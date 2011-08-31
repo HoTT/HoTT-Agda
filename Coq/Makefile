@@ -32,7 +32,7 @@ GLOBFILES:=$(VFILES:.v=.glob)
 
 .PHONY: all .depend html latex pdf
 
-all: .depend $(VOFILES) # doc
+all: $(VOFILES) # doc
 
 clean:
 	/bin/rm -f *~ *.vo *.glob *.~ doc/html/* doc/latex/*
@@ -69,7 +69,7 @@ pdf: latex
 .depend:
 	$(COQDEP) -I . $(VFILES) > .depend
 
-%.vo %.glob: %.v .depend
+%.vo %.glob: %.v
 	$(COQC) $<
 
 include .depend

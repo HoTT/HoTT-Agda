@@ -65,8 +65,8 @@ Defined.
 (** The following lemma tells us how to construct a path in the total space from
    a path in the base space and a path in the fiber. *)
 
-Lemma total_path (A : Type) (P : A -> Type) (x y : sigT P) (p : projT1 x ~~> projT1 y) :
-  (transport p (projT2 x) ~~> projT2 y) -> (x ~~> y).
+Lemma total_path (A : Type) (P : A -> Type) (x y : total P) (p : pr1 x ~~> pr1 y) :
+  (transport p (pr2 x) ~~> pr2 y) -> (x ~~> y).
 Proof.
   intros A P x y p.
   intros q.

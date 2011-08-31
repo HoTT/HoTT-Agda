@@ -5,7 +5,7 @@ Require Export Functions.
 (** For compatibility with Coq 8.2. *)
 Unset Automatic Introduction.
 
-Inductive paths {A} : A -> A -> Type := idpath : forall x, paths x x.
+Inductive paths {A : Type} : A -> A -> Type := idpath : forall x, paths x x.
 
 (* The next line tells [coqdoc] to print [paths] as a wiggly arrow LaTeX. *)
 (** printing ~~> $\leadsto$ *)
@@ -737,6 +737,7 @@ Proof.
   intro a.
   induction p.
   induction r.
+  
   path_via (idpath x @ q).
 Defined.
 
