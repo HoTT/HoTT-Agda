@@ -1,5 +1,4 @@
 Add LoadPath "..".
-Add LoadPath "Circle".
 
 Require Import Homotopy ConeSuspension InfiniteSphere Circle Common.
 
