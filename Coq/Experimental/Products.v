@@ -1,7 +1,7 @@
 Add LoadPath "..".
 Require Import Homotopy.
 
-(** In this file I prove that the based/free loop space (fundamental group/groupoid) commutes with
+(** In this file I prove that the path/loop space (fundamental group/groupoid) commutes with
    products *)
 
 Definition space_to_product {A B : Type} {c c' : A * B}
@@ -44,7 +44,7 @@ Definition inverse2 {A B : Type} {c c' : A * B} (p : c ~~> c')
 Defined.
 
 
-Theorem free_loop_space_commutes_with_products (A B : Type) (c c' : A * B)
+Theorem path_space_commutes_with_products (A B : Type) (c c' : A * B)
         : (fst c ~~> fst c') * (snd c ~~> snd c') ≃> (c ~~> c').
 Proof.
   exists product_to_space.
@@ -53,10 +53,10 @@ Proof.
   apply inverse1.
 Defined.
 
-Theorem based_loop_space_commutes_with_products (A B : Type) (a : A) (b : B)
+Theorem loop_space_commutes_with_products (A B : Type) (a : A) (b : B)
         : (a ~~> a) * (b ~~> b) ≃> ((a, b) ~~> (a, b)).
 Proof.
-  apply free_loop_space_commutes_with_products with (c := (a, b)) (c' := (a, b)).
+  apply path_space_commutes_with_products with (c := (a, b)) (c' := (a, b)).
 Defined.
 
 (** Some useful definitions, propositions and tactics *)
