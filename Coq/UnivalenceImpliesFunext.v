@@ -66,7 +66,7 @@ Section UnivalenceImpliesFunext.
   Theorem univalence_implies_weak_funext : weak_funext_statement.
   Proof.
     intros X P allcontr.
-    assert (eqpt : @paths (X -> Type) (fun x => unit) P).
+    assert (eqpt : (fun x => unit:Type) ~~> P).
     apply univalence_implies_funext.
     intro x.
     apply opposite, equiv_to_path, contr_equiv_unit, allcontr.

@@ -81,13 +81,13 @@ Defined.
 (** Conversely, a path in the total space can be projected down to the base. *)
 
 Definition base_path {A} {P : A -> Type} {u v : sigT P} :
-  (u ~~> v) -> (projT1 u ~~> projT1 v) :=
+  (u ~~> v) -> (pr1 u ~~> pr1 v) :=
   map pr1.
 
 (** And similarly to the fiber.  *)
 
 Definition fiber_path {A} {P : A -> Type} {u v : sigT P}
-  (p : u ~~> v) : (transport (map pr1 p) (projT2 u) ~~> projT2 v).
+  (p : u ~~> v) : (transport (base_path p) (pr2 u) ~~> pr2 v).
 Proof.
   path_induction.
 Defined.
@@ -105,7 +105,7 @@ Proof.
 Defined.
 
 Lemma base_total_path (A : Type) (P : A -> Type) (x y : sigT P)
-  (p : projT1 x ~~> projT1 y) (q : transport p (projT2 x) ~~> projT2 y) :
+  (p : pr1 x ~~> pr1 y) (q : transport p (pr2 x) ~~> pr2 y) :
   (base_path (total_path A P x y p q)) ~~> p.
 Proof.
   destruct x as [x H]. destruct y as [y K]. intros p q.
@@ -114,7 +114,7 @@ Proof.
 Defined.
 
 Lemma fiber_total_path (A : Type) (P : A -> Type) (x y : sigT P)
-  (p : projT1 x ~~> projT1 y) (q : transport p (projT2 x) ~~> projT2 y) :
+  (p : pr1 x ~~> pr1 y) (q : transport p (pr2 x) ~~> pr2 y) :
   transport (P := fun p' : pr1 x ~~> pr1 y => transport p' (pr2 x) ~~> pr2 y)
   (base_total_path A P x y p q) (fiber_path (total_path A P x y p q))
   ~~> q.
@@ -128,7 +128,7 @@ Defined.
    base from a path in the homotopy fiber. *)
 
 Lemma hfiber_triangle {A B} {f : A -> B} {z : B} {x y : hfiber f z} (p : x ~~> y) :
-  (map f (base_path p)) @ (projT2 y) ~~> (projT2 x).
+  (map f (base_path p)) @ (pr2 y) ~~> (pr2 x).
 Proof.
   intros. induction p.
   unfold base_path.
@@ -195,6 +195,14 @@ Defined.
 
 Lemma map_dep_trivial {A B} {x y : A} (f : A -> B) (p: x ~~> y):
   map_dep f p ~~> trans_trivial p (f x) @ map f p. 
+Proof.
+  path_induction.
+Defined.
+
+(* This version is easier to use when proving non-dependent computation rules for HIT *)
+
+Lemma map_dep_trivial2 {A B} {x y : A} (f : A -> B) (p: x ~~> y):
+  map f p ~~> !trans_trivial p (f x) @ map_dep f p.
 Proof.
   path_induction.
 Defined.

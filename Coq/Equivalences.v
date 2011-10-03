@@ -46,7 +46,7 @@ Ltac contract_hfiber y p :=
    should match against the actual values. If the goal is found, then
    we use [eexists] to specify that the center of retraction is at the
    element [existT _ y p] of hfiber provided by the user. After that
-   we generate some fresh names and perfrom intros. *)
+   we generate some fresh names and perform intros. *)
 
 (** The identity map is an equivalence. *)
 
