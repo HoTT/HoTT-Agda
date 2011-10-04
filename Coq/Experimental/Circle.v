@@ -60,4 +60,4 @@ Proof.
   eapply concat.
     apply compute_loop with (P := fun _ => B).
   unwhisker.
-Defined.  
+Defined.

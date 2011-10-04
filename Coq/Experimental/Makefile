@@ -13,7 +13,7 @@ COQDOC:=$(COQBIN)coqdoc
 # The list of files that comprise the library in the order in which
 # they should appear in the generated documentation.
 
-VFILES:= Common.v Circle.v ConeSuspension.v InfiniteSphere.v Spheres.v Products.v
+VFILES:= Common.v Circle.v CircleWellDefined.v ConeSuspension.v InfiniteSphere.v Spheres.v Products.v
 
 VOFILES:=$(VFILES:.v=.vo)
 GLOBFILES:=$(VFILES:.v=.glob)
