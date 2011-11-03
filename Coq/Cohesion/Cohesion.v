@@ -1,6 +1,8 @@
- Add LoadPath "..".
+Add LoadPath "..".
+Add LoadPath "../Limits".
 
 Require Import Homotopy Cohesive_Topos.
+Require Import Pullbacks.
 
 Parameter BG : Type.
 (* BG is inhabited (to be replaced by a connectedness hypothesis later). *)
@@ -54,5 +56,49 @@ Definition G : Type := pt ~~> pt.
    path from [map_from_flat BG x] (of type [BG]) to [pt]. We will take [x := pt_flat] and the path
    will be [l], pre-composed with the previous proof that there is a path from
    [map_from_flat BG pt_flat] to [pt] *)
-Definition theta : G -> flat_dR_BG :=
+Definition theta1 : G -> flat_dR_BG :=
   fun l => tpair pt_flat (pt_compatible @ l).
+
+
+(* Another definition of [theta] using the Pullbacks.v file. The terms [map_to_diagram] and [factor]
+   are defined there.
+   We first define the following homotopy commutative square :
+
+   G ----------> *
+   |             |
+   v             |
+   * --__        |
+   |     --__    |
+   v         --> v
+  ♭BG ---------> BG
+
+  by composing the homotopy pullback square defining [G] and the homotopy commutative triangle below.
+*)
+Definition maptodiag : map_to_diagram (flat BG) unit BG (map_from_flat BG) pt_fun G.
+Proof.
+  exists (compose pt_flat_fun (fun _ => tt)).
+  exists (fun _ => tt).
+  exact (fun l => pt_compatible @ l).
+Defined.
+
+(* Next, with the [factor] function from the Pullbacks.v file, we can transform this homotopy
+   commutative square into a map from [G] to the homotopy pullback of [♭BG -> BG <- *].
+   And then we map by hand this homotopy pullback into the homotopy fiber of [flat_to_map BG] (of
+   course the two are supposed to be canonically identified, but it’s cumbersome to write it as an
+   equivalence here) *)
+Definition theta2 : G -> flat_dR_BG.
+Proof.
+  set (h := factor (flat BG) unit BG (map_from_flat BG) pt_fun G maptodiag).
+  unfold hopullback_type in h.
+  unfold flat_dR_BG, hfiber.
+  intro g.
+  destruct (h g) as [x [t p]].
+  destruct t.
+  exact (tpair x p).
+Defined.
+
+
+Lemma thetas_are_the_same : theta1 ~~> theta2.
+Proof.
+  apply idpath. (* This means that [theta1] and [theta2] are even *definitionally* equal *)
+Defined.
