@@ -1,4 +1,4 @@
-Add LoadPath "..".
+ Add LoadPath "..".
 
 Require Import Homotopy Cohesive_Topos.
 
@@ -26,8 +26,8 @@ Proof.
 Defined.
 
 (* The space of points of [flat BG] is equivalent to the space of points of [BG], this is just a
-   consequence of the fact tha [flat] is a coreflection and that the point is discrete.
-   (Is this expected? Is seems strange) *)
+   consequence of the fact that [flat] is a coreflection and that the point is discrete.
+   (Is this expected? It seems strange) *)
 Definition eq_points_flatBG_BG : (unit -> flat BG) ≃> (unit -> BG) :=
   tpair _ (flat_is_coreflection BG unit is_discrete_unit).
 
