@@ -118,6 +118,7 @@ Proof.
     apply compute_paths_Sinf with (P := fun _ => A).
   unfold compute_points_Sinf'.
   unwhisker.
+  path_simplify.
 Defined.
 
 (** In order to prove that [infinite_sphere] is contractible, we notice that it can also be seen
@@ -230,6 +231,7 @@ Proof.
     apply compute_paths_Binf with (P := fun _ => A).
   unfold compute_points_Binf'.
   unwhisker.
+  path_simplify.
 Defined.
 
 
@@ -315,6 +317,7 @@ Proof.
   unwhisker.
   apply opposite.
   cancel_opposites.
+  path_simplify.
 Defined.
 
 Theorem ball_contr : is_contr infinite_ball.
@@ -388,7 +391,6 @@ Proof.
   rewr (compute_paths_Sinf' infinite_ball points_s_to_b paths_s_to_b n x).
     apply compute_paths_Sinf'. (* rewr should be improved to do this automatically *)
   do_concat_map.
-    apply concat_map with (f := b_to_s).
   undo_opposite_concat.
   do_opposite_map.
   unfold b_to_s at 13. (* This syntax is strange, why not [at 2]? *)

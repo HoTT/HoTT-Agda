@@ -78,6 +78,7 @@ Proof.
     @ map_dep (circle_rect P pt lp') loop
     @ compute_base P pt lp').
   do_opposite_concat.
+  path_simplify.
   associate_right.
   moveright_onleft.
   associate_left.

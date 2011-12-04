@@ -34,7 +34,7 @@ Axiom map_to_sharp : forall X, X -> sharp X.
 Axiom sharp_is_reflection :
   forall X Y, is_codiscrete Y -> is_equiv (fun f : sharp X -> Y => compose f (map_to_sharp X)).
 
-(* Finally the categories of discrete and codiscrete objects are equivalent via the adjonction
+(* Finally the categories of discrete and codiscrete objects are equivalent via the adjunction
    [♭ ⊣ ♯] and when they are identified along this equivalence, the coreflector into discrete
    objects coincides with the reflector into codiscrete objects (both being Γ) *)
 (* TODO *)

@@ -33,11 +33,11 @@ Axiom sphere_rect :
    forall s1 : transport (P := fun a => transport (P := P) a x0 ~~> x1) sf1 p0 ~~> p1,
    (forall x : sphere, P x).
 
-(* Computation rules for points *)
+(* Dependent computation rules for points *)
 Axiom compute_pt0 : forall P x0 x1 p0 p1 s0 s1, (sphere_rect P x0 x1 p0 p1 s0 s1) pt0 ~~> x0.
 Axiom compute_pt1 : forall P x0 x1 p0 p1 s0 s1, (sphere_rect P x0 x1 p0 p1 s0 s1) pt1 ~~> x1.
 
-(* Computation rules for paths *)
+(* Dependent computation rules for paths *)
 Axiom compute_lp0 : forall P x0 x1 p0 p1 s0 s1,
   map_dep (P := P) (sphere_rect P x0 x1 p0 p1 s0 s1) lp0 ~~>
     map (transport (P := P) lp0) (compute_pt0 P x0 x1 p0 p1 s0 s1)
@@ -77,7 +77,7 @@ Proof.
   apply compute_lp1.
 Defined.
 
-(* Computation rules for 2-paths *)
+(* Dependent computation rules for 2-paths *)
 Axiom compute_sf0 : forall P x0 x1 p0 p1 s0 s1,
   map_dep (P := fun a => transport (P := P) a x0 ~~> x1)
     (fun a => !map (transport (P := P) a) (compute_pt0 P x0 x1 p0 p1 s0 s1)

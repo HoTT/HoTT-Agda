@@ -309,7 +309,7 @@ Hint Resolve
   @whisker_right_toid @whisker_right_fromid
   @whisker_left_toid @whisker_left_fromid
   opposite2
-  @map idpath_map concat_map idmap_map compose_map opposite_map
+  @map idpath_map idmap_map compose_map opposite_map
   @map2
  : path_hints.
 
@@ -342,6 +342,15 @@ Ltac path_simplify :=
     | apply @map
     ]; auto with path_hints.
 
+(** The following variant does not use [auto with path_hints] *)
+
+Ltac path_shrink :=
+  repeat progress first [
+      apply whisker_left
+    | apply whisker_right
+    | apply @map
+    ].
+
 (** The following variant allows the caller to supply an additional
    lemma to be tried (for instance, if the caller expects the core
    difference to be resolvable by using a particular lemma). *)
@@ -354,6 +363,16 @@ Ltac path_simplify' lem :=
     | apply lem
     | apply opposite; apply lem
     ]; auto with path_hints.
+ 
+Ltac path_shrink' lem :=
+    repeat progress first [
+      apply whisker_left
+    | apply whisker_right
+    | apply @map
+    | apply lem
+    | apply opposite; apply lem
+    ]; auto.
+
 
 (** These tactics are used to construct a path [a ~~> b] as a
    composition of paths [a ~~> x] and [x ~~> b].  They then apply
@@ -365,6 +384,9 @@ Ltac path_via mid :=
 
 Ltac path_using mid lem :=
   apply @concat with (y := mid); path_simplify' lem.
+
+Ltac path_using' mid lem :=
+  apply @concat with (y := mid); path_shrink' lem.
 
 (** This variant does not call path_simplify. *)
 
@@ -379,27 +401,32 @@ Ltac associate_right_in s :=
   match s with
     context cxt [ (?a @ ?b) @ ?c ] => 
     let mid := context cxt[a @ (b @ c)] in
-      path_using mid concat_associativity
+      path_using' mid concat_associativity
   end.
   
 Ltac associate_right :=
   repeat progress (
     match goal with
-      |- ?s ~~> ?t => first [ associate_right_in s | associate_right_in t ]
+      |- ?s ~~> ?t =>
+        first [ associate_right_in s
+              | associate_right_in t]
+       
     end
   ).
 
 Ltac associate_left_in s :=
   match s with
     context cxt [ ?a @ (?b @ ?c) ] => 
-    let mid := context cxt[(a @ b) @ c] in
-      path_using mid concat_associativity
+      let mid := context cxt[(a @ b) @ c] in
+        path_using' mid concat_associativity
   end.
 
 Ltac associate_left :=
   repeat progress (
     match goal with
-      |- ?s ~~> ?t => first [ associate_left_in s | associate_left_in t ]
+      |- ?s ~~> ?t =>
+        first [ associate_left_in s
+              | associate_left_in t]
     end
   ).
 
@@ -419,23 +446,23 @@ Ltac unwhisker :=
 Ltac cancel_units_in s :=
   match s with
     | context cxt [ idpath ?a @ ?p ] => 
-      let mid := context cxt[p] in path_using mid idpath_left_unit
+      let mid := context cxt[p] in path_using' mid idpath_left_unit
     | context cxt [ ?p @ idpath ?a ] => 
-      let mid := context cxt[p] in path_using mid idpath_right_unit
+      let mid := context cxt[p] in path_using' mid idpath_right_unit
     | context cxt [ map ?f (idpath ?x) ] =>
-      let mid := context cxt[idpath (f x)] in path_using mid idpath_map
+      let mid := context cxt[idpath (f x)] in path_using' mid idpath_map
     | context cxt [ map (idmap _) ?p ] =>
-      let mid := context cxt[p] in path_using mid idmap_map
+      let mid := context cxt[p] in path_using' mid idmap_map
     | context cxt [ ! (idpath ?a) ] =>
-      let mid := context cxt[idpath a] in path_using mid opposite_idpath
+      let mid := context cxt[idpath a] in path_using' mid opposite_idpath
   end.
 
 Ltac cancel_units :=
-  repeat (
+  repeat progress (
     match goal with
       |- ?s ~~> ?t => first [ cancel_units_in s | cancel_units_in t ]
     end
-  ).
+  ); auto.
 
 (** And some tactics for eliminating matched pairs of opposites. *)
 
@@ -453,14 +480,14 @@ Ltac cancel_units :=
 Ltac partly_cancel_left_opposite_of_in p s :=
   match s with
     | context cxt [ @concat _ ?trg _ _ (!p) p ] =>
-      let mid := context cxt[ idpath trg ] in path_using mid opposite_left_inverse
+      let mid := context cxt[ idpath trg ] in path_using' mid opposite_left_inverse
     | context cxt [ !p @ (?a @ ?b) ] =>
-      let mid := context cxt[ (!p @ a) @ b ] in path_using mid concat_associativity
+      let mid := context cxt[ (!p @ a) @ b ] in path_using' mid concat_associativity
     | context cxt [ !p @ _ ] => fail 1
     | context cxt [ (?a @ !p) @ ?b ] =>
-      let mid := context cxt[ a @ (!p @ b) ] in path_using mid concat_associativity
+      let mid := context cxt[ a @ (!p @ b) ] in path_using' mid concat_associativity
     | context cxt [ ?a @ (?b @ !p) ] =>
-      let mid := context cxt[ (a @ b) @ !p ] in path_using mid concat_associativity
+      let mid := context cxt[ (a @ b) @ !p ] in path_using' mid concat_associativity
   end;
   cancel_units.
 
@@ -482,14 +509,14 @@ Ltac cancel_left_opposite_of p :=
 Ltac partly_cancel_right_opposite_of_in p s :=
   match s with
     | context cxt [ @concat _ ?src _ _ p (!p) ] =>
-      let mid := context cxt[ idpath src ] in path_using mid opposite_right_inverse
+      let mid := context cxt[ idpath src ] in path_using' mid opposite_right_inverse
     | context cxt [ (?a @ ?b) @ !p ] =>
-      let mid := context cxt[ a @ (b @ !p) ] in path_using mid concat_associativity
+      let mid := context cxt[ a @ (b @ !p) ] in path_using' mid concat_associativity
     | context cxt [ _ @ !p ] => fail 1
     | context cxt [ ?a @ (!p @ ?b) ] =>
-      let mid := context cxt[ (a @ !p) @ b ] in path_using mid concat_associativity
+      let mid := context cxt[ (a @ !p) @ b ] in path_using' mid concat_associativity
     | context cxt [ (!p @ ?a) @ ?b ] =>
-      let mid := context cxt[ !p @ (a @ b) ] in path_using mid concat_associativity
+      let mid := context cxt[ !p @ (a @ b) ] in path_using' mid concat_associativity
   end;
   cancel_units.
 
@@ -549,7 +576,7 @@ Ltac cancel_opposites :=
 Ltac do_opposite_opposite_in s :=
   match s with
     | context cxt [ ! (! ?p) ] =>
-      let mid := context cxt [ p ] in path_using mid opposite_opposite
+      let mid := context cxt [ p ] in path_using' mid opposite_opposite
   end.
 
 Ltac do_opposite_opposite :=
@@ -572,7 +599,7 @@ Ltac apply_opposite_map :=
 Ltac do_opposite_map_in s :=
   match s with
     | context cxt [ map ?f (! ?p) ] =>
-      let mid := context cxt [ ! map f p ] in path_using mid opposite_map
+      let mid := context cxt [ ! map f p ] in path_using' mid opposite_map; try apply_opposite_map
   end.
 
 Ltac do_opposite_map :=
@@ -585,7 +612,7 @@ Ltac do_opposite_map :=
 Ltac undo_opposite_map_in s :=
   match s with
     | context cxt [ ! (map ?f ?p) ] =>
-      let mid := context cxt [ map f (! p) ] in path_using mid opposite_map
+      let mid := context cxt [ map f (! p) ] in path_using' mid opposite_map; try apply_opposite_map
   end.
 
 Ltac undo_opposite_map :=
@@ -600,7 +627,7 @@ Ltac undo_opposite_map :=
 Ltac do_opposite_concat_in s :=
   match s with
     | context cxt [ (! ?p) @ (! ?q) ] =>
-      let mid := context cxt [ ! (q @ p) ] in path_using mid opposite_concat
+      let mid := context cxt [ ! (q @ p) ] in path_using' mid opposite_concat
   end.
 
 Ltac do_opposite_concat :=
@@ -613,7 +640,7 @@ Ltac do_opposite_concat :=
 Ltac undo_opposite_concat_in s :=
   match s with
     | context cxt [ ! (?q @ ?p) ] =>
-      let mid := context cxt [ (! p) @ (! q) ] in path_using mid opposite_concat
+      let mid := context cxt [ (! p) @ (! q) ] in path_using' mid opposite_concat
   end.
 
 Ltac undo_opposite_concat :=
@@ -638,7 +665,7 @@ Ltac do_compose_map_in s :=
   match s with
     | context cxt [ map (?f ○ ?g) ?p ] =>
       let mid := context cxt [ map f (map g p) ] in
-        path_via mid; try apply_compose_map
+        path_using' mid compose_map; try apply_compose_map
   end.
 
 Ltac do_compose_map :=
@@ -652,7 +679,7 @@ Ltac undo_compose_map_in s :=
   match s with
     | context cxt [ map ?f (map ?g ?p) ] =>
       let mid := context cxt [ map (f ○ g) p ] in
-        path_via mid; try apply_compose_map
+        path_using' mid compose_map; try apply_compose_map
   end.
 
 Ltac undo_compose_map :=
@@ -667,7 +694,8 @@ Ltac undo_compose_map :=
 Ltac do_concat_map_in s :=
   match s with
     | context cxt [ map ?f (?p @ ?q) ] =>
-      let mid := context cxt [ map f p @ map f q ] in path_using mid concat_map
+      let mid := context cxt [ map f p @ map f q ] in
+        path_using' mid concat_map; try exact (concat_map _ _ _ _ _ f _ _)
   end.
 
 Ltac do_concat_map :=
@@ -680,7 +708,7 @@ Ltac do_concat_map :=
 Ltac undo_concat_map_in s :=
   match s with
     | context cxt [ map ?f ?p @ map ?f ?q ] =>
-      let mid := context cxt [ map f (p @ q) ] in path_using mid concat_map
+      let mid := context cxt [ map f (p @ q) ] in path_using' mid concat_map
   end.
 
 Ltac undo_concat_map :=
@@ -769,7 +797,7 @@ Ltac moveright_onright :=
       apply concat_moveright_onright
     | |- (?r ~~> ?q) =>
       path_via (idpath _ @ r); apply concat_moveright_onright
-  end; do_opposite_opposite.
+  end; do_opposite_opposite; path_simplify.
 
 Lemma concat_moveleft_onright A (x y z : A) (p : x ~~> y) (q : x ~~> z) (r : z ~~> y) :
   (p @ !r ~~> q) -> (p ~~> q @ r).
@@ -786,7 +814,7 @@ Ltac moveleft_onright :=
       apply concat_moveleft_onright
     | |- (?p ~~> ?r) =>
       path_via (idpath _ @ r); apply concat_moveleft_onright
-  end; do_opposite_opposite.
+  end; do_opposite_opposite; path_simplify.
 
 Lemma concat_moveleft_onleft A (x y z : A) (p : y ~~> z) (q : x ~~> z) (r : y ~~> x) :
   (!r @ p ~~> q) -> (p ~~> r @ q).
@@ -803,7 +831,7 @@ Ltac moveleft_onleft :=
       apply concat_moveleft_onleft
     | |- (?p ~~> ?r) =>
       path_via (r @ idpath _); apply concat_moveleft_onleft
-  end; do_opposite_opposite.
+  end; do_opposite_opposite; path_simplify.
 
 Lemma concat_moveright_onleft A (x y z : A) (p : x ~~> z) (q : y ~~> z) (r : y ~~> x) :
   (p ~~> !r @ q) -> (r @ p ~~> q).
@@ -820,4 +848,4 @@ Ltac moveright_onleft :=
       apply concat_moveright_onleft
     | |- (?r ~~> ?q) =>
       path_via (r @ idpath _); apply concat_moveright_onleft
-  end; do_opposite_opposite.
+  end; do_opposite_opposite; path_simplify.

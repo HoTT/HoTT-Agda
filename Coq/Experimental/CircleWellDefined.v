@@ -61,7 +61,6 @@ Proof.
   rewr (compute_loop' _ _ _ : map circle_to_circle loop ~~> _).
     apply compute_loop'.
   do_concat_map.
-    apply concat_map with (f := circle_to_circle). (* Why do I need to make [f] explicit? *)
   undo_opposite_concat.
   rewr (compute_loop' _ _ _ : map circle_to_circle loop ~~> _).
     apply compute_loop'.

@@ -332,11 +332,9 @@ Proof.
   associate_left.
   path_via ((!is_section (f x)  @  map (f ○ g) (map f (!is_retraction x))
     @  map (f ○ g) (is_section (f x)))  @  map f (is_retraction x)).
-  unwhisker.
   do_compose_map; auto.
   path_via (map f (!is_retraction x)  @  (!is_section (f (g (f x))))
     @  map (f ○ g) (is_section (f x))  @  map f (is_retraction x)).
-  unwhisker.
   apply opposite, (homotopy_naturality_fromid B _ (fun y => !is_section y)).
   path_via (map f (!is_retraction x)  @  (is_section (f x) @ (!is_section (f x)))
     @  map f (is_retraction x)).
@@ -344,6 +342,7 @@ Proof.
   apply opposite, (homotopy_naturality_fromid B _ (fun y => !is_section y)).
   do_opposite_map.
   cancel_right_opposite_of (is_section (f x)).
+  path_simplify.
 Defined.
 
 (** Therefore, "any homotopy equivalence is an equivalence." *)
@@ -492,8 +491,10 @@ Proof.
   apply @hequiv_is_equiv with (g := @concat A y x z (!p)).
   intro q.
   associate_left.
+  path_simplify.
   intro q.
   associate_left.
+  path_simplify.
 Defined.
 
 Definition concat_equiv_left {A} (x y z : A) (p : x ~~> y) :
@@ -507,8 +508,10 @@ Proof.
   apply @hequiv_is_equiv with (g := fun r : x ~~> z => r @ !p).
   intro q.
   associate_right.
+  path_simplify.
   intro q.
   associate_right.
+  path_simplify.
 Defined.
 
 Definition concat_equiv_right {A} (x y z : A) (p : y ~~> z) :

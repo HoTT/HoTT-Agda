@@ -299,7 +299,7 @@ Proof.
   path_via (transport p q).
   apply opposite, trans_is_concat.
   path_via q.
-  set (qp1 := trans_map p (fun (x0:A) => inl  (x ~~> x0 -> Empty_set)) q).
+  set (qp1 := trans_map p (fun (x0:A) => fun a => inl (x ~~> x0 -> Empty_set) a) q).
   apply inl_injective with (B := (x ~~> x -> Empty_set)).
   exact (qp1 @ qp0).
   induction (q' p).

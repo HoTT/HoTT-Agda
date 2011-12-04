@@ -77,6 +77,7 @@ Proof.
     unfold suspension_rect'.
     apply compute_paths_susp with (P := fun _ => B).
   unwhisker.
+  path_simplify.
 Defined.
 
 (** Cone

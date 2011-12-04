@@ -283,6 +283,7 @@ Proof.
   moveright_onleft.
   undo_opposite_map.
   unwhisker.
+  path_simplify.
 
   eapply concat.
     apply invs1_transp.
@@ -295,7 +296,6 @@ Proof.
   simpl.
   cancel_units.
   do_concat_map.
-    apply concat_map with (f := circle_to_sphere_one).
   undo_opposite_concat.
   undo_opposite_map.
   unfold invs1_south_susp.

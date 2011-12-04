@@ -232,7 +232,7 @@ Section PullbackMap.
     simpl.
     path_via (transport (map f (inverse_is_retraction f x))
      (transport (!inverse_is_section f (f x)) z)).
-    apply map_trans.
+    exact (map_trans _ _ _ _).
     path_via (transport (!inverse_is_section f (f x) @ map f (inverse_is_retraction f x)) z).
     apply opposite, trans_concat.
     path_via (transport (idpath (f x)) z).

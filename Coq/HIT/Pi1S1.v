@@ -324,7 +324,6 @@ Proof.
   path_via (!loop @ !wind (fiber_toint (transport (!loop) x))).
   unfold circle_cover_contrbase.
   do_opposite_map.
-  apply_opposite_map.
   path_via (wind (fiber_toint (transport (!loop) x))).
   apply base_total_path.
   do_opposite_concat.
