@@ -6,7 +6,7 @@ Introduction
 
 This is a basic introduction to Agda, principally aimed at people who want to use Agda for homotopy
 type theory. It will not cover every feature of Agda, but only what I found to be useful for
-homotopy type theory. It will suppose basic knowledge of dependent type theory.
+homotopy type theory. It will suppose some knowledge of dependent type theory.
 
 Disclaimer : I am far from a specialist in Agda, so everything here might be false.
 
@@ -92,7 +92,7 @@ tokens. Similarly, if you write `(x, y)` it will be recognized as two tokens `x,
 parenthesis are special, but the comma is not), so if you want to write a pair, you will need to
 write `(x , y)` instead (this notation is defined in `Types.agda` or in Agda’s standard
 library). Moreover, the underscore character is special, it is used for mixfix operators (see the
-section about mixifix operators), so if in Coq you have something called `opposite_right_inverse`,
+section about fixity declaration), so if in Coq you have something called `opposite_right_inverse`,
 you will rather want to call it `opposite-right-inverse` in Agda (this is recognized as a single
 token). Also, a typing declaration is `a : A`, not `a:A` (which will be parsed as a single token).
 
@@ -105,10 +105,10 @@ Special comments
 Special comments are comments of the form `{-# [special comment] #-}`. The special comments that I
 understand (and use) are
 
-- Options. If you have at the beginning of your file the special comment `{-# OPTIONS --something
-  #-}`, Agda will be called with the command-line option `--something`. This is not inherited by
-  imported modules, so homotopy type theorists should begin *every* Agda file with the special
-  comment `{-# OPTIONS --without-K #-}`.
+- Options. If you have at the beginning of your file the special comment
+  `{-# OPTIONS --something #-}`, Agda will be called with the command-line option `--something`.
+  This is not inherited by imported modules, so homotopy type theorists should begin *every* Agda
+  file with the special comment `{-# OPTIONS --without-K #-}`.
 
 - Builtins. A builtin command is used to register some type as a builtin type that is handled
   specially by Agda. I’m using two of them : universe levels (see the part about universe
@@ -159,7 +159,7 @@ by `->` if you don’t like Unicode.
 
 Universes are written `Set` or `Set₀` or `Set0` for the first one and `Set₁`, `Set₂`, `Set₃`, … for
 the next ones (or `Set1`, `Set2`, `Set3`, …) (I’m not sure this will work after `Set₉`). Subscripts
-are obtained by typing `\_0` for `₀`, for example. There is also universe polymorphism, that allow
+are obtained by typing `\_0` for `₀`, for example. There is also universe polymorphism, that allows
 you to write `Set i` where `i : Level` is a universe level. See the section about universe
 polymorphism for more about this.
 
@@ -225,7 +225,7 @@ using it a lot.
 Implicit arguments
 ------------------
 
-Implicit arguments are introduced with curly brackets instead of parentheses in a function
+Implicit arguments are introduced with braces instead of parentheses in a function
 declaration. Let’s consider the following function
 
     f : {a : A} {b : B} (c : C) {d : D} (e : E) → F
@@ -370,6 +370,17 @@ the function (see above). Given that you can potentially have very involved patt
 will not easily be translatable to a type theory with only dependent eliminators, I’m trying to use
 pattern matching only when it is just an application of the corresponding dependent eliminator.
 
+For example, the family of identity types is defined by
+
+    data _≡_ {i : Level} {A : Set i} : A → A → Set i where
+      refl : (a : A) → a ≡ a
+
+And the type of natural numbers is defined by
+
+    data ℕ : Set where
+      O : ℕ
+      S : ℕ → ℕ
+
 If you define an inductive type corresponding to the natural numbers (with a zero-ary constructor
 and a unary constructor), you can use the following builtins
 
@@ -472,12 +483,12 @@ The main keybindings of the emacs mode are the following
 - `C-c C-l` (load) loads (recompiles) the whole file. You can have holes in it, represented by
   question marks. For example if you load a file called `Test.agda` containing the following
 
-    module Test where
-    identity : (A : Set) → (A → A)
-    identity A x = ?
+      module Test where
+      identity : (A : Set) → (A → A)
+      identity A x = ?
 
   the question mark will be replaced by something looking like `{ }0` meaning that it is now an
-  unsolved goal. In the goal, you can then use other commands described below.
+  unsolved goal. In the goal, you can then use the other commands described below.
 
   There is nothing like incremental compilation as in Coq. Either you recompile the whole file, or
   you use the “refine” and “give” commands below (but this is not always possible, so you should
@@ -497,14 +508,14 @@ When you are in a goal :
 - `C-c C-c` (case) will ask for a variable and will do a pattern matching on this variable. For
   example, suppose you have the following (not yet complete) program
 
-    f : ℕ → A
-    f n = { }0
+      f : ℕ → A
+      f n = { }0
 
   and you do a case analysis on `n`, this will transform the source code into
 
-    f : ℕ → A
-    f O = { }0
-    f (S n) = { }1
+      f : ℕ → A
+      f O = { }0
+      f (S n) = { }1
 
   Beware that this will load the whole file, so this can be slow.
 
