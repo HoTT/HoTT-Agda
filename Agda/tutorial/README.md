@@ -481,8 +481,9 @@ non-ASCII symbol used (after the first occurrence of the symbol).
 The main keybindings of the emacs mode are the following
 
 - `C-c C-l` (load) loads (recompiles) the whole file. You can have holes in it, represented by
-  question marks. For example if you load a file called `Test.agda` containing the following
-
+  question marks.
+  
+For example if you load a file called `Test.agda` containing the following
 
     module Test where
     identity : (A : Set) → (A → A)
