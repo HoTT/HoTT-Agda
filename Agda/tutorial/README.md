@@ -489,12 +489,12 @@ For example if you load a file called `Test.agda` containing the following
     identity : (A : Set) → (A → A)
     identity A x = ?
 
-  the question mark will be replaced by something looking like `{ }0` meaning that it is now an
-  unsolved goal. In the goal, you can then use the other commands described below.
+the question mark will be replaced by something looking like `{ }0` meaning that it is now an
+unsolved goal. In the goal, you can then use the other commands described below.
 
-  There is nothing like incremental compilation as in Coq. Either you recompile the whole file, or
-  you use the “refine” and “give” commands below (but this is not always possible, so you should
-  keep your files small enough for when you have to load them).
+There is nothing like incremental compilation as in Coq. Either you recompile the whole file, or
+you use the “refine” and “give” commands below (but this is not always possible, so you should
+keep your files small enough for when you have to load them).
 
 When you are in a goal :
 
@@ -507,19 +507,20 @@ When you are in a goal :
   (or several), if the type of the goal is a record, this will introduce the constructor of the
   record.
 
-- `C-c C-c` (case) will ask for a variable and will do a pattern matching on this variable. For
-  example, suppose you have the following (not yet complete) program
+- `C-c C-c` (case) will ask for a variable and will do a pattern matching on this variable.
 
-      f : ℕ → A
-      f n = { }0
+For example, suppose you have the following (not yet complete) program
 
-  and you do a case analysis on `n`, this will transform the source code into
+    f : ℕ → A
+    f n = { }0
 
-      f : ℕ → A
-      f O = { }0
-      f (S n) = { }1
+and you do a case analysis on `n`, this will transform the source code into
 
-  Beware that this will load the whole file, so this can be slow.
+    f : ℕ → A
+    f O = { }0
+    f (S n) = { }1
+
+Beware that this will load the whole file, so this can be slow.
 
 - `C-c C-a` (auto) will try to guess the term in this goal.
 
