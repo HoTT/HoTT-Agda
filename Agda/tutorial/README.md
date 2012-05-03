@@ -483,9 +483,10 @@ The main keybindings of the emacs mode are the following
 - `C-c C-l` (load) loads (recompiles) the whole file. You can have holes in it, represented by
   question marks. For example if you load a file called `Test.agda` containing the following
 
-      module Test where
-      identity : (A : Set) → (A → A)
-      identity A x = ?
+
+    module Test where
+    identity : (A : Set) → (A → A)
+    identity A x = ?
 
   the question mark will be replaced by something looking like `{ }0` meaning that it is now an
   unsolved goal. In the goal, you can then use the other commands described below.
