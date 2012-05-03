@@ -4,7 +4,7 @@ Homotopy Type Theory in Agda
 Introduction to Agda
 --------------------
 
-I have written an introduction to Agda for homotopy type theorists in the `Tutorial` directory
+I have written an introduction to Agda for homotopy type theorists in the `tutorial` directory
 containing everything you need to know to understand the Agda code here, be sure to check it out.
 
 Structure of the source
@@ -15,7 +15,7 @@ depend of files before) :
 
 - `Types` contains the definitions of the basic types
 - `Paths` contains the definitions and properties of paths types, transport of something in a
-- fibration along a path, and the various reduction rules of `transport`
+  fibration along a path, and the various reduction rules of `transport`
 - `Contractible` contains some basic properties of contractible types (not needing the notion of
   equivalence)
 - `Equivalences` contains the definition of equivalences and useful properties
