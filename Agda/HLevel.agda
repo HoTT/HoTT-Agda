@@ -14,6 +14,8 @@ contr-contr-equiv : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) (cA : is-con
 contr-contr-equiv {i} {j} {A} {B} f cA cB = λ y → ((π₁ cA , (is-contr-path B cB _ _)) , (λ y' → total-path (is-contr-path A cA _ _)
   (is-contr-path _ (path-contr-contr B cB _ _) _ _)))
 
+-- Definition of h-levels
+
 is-hlevel : ∀ {i} (n : ℕ) (A : Set i) → Set i
 is-hlevel O A = is-contr A
 is-hlevel 1 A = (x y : A) → (x ≡ y)
@@ -38,34 +40,33 @@ is-prop-is-contr A x y = total-path (π₂ y (π₁ x)) (funext-dep _ _
 is-prop-pi : ∀ {i j} (A : Set i) (P : A → Set j) (p : (x : A) → is-prop (P x)) → is-prop ((x : A) → P x)
 is-prop-pi A P p f g = funext-dep _ _ (λ x → p x (f x) (g x))
 
-private
-  lemma1-is-prop-is-prop : ∀ {i} (A : Set i) (c : is-prop A) {x y : A} (p : x ≡ y) → p ∘ c y y ≡ c x y
-  lemma1-is-prop-is-prop A c (refl _) = refl _
+-- In a prop, every path is equal to the canonical path
+is-prop-canon-path : ∀ {i} (A : Set i) (c : is-prop A) {x y : A} (p : x ≡ y) → p ≡ c x y
+is-prop-canon-path A c (refl _) = ! (lemma2 A c _) where
+
+  lemma1 : ∀ {i} (A : Set i) (c : is-prop A) {x y : A} (p : x ≡ y) → p ∘ c y y ≡ c x y
+  lemma1 A c (refl _) = refl _
 
   -- We apply the previous lemma with [p = c y y]
-  lemma2-is-prop-is-prop : ∀ {i} (A : Set i) (c : is-prop A) (y : A) → c y y ≡ refl y
-  lemma2-is-prop-is-prop A c y = anti-whisker-left (c y y) (lemma1-is-prop-is-prop A c (c y y) ∘ ! (refl-right-unit _))
-
-  -- We combine the two lemmas
-  lemma3-is-prop-is-prop : ∀ {i} (A : Set i) (c : is-prop A) {x y : A} (p : x ≡ y) → p ≡ c x y
-  lemma3-is-prop-is-prop A c (refl _) = ! (lemma2-is-prop-is-prop A c _)
+  lemma2 : ∀ {i} (A : Set i) (c : is-prop A) (y : A) → c y y ≡ refl y
+  lemma2 A c y = anti-whisker-left (c y y) (lemma1 A c (c y y) ∘ ! (refl-right-unit _))
 
 is-prop-is-prop : ∀ {i} (A : Set i) → is-prop (is-prop A)
-is-prop-is-prop A c c' = funext-dep _ _ (λ x → funext-dep _ _ (λ x' → lemma3-is-prop-is-prop _ c' (c x x')))
+is-prop-is-prop A c c' = funext-dep _ _ (λ x → funext-dep _ _ (λ x' → is-prop-canon-path _ c' (c x x')))
 
 is-prop-hlevel : ∀ {i} (n : ℕ) (A : Set i) → is-prop (is-hlevel n A)
 is-prop-hlevel O A = is-prop-is-contr A
 is-prop-hlevel (S O) A = is-prop-is-prop A
 is-prop-hlevel (S (S n)) A = is-prop-pi _ _ (λ x → is-prop-pi _ _ (λ x' → is-prop-hlevel (S n) (x ≡ x')))
 
--- Usual definition of [is-prop]
+-- The usual definition of [is-prop] is equivalent
 usual-is-prop : ∀ {i} (A : Set i) (c : is-prop A) → ((x y : A) → (is-contr (x ≡ y)))
 usual-is-prop A c x y = (c x y , lemma3-is-prop-is-prop A c)
 
 -- h-levels are increasing
 is-increasing-hlevel : ∀ {i} (n : ℕ) (A : Set i) → is-hlevel n A → is-hlevel (S n) A
 is-increasing-hlevel O A p = λ x y → π₂ p x ∘ ! (π₂ p y)
-is-increasing-hlevel (S O) A p = λ x y → is-increasing-hlevel O (x ≡ y) (p x y , lemma3-is-prop-is-prop A p)
+is-increasing-hlevel (S O) A p = λ x y → is-increasing-hlevel O (x ≡ y) (p x y , is-prop-canon-path A p)
 is-increasing-hlevel (S (S n)) A p = λ x y → is-increasing-hlevel (S n) (x ≡ y) (p x y)
 
 -- Equivalent types have the same h-level
@@ -77,7 +78,7 @@ is-hlevel-equiv f (S (S n)) c = λ x y → is-hlevel-equiv (equiv-map (f ⁻¹) 
 dec-eq : ∀ {i} (A : Set i) → Set i
 dec-eq A = (x y : A) → (x ≡ y) ⊔ (x ≡ y → ⊥)
 
--- A type with a decidable equality is an hSet
+-- A type with a decidable equality is a set
 dec-eq-is-set : ∀ {i} (A : Set i) (dec : dec-eq A) → is-set A
 dec-eq-is-set A dec x y with dec x y
 dec-eq-is-set A dec x y | inl q = dec-is-set-equal q where

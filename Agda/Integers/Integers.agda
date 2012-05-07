@@ -34,7 +34,7 @@ succ-is-equiv = iso-is-eq succ pred succ-pred pred-succ
 succ-equiv : ℤ ≃ ℤ
 succ-equiv = (succ , succ-is-equiv)
 
--- Equality on ℕ and ℤ is decidable
+-- Equality on ℕ and ℤ is decidable and both are sets
 
 ℕ-get-S : ℕ → ℕ
 ℕ-get-S 0 = 0
