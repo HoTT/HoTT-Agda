@@ -4,7 +4,7 @@ open import Types
 open import Paths
 open import Equivalences
 
-module FiberEquivalences {i j k : Level} {A : Set i} {P : A → Set k} {Q : A → Set j} (f : (x : A) → (P x → Q x)) where
+module FiberEquivalences {i j k} {A : Set i} {P : A → Set k} {Q : A → Set j} (f : (x : A) → (P x → Q x)) where
 
 -- We want to prove that if [f] induces an equivalence on the total spaces, then [f] induces an equivalence fiberwise
 
@@ -33,7 +33,7 @@ module TotalMapEquiv (e : is-equiv total-map) where
   inv-right-inverse x y = app-trans (base-path (inverse-right-inverse total-equiv (x , y))) (π₂ (inverse (_ , e) (x , y)))
     ∘ fiber-path (π₂ (π₁ (e (x , y))))
   
-  base-path-opposite : {i j : Level} {A : Set i} {P : A → Set j} {x y : Σ A P} (p : x ≡ y) → base-path (! p) ≡ ! (base-path p)
+  base-path-opposite : ∀ {i j} {A : Set i} {P : A → Set j} {x y : Σ A P} (p : x ≡ y) → base-path (! p) ≡ ! (base-path p)
   base-path-opposite (refl _) = refl _
 
   inv-left-inverse : (x : A) (y : P x) → inv x (f x y) ≡ y

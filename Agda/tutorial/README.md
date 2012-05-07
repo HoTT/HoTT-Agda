@@ -166,7 +166,8 @@ polymorphism for more about this.
 Dependent product is written `(x : A) → B` or `A → B` if `B` does not depend on `x`. You can also
 write `∀ (x : A) → B` or `∀ x → B` (the type of `x` can only be inferred if you are using the `∀`
 symbol). The `∀` symbol is obtained by typing `\forall`, and you can replace it by `forall` if you
-want.
+want. I’m using it in particular for implicit universe levels, see the examples in the section about
+universe polymorphism.
 
 Function declaration, pattern matching
 --------------------------------------
@@ -329,9 +330,13 @@ example, composition of functions can then be defined as
     _◯_ : {i j k : Level} {A : Set i} {B : Set j} {C : Set k} (f : B → C) (g : A → B) → (A → C)
     f ◯ g = λ x → f (g x)
 
-and the dependent product can be defined as
+The typing declaration can be written more consisely using `∀` :
 
-    Π : {i j : Level} (A : Set i) (P : A → Set j) → Set (max i j)
+    _◯_ : ∀ {i j k} {A : Set i} {B : Set j} {C : Set k} (f : B → C) (g : A → B) → (A → C)
+
+The dependent product can be defined as
+
+    Π : ∀ {i j} (A : Set i) (P : A → Set j) → Set (max i j)
     Π A P = (x : A) → P x
 
 I’m seeing universe polymorphism only as a convenience to have definitions automatically copy-pasted
@@ -372,7 +377,7 @@ pattern matching only when it is just an application of the corresponding depend
 
 For example, the family of identity types is defined by
 
-    data _≡_ {i : Level} {A : Set i} : A → A → Set i where
+    data _≡_ {i} {A : Set i} : A → A → Set i where
       refl : (a : A) → a ≡ a
 
 And the type of natural numbers is defined by
@@ -413,7 +418,7 @@ either `name.field1` or open `name` and use only `field1`.
 
 For example, the type of dependent sums is defined with
 
-    record Σ {i j : Level} (A : Set i) (P : A → Set j) : Set (max i j) where
+    record Σ {i j} (A : Set i) (P : A → Set j) : Set (max i j) where
       constructor _,_
       field
         π₁ : A
@@ -538,12 +543,12 @@ Beware that this will load the whole file, so this can be slow.
 Beware that “auto” and “refine” can give terms that will not be accepted by Agda. For example if you
 try auto in the following :
 
-    ! : {i : Level} {A : Set i} {x y : A} (p : x ≡ y) → y ≡ x
+    ! : ∀ {i} {A : Set i} {x y : A} (p : x ≡ y) → y ≡ x
     ! (refl _) = ?
 
 (where `_≡_` is the family of identity types), this will give
 
-    ! : {i : Level} {A : Set i} {x y : A} (p : x ≡ y) → y ≡ x
+    ! : ∀ {i} {A : Set i} {x y : A} (p : x ≡ y) → y ≡ x
     ! (refl _) = refl .a
 
 which is not syntactically correct. You’ll have to try to circumvent those problems (in this case by

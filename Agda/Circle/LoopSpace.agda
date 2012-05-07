@@ -5,13 +5,16 @@ open import Circle.Circle
 open import Integers.Integers
 open import FiberEquivalences
 
-module Circle.FundamentalGroupCircle where
+module Circle.LoopSpace where
 
 P-path : circle → Set _
 P-path t = (t ≡ base)
 
 tot-path : Set _
 tot-path = Σ circle P-path
+
+succ-path : ℤ ≡ ℤ
+succ-path = eq-to-path succ-equiv
 
 P-type : circle → Set _
 P-type = circle-rec-nondep (Set _) ℤ succ-path
@@ -20,7 +23,7 @@ tot-type : Set _
 tot-type = Σ circle P-type
 
 tot-path-is-contr : is-contr tot-path
-tot-path-is-contr = ((base , refl base) , pathto-contr)
+tot-path-is-contr = ((base , refl base) , is-contr-pathto)
 
 trans-P-type : {u v : circle} (p : u ≡ v) (q : P-type u) → transport P-type p q ≡ transport (λ A → A) (map P-type p) q
 trans-P-type (refl _) _ = refl _
@@ -48,7 +51,7 @@ R-e n = total-path loop (loop-to-succ n)
 
 -- Elimination rule
 module Tot-type-is-ℝ
-  {i : Level}
+  {i}
   (P : tot-type → Set i)
   (z : (n : ℤ) → P (R-z n))
   (e : (n : ℤ) → transport P (R-e n) (z n) ≡ z (succ n)) where
@@ -59,7 +62,7 @@ module Tot-type-is-ℝ
 
   e' : (n : ℤ) → transport P (R-e' n) (z n) ≡ z (transport P-type loop n)
   e' n = (trans-totalpath {P = P-type} {Q = P} {x = (base , n)} {y = (base , transport P-type loop n)} loop (refl _) z
-       ∘ move!-transp-left {P = λ z → P (base , z)} (loop-to-succ n) _  (z (succ n))
+       ∘ move!-transp-left (λ z → P (base , z)) _ (loop-to-succ n) (z (succ n))
          (! (trans-totalpath {P = P-type} {Q = P} {x = (base , n)} {y = (base , succ n)} loop (loop-to-succ n) z)
          ∘ e n))
        ∘ map-dep z (! (loop-to-succ n))
@@ -81,7 +84,7 @@ module Tot-type-is-ℝ
   R-rec : (t : tot-type) → P t
   R-rec (x , y) = P-R-rec x y
 
--- We can now prove that [tot-type] is contractible using [R-rec]
+-- We can now prove that [tot-type] is contractible using [R-rec], that’s a little tedious but not difficult
 P-R-contr : (x : tot-type) → Set _
 P-R-contr x = R-z O ≡ x
 
@@ -133,16 +136,16 @@ fibers-equiv x = fiberwise-equiv fiberwise-map total-equiv x
 ΩS¹≃ℤ : (base ≡ base) ≃ ℤ
 ΩS¹≃ℤ = (fiberwise-map base , fibers-equiv base)
 
--- postulate -- is-set base≡base
---   is-set-base≡base : is-set (base ≡ base)
+postulate -- is-set base≡base
+  is-set-ΩS¹ : is-set (base ≡ base)
 
 -- postulate -- is-prop-is-set
---   is-prop-is-set : {i : Level} (A : Set i) → is-prop (is-set A)
+--   is-prop-is-set : ∀ {i} (A : Set i) → is-prop (is-set A)
 
 -- postulate -- is-set-is-set
---   is-set-is-set : {i : Level} (A : Set i) → is-set (is-set A)
+--   is-set-is-set : ∀ {i} (A : Set i) → is-set (is-set A)
 
--- -- We can also deduce that the circle is of h-level 3
--- circle-is-gpd : is-gpd circle
--- circle-is-gpd = circle-rec _ (circle-rec _ is-set-base≡base (is-prop-is-set _ _ _))
---   (funext-dep _ _ (circle-rec _ (is-prop-is-set _ _ _) (is-set-is-set _ _ _ _ _)))
+-- We can also deduce that the circle is of h-level 3
+circle-is-gpd : is-gpd circle
+circle-is-gpd = circle-rec _ (circle-rec _ is-set-ΩS¹ (is-prop-hlevel 2 _ _ _))
+  (funext-dep _ _ (circle-rec _ (is-prop-hlevel 2 _ _ _) (is-increasing-hlevel 1 _ (is-prop-hlevel 2 _) _ _ _ _)))

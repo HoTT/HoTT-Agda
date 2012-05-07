@@ -10,28 +10,28 @@ module Funext where
 
 -- Naive non dependent function extensionality
 
-module FunextNonDep {i j : Level} {A : Set i} {B : Set j} (f g : A → B) (h : (x : A) → f x ≡ g x) where
+module FunextNonDep {i j} {A : Set i} {B : Set j} (f g : A → B) (h : (x : A) → f x ≡ g x) where
 
   private
-    equiv-comp : {i j : Level} {A : Set i} {B C : Set j} (f : B ≃ C)
+    equiv-comp : ∀ {i j} {A : Set i} {B C : Set j} (f : B ≃ C)
       → is-equiv (λ (g : A → B) → λ (x : A) → f $ (g x))
     equiv-comp {A = A} f = equiv-induction (λ B C f → is-equiv (λ (g : A → B) → λ (x : A) → f $ (g x))) (λ A' y → id-is-equiv (A → A') y) _ _ f
 
-    free-path-space : {i : Level} (A : Set i) → Set _
-    free-path-space A = Σ A (λ x → Σ A (λ y → x ≡ y))
+    free-path-space-B : Set _
+    free-path-space-B = Σ B (λ x → Σ B (λ y → x ≡ y))
 
-    d : A → free-path-space B
+    d : A → free-path-space-B
     d x = (f x , (f x , refl (f x)))
 
-    e : A → free-path-space B
+    e : A → free-path-space-B
     e x = (f x , (g x , h x))
 
-    π₁-is-equiv : is-equiv (λ (y : free-path-space B) → π₁ y)
+    π₁-is-equiv : is-equiv (λ (y : free-path-space-B) → π₁ y)
     π₁-is-equiv =
       iso-is-eq π₁ (λ z → (z , (z , refl z))) refl (λ x' → total-path (refl _) (total-path (π₂ (π₂ x')) (trans-a≡x (π₂ (π₂ x')) (refl (π₁ x')))))
 
-    comp-π₁-is-equiv : is-equiv (λ (f : (x : A) → free-path-space B) → λ (x : A) → π₁ (f x))
-    comp-π₁-is-equiv = equiv-comp ((λ (y : free-path-space B) → π₁ y), π₁-is-equiv)
+    comp-π₁-is-equiv : is-equiv (λ (f : (x : A) → free-path-space-B) → λ (x : A) → π₁ (f x))
+    comp-π₁-is-equiv = equiv-comp ((λ (y : free-path-space-B) → π₁ y), π₁-is-equiv)
 
     d≡e : d ≡ e
     d≡e = equiv-is-inj (_ , comp-π₁-is-equiv) _ _ (refl f)
@@ -43,7 +43,7 @@ open FunextNonDep public
 
 -- Weak function extensionality (a product of contractible types is contractible)
 
-module WeakFunext {i j : Level} {A : Set i} {P : A → Set j} (e : (x : A) → is-contr (P x)) where
+module WeakFunext {i j} {A : Set i} {P : A → Set j} (e : (x : A) → is-contr (P x)) where
   
   private
     P-is-unit : P ≡ (λ (x : A) → unit)
@@ -56,14 +56,14 @@ open WeakFunext public
 
 -- Naive dependent function extensionality
      
-module FunextDep {i j : Level} {A : Set i} {P : A → Set j} (f g : (x : A) → P x) (h : (x : A) → f x ≡ g x) where
+module FunextDep {i j} {A : Set i} {P : A → Set j} (f g : (x : A) → P x) (h : (x : A) → f x ≡ g x) where
   
   private
     Q : A → Set j
     Q x = Σ (P x) (λ y → y ≡ f x)
   
     Q-contr : (x : A) → is-contr (Q x)
-    Q-contr x = ((f x , refl (f x)) , pathto-contr)
+    Q-contr x = ((f x , refl (f x)) , is-contr-pathto)
   
     Q-sections-contr : is-contr ((x : A) → Q x)
     Q-sections-contr = weak-funext Q-contr
@@ -83,4 +83,4 @@ module FunextDep {i j : Level} {A : Set i} {P : A → Set j} (f g : (x : A) → 
 
 open FunextDep public
 
--- Strong function extensionality is missing
+-- Strong function extensionality (not yet proved)

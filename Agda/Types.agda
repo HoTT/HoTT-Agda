@@ -1,7 +1,5 @@
 {-# OPTIONS --without-K #-}
 
--- Basic types
-
 module Types where
 
 -- Universe levels
@@ -19,25 +17,26 @@ postulate  -- Universe levels
 
 -- Empty type
 
-data empty {i : Level} : Set i where
+data ⊥ : Set where  -- \bot
 
-abort : {i j : Level} (A : Set i) → (empty {j} → A)
+abort : ∀ {i} (A : Set i) → (⊥ → A)
 abort A ()
 
 -- Unit type
 
-record unit {i : Level} : Set i where
+-- I need a universe polymorphic [unit]
+record unit {i} : Set i where
   constructor tt
 
 -- Booleans
 
-data bool {i : Level} : Set i where
+data bool : Set where
   true : bool
   false : bool
 
 -- Dependent sum
 
-record Σ {i j : Level} (A : Set i) (P : A → Set j) : Set (max i j) where  -- \Sigma
+record Σ {i j} (A : Set i) (P : A → Set j) : Set (max i j) where  -- \Sigma
   constructor _,_
   field
     π₁ : A       -- \pi\_1
@@ -46,12 +45,10 @@ open Σ public
 
 -- Product
 
-infix 4 _×_
-
-_×_ : {i j : Level} (A : Set i) (B : Set j) → Set (max i j)
+_×_ : ∀ {i j} (A : Set i) (B : Set j) → Set (max i j)
 A × B = Σ A (λ _ → B)
 
--- Naturals
+-- Natural numbers
 
 data ℕ : Set where  -- \bn
   O : ℕ

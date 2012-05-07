@@ -1,9 +1,6 @@
 {-# OPTIONS --without-K #-}
 
-open import Types
-open import Paths
-open import Equivalences
-open import Univalence
+open import Homotopy
 
 module Integers.Integers where
 
@@ -36,6 +33,3 @@ succ-is-equiv = iso-is-eq succ pred succ-pred pred-succ
 
 succ-equiv : ℤ ≃ ℤ
 succ-equiv = (succ , succ-is-equiv)
-
-succ-path : ℤ ≡ ℤ
-succ-path = eq-to-path succ-equiv
