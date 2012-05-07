@@ -4,7 +4,7 @@ base:
 	agda Homotopy.agda
 
 pi1s1:
-	agda Circle/FundamentalGroupCircle.agda
+	agda Circle/LoopSpace.agda
 
 interval:
 	agda Interval/IntervalProps.agda

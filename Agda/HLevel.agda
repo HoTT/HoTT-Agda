@@ -61,7 +61,7 @@ is-prop-hlevel (S (S n)) A = is-prop-pi _ _ (λ x → is-prop-pi _ _ (λ x' → 
 
 -- The usual definition of [is-prop] is equivalent
 usual-is-prop : ∀ {i} (A : Set i) (c : is-prop A) → ((x y : A) → (is-contr (x ≡ y)))
-usual-is-prop A c x y = (c x y , lemma3-is-prop-is-prop A c)
+usual-is-prop A c x y = (c x y , is-prop-canon-path A c)
 
 -- h-levels are increasing
 is-increasing-hlevel : ∀ {i} (n : ℕ) (A : Set i) → is-hlevel n A → is-hlevel (S n) A
