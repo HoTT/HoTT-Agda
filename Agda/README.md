@@ -34,8 +34,8 @@ depend on the modules listed before) :
 
 ### Others
 
-- `Integers.Integers` contains the definition of the successor function and the proof that it’s an
-  equivalence
+- `Integers.Integers` contains the definition of the successor function, the proof that it’s an
+  equivalence, and the proof that the type of the integers is a set
 - `Interval.Interval` contains the HIT definition of the interval
 - `Interval.IntervalProps` contains the proof that the interval is contractible
 - `Circle.Circle` contains the HIT definition of the circle
