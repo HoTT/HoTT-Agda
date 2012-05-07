@@ -86,3 +86,37 @@ _⁻¹ f = (inverse f , inverse-is-equiv f)
 -- Any contractible type is equivalent to the unit type
 contr-equiv-unit : ∀ {i j} {A : Set i} (e : is-contr A) → A ≃ unit {j}
 contr-equiv-unit e = ((λ _ → tt) , iso-is-eq _ (λ _ → π₁ e) (λ y → refl tt) (λ x → ! (π₂ e x)))
+
+-- An equivalence induces an equivalence on the path spaces
+module MapEquiv {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x y : A) where
+
+  map-inverse : (p : (f $ x) ≡ (f $ y)) → x ≡ y
+  map-inverse p = equiv-is-inj f x y p
+
+  left-inverse : (p : x ≡ y) → map-inverse (map (π₁ f) p) ≡ p
+  left-inverse p = move!-right-on-left (inverse-left-inverse f x) _ p
+                      (move-right-on-right (map (inverse f) (map (π₁ f) p)) _ _
+                       (compose-map (inverse f) (π₁ f) p ∘ move!-left-on-right (map (inverse f ◯ π₁ f) p)
+                                                             (inverse-left-inverse f x ∘ p) (inverse-left-inverse f y)
+                                                               (homotopy-naturality-toid (inverse f ◯ π₁ f) (inverse-left-inverse f) p)))
+
+  right-inverse : (p : (f $ x) ≡ (f $ y)) → map (π₁ f) (map-inverse p) ≡ p
+  right-inverse p = map-concat (π₁ f) (! (inverse-left-inverse f x)) _
+                ∘ (map
+                    (λ u →
+                       u ∘ map (π₁ f) (map (inverse f) p ∘ inverse-left-inverse f y))
+                    (map-opposite (π₁ f) (inverse-left-inverse f x))
+                    ∘ move!-right-on-left (map (π₁ f) (inverse-left-inverse f x)) _ p
+                      (map-concat (π₁ f) (map (inverse f) p) (inverse-left-inverse f y) ∘
+                        (map (λ u → u ∘ map (π₁ f) (inverse-left-inverse f y))
+                           (compose-map (π₁ f) (inverse f) p)
+                           ∘ (whisker-left (map (π₁ f ◯ inverse f) p) (! (inverse-triangle f y))
+                                ∘ (homotopy-naturality-toid (π₁ f ◯ inverse f)
+                                     (inverse-right-inverse f) p
+                                     ∘ whisker-right p (inverse-triangle f x))))))
+
+  equiv-map : ((x ≡ y) ≃ ((f $ x) ≡ (f $ y)))
+  equiv-map = (map (π₁ f) , iso-is-eq _ map-inverse right-inverse left-inverse)
+
+equiv-map : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x y : A) → ((x ≡ y) ≃ ((f $ x) ≡ (f $ y)))
+equiv-map f x y = MapEquiv.equiv-map f x y

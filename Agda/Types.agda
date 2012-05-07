@@ -24,7 +24,7 @@ abort A ()
 
 -- Unit type
 
--- I need a universe polymorphic [unit]
+-- I need a universe polymorphic unit type
 record unit {i} : Set i where
   constructor tt
 
@@ -42,6 +42,12 @@ record Σ {i j} (A : Set i) (P : A → Set j) : Set (max i j) where  -- \Sigma
     π₁ : A       -- \pi\_1
     π₂ : P (π₁)  -- \pi\_2
 open Σ public
+
+-- Disjoint sum
+
+data _⊔_ {i j} (A : Set i) (B : Set j) : Set (max i j) where
+  inl : A → A ⊔ B
+  inr : B → A ⊔ B
 
 -- Product
 

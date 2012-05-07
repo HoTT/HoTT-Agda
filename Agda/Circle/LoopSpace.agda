@@ -136,16 +136,11 @@ fibers-equiv x = fiberwise-equiv fiberwise-map total-equiv x
 ΩS¹≃ℤ : (base ≡ base) ≃ ℤ
 ΩS¹≃ℤ = (fiberwise-map base , fibers-equiv base)
 
-postulate -- is-set base≡base
-  is-set-ΩS¹ : is-set (base ≡ base)
-
--- postulate -- is-prop-is-set
---   is-prop-is-set : ∀ {i} (A : Set i) → is-prop (is-set A)
-
--- postulate -- is-set-is-set
---   is-set-is-set : ∀ {i} (A : Set i) → is-set (is-set A)
-
 -- We can also deduce that the circle is of h-level 3
+
+is-set-ΩS¹ : is-set (base ≡ base)
+is-set-ΩS¹ = is-hlevel-equiv (ΩS¹≃ℤ ⁻¹) 2 is-set-ℤ
+
 circle-is-gpd : is-gpd circle
 circle-is-gpd = circle-rec _ (circle-rec _ is-set-ΩS¹ (is-prop-hlevel 2 _ _ _))
   (funext-dep _ _ (circle-rec _ (is-prop-hlevel 2 _ _ _) (is-increasing-hlevel 1 _ (is-prop-hlevel 2 _) _ _ _ _)))

@@ -220,8 +220,21 @@ There is also anonymous pattern matching with the following syntax
     pred : ℕ → ℕ
     pred = λ {0 → 0; S n → n}
 
-I find this a little awkward, especially when pattern matching against identity types, so I’m not
-using it a lot.
+Another form of pattern matching is the `with` syntax. Say you want to prove the following by
+matching against `f x` :
+
+    lemma : (f : A → ℕ) (x : A) → B
+
+The first form of pattern matching will obviously not work (because it can only match against
+arguments, not against arbitrary expressions), but you can write something like this :
+
+    lemma : (f : A → ℕ) (x : A) → B
+    lemma f x with (f x)
+    lemma f x | 0 = […]
+    lemma f x | S n = […]
+
+The second line is there to announce that you are going to do a pattern matching against `f x`, and
+then a vertical line separates the arguments of the function and the result of the pattern matching.
 
 Implicit arguments
 ------------------
