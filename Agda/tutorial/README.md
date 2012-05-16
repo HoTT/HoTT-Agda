@@ -214,6 +214,9 @@ inductive type with zero constructors, we have
 
     abort : (A : Set) (x : empty) → A
     abort A ()
+    
+Beware that such so-called absurd patterns are known to be unsound when combined to Dan Licata’s
+trick for higher inductive types, so use them wisely.
 
 There is also anonymous pattern matching with the following syntax
 
