@@ -47,10 +47,17 @@ succ-equiv = (succ , succ-is-equiv)
 S-injective : (n m : ℕ) (p : S n ≡ S m) → n ≡ m
 S-injective n m p = ! (ℕ-get-S-S n) ∘ (map ℕ-get-S p ∘ ℕ-get-S-S m)
 
+ℕ-O≠Sn-type : ℕ → Set
+ℕ-O≠Sn-type O = unit
+ℕ-O≠Sn-type (S n) = ⊥
+
+ℕ-O≠Sn : (n : ℕ) → (O ≡ S n → ⊥)
+ℕ-O≠Sn n p = transport ℕ-O≠Sn-type p tt
+
 ℕ-dec-eq : dec-eq ℕ
 ℕ-dec-eq O O = inl (refl O)
-ℕ-dec-eq O (S y) = inr (λ ())
-ℕ-dec-eq (S y) O = inr (λ ())
+ℕ-dec-eq O (S y) = inr (ℕ-O≠Sn y)
+ℕ-dec-eq (S y) O = inr (λ p → ℕ-O≠Sn y (! p))
 ℕ-dec-eq (S y) (S y') with ℕ-dec-eq y y'
 ℕ-dec-eq (S y) (S y') | inl p = inl (map S p)
 ℕ-dec-eq (S y) (S y') | inr p⊥ = inr (λ p → p⊥ (S-injective y y' p))
@@ -82,17 +89,36 @@ pos-injective n m p = ! (ℤ-get-pos-pos n) ∘ (map ℤ-get-pos p ∘ ℤ-get-p
 neg-injective : (n m : ℕ) (p : neg n ≡ neg m) → n ≡ m
 neg-injective n m p = ! (ℤ-get-neg-neg n) ∘ (map ℤ-get-neg p ∘ ℤ-get-neg-neg m)
 
+ℤ-neg≠O≠pos-type : ℤ → Set
+ℤ-neg≠O≠pos-type O = unit
+ℤ-neg≠O≠pos-type (pos n) = ⊥
+ℤ-neg≠O≠pos-type (neg n) = ⊥
+
+ℤ-O≠pos : (n : ℕ) → (O ≡ pos n → ⊥)
+ℤ-O≠pos n p = transport ℤ-neg≠O≠pos-type p tt
+
+ℤ-O≠neg : (n : ℕ) → (O ≡ neg n → ⊥)
+ℤ-O≠neg n p = transport ℤ-neg≠O≠pos-type p tt
+
+ℤ-neg≠pos-type : ℤ → Set
+ℤ-neg≠pos-type O = unit
+ℤ-neg≠pos-type (pos n) = ⊥
+ℤ-neg≠pos-type (neg n) = unit
+
+ℤ-neg≠pos : (n m : ℕ) → (neg n ≡ pos m → ⊥)
+ℤ-neg≠pos n m p = transport ℤ-neg≠pos-type p tt
+
 ℤ-dec-eq : dec-eq ℤ
 ℤ-dec-eq O O = inl (refl O)
-ℤ-dec-eq O (pos y) = inr (λ ())
-ℤ-dec-eq O (neg y) = inr (λ ())
-ℤ-dec-eq (pos y) O = inr (λ ())
+ℤ-dec-eq O (pos y) = inr (ℤ-O≠pos y)
+ℤ-dec-eq O (neg y) = inr (ℤ-O≠neg y)
+ℤ-dec-eq (pos y) O = inr (λ p → ℤ-O≠pos y (! p))
 ℤ-dec-eq (pos y) (pos y') with ℕ-dec-eq y y'
 ℤ-dec-eq (pos y) (pos y') | inl p = inl (map pos p)
 ℤ-dec-eq (pos y) (pos y') | inr p⊥ = inr (λ p → p⊥ (pos-injective y y' p))
-ℤ-dec-eq (pos y) (neg y') = inr (λ ())
-ℤ-dec-eq (neg y) O = inr (λ ())
-ℤ-dec-eq (neg y) (pos y') = inr (λ ())
+ℤ-dec-eq (pos y) (neg y') = inr (λ p → ℤ-neg≠pos y' y (! p))
+ℤ-dec-eq (neg y) O = inr (λ p → ℤ-O≠neg y (! p))
+ℤ-dec-eq (neg y) (pos y') = inr (ℤ-neg≠pos y y')
 ℤ-dec-eq (neg y) (neg y') with ℕ-dec-eq y y'
 ℤ-dec-eq (neg y) (neg y') | inl p = inl (map neg p)
 ℤ-dec-eq (neg y) (neg y') | inr p⊥ = inr (λ p → p⊥ (neg-injective y y' p))
