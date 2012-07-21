@@ -11,3 +11,5 @@
 *.out
 # Ignore the dependency file created by coqdep
 .depend
+*.agdai
+Coq/*
