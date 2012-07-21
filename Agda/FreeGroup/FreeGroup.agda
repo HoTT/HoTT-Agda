@@ -3,6 +3,7 @@
 open import Base
 open import Truncation.SphereFillings
 open import Topology.Spheres
+open import Integers.Integers
 
 module FreeGroup.FreeGroup {i} (A : Set i) where
 

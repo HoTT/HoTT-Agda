@@ -78,7 +78,7 @@ abstract
 --   transport (λ x → (y : B) → Q x y) p f q ≡ transport (λ t → Q t q) p (f q)
 -- trans-pi Q (refl _) f q = refl _
 
-filling-has-all-paths : ∀ {i} (n : ℕ) ⦃ >0 : n ≢ 0 ⦄ (A : Set i) ⦃ fill : has-n-spheres-filled (S n) A ⦄ (f : Sⁿ n → A) → all-paths (filling n f)
+filling-has-all-paths : ∀ {i} (n : ℕ) ⦃ >0 : n ≢ 0 ⦄ (A : Set i) ⦃ fill : has-n-spheres-filled (S n) A ⦄ (f : Sⁿ n → A) → has-all-paths (filling n f)
 filling-has-all-paths n A ⦃ fill ⦄ f fill₁ fill₂ =
   total-path (! (π₂ big-map-filled (north _)) ∘ π₂ big-map-filled (south _))
   (funext-dep (λ x →
