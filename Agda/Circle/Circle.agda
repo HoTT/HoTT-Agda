@@ -1,6 +1,6 @@
 {-# OPTIONS --without-K #-}
 
-open import Homotopy
+open import Base
 
 module Circle.Circle where
 

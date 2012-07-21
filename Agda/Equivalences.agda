@@ -77,8 +77,9 @@ abstract
 
 -- The inverse of an equivalence is an equivalence
 
-inverse-is-equiv : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B) → is-equiv (inverse f)
-inverse-is-equiv f = iso-is-eq _ (π₁ f) (inverse-left-inverse f) (inverse-right-inverse f)
+abstract
+  inverse-is-equiv : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B) → is-equiv (inverse f)
+  inverse-is-equiv f = iso-is-eq _ (π₁ f) (inverse-left-inverse f) (inverse-right-inverse f)
 
 _⁻¹ : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B) → B ≃ A  -- \^-\^1
 _⁻¹ f = (inverse f , inverse-is-equiv f)
@@ -120,3 +121,12 @@ module MapEquiv {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x y : A) where
 
 equiv-map : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x y : A) → ((x ≡ y) ≃ ((f $ x) ≡ (f $ y)))
 equiv-map f x y = MapEquiv.equiv-map f x y
+
+total-total-path-is-equiv : ∀ {i j} {A : Set i} {P : A → Set j} {x y : Σ A P} → is-equiv (total-total-path {xu = x} {yv = y})
+total-total-path-is-equiv {P = P} = iso-is-eq _
+  (λ totp → (base-path totp , fiber-path totp))
+  total-path-base-path-fiber-path
+  (λ p → total-path (base-path-total-path (π₁ p) (π₂ p)) (fiber-path-total-path {P = P} (π₁ p) (π₂ p)))
+
+total-path-equiv : ∀ {i j} {A : Set i} {P : A → Set j} {x y : Σ A P} → (Σ (π₁ x ≡ π₁ y) (λ p → transport P p (π₂ x) ≡ (π₂ y))) ≃ (x ≡ y)
+total-path-equiv = (total-total-path , total-total-path-is-equiv)

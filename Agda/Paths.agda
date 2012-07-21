@@ -11,6 +11,9 @@ infix 4 _≡_  -- \equiv
 data _≡_ {i} {A : Set i} : A → A → Set i where
   refl : (a : A) → a ≡ a
 
+_≢_ : ∀ {i} {A : Set i} → (A → A → Set i)
+x ≢ y = (x ≡ y) → ⊥ {zero-u}
+
 -- -- This should not be provable
 -- K : {A : Set} → (x : A) → (p : x ≡ x) → p ≡ refl x
 -- K .x (refl x) = refl _
@@ -46,11 +49,25 @@ module Sigma {i j} {A : Set i} {P : A → Set j} where
   total-path : {x y : A} (p : x ≡ y) {u : P x} {v : P y} (q : transport P p u ≡ v) → (x , u) ≡ (y , v)
   total-path (refl _) (refl _) = refl _
 
+  total-total-path : {xu yv : Σ A P} (q : Σ (π₁ xu ≡ π₁ yv) (λ p → transport P p (π₂ xu) ≡ (π₂ yv))) → xu ≡ yv
+  total-total-path (p , q) = total-path p q
+
   base-path : {x y : Σ A P} (p : x ≡ y) → π₁ x ≡ π₁ y
   base-path = map π₁
 
   fiber-path : {x y : Σ A P} (p : x ≡ y) → transport P (base-path p) (π₂ x) ≡ π₂ y
   fiber-path (refl _) = refl _
+
+  base-path-total-path : {x y : A} (p : x ≡ y) {u : P x} {v : P y} (q : transport P p u ≡ v)
+    → base-path (total-path p q) ≡ p
+  base-path-total-path (refl _) (refl _) = refl _
+
+  fiber-path-total-path : {x y : A} (p : x ≡ y) {u : P x} {v : P y} (q : transport P p u ≡ v)
+    → transport (λ t → transport P t u ≡ v) (base-path-total-path p q) (fiber-path (total-path p q)) ≡ q
+  fiber-path-total-path (refl _) (refl _) = refl _
+
+  total-path-base-path-fiber-path : {x y : Σ A P} (p : x ≡ y) → total-path (base-path p) (fiber-path p) ≡ p
+  total-path-base-path-fiber-path (refl _) = refl _
 
 open Sigma public
 
@@ -75,7 +92,7 @@ module GpdStruct {i} {A : Set i} where
   whisker-left : {x y z : A} (p : x ≡ y) {q r : y ≡ z} (h : q ≡ r) → p ∘ q ≡ p ∘ r
   whisker-left p (refl _) = refl _
 
-  -- Does not seem very usable, because for some reason you have to give [q] and [r] explicitely
+  -- Does not seem very usable, because you have to give [q] and [r] explicitely
   whisker-right : {x y z : A} (p : y ≡ z) {q r : x ≡ y} (h : q ≡ r) → q ∘ p ≡ r ∘ p
   whisker-right p (refl _) = refl _
   
@@ -137,6 +154,10 @@ module TransportReductionRules {i} {A : Set i} where
   trans-concat : ∀ {j} {P : A → Set j} {x y z : A} (p : y ≡ z) (q : x ≡ y) (u : P x)
     → transport P (q ∘ p) u ≡ transport P p (transport P q u)
   trans-concat p (refl _) u = refl _
+
+  compose-trans : ∀ {j} {P : A → Set j} {x y z : A} (p : y ≡ z) (q : x ≡ y) (u : P x)
+    →  transport P p (transport P q u) ≡ transport P (q ∘ p) u
+  compose-trans p (refl _) u = refl _
   
   trans-map : ∀ {j k} {B : Set j} {P : B → Set k} (f : A → B) {x y : A} (p : x ≡ y) (u : P (f x))
     → transport P (map f p) u ≡ transport (P ◯ f) p u
@@ -162,6 +183,9 @@ module TransportReductionRules {i} {A : Set i} where
   
   trans-trans-opposite : ∀ {j} {P : A → Set j} {x y : A} (p : x ≡ y) (u : P y) → transport P p (transport P (! p) u) ≡ u
   trans-trans-opposite (refl _) u = refl u
+
+  trans-opposite-trans : ∀ {j} {P : A → Set j} {x y : A} (p : x ≡ y) (u : P x) → transport P (! p) (transport P p u) ≡ u
+  trans-opposite-trans (refl _) u = refl u
   
   map-dep-trivial : ∀ {j} {B : Set j} (f : A → B) {x y : A} (p : x ≡ y) → map f p ≡ ! (trans-A p (f x)) ∘ map-dep f p
   map-dep-trivial f (refl _) = refl _
@@ -195,6 +219,10 @@ module TransportReductionRules {i} {A : Set i} where
 
   map-cst : ∀ {j} {B : Set j} (b : B) {x y : A} (p : x ≡ y) → map (cstmap b) p ≡ refl b
   map-cst b (refl _) = refl _
+
+  map-idmap : {u v : A} (p : u ≡ v) → map (idmap A) p ≡ p
+  map-idmap (refl _) = refl _
+
 
   -- Move functions
   -- These functions are used when the goal is to show that path is a concatenation of two other paths, and that you want to prove it by moving a path to

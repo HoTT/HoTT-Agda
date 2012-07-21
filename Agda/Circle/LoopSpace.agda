@@ -1,9 +1,8 @@
 {-# OPTIONS --without-K #-}
 
-open import Homotopy
+open import Base
 open import Circle.Circle
 open import Integers.Integers
-open import FiberEquivalences
 
 module Circle.LoopSpace where
 
@@ -23,7 +22,7 @@ tot-type : Set _
 tot-type = Σ circle P-type
 
 tot-path-is-contr : is-contr tot-path
-tot-path-is-contr = ((base , refl base) , is-contr-pathto)
+tot-path-is-contr = ((base , refl base) , pathto-is-contr)
 
 trans-P-type : {u v : circle} (p : u ≡ v) (q : P-type u) → transport P-type p q ≡ transport (λ A → A) (map P-type p) q
 trans-P-type (refl _) _ = refl _
@@ -62,10 +61,10 @@ module Tot-type-is-ℝ
 
   e' : (n : ℤ) → transport P (R-e' n) (z n) ≡ z (transport P-type loop n)
   e' n = (trans-totalpath {P = P-type} {Q = P} {x = (base , n)} {y = (base , transport P-type loop n)} loop (refl _) z
-       ∘ move!-transp-left (λ z → P (base , z)) _ (loop-to-succ n) (z (succ n))
-         (! (trans-totalpath {P = P-type} {Q = P} {x = (base , n)} {y = (base , succ n)} loop (loop-to-succ n) z)
-         ∘ e n))
-       ∘ map-dep z (! (loop-to-succ n))
+         ∘ move!-transp-left (λ z → P (base , z)) _ (loop-to-succ n) (z (succ n))
+           (! (trans-totalpath {P = P-type} {Q = P} {x = (base , n)} {y = (base , succ n)} loop (loop-to-succ n) z)
+            ∘ e n))
+          ∘ map-dep z (! (loop-to-succ n))
 
   -- Now I can prove what I want by induction on the circle
 
@@ -74,11 +73,11 @@ module Tot-type-is-ℝ
 
   P-loop : (t : P-type base) → transport (λ x → (u : P-type x) → P (x , u)) loop P-base t ≡ P-base t
   P-loop t = transport (λ t → transport (λ x → (u : P-type x) → P (x , u)) loop P-base t ≡ P-base t) (trans-trans-opposite {P = P-type} loop t)
-           (! (trans-totalpath {P = P-type} {Q = P} loop (refl _) z)
-           ∘ e' (transport P-type (! loop) t))
+               (! (trans-totalpath {P = P-type} {Q = P} loop (refl _) z)
+               ∘ e' (transport P-type (! loop) t))
 
   P-R-rec : (x : circle) → (t : P-type x) → P (x , t)
-  P-R-rec = circle-rec (λ x → (t : P-type x) → P (x , t)) P-base (funext-dep _ P-base P-loop)
+  P-R-rec = circle-rec (λ x → (t : P-type x) → P (x , t)) P-base (funext-dep P-loop)
 
   -- Here is the conclusion of the elimination rule
   R-rec : (t : tot-type) → P t
@@ -96,21 +95,14 @@ R-contr-base (neg O) = ! (R-e (neg O))
 R-contr-base (neg (S y)) = R-contr-base (neg y) ∘ ! (R-e (neg (S y)))
 
 R-contr-loop : (n : ℤ) → transport P-R-contr (R-e n) (R-contr-base n) ≡ (R-contr-base (succ n))
-R-contr-loop O =
-  trans-a≡x (total-path loop (loop-to-succ O)) (refl _)
-R-contr-loop (pos O) =
-  trans-a≡x (total-path loop (loop-to-succ (pos O)))
-    (total-path loop (loop-to-succ O))
-R-contr-loop (pos (S y)) =
-  trans-a≡x (total-path loop (loop-to-succ (pos (S y))))
-    (R-contr-base (pos y) ∘ total-path loop (loop-to-succ (pos y)))
-R-contr-loop (neg O) =
-  trans-a≡x (total-path loop (loop-to-succ (neg O))) (! (total-path loop (loop-to-succ (neg O)))) ∘
-  opposite-left-inverse (total-path loop (loop-to-succ (neg O)))
+R-contr-loop O = trans-a≡x (R-e O) (refl _)
+R-contr-loop (pos O) = trans-a≡x (R-e (pos O)) (R-e O)
+R-contr-loop (pos (S y)) = trans-a≡x (R-e (pos (S y))) (R-contr-base (pos y) ∘ R-e (pos y))
+R-contr-loop (neg O) = trans-a≡x (R-e (neg O)) (! (R-e (neg O))) ∘ opposite-left-inverse (R-e (neg O))
 R-contr-loop (neg (S y)) =
-  ((trans-a≡x (total-path loop (loop-to-succ (neg (S y)))) (R-contr-base (neg y) ∘ ! (total-path loop (loop-to-succ (neg (S y)))))
-   ∘ concat-assoc (R-contr-base (neg y)) (! (total-path loop (loop-to-succ (neg (S y))))) (total-path loop (loop-to-succ (neg (S y)))))
-   ∘ (whisker-left (R-contr-base (neg y)) (opposite-left-inverse (total-path loop (loop-to-succ (neg (S y)))))))
+  ((trans-a≡x (R-e (neg (S y))) (R-contr-base (neg y) ∘ ! (R-e (neg (S y))))
+   ∘ concat-assoc (R-contr-base (neg y)) (! (R-e (neg (S y)))) (R-e (neg (S y))))
+   ∘ (whisker-left (R-contr-base (neg y)) (opposite-left-inverse (R-e (neg (S y))))))
    ∘ refl-right-unit (R-contr-base (neg y))
 
 R-contr : (x : tot-type) → P-R-contr x
@@ -124,12 +116,12 @@ fiberwise-map : (x : circle) → (P-path x → P-type x)
 fiberwise-map x p = transport P-type (! p) O
 
 -- This induces an equivalence on the total spaces, because both total spaces are contractible
-total-equiv : is-equiv (total-map fiberwise-map)
-total-equiv = contr-contr-equiv (total-map fiberwise-map) tot-path-is-contr tot-type-is-contr
+total-is-equiv : is-equiv (total-map fiberwise-map)
+total-is-equiv = contr-equiv-contr (total-map fiberwise-map) tot-path-is-contr tot-type-is-contr
 
 -- Hence an equivalence fiberwise
 fibers-equiv : (x : circle) → is-equiv (fiberwise-map x)
-fibers-equiv x = fiberwise-equiv fiberwise-map total-equiv x
+fibers-equiv x = fiberwise-equiv fiberwise-map total-is-equiv x
 
 -- We can then conclude that the based loop space of the circle is equivalent to the type of
 -- the integers
@@ -138,9 +130,15 @@ fibers-equiv x = fiberwise-equiv fiberwise-map total-equiv x
 
 -- We can also deduce that the circle is of h-level 3
 
-is-set-ΩS¹ : is-set (base ≡ base)
-is-set-ΩS¹ = is-hlevel-equiv (ΩS¹≃ℤ ⁻¹) 2 is-set-ℤ
+ΩS¹-is-set : is-set (base ≡ base)
+ΩS¹-is-set = equiv-types-hlevel 2 (ΩS¹≃ℤ ⁻¹) ℤ-is-set
 
 circle-is-gpd : is-gpd circle
-circle-is-gpd = circle-rec _ (circle-rec _ is-set-ΩS¹ (is-prop-hlevel 2 _ _ _))
-  (funext-dep _ _ (circle-rec _ (is-prop-hlevel 2 _ _ _) (is-increasing-hlevel 1 _ (is-prop-hlevel 2 _) _ _ _ _)))
+circle-is-gpd =
+  circle-rec _
+    (circle-rec _
+      ΩS¹-is-set  -- [base ≡ base] is a set
+      (π₁ (is-hlevel-is-prop 2 _ _ _)))
+    (funext-dep (circle-rec _
+                  (π₁ (is-hlevel-is-prop 2 _ _ _))
+                  (π₁ (is-increasing-hlevel 1 _ (is-hlevel-is-prop 2 _) _ _ _ _))))

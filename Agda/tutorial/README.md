@@ -23,8 +23,8 @@ Documentation
 
 Documentation for Agda is rather sparse. The official wiki is available
 [here](http://wiki.portal.chalmers.se/agda), you may in particular want to look at the Reference
-manual (but there are a lot of things missing), and at the release notes of the various versions of
-Agda, which often contain useful informations.
+manual (there are a lot of things missing, but there are also parts well explained), and at the
+release notes of the various versions of Agda, which often contain useful informations.
 
 Installation
 ------------
@@ -255,6 +255,18 @@ in emacs (after loading the file). You can give explicitely the value of all imp
 the name of the variable given in the definition of `f` and the second `b` is the value you want to
 give). The order must be respected, for example `f {d = d} c e` will not work.
 
+Instance arguments
+------------------
+
+Instance arguments are a different sort of implicit arguments. They are introduced with the symbols
+`⦃` and `⦄` (in the emacs mode they are obtained by typing `\{{` and `\}}`, and you can use `{{`
+and `}}` instead if you don’t like Unicode).
+
+The difference with implicit arguments is that when they are not explicitely given, Agda try to
+guess instance arguments by looking at the context. More precisely, if `f` is a function with an
+instance argument of type `A`, Agda will search for variables of type `A` in the context and insert
+it if there is exactly one such variable.
+
 Local definitions
 -----------------
 
@@ -473,7 +485,15 @@ inferred value of the first parameter). You can also open it directly with
 
     open module NewModule = SubModule value-of-param2
 
-(you still have to give it a name)
+You can also open parametrized modules with the syntax
+
+    open SubModule value-of-param2
+
+When opening modules, you can rename or hide some of the definitions exported in the module. The
+syntax is the following (`to` is a keyword):
+
+    open SubModule hiding (def1; def2)
+    open SubModule2 renaming (def3 to newdef3; def4 to newdef4)
 
 Private definitions
 -------------------

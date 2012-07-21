@@ -17,14 +17,16 @@ postulate  -- Universe levels
 
 -- Empty type
 
-data ⊥ : Set where  -- \bot
+data ⊥ {i} : Set i where  -- \bot
 
-abort : ∀ {i} (A : Set i) → (⊥ → A)
-abort A ()
+abort : ∀ {i j} {P : ⊥ {i} → Set j} → ((x : ⊥) → P x)
+abort ()
+
+abort-nondep : ∀ {i j} {A : Set j} → (⊥ {i} → A)
+abort-nondep ()
 
 -- Unit type
 
--- I need a universe polymorphic unit type
 record unit {i} : Set i where
   constructor tt
 
