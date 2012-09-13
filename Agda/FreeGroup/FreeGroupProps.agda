@@ -2,6 +2,7 @@
 
 open import Base
 open import Truncation.SphereFillings
+open import Integers.Integers
 
 module FreeGroup.FreeGroupProps {i : Level} (A : Set i) ⦃ p : is-set A ⦄ where
 

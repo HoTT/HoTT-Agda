@@ -22,7 +22,7 @@ freegroup:
 	agda FreeGroup/F2NotCommutative.agda
 
 wedgecircles:
-	agda WedgeCircles/LoopSpaceWedgeOfCircles2.agda
+	agda WedgeCircles/LoopSpaceWedgeCircles2.agda
 
 pullback:
 	agda CategoryTheory/PullbackDef.agda

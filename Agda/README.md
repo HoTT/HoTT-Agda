@@ -111,6 +111,6 @@ depend on the modules listed before) :
 ### Wedge of circles
 
 - `WedgeCircles/WedgeCircles` contains the definition of the wedge of a set of circles
-- `WedgeCircles/LoopSpaceWedgeOfCircles` contains the proof that it’s loop space is the free group
+- `WedgeCircles/LoopSpaceWedgeCircles` contains the proof that it’s loop space is the free group
   (when the set of generators has decidable equality), up to the end of the flattening lemma
-- `WedgeCircles/LoopSpaceWedgeOfCircles2` contains the rest of the proof
+- `WedgeCircles/LoopSpaceWedgeCircles2` contains the rest of the proof

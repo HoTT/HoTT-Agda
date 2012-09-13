@@ -49,28 +49,35 @@ succ-+-right O n = refl _
 succ-+-right (pos O) n = refl _
 succ-+-right (pos (S m)) n = map succ (succ-+-right (pos m) n)
 succ-+-right (neg O) n = succ-pred n ∘ ! (pred-succ n)
-succ-+-right (neg (S m)) n = (succ-pred (neg m + n) ∘ ! (pred-succ (neg m + n))) ∘ map pred (succ-+-right (neg m) n)
+succ-+-right (neg (S m)) n = (succ-pred (neg m + n) ∘ ! (pred-succ (neg m + n)))
+                             ∘ map pred (succ-+-right (neg m) n)
 
 pred-+-right : (m n : ℤ) → pred (m + n) ≡ m + pred n
 pred-+-right O n = refl _
 pred-+-right (pos O) n = pred-succ n ∘ ! (succ-pred n)
-pred-+-right (pos (S m)) n = (pred-succ (pos m + n) ∘ ! (succ-pred (pos m + n))) ∘ map succ (pred-+-right (pos m) n)
+pred-+-right (pos (S m)) n = (pred-succ (pos m + n) ∘ ! (succ-pred (pos m + n)))
+                             ∘ map succ (pred-+-right (pos m) n)
 pred-+-right (neg O) n = refl _
 pred-+-right (neg (S m)) n = map pred (pred-+-right (neg m) n)
 
 opp-right-inverse : (m : ℤ) → m + (- m) ≡ O
 opp-right-inverse O = refl O
 opp-right-inverse (pos O) = refl O
-opp-right-inverse (pos (S m)) = succ-+-right (pos m) (neg (S m)) ∘ opp-right-inverse (pos m)
+opp-right-inverse (pos (S m)) = succ-+-right (pos m) (neg (S m))
+                                ∘ opp-right-inverse (pos m)
 opp-right-inverse (neg O) = refl O
-opp-right-inverse (neg (S m)) = pred-+-right (neg m) (pos (S m)) ∘ opp-right-inverse (neg m)
+opp-right-inverse (neg (S m)) = pred-+-right (neg m) (pos (S m))
+                                ∘ opp-right-inverse (neg m)
 
 opp-left-inverse : (m : ℤ) → (- m) + m ≡ O
 opp-left-inverse O = refl O
 opp-left-inverse (pos O) = refl O
-opp-left-inverse (pos (S m)) = pred-+-right (neg m) (pos (S m)) ∘ opp-left-inverse (pos m)
+opp-left-inverse (pos (S m)) = pred-+-right (neg m) (pos (S m))
+                               ∘ opp-left-inverse (pos m)
 opp-left-inverse (neg O) = refl O
-opp-left-inverse (neg (S m)) = succ-+-right (pos m) (neg (S m)) ∘ opp-left-inverse (neg m) -- pred-+-right (neg m) (pos (S m)) ∘ opp-left-inverse (pos m)
+opp-left-inverse (neg (S m)) = succ-+-right (pos m) (neg (S m))
+                               ∘ opp-left-inverse (neg m)
+                 -- pred-+-right (neg m) (pos (S m)) ∘ opp-left-inverse (pos m)
 
 ℤ-group : Group _
 ℤ-group = group (pregroup

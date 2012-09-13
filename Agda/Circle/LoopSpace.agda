@@ -175,7 +175,7 @@ S¹-is-gpd =
   S¹-rec _
     (S¹-rec _
       ΩS¹-is-set  -- [base ≡ base] is a set
-      {!-m!}) -- (π₁ (is-hlevel-is-prop 2 _ _ _)))
+      (π₁ (is-hlevel-is-prop 2 _ _ _)))
     (funext-dep
       (S¹-rec _
         (π₁ (is-hlevel-is-prop 2 _ _ _))

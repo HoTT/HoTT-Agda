@@ -2,7 +2,8 @@
 
 open import Base
 
-module CategoryTheory.PushoutIsPushout {i} (A B C : Set i) (f : C → A) (g : C → B) where
+module CategoryTheory.PushoutIsPushout {i} (A B C : Set i)
+  (f : C → A) (g : C → B) where
 
 import CategoryTheory.PushoutDef as PushoutDef
 open PushoutDef A B C f g
@@ -17,7 +18,9 @@ factor-pushout E (A→top , B→top , h) = pushout-rec-nondep E A→top B→top 
 
 pushout-is-pushout : is-pushout pushout pushout-cone
 pushout-is-pushout E ⦃ tt ⦄ = iso-is-eq _ (factor-pushout E)
-  (λ y → map (λ u → _ , _ , u) (funext-dep (λ x → pushout-β-glue-nondep E (cone.A→top y) (cone.B→top y) (cone.h y) x)))
+  (λ y → map (λ u → _ , _ , u)
+             (funext-dep (λ x → pushout-β-glue-nondep E (cone.A→top y)
+                                  (cone.B→top y) (cone.h y) x)))
   (λ f → funext-dep (pushout-rec _ (λ a → refl _) (λ b → refl _)
     (λ c → trans-fx≡gx
              (pushout-rec-nondep E (f ◯ left) (f ◯ right)

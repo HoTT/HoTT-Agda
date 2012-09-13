@@ -2,7 +2,8 @@
 
 open import Base
 
-module CategoryTheory.PullbackDef {i j k} (A : Set i) (B : Set j) (C : Set k) (f : A → C) (g : B → C) where
+module CategoryTheory.PullbackDef {i j k} (A : Set i) (B : Set j) (C : Set k)
+  (f : A → C) (g : B → C) where
 
 record pullback : Set (max i (max j k)) where
   constructor _,_,_

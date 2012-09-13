@@ -18,7 +18,10 @@ bool-is-not-contractible : is-contr bool → ⊥ {zero-u}
 bool-is-not-contractible f = transport bool-split (bool-contr-path f) tt
 
 interval-is-contractible : is-contr I
-interval-is-contractible = (zero , (I-rec (λ (t : I) → t ≡ zero) (refl zero) (! seg) (trans-x≡a seg (refl zero) ∘ refl-right-unit (! seg))))
+interval-is-contractible =
+  (zero , I-rec (λ (t : I) → t ≡ zero) (refl zero) (! seg)
+                (trans-x≡a seg (refl zero) ∘ refl-right-unit (! seg)))
 
-interval-funext : ∀ {i j} (A : Set i) (B : Set j) (f g : A → B) (h : (x : A) → f x ≡ g x) → f ≡ g
+interval-funext : ∀ {i j} (A : Set i) (B : Set j) (f g : A → B)
+  (h : (x : A) → f x ≡ g x) → f ≡ g
 interval-funext A B f g h = map (λ i a → I-rec-nondep _ (f a) (g a) (h a) i) seg
