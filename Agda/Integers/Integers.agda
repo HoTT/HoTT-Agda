@@ -40,12 +40,8 @@ succ-equiv = (succ , succ-is-equiv)
 ℕ-get-S 0 = 42
 ℕ-get-S (S n) = n
 
-ℕ-get-S-S : (n : ℕ) → ℕ-get-S (S n) ≡ n
-ℕ-get-S-S 0 = refl 0
-ℕ-get-S-S (S n) = refl (S n)
-
 S-injective : (n m : ℕ) (p : S n ≡ S m) → n ≡ m
-S-injective n m p = ! (ℕ-get-S-S n) ∘ (map ℕ-get-S p ∘ ℕ-get-S-S m)
+S-injective n m p = map ℕ-get-S p
 
 ℕ-Sn≢O-type : ℕ → Set
 ℕ-Sn≢O-type O = ⊥
@@ -70,24 +66,16 @@ S-injective n m p = ! (ℕ-get-S-S n) ∘ (map ℕ-get-S p ∘ ℕ-get-S-S m)
 ℤ-get-pos (pos n) = n
 ℤ-get-pos (neg n) = 0
 
-ℤ-get-pos-pos : (n : ℕ) → ℤ-get-pos (pos n) ≡ n
-ℤ-get-pos-pos 0 = refl _
-ℤ-get-pos-pos (S n) = refl _
-
 pos-injective : (n m : ℕ) (p : pos n ≡ pos m) → n ≡ m
-pos-injective n m p = ! (ℤ-get-pos-pos n) ∘ (map ℤ-get-pos p ∘ ℤ-get-pos-pos m)
+pos-injective n m p = map ℤ-get-pos p
 
 ℤ-get-neg : ℤ → ℕ
 ℤ-get-neg O = 0
 ℤ-get-neg (pos n) = 0
 ℤ-get-neg (neg n) = n
 
-ℤ-get-neg-neg : (n : ℕ) → ℤ-get-neg (neg n) ≡ n
-ℤ-get-neg-neg 0 = refl _
-ℤ-get-neg-neg (S n) = refl _
-
 neg-injective : (n m : ℕ) (p : neg n ≡ neg m) → n ≡ m
-neg-injective n m p = ! (ℤ-get-neg-neg n) ∘ (map ℤ-get-neg p ∘ ℤ-get-neg-neg m)
+neg-injective n m p = map ℤ-get-neg p
 
 ℤ-neg≢O≢pos-type : ℤ → Set
 ℤ-neg≢O≢pos-type O = unit

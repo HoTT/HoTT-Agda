@@ -12,8 +12,8 @@ module HLevel where
 
 -- Every map between contractible types is an equivalence
 abstract
-  contr-equiv-contr : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) (cA : is-contr A) (cB : is-contr B) → is-equiv f
-  contr-equiv-contr {i} {j} {A} {B} f cA cB =
+  contr-to-contr-is-equiv : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) (cA : is-contr A) (cB : is-contr B) → is-equiv f
+  contr-to-contr-is-equiv {i} {j} {A} {B} f cA cB =
     λ y → ((π₁ cA , (is-contr-path B cB _ _))
           , (λ y' → total-path (is-contr-path A cA _ _)
                                (is-contr-path _ (path-contr-contr B cB _ _) _ _)))
@@ -64,14 +64,16 @@ is-contr-is-prop A = all-paths-is-prop
   lemma-is-contr-is-prop c (refl _) = refl _
 
 -- h-levels are increasing
-is-increasing-hlevel : ∀ {i} (n : ℕ) (A : Set i) → is-hlevel n A → is-hlevel (S n) A
-is-increasing-hlevel O A p = all-paths-is-prop (λ x y → π₂ p x ∘ ! (π₂ p y))
-is-increasing-hlevel (S n) A p = λ x y → is-increasing-hlevel n (x ≡ y) (p x y)
+abstract
+  is-increasing-hlevel : ∀ {i} (n : ℕ) (A : Set i) → is-hlevel n A → is-hlevel (S n) A
+  is-increasing-hlevel O A p = all-paths-is-prop (λ x y → π₂ p x ∘ ! (π₂ p y))
+  is-increasing-hlevel (S n) A p = λ x y → is-increasing-hlevel n (x ≡ y) (p x y)
 
 -- Equivalent types have the same h-level
-equiv-types-hlevel : ∀ {i j} {A : Set i} {B : Set j} (n : ℕ) (f : A ≃ B) (c : is-hlevel n A) → is-hlevel n B
-equiv-types-hlevel O f c = ((f $ (π₁ c)) , (λ y → ! (inverse-right-inverse f y) ∘ map (π₁ f) (is-contr-path _ c _ _)))
-equiv-types-hlevel (S n) f c = λ x y → equiv-types-hlevel n (equiv-map (f ⁻¹) x y ⁻¹) (c (f ⁻¹ $ x) (f ⁻¹ $ y))
+abstract
+  equiv-types-hlevel : ∀ {i j} {A : Set i} {B : Set j} (n : ℕ) (f : A ≃ B) (c : is-hlevel n A) → is-hlevel n B
+  equiv-types-hlevel O f c = ((f $ (π₁ c)) , (λ y → ! (inverse-right-inverse f y) ∘ map (π₁ f) (is-contr-path _ c _ _)))
+  equiv-types-hlevel (S n) f c = λ x y → equiv-types-hlevel n (equiv-map (f ⁻¹) x y ⁻¹) (c (f ⁻¹ $ x) (f ⁻¹ $ y))
 
 pi-is-prop : ∀ {i j} {A : Set i} {P : A → Set j} (p : (x : A) → is-prop (P x)) → is-prop ((x : A) → P x)
 pi-is-prop p = all-paths-is-prop (λ f g → funext-dep (λ x → π₁ (p x (f x) (g x))))
@@ -81,8 +83,9 @@ pi-hlevel O p = ((λ x → π₁ (p x)) , (λ f → funext-dep (λ x → π₂ (
 pi-hlevel 1 p = pi-is-prop p
 pi-hlevel (S n) p = λ f g → equiv-types-hlevel n (funext-dep , funext-dep-is-equiv) (pi-hlevel n (λ x → p x (f x) (g x)))
 
-→-hlevel : ∀ {i j} (n : ℕ) {A : Set i} {B : Set j} (p : is-hlevel n B) → is-hlevel n (A → B)
-→-hlevel n p = pi-hlevel n (λ _ → p)
+abstract
+  →-hlevel : ∀ {i j} (n : ℕ) {A : Set i} {B : Set j} (p : is-hlevel n B) → is-hlevel n (A → B)
+  →-hlevel n p = pi-hlevel n (λ _ → p)
 
 is-hlevel-is-prop : ∀ {i} (n : ℕ) (A : Set i) → is-prop (is-hlevel n A)
 is-hlevel-is-prop O A = is-contr-is-prop A

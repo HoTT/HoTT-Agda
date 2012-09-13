@@ -16,5 +16,6 @@ cstmap b = λ _ → b
 
 -- Function composition
 
-_◯_ : ∀ {i j k} {A : Set i} {B : Set j} {C : Set k} (g : B → C) (f : A → B) → (A → C)  -- \bigcirc
+_◯_ : ∀ {i j k} {A : Set i} {B : Set j} {C : Set k} (g : B → C) (f : A → B)
+  → (A → C)  -- \bigcirc
 g ◯ f = λ x → g (f x)

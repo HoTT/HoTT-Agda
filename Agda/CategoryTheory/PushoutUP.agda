@@ -14,14 +14,37 @@ record cone (top : Set m) : Set (suc m) where
     B→top : B → top
     h : (c : C) → (A→top (f c)) ≡ (B→top (g c))
 
+cone-eq : (top : Set m) {a1 a2 : A → top} {b1 b2 : B → top} {h1 : (c : C) → a1 (f c) ≡ b1 (g c)} {h2 : (c : C) → a2 (f c) ≡ b2 (g c)} 
+  (p1 : a1 ≡ a2) (p2 : b1 ≡ b2) (p3 : transport _ p1 (transport _ p2 h1) ≡ h2) → (a1 , b1 , h1) ≡ (a2 , b2 , h2)
+cone-eq top (refl _) (refl _) (refl _) = refl _
+
+postulate
+  cone-eq-new : (top : Set m) {a1 a2 : A → top} {b1 b2 : B → top} {h1 : (c : C) → a1 (f c) ≡ b1 (g c)} {h2 : (c : C) → a2 (f c) ≡ b2 (g c)} 
+    (p1 : a1 ≡ a2) (p2 : b1 ≡ b2) (p3 : (c : C) → happly p1 (f c) ∘ h2 c ≡ h1 c ∘ happly p2 (g c)) → (a1 , b1 , h1) ≡ (a2 , b2 , h2)
+
+-- (c : C) → happly p1 (f c) ∘ h2 c ≡ h1 c ∘ happly p2 (g c)
+
 open import CategoryTheory.PullbackDef
 
+cone-to-pullback : (top : Set m) → cone top → pullback (A → top) (B → top) (C → top) (λ u → u ◯ f) (λ u → u ◯ g)
+cone-to-pullback top (a , b , h) = (a , b , funext-dep h)
+
+pullback-to-cone : (top : Set m) → pullback (A → top) (B → top) (C → top) (λ u → u ◯ f) (λ u → u ◯ g) → cone top
+pullback-to-cone top (a , b , h) = (a , b , happly h)
+
 cone-equiv-pullback : (top : Set m) → cone top ≃ pullback (A → top) (B → top) (C → top) (λ u → u ◯ f) (λ u → u ◯ g)
-cone-equiv-pullback top = ((λ c → (cone.A→top c , cone.B→top c , funext-dep (cone.h c)))
+cone-equiv-pullback top = (cone-to-pullback top
   , iso-is-eq _
-    (λ p → pullback.a _ _ _ _ _ p , pullback.b _ _ _ _ _ p , happly (pullback.h _ _ _ _ _ p))
+    (pullback-to-cone top)
     (λ p → map (λ u → _ , _ , u) (funext-dep-happly _))
     (λ c → map (λ u → _ , _ , u) (happly-funext-dep _)))
+
+pullback-equiv-cone : (top : Set m) → pullback (A → top) (B → top) (C → top) (λ u → u ◯ f) (λ u → u ◯ g) ≃ cone top
+pullback-equiv-cone top = (pullback-to-cone top
+  , iso-is-eq _
+    (cone-to-pullback top)
+    (λ c → map (λ u → _ , _ , u) (happly-funext-dep _))
+    (λ p → map (λ u → _ , _ , u) (funext-dep-happly _)))
 
 compose-cone-map : (D E : Set m) (Dcone : cone D) → ((f : D → E) → cone E)
 compose-cone-map D E (A→top , B→top , h) f = ((f ◯ A→top) , (f ◯ B→top) , (λ c → map f (h c)))

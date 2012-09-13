@@ -40,7 +40,8 @@ word'-total-path : {x y : A} (p : x ≡ y) {v w : word} (q : v ≡ w) → (x ′
 word'-total-path (refl _) (refl _) = refl _
 
 -- The following six functions prove things like if [x ∷ v ≡ y ∷ w], then [x ≡ y].
--- This is not as easy as it sounds, you cannot directly induct on the equality (because [x ∷ v] is not a general element of type word)
+-- This is not as easy as it sounds, you cannot directly induct on the equality (because [x ∷ v] is
+-- not a general element of type word), so you have to extract the head, but it’s not always possible
 
 word-comp-path-type : (v w : word) → Set i
 word-comp-path-type ε ε = unit

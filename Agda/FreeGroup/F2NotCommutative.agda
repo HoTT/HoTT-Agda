@@ -60,4 +60,5 @@ true≢false : true ≢ false
 true≢false ()
 
 F2-non-commutative : ab ≢ ba
-F2-non-commutative p = true≢false (base-path (happly (map F2-act-on-X p) (true , true)))
+F2-non-commutative p = true≢false (base-path (happly (map F2-act-on-X p)
+                                                     (true , true)))

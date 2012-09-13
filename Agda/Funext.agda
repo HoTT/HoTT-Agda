@@ -65,7 +65,7 @@ module FunextDep {i j} {A : Set i} {P : A → Set j} {f g : (x : A) → P x} (h 
 
   abstract
     Q-contr : (x : A) → is-contr (Q x)
-    Q-contr x = ((f x , refl (f x)) , pathto-is-contr)
+    Q-contr x = pathto-is-contr (f x)
     
     Q-sections-contr : is-contr ((x : A) → Q x)
     Q-sections-contr = weak-funext Q-contr
