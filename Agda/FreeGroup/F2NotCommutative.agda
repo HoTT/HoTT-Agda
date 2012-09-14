@@ -5,7 +5,7 @@ open import Base
 module FreeGroup.F2NotCommutative where
 
 import FreeGroup.FreeGroup
-open FreeGroup.FreeGroup bool bool-is-set renaming (freegroup to F2)
+open FreeGroup.FreeGroup bool renaming (freegroup to F2)
 
 X : Set
 X = bool × bool

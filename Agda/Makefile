@@ -26,7 +26,6 @@ wedgecircles:
 
 pullback:
 	agda CategoryTheory/PullbackDef.agda
-	agda CategoryTheory/PullbackInvariantEquiv.agda
 	agda CategoryTheory/PullbackIsPullback.agda
 	agda CategoryTheory/PullbackUP.agda
 
