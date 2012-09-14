@@ -29,17 +29,11 @@ tot-cover : Set
 tot-cover = Σ S¹ universal-cover
 
 -- Transport in the universal cover
-
-trans-universal-cover : {u v : S¹} (p : u ≡ v) (q : universal-cover u)
-  → transport universal-cover p q
-    ≡ transport (λ A → A) (map universal-cover p) q
-trans-universal-cover (refl _) _ = refl _
-
 loop-to-succ : (n : ℤ) → transport universal-cover loop n ≡ succ n
-loop-to-succ n = trans-universal-cover loop n ∘
-                 (map (λ t → transport (λ A → A) t n)
-                      (β-nondep Set ℤ succ-path) ∘
-                 trans-eq-to-path succ-equiv n)
+loop-to-succ n = ! (trans-map {P = λ A → A} universal-cover loop n)
+                 ∘ (map (λ t → transport (λ A → A) t n)
+                        (β-nondep Set ℤ succ-path)
+                 ∘ trans-eq-to-path succ-equiv n)
 
 {- The flattening lemma
 
@@ -157,13 +151,13 @@ total-is-equiv = contr-to-contr-is-equiv (total-map fiberwise-map)
                                          tot-cover-is-contr
 
 -- Hence an equivalence fiberwise
-fiberwise-is-equiv : (x : S¹) → is-equiv (fiberwise-map x)
-fiberwise-is-equiv x = fiberwise-equiv fiberwise-map total-is-equiv x
+fiberwise-map-is-equiv : (x : S¹) → is-equiv (fiberwise-map x)
+fiberwise-map-is-equiv x = fiberwise-is-equiv fiberwise-map total-is-equiv x
 
 -- We can then conclude that the based loop space of the circle is equivalent to
 -- the type of the integers
 ΩS¹≃ℤ : (base ≡ base) ≃ ℤ
-ΩS¹≃ℤ = (fiberwise-map base , fiberwise-is-equiv base)
+ΩS¹≃ℤ = (fiberwise-map base , fiberwise-map-is-equiv base)
 
 -- We can also deduce that the circle is of h-level 3
 

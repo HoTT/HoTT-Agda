@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+grep --color=always -r postulate $(git ls-files) | grep -v "HIT$" |\
+ grep -v "Universe levels$" | grep -v "Univalence axiom$" |\
+ grep -v "tutorial/README.md" | grep -v "findpostulates"

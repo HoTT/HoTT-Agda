@@ -60,7 +60,7 @@ A × B = Σ A (λ _ → B)
 
 data ℕ : Set where  -- \bn
   O : ℕ
-  S : ℕ → ℕ
+  S : (n : ℕ) → ℕ
 
 {-# BUILTIN NATURAL ℕ #-}
 {-# BUILTIN ZERO O #-}
@@ -70,5 +70,5 @@ data ℕ : Set where  -- \bn
 
 data ℤ : Set where  -- \bz
   O : ℤ
-  pos : ℕ → ℤ
-  neg : ℕ → ℤ
+  pos : (n : ℕ) → ℤ
+  neg : (n : ℕ) → ℤ

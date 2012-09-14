@@ -72,9 +72,9 @@ module TotalMapEquiv (e : is-equiv total-map) where
             (map-opposite π₁ (inverse-left-inverse total-equiv (x , y))
             ∘ ! (map ! (lemma1 x y)))
   
-  fiberwise-equiv : ((x : A) → is-equiv (f x))
-  fiberwise-equiv x = iso-is-eq (f x) (inv x) (inv-right-inverse x)
+  fiberwise-is-equiv : ((x : A) → is-equiv (f x))
+  fiberwise-is-equiv x = iso-is-eq (f x) (inv x) (inv-right-inverse x)
                                               (inv-left-inverse x)
 
-fiberwise-equiv : is-equiv total-map → ((x : A) → is-equiv (f x))
-fiberwise-equiv = TotalMapEquiv.fiberwise-equiv
+fiberwise-is-equiv : is-equiv total-map → ((x : A) → is-equiv (f x))
+fiberwise-is-equiv = TotalMapEquiv.fiberwise-is-equiv

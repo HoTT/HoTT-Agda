@@ -7,58 +7,58 @@ module CategoryTheory.PushoutUP {m : Level}
   (P : Set m → Set m) ⦃ PA : P A ⦄ ⦃ PB : P B ⦄ ⦃ PC : P C ⦄ where
 
 -- Idea : [Cone E = (A → E) ×_(C → E) (B → E)]
-record cone (tp : Set m) : Set (suc m) where
+record cone (top : Set m) : Set (suc m) where
   constructor _,_,_
   field
-    A→tp : A → tp
-    B→tp : B → tp
-    h : (c : C) → (A→tp (f c)) ≡ (B→tp (g c))
+    A→top : A → top
+    B→top : B → top
+    h : (c : C) → (A→top (f c)) ≡ (B→top (g c))
 
-cone-eq : (tp : Set m) {a1 a2 : A → tp} {b1 b2 : B → tp}
+cone-eq : (top : Set m) {a1 a2 : A → top} {b1 b2 : B → top}
   {h1 : (c : C) → a1 (f c) ≡ b1 (g c)} {h2 : (c : C) → a2 (f c) ≡ b2 (g c)} 
   (p1 : a1 ≡ a2) (p2 : b1 ≡ b2) (p3 : transport _ p1 (transport _ p2 h1) ≡ h2)
   → (a1 , b1 , h1) ≡ (a2 , b2 , h2)
-cone-eq tp (refl _) (refl _) (refl _) = refl _
+cone-eq top (refl _) (refl _) (refl _) = refl _
 
 postulate
-  cone-eq-new : (tp : Set m) {a1 a2 : A → tp} {b1 b2 : B → tp}
-  {h1 : (c : C) → a1 (f c) ≡ b1 (g c)} {h2 : (c : C) → a2 (f c) ≡ b2 (g c)} 
-  (p1 : a1 ≡ a2) (p2 : b1 ≡ b2)
-  (p3 : (c : C) → happly p1 (f c) ∘ h2 c ≡ h1 c ∘ happly p2 (g c))
-  → (a1 , b1 , h1) ≡ (a2 , b2 , h2)
+  cone-eq-new : (top : Set m) {a1 a2 : A → top} {b1 b2 : B → top}
+    {h1 : (c : C) → a1 (f c) ≡ b1 (g c)} {h2 : (c : C) → a2 (f c) ≡ b2 (g c)} 
+    (p1 : a1 ≡ a2) (p2 : b1 ≡ b2)
+    (p3 : (c : C) → happly p1 (f c) ∘ h2 c ≡ h1 c ∘ happly p2 (g c))
+    → (a1 , b1 , h1) ≡ (a2 , b2 , h2)
 
 -- (c : C) → happly p1 (f c) ∘ h2 c ≡ h1 c ∘ happly p2 (g c)
 
 open import CategoryTheory.PullbackDef
 
-cone-to-pullback : (tp : Set m) → cone tp
-  → pullback (A → tp) (B → tp) (C → tp) (λ u → u ◯ f) (λ u → u ◯ g)
-cone-to-pullback tp (a , b , h) = (a , b , funext-dep h)
+cone-to-pullback : (top : Set m) → cone top
+  → pullback (A → top) (B → top) (C → top) (λ u → u ◯ f) (λ u → u ◯ g)
+cone-to-pullback top (a , b , h) = (a , b , funext-dep h)
 
-pullback-to-cone : (tp : Set m)
-  → pullback (A → tp) (B → tp) (C → tp) (λ u → u ◯ f) (λ u → u ◯ g)
-  → cone tp
-pullback-to-cone tp (a , b , h) = (a , b , happly h)
+pullback-to-cone : (top : Set m)
+  → pullback (A → top) (B → top) (C → top) (λ u → u ◯ f) (λ u → u ◯ g)
+  → cone top
+pullback-to-cone top (a , b , h) = (a , b , happly h)
 
-cone-equiv-pullback : (tp : Set m)
-  → cone tp ≃ pullback (A → tp) (B → tp) (C → tp) (λ u → u ◯ f) (λ u → u ◯ g)
-cone-equiv-pullback tp = (cone-to-pullback tp
+cone-equiv-pullback : (top : Set m)
+  → cone top ≃ pullback (A → top) (B → top) (C → top) (λ u → u ◯ f) (λ u → u ◯ g)
+cone-equiv-pullback top = (cone-to-pullback top
   , iso-is-eq _
-    (pullback-to-cone tp)
+    (pullback-to-cone top)
     (λ p → map (λ u → _ , _ , u) (funext-dep-happly _))
     (λ c → map (λ u → _ , _ , u) (happly-funext-dep _)))
 
-pullback-equiv-cone : (tp : Set m)
-  → pullback (A → tp) (B → tp) (C → tp) (λ u → u ◯ f) (λ u → u ◯ g) ≃ cone tp
-pullback-equiv-cone tp = (pullback-to-cone tp
+pullback-equiv-cone : (top : Set m)
+  → pullback (A → top) (B → top) (C → top) (λ u → u ◯ f) (λ u → u ◯ g) ≃ cone top
+pullback-equiv-cone top = (pullback-to-cone top
   , iso-is-eq _
-    (cone-to-pullback tp)
+    (cone-to-pullback top)
     (λ c → map (λ u → _ , _ , u) (happly-funext-dep _))
     (λ p → map (λ u → _ , _ , u) (funext-dep-happly _)))
 
 compose-cone-map : (D E : Set m) (Dcone : cone D) → ((f : D → E) → cone E)
-compose-cone-map D E (A→tp , B→tp , h) f =
-  ((f ◯ A→tp) , (f ◯ B→tp) , (λ c → map f (h c)))
+compose-cone-map D E (A→top , B→top , h) f =
+  ((f ◯ A→top) , (f ◯ B→top) , (λ c → map f (h c)))
 
 is-pushout : (D : Set m) ⦃ PD : P D ⦄ (Dcone : cone D) → Set _
 is-pushout D Dcone = (E : Set m) ⦃ PE : P E ⦄
@@ -69,7 +69,7 @@ compose-cone-map-compose : (D E F : Set m) (Dcone : cone D) (f : D → E)
   → compose-cone-map E F (compose-cone-map D E Dcone f) g
     ≡ compose-cone-map D F Dcone (g ◯ f)
 compose-cone-map-compose D E F Dcone f g =
-  map (λ u → ((g ◯ (f ◯ cone.A→tp Dcone)) , (g ◯ (f ◯ cone.B→tp Dcone)) , u))
+  map (λ u → ((g ◯ (f ◯ cone.A→top Dcone)) , (g ◯ (f ◯ cone.B→top Dcone)) , u))
       (funext-dep (λ c → compose-map g f (cone.h Dcone c)))
 
 module UniquenessPushout (D : Set m) ⦃ PD : P D ⦄ (Dcone : cone D)

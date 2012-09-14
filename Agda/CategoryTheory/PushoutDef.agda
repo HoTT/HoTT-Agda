@@ -31,9 +31,9 @@ pushout-rec P left* right* glue* (#right y) = right* y
 
 postulate  -- HIT
   pushout-β-glue : ∀ {l} (P : pushout → Set l) (left* : (a : A) → P (left a))
-  (right* : (b : B) → P (right b))
-  (glue* : (c : C) → transport P (glue c) (left* (f c)) ≡ right* (g c)) (c : C)
-    → map-dep (pushout-rec {l} P left* right* glue*) (glue c) ≡ glue* c
+    (right* : (b : B) → P (right b))
+    (glue* : (c : C) → transport P (glue c) (left* (f c)) ≡ right* (g c)) (c : C)
+      → map-dep (pushout-rec {l} P left* right* glue*) (glue c) ≡ glue* c
 
 pushout-rec-nondep : ∀ {l} (D : Set l) (left* : A → D) (right* : B → D)
   (glue* : (c : C) → left* (f c) ≡ right* (g c)) → (pushout → D)
@@ -42,7 +42,7 @@ pushout-rec-nondep D left* right* glue* (#right y) = right* y
 
 postulate  -- HIT
   pushout-β-glue-nondep : ∀ {l} (D : Set l) (left* : A → D) (right* : B → D)
-  (glue* : (c : C) → left* (f c) ≡ right* (g c)) (c : C)
+    (glue* : (c : C) → left* (f c) ≡ right* (g c)) (c : C)
     → map (pushout-rec-nondep D left* right* glue*) (glue c) ≡ glue* c
 
 --pushout-β-glue-nondep D left* right* glue* c =
