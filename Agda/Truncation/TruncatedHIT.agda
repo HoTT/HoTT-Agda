@@ -50,7 +50,7 @@ fill-paths n A t x y f =
   lemma (refl a) = ! (opposite-left-inverse (π₂ u a))
 
 -- We first prove that if n-spheres are filled, then the type is of
--- h-level (S n), we have to prove it for n = 1, and then use the previous lemma
+-- h-level n, we have to prove it for n = 1, and then use the previous lemma
 abstract
   n-spheres-filled-hlevel : ∀ {i} (n : ℕ) ⦃ >0 : n ≢ 0 ⦄ (A : Set i)
     (t : has-n-spheres-filled n A) → is-hlevel n A
@@ -89,6 +89,9 @@ abstract
     filled-newf : filling (S n) newf
     filled-newf = hlevel-n-has-n-spheres-filled (S n) _ (t _ _) newf
 
+-- I prove that if [A] has [S n]-spheres filled, then the type of fillings
+-- of [n]-spheres is a proposition. The idea is that two fillings of
+-- an [n]-sphere define an [S n]-sphere, which is then filled.
 filling-has-all-paths : ∀ {i} (n : ℕ) ⦃ >0 : n ≢ 0 ⦄ (A : Set i)
   ⦃ fill : has-n-spheres-filled (S n) A ⦄ (f : Sⁿ n → A)
   → has-all-paths (filling n f)

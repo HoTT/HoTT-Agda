@@ -76,6 +76,13 @@ abstract
   is-increasing-hlevel (S n) A p =
     λ x y → is-increasing-hlevel n (x ≡ y) (p x y)
 
+-- If [A] is of h-level [n], then so does [x ≡ y] for [x y : A]
+abstract
+  paths-hlevel-n : ∀ {i} (n : ℕ) (A : Set i) (p : is-hlevel n A) {x y : A}
+    → is-hlevel n (x ≡ y)
+  paths-hlevel-n O A p = path-contr-contr _ p _ _
+  paths-hlevel-n (S n) A p {x} {y} = is-increasing-hlevel n _ (p x y)
+
 -- Equivalent types have the same h-level
 abstract
   equiv-types-hlevel : ∀ {i j} {A : Set i} {B : Set j} (n : ℕ) (f : A ≃ B)

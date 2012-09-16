@@ -68,4 +68,3 @@ postulate  -- HIT
 abstract
   τ-hlevel : is-hlevel n τ
   τ-hlevel = n-spheres-filled-hlevel n τ (λ f → (top f , rays f))
-

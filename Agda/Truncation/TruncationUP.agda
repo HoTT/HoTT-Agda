@@ -6,7 +6,7 @@ open import Truncation.Truncation
 module Truncation.TruncationUP where
 
 -- We can extend a function to the truncation, if the codomain is of the correct
--- hlevel
+-- hlevel (renamings of [τ-rec] and [τ-rec-nondep])
 τ-extend : ∀ {i j} (n : ℕ) ⦃ >0 : n ≢ 0 ⦄ {A : Set i} {P : (τ n A) → Set j}
   ⦃ p : (x : τ n A) → is-hlevel n (P x) ⦄ (f : (x : A) → P (proj _ _ x))
   → ((x : τ n A) → P x)
@@ -24,12 +24,8 @@ abstract
   τ-up n A B ⦃ p ⦄ = iso-is-eq _
     (τ-extend-nondep n)
     refl
-    (λ f → funext (τ-extend n ⦃ p = λ x → lemma _ _ p ⦄ (λ x → refl _))) where
-
-    lemma : (x y : B) (p : is-hlevel n B) → is-hlevel n (x ≡ y)
-    lemma x y p with n
-    lemma x y p | O = path-contr-contr B p x y
-    lemma x y p | (S n) = is-increasing-hlevel n (x ≡ y) (p x y)
+    (λ f → funext (τ-extend n ⦃ p = λ x → paths-hlevel-n n B p ⦄
+                            (λ x → refl _)))
 
 -- Equivalence associated to the universal property
 τ-equiv : ∀ {i j} (n : ℕ) ⦃ >0 : n ≢ 0 ⦄ (A : Set i) (B : Set j)
@@ -40,5 +36,5 @@ open import CategoryTheory.ReflectiveSubCategory
 
 -- Reflective subcategory associated to the truncation
 τ-rsc : ∀ {i} (n : ℕ) ⦃ >0 : n ≢ 0 ⦄ → rsc {i}
-τ-rsc n = Rsc (is-hlevel n) (is-hlevel-is-prop n) (τ n) (proj n) (τ-hlevel n)
-              (τ-up n)
+τ-rsc n =
+  Rsc (is-hlevel n) (is-hlevel-is-prop n) (τ n) (proj n) (τ-hlevel n) (τ-up n)
