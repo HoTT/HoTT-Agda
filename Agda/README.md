@@ -90,7 +90,7 @@ depend on the modules listed before) :
 - `Topology/Suspension` contains the definition of the suspension of a type (as a special case of
   pushout)
 - `Topology/Spheres` contains the definitions of spheres
-- `Truncation/SphereFillings` contains the proof that an HIT with special constructors that fill
+- `Truncation/TruncatedHIT` contains the proof that an HIT with special constructors that fill
   spheres can be given an elimination rule easier to work with (see `FreeGroup.FreeGroup` for an
   example)
 - `CategoryTheory/ReflectiveSubCategory` contains the definition of a reflective subcategory

@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import Base
-open import Truncation.SphereFillings
+open import Truncation.TruncatedHIT
 open import Integers.Integers
 
 module FreeGroup.FreeGroupProps {i : Level} (A : Set i) ⦃ p : is-set A ⦄ where

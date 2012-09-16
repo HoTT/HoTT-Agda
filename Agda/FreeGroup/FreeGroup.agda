@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import Base
-open import Truncation.SphereFillings
+open import Truncation.TruncatedHIT
 open import Topology.Spheres
 open import Integers.Integers
 
@@ -27,12 +27,14 @@ _·_ = #·
 _⁻¹·_ : A → freegroup → freegroup
 _⁻¹·_ = #⁻¹·
 
+postulate  -- HIT
+  right-inverse-· : (x : A) (u : freegroup) → x · (x ⁻¹· u) ≡ u
+  left-inverse-·  : (x : A) (u : freegroup) → x ⁻¹· (x · u) ≡ u
+
 top : (f : Sⁿ 2 → freegroup) → freegroup
 top = #top
 
 postulate  -- HIT
-  right-inverse-· : (x : A) (u : freegroup) → x · (x ⁻¹· u) ≡ u
-  left-inverse-·  : (x : A) (u : freegroup) → x ⁻¹· (x · u) ≡ u
   rays : (f : Sⁿ 2 → freegroup) (x : Sⁿ 2) → top f ≡ f x
 
 #freegroup-rec : ∀ {j} (P : freegroup → Set j)
@@ -86,8 +88,7 @@ freegroup-rec P base g g' gg' g'g p =
   #freegroup-rec P base g g' gg' g'g
                  (λ f p₁ → π₁ (u f p₁))
                  (λ f p₁ → π₂ (u f p₁)) where
-  u : _ -- (f : Sⁿ 2 → freegroup) (p : (x : Sⁿ 2) → P (f x))
-        -- → filling-dep 2 P f (top f , rays f) p
+  u : _
   u = hlevel-n-has-filling-dep freegroup P 2 (λ f → (top f , rays f))
 
 freegroup-rec-nondep : ∀ {j} (B : Set j)

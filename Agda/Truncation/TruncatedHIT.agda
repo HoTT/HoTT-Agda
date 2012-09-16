@@ -1,21 +1,21 @@
 {-# OPTIONS --without-K #-}
 {-# OPTIONS --termination-depth=2 #-}
 
-open import Base
-open import Topology.Spheres
-open import Topology.Suspension
-open import Integers.Integers
+module Truncation.TruncatedHIT where
 
-module Truncation.SphereFillings where
+open import Base
+open import Topology.Spheres public
+open import Topology.Suspension public
+open import Integers.Integers public
 
 -- Warning: Here "n-sphere" means sphere of dimension (n - 1)
 -- Filling n-spheres gives something of h-level n
 
--- Definition of fillings of a sphere
+-- Type of fillings of a sphere
 filling : ∀ {i} (n : ℕ) {A : Set i} (f : Sⁿ n → A) → Set i
 filling {i} n {A} f = Σ A (λ t → ((x : Sⁿ n) → t ≡ f x))
 
--- Definition of dependent fillings of a sphere above a ball
+-- Type of dependent fillings of a sphere above a ball
 filling-dep : ∀ {i j} (n : ℕ) {A : Set i} (P : A → Set j) (f : Sⁿ n → A)
   (fill : filling n f) (p : (x : Sⁿ n) → P (f x)) → Set j
 filling-dep {i} {j} n {A} P f fill p =
@@ -88,12 +88,6 @@ abstract
   
     filled-newf : filling (S n) newf
     filled-newf = hlevel-n-has-n-spheres-filled (S n) _ (t _ _) newf
-
--- Should be moved somewhere else
--- trans-pi : ∀ {i j k} {A : Set i} {B : Set j} (Q : A → B → Set k) {u v : A}
---   (p : u ≡ v) (f : (y : B) → Q u y) (q : B) →
---   transport (λ x → (y : B) → Q x y) p f q ≡ transport (λ t → Q t q) p (f q)
--- trans-pi Q (refl _) f q = refl _
 
 filling-has-all-paths : ∀ {i} (n : ℕ) ⦃ >0 : n ≢ 0 ⦄ (A : Set i)
   ⦃ fill : has-n-spheres-filled (S n) A ⦄ (f : Sⁿ n → A)

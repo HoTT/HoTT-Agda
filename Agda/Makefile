@@ -13,7 +13,7 @@ pi1s1:
 	agda Circle/LoopSpace.agda
 
 truncation:
-	agda Truncation/SphereFillings.agda
+	agda Truncation/TruncatedHIT.agda
 	agda Truncation/TruncationUP.agda
 
 freegroup:
