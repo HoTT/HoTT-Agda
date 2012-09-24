@@ -24,7 +24,7 @@ abstract
   τ-up n A B ⦃ p ⦄ = iso-is-eq _
     (τ-extend-nondep n)
     refl
-    (λ f → funext (τ-extend n ⦃ p = λ x → paths-hlevel-n n B p ⦄
+    (λ f → funext-dep (τ-extend n ⦃ p = λ x → paths-hlevel-n n B p ⦄
                             (λ x → refl _)))
 
 -- Equivalence associated to the universal property

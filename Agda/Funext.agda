@@ -49,7 +49,7 @@ module FunextNonDep {i j} {A : Set i} {B : Set j} {f g : A → B}
   funext : f ≡ g
   funext = map (λ f' x → π₁ (π₂ (f' x))) d≡e
 
-open FunextNonDep public
+open FunextNonDep
 
 -- Weak function extensionality (a product of contractible types is
 -- contractible)
@@ -66,7 +66,7 @@ module WeakFunext {i j} {A : Set i} {P : A → Set j}
     weak-funext = transport (λ Q → is-contr ((x : A) → Q x)) (! P-is-unit)
                             ((λ x → tt) , (λ y → funext (λ x → refl tt)))
 
-open WeakFunext public
+open WeakFunext
 
 -- Naive dependent function extensionality
      
@@ -93,10 +93,10 @@ module FunextDep {i j} {A : Set i} {P : A → Set j} {f g : (x : A) → P x}
     Q-f≡Q-g : Q-f ≡ Q-g
     Q-f≡Q-g = is-contr-path _ Q-sections-contr Q-f Q-g
 
-  funext-dep : f ≡ g
-  funext-dep = map (λ u x → π₁ (u x)) Q-f≡Q-g
+  funext-dep-p : f ≡ g
+  funext-dep-p = map (λ u x → π₁ (u x)) Q-f≡Q-g
   
-open FunextDep public
+open FunextDep
 
 -- Strong function extensionality
 
@@ -106,35 +106,56 @@ happly p x = map (λ u → u x) p
 
 module StrongFunextDep {i j} {A : Set i} {P : A → Set j} where
 
-  funext-dep-refl : (f : (x : A) → P x) → funext-dep (λ x → refl (f x)) ≡ refl f
+  funext-dep-refl : (f : (x : A) → P x)
+    → funext-dep-p (λ x → refl (f x)) ≡ refl f
   funext-dep-refl f = map (map (λ u x → π₁ (u x)))
     (is-contr-path (Q-f r ≡ Q-g r) (path-contr-contr _ (Q-sections-contr r)
       (Q-f r) (Q-g r)) (Q-f≡Q-g r) (refl _)) where
     r : (x : A) → f x ≡ f x
     r = λ x → refl (f x)
 
-  funext-dep-happly : {f g : (x : A) → P x} (p : f ≡ g)
-    → funext-dep (happly p) ≡ p
-  funext-dep-happly (refl f) = funext-dep-refl f
+  funext-dep-happly-p : {f g : (x : A) → P x} (p : f ≡ g)
+    → funext-dep-p (happly p) ≡ p
+  funext-dep-happly-p (refl f) = funext-dep-refl f
 
   happly-path : {f : (x : A) → P x} {u v : (x : A) → Q (λ x → refl (f x)) x}
     (p : u ≡ v) (x : A)
     → happly (map (λ u x → π₁ (u x)) p) x ≡ π₂ (u x) ∘ ! (π₂ (v x))
   happly-path (refl u) x = ! (opposite-right-inverse (π₂ (u x)))
 
-  happly-funext-dep : {f g : (x : A) → P x} (h : (x : A) → f x ≡ g x)
-    → happly (funext-dep h) ≡ h
-  happly-funext-dep h = funext-dep (λ x → happly-path (Q-f≡Q-g h) x
-                                          ∘ opposite-opposite (h x))
+  happly-funext-dep-p : {f g : (x : A) → P x} (h : (x : A) → f x ≡ g x)
+    → happly (funext-dep-p h) ≡ h
+  happly-funext-dep-p h = funext-dep-p (λ x → happly-path (Q-f≡Q-g h) x
+                                            ∘ opposite-opposite (h x))
 
   abstract
     happly-is-equiv : {f g : (x : A) → P x} → is-equiv (happly {f = f} {g = g})
-    happly-is-equiv = iso-is-eq _ funext-dep happly-funext-dep funext-dep-happly
+    happly-is-equiv = iso-is-eq _ funext-dep-p happly-funext-dep-p
+                                               funext-dep-happly-p
   
   abstract
-    funext-dep-is-equiv : {f g : (x : A) → P x}
-      → is-equiv (funext-dep {f = f} {g = g})
-    funext-dep-is-equiv = iso-is-eq _ happly funext-dep-happly happly-funext-dep
+    funext-dep-is-equiv-p : {f g : (x : A) → P x}
+      → is-equiv (funext-dep-p {f = f} {g = g})
+    funext-dep-is-equiv-p = iso-is-eq _ happly funext-dep-happly-p
+                                               happly-funext-dep-p
 
-open StrongFunextDep public
+open StrongFunextDep
 
+module ExportedFunext {i j} {A : Set i} {P : A → Set j} {f g : (x : A) → P x}
+  where
+
+  abstract
+    funext-dep : (h : (x : A) → f x ≡ g x) → f ≡ g
+    funext-dep = FunextDep.funext-dep-p
+    
+    funext-dep-happly : (p : f ≡ g) → funext-dep (happly p) ≡ p
+    funext-dep-happly p = funext-dep-happly-p p
+
+    happly-funext-dep : (h : (x : A) → f x ≡ g x)
+      → happly (funext-dep h) ≡ h
+    happly-funext-dep h = happly-funext-dep-p h
+  
+    funext-dep-is-equiv : is-equiv (funext-dep)
+    funext-dep-is-equiv = StrongFunextDep.funext-dep-is-equiv-p
+
+open ExportedFunext public
