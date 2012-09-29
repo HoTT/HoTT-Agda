@@ -72,3 +72,11 @@ data ℤ : Set where  -- \bz
   O : ℤ
   pos : (n : ℕ) → ℤ
   neg : (n : ℕ) → ℤ
+
+-- Lifting
+
+record lift {i} (j : Level) (A : Set i) : Set (max i j) where
+  constructor ↑
+  field
+    ↓ : A
+open lift
