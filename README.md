@@ -27,10 +27,10 @@ A few naming conventions:
 - Equivalences between two types `A` and `B` are called `A-equiv-B` or `f-equiv` if the function
   underlying the equivalence is `f`. In particular you can have
 
-     A-to-B : A → B
-     A-to-B-is-equiv : is-equiv (A-to-B)
-     A-to-B-equiv : A ≃ B
-     A-equiv-B : A ≃ B
+      A-to-B : A → B
+      A-to-B-is-equiv : is-equiv (A-to-B)
+      A-to-B-equiv : A ≃ B
+      A-equiv-B : A ≃ B
 
 Structure of the source
 -----------------------
