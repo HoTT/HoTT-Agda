@@ -4,9 +4,11 @@ Homotopy Type Theory in Agda
 Introduction
 ------------
 
-This document describes the structure of the source code of this HoTT library in Agda. I have
-written an introduction to Agda for homotopy type theorists in the `tutorial` directory containing
-everything you need to know to understand the Agda code here, be sure to check it out.
+This repository contains the development of homotopy type theory and univalent foundations in Agda.
+The structure of the source code is described below.
+
+There is also an introduction to Agda for homotopy type theorists in the `tutorial` directory
+containing everything you need to know to understand the Agda code here, be sure to check it out.
 
 Conventions
 -----------
