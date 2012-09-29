@@ -13,6 +13,7 @@ record cone (top : Set m) : Set (suc m) where
     A→top : A → top
     B→top : B → top
     h : (c : C) → (A→top (f c)) ≡ (B→top (g c))
+open cone public
 
 cone-eq : (top : Set m) {a1 a2 : A → top} {b1 b2 : B → top}
   {h1 : (c : C) → a1 (f c) ≡ b1 (g c)} {h2 : (c : C) → a2 (f c) ≡ b2 (g c)} 

@@ -53,20 +53,22 @@ all-paths-canon-path A c (refl _) = ! (lemma2 A c _) where
                                            ∘ ! (refl-right-unit _))
 
 -- If we have [has-all-paths A], then [A] is a proposition
-all-paths-is-prop : ∀ {i} {A : Set i} (c : has-all-paths A) → is-prop A
-all-paths-is-prop c x y = (c x y , all-paths-canon-path _ c)
+abstract
+  all-paths-is-prop : ∀ {i} {A : Set i} (c : has-all-paths A) → is-prop A
+  all-paths-is-prop c x y = (c x y , all-paths-canon-path _ c)
 
-is-contr-is-prop : ∀ {i} (A : Set i) → is-prop (is-contr A)
-is-contr-is-prop A = all-paths-is-prop
-  (λ x y → total-path (π₂ y (π₁ x))
+abstract
+  is-contr-is-prop : ∀ {i} (A : Set i) → is-prop (is-contr A)
+  is-contr-is-prop A = all-paths-is-prop
+    (λ x y → total-path (π₂ y (π₁ x))
              (funext-dep
               (λ x' → (trans-A→Pxy A (λ x0 y' → y' ≡ x0) (π₂ y (π₁ x)) (π₂ x) x'
                       ∘ trans-a≡x (π₂ y (π₁ x)) (π₂ x x'))
                       ∘ lemma-is-contr-is-prop y (π₂ x x')))) where
 
-  lemma-is-contr-is-prop : (c : is-contr A) {x y : A} (p : x ≡ y)
-    → p ∘ π₂ c y ≡ π₂ c x
-  lemma-is-contr-is-prop c (refl _) = refl _
+    lemma-is-contr-is-prop : (c : is-contr A) {x y : A} (p : x ≡ y)
+      → p ∘ π₂ c y ≡ π₂ c x
+    lemma-is-contr-is-prop c (refl _) = refl _
 
 -- h-levels are increasing
 abstract
