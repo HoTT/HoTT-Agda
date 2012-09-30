@@ -20,13 +20,13 @@ _/_ = _#/_
 proj : A → _/_
 proj = #proj
 
-postulate
+postulate  -- HIT
   eq : (x y : A) (p : R x y) → proj x ≡ proj y
 
 top : (f : Sⁿ 2 → _/_) → _/_
 top = #top
 
-postulate
+postulate  -- HIT
   rays : (f : Sⁿ 2 → _/_) (x : Sⁿ 2) → top f ≡ f x
 
 #/-rec : ∀ {k} (P : _/_ → Set k)
