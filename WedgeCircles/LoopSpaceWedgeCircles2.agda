@@ -146,6 +146,6 @@ fiberwise-map-is-equiv x = fiberwise-is-equiv fiberwise-map total-equiv x
 
 -- We can then conclude that the based loop space of the wedge of circles is
 -- equivalent to the free group
-π₁WA≃FA : (base ≡ base) ≃ FA
-π₁WA≃FA = (fiberwise-map base , fiberwise-map-is-equiv base)
+ΩWA≃FA : (base ≡ base) ≃ FA
+ΩWA≃FA = (fiberwise-map base , fiberwise-map-is-equiv base)
 
