@@ -2,11 +2,11 @@
 
 if [[ $1 = "-h" ]] || [[ $1 = "--help" ]]
 then
-    echo "Usage: $0 [additional files]"
+    echo "Usage: $0"
     echo
-    echo "Shows every postulate used in the git-tracked files and the"
-    echo "additional files, except for HIT-related postulates, universe levels"
-    echo "and the univalence axiom."
+    echo "Shows every postulate used in the Agda files present in the directory"
+    echo "except for HIT-related postulates, universe levels and the univalence"
+    echo "axiom."
     exit 0
 fi
 
@@ -25,7 +25,7 @@ then
     TPUT=":"
 fi
 
-for i in $(git ls-files) $*
+for i in $(git ls-files) $(git ls-files -o --exclude-standard)
 do
     if [[ $i == "tutorial/README.md" ]] || [[ $i == "findpostulates" ]]
     then
