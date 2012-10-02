@@ -1,13 +1,16 @@
 {-# OPTIONS --without-K #-}
 
 open import Base
+open import CategoryTheory.PushoutDef
 
-module CategoryTheory.PushoutUP {m : Level}
-  (A B C : Set m) (f : C → A) (g : C → B)
-  (P : Set m → Set m) ⦃ PA : P A ⦄ ⦃ PB : P B ⦄ ⦃ PC : P C ⦄ where
+module CategoryTheory.PushoutUP {m : Level} (D : pushout-diag m)
+  (P : Set m → Set m) ⦃ PA : P (pushout-diag.A D) ⦄
+  ⦃ PB : P (pushout-diag.B D) ⦄ ⦃ PC : P (pushout-diag.C D) ⦄ where
+
+open pushout-diag D
 
 -- Idea : [Cone E = (A → E) ×_(C → E) (B → E)]
-record cone (top : Set m) : Set (suc m) where
+record cone (top : Set m) : Set m where
   constructor _,_,_
   field
     A→top : A → top
@@ -32,25 +35,25 @@ postulate
 
 open import CategoryTheory.PullbackDef
 
-cone-to-pullback : (top : Set m) → cone top
-  → pullback (A → top) (B → top) (C → top) (λ u → u ◯ f) (λ u → u ◯ g)
+D→top : (top : Set m) → pullback-diag m
+D→top top = diag (A → top) , (B → top) , (C → top) , (λ u → u ◯ f) , (λ u → u ◯ g)
+
+cone-to-pullback : (top : Set m) → cone top → pullback (D→top top)
 cone-to-pullback top (a , b , h) = (a , b , funext-dep h)
 
 pullback-to-cone : (top : Set m)
-  → pullback (A → top) (B → top) (C → top) (λ u → u ◯ f) (λ u → u ◯ g)
+  → pullback (D→top top)
   → cone top
 pullback-to-cone top (a , b , h) = (a , b , happly h)
 
-cone-equiv-pullback : (top : Set m)
-  → cone top ≃ pullback (A → top) (B → top) (C → top) (λ u → u ◯ f) (λ u → u ◯ g)
+cone-equiv-pullback : (top : Set m) → cone top ≃ pullback (D→top top)
 cone-equiv-pullback top = (cone-to-pullback top
   , iso-is-eq _
     (pullback-to-cone top)
     (λ p → map (λ u → _ , _ , u) (funext-dep-happly _))
     (λ c → map (λ u → _ , _ , u) (happly-funext-dep _)))
 
-pullback-equiv-cone : (top : Set m)
-  → pullback (A → top) (B → top) (C → top) (λ u → u ◯ f) (λ u → u ◯ g) ≃ cone top
+pullback-equiv-cone : (top : Set m) → pullback (D→top top) ≃ cone top
 pullback-equiv-cone top = (pullback-to-cone top
   , iso-is-eq _
     (cone-to-pullback top)
