@@ -169,6 +169,10 @@ unit-is-prop = is-increasing-hlevel O _ unit-is-contr
 unit-is-set : ∀ {i} → is-set (unit {i})
 unit-is-set = is-increasing-hlevel 1 _ unit-is-prop
 
+unit-is-hlevel-n : ∀ {i} (n : ℕ) → is-hlevel n (unit {i})
+unit-is-hlevel-n O = unit-is-contr
+unit-is-hlevel-n (S n) = is-increasing-hlevel n _ (unit-is-hlevel-n n)
+
 sigma-hlevel : ∀ {i j} (n : ℕ) {A : Set i} {P : A → Set j} (p : is-hlevel n A)
   (q : (x : A) → is-hlevel n (P x)) → is-hlevel n (Σ A P)
 sigma-hlevel O p q = ((π₁ p , (π₁ (q (π₁ p)))) ,
