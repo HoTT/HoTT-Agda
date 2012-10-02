@@ -25,7 +25,7 @@ then
     TPUT=":"
 fi
 
-for i in $(git ls-files) $1
+for i in $(git ls-files) $*
 do
     if [[ $i == "tutorial/README.md" ]] || [[ $i == "findpostulates" ]]
     then
