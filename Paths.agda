@@ -112,8 +112,8 @@ module GpdStruct {i} {A : Set i} where
   
   anti-whisker-right : {x y z : A} (p : y ≡ z) {q r : x ≡ y} (h : q ∘ p ≡ r ∘ p)
     → q ≡ r
-  anti-whisker-right (refl _) {q} {r} h = ! (refl-right-unit q)
-                                          ∘ (h ∘ refl-right-unit r)
+  anti-whisker-right (refl _) {q} {r} h =
+    ! (refl-right-unit q) ∘ (h ∘ refl-right-unit r)
   
   anti-whisker-left : {x y z : A} (p : x ≡ y) {q r : y ≡ z} (h : p ∘ q ≡ p ∘ r)
     → q ≡ r

@@ -14,11 +14,11 @@ id-is-equiv A =
                             (trans-x≡a (π₂ y') (π₂ y')
                             ∘ opposite-left-inverse (π₂ y'))))
 
-id-eq : ∀ {i} (A : Set i) → A ≃ A
-id-eq A = (idmap A , id-is-equiv A)
+id-equiv : ∀ {i} (A : Set i) → A ≃ A
+id-equiv A = (idmap A , id-is-equiv A)
 
 path-to-eq : ∀ {i} {A B : Set i} → (A ≡ B → A ≃ B)
-path-to-eq (refl A) = id-eq A
+path-to-eq (refl A) = id-equiv A
 
 postulate  -- Univalence axiom
   univalence : ∀ {i} (A B : Set i) → is-equiv (path-to-eq {i} {A} {B})
@@ -46,7 +46,7 @@ trans-eq-to-path {i} {A} {B} f u =
 -- Induction along equivalences
 
 equiv-induction : ∀ {i j} (P : (A : Set i) (B : Set i) (f : A ≃ B) → Set j)
-  (d : (A : Set i) → P A A (id-eq A)) (A B : Set i) (f : A ≃ B)
+  (d : (A : Set i) → P A A (id-equiv A)) (A B : Set i) (f : A ≃ B)
   → P A B f
 equiv-induction P d A B f =
   transport (P A B) (eq-to-path-right-inverse f)
@@ -54,7 +54,7 @@ equiv-induction P d A B f =
 
   equiv-induction-int : ∀ {i j}
     (P : (A : Set i) (B : Set i) (f : A ≃ B) → Set j)
-    (d : (A : Set i) → P A A (id-eq A)) (A B : Set i) (p : A ≡ B)
+    (d : (A : Set i) → P A A (id-equiv A)) (A B : Set i) (p : A ≡ B)
     → P A B (path-to-eq p)
   equiv-induction-int P d .A .A (refl A) = d A
 

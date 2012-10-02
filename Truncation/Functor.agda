@@ -15,13 +15,15 @@ mapτ {A = A} {B = B} f = τ-extend-nondep n (λ x → proj n B (f x)) where
 compose-mapτ : ∀ {i j k} {A : Set i} {B : Set j} {C : Set k}
   (f : A → B) (g : B → C) → (mapτ g ◯ mapτ f ≡ mapτ (g ◯ f))
 compose-mapτ f g =
-  funext (τ-extend n ⦃ p = λ x → is-increasing-hlevel n _ (τ-hlevel n _) _ _ ⦄ 
-                   (λ x → refl _))
+  funext-dep (τ-extend n
+                ⦃ p = λ x → is-increasing-hlevel n _ (τ-hlevel n _) _ _ ⦄ 
+                (λ x → refl _))
 
 mapτ-id : ∀ {i} (A : Set i) → mapτ (λ (x : A) → x) ≡ λ (x : τ n A) → x
 mapτ-id A =
-  funext (τ-extend n ⦃ p = λ x → is-increasing-hlevel n _ (τ-hlevel n _) _ _ ⦄ 
-                   (λ x → refl _))
+  funext-dep (τ-extend n
+                ⦃ p = λ x → is-increasing-hlevel n _ (τ-hlevel n _) _ _ ⦄ 
+                (λ x → refl _))
 
 -- open Map public
 
