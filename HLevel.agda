@@ -57,7 +57,6 @@ abstract
   all-paths-is-prop : ∀ {i} {A : Set i} (c : has-all-paths A) → is-prop A
   all-paths-is-prop c x y = (c x y , all-paths-canon-path _ c)
 
-abstract
   is-contr-is-prop : ∀ {i} (A : Set i) → is-prop (is-contr A)
   is-contr-is-prop A = all-paths-is-prop
     (λ x y → total-path (π₂ y (π₁ x))
@@ -70,23 +69,20 @@ abstract
       → p ∘ π₂ c y ≡ π₂ c x
     lemma-is-contr-is-prop c (refl _) = refl _
 
--- h-levels are increasing
-abstract
+  -- h-levels are increasing
   is-increasing-hlevel : ∀ {i} (n : ℕ) (A : Set i) → is-hlevel n A
     → is-hlevel (S n) A
   is-increasing-hlevel O A p = all-paths-is-prop (λ x y → π₂ p x ∘ ! (π₂ p y))
   is-increasing-hlevel (S n) A p =
     λ x y → is-increasing-hlevel n (x ≡ y) (p x y)
 
--- If [A] is of h-level [n], then so does [x ≡ y] for [x y : A]
-abstract
+  -- If [A] is of h-level [n], then so does [x ≡ y] for [x y : A]
   paths-hlevel-n : ∀ {i} (n : ℕ) (A : Set i) (p : is-hlevel n A) {x y : A}
     → is-hlevel n (x ≡ y)
   paths-hlevel-n O A p = path-contr-contr _ p _ _
   paths-hlevel-n (S n) A p {x} {y} = is-increasing-hlevel n _ (p x y)
 
--- Equivalent types have the same h-level
-abstract
+  -- Equivalent types have the same h-level
   equiv-types-hlevel : ∀ {i j} {A : Set i} {B : Set j} (n : ℕ) (f : A ≃ B)
     (c : is-hlevel n A) → is-hlevel n B
   equiv-types-hlevel O f c =
@@ -96,28 +92,33 @@ abstract
     λ x y → equiv-types-hlevel n (equiv-map (f ⁻¹) x y ⁻¹)
                                (c (f ⁻¹ $ x) (f ⁻¹ $ y))
 
-pi-is-prop : ∀ {i j} {A : Set i} {P : A → Set j}
-  (p : (x : A) → is-prop (P x)) → is-prop ((x : A) → P x)
-pi-is-prop p =
-  all-paths-is-prop (λ f g → funext-dep (λ x → π₁ (p x (f x) (g x))))
+  pi-is-prop : ∀ {i j} {A : Set i} {P : A → Set j}
+    (p : (x : A) → is-prop (P x)) → is-prop ((x : A) → P x)
+  pi-is-prop p =
+    all-paths-is-prop (λ f g → funext-dep (λ x → π₁ (p x (f x) (g x))))
 
-pi-hlevel : ∀ {i j} (n : ℕ) {A : Set i} {P : A → Set j}
-  (p : (x : A) → is-hlevel n (P x)) → is-hlevel n ((x : A) → P x)
-pi-hlevel O p = ((λ x → π₁ (p x)) , (λ f → funext-dep (λ x → π₂ (p x) (f x))))
-pi-hlevel 1 p = pi-is-prop p
-pi-hlevel (S n) p =
-  λ f g → equiv-types-hlevel n (funext-dep , funext-dep-is-equiv)
-                             (pi-hlevel n (λ x → p x (f x) (g x)))
+  pi-hlevel : ∀ {i j} (n : ℕ) {A : Set i} {P : A → Set j}
+    (p : (x : A) → is-hlevel n (P x)) → is-hlevel n ((x : A) → P x)
+  pi-hlevel O p = ((λ x → π₁ (p x)) , (λ f → funext-dep (λ x → π₂ (p x) (f x))))
+  pi-hlevel 1 p = pi-is-prop p
+  pi-hlevel (S n) p =
+    λ f g → equiv-types-hlevel n (funext-dep , funext-dep-is-equiv)
+                               (pi-hlevel n (λ x → p x (f x) (g x)))
 
-abstract
   →-hlevel : ∀ {i j} (n : ℕ) {A : Set i} {B : Set j} (p : is-hlevel n B)
     → is-hlevel n (A → B)
   →-hlevel n p = pi-hlevel n (λ _ → p)
 
-is-hlevel-is-prop : ∀ {i} (n : ℕ) (A : Set i) → is-prop (is-hlevel n A)
-is-hlevel-is-prop O A = is-contr-is-prop A
-is-hlevel-is-prop (S n) A = pi-is-prop (λ x → pi-is-prop
+  is-hlevel-is-prop : ∀ {i} (n : ℕ) (A : Set i) → is-prop (is-hlevel n A)
+  is-hlevel-is-prop O A = is-contr-is-prop A
+  is-hlevel-is-prop (S n) A = pi-is-prop (λ x → pi-is-prop
                                           (λ x' → is-hlevel-is-prop n (x ≡ x')))
+
+  inhab-prop-is-contr : ∀ {i} (A : Set i) (p : is-prop A) (x₀ : A) → is-contr A
+  inhab-prop-is-contr A p x₀ = (x₀ , λ y → π₁ (p _ _))
+
+  contr-is-prop : ∀ {i} {A : Set i} (p : is-contr A) → is-prop A
+  contr-is-prop {i} {A} = is-increasing-hlevel 0 A
 
 dec-eq : ∀ {i} (A : Set i) → Set i
 dec-eq A = (x y : A) → (x ≡ y) ⊔ (x ≢ y)
@@ -163,43 +164,44 @@ dec-eq-is-set A dec x y | inl q = paths-dec-eq-is-prop q where
 
 dec-eq-is-set A dec x y | inr p⊥ = λ p q → abort-nondep (p⊥ p)
 
-unit-is-prop : ∀ {i} → is-prop (unit {i})
-unit-is-prop = is-increasing-hlevel O _ unit-is-contr
+abstract
+  unit-is-prop : ∀ {i} → is-prop (unit {i})
+  unit-is-prop = is-increasing-hlevel O _ unit-is-contr
 
-unit-is-set : ∀ {i} → is-set (unit {i})
-unit-is-set = is-increasing-hlevel 1 _ unit-is-prop
+  unit-is-set : ∀ {i} → is-set (unit {i})
+  unit-is-set = is-increasing-hlevel 1 _ unit-is-prop
 
-unit-is-hlevel-n : ∀ {i} (n : ℕ) → is-hlevel n (unit {i})
-unit-is-hlevel-n O = unit-is-contr
-unit-is-hlevel-n (S n) = is-increasing-hlevel n _ (unit-is-hlevel-n n)
+  unit-is-hlevel-n : ∀ {i} (n : ℕ) → is-hlevel n (unit {i})
+  unit-is-hlevel-n O = unit-is-contr
+  unit-is-hlevel-n (S n) = is-increasing-hlevel n _ (unit-is-hlevel-n n)
 
-sigma-hlevel : ∀ {i j} (n : ℕ) {A : Set i} {P : A → Set j} (p : is-hlevel n A)
-  (q : (x : A) → is-hlevel n (P x)) → is-hlevel n (Σ A P)
-sigma-hlevel O p q = ((π₁ p , (π₁ (q (π₁ p)))) ,
-                     (λ y → total-path (π₂ p _) (π₂ (q _) _)))
-sigma-hlevel (S n) p q =
-  λ x y → equiv-types-hlevel n total-path-equiv
-                             (sigma-hlevel n (p _ _) (λ _ → q _ _ _))
+  sigma-hlevel : ∀ {i j} (n : ℕ) {A : Set i} {P : A → Set j} (p : is-hlevel n A)
+    (q : (x : A) → is-hlevel n (P x)) → is-hlevel n (Σ A P)
+  sigma-hlevel O p q = ((π₁ p , (π₁ (q (π₁ p)))) ,
+                       (λ y → total-path (π₂ p _) (π₂ (q _) _)))
+  sigma-hlevel (S n) p q =
+    λ x y → equiv-types-hlevel n total-path-equiv
+                               (sigma-hlevel n (p _ _) (λ _ → q _ _ _))
 
-×-hlevel : ∀ {i j} (n : ℕ) {A : Set i} {B : Set j} (pA : is-hlevel n A)
-  (pB : is-hlevel n B) → is-hlevel n (A × B)
-×-hlevel n pA pB = sigma-hlevel n pA (λ x → pB)
+  ×-hlevel : ∀ {i j} (n : ℕ) {A : Set i} {B : Set j} (pA : is-hlevel n A)
+    (pB : is-hlevel n B) → is-hlevel n (A × B)
+  ×-hlevel n pA pB = sigma-hlevel n pA (λ x → pB)
 
-subset-is-set : ∀ {i j} (A : Set i) ⦃ p : is-set A ⦄ (P : A → Set j)
-  ⦃ q : (x : A) → is-prop (P x) ⦄ → is-set (Σ A P)
-subset-is-set A ⦃ p ⦄ P ⦃ q ⦄ =
-  sigma-hlevel 2 p (λ x → is-increasing-hlevel 1 (P x) (q x))
+  subset-is-set : ∀ {i j} (A : Set i) ⦃ p : is-set A ⦄ (P : A → Set j)
+    ⦃ q : (x : A) → is-prop (P x) ⦄ → is-set (Σ A P)
+  subset-is-set A ⦃ p ⦄ P ⦃ q ⦄ =
+    sigma-hlevel 2 p (λ x → is-increasing-hlevel 1 (P x) (q x))
 
-is-equiv-is-prop : ∀ {i j} {A : Set i} {B : Set j} (f : A → B)
-  → is-prop (is-equiv f)
-is-equiv-is-prop f = pi-is-prop (λ x → is-contr-is-prop _)
+  is-equiv-is-prop : ∀ {i j} {A : Set i} {B : Set j} (f : A → B)
+    → is-prop (is-equiv f)
+  is-equiv-is-prop f = pi-is-prop (λ x → is-contr-is-prop _)
 
-bool-dec-eq : dec-eq bool
-bool-dec-eq true true = inl (refl true)
-bool-dec-eq true false = inr (λ ())
-bool-dec-eq false true = inr (λ ())
-bool-dec-eq false false = inl (refl false)
+  bool-dec-eq : dec-eq bool
+  bool-dec-eq true true = inl (refl true)
+  bool-dec-eq true false = inr (λ ())
+  bool-dec-eq false true = inr (λ ())
+  bool-dec-eq false false = inl (refl false)
 
-bool-is-set : is-set bool
-bool-is-set = dec-eq-is-set bool bool-dec-eq
+  bool-is-set : is-set bool
+  bool-is-set = dec-eq-is-set bool bool-dec-eq
 

@@ -21,23 +21,24 @@ pushout-diag-raw-eq : ∀ {i} {A A' : Set i} (p : A ≡ A')
   → (diag A , B , C , f , g) ≡ (diag A' , B' , C' , f' , g')
 pushout-diag-raw-eq (refl _) (refl _) (refl _) (refl _) (refl _) = refl _
 
-pushout-diag-eq : ∀ {i} {A A' : Set i} (p : A ≃ A')
-  {B B' : Set i} (q : B ≃ B') {C C' : Set i} (r : C ≃ C')
-  {f : C → A} {f' : C' → A'} (s : (a : C) →  (π₁ p) (f a) ≡ f' (π₁ r a))
-  {g : C → B} {g' : C' → B'} (t : (b : C) → (π₁ q) (g b) ≡ g' (π₁ r b))
-  → (diag A , B , C , f , g) ≡ (diag A' , B' , C' , f' , g')
-pushout-diag-eq p q r {f' = f'} s {g' = g'} t = pushout-diag-raw-eq
-  (eq-to-path p)
-  (eq-to-path q)
-  (eq-to-path r)
-  (funext-dep (λ a → trans-A→X-eq-to-path _ p _ a
-                     ∘ (map (π₁ p) (trans-X→A-eq-to-path _ r _ a)
-                       ∘ (s (inverse r a)
-                       ∘ map f' (inverse-right-inverse r a)))))
-  (funext-dep (λ b → trans-A→X-eq-to-path _ q _ b
-                     ∘ (map (π₁ q) (trans-X→A-eq-to-path _ r _ b)
-                       ∘ (t (inverse r b)
-                       ∘ map g' (inverse-right-inverse r b)))))
+abstract
+  pushout-diag-eq : ∀ {i} {A A' : Set i} (p : A ≃ A')
+    {B B' : Set i} (q : B ≃ B') {C C' : Set i} (r : C ≃ C')
+    {f : C → A} {f' : C' → A'} (s : (a : C) →  (π₁ p) (f a) ≡ f' (π₁ r a))
+    {g : C → B} {g' : C' → B'} (t : (b : C) → (π₁ q) (g b) ≡ g' (π₁ r b))
+    → (diag A , B , C , f , g) ≡ (diag A' , B' , C' , f' , g')
+  pushout-diag-eq p q r {f' = f'} s {g' = g'} t = pushout-diag-raw-eq
+    (eq-to-path p)
+    (eq-to-path q)
+    (eq-to-path r)
+    (funext-dep (λ a → trans-A→X-eq-to-path _ p _ a
+                       ∘ (map (π₁ p) (trans-X→A-eq-to-path _ r _ a)
+                         ∘ (s (inverse r a)
+                         ∘ map f' (inverse-right-inverse r a)))))
+    (funext-dep (λ b → trans-A→X-eq-to-path _ q _ b
+                       ∘ (map (π₁ q) (trans-X→A-eq-to-path _ r _ b)
+                         ∘ (t (inverse r b)
+                         ∘ map g' (inverse-right-inverse r b)))))
 
 module Pushout {i} (D : pushout-diag i) where
 
