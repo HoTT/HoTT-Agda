@@ -41,7 +41,7 @@ depend on the modules listed before) :
 ### Base library
 
 - `Types` contains the definitions of the basic types (universe levels, unit, empty, dependent sums,
-  natural numbers, integers)
+  natural numbers, integers, …)
 - `Functions` contains basic definitions about functions (composition, identities, constant maps)
 - `Paths` contains the definitions and properties of paths types and the groupoid structure of
   types, transport of something in a fibration along a path and its various reduction rules, and
@@ -54,7 +54,7 @@ depend on the modules listed before) :
 - `HLevel` contains various definitions and properties about h-levels
 - `FiberEquivalences` contains the proof that a map between fibrations which is an equivalence of
   total spaces is a fiberwise equivalence (depends only on `Equivalences` and above)
-- `Base` exports everything above and is imported by every subsequent file
+- `Base` exports everything above and is the file that should be imported in any file
 
 ### Interval
 
@@ -64,7 +64,7 @@ depend on the modules listed before) :
 
 ### Integers
 
-- `Algebra.Groups` contains the definition of a group
+- `Algebra.Groups` contains a crappy definition of a group
 - `Integers.Integers` contains the definition of the successor function, the proof that it’s an
   equivalence, and the proof that the type of the integers is a set
 - `Integers.GroupIntegers` contains a proof that the integers form a group
@@ -77,14 +77,14 @@ depend on the modules listed before) :
 
 ### Pullback, pushout
 
-- `CategoryTheory/PullbackDef` contains the definition of the type that should satisfy the universal
+- `CategoryTheory.PullbackDef` contains the definition of the type that should satisfy the universal
   property of pullback with respect to every type in a fixed universe of the form `Set i`
-- `CategoryTheory/PullbackUP` contains the definition of what it means for some type to satisfy the
+- `CategoryTheory.PullbackUP` contains the definition of what it means for some type to satisfy the
   universal property of pullback inside some subcategory (parametrized by a `P : Set i → hProp i`)
-- `CategoryTheory/PullbackIsPullback` contains a proof that what should be a pullback is indeed a
+- `CategoryTheory.PullbackIsPullback` contains a proof that what should be a pullback is indeed a
   pullback
-- Similarly for `CategoryTheory/PushoutDef`, `CategoryTheory/PushoutUP` and
-  `CategoryTheory/PushoutIsPushout`. The file `CategoryTheory/PushoutUP` also contains a proof that
+- Similarly for `CategoryTheory.PushoutDef`, `CategoryTheory.PushoutUP` and
+  `CategoryTheory.PushoutIsPushout`. The file `CategoryTheory.PushoutUP` also contains a proof that
   two pushouts of the same diagram are equivalent
 
 ### Truncation
@@ -95,11 +95,11 @@ depend on the modules listed before) :
 - `Truncation/TruncatedHIT` contains the proof that an HIT with special constructors that fill
   spheres can be given an elimination rule easier to work with (see `FreeGroup.FreeGroup` for an
   example)
-- `CategoryTheory/ReflectiveSubCategory` contains the definition of a reflective subcategory
-- `Truncation/Truncation` contains the definition of truncation
-- `Truncation/TruncationUP` contains the universal property of the truncation, in a more
-  category-theoretic phrasing
-- `Truncation/Functor` contains the action of truncation on maps and compositions
+- `CategoryTheory/ReflectiveSubCategory` contains a definition of reflective subcategories and some
+  properties
+- `Truncation/TruncationHIT` contains the HIT defining the truncation, with a small hack to handle
+  (hlevel 0)-truncations
+- `Truncation/Truncation` contains a nicer interface for truncation and the universal property
 
 ### Free groups
 
@@ -116,3 +116,9 @@ depend on the modules listed before) :
 - `WedgeCircles/LoopSpaceWedgeCircles` contains the proof that it’s loop space is the free group
   (when the set of generators has decidable equality), up to the end of the flattening lemma
 - `WedgeCircles/LoopSpaceWedgeCircles2` contains the rest of the proof
+
+### Quotients
+
+- `Quotients/Quotient.agda` contains a definition of the quotient of a set by a (prop-valued)
+  equivalence relation with truncated higher inductive types
+- `Quotients/QuotientUP.agda` proves the universal property of quotients
