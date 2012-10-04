@@ -17,14 +17,13 @@ record cocone (top : Set i) : Set i where
     top→B : top → B
     h : (t : top) → f (top→A t) ≡ g (top→B t)
 
-pullback-to-cocone : (top : Set i)
-  → (pullback (top → A) (top → B) (top → C) (λ h → f ◯ h) (λ h → g ◯ h)
-    → cocone top)
+top→D : (top : Set i) → pullback-diag i
+top→D top = diag (top → A), (top → B), (top → C), (λ h → f ◯ h), (λ h → g ◯ h)
+
+pullback-to-cocone : (top : Set i) → (pullback (top→D top) → cocone top)
 pullback-to-cocone top (top→A , top→B , h) = (top→A , top→B , happly h)
 
-cocone-to-pullback : (top : Set i)
-  → (cocone top
-    → pullback (top → A) (top → B) (top → C) (λ h → f ◯ h) (λ h → g ◯ h))
+cocone-to-pullback : (top : Set i) → (cocone top → pullback (top→D top))
 cocone-to-pullback top (a , b , h) = (a , b , funext-dep h)
 
 pullback-to-cocone-equiv : (top : Set i) → is-equiv (pullback-to-cocone top)
