@@ -35,8 +35,7 @@ A few naming conventions:
 Structure of the source
 -----------------------
 
-The structure of the source is roughly the following (sorted in topological order, every module only
-depend on the modules listed before) :
+The structure of the source is roughly the following:
 
 ### Base library
 
@@ -56,69 +55,67 @@ depend on the modules listed before) :
   total spaces is a fiberwise equivalence (depends only on `Equivalences` and above)
 - `Base` exports everything above and is the file that should be imported in any file
 
-### Interval
-
-- `Interval.Interval` contains the definition of the interval
-- `Interval.IntervalProps` contains a proof that the interval is contractible and that the interval
-  implies (non-dependent) function extensionality
-
-### Integers
-
-- `Algebra.Groups` contains a crappy definition of a group
 - `Integers.Integers` contains the definition of the successor function, the proof that it’s an
   equivalence, and the proof that the type of the integers is a set
-- `Integers.GroupIntegers` contains a proof that the integers form a group
 
-### Circle
+### Homotopy
 
-- `Circle.Circle` contains the HIT definition of the circle
-- `Circle.LoopSpace` contains the proof that the based loop space of the circle is equivalent to the
-  type of the integers
+The `Homotopy` directory contains homotopy-theoretic definitions and properties. More precisely
+there is:
 
-### Pullback, pushout
-
-- `CategoryTheory.PullbackDef` contains the definition of the type that should satisfy the universal
+- `Homotopy.PullbackDef` contains the definition of the type that should satisfy the universal
   property of pullback with respect to every type in a fixed universe of the form `Set i`
-- `CategoryTheory.PullbackUP` contains the definition of what it means for some type to satisfy the
+- `Homotopy.PullbackUP` contains the definition of what it means for some type to satisfy the
   universal property of pullback inside some subcategory (parametrized by a `P : Set i → hProp i`)
-- `CategoryTheory.PullbackIsPullback` contains a proof that what should be a pullback is indeed a
+- `Homotopy.PullbackIsPullback` contains a proof that what should be a pullback is indeed a
   pullback
-- Similarly for `CategoryTheory.PushoutDef`, `CategoryTheory.PushoutUP` and
-  `CategoryTheory.PushoutIsPushout`. The file `CategoryTheory.PushoutUP` also contains a proof that
+- Similarly for `Homotopy.PushoutDef`, `Homotopy.PushoutUP` and
+  `Homotopy.PushoutIsPushout`. The file `Homotopy.PushoutUP` also contains a proof that
   two pushouts of the same diagram are equivalent
-
-### Truncation
-
-- `Topology/Suspension` contains the definition of the suspension of a type (as a special case of
-  pushout)
-- `Topology/Spheres` contains the definitions of spheres
-- `Truncation/TruncatedHIT` contains the proof that an HIT with special constructors that fill
-  spheres can be given an elimination rule easier to work with (see `FreeGroup.FreeGroup` for an
-  example)
-- `CategoryTheory/ReflectiveSubCategory` contains a definition of reflective subcategories and some
+- `Homotopy.ReflectiveSubCategory` contains a definition of reflective subcategories and some
   properties
-- `Truncation/TruncationHIT` contains the HIT defining the truncation, with a small hack to handle
+- `Homotopy.TruncatedHIT` contains the proof that an HIT with special constructors that fill
+  spheres can be given an elimination rule easier to work with (see `Algebra.FreeGroup` for an
+  example)
+- `Homotopy.TruncationHIT` contains the HIT defining the truncation, with a small hack to handle
   (hlevel 0)-truncations
-- `Truncation/Truncation` contains a nicer interface for truncation and the universal property
+- `Homotopy.Truncation` contains a nicer interface for truncation and the universal property
 
-### Free groups
+### Spaces
 
-- `FreeGroup/FreeGroup` contains the definition of the free group on a set of generators
-- `FreeGroup/FreeGroupProps` contains properties of the free group (that it’s a set and that
+The `Spaces` directory contains definitions and properties of various spaces.
+
+- `Spaces.Interval` contains the definition of the interval
+- `Spaces.IntervalProps` contains a proof that the interval is contractible and that the interval
+  implies (non-dependent) function extensionality
+- `Spaces.Circle` contains the HIT definition of the circle
+- `Spaces.LoopSpaceCircle` contains the proof that the based loop space of the circle is equivalent
+  to the type of the integers
+- `Spaces.Suspension` contains the definition of the suspension of a type (as a special case of
+  pushout)
+- `Spaces.Spheres` contains the definitions of spheres
+- `Spaces.WedgeCircles` contains the definition of the wedge of a set of circles
+- `Spaces.LoopSpaceWedgeCircles` contains the proof that it’s loop space is the free group
+  (when the set of generators has decidable equality), up to the end of the flattening lemma
+- `Spaces.LoopSpaceWedgeCircles2` contains the rest of the proof
+
+### Algebra
+
+The `Algebra` directory contains some basic algebra.
+
+- `Algebra.Groups` contains a crappy definition of a group
+- `Algebra.GroupIntegers` contains a proof that the integers form a group
+- `Algebra/FreeGroup` contains the definition of the free group on a set of generators
+- `Algebra/FreeGroupProps` contains properties of the free group (that it’s a set and that
   multiplying by a generator is an equivalence)
-- `FreeGroup/F2NotCommutative` contains a proof that F2 is not commutative
-- `FreeGroup/FreeGroupAsReducedWords` contains an equivalent definition of the free group as a set
+- `Algebra/F2NotCommutative` contains a proof that F2 is not commutative
+- `Algebra/FreeGroupAsReducedWords` contains an equivalent definition of the free group as a set
   of reduced words, in the case where the set of generators has decidable equality
 
-### Wedge of circles
+### Sets
 
-- `WedgeCircles/WedgeCircles` contains the definition of the wedge of a set of circles
-- `WedgeCircles/LoopSpaceWedgeCircles` contains the proof that it’s loop space is the free group
-  (when the set of generators has decidable equality), up to the end of the flattening lemma
-- `WedgeCircles/LoopSpaceWedgeCircles2` contains the rest of the proof
+The `Sets` repository contains properties of the category of (h)sets.
 
-### Quotients
-
-- `Quotients/Quotient.agda` contains a definition of the quotient of a set by a (prop-valued)
+- `Sets/Quotient.agda` contains a definition of the quotient of a set by a (prop-valued)
   equivalence relation with truncated higher inductive types
-- `Quotients/QuotientUP.agda` proves the universal property of quotients
+- `Sets/QuotientUP.agda` proves the universal property of quotients

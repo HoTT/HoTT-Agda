@@ -10,7 +10,7 @@ integers:
 	agda Integers.agda
 
 pi1s1:
-	agda Spaces/LoopSpace.agda
+	agda Spaces/LoopSpaceCircle.agda
 
 truncation:
 	agda Homotopy/TruncatedHIT.agda

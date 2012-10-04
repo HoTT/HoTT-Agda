@@ -4,7 +4,7 @@ open import Base
 open import Spaces.Circle
 open import Integers
 
-module Spaces.LoopSpace where
+module Spaces.LoopSpaceCircle where
 
 -- Path fibration
 
