@@ -14,7 +14,7 @@ pi1s1:
 
 truncation:
 	agda Truncation/TruncatedHIT.agda
-	agda Truncation/TruncationUP.agda
+	agda Truncation/Truncation.agda
 
 freegroup:
 	agda FreeGroup/FreeGroup.agda
