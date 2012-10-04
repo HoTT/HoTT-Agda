@@ -33,7 +33,7 @@ loop-to-succ : (n : ℤ) → transport universal-cover loop n ≡ succ n
 loop-to-succ n = ! (trans-map {P = λ A → A} universal-cover loop n)
                  ∘ (map (λ t → transport (λ A → A) t n)
                         (β-nondep Set ℤ succ-path)
-                 ∘ trans-eq-to-path succ-equiv n)
+                 ∘ trans-X-eq-to-path succ-equiv n)
 
 {- The flattening lemma
 

@@ -89,7 +89,7 @@ freegroup-rec P base g g' gg' g'g p =
                  (λ f p₁ → π₁ (u f p₁))
                  (λ f p₁ → π₂ (u f p₁)) where
   u : _
-  u = hlevel-n-has-filling-dep freegroup P 2 (λ f → (top f , rays f))
+  u = hlevel-n-has-filling-dep freegroup P 2 (λ ()) (λ f → (top f , rays f))
 
 freegroup-rec-nondep : ∀ {j} (B : Set j)
   (base : B)

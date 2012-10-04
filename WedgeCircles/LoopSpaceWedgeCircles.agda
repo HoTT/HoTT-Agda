@@ -48,7 +48,7 @@ abstract
   loops-to-x· t u =
     trans-universal-cover (loops t) u
     ∘ (map (λ t' → transport (λ B → B) t' u) (β-nondep (Set _) FA x·-path t)
-    ∘ trans-eq-to-path (_ , x·-is-equiv t) u)
+    ∘ trans-X-eq-to-path (_ , x·-is-equiv t) u)
 
 {-
 Here is an HIT declaration for the Cayley graph of the free group over A:
