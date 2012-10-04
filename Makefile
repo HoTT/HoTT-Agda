@@ -4,35 +4,35 @@ base:
 	agda Base.agda
 
 interval:
-	agda Interval/IntervalProps.agda
+	agda Spaces/IntervalProps.agda
 
 integers:
-	agda Integers/Integers.agda
+	agda Integers.agda
 
 pi1s1:
-	agda Circle/LoopSpace.agda
+	agda Spaces/LoopSpace.agda
 
 truncation:
-	agda Truncation/TruncatedHIT.agda
-	agda Truncation/Truncation.agda
+	agda Homotopy/TruncatedHIT.agda
+	agda Homotopy/Truncation.agda
 
 freegroup:
-	agda FreeGroup/FreeGroup.agda
-	agda FreeGroup/FreeGroupProps.agda
-	agda FreeGroup/F2NotCommutative.agda
+	agda Algebra/FreeGroup.agda
+	agda Algebra/FreeGroupProps.agda
+	agda Algebra/F2NotCommutative.agda
 
 wedgecircles:
-	agda WedgeCircles/LoopSpaceWedgeCircles2.agda
+	agda Spaces/LoopSpaceWedgeCircles2.agda
 
 pullback:
-	agda CategoryTheory/PullbackDef.agda
-	agda CategoryTheory/PullbackIsPullback.agda
-	agda CategoryTheory/PullbackUP.agda
+	agda Homotopy/PullbackDef.agda
+	agda Homotopy/PullbackIsPullback.agda
+	agda Homotopy/PullbackUP.agda
 
 pushout:
-	agda CategoryTheory/PushoutDef.agda
-	agda CategoryTheory/PushoutIsPushout.agda
-	agda CategoryTheory/PushoutUP.agda
+	agda Homotopy/PushoutDef.agda
+	agda Homotopy/PushoutIsPushout.agda
+	agda Homotopy/PushoutUP.agda
 
 
 clean:

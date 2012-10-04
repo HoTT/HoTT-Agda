@@ -1,8 +1,8 @@
 {-# OPTIONS --without-K #-}
 
 open import Base
-open import Truncation.Truncation
-open import Integers.Integers
+open import Homotopy.Truncation
+open import Integers
 
 -- Formalization of 0-truncated groups
 module Algebra.Groups where
