@@ -2,7 +2,6 @@
 
 open import Base
 open import Truncation.Truncation
-open import Truncation.TruncationUP
 open import Integers.Integers
 
 -- Formalization of 0-truncated groups
