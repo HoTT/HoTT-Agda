@@ -6,9 +6,11 @@ open import CategoryTheory.PullbackDef
 -- We only consider the universal property internally to a fixed
 -- universe [Set i]. If we don’t, we would have to consider an universe
 -- polymorphic [P] and I don’t want to quantify over universe polymorphic things
-module CategoryTheory.PullbackUP {i}
-  (A B C : Set i) (f : A → C) (g : B → C)
-  (P : Set i → Set i) ⦃ PA : P A ⦄ ⦃ PB : P B ⦄ ⦃ PC : P C ⦄ where
+module CategoryTheory.PullbackUP {i} (d : pullback-diag i)
+  (P : Set i → Set i) ⦃ PA : P (pullback-diag.A d) ⦄
+  ⦃ PB : P (pullback-diag.B d) ⦄ ⦃ PC : P (pullback-diag.C d) ⦄ where
+
+open pullback-diag d
 
 record cocone (top : Set i) : Set i where
   constructor _,_,_
