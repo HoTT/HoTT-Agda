@@ -25,6 +25,9 @@ abort ()
 abort-nondep : ∀ {i j} {A : Set j} → (⊥ {i} → A)
 abort-nondep ()
 
+¬ : ∀ {i} (A : Set i) → Set i
+¬ A = A → ⊥ {zero-u}
+
 -- Unit type
 
 record unit {i} : Set i where
@@ -47,13 +50,13 @@ open Σ public
 
 -- Disjoint sum
 
-data _⊔_ {i j} (A : Set i) (B : Set j) : Set (max i j) where
+data _⊔_ {i j} (A : Set i) (B : Set j) : Set (max i j) where  -- \sqcup
   inl : A → A ⊔ B
   inr : B → A ⊔ B
 
 -- Product
 
-_×_ : ∀ {i j} (A : Set i) (B : Set j) → Set (max i j)
+_×_ : ∀ {i j} (A : Set i) (B : Set j) → Set (max i j)  -- \times
 A × B = Σ A (λ _ → B)
 
 -- Natural numbers
@@ -76,7 +79,7 @@ data ℤ : Set where  -- \bz
 -- Lifting
 
 record lift {i} (j : Level) (A : Set i) : Set (max i j) where
-  constructor ↑
+  constructor ↑  -- \u
   field
-    ↓ : A
+    ↓ : A  -- \d
 open lift

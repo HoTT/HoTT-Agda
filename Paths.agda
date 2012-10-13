@@ -54,6 +54,7 @@ module Sigma {i j} {A : Set i} {P : A → Set j} where
     (q : transport P p u ≡ v) → (x , u) ≡ (y , v)
   total-path (refl _) (refl _) = refl _
 
+  -- Same as [total-path] but with only one argument
   total-total-path : {xu yv : Σ A P} (q : Σ (π₁ xu ≡ π₁ yv)
     (λ p → transport P p (π₂ xu) ≡ (π₂ yv))) → xu ≡ yv
   total-total-path (p , q) = total-path p q
@@ -63,7 +64,7 @@ module Sigma {i j} {A : Set i} {P : A → Set j} where
 
   fiber-path : {x y : Σ A P} (p : x ≡ y)
     → transport P (base-path p) (π₂ x) ≡ π₂ y
-  fiber-path (refl _) = refl _
+  fiber-path {x} {.x} (refl .x) = refl _
 
   base-path-total-path : {x y : A} (p : x ≡ y) {u : P x} {v : P y}
     (q : transport P p u ≡ v) → base-path (total-path p q) ≡ p
@@ -78,7 +79,7 @@ module Sigma {i j} {A : Set i} {P : A → Set j} where
 
   total-path-base-path-fiber-path : {x y : Σ A P} (p : x ≡ y)
     → total-path (base-path p) (fiber-path p) ≡ p
-  total-path-base-path-fiber-path (refl _) = refl _
+  total-path-base-path-fiber-path {x} {.x} (refl .x) = refl _
 
 open Sigma public
 
@@ -105,7 +106,6 @@ module GpdStruct {i} {A : Set i} where
     → p ∘ q ≡ p ∘ r
   whisker-left p (refl _) = refl _
 
-  -- Does not seem very usable, because you have to give [q] and [r] explicitely
   whisker-right : {x y z : A} (p : y ≡ z) {q r : x ≡ y} (h : q ≡ r)
     → q ∘ p ≡ r ∘ p
   whisker-right p (refl _) = refl _
@@ -119,8 +119,8 @@ module GpdStruct {i} {A : Set i} where
     → q ≡ r
   anti-whisker-left (refl _) h = h
 
-  -- To remember the order, [opposite-concat …] gives a result of the
-  -- form [opposite (concat …) ≡ …]
+  -- [opposite-concat …] gives a result of the form [opposite (concat …) ≡ …],
+  -- and so on
   opposite-concat : {x y z : A} (p : x ≡ y) (q : y ≡ z) → ! (p ∘ q) ≡ ! q ∘ ! p
   opposite-concat (refl _) q = ! (refl-right-unit (! q))
 

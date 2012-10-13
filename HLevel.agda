@@ -23,7 +23,7 @@ abstract
 
 is-hlevel : ∀ {i} (n : ℕ) (A : Set i) → Set i
 is-hlevel O A = is-contr A
-is-hlevel (S n) A = (x y : A) → (is-hlevel n (x ≡ y))
+is-hlevel (S n) A = (x y : A) → is-hlevel n (x ≡ y)
 
 is-prop : ∀ {i} (A : Set i) → Set i
 is-prop = is-hlevel 1
@@ -38,7 +38,7 @@ is-gpd = is-hlevel 3
 has-all-paths : ∀ {i} (A : Set i) → Set i
 has-all-paths A = (x y : A) → x ≡ y
 
--- In a prop', every path is equal to the canonical path
+-- If [A] has all paths, every path is equal to the canonical path
 all-paths-canon-path : ∀ {i} (A : Set i) (c : has-all-paths A)
   {x y : A} (p : x ≡ y) → p ≡ c x y
 all-paths-canon-path A c (refl _) = ! (lemma2 A c _) where
@@ -52,18 +52,21 @@ all-paths-canon-path A c (refl _) = ! (lemma2 A c _) where
   lemma2 A c y = anti-whisker-left (c y y) (lemma1 A c (c y y)
                                            ∘ ! (refl-right-unit _))
 
--- If we have [has-all-paths A], then [A] is a proposition
 abstract
+  -- If we have [has-all-paths A], then [A] is a proposition
   all-paths-is-prop : ∀ {i} {A : Set i} (c : has-all-paths A) → is-prop A
   all-paths-is-prop c x y = (c x y , all-paths-canon-path _ c)
+
+  contr-all-paths : ∀ {i} {A : Set i} (c : is-contr A) → has-all-paths A
+  contr-all-paths c x y = π₂ c x ∘ ! (π₂ c y)
 
   is-contr-is-prop : ∀ {i} (A : Set i) → is-prop (is-contr A)
   is-contr-is-prop A = all-paths-is-prop
     (λ x y → total-path (π₂ y (π₁ x))
              (funext-dep
-              (λ x' → (trans-A→Pxy A (λ x0 y' → y' ≡ x0) (π₂ y (π₁ x)) (π₂ x) x'
-                      ∘ trans-a≡x (π₂ y (π₁ x)) (π₂ x x'))
-                      ∘ lemma-is-contr-is-prop y (π₂ x x')))) where
+              (λ t → (trans-A→Pxy A (λ u v → v ≡ u) (π₂ y (π₁ x)) (π₂ x) t
+                      ∘ trans-a≡x (π₂ y (π₁ x)) (π₂ x t))
+                      ∘ lemma-is-contr-is-prop y (π₂ x t)))) where
 
     lemma-is-contr-is-prop : (c : is-contr A) {x y : A} (p : x ≡ y)
       → p ∘ π₂ c y ≡ π₂ c x

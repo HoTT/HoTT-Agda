@@ -37,7 +37,7 @@ inverse-left-inverse (f , e) x = ! (base-path (π₂ (e (f x)) (x , refl (f x)))
 hfiber-triangle : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) (z : B)
   {x y : hfiber f z} (p : x ≡ y)
   → map f (base-path p) ∘ (π₂ y) ≡ π₂ x
-hfiber-triangle f z (refl _) = refl _
+hfiber-triangle f z {x} {.x} (refl .x) = refl _
 
 inverse-triangle : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x : A) →
   inverse-right-inverse f (f $ x) ≡ map (π₁ f) (inverse-left-inverse f x)

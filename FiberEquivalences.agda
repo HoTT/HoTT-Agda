@@ -27,7 +27,7 @@ module TotalMapEquiv (e : is-equiv total-map) where
   -- And the action of [total-map] on paths is correct on the base path
   total-map-fiberwise-on-paths : {u v : Σ A P} (p : u ≡ v)
     → base-path (map total-map p) ≡ base-path p
-  total-map-fiberwise-on-paths (refl _) = refl _
+  total-map-fiberwise-on-paths {u} {.u} (refl .u) = refl _
 
   -- Here is the fiberwise inverse, we use the inverse of the total map and
   -- transform it into a fiberwise map using [base-path-inverse]
