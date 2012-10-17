@@ -70,7 +70,6 @@ abstract
                                        ∘ opposite-map (f ◯ g) (π₂ y')))
        ∘ homotopy-naturality-toid (f ◯ g) h (! (π₂ y')))))))))
 
-abstract 
   iso-is-adjiso : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) (g : B → A)
     (h : (y : B) → f (g y) ≡ y) (h' : (x : A) → g (f x) ≡ x)
     → Σ ((x : A) → g (f x) ≡ x) (λ h'' → (x : A) → map f (h'' x) ≡ h (f x))
@@ -89,28 +88,42 @@ abstract
          ∘ ! (homotopy-naturality-toid (f ◯ g) h (map f (h' x))))
          ∘ whisker-right (h (f x)) (map-compose f g (map f (h' x)))))))))
 
-abstract
   iso-is-eq : ∀ {i j} {A : Set i} {B : Set j}
     (f : A → B) (g : B → A) (h : (y : B) → f (g y) ≡ y)
     (h' : (x : A) → g (f x) ≡ x) → is-equiv f
   iso-is-eq f g h h' = adjiso-is-eq f g h (π₁ (iso-is-adjiso f g h h'))
     (π₂ (iso-is-adjiso f g h h'))
 
--- The inverse of an equivalence is an equivalence
-
-abstract
+  -- The inverse of an equivalence is an equivalence
   inverse-is-equiv : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B)
     → is-equiv (inverse f)
   inverse-is-equiv f = iso-is-eq _ (π₁ f) (inverse-left-inverse f)
                                  (inverse-right-inverse f)
 
+  -- When using [iso-is-eq], the other map which is given is an inverse
+  inverse-iso-is-eq : ∀ {i j} {A : Set i} {B : Set j}
+    (f : A → B) (g : B → A) (h : (y : B) → f (g y) ≡ y)
+    (h' : (x : A) → g (f x) ≡ x) → inverse (f , iso-is-eq f g h h') ≡ g
+  inverse-iso-is-eq f g h h' = refl _
+
 _⁻¹ : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B) → B ≃ A  -- \^-\^1
 _⁻¹ f = (inverse f , inverse-is-equiv f)
+
 
 -- Any contractible type is equivalent to the unit type
 contr-equiv-unit : ∀ {i j} {A : Set i} (e : is-contr A) → A ≃ unit {j}
 contr-equiv-unit e = ((λ _ → tt) , iso-is-eq _ (λ _ → π₁ e) (λ y → refl tt)
                                              (λ x → ! (π₂ e x)))
+
+-- The composite of two equivalences is an equivalence
+compose-is-equiv : ∀ {i j k} {A : Set i} {B : Set j} {C : Set k}
+  (f : A ≃ B) (g : B ≃ C) → is-equiv (π₁ g ◯ π₁ f)
+compose-is-equiv f g =
+  iso-is-eq _ (inverse f ◯ inverse g)
+    (λ y → map (π₁ g) (inverse-right-inverse f (inverse g y))
+           ∘ inverse-right-inverse g y)
+    (λ x → map (inverse f) (inverse-left-inverse g (π₁ f x))
+           ∘ inverse-left-inverse f x)
 
 -- An equivalence induces an equivalence on the path spaces
 module MapEquiv {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x y : A) where

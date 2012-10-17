@@ -49,19 +49,20 @@ private
   ℕ-Sn≢O-type O = ⊥
   ℕ-Sn≢O-type (S n) = unit
 
-ℕ-Sn≢O : (n : ℕ) → (S n ≢ O)
-ℕ-Sn≢O n p = transport ℕ-Sn≢O-type p tt
+abstract
+  ℕ-Sn≢O : (n : ℕ) → (S n ≢ O)
+  ℕ-Sn≢O n p = transport ℕ-Sn≢O-type p tt
 
-ℕ-dec-eq : dec-eq ℕ
-ℕ-dec-eq O O = inl (refl O)
-ℕ-dec-eq O (S n) = inr (λ p → ℕ-Sn≢O n (! p))
-ℕ-dec-eq (S n) O = inr (ℕ-Sn≢O n)
-ℕ-dec-eq (S n) (S m) with ℕ-dec-eq n m
-ℕ-dec-eq (S n) (S m) | inl p = inl (map S p)
-ℕ-dec-eq (S n) (S m) | inr p⊥ = inr (λ p → p⊥ (S-injective n m p))
+  ℕ-dec-eq : dec-eq ℕ
+  ℕ-dec-eq O O = inl (refl O)
+  ℕ-dec-eq O (S n) = inr (λ p → ℕ-Sn≢O n (! p))
+  ℕ-dec-eq (S n) O = inr (ℕ-Sn≢O n)
+  ℕ-dec-eq (S n) (S m) with ℕ-dec-eq n m
+  ℕ-dec-eq (S n) (S m) | inl p = inl (map S p)
+  ℕ-dec-eq (S n) (S m) | inr p⊥ = inr (λ p → p⊥ (S-injective n m p))
 
-ℕ-is-set : is-set ℕ
-ℕ-is-set = dec-eq-is-set ℕ ℕ-dec-eq
+  ℕ-is-set : is-set ℕ
+  ℕ-is-set = dec-eq-is-set ℕ ℕ-dec-eq
 
 private
   ℤ-get-pos : ℤ → ℕ
@@ -99,20 +100,21 @@ private
   ℤ-neg≢pos : (n m : ℕ) → (neg n ≡ pos m → ⊥)
   ℤ-neg≢pos n m p = transport ℤ-neg≢pos-type p tt
 
-ℤ-dec-eq : dec-eq ℤ
-ℤ-dec-eq O O = inl (refl O)
-ℤ-dec-eq O (pos n) = inr (ℤ-O≢pos n)
-ℤ-dec-eq O (neg n) = inr (ℤ-O≢neg n)
-ℤ-dec-eq (pos n) O = inr (λ p → ℤ-O≢pos n (! p))
-ℤ-dec-eq (pos n) (pos m) with ℕ-dec-eq n m
-ℤ-dec-eq (pos n) (pos m) | inl p = inl (map pos p)
-ℤ-dec-eq (pos n) (pos m) | inr p⊥ = inr (λ p → p⊥ (pos-injective n m p))
-ℤ-dec-eq (pos n) (neg m) = inr (λ p → ℤ-neg≢pos m n (! p))
-ℤ-dec-eq (neg n) O = inr (λ p → ℤ-O≢neg n (! p))
-ℤ-dec-eq (neg n) (pos m) = inr (ℤ-neg≢pos n m)
-ℤ-dec-eq (neg n) (neg m) with ℕ-dec-eq n m
-ℤ-dec-eq (neg n) (neg m) | inl p = inl (map neg p)
-ℤ-dec-eq (neg n) (neg m) | inr p⊥ = inr (λ p → p⊥ (neg-injective n m p))
-
-ℤ-is-set : is-set ℤ
-ℤ-is-set = dec-eq-is-set ℤ ℤ-dec-eq
+abstract
+  ℤ-dec-eq : dec-eq ℤ
+  ℤ-dec-eq O O = inl (refl O)
+  ℤ-dec-eq O (pos n) = inr (ℤ-O≢pos n)
+  ℤ-dec-eq O (neg n) = inr (ℤ-O≢neg n)
+  ℤ-dec-eq (pos n) O = inr (λ p → ℤ-O≢pos n (! p))
+  ℤ-dec-eq (pos n) (pos m) with ℕ-dec-eq n m
+  ℤ-dec-eq (pos n) (pos m) | inl p = inl (map pos p)
+  ℤ-dec-eq (pos n) (pos m) | inr p⊥ = inr (λ p → p⊥ (pos-injective n m p))
+  ℤ-dec-eq (pos n) (neg m) = inr (λ p → ℤ-neg≢pos m n (! p))
+  ℤ-dec-eq (neg n) O = inr (λ p → ℤ-O≢neg n (! p))
+  ℤ-dec-eq (neg n) (pos m) = inr (ℤ-neg≢pos n m)
+  ℤ-dec-eq (neg n) (neg m) with ℕ-dec-eq n m
+  ℤ-dec-eq (neg n) (neg m) | inl p = inl (map neg p)
+  ℤ-dec-eq (neg n) (neg m) | inr p⊥ = inr (λ p → p⊥ (neg-injective n m p))
+  
+  ℤ-is-set : is-set ℤ
+  ℤ-is-set = dec-eq-is-set ℤ ℤ-dec-eq

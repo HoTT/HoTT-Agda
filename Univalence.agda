@@ -23,13 +23,14 @@ path-to-eq (refl A) = id-equiv A
 postulate  -- Univalence axiom
   univalence : ∀ {i} (A B : Set i) → is-equiv (path-to-eq {i} {A} {B})
 
-eq-to-path : ∀ {i} {A B : Set i} → (A ≃ B → A ≡ B)
-eq-to-path {i} {A} {B} = inverse (path-to-eq , univalence A B)
+abstract
+  eq-to-path : ∀ {i} {A B : Set i} → (A ≃ B → A ≡ B)
+  eq-to-path {i} {A} {B} = inverse (path-to-eq , univalence A B)
 
-eq-to-path-right-inverse : ∀ {i} {A B : Set i} (f : A ≃ B)
-  → path-to-eq (eq-to-path f) ≡ f
-eq-to-path-right-inverse f =
-  inverse-right-inverse (path-to-eq , univalence _ _) f
+  eq-to-path-right-inverse : ∀ {i} {A B : Set i} (f : A ≃ B)
+    → path-to-eq (eq-to-path f) ≡ f
+  eq-to-path-right-inverse f =
+    inverse-right-inverse (path-to-eq , univalence _ _) f
 
 -- Transport in the structural fibration of a universe
 

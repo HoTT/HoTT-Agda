@@ -24,14 +24,14 @@ cone-eq : (top : Set m) {a1 a2 : A → top} {b1 b2 : B → top}
   → (a1 , b1 , h1) ≡ (a2 , b2 , h2)
 cone-eq top (refl _) (refl _) (refl _) = refl _
 
-postulate
-  cone-eq-new : (top : Set m) {a1 a2 : A → top} {b1 b2 : B → top}
-    {h1 : (c : C) → a1 (f c) ≡ b1 (g c)} {h2 : (c : C) → a2 (f c) ≡ b2 (g c)} 
-    (p1 : a1 ≡ a2) (p2 : b1 ≡ b2)
-    (p3 : (c : C) → happly p1 (f c) ∘ h2 c ≡ h1 c ∘ happly p2 (g c))
-    → (a1 , b1 , h1) ≡ (a2 , b2 , h2)
-
--- (c : C) → happly p1 (f c) ∘ h2 c ≡ h1 c ∘ happly p2 (g c)
+cone-eq-new : (top : Set m) {a1 a2 : A → top} {b1 b2 : B → top}
+  {h1 : (c : C) → a1 (f c) ≡ b1 (g c)} {h2 : (c : C) → a2 (f c) ≡ b2 (g c)} 
+  (p1 : a1 ≡ a2) (p2 : b1 ≡ b2)
+  (p3 : (c : C) → happly p1 (f c) ∘ h2 c ≡ h1 c ∘ happly p2 (g c))
+  → (a1 , b1 , h1) ≡ (a2 , b2 , h2)
+cone-eq-new top (refl _) (refl _) p3 =
+  cone-eq top (refl _) (refl _)
+    (funext-dep (λ c → ! (refl-right-unit _) ∘ ! (p3 c)))
 
 open import Homotopy.PullbackDef
 
