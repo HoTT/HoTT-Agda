@@ -83,14 +83,14 @@ postulate  -- Tedious
     _τ-•_ : τ-∣∣ → τ-∣∣ → τ-∣∣
     _τ-•_ = τ-extend-nondep 2 ⦃ p = →-hlevel 2 (τ-hlevel 2 _) ⦄
               (λ x → τ-extend-nondep 2 ⦃ p = τ-hlevel 2 _ ⦄
-                (λ y → proj 2 _ (x ∙ y)))
+                (λ y → proj (x ∙ y)))
 
     τ-e : τ-∣∣
-    τ-e = proj 2 _ e
+    τ-e = proj e
 
     τ-′ : τ-∣∣ → τ-∣∣
     τ-′ = τ-extend-nondep 2 ⦃ p = τ-hlevel 2 _ ⦄
-                          (λ x → proj 2 _ (x ′))
+                          (λ x → proj (x ′))
 
     abstract
       τ-assoc : (x y z : τ-∣∣) → (x τ-• y) τ-• z ≡ x τ-• (y τ-• z)
@@ -103,31 +103,31 @@ postulate  -- Tedious
                                            τ-is-set _ _) ⦄
             (λ y → τ-extend 2 ⦃ p = λ _ → is-increasing-hlevel 2 (τ 2 ∣_∣)
                                                                 τ-is-set _ _ ⦄
-              (λ z → map (proj 2 _) (assoc x y z)))))
+              (λ z → map proj (assoc x y z)))))
 
     abstract
       τ-right-unit : (x : τ-∣∣) → x τ-• τ-e ≡ x
       τ-right-unit =
         (τ-extend 2 ⦃ p = λ _ → is-increasing-hlevel 2 (τ 2 ∣_∣) τ-is-set _ _ ⦄
-          (λ x → map (proj 2 _) (right-unit x)))
+          (λ x → map proj (right-unit x)))
 
     abstract
       τ-left-unit : (x : τ-∣∣) → τ-e τ-• x ≡ x
       τ-left-unit =
         (τ-extend 2 ⦃ p = λ _ → is-increasing-hlevel 2 (τ 2 ∣_∣) τ-is-set _ _ ⦄
-          (λ x → map (proj 2 _) (left-unit x)))
+          (λ x → map proj (left-unit x)))
 
     abstract
       τ-right-inverse : (x : τ-∣∣) → x τ-• (τ-′ x) ≡ τ-e
       τ-right-inverse =
         (τ-extend 2 ⦃ p = λ _ → is-increasing-hlevel 2 (τ 2 ∣_∣) τ-is-set _ _ ⦄
-          (λ x → map (proj 2 _) (right-inverse x)))
+          (λ x → map proj (right-inverse x)))
 
     abstract
       τ-left-inverse : (x : τ-∣∣) → (τ-′ x) τ-• x ≡ τ-e
       τ-left-inverse =
         (τ-extend 2 ⦃ p = λ _ → is-increasing-hlevel 2 (τ 2 ∣_∣) τ-is-set _ _ ⦄
-          (λ x → map (proj 2 _) (left-inverse x)))
+          (λ x → map proj (left-inverse x)))
 
 is-group-morphism : ∀ {i j} (A : Group i) (B : Group j) (f : ∣ g A ∣ → ∣ g B ∣)
   → Set (max i j)
@@ -136,6 +136,3 @@ is-group-morphism A B f =
 
 _≈_ : ∀ {i j} (A : Group i) (B : Group j) → Set (max i j)
 A ≈ B = Σ (∣ g A ∣ → ∣ g B ∣) (λ f → is-equiv f × is-group-morphism A B f)
-
--- ≈-to-≡ : ∀ {i} (A B : Group i) (f : A ≈ B) → A ≡ B
--- ≈-to-≡ A B f = transport _ (eq-to-path (π₁ f , (π₁ (π₂ f)))) {!!}

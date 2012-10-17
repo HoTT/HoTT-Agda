@@ -6,6 +6,19 @@ open import Integers
 
 module Algebra.FreeGroup {i} (A : Set i) where
 
+{-
+The definition is the following
+
+    (2)data freegroup : Set i where
+      e : freegroup
+      _·_   : A → freegroup → freegroup
+      _⁻¹·_ : A → freegroup → freegroup
+      right-inverse-· : (x : A) (u : freegroup) → x · (x ⁻¹· u) ≡ u
+      left-inverse-·  : (x : A) (u : freegroup) → x ⁻¹· (x · u) ≡ u
+
+("(2)data" means that it’s a higher inductive type truncated to h-level 2)
+-}
+
 private
   data #freegroup : Set i where
     #e  : #freegroup
