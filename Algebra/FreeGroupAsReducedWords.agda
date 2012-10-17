@@ -77,20 +77,33 @@ word'-base-path p = π₁ (word-comp-path p)
 word'-fiber-path : {x y : A} {v w : word} (p : x ′∷ v ≡ y ′∷ w) → v ≡ w
 word'-fiber-path p = π₂ (word-comp-path p)
 
+-- This one goes to Set and is used to prove that the constructors of [word] are
+-- disjoint
+word-cst-dis : (v w : word) → Set
+word-cst-dis ε ε = unit
+word-cst-dis ε (y ∷ w) = ⊥
+word-cst-dis ε (y ′∷ w) = ⊥
+word-cst-dis (x ∷ v) ε = ⊥
+word-cst-dis (x ∷ v) (y ∷ w) = unit
+word-cst-dis (x ∷ v) (y ′∷ w) = ⊥
+word-cst-dis (x ′∷ v) ε = ⊥
+word-cst-dis (x ′∷ v) (y ∷ w) = ⊥
+word-cst-dis (x ′∷ v) (y ′∷ w) = unit
+
 word-dec-eq : dec-eq word
 word-dec-eq ε ε = inl (refl _)
-word-dec-eq ε (x ∷ w) = inr (λ ())
-word-dec-eq ε (x ′∷ w) = inr (λ ())
-word-dec-eq (x ∷ v) ε = inr (λ ())
+word-dec-eq ε (x ∷ w) = inr (λ p → transport (word-cst-dis ε) p tt)
+word-dec-eq ε (x ′∷ w) = inr (λ p → transport (word-cst-dis ε) p tt)
+word-dec-eq (x ∷ v) ε = inr (λ p → transport (word-cst-dis (x ∷ v)) p tt)
 word-dec-eq (x ∷ v) (y ∷ w) with (eq x y)
 word-dec-eq (x ∷ v) (y ∷ w) | inl x≡y with (word-dec-eq v w)
 word-dec-eq (x ∷ v) (y ∷ w) | inl x≡y | inl v≡w = inl (word-total-path x≡y v≡w)
 word-dec-eq (x ∷ v) (y ∷ w) | inl x≡y | inr v≢w =
   inr (λ p → v≢w (word-fiber-path p))
 word-dec-eq (x ∷ v) (y ∷ w) | inr x≢y = inr (λ p → x≢y (word-base-path p))
-word-dec-eq (x ∷ v) (y ′∷ w) = inr (λ ())
-word-dec-eq (x ′∷ v) ε = inr (λ ())
-word-dec-eq (x ′∷ v) (y ∷ w) = inr (λ ())
+word-dec-eq (x ∷ v) (y ′∷ w) = inr (λ p → transport (word-cst-dis (x ∷ v)) p tt)
+word-dec-eq (x ′∷ v) ε = inr (λ p → transport (word-cst-dis (x ′∷ v)) p tt)
+word-dec-eq (x ′∷ v) (y ∷ w) = inr (λ p → transport (word-cst-dis (x ′∷ v)) p tt)
 word-dec-eq (x ′∷ v) (y ′∷ w) with (eq x y)
 word-dec-eq (x ′∷ v) (y ′∷ w) | inl x≡y with (word-dec-eq v w)
 word-dec-eq (x ′∷ v) (y ′∷ w) | inl x≡y | inl v≡w =
