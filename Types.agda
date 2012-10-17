@@ -6,12 +6,12 @@ module Types where
 
 postulate  -- Universe levels
   Level : Set
-  zero-u : Level
+  zero : Level
   suc : Level → Level
   max : Level → Level → Level
 
 {-# BUILTIN LEVEL Level #-}
-{-# BUILTIN LEVELZERO zero-u #-}
+{-# BUILTIN LEVELZERO zero #-}
 {-# BUILTIN LEVELSUC suc #-}
 {-# BUILTIN LEVELMAX max #-}
 
@@ -26,7 +26,7 @@ abort-nondep : ∀ {i j} {A : Set j} → (⊥ {i} → A)
 abort-nondep ()
 
 ¬ : ∀ {i} (A : Set i) → Set i
-¬ A = A → ⊥ {zero-u}
+¬ A = A → ⊥ {zero}
 
 -- Unit type
 

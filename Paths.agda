@@ -12,7 +12,7 @@ data _≡_ {i} {A : Set i} : A → A → Set i where
   refl : (a : A) → a ≡ a
 
 _≢_ : ∀ {i} {A : Set i} → (A → A → Set i)
-x ≢ y = (x ≡ y) → ⊥ {zero-u}
+x ≢ y = (x ≡ y) → ⊥ {zero}
 
 -- -- This should not be provable
 -- K : {A : Set} → (x : A) → (p : x ≡ x) → p ≡ refl x

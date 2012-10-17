@@ -343,12 +343,12 @@ with Agda. The following is extracted from `Types.agda` :
 
     postulate  -- Universe levels
       Level : Set
-      zero-u : Level
+      zero : Level
       suc : Level → Level
       max : Level → Level → Level
     
     {-# BUILTIN LEVEL Level #-}
-    {-# BUILTIN LEVELZERO zero-u #-}
+    {-# BUILTIN LEVELZERO zero #-}
     {-# BUILTIN LEVELSUC suc #-}
     {-# BUILTIN LEVELMAX max #-}
 
