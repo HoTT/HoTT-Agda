@@ -75,7 +75,8 @@ abstract
     ⦃ p : is-hlevel n B ⦄ → is-equiv (τ-extend-nondep n {A} {B})
   τ-extend-nondep-is-equiv n A B ⦃ p ⦄ = iso-is-eq _
     (λ f → f ◯ proj)
-    (λ f → funext-dep (τ-extend n ⦃ λ x → paths-hlevel-n n B p ⦄ (λ x → refl _)))
+    (λ f → funext-dep (τ-extend n ⦃ λ x → paths-hlevel-n n B p ⦄
+                                (λ x → refl _)))
     refl
 
 -- Equivalence associated to the universal property

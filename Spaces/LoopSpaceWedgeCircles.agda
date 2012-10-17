@@ -92,21 +92,22 @@ module equivCA
                (refl _) z
              ∘ move!-transp-left (λ z → P (baseWA , z)) _ (loops-to-x· t u)
                                  (z (t · u))
-             (! (trans-totalpath {P = universal-cover} {Q = P} {x = (baseWA , u)}
-                  {y = (baseWA , (t · u))} (loops t) (loops-to-x· t u) z)
+             (! (trans-totalpath {P = universal-cover} {Q = P}
+                  {x = (baseWA , u)} {y = (baseWA , (t · u))}
+                  (loops t) (loops-to-x· t u) z)
               ∘ e t u))
               ∘ map-dep z (! (loops-to-x· t u))
 
-  P-baseWA : (u : universal-cover (baseWA)) → P (baseWA , u)
-  P-baseWA u = z u
+  P-base : (u : universal-cover (baseWA)) → P (baseWA , u)
+  P-base u = z u
 
   abstract
     P-loops : (t : A) (u : universal-cover (baseWA))
-      → transport (λ x → (t : universal-cover x) → P (x , t)) (loops t) P-baseWA u
-        ≡ P-baseWA u
+      → transport (λ x → (t : universal-cover x) → P (x , t)) (loops t) P-base u
+        ≡ P-base u
     P-loops t u =
       transport (λ u → transport (λ x → (t : universal-cover x) → P (x , t))
-                                 (loops t) P-baseWA u ≡ P-baseWA u)
+                                 (loops t) P-base u ≡ P-base u)
         (trans-trans-opposite {P = universal-cover} (loops t) u)
         (! (trans-totalpath {P = universal-cover} {Q = P}
              {x = (baseWA , transport universal-cover (! (loops t)) u)}
@@ -117,7 +118,7 @@ module equivCA
 
   P-CA-rec : (x : WA) → (t : universal-cover x) → P (x , t)
   P-CA-rec = wedge-circles-rec (λ x → (t : universal-cover x) → P (x , t))
-                               P-baseWA (λ t → funext-dep (P-loops t))
+                               P-base (λ t → funext-dep (P-loops t))
 
   -- Here is the conclusion of the elimination rule
   abstract

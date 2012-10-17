@@ -36,7 +36,8 @@ cone-eq-new top (refl _) (refl _) p3 =
 open import Homotopy.PullbackDef
 
 D→top : (top : Set m) → pullback-diag m
-D→top top = diag (A → top) , (B → top) , (C → top) , (λ u → u ◯ f) , (λ u → u ◯ g)
+D→top top = diag (A → top) , (B → top) , (C → top)
+                 , (λ u → u ◯ f) , (λ u → u ◯ g)
 
 cone-to-pullback : (top : Set m) → cone top → pullback (D→top top)
 cone-to-pullback top (a , b , h) = (a , b , funext-dep h)
