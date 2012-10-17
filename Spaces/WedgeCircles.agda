@@ -4,6 +4,14 @@ open import Base
 
 module Spaces.WedgeCircles {i} (A : Set i) where
 
+{-
+The idea is
+
+data wedge-circles : Set (suc i) where
+  base : wedge-circles
+  loops : A → base ≡ base
+-}
+
 private
   data #wedge-circles : Set (suc i) where
     #base : #wedge-circles

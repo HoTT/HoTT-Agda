@@ -10,7 +10,7 @@ import Algebra.FreeGroup
 import Algebra.FreeGroupProps
 import Algebra.FreeGroupAsReducedWords
 
-open Spaces.WedgeCircles A renaming (wedge-circles to WA)
+open Spaces.WedgeCircles A renaming (wedge-circles to WA; base to baseWA)
 open Algebra.FreeGroup A renaming (freegroup to FA)
 open Algebra.FreeGroupProps A
 open Algebra.FreeGroupAsReducedWords A eq
@@ -18,14 +18,14 @@ open Algebra.FreeGroupAsReducedWords A eq
 -- Path fibration
 
 path-fib : WA → Set (suc i)
-path-fib t = (t ≡ base)
+path-fib t = (t ≡ baseWA)
 
 tot-path-fib : Set (suc i)
 tot-path-fib = Σ (WA) path-fib
 
 abstract
   tot-path-fib-is-contr : is-contr tot-path-fib
-  tot-path-fib-is-contr = pathto-is-contr base
+  tot-path-fib-is-contr = pathto-is-contr baseWA
 
 -- Universal cover
 
@@ -67,7 +67,7 @@ contractibility using the new rules.
 
 -- Introduction rules
 CA-z : FA → tot-cover
-CA-z u = (base , u)
+CA-z u = (baseWA , u)
 
 CA-e : (t : A) (u : FA) → CA-z u ≡ CA-z (t · u)
 CA-e t u = total-path (loops t) (loops-to-x· t u)
@@ -87,37 +87,37 @@ module equivCA
     e' : (t : A) (u : FA)
       → transport P (CA-e' t u) (z u)
         ≡ z (transport universal-cover (loops t) u)
-    e' t u = (trans-totalpath {P = universal-cover} {Q = P} {x = (base , u)}
-               {y = (base , transport universal-cover (loops t) u)} (loops t)
+    e' t u = (trans-totalpath {P = universal-cover} {Q = P} {x = (baseWA , u)}
+               {y = (baseWA , transport universal-cover (loops t) u)} (loops t)
                (refl _) z
-             ∘ move!-transp-left (λ z → P (base , z)) _ (loops-to-x· t u)
+             ∘ move!-transp-left (λ z → P (baseWA , z)) _ (loops-to-x· t u)
                                  (z (t · u))
-             (! (trans-totalpath {P = universal-cover} {Q = P} {x = (base , u)}
-                  {y = (base , (t · u))} (loops t) (loops-to-x· t u) z)
+             (! (trans-totalpath {P = universal-cover} {Q = P} {x = (baseWA , u)}
+                  {y = (baseWA , (t · u))} (loops t) (loops-to-x· t u) z)
               ∘ e t u))
               ∘ map-dep z (! (loops-to-x· t u))
 
-  P-base : (u : universal-cover (base)) → P (base , u)
-  P-base u = z u
+  P-baseWA : (u : universal-cover (baseWA)) → P (baseWA , u)
+  P-baseWA u = z u
 
   abstract
-    P-loops : (t : A) (u : universal-cover (base))
-      → transport (λ x → (t : universal-cover x) → P (x , t)) (loops t) P-base u
-        ≡ P-base u
+    P-loops : (t : A) (u : universal-cover (baseWA))
+      → transport (λ x → (t : universal-cover x) → P (x , t)) (loops t) P-baseWA u
+        ≡ P-baseWA u
     P-loops t u =
       transport (λ u → transport (λ x → (t : universal-cover x) → P (x , t))
-                                 (loops t) P-base u ≡ P-base u)
+                                 (loops t) P-baseWA u ≡ P-baseWA u)
         (trans-trans-opposite {P = universal-cover} (loops t) u)
         (! (trans-totalpath {P = universal-cover} {Q = P}
-             {x = (base , transport universal-cover (! (loops t)) u)}
-             {y = (base , transport universal-cover (loops t)
+             {x = (baseWA , transport universal-cover (! (loops t)) u)}
+             {y = (baseWA , transport universal-cover (loops t)
                (transport universal-cover (! (loops t)) u))}
              (loops t) (refl _) z)
         ∘ e' t (transport universal-cover (! (loops t)) u))
 
   P-CA-rec : (x : WA) → (t : universal-cover x) → P (x , t)
   P-CA-rec = wedge-circles-rec (λ x → (t : universal-cover x) → P (x , t))
-                               P-base (λ t → funext-dep (P-loops t))
+                               P-baseWA (λ t → funext-dep (P-loops t))
 
   -- Here is the conclusion of the elimination rule
   abstract

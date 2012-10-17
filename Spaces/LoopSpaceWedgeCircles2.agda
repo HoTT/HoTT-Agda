@@ -11,7 +11,7 @@ import Algebra.FreeGroupAsReducedWords
 import Spaces.LoopSpaceWedgeCircles
 
 open Spaces.LoopSpaceWedgeCircles A eq
-open Spaces.WedgeCircles A renaming (wedge-circles to WA)
+open Spaces.WedgeCircles A renaming (wedge-circles to WA; base to baseWA)
 open Algebra.FreeGroup A renaming (freegroup to FA)
 open Algebra.FreeGroupProps A
 open Algebra.FreeGroupAsReducedWords A eq
@@ -144,8 +144,9 @@ total-equiv = contr-to-contr-is-equiv (total-map fiberwise-map)
 fiberwise-map-is-equiv : (x : WA) → is-equiv (fiberwise-map x)
 fiberwise-map-is-equiv x = fiberwise-is-equiv fiberwise-map total-equiv x
 
--- We can then conclude that the based loop space of the wedge of circles is
--- equivalent to the free group
-ΩWA≃FA : (base ≡ base) ≃ FA
-ΩWA≃FA = (fiberwise-map base , fiberwise-map-is-equiv base)
+-- We can then conclude that the based loop space of the wedge of circles on [A]
+-- is equivalent to the free group on [A], where [A] is any discrete set (i.e.
+-- with decidable equality)
+ΩWA≃FA : (baseWA ≡ baseWA) ≃ FA
+ΩWA≃FA = (fiberwise-map baseWA , fiberwise-map-is-equiv baseWA)
 
