@@ -125,6 +125,10 @@ compose-is-equiv f g =
     (λ x → map (inverse f) (inverse-left-inverse g (π₁ f x))
            ∘ inverse-left-inverse f x)
 
+equiv-compose : ∀ {i j k} {A : Set i} {B : Set j} {C : Set k}
+  (f : A ≃ B) (g : B ≃ C) → A ≃ C
+equiv-compose f g = ((π₁ g ◯ π₁ f) , compose-is-equiv f g)
+
 -- An equivalence induces an equivalence on the path spaces
 module MapEquiv {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x y : A) where
 
