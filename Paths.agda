@@ -162,6 +162,14 @@ module TransportReductionRules {i} {A : Set i} where
     → transport (λ x → f x ≡ a) p q ≡ ! (map f p) ∘ q
   trans-fx≡a f a (refl _) q = refl q
   
+  trans-x≡fx : (f : A → A) {x y : A} (p : x ≡ y) (q : x ≡ f x)
+    → transport (λ (x : A) → x ≡ f x) p q ≡ ! p ∘ (q ∘ map f p)
+  trans-x≡fx f (refl _) q = ! (refl-right-unit q)
+  
+  trans-fx≡x : (f : A → A) {x y : A} (p : x ≡ y) (q : f x ≡ x)
+    → transport (λ (x : A) → f x ≡ x) p q ≡ ! (map f p) ∘ (q ∘ p)
+  trans-fx≡x f (refl _) q = ! (refl-right-unit q)
+  
   trans-A : ∀ {j} {B : Set j} {x y : A} (p : x ≡ y) (q : B)
     → transport (λ _ → B) p q ≡ q
   trans-A (refl _) q = refl _
