@@ -26,17 +26,17 @@ pullback-to-cocone : (top : Set i) → (pullback (top→D top) → cocone top)
 pullback-to-cocone top (top→A , top→B , h) = (top→A , top→B , happly h)
 
 cocone-to-pullback : (top : Set i) → (cocone top → pullback (top→D top))
-cocone-to-pullback top (a , b , h) = (a , b , funext-dep h)
+cocone-to-pullback top (a , b , h) = (a , b , funext h)
 
 pullback-to-cocone-equiv : (top : Set i) → is-equiv (pullback-to-cocone top)
 pullback-to-cocone-equiv top = iso-is-eq _ (cocone-to-pullback top)
-  (λ y → map (λ u → _ , _ , u) (happly-funext-dep _))
-  (λ x → map (λ u → _ , _ , u) (funext-dep-happly _))
+  (λ y → map (λ u → _ , _ , u) (happly-funext _))
+  (λ x → map (λ u → _ , _ , u) (funext-happly _))
 
 cocone-to-pullback-equiv : (top : Set i) → is-equiv (cocone-to-pullback top)
 cocone-to-pullback-equiv top = iso-is-eq _ (pullback-to-cocone top)
-  (λ x → map (λ u → _ , _ , u) (funext-dep-happly _))
-  (λ y → map (λ u → _ , _ , u) (happly-funext-dep _))
+  (λ x → map (λ u → _ , _ , u) (funext-happly _))
+  (λ y → map (λ u → _ , _ , u) (happly-funext _))
 
 compose-cocone-map : (D E : Set i) (Dcocone : cocone D)
   → ((f : E → D) → cocone E)

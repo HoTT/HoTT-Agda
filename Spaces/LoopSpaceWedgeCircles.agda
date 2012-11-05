@@ -3,7 +3,7 @@
 open import Base
 open import Integers
 
-module Spaces.LoopSpaceWedgeCircles {i} (A : Set i) (eq : dec-eq A) where
+module Spaces.LoopSpaceWedgeCircles {i} (A : Set i) (set : is-set A) where
 
 import Spaces.WedgeCircles
 import Algebra.FreeGroup
@@ -13,7 +13,7 @@ import Algebra.FreeGroupAsReducedWords
 open Spaces.WedgeCircles A renaming (wedge-circles to WA; base to baseWA)
 open Algebra.FreeGroup A renaming (freegroup to FA)
 open Algebra.FreeGroupProps A
-open Algebra.FreeGroupAsReducedWords A eq
+--open Algebra.FreeGroupAsReducedWords A eq
 
 -- Path fibration
 
@@ -70,7 +70,7 @@ CA-z : FA → tot-cover
 CA-z u = (baseWA , u)
 
 CA-e : (t : A) (u : FA) → CA-z u ≡ CA-z (t · u)
-CA-e t u = total-path (loops t) (loops-to-x· t u)
+CA-e t u = Σ-eq (loops t) (loops-to-x· t u)
 
 -- Elimination rule
 module equivCA
@@ -81,7 +81,7 @@ module equivCA
 
   CA-e' : (t : A) (u : FA)
     → CA-z u ≡ CA-z (transport universal-cover (loops t) u)
-  CA-e' t u = total-path (loops t) (refl _)
+  CA-e' t u = Σ-eq (loops t) (refl _)
 
   abstract
     e' : (t : A) (u : FA)
@@ -118,7 +118,7 @@ module equivCA
 
   P-CA-rec : (x : WA) → (t : universal-cover x) → P (x , t)
   P-CA-rec = wedge-circles-rec (λ x → (t : universal-cover x) → P (x , t))
-                               P-base (λ t → funext-dep (P-loops t))
+                               P-base (λ t → funext (P-loops t))
 
   -- Here is the conclusion of the elimination rule
   abstract

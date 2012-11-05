@@ -12,7 +12,7 @@ data _≡_ {i} {A : Set i} : A → A → Set i where
   refl : (a : A) → a ≡ a
 
 _≢_ : ∀ {i} {A : Set i} → (A → A → Set i)
-x ≢ y = (x ≡ y) → ⊥ {zero}
+x ≢ y = ¬ (x ≡ y)
 
 -- -- This should not be provable
 -- K : {A : Set} → (x : A) → (p : x ≡ x) → p ≡ refl x
@@ -22,42 +22,43 @@ x ≢ y = (x ≡ y) → ⊥ {zero}
 
 infix 5 _∘_  -- \o
 
-_∘_ : ∀ {i} {A : Set i} {x y z : A} (p : x ≡ y) (q : y ≡ z) → x ≡ z
+_∘_ : ∀ {i} {A : Set i} {x y z : A} → (x ≡ y → y ≡ z → x ≡ z)
 refl _ ∘ q = q
 
-! : ∀ {i} {A : Set i} {x y : A} (p : x ≡ y) → y ≡ x
+! : ∀ {i} {A : Set i} {x y : A} → (x ≡ y → y ≡ x)
 ! (refl _) = refl _  
 
 -- Transport and map
 
-transport : ∀ {i j} {A : Set i} (P : A → Set j) {x y : A} (p : x ≡ y)
-  → P x → P y
+transport : ∀ {i j} {A : Set i} (P : A → Set j) {x y : A}
+  → (x ≡ y → P x → P y)
 transport P (refl _) t = t
 
-map : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) {x y : A} (p : x ≡ y)
-  → f x ≡ f y
+map : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) {x y : A}
+  → (x ≡ y → f x ≡ f y)
 map f (refl _) = refl _
 
-map-dep : ∀ {i j} {A : Set i} {P : A → Set j} (f : (a : A) → P a)
-  {x y : A} (p : x ≡ y) → transport P p (f x) ≡ f y
+map-dep : ∀ {i j} {A : Set i} {P : A → Set j} (f : (a : A) → P a) {x y : A}
+  → (p : x ≡ y) → transport P p (f x) ≡ f y
 map-dep f (refl _) = refl _
 
-map-dep! : ∀ {i j} {A : Set i} {P : A → Set j} (f : (a : A) → P a)
-  {x y : A} (p : x ≡ y) → f x ≡ transport P (! p) (f y)
+map-dep! : ∀ {i j} {A : Set i} {P : A → Set j} (f : (a : A) → P a) {x y : A}
+  → (p : x ≡ y) → f x ≡ transport P (! p) (f y)
 map-dep! f (refl _) = refl _
 
 -- Paths in Sigma types
 
 module Sigma {i j} {A : Set i} {P : A → Set j} where
 
-  total-path : {x y : A} (p : x ≡ y) {u : P x} {v : P y}
+  Σ-eq : {x y : A} (p : x ≡ y) {u : P x} {v : P y}
     (q : transport P p u ≡ v) → (x , u) ≡ (y , v)
-  total-path (refl _) (refl _) = refl _
+  Σ-eq (refl _) (refl _) = refl _
 
-  -- Same as [total-path] but with only one argument
-  total-total-path : {xu yv : Σ A P} (q : Σ (π₁ xu ≡ π₁ yv)
-    (λ p → transport P p (π₂ xu) ≡ (π₂ yv))) → xu ≡ yv
-  total-total-path (p , q) = total-path p q
+  -- Same as [Σ-eq] but with only one argument
+  total-Σ-eq : {xu yv : Σ A P}
+    (q : Σ (π₁ xu ≡ π₁ yv) (λ p → transport P p (π₂ xu) ≡ (π₂ yv)))
+    → xu ≡ yv
+  total-Σ-eq (p , q) = Σ-eq p q
 
   base-path : {x y : Σ A P} (p : x ≡ y) → π₁ x ≡ π₁ y
   base-path = map π₁
@@ -66,20 +67,21 @@ module Sigma {i j} {A : Set i} {P : A → Set j} where
     → transport P (base-path p) (π₂ x) ≡ π₂ y
   fiber-path {x} {.x} (refl .x) = refl _
 
-  base-path-total-path : {x y : A} (p : x ≡ y) {u : P x} {v : P y}
-    (q : transport P p u ≡ v) → base-path (total-path p q) ≡ p
-  base-path-total-path (refl _) (refl _) = refl _
-
-  fiber-path-total-path : {x y : A} (p : x ≡ y) {u : P x} {v : P y}
-    (q : transport P p u ≡ v)
-    → transport (λ t → transport P t u ≡ v) (base-path-total-path p q)
-                (fiber-path (total-path p q))
-      ≡ q
-  fiber-path-total-path (refl _) (refl _) = refl _
-
-  total-path-base-path-fiber-path : {x y : Σ A P} (p : x ≡ y)
-    → total-path (base-path p) (fiber-path p) ≡ p
-  total-path-base-path-fiber-path {x} {.x} (refl .x) = refl _
+  abstract
+    base-path-Σ-eq : {x y : A} (p : x ≡ y) {u : P x} {v : P y}
+      (q : transport P p u ≡ v) → base-path (Σ-eq p q) ≡ p
+    base-path-Σ-eq (refl _) (refl _) = refl _
+  
+    fiber-path-Σ-eq : {x y : A} (p : x ≡ y) {u : P x} {v : P y}
+      (q : transport P p u ≡ v)
+      → transport (λ t → transport P t u ≡ v) (base-path-Σ-eq p q)
+                  (fiber-path (Σ-eq p q))
+        ≡ q
+    fiber-path-Σ-eq (refl _) (refl _) = refl _
+  
+    Σ-eq-base-path-fiber-path : {x y : Σ A P} (p : x ≡ y)
+      → Σ-eq (base-path p) (fiber-path p) ≡ p
+    Σ-eq-base-path-fiber-path {x} {.x} (refl .x) = refl _
 
 open Sigma public
 
@@ -102,21 +104,21 @@ module GpdStruct {i} {A : Set i} where
   opposite-right-inverse : {x y : A} (p : x ≡ y) → p ∘ (! p) ≡ refl _
   opposite-right-inverse (refl _) = refl _
   
-  whisker-left : {x y z : A} (p : x ≡ y) {q r : y ≡ z} (h : q ≡ r)
-    → p ∘ q ≡ p ∘ r
+  whisker-left : {x y z : A} (p : x ≡ y) {q r : y ≡ z}
+    → (q ≡ r → p ∘ q ≡ p ∘ r)
   whisker-left p (refl _) = refl _
 
-  whisker-right : {x y z : A} (p : y ≡ z) {q r : x ≡ y} (h : q ≡ r)
-    → q ∘ p ≡ r ∘ p
+  whisker-right : {x y z : A} (p : y ≡ z) {q r : x ≡ y}
+    → (q ≡ r → q ∘ p ≡ r ∘ p)
   whisker-right p (refl _) = refl _
   
-  anti-whisker-right : {x y z : A} (p : y ≡ z) {q r : x ≡ y} (h : q ∘ p ≡ r ∘ p)
-    → q ≡ r
+  anti-whisker-right : {x y z : A} (p : y ≡ z) {q r : x ≡ y}
+    → (q ∘ p ≡ r ∘ p → q ≡ r)
   anti-whisker-right (refl _) {q} {r} h =
     ! (refl-right-unit q) ∘ (h ∘ refl-right-unit r)
   
-  anti-whisker-left : {x y z : A} (p : x ≡ y) {q r : y ≡ z} (h : p ∘ q ≡ p ∘ r)
-    → q ≡ r
+  anti-whisker-left : {x y z : A} (p : x ≡ y) {q r : y ≡ z}
+    → (p ∘ q ≡ p ∘ r → q ≡ r)
   anti-whisker-left (refl _) h = h
 
   -- [opposite-concat …] gives a result of the form [opposite (concat …) ≡ …],
@@ -140,17 +142,22 @@ module TransportReductionRules {i} {A : Set i} where
   -- term, [A] is a constant type, and [f] and [g] are constant functions.
   
   trans-x≡a : {a b c : A} (p : b ≡ c) (q : b ≡ a)
-    → transport (λ (x : A) → x ≡ a) p q ≡ (! p) ∘ q
+    → transport (λ x → x ≡ a) p q ≡ (! p) ∘ q
   trans-x≡a (refl _) q = refl _
   
   trans-a≡x : {a b c : A} (p : b ≡ c) (q : a ≡ b)
-    → transport (λ (x : A) → a ≡ x) p q ≡ q ∘ p
+    → transport (λ x → a ≡ x) p q ≡ q ∘ p
   trans-a≡x (refl _) q = ! (refl-right-unit q)
   
   trans-fx≡gx : ∀ {j} {B : Set j} (f g : A → B) {x y : A} (p : x ≡ y)
     (q : f x ≡ g x)
-    → transport (λ (x : A) → f x ≡ g x) p q ≡ ! (map f p) ∘ (q ∘ map g p)
+    → transport (λ x → f x ≡ g x) p q ≡ ! (map f p) ∘ (q ∘ map g p)
   trans-fx≡gx f g (refl _) q = ! (refl-right-unit q)
+  
+  trans-move-fx≡gx : ∀ {j} {B : Set j} (f g : A → B) {x y : A} (p : x ≡ y)
+    (q : f x ≡ g x) {r : f y ≡ g y}
+    → (q ∘ map g p ≡ map f p ∘ r → transport (λ x → f x ≡ g x) p q ≡ r)
+  trans-move-fx≡gx f g (refl _) q h = ! (refl-right-unit q) ∘ h
   
   trans-a≡fx : ∀ {j} {B : Set j} (a : B) (f : A → B) {x y : A} (p : x ≡ y)
     (q : a ≡ f x)
@@ -163,11 +170,11 @@ module TransportReductionRules {i} {A : Set i} where
   trans-fx≡a f a (refl _) q = refl q
   
   trans-x≡fx : (f : A → A) {x y : A} (p : x ≡ y) (q : x ≡ f x)
-    → transport (λ (x : A) → x ≡ f x) p q ≡ ! p ∘ (q ∘ map f p)
+    → transport (λ x → x ≡ f x) p q ≡ ! p ∘ (q ∘ map f p)
   trans-x≡fx f (refl _) q = ! (refl-right-unit q)
   
   trans-fx≡x : (f : A → A) {x y : A} (p : x ≡ y) (q : f x ≡ x)
-    → transport (λ (x : A) → f x ≡ x) p q ≡ ! (map f p) ∘ (q ∘ p)
+    → transport (λ x → f x ≡ x) p q ≡ ! (map f p) ∘ (q ∘ p)
   trans-fx≡x f (refl _) q = ! (refl-right-unit q)
   
   trans-A : ∀ {j} {B : Set j} {x y : A} (p : x ≡ y) (q : B)
@@ -176,7 +183,7 @@ module TransportReductionRules {i} {A : Set i} where
 
   trans-A→Pxy : ∀ {j k} (B : Set j) (P : (x : A) (y : B) → Set k)
     {b c : A} (p : b ≡ c) (q : (y : B) → P b y) (a : B)
-    → transport (λ (x : A) → ((y : B) → P x y)) p q a
+    → transport (λ x → ((y : B) → P x y)) p q a
       ≡ transport (λ u → P u a) p (q a)
   trans-A→Pxy B P (refl _) q a = refl _
   
@@ -197,10 +204,11 @@ module TransportReductionRules {i} {A : Set i} where
     → transport P (map f p) u ≡ transport (P ◯ f) p u
   trans-map f (refl _) u = refl _
   
+  -- Unreadable, should be removed
   trans-totalpath : ∀ {j k} {P : A → Set j} {Q : Σ A P → Set k} {x y : Σ A P}
     (p : π₁ x ≡ π₁ y) (q : transport P p (π₂ x) ≡ π₂ y)
     (f : (t : P (π₁ x)) → Q (π₁ x , t))
-    → transport Q (total-path p q) (f (π₂ x)) ≡
+    → transport Q (Σ-eq p q) (f (π₂ x)) ≡
         transport (λ x' → Q (π₁ y , x')) q
           (transport (λ x' → (t : P x') → Q (x' , t)) p f
             (transport P p (π₂ x)))
@@ -210,7 +218,7 @@ module TransportReductionRules {i} {A : Set i} where
     trans-totalpath' : ∀ {j k} {P : A → Set j} {Q : Σ A P → Set k} {x₁ y₁ : A}
       {x₂ : P x₁} {y₂ : P y₁}
       (p : x₁ ≡ y₁) (q : transport P p (x₂) ≡ y₂) (f : (t : P x₁) → Q (x₁ , t))
-      → transport Q (total-path p q) (f x₂) ≡
+      → transport Q (Σ-eq p q) (f x₂) ≡
           transport (λ x' → Q (y₁ , x')) q
             (transport (λ x' → (t : P x') → Q (x' , t)) p f
               (transport P p x₂))
@@ -268,11 +276,11 @@ module TransportReductionRules {i} {A : Set i} where
   map-compose f g (refl _) = refl _
 
   map-cst : ∀ {j} {B : Set j} (b : B) {x y : A} (p : x ≡ y)
-    → map (cstmap b) p ≡ refl b
+    → map (cst b) p ≡ refl b
   map-cst b (refl _) = refl _
 
-  map-idmap : {u v : A} (p : u ≡ v) → map (idmap A) p ≡ p
-  map-idmap (refl _) = refl _
+  map-id : {u v : A} (p : u ≡ v) → map (id A) p ≡ p
+  map-id (refl _) = refl _
 
 
   -- Move functions

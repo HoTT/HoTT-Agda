@@ -53,7 +53,7 @@ R-z : ℤ → tot-cover
 R-z n = (base , n)
 
 R-e : (n : ℤ) → R-z n ≡ R-z (succ n)
-R-e n = total-path loop (loop-to-succ n)
+R-e n = Σ-eq loop (loop-to-succ n)
 
 -- Elimination rule
 module Tot-cover-is-ℝ
@@ -65,7 +65,7 @@ module Tot-cover-is-ℝ
   -- I redefine [R-e] and [e] to have something involving
   -- [transport universal-cover loop] instead of [succ]
   R-e' : (n : ℤ) → R-z n ≡ R-z (transport universal-cover loop n)
-  R-e' n = total-path loop (refl _)
+  R-e' n = Σ-eq loop (refl _)
 
   e' : (n : ℤ) → transport P (R-e' n) (z n)
                  ≡ z (transport universal-cover loop n)
@@ -97,7 +97,7 @@ module Tot-cover-is-ℝ
 
   P-R-rec : (x : S¹) → (t : universal-cover x) → P (x , t)
   P-R-rec = S¹-rec (λ x → (t : universal-cover x) → P (x , t))
-                   P-base (funext-dep P-loop)
+                   P-base (funext P-loop)
 
   -- Here is the conclusion of the elimination rule
   R-rec : (t : tot-cover) → P t
@@ -169,9 +169,8 @@ S¹-is-gpd =
   S¹-rec _
     (S¹-rec _
       ΩS¹-is-set  -- [base ≡ base] is a set
-      (π₁ (is-hlevel-is-prop 2 _ _ _)))
-    (funext-dep
+      (π₁ (is-hlevel-is-prop 2 _ _)))
+    (funext
       (S¹-rec _
-        (π₁ (is-hlevel-is-prop 2 _ _ _))
-        (π₁ (is-increasing-hlevel 1 _(is-hlevel-is-prop 2 _) _ _ _ _))))
-
+        (π₁ (is-hlevel-is-prop 2 _ _))
+        (prop-has-all-paths (≡-is-hlevel 1 (is-hlevel-is-prop 2)) _ _)))

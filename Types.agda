@@ -33,9 +33,11 @@ abort-nondep ()
 record unit {i} : Set i where
   constructor tt
 
+⊤ = unit  -- \top
+
 -- Booleans
 
-data bool : Set where
+data bool {i} : Set i where
   true : bool
   false : bool
 
@@ -55,9 +57,12 @@ data _⊔_ {i j} (A : Set i) (B : Set j) : Set (max i j) where  -- \sqcup
   inr : B → A ⊔ B
 
 -- Product
-
 _×_ : ∀ {i j} (A : Set i) (B : Set j) → Set (max i j)  -- \times
 A × B = Σ A (λ _ → B)
+
+-- Dependent product
+Π : ∀ {i j} (A : Set i) (P : A → Set j) → Set (max i j)
+Π A P = (x : A) → P x
 
 -- Natural numbers
 

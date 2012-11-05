@@ -2,7 +2,7 @@
 
 open import Base
 
-module Spaces.LoopSpaceWedgeCircles2 {i} (A : Set i) (eq : dec-eq A) where
+module Spaces.LoopSpaceWedgeCircles2 {i} (A : Set i) (eq : has-dec-eq A) where
 
 import Spaces.WedgeCircles
 import Algebra.FreeGroup
@@ -10,7 +10,7 @@ import Algebra.FreeGroupProps
 import Algebra.FreeGroupAsReducedWords
 import Spaces.LoopSpaceWedgeCircles
 
-open Spaces.LoopSpaceWedgeCircles A eq
+open Spaces.LoopSpaceWedgeCircles A (dec-eq-is-set eq)
 open Spaces.WedgeCircles A renaming (wedge-circles to WA; base to baseWA)
 open Algebra.FreeGroup A renaming (freegroup to FA)
 open Algebra.FreeGroupProps A

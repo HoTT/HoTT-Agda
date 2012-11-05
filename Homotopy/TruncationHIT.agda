@@ -63,8 +63,9 @@ postulate  -- HIT
 private
   contr : (n ≡ 0) → is-contr τ
 abstract
-  contr p = inhab-prop-is-contr τ (all-paths-is-prop (hack-prop p))
-                                  (top (λ x → abort-nondep (transport Sⁿ p x)))
+  contr p = inhab-prop-is-contr (top (λ x → abort-nondep (transport Sⁿ p x)))
+                                (all-paths-is-prop (hack-prop p))
+                                  
 
 -- Computation rules for [rays] are not needed
 
@@ -79,7 +80,7 @@ abstract
   abstract
     u : (f : Sⁿ n → τ) (p : (x : Sⁿ n) → P (f x))
       → filling-dep n P f (top f , rays f) p
-    u = hlevel-n-has-filling-dep τ P n contr (λ f → (top f , rays f))
+    u = hlevel-has-filling-dep τ P n contr (λ f → (top f , rays f))
 
     x₁ : (f : Sⁿ n → τ) (p : (x : Sⁿ n) → P (f x)) → P (top f)
     x₁ = λ f p → π₁ (u f p)
@@ -97,9 +98,9 @@ abstract
   #τ-rec-nondep C proj* {λ _ p → π₁ (u p)}
                         {λ _ p → π₂ (u p)} {hack-prop*} where
   u : _
-  u = hlevel-n-has-n-spheres-filled n _ trunc
+  u = hlevel-has-spheres-filled n _ trunc
 
 -- The nth truncation is of h-level [n]
 abstract
-  τ-hlevel : is-hlevel n τ
-  τ-hlevel = n-spheres-filled-hlevel n τ contr (λ f → (top f , rays f))
+  τ-is-hlevel : is-hlevel n τ
+  τ-is-hlevel = spheres-filled-is-hlevel n τ contr (λ f → (top f , rays f))

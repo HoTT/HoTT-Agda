@@ -3,7 +3,7 @@
 open import Types
 open import Functions
 open import Paths
-open import Contractible
+open import HLevel
 
 module Equivalences where
 
@@ -16,102 +16,102 @@ is-equiv {B = B} f = (y : B) → is-contr (hfiber f y)
 _≃_ : ∀ {i j} (A : Set i) (B : Set j) → Set (max i j)  -- \simeq
 A ≃ B = Σ (A → B) is-equiv
 
--- Notation for the application of an equivalence to an argument
+module Fresh {i} {j} {A : Set i} {B : Set j} where
 
-infix 1 _$_
+  -- Notation for the application of an equivalence to an argument
+  _☆_ : (f : A ≃ B) (x : A) → B
+  f ☆ x = (π₁ f) x
 
-_$_ : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x : A) → B
-f $ x = (π₁ f) x
+  inverse : (f : A ≃ B) → B → A
+  inverse (f , e) = λ y → π₁ (π₁ (e y))
 
-inverse : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B) → B → A
-inverse (f , e) y = π₁ (π₁ (e y))
+  abstract
+    inverse-right-inverse : (f : A ≃ B) (y : B) → f ☆ (inverse f y) ≡ y
+    inverse-right-inverse (f , e) y = π₂ (π₁ (e y))
 
-inverse-right-inverse : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B) (y : B)
-  → (f $ ((inverse f) y)) ≡ y
-inverse-right-inverse (f , e) y = π₂ (π₁ (e y))
+    inverse-left-inverse : (f : A ≃ B) (x : A) → inverse f (f ☆ x) ≡ x
+    inverse-left-inverse (f , e) x =
+      ! (base-path (π₂ (e (f x)) (x , refl (f x))))
 
-inverse-left-inverse : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x : A)
-  → (inverse f) (f $ x) ≡ x
-inverse-left-inverse (f , e) x = ! (base-path (π₂ (e (f x)) (x , refl (f x))))
+    hfiber-triangle : (f : A → B) (z : B) {x y : hfiber f z} (p : x ≡ y)
+      → map f (base-path p) ∘ π₂ y ≡ π₂ x
+    hfiber-triangle f z {x} {.x} (refl .x) = refl _
 
-hfiber-triangle : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) (z : B)
-  {x y : hfiber f z} (p : x ≡ y)
-  → map f (base-path p) ∘ (π₂ y) ≡ π₂ x
-hfiber-triangle f z {x} {.x} (refl .x) = refl _
+    inverse-triangle : (f : A ≃ B) (x : A) →
+      inverse-right-inverse f (f ☆ x) ≡ map (π₁ f) (inverse-left-inverse f x)
+    inverse-triangle (f , e) x = move1!-left-on-left _ _
+      (hfiber-triangle f _ (π₂ (e (f x)) (x , refl (f x))))
+       ∘ opposite-map f _
 
-inverse-triangle : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x : A) →
-  inverse-right-inverse f (f $ x) ≡ map (π₁ f) (inverse-left-inverse f x)
-inverse-triangle f x = move1!-left-on-left _ _
-  (hfiber-triangle (π₁ f) _ (π₂ (π₂ f (f $ x)) (x , refl (π₁ f x))))
-  ∘ opposite-map (π₁ f) _
+    -- Needs to be completely rewritten
+    adjiso-is-eq : (f : A → B) (g : B → A) (h : (y : B) → f (g y) ≡ y)
+      (h' : (x : A) → g (f x) ≡ x) (adj : (x : A) → map f (h' x) ≡ h (f x))
+      → is-equiv f
+    adjiso-is-eq f g h h' adj y =
+      ((g y , h y),
+      (λ y' → Σ-eq (! (h' (π₁ y')) ∘ map g (π₂ y'))
+        (trans-fx≡a f _ (! (h' (π₁ y')) ∘ map g (π₂ y')) (π₂ y') ∘
+        move-right-on-right (! (map f (! (h' (π₁ y')) ∘ map g (π₂ y'))))
+          (π₂ y') (h y)
+          (map ! (map-concat f (! (h' (π₁ y'))) (map g (π₂ y')))
+          ∘ (opposite-concat (map f (! (h' (π₁ y')))) (map f (map g (π₂ y'))) ∘
+              (whisker-left (! (map f (map g (π₂ y'))))
+                (opposite-map f (! (h' (π₁ y')))
+                ∘ map (map f) (opposite-opposite (h' (π₁ y'))))
+         ∘ ((whisker-left (! (map f (map g (π₂ y')))) (adj (π₁ y'))
+         ∘ whisker-right (h (f (π₁ y'))) (map ! (compose-map f g (π₂ y'))
+                                         ∘ opposite-map (f ◯ g) (π₂ y')))
+         ∘ homotopy-naturality-toid (f ◯ g) h (! (π₂ y')))))))))
 
-equiv-is-inj : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x y : A)
-  (p : (f $ x) ≡ (f $ y)) → x ≡ y
+    -- Needs to be completely rewritten
+    iso-is-adjiso : (f : A → B) (g : B → A) (h : (y : B) → f (g y) ≡ y)
+      (h' : (x : A) → g (f x) ≡ x)
+      → Σ ((x : A) → g (f x) ≡ x) (λ h'' → (x : A) → map f (h'' x) ≡ h (f x))
+    iso-is-adjiso f g h h' = ((λ x → ! (map g (map f (h' x)))
+                                     ∘ (map g (h (f x)) ∘ h' x)) ,
+      (λ x → map-concat f (! (map g (map f (h' x)))) (map g (h (f x)) ∘ h' x)
+           ∘ (whisker-right (map f (map g (h (f x)) ∘ h' x))
+                            (map-opposite f (map g (map f (h' x))))
+           ∘ move!-right-on-left (map f (map g (map f (h' x))))
+                                 (map f (map g (h (f x)) ∘ h' x)) (h (f x))
+             (map-concat f (map g (h (f x))) (h' x)
+           ∘ (whisker-right (map f (h' x)) (compose-map f g (h (f x)))
+           ∘ ((whisker-right (map f (h' x)) {q = map (f ◯ g) (h (f x))}
+                 {r = h (f (g (f x)))} (anti-whisker-right (h (f x))
+             (homotopy-naturality-toid (f ◯ g) h (h (f x))))
+           ∘ ! (homotopy-naturality-toid (f ◯ g) h (map f (h' x))))
+           ∘ whisker-right (h (f x)) (map-compose f g (map f (h' x)))))))))
+
+    iso-is-eq : (f : A → B) (g : B → A) (h : (y : B) → f (g y) ≡ y)
+      (h' : (x : A) → g (f x) ≡ x) → is-equiv f
+    iso-is-eq f g h h' = adjiso-is-eq f g h (π₁ (iso-is-adjiso f g h h'))
+      (π₂ (iso-is-adjiso f g h h'))
+
+    -- When using [iso-is-eq], the other map which is given is an inverse
+    inverse-iso-is-eq : (f : A → B) (g : B → A) (h : (y : B) → f (g y) ≡ y)
+      (h' : (x : A) → g (f x) ≡ x) → inverse (f , iso-is-eq f g h h') ≡ g
+    inverse-iso-is-eq f g h h' = refl _
+
+open Fresh public
+
+-- The inverse of an equivalence is an equivalence
+inverse-is-equiv : ∀ {i} {j} {A : Set i} {B : Set j} (f : A ≃ B)
+  → is-equiv (inverse f)
+inverse-is-equiv f = iso-is-eq _ (π₁ f) (inverse-left-inverse f)
+                                        (inverse-right-inverse f)
+
+
+_⁻¹ : ∀ {i} {j} {A : Set i} {B : Set j} (f : A ≃ B) → B ≃ A  -- \^-\^1
+_⁻¹ f = (inverse f , inverse-is-equiv f)
+
+-- Equivalences are injective
+equiv-is-inj : ∀ {i} {j} {A : Set i} {B : Set j} (f : A ≃ B) (x y : A)
+  → (f ☆ x ≡ f ☆ y → x ≡ y)
 equiv-is-inj f x y p = ! (inverse-left-inverse f x)
                        ∘ (map (inverse f) p ∘ inverse-left-inverse f y)
 
-abstract
-  adjiso-is-eq : ∀ {i j} {A : Set i} {B : Set j}
-    (f : A → B) (g : B → A) (h : (y : B) → f (g y) ≡ y)
-    (h' : (x : A) → g (f x) ≡ x) (adj : (x : A) → map f (h' x) ≡ h (f x))
-    → is-equiv f
-  adjiso-is-eq f g h h' adj = λ y → ((g y , h y) ,
-    (λ y' → total-path (! (h' (π₁ y')) ∘ map g (π₂ y'))
-      (trans-fx≡a f _ (! (h' (π₁ y')) ∘ map g (π₂ y')) (π₂ y') ∘
-      move-right-on-right (! (map f (! (h' (π₁ y')) ∘ map g (π₂ y'))))
-        (π₂ y') (h y)
-        (map ! (map-concat f (! (h' (π₁ y'))) (map g (π₂ y')))
-        ∘ (opposite-concat (map f (! (h' (π₁ y')))) (map f (map g (π₂ y'))) ∘
-            (whisker-left (! (map f (map g (π₂ y'))))
-              (opposite-map f (! (h' (π₁ y')))
-              ∘ map (map f) (opposite-opposite (h' (π₁ y'))))
-       ∘ ((whisker-left (! (map f (map g (π₂ y')))) (adj (π₁ y'))
-       ∘ whisker-right (h (f (π₁ y'))) (map ! (compose-map f g (π₂ y'))
-                                       ∘ opposite-map (f ◯ g) (π₂ y')))
-       ∘ homotopy-naturality-toid (f ◯ g) h (! (π₂ y')))))))))
-
-  iso-is-adjiso : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) (g : B → A)
-    (h : (y : B) → f (g y) ≡ y) (h' : (x : A) → g (f x) ≡ x)
-    → Σ ((x : A) → g (f x) ≡ x) (λ h'' → (x : A) → map f (h'' x) ≡ h (f x))
-  iso-is-adjiso f g h h' = ((λ x → ! (map g (map f (h' x)))
-                                   ∘ (map g (h (f x)) ∘ h' x)) ,
-    (λ x → map-concat f (! (map g (map f (h' x)))) (map g (h (f x)) ∘ h' x)
-         ∘ (whisker-right (map f (map g (h (f x)) ∘ h' x))
-                          (map-opposite f (map g (map f (h' x))))
-         ∘ move!-right-on-left (map f (map g (map f (h' x))))
-                               (map f (map g (h (f x)) ∘ h' x)) (h (f x))
-           (map-concat f (map g (h (f x))) (h' x)
-         ∘ (whisker-right (map f (h' x)) (compose-map f g (h (f x)))
-         ∘ ((whisker-right (map f (h' x)) {q = map (f ◯ g) (h (f x))}
-               {r = h (f (g (f x)))} (anti-whisker-right (h (f x))
-           (homotopy-naturality-toid (f ◯ g) h (h (f x))))
-         ∘ ! (homotopy-naturality-toid (f ◯ g) h (map f (h' x))))
-         ∘ whisker-right (h (f x)) (map-compose f g (map f (h' x)))))))))
-
-  iso-is-eq : ∀ {i j} {A : Set i} {B : Set j}
-    (f : A → B) (g : B → A) (h : (y : B) → f (g y) ≡ y)
-    (h' : (x : A) → g (f x) ≡ x) → is-equiv f
-  iso-is-eq f g h h' = adjiso-is-eq f g h (π₁ (iso-is-adjiso f g h h'))
-    (π₂ (iso-is-adjiso f g h h'))
-
-  -- The inverse of an equivalence is an equivalence
-  inverse-is-equiv : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B)
-    → is-equiv (inverse f)
-  inverse-is-equiv f = iso-is-eq _ (π₁ f) (inverse-left-inverse f)
-                                 (inverse-right-inverse f)
-
-  -- When using [iso-is-eq], the other map which is given is an inverse
-  inverse-iso-is-eq : ∀ {i j} {A : Set i} {B : Set j}
-    (f : A → B) (g : B → A) (h : (y : B) → f (g y) ≡ y)
-    (h' : (x : A) → g (f x) ≡ x) → inverse (f , iso-is-eq f g h h') ≡ g
-  inverse-iso-is-eq f g h h' = refl _
-
-_⁻¹ : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B) → B ≃ A  -- \^-\^1
-_⁻¹ f = (inverse f , inverse-is-equiv f)
-
-
 -- Any contractible type is equivalent to the unit type
-contr-equiv-unit : ∀ {i j} {A : Set i} (e : is-contr A) → A ≃ unit {j}
+contr-equiv-unit : ∀ {i j} {A : Set i} → (is-contr A → A ≃ unit {j})
 contr-equiv-unit e = ((λ _ → tt) , iso-is-eq _ (λ _ → π₁ e) (λ y → refl tt)
                                              (λ x → ! (π₂ e x)))
 
@@ -126,13 +126,14 @@ compose-is-equiv f g =
            ∘ inverse-left-inverse f x)
 
 equiv-compose : ∀ {i j k} {A : Set i} {B : Set j} {C : Set k}
-  (f : A ≃ B) (g : B ≃ C) → A ≃ C
+  → (A ≃ B → B ≃ C → A ≃ C)
 equiv-compose f g = ((π₁ g ◯ π₁ f) , compose-is-equiv f g)
 
 -- An equivalence induces an equivalence on the path spaces
+-- The proofs here can probably be simplified
 module MapEquiv {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x y : A) where
 
-  map-inverse : (p : (f $ x) ≡ (f $ y)) → x ≡ y
+  map-inverse : (p : f ☆ x ≡ f ☆ y) → x ≡ y
   map-inverse p = equiv-is-inj f x y p
 
   left-inverse : (p : x ≡ y) → map-inverse (map (π₁ f) p) ≡ p
@@ -145,7 +146,7 @@ module MapEquiv {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x y : A) where
                            (homotopy-naturality-toid (inverse f ◯ π₁ f)
                              (inverse-left-inverse f) p)))
 
-  right-inverse : (p : (f $ x) ≡ (f $ y)) → map (π₁ f) (map-inverse p) ≡ p
+  right-inverse : (p : f ☆ x ≡ f ☆ y) → map (π₁ f) (map-inverse p) ≡ p
   right-inverse p =
     map-concat (π₁ f) (! (inverse-left-inverse f x)) _
     ∘ (map (λ u → u ∘ map (π₁ f) (map (inverse f) p ∘ inverse-left-inverse f y))
@@ -159,21 +160,22 @@ module MapEquiv {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x y : A) where
                                     p
         ∘ whisker-right p (inverse-triangle f x))))))
 
-  equiv-map : ((x ≡ y) ≃ ((f $ x) ≡ (f $ y)))
+  equiv-map : (x ≡ y) ≃ (f ☆ x ≡ f ☆ y)
   equiv-map = (map (π₁ f) , iso-is-eq _ map-inverse right-inverse left-inverse)
 
 equiv-map : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x y : A)
-  → ((x ≡ y) ≃ ((f $ x) ≡ (f $ y)))
+  → (x ≡ y) ≃ (f ☆ x ≡ f ☆ y)
 equiv-map f x y = MapEquiv.equiv-map f x y
 
-total-total-path-is-equiv : ∀ {i j} {A : Set i} {P : A → Set j} {x y : Σ A P}
-  → is-equiv (total-total-path {xu = x} {yv = y})
-total-total-path-is-equiv {P = P} = iso-is-eq _
-  (λ totp → (base-path totp , fiber-path totp))
-  total-path-base-path-fiber-path
-  (λ p → total-path (base-path-total-path (π₁ p) (π₂ p))
-                    (fiber-path-total-path {P = P} (π₁ p) (π₂ p)))
+abstract
+  total-Σ-eq-is-equiv : ∀ {i j} {A : Set i} {P : A → Set j} {x y : Σ A P}
+    → is-equiv (total-Σ-eq {xu = x} {yv = y})
+  total-Σ-eq-is-equiv {P = P} = iso-is-eq _
+    (λ totp → (base-path totp , fiber-path totp))
+    Σ-eq-base-path-fiber-path
+    (λ p → Σ-eq (base-path-Σ-eq (π₁ p) (π₂ p))
+                      (fiber-path-Σ-eq {P = P} (π₁ p) (π₂ p)))
 
-total-path-equiv : ∀ {i j} {A : Set i} {P : A → Set j} {x y : Σ A P}
+Σ-eq-equiv : ∀ {i j} {A : Set i} {P : A → Set j} {x y : Σ A P}
   → (Σ (π₁ x ≡ π₁ y) (λ p → transport P p (π₂ x) ≡ (π₂ y))) ≃ (x ≡ y)
-total-path-equiv = (total-total-path , total-total-path-is-equiv)
+Σ-eq-equiv = (total-Σ-eq , total-Σ-eq-is-equiv)

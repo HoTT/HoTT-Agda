@@ -9,7 +9,7 @@ module Homotopy.PushoutUP {m : Level} (D : pushout-diag m)
 
 open pushout-diag D
 
--- Idea : [Cone E = (A → E) ×_(C → E) (B → E)]
+-- Idea : [cone E = (A → E) ×_(C → E) (B → E)]
 record cone (top : Set m) : Set m where
   constructor _,_,_
   field
@@ -31,7 +31,7 @@ cone-eq-new : (top : Set m) {a1 a2 : A → top} {b1 b2 : B → top}
   → (a1 , b1 , h1) ≡ (a2 , b2 , h2)
 cone-eq-new top (refl _) (refl _) p3 =
   cone-eq top (refl _) (refl _)
-    (funext-dep (λ c → ! (refl-right-unit _) ∘ ! (p3 c)))
+    (funext (λ c → ! (refl-right-unit _) ∘ ! (p3 c)))
 
 open import Homotopy.PullbackDef
 
@@ -40,7 +40,7 @@ D→top top = diag (A → top) , (B → top) , (C → top)
                  , (λ u → u ◯ f) , (λ u → u ◯ g)
 
 cone-to-pullback : (top : Set m) → cone top → pullback (D→top top)
-cone-to-pullback top (a , b , h) = (a , b , funext-dep h)
+cone-to-pullback top (a , b , h) = (a , b , funext h)
 
 pullback-to-cone : (top : Set m)
   → pullback (D→top top)
@@ -51,15 +51,15 @@ cone-equiv-pullback : (top : Set m) → cone top ≃ pullback (D→top top)
 cone-equiv-pullback top = (cone-to-pullback top
   , iso-is-eq _
     (pullback-to-cone top)
-    (λ p → map (λ u → _ , _ , u) (funext-dep-happly _))
-    (λ c → map (λ u → _ , _ , u) (happly-funext-dep _)))
+    (λ p → map (λ u → _ , _ , u) (funext-happly _))
+    (λ c → map (λ u → _ , _ , u) (happly-funext _)))
 
 pullback-equiv-cone : (top : Set m) → pullback (D→top top) ≃ cone top
 pullback-equiv-cone top = (pullback-to-cone top
   , iso-is-eq _
     (cone-to-pullback top)
-    (λ c → map (λ u → _ , _ , u) (happly-funext-dep _))
-    (λ p → map (λ u → _ , _ , u) (funext-dep-happly _)))
+    (λ c → map (λ u → _ , _ , u) (happly-funext _))
+    (λ p → map (λ u → _ , _ , u) (funext-happly _)))
 
 compose-cone-map : (D E : Set m) (Dcone : cone D) → ((f : D → E) → cone E)
 compose-cone-map D E (A→top , B→top , h) f =
@@ -75,7 +75,7 @@ compose-cone-map-compose : (D E F : Set m) (Dcone : cone D) (f : D → E)
     ≡ compose-cone-map D F Dcone (g ◯ f)
 compose-cone-map-compose D E F Dcone f g =
   map (λ u → ((g ◯ (f ◯ cone.A→top Dcone)) , (g ◯ (f ◯ cone.B→top Dcone)) , u))
-      (funext-dep (λ c → compose-map g f (cone.h Dcone c)))
+      (funext (λ c → compose-map g f (cone.h Dcone c)))
 
 module UniquenessPushout (D : Set m) ⦃ PD : P D ⦄ (Dcone : cone D)
   (Dpushout : is-pushout D Dcone) (E : Set m) ⦃ PE : P E ⦄ (Econe : cone E)
@@ -94,10 +94,10 @@ module UniquenessPushout (D : Set m) ⦃ PD : P D ⦄ (Dcone : cone D)
   EE-eq = (compose-cone-map E E Econe , Epushout E)
 
   D→E : D → E
-  D→E = (DE-eq ⁻¹) $ Econe
+  D→E = (DE-eq ⁻¹) ☆ Econe
 
   E→D : E → D
-  E→D = (ED-eq ⁻¹) $ Dcone
+  E→D = (ED-eq ⁻¹) ☆ Dcone
 
   abstract
     D→E→D : (λ x → E→D (D→E x)) ≡ (λ x → x)
@@ -106,7 +106,7 @@ module UniquenessPushout (D : Set m) ⦃ PD : P D ⦄ (Dcone : cone D)
       ∘ (map (λ u → compose-cone-map E D u E→D)
              (inverse-right-inverse DE-eq Econe)
       ∘ (inverse-right-inverse ED-eq Dcone
-        ∘ map (λ u → _ , _ , u) (funext-dep (λ c → ! (map-idmap _))))))
+        ∘ map (λ u → _ , _ , u) (funext (λ c → ! (map-id _))))))
 
     E→D→E : (λ x → D→E (E→D x)) ≡ (λ x → x)
     E→D→E = equiv-is-inj (compose-cone-map E E Econe , Epushout E) _ _
@@ -114,7 +114,7 @@ module UniquenessPushout (D : Set m) ⦃ PD : P D ⦄ (Dcone : cone D)
       ∘ (map (λ u → compose-cone-map D E u D→E)
              (inverse-right-inverse ED-eq Dcone)
       ∘ (inverse-right-inverse DE-eq Econe
-        ∘ map (λ u → _ , _ , u) (funext-dep (λ c → ! (map-idmap _))))))
+        ∘ map (λ u → _ , _ , u) (funext (λ c → ! (map-id _))))))
 
     D≃E : D ≃ E
     D≃E = (D→E , iso-is-eq _ E→D (happly E→D→E) (happly D→E→D))

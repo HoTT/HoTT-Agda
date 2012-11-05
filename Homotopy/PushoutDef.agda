@@ -29,14 +29,14 @@ pushout-diag-eq p q r {f} {f'} s {g} {g'} t = pushout-diag-raw-eq
   (eq-to-path p)
   (eq-to-path q)
   (eq-to-path r)
-  (funext-dep (λ a → map f' (trans-X-eq-to-path r a)
+  (funext (λ a → map f' (trans-X-eq-to-path r a)
                      ∘ (s a ∘ ! (trans-X-eq-to-path p (f a)))))
-  (funext-dep (λ b → trans-X-eq-to-path q (g b)
+  (funext (λ b → trans-X-eq-to-path q (g b)
                      ∘ (t b ∘ map g' (! (trans-X-eq-to-path r b)))))
 
-module Pushout {i} (D : pushout-diag i) where
+module Pushout {i} {d : pushout-diag i} where
 
-  open pushout-diag D
+  open pushout-diag d
 
   private
     data #pushout : Set i where
@@ -51,7 +51,7 @@ module Pushout {i} (D : pushout-diag i) where
   
   right : B → pushout
   right = #right
-  
+
   postulate  -- HIT
     glue : (c : C) → left (f c) ≡ right (g c)
   
@@ -79,4 +79,17 @@ module Pushout {i} (D : pushout-diag i) where
       (glue* : (c : C) → left* (f c) ≡ right* (g c)) (c : C)
       → map (pushout-rec-nondep D left* right* glue*) (glue c) ≡ glue* c
   
-open Pushout public
+open Pushout public hiding (pushout)
+
+pushout : ∀ {i} (d : pushout-diag i) → Set i
+pushout d = Pushout.pushout {_} {d}
+
+-- left : ∀ {i} {d : pushout-diag i} → (pushout-diag.A d → pushout d)
+-- left {i} {d} = Pushout.left d
+
+-- right : ∀ {i} {d : pushout-diag i} → (pushout-diag.B d → pushout d)
+-- right {i} {d} = Pushout.right d
+
+-- glue : ∀ {i} {d : pushout-diag i}
+--   → ((c : pushout-diag.C d) → left (pushout-diag.f d c) ≡ right (pushout-diag.g d c))
+-- glue {i} {d} = Pushout.glue d

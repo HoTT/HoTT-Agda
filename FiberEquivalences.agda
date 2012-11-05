@@ -3,7 +3,7 @@
 open import Types
 open import Functions
 open import Paths
-open import Contractible
+open import HLevel
 open import Equivalences
 
 module FiberEquivalences {i j k} {A : Set i} {P : A → Set k} {Q : A → Set j}
@@ -21,7 +21,7 @@ module TotalMapEquiv (e : is-equiv total-map) where
   total-equiv = (total-map , e)
 
   -- The inverse is propositionally fiberwise
-  base-path-inverse : (x : A) (y : Q x) → π₁ ((total-equiv ⁻¹) $ (x , y)) ≡ x
+  base-path-inverse : (x : A) (y : Q x) → π₁ ((total-equiv ⁻¹) ☆ (x , y)) ≡ x
   base-path-inverse x y = base-path (inverse-right-inverse total-equiv (x , y))
   
   -- And the action of [total-map] on paths is correct on the base path
@@ -33,7 +33,7 @@ module TotalMapEquiv (e : is-equiv total-map) where
   -- transform it into a fiberwise map using [base-path-inverse]
   inv : ((x : A) → (Q x → P x))
   inv x y = transport P (base-path-inverse x y)
-                        (π₂ ((total-equiv ⁻¹) $ (x , y)))
+                        (π₂ ((total-equiv ⁻¹) ☆ (x , y)))
   
   app-trans : {x y : A} (p : x ≡ y) (u : P x)
     → f y (transport P p u) ≡ transport Q p (f x u)
@@ -45,7 +45,7 @@ module TotalMapEquiv (e : is-equiv total-map) where
   inv-right-inverse x y =
     app-trans (base-path (inverse-right-inverse total-equiv (x , y)))
               (π₂ (inverse (_ , e) (x , y)))
-    ∘ fiber-path (π₂ (π₁ (e (x , y))))
+    ∘ fiber-path (inverse-right-inverse total-equiv (x , y))
   
   inv-left-inverse : (x : A) (y : P x) → inv x (f x y) ≡ y
   inv-left-inverse x y =
@@ -56,7 +56,7 @@ module TotalMapEquiv (e : is-equiv total-map) where
                                                                  (x , f x y)))
                                (! (base-path-inverse x (f x y))) y)
     ∘ map (λ p → transport P p y)
-          (opposite-left-inverse (map π₁ (π₂ (π₁ (e (x , f x y))))))) where
+          (opposite-left-inverse (map π₁ (inverse-right-inverse total-equiv (x , f x y))))) where
 
     lemma1 : (x : A) (y : P x)
       → base-path-inverse x (f x y)
@@ -65,7 +65,7 @@ module TotalMapEquiv (e : is-equiv total-map) where
                  ∘ total-map-fiberwise-on-paths _
   
     lemma2 : (x : A) (y : P x)
-      → π₂ ((total-equiv ⁻¹) $ (x , f x y))
+      → π₂ ((total-equiv ⁻¹) ☆ (x , f x y))
         ≡ transport P (! (base-path-inverse x (f x y))) y
     lemma2 x y = ! (fiber-path (! (inverse-left-inverse total-equiv (x , y))))
       ∘ map (λ p → transport P p y)

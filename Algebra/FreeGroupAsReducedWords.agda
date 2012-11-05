@@ -2,10 +2,10 @@
 
 open import Base
 
-module Algebra.FreeGroupAsReducedWords {i} (A : Set i) (eq : dec-eq A) where
+module Algebra.FreeGroupAsReducedWords {i} (A : Set i) (eq : has-dec-eq A) where
 
 A-is-set : is-set A
-A-is-set = dec-eq-is-set A eq
+A-is-set = dec-eq-is-set eq
 
 data word : Set i where
   ε : word
@@ -25,10 +25,10 @@ is-reduced-is-prop : (w : word) → is-prop (is-reduced w)
 is-reduced-is-prop ε = unit-is-prop
 is-reduced-is-prop (x ∷ ε) = unit-is-prop
 is-reduced-is-prop (x ∷ (y ∷ w)) = is-reduced-is-prop (y ∷ w)
-is-reduced-is-prop (x ∷ (y ′∷ w)) = ×-hlevel 1 (pi-is-prop (λ _ → λ ()))
+is-reduced-is-prop (x ∷ (y ′∷ w)) = ×-is-hlevel 1 (Π-is-hlevel 1 (λ _ → λ ()))
                                                (is-reduced-is-prop (y ′∷ w))
 is-reduced-is-prop (x ′∷ ε) = unit-is-prop
-is-reduced-is-prop (x ′∷ (y ∷ w)) = ×-hlevel 1 (pi-is-prop (λ _ → λ ()))
+is-reduced-is-prop (x ′∷ (y ∷ w)) = ×-is-hlevel 1 (Π-is-hlevel 1 (λ _ → λ ()))
                                                (is-reduced-is-prop (y ∷ w))
 is-reduced-is-prop (x ′∷ (y ′∷ w)) = is-reduced-is-prop (y ′∷ w)
 
@@ -90,7 +90,7 @@ word-cst-dis (x ′∷ v) ε = ⊥
 word-cst-dis (x ′∷ v) (y ∷ w) = ⊥
 word-cst-dis (x ′∷ v) (y ′∷ w) = unit
 
-word-dec-eq : dec-eq word
+word-dec-eq : has-dec-eq word
 word-dec-eq ε ε = inl (refl _)
 word-dec-eq ε (x ∷ w) = inr (λ p → transport (word-cst-dis ε) p tt)
 word-dec-eq ε (x ′∷ w) = inr (λ p → transport (word-cst-dis ε) p tt)
@@ -103,7 +103,8 @@ word-dec-eq (x ∷ v) (y ∷ w) | inl x≡y | inr v≢w =
 word-dec-eq (x ∷ v) (y ∷ w) | inr x≢y = inr (λ p → x≢y (word-base-path p))
 word-dec-eq (x ∷ v) (y ′∷ w) = inr (λ p → transport (word-cst-dis (x ∷ v)) p tt)
 word-dec-eq (x ′∷ v) ε = inr (λ p → transport (word-cst-dis (x ′∷ v)) p tt)
-word-dec-eq (x ′∷ v) (y ∷ w) = inr (λ p → transport (word-cst-dis (x ′∷ v)) p tt)
+word-dec-eq (x ′∷ v) (y ∷ w) =
+  inr (λ p → transport (word-cst-dis (x ′∷ v)) p tt)
 word-dec-eq (x ′∷ v) (y ′∷ w) with (eq x y)
 word-dec-eq (x ′∷ v) (y ′∷ w) | inl x≡y with (word-dec-eq v w)
 word-dec-eq (x ′∷ v) (y ′∷ w) | inl x≡y | inl v≡w =
@@ -113,11 +114,11 @@ word-dec-eq (x ′∷ v) (y ′∷ w) | inl x≡y | inr v≢w =
 word-dec-eq (x ′∷ v) (y ′∷ w) | inr x≢y = inr (λ p → x≢y (word'-base-path p))
 
 word-is-set : is-set word
-word-is-set = dec-eq-is-set word word-dec-eq
+word-is-set = dec-eq-is-set word-dec-eq
 
 abstract
   reduced-is-set : is-set reduced-word
-  reduced-is-set = subset-is-set word is-reduced
+  reduced-is-set = subtype-hlevel-S-is-hlevel-S 1 word-is-set is-reduced-is-prop
 
 tail-is-reduced : (x : A) (w : word) (r : is-reduced (x ∷ w)) → is-reduced w
 tail-is-reduced x ε red = tt
@@ -170,7 +171,7 @@ abstract
   mul-mul'-reduce x ((y ∷ (z ′∷ w)) , red) | inl equal | inl absurd =
     abort-nondep (π₁ red (! equal ∘ absurd))
   mul-mul'-reduce x ((y ∷ (z ′∷ w)) , red) | inl equal | inr obvious =
-    total-path (map _ equal) (π₁ (is-reduced-is-prop (y ∷ (z ′∷ w)) _ _))
+    Σ-eq (map _ equal) (π₁ (is-reduced-is-prop (y ∷ (z ′∷ w)) _ _))
   mul-mul'-reduce x ((y ∷ w) , red) | inr different with (eq x x)
   mul-mul'-reduce x ((y ∷ w) , red) | inr different | inl obvious = refl _
   mul-mul'-reduce x ((y ∷ w) , red) | inr different | inr absurd =
@@ -193,7 +194,7 @@ abstract
   mul'-mul-reduce x ((y ′∷ (z ∷ w)) , red) | inl equal | inl absurd =
     abort-nondep (π₁ red (! equal ∘ absurd))
   mul'-mul-reduce x ((y ′∷ (z ∷ w)) , red) | inl equal | inr obvious =
-    total-path (map _ equal) (π₁ (is-reduced-is-prop (y ′∷ (z ∷ w)) _ _))
+    Σ-eq (map _ equal) (π₁ (is-reduced-is-prop (y ′∷ (z ∷ w)) _ _))
   mul'-mul-reduce x ((y ′∷ w) , red) | inr different with (eq x x)
   mul'-mul-reduce x ((y ′∷ w) , red) | inr different | inl obvious = refl _
   mul'-mul-reduce x ((y ′∷ w) , red) | inr different | inr absurd =
@@ -220,7 +221,7 @@ abstract
   mul-reduce-reduced x (y ′∷ w) red with (eq x y)
   mul-reduce-reduced x (y ′∷ w) red | inl absurd = abort-nondep (π₁ red absurd)
   mul-reduce-reduced x (y ′∷ w) red | inr obvious =
-    total-path (refl _) (π₁ (is-reduced-is-prop (x ∷ (y ′∷ w)) _ _))
+    Σ-eq (refl _) (π₁ (is-reduced-is-prop (x ∷ (y ′∷ w)) _ _))
 
 abstract
   mul'-reduce-reduced : (x : A) (w : word) (red : is-reduced (x ′∷ w))
@@ -229,7 +230,7 @@ abstract
   mul'-reduce-reduced x (y ∷ w) red with (eq x y)
   mul'-reduce-reduced x (y ∷ w) red | inl absurd = abort-nondep (π₁ red absurd)
   mul'-reduce-reduced x (y ∷ w) red | inr obvious =
-    total-path (refl _) (π₁ (is-reduced-is-prop (x ′∷ (y ∷ w)) _ _))
+    Σ-eq (refl _) (π₁ (is-reduced-is-prop (x ′∷ (y ∷ w)) _ _))
   mul'-reduce-reduced x (y ′∷ w) red = refl _
 
 inv₁ : (w : reduced-word) → freegroup-to-reduced (reduced-to-freegroup w) ≡ w
@@ -267,7 +268,7 @@ inv₂ = freegroup-rec _
              ∘ map (λ t → x ⁻¹· t) {y = u} p)
   (λ x u t → π₁ (freegroup-is-set _ _ _ _))
   (λ x u t → π₁ (freegroup-is-set _ _ _ _))
-  (λ u → is-increasing-hlevel 1 _ (freegroup-is-set _ _))
+  (λ u → hlevel-is-hlevel-S 1 (freegroup-is-set _ _))
 
 freegroup-equiv-reduced : freegroup ≃ reduced-word
 freegroup-equiv-reduced =

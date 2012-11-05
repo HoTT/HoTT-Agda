@@ -4,33 +4,95 @@ Homotopy Type Theory in Agda
 Introduction
 ------------
 
-This repository contains the development of homotopy type theory and univalent foundations in Agda.
-The structure of the source code is described below.
+This repository contains a development of homotopy type theory and univalent
+foundations in Agda.  The structure of the source code is described below.
 
-There is also an introduction to Agda for homotopy type theorists in the `tutorial` directory
-containing everything you need to know to understand the Agda code here, be sure to check it out.
+There is also an introduction to Agda for homotopy type theorists in the
+`tutorial` directory containing everything you need to know to understand the
+Agda code here, be sure to check it out.
 
-Conventions
------------
+Style and naming conventions
+----------------------------
 
-A few naming conventions:
+### General
 
-- Theorems of the form `is-prop A` where `A` is a particular type are named `A-is-prop`, and
-  similarly with `is-contr`, `is-set`, `is-equiv`, etc.
-- Theorems of the form `is-prop A` where `A` is a type such that `has-something A` is inhabited are
-  named `something-is-prop` (and not `has-something-is-prop`, because this would mean `is-prop
-  (has-something A)`)
-- Theorems about computing the h-level of something when the h-level of the composants are known are
-  called `A-hlevel`. In particular you have `→-hlevel` and `pi-hlevel` for nondependent and
-  dependent product and `×-hlevel` and `sigma-hlevel` for sums.
-- Functions between two types `A` and `B` are sometimes called `A-to-B`
-- Equivalences between two types `A` and `B` are called `A-equiv-B` or `f-equiv` if the function
-  underlying the equivalence is `f`. In particular you can have
+- Line length is capped at 80 characters
+- Names of modules are in CamelCase
+- Names of terms are in lowercase-with-hyphens-between-words
+- There are a few sporadic exceptions to the previous rules, namely the type of
+  universe levels `Level` (usually implicit) and universe-like types (`hProp`,
+  `hSet`, `hLevel`, `pType`)
+- Unicode chars can appear in names but should not be overused (prefer `A-to-B`
+  to `A→B` for instance)
+- Avoid names of variables in identifiers
+- Universe levels are usually implicit but should be explicit when they cannot
+  be deduced from the context (for instance `pushout-diag i` is the type of
+  pushout diagrams at the universe level `i`)
+
+### Properties of types
+
+Names of the form `is-X` (or sometimes `has-X`), represent properties that can
+hold (or not) for some type `A`. The property `is-X` can be parametrized by some
+arguments. The property is said to hold for a type `A` iff `is-X args A` is
+inhabited. The types `is-X args A` should be h-propositions.
+
+Examples:
+
+    is-contr
+    is-prop
+    is-set
+    is-hlevel       -- This one has one argument of type [ℕ]
+    has-all-paths   -- Every two points are equal
+    has-dec-eq      -- Decidable equality
+
+- The theorem that states that some type `A` (perhaps with arguments) has some
+  property `is-X` is named `A-is-X`. The arguments of `A-is-X` are the arguments
+  of `is-X` followed by the arguments of `A`.
+- It can be recursive (if `B` satisfies `is-X`, then so does `A B`) in which
+  case the arguments of `A` that can be deduced from the recursive proofs of
+  `is-X` are implicit in `A-is-X`.
+- If `is-X` takes an argument which is a datatype and that the conclusion of the
+  theorem is `is-X (c …) A` where `c` is a constructor of the type of the
+  argument of `is-X`, then the theorem is called `A-is-X-c`.
+- Theorems that state that any type satisfying `is-X` also satisfies `is-Y` are
+  named `X-is-Y` (and not `is-X-is-Y` because this would mean that the types
+  `is-X A` satisfies `is-Y` instead). There is an ambiguity if there is also a
+  type called `X`, but this is not the case for now.
+
+Examples (only the nonimplicit arguments are given)
+
+    unit-is-contr : is-contr unit
+    bool-is-set : is-set bool
+    Σ-is-hlevel : (n : ℕ) (is-hlevel n A) → ((x : A) → is-hlevel n (P x)) → is-hlevel n (Σ A P)
+    ×-is-hlevel : (n : ℕ) (is-hlevel n A) → (is-hlevel n B) → is-hlevel n (A × B)
+    Π-is-hlevel : (n : ℕ) ((x : A) → is-hlevel n (P x)) → is-hlevel n (Π A P)
+    →-is-hlevel : (n : ℕ) (is-hlevel n B) → is-hlevel n (A → B)
+    is-contr-is-prop : is-contr (is-prop A)
+    contr-is-prop : is-contr A → is-prop A
+    hlevel-is-hlevel-S : (n : ℕ) → is-hlevel n A → is-hlevel (S n) A
+    dec-eq-is-set : has-dec-eq A → is-set A
+    contr-has-all-paths : is-contr A → has-all-paths A
+
+### Functions and equivalences
+
+- A natural function between two types `A` and `B` is often called `A-to-B`
+- If `f : A → B`, the lemma asserting that `f` is an equivalence is called `f-is-equiv`
+- If `f : A → B`, the equivalence `(f , f-is-equiv)` is called `f-equiv`
+- As a special case of the previous point, `A-to-B-equiv` is usually called
+  `A-equiv-B` instead
+
+
 
       A-to-B : A → B
       A-to-B-is-equiv : is-equiv (A-to-B)
       A-to-B-equiv : A ≃ B
       A-equiv-B : A ≃ B
+
+### Precedence
+
+_◯_ ?
+_≡_ 4
+_∘_ 5
 
 Structure of the source
 -----------------------

@@ -60,12 +60,12 @@ filling-dep {i} {j} n {A} P f fill p =
 -- filled with an (n+1)-ball.
 -- We will show that this is equivalent to being of h-level n, *for n > 0*
 -- (for n = 0, having 0-spheres filled only means that A is inhabited)
-has-n-spheres-filled : ∀ {i} (n : ℕ) (A : Set i) → Set i
-has-n-spheres-filled n A = (f : Sⁿ n → A) → filling n f
+has-spheres-filled : ∀ {i} (n : ℕ) (A : Set i) → Set i
+has-spheres-filled n A = (f : Sⁿ n → A) → filling n f
 
 -- [has-n-spheres-filled] satisfy the same inductive property than [is-hlevel]
-fill-paths : ∀ {i} (n : ℕ) (A : Set i) (t : has-n-spheres-filled (S n) A)
-  → ((x y : A) → has-n-spheres-filled n (x ≡ y))
+fill-paths : ∀ {i} (n : ℕ) (A : Set i) (t : has-spheres-filled (S n) A)
+  → ((x y : A) → has-spheres-filled n (x ≡ y))
 fill-paths n A t x y f =
   ((! (π₂ u (north _)) ∘ π₂ u (south _))
   , (λ z → ! (lemma (paths _ z)) ∘ suspension-β-paths-nondep _ _ _ _ f _)) where
@@ -87,27 +87,27 @@ fill-paths n A t x y f =
 -- We first prove that if n-spheres are filled, then the type is of
 -- h-level n, we have to prove it for n = 1, and then use the previous lemma
 abstract
-  n-spheres-filled-hlevel : ∀ {i} (n : ℕ) (A : Set i)
-    (contr : (n ≡ 0) → is-contr A) (t : has-n-spheres-filled n A)
+  spheres-filled-is-hlevel : ∀ {i} (n : ℕ) (A : Set i)
+    (contr : (n ≡ 0) → is-contr A) (t : has-spheres-filled n A)
     → is-hlevel n A
-  n-spheres-filled-hlevel 0 A paths t = paths (refl 0)
-  n-spheres-filled-hlevel 1 A _ t =
+  spheres-filled-is-hlevel 0 A paths t = paths (refl 0)
+  spheres-filled-is-hlevel 1 A _ t =
     all-paths-is-prop (λ x y → ! (π₂ (u x y) (north _)) ∘ π₂ (u x y) (south _))
     where
     u : (x y : A)
         → Σ A (λ t' → (u : Sⁿ 1) → t' ≡ suspension-rec-nondep ⊥ A x y abort u)
     u = λ x y → t (suspension-rec-nondep ⊥ A x y abort)
-  n-spheres-filled-hlevel (S (S n)) A _ t =
-    λ x y → n-spheres-filled-hlevel (S n) (x ≡ y) (λ ())
+  spheres-filled-is-hlevel (S (S n)) A _ t =
+    λ x y → spheres-filled-is-hlevel (S n) (x ≡ y) (λ ())
                                     (fill-paths (S n) A t x y)
 
 -- We now prove the converse
 abstract
-  hlevel-n-has-n-spheres-filled : ∀ {i} (n : ℕ) (A : Set i)
-    (t : is-hlevel n A) → has-n-spheres-filled n A
-  hlevel-n-has-n-spheres-filled 0 A t f = (π₁ t , abort)
-  hlevel-n-has-n-spheres-filled 1 A t f = (f (north _) , (λ x → π₁ (t _ _)))
-  hlevel-n-has-n-spheres-filled (S (S n)) A t f =
+  hlevel-has-spheres-filled : ∀ {i} (n : ℕ) (A : Set i)
+    (t : is-hlevel n A) → has-spheres-filled n A
+  hlevel-has-spheres-filled 0 A t f = (π₁ t , abort)
+  hlevel-has-spheres-filled 1 A t f = (f (north _) , (λ x → π₁ (t _ _)))
+  hlevel-has-spheres-filled (S (S n)) A t f =
     (f (north _)
     , (suspension-rec _ _ (refl _) (map f (paths _ (north _)))
         (λ x → trans-a≡fx (f (north _)) f (paths _ _) _
@@ -117,17 +117,17 @@ abstract
     newf x = map f (paths _ x)
   
     filled-newf : filling (S n) newf
-    filled-newf = hlevel-n-has-n-spheres-filled (S n) _ (t _ _) newf
+    filled-newf = hlevel-has-spheres-filled (S n) _ (t _ _) newf
 
 -- I prove that if [A] has [S n]-spheres filled, then the type of fillings
 -- of [n]-spheres is a proposition. The idea is that two fillings of
 -- an [n]-sphere define an [S n]-sphere, which is then filled.
 filling-has-all-paths : ∀ {i} (n : ℕ) (A : Set i)
-  ⦃ fill : has-n-spheres-filled (S n) A ⦄ (f : Sⁿ n → A)
+  ⦃ fill : has-spheres-filled (S n) A ⦄ (f : Sⁿ n → A)
   → has-all-paths (filling n f)
 filling-has-all-paths n A ⦃ fill ⦄ f fill₁ fill₂ =
-  total-path (! (π₂ big-map-filled (north _)) ∘ π₂ big-map-filled (south _))
-  (funext-dep (λ x →
+  Σ-eq (! (π₂ big-map-filled (north _)) ∘ π₂ big-map-filled (south _))
+  (funext (λ x →
                    trans-A→Pxy _ (λ t x₁ → t ≡ f x₁)
                    (! (π₂ big-map-filled (north (Sⁿ n))) ∘
                     π₂ big-map-filled (south (Sⁿ n)))
@@ -161,11 +161,11 @@ filling-has-all-paths n A ⦃ fill ⦄ f fill₁ fill₂ =
   lemma (refl a) = ! (opposite-left-inverse (π₂ big-map-filled a))
 
 abstract
-  hlevel-n-has-filling-dep : ∀ {i j} (A : Set i) (P : A → Set j) (n : ℕ)
+  hlevel-has-filling-dep : ∀ {i j} (A : Set i) (P : A → Set j) (n : ℕ)
     (contr : (n ≡ 0) → is-contr A) ⦃ trunc : (x : A) → is-hlevel n (P x) ⦄
-    (fill : has-n-spheres-filled n A) (f : Sⁿ n → A) (p : (x : Sⁿ n) → P (f x))
+    (fill : has-spheres-filled n A) (f : Sⁿ n → A) (p : (x : Sⁿ n) → P (f x))
     → filling-dep n P f (fill f) p
-  hlevel-n-has-filling-dep A P n contr ⦃ trunc ⦄ fill f p =
+  hlevel-has-filling-dep A P n contr ⦃ trunc ⦄ fill f p =
     transport (λ t → filling-dep n P f t p) eq fill-dep  where
     
     -- Combining [f] and [p] we have a sphere in the total space of [P]
@@ -174,11 +174,11 @@ abstract
     
     -- But this total space is of h-level [n]
     ΣAP-hlevel : is-hlevel n (Σ A P)
-    ΣAP-hlevel = sigma-hlevel n (n-spheres-filled-hlevel n A contr fill) trunc
+    ΣAP-hlevel = Σ-is-hlevel n (spheres-filled-is-hlevel n A contr fill) trunc
     
     -- Hence the sphere is filled
     tot-fill : filling n newf
-    tot-fill = hlevel-n-has-n-spheres-filled n (Σ A P) ΣAP-hlevel newf
+    tot-fill = hlevel-has-spheres-filled n (Σ A P) ΣAP-hlevel newf
   
     -- We can split this filling as a filling of [f] in [A] …
     new-fill : filling n f
@@ -188,10 +188,10 @@ abstract
     fill-dep : filling-dep n P f new-fill p
     fill-dep = (π₂ (π₁ tot-fill) , (λ x → fiber-path (π₂ tot-fill x)))
   
-    A-has-Sn-spheres-filled : has-n-spheres-filled (S n) A
-    A-has-Sn-spheres-filled =
-      hlevel-n-has-n-spheres-filled (S n) A
-        (is-increasing-hlevel n A (n-spheres-filled-hlevel n A contr fill))
+    A-has-spheres-filled-S : has-spheres-filled (S n) A
+    A-has-spheres-filled-S =
+      hlevel-has-spheres-filled (S n) A
+        (hlevel-is-hlevel-S n (spheres-filled-is-hlevel n A contr fill))
   
     -- But both the new and the old fillings of [f] are equal, hence we will
     -- have a dependent filling above the old one

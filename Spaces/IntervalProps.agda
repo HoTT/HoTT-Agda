@@ -5,12 +5,12 @@ open import Spaces.Interval
 
 module Spaces.IntervalProps where
 
-bool-split : bool → Set
+bool-split : bool {zero} → Set
 bool-split true = unit
 bool-split false = ⊥
 
 -- If [bool] is contractible, then [true ≡ false]
-bool-contr-path : is-contr bool → true ≡ false
+bool-contr-path : is-contr (bool {zero}) → true ≡ false
 bool-contr-path (x , f) = (f true) ∘ ! (f false)
 
 -- But if [true ≡ false], then [⊥]

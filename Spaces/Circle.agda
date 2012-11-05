@@ -37,12 +37,20 @@ postulate  -- HIT
       → map-dep (S¹-rec P x p) loop ≡ p
 
 S¹-rec-nondep : ∀ {i} (A : Set i) (x : A) (p : x ≡ x) → (S¹ → A)
-S¹-rec-nondep A x p = S¹-rec (λ _ → A) x (trans-A loop x ∘ p)
+S¹-rec-nondep A x p #base = x
 
-β-nondep : ∀ {i} (A : Set i) (x : A) (p : x ≡ x)
-  → map (S¹-rec-nondep A x p) loop ≡ p
-β-nondep A x p =
-  map-dep-trivial (S¹-rec-nondep A x p) loop ∘
-  (whisker-left (! (trans-A loop _)) (β (λ _ → A) x (trans-A loop _ ∘ p))
-  ∘ (! (concat-assoc (! (trans-A loop _)) (trans-A loop _) p)
-  ∘ whisker-right p (opposite-left-inverse (trans-A loop _))))
+postulate  -- HIT
+  β-nondep : ∀ {i} (A : Set i) (x : A) (p : x ≡ x)
+    → map (S¹-rec-nondep A x p) loop ≡ p
+
+
+-- S¹-rec-nondep : ∀ {i} (A : Set i) (x : A) (p : x ≡ x) → (S¹ → A)
+-- S¹-rec-nondep A x p = S¹-rec (λ _ → A) x (trans-A loop x ∘ p)
+
+-- β-nondep : ∀ {i} (A : Set i) (x : A) (p : x ≡ x)
+--   → map (S¹-rec-nondep A x p) loop ≡ p
+-- β-nondep A x p =
+--   map-dep-trivial (S¹-rec-nondep A x p) loop ∘
+--   (whisker-left (! (trans-A loop _)) (β (λ _ → A) x (trans-A loop _ ∘ p))
+--   ∘ (! (concat-assoc (! (trans-A loop _)) (trans-A loop _) p)
+--   ∘ whisker-right p (opposite-left-inverse (trans-A loop _))))

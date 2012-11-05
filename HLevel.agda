@@ -1,210 +1,171 @@
 {-# OPTIONS --without-K #-}
 
 open import Types
-open import Functions
 open import Paths
-open import Contractible
-open import Equivalences
-open import Univalence
-open import Funext
 
-module HLevel where
+{- Stuff about h-levels that do not require the notion of equivalence or
+   function extensionality -}
 
--- Every map between contractible types is an equivalence
-abstract
-  contr-to-contr-is-equiv : ∀ {i j} {A : Set i} {B : Set j} (f : A → B)
-    (cA : is-contr A) (cB : is-contr B) → is-equiv f
-  contr-to-contr-is-equiv {i} {j} {A} {B} f cA cB =
-    λ y → ((π₁ cA , (is-contr-path B cB _ _))
-          , (λ y' → total-path (is-contr-path A cA _ _)
-                      (is-contr-path _ (path-contr-contr B cB _ _) _ _)))
+module HLevel {i} where
 
 -- Definition of h-levels
 
-is-hlevel : ∀ {i} (n : ℕ) (A : Set i) → Set i
+is-contr : Set i → Set i
+is-contr A = Σ A (λ x → ((y : A) → y ≡ x))
+
+is-hlevel : (n : ℕ) → (Set i → Set i)
 is-hlevel O A = is-contr A
 is-hlevel (S n) A = (x y : A) → is-hlevel n (x ≡ y)
 
-is-prop : ∀ {i} (A : Set i) → Set i
 is-prop = is-hlevel 1
+is-set  = is-hlevel 2
+is-gpd  = is-hlevel 3
 
-is-set : ∀ {i} (A : Set i) → Set i
-is-set = is-hlevel 2
-
-is-gpd : ∀ {i} (A : Set i) → Set i
-is-gpd = is-hlevel 3
-
--- Another definition of [is-prop] (both are equivalent)
-has-all-paths : ∀ {i} (A : Set i) → Set i
+-- The following property is equivalent to being a proposition
+has-all-paths : Set i → Set i
 has-all-paths A = (x y : A) → x ≡ y
 
--- If [A] has all paths, every path is equal to the canonical path
-all-paths-canon-path : ∀ {i} (A : Set i) (c : has-all-paths A)
-  {x y : A} (p : x ≡ y) → p ≡ c x y
-all-paths-canon-path A c (refl _) = ! (lemma2 A c _) where
-
-  lemma1 : ∀ {i} (A : Set i) (c : has-all-paths A) {x y : A} (p : x ≡ y)
-    → p ∘ c y y ≡ c x y
-  lemma1 A c (refl _) = refl _
-
-  -- We apply the previous lemma with [p = c y y]
-  lemma2 : ∀ {i} (A : Set i) (c : has-all-paths A) (y : A) → c y y ≡ refl y
-  lemma2 A c y = anti-whisker-left (c y y) (lemma1 A c (c y y)
-                                           ∘ ! (refl-right-unit _))
+-- Having decidable equality is stronger that being a set
+has-dec-eq : Set i → Set i
+has-dec-eq A = (x y : A) → (x ≡ y) ⊔ (x ≢ y)
 
 abstract
-  -- If we have [has-all-paths A], then [A] is a proposition
-  all-paths-is-prop : ∀ {i} {A : Set i} (c : has-all-paths A) → is-prop A
-  all-paths-is-prop c x y = (c x y , all-paths-canon-path _ c)
+  all-paths-is-prop : {A : Set i} → (has-all-paths A → is-prop A)
+  all-paths-is-prop {A} c x y = (c x y , canon-path) where
+    lemma : {x y : A} (p : x ≡ y) → c x y ≡ p ∘ c y y
+    lemma (refl _) = refl _
 
-  contr-all-paths : ∀ {i} {A : Set i} (c : is-contr A) → has-all-paths A
-  contr-all-paths c x y = π₂ c x ∘ ! (π₂ c y)
-
-  is-contr-is-prop : ∀ {i} (A : Set i) → is-prop (is-contr A)
-  is-contr-is-prop A = all-paths-is-prop
-    (λ x y → total-path (π₂ y (π₁ x))
-             (funext-dep
-              (λ t → (trans-A→Pxy A (λ u v → v ≡ u) (π₂ y (π₁ x)) (π₂ x) t
-                      ∘ trans-a≡x (π₂ y (π₁ x)) (π₂ x t))
-                      ∘ lemma-is-contr-is-prop y (π₂ x t)))) where
-
-    lemma-is-contr-is-prop : (c : is-contr A) {x y : A} (p : x ≡ y)
-      → p ∘ π₂ c y ≡ π₂ c x
-    lemma-is-contr-is-prop c (refl _) = refl _
+    canon-path : {x y : A} (p : x ≡ y) → p ≡ c x y
+    canon-path (refl y) = anti-whisker-right (c y y) (lemma (c y y))
 
   -- h-levels are increasing
-  is-increasing-hlevel : ∀ {i} (n : ℕ) (A : Set i) → is-hlevel n A
-    → is-hlevel (S n) A
-  is-increasing-hlevel O A p = all-paths-is-prop (λ x y → π₂ p x ∘ ! (π₂ p y))
-  is-increasing-hlevel (S n) A p =
-    λ x y → is-increasing-hlevel n (x ≡ y) (p x y)
+  hlevel-is-hlevel-S : {A : Set i} (n : ℕ)
+    → (is-hlevel n A → is-hlevel (S n) A)
+  hlevel-is-hlevel-S O q = all-paths-is-prop (λ x y → π₂ q x ∘ ! (π₂ q y))
+  hlevel-is-hlevel-S (S n) q = λ x y → hlevel-is-hlevel-S n (q x y)
 
-  -- If [A] is of h-level [n], then so does [x ≡ y] for [x y : A]
-  paths-hlevel-n : ∀ {i} (n : ℕ) (A : Set i) (p : is-hlevel n A) {x y : A}
-    → is-hlevel n (x ≡ y)
-  paths-hlevel-n O A p = path-contr-contr _ p _ _
-  paths-hlevel-n (S n) A p {x} {y} = is-increasing-hlevel n _ (p x y)
+  -- A type with a decidable equality is a set
+  dec-eq-is-set : {A : Set i} → (has-dec-eq A → is-set A)
+  dec-eq-is-set dec x y with dec x y
+  dec-eq-is-set dec x y | inr p⊥ = λ p → abort-nondep (p⊥ p)
+  dec-eq-is-set {A} dec x y | inl q = paths-A-is-prop q where
+  
+    -- The fact that equality is decidable on A gives a canonical path parallel
+    -- to every path [p], depending only on the endpoints
+    get-path : {u v : A} (r : u ≡ v) → u ≡ v
+    get-path {u} {v} r with dec u v
+    get-path r | inl q = q
+    get-path r | inr r⊥ = abort-nondep (r⊥ r)
+  
+    get-path-eq : {u : A} (r : u ≡ u) → get-path r ≡ get-path (refl _)
+    get-path-eq {u} r with dec u u
+    get-path-eq r | inl q = refl q
+    get-path-eq r | inr r⊥ = abort-nondep (r⊥ (refl _))
+  
+    lemma : {u v : A} (r : u ≡ v) → r ∘ get-path (refl _) ≡ get-path r
+    lemma (refl _) = refl _
+  
+    paths-A-is-prop : {u v : A} (q : u ≡ v) → is-prop (u ≡ v)
+    paths-A-is-prop (refl u) =
+      hlevel-is-hlevel-S 0
+        (refl u , λ r → anti-whisker-right (get-path (refl _))
+                                           (lemma r ∘ get-path-eq r))
 
-  -- Equivalent types have the same h-level
-  equiv-types-hlevel : ∀ {i j} {A : Set i} {B : Set j} (n : ℕ) (f : A ≃ B)
-    (c : is-hlevel n A) → is-hlevel n B
-  equiv-types-hlevel O f c =
-    ((f $ (π₁ c)) ,
-    (λ y → ! (inverse-right-inverse f y) ∘ map (π₁ f) (is-contr-path _ c _ _)))
-  equiv-types-hlevel (S n) f c =
-    λ x y → equiv-types-hlevel n (equiv-map (f ⁻¹) x y ⁻¹)
-                               (c (f ⁻¹ $ x) (f ⁻¹ $ y))
+module Props {A : Set i} where
+  abstract
+    contr-has-all-paths : is-contr A → has-all-paths A
+    contr-has-all-paths c x y = π₂ c x ∘ ! (π₂ c y)
+  
+    prop-has-all-paths : is-prop A → has-all-paths A
+    prop-has-all-paths c x y = π₁ (c x y)
+    
+    inhab-prop-is-contr : A → is-prop A → is-contr A
+    inhab-prop-is-contr x₀ p = (x₀ , λ y → π₁ (p y x₀))
+  
+    contr-is-hlevel : (n : ℕ) → (is-contr A → is-hlevel n A)
+    contr-is-hlevel 0 p = p
+    contr-is-hlevel (S n) p = hlevel-is-hlevel-S n (contr-is-hlevel n p)
+  
+    prop-is-hlevel-S : (n : ℕ) → (is-prop A → is-hlevel (S n) A)
+    prop-is-hlevel-S 0 p = p
+    prop-is-hlevel-S (S n) p = hlevel-is-hlevel-S (S n) (prop-is-hlevel-S n p)
+  
+    set-is-hlevel-SS : (n : ℕ) → (is-set A → is-hlevel (S (S n)) A)
+    set-is-hlevel-SS 0 p = p
+    set-is-hlevel-SS (S n) p = hlevel-is-hlevel-S (S (S n))
+                                                  (set-is-hlevel-SS n p)
+  
+    contr-is-prop : is-contr A → is-prop A
+    contr-is-prop = contr-is-hlevel 1
 
-  pi-is-prop : ∀ {i j} {A : Set i} {P : A → Set j}
-    (p : (x : A) → is-prop (P x)) → is-prop ((x : A) → P x)
-  pi-is-prop p =
-    all-paths-is-prop (λ f g → funext-dep (λ x → π₁ (p x (f x) (g x))))
+    contr-is-set : is-contr A → is-set A
+    contr-is-set = contr-is-hlevel 2
 
-  pi-hlevel : ∀ {i j} (n : ℕ) {A : Set i} {P : A → Set j}
-    (p : (x : A) → is-hlevel n (P x)) → is-hlevel n ((x : A) → P x)
-  pi-hlevel O p = ((λ x → π₁ (p x)) , (λ f → funext-dep (λ x → π₂ (p x) (f x))))
-  pi-hlevel 1 p = pi-is-prop p
-  pi-hlevel (S n) p =
-    λ f g → equiv-types-hlevel n (funext-dep , funext-dep-is-equiv)
-                               (pi-hlevel n (λ x → p x (f x) (g x)))
+    contr-is-gpd : is-contr A → is-gpd A
+    contr-is-gpd = contr-is-hlevel 3
 
-  →-hlevel : ∀ {i j} (n : ℕ) {A : Set i} {B : Set j} (p : is-hlevel n B)
-    → is-hlevel n (A → B)
-  →-hlevel n p = pi-hlevel n (λ _ → p)
+    prop-is-set : is-prop A → is-set A
+    prop-is-set = prop-is-hlevel-S 1
 
-  is-hlevel-is-prop : ∀ {i} (n : ℕ) (A : Set i) → is-prop (is-hlevel n A)
-  is-hlevel-is-prop O A = is-contr-is-prop A
-  is-hlevel-is-prop (S n) A = pi-is-prop (λ x → pi-is-prop
-                                          (λ x' → is-hlevel-is-prop n (x ≡ x')))
+    prop-is-gpd : is-prop A → is-gpd A
+    prop-is-gpd = prop-is-hlevel-S 2
 
-  inhab-prop-is-contr : ∀ {i} (A : Set i) (p : is-prop A) (x₀ : A) → is-contr A
-  inhab-prop-is-contr A p x₀ = (x₀ , λ y → π₁ (p _ _))
+    set-is-gpd : is-set A → is-gpd A
+    set-is-gpd = set-is-hlevel-SS 1
 
-  contr-is-prop : ∀ {i} {A : Set i} (p : is-contr A) → is-prop A
-  contr-is-prop {i} {A} = is-increasing-hlevel 0 A
+    -- If [A] is of h-level [n], then so does [x ≡ y] for [x y : A]
+    ≡-is-hlevel : (n : ℕ) {x y : A}
+      → (is-hlevel n A → is-hlevel n (x ≡ y))
+    ≡-is-hlevel O p = (contr-has-all-paths p _ _ , unique-path) where
+      unique-path : {u v : A} (q : u ≡ v)
+        → q ≡ contr-has-all-paths p u v
+      unique-path (refl _) = ! (opposite-right-inverse (π₂ p _))
+    ≡-is-hlevel (S n) {x} {y} p = hlevel-is-hlevel-S n (p x y) 
 
-dec-eq : ∀ {i} (A : Set i) → Set i
-dec-eq A = (x y : A) → (x ≡ y) ⊔ (x ≢ y)
-
--- A type with a decidable equality is a set
-dec-eq-is-set : ∀ {i} (A : Set i) (dec : dec-eq A) → is-set A
-dec-eq-is-set A dec x y with dec x y
-dec-eq-is-set A dec x y | inl q = paths-dec-eq-is-prop q where
-
-  -- The fact that equality is decidable on A gives a canonical path parallel to
-  -- every path [p], depending only on the ends
-  get-path : {u v : A} (p : u ≡ v) → u ≡ v
-  get-path {u} {v} p with dec u v
-  get-path p | inl q = q
-  get-path {u} {v} p | inr p⊥ = abort-nondep (p⊥ p)
-
-  get-path-eq : {u v : A} (p q : u ≡ v) → get-path p ≡ get-path q
-  get-path-eq {u} {v} p q with dec u v
-  get-path-eq p q | inl _ = refl _
-  get-path-eq p q | inr p⊥ = abort-nondep (p⊥ p)
-
-  get-path-get-path : {u v : A} (p : u ≡ v) → get-path (get-path p) ≡ get-path p
-  get-path-get-path {u} {v} p with dec u v
-  get-path-get-path p | inl q = refl _
-  get-path-get-path p | inr p⊥ = abort-nondep (p⊥ p)
-
-  lemma : {u v : A} (p : u ≡ v) → p ∘ get-path (refl _) ≡ get-path p
-  lemma (refl _) = refl _
-
-  lemma1 : (a : A) → get-path (refl a) ≡ refl a
-  lemma1 a = anti-whisker-left (get-path (refl a))
-                               (lemma (get-path (refl a))
-                               ∘ (get-path-get-path (refl a)
-                               ∘ ! (refl-right-unit (get-path (refl a)))))
-
-  lemma2 : {u v : A} (p : u ≡ v) → get-path p ≡ p
-  lemma2 p = ! (lemma p) ∘ ((map (λ u → p ∘ u) (lemma1 _))
-             ∘ (refl-right-unit _))
-
-  paths-dec-eq-is-prop : {u v : A} (p : u ≡ v) → is-prop (u ≡ v)
-  paths-dec-eq-is-prop p =
-    all-paths-is-prop (λ q r → ! (lemma2 q) ∘ (get-path-eq q r ∘ lemma2 r))
-
-dec-eq-is-set A dec x y | inr p⊥ = λ p q → abort-nondep (p⊥ p)
+    -- The type of paths to a fixed point is contractible
+    pathto-is-contr : (x : A) → is-contr (Σ A (λ t → t ≡ x))
+    pathto-is-contr x = ((x , refl x) , pathto-unique-path) where
+      pathto-unique-path : {u : A} (pp : Σ A (λ t → t ≡ u)) → pp ≡ (u , refl u)
+      pathto-unique-path (.u , refl u) = refl _
+    
+open Props public
 
 abstract
-  unit-is-prop : ∀ {i} → is-prop (unit {i})
-  unit-is-prop = is-increasing-hlevel O _ unit-is-contr
+  -- Unit is contractible
+  -- I do not need to specify the universe level because in this file [is-contr]
+  -- is not yet universe polymorphic ([i] is a global argument)
+  unit-is-contr : is-contr unit
+  unit-is-contr = (tt , λ y → refl tt)
 
-  unit-is-set : ∀ {i} → is-set (unit {i})
-  unit-is-set = is-increasing-hlevel 1 _ unit-is-prop
+  unit-is-hlevel : (n : ℕ) → is-hlevel n unit
+  unit-is-hlevel n = contr-is-hlevel n unit-is-contr
 
-  unit-is-hlevel-n : ∀ {i} (n : ℕ) → is-hlevel n (unit {i})
-  unit-is-hlevel-n O = unit-is-contr
-  unit-is-hlevel-n (S n) = is-increasing-hlevel n _ (unit-is-hlevel-n n)
+  unit-is-prop : is-prop unit
+  unit-is-prop = unit-is-hlevel 1
 
-  sigma-hlevel : ∀ {i j} (n : ℕ) {A : Set i} {P : A → Set j} (p : is-hlevel n A)
-    (q : (x : A) → is-hlevel n (P x)) → is-hlevel n (Σ A P)
-  sigma-hlevel O p q = ((π₁ p , (π₁ (q (π₁ p)))) ,
-                       (λ y → total-path (π₂ p _) (π₂ (q _) _)))
-  sigma-hlevel (S n) p q =
-    λ x y → equiv-types-hlevel n total-path-equiv
-                               (sigma-hlevel n (p _ _) (λ _ → q _ _ _))
+  unit-is-set : is-set unit
+  unit-is-set = unit-is-hlevel 2
 
-  ×-hlevel : ∀ {i j} (n : ℕ) {A : Set i} {B : Set j} (pA : is-hlevel n A)
-    (pB : is-hlevel n B) → is-hlevel n (A × B)
-  ×-hlevel n pA pB = sigma-hlevel n pA (λ x → pB)
+private
+  bool-true≢false-type : bool {i} → Set
+  bool-true≢false-type true  = ⊤
+  bool-true≢false-type false = ⊥
 
-  subset-is-set : ∀ {i j} (A : Set i) ⦃ p : is-set A ⦄ (P : A → Set j)
-    ⦃ q : (x : A) → is-prop (P x) ⦄ → is-set (Σ A P)
-  subset-is-set A ⦃ p ⦄ P ⦃ q ⦄ =
-    sigma-hlevel 2 p (λ x → is-increasing-hlevel 1 (P x) (q x))
+abstract
+  bool-true≢false : true {i} ≢ false
+  bool-true≢false p = transport bool-true≢false-type p tt
 
-  is-equiv-is-prop : ∀ {i j} {A : Set i} {B : Set j} (f : A → B)
-    → is-prop (is-equiv f)
-  is-equiv-is-prop f = pi-is-prop (λ x → is-contr-is-prop _)
+  bool-false≢true : false {i} ≢ true
+  bool-false≢true p = transport bool-true≢false-type (! p) tt
 
-  bool-dec-eq : dec-eq bool
+  bool-dec-eq : has-dec-eq bool
   bool-dec-eq true true = inl (refl true)
-  bool-dec-eq true false = inr (λ ())
-  bool-dec-eq false true = inr (λ ())
+  bool-dec-eq true false = inr bool-true≢false
+  bool-dec-eq false true = inr bool-false≢true
   bool-dec-eq false false = inl (refl false)
 
   bool-is-set : is-set bool
-  bool-is-set = dec-eq-is-set bool bool-dec-eq
+  bool-is-set = dec-eq-is-set bool-dec-eq
 
+  ⊥-is-prop : is-prop ⊥
+  ⊥-is-prop ()
