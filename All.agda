@@ -1,8 +1,9 @@
 {-# OPTIONS --without-K #-}
 
 {-
-Imports everything. This is not supposed to be used anywhere, this is just a
-simple way to do `make all'
+Imports everything that is not imported by something else.
+This is not supposed to be used anywhere, this is just a simple way to
+do `make all'
 -}
 
 module All where
