@@ -140,6 +140,10 @@ abstract
   unit-is-hlevel : (n : ℕ) → is-hlevel n unit
   unit-is-hlevel n = contr-is-hlevel n unit-is-contr
 
+  -- [unit-is-hlevel#instance] produces unsolved metas
+  unit-is-hlevel-S#instance : {n : ℕ} → is-hlevel (S n) unit
+  unit-is-hlevel-S#instance = contr-is-hlevel _ unit-is-contr
+
   unit-is-prop : is-prop unit
   unit-is-prop = unit-is-hlevel 1
 
