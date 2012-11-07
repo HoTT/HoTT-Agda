@@ -16,7 +16,7 @@ is-equiv {B = B} f = (y : B) → is-contr (hfiber f y)
 _≃_ : ∀ {i j} (A : Set i) (B : Set j) → Set (max i j)  -- \simeq
 A ≃ B = Σ (A → B) is-equiv
 
-module Fresh {i} {j} {A : Set i} {B : Set j} where
+module _ {i} {j} {A : Set i} {B : Set j} where
 
   -- Notation for the application of an equivalence to an argument
   _☆_ : (f : A ≃ B) (x : A) → B
@@ -92,8 +92,6 @@ module Fresh {i} {j} {A : Set i} {B : Set j} where
       (h' : (x : A) → g (f x) ≡ x) → inverse (f , iso-is-eq f g h h') ≡ g
     inverse-iso-is-eq f g h h' = refl _
 
-open Fresh public
-
 -- The inverse of an equivalence is an equivalence
 inverse-is-equiv : ∀ {i} {j} {A : Set i} {B : Set j} (f : A ≃ B)
   → is-equiv (inverse f)
@@ -131,41 +129,40 @@ equiv-compose f g = ((π₁ g ◯ π₁ f) , compose-is-equiv f g)
 
 -- An equivalence induces an equivalence on the path spaces
 -- The proofs here can probably be simplified
-module MapEquiv {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x y : A) where
+module _ {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x y : A) where
 
-  map-inverse : (p : f ☆ x ≡ f ☆ y) → x ≡ y
-  map-inverse p = equiv-is-inj f x y p
+  private
+    map-is-inj : (p : f ☆ x ≡ f ☆ y) → x ≡ y
+    map-is-inj p = equiv-is-inj f x y p
 
-  left-inverse : (p : x ≡ y) → map-inverse (map (π₁ f) p) ≡ p
-  left-inverse p = move!-right-on-left (inverse-left-inverse f x) _ p
-                      (move-right-on-right (map (inverse f) (map (π₁ f) p)) _ _
-                       (compose-map (inverse f) (π₁ f) p
-                       ∘ move!-left-on-right (map (inverse f ◯ π₁ f) p)
-                           (inverse-left-inverse f x ∘ p)
-                           (inverse-left-inverse f y)
-                           (homotopy-naturality-toid (inverse f ◯ π₁ f)
-                             (inverse-left-inverse f) p)))
+    abstract
+      left-inverse : (p : x ≡ y) → map-is-inj (map (π₁ f) p) ≡ p
+      left-inverse p =
+        move!-right-on-left (inverse-left-inverse f x) _ p
+          (move-right-on-right (map (inverse f) (map (π₁ f) p)) _ _
+           (compose-map (inverse f) (π₁ f) p
+           ∘ move!-left-on-right (map (inverse f ◯ π₁ f) p)
+               (inverse-left-inverse f x ∘ p)
+               (inverse-left-inverse f y)
+               (homotopy-naturality-toid (inverse f ◯ π₁ f)
+                 (inverse-left-inverse f) p)))
 
-  right-inverse : (p : f ☆ x ≡ f ☆ y) → map (π₁ f) (map-inverse p) ≡ p
-  right-inverse p =
-    map-concat (π₁ f) (! (inverse-left-inverse f x)) _
-    ∘ (map (λ u → u ∘ map (π₁ f) (map (inverse f) p ∘ inverse-left-inverse f y))
-           (map-opposite (π₁ f) (inverse-left-inverse f x))
-      ∘ move!-right-on-left (map (π₁ f) (inverse-left-inverse f x)) _ p
-        (map-concat (π₁ f) (map (inverse f) p) (inverse-left-inverse f y)
-        ∘ (map (λ u → u ∘ map (π₁ f) (inverse-left-inverse f y))
-               (compose-map (π₁ f) (inverse f) p)
-        ∘ (whisker-left (map (π₁ f ◯ inverse f) p) (! (inverse-triangle f y))
-        ∘ (homotopy-naturality-toid (π₁ f ◯ inverse f) (inverse-right-inverse f)
-                                    p
-        ∘ whisker-right p (inverse-triangle f x))))))
+      right-inverse : (p : f ☆ x ≡ f ☆ y) → map (π₁ f) (map-is-inj p) ≡ p
+      right-inverse p =
+        map-concat (π₁ f) (! (inverse-left-inverse f x)) _
+        ∘ (map (λ u → u ∘ map (π₁ f) (map (inverse f) p ∘ inverse-left-inverse f y))
+               (map-opposite (π₁ f) (inverse-left-inverse f x))
+          ∘ move!-right-on-left (map (π₁ f) (inverse-left-inverse f x)) _ p
+            (map-concat (π₁ f) (map (inverse f) p) (inverse-left-inverse f y)
+            ∘ (map (λ u → u ∘ map (π₁ f) (inverse-left-inverse f y))
+                   (compose-map (π₁ f) (inverse f) p)
+            ∘ (whisker-left (map (π₁ f ◯ inverse f) p) (! (inverse-triangle f y))
+            ∘ (homotopy-naturality-toid (π₁ f ◯ inverse f) (inverse-right-inverse f)
+                                        p
+            ∘ whisker-right p (inverse-triangle f x))))))
 
   equiv-map : (x ≡ y) ≃ (f ☆ x ≡ f ☆ y)
-  equiv-map = (map (π₁ f) , iso-is-eq _ map-inverse right-inverse left-inverse)
-
-equiv-map : ∀ {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x y : A)
-  → (x ≡ y) ≃ (f ☆ x ≡ f ☆ y)
-equiv-map f x y = MapEquiv.equiv-map f x y
+  equiv-map = (map (π₁ f) , iso-is-eq _ map-is-inj right-inverse left-inverse)
 
 abstract
   total-Σ-eq-is-equiv : ∀ {i j} {A : Set i} {P : A → Set j} {x y : Σ A P}

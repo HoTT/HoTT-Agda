@@ -77,44 +77,45 @@ compose-cone-map-compose D E F Dcone f g =
   map (λ u → ((g ◯ (f ◯ cone.A→top Dcone)) , (g ◯ (f ◯ cone.B→top Dcone)) , u))
       (funext (λ c → compose-map g f (cone.h Dcone c)))
 
-module UniquenessPushout (D : Set m) ⦃ PD : P D ⦄ (Dcone : cone D)
+module _ (D : Set m) ⦃ PD : P D ⦄ (Dcone : cone D)
   (Dpushout : is-pushout D Dcone) (E : Set m) ⦃ PE : P E ⦄ (Econe : cone E)
   (Epushout : is-pushout E Econe) where
 
-  DE-eq : (D → E) ≃ cone E
-  DE-eq = (compose-cone-map D E Dcone , Dpushout E)
-
-  ED-eq : (E → D) ≃ cone D
-  ED-eq = (compose-cone-map E D Econe , Epushout D)
-
-  DD-eq : (D → D) ≃ cone D
-  DD-eq = (compose-cone-map D D Dcone , Dpushout D)
-
-  EE-eq : (E → E) ≃ cone E
-  EE-eq = (compose-cone-map E E Econe , Epushout E)
-
-  D→E : D → E
-  D→E = (DE-eq ⁻¹) ☆ Econe
-
-  E→D : E → D
-  E→D = (ED-eq ⁻¹) ☆ Dcone
-
-  abstract
-    D→E→D : (λ x → E→D (D→E x)) ≡ (λ x → x)
-    D→E→D = equiv-is-inj (compose-cone-map D D Dcone , Dpushout D) _ _
-      (! (compose-cone-map-compose D E D Dcone D→E E→D)
-      ∘ (map (λ u → compose-cone-map E D u E→D)
-             (inverse-right-inverse DE-eq Econe)
-      ∘ (inverse-right-inverse ED-eq Dcone
-        ∘ map (λ u → _ , _ , u) (funext (λ c → ! (map-id _))))))
-
-    E→D→E : (λ x → D→E (E→D x)) ≡ (λ x → x)
-    E→D→E = equiv-is-inj (compose-cone-map E E Econe , Epushout E) _ _
-      (! (compose-cone-map-compose E D E Econe E→D D→E)
-      ∘ (map (λ u → compose-cone-map D E u D→E)
-             (inverse-right-inverse ED-eq Dcone)
-      ∘ (inverse-right-inverse DE-eq Econe
-        ∘ map (λ u → _ , _ , u) (funext (λ c → ! (map-id _))))))
-
-    D≃E : D ≃ E
-    D≃E = (D→E , iso-is-eq _ E→D (happly E→D→E) (happly D→E→D))
+  private
+    DE-eq : (D → E) ≃ cone E
+    DE-eq = (compose-cone-map D E Dcone , Dpushout E)
+  
+    ED-eq : (E → D) ≃ cone D
+    ED-eq = (compose-cone-map E D Econe , Epushout D)
+  
+    DD-eq : (D → D) ≃ cone D
+    DD-eq = (compose-cone-map D D Dcone , Dpushout D)
+  
+    EE-eq : (E → E) ≃ cone E
+    EE-eq = (compose-cone-map E E Econe , Epushout E)
+  
+    D→E : D → E
+    D→E = (DE-eq ⁻¹) ☆ Econe
+  
+    E→D : E → D
+    E→D = (ED-eq ⁻¹) ☆ Dcone
+  
+    abstract
+      D→E→D : (λ x → E→D (D→E x)) ≡ (λ x → x)
+      D→E→D = equiv-is-inj (compose-cone-map D D Dcone , Dpushout D) _ _
+        (! (compose-cone-map-compose D E D Dcone D→E E→D)
+        ∘ (map (λ u → compose-cone-map E D u E→D)
+               (inverse-right-inverse DE-eq Econe)
+        ∘ (inverse-right-inverse ED-eq Dcone
+          ∘ map (λ u → _ , _ , u) (funext (λ c → ! (map-id _))))))
+  
+      E→D→E : (λ x → D→E (E→D x)) ≡ (λ x → x)
+      E→D→E = equiv-is-inj (compose-cone-map E E Econe , Epushout E) _ _
+        (! (compose-cone-map-compose E D E Econe E→D D→E)
+        ∘ (map (λ u → compose-cone-map D E u D→E)
+               (inverse-right-inverse ED-eq Dcone)
+        ∘ (inverse-right-inverse DE-eq Econe
+          ∘ map (λ u → _ , _ , u) (funext (λ c → ! (map-id _))))))
+  
+  pushout-equiv-pushout : D ≃ E
+  pushout-equiv-pushout = (D→E , iso-is-eq _ E→D (happly E→D→E) (happly D→E→D))

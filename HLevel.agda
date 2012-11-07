@@ -71,7 +71,7 @@ abstract
         (refl u , λ r → anti-whisker-right (get-path (refl _))
                                            (lemma r ∘ get-path-eq r))
 
-module Props {A : Set i} where
+module _ {A : Set i} where
   abstract
     contr-has-all-paths : is-contr A → has-all-paths A
     contr-has-all-paths c x y = π₂ c x ∘ ! (π₂ c y)
@@ -127,8 +127,6 @@ module Props {A : Set i} where
     pathto-is-contr x = ((x , refl x) , pathto-unique-path) where
       pathto-unique-path : {u : A} (pp : Σ A (λ t → t ≡ u)) → pp ≡ (u , refl u)
       pathto-unique-path (.u , refl u) = refl _
-    
-open Props public
 
 abstract
   -- Unit is contractible

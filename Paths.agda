@@ -48,7 +48,7 @@ map-dep! f (refl _) = refl _
 
 -- Paths in Sigma types
 
-module Sigma {i j} {A : Set i} {P : A → Set j} where
+module _ {i j} {A : Set i} {P : A → Set j} where
 
   Σ-eq : {x y : A} (p : x ≡ y) {u : P x} {v : P y}
     (q : transport P p u ≡ v) → (x , u) ≡ (y , v)
@@ -83,11 +83,9 @@ module Sigma {i j} {A : Set i} {P : A → Set j} where
       → Σ-eq (base-path p) (fiber-path p) ≡ p
     Σ-eq-base-path-fiber-path {x} {.x} (refl .x) = refl _
 
-open Sigma public
-
 -- Some of the ∞-groupoid structure
 
-module GpdStruct {i} {A : Set i} where
+module _ {i} {A : Set i} where
 
   concat-assoc : {x y z t : A} (p : x ≡ y) (q : y ≡ z) (r : z ≡ t)
     → (p ∘ q) ∘ r ≡ p ∘ (q ∘ r)
@@ -132,11 +130,9 @@ module GpdStruct {i} {A : Set i} where
   opposite-opposite : {x y : A} (p : x ≡ y) → ! (! p) ≡ p
   opposite-opposite (refl _) = refl _
 
-open GpdStruct public
-
 -- Reduction rules for transport
 
-module TransportReductionRules {i} {A : Set i} where
+module _ {i} {A : Set i} where
   -- This first part is about transporting something in a known fibration. In
   -- the names, [x] represents the variable of the fibration, [a] is a constant
   -- term, [A] is a constant type, and [f] and [g] are constant functions.
@@ -423,5 +419,3 @@ module TransportReductionRules {i} {A : Set i} where
     (v : P x)
     → u ≡ transport P p v → transport P (! p) u ≡ v
   move!-transp-right P (refl _) _ _ p = p
-  
-open TransportReductionRules public

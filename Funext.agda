@@ -133,9 +133,9 @@ module StrongFunextDep {j} {P : A → Set j} where
 
 open StrongFunextDep
 
--- We only export what is in this module
+-- We only export the following
 
-module ExportedFunext {j} {P : A → Set j} {f g : Π A P} where
+module _ {j} {P : A → Set j} {f g : Π A P} where
 
   abstract
     funext : (h : (x : A) → f x ≡ g x) → f ≡ g
@@ -153,5 +153,3 @@ module ExportedFunext {j} {P : A → Set j} {f g : Π A P} where
 
   funext-equiv : ((x : A) → f x ≡ g x) ≃ (f ≡ g)
   funext-equiv = (funext , funext-is-equiv)
-
-open ExportedFunext public
