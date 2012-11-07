@@ -14,10 +14,10 @@ record Pregroup i : Set (suc i) where
   constructor pregroup
   field
     -- Stuff
-    ∣_∣ : Set i
+    ∣_∣ : Set i  -- \|
 
     -- Structure
-    _∙_ : ∣_∣ → ∣_∣ → ∣_∣
+    _∙_ : ∣_∣ → ∣_∣ → ∣_∣  -- \.
     e : ∣_∣
     _′ : ∣_∣ → ∣_∣  -- \'
 
@@ -52,87 +52,86 @@ unit-group {i} =
     (λ _ → refl tt))
   unit-is-set
 
-postulate  -- Tedious
+postulate  -- Tedious because I have a terrible definition of groups
  unit-group-unique : ∀ {i} (G : Group i) (c : is-contr ∣ g G ∣) → G ≡ unit-group
 
 -- Every pregroup can be truncated to a group
-τ-pregroup : ∀ {i} → Pregroup i → Group i
-τ-pregroup (pregroup ∣_∣ _∙_ e _′ assoc right-unit left-unit
+π₀-pregroup : ∀ {i} → Pregroup i → Group i
+π₀-pregroup (pregroup ∣_∣ _∙_ e _′ assoc right-unit left-unit
              right-inverse left-inverse) =
   group (pregroup
-    τ-∣∣
-    _τ-•_
-    τ-e
-    τ-′
-    τ-assoc
-    τ-right-unit
-    τ-left-unit
-    τ-right-inverse
-    τ-left-inverse)
-  τ-is-set where
+    π₀-∣∣
+    _π₀-•_
+    π₀-e
+    π₀-′
+    π₀-assoc
+    π₀-right-unit
+    π₀-left-unit
+    π₀-right-inverse
+    π₀-left-inverse)
+  (π₀-is-set _) where
 
-    τ-is-set : is-set (τ 2 ∣_∣)
-    τ-is-set = τ-is-hlevel 2 ∣_∣
+    π₀→π₀-is-set : is-set (π₀ ∣_∣ → π₀ ∣_∣)
+    π₀→π₀-is-set = →-is-hlevel 2 (π₀-is-set ∣_∣)
   
-    τ→τ-is-set : is-set (τ 2 ∣_∣ → τ 2 ∣_∣)
-    τ→τ-is-set = →-is-hlevel 2 τ-is-set
-  
-    τ-∣∣ : Set _
-    τ-∣∣ = τ 2 ∣_∣
+    π₀-∣∣ : Set _
+    π₀-∣∣ = π₀ ∣_∣
 
-    _τ-•_ : τ-∣∣ → τ-∣∣ → τ-∣∣
-    _τ-•_ = τ-extend-nondep 2 ⦃ p = →-is-hlevel 2 (τ-is-hlevel 2 _) ⦄
-              (λ x → τ-extend-nondep 2 ⦃ p = τ-is-hlevel 2 _ ⦄
+    _π₀-•_ : π₀-∣∣ → π₀-∣∣ → π₀-∣∣
+    _π₀-•_ = π₀-extend-nondep ⦃ →-is-hlevel 2 (π₀-is-set ∣_∣) ⦄
+              (λ x → π₀-extend-nondep
                 (λ y → proj (x ∙ y)))
 
-    τ-e : τ-∣∣
-    τ-e = proj e
+    π₀-e : π₀-∣∣
+    π₀-e = proj e
 
-    τ-′ : τ-∣∣ → τ-∣∣
-    τ-′ = τ-extend-nondep 2 ⦃ p = τ-is-hlevel 2 _ ⦄
-                          (λ x → proj (x ′))
+    π₀-′ : π₀-∣∣ → π₀-∣∣
+    π₀-′ = π₀-extend-nondep (λ x → proj (x ′))
 
     abstract
-      τ-assoc : (x y z : τ-∣∣) → (x τ-• y) τ-• z ≡ x τ-• (y τ-• z)
-      τ-assoc = 
-        (τ-extend 2 ⦃ p = λ x → Π-is-hlevel 2 (λ _ → Π-is-hlevel 2
-                                (λ _ → hlevel-is-hlevel-S 2
-                                τ-is-set _ _)) ⦄
-          (λ x → τ-extend 2 ⦃ p = λ _ → Π-is-hlevel 2
-                                    (λ _ → hlevel-is-hlevel-S 2
-                                           τ-is-set _ _) ⦄
-            (λ y → τ-extend 2 ⦃ p = λ _ → hlevel-is-hlevel-S 2
-                                                                τ-is-set _ _ ⦄
+      π₀-assoc : (x y z : π₀-∣∣) → (x π₀-• y) π₀-• z ≡ x π₀-• (y π₀-• z)
+      π₀-assoc = 
+        (π₀-extend ⦃ λ _ → Π-is-hlevel 2
+                     (λ _ → Π-is-hlevel 2
+                     (λ _ → hlevel-is-hlevel-S 2
+                            (π₀-is-set _) _ _)) ⦄
+          (λ x → π₀-extend ⦃ λ _ → Π-is-hlevel 2
+                             (λ _ → hlevel-is-hlevel-S 2
+                                    (π₀-is-set _) _ _) ⦄
+            (λ y → π₀-extend ⦃ λ _ → hlevel-is-hlevel-S 2
+                                      (π₀-is-set _) _ _ ⦄
               (λ z → map proj (assoc x y z)))))
 
     abstract
-      τ-right-unit : (x : τ-∣∣) → x τ-• τ-e ≡ x
-      τ-right-unit =
-        (τ-extend 2 ⦃ p = λ _ → hlevel-is-hlevel-S 2 τ-is-set _ _ ⦄
+      π₀-right-unit : (x : π₀-∣∣) → x π₀-• π₀-e ≡ x
+      π₀-right-unit =
+        (π₀-extend ⦃ λ _ → hlevel-is-hlevel-S 2 (π₀-is-set _) _ _ ⦄
           (λ x → map proj (right-unit x)))
 
     abstract
-      τ-left-unit : (x : τ-∣∣) → τ-e τ-• x ≡ x
-      τ-left-unit =
-        (τ-extend 2 ⦃ p = λ _ → hlevel-is-hlevel-S 2 τ-is-set _ _ ⦄
+      π₀-left-unit : (x : π₀-∣∣) → π₀-e π₀-• x ≡ x
+      π₀-left-unit =
+        (π₀-extend ⦃ λ _ → hlevel-is-hlevel-S 2 (π₀-is-set _) _ _ ⦄
           (λ x → map proj (left-unit x)))
 
     abstract
-      τ-right-inverse : (x : τ-∣∣) → x τ-• (τ-′ x) ≡ τ-e
-      τ-right-inverse =
-        (τ-extend 2 ⦃ p = λ _ → hlevel-is-hlevel-S 2 τ-is-set _ _ ⦄
+      π₀-right-inverse : (x : π₀-∣∣) → x π₀-• (π₀-′ x) ≡ π₀-e
+      π₀-right-inverse =
+        (π₀-extend ⦃ λ _ → hlevel-is-hlevel-S 2 (π₀-is-set _) _ _ ⦄
           (λ x → map proj (right-inverse x)))
 
     abstract
-      τ-left-inverse : (x : τ-∣∣) → (τ-′ x) τ-• x ≡ τ-e
-      τ-left-inverse =
-        (τ-extend 2 ⦃ p = λ _ → hlevel-is-hlevel-S 2 τ-is-set _ _ ⦄
+      π₀-left-inverse : (x : π₀-∣∣) → (π₀-′ x) π₀-• x ≡ π₀-e
+      π₀-left-inverse =
+        (π₀-extend ⦃ λ _ → hlevel-is-hlevel-S 2 (π₀-is-set _) _ _ ⦄
           (λ x → map proj (left-inverse x)))
 
-is-group-morphism : ∀ {i j} (A : Group i) (B : Group j) (f : ∣ g A ∣ → ∣ g B ∣)
-  → Set (max i j)
-is-group-morphism A B f =
-  (x y : ∣ g A ∣) → f (_∙_ (g A) x y) ≡ _∙_ (g B) (f x) (f y)
+-- Not used
 
-_≈_ : ∀ {i j} (A : Group i) (B : Group j) → Set (max i j)
-A ≈ B = Σ (∣ g A ∣ → ∣ g B ∣) (λ f → is-equiv f × is-group-morphism A B f)
+-- is-group-morphism : ∀ {i j} (A : Group i) (B : Group j) (f : ∣ g A ∣ → ∣ g B ∣)
+--   → Set (max i j)
+-- is-group-morphism A B f =
+--   (x y : ∣ g A ∣) → f (_∙_ (g A) x y) ≡ _∙_ (g B) (f x) (f y)
+
+-- _≈_ : ∀ {i j} (A : Group i) (B : Group j) → Set (max i j)
+-- A ≈ B = Σ (∣ g A ∣ → ∣ g B ∣) (λ f → is-equiv f × is-group-morphism A B f)
