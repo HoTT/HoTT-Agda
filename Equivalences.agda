@@ -173,6 +173,6 @@ abstract
     (λ p → Σ-eq (base-path-Σ-eq (π₁ p) (π₂ p))
                       (fiber-path-Σ-eq {P = P} (π₁ p) (π₂ p)))
 
-Σ-eq-equiv : ∀ {i j} {A : Set i} {P : A → Set j} {x y : Σ A P}
+total-Σ-eq-equiv : ∀ {i j} {A : Set i} {P : A → Set j} {x y : Σ A P}
   → (Σ (π₁ x ≡ π₁ y) (λ p → transport P p (π₂ x) ≡ (π₂ y))) ≃ (x ≡ y)
-Σ-eq-equiv = (total-Σ-eq , total-Σ-eq-is-equiv)
+total-Σ-eq-equiv = (total-Σ-eq , total-Σ-eq-is-equiv)

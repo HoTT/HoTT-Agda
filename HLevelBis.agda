@@ -59,7 +59,7 @@ abstract
   Σ-is-hlevel O p q = ((π₁ p , (π₁ (q (π₁ p)))) ,
                        (λ y → Σ-eq (π₂ p _) (π₂ (q _) _)))
   Σ-is-hlevel (S n) p q =
-    λ x y → equiv-types-hlevel n Σ-eq-equiv
+    λ x y → equiv-types-hlevel n total-Σ-eq-equiv
                                (Σ-is-hlevel n (p _ _) (λ _ → q _ _ _))
 
   ×-is-hlevel : ∀ {i j} (n : ℕ) {A : Set i} {B : Set j}
@@ -100,7 +100,7 @@ abstract
 
   hLevel-is-hlevel : (n : ℕ) (i : Level) → is-hlevel (S n) (hLevel n i)
   hLevel-is-hlevel n i A B =
-    equiv-types-hlevel n Σ-eq-equiv
+    equiv-types-hlevel n total-Σ-eq-equiv
     (Σ-is-hlevel n (equiv-types-hlevel n eq-to-path-equiv
                                       (≃-is-hlevel n (π₂ A) (π₂ B)))
     (λ _ → contr-is-hlevel n (≡-is-hlevel 0
