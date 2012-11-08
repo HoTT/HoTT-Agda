@@ -3,7 +3,8 @@
 open import Base
 open import Integers
 
-module Spaces.LoopSpaceWedgeCircles {i} (A : Set i) (set : is-set A) where
+module Spaces.FlatteningLoopSpaceWedgeCircles {i} (A : Set i) (set : is-set A)
+  where
 
 import Spaces.WedgeCircles
 import Algebra.FreeGroup
@@ -13,7 +14,6 @@ import Algebra.FreeGroupAsReducedWords
 open Spaces.WedgeCircles A renaming (wedge-circles to WA; base to baseWA)
 open Algebra.FreeGroup A renaming (freegroup to FA)
 open Algebra.FreeGroupProps A
---open Algebra.FreeGroupAsReducedWords A eq
 
 -- Path fibration
 

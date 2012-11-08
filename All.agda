@@ -12,6 +12,6 @@ import Base
 import Spaces.IntervalProps
 import Algebra.F2NotCommutative
 import Spaces.LoopSpaceCircle
-import Spaces.LoopSpaceWedgeCircles2
+import Spaces.LoopSpaceDecidableWedgeCircles
 import Homotopy.PullbackIsPullback
 import Homotopy.PushoutIsPushout
