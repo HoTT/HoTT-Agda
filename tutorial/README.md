@@ -29,15 +29,14 @@ release notes of the various versions of Agda, which often contain useful inform
 Installation
 ------------
 
-If you are using Ubuntu or Debian, install the package `agda-mode` (I haven’t tried it, maybe you
-need something else). You can install the standard library with the package `agda-stdlib` but you
-don’t need it for the code here.
+In order to use the HoTT-Agda library, you need the latest dev version of Agda (or Agda 2.3.2).
 
-If you are using Arch Linux, install the AUR packages `haskell-agda` and `agda-executable` (and tell
-me if there is any problem with them), I don’t think the standard library has been packaged (at
-least not by me).
+You need GHC 7.x, cabal and darcs, and you should be able to download and compile Agda with the
+following commands:
 
-If you are using another operating system, follow the instructions on the Agda wiki.
+    darcs get --lazy http://code.haskell.org/Agda
+    cd Agda
+    cabal install
 
 Basic theory
 ------------
@@ -60,7 +59,7 @@ n` and `x : A ⊢ B : Set m`, then the dependent function type `(x : A) → B` i
 
 - inductive types and inductive families. The default pattern matching algorithm allows more than
 dependent eliminators, for example you can prove axiom K easily by pattern matching. But using the
-`--without-K` option, you can restrict dependent pattern matching to something that should not allow
+`--without-K` flag, you can restrict dependent pattern matching to something that should not allow
 you to prove K. I’m trying to use pattern matching in a minimal way, every pattern matching should
 be directly translatable into a single dependent eliminator use.
 
@@ -70,9 +69,9 @@ and for unit. Also, records are negative types and inductive types are positive 
 understand the difference between positive and negative types).
 
 There is a lot of other features in Agda like coinductive definitions, irrelevant and erasable
-arguments, instance arguments, first class universe polymorphic definitions (see the part about
-universe polymorphism), induction-recursion, termination checking, etc. that I’m not sure if they
-are consistent with homotopy type theory, so I’m trying not to use them.
+arguments, first class universe polymorphic definitions (see the part about universe polymorphism),
+induction-recursion, termination checking, etc. that I’m not sure if they are consistent with
+homotopy type theory, so I’m trying not to use them.
 
 Basic syntax
 ------------
@@ -96,8 +95,8 @@ section about fixity declaration), so if in Coq you have something called `oppos
 you will rather want to call it `opposite-right-inverse` in Agda (this is recognized as a single
 token). Also, a typing declaration is `a : A`, not `a:A` (which will be parsed as a single token).
 
-Indentation matters, you have to indent properly (I think that the convention is to use two spaces
-for indentation), I’ll explain what it means in the appropriate sections.
+Indentation matters, you have to indent properly (the convention is to use two spaces for
+indentation), I’ll explain what it means in the appropriate sections.
 
 Special comments
 ----------------
@@ -112,9 +111,8 @@ understand (and use) are
 
 - Builtins. A builtin command is used to register some type as a builtin type that is handled
   specially by Agda. I’m using two of them : universe levels (see the part about universe
-  polymorphism) and natural numbers (see the part about inductive types, this allows using `42` as a
-  shorthand for `S (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S (S
-  (S (S (S (S (S (S (S (S (S (S (S (S (S (S O)))))))))))))))))))))))))))))))))))))))))`.
+  polymorphism) and natural numbers (see the part about inductive types, this allows using `3` as a
+  shorthand for `S (S (S O))`.
 
 Structure of the source files
 -----------------------------
@@ -128,9 +126,9 @@ with the following :
     module Test where
     -- Interesting stuff, that does not need to be indented
 
-If `Test.agda` is in the directory `/toplevel/Mysublibrary/`, the global module can also be called
+If `Test.agda` is in the directory `/toplevel/Mysublibrary/`, the global module should be called
 `Mysublibrary.Test`, this will tell Agda that the toplevel of the library is `/toplevel/`, and every
-module importation will be with respect to `/toplevel/`.
+module importation is understood with respect to `/toplevel/`.
 
 Importation of other modules/files is done with `open import Myothermodule` or `open import
 Mysublibrary.Myothermodule` if `Myothermodule.agda` is in the directory `Myotherlibrary`. The
@@ -158,16 +156,16 @@ and `→` are Unicode characters written by typing `\Gl` (`G` for greek letter a
 by `->` if you don’t like Unicode.
 
 Universes are written `Set` or `Set₀` or `Set0` for the first one and `Set₁`, `Set₂`, `Set₃`, … for
-the next ones (or `Set1`, `Set2`, `Set3`, …) (I’m not sure this will work after `Set₉`). Subscripts
-are obtained by typing `\_0` for `₀`, for example. There is also universe polymorphism, that allows
-you to write `Set i` where `i : Level` is a universe level. See the section about universe
-polymorphism for more about this.
+the next ones (or `Set1`, `Set2`, `Set3`, …). Subscripts are obtained by typing `\_0` for `₀`, for
+example. There is also universe polymorphism, that allows you to write `Set i` where `i : Level` is
+a universe level. See the section about universe polymorphism for more about this.
 
 Dependent product is written `(x : A) → B` or `A → B` if `B` does not depend on `x`. You can also
-write `∀ (x : A) → B` or `∀ x → B` (the type of `x` can only be inferred if you are using the `∀`
-symbol). The `∀` symbol is obtained by typing `\forall`, and you can replace it by `forall` if you
-want. I’m using it in particular for implicit universe levels, see the examples in the section about
-universe polymorphism.
+write `∀ (x : A) → B` or `∀ x → B` (the type of `x` will only be inferred if you are using the `∀`
+symbol, because `A → B` would be ambiguous (it could mean `(A : Set) → B` which is completely
+different)). The `∀` symbol is obtained by typing `\forall`, and you can replace it by `forall` if
+you want. I’m using it in particular for implicit universe levels, see the examples in the section
+about universe polymorphism.
 
 Function declaration, pattern matching
 --------------------------------------
@@ -214,7 +212,7 @@ inductive type with zero constructors, we have
 
     abort : (A : Set) (x : empty) → A
     abort A ()
-    
+
 Beware that such so-called absurd patterns are known to be unsound when combined to Dan Licata’s
 trick for higher inductive types, so use them wisely.
 
@@ -259,8 +257,7 @@ Instance arguments
 ------------------
 
 Instance arguments are a different sort of implicit arguments. They are introduced with the symbols
-`⦃` and `⦄` (in the emacs mode they are obtained by typing `\{{` and `\}}`, and you can use `{{`
-and `}}` instead if you don’t like Unicode).
+`⦃` and `⦄` or `{{` and `}}` (the unicode symbols are obtained by typing `\{{` and `\}}`).
 
 The difference with implicit arguments is that when they are not explicitely given, Agda try to
 guess instance arguments by looking at the context. More precisely, if `f` is a function with an
