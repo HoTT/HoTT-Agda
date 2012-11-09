@@ -172,6 +172,10 @@ module _ {i} {A : Set i} where
   trans-fx≡x : (f : A → A) {x y : A} (p : x ≡ y) (q : f x ≡ x)
     → transport (λ x → f x ≡ x) p q ≡ ! (map f p) ∘ (q ∘ p)
   trans-fx≡x f (refl _) q = ! (refl-right-unit q)
+
+  trans-x≡x : {x y : A} (p : x ≡ y) (q : x ≡ x)
+    → transport (λ x → x ≡ x) p q ≡ ! p ∘ (q ∘ p)
+  trans-x≡x (refl _) q = ! (refl-right-unit _)
   
   trans-A : ∀ {j} {B : Set j} {x y : A} (p : x ≡ y) (q : B)
     → transport (λ _ → B) p q ≡ q
