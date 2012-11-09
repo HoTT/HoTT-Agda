@@ -3,9 +3,9 @@
 open import Base
 open import Homotopy.PushoutDef
 
-module Homotopy.PushoutUP {m : Level} (D : pushout-diag m)
-  (P : Set m → Set m) ⦃ PA : P (pushout-diag.A D) ⦄
-  ⦃ PB : P (pushout-diag.B D) ⦄ ⦃ PC : P (pushout-diag.C D) ⦄ where
+module Homotopy.PushoutUP {m} (D : pushout-diag m) (P : Set m → Set m)
+  ⦃ PA : P (pushout-diag.A D) ⦄ ⦃ PB : P (pushout-diag.B D) ⦄
+  ⦃ PC : P (pushout-diag.C D) ⦄ where
 
 open pushout-diag D
 
@@ -18,19 +18,19 @@ record cone (top : Set m) : Set m where
     h : (c : C) → (A→top (f c)) ≡ (B→top (g c))
 open cone public
 
-cone-eq : (top : Set m) {a1 a2 : A → top} {b1 b2 : B → top}
+cone-eq-raw : (top : Set m) {a1 a2 : A → top} {b1 b2 : B → top}
   {h1 : (c : C) → a1 (f c) ≡ b1 (g c)} {h2 : (c : C) → a2 (f c) ≡ b2 (g c)} 
   (p1 : a1 ≡ a2) (p2 : b1 ≡ b2) (p3 : transport _ p1 (transport _ p2 h1) ≡ h2)
   → (a1 , b1 , h1) ≡ (a2 , b2 , h2)
-cone-eq top (refl _) (refl _) (refl _) = refl _
+cone-eq-raw top (refl _) (refl _) (refl _) = refl _
 
-cone-eq-new : (top : Set m) {a1 a2 : A → top} {b1 b2 : B → top}
+cone-eq : (top : Set m) {a1 a2 : A → top} {b1 b2 : B → top}
   {h1 : (c : C) → a1 (f c) ≡ b1 (g c)} {h2 : (c : C) → a2 (f c) ≡ b2 (g c)} 
   (p1 : a1 ≡ a2) (p2 : b1 ≡ b2)
   (p3 : (c : C) → happly p1 (f c) ∘ h2 c ≡ h1 c ∘ happly p2 (g c))
   → (a1 , b1 , h1) ≡ (a2 , b2 , h2)
-cone-eq-new top (refl _) (refl _) p3 =
-  cone-eq top (refl _) (refl _)
+cone-eq top (refl _) (refl _) p3 =
+  cone-eq-raw top (refl _) (refl _)
     (funext (λ c → ! (refl-right-unit _) ∘ ! (p3 c)))
 
 open import Homotopy.PullbackDef
