@@ -12,7 +12,7 @@ module Homotopy.PullbackUP {i} (d : pullback-diag i)
 
 open pullback-diag d
 
-record cocone (top : Set i) : Set i where
+record cone (top : Set i) : Set i where
   constructor _,_,_
   field
     top→A : top → A
@@ -22,27 +22,27 @@ record cocone (top : Set i) : Set i where
 top→D : (top : Set i) → pullback-diag i
 top→D top = diag (top → A), (top → B), (top → C), (λ h → f ◯ h), (λ h → g ◯ h)
 
-pullback-to-cocone : (top : Set i) → (pullback (top→D top) → cocone top)
-pullback-to-cocone top (top→A , top→B , h) = (top→A , top→B , happly h)
+pullback-to-cone : (top : Set i) → (pullback (top→D top) → cone top)
+pullback-to-cone top (top→A , top→B , h) = (top→A , top→B , happly h)
 
-cocone-to-pullback : (top : Set i) → (cocone top → pullback (top→D top))
-cocone-to-pullback top (a , b , h) = (a , b , funext h)
+cone-to-pullback : (top : Set i) → (cone top → pullback (top→D top))
+cone-to-pullback top (a , b , h) = (a , b , funext h)
 
-pullback-to-cocone-equiv : (top : Set i) → is-equiv (pullback-to-cocone top)
-pullback-to-cocone-equiv top = iso-is-eq _ (cocone-to-pullback top)
+pullback-to-cone-equiv : (top : Set i) → is-equiv (pullback-to-cone top)
+pullback-to-cone-equiv top = iso-is-eq _ (cone-to-pullback top)
   (λ y → map (λ u → _ , _ , u) (happly-funext _))
   (λ x → map (λ u → _ , _ , u) (funext-happly _))
 
-cocone-to-pullback-equiv : (top : Set i) → is-equiv (cocone-to-pullback top)
-cocone-to-pullback-equiv top = iso-is-eq _ (pullback-to-cocone top)
+cone-to-pullback-equiv : (top : Set i) → is-equiv (cone-to-pullback top)
+cone-to-pullback-equiv top = iso-is-eq _ (pullback-to-cone top)
   (λ x → map (λ u → _ , _ , u) (funext-happly _))
   (λ y → map (λ u → _ , _ , u) (happly-funext _))
 
-compose-cocone-map : (D E : Set i) (Dcocone : cocone D)
-  → ((f : E → D) → cocone E)
-compose-cocone-map D E (top→A , top→B , h) f =
+compose-cone-map : (D E : Set i) (Dcone : cone D)
+  → ((f : E → D) → cone E)
+compose-cone-map D E (top→A , top→B , h) f =
   ((top→A ◯ f) , (top→B ◯ f) , λ x → h (f x))
 
-is-pullback : (D : Set i) ⦃ PD : P D ⦄ (Dcocone : cocone D) → Set _
-is-pullback D Dcocone = (E : Set i) ⦃ PE : P E ⦄
-                        → is-equiv (compose-cocone-map D E Dcocone)
+is-pullback : (D : Set i) ⦃ PD : P D ⦄ (Dcone : cone D) → Set _
+is-pullback D Dcone = (E : Set i) ⦃ PE : P E ⦄
+                        → is-equiv (compose-cone-map D E Dcone)
