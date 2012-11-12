@@ -15,3 +15,4 @@ import Spaces.LoopSpaceCircle
 import Spaces.LoopSpaceDecidableWedgeCircles
 import Homotopy.PullbackIsPullback
 import Homotopy.PushoutIsPushout
+import Homotopy.Truncation
