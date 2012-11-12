@@ -56,7 +56,8 @@ module TotalMapEquiv (e : is-equiv total-map) where
                                                                  (x , f x y)))
                                (! (base-path-inverse x (f x y))) y)
     ∘ map (λ p → transport P p y)
-          (opposite-left-inverse (map π₁ (inverse-right-inverse total-equiv (x , f x y))))) where
+          (opposite-left-inverse (map π₁
+            (inverse-right-inverse total-equiv (x , f x y))))) where
 
     lemma1 : (x : A) (y : P x)
       → base-path-inverse x (f x y)

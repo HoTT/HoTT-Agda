@@ -128,7 +128,8 @@ postulate  -- Tedious because I have a terrible definition of groups
 
 -- Not used
 
--- is-group-morphism : ∀ {i j} (A : Group i) (B : Group j) (f : ∣ g A ∣ → ∣ g B ∣)
+-- is-group-morphism : ∀ {i j} (A : Group i) (B : Group j)
+-- (f : ∣ g A ∣ → ∣ g B ∣)
 --   → Set (max i j)
 -- is-group-morphism A B f =
 --   (x y : ∣ g A ∣) → f (_∙_ (g A) x y) ≡ _∙_ (g B) (f x) (f y)

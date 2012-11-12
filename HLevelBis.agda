@@ -68,7 +68,8 @@ abstract
 
   subtype-hlevel-S-is-hlevel-S : ∀ {i j} {A : Set i} {P : A → Set j} (n : ℕ)
     → (is-hlevel (S n) A → ((x : A) → is-prop (P x)) → is-hlevel (S n) (Σ A P))
-  subtype-hlevel-S-is-hlevel-S n p q = Σ-is-hlevel (S n) p (λ x → prop-is-hlevel-S n (q x))
+  subtype-hlevel-S-is-hlevel-S n p q =
+    Σ-is-hlevel (S n) p (λ x → prop-is-hlevel-S n (q x))
 
   is-equiv-is-prop : ∀ {i j} {A : Set i} {B : Set j} (f : A → B)
     → is-prop (is-equiv f)

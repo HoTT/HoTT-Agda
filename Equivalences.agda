@@ -150,14 +150,17 @@ module _ {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x y : A) where
       right-inverse : (p : f ☆ x ≡ f ☆ y) → map (π₁ f) (map-is-inj p) ≡ p
       right-inverse p =
         map-concat (π₁ f) (! (inverse-left-inverse f x)) _
-        ∘ (map (λ u → u ∘ map (π₁ f) (map (inverse f) p ∘ inverse-left-inverse f y))
+        ∘ (map (λ u → u ∘ map (π₁ f) (map (inverse f) p
+                  ∘ inverse-left-inverse f y))
                (map-opposite (π₁ f) (inverse-left-inverse f x))
           ∘ move!-right-on-left (map (π₁ f) (inverse-left-inverse f x)) _ p
             (map-concat (π₁ f) (map (inverse f) p) (inverse-left-inverse f y)
             ∘ (map (λ u → u ∘ map (π₁ f) (inverse-left-inverse f y))
                    (compose-map (π₁ f) (inverse f) p)
-            ∘ (whisker-left (map (π₁ f ◯ inverse f) p) (! (inverse-triangle f y))
-            ∘ (homotopy-naturality-toid (π₁ f ◯ inverse f) (inverse-right-inverse f)
+            ∘ (whisker-left (map (π₁ f ◯ inverse f) p)
+                            (! (inverse-triangle f y))
+            ∘ (homotopy-naturality-toid (π₁ f ◯ inverse f)
+                                        (inverse-right-inverse f)
                                         p
             ∘ whisker-right p (inverse-triangle f x))))))
 

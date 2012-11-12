@@ -61,7 +61,8 @@ pullback-equiv-cocone top = (pullback-to-cocone top
     (λ c → map (λ u → _ , _ , u) (happly-funext _))
     (λ p → map (λ u → _ , _ , u) (funext-happly _)))
 
-compose-cocone-map : (D E : Set m) (Dcocone : cocone D) → ((f : D → E) → cocone E)
+compose-cocone-map : (D E : Set m) (Dcocone : cocone D)
+  → ((f : D → E) → cocone E)
 compose-cocone-map D E (A→top , B→top , h) f =
   ((f ◯ A→top) , (f ◯ B→top) , (λ c → map f (h c)))
 
@@ -74,12 +75,13 @@ compose-cocone-map-compose : (D E F : Set m) (Dcocone : cocone D) (f : D → E)
   → compose-cocone-map E F (compose-cocone-map D E Dcocone f) g
     ≡ compose-cocone-map D F Dcocone (g ◯ f)
 compose-cocone-map-compose D E F Dcocone f g =
-  map (λ u → ((g ◯ (f ◯ cocone.A→top Dcocone)) , (g ◯ (f ◯ cocone.B→top Dcocone)) , u))
+  map (λ u → ((g ◯ (f ◯ cocone.A→top Dcocone))
+             , (g ◯ (f ◯ cocone.B→top Dcocone)) , u))
       (funext (λ c → compose-map g f (cocone.h Dcocone c)))
 
 module _ (D : Set m) ⦃ PD : P D ⦄ (Dcocone : cocone D)
-  (Dpushout : is-pushout D Dcocone) (E : Set m) ⦃ PE : P E ⦄ (Ecocone : cocone E)
-  (Epushout : is-pushout E Ecocone) where
+  (Dpushout : is-pushout D Dcocone) (E : Set m) ⦃ PE : P E ⦄
+  (Ecocone : cocone E) (Epushout : is-pushout E Ecocone) where
 
   private
     DE-eq : (D → E) ≃ cocone E

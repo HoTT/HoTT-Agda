@@ -83,13 +83,3 @@ open Pushout public hiding (pushout)
 
 pushout : ∀ {i} (d : pushout-diag i) → Set i
 pushout d = Pushout.pushout {_} {d}
-
--- left : ∀ {i} {d : pushout-diag i} → (pushout-diag.A d → pushout d)
--- left {i} {d} = Pushout.left d
-
--- right : ∀ {i} {d : pushout-diag i} → (pushout-diag.B d → pushout d)
--- right {i} {d} = Pushout.right d
-
--- glue : ∀ {i} {d : pushout-diag i}
---   → ((c : pushout-diag.C d) → left (pushout-diag.f d c) ≡ right (pushout-diag.g d c))
--- glue {i} {d} = Pushout.glue d
