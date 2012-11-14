@@ -162,15 +162,15 @@ fiberwise-map-is-equiv x = fiberwise-is-equiv fiberwise-map total-is-equiv x
 -- We can also deduce that the circle is of h-level 3
 
 ΩS¹-is-set : is-set (base ≡ base)
-ΩS¹-is-set = equiv-types-hlevel 2 (ΩS¹≃ℤ ⁻¹) ℤ-is-set
+ΩS¹-is-set = equiv-types-truncated _ (ΩS¹≃ℤ ⁻¹) ℤ-is-set
 
 S¹-is-gpd : is-gpd S¹
 S¹-is-gpd =
   S¹-rec _
     (S¹-rec _
       ΩS¹-is-set  -- [base ≡ base] is a set
-      (π₁ (is-hlevel-is-prop 2 _ _)))
+      (π₁ (is-truncated-is-prop _ _ _)))
     (funext
       (S¹-rec _
-        (π₁ (is-hlevel-is-prop 2 _ _))
-        (prop-has-all-paths (≡-is-hlevel 1 (is-hlevel-is-prop 2)) _ _)))
+        (π₁ (is-truncated-is-prop _ _ _))
+        (prop-has-all-paths (≡-is-truncated _ (is-truncated-is-prop _)) _ _)))

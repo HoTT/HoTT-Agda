@@ -12,7 +12,7 @@ private
   data _#/_ : Set (max i j) where
     #proj : A → _#/_
 
-    #top : (f : Sⁿ 2 → _#/_) → _#/_
+    #top : (f : hSⁿ ⟨0⟩ → _#/_) → _#/_
 
 _/_ : Set (max i j)
 _/_ = _#/_
@@ -23,17 +23,17 @@ proj = #proj
 postulate  -- HIT
   eq : (x y : A) (p : R x y) → proj x ≡ proj y
 
-top : (f : Sⁿ 2 → _/_) → _/_
+top : (f : hSⁿ ⟨0⟩ → _/_) → _/_
 top = #top
 
 postulate  -- HIT
-  rays : (f : Sⁿ 2 → _/_) (x : Sⁿ 2) → top f ≡ f x
+  rays : (f : hSⁿ ⟨0⟩ → _/_) (x : hSⁿ ⟨0⟩) → top f ≡ f x
 
 #/-rec : ∀ {k} (P : _/_ → Set k)
   (proj* : (x : A) → P (proj x))
   (eq* : (x y : A) (p : R x y) → transport P (eq x y p) (proj* x) ≡ proj* y)
-  (top* : (f : Sⁿ 2 → _/_) (p : (x : Sⁿ 2) → P (f x)) → P (top f))
-  (rays* : (f : Sⁿ 2 → _/_) (p : (x : Sⁿ 2) → P (f x)) (x : Sⁿ 2)
+  (top* : (f : hSⁿ ⟨0⟩ → _/_) (p : (x : hSⁿ ⟨0⟩) → P (f x)) → P (top f))
+  (rays* : (f : hSⁿ ⟨0⟩ → _/_) (p : (x : hSⁿ ⟨0⟩) → P (f x)) (x : hSⁿ ⟨0⟩)
          → transport P (rays f x) (top* f p) ≡ p x)
   → ((t : _/_) → P t)
 #/-rec P proj* eq* top* rays* (#proj x) = proj* x
@@ -43,8 +43,8 @@ postulate  -- HIT
 #/-rec-nondep : ∀ {k} (B : Set k)
   (proj* : A → B)
   (eq* : (x y : A) (p : R x y) → proj* x ≡ proj* y)
-  (top* : (f : Sⁿ 2 → _/_) (p : Sⁿ 2 → B) → B)
-  (rays* : (f : Sⁿ 2 → _/_) (p : Sⁿ 2 → B) (x : Sⁿ 2) → top* f p ≡ p x)
+  (top* : (f : hSⁿ ⟨0⟩ → _/_) (p : hSⁿ ⟨0⟩ → B) → B)
+  (rays* : (f : hSⁿ ⟨0⟩ → _/_) (p : hSⁿ ⟨0⟩ → B) (x : hSⁿ ⟨0⟩) → top* f p ≡ p x)
   → (_/_ → B)
 #/-rec-nondep B proj* eq* top* rays* (#proj x) = proj* x
 #/-rec-nondep B proj* eq* top* rays* (#top f) =
@@ -60,7 +60,7 @@ postulate  -- HIT
                                  (λ f p₁ → π₁ (u f p₁))
                                  (λ f p₁ → π₂ (u f p₁)) where
   u : _
-  u = hlevel-has-filling-dep _/_ P 2 (λ ()) (λ f → (top f , rays f))
+  u = truncated-has-filling-dep _/_ P ⟨0⟩ (λ ()) (λ f → (top f , rays f))
 
 /-rec-nondep : ∀ {k} (B : Set k)
   (proj* : A → B)
@@ -71,6 +71,6 @@ postulate  -- HIT
                                                (λ _ p → π₁ (u p))
                                                (λ _ p → π₂ (u p)) where
   u : _
-  u = hlevel-has-spheres-filled 2 _ trunc
+  u = truncated-has-spheres-filled ⟨0⟩ _ trunc
 
 -- Reduction rules for paths are not needed

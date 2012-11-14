@@ -13,13 +13,13 @@ module HLevel {i} where
 is-contr : Set i → Set i
 is-contr A = Σ A (λ x → ((y : A) → y ≡ x))
 
-is-hlevel : (n : ℕ) → (Set i → Set i)
-is-hlevel O A = is-contr A
-is-hlevel (S n) A = (x y : A) → is-hlevel n (x ≡ y)
+is-truncated : (n : ℕ₋₂) → (Set i → Set i)
+is-truncated ⟨-2⟩ A = is-contr A
+is-truncated (S n) A = (x y : A) → is-truncated n (x ≡ y)
 
-is-prop = is-hlevel 1
-is-set  = is-hlevel 2
-is-gpd  = is-hlevel 3
+is-prop = is-truncated ⟨-1⟩
+is-set  = is-truncated ⟨0⟩
+is-gpd  = is-truncated ⟨1⟩
 
 -- The following property is equivalent to being a proposition
 has-all-paths : Set i → Set i
@@ -39,10 +39,12 @@ abstract
     canon-path (refl y) = anti-whisker-right (c y y) (lemma (c y y))
 
   -- h-levels are increasing
-  hlevel-is-hlevel-S : {A : Set i} (n : ℕ)
-    → (is-hlevel n A → is-hlevel (S n) A)
-  hlevel-is-hlevel-S O q = all-paths-is-prop (λ x y → π₂ q x ∘ ! (π₂ q y))
-  hlevel-is-hlevel-S (S n) q = λ x y → hlevel-is-hlevel-S n (q x y)
+  truncated-is-truncated-S : {A : Set i} (n : ℕ₋₂)
+    → (is-truncated n A → is-truncated (S n) A)
+  truncated-is-truncated-S ⟨-2⟩ q =
+    all-paths-is-prop (λ x y → π₂ q x ∘ ! (π₂ q y))
+  truncated-is-truncated-S (S n) q =
+    λ x y → truncated-is-truncated-S n (q x y)
 
   -- A type with a decidable equality is a set
   dec-eq-is-set : {A : Set i} → (has-dec-eq A → is-set A)
@@ -67,7 +69,7 @@ abstract
   
     paths-A-is-prop : {u v : A} (q : u ≡ v) → is-prop (u ≡ v)
     paths-A-is-prop (refl u) =
-      hlevel-is-hlevel-S 0
+      truncated-is-truncated-S ⟨-2⟩
         (refl u , λ r → anti-whisker-right (get-path (refl _))
                                            (lemma r ∘ get-path-eq r))
 
@@ -82,45 +84,47 @@ module _ {A : Set i} where
     inhab-prop-is-contr : A → is-prop A → is-contr A
     inhab-prop-is-contr x₀ p = (x₀ , λ y → π₁ (p y x₀))
   
-    contr-is-hlevel : (n : ℕ) → (is-contr A → is-hlevel n A)
-    contr-is-hlevel 0 p = p
-    contr-is-hlevel (S n) p = hlevel-is-hlevel-S n (contr-is-hlevel n p)
+    contr-is-truncated : (n : ℕ₋₂) → (is-contr A → is-truncated n A)
+    contr-is-truncated ⟨-2⟩ p = p
+    contr-is-truncated (S n) p =
+      truncated-is-truncated-S n (contr-is-truncated n p)
   
-    prop-is-hlevel-S : (n : ℕ) → (is-prop A → is-hlevel (S n) A)
-    prop-is-hlevel-S 0 p = p
-    prop-is-hlevel-S (S n) p = hlevel-is-hlevel-S (S n) (prop-is-hlevel-S n p)
+    prop-is-truncated-S : (n : ℕ₋₂) → (is-prop A → is-truncated (S n) A)
+    prop-is-truncated-S ⟨-2⟩ p = p
+    prop-is-truncated-S (S n) p =
+      truncated-is-truncated-S (S n) (prop-is-truncated-S n p)
   
-    set-is-hlevel-SS : (n : ℕ) → (is-set A → is-hlevel (S (S n)) A)
-    set-is-hlevel-SS 0 p = p
-    set-is-hlevel-SS (S n) p = hlevel-is-hlevel-S (S (S n))
-                                                  (set-is-hlevel-SS n p)
+    set-is-truncated-SS : (n : ℕ₋₂) → (is-set A → is-truncated (S (S n)) A)
+    set-is-truncated-SS ⟨-2⟩ p = p
+    set-is-truncated-SS (S n) p = truncated-is-truncated-S (S (S n))
+                                                  (set-is-truncated-SS n p)
   
     contr-is-prop : is-contr A → is-prop A
-    contr-is-prop = contr-is-hlevel 1
+    contr-is-prop = contr-is-truncated ⟨-1⟩
 
     contr-is-set : is-contr A → is-set A
-    contr-is-set = contr-is-hlevel 2
+    contr-is-set = contr-is-truncated ⟨0⟩
 
     contr-is-gpd : is-contr A → is-gpd A
-    contr-is-gpd = contr-is-hlevel 3
+    contr-is-gpd = contr-is-truncated ⟨1⟩
 
     prop-is-set : is-prop A → is-set A
-    prop-is-set = prop-is-hlevel-S 1
+    prop-is-set = prop-is-truncated-S ⟨-1⟩
 
     prop-is-gpd : is-prop A → is-gpd A
-    prop-is-gpd = prop-is-hlevel-S 2
+    prop-is-gpd = prop-is-truncated-S ⟨0⟩
 
     set-is-gpd : is-set A → is-gpd A
-    set-is-gpd = set-is-hlevel-SS 1
+    set-is-gpd = set-is-truncated-SS ⟨-1⟩
 
     -- If [A] is of h-level [n], then so does [x ≡ y] for [x y : A]
-    ≡-is-hlevel : (n : ℕ) {x y : A}
-      → (is-hlevel n A → is-hlevel n (x ≡ y))
-    ≡-is-hlevel O p = (contr-has-all-paths p _ _ , unique-path) where
+    ≡-is-truncated : (n : ℕ₋₂) {x y : A}
+      → (is-truncated n A → is-truncated n (x ≡ y))
+    ≡-is-truncated ⟨-2⟩ p = (contr-has-all-paths p _ _ , unique-path) where
       unique-path : {u v : A} (q : u ≡ v)
         → q ≡ contr-has-all-paths p u v
       unique-path (refl _) = ! (opposite-right-inverse (π₂ p _))
-    ≡-is-hlevel (S n) {x} {y} p = hlevel-is-hlevel-S n (p x y) 
+    ≡-is-truncated (S n) {x} {y} p = truncated-is-truncated-S n (p x y) 
 
     -- The type of paths to a fixed point is contractible
     pathto-is-contr : (x : A) → is-contr (Σ A (λ t → t ≡ x))
@@ -135,18 +139,18 @@ abstract
   unit-is-contr : is-contr unit
   unit-is-contr = (tt , λ y → refl tt)
 
-  unit-is-hlevel : (n : ℕ) → is-hlevel n unit
-  unit-is-hlevel n = contr-is-hlevel n unit-is-contr
+  unit-is-truncated : (n : ℕ₋₂) → is-truncated n unit
+  unit-is-truncated n = contr-is-truncated n unit-is-contr
 
-  -- [unit-is-hlevel#instance] produces unsolved metas
-  unit-is-hlevel-S#instance : {n : ℕ} → is-hlevel (S n) unit
-  unit-is-hlevel-S#instance = contr-is-hlevel _ unit-is-contr
+  -- [unit-is-truncated#instance] produces unsolved metas
+  unit-is-truncated-S#instance : {n : ℕ₋₂} → is-truncated (S n) unit
+  unit-is-truncated-S#instance = contr-is-truncated _ unit-is-contr
 
   unit-is-prop : is-prop unit
-  unit-is-prop = unit-is-hlevel 1
+  unit-is-prop = unit-is-truncated ⟨-1⟩
 
   unit-is-set : is-set unit
-  unit-is-set = unit-is-hlevel 2
+  unit-is-set = unit-is-truncated ⟨0⟩
 
 private
   bool-true≢false-type : bool {i} → Set

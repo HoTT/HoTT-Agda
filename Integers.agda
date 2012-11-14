@@ -49,14 +49,16 @@ private
   ℕ-S≢O-type O = ⊥
   ℕ-S≢O-type (S n) = unit
 
+-- Technical note: You need to write "0" and not "O" in the following types
+-- because S and O are both overloaded so Agda is confused by [S n ≢ O]
 abstract
-  ℕ-S≢O : (n : ℕ) → (S n ≢ O)
+  ℕ-S≢O : (n : ℕ) → S n ≢ 0
   ℕ-S≢O n p = transport ℕ-S≢O-type p tt
 
-  ℕ-S≢O#instance : {n : ℕ} → (S n ≢ O)
+  ℕ-S≢O#instance : {n : ℕ} → (S n ≢ 0)
   ℕ-S≢O#instance {n} = ℕ-S≢O n
 
-  ℕ-O≢S : (n : ℕ) → (O ≢ S n)
+  ℕ-O≢S : (n : ℕ) → (0 ≢ S n)
   ℕ-O≢S n p = ℕ-S≢O n (! p)
 
   ℕ-has-dec-eq : has-dec-eq ℕ

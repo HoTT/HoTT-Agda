@@ -104,7 +104,7 @@ module StrongFunextDep {j} {P : A → Set j} where
   funext-refl : (f : Π A P)
     → funext-p (λ x → refl (f x)) ≡ refl f
   funext-refl f = map (map (λ u x → π₁ (u x)))
-    (contr-has-all-paths (≡-is-hlevel 0
+    (contr-has-all-paths (≡-is-truncated _
                          (ΠAQ-is-contr (λ x → refl _)))
                          (Q-f≡Q-g (λ x → refl _)) (refl _))
 

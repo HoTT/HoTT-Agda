@@ -34,4 +34,4 @@ module UP {k} (B : Set k) (B-set : is-set B) where
     funext (/-rec A R (λ x → factor (extend f) x ≡ f x)
            (λ x → refl _)
            (λ x y _ → π₁ (B-set _ _ _ _))
-           (λ x → hlevel-is-hlevel-S 1 (B-set _ _)))
+           (λ x → truncated-is-truncated-S _ (B-set _ _)))

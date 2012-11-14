@@ -74,7 +74,8 @@ Examples (only the nonimplicit arguments are given)
 ### Functions and equivalences
 
 - A natural function between two types `A` and `B` is often called `A-to-B`
-- If `f : A → B`, the lemma asserting that `f` is an equivalence is called `f-is-equiv`
+- If `f : A → B`, the lemma asserting that `f` is an equivalence is called
+  `f-is-equiv`
 - If `f : A → B`, the equivalence `(f , f-is-equiv)` is called `f-equiv`
 - As a special case of the previous point, `A-to-B-equiv` is usually called
   `A-equiv-B` instead
@@ -179,11 +180,12 @@ The `Algebra` directory contains some basic algebra.
 - `GroupIntegers` contains a proof that the integers form a group
 - `FreeGroup` contains the definition of the free group on a set of generators
   (not that it’s a group, actually)
-- `FreeGroupProps` contains properties of the free group (that it’s a set and that
-  multiplying by a generator is an equivalence)
+- `FreeGroupProps` contains properties of the free group (that it’s a set and
+  that multiplying by a generator is an equivalence)
 - `F2NotCommutative` contains a proof that F2 is not commutative
-- `FreeGroupAsReducedWords` contains an equivalent definition of the free group as a set
-  of reduced words, in the case where the set of generators has decidable equality
+- `FreeGroupAsReducedWords` contains an equivalent definition of the free group
+  as a set of reduced words, in the case where the set of generators has
+  decidable equality
 
 ### Sets
 

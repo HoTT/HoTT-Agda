@@ -72,13 +72,13 @@ postulate  -- Tedious because I have a terrible definition of groups
   (π₀-is-set _) where
 
     π₀→π₀-is-set : is-set (π₀ ∣_∣ → π₀ ∣_∣)
-    π₀→π₀-is-set = →-is-hlevel 2 (π₀-is-set ∣_∣)
+    π₀→π₀-is-set = →-is-truncated _ (π₀-is-set ∣_∣)
   
     π₀-∣∣ : Set _
     π₀-∣∣ = π₀ ∣_∣
 
     _π₀-•_ : π₀-∣∣ → π₀-∣∣ → π₀-∣∣
-    _π₀-•_ = π₀-extend-nondep ⦃ →-is-hlevel 2 (π₀-is-set ∣_∣) ⦄
+    _π₀-•_ = π₀-extend-nondep ⦃ →-is-truncated _ (π₀-is-set ∣_∣) ⦄
               (λ x → π₀-extend-nondep
                 (λ y → proj (x ∙ y)))
 
@@ -91,40 +91,40 @@ postulate  -- Tedious because I have a terrible definition of groups
     abstract
       π₀-assoc : (x y z : π₀-∣∣) → (x π₀-• y) π₀-• z ≡ x π₀-• (y π₀-• z)
       π₀-assoc = 
-        (π₀-extend ⦃ λ _ → Π-is-hlevel 2
-                     (λ _ → Π-is-hlevel 2
-                     (λ _ → hlevel-is-hlevel-S 2
+        (π₀-extend ⦃ λ _ → Π-is-truncated _
+                     (λ _ → Π-is-truncated _
+                     (λ _ → truncated-is-truncated-S _
                             (π₀-is-set _) _ _)) ⦄
-          (λ x → π₀-extend ⦃ λ _ → Π-is-hlevel 2
-                             (λ _ → hlevel-is-hlevel-S 2
+          (λ x → π₀-extend ⦃ λ _ → Π-is-truncated _
+                             (λ _ → truncated-is-truncated-S _
                                     (π₀-is-set _) _ _) ⦄
-            (λ y → π₀-extend ⦃ λ _ → hlevel-is-hlevel-S 2
+            (λ y → π₀-extend ⦃ λ _ → truncated-is-truncated-S _
                                       (π₀-is-set _) _ _ ⦄
               (λ z → map proj (assoc x y z)))))
 
     abstract
       π₀-right-unit : (x : π₀-∣∣) → x π₀-• π₀-e ≡ x
       π₀-right-unit =
-        (π₀-extend ⦃ λ _ → hlevel-is-hlevel-S 2 (π₀-is-set _) _ _ ⦄
-          (λ x → map proj (right-unit x)))
+        (π₀-extend ⦃ λ _ → truncated-is-truncated-S _ (π₀-is-set _) _ _ ⦄
+          (map proj ◯ right-unit))
 
     abstract
       π₀-left-unit : (x : π₀-∣∣) → π₀-e π₀-• x ≡ x
       π₀-left-unit =
-        (π₀-extend ⦃ λ _ → hlevel-is-hlevel-S 2 (π₀-is-set _) _ _ ⦄
-          (λ x → map proj (left-unit x)))
+        (π₀-extend ⦃ λ _ → truncated-is-truncated-S _ (π₀-is-set _) _ _ ⦄
+          (map proj ◯ left-unit))
 
     abstract
       π₀-right-inverse : (x : π₀-∣∣) → x π₀-• (π₀-′ x) ≡ π₀-e
       π₀-right-inverse =
-        (π₀-extend ⦃ λ _ → hlevel-is-hlevel-S 2 (π₀-is-set _) _ _ ⦄
-          (λ x → map proj (right-inverse x)))
+        (π₀-extend ⦃ λ _ → truncated-is-truncated-S _ (π₀-is-set _) _ _ ⦄
+          (map proj ◯ right-inverse))
 
     abstract
       π₀-left-inverse : (x : π₀-∣∣) → (π₀-′ x) π₀-• x ≡ π₀-e
       π₀-left-inverse =
-        (π₀-extend ⦃ λ _ → hlevel-is-hlevel-S 2 (π₀-is-set _) _ _ ⦄
-          (λ x → map proj (left-inverse x)))
+        (π₀-extend ⦃ λ _ → truncated-is-truncated-S _ (π₀-is-set _) _ _ ⦄
+          (map proj ◯ left-inverse))
 
 -- Not used
 

@@ -74,6 +74,25 @@ data ℕ : Set where  -- \bn
 {-# BUILTIN ZERO O #-}
 {-# BUILTIN SUC S #-}
 
+-- Truncation index (isomorphic to the type of integers ≥ -2)
+
+data ℕ₋₂ : Set where
+  ⟨-2⟩ : ℕ₋₂
+  S : (n : ℕ₋₂) → ℕ₋₂
+
+pattern ⟨-1⟩ = S ⟨-2⟩
+pattern ⟨0⟩ = S ⟨-1⟩
+
+_-1 : ℕ → ℕ₋₂
+O -1 = ⟨-1⟩
+(S n) -1 = S (n -1)
+
+⟨_⟩ : ℕ → ℕ₋₂
+⟨ n ⟩ = S (n -1)
+
+⟨1⟩ = ⟨ 1 ⟩
+⟨2⟩ = ⟨ 2 ⟩
+
 -- Integers
 
 data ℤ : Set where  -- \bz

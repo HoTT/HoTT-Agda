@@ -11,7 +11,7 @@ X : Set
 X = bool × bool
 
 X-is-set : is-set X
-X-is-set = ×-is-hlevel 2 bool-is-set bool-is-set
+X-is-set = ×-is-truncated _ bool-is-set bool-is-set
 
 pattern a = (true  , true )
 pattern b = (true  , false)
@@ -53,7 +53,7 @@ F2-act-on-X = freegroup-rec-nondep (X → X)
   (λ b f → f ◯ act b)
   (λ b f → funext (λ x → map f (act-involutive b x)))
   (λ b f → funext (λ x → map f (act-involutive b x)))
-  (→-is-hlevel 2 X-is-set)
+  (→-is-truncated _ X-is-set)
 
 ab : F2
 ab = true  · (false · e)

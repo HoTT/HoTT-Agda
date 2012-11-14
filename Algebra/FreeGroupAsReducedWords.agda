@@ -25,11 +25,11 @@ is-reduced-is-prop : (w : word) → is-prop (is-reduced w)
 is-reduced-is-prop ε = unit-is-prop
 is-reduced-is-prop (x ∷ ε) = unit-is-prop
 is-reduced-is-prop (x ∷ (y ∷ w)) = is-reduced-is-prop (y ∷ w)
-is-reduced-is-prop (x ∷ (y ′∷ w)) = ×-is-hlevel 1 (Π-is-hlevel 1 (λ _ → λ ()))
-                                               (is-reduced-is-prop (y ′∷ w))
+is-reduced-is-prop (x ∷ (y ′∷ w)) =
+  ×-is-truncated _ (Π-is-truncated _ (λ _ → λ ())) (is-reduced-is-prop (y ′∷ w))
 is-reduced-is-prop (x ′∷ ε) = unit-is-prop
-is-reduced-is-prop (x ′∷ (y ∷ w)) = ×-is-hlevel 1 (Π-is-hlevel 1 (λ _ → λ ()))
-                                               (is-reduced-is-prop (y ∷ w))
+is-reduced-is-prop (x ′∷ (y ∷ w)) =
+  ×-is-truncated _ (Π-is-truncated _ (λ _ → λ ())) (is-reduced-is-prop (y ∷ w))
 is-reduced-is-prop (x ′∷ (y ′∷ w)) = is-reduced-is-prop (y ′∷ w)
 
 reduced-word : Set i
@@ -121,7 +121,8 @@ word-is-set = dec-eq-is-set word-has-dec-eq
 
 abstract
   reduced-is-set : is-set reduced-word
-  reduced-is-set = subtype-hlevel-S-is-hlevel-S 1 word-is-set is-reduced-is-prop
+  reduced-is-set =
+    subtype-truncated-S-is-truncated-S _ word-is-set is-reduced-is-prop
 
 tail-is-reduced : (x : A) (w : word) (r : is-reduced (x ∷ w)) → is-reduced w
 tail-is-reduced x ε red = tt
@@ -202,7 +203,7 @@ abstract
   mul'-mul-reduce x ((y ′∷ w) , red) | inr different | inl obvious = refl _
   mul'-mul-reduce x ((y ′∷ w) , red) | inr different | inr absurd =
     abort-nondep (absurd (refl _))
-  mul'-mul-reduce x ((y ∷ w) , red) with (eq x x) 
+  mul'-mul-reduce x ((y ∷ w) , red) with (eq x x)
   mul'-mul-reduce x ((y ∷ w) , red) | inl obvious = refl _
   mul'-mul-reduce x ((y ∷ w) , red) | inr absurd =
     abort-nondep (absurd (refl _))
@@ -271,7 +272,7 @@ inv₂ = freegroup-rec _
              ∘ map (λ t → x ⁻¹· t) {y = u} p)
   (λ x u t → π₁ (freegroup-is-set _ _ _ _))
   (λ x u t → π₁ (freegroup-is-set _ _ _ _))
-  (λ u → hlevel-is-hlevel-S 1 (freegroup-is-set _ _))
+  (λ u → truncated-is-truncated-S _ (freegroup-is-set _ _))
 
 freegroup-equiv-reduced : freegroup ≃ reduced-word
 freegroup-equiv-reduced =
