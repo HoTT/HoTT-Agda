@@ -53,6 +53,9 @@ abstract
   ℕ-S≢O : (n : ℕ) → (S n ≢ O)
   ℕ-S≢O n p = transport ℕ-S≢O-type p tt
 
+  ℕ-S≢O#instance : {n : ℕ} → (S n ≢ O)
+  ℕ-S≢O#instance {n} = ℕ-S≢O n
+
   ℕ-O≢S : (n : ℕ) → (O ≢ S n)
   ℕ-O≢S n p = ℕ-S≢O n (! p)
 
