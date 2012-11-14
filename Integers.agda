@@ -127,6 +127,6 @@ abstract
   ℤ-dec-eq (neg n) (neg m) with ℕ-dec-eq n m
   ℤ-dec-eq (neg n) (neg m) | inl p = inl (map neg p)
   ℤ-dec-eq (neg n) (neg m) | inr p⊥ = inr (λ p → p⊥ (neg-injective n m p))
-  
+
   ℤ-is-set : is-set ℤ
   ℤ-is-set = dec-eq-is-set ℤ-dec-eq

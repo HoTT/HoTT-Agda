@@ -16,7 +16,7 @@ module Homotopy.Truncation {i} where
 hτ : (n : ℕ) (A : Set i) → Set i
 hτ = T.τ
 
-proj : {n : ℕ} {A : Set i} (x : A) → hτ n A
+proj : {n : ℕ} {A : Set i} → (A → hτ n A)
 proj {n} {A} = T.proj n A
 
 hτ-is-hlevel : (n : ℕ) (A : Set i) → is-hlevel n (hτ n A)

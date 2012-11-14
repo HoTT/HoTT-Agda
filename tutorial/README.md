@@ -29,7 +29,7 @@ release notes of the various versions of Agda, which often contain useful inform
 Installation
 ------------
 
-In order to use the HoTT-Agda library, you need the latest dev version of Agda (or Agda 2.3.2).
+In order to use the HoTT-Agda library, you need at least Agda 2.3.2.
 
 You need GHC 7.x, cabal and darcs, and you should be able to download and compile Agda with the
 following commands:
