@@ -60,7 +60,7 @@ postulate  -- HIT
                                  (λ f p₁ → π₁ (u f p₁))
                                  (λ f p₁ → π₂ (u f p₁)) where
   u : _
-  u = hlevel-n-has-filling-dep _/_ P 2 (λ ()) (λ f → (top f , rays f))
+  u = hlevel-has-filling-dep _/_ P 2 (λ ()) (λ f → (top f , rays f))
 
 /-rec-nondep : ∀ {k} (B : Set k)
   (proj* : A → B)
@@ -71,6 +71,6 @@ postulate  -- HIT
                                                (λ _ p → π₁ (u p))
                                                (λ _ p → π₂ (u p)) where
   u : _
-  u = hlevel-n-has-n-spheres-filled 2 _ trunc
+  u = hlevel-has-spheres-filled 2 _ trunc
 
 -- Reduction rules for paths are not needed

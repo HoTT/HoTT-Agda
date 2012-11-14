@@ -25,13 +25,13 @@ module UP {k} (B : Set k) (B-set : is-set B) where
 
   extend-factor : (f : A →→ B ~ R) → extend (factor f) ≡ f
   extend-factor (f , p) = map (λ x → f , x)
-                           (funext-dep (λ x →
-                            funext-dep (λ x' →
-                            funext-dep (λ p₁ → π₁ (B-set _ _ _ _)))))
+                           (funext (λ x →
+                            funext (λ x' →
+                            funext (λ p₁ → π₁ (B-set _ _ _ _)))))
 
   factor-extend : (f : A / R → B) → factor (extend f) ≡ f
   factor-extend f =
-    funext-dep (/-rec A R (λ x → factor (extend f) x ≡ f x)
-                 (λ x → refl _)
-                 (λ x y p₁ → π₁ (B-set _ _ _ _))
-                 (λ x → is-increasing-hlevel 1 _ (B-set _ _)))
+    funext (/-rec A R (λ x → factor (extend f) x ≡ f x)
+           (λ x → refl _)
+           (λ x y _ → π₁ (B-set _ _ _ _))
+           (λ x → hlevel-is-hlevel-S 1 (B-set _ _)))
