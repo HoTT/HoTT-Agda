@@ -160,14 +160,14 @@ abstract
   bool-false≢true : false {i} ≢ true
   bool-false≢true p = transport bool-true≢false-type (! p) tt
 
-  bool-dec-eq : has-dec-eq bool
-  bool-dec-eq true true = inl (refl true)
-  bool-dec-eq true false = inr bool-true≢false
-  bool-dec-eq false true = inr bool-false≢true
-  bool-dec-eq false false = inl (refl false)
+  bool-has-dec-eq : has-dec-eq bool
+  bool-has-dec-eq true true = inl (refl true)
+  bool-has-dec-eq true false = inr bool-true≢false
+  bool-has-dec-eq false true = inr bool-false≢true
+  bool-has-dec-eq false false = inl (refl false)
 
   bool-is-set : is-set bool
-  bool-is-set = dec-eq-is-set bool-dec-eq
+  bool-is-set = dec-eq-is-set bool-has-dec-eq
 
   ⊥-is-prop : is-prop ⊥
   ⊥-is-prop ()

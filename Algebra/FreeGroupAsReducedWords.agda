@@ -90,31 +90,34 @@ word-cst-dis (x ′∷ v) ε = ⊥
 word-cst-dis (x ′∷ v) (y ∷ w) = ⊥
 word-cst-dis (x ′∷ v) (y ′∷ w) = unit
 
-word-dec-eq : has-dec-eq word
-word-dec-eq ε ε = inl (refl _)
-word-dec-eq ε (x ∷ w) = inr (λ p → transport (word-cst-dis ε) p tt)
-word-dec-eq ε (x ′∷ w) = inr (λ p → transport (word-cst-dis ε) p tt)
-word-dec-eq (x ∷ v) ε = inr (λ p → transport (word-cst-dis (x ∷ v)) p tt)
-word-dec-eq (x ∷ v) (y ∷ w) with (eq x y)
-word-dec-eq (x ∷ v) (y ∷ w) | inl x≡y with (word-dec-eq v w)
-word-dec-eq (x ∷ v) (y ∷ w) | inl x≡y | inl v≡w = inl (word-total-path x≡y v≡w)
-word-dec-eq (x ∷ v) (y ∷ w) | inl x≡y | inr v≢w =
+word-has-dec-eq : has-dec-eq word
+word-has-dec-eq ε ε = inl (refl _)
+word-has-dec-eq ε (x ∷ w) = inr (λ p → transport (word-cst-dis ε) p tt)
+word-has-dec-eq ε (x ′∷ w) = inr (λ p → transport (word-cst-dis ε) p tt)
+word-has-dec-eq (x ∷ v) ε = inr (λ p → transport (word-cst-dis (x ∷ v)) p tt)
+word-has-dec-eq (x ∷ v) (y ∷ w) with (eq x y)
+word-has-dec-eq (x ∷ v) (y ∷ w) | inl x≡y with (word-has-dec-eq v w)
+word-has-dec-eq (x ∷ v) (y ∷ w) | inl x≡y | inl v≡w =
+  inl (word-total-path x≡y v≡w)
+word-has-dec-eq (x ∷ v) (y ∷ w) | inl x≡y | inr v≢w =
   inr (λ p → v≢w (word-fiber-path p))
-word-dec-eq (x ∷ v) (y ∷ w) | inr x≢y = inr (λ p → x≢y (word-base-path p))
-word-dec-eq (x ∷ v) (y ′∷ w) = inr (λ p → transport (word-cst-dis (x ∷ v)) p tt)
-word-dec-eq (x ′∷ v) ε = inr (λ p → transport (word-cst-dis (x ′∷ v)) p tt)
-word-dec-eq (x ′∷ v) (y ∷ w) =
+word-has-dec-eq (x ∷ v) (y ∷ w) | inr x≢y = inr (λ p → x≢y (word-base-path p))
+word-has-dec-eq (x ∷ v) (y ′∷ w) =
+  inr (λ p → transport (word-cst-dis (x ∷ v)) p tt)
+word-has-dec-eq (x ′∷ v) ε = inr (λ p → transport (word-cst-dis (x ′∷ v)) p tt)
+word-has-dec-eq (x ′∷ v) (y ∷ w) =
   inr (λ p → transport (word-cst-dis (x ′∷ v)) p tt)
-word-dec-eq (x ′∷ v) (y ′∷ w) with (eq x y)
-word-dec-eq (x ′∷ v) (y ′∷ w) | inl x≡y with (word-dec-eq v w)
-word-dec-eq (x ′∷ v) (y ′∷ w) | inl x≡y | inl v≡w =
+word-has-dec-eq (x ′∷ v) (y ′∷ w) with (eq x y)
+word-has-dec-eq (x ′∷ v) (y ′∷ w) | inl x≡y with (word-has-dec-eq v w)
+word-has-dec-eq (x ′∷ v) (y ′∷ w) | inl x≡y | inl v≡w =
   inl (word'-total-path x≡y v≡w)
-word-dec-eq (x ′∷ v) (y ′∷ w) | inl x≡y | inr v≢w =
+word-has-dec-eq (x ′∷ v) (y ′∷ w) | inl x≡y | inr v≢w =
   inr (λ p → v≢w (word'-fiber-path p))
-word-dec-eq (x ′∷ v) (y ′∷ w) | inr x≢y = inr (λ p → x≢y (word'-base-path p))
+word-has-dec-eq (x ′∷ v) (y ′∷ w) | inr x≢y =
+  inr (λ p → x≢y (word'-base-path p))
 
 word-is-set : is-set word
-word-is-set = dec-eq-is-set word-dec-eq
+word-is-set = dec-eq-is-set word-has-dec-eq
 
 abstract
   reduced-is-set : is-set reduced-word
