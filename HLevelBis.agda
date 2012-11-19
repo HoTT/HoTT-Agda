@@ -83,16 +83,16 @@ abstract
 
 -- Type of all types of some h-level
 
-Truncated : (n : ℕ₋₂) (i : Level) → Set (suc i)
-Truncated n i = Σ (Set i) (is-truncated n)
+Type≤ : (n : ℕ₋₂) (i : Level) → Set (suc i)
+Type≤ n i = Σ (Set i) (is-truncated n)
 
 hProp : (i : Level) → Set (suc i)
-hProp i = Truncated ⟨-1⟩ i
+hProp i = Type≤ ⟨-1⟩ i
 
 hSet : (i : Level) → Set (suc i)
-hSet i = Truncated ⟨0⟩ i
+hSet i = Type≤ ⟨0⟩ i
 
--- [truncated n] is of h-level [S n]
+-- [Type≤ n] is (n + 1)-truncated
 
 abstract
   ≃-is-truncated : ∀ {i} (n : ℕ₋₂) {A B : Set i}
@@ -105,9 +105,9 @@ abstract
                                       (λ _ → prop-is-truncated-S n
                                              (is-equiv-is-prop _))
 
-  truncated-is-truncated : (n : ℕ₋₂) (i : Level)
-    → is-truncated (S n) (Truncated n i)
-  truncated-is-truncated n i A B =
+  Type≤-is-truncated : (n : ℕ₋₂) (i : Level)
+    → is-truncated (S n) (Type≤ n i)
+  Type≤-is-truncated n i A B =
     equiv-types-truncated n total-Σ-eq-equiv
     (Σ-is-truncated n (equiv-types-truncated n eq-to-path-equiv
                                       (≃-is-truncated n (π₂ A) (π₂ B)))
@@ -115,7 +115,7 @@ abstract
            (inhab-prop-is-contr (π₂ B) (is-truncated-is-prop n {-(π₁ B)-})))))
 
   hProp-is-set : (i : Level) → is-set (hProp i)
-  hProp-is-set i = truncated-is-truncated _ i
+  hProp-is-set i = Type≤-is-truncated _ i
 
   hSet-is-gpd : (i : Level) → is-gpd (hSet i)
-  hSet-is-gpd i = truncated-is-truncated _ i
+  hSet-is-gpd i = Type≤-is-truncated _ i
