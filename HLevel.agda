@@ -51,22 +51,22 @@ abstract
   dec-eq-is-set dec x y with dec x y
   dec-eq-is-set dec x y | inr p⊥ = λ p → abort-nondep (p⊥ p)
   dec-eq-is-set {A} dec x y | inl q = paths-A-is-prop q where
-  
+
     -- The fact that equality is decidable on A gives a canonical path parallel
     -- to every path [p], depending only on the endpoints
     get-path : {u v : A} (r : u ≡ v) → u ≡ v
     get-path {u} {v} r with dec u v
     get-path r | inl q = q
     get-path r | inr r⊥ = abort-nondep (r⊥ r)
-  
+
     get-path-eq : {u : A} (r : u ≡ u) → get-path r ≡ get-path (refl _)
     get-path-eq {u} r with dec u u
     get-path-eq r | inl q = refl q
     get-path-eq r | inr r⊥ = abort-nondep (r⊥ (refl _))
-  
+
     lemma : {u v : A} (r : u ≡ v) → r ∘ get-path (refl _) ≡ get-path r
     lemma (refl _) = refl _
-  
+
     paths-A-is-prop : {u v : A} (q : u ≡ v) → is-prop (u ≡ v)
     paths-A-is-prop (refl u) =
       truncated-is-truncated-S ⟨-2⟩
@@ -77,28 +77,28 @@ module _ {A : Set i} where
   abstract
     contr-has-all-paths : is-contr A → has-all-paths A
     contr-has-all-paths c x y = π₂ c x ∘ ! (π₂ c y)
-  
+
     prop-has-all-paths : is-prop A → has-all-paths A
     prop-has-all-paths c x y = π₁ (c x y)
-    
+
     inhab-prop-is-contr : A → is-prop A → is-contr A
     inhab-prop-is-contr x₀ p = (x₀ , λ y → π₁ (p y x₀))
-  
+
     contr-is-truncated : (n : ℕ₋₂) → (is-contr A → is-truncated n A)
     contr-is-truncated ⟨-2⟩ p = p
     contr-is-truncated (S n) p =
       truncated-is-truncated-S n (contr-is-truncated n p)
-  
+
     prop-is-truncated-S : (n : ℕ₋₂) → (is-prop A → is-truncated (S n) A)
     prop-is-truncated-S ⟨-2⟩ p = p
     prop-is-truncated-S (S n) p =
       truncated-is-truncated-S (S n) (prop-is-truncated-S n p)
-  
+
     set-is-truncated-SS : (n : ℕ₋₂) → (is-set A → is-truncated (S (S n)) A)
     set-is-truncated-SS ⟨-2⟩ p = p
     set-is-truncated-SS (S n) p = truncated-is-truncated-S (S (S n))
                                                   (set-is-truncated-SS n p)
-  
+
     contr-is-prop : is-contr A → is-prop A
     contr-is-prop = contr-is-truncated ⟨-1⟩
 
@@ -124,7 +124,7 @@ module _ {A : Set i} where
       unique-path : {u v : A} (q : u ≡ v)
         → q ≡ contr-has-all-paths p u v
       unique-path (refl _) = ! (opposite-right-inverse (π₂ p _))
-    ≡-is-truncated (S n) {x} {y} p = truncated-is-truncated-S n (p x y) 
+    ≡-is-truncated (S n) {x} {y} p = truncated-is-truncated-S n (p x y)
 
     -- The type of paths to a fixed point is contractible
     pathto-is-contr : (x : A) → is-contr (Σ A (λ t → t ≡ x))
@@ -151,6 +151,10 @@ abstract
 
   unit-is-set : is-set unit
   unit-is-set = unit-is-truncated ⟨0⟩
+
+  contr-has-section : ∀ {j} {A : Set i} {P : A → Set j}
+    → (is-contr A → (x : A) → (u : P x) → Π A P)
+  contr-has-section (x , p) x₀ y₀ t = transport _ (p x₀ ∘ ! (p t)) y₀
 
 private
   bool-true≢false-type : bool {i} → Set
