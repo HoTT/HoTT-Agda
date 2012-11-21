@@ -110,10 +110,10 @@ abstract
   ⦃ p : is-truncated n B ⦄ → (A → B) ≃ (τ n A → B)
 τ-extend-equiv n A B = (τ-extend-nondep , τ-extend-nondep-is-equiv n A B)
 
--- open import Homotopy.ReflectiveSubCategory
+τ-fmap : {n : ℕ₋₂} {A B : Set i} → ((A → B) → (τ n A → τ n B))
+τ-fmap f = τ-extend-nondep (proj ◯ f)
 
--- Reflective subcategory associated to the truncation
--- τ-rsc : (n : ℕ₋₂) → rsc {i}
--- τ-rsc n =
---   Rsc (is-truncated n) (is-truncated-is-prop n) (τ n) (λ A → proj {n} {A})
---       (τ-is-truncated n) (τ-up n)
+τ-fpmap : {n : ℕ₋₂} {A B : Set i} {f g : A → B} (h : (a : A) → f a ≡ g a)
+  → ((a : τ n A) → τ-fmap f a ≡ τ-fmap g a)
+τ-fpmap h = τ-extend ⦃ λ _ → ≡-is-truncated _ (τ-is-truncated _ _) ⦄
+              (map proj ◯ h)
