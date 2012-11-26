@@ -21,13 +21,26 @@ Style and naming conventions
 - Names of terms are in lowercase-with-hyphens-between-words
 - There are a few sporadic exceptions to the previous rules, namely the type of
   universe levels `Level` (usually implicit) and universe-like types (`hProp`,
-  `hSet`, `hLevel`, `pType`)
+  `hSet`, `Type≤`, `pType`)
 - Unicode chars can appear in names but should not be overused (prefer `A-to-B`
   to `A→B` for instance)
 - Avoid names of free variables in identifiers
 - Universe levels are usually implicit but should be explicit when they cannot
   be deduced from the context (for instance `pushout-diag i` is the type of
   pushout diagrams in the universe level `i`)
+
+### Truncation levels
+
+I’m not using the terminology of h-levels anymore, the `is-hlevel` term has been
+replaced by `is-truncated`. The argument of `is-truncated` is of type `ℕ₋₂`
+where
+
+    data ℕ₋₂ : Set where
+      ⟨-2⟩ : ℕ₋₂
+      S : (n : ℕ₋₂) → ℕ₋₂
+
+There are also terms `⟨-1⟩`, `⟨0⟩`, `⟨1⟩`, `⟨2⟩` and `⟨_⟩ : ℕ → ℕ₋₂` with the
+obvious definitions.
 
 ### Properties of types
 
@@ -41,7 +54,7 @@ Examples:
     is-contr
     is-prop
     is-set
-    is-hlevel       -- This one has one argument of type [ℕ]
+    is-truncated    -- This one has one argument of type [ℕ₋₂]
     has-all-paths   -- Every two points are equal
     has-dec-eq      -- Decidable equality
 
@@ -61,13 +74,18 @@ Examples (only the nonimplicit arguments are given)
 
     unit-is-contr : is-contr unit
     bool-is-set : is-set bool
-    Σ-is-hlevel : (n : ℕ) (is-hlevel n A) → ((x : A) → is-hlevel n (P x)) → is-hlevel n (Σ A P)
-    ×-is-hlevel : (n : ℕ) → (is-hlevel n A → is-hlevel n B → is-hlevel n (A × B))
-    Π-is-hlevel : (n : ℕ) → ((x : A) → is-hlevel n (P x)) → is-hlevel n (Π A P)
-    →-is-hlevel : (n : ℕ) → (is-hlevel n B → is-hlevel n (A → B))
+    Σ-is-truncated : (n : ℕ₋₂)
+      → (is-truncated n A → ((x : A) → is-truncated n (P x))
+           → is-truncated n (Σ A P))
+    ×-is-truncated : (n : ℕ₋₂)
+      → (is-truncated n A → is-truncated n B → is-truncated n (A × B))
+    Π-is-truncated : (n : ℕ₋₂)
+      → ((x : A) → is-truncated n (P x)) → is-truncated n (Π A P)
+    →-is-truncated : (n : ℕ₋₂) → (is-truncated n B → is-truncated n (A → B))
     is-contr-is-prop : is-contr (is-prop A)
     contr-is-prop : is-contr A → is-prop A
-    hlevel-is-hlevel-S : (n : ℕ) → is-hlevel n A → is-hlevel (S n) A
+    truncated-is-truncated-S : (n : ℕ₋₂)
+      → (is-truncated n A → is-truncated (S n) A)
     dec-eq-is-set : has-dec-eq A → is-set A
     contr-has-all-paths : is-contr A → has-all-paths A
 
@@ -80,12 +98,10 @@ Examples (only the nonimplicit arguments are given)
 - As a special case of the previous point, `A-to-B-equiv` is usually called
   `A-equiv-B` instead
 
-
-
-      A-to-B : A → B
-      A-to-B-is-equiv : is-equiv (A-to-B)
-      A-to-B-equiv : A ≃ B
-      A-equiv-B : A ≃ B
+    A-to-B : A → B
+    A-to-B-is-equiv : is-equiv (A-to-B)
+    A-to-B-equiv : A ≃ B
+    A-equiv-B : A ≃ B
 
 ### Records
 
@@ -112,13 +128,13 @@ The structure of the source is roughly the following:
   groupoid structure of types, transport of something in a fibration along a
   path and its various reduction rules, and other convenient constructions and
   properties
-- `HLevel` contains definitions and properties about h-levels (not needing the
-  notion of equivalence)
+- `HLevel` contains definitions and properties about truncation levels (not
+  needing the notion of equivalence)
 - `Equivalences` contains the definition of equivalences and useful properties
 - `Univalence` contains the statement of the univalence axiom
 - `Funext` contains the proof of function extensionality (using univalence)
-- `HLevel` contains definitions and properties about h-levels where the notion
-  of equivalence or function extensionality is needed
+- `HLevel` contains definitions and properties about truncation levels where the
+  notion of equivalence or function extensionality is needed
 - `FiberEquivalences` contains the proof that a map between fibrations which is
   an equivalence of total spaces is a fiberwise equivalence (depends only on
   `Equivalences` and above)
@@ -148,10 +164,10 @@ More precisely there is:
   fill spheres can be given an elimination rule easier to work with (see
   `Algebra.FreeGroup` for an example)
 - `TruncationHIT` contains the HIT defining the truncation, with a small hack to
-  handle (hlevel 0)-truncations
+  handle (-2)-truncations
 - `Truncation` contains a nicer interface for truncation and the universal
   property (this is the file you should import if you want to do anything with
-  truncation)
+  truncations)
 
 ### Spaces
 
