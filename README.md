@@ -98,6 +98,8 @@ Examples (only the nonimplicit arguments are given)
 - As a special case of the previous point, `A-to-B-equiv` is usually called
   `A-equiv-B` instead
 
+We have
+
     A-to-B : A → B
     A-to-B-is-equiv : is-equiv (A-to-B)
     A-to-B-equiv : A ≃ B
