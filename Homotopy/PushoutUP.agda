@@ -19,13 +19,13 @@ record cocone (top : Set m) : Set m where
 open cocone public
 
 cocone-eq-raw : (top : Set m) {a1 a2 : A → top} {b1 b2 : B → top}
-  {h1 : (c : C) → a1 (f c) ≡ b1 (g c)} {h2 : (c : C) → a2 (f c) ≡ b2 (g c)} 
+  {h1 : (c : C) → a1 (f c) ≡ b1 (g c)} {h2 : (c : C) → a2 (f c) ≡ b2 (g c)}
   (p1 : a1 ≡ a2) (p2 : b1 ≡ b2) (p3 : transport _ p1 (transport _ p2 h1) ≡ h2)
   → (a1 , b1 , h1) ≡ (a2 , b2 , h2)
 cocone-eq-raw top (refl _) (refl _) (refl _) = refl _
 
 cocone-eq : (top : Set m) {a1 a2 : A → top} {b1 b2 : B → top}
-  {h1 : (c : C) → a1 (f c) ≡ b1 (g c)} {h2 : (c : C) → a2 (f c) ≡ b2 (g c)} 
+  {h1 : (c : C) → a1 (f c) ≡ b1 (g c)} {h2 : (c : C) → a2 (f c) ≡ b2 (g c)}
   (p1 : a1 ≡ a2) (p2 : b1 ≡ b2)
   (p3 : (c : C) → happly p1 (f c) ∘ h2 c ≡ h1 c ∘ happly p2 (g c))
   → (a1 , b1 , h1) ≡ (a2 , b2 , h2)
@@ -86,22 +86,22 @@ module _ (D : Set m) ⦃ PD : P D ⦄ (Dcocone : cocone D)
   private
     DE-eq : (D → E) ≃ cocone E
     DE-eq = (compose-cocone-map D E Dcocone , Dpushout E)
-  
+
     ED-eq : (E → D) ≃ cocone D
     ED-eq = (compose-cocone-map E D Ecocone , Epushout D)
-  
+
     DD-eq : (D → D) ≃ cocone D
     DD-eq = (compose-cocone-map D D Dcocone , Dpushout D)
-  
+
     EE-eq : (E → E) ≃ cocone E
     EE-eq = (compose-cocone-map E E Ecocone , Epushout E)
-  
+
     D→E : D → E
     D→E = (DE-eq ⁻¹) ☆ Ecocone
-  
+
     E→D : E → D
     E→D = (ED-eq ⁻¹) ☆ Dcocone
-  
+
     abstract
       D→E→D : (λ x → E→D (D→E x)) ≡ (λ x → x)
       D→E→D = equiv-is-inj (compose-cocone-map D D Dcocone , Dpushout D) _ _
@@ -110,7 +110,7 @@ module _ (D : Set m) ⦃ PD : P D ⦄ (Dcocone : cocone D)
                (inverse-right-inverse DE-eq Ecocone)
         ∘ (inverse-right-inverse ED-eq Dcocone
           ∘ map (λ u → _ , _ , u) (funext (λ c → ! (map-id _))))))
-  
+
       E→D→E : (λ x → D→E (E→D x)) ≡ (λ x → x)
       E→D→E = equiv-is-inj (compose-cocone-map E E Ecocone , Epushout E) _ _
         (! (compose-cocone-map-compose E D E Ecocone E→D D→E)
@@ -118,6 +118,6 @@ module _ (D : Set m) ⦃ PD : P D ⦄ (Dcocone : cocone D)
                (inverse-right-inverse ED-eq Dcocone)
         ∘ (inverse-right-inverse DE-eq Ecocone
           ∘ map (λ u → _ , _ , u) (funext (λ c → ! (map-id _))))))
-  
+
   pushout-equiv-pushout : D ≃ E
   pushout-equiv-pushout = (D→E , iso-is-eq _ E→D (happly E→D→E) (happly D→E→D))

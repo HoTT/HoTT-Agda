@@ -2,7 +2,7 @@
 
 {-
 Truncated higher inductive types look like higher inductive types except that
-they are truncated down to some fixed h-level.
+they are truncated down to some fixed truncation level.
 This allow to define truncations (obviously) but also free algebras for
 algebraic theories, Eilenberg-MacLane spaces, etc.
 
@@ -44,16 +44,13 @@ open import Spaces.Suspension public
 
 _+1 : ℕ₋₂ → ℕ
 ⟨-2⟩ +1 = 0
-⟨-1⟩ +1 = 0
+(S ⟨-2⟩) +1 = 0
 (S n) +1 = S (n +1)
 
 -- [hSⁿ n] is what is supposed to be filled to get something n-truncated
 hSⁿ : ℕ₋₂ → Set
 hSⁿ ⟨-2⟩ = ⊥
 hSⁿ n = Sⁿ (n +1)
-
--- Warning: Here "n-sphere" means sphere of dimension (n - 1)
--- Filling n-spheres gives something of h-level n
 
 -- Type of fillings of a sphere
 filling : ∀ {i} (n : ℕ₋₂) {A : Set i} (f : hSⁿ n → A) → Set i
@@ -67,7 +64,7 @@ filling-dep {i} {j} n {A} P f fill p =
 
 -- [has-n-spheres-filled n A] is inhabited iff every n-sphere in [A] can be
 -- filled with an (n+1)-ball.
--- We will show that this is equivalent to being of h-level n, *for n > 0*
+-- We will show that this is equivalent to being n-truncated, *for n > 0*
 -- (for n = 0, having 0-spheres filled only means that A is inhabited)
 has-spheres-filled : ∀ {i} (n : ℕ₋₂) (A : Set i) → Set i
 has-spheres-filled n A = (f : hSⁿ n → A) → filling n f
@@ -97,13 +94,13 @@ fill-paths (S n) A t _ x y f =
     → map newf l ≡ ! (π₂ u p) ∘ π₂ u q
   lemma (refl a) = ! (opposite-left-inverse (π₂ u a))
 
--- We first prove that if n-spheres are filled, then the type is of
--- h-level n, we have to prove it for n = 1, and then use the previous lemma
+-- We first prove that if n-spheres are filled, then the type is n-truncated,
+-- we have to prove it for n = -1, and then use the previous lemma
 abstract
   spheres-filled-is-truncated : ∀ {i} (n : ℕ₋₂) (A : Set i)
     → ((n ≡ ⟨-2⟩ → is-contr A) → has-spheres-filled n A → is-truncated n A)
   spheres-filled-is-truncated ⟨-2⟩ A contr t = contr (refl _)
-  spheres-filled-is-truncated ⟨-1⟩ A _ t =
+  spheres-filled-is-truncated (S ⟨-2⟩) A _ t =
     all-paths-is-prop (λ x y → ! (π₂ (t (f x y)) true) ∘ π₂ (t (f x y)) false)
     where
       f : (x y : A) → bool {zero} → A
@@ -118,7 +115,7 @@ abstract
   truncated-has-spheres-filled : ∀ {i} (n : ℕ₋₂) (A : Set i)
     (t : is-truncated n A) → has-spheres-filled n A
   truncated-has-spheres-filled ⟨-2⟩ A t f = (π₁ t , abort)
-  truncated-has-spheres-filled ⟨-1⟩ A t f =
+  truncated-has-spheres-filled (S ⟨-2⟩) A t f =
     (f true , (λ {true → refl _ ; false → π₁ (t (f true) (f false))}))
   truncated-has-spheres-filled (S (S n)) A t f =
     (f (north _)

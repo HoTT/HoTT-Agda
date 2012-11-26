@@ -3,23 +3,31 @@
 open import Types
 open import Paths
 
-{- Stuff about h-levels that do not require the notion of equivalence or
-   function extensionality -}
+{- Stuff about truncation levels (aka h-levers) that do not require the notion
+   of equivalence or function extensionality -}
 
 module HLevel {i} where
 
--- Definition of h-levels
+-- Definition of truncation levels
 
 is-contr : Set i → Set i
 is-contr A = Σ A (λ x → ((y : A) → y ≡ x))
 
-is-truncated : (n : ℕ₋₂) → (Set i → Set i)
+is-truncated : ℕ₋₂ → (Set i → Set i)
 is-truncated ⟨-2⟩ A = is-contr A
 is-truncated (S n) A = (x y : A) → is-truncated n (x ≡ y)
 
 is-prop = is-truncated ⟨-1⟩
 is-set  = is-truncated ⟨0⟩
 is-gpd  = is-truncated ⟨1⟩
+
+-- The original notion of h-level can be defined in the following way.
+-- We won’t use this definition though.
+is-hlevel : ℕ → (Set i → Set i)
+is-hlevel n A = is-truncated (n -2) A where
+  _-2 : ℕ → ℕ₋₂
+  O -2 = ⟨-2⟩
+  (S n) -2 = S (n -2)
 
 -- The following property is equivalent to being a proposition
 has-all-paths : Set i → Set i
@@ -38,7 +46,7 @@ abstract
     canon-path : {x y : A} (p : x ≡ y) → p ≡ c x y
     canon-path (refl y) = anti-whisker-right (c y y) (lemma (c y y))
 
-  -- h-levels are increasing
+  -- Truncation levels are cumulative
   truncated-is-truncated-S : {A : Set i} (n : ℕ₋₂)
     → (is-truncated n A → is-truncated (S n) A)
   truncated-is-truncated-S ⟨-2⟩ q =
@@ -117,7 +125,7 @@ module _ {A : Set i} where
     set-is-gpd : is-set A → is-gpd A
     set-is-gpd = set-is-truncated-SS ⟨-1⟩
 
-    -- If [A] is of h-level [n], then so does [x ≡ y] for [x y : A]
+    -- If [A] is n-truncated, then so does [x ≡ y] for [x y : A]
     ≡-is-truncated : (n : ℕ₋₂) {x y : A}
       → (is-truncated n A → is-truncated n (x ≡ y))
     ≡-is-truncated ⟨-2⟩ p = (contr-has-all-paths p _ _ , unique-path) where

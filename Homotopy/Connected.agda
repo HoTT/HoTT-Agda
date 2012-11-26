@@ -51,3 +51,8 @@ abstract
     → (is-connected (S n) A → is-connected n A)
   connected-S-is-connected n p =
     equiv-types-truncated _ (ττ-equiv-τ n _) (contr-is-connected n p)
+
+app-is-inj : ∀ {j} {A : Set i} {B : Set j} {n : ℕ₋₂} {f g : A → B} (x₀ : A)
+  → (is-connected n A → is-truncated n B → f x₀ ≡ g x₀ → f ≡ g)
+app-is-inj x₀ p q e = equiv-is-inj (τ-extend-equiv _ _ _) _ _
+                                   (funext (contr-has-section p (proj x₀) e))

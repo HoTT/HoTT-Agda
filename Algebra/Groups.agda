@@ -73,7 +73,7 @@ postulate  -- Tedious because I have a terrible definition of groups
 
     π₀→π₀-is-set : is-set (π₀ ∣_∣ → π₀ ∣_∣)
     π₀→π₀-is-set = →-is-truncated _ (π₀-is-set ∣_∣)
-  
+
     π₀-∣∣ : Set _
     π₀-∣∣ = π₀ ∣_∣
 
@@ -90,7 +90,7 @@ postulate  -- Tedious because I have a terrible definition of groups
 
     abstract
       π₀-assoc : (x y z : π₀-∣∣) → (x π₀-• y) π₀-• z ≡ x π₀-• (y π₀-• z)
-      π₀-assoc = 
+      π₀-assoc =
         (π₀-extend ⦃ λ _ → Π-is-truncated _
                      (λ _ → Π-is-truncated _
                      (λ _ → truncated-is-truncated-S _

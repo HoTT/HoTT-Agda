@@ -29,7 +29,7 @@ abstract
     lemma (x , p) (.x , q) (refl .x) t = contr-has-all-paths
                                          (≡-is-truncated _ (x , p)) _ _
 
-  -- Equivalent types have the same h-level
+  -- Equivalent types have the same truncation level
   equiv-types-truncated : ∀ {i j} {A : Set i} {B : Set j} (n : ℕ₋₂) (f : A ≃ B)
     → (is-truncated n A → is-truncated n B)
   equiv-types-truncated ⟨-2⟩ (f , e) (x , p) =
@@ -41,8 +41,6 @@ abstract
     → (((x : A) → is-truncated n (P x)) → is-truncated n (Π A P))
   Π-is-truncated ⟨-2⟩ p =
     ((λ x → π₁ (p x)) , (λ f → funext (λ x → π₂ (p x) (f x))))
-  Π-is-truncated ⟨-1⟩ p =
-    all-paths-is-prop (λ f g → funext (λ x → π₁ (p x (f x) (g x))))
   Π-is-truncated (S n) p = λ f g →
     equiv-types-truncated n funext-equiv
       (Π-is-truncated n (λ x → p x (f x) (g x)))
@@ -81,18 +79,18 @@ abstract
     → is-prop (is-equiv f)
   is-equiv-is-prop f = Π-is-truncated _ (λ x → is-contr-is-prop)
 
--- Type of all types of some h-level
+-- Type of all n-truncated types
 
 Type≤ : (n : ℕ₋₂) (i : Level) → Set (suc i)
 Type≤ n i = Σ (Set i) (is-truncated n)
 
 hProp : (i : Level) → Set (suc i)
-hProp i = Type≤ ⟨-1⟩ i
+hProp = Type≤ ⟨-1⟩
 
 hSet : (i : Level) → Set (suc i)
-hSet i = Type≤ ⟨0⟩ i
+hSet = Type≤ ⟨0⟩
 
--- [Type≤ n] is (n + 1)-truncated
+-- [Type≤ n] is (n+1)-truncated
 
 abstract
   ≃-is-truncated : ∀ {i} (n : ℕ₋₂) {A B : Set i}
@@ -115,7 +113,7 @@ abstract
            (inhab-prop-is-contr (π₂ B) (is-truncated-is-prop n {-(π₁ B)-})))))
 
   hProp-is-set : (i : Level) → is-set (hProp i)
-  hProp-is-set i = Type≤-is-truncated _ i
+  hProp-is-set = Type≤-is-truncated _
 
   hSet-is-gpd : (i : Level) → is-gpd (hSet i)
-  hSet-is-gpd i = Type≤-is-truncated _ i
+  hSet-is-gpd = Type≤-is-truncated _

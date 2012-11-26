@@ -9,14 +9,14 @@ module Algebra.FreeGroup {i} (A : Set i) where
 {-
 The definition is the following
 
-    (2)data freegroup : Set i where
+    (0)data freegroup : Set i where
       e : freegroup
       _·_   : A → freegroup → freegroup
       _⁻¹·_ : A → freegroup → freegroup
       right-inverse-· : (x : A) (u : freegroup) → x · (x ⁻¹· u) ≡ u
       left-inverse-·  : (x : A) (u : freegroup) → x ⁻¹· (x · u) ≡ u
 
-("(2)data" means that it’s a higher inductive type truncated to h-level 2)
+("(0)data" means that it’s a higher inductive 0-truncated type)
 -}
 
 private
@@ -101,7 +101,6 @@ freegroup-rec P base g g' gg' g'g p =
   #freegroup-rec P base g g' gg' g'g
                  (λ f p₁ → π₁ (u f p₁))
                  (λ f p₁ → π₂ (u f p₁)) where
-  u : _
   u = truncated-has-filling-dep freegroup P ⟨0⟩ (λ ()) (λ f → (top f , rays f))
 
 freegroup-rec-nondep : ∀ {j} (B : Set j)
@@ -116,5 +115,4 @@ freegroup-rec-nondep B base g g' gg' g'g p =
   #freegroup-rec-nondep B base g g' gg' g'g
                         (λ _ p → π₁ (u p))
                         (λ _ p → π₂ (u p)) where
-  u : _
   u = truncated-has-spheres-filled ⟨0⟩ _ p

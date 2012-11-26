@@ -159,7 +159,7 @@ fiberwise-map-is-equiv x = fiberwise-is-equiv fiberwise-map total-is-equiv x
 ΩS¹≃ℤ : (base ≡ base) ≃ ℤ
 ΩS¹≃ℤ = (fiberwise-map base , fiberwise-map-is-equiv base)
 
--- We can also deduce that the circle is of h-level 3
+-- We can also deduce that the circle is 1-truncated
 
 ΩS¹-is-set : is-set (base ≡ base)
 ΩS¹-is-set = equiv-types-truncated _ (ΩS¹≃ℤ ⁻¹) ℤ-is-set

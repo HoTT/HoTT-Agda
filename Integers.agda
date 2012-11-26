@@ -72,15 +72,31 @@ abstract
   ℕ-is-set : is-set ℕ
   ℕ-is-set = dec-eq-is-set ℕ-has-dec-eq
 
+data _<_ : ℕ → ℕ → Set where
+  <n : {n : ℕ} → n < S n
+  <S : {n m : ℕ} → (n < m) → (n < S m)
+
+_+_ : ℕ → ℕ → ℕ
+0 + m = m
+S n + m = S (n + m)
+
++S-is-S+ : (n m : ℕ) → n + S m ≡ S n + m
++S-is-S+ O m = refl (S m)
++S-is-S+ (S n) m = map S (+S-is-S+ n m)
+
++0-is-id : (n : ℕ) → n + 0 ≡ n
++0-is-id O = refl O
++0-is-id (S n) = map S (+0-is-id n)
+
 private
   ℤ-get-pos : ℤ → ℕ
   ℤ-get-pos O = 0
   ℤ-get-pos (pos n) = n
   ℤ-get-pos (neg n) = 0
-  
+
   pos-injective : (n m : ℕ) (p : pos n ≡ pos m) → n ≡ m
   pos-injective n m p = map ℤ-get-pos p
-  
+
   ℤ-get-neg : ℤ → ℕ
   ℤ-get-neg O = 0
   ℤ-get-neg (pos n) = 0
