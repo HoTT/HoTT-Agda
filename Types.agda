@@ -109,4 +109,4 @@ record lift {i} (j : Level) (A : Set i) : Set (max i j) where
   constructor ↑  -- \u
   field
     ↓ : A  -- \d
-open lift
+open lift public
