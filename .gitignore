@@ -4,3 +4,6 @@
 .DS_Store
 # Ignore Agda compiled files
 *.agdai
+html/
+Unclassified/
+Test.agda
