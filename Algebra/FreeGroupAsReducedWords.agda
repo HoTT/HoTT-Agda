@@ -180,7 +180,7 @@ abstract
   mul-mul'-reduce x ((y ∷ w) , red) | inr different | inl obvious = refl _
   mul-mul'-reduce x ((y ∷ w) , red) | inr different | inr absurd =
     abort-nondep (absurd (refl _))
-  mul-mul'-reduce x ((y ′∷ w) , red) with (eq x x) 
+  mul-mul'-reduce x ((y ′∷ w) , red) with (eq x x)
   mul-mul'-reduce x ((y ′∷ w) , red) | inl obvious = refl _
   mul-mul'-reduce x ((y ′∷ w) , red) | inr absurd =
     abort-nondep (absurd (refl _))

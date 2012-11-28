@@ -29,10 +29,10 @@ pullback-diag-eq p q r {f} {f'} s {g} {g'} t = pullback-diag-raw-eq
   (eq-to-path p)
   (eq-to-path q)
   (eq-to-path r)
-  (funext (λ a → map f' (trans-X-eq-to-path p a)
-                     ∘ (s a ∘ ! (trans-X-eq-to-path r (f a)))))
-  (funext (λ b → trans-X-eq-to-path r (g b)
-                     ∘ (t b ∘ map g' (! (trans-X-eq-to-path q b)))))
+  (funext (λ a → map f' (trans-id-eq-to-path p a)
+                     ∘ (s a ∘ ! (trans-id-eq-to-path r (f a)))))
+  (funext (λ b → trans-id-eq-to-path r (g b)
+                     ∘ (t b ∘ map g' (! (trans-id-eq-to-path q b)))))
 
 module Pullback {i} (D : pullback-diag i) where
 

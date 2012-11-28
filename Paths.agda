@@ -26,7 +26,7 @@ _∘_ : ∀ {i} {A : Set i} {x y z : A} → (x ≡ y → y ≡ z → x ≡ z)
 refl _ ∘ q = q
 
 ! : ∀ {i} {A : Set i} {x y : A} → (x ≡ y → y ≡ x)
-! (refl _) = refl _  
+! (refl _) = refl _
 
 -- Transport and map
 
@@ -71,14 +71,14 @@ module _ {i j} {A : Set i} {P : A → Set j} where
     base-path-Σ-eq : {x y : A} (p : x ≡ y) {u : P x} {v : P y}
       (q : transport P p u ≡ v) → base-path (Σ-eq p q) ≡ p
     base-path-Σ-eq (refl _) (refl _) = refl _
-  
+
     fiber-path-Σ-eq : {x y : A} (p : x ≡ y) {u : P x} {v : P y}
       (q : transport P p u ≡ v)
       → transport (λ t → transport P t u ≡ v) (base-path-Σ-eq p q)
                   (fiber-path (Σ-eq p q))
         ≡ q
     fiber-path-Σ-eq (refl _) (refl _) = refl _
-  
+
     Σ-eq-base-path-fiber-path : {x y : Σ A P} (p : x ≡ y)
       → Σ-eq (base-path p) (fiber-path p) ≡ p
     Σ-eq-base-path-fiber-path {x} {.x} (refl .x) = refl _
@@ -90,18 +90,18 @@ module _ {i} {A : Set i} where
   concat-assoc : {x y z t : A} (p : x ≡ y) (q : y ≡ z) (r : z ≡ t)
     → (p ∘ q) ∘ r ≡ p ∘ (q ∘ r)
   concat-assoc (refl _) _ _ = refl _
-  
+
   -- [refl-left-unit] is definitionally true
-  
+
   refl-right-unit : {x y : A} (q : x ≡ y) → q ∘ refl _ ≡ q
   refl-right-unit (refl _) = refl _
-  
+
   opposite-left-inverse : {x y : A} (p : x ≡ y) → (! p) ∘ p ≡ refl _
   opposite-left-inverse (refl _) = refl _
-  
+
   opposite-right-inverse : {x y : A} (p : x ≡ y) → p ∘ (! p) ≡ refl _
   opposite-right-inverse (refl _) = refl _
-  
+
   whisker-left : {x y z : A} (p : x ≡ y) {q r : y ≡ z}
     → (q ≡ r → p ∘ q ≡ p ∘ r)
   whisker-left p (refl _) = refl _
@@ -109,12 +109,12 @@ module _ {i} {A : Set i} where
   whisker-right : {x y z : A} (p : y ≡ z) {q r : x ≡ y}
     → (q ≡ r → q ∘ p ≡ r ∘ p)
   whisker-right p (refl _) = refl _
-  
+
   anti-whisker-right : {x y z : A} (p : y ≡ z) {q r : x ≡ y}
     → (q ∘ p ≡ r ∘ p → q ≡ r)
   anti-whisker-right (refl _) {q} {r} h =
     ! (refl-right-unit q) ∘ (h ∘ refl-right-unit r)
-  
+
   anti-whisker-left : {x y z : A} (p : x ≡ y) {q r : y ≡ z}
     → (p ∘ q ≡ p ∘ r → q ≡ r)
   anti-whisker-left (refl _) h = h
@@ -124,7 +124,7 @@ module _ {i} {A : Set i} where
   opposite-concat : {x y z : A} (p : x ≡ y) (q : y ≡ z) → ! (p ∘ q) ≡ ! q ∘ ! p
   opposite-concat (refl _) q = ! (refl-right-unit (! q))
 
-  concat-opposite : {x y z : A} (q : y ≡ z) (p : x ≡ y) → ! q ∘ ! p ≡ ! (p ∘ q) 
+  concat-opposite : {x y z : A} (q : y ≡ z) (p : x ≡ y) → ! q ∘ ! p ≡ ! (p ∘ q)
   concat-opposite q (refl _) = refl-right-unit (! q)
 
   opposite-opposite : {x y : A} (p : x ≡ y) → ! (! p) ≡ p
@@ -136,59 +136,59 @@ module _ {i} {A : Set i} where
   -- This first part is about transporting something in a known fibration. In
   -- the names, [x] represents the variable of the fibration, [a] is a constant
   -- term, [A] is a constant type, and [f] and [g] are constant functions.
-  
-  trans-x≡a : {a b c : A} (p : b ≡ c) (q : b ≡ a)
+
+  trans-id≡cst : {a b c : A} (p : b ≡ c) (q : b ≡ a)
     → transport (λ x → x ≡ a) p q ≡ (! p) ∘ q
-  trans-x≡a (refl _) q = refl _
-  
-  trans-a≡x : {a b c : A} (p : b ≡ c) (q : a ≡ b)
+  trans-id≡cst (refl _) q = refl _
+
+  trans-cst≡id : {a b c : A} (p : b ≡ c) (q : a ≡ b)
     → transport (λ x → a ≡ x) p q ≡ q ∘ p
-  trans-a≡x (refl _) q = ! (refl-right-unit q)
-  
-  trans-fx≡gx : ∀ {j} {B : Set j} (f g : A → B) {x y : A} (p : x ≡ y)
+  trans-cst≡id (refl _) q = ! (refl-right-unit q)
+
+  trans-app≡app : ∀ {j} {B : Set j} (f g : A → B) {x y : A} (p : x ≡ y)
     (q : f x ≡ g x)
     → transport (λ x → f x ≡ g x) p q ≡ ! (map f p) ∘ (q ∘ map g p)
-  trans-fx≡gx f g (refl _) q = ! (refl-right-unit q)
-  
-  trans-move-fx≡gx : ∀ {j} {B : Set j} (f g : A → B) {x y : A} (p : x ≡ y)
+  trans-app≡app f g (refl _) q = ! (refl-right-unit q)
+
+  trans-move-app≡app : ∀ {j} {B : Set j} (f g : A → B) {x y : A} (p : x ≡ y)
     (q : f x ≡ g x) {r : f y ≡ g y}
     → (q ∘ map g p ≡ map f p ∘ r → transport (λ x → f x ≡ g x) p q ≡ r)
-  trans-move-fx≡gx f g (refl _) q h = ! (refl-right-unit q) ∘ h
-  
-  trans-a≡fx : ∀ {j} {B : Set j} (a : B) (f : A → B) {x y : A} (p : x ≡ y)
+  trans-move-app≡app f g (refl _) q h = ! (refl-right-unit q) ∘ h
+
+  trans-cst≡app : ∀ {j} {B : Set j} (a : B) (f : A → B) {x y : A} (p : x ≡ y)
     (q : a ≡ f x)
     → transport (λ x → a ≡ f x) p q ≡ q ∘ map f p
-  trans-a≡fx a f (refl _) q = ! (refl-right-unit q)
-  
-  trans-fx≡a : ∀ {j} {B : Set j} (f : A → B) (a : B) {x y : A} (p : x ≡ y)
+  trans-cst≡app a f (refl _) q = ! (refl-right-unit q)
+
+  trans-app≡cst : ∀ {j} {B : Set j} (f : A → B) (a : B) {x y : A} (p : x ≡ y)
     (q : f x ≡ a)
     → transport (λ x → f x ≡ a) p q ≡ ! (map f p) ∘ q
-  trans-fx≡a f a (refl _) q = refl q
-  
-  trans-x≡fx : (f : A → A) {x y : A} (p : x ≡ y) (q : x ≡ f x)
+  trans-app≡cst f a (refl _) q = refl q
+
+  trans-id≡app : (f : A → A) {x y : A} (p : x ≡ y) (q : x ≡ f x)
     → transport (λ x → x ≡ f x) p q ≡ ! p ∘ (q ∘ map f p)
-  trans-x≡fx f (refl _) q = ! (refl-right-unit q)
-  
-  trans-fx≡x : (f : A → A) {x y : A} (p : x ≡ y) (q : f x ≡ x)
+  trans-id≡app f (refl _) q = ! (refl-right-unit q)
+
+  trans-app≡id : (f : A → A) {x y : A} (p : x ≡ y) (q : f x ≡ x)
     → transport (λ x → f x ≡ x) p q ≡ ! (map f p) ∘ (q ∘ p)
-  trans-fx≡x f (refl _) q = ! (refl-right-unit q)
+  trans-app≡id f (refl _) q = ! (refl-right-unit q)
 
-  trans-x≡x : {x y : A} (p : x ≡ y) (q : x ≡ x)
+  trans-id≡id : {x y : A} (p : x ≡ y) (q : x ≡ x)
     → transport (λ x → x ≡ x) p q ≡ ! p ∘ (q ∘ p)
-  trans-x≡x (refl _) q = ! (refl-right-unit _)
-  
-  trans-A : ∀ {j} {B : Set j} {x y : A} (p : x ≡ y) (q : B)
-    → transport (λ _ → B) p q ≡ q
-  trans-A (refl _) q = refl _
+  trans-id≡id (refl _) q = ! (refl-right-unit _)
 
-  trans-A→Pxy : ∀ {j k} (B : Set j) (P : (x : A) (y : B) → Set k)
+  trans-cst : ∀ {j} {B : Set j} {x y : A} (p : x ≡ y) (q : B)
+    → transport (λ _ → B) p q ≡ q
+  trans-cst (refl _) q = refl _
+
+  trans-Π2 : ∀ {j k} (B : Set j) (P : (x : A) (y : B) → Set k)
     {b c : A} (p : b ≡ c) (q : (y : B) → P b y) (a : B)
     → transport (λ x → ((y : B) → P x y)) p q a
       ≡ transport (λ u → P u a) p (q a)
-  trans-A→Pxy B P (refl _) q a = refl _
-  
+  trans-Π2 B P (refl _) q a = refl _
+
   -- This second part is about transporting something along a known path
-  
+
   trans-concat : ∀ {j} {P : A → Set j} {x y z : A} (p : y ≡ z) (q : x ≡ y)
     (u : P x)
     → transport P (q ∘ p) u ≡ transport P p (transport P q u)
@@ -198,12 +198,12 @@ module _ {i} {A : Set i} where
     (u : P x)
     →  transport P p (transport P q u) ≡ transport P (q ∘ p) u
   compose-trans p (refl _) u = refl _
-  
+
   trans-map : ∀ {j k} {B : Set j} {P : B → Set k} (f : A → B)
     {x y : A} (p : x ≡ y) (u : P (f x))
     → transport P (map f p) u ≡ transport (P ◯ f) p u
   trans-map f (refl _) u = refl _
-  
+
   -- Unreadable, should be removed
   trans-totalpath : ∀ {j k} {P : A → Set j} {Q : Σ A P → Set k} {x y : Σ A P}
     (p : π₁ x ≡ π₁ y) (q : transport P p (π₂ x) ≡ π₂ y)
@@ -214,7 +214,7 @@ module _ {i} {A : Set i} where
             (transport P p (π₂ x)))
   trans-totalpath {j} {k} {P} {Q} {(x₁ , x₂)} {(y₁ , y₂)} p q f =
     trans-totalpath' {j} {k} {P} {Q} {x₁} {y₁} {x₂} {y₂} p q f where
-  
+
     trans-totalpath' : ∀ {j k} {P : A → Set j} {Q : Σ A P → Set k} {x₁ y₁ : A}
       {x₂ : P x₁} {y₂ : P y₁}
       (p : x₁ ≡ y₁) (q : transport P p (x₂) ≡ y₂) (f : (t : P x₁) → Q (x₁ , t))
@@ -223,9 +223,9 @@ module _ {i} {A : Set i} where
             (transport (λ x' → (t : P x') → Q (x' , t)) p f
               (transport P p x₂))
     trans-totalpath' (refl _) (refl _) f = refl _
-  
+
   -- This third part is about various other convenient properties
-  
+
   trans-trans-opposite : ∀ {j} {P : A → Set j} {x y : A} (p : x ≡ y) (u : P y)
     → transport P p (transport P (! p) u) ≡ u
   trans-trans-opposite (refl _) u = refl u
@@ -233,20 +233,20 @@ module _ {i} {A : Set i} where
   trans-opposite-trans : ∀ {j} {P : A → Set j} {x y : A} (p : x ≡ y) (u : P x)
     → transport P (! p) (transport P p u) ≡ u
   trans-opposite-trans (refl _) u = refl u
-  
+
   map-dep-trivial : ∀ {j} {B : Set j} (f : A → B) {x y : A} (p : x ≡ y)
-    → map f p ≡ ! (trans-A p (f x)) ∘ map-dep f p
+    → map f p ≡ ! (trans-cst p (f x)) ∘ map-dep f p
   map-dep-trivial f (refl _) = refl _
 
   homotopy-naturality : ∀ {j} {B : Set j} (f g : A → B)
     (p : (x : A) → f x ≡ g x) {x y : A} (q : x ≡ y)
     → map f q ∘ p y ≡ p x ∘ map g q
   homotopy-naturality f g p (refl _) = ! (refl-right-unit _)
-  
+
   homotopy-naturality-toid : (f : A -> A) (p : (x : A) → f x ≡ x)
     {x y : A} (q : x ≡ y) → map f q ∘ p y ≡ p x ∘ q
   homotopy-naturality-toid f p (refl _) = ! (refl-right-unit _)
-  
+
   homotopy-naturality-fromid : (g : A -> A) (p : (x : A) → x ≡ g x)
     {x y : A} (q : x ≡ y) → q ∘ p y ≡ p x ∘ map g q
   homotopy-naturality-fromid g p (refl _) = ! (refl-right-unit _)
@@ -315,7 +315,7 @@ module _ {i} {A : Set i} where
   move-right-on-left : {x y z : A} (p : x ≡ y) (q : y ≡ z) (r : x ≡ z)
     → (q ≡ (! p) ∘ r → p ∘ q ≡ r)
   move-right-on-left (refl _) q r h = h
- 
+
   move-right-on-right : {x y z : A} (p : x ≡ y) (q : y ≡ z) (r : x ≡ z)
     → (p ≡ r ∘ (! q) → p ∘ q ≡ r)
   move-right-on-right p (refl _) r h = refl-right-unit p
@@ -333,7 +333,7 @@ module _ {i} {A : Set i} where
   move!-right-on-left : {x y z : A} (p : y ≡ x) (q : y ≡ z) (r : x ≡ z)
     → (q ≡ p ∘ r → (! p) ∘ q ≡ r)
   move!-right-on-left (refl _) q r h = h
- 
+
   move!-right-on-right : {x y z : A} (p : x ≡ y) (q : z ≡ y) (r : x ≡ z)
     → (p ≡ r ∘ q → p ∘ (! q) ≡ r)
   move!-right-on-right p (refl _) r h = refl-right-unit p
@@ -350,7 +350,7 @@ module _ {i} {A : Set i} where
   move0-right-on-left : {x y : A} (p : x ≡ y) (q : y ≡ x)
     → (q ≡ ! p → p ∘ q ≡ refl x)
   move0-right-on-left (refl _) q h = h
- 
+
   move0-right-on-right : {x y : A} (p : x ≡ y) (q : y ≡ x)
     → (p ≡ ! q → p ∘ q ≡ refl x)
   move0-right-on-right p (refl _) h = refl-right-unit p ∘ h
@@ -366,7 +366,7 @@ module _ {i} {A : Set i} where
   move0!-right-on-left : {x y : A} (p : y ≡ x) (q : y ≡ x)
     → (q ≡ p → (! p) ∘ q ≡ refl x)
   move0!-right-on-left (refl _) q h = h
- 
+
   move0!-right-on-right : {x y z : A} (p : x ≡ y) (q : x ≡ y)
     → (p ≡ q → p ∘ (! q) ≡ refl x)
   move0!-right-on-right p (refl _) h = refl-right-unit p ∘ h
@@ -382,7 +382,7 @@ module _ {i} {A : Set i} where
   move1-right-on-left : {x y : A} (p : x ≡ y) (r : x ≡ y)
     → (refl y ≡ (! p) ∘ r → p ≡ r)
   move1-right-on-left (refl _) r h = h
- 
+
   move1-right-on-right : {x y : A} (q : x ≡ y) (r : x ≡ y)
     → (refl x ≡ r ∘ (! q) → q ≡ r)
   move1-right-on-right (refl _) r h = h ∘ refl-right-unit r
@@ -398,7 +398,7 @@ module _ {i} {A : Set i} where
   move1!-right-on-left : {x y : A} (p : y ≡ x) (r : x ≡ y)
     → (refl y ≡ p ∘ r → ! p ≡ r)
   move1!-right-on-left (refl _) r h = h
- 
+
   move1!-right-on-right : {x y : A} (q : y ≡ x) (r : x ≡ y)
     → (refl x ≡ r ∘ q → ! q ≡ r)
   move1!-right-on-right (refl _) r h = h ∘ refl-right-unit r
@@ -408,17 +408,17 @@ module _ {i} {A : Set i} where
     (v : P x)
     → transport P (! p) u ≡ v → u ≡ transport P p v
   move-transp-left P _ (refl _) _ p = p
-  
+
   move-transp-right : ∀ {j} (P : A → Set j) {x y : A} (p : y ≡ x) (u : P y)
     (v : P x)
     → u ≡ transport P (! p) v → transport P p u ≡ v
   move-transp-right P (refl _) _ _ p = p
-  
+
   move!-transp-left : ∀ {j} (P : A → Set j) {x y : A} (u : P y) (p : y ≡ x)
     (v : P x)
     → transport P p u ≡ v → u ≡ transport P (! p) v
   move!-transp-left P _ (refl _) _ p = p
-  
+
   move!-transp-right : ∀ {j} (P : A → Set j) {x y : A} (p : x ≡ y) (u : P y)
     (v : P x)
     → u ≡ transport P p v → transport P (! p) u ≡ v

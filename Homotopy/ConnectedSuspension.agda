@@ -1,8 +1,8 @@
 {-# OPTIONS --without-K #-}
 
 open import Base using (_≡_; refl; transport; _∘_; !; _≢_; ℕ; ℕ₋₂; is-contr;
-  is-truncated; S; O; π₁; π₂; funext; map; unit; tt; iso-is-eq; trans-A→Pxy;
-  trans-a≡fx; happly; happly-funext; Σ; equiv-types-truncated;
+  is-truncated; S; O; π₁; π₂; funext; map; unit; tt; iso-is-eq; trans-Π2;
+  trans-cst≡app; happly; happly-funext; Σ; equiv-types-truncated;
   unit-is-truncated-S#instance; id; cst; zero; is-equiv; ≡-is-truncated; _≃_;
   _,_; id-equiv; _×_; Σ-eq; is-truncated-is-prop; map-dep!; _⁻¹; unit-is-contr)
 open import Homotopy.Truncation
@@ -94,9 +94,9 @@ abstract
       (λ c →
         susp-H.cocone-eq-raw _ (refl _) (funext (λ _ → x≡y c))
           (app-is-inj x₀ ττA-is-contr (P-E _ _)
-            (trans-A→Pxy _ (λ v _ → susp-H.A→top c tt ≡ v tt)
+            (trans-Π2 _ (λ v _ → susp-H.A→top c tt ≡ v tt)
               (funext (λ r → susp-H.h c x₀)) _ _
-              ∘ (trans-a≡fx _ (λ u → u tt) (funext (λ r → susp-H.h c x₀)) _
+              ∘ (trans-cst≡app _ (λ u → u tt) (funext (λ r → susp-H.h c x₀)) _
               ∘ happly (happly-funext (λ _ → susp-H.h c x₀)) tt))))
       (λ f → refl f)
 

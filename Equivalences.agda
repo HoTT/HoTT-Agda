@@ -50,7 +50,7 @@ module _ {i} {j} {A : Set i} {B : Set j} where
     adjiso-is-eq f g h h' adj y =
       ((g y , h y),
       (λ y' → Σ-eq (! (h' (π₁ y')) ∘ map g (π₂ y'))
-        (trans-fx≡a f _ (! (h' (π₁ y')) ∘ map g (π₂ y')) (π₂ y') ∘
+        (trans-app≡cst f _ (! (h' (π₁ y')) ∘ map g (π₂ y')) (π₂ y') ∘
         move-right-on-right (! (map f (! (h' (π₁ y')) ∘ map g (π₂ y'))))
           (π₂ y') (h y)
           (map ! (map-concat f (! (h' (π₁ y'))) (map g (π₂ y')))

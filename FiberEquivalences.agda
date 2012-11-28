@@ -23,7 +23,7 @@ module TotalMapEquiv (e : is-equiv total-map) where
   -- The inverse is propositionally fiberwise
   base-path-inverse : (x : A) (y : Q x) → π₁ ((total-equiv ⁻¹) ☆ (x , y)) ≡ x
   base-path-inverse x y = base-path (inverse-right-inverse total-equiv (x , y))
-  
+
   -- And the action of [total-map] on paths is correct on the base path
   total-map-fiberwise-on-paths : {u v : Σ A P} (p : u ≡ v)
     → base-path (map total-map p) ≡ base-path p
@@ -34,11 +34,11 @@ module TotalMapEquiv (e : is-equiv total-map) where
   inv : ((x : A) → (Q x → P x))
   inv x y = transport P (base-path-inverse x y)
                         (π₂ ((total-equiv ⁻¹) ☆ (x , y)))
-  
+
   app-trans : {x y : A} (p : x ≡ y) (u : P x)
     → f y (transport P p u) ≡ transport Q p (f x u)
   app-trans (refl _) _ = refl _
-  
+
   -- We prove that [inv] is a right and left inverse to [f]
 
   inv-right-inverse : (x : A) (y : Q x) → f x (inv x y) ≡ y
@@ -46,7 +46,7 @@ module TotalMapEquiv (e : is-equiv total-map) where
     app-trans (base-path (inverse-right-inverse total-equiv (x , y)))
               (π₂ (inverse (_ , e) (x , y)))
     ∘ fiber-path (inverse-right-inverse total-equiv (x , y))
-  
+
   inv-left-inverse : (x : A) (y : P x) → inv x (f x y) ≡ y
   inv-left-inverse x y =
     map (λ u → transport P (base-path (inverse-right-inverse total-equiv
@@ -64,7 +64,7 @@ module TotalMapEquiv (e : is-equiv total-map) where
         ≡ base-path (inverse-left-inverse total-equiv (x , y))
     lemma1 x y = map base-path (inverse-triangle total-equiv (x , y))
                  ∘ total-map-fiberwise-on-paths _
-  
+
     lemma2 : (x : A) (y : P x)
       → π₂ ((total-equiv ⁻¹) ☆ (x , f x y))
         ≡ transport P (! (base-path-inverse x (f x y))) y
@@ -72,7 +72,7 @@ module TotalMapEquiv (e : is-equiv total-map) where
       ∘ map (λ p → transport P p y)
             (map-opposite π₁ (inverse-left-inverse total-equiv (x , y))
             ∘ ! (map ! (lemma1 x y)))
-  
+
   fiberwise-is-equiv : ((x : A) → is-equiv (f x))
   fiberwise-is-equiv x = iso-is-eq (f x) (inv x) (inv-right-inverse x)
                                               (inv-left-inverse x)

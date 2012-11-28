@@ -52,13 +52,13 @@ abstract
       (concat-assoc q _ _))) where
     fw : FA
     fw = reduced-to-freegroup (w , tail'-is-reduced x w red)
-  
+
     p : x · (x ⁻¹· fw) ≡ fw
     p = right-inverse-· x fw
-  
+
     q : CA-z (x ⁻¹· fw) ≡ CA-z (x · (x ⁻¹· fw))
     q = CA-e x (x ⁻¹· fw)
-  
+
     r : CA-z fw ≡ CA-z e
     r = CA-contr-base-reduced-word (w , tail'-is-reduced x w red)
   CA-contr-loop-reduced-word t ((x ′∷ w) , red) | inr different = refl _
@@ -76,7 +76,7 @@ CA-contr-loop t u =
   -- [CA-contr-loop-reduced-word] gives
   -- that [(map CA-z comp ∘ p (k u)) ∘ for-red u ≡ for-red (t · u)]
 
-  trans-x≡a (CA-e t u) (CA-contr-base u)
+  trans-id≡cst (CA-e t u) (CA-contr-base u)
   ∘ (! (concat-assoc (p u) (map CA-z (q u)) (for-red u))
   ∘ (whisker-right (for-red u) {q = p u ∘ map CA-z (q u)}
        {r = map CA-z (q (t · u)) ∘ (map CA-z comp ∘ p (k u))}

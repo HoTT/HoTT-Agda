@@ -44,40 +44,40 @@ eq-to-path-equiv = (eq-to-path , eq-to-path-is-equiv)
 
 -- Transport in the structural fibration of a universe
 
-trans-X : {A B : Set i} (f : A ≡ B) (u : A)
+trans-id : {A B : Set i} (f : A ≡ B) (u : A)
   → transport (λ X → X) f u ≡ (path-to-eq f) ☆ u
-trans-X (refl _) u = refl u
+trans-id (refl _) u = refl u
 
-trans-X-eq-to-path : {A B : Set i} (f : A ≃ B) (u : A)
+trans-id-eq-to-path : {A B : Set i} (f : A ≃ B) (u : A)
   → transport (λ X → X) (eq-to-path f) u ≡ f ☆ u
-trans-X-eq-to-path {A} {B} f u =
-  trans-X (eq-to-path f) u
+trans-id-eq-to-path {A} {B} f u =
+  trans-id (eq-to-path f) u
   ∘ map (λ (t : A ≃ B) → t ☆ u) (eq-to-path-right-inverse f)
 
 -- Not used
 --
--- trans-X→A : ∀ {i j} (A : Set j) {X Y : Set i} (e : X ≡ Y) (f : X → A)
+-- trans-id→A : ∀ {i j} (A : Set j) {X Y : Set i} (e : X ≡ Y) (f : X → A)
 --   (a : Y) → transport (λ (X : Set i) → X → A) e f a
 --     ≡ f (inverse (path-to-eq e) a)
--- trans-X→A A (refl _) f a = refl _
+-- trans-id→A A (refl _) f a = refl _
 
--- trans-X→A-eq-to-path : ∀ {i j} (A : Set j) {X Y : Set i} (e : X ≃ Y)
+-- trans-id→A-eq-to-path : ∀ {i j} (A : Set j) {X Y : Set i} (e : X ≃ Y)
 --   (f : X → A) (a : Y)
 --   → transport (λ (X : Set i) → X → A) (eq-to-path e) f a ≡ f (inverse e a)
--- trans-X→A-eq-to-path A e f a =
---   trans-X→A A (eq-to-path e) f a
+-- trans-id→A-eq-to-path A e f a =
+--   trans-id→A A (eq-to-path e) f a
 --   ∘ map (λ u → f (inverse u a)) (eq-to-path-right-inverse e)
 
--- trans-A→X : ∀ {i j} (A : Set j) {X Y : Set i} (e : X ≡ Y) (f : A → X)
+-- trans-cst→X : ∀ {i j} (A : Set j) {X Y : Set i} (e : X ≡ Y) (f : A → X)
 --   (a : A) → transport (λ (X : Set i) → A → X) e f a
 --     ≡ π₁ (path-to-eq e) (f a)
--- trans-A→X A (refl _) f a = refl _
+-- trans-cst→X A (refl _) f a = refl _
 
--- trans-A→X-eq-to-path : ∀ {i j} (A : Set j) {X Y : Set i} (e : X ≃ Y)
+-- trans-cst→X-eq-to-path : ∀ {i j} (A : Set j) {X Y : Set i} (e : X ≃ Y)
 --   (f : A → X) (a : A)
 --   → transport (λ (X : Set i) → A → X) (eq-to-path e) f a ≡ π₁ e (f a)
--- trans-A→X-eq-to-path A e f a =
---   trans-A→X A (eq-to-path e) f a
+-- trans-cst→X-eq-to-path A e f a =
+--   trans-cst→X A (eq-to-path e) f a
 --   ∘ map (λ u → π₁ u (f a)) (eq-to-path-right-inverse e)
 
 -- Induction along equivalences

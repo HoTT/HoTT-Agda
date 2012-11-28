@@ -22,7 +22,7 @@ abstract
                (funext (λ x → pushout-β-glue-nondep E (cocone.A→top y)
                                     (cocone.B→top y) (cocone.h y) x)))
     (λ f → funext (pushout-rec _ (λ _ → refl _) (λ _ → refl _)
-      (λ c → trans-fx≡gx
+      (λ c → trans-app≡app
              (pushout-rec-nondep E (f ◯ left) (f ◯ right)
               (λ c' → map f (glue c')))
              f (glue c) (refl _)

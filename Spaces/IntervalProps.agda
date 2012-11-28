@@ -20,7 +20,7 @@ bool-is-not-contr f = transport bool-split (bool-contr-path f) tt
 I-is-contr : is-contr I
 I-is-contr =
   (zer , I-rec (λ (t : I) → t ≡ zer) (refl zer) (! seg)
-                (trans-x≡a seg (refl zer) ∘ refl-right-unit (! seg)))
+                (trans-id≡cst seg (refl zer) ∘ refl-right-unit (! seg)))
 
 interval-implies-funext : ∀ {i j} (A : Set i) (B : Set j) (f g : A → B)
   (h : (x : A) → f x ≡ g x) → f ≡ g

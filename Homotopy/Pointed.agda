@@ -39,4 +39,4 @@ pType-eq-raw : ∀ {i} {X Y : pType i} (p : ∣ X ∣ ≡ ∣ Y ∣)
 pType-eq-raw {i} {(X , x)} {(.X , .x)} (refl .X) (refl .x) = refl _
 
 pType-eq : ∀ {i} {X Y : pType i} → (X ≃⋆ Y → X ≡ Y)
-pType-eq (e , p) = pType-eq-raw (eq-to-path e) (trans-X-eq-to-path e _ ∘ p)
+pType-eq (e , p) = pType-eq-raw (eq-to-path e) (trans-id-eq-to-path e _ ∘ p)

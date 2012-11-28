@@ -33,7 +33,7 @@ loop-to-succ : (n : ℤ) → transport universal-cover loop n ≡ succ n
 loop-to-succ n = ! (trans-map {P = λ A → A} universal-cover loop n)
                  ∘ (map (λ t → transport (λ A → A) t n)
                         (β-nondep Set ℤ succ-path)
-                 ∘ trans-X-eq-to-path succ-equiv n)
+                 ∘ trans-id-eq-to-path succ-equiv n)
 
 {- The flattening lemma
 
@@ -118,14 +118,14 @@ R-contr-base (neg (S y)) = R-contr-base (neg y) ∘ ! (R-e (neg (S y)))
 
 R-contr-loop : (n : ℤ)
   → transport P-R-contr (R-e n) (R-contr-base n) ≡ (R-contr-base (succ n))
-R-contr-loop O = trans-a≡x (R-e O) (refl _)
-R-contr-loop (pos O) = trans-a≡x (R-e (pos O)) (R-e O)
-R-contr-loop (pos (S y)) = trans-a≡x (R-e (pos (S y)))
+R-contr-loop O = trans-cst≡id (R-e O) (refl _)
+R-contr-loop (pos O) = trans-cst≡id (R-e (pos O)) (R-e O)
+R-contr-loop (pos (S y)) = trans-cst≡id (R-e (pos (S y)))
   (R-contr-base (pos y) ∘ R-e (pos y))
-R-contr-loop (neg O) = trans-a≡x (R-e (neg O))
+R-contr-loop (neg O) = trans-cst≡id (R-e (neg O))
   (! (R-e (neg O))) ∘ opposite-left-inverse (R-e (neg O))
 R-contr-loop (neg (S y)) =
-  ((trans-a≡x (R-e (neg (S y))) (R-contr-base (neg y) ∘ ! (R-e (neg (S y))))
+  ((trans-cst≡id (R-e (neg (S y))) (R-contr-base (neg y) ∘ ! (R-e (neg (S y))))
    ∘ concat-assoc (R-contr-base (neg y)) (! (R-e (neg (S y))))
                   (R-e (neg (S y))))
    ∘ (whisker-left (R-contr-base (neg y))

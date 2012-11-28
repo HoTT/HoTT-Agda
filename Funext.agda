@@ -35,7 +35,7 @@ module FunextNonDep {j} {B : Set j} {f g : A → B} (h : (x : A) → f x ≡ g x
         iso-is-eq π₁ (λ z → (z , (z , refl z))) refl
           (λ x' → Σ-eq (refl _)
                     (Σ-eq (π₂ (π₂ x'))
-                      (trans-a≡x (π₂ (π₂ x')) (refl (π₁ x')))))
+                      (trans-cst≡id (π₂ (π₂ x')) (refl (π₁ x')))))
 
       comp-π₁-is-equiv : is-equiv (λ (f : A → free-path-space-B)
                                      → (λ x → π₁ (f x)))

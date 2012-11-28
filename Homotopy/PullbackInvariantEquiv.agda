@@ -66,13 +66,13 @@ module PullbackInvariantEquiv (eqA : A ≃ A') (eqB : B ≃ B') (eqC : C ≃ C')
 
     h : (a : A) → f' ((transport (λ v → v) (eq-to-path eqA) a))
                   ≡ transport (λ v → v) (eq-to-path eqC) (f a)
-    h a = map f' (trans-X-eq-to-path eqA a)
-          ∘ (p a ∘ (! (trans-X-eq-to-path eqC (f a))))
+    h a = map f' (trans-id-eq-to-path eqA a)
+          ∘ (p a ∘ (! (trans-id-eq-to-path eqC (f a))))
 
     h' : (b : B) → transport (λ v → v) (eq-to-path eqC) (g b)
                    ≡ g' ((transport (λ v → v) (eq-to-path eqB) b))
-    h' b = trans-X-eq-to-path eqC (g b)
-           ∘ (q b ∘ map g' (! (trans-X-eq-to-path eqB b)))
+    h' b = trans-id-eq-to-path eqC (g b)
+           ∘ (q b ∘ map g' (! (trans-id-eq-to-path eqB b)))
 
   pullback-to-equiv-pullback : pullback d → pullback d'
   pullback-to-equiv-pullback (a , b , e) =
@@ -84,34 +84,34 @@ module PullbackInvariantEquiv (eqA : A ≃ A') (eqB : B ≃ B') (eqC : C ≃ C')
                              h h' x
         ≡ pullback-to-equiv-pullback x
     pb-to-pb-equal-pb-to-equiv-pb (a , b , h) =
-      pullback-eq d' (trans-X-eq-to-path eqA a)
-        (trans-X-eq-to-path eqB b)
-        (concat-assoc (map f' (trans-X (eq-to-path eqA) a ∘ _) ∘ _) _ _
-         ∘ (concat-assoc (map f' (trans-X (eq-to-path eqA) a ∘ _)) _ _
-         ∘ whisker-left (map f' (trans-X (eq-to-path eqA) a ∘ _))
+      pullback-eq d' (trans-id-eq-to-path eqA a)
+        (trans-id-eq-to-path eqB b)
+        (concat-assoc (map f' (trans-id (eq-to-path eqA) a ∘ _) ∘ _) _ _
+         ∘ (concat-assoc (map f' (trans-id (eq-to-path eqA) a ∘ _)) _ _
+         ∘ whisker-left (map f' (trans-id (eq-to-path eqA) a ∘ _))
         (concat-assoc (p a) _ _
          ∘ whisker-left (p a)
-        (whisker-left (! (trans-X (eq-to-path eqC) (f a) ∘ _))
+        (whisker-left (! (trans-id (eq-to-path eqC) (f a) ∘ _))
           (concat-assoc (map (transport (λ v → v) (eq-to-path eqC)) h) _ _
            ∘ whisker-left (map (transport (λ v → v) (eq-to-path eqC)) h)
-          (concat-assoc (trans-X (eq-to-path eqC) (g b) ∘ _) _ _
-           ∘ whisker-left (trans-X (eq-to-path eqC) (g b) ∘ _)
+          (concat-assoc (trans-id (eq-to-path eqC) (g b) ∘ _) _ _
+           ∘ whisker-left (trans-id (eq-to-path eqC) (g b) ∘ _)
           (concat-assoc (q b) _ _
            ∘ (whisker-left (q b)
-          (concat-map g' (! (trans-X (eq-to-path eqB) b ∘ _)) _
+          (concat-map g' (! (trans-id (eq-to-path eqB) b ∘ _)) _
            ∘ map (map g')
-             (opposite-left-inverse (trans-X (eq-to-path eqB) b ∘ _)))
+             (opposite-left-inverse (trans-id (eq-to-path eqB) b ∘ _)))
            ∘ refl-right-unit (q b)))))
-         ∘ move!-right-on-left (trans-X (eq-to-path eqC) (f a) ∘ _) _ _
+         ∘ move!-right-on-left (trans-id (eq-to-path eqC) (f a) ∘ _) _ _
          (! (concat-assoc (map (transport (λ v → v) (eq-to-path eqC)) h)
-                (trans-X (eq-to-path eqC) (g b) ∘ _) _)
+                (trans-id (eq-to-path eqC) (g b) ∘ _) _)
          ∘ ((whisker-right (q b)
               (homotopy-naturality (transport (λ v → v) (eq-to-path eqC))
                  (π₁ eqC)
-                 (λ t → trans-X (eq-to-path eqC) t
+                 (λ t → trans-id (eq-to-path eqC) t
                         ∘ map (λ u → π₁ u t) (eq-to-path-right-inverse eqC))
                  h))
-           ∘ concat-assoc (trans-X (eq-to-path eqC) (f a) ∘ _) (map (π₁ eqC) h)
+           ∘ concat-assoc (trans-id (eq-to-path eqC) (f a) ∘ _) (map (π₁ eqC) h)
                (q b)))))))
 
     pb-equiv-pb-equal-pb-to-equiv-pb

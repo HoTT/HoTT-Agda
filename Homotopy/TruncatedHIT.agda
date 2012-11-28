@@ -120,7 +120,7 @@ abstract
   truncated-has-spheres-filled (S (S n)) A t f =
     (f (north _)
     , (suspension-rec _ _ (refl _) (map f (paths _ (⋆Sⁿ _)))
-        (λ x → trans-a≡fx (f (north _)) f (paths _ _) _
+        (λ x → trans-cst≡app (f (north _)) f (paths _ _) _
                ∘ (! (π₂ filled-newf x) ∘ π₂ filled-newf (⋆Sⁿ _))))) where
 
     newf : hSⁿ (S n) → (f (north _) ≡ f (south _))
@@ -149,11 +149,11 @@ filling-has-all-paths ⟨-2⟩ A ⦃ fill ⦄ f fill₁ fill₂ =
 filling-has-all-paths (S n) A ⦃ fill ⦄ f fill₁ fill₂ =
   Σ-eq (! (π₂ big-map-filled (north _)) ∘ π₂ big-map-filled (south _))
   (funext (λ x →
-                   trans-A→Pxy _ (λ t x₁ → t ≡ f x₁)
+                   trans-Π2 _ (λ t x₁ → t ≡ f x₁)
                    (! (π₂ big-map-filled (north _)) ∘
                     π₂ big-map-filled (south _))
                    (π₂ fill₁) x
-                   ∘ (trans-x≡a
+                   ∘ (trans-id≡cst
                         (! (π₂ big-map-filled (north _)) ∘
                          π₂ big-map-filled (south _))
                         (π₂ fill₁ x)
