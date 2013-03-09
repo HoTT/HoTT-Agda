@@ -60,6 +60,20 @@ map-dep! : ∀ {i j} {A : Set i} {P : A → Set j} (f : (a : A) → P a) {x y : 
   → (p : x ≡ y) → f x ≡ transport P (! p) (f y)
 map-dep! f (refl _) = refl _
 
+-- Alternative names for map
+
+ap : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) {x y : A}
+  → (x ≡ y → f x ≡ f y)
+ap = map
+
+apd : ∀ {i j} {A : Set i} {P : A → Set j} (f : (a : A) → P a) {x y : A}
+  → (p : x ≡ y) → transport P p (f x) ≡ f y
+apd = map-dep
+
+apd! : ∀ {i j} {A : Set i} {P : A → Set j} (f : (a : A) → P a) {x y : A}
+  → (p : x ≡ y) → f x ≡ transport P (! p) (f y)
+apd! = map-dep!
+
 -- Paths in Sigma types
 
 module _ {i j} {A : Set i} {P : A → Set j} where
