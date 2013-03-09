@@ -212,3 +212,9 @@ The `Sets` repository contains properties of the category of (h)sets.
 - `Quotient` contains a definition of the quotient of a set by a (prop-valued)
   equivalence relation with truncated higher inductive types
 - `QuotientUP` proves the universal property of quotients
+
+Copyrights
+----------
+
+A small amount of code is adapted from
+[Nils Anders Danielsson's library](http://www.cse.chalmers.se/~nad/repos/equality/).

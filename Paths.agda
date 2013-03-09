@@ -28,6 +28,20 @@ refl _ ∘ q = q
 ! : ∀ {i} {A : Set i} {x y : A} → (x ≡ y → y ≡ x)
 ! (refl _) = refl _
 
+-- Equational reasioning combinator
+-- (from Nils' library)
+
+infix  0 finally
+infixr 0 _≡⟨_⟩_
+
+_≡⟨_⟩_ : ∀ {ℓ} {A : Set ℓ} x {y z : A} → x ≡ y → y ≡ z → x ≡ z
+_ ≡⟨ x≡y ⟩ y≡z = x≡y ∘ y≡z
+
+finally : ∀ {ℓ} {A : Set ℓ} (x y : A) → x ≡ y → x ≡ y
+finally _ _ x≡y = x≡y
+
+syntax finally x y x≡y = x ≡⟨ x≡y ⟩∎ y ∎
+
 -- Transport and map
 
 transport : ∀ {i j} {A : Set i} (P : A → Set j) {x y : A}
