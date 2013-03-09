@@ -16,3 +16,8 @@ cst b = λ _ → b
 _◯_ : ∀ {i j k} {A : Set i} {B : A → Set j} {C : (a : A) → (B a → Set k)}
   → (g : {a : A} → Π (B a) (C a)) → (f : Π A B) → Π A (λ a → C a (f a))
 g ◯ f = λ x → g (f x)
+
+-- Application
+infixr 0 _$_
+_$_ : ∀ {i j} {A : Set i} {B : A → Set j} → ((x : A) → B x) → ((x : A) → B x)
+f $ x = f x
