@@ -5,7 +5,7 @@ open import Algebra.Groups
 open import Integers
 open import Homotopy.Truncation
 open import Homotopy.Pointed
-open import Homotopy.LoopTruncation
+open import Homotopy.PathTruncation
 open import Homotopy.Connected
 
 -- Definitions and properties of homotopy groups

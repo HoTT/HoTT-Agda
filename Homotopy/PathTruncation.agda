@@ -8,7 +8,7 @@ open import Homotopy.Truncation
 -- (actually, this is true more generally for paths spaces and we need this
 -- level of generality to prove it)
 
-module Homotopy.LoopTruncation {i} {n : ℕ₋₂} {A : Set i} where
+module Homotopy.PathTruncation {i} {n : ℕ₋₂} {A : Set i} where
 
 private
   to : (x y : A) → (τ n (x ≡ y)) → ((proj {n = S n} x) ≡ (proj y))
