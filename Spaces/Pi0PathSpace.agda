@@ -18,7 +18,7 @@ private
   eq : ∀ {i} {A : Set i} {x y : A} → (x ≡₀ y) ≃ (proj {n = ⟨1⟩} x ≡ proj y)
   eq = τ-path-equiv-path-τ-S
 
-infix 5 _∘₀_  -- \o\0
+infix 8 _∘₀_  -- \o\0
 _∘₀_ : ∀ {i} {A : Set i} {x y z : A} → x ≡₀ y → y ≡₀ z → x ≡₀ z
 p ∘₀ q = inverse eq $ eq ☆ p ∘ eq ☆ q
 

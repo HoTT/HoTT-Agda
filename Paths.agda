@@ -20,7 +20,7 @@ x ≢ y = ¬ (x ≡ y)
 
 -- Composition and opposite of paths
 
-infix 5 _∘_  -- \o
+infix 8 _∘_  -- \o
 
 _∘_ : ∀ {i} {A : Set i} {x y z : A} → (x ≡ y → y ≡ z → x ≡ z)
 refl _ ∘ q = q
