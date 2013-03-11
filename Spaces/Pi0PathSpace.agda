@@ -34,8 +34,8 @@ ap₀ f = τ-ap $ ap f
 
 refl₀-right-unit : ∀ {i} {A : Set i} {x y : A} (q : x ≡₀ y) → (q ∘₀ refl₀ y) ≡ q
 refl₀-right-unit {x = x} {y} = π₀-extend
-  ⦃ λ _ →  ≡-is-truncated _ (π₀-is-set (x ≡ y)) ⦄
-  $ lemma {x} {y}
+  ⦃ λ _ →  ≡-is-set $ π₀-is-set (x ≡ y) ⦄
+  $ lemma x y
   where
-    lemma : ∀ {x} {y} (q : x ≡ y) → (proj q ∘₀ refl₀ _) ≡ proj q
-    lemma (refl _) = inverse-left-inverse eq _
+    lemma : ∀ x y (q : x ≡ y) → (proj q ∘₀ refl₀ _) ≡ proj q
+    lemma ._ ._ (refl _) = inverse-left-inverse eq _

@@ -134,6 +134,9 @@ module _ {A : Set i} where
       unique-path (refl _) = ! (opposite-right-inverse (π₂ p _))
     ≡-is-truncated (S n) {x} {y} p = truncated-is-truncated-S n (p x y)
 
+    ≡-is-set : {x y : A} → (is-set A → is-set (x ≡ y))
+    ≡-is-set = ≡-is-truncated ⟨0⟩
+
     -- The type of paths to a fixed point is contractible
     pathto-is-contr : (x : A) → is-contr (Σ A (λ t → t ≡ x))
     pathto-is-contr x = ((x , refl x) , pathto-unique-path) where
