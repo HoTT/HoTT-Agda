@@ -1,6 +1,10 @@
 {-# OPTIONS --without-K #-}
 
--- Specialized constructs and lemmas for π₀ (x ≡ y)
+{-
+  Specialized constructs and lemmas for π₀ (x ≡ y)
+
+  Should be rewritten with Algebra.Group.
+-}
 
 open import Base
 
