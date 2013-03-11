@@ -45,6 +45,14 @@ abstract
     equiv-types-truncated n funext-equiv
       (Π-is-truncated n (λ x → p x (f x) (g x)))
 
+  Π-is-prop : ∀ {i j} {A : Set i} {P : A → Set j}
+    → (((x : A) → is-prop (P x)) → is-prop (Π A P))
+  Π-is-prop = Π-is-truncated ⟨-1⟩
+
+  Π-is-set : ∀ {i j} {A : Set i} {P : A → Set j}
+    → (((x : A) → is-set (P x)) → is-set (Π A P))
+  Π-is-set = Π-is-truncated ⟨0⟩
+
   →-is-truncated : ∀ {i j} (n : ℕ₋₂) {A : Set i} {B : Set j}
     → (is-truncated n B → is-truncated n (A → B))
   →-is-truncated n p = Π-is-truncated n (λ _ → p)
