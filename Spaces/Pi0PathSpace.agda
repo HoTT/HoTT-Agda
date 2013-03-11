@@ -3,7 +3,7 @@
 {-
   Specialized constructs and lemmas for π₀ (x ≡ y)
 
-  Should be rewritten with Algebra.Group.
+  Should be rewritten with something like Algebra.Groupoid.
 -}
 
 open import Base
