@@ -227,10 +227,15 @@ module _ {i} {A : Set i} where
     →  transport P p (transport P q u) ≡ transport P (q ∘ p) u
   compose-trans p (refl _) u = refl _
 
+  trans-ap : ∀ {j k} {B : Set j} {P : B → Set k} (f : A → B)
+    {x y : A} (p : x ≡ y) (u : P (f x))
+    → transport P (ap f p) u ≡ transport (P ◯ f) p u
+  trans-ap f (refl _) u = refl _
+
   trans-map : ∀ {j k} {B : Set j} {P : B → Set k} (f : A → B)
     {x y : A} (p : x ≡ y) (u : P (f x))
     → transport P (map f p) u ≡ transport (P ◯ f) p u
-  trans-map f (refl _) u = refl _
+  trans-map {P = P} = trans-ap {P = P}
 
   -- Unreadable, should be removed
   trans-totalpath : ∀ {j k} {P : A → Set j} {Q : Σ A P → Set k} {x y : Σ A P}
