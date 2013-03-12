@@ -19,7 +19,7 @@ open import Base
   This is for formalizing the van Kampen thereom.
 -}
 
-module Homotopy.VanKampen.OneSidedPrecode {i}
+module Homotopy.VanKampen.OneSidedSplitPrecode {i}
   (C A B : Set i) (f : C → A) (g : C → B)
   (a₁ : A) where
 
@@ -96,15 +96,15 @@ module Homotopy.VanKampen.OneSidedPrecode {i}
       (h₀-ab : ∀ {b₂} c {co} (_ : P-a co) (p : _ ≡₀ b₂)
         → P-b (co a⟦ c ⟧b p))
       (h₁-a : ∀ {a₂} c p₁ (p₂ : _ ≡₀ a₂) →
-        transport P-a (precode-a-refl₀ c p₁ p₂)
+        transport (P-a {a₂}) (precode-a-refl₀ c p₁ p₂)
           (h₀-ba c (h₀-ab c (h₀-a p₁) (refl₀ _)) p₂)
         ≡ h₀-a (p₁ ∘₀ p₂))
       (h₁-ba : ∀ {a₂} c₁ {co} (pco : P-b co) c₂ p₁ (p₂ : _ ≡₀ a₂) →
-        transport P-a (precode-ba-refl₀ c₁ co c₂ p₁ p₂)
+        transport (P-a {a₂}) (precode-ba-refl₀ c₁ co c₂ p₁ p₂)
           (h₀-ba c₂ (h₀-ab c₂ (h₀-ba c₁ pco p₁) (refl₀ _)) p₂)
         ≡ (h₀-ba c₁ pco (p₁ ∘₀ p₂)))
       (h₁-ab : ∀ {b₂} c₁ {co} (pco : P-a co) c₂ p₁ (p₂ : _ ≡₀ b₂) →
-        transport P-b (precode-ab-refl₀ c₁ co c₂ p₁ p₂)
+        transport (P-b {b₂}) (precode-ab-refl₀ c₁ co c₂ p₁ p₂)
           (h₀-ab c₂ (h₀-ba c₂ (h₀-ab c₁ pco p₁) (refl₀ _)) p₂)
         ≡ (h₀-ab c₁ pco (p₁ ∘₀ p₂)))
       → (∀ {a₂} (co : precode-a a₂) → P-a co)
