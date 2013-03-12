@@ -39,3 +39,8 @@ refl₀-right-unit : ∀ {A : Set i} {x y : A} (q : x ≡₀ y) → (q ∘₀ re
 refl₀-right-unit {x = x} {y} = π₀-extend
   ⦃ λ _ →  ≡-is-set $ π₀-is-set (x ≡ y) ⦄
   (λ x → ap proj $ refl-right-unit x)
+
+refl₀-left-unit : ∀ {A : Set i} {x y : A} (q : x ≡₀ y) → (refl₀ x ∘₀ q) ≡ q
+refl₀-left-unit {x = x} {y} = π₀-extend
+  ⦃ λ _ →  ≡-is-set $ π₀-is-set (x ≡ y) ⦄
+  (λ x → refl $ proj x)
