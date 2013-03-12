@@ -103,7 +103,7 @@ module Homotopy.VanKampen.OneSidedPrecode {i}
         transport P-a (precode-ba-refl₀ c₁ co c₂ p₁ p₂)
           (h₀-ba c₂ (h₀-ab c₂ (h₀-ba c₁ pco p₁) (refl₀ _)) p₂)
         ≡ (h₀-ba c₁ pco (p₁ ∘₀ p₂)))
-      (h₁-ba : ∀ {b₂} c₁ {co} (pco : P-a co) c₂ p₁ (p₂ : _ ≡₀ b₂) →
+      (h₁-ab : ∀ {b₂} c₁ {co} (pco : P-a co) c₂ p₁ (p₂ : _ ≡₀ b₂) →
         transport P-b (precode-ab-refl₀ c₁ co c₂ p₁ p₂)
           (h₀-ab c₂ (h₀-ba c₂ (h₀-ab c₁ pco p₁) (refl₀ _)) p₂)
         ≡ (h₀-ab c₁ pco (p₁ ∘₀ p₂)))
@@ -117,26 +117,22 @@ module Homotopy.VanKampen.OneSidedPrecode {i}
         elim-a (#ba c co p) = h₀-ba c (elim-b co) p
         elim-b (#ab c co p) = h₀-ab c (elim-a co) p
 
-    -- The non-dependent eliminator seems useless.
-{-
     precode-rec-nondep : ∀ {j} (P-a P-b : Set j)
       (h₀-a : ∀ {a₂} (p : a₁ ≡₀ a₂) → P-a)
       (h₀-ba : ∀ {a₂} c {co : precode-b (g c)} → P-b → f c ≡₀ a₂ → P-a)
       (h₀-ab : ∀ {b₂} c {co : precode-a (f c)} → P-a → g c ≡₀ b₂ → P-b)
-      (h₁-a : ∀ {a₂} c (p₁ : a₁ ≡₀ f c) (p₂ : f c ≡₀ a₂) →
+      (h₁-a : ∀ {a₂} c p₁ (p₂ : _ ≡₀ a₂) →
           (h₀-ba c {ab c (a p₁) (refl₀ _)}
             (h₀-ab c {a p₁} (h₀-a p₁) (refl₀ _)) p₂)
         ≡ h₀-a (p₁ ∘₀ p₂))
-      (h₁-ba : ∀ {a₂} c₁ {co : precode-b (g c₁)} (pco : P-b) c₂
-        (p₁ : f c₁ ≡₀ f c₂) (p₂ : f c₂ ≡₀ a₂) →
+      (h₁-ba : ∀ {a₂} c₁ {co} (pco : P-b) c₂ p₁ (p₂ : _ ≡₀ a₂) →
           (h₀-ba c₂ {ab c₂ (ba c₁ co p₁) (refl₀ _)}
             (h₀-ab c₂ {ba c₁ co p₁}
               (h₀-ba c₁ {co} pco p₁)
               (refl₀ _))
             p₂)
         ≡ (h₀-ba c₁ {co} pco (p₁ ∘₀ p₂)))
-      (h₁-ba : ∀ {b₂} c₁ {co : precode-a (f c₁)} (pco : P-a) c₂
-        (p₁ : g c₁ ≡₀ g c₂) (p₂ : g c₂ ≡₀ b₂) →
+      (h₁-ab : ∀ {b₂} c₁ {co} (pco : P-a) c₂ p₁ (p₂ : _ ≡₀ b₂) →
           (h₀-ab c₂ {ba c₂ (ab c₁ co p₁) (refl₀ _)}
             (h₀-ba c₂ {ab c₁ co p₁}
               (h₀-ab c₁ {co} pco p₁)
@@ -152,4 +148,3 @@ module Homotopy.VanKampen.OneSidedPrecode {i}
         elim-a (#a   p)      = h₀-a  p
         elim-a (#ba c co p) = h₀-ba c {co} (elim-b co) p
         elim-b (#ab c co p) = h₀-ab c {co} (elim-a co) p
--}
