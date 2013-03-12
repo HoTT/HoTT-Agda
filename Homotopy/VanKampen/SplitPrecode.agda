@@ -4,7 +4,8 @@ open import Base
 
 {-
   The untruncated representation for paths from a fixed point
-  (a₁ here) in one corner of a pushout (A here).
+  (a₁ here) in one corner of a pushout (A here), split by
+  the end points.
 
        g
     C---->B
@@ -14,12 +15,10 @@ open import Base
     A---->P
      left
 
-  The truncated version is Code. See OneSidedCode.agda.
-
   This is for formalizing the van Kampen thereom.
 -}
 
-module Homotopy.VanKampen.OneSidedSplitPrecode {i}
+module Homotopy.VanKampen.SplitPrecode {i}
   (C A B : Set i) (f : C → A) (g : C → B)
   (a₁ : A) where
 
@@ -117,34 +116,38 @@ module Homotopy.VanKampen.OneSidedSplitPrecode {i}
         elim-a (#ba c co p) = h₀-ba c (elim-b co) p
         elim-b (#ab c co p) = h₀-ab c (elim-a co) p
 
-    precode-rec-nondep : ∀ {j} (P-a P-b : Set j)
-      (h₀-a : ∀ {a₂} (p : a₁ ≡₀ a₂) → P-a)
-      (h₀-ba : ∀ {a₂} c {co : precode-b (g c)} → P-b → f c ≡₀ a₂ → P-a)
-      (h₀-ab : ∀ {b₂} c {co : precode-a (f c)} → P-a → g c ≡₀ b₂ → P-b)
+    -- This is actually "partially dependent".
+    -- P-a and P-b are indexed by the end points.
+    precode-rec-nondep : ∀ {j}
+      (P-a : A → Set j)
+      (P-b : B → Set j)
+      (h₀-a : ∀ {a₂} (p : a₁ ≡₀ a₂) → P-a a₂)
+      (h₀-ba : ∀ {a₂} c {co : precode-b (g c)} → P-b (g c) → f c ≡₀ a₂ → P-a a₂)
+      (h₀-ab : ∀ {b₂} c {co : precode-a (f c)} → P-a (f c) → g c ≡₀ b₂ → P-b b₂)
       (h₁-a : ∀ {a₂} c p₁ (p₂ : _ ≡₀ a₂) →
           (h₀-ba c {ab c (a p₁) (refl₀ _)}
             (h₀-ab c {a p₁} (h₀-a p₁) (refl₀ _)) p₂)
         ≡ h₀-a (p₁ ∘₀ p₂))
-      (h₁-ba : ∀ {a₂} c₁ {co} (pco : P-b) c₂ p₁ (p₂ : _ ≡₀ a₂) →
+      (h₁-ba : ∀ {a₂} c₁ {co} (pco : P-b (g c₁)) c₂ p₁ (p₂ : _ ≡₀ a₂) →
           (h₀-ba c₂ {ab c₂ (ba c₁ co p₁) (refl₀ _)}
             (h₀-ab c₂ {ba c₁ co p₁}
               (h₀-ba c₁ {co} pco p₁)
               (refl₀ _))
             p₂)
         ≡ (h₀-ba c₁ {co} pco (p₁ ∘₀ p₂)))
-      (h₁-ab : ∀ {b₂} c₁ {co} (pco : P-a) c₂ p₁ (p₂ : _ ≡₀ b₂) →
+      (h₁-ab : ∀ {b₂} c₁ {co} (pco : P-a (f c₁)) c₂ p₁ (p₂ : _ ≡₀ b₂) →
           (h₀-ab c₂ {ba c₂ (ab c₁ co p₁) (refl₀ _)}
             (h₀-ba c₂ {ab c₁ co p₁}
               (h₀-ab c₁ {co} pco p₁)
               (refl₀ _))
             p₂)
         ≡ (h₀-ab c₁ {co} pco (p₁ ∘₀ p₂)))
-      → (∀ {a₂} (co : precode-a a₂) → P-a)
-      × (∀ {b₂} (co : precode-b b₂) → P-b)
+      → (∀ {a₂} (co : precode-a a₂) → P-a a₂)
+      × (∀ {b₂} (co : precode-b b₂) → P-b b₂)
     precode-rec-nondep P-a P-b h₀-a h₀-ba h₀-ab _ _ _ = elim-a , elim-b
       where
-        elim-a : ∀ {a₂} (co : precode-a a₂) → P-a
-        elim-b : ∀ {b₂} (co : precode-b b₂) → P-b
+        elim-a : ∀ {a₂} (co : precode-a a₂) → P-a a₂
+        elim-b : ∀ {b₂} (co : precode-b b₂) → P-b b₂
         elim-a (#a   p)      = h₀-a  p
         elim-a (#ba c co p) = h₀-ba c {co} (elim-b co) p
         elim-b (#ab c co p) = h₀-ab c {co} (elim-a co) p
