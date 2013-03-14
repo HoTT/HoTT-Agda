@@ -44,8 +44,8 @@ module Homotopy.VanKampen.SplitCode {i}
     code-a = #code-a
 
     postulate -- HIT
-      code-a-is-set : (a : A) → is-set (code-a a)
-      code-b-is-set : (b : B) → is-set (code-b b)
+      code-a-is-set : {a : A} → is-set (code-a a)
+      code-b-is-set : {b : B} → is-set (code-b b)
 
     a : ∀ {a₂} → a₁ ≡₀ a₂ → code-a a₂
     a = #a
@@ -164,11 +164,11 @@ module Homotopy.VanKampen.SplitCode {i}
   module _ where
 
     abstract
-      any-cell₂-a : ∀ {a} {x y : code-a a} (p q : x ≡ y) → p ≡ q
-      any-cell₂-a = prop-has-all-paths $ code-a-is-set _ _ _
+      code-has-all-cells₂-a : ∀ {a} {x y : code-a a} (p q : x ≡ y) → p ≡ q
+      code-has-all-cells₂-a = prop-has-all-paths $ code-a-is-set _ _
 
-      any-cell₂-b : ∀ {b} {x y : code-b b} (p q : x ≡ y) → p ≡ q
-      any-cell₂-b = prop-has-all-paths $ code-b-is-set _ _ _
+      code-has-all-cells₂-b : ∀ {b} {x y : code-b b} (p q : x ≡ y) → p ≡ q
+      code-has-all-cells₂-b = prop-has-all-paths $ code-b-is-set _ _
 
     -- Non-recursive recursor
     code-rec-a : ∀ {j}
