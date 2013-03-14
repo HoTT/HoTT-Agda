@@ -292,6 +292,10 @@ module _ {i} {A : Set i} where
     → map f (! p) ≡ ! (map f p)
   map-opposite f (refl _) = refl _
 
+  ap-opposite : ∀ {j} {B : Set j} (f : A → B) {x y : A} (p : x ≡ y)
+    → ap f (! p) ≡ ! (ap f p)
+  ap-opposite f (refl _) = refl _
+
   concat-map : ∀ {j} {B : Set j} (f : A → B) {x y z : A} (p : x ≡ y) (q : y ≡ z)
     → map f p ∘ map f q ≡ map f (p ∘ q)
   concat-map f (refl _) _ = refl _
@@ -307,6 +311,10 @@ module _ {i} {A : Set i} where
   map-compose : ∀ {j k} {B : Set j} {C : Set k} (g : B → C) (f : A → B)
     {x y : A} (p : x ≡ y) → map (g ◯ f) p ≡ map g (map f p)
   map-compose f g (refl _) = refl _
+
+  ap-compose : ∀ {j k} {B : Set j} {C : Set k} (g : B → C) (f : A → B)
+    {x y : A} (p : x ≡ y) → ap (g ◯ f) p ≡ ap g (ap f p)
+  ap-compose f g (refl _) = refl _
 
   map-cst : ∀ {j} {B : Set j} (b : B) {x y : A} (p : x ≡ y)
     → map (cst b) p ≡ refl b
