@@ -90,4 +90,31 @@ pushout d = Pushout.pushout {_} {d}
 pushout-flip : ∀ {i} {d : pushout-diag i} → pushout d → pushout (pushout-diag-flip d)
 pushout-flip {d = d} = pushout-rec-nondep
   (pushout $ pushout-diag-flip d)
-  right left (λ c → ! $ glue c)
+  right left (! ◯ glue)
+
+pushout-flip-flip : ∀ {i} {d : pushout-diag i} (p : pushout d)
+                    → pushout-flip (pushout-flip p) ≡ p
+pushout-flip-flip = pushout-rec
+  (λ p → pushout-flip (pushout-flip p) ≡ p)
+  (λ _ → refl _)
+  (λ _ → refl _)
+  (λ c →
+    transport (λ p → pushout-flip (pushout-flip p) ≡ p) (glue c) (refl _)
+      ≡⟨ trans-app≡id (pushout-flip ◯ pushout-flip) (glue c) (refl _) ⟩
+    ! (ap (pushout-flip ◯ pushout-flip) (glue c)) ∘ glue c
+      ≡⟨ ap (λ x → ! x ∘ glue c)
+            $ ap-compose pushout-flip pushout-flip (glue c) ⟩
+    ! (ap pushout-flip (ap pushout-flip (glue c))) ∘ glue c
+      ≡⟨ ap (λ x → ! (ap pushout-flip x) ∘ glue c)
+            $ pushout-β-glue-nondep _ right left (! ◯ glue) c ⟩
+    ! (ap pushout-flip (! (glue c))) ∘ glue c
+      ≡⟨ ap (λ x → ! x ∘ glue c) $ ap-opposite pushout-flip (glue c) ⟩
+    ! (! (ap pushout-flip (glue c))) ∘ glue c
+      ≡⟨ ap (λ x → ! (! x) ∘ glue c)
+            $ pushout-β-glue-nondep _ right left (! ◯ glue) c ⟩
+    ! (! (! (glue c))) ∘ glue c
+      ≡⟨ ap (λ x → ! x ∘ glue c) $ opposite-opposite $ glue c ⟩
+    ! (glue c) ∘ glue c
+      ≡⟨ opposite-left-inverse (glue c) ⟩∎
+    refl _
+      ∎)
