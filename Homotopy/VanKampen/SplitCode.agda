@@ -184,45 +184,15 @@ module Homotopy.VanKampen.SplitCode {i}
           (h₀-ba c₂ (co b⟦ c₁ ⟧a p₁ a⟦ c₂ ⟧b refl₀ _) p₂)
         ≡ (h₀-ba c₁ co (p₁ ∘₀ p₂)))
       → (∀ {a₂} (co : code-a a₂) → P-a co)
-    code-rec-a {j} P-a ⦃ P-a-is-set ⦄ h₀-a h₀-ba h₁-a h₁-ba = elim-a
-      where
-        P-b : ∀ {b₂} → code-b b₂ → Set j
-        P-b = λ _ → unit
-
-        P-b-is-set : ∀ {b₂} co → is-set (P-b {b₂} co)
-        P-b-is-set = λ _ → unit-is-set
-
-        h₀′-a : ∀ {a₂} (p : _ ≡₀ a₂) → P-a (a p)
-        h₀′-a = h₀-a
-
-        h₀′-ba : ∀ {a₂} c {co} (_ : P-b co) (p : f c ≡₀ a₂) → P-a (co b⟦ c ⟧a p)
-        h₀′-ba c {co} _ = h₀-ba c co
-
-        h₀′-ab : ∀ {b₂} c {co} (_ : P-a co) (p : _ ≡₀ b₂) → P-b (co a⟦ c ⟧b p)
-        h₀′-ab _ _ _ = tt
-
-        abstract
-          h₁′-a : ∀ {a₂} c (p₁ : a₁ ≡₀ f c) (p₂ : f c ≡₀ a₂) →
-            transport P-a (code-a-refl₀ c p₁ p₂)
-              (h₀-ba c (ab c (a p₁) (refl₀ _)) p₂)
-            ≡ h₀-a (p₁ ∘₀ p₂)
-          h₁′-a = h₁-a
-
-        abstract
-          h₁′-ba : ∀ {a₂} c₁ {co} (pco : P-b co) c₂ p₁ (p₂ : _ ≡₀ a₂) →
-            transport P-a (code-ba-refl₀ c₁ co c₂ p₁ p₂)
-              (h₀-ba c₂ (co b⟦ c₁ ⟧a p₁ a⟦ c₂ ⟧b refl₀ _) p₂)
-            ≡ (h₀-ba c₁ co (p₁ ∘₀ p₂))
-          h₁′-ba c₁ {co} _ = h₁-ba c₁ co
-
-        abstract
-          h₁′-ab : ∀ {b₂} c₁ {co} (pco : P-a co) c₂ p₁ (p₂ : _ ≡₀ b₂) →
-            transport P-b (code-ab-refl₀ c₁ co c₂ p₁ p₂) tt ≡ tt
-          h₁′-ab _ _ _ _ _ = prop-has-all-paths unit-is-prop _ _
-
-        elim-a : ∀ {a₂} (co : code-a a₂) → P-a co
-        elim-a = π₁ $ code-rec P-a ⦃ P-a-is-set ⦄ P-b ⦃ P-b-is-set ⦄
-                        h₀′-a h₀′-ba h₀′-ab h₁′-a h₁′-ba h₁′-ab
+    code-rec-a {j} P-a ⦃ P-a-is-set ⦄ h₀-a h₀-ba h₁-a h₁-ba = π₁ $ code-rec
+      P-a ⦃ P-a-is-set ⦄
+      (λ _ → unit) ⦃ λ _ → unit-is-set ⦄
+      h₀-a
+      (λ c {co} _ → h₀-ba c co)
+      (λ _ _ _ → tt)
+      h₁-a
+      (λ c₁ {co} _ → h₁-ba c₁ co)
+      (λ _ _ _ _ _ → prop-has-all-paths unit-is-prop _ _)
 
     code-rec-b : ∀ {j}
       (P-b : ∀ {b₂} → code-b b₂ → Set j) ⦃ _ : ∀ {b₂} co → is-set $ P-b {b₂} co ⦄
@@ -232,40 +202,12 @@ module Homotopy.VanKampen.SplitCode {i}
           (h₀-ab c₂ (co a⟦ c₁ ⟧b p₁ b⟦ c₂ ⟧a refl₀ _) p₂)
         ≡ (h₀-ab c₁ co (p₁ ∘₀ p₂)))
       → (∀ {b₂} (co : code-b b₂) → P-b co)
-    code-rec-b {j} P-b ⦃ P-b-is-set ⦄ h₀-ab h₁-ab = elim-b
-      where
-        P-a : ∀ {a₂} → code-a a₂ → Set j
-        P-a = λ _ → unit
-
-        P-a-is-set : ∀ {a₂} co → is-set (P-a {a₂} co)
-        P-a-is-set = λ _ → unit-is-set
-
-        h₀′-a : ∀ {a₂} (p : _ ≡₀ a₂) → P-a (a p)
-        h₀′-a _ = tt
-
-        h₀′-ba : ∀ {a₂} c {co} (_ : P-b co) (p : f c ≡₀ a₂) → P-a (co b⟦ c ⟧a p)
-        h₀′-ba _ _ _ = tt
-
-        h₀′-ab : ∀ {b₂} c {co} (_ : P-a co) (p : _ ≡₀ b₂) → P-b (co a⟦ c ⟧b p)
-        h₀′-ab c {co} _ = h₀-ab c co
-
-        abstract
-          h₁′-a : ∀ {a₂} c (p₁ : a₁ ≡₀ f c) (p₂ : f c ≡₀ a₂) →
-            transport P-a (code-a-refl₀ c p₁ p₂) tt ≡ tt
-          h₁′-a _ _ _ = prop-has-all-paths unit-is-prop _ _
-
-        abstract
-          h₁′-ba : ∀ {a₂} c₁ {co} (pco : P-b co) c₂ p₁ (p₂ : _ ≡₀ a₂) →
-            transport P-a (code-ba-refl₀ c₁ co c₂ p₁ p₂) tt ≡ tt
-          h₁′-ba _ _ _ _ _ = prop-has-all-paths unit-is-prop _ _
-
-        abstract
-          h₁′-ab : ∀ {b₂} c₁ {co} (pco : P-a co) c₂ p₁ (p₂ : _ ≡₀ b₂) →
-            transport P-b (code-ab-refl₀ c₁ co c₂ p₁ p₂)
-              (h₀-ab c₂ (co a⟦ c₁ ⟧b p₁ b⟦ c₂ ⟧a refl₀ _) p₂)
-            ≡ (h₀-ab c₁ co (p₁ ∘₀ p₂))
-          h₁′-ab c₁ {co} _ = h₁-ab c₁ co
-
-        elim-b : ∀ {b₂} (co : code-b b₂) → P-b co
-        elim-b = π₂ $ code-rec P-a ⦃ P-a-is-set ⦄ P-b ⦃ P-b-is-set ⦄
-                        h₀′-a h₀′-ba h₀′-ab h₁′-a h₁′-ba h₁′-ab
+    code-rec-b {j} P-b ⦃ P-b-is-set ⦄ h₀-ab h₁-ab = π₂ $ code-rec
+      (λ _ → unit) ⦃ λ _ → unit-is-set ⦄
+      P-b ⦃ P-b-is-set ⦄
+      (λ _ → tt)
+      (λ _ _ _ → tt)
+      (λ c {co} _ → h₀-ab c co)
+      (λ _ _ _ → prop-has-all-paths unit-is-prop _ _)
+      (λ _ _ _ _ _ → prop-has-all-paths unit-is-prop _ _)
+      (λ c₁ {co} _ → h₁-ab c₁ co)
