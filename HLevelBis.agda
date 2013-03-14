@@ -63,6 +63,9 @@ abstract
   is-truncated-is-prop (S n) =
     Π-is-truncated _ (λ x → Π-is-truncated _ (λ y → is-truncated-is-prop n))
 
+  is-set-is-prop : ∀ {i} {A : Set i} → is-prop (is-set A)
+  is-set-is-prop = is-truncated-is-prop ⟨0⟩
+
   Σ-is-truncated : ∀ {i j} (n : ℕ₋₂) {A : Set i} {P : A → Set j}
     → (is-truncated n A → ((x : A) → is-truncated n (P x))
       → is-truncated n (Σ A P))
