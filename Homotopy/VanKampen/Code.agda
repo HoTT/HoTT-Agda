@@ -127,21 +127,6 @@ module Homotopy.VanKampen.Code {i}
     flipped-code : P → Set i
     flipped-code = F.code ◯ pushout-flip
 
-    private
-      -- not sure if this should be put into Paths.agda
-      trans-app→app-trans : ∀ {i} {A : Set i} {j k} (B : A → Set j) (P : A → Set k)
-        {b c : A} (p : b ≡ c) (q : B b → P b) (a : B b)
-        → transport (λ x → B x → P x) p q (transport B p a)
-          ≡ transport P p (q a)
-      trans-app→app-trans B P (refl _) q a = refl _
-
-      -- not sure if this should be put into Paths.agda
-      trans-app→app : ∀ {i} {A : Set i} {j k} (B : A → Set j) (P : A → Set k)
-        {b c : A} (p : b ≡ c) (q : B b → P b) (a : B c)
-        → transport (λ x → B x → P x) p q a
-          ≡ transport P p (q $ transport B (! p) a)
-      trans-app→app B P (refl _) q a = refl _
-
     aa⇒ba-b⇒a′ : ∀ c₂ {b₁} (co : code-b b₁) (q : b₁ ≡ g c₂)
                  → aa⇒ba (b⇒a′ c₂ co q)
                  ≡ F.a⇒b c₂ (ab⇒bb $ transport code-b q co)
@@ -159,7 +144,7 @@ module Homotopy.VanKampen.Code {i}
       (λ _ → ab⇒bb)
       (λ c₂ → funext λ co →
         transport (λ p → code p → flipped-code p) (glue c₂) aa⇒ba co
-            ≡⟨ trans-app→app code flipped-code (glue c₂) aa⇒ba co ⟩
+            ≡⟨ trans-→ code flipped-code (glue c₂) aa⇒ba co ⟩
         transport flipped-code (glue c₂)
           (aa⇒ba $ transport code (! $ glue c₂) co)
             ≡⟨ ap (λ x → transport flipped-code (glue c₂) $ aa⇒ba x)

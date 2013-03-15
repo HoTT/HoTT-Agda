@@ -215,6 +215,18 @@ module _ {i} {A : Set i} where
       ≡ transport (λ u → P u a) p (q a)
   trans-Π2 B P (refl _) q a = refl _
 
+  trans-→-trans : ∀ {j k} (B : A → Set j) (P : A → Set k)
+    {b c : A} (p : b ≡ c) (q : B b → P b) (a : B b)
+    → transport (λ x → B x → P x) p q (transport B p a)
+      ≡ transport P p (q a)
+  trans-→-trans B P (refl _) q a = refl _
+
+  trans-→ : ∀ {j k} (B : A → Set j) (P : A → Set k)
+    {b c : A} (p : b ≡ c) (q : B b → P b) (a : B c)
+    → transport (λ x → B x → P x) p q a
+      ≡ transport P p (q $ transport B (! p) a)
+  trans-→ B P (refl _) q a = refl _
+
   -- This second part is about transporting something along a known path
 
   trans-concat : ∀ {j} {P : A → Set j} {x y z : A} (p : y ≡ z) (q : x ≡ y)
@@ -299,6 +311,10 @@ module _ {i} {A : Set i} where
   concat-map : ∀ {j} {B : Set j} (f : A → B) {x y z : A} (p : x ≡ y) (q : y ≡ z)
     → map f p ∘ map f q ≡ map f (p ∘ q)
   concat-map f (refl _) _ = refl _
+
+  concat-ap : ∀ {j} {B : Set j} (f : A → B) {x y z : A} (p : x ≡ y) (q : y ≡ z)
+    → map f p ∘ map f q ≡ map f (p ∘ q)
+  concat-ap f (refl _) _ = refl _
 
   map-concat : ∀ {j} {B : Set j} (f : A → B) {x y z : A} (p : x ≡ y) (q : y ≡ z)
     → map f (p ∘ q) ≡ map f p ∘ map f q
