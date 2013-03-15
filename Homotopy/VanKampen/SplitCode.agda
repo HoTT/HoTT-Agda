@@ -321,8 +321,8 @@ module Homotopy.VanKampen.SplitCode {i}
     code = pushout-rec-nondep (Set i) code-a code-b code-glue
 
     -- Useful lemma
-    trans-glue : ∀ c₂ co → transport code (glue c₂) co ≡ a⇒b c₂ co
-    trans-glue c₂ co =
+    trans-code-glue : ∀ c₂ co → transport code (glue c₂) co ≡ a⇒b c₂ co
+    trans-code-glue c₂ co =
       transport code (glue c₂) co
         ≡⟨ ! $ trans-ap {P = λ X → X} code (glue c₂) co ⟩
       transport (λ X → X) (ap code (glue c₂)) co
@@ -333,10 +333,10 @@ module Homotopy.VanKampen.SplitCode {i}
       a⇒b c₂ co
         ∎
 
-    trans-!glue : ∀ c₂ co → transport code (! $ glue c₂) co ≡ b⇒a c₂ co
-    trans-!glue c₂ co = move!-transp-right code (glue c₂) co (b⇒a c₂ co) $ ! $
+    trans-code-!glue : ∀ c₂ co → transport code (! $ glue c₂) co ≡ b⇒a c₂ co
+    trans-code-!glue c₂ co = move!-transp-right code (glue c₂) co (b⇒a c₂ co) $ ! $
       transport code (glue c₂) (b⇒a c₂ co)
-        ≡⟨ trans-glue c₂ (b⇒a c₂ co) ⟩
+        ≡⟨ trans-code-glue c₂ (b⇒a c₂ co) ⟩
       a⇒b c₂ (b⇒a c₂ co)
         ≡⟨ code-glue-bab c₂ co ⟩∎
       co

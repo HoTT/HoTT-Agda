@@ -148,7 +148,7 @@ module Homotopy.VanKampen.Code {i}
         transport flipped-code (glue c₂)
           (aa⇒ba $ transport code (! $ glue c₂) co)
             ≡⟨ ap (λ x → transport flipped-code (glue c₂) $ aa⇒ba x)
-                $ trans-!glue c₂ co ⟩
+                $ trans-code-!glue c₂ co ⟩
         transport flipped-code (glue c₂) (aa⇒ba $ b⇒a c₂ co)
             ≡⟨ ap (transport flipped-code (glue c₂)) $ aa⇒ba-b⇒a′ c₂ co (refl _) ⟩
         transport flipped-code (glue c₂) (F.a⇒b c₂ $ ab⇒bb co)
@@ -158,7 +158,7 @@ module Homotopy.VanKampen.Code {i}
             ≡⟨ ap (λ x → transport F.code x $ F.a⇒b c₂ $ ab⇒bb co)
                   $ pushout-β-glue-nondep _ right left (! ◯ glue) c₂ ⟩
         transport F.code (! $ glue c₂) (F.a⇒b c₂ $ ab⇒bb co)
-            ≡⟨ F.trans-!glue c₂ (F.a⇒b c₂ $ ab⇒bb co) ⟩
+            ≡⟨ F.trans-code-!glue c₂ (F.a⇒b c₂ $ ab⇒bb co) ⟩
         F.b⇒a c₂ (F.a⇒b c₂ $ ab⇒bb co)
             ≡⟨ F.code-glue-aba c₂ _ ⟩∎
         ab⇒bb co
