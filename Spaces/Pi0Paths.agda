@@ -8,7 +8,7 @@
 
 open import Base
 
-module Spaces.Pi0PathSpace {i} where
+module Spaces.Pi0Paths {i} where
 
 open import HLevel
 open import HLevelBis

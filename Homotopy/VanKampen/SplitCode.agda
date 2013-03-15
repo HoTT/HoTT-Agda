@@ -24,7 +24,7 @@ module Homotopy.VanKampen.SplitCode {i}
   (C A B : Set i) (f : C → A) (g : C → B) (a₁ : A) where
 
   open import Homotopy.Truncation
-  open import Spaces.Pi0PathSpace
+  open import Spaces.Pi0Paths
 
   -- Definition.
   module _ where

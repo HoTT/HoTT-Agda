@@ -8,7 +8,7 @@ module Homotopy.VanKampen.Code {i}
 
   open import Homotopy.PushoutDef
   open import Homotopy.Truncation
-  open import Spaces.Pi0PathSpace
+  open import Spaces.Pi0Paths
 
   module Pack1 (A B : Set i) (f : C → A) (g : C → B) (c : C) where
     -- Code from A.
