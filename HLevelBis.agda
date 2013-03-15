@@ -57,6 +57,10 @@ abstract
     → (is-truncated n B → is-truncated n (A → B))
   →-is-truncated n p = Π-is-truncated n (λ _ → p)
 
+  →-is-set : ∀ {i j} {A : Set i} {B : Set j}
+    → (is-set B → is-set (A → B))
+  →-is-set = →-is-truncated ⟨0⟩
+
   is-truncated-is-prop : ∀ {i} (n : ℕ₋₂) {A : Set i}
     → is-prop (is-truncated n A)
   is-truncated-is-prop ⟨-2⟩ = is-contr-is-prop
