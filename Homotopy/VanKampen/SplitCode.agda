@@ -23,6 +23,7 @@ open import Base
 module Homotopy.VanKampen.SplitCode {i}
   (C A B : Set i) (f : C → A) (g : C → B) (a₁ : A) where
 
+  open import Homotopy.PushoutDef
   open import Homotopy.Truncation
   open import Spaces.Pi0Paths
 
@@ -214,7 +215,6 @@ module Homotopy.VanKampen.SplitCode {i}
       (λ c₁ {co} _ → h₁-ab c₁ co)
 
   module _ where
-    open import Homotopy.PushoutDef
     P : Set i
     P = pushout (diag A , B , C , f , g)
 
@@ -316,8 +316,6 @@ module Homotopy.VanKampen.SplitCode {i}
       (λ _ _ _ _ _ → funext λ _ → code-has-all-cells₂-b _ _)
 
   module _ where
-    open import Homotopy.PushoutDef
-
     -- The data type!
     code : P → Set i
     code = pushout-rec-nondep (Set i) code-a code-b code-glue
