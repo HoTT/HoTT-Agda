@@ -204,14 +204,15 @@ module Homotopy.VanKampen.Code {i}
 
   -- Nice interface
   module _ where
-    -- Code from A.
-    module C where
-      open import Homotopy.VanKampen.SplitCode C A B f g public
-      open Pack4 A B f g public
-    -- Code from B. Code flipped.
-    module CF where
-      open import Homotopy.VanKampen.SplitCode C B A g f public
-      open Pack4 B A g f public
+    private
+      -- Code from A.
+      module C where
+        open import Homotopy.VanKampen.SplitCode C A B f g public
+        open Pack4 A B f g public
+      -- Code from B. Code flipped.
+      module CF where
+        open import Homotopy.VanKampen.SplitCode C B A g f public
+        open Pack4 B A g f public
 
     P : Set i
     P = pushout (diag A , B , C , f , g)
