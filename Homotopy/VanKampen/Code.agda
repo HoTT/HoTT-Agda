@@ -186,8 +186,8 @@ module Homotopy.VanKampen.Code {i}
       Laba : P → Set i
       Laba = λ p → ∀ (co : code p) → bp⇒ap p (ap⇒bp p co) ≡ co
     abstract
-      ap⇒bp⇒ap : ∀ p → Laba p
-      ap⇒bp⇒ap = pushout-rec Laba
+      aba-glue-code : ∀ p → Laba p
+      aba-glue-code = pushout-rec Laba
         (λ _ → aba-glue-code-a)
         (λ _ → aba-glue-code-b)
         (λ _ → funext λ _ → prop-has-all-paths (code-b-is-set _ _) _ _)
@@ -196,8 +196,8 @@ module Homotopy.VanKampen.Code {i}
       Lbab : P → Set i
       Lbab = λ p → ∀ (co : flipped-code p) → ap⇒bp p (bp⇒ap p co) ≡ co
     abstract
-      bp⇒ap⇒bp : ∀ p → Lbab p
-      bp⇒ap⇒bp = pushout-rec Lbab
+      bab-glue-code : ∀ p → Lbab p
+      bab-glue-code = pushout-rec Lbab
         (λ _ → F.aba-glue-code-b)
         (λ _ → F.aba-glue-code-a)
         (λ _ → funext λ _ → prop-has-all-paths (F.code-a-is-set _ _) _ _)
@@ -327,46 +327,6 @@ module Homotopy.VanKampen.Code {i}
     bb⇒ab : ∀ {c} {b} → b-code-b (g c) b → a-code-b (f c) b
     bb⇒ab = CF.aa⇒ba _
 
-    glue-code-a : ∀ c → (∀ {a} co → ba⇒aa (aa⇒ba co) ≡ co)
-                      × (∀ {b} co → bb⇒ab (ab⇒bb co) ≡ co)
-    glue-code-a c = C.code-rec (f c)
-      (λ {a} co → ba⇒aa (aa⇒ba co) ≡ co)
-      ⦃ λ _ → ≡-is-set $ C.code-a-is-set _ ⦄
-      (λ {b} co → bb⇒ab (ab⇒bb co) ≡ co)
-      ⦃ λ _ → ≡-is-set $ C.code-b-is-set _ ⦄
-      (λ p →
-        ⟧a refl₀ _ aa⟦ c ⟧b refl₀ _ ab⟦ c ⟧a p
-            ≡⟨ a-code-a-refl₀ c (refl₀ _ ) p ⟩
-        ⟧a refl₀ _ ∘₀ p
-            ≡⟨ ap (λ x → ⟧a x) $ refl₀-left-unit p ⟩∎
-        ⟧a p
-            ∎)
-      (λ c₁ {co} eq p → ap (λ x → x ab⟦ c₁ ⟧a p) eq)
-      (λ c₁ {co} eq p → ap (λ x → x aa⟦ c₁ ⟧b p) eq)
-      (λ _ _ _ → C.code-has-all-cells₂-a _ _ _)
-      (λ _ _ _ _ _ → C.code-has-all-cells₂-a _ _ _)
-      (λ _ _ _ _ _ → C.code-has-all-cells₂-b _ _ _)
-
-    glue-code-b : ∀ c → (∀ {b} co → ab⇒bb (bb⇒ab co) ≡ co)
-                      × (∀ {a} co → aa⇒ba (ba⇒aa co) ≡ co)
-    glue-code-b c = CF.code-rec (g c)
-      (λ {b} co → ab⇒bb (bb⇒ab co) ≡ co)
-      ⦃ λ _ → ≡-is-set $ CF.code-a-is-set _ ⦄
-      (λ {a} co → aa⇒ba (ba⇒aa co) ≡ co)
-      ⦃ λ _ → ≡-is-set $ CF.code-b-is-set _ ⦄
-      (λ p →
-        ⟧b refl₀ _ bb⟦ c ⟧a refl₀ _ ba⟦ c ⟧b p
-            ≡⟨ b-code-b-refl₀ c (refl₀ _) p ⟩
-        ⟧b refl₀ _ ∘₀ p
-            ≡⟨ ap (λ x → ⟧b x) $ refl₀-left-unit p ⟩∎
-        ⟧b p
-            ∎)
-      (λ c₁ {co} eq p → ap (λ x → x ba⟦ c₁ ⟧b p) eq)
-      (λ c₁ {co} eq p → ap (λ x → x bb⟦ c₁ ⟧a p) eq)
-      (λ _ _ _ → CF.code-has-all-cells₂-a _ _ _)
-      (λ _ _ _ _ _ → CF.code-has-all-cells₂-a _ _ _)
-      (λ _ _ _ _ _ → CF.code-has-all-cells₂-b _ _ _)
-
     ap⇒bp : ∀ c {p} → a-code (f c) p → b-code (g c) p
     ap⇒bp c {p} = C.ap⇒bp c p
 
@@ -379,8 +339,8 @@ module Homotopy.VanKampen.Code {i}
 
     glue-code c = funext $ glue-code-pointwise c
     glue-code-pointwise c p = eq-to-path $ glue-code-pointwise-eq c p
-    glue-code-pointwise-eq c p = C.ap⇒bp c p , iso-is-eq
-      (ap⇒bp c {p}) (bp⇒ap c {p}) (C.bp⇒ap⇒bp c p) (C.ap⇒bp⇒ap c p)
+    glue-code-pointwise-eq c p = ap⇒bp c {p} , iso-is-eq
+      (ap⇒bp c {p}) (bp⇒ap c {p}) (C.bab-glue-code c p) (C.aba-glue-code c p)
 
     code : P → P → Set i
     code = pushout-rec-nondep (P → Set i) a-code b-code glue-code
