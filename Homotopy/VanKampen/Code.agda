@@ -142,8 +142,6 @@ module Homotopy.VanKampen.Code {i}
           ≡ transport P p (q $ transport B (! p) a)
       trans-app→app B P (refl _) q a = refl _
 
-    -- Because of the projection, this requires a nested induction
-    -- or τ-extend.
     aa⇒ba-b⇒a′ : ∀ c₂ {b₁} (co : code-b b₁) (q : b₁ ≡ g c₂)
                  → aa⇒ba (b⇒a′ c₂ co q)
                  ≡ F.a⇒b c₂ (ab⇒bb $ transport code-b q co)
