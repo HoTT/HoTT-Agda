@@ -263,10 +263,10 @@ module Homotopy.VanKampen.SplitCode {i}
 
     -- the head of the code
     code-glue : ∀ c → code-a (f c) ≡ code-b (g c)
-    code-glue-eq : ∀ c → code-a (f c) ≃ code-b (g c)
     code-glue-aba : ∀ c (co : code-a (f c)) → b⇒a c (a⇒b c co) ≡ co
     code-glue-bab : ∀ c (co : code-b (g c)) → a⇒b c (b⇒a c co) ≡ co
     private
+      code-glue-eq : ∀ c → code-a (f c) ≃ code-b (g c)
       code-glue-split : ∀ c
         → (∀ {a₂} co → G-a c {a₂} co)
         × (∀ {b₂} co → G-b c {b₂} co)
@@ -315,7 +315,6 @@ module Homotopy.VanKampen.SplitCode {i}
       (λ _ _ _ _ _ → funext λ _ → code-has-all-cells₂-a _ _)
       (λ _ _ _ _ _ → funext λ _ → code-has-all-cells₂-b _ _)
 
-  module _ where
     -- The data type!
     code : P → Set i
     code = pushout-rec-nondep (Set i) code-a code-b code-glue

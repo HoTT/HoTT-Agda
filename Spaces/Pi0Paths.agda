@@ -61,3 +61,7 @@ module _ {i} {A : Set i} where
     π₀-extend ⦃ λ _ → Π-is-set λ _ → ≡-is-set $ π₀-is-set _ ⦄ (λ p →
       π₀-extend ⦃ λ _ → ≡-is-set $ π₀-is-set _ ⦄ (λ q →
         ap proj $ concat-ap f p q))
+
+  trans-id≡₀cst : {a b c : A} (p : b ≡ c) (q : b ≡₀ a)
+    → transport (λ x → x ≡₀ a) p q ≡ proj (! p) ∘₀ q
+  trans-id≡₀cst (refl _) q = ! $ refl₀-left-unit q
