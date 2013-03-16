@@ -118,3 +118,16 @@ pushout-flip-flip = pushout-rec
       ≡⟨ opposite-left-inverse (glue c) ⟩∎
     refl _
       ∎)
+
+pushout-β-!glue-nondep : ∀ {i} {d : pushout-diag i} {l} (D : Set l) →
+  let open pushout-diag d in
+  (left* : A → D) (right* : B → D)
+  (glue* : (c : C) → left* (f c) ≡ right* (g c)) (c : C)
+  → ap (pushout-rec-nondep D left* right* glue*) (! (glue c)) ≡ ! (glue* c)
+pushout-β-!glue-nondep D left* right* glue* c =
+  ap (pushout-rec-nondep D left* right* glue*) (! (glue c))
+    ≡⟨ ap-opposite (pushout-rec-nondep D left* right* glue*) $ glue c ⟩
+  ! (ap (pushout-rec-nondep D left* right* glue*) $ glue c)
+    ≡⟨ ap ! $ pushout-β-glue-nondep D left* right* glue* c ⟩∎
+  ! (glue* c)
+    ∎

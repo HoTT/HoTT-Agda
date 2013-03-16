@@ -316,6 +316,27 @@ module Homotopy.VanKampen.Code {i}
         p₁ p₂
 
     -- Useful lemma
+    trans-a-code-glue : ∀ {a₁} c₂ co → transport (a-code a₁) (glue c₂) co ≡ aa⇒ab c₂ co
+    trans-a-code-glue {a₁} = C.trans-code-glue a₁
+
+    trans-a-code-!glue : ∀ {a₁} c₂ co → transport (a-code a₁) (! $ glue c₂) co ≡ ab⇒aa c₂ co
+    trans-a-code-!glue {a₁} = C.trans-code-!glue a₁
+
+    trans-b-code-!glue : ∀ {b₁} c₂ co → transport (b-code b₁) (! (glue c₂)) co ≡ bb⇒ba c₂ co
+    trans-b-code-!glue {b₁} c₂ co =
+      transport (b-code b₁) (! (glue c₂)) co
+          ≡⟨ ! $ trans-ap {P = CF.code b₁} pushout-flip (! (glue c₂)) co ⟩
+      transport (CF.code b₁) (ap pushout-flip (! (glue c₂))) co
+          ≡⟨ ap (λ x → transport (CF.code b₁) x co)
+                $ pushout-β-!glue-nondep _ right left (! ◯ glue) c₂ ⟩
+      transport (CF.code b₁) (! (! (glue c₂))) co
+          ≡⟨ ap (λ x → transport (CF.code b₁) x co)
+                $ opposite-opposite $ glue c₂ ⟩
+      transport (CF.code b₁) (glue c₂) co
+          ≡⟨ CF.trans-code-glue b₁ c₂ co ⟩∎
+      bb⇒ba c₂ co
+          ∎
+
     trans-glue-code : ∀ c {p} (co : a-code (f c) p)
       → transport (λ x → code x p) (glue c) co
       ≡ ap⇒bp c {p} co
