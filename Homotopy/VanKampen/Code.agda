@@ -100,7 +100,7 @@ module Homotopy.VanKampen.Code {i}
       ab-to′-aa-to-ab : ∀ c₂ {b₁} (co : code-b b₁) (q : b₁ ≡ g c₂)
         → aa⇒ba (b⇒a′ c₂ co q)
         ≡ F.a⇒b c₂ (ab⇒bb $ transport code-b q co)
-      ab-to′-aa-to-ab c₂ = code-rec-b
+      ab-to′-aa-to-ab c₂ = code-b-rec
         (λ {b₁} co → (q : b₁ ≡ g c₂)
             → aa⇒ba (b⇒a′ c₂ co q)
             ≡ F.a⇒b c₂ (ab⇒bb $ transport code-b q co))
@@ -136,57 +136,17 @@ module Homotopy.VanKampen.Code {i}
             ∎)
       p
 
-  module Pack4 (A B : Set i) (f : C → A) (g : C → B) (c : C) where
-
-    -- Code from A.
-    open import Homotopy.VanKampen.SplitCode C A B f g (f c)
-    open Pack3 A B f g c public
-    -- Code from B. F for `flipped'.
-    private
-      module F where
-        open import Homotopy.VanKampen.SplitCode C B A g f (g c) public
-        open Pack3 B A g f c public
-
-    bp⇒ap : ∀ {p} → flipped-code p → code p
-    bp⇒ap {p} = transport
-      (λ x → flipped-code p → code x)
-      (pushout-flip-flip p)
-      (F.ap⇒bp {pushout-flip p})
-
-    open import HLevelBis
-    private
-      Laba : P → Set i
-      Laba = λ p → ∀ (co : code p) → bp⇒ap {p} (ap⇒bp {p} co) ≡ co
-    abstract
-      aba-glue-code : ∀ {p} → Laba p
-      aba-glue-code {p} = pushout-rec Laba
-        (λ _ → aba-glue-code-a)
-        (λ _ → aba-glue-code-b)
-        (λ _ → funext λ _ → prop-has-all-paths (code-b-is-set _ _) _ _)
-        p
-
-    private
-      Lbab : P → Set i
-      Lbab = λ p → ∀ (co : flipped-code p) → ap⇒bp {p} (bp⇒ap {p} co) ≡ co
-    abstract
-      bab-glue-code : ∀ {p} → Lbab p
-      bab-glue-code {p} = pushout-rec Lbab
-        (λ _ → F.aba-glue-code-b)
-        (λ _ → F.aba-glue-code-a)
-        (λ _ → funext λ _ → prop-has-all-paths (F.code-a-is-set _ _) _ _)
-        p
-
   -- Nice interface
   module _ where
     private
       -- Code from A.
       module C where
         open import Homotopy.VanKampen.SplitCode C A B f g public
-        open Pack4 A B f g public
+        open Pack3 A B f g public
       -- Code from B. Code flipped.
       module CF where
         open import Homotopy.VanKampen.SplitCode C B A g f public
-        open Pack4 B A g f public
+        open Pack3 B A g f public
 
     P : Set i
     P = pushout (diag A , B , C , f , g)
@@ -305,7 +265,32 @@ module Homotopy.VanKampen.Code {i}
     ap⇒bp c {p} = C.ap⇒bp c {p}
 
     bp⇒ap : ∀ c {p} → b-code (g c) p → a-code (f c) p
-    bp⇒ap c {p} = C.bp⇒ap c {p}
+    bp⇒ap c {p} = transport
+      (λ x → b-code (g c) p → a-code (f c) x)
+      (pushout-flip-flip p)
+      (CF.ap⇒bp c {pushout-flip p})
+
+    private
+      Laba : C → P → Set i
+      Laba = λ c p → ∀ (co : a-code (f c) p) → bp⇒ap c {p} (ap⇒bp c {p} co) ≡ co
+    abstract
+      aba-glue-code : ∀ c {p} → Laba c p
+      aba-glue-code c {p} = pushout-rec (Laba c)
+        (λ _ → C.aba-glue-code-a c)
+        (λ _ → C.aba-glue-code-b c)
+        (λ _ → funext λ _ → prop-has-all-paths (C.code-b-is-set (f c) _ _) _ _)
+        p
+
+    private
+      Lbab : C → P → Set i
+      Lbab = λ c p → ∀ (co : b-code (g c) p) → ap⇒bp c {p} (bp⇒ap c {p} co) ≡ co
+    abstract
+      bab-glue-code : ∀ c {p} → Lbab c p
+      bab-glue-code c {p} = pushout-rec (Lbab c)
+        (λ _ → CF.aba-glue-code-b c)
+        (λ _ → CF.aba-glue-code-a c)
+        (λ _ → funext λ _ → prop-has-all-paths (CF.code-a-is-set (g c) _ _) _ _)
+        p
 
     glue-code : ∀ c → a-code (f c) ≡ b-code (g c)
     private
@@ -315,7 +300,7 @@ module Homotopy.VanKampen.Code {i}
     glue-code c = funext $ glue-code-pointwise c
     glue-code-pointwise c p = eq-to-path $ glue-code-pointwise-eq c p
     glue-code-pointwise-eq c p = ap⇒bp c {p} , iso-is-eq
-      (ap⇒bp c {p}) (bp⇒ap c {p}) (C.bab-glue-code c {p}) (C.aba-glue-code c {p})
+      (ap⇒bp c {p}) (bp⇒ap c {p}) (bab-glue-code c {p}) (aba-glue-code c {p})
 
     code : P → P → Set i
     code = pushout-rec-nondep (P → Set i) a-code b-code glue-code
@@ -358,6 +343,6 @@ module Homotopy.VanKampen.Code {i}
           transport (λ x → code x p) (glue c) (bp⇒ap c {p} co)
             ≡⟨ trans-glue-code c {p} (bp⇒ap c {p} co) ⟩
           ap⇒bp c {p} (bp⇒ap c {p} co)
-            ≡⟨ C.bab-glue-code c {p} co ⟩∎
+            ≡⟨ bab-glue-code c {p} co ⟩∎
           co
             ∎

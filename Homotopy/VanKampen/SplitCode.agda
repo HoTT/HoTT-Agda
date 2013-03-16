@@ -173,7 +173,7 @@ module Homotopy.VanKampen.SplitCode {i}
       code-has-all-cells₂-b = prop-has-all-paths $ code-b-is-set _ _
 
     -- Non-recursive recursor
-    code-rec-a : ∀ {j}
+    code-a-rec : ∀ {j}
       (P-a : ∀ {a₂} → code-a a₂ → Set j) ⦃ _ : ∀ {a₂} co → is-set $ P-a {a₂} co ⦄
       (h₀-a : ∀ {a₂} (p : _ ≡₀ a₂) → P-a (a p))
       (h₀-ba : ∀ {a₂} c co (p : _ ≡₀ a₂) → P-a (co b⟦ c ⟧a p))
@@ -186,7 +186,7 @@ module Homotopy.VanKampen.SplitCode {i}
           (h₀-ba c₂ (co b⟦ c₁ ⟧a p₁ a⟦ c₂ ⟧b refl₀ _) p₂)
         ≡ (h₀-ba c₁ co (p₁ ∘₀ p₂)))
       → (∀ {a₂} (co : code-a a₂) → P-a co)
-    code-rec-a {j} P-a ⦃ P-a-is-set ⦄ h₀-a h₀-ba h₁-a h₁-ba = π₁ $ code-rec
+    code-a-rec {j} P-a ⦃ P-a-is-set ⦄ h₀-a h₀-ba h₁-a h₁-ba = π₁ $ code-rec
       P-a ⦃ P-a-is-set ⦄
       (λ _ → unit) ⦃ λ _ → unit-is-set ⦄
       h₀-a
@@ -196,7 +196,7 @@ module Homotopy.VanKampen.SplitCode {i}
       (λ c₁ {co} _ → h₁-ba c₁ co)
       (λ _ _ _ _ _ → prop-has-all-paths unit-is-prop _ _)
 
-    code-rec-b : ∀ {j}
+    code-b-rec : ∀ {j}
       (P-b : ∀ {b₂} → code-b b₂ → Set j) ⦃ _ : ∀ {b₂} co → is-set $ P-b {b₂} co ⦄
       (h₀-ab : ∀ {b₂} c co (p : _ ≡₀ b₂) → P-b (co a⟦ c ⟧b p))
       (h₁-ab : ∀ {b₂} c₁ co c₂ p₁ (p₂ : _ ≡₀ b₂) →
@@ -204,7 +204,7 @@ module Homotopy.VanKampen.SplitCode {i}
           (h₀-ab c₂ (co a⟦ c₁ ⟧b p₁ b⟦ c₂ ⟧a refl₀ _) p₂)
         ≡ (h₀-ab c₁ co (p₁ ∘₀ p₂)))
       → (∀ {b₂} (co : code-b b₂) → P-b co)
-    code-rec-b {j} P-b ⦃ P-b-is-set ⦄ h₀-ab h₁-ab = π₂ $ code-rec
+    code-b-rec {j} P-b ⦃ P-b-is-set ⦄ h₀-ab h₁-ab = π₂ $ code-rec
       (λ _ → unit) ⦃ λ _ → unit-is-set ⦄
       P-b ⦃ P-b-is-set ⦄
       (λ _ → tt)
