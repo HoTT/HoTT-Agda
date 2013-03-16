@@ -120,17 +120,3 @@ abstract
   → ((a : τ n A) → τ-fmap f a ≡ τ-fmap g a)
 τ-fpmap h = τ-extend ⦃ λ _ → ≡-is-truncated _ (τ-is-truncated _ _) ⦄
               (map proj ◯ h)
-
--- Applicative
-
-open import HLevelBis
-open import Algebra.Applicative
-
-τ-is-applicative : (n : ℕ₋₂) → Applicative (τ n)
-τ-is-applicative n = record
-  { pure = proj
-  ; _✭_  = τ-extend-nondep ⦃ →-is-truncated n (τ-is-truncated n _) ⦄ τ-ap
-  }
-
-π₀-is-applicative : Applicative π₀
-π₀-is-applicative = τ-is-applicative ⟨0⟩
