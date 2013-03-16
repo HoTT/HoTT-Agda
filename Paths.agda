@@ -229,6 +229,10 @@ module _ {i} {A : Set i} where
 
   -- This second part is about transporting something along a known path
 
+  trans-2 : ∀ {j} (P : A → A → Set j) {x y : A} (p : x ≡ y) (q : P x x)
+    → transport (λ x → P x x) p q ≡ transport (λ z → P z y) p (transport (P x) p q)
+  trans-2 P (refl _) q = refl _
+
   trans-concat : ∀ {j} (P : A → Set j) {x y z : A} (p : y ≡ z) (q : x ≡ y)
     (u : P x)
     → transport P (q ∘ p) u ≡ transport P p (transport P q u)
