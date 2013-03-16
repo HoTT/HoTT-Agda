@@ -66,6 +66,10 @@ module _ {i} {A : Set i} where
     → transport (λ x → x ≡₀ a) p q ≡ proj (! p) ∘₀ q
   trans-id≡₀cst (refl _) q = ! $ refl₀-left-unit q
 
+  trans-cst≡₀id : {a b c : A} (p : b ≡ c) (q : a ≡₀ b)
+    → transport (λ x → a ≡₀ x) p q ≡ q ∘₀ proj p
+  trans-cst≡₀id (refl _) q = ! $ refl₀-right-unit q
+
   ap₀-compose : ∀ {j k} {B : Set j} {C : Set k} (g : B → C) (f : A → B)
     {x y : A} (p : x ≡₀ y) → ap₀ (g ◯ f) p ≡ ap₀ g (ap₀ f p)
   ap₀-compose f g =
