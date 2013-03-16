@@ -123,7 +123,7 @@ module Homotopy.VanKampen.Code {i}
         transport flipped-code (glue c₂) (aa⇒ba $ b⇒a c₂ co)
             ≡⟨ ap (transport flipped-code (glue c₂)) $ ab-to′-aa-to-ab c₂ co (refl _) ⟩
         transport flipped-code (glue c₂) (F.a⇒b c₂ $ ab⇒bb co)
-            ≡⟨ ! $ trans-ap {P = F.code} pushout-flip (glue c₂)
+            ≡⟨ ! $ trans-ap F.code pushout-flip (glue c₂)
                  $ F.a⇒b c₂ $ ab⇒bb co ⟩
         transport F.code (ap pushout-flip $ glue c₂) (F.a⇒b c₂ $ ab⇒bb co)
             ≡⟨ ap (λ x → transport F.code x $ F.a⇒b c₂ $ ab⇒bb co)
@@ -325,7 +325,7 @@ module Homotopy.VanKampen.Code {i}
     trans-b-code-!glue : ∀ {b₁} c₂ co → transport (b-code b₁) (! (glue c₂)) co ≡ bb⇒ba c₂ co
     trans-b-code-!glue {b₁} c₂ co =
       transport (b-code b₁) (! (glue c₂)) co
-          ≡⟨ ! $ trans-ap {P = CF.code b₁} pushout-flip (! (glue c₂)) co ⟩
+          ≡⟨ ! $ trans-ap (CF.code b₁) pushout-flip (! (glue c₂)) co ⟩
       transport (CF.code b₁) (ap pushout-flip (! (glue c₂))) co
           ≡⟨ ap (λ x → transport (CF.code b₁) x co)
                 $ pushout-β-!glue-nondep _ right left (! ◯ glue) c₂ ⟩
@@ -342,12 +342,12 @@ module Homotopy.VanKampen.Code {i}
       ≡ ap⇒bp c {p} co
     trans-glue-code c {p} co =
         transport (λ x → code x p) (glue c) co
-            ≡⟨ ! $ trans-ap {P = λ f → f p} code (glue c) co ⟩
+            ≡⟨ ! $ trans-ap (λ f → f p) code (glue c) co ⟩
         transport (λ f → f p) (ap code (glue c)) co
             ≡⟨ ap (λ x →  transport (λ f → f p) x co)
                 $ pushout-β-glue-nondep (P → Set i) a-code b-code glue-code c ⟩
         transport (λ f → f p) (glue-code c) co
-            ≡⟨ ! $ trans-ap {P = λ X → X} (λ f → f p) (glue-code c) co ⟩
+            ≡⟨ ! $ trans-ap (λ X → X) (λ f → f p) (glue-code c) co ⟩
         transport (λ X → X) (happly (glue-code c) p) co
             ≡⟨ ap (λ x → transport (λ X → X) (x p) co) $ happly-funext $ glue-code-pointwise c ⟩
         transport (λ X → X) (glue-code-pointwise c p) co

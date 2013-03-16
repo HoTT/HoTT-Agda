@@ -52,7 +52,7 @@ module TotalMapEquiv (e : is-equiv total-map) where
     map (λ u → transport P (base-path (inverse-right-inverse total-equiv
                                                              (x , f x y))) u)
         (lemma2 x y)
-    ∘ (! (trans-concat {P = P} (base-path (inverse-right-inverse total-equiv
+    ∘ (! (trans-concat P (base-path (inverse-right-inverse total-equiv
                                                                  (x , f x y)))
                                (! (base-path-inverse x (f x y))) y)
     ∘ map (λ p → transport P p y)

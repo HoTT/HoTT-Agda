@@ -323,7 +323,7 @@ module Homotopy.VanKampen.SplitCode {i}
     trans-code-glue : ∀ c₂ co → transport code (glue c₂) co ≡ a⇒b c₂ co
     trans-code-glue c₂ co =
       transport code (glue c₂) co
-        ≡⟨ ! $ trans-ap {P = λ X → X} code (glue c₂) co ⟩
+        ≡⟨ ! $ trans-ap (λ X → X) code (glue c₂) co ⟩
       transport (λ X → X) (ap code (glue c₂)) co
         ≡⟨ ap (λ x → transport (λ X → X) x co)
             $ pushout-β-glue-nondep (Set i) code-a code-b code-glue c₂ ⟩

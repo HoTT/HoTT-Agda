@@ -229,55 +229,55 @@ module _ {i} {A : Set i} where
 
   -- This second part is about transporting something along a known path
 
-  trans-concat : ∀ {j} {P : A → Set j} {x y z : A} (p : y ≡ z) (q : x ≡ y)
+  trans-concat : ∀ {j} (P : A → Set j) {x y z : A} (p : y ≡ z) (q : x ≡ y)
     (u : P x)
     → transport P (q ∘ p) u ≡ transport P p (transport P q u)
-  trans-concat p (refl _) u = refl _
+  trans-concat P p (refl _) u = refl _
 
-  compose-trans : ∀ {j} {P : A → Set j} {x y z : A} (p : y ≡ z) (q : x ≡ y)
+  compose-trans : ∀ {j} (P : A → Set j) {x y z : A} (p : y ≡ z) (q : x ≡ y)
     (u : P x)
     →  transport P p (transport P q u) ≡ transport P (q ∘ p) u
-  compose-trans p (refl _) u = refl _
+  compose-trans P p (refl _) u = refl _
 
-  trans-ap : ∀ {j k} {B : Set j} {P : B → Set k} (f : A → B)
+  trans-ap : ∀ {j k} {B : Set j} (P : B → Set k) (f : A → B)
     {x y : A} (p : x ≡ y) (u : P (f x))
     → transport P (ap f p) u ≡ transport (P ◯ f) p u
-  trans-ap f (refl _) u = refl _
+  trans-ap P f (refl _) u = refl _
 
-  trans-map : ∀ {j k} {B : Set j} {P : B → Set k} (f : A → B)
+  trans-map : ∀ {j k} {B : Set j} (P : B → Set k) (f : A → B)
     {x y : A} (p : x ≡ y) (u : P (f x))
     → transport P (map f p) u ≡ transport (P ◯ f) p u
-  trans-map {P = P} = trans-ap {P = P}
+  trans-map = trans-ap
 
   -- Unreadable, should be removed
-  trans-totalpath : ∀ {j k} {P : A → Set j} {Q : Σ A P → Set k} {x y : Σ A P}
+  trans-totalpath : ∀ {j k} (P : A → Set j) (Q : Σ A P → Set k) {x y : Σ A P}
     (p : π₁ x ≡ π₁ y) (q : transport P p (π₂ x) ≡ π₂ y)
     (f : (t : P (π₁ x)) → Q (π₁ x , t))
     → transport Q (Σ-eq p q) (f (π₂ x)) ≡
         transport (λ x' → Q (π₁ y , x')) q
           (transport (λ x' → (t : P x') → Q (x' , t)) p f
             (transport P p (π₂ x)))
-  trans-totalpath {j} {k} {P} {Q} {(x₁ , x₂)} {(y₁ , y₂)} p q f =
-    trans-totalpath' {j} {k} {P} {Q} {x₁} {y₁} {x₂} {y₂} p q f where
+  trans-totalpath P Q {(x₁ , x₂)} {(y₁ , y₂)} p q f =
+    trans-totalpath' P Q {x₁} {y₁} {x₂} {y₂} p q f where
 
-    trans-totalpath' : ∀ {j k} {P : A → Set j} {Q : Σ A P → Set k} {x₁ y₁ : A}
+    trans-totalpath' : ∀ {j k} (P : A → Set j) (Q : Σ A P → Set k) {x₁ y₁ : A}
       {x₂ : P x₁} {y₂ : P y₁}
       (p : x₁ ≡ y₁) (q : transport P p (x₂) ≡ y₂) (f : (t : P x₁) → Q (x₁ , t))
       → transport Q (Σ-eq p q) (f x₂) ≡
           transport (λ x' → Q (y₁ , x')) q
             (transport (λ x' → (t : P x') → Q (x' , t)) p f
               (transport P p x₂))
-    trans-totalpath' (refl _) (refl _) f = refl _
+    trans-totalpath' P Q (refl _) (refl _) f = refl _
 
   -- This third part is about various other convenient properties
 
-  trans-trans-opposite : ∀ {j} {P : A → Set j} {x y : A} (p : x ≡ y) (u : P y)
+  trans-trans-opposite : ∀ {j} (P : A → Set j) {x y : A} (p : x ≡ y) (u : P y)
     → transport P p (transport P (! p) u) ≡ u
-  trans-trans-opposite (refl _) u = refl u
+  trans-trans-opposite P (refl _) u = refl u
 
-  trans-opposite-trans : ∀ {j} {P : A → Set j} {x y : A} (p : x ≡ y) (u : P x)
+  trans-opposite-trans : ∀ {j} (P : A → Set j) {x y : A} (p : x ≡ y) (u : P x)
     → transport P (! p) (transport P p u) ≡ u
-  trans-opposite-trans (refl _) u = refl u
+  trans-opposite-trans P (refl _) u = refl u
 
   map-dep-trivial : ∀ {j} {B : Set j} (f : A → B) {x y : A} (p : x ≡ y)
     → map f p ≡ ! (trans-cst p (f x)) ∘ map-dep f p

@@ -30,7 +30,7 @@ tot-cover = Σ S¹ universal-cover
 
 -- Transport in the universal cover
 loop-to-succ : (n : ℤ) → transport universal-cover loop n ≡ succ n
-loop-to-succ n = ! (trans-map {P = λ A → A} universal-cover loop n)
+loop-to-succ n = ! (trans-map (λ A → A) universal-cover loop n)
                  ∘ (map (λ t → transport (λ A → A) t n)
                         (β-nondep Set ℤ succ-path)
                  ∘ trans-id-eq-to-path succ-equiv n)
@@ -69,12 +69,12 @@ module Tot-cover-is-ℝ
 
   e' : (n : ℤ) → transport P (R-e' n) (z n)
                  ≡ z (transport universal-cover loop n)
-  e' n = (trans-totalpath {P = universal-cover} {Q = P} {x = (base , n)}
+  e' n = (trans-totalpath universal-cover P {x = (base , n)}
                           {y = (base , transport universal-cover loop n)}
                           loop (refl _) z
          ∘ move!-transp-left (λ z → P (base , z)) _ (loop-to-succ n)
            (z (succ n))
-           (! (trans-totalpath {P = universal-cover} {Q = P} {x = (base , n)}
+           (! (trans-totalpath universal-cover P {x = (base , n)}
                                {y = (base , succ n)} loop (loop-to-succ n) z)
             ∘ e n))
           ∘ map-dep z (! (loop-to-succ n))
@@ -90,8 +90,8 @@ module Tot-cover-is-ℝ
   P-loop t = transport (λ t → transport
                                 (λ x → (u : universal-cover x) → P (x , u))
                                 loop P-base t ≡ P-base t)
-               (trans-trans-opposite {P = universal-cover} loop t)
-               (! (trans-totalpath {P = universal-cover} {Q = P}
+               (trans-trans-opposite universal-cover loop t)
+               (! (trans-totalpath universal-cover P
                                    loop (refl _) z)
                ∘ e' (transport universal-cover (! loop) t))
 

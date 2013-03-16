@@ -87,12 +87,12 @@ module equivCA
     e' : (t : A) (u : FA)
       → transport P (CA-e' t u) (z u)
         ≡ z (transport universal-cover (loops t) u)
-    e' t u = (trans-totalpath {P = universal-cover} {Q = P} {x = (baseWA , u)}
+    e' t u = (trans-totalpath universal-cover P {x = (baseWA , u)}
                {y = (baseWA , transport universal-cover (loops t) u)} (loops t)
                (refl _) z
              ∘ move!-transp-left (λ z → P (baseWA , z)) _ (loops-to-x· t u)
                                  (z (t · u))
-             (! (trans-totalpath {P = universal-cover} {Q = P}
+             (! (trans-totalpath universal-cover P
                   {x = (baseWA , u)} {y = (baseWA , (t · u))}
                   (loops t) (loops-to-x· t u) z)
               ∘ e t u))
@@ -108,8 +108,8 @@ module equivCA
     P-loops t u =
       transport (λ u → transport (λ x → (t : universal-cover x) → P (x , t))
                                  (loops t) P-base u ≡ P-base u)
-        (trans-trans-opposite {P = universal-cover} (loops t) u)
-        (! (trans-totalpath {P = universal-cover} {Q = P}
+        (trans-trans-opposite universal-cover (loops t) u)
+        (! (trans-totalpath universal-cover P
              {x = (baseWA , transport universal-cover (! (loops t)) u)}
              {y = (baseWA , transport universal-cover (loops t)
                (transport universal-cover (! (loops t)) u))}
