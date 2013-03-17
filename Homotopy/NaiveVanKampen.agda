@@ -1,17 +1,16 @@
 {-# OPTIONS --without-K #-}
 
 open import Base
-
-module Homotopy.NaiveVanKampen
-  {i} (C A B : Set i)
-  (f : C → A)
-  (g : C → B) where
-
 open import Homotopy.Pushout
+
+module Homotopy.NaiveVanKampen {i} (d : pushout-diag i) where
+
+open pushout-diag d
+
 open import Homotopy.Truncation
 open import Spaces.Pi0Paths
-open import Homotopy.NaiveVanKampen.Code C A B f g
-open import Homotopy.NaiveVanKampen.CodeToPath C A B f g
+open import Homotopy.NaiveVanKampen.Code d
+open import Homotopy.NaiveVanKampen.CodeToPath d
 
 private
   refl⇒code : ∀ p → code p p

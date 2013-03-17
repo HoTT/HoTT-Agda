@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import Base
+open import Homotopy.Pushout
 
 {-
   This module provides the function code⇒path
@@ -8,13 +9,13 @@ open import Base
   van Kampen theorem.
 -}
 
-module Homotopy.NaiveVanKampen.CodeToPath {i}
-  (C A B : Set i) (f : C → A) (g : C → B) where
+module Homotopy.NaiveVanKampen.CodeToPath {i} (d : pushout-diag i) where
 
-  open import Homotopy.Pushout
+  open pushout-diag d
+
   open import Homotopy.Truncation
   open import Spaces.Pi0Paths
-  open import Homotopy.NaiveVanKampen.Code C A B f g
+  open import Homotopy.NaiveVanKampen.Code d
 
   private
     pg : ∀ c → _≡₀_ {A = P} (left (f c)) (right (g c))

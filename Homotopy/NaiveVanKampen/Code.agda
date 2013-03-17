@@ -1,20 +1,20 @@
-
 {-# OPTIONS --without-K #-}
 
 open import Base
+open import Homotopy.Pushout
 
-module Homotopy.NaiveVanKampen.Code {i}
-  (C A B : Set i) (f : C → A) (g : C → B) where
+module Homotopy.NaiveVanKampen.Code {i} (d : pushout-diag i) where
 
-  open import Homotopy.Pushout
   open import Homotopy.Truncation
   open import Spaces.Pi0Paths
 
-  module Pack1 (A B : Set i) (f : C → A) (g : C → B) (c : C) where
+  module Pack1 (d : pushout-diag i) (c : pushout-diag.C d) where
+    open pushout-diag d
+
     -- Code from A.
-    open import Homotopy.NaiveVanKampen.SplitCode C A B f g (f c)
+    open import Homotopy.NaiveVanKampen.SplitCode d (f c)
     -- Code from B. F for `flipped'.
-    import Homotopy.NaiveVanKampen.SplitCode C B A g f (g c) as F
+    import Homotopy.NaiveVanKampen.SplitCode (pushout-diag-flip d) (g c) as F
 
     aa⇒ba : ∀ {a₂} → code-a a₂ → F.code-b a₂
     ab⇒bb : ∀ {b₂} → code-b b₂ → F.code-a b₂
@@ -46,15 +46,17 @@ module Homotopy.NaiveVanKampen.Code {i}
           pco F.b⟦ c₁ ⟧a p₁ ∘₀ p₂
             ∎)
 
-  module Pack2 (A B : Set i) (f : C → A) (g : C → B) (c : C) where
+  module Pack2 (d : pushout-diag i) (c : pushout-diag.C d) where
+    open pushout-diag d
+
     -- Code from A.
-    open Pack1 A B f g c public
-    open import Homotopy.NaiveVanKampen.SplitCode C A B f g (f c)
+    open import Homotopy.NaiveVanKampen.SplitCode d (f c)
+    open Pack1 d c public
     -- Code from B. F for `flipped'.
     private
       module F where
-        open import Homotopy.NaiveVanKampen.SplitCode C B A g f (g c) public
-        open Pack1 B A g f c public
+        open import Homotopy.NaiveVanKampen.SplitCode (pushout-diag-flip d) (g c) public
+        open Pack1 (pushout-diag-flip d) c public
 
     aba-glue-code-split : (∀ {a₂} (co : code-a a₂) → F.ab⇒bb (aa⇒ba co) ≡ co)
                         × (∀ {b₂} (co : code-b b₂) → F.aa⇒ba (ab⇒bb co) ≡ co)
@@ -82,16 +84,17 @@ module Homotopy.NaiveVanKampen.Code {i}
       (λ _ _ _ _ _ → code-has-all-cells₂-a _ _)
       (λ _ _ _ _ _ → code-has-all-cells₂-b _ _)
 
-  module Pack3 (A B : Set i) (f : C → A) (g : C → B) (c : C) where
+  module Pack3 (d : pushout-diag i) (c : pushout-diag.C d) where
+    open pushout-diag d
 
     -- Code from A.
-    open Pack2 A B f g c public
-    open import Homotopy.NaiveVanKampen.SplitCode C A B f g (f c)
+    open import Homotopy.NaiveVanKampen.SplitCode d (f c)
+    open Pack2 d c public
     -- Code from B. F for `flipped'.
     private
       module F where
-        open import Homotopy.NaiveVanKampen.SplitCode C B A g f (g c) public hiding (P)
-        open Pack2 B A g f c public
+        open import Homotopy.NaiveVanKampen.SplitCode (pushout-diag-flip d) (g c) public
+        open Pack2 (pushout-diag-flip d) c public
 
     flipped-code : P → Set i
     flipped-code = F.code ◯ pushout-flip
@@ -138,23 +141,24 @@ module Homotopy.NaiveVanKampen.Code {i}
 
   -- Nice interface
   module _ where
+    open pushout-diag d
     private
       -- Code from A.
-      module C where
-        open import Homotopy.NaiveVanKampen.SplitCode C A B f g public
-        open Pack3 A B f g public
+      import Homotopy.NaiveVanKampen.SplitCode d as SC
+      module C = Pack3 d
       -- Code from B. Code flipped.
-      module CF where
-        open import Homotopy.NaiveVanKampen.SplitCode C B A g f public
-        open Pack3 B A g f public
+      import Homotopy.NaiveVanKampen.SplitCode (diag B , A , C , g , f) as SCF
+      module CF = Pack3 (pushout-diag-flip d)
 
     P : Set i
-    P = pushout (diag A , B , C , f , g)
+    P = pushout d
 
     module _ where
-      -- Things that can be directly imported
-      open import Homotopy.NaiveVanKampen.SplitCode C A B f g public
-        using () renaming
+      -- Things that can be directly re-exported
+      -- FIXME Ideally, this should be ‵SC'.
+      -- Somehow that doesn′t work.
+      open import Homotopy.NaiveVanKampen.SplitCode d
+        public using () renaming
           ( code            to a-code
           ; code-a          to a-code-a
           ; code-b          to a-code-b
@@ -164,10 +168,9 @@ module Homotopy.NaiveVanKampen.Code {i}
           ; code-a-is-set   to a-code-a-is-set
           ; code-b-is-set   to a-code-b-is-set
           )
-
       module _ {a₁ : A} where
-        open import Homotopy.NaiveVanKampen.SplitCode C A B f g a₁ public
-          using () renaming
+        open import Homotopy.NaiveVanKampen.SplitCode d a₁
+          public using () renaming
             ( code-a-refl₀  to a-code-a-refl₀
             ; code-ba-refl₀ to a-code-ba-refl₀
             ; code-ab-refl₀ to a-code-ab-refl₀
@@ -179,27 +182,27 @@ module Homotopy.NaiveVanKampen.Code {i}
             )
 
       a-a : ∀ {a₁} {a₂} → a₁ ≡₀ a₂ → a-code-a a₁ a₂
-      a-a = C.a _
+      a-a = SC.a _
 
       infixl 6 a-a
       syntax a-a co = ⟧a co
 
       a-ba : ∀ {a₁} {a₂} c → a-code-b a₁ (g c) → f c ≡₀ a₂ → a-code-a a₁ a₂
-      a-ba = C.ba _
+      a-ba = SC.ba _
 
       infixl 6 a-ba
       syntax a-ba c co p = co ab⟦ c ⟧a p
 
       a-ab : ∀ {a₁} {b₂} c → a-code-a a₁ (f c) → g c ≡₀ b₂ → a-code-b a₁ b₂
-      a-ab = C.ab _
+      a-ab = SC.ab _
 
       infixl 6 a-ab
       syntax a-ab c co p = co aa⟦ c ⟧b p
 
     module _ where
-      -- Things that can be directly imported
-      open import Homotopy.NaiveVanKampen.SplitCode C B A g f public
-        using () renaming
+      -- Things that can be directly re-exported
+      open import Homotopy.NaiveVanKampen.SplitCode (pushout-diag-flip d)
+        public using () renaming
           ( code-a          to b-code-b
           ; code-b          to b-code-a
           ; code-rec        to b-code-rec
@@ -209,11 +212,11 @@ module Homotopy.NaiveVanKampen.Code {i}
           )
 
       b-code : B → P → Set i
-      b-code b = CF.code b ◯ pushout-flip
+      b-code b = SCF.code b ◯ pushout-flip
 
       module _ {b₁ : B} where
-        open import Homotopy.NaiveVanKampen.SplitCode C B A g f b₁ public
-          using () renaming
+        open import Homotopy.NaiveVanKampen.SplitCode (pushout-diag-flip d) b₁
+          public using () renaming
             ( code-a-refl₀  to b-code-b-refl₀
             ; code-ba-refl₀ to b-code-ab-refl₀
             ; code-ab-refl₀ to b-code-ba-refl₀
@@ -225,33 +228,33 @@ module Homotopy.NaiveVanKampen.Code {i}
             )
 
       b-b : ∀ {b₁} {b₂} → b₁ ≡₀ b₂ → b-code-b b₁ b₂
-      b-b = CF.a _
+      b-b = SCF.a _
 
       infixl 6 b-b
       syntax b-b co = ⟧b co
 
       b-ab : ∀ {b₁} {b₂} c → b-code-a b₁ (f c) → g c ≡₀ b₂ → b-code-b b₁ b₂
-      b-ab = CF.ba _
+      b-ab = SCF.ba _
 
       infixl 6 b-ab
       syntax b-ab c co p = co ba⟦ c ⟧b p
 
       b-ba : ∀ {b₁} {a₂} c → b-code-b b₁ (g c) → f c ≡₀ a₂ → b-code-a b₁ a₂
-      b-ba = CF.ab _
+      b-ba = SCF.ab _
 
       infixl 6 b-ba
       syntax b-ba c co p = co bb⟦ c ⟧a p
 
       b-code-is-set : ∀ b₁ p₂ → is-set (b-code b₁ p₂)
-      b-code-is-set b₁ = CF.code-is-set b₁ ◯ pushout-flip
+      b-code-is-set b₁ = SCF.code-is-set b₁ ◯ pushout-flip
 
     -- Tail flipping
-    open Pack3 A B f g public using () renaming
+    open Pack3 d public using () renaming
       ( aa⇒ba to aa⇒ba
       ; ab⇒bb to ab⇒bb
       ; ap⇒bp to ap⇒bp
       )
-    open Pack3 B A g f public using () renaming
+    open Pack3 (pushout-diag-flip d) public using () renaming
       ( aa⇒ba to bb⇒ab
       ; ab⇒bb to ba⇒aa
       )
@@ -308,36 +311,35 @@ module Homotopy.NaiveVanKampen.Code {i}
 
     -- Useful lemma
     module _ {a₁ : A} where
-      open import Homotopy.NaiveVanKampen.SplitCode C A B f g a₁ public
-        using () renaming
-          ( trans-code-glue   to trans-a-code-glue
-          ; trans-code-!glue  to trans-a-code-!glue
-          )
+      open SC a₁ public using () renaming
+        ( trans-code-glue   to trans-a-code-glue
+        ; trans-code-!glue  to trans-a-code-!glue
+        )
 
     trans-b-code-glue : ∀ {b₁} c₂ co → transport (b-code b₁) (glue c₂) co ≡ ba⇒bb c₂ co
     trans-b-code-glue {b₁} c₂ co =
       transport (b-code b₁) (glue c₂) co
-          ≡⟨ ! $ trans-ap (CF.code b₁) pushout-flip (glue c₂) co ⟩
-      transport (CF.code b₁) (ap pushout-flip (glue c₂)) co
-          ≡⟨ ap (λ x → transport (CF.code b₁) x co)
+          ≡⟨ ! $ trans-ap (SCF.code b₁) pushout-flip (glue c₂) co ⟩
+      transport (SCF.code b₁) (ap pushout-flip (glue c₂)) co
+          ≡⟨ ap (λ x → transport (SCF.code b₁) x co)
                 $ pushout-β-glue-nondep _ right left (! ◯ glue) c₂ ⟩
-      transport (CF.code b₁) (! (glue c₂)) co
-          ≡⟨ CF.trans-code-!glue b₁ c₂ co ⟩∎
+      transport (SCF.code b₁) (! (glue c₂)) co
+          ≡⟨ SCF.trans-code-!glue b₁ c₂ co ⟩∎
       ba⇒bb c₂ co
           ∎
 
     trans-b-code-!glue : ∀ {b₁} c₂ co → transport (b-code b₁) (! (glue c₂)) co ≡ bb⇒ba c₂ co
     trans-b-code-!glue {b₁} c₂ co =
       transport (b-code b₁) (! (glue c₂)) co
-          ≡⟨ ! $ trans-ap (CF.code b₁) pushout-flip (! (glue c₂)) co ⟩
-      transport (CF.code b₁) (ap pushout-flip (! (glue c₂))) co
-          ≡⟨ ap (λ x → transport (CF.code b₁) x co)
+          ≡⟨ ! $ trans-ap (SCF.code b₁) pushout-flip (! (glue c₂)) co ⟩
+      transport (SCF.code b₁) (ap pushout-flip (! (glue c₂))) co
+          ≡⟨ ap (λ x → transport (SCF.code b₁) x co)
                 $ pushout-β-!glue-nondep _ right left (! ◯ glue) c₂ ⟩
-      transport (CF.code b₁) (! (! (glue c₂))) co
-          ≡⟨ ap (λ x → transport (CF.code b₁) x co)
+      transport (SCF.code b₁) (! (! (glue c₂))) co
+          ≡⟨ ap (λ x → transport (SCF.code b₁) x co)
                 $ opposite-opposite $ glue c₂ ⟩
-      transport (CF.code b₁) (glue c₂) co
-          ≡⟨ CF.trans-code-glue b₁ c₂ co ⟩∎
+      transport (SCF.code b₁) (glue c₂) co
+          ≡⟨ SCF.trans-code-glue b₁ c₂ co ⟩∎
       bb⇒ba c₂ co
           ∎
 

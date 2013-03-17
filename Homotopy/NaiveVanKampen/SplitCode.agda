@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import Base
+open import Homotopy.Pushout
 
 {-
   The truncated representation for paths from a fixed point
@@ -21,9 +22,10 @@ open import Base
 -}
 
 module Homotopy.NaiveVanKampen.SplitCode {i}
-  (C A B : Set i) (f : C → A) (g : C → B) (a₁ : A) where
+  (d : pushout-diag i) (a₁ : pushout-diag.A d) where
 
-  open import Homotopy.Pushout
+  open pushout-diag d
+
   open import Homotopy.Truncation
   open import Spaces.Pi0Paths
 
@@ -216,7 +218,7 @@ module Homotopy.NaiveVanKampen.SplitCode {i}
 
   module _ where
     P : Set i
-    P = pushout (diag A , B , C , f , g)
+    P = pushout d
 
     -- Basic conversion
     a⇒b : ∀ c → code-a (f c) → code-b (g c)
