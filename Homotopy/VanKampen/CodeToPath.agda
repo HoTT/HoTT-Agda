@@ -34,8 +34,9 @@ module Homotopy.VanKampen.CodeToPath {i}
   module _ {a₁ : A} where
     aa⇒path : ∀ {a₂} → a-code-a a₁ a₂ → _≡₀_ {A = P} (left a₁) (left  a₂)
     ab⇒path : ∀ {b₂} → a-code-b a₁ b₂ → _≡₀_ {A = P} (left a₁) (right b₂)
-    ap⇒path-split : (∀ {a₂} → a-code-a a₁ a₂ → _≡₀_ {A = P} (left a₁) (left  a₂))
-                  × (∀ {b₂} → a-code-b a₁ b₂ → _≡₀_ {A = P} (left a₁) (right b₂))
+    private
+      ap⇒path-split : (∀ {a₂} → a-code-a a₁ a₂ → _≡₀_ {A = P} (left a₁) (left  a₂))
+                    × (∀ {b₂} → a-code-b a₁ b₂ → _≡₀_ {A = P} (left a₁) (right b₂))
 
     aa⇒path = π₁ ap⇒path-split
     ab⇒path = π₂ ap⇒path-split
@@ -134,8 +135,9 @@ module Homotopy.VanKampen.CodeToPath {i}
   module _ {b₁ : B} where
     ba⇒path : ∀ {a₂} → b-code-a b₁ a₂ → _≡₀_ {A = P} (right b₁) (left  a₂)
     bb⇒path : ∀ {b₂} → b-code-b b₁ b₂ → _≡₀_ {A = P} (right b₁) (right b₂)
-    bp⇒path-split : (∀ {b₂} → b-code-b b₁ b₂ → _≡₀_ {A = P} (right b₁) (right b₂))
-                  × (∀ {a₂} → b-code-a b₁ a₂ → _≡₀_ {A = P} (right b₁) (left  a₂))
+    private
+      bp⇒path-split : (∀ {b₂} → b-code-b b₁ b₂ → _≡₀_ {A = P} (right b₁) (right b₂))
+                    × (∀ {a₂} → b-code-a b₁ a₂ → _≡₀_ {A = P} (right b₁) (left  a₂))
 
     ba⇒path = π₂ bp⇒path-split
     bb⇒path = π₁ bp⇒path-split
