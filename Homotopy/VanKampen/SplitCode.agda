@@ -344,11 +344,9 @@ module Homotopy.VanKampen.SplitCode {i}
     -- Truncation level
     open import HLevelBis
     abstract
-      code-is-set : ∀ {p} → is-set $ code p
-      code-is-set {p} = pushout-rec
+      code-is-set : ∀ p → is-set $ code p
+      code-is-set = pushout-rec
         (λ p → is-set $ code p)
         (λ _ → code-a-is-set)
         (λ _ → code-b-is-set)
         (λ _ → prop-has-all-paths is-set-is-prop _ _)
-        p
-

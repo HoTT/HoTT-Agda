@@ -151,91 +151,105 @@ module Homotopy.VanKampen.Code {i}
     P : Set i
     P = pushout (diag A , B , C , f , g)
 
-    a-code : A → P → Set i
-    a-code = C.code
+    module _ where
+      -- Things that can be directly imported
+      open import Homotopy.VanKampen.SplitCode C A B f g public
+        using () renaming
+          ( code            to a-code
+          ; code-a          to a-code-a
+          ; code-b          to a-code-b
+          ; code-rec        to a-code-rec
+          ; code-rec-nondep to a-code-rec-nondep
+          ; code-is-set     to a-code-is-set
+          ; code-a-is-set   to a-code-a-is-set
+          ; code-b-is-set   to a-code-b-is-set
+          )
 
-    a-code-a : A → A → Set i
-    a-code-a = C.code-a
+      a-a : ∀ {a₁} {a₂} → a₁ ≡₀ a₂ → a-code-a a₁ a₂
+      a-a = C.a _
 
-    a-code-b : A → B → Set i
-    a-code-b = C.code-b
+      infixl 6 a-a
+      syntax a-a co = ⟧a co
 
-    a-a : ∀ {a₁} {a₂} → a₁ ≡₀ a₂ → a-code-a a₁ a₂
-    a-a = C.a _
+      a-ba : ∀ {a₁} {a₂} c → a-code-b a₁ (g c) → f c ≡₀ a₂ → a-code-a a₁ a₂
+      a-ba = C.ba _
 
-    infixl 6 a-a
-    syntax a-a co = ⟧a co
+      infixl 6 a-ba
+      syntax a-ba c co p = co ab⟦ c ⟧a p
 
-    a-ba : ∀ {a₁} {a₂} c → a-code-b a₁ (g c) → f c ≡₀ a₂ → a-code-a a₁ a₂
-    a-ba = C.ba _
+      a-ab : ∀ {a₁} {b₂} c → a-code-a a₁ (f c) → g c ≡₀ b₂ → a-code-b a₁ b₂
+      a-ab = C.ab _
 
-    infixl 6 a-ba
-    syntax a-ba c co p = co ab⟦ c ⟧a p
+      infixl 6 a-ab
+      syntax a-ab c co p = co aa⟦ c ⟧b p
 
-    a-ab : ∀ {a₁} {b₂} c → a-code-a a₁ (f c) → g c ≡₀ b₂ → a-code-b a₁ b₂
-    a-ab = C.ab _
+      a-code-a-refl₀ : ∀ {a₁} {a₂} c (p₁ : a₁ ≡₀ _) (p₂ : _ ≡₀ a₂)
+        → ⟧a p₁ aa⟦ c ⟧b refl₀ _ ab⟦ c ⟧a p₂
+        ≡ ⟧a p₁             ∘₀            p₂
+      a-code-a-refl₀ = C.code-a-refl₀ _
 
-    infixl 6 a-ab
-    syntax a-ab c co p = co aa⟦ c ⟧b p
+      a-code-ba-refl₀ : ∀ {a₁} {a₂} c₁ (co : a-code-b a₁ _) c₂ p₁ (p₂ : _ ≡₀ a₂)
+        → co ab⟦ c₁ ⟧a p₁ aa⟦ c₂ ⟧b refl₀ _ ab⟦ c₂ ⟧a p₂
+        ≡ co ab⟦ c₁ ⟧a p₁              ∘₀             p₂
+      a-code-ba-refl₀ = C.code-ba-refl₀ _
 
-    b-code : B → P → Set i
-    b-code b = CF.code b ◯ pushout-flip
+      a-code-ab-refl₀ : ∀ {a₁} {b₂} c₁ (co : a-code-a a₁ _) c₂ p₁ (p₂ : _ ≡₀ b₂)
+        → co aa⟦ c₁ ⟧b p₁ ab⟦ c₂ ⟧a refl₀ _ aa⟦ c₂ ⟧b p₂
+        ≡ co aa⟦ c₁ ⟧b p₁              ∘₀             p₂
+      a-code-ab-refl₀ = C.code-ab-refl₀ _
 
-    b-code-a : B → A → Set i
-    b-code-a = CF.code-b
+    module _ where
+      -- Things that can be directly imported
+      open import Homotopy.VanKampen.SplitCode C B A g f public
+        using () renaming
+          ( code-a          to b-code-b
+          ; code-b          to b-code-a
+          ; code-rec        to b-code-rec
+          ; code-rec-nondep to b-code-rec-nondep
+          ; code-a-is-set   to b-code-b-is-set
+          ; code-b-is-set   to b-code-a-is-set
+          )
 
-    b-code-b : B → B → Set i
-    b-code-b = CF.code-a
+      b-code : B → P → Set i
+      b-code b = CF.code b ◯ pushout-flip
 
-    b-b : ∀ {b₁} {b₂} → b₁ ≡₀ b₂ → b-code-b b₁ b₂
-    b-b = CF.a _
+      b-b : ∀ {b₁} {b₂} → b₁ ≡₀ b₂ → b-code-b b₁ b₂
+      b-b = CF.a _
 
-    infixl 6 b-b
-    syntax b-b co = ⟧b co
+      infixl 6 b-b
+      syntax b-b co = ⟧b co
 
-    b-ab : ∀ {b₁} {b₂} c → b-code-a b₁ (f c) → g c ≡₀ b₂ → b-code-b b₁ b₂
-    b-ab = CF.ba _
+      b-ab : ∀ {b₁} {b₂} c → b-code-a b₁ (f c) → g c ≡₀ b₂ → b-code-b b₁ b₂
+      b-ab = CF.ba _
 
-    infixl 6 b-ab
-    syntax b-ab c co p = co ba⟦ c ⟧b p
+      infixl 6 b-ab
+      syntax b-ab c co p = co ba⟦ c ⟧b p
 
-    b-ba : ∀ {b₁} {a₂} c → b-code-b b₁ (g c) → f c ≡₀ a₂ → b-code-a b₁ a₂
-    b-ba = CF.ab _
+      b-ba : ∀ {b₁} {a₂} c → b-code-b b₁ (g c) → f c ≡₀ a₂ → b-code-a b₁ a₂
+      b-ba = CF.ab _
 
-    infixl 6 b-ba
-    syntax b-ba c co p = co bb⟦ c ⟧a p
+      infixl 6 b-ba
+      syntax b-ba c co p = co bb⟦ c ⟧a p
 
-    a-code-a-refl₀ : ∀ {a₁} {a₂} c (p₁ : a₁ ≡₀ _) (p₂ : _ ≡₀ a₂)
-      → ⟧a p₁ aa⟦ c ⟧b refl₀ _ ab⟦ c ⟧a p₂
-      ≡ ⟧a p₁             ∘₀            p₂
-    a-code-a-refl₀ = C.code-a-refl₀ _
+      b-code-b-refl₀ : ∀ {b₁} {b₂} c (p₁ : b₁ ≡₀ _) (p₂ : _ ≡₀ b₂)
+        → ⟧b p₁ bb⟦ c ⟧a refl₀ _ ba⟦ c ⟧b p₂
+        ≡ ⟧b p₁             ∘₀            p₂
+      b-code-b-refl₀ = CF.code-a-refl₀ _
 
-    a-code-ba-refl₀ : ∀ {a₁} {a₂} c₁ (co : a-code-b a₁ _) c₂ p₁ (p₂ : _ ≡₀ a₂)
-      → co ab⟦ c₁ ⟧a p₁ aa⟦ c₂ ⟧b refl₀ _ ab⟦ c₂ ⟧a p₂
-      ≡ co ab⟦ c₁ ⟧a p₁              ∘₀             p₂
-    a-code-ba-refl₀ = C.code-ba-refl₀ _
+      b-code-ab-refl₀ : ∀ {b₁} {b₂} c₁ (co : b-code-a b₁ _) c₂ p₁ (p₂ : _ ≡₀ b₂)
+        → co ba⟦ c₁ ⟧b p₁ bb⟦ c₂ ⟧a refl₀ _ ba⟦ c₂ ⟧b p₂
+        ≡ co ba⟦ c₁ ⟧b p₁              ∘₀             p₂
+      b-code-ab-refl₀ = CF.code-ba-refl₀ _
 
-    a-code-ab-refl₀ : ∀ {a₁} {b₂} c₁ (co : a-code-a a₁ _) c₂ p₁ (p₂ : _ ≡₀ b₂)
-      → co aa⟦ c₁ ⟧b p₁ ab⟦ c₂ ⟧a refl₀ _ aa⟦ c₂ ⟧b p₂
-      ≡ co aa⟦ c₁ ⟧b p₁              ∘₀             p₂
-    a-code-ab-refl₀ = C.code-ab-refl₀ _
+      b-code-ba-refl₀ : ∀ {b₁} {a₂} c₁ (co : b-code-b b₁ _) c₂ p₁ (p₂ : _ ≡₀ a₂)
+        → co bb⟦ c₁ ⟧a p₁ ba⟦ c₂ ⟧b refl₀ _ bb⟦ c₂ ⟧a p₂
+        ≡ co bb⟦ c₁ ⟧a p₁              ∘₀             p₂
+      b-code-ba-refl₀ = CF.code-ab-refl₀ _
 
-    b-code-b-refl₀ : ∀ {b₁} {b₂} c (p₁ : b₁ ≡₀ _) (p₂ : _ ≡₀ b₂)
-      → ⟧b p₁ bb⟦ c ⟧a refl₀ _ ba⟦ c ⟧b p₂
-      ≡ ⟧b p₁             ∘₀            p₂
-    b-code-b-refl₀ = CF.code-a-refl₀ _
+      b-code-is-set : ∀ b₁ p₂ → is-set (b-code b₁ p₂)
+      b-code-is-set b₁ = CF.code-is-set b₁ ◯ pushout-flip
 
-    b-code-ab-refl₀ : ∀ {b₁} {b₂} c₁ (co : b-code-a b₁ _) c₂ p₁ (p₂ : _ ≡₀ b₂)
-      → co ba⟦ c₁ ⟧b p₁ bb⟦ c₂ ⟧a refl₀ _ ba⟦ c₂ ⟧b p₂
-      ≡ co ba⟦ c₁ ⟧b p₁              ∘₀             p₂
-    b-code-ab-refl₀ = CF.code-ba-refl₀ _
-
-    b-code-ba-refl₀ : ∀ {b₁} {a₂} c₁ (co : b-code-b b₁ _) c₂ p₁ (p₂ : _ ≡₀ a₂)
-      → co bb⟦ c₁ ⟧a p₁ ba⟦ c₂ ⟧b refl₀ _ bb⟦ c₂ ⟧a p₂
-      ≡ co bb⟦ c₁ ⟧a p₁              ∘₀             p₂
-    b-code-ba-refl₀ = CF.code-ab-refl₀ _
-
-    -- head flipping
+    -- Head flipping
     aa⇒ab : ∀ {a} c → a-code-a a (f c) → a-code-b a (g c)
     aa⇒ab {a} = C.a⇒b a
 
@@ -248,7 +262,7 @@ module Homotopy.VanKampen.Code {i}
     bb⇒ba : ∀ {b} c → b-code-b b (g c) → b-code-a b (f c)
     bb⇒ba {b} = CF.a⇒b b
 
-    -- tail flipping
+    -- Tail flipping
     aa⇒ba : ∀ c {a} → a-code-a (f c) a → b-code-a (g c) a
     aa⇒ba = C.aa⇒ba
 
@@ -278,7 +292,7 @@ module Homotopy.VanKampen.Code {i}
       aba-glue-code c {p} = pushout-rec (Laba c)
         (λ _ → C.aba-glue-code-a c)
         (λ _ → C.aba-glue-code-b c)
-        (λ _ → funext λ _ → prop-has-all-paths (C.code-b-is-set (f c) _ _) _ _)
+        (λ _ → funext λ _ → prop-has-all-paths (a-code-b-is-set (f c) _ _) _ _)
         p
 
     private
@@ -307,13 +321,12 @@ module Homotopy.VanKampen.Code {i}
 
     open import HLevelBis
     abstract
-      code-is-set : ∀ {p₁ p₂} → is-set (code p₁ p₂)
-      code-is-set {p₁} {p₂} = pushout-rec
+      code-is-set : ∀ p₁ p₂ → is-set (code p₁ p₂)
+      code-is-set = pushout-rec
         (λ p₁ → ∀ p₂ → is-set $ code p₁ p₂)
-        (λ a → λ p₂ → C.code-is-set a {p₂})
-        (λ b → λ p₂ → CF.code-is-set b {pushout-flip p₂})
+        a-code-is-set
+        b-code-is-set
         (λ _ → prop-has-all-paths (Π-is-prop λ _ → is-set-is-prop) _ _)
-        p₁ p₂
 
     -- Useful lemma
     trans-a-code-glue : ∀ {a₁} c₂ co → transport (a-code a₁) (glue c₂) co ≡ aa⇒ab c₂ co

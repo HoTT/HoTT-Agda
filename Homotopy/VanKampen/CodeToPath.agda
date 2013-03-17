@@ -15,8 +15,6 @@ module Homotopy.VanKampen.CodeToPath {i}
   open import Homotopy.Truncation
   open import Spaces.Pi0Paths
   open import Homotopy.VanKampen.Code C A B f g
-  import Homotopy.VanKampen.SplitCode C A B f g as C
-  import Homotopy.VanKampen.SplitCode C B A g f as CF
 
   private
     pg : ∀ c → _≡₀_ {A = P} (left (f c)) (right (g c))
@@ -41,7 +39,7 @@ module Homotopy.VanKampen.CodeToPath {i}
     aa⇒path = π₁ ap⇒path-split
     ab⇒path = π₂ ap⇒path-split
 
-    ap⇒path-split = C.code-rec-nondep a₁
+    ap⇒path-split = a-code-rec-nondep a₁
       (λ a₂ → left a₁ ≡₀ left  a₂)
       ⦃ λ a₂ → π₀-is-set _ ⦄
       (λ b₂ → left a₁ ≡₀ right b₂)
@@ -110,7 +108,7 @@ module Homotopy.VanKampen.CodeToPath {i}
           transport (λ p → a-code a₁ p → left a₁ ≡₀ p) (glue c) aa⇒path co
               ≡⟨ trans-→ (a-code a₁) (λ x → left a₁ ≡₀ x) (glue c) aa⇒path co ⟩
           transport (λ p → left a₁ ≡₀ p) (glue c) (aa⇒path $ transport (a-code a₁) (! (glue c)) co)
-              ≡⟨ ap (transport (λ p → left a₁ ≡₀ p) (glue c) ◯ aa⇒path) $ C.trans-code-!glue a₁ c co ⟩
+              ≡⟨ ap (transport (λ p → left a₁ ≡₀ p) (glue c) ◯ aa⇒path) $ trans-a-code-!glue c co ⟩
           transport (λ p → left a₁ ≡₀ p) (glue c) (aa⇒path $ ab⇒aa c co)
               ≡⟨ trans-cst≡₀id (glue c) (aa⇒path $ ab⇒aa c co) ⟩
           (aa⇒path $ ab⇒aa c co) ∘₀ pg c
@@ -142,7 +140,7 @@ module Homotopy.VanKampen.CodeToPath {i}
     ba⇒path = π₂ bp⇒path-split
     bb⇒path = π₁ bp⇒path-split
 
-    bp⇒path-split = CF.code-rec-nondep b₁
+    bp⇒path-split = b-code-rec-nondep b₁
       (λ b₂ → right b₁ ≡₀ right b₂)
       ⦃ λ b₂ → π₀-is-set _ ⦄
       (λ a₂ → right b₁ ≡₀ left  a₂)
@@ -244,7 +242,7 @@ module Homotopy.VanKampen.CodeToPath {i}
         × (∀ {b₂} co → Lbaaa c {b₂} co)
       bb⇒ab⇒path c = π₁ $ bp⇒ap⇒path-split c
       ba⇒aa⇒path c = π₂ $ bp⇒ap⇒path-split c
-      bp⇒ap⇒path-split c = CF.code-rec (g c)
+      bp⇒ap⇒path-split c = b-code-rec (g c)
         (λ co → ab⇒path {f c} (bb⇒ab c co) ≡ pg c ∘₀ bb⇒path co)
         ⦃ λ _ → ≡-is-set $ π₀-is-set _ ⦄
         (λ co → aa⇒path {f c} (ba⇒aa c co) ≡ pg c ∘₀ ba⇒path co)
