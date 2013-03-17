@@ -20,7 +20,7 @@ open import Base
   This is for formalizing the van Kampen theorem.
 -}
 
-module Homotopy.VanKampen.SplitCode {i}
+module Homotopy.NaiveVanKampen.SplitCode {i}
   (C A B : Set i) (f : C → A) (g : C → B) (a₁ : A) where
 
   open import Homotopy.PushoutDef

@@ -8,13 +8,13 @@ open import Base
   van Kampen theorem.
 -}
 
-module Homotopy.VanKampen.CodeToPath {i}
+module Homotopy.NaiveVanKampen.CodeToPath {i}
   (C A B : Set i) (f : C → A) (g : C → B) where
 
   open import Homotopy.PushoutDef
   open import Homotopy.Truncation
   open import Spaces.Pi0Paths
-  open import Homotopy.VanKampen.Code C A B f g
+  open import Homotopy.NaiveVanKampen.Code C A B f g
 
   private
     pg : ∀ c → _≡₀_ {A = P} (left (f c)) (right (g c))

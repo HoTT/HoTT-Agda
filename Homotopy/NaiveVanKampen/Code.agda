@@ -3,7 +3,7 @@
 
 open import Base
 
-module Homotopy.VanKampen.Code {i}
+module Homotopy.NaiveVanKampen.Code {i}
   (C A B : Set i) (f : C → A) (g : C → B) where
 
   open import Homotopy.PushoutDef
@@ -12,9 +12,9 @@ module Homotopy.VanKampen.Code {i}
 
   module Pack1 (A B : Set i) (f : C → A) (g : C → B) (c : C) where
     -- Code from A.
-    open import Homotopy.VanKampen.SplitCode C A B f g (f c)
+    open import Homotopy.NaiveVanKampen.SplitCode C A B f g (f c)
     -- Code from B. F for `flipped'.
-    import Homotopy.VanKampen.SplitCode C B A g f (g c) as F
+    import Homotopy.NaiveVanKampen.SplitCode C B A g f (g c) as F
 
     aa⇒ba : ∀ {a₂} → code-a a₂ → F.code-b a₂
     ab⇒bb : ∀ {b₂} → code-b b₂ → F.code-a b₂
@@ -49,11 +49,11 @@ module Homotopy.VanKampen.Code {i}
   module Pack2 (A B : Set i) (f : C → A) (g : C → B) (c : C) where
     -- Code from A.
     open Pack1 A B f g c public
-    open import Homotopy.VanKampen.SplitCode C A B f g (f c)
+    open import Homotopy.NaiveVanKampen.SplitCode C A B f g (f c)
     -- Code from B. F for `flipped'.
     private
       module F where
-        open import Homotopy.VanKampen.SplitCode C B A g f (g c) public
+        open import Homotopy.NaiveVanKampen.SplitCode C B A g f (g c) public
         open Pack1 B A g f c public
 
     aba-glue-code-split : (∀ {a₂} (co : code-a a₂) → F.ab⇒bb (aa⇒ba co) ≡ co)
@@ -86,11 +86,11 @@ module Homotopy.VanKampen.Code {i}
 
     -- Code from A.
     open Pack2 A B f g c public
-    open import Homotopy.VanKampen.SplitCode C A B f g (f c)
+    open import Homotopy.NaiveVanKampen.SplitCode C A B f g (f c)
     -- Code from B. F for `flipped'.
     private
       module F where
-        open import Homotopy.VanKampen.SplitCode C B A g f (g c) public hiding (P)
+        open import Homotopy.NaiveVanKampen.SplitCode C B A g f (g c) public hiding (P)
         open Pack2 B A g f c public
 
     flipped-code : P → Set i
@@ -141,11 +141,11 @@ module Homotopy.VanKampen.Code {i}
     private
       -- Code from A.
       module C where
-        open import Homotopy.VanKampen.SplitCode C A B f g public
+        open import Homotopy.NaiveVanKampen.SplitCode C A B f g public
         open Pack3 A B f g public
       -- Code from B. Code flipped.
       module CF where
-        open import Homotopy.VanKampen.SplitCode C B A g f public
+        open import Homotopy.NaiveVanKampen.SplitCode C B A g f public
         open Pack3 B A g f public
 
     P : Set i
@@ -153,7 +153,7 @@ module Homotopy.VanKampen.Code {i}
 
     module _ where
       -- Things that can be directly imported
-      open import Homotopy.VanKampen.SplitCode C A B f g public
+      open import Homotopy.NaiveVanKampen.SplitCode C A B f g public
         using () renaming
           ( code            to a-code
           ; code-a          to a-code-a
@@ -166,7 +166,7 @@ module Homotopy.VanKampen.Code {i}
           )
 
       module _ {a₁ : A} where
-        open import Homotopy.VanKampen.SplitCode C A B f g a₁ public
+        open import Homotopy.NaiveVanKampen.SplitCode C A B f g a₁ public
           using () renaming
             ( code-a-refl₀  to a-code-a-refl₀
             ; code-ba-refl₀ to a-code-ba-refl₀
@@ -198,7 +198,7 @@ module Homotopy.VanKampen.Code {i}
 
     module _ where
       -- Things that can be directly imported
-      open import Homotopy.VanKampen.SplitCode C B A g f public
+      open import Homotopy.NaiveVanKampen.SplitCode C B A g f public
         using () renaming
           ( code-a          to b-code-b
           ; code-b          to b-code-a
@@ -212,7 +212,7 @@ module Homotopy.VanKampen.Code {i}
       b-code b = CF.code b ◯ pushout-flip
 
       module _ {b₁ : B} where
-        open import Homotopy.VanKampen.SplitCode C B A g f b₁ public
+        open import Homotopy.NaiveVanKampen.SplitCode C B A g f b₁ public
           using () renaming
             ( code-a-refl₀  to b-code-b-refl₀
             ; code-ba-refl₀ to b-code-ab-refl₀
@@ -308,7 +308,7 @@ module Homotopy.VanKampen.Code {i}
 
     -- Useful lemma
     module _ {a₁ : A} where
-      open import Homotopy.VanKampen.SplitCode C A B f g a₁ public
+      open import Homotopy.NaiveVanKampen.SplitCode C A B f g a₁ public
         using () renaming
           ( trans-code-glue   to trans-a-code-glue
           ; trans-code-!glue  to trans-a-code-!glue

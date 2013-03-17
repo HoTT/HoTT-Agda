@@ -2,7 +2,7 @@
 
 open import Base
 
-module Homotopy.VanKampen
+module Homotopy.NaiveVanKampen
   {i} (C A B : Set i)
   (f : C → A)
   (g : C → B) where
@@ -10,8 +10,8 @@ module Homotopy.VanKampen
 open import Homotopy.PushoutDef
 open import Homotopy.Truncation
 open import Spaces.Pi0Paths
-open import Homotopy.VanKampen.Code C A B f g
-open import Homotopy.VanKampen.CodeToPath C A B f g
+open import Homotopy.NaiveVanKampen.Code C A B f g
+open import Homotopy.NaiveVanKampen.CodeToPath C A B f g
 
 private
   refl⇒code : ∀ p → code p p
