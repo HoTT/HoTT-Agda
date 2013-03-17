@@ -137,6 +137,9 @@ module _ {A : Set i} where
     ≡-is-set : {x y : A} → (is-set A → is-set (x ≡ y))
     ≡-is-set = ≡-is-truncated ⟨0⟩
 
+    ≡-is-prop : {x y : A} → (is-prop A → is-prop (x ≡ y))
+    ≡-is-prop = ≡-is-truncated ⟨-1⟩
+
     -- The type of paths to a fixed point is contractible
     pathto-is-contr : (x : A) → is-contr (Σ A (λ t → t ≡ x))
     pathto-is-contr x = ((x , refl x) , pathto-unique-path) where
