@@ -314,6 +314,18 @@ module Homotopy.VanKampen.Code {i}
           ; trans-code-!glue  to trans-a-code-!glue
           )
 
+    trans-b-code-glue : ∀ {b₁} c₂ co → transport (b-code b₁) (glue c₂) co ≡ ba⇒bb c₂ co
+    trans-b-code-glue {b₁} c₂ co =
+      transport (b-code b₁) (glue c₂) co
+          ≡⟨ ! $ trans-ap (CF.code b₁) pushout-flip (glue c₂) co ⟩
+      transport (CF.code b₁) (ap pushout-flip (glue c₂)) co
+          ≡⟨ ap (λ x → transport (CF.code b₁) x co)
+                $ pushout-β-glue-nondep _ right left (! ◯ glue) c₂ ⟩
+      transport (CF.code b₁) (! (glue c₂)) co
+          ≡⟨ CF.trans-code-!glue b₁ c₂ co ⟩∎
+      ba⇒bb c₂ co
+          ∎
+
     trans-b-code-!glue : ∀ {b₁} c₂ co → transport (b-code b₁) (! (glue c₂)) co ≡ bb⇒ba c₂ co
     trans-b-code-!glue {b₁} c₂ co =
       transport (b-code b₁) (! (glue c₂)) co
