@@ -46,8 +46,8 @@ module Homotopy.VanKampen.SplitCode {i}
     code-a = #code-a
 
     postulate -- HIT
-      code-a-is-set : {a : A} → is-set (code-a a)
-      code-b-is-set : {b : B} → is-set (code-b b)
+      code-a-is-set : ∀ a → is-set (code-a a)
+      code-b-is-set : ∀ b → is-set (code-b b)
 
     a : ∀ {a₂} → a₁ ≡₀ a₂ → code-a a₂
     a = #a
@@ -167,10 +167,10 @@ module Homotopy.VanKampen.SplitCode {i}
     -- all-paths
     abstract
       code-has-all-cells₂-a : ∀ {a} {x y : code-a a} (p q : x ≡ y) → p ≡ q
-      code-has-all-cells₂-a = prop-has-all-paths $ code-a-is-set _ _
+      code-has-all-cells₂-a = prop-has-all-paths $ code-a-is-set _ _ _
 
       code-has-all-cells₂-b : ∀ {b} {x y : code-b b} (p q : x ≡ y) → p ≡ q
-      code-has-all-cells₂-b = prop-has-all-paths $ code-b-is-set _ _
+      code-has-all-cells₂-b = prop-has-all-paths $ code-b-is-set _ _ _
 
     -- Non-recursive recursor
     code-a-rec : ∀ {j}
@@ -253,13 +253,13 @@ module Homotopy.VanKampen.SplitCode {i}
         → b⇒a c (a⇒b′ c co q) ≡ transport code-a q co
 
       G-a-is-set : ∀ c {a₂} co → is-set (G-a c {a₂} co)
-      G-a-is-set _ {a₂} co = Π-is-set λ _ → ≡-is-set code-a-is-set
+      G-a-is-set _ {a₂} co = Π-is-set λ _ → ≡-is-set $ code-a-is-set _
 
       G-b = λ c {b₂} co → (q : b₂ ≡ g c)
         → a⇒b c (b⇒a′ c co q) ≡ transport code-b q co
 
       G-b-is-set : ∀ c {b₂} co → is-set (G-b c {b₂} co)
-      G-b-is-set _ {b₂} co = Π-is-set λ _ → ≡-is-set code-b-is-set
+      G-b-is-set _ {b₂} co = Π-is-set λ _ → ≡-is-set $ code-b-is-set _
 
     -- the head of the code
     code-glue : ∀ c → code-a (f c) ≡ code-b (g c)
@@ -347,6 +347,6 @@ module Homotopy.VanKampen.SplitCode {i}
       code-is-set : ∀ p → is-set $ code p
       code-is-set = pushout-rec
         (λ p → is-set $ code p)
-        (λ _ → code-a-is-set)
-        (λ _ → code-b-is-set)
+        code-a-is-set
+        code-b-is-set
         (λ _ → prop-has-all-paths is-set-is-prop _ _)
