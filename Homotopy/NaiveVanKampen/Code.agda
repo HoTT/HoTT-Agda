@@ -6,7 +6,7 @@ open import Base
 module Homotopy.NaiveVanKampen.Code {i}
   (C A B : Set i) (f : C → A) (g : C → B) where
 
-  open import Homotopy.PushoutDef
+  open import Homotopy.Pushout
   open import Homotopy.Truncation
   open import Spaces.Pi0Paths
 

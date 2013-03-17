@@ -23,7 +23,7 @@ open import Base
 module Homotopy.NaiveVanKampen.SplitCode {i}
   (C A B : Set i) (f : C → A) (g : C → B) (a₁ : A) where
 
-  open import Homotopy.PushoutDef
+  open import Homotopy.Pushout
   open import Homotopy.Truncation
   open import Spaces.Pi0Paths
 
