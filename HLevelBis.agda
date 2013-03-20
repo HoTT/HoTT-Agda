@@ -94,6 +94,10 @@ abstract
     → is-prop (is-equiv f)
   is-equiv-is-prop f = Π-is-truncated _ (λ x → is-contr-is-prop)
 
+  -- As a result, it is enough to compare the first part of the equivalence
+  equiv-eq : ∀ {i} {A B : Set i} {f g : A ≃ B} → π₁ f ≡ π₁ g → f ≡ g
+  equiv-eq p = Σ-eq p $ prop-has-all-paths (is-equiv-is-prop _) _ _
+
 -- Type of all n-truncated types
 
 Type≤ : (n : ℕ₋₂) (i : Level) → Set (suc i)
@@ -118,12 +122,23 @@ abstract
                                       (λ _ → prop-is-truncated-S n
                                              (is-equiv-is-prop _))
 
+  ≃-is-set : ∀ {i} {A B : Set i} → (is-set A → is-set B → is-set (A ≃ B))
+  ≃-is-set = ≃-is-truncated ⟨0⟩
+
+  universe-≡-is-truncated : ∀ {i} (n : ℕ₋₂) {A B : Set i}
+    → (is-truncated n A → is-truncated n B → is-truncated n (A ≡ B))
+  universe-≡-is-truncated n pA pB = equiv-types-truncated n eq-to-path-equiv
+    $ ≃-is-truncated n pA pB
+
+  universe-≡-is-set : ∀ {i} {A B : Set i}
+    → (is-set A → is-set B → is-set (A ≡ B))
+  universe-≡-is-set = universe-≡-is-truncated ⟨0⟩
+
   Type≤-is-truncated : (n : ℕ₋₂) (i : Level)
     → is-truncated (S n) (Type≤ n i)
   Type≤-is-truncated n i A B =
     equiv-types-truncated n total-Σ-eq-equiv
-    (Σ-is-truncated n (equiv-types-truncated n eq-to-path-equiv
-                                      (≃-is-truncated n (π₂ A) (π₂ B)))
+    (Σ-is-truncated n (universe-≡-is-truncated n (π₂ A) (π₂ B))
     (λ _ → contr-is-truncated n (≡-is-truncated _
            (inhab-prop-is-contr (π₂ B) (is-truncated-is-prop n {-(π₁ B)-})))))
 

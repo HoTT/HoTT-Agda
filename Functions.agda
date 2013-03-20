@@ -19,5 +19,14 @@ g ◯ f = λ x → g (f x)
 
 -- Application
 infixr 0 _$_
-_$_ : ∀ {i j} {A : Set i} {B : A → Set j} → ((x : A) → B x) → ((x : A) → B x)
+_$_ : ∀ {i j} {A : Set i} {B : A → Set j} → (∀ x → B x) → (∀ x → B x)
 f $ x = f x
+
+-- Curry! Can't live without it!
+curry : ∀ {i j k} {A : Set i} {B : A → Set j} {C : Σ A B → Set k}
+  → (∀ s → C s) → (∀ x y → C (x , y))
+curry f x y = f (x , y)
+
+uncurry : ∀ {i j k} {A : Set i} {B : A → Set j} {C : ∀ x → B x → Set k}
+  → (∀ x y → C x y) → (∀ s → C (π₁ s) (π₂ s))
+uncurry f (x , y) = f x y
