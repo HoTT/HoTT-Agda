@@ -16,6 +16,16 @@ is-equiv {B = B} f = (y : B) → is-contr (hfiber f y)
 _≃_ : ∀ {i j} (A : Set i) (B : Set j) → Set (max i j)  -- \simeq
 A ≃ B = Σ (A → B) is-equiv
 
+abstract
+  id-is-equiv : ∀ {i} (A : Set i) → is-equiv (id A)
+  id-is-equiv A = pathto-is-contr
+
+id-equiv : ∀ {i} (A : Set i) → A ≃ A
+id-equiv A = (id A , id-is-equiv A)
+
+path-to-eq : ∀ {i} {A B : Set i} → (A ≡ B → A ≃ B)
+path-to-eq (refl A) = id-equiv A
+
 module _ {i} {j} {A : Set i} {B : Set j} where
 
   -- Notation for the application of an equivalence to an argument

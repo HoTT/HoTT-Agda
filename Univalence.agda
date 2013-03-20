@@ -8,18 +8,8 @@ open import Equivalences
 
 module Univalence {i} where
 
-abstract
-  id-is-equiv : (A : Set i) → is-equiv (id A)
-  id-is-equiv A = pathto-is-contr
-
-id-equiv : (A : Set i) → A ≃ A
-id-equiv A = (id A , id-is-equiv A)
-
-path-to-eq : {A B : Set i} → (A ≡ B → A ≃ B)
-path-to-eq (refl A) = id-equiv A
-
 postulate  -- Univalence axiom
-  univalence : (A B : Set i) → is-equiv (path-to-eq {A} {B})
+  univalence : (A B : Set i) → is-equiv (path-to-eq {i} {A} {B})
 
 abstract
   -- It does not harm to have [eq-to-path] abstract even if its type is not a
