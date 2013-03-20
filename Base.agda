@@ -9,5 +9,6 @@ open import HLevel public
 open import Equivalences public
 open import Univalence public
 open import Funext public
+open import EquivalenceLemmas public
 open import HLevelBis public
 open import FiberEquivalences public

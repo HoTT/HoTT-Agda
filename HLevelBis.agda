@@ -94,10 +94,6 @@ abstract
     → is-prop (is-equiv f)
   is-equiv-is-prop f = Π-is-truncated _ (λ x → is-contr-is-prop)
 
-  -- As a result, it is enough to compare the first part of the equivalence
-  equiv-eq : ∀ {i} {A B : Set i} {f g : A ≃ B} → π₁ f ≡ π₁ g → f ≡ g
-  equiv-eq p = Σ-eq p $ prop-has-all-paths (is-equiv-is-prop _) _ _
-
 -- Type of all n-truncated types
 
 Type≤ : (n : ℕ₋₂) (i : Level) → Set (suc i)
