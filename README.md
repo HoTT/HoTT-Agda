@@ -216,5 +216,6 @@ The `Sets` repository contains properties of the category of (h)sets.
 Copyrights
 ----------
 
-A small amount of code is adapted from
-[Nils Anders Danielsson's library](http://www.cse.chalmers.se/~nad/repos/equality/).
+The equational reasoning combinators are adapted from
+[Nils Anders Danielsson's library](http://www.cse.chalmers.se/~nad/repos/equality/)
+which is released under BSD3.
