@@ -4,9 +4,12 @@
 Imports everything that is not imported by something else.
 This is not supposed to be used anywhere, this is just a simple way to
 do `make all'
+
+This file is intentionally named index.agda so that
+Agda will generate index.html.
 -}
 
-module All where
+module index where
 
 import Base
 import Spaces.IntervalProps
@@ -18,3 +21,4 @@ import Homotopy.PushoutIsPushout
 import Homotopy.Truncation
 import Sets.QuotientUP
 import Spaces.PikSn
+import Homotopy.NaiveVanKampen
