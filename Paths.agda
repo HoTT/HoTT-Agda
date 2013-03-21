@@ -343,6 +343,11 @@ module _ {i} {A : Set i} where
   map-id : {u v : A} (p : u ≡ v) → map (id A) p ≡ p
   map-id (refl _) = refl _
 
+  app-trans : ∀ {j k} (B : A → Set j) (C : A → Set k) (f : ∀ x → B x → C x)
+    {x y} (p : x ≡ y) (a : B x)
+    → f y (transport B p a) ≡ transport C p (f x a)
+  app-trans B C f (refl _) a = refl _
+
 
   -- Move functions
   -- These functions are used when the goal is to show that path is a

@@ -35,15 +35,11 @@ module TotalMapEquiv (e : is-equiv total-map) where
   inv x y = transport P (base-path-inverse x y)
                         (π₂ ((total-equiv ⁻¹) ☆ (x , y)))
 
-  app-trans : {x y : A} (p : x ≡ y) (u : P x)
-    → f y (transport P p u) ≡ transport Q p (f x u)
-  app-trans (refl _) _ = refl _
-
   -- We prove that [inv] is a right and left inverse to [f]
 
   inv-right-inverse : (x : A) (y : Q x) → f x (inv x y) ≡ y
   inv-right-inverse x y =
-    app-trans (base-path (inverse-right-inverse total-equiv (x , y)))
+    app-trans _ _ f (base-path (inverse-right-inverse total-equiv (x , y)))
               (π₂ (inverse (_ , e) (x , y)))
     ∘ fiber-path (inverse-right-inverse total-equiv (x , y))
 
