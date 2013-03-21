@@ -16,9 +16,8 @@ is-equiv {B = B} f = (y : B) → is-contr (hfiber f y)
 _≃_ : ∀ {i j} (A : Set i) (B : Set j) → Set (max i j)  -- \simeq
 A ≃ B = Σ (A → B) is-equiv
 
-abstract
-  id-is-equiv : ∀ {i} (A : Set i) → is-equiv (id A)
-  id-is-equiv A = pathto-is-contr
+id-is-equiv : ∀ {i} (A : Set i) → is-equiv (id A)
+id-is-equiv A = pathto-is-contr
 
 id-equiv : ∀ {i} (A : Set i) → A ≃ A
 id-equiv A = (id A , id-is-equiv A)
@@ -53,13 +52,14 @@ module _ {i} {j} {A : Set i} {B : Set j} where
       (hfiber-triangle f _ (π₂ (e (f x)) (x , refl (f x))))
        ∘ opposite-map f _
 
-    -- Needs to be completely rewritten
-    adjiso-is-eq : (f : A → B) (g : B → A) (h : (y : B) → f (g y) ≡ y)
-      (h' : (x : A) → g (f x) ≡ x) (adj : (x : A) → map f (h' x) ≡ h (f x))
-      → is-equiv f
-    adjiso-is-eq f g h h' adj y =
-      ((g y , h y),
-      (λ y' → Σ-eq (! (h' (π₁ y')) ∘ map g (π₂ y'))
+  -- Needs to be completely rewritten
+  adjiso-is-eq : (f : A → B) (g : B → A) (h : (y : B) → f (g y) ≡ y)
+    (h' : (x : A) → g (f x) ≡ x) (adj : (x : A) → map f (h' x) ≡ h (f x))
+    → is-equiv f
+  adjiso-is-eq f g h h' adj y = ((g y , h y), path) where
+    abstract
+      path : ∀ (fiber : hfiber f y) → fiber ≡ (g y , h y)
+      path = λ y' → Σ-eq (! (h' (π₁ y')) ∘ map g (π₂ y'))
         (trans-app≡cst f _ (! (h' (π₁ y')) ∘ map g (π₂ y')) (π₂ y') ∘
         move-right-on-right (! (map f (! (h' (π₁ y')) ∘ map g (π₂ y'))))
           (π₂ y') (h y)
@@ -71,8 +71,9 @@ module _ {i} {j} {A : Set i} {B : Set j} where
          ∘ ((whisker-left (! (map f (map g (π₂ y')))) (adj (π₁ y'))
          ∘ whisker-right (h (f (π₁ y'))) (map ! (compose-map f g (π₂ y'))
                                          ∘ opposite-map (f ◯ g) (π₂ y')))
-         ∘ homotopy-naturality-toid (f ◯ g) h (! (π₂ y')))))))))
+         ∘ homotopy-naturality-toid (f ◯ g) h (! (π₂ y')))))))
 
+  abstract
     -- Needs to be completely rewritten
     iso-is-adjiso : (f : A → B) (g : B → A) (h : (y : B) → f (g y) ≡ y)
       (h' : (x : A) → g (f x) ≡ x)
@@ -92,15 +93,15 @@ module _ {i} {j} {A : Set i} {B : Set j} where
            ∘ ! (homotopy-naturality-toid (f ◯ g) h (map f (h' x))))
            ∘ whisker-right (h (f x)) (map-compose f g (map f (h' x)))))))))
 
-    iso-is-eq : (f : A → B) (g : B → A) (h : (y : B) → f (g y) ≡ y)
-      (h' : (x : A) → g (f x) ≡ x) → is-equiv f
-    iso-is-eq f g h h' = adjiso-is-eq f g h (π₁ (iso-is-adjiso f g h h'))
-      (π₂ (iso-is-adjiso f g h h'))
+  iso-is-eq : (f : A → B) (g : B → A) (h : (y : B) → f (g y) ≡ y)
+    (h' : (x : A) → g (f x) ≡ x) → is-equiv f
+  iso-is-eq f g h h' = adjiso-is-eq f g h (π₁ (iso-is-adjiso f g h h'))
+    (π₂ (iso-is-adjiso f g h h'))
 
-    -- When using [iso-is-eq], the other map which is given is an inverse
-    inverse-iso-is-eq : (f : A → B) (g : B → A) (h : (y : B) → f (g y) ≡ y)
-      (h' : (x : A) → g (f x) ≡ x) → inverse (f , iso-is-eq f g h h') ≡ g
-    inverse-iso-is-eq f g h h' = refl _
+  -- When using [iso-is-eq], the other map which is given is an inverse
+  inverse-iso-is-eq : (f : A → B) (g : B → A) (h : (y : B) → f (g y) ≡ y)
+    (h' : (x : A) → g (f x) ≡ x) → inverse (f , iso-is-eq f g h h') ≡ g
+  inverse-iso-is-eq f g h h' = refl _
 
 -- The inverse of an equivalence is an equivalence
 inverse-is-equiv : ∀ {i} {j} {A : Set i} {B : Set j} (f : A ≃ B)
