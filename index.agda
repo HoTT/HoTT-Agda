@@ -21,4 +21,4 @@ import Homotopy.PushoutIsPushout
 import Homotopy.Truncation
 import Sets.QuotientUP
 import Spaces.PikSn
-import Homotopy.NaiveVanKampen
+import Homotopy.VanKampen
