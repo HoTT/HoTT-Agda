@@ -62,6 +62,13 @@ module _ {i} {A : Set i} where
       π₀-extend ⦃ λ _ → ≡-is-set $ π₀-is-set _ ⦄ (λ q →
         ap proj $ concat-ap f p q))
 
+  ap₀-compose : ∀ {j k} {B : Set j} {C : Set k} (g : B → C) (f : A → B)
+    {x y : A} (p : x ≡₀ y) → ap₀ (g ◯ f) p ≡ ap₀ g (ap₀ f p)
+  ap₀-compose f g =
+    π₀-extend ⦃ λ _ → ≡-is-set $ π₀-is-set _ ⦄ (λ p →
+      ap proj $ ap-compose f g p)
+
+module _ {i} {A : Set i} where
   trans-id≡₀cst : {a b c : A} (p : b ≡ c) (q : b ≡₀ a)
     → transport (λ x → x ≡₀ a) p q ≡ proj (! p) ∘₀ q
   trans-id≡₀cst (refl _) q = ! $ refl₀-left-unit q
@@ -70,8 +77,20 @@ module _ {i} {A : Set i} where
     → transport (λ x → a ≡₀ x) p q ≡ q ∘₀ proj p
   trans-cst≡₀id (refl _) q = ! $ refl₀-right-unit q
 
-  ap₀-compose : ∀ {j k} {B : Set j} {C : Set k} (g : B → C) (f : A → B)
-    {x y : A} (p : x ≡₀ y) → ap₀ (g ◯ f) p ≡ ap₀ g (ap₀ f p)
-  ap₀-compose f g =
-    π₀-extend ⦃ λ _ → ≡-is-set $ π₀-is-set _ ⦄ (λ p →
-      ap proj $ ap-compose f g p)
+module _ {i} {A : Set i} where
+  homotopy₀-naturality : ∀ {j} {B : Set j} (f g : A → B)
+    (p : (x : A) → f x ≡₀ g x) {x y : A} (q : x ≡₀ y)
+    → ap₀ f q ∘₀ p y ≡ p x ∘₀ ap₀ g q
+  homotopy₀-naturality f g p {x} {y} q = π₀-extend
+    ⦃ λ q → ≡-is-set {x = ap₀ f q ∘₀ p y} {y = p x ∘₀ ap₀ g q}
+            $ π₀-is-set (f x ≡ g y) ⦄
+    (lemma {x} {y}) q
+    where
+      lemma : ∀ {x y : A} (q : x ≡ y) → ap₀ f (proj q) ∘₀ p y ≡ p x ∘₀ ap₀ g (proj q)
+      lemma (refl _) =
+        refl₀ _ ∘₀ p _
+          ≡⟨ refl₀-left-unit (p _) ⟩
+        p _
+          ≡⟨ ! $ refl₀-right-unit _ ⟩∎
+        p _ ∘₀ refl₀ _
+          ∎

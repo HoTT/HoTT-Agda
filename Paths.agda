@@ -304,6 +304,10 @@ module _ {i} {A : Set i} where
     → ! (map f p) ≡ map f (! p)
   opposite-map f (refl _) = refl _
 
+  opposite-ap : ∀ {j} {B : Set j} (f : A → B) {x y : A} (p : x ≡ y)
+    → ! (ap f p) ≡ ap f (! p)
+  opposite-ap f (refl _) = refl _
+
   map-opposite : ∀ {j} {B : Set j} (f : A → B) {x y : A} (p : x ≡ y)
     → map f (! p) ≡ ! (map f p)
   map-opposite f (refl _) = refl _
