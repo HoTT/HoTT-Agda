@@ -61,6 +61,10 @@ abstract
     → (is-set B → is-set (A → B))
   →-is-set = →-is-truncated ⟨0⟩
 
+  →-is-prop : ∀ {i j} {A : Set i} {B : Set j}
+    → (is-prop B → is-prop (A → B))
+  →-is-prop = →-is-truncated ⟨-1⟩
+
   is-truncated-is-prop : ∀ {i} (n : ℕ₋₂) {A : Set i}
     → is-prop (is-truncated n A)
   is-truncated-is-prop ⟨-2⟩ = is-contr-is-prop
