@@ -138,11 +138,6 @@ equiv-compose : ∀ {i j k} {A : Set i} {B : Set j} {C : Set k}
   → (A ≃ B → B ≃ C → A ≃ C)
 equiv-compose f g = ((π₁ g ◯ π₁ f) , compose-is-equiv f g)
 
-infix 8 _⊙_  -- \odot
-_⊙_ : ∀ {i j k} {A : Set i} {B : Set j} {C : Set k}
-  → (A ≃ B → B ≃ C → A ≃ C)
-_⊙_ = equiv-compose
-
 -- An equivalence induces an equivalence on the path spaces
 -- The proofs here can probably be simplified
 module _ {i j} {A : Set i} {B : Set j} (f : A ≃ B) (x y : A) where
