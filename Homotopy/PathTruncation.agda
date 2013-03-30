@@ -65,3 +65,10 @@ private
 τ-path-equiv-path-τ-S : {x y : A} → τ n (x ≡ y) ≃ (proj {n = S n} x ≡ proj y)
 τ-path-equiv-path-τ-S {x} {y} =
   (to x y , iso-is-eq _ (from x y) (to-from x y) (from-to x y))
+
+module _ where
+  open import Homotopy.Connected
+
+  has-all-τ-paths : ∀ ⦃ _ : is-connected (S n) A ⦄ (p q : A) → τ n (p ≡ q)
+  has-all-τ-paths ⦃ _ , path ⦄ p q = inverse τ-path-equiv-path-τ-S
+    $ path (proj p) ∘ ! (path $ proj q)
