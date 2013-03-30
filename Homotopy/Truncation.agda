@@ -67,9 +67,8 @@ abstract
 π₀ : Set i → Set i
 π₀ = τ ⟨0⟩
 
-abstract
-  π₀-is-set : (A : Set i) → is-set (π₀ A)
-  π₀-is-set A = T.τ-is-truncated _ _
+π₀-is-set : (A : Set i) → is-set (π₀ A)
+π₀-is-set A = T.τ-is-truncated _ _
 
 π₀-extend : ∀ {j} {A : Set i} {P : π₀ A → Set j}
   ⦃ p : (x : π₀ A) → is-set (P x) ⦄ (f : (x : A) → P (proj x))
