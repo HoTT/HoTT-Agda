@@ -28,7 +28,7 @@ module _ (l : legend i C) where
         ⦃ λ _ → b-code-b-is-set _ _ _ _ ⦄
         (λ n →
           transport (λ p → code p p) (glue $ loc n) (⟧a refl₀ (f $ loc n))
-              ≡⟨ trans-2 code (glue $ loc n) $ ⟧a refl₀ (f $ loc n) ⟩
+              ≡⟨ trans-diag code (glue $ loc n) $ ⟧a refl₀ (f $ loc n) ⟩
           transport (λ p → code p (right $ g $ loc n)) (glue $ loc n)
             (transport (a-code (f $ loc n)) (glue $ loc n) (⟧a refl₀ (f $ loc n)))
               ≡⟨ ap (transport (λ p → code p (right $ g $ loc n)) (glue $ loc n))
