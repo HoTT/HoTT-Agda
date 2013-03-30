@@ -78,9 +78,14 @@ apd! = map-dep!
 
 module _ {i j} {A : Set i} {P : A → Set j} where
 
+  ap2 : ∀ {k} {Q : Set k} (f : (a : A) → P a → Q)
+    {x y : A} (p : x ≡ y) {u : P x} {v : P y}
+    (q : transport P p u ≡ v) → f x u ≡ f y v
+  ap2 f (refl _) (refl _) = refl _
+
   Σ-eq : {x y : A} (p : x ≡ y) {u : P x} {v : P y}
     (q : transport P p u ≡ v) → (x , u) ≡ (y , v)
-  Σ-eq (refl _) (refl _) = refl _
+  Σ-eq = ap2 _,_
 
   -- Same as [Σ-eq] but with only one argument
   total-Σ-eq : {xu yv : Σ A P}
