@@ -56,10 +56,12 @@ module Reconstruct where
     strip = #strip
 
     postulate
+      ribbon-is-set : ∀ a₂ → is-set (ribbon a₂)
       paste : ∀ {a₂} y loop (p : a ≡₀ a₂)
         → strip (y ∙ loop) p ≡ strip y (loop ∘₀ p)
 
     ribbon-rec : ∀ a₂ {j} (P : ribbon a₂ → Set j)
+      ⦃ P-is-set : ∀ r → is-set (P r) ⦄
       (strip* : ∀ y p → P (strip y p))
       (paste* : ∀ y loop p → transport P (paste y loop p) (strip* (y ∙ loop) p)
                            ≡ strip* y (loop ∘₀ p))
