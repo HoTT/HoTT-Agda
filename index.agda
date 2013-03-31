@@ -22,3 +22,4 @@ import Homotopy.Truncation
 import Sets.QuotientUP
 import Spaces.PikSn
 import Homotopy.VanKampen
+import Homotopy.Cover
