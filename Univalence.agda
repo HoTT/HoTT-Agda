@@ -11,26 +11,22 @@ module Univalence {i} where
 postulate  -- Univalence axiom
   univalence : (A B : Set i) → is-equiv (path-to-eq {i} {A} {B})
 
-abstract
-  -- It does not harm to have [eq-to-path] abstract even if its type is not a
-  -- prop because the definition uses an axiom so there is no computational
-  -- content anyway
-  eq-to-path : {A B : Set i} → (A ≃ B → A ≡ B)
-  eq-to-path {A} {B} = inverse (path-to-eq , univalence A B)
-
-  eq-to-path-is-equiv : {A B : Set i} → is-equiv (eq-to-path {A} {B})
-  eq-to-path-is-equiv = inverse-is-equiv (path-to-eq , univalence _ _)
-
-  eq-to-path-right-inverse : {A B : Set i} (f : A ≃ B)
-    → path-to-eq (eq-to-path f) ≡ f
-  eq-to-path-right-inverse f =
-    inverse-right-inverse (path-to-eq , univalence _ _) f
-
 path-to-eq-equiv : {A B : Set i} → ((A ≡ B) ≃ (A ≃ B))
 path-to-eq-equiv = (path-to-eq , univalence _ _)
 
 eq-to-path-equiv : {A B : Set i} → ((A ≃ B) ≃ (A ≡ B))
-eq-to-path-equiv = (eq-to-path , eq-to-path-is-equiv)
+eq-to-path-equiv = path-to-eq-equiv ⁻¹
+
+eq-to-path : {A B : Set i} → (A ≃ B → A ≡ B)
+eq-to-path {A} {B} = π₁ eq-to-path-equiv
+
+eq-to-path-right-inverse : {A B : Set i} (f : A ≃ B)
+  → path-to-eq (eq-to-path f) ≡ f
+eq-to-path-right-inverse = inverse-right-inverse path-to-eq-equiv
+
+path-to-eq-right-inverse : {A B : Set i} (f : A ≡ B)
+  → eq-to-path (path-to-eq f) ≡ f
+path-to-eq-right-inverse = inverse-left-inverse path-to-eq-equiv
 
 -- Transport in the structural fibration of a universe
 
