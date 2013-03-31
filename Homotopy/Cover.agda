@@ -55,10 +55,10 @@ covering-eq {cov[ ._ , set₁ ]} {cov[ ._ , set₂ ]} (refl _) =
     (prop-has-all-paths (Π-is-prop λ _ → is-set-is-prop) _ _)
 
 module Reconstruct where
-  module G = Pregroup (Group.g (πⁿ-group 1 (A , a)))
+  module G = Group (πⁿ-group 1 (A , a))
 
-  G-is-set : is-set (G.∣_∣)
-  G-is-set = Group.set (πⁿ-group 1 (A , a))
+  G-is-set : is-set G.elems
+  G-is-set = G.set
 
   -- The right group action with respect to the π¹ ( A , a )
   -- Y should be some set, but that condition is not needed
@@ -66,7 +66,7 @@ module Reconstruct where
   record action (Y : Set i) : Set (suc i) where
     constructor act[_,_,_]
     field
-      _∙_ : Y → G.∣_∣ → Y
+      _∙_ : Y → G.elems → Y
       right-unit : ∀ y → y ∙ G.e ≡ y
       assoc : ∀ y p₁ p₂ → (y ∙ p₁) ∙ p₂ ≡ y ∙ (p₁ G.∙ p₂)
 
@@ -127,7 +127,7 @@ module Reconstruct where
     gset = Σ (Set i) (λ Y → action Y × is-set Y)
 
     gset-eq : ∀ {gs₁ gs₂ : gset} (Y≡ : π₁ gs₁ ≡ π₁ gs₂)
-      → (∙≡ : transport (λ Y → Y → G.∣_∣ → Y) Y≡ (action._∙_ (π₁ (π₂ gs₁)))
+      → (∙≡ : transport (λ Y → Y → G.elems → Y) Y≡ (action._∙_ (π₁ (π₂ gs₁)))
             ≡ action._∙_ (π₁ (π₂ gs₂)))
       → gs₁ ≡ gs₂
     gset-eq
@@ -303,13 +303,13 @@ module Reconstruct where
               ∎)
           (λ _ _ _ → prop-has-all-paths (ribbon-is-set a _ _) _ _))
 
-    trans-eq-∙ : ∀ {Y₁ Y₂ : Set i} (Y≃ : Y₁ ≃ Y₂) (_∙_ : Y₁ → G.∣_∣ → Y₁) (y₂ : Y₂) (g : G.∣_∣)
-      → transport (λ Y → Y → G.∣_∣ → Y) (eq-to-path Y≃) _∙_ y₂ g ≡ (Y≃ ☆ (inverse Y≃ y₂ ∙ g))
+    trans-eq-∙ : ∀ {Y₁ Y₂ : Set i} (Y≃ : Y₁ ≃ Y₂) (_∙_ : Y₁ → G.elems → Y₁) (y₂ : Y₂) (g : G.elems)
+      → transport (λ Y → Y → G.elems → Y) (eq-to-path Y≃) _∙_ y₂ g ≡ (Y≃ ☆ (inverse Y≃ y₂ ∙ g))
     trans-eq-∙ = equiv-induction
       (λ {Y₁ Y₂ : Set i} (Y≃ : Y₁ ≃ Y₂)
-        → ∀ (_∙_ : Y₁ → G.∣_∣ → Y₁) (y₂ : Y₂) (g : G.∣_∣)
-        → transport (λ Y → Y → G.∣_∣ → Y) (eq-to-path Y≃) _∙_ y₂ g ≡ (Y≃ ☆ (inverse Y≃ y₂ ∙ g)))
-      (λ Y _∙_ y₂ g → ap (λ x → transport (λ Y → Y → G.∣_∣ → Y) x _∙_ y₂ g)
+        → ∀ (_∙_ : Y₁ → G.elems → Y₁) (y₂ : Y₂) (g : G.elems)
+        → transport (λ Y → Y → G.elems → Y) (eq-to-path Y≃) _∙_ y₂ g ≡ (Y≃ ☆ (inverse Y≃ y₂ ∙ g)))
+      (λ Y _∙_ y₂ g → ap (λ x → transport (λ Y → Y → G.elems → Y) x _∙_ y₂ g)
                          $ path-to-eq-right-inverse $ refl _)
 
     trans-trace : ∀ {Y} (act : action Y) {a₁ a₂} (q : a₁ ≡ a₂) y p
@@ -326,7 +326,7 @@ module Reconstruct where
       in gset-eq
           (eq-to-path ≃Y)
           (funext λ y → funext $ π₀-extend ⦃ λ _ → ≡-is-set Y-is-set ⦄ λ p →
-            transport (λ Y → Y → G.∣_∣ → Y) (eq-to-path ≃Y) _⊙_ y (proj p)
+            transport (λ Y → Y → G.elems → Y) (eq-to-path ≃Y) _⊙_ y (proj p)
               ≡⟨ trans-eq-∙ ≃Y _⊙_ y (proj p) ⟩
             ⇒Y (transport (ribbon act) p (trace y (refl₀ _)))
               ≡⟨ ap ⇒Y $ trans-trace act p y (refl₀ _) ⟩∎

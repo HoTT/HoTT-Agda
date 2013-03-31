@@ -14,117 +14,117 @@ record Pregroup i : Set (suc i) where
   constructor pregroup
   field
     -- Stuff
-    ∣_∣ : Set i  -- \|
+    elems : Set i  -- \|
 
     -- Structure
-    _∙_ : ∣_∣ → ∣_∣ → ∣_∣  -- \.
-    e : ∣_∣
-    _′ : ∣_∣ → ∣_∣  -- \'
+    _∙_ : elems → elems → elems  -- \.
+    e : elems
+    _′ : elems → elems  -- \'
 
     -- Properties
-    assoc : (x y z : ∣_∣) → (x ∙ y) ∙ z ≡ x ∙ (y ∙ z)
-    right-unit : (x : ∣_∣) → x ∙ e ≡ x
-    left-unit : (x : ∣_∣) → e ∙ x ≡ x
-    right-inverse : (x : ∣_∣) → x ∙ (x ′) ≡ e
-    left-inverse : (x : ∣_∣) → (x ′) ∙ x ≡ e
-open Pregroup
+    assoc : ∀ x y z → (x ∙ y) ∙ z ≡ x ∙ (y ∙ z)
+    right-unit : ∀ x → x ∙ e ≡ x
+    left-unit : ∀ x → e ∙ x ≡ x
+    right-inverse : ∀ x → x ∙ (x ′) ≡ e
+    left-inverse : ∀ x → (x ′) ∙ x ≡ e
 
 record Group i : Set (suc i) where
   constructor group
   field
-    g : Pregroup i
-    set : is-set (∣ g ∣)
-open Group
+    pre : Pregroup i
+  open Pregroup pre
+  field
+    set : is-set elems
+  open Pregroup pre public
 
 -- Group structure on [unit]
 unit-group : ∀ {i} → Group i
-unit-group {i} =
-  group
-    (pregroup
-    unit
-    (λ _ _ → tt)
-    tt
-    (λ _ → tt)
-    (λ _ _ _ → refl tt)
-    (λ _ → refl tt)
-    (λ _ → refl tt)
-    (λ _ → refl tt)
-    (λ _ → refl tt))
-  unit-is-set
+unit-group {i} = record
+  { pre = record
+    { elems = unit
+    ; _∙_ = λ _ _ → tt
+    ; e = tt
+    ; _′ = λ _ → tt
+    ; assoc = λ _ _ _ → refl tt
+    ; right-unit = λ _ → refl tt
+    ; left-unit = λ _ → refl tt
+    ; right-inverse = λ _ → refl tt
+    ; left-inverse = λ _ → refl tt
+    }
+  ; set = unit-is-set
+  }
 
 postulate  -- Tedious because I have a terrible definition of groups
- unit-group-unique : ∀ {i} (G : Group i) (c : is-contr ∣ g G ∣) → G ≡ unit-group
+  unit-group-unique : ∀ {i} (G : Group i) →
+    let open Group G in (c : is-contr elems) → G ≡ unit-group
 
 -- Every pregroup can be truncated to a group
 π₀-pregroup : ∀ {i} → Pregroup i → Group i
-π₀-pregroup (pregroup ∣_∣ _∙_ e _′ assoc right-unit left-unit
-             right-inverse left-inverse) =
-  group (pregroup
-    π₀-∣∣
-    _π₀-•_
-    π₀-e
-    π₀-′
-    π₀-assoc
-    π₀-right-unit
-    π₀-left-unit
-    π₀-right-inverse
-    π₀-left-inverse)
-  (π₀-is-set _) where
+π₀-pregroup pre = record
+  { pre = record
+    { elems = elems₀
+    ; _∙_ = _•₀_
+    ; e = e₀
+    ; _′ = _′₀
+    ; assoc = assoc₀
+    ; right-unit = right-unit₀
+    ; left-unit = left-unit₀
+    ; right-inverse = right-inverse₀
+    ; left-inverse = left-inverse₀
+    }
+  ; set = elems₀-is-set
+  } where
 
-    π₀→π₀-is-set : is-set (π₀ ∣_∣ → π₀ ∣_∣)
-    π₀→π₀-is-set = →-is-truncated _ (π₀-is-set ∣_∣)
+    open Pregroup pre
 
-    π₀-∣∣ : Set _
-    π₀-∣∣ = π₀ ∣_∣
+    elems₀ : Set _
+    elems₀ = π₀ elems
 
-    _π₀-•_ : π₀-∣∣ → π₀-∣∣ → π₀-∣∣
-    _π₀-•_ = π₀-extend-nondep ⦃ →-is-truncated _ (π₀-is-set ∣_∣) ⦄
-              (λ x → π₀-extend-nondep
+    elems₀-is-set : is-set elems₀
+    elems₀-is-set = π₀-is-set elems
+
+    _•₀_ : elems₀ → elems₀ → elems₀
+    _•₀_ = π₀-extend-nondep ⦃ →-is-set $ elems₀-is-set ⦄
+              (λ x → π₀-extend-nondep ⦃ elems₀-is-set ⦄
                 (λ y → proj (x ∙ y)))
 
-    π₀-e : π₀-∣∣
-    π₀-e = proj e
+    e₀ : π₀ elems
+    e₀ = proj e
 
-    π₀-′ : π₀-∣∣ → π₀-∣∣
-    π₀-′ = π₀-extend-nondep (λ x → proj (x ′))
-
-    abstract
-      π₀-assoc : (x y z : π₀-∣∣) → (x π₀-• y) π₀-• z ≡ x π₀-• (y π₀-• z)
-      π₀-assoc =
-        (π₀-extend ⦃ λ _ → Π-is-truncated _
-                     (λ _ → Π-is-truncated _
-                     (λ _ → truncated-is-truncated-S _
-                            (π₀-is-set _) _ _)) ⦄
-          (λ x → π₀-extend ⦃ λ _ → Π-is-truncated _
-                             (λ _ → truncated-is-truncated-S _
-                                    (π₀-is-set _) _ _) ⦄
-            (λ y → π₀-extend ⦃ λ _ → truncated-is-truncated-S _
-                                      (π₀-is-set _) _ _ ⦄
-              (λ z → map proj (assoc x y z)))))
+    _′₀ : elems₀ → elems₀
+    _′₀ = π₀-extend-nondep ⦃ elems₀-is-set ⦄ (λ x → proj (x ′))
 
     abstract
-      π₀-right-unit : (x : π₀-∣∣) → x π₀-• π₀-e ≡ x
-      π₀-right-unit =
-        (π₀-extend ⦃ λ _ → truncated-is-truncated-S _ (π₀-is-set _) _ _ ⦄
-          (map proj ◯ right-unit))
+      assoc₀ : ∀ x y z → (x •₀ y) •₀ z ≡ x •₀ (y •₀ z)
+      assoc₀ =
+        (π₀-extend ⦃ λ _ → Π-is-set λ _ → Π-is-set λ _ → ≡-is-set elems₀-is-set ⦄
+          (λ x → π₀-extend ⦃ λ _ → Π-is-set λ _ → ≡-is-set elems₀-is-set ⦄
+            (λ y → π₀-extend ⦃ λ _ → ≡-is-set elems₀-is-set ⦄
+              (λ z → ap proj (assoc x y z)))))
 
     abstract
-      π₀-left-unit : (x : π₀-∣∣) → π₀-e π₀-• x ≡ x
-      π₀-left-unit =
-        (π₀-extend ⦃ λ _ → truncated-is-truncated-S _ (π₀-is-set _) _ _ ⦄
-          (map proj ◯ left-unit))
+      right-unit₀ : ∀ x → x •₀ e₀ ≡ x
+      right-unit₀ =
+        (π₀-extend ⦃ λ _ → ≡-is-set elems₀-is-set ⦄
+          (ap proj ◯ right-unit))
 
     abstract
-      π₀-right-inverse : (x : π₀-∣∣) → x π₀-• (π₀-′ x) ≡ π₀-e
-      π₀-right-inverse =
-        (π₀-extend ⦃ λ _ → truncated-is-truncated-S _ (π₀-is-set _) _ _ ⦄
-          (map proj ◯ right-inverse))
+      left-unit₀ : ∀ x → e₀ •₀ x ≡ x
+      left-unit₀ =
+        (π₀-extend ⦃ λ _ → ≡-is-set elems₀-is-set ⦄
+          (ap proj ◯ left-unit))
 
     abstract
-      π₀-left-inverse : (x : π₀-∣∣) → (π₀-′ x) π₀-• x ≡ π₀-e
-      π₀-left-inverse =
-        (π₀-extend ⦃ λ _ → truncated-is-truncated-S _ (π₀-is-set _) _ _ ⦄
-          (map proj ◯ left-inverse))
+      right-inverse₀ : ∀ x → x •₀ (x ′₀) ≡ e₀
+      right-inverse₀ =
+        (π₀-extend ⦃ λ _ → ≡-is-set elems₀-is-set ⦄
+          (ap proj ◯ right-inverse))
+
+    abstract
+      left-inverse₀ : ∀ x → (x ′₀) •₀ x ≡ e₀
+      left-inverse₀ =
+        (π₀-extend ⦃ λ _ → ≡-is-set elems₀-is-set ⦄
+          (ap proj ◯ left-inverse))
 
 -- Not used
 
