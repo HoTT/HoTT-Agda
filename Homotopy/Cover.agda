@@ -55,10 +55,7 @@ covering-eq {cov[ ._ , set₁ ]} {cov[ ._ , set₂ ]} (refl _) =
     (prop-has-all-paths (Π-is-prop λ _ → is-set-is-prop) _ _)
 
 module Reconstruct where
-  module G = Group (πⁿ-group 1 (A , a))
-
-  G-is-set : is-set G.elems
-  G-is-set = G.set
+  module G = group (πⁿ-group 1 (A , a))
 
   -- The right group action with respect to the π¹ ( A , a )
   -- Y should be some set, but that condition is not needed

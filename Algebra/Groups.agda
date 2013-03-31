@@ -10,8 +10,8 @@ module Algebra.Groups where
 -- A pregroup is a group whose carrier is not a required to be a set (but
 -- without higher coherences)
 
-record Pregroup i : Set (suc i) where
-  constructor pregroup
+record pregroup i : Set (suc i) where
+  -- constructor pregroup
   field
     -- Stuff
     elems : Set i  -- \|
@@ -28,17 +28,17 @@ record Pregroup i : Set (suc i) where
     right-inverse : ∀ x → x ∙ (x ′) ≡ e
     left-inverse : ∀ x → (x ′) ∙ x ≡ e
 
-record Group i : Set (suc i) where
-  constructor group
+record group i : Set (suc i) where
+  -- constructor group
   field
-    pre : Pregroup i
-  open Pregroup pre
+    pre : pregroup i
+  open pregroup pre
   field
     set : is-set elems
-  open Pregroup pre public
+  open pregroup pre public
 
 -- Group structure on [unit]
-unit-group : ∀ {i} → Group i
+unit-group : ∀ {i} → group i
 unit-group {i} = record
   { pre = record
     { elems = unit
@@ -55,11 +55,11 @@ unit-group {i} = record
   }
 
 postulate  -- Tedious because I have a terrible definition of groups
-  unit-group-unique : ∀ {i} (G : Group i) →
-    let open Group G in (c : is-contr elems) → G ≡ unit-group
+  unit-group-unique : ∀ {i} (G : group i) →
+    let open group G in (c : is-contr elems) → G ≡ unit-group
 
 -- Every pregroup can be truncated to a group
-π₀-pregroup : ∀ {i} → Pregroup i → Group i
+π₀-pregroup : ∀ {i} → pregroup i → group i
 π₀-pregroup pre = record
   { pre = record
     { elems = elems₀
@@ -75,7 +75,7 @@ postulate  -- Tedious because I have a terrible definition of groups
   ; set = elems₀-is-set
   } where
 
-    open Pregroup pre
+    open pregroup pre
 
     elems₀ : Set _
     elems₀ = π₀ elems

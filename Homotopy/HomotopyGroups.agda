@@ -15,34 +15,26 @@ module Homotopy.HomotopyGroups {i} where
 Ω : (X : pType i) → pType i
 Ω X = ((⋆ X ≡ ⋆ X), refl (⋆ X))
 
-Ω-pregroup : (X : pType i) → Pregroup i
-Ω-pregroup X = pregroup
-  -- Carrier
-  (⋆ X ≡ ⋆ X)
-  -- Multiplication
-  _∘_
-  -- Unit
-  (refl _)
-  -- Inverse
-  !
-  -- Associativity
-  concat-assoc
-  -- Right unity
-  refl-right-unit
-  -- Left unity
-  refl
-  -- Right inverse
-  opposite-right-inverse
-  -- Left inverse
-  opposite-left-inverse
+Ω-pregroup : (X : pType i) → pregroup i
+Ω-pregroup X = record
+  { elems         = (⋆ X) ≡ (⋆ X)
+  ; _∙_           = _∘_
+  ; e             = refl _
+  ; _′            = !
+  ; assoc         = concat-assoc
+  ; right-unit    = refl-right-unit
+  ; left-unit     = refl
+  ; right-inverse = opposite-right-inverse
+  ; left-inverse  = opposite-left-inverse
+  }
 
-Ωⁿ-pregroup : (n : ℕ) ⦃ >0 : n ≢ O ⦄ (X : pType i) → Pregroup i
+Ωⁿ-pregroup : (n : ℕ) ⦃ >0 : n ≢ O ⦄ (X : pType i) → pregroup i
 Ωⁿ-pregroup O ⦃ >0 ⦄ X = abort-nondep (>0 (refl O))
 Ωⁿ-pregroup 1 X = Ω-pregroup X
 Ωⁿ-pregroup (S (S n)) X = Ωⁿ-pregroup (S n) (Ω X)
 
 -- Homotopy groups
-πⁿ-group : (n : ℕ) ⦃ >0 : n ≢ O ⦄ (X : pType i) → Group i
+πⁿ-group : (n : ℕ) ⦃ >0 : n ≢ O ⦄ (X : pType i) → group i
 πⁿ-group n X = π₀-pregroup (Ωⁿ-pregroup n X)
 
 -- Homotopy groups of loop space
