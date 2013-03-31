@@ -69,6 +69,6 @@ private
 module _ where
   open import Homotopy.Connected
 
-  has-all-τ-paths : ∀ ⦃ _ : is-connected (S n) A ⦄ (p q : A) → τ n (p ≡ q)
-  has-all-τ-paths ⦃ _ , path ⦄ p q = inverse τ-path-equiv-path-τ-S
+  connected-has-all-τ-paths : is-connected (S n) A → (p q : A) → τ n (p ≡ q)
+  connected-has-all-τ-paths (_ , path) p q = inverse τ-path-equiv-path-τ-S
     $ path (proj p) ∘ ! (path $ proj q)
