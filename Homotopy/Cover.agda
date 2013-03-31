@@ -225,10 +225,6 @@ module Reconstruct where
     ribbon⇒fiber cov a₂ = let open covering cov in
       ribbon-rec-nondep a₂ (fiber a₂) ⦃ fiber-is-set a₂ ⦄ (tracing cov) (compose-tracing cov)
 
-    private
-      postulate
-        magic : ∀ {i} {X : Set i} → X
-
     abstract
       ribbon⇒fiber⇒ribbon : ∀ cov a₂ r → fiber⇒ribbon cov a₂ (ribbon⇒fiber cov a₂ r) ≡ r
       ribbon⇒fiber⇒ribbon cov a₂ = ribbon-rec a₂
