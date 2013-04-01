@@ -135,10 +135,12 @@ module _ {i} {A : Set i} where
   opposite-right-inverse : {x y : A} (p : x ≡ y) → p ∘ (! p) ≡ refl _
   opposite-right-inverse (refl _) = refl _
 
+  -- This is useless in the presence of ap & equation reasioning combinators
   whisker-left : {x y z : A} (p : x ≡ y) {q r : y ≡ z}
     → (q ≡ r → p ∘ q ≡ p ∘ r)
   whisker-left p (refl _) = refl _
 
+  -- This is useless in the presence of ap & equation reasioning combinators
   whisker-right : {x y z : A} (p : y ≡ z) {q r : x ≡ y}
     → (q ≡ r → q ∘ p ≡ r ∘ p)
   whisker-right p (refl _) = refl _
