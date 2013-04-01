@@ -214,7 +214,6 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
       cov = fundamental-covering
       open covering cov
       open gset fundamental-gset
-      open action act
 
       center′ : Σ A fiber
       center′ = (a , trace {act = act} (refl₀ _) (refl₀ _))

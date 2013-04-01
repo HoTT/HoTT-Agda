@@ -30,6 +30,7 @@ module Algebra.GroupSets {i} (grp : group i) where
       carrier : Set i
       act : action carrier
       set : is-set carrier
+    open action act public
 
   gset-eq : ∀ {gs₁ gs₂ : gset} (carrier≡ : gset.carrier gs₁ ≡ gset.carrier gs₂)
     → (∙≡ : transport (λ Y → Y → G.carrier → Y) carrier≡ (action._∙_ (gset.act gs₁))
