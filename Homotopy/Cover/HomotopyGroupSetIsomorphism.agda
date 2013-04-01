@@ -88,15 +88,17 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
     fiber+skel⇒ribbon cov a₂ y = π₀-extend-nondep ⦃ ribbon-is-set a₂ ⦄ skeleton₁-lifted
 
     private
-      base-path-magic : ∀ a₂ → [ a ≡ a₂ ]
-      base-path-magic = connected-has-all-τ-paths A-is-conn a
+      base-path₋₁ : ∀ a₂ → [ a ≡ a₂ ]
+      base-path₋₁ = connected-has-all-τ-paths A-is-conn a
 
-      skel-magic : ∀ cov a₂ y → skel cov a₂ y
-      skel-magic cov a₂ y = []-extend-nondep ⦃ skel-is-prop cov a₂ y ⦄
-        (proj ◯ point) (base-path-magic a₂)
+      skel-magic : ∀ cov a₂ y → [ a ≡ a₂ ] → skel cov a₂ y
+      skel-magic cov a₂ y = []-extend-nondep ⦃ skel-is-prop cov a₂ y ⦄ (proj ◯ point)
+
+    fiber+path₋₁⇒ribbon : ∀ cov a₂ → covering.fiber cov a₂ → [ a ≡ a₂ ] → ribbon (covering⇒action cov) a₂
+    fiber+path₋₁⇒ribbon cov a₂ y = fiber+skel⇒ribbon cov a₂ y ◯ skel-magic cov a₂ y
 
     fiber⇒ribbon : ∀ cov a₂ → covering.fiber cov a₂ → ribbon (covering⇒action cov) a₂
-    fiber⇒ribbon cov a₂ y = fiber+skel⇒ribbon cov a₂ y $ skel-magic cov a₂ y
+    fiber⇒ribbon cov a₂ y = fiber+path₋₁⇒ribbon cov a₂ y $ base-path₋₁ a₂
 
     ribbon⇒fiber : ∀ cov a₂ → ribbon (covering⇒action cov) a₂ → covering.fiber cov a₂
     ribbon⇒fiber cov a₂ = let open covering cov in
@@ -110,10 +112,7 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
         (λ y p → []-extend
           -- All these ugly things will go away when bp = proj bp′
           ⦃ λ bp → ribbon-is-set a₂
-                    (fiber+skel⇒ribbon cov a₂ (tracing cov y p)
-                      ([]-extend-nondep
-                        ⦃ skel-is-prop cov a₂ (tracing cov y p) ⦄
-                        (proj ◯ point) bp))
+                    (fiber+path₋₁⇒ribbon cov a₂ (tracing cov y p) bp)
                     (trace y p) ⦄
           (λ bp → -- real base path
               trace (tracing cov (tracing cov y p) (proj $ ! bp)) (proj bp)
@@ -128,17 +127,14 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
                 ≡⟨ ap (trace y) $ refl₀-right-unit p ⟩∎
               trace y p
                 ∎)
-          (base-path-magic a₂))
+          (base-path₋₁ a₂))
         (λ _ _ _ → prop-has-all-paths (ribbon-is-set a₂ _ _) _ _)
 
       fiber⇒ribbon⇒fiber : ∀ cov a₂ y → ribbon⇒fiber cov a₂ (fiber⇒ribbon cov a₂ y) ≡ y
       fiber⇒ribbon⇒fiber cov a₂ y = let open covering cov in []-extend
         ⦃ λ bp → fiber-is-set a₂
                   (ribbon⇒fiber cov a₂
-                    (fiber+skel⇒ribbon cov a₂ y
-                      ([]-extend-nondep
-                        ⦃ skel-is-prop cov a₂ y ⦄
-                        (proj ◯ point) bp)))
+                    (fiber+path₋₁⇒ribbon cov a₂ y bp))
                   y ⦄
         ( λ bp →
             tracing cov (tracing cov y (proj $ ! bp)) (proj bp)
@@ -147,7 +143,7 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
               ≡⟨ ap (tracing cov y ◯ proj) $ opposite-left-inverse bp ⟩∎
             y
               ∎)
-        (base-path-magic a₂)
+        (base-path₋₁ a₂)
 
     covering⇒gset⇒covering : ∀ cov → gset⇒covering (covering⇒gset cov) ≡ cov
     covering⇒gset⇒covering cov = covering-eq $ funext λ a₂
