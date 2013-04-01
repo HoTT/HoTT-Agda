@@ -17,7 +17,7 @@ module Homotopy.HomotopyGroups {i} where
 
 Ω-pregroup : (X : pType i) → pregroup i
 Ω-pregroup X = record
-  { elems         = (⋆ X) ≡ (⋆ X)
+  { carrier       = (⋆ X) ≡ (⋆ X)
   ; _∙_           = _∘_
   ; e             = refl _
   ; _′            = !

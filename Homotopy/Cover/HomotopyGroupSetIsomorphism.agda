@@ -180,13 +180,13 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
               ∎)
           (λ _ _ _ → prop-has-all-paths (ribbon-is-set a _ _) _ _))
 
-    trans-eq-∙ : ∀ {Y₁ Y₂ : Set i} (Y≃ : Y₁ ≃ Y₂) (_∙_ : Y₁ → G.elems → Y₁) (y₂ : Y₂) (g : G.elems)
-      → transport (λ Y → Y → G.elems → Y) (eq-to-path Y≃) _∙_ y₂ g ≡ (Y≃ ☆ (inverse Y≃ y₂ ∙ g))
+    trans-eq-∙ : ∀ {Y₁ Y₂ : Set i} (Y≃ : Y₁ ≃ Y₂) (_∙_ : Y₁ → G.carrier → Y₁) (y₂ : Y₂) (g : G.carrier)
+      → transport (λ Y → Y → G.carrier → Y) (eq-to-path Y≃) _∙_ y₂ g ≡ (Y≃ ☆ (inverse Y≃ y₂ ∙ g))
     trans-eq-∙ = equiv-induction
       (λ {Y₁ Y₂ : Set i} (Y≃ : Y₁ ≃ Y₂)
-        → ∀ (_∙_ : Y₁ → G.elems → Y₁) (y₂ : Y₂) (g : G.elems)
-        → transport (λ Y → Y → G.elems → Y) (eq-to-path Y≃) _∙_ y₂ g ≡ (Y≃ ☆ (inverse Y≃ y₂ ∙ g)))
-      (λ Y _∙_ y₂ g → ap (λ x → transport (λ Y → Y → G.elems → Y) x _∙_ y₂ g)
+        → ∀ (_∙_ : Y₁ → G.carrier → Y₁) (y₂ : Y₂) (g : G.carrier)
+        → transport (λ Y → Y → G.carrier → Y) (eq-to-path Y≃) _∙_ y₂ g ≡ (Y≃ ☆ (inverse Y≃ y₂ ∙ g)))
+      (λ Y _∙_ y₂ g → ap (λ x → transport (λ Y → Y → G.carrier → Y) x _∙_ y₂ g)
                          $ path-to-eq-right-inverse $ refl _)
 
     gset⇒covering⇒gset : ∀ gs → covering⇒gset (gset⇒covering gs) ≡ gs
@@ -199,7 +199,7 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
       in gset-eq
           (eq-to-path ≃Y)
           (funext λ y → funext $ π₀-extend ⦃ λ _ → ≡-is-set Y-is-set ⦄ λ p →
-            transport (λ Y → Y → G.elems → Y) (eq-to-path ≃Y) _⊙_ y (proj p)
+            transport (λ Y → Y → G.carrier → Y) (eq-to-path ≃Y) _⊙_ y (proj p)
               ≡⟨ trans-eq-∙ ≃Y _⊙_ y (proj p) ⟩
             ⇒Y (transport (ribbon act) p (trace y (refl₀ _)))
               ≡⟨ ap ⇒Y $ trans-trace act p y (refl₀ _) ⟩∎
