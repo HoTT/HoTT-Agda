@@ -55,61 +55,13 @@ covering-eq {cov[ ._ , set₁ ]} {cov[ ._ , set₂ ]} (refl _) =
     (prop-has-all-paths (Π-is-prop λ _ → is-set-is-prop) _ _)
 
 module Reconstruct where
-  module G = group (πⁿ-group 1 (A , a))
+  private
+    fundamental-group : group i
+    fundamental-group = πⁿ-group 1 (A , a)
+    module G = group fundamental-group
 
-  -- The right group action with respect to the π¹ ( A , a )
-  -- Y should be some set, but that condition is not needed
-  -- in the definition.
-  record action (Y : Set i) : Set (suc i) where
-    constructor act[_,_,_]
-    field
-      _∙_ : Y → G.elems → Y
-      right-unit : ∀ y → y ∙ G.e ≡ y
-      assoc : ∀ y p₁ p₂ → (y ∙ p₁) ∙ p₂ ≡ y ∙ (p₁ G.∙ p₂)
-
-{-
-  action-eq : ∀ {Y} ⦃ _ : is-set Y ⦄ {act₁ act₂ : action Y}
-    → action._∙_ act₁ ≡ action._∙_ act₂ → act₁ ≡ act₂
-  action-eq ∙≡ =
--}
-
-  -- The HIT ribbon---reconstructed covering space
-  module Ribbon {Y} {act : action Y} where
-    open action act
-    private
-      data #ribbon (a₂ : A) : Set i where
-        #trace : Y →  a ≡₀ a₂ → #ribbon a₂
-
-    ribbon : A → Set i
-    ribbon = #ribbon
-
-    trace : ∀ {a₂} → Y → a ≡₀ a₂ → ribbon a₂
-    trace = #trace
-
-    postulate
-      ribbon-is-set : ∀ a₂ → is-set (ribbon a₂)
-      paste : ∀ {a₂} y loop (p : a ≡₀ a₂)
-        → trace (y ∙ loop) p ≡ trace y (loop ∘₀ p)
-
-    ribbon-rec : ∀ a₂ {j} (P : ribbon a₂ → Set j)
-      ⦃ P-is-set : ∀ r → is-set (P r) ⦄
-      (trace* : ∀ y p → P (trace y p))
-      (paste* : ∀ y loop p → transport P (paste y loop p) (trace* (y ∙ loop) p)
-                           ≡ trace* y (loop ∘₀ p))
-      → (∀ r → P r)
-    ribbon-rec a₂ P trace* paste* (#trace y p) = trace* y p
-
-    ribbon-rec-nondep : ∀ a₂ {j} (P : Set j)
-      ⦃ P-is-set : is-set P ⦄
-      (trace* : ∀ (y : Y) (p : a ≡₀ a₂) → P)
-      (paste* : ∀ y (loop : a ≡₀ a) p → trace* (y ∙ loop) p ≡ trace* y (loop ∘₀ p))
-      → (ribbon a₂ → P)
-    ribbon-rec-nondep a₂ P trace* paste* (#trace y p) = trace* y p
-
-  open Ribbon public hiding (ribbon)
-
-  ribbon : ∀ {Y} → action Y → A → Set i
-  ribbon {Y} act = Ribbon.ribbon {Y} {act}
+  open import Algebra.GroupSets fundamental-group
+  open import Homotopy.Cover.Ribbon A a
 
   {-
     ribbon-is-covering : ∀ {Y} → action Y → covering
@@ -120,38 +72,15 @@ module Reconstruct where
   module _ where
     open import Homotopy.Skeleton
 
-    gset : Set (suc i)
-    gset = Σ (Set i) (λ Y → action Y × is-set Y)
-
-    gset-eq : ∀ {gs₁ gs₂ : gset} (Y≡ : π₁ gs₁ ≡ π₁ gs₂)
-      → (∙≡ : transport (λ Y → Y → G.elems → Y) Y≡ (action._∙_ (π₁ (π₂ gs₁)))
-            ≡ action._∙_ (π₁ (π₂ gs₂)))
-      → gs₁ ≡ gs₂
-    gset-eq
-      {._ , (act[ ._ , unit₁ , assoc₁ ] , set₁)}
-      {._ , (act[ ._ , unit₂ , assoc₂ ] , set₂)}
-      (refl Y) (refl ∙) =
-        Y , (act[ ∙ , unit₁ , assoc₁ ] , set₁)
-          ≡⟨ ap (λ unit → Y , (act[ ∙ , unit , assoc₁ ] , set₁))
-                $ prop-has-all-paths (Π-is-prop λ _ → set₁ _ _) _ _ ⟩
-        Y , (act[ ∙ , unit₂ , assoc₁ ] , set₁)
-          ≡⟨ ap (λ assoc → Y , (act[ ∙ , unit₂ , assoc ] , set₁))
-                $ prop-has-all-paths (Π-is-prop λ _ → Π-is-prop λ _ → Π-is-prop λ _ → set₁ _ _) _ _ ⟩
-        Y , (act[ ∙ , unit₂ , assoc₂ ] , set₁)
-          ≡⟨ ap (λ set → Y , (act[ ∙ , unit₂ , assoc₂ ] , set))
-                $ prop-has-all-paths is-set-is-prop _ _ ⟩∎
-        Y , (act[ ∙ , unit₂ , assoc₂ ] , set₂)
-          ∎
-
     gset⇒covering : gset → covering
-    gset⇒covering (_ , (act , _)) = cov[ ribbon act , ribbon-is-set ]
+    gset⇒covering gset[ _ , act , _ ] = cov[ ribbon act , ribbon-is-set ]
 
     covering⇒action : ∀ cov → action (covering.fiber cov a)
     covering⇒action cov = act[ tracing cov , refl , compose-tracing cov ]
 
     covering⇒gset : covering → gset
     covering⇒gset cov = let open covering cov in
-      fiber a , (covering⇒action cov , fiber-is-set a)
+      gset[ fiber a , covering⇒action cov , fiber-is-set a ]
 
     -- The first direction: covering -> gset -> covering
 
@@ -309,12 +238,8 @@ module Reconstruct where
       (λ Y _∙_ y₂ g → ap (λ x → transport (λ Y → Y → G.elems → Y) x _∙_ y₂ g)
                          $ path-to-eq-right-inverse $ refl _)
 
-    trans-trace : ∀ {Y} (act : action Y) {a₁ a₂} (q : a₁ ≡ a₂) y p
-      → transport (ribbon act) q (trace y p) ≡ trace y (p ∘₀ proj q)
-    trans-trace act (refl _) y p = ap (trace y) $ ! $ refl₀-right-unit p
-
     gset⇒covering⇒gset : ∀ gs → covering⇒gset (gset⇒covering gs) ≡ gs
-    gset⇒covering⇒gset (Y , (act , Y-is-set)) =
+    gset⇒covering⇒gset gset[ Y , act , Y-is-set ] =
       let
         open action act
         _⊙_ = tracing cov[ ribbon act , ribbon-is-set {Y} {act} ]
