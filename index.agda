@@ -23,3 +23,4 @@ import Sets.QuotientUP
 import Spaces.PikSn
 import Homotopy.VanKampen
 import Homotopy.Cover
+import Homotopy.Skeleton.SetConstantFactorization
