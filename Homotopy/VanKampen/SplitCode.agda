@@ -11,7 +11,7 @@ module Homotopy.VanKampen.SplitCode {i} (d : pushout-diag i)
   open legend l
 
   open import Homotopy.Truncation
-  open import Spaces.Pi0Paths
+  open import Homotopy.HomotopyGroupoids
 
   -- Definition.
   module _ where

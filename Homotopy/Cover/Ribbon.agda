@@ -17,7 +17,7 @@ module Homotopy.Cover.Ribbon {i} (A : Set i) (a : A) {Y : Set i} where
   open import Homotopy.Pointed
   open import Homotopy.Truncation
   open import Homotopy.HomotopyGroups
-  open import Spaces.Pi0Paths
+  open import Homotopy.HomotopyGroupoids
 
   private
     fundamental-group : group i

@@ -8,7 +8,7 @@ module Homotopy.VanKampen.Code {i} (d : pushout-diag i)
   (l : legend i (pushout-diag.C d)) where
 
   open import Homotopy.Truncation
-  open import Spaces.Pi0Paths
+  open import Homotopy.HomotopyGroupoids
 
   private
     module PackA1 (d : pushout-diag i)

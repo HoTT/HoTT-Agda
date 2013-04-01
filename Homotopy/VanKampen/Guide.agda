@@ -6,7 +6,6 @@ module Homotopy.VanKampen.Guide where
 
 open import Homotopy.Truncation
 open import Homotopy.Connected
-open import Homotopy.PushoutDef
 
 record legend i (city : Set i) : Set (suc i) where
   constructor leg_,_,_

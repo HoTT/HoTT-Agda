@@ -2,13 +2,13 @@
 
 open import Base
 open import Homotopy.Pushout
-open import Homotopy.VanKampen.Guide
 
 module Homotopy.VanKampen {i} (d : pushout-diag i) where
 open pushout-diag d
 
 open import Homotopy.Truncation
-open import Spaces.Pi0Paths
+open import Homotopy.HomotopyGroupoids
+open import Homotopy.VanKampen.Guide
 
 module _ (l : legend i C) where
   open legend l
