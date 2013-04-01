@@ -35,67 +35,49 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
 
   -- The first direction: covering -> gset -> covering
 
-  fiber+path⇒ribbon : ∀ cov a₂ y (p : a ≡ a₂) → ribbon (covering⇒action cov) a₂
-  fiber+path⇒ribbon cov a₂ y p = trace (tracing cov y (proj $ ! p)) (proj p)
-
-  fiber+path⇒ribbon-is-path-irrelevant : ∀ cov a₂ y p₁ p₂
-    → fiber+path⇒ribbon cov a₂ y p₁ ≡ fiber+path⇒ribbon cov a₂ y p₂
-  fiber+path⇒ribbon-is-path-irrelevant cov a₂ y p₁ p₂ =
-    -- FIXME The whole proof should be in reverse to reduce !
-    trace (tracing cov y (proj $ ! p₁)) (proj p₁)
-      ≡⟨ ap (λ x → trace (tracing cov y (proj $ ! p₁)) (proj x))
-            $ ! $ refl-right-unit p₁ ⟩
-    trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ refl _)
-      ≡⟨ ap (λ x → trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ x))
-            $ ! $ opposite-left-inverse p₂ ⟩
-    trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ (! p₂ ∘ p₂))
-      ≡⟨ ap (λ x → trace (tracing cov y (proj $ ! p₁)) (proj x))
-            $ ! $ concat-assoc p₁ (! p₂) p₂ ⟩
-    trace (tracing cov y (proj $ ! p₁)) (proj $ (p₁ ∘ ! p₂) ∘ p₂)
-      ≡⟨ ! $ paste (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ ! p₂) (proj p₂) ⟩
-    trace (tracing cov (tracing cov y (proj $ ! p₁)) (proj (p₁ ∘ ! p₂))) (proj p₂)
-      ≡⟨ ap (λ x → trace x (proj p₂))
-            $ compose-tracing cov y (proj $ ! p₁) (proj $ p₁ ∘ ! p₂) ⟩
-    trace (tracing cov y (proj $ ! p₁ ∘ (p₁ ∘ ! p₂))) (proj p₂)
-      ≡⟨ ap (λ x → trace (tracing cov y (proj x)) (proj p₂))
-            $ ! $ concat-assoc (! p₁) p₁ (! p₂) ⟩
-    trace (tracing cov y (proj $ (! p₁ ∘ p₁) ∘ ! p₂)) (proj p₂)
-      ≡⟨ ap (λ x → trace (tracing cov y (proj $ x ∘ ! p₂)) (proj p₂))
-            $ opposite-left-inverse p₁ ⟩∎
-    trace (tracing cov y (proj $ ! p₂)) (proj p₂)
-      ∎
-
-  private
-    skel : ∀ cov (a₂ : A) → covering.fiber cov a₂ → Set i
-    skel cov a₂ y = π₀ (skeleton₁ (fiber+path⇒ribbon cov a₂ y))
-
-  abstract
-    skel-has-all-paths : ∀ cov a₂ y → has-all-paths (skel cov a₂ y)
-    skel-has-all-paths cov a₂ y =
-      π₀-extend ⦃ λ _ → Π-is-set λ _ → ≡-is-set $ π₀-is-set _ ⦄
-        (skeleton₁-rec (λ s₁ → ∀ s₂ → proj s₁ ≡ s₂)
-          (λ p₁ → π₀-extend ⦃ λ _ → ≡-is-set $ π₀-is-set _ ⦄
-            (skeleton₁-rec (λ s₂ → proj (point p₁) ≡ proj s₂)
-              (λ p₂ → ap proj $ link p₁ p₂
-                              $ fiber+path⇒ribbon-is-path-irrelevant cov a₂ y p₁ p₂)
-              (λ _ _ _ → prop-has-all-paths (π₀-is-set _ _ _) _ _)))
-          (λ _ _ _ → funext λ _ → prop-has-all-paths (π₀-is-set _ _ _) _ _))
-
-  skel-is-prop : ∀ cov a₂ y → is-prop (skel cov a₂ y)
-  skel-is-prop cov a₂ y = all-paths-is-prop $ skel-has-all-paths cov a₂ y
-
-  fiber+skel⇒ribbon : ∀ cov a₂ y → skel cov a₂ y → ribbon (covering⇒action cov) a₂
-  fiber+skel⇒ribbon cov a₂ y = π₀-extend-nondep ⦃ ribbon-is-set a₂ ⦄ skeleton₁-lifted
-
   private
     base-path₋₁ : ∀ a₂ → [ a ≡ a₂ ]
     base-path₋₁ = connected-has-all-τ-paths A-is-conn a
 
-    skel-magic : ∀ cov a₂ y → [ a ≡ a₂ ] → skel cov a₂ y
-    skel-magic cov a₂ y = []-extend-nondep ⦃ skel-is-prop cov a₂ y ⦄ (proj ◯ point)
+    module _ (cov : covering) (a₂ : A) (y : covering.fiber cov a₂) where
 
-  fiber+path₋₁⇒ribbon : ∀ cov a₂ → covering.fiber cov a₂ → [ a ≡ a₂ ] → ribbon (covering⇒action cov) a₂
-  fiber+path₋₁⇒ribbon cov a₂ y = fiber+skel⇒ribbon cov a₂ y ◯ skel-magic cov a₂ y
+      fiber+path⇒ribbon : ∀ (p : a ≡ a₂) → ribbon (covering⇒action cov) a₂
+      fiber+path⇒ribbon p = trace (tracing cov y (proj $ ! p)) (proj p)
+
+      fiber+path⇒ribbon-is-path-irrelevant : ∀ p₁ p₂
+        → fiber+path⇒ribbon p₁ ≡ fiber+path⇒ribbon p₂
+      fiber+path⇒ribbon-is-path-irrelevant p₁ p₂ =
+        -- FIXME The whole proof should be in reverse to reduce !
+        trace (tracing cov y (proj $ ! p₁)) (proj p₁)
+          ≡⟨ ap (λ x → trace (tracing cov y (proj $ ! p₁)) (proj x))
+                $ ! $ refl-right-unit p₁ ⟩
+        trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ refl _)
+          ≡⟨ ap (λ x → trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ x))
+                $ ! $ opposite-left-inverse p₂ ⟩
+        trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ (! p₂ ∘ p₂))
+          ≡⟨ ap (λ x → trace (tracing cov y (proj $ ! p₁)) (proj x))
+                $ ! $ concat-assoc p₁ (! p₂) p₂ ⟩
+        trace (tracing cov y (proj $ ! p₁)) (proj $ (p₁ ∘ ! p₂) ∘ p₂)
+          ≡⟨ ! $ paste (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ ! p₂) (proj p₂) ⟩
+        trace (tracing cov (tracing cov y (proj $ ! p₁)) (proj (p₁ ∘ ! p₂))) (proj p₂)
+          ≡⟨ ap (λ x → trace x (proj p₂))
+                $ compose-tracing cov y (proj $ ! p₁) (proj $ p₁ ∘ ! p₂) ⟩
+        trace (tracing cov y (proj $ ! p₁ ∘ (p₁ ∘ ! p₂))) (proj p₂)
+          ≡⟨ ap (λ x → trace (tracing cov y (proj x)) (proj p₂))
+                $ ! $ concat-assoc (! p₁) p₁ (! p₂) ⟩
+        trace (tracing cov y (proj $ (! p₁ ∘ p₁) ∘ ! p₂)) (proj p₂)
+          ≡⟨ ap (λ x → trace (tracing cov y (proj $ x ∘ ! p₂)) (proj p₂))
+                $ opposite-left-inverse p₁ ⟩∎
+        trace (tracing cov y (proj $ ! p₂)) (proj p₂)
+          ∎
+
+      open import Homotopy.Skeleton.SetConstantFactorization
+        (ribbon-is-set a₂)
+        fiber+path⇒ribbon
+        fiber+path⇒ribbon-is-path-irrelevant
+
+      fiber+path₋₁⇒ribbon : [ a ≡ a₂ ] → ribbon (covering⇒action cov) a₂
+      fiber+path₋₁⇒ribbon = extended
 
   fiber⇒ribbon : ∀ cov a₂ → covering.fiber cov a₂ → ribbon (covering⇒action cov) a₂
   fiber⇒ribbon cov a₂ y = fiber+path₋₁⇒ribbon cov a₂ y $ base-path₋₁ a₂
