@@ -299,3 +299,68 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
 
   canonical-covering-is-universal : is-universal canonical-covering
   canonical-covering-is-universal = Universality.center , Universality.path
+
+  -- The other direction:  If a covering is universal, then the fiber
+  -- is equivalent to the fundamental group.
+  module _ (cov : covering) (cov-is-universal : is-universal cov) where
+    open covering cov
+    open action (covering⇒action cov)
+    module FG = group fundamental-group
+
+    private
+      -- We need a point!
+      module GiveMeAPoint (center : fiber a) where
+
+        -- Goal: fiber a <-> fundamental group
+
+        fiber-a⇒fg : fiber a → a ≡₀ a
+        fiber-a⇒fg y = ap₀ π₁ $ connected-has-all-τ-paths
+          cov-is-universal (a , center) (a , y)
+
+        fg⇒fiber-a : a ≡₀ a → fiber a
+        fg⇒fiber-a = tracing cov center
+
+        fg⇒fiber-a⇒fg : ∀ p → fiber-a⇒fg (fg⇒fiber-a p) ≡ p
+        fg⇒fiber-a⇒fg = π₀-extend ⦃ λ _ → ≡-is-set $ π₀-is-set _ ⦄ λ p →
+          ap₀ π₁ (connected-has-all-τ-paths
+            cov-is-universal (a , center) (a , transport fiber p center))
+              ≡⟨ ap (ap₀ π₁)
+                    $ ! $ π₂ (connected-has-contr-τ-paths cov-is-universal _ _)
+                             (proj $ Σ-eq p (refl $ transport fiber p center)) ⟩
+          ap₀ π₁ (proj $ Σ-eq p (refl $ transport fiber p center))
+              ≡⟨ ap proj $ base-path-Σ-eq p (refl _) ⟩∎
+          proj p
+              ∎
+
+        fiber-a⇒fg⇒fiber-a : ∀ y → fg⇒fiber-a (fiber-a⇒fg y) ≡ y
+        fiber-a⇒fg⇒fiber-a y = π₀-extend
+          ⦃ λ p → ≡-is-set {x = tracing cov center (ap₀ π₁ p)} {y = y}
+                    $ fiber-is-set a ⦄
+          (λ p →
+            transport fiber (base-path p) center
+              ≡⟨ trans-base-path p ⟩∎
+            y
+              ∎)
+          (connected-has-all-τ-paths cov-is-universal (a , center) (a , y))
+
+        fiber-a≃fg : fiber a ≃ (a ≡₀ a)
+        fiber-a≃fg = fiber-a⇒fg , iso-is-eq _ fg⇒fiber-a
+          fg⇒fiber-a⇒fg fiber-a⇒fg⇒fiber-a
+
+    -- This is the best we can obtain, because there is no continuous
+    -- choice of the center.
+    [center] : [ fiber a ]
+    [center] = τ-extend-nondep
+      ⦃ prop-is-gpd []-is-prop ⦄
+      (λ y → []-extend-nondep
+        ⦃ []-is-prop ⦄
+        (proj ◯ λ p → transport fiber p (π₂ y))
+        (connected-has-all-τ-paths A-is-conn (π₁ y) a))
+      (π₁ cov-is-universal)
+
+    -- [ isomorphism between the fiber and the fundamental group ]
+    -- This is the best we can obtain, because there is no continuous
+    -- choice of the center.
+    [fiber-a≃fg] : [ fiber a ≃ (a ≡₀ a) ]
+    [fiber-a≃fg] = []-extend-nondep ⦃ []-is-prop ⦄
+      (proj ◯ GiveMeAPoint.fiber-a≃fg) [center]
