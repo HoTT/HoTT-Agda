@@ -86,46 +86,47 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
   ribbon⇒fiber cov a₂ = let open covering cov in
     ribbon-rec-nondep a₂ (fiber a₂) ⦃ fiber-is-set a₂ ⦄ (tracing cov) (compose-tracing cov)
 
-  abstract
-    ribbon⇒fiber⇒ribbon : ∀ cov a₂ r → fiber⇒ribbon cov a₂ (ribbon⇒fiber cov a₂ r) ≡ r
-    ribbon⇒fiber⇒ribbon cov a₂ = ribbon-rec a₂
-      (λ r → fiber⇒ribbon cov a₂ (ribbon⇒fiber cov a₂ r) ≡ r)
-      ⦃ λ _ → ≡-is-set $ ribbon-is-set a₂ ⦄
-      (λ y p → []-extend
-        -- All these ugly things will go away when bp = proj bp′
-        ⦃ λ bp → ribbon-is-set a₂
-                  (fiber+path₋₁⇒ribbon cov a₂ (tracing cov y p) bp)
-                  (trace y p) ⦄
-        (λ bp → -- real base path
-            trace (tracing cov (tracing cov y p) (proj $ ! bp)) (proj bp)
-              ≡⟨ ap (λ x → trace x (proj bp)) $ compose-tracing cov y p (proj $ ! bp) ⟩
-            trace (tracing cov y (p ∘₀ proj (! bp))) (proj bp)
-              ≡⟨ paste y (p ∘₀ proj (! bp)) (proj bp) ⟩
-            trace y ((p ∘₀ proj (! bp)) ∘₀ proj bp)
-              ≡⟨ ap (trace y) $ concat₀-assoc p (proj $ ! bp) (proj bp) ⟩
-            trace y (p ∘₀ (proj $ ! bp ∘ bp))
-              ≡⟨ ap (λ x → trace y (p ∘₀ proj x)) $ opposite-left-inverse bp ⟩
-            trace y (p ∘₀ refl₀ _)
-              ≡⟨ ap (trace y) $ refl₀-right-unit p ⟩∎
-            trace y p
-              ∎)
-        (base-path₋₁ a₂))
-      (λ _ _ _ → prop-has-all-paths (ribbon-is-set a₂ _ _) _ _)
+  private
+    abstract
+      ribbon⇒fiber⇒ribbon : ∀ cov a₂ r → fiber⇒ribbon cov a₂ (ribbon⇒fiber cov a₂ r) ≡ r
+      ribbon⇒fiber⇒ribbon cov a₂ = ribbon-rec a₂
+        (λ r → fiber⇒ribbon cov a₂ (ribbon⇒fiber cov a₂ r) ≡ r)
+        ⦃ λ _ → ≡-is-set $ ribbon-is-set a₂ ⦄
+        (λ y p → []-extend
+          -- All these ugly things will go away when bp = proj bp′
+          ⦃ λ bp → ribbon-is-set a₂
+                    (fiber+path₋₁⇒ribbon cov a₂ (tracing cov y p) bp)
+                    (trace y p) ⦄
+          (λ bp → -- real base path
+              trace (tracing cov (tracing cov y p) (proj $ ! bp)) (proj bp)
+                ≡⟨ ap (λ x → trace x (proj bp)) $ compose-tracing cov y p (proj $ ! bp) ⟩
+              trace (tracing cov y (p ∘₀ proj (! bp))) (proj bp)
+                ≡⟨ paste y (p ∘₀ proj (! bp)) (proj bp) ⟩
+              trace y ((p ∘₀ proj (! bp)) ∘₀ proj bp)
+                ≡⟨ ap (trace y) $ concat₀-assoc p (proj $ ! bp) (proj bp) ⟩
+              trace y (p ∘₀ (proj $ ! bp ∘ bp))
+                ≡⟨ ap (λ x → trace y (p ∘₀ proj x)) $ opposite-left-inverse bp ⟩
+              trace y (p ∘₀ refl₀ _)
+                ≡⟨ ap (trace y) $ refl₀-right-unit p ⟩∎
+              trace y p
+                ∎)
+          (base-path₋₁ a₂))
+        (λ _ _ _ → prop-has-all-paths (ribbon-is-set a₂ _ _) _ _)
 
-    fiber⇒ribbon⇒fiber : ∀ cov a₂ y → ribbon⇒fiber cov a₂ (fiber⇒ribbon cov a₂ y) ≡ y
-    fiber⇒ribbon⇒fiber cov a₂ y = let open covering cov in []-extend
-      ⦃ λ bp → fiber-is-set a₂
-                (ribbon⇒fiber cov a₂
-                  (fiber+path₋₁⇒ribbon cov a₂ y bp))
-                y ⦄
-      ( λ bp →
-          tracing cov (tracing cov y (proj $ ! bp)) (proj bp)
-            ≡⟨ compose-tracing cov y (proj $ ! bp) (proj bp) ⟩
-          tracing cov y (proj $ ! bp ∘ bp)
-            ≡⟨ ap (tracing cov y ◯ proj) $ opposite-left-inverse bp ⟩∎
-          y
-            ∎)
-      (base-path₋₁ a₂)
+      fiber⇒ribbon⇒fiber : ∀ cov a₂ y → ribbon⇒fiber cov a₂ (fiber⇒ribbon cov a₂ y) ≡ y
+      fiber⇒ribbon⇒fiber cov a₂ y = let open covering cov in []-extend
+        ⦃ λ bp → fiber-is-set a₂
+                  (ribbon⇒fiber cov a₂
+                    (fiber+path₋₁⇒ribbon cov a₂ y bp))
+                  y ⦄
+        ( λ bp →
+            tracing cov (tracing cov y (proj $ ! bp)) (proj bp)
+              ≡⟨ compose-tracing cov y (proj $ ! bp) (proj bp) ⟩
+            tracing cov y (proj $ ! bp ∘ bp)
+              ≡⟨ ap (tracing cov y ◯ proj) $ opposite-left-inverse bp ⟩∎
+            y
+              ∎)
+        (base-path₋₁ a₂)
 
   covering⇒gset⇒covering : ∀ cov → gset⇒covering (covering⇒gset cov) ≡ cov
   covering⇒gset⇒covering cov = covering-eq $ funext λ a₂
@@ -158,14 +159,15 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
             ∎)
         (λ _ _ _ → prop-has-all-paths (ribbon-is-set a _ _) _ _))
 
-  trans-eq-∙ : ∀ {Y₁ Y₂ : Set i} (Y≃ : Y₁ ≃ Y₂) (_∙_ : Y₁ → G.carrier → Y₁) (y₂ : Y₂) (g : G.carrier)
-    → transport (λ Y → Y → G.carrier → Y) (eq-to-path Y≃) _∙_ y₂ g ≡ (Y≃ ☆ (inverse Y≃ y₂ ∙ g))
-  trans-eq-∙ = equiv-induction
-    (λ {Y₁ Y₂ : Set i} (Y≃ : Y₁ ≃ Y₂)
-      → ∀ (_∙_ : Y₁ → G.carrier → Y₁) (y₂ : Y₂) (g : G.carrier)
-      → transport (λ Y → Y → G.carrier → Y) (eq-to-path Y≃) _∙_ y₂ g ≡ (Y≃ ☆ (inverse Y≃ y₂ ∙ g)))
-    (λ Y _∙_ y₂ g → ap (λ x → transport (λ Y → Y → G.carrier → Y) x _∙_ y₂ g)
-                       $ path-to-eq-right-inverse $ refl _)
+  private
+    trans-eq-∙ : ∀ {Y₁ Y₂ : Set i} (Y≃ : Y₁ ≃ Y₂) (_∙_ : Y₁ → G.carrier → Y₁) (y₂ : Y₂) (g : G.carrier)
+      → transport (λ Y → Y → G.carrier → Y) (eq-to-path Y≃) _∙_ y₂ g ≡ (Y≃ ☆ (inverse Y≃ y₂ ∙ g))
+    trans-eq-∙ = equiv-induction
+      (λ {Y₁ Y₂ : Set i} (Y≃ : Y₁ ≃ Y₂)
+        → ∀ (_∙_ : Y₁ → G.carrier → Y₁) (y₂ : Y₂) (g : G.carrier)
+        → transport (λ Y → Y → G.carrier → Y) (eq-to-path Y≃) _∙_ y₂ g ≡ (Y≃ ☆ (inverse Y≃ y₂ ∙ g)))
+      (λ Y _∙_ y₂ g → ap (λ x → transport (λ Y → Y → G.carrier → Y) x _∙_ y₂ g)
+                         $ path-to-eq-right-inverse $ refl _)
 
   gset⇒covering⇒gset : ∀ gs → covering⇒gset (gset⇒covering gs) ≡ gs
   gset⇒covering⇒gset gset[ Y , act , Y-is-set ] =
@@ -307,45 +309,44 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
     open action (covering⇒action cov)
     module FG = group fundamental-group
 
-    private
-      -- We need a point!
-      module GiveMeAPoint (center : fiber a) where
+    -- We need a point!
+    module GiveMeAPoint (center : fiber a) where
 
-        -- Goal: fiber a <-> fundamental group
+      -- Goal: fiber a <-> fundamental group
 
-        fiber-a⇒fg : fiber a → a ≡₀ a
-        fiber-a⇒fg y = ap₀ π₁ $ connected-has-all-τ-paths
-          cov-is-universal (a , center) (a , y)
+      fiber-a⇒fg : fiber a → a ≡₀ a
+      fiber-a⇒fg y = ap₀ π₁ $ connected-has-all-τ-paths
+        cov-is-universal (a , center) (a , y)
 
-        fg⇒fiber-a : a ≡₀ a → fiber a
-        fg⇒fiber-a = tracing cov center
+      fg⇒fiber-a : a ≡₀ a → fiber a
+      fg⇒fiber-a = tracing cov center
 
-        fg⇒fiber-a⇒fg : ∀ p → fiber-a⇒fg (fg⇒fiber-a p) ≡ p
-        fg⇒fiber-a⇒fg = π₀-extend ⦃ λ _ → ≡-is-set $ π₀-is-set _ ⦄ λ p →
-          ap₀ π₁ (connected-has-all-τ-paths
-            cov-is-universal (a , center) (a , transport fiber p center))
-              ≡⟨ ap (ap₀ π₁)
-                    $ ! $ π₂ (connected-has-contr-τ-paths cov-is-universal _ _)
-                             (proj $ Σ-eq p (refl $ transport fiber p center)) ⟩
-          ap₀ π₁ (proj $ Σ-eq p (refl $ transport fiber p center))
-              ≡⟨ ap proj $ base-path-Σ-eq p (refl _) ⟩∎
-          proj p
-              ∎
+      fg⇒fiber-a⇒fg : ∀ p → fiber-a⇒fg (fg⇒fiber-a p) ≡ p
+      fg⇒fiber-a⇒fg = π₀-extend ⦃ λ _ → ≡-is-set $ π₀-is-set _ ⦄ λ p →
+        ap₀ π₁ (connected-has-all-τ-paths
+          cov-is-universal (a , center) (a , transport fiber p center))
+            ≡⟨ ap (ap₀ π₁)
+                  $ ! $ π₂ (connected-has-contr-τ-paths cov-is-universal _ _)
+                           (proj $ Σ-eq p (refl $ transport fiber p center)) ⟩
+        ap₀ π₁ (proj $ Σ-eq p (refl $ transport fiber p center))
+            ≡⟨ ap proj $ base-path-Σ-eq p (refl _) ⟩∎
+        proj p
+            ∎
 
-        fiber-a⇒fg⇒fiber-a : ∀ y → fg⇒fiber-a (fiber-a⇒fg y) ≡ y
-        fiber-a⇒fg⇒fiber-a y = π₀-extend
-          ⦃ λ p → ≡-is-set {x = tracing cov center (ap₀ π₁ p)} {y = y}
-                    $ fiber-is-set a ⦄
-          (λ p →
-            transport fiber (base-path p) center
-              ≡⟨ trans-base-path p ⟩∎
-            y
-              ∎)
-          (connected-has-all-τ-paths cov-is-universal (a , center) (a , y))
+      fiber-a⇒fg⇒fiber-a : ∀ y → fg⇒fiber-a (fiber-a⇒fg y) ≡ y
+      fiber-a⇒fg⇒fiber-a y = π₀-extend
+        ⦃ λ p → ≡-is-set {x = tracing cov center (ap₀ π₁ p)} {y = y}
+                  $ fiber-is-set a ⦄
+        (λ p →
+          transport fiber (base-path p) center
+            ≡⟨ trans-base-path p ⟩∎
+          y
+            ∎)
+        (connected-has-all-τ-paths cov-is-universal (a , center) (a , y))
 
-        fiber-a≃fg : fiber a ≃ (a ≡₀ a)
-        fiber-a≃fg = fiber-a⇒fg , iso-is-eq _ fg⇒fiber-a
-          fg⇒fiber-a⇒fg fiber-a⇒fg⇒fiber-a
+      fiber-a≃fg : fiber a ≃ (a ≡₀ a)
+      fiber-a≃fg = fiber-a⇒fg , iso-is-eq _ fg⇒fiber-a
+        fg⇒fiber-a⇒fg fiber-a⇒fg⇒fiber-a
 
     -- This is the best we can obtain, because there is no continuous
     -- choice of the center.
