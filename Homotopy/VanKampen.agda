@@ -7,7 +7,7 @@ module Homotopy.VanKampen {i} (d : pushout-diag i) where
 open pushout-diag d
 
 open import Homotopy.Truncation
-open import Homotopy.HomotopyGroupoids
+open import Homotopy.PathTruncation
 open import Homotopy.VanKampen.Guide
 
 module _ (l : legend i C) where

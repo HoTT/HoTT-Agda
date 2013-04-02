@@ -12,7 +12,7 @@ record covering : Set (suc i) where
 
 open import Homotopy.Truncation
 open import Homotopy.Connected
-open import Homotopy.HomotopyGroupoids
+open import Homotopy.PathTruncation
 
 -- In terms of connectedness
 is-universal : covering → Set i

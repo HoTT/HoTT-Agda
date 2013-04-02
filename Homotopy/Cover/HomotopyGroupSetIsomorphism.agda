@@ -6,22 +6,18 @@ open import Homotopy.Connected
 module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
   (A : Set i) (a : A) (A-is-conn : is-connected ⟨0⟩ A) where
 
-  open import Integers
   open import Algebra.Groups
   open import Homotopy.Pointed
   open import Homotopy.Truncation
-  open import Homotopy.HomotopyGroups
-  open import Homotopy.HomotopyGroupoids
+  open import Homotopy.HomotopyGroups {i}
+  open import Homotopy.PathTruncation
   open import Homotopy.Cover.Def A
+  open import Homotopy.Cover.Ribbon A a
 
   private
-    fundamental-group : group i
-    fundamental-group = πⁿ-group 1 (A , a)
-    module G = group fundamental-group
-  open import Algebra.GroupSets fundamental-group
-
-  open import Homotopy.Cover.Ribbon A a
-  open import Homotopy.Skeleton
+    fundamental-group′ = fundamental-group (A , a)
+    module G = group fundamental-group′
+  open import Algebra.GroupSets fundamental-group′
 
   gset⇒covering : gset → covering
   gset⇒covering gset[ _ , act , _ ] = cov[ ribbon act , ribbon-is-set ]
@@ -198,7 +194,7 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
   -- FIXME What's the established terminology for this?
   canonical-gset : gset
   canonical-gset = record
-    { carrier = group.carrier fundamental-group
+    { carrier = G.carrier
     ; act     = record
       { _∙_        = _∘₀_
       ; right-unit = refl₀-right-unit
@@ -307,7 +303,6 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
   module _ (cov : covering) (cov-is-universal : is-universal cov) where
     open covering cov
     open action (covering⇒action cov)
-    module FG = group fundamental-group
 
     -- We need a point!
     module GiveMeAPoint (center : fiber a) where

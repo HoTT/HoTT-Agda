@@ -8,7 +8,7 @@
 
 open import Base
 
-module Homotopy.HomotopyGroupoids where
+module Homotopy.PathTruncation where
 
 open import HLevel
 open import HLevelBis

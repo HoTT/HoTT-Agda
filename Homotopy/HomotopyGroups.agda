@@ -5,7 +5,7 @@ open import Algebra.Groups
 open import Integers
 open import Homotopy.Truncation
 open import Homotopy.Pointed
-open import Homotopy.HomotopyGroupoids
+open import Homotopy.PathTruncation
 open import Homotopy.Connected
 
 -- Definitions and properties of homotopy groups
@@ -36,6 +36,9 @@ module Homotopy.HomotopyGroups {i} where
 -- Homotopy groups
 πⁿ-group : (n : ℕ) ⦃ >0 : n ≢ O ⦄ (X : pType i) → group i
 πⁿ-group n X = π₀-pregroup (Ωⁿ-pregroup n X)
+
+fundamental-group : (X : pType i) → group i
+fundamental-group X = πⁿ-group 1 ⦃ ℕ-S≢O 0 ⦄ X
 
 -- Homotopy groups of loop space
 πⁿ-group-from-πⁿΩ : (n : ℕ) ⦃ >0 : n ≢ 0 ⦄ (X : pType i)

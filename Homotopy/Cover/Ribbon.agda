@@ -2,6 +2,8 @@
 
 {-
   Ribbon is the explicit covering space construction.
+
+  This is given by Daniel Grayson, Favonia, Guillaume Brunerie
 -}
 
 open import Base
@@ -17,14 +19,11 @@ module Homotopy.Cover.Ribbon {i} (A : Set i) (a : A) {Y : Set i} where
   open import Homotopy.Pointed
   open import Homotopy.Truncation
   open import Homotopy.HomotopyGroups
-  open import Homotopy.HomotopyGroupoids
+  open import Homotopy.PathTruncation
 
   private
-    fundamental-group : group i
-    fundamental-group = πⁿ-group 1 (A , a)
-    module G = group fundamental-group
-
-  open import Algebra.GroupSets fundamental-group
+    module G = group (fundamental-group (A , a))
+  open import Algebra.GroupSets (fundamental-group (A , a))
 
   -- The HIT ribbon---reconstructed covering space
   private
