@@ -96,6 +96,10 @@ module _ {i j} {A : Set i} {P : A → Set j} where
   base-path : {x y : Σ A P} (p : x ≡ y) → π₁ x ≡ π₁ y
   base-path = map π₁
 
+  trans-base-path : {x y : Σ A P} (p : x ≡ y)
+    → transport P (base-path p) (π₂ x) ≡ π₂ y
+  trans-base-path {_} {._} (refl ._) = refl _
+
   fiber-path : {x y : Σ A P} (p : x ≡ y)
     → transport P (base-path p) (π₂ x) ≡ π₂ y
   fiber-path {x} {.x} (refl .x) = refl _
