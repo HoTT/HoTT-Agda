@@ -35,10 +35,10 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
 
   -- The first direction: covering -> gset -> covering
 
-  private
-    base-path₋₁ : ∀ a₂ → [ a ≡ a₂ ]
-    base-path₋₁ = connected-has-all-τ-paths A-is-conn a
+  [base-path] : ∀ a₂ → [ a ≡ a₂ ]
+  [base-path] = connected-has-all-τ-paths A-is-conn a
 
+  private
     module _ (cov : covering) (a₂ : A) (y : covering.fiber cov a₂) where
 
       fiber+path⇒ribbon : ∀ (p : a ≡ a₂) → ribbon (covering⇒action cov) a₂
@@ -80,7 +80,7 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
       fiber+path₋₁⇒ribbon = extended
 
   fiber⇒ribbon : ∀ cov a₂ → covering.fiber cov a₂ → ribbon (covering⇒action cov) a₂
-  fiber⇒ribbon cov a₂ y = fiber+path₋₁⇒ribbon cov a₂ y $ base-path₋₁ a₂
+  fiber⇒ribbon cov a₂ y = fiber+path₋₁⇒ribbon cov a₂ y $ [base-path] a₂
 
   ribbon⇒fiber : ∀ cov a₂ → ribbon (covering⇒action cov) a₂ → covering.fiber cov a₂
   ribbon⇒fiber cov a₂ = let open covering cov in
@@ -110,7 +110,7 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
                 ≡⟨ ap (trace y) $ refl₀-right-unit p ⟩∎
               trace y p
                 ∎)
-          (base-path₋₁ a₂))
+          ([base-path] a₂))
         (λ _ _ _ → prop-has-all-paths (ribbon-is-set a₂ _ _) _ _)
 
       fiber⇒ribbon⇒fiber : ∀ cov a₂ y → ribbon⇒fiber cov a₂ (fiber⇒ribbon cov a₂ y) ≡ y
@@ -126,7 +126,7 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
               ≡⟨ ap (tracing cov y ◯ proj) $ opposite-left-inverse bp ⟩∎
             y
               ∎)
-        (base-path₋₁ a₂)
+        ([base-path] a₂)
 
   covering⇒gset⇒covering : ∀ cov → gset⇒covering (covering⇒gset cov) ≡ cov
   covering⇒gset⇒covering cov = covering-eq $ funext λ a₂
