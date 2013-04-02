@@ -238,9 +238,9 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
 
       path-trace : ∀ {a₂} y p → (a₂ , trace {act = act} y p) ≡₀ center′
       path-trace {a₂} =
-        (π₀-extend ⦃ λ y → Π-is-set λ p → π₀-is-set ((a₂ , trace y p) ≡ center′) ⦄
+        π₀-extend ⦃ λ y → Π-is-set λ p → π₀-is-set ((a₂ , trace y p) ≡ center′) ⦄
           (λ y → π₀-extend ⦃ λ p → π₀-is-set ((a₂ , trace (proj y) p) ≡ center′) ⦄
-            (λ p → proj $ Σ-eq (! p ∘ ! y) (path-trace-fiber y p))))
+            (λ p → proj $ Σ-eq (! p ∘ ! y) (path-trace-fiber y p)))
 
       private
         -- An ugly lemma for this purpose only
@@ -266,9 +266,7 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
                       ≡⟨ trans-fiber≡cst-proj-Σ-eq A fiber a₂ center′
                             (paste (proj y) (proj loop) (proj p))
                             (! p ∘ ! (y ∘ loop)) (path-trace-fiber (y ∘ loop) p) ⟩
-                  proj (Σ-eq (! p ∘ ! (y ∘ loop))
-                    (ap (transport fiber (! p ∘ ! (y ∘ loop))) (! $ paste (proj y) (proj loop) (proj p))
-                    ∘ path-trace-fiber (y ∘ loop) p))
+                  proj (Σ-eq (! p ∘ ! (y ∘ loop)) _)
                       ≡⟨ ap proj $
                           ap2 (λ p q → Σ-eq p q)
                             (! p ∘ ! (y ∘ loop)
