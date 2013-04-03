@@ -7,23 +7,18 @@
 -}
 
 open import Base
-open import Homotopy.Connected
-open import Algebra.Groups
+open import Homotopy.Pointed
 
 -- A is the pointed base space.
 -- Y is intended to be a (group-)set,
 -- but can be an arbitrarily weird space.
-module Homotopy.Cover.Ribbon {i} (A : Set i) (a : A) {Y : Set i} where
+module Homotopy.Cover.Ribbon {i} (A⋆ : pType i) {Y : Set i} where
+  open pType A⋆ renaming (∣_∣ to A ; ⋆ to a)
 
-  open import Integers
-  open import Homotopy.Pointed
   open import Homotopy.Truncation
-  open import Homotopy.HomotopyGroups
   open import Homotopy.PathTruncation
-
-  private
-    module G = group (fundamental-group (A , a))
-  open import Algebra.GroupSets (fundamental-group (A , a))
+  open import Homotopy.HomotopyGroups
+  open import Algebra.GroupSets (fundamental-group A⋆)
 
   -- The HIT ribbon---reconstructed covering space
   private

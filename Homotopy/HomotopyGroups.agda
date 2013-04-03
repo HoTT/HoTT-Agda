@@ -13,7 +13,7 @@ module Homotopy.HomotopyGroups {i} where
 
 -- Loop space
 Ω : (X : pType i) → pType i
-Ω X = ((⋆ X ≡ ⋆ X), refl (⋆ X))
+Ω X = ⋆[ ⋆ X ≡ ⋆ X , refl (⋆ X) ]
 
 Ω-pregroup : (X : pType i) → pregroup i
 Ω-pregroup X = record
@@ -95,7 +95,7 @@ map-Ω-equiv X Y e = transport (λ u → Ω X ≃⋆ Ω u) (pType-eq e) (id-equi
     (τ⋆kΩⁿ-is-Ωⁿτ⋆n+k 0 n X)
 
 is-connected⋆ : ℕ₋₂ → pType i → Set i
-is-connected⋆ n (X , x) = is-connected n X
+is-connected⋆ n ⋆[ X , x ] = is-connected n X
 
 connected-lt : (k n : ℕ) (lt : k < S n) (X : pType i)
   → (is-connected⋆ ⟨ n ⟩ X → is-contr⋆ (τ⋆ ⟨ k ⟩ X))

@@ -1,16 +1,18 @@
 {-# OPTIONS --without-K #-}
 
 open import Base
+open import Homotopy.Pointed
 open import Homotopy.Connected
 
 -- TODO Use pType i?
-module Homotopy.Cover {i} (A : Set i) (a : A)
-  (A-is-conn : is-connected ⟨0⟩ A) where
+module Homotopy.Cover {i} (A⋆ : pType i)
+  (A-is-conn : is-connected ⟨0⟩ ∣ A⋆ ∣) where
+open pType A⋆ renaming (∣_∣ to A ; ⋆ to a)
 
 open import Homotopy.Cover.Def A
 
 module Reconstruct where
-  open import Homotopy.Cover.HomotopyGroupSetIsomorphism A a A-is-conn public
+  open import Homotopy.Cover.HomotopyGroupSetIsomorphism A⋆ A-is-conn public
 
 {-
 -- The following is still a mess.  Don't read it.

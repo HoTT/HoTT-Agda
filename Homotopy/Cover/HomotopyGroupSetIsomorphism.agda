@@ -1,23 +1,23 @@
 {-# OPTIONS --without-K #-}
 
 open import Base
+open import Homotopy.Pointed
 open import Homotopy.Connected
 
 module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
-  (A : Set i) (a : A) (A-is-conn : is-connected ⟨0⟩ A) where
+  (A⋆ : pType i) (A-is-conn : is-connected ⟨0⟩ ∣ A⋆ ∣) where
+  open pType A⋆ renaming (∣_∣ to A ; ⋆ to a)
 
   open import Algebra.Groups
-  open import Homotopy.Pointed
   open import Homotopy.Truncation
   open import Homotopy.HomotopyGroups {i}
   open import Homotopy.PathTruncation
   open import Homotopy.Cover.Def A
-  open import Homotopy.Cover.Ribbon A a
+  open import Homotopy.Cover.Ribbon A⋆
 
   private
-    fundamental-group′ = fundamental-group (A , a)
-    module G = group fundamental-group′
-  open import Algebra.GroupSets fundamental-group′
+    module G = group (fundamental-group A⋆)
+  open import Algebra.GroupSets (fundamental-group A⋆)
 
   gset⇒covering : gset → covering
   gset⇒covering gset[ _ , act , _ ] = cov[ ribbon act , ribbon-is-set ]
