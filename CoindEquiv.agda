@@ -27,6 +27,9 @@ trans-∼ (to , from , eq) (to' , from' , eq') =
 -- sym-∼ : ∀ {i} {A B : Set i} → A ∼ B → B ∼ A
 -- sym-∼ (to , from , eq) = (from , to , (λ a b → ♯ {!sym-∼ (♭ (eq b a))!}))
 
+
+-- Logical equivalence with the usual notion of equivalences
+
 ∼-to-≃ : ∀ {i j} {A : Set i} {B : Set j} → (A ∼ B → A ≃ B)
 ∼-to-≃ (to , from , eq) =
   (to , iso-is-eq to from (λ b → _∼_.from (♭ (eq (from b) b)) (refl _))
@@ -37,6 +40,7 @@ trans-∼ (to , from , eq) (to' , from' , eq') =
   (λ a b → ♯ ≃-to-∼ (equiv-compose
     (path-to-eq (map (λ b → e ☆ a ≡ b) (! (inverse-right-inverse e b))))
     ((equiv-map e a (inverse e b))⁻¹)))
+
 
 -- Unfinished attempt to prove that this notion is coherent
 
@@ -61,8 +65,8 @@ trans-∼ (to , from , eq) (to' , from' , eq') =
 -- ∼-eq p q r = ∼-eq-raw (funext p) (funext q)
 --   (funext (λ a → (funext (λ b → {!r a b!}))))
 
--- thing : ∀ {i j} (A : Set i) (B : Set j) → ((A ≃ B) ≃ (A ∼ B))
--- thing A B = (≃-to-∼ A B , iso-is-eq _ (∼-to-≃ A B)
+-- coherent : ∀ {i j} (A : Set i) (B : Set j) → ((A ≃ B) ≃ (A ∼ B))
+-- coherent A B = (≃-to-∼ A B , iso-is-eq _ (∼-to-≃ A B)
 --   (λ y → ∼-eq (λ a → refl _)
 --               (λ b → happly (inverse-iso-is-eq (_∼_.to y) (_∼_.from y) _ _) b)
 --               (λ a b → {!!}))
