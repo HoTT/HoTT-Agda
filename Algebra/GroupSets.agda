@@ -3,13 +3,17 @@
 open import Base
 open import Algebra.Groups
 
+{-
+    The definition of G-sets.  Thanks to Daniel Grayson.
+-}
+
 module Algebra.GroupSets {i} (grp : group i) where
 
   private
     module G = group grp
 
-  -- The right group action with respect to the π¹ ( A , a )
-  -- Y should be some set, but that condition is not needed
+  -- The right group action with respect to the group [grp].
+  -- [Y] should be some set, but that condition is not needed
   -- in the definition.
   record action (Y : Set i) : Set i where
     constructor act[_,_,_]
@@ -24,6 +28,8 @@ module Algebra.GroupSets {i} (grp : group i) where
   action-eq ∙≡ =
   -}
 
+  -- The definition of a G-set.  A set [carrier] equipped with
+  -- a right group action with respect to [grp].
   record gset : Set (suc i) where
     constructor gset[_,_,_]
     field
@@ -32,6 +38,9 @@ module Algebra.GroupSets {i} (grp : group i) where
       set : is-set carrier
     open action act public
 
+  -- A convenient tool to compare two G-sets.  Many data are
+  -- just props and this function do the coversion for them
+  -- for you.  You only need to show the non-trivial parts.
   gset-eq : ∀ {gs₁ gs₂ : gset} (carrier≡ : gset.carrier gs₁ ≡ gset.carrier gs₂)
     → (∙≡ : transport (λ Y → Y → G.carrier → Y) carrier≡ (action._∙_ (gset.act gs₁))
           ≡ action._∙_ (gset.act gs₂))
