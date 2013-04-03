@@ -226,6 +226,12 @@ module _ {i} {A : Set i} where
       ≡ transport (λ u → P u a) p (q a)
   trans-Π2 B P (refl _) q a = refl _
 
+  trans-Π2-dep : ∀ {j k} (B : A → Set j) (P : (x : A) (y : B x) → Set k)
+    {a₁ a₂ : A} (p : a₁ ≡ a₂) (q : (y : B a₁) → P a₁ y) (b : B a₂)
+    → transport (λ x → ((y : B x) → P x y)) p q b
+      ≡ transport (uncurry P) (! (Σ-eq (! p) $ refl _)) (q (transport B (! p) b))
+  trans-Π2-dep B P (refl _) q b = refl _
+
   trans-→-trans : ∀ {j k} (B : A → Set j) (P : A → Set k)
     {b c : A} (p : b ≡ c) (q : B b → P b) (a : B b)
     → transport (λ x → B x → P x) p q (transport B p a)
