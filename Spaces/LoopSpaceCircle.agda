@@ -32,7 +32,7 @@ tot-cover = Σ S¹ universal-cover
 loop-to-succ : (n : ℤ) → transport universal-cover loop n ≡ succ n
 loop-to-succ n = ! (trans-map (λ A → A) universal-cover loop n)
                  ∘ (map (λ t → transport (λ A → A) t n)
-                        (β-nondep Set ℤ succ-path)
+                        (S¹-β-loop-nondep Set ℤ succ-path)
                  ∘ trans-id-eq-to-path succ-equiv n)
 
 {- The flattening lemma

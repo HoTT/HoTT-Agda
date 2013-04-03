@@ -33,14 +33,14 @@ S¹-rec : ∀ {i} (P : S¹ → Set i) (x : P base) (p : transport P loop x ≡ x
 S¹-rec P x p #base = x
 
 postulate  -- HIT
-  β : ∀ {i} (P : S¹ → Set i) (x : P base) (p : transport P loop x ≡ x)
+  S¹-β-loop : ∀ {i} (P : S¹ → Set i) (x : P base) (p : transport P loop x ≡ x)
       → map-dep (S¹-rec P x p) loop ≡ p
 
 S¹-rec-nondep : ∀ {i} (A : Set i) (x : A) (p : x ≡ x) → (S¹ → A)
 S¹-rec-nondep A x p #base = x
 
 postulate  -- HIT
-  β-nondep : ∀ {i} (A : Set i) (x : A) (p : x ≡ x)
+  S¹-β-loop-nondep : ∀ {i} (A : Set i) (x : A) (p : x ≡ x)
     → map (S¹-rec-nondep A x p) loop ≡ p
 
 
