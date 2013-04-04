@@ -34,11 +34,21 @@ trans-id : {A B : Set i} (f : A ≡ B) (u : A)
   → transport (λ X → X) f u ≡ (path-to-eq f) ☆ u
 trans-id (refl _) u = refl u
 
+trans-id! : {A B : Set i} (f : A ≡ B) (u : B)
+  → transport (λ X → X) (! f) u ≡ inverse (path-to-eq f) u
+trans-id! (refl _) u = refl u
+
 trans-id-eq-to-path : {A B : Set i} (f : A ≃ B) (u : A)
   → transport (λ X → X) (eq-to-path f) u ≡ f ☆ u
 trans-id-eq-to-path {A} {B} f u =
   trans-id (eq-to-path f) u
   ∘ map (λ (t : A ≃ B) → t ☆ u) (eq-to-path-right-inverse f)
+
+trans-id-!eq-to-path : {A B : Set i} (f : A ≃ B) (u : B)
+  → transport (λ X → X) (! (eq-to-path f)) u ≡ inverse f u
+trans-id-!eq-to-path {A} {B} f u =
+  trans-id! (eq-to-path f) u
+  ∘ map (λ (t : A ≃ B) → inverse t u) (eq-to-path-right-inverse f)
 
 -- Not used
 --
