@@ -4,7 +4,6 @@ open import Base
 open import Homotopy.Pointed
 open import Homotopy.Connected
 
--- TODO Use pType i?
 module Homotopy.Cover {i} (A⋆ : pType i)
   (A-is-conn : is-connected ⟨0⟩ ∣ A⋆ ∣) where
 open pType A⋆ renaming (∣_∣ to A ; ⋆ to a)
