@@ -3,7 +3,8 @@
 {-
   Ribbon is the explicit covering space construction.
 
-  This is given by Daniel Grayson, Favonia, Guillaume Brunerie.
+  This construction is given by Daniel Grayson, Favonia (me)
+  and Guillaume Brunerie together.
 -}
 
 open import Base
