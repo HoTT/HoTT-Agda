@@ -83,9 +83,9 @@ module Homotopy.Cover.ExamplePi1Circle where
     lemma₁ (refl _) f z = refl _ 
 
   -- One can follow Michael's proof to finish this, but this is not
-  -- the main point in this example and is too annoying.  Thus I skip it.
+  -- the main point in this example and is too annoying.
   private
-    postulate
+    postulate -- This still proves something: I am lazy.
       magic : ∀ {i} {X : Set i} → X
 
   path : ∀ x z → (x , z) ≡ loopⁿ-end
