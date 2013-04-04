@@ -3,7 +3,7 @@
 {-
   Ribbon is the explicit covering space construction.
 
-  This is given by Daniel Grayson, Favonia, Guillaume Brunerie
+  This is given by Daniel Grayson, Favonia, Guillaume Brunerie.
 -}
 
 open import Base
@@ -60,8 +60,6 @@ module Homotopy.Cover.Ribbon {i} (A⋆ : pType i) {Y : Set i} where
         → (∀ r → P r)
       ribbon-rec a₂ P trace* paste* (#trace y p) = trace* y p
 
-      -- TODO The computation rule for paste.
-
       -- Standard non-dependent eliminator
       ribbon-rec-nondep : ∀ a₂ {j} (P : Set j)
         ⦃ P-is-set : is-set P ⦄
@@ -69,8 +67,6 @@ module Homotopy.Cover.Ribbon {i} (A⋆ : pType i) {Y : Set i} where
         (paste* : ∀ y (loop : a ≡₀ a) p → trace* (y ∙ loop) p ≡ trace* y (loop ∘₀ p))
         → (ribbon a₂ → P)
       ribbon-rec-nondep a₂ P trace* paste* (#trace y p) = trace* y p
-
-      -- TODO The non-dependent computation rule for paste.
 
   open Ribbon public hiding (ribbon)
 
