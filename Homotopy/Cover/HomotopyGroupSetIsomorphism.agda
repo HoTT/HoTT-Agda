@@ -5,7 +5,7 @@ open import Homotopy.Pointed
 open import Homotopy.Connected
 
 module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
-  (A⋆ : pType i) (A-is-conn : is-connected ⟨0⟩ ∣ A⋆ ∣) where
+  (A⋆ : pType i) (A⋆-is-conn : is-connected⋆ ⟨0⟩ A⋆) where
   open pType A⋆ renaming (∣_∣ to A ; ⋆ to a)
 
   open import Algebra.Groups
@@ -39,7 +39,7 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
   -- The challenge is to get this path.
   abstract
     [base-path] : ∀ a₂ → [ a ≡ a₂ ]
-    [base-path] = connected-has-all-τ-paths A-is-conn a
+    [base-path] = connected-has-all-τ-paths A⋆-is-conn a
 
   -- Part 1: Show that the generated cover (ribbon) is fiberwisely
   --         equivalent to the original fiber.
@@ -371,7 +371,7 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
       (λ y → []-extend-nondep
         ⦃ []-is-prop ⦄
         (proj ◯ λ p → transport fiber p (π₂ y))
-        (connected-has-all-τ-paths A-is-conn (π₁ y) a))
+        (connected-has-all-τ-paths A⋆-is-conn (π₁ y) a))
       (π₁ cov-is-universal)
 
     -- [ isomorphism between the fiber and the fundamental group ]

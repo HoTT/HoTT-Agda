@@ -94,16 +94,6 @@ map-Ω-equiv X Y e = transport (λ u → Ω X ≃⋆ Ω u) (pType-eq e) (id-equi
   transport (λ u → πⁿ n X ≃⋆ Ωⁿ n (τ⋆ ⟨ u ⟩ X)) (+0-is-id n)
     (τ⋆kΩⁿ-is-Ωⁿτ⋆n+k 0 n X)
 
-is-connected⋆ : ℕ₋₂ → pType i → Set i
-is-connected⋆ n ⋆[ X , x ] = is-connected n X
-
-connected-lt : (k n : ℕ) (lt : k < S n) (X : pType i)
-  → (is-connected⋆ ⟨ n ⟩ X → is-contr⋆ (τ⋆ ⟨ k ⟩ X))
-connected-lt .n n <n X p = p
-connected-lt k O (<S ()) X p
-connected-lt k (S n) (<S lt) X p =
-  connected-lt k n lt X (connected-S-is-connected ⟨ n ⟩ p)
-
 contr-is-contr-Ω : (X : pType i) → (is-contr⋆ X → is-contr⋆ (Ω X))
 contr-is-contr-Ω X p = ≡-is-truncated ⟨-2⟩ p
 
@@ -114,7 +104,7 @@ contr-is-contr-Ωⁿ (S n) X p = contr-is-contr-Ω _ (contr-is-contr-Ωⁿ n X p
 connected-other-πⁿ : (k n : ℕ) (lt : k < S n) (X : pType i)
   → (is-connected⋆ ⟨ n ⟩ X → is-contr⋆ (other-πⁿ k X))
 connected-other-πⁿ k n lt X p =
-  contr-is-contr-Ωⁿ k _ (connected-lt k n lt X p)
+  contr-is-contr-Ωⁿ k _ (connected⋆-lt k n lt X p)
 
 connected-πⁿ : (k n : ℕ) (lt : k < S n) (X : pType i)
   → (is-connected⋆ ⟨ n ⟩ X → is-contr⋆ (πⁿ k X))

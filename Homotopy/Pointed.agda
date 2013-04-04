@@ -1,9 +1,12 @@
 {-# OPTIONS --without-K #-}
 
 open import Base
-open import Homotopy.Truncation
 
 module Homotopy.Pointed where
+
+open import Integers
+open import Homotopy.Truncation
+open import Homotopy.Connected
 
 record pType (i : Level) : Set (suc i) where
   constructor ⋆[_,_]
@@ -23,6 +26,16 @@ _→⋆_ A B = ⋆[ Σ (∣ A ∣ → ∣ B ∣) (λ f → f (⋆ A) ≡ ⋆ B),
 
 is-contr⋆ : ∀ {i} → (pType i → Set i)
 is-contr⋆ ⋆[ X , x ] = is-contr X
+
+is-connected⋆ : ∀ {i} → ℕ₋₂ → (pType i → Set i)
+is-connected⋆ n ⋆[ X , x ] = is-connected n X
+
+connected⋆-lt : ∀ {i} (k n : ℕ) (lt : k < S n) (X : pType i)
+  → (is-connected⋆ ⟨ n ⟩ X → is-contr⋆ (τ⋆ ⟨ k ⟩ X))
+connected⋆-lt .n n <n X p = p
+connected⋆-lt k O (<S ()) X p
+connected⋆-lt k (S n) (<S lt) X p =
+  connected⋆-lt k n lt X (connected-S-is-connected ⟨ n ⟩ p)
 
 _≃⋆_ : ∀ {i j} → (pType i → pType j → Set (max i j))
 ⋆[ X , x ] ≃⋆ ⋆[ Y , y ] = Σ (X ≃ Y) (λ f → π₁ f x ≡ y)
