@@ -29,8 +29,8 @@ abstract
   pred-succ (neg O) = refl (neg O)
   pred-succ (neg (S n)) = refl (neg (S n))
 
-  succ-is-equiv : is-equiv succ
-  succ-is-equiv = iso-is-eq succ pred succ-pred pred-succ
+succ-is-equiv : is-equiv succ
+succ-is-equiv = iso-is-eq succ pred succ-pred pred-succ
 
 succ-equiv : ℤ ≃ ℤ
 succ-equiv = (succ , succ-is-equiv)
