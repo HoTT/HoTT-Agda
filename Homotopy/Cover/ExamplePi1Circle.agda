@@ -16,8 +16,8 @@ module Homotopy.Cover.ExamplePi1Circle where
   {-
       The 1st step: Show that the circle is connected.
   -}
-  S¹-is-⟨1⟩-connected : is-connected ⟨0⟩ S¹
-  S¹-is-⟨1⟩-connected = proj base ,
+  S¹-is-conn : is-connected ⟨0⟩ S¹
+  S¹-is-conn = proj base ,
     τ-extend ⦃ λ _ → ≡-is-set $ π₀-is-set S¹ ⦄
       (S¹-rec (λ x → proj x ≡ proj base) (refl _)
         (prop-has-all-paths (π₀-is-set S¹ _ _) _ _))
@@ -25,8 +25,7 @@ module Homotopy.Cover.ExamplePi1Circle where
   open import Integers
   open import Homotopy.Pointed
   open import Homotopy.Cover.Def S¹
-  open import Homotopy.Cover.HomotopyGroupSetIsomorphism
-    (⋆[ S¹ , base ]) S¹-is-⟨1⟩-connected
+  open import Homotopy.Cover.HomotopyGroupSetIsomorphism (⋆[ S¹ , base ]) S¹-is-conn
 
   S¹-covering : covering
   S¹-covering = let fiber = S¹-rec-nondep Set ℤ (eq-to-path succ-equiv) in
@@ -38,69 +37,93 @@ module Homotopy.Cover.ExamplePi1Circle where
       The 2nd step : Show that S¹ is contractible.
   -}
 
-  -- Lemmas
-  trans-fiber-loop : ∀ z → transport fiber loop z ≡ succ z
-  trans-fiber-loop z =
-    transport fiber loop z
-      ≡⟨ ! $ trans-ap (id _) fiber loop z ⟩
-    transport (id _) (ap fiber loop) z
-      ≡⟨ ap (λ x → transport (id _) x z) $ S¹-β-loop-nondep Set ℤ (eq-to-path _) ⟩
-    transport (id _) (eq-to-path succ-equiv) z
-      ≡⟨ trans-id-eq-to-path _ _ ⟩∎
-    succ z
-      ∎
+  -- One step.
   trans-fiber-!loop : ∀ z → transport fiber (! loop) z ≡ pred z
-  trans-fiber-!loop z = move!-transp-right fiber loop _ _ $ ! $ trans-fiber-loop _ ∘ succ-pred z
+  trans-fiber-!loop z =
+    transport fiber (! loop) z
+      ≡⟨ ! $ trans-ap (id _) fiber (! loop) z ⟩
+    transport (id _) (ap fiber (! loop)) z
+      ≡⟨ ap (λ x → transport (id _) x z) $ ap-opposite fiber loop ⟩
+    transport (id _) (! (ap fiber loop)) z
+      ≡⟨ ap (λ x → transport (id _) (! x) z) $ S¹-β-loop-nondep Set ℤ (eq-to-path _) ⟩
+    transport (id _) (! (eq-to-path succ-equiv)) z
+      ≡⟨ trans-id-!eq-to-path _ _ ⟩∎
+    pred z
+      ∎
 
   -- The center is path-end.
-  loopⁿ-end : Σ S¹ fiber
-  loopⁿ-end = (base , O)
+  loop⁻ⁿ-end : Σ S¹ fiber
+  loop⁻ⁿ-end = (base , O)
 
   -- Climbing up the stairs.
-  loopⁿ-succ : ∀ z → _≡_ {A = Σ S¹ fiber} (base , z) (base , succ z)
-  loopⁿ-succ z = Σ-eq loop $ trans-fiber-loop z
+  loop⁻¹ : ∀ z → _≡_ {A = Σ S¹ fiber} (base , z) (base , pred z)
+  loop⁻¹ z = Σ-eq (! loop) (trans-fiber-!loop z)
 
   -- Agda needs us to show the induction order explicitly,
   -- and so there are so many functions.
-  loopⁿ : ∀ z → (base , z) ≡ loopⁿ-end
-  loopⁿ-pos : ∀ n → (base , pos n) ≡ loopⁿ-end
-  loopⁿ-neg : ∀ n → (base , neg n) ≡ loopⁿ-end
+  loop⁻ⁿ : ∀ z → (base , z) ≡ loop⁻ⁿ-end
+  loop⁻ⁿ-pos : ∀ n → (base , pos n) ≡ loop⁻ⁿ-end
+  loop⁻ⁿ-neg : ∀ n → (base , neg n) ≡ loop⁻ⁿ-end
 
-  loopⁿ O = refl _
-  loopⁿ (pos _) = loopⁿ-pos _
-  loopⁿ (neg _) = loopⁿ-neg _
-  loopⁿ-pos 0 = ! $ loopⁿ-succ _
-  loopⁿ-pos (S _) = (! $ loopⁿ-succ _) ∘ loopⁿ-pos _
-  loopⁿ-neg 0 = loopⁿ-succ _
-  loopⁿ-neg (S _) = loopⁿ-succ _ ∘ loopⁿ-neg _
+  loop⁻ⁿ O = refl _
+  loop⁻ⁿ (pos _) = loop⁻ⁿ-pos _
+  loop⁻ⁿ (neg _) = loop⁻ⁿ-neg _
+  loop⁻ⁿ-pos 0 = loop⁻¹ _
+  loop⁻ⁿ-pos (S _) = loop⁻¹ _ ∘ loop⁻ⁿ-pos _
+  loop⁻ⁿ-neg 0 = ! (loop⁻¹ _)
+  loop⁻ⁿ-neg (S _) = ! (loop⁻¹ _) ∘ loop⁻ⁿ-neg _
 
   private
-    -- This lemma should be derivable from trans-Π2-dep and trans-id≡cst and ...
-    -- but a simple J rule looks better.
-    lemma₁ : ∀ {x₁ x₂} (q : x₁ ≡ x₂) (f : ∀ z → (x₁ , z) ≡ loopⁿ-end) (z : fiber x₂) 
-      → transport (λ s → ∀ z → (s , z) ≡ loopⁿ-end) q f z
+    -- These are specialized J rules that work for this development only.
+    -- I am too lazy to generalize them.
+
+    lemma₁ : ∀ {x₁ x₂} (q : x₁ ≡ x₂) (f : ∀ z → (x₁ , z) ≡ loop⁻ⁿ-end) (z : fiber x₂)
+      → transport (λ s → ∀ z → (s , z) ≡ loop⁻ⁿ-end) q f z
       ≡ Σ-eq (! q) (refl _) ∘ f (transport fiber (! q) z)
-    lemma₁ (refl _) f z = refl _ 
+    lemma₁ (refl _) f z = refl _
 
-  -- One can follow Michael's proof to finish this, but this is not
-  -- the main point in this example and is too annoying.
-  private
-    postulate -- This still proves something: I am lazy.
-      magic : ∀ {i} {X : Set i} → X
+    lemma₂ : ∀ {b₁} {b₂} (q : b₁ ≡ b₂) p
+      → transport (λ z → (base , z) ≡ loop⁻ⁿ-end) (! q) p
+      ≡ Σ-eq (refl _) q ∘ p
+    lemma₂ (refl _) p = refl _
 
-  path : ∀ x z → (x , z) ≡ loopⁿ-end
-  path = S¹-rec (λ s → ∀ z → (s , z) ≡ loopⁿ-end) loopⁿ $ funext λ z →
-    transport (λ s → ∀ z → (s , z) ≡ loopⁿ-end) loop loopⁿ z
-      ≡⟨ lemma₁ loop loopⁿ z ⟩
-    Σ-eq (! loop) (refl _) ∘ loopⁿ (transport fiber (! loop) z)
-      ≡⟨ ap (λ x → Σ-eq (! loop) (refl _) ∘ x) $ apd! loopⁿ (trans-fiber-!loop z) ⟩
-    Σ-eq (! loop) (refl _) ∘ (transport (λ z → (base , z) ≡ loopⁿ-end) (! $ trans-fiber-!loop z) (loopⁿ (pred z)))
-      ≡⟨ magic ⟩∎
-    loopⁿ z
-      ∎
+    compose-Σ-eq : ∀ {a₁} {a₂} (p : a₁ ≡ a₂)
+      {b₁ : fiber a₁} {b₂} (q : transport fiber p b₁ ≡ b₂)
+      → Σ-eq {A = S¹} {P = fiber} p (refl _) ∘ Σ-eq (refl _) q ≡ Σ-eq p q
+    compose-Σ-eq (refl _) q = refl _
+
+    loop⁻¹-loop⁻ⁿ-pred : ∀ z → loop⁻¹ z ∘ loop⁻ⁿ (pred z) ≡ loop⁻ⁿ z
+    loop⁻¹-loop⁻ⁿ-pred O = opposite-right-inverse (loop⁻¹ _)
+    loop⁻¹-loop⁻ⁿ-pred (pos O) = refl-right-unit _
+    loop⁻¹-loop⁻ⁿ-pred (pos (S _)) = refl _
+    loop⁻¹-loop⁻ⁿ-pred (neg _) =
+      loop⁻¹ _ ∘ (! (loop⁻¹ _) ∘ loop⁻ⁿ-neg _)
+        ≡⟨ ! $ concat-assoc (loop⁻¹ _) (! (loop⁻¹ _)) _ ⟩
+      (loop⁻¹ _ ∘ ! (loop⁻¹ _)) ∘ loop⁻ⁿ-neg _
+        ≡⟨ ap (λ x → x ∘ loop⁻ⁿ-neg _) $ opposite-right-inverse (loop⁻¹ _) ⟩∎
+      loop⁻ⁿ-neg _
+        ∎
+
+  path : ∀ x z → (x , z) ≡ loop⁻ⁿ-end
+  path = S¹-rec (λ s → ∀ z → (s , z) ≡ loop⁻ⁿ-end) loop⁻ⁿ $ funext λ z →
+    transport (λ s → ∀ z → (s , z) ≡ loop⁻ⁿ-end) loop loop⁻ⁿ z
+        ≡⟨ lemma₁ loop loop⁻ⁿ z ⟩
+    Σ-eq (! loop) (refl _) ∘ loop⁻ⁿ (transport fiber (! loop) z)
+        ≡⟨ ap (λ x → Σ-eq (! loop) (refl _) ∘ x) $ apd! loop⁻ⁿ (trans-fiber-!loop z) ⟩
+    Σ-eq (! loop) (refl _) ∘
+      (transport (λ z → (base , z) ≡ loop⁻ⁿ-end) (! $ trans-fiber-!loop z) (loop⁻ⁿ (pred z)))
+        ≡⟨ ap (λ x → Σ-eq (! loop) (refl _) ∘ x) $ lemma₂ (trans-fiber-!loop z) (loop⁻ⁿ (pred z)) ⟩
+    Σ-eq (! loop) (refl _) ∘ (Σ-eq (refl _) (trans-fiber-!loop z) ∘ loop⁻ⁿ (pred z))
+        ≡⟨ ! $ concat-assoc (Σ-eq (! loop) (refl _)) _ _ ⟩
+    (Σ-eq (! loop) (refl _) ∘ Σ-eq (refl _) (trans-fiber-!loop z)) ∘ loop⁻ⁿ (pred z)
+        ≡⟨ ap (λ x → x ∘ loop⁻ⁿ (pred z)) $ compose-Σ-eq (! loop) (trans-fiber-!loop z) ⟩
+    loop⁻¹ z ∘ loop⁻ⁿ (pred z)
+        ≡⟨ loop⁻¹-loop⁻ⁿ-pred z ⟩∎
+    loop⁻ⁿ z
+        ∎
 
   S¹-covering-is-universal : is-universal S¹-covering
-  S¹-covering-is-universal = contr-is-connected ⟨1⟩ $ (base , O) , uncurry path
+  S¹-covering-is-universal = contr-is-connected ⟨1⟩ $ loop⁻ⁿ-end , uncurry path
 
   ℤ-π¹S¹-equiv : ℤ ≃ (base ≡₀ base)
   ℤ-π¹S¹-equiv = GiveMeAPoint.fiber-a≃fg S¹-covering S¹-covering-is-universal O
