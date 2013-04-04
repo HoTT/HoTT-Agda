@@ -200,103 +200,110 @@ module Homotopy.VanKampen.SplitCode {i} (d : pushout-diag i)
 
   -- Derived 1-cells.
   module _ where
-    code-ba-swap : ∀ n₁ co n₂ (r : loc n₁ ≡₀ loc n₂)
-      → co b⟦ n₁ ⟧a ap₀ f r a⟦ n₂ ⟧b refl₀ _
-      ≡ co b⟦ n₁ ⟧a refl₀ _ a⟦ n₁ ⟧b ap₀ g r
-    code-ba-swap n₁ co n₂ r =
-      co                                   b⟦ n₁ ⟧a ap₀ f r a⟦ n₂ ⟧b refl₀ _
-        ≡⟨ ap (λ x → x b⟦ n₁ ⟧a ap₀ f r a⟦ n₂ ⟧b refl₀ _) $ ! $ code-b-refl-refl n₁ co ⟩
-      co b⟦ n₁ ⟧a refl₀ _ a⟦ n₁ ⟧b refl₀ _ b⟦ n₁ ⟧a ap₀ f r a⟦ n₂ ⟧b refl₀ _
-        ≡⟨ ap (λ x → x a⟦ n₂ ⟧b refl₀ _) $ ! $ code-ab-swap n₁ (co b⟦ n₁ ⟧a refl₀ _) n₂ r ⟩
-      co b⟦ n₁ ⟧a refl₀ _ a⟦ n₁ ⟧b ap₀ g r b⟦ n₂ ⟧a refl₀ _ a⟦ n₂ ⟧b refl₀ _
-        ≡⟨ code-b-refl-refl n₂ $ co b⟦ n₁ ⟧a refl₀ _ a⟦ n₁ ⟧b ap₀ g r ⟩∎
-      co b⟦ n₁ ⟧a refl₀ _ a⟦ n₁ ⟧b ap₀ g r
-        ∎
+    abstract
+      code-ba-swap : ∀ n₁ co n₂ (r : loc n₁ ≡₀ loc n₂)
+        → co b⟦ n₁ ⟧a ap₀ f r a⟦ n₂ ⟧b refl₀ _
+        ≡ co b⟦ n₁ ⟧a refl₀ _ a⟦ n₁ ⟧b ap₀ g r
+      code-ba-swap n₁ co n₂ r =
+        co                                   b⟦ n₁ ⟧a ap₀ f r a⟦ n₂ ⟧b refl₀ _
+          ≡⟨ ap (λ x → x b⟦ n₁ ⟧a ap₀ f r a⟦ n₂ ⟧b refl₀ _) $ ! $ code-b-refl-refl n₁ co ⟩
+        co b⟦ n₁ ⟧a refl₀ _ a⟦ n₁ ⟧b refl₀ _ b⟦ n₁ ⟧a ap₀ f r a⟦ n₂ ⟧b refl₀ _
+          ≡⟨ ap (λ x → x a⟦ n₂ ⟧b refl₀ _) $ ! $ code-ab-swap n₁ (co b⟦ n₁ ⟧a refl₀ _) n₂ r ⟩
+        co b⟦ n₁ ⟧a refl₀ _ a⟦ n₁ ⟧b ap₀ g r b⟦ n₂ ⟧a refl₀ _ a⟦ n₂ ⟧b refl₀ _
+          ≡⟨ code-b-refl-refl n₂ $ co b⟦ n₁ ⟧a refl₀ _ a⟦ n₁ ⟧b ap₀ g r ⟩∎
+        co b⟦ n₁ ⟧a refl₀ _ a⟦ n₁ ⟧b ap₀ g r
+          ∎
 
-    -- Old (provable) rules.
-    code-a-merge : ∀ {a₂} n p₁ (p₂ : _ ≡₀ a₂)
-      → ⟧a p₁ a⟦ n ⟧b refl₀ _ b⟦ n ⟧a p₂
-      ≡ ⟧a p₁            ∘₀           p₂
-    code-a-merge {a₂} n p₁ = π₀-extend
-      ⦃ λ _ → ≡-is-set $ code-a-is-set a₂ ⦄
-      ( λ p₂ →
-          ⟧a p₁ a⟦ n ⟧b refl₀ _ b⟦ n ⟧a proj p₂
-            ≡⟨ ! $ trans-ba p₂ n (⟧a p₁ a⟦ n ⟧b refl₀ _) (refl₀ _) ⟩
-          transport code-a p₂ (⟧a p₁ a⟦ n ⟧b refl₀ _ b⟦ n ⟧a refl₀ _)
-            ≡⟨ ap (transport code-a p₂) $ code-a-refl-refl n (⟧a p₁) ⟩
-          transport code-a p₂ (⟧a p₁)
-            ≡⟨ trans-a p₂ p₁ ⟩∎
-          ⟧a p₁ ∘₀ proj p₂
-            ∎)
+    abstract
+      -- Old (provable) rules.
+      code-a-merge : ∀ {a₂} n p₁ (p₂ : _ ≡₀ a₂)
+        → ⟧a p₁ a⟦ n ⟧b refl₀ _ b⟦ n ⟧a p₂
+        ≡ ⟧a p₁            ∘₀           p₂
+      code-a-merge {a₂} n p₁ = π₀-extend
+        ⦃ λ _ → ≡-is-set $ code-a-is-set a₂ ⦄
+        ( λ p₂ →
+            ⟧a p₁ a⟦ n ⟧b refl₀ _ b⟦ n ⟧a proj p₂
+              ≡⟨ ! $ trans-ba p₂ n (⟧a p₁ a⟦ n ⟧b refl₀ _) (refl₀ _) ⟩
+            transport code-a p₂ (⟧a p₁ a⟦ n ⟧b refl₀ _ b⟦ n ⟧a refl₀ _)
+              ≡⟨ ap (transport code-a p₂) $ code-a-refl-refl n (⟧a p₁) ⟩
+            transport code-a p₂ (⟧a p₁)
+              ≡⟨ trans-a p₂ p₁ ⟩∎
+            ⟧a p₁ ∘₀ proj p₂
+              ∎)
 
-    code-ab-merge : ∀ {b₂} n₁ co n₂ p₁ (p₂ : _ ≡₀ b₂)
-      → co a⟦ n₁ ⟧b p₁ b⟦ n₂ ⟧a refl₀ _ a⟦ n₂ ⟧b p₂
-      ≡ co a⟦ n₁ ⟧b p₁             ∘₀            p₂
-    code-ab-merge {b₂} n₁ co n₂ p₁ = π₀-extend
-      ⦃ λ _ → ≡-is-set $ code-b-is-set b₂ ⦄
-      ( λ p₂ →
-          co a⟦ n₁ ⟧b p₁ b⟦ n₂ ⟧a refl₀ _ a⟦ n₂ ⟧b proj p₂
-            ≡⟨ ! $ trans-ab p₂ n₂ (co a⟦ n₁ ⟧b p₁ b⟦ n₂ ⟧a refl₀ _) (refl₀ _) ⟩
-          transport code-b p₂ (co a⟦ n₁ ⟧b p₁ b⟦ n₂ ⟧a refl₀ _ a⟦ n₂ ⟧b refl₀ _)
-            ≡⟨ ap (transport code-b p₂) $ code-b-refl-refl n₂ (co a⟦ n₁ ⟧b p₁) ⟩
-          transport code-b p₂ (co a⟦ n₁ ⟧b p₁)
-            ≡⟨ trans-ab p₂ n₁ co p₁ ⟩∎
-          co a⟦ n₁ ⟧b p₁ ∘₀ proj p₂
-            ∎)
+    abstract
+      code-ab-merge : ∀ {b₂} n₁ co n₂ p₁ (p₂ : _ ≡₀ b₂)
+        → co a⟦ n₁ ⟧b p₁ b⟦ n₂ ⟧a refl₀ _ a⟦ n₂ ⟧b p₂
+        ≡ co a⟦ n₁ ⟧b p₁             ∘₀            p₂
+      code-ab-merge {b₂} n₁ co n₂ p₁ = π₀-extend
+        ⦃ λ _ → ≡-is-set $ code-b-is-set b₂ ⦄
+        ( λ p₂ →
+            co a⟦ n₁ ⟧b p₁ b⟦ n₂ ⟧a refl₀ _ a⟦ n₂ ⟧b proj p₂
+              ≡⟨ ! $ trans-ab p₂ n₂ (co a⟦ n₁ ⟧b p₁ b⟦ n₂ ⟧a refl₀ _) (refl₀ _) ⟩
+            transport code-b p₂ (co a⟦ n₁ ⟧b p₁ b⟦ n₂ ⟧a refl₀ _ a⟦ n₂ ⟧b refl₀ _)
+              ≡⟨ ap (transport code-b p₂) $ code-b-refl-refl n₂ (co a⟦ n₁ ⟧b p₁) ⟩
+            transport code-b p₂ (co a⟦ n₁ ⟧b p₁)
+              ≡⟨ trans-ab p₂ n₁ co p₁ ⟩∎
+            co a⟦ n₁ ⟧b p₁ ∘₀ proj p₂
+              ∎)
 
-    code-ba-merge : ∀ {a₂} n₁ co n₂ p₁ (p₂ : _ ≡₀ a₂)
-      → co b⟦ n₁ ⟧a p₁ a⟦ n₂ ⟧b refl₀ _ b⟦ n₂ ⟧a p₂
-      ≡ co b⟦ n₁ ⟧a p₁             ∘₀            p₂
-    code-ba-merge {a₂} n₁ co n₂ p₁ = π₀-extend
-      ⦃ λ _ → ≡-is-set $ code-a-is-set a₂ ⦄
-      ( λ p₂ →
-          co b⟦ n₁ ⟧a p₁ a⟦ n₂ ⟧b refl₀ _ b⟦ n₂ ⟧a proj p₂
-            ≡⟨ ! $ trans-ba p₂ n₂ (co b⟦ n₁ ⟧a p₁ a⟦ n₂ ⟧b refl₀ _) (refl₀ _) ⟩
-          transport code-a p₂ (co b⟦ n₁ ⟧a p₁ a⟦ n₂ ⟧b refl₀ _ b⟦ n₂ ⟧a refl₀ _)
-            ≡⟨ ap (transport code-a p₂) $ code-a-refl-refl n₂ (co b⟦ n₁ ⟧a p₁) ⟩
-          transport code-a p₂ (co b⟦ n₁ ⟧a p₁)
-            ≡⟨ trans-ba p₂ n₁ co p₁ ⟩∎
-          co b⟦ n₁ ⟧a p₁ ∘₀ proj p₂
-            ∎)
+    abstract
+      code-ba-merge : ∀ {a₂} n₁ co n₂ p₁ (p₂ : _ ≡₀ a₂)
+        → co b⟦ n₁ ⟧a p₁ a⟦ n₂ ⟧b refl₀ _ b⟦ n₂ ⟧a p₂
+        ≡ co b⟦ n₁ ⟧a p₁             ∘₀            p₂
+      code-ba-merge {a₂} n₁ co n₂ p₁ = π₀-extend
+        ⦃ λ _ → ≡-is-set $ code-a-is-set a₂ ⦄
+        ( λ p₂ →
+            co b⟦ n₁ ⟧a p₁ a⟦ n₂ ⟧b refl₀ _ b⟦ n₂ ⟧a proj p₂
+              ≡⟨ ! $ trans-ba p₂ n₂ (co b⟦ n₁ ⟧a p₁ a⟦ n₂ ⟧b refl₀ _) (refl₀ _) ⟩
+            transport code-a p₂ (co b⟦ n₁ ⟧a p₁ a⟦ n₂ ⟧b refl₀ _ b⟦ n₂ ⟧a refl₀ _)
+              ≡⟨ ap (transport code-a p₂) $ code-a-refl-refl n₂ (co b⟦ n₁ ⟧a p₁) ⟩
+            transport code-a p₂ (co b⟦ n₁ ⟧a p₁)
+              ≡⟨ trans-ba p₂ n₁ co p₁ ⟩∎
+            co b⟦ n₁ ⟧a p₁ ∘₀ proj p₂
+              ∎)
 
-    code-a-shift : ∀ {b₂} n₁ p₁ n₂ (r : loc n₁ ≡₀ loc n₂) (p₂ : _ ≡₀ b₂)
-      → ⟧a p₁ ∘₀ ap₀ f r a⟦ n₂ ⟧b            p₂
-      ≡ ⟧a p₁            a⟦ n₁ ⟧b ap₀ g r ∘₀ p₂
-    code-a-shift n₁ p₁ n₂ r p₂ =
-      ⟧a p₁             ∘₀            ap₀ f r a⟦ n₂ ⟧b p₂
-        ≡⟨ ap (λ x → x a⟦ n₂ ⟧b p₂) $ ! $ code-a-merge n₁ p₁ (ap₀ f r) ⟩
-      ⟧a p₁ a⟦ n₁ ⟧b refl₀ _ b⟦ n₁ ⟧a ap₀ f r a⟦ n₂ ⟧b p₂
-        ≡⟨ ap (λ x → x a⟦ n₂ ⟧b p₂) $ ! $ code-ab-swap n₁ (⟧a p₁) n₂ r ⟩
-      ⟧a p₁ a⟦ n₁ ⟧b ap₀ g r b⟦ n₂ ⟧a refl₀ _ a⟦ n₂ ⟧b p₂
-        ≡⟨ code-ab-merge n₁ (⟧a p₁) n₂ (ap₀ g r) p₂ ⟩∎
-      ⟧a p₁ a⟦ n₁ ⟧b ap₀ g r             ∘₀            p₂
-        ∎
+    abstract
+      code-a-shift : ∀ {b₂} n₁ p₁ n₂ (r : loc n₁ ≡₀ loc n₂) (p₂ : _ ≡₀ b₂)
+        → ⟧a p₁ ∘₀ ap₀ f r a⟦ n₂ ⟧b            p₂
+        ≡ ⟧a p₁            a⟦ n₁ ⟧b ap₀ g r ∘₀ p₂
+      code-a-shift n₁ p₁ n₂ r p₂ =
+        ⟧a p₁             ∘₀            ap₀ f r a⟦ n₂ ⟧b p₂
+          ≡⟨ ap (λ x → x a⟦ n₂ ⟧b p₂) $ ! $ code-a-merge n₁ p₁ (ap₀ f r) ⟩
+        ⟧a p₁ a⟦ n₁ ⟧b refl₀ _ b⟦ n₁ ⟧a ap₀ f r a⟦ n₂ ⟧b p₂
+          ≡⟨ ap (λ x → x a⟦ n₂ ⟧b p₂) $ ! $ code-ab-swap n₁ (⟧a p₁) n₂ r ⟩
+        ⟧a p₁ a⟦ n₁ ⟧b ap₀ g r b⟦ n₂ ⟧a refl₀ _ a⟦ n₂ ⟧b p₂
+          ≡⟨ code-ab-merge n₁ (⟧a p₁) n₂ (ap₀ g r) p₂ ⟩∎
+        ⟧a p₁ a⟦ n₁ ⟧b ap₀ g r             ∘₀            p₂
+          ∎
 
-    code-ba-shift : ∀ {b₂} n₁ co n₂ p₁ n₃ (r : loc n₂ ≡₀ loc n₃) (p₂ : _ ≡₀ b₂)
-      → co b⟦ n₁ ⟧a p₁ ∘₀ ap₀ f r a⟦ n₃ ⟧b            p₂
-      ≡ co b⟦ n₁ ⟧a p₁            a⟦ n₂ ⟧b ap₀ g r ∘₀ p₂
-    code-ba-shift n₁ co n₂ p₁ n₃ r p₂ =
-      co b⟦ n₁ ⟧a p₁             ∘₀            ap₀ f r a⟦ n₃ ⟧b p₂
-        ≡⟨ ap (λ x → x a⟦ n₃ ⟧b p₂) $ ! $ code-ba-merge n₁ co n₂ p₁ (ap₀ f r) ⟩
-      co b⟦ n₁ ⟧a p₁ a⟦ n₂ ⟧b refl₀ _ b⟦ n₂ ⟧a ap₀ f r a⟦ n₃ ⟧b p₂
-        ≡⟨ ap (λ x → x a⟦ n₃ ⟧b p₂) $ ! $ code-ab-swap n₂ (co b⟦ n₁ ⟧a p₁) n₃ r ⟩
-      co b⟦ n₁ ⟧a p₁ a⟦ n₂ ⟧b ap₀ g r b⟦ n₃ ⟧a refl₀ _ a⟦ n₃ ⟧b p₂
-        ≡⟨ code-ab-merge n₂ (co b⟦ n₁ ⟧a p₁) n₃ (ap₀ g r) p₂ ⟩∎
-      co b⟦ n₁ ⟧a p₁ a⟦ n₂ ⟧b ap₀ g r             ∘₀            p₂
-        ∎
+    abstract
+      code-ba-shift : ∀ {b₂} n₁ co n₂ p₁ n₃ (r : loc n₂ ≡₀ loc n₃) (p₂ : _ ≡₀ b₂)
+        → co b⟦ n₁ ⟧a p₁ ∘₀ ap₀ f r a⟦ n₃ ⟧b            p₂
+        ≡ co b⟦ n₁ ⟧a p₁            a⟦ n₂ ⟧b ap₀ g r ∘₀ p₂
+      code-ba-shift n₁ co n₂ p₁ n₃ r p₂ =
+        co b⟦ n₁ ⟧a p₁             ∘₀            ap₀ f r a⟦ n₃ ⟧b p₂
+          ≡⟨ ap (λ x → x a⟦ n₃ ⟧b p₂) $ ! $ code-ba-merge n₁ co n₂ p₁ (ap₀ f r) ⟩
+        co b⟦ n₁ ⟧a p₁ a⟦ n₂ ⟧b refl₀ _ b⟦ n₂ ⟧a ap₀ f r a⟦ n₃ ⟧b p₂
+          ≡⟨ ap (λ x → x a⟦ n₃ ⟧b p₂) $ ! $ code-ab-swap n₂ (co b⟦ n₁ ⟧a p₁) n₃ r ⟩
+        co b⟦ n₁ ⟧a p₁ a⟦ n₂ ⟧b ap₀ g r b⟦ n₃ ⟧a refl₀ _ a⟦ n₃ ⟧b p₂
+          ≡⟨ code-ab-merge n₂ (co b⟦ n₁ ⟧a p₁) n₃ (ap₀ g r) p₂ ⟩∎
+        co b⟦ n₁ ⟧a p₁ a⟦ n₂ ⟧b ap₀ g r             ∘₀            p₂
+          ∎
 
-    code-ab-shift : ∀ {a₂} n₁ co n₂ p₁ n₃ (r : loc n₂ ≡₀ loc n₃) (p₂ : _ ≡₀ a₂)
-      → co a⟦ n₁ ⟧b p₁ ∘₀ ap₀ g r b⟦ n₃ ⟧a            p₂
-      ≡ co a⟦ n₁ ⟧b p₁            b⟦ n₂ ⟧a ap₀ f r ∘₀ p₂
-    code-ab-shift n₁ co n₂ p₁ n₃ r p₂ =
-      co a⟦ n₁ ⟧b p₁             ∘₀            ap₀ g r b⟦ n₃ ⟧a p₂
-        ≡⟨ ap (λ x → x b⟦ n₃ ⟧a p₂) $ ! $ code-ab-merge n₁ co n₂ p₁ (ap₀ g r) ⟩
-      co a⟦ n₁ ⟧b p₁ b⟦ n₂ ⟧a refl₀ _ a⟦ n₂ ⟧b ap₀ g r b⟦ n₃ ⟧a p₂
-        ≡⟨ ap (λ x → x b⟦ n₃ ⟧a p₂) $ ! $ code-ba-swap n₂ (co a⟦ n₁ ⟧b p₁) n₃ r ⟩
-      co a⟦ n₁ ⟧b p₁ b⟦ n₂ ⟧a ap₀ f r a⟦ n₃ ⟧b refl₀ _ b⟦ n₃ ⟧a p₂
-        ≡⟨ code-ba-merge n₂ (co a⟦ n₁ ⟧b p₁) n₃ (ap₀ f r) p₂ ⟩∎
-      co a⟦ n₁ ⟧b p₁ b⟦ n₂ ⟧a ap₀ f r             ∘₀            p₂
-        ∎
+    abstract
+      code-ab-shift : ∀ {a₂} n₁ co n₂ p₁ n₃ (r : loc n₂ ≡₀ loc n₃) (p₂ : _ ≡₀ a₂)
+        → co a⟦ n₁ ⟧b p₁ ∘₀ ap₀ g r b⟦ n₃ ⟧a            p₂
+        ≡ co a⟦ n₁ ⟧b p₁            b⟦ n₂ ⟧a ap₀ f r ∘₀ p₂
+      code-ab-shift n₁ co n₂ p₁ n₃ r p₂ =
+        co a⟦ n₁ ⟧b p₁             ∘₀            ap₀ g r b⟦ n₃ ⟧a p₂
+          ≡⟨ ap (λ x → x b⟦ n₃ ⟧a p₂) $ ! $ code-ab-merge n₁ co n₂ p₁ (ap₀ g r) ⟩
+        co a⟦ n₁ ⟧b p₁ b⟦ n₂ ⟧a refl₀ _ a⟦ n₂ ⟧b ap₀ g r b⟦ n₃ ⟧a p₂
+          ≡⟨ ap (λ x → x b⟦ n₃ ⟧a p₂) $ ! $ code-ba-swap n₂ (co a⟦ n₁ ⟧b p₁) n₃ r ⟩
+        co a⟦ n₁ ⟧b p₁ b⟦ n₂ ⟧a ap₀ f r a⟦ n₃ ⟧b refl₀ _ b⟦ n₃ ⟧a p₂
+          ≡⟨ code-ba-merge n₂ (co a⟦ n₁ ⟧b p₁) n₃ (ap₀ f r) p₂ ⟩∎
+        co a⟦ n₁ ⟧b p₁ b⟦ n₂ ⟧a ap₀ f r             ∘₀            p₂
+          ∎
 
   -- Definition of code
   module _ where
@@ -329,6 +336,7 @@ module Homotopy.VanKampen.SplitCode {i} (d : pushout-diag i)
         co a⟦ n₁ ⟧b refl₀ _ b⟦ n₁ ⟧a proj (ap f r)
           ∎
 
+    abstract
       trans-code-b-r : ∀ n₁ n₂ (r : loc n₁ ≡ loc n₂) (co : code-b $ g $ loc n₁)
         → transport (code-b ◯ g) r co ≡ co b⟦ n₁ ⟧a refl₀ _ a⟦ n₁ ⟧b proj (ap g r)
       trans-code-b-r n₁ n₂ r co =
@@ -384,34 +392,36 @@ module Homotopy.VanKampen.SplitCode {i} (d : pushout-diag i)
     code = pushout-rec-nondep (Set i) code-a code-b (eq-to-path ◯ code-glue-eq)
 
     -- Useful lemma
-    trans-code-glue-loc : ∀ n₂ co → transport code (glue $ loc n₂) co ≡ a⇒b n₂ co
-    trans-code-glue-loc n₂ co =
-      transport code (glue $ loc n₂) co
-        ≡⟨ ! $ trans-ap (λ X → X) code (glue $ loc n₂) co ⟩
-      transport (λ X → X) (ap code $ glue $ loc n₂) co
-        ≡⟨ ap (λ x → transport (λ X → X) x co)
-            $ pushout-β-glue-nondep (Set i) code-a code-b (eq-to-path ◯ code-glue-eq) (loc n₂) ⟩
-      transport (λ X → X) (eq-to-path $ code-glue-eq $ loc n₂) co
-        ≡⟨ ap (λ x → transport (λ X → X) (eq-to-path x) co)
-              $ visit-fiber-β-loc l
-                  (λ c → code-a (f c) ≃ code-b (g c))
-                  ⦃ λ _ → ≃-is-set (code-a-is-set _) (code-b-is-set _) ⦄
-                  code-glue-eq-loc
-                  code-glue-eq-route
-                  n₂ ⟩
-      transport (λ X → X) (eq-to-path $ code-glue-eq-loc n₂) co
-        ≡⟨ trans-id-eq-to-path (code-glue-eq-loc n₂) co ⟩∎
-      a⇒b n₂ co
-        ∎
+    abstract
+      trans-code-glue-loc : ∀ n₂ co → transport code (glue $ loc n₂) co ≡ a⇒b n₂ co
+      trans-code-glue-loc n₂ co =
+        transport code (glue $ loc n₂) co
+          ≡⟨ ! $ trans-ap (λ X → X) code (glue $ loc n₂) co ⟩
+        transport (λ X → X) (ap code $ glue $ loc n₂) co
+          ≡⟨ ap (λ x → transport (λ X → X) x co)
+              $ pushout-β-glue-nondep (Set i) code-a code-b (eq-to-path ◯ code-glue-eq) (loc n₂) ⟩
+        transport (λ X → X) (eq-to-path $ code-glue-eq $ loc n₂) co
+          ≡⟨ ap (λ x → transport (λ X → X) (eq-to-path x) co)
+                $ visit-fiber-β-loc l
+                    (λ c → code-a (f c) ≃ code-b (g c))
+                    ⦃ λ _ → ≃-is-set (code-a-is-set _) (code-b-is-set _) ⦄
+                    code-glue-eq-loc
+                    code-glue-eq-route
+                    n₂ ⟩
+        transport (λ X → X) (eq-to-path $ code-glue-eq-loc n₂) co
+          ≡⟨ trans-id-eq-to-path (code-glue-eq-loc n₂) co ⟩∎
+        a⇒b n₂ co
+          ∎
 
-    trans-code-!glue-loc : ∀ n₂ co → transport code (! $ glue $ loc n₂) co ≡ b⇒a n₂ co
-    trans-code-!glue-loc n₂ co = move!-transp-right code (glue $ loc n₂) co (b⇒a n₂ co) $ ! $
-      transport code (glue $ loc n₂) (b⇒a n₂ co)
-        ≡⟨ trans-code-glue-loc n₂ (b⇒a n₂ co) ⟩
-      a⇒b n₂ (b⇒a n₂ co)
-        ≡⟨ code-b-refl-refl n₂ co ⟩∎
-      co
-        ∎
+    abstract
+      trans-code-!glue-loc : ∀ n₂ co → transport code (! $ glue $ loc n₂) co ≡ b⇒a n₂ co
+      trans-code-!glue-loc n₂ co = move!-transp-right code (glue $ loc n₂) co (b⇒a n₂ co) $ ! $
+        transport code (glue $ loc n₂) (b⇒a n₂ co)
+          ≡⟨ trans-code-glue-loc n₂ (b⇒a n₂ co) ⟩
+        a⇒b n₂ (b⇒a n₂ co)
+          ≡⟨ code-b-refl-refl n₂ co ⟩∎
+        co
+          ∎
 
     -- Truncation level
     abstract

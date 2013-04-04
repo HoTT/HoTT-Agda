@@ -34,72 +34,71 @@ module Homotopy.VanKampen.CodeToPath {i} (d : pushout-diag i)
     ap₀r p = ap₀ right p
 
   module _ {a₁ : A} where
-    aa⇒path : ∀ {a₂} → a-code-a a₁ a₂ → _≡₀_ {A = P} (left a₁) (left  a₂)
-    ab⇒path : ∀ {b₂} → a-code-b a₁ b₂ → _≡₀_ {A = P} (left a₁) (right b₂)
     private
       ap⇒path-split : (∀ {a₂} → a-code-a a₁ a₂ → _≡₀_ {A = P} (left a₁) (left  a₂))
                     × (∀ {b₂} → a-code-b a₁ b₂ → _≡₀_ {A = P} (left a₁) (right b₂))
+      ap⇒path-split = a-code-rec-nondep a₁
+        (λ a₂ → left a₁ ≡₀ left  a₂)
+        ⦃ λ a₂ → π₀-is-set _ ⦄
+        (λ b₂ → left a₁ ≡₀ right b₂)
+        ⦃ λ b₂ → π₀-is-set _ ⦄
+        (λ p → ap₀l p)
+        (λ n pco p → (pco ∘₀ p!gl n) ∘₀ ap₀l p)
+        (λ n pco p → (pco ∘₀ pgl  n) ∘₀ ap₀r p)
+        (λ n {co} pco →
+          (((pco ∘₀ pgl n) ∘₀ refl₀ _) ∘₀ p!gl n) ∘₀ refl₀ _
+            ≡⟨ refl₀-right-unit _ ⟩
+          ((pco ∘₀ pgl n) ∘₀ refl₀ _) ∘₀ p!gl n
+            ≡⟨ ap (λ x → x ∘₀ p!gl n)
+                  $ refl₀-right-unit $ pco ∘₀ pgl n ⟩
+          (pco ∘₀ pgl n) ∘₀ p!gl n
+            ≡⟨ concat₀-assoc pco (pgl n) (p!gl n) ⟩
+          pco ∘₀ (pgl n ∘₀ p!gl n)
+            ≡⟨ ap (λ x → pco ∘₀ proj x)
+                  $ opposite-right-inverse $ glue $ loc n ⟩
+          pco ∘₀ refl₀ _
+            ≡⟨ refl₀-right-unit pco ⟩∎
+          pco
+            ∎)
+        (λ n {co} pco →
+          (((pco ∘₀ p!gl n) ∘₀ refl₀ _) ∘₀ pgl n) ∘₀ refl₀ _
+            ≡⟨ refl₀-right-unit _ ⟩
+          ((pco ∘₀ p!gl n) ∘₀ refl₀ _) ∘₀ pgl n
+            ≡⟨ ap (λ x → x ∘₀ pgl n)
+                  $ refl₀-right-unit $ pco ∘₀ p!gl n ⟩
+          (pco ∘₀ p!gl n) ∘₀ pgl n
+            ≡⟨ concat₀-assoc pco (p!gl n) (pgl n) ⟩
+          pco ∘₀ (p!gl n ∘₀ pgl n)
+            ≡⟨ ap (λ x → pco ∘₀ proj x)
+                  $ opposite-left-inverse $ glue $ loc n ⟩
+          pco ∘₀ refl₀ _
+            ≡⟨ refl₀-right-unit pco ⟩∎
+          pco
+            ∎)
+        (λ n₁ {co} pco n₂ r →
+          (((pco ∘₀ pgl n₁) ∘₀ ap₀r (ap₀ g r)) ∘₀ p!gl n₂) ∘₀ refl₀ _
+            ≡⟨ refl₀-right-unit _ ⟩
+          ((pco ∘₀ pgl n₁) ∘₀ ap₀r (ap₀ g r)) ∘₀ p!gl n₂
+            ≡⟨ concat₀-assoc (pco ∘₀ pgl n₁) (ap₀r (ap₀ g r)) (p!gl n₂) ⟩
+          (pco ∘₀ pgl n₁) ∘₀ (ap₀r (ap₀ g r) ∘₀ p!gl n₂)
+            ≡⟨ ap (λ x → (pco ∘₀ pgl n₁) ∘₀ (x ∘₀ p!gl n₂)) $ ! $ ap₀-compose right g r ⟩
+          (pco ∘₀ pgl n₁) ∘₀ (ap₀ (right ◯ g) r ∘₀ p!gl n₂)
+            ≡⟨ ap (λ x → (pco ∘₀ pgl n₁) ∘₀ x)
+                  $ homotopy₀-naturality (right ◯ g) (left ◯ f) (proj ◯ (! ◯ glue)) r ⟩
+          (pco ∘₀ pgl n₁) ∘₀ (p!gl n₁ ∘₀ ap₀ (left ◯ f) r)
+            ≡⟨ ! $ concat₀-assoc (pco ∘₀ pgl n₁) (p!gl n₁) (ap₀ (left ◯ f) r) ⟩
+          ((pco ∘₀ pgl n₁) ∘₀ p!gl n₁) ∘₀ ap₀ (left ◯ f) r
+            ≡⟨ ap (λ x → ((pco ∘₀ pgl n₁) ∘₀ p!gl n₁) ∘₀ x) $ ap₀-compose left f r ⟩
+          ((pco ∘₀ pgl n₁) ∘₀ p!gl n₁) ∘₀ ap₀l (ap₀ f r)
+            ≡⟨ ap (λ x → (x ∘₀ p!gl n₁) ∘₀ ap₀l (ap₀ f r))
+                  $ ! $ refl₀-right-unit $ pco ∘₀ pgl n₁ ⟩∎
+          (((pco ∘₀ pgl n₁) ∘₀ refl₀ _) ∘₀ p!gl n₁) ∘₀ ap₀l (ap₀ f r)
+            ∎)
 
+    aa⇒path : ∀ {a₂} → a-code-a a₁ a₂ → _≡₀_ {A = P} (left a₁) (left  a₂)
     aa⇒path = π₁ ap⇒path-split
+    ab⇒path : ∀ {b₂} → a-code-b a₁ b₂ → _≡₀_ {A = P} (left a₁) (right b₂)
     ab⇒path = π₂ ap⇒path-split
-
-    ap⇒path-split = a-code-rec-nondep a₁
-      (λ a₂ → left a₁ ≡₀ left  a₂)
-      ⦃ λ a₂ → π₀-is-set _ ⦄
-      (λ b₂ → left a₁ ≡₀ right b₂)
-      ⦃ λ b₂ → π₀-is-set _ ⦄
-      (λ p → ap₀l p)
-      (λ n pco p → (pco ∘₀ p!gl n) ∘₀ ap₀l p)
-      (λ n pco p → (pco ∘₀ pgl  n) ∘₀ ap₀r p)
-      (λ n {co} pco →
-        (((pco ∘₀ pgl n) ∘₀ refl₀ _) ∘₀ p!gl n) ∘₀ refl₀ _
-          ≡⟨ refl₀-right-unit _ ⟩
-        ((pco ∘₀ pgl n) ∘₀ refl₀ _) ∘₀ p!gl n
-          ≡⟨ ap (λ x → x ∘₀ p!gl n)
-                $ refl₀-right-unit $ pco ∘₀ pgl n ⟩
-        (pco ∘₀ pgl n) ∘₀ p!gl n
-          ≡⟨ concat₀-assoc pco (pgl n) (p!gl n) ⟩
-        pco ∘₀ (pgl n ∘₀ p!gl n)
-          ≡⟨ ap (λ x → pco ∘₀ proj x)
-                $ opposite-right-inverse $ glue $ loc n ⟩
-        pco ∘₀ refl₀ _
-          ≡⟨ refl₀-right-unit pco ⟩∎
-        pco
-          ∎)
-      (λ n {co} pco →
-        (((pco ∘₀ p!gl n) ∘₀ refl₀ _) ∘₀ pgl n) ∘₀ refl₀ _
-          ≡⟨ refl₀-right-unit _ ⟩
-        ((pco ∘₀ p!gl n) ∘₀ refl₀ _) ∘₀ pgl n
-          ≡⟨ ap (λ x → x ∘₀ pgl n)
-                $ refl₀-right-unit $ pco ∘₀ p!gl n ⟩
-        (pco ∘₀ p!gl n) ∘₀ pgl n
-          ≡⟨ concat₀-assoc pco (p!gl n) (pgl n) ⟩
-        pco ∘₀ (p!gl n ∘₀ pgl n)
-          ≡⟨ ap (λ x → pco ∘₀ proj x)
-                $ opposite-left-inverse $ glue $ loc n ⟩
-        pco ∘₀ refl₀ _
-          ≡⟨ refl₀-right-unit pco ⟩∎
-        pco
-          ∎)
-      (λ n₁ {co} pco n₂ r →
-        (((pco ∘₀ pgl n₁) ∘₀ ap₀r (ap₀ g r)) ∘₀ p!gl n₂) ∘₀ refl₀ _
-          ≡⟨ refl₀-right-unit _ ⟩
-        ((pco ∘₀ pgl n₁) ∘₀ ap₀r (ap₀ g r)) ∘₀ p!gl n₂
-          ≡⟨ concat₀-assoc (pco ∘₀ pgl n₁) (ap₀r (ap₀ g r)) (p!gl n₂) ⟩
-        (pco ∘₀ pgl n₁) ∘₀ (ap₀r (ap₀ g r) ∘₀ p!gl n₂)
-          ≡⟨ ap (λ x → (pco ∘₀ pgl n₁) ∘₀ (x ∘₀ p!gl n₂)) $ ! $ ap₀-compose right g r ⟩
-        (pco ∘₀ pgl n₁) ∘₀ (ap₀ (right ◯ g) r ∘₀ p!gl n₂)
-          ≡⟨ ap (λ x → (pco ∘₀ pgl n₁) ∘₀ x)
-                $ homotopy₀-naturality (right ◯ g) (left ◯ f) (proj ◯ (! ◯ glue)) r ⟩
-        (pco ∘₀ pgl n₁) ∘₀ (p!gl n₁ ∘₀ ap₀ (left ◯ f) r)
-          ≡⟨ ! $ concat₀-assoc (pco ∘₀ pgl n₁) (p!gl n₁) (ap₀ (left ◯ f) r) ⟩
-        ((pco ∘₀ pgl n₁) ∘₀ p!gl n₁) ∘₀ ap₀ (left ◯ f) r
-          ≡⟨ ap (λ x → ((pco ∘₀ pgl n₁) ∘₀ p!gl n₁) ∘₀ x) $ ap₀-compose left f r ⟩
-        ((pco ∘₀ pgl n₁) ∘₀ p!gl n₁) ∘₀ ap₀l (ap₀ f r)
-          ≡⟨ ap (λ x → (x ∘₀ p!gl n₁) ∘₀ ap₀l (ap₀ f r))
-                $ ! $ refl₀-right-unit $ pco ∘₀ pgl n₁ ⟩∎
-        (((pco ∘₀ pgl n₁) ∘₀ refl₀ _) ∘₀ p!gl n₁) ∘₀ ap₀l (ap₀ f r)
-          ∎)
 
     ap⇒path : ∀ {p₂ : P} → a-code a₁ p₂ → left a₁ ≡₀ p₂
     ap⇒path {p₂} = pushout-rec
@@ -137,72 +136,71 @@ module Homotopy.VanKampen.CodeToPath {i} (d : pushout-diag i)
   -- the neccessary type conversion definitional, so
   -- I just copied and pasted the previous module.
   module _ {b₁ : B} where
-    bb⇒path : ∀ {b₂} → b-code-b b₁ b₂ → _≡₀_ {A = P} (right b₁) (right  b₂)
-    ba⇒path : ∀ {a₂} → b-code-a b₁ a₂ → _≡₀_ {A = P} (right b₁) (left a₂)
     private
       bp⇒path-split : (∀ {b₂} → b-code-b b₁ b₂ → _≡₀_ {A = P} (right b₁) (right  b₂))
                     × (∀ {a₂} → b-code-a b₁ a₂ → _≡₀_ {A = P} (right b₁) (left a₂))
+      bp⇒path-split = b-code-rec-nondep b₁
+        (λ b₂ → right b₁ ≡₀ right  b₂)
+        ⦃ λ b₂ → π₀-is-set _ ⦄
+        (λ a₂ → right b₁ ≡₀ left a₂)
+        ⦃ λ a₂ → π₀-is-set _ ⦄
+        (λ p → ap₀r p)
+        (λ n pco p → (pco ∘₀ pgl  n) ∘₀ ap₀r p)
+        (λ n pco p → (pco ∘₀ p!gl n) ∘₀ ap₀l p)
+        (λ n {co} pco →
+          (((pco ∘₀ p!gl n) ∘₀ refl₀ _) ∘₀ pgl n) ∘₀ refl₀ _
+            ≡⟨ refl₀-right-unit _ ⟩
+          ((pco ∘₀ p!gl n) ∘₀ refl₀ _) ∘₀ pgl n
+            ≡⟨ ap (λ x → x ∘₀ pgl n)
+                  $ refl₀-right-unit $ pco ∘₀ p!gl n ⟩
+          (pco ∘₀ p!gl n) ∘₀ pgl n
+            ≡⟨ concat₀-assoc pco (p!gl n) (pgl n) ⟩
+          pco ∘₀ (p!gl n ∘₀ pgl n)
+            ≡⟨ ap (λ x → pco ∘₀ proj x)
+                  $ opposite-left-inverse $ glue $ loc n ⟩
+          pco ∘₀ refl₀ _
+            ≡⟨ refl₀-right-unit pco ⟩∎
+          pco
+            ∎)
+        (λ n {co} pco →
+          (((pco ∘₀ pgl n) ∘₀ refl₀ _) ∘₀ p!gl n) ∘₀ refl₀ _
+            ≡⟨ refl₀-right-unit _ ⟩
+          ((pco ∘₀ pgl n) ∘₀ refl₀ _) ∘₀ p!gl n
+            ≡⟨ ap (λ x → x ∘₀ p!gl n)
+                  $ refl₀-right-unit $ pco ∘₀ pgl n ⟩
+          (pco ∘₀ pgl n) ∘₀ p!gl n
+            ≡⟨ concat₀-assoc pco (pgl n) (p!gl n) ⟩
+          pco ∘₀ (pgl n ∘₀ p!gl n)
+            ≡⟨ ap (λ x → pco ∘₀ proj x)
+                  $ opposite-right-inverse $ glue $ loc n ⟩
+          pco ∘₀ refl₀ _
+            ≡⟨ refl₀-right-unit pco ⟩∎
+          pco
+            ∎)
+        (λ n₁ {co} pco n₂ r →
+          (((pco ∘₀ p!gl n₁) ∘₀ ap₀l (ap₀ f r)) ∘₀ pgl n₂) ∘₀ refl₀ _
+            ≡⟨ refl₀-right-unit _ ⟩
+          ((pco ∘₀ p!gl n₁) ∘₀ ap₀l (ap₀ f r)) ∘₀ pgl n₂
+            ≡⟨ concat₀-assoc (pco ∘₀ p!gl n₁) (ap₀l (ap₀ f r)) (pgl n₂) ⟩
+          (pco ∘₀ p!gl n₁) ∘₀ (ap₀l (ap₀ f r) ∘₀ pgl n₂)
+            ≡⟨ ap (λ x → (pco ∘₀ p!gl n₁) ∘₀ (x ∘₀ pgl n₂)) $ ! $ ap₀-compose left f r ⟩
+          (pco ∘₀ p!gl n₁) ∘₀ (ap₀ (left ◯ f) r ∘₀ pgl n₂)
+            ≡⟨ ap (λ x → (pco ∘₀ p!gl n₁) ∘₀ x)
+                  $ homotopy₀-naturality (left ◯ f) (right ◯ g) (proj ◯  glue) r ⟩
+          (pco ∘₀ p!gl n₁) ∘₀ (pgl n₁ ∘₀ ap₀ (right ◯ g) r)
+            ≡⟨ ! $ concat₀-assoc (pco ∘₀ p!gl n₁) (pgl n₁) (ap₀ (right ◯ g) r) ⟩
+          ((pco ∘₀ p!gl n₁) ∘₀ pgl n₁) ∘₀ ap₀ (right ◯ g) r
+            ≡⟨ ap (λ x → ((pco ∘₀ p!gl n₁) ∘₀ pgl n₁) ∘₀ x) $ ap₀-compose right g r ⟩
+          ((pco ∘₀ p!gl n₁) ∘₀ pgl n₁) ∘₀ ap₀r (ap₀ g r)
+            ≡⟨ ap (λ x → (x ∘₀ pgl n₁) ∘₀ ap₀r (ap₀ g r))
+                  $ ! $ refl₀-right-unit $ pco ∘₀ p!gl n₁ ⟩∎
+          (((pco ∘₀ p!gl n₁) ∘₀ refl₀ _) ∘₀ pgl n₁) ∘₀ ap₀r (ap₀ g r)
+            ∎)
 
+    bb⇒path : ∀ {b₂} → b-code-b b₁ b₂ → _≡₀_ {A = P} (right b₁) (right  b₂)
     bb⇒path = π₁ bp⇒path-split
+    ba⇒path : ∀ {a₂} → b-code-a b₁ a₂ → _≡₀_ {A = P} (right b₁) (left a₂)
     ba⇒path = π₂ bp⇒path-split
-
-    bp⇒path-split = b-code-rec-nondep b₁
-      (λ b₂ → right b₁ ≡₀ right  b₂)
-      ⦃ λ b₂ → π₀-is-set _ ⦄
-      (λ a₂ → right b₁ ≡₀ left a₂)
-      ⦃ λ a₂ → π₀-is-set _ ⦄
-      (λ p → ap₀r p)
-      (λ n pco p → (pco ∘₀ pgl  n) ∘₀ ap₀r p)
-      (λ n pco p → (pco ∘₀ p!gl n) ∘₀ ap₀l p)
-      (λ n {co} pco →
-        (((pco ∘₀ p!gl n) ∘₀ refl₀ _) ∘₀ pgl n) ∘₀ refl₀ _
-          ≡⟨ refl₀-right-unit _ ⟩
-        ((pco ∘₀ p!gl n) ∘₀ refl₀ _) ∘₀ pgl n
-          ≡⟨ ap (λ x → x ∘₀ pgl n)
-                $ refl₀-right-unit $ pco ∘₀ p!gl n ⟩
-        (pco ∘₀ p!gl n) ∘₀ pgl n
-          ≡⟨ concat₀-assoc pco (p!gl n) (pgl n) ⟩
-        pco ∘₀ (p!gl n ∘₀ pgl n)
-          ≡⟨ ap (λ x → pco ∘₀ proj x)
-                $ opposite-left-inverse $ glue $ loc n ⟩
-        pco ∘₀ refl₀ _
-          ≡⟨ refl₀-right-unit pco ⟩∎
-        pco
-          ∎)
-      (λ n {co} pco →
-        (((pco ∘₀ pgl n) ∘₀ refl₀ _) ∘₀ p!gl n) ∘₀ refl₀ _
-          ≡⟨ refl₀-right-unit _ ⟩
-        ((pco ∘₀ pgl n) ∘₀ refl₀ _) ∘₀ p!gl n
-          ≡⟨ ap (λ x → x ∘₀ p!gl n)
-                $ refl₀-right-unit $ pco ∘₀ pgl n ⟩
-        (pco ∘₀ pgl n) ∘₀ p!gl n
-          ≡⟨ concat₀-assoc pco (pgl n) (p!gl n) ⟩
-        pco ∘₀ (pgl n ∘₀ p!gl n)
-          ≡⟨ ap (λ x → pco ∘₀ proj x)
-                $ opposite-right-inverse $ glue $ loc n ⟩
-        pco ∘₀ refl₀ _
-          ≡⟨ refl₀-right-unit pco ⟩∎
-        pco
-          ∎)
-      (λ n₁ {co} pco n₂ r →
-        (((pco ∘₀ p!gl n₁) ∘₀ ap₀l (ap₀ f r)) ∘₀ pgl n₂) ∘₀ refl₀ _
-          ≡⟨ refl₀-right-unit _ ⟩
-        ((pco ∘₀ p!gl n₁) ∘₀ ap₀l (ap₀ f r)) ∘₀ pgl n₂
-          ≡⟨ concat₀-assoc (pco ∘₀ p!gl n₁) (ap₀l (ap₀ f r)) (pgl n₂) ⟩
-        (pco ∘₀ p!gl n₁) ∘₀ (ap₀l (ap₀ f r) ∘₀ pgl n₂)
-          ≡⟨ ap (λ x → (pco ∘₀ p!gl n₁) ∘₀ (x ∘₀ pgl n₂)) $ ! $ ap₀-compose left f r ⟩
-        (pco ∘₀ p!gl n₁) ∘₀ (ap₀ (left ◯ f) r ∘₀ pgl n₂)
-          ≡⟨ ap (λ x → (pco ∘₀ p!gl n₁) ∘₀ x)
-                $ homotopy₀-naturality (left ◯ f) (right ◯ g) (proj ◯  glue) r ⟩
-        (pco ∘₀ p!gl n₁) ∘₀ (pgl n₁ ∘₀ ap₀ (right ◯ g) r)
-          ≡⟨ ! $ concat₀-assoc (pco ∘₀ p!gl n₁) (pgl n₁) (ap₀ (right ◯ g) r) ⟩
-        ((pco ∘₀ p!gl n₁) ∘₀ pgl n₁) ∘₀ ap₀ (right ◯ g) r
-          ≡⟨ ap (λ x → ((pco ∘₀ p!gl n₁) ∘₀ pgl n₁) ∘₀ x) $ ap₀-compose right g r ⟩
-        ((pco ∘₀ p!gl n₁) ∘₀ pgl n₁) ∘₀ ap₀r (ap₀ g r)
-          ≡⟨ ap (λ x → (x ∘₀ pgl n₁) ∘₀ ap₀r (ap₀ g r))
-                $ ! $ refl₀-right-unit $ pco ∘₀ p!gl n₁ ⟩∎
-        (((pco ∘₀ p!gl n₁) ∘₀ refl₀ _) ∘₀ pgl n₁) ∘₀ ap₀r (ap₀ g r)
-          ∎)
 
     bp⇒path : ∀ {p₂ : P} → b-code b₁ p₂ → right b₁ ≡₀ p₂
     bp⇒path {p₂} = pushout-rec
@@ -244,13 +242,10 @@ module Homotopy.VanKampen.CodeToPath {i} (d : pushout-diag i)
       Lbbab n co = ab⇒path {f $ loc n} (bb⇒ab n co) ≡ pgl n ∘₀ bb⇒path co
 
     private
-      ba⇒aa⇒path : ∀ n {a₂} co → Lbaaa n {a₂} co
-      bb⇒ab⇒path : ∀ n {b₂} co → Lbbab n {b₂} co
       bp⇒ap⇒path-split : ∀ n
         → (∀ {a₂} co → Lbbab n {a₂} co)
         × (∀ {b₂} co → Lbaaa n {b₂} co)
-      bb⇒ab⇒path n = π₁ $ bp⇒ap⇒path-split n
-      ba⇒aa⇒path n = π₂ $ bp⇒ap⇒path-split n
+    abstract
       bp⇒ap⇒path-split n = b-code-rec (g $ loc n)
         (λ co → ab⇒path {f $ loc n} (bb⇒ab n co) ≡ pgl n ∘₀ bb⇒path co)
         ⦃ λ _ → ≡-is-set $ π₀-is-set _ ⦄
@@ -289,9 +284,16 @@ module Homotopy.VanKampen.CodeToPath {i} (d : pushout-diag i)
         (λ _ co → prop-has-all-paths (π₀-is-set _ _ _) _ co)
         (λ _ _ _ _ → prop-has-all-paths (π₀-is-set _ _ _) _ _)
 
+    ba⇒aa⇒path : ∀ n {a₂} co → Lbaaa n {a₂} co
+    ba⇒aa⇒path n = π₂ $ bp⇒ap⇒path-split n
+    bb⇒ab⇒path : ∀ n {b₂} co → Lbbab n {b₂} co
+    bb⇒ab⇒path n = π₁ $ bp⇒ap⇒path-split n
+
+    private
       bp⇒ap⇒path : ∀ n {p₂} (co : b-code (g $ loc n) p₂)
         → ap⇒path {f $ loc n} {p₂} (bp⇒ap n {p₂} co)
         ≡ pgl n ∘₀ bp⇒path {g $ loc n} {p₂} co
+    abstract
       bp⇒ap⇒path n {p₂} = pushout-rec
         (λ x → ∀ (co : b-code (g $ loc n) x)
                → ap⇒path {f $ loc n} {x} (bp⇒ap n {x} co)
