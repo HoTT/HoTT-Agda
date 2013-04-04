@@ -37,8 +37,9 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
 
   -- From 0-connectedness we can get a (-1)-truncated base path.
   -- The challenge is to get this path.
-  [base-path] : ∀ a₂ → [ a ≡ a₂ ]
-  [base-path] = connected-has-all-τ-paths A-is-conn a
+  abstract
+    [base-path] : ∀ a₂ → [ a ≡ a₂ ]
+    [base-path] = connected-has-all-τ-paths A-is-conn a
 
   -- Part 1: Show that the generated cover (ribbon) is fiberwisely
   --         equivalent to the original fiber.
@@ -49,33 +50,34 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
       fiber+path⇒ribbon : ∀ (p : a ≡ a₂) → ribbon (covering⇒action cov) a₂
       fiber+path⇒ribbon p = trace (tracing cov y (proj $ ! p)) (proj p)
 
-      -- Our construction is "constant" with respect to paths.
-      fiber+path⇒ribbon-is-path-irrelevant : ∀ p₁ p₂
-        → fiber+path⇒ribbon p₁ ≡ fiber+path⇒ribbon p₂
-      fiber+path⇒ribbon-is-path-irrelevant p₁ p₂ =
-        -- FIXME The whole proof should be in reverse to reduce !
-        trace (tracing cov y (proj $ ! p₁)) (proj p₁)
-          ≡⟨ ap (λ x → trace (tracing cov y (proj $ ! p₁)) (proj x))
-                $ ! $ refl-right-unit p₁ ⟩
-        trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ refl _)
-          ≡⟨ ap (λ x → trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ x))
-                $ ! $ opposite-left-inverse p₂ ⟩
-        trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ (! p₂ ∘ p₂))
-          ≡⟨ ap (λ x → trace (tracing cov y (proj $ ! p₁)) (proj x))
-                $ ! $ concat-assoc p₁ (! p₂) p₂ ⟩
-        trace (tracing cov y (proj $ ! p₁)) (proj $ (p₁ ∘ ! p₂) ∘ p₂)
-          ≡⟨ ! $ paste (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ ! p₂) (proj p₂) ⟩
-        trace (tracing cov (tracing cov y (proj $ ! p₁)) (proj (p₁ ∘ ! p₂))) (proj p₂)
-          ≡⟨ ap (λ x → trace x (proj p₂))
-                $ compose-tracing cov y (proj $ ! p₁) (proj $ p₁ ∘ ! p₂) ⟩
-        trace (tracing cov y (proj $ ! p₁ ∘ (p₁ ∘ ! p₂))) (proj p₂)
-          ≡⟨ ap (λ x → trace (tracing cov y (proj x)) (proj p₂))
-                $ ! $ concat-assoc (! p₁) p₁ (! p₂) ⟩
-        trace (tracing cov y (proj $ (! p₁ ∘ p₁) ∘ ! p₂)) (proj p₂)
-          ≡⟨ ap (λ x → trace (tracing cov y (proj $ x ∘ ! p₂)) (proj p₂))
-                $ opposite-left-inverse p₁ ⟩∎
-        trace (tracing cov y (proj $ ! p₂)) (proj p₂)
-          ∎
+      abstract
+        -- Our construction is "constant" with respect to paths.
+        fiber+path⇒ribbon-is-path-irrelevant : ∀ p₁ p₂
+          → fiber+path⇒ribbon p₁ ≡ fiber+path⇒ribbon p₂
+        fiber+path⇒ribbon-is-path-irrelevant p₁ p₂ =
+          -- FIXME The whole proof should be in reverse to reduce !
+          trace (tracing cov y (proj $ ! p₁)) (proj p₁)
+            ≡⟨ ap (λ x → trace (tracing cov y (proj $ ! p₁)) (proj x))
+                  $ ! $ refl-right-unit p₁ ⟩
+          trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ refl _)
+            ≡⟨ ap (λ x → trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ x))
+                  $ ! $ opposite-left-inverse p₂ ⟩
+          trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ (! p₂ ∘ p₂))
+            ≡⟨ ap (λ x → trace (tracing cov y (proj $ ! p₁)) (proj x))
+                  $ ! $ concat-assoc p₁ (! p₂) p₂ ⟩
+          trace (tracing cov y (proj $ ! p₁)) (proj $ (p₁ ∘ ! p₂) ∘ p₂)
+            ≡⟨ ! $ paste (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ ! p₂) (proj p₂) ⟩
+          trace (tracing cov (tracing cov y (proj $ ! p₁)) (proj (p₁ ∘ ! p₂))) (proj p₂)
+            ≡⟨ ap (λ x → trace x (proj p₂))
+                  $ compose-tracing cov y (proj $ ! p₁) (proj $ p₁ ∘ ! p₂) ⟩
+          trace (tracing cov y (proj $ ! p₁ ∘ (p₁ ∘ ! p₂))) (proj p₂)
+            ≡⟨ ap (λ x → trace (tracing cov y (proj x)) (proj p₂))
+                  $ ! $ concat-assoc (! p₁) p₁ (! p₂) ⟩
+          trace (tracing cov y (proj $ (! p₁ ∘ p₁) ∘ ! p₂)) (proj p₂)
+            ≡⟨ ap (λ x → trace (tracing cov y (proj $ x ∘ ! p₂)) (proj p₂))
+                  $ opposite-left-inverse p₁ ⟩∎
+          trace (tracing cov y (proj $ ! p₂)) (proj p₂)
+            ∎
 
       -- Call the magical factorization library.
       open import Homotopy.Skeleton.SetConstantFactorization
@@ -238,6 +240,15 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
       center : τ ⟨1⟩ (Σ A fiber)
       center = proj center′
 
+      private
+        -- An ugly lemma for this development only
+        trans-fiber≡cst-proj-Σ-eq : ∀ {i} (P : Set i) (Q : P → Set i)
+          (a : P) (c : Σ P Q) {b₁ b₂} (p : b₁ ≡ b₂) (q : a ≡ π₁ c)
+          (r : transport Q q b₁ ≡ π₂ c)
+          → transport (λ r → (a , r) ≡₀ c) p (proj $ Σ-eq q r)
+          ≡ proj (Σ-eq q (ap (transport Q q) (! p) ∘ r))
+        trans-fiber≡cst-proj-Σ-eq P Q a c (refl _) q r = refl _
+
       abstract
         path-trace-fiber : ∀ {a₂} y (p : a ≡ a₂)
           → transport fiber (! p ∘ ! y) (trace (proj y) (proj p))
@@ -261,15 +272,6 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
         π₀-extend ⦃ λ y → Π-is-set λ p → π₀-is-set ((a₂ , trace y p) ≡ center′) ⦄
           (λ y → π₀-extend ⦃ λ p → π₀-is-set ((a₂ , trace (proj y) p) ≡ center′) ⦄
             (λ p → proj $ Σ-eq (! p ∘ ! y) (path-trace-fiber y p)))
-
-      private
-        -- An ugly lemma for this purpose only
-        trans-fiber≡cst-proj-Σ-eq : ∀ {i} (P : Set i) (Q : P → Set i)
-          (a : P) (c : Σ P Q) {b₁ b₂} (p : b₁ ≡ b₂) (q : a ≡ π₁ c)
-          (r : transport Q q b₁ ≡ π₂ c)
-          → transport (λ r → (a , r) ≡₀ c) p (proj $ Σ-eq q r)
-          ≡ proj (Σ-eq q (ap (transport Q q) (! p) ∘ r))
-        trans-fiber≡cst-proj-Σ-eq P Q a c (refl _) q r = refl _
 
       abstract
         path-paste : ∀ {a₂} y loop p
@@ -302,13 +304,13 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
                       ∎)))
 
       path′ : (y : Σ A fiber) → proj {n = ⟨1⟩} y ≡ center
-      path′ (a₂ , r) = τ-path-equiv-path-τ-S {n = ⟨0⟩} {A = Σ A fiber} {x = (a₂ , r)} ☆
-        ribbon-rec {act = act} a₂
-          (λ r → (a₂ , r) ≡₀ center′)
-          ⦃ λ r → π₀-is-set ((a₂ , r) ≡ center′) ⦄
+      path′ y = τ-path-equiv-path-τ-S {n = ⟨0⟩} ☆
+        ribbon-rec {act = act} (π₁ y)
+          (λ r → (π₁ y , r) ≡₀ center′)
+          ⦃ λ r → π₀-is-set ((π₁ y , r) ≡ center′) ⦄
           path-trace
           path-paste
-          r
+          (π₂ y)
 
       path : (y : τ ⟨1⟩ (Σ A fiber)) → y ≡ center
       path = τ-extend {n = ⟨1⟩} ⦃ λ _ → ≡-is-truncated ⟨1⟩ $ τ-is-truncated ⟨1⟩ _ ⦄ path′
