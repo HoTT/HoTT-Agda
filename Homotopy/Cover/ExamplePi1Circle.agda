@@ -51,7 +51,7 @@ module Homotopy.Cover.ExamplePi1Circle where
     pred z
       ∎
 
-  -- The center is path-end.
+  -- The end of this function.  This can save some type annotations.
   loop⁻ⁿ-end : Σ S¹ fiber
   loop⁻ⁿ-end = (base , O)
 
