@@ -80,14 +80,14 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
             ∎
 
       -- Call the magical factorization library.
-      open import Homotopy.Skeleton.SetConstantFactorization
+      open import Homotopy.Extensions.ToPropToConstSet
         (ribbon-is-set a₂)
         fiber+path⇒ribbon
         fiber+path⇒ribbon-is-path-irrelevant
 
       -- Now we can read the (-1)-truncated path.
       fiber+path₋₁⇒ribbon : [ a ≡ a₂ ] → ribbon (covering⇒action cov) a₂
-      fiber+path₋₁⇒ribbon = extended
+      fiber+path₋₁⇒ribbon = extension
 
   -- So the conversion from fiber to ribbon is done.
   fiber⇒ribbon : ∀ cov a₂ → covering.fiber cov a₂ → ribbon (covering⇒action cov) a₂
