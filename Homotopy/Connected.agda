@@ -11,6 +11,9 @@ is-connected n A = is-contr (τ n A)
 is-connected-is-prop : (n : ℕ₋₂) {A : Set i} → is-prop (is-connected n A)
 is-connected-is-prop n = is-contr-is-prop
 
+is-fiber-connected : {A B : Set i} → ℕ₋₂ → (A → B) → Set i
+is-fiber-connected n f = ∀ x → is-connected n (hfiber f x)
+
 module _ (n : ℕ₋₂) (A : Set i) where
 
   private
