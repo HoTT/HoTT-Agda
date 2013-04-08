@@ -4,7 +4,7 @@ open import Base
 open import HLevel
 
 module Homotopy.Extensions.ToPropToConstSet {i}
-  {A B : Set i} (B-is-set : is-set B)
+  {A B : Set i} ⦃ B-is-set : is-set B ⦄
   (f : A → B) (f-is-const : ∀ a₁ a₂ → f a₁ ≡ f a₂) where
 
   open import Homotopy.Truncation
@@ -28,6 +28,6 @@ module Homotopy.Extensions.ToPropToConstSet {i}
     skel-is-prop : is-prop skel
     skel-is-prop = all-paths-is-prop skel-has-all-paths
 
-  extension : [ A ] → B
-  extension = π₀-extend-nondep ⦃ B-is-set ⦄ skeleton₁-lifted
+  cst-extend : [ A ] → B
+  cst-extend = π₀-extend-nondep ⦃ B-is-set ⦄ skeleton₁-lifted
             ◯ []-extend-nondep ⦃ skel-is-prop ⦄ (proj ◯ point)
