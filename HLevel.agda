@@ -17,10 +17,6 @@ is-truncated : ℕ₋₂ → (Set i → Set i)
 is-truncated ⟨-2⟩ A = is-contr A
 is-truncated (S n) A = (x y : A) → is-truncated n (x ≡ y)
 
-_+2+_ : ℕ₋₂ → ℕ₋₂ → ℕ₋₂
-⟨-2⟩ +2+ n = n
-S m +2+ n = S (m +2+ n)
-
 is-prop = is-truncated ⟨-1⟩
 is-set  = is-truncated ⟨0⟩
 is-gpd  = is-truncated ⟨1⟩
