@@ -3,7 +3,7 @@
 open import Base
 open import Homotopy.Connected
 
-module Homotopy.Extensions.WedgeToProductToConnected where
+module Homotopy.Extensions.ProductPushoutToProductToConnected where
   open import Homotopy.Truncation
 
   private
@@ -167,41 +167,53 @@ module Homotopy.Extensions.WedgeToProductToConnected where
           in transport (is-truncated n₂) (! extension≡-extension′-path) extension′-is-trunc
 
   -- The main factorization theorem
-  module _ {i j : Level} where
+  module _ {i j} {A B A′ B′ : Set i}
+    (f : A → A′) (g : B → B′) (P : A′ → B′ → Set j) where
+
     open import Homotopy.Pushout
     open import Homotopy.Wedge
 
-    connected-extend : ∀ (d : wedge-diag i) → let open wedge-diag d in
-      ∀ (P : A → B → Set j) {n₁ n₂}
-      ⦃ P-is-trunc : ∀ a b → is-truncated (n₁ +2+ n₂) (P a b) ⦄
+    {-
+      -- The pushout diagram you should have in your mind.
+
+      connected-extend-diag : pushout-diag i
+      connected-extend-diag = record
+        { A = A′ × B
+        ; B = A × B′
+        ; C = A × B
+        ; f = λ{(a , b) → f a , b}
+        ; g = λ{(a , b) → a , g b}
+        }
+    -}
+
+    connected-extend : ∀ {n₁ n₂}
+      ⦃ P-is-trunc : ∀ a′ b′ → is-truncated (n₁ +2+ n₂) (P a′ b′) ⦄
       (f-is-conn : has-connected-fibers n₁ f)
       (g-is-conn : has-connected-fibers n₂ g)
-      (left* : ∀ a c → P a (g c))
-      (right* : ∀ b c → P (f c) b)
-      (glue* : ∀ c → left* a c ≡ right* b c)
+      (left* :  ∀ a′ b → P a′ (g b))
+      (right* : ∀ a b′ → P (f a) b′)
+      (glue* :  ∀ a b → left* (f a) b ≡ right* a (g b))
       → (∀ a b → P a b)
-    connected-extend d P {n₁} {n₂} ⦃ P-is-trunc ⦄ f-is-conn g-is-conn left* right* glue* =
+    connected-extend {n₁} {n₂} ⦃ P-is-trunc ⦄ f-is-conn g-is-conn left* right* glue* =
       extend-magic₃
         where
-          open wedge-diag d
-
           -- The first part: The extension for a fixed [a] is n₁-truncated.
-          extension₁ : ∀ a₂ → Set (max i j)
-          extension₁ a₂ = extension g (P a₂) (left* a₂)
+          extension₁ : ∀ a′ → Set (max i j)
+          extension₁ a′ = extension g (P a′) (left* a′)
 
-          extend-magic₁ : ∀ a₂ → is-truncated n₁ (extension₁ a₂)
-          extend-magic₁ a₂ = extension-is-truncated
-            g g-is-conn (P a₂) ⦃ P-is-trunc a₂ ⦄ (left* a₂)
+          extend-magic₁ : ∀ a′ → is-truncated n₁ (extension₁ a′)
+          extend-magic₁ a′ = extension-is-truncated
+            g g-is-conn (P a′) ⦃ P-is-trunc a′ ⦄ (left* a′)
 
           -- The second part: The extension of extensions is contractible.
           extension₂ : Set (max i j)
           extension₂ = extension f extension₁ $
-            (λ c → (λ b → right* b c) , glue*)
+            (λ a → right* a , glue* a)
 
           extend-magic₂ : is-truncated ⟨-2⟩ extension₂
           extend-magic₂ = extension-is-truncated
             f f-is-conn extension₁ ⦃ extend-magic₁ ⦄
-            (λ c → (λ b → right* b c) , glue*)
+            (λ a → right* a , glue* a)
 
           -- Get the buried function.
           extend-magic₃ : ∀ a b → P a b
