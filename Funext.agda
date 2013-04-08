@@ -122,14 +122,12 @@ module StrongFunextDep {j} {P : A → Set j} where
   happly-funext-p h = funext-p (λ x → happly-path (Q-f≡Q-g h) x
                                             ∘ opposite-opposite (h x))
 
-  abstract
-    happly-is-equiv : {f g : Π A P} → is-equiv (happly {f = f} {g = g})
-    happly-is-equiv = iso-is-eq _ funext-p happly-funext-p funext-happly-p
+  happly-is-equiv : {f g : Π A P} → is-equiv (happly {f = f} {g = g})
+  happly-is-equiv = iso-is-eq _ funext-p happly-funext-p funext-happly-p
 
-  abstract
-    funext-is-equiv-p : {f g : Π A P}
-      → is-equiv (funext-p {f = f} {g = g})
-    funext-is-equiv-p = iso-is-eq _ happly funext-happly-p happly-funext-p
+  funext-is-equiv-p : {f g : Π A P}
+    → is-equiv (funext-p {f = f} {g = g})
+  funext-is-equiv-p = iso-is-eq _ happly funext-happly-p happly-funext-p
 
 open StrongFunextDep
 
@@ -153,3 +151,6 @@ module _ {j} {P : A → Set j} {f g : Π A P} where
 
   funext-equiv : ((x : A) → f x ≡ g x) ≃ (f ≡ g)
   funext-equiv = (funext , funext-is-equiv)
+
+  happly-equiv : (f ≡ g) ≃ ((x : A) → f x ≡ g x)
+  happly-equiv = (happly , happly-is-equiv)
