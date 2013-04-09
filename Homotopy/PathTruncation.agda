@@ -161,9 +161,9 @@ module _ {i} {n : ℕ₋₂} {A : Set i} where
     open import Homotopy.Connected
 
     abstract
-      connected-has-contr-τ-paths : is-connected (S n) A → (p q : A) → is-contr (τ n (p ≡ q))
-      connected-has-contr-τ-paths conn p q =
+      connected-has-connected-paths : is-connected (S n) A → (p q : A) → is-connected n (p ≡ q)
+      connected-has-connected-paths conn p q =
         equiv-types-truncated ⟨-2⟩ (τ-path-equiv-path-τ-S ⁻¹) (contr-is-prop conn (proj p) (proj q))
 
     connected-has-all-τ-paths : is-connected (S n) A → (p q : A) → τ n (p ≡ q)
-    connected-has-all-τ-paths conn p q = π₁ $ connected-has-contr-τ-paths conn p q
+    connected-has-all-τ-paths conn p q = π₁ $ connected-has-connected-paths conn p q

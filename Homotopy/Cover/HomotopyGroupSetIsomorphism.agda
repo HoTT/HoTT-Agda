@@ -341,7 +341,7 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
         ap₀ π₁ (connected-has-all-τ-paths
           cov-is-universal (a , center) (a , transport fiber p center))
             ≡⟨ ap (ap₀ π₁)
-                  $ ! $ π₂ (connected-has-contr-τ-paths cov-is-universal _ _)
+                  $ ! $ π₂ (connected-has-connected-paths cov-is-universal _ _)
                            (proj $ Σ-eq p (refl $ transport fiber p center)) ⟩
         ap₀ π₁ (proj $ Σ-eq p (refl $ transport fiber p center))
             ≡⟨ ap proj $ base-path-Σ-eq p (refl _) ⟩∎
