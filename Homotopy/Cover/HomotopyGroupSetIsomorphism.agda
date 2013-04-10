@@ -44,50 +44,36 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
   -- Part 1: Show that the generated cover (ribbon) is fiberwisely
   --         equivalent to the original fiber.
   private
-    module _ (cov : covering) (a₂ : A) (y : covering.fiber cov a₂) where
+    module _ (cov : covering) where
 
       -- Suppose that we get the path, we can compute the ribbon easily.
-      fiber+path⇒ribbon : ∀ (p : a ≡ a₂) → ribbon (covering⇒action cov) a₂
-      fiber+path⇒ribbon p = trace (tracing cov y (proj $ ! p)) (proj p)
+      fiber+path⇒ribbon : ∀ a₂ (y : covering.fiber cov a₂) (p : a ≡ a₂)
+        → ribbon (covering⇒action cov) a₂
+      fiber+path⇒ribbon a₂ y p = trace (tracing cov y (proj $ ! p)) (proj p)
 
       abstract
         -- Our construction is "constant" with respect to paths.
-        fiber+path⇒ribbon-is-path-irrelevant : ∀ p₁ p₂
-          → fiber+path⇒ribbon p₁ ≡ fiber+path⇒ribbon p₂
-        fiber+path⇒ribbon-is-path-irrelevant p₁ p₂ =
-          -- FIXME The whole proof should be in reverse to reduce !
-          trace (tracing cov y (proj $ ! p₁)) (proj p₁)
-            ≡⟨ ap (λ x → trace (tracing cov y (proj $ ! p₁)) (proj x))
-                  $ ! $ refl-right-unit p₁ ⟩
-          trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ refl)
-            ≡⟨ ap (λ x → trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ x))
-                  $ ! $ opposite-left-inverse p₂ ⟩
-          trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ (! p₂ ∘ p₂))
-            ≡⟨ ap (λ x → trace (tracing cov y (proj $ ! p₁)) (proj x))
-                  $ ! $ concat-assoc p₁ (! p₂) p₂ ⟩
-          trace (tracing cov y (proj $ ! p₁)) (proj $ (p₁ ∘ ! p₂) ∘ p₂)
-            ≡⟨ ! $ paste (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ ! p₂) (proj p₂) ⟩
-          trace (tracing cov (tracing cov y (proj $ ! p₁)) (proj (p₁ ∘ ! p₂))) (proj p₂)
-            ≡⟨ ap (λ x → trace x (proj p₂))
-                  $ compose-tracing cov y (proj $ ! p₁) (proj $ p₁ ∘ ! p₂) ⟩
-          trace (tracing cov y (proj $ ! p₁ ∘ (p₁ ∘ ! p₂))) (proj p₂)
-            ≡⟨ ap (λ x → trace (tracing cov y (proj x)) (proj p₂))
-                  $ ! $ concat-assoc (! p₁) p₁ (! p₂) ⟩
-          trace (tracing cov y (proj $ (! p₁ ∘ p₁) ∘ ! p₂)) (proj p₂)
-            ≡⟨ ap (λ x → trace (tracing cov y (proj $ x ∘ ! p₂)) (proj p₂))
-                  $ opposite-left-inverse p₁ ⟩∎
-          trace (tracing cov y (proj $ ! p₂)) (proj p₂)
+        fiber+path⇒ribbon-is-path-irrelevant : ∀ a₂
+          (y : covering.fiber cov a₂) (p₁ p₂ : a ≡ a₂)
+          → fiber+path⇒ribbon a₂ y p₁ ≡ fiber+path⇒ribbon a₂ y p₂
+        fiber+path⇒ribbon-is-path-irrelevant .a y p refl =
+          trace (tracing cov y (proj $ ! p)) (proj p)
+            ≡⟨ paste y (proj $ ! p) (proj p) ⟩
+          trace y (proj $ (! p ∘ p))
+            ≡⟨ ap (λ x → trace y (proj x)) $ opposite-left-inverse p ⟩∎
+          trace y refl₀
             ∎
 
       -- Call the magical factorization library.
       open import Homotopy.Extensions.ToPropToConstSet
 
       -- Now we can read the (-1)-truncated path.
-      fiber+path₋₁⇒ribbon : [ a ≡ a₂ ] → ribbon (covering⇒action cov) a₂
-      fiber+path₋₁⇒ribbon = cst-extend
+      fiber+path₋₁⇒ribbon : ∀ a₂ (y : covering.fiber cov a₂)
+        → [ a ≡ a₂ ] → ribbon (covering⇒action cov) a₂
+      fiber+path₋₁⇒ribbon a₂ y = cst-extend
         ⦃ ribbon-is-set a₂ ⦄
-        fiber+path⇒ribbon
-        fiber+path⇒ribbon-is-path-irrelevant
+        (fiber+path⇒ribbon a₂ y)
+        (fiber+path⇒ribbon-is-path-irrelevant a₂ y)
 
   -- So the conversion from fiber to ribbon is done.
   fiber⇒ribbon : ∀ cov a₂ → covering.fiber cov a₂ → ribbon (covering⇒action cov) a₂
@@ -110,21 +96,22 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
           ⦃ λ bp → ribbon-is-set a₂
                     (fiber+path₋₁⇒ribbon cov a₂ (tracing cov y p) bp)
                     (trace y p) ⦄
-          (λ bp → -- real base path
-              trace (tracing cov (tracing cov y p) (proj $ ! bp)) (proj bp)
-                ≡⟨ ap (λ x → trace x (proj bp)) $ compose-tracing cov y p (proj $ ! bp) ⟩
-              trace (tracing cov y (p ∘₀ proj (! bp))) (proj bp)
-                ≡⟨ paste y (p ∘₀ proj (! bp)) (proj bp) ⟩
-              trace y ((p ∘₀ proj (! bp)) ∘₀ proj bp)
-                ≡⟨ ap (trace y) $ concat₀-assoc p (proj $ ! bp) (proj bp) ⟩
-              trace y (p ∘₀ (proj $ ! bp ∘ bp))
-                ≡⟨ ap (λ x → trace y (p ∘₀ proj x)) $ opposite-left-inverse bp ⟩
+          (lemma a₂ y p)
+          ([base-path] a₂))
+        (λ _ _ _ → prop-has-all-paths (ribbon-is-set a₂ _ _) _ _)
+        where
+          abstract
+            lemma : ∀ a₂ (y : covering.fiber cov a) (p : a ≡₀ a₂) (bp : a ≡ a₂)
+              → trace {act = covering⇒action cov}
+                  (tracing cov (tracing cov y p) (proj $ ! bp)) (proj bp)
+              ≡ trace y p
+            lemma .a y p refl =
+              trace (tracing cov y p) refl₀
+                ≡⟨ paste y p refl₀ ⟩
               trace y (p ∘₀ refl₀)
                 ≡⟨ ap (trace y) $ refl₀-right-unit p ⟩∎
               trace y p
-                ∎)
-          ([base-path] a₂))
-        (λ _ _ _ → prop-has-all-paths (ribbon-is-set a₂ _ _) _ _)
+                ∎
 
       fiber⇒ribbon⇒fiber : ∀ cov a₂ y → ribbon⇒fiber cov a₂ (fiber⇒ribbon cov a₂ y) ≡ y
       fiber⇒ribbon⇒fiber cov a₂ y = let open covering cov in []-extend
@@ -133,14 +120,14 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
                   (ribbon⇒fiber cov a₂
                     (fiber+path₋₁⇒ribbon cov a₂ y bp))
                   y ⦄
-        (λ bp → -- real base path
-            tracing cov (tracing cov y (proj $ ! bp)) (proj bp)
-              ≡⟨ compose-tracing cov y (proj $ ! bp) (proj bp) ⟩
-            tracing cov y (proj $ ! bp ∘ bp)
-              ≡⟨ ap (tracing cov y ◯ proj) $ opposite-left-inverse bp ⟩∎
-            y
-              ∎)
+        (lemma a₂ y)
         ([base-path] a₂)
+        where
+          abstract
+            lemma : ∀ a₂ (y : covering.fiber cov a₂) (bp : a ≡ a₂)
+              → tracing cov (tracing cov y (proj $ ! bp)) (proj bp)
+              ≡ y
+            lemma .a y refl = refl
 
   covering⇒gset⇒covering : ∀ cov → gset⇒covering (covering⇒gset cov) ≡ cov
   covering⇒gset⇒covering cov = covering-eq $ funext λ a₂
@@ -270,6 +257,30 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
             (λ p → proj $ Σ-eq (! p ∘ ! y) (path-trace-fiber y p)))
 
       abstract
+        path-paste′ : ∀ {a₂} y loop p
+          → transport (λ r → (a₂ , r) ≡₀ center′) (paste (proj y) (proj loop) (proj p))
+              (path-trace (proj $ y ∘ loop) (proj p))
+          ≡ path-trace (proj y) (proj $ loop ∘ p)
+        path-paste′ y loop refl =
+          transport (λ r → (a , r) ≡₀ center′) (paste (proj y) (proj loop) refl₀)
+            (proj $ Σ-eq (! (y ∘ loop)) (path-trace-fiber (y ∘ loop) refl))
+              ≡⟨ trans-fiber≡cst-proj-Σ-eq A fiber a center′
+                    (paste (proj y) (proj loop) refl₀)
+                    (! (y ∘ loop)) (path-trace-fiber (y ∘ loop) refl) ⟩
+          proj (Σ-eq (! (y ∘ loop)) _)
+              ≡⟨ ap proj $
+                  ap2 (λ p q → Σ-eq p q)
+                    (! (y ∘ loop)
+                      ≡⟨ opposite-concat y loop ⟩
+                    ! loop ∘ ! y
+                      ≡⟨ ap (λ x → ! x ∘ ! y) $ ! $ refl-right-unit loop ⟩∎
+                    ! (loop ∘ refl) ∘ ! y
+                      ∎)
+                    (prop-has-all-paths (ribbon-is-set a _ _) _ _) ⟩∎
+          proj (Σ-eq (! (loop ∘ refl) ∘ ! y) (path-trace-fiber y (loop ∘ refl)))
+              ∎
+
+      abstract
         path-paste : ∀ {a₂} y loop p
           → transport (λ r → (a₂ , r) ≡₀ center′) (paste y loop p)
               (path-trace (y ∘₀ loop) p)
@@ -278,26 +289,7 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
           π₀-extend ⦃ λ y → Π-is-set λ loop → Π-is-set λ p → ≡-is-set $ π₀-is-set _ ⦄
             (λ y → π₀-extend ⦃ λ loop → Π-is-set λ p → ≡-is-set $ π₀-is-set _ ⦄
               (λ loop → π₀-extend ⦃ λ p → ≡-is-set $ π₀-is-set _ ⦄
-                (λ p →
-                  transport (λ r → (a₂ , r) ≡₀ center′) (paste (proj y) (proj loop) (proj p))
-                    (proj $ Σ-eq (! p ∘ ! (y ∘ loop)) (path-trace-fiber (y ∘ loop) p))
-                      ≡⟨ trans-fiber≡cst-proj-Σ-eq A fiber a₂ center′
-                            (paste (proj y) (proj loop) (proj p))
-                            (! p ∘ ! (y ∘ loop)) (path-trace-fiber (y ∘ loop) p) ⟩
-                  proj (Σ-eq (! p ∘ ! (y ∘ loop)) _)
-                      ≡⟨ ap proj $
-                          ap2 (λ p q → Σ-eq p q)
-                            (! p ∘ ! (y ∘ loop)
-                              ≡⟨ ap (λ x → ! p ∘ x) $ opposite-concat y loop ⟩
-                            ! p ∘ (! loop ∘ ! y)
-                              ≡⟨ ! $ concat-assoc (! p) (! loop) (! y) ⟩
-                            (! p ∘ ! loop) ∘ ! y
-                              ≡⟨ ap (λ x → x ∘ ! y) $ concat-opposite p loop ⟩∎
-                            ! (loop ∘ p) ∘ ! y
-                              ∎)
-                            (prop-has-all-paths (ribbon-is-set a _ _) _ _) ⟩∎
-                  proj (Σ-eq (! (loop ∘ p) ∘ ! y) (path-trace-fiber y (loop ∘ p)))
-                      ∎)))
+                (λ p → path-paste′ y loop p)))
 
       path′ : (y : Σ A fiber) → proj {n = ⟨1⟩} y ≡ center
       path′ y = τ-path-equiv-path-τ-S {n = ⟨0⟩} ☆
