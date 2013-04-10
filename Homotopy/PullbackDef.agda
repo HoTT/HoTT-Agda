@@ -18,7 +18,7 @@ pullback-diag-raw-eq : ∀ {i} {A A' : Set i} (p : A ≡ A')
   {f : A → C} {f' : A' → C'} (s : f' ◯ (transport _ p) ≡ transport _ r ◯ f)
   {g : B → C} {g' : B' → C'} (t : transport _ r ◯ g ≡ g' ◯ (transport _ q))
   → (diag A , B , C , f , g) ≡ (diag A' , B' , C' , f' , g')
-pullback-diag-raw-eq (refl _) (refl _) (refl _) (refl _) (refl _) = refl _
+pullback-diag-raw-eq refl refl refl refl refl = refl
 
 pullback-diag-eq : ∀ {i} {A A' : Set i} (p : A ≃ A')
   {B B' : Set i} (q : B ≃ B') {C C' : Set i} (r : C ≃ C')
@@ -29,10 +29,10 @@ pullback-diag-eq p q r {f} {f'} s {g} {g'} t = pullback-diag-raw-eq
   (eq-to-path p)
   (eq-to-path q)
   (eq-to-path r)
-  (funext (λ a → map f' (trans-id-eq-to-path p a)
+  (funext (λ a → ap f' (trans-id-eq-to-path p a)
                      ∘ (s a ∘ ! (trans-id-eq-to-path r (f a)))))
   (funext (λ b → trans-id-eq-to-path r (g b)
-                     ∘ (t b ∘ map g' (! (trans-id-eq-to-path q b)))))
+                     ∘ (t b ∘ ap g' (! (trans-id-eq-to-path q b)))))
 
 module Pullback {i} (D : pullback-diag i) where
 
@@ -46,9 +46,9 @@ module Pullback {i} (D : pullback-diag i) where
       h : f a ≡ g b
 
   pullback-eq : {a a' : A} (p : a ≡ a') {b b' : B} (q : b ≡ b')
-    {h : f a ≡ g b} {h' : f a' ≡ g b'} (r : h ∘ map g q ≡ map f p ∘ h')
+    {h : f a ≡ g b} {h' : f a' ≡ g b'} (r : h ∘ ap g q ≡ ap f p ∘ h')
     → (a , b , h) ≡ (a' , b' , h')
-  pullback-eq (refl _) (refl _) r =
-    map (λ u → _ , _ , u) (! (refl-right-unit _) ∘ r)
+  pullback-eq refl refl r =
+    ap (λ u → _ , _ , u) (! (refl-right-unit _) ∘ r)
 
 open Pullback public

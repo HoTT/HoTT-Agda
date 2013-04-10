@@ -22,15 +22,15 @@ cocone-eq-raw : (top : Set m) {a1 a2 : A → top} {b1 b2 : B → top}
   {h1 : (c : C) → a1 (f c) ≡ b1 (g c)} {h2 : (c : C) → a2 (f c) ≡ b2 (g c)}
   (p1 : a1 ≡ a2) (p2 : b1 ≡ b2) (p3 : transport _ p1 (transport _ p2 h1) ≡ h2)
   → (a1 , b1 , h1) ≡ (a2 , b2 , h2)
-cocone-eq-raw top (refl _) (refl _) (refl _) = refl _
+cocone-eq-raw top refl refl refl = refl
 
 cocone-eq : (top : Set m) {a1 a2 : A → top} {b1 b2 : B → top}
   {h1 : (c : C) → a1 (f c) ≡ b1 (g c)} {h2 : (c : C) → a2 (f c) ≡ b2 (g c)}
   (p1 : a1 ≡ a2) (p2 : b1 ≡ b2)
   (p3 : (c : C) → happly p1 (f c) ∘ h2 c ≡ h1 c ∘ happly p2 (g c))
   → (a1 , b1 , h1) ≡ (a2 , b2 , h2)
-cocone-eq top (refl _) (refl _) p3 =
-  cocone-eq-raw top (refl _) (refl _)
+cocone-eq top refl refl p3 =
+  cocone-eq-raw top refl refl
     (funext (λ c → ! (refl-right-unit _) ∘ ! (p3 c)))
 
 open import Homotopy.PullbackDef
@@ -51,20 +51,20 @@ cocone-equiv-pullback : (top : Set m) → cocone top ≃ pullback (D→top top)
 cocone-equiv-pullback top = (cocone-to-pullback top
   , iso-is-eq _
     (pullback-to-cocone top)
-    (λ p → map (λ u → _ , _ , u) (funext-happly _))
-    (λ c → map (λ u → _ , _ , u) (happly-funext _)))
+    (λ p → ap (λ u → _ , _ , u) (funext-happly _))
+    (λ c → ap (λ u → _ , _ , u) (happly-funext _)))
 
 pullback-equiv-cocone : (top : Set m) → pullback (D→top top) ≃ cocone top
 pullback-equiv-cocone top = (pullback-to-cocone top
   , iso-is-eq _
     (cocone-to-pullback top)
-    (λ c → map (λ u → _ , _ , u) (happly-funext _))
-    (λ p → map (λ u → _ , _ , u) (funext-happly _)))
+    (λ c → ap (λ u → _ , _ , u) (happly-funext _))
+    (λ p → ap (λ u → _ , _ , u) (funext-happly _)))
 
 compose-cocone-map : (D E : Set m) (Dcocone : cocone D)
   → ((f : D → E) → cocone E)
 compose-cocone-map D E (A→top , B→top , h) f =
-  ((f ◯ A→top) , (f ◯ B→top) , (λ c → map f (h c)))
+  ((f ◯ A→top) , (f ◯ B→top) , (λ c → ap f (h c)))
 
 is-pushout : (D : Set m) ⦃ PD : P D ⦄ (Dcocone : cocone D) → Set _
 is-pushout D Dcocone = (E : Set m) ⦃ PE : P E ⦄
@@ -75,9 +75,9 @@ compose-cocone-map-compose : (D E F : Set m) (Dcocone : cocone D) (f : D → E)
   → compose-cocone-map E F (compose-cocone-map D E Dcocone f) g
     ≡ compose-cocone-map D F Dcocone (g ◯ f)
 compose-cocone-map-compose D E F Dcocone f g =
-  map (λ u → ((g ◯ (f ◯ cocone.A→top Dcocone))
+  ap (λ u → ((g ◯ (f ◯ cocone.A→top Dcocone))
              , (g ◯ (f ◯ cocone.B→top Dcocone)) , u))
-      (funext (λ c → compose-map g f (cocone.h Dcocone c)))
+      (funext (λ c → compose-ap g f (cocone.h Dcocone c)))
 
 module _ (D : Set m) ⦃ PD : P D ⦄ (Dcocone : cocone D)
   (Dpushout : is-pushout D Dcocone) (E : Set m) ⦃ PE : P E ⦄
@@ -106,18 +106,18 @@ module _ (D : Set m) ⦃ PD : P D ⦄ (Dcocone : cocone D)
       D→E→D : (λ x → E→D (D→E x)) ≡ (λ x → x)
       D→E→D = equiv-is-inj (compose-cocone-map D D Dcocone , Dpushout D) _ _
         (! (compose-cocone-map-compose D E D Dcocone D→E E→D)
-        ∘ (map (λ u → compose-cocone-map E D u E→D)
+        ∘ (ap (λ u → compose-cocone-map E D u E→D)
                (inverse-right-inverse DE-eq Ecocone)
         ∘ (inverse-right-inverse ED-eq Dcocone
-          ∘ map (λ u → _ , _ , u) (funext (λ c → ! (map-id _))))))
+          ∘ ap (λ u → _ , _ , u) (funext (λ c → ! (ap-id _))))))
 
       E→D→E : (λ x → D→E (E→D x)) ≡ (λ x → x)
       E→D→E = equiv-is-inj (compose-cocone-map E E Ecocone , Epushout E) _ _
         (! (compose-cocone-map-compose E D E Ecocone E→D D→E)
-        ∘ (map (λ u → compose-cocone-map D E u D→E)
+        ∘ (ap (λ u → compose-cocone-map D E u D→E)
                (inverse-right-inverse ED-eq Dcocone)
         ∘ (inverse-right-inverse DE-eq Ecocone
-          ∘ map (λ u → _ , _ , u) (funext (λ c → ! (map-id _))))))
+          ∘ ap (λ u → _ , _ , u) (funext (λ c → ! (ap-id _))))))
 
   pushout-equiv-pushout : D ≃ E
   pushout-equiv-pushout = (D→E , iso-is-eq _ E→D (happly E→D→E) (happly D→E→D))

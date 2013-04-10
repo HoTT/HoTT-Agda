@@ -15,7 +15,7 @@ record legend i (city : Set i) : Set (suc i) where
     all-listed : ∀ c → [ hfiber loc c ]
 
 id-legend : ∀ {i} (A : Set i) → legend i A
-id-legend A = leg A , id A , λ x → proj $ x , refl _
+id-legend A = leg A , id A , λ x → proj $ x , refl
 
 private
   module Book {i} {city : Set i} {l : legend i city} where
@@ -96,7 +96,7 @@ module _ {i} {city : Set i} (l : legend i city) where
                 ≡⟨ concat-assoc (! (! p₁)) (! p₂) p₂ ⟩
               ! (! p₁) ∘ (! p₂ ∘ p₂)
                 ≡⟨ ap (λ x → ! (! p₁) ∘ x) $ opposite-left-inverse p₂ ⟩
-              ! (! p₁) ∘ refl _
+              ! (! p₁) ∘ refl
                 ≡⟨ refl-right-unit $ ! (! p₁) ⟩
               ! (! p₁)
                 ≡⟨ opposite-opposite p₁ ⟩∎
@@ -140,7 +140,7 @@ module _ {i} {city : Set i} (l : legend i city) where
   visit-fiber-β-loc P ⦃ P-is-set ⦄ h₀-p h₁-r n =
     visit-fiber-rec P ⦃ P-is-set ⦄ h₀-p h₁-r (loc n)
       ≡⟨ ap (π₀-extend-nondep ⦃ P-is-set $ loc n ⦄ (visit-fiber-rec′ P h₀-p h₁-r $ loc n))
-            $ ! $ π₂ (drawn-as-one $ loc n) (proj $ point n , refl _) ⟩∎
+            $ ! $ π₂ (drawn-as-one $ loc n) (proj $ point n , refl) ⟩∎
     h₀-p n
       ∎
 
@@ -164,7 +164,7 @@ module _ {i} {city : Set i} (l : legend i city) where
   loc-fiber-β-loc P ⦃ P-is-prop ⦄ h₀-p n =
     loc-fiber-rec P ⦃ P-is-prop ⦄ h₀-p (loc n)
       ≡⟨ ap ([]-extend-nondep ⦃ P-is-prop $ loc n ⦄ (loc-fiber-rec′ P h₀-p $ loc n))
-            $ prop-has-all-paths []-is-prop (all-listed $ loc n) $ proj $ n , refl _ ⟩∎
+            $ prop-has-all-paths []-is-prop (all-listed $ loc n) $ proj $ n , refl ⟩∎
     h₀-p n
       ∎
 
@@ -178,10 +178,10 @@ private
       (h₀-p : ∀ n → P n)
       (h₁-r : ∀ n₁ n₂ r → transport P r (h₀-p n₁) ≡ h₀-p n₂)
       → ∀ n → visit-fiber-rec (id-legend city) P ⦃ P-is-set ⦄ h₀-p h₁-r n ≡ h₀-p n
-    visit-fiber-β-id P ⦃ P-is-set ⦄ h₀-p h₁-r n = refl _
+    visit-fiber-β-id P ⦃ P-is-set ⦄ h₀-p h₁-r n = refl
 
     loc-fiber-β-id : ∀ {j} (P : city → Set j)
       ⦃ P-is-prop : ∀ (c : city) → is-prop $ P c ⦄
       (h₀-p : ∀ n → P n)
       → ∀ n → loc-fiber-rec (id-legend city) P ⦃ P-is-prop ⦄ h₀-p n ≡ h₀-p n
-    loc-fiber-β-id P ⦃ P-is-prop ⦄ h₀-p n = refl _
+    loc-fiber-β-id P ⦃ P-is-prop ⦄ h₀-p n = refl

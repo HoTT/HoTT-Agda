@@ -1,11 +1,6 @@
 {-# OPTIONS --without-K #-}
 
-open import Base using (unit; tt; map; _◯_; funext; _∘_; !; _≃_; _,_; _⁻¹;
-  happly; _☆_; _≡_; inverse-left-inverse; ℕ; ℕ₋₂; is-truncated;
-  ≡-is-truncated; refl; map-concat; map-opposite; happly-funext;
-  map-compose; whisker-left; whisker-right; compose-map; refl-right-unit;
-  is-equiv; transport; compose-is-equiv; cst)
-
+open import Base
 open import Homotopy.PushoutDef
 open import Homotopy.PushoutUP as PushoutUP
 open import Homotopy.Truncation
@@ -29,7 +24,7 @@ module τH = PushoutUP τd (is-truncated n)
 cocone-τpushout : τH.cocone (τ n (pushout d))
 cocone-τpushout = (τ-fmap left , τ-fmap right ,
                      τ-extend ⦃ λ _ → ≡-is-truncated _ (τ-is-truncated _ _) ⦄
-                       (map proj ◯ glue))
+                       (ap proj ◯ glue))
 
 -- We have a map [(τ n (pushout d) → E) → τH.cocone E] with [E] in [P] given by
 -- [τH.compose-cocone-map] and we want to prove that it’s an equivalence
@@ -69,7 +64,7 @@ module _ (E : Set i) ⦃ P-E : is-truncated n E ⦄ where
     equiv1 = ((λ u → u ◯ proj) , τ-up n _ _)
 
     equiv2 : (pushout d → E) ≃ H.cocone E
-    equiv2 = ((λ f → ((f ◯ left) , (f ◯ right) , (map f ◯ glue)))
+    equiv2 = ((λ f → ((f ◯ left) , (f ◯ right) , (ap f ◯ glue)))
              , pushout-is-pushout E)
 
     -- (could be defined more generally somewhere else)
@@ -85,14 +80,14 @@ module _ (E : Set i) ⦃ P-E : is-truncated n E ⦄ where
 
     p₀ : (a : A → E) (x : τ n C)
       → τ-extend-nondep a (τ-fmap f x) ≡ τ-extend-nondep (a ◯ f) x
-    p₀ a = τ-extend (λ x → refl (a (f x)))
+    p₀ a = τ-extend (λ x → refl)
 
     p : (a : A → E) → (τ-extend-nondep a) ◯ τ-fmap f ≡ τ-extend-nondep (a ◯ f)
     p a = funext (p₀ a)
 
     q₀ : (b : B → E) (x : τ n C)
       → τ-extend-nondep (b ◯ g) x ≡ τ-extend-nondep b (τ-fmap g x)
-    q₀ b = τ-extend (λ x → refl (b (g x)))
+    q₀ b = τ-extend (λ x → refl)
 
     q : (b : B → E) → τ-extend-nondep (b ◯ g) ≡ (τ-extend-nondep b) ◯ τ-fmap g
     q b = funext (q₀ b)
@@ -115,16 +110,16 @@ module _ (E : Set i) ⦃ P-E : is-truncated n E ⦄ where
     map-543-correct : (x : H.cocone E)
       → equiv5 ☆ (equiv4 ☆ (equiv3 ☆ x)) ≡ map-543 x
     map-543-correct (a , b , h) =
-      map (λ u → _ , _ , u)
+      ap (λ u → _ , _ , u)
         (funext (τ-extend
           (λ x →
-            map-concat (λ u → u (proj x)) (p a)
-              (map τ-extend-nondep (funext h) ∘ q b)
+            ap-concat (λ u → u (proj x)) (p a)
+              (ap τ-extend-nondep (funext h) ∘ q b)
             ∘ (whisker-right _ (happly (happly-funext (p₀ a)) (proj x))
-            ∘ (map-concat (λ u → u (proj x))
-                (map τ-extend-nondep (funext h)) (q b)
+            ∘ (ap-concat (λ u → u (proj x))
+                (ap τ-extend-nondep (funext h)) (q b)
             ∘ (whisker-right _
-                (compose-map (λ u → u (proj x)) τ-extend-nondep (funext h))
+                (compose-ap (λ u → u (proj x)) τ-extend-nondep (funext h))
             ∘ (whisker-right _ (happly (happly-funext h) x)
             ∘ (whisker-left (h x)
                 (happly (happly-funext (q₀ b)) (proj x))
@@ -137,7 +132,7 @@ module _ (E : Set i) ⦃ P-E : is-truncated n E ⦄ where
 
     map-21-A₀ : (f : τ n (pushout d) → E) (u : τ n A)
       → τH.A→top (map-543 (equiv2 ☆ (equiv1 ☆ f))) u ≡ τH.A→top (map-54321 f) u
-    map-21-A₀ f = τ-extend (λ x → refl _)
+    map-21-A₀ f = τ-extend (λ x → refl)
 
     map-21-A : (f : τ n (pushout d) → E)
       → τH.A→top (map-543 (equiv2 ☆ (equiv1 ☆ f))) ≡ τH.A→top (map-54321 f)
@@ -145,7 +140,7 @@ module _ (E : Set i) ⦃ P-E : is-truncated n E ⦄ where
 
     map-21-B₀ : (f : τ n (pushout d) → E) (u : τ n B)
       → τH.B→top (map-543 (equiv2 ☆ (equiv1 ☆ f))) u ≡ τH.B→top (map-54321 f) u
-    map-21-B₀ f = τ-extend (λ x → refl _)
+    map-21-B₀ f = τ-extend (λ x → refl)
 
     map-21-B : (f : τ n (pushout d) → E)
       → τH.B→top (map-543 (equiv2 ☆ (equiv1 ☆ f))) ≡ τH.B→top (map-54321 f)
@@ -157,9 +152,9 @@ module _ (E : Set i) ⦃ P-E : is-truncated n E ⦄ where
       (τ-extend
         (λ x →
           whisker-right _ (happly (happly-funext (map-21-A₀ h)) (proj (f x)))
-          ∘ (compose-map h proj _
-          ∘ (! (refl-right-unit (map (h ◯ proj) (glue x)))
-          ∘ whisker-left (map (h ◯ proj) (glue x))
+          ∘ (compose-ap h proj _
+          ∘ (! (refl-right-unit (ap (h ◯ proj) (glue x)))
+          ∘ whisker-left (ap (h ◯ proj) (glue x))
           (! (happly (happly-funext (map-21-B₀ h)) (proj (g x))))))))
 
     map-54321-correct : (f : τ n (pushout d) → E)

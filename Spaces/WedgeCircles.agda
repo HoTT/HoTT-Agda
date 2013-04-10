@@ -32,7 +32,7 @@ wedge-circles-rec P x p #base = x
 postulate  -- HIT
   β : ∀ {i} (P : wedge-circles → Set i) (x : P base)
       (p : (t : A) → transport P (loops t) x ≡ x) (t : A)
-      → map-dep (wedge-circles-rec P x p) (loops t) ≡ p t
+      → apd (wedge-circles-rec P x p) (loops t) ≡ p t
 
 wedge-circles-rec-nondep : ∀ {i} (B : Set i) (x : B) (p : A → x ≡ x)
   → (wedge-circles → B)
@@ -40,4 +40,4 @@ wedge-circles-rec-nondep B x p #base = x
 
 postulate  -- HIT
   β-nondep : ∀ {i} (B : Set i) (x : B) (p : A → x ≡ x) (t : A)
-      → map (wedge-circles-rec-nondep B x p) (loops t) ≡ p t
+      → ap (wedge-circles-rec-nondep B x p) (loops t) ≡ p t

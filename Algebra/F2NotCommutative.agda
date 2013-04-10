@@ -37,22 +37,22 @@ act true  = map1
 act false = map2
 
 act-involutive : (b : bool) (x : X) → (act b (act b x) ≡ x)
-act-involutive true  a = refl _
-act-involutive true  b = refl _
-act-involutive true  c = refl _
-act-involutive true  d = refl _
-act-involutive false a = refl _
-act-involutive false b = refl _
-act-involutive false c = refl _
-act-involutive false d = refl _
+act-involutive true  a = refl
+act-involutive true  b = refl
+act-involutive true  c = refl
+act-involutive true  d = refl
+act-involutive false a = refl
+act-involutive false b = refl
+act-involutive false c = refl
+act-involutive false d = refl
 
 F2-act-on-X : F2 → (X → X)
 F2-act-on-X = freegroup-rec-nondep (X → X)
   (id X)
   (λ b f → f ◯ act b)
   (λ b f → f ◯ act b)
-  (λ b f → funext (λ x → map f (act-involutive b x)))
-  (λ b f → funext (λ x → map f (act-involutive b x)))
+  (λ b f → funext (λ x → ap f (act-involutive b x)))
+  (λ b f → funext (λ x → ap f (act-involutive b x)))
   (→-is-truncated _ X-is-set)
 
 ab : F2
@@ -63,4 +63,4 @@ ba = false · (true  · e)
 
 F2-non-commutative : ab ≢ ba
 F2-non-commutative p =
-  bool-true≢false (base-path (happly (map F2-act-on-X p) a))
+  bool-true≢false (base-path (happly (ap F2-act-on-X p) a))

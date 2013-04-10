@@ -24,7 +24,7 @@ module FunextNonDep {j} {B : Set j} {f g : A → B} (h : (x : A) → f x ≡ g x
     free-path-space-B = Σ B (λ x → Σ B (λ y → x ≡ y))
 
     d : A → free-path-space-B
-    d x = (f x , (f x , refl (f x)))
+    d x = (f x , (f x , refl))
 
     e : A → free-path-space-B
     e x = (f x , (g x , h x))
@@ -32,10 +32,10 @@ module FunextNonDep {j} {B : Set j} {f g : A → B} (h : (x : A) → f x ≡ g x
     abstract
       π₁-is-equiv : is-equiv (λ (y : free-path-space-B) → π₁ y)
       π₁-is-equiv =
-        iso-is-eq π₁ (λ z → (z , (z , refl z))) refl
-          (λ x' → Σ-eq (refl _)
+        iso-is-eq π₁ (λ z → (z , (z , refl))) (λ _ → refl)
+          (λ x' → Σ-eq refl
                     (Σ-eq (π₂ (π₂ x'))
-                      (trans-cst≡id (π₂ (π₂ x')) (refl (π₁ x')))))
+                      (trans-cst≡id (π₂ (π₂ x')) refl)))
 
       comp-π₁-is-equiv : is-equiv (λ (f : A → free-path-space-B)
                                      → (λ x → π₁ (f x)))
@@ -43,10 +43,10 @@ module FunextNonDep {j} {B : Set j} {f g : A → B} (h : (x : A) → f x ≡ g x
                                      π₁-is-equiv)
 
       d≡e : d ≡ e
-      d≡e = equiv-is-inj (_ , comp-π₁-is-equiv) _ _ (refl f)
+      d≡e = equiv-is-inj (_ , comp-π₁-is-equiv) _ _ refl
 
   funext-nondep : f ≡ g
-  funext-nondep = map (λ f' x → π₁ (π₂ (f' x))) d≡e
+  funext-nondep = ap (λ f' x → π₁ (π₂ (f' x))) d≡e
 
 open FunextNonDep
 
@@ -60,7 +60,7 @@ module WeakFunext {j} {P : A → Set j} (e : (x : A) → is-contr (P x)) where
   abstract
     weak-funext : is-contr (Π A P)
     weak-funext = transport (λ Q → is-contr (Π A Q)) (! P-is-unit)
-                            ((λ x → tt) , (λ y → funext-nondep (λ x → refl tt)))
+                            ((λ x → tt) , (λ y → funext-nondep (λ x → refl)))
 
 open WeakFunext
 
@@ -80,7 +80,7 @@ module FunextDep {j} {P : A → Set j} {f g : Π A P} (h : (x : A) → f x ≡ g
     ΠAQ-is-contr = weak-funext Q-is-contr
 
   Q-f : Π A Q
-  Q-f x = (f x , refl _)
+  Q-f x = (f x , refl)
 
   Q-g : Π A Q
   Q-g x = (g x , ! (h x))
@@ -90,32 +90,32 @@ module FunextDep {j} {P : A → Set j} {f g : Π A P} (h : (x : A) → f x ≡ g
     Q-f≡Q-g = contr-has-all-paths ΠAQ-is-contr Q-f Q-g
 
   funext-p : f ≡ g
-  funext-p = map (λ u x → π₁ (u x)) Q-f≡Q-g
+  funext-p = ap (λ u x → π₁ (u x)) Q-f≡Q-g
 
 open FunextDep
 
 happly : ∀ {j} {P : A → Set j} {f g : Π A P} (p : f ≡ g) → ((x : A) → f x ≡ g x)
-happly p x = map (λ u → u x) p
+happly p x = ap (λ u → u x) p
 
 -- Strong function extensionality
 
 module StrongFunextDep {j} {P : A → Set j} where
 
   funext-refl : (f : Π A P)
-    → funext-p (λ x → refl (f x)) ≡ refl f
-  funext-refl f = map (map (λ u x → π₁ (u x)))
+    → funext-p (λ x → refl {a = f x}) ≡ refl
+  funext-refl f = ap (ap (λ u x → π₁ (u x)))
     (contr-has-all-paths (≡-is-truncated _
-                         (ΠAQ-is-contr (λ x → refl _)))
-                         (Q-f≡Q-g (λ x → refl _)) (refl _))
+                         (ΠAQ-is-contr (λ x → refl)))
+                         (Q-f≡Q-g (λ x → refl)) refl)
 
   funext-happly-p : {f g : Π A P} (p : f ≡ g)
     → funext-p (happly p) ≡ p
-  funext-happly-p (refl f) = funext-refl f
+  funext-happly-p {f} refl = funext-refl f
 
-  happly-path : {f : Π A P} {u v : (x : A) → Q (λ x → refl (f x)) x}
+  happly-path : {f : Π A P} {u v : (x : A) → Q (λ x → refl {a = f x}) x}
     (p : u ≡ v) (x : A)
-    → happly (map (λ u x → π₁ (u x)) p) x ≡ π₂ (u x) ∘ ! (π₂ (v x))
-  happly-path (refl u) x = ! (opposite-right-inverse (π₂ (u x)))
+    → happly (ap (λ u x → π₁ (u x)) p) x ≡ π₂ (u x) ∘ ! (π₂ (v x))
+  happly-path {u = u} refl x = ! (opposite-right-inverse (π₂ (u x)))
 
   happly-funext-p : {f g : Π A P} (h : (x : A) → f x ≡ g x)
     → happly (funext-p h) ≡ h

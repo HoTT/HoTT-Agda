@@ -18,11 +18,11 @@ pushout-flip-flip : ∀ {i} {d : pushout-diag i} (p : pushout d)
                     → pushout-flip (pushout-flip p) ≡ p
 pushout-flip-flip {d = d} = pushout-rec
   (λ p → pushout-flip (pushout-flip p) ≡ p)
-  (λ _ → refl _)
-  (λ _ → refl _)
+  (λ _ → refl)
+  (λ _ → refl)
   (λ c →
-    transport (λ p → pushout-flip (pushout-flip p) ≡ p) (glue c) (refl _)
-      ≡⟨ trans-app≡id (pushout-flip ◯ pushout-flip) (glue c) (refl _) ⟩
+    transport (λ p → pushout-flip (pushout-flip p) ≡ p) (glue c) refl
+      ≡⟨ trans-app≡id (pushout-flip ◯ pushout-flip) (glue c) refl ⟩
     ! (ap (pushout-flip ◯ pushout-flip) (glue c)) ∘ glue c
       ≡⟨ ap (λ x → ! x ∘ glue c)
             $ ap-compose pushout-flip pushout-flip (glue c) ⟩
@@ -38,7 +38,7 @@ pushout-flip-flip {d = d} = pushout-rec
       ≡⟨ ap (λ x → ! x ∘ glue c) $ opposite-opposite $ glue c ⟩
     ! (glue c) ∘ glue c
       ≡⟨ opposite-left-inverse (glue c) ⟩∎
-    refl _
+    refl
       ∎)
 
 pushout-β-!glue-nondep : ∀ {i} {d : pushout-diag i} {l} (D : Set l) →

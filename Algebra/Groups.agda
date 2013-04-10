@@ -45,11 +45,11 @@ unit-group {i} = record
     ; _∙_ = λ _ _ → tt
     ; e = tt
     ; _′ = λ _ → tt
-    ; assoc = λ _ _ _ → refl tt
-    ; right-unit = λ _ → refl tt
-    ; left-unit = λ _ → refl tt
-    ; right-inverse = λ _ → refl tt
-    ; left-inverse = λ _ → refl tt
+    ; assoc = λ _ _ _ → refl
+    ; right-unit = λ _ → refl
+    ; left-unit = λ _ → refl
+    ; right-inverse = λ _ → refl
+    ; left-inverse = λ _ → refl
     }
   ; set = unit-is-set
   }

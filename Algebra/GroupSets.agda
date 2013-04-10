@@ -46,9 +46,9 @@ module Algebra.GroupSets {i} (grp : group i) where
           ≡ action._∙_ (gset.act gs₂))
     → gs₁ ≡ gs₂
   gset-eq
-    {gset[ ._ , act[ ._ , unit₁ , assoc₁ ] , set₁ ]}
+    {gset[  Y , act[  ∙ , unit₁ , assoc₁ ] , set₁ ]}
     {gset[ ._ , act[ ._ , unit₂ , assoc₂ ] , set₂ ]}
-    (refl Y) (refl ∙) =
+    refl refl =
       gset[ Y , act[ ∙ , unit₁ , assoc₁ ] , set₁ ]
         ≡⟨ ap (λ unit → gset[ Y , act[ ∙ , unit , assoc₁ ] , set₁ ])
               $ prop-has-all-paths (Π-is-prop λ _ → set₁ _ _) _ _ ⟩

@@ -27,7 +27,7 @@ module Homotopy.VanKampen.Code.LemmaPackA {i} (d : pushout-diag i)
         ap⇒bp-split = code-rec-nondep
           F.code-b ⦃ λ _ → F.code-b-is-set _ ⦄
           F.code-a ⦃ λ _ → F.code-a-is-set _ ⦄
-          (λ p → F.⟧a refl₀ _ F.a⟦ n ⟧b p)
+          (λ p → F.⟧a refl₀ F.a⟦ n ⟧b p)
           (λ n₁ pco p → pco F.a⟦ n₁ ⟧b p)
           (λ n₁ pco p → pco F.b⟦ n₁ ⟧a p)
           (λ n₁ pco → F.code-b-refl-refl n₁ pco)
@@ -64,9 +64,9 @@ module Homotopy.VanKampen.Code.LemmaPackA {i} (d : pushout-diag i)
           (λ {b} co → F.aa⇒ba (ab⇒bb co) ≡ co)
           ⦃ λ _ → ≡-is-set $ code-b-is-set _ ⦄
           (λ p →
-            ⟧a refl₀ _ a⟦ n ⟧b refl₀ _ b⟦ n ⟧a p
-                ≡⟨ code-a-merge n (refl₀ _) p ⟩
-            ⟧a refl₀ _ ∘₀ p
+            ⟧a refl₀ a⟦ n ⟧b refl₀ b⟦ n ⟧a p
+                ≡⟨ code-a-merge n refl₀ p ⟩
+            ⟧a refl₀ ∘₀ p
                 ≡⟨ ap (λ x → ⟧a x) $ refl₀-left-unit p ⟩∎
             ⟧a p
                 ∎)
@@ -113,7 +113,7 @@ module Homotopy.VanKampen.Code.LemmaPackA {i} (d : pushout-diag i)
                 ≡⟨ ap (λ x → transport flipped-code (glue $ loc n) $ aa⇒ba x)
                     $ trans-code-!glue-loc n co ⟩
             transport flipped-code (glue $ loc n) (aa⇒ba $ b⇒a n co)
-                ≡⟨ refl _ ⟩
+                ≡⟨ refl ⟩
             transport flipped-code (glue $ loc n) (F.a⇒b n $ ab⇒bb co)
                 ≡⟨ ! $ trans-ap F.code pushout-flip (glue $ loc n)
                      $ F.a⇒b n $ ab⇒bb co ⟩

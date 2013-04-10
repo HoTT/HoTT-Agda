@@ -21,10 +21,10 @@ module UP {k} (B : Set k) (B-set : is-set B) where
   factor (f , p) = /-rec-nondep A R B f p B-set
 
   extend : ((A / R → B) → (A →→ B ~ R))
-  extend f = ((f ◯ proj A R) , (λ x x' p₁ → map f (eq A R x x' p₁)))
+  extend f = ((f ◯ proj A R) , (λ x x' p₁ → ap f (eq A R x x' p₁)))
 
   extend-factor : (f : A →→ B ~ R) → extend (factor f) ≡ f
-  extend-factor (f , p) = map (λ x → f , x)
+  extend-factor (f , p) = ap (λ x → f , x)
                            (funext (λ x →
                             funext (λ x' →
                             funext (λ p₁ → π₁ (B-set _ _ _ _)))))
@@ -32,6 +32,6 @@ module UP {k} (B : Set k) (B-set : is-set B) where
   factor-extend : (f : A / R → B) → factor (extend f) ≡ f
   factor-extend f =
     funext (/-rec A R (λ x → factor (extend f) x ≡ f x)
-           (λ x → refl _)
+           (λ x → refl)
            (λ x y _ → π₁ (B-set _ _ _ _))
            (λ x → truncated-is-truncated-S _ (B-set _ _)))

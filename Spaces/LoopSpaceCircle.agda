@@ -30,8 +30,8 @@ tot-cover = Σ S¹ universal-cover
 
 -- Transport in the universal cover
 loop-to-succ : (n : ℤ) → transport universal-cover loop n ≡ succ n
-loop-to-succ n = ! (trans-map (λ A → A) universal-cover loop n)
-                 ∘ (map (λ t → transport (λ A → A) t n)
+loop-to-succ n = ! (trans-ap (λ A → A) universal-cover loop n)
+                 ∘ (ap (λ t → transport (λ A → A) t n)
                         (S¹-β-loop-nondep Set ℤ succ-path)
                  ∘ trans-id-eq-to-path succ-equiv n)
 
@@ -65,19 +65,19 @@ module Tot-cover-is-ℝ
   -- I redefine [R-e] and [e] to have something involving
   -- [transport universal-cover loop] instead of [succ]
   R-e' : (n : ℤ) → R-z n ≡ R-z (transport universal-cover loop n)
-  R-e' n = Σ-eq loop (refl _)
+  R-e' n = Σ-eq loop refl
 
   e' : (n : ℤ) → transport P (R-e' n) (z n)
                  ≡ z (transport universal-cover loop n)
   e' n = (trans-totalpath universal-cover P {x = (base , n)}
                           {y = (base , transport universal-cover loop n)}
-                          loop (refl _) z
+                          loop refl z
          ∘ move!-transp-left (λ z → P (base , z)) _ (loop-to-succ n)
            (z (succ n))
            (! (trans-totalpath universal-cover P {x = (base , n)}
                                {y = (base , succ n)} loop (loop-to-succ n) z)
             ∘ e n))
-          ∘ map-dep z (! (loop-to-succ n))
+          ∘ apd z (! (loop-to-succ n))
 
   -- Now I can prove what I want by induction on the circle
 
@@ -92,7 +92,7 @@ module Tot-cover-is-ℝ
                                 loop P-base t ≡ P-base t)
                (trans-trans-opposite universal-cover loop t)
                (! (trans-totalpath universal-cover P
-                                   loop (refl _) z)
+                                   loop refl z)
                ∘ e' (transport universal-cover (! loop) t))
 
   P-R-rec : (x : S¹) → (t : universal-cover x) → P (x , t)
@@ -110,7 +110,7 @@ P-R-contr : (x : tot-cover) → Set _
 P-R-contr x = R-z O ≡ x
 
 R-contr-base : (n : ℤ) → P-R-contr (R-z n)
-R-contr-base O = refl _
+R-contr-base O = refl
 R-contr-base (pos O) = R-e O
 R-contr-base (pos (S y)) = R-contr-base (pos y) ∘ R-e (pos y)
 R-contr-base (neg O) = ! (R-e (neg O))
@@ -118,7 +118,7 @@ R-contr-base (neg (S y)) = R-contr-base (neg y) ∘ ! (R-e (neg (S y)))
 
 R-contr-loop : (n : ℤ)
   → transport P-R-contr (R-e n) (R-contr-base n) ≡ (R-contr-base (succ n))
-R-contr-loop O = trans-cst≡id (R-e O) (refl _)
+R-contr-loop O = trans-cst≡id (R-e O) refl
 R-contr-loop (pos O) = trans-cst≡id (R-e (pos O)) (R-e O)
 R-contr-loop (pos (S y)) = trans-cst≡id (R-e (pos (S y)))
   (R-contr-base (pos y) ∘ R-e (pos y))

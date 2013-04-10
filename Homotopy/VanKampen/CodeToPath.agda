@@ -46,9 +46,9 @@ module Homotopy.VanKampen.CodeToPath {i} (d : pushout-diag i)
         (λ n pco p → (pco ∘₀ p!gl n) ∘₀ ap₀l p)
         (λ n pco p → (pco ∘₀ pgl  n) ∘₀ ap₀r p)
         (λ n {co} pco →
-          (((pco ∘₀ pgl n) ∘₀ refl₀ _) ∘₀ p!gl n) ∘₀ refl₀ _
+          (((pco ∘₀ pgl n) ∘₀ refl₀) ∘₀ p!gl n) ∘₀ refl₀
             ≡⟨ refl₀-right-unit _ ⟩
-          ((pco ∘₀ pgl n) ∘₀ refl₀ _) ∘₀ p!gl n
+          ((pco ∘₀ pgl n) ∘₀ refl₀) ∘₀ p!gl n
             ≡⟨ ap (λ x → x ∘₀ p!gl n)
                   $ refl₀-right-unit $ pco ∘₀ pgl n ⟩
           (pco ∘₀ pgl n) ∘₀ p!gl n
@@ -56,14 +56,14 @@ module Homotopy.VanKampen.CodeToPath {i} (d : pushout-diag i)
           pco ∘₀ (pgl n ∘₀ p!gl n)
             ≡⟨ ap (λ x → pco ∘₀ proj x)
                   $ opposite-right-inverse $ glue $ loc n ⟩
-          pco ∘₀ refl₀ _
+          pco ∘₀ refl₀
             ≡⟨ refl₀-right-unit pco ⟩∎
           pco
             ∎)
         (λ n {co} pco →
-          (((pco ∘₀ p!gl n) ∘₀ refl₀ _) ∘₀ pgl n) ∘₀ refl₀ _
+          (((pco ∘₀ p!gl n) ∘₀ refl₀) ∘₀ pgl n) ∘₀ refl₀
             ≡⟨ refl₀-right-unit _ ⟩
-          ((pco ∘₀ p!gl n) ∘₀ refl₀ _) ∘₀ pgl n
+          ((pco ∘₀ p!gl n) ∘₀ refl₀) ∘₀ pgl n
             ≡⟨ ap (λ x → x ∘₀ pgl n)
                   $ refl₀-right-unit $ pco ∘₀ p!gl n ⟩
           (pco ∘₀ p!gl n) ∘₀ pgl n
@@ -71,12 +71,12 @@ module Homotopy.VanKampen.CodeToPath {i} (d : pushout-diag i)
           pco ∘₀ (p!gl n ∘₀ pgl n)
             ≡⟨ ap (λ x → pco ∘₀ proj x)
                   $ opposite-left-inverse $ glue $ loc n ⟩
-          pco ∘₀ refl₀ _
+          pco ∘₀ refl₀
             ≡⟨ refl₀-right-unit pco ⟩∎
           pco
             ∎)
         (λ n₁ {co} pco n₂ r →
-          (((pco ∘₀ pgl n₁) ∘₀ ap₀r (ap₀ g r)) ∘₀ p!gl n₂) ∘₀ refl₀ _
+          (((pco ∘₀ pgl n₁) ∘₀ ap₀r (ap₀ g r)) ∘₀ p!gl n₂) ∘₀ refl₀
             ≡⟨ refl₀-right-unit _ ⟩
           ((pco ∘₀ pgl n₁) ∘₀ ap₀r (ap₀ g r)) ∘₀ p!gl n₂
             ≡⟨ concat₀-assoc (pco ∘₀ pgl n₁) (ap₀r (ap₀ g r)) (p!gl n₂) ⟩
@@ -92,7 +92,7 @@ module Homotopy.VanKampen.CodeToPath {i} (d : pushout-diag i)
           ((pco ∘₀ pgl n₁) ∘₀ p!gl n₁) ∘₀ ap₀l (ap₀ f r)
             ≡⟨ ap (λ x → (x ∘₀ p!gl n₁) ∘₀ ap₀l (ap₀ f r))
                   $ ! $ refl₀-right-unit $ pco ∘₀ pgl n₁ ⟩∎
-          (((pco ∘₀ pgl n₁) ∘₀ refl₀ _) ∘₀ p!gl n₁) ∘₀ ap₀l (ap₀ f r)
+          (((pco ∘₀ pgl n₁) ∘₀ refl₀) ∘₀ p!gl n₁) ∘₀ ap₀l (ap₀ f r)
             ∎)
 
     aa⇒path : ∀ {a₂} → a-code-a a₁ a₂ → _≡₀_ {A = P} (left a₁) (left  a₂)
@@ -117,14 +117,14 @@ module Homotopy.VanKampen.CodeToPath {i} (d : pushout-diag i)
             transport (λ p → left a₁ ≡₀ p) (glue $ loc n) (aa⇒path $ ab⇒aa n co)
                 ≡⟨ trans-cst≡₀id (glue $ loc n) (aa⇒path $ ab⇒aa n co) ⟩
             (aa⇒path $ ab⇒aa n co) ∘₀ pgl n
-                ≡⟨ refl _ ⟩
-            ((ab⇒path co ∘₀ p!gl n) ∘₀ refl₀ _) ∘₀ pgl n
+                ≡⟨ refl ⟩
+            ((ab⇒path co ∘₀ p!gl n) ∘₀ refl₀) ∘₀ pgl n
                 ≡⟨ ap (λ x → x ∘₀ pgl n) $ refl₀-right-unit $ ab⇒path co ∘₀ p!gl n ⟩
             (ab⇒path co ∘₀ p!gl n) ∘₀ pgl n
                 ≡⟨ concat₀-assoc (ab⇒path co) (p!gl n) (pgl n) ⟩
             ab⇒path co ∘₀ (p!gl n ∘₀ pgl n)
                 ≡⟨ ap (λ x → ab⇒path co ∘₀ proj x) $ opposite-left-inverse $ glue $ loc n ⟩
-            ab⇒path co ∘₀ refl₀ _
+            ab⇒path co ∘₀ refl₀
                 ≡⟨ refl₀-right-unit $ ab⇒path co ⟩∎
             ab⇒path co
                 ∎))
@@ -148,9 +148,9 @@ module Homotopy.VanKampen.CodeToPath {i} (d : pushout-diag i)
         (λ n pco p → (pco ∘₀ pgl  n) ∘₀ ap₀r p)
         (λ n pco p → (pco ∘₀ p!gl n) ∘₀ ap₀l p)
         (λ n {co} pco →
-          (((pco ∘₀ p!gl n) ∘₀ refl₀ _) ∘₀ pgl n) ∘₀ refl₀ _
+          (((pco ∘₀ p!gl n) ∘₀ refl₀) ∘₀ pgl n) ∘₀ refl₀
             ≡⟨ refl₀-right-unit _ ⟩
-          ((pco ∘₀ p!gl n) ∘₀ refl₀ _) ∘₀ pgl n
+          ((pco ∘₀ p!gl n) ∘₀ refl₀) ∘₀ pgl n
             ≡⟨ ap (λ x → x ∘₀ pgl n)
                   $ refl₀-right-unit $ pco ∘₀ p!gl n ⟩
           (pco ∘₀ p!gl n) ∘₀ pgl n
@@ -158,14 +158,14 @@ module Homotopy.VanKampen.CodeToPath {i} (d : pushout-diag i)
           pco ∘₀ (p!gl n ∘₀ pgl n)
             ≡⟨ ap (λ x → pco ∘₀ proj x)
                   $ opposite-left-inverse $ glue $ loc n ⟩
-          pco ∘₀ refl₀ _
+          pco ∘₀ refl₀
             ≡⟨ refl₀-right-unit pco ⟩∎
           pco
             ∎)
         (λ n {co} pco →
-          (((pco ∘₀ pgl n) ∘₀ refl₀ _) ∘₀ p!gl n) ∘₀ refl₀ _
+          (((pco ∘₀ pgl n) ∘₀ refl₀) ∘₀ p!gl n) ∘₀ refl₀
             ≡⟨ refl₀-right-unit _ ⟩
-          ((pco ∘₀ pgl n) ∘₀ refl₀ _) ∘₀ p!gl n
+          ((pco ∘₀ pgl n) ∘₀ refl₀) ∘₀ p!gl n
             ≡⟨ ap (λ x → x ∘₀ p!gl n)
                   $ refl₀-right-unit $ pco ∘₀ pgl n ⟩
           (pco ∘₀ pgl n) ∘₀ p!gl n
@@ -173,12 +173,12 @@ module Homotopy.VanKampen.CodeToPath {i} (d : pushout-diag i)
           pco ∘₀ (pgl n ∘₀ p!gl n)
             ≡⟨ ap (λ x → pco ∘₀ proj x)
                   $ opposite-right-inverse $ glue $ loc n ⟩
-          pco ∘₀ refl₀ _
+          pco ∘₀ refl₀
             ≡⟨ refl₀-right-unit pco ⟩∎
           pco
             ∎)
         (λ n₁ {co} pco n₂ r →
-          (((pco ∘₀ p!gl n₁) ∘₀ ap₀l (ap₀ f r)) ∘₀ pgl n₂) ∘₀ refl₀ _
+          (((pco ∘₀ p!gl n₁) ∘₀ ap₀l (ap₀ f r)) ∘₀ pgl n₂) ∘₀ refl₀
             ≡⟨ refl₀-right-unit _ ⟩
           ((pco ∘₀ p!gl n₁) ∘₀ ap₀l (ap₀ f r)) ∘₀ pgl n₂
             ≡⟨ concat₀-assoc (pco ∘₀ p!gl n₁) (ap₀l (ap₀ f r)) (pgl n₂) ⟩
@@ -194,7 +194,7 @@ module Homotopy.VanKampen.CodeToPath {i} (d : pushout-diag i)
           ((pco ∘₀ p!gl n₁) ∘₀ pgl n₁) ∘₀ ap₀r (ap₀ g r)
             ≡⟨ ap (λ x → (x ∘₀ pgl n₁) ∘₀ ap₀r (ap₀ g r))
                   $ ! $ refl₀-right-unit $ pco ∘₀ p!gl n₁ ⟩∎
-          (((pco ∘₀ p!gl n₁) ∘₀ refl₀ _) ∘₀ pgl n₁) ∘₀ ap₀r (ap₀ g r)
+          (((pco ∘₀ p!gl n₁) ∘₀ refl₀) ∘₀ pgl n₁) ∘₀ ap₀r (ap₀ g r)
             ∎)
 
     bb⇒path : ∀ {b₂} → b-code-b b₁ b₂ → _≡₀_ {A = P} (right b₁) (right  b₂)
@@ -219,14 +219,14 @@ module Homotopy.VanKampen.CodeToPath {i} (d : pushout-diag i)
             transport (λ p → right b₁ ≡₀ p) (glue $ loc n) (ba⇒path $ bb⇒ba n co)
                 ≡⟨ trans-cst≡₀id (glue $ loc n) (ba⇒path $ bb⇒ba n co) ⟩
             (ba⇒path $ bb⇒ba n co) ∘₀ pgl n
-                ≡⟨ refl _ ⟩
-            ((bb⇒path co ∘₀ p!gl n) ∘₀ refl₀ _) ∘₀ pgl n
+                ≡⟨ refl ⟩
+            ((bb⇒path co ∘₀ p!gl n) ∘₀ refl₀) ∘₀ pgl n
                 ≡⟨ ap (λ x → x ∘₀ pgl n) $ refl₀-right-unit $ bb⇒path co ∘₀ p!gl n ⟩
             (bb⇒path co ∘₀ p!gl n) ∘₀ pgl n
                 ≡⟨ concat₀-assoc (bb⇒path co) (p!gl n) (pgl n) ⟩
             bb⇒path co ∘₀ (p!gl n ∘₀ pgl n)
                 ≡⟨ ap (λ x → bb⇒path co ∘₀ proj x) $ opposite-left-inverse $ glue $ loc n ⟩
-            bb⇒path co ∘₀ refl₀ _
+            bb⇒path co ∘₀ refl₀
                 ≡⟨ refl₀-right-unit $ bb⇒path co ⟩∎
             bb⇒path co
                 ∎)
@@ -253,11 +253,11 @@ module Homotopy.VanKampen.CodeToPath {i} (d : pushout-diag i)
         ⦃ λ _ → ≡-is-set $ π₀-is-set _ ⦄
         (λ p →
           ab⇒path (bb⇒ab n (⟧b p))
-            ≡⟨ refl _ ⟩
-          (refl₀ _ ∘₀ pgl n) ∘₀ ap₀r p
+            ≡⟨ refl ⟩
+          (refl₀ ∘₀ pgl n) ∘₀ ap₀r p
             ≡⟨ ap (λ x → x ∘₀ ap₀r p) $ refl₀-left-unit $ pgl n ⟩
           pgl n ∘₀ ap₀r p
-            ≡⟨ refl _ ⟩∎
+            ≡⟨ refl ⟩∎
           pgl n ∘₀ bb⇒path (⟧b p)
             ∎)
         (λ n₁ {co} eq p₁ →
@@ -327,7 +327,7 @@ module Homotopy.VanKampen.CodeToPath {i} (d : pushout-diag i)
               ≡⟨ ! $ concat₀-assoc (p!gl n) (pgl n) (bp⇒path {g $ loc n} {p₂} co) ⟩
           (p!gl n ∘₀ pgl n) ∘₀ bp⇒path {g $ loc n} {p₂} co
               ≡⟨ ap (λ x → proj x ∘₀ bp⇒path {g $ loc n} {p₂} co) $ opposite-left-inverse (glue $ loc n) ⟩
-          refl₀ (right (g $ loc n)) ∘₀ bp⇒path {g $ loc n} {p₂} co
+          refl₀ ∘₀ bp⇒path {g $ loc n} {p₂} co
               ≡⟨ refl₀-left-unit (bp⇒path {g $ loc n} {p₂} co) ⟩∎
           bp⇒path {g $ loc n} {p₂} co
               ∎))

@@ -30,7 +30,7 @@ I-rec P x₀ x₁ p #one = x₁
 postulate  -- HIT
   β : ∀ {i} (P : I → Set i) (x₀ : P zer) (x₁ : P one)
       (p : transport P seg x₀ ≡ x₁)
-      → map-dep (I-rec P x₀ x₁ p) seg ≡ p
+      → apd (I-rec P x₀ x₁ p) seg ≡ p
 
 I-rec-nondep : ∀ {i} (C : Set i) (x₀ x₁ : C) (p : x₀ ≡ x₁) → (I → C)
 I-rec-nondep C x₀ x₁ p #zer = x₀
@@ -38,4 +38,4 @@ I-rec-nondep C x₀ x₁ p #one = x₁
 
 postulate  -- HIT
   β-nondep : ∀ {i} (C : Set i) (x₀ x₁ : C) (p : x₀ ≡ x₁)
-             → map (I-rec-nondep C x₀ x₁ p) seg ≡ p
+             → ap (I-rec-nondep C x₀ x₁ p) seg ≡ p

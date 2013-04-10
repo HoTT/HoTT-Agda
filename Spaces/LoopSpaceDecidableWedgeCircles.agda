@@ -19,36 +19,36 @@ P-CA-contr x = x ≡ CA-z e
 -- We first prove it on points coming from reduced words
 CA-contr-base-reduced-word : (w : reduced-word)
   → P-CA-contr (CA-z (reduced-to-freegroup w))
-CA-contr-base-reduced-word (ε , red) = refl _
+CA-contr-base-reduced-word (ε , red) = refl
 CA-contr-base-reduced-word ((x ∷ w) , red) =
   ! (CA-e x _)
   ∘ CA-contr-base-reduced-word (w , tail-is-reduced x w red)
 CA-contr-base-reduced-word ((x ′∷ w) , red) =
-  (CA-e x _ ∘ map CA-z (right-inverse-· x _))
+  (CA-e x _ ∘ ap CA-z (right-inverse-· x _))
   ∘ CA-contr-base-reduced-word (w , tail'-is-reduced x w red)
 
 -- Then on every point
 CA-contr-base : (u : FA) → P-CA-contr (CA-z u)
 CA-contr-base u =
-  map CA-z (! (inv₂ u)) ∘ (CA-contr-base-reduced-word (freegroup-to-reduced u))
+  ap CA-z (! (inv₂ u)) ∘ (CA-contr-base-reduced-word (freegroup-to-reduced u))
 
 -- Now we prove that it’s true on paths, coming from reduced words
 abstract
   CA-contr-loop-reduced-word : (t : A) (w : reduced-word) →
-    (map CA-z (reduced-to-freegroup-mul-reduce t w)
+    (ap CA-z (reduced-to-freegroup-mul-reduce t w)
     ∘ ! (CA-e t (reduced-to-freegroup w)))
     ∘ (CA-contr-base-reduced-word w)
     ≡ CA-contr-base-reduced-word (mul-reduce t w)
-  CA-contr-loop-reduced-word t (ε , red) = refl _
-  CA-contr-loop-reduced-word t ((x ∷ w) , red) = refl _
+  CA-contr-loop-reduced-word t (ε , red) = refl
+  CA-contr-loop-reduced-word t ((x ∷ w) , red) = refl
   CA-contr-loop-reduced-word t ((x ′∷ w) , red) with (eq t x)
-  CA-contr-loop-reduced-word x ((.x ′∷ w) , red) | inl (refl .x) =
+  CA-contr-loop-reduced-word x ((.x ′∷ w) , red) | inl refl =
     -- With the notations below, what we have to prove
-    -- is [ (map CA-z (! p) ∘ ! q) ∘ ((q ∘ map CA-z p) ∘ r) ≡ r ]
-    concat-assoc (map CA-z (! p)) _ _
-    ∘ (map (λ t₁ → t₁ ∘ (! q ∘ ((q ∘ map CA-z p) ∘ r))) (map-opposite CA-z p)
-    ∘ move!-right-on-left (map CA-z p) (! q ∘ ((q ∘ map CA-z p) ∘ r)) r
-      (move!-right-on-left q ((q ∘ map CA-z p) ∘ r) (map CA-z p ∘ r)
+    -- is [ (ap CA-z (! p) ∘ ! q) ∘ ((q ∘ ap CA-z p) ∘ r) ≡ r ]
+    concat-assoc (ap CA-z (! p)) _ _
+    ∘ (ap (λ t₁ → t₁ ∘ (! q ∘ ((q ∘ ap CA-z p) ∘ r))) (ap-opposite CA-z p)
+    ∘ move!-right-on-left (ap CA-z p) (! q ∘ ((q ∘ ap CA-z p) ∘ r)) r
+      (move!-right-on-left q ((q ∘ ap CA-z p) ∘ r) (ap CA-z p ∘ r)
       (concat-assoc q _ _))) where
     fw : FA
     fw = reduced-to-freegroup (w , tail'-is-reduced x w red)
@@ -61,7 +61,7 @@ abstract
 
     r : CA-z fw ≡ CA-z e
     r = CA-contr-base-reduced-word (w , tail'-is-reduced x w red)
-  CA-contr-loop-reduced-word t ((x ′∷ w) , red) | inr different = refl _
+  CA-contr-loop-reduced-word t ((x ′∷ w) , red) | inr different = refl
 
 -- And finally for every path
 CA-contr-loop : (t : A) (u : FA)
@@ -70,26 +70,26 @@ CA-contr-loop t u =
   -- Idea:
   --
   -- We need to prove
-  --   [p u ∘ (map CA-z (q u) ∘ for-red u)
-  --    ≡ map CA-z (q (t · u)) ∘ for-red (t · u)]
+  --   [p u ∘ (ap CA-z (q u) ∘ for-red u)
+  --    ≡ ap CA-z (q (t · u)) ∘ for-red (t · u)]
   --
   -- [CA-contr-loop-reduced-word] gives
-  -- that [(map CA-z comp ∘ p (k u)) ∘ for-red u ≡ for-red (t · u)]
+  -- that [(ap CA-z comp ∘ p (k u)) ∘ for-red u ≡ for-red (t · u)]
 
   trans-id≡cst (CA-e t u) (CA-contr-base u)
-  ∘ (! (concat-assoc (p u) (map CA-z (q u)) (for-red u))
-  ∘ (whisker-right (for-red u) {q = p u ∘ map CA-z (q u)}
-       {r = map CA-z (q (t · u)) ∘ (map CA-z comp ∘ p (k u))}
+  ∘ (! (concat-assoc (p u) (ap CA-z (q u)) (for-red u))
+  ∘ (whisker-right (for-red u) {q = p u ∘ ap CA-z (q u)}
+       {r = ap CA-z (q (t · u)) ∘ (ap CA-z comp ∘ p (k u))}
     (! (homotopy-naturality f g p (q u))
-    ∘ (whisker-right (p (k u)) {q = map f (q u)}
-         {r = map CA-z (q (t · u)) ∘ map CA-z comp}
-      (map-compose CA-z (λ u₁ → t · u₁) (q u)
-      ∘ (map (map CA-z) (π₁ (freegroup-is-set _ _ _ _))
-      ∘ map-concat CA-z (q (t · u)) comp))
-    ∘ concat-assoc (map CA-z (q (t · u))) (map CA-z comp) (p (k u))))
-  ∘ (concat-assoc (map CA-z (q (t · u))) (map CA-z comp ∘ p (k u))
+    ∘ (whisker-right (p (k u)) {q = ap f (q u)}
+         {r = ap CA-z (q (t · u)) ∘ ap CA-z comp}
+      (ap-compose CA-z (λ u₁ → t · u₁) (q u)
+      ∘ (ap (ap CA-z) (π₁ (freegroup-is-set _ _ _ _))
+      ∘ ap-concat CA-z (q (t · u)) comp))
+    ∘ concat-assoc (ap CA-z (q (t · u))) (ap CA-z comp) (p (k u))))
+  ∘ (concat-assoc (ap CA-z (q (t · u))) (ap CA-z comp ∘ p (k u))
        (for-red u)
-       ∘ whisker-left (map CA-z (q (t · u)))
+       ∘ whisker-left (ap CA-z (q (t · u)))
            auie))) where
   f : FA → tot-cover
   f u = CA-z (t · u)
@@ -112,7 +112,7 @@ CA-contr-loop t u =
   comp : k (t · u) ≡ t · (k u)
   comp = reduced-to-freegroup-mul-reduce t (freegroup-to-reduced u)
 
-  auie : (map CA-z comp ∘ p (k u)) ∘ for-red u ≡ for-red (t · u)
+  auie : (ap CA-z comp ∘ p (k u)) ∘ for-red u ≡ for-red (t · u)
   auie = CA-contr-loop-reduced-word t (freegroup-to-reduced u)
 
 -- Hence, [CA] is contractible

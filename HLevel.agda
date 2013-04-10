@@ -41,10 +41,10 @@ abstract
   all-paths-is-prop : {A : Set i} → (has-all-paths A → is-prop A)
   all-paths-is-prop {A} c x y = (c x y , canon-path) where
     lemma : {x y : A} (p : x ≡ y) → c x y ≡ p ∘ c y y
-    lemma (refl _) = refl _
+    lemma refl = refl
 
     canon-path : {x y : A} (p : x ≡ y) → p ≡ c x y
-    canon-path (refl y) = anti-whisker-right (c y y) (lemma (c y y))
+    canon-path {.y} {y} refl = anti-whisker-right (c y y) (lemma (c y y))
 
   -- Truncation levels are cumulative
   truncated-is-truncated-S : {A : Set i} (n : ℕ₋₂)
@@ -67,19 +67,19 @@ abstract
     get-path r | inl q = q
     get-path r | inr r⊥ = abort-nondep (r⊥ r)
 
-    get-path-eq : {u : A} (r : u ≡ u) → get-path r ≡ get-path (refl _)
+    get-path-eq : {u : A} (r : u ≡ u) → get-path r ≡ get-path refl
     get-path-eq {u} r with dec u u
-    get-path-eq r | inl q = refl q
-    get-path-eq r | inr r⊥ = abort-nondep (r⊥ (refl _))
+    get-path-eq r | inl q = refl
+    get-path-eq r | inr r⊥ = abort-nondep (r⊥ refl)
 
-    lemma : {u v : A} (r : u ≡ v) → r ∘ get-path (refl _) ≡ get-path r
-    lemma (refl _) = refl _
+    lemma : {u v : A} (r : u ≡ v) → r ∘ get-path refl ≡ get-path r
+    lemma refl = refl
 
     paths-A-is-prop : {u v : A} (q : u ≡ v) → is-prop (u ≡ v)
-    paths-A-is-prop (refl u) =
+    paths-A-is-prop {u} {.u} refl =
       truncated-is-truncated-S ⟨-2⟩
-        (refl u , λ r → anti-whisker-right (get-path (refl _))
-                                           (lemma r ∘ get-path-eq r))
+        (refl , λ r → anti-whisker-right (get-path refl)
+                                         (lemma r ∘ get-path-eq r))
 
 module _ {A : Set i} where
   abstract
@@ -131,14 +131,14 @@ module _ {A : Set i} where
     ≡-is-truncated ⟨-2⟩ p = (contr-has-all-paths p _ _ , unique-path) where
       unique-path : {u v : A} (q : u ≡ v)
         → q ≡ contr-has-all-paths p u v
-      unique-path (refl _) = ! (opposite-right-inverse (π₂ p _))
+      unique-path refl = ! (opposite-right-inverse (π₂ p _))
     ≡-is-truncated (S n) {x} {y} p = truncated-is-truncated-S n (p x y)
 
   -- The type of paths to a fixed point is contractible
   pathto-is-contr : (x : A) → is-contr (Σ A (λ t → t ≡ x))
-  pathto-is-contr x = ((x , refl x) , pathto-unique-path) where
-    pathto-unique-path : {u : A} (pp : Σ A (λ t → t ≡ u)) → pp ≡ (u , refl u)
-    pathto-unique-path (.u , refl u) = refl _
+  pathto-is-contr x = ((x , refl) , pathto-unique-path) where
+    pathto-unique-path : {u : A} (pp : Σ A (λ t → t ≡ u)) → pp ≡ (u , refl)
+    pathto-unique-path (u , refl) = refl
 
   -- Specilization
   module _ where
@@ -153,7 +153,7 @@ abstract
   -- I do not need to specify the universe level because in this file [is-contr]
   -- is not yet universe polymorphic ([i] is a global argument)
   unit-is-contr : is-contr unit
-  unit-is-contr = (tt , λ y → refl tt)
+  unit-is-contr = (tt , λ y → refl)
 
   unit-is-truncated : (n : ℕ₋₂) → is-truncated n unit
   unit-is-truncated n = contr-is-truncated n unit-is-contr
@@ -185,10 +185,10 @@ abstract
   bool-false≢true p = transport bool-true≢false-type (! p) tt
 
   bool-has-dec-eq : has-dec-eq bool
-  bool-has-dec-eq true true = inl (refl true)
+  bool-has-dec-eq true true = inl refl
   bool-has-dec-eq true false = inr bool-true≢false
   bool-has-dec-eq false true = inr bool-false≢true
-  bool-has-dec-eq false false = inl (refl false)
+  bool-has-dec-eq false false = inl refl
 
   bool-is-set : is-set bool
   bool-is-set = dec-eq-is-set bool-has-dec-eq

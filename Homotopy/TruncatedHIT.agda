@@ -74,7 +74,7 @@ has-spheres-filled n A = (f : hSⁿ n → A) → filling n f
 fill-paths : ∀ {i} (n : ℕ₋₂) (A : Set i) (t : has-spheres-filled (S n) A)
   → (n ≡ ⟨-2⟩ → is-contr A) → ((x y : A) → has-spheres-filled n (x ≡ y))
 fill-paths ⟨-2⟩ A t contr x y f =
-  (contr-has-all-paths (contr (refl _)) x y , abort)
+  (contr-has-all-paths (contr refl) x y , abort)
 fill-paths (S n) A t _ x y f =
   ((! (π₂ u (north _)) ∘ π₂ u (south _))
   , (λ z → ! (lemma (paths _ z)) ∘ suspension-β-paths-nondep _ _ _ _ f _)) where
@@ -91,15 +91,15 @@ fill-paths (S n) A t _ x y f =
   -- Every path in the sphere is equal (in A) to the canonical path going
   -- through the center of the filled sphere
   lemma : {p q : hSⁿ (S (S n))} (l : p ≡ q)
-    → map newf l ≡ ! (π₂ u p) ∘ π₂ u q
-  lemma (refl a) = ! (opposite-left-inverse (π₂ u a))
+    → ap newf l ≡ ! (π₂ u p) ∘ π₂ u q
+  lemma {p = a} refl = ! (opposite-left-inverse (π₂ u a))
 
 -- We first prove that if n-spheres are filled, then the type is n-truncated,
 -- we have to prove it for n = -1, and then use the previous lemma
 abstract
   spheres-filled-is-truncated : ∀ {i} (n : ℕ₋₂) (A : Set i)
     → ((n ≡ ⟨-2⟩ → is-contr A) → has-spheres-filled n A → is-truncated n A)
-  spheres-filled-is-truncated ⟨-2⟩ A contr t = contr (refl _)
+  spheres-filled-is-truncated ⟨-2⟩ A contr t = contr refl
   spheres-filled-is-truncated (S ⟨-2⟩) A _ t =
     all-paths-is-prop (λ x y → ! (π₂ (t (f x y)) true) ∘ π₂ (t (f x y)) false)
     where
@@ -116,15 +116,15 @@ abstract
     (t : is-truncated n A) → has-spheres-filled n A
   truncated-has-spheres-filled ⟨-2⟩ A t f = (π₁ t , abort)
   truncated-has-spheres-filled (S ⟨-2⟩) A t f =
-    (f true , (λ {true → refl _ ; false → π₁ (t (f true) (f false))}))
+    (f true , (λ {true → refl ; false → π₁ (t (f true) (f false))}))
   truncated-has-spheres-filled (S (S n)) A t f =
     (f (north _)
-    , (suspension-rec _ _ (refl _) (map f (paths _ (⋆Sⁿ _)))
+    , (suspension-rec _ _ refl (ap f (paths _ (⋆Sⁿ _)))
         (λ x → trans-cst≡app (f (north _)) f (paths _ _) _
                ∘ (! (π₂ filled-newf x) ∘ π₂ filled-newf (⋆Sⁿ _))))) where
 
     newf : hSⁿ (S n) → (f (north _) ≡ f (south _))
-    newf x = map f (paths _ x)
+    newf x = ap f (paths _ x)
 
     filled-newf : filling (S n) newf
     filled-newf = truncated-has-spheres-filled (S n) _ (t _ _) newf
@@ -178,8 +178,8 @@ filling-has-all-paths (S n) A ⦃ fill ⦄ f fill₁ fill₂ =
   big-map-filled = fill big-map
 
   lemma : {u v : hSⁿ (S (S n))} (p : u ≡ v)
-    → map big-map p ≡ (! (π₂ big-map-filled u) ∘  π₂ big-map-filled v)
-  lemma (refl a) = ! (opposite-left-inverse (π₂ big-map-filled a))
+    → ap big-map p ≡ (! (π₂ big-map-filled u) ∘  π₂ big-map-filled v)
+  lemma {u = a} refl = ! (opposite-left-inverse (π₂ big-map-filled a))
 
 abstract
   truncated-has-filling-dep : ∀ {i j} (A : Set i) (P : A → Set j) (n : ℕ₋₂)

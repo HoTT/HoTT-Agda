@@ -30,13 +30,13 @@ cone-to-pullback top (a , b , h) = (a , b , funext h)
 
 pullback-to-cone-equiv : (top : Set i) → is-equiv (pullback-to-cone top)
 pullback-to-cone-equiv top = iso-is-eq _ (cone-to-pullback top)
-  (λ y → map (λ u → _ , _ , u) (happly-funext _))
-  (λ x → map (λ u → _ , _ , u) (funext-happly _))
+  (λ y → ap (λ u → _ , _ , u) (happly-funext _))
+  (λ x → ap (λ u → _ , _ , u) (funext-happly _))
 
 cone-to-pullback-equiv : (top : Set i) → is-equiv (cone-to-pullback top)
 cone-to-pullback-equiv top = iso-is-eq _ (pullback-to-cone top)
-  (λ x → map (λ u → _ , _ , u) (funext-happly _))
-  (λ y → map (λ u → _ , _ , u) (happly-funext _))
+  (λ x → ap (λ u → _ , _ , u) (funext-happly _))
+  (λ y → ap (λ u → _ , _ , u) (happly-funext _))
 
 compose-cone-map : (D E : Set i) (Dcone : cone D)
   → ((f : E → D) → cone E)

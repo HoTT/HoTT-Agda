@@ -19,7 +19,7 @@ module Homotopy.Cover.ExamplePi1Circle where
   S¹-is-conn : is-connected ⟨0⟩ S¹
   S¹-is-conn = proj base ,
     τ-extend ⦃ λ _ → ≡-is-set $ π₀-is-set S¹ ⦄
-      (S¹-rec (λ x → proj x ≡ proj base) (refl _)
+      (S¹-rec (λ x → proj x ≡ proj base) refl
         (prop-has-all-paths (π₀-is-set S¹ _ _) _ _))
 
   open import Integers
@@ -65,7 +65,7 @@ module Homotopy.Cover.ExamplePi1Circle where
   loop⁻ⁿ-pos : ∀ n → (base , pos n) ≡ loop⁻ⁿ-end
   loop⁻ⁿ-neg : ∀ n → (base , neg n) ≡ loop⁻ⁿ-end
 
-  loop⁻ⁿ O = refl _
+  loop⁻ⁿ O = refl
   loop⁻ⁿ (pos _) = loop⁻ⁿ-pos _
   loop⁻ⁿ (neg _) = loop⁻ⁿ-neg _
   loop⁻ⁿ-pos 0 = loop⁻¹ _
@@ -79,23 +79,23 @@ module Homotopy.Cover.ExamplePi1Circle where
 
     lemma₁ : ∀ {x₁ x₂} (q : x₁ ≡ x₂) (f : ∀ z → (x₁ , z) ≡ loop⁻ⁿ-end) (z : fiber x₂)
       → transport (λ s → ∀ z → (s , z) ≡ loop⁻ⁿ-end) q f z
-      ≡ Σ-eq (! q) (refl _) ∘ f (transport fiber (! q) z)
-    lemma₁ (refl _) f z = refl _
+      ≡ Σ-eq (! q) refl ∘ f (transport fiber (! q) z)
+    lemma₁ refl f z = refl
 
     lemma₂ : ∀ {b₁} {b₂} (q : b₁ ≡ b₂) p
       → transport (λ z → (base , z) ≡ loop⁻ⁿ-end) (! q) p
-      ≡ Σ-eq (refl _) q ∘ p
-    lemma₂ (refl _) p = refl _
+      ≡ Σ-eq refl q ∘ p
+    lemma₂ refl p = refl
 
     compose-Σ-eq : ∀ {a₁} {a₂} (p : a₁ ≡ a₂)
       {b₁ : fiber a₁} {b₂} (q : transport fiber p b₁ ≡ b₂)
-      → Σ-eq {A = S¹} {P = fiber} p (refl _) ∘ Σ-eq (refl _) q ≡ Σ-eq p q
-    compose-Σ-eq (refl _) q = refl _
+      → Σ-eq {A = S¹} {P = fiber} p refl ∘ Σ-eq refl q ≡ Σ-eq p q
+    compose-Σ-eq refl q = refl
 
     loop⁻¹-loop⁻ⁿ-pred : ∀ z → loop⁻¹ z ∘ loop⁻ⁿ (pred z) ≡ loop⁻ⁿ z
     loop⁻¹-loop⁻ⁿ-pred O = opposite-right-inverse (loop⁻¹ _)
     loop⁻¹-loop⁻ⁿ-pred (pos O) = refl-right-unit _
-    loop⁻¹-loop⁻ⁿ-pred (pos (S _)) = refl _
+    loop⁻¹-loop⁻ⁿ-pred (pos (S _)) = refl
     loop⁻¹-loop⁻ⁿ-pred (neg _) =
       loop⁻¹ _ ∘ (! (loop⁻¹ _) ∘ loop⁻ⁿ-neg _)
         ≡⟨ ! $ concat-assoc (loop⁻¹ _) (! (loop⁻¹ _)) _ ⟩
@@ -108,14 +108,14 @@ module Homotopy.Cover.ExamplePi1Circle where
   path = S¹-rec (λ s → ∀ z → (s , z) ≡ loop⁻ⁿ-end) loop⁻ⁿ $ funext λ z →
     transport (λ s → ∀ z → (s , z) ≡ loop⁻ⁿ-end) loop loop⁻ⁿ z
         ≡⟨ lemma₁ loop loop⁻ⁿ z ⟩
-    Σ-eq (! loop) (refl _) ∘ loop⁻ⁿ (transport fiber (! loop) z)
-        ≡⟨ ap (λ x → Σ-eq (! loop) (refl _) ∘ x) $ apd! loop⁻ⁿ (trans-fiber-!loop z) ⟩
-    Σ-eq (! loop) (refl _) ∘
+    Σ-eq (! loop) refl ∘ loop⁻ⁿ (transport fiber (! loop) z)
+        ≡⟨ ap (λ x → Σ-eq (! loop) refl ∘ x) $ apd! loop⁻ⁿ (trans-fiber-!loop z) ⟩
+    Σ-eq (! loop) refl ∘
       (transport (λ z → (base , z) ≡ loop⁻ⁿ-end) (! $ trans-fiber-!loop z) (loop⁻ⁿ (pred z)))
-        ≡⟨ ap (λ x → Σ-eq (! loop) (refl _) ∘ x) $ lemma₂ (trans-fiber-!loop z) (loop⁻ⁿ (pred z)) ⟩
-    Σ-eq (! loop) (refl _) ∘ (Σ-eq (refl _) (trans-fiber-!loop z) ∘ loop⁻ⁿ (pred z))
-        ≡⟨ ! $ concat-assoc (Σ-eq (! loop) (refl _)) _ _ ⟩
-    (Σ-eq (! loop) (refl _) ∘ Σ-eq (refl _) (trans-fiber-!loop z)) ∘ loop⁻ⁿ (pred z)
+        ≡⟨ ap (λ x → Σ-eq (! loop) refl ∘ x) $ lemma₂ (trans-fiber-!loop z) (loop⁻ⁿ (pred z)) ⟩
+    Σ-eq (! loop) refl ∘ (Σ-eq refl (trans-fiber-!loop z) ∘ loop⁻ⁿ (pred z))
+        ≡⟨ ! $ concat-assoc (Σ-eq (! loop) refl) _ _ ⟩
+    (Σ-eq (! loop) refl ∘ Σ-eq refl (trans-fiber-!loop z)) ∘ loop⁻ⁿ (pred z)
         ≡⟨ ap (λ x → x ∘ loop⁻ⁿ (pred z)) $ compose-Σ-eq (! loop) (trans-fiber-!loop z) ⟩
     loop⁻¹ z ∘ loop⁻ⁿ (pred z)
         ≡⟨ loop⁻¹-loop⁻ⁿ-pred z ⟩∎

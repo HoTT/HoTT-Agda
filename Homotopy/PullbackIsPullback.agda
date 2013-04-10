@@ -19,5 +19,5 @@ factor-pullback E (top→A , top→B , h) x = (top→A x , top→B x , h x)
 pullback-is-pullback : is-pullback (pullback d) pullback-cone
 pullback-is-pullback E = iso-is-eq _
   (factor-pullback E)
-  (λ y → refl _)
-  (λ f → refl _)
+  (λ y → refl)
+  (λ f → refl)

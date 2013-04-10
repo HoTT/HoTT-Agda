@@ -27,8 +27,8 @@ _∘₀_ =
 !₀ : ∀ {i} {A : Set i} {x y : A} → x ≡₀ y → y ≡₀ x
 !₀ = π₀-extend-nondep ⦃ π₀-is-set _ ⦄ (proj ◯ !)
 
-refl₀ : ∀ {i} {A : Set i} (x : A) → x ≡₀ x
-refl₀ x = proj $ refl x
+refl₀ : ∀ {i} {A : Set i} {a : A} → a ≡₀ a
+refl₀ = proj refl
 
 ap₀ : ∀ {i j} {A : Set i} {B : Set j} {x y : A} (f : A → B)
   → x ≡₀ y → f x ≡₀ f y
@@ -36,15 +36,15 @@ ap₀ f = π₀-extend-nondep ⦃ π₀-is-set _ ⦄ (proj ◯ ap f)
 
 module _ {i} {A : Set i} where
 
-  refl₀-right-unit : ∀ {x y : A} (q : x ≡₀ y) → (q ∘₀ refl₀ y) ≡ q
+  refl₀-right-unit : ∀ {x y : A} (q : x ≡₀ y) → (q ∘₀ refl₀) ≡ q
   refl₀-right-unit {x = x} {y} = π₀-extend
     ⦃ λ _ →  ≡-is-set $ π₀-is-set (x ≡ y) ⦄
     (λ x → ap proj $ refl-right-unit x)
 
-  refl₀-left-unit : ∀ {x y : A} (q : x ≡₀ y) → (refl₀ x ∘₀ q) ≡ q
+  refl₀-left-unit : ∀ {x y : A} (q : x ≡₀ y) → (refl₀ ∘₀ q) ≡ q
   refl₀-left-unit {x = x} {y} = π₀-extend
     ⦃ λ _ →  ≡-is-set $ π₀-is-set (x ≡ y) ⦄
-    (λ x → refl $ proj x)
+    (λ _ → refl)
 
   concat₀-assoc : {x y z t : A} (p : x ≡₀ y) (q : y ≡₀ z) (r : z ≡₀ t)
     → (p ∘₀ q) ∘₀ r ≡ p ∘₀ (q ∘₀ r)
@@ -70,11 +70,11 @@ module _ {i} {A : Set i} where
 module _ {i} {A : Set i} where
   trans-id≡₀cst : {a b c : A} (p : b ≡ c) (q : b ≡₀ a)
     → transport (λ x → x ≡₀ a) p q ≡ proj (! p) ∘₀ q
-  trans-id≡₀cst (refl _) q = ! $ refl₀-left-unit q
+  trans-id≡₀cst refl q = ! $ refl₀-left-unit q
 
   trans-cst≡₀id : {a b c : A} (p : b ≡ c) (q : a ≡₀ b)
     → transport (λ x → a ≡₀ x) p q ≡ q ∘₀ proj p
-  trans-cst≡₀id (refl _) q = ! $ refl₀-right-unit q
+  trans-cst≡₀id refl q = ! $ refl₀-right-unit q
 
 module _ {i} {A : Set i} where
   homotopy₀-naturality : ∀ {j} {B : Set j} (f g : A → B)
@@ -86,12 +86,12 @@ module _ {i} {A : Set i} where
     (lemma {x} {y}) q
     where
       lemma : ∀ {x y : A} (q : x ≡ y) → ap₀ f (proj q) ∘₀ p y ≡ p x ∘₀ ap₀ g (proj q)
-      lemma (refl _) =
-        refl₀ _ ∘₀ p _
+      lemma refl =
+        refl₀ ∘₀ p _
           ≡⟨ refl₀-left-unit (p _) ⟩
         p _
           ≡⟨ ! $ refl₀-right-unit _ ⟩∎
-        p _ ∘₀ refl₀ _
+        p _ ∘₀ refl₀
           ∎
 
 -- Loop space commutes with truncation in the sense that
@@ -103,7 +103,7 @@ module _ {i} {n : ℕ₋₂} {A : Set i} where
 
   private
     to : (x y : A) → (τ n (x ≡ y)) → ((proj {n = S n} x) ≡ (proj y))
-    to x y = τ-extend-nondep ⦃ τ-is-truncated (S n) A _ _ ⦄ (map proj)
+    to x y = τ-extend-nondep ⦃ τ-is-truncated (S n) A _ _ ⦄ (ap proj)
 
     -- [truncated-path-space (proj x) (proj y)] is [τ n (x ≡ y)]
     truncated-path-space : (u v : τ (S n) A) → Type≤ n i
@@ -127,10 +127,10 @@ module _ {i} {n : ℕ₋₂} {A : Set i} where
     from'-refl : (u : τ (S n) A) → (π₁ (truncated-path-space u u))
     from'-refl = τ-extend ⦃ λ x → truncated-is-truncated-S n
                                     (π₂ (truncated-path-space x x))⦄
-                   (λ x → proj (refl x))
+                   (λ x → proj refl)
 
     from' : (u v : τ (S n) A) → (u ≡ v → π₁ (truncated-path-space u v))
-    from' u .u (refl .u) = from'-refl u
+    from' u .u refl = from'-refl u
 
     from : (x y : A) → (proj {n = S n} x ≡ proj y → τ n (x ≡ y))
     from x y p = from' (proj x) (proj y) p
@@ -140,15 +140,15 @@ module _ {i} {n : ℕ₋₂} {A : Set i} where
                     (from-to' x y) where
 
       from-to' : (x y : A) (p : x ≡ y) → from x y (to x y (proj p)) ≡ proj p
-      from-to' x .x (refl .x) = refl _
+      from-to' x .x refl = refl
 
     to'-from' : (u v : τ (S n) A) (p : u ≡ v) → to' u v (from' u v p) ≡ p
-    to'-from' x .x (refl .x) = to'-from'-refl x where
-      to'-from'-refl : (u : τ (S n) A) → to' u u (from' u u (refl u)) ≡ refl u
+    to'-from' x .x refl = to'-from'-refl x where
+      to'-from'-refl : (u : τ (S n) A) → to' u u (from' u u refl) ≡ refl
       to'-from'-refl = τ-extend ⦃ λ _ → ≡-is-truncated (S n)
                                           (≡-is-truncated (S n)
                                             (τ-is-truncated (S n) A))⦄
-                         (λ _ → refl _)
+                         (λ _ → refl)
 
     to-from : (x y : A) (p : proj {n = S n} x ≡ proj y) → to x y (from x y p) ≡ p
     to-from x y p = to'-from' (proj x) (proj y) p

@@ -1,10 +1,6 @@
 {-# OPTIONS --without-K #-}
 
-open import Base using (_≡_; refl; transport; _∘_; !; _≢_; ℕ; ℕ₋₂; is-contr;
-  is-truncated; S; O; π₁; π₂; funext; map; unit; tt; iso-is-eq; trans-Π2;
-  trans-cst≡app; happly; happly-funext; Σ; equiv-types-truncated;
-  unit-is-truncated-S#instance; id; cst; zero; is-equiv; ≡-is-truncated; _≃_;
-  _,_; id-equiv; _×_; Σ-eq; is-truncated-is-prop; map-dep!; _⁻¹; unit-is-contr)
+open import Base
 open import Homotopy.Truncation
 open import Homotopy.Connected
 open import Spaces.Suspension
@@ -53,10 +49,10 @@ abstract
   τ-unit-to-unit-is-equiv : is-equiv τ-unit-to-unit
   τ-unit-to-unit-is-equiv =
     iso-is-eq _ (λ _ → proj tt)
-      (λ _ → refl tt)
+      (λ _ → refl)
       (τ-extend
          ⦃ λ _ → ≡-is-truncated (S n) (τ-is-truncated (S n) _) ⦄
-        (λ _ → refl _))
+        (λ _ → refl))
 
 τ-unit-equiv-unit : τ (S n) unit ≃ unit
 τ-unit-equiv-unit = (τ-unit-to-unit , τ-unit-to-unit-is-equiv)
@@ -65,11 +61,11 @@ abstract
 abstract
   τ-susp-equal-susp : τ-susp-diag ≡ susp-diag
   τ-susp-equal-susp = pushout-diag-eq τ-unit-equiv-unit τ-unit-equiv-unit
-                        (id-equiv _) (λ _ → refl tt) (λ _ → refl tt)
+                        (id-equiv _) (λ _ → refl) (λ _ → refl)
 
   -- But we prove by hand that the point is also a pushout of this diagram
   unit-cocone : susp-H.cocone unit
-  unit-cocone = (id _ susp-H., id _ , cst (refl tt))
+  unit-cocone = (id _ susp-H., id _ , cst refl)
 
   private
     factor-pushout : (E : Set i) → (susp-H.cocone E → (unit {i} → E))
@@ -92,13 +88,13 @@ abstract
     iso-is-eq _
       (factor-pushout E)
       (λ c →
-        susp-H.cocone-eq-raw _ (refl _) (funext (λ _ → x≡y c))
+        susp-H.cocone-eq-raw _ refl (funext (λ _ → x≡y c))
           (app-is-inj x₀ ττA-is-contr (P-E _ _)
             (trans-Π2 _ (λ v _ → susp-H.A→top c tt ≡ v tt)
               (funext (λ r → susp-H.h c x₀)) _ _
               ∘ (trans-cst≡app _ (λ u → u tt) (funext (λ r → susp-H.h c x₀)) _
               ∘ happly (happly-funext (λ _ → susp-H.h c x₀)) tt))))
-      (λ f → refl f)
+      (λ _ → refl)
 
 -- Type of (S n)-truncated pushout-diagrams (this should probably be defined
 -- more generally in Homotopy.PushoutDef or something)
@@ -137,7 +133,7 @@ new-is-pushout (d , (_ , (_ , _))) =
   PushoutUP.is-pushout d (is-truncated (S n))
 
 unit-new-cocone : (d : truncated-diag) → new-cocone d unit
-unit-new-cocone d = ((λ _ → tt) PushoutUP., (λ _ → tt) , (λ _ → refl tt))
+unit-new-cocone d = ((λ _ → tt) PushoutUP., (λ _ → tt) , (λ _ → refl))
 
 unit-is-pushout : (d : truncated-diag) → Set _
 unit-is-pushout d = new-is-pushout d unit (unit-new-cocone d)

@@ -20,26 +20,26 @@ module _ (l : legend i C) where
     refl⇒code : ∀ p → code p p
     refl⇒code = pushout-rec
       (λ p → code p p)
-      (λ _ → ⟧a refl₀ _)
-      (λ _ → ⟧b refl₀ _)
+      (λ _ → ⟧a refl₀)
+      (λ _ → ⟧b refl₀)
       (loc-fiber-rec l
-        (λ c → transport (λ p → code p p) (glue c) (⟧a refl₀ (f c))
-             ≡ ⟧b refl₀ (g c))
+        (λ c → transport (λ p → code p p) (glue c) (⟧a refl₀)
+             ≡ ⟧b refl₀)
         ⦃ λ _ → b-code-b-is-set _ _ _ _ ⦄
         (λ n →
-          transport (λ p → code p p) (glue $ loc n) (⟧a refl₀ (f $ loc n))
-              ≡⟨ trans-diag code (glue $ loc n) $ ⟧a refl₀ (f $ loc n) ⟩
+          transport (λ p → code p p) (glue $ loc n) (⟧a refl₀)
+              ≡⟨ trans-diag code (glue $ loc n) $ ⟧a refl₀ ⟩
           transport (λ p → code p (right $ g $ loc n)) (glue $ loc n)
-            (transport (a-code (f $ loc n)) (glue $ loc n) (⟧a refl₀ (f $ loc n)))
+            (transport (a-code (f $ loc n)) (glue $ loc n) (⟧a refl₀))
               ≡⟨ ap (transport (λ p → code p (right $ g $ loc n)) (glue $ loc n))
-                    $ trans-a-code-glue-loc n $ ⟧a refl₀ (f $ loc n) ⟩
-          transport (λ p → code p (right $ g $ loc n)) (glue $ loc n) (aa⇒ab n (⟧a refl₀ (f $ loc n)))
-              ≡⟨ trans-glue-code-loc n {right $ g $ loc n} $ aa⇒ab n (⟧a refl₀ (f $ loc n)) ⟩
-          ab⇒bb n (aa⇒ab n (⟧a refl₀ (f $ loc n)))
-              ≡⟨ refl _ ⟩
-          ⟧b refl₀ (g $ loc n) bb⟦ n ⟧a refl₀ _ ba⟦ n ⟧b refl₀ _
+                    $ trans-a-code-glue-loc n $ ⟧a refl₀ ⟩
+          transport (λ p → code p (right $ g $ loc n)) (glue $ loc n) (aa⇒ab n (⟧a refl₀))
+              ≡⟨ trans-glue-code-loc n {right $ g $ loc n} $ aa⇒ab n (⟧a refl₀) ⟩
+          ab⇒bb n (aa⇒ab n (⟧a refl₀))
+              ≡⟨ refl ⟩
+          ⟧b refl₀ bb⟦ n ⟧a refl₀ ba⟦ n ⟧b refl₀
               ≡⟨ b-code-b-refl-refl _ _ ⟩∎
-          ⟧b refl₀ (g $ loc n)
+          ⟧b refl₀
               ∎))
 
 
@@ -49,15 +49,15 @@ module _ (l : legend i C) where
     (λ q → transport (code p₁) q (refl⇒code p₁))
 
   private
-    refl⇒code⇒path : ∀ p → code⇒path (refl⇒code p) ≡ refl₀ p
+    refl⇒code⇒path : ∀ p → code⇒path (refl⇒code p) ≡ refl₀ {a = p}
     refl⇒code⇒path = pushout-rec
-      (λ p → code⇒path (refl⇒code p) ≡ refl₀ p)
-      (λ _ → refl _)
-      (λ _ → refl _)
+      (λ p → code⇒path (refl⇒code p) ≡ refl₀)
+      (λ _ → refl)
+      (λ _ → refl)
       (λ _ → prop-has-all-paths (π₀-is-set _ _ _) _ _)
 
     path′⇒code⇒path : ∀ {p₁ p₂} (q : p₁ ≡ p₂) → code⇒path (path⇒code $ proj q) ≡ proj q
-    path′⇒code⇒path (refl _) = refl⇒code⇒path _
+    path′⇒code⇒path refl = refl⇒code⇒path _
 
   path⇒code⇒path : ∀ {p₁ p₂} (q : p₁ ≡₀ p₂) → code⇒path (path⇒code q) ≡ q
   path⇒code⇒path {p₁} {p₂} = π₀-extend
@@ -80,7 +80,7 @@ module _ (l : legend i C) where
   private
     path⇒code-concat₀ : ∀ {p₁ p₂ p₃} (q : p₁ ≡₀ p₂) (r : p₂ ≡ p₃)
       → path⇒code (q ∘₀ proj r) ≡ transport (code p₁) r (path⇒code q)
-    path⇒code-concat₀ q (refl _) = ap path⇒code $ refl₀-right-unit q
+    path⇒code-concat₀ q refl = ap path⇒code $ refl₀-right-unit q
 
     module _ {a₁} where
       ap⇒path⇒ap-split :
@@ -96,11 +96,11 @@ module _ (l : legend i C) where
           ⦃ λ _ → ≡-is-set $ a-code-a-is-set a₁ a₂ ⦄
           (λ p → let p′ = proj p in
             path⇒code (ap₀l p′)
-              ≡⟨ refl _ ⟩
-            transport (a-code a₁) (ap left p) (path⇒code $ refl₀ (left a₁))
-              ≡⟨ trans-ap (a-code a₁) left p $ ⟧a refl₀ a₁ ⟩
-            transport (a-code-a a₁) p (⟧a refl₀ a₁)
-              ≡⟨ trans-a-code-a p $ refl₀ a₁ ⟩∎
+              ≡⟨ refl ⟩
+            transport (a-code a₁) (ap left p) (path⇒code $ refl₀ {a = left a₁})
+              ≡⟨ trans-ap (a-code a₁) left p $ ⟧a refl₀ ⟩
+            transport (a-code-a a₁) p (⟧a refl₀)
+              ≡⟨ trans-a-code-a p refl₀ ⟩∎
             ⟧a proj p
               ∎) p)
         (λ {a₂} n {co} eq p → π₀-extend
@@ -119,8 +119,8 @@ module _ (l : legend i C) where
                 ≡⟨ ap (transport (a-code-a a₁) p ◯ transport (a-code a₁) (! (glue $ loc n))) eq ⟩
             transport (a-code-a a₁) p (transport (a-code a₁) (! (glue $ loc n)) co)
                 ≡⟨ ap (transport (a-code-a a₁) p) $ trans-a-code-!glue-loc n co ⟩
-            transport (a-code-a a₁) p (co ab⟦ n ⟧a refl₀ _)
-                ≡⟨ trans-a-code-ba p n co (refl₀ _) ⟩∎
+            transport (a-code-a a₁) p (co ab⟦ n ⟧a refl₀)
+                ≡⟨ trans-a-code-ba p n co refl₀ ⟩∎
             co ab⟦ n ⟧a p′
                 ∎) p)
         (λ {b₂} n {co} eq p → π₀-extend
@@ -139,8 +139,8 @@ module _ (l : legend i C) where
                 ≡⟨ ap (transport (a-code-b a₁) p ◯ transport (a-code a₁) (glue $ loc n)) eq ⟩
             transport (a-code-b a₁) p (transport (a-code a₁) (glue $ loc n) co)
                 ≡⟨ ap (transport (a-code-b a₁) p) $ trans-a-code-glue-loc n co ⟩
-            transport (a-code-b a₁) p (co aa⟦ n ⟧b refl₀ _)
-                ≡⟨ trans-a-code-ab p n co (refl₀ _) ⟩∎
+            transport (a-code-b a₁) p (co aa⟦ n ⟧b refl₀)
+                ≡⟨ trans-a-code-ab p n co refl₀ ⟩∎
             co aa⟦ n ⟧b p′
                 ∎) p)
         (λ _ _ → prop-has-all-paths (a-code-a-is-set a₁ _ _ _) _ _)
@@ -172,11 +172,11 @@ module _ (l : legend i C) where
           ⦃ λ _ → ≡-is-set $ b-code-b-is-set b₁ b₂ ⦄
           (λ p → let p′ = proj p in
             path⇒code (ap₀r p′)
-              ≡⟨ refl _ ⟩
-            transport (b-code b₁) (ap right p) (path⇒code $ refl₀ (right b₁))
-              ≡⟨ trans-ap (b-code b₁) right p $ ⟧b refl₀ b₁ ⟩
-            transport (b-code-b b₁) p (⟧b refl₀ b₁)
-              ≡⟨ trans-b-code-b p $ refl₀ b₁ ⟩∎
+              ≡⟨ refl ⟩
+            transport (b-code b₁) (ap right p) (path⇒code $ refl₀ {a = right b₁})
+              ≡⟨ trans-ap (b-code b₁) right p $ ⟧b refl₀ ⟩
+            transport (b-code-b b₁) p (⟧b refl₀)
+              ≡⟨ trans-b-code-b p refl₀ ⟩∎
             ⟧b proj p
               ∎) p)
         (λ {b₂} n {co} eq p → π₀-extend
@@ -195,8 +195,8 @@ module _ (l : legend i C) where
                 ≡⟨ ap (transport (b-code-b b₁) p ◯ transport (b-code b₁) (glue $ loc n)) eq ⟩
             transport (b-code-b b₁) p (transport (b-code b₁) (glue $ loc n) co)
                 ≡⟨ ap (transport (b-code-b b₁) p) $ trans-b-code-glue-loc n co ⟩
-            transport (b-code-b b₁) p (co ba⟦ n ⟧b refl₀ _)
-                ≡⟨ trans-b-code-ab p n co (refl₀ _) ⟩∎
+            transport (b-code-b b₁) p (co ba⟦ n ⟧b refl₀)
+                ≡⟨ trans-b-code-ab p n co refl₀ ⟩∎
             co ba⟦ n ⟧b p′
                 ∎) p)
         (λ {a₂} n {co} eq p → π₀-extend
@@ -215,8 +215,8 @@ module _ (l : legend i C) where
                 ≡⟨ ap (transport (b-code-a b₁) p ◯ transport (b-code b₁) (! (glue $ loc n))) eq ⟩
             transport (b-code-a b₁) p (transport (b-code b₁) (! (glue $ loc n)) co)
                 ≡⟨ ap (transport (b-code-a b₁) p) $ trans-b-code-!glue-loc n co ⟩
-            transport (b-code-a b₁) p (co bb⟦ n ⟧a refl₀ _)
-                ≡⟨ trans-b-code-ba p n co (refl₀ _) ⟩∎
+            transport (b-code-a b₁) p (co bb⟦ n ⟧a refl₀)
+                ≡⟨ trans-b-code-ba p n co refl₀ ⟩∎
             co bb⟦ n ⟧a p′
                 ∎) p)
         (λ _ _ → prop-has-all-paths (b-code-b-is-set b₁ _ _ _) _ _)

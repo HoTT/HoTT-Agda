@@ -220,12 +220,12 @@ module Homotopy.VanKampen.Code {i} (d : pushout-diag i)
             ≡⟨ ap (transport (λ x → b-code-a x a) (ap g r) ◯ aa⇒ba n₁ {a})
                   $ trans-!q-a-code-a (ap f r) p ⟩
         transport (λ x → b-code-a x a) (ap g r)
-          (⟧b refl₀ _ bb⟦ n₁ ⟧a proj (ap f r) ∘₀ p)
+          (⟧b refl₀ bb⟦ n₁ ⟧a proj (ap f r) ∘₀ p)
             ≡⟨ trans-q-b-code-ba (ap g r) _ _ _ ⟩
-        transport (λ x → b-code-b x (g $ loc n₁)) (ap g r) (⟧b refl₀ _)
+        transport (λ x → b-code-b x (g $ loc n₁)) (ap g r) (⟧b refl₀)
           bb⟦ n₁ ⟧a proj (ap f r) ∘₀ p
             ≡⟨ ap (λ x → x bb⟦ n₁ ⟧a proj (ap f r) ∘₀ p) $ trans-q-b-code-b (ap g r) _ ⟩
-        ⟧b proj (! (ap g r)) ∘₀ refl₀ _ bb⟦ n₁ ⟧a proj (ap f r) ∘₀ p
+        ⟧b proj (! (ap g r)) ∘₀ refl₀ bb⟦ n₁ ⟧a proj (ap f r) ∘₀ p
             ≡⟨ ap (λ x → ⟧b x bb⟦ n₁ ⟧a proj (ap f r) ∘₀ p) $ refl₀-right-unit _ ⟩
         ⟧b proj (! (ap g r)) bb⟦ n₁ ⟧a proj (ap f r) ∘₀ p
             ≡⟨ ! $ SCF.code-a-shift (g $ loc n₂) n₁ (proj (! (ap g r))) n₂ (proj r) p ⟩

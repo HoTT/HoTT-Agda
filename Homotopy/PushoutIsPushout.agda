@@ -18,15 +18,15 @@ factor-pushout E (A→top , B→top , h) = pushout-rec-nondep E A→top B→top 
 abstract
   pushout-is-pushout : is-pushout (pushout d) pushout-cocone
   pushout-is-pushout E ⦃ tt ⦄ = iso-is-eq _ (factor-pushout E)
-    (λ y → map (λ u → _ , _ , u)
+    (λ y → ap (λ u → _ , _ , u)
                (funext (λ x → pushout-β-glue-nondep E (cocone.A→top y)
                                     (cocone.B→top y) (cocone.h y) x)))
-    (λ f → funext (pushout-rec _ (λ _ → refl _) (λ _ → refl _)
+    (λ f → funext (pushout-rec _ (λ _ → refl) (λ _ → refl)
       (λ c → trans-app≡app
              (pushout-rec-nondep E (f ◯ left) (f ◯ right)
-              (λ c' → map f (glue c')))
-             f (glue c) (refl _)
-             ∘ (map (λ u → ! u ∘ map f (glue c))
+              (λ c' → ap f (glue c')))
+             f (glue c) refl
+             ∘ (ap (λ u → ! u ∘ ap f (glue c))
                   (pushout-β-glue-nondep E (f ◯ left) (f ◯ right)
-                   (λ c' → map f (glue c')) c)
-                  ∘ opposite-left-inverse (map f (glue c))))))
+                   (λ c' → ap f (glue c')) c)
+                  ∘ opposite-left-inverse (ap f (glue c))))))

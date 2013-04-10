@@ -78,4 +78,4 @@ module Homotopy.Cover.Ribbon {i} (A⋆ : pType i) {Y : Set i} where
 
     trans-trace : ∀ {a₁ a₂} (q : a₁ ≡ a₂) y p
       → transport ribbon q (trace y p) ≡ trace y (p ∘₀ proj q)
-    trans-trace (refl _) y p = ap (trace y) $ ! $ refl₀-right-unit p
+    trans-trace refl y p = ap (trace y) $ ! $ refl₀-right-unit p

@@ -26,16 +26,16 @@ abstract
 
     lemma : (x y : is-contr A) (p : π₁ x ≡ π₁ y) (t : A)
       → transport (λ v → (z : A) → z ≡ v) p (π₂ x) t ≡ π₂ y t
-    lemma (x , p) (.x , q) (refl .x) t = contr-has-all-paths
-                                         (≡-is-truncated _ (x , p)) _ _
+    lemma (x , p) (.x , q) refl t = contr-has-all-paths
+                                    (≡-is-truncated _ (x , p)) _ _
 
   -- Equivalent types have the same truncation level
   equiv-types-truncated : ∀ {i j} {A : Set i} {B : Set j} (n : ℕ₋₂) (f : A ≃ B)
     → (is-truncated n A → is-truncated n B)
   equiv-types-truncated ⟨-2⟩ (f , e) (x , p) =
-    (f x , (λ y → ! (inverse-right-inverse (f , e) y) ∘ map f (p _)))
+    (f x , (λ y → ! (inverse-right-inverse (f , e) y) ∘ ap f (p _)))
   equiv-types-truncated (S n) f c = λ x y →
-    equiv-types-truncated n (equiv-map (f ⁻¹) x y ⁻¹) (c (f ⁻¹ ☆ x) (f ⁻¹ ☆ y))
+    equiv-types-truncated n (equiv-ap (f ⁻¹) x y ⁻¹) (c (f ⁻¹ ☆ x) (f ⁻¹ ☆ y))
 
   Π-is-truncated : ∀ {i j} (n : ℕ₋₂) {A : Set i} {P : A → Set j}
     → (((x : A) → is-truncated n (P x)) → is-truncated n (Π A P))

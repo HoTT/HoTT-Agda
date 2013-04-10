@@ -42,6 +42,6 @@ compose-tracing cov y = let open covering cov in
 covering-eq : ∀ {co₁ co₂ : covering}
   → covering.fiber co₁ ≡ covering.fiber co₂
   → co₁ ≡ co₂
-covering-eq {cov[ ._ , set₁ ]} {cov[ ._ , set₂ ]} (refl _) =
+covering-eq {cov[ _ , set₁ ]} {cov[ ._ , set₂ ]} refl =
   ap (λ set → cov[ _ , set ])
     (prop-has-all-paths (Π-is-prop λ _ → is-set-is-prop) _ _)

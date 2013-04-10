@@ -40,14 +40,14 @@ tot-cover = Σ WA universal-cover
 
 trans-universal-cover : {u v : WA} (p : u ≡ v) (q : universal-cover u)
   → transport universal-cover p q
-    ≡ transport (λ A → A) (map universal-cover p) q
-trans-universal-cover (refl _) _ = refl _
+    ≡ transport (λ A → A) (ap universal-cover p) q
+trans-universal-cover refl _ = refl
 
 abstract
   loops-to-x· : (t : A) (u : FA) → transport universal-cover (loops t) u ≡ t · u
   loops-to-x· t u =
     trans-universal-cover (loops t) u
-    ∘ (map (λ t' → transport (λ B → B) t' u) (β-nondep (Set _) FA x·-path t)
+    ∘ (ap (λ t' → transport (λ B → B) t' u) (β-nondep (Set _) FA x·-path t)
     ∘ trans-id-eq-to-path (_ , x·-is-equiv t) u)
 
 {-
@@ -81,7 +81,7 @@ module equivCA
 
   CA-e' : (t : A) (u : FA)
     → CA-z u ≡ CA-z (transport universal-cover (loops t) u)
-  CA-e' t u = Σ-eq (loops t) (refl _)
+  CA-e' t u = Σ-eq (loops t) refl
 
   abstract
     e' : (t : A) (u : FA)
@@ -89,14 +89,14 @@ module equivCA
         ≡ z (transport universal-cover (loops t) u)
     e' t u = (trans-totalpath universal-cover P {x = (baseWA , u)}
                {y = (baseWA , transport universal-cover (loops t) u)} (loops t)
-               (refl _) z
+               refl z
              ∘ move!-transp-left (λ z → P (baseWA , z)) _ (loops-to-x· t u)
                                  (z (t · u))
              (! (trans-totalpath universal-cover P
                   {x = (baseWA , u)} {y = (baseWA , (t · u))}
                   (loops t) (loops-to-x· t u) z)
               ∘ e t u))
-              ∘ map-dep z (! (loops-to-x· t u))
+              ∘ apd z (! (loops-to-x· t u))
 
   P-base : (u : universal-cover (baseWA)) → P (baseWA , u)
   P-base u = z u
@@ -113,7 +113,7 @@ module equivCA
              {x = (baseWA , transport universal-cover (! (loops t)) u)}
              {y = (baseWA , transport universal-cover (loops t)
                (transport universal-cover (! (loops t)) u))}
-             (loops t) (refl _) z)
+             (loops t) refl z)
         ∘ e' t (transport universal-cover (! (loops t)) u))
 
   P-CA-rec : (x : WA) → (t : universal-cover x) → P (x , t)

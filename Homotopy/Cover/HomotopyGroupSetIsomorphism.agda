@@ -27,7 +27,7 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
   gset⇒covering gset[ _ , act , _ ] = cov[ ribbon act , ribbon-is-set ]
 
   covering⇒action : ∀ cov → action (covering.fiber cov a)
-  covering⇒action cov = act[ tracing cov , refl , compose-tracing cov ]
+  covering⇒action cov = act[ tracing cov , (λ _ → refl) , compose-tracing cov ]
 
   covering⇒gset : covering → gset
   covering⇒gset cov = let open covering cov in
@@ -59,7 +59,7 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
           trace (tracing cov y (proj $ ! p₁)) (proj p₁)
             ≡⟨ ap (λ x → trace (tracing cov y (proj $ ! p₁)) (proj x))
                   $ ! $ refl-right-unit p₁ ⟩
-          trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ refl _)
+          trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ refl)
             ≡⟨ ap (λ x → trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ x))
                   $ ! $ opposite-left-inverse p₂ ⟩
           trace (tracing cov y (proj $ ! p₁)) (proj $ p₁ ∘ (! p₂ ∘ p₂))
@@ -119,7 +119,7 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
                 ≡⟨ ap (trace y) $ concat₀-assoc p (proj $ ! bp) (proj bp) ⟩
               trace y (p ∘₀ (proj $ ! bp ∘ bp))
                 ≡⟨ ap (λ x → trace y (p ∘₀ proj x)) $ opposite-left-inverse bp ⟩
-              trace y (p ∘₀ refl₀ _)
+              trace y (p ∘₀ refl₀)
                 ≡⟨ ap (trace y) $ refl₀-right-unit p ⟩∎
               trace y p
                 ∎)
@@ -160,15 +160,15 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
   ribbon-a≃Y : ∀ {Y} {act : action Y} ⦃ _ : is-set Y ⦄ → ribbon act a ≃ Y
   ribbon-a≃Y {Y} {act} ⦃ Y-is-set ⦄ = let open action act in
     ribbon-a⇒Y ⦃ Y-is-set ⦄ , iso-is-eq _
-      (λ y → trace y (refl₀ _))
+      (λ y → trace y refl₀)
       (λ y → right-unit y)
       (ribbon-rec a
-        (λ r → trace (ribbon-a⇒Y ⦃ Y-is-set ⦄ r) (refl₀ _) ≡ r)
+        (λ r → trace (ribbon-a⇒Y ⦃ Y-is-set ⦄ r) refl₀ ≡ r)
         ⦃ λ _ → ≡-is-set $ ribbon-is-set a ⦄
         (λ y p →
-          trace (y ∙ p) (refl₀ _)
-            ≡⟨ paste y p (refl₀ _) ⟩
-          trace y (p G.∙ refl₀ _)
+          trace (y ∙ p) refl₀
+            ≡⟨ paste y p refl₀ ⟩
+          trace y (p G.∙ refl₀)
             ≡⟨ ap (trace y) $ G.right-unit p ⟩∎
           trace y p
             ∎)
@@ -183,7 +183,7 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
         → ∀ (_∙_ : Y₁ → G.carrier → Y₁) (y₂ : Y₂) (g : G.carrier)
         → transport (λ Y → Y → G.carrier → Y) (eq-to-path Y≃) _∙_ y₂ g ≡ (Y≃ ☆ (inverse Y≃ y₂ ∙ g)))
       (λ Y _∙_ y₂ g → ap (λ x → transport (λ Y → Y → G.carrier → Y) x _∙_ y₂ g)
-                         $ path-to-eq-right-inverse $ refl _)
+                         $ path-to-eq-right-inverse refl)
 
   gset⇒covering⇒gset : ∀ gs → covering⇒gset (gset⇒covering gs) ≡ gs
   gset⇒covering⇒gset gset[ Y , act , Y-is-set ] =
@@ -197,8 +197,8 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
         (funext λ y → funext $ π₀-extend ⦃ λ _ → ≡-is-set Y-is-set ⦄ λ p →
           transport (λ Y → Y → G.carrier → Y) (eq-to-path ≃Y) _⊙_ y (proj p)
             ≡⟨ trans-eq-∙ ≃Y _⊙_ y (proj p) ⟩
-          ⇒Y (transport (ribbon act) p (trace y (refl₀ _)))
-            ≡⟨ ap ⇒Y $ trans-trace act p y (refl₀ _) ⟩∎
+          ⇒Y (transport (ribbon act) p (trace y refl₀))
+            ≡⟨ ap ⇒Y $ trans-trace act p y refl₀ ⟩∎
           y ∙ proj p
             ∎)
 
@@ -235,7 +235,7 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
       open gset canonical-gset
 
       center′ : Σ A fiber
-      center′ = (a , trace {act = act} (refl₀ _) (refl₀ _))
+      center′ = (a , trace {act = act} refl₀ refl₀)
 
       center : τ ⟨1⟩ (Σ A fiber)
       center = proj center′
@@ -247,24 +247,20 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
           (r : transport Q q b₁ ≡ π₂ c)
           → transport (λ r → (a , r) ≡₀ c) p (proj $ Σ-eq q r)
           ≡ proj (Σ-eq q (ap (transport Q q) (! p) ∘ r))
-        trans-fiber≡cst-proj-Σ-eq P Q a c (refl _) q r = refl _
+        trans-fiber≡cst-proj-Σ-eq P Q a c refl q r = refl
 
       abstract
         path-trace-fiber : ∀ {a₂} y (p : a ≡ a₂)
           → transport fiber (! p ∘ ! y) (trace (proj y) (proj p))
-          ≡ trace (refl₀ _) (refl₀ _)
-        path-trace-fiber y p =
-          transport fiber (! p ∘ ! y) (trace (proj y) (proj p))
-            ≡⟨ trans-trace act (! p ∘ ! y) (proj y) (proj p) ⟩
-          trace (proj y) (proj $ p ∘ (! p ∘ ! y))
-            ≡⟨ ap (trace (proj y) ◯ proj) $ ! $ concat-assoc p (! p) (! y) ⟩
-          trace (proj y) (proj $ (p ∘ ! p) ∘ ! y)
-            ≡⟨ ap (λ x → trace (proj y) $ proj $ x ∘ ! y) $ opposite-right-inverse p ⟩
+          ≡ trace refl₀ refl₀
+        path-trace-fiber y refl =
+          transport fiber (! y) (trace (proj y) refl₀)
+            ≡⟨ trans-trace act (! y) (proj y) refl₀ ⟩
           trace (proj y) (proj $ ! y)
-            ≡⟨ paste (refl₀ _) (proj y) (proj $ ! y) ⟩
-          trace (refl₀ _) (proj $ y ∘ ! y)
-            ≡⟨ ap (trace (refl₀ _) ◯ proj) $ opposite-right-inverse y ⟩∎
-          trace (refl₀ _) (refl₀ _)
+            ≡⟨ paste refl₀ (proj y) (proj $ ! y) ⟩
+          trace refl₀ (proj $ y ∘ ! y)
+            ≡⟨ ap (trace refl₀ ◯ proj) $ opposite-right-inverse y ⟩∎
+          trace refl₀ refl₀
             ∎
 
       path-trace : ∀ {a₂} y p → (a₂ , trace {act = act} y p) ≡₀ center′
@@ -342,9 +338,9 @@ module Homotopy.Cover.HomotopyGroupSetIsomorphism {i}
           cov-is-universal (a , center) (a , transport fiber p center))
             ≡⟨ ap (ap₀ π₁)
                   $ ! $ π₂ (connected-has-connected-paths cov-is-universal _ _)
-                           (proj $ Σ-eq p (refl $ transport fiber p center)) ⟩
-        ap₀ π₁ (proj $ Σ-eq p (refl $ transport fiber p center))
-            ≡⟨ ap proj $ base-path-Σ-eq p (refl _) ⟩∎
+                           (proj $ Σ-eq p refl) ⟩
+        ap₀ π₁ (proj $ Σ-eq p refl)
+            ≡⟨ ap proj $ base-path-Σ-eq p refl ⟩∎
         proj p
             ∎
 

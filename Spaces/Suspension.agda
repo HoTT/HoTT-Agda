@@ -28,7 +28,7 @@ suspension-rec P n s p = pushout-rec P (λ _ → n) (λ _ → s) p
 
 suspension-β-paths : ∀ {j} (P : suspension → Set j) (n : P north) (s : P south)
   (p : (x : A) → transport P (paths x) n ≡ s)
-  → ((x : A) → map-dep (suspension-rec P n s p) (paths x) ≡ p x)
+  → ((x : A) → apd (suspension-rec P n s p) (paths x) ≡ p x)
 suspension-β-paths P n s p =
   pushout-β-glue P (λ _ → n) (λ _ → s) p
 
@@ -38,6 +38,6 @@ suspension-rec-nondep C n s p =
   pushout-rec-nondep C (λ _ → n) (λ _ → s) p
 
 suspension-β-paths-nondep : ∀ {j} (C : Set j) (n s : C) (p : A → n ≡ s)
-  → ((x : A) → map (suspension-rec-nondep C n s p) (paths x) ≡ p x)
+  → ((x : A) → ap (suspension-rec-nondep C n s p) (paths x) ≡ p x)
 suspension-β-paths-nondep C n s p =
   pushout-β-glue-nondep C (λ _ → n) (λ _ → s) p

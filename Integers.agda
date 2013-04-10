@@ -18,16 +18,16 @@ pred (neg n) = neg (S n)
 
 abstract
   succ-pred : (n : ℤ) → succ (pred n) ≡ n
-  succ-pred O = refl O
-  succ-pred (pos O) = refl (pos O)
-  succ-pred (pos (S n)) = refl (pos (S n))
-  succ-pred (neg n) = refl (neg n)
+  succ-pred O = refl
+  succ-pred (pos O) = refl
+  succ-pred (pos (S n)) = refl
+  succ-pred (neg n) = refl
 
   pred-succ : (n : ℤ) → pred (succ n) ≡ n
-  pred-succ O = refl O
-  pred-succ (pos n) = refl (pos n)
-  pred-succ (neg O) = refl (neg O)
-  pred-succ (neg (S n)) = refl (neg (S n))
+  pred-succ O = refl
+  pred-succ (pos n) = refl
+  pred-succ (neg O) = refl
+  pred-succ (neg (S n)) = refl
 
 succ-is-equiv : is-equiv succ
 succ-is-equiv = iso-is-eq succ pred succ-pred pred-succ
@@ -43,7 +43,7 @@ private
   ℕ-get-S (S n) = n
 
   S-injective : (n m : ℕ) (p : S n ≡ S m) → n ≡ m
-  S-injective n m p = map ℕ-get-S p
+  S-injective n m p = ap ℕ-get-S p
 
   ℕ-S≢O-type : ℕ → Set
   ℕ-S≢O-type O = ⊥
@@ -62,11 +62,11 @@ abstract
   ℕ-O≢S n p = ℕ-S≢O n (! p)
 
   ℕ-has-dec-eq : has-dec-eq ℕ
-  ℕ-has-dec-eq O O = inl (refl O)
+  ℕ-has-dec-eq O O = inl refl
   ℕ-has-dec-eq O (S n) = inr (ℕ-O≢S n)
   ℕ-has-dec-eq (S n) O = inr (ℕ-S≢O n)
   ℕ-has-dec-eq (S n) (S m) with ℕ-has-dec-eq n m
-  ℕ-has-dec-eq (S n) (S m) | inl p = inl (map S p)
+  ℕ-has-dec-eq (S n) (S m) | inl p = inl (ap S p)
   ℕ-has-dec-eq (S n) (S m) | inr p⊥ = inr (λ p → p⊥ (S-injective n m p))
 
   ℕ-is-set : is-set ℕ
@@ -81,12 +81,12 @@ _+_ : ℕ → ℕ → ℕ
 S n + m = S (n + m)
 
 +S-is-S+ : (n m : ℕ) → n + S m ≡ S n + m
-+S-is-S+ O m = refl (S m)
-+S-is-S+ (S n) m = map S (+S-is-S+ n m)
++S-is-S+ O m = refl
++S-is-S+ (S n) m = ap S (+S-is-S+ n m)
 
 +0-is-id : (n : ℕ) → n + 0 ≡ n
-+0-is-id O = refl O
-+0-is-id (S n) = map S (+0-is-id n)
++0-is-id O = refl
++0-is-id (S n) = ap S (+0-is-id n)
 
 private
   ℤ-get-pos : ℤ → ℕ
@@ -95,7 +95,7 @@ private
   ℤ-get-pos (neg n) = 0
 
   pos-injective : (n m : ℕ) (p : pos n ≡ pos m) → n ≡ m
-  pos-injective n m p = map ℤ-get-pos p
+  pos-injective n m p = ap ℤ-get-pos p
 
   ℤ-get-neg : ℤ → ℕ
   ℤ-get-neg O = 0
@@ -103,7 +103,7 @@ private
   ℤ-get-neg (neg n) = n
 
   neg-injective : (n m : ℕ) (p : neg n ≡ neg m) → n ≡ m
-  neg-injective n m p = map ℤ-get-neg p
+  neg-injective n m p = ap ℤ-get-neg p
 
   ℤ-neg≢O≢pos-type : ℤ → Set
   ℤ-neg≢O≢pos-type O = unit
@@ -135,18 +135,18 @@ abstract
   ℤ-pos≢neg n m p = transport ℤ-neg≢pos-type (! p) tt
 
   ℤ-has-dec-eq : has-dec-eq ℤ
-  ℤ-has-dec-eq O O = inl (refl O)
+  ℤ-has-dec-eq O O = inl refl
   ℤ-has-dec-eq O (pos n) = inr (ℤ-O≢pos n)
   ℤ-has-dec-eq O (neg n) = inr (ℤ-O≢neg n)
   ℤ-has-dec-eq (pos n) O = inr (ℤ-pos≢O n)
   ℤ-has-dec-eq (pos n) (pos m) with ℕ-has-dec-eq n m
-  ℤ-has-dec-eq (pos n) (pos m) | inl p = inl (map pos p)
+  ℤ-has-dec-eq (pos n) (pos m) | inl p = inl (ap pos p)
   ℤ-has-dec-eq (pos n) (pos m) | inr p⊥ = inr (λ p → p⊥ (pos-injective n m p))
   ℤ-has-dec-eq (pos n) (neg m) = inr (ℤ-pos≢neg n m)
   ℤ-has-dec-eq (neg n) O = inr (ℤ-neg≢O n)
   ℤ-has-dec-eq (neg n) (pos m) = inr (ℤ-neg≢pos n m)
   ℤ-has-dec-eq (neg n) (neg m) with ℕ-has-dec-eq n m
-  ℤ-has-dec-eq (neg n) (neg m) | inl p = inl (map neg p)
+  ℤ-has-dec-eq (neg n) (neg m) | inl p = inl (ap neg p)
   ℤ-has-dec-eq (neg n) (neg m) | inr p⊥ = inr (λ p → p⊥ (neg-injective n m p))
 
   ℤ-is-set : is-set ℤ

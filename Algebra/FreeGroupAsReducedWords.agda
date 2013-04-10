@@ -37,11 +37,11 @@ reduced-word = Σ word is-reduced
 
 word-total-path : {x y : A} (p : x ≡ y) {v w : word} (q : v ≡ w)
   → (x ∷ v ≡ y ∷ w)
-word-total-path (refl _) (refl _) = refl _
+word-total-path refl refl = refl
 
 word'-total-path : {x y : A} (p : x ≡ y) {v w : word} (q : v ≡ w)
   → (x ′∷ v ≡ y ′∷ w)
-word'-total-path (refl _) (refl _) = refl _
+word'-total-path refl refl = refl
 
 -- The following six functions prove things like if [x ∷ v ≡ y ∷ w],
 -- then [x ≡ y].
@@ -61,9 +61,9 @@ word-comp-path-type (x ′∷ v) (y ∷ w) = ⊥
 word-comp-path-type (x ′∷ v) (y ′∷ w) = (x ≡ y) × (v ≡ w)
 
 word-comp-path : {v w : word} (p : v ≡ w) → word-comp-path-type v w
-word-comp-path (refl ε) = tt
-word-comp-path (refl (x ∷ v)) = (refl _ , refl _)
-word-comp-path (refl (x ′∷ v)) = (refl _ , refl _)
+word-comp-path {v = ε}      refl = tt
+word-comp-path {v = x  ∷ v} refl = (refl , refl)
+word-comp-path {v = x ′∷ v} refl = (refl , refl)
 
 word-base-path : {x y : A} {v w : word} (p : x ∷ v ≡ y ∷ w) → x ≡ y
 word-base-path p = π₁ (word-comp-path p)
@@ -91,7 +91,7 @@ word-cst-dis (x ′∷ v) (y ∷ w) = ⊥
 word-cst-dis (x ′∷ v) (y ′∷ w) = unit
 
 word-has-dec-eq : has-dec-eq word
-word-has-dec-eq ε ε = inl (refl _)
+word-has-dec-eq ε ε = inl refl
 word-has-dec-eq ε (x ∷ w) = inr (λ p → transport (word-cst-dis ε) p tt)
 word-has-dec-eq ε (x ′∷ w) = inr (λ p → transport (word-cst-dis ε) p tt)
 word-has-dec-eq (x ∷ v) ε = inr (λ p → transport (word-cst-dis (x ∷ v)) p tt)
@@ -166,47 +166,47 @@ abstract
   mul-mul'-reduce : (x : A) (w : reduced-word)
     → mul-reduce x (mul'-reduce x w) ≡ w
   mul-mul'-reduce x (ε , red) with (eq x x)
-  mul-mul'-reduce x (ε , red) | inl obvious = refl _
-  mul-mul'-reduce x (ε , red) | inr absurd = abort-nondep (absurd (refl _))
+  mul-mul'-reduce x (ε , red) | inl obvious = refl
+  mul-mul'-reduce x (ε , red) | inr absurd = abort-nondep (absurd refl)
   mul-mul'-reduce x ((y ∷ w) , red) with (eq x y)
-  mul-mul'-reduce x ((y ∷ ε) , red) | inl equal = map _ equal
-  mul-mul'-reduce x ((y ∷ (z ∷ w)) , red) | inl equal = map _ equal
+  mul-mul'-reduce x ((y ∷ ε) , red) | inl equal = ap _ equal
+  mul-mul'-reduce x ((y ∷ (z ∷ w)) , red) | inl equal = ap _ equal
   mul-mul'-reduce x ((y ∷ (z ′∷ w)) , red) | inl equal with (eq x z)
   mul-mul'-reduce x ((y ∷ (z ′∷ w)) , red) | inl equal | inl absurd =
     abort-nondep (π₁ red (! equal ∘ absurd))
   mul-mul'-reduce x ((y ∷ (z ′∷ w)) , red) | inl equal | inr obvious =
-    Σ-eq (map _ equal) (π₁ (is-reduced-is-prop (y ∷ (z ′∷ w)) _ _))
+    Σ-eq (ap _ equal) (π₁ (is-reduced-is-prop (y ∷ (z ′∷ w)) _ _))
   mul-mul'-reduce x ((y ∷ w) , red) | inr different with (eq x x)
-  mul-mul'-reduce x ((y ∷ w) , red) | inr different | inl obvious = refl _
+  mul-mul'-reduce x ((y ∷ w) , red) | inr different | inl obvious = refl
   mul-mul'-reduce x ((y ∷ w) , red) | inr different | inr absurd =
-    abort-nondep (absurd (refl _))
+    abort-nondep (absurd refl)
   mul-mul'-reduce x ((y ′∷ w) , red) with (eq x x)
-  mul-mul'-reduce x ((y ′∷ w) , red) | inl obvious = refl _
+  mul-mul'-reduce x ((y ′∷ w) , red) | inl obvious = refl
   mul-mul'-reduce x ((y ′∷ w) , red) | inr absurd =
-    abort-nondep (absurd (refl _))
+    abort-nondep (absurd refl)
 
 abstract
   mul'-mul-reduce : (x : A) (w : reduced-word)
     → mul'-reduce x (mul-reduce x w) ≡ w
   mul'-mul-reduce x (ε , red) with (eq x x)
-  mul'-mul-reduce x (ε , red) | inl obvious = refl _
-  mul'-mul-reduce x (ε , red) | inr absurd = abort-nondep (absurd (refl _))
+  mul'-mul-reduce x (ε , red) | inl obvious = refl
+  mul'-mul-reduce x (ε , red) | inr absurd = abort-nondep (absurd refl)
   mul'-mul-reduce x ((y ′∷ w) , red) with (eq x y)
-  mul'-mul-reduce x ((y ′∷ ε) , red) | inl equal = map _ equal
-  mul'-mul-reduce x ((y ′∷ (z ′∷ w)) , red) | inl equal = map _ equal
+  mul'-mul-reduce x ((y ′∷ ε) , red) | inl equal = ap _ equal
+  mul'-mul-reduce x ((y ′∷ (z ′∷ w)) , red) | inl equal = ap _ equal
   mul'-mul-reduce x ((y ′∷ (z ∷ w)) , red) | inl equal with (eq x z)
   mul'-mul-reduce x ((y ′∷ (z ∷ w)) , red) | inl equal | inl absurd =
     abort-nondep (π₁ red (! equal ∘ absurd))
   mul'-mul-reduce x ((y ′∷ (z ∷ w)) , red) | inl equal | inr obvious =
-    Σ-eq (map _ equal) (π₁ (is-reduced-is-prop (y ′∷ (z ∷ w)) _ _))
+    Σ-eq (ap _ equal) (π₁ (is-reduced-is-prop (y ′∷ (z ∷ w)) _ _))
   mul'-mul-reduce x ((y ′∷ w) , red) | inr different with (eq x x)
-  mul'-mul-reduce x ((y ′∷ w) , red) | inr different | inl obvious = refl _
+  mul'-mul-reduce x ((y ′∷ w) , red) | inr different | inl obvious = refl
   mul'-mul-reduce x ((y ′∷ w) , red) | inr different | inr absurd =
-    abort-nondep (absurd (refl _))
+    abort-nondep (absurd refl)
   mul'-mul-reduce x ((y ∷ w) , red) with (eq x x)
-  mul'-mul-reduce x ((y ∷ w) , red) | inl obvious = refl _
+  mul'-mul-reduce x ((y ∷ w) , red) | inl obvious = refl
   mul'-mul-reduce x ((y ∷ w) , red) | inr absurd =
-    abort-nondep (absurd (refl _))
+    abort-nondep (absurd refl)
 
 freegroup-to-reduced : freegroup → reduced-word
 freegroup-to-reduced = freegroup-rec-nondep reduced-word
@@ -220,56 +220,56 @@ freegroup-to-reduced = freegroup-rec-nondep reduced-word
 abstract
   mul-reduce-reduced : (x : A) (w : word) (red : is-reduced (x ∷ w))
     → mul-reduce x (w , tail-is-reduced x w red) ≡ ((x ∷ w) , red)
-  mul-reduce-reduced x ε red = refl _
-  mul-reduce-reduced x (y ∷ w) red = refl _
+  mul-reduce-reduced x ε red = refl
+  mul-reduce-reduced x (y ∷ w) red = refl
   mul-reduce-reduced x (y ′∷ w) red with (eq x y)
   mul-reduce-reduced x (y ′∷ w) red | inl absurd = abort-nondep (π₁ red absurd)
   mul-reduce-reduced x (y ′∷ w) red | inr obvious =
-    Σ-eq (refl _) (π₁ (is-reduced-is-prop (x ∷ (y ′∷ w)) _ _))
+    Σ-eq refl (π₁ (is-reduced-is-prop (x ∷ (y ′∷ w)) _ _))
 
 abstract
   mul'-reduce-reduced : (x : A) (w : word) (red : is-reduced (x ′∷ w))
     → mul'-reduce x (w , tail'-is-reduced x w red) ≡ ((x ′∷ w) , red)
-  mul'-reduce-reduced x ε red = refl _
+  mul'-reduce-reduced x ε red = refl
   mul'-reduce-reduced x (y ∷ w) red with (eq x y)
   mul'-reduce-reduced x (y ∷ w) red | inl absurd = abort-nondep (π₁ red absurd)
   mul'-reduce-reduced x (y ∷ w) red | inr obvious =
-    Σ-eq (refl _) (π₁ (is-reduced-is-prop (x ′∷ (y ∷ w)) _ _))
-  mul'-reduce-reduced x (y ′∷ w) red = refl _
+    Σ-eq refl (π₁ (is-reduced-is-prop (x ′∷ (y ∷ w)) _ _))
+  mul'-reduce-reduced x (y ′∷ w) red = refl
 
 inv₁ : (w : reduced-word) → freegroup-to-reduced (reduced-to-freegroup w) ≡ w
-inv₁ (ε , red) = refl _
-inv₁ ((x ∷ w) , red) = map (mul-reduce x) (inv₁ (w , tail-is-reduced x w red))
+inv₁ (ε , red) = refl
+inv₁ ((x ∷ w) , red) = ap (mul-reduce x) (inv₁ (w , tail-is-reduced x w red))
                        ∘ mul-reduce-reduced x w red
 inv₁ ((x ′∷ w) , red) =
-  map (mul'-reduce x) (inv₁ (w , tail'-is-reduced x w red))
+  ap (mul'-reduce x) (inv₁ (w , tail'-is-reduced x w red))
   ∘ mul'-reduce-reduced x w red
 
 reduced-to-freegroup-mul-reduce : (x : A) (v : reduced-word)
   → reduced-to-freegroup (mul-reduce x v) ≡ x · (reduced-to-freegroup v)
-reduced-to-freegroup-mul-reduce x (ε , red) = refl _
-reduced-to-freegroup-mul-reduce x ((y ∷ v) , red) = refl _
+reduced-to-freegroup-mul-reduce x (ε , red) = refl
+reduced-to-freegroup-mul-reduce x ((y ∷ v) , red) = refl
 reduced-to-freegroup-mul-reduce x ((y ′∷ v) , red) with (eq x y)
-reduced-to-freegroup-mul-reduce x ((.x ′∷ v) , red) | inl (refl .x) =
+reduced-to-freegroup-mul-reduce x ((.x ′∷ v) , red) | inl refl =
   ! (right-inverse-· x (reduced-to-freegroup (v , tail'-is-reduced x v red)))
-reduced-to-freegroup-mul-reduce x ((y ′∷ v) , red) | inr different = refl _
+reduced-to-freegroup-mul-reduce x ((y ′∷ v) , red) | inr different = refl
 
 reduced-to-freegroup-mul'-reduce : (x : A) (v : reduced-word)
   → reduced-to-freegroup (mul'-reduce x v) ≡ x ⁻¹· (reduced-to-freegroup v)
-reduced-to-freegroup-mul'-reduce x (ε , red) = refl _
+reduced-to-freegroup-mul'-reduce x (ε , red) = refl
 reduced-to-freegroup-mul'-reduce x ((y ∷ v) , red) with (eq x y)
-reduced-to-freegroup-mul'-reduce x ((.x ∷ v) , red) | inl (refl .x) =
+reduced-to-freegroup-mul'-reduce x ((.x ∷ v) , red) | inl refl =
   ! (left-inverse-· x (reduced-to-freegroup (v , tail-is-reduced x v red)))
-reduced-to-freegroup-mul'-reduce x ((y ∷ v) , red) | inr different = refl _
-reduced-to-freegroup-mul'-reduce x ((y ′∷ v) , red) = refl _
+reduced-to-freegroup-mul'-reduce x ((y ∷ v) , red) | inr different = refl
+reduced-to-freegroup-mul'-reduce x ((y ′∷ v) , red) = refl
 
 inv₂ : (a : freegroup) → reduced-to-freegroup (freegroup-to-reduced a) ≡ a
 inv₂ = freegroup-rec _
-  (refl _)
+  refl
   (λ x u p → reduced-to-freegroup-mul-reduce x (freegroup-to-reduced u)
-             ∘ map (λ t → x · t) {y = u} p)
+             ∘ ap (λ t → x · t) {y = u} p)
   (λ x u p → reduced-to-freegroup-mul'-reduce x (freegroup-to-reduced u)
-             ∘ map (λ t → x ⁻¹· t) {y = u} p)
+             ∘ ap (λ t → x ⁻¹· t) {y = u} p)
   (λ x u t → π₁ (freegroup-is-set _ _ _ _))
   (λ x u t → π₁ (freegroup-is-set _ _ _ _))
   (λ u → truncated-is-truncated-S _ (freegroup-is-set _ _))
