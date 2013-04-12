@@ -101,26 +101,30 @@ happly p x = ap (λ u → u x) p
 
 module StrongFunextDep {j} {P : A → Set j} where
 
-  funext-refl : (f : Π A P)
-    → funext-p (λ x → refl {a = f x}) ≡ refl
-  funext-refl f = ap (ap (λ u x → π₁ (u x)))
-    (contr-has-all-paths (≡-is-truncated _
-                         (ΠAQ-is-contr (λ x → refl)))
-                         (Q-f≡Q-g (λ x → refl)) refl)
+  abstract
+    funext-refl : (f : Π A P)
+      → funext-p (λ x → refl {a = f x}) ≡ refl
+    funext-refl f = ap (ap (λ u x → π₁ (u x)))
+      (contr-has-all-paths (≡-is-truncated _
+                           (ΠAQ-is-contr (λ x → refl)))
+                           (Q-f≡Q-g (λ x → refl)) refl)
 
-  funext-happly-p : {f g : Π A P} (p : f ≡ g)
-    → funext-p (happly p) ≡ p
-  funext-happly-p {f} refl = funext-refl f
+  abstract
+    funext-happly-p : {f g : Π A P} (p : f ≡ g)
+      → funext-p (happly p) ≡ p
+    funext-happly-p {f} refl = funext-refl f
 
-  happly-path : {f : Π A P} {u v : (x : A) → Q (λ x → refl {a = f x}) x}
-    (p : u ≡ v) (x : A)
-    → happly (ap (λ u x → π₁ (u x)) p) x ≡ π₂ (u x) ∘ ! (π₂ (v x))
-  happly-path {u = u} refl x = ! (opposite-right-inverse (π₂ (u x)))
+  abstract
+    happly-path : {f : Π A P} {u v : (x : A) → Q (λ x → refl {a = f x}) x}
+      (p : u ≡ v) (x : A)
+      → happly (ap (λ u x → π₁ (u x)) p) x ≡ π₂ (u x) ∘ ! (π₂ (v x))
+    happly-path {u = u} refl x = ! (opposite-right-inverse (π₂ (u x)))
 
-  happly-funext-p : {f g : Π A P} (h : (x : A) → f x ≡ g x)
-    → happly (funext-p h) ≡ h
-  happly-funext-p h = funext-p (λ x → happly-path (Q-f≡Q-g h) x
-                                            ∘ opposite-opposite (h x))
+  abstract
+    happly-funext-p : {f g : Π A P} (h : (x : A) → f x ≡ g x)
+      → happly (funext-p h) ≡ h
+    happly-funext-p h = funext-p (λ x → happly-path (Q-f≡Q-g h) x
+                                              ∘ opposite-opposite (h x))
 
   happly-is-equiv : {f g : Π A P} → is-equiv (happly {f = f} {g = g})
   happly-is-equiv = iso-is-eq _ funext-p happly-funext-p funext-happly-p
