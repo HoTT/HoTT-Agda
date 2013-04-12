@@ -25,28 +25,37 @@ infixr 8 _∘_  -- \o
 _∘_ : ∀ {i} {A : Set i} {x y z : A} → (x ≡ y → y ≡ z → x ≡ z)
 refl ∘ q = q
 
+-- Composition with the opposite definitional behaviour
+_∘'_ : ∀ {i} {A : Set i} {x y z : A} → (x ≡ y → y ≡ z → x ≡ z)
+q ∘' refl = q
+
 ! : ∀ {i} {A : Set i} {x y : A} → (x ≡ y → y ≡ x)
 ! refl = refl
 
--- Equational reasioning combinator
--- (from Nils' library)
+-- Equational reasoning combinator
 
-infix  0 finally
-infixr 0 _≡⟨_⟩_
+infix  2 _∎
+infixr 2 _≡⟨_⟩_
 
-_≡⟨_⟩_ : ∀ {ℓ} {A : Set ℓ} x {y z : A} → x ≡ y → y ≡ z → x ≡ z
-_ ≡⟨ x≡y ⟩ y≡z = x≡y ∘ y≡z
+_≡⟨_⟩_ : ∀ {i} {A : Set i} (x : A) {y z : A} → x ≡ y → y ≡ z → x ≡ z
+_ ≡⟨ p1 ⟩ p2 = p1 ∘ p2
 
-finally : ∀ {ℓ} {A : Set ℓ} (x y : A) → x ≡ y → x ≡ y
-finally _ _ x≡y = x≡y
+_∎ : ∀ {i} {A : Set i} (x : A) → x ≡ x
+_∎ _ = refl
 
-syntax finally x y x≡y = x ≡⟨ x≡y ⟩∎ y ∎
+-- Obsolete, for retrocompatibility only
+infixr 2 _≡⟨_⟩∎_
+_≡⟨_⟩∎_ : ∀ {i} {A : Set i} (x : A) {y z : A} → x ≡ y → y ≡ z → x ≡ z
+_≡⟨_⟩∎_ = _≡⟨_⟩_
 
 -- Transport and ap
 
 ap : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) {x y : A}
   → (x ≡ y → f x ≡ f y)
 ap f refl = refl
+
+-- Make equational reasoning much more readable
+syntax ap f p = p |in-ctx f
 
 transport : ∀ {i j} {A : Set i} (P : A → Set j) {x y : A}
   → (x ≡ y → P x → P y)
@@ -114,10 +123,13 @@ module _ {i} {A : Set i} where
     → (p ∘ q) ∘ r ≡ p ∘ (q ∘ r)
   concat-assoc refl _ _ = refl
 
-  -- [refl-left-unit] is definitionally true
+  -- [refl-left-unit] for _∘_ and [refl-right-unit] for _∘'_ are definitional
 
   refl-right-unit : {x y : A} (q : x ≡ y) → q ∘ refl ≡ q
   refl-right-unit refl = refl
+
+  refl-left-unit : {x y : A} (q : x ≡ y) → refl ∘' q ≡ q
+  refl-left-unit refl = refl
 
   opposite-left-inverse : {x y : A} (p : x ≡ y) → (! p) ∘ p ≡ refl
   opposite-left-inverse refl = refl
