@@ -42,12 +42,13 @@ module Homotopy.Extensions.ProductPushoutToProductToConnected
     extension₂ : Set (max i j)
     extension₂ = extension f extension₁ (λ a → right* a , glue* a)
 
-    extend-magic₂ : is-truncated ⟨-2⟩ extension₂
-    extend-magic₂ = extension-is-truncated
-      f f-is-conn extension₁ ⦃ extend-magic₁ ⦄ (λ a → right* a , glue* a)
+    abstract
+      extend-magic₂ : is-truncated ⟨-2⟩ extension₂
+      extend-magic₂ = extension-is-truncated
+        f f-is-conn extension₁ ⦃ extend-magic₁ ⦄ (λ a → right* a , glue* a)
 
-    extend-magic₃ : extension₂
-    extend-magic₃ = π₁ extend-magic₂
+      extend-magic₃ : extension₂
+      extend-magic₃ = π₁ extend-magic₂
 
   abstract
     -- Get the buried function.
@@ -60,3 +61,31 @@ module Homotopy.Extensions.ProductPushoutToProductToConnected
 
     connected-extend-β-right : ∀ a b′ → connected-extend (f a) b′ ≡ right* a b′
     connected-extend-β-right a b′ = ! $ happly (base-path (π₂ extend-magic₃ a)) b′
+
+    private
+      -- This is a combination of 2~3 basic rules.
+      lemma₁ : ∀ a (k : ∀ b → P (f a) (g b))
+        {l₁ l₂ : ∀ b′ → P (f a) b′} (p : l₁ ≡ l₂) (q : ∀ b → k b ≡ l₁ (g b)) c
+        → transport (λ l → ∀ b → k b ≡ l (g b)) p q c
+        ≡ q c ∘ happly p (g c)
+      lemma₁ a k refl q c = ! $ refl-right-unit _
+
+    connected-extend-triangle : ∀ a b
+      → connected-extend-β-left (f a) b ∘ glue* a b
+      ≡ connected-extend-β-right a (g b)
+    connected-extend-triangle a b =
+      ! (π₂ (π₁ extend-magic₃ (f a)) b) ∘ glue* a b
+        ≡⟨ ap (λ p → ! p ∘ glue* a b) $ ! $ happly (fiber-path (π₂ extend-magic₃ a)) b ⟩
+      ! (transport (λ l → ∀ b → left* (f a) b ≡ l (g b)) (base-path (π₂ extend-magic₃ a)) (glue* a) b) ∘ glue* a b
+        ≡⟨ ap (λ p → ! p ∘ glue* a b)
+              $ lemma₁ a (left* (f a)) (base-path (π₂ extend-magic₃ a)) (glue* a) b ⟩
+      ! (glue* a b ∘ happly (base-path (π₂ extend-magic₃ a)) (g b)) ∘ glue* a b
+        ≡⟨ ap (λ p → p ∘ glue* a b) $ opposite-concat (glue* a b) (happly (base-path (π₂ extend-magic₃ a)) (g b)) ⟩
+      (connected-extend-β-right a (g b) ∘ ! (glue* a b)) ∘ glue* a b
+        ≡⟨ concat-assoc (connected-extend-β-right a (g b)) (! (glue* a b)) (glue* a b) ⟩
+      connected-extend-β-right a (g b) ∘ ! (glue* a b) ∘ glue* a b
+        ≡⟨ ap (λ p → connected-extend-β-right a (g b) ∘ p) $ opposite-left-inverse (glue* a b) ⟩
+      connected-extend-β-right a (g b) ∘ refl
+        ≡⟨ refl-right-unit _ ⟩∎
+      connected-extend-β-right a (g b)
+        ∎
