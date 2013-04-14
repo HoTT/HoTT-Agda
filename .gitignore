@@ -1,0 +1,7 @@
+# Ignore Agda compiled files
+*.agdai
+# Ignore Emacs backup files
+*~
+html/
+Unclassified/
+Test.agda
