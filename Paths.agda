@@ -11,6 +11,8 @@ infix 4 _≡_  -- \equiv
 data _≡_ {i} {A : Set i} (a : A) : A → Set i where
   refl : a ≡ a
 
+_==_ = _≡_
+
 _≢_ : ∀ {i} {A : Set i} → (A → A → Set i)
 x ≢ y = ¬ (x ≡ y)
 

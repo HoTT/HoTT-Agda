@@ -29,13 +29,13 @@ module BaseHIT where
     pp : (b : B) → cc (f b) ≡ cc (g b)
 
   W-rec : ∀ {ℓ} (P : W → Set ℓ) (cc* : (a : A) → P (cc a))
-    (pp* : (b : B) → cc* (f b) ≡[ P ↓ pp b ] cc* (g b))
+    (pp* : (b : B) → cc* (f b) == cc* (g b) [ P ↓ pp b ])
     → ((w : W) → P w)
   W-rec P cc* pp* (#cc a) = cc* a
 
   postulate
     W-rec-β : ∀ {ℓ} (P : W → Set ℓ) (cc* : (a : A) → P (cc a))
-      (pp* : (b : B) → cc* (f b) ≡[ P ↓ pp b ] cc* (g b))
+      (pp* : (b : B) → cc* (f b) == cc* (g b) [ P ↓ pp b ])
       → ((b : B) → apd (W-rec P cc* pp*) (pp b) ≡ pp* b)
 
   W-rec-nondep : ∀ {ℓ} (P : Set ℓ) (cc* : A → P)
@@ -72,14 +72,14 @@ module FlattenedHIT where
 
   Wt-rec : ∀ {ℓ} (P : Wt → Set ℓ) (cct* : (a : A) (c : C a) → P (cct a c))
     (ppt* : (b : B) (d : C (f b)) →
-           cct* (f b) d ≡[ P ↓ ppt b d ] cct* (g b) (π₁ (D b) d))
+           cct* (f b) d == cct* (g b) (π₁ (D b) d) [ P ↓ ppt b d ])
     → ((w : Wt) → P w)
   Wt-rec P cct* ppt* (#cct a c) = cct* a c
 
   postulate
     Wt-rec-β : ∀ {ℓ} (P : Wt → Set ℓ) (cct* : (a : A) (c : C a) → P (cct a c))
       (ppt* : (b : B) (d : C (f b)) →
-             cct* (f b) d ≡[ P ↓ ppt b d ] cct* (g b) (π₁ (D b) d))
+             cct* (f b) d == cct* (g b) (π₁ (D b) d) [ P ↓ ppt b d ])
       → ((b : B) (d : C (f b)) → apd (Wt-rec P cct* ppt*) (ppt b d) ≡ ppt* b d)
 
   Wt-rec-nondep : ∀ {ℓ} (P : Set ℓ) (cct* : (a : A) → C a → P)
@@ -117,10 +117,10 @@ lem refl refl = refl
 
 -- Dependent path in [P] over [pp b]
 module _ {b : B} {d : C (f b)} {d' : C (g b)} where
-  ↓-pp-in : (π₁ (D b) d ≡ d' → d ≡[ P ↓ pp b ] d')
+  ↓-pp-in : (π₁ (D b) d ≡ d' → d == d' [ P ↓ pp b ])
   ↓-pp-in p = to-transp-in P (pp b) (pp-path b d ∘' p)
 
-  ↓-pp-out : (d ≡[ P ↓ pp b ] d' → π₁ (D b) d ≡ d')
+  ↓-pp-out : (d == d' [ P ↓ pp b ] → π₁ (D b) d ≡ d')
   ↓-pp-out p = ! (pp-path b d) ∘ to-transp-out p
 
   ↓-pp-β : (q : π₁ (D b) d ≡ d') → ↓-pp-out (↓-pp-in q) ≡ q
