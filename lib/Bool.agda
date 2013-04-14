@@ -3,16 +3,38 @@
 module lib.Bool where
 
 open import lib.Base
+open import lib.NType
+open import lib.Empty
+open import lib.Unit
+open import lib.Coproduct
 
-data Bool {i} : Type i where
+data Bool : Type₀ where
   true : Bool
   false : Bool
 
-Bool₀ = Bool {zero}
-Bool0 = Bool {zero}
-
-if_then_else_ : ∀ {i j} {A : Bool {i} → Type j}
+if_then_else_ : ∀ {i} {A : Bool → Type i}
   (b : Bool) (t : A true) (e : A false)
   → A b
 if true then t else e = t
 if false then t else e = e
+
+private
+  Bool-true≠false-type : Bool → Type₀
+  Bool-true≠false-type true  = ⊤
+  Bool-true≠false-type false = ⊥
+
+abstract
+  Bool-true≠false : true =/= false
+  Bool-true≠false p = transport Bool-true≠false-type p tt
+
+  Bool-false≠true : false =/= true
+  Bool-false≠true p = transport Bool-true≠false-type (! p) tt
+
+  Bool-has-dec-eq : has-dec-eq Bool
+  Bool-has-dec-eq true true = inl idp
+  Bool-has-dec-eq true false = inr Bool-true≠false
+  Bool-has-dec-eq false true = inr Bool-false≠true
+  Bool-has-dec-eq false false = inl idp
+
+  Bool-is-set : is-set Bool
+  Bool-is-set = dec-eq-is-set Bool-has-dec-eq
