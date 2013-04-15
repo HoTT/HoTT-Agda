@@ -8,6 +8,10 @@ module lib.Univalence where
 coe : ∀ {i} {A B : Type i} → A == B → A → B
 coe idp = idf _
 
+coe-∙ : ∀ {i} {A B C : Type i} (p : A == B) (q : B == C) (a : A)
+  → coe (p ∙ q) a == coe q (coe p a)
+coe-∙ idp idp a = idp
+
 abstract
   idf-is-equiv : ∀ {i} (A : Type i) → is-equiv (idf A)
   idf-is-equiv A =
@@ -30,6 +34,8 @@ postulate  -- Univalence axiom
 postulate -- TODO
   coe-β : ∀ {i} {A B : Type i} (f : A → B) (f-is-equiv : is-equiv f) (a : A)
     → coe (ua (f , f-is-equiv)) a == f a
+  coe-!β : ∀ {i} {A B : Type i} (f : A → B) (f-is-equiv : is-equiv f) (b : B)
+    → coe (! (ua (f , f-is-equiv))) b == inverse (f , f-is-equiv) b
 
 -- Induction along equivalences
 

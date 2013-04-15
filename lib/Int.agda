@@ -5,11 +5,14 @@ module lib.Int where
 open import lib.Base
 open import lib.Nat
 open import lib.Equivalences
+open import lib.NType
 
 data ℤ : Type₀ where
   O : ℤ
   pos : (n : ℕ) → ℤ
   neg : (n : ℕ) → ℤ
+
+Int = ℤ
 
 succ : ℤ → ℤ
 succ O = pos O
@@ -38,3 +41,6 @@ abstract
 
 succ-equiv : ℤ ≃ ℤ
 succ-equiv = equiv succ pred succ-pred pred-succ
+
+postulate
+  ℤ-is-set : is-set ℤ

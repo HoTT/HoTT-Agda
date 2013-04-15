@@ -1,5 +1,4 @@
 all:
-	agda HoTT.agda
 	agda index.agda
 
 lib:

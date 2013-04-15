@@ -14,7 +14,7 @@ module index where
 import HoTT
 -- import Spaces.IntervalProps
 -- import Algebra.F2NotCommutative
--- import Spaces.LoopSpaceCircle
+import homotopy.LoopSpaceCircle
 -- import Spaces.LoopSpaceDecidableWedgeCircles
 -- import Homotopy.PullbackIsPullback
 -- import Homotopy.PushoutIsPushout

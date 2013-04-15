@@ -116,6 +116,8 @@ idf A = λ x → x
 cst : ∀ {i j} {A : Type i} {B : Type j} (b : B) → (A → B)
 cst b = λ _ → b
 
+infixr 2 _∘_
+
 -- Composition of dependent functions
 _∘_ : ∀ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → (B a → Type k)}
   → (g : {a : A} → Π (B a) (C a)) → (f : Π A B) → Π A (λ a → C a (f a))
