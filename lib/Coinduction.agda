@@ -6,7 +6,7 @@ module lib.Coinduction where
 
 infix 1000 ♯_
 
-postulate
+postulate  -- Coinduction
   ∞  : ∀ {i} (A : Type i) → Type i
   ♯_ : ∀ {i} {A : Type i} → A → ∞ A
   ♭  : ∀ {i} {A : Type i} → ∞ A → A

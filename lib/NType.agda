@@ -28,13 +28,13 @@ has-dec-eq A = (x y : A) → Coprod (x == y) (x =/= y)
 abstract
   all-paths-is-prop : {A : Type i} → (has-all-paths A → is-prop A)
   all-paths-is-prop {A} c x y = (c x y , canon-path) where
-    lemma : {x y : A} (p : x == y) → c x y == c x x ∙ p
+    lemma : {x y : A} (p : x == y) → c x y == p ∙ c y y
     lemma idp = idp
 
     canon-path : {x y : A} (p : x == y) → c x y == p
     canon-path {.y} {y} idp =
       c y y               =⟨ lemma (! (c y y)) ⟩
-      c y y ∙ (! (c y y)) =⟨ !-inv-r (c y y) ⟩
+      (! (c y y)) ∙ c y y =⟨ !-inv-l (c y y) ⟩
       idp ∎
 
   -- Truncation levels are cumulative
@@ -117,6 +117,12 @@ module _ {A : Type i} where
   pathto-is-contr x = ((x , idp) , pathto-unique-path) where
     pathto-unique-path : {u : A} (pp : Σ A (λ t → t == u)) → (u , idp) == pp
     pathto-unique-path (u , idp) = idp
+
+  -- The type of paths from a fixed point is contractible
+  pathfrom-is-contr : (x : A) → is-contr (Σ A (λ t → x == t))
+  pathfrom-is-contr x = ((x , idp) , pathfrom-unique-path) where
+    pathfrom-unique-path : {u : A} (pp : Σ A (λ t → u == t)) → (u , idp) == pp
+    pathfrom-unique-path (u , idp) = idp
 
   contr-has-section : ∀ {j} {A : Type i} {B : A → Type j}
     → (is-contr A → (x : A) → (u : B x) → Π A B)

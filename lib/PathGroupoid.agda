@@ -13,7 +13,7 @@ module lib.PathGroupoid {i} {A : Type i} where
 -- Composition with the opposite definitional behaviour
 _∙'_ : {x y z : A}
   → (x == y → y == z → x == z)
-idp ∙' q = q
+q ∙' idp = q
 
 -- ! : {x y : A}
 --   → (x == y → y == x)
@@ -21,15 +21,15 @@ idp ∙' q = q
 
 ∙-assoc : {x y z t : A} (p : x == y) (q : y == z) (r : z == t)
   → (p ∙ q) ∙ r == p ∙ (q ∙ r)
-∙-assoc _ _ idp = idp
+∙-assoc idp idp idp = idp
 
--- [∙-unit-r] and [∙'-unit-l] are definitional
+-- [∙-unit-l] and [∙'-unit-r] are definitional
 
-∙-unit-l : {x y : A} (q : x == y) → idp ∙ q == q
-∙-unit-l idp = idp
+∙-unit-r : {x y : A} (q : x == y) → q ∙ idp == q
+∙-unit-r idp = idp
 
-∙'-unit-r : {x y : A} (q : x == y) → q ∙' idp == q
-∙'-unit-r idp = idp
+∙'-unit-l : {x y : A} (q : x == y) → idp ∙' q == q
+∙'-unit-l idp = idp
 
 !-inv-l : {x y : A} (p : x == y) → (! p) ∙ p == idp
 !-inv-l idp = idp

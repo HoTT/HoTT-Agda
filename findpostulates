@@ -1,0 +1,50 @@
+#!/bin/sh
+
+if [[ $1 = "-h" ]] || [[ $1 = "--help" ]]
+then
+    echo "Usage: $0"
+    echo
+    echo "Shows every postulate used in the Agda files present in the directory"
+    echo "except for HIT-related postulates, universe levels and the univalence"
+    echo "axiom."
+    exit 0
+fi
+
+if ! command -v awk &>/dev/null
+then
+    echo "You need awk to run this script"
+    exit 1
+fi
+
+# Only use tput if it’s installed
+
+TPUT="tput"
+
+if ! tput -V &>/dev/null
+then
+    TPUT=":"
+fi
+
+for i in $(git ls-files) $(git ls-files -o --exclude-standard)
+do
+    if [[ $i =~ tutorial/* ]] || [[ $i =~ findpostulates ]] || [[ $i =~ old/* ]]
+    then
+        continue
+    fi
+
+    result=$(awk '/postulate/\
+                    {if ($0 !~ /HIT$/ &&\
+                         $0 !~ /Universe levels$/ &&\
+                         $0 !~ /Coinduction$/ &&\
+                         $0 !~ /Univalence axiom$/)\
+                      {print; getline; print}}' $i)
+
+    if [[ $result != "" ]]
+    then
+        $TPUT setaf 5
+        echo $i:
+        $TPUT setaf 7
+        echo "$result"
+        echo
+    fi
+done

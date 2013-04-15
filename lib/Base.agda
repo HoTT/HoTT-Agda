@@ -91,7 +91,7 @@ infixr 8 _∙_
 
 _∙_ : ∀ {i} {A : Type i} {x y z : A}
   → (x == y → y == z → x == z)
-q ∙ idp = q
+idp ∙ q = q
 
 ! : ∀ {i} {A : Type i} {x y : A}
   → (x == y → y == x)
@@ -106,11 +106,11 @@ _=⟨_⟩_ : ∀ {i} {A : Type i} (x : A) {y z : A} → x == y → y == z → x 
 _ =⟨ p ⟩ q = p ∙ q
 
 _∎ : ∀ {i} {A : Type i} (x : A) → x == x
-_∎ _ = idp
+_ ∎ = idp
 
 -- Identity functions
-id : ∀ {i} (A : Type i) → (A → A)
-id A = λ x → x
+idf : ∀ {i} (A : Type i) → (A → A)
+idf A = λ x → x
 
 -- Constant functions
 cst : ∀ {i j} {A : Type i} {B : Type j} (b : B) → (A → B)

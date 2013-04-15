@@ -15,11 +15,11 @@ ap-! f idp = idp
 
 ∙-ap : ∀ {j} {B : Type j} (f : A → B) {x y z : A} (p : x == y) (q : y == z)
   → ap f p ∙ ap f q == ap f (p ∙ q)
-∙-ap f _ idp = idp
+∙-ap f idp idp = idp
 
 ap-∙ : ∀ {j} {B : Type j} (f : A → B) {x y z : A} (p : x == y) (q : y == z)
   → ap f (p ∙ q) == ap f p ∙ ap f q
-ap-∙ f _ idp = idp
+ap-∙ f idp idp = idp
 
 ∘-ap : ∀ {j k} {B : Type j} {C : Type k} (g : B → C) (f : A → B)
   {x y : A} (p : x == y) → ap g (ap f p) == ap (g ∘ f) p
@@ -33,5 +33,5 @@ ap-cst : ∀ {j} {B : Type j} (b : B) {x y : A} (p : x == y)
   → ap (cst b) p == idp
 ap-cst b idp = idp
 
-ap-id : {u v : A} (p : u == v) → ap (id A) p == p
-ap-id idp = idp
+ap-idf : {u v : A} (p : u == v) → ap (idf A) p == p
+ap-idf idp = idp
