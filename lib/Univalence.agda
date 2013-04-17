@@ -32,10 +32,10 @@ postulate  -- Univalence axiom
   ua-η : ∀ {i} {A B : Type i} (p : A == B) → ua (coe-equiv p) == p
 
 postulate -- TODO
-  coe-β : ∀ {i} {A B : Type i} (f : A → B) (f-is-equiv : is-equiv f) (a : A)
-    → coe (ua (f , f-is-equiv)) a == f a
-  coe-!β : ∀ {i} {A B : Type i} (f : A → B) (f-is-equiv : is-equiv f) (b : B)
-    → coe (! (ua (f , f-is-equiv))) b == inverse (f , f-is-equiv) b
+  coe-β : ∀ {i} {A B : Type i} (e : A ≃ B) (a : A)
+    → coe (ua e) a == e ☆ a
+  coe-!β : ∀ {i} {A B : Type i} (e : A ≃ B)  (b : B)
+    → coe (! (ua e)) b == inverse e b
 
 -- Induction along equivalences
 

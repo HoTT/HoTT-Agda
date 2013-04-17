@@ -52,12 +52,13 @@ postulate  -- HIT
 
 module _ {i} {A : Type i} (f : A ≃ A) where
 
-  P = S¹-rec A (ua f)
+  private
+    P = S¹-rec A (ua f)
 
   loop-path : (a : A) → coe (ap P loop) a == f ☆ a
   loop-path a =
     coe (ap P loop) a =⟨ loop-β' A (ua f) |in-ctx (λ u → coe u a) ⟩
-    coe (ua f) a      =⟨ coe-β (fst f) _ a ⟩
+    coe (ua f) a      =⟨ coe-β f a ⟩
     f ☆ a ∎
 
   !loop-path : (a : A) → coe (ap P (! loop)) a == inverse f a
@@ -66,7 +67,7 @@ module _ {i} {A : Type i} (f : A ≃ A) where
         =⟨ ap-! P loop |in-ctx (λ u → coe u a) ⟩
     coe (! (ap P loop)) a
         =⟨ loop-β' A (ua f) |in-ctx (λ u → coe (! u) a) ⟩
-    coe (! (ua f)) a =⟨ coe-!β (fst f) _ a ⟩
+    coe (! (ua f)) a =⟨ coe-!β f a ⟩
     inverse f a ∎
 
   ↓-loop-out : {a a' : A} → a == a' [ P ↓ loop ] → f ☆ a == a'

@@ -10,6 +10,11 @@ open import lib.Univalence
 _×_ : ∀ {i j} (A : Type i) (B : Type j) → Type (max i j)
 A × B = Σ A (λ _ → B)
 
+module _ {i j} {A : Type i} {B : Type j} where
+  pair=' : {a a' : A} (p : a == a') {b b' : B} (q : b == b')
+    → (a , b) == (a' , b')
+  pair=' idp idp = idp
+
 module _ {i j} {A : Type i} {B : A → Type j} where
 
   pair : (a : A) (b : B a) → Σ A B
@@ -19,6 +24,7 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     (q : b == b' [ B ↓ p ])
     → (a , b) == (a' , b')
   pair= idp idp = idp
+
 
   fst= : {ab a'b' : Σ A B} (p : ab == a'b') → (fst ab == fst a'b')
   fst= {._} {_} idp = idp

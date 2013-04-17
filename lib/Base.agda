@@ -27,6 +27,10 @@ Type0 = Set0
 Type₁ = Set₁
 Type1 = Set1
 
+OfType : ∀ {i} (A : Type i) (u : A) → A
+OfType A u = u
+
+syntax OfType A u =  u :> A
 
 -- Identity type
 infixr 4 _==_

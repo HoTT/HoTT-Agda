@@ -31,7 +31,7 @@ module _ {i j} {A : Set i} {B : Set j} where
     → (↓-cst-out (↓-cst-in p q) == q)
   ↓-cst-β idp q = idp
 
--- Dependent paths in a constant fibration
+-- Dependent paths in a constant fibration XX
 module _ {i j k} {A : Set i} {B : A → Set j} {C : A → Set k} where
 
   ↓-cst2-in : {x y : A} (p : x == y) {b : C x} {c : C y}
@@ -45,6 +45,21 @@ module _ {i j k} {A : Set i} {B : A → Set j} {C : A → Set k} where
     → u == v [ (λ xy → B (fst xy)) ↓ (pair= p q) ]
     → u == v [ B ↓ p ]
   ↓-cst2-out idp idp r = r
+
+-- Dependent paths in a constant fibration XX
+module _ {i j k} {A : Set i} {B : A → Set j} {C : Set k} where
+
+  ↓-cst2'-in : {x y : A} (p : x == y) {b c : C}
+    (q : b == c) {u : B x} {v : B y}
+    → u == v [ B ↓ p ]
+    → u == v [ (λ xy → B (fst xy)) ↓ (pair=' p q) ]
+  ↓-cst2'-in idp idp r = r
+
+  ↓-cst2'-out : {x y : A} (p : x == y) {b c : C}
+    (q : b == c) {u : B x} {v : B y}
+    → u == v [ (λ xy → B (fst xy)) ↓ (pair=' p q) ]
+    → u == v [ B ↓ p ]
+  ↓-cst2'-out idp idp r = r
 
 -- -- ap can be defined via apd, not sure whether it’s a good idea or not
 -- ap : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) {x y : A} (p : x == y)
@@ -315,16 +330,16 @@ apd-π₂-β idp idp = idp
 
 -- Dependent path in a type of the form [λ x → g (f x) ≡ x]
 module _ {i j} {A : Set i} {B : Set j} (f : A → B) (g : B → A) where
-  ↓-◯=id-in : {x y : A} {p : x == y} {u : g (f x) == x} {v : g (f y) == y}
+  ↓-∘=id-in : {x y : A} {p : x == y} {u : g (f x) == x} {v : g (f y) == y}
     → ((ap g (ap f p) ∙' v) == (u ∙ p))
     → (u == v [ (λ x → g (f x) == x) ↓ p ])
-  ↓-◯=id-in {p = idp} q = ! (∙-unit-r _) ∙ (! q) ∙ (∙'-unit-l _)
+  ↓-∘=id-in {p = idp} q = ! (∙-unit-r _) ∙ (! q) ∙ (∙'-unit-l _)
 
 -- WIP, derive it from more primitive principles
--- ↓-◯≡id-in f g {p = p} {u} {v} q =
---   ↓-≡-in (u ◃ apd (λ x → g (f x)) p =⟨ apd-◯ f g p |in-ctx (λ t → u ◃ t) ⟩
+-- ↓-∘≡id-in f g {p = p} {u} {v} q =
+--   ↓-≡-in (u ◃ apd (λ x → g (f x)) p =⟨ apd-∘ f g p |in-ctx (λ t → u ◃ t) ⟩
 --         u ◃ ↓-apd-out _ f p (apdd g p (apd f p)) =⟨ apdd-cst (λ _ b → g b) p (ap f p) (! (apd-nd f p)) |in-ctx (λ t → u ◃ ↓-apd-out _ f p t) ⟩
---         u ◃ ↓-apd-out _ f p (apd (λ t → g (π₂ t)) (pair= p (apd f p))) =⟨ apd-◯ π₂ g (pair= p (apd f p)) |in-ctx (λ t → u ◃ ↓-apd-out _ f p t) ⟩
+--         u ◃ ↓-apd-out _ f p (apd (λ t → g (π₂ t)) (pair= p (apd f p))) =⟨ apd-∘ π₂ g (pair= p (apd f p)) |in-ctx (λ t → u ◃ ↓-apd-out _ f p t) ⟩
 --         u ◃ ↓-apd-out _ f p (↓-apd-out _ π₂ (pair= p (apd f p)) (apdd g (pair= p (apd f p)) (apd π₂ (pair= p (apd f p))))) =⟨ {!!} ⟩
 --         apd (λ x → x) p ▹ v ∎)
 
@@ -369,6 +384,15 @@ _∙'dep_ : ∀ {i j} {A : Set i} {B : A → Set j}
    → u == w [ B ↓ (p ∙' p') ])
 _∙'dep_ {p' = idp} q idp = q
 
+-- Dependent concatenation'
+_∙dep_ : ∀ {i j} {A : Set i} {B : A → Set j}
+  {x y z : A} {p : x == y} {p' : y == z}
+  {u : B x} {v : B y} {w : B z}
+  → (u == v [ B ↓ p ]
+   → v == w [ B ↓ p' ]
+   → u == w [ B ↓ (p ∙ p') ])
+_∙dep_ {p = idp} idp q = q
+
 -- Implementation of [_∙'_] on Σ
 Σ-∙' : ∀ {i j} {A : Set i} {B : A → Set j}
   {x y z : A} {p : x == y} {p' : y == z}
@@ -377,12 +401,20 @@ _∙'dep_ {p' = idp} q idp = q
   → (pair= p q ∙' pair= p' r) == pair= (p ∙' p') (q ∙'dep r)
 Σ-∙' {p' = idp} q idp = idp
 
--- -- No idea what that is
--- to-transp-weird : ∀ {i j} {A : Set i} {B : A → Set j}
---   {u v : A} {d : B u} {d' d'' : B v} {p : u == v}
---   (q : d == d' [ B ↓ p ]) (r : fst (ua-out (ap B p)) d == d'')
---   → (to-transp-in B p r ∙'dep (! r ∙ to-transp-out q)) == q
--- to-transp-weird {p = idp} idp idp = idp
+-- Implementation of [_∙_] on Σ
+Σ-∙ : ∀ {i j} {A : Set i} {B : A → Set j}
+  {x y z : A} {p : x == y} {p' : y == z}
+  {u : B x} {v : B y} {w : B z}
+  (q : u == v [ B ↓ p ]) (r : v == w [ B ↓ p' ])
+  → (pair= p q ∙ pair= p' r) == pair= (p ∙ p') (q ∙dep r)
+Σ-∙ {p = idp} idp q = idp
+
+-- No idea what that is
+to-transp-weird : ∀ {i j} {A : Set i} {B : A → Set j}
+  {u v : A} {d : B u} {d' d'' : B v} {p : u == v}
+  (q : d == d' [ B ↓ p ]) (r : coe (ap B p) d == d'')
+  → (to-transp-in B p r ∙'dep (! r ∙ to-transp-out q)) == q
+to-transp-weird {p = idp} idp idp = idp
 
 
 _∙'2_ : ∀ {i j} {A : Set i} {B : A → Set j} {a b c : Π A B}

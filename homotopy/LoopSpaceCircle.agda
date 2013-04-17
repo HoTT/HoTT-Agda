@@ -22,6 +22,8 @@ loop^ (pos (S n)) = loop^ (pos n) ∙ loop
 loop^ (neg O) = ! loop
 loop^ (neg (S n)) = loop^ (neg n) ∙ (! loop)
 
+-- Compatibility of [loop^] with the successor function
+
 loop^S : (n : ℤ) → loop^ n ∙ loop == loop^ (succ n)
 loop^S O = idp
 loop^S (pos n) = idp
@@ -34,7 +36,7 @@ loop^S (neg (S n)) =
   loop^ (neg n) ∎
 
 loop^S' : {n n' : ℤ} (p : succ n == n') → loop^ n ∙ loop == loop^ n'
-loop^S' {n} idp = loop^S n
+loop^S' {n} p = loop^S n ∙ ap loop^ p
 
 decode : {x : S¹} (t : Cover x) → base == x
 decode {x} =
@@ -83,6 +85,33 @@ encode-decode {x} =
 
 theorem : (base == base) ≃ ℤ
 theorem = equiv encode decode (encode-decode {base}) decode-encode
+
+
+{- Unfinished attempt to get something similar to Mike’s original proof
+tot : Type₀
+tot = Σ S¹ Cover
+
+x : (n : ℤ) → O == n [ Cover ↓ loop^ n ]
+x n = to-transp-in Cover (loop^ n) (encode-loop^ n)
+
+postulate
+  xx : {n n' : ℤ} → (n == n') == (O == n [ Cover ↓ loop^ n ])
+
+contr-curryfied : (x : S¹) (t : Cover x) → (base , O) == (x , t) :> tot
+contr-curryfied = S¹-elim (λ n → pair= (loop^ n) (x n)) (↓-Π-in (λ {n} {n'} q →
+  ↓-cst=idf-in
+    (pair= (loop^ n) (x n) ∙ pair= loop q =⟨ Σ-∙ (x n) q ⟩
+    pair= (loop^ n ∙ loop) (x n ∙dep q)
+      =⟨ ap (uncurry (λ p q → pair= p q))
+            (pair= (loop^S' {n} (↓-loop-out succ-equiv q))
+              (to-transp-in _ _ {!fst (ℤ-is-set _ _ _ _)!})) ⟩
+    pair= (loop^ n') (x n') ∎)))
+
+contr : (xt : tot) → (base , O) == xt
+contr (x , t) = contr-curryfied x t
+-}
+
+
 
 -- -- Path fibration
 
