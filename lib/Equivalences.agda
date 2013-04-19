@@ -41,29 +41,86 @@ postulate  -- TODO
   is-equiv-is-prop : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
     → is-prop (is-equiv f)
 
-_☆_ : ∀ {i j} {A : Type i} {B : Type j} (f : A ≃ B) (a : A) → B
-f ☆ a = (fst f) a
+-- _☆_ : ∀ {i j} {A : Type i} {B : Type j} (f : A ≃ B) (a : A) → B
+-- f ☆ a = (fst f) a
 
-inverse : ∀ {i} {j} {A : Set i} {B : Set j} (f : A ≃ B) → (B → A)
-inverse (f , f-is-equiv) = is-equiv.g f-is-equiv
+–> : ∀ {i} {j} {A : Type i} {B : Type j} (e : A ≃ B) → (A → B)
+–> e = fst e
 
-inverse-inv-l : ∀ {i} {j} {A : Set i} {B : Set j} (f : A ≃ B) (a : A)
-  → (inverse f (f ☆ a) == a)
-inverse-inv-l (f , f-is-equiv) a = is-equiv.g-f f-is-equiv a
+<– : ∀ {i} {j} {A : Type i} {B : Type j} (e : A ≃ B) → (B → A)
+<– e = is-equiv.g (snd e)
 
-inverse-inv-r : ∀ {i} {j} {A : Set i} {B : Set j} (f : A ≃ B) (b : B)
-  → (f ☆ (inverse f b) == b)
-inverse-inv-r (f , f-is-equiv) b = is-equiv.f-g f-is-equiv b
+<–-inv-l : ∀ {i} {j} {A : Type i} {B : Type j} (e : A ≃ B) (a : A)
+  → (<– e (–> e a) == a)
+<–-inv-l e a = is-equiv.g-f (snd e) a
+
+<–-inv-r : ∀ {i} {j} {A : Type i} {B : Type j} (e : A ≃ B) (b : B)
+  → (–> e (<– e b) == b)
+<–-inv-r e b = is-equiv.f-g (snd e) b
 
 -- Equivalences are injective
-equiv-inj : ∀ {i} {j} {A : Set i} {B : Set j} (f : A ≃ B) {x y : A}
-  → (f ☆ x == f ☆ y → x == y)
-equiv-inj f-eq {x} {y} p = let (f , g) = (fst f-eq , inverse f-eq) in
-  x       =⟨ ! (inverse-inv-l f-eq x) ⟩
+equiv-inj : ∀ {i} {j} {A : Type i} {B : Type j} (e : A ≃ B) {x y : A}
+  → (–> e x == –> e y → x == y)
+equiv-inj e {x} {y} p = let (f , g) = (–> e , <– e) in
+  x       =⟨ ! (<–-inv-l e x) ⟩
   g (f x) =⟨ ap g p ⟩
-  g (f y) =⟨ inverse-inv-l f-eq y ⟩
+  g (f y) =⟨ <–-inv-l e y ⟩
   y ∎
+
+_⁻¹ : ∀ {i j} {A : Type i} {B : Type j} → (A ≃ B) → (B ≃ A)
+e ⁻¹ = equiv (<– e) (–> e) (<–-inv-l e) (<–-inv-r e)
+
+_∘e_ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
+  → B ≃ C → A ≃ B → A ≃ C
+e1 ∘e e2 = equiv (–> e1 ∘ –> e2) (<– e2 ∘ <– e1)
+  (λ c → –> e1 (–> e2 (<– e2 (<– e1 c)))
+                   =⟨ <–-inv-r e2 (<– e1 c) |in-ctx (–> e1) ⟩
+         –> e1 (<– e1 c)  =⟨ <–-inv-r e1 c ⟩
+         c ∎)
+  (λ a → <– e2 (<– e1 (–> e1 (–> e2 a)))
+                   =⟨ <–-inv-l e1 (–> e2 a) |in-ctx (<– e2) ⟩
+         <– e2 (–> e2 a)  =⟨ <–-inv-l e2 a ⟩
+         a ∎)
 
 -- Any contractible type is equivalent to the unit type
 contr-equiv-Unit : ∀ {i j} {A : Type i} → (is-contr A → A ≃ Unit {j})
 contr-equiv-Unit e = equiv (λ _ → tt) (λ _ → fst e) (λ _ → idp) (λ a → snd e a)
+
+
+-- An equivalence induces an equivalence on the path spaces
+-- The proofs here can probably be simplified
+module _ {i j} {A : Type i} {B : Type j} (e : A ≃ B) where
+
+  private
+    ap-is-inj : {x y : A} (p : –> e x == –> e y) → x == y
+    ap-is-inj p = equiv-inj e p
+
+    abstract
+      left-inverse : {x y : A} (p : x == y) → ap-is-inj (ap (–> e) p) == p
+      left-inverse idp =
+        ! (<–-inv-l e _) ∙ <–-inv-l e _ ∙ idp
+                  =⟨ ∙-unit-r (<–-inv-l e _) |in-ctx (λ u → ! (<–-inv-l e _) ∙ u)  ⟩
+        ! (<–-inv-l e _) ∙ <–-inv-l e _ =⟨ !-inv-l (<–-inv-l e _) ⟩
+        idp ∎
+
+      postulate
+       right-inverse : {x y : A} (p : –> e x == –> e y)
+        → ap (–> e) (ap-is-inj p) == p
+--      right-inverse p = {!!}
+        -- ap-∙ (–> e) (! (inverse-left-inverse e x)) _
+        -- ∙ (ap (λ u → u ∙ ap (–> e) (ap (inverse e) p
+        --           ∙ inverse-left-inverse e y))
+        --        (ap-opposite (–> e) (inverse-left-inverse e x))
+        --   ∙ move!-right-on-left (ap (–> e) (inverse-left-inverse e x)) _ p
+        --     (ap-concat (–> e) (ap (inverse e) p) (inverse-left-inverse e y)
+        --     ∙ (ap (λ u → u ∙ ap (–> e) (inverse-left-inverse e y))
+        --            (compose-ap (–> e) (inverse e) p)
+        --     ∙ (whisker-left (ap (–> e ◯ inverse e) p)
+        --                     (! (inverse-triangle e y))
+        --     ∙ (homotopy-naturality-toid (–> e ◯ inverse e)
+        --                                 (inverse-right-inverse e)
+        --                                 p
+        --     ∙ whisker-right p (inverse-triangle e x))))))
+
+  equiv-ap : (x y : A) → (x == y) ≃ (–> e x == –> e y)
+  equiv-ap x y = equiv (ap (–> e)) ap-is-inj right-inverse left-inverse

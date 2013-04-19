@@ -27,6 +27,7 @@ private
     → (span A B C f g) == (span A' B' C' f' g')
   span=-raw idp idp idp idp idp = idp
 
+-- TODO
 -- span= : ∀ {i j k} {A A' : Type i} (p : A ≃ A')
 --   {B B' : Type j} (q : B ≃ B') {C C' : Type k} (r : C ≃ C')
 --   {f : C → A} {f' : C' → A'} (s : (a : C) →  f' (fst r a) == (fst p) (f a))

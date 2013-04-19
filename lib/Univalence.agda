@@ -33,9 +33,14 @@ postulate  -- Univalence axiom
 
 postulate -- TODO
   coe-β : ∀ {i} {A B : Type i} (e : A ≃ B) (a : A)
-    → coe (ua e) a == e ☆ a
+    → coe (ua e) a == –> e a
   coe-!β : ∀ {i} {A B : Type i} (e : A ≃ B)  (b : B)
-    → coe (! (ua e)) b == inverse e b
+    → coe (! (ua e)) b == <– e b
+
+postulate
+  ↓-idf-ua-out : ∀ {i} {A B : Type i} (e : A ≃ B) {u : A} {v : B}
+    → u == v [ (λ x → x) ↓ (ua e) ]
+    → –> e u == v
 
 -- Induction along equivalences
 

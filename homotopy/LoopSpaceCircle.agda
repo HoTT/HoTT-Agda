@@ -12,9 +12,6 @@ succ-path = ua succ-equiv
 Cover : S¹ → Type₀
 Cover = S¹-rec ℤ succ-path
 
-encode : {x : S¹} (p : base == x) → Cover x
-encode p = coe (ap Cover p) O
-
 loop^ : (n : ℤ) → base == base
 loop^ O = idp
 loop^ (pos O) = loop
@@ -38,14 +35,8 @@ loop^S (neg (S n)) =
 loop^S' : {n n' : ℤ} (p : succ n == n') → loop^ n ∙ loop == loop^ n'
 loop^S' {n} p = loop^S n ∙ ap loop^ p
 
-decode : {x : S¹} (t : Cover x) → base == x
-decode {x} =
-  S¹-elim loop^ (↓-→-in (λ {n} q →
-                 ↓-cst=idf-in
-                   (loop^S' {n} (↓-loop-out succ-equiv q)))) x
-
-decode-encode : {x : S¹} (t : base == x) → decode (encode t) == t
-decode-encode idp = idp
+encode : {x : S¹} (p : base == x) → Cover x
+encode p = coe (ap Cover p) O
 
 encode-loop^ : (n : ℤ) → encode (loop^ n) == n
 encode-loop^ O = idp
@@ -76,6 +67,15 @@ encode-loop^ (neg (S n)) =
   coe (ap Cover (! loop)) (neg n)
        =⟨ !loop-path succ-equiv (neg n) ⟩
   neg (S n) ∎
+
+decode : {x : S¹} (t : Cover x) → base == x
+decode {x} =
+  S¹-elim loop^ (↓-→-in (λ {n} q →
+                 ↓-cst=idf-in
+                   (loop^S' {n} (↓-loop-out succ-equiv q)))) x
+
+decode-encode : {x : S¹} (t : base == x) → decode (encode t) == t
+decode-encode idp = idp
 
 encode-decode : {x : S¹} (t : Cover x) → encode (decode {x} t) == t
 encode-decode {x} =
