@@ -1,19 +1,9 @@
 {-# OPTIONS --without-K #-}
 
-module lib.TLevel where
-
 open import lib.Base
-open import lib.Nat
+open import lib.types.Nat
 
-data ℕ₋₂ : Type₀ where
-  ⟨-2⟩ : ℕ₋₂
-  S : (n : ℕ₋₂) → ℕ₋₂
-
-⟨-1⟩ : ℕ₋₂
-⟨-1⟩ = S ⟨-2⟩
-
-⟨0⟩ : ℕ₋₂
-⟨0⟩ = S ⟨-1⟩
+module lib.types.TLevel where
 
 _-1 : ℕ → ℕ₋₂
 O -1 = ⟨-1⟩

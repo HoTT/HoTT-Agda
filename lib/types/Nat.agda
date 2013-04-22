@@ -1,8 +1,8 @@
 {-# OPTIONS --without-K #-}
 
-module lib.Nat where
+open import lib.Basics
 
-open import lib.Base
+module lib.types.Nat where
 
 data ℕ : Type₀ where
   O : ℕ

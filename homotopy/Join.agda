@@ -132,8 +132,10 @@ private
     to-from-glue-glue' : (a : A) (bc : B × C)
      → to-from-glue-left' a (fst bc) == to-from-glue-right' a (snd bc) [ (λ x → ap to (ap from (glue (a , x))) ∙' to-from-right x == to-from-left a ∙ glue (a , x)) ↓ glue bc ]
     to-from-glue-glue' a (b , c) = ↓-=-in (!
-      (apd (λ x → ap to (ap from (glue (a , x))) ∙' to-from-right x) (glue (b , c)) ▹ to-from-glue-right' a c =⟨ {!!} ⟩
-       ((apd (λ x → ap to (ap from (glue (a , x)))) (glue (b , c))) ∙'2 (apd to-from-right (glue (b , c)))) ▹ to-from-glue-right' a c =⟨ {!!} ⟩
+      (apd (λ x → ap to (ap from (glue (a , x))) ∙' to-from-right x) (glue (b , c)) ▹ to-from-glue-right' a c
+                 =⟨ stuff (λ x → ap to (ap from (glue (a , x)))) to-from-right (glue (b , c)) |in-ctx (λ u → u ▹ to-from-glue-right' a c) ⟩
+       ((apd (λ x → ap to (ap from (glue (a , x)))) (glue (b , c))) ∙'2 (apd to-from-right (glue (b , c)))) ▹ to-from-glue-right' a c
+                 =⟨ glue-β _ to-from-right-left to-from-right-right to-from-right-glue (b , c) |in-ctx (λ u → ((apd (λ x → ap to (ap from (glue (a , x)))) (glue (b , c))) ∙'2 u) ▹ to-from-glue-right' a c) ⟩
        ((apd (λ x → ap to (ap from (glue (a , x)))) (glue (b , c))) ∙'2 (to-from-right-glue (b , c))) ▹ to-from-glue-right' a c =⟨ {!!} ⟩
        to-from-glue-left' a b ◃ apd (λ x → glue (a , x)) (glue (b , c)) ∎))
 

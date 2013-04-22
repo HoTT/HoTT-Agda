@@ -1,11 +1,8 @@
 {-# OPTIONS --without-K #-}
 
-module lib.Pi where
+open import lib.Basics
 
-open import lib.Base
-open import lib.Sigma
-open import lib.Funext
-open import lib.PathOver
+module lib.types.Pi where
 
 -- Dependent paths in a Π-type
 module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k} where

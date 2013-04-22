@@ -5,12 +5,9 @@ open import lib.Equivalences
 
 module lib.Univalence where
 
-coe : ∀ {i} {A B : Type i} → A == B → A → B
-coe idp = idf _
-
 coe-∙ : ∀ {i} {A B C : Type i} (p : A == B) (q : B == C) (a : A)
   → coe (p ∙ q) a == coe q (coe p a)
-coe-∙ idp idp a = idp
+coe-∙ idp q a = idp
 
 abstract
   idf-is-equiv : ∀ {i} (A : Type i) → is-equiv (idf A)
@@ -34,8 +31,13 @@ postulate  -- Univalence axiom
 postulate -- TODO
   coe-β : ∀ {i} {A B : Type i} (e : A ≃ B) (a : A)
     → coe (ua e) a == –> e a
-  coe-!β : ∀ {i} {A B : Type i} (e : A ≃ B)  (b : B)
-    → coe (! (ua e)) b == <– e b
+  coe!-β : ∀ {i} {A B : Type i} (e : A ≃ B) (b : B)
+    → coe! (ua e) b == <– e b
+
+coe-ap-! : ∀ {i j} {A : Type i} (P : A → Type j) {a b : A} (p : a == b)
+  (x : P b)
+  → coe (ap P (! p)) x == coe! (ap P p) x
+coe-ap-! P idp x = idp
 
 postulate
   ↓-idf-ua-out : ∀ {i} {A B : Type i} (e : A ≃ B) {u : A} {v : B}

@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Base
-open import lib.Sigma
 open import lib.PathGroupoid
 open import lib.Funext
 open import lib.Univalence

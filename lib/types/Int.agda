@@ -1,11 +1,9 @@
 {-# OPTIONS --without-K #-}
 
-module lib.Int where
+open import lib.Basics
+open import lib.types.Nat
 
-open import lib.Base
-open import lib.Nat
-open import lib.Equivalences
-open import lib.NType
+module lib.types.Int where
 
 data ℤ : Type₀ where
   O : ℤ

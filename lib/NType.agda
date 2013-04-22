@@ -1,8 +1,6 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Base
-open import lib.TLevel
-open import lib.Coproduct
 open import lib.PathGroupoid
 
 module lib.NType {i} where
@@ -52,13 +50,13 @@ abstract
    T : {x y : A} → x == y → Type i
    T {x} {y} p =
      match (d x y) withl (λ b → match (d x x) withl (λ b' → p == ! b' ∙ b)
-                                              withr (λ _ → ⊥))
-                   withr (λ _ → ⊥)
+                                              withr (λ _ → Lift ⊥))
+                   withr (λ _ → Lift ⊥)
 
    lemma : {x y : A} → (p : x == y) -> T p
    lemma {x} idp with (d x x)
    ... | inl a = ! (!-inv-l a)
-   ... | inr r = r idp
+   ... | inr r = lift (r idp)
 
    UIP : {x y : A} (p q : x == y) -> p == q
    UIP {x} idp q with d x x | lemma q

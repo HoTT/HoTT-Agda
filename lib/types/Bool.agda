@@ -1,12 +1,8 @@
 {-# OPTIONS --without-K #-}
 
-module lib.Bool where
+open import lib.Basics
 
-open import lib.Base
-open import lib.NType
-open import lib.Empty
-open import lib.Unit
-open import lib.Coproduct
+module lib.types.Bool where
 
 data Bool : Type₀ where
   true : Bool

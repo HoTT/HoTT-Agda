@@ -27,10 +27,10 @@ loop^S (pos n) = idp
 loop^S (neg O) = !-inv-l loop
 loop^S (neg (S n)) =
   (loop^ (neg n) ∙ ! loop) ∙ loop =⟨ ∙-assoc (loop^ (neg n)) (! loop) loop ⟩
-  loop^ (neg n) ∙ (! loop ∙ loop)
+   loop^ (neg n) ∙ (! loop ∙ loop)
         =⟨ !-inv-l loop |in-ctx (λ u → loop^ (neg n) ∙ u) ⟩
-  loop^ (neg n) ∙ idp =⟨ ∙-unit-r _ ⟩
-  loop^ (neg n) ∎
+   loop^ (neg n) ∙ idp =⟨ ∙-unit-r _ ⟩
+   loop^ (neg n) ∎
 
 loop^S' : {n n' : ℤ} (p : succ n == n') → loop^ n ∙ loop == loop^ n'
 loop^S' {n} p = loop^S n ∙ ap loop^ p
@@ -38,10 +38,10 @@ loop^S' {n} p = loop^S n ∙ ap loop^ p
 encode : {x : S¹} (p : base == x) → Cover x
 encode p = coe (ap Cover p) O
 
-encode-loop^ : (n : ℤ) → encode (loop^ n) == n
-encode-loop^ O = idp
-encode-loop^ (pos O) = loop-path succ-equiv O
-encode-loop^ (pos (S n)) =
+encode-decode' : (n : ℤ) → encode (loop^ n) == n
+encode-decode' O = idp
+encode-decode' (pos O) = loop-path succ-equiv O
+encode-decode' (pos (S n)) =
   encode (loop^ (pos n) ∙ loop) =⟨ idp ⟩
   coe (ap Cover (loop^ (pos n) ∙ loop)) O
        =⟨ ap-∙ Cover (loop^ (pos n)) loop |in-ctx (λ u → coe u O) ⟩
@@ -49,12 +49,15 @@ encode-loop^ (pos (S n)) =
        =⟨ coe-∙ (ap Cover (loop^ (pos n)))
                 (ap Cover loop) O ⟩
   coe (ap Cover loop) (coe (ap Cover (loop^ (pos n))) O)
-       =⟨ encode-loop^ (pos n) |in-ctx coe (ap Cover loop) ⟩
+       =⟨ encode-decode' (pos n) |in-ctx coe (ap Cover loop) ⟩
   coe (ap Cover loop) (pos n)
        =⟨ loop-path succ-equiv (pos n) ⟩
   pos (S n) ∎
-encode-loop^ (neg O) = !loop-path succ-equiv O
-encode-loop^ (neg (S n)) =
+encode-decode' (neg O) =
+  coe (ap Cover (! loop)) O =⟨ coe-ap-! Cover loop O ⟩
+  coe! (ap Cover loop) O =⟨ !loop-path succ-equiv O ⟩
+  neg O ∎
+encode-decode' (neg (S n)) =
   encode (loop^ (neg n) ∙ ! loop) =⟨ idp ⟩
   coe (ap Cover (loop^ (neg n) ∙ ! loop)) O
        =⟨ ap-∙ Cover (loop^ (neg n)) (! loop)
@@ -63,8 +66,10 @@ encode-loop^ (neg (S n)) =
        =⟨ coe-∙ (ap Cover (loop^ (neg n)))
                 (ap Cover (! loop)) O ⟩
   coe (ap Cover (! loop)) (coe (ap Cover (loop^ (neg n))) O)
-       =⟨ encode-loop^ (neg n) |in-ctx coe (ap Cover (! loop)) ⟩
+       =⟨ encode-decode' (neg n) |in-ctx coe (ap Cover (! loop)) ⟩
   coe (ap Cover (! loop)) (neg n)
+       =⟨ coe-ap-! Cover loop (neg n) ⟩
+  coe! (ap Cover loop) (neg n)
        =⟨ !loop-path succ-equiv (neg n) ⟩
   neg (S n) ∎
 
@@ -77,14 +82,13 @@ decode {x} =
 decode-encode : {x : S¹} (t : base == x) → decode (encode t) == t
 decode-encode idp = idp
 
+theorem : (base == base) ≃ ℤ
+theorem = equiv encode decode encode-decode' decode-encode
+
 encode-decode : {x : S¹} (t : Cover x) → encode (decode {x} t) == t
 encode-decode {x} =
   S¹-elim {A = λ x → (t : Cover x) → encode (decode {x} t) == t}
-    encode-loop^ (↓-Π-in (λ q → to-transp-in _ _ (fst (ℤ-is-set _ _ _ _)))) x
-
-
-theorem : (base == base) ≃ ℤ
-theorem = equiv encode decode (encode-decode {base}) decode-encode
+    encode-decode' (↓-Π-in (λ q → to-transp-in _ _ (fst (ℤ-is-set _ _ _ _)))) x
 
 
 {- Unfinished attempt to get something similar to Mike’s original proof
@@ -92,7 +96,7 @@ tot : Type₀
 tot = Σ S¹ Cover
 
 x : (n : ℤ) → O == n [ Cover ↓ loop^ n ]
-x n = to-transp-in Cover (loop^ n) (encode-loop^ n)
+x n = to-transp-in Cover (loop^ n) (encode-decode' n)
 
 postulate
   xx : {n n' : ℤ} → (n == n') == (O == n [ Cover ↓ loop^ n ])
@@ -111,7 +115,50 @@ contr : (xt : tot) → (base , O) == xt
 contr (x , t) = contr-curryfied x t
 -}
 
+{- Flattening lemma proof -}
 
+open import homotopy.Flattening
+  Unit Unit (idf _) (idf _) (cst ℤ) (cst succ-equiv)
+
+-- This is basically [loop^]
+tot-is-contr-base : (n : ℤ) → cct tt O == cct tt n
+tot-is-contr-base O = idp
+tot-is-contr-base (pos O) = ppt tt O
+tot-is-contr-base (pos (S n)) = tot-is-contr-base (pos n) ∙ ppt tt (pos n)
+tot-is-contr-base (neg O) = ! (ppt tt (neg O))
+tot-is-contr-base (neg (S n)) =
+  tot-is-contr-base (neg n) ∙ ! (ppt tt (neg (S n)))
+
+-- This is basically [loop^S]
+tot-is-contr-loop : (n : ℤ)
+  → tot-is-contr-base n == tot-is-contr-base (succ n)
+      [ (λ x → cct tt O == x) ↓ ppt tt n ]
+tot-is-contr-loop n = ↓-cst=idf-in (aux n)
+  where
+  aux : (n : ℤ) → tot-is-contr-base n ∙ ppt tt n == tot-is-contr-base (succ n)
+  aux O = idp
+  aux (pos n) = idp
+  aux (neg O) = !-inv-l (ppt tt (neg O))
+  aux (neg (S n)) =
+    tot-is-contr-base (neg (S n)) ∙ ppt tt (neg (S n)) =⟨ idp ⟩
+     (tot-is-contr-base (neg n) ∙ ! (ppt tt (neg (S n)))) ∙ ppt tt (neg (S n))
+          =⟨ ∙-assoc (tot-is-contr-base (neg n)) _ _ ⟩
+     tot-is-contr-base (neg n) ∙ (! (ppt tt (neg (S n))) ∙ ppt tt (neg (S n)))
+          =⟨ !-inv-l (ppt tt (neg (S n)))
+             |in-ctx (λ u → tot-is-contr-base (neg n) ∙ u) ⟩
+     tot-is-contr-base (neg n) ∙ idp
+          =⟨ ∙-unit-r _ ⟩
+     tot-is-contr-base (neg n) ∎
+
+tott-is-contr : is-contr Wt
+tott-is-contr =
+  (cct tt O , Wt-elim (tot-is-contr-base ∘ snd) (tot-is-contr-loop ∘ snd))
+
+tot-is-contr : is-contr (Σ W P)
+tot-is-contr = transport! is-contr (ua eqv) tott-is-contr
+
+tot2-is-contr : is-contr (Σ S¹ Cover)
+tot2-is-contr = transport! is-contr (S¹-generic.eqv-tot succ-equiv) tot-is-contr
 
 -- -- Path fibration
 

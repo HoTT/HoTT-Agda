@@ -1,10 +1,8 @@
 {-# OPTIONS --without-K #-}
 
-module lib.Paths where
+open import lib.Basics
 
-open import lib.Base
-open import lib.Empty
-open import lib.PathGroupoid
+module lib.types.Paths where
 
 ↓-app='cst-in : ∀ {i j} {A : Set i} {B : Set j} {f : A → B} {b : B}
   {x y : A} {p : x == y} {u : f x == b} {v : f y == b}
@@ -35,6 +33,12 @@ open import lib.PathGroupoid
   → (u ∙ p) == v
   → (u == v [ (λ x → a == x) ↓ p ])
 ↓-cst=idf-in {p = idp} idp = ! (∙-unit-r _)
+
+↓-idf=idf-in : ∀ {i} {A : Set i}
+  {x y : A} {p : x == y} {u : x == x} {v : y == y}
+  → u ∙ p == p ∙' v
+  → (u == v [ (λ x → x == x) ↓ p ])
+↓-idf=idf-in {p = idp} q = ! (∙-unit-r _) ∙ q ∙ ∙'-unit-l _
 
 
 ↓-='-in : ∀ {i j} {A : Set i} {B : Set j} {f g : A → B}

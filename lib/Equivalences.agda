@@ -3,7 +3,6 @@
 open import lib.Base
 open import lib.PathGroupoid
 open import lib.NType
-open import lib.Unit
 
 module lib.Equivalences where
 
@@ -83,8 +82,8 @@ e1 ∘e e2 = equiv (–> e1 ∘ –> e2) (<– e2 ∘ <– e1)
          a ∎)
 
 -- Any contractible type is equivalent to the unit type
-contr-equiv-Unit : ∀ {i j} {A : Type i} → (is-contr A → A ≃ Unit {j})
-contr-equiv-Unit e = equiv (λ _ → tt) (λ _ → fst e) (λ _ → idp) (λ a → snd e a)
+contr-equiv-Unit : ∀ {i j} {A : Type i} → (is-contr A → A ≃ Lift {j = j} ⊤)
+contr-equiv-Unit e = equiv (λ _ → lift tt) (λ _ → fst e) (λ _ → idp) (λ a → snd e a)
 
 
 -- An equivalence induces an equivalence on the path spaces

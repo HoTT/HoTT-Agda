@@ -1,8 +1,6 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Base
-open import lib.Unit
-open import lib.Sigma
 open import lib.Equivalences
 open import lib.Univalence
 open import lib.NType
@@ -36,7 +34,7 @@ module FunextNonDep {j} {B : Type j} {f g : A → B} (h : (x : A) → f x == g x
       fst-is-equiv : is-equiv (λ (y : free-path-space-B) → fst y)
       fst-is-equiv =
         is-eq fst (λ z → (z , (z , idp))) (λ _ → idp)
-          (λ x' → pair= idp
+          (λ x' → ap (λ x → (_ , x))
                         (contr-has-all-paths (pathfrom-is-contr (fst x')) _ _))
 
       comp-fst-is-equiv : is-equiv (λ (f : A → free-path-space-B)
@@ -56,13 +54,13 @@ open FunextNonDep
 -- contractible)
 module WeakFunext {j} {P : A → Type j} (e : (x : A) → is-contr (P x)) where
 
-  P-is-unit : P == (λ x → ⊤)
+  P-is-unit : P == (λ x → Lift ⊤)
   P-is-unit = funext-nondep (λ x → ua (contr-equiv-Unit (e x)))
 
   abstract
     weak-funext : is-contr (Π A P)
     weak-funext = transport (λ Q → is-contr (Π A Q)) (! P-is-unit)
-                            ((λ x → tt) , (λ y → funext-nondep (λ x → idp)))
+                            ((λ x → lift tt) , (λ y → funext-nondep (λ x → idp)))
 
 open WeakFunext
 
@@ -156,3 +154,8 @@ module _ {j} {P : A → Type j} {f g : Π A P} where
 
   happly-equiv : (f == g) ≃ ((x : A) → f x == g x)
   happly-equiv = (happly , happly-is-equiv)
+
+  λ= = funext
+  app= = happly
+  app=-β = happly ∘ happly-funext
+  λ=-η = funext-happly
