@@ -242,6 +242,18 @@ module _ {i} {A : Set i} where
       ≡ transport P p (q $ transport B (! p) a)
   trans-→ B P refl q a = refl
 
+  trans-app→cst : ∀ {j k} (B : A → Set j) {P : Set k}
+    {b c : A} (p : b ≡ c) (q : B b → P) (a : B c)
+    → transport (λ x → B x → P) p q a
+      ≡ q (transport B (! p) a)
+  trans-app→cst B refl q a = refl
+
+  trans!-app→cst : ∀ {j k} (B : A → Set j) {P : Set k}
+    {b c : A} (p : c ≡ b) (q : B b → P) (a : B c)
+    → transport (λ x → B x → P) (! p) q a
+      ≡ q (transport B p a)
+  trans!-app→cst B refl q a = refl
+
   -- This second part is about transporting something along a known path
 
   trans-diag : ∀ {j} (P : A → A → Set j) {x y : A} (p : x ≡ y) (q : P x x)
