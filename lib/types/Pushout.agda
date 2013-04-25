@@ -111,12 +111,12 @@ module Pushout {i j k} {d : Span i j k} where
         → –> (glue* c) a == b
       ↓-glue-out c {a} {b} p =
         –> (glue* c) a =⟨ ! (glue-path c a) ⟩
-        coe (ap P (glue c)) a =⟨ to-transp-out p ⟩
+        coe (ap P (glue c)) a =⟨ to-transp p ⟩
         b ∎
 
       ↓-glue-in : (c : C) {a : left* (f c)} {b : right* (g c)} → –> (glue* c) a == b
         → a == b [ P ↓ glue c ]
-      ↓-glue-in c {a} {b} p = to-transp-in P (glue c) (glue-path c a ∙ p)
+      ↓-glue-in c {a} {b} p = from-transp P (glue c) (glue-path c a ∙ p)
 
 open Pushout public hiding (pushout)
 

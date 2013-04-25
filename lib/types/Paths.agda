@@ -34,6 +34,12 @@ module lib.types.Paths where
   → (u == v [ (λ x → a == x) ↓ p ])
 ↓-cst=idf-in {p = idp} idp = ! (∙-unit-r _)
 
+↓-idf=cst-in : ∀ {i} {A : Set i} {a : A}
+  {x y : A} {p : x == y} {u : x == a} {v : y == a}
+  → u == p ∙' v
+  → (u == v [ (λ x → x == a) ↓ p ])
+↓-idf=cst-in {p = idp} q = q ∙ ∙'-unit-l _
+
 ↓-idf=idf-in : ∀ {i} {A : Set i}
   {x y : A} {p : x == y} {u : x == x} {v : y == y}
   → u ∙ p == p ∙' v

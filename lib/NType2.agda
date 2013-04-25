@@ -1,0 +1,112 @@
+{-# OPTIONS --without-K #-}
+
+open import lib.Basics
+open import lib.types.Types
+
+module lib.NType2 where
+
+abstract
+  -- Every map between contractible types is an equivalence
+  contr-to-contr-is-equiv : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
+    → (is-contr A → is-contr B → is-equiv f)
+  contr-to-contr-is-equiv f cA cB =
+    is-eq f (λ _ → fst cA) (λ b → ! (snd cB _) ∙ snd cB b) (snd cA)
+
+  is-contr-is-prop : ∀ {i} {A : Type i} → is-prop (is-contr A)
+  is-contr-is-prop {A = A} = all-paths-is-prop (λ x y →
+    pair= (snd x (fst y))
+          (↓-cst→app-in (λ a → ↓-idf=cst-in (lemma x y a (snd y a))))) where
+
+    lemma : (x y : is-contr A) (a : A) (p : fst y == a)
+      → snd x a == snd x (fst y) ∙' p
+    lemma x y ._ idp = idp
+
+  has-level-is-prop : ∀ {i} {n : ℕ₋₂} {A : Type i}
+    → is-prop (has-level n A)
+  has-level-is-prop {n = ⟨-2⟩} = is-contr-is-prop
+  has-level-is-prop {n = S n} =
+    Π-level (λ x → Π-level (λ y → has-level-is-prop))
+
+  is-prop-is-prop : ∀ {i} {A : Type i} → is-prop (is-prop A)
+  is-prop-is-prop = has-level-is-prop
+
+  is-set-is-prop : ∀ {i} {A : Type i} → is-prop (is-set A)
+  is-set-is-prop = has-level-is-prop
+
+  subtype-level : ∀ {i j} {n : ℕ₋₂}
+    {A : Type i} {P : A → Type j}
+    → (has-level (S n) A → ((x : A) → is-prop (P x))
+      → has-level (S n) (Σ A P))
+  subtype-level p q = Σ-level p (λ x → prop-has-level-S (q x))
+
+-- -- Type of all n-truncated types
+
+_-Type_ : (n : ℕ₋₂) (i : ULevel) → Type (suc i)
+n -Type i = Σ (Type i) (has-level n)
+
+hProp : (i : ULevel) → Type (suc i)
+hProp i = ⟨-1⟩ -Type i
+
+hSet : (i : ULevel) → Type (suc i)
+hSet i = ⟨0⟩ -Type i
+
+_-Type₀ : (n : ℕ₋₂) → Type₁
+n -Type₀ = n -Type zero
+
+hProp₀ = hProp zero
+hSet₀ = hSet zero
+
+-- [n -Type] is an (n+1)-type
+
+abstract
+  ≃-level : ∀ {i} {n : ℕ₋₂} {A B : Type i}
+    → (has-level n A → has-level n B → has-level n (A ≃ B))
+  ≃-level {n = ⟨-2⟩} pA pB =
+    ((cst (fst pB) , contr-to-contr-is-equiv _ pA pB)
+    , (λ e → pair= (funext (λ _ → snd pB _))
+                   (from-transp is-equiv _ (fst (is-equiv-is-prop _ _ _)))))
+  ≃-level {n = S n} pA pB =
+    Σ-level (→-level pB) (λ _ → prop-has-level-S (is-equiv-is-prop _))
+
+  ≃-is-set : ∀ {i} {A B : Type i} → (is-set A → is-set B → is-set (A ≃ B))
+  ≃-is-set = ≃-level
+
+  universe-=-level : ∀ {i} {n : ℕ₋₂} {A B : Type i}
+    → (has-level n A → has-level n B → has-level n (A == B))
+  universe-=-level pA pB = equiv-preserves-level ua-equiv (≃-level pA pB)
+
+  universe-=-is-set : ∀ {i} {A B : Type i}
+    → (is-set A → is-set B → is-set (A == B))
+  universe-=-is-set = universe-=-level
+
+  nType= : ∀ {i} {n : ℕ₋₂} (A B : n -Type i) → Type (suc i)
+  nType= (A , _) (B , _) = A == B
+
+  nType=-in : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} → fst A == fst B → A == B
+  nType=-in idp = pair= idp (fst (has-level-is-prop _ _))
+
+  nType=-β : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} (p : fst A == fst B)
+    → fst= (nType=-in {A = A} {B = B} p) == p
+  nType=-β idp = fst=-β idp _
+
+  nType=-η : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} (p : A == B)
+    → nType=-in (fst= p) == p
+  nType=-η {B = _} idp = ap (pair= idp)
+    (ap fst {x = has-level-is-prop _ _}
+            {y = (idp , (λ p → fst (prop-is-set has-level-is-prop _ _ _ _)))}
+        (fst (is-contr-is-prop _ _)))
+
+  nType=-equiv : ∀ {i} {n : ℕ₋₂} (A B : n -Type i) → (nType= A B) ≃ (A == B)
+  nType=-equiv A B = equiv nType=-in fst= nType=-η nType=-β
+
+  _-Type-level_ : (n : ℕ₋₂) (i : ULevel)
+    → has-level (S n) (n -Type i)
+  (n -Type-level i) A B =
+    equiv-preserves-level (nType=-equiv A B)
+                          (universe-=-level (snd A) (snd B))
+
+  hProp-is-set : (i : ULevel) → is-set (hProp i)
+  hProp-is-set i = ⟨-1⟩ -Type-level i
+
+  hSet-level : (i : ULevel) → has-level ⟨1⟩ (hSet i)
+  hSet-level i = ⟨0⟩ -Type-level i

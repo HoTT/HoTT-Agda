@@ -74,26 +74,26 @@ module _ {A : Type i} where
     inhab-prop-is-contr : A → is-prop A → is-contr A
     inhab-prop-is-contr x₀ p = (x₀ , λ y → fst (p x₀ y))
 
-    contr-has-level : (n : ℕ₋₂) → (is-contr A → has-level n A)
-    contr-has-level ⟨-2⟩ p = p
-    contr-has-level (S n) p = raise-level n (contr-has-level n p)
+    contr-has-level : {n : ℕ₋₂} → (is-contr A → has-level n A)
+    contr-has-level {n = ⟨-2⟩} p = p
+    contr-has-level {n = S n} p = raise-level n (contr-has-level p)
 
-    prop-has-level-S : (n : ℕ₋₂) → (is-prop A → has-level (S n) A)
-    prop-has-level-S ⟨-2⟩ p = p
-    prop-has-level-S (S n) p = raise-level (S n) (prop-has-level-S n p)
+    prop-has-level-S : {n : ℕ₋₂} → (is-prop A → has-level (S n) A)
+    prop-has-level-S {n = ⟨-2⟩} p = p
+    prop-has-level-S {n = S n} p = raise-level (S n) (prop-has-level-S p)
 
-    set-has-level-SS : (n : ℕ₋₂) → (is-set A → has-level (S (S n)) A)
-    set-has-level-SS ⟨-2⟩ p = p
-    set-has-level-SS (S n) p = raise-level (S (S n)) (set-has-level-SS n p)
+    set-has-level-SS : {n : ℕ₋₂} → (is-set A → has-level (S (S n)) A)
+    set-has-level-SS {n = ⟨-2⟩} p = p
+    set-has-level-SS {n = S n} p = raise-level (S (S n)) (set-has-level-SS p)
 
     contr-is-prop : is-contr A → is-prop A
-    contr-is-prop = contr-has-level ⟨-1⟩
+    contr-is-prop = contr-has-level
 
     contr-is-set : is-contr A → is-set A
-    contr-is-set = contr-has-level ⟨0⟩
+    contr-is-set = contr-has-level
 
     prop-is-set : is-prop A → is-set A
-    prop-is-set = prop-has-level-S ⟨-1⟩
+    prop-is-set = prop-has-level-S
 
     -- If [A] has level [n], then so does [x == y] for [x y : A]
     =-preserves-level : (n : ℕ₋₂) {x y : A}

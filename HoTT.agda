@@ -4,6 +4,7 @@ module HoTT where
 
 open import lib.Basics public
 open import lib.types.Types public
+open import lib.NType2 public
 
 {-
 To use coinduction in the form of [∞], [♭] and [♯] you can do:

@@ -68,7 +68,7 @@ module _ {i} {A : Type i} (f : A ≃ A) where
   ↓-loop-out : {a a' : A} → a == a' [ P ↓ loop ] → –> f a == a'
   ↓-loop-out {a} {a'} p =
     –> f a =⟨ ! (loop-path a) ⟩
-    coe (ap P loop) a =⟨ to-transp-out p ⟩
+    coe (ap P loop) a =⟨ to-transp p ⟩
     a' ∎
 
 module S¹-generic where

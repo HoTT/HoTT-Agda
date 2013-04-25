@@ -3,6 +3,7 @@
 open import lib.Base
 open import lib.PathGroupoid
 open import lib.Funext
+open import lib.Equivalences
 open import lib.Univalence
 
 module lib.PathOver where
@@ -142,26 +143,57 @@ apd-π₂-β idp idp = idp
 -- These lemmas do not really look computational, but they are only used in the
 -- [↓-pp] lemmas which do look computational.
 
-to-transp-in : ∀ {i j} {A : Set i} (B : A → Set j)
+module _ {i j} {A : Set i} where
+
+  from-transp : (B : A → Set j) {a a' : A} (p : a == a')
+    {u : B a} {v : B a'}
+    → (coe (ap B p) u == v)
+    → (u == v [ B ↓ p ])
+  from-transp B idp idp = idp
+
+  to-transp : {B : A → Set j} {a a' : A} {p : a == a'}
+    {u : B a} {v : B a'}
+    → (u == v [ B ↓ p ])
+    → (coe (ap B p) u == v)
+  to-transp {p = idp} idp = idp
+
+  to-transp-β : (B : A → Set j) {a a' : A} (p : a == a')
+    {u : B a} {v : B a'}
+    (q : coe (ap B p) u == v)
+    → to-transp (from-transp B p q) == q
+  to-transp-β B idp idp = idp
+
+  to-transp-η : {B : A → Set j} {a a' : A} {p : a == a'}
+    {u : B a} {v : B a'}
+    (q : u == v [ B ↓ p ])
+    → from-transp B p (to-transp q) == q
+  to-transp-η {p = idp} idp = idp
+
+  to-transp-equiv : (B : A → Set j) {a a' : A} (p : a == a')
+    {u : B a} {v : B a'} → (u == v [ B ↓ p ]) ≃ (coe (ap B p) u == v)
+  to-transp-equiv B p =
+    equiv to-transp (from-transp B p) (to-transp-β B p) (to-transp-η)
+
+from-transp! : ∀ {i j} {A : Set i} (B : A → Set j)
   {a a' : A} (p : a == a')
   {u : B a} {v : B a'}
-  → (coe (ap B p) u == v)
+  → (u == coe! (ap B p) v)
   → (u == v [ B ↓ p ])
-to-transp-in B idp idp = idp
+from-transp! B idp idp = idp
 
-to-transp-out : ∀ {i j} {A : Set i} {B : A → Set j}
+to-transp! : ∀ {i j} {A : Set i} {B : A → Set j}
   {a a' : A} {p : a == a'}
   {u : B a} {v : B a'}
   → (u == v [ B ↓ p ])
-  → (coe (ap B p) u == v)
-to-transp-out {p = idp} idp = idp
+  → (u == coe! (ap B p) v)
+to-transp! {p = idp} idp = idp
 
-to-transp-β : ∀ {i j} {A : Set i} (B : A → Set j)
+to-transp!-β : ∀ {i j} {A : Set i} (B : A → Set j)
   {a a' : A} (p : a == a')
   {u : B a} {v : B a'}
-  (q : coe (ap B p) u == v)
-  → to-transp-out (to-transp-in B p q) == q
-to-transp-β B idp idp = idp
+  (q : u == coe! (ap B p) v)
+  → to-transp! (from-transp! B p q) == q
+to-transp!-β B idp idp = idp
 
 
 -- Stuff that do not belong here
@@ -209,7 +241,7 @@ _∙dep_ {p = idp} idp q = q
 to-transp-weird : ∀ {i j} {A : Set i} {B : A → Set j}
   {u v : A} {d : B u} {d' d'' : B v} {p : u == v}
   (q : d == d' [ B ↓ p ]) (r : coe (ap B p) d == d'')
-  → (to-transp-in B p r ∙'dep (! r ∙ to-transp-out q)) == q
+  → (from-transp B p r ∙'dep (! r ∙ to-transp q)) == q
 to-transp-weird {p = idp} idp idp = idp
 
 

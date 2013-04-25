@@ -65,16 +65,16 @@ module _ {k} (C : A → Type k) (D : (b : B) → C (f b) ≃ C (g b)) where
   -- Dependent path in [P] over [pp b]
   module _ {b : B} {d : C (f b)} {d' : C (g b)} where
     ↓-pp-in : (–> (D b) d == d' → d == d' [ P ↓ pp b ])
-    ↓-pp-in p = to-transp-in P (pp b) (pp-path b d ∙' p)
+    ↓-pp-in p = from-transp P (pp b) (pp-path b d ∙' p)
 
     ↓-pp-out : (d == d' [ P ↓ pp b ] → –> (D b) d == d')
-    ↓-pp-out p = ! (pp-path b d) ∙ to-transp-out p
+    ↓-pp-out p = ! (pp-path b d) ∙ to-transp p
 
     ↓-pp-β : (q : –> (D b) d == d') → ↓-pp-out (↓-pp-in q) == q
     ↓-pp-β q =
       ↓-pp-out (↓-pp-in q)
                         =⟨ idp ⟩
-      ! (pp-path b d) ∙ to-transp-out (to-transp-in P (pp b) (pp-path b d ∙' q))
+      ! (pp-path b d) ∙ to-transp (from-transp P (pp b) (pp-path b d ∙' q))
                  =⟨ to-transp-β P (pp b) (pp-path b d ∙' q) |in-ctx (λ u → ! (pp-path b d) ∙ u) ⟩
       ! (pp-path b d) ∙ (pp-path b d ∙' q)
                  =⟨ lem (pp-path b d) q ⟩
@@ -83,5 +83,3 @@ module _ {k} (C : A → Type k) (D : (b : B) → C (f b) ≃ C (g b)) where
         lem : ∀ {i} {A : Type i} {x y z : A} (p : x == y) (q : y == z)
           → ! p ∙ (p ∙' q) == q
         lem idp idp = idp
-
-

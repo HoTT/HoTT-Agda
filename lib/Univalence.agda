@@ -28,6 +28,9 @@ postulate  -- Univalence axiom
   coe-equiv-β : ∀ {i} {A B : Type i} (e : A ≃ B) → coe-equiv (ua e) == e
   ua-η : ∀ {i} {A B : Type i} (p : A == B) → ua (coe-equiv p) == p
 
+ua-equiv : ∀ {i} {A B : Type i} → (A ≃ B) ≃ (A == B)
+ua-equiv = equiv ua coe-equiv ua-η coe-equiv-β
+
 postulate -- TODO
   coe-β : ∀ {i} {A B : Type i} (e : A ≃ B) (a : A)
     → coe (ua e) a == –> e a

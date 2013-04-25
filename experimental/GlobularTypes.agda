@@ -4,6 +4,7 @@ open import HoTT
 
 module experimental.GlobularTypes where
 
+{- Globular types as a coinductive record -}
 record Glob (i : ULevel) : Type (suc i) where
   coinductive
   constructor glob
@@ -12,14 +13,17 @@ record Glob (i : ULevel) : Type (suc i) where
     Hom : (a b : Ob) → Glob i
 open Glob public
 
+{- The terminal globular type -}
 Unit-glob : Glob zero
 Ob Unit-glob = Unit
-Hom Unit-glob a b = Unit-glob
+Hom Unit-glob _ _ = Unit-glob
 
-Id-glob : (A : Type₀) → Glob zero
+{- The tower of identity types -}
+Id-glob : ∀ {i} (A : Type i) → Glob zero
 Ob (Id-glob A) = A
 Hom (Id-glob A) a b = Id-glob (a == b)
 
+{- Bisimulation between globular types -}
 record _~_ {i} (G H : Glob i) : Type (suc i) where
   coinductive
   constructor glob~
@@ -31,14 +35,14 @@ record _~_ {i} (G H : Glob i) : Type (suc i) where
 open _~_ public
 
 =-to-~ : ∀ {i} {G H : Glob i} → G == H → G ~ H
-Ob= (=-to-~ p) = ap Ob p 
+Ob= (=-to-~ p) = ap Ob p
 Hom= (=-to-~ p) q r =
   =-to-~ (↓-app→cst-out (↓-→-out (apd Hom p)
                                  (↓-ap-out _ Ob p q))
                         (↓-ap-out _ Ob p r))
--- The definition of [Hom= (=-to-~ p) q r] would just be [apd Hom p q r] in
--- infinite-dimensional type theory, but here we need to add a lot of non-sense
--- to make it type-check.
+-- The definition of [Hom= (=-to-~ p) q r] would/should just be
+-- [=-to-~ (apd Hom p q r)] in infinite-dimensional type theory, but here we
+-- need to add a lot of non-sense to make it type-check.
 
 {-
 We postulate that bisimilarity is equality, because this should be true.
@@ -66,4 +70,3 @@ eta : ∀ {i} {A : Type (suc i)} (Ob* : A → Type i)
   (Hom* : (x : A) (a b : Ob* x) → A)
   (f g : A → Glob i) (s : (x : A) → f x ~ g x) → f == g
 eta Ob* Hom* f g s = funext (λ x → bisim (s x))
-
