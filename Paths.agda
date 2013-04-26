@@ -142,10 +142,9 @@ module _ {i} {A : Set i} where
     → (q ≡ r → p ∘ q ≡ p ∘ r)
   whisker-left p refl = refl
 
-  -- This is useless in the presence of ap & equation reasioning combinators
   whisker-right : {x y z : A} (p : y ≡ z) {q r : x ≡ y}
     → (q ≡ r → q ∘ p ≡ r ∘ p)
-  whisker-right p refl = refl
+  whisker-right refl {q} {r} h = refl-right-unit q ∘ (h ∘ ! (refl-right-unit r))
 
   anti-whisker-right : {x y z : A} (p : y ≡ z) {q r : x ≡ y}
     → (q ∘ p ≡ r ∘ p → q ≡ r)
