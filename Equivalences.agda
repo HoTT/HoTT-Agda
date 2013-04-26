@@ -42,6 +42,9 @@ module _ {i} {j} {A : Set i} {B : Set j} where
     inverse-left-inverse (f , e) x =
       ! (base-path (π₂ (e (f x)) (x , refl)))
 
+    move-inverse : ∀ (f : A ≃ B) {x} {y} → f ☆ y ≡ x → inverse f x ≡ y
+    move-inverse f p = ap (inverse f) (! p) ∘ inverse-left-inverse f _
+
     hfiber-triangle : (f : A → B) (z : B) {x y : hfiber f z} (p : x ≡ y)
       → ap f (base-path p) ∘ π₂ y ≡ π₂ x
     hfiber-triangle f z {x} {.x} refl = refl
