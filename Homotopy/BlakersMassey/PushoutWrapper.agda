@@ -38,6 +38,13 @@ module Homotopy.BlakersMassey.PushoutWrapper
     pushout-rec R left* right* glue* =
       P.pushout-rec R left* right* (λ q → glue* (π₂ (π₂ q)))
 
+    pushout-β-glue : ∀ {k} (R : P → Set k)
+      (left* : ∀ x → R (left x)) (right* : ∀ y → R (right y))
+      (glue* : ∀ {x} {y} (q : Q x y) → transport R (glue q) (left* x) ≡ right* y)
+      → (∀ {x} {y} (q : Q x y) → apd (pushout-rec R left* right* glue*) (glue q) ≡ glue* q)
+    pushout-β-glue R left* right* glue* {x}{y} q =
+      P.pushout-β-glue R left* right* (λ q → glue* (π₂ (π₂ q))) (x , (y , q))
+
     pushout-rec-nondep : ∀ {k} (R : Set k)
       (left* : X → R) (right* : Y → R)
       (glue* : ∀ {x} {y} (q : Q x y) → left* x ≡ right* y)
