@@ -86,8 +86,8 @@ decode {x} =
 decode-encode : {x : S¹} (t : base == x) → decode (encode t) == t
 decode-encode idp = idp  -- Magic!
 
-theorem : (base == base) ≃ ℤ
-theorem = equiv encode decode encode-decode' decode-encode
+ΩS¹≃ℤ : (base == base) ≃ ℤ
+ΩS¹≃ℤ = equiv encode decode encode-decode' decode-encode
 
 -- This is the whole fiberwise equivalence, this is not needed for the theorem.
 encode-decode : {x : S¹} (t : Cover x) → encode (decode {x} t) == t
@@ -103,37 +103,39 @@ open import homotopy.Flattening
   Unit Unit (idf _) (idf _) (cst ℤ) (cst succ-equiv)
   renaming (eqv to flattening-eqv)
 
+-- We prove that the flattened HIT corresponding to the universal cover of the
+-- circle (the real line) is contractible
 Wt-is-contr : is-contr Wt
-Wt-is-contr = (cct tt O , Wt-elim (base-case ∘ snd) (loop-case ∘ snd)) where
+Wt-is-contr = (cct tt O , Wt-elim (base* ∘ snd) (loop* ∘ snd)) where
 
   -- This is basically [loop^]
-  base-case : (n : ℤ) → cct tt O == cct tt n
-  base-case O = idp
-  base-case (pos O) = ppt tt O
-  base-case (pos (S n)) = base-case (pos n) ∙ ppt tt (pos n)
-  base-case (neg O) = ! (ppt tt (neg O))
-  base-case (neg (S n)) = base-case (neg n) ∙ ! (ppt tt (neg (S n)))
+  base* : (n : ℤ) → cct tt O == cct tt n
+  base* O = idp
+  base* (pos O) = ppt tt O
+  base* (pos (S n)) = base* (pos n) ∙ ppt tt (pos n)
+  base* (neg O) = ! (ppt tt (neg O))
+  base* (neg (S n)) = base* (neg n) ∙ ! (ppt tt (neg (S n)))
 
   -- This is basically [loop^S]
-  loop-case : (n : ℤ)
-    → base-case n == base-case (succ n) [ (λ x → cct tt O == x) ↓ ppt tt n ]
-  loop-case n = ↓-cst=idf-in (aux n) where
+  loop* : (n : ℤ)
+    → base* n == base* (succ n) [ (λ x → cct tt O == x) ↓ ppt tt n ]
+  loop* n = ↓-cst=idf-in (aux n) where
 
-    aux : (n : ℤ) → base-case n ∙ ppt tt n == base-case (succ n)
+    aux : (n : ℤ) → base* n ∙ ppt tt n == base* (succ n)
     aux O = idp
     aux (pos n) = idp
     aux (neg O) = !-inv-l (ppt tt (neg O))
     aux (neg (S n)) =
-      base-case (neg (S n)) ∙ ppt tt (neg (S n))
+      base* (neg (S n)) ∙ ppt tt (neg (S n))
                 =⟨ idp ⟩
-      (base-case (neg n) ∙ ! (ppt tt (neg (S n)))) ∙ ppt tt (neg (S n))
-                =⟨ ∙-assoc (base-case (neg n)) _ _ ⟩
-      base-case (neg n) ∙ (! (ppt tt (neg (S n))) ∙ ppt tt (neg (S n)))
+      (base* (neg n) ∙ ! (ppt tt (neg (S n)))) ∙ ppt tt (neg (S n))
+                =⟨ ∙-assoc (base* (neg n)) _ _ ⟩
+      base* (neg n) ∙ (! (ppt tt (neg (S n))) ∙ ppt tt (neg (S n)))
                 =⟨ !-inv-l (ppt tt (neg (S n)))
-                       |in-ctx (λ u → base-case (neg n) ∙ u) ⟩
-      base-case (neg n) ∙ idp
+                       |in-ctx (λ u → base* (neg n) ∙ u) ⟩
+      base* (neg n) ∙ idp
                 =⟨ ∙-unit-r _ ⟩
-      base-case (neg n) ∎
+      base* (neg n) ∎
 
 -- Using the flattening lemma we get that the total space of [Cover]
 -- is contractible
@@ -144,20 +146,43 @@ tot-is-contr = transport! is-contr
 tot-encode : Σ S¹ (λ y → base == y) → Σ S¹ Cover
 tot-encode (x , y) = (x , encode y)
 
--- This induces an equivalence on the total spaces, because both total spaces
--- are contractible
+-- The previous map induces an equivalence on the total spaces, because both
+-- total spaces are contractible
 total-is-equiv : is-equiv tot-encode
 total-is-equiv = contr-to-contr-is-equiv _ (pathfrom-is-contr base) tot-is-contr
 
--- Hence an equivalence fiberwise
-postulate  -- TODO
+-- Hence it’s an equivalence fiberwise
+postulate  -- TODO, will be only one line
   encode-is-equiv : (x : S¹) → is-equiv (encode {x})
---encode-is-equiv x = {!!}
 
--- We can then conclude that the based loop space of the circle is equivalent to
--- the type of the integers
-ΩS¹≃ℤ : (base == base) ≃ ℤ
-ΩS¹≃ℤ = (encode {base} , encode-is-equiv base)
+private
+  -- We can then conclude that the loop space of the circle is equivalent
+  -- to the type of the integers
+  ΩS¹≃ℤ' : (base == base) ≃ ℤ
+  ΩS¹≃ℤ' = (encode {base} , encode-is-equiv base)
+
+-- We can also deduce that the circle is a 1-type (WIP)
+
+ΩS¹-is-set : is-set (base == base)
+ΩS¹-is-set = equiv-preserves-level (ΩS¹≃ℤ ⁻¹) ℤ-is-set
+
+-- TODO
+-- S¹-level : has-level ⟨1⟩ S¹
+-- S¹-level =
+--   S¹-elim
+--     (S¹-elim
+--       ΩS¹-is-set  -- [base == base] is a set
+--       (from-transp _ loop (fst (has-level-is-prop _ _))))
+--  -- (π₁ (is-truncated-is-prop _ _ _)))
+--     (↓-cst→app-in
+--       (S¹-elim
+--         (from-transp _ loop (fst (has-level-is-prop _ _)))
+--         (from-transp _ loop {!!})))
+-- --     (funext
+-- --       (S¹-elim
+-- --         ? -- (π₁ (is-truncated-is-prop _ _ _))
+-- --         ?))
+-- -- --(prop-has-all-paths (==-is-truncated _ (is-truncated-is-prop _)) _ _)))
 
 {- Unfinished attempt to get something similar to Mike’s original proof
 tot : Type₀
@@ -182,55 +207,3 @@ contr-curryfied = S¹-elim (λ n → pair= (loop^ n) (x n)) (↓-Π-in (λ {n} {
 contr : (xt : tot) → (base , O) == xt
 contr (x , t) = contr-curryfied x t
 -}
-
--- -- Path fibration
-
--- path-fib : S¹ → Type₀
--- path-fib t = (t == base)
-
--- tot-path-fib : Type₀
--- tot-path-fib = Σ S¹ path-fib
-
--- tot-path-fib-is-contr : is-contr tot-path-fib
--- tot-path-fib-is-contr = pathto-is-contr base
-
-
--- tot-cover-is-contr : is-contr tot-cover
--- tot-cover-is-contr = (R-z O , λ x → ! (R-contr x))
-
--- -- We define now a fiberwise map between the two fibrations [path-fib]
--- -- and [Cover]
--- fiberwise-map : (x : S¹) → (path-fib x → Cover x)
--- fiberwise-map x p = transport Cover (! p) O
-
--- -- This induces an equivalence on the total spaces, because both total spaces
--- -- are contractible
--- total-is-equiv : is-equiv (total-map fiberwise-map)
--- total-is-equiv = contr-to-contr-is-equiv (total-map fiberwise-map)
---                                          tot-path-fib-is-contr
---                                          tot-cover-is-contr
-
--- -- Hence an equivalence fiberwise
--- fiberwise-map-is-equiv : (x : S¹) → is-equiv (fiberwise-map x)
--- fiberwise-map-is-equiv x = fiberwise-is-equiv fiberwise-map total-is-equiv x
-
--- -- We can then conclude that the based loop space of the circle is equivalent to
--- -- the type of the integers
--- ΩS¹≃ℤ : (base == base) ≃ ℤ
--- ΩS¹≃ℤ = (fiberwise-map base , fiberwise-map-is-equiv base)
-
--- -- We can also deduce that the circle is 1-truncated
-
--- ΩS¹-is-set : is-set (base == base)
--- ΩS¹-is-set = equiv-types-truncated _ (ΩS¹≃ℤ ⁻¹) ℤ-is-set
-
--- S¹-is-gpd : is-gpd S¹
--- S¹-is-gpd =
---   S¹-rec _
---     (S¹-rec _
---       ΩS¹-is-set  -- [base == base] is a set
---       (π₁ (is-truncated-is-prop _ _ _)))
---     (funext
---       (S¹-rec _
---         (π₁ (is-truncated-is-prop _ _ _))
---         (prop-has-all-paths (==-is-truncated _ (is-truncated-is-prop _)) _ _)))
