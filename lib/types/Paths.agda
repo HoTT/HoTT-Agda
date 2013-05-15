@@ -62,10 +62,21 @@ _▹_ : ∀ {i j} {A : Set i} {B : A → Set j} {x y : A} {u : B x}
      → (u == w [ B ↓ p ])
 _▹_ {p = idp} q idp = q
 
-idp▹ : ∀ {i j} {A : Set i} {B : A → Set j} {x : A}
+idp▹ : ∀ {i j} {A : Set i} (B : A → Set j) {x : A}
   {v w : B x} (q : v == w)
   → _▹_ {B = B} {p = idp} idp q == q
-idp▹ idp = idp
+idp▹ B idp = idp
+
+_▹!_ : ∀ {i j} {A : Set i} {B : A → Set j} {x y : A} {u : B x}
+  {v w : B y} {p : x == y}
+  → (u == v [ B ↓ p ]) → w == v
+     → (u == w [ B ↓ p ])
+_▹!_ {p = idp} q idp = q
+
+idp▹! : ∀ {i j} {A : Set i} (B : A → Set j) {x : A}
+  {v w : B x} (q : w == v)
+  → _▹!_ {B = B} {p = idp} idp q == ! q
+idp▹! B idp = idp
 
 _◃_ : ∀ {i j} {A : Set i} {B : A → Set j} {x y : A} {u v : B x}
   {w : B y} {p : x == y}
@@ -73,10 +84,21 @@ _◃_ : ∀ {i j} {A : Set i} {B : A → Set j} {x y : A} {u v : B x}
      → (u == w [ B ↓ p ]))
 _◃_ {p = idp} idp q = q
 
-◃idp : ∀ {i j} {A : Set i} {B : A → Set j} {x : A}
-  {v w : B x} (q : v == w)
+◃idp : ∀ {i j} {A : Set i} (B : A → Set j) {x : A}
+  {v w : B x} (q : w == v)
   → _◃_ {B = B} {p = idp} q idp == q
-◃idp idp = idp
+◃idp B idp = idp
+
+_!◃_ : ∀ {i j} {A : Set i} {B : A → Set j} {x y : A} {u v : B x}
+  {w : B y} {p : x == y}
+  → (v == u → (v == w [ B ↓ p ])
+     → (u == w [ B ↓ p ]))
+_!◃_ {p = idp} idp q = q
+
+!◃idp : ∀ {i j} {A : Set i} (B : A → Set j) {x : A}
+  {v w : B x} (q : v == w)
+  → _!◃_ {B = B} {p = idp} q idp == ! q
+!◃idp B idp = idp
 
 
 ↓-=-in : ∀ {i j} {A : Set i} {B : A → Set j} {f g : Π A B}
@@ -84,7 +106,7 @@ _◃_ {p = idp} idp q = q
   → (u ◃ apd f p) == (apd g p ▹ v)
   → (u == v [ (λ x → g x == f x) ↓ p ])
 ↓-=-in {B = B} {p = idp} {u} {v} q =
-  ! (◃idp {B = B} u) ∙ (q ∙ idp▹ {B = B} v)
+  ! (◃idp B u) ∙ (q ∙ idp▹ B v)
 
 postulate
  ↓-=-out : ∀ {i j} {A : Set i} {B : A → Set j} {f g : Π A B}

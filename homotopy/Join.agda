@@ -6,10 +6,9 @@ open import HoTT
 
 module homotopy.Join where
 
-_*_ : ∀ {i j} (A : Type i) (B : Type j) → Type (max i j)
-A * B = A ⊔^[ A × B ] B  / fst , snd
+  _*_ : ∀ {i j} (A : Type i) (B : Type j) → Type (max i j)
+  A * B = A ⊔^[ A × B ] B  / fst , snd
 
-private
   module Assoc {i j k} (A : Type i) (B : Type j) (C : Type k) where
 
     {- First map -}
@@ -24,7 +23,7 @@ private
     to-left-glue (a , b) = glue (a , left b)
 
     to-left : A * B → A * (B * C)
-    to-left = pushout-rec _ to-left-left to-left-right to-left-glue
+    to-left = pushout-rec to-left-left to-left-right to-left-glue
 
     to-right : C → A * (B * C)
     to-right c = right (right c)
@@ -38,14 +37,19 @@ private
     to-glue-glue : (c : C) (ab : A × B) → to-glue-left c (fst ab) == to-glue-right c (snd ab) [ (λ x → to-left x == to-right c) ↓ glue ab ]
     to-glue-glue c (a , b) = ↓-app='cst-in
       (glue (a , right c) =⟨ ! (↓-cst='app-out (apd (λ (x : B * C) → glue (a , x)) (glue (b , c)))) ⟩
-       glue (a , left b) ∙' ap right (glue (b , c)) =⟨ ! (glue-β' _ to-left-left to-left-right to-left-glue (a , b)) |in-ctx (λ u → u ∙' ap right (glue (b , c))) ⟩
+       glue (a , left b) ∙' ap right (glue (b , c)) =⟨ ! (glue-β' to-left-left to-left-right to-left-glue (a , b)) |in-ctx (λ u → u ∙' ap right (glue (b , c))) ⟩
        ap to-left (glue (a , b)) ∙' ap right (glue (b , c)) ∎)
 
     to-glue : (ab-c : (A * B) × C) → to-left (fst ab-c) == to-right (snd ab-c)
-    to-glue (ab , c) = pushout-elim _ (to-glue-left c) (to-glue-right c) (to-glue-glue c) ab
+    to-glue (ab , c) = pushout-elim (to-glue-left c) (to-glue-right c) (to-glue-glue c) ab
 
     to : (A * B) * C → A * (B * C)
-    to = pushout-rec _ to-left to-right to-glue
+    to = pushout-rec to-left to-right to-glue
+
+    postulate
+      glue-β'-to : (ab-c : (A * B) × C) → ap to (glue ab-c) == to-glue ab-c
+      -- -- For some unknown reason, the following gives an unsolved meta
+      -- glue-β'-to ab-c = glue-β' to-left to-right to-glue ab-c 
 
     {- Second map -}
 
@@ -62,7 +66,7 @@ private
     from-right-glue (b , c) = glue (right b , c)
 
     from-right : B * C → (A * B) * C
-    from-right = pushout-rec _ from-right-left from-right-right from-right-glue
+    from-right = pushout-rec from-right-left from-right-right from-right-glue
 
     from-glue-left : (a : A) (b : B) → from-left a == from-right (left b)
     from-glue-left a b = ap left (glue (a , b))
@@ -72,15 +76,20 @@ private
 
     from-glue-glue : (a : A) (bc : B × C) → from-glue-left a (fst bc) == from-glue-right a (snd bc) [ (λ x → from-left a == from-right x) ↓ glue bc ]
     from-glue-glue a (b , c) = ↓-cst='app-in
-      (ap left (glue (a , b)) ∙' ap from-right (glue (b , c)) =⟨ glue-β' _ from-right-left from-right-right from-right-glue (b , c) |in-ctx (λ u → ap left (glue (a , b)) ∙' u) ⟩
+      (ap left (glue (a , b)) ∙' ap from-right (glue (b , c)) =⟨ glue-β' from-right-left from-right-right from-right-glue (b , c) |in-ctx (λ u → ap left (glue (a , b)) ∙' u) ⟩
        ap left (glue (a , b)) ∙' glue (right b , c) =⟨ ! (↓-app='cst-out (apd (λ (x : A * B) → glue (x , c)) (glue (a , b)))) ⟩
        glue (left a , c) ∎)
 
     from-glue : (a-bc : A × (B * C)) → from-left (fst a-bc) == from-right (snd a-bc)
-    from-glue (a , bc) = pushout-elim _ (from-glue-left a) (from-glue-right a) (from-glue-glue a) bc
+    from-glue (a , bc) = pushout-elim (from-glue-left a) (from-glue-right a) (from-glue-glue a) bc
 
     from : A * (B * C) → (A * B) * C
-    from = pushout-rec _ from-left from-right from-glue
+    from = pushout-rec from-left from-right from-glue
+
+    postulate
+      glue-β'-from : (a-bc : A × (B * C)) → ap from (glue a-bc) == from-glue a-bc
+      -- -- For some unknown reason, the following gives an unsolved meta
+      -- glue-β'-from a-bc = glue-β' from-left from-right from-glue a-bc
 
     {- First composite -}
 
@@ -97,21 +106,21 @@ private
     to-from-right-glue (b , c) = ↓-='-in (!
                     (ap (λ z → to (from (right z))) (glue (b , c)) =⟨ idp ⟩
                      ap (λ z → to (from-right z)) (glue (b , c)) =⟨ ap-∘ to from-right (glue (b , c)) ⟩
-                     ap to (ap from-right (glue (b , c))) =⟨ glue-β' _ from-right-left from-right-right from-right-glue (b , c) |in-ctx ap to ⟩
-                     ap to (glue ((right b , c) :> (A * B) × C)) =⟨ glue-β' (A * (B * C)) to-left to-right to-glue ((right b , c) :> (A * B) × C) ⟩
+                     ap to (ap from-right (glue (b , c))) =⟨ glue-β' from-right-left from-right-right from-right-glue (b , c) |in-ctx ap to ⟩
+                     ap to (glue ((right b , c) :> (A * B) × C)) =⟨ glue-β'-to (right b , c)⟩
                      to-glue ((right b , c) :> (A * B) × C) =⟨ idp ⟩
                      ap right (glue (b , c)) ∎))
 
     to-from-right : (bc : B * C) → to (from (right bc)) == right bc
-    to-from-right = pushout-elim _ to-from-right-left to-from-right-right to-from-right-glue
+    to-from-right = pushout-elim to-from-right-left to-from-right-right to-from-right-glue
 
     to-from-glue-left' : (a : A) (b : B) → ap to (ap from (glue (a , left b))) == glue (a , left b)
     to-from-glue-left' a b =
-      (ap to (ap from (glue (a , left b))) =⟨ glue-β' _ from-left from-right from-glue (a , left b) |in-ctx ap to ⟩
+      (ap to (ap from (glue (a , left b))) =⟨ glue-β'-from (a , left b) |in-ctx ap to ⟩
        ap to (from-glue (a , left b)) =⟨ idp ⟩
        ap to (ap left (glue (a , b))) =⟨ ∘-ap to left (glue (a , b)) ⟩
        ap (to ∘ left) (glue (a , b)) =⟨ idp ⟩
-       ap to-left (glue (a , b)) =⟨ glue-β' _ to-left-left to-left-right to-left-glue (a , b) ⟩
+       ap to-left (glue (a , b)) =⟨ glue-β' to-left-left to-left-right to-left-glue (a , b) ⟩
        to-left-glue (a , b) =⟨ idp ⟩
        glue (a , left b) ∎)
 
@@ -120,34 +129,11 @@ private
 
     to-from-glue-right' : (a : A) (c : C) → ap to (ap from (glue (a , right c))) == glue (a , right c)
     to-from-glue-right' a c =
-      (ap to (ap from (glue (a , right c))) =⟨ glue-β' _ from-left from-right from-glue (a , right c) |in-ctx ap to ⟩
+      (ap to (ap from (glue (a , right c))) =⟨ glue-β'-from (a , right c) |in-ctx ap to ⟩
        ap to (from-glue (a , right c)) =⟨ idp ⟩
-       ap to (glue (left a , c)) =⟨ glue-β' _ to-left to-right to-glue (left a , c) ⟩
+       ap to (glue (left a , c)) =⟨ glue-β'-to (left a , c) ⟩
        to-glue (left a , c) =⟨ idp ⟩
        glue (a , right c) ∎)
 
     to-from-glue-right : (a : A) (c : C) → to-from-left a == to-from-right (right c) [ (λ x → to (from x) == x) ↓ glue (a , right c) ]
     to-from-glue-right a c = ↓-∘=id-in from to (to-from-glue-right' a c)
-
-    to-from-glue-glue' : (a : A) (bc : B × C)
-     → to-from-glue-left' a (fst bc) == to-from-glue-right' a (snd bc) [ (λ x → ap to (ap from (glue (a , x))) ∙' to-from-right x == to-from-left a ∙ glue (a , x)) ↓ glue bc ]
-    to-from-glue-glue' a (b , c) = ↓-=-in (!
-      (apd (λ x → ap to (ap from (glue (a , x))) ∙' to-from-right x) (glue (b , c)) ▹ to-from-glue-right' a c
-                 =⟨ stuff (λ x → ap to (ap from (glue (a , x)))) to-from-right (glue (b , c)) |in-ctx (λ u → u ▹ to-from-glue-right' a c) ⟩
-       ((apd (λ x → ap to (ap from (glue (a , x)))) (glue (b , c))) ∙'2 (apd to-from-right (glue (b , c)))) ▹ to-from-glue-right' a c
-                 =⟨ glue-β _ to-from-right-left to-from-right-right to-from-right-glue (b , c) |in-ctx (λ u → ((apd (λ x → ap to (ap from (glue (a , x)))) (glue (b , c))) ∙'2 u) ▹ to-from-glue-right' a c) ⟩
-       ((apd (λ x → ap to (ap from (glue (a , x)))) (glue (b , c))) ∙'2 (to-from-right-glue (b , c))) ▹ to-from-glue-right' a c =⟨ {!!} ⟩
-       to-from-glue-left' a b ◃ apd (λ x → glue (a , x)) (glue (b , c)) ∎))
-
-    -- to-from-glue-glue : (a : A) (bc : B × C)
-    --  → to-from-glue-left a (fst bc) == to-from-glue-right a (snd bc) [ (λ x → to-from-left a == to-from-right x [ (λ y → to (from y) == y) ↓ glue (a , x) ]) ↓ glue bc ]
-    -- to-from-glue-glue a (b , c) = {!!}  -- Should not be too hard
-
-    -- to-from-glue : (x : A × (B * C)) → to-from-left (fst x) == to-from-right (snd x) [ (λ x → to (from x) == x) ↓ glue x ]
-    -- to-from-glue (a , bc) = pushout-rec _ (to-from-glue-left a) (to-from-glue-right a) (to-from-glue-glue a) bc
-
-    -- to-from : (x : A * (B * C)) → to (from x) == x
-    -- to-from = pushout-rec _ to-from-left to-from-right to-from-glue
-
-  -- *-assoc : (A * B) * C ≃ A * (B * C)
-  -- *-assoc = equiv to from to-from from-to
