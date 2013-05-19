@@ -40,9 +40,6 @@ postulate  -- TODO
   is-equiv-is-prop : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
     → is-prop (is-equiv f)
 
--- _☆_ : ∀ {i j} {A : Type i} {B : Type j} (f : A ≃ B) (a : A) → B
--- f ☆ a = (fst f) a
-
 –> : ∀ {i} {j} {A : Type i} {B : Type j} (e : A ≃ B) → (A → B)
 –> e = fst e
 

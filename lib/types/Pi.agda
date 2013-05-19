@@ -9,9 +9,9 @@ abstract
   Π-level : ∀ {i j} {n : ℕ₋₂} {A : Set i} {P : A → Set j}
     → (((x : A) → has-level n (P x)) → has-level n (Π A P))
   Π-level {n = ⟨-2⟩} p =
-    ((λ x → fst (p x)) , (λ f → funext (λ x → snd (p x) (f x))))
+    ((λ x → fst (p x)) , (λ f → λ= (λ x → snd (p x) (f x))))
   Π-level {n = S n} p = λ f g →
-    equiv-preserves-level funext-equiv
+    equiv-preserves-level λ=-equiv
       (Π-level (λ x → p x (f x) (g x)))
 
   Π-is-prop : ∀ {i j} {A : Set i} {P : A → Set j}
@@ -34,7 +34,6 @@ abstract
     → (is-prop B → is-prop (A → B))
   →-is-prop = →-level
 
-
 -- Dependent paths in a Π-type
 module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k}
   where
@@ -43,20 +42,20 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k
     → ({t : B x} {t' : B x'} (q : t == t' [ B ↓ p ])
         → u t == u' t' [ uncurry C ↓ pair= p q ])
     → (u == u' [ (λ x → Π (B x) (C x)) ↓ p ])
-  ↓-Π-in {p = idp} f = funext (λ x → f (idp {a = x}))
+  ↓-Π-in {p = idp} f = λ= (λ x → f (idp {a = x}))
 
   ↓-Π-out : {x x' : A} {p : x == x'} {u : Π (B x) (C x)} {u' : Π (B x') (C x')}
     → (u == u' [ (λ x → Π (B x) (C x)) ↓ p ])
     → ({t : B x} {t' : B x'} (q : t == t' [ B ↓ p ])
         → u t == u' t' [ uncurry C ↓ pair= p q ])
-  ↓-Π-out {p = idp} q idp = happly q _
+  ↓-Π-out {p = idp} q idp = app= q _
 
   ↓-Π-β : {x x' : A} {p : x == x'} {u : Π (B x) (C x)} {u' : Π (B x') (C x')}
     → (f : {t : B x} {t' : B x'} (q : t == t' [ B ↓ p ])
             → u t == u' t' [ uncurry C ↓ pair= p q ])
     → {t : B x} {t' : B x'} (q : t == t' [ B ↓ p ])
     → ↓-Π-out (↓-Π-in f) q == f q
-  ↓-Π-β {p = idp} f idp = happly (happly-funext (λ x → f (idp {a = x}))) _
+  ↓-Π-β {p = idp} f idp = app=-β (λ x → f (idp {a = x})) _
 
 -- Dependent paths in a Π-type where the codomain is not dependent on anything
 module _ {i j k} {A : Type i} {B : A → Type j} {C : Type k} {x x' : A}

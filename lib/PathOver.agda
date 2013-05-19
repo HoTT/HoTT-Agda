@@ -1,10 +1,10 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Base
-open import lib.PathGroupoid
 open import lib.Funext
 open import lib.Equivalences
 open import lib.Univalence
+open import lib.PathGroupoid
 
 module lib.PathOver where
 
@@ -111,10 +111,6 @@ ap-cst,id : ∀ {i j} {A : Set i} (B : A → Set j)
   → ap (λ x → _,_ {B = B} a x) p == pair= idp p
 ap-cst,id B idp = idp
 
--- apd-nd : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) {x y : A}
---   → (p : x ≡ y) → apd f p ≡ ↓-cst-in p (ap f p)
--- apd-nd f idp = idp
-
 apd-∘ : ∀ {i j k} {A : Set i} {B : A → Set j} {C : (a : A) → B a → Set k}
   (f : Π A B) (g : {a : A} → Π (B a) (C a)) {x y : A} (p : x == y)
   → apd (g ∘ f) p == ↓-apd-out C f p (apdd g p (apd f p))
@@ -198,44 +194,6 @@ to-transp!-β B idp idp = idp
 
 -- Stuff that do not belong here
 
-ap-∙' : ∀ {i j} {A : Set i} {B : Set j} (f : A → B)
-  {x y z : A} (p : x == y) (q : y == z)
-  → ap f (p ∙' q) == (ap f p ∙' ap f q)
-ap-∙' f idp idp = idp
-
--- Dependent concatenation'
-_∙'dep_ : ∀ {i j} {A : Set i} {B : A → Set j}
-  {x y z : A} {p : x == y} {p' : y == z}
-  {u : B x} {v : B y} {w : B z}
-  → (u == v [ B ↓ p ]
-   → v == w [ B ↓ p' ]
-   → u == w [ B ↓ (p ∙' p') ])
-_∙'dep_ {p' = idp} q idp = q
-
--- Dependent concatenation'
-_∙dep_ : ∀ {i j} {A : Set i} {B : A → Set j}
-  {x y z : A} {p : x == y} {p' : y == z}
-  {u : B x} {v : B y} {w : B z}
-  → (u == v [ B ↓ p ]
-   → v == w [ B ↓ p' ]
-   → u == w [ B ↓ (p ∙ p') ])
-_∙dep_ {p = idp} idp q = q
-
--- Implementation of [_∙'_] on Σ
-Σ-∙' : ∀ {i j} {A : Set i} {B : A → Set j}
-  {x y z : A} {p : x == y} {p' : y == z}
-  {u : B x} {v : B y} {w : B z}
-  (q : u == v [ B ↓ p ]) (r : v == w [ B ↓ p' ])
-  → (pair= p q ∙' pair= p' r) == pair= (p ∙' p') (q ∙'dep r)
-Σ-∙' {p' = idp} q idp = idp
-
--- Implementation of [_∙_] on Σ
-Σ-∙ : ∀ {i j} {A : Set i} {B : A → Set j}
-  {x y z : A} {p : x == y} {p' : y == z}
-  {u : B x} {v : B y} {w : B z}
-  (q : u == v [ B ↓ p ]) (r : v == w [ B ↓ p' ])
-  → (pair= p q ∙ pair= p' r) == pair= (p ∙ p') (q ∙dep r)
-Σ-∙ {p = idp} idp q = idp
 
 -- No idea what that is
 to-transp-weird : ∀ {i j} {A : Set i} {B : A → Set j}
@@ -244,16 +202,3 @@ to-transp-weird : ∀ {i j} {A : Set i} {B : A → Set j}
   → (from-transp B p r ∙'dep (! r ∙ to-transp q)) == q
 to-transp-weird {p = idp} idp idp = idp
 
-
-_∙'2_ : ∀ {i j} {A : Set i} {B : A → Set j} {a b c : Π A B}
-  {x y : A} {p : x == y} {q : a x == b x} {q' : a y == b y}
-  {r : b x == c x} {r' : b y == c y}
-  → (q == q'            [ (λ z → a z == b z) ↓ p ])
-  → (r == r'            [ (λ z → b z == c z) ↓ p ])
-  → (q ∙' r == q' ∙' r' [ (λ z → a z == c z) ↓ p ])
-_∙'2_ {p = idp} idp idp = idp
-
-stuff : ∀ {i j} {A : Set i} {B : Set j} {b : B} {c : A → B} {d : A → B}
-  (q : (a : A) → b == c a) (r : (a : A) → c a == d a) {a a' : A} (p : a == a')
-  → apd (λ a → q a ∙' r a) p == ((apd q p) ∙'2 (apd r p))
-stuff q r idp = idp

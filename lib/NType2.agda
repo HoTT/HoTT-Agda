@@ -5,6 +5,18 @@ open import lib.types.Types
 
 module lib.NType2 where
 
+module _ {i j} {A : Type i} {B : A → Type j} where
+  abstract
+    prop-has-all-paths-↓ : {x y : A} {p : x == y} {u : B x} {v : B y}
+      → (is-prop (B y) → u == v [ B ↓ p ])
+    prop-has-all-paths-↓ {p = idp} k = prop-has-all-paths k _ _
+
+    set-↓-has-all-paths-↓ : ∀ {k} {C : Type k}
+      {x y : C → A} {p : (t : C) → x t == y t} {u : (t : C) → B (x t)} {v : (t : C) → B (y t)}
+      {a b : C} {q : a == b} {α : u a == v a [ B ↓ p a ]} {β : u b == v b [ B ↓ p b ]}
+      → (is-set (B (y a)) → α == β [ (λ t → u t == v t [ B ↓ p t ]) ↓ q ])
+    set-↓-has-all-paths-↓ {p = p} {q = idp} k = <– (equiv-ap (to-transp-equiv B (p _)) _ _) (fst (k _ _ _ _))
+
 abstract
   -- Every map between contractible types is an equivalence
   contr-to-contr-is-equiv : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
@@ -63,7 +75,7 @@ abstract
     → (has-level n A → has-level n B → has-level n (A ≃ B))
   ≃-level {n = ⟨-2⟩} pA pB =
     ((cst (fst pB) , contr-to-contr-is-equiv _ pA pB)
-    , (λ e → pair= (funext (λ _ → snd pB _))
+    , (λ e → pair= (λ= (λ _ → snd pB _))
                    (from-transp is-equiv _ (fst (is-equiv-is-prop _ _ _)))))
   ≃-level {n = S n} pA pB =
     Σ-level (→-level pB) (λ _ → prop-has-level-S (is-equiv-is-prop _))

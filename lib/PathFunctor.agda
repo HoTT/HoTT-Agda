@@ -5,21 +5,41 @@ open import lib.PathGroupoid
 
 module lib.PathFunctor {i} {A : Type i} where
 
-!-ap : ∀ {j} {B : Type j} (f : A → B) {x y : A} (p : x == y)
-  → ! (ap f p) == ap f (! p)
-!-ap f idp = idp
+module _ {j} {B : Type j} (f : A → B) where
 
-ap-! : ∀ {j} {B : Type j} (f : A → B) {x y : A} (p : x == y)
-  → ap f (! p) == ! (ap f p)
-ap-! f idp = idp
+  !-ap : {x y : A} (p : x == y)
+    → ! (ap f p) == ap f (! p)
+  !-ap idp = idp
 
-∙-ap : ∀ {j} {B : Type j} (f : A → B) {x y z : A} (p : x == y) (q : y == z)
-  → ap f p ∙ ap f q == ap f (p ∙ q)
-∙-ap f idp idp = idp
+  ap-! : {x y : A} (p : x == y)
+    → ap f (! p) == ! (ap f p)
+  ap-! idp = idp
 
-ap-∙ : ∀ {j} {B : Type j} (f : A → B) {x y z : A} (p : x == y) (q : y == z)
-  → ap f (p ∙ q) == ap f p ∙ ap f q
-ap-∙ f idp idp = idp
+  ∙-ap : {x y z : A} (p : x == y) (q : y == z)
+    → ap f p ∙ ap f q == ap f (p ∙ q)
+  ∙-ap idp idp = idp
+
+  ap-∙ : {x y z : A} (p : x == y) (q : y == z)
+    → ap f (p ∙ q) == ap f p ∙ ap f q
+  ap-∙ idp idp = idp
+
+  ∙'-ap : {x y z : A} (p : x == y) (q : y == z)
+    → ap f p ∙' ap f q == ap f (p ∙' q)
+  ∙'-ap idp idp = idp
+
+  ap-∙' : {x y z : A} (p : x == y) (q : y == z)
+    → ap f (p ∙' q) == ap f p ∙' ap f q
+  ap-∙' idp idp = idp
+
+module _ {j} {B : A → Type j} (f : Π A B) where
+
+  apd-∙ : {x y z : A} (p : x == y) (q : y == z)
+    → apd f (p ∙ q) == apd f p ∙dep apd f q
+  apd-∙ idp idp = idp
+
+  apd-∙' : {x y z : A} (p : x == y) (q : y == z)
+    → apd f (p ∙' q) == apd f p ∙'dep apd f q
+  apd-∙' idp idp = idp
 
 ∘-ap : ∀ {j k} {B : Type j} {C : Type k} (g : B → C) (f : A → B)
   {x y : A} (p : x == y) → ap g (ap f p) == ap (g ∘ f) p

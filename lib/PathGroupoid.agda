@@ -57,3 +57,36 @@ q ∙' idp = q
 
 !-! : {x y : A} (p : x == y) → ! (! p) == p
 !-! idp = idp
+
+-- Dependent things
+module _ {j} {B : A → Set j} where
+
+  -- Dependent concatenation'
+  _∙dep_ : {x y z : A} {p : x == y} {p' : y == z}
+    {u : B x} {v : B y} {w : B z}
+    → (u == v [ B ↓ p ]
+    → v == w [ B ↓ p' ]
+    → u == w [ B ↓ (p ∙ p') ])
+  _∙dep_ {p = idp} idp q = q
+
+  -- Dependent concatenation'
+  _∙'dep_ : {x y z : A} {p : x == y} {p' : y == z}
+    {u : B x} {v : B y} {w : B z}
+    → (u == v [ B ↓ p ]
+    → v == w [ B ↓ p' ]
+    → u == w [ B ↓ (p ∙' p') ])
+  _∙'dep_ {p' = idp} q idp = q
+
+
+-- _∙'2_ : ∀ {i j} {A : Set i} {B : A → Set j} {a b c : Π A B}
+--   {x y : A} {p : x == y} {q : a x == b x} {q' : a y == b y}
+--   {r : b x == c x} {r' : b y == c y}
+--   → (q == q'            [ (λ z → a z == b z) ↓ p ])
+--   → (r == r'            [ (λ z → b z == c z) ↓ p ])
+--   → (q ∙' r == q' ∙' r' [ (λ z → a z == c z) ↓ p ])
+-- _∙'2_ {p = idp} idp idp = idp
+
+-- stuff : ∀ {j} {B : Set j} {b : B} {c : A → B} {d : A → B}
+--   (q : (a : A) → b == c a) (r : (a : A) → c a == d a) {a a' : A} (p : a == a')
+--   → apd (λ a → q a ∙' r a) p == ((apd q p) ∙'2 (apd r p))
+-- stuff q r idp = idp

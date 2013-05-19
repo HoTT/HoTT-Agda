@@ -5,6 +5,8 @@ open import lib.PathGroupoid
 
 module lib.NType {i} where
 
+{- Definition of truncation levels -}
+
 is-contr : Type i → Type i
 is-contr A = Σ A (λ x → ((y : A) → x == y))
 
@@ -15,27 +17,26 @@ has-level (S n) A = (x y : A) → has-level n (x == y)
 is-prop = has-level ⟨-1⟩
 is-set  = has-level ⟨0⟩
 
--- The following property is equivalent to being a proposition
+{- To be a mere proposition, it is sufficient that all points are equal -}
+
 has-all-paths : Type i → Type i
 has-all-paths A = (x y : A) → x == y
-
--- Having decidable equality is stronger that being a set
-has-dec-eq : Type i → Type i
-has-dec-eq A = (x y : A) → Coprod (x == y) (x =/= y)
 
 abstract
   all-paths-is-prop : {A : Type i} → (has-all-paths A → is-prop A)
   all-paths-is-prop {A} c x y = (c x y , canon-path) where
-    lemma : {x y : A} (p : x == y) → c x y == p ∙ c y y
-    lemma idp = idp
 
     canon-path : {x y : A} (p : x == y) → c x y == p
     canon-path {.y} {y} idp =
       c y y               =⟨ lemma (! (c y y)) ⟩
       (! (c y y)) ∙ c y y =⟨ !-inv-l (c y y) ⟩
-      idp ∎
+      idp ∎  where
 
-  -- Truncation levels are cumulative
+      lemma : {x y : A} (p : x == y) → c x y == p ∙ c y y
+      lemma idp = idp
+
+{- Truncation levels are cumulative -}
+abstract
   raise-level : {A : Type i} (n : ℕ₋₂)
     → (has-level n A → has-level (S n) A)
   raise-level ⟨-2⟩ q =
@@ -43,25 +44,33 @@ abstract
   raise-level (S n) q =
     λ x y → raise-level n (q x y)
 
-  -- A type with a decidable equality is a set
+{- Having decidable equality is stronger that being a set -}
+
+has-dec-eq : Type i → Type i
+has-dec-eq A = (x y : A) → Coprod (x == y) (x =/= y)
+
+abstract
   dec-eq-is-set : {A : Type i} → (has-dec-eq A → is-set A)
-  dec-eq-is-set {A} d = λ x y → all-paths-is-prop UIP where
-
-   T : {x y : A} → x == y → Type i
-   T {x} {y} p =
-     match (d x y) withl (λ b → match (d x x) withl (λ b' → p == ! b' ∙ b)
-                                              withr (λ _ → Lift ⊥))
-                   withr (λ _ → Lift ⊥)
-
-   lemma : {x y : A} → (p : x == y) -> T p
-   lemma {x} idp with (d x x)
-   ... | inl a = ! (!-inv-l a)
-   ... | inr r = lift (r idp)
+  dec-eq-is-set {A} d x y = all-paths-is-prop UIP where
 
    UIP : {x y : A} (p q : x == y) -> p == q
-   UIP {x} idp q with d x x | lemma q
-   ... | inl a | p' = ! (!-inv-l a) ∙ (! p')
-   ... | inr r | _ = ⊥-rec (r idp)
+   UIP {x} idp q with d x x | lemma q  where
+
+     T : {x y : A} → x == y → Type i
+     T {x} {y} p =
+       match (d x y) withl (λ b → match (d x x) withl (λ b' → p == ! b' ∙ b)
+                                                withr (λ _ → Lift ⊥))
+                     withr (λ _ → Lift ⊥)
+
+     lemma : {x y : A} → (p : x == y) -> T p
+     lemma {x} idp with (d x x)
+     lemma idp | inl a = ! (!-inv-l a)
+     lemma idp | inr r = lift (r idp)
+
+   UIP idp q | inl a | p' = ! (!-inv-l a) ∙ (! p')
+   UIP idp q | inr r | _ = ⊥-rec (r idp)
+
+{- Relationship between levels -}
 
 module _ {A : Type i} where
   abstract
@@ -109,12 +118,6 @@ module _ {A : Type i} where
 
     =-preserves-prop : {x y : A} → (is-prop A → is-prop (x == y))
     =-preserves-prop = =-preserves-level ⟨-1⟩
-
-  -- The type of paths to a fixed point is contractible
-  pathto-is-contr : (x : A) → is-contr (Σ A (λ t → t == x))
-  pathto-is-contr x = ((x , idp) , pathto-unique-path) where
-    pathto-unique-path : {u : A} (pp : Σ A (λ t → t == u)) → (u , idp) == pp
-    pathto-unique-path (u , idp) = idp
 
   -- The type of paths from a fixed point is contractible
   pathfrom-is-contr : (x : A) → is-contr (Σ A (λ t → x == t))

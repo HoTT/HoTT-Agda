@@ -3,6 +3,7 @@
 open import lib.Basics
 open import lib.types.Paths
 open import lib.types.Pi
+open import lib.types.Unit
 
 module lib.types.Circle where
 
@@ -53,38 +54,45 @@ module _ {i} {A : Type i} (f : A ≃ A) where
   private
     P = S¹-rec A (ua f)
 
-  loop-path : (a : A) → coe (ap P loop) a == –> f a
-  loop-path a =
+  coe-loop-β' : (a : A) → coe (ap P loop) a == –> f a
+  coe-loop-β' a =
     coe (ap P loop) a =⟨ loop-β' A (ua f) |in-ctx (λ u → coe u a) ⟩
     coe (ua f) a      =⟨ coe-β f a ⟩
     –> f a ∎
 
-  !loop-path : (a : A) → coe! (ap P loop) a == <– f a
-  !loop-path a =
+  coe!-loop-β' : (a : A) → coe! (ap P loop) a == <– f a
+  coe!-loop-β' a =
     coe! (ap P loop) a =⟨ loop-β' A (ua f) |in-ctx (λ u → coe! u a) ⟩
     coe! (ua f) a =⟨ coe!-β f a ⟩
     <– f a ∎
 
   ↓-loop-out : {a a' : A} → a == a' [ P ↓ loop ] → –> f a == a'
   ↓-loop-out {a} {a'} p =
-    –> f a =⟨ ! (loop-path a) ⟩
+    –> f a =⟨ ! (coe-loop-β' a) ⟩
     coe (ap P loop) a =⟨ to-transp p ⟩
     a' ∎
 
-module S¹-generic where
-
-  open import lib.types.Generic1HIT ⊤ ⊤ (idf _) (idf _)
+{- Flattening -}
+module FlatteningS¹ {i} (A : Type i) (f : A ≃ A) where
 
   private
-    to : S¹ → Wg
+    P = S¹-rec A (ua f)
+
+  open import lib.types.Flattening
+    Unit Unit (idf _) (idf _) (cst A) (cst f) public
+
+  flattening-S¹ : Σ S¹ P == Wt
+  flattening-S¹ = eqv-tot f ∙ ua flattening-equiv  where
+
+    to : S¹ → W
     to = S¹-rec (cc tt) (pp tt)
 
-    from : Wg → S¹
-    from = Wg-rec (cst base) (cst loop)
+    from : W → S¹
+    from = W-rec (cst base) (cst loop)
 
     abstract
-      to-from : (x : Wg) → to (from x) == x
-      to-from = Wg-elim (λ _ → idp) (λ _ → ↓-∘=id-in from to
+      to-from : (x : W) → to (from x) == x
+      to-from = W-elim (λ _ → idp) (λ _ → ↓-∘=id-in from to
         (ap to (ap from (pp tt)) =⟨ pp-β' (cst base) (cst loop) tt |in-ctx ap to ⟩
         ap to loop =⟨ loop-β' (cc tt) (pp tt) ⟩
         pp tt ∎))
@@ -95,22 +103,23 @@ module S¹-generic where
         ap from (pp tt) =⟨ pp-β' (cst base) (cst loop) tt ⟩
         loop ∎))
 
-  eqv : S¹ ≃ Wg
-  eqv = equiv to from to-from from-to
+    eqv : S¹ ≃ W
+    eqv = equiv to from to-from from-to
 
-  eqv-fib : ∀ {i} {A : Type i} (e : A ≃ A) →
-    S¹-rec A (ua e) == Wg-rec (cst A) (cst (ua e)) [ (λ X → (X → Type _)) ↓ ua eqv ]
-  eqv-fib e = ↓-app→cst-in (λ {t} p → S¹-elim {A = λ t → S¹-rec _ (ua e) t == Wg-rec (cst _) (cst (ua e)) (–> eqv t)} idp (↓-='-in
-    (ap (Wg-rec (cst _) (cst (ua e)) ∘ (–> eqv)) loop =⟨ ap-∘ (Wg-rec (cst _) (cst (ua e))) (–> eqv) loop ⟩
-     ap (Wg-rec (cst _) (cst (ua e))) (ap (–> eqv) loop) =⟨ loop-β' (cc tt) (pp tt) |in-ctx ap (Wg-rec (cst _) (cst (ua e))) ⟩
-     ap (Wg-rec (cst _) (cst (ua e))) (pp tt) =⟨ pp-β' (cst _) (cst (ua e)) tt ⟩
-     ua e =⟨ ! (loop-β' _ (ua e)) ⟩
-     ap (S¹-rec _ (ua e)) loop ∎))
-    t ∙ (ap (Wg-rec (cst _) (cst (ua e))) (↓-idf-ua-out eqv p)))
+    eqv-fib : ∀ {i} {A : Type i} (e : A ≃ A) →
+      S¹-rec A (ua e) == W-rec (cst A) (cst (ua e)) [ (λ X → (X → Type _)) ↓ ua eqv ]
+    eqv-fib e = ↓-app→cst-in (λ {t} p → S¹-elim {A = λ t → S¹-rec _ (ua e) t == W-rec (cst _) (cst (ua e)) (–> eqv t)} idp (↓-='-in
+      (ap (W-rec (cst _) (cst (ua e)) ∘ (–> eqv)) loop =⟨ ap-∘ (W-rec (cst _) (cst (ua e))) (–> eqv) loop ⟩
+      ap (W-rec (cst _) (cst (ua e))) (ap (–> eqv) loop) =⟨ loop-β' (cc tt) (pp tt) |in-ctx ap (W-rec (cst _) (cst (ua e))) ⟩
+      ap (W-rec (cst _) (cst (ua e))) (pp tt) =⟨ pp-β' (cst _) (cst (ua e)) tt ⟩
+      ua e =⟨ ! (loop-β' _ (ua e)) ⟩
+      ap (S¹-rec _ (ua e)) loop ∎))
+      t ∙ (ap (W-rec (cst _) (cst (ua e))) (↓-idf-ua-out eqv p)))
 
-  eqv-tot : ∀ {i} {A : Type i} (e : A ≃ A)
-    → Σ S¹ (S¹-rec A (ua e)) == Σ Wg (Wg-rec (cst A) (cst (ua e)))
-  eqv-tot e = ap (uncurry Σ) (pair= (ua eqv) (eqv-fib e))
+    eqv-tot : ∀ {i} {A : Type i} (e : A ≃ A)
+      → Σ S¹ (S¹-rec A (ua e)) == Σ W (W-rec (cst A) (cst (ua e)))
+    eqv-tot e = ap (uncurry Σ) (pair= (ua eqv) (eqv-fib e))
+
 
 {- -}
 

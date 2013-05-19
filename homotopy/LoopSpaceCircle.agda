@@ -73,7 +73,7 @@ loop^succ (neg (S n)) =
 -- on [n]
 encode-loop^ : (n : ℤ) → encode (loop^ n) == n
 encode-loop^ O = idp
-encode-loop^ (pos O) = loop-path succ-equiv O
+encode-loop^ (pos O) = coe-loop-β' succ-equiv O
 encode-loop^ (pos (S n)) =
   encode (loop^ (pos n) ∙ loop) =⟨ idp ⟩
   coe (ap Cover (loop^ (pos n) ∙ loop)) O
@@ -84,11 +84,11 @@ encode-loop^ (pos (S n)) =
   coe (ap Cover loop) (coe (ap Cover (loop^ (pos n))) O)
        =⟨ encode-loop^ (pos n) |in-ctx coe (ap Cover loop) ⟩
   coe (ap Cover loop) (pos n)
-       =⟨ loop-path succ-equiv (pos n) ⟩
+       =⟨ coe-loop-β' succ-equiv (pos n) ⟩
   pos (S n) ∎
 encode-loop^ (neg O) =
   coe (ap Cover (! loop)) O =⟨ coe-ap-! Cover loop O ⟩
-  coe! (ap Cover loop) O =⟨ !loop-path succ-equiv O ⟩
+  coe! (ap Cover loop) O =⟨ coe!-loop-β' succ-equiv O ⟩
   neg O ∎
 encode-loop^ (neg (S n)) =
   encode (loop^ (neg n) ∙ ! loop) =⟨ idp ⟩
@@ -103,7 +103,7 @@ encode-loop^ (neg (S n)) =
   coe (ap Cover (! loop)) (neg n)
        =⟨ coe-ap-! Cover loop (neg n) ⟩
   coe! (ap Cover loop) (neg n)
-       =⟨ !loop-path succ-equiv (neg n) ⟩
+       =⟨ coe!-loop-β' succ-equiv (neg n) ⟩
   neg (S n) ∎
 
 {- 3. Dan’s encode-decode proof -}
@@ -111,56 +111,50 @@ encode-loop^ (neg (S n)) =
 -- The decoding function at [base] is [loop^], but we extend it to the whole
 -- of [S¹] so that [decode-encode] becomes easier (and we need [loop^succ] to
 -- be able to extend it)
-decode : {x : S¹} → (Cover x → base == x)
-decode {x} =
-  S¹-elim loop^ (↓-→-in (λ {n} q →
+decode : (x : S¹) → (Cover x → base == x)
+decode =
+  S¹-elim loop^ (↓-→-in (λ {n} q → 
                  ↓-cst=idf-in
-                   (loop^succ n ∙ ap loop^ (↓-loop-out succ-equiv q)))) x
+                   (loop^succ n ∙ ap loop^ (↓-loop-out succ-equiv q))))
 
-decode-encode : {x : S¹} (t : base == x) → decode (encode t) == t
-decode-encode idp = idp  -- Magic!
+decode-encode : (x : S¹) (t : base == x) → decode x (encode t) == t
+decode-encode .base idp = idp  -- Magic!
 
 -- And we get the theorem
 ΩS¹≃ℤ : (base == base) ≃ ℤ
-ΩS¹≃ℤ = equiv encode decode encode-loop^ decode-encode
+ΩS¹≃ℤ = equiv encode (decode base) encode-loop^ (decode-encode base)
 
-{- 4. Mike’s proof that [Σ S¹ Cover] is contractible (or at least something
-      similar) -}
+{- 4. Mike’s proof that [Σ S¹ Cover] is contractible -}
 
 -- We want to prove that every point of [Σ S¹ Cover] is equal to [(base , O)]
 paths-mike : (xt : Σ S¹ Cover) → (base , O) == xt
-paths-mike (x , t) = paths-mike-curr x t where
+paths-mike (x , t) = paths-mike-c x t where
 
-  ↓-loop^ : (n : ℤ) → O == n [ Cover ↓ loop^ n ]
-  ↓-loop^ n = from-transp _ _ (encode-loop^ n)
-
-  -- So we do it by circle-induction on the first component. When it’s [base],
-  -- we use the [↓-loop^] above (which is essentially [encode-loop^]) and
-  -- around [loop] we need to use [loop^succ] and the fact that [ℤ] is a set.
-  paths-mike-curr : (x : S¹) (t : Cover x) → (base , O) == (x , t) :> Σ S¹ Cover
-  paths-mike-curr = S¹-elim
+  -- We do it by circle-induction on the first component. When it’s [base],
+  -- we use the [↓-loop^] below (which is essentially [encode-loop^]) and
+  -- for [loop] we use [loop^succ] and the fact that [ℤ] is a set.
+  paths-mike-c : (x : S¹) (t : Cover x) → (base , O) == (x , t) :> Σ S¹ Cover
+  paths-mike-c = S¹-elim
     (λ n → pair= (loop^ n) (↓-loop^ n))
     (↓-Π-in (λ {n} {n'} q →
      ↓-cst=idf-in
        (pair= (loop^ n) (↓-loop^ n) ∙ pair= loop q
                   =⟨ Σ-∙ (↓-loop^ n) q ⟩
         pair= (loop^ n ∙ loop) (↓-loop^ n ∙dep q)
-                  =⟨ ap (uncurry (λ p q → pair= p q))
-                        (pair= (loop^succ n ∙ ap loop^ (↓-loop-out succ-equiv q))
-                               (from-transp _ _
-                                 (<– (equiv-ap (to-transp-equiv Cover (loop^ n')) _ _)
-                                     (fst (ℤ-is-set _ _ _ _))))) ⟩
-        pair= (loop^ n') (↓-loop^ n') ∎)))
+                  =⟨ pair== (loop^succ n ∙ ap loop^ (↓-loop-out succ-equiv q))
+                            (set-↓-has-all-paths-↓ ℤ-is-set) ⟩
+        pair= (loop^ n') (↓-loop^ n') ∎))) where
+
+    ↓-loop^ : (n : ℤ) → O == n [ Cover ↓ loop^ n ]
+    ↓-loop^ n = from-transp _ _ (encode-loop^ n)
 
 contr-mike : is-contr (Σ S¹ Cover)
 contr-mike = ((base , O) , paths-mike)
 
 {- 5. Flattening lemma proof that [Σ S¹ Cover] is contractible -}
 
--- We import the flattening lemma for the universal cover of the circle
-open import homotopy.Flattening
-  Unit Unit (idf _) (idf _) (cst ℤ) (cst succ-equiv)
-  renaming (eqv to flattening-eqv)
+--We import the flattening lemma for the universal cover of the circle
+open FlatteningS¹ ℤ succ-equiv
 
 -- We prove that the flattened HIT corresponding to the universal cover of the
 -- circle (the real line) is contractible
@@ -199,12 +193,11 @@ Wt-is-contr = (cct tt O , Wt-elim (base* ∘ snd) (loop* ∘ snd)) where
 -- Then, using the flattening lemma we get that the total space of [Cover] is
 -- contractible
 contr-flattening : is-contr (Σ S¹ Cover)
-contr-flattening = transport! is-contr
-  (S¹-generic.eqv-tot succ-equiv ∙ ua flattening-eqv) Wt-is-contr
+contr-flattening = transport! is-contr flattening-S¹ Wt-is-contr
 
 {- 6. Proof that [Ω S¹ ≃ ℤ] using the fact that [Σ S¹ Cover] is contractible -}
 
-tot-encode : Σ S¹ (λ y → base == y) → Σ S¹ Cover
+tot-encode : Σ S¹ (λ x → base == x) → Σ S¹ Cover
 tot-encode (x , y) = (x , encode y)
 
 -- The previous map induces an equivalence on the total spaces, because both
@@ -226,18 +219,18 @@ postulate  -- TODO, will be only one line using the fact that an equivalence on
 -- This is quite similar to [paths-mike], we’re doing it by circle-induction,
 -- the base case is [encode-loop^] and the loop case is using the fact that [ℤ]
 -- is a set (and [loop^succ] is already used in [decode])
-encode-decode : {x : S¹} (t : Cover x) → encode (decode {x} t) == t
-encode-decode {x} =
-  S¹-elim {A = λ x → (t : Cover x) → encode (decode {x} t) == t}
-    encode-loop^ (↓-Π-in (λ q → from-transp _ _ (fst (ℤ-is-set _ _ _ _)))) x
+encode-decode : (x : S¹) (t : Cover x) → encode (decode x t) == t
+encode-decode =
+  S¹-elim {A = λ x → (t : Cover x) → encode (decode x t) == t}
+    encode-loop^ (↓-Π-in (λ q → prop-has-all-paths-↓ (ℤ-is-set _ _)))
 
 encode-is-equiv' : (x : S¹) → is-equiv (encode {x})
-encode-is-equiv' x = is-eq encode decode (encode-decode {x}) decode-encode
+encode-is-equiv' x = is-eq encode (decode x) (encode-decode x) (decode-encode x)
 
 {- 8. Proof that the circle is a 1-type -}
 
 Cover-is-set : (y : S¹) → is-set (Cover y)
-Cover-is-set = S¹-elim ℤ-is-set (from-transp _ _ (fst (is-set-is-prop _ _)))
+Cover-is-set = S¹-elim ℤ-is-set (prop-has-all-paths-↓ is-set-is-prop)
 
 ΩS¹-is-set : (y : S¹) → is-set (base == y)
 ΩS¹-is-set y = equiv-preserves-level ((encode {y} , encode-is-equiv y) ⁻¹)
@@ -245,4 +238,4 @@ Cover-is-set = S¹-elim ℤ-is-set (from-transp _ _ (fst (is-set-is-prop _ _)))
 
 S¹-level : has-level ⟨1⟩ S¹
 S¹-level =
-  S¹-elim ΩS¹-is-set (from-transp _ _ (funext (λ _ → fst (is-set-is-prop _ _))))
+  S¹-elim ΩS¹-is-set (prop-has-all-paths-↓ (Π-level (λ x → is-set-is-prop)))

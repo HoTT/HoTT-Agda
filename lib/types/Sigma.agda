@@ -36,7 +36,11 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     → p == pair= (fst= p) (snd= p)
   pair=-η {._} {_} idp = idp
 
-  -- What’s the type of pair=-ext?
+  pair== : {a a' : A} {p p' : a == a'} (α : p == p')
+           {b : B a} {b' : B a'} {q : b == b' [ B ↓ p ]} {q' : b == b' [ B ↓ p' ]}
+           (β : q == q' [ (λ u → b == b' [ B ↓ u ]) ↓ α ])
+    → pair= p q == pair= p' q'
+  pair== idp idp = idp
 
 module _ {i j} {A : Type i} {B : A → Type j} where
 
@@ -67,3 +71,34 @@ abstract
   ×-level : ∀ {i j} {n : ℕ₋₂} {A : Set i} {B : Set j}
     → (has-level n A → has-level n B → has-level n (A × B))
   ×-level pA pB = Σ-level pA (λ x → pB)
+
+
+-- Implementation of [_∙'_] on Σ
+Σ-∙' : ∀ {i j} {A : Set i} {B : A → Set j}
+  {x y z : A} {p : x == y} {p' : y == z}
+  {u : B x} {v : B y} {w : B z}
+  (q : u == v [ B ↓ p ]) (r : v == w [ B ↓ p' ])
+  → (pair= p q ∙' pair= p' r) == pair= (p ∙' p') (q ∙'dep r)
+Σ-∙' {p' = idp} q idp = idp
+
+-- Implementation of [_∙_] on Σ
+Σ-∙ : ∀ {i j} {A : Set i} {B : A → Set j}
+  {x y z : A} {p : x == y} {p' : y == z}
+  {u : B x} {v : B y} {w : B z}
+  (q : u == v [ B ↓ p ]) (r : v == w [ B ↓ p' ])
+  → (pair= p q ∙ pair= p' r) == pair= (p ∙ p') (q ∙dep r)
+Σ-∙ {p = idp} idp q = idp
+
+-- Implementation of [_∙'_] on ×
+×-∙' : ∀ {i j} {A : Set i} {B : Set j}
+  {x y z : A} (p : x == y) (p' : y == z)
+  {u v w : B} (q : u == v) (q' : v == w)
+  → (pair=' p q ∙' pair=' p' q') == pair=' (p ∙' p') (q ∙' q')
+×-∙' p idp q idp = idp
+
+-- Implementation of [_∙_] on ×
+×-∙ : ∀ {i j} {A : Set i} {B : Set j}
+  {x y z : A} (p : x == y) (p' : y == z)
+  {u v w : B} (q : u == v) (q' : v == w)
+  → (pair=' p q ∙ pair=' p' q') == pair=' (p ∙ p') (q ∙ q')
+×-∙ idp p' idp q' = idp

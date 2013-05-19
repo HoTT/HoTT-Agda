@@ -5,7 +5,7 @@ module lib.Base where
 -- Universe levels
 
 postulate  -- Universe levels
-  ULevel : Set
+  ULevel : Set  -- [Set] is allowed here
   zero : ULevel
   suc : ULevel → ULevel
   max : ULevel → ULevel → ULevel
@@ -18,14 +18,14 @@ postulate  -- Universe levels
 
 -- Universes
 
-Type : (i : ULevel) → Set (suc i)
-Type i = Set i
+Type : (i : ULevel) → Set (suc i)  -- [Set] is allowed here
+Type i = Set i  -- [Set] is allowed here
 
-Type₀ = Set₀
-Type0 = Set0
+Type₀ = Type zero
+Type0 = Type zero
 
-Type₁ = Set₁
-Type1 = Set1
+Type₁ = Type (suc zero)
+Type1 = Type (suc zero)
 
 infix 10 of-type
 
@@ -42,6 +42,9 @@ data _==_ {i} {A : Type i} (a : A) : A → Type i where
   idp : a == a
 
 Path = _==_
+
+{-# BUILTIN EQUALITY _==_ #-}
+{-# BUILTIN REFL  idp #-}
 
 -- -- This should not be provable
 -- K : {A : Type₀} {x : A} (p : x == x) → p == idp
@@ -219,4 +222,4 @@ pair= idp idp = idp
 pair=' : ∀ {i j} {A : Type i} {B : Type j}
   {a a' : A} (p : a == a') {b b' : B} (q : b == b')
   → (a , b) == (a' , b')
-pair=' idp idp = idp
+pair=' idp q = pair= idp q
