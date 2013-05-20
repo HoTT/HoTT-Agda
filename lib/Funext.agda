@@ -102,14 +102,14 @@ module StrongFunextDep {j} {P : A → Type j} where
   open FunextDep
 
   λ=-idp : (f : Π A P)
-    → λ= (λ x → idp {a = f x}) == idp
+    → idp == λ= (λ x → idp {a = f x})
   λ=-idp f = ap (ap (λ u x → fst (u x)))
     (contr-has-all-paths (=-preserves-level _
                          (ΠAQ-is-contr (λ x → idp)))
-                         (Q-f==Q-g (λ x → idp)) idp)
+                         idp (Q-f==Q-g (λ x → idp)))
 
   λ=-η : {f g : Π A P} (p : f == g)
-    → λ= (app= p) == p
+    → p == λ= (app= p)
   λ=-η {f} idp = λ=-idp f
 
   app=-β : {f g : Π A P} (h : (x : A) → f x == g x) (x : A)
@@ -122,11 +122,11 @@ module StrongFunextDep {j} {P : A → Type j} where
     app=-path {u = u} idp x = ! (!-inv-l (snd (u x)))
 
   app=-is-equiv : {f g : Π A P} → is-equiv (app= {f = f} {g = g})
-  app=-is-equiv = is-eq _ λ= (λ h → λ= (app=-β h)) λ=-η
+  app=-is-equiv = is-eq _ λ= (λ h → λ= (app=-β h)) (! ∘ λ=-η)
 
   λ=-is-equiv : {f g : Π A P}
     → is-equiv (λ= {f = f} {g = g})
-  λ=-is-equiv = is-eq _ app= λ=-η (λ h → λ= (app=-β h))
+  λ=-is-equiv = is-eq _ app= (! ∘ λ=-η) (λ h → λ= (app=-β h))
 
 -- We only export the following
 
@@ -139,7 +139,7 @@ module _ {j} {P : A → Type j} {f g : Π A P} where
     app=-β : (p : (x : A) → f x == g x) (x : A) → app= (λ= p) x == p x
     app=-β = StrongFunextDep.app=-β
 
-    λ=-η : (p : f == g) → λ= (app= p) == p
+    λ=-η : (p : f == g) → p == λ= (app= p)
     λ=-η = StrongFunextDep.λ=-η
 
   λ=-equiv : ((x : A) → f x == g x) ≃ (f == g)

@@ -4,20 +4,10 @@ open import lib.Base
 
 module lib.PathGroupoid {i} {A : Type i} where
 
--- infixr 8 _∙_
-
--- _∙_ : {x y z : A}
---   → (x == y → y == z → x == z)
--- q ∙ idp = q
-
 -- Composition with the opposite definitional behaviour
 _∙'_ : {x y z : A}
   → (x == y → y == z → x == z)
 q ∙' idp = q
-
--- ! : {x y : A}
---   → (x == y → y == x)
--- ! idp = idp
 
 ∙-assoc : {x y z t : A} (p : x == y) (q : y == z) (r : z == t)
   → (p ∙ q) ∙ r == p ∙ (q ∙ r)

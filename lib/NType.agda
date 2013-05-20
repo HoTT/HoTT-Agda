@@ -47,7 +47,7 @@ abstract
 {- Having decidable equality is stronger that being a set -}
 
 has-dec-eq : Type i → Type i
-has-dec-eq A = (x y : A) → Coprod (x == y) (x =/= y)
+has-dec-eq A = (x y : A) → Coprod (x == y) (x ≠ y)
 
 abstract
   dec-eq-is-set : {A : Type i} → (has-dec-eq A → is-set A)

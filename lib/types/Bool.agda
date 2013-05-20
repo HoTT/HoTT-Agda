@@ -20,10 +20,10 @@ private
   Bool-true≠false-type false = ⊥
 
 abstract
-  Bool-true≠false : true =/= false
+  Bool-true≠false : true ≠ false
   Bool-true≠false p = transport Bool-true≠false-type p tt
 
-  Bool-false≠true : false =/= true
+  Bool-false≠true : false ≠ true
   Bool-false≠true p = transport Bool-true≠false-type (! p) tt
 
   Bool-has-dec-eq : has-dec-eq Bool

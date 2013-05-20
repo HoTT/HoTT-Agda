@@ -2,7 +2,7 @@
 
 module lib.Base where
 
--- Universe levels
+{- Universe and typing -}
 
 postulate  -- Universe levels
   ULevel : Set  -- [Set] is allowed here
@@ -14,9 +14,6 @@ postulate  -- Universe levels
 {-# BUILTIN LEVELZERO zero #-}
 {-# BUILTIN LEVELSUC suc #-}
 {-# BUILTIN LEVELMAX max #-}
-
-
--- Universes
 
 Type : (i : ULevel) → Set (suc i)  -- [Set] is allowed here
 Type i = Set i  -- [Set] is allowed here
@@ -34,8 +31,8 @@ of-type A u = u
 
 syntax of-type A u =  u :> A
 
+{- Identity type -}
 
--- Identity type
 infix 4 _==_
 
 data _==_ {i} {A : Type i} (a : A) : A → Type i where
@@ -51,7 +48,7 @@ Path = _==_
 -- K idp = idp
 
 
--- Path over a path
+{- Dependent paths -}
 
 PathOver : ∀ {i j} {A : Type i} (B : A → Type j)
   {x y : A} (p : x == y) (u : B x) (v : B y) → Type j
@@ -115,8 +112,8 @@ data ⊥ : Type₀ where  -- \bot
 ¬ : ∀ {i} (A : Type i) → Type i
 ¬ A = A → ⊥
 
-_=/=_ : ∀ {i} {A : Type i} → (A → A → Type i)
-x =/= y = ¬ (x == y)
+_≠_ : ∀ {i} {A : Type i} → (A → A → Type i)
+x ≠ y = ¬ (x == y)
 
 
 -- Lifting
