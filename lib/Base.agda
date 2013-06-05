@@ -48,6 +48,10 @@ Path = _==_
 -- K idp = idp
 
 
+record ⊤ : Type₀ where
+  constructor tt
+
+
 {- Dependent paths -}
 
 PathOver : ∀ {i j} {A : Type i} (B : A → Type j)
@@ -57,9 +61,17 @@ PathOver B idp u v = (u == v)
 syntax PathOver B p u v =
   u == v [ B ↓ p ]
 
+-- This is the most general non-dependent version of [ap].
+-- The usual [ap] is deduced from it.
+ap↓ : ∀ {i j k} {A : Set i} {B : A → Set j} {C : A → Set k}
+  (g : {a : A} → B a → C a) {x y : A} {p : x == y}
+  {u : B x} {v : B y} (q : u == v [ B ↓ p ])
+  → g u == g v [ C ↓ p ]
+ap↓ g {p = idp} idp = idp
+
 ap : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) {x y : A}
   → (x == y → f x == f y)
-ap f idp = idp
+ap f p = ap↓ {A = ⊤} f {p = idp} p
 
 apd : ∀ {i j} {A : Type i} {B : A → Type j} (f : (a : A) → B a) {x y : A}
   → (p : x == y) → f x == f y [ B ↓ p ]
@@ -188,10 +200,6 @@ match (inr b) withl l withr r = r b
 
 
 
-record ⊤ : Type₀ where
-  constructor tt
-
-
 -- (Un)curryfication
 curry : ∀ {i j k} {A : Type i} {B : A → Type j} {C : Σ A B → Type k}
   → (∀ s → C s) → (∀ x y → C (x , y))
@@ -220,3 +228,10 @@ pair=' : ∀ {i j} {A : Type i} {B : Type j}
   {a a' : A} (p : a == a') {b b' : B} (q : b == b')
   → (a , b) == (a' , b')
 pair=' idp q = pair= idp q
+
+
+-- When you want to cheat
+
+module ADMIT where
+  postulate
+    ADMIT : ∀ {i} {A : Type i} → A

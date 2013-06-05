@@ -33,11 +33,10 @@ module homotopy.LoopSpaceCircle where
 
 {- 1. Universal cover and encoding map (common to all three proofs) -}
 
-succ-path : ℤ == ℤ
-succ-path = ua succ-equiv
+module Cover = S¹RecType ℤ succ-equiv
 
 Cover : S¹ → Type₀
-Cover = S¹-rec ℤ succ-path
+Cover = Cover.f
 
 encode : {x : S¹} (p : base == x) → Cover x
 encode p = transport Cover p O
@@ -73,7 +72,7 @@ loop^succ (neg (S n)) =
 -- on [n]
 encode-loop^ : (n : ℤ) → encode (loop^ n) == n
 encode-loop^ O = idp
-encode-loop^ (pos O) = coe-loop-β' succ-equiv O
+encode-loop^ (pos O) = Cover.coe-loop-β O
 encode-loop^ (pos (S n)) =
   encode (loop^ (pos n) ∙ loop) =⟨ idp ⟩
   coe (ap Cover (loop^ (pos n) ∙ loop)) O
@@ -84,11 +83,11 @@ encode-loop^ (pos (S n)) =
   coe (ap Cover loop) (coe (ap Cover (loop^ (pos n))) O)
        =⟨ encode-loop^ (pos n) |in-ctx coe (ap Cover loop) ⟩
   coe (ap Cover loop) (pos n)
-       =⟨ coe-loop-β' succ-equiv (pos n) ⟩
+       =⟨ Cover.coe-loop-β (pos n) ⟩
   pos (S n) ∎
 encode-loop^ (neg O) =
   coe (ap Cover (! loop)) O =⟨ coe-ap-! Cover loop O ⟩
-  coe! (ap Cover loop) O =⟨ coe!-loop-β' succ-equiv O ⟩
+  coe! (ap Cover loop) O =⟨ Cover.coe!-loop-β O ⟩
   neg O ∎
 encode-loop^ (neg (S n)) =
   encode (loop^ (neg n) ∙ ! loop) =⟨ idp ⟩
@@ -103,7 +102,7 @@ encode-loop^ (neg (S n)) =
   coe (ap Cover (! loop)) (neg n)
        =⟨ coe-ap-! Cover loop (neg n) ⟩
   coe! (ap Cover loop) (neg n)
-       =⟨ coe!-loop-β' succ-equiv (neg n) ⟩
+       =⟨ Cover.coe!-loop-β (neg n) ⟩
   neg (S n) ∎
 
 {- 3. Dan’s encode-decode proof -}
@@ -113,9 +112,9 @@ encode-loop^ (neg (S n)) =
 -- be able to extend it)
 decode : (x : S¹) → (Cover x → base == x)
 decode =
-  S¹-elim loop^ (↓-→-in (λ {n} q → 
+  S¹-elim loop^ (↓-→-in (λ {n} q →
                  ↓-cst=idf-in
-                   (loop^succ n ∙ ap loop^ (↓-loop-out succ-equiv q))))
+                   (loop^succ n ∙ ap loop^ (Cover.↓-loop-out q))))
 
 decode-encode : (x : S¹) (t : base == x) → decode x (encode t) == t
 decode-encode .base idp = idp  -- Magic!
@@ -141,7 +140,7 @@ paths-mike (x , t) = paths-mike-c x t where
        (pair= (loop^ n) (↓-loop^ n) ∙ pair= loop q
                   =⟨ Σ-∙ (↓-loop^ n) q ⟩
         pair= (loop^ n ∙ loop) (↓-loop^ n ∙dep q)
-                  =⟨ pair== (loop^succ n ∙ ap loop^ (↓-loop-out succ-equiv q))
+                  =⟨ pair== (loop^succ n ∙ ap loop^ (Cover.↓-loop-out q))
                             (set-↓-has-all-paths-↓ ℤ-is-set) ⟩
         pair= (loop^ n') (↓-loop^ n') ∎))) where
 
@@ -154,12 +153,13 @@ contr-mike = ((base , O) , paths-mike)
 {- 5. Flattening lemma proof that [Σ S¹ Cover] is contractible -}
 
 --We import the flattening lemma for the universal cover of the circle
-open FlatteningS¹ ℤ succ-equiv
+--open FlatteningS¹ ℤ succ-equiv
+open Cover using (module Wt; Wt; cct; ppt; flattening-S¹)
 
 -- We prove that the flattened HIT corresponding to the universal cover of the
 -- circle (the real line) is contractible
 Wt-is-contr : is-contr Wt
-Wt-is-contr = (cct tt O , Wt-elim (base* ∘ snd) (loop* ∘ snd)) where
+Wt-is-contr = (cct tt O , Wt.elim (base* ∘ snd) (loop* ∘ snd)) where
 
   -- This is basically [loop^]
   base* : (n : ℤ) → cct tt O == cct tt n

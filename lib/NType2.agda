@@ -7,6 +7,10 @@ module lib.NType2 where
 
 module _ {i j} {A : Type i} {B : A → Type j} where
   abstract
+    =-[-↓-]-level : {a b : A} {p : a == b} {u : B a} {v : B b} {n : ℕ₋₂}
+      → ((x : A) → has-level (S n) (B x)) → has-level n (u == v [ B ↓ p ])
+    =-[-↓-]-level {p = idp} k = k _ _ _
+
     prop-has-all-paths-↓ : {x y : A} {p : x == y} {u : B x} {v : B y}
       → (is-prop (B y) → u == v [ B ↓ p ])
     prop-has-all-paths-↓ {p = idp} k = prop-has-all-paths k _ _
@@ -15,7 +19,11 @@ module _ {i j} {A : Type i} {B : A → Type j} where
       {x y : C → A} {p : (t : C) → x t == y t} {u : (t : C) → B (x t)} {v : (t : C) → B (y t)}
       {a b : C} {q : a == b} {α : u a == v a [ B ↓ p a ]} {β : u b == v b [ B ↓ p b ]}
       → (is-set (B (y a)) → α == β [ (λ t → u t == v t [ B ↓ p t ]) ↓ q ])
-    set-↓-has-all-paths-↓ {p = p} {q = idp} k = <– (equiv-ap (to-transp-equiv B (p _)) _ _) (fst (k _ _ _ _))
+    set-↓-has-all-paths-↓ {q = idp} = lemma _
+      where
+        lemma : {x y : A} (p : x == y) {u : B x} {v : B y} {α β : u == v [ B ↓ p ]}
+          → is-set (B y) → α == β
+        lemma idp k = fst (k _ _ _ _)
 
 abstract
   -- Every map between contractible types is an equivalence

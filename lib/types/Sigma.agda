@@ -102,3 +102,9 @@ abstract
   {u v w : B} (q : u == v) (q' : v == w)
   → (pair=' p q ∙ pair=' p' q') == pair=' (p ∙ p') (q ∙ q')
 ×-∙ idp p' idp q' = idp
+
+-- Special case of [ap-,]
+ap-cst,id : ∀ {i j} {A : Set i} (B : A → Set j)
+  {a : A} {x y : B a} (p : x == y)
+  → ap (λ x → _,_ {B = B} a x) p == pair= idp p
+ap-cst,id B idp = idp

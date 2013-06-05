@@ -47,6 +47,10 @@ postulate
     → u == v [ (λ x → x) ↓ (ua e) ]
     → –> e u == v
 
+  ↓-idf-ua-in : ∀ {i} {A B : Type i} (e : A ≃ B) {u : A} {v : B}
+    → –> e u == v
+    → u == v [ (λ x → x) ↓ (ua e) ]
+
 -- Induction along equivalences
 
 equiv-induction : ∀ {i j} {A B : Set i} (P : {A B : Set i} (f : A ≃ B) → Type j)

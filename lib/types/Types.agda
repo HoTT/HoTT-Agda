@@ -15,8 +15,13 @@ open import lib.types.Pi public
 open import lib.types.Coproduct public
 open import lib.types.Lift public
 open import lib.types.Circle public
+open import lib.types.Span public
 open import lib.types.Pushout public
+open import lib.types.Suspension public
 open import lib.types.Torus public
 
+open import lib.types.PathSeq public
+
+-- This should probably not be exported
 -- module Generic1HIT {i j} (A : Type i) (B : Type j) (f g : B → A) where
 --   open import lib.types.Generic1HIT A B f g public

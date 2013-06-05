@@ -4,29 +4,34 @@ open import lib.Basics
 
 module lib.types.Paths where
 
-↓-app='cst-in : ∀ {i j} {A : Set i} {B : Set j} {f : A → B} {b : B}
-  {x y : A} {p : x == y} {u : f x == b} {v : f y == b}
-  → u == (ap f p ∙' v)
-  → (u == v [ (λ x → f x == b) ↓ p ])
-↓-app='cst-in {p = idp} q = q ∙ ∙'-unit-l _
+module _ {i j} {A : Type i} {B : Type j} {f : A → B} {b : B} where
 
-↓-app='cst-out : ∀ {i j} {A : Set i} {B : Set j} {f : A → B} {b : B}
-  {x y : A} {p : x == y} {u : f x == b} {v : f y == b}
-  → (u == v [ (λ x → f x == b) ↓ p ])
-  → u == (ap f p ∙' v)
-↓-app='cst-out {p = idp} idp = ! (∙'-unit-l _)
+  ↓-app='cst-in : {x y : A} {p : x == y} {u : f x == b} {v : f y == b}
+    → u == (ap f p ∙' v)
+    → (u == v [ (λ x → f x == b) ↓ p ])
+  ↓-app='cst-in {p = idp} q = q ∙ ∙'-unit-l _
 
-↓-cst='app-in : ∀ {i j} {A : Set i} {B : Set j} {f : A → B} {b : B}
-  {x y : A} {p : x == y} {u : b == f x} {v : b == f y}
-  → (u ∙' ap f p) == v
-  → (u == v [ (λ x → b == f x) ↓ p ])
-↓-cst='app-in {p = idp} idp = idp
+  ↓-app='cst-out : {x y : A} {p : x == y} {u : f x == b} {v : f y == b}
+    → (u == v [ (λ x → f x == b) ↓ p ])
+    → u == (ap f p ∙' v)
+  ↓-app='cst-out {p = idp} idp = ! (∙'-unit-l _)
 
-↓-cst='app-out : ∀ {i j} {A : Set i} {B : Set j} {f : A → B} {b : B}
-  {x y : A} {p : x == y} {u : b == f x} {v : b == f y}
-  → (u == v [ (λ x → b == f x) ↓ p ])
-  → (u ∙' ap f p) == v
-↓-cst='app-out {p = idp} idp = idp
+  ↓-cst='app-in : {x y : A} {p : x == y} {u : b == f x} {v : b == f y}
+    → (u ∙' ap f p) == v
+    → (u == v [ (λ x → b == f x) ↓ p ])
+  ↓-cst='app-in {p = idp} idp = idp
+
+  ↓-cst='app-out : {x y : A} {p : x == y} {u : b == f x} {v : b == f y}
+    → (u == v [ (λ x → b == f x) ↓ p ])
+    → (u ∙' ap f p) == v
+  ↓-cst='app-out {p = idp} idp = idp
+
+module _ {i} {A : Type i} {f : A → A} where
+
+  ↓-app='idf-in : {x y : A} {p : x == y} {u : f x == x} {v : f y == y}
+    → u ∙' p == ap f p ∙ v
+    → u == v [ (λ z → f z == z) ↓ p ]
+  ↓-app='idf-in {p = idp} q = q
 
 ↓-cst=idf-in : ∀ {i} {A : Set i} {a : A}
   {x y : A} {p : x == y} {u : a == x} {v : a == y}
@@ -129,3 +134,10 @@ module _ {i j} {A : Set i} {B : Set j} (f : A → B) (g : B → A) where
 --         u ◃ ↓-apd-out _ f p (apd (λ t → g (π₂ t)) (pair= p (apd f p))) =⟨ apd-∘ π₂ g (pair= p (apd f p)) |in-ctx (λ t → u ◃ ↓-apd-out _ f p t) ⟩
 --         u ◃ ↓-apd-out _ f p (↓-apd-out _ π₂ (pair= p (apd f p)) (apdd g (pair= p (apd f p)) (apd π₂ (pair= p (apd f p))))) =⟨ {!!} ⟩
 --         apd (λ x → x) p ▹ v ∎)
+
+ap↓-◃ : ∀ {i j} {A : Set i} {B : A → Set j} {x y : A} {u v : B x}
+  {k} {C : A → Set k}
+  (f : {a : A} → B a → C a)
+  {w : B y} {p : x == y} (q : u == v) (r : v == w [ B ↓ p ])
+  → ap↓ f (q ◃ r) == ap f q ◃ ap↓ f r
+ap↓-◃ f {p = idp} idp idp = idp

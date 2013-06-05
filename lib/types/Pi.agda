@@ -1,38 +1,36 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
+open import lib.types.Paths
 
 module lib.types.Pi where
 
-abstract
+Π-level : ∀ {i j} {A : Type i} {B : A → Type j} {n : ℕ₋₂}
+  → (((x : A) → has-level n (B x)) → has-level n (Π A B))
+Π-level {n = ⟨-2⟩} p =
+  ((λ x → fst (p x)) , (λ f → λ= (λ x → snd (p x) (f x))))
+Π-level {n = S n} p = λ f g →
+  equiv-preserves-level λ=-equiv
+    (Π-level (λ x → p x (f x) (g x)))
 
-  Π-level : ∀ {i j} {n : ℕ₋₂} {A : Set i} {P : A → Set j}
-    → (((x : A) → has-level n (P x)) → has-level n (Π A P))
-  Π-level {n = ⟨-2⟩} p =
-    ((λ x → fst (p x)) , (λ f → λ= (λ x → snd (p x) (f x))))
-  Π-level {n = S n} p = λ f g →
-    equiv-preserves-level λ=-equiv
-      (Π-level (λ x → p x (f x) (g x)))
+module _ {i j} {A : Type i} {B : A → Type j} where
+  abstract
+    Π-is-prop : ((x : A) → is-prop (B x)) → is-prop (Π A B)
+    Π-is-prop = Π-level
 
-  Π-is-prop : ∀ {i j} {A : Set i} {P : A → Set j}
-    → (((x : A) → is-prop (P x)) → is-prop (Π A P))
-  Π-is-prop = Π-level
+    Π-is-set : ((x : A) → is-set (B x)) → is-set (Π A B)
+    Π-is-set = Π-level
 
-  Π-is-set : ∀ {i j} {A : Set i} {P : A → Set j}
-    → (((x : A) → is-set (P x)) → is-set (Π A P))
-  Π-is-set = Π-level
+module _ {i j} {A : Type i} {B : Type j} where
+  abstract
+    →-level : {n : ℕ₋₂} → (has-level n B → has-level n (A → B))
+    →-level p = Π-level (λ _ → p)
 
-  →-level : ∀ {i j} {n : ℕ₋₂} {A : Set i} {B : Set j}
-    → (has-level n B → has-level n (A → B))
-  →-level p = Π-level (λ _ → p)
+    →-is-set : is-set B → is-set (A → B)
+    →-is-set = →-level
 
-  →-is-set : ∀ {i j} {A : Set i} {B : Set j}
-    → (is-set B → is-set (A → B))
-  →-is-set = →-level
-
-  →-is-prop : ∀ {i j} {A : Set i} {B : Set j}
-    → (is-prop B → is-prop (A → B))
-  →-is-prop = →-level
+    →-is-prop : is-prop B → is-prop (A → B)
+    →-is-prop = →-level
 
 -- Dependent paths in a Π-type
 module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k}
@@ -65,7 +63,7 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : Type k} {x x' : A}
     ({t : B x} {t' : B x'} (q : t == t' [ B ↓ p ])
       → u t == u' t')
     → (u == u' [ (λ x → B x → C) ↓ p ])
-  ↓-app→cst-in f = ↓-Π-in (λ q → ↓-cst-in (pair= p q) (f q))
+  ↓-app→cst-in f = ↓-Π-in (λ q → ↓-cst-in (f q))
 
   ↓-app→cst-out :
     (u == u' [ (λ x → B x → C) ↓ p ])
@@ -81,10 +79,10 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : Type k} {x x' : A}
   ↓-app→cst-β f q =
     ↓-app→cst-out (↓-app→cst-in f) q
              =⟨ idp ⟩
-    ↓-cst-out (↓-Π-out (↓-Π-in (λ qq → ↓-cst-in (pair= p qq) (f qq))) q)
-             =⟨ ↓-Π-β (λ qq → ↓-cst-in (pair= p qq) (f qq)) q |in-ctx
+    ↓-cst-out (↓-Π-out (↓-Π-in (λ qq → ↓-cst-in (f qq))) q)
+             =⟨ ↓-Π-β (λ qq → ↓-cst-in (f qq)) q |in-ctx
                       ↓-cst-out ⟩
-    ↓-cst-out (↓-cst-in (pair= p q) (f q))
+    ↓-cst-out (↓-cst-in {p = pair= p q} (f q))
              =⟨ ↓-cst-β (pair= p q) (f q) ⟩
     f q ∎
 
@@ -113,7 +111,6 @@ module _ {i j k} {A : Type i} {B : Type j} {C : A → B → Type k}
     ↓-cst→app-in :
       ((b : B) → u b == u' b [ (λ x → C x b) ↓ p ])
       → (u == u' [ (λ x → (b : B) → C x b) ↓ p ])
---  ↓-cst→app-in f = ↓-Π-in (λ q → {!f (↓-cst-out q)!})
 
   postulate
     ↓-cst→app-out :
@@ -125,3 +122,58 @@ split-ap2 : ∀ {i j k} {A : Type i} {B : A → Type j} {C : Type k} (f : Σ A B
   {u : B x} {v : B y} (q : u == v [ B ↓ p ])
   → ap f (pair= p q) == ↓-app→cst-out (apd (curry f) p) q
 split-ap2 f idp idp = idp
+
+apdi2 : ∀ {i j k} {A : Set i} {B : A → Set j} {C : (a : A) → B a → Set k}
+  (g : {a : A} → Π (B a) (C a)) {x y : A} {p : x == y}
+  {u : B x} {v : B y} (q : u == v [ B ↓ p ])
+  → g u == g v [ uncurry C ↓ pair= p q ]
+apdi2 g {p = idp} idp = idp
+
+apd-∘ : ∀ {i j k} {A : Set i} {B : A → Set j} {C : (a : A) → B a → Set k}
+  (g : {a : A} → Π (B a) (C a)) (f : Π A B) {x y : A} (p : x == y)
+  {q : f x == f y [ B ↓ p ]} (r : apd f p == q)
+  → apd (g ∘ f) p == ↓-apd-out C r (apdi2 g q)
+apd-∘ g f idp idp = idp
+
+apd-∘' : ∀ {i j k} {A : Set i} {B : A → Set j} {C : A → Set k}
+  (g : {a : A} → B a → C a) (f : Π A B) {x y : A} (p : x == y)
+  → apd (g ∘ f) p == ap↓ g (apd f p)
+apd-∘' g f idp = idp
+
+postulate
+ lhs :
+  ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} {f g : Π A B}
+  {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+  (k : (u ◃ apd g p) == (apd f p ▹ v))
+  (h : {a : A} → B a → C a)
+  → ap h u ◃ apd (h ∘ g) p == ap↓ h (u ◃ apd g p)
+
+ rhs :
+  ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} {f g : Π A B}
+  {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+  (k : (u ◃ apd g p) == (apd f p ▹ v))
+  (h : {a : A} → B a → C a)
+  → ap↓ h (apd f p ▹ v) == apd (h ∘ f) p ▹ ap h v
+
+ ap↓-↓-=-in :
+  ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} {f g : Π A B}
+  {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+  (k : (u ◃ apd g p) == (apd f p ▹ v))
+  (h : {a : A} → B a → C a)
+  → ap↓ (λ {a} → ap (h {a = a})) (↓-=-in {p = p} {u = u} {v = v} k)
+  == ↓-=-in (lhs k h ∙ ap (ap↓ (λ {a} → h {a = a})) k ∙ rhs k h)
+
+--h (f x) == h (g y) [ C ↓ p ]
+
+
+-- api2-swap! : ∀ {i j k ℓ} {A : Type i} {B : Type j} {C : Type k}
+--   (f : A → C) (g : B → C)
+--   {a a' : A} {p : a == a'} {b b' : B} {q : b == b'}
+--   (r : f a == g b') (s : f a' == g b)
+--   (t : r == s ∙ ap g q  [ (λ x → f x == g b') ↓ p ])
+--   {D : Type ℓ}
+--   (h : C → D)
+--   → api2 (ap h) (↓-swap! f g r s t) == (ap-∙' h (ap f p) s ∙ ∘-ap h f p ∙'2 (idp :> (ap h s == ap h s))) ◃ --(∘-ap h f p ∙'2 (idp :> (ap h s == ap h s)))) ◃
+--                                        ↓-swap! (h ∘ f) (h ∘ g) (ap h r) (ap h s)
+--                                          (api2 (ap h) t ▹ (ap-∙ h s (ap g q) ∙ (idp :> (ap h s == ap h s)) ∙2 ∘-ap h g q))
+-- api2-swap! = {!!}
