@@ -11,7 +11,7 @@ module lib.types.Pushout where
 
 module Pushout {i j k} {d : Span i j k} where
 
-  open Span d
+  open Span d renaming (f to g; g to h)
 
   module _ where
 
@@ -106,7 +106,7 @@ Pushout d = Pushout.Pushout {d = d}
 
 module _  {i j k} {d : Span i j k} where
 
-  open Span d
+  open Span d renaming (f to g; g to h)
 
   module PushoutRecType {l} (left* : A → Type l) (right* : B → Type l)
     (glue* : (c : C) → left* (g c) ≃ right* (h c)) where

@@ -1,7 +1,10 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
-open import lib.types.Types
+open import lib.types.Paths
+open import lib.types.Pi
+open import lib.types.Sigma
+open import lib.types.TLevel
 
 module lib.NType2 where
 
@@ -59,7 +62,7 @@ abstract
       → has-level (S n) (Σ A P))
   subtype-level p q = Σ-level p (λ x → prop-has-level-S (q x))
 
--- -- Type of all n-truncated types
+-- Type of all n-truncated types
 
 _-Type_ : (n : ℕ₋₂) (i : ULevel) → Type (suc i)
 n -Type i = Σ (Type i) (has-level n)

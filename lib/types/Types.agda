@@ -19,6 +19,9 @@ open import lib.types.Span public
 open import lib.types.Pushout public
 open import lib.types.Suspension public
 open import lib.types.Torus public
+open import lib.types.Truncation public
+open import lib.types.Cospan public
+open import lib.types.Pullback public
 
 open import lib.types.PathSeq public
 

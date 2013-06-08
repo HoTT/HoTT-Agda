@@ -147,4 +147,3 @@ module _ {j} {P : A → Type j} {f g : Π A P} where
     abstract
       λ=-is-equiv : is-equiv λ=
       λ=-is-equiv = StrongFunextDep.λ=-is-equiv
-
