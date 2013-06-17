@@ -2,6 +2,7 @@
 
 open import lib.Base
 open import lib.PathGroupoid
+open import lib.PathFunctor
 open import lib.NType
 
 module lib.Equivalences where
@@ -22,9 +23,31 @@ is-eq {A = A} {B = B} f g f-g g-f =
     f-g' : (b : B) → f (g b) == b
     f-g' b = ! (ap (f ∘ g) (f-g b)) ∙ ap f (g-f (g b)) ∙ f-g b
 
-    postulate  -- TODO
-      adj : (a : A) → ap f (g-f a) == f-g' (f a)
---    adj a = {!!}
+    adj : (a : A) → ap f (g-f a) == f-g' (f a)
+    adj a = 
+      ap f (g-f a)
+        =⟨ ! (!-inv-l (ap (f ∘ g) (f-g (f a)))) |in-ctx (λ q → q ∙ ap f (g-f a)) ⟩
+      (! (ap (f ∘ g) (f-g (f a))) ∙ ap (f ∘ g) (f-g (f a))) ∙ ap f (g-f a)
+        =⟨ ∙-assoc (! (ap (f ∘ g) (f-g (f a)))) (ap (f ∘ g) (f-g (f a))) _ ⟩
+      ! (ap (f ∘ g) (f-g (f a))) ∙ ap (f ∘ g) (f-g (f a)) ∙ ap f (g-f a)
+        =⟨ lemma |in-ctx (λ q → ! (ap (f ∘ g) (f-g (f a))) ∙ q) ⟩
+      ! (ap (f ∘ g) (f-g (f a))) ∙ ap f (g-f (g (f a))) ∙ f-g (f a) ∎ 
+      where 
+      lemma : ap (f ∘ g) (f-g (f a)) ∙ ap f (g-f a) 
+           == ap f (g-f (g (f a))) ∙ f-g (f a)
+      lemma = 
+        ap (f ∘ g) (f-g (f a)) ∙ ap f (g-f a)
+          =⟨ htpy-natural-toid f-g (f a) |in-ctx (λ q → q ∙ ap f (g-f a)) ⟩
+        f-g (f (g (f a))) ∙ ap f (g-f a)
+          =⟨ ! (ap-idf (ap f (g-f a))) |in-ctx (λ q → f-g (f (g (f a))) ∙ q) ⟩
+        f-g (f (g (f a))) ∙ ap (idf B) (ap f (g-f a))
+          =⟨ ! (htpy-natural f-g (ap f (g-f a))) ⟩
+        ap (f ∘ g) (ap f (g-f a)) ∙ f-g (f a)
+          =⟨ ap-∘ f g (ap f (g-f a)) |in-ctx (λ q → q ∙ f-g (f a)) ⟩
+        ap f (ap g (ap f (g-f a))) ∙ f-g (f a)
+          =⟨ ∘-ap g f (g-f a) ∙ htpy-natural-toid g-f a 
+             |in-ctx (λ q → ap f q ∙ f-g (f a)) ⟩
+        ap f (g-f (g (f a))) ∙ f-g (f a) ∎
 
 _≃_ : ∀ {i j} (A : Type i) (B : Type j) → Type (max i j)
 A ≃ B = Σ (A → B) is-equiv
@@ -99,24 +122,33 @@ module _ {i j} {A : Type i} {B : Type j} (e : A ≃ B) where
         ! (<–-inv-l e _) ∙ <–-inv-l e _ =⟨ !-inv-l (<–-inv-l e _) ⟩
         idp ∎
 
-      postulate
-       right-inverse : {x y : A} (p : –> e x == –> e y)
+      right-inverse : {x y : A} (p : –> e x == –> e y) 
         → ap (–> e) (ap-is-inj p) == p
---      right-inverse p = {!!}
-        -- ap-∙ (–> e) (! (inverse-left-inverse e x)) _
-        -- ∙ (ap (λ u → u ∙ ap (–> e) (ap (inverse e) p
-        --           ∙ inverse-left-inverse e y))
-        --        (ap-opposite (–> e) (inverse-left-inverse e x))
-        --   ∙ move!-right-on-left (ap (–> e) (inverse-left-inverse e x)) _ p
-        --     (ap-concat (–> e) (ap (inverse e) p) (inverse-left-inverse e y)
-        --     ∙ (ap (λ u → u ∙ ap (–> e) (inverse-left-inverse e y))
-        --            (compose-ap (–> e) (inverse e) p)
-        --     ∙ (whisker-left (ap (–> e ◯ inverse e) p)
-        --                     (! (inverse-triangle e y))
-        --     ∙ (homotopy-naturality-toid (–> e ◯ inverse e)
-        --                                 (inverse-right-inverse e)
-        --                                 p
-        --     ∙ whisker-right p (inverse-triangle e x))))))
+      right-inverse {x} {y} p = 
+        ap f (! (g-f x) ∙ ap g p ∙ (g-f y) ∙ idp)
+          =⟨ ∙-unit-r _ |in-ctx (λ q →  ap f (! (g-f x) ∙ ap g p ∙ q)) ⟩
+        ap f (! (g-f x) ∙ ap g p ∙ (g-f y))
+          =⟨ ap-∙ f (! (g-f x)) (ap g p ∙ (g-f y)) ⟩
+        ap f (! (g-f x)) ∙ ap f (ap g p ∙ (g-f y))
+          =⟨ ap-∙ f (ap g p) (g-f y) |in-ctx (λ q →  ap f (! (g-f x)) ∙ q) ⟩
+        ap f (! (g-f x)) ∙ ap f (ap g p) ∙ ap f (g-f y)
+          =⟨ ∘-ap f g p |in-ctx (λ q → ap f (! (g-f x)) ∙ q ∙ ap f (g-f y)) ⟩
+        ap f (! (g-f x)) ∙ ap (f ∘ g) p ∙ ap f (g-f y)
+          =⟨ adj y |in-ctx (λ q →  ap f (! (g-f x)) ∙ ap (f ∘ g) p ∙ q) ⟩
+        ap f (! (g-f x)) ∙ ap (f ∘ g) p ∙ (f-g (f y))
+          =⟨ ap-! f (g-f x) |in-ctx (λ q → q ∙ ap (f ∘ g) p ∙ (f-g (f y))) ⟩
+        ! (ap f (g-f x)) ∙ ap (f ∘ g) p ∙ (f-g (f y))
+          =⟨ adj x |in-ctx (λ q →  ! q ∙ ap (f ∘ g) p ∙ (f-g (f y))) ⟩
+        ! (f-g (f x)) ∙ ap (f ∘ g) p ∙ (f-g (f y))
+          =⟨ htpy-natural f-g p |in-ctx (λ q →  ! (f-g (f x)) ∙ q) ⟩
+        ! (f-g (f x)) ∙ (f-g (f x)) ∙ ap (idf B) p
+          =⟨ ! (∙-assoc (! (f-g (f x))) (f-g (f x)) (ap (idf B) p))
+             ∙ ap (λ q → q ∙ ap (idf B) p) (!-inv-l (f-g (f x))) ∙ ap-idf p ⟩
+        p ∎
+        where f : A → B; f = –> e; g : B → A; g = <– e
+              g-f : ∀ x → (g (f x) == x); g-f = <–-inv-l e 
+              f-g : ∀ y → (f (g y) == y); f-g = <–-inv-r e 
+              adj : ∀ x → ap f (g-f x) == f-g (f x); adj = is-equiv.adj (snd e)
 
   equiv-ap : (x y : A) → (x == y) ≃ (–> e x == –> e y)
   equiv-ap x y = equiv (ap (–> e)) ap-is-inj right-inverse left-inverse

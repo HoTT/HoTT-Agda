@@ -33,11 +33,11 @@ module _ {i} {A : Type i} where
   !-inv-r : {x y : A} (p : x == y) → p ∙ (! p) == idp
   !-inv-r idp = idp
 
-  -- -- Useful ?
-  -- anti-whisker-right : {x y z : A} (p : y == z) {q r : x == y}
-  --   → (q ∙ p == r ∙ p → q == r)
-  -- anti-whisker-right idp {q} {r} h =
-  --   ! (idp-right-unit q) ∙ (h ∙ idp-right-unit r)
+  -- Useful ?
+  anti-whisker-right : {x y z : A} (p : y == z) {q r : x == y}
+    → (q ∙ p == r ∙ p → q == r)
+  anti-whisker-right idp {q} {r} h =
+    ! (∙-unit-r q) ∙ (h ∙ ∙-unit-r r)
 
   -- anti-whisker-left : {x y z : A} (p : x == y) {q r : y == z}
   --   → (p ∙ q == p ∙ r → q == r)

@@ -55,3 +55,12 @@ ap-cst b idp = idp
 
 ap-idf : {u v : A} (p : u == v) → ap (idf A) p == p
 ap-idf idp = idp
+
+htpy-natural : ∀ {j} {B : Type j} {x y : A} {f g : A → B} 
+  (p : ∀ x → (f x == g x)) (q : x == y) → ap f q ∙ p y == p x ∙ ap g q
+htpy-natural p idp = ! (∙-unit-r _)
+
+htpy-natural-toid : {f : A → A}
+  (p : ∀ (x : A) → f x == x) → (∀ x → ap f (p x) == p (f x))
+htpy-natural-toid {f = f} p x = anti-whisker-right (p x) $ 
+  htpy-natural p (p x) ∙ ap (λ q → p (f x) ∙ q) (ap-idf (p x))
