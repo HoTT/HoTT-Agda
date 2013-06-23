@@ -32,6 +32,22 @@ module _ {i j} {A : Type i} {B : Type j} where
     →-is-prop : is-prop B → is-prop (A → B)
     →-is-prop = →-level
 
+-- Equivalences in a Π-type
+equiv-Π-r : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
+  → (∀ x → B x ≃ C x) → Π A B ≃ Π A C
+equiv-Π-r {A = A} {B = B} {C = C} k = equiv f g f-g g-f
+  where f : Π A B → Π A C
+        f c x = –> (k x) (c x)
+
+        g : Π A C → Π A B
+        g d x = <– (k x) (d x)
+
+        f-g : ∀ d → f (g d) == d
+        f-g d = λ= (λ x →  <–-inv-r (k x) (d x)) 
+
+        g-f : ∀ c → g (f c) == c
+        g-f c = λ= (λ x → <–-inv-l (k x) (c x))
+
 -- Dependent paths in a Π-type
 module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k}
   where
@@ -161,7 +177,8 @@ postulate
   (k : (u ◃ apd g p) == (apd f p ▹ v))
   (h : {a : A} → B a → C a)
   → ap↓ (λ {a} → ap (h {a = a})) (↓-=-in {p = p} {u = u} {v = v} k)
-  == ↓-=-in (lhs k h ∙ ap (ap↓ (λ {a} → h {a = a})) k ∙ rhs k h)
+  == ↓-=-in (lhs {f = f} {g = g} k h ∙ ap (ap↓ (λ {a} → h {a = a})) k 
+                                     ∙ rhs {f = f} {g = g} k h)
 
 --h (f x) == h (g y) [ C ↓ p ]
 

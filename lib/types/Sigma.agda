@@ -72,6 +72,42 @@ abstract
     → (has-level n A → has-level n B → has-level n (A × B))
   ×-level pA pB = Σ-level pA (λ x → pB)
 
+-- Equivalences in a Σ-type
+
+equiv-Σ-fst : ∀ {i j k} {A : Type i} {B : Type j} (P : B → Type k) {h : A → B}
+                  → is-equiv h → (Σ A (P ∘ h)) ≃ (Σ B P)
+equiv-Σ-fst {A = A} {B = B} P {h = h} e = equiv f g f-g g-f
+  where f : Σ A (P ∘ h) → Σ B P
+        f (a , r) = (h a , r)
+
+        g : Σ B P → Σ A (P ∘ h)
+        g (b , s) = (is-equiv.g e b , transport P (! (is-equiv.f-g e b)) s)
+
+        f-g : ∀ y → f (g y) == y
+        f-g (b , s) = pair= (is-equiv.f-g e b) (trans-↓ P (is-equiv.f-g e b) s)
+
+        g-f : ∀ x → g (f x) == x
+        g-f (a , r) = 
+          pair= (is-equiv.g-f e a) 
+                (transport (λ q → transport P (! q) r == r [ P ∘ h ↓ is-equiv.g-f e a ]) 
+                           (is-equiv.adj e a) 
+                           (trans-ap-↓ P h (is-equiv.g-f e a) r) )
+
+equiv-Σ-snd : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
+  → (∀ x → B x ≃ C x) → Σ A B ≃ Σ A C
+equiv-Σ-snd {A = A} {B = B} {C = C} k = equiv f g f-g g-f
+  where f : Σ A B → Σ A C
+        f (a , b) = (a , fst (k a) b)
+
+        g : Σ A C → Σ A B
+        g (a , c) = (a , is-equiv.g (snd (k a)) c)
+
+        f-g : ∀ p → f (g p) == p
+        f-g (a , c) = pair= idp (is-equiv.f-g (snd (k a)) c)
+
+        g-f : ∀ p → g (f p) == p
+        g-f (a , b) = pair= idp (is-equiv.g-f (snd (k a)) b)
+
 
 -- Implementation of [_∙'_] on Σ
 Σ-∙' : ∀ {i j} {A : Set i} {B : A → Set j}

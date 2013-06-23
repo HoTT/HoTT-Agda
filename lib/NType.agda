@@ -83,6 +83,10 @@ module _ {A : Type i} where
     inhab-prop-is-contr : A → is-prop A → is-contr A
     inhab-prop-is-contr x₀ p = (x₀ , λ y → fst (p x₀ y))
 
+    inhab-to-contr-is-prop : (A → is-contr A) → is-prop A
+    inhab-to-contr-is-prop c = all-paths-is-prop $
+      λ x y → ! (snd (c x) x) ∙ snd (c x) y
+
     contr-has-level : {n : ℕ₋₂} → (is-contr A → has-level n A)
     contr-has-level {n = ⟨-2⟩} p = p
     contr-has-level {n = S n} p = raise-level n (contr-has-level p)
@@ -124,6 +128,13 @@ module _ {A : Type i} where
   pathfrom-is-contr x = ((x , idp) , pathfrom-unique-path) where
     pathfrom-unique-path : {u : A} (pp : Σ A (λ t → u == t)) → (u , idp) == pp
     pathfrom-unique-path (u , idp) = idp
+
+-- The type of paths to a fixed point is contractible
+  pathto-is-contr : (x : A) → is-contr (Σ A (λ t → t == x))
+  pathto-is-contr x = ((x , idp) , pathto-unique-path) where
+    pathto-unique-path : {u : A} (pp : Σ A (λ t → t == u)) → (u , idp) == pp
+    pathto-unique-path (u , idp) = idp
+
 
   contr-has-section : ∀ {j} {A : Type i} {B : A → Type j}
     → (is-contr A → (x : A) → (u : B x) → Π A B)

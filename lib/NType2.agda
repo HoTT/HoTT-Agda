@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
+open import lib.Equivalences2
 open import lib.types.Paths
 open import lib.types.Pi
 open import lib.types.Sigma
@@ -38,11 +39,11 @@ abstract
   is-contr-is-prop : ∀ {i} {A : Type i} → is-prop (is-contr A)
   is-contr-is-prop {A = A} = all-paths-is-prop (λ x y →
     pair= (snd x (fst y))
-          (↓-cst→app-in (λ a → ↓-idf=cst-in (lemma x y a (snd y a))))) where
+          (↓-cst→app-in (λ a → ↓-idf=cst-in (lemma x (fst y) a (snd y a))))) where
 
-    lemma : (x y : is-contr A) (a : A) (p : fst y == a)
-      → snd x a == snd x (fst y) ∙' p
-    lemma x y ._ idp = idp
+    lemma : (x : is-contr A) (b a : A) (p : b == a)
+      → snd x a == snd x b ∙' p
+    lemma x b ._ idp = idp
 
   has-level-is-prop : ∀ {i} {n : ℕ₋₂} {A : Type i}
     → is-prop (has-level n A)

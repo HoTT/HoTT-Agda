@@ -192,3 +192,16 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → C) (g : B →
     → (ap f p ∙' s == r [ (λ x → f a == g x)  ↓ q ])
   ↓-swap! {p = idp} {q = idp} r s t = ∙'-unit-l s ∙ ! (∙-unit-r s) ∙ (! t)
 
+trans-↓ : ∀ {i j} {A : Type i} (P : A → Type j) {a₁ a₂ : A}
+  (p : a₁ == a₂) (y : P a₂) → transport P (! p) y == y [ P ↓ p ]
+trans-↓ _ idp _ = idp
+
+trans-ap-↓ : ∀ {i j k} {A : Type i} {B : Type j} (P : B → Type k) (h : A → B)
+  {a₁ a₂ : A} (p : a₁ == a₂) (y : P (h a₂)) 
+  → transport P (! (ap h p)) y == y [ P ∘ h ↓ p ]
+trans-ap-↓ _ _ idp _ = idp
+
+↓-pathto-eqv : ∀ {i j} {A : Type i} {B : Type j} {h : A → B} 
+  {a₁ a₂ : A} {b : B} {q : h a₁ == b} {r : h a₂ == b} (p : a₁ == a₂)
+  → (q == r [ (λ a → h a == b) ↓ p ]) ≃ (ap h p ∙ r == q)
+↓-pathto-eqv idp = (! , is-eq ! ! !-! !-!)

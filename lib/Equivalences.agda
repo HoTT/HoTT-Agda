@@ -59,10 +59,6 @@ equiv : ∀ {i j} {A : Type i} {B : Type j}
   (g-f : (a : A) → g (f a) == a) → A ≃ B
 equiv f g f-g g-f = (f , is-eq f g f-g g-f)
 
-postulate  -- TODO
-  is-equiv-is-prop : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
-    → is-prop (is-equiv f)
-
 –> : ∀ {i} {j} {A : Type i} {B : Type j} (e : A ≃ B) → (A → B)
 –> e = fst e
 
@@ -160,3 +156,9 @@ equiv-preserves-level {n = ⟨-2⟩} e (x , p) =
   (–> e x , (λ y → ap (–> e) (p _) ∙ <–-inv-r e y))
 equiv-preserves-level {n = S n} e c = λ x y →
    equiv-preserves-level (equiv-ap (e ⁻¹) x y ⁻¹) (c (<– e x) (<– e y))
+
+choice : ∀ {i j k} {A : Type i} {B : A → Type j} {P : (a : A) → B a → Type k}
+  → Π A (λ a → Σ (B a) (λ b → P a b)) ≃ Σ (Π A B) (λ g → Π A (λ a → P a (g a)))
+choice = equiv f g (λ _ → idp) (λ _ → idp)
+  where f = λ c → ((λ a → fst (c a)) , (λ a → snd (c a)))
+        g = λ d → (λ a → (fst d a , snd d a))

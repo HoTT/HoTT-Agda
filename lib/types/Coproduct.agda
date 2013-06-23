@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
+open import lib.types.Lift
 
 module lib.types.Coproduct where
 
@@ -31,11 +32,8 @@ module _ {i j} {A : Type i} {B : Type j} where
           f-g (inr b₁) (inr .b₁) (lift idp) = idp
 
           g-f : ∀ x' y' → ∀ p → +-decode (+-encode {x'} {y'} p) == p
-          g-f (inl _) (inl ._) idp = idp
-          g-f (inr _) (inr ._) idp = idp
-
-  lift-equiv : ∀ {i j} {A : Type i} → Lift {j = j} A ≃ A
-  lift-equiv = equiv lower lift (λ _ → idp) (λ _ → idp)
+          g-f (inl _) .(inl _) idp = idp
+          g-f (inr _) .(inr _) idp = idp
 
   inl=inl-equiv : (a₁ a₂ : A) → (inl a₁ == inl a₂) ≃ (a₁ == a₂)
   inl=inl-equiv a₁ a₂ = lift-equiv ∘e +-code-equiv (inl a₁) (inl a₂)

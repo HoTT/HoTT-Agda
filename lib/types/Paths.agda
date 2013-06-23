@@ -37,7 +37,7 @@ module _ {i} {A : Type i} {f : A → A} where
   {x y : A} {p : x == y} {u : a == x} {v : a == y}
   → (u ∙ p) == v
   → (u == v [ (λ x → a == x) ↓ p ])
-↓-cst=idf-in {p = idp} idp = ! (∙-unit-r _)
+↓-cst=idf-in {p = idp} q = ! (∙-unit-r _) ∙ q
 
 ↓-idf=cst-in : ∀ {i} {A : Set i} {a : A}
   {x y : A} {p : x == y} {u : x == a} {v : y == a}
