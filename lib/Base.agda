@@ -219,22 +219,6 @@ record Lift {i j} (A : Type i) : Type (lmax i j) where
     lower : A
 open Lift public
 
-{- Operations on paths
-
-Concatenation of paths is denoted with the symbol `_∙_` and it uses diagrammatic
-order and reduces when the first argument is `idp`
-Reversal of paths is denoted with the symbol `!`.
--}
-
-infixr 8 _∙_
-
-_∙_ : ∀ {i} {A : Type i} {x y z : A}
-  → (x == y → y == z → x == z)
-idp ∙ q = q
-
-! : ∀ {i} {A : Type i} {x y : A}
-  → (x == y → y == x)
-! idp = idp
 
 {- Equational reasoning
 
@@ -256,13 +240,19 @@ equal to `b`, and `ctx` is the context.
 In such cases, you can use instead `thm |in-ctx ctx`. The advantage is that
 `ctx` is usually boring whereas the first word of `thm` is the most interesting
 part.
+
+_=⟨_⟩ is not definitionally the same thing as concatenation of paths _∙_ because
+we haven’t defined concatenation of paths yet, and also you probably shouldn’t
+reason on paths constructed with equational reasoning.
+If you do want to reason on paths constructed with equational reasoning, check
+out lib.types.PathSeq instead.
 -}
 
 infix  2 _∎
 infixr 2 _=⟨_⟩_
 
 _=⟨_⟩_ : ∀ {i} {A : Type i} (x : A) {y z : A} → x == y → y == z → x == z
-_ =⟨ p ⟩ q = p ∙ q
+_ =⟨ idp ⟩ idp = idp
 
 _∎ : ∀ {i} {A : Type i} (x : A) → x == x
 _ ∎ = idp

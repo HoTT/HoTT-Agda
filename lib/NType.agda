@@ -5,7 +5,7 @@ open import lib.PathGroupoid
 
 module lib.NType {i} where
 
-{- Definition of truncation levels -}
+{- Definition of contractible types and truncation levels -}
 
 is-contr : Type i → Type i
 is-contr A = Σ A (λ x → ((y : A) → x == y))
@@ -70,7 +70,7 @@ abstract
    UIP idp q | inl a | p' = ! (!-inv-l a) ∙ (! p')
    UIP idp q | inr r | _ = Empty-elim (r idp)
 
-{- Relationship between levels -}
+{- Relationships between levels -}
 
 module _ {A : Type i} where
   abstract
@@ -108,7 +108,7 @@ module _ {A : Type i} where
     prop-is-set : is-prop A → is-set A
     prop-is-set = prop-has-level-S
 
-    -- If [A] has level [n], then so does [x == y] for [x y : A]
+    {- If [A] has level [n], then so does [x == y] for [x y : A] -}
     =-preserves-level : (n : ℕ₋₂) {x y : A}
       → (has-level n A → has-level n (x == y))
     =-preserves-level ⟨-2⟩ p = (contr-has-all-paths p _ _ , unique-path) where
@@ -123,19 +123,22 @@ module _ {A : Type i} where
     =-preserves-prop : {x y : A} → (is-prop A → is-prop (x == y))
     =-preserves-prop = =-preserves-level ⟨-1⟩
 
-  -- The type of paths from a fixed point is contractible
+  {- The type of paths from a fixed point is contractible -}
   pathfrom-is-contr : (x : A) → is-contr (Σ A (λ t → x == t))
   pathfrom-is-contr x = ((x , idp) , pathfrom-unique-path) where
     pathfrom-unique-path : {u : A} (pp : Σ A (λ t → u == t)) → (u , idp) == pp
     pathfrom-unique-path (u , idp) = idp
 
--- The type of paths to a fixed point is contractible
+  {- The type of paths to a fixed point is contractible -}
   pathto-is-contr : (x : A) → is-contr (Σ A (λ t → t == x))
   pathto-is-contr x = ((x , idp) , pathto-unique-path) where
     pathto-unique-path : {u : A} (pp : Σ A (λ t → t == u)) → (u , idp) == pp
     pathto-unique-path (u , idp) = idp
 
-
+  {-
+  If [B] is a fibration over a contractible type [A], then any point in any
+  fiber of [B] gives a section
+  -}
   contr-has-section : ∀ {j} {A : Type i} {B : A → Type j}
     → (is-contr A → (x : A) → (u : B x) → Π A B)
   contr-has-section {B = B} (x , p) x₀ y₀ t = transport B (! (p x₀) ∙ p t) y₀

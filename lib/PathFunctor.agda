@@ -5,6 +5,7 @@ open import lib.PathGroupoid
 
 module lib.PathFunctor {i} {A : Type i} where
 
+{- Nondependent stuff -}
 module _ {j} {B : Type j} (f : A → B) where
 
   !-ap : {x y : A} (p : x == y)
@@ -31,6 +32,7 @@ module _ {j} {B : Type j} (f : A → B) where
     → ap f (p ∙' q) == ap f p ∙' ap f q
   ap-∙' idp idp = idp
 
+{- Dependent stuff -}
 module _ {j} {B : A → Type j} (f : Π A B) where
 
   apd-∙ : {x y z : A} (p : x == y) (q : y == z)
@@ -40,6 +42,8 @@ module _ {j} {B : A → Type j} (f : Π A B) where
   apd-∙' : {x y z : A} (p : x == y) (q : y == z)
     → apd f (p ∙' q) == apd f p ∙'dep apd f q
   apd-∙' idp idp = idp
+
+{- Fuse and unfuse -}
 
 ∘-ap : ∀ {j k} {B : Type j} {C : Type k} (g : B → C) (f : A → B)
   {x y : A} (p : x == y) → ap g (ap f p) == ap (g ∘ f) p
@@ -55,6 +59,8 @@ ap-cst b idp = idp
 
 ap-idf : {u v : A} (p : u == v) → ap (idf A) p == p
 ap-idf idp = idp
+
+{- Naturality of homotopies -}
 
 htpy-natural : ∀ {j} {B : Type j} {x y : A} {f g : A → B} 
   (p : ∀ x → (f x == g x)) (q : x == y) → ap f q ∙ p y == p x ∙ ap g q
