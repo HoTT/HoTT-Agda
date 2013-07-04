@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Base
+open import lib.PathGroupoid
 open import lib.Equivalences
 
 module lib.Univalence where

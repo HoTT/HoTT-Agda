@@ -77,10 +77,7 @@ equiv f g f-g g-f = (f , is-eq f g f-g g-f)
 equiv-inj : ∀ {i} {j} {A : Type i} {B : Type j} (e : A ≃ B) {x y : A}
   → (–> e x == –> e y → x == y)
 equiv-inj e {x} {y} p = let (f , g) = (–> e , <– e) in
-  x       =⟨ ! (<–-inv-l e x) ⟩
-  g (f x) =⟨ ap g p ⟩
-  g (f y) =⟨ <–-inv-l e y ⟩
-  y ∎
+  ! (<–-inv-l e x) ∙ ap g p ∙ <–-inv-l e y
 
 _⁻¹ : ∀ {i j} {A : Type i} {B : Type j} → (A ≃ B) → (B ≃ A)
 e ⁻¹ = equiv (<– e) (–> e) (<–-inv-l e) (<–-inv-r e)
@@ -112,17 +109,11 @@ module _ {i j} {A : Type i} {B : Type j} (e : A ≃ B) where
 
     abstract
       left-inverse : {x y : A} (p : x == y) → ap-is-inj (ap (–> e) p) == p
-      left-inverse idp =
-        ! (<–-inv-l e _) ∙ <–-inv-l e _ ∙ idp
-                  =⟨ ∙-unit-r (<–-inv-l e _) |in-ctx (λ u → ! (<–-inv-l e _) ∙ u)  ⟩
-        ! (<–-inv-l e _) ∙ <–-inv-l e _ =⟨ !-inv-l (<–-inv-l e _) ⟩
-        idp ∎
+      left-inverse idp = !-inv-l (<–-inv-l e _)
 
       right-inverse : {x y : A} (p : –> e x == –> e y) 
         → ap (–> e) (ap-is-inj p) == p
       right-inverse {x} {y} p = 
-        ap f (! (g-f x) ∙ ap g p ∙ (g-f y) ∙ idp)
-          =⟨ ∙-unit-r _ |in-ctx (λ q →  ap f (! (g-f x) ∙ ap g p ∙ q)) ⟩
         ap f (! (g-f x) ∙ ap g p ∙ (g-f y))
           =⟨ ap-∙ f (! (g-f x)) (ap g p ∙ (g-f y)) ⟩
         ap f (! (g-f x)) ∙ ap f (ap g p ∙ (g-f y))
