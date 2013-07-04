@@ -10,21 +10,21 @@ module lib.Base where
 {- Universes and typing
 
 Agda has explicit universe polymorphism, which means that there is an actual
-type of universe levels on which you can quantify. This type is called `ULevel`
+type of universe levels on which you can quantify. This type is called [ULevel]
 and comes equipped with the following operations:
 
-- `lzero : ULevel` (in order to have at least one universe)
-- `lsucc : ULevel → ULevel` (the `i`th universe level is a term in the
-  `lsucc i`th universe)
-- `lmax : ULevel → ULevel → ULevel` (in order to type dependent products (where
+- [lzero] : [ULevel] (in order to have at least one universe)
+- [lsucc] : [ULevel → ULevel] (the [i]th universe level is a term in the
+  [lsucc i]th universe)
+- [lmax] : [ULevel → ULevel → ULevel] (in order to type dependent products (where
   the codomain is in a uniform universe level)
 
 This type is postulated below and linked to Agda’s universe polymorphism
 mechanism via the BUILTIN commands (it’s the way it works).
 
-In plain Agda, the `i`th universe is called `Set i`, which is not a very good
-name from the point of view of HoTT, so we define `Type` as a synonym of `Set`
-and `Set` should never be used again.
+In plain Agda, the [i]th universe is called [Set i], which is not a very good
+name from the point of view of HoTT, so we define [Type] as a synonym of [Set]
+and [Set] should never be used again.
 -}
 
 postulate  -- Universe levels
@@ -49,10 +49,10 @@ Type1 = Type (lsucc lzero)
 
 {-
 There is no built-in or standard way to coerce an ambiguous term to a given type
-(like `u : A` in ML), the symbol `:` is reserved, and the Unicode `∶` is really
+(like [u : A] in ML), the symbol [:] is reserved, and the Unicode [∶] is really
 a bad idea.
-So we’re using the symbol `_:>_`, which has the advantage that it can micmic
-Coq’s `u = v :> A`.
+So we’re using the symbol [_:>_], which has the advantage that it can micmic
+Coq’s [u = v :> A].
 -}
 
 infix 10 of-type
@@ -64,9 +64,9 @@ syntax of-type A u =  u :> A
 
 {- Identity type
 
-The identity type is called `Path` and `_==_` because the symbol `=` is
+The identity type is called [Path] and [_==_] because the symbol [=] is
 reserved in Agda.
-The constant path is `idp`. Note that all arguments of `idp` are implicit.
+The constant path is [idp]. Note that all arguments of [idp] are implicit.
 -}
 
 infix 4 _==_
@@ -90,10 +90,10 @@ record Unit : Type₀ where
 {- Dependent paths
 
 The notion of dependent path is a very important notion.
-If you have a dependent type `B` over `A`, a path `p : x == y` in `A` and two
-points `u : B x` and `v : B y`, there is a type `u == v [ B ↓ p ]` of paths from
-`u` to `v` lying over the path `p`.
-By definition, if `p` is a constant path, then `u == v [ B ↓ p ]` is just an
+If you have a dependent type [B] over [A], a path [p : x == y] in [A] and two
+points [u : B x] and [v : B y], there is a type [u == v [ B ↓ p ]] of paths from
+[u] to [v] lying over the path [p].
+By definition, if [p] is a constant path, then [u == v [ B ↓ p ]] is just an
 ordinary path in the fiber.
 -}
 
@@ -106,10 +106,10 @@ syntax PathOver B p u v =
 
 {- Ap, coe and transport
 
-Given two fibrations over a type `A`, a fiberwise map between the two fibrations
-can be applied to any dependent path in the first fibration (`ap↓`).
-As a special case, when `A` is `Unit`, we find the familiar `ap` (`ap` is
-defined in terms of `ap↓` because it shouldn’t change anything for the user
+Given two fibrations over a type [A], a fiberwise map between the two fibrations
+can be applied to any dependent path in the first fibration ([ap↓]).
+As a special case, when [A] is [Unit], we find the familiar [ap] ([ap] is
+defined in terms of [ap↓] because it shouldn’t change anything for the user
 and this is helpful in some rare cases)
 -}
 
@@ -140,8 +140,8 @@ coe! : ∀ {i} {A B : Type i} (p : A == B) → B → A
 coe! idp x = x
 
 {-
-The operations of transport forward and backward are defined in terms of `ap`
-and `coe`, because this is more convenient in practice.
+The operations of transport forward and backward are defined in terms of [ap]
+and [coe], because this is more convenient in practice.
 -}
 
 transport : ∀ {i j} {A : Type i} (B : A → Type j) {x y : A} (p : x == y)
@@ -232,13 +232,13 @@ The idea is that you can write the following:
       d =⟨ s ⟩
       e ∎
 
-where `p` is a path from `a` to `b`, `q` is a path from `b` to `c`, and so on.
+where [p] is a path from [a] to [b], [q] is a path from [b] to [c], and so on.
 
-You often have to apply some equality in some context, for instance `p` could be
-`ap ctx thm` where `thm` is the interesting theorem used to prove that `a` is
-equal to `b`, and `ctx` is the context.
-In such cases, you can use instead `thm |in-ctx ctx`. The advantage is that
-`ctx` is usually boring whereas the first word of `thm` is the most interesting
+You often have to apply some equality in some context, for instance [p] could be
+[ap ctx thm] where [thm] is the interesting theorem used to prove that [a] is
+equal to [b], and [ctx] is the context.
+In such cases, you can use instead [thm |in-ctx ctx]. The advantage is that
+[ctx] is usually boring whereas the first word of [thm] is the most interesting
 part.
 
 _=⟨_⟩ is not definitionally the same thing as concatenation of paths _∙_ because
@@ -261,10 +261,10 @@ syntax ap f p = p |in-ctx f
 
 {- Various basic functions and function operations
 
-The identity function on a type `A` is `idf A` and the constant function at some
-point `b` is `cst b`.
+The identity function on a type [A] is [idf A] and the constant function at some
+point [b] is [cst b].
 
-Composition of functions (`_∘_`) can handle dependent functions.
+Composition of functions ([_∘_]) can handle dependent functions.
 -}
 
 idf : ∀ {i} (A : Type i) → (A → A)
