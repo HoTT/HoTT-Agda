@@ -31,7 +31,7 @@ the identity type of Σ-types is `pair=` and not `pair==`.
 The numbering is the homotopy-theoretic numbering, parametrized by the type
 `TLevel` or `ℕ₋₂` where
 
-    data TLevel : Set where
+    data TLevel : Type₀ where
       ⟨-2⟩ : TLevel
       S : TLevel → TLevel
 

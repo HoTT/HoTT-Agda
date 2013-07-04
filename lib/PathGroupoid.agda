@@ -86,7 +86,7 @@ module _ {i} {A : Type i} where
 
 
 {- Dependent stuff -}
-module _ {i j} {A : Set i} {B : A → Set j} where
+module _ {i j} {A : Type i} {B : A → Type j} where
 
   {- Dependent concatenation -}
 

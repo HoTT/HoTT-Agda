@@ -9,7 +9,7 @@ open import lib.PathGroupoid
 module lib.PathOver where
 
 -- Dependent paths in a constant fibration
-module _ {i j} {A : Set i} {B : Set j} where
+module _ {i j} {A : Type i} {B : Type j} where
 
   ↓-cst-in : {x y : A} {p : x == y} {u v : B}
     → u == v
@@ -38,7 +38,7 @@ module _ {i j} {A : Set i} {B : Set j} where
   ↓-cst-in2 {p₀ = idp} {p₁ = .idp} {q₀} {q₁} {idp} k = k
 
 -- Dependent paths in a fibration constant in the second argument
-module _ {i j k} {A : Set i} {B : A → Set j} {C : A → Set k} where
+module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} where
 
   ↓-cst2-in : {x y : A} (p : x == y) {b : C x} {c : C y}
     (q : b == c [ C ↓ p ]) {u : B x} {v : B y}
@@ -54,7 +54,7 @@ module _ {i j k} {A : Set i} {B : A → Set j} {C : A → Set k} where
 
 -- Dependent paths in a fibration constant and non dependent in the
 -- second argument
-module _ {i j k} {A : Set i} {B : A → Set j} {C : Set k} where
+module _ {i j k} {A : Type i} {B : A → Type j} {C : Type k} where
 
   ↓-cst2'-in : {x y : A} (p : x == y) {b c : C}
     (q : b == c) {u : B x} {v : B y}
@@ -69,7 +69,7 @@ module _ {i j k} {A : Set i} {B : A → Set j} {C : Set k} where
   ↓-cst2'-out idp idp r = r
 
 -- -- ap can be defined via apd, not sure whether it’s a good idea or not
--- ap : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) {x y : A} (p : x == y)
+-- ap : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) {x y : A} (p : x == y)
 --   → f x == f y
 -- ap f p = ↓-cst-out (apd f p)
 
@@ -78,7 +78,7 @@ apd=cst-in : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
   → apd f p == ↓-cst-in q → ap f p == q
 apd=cst-in {p = idp} x = x
 
-↓-apd-out : ∀ {i j k} {A : Set i} {B : A → Set j} (C : (a : A) → B a → Set k)
+↓-apd-out : ∀ {i j k} {A : Type i} {B : A → Type j} (C : (a : A) → B a → Type k)
   {f : Π A B} {x y : A} {p : x == y}
   {q : f x == f y [ B ↓ p ]} (r : apd f p == q)
   {u : C x (f x)} {v : C y (f y)}
@@ -87,7 +87,7 @@ apd=cst-in {p = idp} x = x
 ↓-apd-out C {p = idp} idp idp = idp
 
 -- Dependent paths over [ap f p]
-module _ {i j k} {A : Set i} {B : Set j} (C : B → Set k) (f : A → B) where
+module _ {i j k} {A : Type i} {B : Type j} (C : B → Type k) (f : A → B) where
 
   ↓-ap-in : {x y : A} {p : x == y} {u : C (f x)} {v : C (f y)}
     → u == v [ C ∘ f ↓ p ]
@@ -101,53 +101,53 @@ module _ {i j k} {A : Set i} {B : Set j} (C : B → Set k) (f : A → B) where
 
 -- Mediating dependent paths with the transport version
 
-module _ {i j} {A : Set i} where
+module _ {i j} {A : Type i} where
 
-  from-transp : (B : A → Set j) {a a' : A} (p : a == a')
+  from-transp : (B : A → Type j) {a a' : A} (p : a == a')
     {u : B a} {v : B a'}
     → (transport B p u == v)
     → (u == v [ B ↓ p ])
   from-transp B idp idp = idp
 
-  to-transp : {B : A → Set j} {a a' : A} {p : a == a'}
+  to-transp : {B : A → Type j} {a a' : A} {p : a == a'}
     {u : B a} {v : B a'}
     → (u == v [ B ↓ p ])
     → (transport B p u == v)
   to-transp {p = idp} idp = idp
 
-  to-transp-β : (B : A → Set j) {a a' : A} (p : a == a')
+  to-transp-β : (B : A → Type j) {a a' : A} (p : a == a')
     {u : B a} {v : B a'}
     (q : transport B p u == v)
     → to-transp (from-transp B p q) == q
   to-transp-β B idp idp = idp
 
-  to-transp-η : {B : A → Set j} {a a' : A} {p : a == a'}
+  to-transp-η : {B : A → Type j} {a a' : A} {p : a == a'}
     {u : B a} {v : B a'}
     (q : u == v [ B ↓ p ])
     → from-transp B p (to-transp q) == q
   to-transp-η {p = idp} idp = idp
 
-  to-transp-equiv : (B : A → Set j) {a a' : A} (p : a == a')
+  to-transp-equiv : (B : A → Type j) {a a' : A} (p : a == a')
     {u : B a} {v : B a'} → (u == v [ B ↓ p ]) ≃ (transport B p u == v)
   to-transp-equiv B p =
     equiv to-transp (from-transp B p) (to-transp-β B p) (to-transp-η)
 
 
-  from-transp! : (B : A → Set j)
+  from-transp! : (B : A → Type j)
     {a a' : A} (p : a == a')
     {u : B a} {v : B a'}
     → (u == transport! B p v)
     → (u == v [ B ↓ p ])
   from-transp! B idp idp = idp
 
-  to-transp! : {B : A → Set j}
+  to-transp! : {B : A → Type j}
     {a a' : A} {p : a == a'}
     {u : B a} {v : B a'}
     → (u == v [ B ↓ p ])
     → (u == transport! B p v)
   to-transp! {p = idp} idp = idp
 
-  to-transp!-β : (B : A → Set j)
+  to-transp!-β : (B : A → Type j)
     {a a' : A} (p : a == a')
     {u : B a} {v : B a'}
     (q : u == transport! B p v)
@@ -155,7 +155,7 @@ module _ {i j} {A : Set i} where
   to-transp!-β B idp idp = idp
 
 -- No idea what that is
-to-transp-weird : ∀ {i j} {A : Set i} {B : A → Set j}
+to-transp-weird : ∀ {i j} {A : Type i} {B : A → Type j}
   {u v : A} {d : B u} {d' d'' : B v} {p : u == v}
   (q : d == d' [ B ↓ p ]) (r : transport B p d == d'')
   → (from-transp B p r ∙'dep (! r ∙ to-transp q)) == q

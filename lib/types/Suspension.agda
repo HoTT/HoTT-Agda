@@ -30,7 +30,7 @@ module SuspensionElim {j} {P : Suspension → Type j} (n : P north) (s : P south
 
 open SuspensionElim public using () renaming (f to Suspension-elim)
 
-module SuspensionRec {j} {C : Set j} (n s : C) (p : A → n == s)
+module SuspensionRec {j} {C : Type j} (n s : C) (p : A → n == s)
   = PushoutRec {d = suspension-span} (λ _ → n) (λ _ → s) p
 
 module SuspensionRecType {j} (n s : Type j) (p : A → n ≃ s)

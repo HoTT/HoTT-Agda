@@ -150,7 +150,7 @@ module _ {i j} {A : Type i} {B : Type j} (e : A ≃ B) where
   equiv-ap x y = equiv (ap (–> e)) ap-is-inj right-inverse left-inverse
 
 -- Equivalent types have the same truncation level
-equiv-preserves-level : ∀ {i j} {A : Set i} {B : Set j} {n : ℕ₋₂} (e : A ≃ B)
+equiv-preserves-level : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} (e : A ≃ B)
   → (has-level n A → has-level n B)
 equiv-preserves-level {n = ⟨-2⟩} e (x , p) =
   (–> e x , (λ y → ap (–> e) (p _) ∙ <–-inv-r e y))

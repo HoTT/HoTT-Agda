@@ -33,26 +33,26 @@ module _ {i} {A : Type i} {f : A → A} where
     → u == v [ (λ z → f z == z) ↓ p ]
   ↓-app='idf-in {p = idp} q = q
 
-↓-cst=idf-in : ∀ {i} {A : Set i} {a : A}
+↓-cst=idf-in : ∀ {i} {A : Type i} {a : A}
   {x y : A} {p : x == y} {u : a == x} {v : a == y}
   → (u ∙ p) == v
   → (u == v [ (λ x → a == x) ↓ p ])
 ↓-cst=idf-in {p = idp} q = ! (∙-unit-r _) ∙ q
 
-↓-idf=cst-in : ∀ {i} {A : Set i} {a : A}
+↓-idf=cst-in : ∀ {i} {A : Type i} {a : A}
   {x y : A} {p : x == y} {u : x == a} {v : y == a}
   → u == p ∙' v
   → (u == v [ (λ x → x == a) ↓ p ])
 ↓-idf=cst-in {p = idp} q = q ∙ ∙'-unit-l _
 
-↓-idf=idf-in : ∀ {i} {A : Set i}
+↓-idf=idf-in : ∀ {i} {A : Type i}
   {x y : A} {p : x == y} {u : x == x} {v : y == y}
   → u ∙ p == p ∙' v
   → (u == v [ (λ x → x == x) ↓ p ])
 ↓-idf=idf-in {p = idp} q = ! (∙-unit-r _) ∙ q ∙ ∙'-unit-l _
 
 
-↓-='-in : ∀ {i j} {A : Set i} {B : Set j} {f g : A → B}
+↓-='-in : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
   {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
   → (u ∙ ap g p) == (ap f p ∙' v)
   → (u == v [ (λ x → f x == g x) ↓ p ])
@@ -61,52 +61,52 @@ module _ {i} {A : Type i} {f : A → A} where
 -- Dependent vs nondependent whiskering
 -- This definitional behaviour make [↓-=-in] slightly more complicated to prove
 -- but [↓-=-in] is often used in the case where [u] and [v] are [idp]
-_▹_ : ∀ {i j} {A : Set i} {B : A → Set j} {x y : A} {u : B x}
+_▹_ : ∀ {i j} {A : Type i} {B : A → Type j} {x y : A} {u : B x}
   {v w : B y} {p : x == y}
   → (u == v [ B ↓ p ]) → v == w
      → (u == w [ B ↓ p ])
 _▹_ {p = idp} q idp = q
 
-idp▹ : ∀ {i j} {A : Set i} (B : A → Set j) {x : A}
+idp▹ : ∀ {i j} {A : Type i} (B : A → Type j) {x : A}
   {v w : B x} (q : v == w)
   → _▹_ {B = B} {p = idp} idp q == q
 idp▹ B idp = idp
 
-_▹!_ : ∀ {i j} {A : Set i} {B : A → Set j} {x y : A} {u : B x}
+_▹!_ : ∀ {i j} {A : Type i} {B : A → Type j} {x y : A} {u : B x}
   {v w : B y} {p : x == y}
   → (u == v [ B ↓ p ]) → w == v
      → (u == w [ B ↓ p ])
 _▹!_ {p = idp} q idp = q
 
-idp▹! : ∀ {i j} {A : Set i} (B : A → Set j) {x : A}
+idp▹! : ∀ {i j} {A : Type i} (B : A → Type j) {x : A}
   {v w : B x} (q : w == v)
   → _▹!_ {B = B} {p = idp} idp q == ! q
 idp▹! B idp = idp
 
-_◃_ : ∀ {i j} {A : Set i} {B : A → Set j} {x y : A} {u v : B x}
+_◃_ : ∀ {i j} {A : Type i} {B : A → Type j} {x y : A} {u v : B x}
   {w : B y} {p : x == y}
   → (u == v → (v == w [ B ↓ p ])
      → (u == w [ B ↓ p ]))
 _◃_ {p = idp} idp q = q
 
-◃idp : ∀ {i j} {A : Set i} (B : A → Set j) {x : A}
+◃idp : ∀ {i j} {A : Type i} (B : A → Type j) {x : A}
   {v w : B x} (q : w == v)
   → _◃_ {B = B} {p = idp} q idp == q
 ◃idp B idp = idp
 
-_!◃_ : ∀ {i j} {A : Set i} {B : A → Set j} {x y : A} {u v : B x}
+_!◃_ : ∀ {i j} {A : Type i} {B : A → Type j} {x y : A} {u v : B x}
   {w : B y} {p : x == y}
   → (v == u → (v == w [ B ↓ p ])
      → (u == w [ B ↓ p ]))
 _!◃_ {p = idp} idp q = q
 
-!◃idp : ∀ {i j} {A : Set i} (B : A → Set j) {x : A}
+!◃idp : ∀ {i j} {A : Type i} (B : A → Type j) {x : A}
   {v w : B x} (q : v == w)
   → _!◃_ {B = B} {p = idp} q idp == ! q
 !◃idp B idp = idp
 
 
-↓-=-in : ∀ {i j} {A : Set i} {B : A → Set j} {f g : Π A B}
+↓-=-in : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
   {x y : A} {p : x == y} {u : g x == f x} {v : g y == f y}
   → (u ◃ apd f p) == (apd g p ▹ v)
   → (u == v [ (λ x → g x == f x) ↓ p ])
@@ -114,14 +114,14 @@ _!◃_ {p = idp} idp q = q
   ! (◃idp B u) ∙ (q ∙ idp▹ B v)
 
 postulate
- ↓-=-out : ∀ {i j} {A : Set i} {B : A → Set j} {f g : Π A B}
+ ↓-=-out : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
   {x y : A} {p : x == y} {u : g x == f x} {v : g y == f y}
   → (u == v [ (λ x → g x == f x) ↓ p ])
   → (u ◃ apd f p) == (apd g p ▹ v)
 --↓-=-out {B = B} {p = idp} idp = {!!}
 
 -- Dependent path in a type of the form [λ x → g (f x) ≡ x]
-module _ {i j} {A : Set i} {B : Set j} (f : A → B) (g : B → A) where
+module _ {i j} {A : Type i} {B : Type j} (f : A → B) (g : B → A) where
   ↓-∘=id-in : {x y : A} {p : x == y} {u : g (f x) == x} {v : g (f y) == y}
     → ((ap g (ap f p) ∙' v) == (u ∙ p))
     → (u == v [ (λ x → g (f x) == x) ↓ p ])
@@ -135,8 +135,8 @@ module _ {i j} {A : Set i} {B : Set j} (f : A → B) (g : B → A) where
 --         u ◃ ↓-apd-out _ f p (↓-apd-out _ π₂ (pair= p (apd f p)) (apdd g (pair= p (apd f p)) (apd π₂ (pair= p (apd f p))))) =⟨ {!!} ⟩
 --         apd (λ x → x) p ▹ v ∎)
 
-ap↓-◃ : ∀ {i j} {A : Set i} {B : A → Set j} {x y : A} {u v : B x}
-  {k} {C : A → Set k}
+ap↓-◃ : ∀ {i j} {A : Type i} {B : A → Type j} {x y : A} {u v : B x}
+  {k} {C : A → Type k}
   (f : {a : A} → B a → C a)
   {w : B y} {p : x == y} (q : u == v) (r : v == w [ B ↓ p ])
   → ap↓ f (q ◃ r) == ap f q ◃ ap↓ f r

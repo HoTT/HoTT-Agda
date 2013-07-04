@@ -139,19 +139,19 @@ split-ap2 : ∀ {i j k} {A : Type i} {B : A → Type j} {C : Type k} (f : Σ A B
   → ap f (pair= p q) == ↓-app→cst-out (apd (curry f) p) q
 split-ap2 f idp idp = idp
 
-apdi2 : ∀ {i j k} {A : Set i} {B : A → Set j} {C : (a : A) → B a → Set k}
+apdi2 : ∀ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k}
   (g : {a : A} → Π (B a) (C a)) {x y : A} {p : x == y}
   {u : B x} {v : B y} (q : u == v [ B ↓ p ])
   → g u == g v [ uncurry C ↓ pair= p q ]
 apdi2 g {p = idp} idp = idp
 
-apd-∘ : ∀ {i j k} {A : Set i} {B : A → Set j} {C : (a : A) → B a → Set k}
+apd-∘ : ∀ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k}
   (g : {a : A} → Π (B a) (C a)) (f : Π A B) {x y : A} (p : x == y)
   {q : f x == f y [ B ↓ p ]} (r : apd f p == q)
   → apd (g ∘ f) p == ↓-apd-out C r (apdi2 g q)
 apd-∘ g f idp idp = idp
 
-apd-∘' : ∀ {i j k} {A : Set i} {B : A → Set j} {C : A → Set k}
+apd-∘' : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
   (g : {a : A} → B a → C a) (f : Π A B) {x y : A} (p : x == y)
   → apd (g ∘ f) p == ap↓ g (apd f p)
 apd-∘' g f idp = idp
