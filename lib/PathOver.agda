@@ -192,6 +192,14 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → C) (g : B →
     → (ap f p ∙' s == r [ (λ x → f a == g x)  ↓ q ])
   ↓-swap! {p = idp} {q = idp} r s t = ∙'-unit-l s ∙ ! (∙-unit-r s) ∙ (! t)
 
+-- Dependent paths over function spaces
+↓-→-is-square : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} 
+  {x y : A} (f : B x → C x) (g : B y → C y) (p : x == y)
+  → ((transport C p ∘ f) == (g ∘ transport B p)) 
+    == (f == g [ (λ z → B z → C z) ↓ p ])
+↓-→-is-square _ _ idp = idp
+
+
 trans-↓ : ∀ {i j} {A : Type i} (P : A → Type j) {a₁ a₂ : A}
   (p : a₁ == a₂) (y : P a₂) → transport P (! p) y == y [ P ↓ p ]
 trans-↓ _ idp _ = idp

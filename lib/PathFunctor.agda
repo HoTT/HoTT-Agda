@@ -70,3 +70,8 @@ htpy-natural-toid : {f : A → A}
   (p : ∀ (x : A) → f x == x) → (∀ x → ap f (p x) == p (f x))
 htpy-natural-toid {f = f} p x = anti-whisker-right (p x) $ 
   htpy-natural p (p x) ∙ ap (λ q → p (f x) ∙ q) (ap-idf (p x))
+
+-- unsure where this belongs
+trans-pathfrom : ∀ {i} {A : Type i} {a x y : A} (p : x == y) (q : a == x)
+  → transport (λ x → a == x) p q == q ∙ p
+trans-pathfrom idp q = ! (∙-unit-r q)  
