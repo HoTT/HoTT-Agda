@@ -53,10 +53,10 @@ postulate
 
 -- Induction along equivalences
 
-equiv-induction : ∀ {i j} {A B : Set i} (P : {A B : Set i} (f : A ≃ B) → Type j)
+equiv-induction : ∀ {i j} (P : {A B : Type i} (f : A ≃ B) → Type j)
   (d : (A : Type i) → P (ide A)) {A B : Type i} (f : A ≃ B)
   → P f
-equiv-induction {i} {j} {A} {B} P d f =
+equiv-induction {i} {j} P d f =
   transport P (coe-equiv-β f)
     (equiv-induction-int P d (ua f)) where
 

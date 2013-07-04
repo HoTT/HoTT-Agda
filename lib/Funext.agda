@@ -16,9 +16,8 @@ module FunextNonDep {j} {B : Type j} {f g : A → B} (h : (x : A) → f x == g x
   private
     equiv-comp : {B C : Type j} (e : B ≃ C)
       → is-equiv (λ (g : A → B) → (λ x → –> e (g x)))
-    equiv-comp {B} {C} e =
-      equiv-induction {A = B} {B = C}
-                      (λ {B} e → is-equiv (λ (g : A → B) → (λ x → –> e (g x))))
+    equiv-comp {B} e =
+      equiv-induction (λ {B} e → is-equiv (λ (g : A → B) → (λ x → –> e (g x))))
                       (λ A' → idf-is-equiv (A → A')) e
 
     free-path-space-B : Type j
