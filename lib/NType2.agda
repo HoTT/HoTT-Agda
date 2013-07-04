@@ -65,20 +65,20 @@ abstract
 
 -- Type of all n-truncated types
 
-_-Type_ : (n : ℕ₋₂) (i : ULevel) → Type (suc i)
+_-Type_ : (n : ℕ₋₂) (i : ULevel) → Type (lsucc i)
 n -Type i = Σ (Type i) (has-level n)
 
-hProp : (i : ULevel) → Type (suc i)
+hProp : (i : ULevel) → Type (lsucc i)
 hProp i = ⟨-1⟩ -Type i
 
-hSet : (i : ULevel) → Type (suc i)
+hSet : (i : ULevel) → Type (lsucc i)
 hSet i = ⟨0⟩ -Type i
 
 _-Type₀ : (n : ℕ₋₂) → Type₁
-n -Type₀ = n -Type zero
+n -Type₀ = n -Type lzero
 
-hProp₀ = hProp zero
-hSet₀ = hSet zero
+hProp₀ = hProp lzero
+hSet₀ = hSet lzero
 
 -- [n -Type] is an (n+1)-type
 
@@ -103,7 +103,7 @@ abstract
     → (is-set A → is-set B → is-set (A == B))
   universe-=-is-set = universe-=-level
 
-  nType= : ∀ {i} {n : ℕ₋₂} (A B : n -Type i) → Type (suc i)
+  nType= : ∀ {i} {n : ℕ₋₂} (A B : n -Type i) → Type (lsucc i)
   nType= (A , _) (B , _) = A == B
 
   nType=-in : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} → fst A == fst B → A == B
@@ -115,7 +115,7 @@ abstract
 
   nType=-η : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} (p : A == B)
     → nType=-in (fst= p) == p
-  nType=-η {B = _} idp = ap (pair= idp)
+  nType=-η {A = A} {B = .A} idp = ap (pair= idp)
     (ap fst {x = has-level-is-prop _ _}
             {y = (idp , (λ p → fst (prop-is-set has-level-is-prop _ _ _ _)))}
         (fst (is-contr-is-prop _ _)))

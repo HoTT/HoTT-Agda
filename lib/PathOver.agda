@@ -59,12 +59,12 @@ module _ {i j k} {A : Set i} {B : A → Set j} {C : Set k} where
   ↓-cst2'-in : {x y : A} (p : x == y) {b c : C}
     (q : b == c) {u : B x} {v : B y}
     → u == v [ B ↓ p ]
-    → u == v [ (λ xy → B (fst xy)) ↓ (pair=' p q) ]
+    → u == v [ (λ xy → B (fst xy)) ↓ (pair×= p q) ]
   ↓-cst2'-in idp idp r = r
 
   ↓-cst2'-out : {x y : A} (p : x == y) {b c : C}
     (q : b == c) {u : B x} {v : B y}
-    → u == v [ (λ xy → B (fst xy)) ↓ (pair=' p q) ]
+    → u == v [ (λ xy → B (fst xy)) ↓ (pair×= p q) ]
     → u == v [ B ↓ p ]
   ↓-cst2'-out idp idp r = r
 
@@ -167,12 +167,12 @@ module _ {i j} where
   ↓-snd-in : {A A' : Type i} {B B' : Type j} (p : A == A') (q : B == B')
     {u : B} {v : B'}
     → u == v [ (λ X → X) ↓ q ]
-    → u == v [ snd ↓ pair=' p q ]
+    → u == v [ snd ↓ pair×= p q ]
   ↓-snd-in idp idp h = h
 
   ↓-fst-out : {A A' : Type i} {B B' : Type j} (p : A == A') (q : B == B')
     {u : A} {v : A'}
-    → u == v [ fst ↓ pair=' p q ]
+    → u == v [ fst ↓ pair×= p q ]
     → u == v [ (λ X → X) ↓ p ]
   ↓-fst-out idp idp h = h
 

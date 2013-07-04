@@ -16,15 +16,15 @@ if false then t else e = e
 
 private
   Bool-true≠false-type : Bool → Type₀
-  Bool-true≠false-type true  = ⊤
-  Bool-true≠false-type false = ⊥
+  Bool-true≠false-type true  = Unit
+  Bool-true≠false-type false = Empty
 
 abstract
   Bool-true≠false : true ≠ false
-  Bool-true≠false p = transport Bool-true≠false-type p tt
+  Bool-true≠false p = transport Bool-true≠false-type p unit
 
   Bool-false≠true : false ≠ true
-  Bool-false≠true p = transport Bool-true≠false-type (! p) tt
+  Bool-false≠true p = transport Bool-true≠false-type (! p) unit
 
   Bool-has-dec-eq : has-dec-eq Bool
   Bool-has-dec-eq true true = inl idp

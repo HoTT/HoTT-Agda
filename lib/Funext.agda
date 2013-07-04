@@ -53,13 +53,13 @@ open FunextNonDep using (λ=-nondep)
 -- contractible)
 module WeakFunext {j} {P : A → Type j} (e : (x : A) → is-contr (P x)) where
 
-  P-is-unit : P == (λ x → Lift ⊤)
-  P-is-unit = λ=-nondep (λ x → ua (contr-equiv-Unit (e x)))
+  P-is-Unit : P == (λ x → Lift Unit)
+  P-is-Unit = λ=-nondep (λ x → ua (contr-equiv-Unit (e x)))
 
   abstract
     weak-λ= : is-contr (Π A P)
-    weak-λ= = transport (λ Q → is-contr (Π A Q)) (! P-is-unit)
-                            ((λ x → lift tt) , (λ y → λ=-nondep (λ x → idp)))
+    weak-λ= = transport (λ Q → is-contr (Π A Q)) (! P-is-Unit)
+                            ((λ x → lift unit) , (λ y → λ=-nondep (λ x → idp)))
 
 -- Naive dependent function extensionality
 

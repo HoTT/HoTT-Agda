@@ -4,12 +4,13 @@ open import lib.Basics
 
 module lib.types.Unit where
 
-Unit = ⊤
+⊤ = Unit
+tt = unit
 
 abstract
   -- Unit is contractible
   Unit-is-contr : is-contr Unit
-  Unit-is-contr = (tt , λ y → idp)
+  Unit-is-contr = (unit , λ y → idp)
 
   Unit-has-level : {n : ℕ₋₂} → has-level n Unit
   Unit-has-level = contr-has-level Unit-is-contr

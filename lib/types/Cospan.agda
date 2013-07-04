@@ -5,7 +5,7 @@ open import lib.types.Pi
 
 module lib.types.Cospan where
 
-record Cospan (i j k : ULevel) : Type (suc (max (max i j) k)) where
+record Cospan {i j k : ULevel} : Type (lsucc (lmax (lmax i j) k)) where
   constructor cospan
   field
     A : Type i

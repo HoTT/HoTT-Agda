@@ -7,7 +7,7 @@ open import lib.NType
 
 module lib.Equivalences where
 
-record is-equiv {i j} {A : Type i} {B : Type j} (f : A → B) : Type (max i j)
+record is-equiv {i j} {A : Type i} {B : Type j} (f : A → B) : Type (lmax i j)
   where
   field
     g : B → A
@@ -49,7 +49,7 @@ is-eq {A = A} {B = B} f g f-g g-f =
              |in-ctx (λ q → ap f q ∙ f-g (f a)) ⟩
         ap f (g-f (g (f a))) ∙ f-g (f a) ∎
 
-_≃_ : ∀ {i j} (A : Type i) (B : Type j) → Type (max i j)
+_≃_ : ∀ {i j} (A : Type i) (B : Type j) → Type (lmax i j)
 A ≃ B = Σ (A → B) is-equiv
 
 Equiv = _≃_
@@ -98,8 +98,8 @@ e1 ∘e e2 = equiv (–> e1 ∘ –> e2) (<– e2 ∘ <– e1)
          a ∎)
 
 -- Any contractible type is equivalent to the unit type
-contr-equiv-Unit : ∀ {i j} {A : Type i} → (is-contr A → A ≃ Lift {j = j} ⊤)
-contr-equiv-Unit e = equiv (λ _ → lift tt) (λ _ → fst e) (λ _ → idp) (λ a → snd e a)
+contr-equiv-Unit : ∀ {i j} {A : Type i} → (is-contr A → A ≃ Lift {j = j} Unit)
+contr-equiv-Unit e = equiv (λ _ → lift unit) (λ _ → fst e) (λ _ → idp) (λ a → snd e a)
 
 
 -- An equivalence induces an equivalence on the path spaces

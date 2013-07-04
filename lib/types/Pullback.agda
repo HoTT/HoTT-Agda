@@ -5,11 +5,11 @@ open import lib.types.Cospan
 
 module lib.types.Pullback where
 
-module _ {i j k} (D : Cospan i j k) where
+module _ {i j k} (D : Cospan {i} {j} {k}) where
 
   open Cospan D
 
-  record Pullback : Type (max i (max j k)) where
+  record Pullback : Type (lmax i (lmax j k)) where
     constructor pullback
     field
       a : A

@@ -5,7 +5,7 @@ open import lib.types.Pi
 
 module lib.types.Span where
 
-record Span (i j k : ULevel) : Type (suc (max (max i j) k)) where
+record Span {i j k : ULevel} : Type (lsucc (lmax (lmax i j) k)) where
   constructor span
   field
     A : Type i
@@ -18,9 +18,9 @@ private
   span=-raw : ∀ {i j k} {A A' : Type i} (p : A == A')
     {B B' : Type j} (q : B == B') {C C' : Type k} (r : C == C')
     {f : C → A} {f' : C' → A'}
-    (s : f == f' [ (λ CA → fst CA → snd CA) ↓ pair=' r p ])
+    (s : f == f' [ (λ CA → fst CA → snd CA) ↓ pair×= r p ])
     {g : C → B} {g' : C' → B'}
-    (t : g == g' [ (λ CB → fst CB → snd CB) ↓ pair=' r q ])
+    (t : g == g' [ (λ CB → fst CB → snd CB) ↓ pair×= r q ])
     → (span A B C f g) == (span A' B' C' f' g')
   span=-raw idp idp idp idp idp = idp
 

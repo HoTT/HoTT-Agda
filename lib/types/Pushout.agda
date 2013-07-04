@@ -8,15 +8,17 @@ open import lib.types.Paths
 import lib.types.Generic1HIT as Generic1HIT
 
 module lib.types.Pushout where
+-- Cannot be parametrized by i j k because we use different values in the
+-- flattening lemma. This should be fixed somehow.
 
-module Pushout {i j k} {d : Span i j k} where
+module Pushout {i} {j} {k} {d : Span {i} {j} {k}} where
 
   open Span d renaming (f to g; g to h)
 
   module _ where
 
     private
-      data #Pushout : Type (max (max i j) k) where
+      data #Pushout : Type (lmax (lmax i j) k) where
         #left : A → #Pushout
         #right : B → #Pushout
 
@@ -101,10 +103,10 @@ module Pushout {i j k} {d : Span i j k} where
 
 open Pushout public hiding (Pushout)
 
-Pushout : ∀ {i j k} (d : Span i j k) → Type (max (max i j) k)
+Pushout : ∀ {i j k} (d : Span {i} {j} {k}) → Type (lmax (lmax i j) k)
 Pushout d = Pushout.Pushout {d = d}
 
-module _  {i j k} {d : Span i j k} where
+module _  {i} {j} {k} {d : Span {i} {j} {k}} where
 
   open Span d renaming (f to g; g to h)
 
@@ -141,7 +143,7 @@ module _  {i j k} {d : Span i j k} where
         → a == b [ f ↓ glue c ]
       ↓-glue-in c {a} {b} p = from-transp f (glue c) (coe-glue-β c a ∙ p)
 
-    f-d : Span (max l i) (max l j) (max l k)
+    f-d : Span
     f-d = span fA fB fC fg fh  module _ where
 
       fA : Type _
@@ -251,8 +253,8 @@ module _  {i j k} {d : Span i j k} where
            t ∙ ap P.f (↓-idf-ua-out _ q))
 
 _⊔^[_]_/_ : ∀ {i j k} (A : Type i) (C : Type k) (B : Type j)
-  (fg : (C → A) × (C → B)) → Type (max (max i j) k)
+  (fg : (C → A) × (C → B)) → Type (lmax (lmax i j) k)
 A ⊔^[ C ] B  / (f , g) = Pushout (span A B C f g)
 
-_*_ : ∀ {i j} (A : Type i) (B : Type j) → Type (max i j)
+_*_ : ∀ {i j} (A : Type i) (B : Type j) → Type (lmax i j)
 A * B = A ⊔^[ (A × B) ] B  / (fst , snd)

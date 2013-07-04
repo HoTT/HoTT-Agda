@@ -18,7 +18,7 @@ data T : Type where
 -}
 module _ where
   private
-    data #T : Type (max i j) where
+    data #T : Type (lmax i j) where
       #cc : A → #T
 
   T : Type _

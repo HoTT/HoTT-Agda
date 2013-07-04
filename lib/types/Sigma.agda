@@ -5,7 +5,7 @@ open import lib.Basics
 module lib.types.Sigma where
 
 -- Cartesian product
-_×_ : ∀ {i j} (A : Type i) (B : Type j) → Type (max i j)
+_×_ : ∀ {i j} (A : Type i) (B : Type j) → Type (lmax i j)
 A × B = Σ A (λ _ → B)
 
 module _ {i j} {A : Type i} {B : A → Type j} where
@@ -44,7 +44,7 @@ module _ {i j} {A : Type i} {B : A → Type j} where
 
 module _ {i j} {A : Type i} {B : A → Type j} where
 
-  Σ= : (x y : Σ A B) → Type (max i j)
+  Σ= : (x y : Σ A B) → Type (lmax i j)
   Σ= (a , b) (a' , b') = Σ (a == a') (λ p → b == b' [ B ↓ p ])
 
   Σ=-eqv : (x y : Σ A B) →  (Σ= x y) ≃ (x == y)
@@ -129,14 +129,14 @@ equiv-Σ-snd {A = A} {B = B} {C = C} k = equiv f g f-g g-f
 ×-∙' : ∀ {i j} {A : Set i} {B : Set j}
   {x y z : A} (p : x == y) (p' : y == z)
   {u v w : B} (q : u == v) (q' : v == w)
-  → (pair=' p q ∙' pair=' p' q') == pair=' (p ∙' p') (q ∙' q')
+  → (pair×= p q ∙' pair×= p' q') == pair×= (p ∙' p') (q ∙' q')
 ×-∙' p idp q idp = idp
 
 -- Implementation of [_∙_] on ×
 ×-∙ : ∀ {i j} {A : Set i} {B : Set j}
   {x y z : A} (p : x == y) (p' : y == z)
   {u v w : B} (q : u == v) (q' : v == w)
-  → (pair=' p q ∙ pair=' p' q') == pair=' (p ∙ p') (q ∙ q')
+  → (pair×= p q ∙ pair×= p' q') == pair×= (p ∙ p') (q ∙ q')
 ×-∙ idp p' idp q' = idp
 
 -- Special case of [ap-,]

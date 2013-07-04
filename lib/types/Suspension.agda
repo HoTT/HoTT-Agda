@@ -9,7 +9,7 @@ open import lib.types.Unit
 
 module lib.types.Suspension {i} (A : Type i) where
 
-suspension-span : Span zero zero i
+suspension-span : Span
 suspension-span = span Unit Unit A (λ _ → tt) (λ _ → tt)
 
 Suspension : Type i

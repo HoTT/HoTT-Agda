@@ -27,7 +27,7 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k}
 
 
 is-contr-map : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
-             → Type (max i j)
+             → Type (lmax i j)
 is-contr-map {A = A} {B = B} f = (y : B) → is-contr (Σ A (λ x → f x == y))
 
 equiv-is-contr-map : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
@@ -44,17 +44,17 @@ fiber=-eqv r s = equiv-Σ-snd (λ γ → ↓-pathto-eqv γ) ∘e ((Σ=-eqv r s)�
 
 module _ {i j} {A : Type i} {B : Type j} where
 
-  linv : (A → B) → Type (max i j)
+  linv : (A → B) → Type (lmax i j)
   linv f = Σ (B → A) (λ g → (∀ x → g (f x) == x))
 
-  rinv : (A → B) → Type (max i j)
+  rinv : (A → B) → Type (lmax i j)
   rinv f = Σ (B → A) (λ g → (∀ y → f (g y) == y))
 
-  lcoh : (f : A → B) → linv f → Type (max i j)
+  lcoh : (f : A → B) → linv f → Type (lmax i j)
   lcoh f (g , g-f) = Σ (∀ y → f (g y) == y) 
                        (λ f-g → ∀ y → ap g (f-g y) == g-f (g y))
 
-  rcoh : (f : A → B) → rinv f → Type (max i j)
+  rcoh : (f : A → B) → rinv f → Type (lmax i j)
   rcoh f (g , f-g) = Σ (∀ x → g (f x) == x)
                        (λ g-f → ∀ x → ap f (g-f x) == f-g (f x))
 

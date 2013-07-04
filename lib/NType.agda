@@ -59,8 +59,8 @@ abstract
      T : {x y : A} → x == y → Type i
      T {x} {y} p =
        match (d x y) withl (λ b → match (d x x) withl (λ b' → p == ! b' ∙ b)
-                                                withr (λ _ → Lift ⊥))
-                     withr (λ _ → Lift ⊥)
+                                                withr (λ _ → Lift Empty))
+                     withr (λ _ → Lift Empty)
 
      lemma : {x y : A} → (p : x == y) -> T p
      lemma {x} idp with (d x x)
@@ -68,7 +68,7 @@ abstract
      lemma idp | inr r = lift (r idp)
 
    UIP idp q | inl a | p' = ! (!-inv-l a) ∙ (! p')
-   UIP idp q | inr r | _ = ⊥-rec (r idp)
+   UIP idp q | inr r | _ = Empty-elim (r idp)
 
 {- Relationship between levels -}
 
