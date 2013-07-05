@@ -34,9 +34,9 @@ abstract
     (ua p)
     (ua q)
     (ua r)
-    (↓-→-in (λ α → ↓-snd-in (ua r) (ua p) (↓-idf-ua-in p (
+    (↓-→-in (λ α → ↓-snd×-in (ua r) (ua p) (↓-idf-ua-in p (
                    s _
-                   ∙ ap f' (↓-idf-ua-out r (↓-fst-out (ua r) (ua p) α))))))
-    (↓-→-in (λ β → ↓-snd-in (ua r) (ua q) (↓-idf-ua-in q (
+                   ∙ ap f' (↓-idf-ua-out r (↓-fst×-out (ua r) (ua p) α))))))
+    (↓-→-in (λ β → ↓-snd×-in (ua r) (ua q) (↓-idf-ua-in q (
                    t _
-                   ∙ ap g' (↓-idf-ua-out r (↓-fst-out (ua r) (ua q) β))))))
+                   ∙ ap g' (↓-idf-ua-out r (↓-fst×-out (ua r) (ua q) β))))))

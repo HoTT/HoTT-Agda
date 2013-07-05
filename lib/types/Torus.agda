@@ -67,7 +67,7 @@ module TorusRec {i} {A : Type i} (baseT* : A) (loopT1* loopT2* : baseT* == baseT
   private
     module M = TorusElim {A = λ _ → A} baseT* (↓-cst-in loopT1*) (↓-cst-in loopT2*)
                          (↓-cst-in-∙ loopT1 loopT2 loopT1* loopT2*
-                         ◃ (↓-cst-in2 surfT* ▹! (↓-cst-in-∙ loopT2 loopT1 loopT2* loopT1*)))
+                         !◃ (↓-cst-in2 surfT* ▹ (↓-cst-in-∙ loopT2 loopT1 loopT2* loopT1*)))
 
   f : Torus → A
   f = M.f
