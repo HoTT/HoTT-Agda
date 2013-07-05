@@ -7,19 +7,43 @@ open import lib.NType
 
 module lib.Equivalences where
 
-record is-equiv {i j} {A : Type i} {B : Type j} (f : A → B) : Type (lmax i j)
-  where
-  field
-    g : B → A
-    f-g : (b : B) → f (g b) == b
-    g-f : (a : A) → g (f a) == a
-    adj : (a : A) → ap f (g-f a) == f-g (f a)
+{-
+We use the half-adjoint definition of equivalences (but this fact should be
+invisible to the user of the library). The constructor of the type of
+equivalences is [equiv], it takes two maps and the two proofs that the composites
+are equal: [equiv to from to-from from-to]
 
-is-eq : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
-  (g : B → A) (f-g : (b : B) → f (g b) == b)
-  (g-f : (a : A) → g (f a) == a) → is-equiv f
-is-eq {A = A} {B = B} f g f-g g-f =
-  record {g = g; f-g = f-g'; g-f = g-f; adj = adj} where
+The type of equivalences between two types [A] and [B] can be written either
+[A ≃ B] or [Equiv A B].
+
+Given an equivalence [e] : [A ≃ B], you can extract the two maps as follows:
+[–> e] : [A → B] and [<– e] : [B → A] (the dash is an en dash)
+The proofs that the composites are the identities are [<–-inv-l] and [<–-inv-r].
+
+The identity equivalence on [A] is [ide A], the composition of two equivalences
+is [_∘e_] (function composition order) and the inverse of an equivalence is [_⁻¹]
+-}
+
+module _ {i} {j} {A : Type i} {B : Type j} where
+
+  record is-equiv (f : A → B) : Type (lmax i j)
+    where
+    field
+      g : B → A
+      f-g : (b : B) → f (g b) == b
+      g-f : (a : A) → g (f a) == a
+      adj : (a : A) → ap f (g-f a) == f-g (f a)
+
+  {-
+  In order to prove that something is an equivalence, you have to give an inverse
+  and a proof that it’s an inverse (you don’t need the adj part).
+  [is-eq] is a very, very bad name.
+  -}
+  is-eq : (f : A → B)
+    (g : B → A) (f-g : (b : B) → f (g b) == b)
+    (g-f : (a : A) → g (f a) == a) → is-equiv f
+  is-eq f g f-g g-f =
+   record {g = g; f-g = f-g'; g-f = g-f; adj = adj} where
     f-g' : (b : B) → f (g b) == b
     f-g' b = ! (ap (f ∘ g) (f-g b)) ∙ ap f (g-f (g b)) ∙ f-g b
 
@@ -54,33 +78,33 @@ A ≃ B = Σ (A → B) is-equiv
 
 Equiv = _≃_
 
-equiv : ∀ {i j} {A : Type i} {B : Type j}
-  (f : A → B) (g : B → A) (f-g : (b : B) → f (g b) == b)
-  (g-f : (a : A) → g (f a) == a) → A ≃ B
-equiv f g f-g g-f = (f , is-eq f g f-g g-f)
+module _ {i} {j} {A : Type i} {B : Type j} where
 
-–> : ∀ {i} {j} {A : Type i} {B : Type j} (e : A ≃ B) → (A → B)
-–> e = fst e
+  equiv : (f : A → B) (g : B → A) (f-g : (b : B) → f (g b) == b)
+          (g-f : (a : A) → g (f a) == a) → A ≃ B
+  equiv f g f-g g-f = (f , is-eq f g f-g g-f)
 
-<– : ∀ {i} {j} {A : Type i} {B : Type j} (e : A ≃ B) → (B → A)
-<– e = is-equiv.g (snd e)
+  –> : (e : A ≃ B) → (A → B)
+  –> e = fst e
 
-<–-inv-l : ∀ {i} {j} {A : Type i} {B : Type j} (e : A ≃ B) (a : A)
-  → (<– e (–> e a) == a)
-<–-inv-l e a = is-equiv.g-f (snd e) a
+  <– : (e : A ≃ B) → (B → A)
+  <– e = is-equiv.g (snd e)
 
-<–-inv-r : ∀ {i} {j} {A : Type i} {B : Type j} (e : A ≃ B) (b : B)
-  → (–> e (<– e b) == b)
-<–-inv-r e b = is-equiv.f-g (snd e) b
+  <–-inv-l : (e : A ≃ B) (a : A)
+    → (<– e (–> e a) == a)
+  <–-inv-l e a = is-equiv.g-f (snd e) a
 
--- Equivalences are injective
-equiv-inj : ∀ {i} {j} {A : Type i} {B : Type j} (e : A ≃ B) {x y : A}
-  → (–> e x == –> e y → x == y)
-equiv-inj e {x} {y} p = let (f , g) = (–> e , <– e) in
-  ! (<–-inv-l e x) ∙ ap g p ∙ <–-inv-l e y
+  <–-inv-r : (e : A ≃ B) (b : B)
+    → (–> e (<– e b) == b)
+  <–-inv-r e b = is-equiv.f-g (snd e) b
 
-_⁻¹ : ∀ {i j} {A : Type i} {B : Type j} → (A ≃ B) → (B ≃ A)
-e ⁻¹ = equiv (<– e) (–> e) (<–-inv-l e) (<–-inv-r e)
+  -- Equivalences are "injective"
+  equiv-inj : (e : A ≃ B) {x y : A}
+    → (–> e x == –> e y → x == y)
+  equiv-inj e {x} {y} p = ! (<–-inv-l e x) ∙ ap (<– e) p ∙ <–-inv-l e y
+
+ide : ∀ {i} (A : Type i) → A ≃ A
+ide A = equiv (idf A) (idf A) (λ _ → idp) (λ _ → idp)
 
 _∘e_ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
   → B ≃ C → A ≃ B → A ≃ C
@@ -94,25 +118,25 @@ e1 ∘e e2 = equiv (–> e1 ∘ –> e2) (<– e2 ∘ <– e1)
          <– e2 (–> e2 a)  =⟨ <–-inv-l e2 a ⟩
          a ∎)
 
--- Any contractible type is equivalent to the unit type
-contr-equiv-Unit : ∀ {i j} {A : Type i} → (is-contr A → A ≃ Lift {j = j} Unit)
-contr-equiv-Unit e = equiv (λ _ → lift unit) (λ _ → fst e) (λ _ → idp) (λ a → snd e a)
+_⁻¹ : ∀ {i j} {A : Type i} {B : Type j} → (A ≃ B) → (B ≃ A)
+e ⁻¹ = equiv (<– e) (–> e) (<–-inv-l e) (<–-inv-r e)
+
+{- Any contractible type is equivalent to all liftings of the unit type -}
+contr-equiv-LiftUnit : ∀ {i j} {A : Type i} → (is-contr A → A ≃ Lift {j = j} Unit)
+contr-equiv-LiftUnit e =
+  equiv (λ _ → lift unit) (λ _ → fst e) (λ _ → idp) (λ a → snd e a)
 
 
--- An equivalence induces an equivalence on the path spaces
--- The proofs here can probably be simplified
+{- An equivalence induces an equivalence on the path spaces -}
 module _ {i j} {A : Type i} {B : Type j} (e : A ≃ B) where
 
   private
-    ap-is-inj : {x y : A} (p : –> e x == –> e y) → x == y
-    ap-is-inj p = equiv-inj e p
-
     abstract
-      left-inverse : {x y : A} (p : x == y) → ap-is-inj (ap (–> e) p) == p
+      left-inverse : {x y : A} (p : x == y) → equiv-inj e (ap (–> e) p) == p
       left-inverse idp = !-inv-l (<–-inv-l e _)
 
       right-inverse : {x y : A} (p : –> e x == –> e y) 
-        → ap (–> e) (ap-is-inj p) == p
+        → ap (–> e) (equiv-inj e p) == p
       right-inverse {x} {y} p = 
         ap f (! (g-f x) ∙ ap g p ∙ (g-f y))
           =⟨ ap-∙ f (! (g-f x)) (ap g p ∙ (g-f y)) ⟩
@@ -138,9 +162,9 @@ module _ {i j} {A : Type i} {B : Type j} (e : A ≃ B) where
               adj : ∀ x → ap f (g-f x) == f-g (f x); adj = is-equiv.adj (snd e)
 
   equiv-ap : (x y : A) → (x == y) ≃ (–> e x == –> e y)
-  equiv-ap x y = equiv (ap (–> e)) ap-is-inj right-inverse left-inverse
+  equiv-ap x y = equiv (ap (–> e)) (equiv-inj e) right-inverse left-inverse
 
--- Equivalent types have the same truncation level
+{- Equivalent types have the same truncation level -}
 equiv-preserves-level : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} (e : A ≃ B)
   → (has-level n A → has-level n B)
 equiv-preserves-level {n = ⟨-2⟩} e (x , p) =
@@ -148,6 +172,7 @@ equiv-preserves-level {n = ⟨-2⟩} e (x , p) =
 equiv-preserves-level {n = S n} e c = λ x y →
    equiv-preserves-level (equiv-ap (e ⁻¹) x y ⁻¹) (c (<– e x) (<– e y))
 
+{- The type-theoretic axiom of choice -}
 choice : ∀ {i j k} {A : Type i} {B : A → Type j} {P : (a : A) → B a → Type k}
   → Π A (λ a → Σ (B a) (λ b → P a b)) ≃ Σ (Π A B) (λ g → Π A (λ a → P a (g a)))
 choice = equiv f g (λ _ → idp) (λ _ → idp)

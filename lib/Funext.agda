@@ -6,6 +6,10 @@ open import lib.Univalence
 open import lib.NType
 open import lib.PathGroupoid
 
+{-
+A proof of function extensionality from the univalence axiom.
+-}
+
 module lib.Funext {i} {A : Type i} where
 
 -- Naive non dependent function extensionality
@@ -18,7 +22,7 @@ module FunextNonDep {j} {B : Type j} {f g : A → B} (h : (x : A) → f x == g x
       → is-equiv (λ (g : A → B) → (λ x → –> e (g x)))
     equiv-comp {B} e =
       equiv-induction (λ {B} e → is-equiv (λ (g : A → B) → (λ x → –> e (g x))))
-                      (λ A' → idf-is-equiv (A → A')) e
+                      (λ A' → snd (ide (A → A'))) e
 
     free-path-space-B : Type j
     free-path-space-B = Σ B (λ x → Σ B (λ y → x == y))
@@ -54,7 +58,7 @@ open FunextNonDep using (λ=-nondep)
 module WeakFunext {j} {P : A → Type j} (e : (x : A) → is-contr (P x)) where
 
   P-is-Unit : P == (λ x → Lift Unit)
-  P-is-Unit = λ=-nondep (λ x → ua (contr-equiv-Unit (e x)))
+  P-is-Unit = λ=-nondep (λ x → ua (contr-equiv-LiftUnit (e x)))
 
   abstract
     weak-λ= : is-contr (Π A P)
@@ -91,14 +95,15 @@ module FunextDep {j} {P : A → Type j} {f g : Π A P} (h : (x : A) → f x == g
   λ= : f == g
   λ= = ap (λ u x → fst (u x)) Q-f==Q-g
 
-app= : ∀ {j} {P : A → Type j} {f g : Π A P} (p : f == g) → ((x : A) → f x == g x)
-app= p x = ap (λ u → u x) p
-
 -- Strong function extensionality
 
 module StrongFunextDep {j} {P : A → Type j} where
 
   open FunextDep
+
+  app= : ∀ {j} {P : A → Type j} {f g : Π A P} (p : f == g)
+    → ((x : A) → f x == g x)
+  app= p x = ap (λ u → u x) p
 
   λ=-idp : (f : Π A P)
     → idp == λ= (λ x → idp {a = f x})
@@ -130,6 +135,9 @@ module StrongFunextDep {j} {P : A → Type j} where
 -- We only export the following
 
 module _ {j} {P : A → Type j} {f g : Π A P} where
+
+  app= : f == g → ((x : A) → f x == g x)
+  app= p x = ap (λ u → u x) p
 
   abstract
     λ= : (h : (x : A) → f x == g x) → f == g

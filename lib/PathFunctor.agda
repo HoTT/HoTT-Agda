@@ -60,6 +60,25 @@ ap-cst b idp = idp
 ap-idf : {u v : A} (p : u == v) → ap (idf A) p == p
 ap-idf idp = idp
 
+{- Functoriality of [coe] -}
+
+coe-∙ : {B C : Type i} (p : A == B) (q : B == C) (a : A)
+  → coe (p ∙ q) a == coe q (coe p a)
+coe-∙ idp q a = idp
+
+coe!-inv-r : {B : Type i} (p : A == B) (b : B)
+  → coe p (coe! p b) == b
+coe!-inv-r idp b = idp
+
+coe!-inv-l : {B : Type i} (p : A == B) (a : A)
+  → coe! p (coe p a) == a
+coe!-inv-l idp a = idp
+
+coe-ap-! : ∀ {i j} {A : Type i} (P : A → Type j) {a b : A} (p : a == b)
+  (x : P b)
+  → coe (ap P (! p)) x == coe! (ap P p) x
+coe-ap-! P idp x = idp
+
 {- Naturality of homotopies -}
 
 htpy-natural : ∀ {j} {B : Type j} {x y : A} {f g : A → B} 
