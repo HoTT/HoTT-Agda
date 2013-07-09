@@ -116,8 +116,8 @@ decode =
                  ↓-cst=idf-in
                    (loop^succ n ∙ ap loop^ (Cover.↓-loop-out q))))
 
-decode-encode : (x : S¹) (t : base == x) → decode x (encode t) == t
-decode-encode .base idp = idp  -- Magic!
+decode-encode : (x : S¹) (p : base == x) → decode x (encode p) == p
+decode-encode _ p = J (λ x p → decode x (encode p) == p) idp p  -- Magic!
 
 -- And we get the theorem
 ΩS¹≃ℤ : (base == base) ≃ ℤ

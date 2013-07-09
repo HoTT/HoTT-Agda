@@ -18,14 +18,17 @@ data T : Type where
 -}
 module _ where
   private
+    data #T-aux : Type (lmax i j) where
+      #cc : A → #T-aux
+
     data #T : Type (lmax i j) where
-      #cc : A → #T
+      #t : #T-aux → (Unit → Unit) → #T
 
   T : Type _
   T = #T
 
   cc : A → T
-  cc = #cc
+  cc a = #t (#cc a) _
 
   postulate  -- HIT
     pp : (b : B) → cc (g b) == cc (h b)
@@ -34,7 +37,7 @@ module _ where
     (pp* : (b : B) → cc* (g b) == cc* (h b) [ C ↓ pp b ]) where
 
     f : Π T C
-    f (#cc a) = cc* a
+    f (#t (#cc a) _) = cc* a
 
     postulate  -- HIT
       pp-β : (b : B) → apd f (pp b) == pp* b

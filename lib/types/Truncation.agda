@@ -11,14 +11,17 @@ module lib.types.Truncation where
 module _ {i} where
 
   private
-    data Trunc# (n : ℕ₋₂) (A : Type i) : Type i where
-      [_]# : A → Trunc# n A
+    data #Trunc-aux (n : ℕ₋₂) (A : Type i) : Type i where
+      #[_] : A → #Trunc-aux n A
+
+    data #Trunc (n : ℕ₋₂) (A : Type i) : Type i where
+      #trunc : #Trunc-aux n A → (Unit → Unit) → #Trunc n A
 
   Trunc : (n : ℕ₋₂) (A : Type i) → Type i
-  Trunc = Trunc#
+  Trunc = #Trunc
 
   [_] : {n : ℕ₋₂} {A : Type i} → A → Trunc n A
-  [_] = [_]#
+  [ a ] = #trunc #[ a ] _
 
   postulate
     Trunc-level : {n : ℕ₋₂} {A : Type i} → has-level n (Trunc n A)
@@ -27,7 +30,7 @@ module _ {i} where
     (p : (x : Trunc n A) → has-level n (B x)) (d : (a : A) → B [ a ]) where
 
     f : (x : Trunc n A) → B x
-    f [ a ]# = d a
+    f (#trunc #[ a ] _) = d a
 
 open TruncElim public renaming (f to Trunc-elim)
 

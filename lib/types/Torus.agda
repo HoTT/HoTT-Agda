@@ -15,14 +15,17 @@ data Torus : Type₀ where
 
 module _ where
   private
+    data #Torus-aux : Type₀ where
+      #baseT : #Torus-aux
+
     data #Torus : Type₀ where
-      #baseT : #Torus
+      #torus : #Torus-aux → (Unit → Unit) → #Torus
 
   Torus : Type₀
   Torus = #Torus
 
   baseT : Torus
-  baseT = #baseT
+  baseT = #torus #baseT _
 
   postulate  -- HIT
     loopT1 : baseT == baseT
@@ -37,7 +40,7 @@ module _ where
               [ (λ p → baseT* == baseT* [ A ↓ p ]) ↓ surfT ]) where
 
     f : Π Torus A
-    f #baseT = baseT*
+    f (#torus #baseT _) = baseT*
 
     postulate  -- HIT
       loopT1-β : apd f loopT1 == loopT1*

@@ -18,18 +18,21 @@ module Pushout {i} {j} {k} {d : Span {i} {j} {k}} where
   module _ where
 
     private
+      data #Pushout-aux : Type (lmax (lmax i j) k) where
+        #left : A → #Pushout-aux
+        #right : B → #Pushout-aux
+
       data #Pushout : Type (lmax (lmax i j) k) where
-        #left : A → #Pushout
-        #right : B → #Pushout
+        #pushout : #Pushout-aux → (Unit → Unit) → #Pushout
 
     Pushout : Type _
     Pushout = #Pushout
 
     left : A → Pushout
-    left = #left
+    left a = #pushout (#left a) _
 
     right : B → Pushout
-    right = #right
+    right b = #pushout (#right b) _
 
     postulate  -- HIT
       glue : (c : C) → left (g c) == right (h c)
@@ -39,8 +42,8 @@ module Pushout {i} {j} {k} {d : Span {i} {j} {k}} where
       (glue* : (c : C) → left* (g c) == right* (h c) [ P ↓ glue c ]) where
 
       f : (x : Pushout) → P x
-      f (#left y) = left* y
-      f (#right y) = right* y
+      f (#pushout (#left y) _) = left* y
+      f (#pushout (#right y) _) = right* y
 
       postulate  -- HIT
         glue-β : (c : C) → apd f (glue c) == glue* c

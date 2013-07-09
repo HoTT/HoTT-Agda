@@ -20,14 +20,17 @@ reduction rule for [base]
 
 module _ where
   private
+    data #S¹-aux : Type₀ where
+      #base : #S¹-aux
+
     data #S¹ : Type₀ where
-      #base : #S¹
+      #s¹ : #S¹-aux → (Unit → Unit) → #S¹
 
   S¹ : Type₀
   S¹ = #S¹
 
   base : S¹
-  base = #base
+  base = #s¹ #base _
 
   postulate  -- HIT
     loop : base == base
@@ -36,7 +39,7 @@ module _ where
     (loop* : base* == base* [ A ↓ loop ]) where
 
     f : Π S¹ A
-    f #base = base*
+    f (#s¹ #base _) = base*
 
     postulate  -- HIT
       loop-β : apd f loop == loop*

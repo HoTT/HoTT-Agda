@@ -79,6 +79,17 @@ Path = _==_
 {-# BUILTIN EQUALITY _==_ #-}
 {-# BUILTIN REFL  idp #-}
 
+{- Paulin-Mohring J rule
+
+At the time I’m writing this (July 2013), the identity type is somehow broken in
+Agda dev, it behaves more or less as the Martin-Löf identity type instead of
+behaving like the Paulin-Mohring identity type.
+So here is the Paulin-Mohring J rule -}
+
+J : ∀ {i j} {A : Type i} {a : A} (B : (a' : A) (p : a == a') → Type j) (d : B a idp)
+  {a' : A} (p : a == a') → B a' p
+J B d idp = d
+
 {- Unit type
 
 The unit type is defined as record so that we also get the η-rule definitionally.
