@@ -6,25 +6,23 @@ open import lib.types.Pi
 
 module lib.Equivalences2 where
 
--- Pre- and post- composition are equivalences
+{- Pre- and post- composition with equivalences are equivalences -}
 module _ {i j k} {A : Type i} {B : Type j} {C : Type k} 
          {h : A → B} (e : is-equiv h) where
 
-  pre∘-equiv : is-equiv (λ (k : C → A) → h ∘ k)
-  pre∘-equiv = is-eq f g f-g g-f
+  pre∘-is-equiv : is-equiv (λ (k : C → A) → h ∘ k)
+  pre∘-is-equiv = is-eq f g f-g g-f
     where f = λ k → h ∘ k
           g = λ k → is-equiv.g e ∘ k
           f-g = λ k → ap (λ q → q ∘ k) (λ= $ is-equiv.f-g e) 
           g-f = λ k → ap (λ q → q ∘ k) (λ= $ is-equiv.g-f e)
 
-  post∘-equiv : is-equiv (λ (k : B → C) → k ∘ h)
-  post∘-equiv = is-eq f g f-g g-f
+  post∘-is-equiv : is-equiv (λ (k : B → C) → k ∘ h)
+  post∘-is-equiv = is-eq f g f-g g-f
     where f = λ k → k ∘ h
           g = λ k → k ∘ is-equiv.g e
           f-g = λ k → ap (λ q → λ x → k (q x)) (λ= $ is-equiv.g-f e)
           g-f = λ k → ap (λ q → λ x → k (q x)) (λ= $ is-equiv.f-g e)
-
-
 
 is-contr-map : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
              → Type (lmax i j)
@@ -63,11 +61,11 @@ module _ {i j} {A : Type i} {B : Type j} {f : A → B} (e : is-equiv f) where
 
   equiv-linv-is-contr : is-contr (linv f)
   equiv-linv-is-contr = equiv-preserves-level (equiv-Σ-snd (λ _ → λ=-equiv ⁻¹))
-                          (equiv-is-contr-map (post∘-equiv e) (idf A))
+                          (equiv-is-contr-map (post∘-is-equiv e) (idf A))
 
   equiv-rinv-is-contr : is-contr (rinv f)
   equiv-rinv-is-contr = equiv-preserves-level (equiv-Σ-snd (λ _ → λ=-equiv ⁻¹)) 
-                          (equiv-is-contr-map (pre∘-equiv e) (idf B))
+                          (equiv-is-contr-map (pre∘-is-equiv e) (idf B))
 
 module _ {i j} {A : Type i} {B : Type j} {f : A → B} where
 

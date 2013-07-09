@@ -130,6 +130,24 @@ abstract
   Trunc-rec-is-equiv n A B p = is-eq _ (λ f → f ∘ [_])
     (λ f → λ= (Trunc-elim (λ _ → =-preserves-level _ p) (λ a → idp))) (λ f → idp)
 
+
+Trunc-preserves-level : ∀ {i} {A : Type i} {n : ℕ₋₂} (m : ℕ₋₂)
+ → has-level n A → has-level n (Trunc m A)
+Trunc-preserves-level {n = ⟨-2⟩} _ (a₀ , p) = 
+  ([ a₀ ] , Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+              (λ a → ap [_] (p a)))
+Trunc-preserves-level ⟨-2⟩ _ = contr-has-level Trunc-level
+Trunc-preserves-level {n = (S n)} (S m) c t₁ t₂ = 
+  Trunc-elim 
+    (λ s₁ → prop-has-level-S {A = has-level n (s₁ == t₂)} has-level-is-prop) 
+    (λ a₁ → Trunc-elim 
+      (λ s₂ → prop-has-level-S {A = has-level n ([ a₁ ] == s₂)} has-level-is-prop)
+      (λ a₂ → equiv-preserves-level 
+      ((Trunc=-equiv [ a₁ ] [ a₂ ])⁻¹)
+               (Trunc-preserves-level {n = n} m (c a₁ a₂))) 
+              t₂) 
+    t₁
+
 -- Equivalence associated to the universal property
 Trunc-extend-equiv : ∀ {i j} (n : ℕ₋₂) (A : Type i) (B : Type j)
   (p : has-level n B) → (A → B) ≃ (Trunc n A → B)
@@ -142,3 +160,8 @@ Trunc-fpmap : ∀ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j} {f g : A → B
   → ((a : Trunc n A) → Trunc-fmap f a == Trunc-fmap g a)
 Trunc-fpmap h = Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
                 (ap [_] ∘ h)
+
+Trunc-fmap-∘ : ∀ {i j k} {n : ℕ₋₂} {A : Type i} {B : Type j} {C : Type k}
+  → (g : B → C) → (f : A → B) 
+  → ∀ x → Trunc-fmap {n = n} g (Trunc-fmap f x) == Trunc-fmap (g ∘ f) x
+Trunc-fmap-∘ g f = Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp)
