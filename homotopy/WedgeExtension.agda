@@ -86,3 +86,4 @@ module WedgeExt {i j} {A : Type i} {a₀ : A} {B : Type j} {b₀ : B} where
         lemma₂ : β-r b₀ ∙ ! p == β-l a₀
         lemma₂ = ap (λ w → β-r b₀ ∙ w) (! (ap-idf _) ∙ ap-∘ _ _ _) 
                  ∙ (–> (↓-pathto-eqv β-r-aux) lemma₁)
+
