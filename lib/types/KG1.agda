@@ -13,14 +13,17 @@ module lib.types.KG1 {i} (G : Group i) where
 open Group G
 
 private
+  data #KG1-aux : Type i where
+    #kbase : #KG1-aux
+
   data #KG1 : Type i where
-    #kbase : #KG1
+    #kg1 : #KG1-aux → (Unit → Unit) → #KG1
 
 KG1 : Type i
 KG1 = #KG1
 
 kbase : KG1
-kbase = #kbase
+kbase = #kg1 #kbase _
 
 postulate  -- HIT
   klevel : has-level ⟨ 1 ⟩ KG1
@@ -32,7 +35,7 @@ module KG1Rec {j} {C : ⟨ 1 ⟩ -Type j}
   (kbase* : fst C) (hom* : GroupHom G (PathGroup C kbase*)) where
 
   f : KG1 → fst C
-  f #kbase = kbase*
+  f (#kg1 #kbase _) = kbase*
 
   postulate  -- HIT
     kloop-β : (g : El) → ap f (kloop g) == GroupHom.f hom* g
@@ -50,7 +53,7 @@ module KG1Elim {j} {C : KG1 → ⟨ 1 ⟩ -Type j}
   where
 
   f : Π KG1 (fst ∘ C)
-  f #kbase = kbase*
+  f (#kg1 #kbase _) = kbase*
 
   postulate  -- HIT
     kloop-β : (g : El) → apd f (kloop g) == kloop* g
@@ -177,7 +180,7 @@ module π₁ where
                   kloop (transport (λ z → fst (Codes z)) (kloop g) y) ∎
 
   decode-encode : ∀ {x} (α : kbase == x) → decode (encode α) == α
-  decode-encode idp = kloop-ident
+  decode-encode α = J (λ (x : KG1) (α : kbase == x) → decode (encode α) == α) kloop-ident α
 
   Ω¹[KG1]-equiv-G : (kbase == kbase) ≃ El
   Ω¹[KG1]-equiv-G = equiv encode decode encode-decode' decode-encode
