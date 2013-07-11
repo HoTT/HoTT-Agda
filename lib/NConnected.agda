@@ -9,6 +9,7 @@ open import lib.types.Pi
 open import lib.types.Sigma
 open import lib.types.TLevel
 open import lib.types.Truncation
+open import lib.types.Suspension
 
 module lib.NConnected where
 
@@ -19,9 +20,11 @@ is-conn-map {A = A} {B = B} n f =
 is-connected : ∀ {i} → ℕ₋₂ → Type i → Type i
 is-connected n A = is-contr (Trunc n A)
 
+{- all inhabited types are ⟨-1⟩-connected -}
+inhab-conn : ∀ {i} (A : Type i) (a : A) → is-connected ⟨-1⟩ A
+inhab-conn A a = ([ a ] , prop-has-all-paths Trunc-level [ a ])
 
--- "induction principle" for n-connected maps
--- (where codomain is n-type)
+{- "induction principle" for n-connected maps (where codomain is n-type) -}
 abstract
   conn-elim-eqv : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂}
     → {h : A → B} → is-conn-map n h
@@ -114,8 +117,8 @@ abstract
             =⟨ ap (λ w → v ∙ w) (!-inv-r (∙-unit-r q)) ∙ ∙-unit-r v ⟩
           v ∎
 
--- generalized "almost induction principle"
--- for maps into ≥n-types
+{- generalized "almost induction principle" for maps into ≥n-types 
+   TODO: rearrange this to use ≤T?                                 -}
 conn-elim-general : ∀ {i j} {A : Type i} {B : Type j} {n k : ℕ₋₂}
   → {f : A → B} → is-conn-map n f
   → ∀ {l} (P : B → (k +2+ n) -Type l) 
@@ -145,7 +148,7 @@ conn-elim-general {B = B} {n = n} {k = S k'} {f = f} c P t (g , p) (h , q) =
 
     e : (Σ (∀ x → g x == h x) (λ r → (r ∘ f) == app= (p ∙ ! q)))
         ≃ ((g , p) == (h , q)) 
-    e = ((Σ=-eqv _ _ ∘e equiv-Σ-snd (λ u → (↓-pathto-eqv u)⁻¹))
+    e = ((Σ=-eqv _ _ ∘e equiv-Σ-snd (λ u → (↓-fiber-to-eqv u)⁻¹))
         ∘e (equiv-Σ-fst _ (snd λ=-equiv))) ∘e equiv-Σ-snd lemma
               
 
@@ -227,3 +230,37 @@ Trunc-preserves-conn {A = A} {n = S n} m c = lemma (fst c) (snd c)
            (λ x → <– (Trunc=-equiv [ [ a ] ] [ [ x ] ]) 
               (Trunc-fmap (ap [_]) 
                 (–> (Trunc=-equiv [ a ] [ x ]) (p [ x ])))))))
+
+
+{- Suspension of an n-connected space is n+1-connected 
+   what is the best place for this?                    -}
+abstract
+  Susp-conn : ∀ {i} {A : Type i} {n : ℕ₋₂} 
+    → is-connected n A → is-connected (S n) (Suspension A)
+  Susp-conn {A = A} {n = n} cA = 
+    ([ north A ] ,
+     Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+       (Suspension-elim A 
+         idp 
+         (Trunc-rec (Trunc-level {n = S n} _ _)
+                    (λ a → ap [_] (merid A a)) 
+                    (fst cA))
+         (λ x → Trunc-elim
+            {B = λ y → idp == 
+              Trunc-rec (Trunc-level {n = S n} _ _) (λ a → ap [_] (merid A a)) y
+              [ (λ z → [ north A ] == [ z ]) ↓ (merid A x) ]}
+            (λ _ → ↓-preserves-level _ (λ _ → Trunc-level {n = S n} _ _))
+            (λ x' → <– (↓-fiber-from-eqv (merid A x)) (mers-eq n cA x x'))
+            (fst cA))))
+    where 
+    mers-eq : ∀ {i} {A : Type i} (n : ℕ₋₂) 
+      → is-connected n A → (x x' : A)
+      → ap ([_] {n = S n}) (merid A x) 
+        == Trunc-rec (Trunc-level {n = S n} _ _) 
+                     (λ a → ap [_] (merid A a)) [ x' ]
+    mers-eq ⟨-2⟩ cA x x' = contr-has-all-paths (Trunc-level {n = ⟨-1⟩} _ _) _ _
+    mers-eq {A = A} (S n) cA x x' = 
+      conn-elim (pointed-conn-out A x cA) 
+        (λ y → ((ap [_] (merid A x) == ap [_] (merid A y)) ,
+                Trunc-level {n = S (S n)} _ _ _ _)) 
+        (λ _ → idp) x'

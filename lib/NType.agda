@@ -2,6 +2,7 @@
 
 open import lib.Base
 open import lib.PathGroupoid
+open import lib.types.TLevel
 
 module lib.NType {i} where
 
@@ -142,3 +143,17 @@ module _ {A : Type i} where
   contr-has-section : ∀ {j} {A : Type i} {B : A → Type j}
     → (is-contr A → (x : A) → (u : B x) → Π A B)
   contr-has-section {B = B} (x , p) x₀ y₀ t = transport B (! (p x₀) ∙ p t) y₀
+
+abstract
+  raise-level-≤ : {A : Type i} (m n : ℕ₋₂)
+    → (m ≤T n) → has-level m A → has-level n A
+  raise-level-≤ ⟨-2⟩ n _ pA = contr-has-level pA 
+  raise-level-≤ (S m) ⟨-2⟩ b _ = Empty-elim b
+  raise-level-≤ (S m) (S n) le pA x y = raise-level-≤ m n le (pA x y)
+
+abstract
+  min-level : {A : Type i} (m n : ℕ₋₂)
+    → has-level m A → has-level n A → has-level (minT m n) A
+  min-level m n _ _ with minT= m n
+  min-level {A} m n mA nA | inl p = transport (λ k → has-level k A) (! p) mA
+  min-level {A} m n mA nA | inr q = transport (λ k → has-level k A) (! q) nA

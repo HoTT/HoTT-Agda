@@ -1,6 +1,6 @@
 {-# OPTIONS --without-K #-}
 
-open import lib.Basics
+open import lib.Base
 
 module lib.types.Nat where
 

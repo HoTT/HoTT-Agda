@@ -15,6 +15,10 @@ module _ {i j} {A : Type i} {B : A → Type j} where
       → ((x : A) → has-level (S n) (B x)) → has-level n (u == v [ B ↓ p ])
     =-[-↓-]-level {p = idp} k = k _ _ _
 
+    ↓-preserves-level : {a b : A} {p : a == b} {u : B a} {v : B b} (n : ℕ₋₂)
+      → ((x : A) → has-level n (B x)) → has-level n (u == v [ B ↓ p ])
+    ↓-preserves-level {p = idp} n k = =-preserves-level n (k _)
+
     prop-has-all-paths-↓ : {x y : A} {p : x == y} {u : B x} {v : B y}
       → (is-prop (B y) → u == v [ B ↓ p ])
     prop-has-all-paths-↓ {p = idp} k = prop-has-all-paths k _ _

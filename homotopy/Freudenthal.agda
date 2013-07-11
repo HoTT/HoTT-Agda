@@ -23,9 +23,8 @@ private
   move1-left-on-left p idp h = h
 
 module FreudenthalEquiv
-  {i} (n : ℕ₋₂) (X : Type i) (x₀ : X) (cX : is-connected (S (S n)) X) where
-
-  k = S (n +2+ S n)
+  {i} (n k : ℕ₋₂) (kle : k ≤T S (n +2+ S n))
+  (X : Type i) (x₀ : X) (cX : is-connected (S (S n)) X) where
 
   P : Suspension X → Type i
   P x = Trunc k (north X == x)
@@ -37,7 +36,7 @@ module FreudenthalEquiv
   Codes-mer-args = record {n = n; m = n; 
     cA = cX; 
     cB = Trunc-preserves-conn k cX;
-    P = λ _ _ → (Trunc k X , Trunc-level);
+    P = λ _ _ → (Trunc k X , raise-level-≤ k _ kle Trunc-level);
     f = [_]; g = idf _; p = idp}
   
   Codes-mer : X → Trunc k X → Trunc k X
@@ -139,7 +138,7 @@ module FreudenthalEquiv
         P = λ x₁ x₂ → 
           ((transport P (merid X x₁) (Trunc-fmap up [ x₂ ])
             == Trunc-fmap (merid X) (transport Codes (merid X x₁) [ x₂ ])),
-           =-preserves-level _ Trunc-level);
+           =-preserves-level _ (raise-level-≤ k _ kle Trunc-level));
 
         f = λ a → 
           transport P (merid X a) [ up x₀ ]

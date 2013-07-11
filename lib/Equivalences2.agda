@@ -37,7 +37,7 @@ equiv-is-contr-map e y =
 fiber=-eqv : ∀ {i j} {A : Type i} {B : Type j} {h : A → B} {y : B} 
   (r s : Σ A (λ x → h x == y))
   → (r == s) ≃ Σ (fst r == fst s) (λ γ → ap h γ ∙ snd s == snd r)
-fiber=-eqv r s = equiv-Σ-snd (λ γ → ↓-pathto-eqv γ) ∘e ((Σ=-eqv r s)⁻¹)
+fiber=-eqv r s = equiv-Σ-snd (λ γ → ↓-fiber-to-eqv γ) ∘e ((Σ=-eqv r s)⁻¹)
 
 
 module _ {i j} {A : Type i} {B : Type j} where
