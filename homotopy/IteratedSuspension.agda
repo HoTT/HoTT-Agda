@@ -14,9 +14,7 @@ open import homotopy.Freudenthal
 
 module homotopy.IteratedSuspension where
 
-{- MOVE to PathFunctor -}
-coe-! : ∀ {i} {A B : Type i} (p : A == B) → coe (! p) == coe! p
-coe-! idp = idp
+{- TODO : indexing in here is messy -}
 
 Susp^ : ∀ {i} (n : ℕ) → Type i → Type i
 Susp^ O A = A
@@ -35,7 +33,6 @@ transport-Susp^-number : ∀ {i} → ∀ {m n} (α : m == n) → {A : Type i} (a
   →  north^ m a == north^ n a [ (λ t → Susp^ t A) ↓ α ]
 transport-Susp^-number idp _ = idp
 
-{- TODO : change the ≤T requirement to something reasonable -}
 module Stable {i} (A : Type i) (a : A)
   (n' : ℕ) (k : ℕ) (kle : ⟨ k ⟩ ≤T S ((n' -2) +2+ S (n' -2))) where
 
