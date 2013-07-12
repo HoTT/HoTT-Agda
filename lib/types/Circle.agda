@@ -39,7 +39,10 @@ module _ where
     (loop* : base* == base* [ A ↓ loop ]) where
 
     f : Π S¹ A
-    f (#s¹ #base _) = base*
+    f = f-aux phantom where
+
+     f-aux : Phantom loop* → Π S¹ A
+     f-aux phantom (#s¹ #base _) = base*
 
     postulate  -- HIT
       loop-β : apd f loop == loop*

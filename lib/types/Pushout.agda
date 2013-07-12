@@ -41,9 +41,12 @@ module Pushout {i} {j} {k} {d : Span {i} {j} {k}} where
       (right* : (b : B) → P (right b))
       (glue* : (c : C) → left* (g c) == right* (h c) [ P ↓ glue c ]) where
 
-      f : (x : Pushout) → P x
-      f (#pushout (#left y) _) = left* y
-      f (#pushout (#right y) _) = right* y
+      f : Π Pushout P
+      f = f-aux phantom  where
+
+        f-aux : Phantom glue* → Π Pushout P
+        f-aux phantom (#pushout (#left y) _) = left* y
+        f-aux phantom (#pushout (#right y) _) = right* y
 
       postulate  -- HIT
         glue-β : (c : C) → apd f (glue c) == glue* c

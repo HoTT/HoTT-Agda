@@ -40,7 +40,10 @@ module _ where
               [ (λ p → baseT* == baseT* [ A ↓ p ]) ↓ surfT ]) where
 
     f : Π Torus A
-    f (#torus #baseT _) = baseT*
+    f = f-aux phantom  where
+
+      f-aux : Phantom surfT* → Π Torus A
+      f-aux phantom (#torus #baseT _) = baseT*
 
     postulate  -- HIT
       loopT1-β : apd f loopT1 == loopT1*

@@ -344,6 +344,14 @@ match (inl a) withl l withr r = l a
 match (inr b) withl l withr r = r b
 
 {-
+Used in a hack to make HIT maybe consistent. This is just a parametrized unit
+type (positively)
+-}
+
+data Phantom {i} {A : Type i} (a : A) : Type₀ where
+  phantom : Phantom a
+
+{-
 -- When you want to cheat
 
 module ADMIT where

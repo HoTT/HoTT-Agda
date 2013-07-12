@@ -29,8 +29,11 @@ module _ {i} where
   module TruncElim {n : ℕ₋₂} {A : Type i} {j} {B : Trunc n A → Type j}
     (p : (x : Trunc n A) → has-level n (B x)) (d : (a : A) → B [ a ]) where
 
-    f : (x : Trunc n A) → B x
-    f (#trunc #[ a ] _) = d a
+    f : Π (Trunc n A) B
+    f = f-aux phantom  where
+
+      f-aux : Phantom p → Π (Trunc n A) B
+      f-aux phantom (#trunc #[ a ] _) = d a
 
 open TruncElim public renaming (f to Trunc-elim)
 

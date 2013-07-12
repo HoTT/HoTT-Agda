@@ -37,7 +37,10 @@ module _ where
     (pp* : (b : B) → cc* (g b) == cc* (h b) [ C ↓ pp b ]) where
 
     f : Π T C
-    f (#t (#cc a) _) = cc* a
+    f = f-aux phantom  where
+
+      f-aux : Phantom pp* → Π T C
+      f-aux phantom (#t (#cc a) _) = cc* a
 
     postulate  -- HIT
       pp-β : (b : B) → apd f (pp b) == pp* b
