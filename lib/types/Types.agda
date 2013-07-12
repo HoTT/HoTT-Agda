@@ -17,6 +17,7 @@ open import lib.types.Lift public
 open import lib.types.Circle public
 open import lib.types.Span public
 open import lib.types.Pushout public
+open import lib.types.PushoutFlattening public
 open import lib.types.Suspension public
 open import lib.types.Torus public
 open import lib.types.Truncation public

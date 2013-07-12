@@ -148,7 +148,7 @@ conn-elim-general {B = B} {n = n} {k = S k'} {f = f} c P t (g , p) (h , q) =
 
     e : (Σ (∀ x → g x == h x) (λ r → (r ∘ f) == app= (p ∙ ! q)))
         ≃ ((g , p) == (h , q)) 
-    e = ((Σ=-eqv _ _ ∘e equiv-Σ-snd (λ u → (↓-fiber-to-eqv u)⁻¹))
+    e = ((=Σ-eqv _ _ ∘e equiv-Σ-snd (λ u → (↓-fiber-to-eqv u)⁻¹))
         ∘e (equiv-Σ-fst _ (snd λ=-equiv))) ∘e equiv-Σ-snd lemma
               
 

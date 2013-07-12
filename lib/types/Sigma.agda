@@ -44,17 +44,21 @@ module _ {i j} {A : Type i} {B : A → Type j} where
 
 module _ {i j} {A : Type i} {B : A → Type j} where
 
-  Σ= : (x y : Σ A B) → Type (lmax i j)
-  Σ= (a , b) (a' , b') = Σ (a == a') (λ p → b == b' [ B ↓ p ])
+  =Σ : (x y : Σ A B) → Type (lmax i j)
+  =Σ (a , b) (a' , b') = Σ (a == a') (λ p → b == b' [ B ↓ p ])
 
-  Σ=-eqv : (x y : Σ A B) →  (Σ= x y) ≃ (x == y)
-  Σ=-eqv x y =
+  =Σ-eqv : (x y : Σ A B) →  (=Σ x y) ≃ (x == y)
+  =Σ-eqv x y =
     equiv (λ pq → pair= (fst pq) (snd pq)) (λ p → fst= p , snd= p)
           (λ p → ! (pair=-η p))
           (λ pq → pair= (fst=-β (fst pq) (snd pq)) (snd=-β (fst pq) (snd pq)))
 
-  Σ=-path : (x y : Σ A B) → (Σ= x y) == (x == y)
-  Σ=-path x y = ua (Σ=-eqv x y)
+  =Σ-path : (x y : Σ A B) → (=Σ x y) == (x == y)
+  =Σ-path x y = ua (=Σ-eqv x y)
+
+Σ= : ∀ {i j} {A A' : Type i} (p : A == A') {B : A → Type j} {B' : A' → Type j}
+  (q : B == B' [ (λ X → (X → Type j)) ↓ p ]) → Σ A B == Σ A' B'
+Σ= idp idp = idp
 
 abstract
 
@@ -64,7 +68,7 @@ abstract
   Σ-level {n = ⟨-2⟩} p q =
     ((fst p , (fst (q (fst p)))) ,
       (λ y → pair= (snd p _) (from-transp! _ _ (snd (q _) _))))
-  Σ-level {n = S n} p q = λ x y → equiv-preserves-level (Σ=-eqv x y)
+  Σ-level {n = S n} p q = λ x y → equiv-preserves-level (=Σ-eqv x y)
     (Σ-level (p _ _)
       (λ _ → equiv-preserves-level ((to-transp-equiv _ _)⁻¹) (q _ _ _)))
 
