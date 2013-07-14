@@ -143,7 +143,7 @@ from-to = {!Torus-elim idp from-to-loopT1 from-to-loopT2 {!!}!}
   where
 
   from-to-loopT1 : idp == idp [ (λ z → from (to z) == z) ↓ loopT1 ]
-  from-to-loopT1 = ↓-∘=id-in to from
+  from-to-loopT1 = ↓-∘=idf-in from to
     (ap from (ap to loopT1)                =⟨ To.loopT1-β |in-ctx ap from ⟩
     ap from (pair=' loop idp)             =⟨ lemma from loop (idp {a = base}) ⟩
     ap (λ u → u base) (ap from-c loop)    =⟨ FromC.loop-β |in-ctx ap (λ u → u base) ⟩
@@ -157,7 +157,7 @@ from-to = {!Torus-elim idp from-to-loopT1 from-to-loopT2 {!!}!}
 
 
   from-to-loopT2 : idp == idp [ (λ z → from (to z) == z) ↓ loopT2 ]
-  from-to-loopT2 = ↓-∘=id-in to from
+  from-to-loopT2 = ↓-∘=idf-in from to
     (ap from (ap to loopT2)                =⟨ To.loopT2-β |in-ctx ap from ⟩
     ap from (pair=' idp loop)             =⟨ lemma' from (idp {a = base}) loop ⟩
     ap from-c-base loop    =⟨ FromCBase.loop-β ⟩

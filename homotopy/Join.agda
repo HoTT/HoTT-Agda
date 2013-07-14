@@ -98,7 +98,7 @@ module Assoc {i j k} (A : Type i) (B : Type j) (C : Type k) where
     glue (a , left b) ∎∎
 
   to-from-glue-left : (a : A) (b : B) → idp == to-from-right (left b) [ (λ x → to (from x) == x) ↓ glue (a , left b) ]
-  to-from-glue-left a b = ↓-∘=id-in from to (↯ to-from-glue-left' a b)
+  to-from-glue-left a b = ↓-∘=idf-in to from (↯ to-from-glue-left' a b)
 
   to-from-glue-right' : (a : A) (c : C) → ap to (ap from (glue (a , right c))) =-= glue (a , right c)
   to-from-glue-right' a c =
@@ -107,4 +107,4 @@ module Assoc {i j k} (A : Type i) (B : Type j) (C : Type k) where
     glue (a , right c) ∎∎
 
   to-from-glue-right : (a : A) (c : C) → idp == to-from-right (right c) [ (λ x → to (from x) == x) ↓ glue (a , right c) ]
-  to-from-glue-right a c = ↓-∘=id-in from to (↯ to-from-glue-right' a c)
+  to-from-glue-right a c = ↓-∘=idf-in to from (↯ to-from-glue-right' a c)

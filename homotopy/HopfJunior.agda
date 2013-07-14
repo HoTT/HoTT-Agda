@@ -65,7 +65,7 @@ private
 
   -- First composite
   to-from : (x : S¹) → to (from x) == x
-  to-from = S¹-elim idp (↓-∘=id-in from to
+  to-from = S¹-elim idp (↓-∘=idf-in to from
     (ap to (ap from loop)                       =⟨ loop-β' from-base from-loop |in-ctx ap to ⟩
      ap to (ppt tt true ∙ ppt tt false)         =⟨ ap-∙ to (ppt tt true) (ppt tt false) ⟩
      ap to (ppt tt true) ∙ ap to (ppt tt false) =⟨ ppt-β' to-cct to-ppt (tt , true) |in-ctx (λ u → u ∙ ap to (ppt tt false)) ⟩
@@ -92,7 +92,7 @@ private
     ! (ppt tt false) ∙ ppt tt false ∎
 
   from-to : (x : Wt) → from (to x) == x
-  from-to = Wt-elim (from-to-cct ∘ snd) (λ b → ↓-∘=id-in to from (from-to-ppt (snd b)))
+  from-to = Wt-elim (from-to-cct ∘ snd) (λ b → ↓-∘=idf-in from to (from-to-ppt (snd b)))
 
   -- Conclusion
   subresult : Wt ≃ S¹

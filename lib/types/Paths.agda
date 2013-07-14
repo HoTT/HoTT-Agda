@@ -49,6 +49,7 @@ module _ {i} {A : Type i} where
     → (u == v [ (λ x → x == x) ↓ p ])
   ↓-idf=idf-in {p = idp} q = ! (∙-unit-r _) ∙ q ∙ ∙'-unit-l _
 
+{- Nondependent identity type -}
 
 ↓-='-in : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
   {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
@@ -56,9 +57,7 @@ module _ {i} {A : Type i} where
   → (u == v [ (λ x → f x == g x) ↓ p ])
 ↓-='-in {p = idp} q = ! (∙-unit-r _) ∙ q ∙ (∙'-unit-l _)
 
--- Dependent vs nondependent whiskering
--- This definitional behaviour make [↓-=-in] slightly more complicated to prove
--- but [↓-=-in] is often used in the case where [u] and [v] are [idp]
+{- Identity type where the type is dependent -}
 
 ↓-=-in : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
   {x y : A} {p : x == y} {u : g x == f x} {v : g y == f y}
@@ -73,11 +72,11 @@ module _ {i} {A : Type i} where
 ↓-=-out {B = B} {p = idp} {u} {v} q = (◃idp u) ∙ q ∙ ! (idp▹ v)
 
 -- Dependent path in a type of the form [λ x → g (f x) ≡ x]
-module _ {i j} {A : Type i} {B : Type j} (f : A → B) (g : B → A) where
-  ↓-∘=id-in : {x y : A} {p : x == y} {u : g (f x) == x} {v : g (f y) == y}
+module _ {i j} {A : Type i} {B : Type j} (g : B → A) (f : A → B) where
+  ↓-∘=idf-in : {x y : A} {p : x == y} {u : g (f x) == x} {v : g (f y) == y}
     → ((ap g (ap f p) ∙' v) == (u ∙ p))
     → (u == v [ (λ x → g (f x) == x) ↓ p ])
-  ↓-∘=id-in {p = idp} q = ! (∙-unit-r _) ∙ (! q) ∙ (∙'-unit-l _)
+  ↓-∘=idf-in {p = idp} q = ! (∙-unit-r _) ∙ (! q) ∙ (∙'-unit-l _)
 
 -- WIP, derive it from more primitive principles
 -- ↓-∘≡id-in f g {p = p} {u} {v} q =

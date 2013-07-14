@@ -144,7 +144,7 @@ module PushoutRecType {l} (left* : A → Type l) (right* : B → Type l)
 
           to-from-pp : (c : fC)
             → idp == idp [ (λ x → to (from x) == x) ↓ fG.pp c ]
-          to-from-pp c = ↓-∘=id-in from to
+          to-from-pp c = ↓-∘=idf-in to from
             (ap to (ap from (fG.pp c))   =⟨ From.pp-β c |in-ctx ap to ⟩
              ap to (fG'.pp c)            =⟨ To.pp-β c ⟩
              fG.pp c ∎)
@@ -157,7 +157,7 @@ module PushoutRecType {l} (left* : A → Type l) (right* : B → Type l)
 
           from-to-pp : (b : Bt)
             → idp == idp [ (λ x → from (to x) == x) ↓ fG'.pp b ]
-          from-to-pp b = ↓-∘=id-in to from
+          from-to-pp b = ↓-∘=idf-in from to
             (ap from (ap to (fG'.pp b))   =⟨ To.pp-β b |in-ctx ap from ⟩
              ap from (fG.pp b)            =⟨ From.pp-β b ⟩
              fG'.pp b ∎)

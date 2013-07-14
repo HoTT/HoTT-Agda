@@ -98,16 +98,16 @@ module Pushout {d : Spanijk} where
 
           to-from-pp :
             (c : C) → idp == idp [ (λ z → to (from z) == z) ↓ pp c ]
-          to-from-pp c = ↓-∘=id-in from to
+          to-from-pp c = ↓-∘=idf-in to from
             (ap to (ap from (pp c))   =⟨ From.pp-β c |in-ctx ap to ⟩
-            ap to (glue c)                    =⟨ To.glue-β c ⟩
-            pp c ∎)
+             ap to (glue c)           =⟨ To.glue-β c ⟩
+             pp c ∎)
 
         from-to : (x : Pushout) → from (to x) == x
-        from-to = Pushout-elim (λ a → idp) (λ b → idp) (λ c → ↓-∘=id-in to from
+        from-to = Pushout-elim (λ a → idp) (λ b → idp) (λ c → ↓-∘=idf-in from to
           (ap from (ap to (glue c))   =⟨ To.glue-β c |in-ctx ap from ⟩
-          ap from (pp c)    =⟨ From.pp-β c ⟩
-          glue c ∎))
+           ap from (pp c)             =⟨ From.pp-β c ⟩
+           glue c ∎))
 
 open Pushout public hiding (Pushout)
 
