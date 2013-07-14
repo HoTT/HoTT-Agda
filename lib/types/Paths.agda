@@ -61,57 +61,12 @@ module _ {i} {A : Type i} {f : A → A} where
 -- Dependent vs nondependent whiskering
 -- This definitional behaviour make [↓-=-in] slightly more complicated to prove
 -- but [↓-=-in] is often used in the case where [u] and [v] are [idp]
-_▹_ : ∀ {i j} {A : Type i} {B : A → Type j} {x y : A} {u : B x}
-  {v w : B y} {p : x == y}
-  → (u == v [ B ↓ p ]) → v == w
-     → (u == w [ B ↓ p ])
-_▹_ {p = idp} q idp = q
-
-idp▹ : ∀ {i j} {A : Type i} (B : A → Type j) {x : A}
-  {v w : B x} (q : v == w)
-  → _▹_ {B = B} {p = idp} idp q == q
-idp▹ B idp = idp
-
-_▹!_ : ∀ {i j} {A : Type i} {B : A → Type j} {x y : A} {u : B x}
-  {v w : B y} {p : x == y}
-  → (u == v [ B ↓ p ]) → w == v
-     → (u == w [ B ↓ p ])
-_▹!_ {p = idp} q idp = q
-
-idp▹! : ∀ {i j} {A : Type i} (B : A → Type j) {x : A}
-  {v w : B x} (q : w == v)
-  → _▹!_ {B = B} {p = idp} idp q == ! q
-idp▹! B idp = idp
-
-_◃_ : ∀ {i j} {A : Type i} {B : A → Type j} {x y : A} {u v : B x}
-  {w : B y} {p : x == y}
-  → (u == v → (v == w [ B ↓ p ])
-     → (u == w [ B ↓ p ]))
-_◃_ {p = idp} idp q = q
-
-◃idp : ∀ {i j} {A : Type i} (B : A → Type j) {x : A}
-  {v w : B x} (q : w == v)
-  → _◃_ {B = B} {p = idp} q idp == q
-◃idp B idp = idp
-
-_!◃_ : ∀ {i j} {A : Type i} {B : A → Type j} {x y : A} {u v : B x}
-  {w : B y} {p : x == y}
-  → (v == u → (v == w [ B ↓ p ])
-     → (u == w [ B ↓ p ]))
-_!◃_ {p = idp} idp q = q
-
-!◃idp : ∀ {i j} {A : Type i} (B : A → Type j) {x : A}
-  {v w : B x} (q : v == w)
-  → _!◃_ {B = B} {p = idp} q idp == ! q
-!◃idp B idp = idp
-
 
 ↓-=-in : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
   {x y : A} {p : x == y} {u : g x == f x} {v : g y == f y}
   → (u ◃ apd f p) == (apd g p ▹ v)
   → (u == v [ (λ x → g x == f x) ↓ p ])
-↓-=-in {B = B} {p = idp} {u} {v} q =
-  ! (◃idp B u) ∙ (q ∙ idp▹ B v)
+↓-=-in {B = B} {p = idp} {u} {v} q = ! (◃idp u) ∙ q ∙ idp▹ v
 
 postulate
  ↓-=-out : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
@@ -134,10 +89,3 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) (g : B → A) where
 --         u ◃ ↓-apd-out _ f p (apd (λ t → g (π₂ t)) (pair= p (apd f p))) =⟨ apd-∘ π₂ g (pair= p (apd f p)) |in-ctx (λ t → u ◃ ↓-apd-out _ f p t) ⟩
 --         u ◃ ↓-apd-out _ f p (↓-apd-out _ π₂ (pair= p (apd f p)) (apdd g (pair= p (apd f p)) (apd π₂ (pair= p (apd f p))))) =⟨ {!!} ⟩
 --         apd (λ x → x) p ▹ v ∎)
-
-ap↓-◃ : ∀ {i j} {A : Type i} {B : A → Type j} {x y : A} {u v : B x}
-  {k} {C : A → Type k}
-  (f : {a : A} → B a → C a)
-  {w : B y} {p : x == y} (q : u == v) (r : v == w [ B ↓ p ])
-  → ap↓ f (q ◃ r) == ap f q ◃ ap↓ f r
-ap↓-◃ f {p = idp} idp idp = idp

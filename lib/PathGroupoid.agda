@@ -97,6 +97,11 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     → u == w [ B ↓ (p ∙ p') ])
   _∙dep_ {p = idp} idp q = q
 
+  _◃_ = _∙dep_
+
+  ◃idp : {x : A} {v w : B x} (q : w == v)
+    → q ◃ idp == q
+  ◃idp idp = idp
 
   _∙'dep_ : {x y z : A} {p : x == y} {p' : y == z}
     {u : B x} {v : B y} {w : B z}
@@ -105,10 +110,39 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     → u == w [ B ↓ (p ∙' p') ])
   _∙'dep_ {p' = idp} q idp = q
 
+  _▹_ = _∙'dep_
+
+  {- That’s not perfect, because [q] could be a dependent path. But in that case
+     this is not well typed… -}
+  idp▹ : {x : A} {v w : B x} (q : v == w)
+    → idp ▹ q == q
+  idp▹ idp = idp
+
+  _▹!_ : {x y z : A} {p : x == y} {p' : z == y}
+    {u : B x} {v : B y} {w : B z}
+    → u == v [ B ↓ p ]
+    → w == v [ B ↓ p' ]
+    → u == w [ B ↓ p ∙' (! p') ]
+  _▹!_ {p' = idp} q idp = q
+
+  idp▹! : {x : A} {v w : B x} (q : w == v)
+    → idp ▹! q == ! q
+  idp▹! idp = idp
+
+  _!◃_ : {x y z : A} {p : y == x} {p' : y == z}
+    {u : B x} {v : B y} {w : B z}
+    → v == u [ B ↓ p ]
+    → v == w [ B ↓ p' ]
+    → u == w [ B ↓ (! p) ∙ p' ]
+  _!◃_ {p = idp} idp q = q
+
+  !◃idp :{x : A} {v w : B x} (q : v == w)
+    → q !◃ idp == ! q
+  !◃idp idp = idp
+
+
   {-
-  This is some kind of dependent horizontal composition (used in [apd∙']).
-  [apd∙] reduces a term of the form [apd (λ a → q a ∙ r a) p], do not confuse it
-  with [apd-∙] which reduces a term of the form [apd f (p ∙ q)].
+  This is some kind of dependent horizontal composition (used in [apd∙]).
   -}
 
   _∙2_ : {x y z : Π A B}
@@ -126,6 +160,11 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     → (r == r'            [ (λ a → y a == z a) ↓ p ])
     → (q ∙' r == q' ∙' r' [ (λ a → x a == z a) ↓ p ])
   _∙'2_ {p = idp} idp idp = idp
+
+  {-
+  [apd∙] reduces a term of the form [apd (λ a → q a ∙ r a) p], do not confuse it
+  with [apd-∙] which reduces a term of the form [apd f (p ∙ q)].
+  -}
 
   apd∙ : {a a' : A} {x y z : Π A B}
     (q : (a : A) → x a == y a) (r : (a : A) → y a == z a)

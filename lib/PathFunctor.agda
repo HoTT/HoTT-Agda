@@ -43,6 +43,14 @@ module _ {j} {B : A → Type j} (f : Π A B) where
     → apd f (p ∙' q) == apd f p ∙'dep apd f q
   apd-∙' idp idp = idp
 
+{- Over stuff -}
+module _ {j k} {B : A → Type j} {C : A → Type k} (f : {a : A} → B a → C a) where
+
+  ap↓-◃ : {x y z : A} {u : B x} {v : B y} {w : B z}
+    {p : x == y} {p' : y == z} (q : u == v [ B ↓ p ]) (r : v == w [ B ↓ p' ])
+    → ap↓ f (q ◃ r) == ap↓ f q ◃ ap↓ f r
+  ap↓-◃ {p = idp} {p' = idp} idp idp = idp
+
 {- Fuse and unfuse -}
 
 ∘-ap : ∀ {j k} {B : Type j} {C : Type k} (g : B → C) (f : A → B)
