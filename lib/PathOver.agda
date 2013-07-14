@@ -109,6 +109,16 @@ module _ {i j k} {A : Type i} {B : Type j} (C : B → Type k) (f : A → B) wher
     → u == v [ C ∘ f ↓ p ]
   ↓-ap-out idp idp = idp
 
+apd↓ : ∀ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k}
+  (f : {a : A} (b : B a) → C a b) {x y : A} {p : x == y}
+  {u : B x} {v : B y} (q : u == v [ B ↓ p ])
+  → f u == f v [ (λ xy → C (fst xy) (snd xy)) ↓ pair= p q ]
+apd↓ f {p = idp} idp = idp
+
+apd↓=apd :  ∀ {i j} {A : Type i} {B : A → Type j} (f : (a : A) → B a) {x y : A}
+  (p : x == y) → (apd f p == ↓-ap-out _ _ p (apd↓ {A = Unit} f {p = idp} p))
+apd↓=apd f idp = idp
+
 -- Paths in the fibrations [fst] and [snd]
 module _ {i j} where
 

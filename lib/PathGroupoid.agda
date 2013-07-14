@@ -12,7 +12,7 @@ module _ {i} {A : Type i} where
   with different definitionnal behaviour. Maybe we should have only one but it’s
   sometimes useful to have both (in particular in lib.types.Paths).
   -}
-  
+
   infixr 8 _∙_ _∙'_
 
   _∙_ : {x y z : A}

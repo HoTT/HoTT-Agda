@@ -134,7 +134,10 @@ ap : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) {x y : A}
   → (x == y → f x == f y)
 ap f p = ap↓ {A = Unit} f {p = idp} p
 
--- apd↓ has not yet been useful, but presumably it will be at some point
+{-
+[apd↓] is defined in lib.PathOver. Unlike [ap↓] and [ap], [apd] is not
+definitionally a special case of [apd↓]
+-}
 
 apd : ∀ {i j} {A : Type i} {B : A → Type j} (f : (a : A) → B a) {x y : A}
   → (p : x == y) → f x == f y [ B ↓ p ]
@@ -188,7 +191,7 @@ pair= : ∀ {i j} {A : Type i} {B : A → Type j}
   {a a' : A} (p : a == a') {b : B a} {b' : B a'}
   (q : b == b' [ B ↓ p ])
   → (a , b) == (a' , b')
-pair= idp idp = idp
+pair= idp q = ap (_,_ _) q
 
 pair×= : ∀ {i j} {A : Type i} {B : Type j}
   {a a' : A} (p : a == a') {b b' : B} (q : b == b')
