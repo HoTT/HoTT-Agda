@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Base
+open import lib.PathGroupoid
 open import lib.types.Nat
 
 module lib.types.TLevel where
@@ -23,9 +24,18 @@ _+2+_ : ℕ₋₂ → ℕ₋₂ → ℕ₋₂
 ⟨-2⟩ +2+ n = n
 S m +2+ n = S (m +2+ n)
 
-{- TODO prove -}
-postulate
-  +2+-comm : (m n : ℕ₋₂) → m +2+ n == n +2+ m
++2+-comm : (m n : ℕ₋₂) → m +2+ n == n +2+ m
++2+-comm ⟨-2⟩ n = n+2-2=n n  where
+
+  n+2-2=n : (n : ℕ₋₂) → n == n +2+ ⟨-2⟩
+  n+2-2=n ⟨-2⟩ = idp
+  n+2-2=n (S n) = ap S (n+2-2=n n)
+
++2+-comm (S m) n = ap S (+2+-comm m n) ∙ swapS n m where
+
+  swapS : (n m : ℕ₋₂) → S n +2+ m == n +2+ S m
+  swapS ⟨-2⟩ m = idp
+  swapS (S n) m = ap S (swapS n m)
 
 
 _≤T_ : ℕ₋₂ → ℕ₋₂ → Type₀
@@ -54,4 +64,3 @@ minT= (S _) ⟨-2⟩ = inr idp
 minT= (S m) (S n) with minT= m n
 minT= (S m) (S n) | inl p = inl (ap S p)
 minT= (S m) (S n) | inr q = inr (ap S q)
-

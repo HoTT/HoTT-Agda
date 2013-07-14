@@ -34,3 +34,5 @@ abstract
 
   Bool-is-set : is-set Bool
   Bool-is-set = dec-eq-is-set Bool-has-dec-eq
+
+Bool-level = Bool-is-set
