@@ -6,50 +6,48 @@ module lib.types.Paths where
 
 module _ {i j} {A : Type i} {B : Type j} {f : A → B} {b : B} where
 
-  ↓-app='cst-in : {x y : A} {p : x == y} {u : f x == b} {v : f y == b}
+  ↓-app=cst-in : {x y : A} {p : x == y} {u : f x == b} {v : f y == b}
     → u == (ap f p ∙' v)
     → (u == v [ (λ x → f x == b) ↓ p ])
-  ↓-app='cst-in {p = idp} q = q ∙ ∙'-unit-l _
+  ↓-app=cst-in {p = idp} q = q ∙ ∙'-unit-l _
 
-  ↓-app='cst-out : {x y : A} {p : x == y} {u : f x == b} {v : f y == b}
+  ↓-app=cst-out : {x y : A} {p : x == y} {u : f x == b} {v : f y == b}
     → (u == v [ (λ x → f x == b) ↓ p ])
     → u == (ap f p ∙' v)
-  ↓-app='cst-out {p = idp} idp = ! (∙'-unit-l _)
+  ↓-app=cst-out {p = idp} idp = ! (∙'-unit-l _)
 
-  ↓-cst='app-in : {x y : A} {p : x == y} {u : b == f x} {v : b == f y}
+  ↓-cst=app-in : {x y : A} {p : x == y} {u : b == f x} {v : b == f y}
     → (u ∙' ap f p) == v
     → (u == v [ (λ x → b == f x) ↓ p ])
-  ↓-cst='app-in {p = idp} idp = idp
+  ↓-cst=app-in {p = idp} idp = idp
 
-  ↓-cst='app-out : {x y : A} {p : x == y} {u : b == f x} {v : b == f y}
+  ↓-cst=app-out : {x y : A} {p : x == y} {u : b == f x} {v : b == f y}
     → (u == v [ (λ x → b == f x) ↓ p ])
     → (u ∙' ap f p) == v
-  ↓-cst='app-out {p = idp} idp = idp
+  ↓-cst=app-out {p = idp} idp = idp
 
-module _ {i} {A : Type i} {f : A → A} where
+module _ {i} {A : Type i} where
 
-  ↓-app='idf-in : {x y : A} {p : x == y} {u : f x == x} {v : f y == y}
+  ↓-app=idf-in : {f : A → A} {x y : A} {p : x == y}
+    {u : f x == x} {v : f y == y}
     → u ∙' p == ap f p ∙ v
     → u == v [ (λ z → f z == z) ↓ p ]
-  ↓-app='idf-in {p = idp} q = q
+  ↓-app=idf-in {p = idp} q = q
 
-↓-cst=idf-in : ∀ {i} {A : Type i} {a : A}
-  {x y : A} {p : x == y} {u : a == x} {v : a == y}
-  → (u ∙ p) == v
-  → (u == v [ (λ x → a == x) ↓ p ])
-↓-cst=idf-in {p = idp} q = ! (∙-unit-r _) ∙ q
+  ↓-cst=idf-in : {a : A} {x y : A} {p : x == y} {u : a == x} {v : a == y}
+    → (u ∙ p) == v
+    → (u == v [ (λ x → a == x) ↓ p ])
+  ↓-cst=idf-in {p = idp} q = ! (∙-unit-r _) ∙ q
 
-↓-idf=cst-in : ∀ {i} {A : Type i} {a : A}
-  {x y : A} {p : x == y} {u : x == a} {v : y == a}
-  → u == p ∙' v
-  → (u == v [ (λ x → x == a) ↓ p ])
-↓-idf=cst-in {p = idp} q = q ∙ ∙'-unit-l _
+  ↓-idf=cst-in : {a : A} {x y : A} {p : x == y} {u : x == a} {v : y == a}
+    → u == p ∙' v
+    → (u == v [ (λ x → x == a) ↓ p ])
+  ↓-idf=cst-in {p = idp} q = q ∙ ∙'-unit-l _
 
-↓-idf=idf-in : ∀ {i} {A : Type i}
-  {x y : A} {p : x == y} {u : x == x} {v : y == y}
-  → u ∙ p == p ∙' v
-  → (u == v [ (λ x → x == x) ↓ p ])
-↓-idf=idf-in {p = idp} q = ! (∙-unit-r _) ∙ q ∙ ∙'-unit-l _
+  ↓-idf=idf-in : {x y : A} {p : x == y} {u : x == x} {v : y == y}
+    → u ∙ p == p ∙' v
+    → (u == v [ (λ x → x == x) ↓ p ])
+  ↓-idf=idf-in {p = idp} q = ! (∙-unit-r _) ∙ q ∙ ∙'-unit-l _
 
 
 ↓-='-in : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
@@ -68,12 +66,11 @@ module _ {i} {A : Type i} {f : A → A} where
   → (u == v [ (λ x → g x == f x) ↓ p ])
 ↓-=-in {B = B} {p = idp} {u} {v} q = ! (◃idp u) ∙ q ∙ idp▹ v
 
-postulate
- ↓-=-out : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
+↓-=-out : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
   {x y : A} {p : x == y} {u : g x == f x} {v : g y == f y}
   → (u == v [ (λ x → g x == f x) ↓ p ])
   → (u ◃ apd f p) == (apd g p ▹ v)
---↓-=-out {B = B} {p = idp} idp = {!!}
+↓-=-out {B = B} {p = idp} {u} {v} q = (◃idp u) ∙ q ∙ ! (idp▹ v)
 
 -- Dependent path in a type of the form [λ x → g (f x) ≡ x]
 module _ {i j} {A : Type i} {B : Type j} (f : A → B) (g : B → A) where

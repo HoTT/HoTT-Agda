@@ -32,7 +32,7 @@ module _ {i j} {A : Type i} {B : Type j} where
     →-is-prop : is-prop B → is-prop (A → B)
     →-is-prop = →-level
 
--- Equivalences in a Π-type
+{- Equivalences in a Π-type -}
 equiv-Π-r : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
   → (∀ x → B x ≃ C x) → Π A B ≃ Π A C
 equiv-Π-r {A = A} {B = B} {C = C} k = equiv f g f-g g-f
@@ -43,12 +43,12 @@ equiv-Π-r {A = A} {B = B} {C = C} k = equiv f g f-g g-f
         g d x = <– (k x) (d x)
 
         f-g : ∀ d → f (g d) == d
-        f-g d = λ= (λ x →  <–-inv-r (k x) (d x)) 
+        f-g d = λ= (λ x →  <–-inv-r (k x) (d x))
 
         g-f : ∀ c → g (f c) == c
         g-f c = λ= (λ x → <–-inv-l (k x) (c x))
 
--- Dependent paths in a Π-type
+{- Dependent paths in a Π-type -}
 module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k}
   where
 
@@ -71,7 +71,11 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k
     → ↓-Π-out (↓-Π-in f) q == f q
   ↓-Π-β {p = idp} f idp = app=-β (λ x → f (idp {a = x})) _
 
--- Dependent paths in a Π-type where the codomain is not dependent on anything
+{- Dependent paths in a Π-type where the codomain is not dependent on anything
+
+Right now, this is defined in terms of the previous one. Maybe it’s a good idea,
+maybe not.
+-}
 module _ {i j k} {A : Type i} {B : A → Type j} {C : Type k} {x x' : A}
   {p : x == x'} {u : B x → C} {u' : B x' → C} where
 
@@ -102,7 +106,7 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : Type k} {x x' : A}
              =⟨ ↓-cst-β (pair= p q) (f q) ⟩
     f q ∎
 
--- Dependent paths in an arrow type
+{- Dependent paths in an arrow type -}
 module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
   {x x' : A} {p : x == x'} {u : B x → C x} {u' : B x' → C x'} where
 
@@ -119,19 +123,19 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
   ↓-→-out r q = ↓-cst2-out p q (↓-Π-out r q)
 
 -- Dependent paths in a Π-type where the domain is constant
-module _ {i j k} {A : Type i} {B : Type j} {C : A → B → Type k}
-  {x x' : A} {p : x == x'}
-  {u : (b : B) → C x b} {u' : (b : B) → C x' b} where
+module _ {i j k} {A : Type i} {B : Type j} {C : A → B → Type k} where
 
-  postulate
-    ↓-cst→app-in :
-      ((b : B) → u b == u' b [ (λ x → C x b) ↓ p ])
-      → (u == u' [ (λ x → (b : B) → C x b) ↓ p ])
+  ↓-cst→app-in : {x x' : A} {p : x == x'}
+    {u : (b : B) → C x b} {u' : (b : B) → C x' b}
+    → ((b : B) → u b == u' b [ (λ x → C x b) ↓ p ])
+    → (u == u' [ (λ x → (b : B) → C x b) ↓ p ])
+  ↓-cst→app-in {p = idp} f = λ= f
 
-  postulate
-    ↓-cst→app-out :
-      (u == u' [ (λ x → (b : B) → C x b) ↓ p ])
-      → ((b : B) → u b == u' b [ (λ x → C x b) ↓ p ])
+  ↓-cst→app-out : {x x' : A} {p : x == x'}
+    {u : (b : B) → C x b} {u' : (b : B) → C x' b}
+    → (u == u' [ (λ x → (b : B) → C x b) ↓ p ])
+    → ((b : B) → u b == u' b [ (λ x → C x b) ↓ p ])
+  ↓-cst→app-out {p = idp} q = app= q
 
 split-ap2 : ∀ {i j k} {A : Type i} {B : A → Type j} {C : Type k} (f : Σ A B → C)
   {x y : A} (p : x == y)
@@ -157,6 +161,9 @@ apd-∘' : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
   → apd (g ∘ f) p == ap↓ g (apd f p)
 apd-∘' g f idp = idp
 
+{- 2-dimensional coherence conditions -}
+
+--module Ap↓-↓-=-in
 postulate
  lhs :
   ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} {f g : Π A B}
@@ -172,14 +179,14 @@ postulate
   (h : {a : A} → B a → C a)
   → ap↓ h (apd f p ▹ v) == apd (h ∘ f) p ▹ ap h v
 
- ap↓-↓-=-in :
-  ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} {f g : Π A B}
-  {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
-  (k : (u ◃ apd g p) == (apd f p ▹ v))
-  (h : {a : A} → B a → C a)
-  → ap↓ (λ {a} → ap (h {a = a})) (↓-=-in {p = p} {u = u} {v = v} k)
-  == ↓-=-in (lhs {f = f} {g = g} k h ∙ ap (ap↓ (λ {a} → h {a = a})) k 
-                                     ∙ rhs {f = f} {g = g} k h)
+ -- ap↓-↓-=-in :
+ --  ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} {f g : Π A B}
+ --  {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+ --  (k : (u ◃ apd g p) == (apd f p ▹ v))
+ --  (h : {a : A} → B a → C a)
+ --  → ap↓ (λ {a} → ap (h {a = a})) (↓-=-in {p = p} {u = u} {v = v} k)
+ --  == ↓-=-in (lhs {f = f} {g = g} k h ∙ ap (ap↓ (λ {a} → h {a = a})) k 
+ --                                     ∙ rhs {f = f} {g = g} k h)
 
 --h (f x) == h (g y) [ C ↓ p ]
 
