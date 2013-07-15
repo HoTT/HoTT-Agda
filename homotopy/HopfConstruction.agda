@@ -21,14 +21,14 @@ postulate
 
 module H = SuspensionRecType A A A μ-equiv
 
-s : Span i i i
+s : Span
 s = span (⊤ × A) (⊤ × A) (A × A)
          (λ cc' → (tt , snd cc')) (λ cc' → (tt , uncurry μ cc'))
 
 lemma : Σ (Suspension A) H.f == Pushout s
 lemma = H.flattening
 
-join-span-flipped : Span i i i
+join-span-flipped : Span
 join-span-flipped = span A A (A × A) snd fst
 
 eq : (A × A) ≃ (A × A)
@@ -41,10 +41,10 @@ eq = equiv to from to-from from-to  where
   from (a , a') = (<– (μ-equiv2 a') a , a')
 
   to-from : (a : A × A) → to (from a) == a
-  to-from (a , a') = pair=' (<–-inv-r (μ-equiv2 a') a) idp
+  to-from (a , a') = pair×= (<–-inv-r (μ-equiv2 a') a) idp
 
   from-to : (a : A × A) → from (to a) == a
-  from-to (a , a') = pair=' (<–-inv-l (μ-equiv2 a') a) idp
+  from-to (a , a') = pair×= (<–-inv-l (μ-equiv2 a') a) idp
 
 x : s == join-span-flipped
 x = span= (equiv snd (_,_ tt) (λ b → idp) (λ a → idp))
@@ -52,7 +52,7 @@ x = span= (equiv snd (_,_ tt) (λ b → idp) (λ a → idp))
           eq (λ a → idp) (λ a → idp)
 
 record FibSeq {i j k ℓ} (A : Type i) (B : Type j) (C : Type k) (c : C)
-  : Type (max (max i j) (max k (suc ℓ))) where
+  : Type (lmax (lmax i j) (lmax k (lsucc ℓ))) where
   constructor fibSeq
   field
     fibration : C → Type ℓ
