@@ -59,12 +59,12 @@ private
   neg-injective : (n m : ℕ) (p : neg n == neg m) → n == m
   neg-injective n m p = ap ℤ-get-neg p
 
-  ℤ-neg≠O≠pos-type : ℤ → Set
+  ℤ-neg≠O≠pos-type : ℤ → Type₀
   ℤ-neg≠O≠pos-type O = Unit
   ℤ-neg≠O≠pos-type (pos n) = Empty
   ℤ-neg≠O≠pos-type (neg n) = Empty
 
-  ℤ-neg≠pos-type : ℤ → Set
+  ℤ-neg≠pos-type : ℤ → Type₀
   ℤ-neg≠pos-type O = Unit
   ℤ-neg≠pos-type (pos n) = Empty
   ℤ-neg≠pos-type (neg n) = Unit

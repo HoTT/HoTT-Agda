@@ -11,13 +11,8 @@ open import homotopy.WedgeExtension
 
 module homotopy.Freudenthal where
 
-{- some lemmas (move these?) -}
+{- lemma (move this where?) -}
 private
-  ap2 : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} {x y : A} {w z : B} 
-    (f : A → B → C) → (x == y) → (w == z) 
-    → f x w == f y z
-  ap2 f idp idp = idp
-
   move1-left-on-left : ∀ {i} {A : Type i} {x y : A} (p : x == y) (q : x == y)
     → ((! q) ∙ p == idp → p == q)
   move1-left-on-left p idp h = h
@@ -178,8 +173,8 @@ module FreudenthalEquiv
               |in-ctx (λ w → Trunc-fmap (merid X) (coe w [ b ])) ⟩
           Trunc-fmap (merid X) (transport Codes (merid X x₀) [ b ]) ∎;
 
-        p = ap2
-          (λ p₁ → λ p₂ →
+        p = ap
+          (λ {(p₁ , p₂) → 
             transport P (merid X x₀) [ up x₀ ]
               =⟨ transport-Trunc (λ y → north X == y) (merid X x₀) (up x₀) ⟩
             [ transport (λ y → north X == y) (merid X x₀) (up x₀) ]
@@ -195,8 +190,8 @@ module FreudenthalEquiv
             Trunc-fmap (merid X) (coe (ua (Codes-mer-equiv x₀)) [ x₀ ])
               =⟨ ! (SuspensionRec.glue-β X _ _ (ua ∘ Codes-mer-equiv) x₀)
                 |in-ctx (λ w → Trunc-fmap (merid X) (coe w [ x₀ ])) ⟩
-            Trunc-fmap (merid X) (transport Codes (merid X x₀) [ x₀ ]) ∎)
-          (coh (merid X x₀)) Codes-mer-coh}
+            Trunc-fmap (merid X) (transport Codes (merid X x₀) [ x₀ ]) ∎})
+          (pair×= (coh (merid X x₀)) Codes-mer-coh)}
           where
             coh : {s₁ s₂ : Suspension X} (p : s₁ == s₂)
               → (ap (λ s → s ∙ p) (!-inv-r p))
