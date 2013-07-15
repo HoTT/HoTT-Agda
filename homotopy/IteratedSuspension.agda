@@ -32,35 +32,38 @@ transport-Susp^-number : ∀ {i} → ∀ {m n} (α : m == n) → {A : Type i} (a
 transport-Susp^-number idp _ = idp
 
 {- π (S k) (Susp^ (S n) A) (north^ (S n) a) == π k (Susp^ n A) (north^ n a),
-   where n = S n'                                                            -}
-module Susp^Stable {i} (A : Type i) (a : A)
-  (n' : ℕ) (k : ℕ) (kle : k ≤ n' *2) where
+   where n = S n' and k = S k' -}
+module Susp^Stable {i} (A : Type i) (a : A) (cA : is-connected ⟨0⟩ A)
+  (n' : ℕ) (k' : ℕ) (kle : S k' ≤ (S n') *2) where
+  
+  {- need k,n ≥ 1 -}
+  k : ℕ
+  k = S k'
 
-  {- need n ≥ 1 -}
   n : ℕ
   n = S n'
 
   {- some numeric computations -}
   private
-    kle' : ⟨ k ⟩ ≤T ((n -2) +2+ (n -2))
-    kle' = ≤T-trans (⟨⟩-monotone-≤ kle) (inl $ lemma n')
-      where
-      lemma : (n' : ℕ) → ⟨ n' *2 ⟩ == ((S n' -2) +2+ (S n' -2))
-      lemma O = idp
-      lemma (S n') = ap S (ap S (lemma n') ∙ ! (+2+-βr (S n' -2) (S n' -2))) 
+    kle' : ⟨ k ⟩ ≤T S ((n -2) +2+ S (n -2))
+    kle' = ≤T-trans (⟨⟩-monotone-≤ kle) (inl (lemma n'))
+      where lemma : (n' : ℕ) → ⟨ S n' *2 ⟩ == S ((S n' -2) +2+ S (S n' -2))
+            lemma O = idp
+            lemma (S n') = ap S (ap S (lemma n') 
+                                 ∙ ! (+2+-βr (S (S n') -2) (S (S n') -2)))
 
 
-    nlemma₁ : (n : ℕ) → (S n -2) +2+ ⟨-1⟩ == S (S (n -2))
-    nlemma₁ n = +2+-comm (S n -2) ⟨-1⟩
+    nlemma₁ : (n : ℕ) → (n -2) +2+ ⟨0⟩ == S (S (n -2))
+    nlemma₁ n = +2+-comm (n -2) ⟨0⟩
 
     nlemma₂ : (k : ℕ) → (k -2) +2+ ⟨0⟩ == ⟨ k ⟩
     nlemma₂ O = idp
     nlemma₂ (S k) = ap S (nlemma₂ k)
 
-  module F = FreudenthalEquiv (n' -2) (⟨ k ⟩) kle'
+  module F = FreudenthalEquiv (n -2) (⟨ k ⟩) kle'
                (Susp^ n A) (north^ n a)
                (transport (λ t → is-connected t (Susp^ n A))
-                  (nlemma₁ n') (Susp^-conn n (inhab-conn A a)))
+                  (nlemma₁ n) (Susp^-conn n cA))
 
   stable : π (S k) (Susp^ (S n) A) (north^ (S n) a)
            == π k (Susp^ n A) (north^ n a) 
