@@ -36,7 +36,7 @@ module FreudenthalEquiv
   Codes-mer-args = record {n = n; m = n; 
     cA = cX; 
     cB = Trunc-preserves-conn k cX;
-    P = λ _ _ → (Trunc k X , raise-level-≤ k _ kle Trunc-level);
+    P = λ _ _ → (Trunc k X , raise-level-≤T kle Trunc-level);
     f = [_]; g = idf _; p = idp}
   
   Codes-mer : X → Trunc k X → Trunc k X
@@ -138,7 +138,7 @@ module FreudenthalEquiv
         P = λ x₁ x₂ → 
           ((transport P (merid X x₁) (Trunc-fmap up [ x₂ ])
             == Trunc-fmap (merid X) (transport Codes (merid X x₁) [ x₂ ])),
-           =-preserves-level _ (raise-level-≤ k _ kle Trunc-level));
+           =-preserves-level _ (raise-level-≤T kle Trunc-level));
 
         f = λ a → 
           transport P (merid X a) [ up x₀ ]

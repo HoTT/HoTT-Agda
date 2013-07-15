@@ -169,8 +169,27 @@ Trunc-fmap-∘ : ∀ {i j k} {n : ℕ₋₂} {A : Type i} {B : Type j} {C : Type
   → ∀ x → Trunc-fmap {n = n} g (Trunc-fmap f x) == Trunc-fmap (g ∘ f) x
 Trunc-fmap-∘ g f = Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp)
 
-
 transport-Trunc : ∀ {i j} {A : Type i} {n : ℕ₋₂} (P : A → Type j) 
   {x y : A} (p : x == y) (b : P x)
   → transport (Trunc n ∘ P) p [ b ] == [ transport P p b ]
 transport-Trunc _ idp _ = idp
+
+fuse-Trunc : ∀ {i} (A : Type i) (m n : ℕ₋₂)
+  → Trunc m (Trunc n A) ≃ Trunc (minT m n) A
+fuse-Trunc A m n = equiv
+  (Trunc-rec (raise-level-≤T (minT≤l m n) Trunc-level) 
+    (Trunc-rec (raise-level-≤T (minT≤r m n) Trunc-level) 
+      [_]))
+  (Trunc-rec l ([_] ∘ [_]))
+  (Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp))
+  (Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+     (Trunc-elim 
+       (λ _ → =-preserves-level _ (Trunc-preserves-level _ Trunc-level)) 
+       (λ _ → idp)))
+  where l : has-level (minT m n) (Trunc m (Trunc n A))
+        l with (minT-out m n)
+        l | inl p = transport (λ k → has-level k (Trunc m (Trunc n A)))
+                              (! p) Trunc-level
+        l | inr q = Trunc-preserves-level _
+                      (transport (λ k → has-level k (Trunc n A))
+                                 (! q) Trunc-level)

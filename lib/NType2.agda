@@ -142,16 +142,12 @@ abstract
 {- The following two lemmas are in NType2 instead of NType because of cyclic
    dependencies -}
 
-abstract
-  raise-level-≤ : ∀ {i} {A : Type i} (m n : ℕ₋₂)
-    → (m ≤T n) → has-level m A → has-level n A
-  raise-level-≤ ⟨-2⟩ n _ pA = contr-has-level pA
-  raise-level-≤ (S m) ⟨-2⟩ b _ = Empty-elim b
-  raise-level-≤ (S m) (S n) le pA x y = raise-level-≤ m n le (pA x y)
+module _ {i} {A : Type i} where
+  abstract
+    raise-level-<T : {m n : ℕ₋₂} → (m <T n) → has-level m A → has-level n A
+    raise-level-<T ltS = raise-level _
+    raise-level-<T (ltSR lt) = raise-level _ ∘ raise-level-<T lt
 
-abstract
-  min-level : ∀ {i} {A : Type i} (m n : ℕ₋₂)
-    → has-level m A → has-level n A → has-level (minT m n) A
-  min-level m n _ _ with minT= m n
-  min-level {A = A} m n mA nA | inl p = transport (λ k → has-level k A) (! p) mA
-  min-level {A = A} m n mA nA | inr q = transport (λ k → has-level k A) (! q) nA
+    raise-level-≤T : {m n : ℕ₋₂} → (m ≤T n) → has-level m A → has-level n A
+    raise-level-≤T (inl p) = transport (λ t → has-level t A) p
+    raise-level-≤T (inr lt) = raise-level-<T lt
