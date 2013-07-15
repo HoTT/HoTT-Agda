@@ -5,6 +5,8 @@ open import homotopy.HSpace
 
 module homotopy.CircleHSpace where
 
+open S¹Rec using (loop-β) renaming (f to S¹-rec)
+
 S¹-hSpace : HSpaceStructure S¹
 S¹-hSpace = hSpaceStructure base μ μe- μ-e where
 
@@ -18,11 +20,11 @@ S¹-hSpace = hSpaceStructure base μ μe- μ-e where
   μe- x = idp
 
   μ-e : (x : S¹) → μ x base == x
-  μ-e = S¹-elim idp (↓-app='idf-in
+  μ-e = S¹-elim idp (↓-app=idf-in
     (idp ∙' loop                          =⟨ ∙'-unit-l loop ⟩
      loop                                 =⟨ idp ⟩
      turn-around base                     =⟨ ! (app=-β turn-around base) ⟩
-     ap (λ z → z base) (λ= turn-around)   =⟨ ! (loop-β' (idf S¹) (λ= turn-around) |in-ctx (ap (λ z → z base))) ⟩
+     ap (λ z → z base) (λ= turn-around)   =⟨ ! (loop-β (idf S¹) (λ= turn-around) |in-ctx (ap (λ z → z base))) ⟩
      ap (λ z → z base) (ap μ loop)        =⟨ ! (ap-∘ (λ z → z base) μ loop) ⟩
      ap (λ z → μ z base) loop             =⟨ ! (∙-unit-r _) ⟩
      ap (λ z → μ z base) loop ∙ idp ∎))
