@@ -73,7 +73,6 @@ conn-elim-β : ∀ {i j k} {A : Type i} {B : Type j} {n : ℕ₋₂}
   → ∀ a → (conn-elim c P f (h a)) == f a
 conn-elim-β c P f = app= (is-equiv.f-g (conn-elim-eqv c P) f)
 
-
 abstract
   move-right-on-right-eqv : ∀ {i} {A : Type i} {x y z : A}
     (p : x == y) (q : x == z) (r : y == z)
@@ -212,6 +211,11 @@ abstract
 
       point : Trunc n (Σ ⊤ (λ _ → a₀ == a))
       point = out $ contr-has-all-paths c [ a₀ ] [ a ]
+
+prop-over-connected :  ∀ {i j} {A : Type i} {a : A} (p : is-connected ⟨0⟩ A)
+  → (P : A → hProp j)
+  → fst (P a) → Π A (fst ∘ P)
+prop-over-connected p P x = conn-elim (pointed-conn-out _ _ p) P (λ _ → x)
 
 Trunc-preserves-conn : ∀ {i} {A : Type i} {n : ℕ₋₂} (m : ℕ₋₂)
   → is-connected n A → is-connected n (Trunc m A)

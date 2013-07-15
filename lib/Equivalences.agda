@@ -103,6 +103,9 @@ module _ {i} {j} {A : Type i} {B : Type j} where
     → (–> e x == –> e y → x == y)
   equiv-inj e {x} {y} p = ! (<–-inv-l e x) ∙ ap (<– e) p ∙ <–-inv-l e y
 
+idf-is-equiv : ∀ {i} (A : Type i) → is-equiv (idf A)
+idf-is-equiv A = is-eq _ (idf A) (λ _ → idp) (λ _ → idp)
+
 ide : ∀ {i} (A : Type i) → A ≃ A
 ide A = equiv (idf A) (idf A) (λ _ → idp) (λ _ → idp)
 
