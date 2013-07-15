@@ -264,3 +264,15 @@ abstract
         (λ y → ((ap [_] (merid A x) == ap [_] (merid A y)) ,
                 Trunc-level {n = S (S n)} _ _ _ _)) 
         (λ _ → idp) x'
+
+abstract
+  path-conn : ∀ {i} {A : Type i} {x y : A} {n : ℕ₋₂} 
+    → is-connected (S n) A → is-connected n (x == y)
+  path-conn {x = x} {y = y} cA = 
+    equiv-preserves-level (Trunc=-equiv [ x ] [ y ]) 
+      (contr-is-prop cA [ x ] [ y ])
+
+connected-at-level-is-contr : ∀ {i} {A : Type i} {n : ℕ₋₂}
+  → has-level n A → is-connected n A → is-contr A
+connected-at-level-is-contr pA cA = 
+  equiv-preserves-level (unTrunc-equiv _ pA) cA

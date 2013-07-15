@@ -151,6 +151,13 @@ Trunc-preserves-level {n = (S n)} (S m) c t₁ t₂ =
               t₂) 
     t₁
 
+{- an n-type is equivalent to its n-truncation -}
+unTrunc-equiv : ∀ {i} {n : ℕ₋₂} (A : Type i)
+  → has-level n A → Trunc n A ≃ A
+unTrunc-equiv A nA = equiv f [_] (λ _ → idp) g-f where 
+  f = Trunc-rec nA (idf _)
+  g-f = Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp)
+
 -- Equivalence associated to the universal property
 Trunc-extend-equiv : ∀ {i j} (n : ℕ₋₂) (A : Type i) (B : Type j)
   (p : has-level n B) → (A → B) ≃ (Trunc n A → B)

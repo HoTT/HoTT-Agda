@@ -8,7 +8,7 @@ open import lib.types.Truncation
 open import lib.types.Bool
 open import lib.types.Nat
 open import lib.types.TLevel
-open import lib.types.LoopSpace
+open import homotopy.LoopSpace
 open import homotopy.Freudenthal
 
 
