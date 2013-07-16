@@ -11,7 +11,6 @@ open import lib.types.TLevel
 open import homotopy.LoopSpace
 open import homotopy.Freudenthal
 
-
 module homotopy.IteratedSuspension where
 
 Susp^ : ∀ {i} (n : ℕ) → Type i → Type i

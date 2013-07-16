@@ -202,3 +202,18 @@ postulate
 --                                        ↓-swap! (h ∘ f) (h ∘ g) (ap h r) (ap h s)
 --                                          (api2 (ap h) t ▹ (ap-∙ h s (ap g q) ∙ (idp :> (ap h s == ap h s)) ∙2 ∘-ap h g q))
 -- api2-swap! = {!!}
+
+{- Functoriality of application and function extensionality -}
+
+∙-app= : ∀ {i j} {A : Type i} {B : A → Type j} {f g h : Π A B}
+  (α : f == g) (β : g == h) 
+  → α ∙ β == λ= (λ x → app= α x ∙ app= β x)
+∙-app= idp β = λ=-η β
+
+∙-λ= : ∀ {i j} {A : Type i} {B : A → Type j} {f g h : Π A B}
+  (α : (x : A) → f x == g x) (β : (x : A) → g x == h x) 
+  → λ= α ∙ λ= β == λ= (λ x → α x ∙ β x)
+∙-λ= α β = ∙-app= (λ= α) (λ= β)
+  ∙ ap λ= (λ= (λ x → ap (λ w → w ∙ app= (λ= β) x) (app=-β α x)
+                   ∙ ap (λ w → α x ∙ w) (app=-β β x)))
+

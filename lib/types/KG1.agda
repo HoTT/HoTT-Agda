@@ -60,13 +60,13 @@ module KG1Elim {j} {C : KG1 → ⟨ 1 ⟩ -Type j}
 
 open KG1Elim public using () renaming (f to KG1-elim)
 
-cancels-inverse : ∀ {i} {A : Type i} {x y : A} 
-  (p : x == y) (q : y == x) → p ∙ q == idp → p == ! q
-cancels-inverse p idp r = ! (∙-unit-r p) ∙ r
-
 kloop-inv : ∀ g → kloop (inv g) == ! (kloop g)
 kloop-inv g = cancels-inverse _ _ lemma
   where 
+    cancels-inverse : ∀ {i} {A : Type i} {x y : A} 
+      (p : x == y) (q : y == x) → p ∙ q == idp → p == ! q
+    cancels-inverse p idp r = ! (∙-unit-r p) ∙ r
+
     lemma : kloop (inv g) ∙ kloop g  == idp
     lemma = ! (kloop-comp (inv g) g) ∙ ap kloop (invl g) ∙ kloop-ident
 
