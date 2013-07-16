@@ -4,9 +4,11 @@ open import lib.Basics
 open import lib.Group
 open import lib.NType2
 open import lib.Equivalences2
+open import lib.NConnected
 open import lib.types.Pi
 open import lib.types.Sigma
 open import lib.types.TLevel
+open import lib.types.Truncation
 
 module lib.types.KG1 {i} (G : Group i) where
 
@@ -182,6 +184,23 @@ module π₁ where
   decode-encode : ∀ {x} (α : kbase == x) → decode (encode α) == α
   decode-encode α = J (λ (x : KG1) (α : kbase == x) → decode (encode α) == α) kloop-ident α
 
-  Ω¹[KG1]-equiv-G : (kbase == kbase) ≃ El
-  Ω¹[KG1]-equiv-G = equiv encode decode encode-decode' decode-encode
+  Ω¹-equiv : (kbase == kbase) ≃ El
+  Ω¹-equiv = equiv encode decode encode-decode' decode-encode
 
+  Ω¹-path : (kbase == kbase) == El
+  Ω¹-path = ua Ω¹-equiv
+
+  π₁-path : Trunc ⟨0⟩ (kbase == kbase) == El
+  π₁-path = ap (Trunc ⟨0⟩) Ω¹-path ∙ ua (unTrunc-equiv El El-level)
+
+{- KG1 is 0-connected -}
+abstract
+  KG1-conn : is-connected ⟨0⟩ KG1
+  KG1-conn = ([ kbase ] , Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+    (KG1-elim
+      {C = λ x → ([ kbase ] == [ x ]) ,
+                 raise-level _ (=-preserves-level _ Trunc-level)}
+      idp
+      (λ _ → prop-has-all-paths-↓ (Trunc-level {n = ⟨0⟩} _ _))
+      (set-↓-has-all-paths-↓ (=-preserves-level _ Trunc-level))
+      (λ _ _ → set-↓-has-all-paths-↓ (=-preserves-level _ Trunc-level))))

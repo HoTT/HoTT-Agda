@@ -39,8 +39,8 @@ mult-hom = record {f = f; pres-ident = pres-ident; pres-comp = pres-comp}
                  (=-preserves-level _ (=-preserves-level _ klevel))}
       (kloop-ident ∙ ! (ap-idf idp)) 
       (λ _ → prop-has-all-paths-↓ (klevel _ _ _ _))
-      (set-↓-has-all-paths-↓ (raise-level _ (klevel _ _ _ _)))
-      (λ _ _ → set-↓-has-all-paths-↓ (raise-level _ (klevel _ _ _ _))))) 
+      (set-↓-has-all-paths-↓ (=-preserves-level _ (klevel _ _)))
+      (λ _ _ → set-↓-has-all-paths-↓ (=-preserves-level _ (klevel _ _)))))
     ∙ ! (λ=-η idp)
 
   pres-comp = λ g₁ g₂ → 
@@ -48,8 +48,8 @@ mult-hom = record {f = f; pres-ident = pres-ident; pres-comp = pres-comp}
       {C = λ x → (_ , =-preserves-level _ (=-preserves-level _ klevel))}
       (kloop-comp g₁ g₂)
       (λ _ → prop-has-all-paths-↓ (klevel _ _ _ _))
-      (set-↓-has-all-paths-↓ (raise-level _ (klevel _ _ _ _)))
-      (λ _ _ → set-↓-has-all-paths-↓ (raise-level _ (klevel _ _ _ _))))) 
+      (set-↓-has-all-paths-↓ (=-preserves-level _ (klevel _ _)))
+      (λ _ _ → set-↓-has-all-paths-↓ (=-preserves-level _ (klevel _ _))))) 
     ∙ ! (∙-λ= _ _)
 
 mult : KG1 → KG1 → KG1

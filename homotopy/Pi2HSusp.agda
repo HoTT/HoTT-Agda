@@ -154,8 +154,8 @@ main-lemma-eqv = equiv encode decode' encode-decode' decode-encode
 main-lemma : Trunc ⟨ 1 ⟩ (north A == north A) == A
 main-lemma = ua main-lemma-eqv
 
-π2-Suspension : π 2 (Suspension A) (north A) == π 1 A e
-π2-Suspension = 
+π₂-Suspension : π 2 (Suspension A) (north A) == π 1 A e
+π₂-Suspension = 
   Trunc ⟨0⟩ (Ω^ 1 (Ω^ 1 (Suspension A) (north A)) idp)
     =⟨ Trunc-Ω^-path ⟨0⟩ 1 _ _ ⟩
   Ω^ 1 (Trunc ⟨ 1 ⟩ (Ω^ 1 (Suspension A) (north A))) [ idp ]

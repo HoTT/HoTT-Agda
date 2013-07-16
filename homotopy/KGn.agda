@@ -1,14 +1,10 @@
 {-# OPTIONS --without-K #-}
 
-open import lib.Basics
-open import lib.NType2
-open import lib.types.Sigma
-open import lib.types.Nat
-open import lib.types.TLevel
-open import lib.types.Truncation
-open import lib.types.Suspension
-open import lib.NConnected
+open import HoTT
+open import lib.Group
+import lib.types.KG1
 open import homotopy.HSpace renaming (HSpaceStructure to HSS)
+open import homotopy.KG1HSpace
 open import homotopy.LoopSpace
 open import homotopy.Freudenthal
 open import homotopy.IteratedSuspension
@@ -75,26 +71,26 @@ module Implicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
 
   module Zero where
 
-    π0 : (n : ℕ) → π 0 (KG1+ n) (kbase n) == Lift Unit
-    π0 n = ua (contr-equiv-LiftUnit (connected-at-level-is-contr 
+    π₀ : (n : ℕ) → π 0 (KG1+ n) (kbase n) == Lift Unit
+    π₀ n = ua (contr-equiv-LiftUnit (connected-at-level-is-contr 
               (raise-level-≤T (≤T-ap-S (≤T-ap-S (-2≤T (n -2))))
                               (Trunc-level {n = ⟨0⟩}))
               (Trunc-preserves-conn ⟨0⟩ (KG1+-conn n))))
 
   module BelowDiagonal where
 
-    π1 : (n : ℕ) → π 1 (KG1+ (S n)) (kbase (S n)) == Lift Unit
-    π1 n = ua (contr-equiv-LiftUnit (connected-at-level-is-contr 
+    π₁ : (n : ℕ) → π 1 (KG1+ (S n)) (kbase (S n)) == Lift Unit
+    π₁ n = ua (contr-equiv-LiftUnit (connected-at-level-is-contr 
               (raise-level-≤T (≤T-ap-S (≤T-ap-S (-2≤T (n -2)))) 
                               (Trunc-level {n = ⟨0⟩}))
               (Trunc-preserves-conn ⟨0⟩ (path-conn (KG1+-conn (S n))))))
 
     -- could probably avoid some of this clutter
     π-below : (k n : ℕ) → (k < S n) → π k (KG1+ n) (kbase n) == Lift Unit
-    π-below O n lt = Zero.π0 n
-    π-below 1 .1 ltS = π1 0
-    π-below 1 .2 (ltSR ltS) = π1 1
-    π-below 1 (S n) (ltSR (ltSR _)) = π1 n
+    π-below O n lt = Zero.π₀ n
+    π-below 1 .1 ltS = π₁ 0
+    π-below 1 .2 (ltSR ltS) = π₁ 1
+    π-below 1 (S n) (ltSR (ltSR _)) = π₁ n
     π-below (S (S k)) .(S (S k)) ltS = 
       Stable.stable k k (inr ltS) ∙ π-below (S k) (S k) ltS
     π-below (S (S k)) .(S (S (S k))) (ltSR ltS) = 
@@ -109,29 +105,29 @@ module Implicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
 
   module OnDiagonal where
 
-    π1 : π 1 (KG1+ 0) (kbase 0) == π 1 A a₀
-    π1 = 
+    π₁ : π 1 (KG1+ 0) (kbase 0) == π 1 A a₀
+    π₁ = 
       Trunc ⟨0⟩ ([ a₀ ] == [ a₀ ]) 
         =⟨ ap (Trunc ⟨0⟩) $ ua (Trunc=-equiv [ a₀ ] [ a₀ ]) ⟩ 
       Trunc ⟨0⟩ (Trunc ⟨0⟩ (a₀ == a₀))
         =⟨ ua (fuse-Trunc (a₀ == a₀) ⟨0⟩ ⟨0⟩) ⟩
       Trunc ⟨0⟩ (a₀ == a₀) ∎
 
-    module Π2 = homotopy.Pi2HSusp A gA cA A-H μcoh
+    module Π₂ = homotopy.Pi2HSusp A gA cA A-H μcoh
 
-    π2 : π 2 (KG1+ 1) (kbase 1) == π 1 A a₀
-    π2 = 
+    π₂ : π 2 (KG1+ 1) (kbase 1) == π 1 A a₀
+    π₂ = 
       Trunc ⟨0⟩ (Ω^ 2 (Trunc ⟨ 2 ⟩ (Suspension A)) [ north A ])
         =⟨ ! (ap (Trunc ⟨0⟩) (Trunc-Ω^-path ⟨0⟩ 2 (Suspension A) (north A))) ⟩
       Trunc ⟨0⟩ (Trunc ⟨0⟩ (Ω^ 2 (Suspension A) (north A)))
         =⟨ ua (fuse-Trunc _ ⟨0⟩ ⟨0⟩) ⟩
       Trunc ⟨0⟩ (Ω^ 2 (Suspension A) (north A))
-        =⟨ Π2.π2-Suspension ⟩
+        =⟨ Π₂.π₂-Suspension ⟩
       Trunc ⟨0⟩ (Ω^ 1 A a₀) ∎
 
     π-diag : (n : ℕ) → π (S n) (KG1+ n) (kbase n) == π 1 A a₀
-    π-diag 0 = π1
-    π-diag 1 = π2
+    π-diag 0 = π₁
+    π-diag 1 = π₂
     π-diag (S (S n)) = Stable.stable (S n) n (inl idp) ∙ π-diag (S n)
 
   module AboveDiagonal where
@@ -144,5 +140,20 @@ module Implicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
       where lemma : {k n : ℕ} → S n < k → ⟨ S n ⟩ ≤T ((k -2) +2+ ⟨-1⟩)
             lemma ltS = inl (+2+-comm ⟨-1⟩ _)
             lemma (ltSR lt) = ≤T-trans (lemma lt) (inr ltS) 
+
+module Explicit {i} (G : AbelianGroup i) where
+  module KG1 = lib.types.KG1 (fst G)
+  module KGn = Implicit KG1.KG1 KG1.KG1-conn KG1.klevel (H-KG1 G) (μcoh G)
+
+  open KGn public using (KG1+ ; kbase)
+
+  π-below : (k n : ℕ) → (k < S n) → π k (KG1+ n) (kbase n) == Lift Unit
+  π-below = KGn.BelowDiagonal.π-below
+
+  π-diag : (n : ℕ) → π (S n) (KG1+ n) (kbase n) == Group.El (fst G)
+  π-diag n = KGn.OnDiagonal.π-diag n ∙ KG1.π₁.π₁-path
+
+  π-above : (k n : ℕ) → (S n < k) → π k (KG1+ n) (kbase n) == Lift Unit
+  π-above = KGn.AboveDiagonal.π-above
 
 
