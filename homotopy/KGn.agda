@@ -10,7 +10,7 @@ open import homotopy.Freudenthal
 open import homotopy.IteratedSuspension
 import homotopy.Pi2HSusp
 
-module homotopy.KGn' where
+module homotopy.KGn where
 
 -- KGn when G is π₁(A)
 module Implicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A) 
