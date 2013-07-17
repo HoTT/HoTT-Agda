@@ -141,6 +141,52 @@ module Implicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
             lemma ltS = inl (+2+-comm ⟨-1⟩ _)
             lemma (ltSR lt) = ≤T-trans (lemma lt) (inr ltS) 
 
+  module Spectrum where
+
+    private
+      module Π₂ = homotopy.Pi2HSusp A gA cA A-H μcoh
+
+    spectrumO : Path {A = KG1+ 1} (kbase _) (kbase _) == KG1+ O
+    spectrumO = 
+      Path {A = KG1+ 1} [ north A ] [ north A ]
+        =⟨ ua $ Trunc=-equiv [ north A ] [ north A ] ⟩ 
+      Trunc ⟨ 1 ⟩ (north A == north A)
+        =⟨ Π₂.main-lemma ⟩
+      A
+        =⟨ ! (ua $ unTrunc-equiv A gA) ⟩
+      Trunc ⟨ 1 ⟩ A ∎
+
+    private
+      sconn : (n : ℕ) → is-connected (S (S (n -1))) (Susp^ (S n) A)
+      sconn n = transport (λ t → is-connected t (Susp^ (S n) A))
+                          (lemma n) (Susp^-conn (S n) cA)
+        where lemma : (n : ℕ) → S ((n -2) +2+ ⟨0⟩) == S (S (n -1))
+              lemma O = idp
+              lemma (S n) = ap S (lemma n)
+
+
+      kle : (n : ℕ) → ⟨ S (S n) ⟩ ≤T S ((n -1) +2+ S (n -1))
+      kle O = inl idp
+      kle (S n) = ≤T-trans (≤T-ap-S (kle n)) 
+                   (≤T-trans (inl (! (+2+-βr (S n -1) (S n -1)))) 
+                               (inr ltS))
+
+      module FS (n : ℕ) = FreudenthalEquiv (n -1) (⟨ S (S n) ⟩) (kle n)
+                            (Susp^ (S n) A) (north^ (S n) a₀) (sconn n)
+
+    spectrumS : (n : ℕ)
+      → Path {A = KG1+ (S (S n))} (kbase _) (kbase _) == KG1+ (S n)
+    spectrumS n = 
+      Path {A = KG1+ (S (S n))} [ north _ ] [ north _ ]
+        =⟨ ua $ Trunc=-equiv [ north _ ] [ north _ ] ⟩ 
+      Trunc ⟨ S (S n) ⟩ (north (Susp^ (S n) A) == north (Susp^ (S n) A))
+        =⟨ ! (FS.path n) ⟩
+      KG1+ (S n) ∎
+
+    spectrum : (n : ℕ) → Path {A = KG1+ (S n)} (kbase _) (kbase _) == KG1+ n
+    spectrum O = spectrumO
+    spectrum (S n) = spectrumS n
+
 module Explicit {i} (G : AbelianGroup i) where
   module KG1 = lib.types.KG1 (fst G)
   module KGn = Implicit KG1.KG1 KG1.KG1-conn KG1.klevel (H-KG1 G) (μcoh G)
@@ -156,4 +202,5 @@ module Explicit {i} (G : AbelianGroup i) where
   π-above : (k n : ℕ) → (S n < k) → π k (KG1+ n) (kbase n) == Lift Unit
   π-above = KGn.AboveDiagonal.π-above
 
-
+  spectrum : (n : ℕ) → Path {A = KG1+ (S n)} (kbase _) (kbase _) == KG1+ n
+  spectrum = KGn.Spectrum.spectrum
