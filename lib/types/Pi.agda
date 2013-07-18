@@ -250,7 +250,6 @@ module Ap↓-swap! {i j k ℓ} {A : Type i} {B : Type j} {C : Type k}
       coh2 : ∀ {i} {A : Type i} {x y z : A} (p : x == y) (q : y == z) → (p ∙ q) ∙ ! q == p
       coh2 idp idp = idp
 
-<<<<<<< HEAD
 -- api2-swap! : ∀ {i j k ℓ} {A : Type i} {B : Type j} {C : Type k}
 --   (f : A → C) (g : B → C)
 --   {a a' : A} {p : a == a'} {b b' : B} {q : b == b'}
