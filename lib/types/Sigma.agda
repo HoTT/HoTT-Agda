@@ -119,7 +119,7 @@ equiv-Σ-snd {A = A} {B = B} {C = C} k = equiv f g f-g g-f
   {u : B x} {v : B y} {w : B z}
   (q : u == v [ B ↓ p ]) (r : v == w [ B ↓ p' ])
   → (pair= p q ∙' pair= p' r) == pair= (p ∙' p') (q ∙'dep r)
-Σ-∙' {p' = idp} q idp = idp
+Σ-∙' {p = idp} {p' = idp} q idp = idp
 
 -- Implementation of [_∙_] on Σ
 Σ-∙ : ∀ {i j} {A : Type i} {B : A → Type j}
@@ -127,21 +127,21 @@ equiv-Σ-snd {A = A} {B = B} {C = C} k = equiv f g f-g g-f
   {u : B x} {v : B y} {w : B z}
   (q : u == v [ B ↓ p ]) (r : v == w [ B ↓ p' ])
   → (pair= p q ∙ pair= p' r) == pair= (p ∙ p') (q ∙dep r)
-Σ-∙ {p = idp} idp q = idp
+Σ-∙ {p = idp} {p' = idp} idp r = idp
 
 -- Implementation of [_∙'_] on ×
 ×-∙' : ∀ {i j} {A : Type i} {B : Type j}
   {x y z : A} (p : x == y) (p' : y == z)
   {u v w : B} (q : u == v) (q' : v == w)
   → (pair×= p q ∙' pair×= p' q') == pair×= (p ∙' p') (q ∙' q')
-×-∙' p idp q idp = idp
+×-∙' idp idp q idp = idp
 
 -- Implementation of [_∙_] on ×
 ×-∙ : ∀ {i j} {A : Type i} {B : Type j}
   {x y z : A} (p : x == y) (p' : y == z)
   {u v w : B} (q : u == v) (q' : v == w)
   → (pair×= p q ∙ pair×= p' q') == pair×= (p ∙ p') (q ∙ q')
-×-∙ idp p' idp q' = idp
+×-∙ idp idp idp r = idp
 
 -- Special case of [ap-,]
 ap-cst,id : ∀ {i j} {A : Type i} (B : A → Type j)

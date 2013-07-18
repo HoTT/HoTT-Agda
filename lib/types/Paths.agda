@@ -63,13 +63,13 @@ module _ {i} {A : Type i} where
   {x y : A} {p : x == y} {u : g x == f x} {v : g y == f y}
   → (u ◃ apd f p) == (apd g p ▹ v)
   → (u == v [ (λ x → g x == f x) ↓ p ])
-↓-=-in {B = B} {p = idp} {u} {v} q = ! (◃idp u) ∙ q ∙ idp▹ v
+↓-=-in {B = B} {p = idp} {u} {v} q = ! (◃idp {B = B} u) ∙ q ∙ idp▹ {B = B} v
 
 ↓-=-out : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
   {x y : A} {p : x == y} {u : g x == f x} {v : g y == f y}
   → (u == v [ (λ x → g x == f x) ↓ p ])
   → (u ◃ apd f p) == (apd g p ▹ v)
-↓-=-out {B = B} {p = idp} {u} {v} q = (◃idp u) ∙ q ∙ ! (idp▹ v)
+↓-=-out {B = B} {p = idp} {u} {v} q = (◃idp {B = B} u) ∙ q ∙ ! (idp▹ {B = B} v)
 
 -- Dependent path in a type of the form [λ x → g (f x) ≡ x]
 module _ {i j} {A : Type i} {B : Type j} (g : B → A) (f : A → B) where

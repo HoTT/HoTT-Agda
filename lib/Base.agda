@@ -124,15 +124,15 @@ defined in terms of [ap↓] because it shouldn’t change anything for the user
 and this is helpful in some rare cases)
 -}
 
+ap : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) {x y : A}
+  → (x == y → f x == f y)
+ap f idp = idp
+
 ap↓ : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
   (g : {a : A} → B a → C a) {x y : A} {p : x == y}
   {u : B x} {v : B y}
   → (u == v [ B ↓ p ] → g u == g v [ C ↓ p ])
-ap↓ g {p = idp} idp = idp
-
-ap : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) {x y : A}
-  → (x == y → f x == f y)
-ap f p = ap↓ {A = Unit} f {p = idp} p
+ap↓ g {p = idp} p = ap g p
 
 {-
 [apd↓] is defined in lib.PathOver. Unlike [ap↓] and [ap], [apd] is not

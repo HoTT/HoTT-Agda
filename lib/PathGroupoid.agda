@@ -69,11 +69,30 @@ module _ {i} {A : Type i} where
   !-! : {x y : A} (p : x == y) → ! (! p) == p
   !-! idp = idp
 
+  {- Horizontal compositions -}
+
+  _∙2_ : {x y z : A} {p p' : x == y} {q q' : y == z} (α : p == p') (β : q == q')
+    → p ∙ q == p' ∙ q'
+  _∙2_ {p = idp} idp β = β
+
+  _∙'2_ : {x y z : A} {p p' : x == y} {q q' : y == z} (α : p == p') (β : q == q')
+    → p ∙' q == p' ∙' q'
+  _∙'2_ {q = idp} α idp = α
+
+  idp∙2idp : {x y z : A} (p : x == y) (q : y == z)
+    → (idp {a = p}) ∙2 (idp {a = q}) == idp
+  idp∙2idp idp idp = idp
+
+  idp∙'2idp : {x y z : A} (p : x == y) (q : y == z)
+    → (idp {a = p}) ∙'2 (idp {a = q}) == idp
+  idp∙'2idp idp idp = idp
+
 {-
 Sometimes we need to restart a new section in order to have everything in the
 previous one generalized.
 -}
 module _ {i} {A : Type i} where
+
   -- Useful ?
   anti-whisker-right : {x y z : A} (p : y == z) {q r : x == y}
     → (q ∙ p == r ∙ p → q == r)
@@ -95,7 +114,7 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     → (u == v [ B ↓ p ]
     → v == w [ B ↓ p' ]
     → u == w [ B ↓ (p ∙ p') ])
-  _∙dep_ {p = idp} idp q = q
+  _∙dep_ {p = idp} {p' = idp} q r = q ∙ r
 
   _◃_ = _∙dep_
 
@@ -108,7 +127,7 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     → (u == v [ B ↓ p ]
     → v == w [ B ↓ p' ]
     → u == w [ B ↓ (p ∙' p') ])
-  _∙'dep_ {p' = idp} q idp = q
+  _∙'dep_ {p = idp} {p' = idp} q r = q ∙' r
 
   _▹_ = _∙'dep_
 
@@ -117,6 +136,11 @@ module _ {i j} {A : Type i} {B : A → Type j} where
   idp▹ : {x : A} {v w : B x} (q : v == w)
     → idp ▹ q == q
   idp▹ idp = idp
+
+  ▹idp : {x y : A} {p : x == y}
+    {u : B x} {v : B y} (q : u == v [ B ↓ p ])
+    → q ▹ idp == q
+  ▹idp {p = idp} idp = idp
 
   _▹!_ : {x y z : A} {p : x == y} {p' : z == y}
     {u : B x} {v : B y} {w : B z}
@@ -145,21 +169,21 @@ module _ {i j} {A : Type i} {B : A → Type j} where
   This is some kind of dependent horizontal composition (used in [apd∙]).
   -}
 
-  _∙2_ : {x y z : Π A B}
+  _∙2ᵈ_ : {x y z : Π A B}
     {a a' : A} {p : a == a'} {q : x a == y a} {q' : x a' == y a'}
     {r : y a == z a} {r' : y a' == z a'}
     → (q == q'            [ (λ a → x a == y a) ↓ p ])
     → (r == r'            [ (λ a → y a == z a) ↓ p ])
     → (q ∙ r == q' ∙ r' [ (λ a → x a == z a) ↓ p ])
-  _∙2_ {p = idp} idp idp = idp
+  _∙2ᵈ_ {p = idp} α β = α ∙2 β
 
-  _∙'2_ : {x y z : Π A B}
+  _∙'2ᵈ_ : {x y z : Π A B}
     {a a' : A} {p : a == a'} {q : x a == y a} {q' : x a' == y a'}
     {r : y a == z a} {r' : y a' == z a'}
     → (q == q'            [ (λ a → x a == y a) ↓ p ])
     → (r == r'            [ (λ a → y a == z a) ↓ p ])
     → (q ∙' r == q' ∙' r' [ (λ a → x a == z a) ↓ p ])
-  _∙'2_ {p = idp} idp idp = idp
+  _∙'2ᵈ_ {p = idp} α β = α ∙'2 β
 
   {-
   [apd∙] reduces a term of the form [apd (λ a → q a ∙ r a) p], do not confuse it
@@ -169,11 +193,11 @@ module _ {i j} {A : Type i} {B : A → Type j} where
   apd∙ : {a a' : A} {x y z : Π A B}
     (q : (a : A) → x a == y a) (r : (a : A) → y a == z a)
     (p : a == a')
-    → apd (λ a → q a ∙ r a) p == apd q p ∙2 apd r p
-  apd∙ q r idp = idp
+    → apd (λ a → q a ∙ r a) p == apd q p ∙2ᵈ apd r p
+  apd∙ q r idp = ! (idp∙2idp (q _) (r _))
 
   apd∙' : {a a' : A} {x y z : Π A B}
     (q : (a : A) → x a == y a) (r : (a : A) → y a == z a)
     (p : a == a')
-    → apd (λ a → q a ∙' r a) p == apd q p ∙'2 apd r p
-  apd∙' q r idp = idp
+    → apd (λ a → q a ∙' r a) p == apd q p ∙'2ᵈ apd r p
+  apd∙' q r idp = ! (idp∙'2idp (q _) (r _))

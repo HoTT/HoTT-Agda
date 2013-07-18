@@ -18,19 +18,19 @@ module _ {j} {B : Type j} (f : A → B) where
 
   ∙-ap : {x y z : A} (p : x == y) (q : y == z)
     → ap f p ∙ ap f q == ap f (p ∙ q)
-  ∙-ap idp idp = idp
+  ∙-ap idp q = idp
 
   ap-∙ : {x y z : A} (p : x == y) (q : y == z)
     → ap f (p ∙ q) == ap f p ∙ ap f q
-  ap-∙ idp idp = idp
+  ap-∙ idp q = idp
 
   ∙'-ap : {x y z : A} (p : x == y) (q : y == z)
     → ap f p ∙' ap f q == ap f (p ∙' q)
-  ∙'-ap idp idp = idp
+  ∙'-ap p idp = idp
 
   ap-∙' : {x y z : A} (p : x == y) (q : y == z)
     → ap f (p ∙' q) == ap f p ∙' ap f q
-  ap-∙' idp idp = idp
+  ap-∙' p idp = idp
 
 {- Dependent stuff -}
 module _ {j} {B : A → Type j} (f : Π A B) where
