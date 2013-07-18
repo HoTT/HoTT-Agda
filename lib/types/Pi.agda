@@ -161,23 +161,28 @@ apd-∘' : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
   → apd (g ∘ f) p == ap↓ g (apd f p)
 apd-∘' g f idp = idp
 
+∘'-apd : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
+  (g : {a : A} → B a → C a) (f : Π A B) {x y : A} (p : x == y)
+  → ap↓ g (apd f p) == apd (g ∘ f) p
+∘'-apd g f idp = idp
+
+
 {- 2-dimensional coherence conditions -}
 
---module Ap↓-↓-=-in
-postulate
- lhs :
-  ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} {f g : Π A B}
-  {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
-  (k : (u ◃ apd g p) == (apd f p ▹ v))
-  (h : {a : A} → B a → C a)
-  → ap h u ◃ apd (h ∘ g) p == ap↓ h (u ◃ apd g p)
+-- postulate
+--  lhs :
+--   ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} {f g : Π A B}
+--   {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+--   (k : (u ◃ apd g p) == (apd f p ▹ v))
+--   (h : {a : A} → B a → C a)
+--   → ap h u ◃ apd (h ∘ g) p == ap↓ h (u ◃ apd g p)
 
- rhs :
-  ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} {f g : Π A B}
-  {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
-  (k : (u ◃ apd g p) == (apd f p ▹ v))
-  (h : {a : A} → B a → C a)
-  → ap↓ h (apd f p ▹ v) == apd (h ∘ f) p ▹ ap h v
+--  rhs :
+--   ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} {f g : Π A B}
+--   {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+--   (k : (u ◃ apd g p) == (apd f p ▹ v))
+--   (h : {a : A} → B a → C a)
+--   → ap↓ h (apd f p ▹ v) == apd (h ∘ f) p ▹ ap h v
 
  -- ap↓-↓-=-in :
  --  ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} {f g : Π A B}
@@ -188,9 +193,64 @@ postulate
  --  == ↓-=-in (lhs {f = f} {g = g} k h ∙ ap (ap↓ (λ {a} → h {a = a})) k 
  --                                     ∙ rhs {f = f} {g = g} k h)
 
---h (f x) == h (g y) [ C ↓ p ]
+{-
+Commutation of [ap↓ (ap h)] and [↓-swap!]. This is "just" J, but it’s not as
+easy as it seems.
+-}
 
+module Ap↓-swap! {i j k ℓ} {A : Type i} {B : Type j} {C : Type k}
+  {D : Type ℓ} (h : C → D) (f : A → C) (g : B → C)
+  {a a' : A} {p : a == a'} {b b' : B} {q : b == b'}
+  (r : f a == g b') (s : f a' == g b)
+  (t : r == s ∙ ap g q  [ (λ x → f x == g b') ↓ p ])
+  where
 
+  lhs : ap h (ap f p ∙' s) == ap (h ∘ f) p ∙' ap h s
+  lhs = ap-∙' h (ap f p) s ∙ (ap (λ u → u ∙' ap h s) (∘-ap h f p))
+
+  rhs : ap h (s ∙ ap g q) == ap h s ∙ ap (h ∘ g) q
+  rhs = ap-∙ h s (ap g q) ∙ (ap (λ u → ap h s ∙ u) (∘-ap h g q))
+
+  β : ap↓ (ap h) (↓-swap! f g r s t) ==
+              lhs ◃ ↓-swap! (h ∘ f) (h ∘ g) (ap h r) (ap h s) (ap↓ (ap h) t ▹ rhs)
+  β with a | a' | p | b | b' | q | r | s | t
+  β | a | .a | idp | b | .b | idp | r | s | t = coh r s t  where
+
+    T : {x x' : C} (r s : x == x') (t : r == s ∙ idp) → Type _
+    T r s t =
+      ap (ap h) (∙'-unit-l s ∙ ! (∙-unit-r s) ∙ ! t) ==
+      (ap-∙' h idp s ∙ idp)
+      ∙
+      (∙'-unit-l (ap h s) ∙
+      ! (∙-unit-r (ap h s)) ∙
+      !
+      (ap (ap h) t ∙'
+        (ap-∙ h s idp ∙ idp)))
+
+    T' : {x x' : C} (s : x == x') → Type _
+    T' s =
+      ap (ap h) (∙'-unit-l s ∙ ! (∙-unit-r s) ∙ ! (! (∙-unit-r s))) ==
+      (ap-∙' h idp s ∙ idp)
+      ∙
+      (∙'-unit-l (ap h s) ∙
+      ! (∙-unit-r (ap h s)) ∙
+      !
+      (ap (ap h) (! (∙-unit-r s)) ∙'
+        (ap-∙ h s idp ∙ idp)))
+
+    coh'' : {x x' : C} (s : x == x') → T' s
+    coh'' idp = idp
+
+    coh' : {x x' : C} {r s : x == x'} (t : r == s) → T r s (t ∙ ! (∙-unit-r s))
+    coh' {s = s} idp = coh'' s
+
+    coh : {x x' : C} (r s : x == x') (t : r == s ∙ idp) → T r s t
+    coh r s t = transport (λ t → T r s t) (coh2 t (∙-unit-r s)) (coh' (t ∙ ∙-unit-r s))  where
+
+      coh2 : ∀ {i} {A : Type i} {x y z : A} (p : x == y) (q : y == z) → (p ∙ q) ∙ ! q == p
+      coh2 idp idp = idp
+
+<<<<<<< HEAD
 -- api2-swap! : ∀ {i j k ℓ} {A : Type i} {B : Type j} {C : Type k}
 --   (f : A → C) (g : B → C)
 --   {a a' : A} {p : a == a'} {b b' : B} {q : b == b'}
@@ -216,4 +276,3 @@ postulate
 ∙-λ= α β = ∙-app= (λ= α) (λ= β)
   ∙ ap λ= (λ= (λ x → ap (λ w → w ∙ app= (λ= β) x) (app=-β α x)
                    ∙ ap (λ w → α x ∙ w) (app=-β β x)))
-

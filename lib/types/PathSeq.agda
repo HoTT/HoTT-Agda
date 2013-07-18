@@ -200,3 +200,20 @@ module _ {i} {A : Type i} where
     ex9 : (↯ 4# t) == p ∙ q ∙ r
     ex9 = idp
 
+
+
+apd= : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
+       (p : (x : A) → f x == g x) {a b : A} (q : a == b)
+       → apd f q ▹ p b == p a ◃ apd g q
+apd= {B = B} p {b} idp = idp▹ {B = B} (p b) ∙ ! (◃idp {B = B} (p b))
+
+apd=-red : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
+           (p : (x : A) → f x == g x) {a b : A} (q : a == b)
+           {u : B b} (s : g b =-= u)
+           → apd f q ▹ (↯ _ =⟪ p b ⟫ s) == p a ◃ (apd g q ▹ (↯ s))
+apd=-red {B = B} p {b} idp s = coh (p b) s  where
+
+  coh : ∀ {i} {A : Type i} {u v w : A} (p : u == v) (s : v =-= w)
+    → (idp ∙' (↯ _ =⟪ p ⟫ s)) == p ∙ idp ∙' (↯ s)
+  coh idp (a ∎∎) = idp
+  coh idp (a =⟪ p₁ ⟫ s₁) = idp

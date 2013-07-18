@@ -4,12 +4,7 @@ open import HoTT
 
 -- Associativity of the join (work in progress)
 
-module homotopy.Join where
-
-*-span : ∀ {i j} (A : Type i) (B : Type j) → Span i j (max i j)
-*-span A B = span A B (A × B) fst snd
-
-module Assoc {i j k} (A : Type i) (B : Type j) (C : Type k) where
+module homotopy.JoinAssoc {i j k} (A : Type i) (B : Type j) (C : Type k) where
 
   {- First map -}
 
@@ -62,7 +57,7 @@ module Assoc {i j k} (A : Type i) (B : Type j) (C : Type k) where
 
     from-glue-glue : (a : A) (bc : B × C) → from-glue-left a (fst bc) == from-glue-right a (snd bc) [ (λ x → left (left a) == from-right x) ↓ glue bc ]
     from-glue-glue a (b , c) = ↓-swap! left from-right _ idp
-      (apd (λ x → glue (x , c)) (glue (a , b)) ▹! (FromRight.glue-β (b , c))) 
+      (apd (λ x → glue (x , c)) (glue (a , b)) ▹! (FromRight.glue-β (b , c)))
 
     module FromGlue (a : A) = PushoutElim (from-glue-left a) (from-glue-right a) (from-glue-glue a)
 
@@ -108,3 +103,7 @@ module Assoc {i j k} (A : Type i) (B : Type j) (C : Type k) where
 
   to-from-glue-right : (a : A) (c : C) → idp == to-from-right (right c) [ (λ x → to (from x) == x) ↓ glue (a , right c) ]
   to-from-glue-right a c = ↓-∘=idf-in to from (↯ to-from-glue-right' a c)
+
+
+  postulate  -- Not proved yet. Some of it is being worked on at JoinAssoc2
+    *-assoc : ((A * B) * C) ≃ (A * (B * C))

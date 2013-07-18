@@ -239,6 +239,16 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → C) (g : B →
     → (ap f p ∙' s == r [ (λ x → f a == g x)  ↓ q ])
   ↓-swap! {p = idp} {q = idp} r s t = ∙'-unit-l s ∙ ! (∙-unit-r s) ∙ (! t)
 
+  ↓-swap-β : {a a' : A} {p : a == a'} {b b' : B} {q : b == b'}
+    (r : f a == g b') (s : f a' == g b)
+    (t : ap f p ∙' s == r [ (λ x → f a == g x)  ↓ q ])
+    → ↓-swap! r s (↓-swap r s t) == t
+  ↓-swap-β {p = idp} {q = idp} r s t = coh (∙'-unit-l s) (∙-unit-r s) t  where
+  
+    coh : ∀ {i} {X : Type i} {x y z t : X} (p : x == y) (q : z == y) (r : x == t)
+      → p ∙ ! q ∙ ! (! r ∙ p ∙ ! q) == r
+    coh idp q idp = !-inv-r (! q)
+
 -- Dependent paths over function spaces
 ↓-→-is-square : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} 
   {x y : A} (f : B x → C x) (g : B y → C y) (p : x == y)

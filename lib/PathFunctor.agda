@@ -51,6 +51,11 @@ module _ {j k} {B : A → Type j} {C : A → Type k} (f : {a : A} → B a → C 
     → ap↓ f (q ◃ r) == ap↓ f q ◃ ap↓ f r
   ap↓-◃ {p = idp} {p' = idp} idp idp = idp
 
+  ap↓-▹! : {x y z : A} {u : B x} {v : B y} {w : B z}
+    {p : x == y} {p' : z == y} (q : u == v [ B ↓ p ]) (r : w == v [ B ↓ p' ])
+    → ap↓ f (q ▹! r) == ap↓ f q ▹! ap↓ f r
+  ap↓-▹! {p = idp} {p' = idp} idp idp = idp
+
 {- Fuse and unfuse -}
 
 ∘-ap : ∀ {j k} {B : Type j} {C : Type k} (g : B → C) (f : A → B)
