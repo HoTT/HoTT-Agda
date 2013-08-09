@@ -22,4 +22,4 @@ module _ {i j k} (D : Cospan {i} {j} {k}) where
   pullback= idp idp r =
     ap (pullback _ _) (! (∙-unit-r _) ∙ r)
 
-open Pullback public
+open Pullback
