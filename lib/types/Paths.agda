@@ -4,17 +4,28 @@ open import lib.Basics
 
 module lib.types.Paths where
 
+module _ {i} {A : Type i} {x y : A} where
+
+  !-equiv : (x == y) ≃ (y == x)
+  !-equiv = equiv ! ! !-! !-!
+
 module _ {i j} {A : Type i} {B : Type j} {f : A → B} {b : B} where
 
   ↓-app=cst-in : {x y : A} {p : x == y} {u : f x == b} {v : f y == b}
-    → u == (ap f p ∙' v)
+    → u == (ap f p ∙ v)
     → (u == v [ (λ x → f x == b) ↓ p ])
-  ↓-app=cst-in {p = idp} q = q ∙ ∙'-unit-l _
+  ↓-app=cst-in {p = idp} q = q
 
   ↓-app=cst-out : {x y : A} {p : x == y} {u : f x == b} {v : f y == b}
     → (u == v [ (λ x → f x == b) ↓ p ])
-    → u == (ap f p ∙' v)
-  ↓-app=cst-out {p = idp} idp = ! (∙'-unit-l _)
+    → u == (ap f p ∙ v)
+  ↓-app=cst-out {p = idp} r = r
+
+  ↓-app=cst-eqv : {x y : A} {p : x == y} {u : f x == b} {v : f y == b}
+    → (u == (ap f p ∙ v)) ≃ (u == v [ (λ x → f x == b) ↓ p ])
+  ↓-app=cst-eqv {p = idp} = equiv ↓-app=cst-in ↓-app=cst-out 
+                             
+     (λ _ → idp) (λ _ → idp)
 
   ↓-cst=app-in : {x y : A} {p : x == y} {u : b == f x} {v : b == f y}
     → (u ∙' ap f p) == v

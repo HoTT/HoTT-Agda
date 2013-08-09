@@ -1,14 +1,6 @@
 {-# OPTIONS --without-K #-}
 
-open import lib.Basics
-open import lib.NType2
-open import lib.Equivalences2
-open import lib.NConnected
-open import lib.types.Pi
-open import lib.types.Sigma
-open import lib.types.TLevel
-open import lib.types.Suspension
-open import lib.types.Truncation
+open import HoTT
 
 module homotopy.WedgeExtension where
 
@@ -54,8 +46,9 @@ module WedgeExt {i j} {A : Type i} {a₀ : A} {B : Type j} {b₀ : B} where
 
     abstract
       β-r-aux : fst (l r a₀) == g
-      β-r-aux = fst= (conn-elim-β (pointed-conn-out A a₀ cA)
-                                  (Q r) (λ (_ : Unit) → (g , ap cst (! p))) unit)
+      β-r-aux = fst= (conn-elim-β 
+        (pointed-conn-out A a₀ cA)
+        (Q r) (λ (_ : Unit) → (g , ap cst (! p))) unit)
 
     abstract
       β-r : ∀ b → ext r a₀ b == g b
@@ -85,5 +78,5 @@ module WedgeExt {i j} {A : Type i} {a₀ : A} {B : Type j} {b₀ : B} where
 
         lemma₂ : β-r b₀ ∙ ! p == β-l a₀
         lemma₂ = ap (λ w → β-r b₀ ∙ w) (! (ap-idf _) ∙ ap-∘ _ _ _) 
-                 ∙ (–> (↓-fiber-to-eqv β-r-aux) lemma₁)
+                 ∙ (! (↓-app=cst-out lemma₁))
 

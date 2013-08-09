@@ -249,7 +249,7 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → C) (g : B →
       → p ∙ ! q ∙ ! (! r ∙ p ∙ ! q) == r
     coh idp q idp = !-inv-r (! q)
 
--- Dependent paths over function spaces
+{- Dependent paths over function spaces -}
 ↓-→-is-square : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} 
   {x y : A} (f : B x → C x) (g : B y → C y) (p : x == y)
   → ((transport C p ∘ f) == (g ∘ transport B p)) 
@@ -265,18 +265,4 @@ trans-ap-↓ : ∀ {i j k} {A : Type i} {B : Type j} (P : B → Type k) (h : A �
   {a₁ a₂ : A} (p : a₁ == a₂) (y : P (h a₂)) 
   → transport P (! (ap h p)) y == y [ P ∘ h ↓ p ]
 trans-ap-↓ _ _ idp _ = idp
-
-↓-pathfrom : ∀ {i} {A : Type i} {a x y : A} (p : a == x) (q : a == y)
-  (r : x == y) → (p == q [ (λ z → a == z) ↓ r ]) == (p ∙ r == q)
-↓-pathfrom idp q idp = idp
-
-↓-fiber-to-eqv : ∀ {i j} {A : Type i} {B : Type j} {h : A → B} 
-  {a₁ a₂ : A} {b : B} {q : h a₁ == b} {r : h a₂ == b} (p : a₁ == a₂)
-  → (q == r [ (λ a → h a == b) ↓ p ]) ≃ (ap h p ∙ r == q)
-↓-fiber-to-eqv idp = equiv ! ! !-! !-!
-
-↓-fiber-from-eqv : ∀ {i j} {A : Type i} {B : Type j} {h : A → B} 
-  {a₁ a₂ : A} {b : B} {q : b == h a₁} {r : b == h a₂} (p : a₁ == a₂)
-  → (q == r [ (λ a → b == h a) ↓ p ]) ≃ (q ∙ ap h p == r)
-↓-fiber-from-eqv idp = ((λ u → ∙-unit-r _ ∙ u) , pre∙-is-equiv (∙-unit-r _))
 

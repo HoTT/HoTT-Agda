@@ -3,6 +3,7 @@
 open import lib.Basics
 open import lib.types.Sigma
 open import lib.types.Pi
+open import lib.types.Paths
 
 module lib.Equivalences2 where
 
@@ -37,7 +38,7 @@ equiv-is-contr-map e y =
 fiber=-eqv : ∀ {i j} {A : Type i} {B : Type j} {h : A → B} {y : B} 
   (r s : Σ A (λ x → h x == y))
   → (r == s) ≃ Σ (fst r == fst s) (λ γ → ap h γ ∙ snd s == snd r)
-fiber=-eqv r s = equiv-Σ-snd (λ γ → ↓-fiber-to-eqv γ) ∘e ((=Σ-eqv r s)⁻¹)
+fiber=-eqv r s = equiv-Σ-snd (λ γ → !-equiv ∘e (↓-app=cst-eqv ⁻¹)) ∘e ((=Σ-eqv r s)⁻¹)
 
 
 module _ {i j} {A : Type i} {B : Type j} where
@@ -105,7 +106,6 @@ is-equiv-is-prop : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
 is-equiv-is-prop _ = inhab-to-contr-is-prop $ λ e → 
   equiv-preserves-level rinv-and-rcoh-eqv-is-equiv
     (Σ-level (equiv-rinv-is-contr e) (equiv-rcoh-is-contr e))
-
 
 ∘e-unit-r : ∀ {i} {A B : Type i} (e : A ≃ B) → e ∘e ide A == e
 ∘e-unit-r e = 

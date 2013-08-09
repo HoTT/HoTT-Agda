@@ -7,6 +7,7 @@ open import lib.types.Unit
 open import lib.types.Nat
 open import lib.types.Pi
 open import lib.types.Sigma
+open import lib.types.Paths
 open import lib.types.TLevel
 open import lib.types.Truncation
 open import lib.types.Suspension
@@ -147,7 +148,7 @@ conn-elim-general {B = B} {n = n} {k = S k'} {f = f} c P t (g , p) (h , q) =
 
     e : (Σ (∀ x → g x == h x) (λ r → (r ∘ f) == app= (p ∙ ! q)))
         ≃ ((g , p) == (h , q)) 
-    e = ((=Σ-eqv _ _ ∘e equiv-Σ-snd (λ u → (↓-fiber-to-eqv u)⁻¹))
+    e = ((=Σ-eqv _ _ ∘e equiv-Σ-snd (λ u → ↓-app=cst-eqv ∘e !-equiv))
         ∘e (equiv-Σ-fst _ (snd λ=-equiv))) ∘e equiv-Σ-snd lemma
               
 
@@ -254,7 +255,7 @@ abstract
               Trunc-rec (Trunc-level {n = S n} _ _) (λ a → ap [_] (merid A a)) y
               [ (λ z → [ north A ] == [ z ]) ↓ (merid A x) ]}
             (λ _ → ↓-preserves-level _ (λ _ → Trunc-level {n = S n} _ _))
-            (λ x' → <– (↓-fiber-from-eqv (merid A x)) (mers-eq n cA x x'))
+            (λ x' → ↓-cst=app-in (∙'-unit-l _ ∙ mers-eq n cA x x'))
             (fst cA))))
     where 
     mers-eq : ∀ {i} {A : Type i} (n : ℕ₋₂) 
