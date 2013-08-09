@@ -10,7 +10,7 @@ open import lib.types.Sigma
 open import lib.types.TLevel
 open import lib.types.Truncation
 
-module lib.types.KG1 {i} (G : Group i) where
+module lib.types.KG1 {i} {El : Type i} (G : Group El) where
 
 open Group G
 

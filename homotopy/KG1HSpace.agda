@@ -5,7 +5,7 @@ open import lib.Group
 open import homotopy.HSpace
 import lib.types.KG1
 
-module homotopy.KG1HSpace {i} (A : AbelianGroup i) where
+module homotopy.KG1HSpace {i} {El : Type i} (A : AbelianGroup El) where
 
 open Group (fst A)
 open lib.types.KG1 (fst A)

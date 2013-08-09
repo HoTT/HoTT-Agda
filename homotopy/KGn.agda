@@ -203,7 +203,7 @@ module Implicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
     spectrum 1 = spectrum1
     spectrum (S (S n)) = spectrumSS n
 
-module Explicit {i} (G : AbelianGroup i) where
+module Explicit {i} {A : Type i} (G : AbelianGroup A) where
   module KG1 = lib.types.KG1 (fst G)
   module KGn = Implicit KG1.KG1 KG1.KG1-conn KG1.klevel (H-KG1 G) (μcoh G)
 
