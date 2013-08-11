@@ -130,17 +130,6 @@ Trunc-Ω^ m (S n) X =
   invl = !^-inv-l n
   }
 
-{- Using instance arguments makes this not always definitional -}
-Ω^-group-ident : ∀ {i} {n : ℕ} ⦃ _ : n ≠ O ⦄ {X : Ptd i} 
-  {pX : has-level ⟨ n ⟩ (fst X)}
-  → Group.ident (Ω^-group n X pX) == idp^ n
-Ω^-group-ident {i} {O} ⦃ posi ⦄ = ⊥-rec (posi idp)
-Ω^-group-ident {i} {S n} = idp
-
--- Ω^-group-conc : ∀ {i} {n : ℕ} ⦃ _ : n ≠ O ⦄ {X : Ptd i}
---   {pX : has-level ⟨ n ⟩ (fst X)}
---   → Group.
-  
 π : ∀ {i} (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) → Group (Trunc ⟨0⟩ (Ω^ n X))
 π O ⦃ posi ⦄ _ = ⊥-rec (posi idp)
 π (S n) ⦃ posi ⦄ X = record {
