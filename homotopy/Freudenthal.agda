@@ -1,12 +1,6 @@
 {-# OPTIONS --without-K #-}
 
-open import lib.Basics
-open import lib.Equivalences2
-open import lib.NType2
-open import lib.NConnected
-open import lib.types.TLevel
-open import lib.types.Truncation
-open import lib.types.Suspension
+open import HoTT
 open import homotopy.WedgeExtension
 
 module homotopy.Freudenthal where
@@ -77,6 +71,9 @@ module FreudenthalEquiv
 
   decodeN : Codes (north X) → Trunc k (north X == north X)
   decodeN = Trunc-fmap up
+
+  decodeN-pt : decodeN [ x₀ ] == [ idp ]
+  decodeN-pt = ap [_] (!-inv-r (merid X x₀))
 
   decodeS : Codes (south X) → P (south X)
   decodeS = Trunc-fmap (merid X)
@@ -219,3 +216,26 @@ module FreudenthalEquiv
 
   path : Trunc k X == Trunc k (north X == north X)
   path = ua eqv
+
+{- Used to prove stability in iterated suspensions -}
+module FreudenthalIso
+  {i} (n : ℕ₋₂) (k : ℕ) ⦃ _ : k ≠ O ⦄ (kle : ⟨ k ⟩ ≤T S (n +2+ S n))
+  (X : Ptd i) (cX : is-connected (S (S n)) (fst X)) where
+
+  open FreudenthalEquiv n (⟨ k ⟩) kle (fst X) (snd X) cX public
+
+  hom : GroupHom 
+    (Ω^-group k (Ptd-Trunc ⟨ k ⟩ X) Trunc-level)
+    (Ω^-group k (Ptd-Trunc ⟨ k ⟩ (Ptd-Ω (Ptd-Susp X))) Trunc-level)
+  hom = record { 
+    f = fst F;
+    pres-ident = snd F;
+    pres-comp = λ p q → ap^-conc^ k }
+    where F = ap^ k (decodeN , decodeN-pt)
+
+  iso : Path {A = Σ _ Group}
+    (_ , Ω^-group k (Ptd-Trunc ⟨ k ⟩ X) Trunc-level)
+    (_ , Ω^-group k (Ptd-Trunc ⟨ k ⟩ (Ptd-Ω (Ptd-Susp X))) Trunc-level)
+  iso = group-iso 
+    hom 
+    (is-equiv-ap^ k (snd eqv))

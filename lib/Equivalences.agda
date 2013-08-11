@@ -109,6 +109,9 @@ idf-is-equiv A = is-eq _ (idf A) (λ _ → idp) (λ _ → idp)
 ide : ∀ {i} (A : Type i) → A ≃ A
 ide A = equiv (idf A) (idf A) (λ _ → idp) (λ _ → idp)
 
+infixr 2 _∘e_
+infixr 2 _∘ise_
+
 _∘e_ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
   → B ≃ C → A ≃ B → A ≃ C
 e1 ∘e e2 = equiv (–> e1 ∘ –> e2) (<– e2 ∘ <– e1)
@@ -120,6 +123,11 @@ e1 ∘e e2 = equiv (–> e1 ∘ –> e2) (<– e2 ∘ <– e1)
                    =⟨ <–-inv-l e1 (–> e2 a) |in-ctx (<– e2) ⟩
          <– e2 (–> e2 a)  =⟨ <–-inv-l e2 a ⟩
          a ∎)
+
+_∘ise_ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
+  {f : A → B} {g : B → C}
+  → is-equiv g → is-equiv f → is-equiv (g ∘ f)
+i1 ∘ise i2 = snd ((_ , i1) ∘e (_ , i2))
 
 _⁻¹ : ∀ {i j} {A : Type i} {B : Type j} → (A ≃ B) → (B ≃ A)
 e ⁻¹ = equiv (<– e) (–> e) (<–-inv-l e) (<–-inv-r e)
@@ -159,10 +167,10 @@ module _ {i j} {A : Type i} {B : Type j} (e : A ≃ B) where
           =⟨ ! (∙-assoc (! (f-g (f x))) (f-g (f x)) (ap (idf B) p))
              ∙ ap (λ q → q ∙ ap (idf B) p) (!-inv-l (f-g (f x))) ∙ ap-idf p ⟩
         p ∎
-        where f : A → B; f = –> e; g : B → A; g = <– e
-              g-f : ∀ x → (g (f x) == x); g-f = <–-inv-l e 
-              f-g : ∀ y → (f (g y) == y); f-g = <–-inv-r e 
-              adj : ∀ x → ap f (g-f x) == f-g (f x); adj = is-equiv.adj (snd e)
+        where f : A → B
+              f = fst e
+
+              open is-equiv (snd e)
 
   equiv-ap : (x y : A) → (x == y) ≃ (–> e x == –> e y)
   equiv-ap x y = equiv (ap (–> e)) (equiv-inj e) right-inverse left-inverse

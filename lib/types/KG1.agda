@@ -1,14 +1,16 @@
 {-# OPTIONS --without-K #-} 
 
 open import lib.Basics
-open import lib.Group
 open import lib.NType2
 open import lib.Equivalences2
 open import lib.NConnected
+open import lib.types.Nat
 open import lib.types.Pi
 open import lib.types.Sigma
 open import lib.types.TLevel
 open import lib.types.Truncation
+open import lib.types.Group
+open import lib.types.LoopSpace
 
 module lib.types.KG1 {i} {El : Type i} (G : Group El) where
 
@@ -86,7 +88,7 @@ module π₁ where
       (prop-has-all-paths-↓ {B = is-equiv} (is-equiv-is-prop $ idf El))
 
   comp-equiv-comp : (g₁ g₂ : El) → comp-equiv (comp g₁ g₂)
-                    == comp-equiv g₂ ∘e comp-equiv g₁
+                    == (comp-equiv g₂ ∘e comp-equiv g₁)
   comp-equiv-comp g₁ g₂ = 
    pair= (λ= (λ x → ! (assoc x g₁ g₂)))
       (prop-has-all-paths-↓ {B = is-equiv} (is-equiv-is-prop _)) 
@@ -192,6 +194,15 @@ module π₁ where
 
   π₁-path : Trunc ⟨0⟩ (kbase == kbase) == El
   π₁-path = ap (Trunc ⟨0⟩) Ω¹-path ∙ ua (unTrunc-equiv El El-level)
+
+  π₁-iso : Path {A = Σ (Type i) Group} 
+    (_ , π 1 (KG1 , kbase)) 
+    (_ , G)
+  π₁-iso = ! $ group-iso 
+    (record { f = [_] ∘ decode';
+              pres-ident = ap [_] kloop-ident; 
+              pres-comp = λ g₁ g₂ → ap [_] (kloop-comp g₁ g₂) }) 
+    (snd ((unTrunc-equiv (kbase == kbase) (klevel _ _))⁻¹ ∘e (Ω¹-equiv ⁻¹)))
 
 {- KG1 is 0-connected -}
 abstract

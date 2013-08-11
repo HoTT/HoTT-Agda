@@ -107,7 +107,7 @@ is-equiv-is-prop _ = inhab-to-contr-is-prop $ λ e →
   equiv-preserves-level rinv-and-rcoh-eqv-is-equiv
     (Σ-level (equiv-rinv-is-contr e) (equiv-rcoh-is-contr e))
 
-∘e-unit-r : ∀ {i} {A B : Type i} (e : A ≃ B) → e ∘e ide A == e
+∘e-unit-r : ∀ {i} {A B : Type i} (e : A ≃ B) → (e ∘e ide A) == e
 ∘e-unit-r e = 
   pair= idp (prop-has-all-paths (is-equiv-is-prop (fst e)) _ _)
 
