@@ -230,12 +230,11 @@ module FreudenthalIso
   hom = record { 
     f = fst F;
     pres-ident = snd F;
-    pres-comp = λ p q → ap^-conc^ k }
+    pres-comp = ap^-conc^ k (decodeN , decodeN-pt) }
     where F = ap^ k (decodeN , decodeN-pt)
 
-  iso : Path {A = Σ _ Group}
-    (_ , Ω^-group k (Ptd-Trunc ⟨ k ⟩ X) Trunc-level)
-    (_ , Ω^-group k (Ptd-Trunc ⟨ k ⟩ (Ptd-Ω (Ptd-Susp X))) Trunc-level)
-  iso = group-iso 
-    hom 
-    (is-equiv-ap^ k (snd eqv))
+  iso : Ω^-groupΣ k (Ptd-Trunc ⟨ k ⟩ X) Trunc-level
+     == Ω^-groupΣ k (Ptd-Trunc ⟨ k ⟩ (Ptd-Ω (Ptd-Susp X))) Trunc-level
+  iso = group-iso hom (is-equiv-ap^ k (decodeN , decodeN-pt) (snd eqv))
+
+  

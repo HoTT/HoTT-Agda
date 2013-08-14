@@ -11,6 +11,7 @@ open import lib.types.TLevel
 open import lib.types.Truncation
 open import lib.types.Group
 open import lib.types.LoopSpace
+open import lib.types.FundamentalGroup
 
 module lib.types.KG1 {i} {El : Type i} (G : Group El) where
 
@@ -195,9 +196,7 @@ module π₁ where
   π₁-path : Trunc ⟨0⟩ (kbase == kbase) == El
   π₁-path = ap (Trunc ⟨0⟩) Ω¹-path ∙ ua (unTrunc-equiv El El-level)
 
-  π₁-iso : Path {A = Σ (Type i) Group} 
-    (_ , π 1 (KG1 , kbase)) 
-    (_ , G)
+  π₁-iso : πΣ 1 (KG1 , kbase) == (El , G)
   π₁-iso = ! $ group-iso 
     (record { f = [_] ∘ decode';
               pres-ident = ap [_] kloop-ident; 

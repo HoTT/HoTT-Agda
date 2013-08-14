@@ -46,9 +46,6 @@ module _ {i} where
   Ptd-Susp : Ptd i → Ptd i
   Ptd-Susp (A , _) = ∙[ Suspension A , north A ]
 
-  Ptd-Ω : Ptd i → Ptd i
-  Ptd-Ω (A , a) = ∙[ (a == a) , idp ]
-
   Ptd-Trunc : ℕ₋₂ → Ptd i → Ptd i
   Ptd-Trunc n (A , a) = ∙[ Trunc n A , [ a ] ]
 

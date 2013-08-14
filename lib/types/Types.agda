@@ -28,6 +28,7 @@ open import lib.types.Group public
 open import lib.types.KG1 public
 open import lib.types.Pointed public
 open import lib.types.LoopSpace public
+open import lib.types.FundamentalGroup public
 
 open import lib.types.PathSeq public
 

@@ -147,14 +147,50 @@ main-lemma-eqv = equiv encode decode' encode-decode' decode-encode
 main-lemma : Trunc ⟨ 1 ⟩ (north A == north A) == A
 main-lemma = ua main-lemma-eqv
 
--- π₂-Suspension : π 2 (Suspension A) (north A) == π 1 A e
--- π₂-Suspension = 
---   Trunc ⟨0⟩ (Ω^ 1 (Ω^ 1 (Suspension A) (north A)) idp)
---     =⟨ Trunc-Ω^ ⟨0⟩ 1 _ _ ⟩
---   Ω^ 1 (Trunc ⟨ 1 ⟩ (Ω^ 1 (Suspension A) (north A))) [ idp ]
---     =⟨ Ω^-coe-path 1 main-lemma [ idp ] ⟩
---   Ω^ 1 A (coe main-lemma [ idp ])
---     =⟨ ap (Ω^ 1 A) (coe-β main-lemma-eqv [ idp ]) ⟩
---   Ω^ 1 A e
---     =⟨ ! (ua (unTrunc-equiv (Ω^ 1 A e) (gA e e))) ⟩
---   Trunc ⟨0⟩ (Ω^ 1 A e) ∎
+{- for main-lemma-iso; separated for performance reasons -}
+private
+  module Iso where
+    abstract
+      H : fst (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))
+            ∙→ Ptd-Trunc ⟨ 1 ⟩ (A , e))
+      H = (λ x → [ encode x ]) , idp
+
+      F : fst (Ptd-Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e))))
+            ∙→ Ptd-Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (A , e)))
+      F = ap^ 1 H
+
+      f : Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e))))
+        → Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (A , e))
+      f = fst F
+
+      pres-ident : f (idp^ 1) == idp^ 1
+      pres-ident = snd F
+
+      pres-comp : (p q : Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))))
+        → f (conc^ 1 p q) == conc^ 1 (f p) (f q)
+      pres-comp = ap^-conc^ 1 H
+
+      ie : is-equiv f
+      ie = is-equiv-ap^ 1 H (snd $ ((unTrunc-equiv A gA)⁻¹ ∘e main-lemma-eqv))
+
+abstract
+  main-lemma-iso : 
+       Ω^-groupΣ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))) Trunc-level
+    == Ω^-groupΣ 1 (Ptd-Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
+  main-lemma-iso = group-iso 
+    (record {f = f; pres-ident = pres-ident; pres-comp = pres-comp})
+    ie 
+    where open Iso
+
+abstract
+  π₂-Suspension : πΣ 2 (Ptd-Susp (A , e)) == πΣ 1 (A , e)
+  π₂-Suspension = 
+    πΣ 2 (Ptd-Susp (A , e))
+      =⟨ π-inner-iso 1 (Ptd-Susp (A , e)) ⟩
+    πΣ 1 (Ptd-Ω (Ptd-Susp (A , e)))
+      =⟨ ! (π-Trunc-shift-iso 1 (Ptd-Ω (Ptd-Susp (A , e)))) ⟩
+    Ω^-groupΣ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))) Trunc-level
+      =⟨ main-lemma-iso ⟩
+    Ω^-groupΣ 1 (Ptd-Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
+      =⟨ π-Trunc-shift-iso 1 (A , e) ⟩
+    πΣ 1 (A , e) ∎

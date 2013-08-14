@@ -11,12 +11,20 @@ open import lib.types.Group
 
 module lib.types.LoopSpace where
 
-Ptd-Ω^ : ∀ {i} (n : ℕ) → Ptd i → Ptd i
-Ptd-Ω^ O X = X
-Ptd-Ω^ (S n) X = Ptd-Ω (Ptd-Ω^ n X)
+module _ {i} where
 
-Ω^ : ∀ {i} (n : ℕ) → Ptd i → Type i
-Ω^ n X = fst (Ptd-Ω^ n X)
+  Ptd-Ω : Ptd i → Ptd i
+  Ptd-Ω (A , a) = ∙[ (a == a) , idp ]
+
+  Ω : Ptd i → Type i
+  Ω = fst ∘ Ptd-Ω
+
+  Ptd-Ω^ : (n : ℕ) → Ptd i → Ptd i
+  Ptd-Ω^ O X = X
+  Ptd-Ω^ (S n) X = Ptd-Ω (Ptd-Ω^ n X)
+
+  Ω^ : (n : ℕ) → Ptd i → Type i
+  Ω^ n X = fst (Ptd-Ω^ n X)
 
 idp^ : ∀ {i} (n : ℕ) {X : Ptd i} → Ω^ n X
 idp^ n {X} = snd (Ptd-Ω^ n X)
@@ -66,34 +74,43 @@ module _ {i} {X : Ptd i} where
   !^-inv-r O ⦃ posi ⦄ = ⊥-rec (posi idp)
   !^-inv-r (S n) = !-inv-r
 
-ap^-conc^ : ∀ {i j} (n : ℕ) ⦃ _ : n ≠ O ⦄ {X : Ptd i} {Y : Ptd j}
-  → {p q : Ω^ n X} {F : fst (X ∙→ Y)}
-  → fst (ap^ n F) (conc^ n p q) == conc^ n (fst (ap^ n F) p) (fst (ap^ n F) q)
-ap^-conc^ O ⦃ posi ⦄ {p = _} {q = _} {F = _} = ⊥-rec (posi idp)
-ap^-conc^ (S n) {p = p} {q = q} {F = F}  = 
-  ! gpt ∙ ap g (p ∙ q) ∙ gpt
-    =⟨ ap-∙ g p q |in-ctx (λ w → ! gpt ∙ w ∙ gpt) ⟩
-  ! gpt ∙ (ap g p ∙ ap g q) ∙ gpt
-    =⟨ lemma (ap g p) (ap g q) gpt ⟩
-  (! gpt ∙ ap g p ∙ gpt) ∙ (! gpt ∙ ap g q ∙ gpt) ∎
-  where 
-  g = fst (ap^ n F)
-  gpt = snd (ap^ n F)
+abstract
+  ap^-conc^ : ∀ {i j} (n : ℕ) ⦃ _ : n ≠ O ⦄ 
+    {X : Ptd i} {Y : Ptd j} (F : fst (X ∙→ Y)) (p q : Ω^ n X)
+    → fst (ap^ n F) (conc^ n p q) == conc^ n (fst (ap^ n F) p) (fst (ap^ n F) q)
+  ap^-conc^ O ⦃ posi ⦄ _ _ = ⊥-rec (posi idp)
+  ap^-conc^ (S n) {X = X} {Y = Y} F p q = 
+    ! gpt ∙ ap g (p ∙ q) ∙ gpt
+      =⟨ ap-∙ g p q |in-ctx (λ w → ! gpt ∙ w ∙ gpt) ⟩
+    ! gpt ∙ (ap g p ∙ ap g q) ∙ gpt
+      =⟨ lemma (ap g p) (ap g q) gpt ⟩
+    (! gpt ∙ ap g p ∙ gpt) ∙ (! gpt ∙ ap g q ∙ gpt) ∎
+    where 
+    g : Ω^ n X → Ω^ n Y
+    g = fst (ap^ n F)
 
-  lemma : ∀ {i} {A : Type i} {x y : A}
-    → (p q : x == x) (r : x == y)
-    → ! r ∙ (p ∙ q) ∙ r == (! r ∙ p ∙ r) ∙ (! r ∙ q ∙ r)
-  lemma p q idp = ∙-unit-r (p ∙ q) ∙ (! (∙-unit-r p) ∙2 ! (∙-unit-r q))
+    gpt : g (idp^ n) == idp^ n
+    gpt = snd (ap^ n F)
+
+    lemma : ∀ {i} {A : Type i} {x y : A}
+      → (p q : x == x) (r : x == y)
+      → ! r ∙ (p ∙ q) ∙ r == (! r ∙ p ∙ r) ∙ (! r ∙ q ∙ r)
+    lemma p q idp = ∙-unit-r (p ∙ q) ∙ (! (∙-unit-r p) ∙2 ! (∙-unit-r q))
 
 {- ap^ preserves (pointed) equivalences -}
-is-equiv-ap^ : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j} 
-  {F : fst (X ∙→ Y)} (e : is-equiv (fst F))
-  → is-equiv (fst (ap^ n F))
-is-equiv-ap^ O e = e
-is-equiv-ap^ (S n) {F = F} e = 
-       pre∙-is-equiv (! (snd (ap^ n F)))
-  ∘ise post∙-is-equiv (snd (ap^ n F)) 
-  ∘ise snd (equiv-ap (_ , is-equiv-ap^ n e) _ _)
+module _ {i j} {X : Ptd i} {Y : Ptd j} where
+
+  is-equiv-ap^ : (n : ℕ) (F : fst (X ∙→ Y)) (e : is-equiv (fst F))
+    → is-equiv (fst (ap^ n F))
+  is-equiv-ap^ O F e = e
+  is-equiv-ap^ (S n) F e = 
+         pre∙-is-equiv (! (snd (ap^ n F)))
+    ∘ise post∙-is-equiv (snd (ap^ n F)) 
+    ∘ise snd (equiv-ap (_ , is-equiv-ap^ n F e) _ _)
+
+  equiv-ap^ : (n : ℕ) (F : fst (X ∙→ Y)) (e : is-equiv (fst F)) 
+    → Ω^ n X ≃ Ω^ n Y
+  equiv-ap^ n F e = (fst (ap^ n F) , is-equiv-ap^ n F e)
 
 Ω^-level-in : ∀ {i} (m : ℕ₋₂) (n : ℕ) (X : Ptd i)
   → (has-level ((n -2) +2+ m) (fst X) → has-level m (Ω^ n X))
@@ -103,72 +120,80 @@ is-equiv-ap^ (S n) {F = F} e =
     (transport (λ k → has-level k (fst X)) (! (+2+-βr (n -2) m)) pX) 
     (idp^ n) (idp^ n)
 
-Trunc-Ω^ : ∀ {i} (m : ℕ₋₂) (n : ℕ) (X : Ptd i)
-  → Ptd-Trunc m (Ptd-Ω^ n X) == Ptd-Ω^ n (Ptd-Trunc ((n -2) +2+ m) X)
-Trunc-Ω^ m O X = idp
-Trunc-Ω^ m (S n) X = 
-  Ptd-Trunc m (Ptd-Ω^ (S n) X)
-    =⟨ ! (pair= (Trunc=-path [ _ ] [ _ ]) (↓-idf-ua-in _ idp)) ⟩
-  Ptd-Ω (Ptd-Trunc (S m) (Ptd-Ω^ n X))
-    =⟨ ap Ptd-Ω (Trunc-Ω^ (S m) n X) ⟩
-  Ptd-Ω^ (S n) (Ptd-Trunc ((n -2) +2+ S m) X) 
-    =⟨ +2+-βr (n -2) m |in-ctx (λ k → Ptd-Ω^ (S n) (Ptd-Trunc k X)) ⟩
-  Ptd-Ω^ (S n) (Ptd-Trunc (S (n -2) +2+ m) X) ∎
+{- Pushing truncation through loop space -}
+module _ {i} where
 
-Ω^-group : ∀ {i} (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i)
-  → has-level ⟨ n ⟩ (fst X) → Group (Ω^ n X)
-Ω^-group n X pX = record {
-  El-level = Ω^-level-in ⟨0⟩ n X $
-    transport (λ t → has-level t (fst X)) (+2+-comm ⟨0⟩ (n -2)) pX;
-  ident = idp^ n;
-  inv = !^ n;
-  comp = conc^ n;
-  unitl = conc^-unit-l n;
-  unitr = conc^-unit-r n;
-  assoc = conc^-assoc n;
-  invr = !^-inv-r n;
-  invl = !^-inv-l n
-  }
+  Trunc-Ω^ : (m : ℕ₋₂) (n : ℕ) (X : Ptd i)
+    → Ptd-Trunc m (Ptd-Ω^ n X) == Ptd-Ω^ n (Ptd-Trunc ((n -2) +2+ m) X)
+  Trunc-Ω^ m O X = idp
+  Trunc-Ω^ m (S n) X = 
+    Ptd-Trunc m (Ptd-Ω^ (S n) X)
+      =⟨ ! (pair= (Trunc=-path [ _ ] [ _ ]) (↓-idf-ua-in _ idp)) ⟩
+    Ptd-Ω (Ptd-Trunc (S m) (Ptd-Ω^ n X))
+      =⟨ ap Ptd-Ω (Trunc-Ω^ (S m) n X) ⟩
+    Ptd-Ω^ (S n) (Ptd-Trunc ((n -2) +2+ S m) X) 
+      =⟨ +2+-βr (n -2) m |in-ctx (λ k → Ptd-Ω^ (S n) (Ptd-Trunc k X)) ⟩
+    Ptd-Ω^ (S n) (Ptd-Trunc (S (n -2) +2+ m) X) ∎
 
-π : ∀ {i} (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) → Group (Trunc ⟨0⟩ (Ω^ n X))
-π O ⦃ posi ⦄ _ = ⊥-rec (posi idp)
-π (S n) ⦃ posi ⦄ X = record {
-  El-level = Trunc-level;
-  ident = [ idp^ (S n) ];
-  inv = Trunc-fmap (!^ (S n) ⦃ posi ⦄);
-  comp = Trunc-rec (Π-level (λ _ → Trunc-level)) 
-                   (Trunc-fmap ∘ conc^ (S n) ⦃ posi ⦄);
+  Ω-Trunc-equiv : (m : ℕ₋₂) (X : Ptd i)
+    → Ω (Ptd-Trunc (S m) X) ≃ Trunc m (Ω X)
+  Ω-Trunc-equiv m X = Trunc=-equiv [ snd X ] [ snd X ]
 
-  unitl = Trunc-elim 
-    (λ _ → =-preserves-level _ Trunc-level) 
-    (λ _ → idp);
+{- A loop space is a group if it has the right level -}
+module _ {i} (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) (pX : has-level ⟨ n ⟩ (fst X))
+  where
 
-  unitr = Trunc-elim 
-    (λ _ → =-preserves-level _ Trunc-level)
-    (λ a → ap [_] (∙-unit-r a));
+  Ω^-group : Group (Ω^ n X)
+  Ω^-group = record {
+    El-level = Ω^-level-in ⟨0⟩ n X $
+      transport (λ t → has-level t (fst X)) (+2+-comm ⟨0⟩ (n -2)) pX;
+    ident = idp^ n;
+    inv = !^ n;
+    comp = conc^ n;
+    unitl = conc^-unit-l n;
+    unitr = conc^-unit-r n;
+    assoc = conc^-assoc n;
+    invr = !^-inv-r n;
+    invl = !^-inv-l n
+    }
 
-  assoc = Trunc-elim 
-    (λ _ → Π-level (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level)))
-    (λ a → Trunc-elim
-      (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
-      (λ b → Trunc-elim 
-         (λ _ → =-preserves-level _ Trunc-level) 
-         (λ c → ap [_] (∙-assoc a b c))));
+  Ω^-groupΣ : Σ (Type i) Group
+  Ω^-groupΣ = (Ω^ n X , Ω^-group)
 
-  invr = Trunc-elim
-    (λ _ → =-preserves-level _ Trunc-level)
-    (λ a → ap [_] (!-inv-r a));
 
-  invl = Trunc-elim
-    (λ _ → =-preserves-level _ Trunc-level)
-    (λ a → ap [_] (!-inv-l a))
 
-  }
+{- Our definition of Ω^ builds up loops on the outside,
+ - but this is equivalent to building up on the inside -}  
+module _ {i} where
+  Ptd-Ω^-inner-path : (n : ℕ) (X : Ptd i)
+    → Ptd-Ω^ (S n) X == Ptd-Ω^ n (Ptd-Ω X)
+  Ptd-Ω^-inner-path O X = idp
+  Ptd-Ω^-inner-path (S n) X = ap Ptd-Ω (Ptd-Ω^-inner-path n X)
 
-postulate
-  π-Trunc-≤T : ∀ {i} (n : ℕ) ⦃ _ : n ≠ O ⦄ (m : ℕ₋₂) (X : Ptd i)
-    → (⟨ n ⟩ ≤T m)
-    → Path {A = Σ (Type i) Group} (_ , π n (Ptd-Trunc m X)) (_ , π n X)
+  Ptd-Ω^-inner-out : (n : ℕ) (X : Ptd i)
+    → fst (Ptd-Ω^ (S n) X ∙→ Ptd-Ω^ n (Ptd-Ω X))
+  Ptd-Ω^-inner-out O _ = (idf _ , idp)
+  Ptd-Ω^-inner-out (S n) X = ap^ 1 (Ptd-Ω^-inner-out n X)
+
+  Ω^-inner-out : (n : ℕ) (X : Ptd i)
+    → (Ω^ (S n) X → Ω^ n (Ptd-Ω X))
+  Ω^-inner-out n X = fst (Ptd-Ω^-inner-out n X)
+
+  Ω^-inner-out-conc^ : (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) (p q : Ω^ (S n) X)
+    → Ω^-inner-out n X (conc^ (S n) p q) 
+      == conc^ n (Ω^-inner-out n X p) (Ω^-inner-out n X q)
+  Ω^-inner-out-conc^ O ⦃ posi ⦄ X = ⊥-rec (posi idp)
+  Ω^-inner-out-conc^ (S n) X p q = 
+    ap^-conc^ 1 (Ptd-Ω^-inner-out n X) p q
+
+  Ω^-inner-is-equiv : (n : ℕ) (X : Ptd i)
+    → is-equiv (fst (Ptd-Ω^-inner-out n X))
+  Ω^-inner-is-equiv O X = is-eq (idf _) (idf _) (λ _ → idp) (λ _ → idp)
+  Ω^-inner-is-equiv (S n) X = 
+    is-equiv-ap^ 1 (Ptd-Ω^-inner-out n X) (Ω^-inner-is-equiv n X)
+
+  Ω^-inner-equiv : (n : ℕ) (X : Ptd i) → Ω^ (S n) X ≃ Ω^ n (Ptd-Ω X)
+  Ω^-inner-equiv n X = _ , Ω^-inner-is-equiv n X
 
 -- π-Trunc-≤T : ∀ {i} (n : ℕ) (m : ℕ₋₂) (A : Type i) (a : A) → (⟨ n ⟩ ≤T m) 
 --   → π n (Trunc m A) [ a ] == π n A a

@@ -24,6 +24,7 @@ open Group
 
 record GroupHom {i j} {A : Type i} {B : Type j} 
   (G : Group A) (H : Group B) : Type (lsucc (lmax i j)) where
+  constructor group-hom
   field
     f : A → B
     pres-ident : f (ident G) == ident H
@@ -85,6 +86,7 @@ abstract
     → G == H [ Group ↓ p ]
   ↓-group= idp = group=
 
+  
   group-iso : ∀ {i} {A B : Type i} {G : Group A} {H : Group B} (h : GroupHom G H) 
     → is-equiv (GroupHom.f h) → Path {A = Σ (Type i) Group} (A , G) (B , H)
   group-iso {A = A} {G = G} {H = H} h e = 

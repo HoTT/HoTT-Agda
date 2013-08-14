@@ -166,6 +166,10 @@ Trunc-extend-equiv n A B p = (Trunc-rec p , Trunc-rec-is-equiv n A B p)
 Trunc-fmap : ∀ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j} → ((A → B) → (Trunc n A → Trunc n B))
 Trunc-fmap f = Trunc-rec Trunc-level ([_] ∘ f)
 
+Trunc-fmap2 : ∀ {i j k} {n : ℕ₋₂} {A : Type i} {B : Type j} {C : Type k}
+  → ((A → B → C) → (Trunc n A → Trunc n B → Trunc n C))
+Trunc-fmap2 f = Trunc-rec (Π-level (λ _ → Trunc-level)) (λ a → Trunc-fmap (f a))
+
 Trunc-fpmap : ∀ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j} {f g : A → B} (h : (a : A) → f a == g a)
   → ((a : Trunc n A) → Trunc-fmap f a == Trunc-fmap g a)
 Trunc-fpmap h = Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
@@ -175,6 +179,64 @@ Trunc-fmap-∘ : ∀ {i j k} {n : ℕ₋₂} {A : Type i} {B : Type j} {C : Type
   → (g : B → C) → (f : A → B) 
   → ∀ x → Trunc-fmap {n = n} g (Trunc-fmap f x) == Trunc-fmap (g ∘ f) x
 Trunc-fmap-∘ g f = Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp)
+
+{- Pushing concatentation through Trunc= -}
+module _ {i} {n : ℕ₋₂} {A : Type i} where
+
+  {- concatenation in Trunc= -}
+  Trunc=-∙ : {ta tb tc : Trunc (S n) A} 
+    → fst (Trunc= ta tb) → fst (Trunc= tb tc) → fst (Trunc= ta tc)
+  Trunc=-∙ {ta = ta} {tb = tb} {tc = tc} =
+    Trunc-elim {B = λ ta → C ta tb tc} 
+      (λ ta → level ta tb tc)
+      (λ a → Trunc-elim {B = λ tb → C [ a ] tb tc} 
+         (λ tb → level [ a ] tb tc)
+         (λ b → Trunc-elim {B = λ tc → C [ a ] [ b ] tc} 
+                  (λ tc → level [ a ] [ b ] tc)
+                  (λ c → Trunc-fmap2 _∙_)
+                  tc)
+         tb) 
+      ta
+    where
+    C : (ta tb tc : Trunc (S n) A) → Type i
+    C ta tb tc = fst (Trunc= ta tb) → fst (Trunc= tb tc) → fst (Trunc= ta tc)
+
+    level : (ta tb tc : Trunc (S n) A) → has-level (S n) (C ta tb tc)
+    level ta tb tc = raise-level _ $ 
+              Π-level (λ _ → Π-level (λ _ → snd (Trunc= ta tc)))
+
+  Trunc=-∙-comm : {x y z : Trunc (S n) A }
+    (p : x == y) (q : y == z)
+    →  –> (Trunc=-equiv x z) (p ∙ q)
+    == Trunc=-∙ {ta = x} (–> (Trunc=-equiv x y) p) (–> (Trunc=-equiv y z) q)
+  Trunc=-∙-comm {x = x} idp idp = 
+    Trunc-elim
+       {B = λ x → –> (Trunc=-equiv x x) idp
+               == Trunc=-∙ {ta = x} (–> (Trunc=-equiv x x) idp)
+                                    (–> (Trunc=-equiv x x) idp)}
+       (λ x → raise-level _ $ =-preserves-level _ (snd (Trunc= x x)))
+       (λ a → idp)
+       x
+
+{- Truncation preserves equivalences - more convenient than univalence+ap
+ - when we need to know the forward or backward function explicitly -}
+module _ {i j} (n : ℕ₋₂) {A : Type i} {B : Type j} where
+
+  equiv-Trunc : A ≃ B → Trunc n A ≃ Trunc n B
+  equiv-Trunc e = equiv f g f-g g-f where
+    f = Trunc-fmap (–> e)
+    g = Trunc-fmap (<– e)
+
+    f-g : ∀ tb → f (g tb) == tb
+    f-g = Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+            (ap [_] ∘ <–-inv-r e)
+
+    g-f : ∀ ta → g (f ta) == ta
+    g-f = Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+            (ap [_] ∘ <–-inv-l e)
+
+  is-equiv-Trunc : (f : A → B) → is-equiv f → is-equiv (Trunc-fmap {n = n} f)
+  is-equiv-Trunc f ie = snd (equiv-Trunc (f , ie))
 
 transport-Trunc : ∀ {i j} {A : Type i} {n : ℕ₋₂} (P : A → Type j) 
   {x y : A} (p : x == y) (b : P x)

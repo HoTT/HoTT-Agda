@@ -27,7 +27,7 @@ Ptd-Susp^-conn : ∀ {i} (n : ℕ) {X : Ptd i} {m : ℕ₋₂}
 Ptd-Susp^-conn O cX = cX
 Ptd-Susp^-conn (S n) cX = Susp-conn (Ptd-Susp^-conn n cX)
 
-{- π (S k) (Susp^ (S n) A) (north^ (S n) a) == π k (Susp^ n A) (north^ n a),
+{- πΣ (S k) (Ptd-Susp^ (S n) X) == πΣ k (Ptd-Susp^ n X),
    where n = S n' and k = S k' -}
 module Susp^Stable {i} (X : Ptd i) (cX : is-connected ⟨0⟩ (fst X))
   (n' : ℕ) (k' : ℕ) (kle : S k' ≤ (S n') *2) where
@@ -61,29 +61,15 @@ module Susp^Stable {i} (X : Ptd i) (cX : is-connected ⟨0⟩ (fst X))
     (transport (λ t → is-connected t (fst (Ptd-Susp^ n X)))
                (nlemma₁ n) (Ptd-Susp^-conn n cX))
 
-  -- stable : Path {A = Σ _ Group}
-  --   (_ , π (S k) (Ptd-Susp^ (S n) X)) 
-  --   (_ , π k (Ptd-Susp^ n X))
-  -- stable = group-iso 
-  --   {!!} 
-  --   {!!}
+  stable : πΣ (S k) (Ptd-Susp^ (S n) X) == πΣ k (Ptd-Susp^ n X)
+  stable = 
+    πΣ (S k) (Ptd-Susp^ (S n) X)
+      =⟨ π-inner-iso k (Ptd-Susp^ (S n) X) ⟩
+    πΣ k (Ptd-Ω (Ptd-Susp^ (S n) X)) 
+      =⟨ ! (π-Trunc-shift-iso k (Ptd-Ω (Ptd-Susp^ (S n) X))) ⟩
+    Ω^-groupΣ k (Ptd-Trunc ⟨ k ⟩ (Ptd-Ω (Ptd-Susp^ (S n) X))) Trunc-level
+      =⟨ ! F.iso ⟩
+    Ω^-groupΣ k (Ptd-Trunc ⟨ k ⟩ (Ptd-Susp^ n X)) Trunc-level
+      =⟨ π-Trunc-shift-iso k (Ptd-Susp^ n X) ⟩
+    πΣ k (Ptd-Susp^ n X) ∎
 
-  -- stable : π (S k) (Susp^ (S n) A) (north^ (S n) a)
-  --          == π k (Susp^ n A) (north^ n a) 
-  -- stable = 
-  --   Trunc ⟨ 0 ⟩ (Ω^ (S k) (Susp^ (S n) A) (north^ (S n) a))
-  --     =⟨ idp ⟩
-  --   Trunc ⟨ 0 ⟩ (Ω^ k (north (Susp^ n A) == north (Susp^ n A)) idp)
-  --     =⟨ Trunc-Ω^-path ⟨0⟩ k _ _  ⟩
-  --   Ω^ k (Trunc ((k -2) +2+ ⟨0⟩) (north (Susp^ n A) == north (Susp^ n A))) [ idp ] 
-  --     =⟨ nlemma₂ k |in-ctx (λ t → Ω^ k (Trunc t (north (Susp^ n A) == north (Susp^ n A))) [ idp ]) ⟩ 
-  --   Ω^ k (Trunc ⟨ k ⟩ (north (Susp^ n A) == north (Susp^ n A))) [ idp ]
-  --     =⟨ Ω^-coe-path k (! F.path) [ idp ] ⟩
-  --   Ω^ k (Trunc ⟨ k ⟩ (Susp^ n A)) (coe (! F.path) [ idp ])
-  --     =⟨ app= (coe-! F.path) [ idp ] ∙ coe!-β F.eqv [ idp ]
-  --       |in-ctx (λ w → Ω^ k (Trunc ⟨ k ⟩ (Susp^ n A)) w) ⟩
-  --   Ω^ k (Trunc ⟨ k ⟩ (Susp^ n A)) [ north^ n a ] 
-  --     =⟨ ! (nlemma₂ k) |in-ctx (λ t → Ω^ k (Trunc t (Susp^ n A)) [ north^ n a ]) ⟩
-  --   Ω^ k (Trunc ((k -2) +2+ ⟨0⟩) (Susp^ n A)) [ north^ n a ]
-  --     =⟨ ! (Trunc-Ω^-path ⟨0⟩ k _ _) ⟩
-  --   Trunc ⟨ 0 ⟩ (Ω^ k (Susp^ n A) (north^ n a)) ∎
