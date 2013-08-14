@@ -29,13 +29,15 @@ module _ {i} where
 idp^ : ∀ {i} (n : ℕ) {X : Ptd i} → Ω^ n X
 idp^ n {X} = snd (Ptd-Ω^ n X)
 
-!^ : ∀ {i} (n : ℕ) ⦃ _ : n ≠ O ⦄ {X : Ptd i} → Ω^ n X → Ω^ n X
-!^ O ⦃ posi ⦄ = ⊥-rec (posi idp)
-!^ (S n) = !
+{- for n ≥ 1, we have a group structure on the loop space -}
+module _ {i} where
+  !^ : (n : ℕ) ⦃ _ : n ≠ O ⦄ {X : Ptd i} → Ω^ n X → Ω^ n X
+  !^ O ⦃ posi ⦄ = ⊥-rec (posi idp)
+  !^ (S n) = !
 
-conc^ : ∀ {i} (n : ℕ) ⦃ _ : n ≠ O ⦄ {X : Ptd i} → Ω^ n X → Ω^ n X → Ω^ n X
-conc^ O ⦃ posi ⦄ = ⊥-rec (posi idp)
-conc^ (S n) = _∙_
+  conc^ : (n : ℕ) ⦃ _ : n ≠ O ⦄ {X : Ptd i} → Ω^ n X → Ω^ n X → Ω^ n X
+  conc^ O ⦃ posi ⦄ = ⊥-rec (posi idp)
+  conc^ (S n) = _∙_
 
 ap^ : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
   → fst (X ∙→ Y) → fst (Ptd-Ω^ n X ∙→ Ptd-Ω^ n Y)
@@ -194,23 +196,4 @@ module _ {i} where
 
   Ω^-inner-equiv : (n : ℕ) (X : Ptd i) → Ω^ (S n) X ≃ Ω^ n (Ptd-Ω X)
   Ω^-inner-equiv n X = _ , Ω^-inner-is-equiv n X
-
--- π-Trunc-≤T : ∀ {i} (n : ℕ) (m : ℕ₋₂) (A : Type i) (a : A) → (⟨ n ⟩ ≤T m) 
---   → π n (Trunc m A) [ a ] == π n A a
--- π-Trunc-≤T n m A a lte = 
---   π n (Trunc m A) [ a ]
---     =⟨ ap (λ t → π n (Trunc t A) [ a ]) 
---           (! (snd w) ∙ +2+-comm (fst w) ⟨ n ⟩ ∙ nlemma n (fst w)) ⟩
---   π n (Trunc ((n -2) +2+ (S (S (fst w)))) A) [ a ]
---     =⟨ ap (Trunc ⟨0⟩) (! (Trunc-Ω^-path (S (S (fst w))) n A a)) ⟩
---   Trunc ⟨0⟩ (Trunc (S (S (fst w))) (Ω^ n A a))
---     =⟨ ua $ fuse-Trunc _ ⟨0⟩ (S (S (fst w))) ⟩
---   Trunc ⟨0⟩ (Ω^ n A a) ∎
---   where
---     w : Σ ℕ₋₂ (λ k → k +2+ ⟨ n ⟩ == m)
---     w = ≤T-witness lte
-
---     nlemma : (n : ℕ) (k : ℕ₋₂) → ⟨ n ⟩ +2+ k == (n -2) +2+ (S (S k))
---     nlemma O k = idp
---     nlemma (S n) k = ap S (nlemma n k)
 

@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
+open import lib.NType2
 open import lib.types.Nat
 open import lib.types.TLevel
 open import lib.types.Empty
@@ -131,3 +132,22 @@ module _ {i} where
     r = transport (λ k → Ω^Ts-PreIso ⟨0⟩ n k X) 
                   (n-eq n) (Ω^-Trunc-shift-preiso n ⟨0⟩ X)
     open Ω^Ts-PreIso r
+
+π-Trunc-≤T-iso : ∀ {i} (n : ℕ) ⦃ _ : n ≠ O ⦄ (m : ℕ₋₂) (X : Ptd i)
+  → (⟨ n ⟩ ≤T m) → πΣ n (Ptd-Trunc m X) == πΣ n X
+π-Trunc-≤T-iso n m X lte = 
+  πΣ n (Ptd-Trunc m X) 
+    =⟨ ! (π-Trunc-shift-iso n (Ptd-Trunc m X)) ⟩
+  Ω^-groupΣ n (Ptd-Trunc ⟨ n ⟩ (Ptd-Trunc m X)) Trunc-level
+    =⟨ lemma ⟩
+  Ω^-groupΣ n (Ptd-Trunc ⟨ n ⟩ X) Trunc-level
+    =⟨ π-Trunc-shift-iso n X ⟩
+  πΣ n X ∎
+  where
+  lemma : Ω^-groupΣ n (Ptd-Trunc ⟨ n ⟩ (Ptd-Trunc m X)) Trunc-level
+       ==  Ω^-groupΣ n (Ptd-Trunc ⟨ n ⟩ X) Trunc-level
+  lemma = ap (uncurry $ Ω^-groupΣ n) $
+    pair= 
+      (ptd-ua (fuse-Trunc (fst X) ⟨ n ⟩ m) idp ∙ 
+       ap (λ k → Ptd-Trunc k X) (minT-out-l lte)) 
+      (prop-has-all-paths-↓ has-level-is-prop)

@@ -32,7 +32,7 @@ private
   S-injective : (n m : ℕ) (p : S n == S m) → n == m
   S-injective n m p = ap ℕ-get-S p
 
-  ℕ-S≠O-type : ℕ → Set
+  ℕ-S≠O-type : ℕ → Type₀
   ℕ-S≠O-type O = Empty
   ℕ-S≠O-type (S n) = Unit
 

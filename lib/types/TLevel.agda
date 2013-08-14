@@ -2,6 +2,7 @@
 
 open import lib.Base
 open import lib.PathGroupoid
+open import lib.types.Empty
 open import lib.types.Nat
 
 module lib.types.TLevel where
@@ -89,6 +90,26 @@ m ≤T n = Coprod (m == n) (m <T n)
 ≤T-+2+-r k (inl p) = inl (ap (λ t → t +2+ k) p)
 ≤T-+2+-r k (inr lt) = inr (<T-+2+-r k lt)
 
+private
+  T-get-S : ℕ₋₂ → ℕ₋₂
+  T-get-S ⟨-2⟩ = ⟨ 42 ⟩
+  T-get-S (S n) = n
+
+  T-S≠⟨-2⟩-type : ℕ₋₂ → Type₀
+  T-S≠⟨-2⟩-type ⟨-2⟩ = Empty
+  T-S≠⟨-2⟩-type (S n) = Unit
+
+T-S≠⟨-2⟩ : (n : ℕ₋₂) → S n ≠ ⟨-2⟩
+T-S≠⟨-2⟩ n p = transport T-S≠⟨-2⟩-type p unit
+
+T-S≠ : (n : ℕ₋₂) → S n ≠ n
+T-S≠ ⟨-2⟩ = T-S≠⟨-2⟩ ⟨-2⟩
+T-S≠ (S n) p = T-S≠ n (ap T-get-S p)
+
+T-S+2+≠ : (n k : ℕ₋₂) → S (k +2+ n) ≠ n
+T-S+2+≠ ⟨-2⟩ k = T-S≠⟨-2⟩ (k +2+ ⟨-2⟩)
+T-S+2+≠ (S n) k p = T-S+2+≠ n k (ap T-get-S (ap S (! (+2+-βr k n)) ∙ p))
+
 <T-witness : {m n : ℕ₋₂} → (m <T n) → Σ ℕ₋₂ (λ k → S k +2+ m == n)
 <T-witness ltS = (⟨-2⟩ , idp)
 <T-witness (ltSR lt) = let w' = <T-witness lt in (S (fst w') , ap S (snd w'))
@@ -96,6 +117,20 @@ m ≤T n = Coprod (m == n) (m <T n)
 ≤T-witness : {m n : ℕ₋₂} → (m ≤T n) → Σ ℕ₋₂ (λ k → k +2+ m == n)
 ≤T-witness (inl p) = (⟨-2⟩ , p)
 ≤T-witness (inr lt) = let w' = <T-witness lt in (S (fst w') , snd w')
+
+<T-to-≠ : {m n : ℕ₋₂} → (m <T n) → m ≠ n
+<T-to-≠ {m} {n} lt p = T-S+2+≠ m (fst w) (snd w ∙ ! p)
+  where w = <T-witness lt
+
+=-to-≮T : {m n : ℕ₋₂} → (m == n) → ¬ (m <T n)
+=-to-≮T p lt = <T-to-≠ lt p
+
+<T-to-≯T : {m n : ℕ₋₂} → (m <T n) → ¬ (n <T m)
+<T-to-≯T lt gt = =-to-≮T idp (<T-trans lt gt)
+
+<T-to-≱T : {m n : ℕ₋₂} → (m <T n) → ¬ (n ≤T m)
+<T-to-≱T lt (inl p) = <T-to-≠ lt (! p)
+<T-to-≱T lt (inr gt) = <T-to-≯T lt gt
 
 -2-monotone-< : {m n : ℕ} → (m < n) → (m -2 <T n -2)
 -2-monotone-< ltS = ltS
@@ -135,3 +170,9 @@ minT-out (S m) (S n) with minT-out m n
 minT-out (S m) (S n) | inl p = inl (ap S p)
 minT-out (S m) (S n) | inr q = inr (ap S q)
 
+minT-out-l : {m n : ℕ₋₂} → (m ≤T n) → minT m n == m
+minT-out-l {m} {n} lte with minT-out m n
+minT-out-l lte | inl eqm = eqm
+minT-out-l (inl p) | inr eqn = eqn ∙ ! p
+minT-out-l {m} {n} (inr lt) | inr eq = 
+  ⊥-rec (<T-to-≱T (transport (λ k → m <T k) (! eq) lt) (minT≤l m n))
