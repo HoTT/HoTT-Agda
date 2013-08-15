@@ -1,6 +1,10 @@
 {-# OPTIONS --without-K #-}
 
-open import HoTT
+open import lib.Basics
+open import lib.types.TLevel
+open import lib.types.Pi
+open import lib.types.Truncation
+open import lib.types.Groupoid
 
 module lib.types.FundamentalGroupoid where
 
