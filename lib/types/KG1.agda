@@ -11,7 +11,7 @@ open import lib.types.TLevel
 open import lib.types.Truncation
 open import lib.types.Group
 open import lib.types.LoopSpace
-open import lib.types.FundamentalGroup
+open import lib.types.HomotopyGroup
 
 module lib.types.KG1 where
 
