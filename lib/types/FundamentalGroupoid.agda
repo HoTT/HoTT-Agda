@@ -83,11 +83,11 @@ module _ {i} (A : Type i) where
     ; ident = idp₀
     ; inv = !₀
     ; comp = _∙₀_
-    ; unitl = ∙₀-unit-l
-    ; unitr = ∙₀-unit-r
+    ; unit-l = ∙₀-unit-l
+    ; unit-r = ∙₀-unit-r
     ; assoc = ∙₀-assoc
-    ; invr = !₀-inv-r
-    ; invl = !₀-inv-l
+    ; inv-l = !₀-inv-l
+    ; inv-r = !₀-inv-r
     }
 
 {-

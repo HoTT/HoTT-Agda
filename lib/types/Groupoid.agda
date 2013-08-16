@@ -15,10 +15,10 @@ record Groupoid {i j} {El : Type i} (Arr : El → El → Type j) : Type (lmax i 
     ident : ∀ {x} → Arr x x
     inv : ∀ {x y} → Arr x y → Arr y x
     comp : ∀ {x y z} → Arr x y → Arr y z → Arr x z
-    unitl : ∀ {x y} (a : Arr x y) → comp ident a == a
-    unitr : ∀ {x y} (a : Arr x y) → comp a ident == a
+    unit-l : ∀ {x y} (a : Arr x y) → comp ident a == a
+    unit-r : ∀ {x y} (a : Arr x y) → comp a ident == a
     assoc   : ∀ {x y z w} (a : Arr x y) (b : Arr y z) (c : Arr z w)
               → comp (comp a b) c == comp a (comp b c)
-    invr    : ∀ {x y} (a : Arr x y) → (comp a (inv a)) == ident
-    invl    : ∀ {x y } (a : Arr x y) → (comp (inv a) a) == ident
+    inv-r    : ∀ {x y} (a : Arr x y) → (comp a (inv a)) == ident
+    inv-l    : ∀ {x y } (a : Arr x y) → (comp (inv a) a) == ident
 open Groupoid
