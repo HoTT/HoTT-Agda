@@ -109,27 +109,27 @@ module _ {i j} {A : Type i} {B : A → Type j} where
 
   {- Dependent concatenation -}
 
-  _∙dep_ : {x y z : A} {p : x == y} {p' : y == z}
+  _∙ᵈ_ : {x y z : A} {p : x == y} {p' : y == z}
     {u : B x} {v : B y} {w : B z}
     → (u == v [ B ↓ p ]
     → v == w [ B ↓ p' ]
     → u == w [ B ↓ (p ∙ p') ])
-  _∙dep_ {p = idp} {p' = idp} q r = q ∙ r
+  _∙ᵈ_ {p = idp} {p' = idp} q r = q ∙ r
 
-  _◃_ = _∙dep_
+  _◃_ = _∙ᵈ_
 
   ◃idp : {x : A} {v w : B x} (q : w == v)
     → q ◃ idp == q
   ◃idp idp = idp
 
-  _∙'dep_ : {x y z : A} {p : x == y} {p' : y == z}
+  _∙'ᵈ_ : {x y z : A} {p : x == y} {p' : y == z}
     {u : B x} {v : B y} {w : B z}
     → (u == v [ B ↓ p ]
     → v == w [ B ↓ p' ]
     → u == w [ B ↓ (p ∙' p') ])
-  _∙'dep_ {p = idp} {p' = idp} q r = q ∙' r
+  _∙'ᵈ_ {p = idp} {p' = idp} q r = q ∙' r
 
-  _▹_ = _∙'dep_
+  _▹_ = _∙'ᵈ_
 
   {- That’s not perfect, because [q] could be a dependent path. But in that case
      this is not well typed… -}

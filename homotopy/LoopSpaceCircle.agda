@@ -139,7 +139,7 @@ paths-mike (x , t) = paths-mike-c x t where
      ↓-cst=idf-in
        (pair= (loop^ n) (↓-loop^ n) ∙ pair= loop q
                   =⟨ Σ-∙ (↓-loop^ n) q ⟩
-        pair= (loop^ n ∙ loop) (↓-loop^ n ∙dep q)
+        pair= (loop^ n ∙ loop) (↓-loop^ n ∙ᵈ q)
                   =⟨ pair== (loop^succ n ∙ ap loop^ (Cover.↓-loop-out q))
                             (set-↓-has-all-paths-↓ ℤ-is-set) ⟩
         pair= (loop^ n') (↓-loop^ n') ∎))) where

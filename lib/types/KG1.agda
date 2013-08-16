@@ -55,7 +55,7 @@ module KG1 {i} {El : Type i} (G : Group El) where
     (preserves-ident : kloop* ident == idp
        [ (λ p → kbase* == kbase* [ fst ∘ C ↓ p ]) ↓ kloop-ident ])
     (preserves-comp : (g₁ g₂ : El) → 
-       kloop* (comp g₁ g₂) == kloop* g₁ ∙dep kloop* g₂
+       kloop* (comp g₁ g₂) == kloop* g₁ ∙ᵈ kloop* g₂
        [ (λ p → kbase* == kbase* [ fst ∘ C ↓ p ]) ↓ kloop-comp g₁ g₂ ])
     where
 
@@ -131,7 +131,7 @@ module KG1 {i} {El : Type i} (G : Group El) where
               =⟨ prop-has-all-paths (=-[-↓-]-level (λ _ → raise-level _ has-level-is-prop)) _ _
                 |in-ctx (λ w → pair= (ua (comp-equiv g₁) ∙ ua (comp-equiv g₂)) w) ⟩
             pair= (ua (comp-equiv g₁) ∙ ua (comp-equiv g₂)) 
-                  (phap {ua (comp-equiv g₁)} ∙dep phap {ua (comp-equiv g₂)})
+                  (phap {ua (comp-equiv g₁)} ∙ᵈ phap {ua (comp-equiv g₂)})
               =⟨ ! (Σ-∙ (phap {p = ua $ comp-equiv g₁}) (phap {p = ua $ comp-equiv g₂})) ⟩
             pair= (ua $ comp-equiv g₁) phap ∙ pair= (ua $ comp-equiv g₂) phap ∎
 

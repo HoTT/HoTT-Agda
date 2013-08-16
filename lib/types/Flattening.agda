@@ -125,7 +125,7 @@ private
                  =⟨ ap-cst,id P (↓-pp-out q) |in-ctx (λ u → pair= (pp b) (↓-pp-in idp) ∙' u) ⟩
        pair= (pp b) (↓-pp-in idp) ∙' pair= idp (↓-pp-out q)
                  =⟨ Σ-∙' (↓-pp-in idp) (↓-pp-out q) ⟩
-       pair= (pp b) (↓-pp-in idp ∙'dep ↓-pp-out q)
+       pair= (pp b) (↓-pp-in idp ∙'ᵈ ↓-pp-out q)
                  =⟨ to-transp-weird q (coe-pp-β _ _) |in-ctx pair= (pp b) ⟩
        pair= (pp b) q ∎)))
 

@@ -36,7 +36,7 @@ module _ where
   module TorusElim {i} {A : Torus → Type i} (baseT* : A baseT)
     (loopT1* : baseT* == baseT* [ A ↓ loopT1 ])
     (loopT2* : baseT* == baseT* [ A ↓ loopT2 ])
-    (surfT* : loopT1* ∙dep loopT2* == loopT2* ∙dep loopT1*
+    (surfT* : loopT1* ∙ᵈ loopT2* == loopT2* ∙ᵈ loopT1*
               [ (λ p → baseT* == baseT* [ A ↓ p ]) ↓ surfT ]) where
 
     f : Π Torus A
@@ -50,19 +50,19 @@ module _ where
       loopT2-β : apd f loopT2 == loopT2*
 
     private
-      lhs : apd f (loopT1 ∙ loopT2) == loopT1* ∙dep loopT2*
+      lhs : apd f (loopT1 ∙ loopT2) == loopT1* ∙ᵈ loopT2*
       lhs =
         apd f (loopT1 ∙ loopT2)                   =⟨ apd-∙ f loopT1 loopT2 ⟩
-        apd f loopT1 ∙dep apd f loopT2            =⟨ loopT1-β |in-ctx (λ u → u ∙dep apd f loopT2) ⟩
-        loopT1* ∙dep apd f loopT2                 =⟨ loopT2-β |in-ctx (λ u → loopT1* ∙dep u) ⟩
-        loopT1* ∙dep loopT2* ∎
+        apd f loopT1 ∙ᵈ apd f loopT2            =⟨ loopT1-β |in-ctx (λ u → u ∙ᵈ apd f loopT2) ⟩
+        loopT1* ∙ᵈ apd f loopT2                 =⟨ loopT2-β |in-ctx (λ u → loopT1* ∙ᵈ u) ⟩
+        loopT1* ∙ᵈ loopT2* ∎
 
-      rhs : apd f (loopT2 ∙ loopT1) == loopT2* ∙dep loopT1*
+      rhs : apd f (loopT2 ∙ loopT1) == loopT2* ∙ᵈ loopT1*
       rhs =
         apd f (loopT2 ∙ loopT1)                   =⟨ apd-∙ f loopT2 loopT1 ⟩
-        apd f loopT2 ∙dep apd f loopT1            =⟨ loopT2-β |in-ctx (λ u → u ∙dep apd f loopT1) ⟩
-        loopT2* ∙dep apd f loopT1                 =⟨ loopT1-β |in-ctx (λ u → loopT2* ∙dep u) ⟩
-        loopT2* ∙dep loopT1* ∎
+        apd f loopT2 ∙ᵈ apd f loopT1            =⟨ loopT2-β |in-ctx (λ u → u ∙ᵈ apd f loopT1) ⟩
+        loopT2* ∙ᵈ apd f loopT1                 =⟨ loopT1-β |in-ctx (λ u → loopT2* ∙ᵈ u) ⟩
+        loopT2* ∙ᵈ loopT1* ∎
 
     postulate  -- HIT
       surfT-β : apd (apd f) surfT == lhs ◃ (surfT* ▹! rhs)

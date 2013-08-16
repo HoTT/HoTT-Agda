@@ -54,7 +54,7 @@ module _ {i j} {A : Type i} {B : Type j} where
   ↓-cst-in-∙ : {x y z : A} (p : x == y) (q : y == z) {u v w : B}
     (p' : u == v) (q' : v == w)
     → ↓-cst-in {p = p ∙ q} (p' ∙ q')
-      == ↓-cst-in {p = p} p' ∙dep ↓-cst-in {p = q} q'
+      == ↓-cst-in {p = p} p' ∙ᵈ ↓-cst-in {p = q} q'
   ↓-cst-in-∙ idp idp idp idp = idp
 
   {- Introduction of an equality between [↓-cst-in]s (used to deduce the
@@ -220,7 +220,7 @@ apd=cst-in {p = idp} x = x
 to-transp-weird : ∀ {i j} {A : Type i} {B : A → Type j}
   {u v : A} {d : B u} {d' d'' : B v} {p : u == v}
   (q : d == d' [ B ↓ p ]) (r : transport B p d == d'')
-  → (from-transp B p r ∙'dep (! r ∙ to-transp q)) == q
+  → (from-transp B p r ∙'ᵈ (! r ∙ to-transp q)) == q
 to-transp-weird {p = idp} idp idp = idp
 
 -- Something not really clear yet

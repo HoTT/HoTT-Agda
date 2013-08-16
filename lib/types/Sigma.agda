@@ -118,7 +118,7 @@ equiv-Σ-snd {A = A} {B = B} {C = C} k = equiv f g f-g g-f
   {x y z : A} {p : x == y} {p' : y == z}
   {u : B x} {v : B y} {w : B z}
   (q : u == v [ B ↓ p ]) (r : v == w [ B ↓ p' ])
-  → (pair= p q ∙' pair= p' r) == pair= (p ∙' p') (q ∙'dep r)
+  → (pair= p q ∙' pair= p' r) == pair= (p ∙' p') (q ∙'ᵈ r)
 Σ-∙' {p = idp} {p' = idp} q idp = idp
 
 -- Implementation of [_∙_] on Σ
@@ -126,7 +126,7 @@ equiv-Σ-snd {A = A} {B = B} {C = C} k = equiv f g f-g g-f
   {x y z : A} {p : x == y} {p' : y == z}
   {u : B x} {v : B y} {w : B z}
   (q : u == v [ B ↓ p ]) (r : v == w [ B ↓ p' ])
-  → (pair= p q ∙ pair= p' r) == pair= (p ∙ p') (q ∙dep r)
+  → (pair= p q ∙ pair= p' r) == pair= (p ∙ p') (q ∙ᵈ r)
 Σ-∙ {p = idp} {p' = idp} idp r = idp
 
 -- Implementation of [_∙'_] on ×

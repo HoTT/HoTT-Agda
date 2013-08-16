@@ -36,11 +36,11 @@ module _ {j} {B : Type j} (f : A → B) where
 module _ {j} {B : A → Type j} (f : Π A B) where
 
   apd-∙ : {x y z : A} (p : x == y) (q : y == z)
-    → apd f (p ∙ q) == apd f p ∙dep apd f q
+    → apd f (p ∙ q) == apd f p ∙ᵈ apd f q
   apd-∙ idp idp = idp
 
   apd-∙' : {x y z : A} (p : x == y) (q : y == z)
-    → apd f (p ∙' q) == apd f p ∙'dep apd f q
+    → apd f (p ∙' q) == apd f p ∙'ᵈ apd f q
   apd-∙' idp idp = idp
 
 {- Over stuff -}
