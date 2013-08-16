@@ -227,22 +227,8 @@ module Ap↓-swap! {i j k ℓ} {A : Type i} {B : Type j} {C : Type k}
       (ap (ap h) t ∙'
         (ap-∙ h s idp ∙ idp)))
 
-    T' : {x x' : C} (s : x == x') → Type _
-    T' s =
-      ap (ap h) (∙'-unit-l s ∙ ! (∙-unit-r s) ∙ ! (! (∙-unit-r s))) ==
-      (ap-∙' h idp s ∙ idp)
-      ∙
-      (∙'-unit-l (ap h s) ∙
-      ! (∙-unit-r (ap h s)) ∙
-      !
-      (ap (ap h) (! (∙-unit-r s)) ∙'
-        (ap-∙ h s idp ∙ idp)))
-
-    coh'' : {x x' : C} (s : x == x') → T' s
-    coh'' idp = idp
-
     coh' : {x x' : C} {r s : x == x'} (t : r == s) → T r s (t ∙ ! (∙-unit-r s))
-    coh' {s = s} idp = coh'' s
+    coh' {r = idp} {s = .idp} idp = idp
 
     coh : {x x' : C} (r s : x == x') (t : r == s ∙ idp) → T r s t
     coh r s t = transport (λ t → T r s t) (coh2 t (∙-unit-r s)) (coh' (t ∙ ∙-unit-r s))  where
@@ -250,17 +236,15 @@ module Ap↓-swap! {i j k ℓ} {A : Type i} {B : Type j} {C : Type k}
       coh2 : ∀ {i} {A : Type i} {x y z : A} (p : x == y) (q : y == z) → (p ∙ q) ∙ ! q == p
       coh2 idp idp = idp
 
--- api2-swap! : ∀ {i j k ℓ} {A : Type i} {B : Type j} {C : Type k}
---   (f : A → C) (g : B → C)
---   {a a' : A} {p : a == a'} {b b' : B} {q : b == b'}
---   (r : f a == g b') (s : f a' == g b)
---   (t : r == s ∙ ap g q  [ (λ x → f x == g b') ↓ p ])
---   {D : Type ℓ}
---   (h : C → D)
---   → api2 (ap h) (↓-swap! f g r s t) == (ap-∙' h (ap f p) s ∙ ∘-ap h f p ∙'2 (idp :> (ap h s == ap h s))) ◃ --(∘-ap h f p ∙'2 (idp :> (ap h s == ap h s)))) ◃
---                                        ↓-swap! (h ∘ f) (h ∘ g) (ap h r) (ap h s)
---                                          (api2 (ap h) t ▹ (ap-∙ h s (ap g q) ∙ (idp :> (ap h s == ap h s)) ∙2 ∘-ap h g q))
--- api2-swap! = {!!}
+
+-- module _ {i j k} {A : Type i} {B B' : Type j} {C : Type k} (f : A → C) (g' : B' → B) (g : B → C) where
+
+--   abc : {a a' : A} {p : a == a'} {c c' : B'} {q' : c == c'} {q : g' c == g' c'}
+--     (r : f a == g (g' c')) (s : f a' == g (g' c))
+--     (t : q == ap g' q')
+--     (α : r == s ∙ ap g q [ (λ x → f x == g (g' c')) ↓ p ])
+--     → {!(↓-swap! f g r s α ▹ ?) ∙'2ᵈ ?!} == ↓-swap! f (g ∘ g') {p = p} {q = q'} r s (α ▹ ap (λ u → s ∙ u) (ap (ap g) t ∙ ∘-ap g g' q')) 
+--   abc = {!!}
 
 {- Functoriality of application and function extensionality -}
 

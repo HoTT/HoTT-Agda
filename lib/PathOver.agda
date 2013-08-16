@@ -247,7 +247,7 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → C) (g : B →
   
     coh : ∀ {i} {X : Type i} {x y z t : X} (p : x == y) (q : z == y) (r : x == t)
       → p ∙ ! q ∙ ! (! r ∙ p ∙ ! q) == r
-    coh idp q idp = !-inv-r (! q)
+    coh idp idp idp = idp
 
 {- Dependent paths over function spaces -}
 ↓-→-is-square : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} 
