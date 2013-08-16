@@ -107,6 +107,17 @@ module _ {i} {A : Type i} where
 {- Dependent stuff -}
 module _ {i j} {A : Type i} {B : A → Type j} where
 
+  {- Dependent constant path -}
+
+  idpᵈ : {x : A} {u : B x} → u == u [ B ↓ idp ]
+  idpᵈ = idp
+
+  {- Dependent opposite path -}
+
+  !ᵈ : {x y : A} {p : x == y} {u : B x} {v : B y}
+    → (u == v [ B ↓ p ] → v == u [ B ↓ (! p)])
+  !ᵈ {p = idp} = !
+
   {- Dependent concatenation -}
 
   _∙ᵈ_ : {x y z : A} {p : x == y} {p' : y == z}
