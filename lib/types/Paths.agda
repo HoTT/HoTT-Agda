@@ -68,6 +68,12 @@ module _ {i} {A : Type i} where
   → (u == v [ (λ x → f x == g x) ↓ p ])
 ↓-='-in {p = idp} q = ! (∙-unit-r _) ∙ q ∙ (∙'-unit-l _)
 
+↓-='-out : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
+  {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+  → (u == v [ (λ x → f x == g x) ↓ p ])
+  → (u ∙ ap g p) == (ap f p ∙' v)
+↓-='-out {p = idp} q = (∙-unit-r _) ∙ q ∙ ! (∙'-unit-l _)
+
 {- Identity type where the type is dependent -}
 
 ↓-=-in : ∀ {i j} {A : Type i} {B : A → Type j} {f g : Π A B}
@@ -96,3 +102,29 @@ module _ {i j} {A : Type i} {B : Type j} (g : B → A) (f : A → B) where
 --         u ◃ ↓-apd-out _ f p (apd (λ t → g (π₂ t)) (pair= p (apd f p))) =⟨ apd-∘ π₂ g (pair= p (apd f p)) |in-ctx (λ t → u ◃ ↓-apd-out _ f p t) ⟩
 --         u ◃ ↓-apd-out _ f p (↓-apd-out _ π₂ (pair= p (apd f p)) (apdd g (pair= p (apd f p)) (apd π₂ (pair= p (apd f p))))) =⟨ {!!} ⟩
 --         apd (λ x → x) p ▹ v ∎)
+
+-- module _ {i j} {A : Type i} {B : Type j} {x y z : A → B} where
+
+--   lhs : 
+--     {a a' : A} {p : a == a'} {q : x a == y a} {q' : x a' == y a'}
+--     {r : y a == z a} {r' : y a' == z a'}
+--     (α : q == q'            [ (λ a → x a == y a) ↓ p ])
+--     (β : r ∙ ap z p == ap y p ∙' r')
+--     → (q ∙' r) ∙ ap z p == ap x p ∙' q' ∙' r'
+--   lhs =
+--     (q ∙' r) ∙ ap z p     =⟨ ? ⟩  -- assoc
+--     q ∙' (r ∙ ap z p)     =⟨ ? ⟩  -- β
+--     q ∙' (ap y p ∙' r')   =⟨ ? ⟩  -- assoc
+--     (q ∙' ap y p) ∙' r'   =⟨ ? ⟩  -- ∙ = ∙'
+--     (q ∙ ap y p) ∙' r'    =⟨ ? ⟩  -- α
+--     (ap x p ∙' q') ∙' r'  =⟨ ? ⟩  -- assoc
+--     ap x p ∙' q' ∙' r' ∎
+    
+
+--   thing :
+--     {a a' : A} {p : a == a'} {q : x a == y a} {q' : x a' == y a'}
+--     {r : y a == z a} {r' : y a' == z a'}
+--     (α : q == q'            [ (λ a → x a == y a) ↓ p ])
+--     (β : r ∙ ap z p == ap y p ∙' r')
+--     → (_∙'2ᵈ_ {r = r} {r' = r'} α (↓-='-in β) == ↓-='-in {!!})
+--   thing = {!!}
