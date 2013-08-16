@@ -45,23 +45,24 @@ module PushoutRecType {l} (left* : A → Type l) (right* : B → Type l)
       → a == b [ f ↓ glue c ]
     ↓-glue-in c {a} {b} p = from-transp f (glue c) (coe-glue-β c a ∙ p)
 
-  f-d : Span
-  f-d = span fA fB fC fg fh  module _ where
+  private
+    f-d : Span
+    f-d = span fA fB fC fg fh  module _ where
 
-    fA : Type _
-    fA = Σ A left*
+      fA : Type _
+      fA = Σ A left*
 
-    fB : Type _
-    fB = Σ B right*
+      fB : Type _
+      fB = Σ B right*
 
-    fC : Type _
-    fC = Σ C (left* ∘ g)
+      fC : Type _
+      fC = Σ C (left* ∘ g)
 
-    fg : fC → fA
-    fg (c , c') = (g c , c')
+      fg : fC → fA
+      fg (c , c') = (g c , c')
 
-    fh : fC → fB
-    fh (c , c') = (h c , –> (glue* c) c')
+      fh : fC → fB
+      fh (c , c') = (h c , –> (glue* c) c')
 
   flattening : Σ (Pushout d) f == Pushout f-d
   flattening = Σ= p p' ∙ q ∙ r ∙ s  where
