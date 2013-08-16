@@ -347,7 +347,7 @@ match (inl a) withl l withr r = l a
 match (inr b) withl l withr r = r b
 
 {-
-Used in a hack to make HIT maybe consistent. This is just a parametrized unit
+Used in a hack to make HITs maybe consistent. This is just a parametrized unit
 type (positively)
 -}
 

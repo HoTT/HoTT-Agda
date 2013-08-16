@@ -241,7 +241,7 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → C) (g : B →
 
   ↓-swap-β : {a a' : A} {p : a == a'} {b b' : B} {q : b == b'}
     (r : f a == g b') (s : f a' == g b)
-    (t : ap f p ∙' s == r [ (λ x → f a == g x)  ↓ q ])
+    (t : ap f p ∙' s == r [ (λ x → f a == g x) ↓ q ])
     → ↓-swap! r s (↓-swap r s t) == t
   ↓-swap-β {p = idp} {q = idp} r s t = coh (∙'-unit-l s) (∙-unit-r s) t  where
   
