@@ -8,17 +8,23 @@ open import lib.types.Pi
 
 module lib.types.Groupoid where
 
-record Groupoid {i j} {El : Type i} (Arr : El → El → Type j) : Type (lmax i j) where
-  constructor groupoid
+record GroupoidStructure {i j} {El : Type i} (Arr : El → El → Type j)
+  (_ : ∀ x y → has-level ⟨0⟩ (Arr x y)) : Type (lmax i j) where
   field
-    Arr-level : ∀ {x y} → has-level ⟨0⟩ (Arr x y)
-    ident : ∀ {x} → Arr x x
+    id : ∀ {x} → Arr x x
     inv : ∀ {x y} → Arr x y → Arr y x
     comp : ∀ {x y z} → Arr x y → Arr y z → Arr x z
-    unit-l : ∀ {x y} (a : Arr x y) → comp ident a == a
-    unit-r : ∀ {x y} (a : Arr x y) → comp a ident == a
+    unit-l : ∀ {x y} (a : Arr x y) → comp id a == a
+    unit-r : ∀ {x y} (a : Arr x y) → comp a id == a
     assoc   : ∀ {x y z w} (a : Arr x y) (b : Arr y z) (c : Arr z w)
               → comp (comp a b) c == comp a (comp b c)
-    inv-r    : ∀ {x y} (a : Arr x y) → (comp a (inv a)) == ident
-    inv-l    : ∀ {x y } (a : Arr x y) → (comp (inv a) a) == ident
-open Groupoid
+    inv-r    : ∀ {x y} (a : Arr x y) → (comp a (inv a)) == id
+    inv-l    : ∀ {x y } (a : Arr x y) → (comp (inv a) a) == id
+
+record Groupoid {i j} : Type (lsucc (lmax i j)) where
+  constructor groupoid
+  field
+    El : Type i
+    Arr : El → El → Type j
+    Arr-level : ∀ x y → has-level ⟨0⟩ (Arr x y)
+    groupoid-structure : GroupoidStructure Arr Arr-level

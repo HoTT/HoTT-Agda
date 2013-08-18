@@ -77,17 +77,21 @@ module _ {i} {A : Type i} where
 
 module _ {i} (A : Type i) where
 
-  fundamental-groupoid : Groupoid (_=₀_ {A = A})
+  fundamental-groupoid : Groupoid
   fundamental-groupoid = record
-    { Arr-level = Trunc-level
-    ; ident = idp₀
-    ; inv = !₀
-    ; comp = _∙₀_
-    ; unit-l = ∙₀-unit-l
-    ; unit-r = ∙₀-unit-r
-    ; assoc = ∙₀-assoc
-    ; inv-l = !₀-inv-l
-    ; inv-r = !₀-inv-r
+    { El = A
+    ; Arr = _=₀_ {A = A}
+    ; Arr-level = λ _ _ → Trunc-level
+    ; groupoid-structure = record
+      { id = idp₀
+      ; inv = !₀
+      ; comp = _∙₀_
+      ; unit-l = ∙₀-unit-l
+      ; unit-r = ∙₀-unit-r
+      ; assoc = ∙₀-assoc
+      ; inv-l = !₀-inv-l
+      ; inv-r = !₀-inv-r
+      }
     }
 
 {-
