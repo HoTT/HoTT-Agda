@@ -82,7 +82,7 @@ module _ {i} (A : Type i) where
     { El = A
     ; Arr = _=₀_ {A = A}
     ; Arr-level = λ _ _ → Trunc-level
-    ; groupoid-structure = record
+    ; groupoid-struct = record
       { id = idp₀
       ; inv = !₀
       ; comp = _∙₀_

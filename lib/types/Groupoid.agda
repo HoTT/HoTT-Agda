@@ -27,4 +27,4 @@ record Groupoid {i j} : Type (lsucc (lmax i j)) where
     El : Type i
     Arr : El → El → Type j
     Arr-level : ∀ x y → has-level ⟨0⟩ (Arr x y)
-    groupoid-structure : GroupoidStructure Arr Arr-level
+    groupoid-struct : GroupoidStructure Arr Arr-level
