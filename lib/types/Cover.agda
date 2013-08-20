@@ -9,13 +9,13 @@ open import lib.types.Sigma
 open import lib.types.Pointed
 open import lib.types.LoopSpace
 
-module lib.types.Covering {i} where
+module lib.types.Cover {i} where
 
 {-
   The definition of covering spaces.
 -}
-record Covering (A : Type i) {j} : Type (lmax i (lsucc j)) where
-  constructor covering
+record Cover (A : Type i) {j} : Type (lmax i (lsucc j)) where
+  constructor cover
   field
     Fiber : A → Type j
     Fiber-level : ∀ a → is-set (Fiber a)
@@ -23,34 +23,34 @@ record Covering (A : Type i) {j} : Type (lmax i (lsucc j)) where
 -- Basic tools
 module _ {A : Type i} {j} where
 
-  open Covering
+  open Cover
 
   private
-    covering=′ : (c₁ c₂ : Covering A {j}) → Fiber c₁ == Fiber c₂ → c₁ == c₂
-    covering=′ (covering f _) (covering .f _) idp = ap (covering f) $
+    cover=′ : (c₁ c₂ : Cover A {j}) → Fiber c₁ == Fiber c₂ → c₁ == c₂
+    cover=′ (cover f _) (cover .f _) idp = ap (cover f) $
       prop-has-all-paths (Π-is-prop λ _ → is-set-is-prop) _ _
 
-  covering= : (c₁ c₂ : Covering A {j}) → (∀ a → Fiber c₁ a ≃ Fiber c₂ a)
+  cover= : (c₁ c₂ : Cover A {j}) → (∀ a → Fiber c₁ a ≃ Fiber c₂ a)
     → c₁ == c₂
-  covering= c₁ c₂ F≃ = covering=′ c₁ c₂ (λ= λ a → ua $ F≃ a)
+  cover= c₁ c₂ F≃ = cover=′ c₁ c₂ (λ= λ a → ua $ F≃ a)
 
   -- The definition of universality in terms of connectedness.
-  is-universal : Covering A {j} → Type (lmax i j)
-  is-universal (covering F _) = is-connected ⟨1⟩ $ Σ A F
+  is-universal : Cover A {j} → Type (lmax i j)
+  is-universal (cover F _) = is-connected ⟨1⟩ $ Σ A F
 
   -- In terms of connectedness
-  UniversalCovering : Type (lmax i (lsucc j))
-  UniversalCovering = Σ (Covering A {j}) is-universal
+  UniversalCover : Type (lmax i (lsucc j))
+  UniversalCover = Σ (Cover A {j}) is-universal
 
 -- Theorem: A covering space keeps higher homotopy groups.
 module _ (A∙ : Ptd i)
-  {j} (c : Covering (fst A∙) {j})
-  (a↑ : Covering.Fiber c (snd A∙)) where
+  {j} (c : Cover (fst A∙) {j})
+  (a↑ : Cover.Fiber c (snd A∙)) where
 
-  open Covering c
+  open Cover c
   private
-    F = Covering.Fiber c
-    F-level = Covering.Fiber-level c
+    F = Cover.Fiber c
+    F-level = Cover.Fiber-level c
     A = fst A∙
     a = snd A∙
 

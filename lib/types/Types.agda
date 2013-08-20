@@ -26,12 +26,13 @@ open import lib.types.Cospan public
 open import lib.types.Pullback public
 open import lib.types.Group public
 open import lib.types.Groupoid public
+open import lib.types.GroupSet public
 open import lib.types.KG1 public
 open import lib.types.Pointed public
 open import lib.types.LoopSpace public
 open import lib.types.HomotopyGroup public
 open import lib.types.FundamentalGroupoid public
-open import lib.types.Covering public
+open import lib.types.Cover public
 
 open import lib.types.PathSeq public
 
