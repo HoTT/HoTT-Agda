@@ -55,6 +55,7 @@ module _ (A∙ : Ptd i)
     a = snd A∙
 
   private
+    -- The projection map with one end free (in order to apply J).
     to′ : ∀ {p⇑ : _==_ {A = Σ A F} (a , a↑) (a , a↑)}
         → idp == p⇑ → idp == fst= p⇑
     to′ idp=p⇑ = ap fst= idp=p⇑
@@ -63,13 +64,14 @@ module _ (A∙ : Ptd i)
     to : Ω^ 2 ∙[ Σ A F , (a , a↑) ] → Ω^ 2 A∙
     to p²⇑ = to′ {p⇑ = idp} p²⇑
 
-    -- aux
+    -- Auxiliary synthesized path for injection.
     idp=p↑ : ∀ {p : a == a} {p↑ : a↑ == a↑ [ F ↓ p ]}
              → (idp=p : idp == p)
              → idp == p↑
                [ (λ p → a↑ == a↑ [ F ↓ p ]) ↓ idp=p ]
     idp=p↑ idp = prop-has-all-paths (F-level a _ _) _ _
 
+    -- The injection map with some ends free (in order to apply J).
     from′ : ∀ {p : a == a} {p↑ : a↑ == a↑ [ F ↓ p ]}
             → (idp=p : idp == p)
             → idp == p↑ -- aux
@@ -81,6 +83,7 @@ module _ (A∙ : Ptd i)
     from : Ω^ 2 A∙ → Ω^ 2 ∙[ Σ A F , (a , a↑) ]
     from p² = from′ {p = idp} {p↑ = idp} p² (idp=p↑ p²)
 
+    -- Injection is left-inverse to projection (with some ends free).
     from′-to′ : ∀ {p⇑ : _==_ {A = Σ A F} (a , a↑) (a , a↑)}
                 → (idp=p⇑ : idp == p⇑)
                 → (idp=snd=p⇑ : idp == snd= p⇑ -- aux
@@ -89,9 +92,11 @@ module _ (A∙ : Ptd i)
                   [ (λ p⇑ → idp == p⇑) ↓ ! (pair=-η p⇑) ]
     from′-to′ idp idp = idp
 
+    -- Injection is left-inverse to projection.
     from-to : ∀ p²⇑ → from (to p²⇑) == p²⇑
     from-to p²⇑ = from′-to′ {p⇑ = idp} p²⇑ (idp=p↑ (to′ p²⇑))
 
+    -- Injection is right-inverse to projection (with some ends free).
     to′-from′ : ∀ {p : a == a} {p↑ : a↑ == a↑ [ F ↓ p ]}
                 → (idp=p : idp == p)
                 → (idp=p↑ : idp == p↑ -- aux
@@ -100,6 +105,7 @@ module _ (A∙ : Ptd i)
                   [ (λ p → idp == p) ↓ fst=-β p p↑ ]
     to′-from′ idp idp = idp
 
+    -- Injection is right-inverse to projection.
     to-from : ∀ p² → to (from p²) == p²
     to-from p² = to′-from′ p² (idp=p↑ p²)
 
