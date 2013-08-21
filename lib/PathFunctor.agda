@@ -96,7 +96,7 @@ coe-ap-! : ∀ {j} (P : A → Type j) {a b : A} (p : a == b)
 coe-ap-! P idp x = idp
 
 {- Functoriality of transport -}
-trans-∙ : ∀ {i j} {A : Type i} {B : A → Type j} {x y z : A}
+trans-∙ : ∀ {j} {B : A → Type j} {x y z : A}
   (p : x == y) (q : y == z) (b : B x)
   → transport B (p ∙ q) b == transport B q (transport B p b)
 trans-∙ idp _ _ = idp
@@ -113,6 +113,6 @@ htpy-natural-toid {f = f} p x = anti-whisker-right (p x) $
   htpy-natural p (p x) ∙ ap (λ q → p (f x) ∙ q) (ap-idf (p x))
 
 -- unsure where this belongs
-trans-pathfrom : ∀ {i} {A : Type i} {a x y : A} (p : x == y) (q : a == x)
+trans-pathfrom : ∀ {a x y : A} (p : x == y) (q : a == x)
   → transport (λ x → a == x) p q == q ∙ p
 trans-pathfrom idp q = ! (∙-unit-r q)  

@@ -179,7 +179,7 @@ module KG1 {i} {El : Type i} (G : Group El) where
       loop' g = coe (↓-→-is-square {B = fst ∘ Codes} {C = Path kbase}
                   decode' decode' (kloop g)) $ λ= $ λ y → 
                     transport (λ z → kbase == z) (kloop g) (kloop y)
-                      =⟨ trans-pathfrom {A = Type i} (kloop g) (kloop y) ⟩
+                      =⟨ trans-pathfrom (kloop g) (kloop y) ⟩
                     kloop y ∙ kloop g
                       =⟨ ! (kloop-comp y g) ⟩
                     kloop (comp y g)
