@@ -65,6 +65,9 @@ module _ {i} where
   πΣ : (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) → Σ (Type i) Group
   πΣ n X = (Trunc ⟨0⟩ (Ω^ n X) , π n X)
 
+  fundamental-group : (X : Ptd i) → Group (Trunc ⟨0⟩ (Ω^ 1 X))
+  fundamental-group X = π 1 ⦃ ℕ-S≠O#instance ⦄ X
+
 {- π_(n+1) of a space is π_n of its loop space -}
 abstract
   π-inner-iso : ∀ {i} (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i)
