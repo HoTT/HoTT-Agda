@@ -188,29 +188,29 @@ private
   neg-S-ℤ+-pos-S O      n₂ = idp
   neg-S-ℤ+-pos-S (S n₁) n₂ = ap pred $ neg-S-ℤ+-pos-S n₁ n₂
 
-  ℤ-inv-r-pos : ∀ n → pos n ℤ+ neg n == O
-  ℤ-inv-r-pos O     = idp
-  ℤ-inv-r-pos (S n) =
+  ℤ~-inv-r-pos : ∀ n → pos n ℤ+ neg n == O
+  ℤ~-inv-r-pos O     = idp
+  ℤ~-inv-r-pos (S n) =
     pos (S n) ℤ+ neg (S n)  =⟨ pos-S-ℤ+-neg-S n n ⟩
-    pos n ℤ+ neg n          =⟨ ℤ-inv-r-pos n ⟩
+    pos n ℤ+ neg n          =⟨ ℤ~-inv-r-pos n ⟩
     O                       ∎
 
-  ℤ-inv-r-neg : ∀ n → neg n ℤ+ pos n == O
-  ℤ-inv-r-neg O     = idp
-  ℤ-inv-r-neg (S n) =
+  ℤ~-inv-r-neg : ∀ n → neg n ℤ+ pos n == O
+  ℤ~-inv-r-neg O     = idp
+  ℤ~-inv-r-neg (S n) =
     neg (S n) ℤ+ pos (S n)  =⟨ neg-S-ℤ+-pos-S n n ⟩
-    neg n ℤ+ pos n          =⟨ ℤ-inv-r-neg n ⟩
+    neg n ℤ+ pos n          =⟨ ℤ~-inv-r-neg n ⟩
     O                       ∎
 
 ℤ~-inv-r : ∀ z → z ℤ+ ℤ~ z == O
 ℤ~-inv-r O       = idp
-ℤ~-inv-r (pos n) = ℤ-inv-r-pos n
-ℤ~-inv-r (neg n) = ℤ-inv-r-neg n
+ℤ~-inv-r (pos n) = ℤ~-inv-r-pos n
+ℤ~-inv-r (neg n) = ℤ~-inv-r-neg n
 
 ℤ~-inv-l : ∀ z → ℤ~ z ℤ+ z == O
 ℤ~-inv-l O       = idp
-ℤ~-inv-l (pos n) = ℤ-inv-r-neg n
-ℤ~-inv-l (neg n) = ℤ-inv-r-pos n
+ℤ~-inv-l (pos n) = ℤ~-inv-r-neg n
+ℤ~-inv-l (neg n) = ℤ~-inv-r-pos n
 
 -- TODO Wait for the pending changes in lib.types.Group
 ℤ-group : Group ℤ
