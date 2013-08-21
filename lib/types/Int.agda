@@ -2,6 +2,7 @@
 
 open import lib.Basics
 open import lib.types.Nat
+open import lib.types.Group
 
 module lib.types.Int where
 
@@ -107,3 +108,120 @@ abstract
   ℤ-is-set = dec-eq-is-set ℤ-has-dec-eq
 
 ℤ-level = ℤ-is-set
+
+{-
+  ℤ is also a group!
+-}
+
+-- inv
+ℤ~ : ℤ → ℤ
+ℤ~ O = O
+ℤ~ (pos n) = neg n
+ℤ~ (neg n) = pos n
+
+-- comp
+_ℤ+_ : ℤ → ℤ → ℤ
+O         ℤ+ z = z
+pos O     ℤ+ z = succ z
+pos (S n) ℤ+ z = succ (pos n ℤ+ z)
+neg O     ℤ+ z = pred z
+neg (S n) ℤ+ z = pred (neg n ℤ+ z)
+
+-- unit-l
+ℤ+-unit-l : ∀ z → O ℤ+ z == z
+ℤ+-unit-l _ = idp
+
+-- unit-r
+private
+  ℤ+-unit-r-pos : ∀ n → pos n ℤ+ O == pos n
+  ℤ+-unit-r-pos O     = idp
+  ℤ+-unit-r-pos (S n) = ap succ $ ℤ+-unit-r-pos n
+
+  ℤ+-unit-r-neg : ∀ n → neg n ℤ+ O == neg n
+  ℤ+-unit-r-neg O     = idp
+  ℤ+-unit-r-neg (S n) = ap pred $ ℤ+-unit-r-neg n
+
+ℤ+-unit-r : ∀ z → z ℤ+ O == z
+ℤ+-unit-r O = idp
+ℤ+-unit-r (pos n) = ℤ+-unit-r-pos n
+ℤ+-unit-r (neg n) = ℤ+-unit-r-neg n
+
+-- assoc
+succ-ℤ+ : ∀ z₁ z₂ → succ z₁ ℤ+ z₂ == succ (z₁ ℤ+ z₂)
+succ-ℤ+ O _ = idp
+succ-ℤ+ (pos n) _ = idp
+succ-ℤ+ (neg O) _ = ! $ succ-pred _
+succ-ℤ+ (neg (S n)) _ = ! $ succ-pred _
+
+pred-ℤ+ : ∀ z₁ z₂ → pred z₁ ℤ+ z₂ == pred (z₁ ℤ+ z₂)
+pred-ℤ+ O _ = idp
+pred-ℤ+ (neg n) _ = idp
+pred-ℤ+ (pos O) _ = ! $ pred-succ _
+pred-ℤ+ (pos (S n)) _ = ! $ pred-succ _
+
+private
+  ℤ+-assoc-pos : ∀ n₁ z₂ z₃ → (pos n₁ ℤ+ z₂) ℤ+ z₃ == pos n₁ ℤ+ (z₂ ℤ+ z₃)
+  ℤ+-assoc-pos O      z₂ z₃ = succ-ℤ+ z₂ z₃
+  ℤ+-assoc-pos (S n₁) z₂ z₃ =
+    succ (pos n₁ ℤ+ z₂) ℤ+ z₃     =⟨ succ-ℤ+ (pos n₁ ℤ+ z₂) z₃ ⟩
+    succ ((pos n₁ ℤ+ z₂) ℤ+ z₃)   =⟨ ap succ $ ℤ+-assoc-pos n₁ z₂ z₃ ⟩
+    succ (pos n₁ ℤ+ (z₂ ℤ+ z₃))   ∎
+
+  ℤ+-assoc-neg : ∀ n₁ z₂ z₃ → (neg n₁ ℤ+ z₂) ℤ+ z₃ == neg n₁ ℤ+ (z₂ ℤ+ z₃)
+  ℤ+-assoc-neg O      z₂ z₃ = pred-ℤ+ z₂ z₃
+  ℤ+-assoc-neg (S n₁) z₂ z₃ =
+    pred (neg n₁ ℤ+ z₂) ℤ+ z₃     =⟨ pred-ℤ+ (neg n₁ ℤ+ z₂) z₃ ⟩
+    pred ((neg n₁ ℤ+ z₂) ℤ+ z₃)   =⟨ ap pred $ ℤ+-assoc-neg n₁ z₂ z₃ ⟩
+    pred (neg n₁ ℤ+ (z₂ ℤ+ z₃))   ∎
+
+ℤ+-assoc : ∀ z₁ z₂ z₃ → (z₁ ℤ+ z₂) ℤ+ z₃ == z₁ ℤ+ (z₂ ℤ+ z₃)
+ℤ+-assoc O        _ _ = idp
+ℤ+-assoc (pos n₁) _ _ = ℤ+-assoc-pos n₁ _ _
+ℤ+-assoc (neg n₁) _ _ = ℤ+-assoc-neg n₁ _ _
+
+private
+  pos-S-ℤ+-neg-S : ∀ n₁ n₂ → pos (S n₁) ℤ+ neg (S n₂) == pos n₁ ℤ+ neg n₂
+  pos-S-ℤ+-neg-S O      n₂ = idp
+  pos-S-ℤ+-neg-S (S n₁) n₂ = ap succ $ pos-S-ℤ+-neg-S n₁ n₂
+
+  neg-S-ℤ+-pos-S : ∀ n₁ n₂ → neg (S n₁) ℤ+ pos (S n₂) == neg n₁ ℤ+ pos n₂
+  neg-S-ℤ+-pos-S O      n₂ = idp
+  neg-S-ℤ+-pos-S (S n₁) n₂ = ap pred $ neg-S-ℤ+-pos-S n₁ n₂
+
+  ℤ-inv-r-pos : ∀ n → pos n ℤ+ neg n == O
+  ℤ-inv-r-pos O     = idp
+  ℤ-inv-r-pos (S n) =
+    pos (S n) ℤ+ neg (S n)  =⟨ pos-S-ℤ+-neg-S n n ⟩
+    pos n ℤ+ neg n          =⟨ ℤ-inv-r-pos n ⟩
+    O                       ∎
+
+  ℤ-inv-r-neg : ∀ n → neg n ℤ+ pos n == O
+  ℤ-inv-r-neg O     = idp
+  ℤ-inv-r-neg (S n) =
+    neg (S n) ℤ+ pos (S n)  =⟨ neg-S-ℤ+-pos-S n n ⟩
+    neg n ℤ+ pos n          =⟨ ℤ-inv-r-neg n ⟩
+    O                       ∎
+
+ℤ~-inv-r : ∀ z → z ℤ+ ℤ~ z == O
+ℤ~-inv-r O       = idp
+ℤ~-inv-r (pos n) = ℤ-inv-r-pos n
+ℤ~-inv-r (neg n) = ℤ-inv-r-neg n
+
+ℤ~-inv-l : ∀ z → ℤ~ z ℤ+ z == O
+ℤ~-inv-l O       = idp
+ℤ~-inv-l (pos n) = ℤ-inv-r-neg n
+ℤ~-inv-l (neg n) = ℤ-inv-r-pos n
+
+-- TODO Wait for the pending changes in lib.types.Group
+ℤ-group : Group ℤ
+ℤ-group = record
+  { El-level = ℤ-is-set
+  ; ident = O
+  ; inv = ℤ~
+  ; comp = _ℤ+_
+  ; unitl = ℤ+-unit-l
+  ; unitr = ℤ+-unit-r
+  ; assoc = ℤ+-assoc
+  ; invr = ℤ~-inv-r
+  ; invl = ℤ~-inv-l
+  }
