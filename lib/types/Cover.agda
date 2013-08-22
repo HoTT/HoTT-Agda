@@ -14,7 +14,7 @@ module lib.types.Cover {i} where
 {-
   The definition of covering spaces.
 -}
-record Cover (A : Type i) {j} : Type (lmax i (lsucc j)) where
+record Cover (A : Type i) j : Type (lmax i (lsucc j)) where
   constructor cover
   field
     Fiber : A → Type j
@@ -27,25 +27,25 @@ module _ {A : Type i} {j} where
   open Cover
 
   private
-    cover=′ : (c₁ c₂ : Cover A {j}) → Fiber c₁ == Fiber c₂ → c₁ == c₂
+    cover=′ : (c₁ c₂ : Cover A j) → Fiber c₁ == Fiber c₂ → c₁ == c₂
     cover=′ (cover f _) (cover .f _) idp = ap (cover f) $
       prop-has-all-paths (Π-is-prop λ _ → is-set-is-prop) _ _
 
-  cover= : (c₁ c₂ : Cover A {j}) → (∀ a → Fiber c₁ a ≃ Fiber c₂ a)
+  cover= : (c₁ c₂ : Cover A j) → (∀ a → Fiber c₁ a ≃ Fiber c₂ a)
     → c₁ == c₂
   cover= c₁ c₂ F≃ = cover=′ c₁ c₂ (λ= λ a → ua $ F≃ a)
 
   -- The definition of universality in terms of connectedness.
-  is-universal : Cover A {j} → Type (lmax i j)
+  is-universal : Cover A j → Type (lmax i j)
   is-universal (cover F _) = is-connected ⟨1⟩ $ Σ A F
 
   -- In terms of connectedness
   UniversalCover : Type (lmax i (lsucc j))
-  UniversalCover = Σ (Cover A {j}) is-universal
+  UniversalCover = Σ (Cover A j) is-universal
 
 -- Theorem: A covering space keeps higher homotopy groups.
 module _ (A∙ : Ptd i)
-  {j} (c : Cover (fst A∙) {j})
+  {j} (c : Cover (fst A∙) j)
   (a↑ : Cover.Fiber c (snd A∙)) where
 
   open Cover c

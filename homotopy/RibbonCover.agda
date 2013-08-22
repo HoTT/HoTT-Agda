@@ -12,7 +12,7 @@ open import HoTT
 -- A is the pointed base space.
 -- El is intended to be a (group-)set,
 module homotopy.RibbonCover {i} (A∙ : Ptd i)
-  {j} (gs : Gset (fundamental-group A∙) {j}) where
+  {j} (gs : Gset (fundamental-group A∙) j) where
 
   private
     A = fst A∙
