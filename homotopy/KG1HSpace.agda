@@ -3,10 +3,12 @@
 open import HoTT
 open import homotopy.HSpace
 
-module homotopy.KG1HSpace {i} {El : Type i} (A : AbelianGroup El) where
+module homotopy.KG1HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
 
-open Group (fst A)
-open KG1 (fst A)
+open Group A
+open GroupStructure group-struct
+
+open KG1 A
 
 mult-loop : (g : El) (x : KG1) → x == x
 mult-loop g = KG1-elim 
@@ -20,13 +22,13 @@ mult-loop g = KG1-elim
     loop' : (g' : El) → kloop g == kloop g [ (λ x → x == x) ↓ kloop g' ]
     loop' g' = ↓-idf=idf-in $
       kloop g ∙ kloop g'     =⟨ ! (kloop-comp g g') ⟩
-      kloop (comp g g')      =⟨ ap kloop (snd A g g') ⟩
+      kloop (comp g g')      =⟨ ap kloop (A-abelian g g') ⟩
       kloop (comp g' g)      =⟨ kloop-comp g' g ⟩
       kloop g' ∙ kloop g     =⟨ ∙=∙' (kloop g') (kloop g) ⟩
       kloop g' ∙' kloop g    ∎
 
-mult-hom : GroupHom (fst A) 
-             (PathGroup ((KG1 → KG1) , Π-level (λ _ → klevel)) (λ x → x))
+mult-hom : GroupHom A 
+  (Ω^-group 1 ((KG1 → KG1) , (λ x → x)) (Π-level (λ _ → klevel)))
 mult-hom = record {f = f; pres-ident = pres-ident; pres-comp = pres-comp}
   where
   f = λ g → λ= (mult-loop g)

@@ -175,22 +175,22 @@ private
 
 abstract
   main-lemma-iso : 
-       Ω^-groupΣ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))) Trunc-level
-    == Ω^-groupΣ 1 (Ptd-Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
+       Ω^-group 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))) Trunc-level
+    == Ω^-group 1 (Ptd-Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
   main-lemma-iso = group-iso 
     (record {f = f; pres-ident = pres-ident; pres-comp = pres-comp})
     ie 
     where open Iso
 
 abstract
-  π₂-Suspension : πΣ 2 (Ptd-Susp (A , e)) == πΣ 1 (A , e)
+  π₂-Suspension : π 2 (Ptd-Susp (A , e)) == π 1 (A , e)
   π₂-Suspension = 
-    πΣ 2 (Ptd-Susp (A , e))
+    π 2 (Ptd-Susp (A , e))
       =⟨ π-inner-iso 1 (Ptd-Susp (A , e)) ⟩
-    πΣ 1 (Ptd-Ω (Ptd-Susp (A , e)))
+    π 1 (Ptd-Ω (Ptd-Susp (A , e)))
       =⟨ ! (π-Trunc-shift-iso 1 (Ptd-Ω (Ptd-Susp (A , e)))) ⟩
-    Ω^-groupΣ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))) Trunc-level
+    Ω^-group 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))) Trunc-level
       =⟨ main-lemma-iso ⟩
-    Ω^-groupΣ 1 (Ptd-Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
+    Ω^-group 1 (Ptd-Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
       =⟨ π-Trunc-shift-iso 1 (A , e) ⟩
-    πΣ 1 (A , e) ∎
+    π 1 (A , e) ∎

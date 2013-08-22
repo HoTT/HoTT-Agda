@@ -212,11 +212,9 @@ private
 ℤ~-inv-l (pos n) = ℤ~-inv-r-neg n
 ℤ~-inv-l (neg n) = ℤ~-inv-r-pos n
 
--- TODO Wait for the pending changes in lib.types.Group
-ℤ-group : Group ℤ
-ℤ-group = record
-  { El-level = ℤ-is-set
-  ; ident = O
+ℤ-group-structure : GroupStructure ℤ ℤ-is-set
+ℤ-group-structure = record
+  { ident = O
   ; inv = ℤ~
   ; comp = _ℤ+_
   ; unitl = ℤ+-unit-l
@@ -225,3 +223,6 @@ private
   ; invr = ℤ~-inv-r
   ; invl = ℤ~-inv-l
   }
+
+ℤ-group : Group₀
+ℤ-group = group _ _ ℤ-group-structure

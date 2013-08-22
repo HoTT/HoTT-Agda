@@ -15,9 +15,10 @@ open import lib.types.HomotopyGroup
 
 module lib.types.KG1 where
 
-module KG1 {i} {El : Type i} (G : Group El) where
+module KG1 {i} (G : Group i) where
 
   open Group G
+  open GroupStructure group-struct
 
   private
     data #KG1-aux : Type i where
@@ -39,7 +40,8 @@ module KG1 {i} {El : Type i} (G : Group El) where
     kloop-comp : ∀ g₁ g₂ → kloop (comp g₁ g₂) == kloop g₁ ∙ kloop g₂
 
   module KG1Rec {j} {C : ⟨ 1 ⟩ -Type j}
-    (kbase* : fst C) (hom* : GroupHom G (PathGroup C kbase*)) where
+    (kbase* : fst C) 
+    (hom* : GroupHom G (Ω^-group 1 (fst C , kbase*) (snd C))) where
 
     f : KG1 → fst C
     f (#kg1 #kbase _) = kbase*
@@ -97,8 +99,9 @@ module KG1 {i} {El : Type i} (G : Group El) where
         (prop-has-all-paths-↓ {B = is-equiv} (is-equiv-is-prop _)) 
 
 
-    Codes-hom : GroupHom G (PathGroup ((⟨0⟩ -Type i) , (⟨0⟩ -Type-level i))
-                                      (El , El-level))
+    Codes-hom : GroupHom 
+      G 
+      (Ω^-group 1 ((⟨0⟩ -Type i) , (El , El-level)) (⟨0⟩ -Type-level i))
     Codes-hom = record {f = f; pres-ident = pri; pres-comp = prc}
       where 
         -- saving some space
@@ -198,7 +201,7 @@ module KG1 {i} {El : Type i} (G : Group El) where
     π₁-path : Trunc ⟨0⟩ (kbase == kbase) == El
     π₁-path = ap (Trunc ⟨0⟩) Ω¹-path ∙ ua (unTrunc-equiv El El-level)
 
-    π₁-iso : πΣ 1 (KG1 , kbase) == (El , G)
+    π₁-iso : π 1 (KG1 , kbase) == G
     π₁-iso = ! $ group-iso 
       (record { f = [_] ∘ decode';
                 pres-ident = ap [_] kloop-ident; 

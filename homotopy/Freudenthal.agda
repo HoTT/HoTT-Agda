@@ -233,8 +233,8 @@ module FreudenthalIso
     pres-comp = ap^-conc^ k (decodeN , decodeN-pt) }
     where F = ap^ k (decodeN , decodeN-pt)
 
-  iso : Ω^-groupΣ k (Ptd-Trunc ⟨ k ⟩ X) Trunc-level
-     == Ω^-groupΣ k (Ptd-Trunc ⟨ k ⟩ (Ptd-Ω (Ptd-Susp X))) Trunc-level
+  iso : Ω^-group k (Ptd-Trunc ⟨ k ⟩ X) Trunc-level
+     == Ω^-group k (Ptd-Trunc ⟨ k ⟩ (Ptd-Ω (Ptd-Susp X))) Trunc-level
   iso = group-iso hom (is-equiv-ap^ k (decodeN , decodeN-pt) (snd eqv))
 
   

@@ -16,9 +16,9 @@ module lib.types.HomotopyGroup where
 {- Higher homotopy groups -}
 module _ {i} where
 
-  π : (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) → Group (Trunc ⟨0⟩ (Ω^ n X))
-  π n X = record {
-    El-level = Trunc-level;
+  π-structure : (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) 
+    → GroupStructure (Trunc ⟨0⟩ (Ω^ n X)) Trunc-level
+  π-structure n X = record {
     ident = ident; inv = inv; comp = comp;
     unitl = unitl; unitr = unitr; assoc = assoc;
     invr = invr; invl = invl }
@@ -62,16 +62,16 @@ module _ {i} where
         (λ _ → =-preserves-level _ Trunc-level)
         (ap [_] ∘ !^-inv-l n)
 
-  πΣ : (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) → Σ (Type i) Group
-  πΣ n X = (Trunc ⟨0⟩ (Ω^ n X) , π n X)
+  π : (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) → Group i
+  π n X = group _ _ (π-structure n X)
 
-  fundamental-group : (X : Ptd i) → Group (Trunc ⟨0⟩ (Ω^ 1 X))
+  fundamental-group : (X : Ptd i) → Group i
   fundamental-group X = π 1 ⦃ ℕ-S≠O#instance ⦄ X
 
 {- π_(n+1) of a space is π_n of its loop space -}
 abstract
   π-inner-iso : ∀ {i} (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i)
-    → πΣ (S n) X == πΣ n (Ptd-Ω X)
+    → π (S n) X == π n (Ptd-Ω X)
   π-inner-iso O ⦃ posi ⦄ X = ⊥-rec (posi idp)
   π-inner-iso (S n') ⦃ posi ⦄ X = group-iso 
     (record { 
@@ -123,7 +123,7 @@ module _ {i} where
                    ∘e equiv-ap^ 1 (Ω^Ts-PreIso.F r) (Ω^Ts-PreIso.e r)) }
 
   π-Trunc-shift-iso : (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) 
-    → Ω^-groupΣ n (Ptd-Trunc ⟨ n ⟩ X) Trunc-level == πΣ n X 
+    → Ω^-group n (Ptd-Trunc ⟨ n ⟩ X) Trunc-level == π n X 
   π-Trunc-shift-iso n X = group-iso 
     (record {f = fst F; pres-ident = snd F; pres-comp = pres-comp })
     e
@@ -138,19 +138,19 @@ module _ {i} where
 
 abstract
   π-Trunc-≤T-iso : ∀ {i} (n : ℕ) ⦃ _ : n ≠ O ⦄ (m : ℕ₋₂) (X : Ptd i)
-    → (⟨ n ⟩ ≤T m) → πΣ n (Ptd-Trunc m X) == πΣ n X
+    → (⟨ n ⟩ ≤T m) → π n (Ptd-Trunc m X) == π n X
   π-Trunc-≤T-iso n m X lte = 
-    πΣ n (Ptd-Trunc m X) 
+    π n (Ptd-Trunc m X) 
       =⟨ ! (π-Trunc-shift-iso n (Ptd-Trunc m X)) ⟩
-    Ω^-groupΣ n (Ptd-Trunc ⟨ n ⟩ (Ptd-Trunc m X)) Trunc-level
+    Ω^-group n (Ptd-Trunc ⟨ n ⟩ (Ptd-Trunc m X)) Trunc-level
       =⟨ lemma ⟩
-    Ω^-groupΣ n (Ptd-Trunc ⟨ n ⟩ X) Trunc-level
+    Ω^-group n (Ptd-Trunc ⟨ n ⟩ X) Trunc-level
       =⟨ π-Trunc-shift-iso n X ⟩
-    πΣ n X ∎
+    π n X ∎
     where
-    lemma : Ω^-groupΣ n (Ptd-Trunc ⟨ n ⟩ (Ptd-Trunc m X)) Trunc-level
-         ==  Ω^-groupΣ n (Ptd-Trunc ⟨ n ⟩ X) Trunc-level
-    lemma = ap (uncurry $ Ω^-groupΣ n) $
+    lemma : Ω^-group n (Ptd-Trunc ⟨ n ⟩ (Ptd-Trunc m X)) Trunc-level
+         ==  Ω^-group n (Ptd-Trunc ⟨ n ⟩ X) Trunc-level
+    lemma = ap (uncurry $ Ω^-group n) $
       pair= 
         (ptd-ua (fuse-Trunc (fst X) ⟨ n ⟩ m) idp ∙ 
          ap (λ k → Ptd-Trunc k X) (minT-out-l lte)) 

@@ -145,10 +145,11 @@ module _ {i} where
 module _ {i} (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) (pX : has-level ⟨ n ⟩ (fst X))
   where
 
-  Ω^-group : Group (Ω^ n X)
-  Ω^-group = record {
-    El-level = Ω^-level-in ⟨0⟩ n X $
-      transport (λ t → has-level t (fst X)) (+2+-comm ⟨0⟩ (n -2)) pX;
+  Ω^-group-structure : GroupStructure 
+    (Ω^ n X)
+    (Ω^-level-in ⟨0⟩ n X $
+       transport (λ t → has-level t (fst X)) (+2+-comm ⟨0⟩ (n -2)) pX)
+  Ω^-group-structure = record {
     ident = idp^ n;
     inv = !^ n;
     comp = conc^ n;
@@ -159,10 +160,8 @@ module _ {i} (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) (pX : has-level ⟨ n ⟩
     invl = !^-inv-l n
     }
 
-  Ω^-groupΣ : Σ (Type i) Group
-  Ω^-groupΣ = (Ω^ n X , Ω^-group)
-
-
+  Ω^-group : Group i
+  Ω^-group = group _ _ Ω^-group-structure
 
 {- Our definition of Ω^ builds up loops on the outside,
  - but this is equivalent to building up on the inside -}  
