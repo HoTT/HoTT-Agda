@@ -19,6 +19,7 @@ record Cover (A : Type i) {j} : Type (lmax i (lsucc j)) where
   field
     Fiber : A → Type j
     Fiber-level : ∀ a → is-set (Fiber a)
+  Fiber-is-set = Fiber-level
 
 -- Basic tools
 module _ {A : Type i} {j} where
