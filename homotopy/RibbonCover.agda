@@ -12,7 +12,7 @@ open import HoTT
 -- A is the pointed base space.
 -- El is intended to be a (group-)set,
 module homotopy.RibbonCover {i} (A∙ : Ptd i)
-  {j} (gs : Gset (π 1 A∙) {j})  where
+  {j} (gs : Gset (fundamental-group A∙) {j}) where
 
   private
     A = fst A∙
@@ -24,14 +24,14 @@ module homotopy.RibbonCover {i} (A∙ : Ptd i)
   -- The HIT ribbon---reconstructed covering space
   private
     data #Ribbon-aux (a₂ : A) : Type (lmax i j) where
-      #trace : El →  a =₀ a₂ → #Ribbon-aux a₂
+      #trace : El → a =₀ a₂ → #Ribbon-aux a₂
 
     data #Ribbon (a₂ : A) : Type (lmax i j) where
       #ribbon : #Ribbon-aux a₂ → (Unit → Unit) → #Ribbon a₂
-      
+
   Ribbon : A → Type (lmax i j)
   Ribbon = #Ribbon
-      
+
   -- A point in the fiber [a₂].
   {-
     [e] is a point in the [fiber a], and
@@ -39,7 +39,7 @@ module homotopy.RibbonCover {i} (A∙ : Ptd i)
   -}
   trace : ∀ {a₂} → El → a =₀ a₂ → Ribbon a₂
   trace el p = #ribbon (#trace el p) _
-      
+
   {-
     A loop based at [a] can used as a group action
     or for concatination.  Both should be equivalent.
@@ -53,7 +53,9 @@ module homotopy.RibbonCover {i} (A∙ : Ptd i)
     due to [paste].
   -}
   postulate -- HIT
-    Ribbon-level : ∀ a₂ → is-set (Ribbon a₂)
+    Ribbon-is-set : ∀ {a₂} → is-set (Ribbon a₂)
+
+  Ribbon-level = Ribbon-is-set
 
   -- Elimination rules.
   module RibbonElim a₂ {j} {P : Ribbon a₂ → Type j}
@@ -65,7 +67,7 @@ module homotopy.RibbonCover {i} (A∙ : Ptd i)
 
     f : Π (Ribbon a₂) P
     f = f-aux phantom phantom where
- 
+
       f-aux : Phantom trace* → Phantom paste* → Π (Ribbon a₂) P
       f-aux phantom phantom (#ribbon (#trace el p) _) = trace* el p
 
