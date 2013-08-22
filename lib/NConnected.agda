@@ -14,12 +14,12 @@ open import lib.types.Suspension
 
 module lib.NConnected where
 
-is-conn-map : ∀ {i j} {A : Type i} {B : Type j} → ℕ₋₂ → (A → B) → Type (lmax i j)
-is-conn-map {A = A} {B = B} n f = 
-  Π B (λ b → is-contr $ Trunc n (Σ A (λ a → f a == b)))
-
 is-connected : ∀ {i} → ℕ₋₂ → Type i → Type i
 is-connected n A = is-contr (Trunc n A)
+
+is-conn-map : ∀ {i j} {A : Type i} {B : Type j} → ℕ₋₂ → (A → B) → Type (lmax i j)
+is-conn-map {A = A} {B = B} n f =
+  Π B (λ b → is-connected n (Σ A (λ a → f a == b)))
 
 {- all inhabited types are ⟨-1⟩-connected -}
 inhab-conn : ∀ {i} (A : Type i) (a : A) → is-connected ⟨-1⟩ A
