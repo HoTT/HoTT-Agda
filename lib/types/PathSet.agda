@@ -92,7 +92,7 @@ module _ {i} {A : Type i} where
       (λ _ → Π-is-set λ _ → =-preserves-level ⟨0⟩ C-level)
       (λ q a → coe-∙ p q a))
 
-  trans₀-∙₀ : ∀ {i} {A : Type i} {j} {B : A → Type j}
+  trans₀-∙₀ : ∀ {j} {B : A → Type j}
     → (B-level : ∀ {a} → is-set (B a))
     → {x y z : A} (p : x =₀ y) (q : y =₀ z) (b : B x)
     → transport₀ B B-level (p ∙₀ q) b
