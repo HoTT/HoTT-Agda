@@ -34,6 +34,7 @@ open import lib.types.HomotopyGroup public
 open import lib.types.PathSet public
 open import lib.types.FundamentalGroupoid public
 open import lib.types.Cover public
+open import lib.types.OneSkeleton public
 
 open import lib.types.PathSeq public
 
