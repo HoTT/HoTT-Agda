@@ -32,8 +32,8 @@ ap₀ f = Trunc-rec Trunc-level ([_] ∘ ap f)
 coe₀ : ∀ {i} {A B : Type i} (_ : is-set B) (p : A =₀ B) → A → B
 coe₀ B-level = Trunc-rec (→-is-set B-level) coe
 
-transport₀ : ∀ {i j} {A : Type i} (B : A → Type j)
-  (B-level : ∀ {a} → is-set (B a)) {x y : A} (p : x =₀ y) → (B x → B y)
+transport₀ : ∀ {i j} {A : Type i} (B : A → Type j) {x y : A}
+  (B-level : is-set (B y)) (p : x =₀ y) → (B x → B y)
 transport₀ B B-level p = coe₀ B-level (ap₀ B p)
 
 module _ {i} {A : Type i} where

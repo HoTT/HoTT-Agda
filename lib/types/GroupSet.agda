@@ -32,6 +32,7 @@ module lib.types.GroupSet {i} where
       El-level : is-set El
       gset-struct : GsetStructure grp El El-level
     open GsetStructure gset-struct public
+    El-is-set = El-level
 
   -- A helper function to establish equivalence between two G-sets.
   -- Many data are just props and this function do the coversion for them
@@ -86,9 +87,13 @@ module lib.types.GroupSet {i} where
         gset='' idp idp (gset-structure= λ x g → act= idp g)
 
     gset= : ∀ {gs₁ gs₂ : Gset grp j}
-      → (El= : El gs₁ == El gs₂)
-      → (∀ {x₁} {x₂} (p : x₁ == x₂ [ idf _ ↓ El= ]) g
-          → act gs₁ x₁ g == act gs₂ x₂ g [ idf _ ↓ El= ])
+      → (El≃ : El gs₁ ≃ El gs₂)
+      → (∀ {x₁} {x₂}
+          → –> El≃ x₁ == x₂
+          → ∀ g → –> El≃ (act gs₁ x₁ g) == act gs₂ x₂ g)
       → gs₁ == gs₂
-    gset= El= act= =
-      gset=' El= (prop-has-all-paths-↓ is-set-is-prop) act=
+    gset= El≃ act= =
+      gset='
+        (ua El≃)
+        (prop-has-all-paths-↓ is-set-is-prop)
+        (λ x= g → ↓-idf-ua-in El≃ $ act= (↓-idf-ua-out El≃ x=) g)
