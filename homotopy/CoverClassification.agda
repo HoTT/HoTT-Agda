@@ -15,33 +15,12 @@ module homotopy.CoverClassification {i} (A : Type i)
   gset-to-cover : ∀ {j} a₁ → Gset (π1A a₁) j → Cover A (lmax i j)
   gset-to-cover a₁ gs = Ribbon-cover (A , a₁) gs
 
-  module _ where
-    cover-trace* : ∀ {j} (cov : Cover A j) {a₁ a₂}
-      → Cover.Fiber cov a₁ → a₁ =₀ a₂
-      → Cover.Fiber cov a₂
-    cover-trace* cov a↑ p =
-      transport₀ (Fiber cov) (Fiber-is-set cov _) p a↑
-
-    abstract
-      cover-trace*-idp₀ : ∀ {j} (cov : Cover A j) {a₁}
-        → (a↑ : Cover.Fiber cov a₁)
-        → cover-trace* cov a↑ idp₀ == a↑
-      cover-trace*-idp₀ cov a↑ = idp
-
-      cover-paste* : ∀ {j} (cov : Cover A j) {a₁ a₂}
-        → (a↑ : Cover.Fiber cov a₁)
-        → (loop : a₁ =₀ a₁)
-        → (p : a₁ =₀ a₂)
-        → cover-trace* cov (cover-trace* cov a↑ loop) p
-        == cover-trace* cov a↑ (loop ∙₀ p)
-      cover-paste* cov a↑ loop p = ! $ trans₀-∙₀ (λ {a} → Fiber-is-set cov a) loop p a↑
-
   cover-to-gset-struct : ∀ {j} (cov : Cover A j) (a₁ : A)
     → GsetStructure (π1A a₁) (Fiber cov a₁) (Fiber-is-set cov a₁)
   cover-to-gset-struct cov a₁ = record
-    { act = cover-trace* cov
-    ; unit-r = cover-trace*-idp₀ cov
-    ; assoc = cover-paste* cov
+    { act = cover-trace cov
+    ; unit-r = cover-trace-idp₀ cov
+    ; assoc = cover-paste cov
     }
 
   cover-to-gset : ∀ {j} → Cover A j → (a : A) → Gset (π1A a) j
@@ -67,7 +46,7 @@ module homotopy.CoverClassification {i} (A : Type i)
       fiber+path-to-ribbon : ∀ {a₁ a₂} (a↑ : Fiber cov a₂) (p : a₁ == a₂)
         → Ribbon (A , a₁) (cover-to-gset cov a₁) a₂
       fiber+path-to-ribbon {a₂} a↑ p =
-        trace (cover-trace* cov a↑ [ ! p ]) [ p ]
+        trace (cover-trace cov a↑ [ ! p ]) [ p ]
 
       abstract
         -- Our construction is "constant" with respect to paths.
@@ -75,7 +54,7 @@ module homotopy.CoverClassification {i} (A : Type i)
           ∀ {a₁ a₂} (a↑ : Fiber cov a₂) (p₁ p₂ : a₁ == a₂)
           → fiber+path-to-ribbon a↑ p₁ == fiber+path-to-ribbon a↑ p₂
         fiber+path-to-ribbon-is-path-irrelevant a↑ p idp =
-          trace (cover-trace* cov a↑ [ ! p ]) [ p ]
+          trace (cover-trace cov a↑ [ ! p ]) [ p ]
             =⟨ paste a↑ [ ! p ] [ p ] ⟩
           trace a↑ [ ! p ∙ p ]
             =⟨ ap (trace a↑) $ !₀-inv-l [ p ] ⟩
@@ -101,7 +80,7 @@ module homotopy.CoverClassification {i} (A : Type i)
   ribbon-to-fiber : ∀ {j} (cov : Cover A j) {a₁ a₂}
     → Ribbon (A , a₁) (cover-to-gset cov a₁) a₂ → Cover.Fiber cov a₂
   ribbon-to-fiber cov {a₁}{a₂} r =
-    Ribbon-rec (Fiber-is-set cov a₂) (cover-trace* cov) (cover-paste* cov) r
+    Ribbon-rec (Fiber-is-set cov a₂) (cover-trace cov) (cover-paste cov) r
 
   private
     -- Some routine computations.
@@ -115,7 +94,7 @@ module homotopy.CoverClassification {i} (A : Type i)
         (λ a↑ p → Trunc-elim
           -- All ugly things will go away when bp = proj bp′
           (λ bp → Ribbon-is-set
-                    (fiber+path₋₁-to-ribbon cov (cover-trace* cov a↑ p) bp)
+                    (fiber+path₋₁-to-ribbon cov (cover-trace cov a↑ p) bp)
                     (trace a↑ p))
           (lemma a↑ p)
           [base-path])
@@ -124,10 +103,10 @@ module homotopy.CoverClassification {i} (A : Type i)
           abstract
             lemma : ∀ {a₂} (a↑ : Cover.Fiber cov a₁) (p : a₁ =₀ a₂) (bp : a₁ == a₂)
               → trace {gs = cover-to-gset cov a₁}
-                  (cover-trace* cov (cover-trace* cov a↑ p) [ ! bp ]) [ bp ]
+                  (cover-trace cov (cover-trace cov a↑ p) [ ! bp ]) [ bp ]
               == trace a↑ p
             lemma a↑ p idp =
-              trace (cover-trace* cov a↑ p) idp₀
+              trace (cover-trace cov a↑ p) idp₀
                 =⟨ paste a↑ p idp₀ ⟩
               trace a↑ (p ∙₀ idp₀)
                 =⟨ ap (trace a↑) $ ∙₀-unit-r p ⟩
@@ -148,7 +127,7 @@ module homotopy.CoverClassification {i} (A : Type i)
         where
           abstract
             lemma : ∀ {a₂} (a↑ : Cover.Fiber cov a₂) (bp : a₁ == a₂)
-              → cover-trace* cov (cover-trace* cov a↑ [ ! bp ]) [ bp ]
+              → cover-trace cov (cover-trace cov a↑ [ ! bp ]) [ bp ]
               == a↑
             lemma a↑ idp = idp
 

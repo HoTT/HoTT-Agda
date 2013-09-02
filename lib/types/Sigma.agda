@@ -42,6 +42,25 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     → pair= p q == pair= p' q'
   pair== idp idp = idp
 
+module _ {i j} {A : Type i} {B : Type j} where
+
+  fst×= : {ab a'b' : A × B} (p : ab == a'b') → (fst ab == fst a'b')
+  fst×= = ap fst
+
+  snd×= : {ab a'b' : A × B} (p : ab == a'b')
+    → (snd ab == snd a'b')
+  snd×= = ap snd
+
+  fst×=-β : {a a' : A} (p : a == a')
+    {b b' : B} (q : b == b')
+    → fst×= (pair×= p q) == p
+  fst×=-β idp idp = idp
+
+  snd×=-β : {a a' : A} (p : a == a')
+    {b b' : B} (q : b == b')
+    → snd×= (pair×= p q) == q
+  snd×=-β idp idp = idp
+
 module _ {i j} {A : Type i} {B : A → Type j} where
 
   =Σ : (x y : Σ A B) → Type (lmax i j)

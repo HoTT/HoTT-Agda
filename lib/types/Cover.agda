@@ -8,6 +8,7 @@ open import lib.types.Pi
 open import lib.types.Sigma
 open import lib.types.Pointed
 open import lib.types.LoopSpace
+open import lib.types.PathSet
 
 module lib.types.Cover {i} where
 
@@ -20,6 +21,7 @@ record Cover (A : Type i) j : Type (lmax i (lsucc j)) where
     Fiber : A → Type j
     Fiber-level : ∀ a → is-set (Fiber a)
   Fiber-is-set = Fiber-level
+  TotalSpace = Σ A Fiber
 
 -- Basic tools
 module _ {A : Type i} {j} where
@@ -37,7 +39,7 @@ module _ {A : Type i} {j} where
 
   -- The definition of universality in terms of connectedness.
   is-universal : Cover A j → Type (lmax i j)
-  is-universal (cover F _) = is-connected ⟨1⟩ $ Σ A F
+  is-universal cov = is-connected ⟨1⟩ $ TotalSpace cov
 
   -- In terms of connectedness
   UniversalCover : Type (lmax i (lsucc j))
@@ -114,21 +116,26 @@ module _ (A∙ : Ptd i)
   Ω²ΣAFiber≃Ω²A : Ω^ 2 (Σ A F , (a , a↑)) ≃ Ω^ 2 A∙
   Ω²ΣAFiber≃Ω²A = to , is-eq to from to-from from-to
 
-{-
-tracing : ∀ cov → let open covering cov in
-  ∀ {a₁ a₂} → fiber a₁ → a₁ ≡₀ a₂ → fiber a₂
-tracing cov[ fiber , fiber-is-set ] y =
-  π₀-extend-nondep
-    ⦃ fiber-is-set _ ⦄
-    (λ p → transport fiber p y)
+-- A natural way to construct a G-set from covering spaces.
+module _ {A : Type i} where
+  open Cover
 
-compose-tracing : ∀ cov → let open covering cov in
-  ∀ {a₁ a₂ a₃} y (p₁ : a₁ ≡₀ a₂) (p₂ : a₂ ≡₀ a₃)
-  → tracing cov (tracing cov y p₁) p₂ ≡ tracing cov y (p₁ ∘₀ p₂)
-compose-tracing cov y = let open covering cov in
-  π₀-extend
-    ⦃ λ _ → Π-is-set λ _ → ≡-is-set $ fiber-is-set _ ⦄
-    (λ p₁ → π₀-extend
-      ⦃ λ _ → ≡-is-set $ fiber-is-set _ ⦄
-      (λ p₂ → compose-trans fiber p₂ p₁ y))
--}
+  cover-trace : ∀ {j} (cov : Cover A j) {a₁ a₂}
+    → Fiber cov a₁ → a₁ =₀ a₂
+    → Fiber cov a₂
+  cover-trace cov a↑ p =
+    transport₀ (Fiber cov) (Fiber-is-set cov _) p a↑
+
+  abstract
+    cover-trace-idp₀ : ∀ {j} (cov : Cover A j) {a₁}
+      → (a↑ : Fiber cov a₁)
+      → cover-trace cov a↑ idp₀ == a↑
+    cover-trace-idp₀ cov a↑ = idp
+
+    cover-paste : ∀ {j} (cov : Cover A j) {a₁ a₂}
+      → (a↑ : Fiber cov a₁)
+      → (loop : a₁ =₀ a₁)
+      → (p : a₁ =₀ a₂)
+      → cover-trace cov (cover-trace cov a↑ loop) p
+      == cover-trace cov a↑ (loop ∙₀ p)
+    cover-paste cov a↑ loop p = ! $ trans₀-∙₀ (λ {a} → Fiber-is-set cov a) loop p a↑
