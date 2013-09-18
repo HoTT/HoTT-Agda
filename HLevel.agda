@@ -24,10 +24,7 @@ is-gpd  = is-truncated ⟨1⟩
 -- The original notion of h-level can be defined in the following way.
 -- We won’t use this definition though.
 is-hlevel : ℕ → (Set i → Set i)
-is-hlevel n A = is-truncated (n -2) A where
-  _-2 : ℕ → ℕ₋₂
-  O -2 = ⟨-2⟩
-  (S n) -2 = S (n -2)
+is-hlevel n = is-truncated (n -2)
 
 -- The following property is equivalent to being a proposition
 has-all-paths : Set i → Set i

@@ -88,6 +88,12 @@ S n + m = S (n + m)
 +0-is-id O = refl
 +0-is-id (S n) = ap S (+0-is-id n)
 
++-comm : (n m : ℕ) → n + m ≡ m + n
++-comm n     0     = +0-is-id n
++-comm 0     (S m) = ap S (+-comm 0 m)
++-comm (S n) (S m) = ap S (+-comm n (S m)
+                         ∘ !(+-comm m (S n) ∘ ap S (+-comm n m)))
+
 private
   ℤ-get-pos : ℤ → ℕ
   ℤ-get-pos O = 0
