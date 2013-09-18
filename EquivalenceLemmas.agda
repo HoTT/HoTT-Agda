@@ -15,5 +15,5 @@ open import HLevelBis
 
 module EquivalenceLemmas where
 
-  equiv-eq : ∀ {i} {A B : Set i} {f g : A ≃ B} → π₁ f ≡ π₁ g → f ≡ g
+  equiv-eq : ∀ {i j} {A : Set i} {B : Set j} {f g : A ≃ B} → π₁ f ≡ π₁ g → f ≡ g
   equiv-eq p = Σ-eq p $ prop-has-all-paths (is-equiv-is-prop _) _ _
