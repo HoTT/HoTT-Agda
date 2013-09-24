@@ -132,6 +132,16 @@ i1 ∘ise i2 = snd ((_ , i1) ∘e (_ , i2))
 _⁻¹ : ∀ {i j} {A : Type i} {B : Type j} → (A ≃ B) → (B ≃ A)
 e ⁻¹ = equiv (<– e) (–> e) (<–-inv-l e) (<–-inv-r e)
 
+{- Equational reasoning for equivalences -}
+infix  2 _≃∎
+infixr 2 _≃⟨_⟩_
+
+_≃⟨_⟩_ : ∀ {i j k} (A : Type i) {B : Type j} {C : Type k} → A ≃ B → B ≃ C → A ≃ C
+A ≃⟨ u ⟩ v = v ∘e u
+
+_≃∎ : ∀ {i} (A : Type i) → A ≃ A
+_≃∎ = ide
+
 {- Any contractible type is equivalent to all liftings of the unit type -}
 contr-equiv-LiftUnit : ∀ {i j} {A : Type i} → (is-contr A → A ≃ Lift {j = j} Unit)
 contr-equiv-LiftUnit e =
