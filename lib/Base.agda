@@ -180,6 +180,8 @@ Shorter notation for Π-types.
 Σ-types are defined as a record so that we have definitional η.
 -}
 
+infix 1 _,_
+
 record Σ {i j} (A : Type i) (B : A → Type j) : Type (lmax i j) where
   constructor _,_
   field
