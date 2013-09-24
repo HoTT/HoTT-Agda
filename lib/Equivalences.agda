@@ -109,8 +109,8 @@ idf-is-equiv A = is-eq _ (idf A) (λ _ → idp) (λ _ → idp)
 ide : ∀ {i} (A : Type i) → A ≃ A
 ide A = equiv (idf A) (idf A) (λ _ → idp) (λ _ → idp)
 
-infixr 2 _∘e_
-infixr 2 _∘ise_
+infixr 4 _∘e_
+infixr 4 _∘ise_
 
 _∘e_ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
   → B ≃ C → A ≃ B → A ≃ C
