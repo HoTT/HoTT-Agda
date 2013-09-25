@@ -186,3 +186,14 @@ module _ {i j} {A : Type i} {B : A → Type j} where
 
   hfiber-fst : ∀ a → hfiber (fst :> (Σ A B → A)) a ≃ B a
   hfiber-fst a = to a , is-eq (to a) (from a) (to-from a) (from-to a)
+
+module _ where
+  -- An orphan lemma.
+  ↓-cst×app-in : ∀ {i j k} {A : Type i}
+    {B : Type j} {C : A → B → Type k}
+    {a₁ a₂ : A} (p : a₁ == a₂)
+    {b₁ b₂ : B} (q : b₁ == b₂)
+    {c₁ : C a₁ b₁}{c₂ : C a₂ b₂}
+    → c₁ == c₂ [ uncurry C ↓ pair×= p q ]
+    → (b₁ , c₁) == (b₂ , c₂) [ (λ x → Σ B (C x)) ↓ p ]
+  ↓-cst×app-in idp idp idp = idp

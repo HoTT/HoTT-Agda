@@ -25,16 +25,6 @@ module homotopy.UniversalCoverIsUniversal {i} (A : Type i)
       }
 
     private
-      -- A lemma that should be moved to the basic library.
-      ↓-cst×app-in : ∀ {i j k} {A : Type i}
-        {B : Type j} {C : A → B → Type k}
-        {a₁ a₂ : A} (p : a₁ == a₂)
-        {b₁ b₂ : B} (q : b₁ == b₂)
-        {c₁ : C a₁ b₁}{c₂ : C a₂ b₂}
-        → c₁ == c₂ [ uncurry C ↓ pair×= p q ]
-        → (b₁ , c₁) == (b₂ , c₂) [ (λ x → Σ B (C x)) ↓ p ]
-      ↓-cst×app-in idp idp idp = idp
-
       -- One-to-many relationship between the base paths
       -- and points in the cover.
 
@@ -72,17 +62,22 @@ module homotopy.UniversalCoverIsUniversal {i} (A : Type i)
             ap (cover-trace cov a↑₁ ∘ snd) (pair×= cert (idp :> (p == p))) ∙' cert
               ∎
 
+    -- The map is done.
     weak-inital : ∀ a₂ → TotalSpace (quotient-cover a₂) ≃ (a₁ =₀ a₂)
     weak-inital a₂ = to , is-eq _ from to-from from-to
 
+    -- Strong initiality: Take any other map, and it will be the same.
     module Uniqueness
       (cover′ : ∀ a₂ → Cover (Fiber cov a₂) (lmax i k))
-      --(a↑₁ : Fiber cov a₁)
       (weak-inital′ : ∀ a₂ → TotalSpace (cover′ a₂) ≃ (a₁ =₀ a₂))
       (preserves-a↑₁ : fst (<– (weak-inital′ a₁) idp₀) == a↑₁)
       where
 
       private
+        -- The key lemma.  By path induction it is sufficient to consider [idp₀],
+        -- the point in the universal cover.  So [preserves-a↑₁] actually
+        -- gives the proof for every point in the universal cover,
+        -- (modulo the truncation).
         fst-match′ : ∀ {a₂} (p : a₁ =₀ a₂)
           → fst (<– (weak-inital a₂) p) == fst (<– (weak-inital′ a₂) p)
         fst-match′ {a₂} = Trunc-elim
@@ -92,9 +87,11 @@ module homotopy.UniversalCoverIsUniversal {i} (A : Type i)
               → fst (<– (weak-inital a₂) [ p ]) == fst (<– (weak-inital′ a₂) [ p ])
             lemma idp = ! preserves-a↑₁
 
+        -- The total space of both, for sure, are the same (= universal cover)
         total-equiv : ∀ a₂ → TotalSpace (quotient-cover a₂) ≃ TotalSpace (cover′ a₂)
         total-equiv a₂ = (weak-inital′ a₂) ⁻¹ ∘e weak-inital a₂
 
+        -- A wrapped version of [fst-march′].
         fst-match : ∀ a₂ {a⇑₂} {a⇑₂′} (q : a⇑₂ == a⇑₂′ [ (λ X → X) ↓ ua (total-equiv a₂) ])
           → fst a⇑₂ == fst a⇑₂′
         fst-match a₂ {a⇑₂} {a⇑₂′} q =
@@ -107,9 +104,11 @@ module homotopy.UniversalCoverIsUniversal {i} (A : Type i)
           fst a⇑₂′
             ∎
   
+        -- A more wrapped version.
         fst-equiv : ∀ a₂ → fst == fst [ (λ C → C → Fiber cov a₂) ↓ ua (total-equiv a₂) ]
         fst-equiv a₂ = ↓-app→cst-in (fst-match a₂)
 
+        -- Essential part of equivalences between covers.
         Fiber-equiv : ∀ a₂ a↑₂ → Fiber (quotient-cover a₂) a↑₂ ≃ Fiber (cover′ a₂) a↑₂
         Fiber-equiv a₂ a↑₂ = hfiber-fst a↑₂
           ∘e lemma a₂ a↑₂ (ua $ total-equiv a₂) (fst-equiv a₂)
