@@ -20,6 +20,22 @@ _+_ : ℕ → ℕ → ℕ
 0 + n = n
 (S m) + n = S (m + n)
 
++-unit-r : (m : ℕ) → m + 0 == m
++-unit-r 0     = idp
++-unit-r (S m) = ap S (+-unit-r m)
+
++-βr : (m n : ℕ) → m + (S n) == S (m + n)
++-βr 0     n = idp
++-βr (S m) n = ap S (+-βr m n)
+
++-comm : (m n : ℕ) → m + n == n + m
++-comm m 0     = +-unit-r m
++-comm m (S n) = +-βr m n ∙ ap S (+-comm m n)
+
++-assoc : (k m n : ℕ) → (k + m) + n == k + (m + n)
++-assoc 0     m n = idp
++-assoc (S k) m n = ap S (+-assoc k m n)
+
 _*2 : ℕ → ℕ
 O *2 = O
 (S n) *2 = S (S (n *2))

@@ -109,8 +109,8 @@ idf-is-equiv A = is-eq _ (idf A) (λ _ → idp) (λ _ → idp)
 ide : ∀ {i} (A : Type i) → A ≃ A
 ide A = equiv (idf A) (idf A) (λ _ → idp) (λ _ → idp)
 
-infixr 2 _∘e_
-infixr 2 _∘ise_
+infixr 4 _∘e_
+infixr 4 _∘ise_
 
 _∘e_ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
   → B ≃ C → A ≃ B → A ≃ C
@@ -131,6 +131,16 @@ i1 ∘ise i2 = snd ((_ , i1) ∘e (_ , i2))
 
 _⁻¹ : ∀ {i j} {A : Type i} {B : Type j} → (A ≃ B) → (B ≃ A)
 e ⁻¹ = equiv (<– e) (–> e) (<–-inv-l e) (<–-inv-r e)
+
+{- Equational reasoning for equivalences -}
+infix  2 _≃∎
+infixr 2 _≃⟨_⟩_
+
+_≃⟨_⟩_ : ∀ {i j k} (A : Type i) {B : Type j} {C : Type k} → A ≃ B → B ≃ C → A ≃ C
+A ≃⟨ u ⟩ v = v ∘e u
+
+_≃∎ : ∀ {i} (A : Type i) → A ≃ A
+_≃∎ = ide
 
 {- Any contractible type is equivalent to all liftings of the unit type -}
 contr-equiv-LiftUnit : ∀ {i j} {A : Type i} → (is-contr A → A ≃ Lift {j = j} Unit)

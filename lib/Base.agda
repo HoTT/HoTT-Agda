@@ -69,7 +69,7 @@ reserved in Agda.
 The constant path is [idp]. Note that all arguments of [idp] are implicit.
 -}
 
-infix 4 _==_
+infix 3 _==_
 
 data _==_ {i} {A : Type i} (a : A) : A → Type i where
   idp : a == a
@@ -180,6 +180,8 @@ Shorter notation for Π-types.
 Σ-types are defined as a record so that we have definitional η.
 -}
 
+infix 1 _,_
+
 record Σ {i j} (A : Type i) (B : A → Type j) : Type (lmax i j) where
   constructor _,_
   field
@@ -287,7 +289,7 @@ idf A = λ x → x
 cst : ∀ {i j} {A : Type i} {B : Type j} (b : B) → (A → B)
 cst b = λ _ → b
 
-infixr 2 _∘_
+infixr 4 _∘_
 
 _∘_ : ∀ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → (B a → Type k)}
   → (g : {a : A} → Π (B a) (C a)) → (f : Π A B) → Π A (λ a → C a (f a))
