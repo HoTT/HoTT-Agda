@@ -33,6 +33,27 @@ module _ {i j} {A : Type i} {B : Type j} where
     →-is-prop = →-level
 
 {- Equivalences in a Π-type -}
+equiv-Π-l : ∀ {i j k} {A : Type i} {B : Type j} (P : B → Type k) {h : A → B}
+            → is-equiv h → Π A (P ∘ h) ≃ Π B P
+equiv-Π-l {A = A} {B = B} P {h = h} e = equiv f g f-g g-f where
+  w : A ≃ B
+  w = (h , e)
+
+  f : Π A (P ∘ h) → Π B P
+  f u b = transport P (<–-inv-r w b) (u (<– w b))
+
+  g : Π B P → Π A (P ∘ h)
+  g v a = v (–> w a)
+
+  f-g : ∀ v → f (g v) == v
+  f-g v = λ= λ b → to-transp (apd v (<–-inv-r w b))
+
+  g-f : ∀ u → g (f u) == u
+  g-f u = λ= λ a → to-transp $ transport (λ p → u _ == _ [ P ↓ p ])
+                                         (is-equiv.adj e a)
+                                         (↓-ap-in P (–> w)
+                                                    (apd u $ <–-inv-l w a))
+
 equiv-Π-r : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
   → (∀ x → B x ≃ C x) → Π A B ≃ Π A C
 equiv-Π-r {A = A} {B = B} {C = C} k = equiv f g f-g g-f
