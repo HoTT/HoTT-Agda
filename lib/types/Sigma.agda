@@ -167,3 +167,22 @@ ap-cst,id : ∀ {i j} {A : Type i} (B : A → Type j)
   {a : A} {x y : B a} (p : x == y)
   → ap (λ x → _,_ {B = B} a x) p == pair= idp p
 ap-cst,id B idp = idp
+
+-- hfiber fst == B
+module _ {i j} {A : Type i} {B : A → Type j} where
+
+  private
+    to : ∀ a → hfiber (fst :> (Σ A B → A)) a → B a
+    to a ((.a , b) , idp) = b
+
+    from : ∀ (a : A) → B a → hfiber (fst :> (Σ A B → A)) a
+    from a b = (a , b) , idp
+
+    to-from : ∀ (a : A) (b : B a) → to a (from a b) == b
+    to-from a b = idp
+
+    from-to : ∀ a b′ → from a (to a b′) == b′
+    from-to a ((.a , b) , idp) = idp
+
+  hfiber-fst : ∀ a → hfiber (fst :> (Σ A B → A)) a ≃ B a
+  hfiber-fst a = to a , is-eq (to a) (from a) (to-from a) (from-to a)
