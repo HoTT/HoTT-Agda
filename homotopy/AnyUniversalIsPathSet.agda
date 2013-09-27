@@ -2,7 +2,7 @@
 
 open import HoTT
 
-module homotopy.PathSetIsUniversalCover {i} (A : Type i)
+module homotopy.AnyUniversalIsPathSet {i} (A : Type i)
   (A-conn : is-connected ⟨0⟩ A) where
 
   open Cover
@@ -60,5 +60,5 @@ module homotopy.PathSetIsUniversalCover {i} (A : Type i)
         (λ p → to-transp $ snd= p)
         ([path] (a₁ , a⇑₁) (a₂ , a⇑₂))
 
-    path-set-is-univ-cov : ∀ a₂ → Fiber univ-cov a₂ ≃ (a₁ =₀ a₂)
-    path-set-is-univ-cov a₂ = to , is-eq _ from to-from from-to
+    theorem : ∀ a₂ → Fiber univ-cov a₂ ≃ (a₁ =₀ a₂)
+    theorem a₂ = to , is-eq _ from to-from from-to
