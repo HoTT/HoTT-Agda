@@ -142,10 +142,18 @@ A ≃⟨ u ⟩ v = v ∘e u
 _≃∎ : ∀ {i} (A : Type i) → A ≃ A
 _≃∎ = ide
 
-{- Any contractible type is equivalent to all liftings of the unit type -}
-contr-equiv-LiftUnit : ∀ {i j} {A : Type i} → (is-contr A → A ≃ Lift {j = j} Unit)
-contr-equiv-LiftUnit e =
-  equiv (λ _ → lift unit) (λ _ → fst e) (λ _ → idp) (λ a → snd e a)
+
+{- lifting is an equivalence -}
+lift-equiv : ∀ {i j} {A : Type i} → Lift {j = j} A ≃ A
+lift-equiv = equiv lower lift (λ _ → idp) (λ _ → idp)
+
+{- Any contractible type is equivalent to (all liftings of) the unit type -}
+module _ {i} {A : Type i} (h : is-contr A) where
+  contr-equiv-Unit : A ≃ Unit
+  contr-equiv-Unit = equiv (λ _ → unit) (λ _ → fst h) (λ _ → idp) (snd h)
+
+  contr-equiv-LiftUnit : ∀ {j} → A ≃ Lift {j = j} Unit
+  contr-equiv-LiftUnit = lift-equiv ⁻¹ ∘e contr-equiv-Unit
 
 
 {- An equivalence induces an equivalence on the path spaces -}
@@ -193,12 +201,37 @@ equiv-preserves-level {n = ⟨-2⟩} e (x , p) =
 equiv-preserves-level {n = S n} e c = λ x y →
    equiv-preserves-level (equiv-ap (e ⁻¹) x y ⁻¹) (c (<– e x) (<– e y))
 
-{- The type-theoretic axiom of choice -}
-choice : ∀ {i j k} {A : Type i} {B : A → Type j} {P : (a : A) → B a → Type k}
-  → Π A (λ a → Σ (B a) (λ b → P a b)) ≃ Σ (Π A B) (λ g → Π A (λ a → P a (g a)))
-choice = equiv f g (λ _ → idp) (λ _ → idp)
-  where f = λ c → ((λ a → fst (c a)) , (λ a → snd (c a)))
-        g = λ d → (λ a → (fst d a , snd d a))
+{- This is a collection of type equivalences involving basic type formers.
+   We exclude Empty since Π₁-Empty requires λ=.
+-}
+module _ {j} {B : Unit → Type j} where
+  Σ₁-Unit : Σ Unit B ≃ B unit
+  Σ₁-Unit = equiv (λ {(unit , b) → b}) (λ b → (unit , b)) (λ _ → idp) (λ _ → idp)
+
+  Π₁-Unit : Π Unit B ≃ B unit
+  Π₁-Unit = equiv (λ f → f unit) (λ b _ → b) (λ _ → idp) (λ _ → idp)
+
+module _ {i} {A : Type i} where
+  Σ₂-Unit : Σ A (λ _ → Unit) ≃ A
+  Σ₂-Unit = equiv fst (λ a → (a , unit)) (λ _ → idp) (λ _ → idp)
+
+  Π₂-Unit : Π A (λ _ → Unit) ≃ Unit
+  Π₂-Unit = equiv (λ _ → unit) (λ _ _ → unit) (λ _ → idp) (λ _ → idp)
+
+module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k} where
+  Σ-assoc : Σ (Σ A B) (uncurry C) ≃ Σ A (λ a → Σ (B a) (C a))
+  Σ-assoc = equiv (λ {((a , b) , c) → (a , (b , c))})
+                  (λ {(a , (b , c)) → ((a , b) , c)}) (λ _ → idp) (λ _ → idp)
+
+  curry-equiv : Π (Σ A B) (uncurry C) ≃ Π A (λ a → Π (B a) (C a))
+  curry-equiv = equiv curry uncurry (λ _ → idp) (λ _ → idp)
+
+  {- The type-theoretic axiom of choice -}
+  choice : Π A (λ a → Σ (B a) (λ b → C a b)) ≃ Σ (Π A B) (λ g → Π A (λ a → C a (g a)))
+  choice = equiv f g (λ _ → idp) (λ _ → idp)
+    where f = λ c → ((λ a → fst (c a)) , (λ a → snd (c a)))
+          g = λ d → (λ a → (fst d a , snd d a))
+
 
 {- Pre- and post- concatenation are equivalences -}
 module _ {i} {A : Type i} {x y z : A} where
