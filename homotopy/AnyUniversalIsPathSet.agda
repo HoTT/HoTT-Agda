@@ -9,7 +9,7 @@ module homotopy.AnyUniversalIsPathSet {i} (A : Type i)
 
   module _
     (a₁ : A)
-    -- A universal covering.
+    -- A universal covering (defined as being simply connected).
     {j} (univ-cov : Cover A j)
     (univ-cov-univ : is-universal univ-cov)
     (a⇑₁ : Fiber univ-cov a₁)
