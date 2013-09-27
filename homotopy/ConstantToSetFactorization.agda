@@ -28,3 +28,8 @@ module homotopy.ConstantToSetFactorization
   cst-extend : Trunc ⟨-1⟩ A → B
   cst-extend = Trunc-rec B-is-set OneSkeleton-lift
              ∘ Trunc-rec Skel-is-prop ([_] ∘ point)
+
+  -- The beta rule.
+  -- This is definitionally true, so you don't need it.
+  cst-extend-β : cst-extend ∘ [_] == f
+  cst-extend-β = idp
