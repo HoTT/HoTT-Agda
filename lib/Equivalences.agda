@@ -73,6 +73,8 @@ module _ {i} {j} {A : Type i} {B : Type j} where
              |in-ctx (λ q → ap f q ∙ f-g (f a)) ⟩
         ap f (g-f (g (f a))) ∙ f-g (f a) ∎
 
+infix 4 _≃_
+
 _≃_ : ∀ {i j} (A : Type i) (B : Type j) → Type (lmax i j)
 A ≃ B = Σ (A → B) is-equiv
 
