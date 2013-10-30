@@ -93,7 +93,8 @@ module _ (A∙ : Ptd i)
                   [ (λ p → a↑ == a↑ [ F ↓ p ]) ↓ to′ idp=p⇑ ])
                 → from′ (to′ idp=p⇑) idp=snd=p⇑ == idp=p⇑
                   [ (λ p⇑ → idp == p⇑) ↓ ! (pair=-η p⇑) ]
-    from′-to′ idp idp = idp
+    from′-to′ idp idp=snd=p⇑ = ap (from′ idp)
+      $ contr-has-all-paths (F-level a _ _ _ _) _ _
 
     -- Injection is left-inverse to projection.
     from-to : ∀ p²⇑ → from (to p²⇑) == p²⇑
