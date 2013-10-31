@@ -39,6 +39,7 @@ is-abelian G = (a b : El G) →
 
 record GroupHom {i j} (G : Group i) (H : Group j) 
   : Type (lsucc (lmax i j)) where
+  constructor group-hom
   field
     f : El G → El H
     pres-ident : f (ident (group-struct G)) == (ident (group-struct H))
@@ -161,4 +162,3 @@ abstract
       (q : d₁ == d₂ [ D ↓ p ]) → (e₁ == e₂ [ uncurry E ↓ pair= p q ])
       → (f c₁ d₁ e₁ == f c₂ d₂ e₂)
     lemma f idp idp idp = idp
-

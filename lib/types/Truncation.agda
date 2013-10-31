@@ -121,7 +121,6 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
 
     from-to : (a b : Trunc (S n) A) (p : a == b) → from a b (to a b p) == p
     from-to a .a idp = from-to-aux a
-
   Trunc=-path : (a b : Trunc (S n) A) → (a == b) == fst (Trunc= a b)
   Trunc=-path a b = ua (Trunc=-equiv a b)
 
@@ -262,3 +261,4 @@ fuse-Trunc A m n = equiv
         l | inr q = Trunc-preserves-level _
                       (transport (λ k → has-level k (Trunc n A))
                                  (! q) Trunc-level)
+

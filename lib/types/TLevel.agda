@@ -56,6 +56,9 @@ m ≤T n = Coprod (m == n) (m <T n)
 <T-trans lt₁ ltS = ltSR lt₁
 <T-trans lt₁ (ltSR lt₂) = ltSR (<T-trans lt₁ lt₂)
 
+≤T-refl : {m : ℕ₋₂} → m ≤T m
+≤T-refl = inl idp
+
 ≤T-trans : {m n k : ℕ₋₂} → m ≤T n → n ≤T k → m ≤T k
 ≤T-trans {k = k} (inl p₁) lte₂ = transport (λ t → t ≤T k) (! p₁) lte₂
 ≤T-trans {m = m} lte₁ (inl p₂) = transport (λ t → m ≤T t) p₂ lte₁

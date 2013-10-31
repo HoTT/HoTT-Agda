@@ -217,6 +217,9 @@ module FreudenthalEquiv
   path : Trunc k X == Trunc k (north X == north X)
   path = ua eqv
 
+  ptd-path : Ptd-Trunc k (X , x₀) == Ptd-Trunc k (Ptd-Ω (Ptd-Susp (X , x₀)))
+  ptd-path = ptd-ua eqv (ap [_] (!-inv-r (merid X x₀)))
+
 {- Used to prove stability in iterated suspensions -}
 module FreudenthalIso
   {i} (n : ℕ₋₂) (k : ℕ) ⦃ _ : k ≠ O ⦄ (kle : ⟨ k ⟩ ≤T S (n +2+ S n))

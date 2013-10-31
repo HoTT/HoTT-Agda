@@ -3,6 +3,7 @@
 open import lib.Base
 open import lib.PathGroupoid
 open import lib.NType
+open import lib.types.Empty
 
 module lib.types.Nat where
 
@@ -94,6 +95,9 @@ O≤ (S m) = inr (O< m)
 <-trans : {m n k : ℕ} → m < n → n < k → m < k
 <-trans lt₁ ltS = ltSR lt₁
 <-trans lt₁ (ltSR lt₂) = ltSR (<-trans lt₁ lt₂)
+
+≤-refl : {m : ℕ} → m ≤ m
+≤-refl = inl idp
 
 ≤-trans : {m n k : ℕ} → m ≤ n → n ≤ k → m ≤ k
 ≤-trans {k = k} (inl p₁) lte₂ = transport (λ t → t ≤ k) (! p₁) lte₂

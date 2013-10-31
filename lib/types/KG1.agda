@@ -10,6 +10,7 @@ open import lib.types.Sigma
 open import lib.types.TLevel
 open import lib.types.Truncation
 open import lib.types.Group
+open import lib.types.Pointed
 open import lib.types.LoopSpace
 open import lib.types.HomotopyGroup
 
@@ -32,6 +33,9 @@ module KG1 {i} (G : Group i) where
 
   kbase : KG1
   kbase = #kg1 #kbase _
+
+  Ptd-KG1 : Ptd i
+  Ptd-KG1 = ∙[ KG1 , kbase ]
 
   postulate  -- HIT
     klevel : has-level ⟨ 1 ⟩ KG1
@@ -201,8 +205,9 @@ module KG1 {i} (G : Group i) where
     π₁-path : Trunc ⟨0⟩ (kbase == kbase) == El
     π₁-path = ap (Trunc ⟨0⟩) Ω¹-path ∙ ua (unTrunc-equiv El El-level)
 
-    π₁-iso : π 1 (KG1 , kbase) == G
-    π₁-iso = ! $ group-iso 
+    π₁-iso : ⦃ p1 : 1 ≠ 0 ⦄ → π 1 ⦃ p1 ⦄ (KG1 , kbase) == G
+    π₁-iso = transport (λ pi → pi 1 Ptd-KG1 == G) π-fold $ ! $
+      group-iso 
       (record { f = [_] ∘ decode';
                 pres-ident = ap [_] kloop-ident; 
                 pres-comp = λ g₁ g₂ → ap [_] (kloop-comp g₁ g₂) }) 
