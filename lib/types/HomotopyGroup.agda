@@ -17,7 +17,7 @@ module lib.types.HomotopyGroup where
 module _ {i} where
 
   π-structure : (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) 
-    → GroupStructure (Trunc ⟨0⟩ (Ω^ n X)) Trunc-level
+    → GroupStructure (Trunc ⟨0⟩ (Ω^ n X))
   π-structure n X = record {
     ident = ident; inv = inv; comp = comp;
     unitl = unitl; unitr = unitr; assoc = assoc;
@@ -63,7 +63,7 @@ module _ {i} where
         (ap [_] ∘ !^-inv-l n)
 
   π-concrete : (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) → Group i
-  π-concrete n X = group _ _ (π-structure n X)
+  π-concrete n X = group _ Trunc-level (π-structure n X)
 
   {- Since the definition of π-concrete is so complicated, using it 
    - can be very slow, so we use an abstracted version and convert

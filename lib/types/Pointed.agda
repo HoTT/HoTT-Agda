@@ -1,6 +1,8 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
+open import lib.types.Pi
+open import lib.types.Sigma
 open import lib.types.Suspension
 open import lib.types.Truncation
 
@@ -54,3 +56,6 @@ ptd-ua : ∀ {i} {A B : Type i} {a₀ : A} {b₀ : B}
   (e : A ≃ B) → –> e a₀ == b₀ → ∙[ A , a₀ ] == ∙[ B , b₀ ]
 ptd-ua e p = pair= (ua e) (↓-idf-ua-in e p)
 
+∙→-level : ∀ {i j} {A : Ptd i} {B : Ptd j} {n : ℕ₋₂} 
+  → has-level n (fst B) → has-level n (fst (A ∙→ B))
+∙→-level pB = Σ-level (Π-level (λ _ → pB)) (λ _ → =-preserves-level _ pB)

@@ -212,7 +212,7 @@ private
 ℤ~-inv-l (pos n) = ℤ~-inv-r-neg n
 ℤ~-inv-l (neg n) = ℤ~-inv-r-pos n
 
-ℤ-group-structure : GroupStructure ℤ ℤ-is-set
+ℤ-group-structure : GroupStructure ℤ 
 ℤ-group-structure = record
   { ident = O
   ; inv = ℤ~
@@ -225,4 +225,4 @@ private
   }
 
 ℤ-group : Group₀
-ℤ-group = group _ _ ℤ-group-structure
+ℤ-group = group _ ℤ-is-set ℤ-group-structure

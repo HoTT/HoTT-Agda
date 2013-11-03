@@ -35,7 +35,7 @@ Unit-level = Unit-is-contr
 ⊤-is-set = Unit-is-set
 
 Lift-Unit-group-structure : ∀ {i} → 
-  GroupStructure {i} (Lift Unit) (Lift-level Unit-is-set)
+  GroupStructure {i} (Lift Unit) 
 Lift-Unit-group-structure = record
   { ident = lift unit
   ; inv = λ _ → lift unit
@@ -48,7 +48,7 @@ Lift-Unit-group-structure = record
   }
 
 LiftUnit-group : ∀ {i} → Group i
-LiftUnit-group = group _ _ Lift-Unit-group-structure
+LiftUnit-group = group _ (Lift-level Unit-is-set) Lift-Unit-group-structure
 
 contr-iso-LiftUnit : ∀ {i} (G : Group i) → is-contr (Group.El G)
   → G == LiftUnit-group
