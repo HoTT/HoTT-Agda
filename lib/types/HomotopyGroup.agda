@@ -9,6 +9,7 @@ open import lib.types.Pi
 open import lib.types.Truncation
 open import lib.types.Pointed
 open import lib.types.Group
+open import lib.types.TruncationGroup
 open import lib.types.LoopSpace
 
 module lib.types.HomotopyGroup where
@@ -16,54 +17,8 @@ module lib.types.HomotopyGroup where
 {- Higher homotopy groups -}
 module _ {i} where
 
-  π-structure : (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) 
-    → GroupStructure (Trunc ⟨0⟩ (Ω^ n X))
-  π-structure n X = record {
-    ident = ident; inv = inv; comp = comp;
-    unitl = unitl; unitr = unitr; assoc = assoc;
-    invr = invr; invl = invl }
-    where
-    ident : Trunc ⟨0⟩ (Ω^ n X)
-    ident = [ idp^ n ]
-
-    inv : Trunc ⟨0⟩ (Ω^ n X) → Trunc ⟨0⟩ (Ω^ n X)
-    inv = Trunc-fmap (!^ n)
-
-    comp : Trunc ⟨0⟩ (Ω^ n X) → Trunc ⟨0⟩ (Ω^ n X) → Trunc ⟨0⟩ (Ω^ n X)
-    comp = Trunc-fmap2 (conc^ n)
-
-    abstract
-      unitl : ∀ a → comp ident a == a
-      unitl = Trunc-elim
-        (λ _ → =-preserves-level _ Trunc-level)
-        (ap [_] ∘ conc^-unit-l n)
-
-      unitr : ∀ a → comp a ident == a
-      unitr = Trunc-elim 
-        (λ _ → =-preserves-level _ Trunc-level)
-        (ap [_] ∘ conc^-unit-r n)
-
-      assoc : ∀ a b c → comp (comp a b) c == comp a (comp b c)
-      assoc = Trunc-elim 
-        (λ _ → Π-level (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level)))
-        (λ a → Trunc-elim
-          (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
-          (λ b → Trunc-elim 
-             (λ _ → =-preserves-level _ Trunc-level) 
-             (λ c → ap [_] (conc^-assoc n a b c))))
-
-      invr : ∀ a → (comp a (inv a)) == ident
-      invr = Trunc-elim
-        (λ _ → =-preserves-level _ Trunc-level)
-        (ap [_] ∘ !^-inv-r n)
-
-      invl : ∀ a → (comp (inv a) a) == ident
-      invl = Trunc-elim
-        (λ _ → =-preserves-level _ Trunc-level)
-        (ap [_] ∘ !^-inv-l n)
-
   π-concrete : (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) → Group i
-  π-concrete n X = group _ Trunc-level (π-structure n X)
+  π-concrete n X = Trunc-Group (Ω^-group-structure n X)
 
   {- Since the definition of π-concrete is so complicated, using it 
    - can be very slow, so we use an abstracted version and convert

@@ -25,6 +25,7 @@ open import lib.types.Truncation public
 open import lib.types.Cospan public
 open import lib.types.Pullback public
 open import lib.types.Group public
+open import lib.types.TruncationGroup public
 open import lib.types.Groupoid public
 open import lib.types.GroupSet public
 open import lib.types.KG1 public

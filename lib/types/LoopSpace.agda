@@ -141,14 +141,10 @@ module _ {i} where
     → Ω (Ptd-Trunc (S m) X) ≃ Trunc m (Ω X)
   Ω-Trunc-equiv m X = Trunc=-equiv [ snd X ] [ snd X ]
 
-{- A loop space is a group if it has the right level -}
-module _ {i} (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) (pX : has-level ⟨ n ⟩ (fst X))
-  where
+{- A loop space is a pregroup, and a group if it has the right level -}
+module _ {i} (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) where
 
-  Ω^-group-structure : GroupStructure 
-    (Ω^ n X)
-    (Ω^-level-in ⟨0⟩ n X $
-       transport (λ t → has-level t (fst X)) (+2+-comm ⟨0⟩ (n -2)) pX)
+  Ω^-group-structure : GroupStructure (Ω^ n X)
   Ω^-group-structure = record {
     ident = idp^ n;
     inv = !^ n;
@@ -160,8 +156,12 @@ module _ {i} (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) (pX : has-level ⟨ n ⟩
     invl = !^-inv-l n
     }
 
-  Ω^-group : Group i
-  Ω^-group = group _ _ Ω^-group-structure
+  Ω^-group : has-level ⟨ n ⟩ (fst X) → Group i
+  Ω^-group pX = group 
+    (Ω^ n X)
+    (Ω^-level-in ⟨0⟩ n X $
+       transport (λ t → has-level t (fst X)) (+2+-comm ⟨0⟩ (n -2)) pX)
+    Ω^-group-structure
 
 {- Our definition of Ω^ builds up loops on the outside,
  - but this is equivalent to building up on the inside -}  

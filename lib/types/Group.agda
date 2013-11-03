@@ -161,8 +161,7 @@ abstract
       → (f c₁ d₁ e₁ == f c₂ d₂ e₂)
     lemma f idp idp idp = idp
 
-module _ {i} {El : Type i}
-  (GS : GroupStructure El) where
+module _ {i} {El : Type i} (GS : GroupStructure El) where
   
   private
     _⊙_ = comp GS
@@ -188,3 +187,4 @@ module _ {i} {El : Type i}
   group-inv-ident : inv GS (ident GS) == ident GS
   group-inv-ident = 
     group-inv-unique-l (ident GS) (ident GS) (unitl GS (ident GS))
+
