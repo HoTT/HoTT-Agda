@@ -69,14 +69,17 @@ equiv-Π-r {A = A} {B = B} {C = C} k = equiv f g f-g g-f
         g-f : ∀ c → g (f c) == c
         g-f c = λ= (λ x → <–-inv-l (k x) (c x))
 
-equiv-Π : ∀ {i₀ i₁ j₀ j₁} {A₀ : Type i₀} {A₁ : Type i₁}
-            {B₀ : A₀ → Type j₀} {B₁ : A₁ → Type j₁}
-            (u : A₀ ≃ A₁) (v : ∀ a → B₀ (<– u a) ≃ B₁ a)
-          → Π A₀ B₀ ≃ Π A₁ B₁
-equiv-Π {A₀ = A₀} {A₁} {B₀} {B₁} u v =
-  Π A₀ B₀           ≃⟨ equiv-Π-l _ (snd (u ⁻¹)) ⁻¹ ⟩
-  Π A₁ (B₀ ∘ <– u)  ≃⟨ equiv-Π-r v ⟩
-  Π A₁ B₁           ≃∎
+module _ {i₀ i₁ j₀ j₁} {A₀ : Type i₀} {A₁ : Type i₁}
+         {B₀ : A₀ → Type j₀} {B₁ : A₁ → Type j₁} where
+  equiv-Π : (u : A₀ ≃ A₁) (v : ∀ a → B₀ (<– u a) ≃ B₁ a) → Π A₀ B₀ ≃ Π A₁ B₁
+  equiv-Π u v = Π A₀ B₀           ≃⟨ equiv-Π-l _ (snd (u ⁻¹)) ⁻¹ ⟩
+                Π A₁ (B₀ ∘ <– u)  ≃⟨ equiv-Π-r v ⟩
+                Π A₁ B₁           ≃∎
+
+  equiv-Π' : (u : A₀ ≃ A₁) (v : ∀ a → B₀ a ≃ B₁ (–> u a)) → Π A₀ B₀ ≃ Π A₁ B₁
+  equiv-Π' u v = Π A₀ B₀           ≃⟨ equiv-Π-r v ⟩
+                 Π A₀ (B₁ ∘ –> u)  ≃⟨ equiv-Π-l _ (snd u) ⟩
+                 Π A₁ B₁           ≃∎
 
 
 {- Dependent paths in a Π-type -}
