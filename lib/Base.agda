@@ -27,13 +27,13 @@ name from the point of view of HoTT, so we define [Type] as a synonym of [Set]
 and [Set] should never be used again.
 -}
 
-open import Agda.Prim
+open import Agda.Prim renaming (lzero to lzero-pre)
 
 ULevel : Set
 ULevel = Level
 
--- lzero : ULevel
--- lzero = lzero
+lzero : ULevel
+lzero = lzero-pre
 
 lsucc : ULevel → ULevel
 lsucc = lsuc
