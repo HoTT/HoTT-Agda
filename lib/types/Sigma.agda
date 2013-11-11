@@ -135,16 +135,14 @@ equiv-Σ-snd {A = A} {B = B} {C = C} k = equiv f g f-g g-f
 module _ {i₀ i₁ j₀ j₁} {A₀ : Type i₀} {A₁ : Type i₁}
          {B₀ : A₀ → Type j₀} {B₁ : A₁ → Type j₁} where
   equiv-Σ : (u : A₀ ≃ A₁) (v : ∀ a → B₀ (<– u a) ≃ B₁ a) → Σ A₀ B₀ ≃ Σ A₁ B₁
-  equiv-Σ u v =
-    Σ A₀ B₀           ≃⟨ equiv-Σ-fst _ (snd (u ⁻¹)) ⁻¹ ⟩
-    Σ A₁ (B₀ ∘ <– u)  ≃⟨ equiv-Σ-snd v ⟩
-    Σ A₁ B₁           ≃∎
+  equiv-Σ u v = Σ A₀ B₀           ≃⟨ equiv-Σ-fst _ (snd (u ⁻¹)) ⁻¹ ⟩
+                Σ A₁ (B₀ ∘ <– u)  ≃⟨ equiv-Σ-snd v ⟩
+                Σ A₁ B₁           ≃∎
 
   equiv-Σ' : (u : A₀ ≃ A₁) (v : ∀ a → B₀ a ≃ B₁ (–> u a)) → Σ A₀ B₀ ≃ Σ A₁ B₁
-  equiv-Σ' u v =
-    Σ A₀ B₀           ≃⟨ equiv-Σ-snd v ⟩
-    Σ A₀ (B₁ ∘ –> u)  ≃⟨ equiv-Σ-fst _ (snd u) ⟩
-    Σ A₁ B₁           ≃∎
+  equiv-Σ' u v = Σ A₀ B₀           ≃⟨ equiv-Σ-snd v ⟩
+                 Σ A₀ (B₁ ∘ –> u)  ≃⟨ equiv-Σ-fst _ (snd u) ⟩
+                 Σ A₁ B₁           ≃∎
 
 
 -- Implementation of [_∙'_] on Σ

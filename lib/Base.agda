@@ -27,16 +27,19 @@ name from the point of view of HoTT, so we define [Type] as a synonym of [Set]
 and [Set] should never be used again.
 -}
 
-postulate  -- Universe levels
-  ULevel : Set
-  lzero : ULevel
-  lsucc : ULevel → ULevel
-  lmax : ULevel → ULevel → ULevel
+open import Agda.Prim
 
-{-# BUILTIN LEVEL ULevel #-}
-{-# BUILTIN LEVELZERO lzero #-}
-{-# BUILTIN LEVELSUC lsucc #-}
-{-# BUILTIN LEVELMAX lmax #-}
+ULevel : Set
+ULevel = Level
+
+-- lzero : ULevel
+-- lzero = lzero
+
+lsucc : ULevel → ULevel
+lsucc = lsuc
+
+lmax : ULevel → ULevel → ULevel
+lmax = _⊔_
 
 Type : (i : ULevel) → Set (lsucc i)
 Type i = Set i
