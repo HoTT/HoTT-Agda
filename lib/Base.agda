@@ -30,8 +30,8 @@ and [Set] should never be used again.
 {-
 The latest Agda release predefines its own universe levels. We hence
 cannot postulate our own buildins anymore.
-This change makes the library compatible with Agda 2.2.3.2,
-but incompatible with Agda 2.2.3.1 and before.
+This change makes the library compatible with Agda 2.3.2.2,
+but incompatible with Agda 2.3.2.1 and before.
 -}
 open import Agda.Prim renaming (lzero to lzero-pre)
 
