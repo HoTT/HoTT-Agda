@@ -13,6 +13,102 @@ hfiber {A = A} f y = Σ A (λ x → f x ≡ y)
 is-equiv : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) → Set (max i j)
 is-equiv {B = B} f = (y : B) → is-contr (hfiber f y)
 
+_~_ : ∀ {i j} {A : Set i} {B : Set j} (f g : A → B) → Set (max i j)
+_~_ {A = A} f g = (x : A) → (f x ≡ g x)
+
+qinv : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) → Set (max i j)
+qinv {A = A} {B = B} f = Σ (B → A) (λ g → ((f ◯ g) ~ id B) × ((g ◯ f) ~ id A))
+
+is-hae : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) → Set (max i j)
+is-hae {A = A} {B = B} f =
+  Σ (B → A)          (λ g →
+  Σ ((g ◯ f) ~ id A) (λ η → 
+  Σ ((f ◯ g) ~ id B) (λ ε →
+  (x : A) → ap f (η x) ≡ ε (f x)))) 
+
+qinv-to-hae : ∀ {i j} {A : Set i} {B : Set j} → (f : A → B) → qinv f → is-hae f
+qinv-to-hae {A = A} {B = B} f (g , (ε , η)) = g , (η , (ε' , τ)) where
+  ε' : (f ◯ g) ~ id B
+  ε' b = ! (ε (f (g b))) ∘ ap f (η (g b)) ∘ ε b
+
+  lem : (a : A) → η (g (f a)) ≡ ap (g ◯ f) (η a)
+  lem a =
+      η (g (f a))
+    ≡⟨ ! (refl-right-unit (η (g (f a))) ) ⟩
+      η (g (f a)) ∘ refl
+    ≡⟨ ap (λ p → η (g (f a)) ∘ p) (! (opposite-right-inverse (η a))) ⟩
+      η (g (f a)) ∘ (η a ∘ (! (η a)))
+    ≡⟨ ! (concat-assoc (η (g (f a))) (η a) (! (η a))) ⟩
+      (η (g (f a)) ∘ η a) ∘ (! (η a))
+    ≡⟨ ap (λ p → p ∘ (! (η a)) ) (! (homotopy-naturality-toid (g ◯ f) η (η a))) ⟩ 
+      (ap (g ◯ f) (η a) ∘ η a) ∘ (! (η a))
+    ≡⟨ concat-assoc (ap (g ◯ f) (η a)) (η a) (! (η a)) ⟩
+      ap (g ◯ f) (η a) ∘ (η a ∘ (! (η a)))
+    ≡⟨ ap (λ p → ap (g ◯ f) (η a) ∘ p) (opposite-right-inverse (η a)) ⟩
+      ap (g ◯ f) (η a) ∘ refl
+    ≡⟨ refl-right-unit (ap (g ◯ f) (η a)) ⟩
+      ap (g ◯ f) (η a)
+    ∎
+
+  lem₂ : (a : A) →  ε (f (g (f a))) ∘ ap f (η a) ≡ ap f (η (g (f a))) ∘ ε (f a)
+  lem₂ a =
+    ! (ap f (η (g (f a))) ∘ ε (f a)
+    ≡⟨ ap (λ p → ap f p ∘ ε (f a)) (lem a) ⟩
+      ap f (ap (g ◯ f) (η a)) ∘ ε (f a)
+    ≡⟨ ap (λ p → p ∘ ε (f a)) (compose-ap f (g ◯ f) (η a)) ⟩
+      ap (f ◯ (g ◯ f)) (η a) ∘ ε (f a)
+    ≡⟨ homotopy-naturality (f ◯ (g ◯ f)) f (λ x → ε (f x)) (η a) ⟩
+      ε (f (g (f a))) ∘ ap f (η a)
+    ∎)
+
+  τ : (a : A) → ap f (η a) ≡ ε' (f a)
+  τ a = 
+      ap f (η a)
+    ≡⟨ refl ⟩
+      refl ∘ ap f (η a)
+    ≡⟨ ap (λ p → p ∘ ap f (η a)) (! (opposite-left-inverse (ε (f (g (f a)))))) ⟩
+      (! (ε (f (g (f a)))) ∘ (ε (f (g (f a))))) ∘ ap f (η a)
+    ≡⟨ concat-assoc (! (ε (f (g (f a))))) (ε (f (g (f a)))) (ap f (η a)) ⟩
+      ! (ε (f (g (f a)))) ∘ ((ε (f (g (f a)))) ∘ ap f (η a))
+    ≡⟨ ap (λ p → ! (ε (f (g (f a)))) ∘ p) (lem₂ a) ⟩
+       ! (ε (f (g (f a)))) ∘ (ap f (η (g (f a))) ∘ ε (f a))
+    ∎
+
+hae-is-equiv : ∀ {i j} {A : Set i} {B : Set j} → (f : A → B) → is-hae f → is-equiv f
+hae-is-equiv f (g , (η , (ε , τ))) y = (g y , ε y) , contr where
+  contr : (xp : hfiber f y) → xp ≡ g y , ε y
+  contr (x , p) = total-Σ-eq ( ((! (η x)) ∘ ap g p) , t) where
+    t : transport (λ z → f z ≡ y) (! (η x) ∘ ap g p) p ≡ ε y
+    t =
+        transport (λ z → f z ≡ y) (! (η x) ∘ ap g p) p
+      ≡⟨ trans-app≡cst f y (! (η x) ∘ ap g p) p ⟩
+        ! (ap f (! (η x) ∘ ap g p)) ∘ p
+      ≡⟨ ap (λ q → q ∘ p) (opposite-ap f (! (η x) ∘ ap g p)) ⟩
+        ap f (! (! (η x) ∘ ap g p)) ∘ p
+      ≡⟨ ap (λ q → ap f q ∘ p) (opposite-concat (! (η x)) (ap g p)) ⟩
+        ap f (! (ap g p) ∘ ! (! (η x))) ∘ p
+      ≡⟨ ap (λ q → ap f (! (ap g p) ∘ q) ∘ p) (opposite-opposite (η x)) ⟩
+        ap f (! (ap g p) ∘ η x) ∘ p
+      ≡⟨ ap (λ q → q ∘ p) (ap-concat f (! (ap g p)) (η x)) ⟩
+        (ap f (! (ap g p)) ∘ ap f (η x)) ∘ p
+      ≡⟨ ap (λ q → (q ∘ ap f (η x)) ∘ p) (ap-opposite f (ap g p)) ⟩
+        (! (ap f (ap g p)) ∘ ap f (η x)) ∘ p
+      ≡⟨ ap (λ q → (! q ∘ ap f (η x)) ∘ p) (compose-ap f g p) ⟩
+        (! (ap (f ◯ g) p) ∘ ap f (η x)) ∘ p
+      ≡⟨ ap (λ q → ((! (ap (f ◯ g) p)) ∘ q) ∘ p ) (τ x) ⟩
+        (! (ap (f ◯ g) p) ∘ ε (f x)) ∘ p
+      ≡⟨ ap (λ q → (q ∘ ε (f x)) ∘ p) (opposite-ap (f ◯ g) p) ⟩
+        (ap (f ◯ g) (! p) ∘ ε (f x)) ∘ p
+      ≡⟨ ap (λ q → q ∘ p) (homotopy-naturality-toid (f ◯ g) ε (! p)) ⟩ 
+        (ε y ∘ ! p) ∘ p
+      ≡⟨ concat-assoc (ε y) (! p) p ⟩ 
+        ε y ∘ ((! p) ∘ p)
+      ≡⟨ ap (λ q → ε y ∘ q) (opposite-left-inverse p) ⟩ 
+        ε y ∘ refl
+      ≡⟨ refl-right-unit (ε y) ⟩
+        ε y
+      ∎
+
 _≃_ : ∀ {i j} (A : Set i) (B : Set j) → Set (max i j)  -- \simeq
 A ≃ B = Σ (A → B) is-equiv
 
