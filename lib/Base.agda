@@ -27,25 +27,16 @@ name from the point of view of HoTT, so we define [Type] as a synonym of [Set]
 and [Set] should never be used again.
 -}
 
-{-
-The latest Agda release predefines its own universe levels. We hence
-cannot postulate our own buildins anymore.
-This change makes the library compatible with Agda 2.3.2.2,
-but incompatible with Agda 2.3.2.1 and before.
--}
-open import Agda.Prim renaming (lzero to lzero-pre)
+postulate -- Universe levels
+  ULevel : Set
+  lzero : ULevel
+  lsucc : ULevel → ULevel
+  lmax : ULevel → ULevel → ULevel
 
-ULevel : Set
-ULevel = Level
-
-lzero : ULevel
-lzero = lzero-pre
-
-lsucc : ULevel → ULevel
-lsucc = lsuc
-
-lmax : ULevel → ULevel → ULevel
-lmax = _⊔_
+{-# BUILTIN LEVEL ULevel #-}
+{-# BUILTIN LEVELZERO lzero #-}
+{-# BUILTIN LEVELSUC lsucc #-}
+{-# BUILTIN LEVELMAX lmax #-}
 
 Type : (i : ULevel) → Set (lsucc i)
 Type i = Set i
