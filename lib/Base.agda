@@ -27,7 +27,7 @@ name from the point of view of HoTT, so we define [Type] as a synonym of [Set]
 and [Set] should never be used again.
 -}
 
-postulate -- Universe levels
+postulate  -- Universe levels
   ULevel : Set
   lzero : ULevel
   lsucc : ULevel → ULevel
