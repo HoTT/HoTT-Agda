@@ -56,8 +56,6 @@ data _⊔_ {i j} (A : Set i) (B : Set j) : Set (max i j) where  -- \sqcup
   inl : A → A ⊔ B
   inr : B → A ⊔ B
 
-infixr 2 _×_
-
 -- Product
 _×_ : ∀ {i j} (A : Set i) (B : Set j) → Set (max i j)  -- \times
 A × B = Σ A (λ _ → B)

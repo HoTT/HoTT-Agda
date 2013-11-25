@@ -1,5 +1,5 @@
 {-# OPTIONS --without-K #-}
-{-# OPTIONS --no-termination-check #-}
+
 {-
 Truncated higher inductive types look like higher inductive types except that
 they are truncated down to some fixed truncation level.
