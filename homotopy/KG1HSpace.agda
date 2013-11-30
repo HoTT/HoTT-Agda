@@ -14,7 +14,8 @@ module KG1HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
 
   mult-loop : (g : El) (x : KG1) → x == x
   mult-loop g = KG1-elim 
-    {C = λ x → ((x == x) , =-preserves-level _ klevel)}
+    {C = λ x → x == x}
+    (λ _ → =-preserves-level _ klevel)
     (kloop g)
     loop'
     (set-↓-has-all-paths-↓ (klevel kbase kbase))
@@ -37,8 +38,8 @@ module KG1HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
 
     pres-ident = 
       ap λ= (λ= (KG1-elim 
-        {C = λ x → (mult-loop ident x == app= (idp {a = idf _}) x) , 
-                   (=-preserves-level _ (=-preserves-level _ klevel))}
+        {C = λ x → mult-loop ident x == app= (idp {a = idf _}) x}
+        (λ _ → =-preserves-level _ (=-preserves-level _ klevel))
         (kloop-ident ∙ ! (ap-idf idp)) 
         (λ _ → prop-has-all-paths-↓ (klevel _ _ _ _))
         (set-↓-has-all-paths-↓ (=-preserves-level _ (klevel _ _)))
@@ -47,7 +48,9 @@ module KG1HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
 
     pres-comp = λ g₁ g₂ → 
       ap λ= (λ= (KG1-elim
-        {C = λ x → (_ , =-preserves-level _ (=-preserves-level _ klevel))}
+        {C = λ x → mult-loop (comp g₁ g₂) x 
+                == mult-loop g₁ x ∙ mult-loop g₂ x}
+        (λ _ →  =-preserves-level _ (=-preserves-level _ klevel))
         (kloop-comp g₁ g₂)
         (λ _ → prop-has-all-paths-↓ (klevel _ _ _ _))
         (set-↓-has-all-paths-↓ (=-preserves-level _ (klevel _ _)))
@@ -55,14 +58,15 @@ module KG1HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
       ∙ ! (∙-λ= _ _)
 
   mult : KG1 → KG1 → KG1
-  mult = KG1-rec {C = (KG1 → KG1) , Π-level (λ _ → klevel)} (λ x → x) mult-hom
+  mult = KG1-rec {C = KG1 → KG1} (Π-level (λ _ → klevel)) (λ x → x) mult-hom
 
   H-KG1 : HSpaceStructure KG1
   H-KG1 = record { e = kbase; μ = mult; μe- = μe-; μ-e = μ-e}
     where
     μe- : (x : KG1) → mult kbase x == x
     μe- = KG1-elim 
-      {C = λ x → (mult kbase x == x) , =-preserves-level ⟨ 1 ⟩ klevel}
+      {C = λ x → mult kbase x == x} 
+      (λ _ → =-preserves-level ⟨ 1 ⟩ klevel)
       idp
       (λ g → ↓-app=idf-in $ ∙'-unit-l (kloop g) ∙ (! (ap-idf (kloop g))) 
                             ∙ ! (∙-unit-r (ap (mult kbase) (kloop g))))
@@ -71,7 +75,8 @@ module KG1HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
 
     μ-e : (x : KG1) → mult x kbase == x
     μ-e = KG1-elim
-      {C = λ x → (mult x kbase == x) , =-preserves-level ⟨ 1 ⟩ klevel}
+      {C = λ x → mult x kbase == x}
+      (λ _ → =-preserves-level ⟨ 1 ⟩ klevel)
       idp
       (λ g → ↓-app=idf-in $ 
          idp ∙' kloop g 
@@ -79,7 +84,9 @@ module KG1HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
          kloop g
            =⟨ ! (app=-β (mult-loop g) kbase) ⟩
          app= (λ= (mult-loop g)) kbase
-           =⟨ ! (KG1Rec.kloop-β (λ x → x) mult-hom g) |in-ctx (λ w → app= w kbase) ⟩
+           =⟨ ! (KG1Rec.kloop-β {C = KG1 → KG1} 
+                   (Π-level (λ _ → klevel)) (λ x → x) mult-hom g)
+              |in-ctx (λ w → app= w kbase) ⟩
          app= (ap mult (kloop g)) kbase
            =⟨ ∘-ap (λ f → f kbase) mult (kloop g) ⟩
          ap (λ z → mult z kbase) (kloop g)

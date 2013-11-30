@@ -68,7 +68,7 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
     encode-decode' : (a : A) → encode (decode' a) == a
     encode-decode' a = 
       transport Codes (merid A a ∙ ! (merid A e)) e
-        =⟨ trans-∙ (merid A a) (! (merid A e)) e ⟩
+        =⟨ trans-∙ {B = Codes} (merid A a) (! (merid A e)) e ⟩
       transport Codes (! (merid A e)) (transport Codes (merid A a) e)
         =⟨ transport-Codes-mer a e ∙ μ-e a
           |in-ctx (λ w → transport Codes (! (merid A e)) w) ⟩
@@ -153,30 +153,29 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
   ptd-main-lemma = ptd-ua main-lemma-eqv idp
 
   {- for main-lemma-iso; separated for performance reasons -}
-  private
-    module Iso where
-      abstract
-        H : fst (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))
-              ∙→ Ptd-Trunc ⟨ 1 ⟩ (A , e))
-        H = (λ x → [ encode x ]) , idp
+  module Iso where
+    abstract
+      H : fst (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))
+            ∙→ Ptd-Trunc ⟨ 1 ⟩ (A , e))
+      H = (λ x → [ encode x ]) , idp
 
-        F : fst (Ptd-Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e))))
-              ∙→ Ptd-Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (A , e)))
-        F = ap^ 1 H
+      F : fst (Ptd-Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e))))
+            ∙→ Ptd-Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (A , e)))
+      F = ap^ 1 H
 
-        f : Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e))))
-          → Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (A , e))
-        f = fst F
+      f : Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e))))
+        → Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (A , e))
+      f = fst F
 
-        pres-ident : f (idp^ 1) == idp^ 1
-        pres-ident = snd F
+      pres-ident : f (idp^ 1) == idp^ 1
+      pres-ident = snd F
 
-        pres-comp : (p q : Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))))
-          → f (conc^ 1 p q) == conc^ 1 (f p) (f q)
-        pres-comp = ap^-conc^ 1 H
+      pres-comp : (p q : Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))))
+        → f (conc^ 1 p q) == conc^ 1 (f p) (f q)
+      pres-comp = ap^-conc^ 1 H
 
-        ie : is-equiv f
-        ie = is-equiv-ap^ 1 H (snd $ ((unTrunc-equiv A gA)⁻¹ ∘e main-lemma-eqv))
+      ie : is-equiv f
+      ie = is-equiv-ap^ 1 H (snd $ ((unTrunc-equiv A gA)⁻¹ ∘e main-lemma-eqv))
 
   abstract
     main-lemma-iso : ⦃ p1 : 1 ≠ 0 ⦄ → 

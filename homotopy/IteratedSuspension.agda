@@ -69,7 +69,7 @@ module Susp^Stable {i} (X : Ptd i) (cX : is-connected ⟨0⟩ (fst X))
             → C (S n) ⦃ psn ⦄ ⦃ pssn ⦄)
       → ((n : ℕ) ⦃ pn : n ≠ 0 ⦄ ⦃ psn : S n ≠ 0 ⦄
             → C n ⦃ pn ⦄ ⦃ psn ⦄)
-    lemma C f O ⦃ posi ⦄ = ⊥-rec (posi idp)
+    lemma C f O ⦃ posi ⦄ ⦃ _ ⦄ = ⊥-rec (posi idp)
     lemma C f (S n) ⦃ psn ⦄ ⦃ pssn ⦄ = f n ⦃ psn ⦄ ⦃ pssn ⦄
 
   abstract

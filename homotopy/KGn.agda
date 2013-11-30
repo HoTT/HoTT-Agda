@@ -14,12 +14,13 @@ module Implicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
   (gA : has-level ⟨ 1 ⟩ A) (A-H : HSS A) 
   (μcoh : HSS.μe- A-H (HSS.e A-H) == HSS.μ-e A-H (HSS.e A-H)) where
 
-  a₀ = HSS.e A-H
-  X = ∙[ A , a₀ ]
+  private
+    a₀ = HSS.e A-H
+    X = ∙[ A , a₀ ]
 
   Ptd-KG : (n : ℕ) ⦃ _ : n ≠ O ⦄ → Ptd i
   Ptd-KG O ⦃ posi ⦄ = ⊥-rec (posi idp)
-  Ptd-KG (S n) = Ptd-Trunc ⟨ S n ⟩ (Ptd-Susp^ n X)
+  Ptd-KG (S n) ⦃ _ ⦄ = Ptd-Trunc ⟨ S n ⟩ (Ptd-Susp^ n X)
 
   KG : (n : ℕ) ⦃ _ : n ≠ O ⦄ → Type i
   KG n = fst (Ptd-KG n)
@@ -29,7 +30,7 @@ module Implicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
 
   KG-level : (n : ℕ) ⦃ _ : n ≠ O ⦄ → has-level ⟨ n ⟩ (fst (Ptd-KG n))
   KG-level O ⦃ posi ⦄ = ⊥-rec (posi idp)
-  KG-level (S n) = Trunc-level
+  KG-level (S n) ⦃ _ ⦄ = Trunc-level
 
   KG-conn : (n : ℕ) → is-connected ⟨ n ⟩ (KG (S n))
   KG-conn n = Trunc-preserves-conn ⟨ S n ⟩ 
@@ -117,7 +118,7 @@ module Implicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
     π₁ ⦃ pn ⦄ ⦃ p1 ⦄ = 
       π-Trunc-≤T-iso 1 ⦃ pn ⦄ ⟨ 1 ⟩ X ≤T-refl 
       ∙ ap (λ p → π 1 ⦃ p ⦄ X) 
-           (prop-has-all-paths (Π-level (λ _ → ⊥-is-prop)) _ _)
+           (prop-has-all-paths (Π-level (λ _ → ⊥-is-prop)) pn p1)
 
     private
       module Π₂ = Pi2HSusp A gA cA A-H μcoh
@@ -130,7 +131,7 @@ module Implicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
 
     π-diag : (n : ℕ) → ⦃ pn : n ≠ 0 ⦄ → ⦃ p1 : 1 ≠ O ⦄
       → π n ⦃ pn ⦄ (Ptd-KG n) == π 1 ⦃ p1 ⦄ X
-    π-diag 0 ⦃ pn ⦄ = ⊥-rec (pn idp)
+    π-diag 0 ⦃ pn ⦄ ⦃ _ ⦄ = ⊥-rec (pn idp)
     π-diag 1 ⦃ pn ⦄ ⦃ p1 ⦄ = π₁ ⦃ pn ⦄ ⦃ p1 ⦄
     π-diag 2 ⦃ pn ⦄ ⦃ p1 ⦄ = π₂ ⦃ pn ⦄ ⦃ p1 ⦄
     π-diag (S (S (S n))) ⦃ pn ⦄ ⦃ p1 ⦄ = 
@@ -169,12 +170,13 @@ module Implicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
       Ptd-KG 1 ∎
 
     private
+      nlemma : (n : ℕ) → Path {A = ℕ₋₂} (S ((n -2) +2+ ⟨0⟩)) (S (S (n -1)))
+      nlemma O = idp 
+      nlemma (S n) = ap S (nlemma n)
+
       sconn : (n : ℕ) → is-connected (S (S (n -1))) (fst (Ptd-Susp^ (S n) X))
       sconn n = transport (λ t → is-connected t (fst (Ptd-Susp^ (S n) X)))
-                          (lemma n) (Ptd-Susp^-conn (S n) cA)
-        where lemma : (n : ℕ) → S ((n -2) +2+ ⟨0⟩) == S (S (n -1))
-              lemma O = idp
-              lemma (S n) = ap S (lemma n)
+                          (nlemma n) (Ptd-Susp^-conn (S n) cA)
 
       kle : (n : ℕ) → ⟨ S (S n) ⟩ ≤T S ((n -1) +2+ S (n -1))
       kle O = inl idp
@@ -195,11 +197,12 @@ module Implicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
         =⟨ ! (FS.ptd-path n) ⟩
       Ptd-KG (S (S n)) ∎
 
-    spectrum : (n : ℕ) ⦃ pn : n ≠ 0 ⦄ → Ptd-Ω (Ptd-KG (S n)) == Ptd-KG n
-    spectrum 0 ⦃ pn ⦄ = ⊥-rec (pn idp)
-    spectrum 1 = spectrum₁
-    spectrum (S (S n)) = spectrumSS n
-
+    abstract
+      spectrum : (n : ℕ) ⦃ pn : n ≠ 0 ⦄ → Ptd-Ω (Ptd-KG (S n)) == Ptd-KG n
+      spectrum 0 ⦃ pn ⦄ = ⊥-rec (pn idp)
+      spectrum 1 ⦃ _ ⦄ = spectrum₁
+      spectrum (S (S n)) ⦃ _ ⦄ = spectrumSS n
+  
 module Explicit {i} (G : Group i) (G-abelian : is-abelian G) where
   module K1 = KG1 G 
   module HSpace = KG1HSpace G G-abelian
