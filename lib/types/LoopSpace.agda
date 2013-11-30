@@ -33,11 +33,11 @@ idp^ n {X} = snd (Ptd-Ω^ n X)
 module _ {i} where
   !^ : (n : ℕ) ⦃ _ : n ≠ O ⦄ {X : Ptd i} → Ω^ n X → Ω^ n X
   !^ O ⦃ posi ⦄ = ⊥-rec (posi idp)
-  !^ (S n) = !
+  !^ (S n) ⦃ _ ⦄ = !
 
   conc^ : (n : ℕ) ⦃ _ : n ≠ O ⦄ {X : Ptd i} → Ω^ n X → Ω^ n X → Ω^ n X
   conc^ O ⦃ posi ⦄ = ⊥-rec (posi idp)
-  conc^ (S n) = _∙_
+  conc^ (S n) ⦃ _ ⦄ = _∙_
 
 ap^ : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
   → fst (X ∙→ Y) → fst (Ptd-Ω^ n X ∙→ Ptd-Ω^ n Y)
@@ -59,29 +59,29 @@ module _ {i} {X : Ptd i} where
   conc^-unit-r : (n : ℕ) ⦃ _ : n ≠ O ⦄ (q : Ω^ n X) 
     → (conc^ n q (idp^ n)) == q
   conc^-unit-r O ⦃ posi ⦄ = ⊥-rec (posi idp)
-  conc^-unit-r (S n) = ∙-unit-r 
+  conc^-unit-r (S n) ⦃ _ ⦄ = ∙-unit-r 
 
   conc^-assoc : (n : ℕ) ⦃ _ : n ≠ O ⦄ (p q r : Ω^ n X) 
     → conc^ n (conc^ n p q) r == conc^ n p (conc^ n q r)
   conc^-assoc O ⦃ posi ⦄ = ⊥-rec (posi idp)
-  conc^-assoc (S n) = ∙-assoc
+  conc^-assoc (S n) ⦃ _ ⦄ = ∙-assoc
 
   !^-inv-l : (n : ℕ) ⦃ _ : n ≠ O ⦄ (p : Ω^ n X)
     → conc^ n (!^ n p) p == idp^ n
   !^-inv-l O ⦃ posi ⦄ = ⊥-rec (posi idp)
-  !^-inv-l (S n) = !-inv-l
+  !^-inv-l (S n) ⦃ _ ⦄ = !-inv-l
 
   !^-inv-r : (n : ℕ) ⦃ _ : n ≠ O ⦄ (p : Ω^ n X)
     → conc^ n p (!^ n p) == idp^ n
   !^-inv-r O ⦃ posi ⦄ = ⊥-rec (posi idp)
-  !^-inv-r (S n) = !-inv-r
+  !^-inv-r (S n) ⦃ _ ⦄ = !-inv-r
 
 abstract
   ap^-conc^ : ∀ {i j} (n : ℕ) ⦃ _ : n ≠ O ⦄ 
     {X : Ptd i} {Y : Ptd j} (F : fst (X ∙→ Y)) (p q : Ω^ n X)
     → fst (ap^ n F) (conc^ n p q) == conc^ n (fst (ap^ n F) p) (fst (ap^ n F) q)
-  ap^-conc^ O ⦃ posi ⦄ _ _ = ⊥-rec (posi idp)
-  ap^-conc^ (S n) {X = X} {Y = Y} F p q = 
+  ap^-conc^ O ⦃ posi ⦄ _ _ _ = ⊥-rec (posi idp)
+  ap^-conc^ (S n) ⦃ _ ⦄ {X = X} {Y = Y} F p q =
     ! gpt ∙ ap g (p ∙ q) ∙ gpt
       =⟨ ap-∙ g p q |in-ctx (λ w → ! gpt ∙ w ∙ gpt) ⟩
     ! gpt ∙ (ap g p ∙ ap g q) ∙ gpt
@@ -183,8 +183,8 @@ module _ {i} where
   Ω^-inner-out-conc^ : (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) (p q : Ω^ (S n) X)
     → Ω^-inner-out n X (conc^ (S n) p q) 
       == conc^ n (Ω^-inner-out n X p) (Ω^-inner-out n X q)
-  Ω^-inner-out-conc^ O ⦃ posi ⦄ X = ⊥-rec (posi idp)
-  Ω^-inner-out-conc^ (S n) X p q = 
+  Ω^-inner-out-conc^ O ⦃ posi ⦄ X _ _ = ⊥-rec (posi idp)
+  Ω^-inner-out-conc^ (S n) ⦃ _ ⦄ X p q = 
     ap^-conc^ 1 (Ptd-Ω^-inner-out n X) p q
 
   Ω^-inner-is-equiv : (n : ℕ) (X : Ptd i)

@@ -59,7 +59,7 @@ module lib.types.Pushout {i} {j} {k} where
     f = M.f
 
     glue-β : (c : Span.C d) → ap f (glue c) == glue* c
-    glue-β c = apd=cst-in (M.glue-β c)
+    glue-β c = apd=cst-in {f = f} (M.glue-β c)
 
   module PushoutGeneric {d : Span {i} {j} {k}} where
 
@@ -67,8 +67,7 @@ module lib.types.Pushout {i} {j} {k} where
 
     open Generic1HIT (Coprod A B) C (inl ∘ g) (inr ∘ h) public
 
-    generic-pushout : Pushout d ≃ T
-    generic-pushout = equiv to from to-from from-to  module _ where
+    module _ where
 
       module To = PushoutRec (cc ∘ inl) (cc ∘ inr) pp
 
@@ -105,6 +104,9 @@ module lib.types.Pushout {i} {j} {k} where
           (ap from (ap to (glue c))   =⟨ To.glue-β c |in-ctx ap from ⟩
            ap from (pp c)             =⟨ From.pp-β c ⟩
            glue c ∎))
+
+    generic-pushout : Pushout d ≃ T
+    generic-pushout = equiv to from to-from from-to  
 
   _⊔^[_]_/_ : (A : Type i) (C : Type k) (B : Type j)
     (fg : (C → A) × (C → B)) → Type (lmax (lmax i j) k)

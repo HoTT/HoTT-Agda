@@ -123,33 +123,37 @@ conn-elim-general : ∀ {i j} {A : Type i} {B : Type j} {n k : ℕ₋₂}
   → {f : A → B} → is-conn-map n f
   → ∀ {l} (P : B → (k +2+ n) -Type l) 
   → ∀ t → has-level k (Σ (Π B (fst ∘ P)) (λ s → (s ∘ f) == t))
-conn-elim-general {k = ⟨-2⟩} c P = 
-  equiv-is-contr-map (conn-elim-eqv c P)
-conn-elim-general {B = B} {n = n} {k = S k'} {f = f} c P t (g , p) (h , q) =
-  equiv-preserves-level e $ conn-elim-general {k = k'} c Q (app= (p ∙ ! q))
+conn-elim-general {k = ⟨-2⟩} c P t = 
+  equiv-is-contr-map (conn-elim-eqv c P) t
+conn-elim-general {B = B} {n = n} {k = S k'} {f = f} c P t =
+  λ {(g , p) (h , q) → 
+    equiv-preserves-level (e g h p q) $ 
+      conn-elim-general {k = k'} c (Q g h) (app= (p ∙ ! q))}
   where 
-    Q : B → (k' +2+ n) -Type _
-    Q b = ((g b == h b) , snd (P b) _ _)
+    Q : (g h : Π B (fst ∘ P)) → B → (k' +2+ n) -Type _
+    Q g h b = ((g b == h b) , snd (P b) _ _)
 
     app=-ap : ∀ {i j k} {A : Type i} {B : Type j} {C : B → Type k}
       (f : A → B) {g h : Π B C} (p : g == h)
       → app= (ap (λ k → k ∘ f) p) == (app= p ∘ f)
     app=-ap f idp = idp
 
-    lemma : (H : ∀ x → g x == h x)
+    lemma : ∀ g h p q → (H : ∀ x → g x == h x)
       → ((H ∘ f) == app= (p ∙ ! q)) 
          ≃ (ap (λ v → v ∘ f) (λ= H) ∙ q == p)
-    lemma H = 
+    lemma g h p q H = 
       move-right-on-right-eqv (ap (λ v → v ∘ f) (λ= H)) p q 
       ∘e transport (λ w → (w == app= (p ∙ ! q)) 
                       ≃ (ap (λ v → v ∘ f) (λ= H) == p ∙ ! q))
                    (app=-ap f (λ= H) ∙ ap (λ k → k ∘ f) (λ= $ app=-β H))
                    ((equiv-ap app=-equiv _ _)⁻¹)
 
-    e : (Σ (∀ x → g x == h x) (λ r → (r ∘ f) == app= (p ∙ ! q)))
-        ≃ ((g , p) == (h , q)) 
-    e = ((=Σ-eqv _ _ ∘e equiv-Σ-snd (λ u → ↓-app=cst-eqv ∘e !-equiv))
-        ∘e (equiv-Σ-fst _ (snd λ=-equiv))) ∘e equiv-Σ-snd lemma
+    e : ∀ g h p q  →
+      (Σ (∀ x → g x == h x) (λ r → (r ∘ f) == app= (p ∙ ! q)))
+      ≃ ((g , p) == (h , q)) 
+    e g h p q = 
+      ((=Σ-eqv _ _ ∘e equiv-Σ-snd (λ u → ↓-app=cst-eqv ∘e !-equiv))
+      ∘e (equiv-Σ-fst _ (snd λ=-equiv))) ∘e equiv-Σ-snd (lemma g h p q)
               
 
 conn-intro : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} {h : A → B}

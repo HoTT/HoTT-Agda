@@ -90,6 +90,10 @@ J : ∀ {i j} {A : Type i} {a : A} (B : (a' : A) (p : a == a') → Type j) (d : 
   {a' : A} (p : a == a') → B a' p
 J B d idp = d
 
+J' : ∀ {i j} {A : Type i} {a : A} (B : (a' : A) (p : a' == a) → Type j) (d : B a idp)
+  {a' : A} (p : a' == a) → B a' p
+J' B d idp = d
+
 {- Unit type
 
 The unit type is defined as record so that we also get the η-rule definitionally.

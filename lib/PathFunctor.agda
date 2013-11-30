@@ -112,6 +112,26 @@ htpy-natural-toid : {f : A → A}
 htpy-natural-toid {f = f} p x = anti-whisker-right (p x) $ 
   htpy-natural p (p x) ∙ ap (λ q → p (f x) ∙ q) (ap-idf (p x))
 
+{- for functions with two arguments -}
+
+module _ {j k} {B : Type j} {C : Type k} (f : A → B → C) where
+
+  ap2 : {x y : A} {w z : B} 
+    → (x == y) → (w == z) → f x w == f y z
+  ap2 idp idp = idp
+
+  ap2-out : {x y : A} {w z : B} (p : x == y) (q : w == z)
+    → ap2 p q == ap (λ u → f u w) p ∙ ap (λ v → f y v) q
+  ap2-out idp idp = idp
+
+  ap2-idp-l : {x : A} {w z : B} (q : w == z)
+    → ap2 (idp {a = x}) q == ap (f x) q
+  ap2-idp-l idp = idp
+
+  ap2-idp-r : {x y : A} {w : B} (p : x == y)
+    → ap2 p (idp {a = w}) == ap (λ z → f z w) p
+  ap2-idp-r idp = idp
+
 -- unsure where this belongs
 trans-pathfrom : ∀ {a x y : A} (p : x == y) (q : a == x)
   → transport (λ x → a == x) p q == q ∙ p

@@ -58,7 +58,7 @@ module S¹Rec {i} {A : Type i} (base* : A) (loop* : base* == base*) where
   f = M.f
 
   loop-β : ap f loop == loop*
-  loop-β = apd=cst-in M.loop-β
+  loop-β = apd=cst-in {f = f} M.loop-β
 
 module S¹RecType {i} (A : Type i) (e : A ≃ A) where
 

@@ -46,9 +46,7 @@ module PushoutRecType {l} (left* : A → Type l) (right* : B → Type l)
     ↓-glue-in c {a} {b} p = from-transp f (glue c) (coe-glue-β c a ∙ p)
 
   private
-    f-d : Span
-    f-d = span fA fB fC fg fh  module _ where
-
+    module _ where
       fA : Type _
       fA = Σ A left*
 
@@ -63,6 +61,9 @@ module PushoutRecType {l} (left* : A → Type l) (right* : B → Type l)
 
       fh : fC → fB
       fh (c , c') = (h c , –> (glue* c) c')
+
+    f-d : Span
+    f-d = span fA fB fC fg fh  
 
   flattening : Σ (Pushout d) f == Pushout f-d
   flattening = Σ= p p' ∙ q ∙ r ∙ s  where
@@ -91,7 +92,7 @@ module PushoutRecType {l} (left* : A → Type l) (right* : B → Type l)
            Pushout-elim {P = λ t → f t == P.f (–> p-equiv t)}
              (λ a → idp) (λ b → idp)
              (λ c → ↓-='-in
-               (ap (P.f ∘ (–> p-equiv)) (glue c)    =⟨ ap-∘ P.f _ (glue c) ⟩
+               (ap (P.f ∘ (–> p-equiv)) (glue c)    =⟨ ap-∘ P.f (–> p-equiv) (glue c) ⟩
                 ap P.f (ap (–> p-equiv) (glue c))   =⟨ G.To.glue-β c |in-ctx ap P.f ⟩
                 ap P.f (pp c)                       =⟨ P.pp-β c ⟩
                 ua (glue* c)                        =⟨ ! (glue-β c) ⟩

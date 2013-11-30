@@ -139,7 +139,7 @@ Trunc-preserves-level {n = ⟨-2⟩} _ (a₀ , p) =
   ([ a₀ ] , Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
               (λ a → ap [_] (p a)))
 Trunc-preserves-level ⟨-2⟩ _ = contr-has-level Trunc-level
-Trunc-preserves-level {n = (S n)} (S m) c t₁ t₂ = 
+Trunc-preserves-level {n = (S n)} (S m) c = λ t₁ t₂ → 
   Trunc-elim 
     (λ s₁ → prop-has-level-S {A = has-level n (s₁ == t₂)} has-level-is-prop) 
     (λ a₁ → Trunc-elim 

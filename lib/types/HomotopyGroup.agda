@@ -40,17 +40,18 @@ module _ {i} where
 abstract
   π-inner-iso : ∀ {i} (n : ℕ) ⦃ pn : n ≠ 0 ⦄ ⦃ psn : S n ≠ 0 ⦄ (X : Ptd i)
     → π (S n) ⦃ psn ⦄ X == π n ⦃ pn ⦄ (Ptd-Ω X)
-  π-inner-iso O ⦃ posi ⦄ X = ⊥-rec (posi idp)
-  π-inner-iso (S n') ⦃ posi ⦄ X = 
-    transport (λ pi → pi (S n) X == pi n (Ptd-Ω X)) π-fold $ group-iso
-      (record { 
-        f = Trunc-fmap (Ω^-inner-out n X);
-        pres-ident = ap [_] (snd (Ptd-Ω^-inner-out n X));
-        pres-comp = 
-          Trunc-elim (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
-            (λ p → Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
-               (λ q → ap [_] (Ω^-inner-out-conc^ n ⦃ posi ⦄ X p q)))})
-      (is-equiv-Trunc ⟨0⟩ (Ω^-inner-out n X) (Ω^-inner-is-equiv n X))
+  π-inner-iso O ⦃ pn ⦄ ⦃ psn ⦄ X = ⊥-rec (pn idp)
+  π-inner-iso (S n') ⦃ pn' ⦄ ⦃ pn ⦄ X = 
+    transport (λ pi → pi (S n) ⦃ pn ⦄ X == pi n ⦃ pn' ⦄ (Ptd-Ω X)) π-fold $ 
+      group-iso
+        (record { 
+          f = Trunc-fmap (Ω^-inner-out n X);
+          pres-ident = ap [_] (snd (Ptd-Ω^-inner-out n X));
+          pres-comp = 
+            Trunc-elim (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
+              (λ p → Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+                 (λ q → ap [_] (Ω^-inner-out-conc^ n ⦃ pn' ⦄ X p q)))})
+        (is-equiv-Trunc ⟨0⟩ (Ω^-inner-out n X) (Ω^-inner-is-equiv n X))
     where
     n : ℕ
     n = S n'

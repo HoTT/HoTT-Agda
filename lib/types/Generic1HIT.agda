@@ -56,7 +56,7 @@ module Rec {k} {C : Type k} (cc* : A → C)
   f = M.f
 
   pp-β : (b : B) → ap f (pp b) == pp* b
-  pp-β b = apd=cst-in (M.pp-β b)
+  pp-β b = apd=cst-in {f = f} (M.pp-β b)
 
 module RecType {k} (C : A → Type k) (D : (b : B) → C (g b) ≃ C (h b)) where
 

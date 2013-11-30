@@ -105,11 +105,11 @@ T-S≠⟨-2⟩ : (n : ℕ₋₂) → S n ≠ ⟨-2⟩
 T-S≠⟨-2⟩ n p = transport T-S≠⟨-2⟩-type p unit
 
 T-S≠ : (n : ℕ₋₂) → S n ≠ n
-T-S≠ ⟨-2⟩ = T-S≠⟨-2⟩ ⟨-2⟩
+T-S≠ ⟨-2⟩ p = T-S≠⟨-2⟩ ⟨-2⟩ p
 T-S≠ (S n) p = T-S≠ n (ap T-get-S p)
 
 T-S+2+≠ : (n k : ℕ₋₂) → S (k +2+ n) ≠ n
-T-S+2+≠ ⟨-2⟩ k = T-S≠⟨-2⟩ (k +2+ ⟨-2⟩)
+T-S+2+≠ ⟨-2⟩ k p = T-S≠⟨-2⟩ (k +2+ ⟨-2⟩) p
 T-S+2+≠ (S n) k p = T-S+2+≠ n k (ap T-get-S (ap S (! (+2+-βr k n)) ∙ p))
 
 <T-witness : {m n : ℕ₋₂} → (m <T n) → Σ ℕ₋₂ (λ k → S k +2+ m == n)

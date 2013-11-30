@@ -79,10 +79,10 @@ module TorusRec {i} {A : Type i} (baseT* : A) (loopT1* loopT2* : baseT* == baseT
   f = M.f
 
   loopT1-β : ap f loopT1 == loopT1*
-  loopT1-β = apd=cst-in M.loopT1-β
+  loopT1-β = apd=cst-in {f = f} M.loopT1-β
 
   loopT2-β : ap f loopT2 == loopT2*
-  loopT2-β = apd=cst-in M.loopT2-β
+  loopT2-β = apd=cst-in {f = f} M.loopT2-β
 
   private
     lhs : ap f (loopT1 ∙ loopT2) == loopT1* ∙ loopT2*

@@ -52,7 +52,7 @@ module lib.types.OneSkeleton {i} {A : Type i} {j} {B : Type j} where
       f = M.f
 
       link-β : ∀ a₁ a₂ p → ap f (link a₁ a₂ p) == link* a₁ a₂ p
-      link-β a₁ a₂ p = apd=cst-in (M.link-β a₁ a₂ p)
+      link-β a₁ a₂ p = apd=cst-in {f = f} (M.link-β a₁ a₂ p)
 
     open OneSkeletonRec public using () renaming (f to OneSkeleton-rec)
 
