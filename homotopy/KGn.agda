@@ -10,7 +10,7 @@ open import homotopy.KG1HSpace
 module homotopy.KGn where
 
 -- K(G,n) when G is π₁(A,a₀)
-module Implicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A) 
+module KGnImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A) 
   (gA : has-level ⟨ 1 ⟩ A) (A-H : HSS A) 
   (μcoh : HSS.μe- A-H (HSS.e A-H) == HSS.μ-e A-H (HSS.e A-H)) where
 
@@ -203,10 +203,10 @@ module Implicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
       spectrum 1 ⦃ _ ⦄ = spectrum₁
       spectrum (S (S n)) ⦃ _ ⦄ = spectrumSS n
   
-module Explicit {i} (G : Group i) (G-abelian : is-abelian G) where
+module KGnExplicit {i} (G : Group i) (G-abelian : is-abelian G) where
   module K1 = KG1 G 
   module HSpace = KG1HSpace G G-abelian
-  module Kn = Implicit K1.KG1 K1.KG1-conn K1.klevel HSpace.H-KG1 HSpace.μcoh
+  module Kn = KGnImplicit K1.KG1 K1.KG1-conn K1.klevel HSpace.H-KG1 HSpace.μcoh
 
   open Kn public 
   open Kn.BelowDiagonal public using (π-below)
