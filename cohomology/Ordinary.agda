@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import lib.types.Cofiber
 open import homotopy.KGn
 open import cohomology.SuspAdjointLoopIso
 open import cohomology.WithCoefficients
@@ -46,8 +45,11 @@ module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
     (λ {(g , gpt) → (g ∘ f , ap g fpt ∙ gpt)}) ,
     pair= idp (∙-unit-r _ ∙ ap-cst idp fpt)
 
-  CF : fst (X ∙→ Y) → GroupHom (C n Y) (C n X)
-  CF (f , fpt) = record {
+  CF : fst (X ∙→ Y) → fst (Ptd-CEl n Y ∙→ Ptd-CEl n X)
+  CF F = (Trunc-fmap (fst (uCF F)) , ap [_] (snd (uCF F)))
+
+  CF-hom : fst (X ∙→ Y) → GroupHom (C n Y) (C n X)
+  CF-hom (f , fpt) = record {
     f = T;
     pres-ident = ap [_] (snd (uCF (f , fpt)));
     pres-comp = λ G H → Trunc-elim 
@@ -61,7 +63,7 @@ module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
     where
     _⊗_ = GroupStructure.comp (Group.group-struct (C n X))
     _⊕_ = GroupStructure.comp (Group.group-struct (C n Y))
-    T = Trunc-fmap (fst (uCF (f , fpt)))
+    T = fst (CF (f , fpt))
 
     lemma : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
       {a : A} {b : B} {c₁ c₂ : C}
@@ -101,7 +103,7 @@ ptd-cfcod {X = X} (f , fpt) =
 
 module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
 
-  {- in image of (CF n (ptd-cfcod F)) ⇒ in kernel of (CF n F) -}
+  {- in image of (uCF n (ptd-cfcod F)) ⇒ in kernel of (uCF n F) -}
   uC-Exact-itok : (F : fst (X ∙→ Y)) 
     → is-exact-itok (uCF n (ptd-cfcod F)) (uCF n F)
   uC-Exact-itok (f , fpt) (g , gpt) = pair= 
@@ -124,7 +126,7 @@ module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
       → ap (g ∘ f) p ∙ ap g (ap f (! p) ∙ q) ∙ r == ap g q ∙ r
     lemma f g idp idp idp = idp
 
-  {- in kernel of (CF n F) ⇒ in image of (CF n (ptd-cfcod F)) -}
+  {- in kernel of (uCF n F) ⇒ in image of (uCF n (ptd-cfcod F)) -}
   uC-Exact-ktoi : (F : fst (X ∙→ Y)) 
     → is-exact-ktoi (uCF n (ptd-cfcod F)) (uCF n F)
   uC-Exact-ktoi (f , fpt) (h , hpt) p = 
@@ -140,3 +142,31 @@ module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
       (p : a₁ == a₂) (q : b == f a₂)
       → ap g (ap f p ∙ ! q) == ap (g ∘ f) p ∙ ! (ap g q)
     lemma f g idp q = ap-! g q
+
+{- Truncated Exactness Axiom -}
+
+module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
+
+  {- in image of (CF n (ptd-cfcod F)) ⇒ in kernel of (CF n F) -}
+  C-Exact-itok : (F : fst (X ∙→ Y)) 
+    → is-exact-itok (CF n (ptd-cfcod F)) (CF n F)
+  C-Exact-itok F = 
+    Trunc-elim 
+      {B = λ tG → fst (CF n F) (fst (CF n (ptd-cfcod F)) tG) == Cid n X}
+      (λ _ → =-preserves-level _ Trunc-level)
+      (λ G → ap [_] (uC-Exact-itok n F G))
+
+  {- in kernel of (CF n F) ⇒ merely in image of (CF n (ptd-cfcod F)) -}
+  C-Exact-ktoi-mere : (F : fst (X ∙→ Y))
+    → is-exact-ktoi-mere (CF n (ptd-cfcod F)) (CF n F)
+  C-Exact-ktoi-mere F = 
+    Trunc-elim
+      {B = λ H → fst (CF n F) H == Cid n X
+         → Trunc ⟨-1⟩ (Σ (CEl n (Ptd-Cof (fst F))) 
+                         (λ K → fst (CF n (ptd-cfcod F)) K == H))}
+      (λ _ → Π-level (λ _ → raise-level _ Trunc-level))
+      (λ H tp → Trunc-rec Trunc-level
+        (λ p → [ (let wit = uC-Exact-ktoi n F H p  
+                  in [ fst wit ] , (ap [_] (snd wit))) ])
+        (–> (Trunc=-equiv _ _) tp))
+
