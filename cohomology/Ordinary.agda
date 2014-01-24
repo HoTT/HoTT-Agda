@@ -180,22 +180,23 @@ module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
       itok-to-mere (CF n (ptd-cfcod F)) (CF n F) Trunc-level (C-Exact-itok F)
 
   {- in kernel of (CF n F) ⇒ merely in image of (CF n (ptd-cfcod F)) -}
-  C-Exact-ktoi-mere : (F : fst (X ∙→ Y))
-    → is-exact-ktoi-mere (CF n (ptd-cfcod F)) (CF n F)
-  C-Exact-ktoi-mere F = 
-    Trunc-elim
-      {B = λ tH → fst (CF n F) tH == Cid n X
-         → Trunc ⟨-1⟩ (Σ (CEl n (Ptd-Cof (fst F))) 
-                         (λ tK → fst (CF n (ptd-cfcod F)) tK == tH))}
-      (λ _ → Π-level (λ _ → raise-level _ Trunc-level))
-      (λ H tp → Trunc-rec Trunc-level (lemma H) (–> (Trunc=-equiv _ _) tp))
-      where 
-      lemma : (H : uCEl n Y) 
-        → fst (uCF n F) H == uCid n X
-        → Trunc ⟨-1⟩ (Σ (CEl n (Ptd-Cof (fst F))) 
-                        (λ tK → fst (CF n (ptd-cfcod F)) tK == [ H ]))
-      lemma H p = [ [ fst wit ] , ap [_] (snd wit) ]
-        where wit = uC-Exact-ktoi n F H p
+  abstract
+    C-Exact-ktoi-mere : (F : fst (X ∙→ Y))
+      → is-exact-ktoi-mere (CF n (ptd-cfcod F)) (CF n F)
+    C-Exact-ktoi-mere F = 
+      Trunc-elim
+        {B = λ tH → fst (CF n F) tH == Cid n X
+           → Trunc ⟨-1⟩ (Σ (CEl n (Ptd-Cof (fst F))) 
+                           (λ tK → fst (CF n (ptd-cfcod F)) tK == tH))}
+        (λ _ → Π-level (λ _ → raise-level _ Trunc-level))
+        (λ H tp → Trunc-rec Trunc-level (lemma H) (–> (Trunc=-equiv _ _) tp))
+        where 
+        lemma : (H : uCEl n Y) 
+          → fst (uCF n F) H == uCid n X
+          → Trunc ⟨-1⟩ (Σ (CEl n (Ptd-Cof (fst F))) 
+                          (λ tK → fst (CF n (ptd-cfcod F)) tK == [ H ]))
+        lemma H p = [ [ fst (uC-Exact-ktoi n F H p) ] , 
+                        ap [_] (snd (uC-Exact-ktoi n F H p)) ]
 
 {- Finite Additivity Axiom -}
 module _ {j k} (n : ℕ) (X : Ptd j) (Y : Ptd k) where
@@ -249,6 +250,8 @@ module _ {j k} (n : ℕ) (X : Ptd j) (Y : Ptd k) where
           (↓-app=cst-in (ap (λ w → w ∙ snd H)
                             (! (app=-β (L-R-fst H) (snd (Ptd-Wedge X Y))))))))
         where
+        {- the first component of detruncated L (R [ h , hpt ]);
+         - given a name for sake of space -}
         wh : fst (Ptd-Wedge X Y ∙→ Ptd-Ω (Ptd-KG (S n)))
           → (Wedge X Y → Ω (Ptd-KG (S n)))
         wh (h , hpt) = 
@@ -301,10 +304,6 @@ module _ {j k} (n : ℕ) (X : Ptd j) (Y : Ptd k) where
             == ap2 _∙_ (ap f r ∙ α) (ap g r ∙ β)
         lemma f g idp idp idp = idp
 
-    abstract
-      e : is-equiv R
-      e = is-eq R L R-L L-R
-
   abstract
     C-Additivity : C n (Ptd-Wedge X Y) == (C n X) ×G (C n Y)
-    C-Additivity = group-iso (group-hom R pres-ident pres-comp) e
+    C-Additivity = group-iso (group-hom R pres-ident pres-comp) (is-eq R L R-L L-R)
