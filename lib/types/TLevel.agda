@@ -7,6 +7,9 @@ open import lib.types.Nat
 
 module lib.types.TLevel where
 
+infix 5 _-2
+infix 5 _-1
+
 _-2 : ℕ → ℕ₋₂
 O -2 = ⟨-2⟩
 (S n) -2 = S (n -2)
@@ -37,6 +40,9 @@ S m +2+ n = S (m +2+ n)
 +2+-comm m (S n) = +2+-βr m n ∙ ap S (+2+-comm m n)
 
 {- Inequalities -}
+infix 4 _<T_
+infix 4 _≤T_
+
 data _<T_ : ℕ₋₂ → ℕ₋₂ → Type₀ where
   ltS : {m : ℕ₋₂} → m <T (S m)
   ltSR : {m n : ℕ₋₂} → m <T n → m <T (S n)

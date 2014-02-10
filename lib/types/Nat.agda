@@ -77,6 +77,9 @@ abstract
 ℕ-level = ℕ-is-set
 
 {- Inequalities -}
+infix 4 _<_
+infix 4 _≤_
+
 data _<_ : ℕ → ℕ → Type₀ where
   ltS : {m : ℕ} → m < (S m)
   ltSR : {m n : ℕ} → m < n → m < (S n)

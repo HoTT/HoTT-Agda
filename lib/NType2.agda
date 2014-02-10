@@ -87,7 +87,7 @@ hSet₀ = hSet lzero
 -- [n -Type] is an (n+1)-type
 
 abstract
-  ≃-level : ∀ {i} {n : ℕ₋₂} {A B : Type i}
+  ≃-level : ∀ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j}
     → (has-level n A → has-level n B → has-level n (A ≃ B))
   ≃-level {n = ⟨-2⟩} pA pB =
     ((cst (fst pB) , contr-to-contr-is-equiv _ pA pB)
@@ -96,7 +96,8 @@ abstract
   ≃-level {n = S n} pA pB =
     Σ-level (→-level pB) (λ _ → prop-has-level-S (is-equiv-is-prop _))
 
-  ≃-is-set : ∀ {i} {A B : Type i} → (is-set A → is-set B → is-set (A ≃ B))
+  ≃-is-set : ∀ {i j} {A : Type i} {B : Type j}
+            → is-set A → is-set B → is-set (A ≃ B)
   ≃-is-set = ≃-level
 
   universe-=-level : ∀ {i} {n : ℕ₋₂} {A B : Type i}
