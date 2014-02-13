@@ -36,6 +36,11 @@ module _ {i} where
   fundamental-group : (X : Ptd i) → Group i
   fundamental-group X = π 1 ⦃ ℕ-S≠O#instance ⦄ X
 
+  {- Favonia: Sorry about this dirty workaround.
+   - I should have updated covering spaces accordingly instead. -}
+  concrete-fundamental-group : (X : Ptd i) → Group i
+  concrete-fundamental-group X = π-concrete 1 ⦃ ℕ-S≠O#instance ⦄ X
+
 {- π_(n+1) of a space is π_n of its loop space -}
 abstract
   π-inner-iso : ∀ {i} (n : ℕ) ⦃ pn : n ≠ 0 ⦄ ⦃ psn : S n ≠ 0 ⦄ (X : Ptd i)

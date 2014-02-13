@@ -10,7 +10,7 @@ module homotopy.CoverClassification {i} (A : Type i)
 
   module _ where
   -- private
-    π1A = λ a → fundamental-group ∙[ A , a ]
+    π1A = λ a → concrete-fundamental-group ∙[ A , a ]
 
   gset-to-cover : ∀ {j} a₁ → Gset (π1A a₁) j → Cover A (lmax i j)
   gset-to-cover a₁ gs = Ribbon-cover (A , a₁) gs

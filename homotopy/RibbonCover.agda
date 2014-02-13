@@ -16,7 +16,7 @@ module homotopy.RibbonCover {i : ULevel} where
   -- The HIT ribbon---reconstructed covering space
 
   private
-    module _ (A∙ : Ptd i) {j} (gs : Gset (fundamental-group A∙) j) where
+    module _ (A∙ : Ptd i) {j} (gs : Gset (concrete-fundamental-group A∙) j) where
       private
         A = fst A∙
         a = snd A∙
