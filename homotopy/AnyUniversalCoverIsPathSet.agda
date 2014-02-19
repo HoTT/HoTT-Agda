@@ -2,7 +2,7 @@
 
 open import HoTT
 
-module homotopy.AnyUniversalIsPathSet {i} (A : Type i)
+module homotopy.AnyUniversalCoverIsPathSet {i} (A : Type i)
   (A-conn : is-connected ⟨0⟩ A) where
 
   open Cover
