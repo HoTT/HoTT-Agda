@@ -25,15 +25,15 @@ module _ where
       link₀ : ∀ a₁ a₂ → map a₁ == map a₂ → point a₁ == point a₂
 
       link₁ : ∀ a₁ a₂ a₃ (p₁ : map a₁ == map a₂) (p₂ : map a₂ == map a₃)
-            → link₀ a₁ a₂ p₁ ∙ link₀ a₂ a₃ p₂ == link₀ a₁ a₃ (p₁ ∙ p₂)
+            → link₀ a₁ a₂ p₁ ∙' link₀ a₂ a₃ p₂ == link₀ a₁ a₃ (p₁ ∙' p₂)
 
     module TwoSkeletonElim
       {l} {P : TwoSkeleton map → Type l}
       (point* : ∀ a → P (point a))
       (link₀* : ∀ a₁ a₂ p → point* a₁ == point* a₂ [ P ↓ link₀ a₁ a₂ p ])
       (link₁* : ∀ a₁ a₂ a₃ p₁ p₂
-        →  link₀* a₁ a₂ p₁ ∙ᵈ link₀* a₂ a₃ p₂
-        == link₀* a₁ a₃ (p₁ ∙ p₂)
+        →  link₀* a₁ a₂ p₁ ∙'ᵈ link₀* a₂ a₃ p₂
+        == link₀* a₁ a₃ (p₁ ∙' p₂)
         [ (λ p → PathOver P p (point* a₁) (point* a₃)) ↓ link₁ a₁ a₂ a₃ p₁ p₂ ]) where
 
       f : Π (TwoSkeleton map) P
@@ -47,39 +47,38 @@ module _ where
 
       private
         lemma : ∀ a₁ a₂ a₃ p₁ p₂
-              → apd f (link₀ a₁ a₂ p₁ ∙ link₀ a₂ a₃ p₂)
-             == link₀* a₁ a₂ p₁ ∙ᵈ link₀* a₂ a₃ p₂
+              → apd f (link₀ a₁ a₂ p₁ ∙' link₀ a₂ a₃ p₂)
+             == link₀* a₁ a₂ p₁ ∙'ᵈ link₀* a₂ a₃ p₂
         lemma a₁ a₂ a₃ p₁ p₂ =
-          apd f (link₀ a₁ a₂ p₁ ∙ link₀ a₂ a₃ p₂)
-            =⟨ apd-∙ f (link₀ a₁ a₂ p₁) (link₀ a₂ a₃ p₂) ⟩
-          apd f (link₀ a₁ a₂ p₁) ∙ᵈ apd f (link₀ a₂ a₃ p₂)
-            =⟨ link₀-β a₁ a₂ p₁ |in-ctx (λ u → u ∙ᵈ apd f (link₀ a₂ a₃ p₂)) ⟩
-          link₀* a₁ a₂ p₁ ∙ᵈ apd f (link₀ a₂ a₃ p₂)
-            =⟨ link₀-β a₂ a₃ p₂ |in-ctx (λ u → link₀* a₁ a₂ p₁ ∙ᵈ u) ⟩
-          link₀* a₁ a₂ p₁ ∙ᵈ link₀* a₂ a₃ p₂
+          apd f (link₀ a₁ a₂ p₁ ∙' link₀ a₂ a₃ p₂)
+            =⟨ apd-∙' f (link₀ a₁ a₂ p₁) (link₀ a₂ a₃ p₂) ⟩
+          apd f (link₀ a₁ a₂ p₁) ∙'ᵈ apd f (link₀ a₂ a₃ p₂)
+            =⟨ link₀-β a₁ a₂ p₁ |in-ctx (λ u → u ∙'ᵈ apd f (link₀ a₂ a₃ p₂)) ⟩
+          link₀* a₁ a₂ p₁ ∙'ᵈ apd f (link₀ a₂ a₃ p₂)
+            =⟨ link₀-β a₂ a₃ p₂ |in-ctx (λ u → link₀* a₁ a₂ p₁ ∙'ᵈ u) ⟩
+          link₀* a₁ a₂ p₁ ∙'ᵈ link₀* a₂ a₃ p₂
             ∎
 
       postulate  -- HIT
         link₁-β : ∀ a₁ a₂ a₃ p₁ p₂
                 → apd (apd f) (link₁ a₁ a₂ a₃ p₁ p₂)
-               == lemma a₁ a₂ a₃ p₁ p₂ ◃ (link₁* a₁ a₂ a₃ p₁ p₂ ▹! link₀-β a₁ a₃ (p₁ ∙ p₂))
+               == lemma a₁ a₂ a₃ p₁ p₂ ◃ (link₁* a₁ a₂ a₃ p₁ p₂ ▹! link₀-β a₁ a₃ (p₁ ∙' p₂))
+
+open TwoSkeletonElim public using () renaming (f to TwoSkeleton-elim)
 
 module TwoSkeletonRec {map : A → B} {l} {P : Type l}
   (point* : ∀ a → P)
   (link₀* : ∀ a₁ a₂ p → point* a₁ == point* a₂)
   (link₁* : ∀ a₁ a₂ a₃ (p₁ : map a₁ == map a₂) (p₂ : map a₂ == map a₃)
-            → link₀* a₁ a₂ p₁ ∙ link₀* a₂ a₃ p₂
-           == link₀* a₁ a₃ (p₁ ∙ p₂)) where
-
-  postulate
-    meow : ∀ {i} {X : Type i} → X
+            → link₀* a₁ a₂ p₁ ∙' link₀* a₂ a₃ p₂
+           == link₀* a₁ a₃ (p₁ ∙' p₂)) where
 
   private
     module M = TwoSkeletonElim {l = l} {P = λ _ → P}
       point*
       (λ a₁ a₂ p → ↓-cst-in (link₀* a₁ a₂ p))
       (λ a₁ a₂ a₃ p₁ p₂
-        → ↓-cst-in-∙ (link₀ a₁ a₂ p₁) (link₀ a₂ a₃ p₂) (link₀* a₁ a₂ p₁) (link₀* a₂ a₃ p₂)
+        → ↓-cst-in-∙' (link₀ a₁ a₂ p₁) (link₀ a₂ a₃ p₂) (link₀* a₁ a₂ p₁) (link₀* a₂ a₃ p₂)
        !◃ ↓-cst-in2 (link₁* a₁ a₂ a₃ p₁ p₂))
 
   f : TwoSkeleton map → P
@@ -90,20 +89,20 @@ module TwoSkeletonRec {map : A → B} {l} {P : Type l}
 
   private
     lemma : ∀ a₁ a₂ a₃ p₁ p₂
-          → ap f (link₀ a₁ a₂ p₁ ∙ link₀ a₂ a₃ p₂)
-         == link₀* a₁ a₂ p₁ ∙ link₀* a₂ a₃ p₂
+          → ap f (link₀ a₁ a₂ p₁ ∙' link₀ a₂ a₃ p₂)
+         == link₀* a₁ a₂ p₁ ∙' link₀* a₂ a₃ p₂
     lemma a₁ a₂ a₃ p₁ p₂ =
-      ap f (link₀ a₁ a₂ p₁ ∙ link₀ a₂ a₃ p₂)
-        =⟨ ap-∙ f (link₀ a₁ a₂ p₁) (link₀ a₂ a₃ p₂) ⟩
-      ap f (link₀ a₁ a₂ p₁) ∙ ap f (link₀ a₂ a₃ p₂)
-        =⟨ link₀-β a₁ a₂ p₁ |in-ctx (λ u → u ∙ ap f (link₀ a₂ a₃ p₂)) ⟩
-      link₀* a₁ a₂ p₁ ∙ ap f (link₀ a₂ a₃ p₂)
-        =⟨ link₀-β a₂ a₃ p₂ |in-ctx (λ u → link₀* a₁ a₂ p₁ ∙ u) ⟩
-      link₀* a₁ a₂ p₁ ∙ link₀* a₂ a₃ p₂
+      ap f (link₀ a₁ a₂ p₁ ∙' link₀ a₂ a₃ p₂)
+        =⟨ ap-∙' f (link₀ a₁ a₂ p₁) (link₀ a₂ a₃ p₂) ⟩
+      ap f (link₀ a₁ a₂ p₁) ∙' ap f (link₀ a₂ a₃ p₂)
+        =⟨ link₀-β a₁ a₂ p₁ |in-ctx (λ u → u ∙' ap f (link₀ a₂ a₃ p₂)) ⟩
+      link₀* a₁ a₂ p₁ ∙' ap f (link₀ a₂ a₃ p₂)
+        =⟨ link₀-β a₂ a₃ p₂ |in-ctx (λ u → link₀* a₁ a₂ p₁ ∙' u) ⟩
+      link₀* a₁ a₂ p₁ ∙' link₀* a₂ a₃ p₂
         ∎
 
   -- I am a lazy person.
   postulate  -- HIT
     link₁-β : ∀ a₁ a₂ a₃ p₁ p₂
             → ap (ap f) (link₁ a₁ a₂ a₃ p₁ p₂)
-           == (lemma a₁ a₂ a₃ p₁ p₂ ∙ link₁* a₁ a₂ a₃ p₁ p₂) ∙ (! $ link₀-β a₁ a₃ (p₁ ∙ p₂))
+           == (lemma a₁ a₂ a₃ p₁ p₂ ∙ link₁* a₁ a₂ a₃ p₁ p₂) ∙ (! $ link₀-β a₁ a₃ (p₁ ∙' p₂))
