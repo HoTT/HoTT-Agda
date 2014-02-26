@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
+open import homotopy.OneSkeleton
 
 module homotopy.ConstantToSetFactorization
   {i j} {A : Type i} {B : Type j} (B-is-set : is-set B)

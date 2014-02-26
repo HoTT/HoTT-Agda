@@ -1,8 +1,8 @@
 {-# OPTIONS --without-K #-}
 
-open import lib.Basics
+open import HoTT
 
-module lib.types.OneSkeleton {i} {A : Type i} {j} {B : Type j} where
+module homotopy.OneSkeleton {i} {A : Type i} {j} {B : Type j} where
 
   private
     module _ (map : A → B) where

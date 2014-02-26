@@ -37,7 +37,6 @@ open import lib.types.HomotopyGroup public
 open import lib.types.PathSet public
 open import lib.types.FundamentalGroupoid public
 open import lib.types.Cover public
-open import lib.types.OneSkeleton public
 
 -- broken in 2.3.2.2?
 -- open import lib.types.PathSeq public
