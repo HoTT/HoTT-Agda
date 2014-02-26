@@ -57,6 +57,13 @@ module _ {i j} {A : Type i} {B : Type j} where
       == ↓-cst-in {p = p} p' ∙ᵈ ↓-cst-in {p = q} q'
   ↓-cst-in-∙ idp idp idp idp = idp
 
+  {- Interaction of [↓-cst-in] with [_∙'_] -}
+  ↓-cst-in-∙' : {x y z : A} (p : x == y) (q : y == z) {u v w : B}
+    (p' : u == v) (q' : v == w)
+    → ↓-cst-in {p = p ∙' q} (p' ∙' q')
+      == ↓-cst-in {p = p} p' ∙'ᵈ ↓-cst-in {p = q} q'
+  ↓-cst-in-∙' idp idp idp idp = idp
+
   {- Introduction of an equality between [↓-cst-in]s (used to deduce the
      recursor from the eliminator in HIT with 2-paths) -}
   ↓-cst-in2 : {a a' : A} {u v : B}
