@@ -1,9 +1,8 @@
-# Ignore Emacs backup files
-*~
-# Ignore the .DS_Store file generated on a Mac
-.DS_Store
 # Ignore Agda compiled files
 *.agdai
+# Ignore Emacs backup files
+*~
 html/
 Unclassified/
 Test.agda
+MAlonzo/

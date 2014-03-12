@@ -27,7 +27,7 @@ fi
 
 for i in $(git ls-files) $(git ls-files -o --exclude-standard)
 do
-    if [[ $i =~ tutorial/* ]] || [[ $i =~ findpostulates ]] || [[ $i =~ old/* ]]
+    if [[ $i == "tutorial/README.md" ]] || [[ $i == "findpostulates" ]]
     then
         continue
     fi
@@ -35,7 +35,6 @@ do
     result=$(awk '/postulate/\
                     {if ($0 !~ /HIT$/ &&\
                          $0 !~ /Universe levels$/ &&\
-                         $0 !~ /Coinduction$/ &&\
                          $0 !~ /Univalence axiom$/)\
                       {print; getline; print}}' $i)
 

@@ -1,9 +1,6 @@
 all:
 	agda index.agda
 
-lib:
-	agda HoTT.agda
-
 .PHONY: html
 html:
 	rm -f $(wildcard html/*)

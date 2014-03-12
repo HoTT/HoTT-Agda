@@ -9,7 +9,7 @@ module Spaces.Flattening {i j k}
 open import Spaces.FlatteningTypes A B f g C D
 
 -- The family of paths used in the definition of [flatten]
-paths-flatten : (b : B) → (cct (f b) ≡[ (λ w → (P w → Wt)) ↓ pp b ] cct (g b))
+paths-flatten : (b : B) → (cct (f b) == cct (g b) [ (λ w → (P w → Wt)) ↓ pp b ])
 paths-flatten b =
   ↓-app→cst-in (λ q → ppt b _ ∘' ap (cct (g b)) (↓-pp-out q))
 
@@ -29,7 +29,7 @@ flatten-unflatten : (w : Wt) → flatten (unflatten w) ≡ w
 flatten-unflatten =
   Wt-rec _
     (λ _ _ → refl)
-    (λ b d → ↓-◯≡id-in unflatten flatten
+    (λ b d → ↓-◯=id-in unflatten flatten
       (ap flatten (ap unflatten (ppt b d))
                  ≡⟨ Wt-rec-nondep-β _ (λ a c → (cc a , c)) (λ b d → Σ-eq (pp b) (↓-pp-in refl)) b d |in-ctx ap flatten ⟩
        ap flatten (Σ-eq (pp b) (↓-pp-in refl))
@@ -50,7 +50,7 @@ unflatten-flatten-curried : (w : W) (x : P w)
 unflatten-flatten-curried =
   W-rec _ (λ a x → refl)
     (λ b → ↓-Π-in
-    (λ q → ↓-◯≡id-in flatten unflatten
+    (λ q → ↓-◯=id-in flatten unflatten
       (ap unflatten (ap flatten (Σ-eq (pp b) q))
                  ≡⟨ split-ap2 flatten (pp b) q |in-ctx ap unflatten ⟩
        ap unflatten (↓-app→cst-out (apd flatten-curried (pp b)) q)
