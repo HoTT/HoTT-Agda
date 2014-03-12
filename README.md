@@ -7,6 +7,12 @@ Introduction
 This repository contains a development of homotopy type theory and univalent
 foundations in Agda.  The structure of the source code is described below.
 
+Agda Options
+------------
+
+This library is assuming the options `--universe-polymorphism` (on by default)
+and the experimental one `--without-K`.
+
 Style and naming conventions
 ----------------------------
 
