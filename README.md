@@ -1,13 +1,3 @@
-Note (July 4th 2013):
------
-
-A new version of this library is currently being developped in the branch 2.0.
-It’s not yet complete and documented enough to be used, but hopefully it will
-soon be. One big change is the generalized use of the notion of path over a
-path, for instance `apd`, `pair=` (new name for `Σ-eq`) and eliminators of HIT
-all use it.
-
-
 Homotopy Type Theory in Agda
 ============================
 
