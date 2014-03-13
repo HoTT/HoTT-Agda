@@ -124,3 +124,5 @@ module TwoConstancyRec
     link₁-β : ∀ a₁ a₂ a₃
             → ap (ap f) (link₁ a₁ a₂ a₃)
            == (lemma a₁ a₂ a₃ ∙ link₁* a₁ a₂ a₃) ∙ (! $ link₀-β a₁ a₃)
+
+open TwoConstancyRec public using () renaming (f to TwoConstancy-rec)
