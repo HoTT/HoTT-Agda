@@ -50,6 +50,14 @@ module _ {i} {A : Type i} where
     → (u == v [ (λ x → a == x) ↓ p ])
   ↓-cst=idf-in {p = idp} q = ! (∙-unit-r _) ∙ q
 
+  {- I'm not sure about the naming, but I think this is actually
+   - more compatible with [↓-app=idf-in].
+   -}
+  ↓-cst=idf-in' : {a : A} {x y : A} {p : x == y} {u : a == x} {v : a == y}
+    → (u ∙' p) == v
+    → (u == v [ (λ x → a == x) ↓ p ])
+  ↓-cst=idf-in' {p = idp} q = q
+
   ↓-idf=cst-in : {a : A} {x y : A} {p : x == y} {u : x == a} {v : y == a}
     → u == p ∙' v
     → (u == v [ (λ x → x == a) ↓ p ])
