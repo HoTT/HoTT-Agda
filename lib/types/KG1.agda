@@ -137,7 +137,7 @@ module KG1 {i} (G : Group i) where
             pair= (ua $ comp-equiv g₂ ∘e comp-equiv g₁) phap
               =⟨ ua-∘e (comp-equiv g₁) (comp-equiv g₂) |in-ctx (λ w → pair= w phap) ⟩
             pair= (ua (comp-equiv g₁) ∙ ua (comp-equiv g₂)) phap
-              =⟨ prop-has-all-paths (=-[-↓-]-level (λ _ → raise-level _ has-level-is-prop)) _ _
+              =⟨ prop-has-all-paths (↓-level (λ _ → raise-level _ has-level-is-prop)) _ _
                 |in-ctx (λ w → pair= (ua (comp-equiv g₁) ∙ ua (comp-equiv g₂)) w) ⟩
             pair= (ua (comp-equiv g₁) ∙ ua (comp-equiv g₂)) 
                   (phap {ua (comp-equiv g₁)} ∙ᵈ phap {ua (comp-equiv g₂)})
@@ -180,7 +180,7 @@ module KG1 {i} (G : Group i) where
         decode'
         loop'
         (prop-has-all-paths-↓ (Π-level (λ _ → klevel _ _) _ _))
-        (λ _ _ → prop-has-all-paths-↓ (=-[-↓-]-level (λ _ → Π-level (λ _ → klevel _ _))))
+        (λ _ _ → prop-has-all-paths-↓ (↓-level (λ _ → Π-level (λ _ → klevel _ _))))
         x
       where 
       loop' : (g : El) 

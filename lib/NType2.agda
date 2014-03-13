@@ -11,9 +11,9 @@ module lib.NType2 where
 
 module _ {i j} {A : Type i} {B : A → Type j} where
   abstract
-    =-[-↓-]-level : {a b : A} {p : a == b} {u : B a} {v : B b} {n : ℕ₋₂}
+    ↓-level : {a b : A} {p : a == b} {u : B a} {v : B b} {n : ℕ₋₂}
       → ((x : A) → has-level (S n) (B x)) → has-level n (u == v [ B ↓ p ])
-    =-[-↓-]-level {p = idp} k = k _ _ _
+    ↓-level {p = idp} k = k _ _ _
 
     ↓-preserves-level : {a b : A} {p : a == b} {u : B a} {v : B b} (n : ℕ₋₂)
       → ((x : A) → has-level n (B x)) → has-level n (u == v [ B ↓ p ])
