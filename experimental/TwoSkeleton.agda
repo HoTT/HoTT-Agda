@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K --copatterns #-}
+{-# OPTIONS --without-K #-}
 
 open import HoTT
 
