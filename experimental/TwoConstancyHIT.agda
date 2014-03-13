@@ -14,7 +14,7 @@
 
 open import HoTT
 
-module experimental.TwoConstancyHIT {i} {A : Type i} {j} {B : Type j} where
+module experimental.TwoConstancyHIT {i} {A : Type i} where
 
 module _ where
   private
