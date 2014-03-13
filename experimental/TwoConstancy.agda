@@ -4,7 +4,7 @@ open import HoTT
 open import experimental.TwoConstancyHIT
 
 module experimental.TwoConstancy
-  {i j} {A : Type i} {B : Type j} (B-is-gpd : has-level ⟨1⟩ B)
+  {i j} {A : Type i} {B : Type j} (B-is-gpd : is-gpd B)
   (f : A → B)
   (f-is-const₀ : ∀ a₁ a₂ → f a₁ == f a₂)
   (f-is-const₁ : ∀ a₁ a₂ a₃

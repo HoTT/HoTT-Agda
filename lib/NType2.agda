@@ -67,6 +67,11 @@ abstract
       → has-level (S n) (Σ A P))
   subtype-level p q = Σ-level p (λ x → prop-has-level-S (q x))
 
+-- Groupoids
+
+is-gpd : {i : ULevel} → Type i → Type i
+is-gpd = has-level ⟨1⟩
+
 -- Type of all n-truncated types
 
 _-Type_ : (n : ℕ₋₂) (i : ULevel) → Type (lsucc i)

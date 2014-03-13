@@ -37,11 +37,11 @@ module _ where
 
       link₁ : ∀ a₁ a₂ a₃ → link₀ a₁ a₂ ∙' link₀ a₂ a₃ == link₀ a₁ a₃
 
-      TwoConstancy-level : has-level ⟨1⟩ (TwoConstancy A)
+      TwoConstancy-level : is-gpd (TwoConstancy A)
 
     module TwoConstancyElim
       {l} {P : TwoConstancy A → Type l}
-      (p : ∀ x → has-level ⟨1⟩ (P x))
+      (p : ∀ x → is-gpd (P x))
       (point* : ∀ a → P (point a))
       (link₀* : ∀ a₁ a₂ → point* a₁ == point* a₂ [ P ↓ link₀ a₁ a₂ ])
       (link₁* : ∀ a₁ a₂ a₃
@@ -82,7 +82,7 @@ open TwoConstancyElim public using () renaming (f to TwoConstancy-elim)
 module TwoConstancyRec
   {i} {A : Type i}
   {l} {P : Type l}
-  (p : has-level ⟨1⟩ P)
+  (p : is-gpd P)
   (point* : ∀ a → P)
   (link₀* : ∀ a₁ a₂ → point* a₁ == point* a₂)
   (link₁* : ∀ a₁ a₂ a₃
