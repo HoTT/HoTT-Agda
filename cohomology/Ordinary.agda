@@ -5,7 +5,6 @@ open import homotopy.KGn
 open import cohomology.SuspAdjointLoopIso
 open import cohomology.WithCoefficients
 open import cohomology.Exactness
-open import cohomology.GroupProduct
 
 module cohomology.Ordinary {i} (G : Group i) (G-abelian : is-abelian G) where
 

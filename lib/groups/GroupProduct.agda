@@ -4,7 +4,7 @@ open import lib.Basics
 open import lib.types.Group
 open import lib.types.Sigma
 
-module cohomology.GroupProduct where
+module lib.groups.GroupProduct where
 
 ×-group-struct : ∀ {i j} {A : Type i} {B : Type j} 
   (GS : GroupStructure A) (HS : GroupStructure B)
