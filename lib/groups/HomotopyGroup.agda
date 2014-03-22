@@ -9,10 +9,11 @@ open import lib.types.Pi
 open import lib.types.Truncation
 open import lib.types.Pointed
 open import lib.types.Group
-open import lib.types.TruncationGroup
 open import lib.types.LoopSpace
 
-module lib.types.HomotopyGroup where
+open import lib.groups.TruncationGroup
+
+module lib.groups.HomotopyGroup where
 
 {- Higher homotopy groups -}
 module _ {i} where

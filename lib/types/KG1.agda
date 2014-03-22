@@ -12,7 +12,7 @@ open import lib.types.Truncation
 open import lib.types.Group
 open import lib.types.Pointed
 open import lib.types.LoopSpace
-open import lib.types.HomotopyGroup
+open import lib.groups.HomotopyGroup
 
 module lib.types.KG1 where
 

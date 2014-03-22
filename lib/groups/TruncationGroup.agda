@@ -5,7 +5,7 @@ open import lib.types.Group
 open import lib.types.Pi
 open import lib.types.Truncation
 
-module lib.types.TruncationGroup where
+module lib.groups.TruncationGroup where
 
 module _ {i} {El : Type i} (GS : GroupStructure El) where
 
