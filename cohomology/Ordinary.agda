@@ -5,6 +5,7 @@ open import homotopy.KGn
 open import cohomology.SuspAdjointLoopIso
 open import cohomology.WithCoefficients
 open import cohomology.Exactness
+open import cohomology.Choice
 
 module cohomology.Ordinary {i} (G : Group i) (G-abelian : is-abelian G) where
 
@@ -86,12 +87,7 @@ module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
   {- TODO: prove that CF is actually a functor -}
 
 
-{- Eilenberg-Steenrod Axioms 
- - Currently including:
-   ∙ Suspension 
-   ∙ Non-truncated and Truncated versions of Exactness
-   ∙ Finite Additivity 
- -}
+{- Eilenberg-Steenrod Axioms -}
 
 {- Suspension Axiom -}
 
@@ -115,9 +111,9 @@ module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
 
   {- in image of (uCF n (ptd-cfcod F)) ⇒ in kernel of (uCF n F) -}
   abstract
-    uC-Exact-itok : (F : fst (X ∙→ Y)) 
+    uC-exact-itok : (F : fst (X ∙→ Y)) 
       → is-exact-itok (uCF n (ptd-cfcod F)) (uCF n F)
-    uC-Exact-itok (f , fpt) (g , gpt) = pair= 
+    uC-exact-itok (f , fpt) (g , gpt) = pair= 
       (λ= (λ x → ap g (! (cfglue f x)) ∙ gpt))
       (↓-app=cst-in $ 
         ap (g ∘ cfcod f) fpt 
@@ -139,9 +135,9 @@ module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
 
   {- in kernel of (uCF n F) ⇒ in image of (uCF n (ptd-cfcod F)) -}
   abstract
-    uC-Exact-ktoi : (F : fst (X ∙→ Y)) 
+    uC-exact-ktoi : (F : fst (X ∙→ Y)) 
       → is-exact-ktoi (uCF n (ptd-cfcod F)) (uCF n F)
-    uC-Exact-ktoi (f , fpt) (h , hpt) p = 
+    uC-exact-ktoi (f , fpt) (h , hpt) p = 
       (g , ! q ∙ hpt) , 
       pair= idp (! (∙-assoc q (! q) hpt) ∙ ap (λ w → w ∙ hpt) (!-inv-r q))
       where 
@@ -164,25 +160,25 @@ module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
 
   {- in image of (CF n (ptd-cfcod F)) ⇒ in kernel of (CF n F) -}
   abstract
-    C-Exact-itok : (F : fst (X ∙→ Y)) 
+    C-exact-itok : (F : fst (X ∙→ Y)) 
       → is-exact-itok (CF n (ptd-cfcod F)) (CF n F)
-    C-Exact-itok F = 
+    C-exact-itok F = 
       Trunc-elim 
         {B = λ tG → fst (CF n F) (fst (CF n (ptd-cfcod F)) tG) == Cid n X}
         (λ _ → =-preserves-level _ Trunc-level)
-        (λ G → ap [_] (uC-Exact-itok n F G))
+        (λ G → ap [_] (uC-exact-itok n F G))
 
   abstract
-    C-Exact-itok-mere : (F : fst (X ∙→ Y))
+    C-exact-itok-mere : (F : fst (X ∙→ Y))
       → is-exact-itok-mere (CF n (ptd-cfcod F)) (CF n F)
-    C-Exact-itok-mere F = 
-      itok-to-mere (CF n (ptd-cfcod F)) (CF n F) Trunc-level (C-Exact-itok F)
+    C-exact-itok-mere F = 
+      itok-to-mere (CF n (ptd-cfcod F)) (CF n F) Trunc-level (C-exact-itok F)
 
   {- in kernel of (CF n F) ⇒ merely in image of (CF n (ptd-cfcod F)) -}
   abstract
-    C-Exact-ktoi-mere : (F : fst (X ∙→ Y))
+    C-exact-ktoi-mere : (F : fst (X ∙→ Y))
       → is-exact-ktoi-mere (CF n (ptd-cfcod F)) (CF n F)
-    C-Exact-ktoi-mere F = 
+    C-exact-ktoi-mere F = 
       Trunc-elim
         {B = λ tH → fst (CF n F) tH == Cid n X
            → Trunc ⟨-1⟩ (Σ (CEl n (Ptd-Cof (fst F))) 
@@ -194,108 +190,103 @@ module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
           → fst (uCF n F) H == uCid n X
           → Trunc ⟨-1⟩ (Σ (CEl n (Ptd-Cof (fst F))) 
                           (λ tK → fst (CF n (ptd-cfcod F)) tK == [ H ]))
-        lemma H p = [ [ fst (uC-Exact-ktoi n F H p) ] , 
-                        ap [_] (snd (uC-Exact-ktoi n F H p)) ]
+        lemma H p = [ [ fst (uC-exact-ktoi n F H p) ] , 
+                        ap [_] (snd (uC-exact-ktoi n F H p)) ]
 
-{- Finite Additivity Axiom -}
-module _ {j k} (n : ℕ) (X : Ptd j) (Y : Ptd k) where
+{- General Additivity Axiom -}
+module _ {j k} (n : ℕ) {A : Type j} (X : A → Ptd k) 
+  (uie : has-choice ⟨0⟩ A (uCEl n ∘ X)) where
 
-  private
-    _◯_ = GroupStructure.comp (Group.group-struct (C n (Ptd-Wedge X Y)))
-    _□_ = GroupStructure.comp (Group.group-struct ((C n X) ×G (C n Y)))
+  module _ where
+    R' : CEl n (Ptd-BigWedge X) → Trunc ⟨0⟩ (Π A (uCEl n ∘ X))
+    R' = Trunc-rec Trunc-level (λ H → [ (λ a → H ∘ptd ptd-bwin a) ])
 
-    R : CEl n (Ptd-Wedge X Y) → (CEl n X) × (CEl n Y)
-    R = Trunc-rec (×-level Trunc-level Trunc-level) 
-      (λ {H → ([ H ∘ptd ptd-winl ] , [ H ∘ptd ptd-winr ])})
+    R : CEl n (Ptd-BigWedge X) → Π A (CEl n ∘ X)
+    R = unchoose ∘ R'
 
-    L : (CEl n X) × (CEl n Y) → CEl n (Ptd-Wedge X Y)
-    L (tF , tG) = Trunc-rec 
-      Trunc-level 
-      (λ {(f , fpt) → Trunc-rec 
-        Trunc-level 
-        (λ {(g , gpt) → [ WedgeRec.f f g (fpt ∙ ! gpt) , fpt ]})
-        tG})
-      tF
+    L' : Trunc ⟨0⟩ (Π A (uCEl n ∘ X)) → CEl n (Ptd-BigWedge X)
+    L' = Trunc-rec Trunc-level 
+      (λ K → [ BigWedgeRec.f idp (fst ∘ K) (! ∘ snd ∘ K) , 
+               idp ])
 
-    abstract
-      R-L : ∀ y → R (L y) == y
-      R-L (tF , tG) = Trunc-elim
-        {B = λ tF → ∀ tG → R (L (tF , tG)) == (tF , tG)}
-        (λ _ → Π-level (λ _ → 
-                 =-preserves-level _ (×-level Trunc-level Trunc-level)))
-        (λ {(f , fpt) → Trunc-elim
-          {B = λ tG → R (L ([ f , fpt ] , tG)) == ([ f , fpt ] , tG)}
-          (λ _ → =-preserves-level _ (×-level Trunc-level Trunc-level))
-          (λ {(g , gpt) → 
-             pair×= idp 
-               (ap [_] (pair= idp 
-                          (lemma (WedgeRec.f f g (fpt ∙ ! gpt)) 
-                                 wglue fpt gpt 
-                                 (WedgeRec.glue-β f g (fpt ∙ ! gpt) tt))))})})
-        tF tG
-        where
-        lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
-          {a₁ a₂ : A} (p : a₁ == a₂) {b : B} (q : f a₁ == b) (r : f a₂ == b)
-          → ap f p == q ∙ ! r → ap f (! p) ∙ q == r
-        lemma f idp idp r p = ap ! p ∙ !-! r
+    L : Π A (CEl n ∘ X) → CEl n (Ptd-BigWedge X)
+    L = L' ∘ (is-equiv.g uie)
 
-    abstract
-      L-R : ∀ x → L (R x) == x
-      L-R = Trunc-elim
-        {B = λ tH → L (R tH) == tH}
-        (λ _ → =-preserves-level _ Trunc-level)
-        (λ H → ap [_] (pair= 
-          (λ= (L-R-fst H))
-          (↓-app=cst-in (ap (λ w → w ∙ snd H)
-                            (! (app=-β (L-R-fst H) (snd (Ptd-Wedge X Y))))))))
-        where
-        {- the first component of detruncated L (R [ h , hpt ]);
-         - given a name for sake of space -}
-        wh : fst (Ptd-Wedge X Y ∙→ Ptd-Ω (Ptd-KG (S n)))
-          → (Wedge X Y → Ω (Ptd-KG (S n)))
-        wh (h , hpt) = 
-          WedgeRec.f (h ∘ winl) (h ∘ winr) 
-            (snd ((h , hpt) ∘ptd ptd-winl) ∙ ! (snd ((h , hpt) ∘ptd ptd-winr)))
+    R'-L' : ∀ y → R' (L' y) == y
+    R'-L' = Trunc-elim
+      {B = λ tK → R' (L' tK) == tK}
+      (λ _ → =-preserves-level _ Trunc-level)
+      (λ K → ap [_] (λ= (λ a → pair= idp $
+        ap (BigWedgeRec.f idp (fst ∘ K) (! ∘ snd ∘ K)) (! (bwglue a)) ∙ idp
+          =⟨ ∙-unit-r _ ⟩
+        ap (BigWedgeRec.f idp (fst ∘ K) (! ∘ snd ∘ K)) (! (bwglue a)) 
+          =⟨ ap-! (BigWedgeRec.f idp (fst ∘ K) (! ∘ snd ∘ K)) (bwglue a) ⟩
+        ! (ap (BigWedgeRec.f idp (fst ∘ K) (! ∘ snd ∘ K)) (bwglue a)) 
+          =⟨ ap ! (BigWedgeRec.glue-β idp (fst ∘ K) (! ∘ snd ∘ K) a) ⟩
+        ! (! (snd (K a)))
+          =⟨ !-! (snd (K a)) ⟩
+        snd (K a) ∎)))
 
-        lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
-          {a₁ a₂ : A} {b : B} (p : a₁ == a₂) (q : f a₁ == b)
-          → ap f p == q ∙ ! (ap f (! p) ∙ q)
-        lemma f idp idp = idp
+    L'-R' : ∀ x → L' (R' x) == x
+    L'-R' = Trunc-elim
+      {B = λ tH → L' (R' tH) == tH}
+      (λ _ → =-preserves-level _ Trunc-level)
+      (λ {(h , hpt) → ap [_] (pair= 
+         (λ= (L-R-fst (h , hpt)))
+         (↓-app=cst-in $ ! $
+            ap (λ w → w ∙ hpt) (app=-β (L-R-fst (h , hpt)) bwbase)
+            ∙ !-inv-l hpt))})
+      where
+      wh : fst (Ptd-BigWedge X ∙→ Ptd-Ω (Ptd-KG (S n)))
+        → (BigWedge X → Ω (Ptd-KG (S n)))
+      wh (h , hpt) = 
+        BigWedgeRec.f idp (λ a → h ∘ bwin a)
+          (λ a → ! (ap h (! (bwglue a)) ∙ hpt))
 
-        L-R-fst : (H : fst (Ptd-Wedge X Y ∙→ Ptd-Ω (Ptd-KG (S n))))
-          → ∀ w → (wh H) w == fst H w
-        L-R-fst (h , hpt) = Wedge-elim
-          {P = λ w → wh (h , hpt) w == h w}
-          (λ _ → idp)
-          (λ _ → idp)
-          (↓-='-in 
-            (ap h wglue
-               =⟨ lemma h (glue unit) hpt ⟩
-             snd ((h , hpt) ∘ptd ptd-winl) ∙ ! (snd ((h , hpt) ∘ptd ptd-winr))
-               =⟨ ! (WedgeRec.glue-β (h ∘ winl) (h ∘ winr) _ tt) ⟩
-             ap (wh (h , hpt)) wglue ∎ ))
+      lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
+        {a₁ a₂ : A} {b : B} (p : a₁ == a₂) (q : f a₁ == b)
+        → ! q ∙ ap f p == ! (ap f (! p) ∙ q)
+      lemma f idp idp = idp
+
+      L-R-fst : (H : fst (Ptd-BigWedge X ∙→ Ptd-Ω (Ptd-KG (S n))))
+        → ∀ w → (wh H) w == fst H w
+      L-R-fst (h , hpt) = BigWedge-elim 
+        {P = λ w → wh (h , hpt) w == h w}
+        (! hpt)
+        (λ _ _ → idp)
+        (λ a → ↓-='-in $
+           ! hpt ∙ ap h (bwglue a)
+             =⟨ lemma h (bwglue a) hpt ⟩
+           ! (ap h (! (bwglue a)) ∙ hpt)
+             =⟨ ! (BigWedgeRec.glue-β idp (λ a → h ∘ bwin a) 
+                     (λ a → ! (ap h (! (bwglue a)) ∙ hpt)) a) ⟩
+           ap (wh (h , hpt)) (bwglue a) ∎)
 
     abstract
-      pres-ident : R (Cid n (Ptd-Wedge X Y)) == (Cid n X , Cid n Y)
+      R'-is-equiv : is-equiv R'
+      R'-is-equiv = is-eq R' L' R'-L' L'-R'
+      
+    abstract
+      pres-ident : R (Cid n (Ptd-BigWedge X)) == (Cid n ∘ X)
       pres-ident = 
-        pair×= idp (ap [_] (pair= idp (∙-unit-r _ ∙ ap-cst idp (! wglue))))
+        λ= (λ a → ap [_] (pair= idp (∙-unit-r _ ∙ ap-cst idp (! (bwglue a)))))
+
+    _◯_ = GroupStructure.comp (Group.group-struct (C n (Ptd-BigWedge X)))
+    _□_ = GroupStructure.comp (Group.group-struct (ΠG A (C n ∘ X)))
 
     abstract
-      pres-comp : (tF tG : CEl n (Ptd-Wedge X Y)) 
+      pres-comp : (tF tG : CEl n (Ptd-BigWedge X)) 
         → R (tF ◯ tG) == (R tF) □ (R tG)
-      pres-comp = 
-        Trunc-elim
-          {B = λ tF → (tG : CEl n (Ptd-Wedge X Y)) 
-                    → R (tF ◯ tG) == (R tF) □ (R tG)}
-          (λ _ → Π-level (λ _ → 
-                   =-preserves-level _ (×-level Trunc-level Trunc-level)))
-          (λ F → Trunc-elim
-            {B = λ tG → R ([ F ] ◯ tG) == (R [ F ]) □ (R tG)}
-            (λ _ → =-preserves-level _ (×-level Trunc-level Trunc-level))
-            (λ G → pair×= idp (ap [_] (pair= 
-              idp 
-              (lemma (fst F) (fst G) (! (glue unit)) (snd F) (snd G))))))
-        where 
+      pres-comp = Trunc-elim 
+        {B = λ tF → ∀ tG → R (tF ◯ tG) == (R tF) □ (R tG)}
+        (λ _ → Π-level (λ _ → =-preserves-level _ (Π-level (λ _ → Trunc-level))))
+        (λ F → Trunc-elim
+          {B = λ tG → R ([ F ] ◯ tG) == R [ F ] □ R tG}
+          (λ _ → =-preserves-level _ (Π-level (λ _ → Trunc-level)))
+          (λ G → λ= (λ a → ap [_] (pair= 
+            idp 
+            (lemma (fst F) (fst G) (! (bwglue a)) (snd F) (snd G))))))
+        where
         lemma : ∀ {i j} {A : Type i} {B : Type j} {a₁ a₂ : A} {b₀ : B}
           {p q : b₀ == b₀} (f : A → b₀ == b₀) (g : A → b₀ == b₀) 
           (r : a₁ == a₂) (α : f a₂ == p) (β : g a₂ == q)
@@ -303,6 +294,14 @@ module _ {j k} (n : ℕ) (X : Ptd j) (Y : Ptd k) where
             == ap2 _∙_ (ap f r ∙ α) (ap g r ∙ β)
         lemma f g idp idp idp = idp
 
+    abstract
+      R-hom : GroupHom (C n (Ptd-BigWedge X)) (ΠG A (C n ∘ X))
+      R-hom = group-hom R pres-ident pres-comp
+
+      R-is-equiv : is-equiv (GroupHom.f R-hom)
+      R-is-equiv = uie ∘ise R'-is-equiv
+
   abstract
-    C-Additivity : C n (Ptd-Wedge X Y) == (C n X) ×G (C n Y)
-    C-Additivity = group-iso (group-hom R pres-ident pres-comp) (is-eq R L R-L L-R)
+    C-additive : C n (Ptd-BigWedge X) == ΠG A (C n ∘ X)
+    C-additive = group-iso R-hom R-is-equiv
+

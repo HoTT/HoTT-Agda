@@ -3,9 +3,11 @@
 open import lib.Basics
 open import lib.types.Group
 open import lib.types.Sigma
+open import lib.types.Pi
 
 module lib.groups.GroupProduct where
 
+{- binary product -}
 ×-group-struct : ∀ {i j} {A : Type i} {B : Type j} 
   (GS : GroupStructure A) (HS : GroupStructure B)
   → GroupStructure (A × B)
@@ -24,3 +26,23 @@ module lib.groups.GroupProduct where
 _×G_ : ∀ {i j} → Group i → Group j → Group (lmax i j)
 _×G_ (group A A-level A-struct) (group B B-level B-struct) = 
   group (A × B) (×-level A-level B-level) (×-group-struct A-struct B-struct)
+
+{- general product -}
+Π-group-struct : ∀ {i j} {I : Type i} {A : I → Type j}
+  (FS : (i : I) → GroupStructure (A i))
+  → GroupStructure (Π I A)
+Π-group-struct FS = record {
+  ident = ident ∘ FS;
+  inv = λ f i → inv (FS i) (f i);
+  comp = λ f g i → comp (FS i) (f i) (g i);
+  unitl = λ f → (λ= (λ i → unitl (FS i) (f i)));
+  unitr = λ f → (λ= (λ i → unitr (FS i) (f i)));
+  assoc = λ f g h → (λ= (λ i → assoc (FS i) (f i) (g i) (h i)));
+  invl = λ f → (λ= (λ i → invl (FS i) (f i)));
+  invr = λ f → (λ= (λ i → invr (FS i) (f i)))}
+  where open GroupStructure
+
+ΠG : ∀ {i j} (I : Type i) (F : I → Group j) → Group (lmax i j)
+ΠG I F = group (Π I (El ∘ F)) (Π-level (λ i → El-level (F i))) 
+               (Π-group-struct (group-struct ∘ F))
+  where open Group
