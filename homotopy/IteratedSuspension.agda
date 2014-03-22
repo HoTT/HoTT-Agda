@@ -27,7 +27,7 @@ module Susp^StableSucc {i} (X : Ptd i) (cX : is-connected ⟨0⟩ (fst X))
   private
     kle' : ⟨ k ⟩ ≤T S ((n -2) +2+ S (n -2))
     kle' = ≤T-trans (⟨⟩-monotone-≤ kle) (inl (lemma n))
-      where lemma : (n : ℕ) → ⟨ n *2 ⟩ == S ((n -2) +2+ S n -2)
+      where lemma : (n : ℕ) → ⟨ n *2 ⟩ == S ((n -2) +2+ S (n -2))
             lemma O = idp
             lemma (S n') = ap S (ap S (lemma n') 
                                  ∙ ! (+2+-βr (S n' -2) (S n' -2)))
