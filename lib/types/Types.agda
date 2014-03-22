@@ -21,6 +21,7 @@ open import lib.types.PushoutFlattening public
 open import lib.types.Suspension public
 open import lib.types.Cofiber public
 open import lib.types.Wedge public
+open import lib.types.BigWedge public
 open import lib.types.Join public
 open import lib.types.Torus public
 open import lib.types.Truncation public
@@ -37,6 +38,7 @@ open import lib.types.HomotopyGroup public
 open import lib.types.PathSet public
 open import lib.types.FundamentalGroupoid public
 open import lib.types.Cover public
+open import lib.types.OneSkeleton public
 
 -- broken in 2.3.2.2?
 -- open import lib.types.PathSeq public
