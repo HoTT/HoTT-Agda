@@ -12,48 +12,53 @@ has-choice : ∀ {i j} (n : ℕ₋₂) (A : Type i) (B : A → Type j) → Type 
 has-choice {i} {j} n A B = is-equiv (unchoose {n = n} {A} {B})
 
 {- Binary Choice -}
+pick-Bool : ∀ {j} {C : Bool → Type j} → (C true) → (C false) → Π Bool C
+pick-Bool x y true = x
+pick-Bool x y false = y
+
+pick-Bool-η : ∀ {j} {C : Bool → Type j} (f : Π Bool C)
+  → pick-Bool (f true) (f false) == f
+pick-Bool-η {C = C} f = λ= lemma
+  where
+  lemma : (b : Bool) → pick-Bool {C = C} (f true) (f false) b == f b
+  lemma true = idp
+  lemma false = idp
+
 module _ {i} {n : ℕ₋₂} {A : Bool → Type i} where
+  choose-Bool : Π Bool (Trunc n ∘ A) → Trunc n (Π Bool A)
+  choose-Bool f = Trunc-rec Trunc-level
+    (λ ft → Trunc-rec Trunc-level
+      (λ ff → [ pick-Bool ft ff ] )
+      (f false)) 
+    (f true)
+
+  choose-Bool-squash : (f : Π Bool A) 
+    → choose-Bool (λ b → [ f b ]) == [ f ]
+  choose-Bool-squash f = ap [_] (pick-Bool-η f)
 
   private
-    pick : ∀ {j} {C : Bool → Type j} → (C true) → (C false) → Π Bool C
-    pick x y true = x
-    pick x y false = y
-
-    pick-η : ∀ {j} {C : Bool → Type j} (f : Π Bool C)
-      → pick (f true) (f false) == f
-    pick-η {C = C} f = λ= lemma
-      where
-      lemma : (b : Bool) → pick {C = C} (f true) (f false) b == f b
-      lemma true = idp
-      lemma false = idp
-
-    choose : Π Bool (Trunc n ∘ A) → Trunc n (Π Bool A)
-    choose f = Trunc-rec Trunc-level
-      (λ ft → Trunc-rec Trunc-level
-        (λ ff → [ pick ft ff ] )
-        (f false)) 
-      (f true)
-
-    unc-c : ∀ f → unchoose (choose f) == f
-    unc-c f = transport (λ h → unchoose (choose h) == h) (pick-η f) $
+    unc-c : ∀ f → unchoose (choose-Bool f) == f
+    unc-c f = transport (λ h → unchoose (choose-Bool h) == h) (pick-Bool-η f) $
       Trunc-elim
         {B = λ tft → 
-          unchoose (choose (pick tft (f false))) == pick tft (f false)}
+          unchoose (choose-Bool (pick-Bool tft (f false))) 
+          == pick-Bool tft (f false)}
         (λ _ → =-preserves-level _ (Π-level (λ _ → Trunc-level)))
         (λ ft → Trunc-elim
           {B = λ tff → 
-            unchoose (choose (pick [ ft ] tff )) == pick [ ft ] tff}
+            unchoose (choose-Bool (pick-Bool [ ft ] tff ))
+            == pick-Bool [ ft ] tff}
           (λ _ → =-preserves-level _ (Π-level (λ _ → Trunc-level)))
-          (λ ff → ! (pick-η _))
+          (λ ff → ! (pick-Bool-η _))
           (f false))
         (f true)
 
-    c-unc : ∀ tg → choose (unchoose tg) == tg
+    c-unc : ∀ tg → choose-Bool (unchoose tg) == tg
     c-unc = Trunc-elim
-      {B = λ tg → choose (unchoose tg) == tg}
+      {B = λ tg → choose-Bool (unchoose tg) == tg}
       (λ _ → =-preserves-level _ Trunc-level)
-      (λ g → ap [_] (pick-η g))
+      (λ g → ap [_] (pick-Bool-η g))
 
   Bool-has-choice : has-choice n Bool A
-  Bool-has-choice = is-eq unchoose choose unc-c c-unc
+  Bool-has-choice = is-eq unchoose choose-Bool unc-c c-unc
 
