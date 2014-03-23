@@ -262,3 +262,39 @@ fuse-Trunc A m n = equiv
                       (transport (λ k → has-level k (Trunc n A))
                                  (! q) Trunc-level)
 
+{- Truncating a binary product is equivalent to truncating its components -}
+Trunc-×-equiv : ∀ {i} {j} (n : ℕ₋₂) (A : Type i) (B : Type j)
+  → Trunc n (A × B) ≃ Trunc n A × Trunc n B
+Trunc-×-equiv n A B = equiv f g f-g g-f
+  where
+  f : Trunc n (A × B) → Trunc n A × Trunc n B
+  f = Trunc-rec (×-level Trunc-level Trunc-level) 
+        (λ {(a , b) → [ a ] , [ b ]})
+
+  g : Trunc n A × Trunc n B → Trunc n (A × B)
+  g (ta , tb) = Trunc-rec Trunc-level
+                  (λ a → Trunc-rec Trunc-level
+                    (λ b → [ a , b ])
+                  tb)
+                ta
+
+  f-g : ∀ p → f (g p) == p
+  f-g (ta , tb) = Trunc-elim 
+    {B = λ ta → f (g (ta , tb)) == (ta , tb)}
+    (λ _ → =-preserves-level _ (×-level Trunc-level Trunc-level))
+    (λ a → Trunc-elim
+      {B = λ tb → f (g ([ a ] , tb)) == ([ a ] , tb)}
+      (λ _ → =-preserves-level _ (×-level Trunc-level Trunc-level))
+      (λ b → idp)
+      tb)
+    ta
+
+  g-f : ∀ tab → g (f tab) == tab
+  g-f = Trunc-elim
+    {B = λ tab → g (f tab) == tab}
+    (λ _ → =-preserves-level _ Trunc-level)
+    (λ ab → idp)
+
+Trunc-×-path : ∀ {i} {j} (n : ℕ₋₂) (A : Type i) (B : Type j)
+  → Trunc n (A × B) == Trunc n A × Trunc n B
+Trunc-×-path n A B = ua (Trunc-×-equiv n A B)
