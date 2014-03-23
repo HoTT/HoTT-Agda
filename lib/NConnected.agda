@@ -21,6 +21,10 @@ is-conn-map : ∀ {i j} {A : Type i} {B : Type j} → ℕ₋₂ → (A → B) �
 is-conn-map {A = A} {B = B} n f =
   Π B (λ b → is-connected n (Σ A (λ a → f a == b)))
 
+{- all types are ⟨-2⟩-connected -}
+-2-conn : ∀ {i} (A : Type i) → is-connected ⟨-2⟩ A
+-2-conn A = Trunc-level
+
 {- all inhabited types are ⟨-1⟩-connected -}
 inhab-conn : ∀ {i} (A : Type i) (a : A) → is-connected ⟨-1⟩ A
 inhab-conn A a = ([ a ] , prop-has-all-paths Trunc-level [ a ])
@@ -222,6 +226,7 @@ prop-over-connected :  ∀ {i j} {A : Type i} {a : A} (p : is-connected ⟨0⟩ 
   → fst (P a) → Π A (fst ∘ P)
 prop-over-connected p P x = conn-elim (pointed-conn-out _ _ p) P (λ _ → x)
 
+{- Connectedness of a truncated type -}
 Trunc-preserves-conn : ∀ {i} {A : Type i} {n : ℕ₋₂} (m : ℕ₋₂)
   → is-connected n A → is-connected n (Trunc m A)
 Trunc-preserves-conn {n = ⟨-2⟩} m c = Trunc-level
@@ -240,7 +245,40 @@ Trunc-preserves-conn {A = A} {n = S n} m c = lemma (fst c) (snd c)
               (Trunc-fmap (ap [_]) 
                 (–> (Trunc=-equiv [ a ] [ x ]) (p [ x ])))))))
 
+{- Connectedness of a Σ-type -}
+abstract
+  Σ-conn : ∀ {i} {j} {A : Type i} {B : A → Type j} {n : ℕ₋₂}
+    → is-connected n A → (∀ a → is-connected n (B a))
+    → is-connected n (Σ A B)
+  Σ-conn {A = A} {B = B} {n = ⟨-2⟩} cA cB = -2-conn (Σ A B)
+  Σ-conn {A = A} {B = B} {n = S m} cA cB = 
+    Trunc-elim
+      {B = λ ta → (∀ tx → ta == tx) → is-connected (S m) (Σ A B)}
+      (λ _ → Π-level (λ _ → prop-has-level-S is-contr-is-prop))
+      (λ a₀ pA →
+        Trunc-elim
+          {B = λ tb → (∀ ty → tb == ty) → is-connected (S m) (Σ A B)}
+          (λ _ → Π-level (λ _ → prop-has-level-S is-contr-is-prop))
+          (λ b₀ pB → 
+            ([ a₀ , b₀ ] ,
+              Trunc-elim
+                {B = λ tp → [ a₀ , b₀ ] == tp}
+                (λ _ → =-preserves-level _ Trunc-level)
+                (λ {(r , s) → 
+                  Trunc-rec (Trunc-level {n = S m} _ _)
+                    (λ pa → Trunc-rec (Trunc-level {n = S m} _ _)
+                      (λ pb → ap [_] (pair= pa (from-transp! B pa pb)))
+                      (–> (Trunc=-equiv [ b₀ ] [ transport! B pa s ]) 
+                          (pB [ transport! B pa s ])))
+                    (–> (Trunc=-equiv [ a₀ ] [ r ]) (pA [ r ]))})))
+          (fst (cB a₀)) (snd (cB a₀)))
+      (fst cA) (snd cA)
 
+  ×-conn : ∀ {i} {j} {A : Type i} {B : Type j} {n : ℕ₋₂}
+    → is-connected n A → is-connected n B
+    → is-connected n (A × B)
+  ×-conn cA cB = Σ-conn cA (λ _ → cB)
+      
 {- Suspension of an n-connected space is n+1-connected 
    what is the best place for this?                    -}
 abstract
@@ -274,6 +312,7 @@ abstract
                 Trunc-level {n = S (S n)} _ _ _ _)) 
         (λ _ → idp) x'
 
+{- connectedness of a path space -}
 abstract
   path-conn : ∀ {i} {A : Type i} {x y : A} {n : ℕ₋₂} 
     → is-connected (S n) A → is-connected n (x == y)
@@ -281,7 +320,16 @@ abstract
     equiv-preserves-level (Trunc=-equiv [ x ] [ y ]) 
       (contr-is-prop cA [ x ] [ y ])
 
+{- an n-Type which is n-connected is contractible -}
 connected-at-level-is-contr : ∀ {i} {A : Type i} {n : ℕ₋₂}
   → has-level n A → is-connected n A → is-contr A
 connected-at-level-is-contr pA cA = 
   equiv-preserves-level (unTrunc-equiv _ pA) cA
+
+{- if A is n-connected and m ≤ n, then A is m-connected -}
+connected-≤T : ∀ {i} {m n : ℕ₋₂} {A : Type i}
+  → m ≤T n → is-connected n A → is-connected m A
+connected-≤T {m = m} {n = n} {A = A} leq cA = 
+  transport (λ B → is-contr B) 
+            (ua (fuse-Trunc A m n) ∙ ap (λ k → Trunc k A) (minT-out-l leq)) 
+            (Trunc-preserves-level m cA)
