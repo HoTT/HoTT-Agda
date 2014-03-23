@@ -305,3 +305,42 @@ module _ {j k} (n : ℕ) {A : Type j} (X : A → Ptd k)
     C-additive : C n (Ptd-BigWedge X) == ΠG A (C n ∘ X)
     C-additive = group-iso R-hom R-is-equiv
 
+module _ (n : ℕ) where
+
+  private
+    reduce : ∀ {j} (X : Ptd j) → fst (∙[ Bool , true ] ∙→ X) ≃ fst X
+    reduce X = equiv f g f-g g-f
+      where
+      f : fst (∙[ Bool , true ] ∙→ X) → fst X
+      f (h , _) = h false
+
+      g : fst X → fst (∙[ Bool , true ] ∙→ X)
+      g x = (h , idp)
+        where h : Bool → fst X
+              h true = snd X
+              h false = x
+
+      f-g : ∀ x → f (g x) == x
+      f-g x = idp
+
+      g-f : ∀ H → g (f H) == H
+      g-f (h , hpt) = pair= 
+        (λ= lemma) 
+        (↓-app=cst-in $
+          idp
+            =⟨ ! (!-inv-l hpt) ⟩
+          ! hpt ∙ hpt
+            =⟨ ! (app=-β lemma true) |in-ctx (λ w → w ∙ hpt) ⟩
+          app= (λ= lemma) true ∙ hpt ∎)
+        where lemma : ∀ b → fst (g (f (h , hpt))) b == h b
+              lemma true = ! hpt
+              lemma false = idp
+
+  abstract
+    C-ordinary : C (S n) ∙[ Bool , true ] == LiftUnit-group
+    C-ordinary = contr-iso-LiftUnit _ $ connected-at-level-is-contr 
+      (Trunc-level {n = ⟨0⟩})
+      (Trunc-preserves-conn ⟨0⟩ 
+        (transport (λ B → is-connected ⟨0⟩ B) (! (ua (reduce _)))
+          (path-conn (connected-≤T (⟨⟩-monotone-≤ (≤-ap-S (O≤ n)))
+                                   (KG-conn (S n))))))
