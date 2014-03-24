@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
+open import homotopy.KGn
 
 module cohomology.WithCoefficients where
 
@@ -80,3 +81,73 @@ module cohomology.WithCoefficients where
 
 →Ω-Group : ∀ {i j} (X : Ptd i) (Y : Ptd j) → Group (lmax i j)
 →Ω-Group X Y = Trunc-Group (→Ω-group-structure X Y)
+
+
+{- Some lemmas to be used to calculate cohomology of S⁰ -}
+Bool∙→-out : ∀ {j} {X : Ptd j} → fst (Ptd-Bool ∙→ X) → fst X
+Bool∙→-out (h , _) = h false
+
+Bool∙→-equiv : ∀ {j} (X : Ptd j) → fst (Ptd-Bool ∙→ X) ≃ fst X
+Bool∙→-equiv X = equiv Bool∙→-out g f-g g-f
+  where
+  g : fst X → fst (Ptd-Bool ∙→ X)
+  g x = ((λ b → if b then snd X else x) , idp)
+
+  f-g : ∀ x → Bool∙→-out (g x) == x
+  f-g x = idp
+
+  g-f : ∀ H → g (Bool∙→-out H) == H
+  g-f (h , hpt) = pair= 
+    (λ= lemma) 
+    (↓-app=cst-in $
+      idp
+        =⟨ ! (!-inv-l hpt) ⟩
+      ! hpt ∙ hpt
+        =⟨ ! (app=-β lemma true) |in-ctx (λ w → w ∙ hpt) ⟩
+      app= (λ= lemma) true ∙ hpt ∎)
+    where lemma : ∀ b → fst (g (h false)) b == h b
+          lemma true = ! hpt
+          lemma false = idp
+
+abstract
+  Bool∙→-path : ∀ {j} (X : Ptd j) → fst (Ptd-Bool ∙→ X) == fst X
+  Bool∙→-path X = ua (Bool∙→-equiv X)
+
+private
+  Bool∙→Ω-iso-π₁' : ∀ {i} (X : Ptd i) → →Ω-Group Ptd-Bool X == π 1 X
+  Bool∙→Ω-iso-π₁' X = 
+    transport (λ pi → →Ω-Group Ptd-Bool X == pi 1 X) π-fold
+      (group-iso 
+        (record {
+          f = Trunc-fmap Bool∙→-out;
+          pres-ident = idp;
+          pres-comp = λ tg₁ tg₂ → 
+            Trunc-elim
+              {B = λ tg₁ → Trunc-fmap Bool∙→-out (tg₁ ◯ tg₂)
+                   == (Trunc-fmap Bool∙→-out tg₁) □ (Trunc-fmap Bool∙→-out tg₂)}
+              (λ _ → =-preserves-level _ Trunc-level)
+              (λ g₁ → 
+                Trunc-elim
+                  {B = λ tg₂ → Trunc-fmap Bool∙→-out ([ g₁ ] ◯ tg₂)
+                       == [ Bool∙→-out g₁ ] □ (Trunc-fmap Bool∙→-out tg₂)}
+                  (λ _ → =-preserves-level _ Trunc-level)
+                  (λ g₂ → idp)
+                  tg₂)
+              tg₁})
+        (is-equiv-Trunc ⟨0⟩ _ (snd (Bool∙→-equiv (Ptd-Ω X)))))
+    where
+    _◯_ = Trunc-fmap2 {n = ⟨0⟩} $ GroupStructure.comp $ 
+            →Ω-group-structure Ptd-Bool X
+    _□_ = Trunc-fmap2 {n = ⟨0⟩} $ GroupStructure.comp $ Ω^-group-structure 1 X
+
+{- Agda seems to handle "abstract" more easily when it's separated from
+ - the details of the term -}
+abstract
+  Bool∙→Ω-iso-π₁ : ∀ {i} (X : Ptd i) → →Ω-Group Ptd-Bool X == π 1 X
+  Bool∙→Ω-iso-π₁ = Bool∙→Ω-iso-π₁'
+
+Bool∙→KG0-iso-G : ∀ {i} (G : Group i) (abel : is-abelian G)
+  → →Ω-Group Ptd-Bool (KGnExplicit.Ptd-KG G abel 1) == G
+Bool∙→KG0-iso-G G abel = 
+  Bool∙→Ω-iso-π₁ (KGnExplicit.Ptd-KG G abel 1) 
+  ∙ KGnExplicit.π-diag G abel 1

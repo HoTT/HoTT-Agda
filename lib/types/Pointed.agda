@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
+open import lib.types.Bool
 open import lib.types.Pi
 open import lib.types.Sigma
 open import lib.types.Suspension
@@ -10,6 +11,8 @@ module lib.types.Pointed where
 
 Ptd : ∀ i → Type (lsucc i)
 Ptd i = Σ (Type i) (λ A → A)
+
+Ptd₀ = Ptd lzero
 
 ∙[_,_] : ∀ {i} (A : Type i) (a : A) → Ptd i
 ∙[_,_] = _,_
@@ -34,21 +37,17 @@ _∘ptd_ : ∀ {i j k} {A : Ptd i} {B : Ptd j} {C : Ptd k}
   lemma : ∀ {x} {y} (fpt : x == y) → ∀ gpt → ∀ hpt →
           ap (h ∘ g) fpt ∙ ap h gpt ∙ hpt == ap h (ap g fpt ∙ gpt) ∙ hpt
   lemma idp gpt hpt = idp
-    -- ap (h ∘ g) fpt ∙ ap h gpt ∙ hpt
-    --   =⟨ ap-∘ h g fpt |in-ctx (λ w → w ∙ ap h gpt ∙ hpt) ⟩
-    -- ap h (ap g fpt) ∙ ap h gpt ∙ hpt
-    --   =⟨ ! (∙-assoc (ap h (ap g fpt)) (ap h gpt) hpt) ⟩
-    -- (ap h (ap g fpt) ∙ ap h gpt) ∙ hpt
-    --   =⟨ ∙-ap h (ap g fpt) gpt |in-ctx (λ w → w ∙ hpt) ⟩
-    -- ap h (ap g fpt ∙ gpt) ∙ hpt ∎
+
 
 {- Pointed versions of existing types -}
-module _ {i} where
+module _ where
+  Ptd-Bool : Ptd₀
+  Ptd-Bool = ∙[ Bool , true ]
 
-  Ptd-Susp : Ptd i → Ptd i
+  Ptd-Susp : ∀ {i} → Ptd i → Ptd i
   Ptd-Susp (A , _) = ∙[ Suspension A , north A ]
 
-  Ptd-Trunc : ℕ₋₂ → Ptd i → Ptd i
+  Ptd-Trunc : ∀ {i} → ℕ₋₂ → Ptd i → Ptd i
   Ptd-Trunc n (A , a) = ∙[ Trunc n A , [ a ] ]
 
 {- Equality of pointed types from an equivalence -}
