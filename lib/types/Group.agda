@@ -46,6 +46,28 @@ record GroupHom {i j} (G : Group i) (H : Group j)
     pres-comp  : ∀ g1 g2 → f (comp (group-struct G) g1 g2) 
                            == comp (group-struct H) (f g1) (f g2)
 
+
+idhom : ∀ {i} (G : Group i) → GroupHom G G
+idhom G = group-hom (idf _) idp (λ _ _ → idp)
+
+_∘hom_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
+  → GroupHom H K → GroupHom G H → GroupHom G K
+(group-hom g g-id g-comp) ∘hom (group-hom f f-id f-comp) =
+  record {
+    f = g ∘ f;
+    pres-ident = ap g f-id ∙ g-id;
+    pres-comp = λ x₁ x₂ → ap g (f-comp x₁ x₂) ∙ g-comp (f x₁) (f x₂)}
+
+hom= : ∀ {i j} {G : Group i} {H : Group j} (h k : GroupHom G H)
+  → GroupHom.f h == GroupHom.f k → h == k
+hom= {H = H} (group-hom f f-id f-comp) (group-hom g g-id g-comp) p =
+  ap (λ {(h , (h-id , h-comp)) → group-hom h h-id h-comp}) 
+     (pair= p 
+       (prop-has-all-paths-↓ 
+         (×-level (Group.El-level H _ _) 
+                  (Π-level (λ _ → Π-level (λ _ → Group.El-level H _ _))))))
+
+
 grouphom-pres-inv : ∀ {i j} {G : Group i} {H : Group j} (h : GroupHom G H)
   (a : El G) → GroupHom.f h (inv (group-struct G) a) 
             == inv (group-struct H) (GroupHom.f h a)

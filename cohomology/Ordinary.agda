@@ -85,8 +85,22 @@ module _ (n : ℕ) {X Y : Ptd i} where
         ((λ x → g (f x) ∙ h (f x)) , ap2 _∙_ (ap g fpt ∙ gpt) (ap h fpt ∙ hpt))
     comp-lemma g h gpt hpt = pair= idp (lemma f g h _∙_ fpt gpt hpt)
 
-  {- TODO: prove that CF is actually a functor -}
+{- CF-hom is a functor from pointed spaces to abelian groups -}
+module _ (n : ℕ) {X : Ptd i} where
 
+  CF-ident : CF-hom n ((λ x → x) , idp) == idhom (C n X)
+  CF-ident = hom= _ _ $ λ= $ Trunc-elim
+    {B = λ tx → Trunc-fmap (λ x → x) tx == tx}
+    (λ _ → =-preserves-level _ Trunc-level)
+    (λ _ → idp)
+
+  CF-comp : {Y Z : Ptd i} (G : fst (Y ∙→ Z)) (F : fst (X ∙→ Y))
+    → CF-hom n (G ∘ptd F) == CF-hom n F ∘hom CF-hom n G
+  CF-comp G F = hom= _ _ $ λ= $ Trunc-elim
+    {B = λ tH → Trunc-fmap (λ H → H ∘ptd (G ∘ptd F)) tH
+                == Trunc-fmap (λ K → K ∘ptd F) (Trunc-fmap (λ H → H ∘ptd G) tH)}
+    (λ _ → =-preserves-level _ Trunc-level)
+    (λ H → ap [_] (! (∘ptd-assoc H G F)))
 
 {- Eilenberg-Steenrod Axioms -}
 
@@ -319,6 +333,8 @@ C-Cohomology : OrdinaryTheory i
 C-Cohomology = record {
   C = C;
   F-hom = CF-hom;
+  F-ident = CF-ident;
+  F-comp = CF-comp;
   C-Susp = C-Susp;
   C-exact-itok-mere = C-exact-itok-mere;
   C-exact-ktoi-mere = C-exact-ktoi-mere;

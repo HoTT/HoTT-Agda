@@ -28,6 +28,11 @@ record OrdinaryTheory i : Type (lsucc i) where
   field
     F-hom : (n : ℕ) {X Y : Ptd i} → fst (X ∙→ Y) → GroupHom (C n Y) (C n X)
 
+    F-ident : (n : ℕ) {X : Ptd i} 
+      → F-hom n ((λ x → x) , idp) == idhom (C n X)
+    F-comp : (n : ℕ) {X Y Z : Ptd i} (g : fst (Y ∙→ Z)) (f : fst (X ∙→ Y))
+      → F-hom n (g ∘ptd f) == F-hom n f ∘hom F-hom n g
+
   F : (n : ℕ) {X Y : Ptd i} → fst (X ∙→ Y) → fst (Ptd-CEl n Y ∙→ Ptd-CEl n X)
   F n f = (GroupHom.f (F-hom n f) , GroupHom.pres-ident (F-hom n f))
 
