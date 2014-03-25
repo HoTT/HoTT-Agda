@@ -6,19 +6,20 @@ open import cohomology.SuspAdjointLoopIso
 open import cohomology.WithCoefficients
 open import cohomology.Exactness
 open import cohomology.Choice
+open import cohomology.OrdinaryTheory
 
 module cohomology.Ordinary {i} (G : Group i) (G-abelian : is-abelian G) where
 
 open KGnExplicit G G-abelian using (Ptd-KG; KG-conn; spectrum)
 
 {- Definition of cohomology group C -}
-module _ {j} (n : ℕ) (X : Ptd j) where
+module _ (n : ℕ) (X : Ptd i) where
   {- Ordinary cohomology group -}
-  C : Group (lmax i j)
+  C : Group i
   C = →Ω-Group X (Ptd-KG (S n))
 
   {- Underlying space of cohomology group -}
-  CEl : Type (lmax i j)
+  CEl : Type i
   CEl = Group.El C -- Ptd-Trunc ⟨0⟩ (fst (X ∙→ Ptd-Ω (Ptd-KG (S n))))
 
   {- Basepoint of underlying space -}
@@ -26,14 +27,14 @@ module _ {j} (n : ℕ) (X : Ptd j) where
   Cid = GroupStructure.ident (Group.group-struct C)
 
   {- Underlying pointed space of cohomology group -}
-  Ptd-CEl : Ptd (lmax i j)
+  Ptd-CEl : Ptd i
   Ptd-CEl = ∙[ Group.El C , Cid ]
 
   {- Untruncated versions of the cohomology spaces -}
-  uCEl : Type (lmax i j) -- CEl ≡ Trunc ⟨0⟩ uCEl
+  uCEl : Type i -- CEl ≡ Trunc ⟨0⟩ uCEl
   uCEl = fst (X ∙→ Ptd-Ω (Ptd-KG (S n)))
 
-  Ptd-uCEl : Ptd (lmax i j)
+  Ptd-uCEl : Ptd i
   Ptd-uCEl = X ∙→ Ptd-Ω (Ptd-KG (S n))
 
   uCid : uCEl
@@ -41,7 +42,7 @@ module _ {j} (n : ℕ) (X : Ptd j) where
 
 {- CF, the functorial action of C:
  - contravariant functor from pointed spaces to abelian groups -}
-module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
+module _ (n : ℕ) {X Y : Ptd i} where
 
   {- untruncated version - from pointed spaces to pointed spaces -}
   uCF : fst (X ∙→ Y) → fst (Ptd-uCEl n Y ∙→ Ptd-uCEl n X)
@@ -92,7 +93,7 @@ module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
 {- Suspension Axiom -}
 
 abstract
-  C-Susp : ∀ {j} (n : ℕ) (X : Ptd j) → C (S n) (Ptd-Susp X) == C n X
+  C-Susp : (n : ℕ) (X : Ptd i) → C (S n) (Ptd-Susp X) == C n X
   C-Susp n X = SuspAdjointLoopIso.iso X (Ptd-KG (S (S n))) 
                ∙ ap (→Ω-Group X) spec
     where
@@ -101,13 +102,7 @@ abstract
 
 {- Non-truncated Exactness Axiom -}
 
-{- pointed version of the function [cfcod] from lib.types.Cofiber -}
-ptd-cfcod : ∀ {j k} {X : Ptd j} {Y : Ptd k} (F : fst (X ∙→ Y))
-  → fst (Y ∙→ Ptd-Cof (fst F))
-ptd-cfcod {X = X} (f , fpt) = 
-  (cfcod f , ap (cfcod f) (! fpt) ∙ ! (cfglue f (snd X)))
-
-module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
+module _ (n : ℕ) {X Y : Ptd i} where
 
   {- in image of (uCF n (ptd-cfcod F)) ⇒ in kernel of (uCF n F) -}
   abstract
@@ -156,7 +151,7 @@ module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
 
 {- Truncated Exactness Axiom -}
 
-module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
+module _ (n : ℕ) {X Y : Ptd i} where
 
   {- in image of (CF n (ptd-cfcod F)) ⇒ in kernel of (CF n F) -}
   abstract
@@ -194,8 +189,12 @@ module _ {j k} (n : ℕ) {X : Ptd j} {Y : Ptd k} where
                         ap [_] (snd (uC-exact-ktoi n F H p)) ]
 
 {- General Additivity Axiom -}
-module _ {j k} (n : ℕ) {A : Type j} (X : A → Ptd k) 
-  (uie : has-choice ⟨0⟩ A (uCEl n ∘ X)) where
+module _ (n : ℕ) {A : Type i} (X : A → Ptd i) 
+  (ac : (W : A → Type i) → (∀ a → has-level ⟨ n ⟩ (W a)) → has-choice ⟨0⟩ A W)
+  where
+
+  uie : has-choice ⟨0⟩ A (uCEl n ∘ X)
+  uie = ac (uCEl n ∘ X) (λ _ → ∙→-level (Trunc-level {n = S ⟨ n ⟩} _ _))
 
   module _ where
     R' : CEl n (Ptd-BigWedge X) → Trunc ⟨0⟩ (Π A (uCEl n ∘ X))
@@ -307,10 +306,21 @@ module _ {j k} (n : ℕ) {A : Type j} (X : A → Ptd k)
 
 {- Dimension Axiom -}
 abstract
-  C-dimensionS : (n : ℕ) → C (S n) Ptd-Bool == LiftUnit-group
+  C-dimensionS : (n : ℕ) → C (S n) (Ptd-Lift Ptd-Bool) == LiftUnit-group
   C-dimensionS n = contr-iso-LiftUnit _ $ connected-at-level-is-contr 
     (Trunc-level {n = ⟨0⟩})
     (Trunc-preserves-conn ⟨0⟩ 
-      (transport (λ B → is-connected ⟨0⟩ B) (! (Bool∙→-path _))
+      (transport (λ B → is-connected ⟨0⟩ B) 
+        (! (Bool∙→-path _))
         (path-conn (connected-≤T (⟨⟩-monotone-≤ (≤-ap-S (O≤ n)))
                                  (KG-conn (S n))))))
+
+C-Cohomology : OrdinaryTheory i
+C-Cohomology = record {
+  C = C;
+  F-hom = CF-hom;
+  C-Susp = C-Susp;
+  C-exact-itok-mere = C-exact-itok-mere;
+  C-exact-ktoi-mere = C-exact-ktoi-mere;
+  C-additive = C-additive;
+  C-dimensionS = C-dimensionS}

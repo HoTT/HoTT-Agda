@@ -44,6 +44,9 @@ module _ where
   Ptd-Bool : Ptd₀
   Ptd-Bool = ∙[ Bool , true ]
 
+  Ptd-Lift : ∀ {i j} → Ptd i → Ptd (lmax i j)
+  Ptd-Lift {j = j} (A , a) = ∙[ Lift {j = j} A , lift a ]
+
   Ptd-Susp : ∀ {i} → Ptd i → Ptd i
   Ptd-Susp (A , _) = ∙[ Suspension A , north A ]
 
