@@ -79,9 +79,9 @@ module KGnImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
   module BelowDiagonal where
 
     π₁ : (n : ℕ) → ⦃ p1 : 1 ≠ 0 ⦄ 
-      → π 1 ⦃ p1 ⦄ (Ptd-KG (S (S n))) == LiftUnit-group
+      → π 1 ⦃ p1 ⦄ (Ptd-KG (S (S n))) == LiftUnit-Group
     π₁ n ⦃ p1 ⦄ = transport 
-      (λ pi → pi 1 ⦃ p1 ⦄ (Ptd-KG (S (S n))) == LiftUnit-group) 
+      (λ pi → pi 1 ⦃ p1 ⦄ (Ptd-KG (S (S n))) == LiftUnit-Group) 
       π-fold 
       (contr-iso-LiftUnit (π-concrete 1 ⦃ p1 ⦄ (Ptd-KG (S (S n)))) 
          (connected-at-level-is-contr 
@@ -92,7 +92,7 @@ module KGnImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
     -- some clutter here arises from the definition of <; 
     -- any simple way to avoid this?
     π-below : (k n : ℕ) → ⦃ pk : k ≠ 0 ⦄ → ⦃ pn : n ≠ 0 ⦄ → (k < n) 
-      → π k ⦃ pk ⦄ (Ptd-KG n ⦃ pn ⦄) == LiftUnit-group
+      → π k ⦃ pk ⦄ (Ptd-KG n ⦃ pn ⦄) == LiftUnit-Group
     π-below 0 _ ⦃ pk ⦄ lt = ⊥-rec (pk idp)
     π-below 1 .2 ⦃ pk ⦄ ltS = π₁ 0 ⦃ pk ⦄
     π-below 1 .3 ⦃ pk ⦄ (ltSR ltS) = π₁ 1 ⦃ pk ⦄
@@ -141,9 +141,9 @@ module KGnImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
   module AboveDiagonal where
 
     π-above : (k n : ℕ) → ⦃ pk : k ≠ 0 ⦄ → ⦃ pn : n ≠ 0 ⦄ → (n < k)
-      → π k (Ptd-KG n) == LiftUnit-group
+      → π k (Ptd-KG n) == LiftUnit-Group
     π-above k n lt = transport
-      (λ pi → pi k (Ptd-KG n) == LiftUnit-group)
+      (λ pi → pi k (Ptd-KG n) == LiftUnit-Group)
       π-fold
       (contr-iso-LiftUnit (π-concrete k (Ptd-KG n)) 
         (inhab-prop-is-contr 

@@ -49,6 +49,6 @@ record OrdinaryTheory i : Type (lsucc i) where
       → C n (Ptd-BigWedge Z) == ΠG I (C n ∘ Z)
 
     C-dimensionS : (n : ℕ) 
-      → C (S n) (Ptd-Lift Ptd-Bool) == LiftUnit-group
+      → C (S n) (Ptd-Lift Ptd-Bool) == LiftUnit-Group
 
 

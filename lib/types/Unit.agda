@@ -34,24 +34,3 @@ Unit-level = Unit-is-contr
 ⊤-is-prop = Unit-is-prop
 ⊤-is-set = Unit-is-set
 
-Lift-Unit-group-structure : ∀ {i} → 
-  GroupStructure {i} (Lift Unit) 
-Lift-Unit-group-structure = record
-  { ident = lift unit
-  ; inv = λ _ → lift unit
-  ; comp = λ _ _ → lift unit
-  ; unitl = λ _ → idp
-  ; unitr = λ _ → idp
-  ; assoc = λ _ _ _ → idp
-  ; invr = λ _ → idp
-  ; invl = λ _ → idp
-  }
-
-LiftUnit-group : ∀ {i} → Group i
-LiftUnit-group = group _ (Lift-level Unit-is-set) Lift-Unit-group-structure
-
-contr-iso-LiftUnit : ∀ {i} (G : Group i) → is-contr (Group.El G)
-  → G == LiftUnit-group
-contr-iso-LiftUnit G pA = group-iso 
-  (group-hom (λ _ → lift unit) idp (λ _ _ → idp)) 
-  (snd (contr-equiv-LiftUnit pA))

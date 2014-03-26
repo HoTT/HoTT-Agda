@@ -320,7 +320,7 @@ module _ (n : ℕ) {A : Type i} (X : A → Ptd i)
 
 {- Dimension Axiom -}
 abstract
-  C-dimensionS : (n : ℕ) → C (S n) (Ptd-Lift Ptd-Bool) == LiftUnit-group
+  C-dimensionS : (n : ℕ) → C (S n) (Ptd-Lift Ptd-Bool) == LiftUnit-Group
   C-dimensionS n = contr-iso-LiftUnit _ $ connected-at-level-is-contr 
     (Trunc-level {n = ⟨0⟩})
     (Trunc-preserves-conn ⟨0⟩ 
