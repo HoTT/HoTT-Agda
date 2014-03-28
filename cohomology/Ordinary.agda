@@ -24,11 +24,11 @@ module _ (n : ℕ) (X : Ptd i) where
 
   {- Basepoint of underlying space -}
   Cid : CEl
-  Cid = GroupStructure.ident (Group.group-struct C)
+  Cid = Group.ident C
 
   {- Underlying pointed space of cohomology group -}
   Ptd-CEl : Ptd i
-  Ptd-CEl = ∙[ Group.El C , Cid ]
+  Ptd-CEl = Group.Ptd-El C
 
   {- Untruncated versions of the cohomology spaces -}
   uCEl : Type i -- CEl ≡ Trunc ⟨0⟩ uCEl
@@ -66,8 +66,8 @@ module _ (n : ℕ) {X Y : Ptd i} where
         (λ {(h , hpt) → ap [_] (comp-lemma g h gpt hpt)})}) 
       G H}
     where
-    _◯_ = GroupStructure.comp (Group.group-struct (C n X))
-    _□_ = GroupStructure.comp (Group.group-struct (C n Y))
+    _◯_ = Group.comp (C n X)
+    _□_ = Group.comp (C n Y)
     T = fst (CF (f , fpt))
 
     lemma : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
@@ -284,8 +284,8 @@ module _ (n : ℕ) {A : Type i} (X : A → Ptd i)
       pres-ident = 
         λ= (λ a → ap [_] (pair= idp (∙-unit-r _ ∙ ap-cst idp (! (bwglue a)))))
 
-    _◯_ = GroupStructure.comp (Group.group-struct (C n (Ptd-BigWedge X)))
-    _□_ = GroupStructure.comp (Group.group-struct (ΠG A (C n ∘ X)))
+    _◯_ = Group.comp (C n (Ptd-BigWedge X))
+    _□_ = Group.comp (ΠG A (C n ∘ X))
 
     abstract
       pres-comp : (tF tG : CEl n (Ptd-BigWedge X)) 

@@ -8,7 +8,6 @@ module homotopy.KG1HSpace where
 module KG1HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
 
   open Group A
-  open GroupStructure group-struct
 
   open KG1 A
 
