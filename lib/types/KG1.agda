@@ -45,7 +45,7 @@ module KG1 {i} (G : Group i) where
   module KG1Rec {j} {C : Type j}
     (C-level : has-level ⟨ 1 ⟩ C)
     (kbase* : C) 
-    (hom* : GroupHom G (Ω^-group 1 (C , kbase*) C-level)) where
+    (hom* : GroupHom G (Ω^-Group 1 (C , kbase*) C-level)) where
 
     f : KG1 → C
     f (#kg1 #kbase _) = kbase*
@@ -108,7 +108,7 @@ module KG1 {i} (G : Group i) where
                      (Ω^-group-structure 1 (Type i , El))
 
     0-Group : Group (lsucc i)
-    0-Group = Ω^-group 1 ((⟨0⟩ -Type i) , (El , El-level)) (⟨0⟩ -Type-level i)
+    0-Group = Ω^-Group 1 ((⟨0⟩ -Type i) , (El , El-level)) (⟨0⟩ -Type-level i)
 
     Codes-hom₁ : GroupHom G Ω-Group
     Codes-hom₁ = record {f = f; pres-ident = pri; pres-comp = prc}

@@ -30,7 +30,7 @@ module KG1HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
         kloop g' ∙' kloop g    ∎
 
   mult-hom : GroupHom A 
-    (Ω^-group 1 ((KG1 → KG1) , (λ x → x)) (Π-level (λ _ → klevel)))
+    (Ω^-Group 1 ((KG1 → KG1) , (λ x → x)) (Π-level (λ _ → klevel)))
   mult-hom = record {f = f; pres-ident = pres-ident; pres-comp = pres-comp}
     where
     f = λ g → λ= (mult-loop g)

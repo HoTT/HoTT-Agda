@@ -156,8 +156,8 @@ module _ {i} (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) where
     invl = !^-inv-l n
     }
 
-  Ω^-group : has-level ⟨ n ⟩ (fst X) → Group i
-  Ω^-group pX = group 
+  Ω^-Group : has-level ⟨ n ⟩ (fst X) → Group i
+  Ω^-Group pX = group 
     (Ω^ n X)
     (Ω^-level-in ⟨0⟩ n X $
        transport (λ t → has-level t (fst X)) (+2+-comm ⟨0⟩ (n -2)) pX)

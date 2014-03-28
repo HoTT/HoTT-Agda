@@ -99,9 +99,9 @@ module _ {i} where
                    ∘e equiv-ap^ 1 (Ω^Ts-PreIso.F r) (Ω^Ts-PreIso.e r)) }
 
   π-Trunc-shift-iso : (n : ℕ) ⦃ _ : n ≠ O ⦄ (X : Ptd i) 
-    → Ω^-group n (Ptd-Trunc ⟨ n ⟩ X) Trunc-level == π n X 
+    → Ω^-Group n (Ptd-Trunc ⟨ n ⟩ X) Trunc-level == π n X 
   π-Trunc-shift-iso n X = transport 
-    (λ pi → Ω^-group n (Ptd-Trunc ⟨ n ⟩ X) Trunc-level == pi n X) 
+    (λ pi → Ω^-Group n (Ptd-Trunc ⟨ n ⟩ X) Trunc-level == pi n X) 
     π-fold 
     (group-iso (group-hom (fst F) (snd F) pres-comp) e)
     where 
@@ -119,15 +119,15 @@ abstract
   π-Trunc-≤T-iso n m X lte = 
     π n (Ptd-Trunc m X) 
       =⟨ ! (π-Trunc-shift-iso n (Ptd-Trunc m X)) ⟩
-    Ω^-group n (Ptd-Trunc ⟨ n ⟩ (Ptd-Trunc m X)) Trunc-level
+    Ω^-Group n (Ptd-Trunc ⟨ n ⟩ (Ptd-Trunc m X)) Trunc-level
       =⟨ lemma ⟩
-    Ω^-group n (Ptd-Trunc ⟨ n ⟩ X) Trunc-level
+    Ω^-Group n (Ptd-Trunc ⟨ n ⟩ X) Trunc-level
       =⟨ π-Trunc-shift-iso n X ⟩
     π n X ∎
     where
-    lemma : Ω^-group n (Ptd-Trunc ⟨ n ⟩ (Ptd-Trunc m X)) Trunc-level
-         ==  Ω^-group n (Ptd-Trunc ⟨ n ⟩ X) Trunc-level
-    lemma = ap (uncurry $ Ω^-group n) $
+    lemma : Ω^-Group n (Ptd-Trunc ⟨ n ⟩ (Ptd-Trunc m X)) Trunc-level
+         ==  Ω^-Group n (Ptd-Trunc ⟨ n ⟩ X) Trunc-level
+    lemma = ap (uncurry $ Ω^-Group n) $
       pair= 
         (ptd-ua (fuse-Trunc (fst X) ⟨ n ⟩ m) idp ∙ 
          ap (λ k → Ptd-Trunc k X) (minT-out-l lte)) 
