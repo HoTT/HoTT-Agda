@@ -20,6 +20,7 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level ⟨0⟩ El)
     assoc   : ∀ a b c → comp (comp a b) c == comp a (comp b c)
     invl    : ∀ a → (comp (inv a) a) == ident
     invr    : ∀ a → (comp a (inv a)) == ident
+
 open GroupStructure
 
 record Group i : Type (lsucc i) where 
@@ -28,6 +29,10 @@ record Group i : Type (lsucc i) where
     El : Type i
     El-level : has-level ⟨0⟩ El
     group-struct : GroupStructure El
+
+  Ptd-El : Σ (Type i) (λ A → A)
+  Ptd-El = (El , GroupStructure.ident group-struct)
+
 open Group
 
 Group₀ : Type (lsucc lzero)
@@ -45,6 +50,10 @@ record GroupHom {i j} (G : Group i) (H : Group j)
     pres-ident : f (ident (group-struct G)) == (ident (group-struct H))
     pres-comp  : ∀ g1 g2 → f (comp (group-struct G) g1 g2) 
                            == comp (group-struct H) (f g1) (f g2)
+
+  ptd-f : Σ (El G → El H) 
+            (λ f → f (ident (group-struct G)) == ident (group-struct H))
+  ptd-f = (f , pres-ident)
 
 
 idhom : ∀ {i} (G : Group i) → GroupHom G G

@@ -25,6 +25,12 @@ _ptd->_ = _∙→_
 
 infixr 2 _∘ptd_
 
+ptd-idf : ∀ {i} (X : Ptd i) → fst (X ∙→ X)
+ptd-idf A = ((λ x → x) , idp)
+
+ptd-cst : ∀ {i} (X : Ptd i) → fst (X ∙→ X)
+ptd-cst X = ((λ x → snd X) , idp)
+
 _∘ptd_ : ∀ {i j k} {A : Ptd i} {B : Ptd j} {C : Ptd k}
   (g : fst (B ∙→ C)) (f : fst (A ∙→ B)) → fst (A ∙→ C)
 (g , gpt) ∘ptd (f , fpt) = (g ∘ f) , (ap g fpt ∙ gpt)
@@ -41,6 +47,9 @@ _∘ptd_ : ∀ {i j k} {A : Ptd i} {B : Ptd j} {C : Ptd k}
 
 {- Pointed versions of existing types -}
 module _ where
+  Ptd-Unit : Ptd₀
+  Ptd-Unit = ∙[ Unit , unit ]
+
   Ptd-Bool : Ptd₀
   Ptd-Bool = ∙[ Bool , true ]
 

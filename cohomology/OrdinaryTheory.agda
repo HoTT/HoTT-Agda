@@ -26,23 +26,23 @@ record OrdinaryTheory i : Type (lsucc i) where
   Ptd-CEl n X = ∙[ CEl n X , Cid n X ]
 
   field
-    F-hom : (n : ℕ) {X Y : Ptd i} → fst (X ∙→ Y) → GroupHom (C n Y) (C n X)
+    CF-hom : (n : ℕ) {X Y : Ptd i} → fst (X ∙→ Y) → GroupHom (C n Y) (C n X)
 
-    F-ident : (n : ℕ) {X : Ptd i} 
-      → F-hom n ((λ x → x) , idp) == idhom (C n X)
-    F-comp : (n : ℕ) {X Y Z : Ptd i} (g : fst (Y ∙→ Z)) (f : fst (X ∙→ Y))
-      → F-hom n (g ∘ptd f) == F-hom n f ∘hom F-hom n g
+    CF-ident : (n : ℕ) {X : Ptd i} 
+      → CF-hom n ((λ x → x) , idp) == idhom (C n X)
+    CF-comp : (n : ℕ) {X Y Z : Ptd i} (g : fst (Y ∙→ Z)) (f : fst (X ∙→ Y))
+      → CF-hom n (g ∘ptd f) == CF-hom n f ∘hom CF-hom n g
 
-  F : (n : ℕ) {X Y : Ptd i} → fst (X ∙→ Y) → fst (Ptd-CEl n Y ∙→ Ptd-CEl n X)
-  F n f = (GroupHom.f (F-hom n f) , GroupHom.pres-ident (F-hom n f))
+  CF : (n : ℕ) {X Y : Ptd i} → fst (X ∙→ Y) → fst (Ptd-CEl n Y ∙→ Ptd-CEl n X)
+  CF n f = (GroupHom.f (CF-hom n f) , GroupHom.pres-ident (CF-hom n f))
 
   field
     C-Susp : (n : ℕ) (X : Ptd i) → C (S n) (Ptd-Susp X) == C n X
 
     C-exact-itok-mere : (n : ℕ) {X Y : Ptd i} (f : fst (X ∙→ Y))
-      → is-exact-itok-mere (F n (ptd-cfcod f)) (F n f)
+      → is-exact-itok-mere (CF n (ptd-cfcod f)) (CF n f)
     C-exact-ktoi-mere : (n : ℕ) {X Y : Ptd i} (f : fst (X ∙→ Y))
-      → is-exact-ktoi-mere (F n (ptd-cfcod f)) (F n f)
+      → is-exact-ktoi-mere (CF n (ptd-cfcod f)) (CF n f)
 
     C-additive : (n : ℕ) {I : Type i} (Z : I → Ptd i)
       → ((W : I → Type i) → (∀ i → has-level ⟨ n ⟩ (W i)) → has-choice ⟨0⟩ I W)

@@ -332,9 +332,9 @@ abstract
 C-Cohomology : OrdinaryTheory i
 C-Cohomology = record {
   C = C;
-  F-hom = CF-hom;
-  F-ident = CF-ident;
-  F-comp = CF-comp;
+  CF-hom = CF-hom;
+  CF-ident = CF-ident;
+  CF-comp = CF-comp;
   C-Susp = C-Susp;
   C-exact-itok-mere = C-exact-itok-mere;
   C-exact-ktoi-mere = C-exact-ktoi-mere;
