@@ -58,10 +58,10 @@ module _ (n : ℕ) {X Y : Ptd i} where
     f = T;
     pres-ident = ap [_] (snd (uCF (f , fpt)));
     pres-comp = λ G H → Trunc-elim 
-      {B = λ G → ∀ H → T (G □ H) == T G ◯ T H}
+      {P = λ G → ∀ H → T (G □ H) == T G ◯ T H}
       (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
       (λ {(g , gpt) → Trunc-elim
-        {B = λ H → T ([ g , gpt ] □ H) == T [ g , gpt ] ◯ T H}
+        {P = λ H → T ([ g , gpt ] □ H) == T [ g , gpt ] ◯ T H}
         (λ _ → =-preserves-level _ Trunc-level)
         (λ {(h , hpt) → ap [_] (comp-lemma g h gpt hpt)})}) 
       G H}
@@ -90,14 +90,14 @@ module _ (n : ℕ) {X : Ptd i} where
 
   CF-ident : CF-hom n ((λ x → x) , idp) == idhom (C n X)
   CF-ident = hom= _ _ $ λ= $ Trunc-elim
-    {B = λ tx → Trunc-fmap (λ x → x) tx == tx}
+    {P = λ tx → Trunc-fmap (λ x → x) tx == tx}
     (λ _ → =-preserves-level _ Trunc-level)
     (λ _ → idp)
 
   CF-comp : {Y Z : Ptd i} (G : fst (Y ∙→ Z)) (F : fst (X ∙→ Y))
     → CF-hom n (G ∘ptd F) == CF-hom n F ∘hom CF-hom n G
   CF-comp G F = hom= _ _ $ λ= $ Trunc-elim
-    {B = λ tH → Trunc-fmap (λ H → H ∘ptd (G ∘ptd F)) tH
+    {P = λ tH → Trunc-fmap (λ H → H ∘ptd (G ∘ptd F)) tH
                 == Trunc-fmap (λ K → K ∘ptd F) (Trunc-fmap (λ H → H ∘ptd G) tH)}
     (λ _ → =-preserves-level _ Trunc-level)
     (λ H → ap [_] (! (∘ptd-assoc H G F)))
@@ -173,7 +173,7 @@ module _ (n : ℕ) {X Y : Ptd i} where
       → is-exact-itok (CF n (ptd-cfcod F)) (CF n F)
     C-exact-itok F = 
       Trunc-elim 
-        {B = λ tG → fst (CF n F) (fst (CF n (ptd-cfcod F)) tG) == Cid n X}
+        {P = λ tG → fst (CF n F) (fst (CF n (ptd-cfcod F)) tG) == Cid n X}
         (λ _ → =-preserves-level _ Trunc-level)
         (λ G → ap [_] (uC-exact-itok n F G))
 
@@ -189,7 +189,7 @@ module _ (n : ℕ) {X Y : Ptd i} where
       → is-exact-ktoi-mere (CF n (ptd-cfcod F)) (CF n F)
     C-exact-ktoi-mere F = 
       Trunc-elim
-        {B = λ tH → fst (CF n F) tH == Cid n X
+        {P = λ tH → fst (CF n F) tH == Cid n X
            → Trunc ⟨-1⟩ (Σ (CEl n (Ptd-Cof (fst F))) 
                            (λ tK → fst (CF n (ptd-cfcod F)) tK == tH))}
         (λ _ → Π-level (λ _ → raise-level _ Trunc-level))
@@ -227,7 +227,7 @@ module _ (n : ℕ) {A : Type i} (X : A → Ptd i)
 
     R'-L' : ∀ y → R' (L' y) == y
     R'-L' = Trunc-elim
-      {B = λ tK → R' (L' tK) == tK}
+      {P = λ tK → R' (L' tK) == tK}
       (λ _ → =-preserves-level _ Trunc-level)
       (λ K → ap [_] (λ= (λ a → pair= idp $
         ap (BigWedgeRec.f idp (fst ∘ K) (! ∘ snd ∘ K)) (! (bwglue a)) ∙ idp
@@ -242,7 +242,7 @@ module _ (n : ℕ) {A : Type i} (X : A → Ptd i)
 
     L'-R' : ∀ x → L' (R' x) == x
     L'-R' = Trunc-elim
-      {B = λ tH → L' (R' tH) == tH}
+      {P = λ tH → L' (R' tH) == tH}
       (λ _ → =-preserves-level _ Trunc-level)
       (λ {(h , hpt) → ap [_] (pair= 
          (λ= (L-R-fst (h , hpt)))
@@ -291,10 +291,10 @@ module _ (n : ℕ) {A : Type i} (X : A → Ptd i)
       pres-comp : (tF tG : CEl n (Ptd-BigWedge X)) 
         → R (tF ◯ tG) == (R tF) □ (R tG)
       pres-comp = Trunc-elim 
-        {B = λ tF → ∀ tG → R (tF ◯ tG) == (R tF) □ (R tG)}
+        {P = λ tF → ∀ tG → R (tF ◯ tG) == (R tF) □ (R tG)}
         (λ _ → Π-level (λ _ → =-preserves-level _ (Π-level (λ _ → Trunc-level))))
         (λ F → Trunc-elim
-          {B = λ tG → R ([ F ] ◯ tG) == R [ F ] □ R tG}
+          {P = λ tG → R ([ F ] ◯ tG) == R [ F ] □ R tG}
           (λ _ → =-preserves-level _ (Π-level (λ _ → Trunc-level)))
           (λ G → λ= (λ a → ap [_] (pair= 
             idp 

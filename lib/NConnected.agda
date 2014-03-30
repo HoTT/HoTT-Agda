@@ -214,7 +214,7 @@ abstract
         out-aux (into-aux x)
           =⟨ Trunc-fmap-∘ _ _ x ⟩
         Trunc-fmap (λ q → (tt , (snd q))) x
-          =⟨ Trunc-elim {B = λ x → Trunc-fmap (λ q → (tt , snd q)) x == x}
+          =⟨ Trunc-elim {P = λ x → Trunc-fmap (λ q → (tt , snd q)) x == x}
                (λ _ → =-preserves-level n Trunc-level) (λ _ → idp) x ⟩
         x ∎
 
@@ -253,16 +253,16 @@ abstract
   Σ-conn {A = A} {B = B} {n = ⟨-2⟩} cA cB = -2-conn (Σ A B)
   Σ-conn {A = A} {B = B} {n = S m} cA cB = 
     Trunc-elim
-      {B = λ ta → (∀ tx → ta == tx) → is-connected (S m) (Σ A B)}
+      {P = λ ta → (∀ tx → ta == tx) → is-connected (S m) (Σ A B)}
       (λ _ → Π-level (λ _ → prop-has-level-S is-contr-is-prop))
       (λ a₀ pA →
         Trunc-elim
-          {B = λ tb → (∀ ty → tb == ty) → is-connected (S m) (Σ A B)}
+          {P = λ tb → (∀ ty → tb == ty) → is-connected (S m) (Σ A B)}
           (λ _ → Π-level (λ _ → prop-has-level-S is-contr-is-prop))
           (λ b₀ pB → 
             ([ a₀ , b₀ ] ,
               Trunc-elim
-                {B = λ tp → [ a₀ , b₀ ] == tp}
+                {P = λ tp → [ a₀ , b₀ ] == tp}
                 (λ _ → =-preserves-level _ Trunc-level)
                 (λ {(r , s) → 
                   Trunc-rec (Trunc-level {n = S m} _ _)
@@ -293,7 +293,7 @@ abstract
                     (λ a → ap [_] (merid A a)) 
                     (fst cA))
          (λ x → Trunc-elim
-            {B = λ y → idp == 
+            {P = λ y → idp == 
               Trunc-rec (Trunc-level {n = S n} _ _) (λ a → ap [_] (merid A a)) y
               [ (λ z → [ north A ] == [ z ]) ↓ (merid A x) ]}
             (λ _ → ↓-preserves-level _ (λ _ → Trunc-level {n = S n} _ _))

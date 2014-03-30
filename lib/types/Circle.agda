@@ -35,13 +35,13 @@ module _ where
   postulate  -- HIT
     loop : base == base
 
-  module S¹Elim {i} {A : S¹ → Type i} (base* : A base)
-    (loop* : base* == base* [ A ↓ loop ]) where
+  module S¹Elim {i} {P : S¹ → Type i} (base* : P base)
+    (loop* : base* == base* [ P ↓ loop ]) where
 
-    f : Π S¹ A
+    f : Π S¹ P
     f = f-aux phantom where
 
-     f-aux : Phantom loop* → Π S¹ A
+     f-aux : Phantom loop* → Π S¹ P
      f-aux phantom (#s¹ #base _) = base*
 
     postulate  -- HIT
@@ -115,7 +115,7 @@ module S¹RecType {i} (A : Type i) (e : A ≃ A) where
 
       eqv-fib : f == P.f [ (λ X → (X → Type _)) ↓ ua eqv ]
       eqv-fib =
-        ↓-app→cst-in (λ {t} p → S¹-elim {A = λ t → f t == P.f (–> eqv t)} idp
+        ↓-app→cst-in (λ {t} p → S¹-elim {P = λ t → f t == P.f (–> eqv t)} idp
           (↓-='-in
             (ap (P.f ∘ (–> eqv)) loop   =⟨ ap-∘ P.f to loop ⟩
              ap P.f (ap to loop)        =⟨ To.loop-β |in-ctx ap P.f ⟩

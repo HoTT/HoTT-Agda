@@ -138,7 +138,7 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
     decode-encode : {x : Suspension A} (tα : P x) 
       → decode {x} (encode {x} tα) == tα
     decode-encode {x} = Trunc-elim 
-      {B = λ tα → decode {x} (encode {x} tα) == tα}
+      {P = λ tα → decode {x} (encode {x} tα) == tα}
       (λ _ → =-preserves-level ⟨ 1 ⟩ Trunc-level)
       (J (λ y p → decode {y} (encode {y} [ p ]) == [ p ])
          (ap [_] (!-inv-r (merid A e))))

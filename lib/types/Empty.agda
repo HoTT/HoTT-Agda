@@ -6,7 +6,7 @@ module lib.types.Empty where
 
 ⊥ = Empty
 
-⊥-elim : ∀ {i} {A : ⊥ → Type i} → ((x : ⊥) → A x)
+⊥-elim : ∀ {i} {P : ⊥ → Type i} → ((x : ⊥) → P x)
 ⊥-elim = Empty-elim
 
 Empty-rec : ∀ {i} {A : Type i} → (Empty → A)

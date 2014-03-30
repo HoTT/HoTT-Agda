@@ -33,16 +33,16 @@ module _ where
     surfT : loopT1 ∙ loopT2 == loopT2 ∙ loopT1
 
   {- Dependent elimination and computation rules -}
-  module TorusElim {i} {A : Torus → Type i} (baseT* : A baseT)
-    (loopT1* : baseT* == baseT* [ A ↓ loopT1 ])
-    (loopT2* : baseT* == baseT* [ A ↓ loopT2 ])
+  module TorusElim {i} {P : Torus → Type i} (baseT* : P baseT)
+    (loopT1* : baseT* == baseT* [ P ↓ loopT1 ])
+    (loopT2* : baseT* == baseT* [ P ↓ loopT2 ])
     (surfT* : loopT1* ∙ᵈ loopT2* == loopT2* ∙ᵈ loopT1*
-              [ (λ p → baseT* == baseT* [ A ↓ p ]) ↓ surfT ]) where
+              [ (λ p → baseT* == baseT* [ P ↓ p ]) ↓ surfT ]) where
 
-    f : Π Torus A
+    f : Π Torus P
     f = f-aux phantom  where
 
-      f-aux : Phantom surfT* → Π Torus A
+      f-aux : Phantom surfT* → Π Torus P
       f-aux phantom (#torus #baseT _) = baseT*
 
     postulate  -- HIT
@@ -71,7 +71,7 @@ module TorusRec {i} {A : Type i} (baseT* : A) (loopT1* loopT2* : baseT* == baseT
   (surfT* : loopT1* ∙ loopT2* == loopT2* ∙ loopT1*) where
 
   private
-    module M = TorusElim {A = λ _ → A} baseT* (↓-cst-in loopT1*) (↓-cst-in loopT2*)
+    module M = TorusElim {P = λ _ → A} baseT* (↓-cst-in loopT1*) (↓-cst-in loopT2*)
                          (↓-cst-in-∙ loopT1 loopT2 loopT1* loopT2*
                          !◃ (↓-cst-in2 surfT* ▹ (↓-cst-in-∙ loopT2 loopT1 loopT2* loopT1*)))
 

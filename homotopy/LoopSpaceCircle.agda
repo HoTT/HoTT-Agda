@@ -221,7 +221,7 @@ postulate  -- TODO, will be only one line using the fact that an equivalence on
 -- is a set (and [loop^succ] is already used in [decode])
 encode-decode : (x : S¹) (t : S¹Cover x) → encode (decode x t) == t
 encode-decode =
-  S¹-elim {A = λ x → (t : S¹Cover x) → encode (decode x t) == t}
+  S¹-elim {P = λ x → (t : S¹Cover x) → encode (decode x t) == t}
     encode-loop^ (↓-Π-in (λ q → prop-has-all-paths-↓ (ℤ-is-set _ _)))
 
 encode-is-equiv' : (x : S¹) → is-equiv (encode {x})

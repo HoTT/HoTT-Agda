@@ -26,13 +26,13 @@ module _ {i} where
   postulate
     Trunc-level : {n : ℕ₋₂} {A : Type i} → has-level n (Trunc n A)
 
-  module TruncElim {n : ℕ₋₂} {A : Type i} {j} {B : Trunc n A → Type j}
-    (p : (x : Trunc n A) → has-level n (B x)) (d : (a : A) → B [ a ]) where
+  module TruncElim {n : ℕ₋₂} {A : Type i} {j} {P : Trunc n A → Type j}
+    (p : (x : Trunc n A) → has-level n (P x)) (d : (a : A) → P [ a ]) where
 
-    f : Π (Trunc n A) B
+    f : Π (Trunc n A) P
     f = f-aux phantom  where
 
-      f-aux : Phantom p → Π (Trunc n A) B
+      f-aux : Phantom p → Π (Trunc n A) P
       f-aux phantom (#trunc #[ a ] _) = d a
 
 open TruncElim public renaming (f to Trunc-elim)
@@ -186,11 +186,11 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
   Trunc=-∙ : {ta tb tc : Trunc (S n) A} 
     → fst (Trunc= ta tb) → fst (Trunc= tb tc) → fst (Trunc= ta tc)
   Trunc=-∙ {ta = ta} {tb = tb} {tc = tc} =
-    Trunc-elim {B = λ ta → C ta tb tc} 
+    Trunc-elim {P = λ ta → C ta tb tc} 
       (λ ta → level ta tb tc)
-      (λ a → Trunc-elim {B = λ tb → C [ a ] tb tc} 
+      (λ a → Trunc-elim {P = λ tb → C [ a ] tb tc} 
          (λ tb → level [ a ] tb tc)
-         (λ b → Trunc-elim {B = λ tc → C [ a ] [ b ] tc} 
+         (λ b → Trunc-elim {P = λ tc → C [ a ] [ b ] tc} 
                   (λ tc → level [ a ] [ b ] tc)
                   (λ c → Trunc-fmap2 _∙_)
                   tc)
@@ -210,7 +210,7 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
     == Trunc=-∙ {ta = x} (–> (Trunc=-equiv x y) p) (–> (Trunc=-equiv y z) q)
   Trunc=-∙-comm {x = x} idp idp = 
     Trunc-elim
-       {B = λ x → –> (Trunc=-equiv x x) idp
+       {P = λ x → –> (Trunc=-equiv x x) idp
                == Trunc=-∙ {ta = x} (–> (Trunc=-equiv x x) idp)
                                     (–> (Trunc=-equiv x x) idp)}
        (λ x → raise-level _ $ =-preserves-level _ (snd (Trunc= x x)))
@@ -280,10 +280,10 @@ Trunc-×-equiv n A B = equiv f g f-g g-f
 
   f-g : ∀ p → f (g p) == p
   f-g (ta , tb) = Trunc-elim 
-    {B = λ ta → f (g (ta , tb)) == (ta , tb)}
+    {P = λ ta → f (g (ta , tb)) == (ta , tb)}
     (λ _ → =-preserves-level _ (×-level Trunc-level Trunc-level))
     (λ a → Trunc-elim
-      {B = λ tb → f (g ([ a ] , tb)) == ([ a ] , tb)}
+      {P = λ tb → f (g ([ a ] , tb)) == ([ a ] , tb)}
       (λ _ → =-preserves-level _ (×-level Trunc-level Trunc-level))
       (λ b → idp)
       tb)
@@ -291,7 +291,7 @@ Trunc-×-equiv n A B = equiv f g f-g g-f
 
   g-f : ∀ tab → g (f tab) == tab
   g-f = Trunc-elim
-    {B = λ tab → g (f tab) == tab}
+    {P = λ tab → g (f tab) == tab}
     (λ _ → =-preserves-level _ Trunc-level)
     (λ ab → idp)
 

@@ -55,18 +55,18 @@ module KG1 {i} (G : Group i) where
 
   open KG1Rec public using () renaming (f to KG1-rec)
 
-  module KG1Elim {j} {C : KG1 → Type j}
-    (C-level : (x : KG1) → has-level ⟨ 1 ⟩ (C x))
-    (kbase* : C kbase)
-    (kloop* : (g : El) → kbase* == kbase* [ C ↓ kloop g ])
+  module KG1Elim {j} {P : KG1 → Type j}
+    (P-level : (x : KG1) → has-level ⟨ 1 ⟩ (P x))
+    (kbase* : P kbase)
+    (kloop* : (g : El) → kbase* == kbase* [ P ↓ kloop g ])
     (preserves-ident : kloop* ident == idp
-       [ (λ p → kbase* == kbase* [ C ↓ p ]) ↓ kloop-ident ])
+       [ (λ p → kbase* == kbase* [ P ↓ p ]) ↓ kloop-ident ])
     (preserves-comp : (g₁ g₂ : El) → 
        kloop* (comp g₁ g₂) == kloop* g₁ ∙ᵈ kloop* g₂
-       [ (λ p → kbase* == kbase* [ C ↓ p ]) ↓ kloop-comp g₁ g₂ ])
+       [ (λ p → kbase* == kbase* [ P ↓ p ]) ↓ kloop-comp g₁ g₂ ])
     where
 
-    f : Π KG1 C
+    f : Π KG1 P
     f (#kg1 #kbase _) = kbase*
 
     postulate  -- HIT
@@ -185,7 +185,7 @@ module KG1 {i} (G : Group i) where
 
     decode : {x : KG1} → fst (Codes x) → kbase == x
     decode {x} = 
-      KG1-elim {C = λ x' → fst (Codes x') → kbase == x'}
+      KG1-elim {P = λ x' → fst (Codes x') → kbase == x'}
         (λ _ → Π-level (λ _ → =-preserves-level _ klevel))
         decode'
         loop'
@@ -235,7 +235,7 @@ module KG1 {i} (G : Group i) where
     KG1-conn : is-connected ⟨0⟩ KG1
     KG1-conn = ([ kbase ] , Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
       (KG1-elim
-        {C = λ x → [ kbase ] == [ x ]}
+        {P = λ x → [ kbase ] == [ x ]}
         (λ _ → raise-level _ (=-preserves-level _ Trunc-level))
         idp
         (λ _ → prop-has-all-paths-↓ (Trunc-level {n = ⟨0⟩} _ _))

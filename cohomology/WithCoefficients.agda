@@ -127,12 +127,12 @@ private
           pres-ident = idp;
           pres-comp = λ tg₁ tg₂ → 
             Trunc-elim
-              {B = λ tg₁ → Trunc-fmap Bool∙→-out (tg₁ ◯ tg₂)
+              {P = λ tg₁ → Trunc-fmap Bool∙→-out (tg₁ ◯ tg₂)
                    == (Trunc-fmap Bool∙→-out tg₁) □ (Trunc-fmap Bool∙→-out tg₂)}
               (λ _ → =-preserves-level _ Trunc-level)
               (λ g₁ → 
                 Trunc-elim
-                  {B = λ tg₂ → Trunc-fmap Bool∙→-out ([ g₁ ] ◯ tg₂)
+                  {P = λ tg₂ → Trunc-fmap Bool∙→-out ([ g₁ ] ◯ tg₂)
                        == [ Bool∙→-out g₁ ] □ (Trunc-fmap Bool∙→-out tg₂)}
                   (λ _ → =-preserves-level _ Trunc-level)
                   (λ g₂ → idp)

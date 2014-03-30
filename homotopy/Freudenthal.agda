@@ -218,7 +218,7 @@ module FreudenthalEquiv
   decode-encode : {x : Suspension X} (tα : Q x) 
     → decode {x} (encode {x} tα) == tα
   decode-encode {x} tα = Trunc-elim 
-    {B = λ tα → decode {x} (encode {x} tα) == tα}
+    {P = λ tα → decode {x} (encode {x} tα) == tα}
     (λ _ → =-preserves-level k Trunc-level)
     (J (λ y p → decode {y} (encode {y} [ p ]) == [ p ]) 
        (ap [_] (!-inv-r (merid X x₀))))

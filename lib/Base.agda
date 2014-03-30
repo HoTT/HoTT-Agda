@@ -214,7 +214,7 @@ anymore after that.
 
 data Empty : Type₀ where
 
-Empty-elim : ∀ {i} {A : Empty → Type i} → ((x : Empty) → A x)
+Empty-elim : ∀ {i} {P : Empty → Type i} → ((x : Empty) → P x)
 Empty-elim ()
 
 

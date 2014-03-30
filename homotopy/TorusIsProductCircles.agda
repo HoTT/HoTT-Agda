@@ -9,7 +9,8 @@ surfT' = surfT ∙ (∙=∙' loopT2 loopT1)
 
 {- First map -}
 to : Torus → S¹ × S¹
-to = To.f module _ where
+to = To.f 
+  where
 
   to-surfT : (pair=' loop idp) ∙ (pair=' idp loop)
              == (pair=' idp loop) ∙ (pair=' loop idp)

@@ -40,12 +40,12 @@ module _ {i} {n : ℕ₋₂} {A : Bool → Type i} where
     unc-c : ∀ f → unchoose (choose-Bool f) == f
     unc-c f = transport (λ h → unchoose (choose-Bool h) == h) (pick-Bool-η f) $
       Trunc-elim
-        {B = λ tft → 
+        {P = λ tft → 
           unchoose (choose-Bool (pick-Bool tft (f false))) 
           == pick-Bool tft (f false)}
         (λ _ → =-preserves-level _ (Π-level (λ _ → Trunc-level)))
         (λ ft → Trunc-elim
-          {B = λ tff → 
+          {P = λ tff → 
             unchoose (choose-Bool (pick-Bool [ ft ] tff ))
             == pick-Bool [ ft ] tff}
           (λ _ → =-preserves-level _ (Π-level (λ _ → Trunc-level)))
@@ -55,7 +55,7 @@ module _ {i} {n : ℕ₋₂} {A : Bool → Type i} where
 
     c-unc : ∀ tg → choose-Bool (unchoose tg) == tg
     c-unc = Trunc-elim
-      {B = λ tg → choose-Bool (unchoose tg) == tg}
+      {P = λ tg → choose-Bool (unchoose tg) == tg}
       (λ _ → =-preserves-level _ Trunc-level)
       (λ g → ap [_] (pick-Bool-η g))
 

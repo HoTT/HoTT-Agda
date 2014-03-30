@@ -51,11 +51,11 @@ module SuspAdjointLoopIso {i j} (X : Ptd i) (Y : Ptd j) where
       pres-ident = ap [_] ΣAΩ.pres-ident;
       pres-comp = λ F G → 
         Trunc-elim
-          {B = λ F → f (Trunc-fmap2 (comp GSΣ) F G) 
+          {P = λ F → f (Trunc-fmap2 (comp GSΣ) F G) 
                   == Trunc-fmap2 (comp GSΩ) (f F) (f G)}
           (λ _ → =-preserves-level _ Trunc-level)
           (λ F' → Trunc-elim
-            {B = λ G → f (Trunc-fmap2 (comp GSΣ) [ F' ] G)
+            {P = λ G → f (Trunc-fmap2 (comp GSΣ) [ F' ] G)
                     == Trunc-fmap2 (comp GSΩ) (f [ F' ]) (f G)}
             (λ _ → =-preserves-level _ Trunc-level)
             (λ G' → ap [_] (pres-comp-inner F' G'))
