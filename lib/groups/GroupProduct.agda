@@ -27,6 +27,7 @@ _×G_ : ∀ {i j} → Group i → Group j → Group (lmax i j)
 _×G_ (group A A-level A-struct) (group B B-level B-struct) = 
   group (A × B) (×-level A-level B-level) (×-group-struct A-struct B-struct)
 
+
 {- general product -}
 Π-group-struct : ∀ {i j} {I : Type i} {A : I → Type j}
   (FS : (i : I) → GroupStructure (A i))
@@ -46,3 +47,13 @@ _×G_ (group A A-level A-struct) (group B B-level B-struct) =
 ΠG I F = group (Π I (El ∘ F)) (Π-level (λ i → El-level (F i))) 
                (Π-group-struct (group-struct ∘ F))
   where open Group
+
+
+{- defining a homomorphism into a binary product -}
+×-hom : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
+  → GroupHom G H → GroupHom G K → GroupHom G (H ×G K)
+×-hom (group-hom h h-id h-comp) (group-hom k k-id k-comp) = record {
+  f = λ x → (h x , k x);
+  pres-ident = pair×= h-id k-id;
+  pres-comp = λ x y → pair×= (h-comp x y) (k-comp x y)}
+
