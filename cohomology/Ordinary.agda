@@ -2,6 +2,7 @@
 
 open import HoTT 
 open import homotopy.KGn
+open import homotopy.SuspAdjointLoop
 open import cohomology.SuspAdjointLoopIso
 open import cohomology.WithCoefficients
 open import cohomology.Exactness
@@ -10,7 +11,7 @@ open import cohomology.OrdinaryTheory
 
 module cohomology.Ordinary {i} (G : Group i) (G-abelian : is-abelian G) where
 
-open KGnExplicit G G-abelian using (Ptd-KG; KG-conn; spectrum)
+open KGnExplicit G G-abelian using (Ptd-KG; KG-level; KG-conn; spectrum)
 
 {- Definition of cohomology group C -}
 module _ (n : ℕ) (X : Ptd i) where
@@ -104,15 +105,23 @@ module _ (n : ℕ) {X : Ptd i} where
 
 {- Eilenberg-Steenrod Axioms -}
 
-{- Suspension Axiom -}
+{- Suspension Axioms -}
 
 abstract
-  C-Susp : (n : ℕ) (X : Ptd i) → C (S n) (Ptd-Susp X) == C n X
-  C-Susp n X = SuspAdjointLoopIso.iso X (Ptd-KG (S (S n))) 
+  C-SuspS : (n : ℕ) (X : Ptd i) → C (S n) (Ptd-Susp X) == C n X
+  C-SuspS n X = SuspAdjointLoopIso.iso X (Ptd-KG (S (S n))) 
                ∙ ap (→Ω-Group X) spec
     where
     spec : Ptd-Ω (Ptd-KG (S (S n))) == Ptd-KG (S n)
     spec = spectrum (S n)
+
+abstract
+  C-SuspO : (X : Ptd i) → is-contr (CEl 0 (Ptd-Susp X))
+  C-SuspO X = inhab-prop-is-contr 
+    (Cid 0 (Ptd-Susp X)) 
+    (Trunc-preserves-level ⟨0⟩ $
+      equiv-preserves-level ((SuspAdjointLoop.eqv X (Ptd-Ω (Ptd-KG 1)))⁻¹)
+        (∙→-level (KG-level 1 _ _ _ _)))
 
 {- Non-truncated Exactness Axiom -}
 
@@ -335,7 +344,8 @@ C-Cohomology = record {
   CF-hom = CF-hom;
   CF-ident = CF-ident;
   CF-comp = CF-comp;
-  C-Susp = C-Susp;
+  C-SuspS = C-SuspS;
+  C-SuspO = C-SuspO;
   C-exact-itok-mere = C-exact-itok-mere;
   C-exact-ktoi-mere = C-exact-ktoi-mere;
   C-additive = C-additive;
