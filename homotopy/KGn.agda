@@ -3,7 +3,7 @@
 open import HoTT
 open import homotopy.HSpace renaming (HSpaceStructure to HSS)
 open import homotopy.Freudenthal
-open import homotopy.IteratedSuspension
+open import homotopy.IterSuspensionStable
 open import homotopy.Pi2HSusp
 open import homotopy.KG1HSpace
 
