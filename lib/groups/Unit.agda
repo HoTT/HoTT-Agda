@@ -3,15 +3,15 @@
 open import lib.Basics
 open import lib.types.Group
 open import lib.types.Unit
-open import lib.types.Lift
+open import lib.groups.Lift
 
 module lib.groups.Unit where
 
-LiftUnit-group-structure : ∀ {i} → GroupStructure {i} (Lift Unit) 
-LiftUnit-group-structure = record
-  { ident = lift unit
-  ; inv = λ _ → lift unit
-  ; comp = λ _ _ → lift unit
+Unit-group-structure : GroupStructure Unit
+Unit-group-structure = record
+  { ident = unit
+  ; inv = λ _ → unit
+  ; comp = λ _ _ → unit
   ; unitl = λ _ → idp
   ; unitr = λ _ → idp
   ; assoc = λ _ _ _ → idp
@@ -19,8 +19,11 @@ LiftUnit-group-structure = record
   ; invl = λ _ → idp
   }
 
+Unit-Group : Group lzero
+Unit-Group = group _ Unit-is-set Unit-group-structure
+
 LiftUnit-Group : ∀ {i} → Group i
-LiftUnit-Group = group _ (Lift-level Unit-is-set) LiftUnit-group-structure
+LiftUnit-Group = Lift-Group Unit-Group
 
 contr-iso-LiftUnit : ∀ {i} (G : Group i) → is-contr (Group.El G)
   → G == LiftUnit-Group
