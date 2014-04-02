@@ -49,7 +49,6 @@ record OrdinaryTheory i : Type (lsucc i) where
       → ((W : I → Type i) → (∀ i → has-level ⟨ n ⟩ (W i)) → has-choice ⟨0⟩ I W)
       → C n (Ptd-BigWedge Z) == ΠG I (C n ∘ Z)
 
-    C-dimensionS : (n : ℕ) 
-      → C (S n) (Ptd-Lift Ptd-Bool) == LiftUnit-Group
+    C-dimensionS : (n : ℕ) → is-contr (CEl (S n) (Ptd-Lift Ptd-Bool))
 
 
