@@ -101,13 +101,20 @@ module _ {i} {A : Type i} where
     → p ∙ q == p ∙ q'
   _∙ₗ_ {q = q} {q' = q'} idp β = β
 
-  _⋆2_ : {x y z : A} {p p' : x == y} {q q' : y == z} (α : p == p') (β : q == q')
+  _⋆2_ : {x y z : A} {p p' : x == y} {q q' : y == z}
+         (α : p == p') (β : q == q')
     → p ∙ q == p' ∙ q'
   _⋆2_ {p' = p'} {q = q} α β = (α ∙ᵣ q) ∙ (p' ∙ₗ β)
 
-  _⋆'2_ : {x y z : A} {p p' : x == y} {q q' : y == z} (α : p == p') (β : q == q')
+  _⋆'2_ : {x y z : A} {p p' : x == y} {q q' : y == z}
+          (α : p == p') (β : q == q')
     → p ∙ q == p' ∙ q'
   _⋆'2_ {p = p} {q' = q'} α β = (p ∙ₗ β) ∙ (α ∙ᵣ q')
+
+  ⋆2=⋆'2 : {x y z : A} {p p' : x == y} {q q' : y == z}
+           (α : p == p') (β : q == q')
+    → α ⋆2 β == α ⋆'2 β
+  ⋆2=⋆'2 {p = idp} {q = idp} idp idp = idp
 
 module _ {i} {A : Type i} where
 

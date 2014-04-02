@@ -129,25 +129,10 @@ module _ {i} {X : Ptd i} where
   conc^2-comm α β = ! (⋆2=conc^ α β) ∙ ⋆2=⋆'2 α β ∙ ⋆'2=conc^ α β
     where
       ⋆2=conc^ : (α β : Ω^ 2 X) → α ⋆2 β == conc^ 2 α β
-      ⋆2=conc^ α β = α ⋆2 β
-                       =⟨ idp ⟩
-                     (∙-unit-r idp ∙ α ∙ ! (∙-unit-r idp)) ∙ β
-                       =⟨ idp ⟩
-                     (α ∙ ! (∙-unit-r idp)) ∙ β
-                       =⟨ ∙-unit-r α |in-ctx (λ π → π ∙ β) ⟩
-                     α ∙ β ∎
+      ⋆2=conc^ α β = ap (λ π → π ∙ β) (∙-unit-r α)
 
       ⋆'2=conc^ : (α β : Ω^ 2  X) → α ⋆'2 β == conc^ 2 β α
-      ⋆'2=conc^ α β = α ⋆'2 β
-                        =⟨ idp ⟩
-                      β ∙ (∙-unit-r idp ∙ α ∙ ! (∙-unit-r idp))
-                        =⟨ idp ⟩
-                      β ∙ (α ∙ ! (∙-unit-r idp))
-                        =⟨ ∙-unit-r α |in-ctx (λ π → β ∙ π) ⟩
-                      β ∙ α ∎
-
-      ⋆2=⋆'2 : (α β : Ω^ 2 X) → α ⋆2 β == α ⋆'2 β
-      ⋆2=⋆'2 idp idp = idp
+      ⋆'2=conc^ α β = ap (λ π → β ∙ π) (∙-unit-r α)
 
 {- Pushing truncation through loop space -}
 module _ {i} where
