@@ -15,6 +15,7 @@ module index where
 -- import Algebra.F2NotCommutative
 import homotopy.LoopSpaceCircle
 import homotopy.HopfJunior
+import homotopy.SuspensionJoin
 -- import homotopy.Hopf
 -- import Spaces.LoopSpaceDecidableWedgeCircles
 -- import Homotopy.PullbackIsPullback
