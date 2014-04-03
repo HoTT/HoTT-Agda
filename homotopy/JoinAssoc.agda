@@ -7,66 +7,74 @@ open import HoTT
 module homotopy.JoinAssoc {i j k} (A : Type i) (B : Type j) (C : Type k) where
 
   {- First map -}
+  
+  module _ where
 
-  to : (A * B) * C → A * (B * C)
-  to = To.f  module _ where
+    private
 
-    to-left-glue : (ab : A × B) → left (fst ab) == right (left (snd ab)) :> A * (B * C)
-    to-left-glue (a , b) = glue (a , left b)
+      to-left-glue : (ab : A × B) → left (fst ab) == right (left (snd ab)) :> A * (B * C)
+      to-left-glue (a , b) = glue (a , left b)
 
-    module ToLeft = PushoutRec left (right ∘ left) to-left-glue
+      module ToLeft = PushoutRec left (right ∘ left) to-left-glue
 
-    to-left : A * B → A * (B * C)
-    to-left = ToLeft.f
+      to-left : A * B → A * (B * C)
+      to-left = ToLeft.f
 
-    to-glue-left : (c : C) (a : A) → to-left (left a) == right (right c)
-    to-glue-left c a = glue (a , right c)
+      to-glue-left : (c : C) (a : A) → to-left (left a) == right (right c)
+      to-glue-left c a = glue (a , right c)
 
-    to-glue-right : (c : C) (b : B) → to-left (right b) == right (right c)
-    to-glue-right c b = ap right (glue (b , c))
+      to-glue-right : (c : C) (b : B) → to-left (right b) == right (right c)
+      to-glue-right c b = ap right (glue (b , c))
 
-    to-glue-glue : (c : C) (ab : A × B) → to-glue-left c (fst ab) == to-glue-right c (snd ab) [ (λ x → to-left x == right (right c)) ↓ glue ab ]
-    to-glue-glue c (a , b) = ↓-swap to-left right _ idp
-      (ToLeft.glue-β (a , b) ◃ apd (λ x → glue (a , x)) (glue (b , c)))
+      to-glue-glue : (c : C) (ab : A × B) → to-glue-left c (fst ab) == to-glue-right c (snd ab) [ (λ x → to-left x == right (right c)) ↓ glue ab ]
+      to-glue-glue c (a , b) = ↓-swap to-left right _ idp
+        (ToLeft.glue-β (a , b) ◃ apd (λ x → glue (a , x)) (glue (b , c)))
 
-    module ToGlue (c : C) = PushoutElim (to-glue-left c) (to-glue-right c) (to-glue-glue c)
+      module ToGlue (c : C) = PushoutElim (to-glue-left c) (to-glue-right c) (to-glue-glue c)
 
-    to-glue : (ab-c : (A * B) × C) → to-left (fst ab-c) == right (right (snd ab-c))
-    to-glue (ab , c) = M.f ab where module M = ToGlue c
+      to-glue : (ab-c : (A * B) × C) → to-left (fst ab-c) == right (right (snd ab-c))
+      to-glue (ab , c) = M.f ab where module M = ToGlue c
 
     module To = PushoutRec {d = *-span (A * B) C} to-left (right ∘ right) to-glue
 
+  to : (A * B) * C → A * (B * C)
+  to = To.f
+
   {- Second map -}
 
-  from : A * (B * C) → (A * B) * C
-  from = From.f  module MM where
+  module _ where
 
-    from-right-glue : (bc : B × C) → left (right (fst bc)) == right (snd bc)
-    from-right-glue (b , c) = glue (right b , c)
+    private
 
-    module FromRight = PushoutRec (left ∘ right) right from-right-glue
+      from-right-glue : (bc : B × C) → left (right (fst bc)) == right (snd bc)
+      from-right-glue (b , c) = glue (right b , c)
+
+      module FromRight = PushoutRec (left ∘ right) right from-right-glue
 
     from-right : B * C → (A * B) * C
     from-right = FromRight.f
 
-    from-glue-left : (a : A) (b : B) → left (left a) == from-right (left b)
-    from-glue-left a b = ap left (glue (a , b))
+    private
 
-    from-glue-right : (a : A) (c : C) → left (left a) == from-right (right c)
-    from-glue-right a c = glue (left a , c)
+      from-glue-left : (a : A) (b : B) → left (left a) == from-right (left b)
+      from-glue-left a b = ap left (glue (a , b))
 
-    from-glue-glue : (a : A) (bc : B × C) → from-glue-left a (fst bc) == from-glue-right a (snd bc) [ (λ x → left (left a) == from-right x) ↓ glue bc ]
-    from-glue-glue a (b , c) = ↓-swap! left from-right _ idp
-      (apd (λ x → glue (x , c)) (glue (a , b)) ▹! (FromRight.glue-β (b , c)))
+      from-glue-right : (a : A) (c : C) → left (left a) == from-right (right c)
+      from-glue-right a c = glue (left a , c)
 
-    module FromGlue (a : A) = PushoutElim (from-glue-left a) (from-glue-right a) (from-glue-glue a)
+      from-glue-glue : (a : A) (bc : B × C) → from-glue-left a (fst bc) == from-glue-right a (snd bc) [ (λ x → left (left a) == from-right x) ↓ glue bc ]
+      from-glue-glue a (b , c) = ↓-swap! left from-right _ idp
+        (apd (λ x → glue (x , c)) (glue (a , b)) ▹! (FromRight.glue-β (b , c)))
 
-    from-glue : (a-bc : A × (B * C)) → left (left (fst a-bc)) == from-right (snd a-bc)
-    from-glue (a , bc) = M.f bc where module M = FromGlue a
+      module FromGlue (a : A) = PushoutElim (from-glue-left a) (from-glue-right a) (from-glue-glue a)
+
+      from-glue : (a-bc : A × (B * C)) → left (left (fst a-bc)) == from-right (snd a-bc)
+      from-glue (a , bc) = M.f bc where module M = FromGlue a
 
     module From = PushoutRec {d = *-span A (B * C)} (left ∘ left) from-right from-glue
 
-  open MM public
+  from : A * (B * C) → (A * B) * C
+  from = From.f
 
   {- First composite -}
   
