@@ -156,6 +156,21 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
       → u t == u' t' [ C ↓ p ])
   ↓-→-out r q = ↓-cst2-out p q (↓-Π-out r q)
 
+{- Transport form of dependent path in an arrow type -}
+module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} where
+
+  ↓-→-from-transp : {x x' : A} {p : x == x'}
+    {u : B x → C x} {u' : B x' → C x'}
+    → transport C p ∘ u == u' ∘ transport B p
+    → u == u' [ (λ x → B x → C x) ↓ p ]
+  ↓-→-from-transp {p = idp} q = q
+
+  ↓-→-to-transp : {x x' : A} {p : x == x'}
+    {u : B x → C x} {u' : B x' → C x'}
+    → u == u' [ (λ x → B x → C x) ↓ p ]
+    → transport C p ∘ u == u' ∘ transport B p
+  ↓-→-to-transp {p = idp} q = q
+
 -- Dependent paths in a Π-type where the domain is constant
 module _ {i j k} {A : Type i} {B : Type j} {C : A → B → Type k} where
 

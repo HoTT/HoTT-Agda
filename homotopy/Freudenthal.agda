@@ -127,8 +127,9 @@ module FreudenthalEquiv
   decode {x} = Suspension-elim X 
     {P = λ y → Codes y → Q y}
     decodeN decodeS
-    (λ x' → coe (↓-→-is-square {B = Codes} {C = Q} 
-                   decodeN decodeS (merid X x')) (λ= (STS x')))
+    (λ x' → ↓-→-from-transp (λ= (STS x')))
+    -- (λ x' → coe (↓-→-is-square {B = Codes} {C = Q} 
+    --                decodeN decodeS (merid X x')) (λ= (STS x')))
     x
     where
     abstract

@@ -113,9 +113,7 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
   decode {x} = Suspension-elim A {P = λ x → Codes x → P x}
                  decode'
                  (λ a → [ merid A a ])
-                 (λ a → coe (↓-→-is-square {B = Codes} {C = P} 
-                               decode' (λ a → [ merid A a ]) _)
-                            (λ= $ STS a))
+                 (λ a → ↓-→-from-transp (λ= $ STS a))
                  x
     where 
     abstract

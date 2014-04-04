@@ -152,7 +152,7 @@ abstract
 
     inv= : inv G == inv H [ (λ C → C → C) ↓ ua (f , e) ]
     inv= =
-      coe (↓-→-is-square (inv G) (inv H) (ua (f , e))) $ λ= $ λ a → 
+      ↓-→-from-transp $ λ= $ λ a → 
         transport (λ C → C) (ua (f , e)) (inv G a) 
           =⟨ to-transp (↓-idf-ua-in _ idp) ⟩
         f (inv G a) 
@@ -164,7 +164,7 @@ abstract
     comp=' : (a : El G) 
       → comp G a == comp H (f a) [ (λ C → C → C) ↓ ua (f , e) ]
     comp=' a = 
-      coe (↓-→-is-square (comp G a) (comp H (f a)) (ua (f , e))) $ λ= $ λ b →
+      ↓-→-from-transp $ λ= $ λ b →
         transport (λ C → C) (ua (f , e)) (comp G a b)
           =⟨ to-transp (↓-idf-ua-in _ idp) ⟩
         f (comp G a b)
@@ -175,7 +175,7 @@ abstract
 
     comp= : comp G == comp H [ (λ C → C → C → C) ↓ ua (f , e) ]
     comp= =
-      coe (↓-→-is-square (comp G) (comp H) (ua (f , e))) $ λ= $ λ a → 
+      ↓-→-from-transp $ λ= $ λ a →
         transport (λ C → C → C) (ua (f , e)) (comp G a)
           =⟨ to-transp (comp=' a) ⟩
         comp H (f a)
