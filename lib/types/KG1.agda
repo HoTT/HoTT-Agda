@@ -195,15 +195,14 @@ module KG1 {i} (G : Group i) where
       where 
       loop' : (g : El) 
         → decode' == decode' [ (λ x' → fst (Codes x') → kbase == x') ↓ kloop g ]
-      loop' g = coe (↓-→-is-square {B = fst ∘ Codes} {C = Path kbase}
-                  decode' decode' (kloop g)) $ λ= $ λ y → 
-                    transport (λ z → kbase == z) (kloop g) (kloop y)
-                      =⟨ trans-pathfrom (kloop g) (kloop y) ⟩
-                    kloop y ∙ kloop g
-                      =⟨ ! (kloop-comp y g) ⟩
-                    kloop (comp y g)
-                      =⟨ ap kloop (! (to-transp (↓-Codes-loop g y))) ⟩
-                    kloop (transport (λ z → fst (Codes z)) (kloop g) y) ∎
+      loop' g = ↓-→-from-transp $ λ= $ λ y →
+        transport (λ z → kbase == z) (kloop g) (kloop y)
+          =⟨ trans-pathfrom (kloop g) (kloop y) ⟩
+        kloop y ∙ kloop g
+          =⟨ ! (kloop-comp y g) ⟩
+        kloop (comp y g)
+          =⟨ ap kloop (! (to-transp (↓-Codes-loop g y))) ⟩
+        kloop (transport (λ z → fst (Codes z)) (kloop g) y) ∎
 
     decode-encode : ∀ {x} (α : kbase == x) → decode (encode α) == α
     decode-encode α = 

@@ -7,21 +7,21 @@ module homotopy.TorusIsProductCircles where
 surfT' : loopT1 ∙ loopT2 == loopT2 ∙' loopT1
 surfT' = surfT ∙ (∙=∙' loopT2 loopT1)
 
+private
+  to-surfT : (pair×= loop idp) ∙ (pair×= idp loop)
+             == (pair×= idp loop) ∙ (pair×= loop idp)
+  to-surfT =
+    pair×= loop idp ∙ pair×= idp loop   =⟨ ×-∙ loop idp idp loop ⟩
+    pair×= (loop ∙ idp) (idp ∙ loop)    =⟨ ∙-unit-r loop |in-ctx (λ u → pair×= u loop) ⟩
+    pair×= loop loop                    =⟨ ! (∙-unit-r loop) |in-ctx (λ u → pair×= loop u) ⟩
+    pair×= (idp ∙ loop) (loop ∙ idp)    =⟨ ! (×-∙ idp loop loop idp) ⟩
+    pair×= idp loop ∙ pair×= loop idp ∎
+
+module To = TorusRec (base , base) (pair×= loop idp) (pair×= idp loop) to-surfT
+
 {- First map -}
 to : Torus → S¹ × S¹
 to = To.f 
-  where
-
-  to-surfT : (pair=' loop idp) ∙ (pair=' idp loop)
-             == (pair=' idp loop) ∙ (pair=' loop idp)
-  to-surfT =
-    pair=' loop idp ∙ pair=' idp loop   =⟨ ×-∙ loop idp idp loop ⟩
-    pair=' (loop ∙ idp) (idp ∙ loop)    =⟨ ∙-unit-r loop |in-ctx (λ u → pair=' u loop) ⟩
-    pair=' loop loop                    =⟨ ! (∙-unit-r loop) |in-ctx (λ u → pair=' loop u) ⟩
-    pair=' (idp ∙ loop) (loop ∙ idp)    =⟨ ! (×-∙ idp loop loop idp) ⟩
-    pair=' idp loop ∙ pair=' loop idp ∎
-
-  module To = TorusRec (base , base) (pair=' loop idp) (pair=' idp loop) to-surfT
 
 {- Second map -}
 
@@ -73,7 +73,7 @@ to-from-c = {!!} --S¹-elim to-from-c-base (↓-cst→app-in to-from-c-loop)
     ap (to ∘ from-c-base) loop    =⟪ ap-∘ to from-c-base loop ⟫
     ap to (ap from-c-base loop)   =⟪ FromCBase.loop-β |in-ctx ap to ⟫
     ap to loopT2                  =⟪ To.loopT2-β ⟫
-    pair=' idp loop               =⟪ ! (ap-cst,id _ loop) ⟫
+    pair×= idp loop               =⟪ ! (ap-cst,id _ loop) ⟫
     ap (λ y → (base , y)) loop ∎∎
 
   to-from-c-base-loop : idp == idp [ (λ z → to (from-c-base z) == (base , z)) ↓ loop ]
@@ -81,7 +81,7 @@ to-from-c = {!!} --S¹-elim to-from-c-base (↓-cst→app-in to-from-c-loop)
 
   module ToFromCBase = S¹Elim idp to-from-c-base-loop
 
-  -- 1!to-from-c-base-loop : idp == idp [ (λ z → to (from-c-base (fst z)) == z) ↓ (pair=' loop idp) ]
+  -- 1!to-from-c-base-loop : idp == idp [ (λ z → to (from-c-base (fst z)) == z) ↓ (pair×= loop idp) ]
   -- 1!to-from-c-base-loop = ↓-='-in (! (↯ 1! to-from-c-base-loop'))
 
 --   module 1!ToFromCBase!1 = S¹Elim idp 1!to-from-c-base-loop
@@ -89,7 +89,7 @@ to-from-c = {!!} --S¹-elim to-from-c-base (↓-cst→app-in to-from-c-loop)
   to-from-c-base : (y : S¹) → to (from-c-base y) == (base , y)
   to-from-c-base = ToFromCBase.f
 
-  thing2 : (y : S¹) → ap to (from-c-loop' y) == to-from-c-base y ∙ pair=' loop idp ∙' (! (to-from-c-base y))
+  thing2 : (y : S¹) → ap to (from-c-loop' y) == to-from-c-base y ∙ pair×= loop idp ∙' (! (to-from-c-base y))
   thing2 = {!S¹-elim To.loopT1-β {!To.loopT1-β!}!}
 
   to-from-c-loop : (y : S¹) → to-from-c-base y == to-from-c-base y [ (λ x → to (from-c x y) == (x , y)) ↓ loop ]
@@ -98,7 +98,7 @@ to-from-c = {!!} --S¹-elim to-from-c-base (↓-cst→app-in to-from-c-loop)
     to-from-c-loop-base2 : ap (λ x → (x , base)) loop =-= ap (λ x → to (from-c x base)) loop
     to-from-c-loop-base2 = 
       ap (λ z → z , base) loop               =⟪ {!ap-id,cst _ loop!} ⟫
-      pair=' loop idp                        =⟪ ! To.loopT1-β ⟫
+      pair×= loop idp                        =⟪ ! To.loopT1-β ⟫
       ap to loopT1                           =⟪ ! (thing base) |in-ctx ap to ⟫
       ap to (ap (λ z → from-c z base) loop)  =⟪ ! (ap-∘ to (λ z → from-c z base) loop) ⟫
       ap (λ z → to (from-c z base)) loop ∎∎
@@ -146,27 +146,27 @@ from-to = {!Torus-elim idp from-to-loopT1 from-to-loopT2 {!!}!}
   from-to-loopT1 : idp == idp [ (λ z → from (to z) == z) ↓ loopT1 ]
   from-to-loopT1 = ↓-∘=idf-in from to
     (ap from (ap to loopT1)                =⟨ To.loopT1-β |in-ctx ap from ⟩
-    ap from (pair=' loop idp)             =⟨ lemma from loop (idp {a = base}) ⟩
+    ap from (pair×= loop idp)             =⟨ lemma from loop (idp {a = base}) ⟩
     ap (λ u → u base) (ap from-c loop)    =⟨ FromC.loop-β |in-ctx ap (λ u → u base) ⟩
     ap (λ u → u base) (λ= from-c-loop')   =⟨ app=-β from-c-loop' base ⟩
     loopT1 ∎)  where
 
       lemma : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A × B → C)
         {x y : A} (p : x == y) {z t : B} (q : z == t)
-        → ap f (pair=' p q) == app= (ap (curry f) p) z ∙' ap (curry f y) q
+        → ap f (pair×= p q) == app= (ap (curry f) p) z ∙' ap (curry f y) q
       lemma f idp idp = idp
 
 
   from-to-loopT2 : idp == idp [ (λ z → from (to z) == z) ↓ loopT2 ]
   from-to-loopT2 = ↓-∘=idf-in from to
     (ap from (ap to loopT2)                =⟨ To.loopT2-β |in-ctx ap from ⟩
-    ap from (pair=' idp loop)             =⟨ lemma' from (idp {a = base}) loop ⟩
+    ap from (pair×= idp loop)             =⟨ lemma' from (idp {a = base}) loop ⟩
     ap from-c-base loop    =⟨ FromCBase.loop-β ⟩
     loopT2 ∎)  where
 
       lemma' : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A × B → C)
         {x y : A} (p : x == y) {z t : B} (q : z == t)
-        → ap f (pair=' p q) == ap (curry f x) q ∙' app= (ap (curry f) p) t
+        → ap f (pair×= p q) == ap (curry f x) q ∙' app= (ap (curry f) p) t
       lemma' f idp idp = idp
 
 -- to-from-c-app-base : (y : S¹) → to (from-c y base) == (y , base)

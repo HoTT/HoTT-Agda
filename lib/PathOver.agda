@@ -256,13 +256,6 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → C) (g : B →
       → p ∙ ! q ∙ ! (! r ∙ p ∙ ! q) == r
     coh idp idp idp = idp
 
-{- Dependent paths over function spaces -}
-↓-→-is-square : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} 
-  {x y : A} (f : B x → C x) (g : B y → C y) (p : x == y)
-  → ((transport C p ∘ f) == (g ∘ transport B p)) 
-    == (f == g [ (λ z → B z → C z) ↓ p ])
-↓-→-is-square _ _ idp = idp
-
 
 trans-↓ : ∀ {i j} {A : Type i} (P : A → Type j) {a₁ a₂ : A}
   (p : a₁ == a₂) (y : P a₂) → transport P (! p) y == y [ P ↓ p ]
