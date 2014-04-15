@@ -20,23 +20,15 @@ and comes equipped with the following operations:
   the codomain is in a uniform universe level)
 
 This type is postulated below and linked to Agda’s universe polymorphism
-mechanism via the BUILTIN commands (it’s the way it works).
+mechanism via the built-in module Agda.Primitive (it’s the new way).
 
 In plain Agda, the [i]th universe is called [Set i], which is not a very good
 name from the point of view of HoTT, so we define [Type] as a synonym of [Set]
 and [Set] should never be used again.
 -}
 
-postulate  -- Universe levels
-  ULevel : Set
-  lzero : ULevel
-  lsucc : ULevel → ULevel
-  lmax : ULevel → ULevel → ULevel
-
-{-# BUILTIN LEVEL ULevel #-}
-{-# BUILTIN LEVELZERO lzero #-}
-{-# BUILTIN LEVELSUC lsucc #-}
-{-# BUILTIN LEVELMAX lmax #-}
+open import Agda.Primitive public using (lzero)
+  renaming (Level to ULevel; lsuc to lsucc; _⊔_ to lmax)
 
 Type : (i : ULevel) → Set (lsucc i)
 Type i = Set i

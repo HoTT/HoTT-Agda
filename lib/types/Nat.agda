@@ -12,8 +12,6 @@ data ℕ : Type₀ where
   S : (n : ℕ) → ℕ
 
 {-# BUILTIN NATURAL ℕ #-}
-{-# BUILTIN ZERO O #-}
-{-# BUILTIN SUC S #-}
 
 Nat = ℕ
 
