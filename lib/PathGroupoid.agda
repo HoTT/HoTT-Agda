@@ -92,6 +92,31 @@ Sometimes we need to restart a new section in order to have everything in the
 previous one generalized.
 -}
 module _ {i} {A : Type i} where
+  {- Whisker and horizontal composition for Eckmann-Hilton argument -}
+  _∙ᵣ_ : {x y z : A} {p p' : x == y} (α : p == p') (q : y == z)
+    → p ∙ q == p' ∙ q
+  _∙ᵣ_ {p = p} {p' = p'} α idp = ∙-unit-r p ∙ α ∙ ! (∙-unit-r p')
+
+  _∙ₗ_ : {x y z : A} {q q' : y == z} (p : x == y) (β : q == q')
+    → p ∙ q == p ∙ q'
+  _∙ₗ_ {q = q} {q' = q'} idp β = β
+
+  _⋆2_ : {x y z : A} {p p' : x == y} {q q' : y == z}
+         (α : p == p') (β : q == q')
+    → p ∙ q == p' ∙ q'
+  _⋆2_ {p' = p'} {q = q} α β = (α ∙ᵣ q) ∙ (p' ∙ₗ β)
+
+  _⋆'2_ : {x y z : A} {p p' : x == y} {q q' : y == z}
+          (α : p == p') (β : q == q')
+    → p ∙ q == p' ∙ q'
+  _⋆'2_ {p = p} {q' = q'} α β = (p ∙ₗ β) ∙ (α ∙ᵣ q')
+
+  ⋆2=⋆'2 : {x y z : A} {p p' : x == y} {q q' : y == z}
+           (α : p == p') (β : q == q')
+    → α ⋆2 β == α ⋆'2 β
+  ⋆2=⋆'2 {p = idp} {q = idp} idp idp = idp
+
+module _ {i} {A : Type i} where
 
   -- Useful ?
   anti-whisker-right : {x y z : A} (p : y == z) {q r : x == y}

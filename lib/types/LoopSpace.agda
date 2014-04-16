@@ -122,6 +122,18 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
     (transport (λ k → has-level k (fst X)) (! (+2+-βr (n -2) m)) pX) 
     (idp^ n) (idp^ n)
 
+{- Eckmann-Hilton argument -}
+module _ {i} {X : Ptd i} where
+
+  conc^2-comm : (α β : Ω^ 2 X) → conc^ 2 α β == conc^ 2 β α
+  conc^2-comm α β = ! (⋆2=conc^ α β) ∙ ⋆2=⋆'2 α β ∙ ⋆'2=conc^ α β
+    where
+      ⋆2=conc^ : (α β : Ω^ 2 X) → α ⋆2 β == conc^ 2 α β
+      ⋆2=conc^ α β = ap (λ π → π ∙ β) (∙-unit-r α)
+
+      ⋆'2=conc^ : (α β : Ω^ 2  X) → α ⋆'2 β == conc^ 2 β α
+      ⋆'2=conc^ α β = ap (λ π → β ∙ π) (∙-unit-r α)
+
 {- Pushing truncation through loop space -}
 module _ {i} where
 
