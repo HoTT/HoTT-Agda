@@ -13,7 +13,7 @@ module homotopy.CoverClassification {i} (A : Type i)
     π1A = λ a → concrete-fundamental-group ∙[ A , a ]
 
   gset-to-cover : ∀ {j} a₁ → Gset (π1A a₁) j → Cover A (lmax i j)
-  gset-to-cover a₁ gs = Ribbon-cover (A , a₁) gs
+  gset-to-cover a₁ gs = Ribbon-cover ∙[ A , a₁ ] gs
 
   cover-to-gset-struct : ∀ {j} (cov : Cover A j) (a₁ : A)
     → GsetStructure (π1A a₁) (Fiber cov a₁) (Fiber-is-set cov a₁)
@@ -44,7 +44,7 @@ module homotopy.CoverClassification {i} (A : Type i)
 
       -- Suppose that we get the path, we can compute the ribbon easily.
       fiber+path-to-ribbon : ∀ {a₁ a₂} (a↑ : Fiber cov a₂) (p : a₁ == a₂)
-        → Ribbon (A , a₁) (cover-to-gset cov a₁) a₂
+        → Ribbon ∙[ A , a₁ ] (cover-to-gset cov a₁) a₂
       fiber+path-to-ribbon {a₂} a↑ p =
         trace (cover-trace cov a↑ [ ! p ]) [ p ]
 
@@ -64,7 +64,7 @@ module homotopy.CoverClassification {i} (A : Type i)
       open import homotopy.ConstantToSetFactorization
 
       fiber+path₋₁-to-ribbon : ∀ {a₁ a₂} (a↑ : Cover.Fiber cov a₂)
-        → Trunc ⟨-1⟩ (a₁ == a₂) → Ribbon (A , a₁) (cover-to-gset cov a₁) a₂
+        → Trunc ⟨-1⟩ (a₁ == a₂) → Ribbon ∙[ A , a₁ ] (cover-to-gset cov a₁) a₂
       fiber+path₋₁-to-ribbon a↑ = cst-extend
         Ribbon-is-set
         (fiber+path-to-ribbon a↑)
@@ -73,12 +73,12 @@ module homotopy.CoverClassification {i} (A : Type i)
   -- So the conversion from fiber to ribbon is done.
   fiber-to-ribbon : ∀ {j} (cov : Cover A j)
     → {a₁ a₂ : A} (a↑ : Cover.Fiber cov a₂)
-    → Ribbon (A , a₁) (cover-to-gset cov a₁) a₂
+    → Ribbon ∙[ A , a₁ ] (cover-to-gset cov a₁) a₂
   fiber-to-ribbon cov a↑ = fiber+path₋₁-to-ribbon cov a↑ [base-path]
 
   -- The other direction is easy.
   ribbon-to-fiber : ∀ {j} (cov : Cover A j) {a₁ a₂}
-    → Ribbon (A , a₁) (cover-to-gset cov a₁) a₂ → Cover.Fiber cov a₂
+    → Ribbon ∙[ A , a₁ ] (cover-to-gset cov a₁) a₂ → Cover.Fiber cov a₂
   ribbon-to-fiber cov {a₁}{a₂} r =
     Ribbon-rec (Fiber-is-set cov a₂) (cover-trace cov) (cover-paste cov) r
 
@@ -86,7 +86,7 @@ module homotopy.CoverClassification {i} (A : Type i)
     -- Some routine computations.
     abstract
       ribbon-to-fiber-to-ribbon : ∀ {j} (cov : Cover A j) {a₁ a₂}
-        → (r : Ribbon (A , a₁) (cover-to-gset cov a₁) a₂)
+        → (r : Ribbon ∙[ A , a₁ ] (cover-to-gset cov a₁) a₂)
         → fiber-to-ribbon cov (ribbon-to-fiber cov r) == r
       ribbon-to-fiber-to-ribbon cov {a₁}{a₂} = Ribbon-elim
         {P = λ r → fiber-to-ribbon cov (ribbon-to-fiber cov r) == r}
@@ -102,9 +102,9 @@ module homotopy.CoverClassification {i} (A : Type i)
         where
           abstract
             lemma : ∀ {a₂} (a↑ : Cover.Fiber cov a₁) (p : a₁ =₀ a₂) (bp : a₁ == a₂)
-              → trace {gs = cover-to-gset cov a₁}
+              → trace {A∙ = ∙[ A , a₁ ]} {gs = cover-to-gset cov a₁}
                   (cover-trace cov (cover-trace cov a↑ p) [ ! bp ]) [ bp ]
-              == trace a↑ p
+              == trace {A∙ = ∙[ A , a₁ ]} {gs = cover-to-gset cov a₁} a↑ p
             lemma a↑ p idp =
               trace (cover-trace cov a↑ p) idp₀
                 =⟨ paste a↑ p idp₀ ⟩
@@ -144,12 +144,12 @@ module homotopy.CoverClassification {i} (A : Type i)
 
   -- Part 2.1: The fiber over the point a is the carrier.
   ribbon-a₁-to-El : ∀ {j} {a₁} {gs : Gset (π1A a₁) j}
-    → Ribbon (A , a₁) gs a₁ → Gset.El gs
+    → Ribbon ∙[ A , a₁ ] gs a₁ → Gset.El gs
   ribbon-a₁-to-El {j} {a₁} {gs} = let open Gset gs in
     Ribbon-rec El-level act assoc
 
   ribbon-a₁-to-El-equiv : ∀ {j} {a₁} {gs : Gset (π1A a₁) j}
-    → Ribbon (A , a₁) gs a₁ ≃ Gset.El gs
+    → Ribbon ∙[ A , a₁ ] gs a₁ ≃ Gset.El gs
   ribbon-a₁-to-El-equiv {j} {a₁} {gs} = let open Gset gs in
     ribbon-a₁-to-El , is-eq _
       (λ r → trace r idp₀)
@@ -172,12 +172,12 @@ module homotopy.CoverClassification {i} (A : Type i)
     gset=
       ribbon-a₁-to-El-equiv
       (λ {x₁}{x₂} x= → Trunc-elim (λ _ → =-preserves-set $ Gset.El-is-set gs) λ g →
-        ribbon-a₁-to-El (transport (Ribbon (A , a₁) gs) g x₁)
-          =⟨ ap (λ x → ribbon-a₁-to-El (transport (Ribbon (A , a₁) gs) g x))
+        ribbon-a₁-to-El (transport (Ribbon ∙[ A , a₁ ] gs) g x₁)
+          =⟨ ap (λ x → ribbon-a₁-to-El (transport (Ribbon ∙[ A , a₁ ] gs) g x))
                 $ ! $ <–-inv-l ribbon-a₁-to-El-equiv x₁ ⟩
-        ribbon-a₁-to-El (transport (Ribbon (A , a₁) gs) g (trace (ribbon-a₁-to-El x₁) idp₀))
-          =⟨ ap (λ x → ribbon-a₁-to-El (transport (Ribbon (A , a₁) gs) g (trace x idp₀))) x= ⟩
-        ribbon-a₁-to-El (transport (Ribbon (A , a₁) gs) g (trace x₂ idp₀))
+        ribbon-a₁-to-El (transport (Ribbon ∙[ A , a₁ ] gs) g (trace (ribbon-a₁-to-El x₁) idp₀))
+          =⟨ ap (λ x → ribbon-a₁-to-El (transport (Ribbon ∙[ A , a₁ ] gs) g (trace x idp₀))) x= ⟩
+        ribbon-a₁-to-El (transport (Ribbon ∙[ A , a₁ ] gs) g (trace x₂ idp₀))
           =⟨ ap ribbon-a₁-to-El $ trans-trace g x₂ idp₀ ⟩
         Gset.act gs x₂ [ g ]
           ∎)
