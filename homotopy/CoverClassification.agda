@@ -8,13 +8,14 @@ module homotopy.CoverClassification {i} (A : Type i)
 
   open Cover
 
-  module _ where
-  -- private
+  private
     π1A = λ a → concrete-fundamental-group ∙[ A , a ]
 
+  -- A covering space constructed from a G-set.
   gset-to-cover : ∀ {j} a₁ → Gset (π1A a₁) j → Cover A (lmax i j)
   gset-to-cover a₁ gs = Ribbon-cover ∙[ A , a₁ ] gs
 
+  -- Covering spaces to G-sets.
   cover-to-gset-struct : ∀ {j} (cov : Cover A j) (a₁ : A)
     → GsetStructure (π1A a₁) (Fiber cov a₁) (Fiber-is-set cov a₁)
   cover-to-gset-struct cov a₁ = record

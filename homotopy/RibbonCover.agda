@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 {-
-  Ribbon is the explicit covering space construction.
+  Ribbon is an explicit covering space construction.
 
   This construction is given by Daniel Grayson, Favonia
   and Guillaume Brunerie together.
@@ -25,6 +25,17 @@ module homotopy.RibbonCover {i : ULevel} where
         a = snd A∙
         El = Gset.El gs
         El-level = Gset.El-level gs
+        _⊙_ = Gset.act gs
+
+      {-
+        What the following data type definition should be
+        when we have a proof assistant for HoTT:
+
+        data Ribbon (a₂ : A) : Set where
+          trace : El → a =₀ a₂ → Ribbon a₂
+          paste : ∀ el loop (p : a =₀ a₂)
+                → trace (el ⊙ loop) p == trace el (loop ∙₀ p)
+      -}
 
       data #Ribbon-aux (a₂ : A) : Type (lmax i j) where
         #trace : El → a =₀ a₂ → #Ribbon-aux a₂

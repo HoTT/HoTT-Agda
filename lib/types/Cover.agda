@@ -23,11 +23,12 @@ record Cover (A : Type i) j : Type (lmax i (lsucc j)) where
   Fiber-is-set = Fiber-level
   TotalSpace = Σ A Fiber
 
--- Basic tools
+-- Basic lemmas
 module _ {A : Type i} {j} where
 
   open Cover
 
+  -- Equality between covers.
   private
     cover=′ : {c₁ c₂ : Cover A j} → Fiber c₁ == Fiber c₂ → c₁ == c₂
     cover=′ {cover f _} {cover .f _} idp = ap (cover f) $
