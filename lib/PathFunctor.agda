@@ -101,6 +101,11 @@ trans-∙ : ∀ {j} {B : A → Type j} {x y z : A}
   → transport B (p ∙ q) b == transport B q (transport B p b)
 trans-∙ idp _ _ = idp
 
+trans-∙' : ∀ {j} {B : A → Type j} {x y z : A}
+  (p : x == y) (q : y == z) (b : B x)
+  → transport B (p ∙' q) b == transport B q (transport B p b)
+trans-∙' _ idp _ = idp
+
 {- Naturality of homotopies -}
 
 htpy-natural : ∀ {j} {B : Type j} {x y : A} {f g : A → B} 

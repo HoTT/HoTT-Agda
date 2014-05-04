@@ -15,9 +15,12 @@ _=₀_ x y = Trunc ⟨0⟩ (x == y)
 _=0_ : ∀ {i} {A : Type i} → A → A → Type i
 _=0_ = _=₀_
 
-infix 8 _∙₀_  -- \.\0
+infix 8 _∙₀_ _∙₀'_ -- \.\0
 _∙₀_ : ∀ {i} {A : Type i} {x y z : A} → x =₀ y → y =₀ z → x =₀ z
 _∙₀_ = Trunc-fmap2 _∙_
+
+_∙₀'_ : ∀ {i} {A : Type i} {x y z : A} → x =₀ y → y =₀ z → x =₀ z
+_∙₀'_ = Trunc-fmap2 _∙'_
 
 !₀ : ∀ {i} {A : Type i} {x y : A} → x =₀ y → y =₀ x
 !₀ = Trunc-fmap !
@@ -102,6 +105,17 @@ module _ {i} {A : Type i} where
       (λ p → Trunc-elim
         (λ _ → Π-is-set λ _ → =-preserves-level ⟨0⟩ B-level)
         (λ q b → trans-∙ p q b))
+
+    trans₀-∙₀' : ∀ {j} {B : A → Type j}
+      → (B-level : ∀ {a} → is-set (B a))
+      → {x y z : A} (p : x =₀ y) (q : y =₀ z) (b : B x)
+      → transport₀ B B-level (p ∙₀' q) b
+      == transport₀ B B-level q (transport₀ B B-level p b)
+    trans₀-∙₀' B-level = Trunc-elim
+      (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-level ⟨0⟩ B-level)
+      (λ p → Trunc-elim
+        (λ _ → Π-is-set λ _ → =-preserves-level ⟨0⟩ B-level)
+        (λ q b → trans-∙' p q b))
 
 {-
 module _ {i} {A : Type i} where
