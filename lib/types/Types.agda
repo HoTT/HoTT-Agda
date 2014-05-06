@@ -36,9 +36,7 @@ open import lib.types.LoopSpace public
 open import lib.types.PathSet public
 open import lib.types.FundamentalGroupoid public
 open import lib.types.Cover public
-
--- broken in 2.3.2.2?
--- open import lib.types.PathSeq public
+open import lib.types.PathSeq public
 
 -- This should probably not be exported
 -- module Generic1HIT {i j} (A : Type i) (B : Type j) (f g : B → A) where
