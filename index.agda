@@ -16,6 +16,9 @@ module index where
 import homotopy.LoopSpaceCircle
 import homotopy.HopfJunior
 import homotopy.Hopf
+import homotopy.CoverClassification
+import homotopy.AnyUniversalCoverIsPathSet
+import homotopy.PathSetIsInital
 -- import Spaces.LoopSpaceDecidableWedgeCircles
 -- import Homotopy.PullbackIsPullback
 -- import Homotopy.PushoutIsPushout
@@ -23,5 +26,3 @@ import homotopy.Hopf
 -- import Sets.QuotientUP
 -- import Spaces.PikSn
 -- import Homotopy.VanKampen
--- import Homotopy.Cover
--- import Homotopy.Cover.ExamplePi1Circle
