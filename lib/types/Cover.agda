@@ -8,14 +8,15 @@ open import lib.types.Pi
 open import lib.types.Sigma
 open import lib.types.Pointed
 open import lib.types.LoopSpace
+open import lib.types.Truncation
 open import lib.types.PathSet
 
-module lib.types.Cover {i} where
+module lib.types.Cover where
 
 {-
   The definition of covering spaces.
 -}
-record Cover (A : Type i) j : Type (lmax i (lsucc j)) where
+record Cover {i} (A : Type i) j : Type (lmax i (lsucc j)) where
   constructor cover
   field
     Fiber : A → Type j
@@ -24,7 +25,7 @@ record Cover (A : Type i) j : Type (lmax i (lsucc j)) where
   TotalSpace = Σ A Fiber
 
 -- Basic lemmas
-module _ {A : Type i} {j} where
+module _ {i} {A : Type i} {j} where
 
   open Cover
 
@@ -47,7 +48,7 @@ module _ {A : Type i} {j} where
   UniversalCover = Σ (Cover A j) is-universal
 
 -- Theorem: A covering space keeps higher homotopy groups.
-module _ (A∙ : Ptd i)
+module _ {i} (A∙ : Ptd i)
   {j} (c : Cover (fst A∙) j)
   (a↑ : Cover.Fiber c (snd A∙)) where
 
@@ -119,7 +120,7 @@ module _ (A∙ : Ptd i)
   Ω²ΣAFiber≃Ω²A = to , is-eq to from to-from from-to
 
 -- A natural way to construct a G-set from covering spaces.
-module _ {A : Type i} where
+module _ {i} {A : Type i} where
   open Cover
 
   cover-trace : ∀ {j} (cov : Cover A j) {a₁ a₂}
@@ -141,3 +142,21 @@ module _ {A : Type i} where
       → cover-trace cov (cover-trace cov a↑ loop) p
       == cover-trace cov a↑ (loop ∙₀ p)
     cover-paste cov a↑ loop p = ! $ trans₀-∙₀ (λ {a} → Fiber-is-set cov a) loop p a↑
+
+-- Path sets form a covering space
+module _ {i} (A∙ : Ptd i) where
+  path-set-cover : Cover (fst A∙) i
+  path-set-cover = record
+    { Fiber = λ a → snd A∙ =₀ a
+    ; Fiber-level = λ a → Trunc-level
+    }
+
+-- Cover morphisms
+record CoverHom {i} {A : Type i} {j₁ j₂}
+  (cov1 : Cover A j₁)
+  (cov2 : Cover A j₂) : Type (lmax i (lsucc (lmax j₁ j₂))) where
+  open Cover
+  field
+    f : (a : A) → Cover (Fiber cov1 a) (lmax j₁ j₂)
+    match : (a : A) → TotalSpace (f a) ≃ Fiber cov2 a
+  -- cover : Cover (TotalSpace cov1)

@@ -97,3 +97,12 @@ module lib.types.GroupSet {i} where
         (ua El≃)
         (prop-has-all-paths-↓ is-set-is-prop)
         (λ x= g → ↓-idf-ua-in El≃ $ act= (↓-idf-ua-out El≃ x=) g)
+
+  -- The Gset homomorphism.
+  record GsetHom {grp : Group i} {j}
+    (gset1 : Gset grp j)
+    (gset2 : Gset grp j) : Type (lmax i j) where
+    open Gset
+    field
+      f : El gset1 → El gset2
+      pres-act : ∀ g x → f (act gset1 x g) == act gset2 (f x) g

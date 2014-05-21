@@ -62,16 +62,22 @@ module homotopy.PathSetIsInital {i} (A : Type i)
             ap (cover-trace cov a↑₁ ∘ snd) (pair×= cert (idp :> (p == p))) ∙' cert
               ∎
 
-    -- The map is done.
-    weak-inital : ∀ a₂ → TotalSpace (quotient-cover a₂) ≃ (a₁ =₀ a₂)
-    weak-inital a₂ = to , is-eq _ from to-from from-to
+    -- Weak initiality
+    quotient-cover-hom : CoverHom cov (path-set-cover ∙[ A , a₁ ])
+    quotient-cover-hom = record
+      { f = quotient-cover
+      ; match = λ a₂ → to , is-eq _ from to-from from-to
+      }
 
     -- Strong initiality: Take any other map, and it will be the same.
     module Uniqueness
-      (cover′ : ∀ a₂ → Cover (Fiber cov a₂) (lmax i k))
-      (weak-inital′ : ∀ a₂ → TotalSpace (cover′ a₂) ≃ (a₁ =₀ a₂))
-      (preserves-a↑₁ : fst (<– (weak-inital′ a₁) idp₀) == a↑₁)
+      (cover-hom : CoverHom cov (path-set-cover ∙[ A , a₁ ]))
+      (preserves-a↑₁ : fst (<– (CoverHom.match cover-hom a₁) idp₀) == a↑₁)
       where
+
+      cover′ = CoverHom.f cover-hom
+      weak-inital = CoverHom.match quotient-cover-hom
+      weak-inital′ = CoverHom.match cover-hom
 
       private
         -- The key lemma.  By path induction it is sufficient to consider [idp₀],
@@ -103,7 +109,7 @@ module homotopy.PathSetIsInital {i} (A : Type i)
             =⟨ ap fst $ ↓-idf-ua-out (total-equiv a₂) q ⟩
           fst a⇑₂′
             ∎
-  
+
         -- A more wrapped version.
         fst-equiv : ∀ a₂ → fst == fst [ (λ C → C → Fiber cov a₂) ↓ ua (total-equiv a₂) ]
         fst-equiv a₂ = ↓-app→cst-in (fst-match a₂)
@@ -119,5 +125,5 @@ module homotopy.PathSetIsInital {i} (A : Type i)
               → hfiber f₁ a↑₂ ≃ hfiber f₂ a↑₂
             lemma a₂ a↑₂ idp idp = ide _
 
-      theorem : quotient-cover == cover′
+      theorem : quotient-cover == CoverHom.f cover-hom
       theorem = λ= λ a₂ → cover= (Fiber-equiv a₂)
