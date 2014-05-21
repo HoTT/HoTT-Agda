@@ -308,3 +308,13 @@ module Ap↓-swap! {i j k ℓ} {A : Type i} {B : Type j} {C : Type k}
 ∙-λ= α β = ∙-app= (λ= α) (λ= β)
   ∙ ap λ= (λ= (λ x → ap (λ w → w ∙ app= (λ= β) x) (app=-β α x)
                    ∙ ap (λ w → α x ∙ w) (app=-β β x)))
+
+{- Coversions between functions with implicit and explicit arguments -}
+
+expose-equiv : ∀ {i j} {A : Type i} {B : A → Type j}
+  → ({x : A} → B x) ≃ ((x : A) → B x)
+expose-equiv = (λ f a → f {a}) , is-eq
+  _
+  (λ f {a} → f a)
+  (λ _ → idp)
+  (λ _ → idp)
