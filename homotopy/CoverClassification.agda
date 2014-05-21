@@ -8,12 +8,11 @@ module homotopy.CoverClassification {i} (A∙ : Ptd i)
 
   open Cover
 
-  A : Type i
-  A = fst A∙
-  a₁ : A
-  a₁ = snd A∙
-
   private
+    A : Type i
+    A = fst A∙
+    a₁ : A
+    a₁ = snd A∙
     π1A = concrete-fundamental-group A∙
 
   -- A covering space constructed from a G-set.

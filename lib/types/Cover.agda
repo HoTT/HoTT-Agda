@@ -156,4 +156,4 @@ CoverHom : ∀ {i} {A : Type i} {j₁ j₂}
   → (cov1 : Cover A j₁)
   → (cov2 : Cover A j₂)
   → Type (lmax i (lmax j₁ j₂))
-CoverHom (cover F₁ _) (cover F₂ _) = ∀ a → F₂ a → F₁ a
+CoverHom (cover F₁ _) (cover F₂ _) = ∀ a → F₁ a → F₂ a

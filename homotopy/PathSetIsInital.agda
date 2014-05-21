@@ -19,12 +19,12 @@ module homotopy.PathSetIsInital {i} (A : Type i)
       univ-cover = path-set-cover ∙[ A , a₁ ]
 
     -- Weak initiality by transport.
-    quotient-cover : CoverHom cov univ-cover
+    quotient-cover : CoverHom univ-cover cov
     quotient-cover _ p = cover-trace cov a↑₁ p
 
     -- Strong initiality by path induction.
     module Uniqueness
-      (cover-hom : CoverHom cov univ-cover)
+      (cover-hom : CoverHom univ-cover cov)
       (pres-a↑₁ : cover-hom a₁ idp₀ == a↑₁)
       where
 

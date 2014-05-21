@@ -100,9 +100,28 @@ module lib.types.GroupSet {i} where
 
   -- The Gset homomorphism.
   record GsetHom {grp : Group i} {j}
-    (gset1 : Gset grp j)
-    (gset2 : Gset grp j) : Type (lmax i j) where
+    (gset₁ gset₂ : Gset grp j) : Type (lmax i j) where
+    constructor gset-hom
     open Gset
     field
-      f : El gset1 → El gset2
-      pres-act : ∀ g x → f (act gset1 x g) == act gset2 (f x) g
+      f : El gset₁ → El gset₂
+      pres-act : ∀ g x → f (act gset₁ x g) == act gset₂ (f x) g
+
+  private
+    gset-hom=' : ∀ {grp : Group i} {j} {gset₁ gset₂ : Gset grp j}
+      {gsh₁ gsh₂ : GsetHom gset₁ gset₂}
+      → (f= : GsetHom.f gsh₁ == GsetHom.f gsh₂)
+      → (GsetHom.pres-act gsh₁ == GsetHom.pres-act gsh₂
+        [ (λ f → ∀ g x → f (Gset.act gset₁ x g) == Gset.act gset₂ (f x) g) ↓ f= ] )
+      → gsh₁ == gsh₂
+    gset-hom=' idp idp = idp
+
+  gset-hom= : ∀ {grp : Group i} {j} {gset₁ gset₂ : Gset grp j}
+    {gsh₁ gsh₂ : GsetHom gset₁ gset₂}
+    → (∀ x → GsetHom.f gsh₁ x == GsetHom.f gsh₂ x)
+    → gsh₁ == gsh₂
+  gset-hom= {gset₂ = gset₂} f= =
+    gset-hom='
+      (λ= f=)
+      (prop-has-all-paths-↓ $
+        Π-level λ _ → Π-level λ _ → Gset.El-level gset₂ _ _)
