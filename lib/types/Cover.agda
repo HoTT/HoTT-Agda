@@ -152,11 +152,8 @@ module _ {i} (A∙ : Ptd i) where
     }
 
 -- Cover morphisms
-record CoverHom {i} {A : Type i} {j₁ j₂}
-  (cov1 : Cover A j₁)
-  (cov2 : Cover A j₂) : Type (lmax i (lsucc (lmax j₁ j₂))) where
-  open Cover
-  field
-    f : (a : A) → Cover (Fiber cov1 a) (lmax j₁ j₂)
-    match : (a : A) → TotalSpace (f a) ≃ Fiber cov2 a
-  -- cover : Cover (TotalSpace cov1)
+CoverHom : ∀ {i} {A : Type i} {j₁ j₂}
+  → (cov1 : Cover A j₁)
+  → (cov2 : Cover A j₂)
+  → Type (lmax i (lmax j₁ j₂))
+CoverHom (cover F₁ _) (cover F₂ _) = ∀ a → F₂ a → F₁ a
