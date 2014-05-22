@@ -142,10 +142,9 @@ module _ {i} {A : Set i} where
     → (q ≡ r → p ∘ q ≡ p ∘ r)
   whisker-left p refl = refl
 
-  -- This is useless in the presence of ap & equation reasioning combinators
   whisker-right : {x y z : A} (p : y ≡ z) {q r : x ≡ y}
     → (q ≡ r → q ∘ p ≡ r ∘ p)
-  whisker-right p refl = refl
+  whisker-right refl {q} {r} h = refl-right-unit q ∘ (h ∘ ! (refl-right-unit r))
 
   anti-whisker-right : {x y z : A} (p : y ≡ z) {q r : x ≡ y}
     → (q ∘ p ≡ r ∘ p → q ≡ r)
@@ -242,6 +241,18 @@ module _ {i} {A : Set i} where
       ≡ transport P p (q $ transport B (! p) a)
   trans-→ B P refl q a = refl
 
+  trans-app→cst : ∀ {j k} (B : A → Set j) {P : Set k}
+    {b c : A} (p : b ≡ c) (q : B b → P) (a : B c)
+    → transport (λ x → B x → P) p q a
+      ≡ q (transport B (! p) a)
+  trans-app→cst B refl q a = refl
+
+  trans!-app→cst : ∀ {j k} (B : A → Set j) {P : Set k}
+    {b c : A} (p : c ≡ b) (q : B b → P) (a : B c)
+    → transport (λ x → B x → P) (! p) q a
+      ≡ q (transport B p a)
+  trans!-app→cst B refl q a = refl
+
   -- This second part is about transporting something along a known path
 
   trans-diag : ∀ {j} (P : A → A → Set j) {x y : A} (p : x ≡ y) (q : P x x)
@@ -292,6 +303,11 @@ module _ {i} {A : Set i} where
   trans-opposite-trans : ∀ {j} (P : A → Set j) {x y : A} (p : x ≡ y) (u : P x)
     → transport P (! p) (transport P p u) ≡ u
   trans-opposite-trans P refl u = refl
+
+  concat-assoc-131-212 : {x₁ x₂ x₃ x₄ x₅ x₆ : A}
+    (p₁ : x₁ ≡ x₂) (p₂ : x₂ ≡ x₃) (p₃ : x₃ ≡ x₄) (p₄ : x₄ ≡ x₅) (p₅ : x₅ ≡ x₆)
+    → p₁ ∘ (p₂ ∘ p₃ ∘ p₄) ∘ p₅ ≡ (p₁ ∘ p₂) ∘ p₃ ∘ (p₄ ∘ p₅)
+  concat-assoc-131-212 refl refl refl _ _ = refl
 
   ap-dep-trivial : ∀ {j} {B : Set j} (f : A → B) {x y : A} (p : x ≡ y)
     → ap f p ≡ ! (trans-cst p (f x)) ∘ apd f p
@@ -346,6 +362,57 @@ module _ {i} {A : Set i} where
     → f y (transport B p a) ≡ transport C p (f x a)
   app-trans B C f refl a = refl
 
+module _ {i} {A : Set i} where
+  -- This part is still about various other convenient properties.
+  -- A new section is used because these lemmas are talking about paths of paths.
+
+  whisker-right-refl : {x y z : A} (p : y ≡ z) {q : x ≡ y}
+    → whisker-right p {q} {q} refl ≡ refl
+  whisker-right-refl refl {q} = opposite-right-inverse (refl-right-unit q)
+
+  anti-whisker-right-refl : {x y z : A} (p : y ≡ z) {q : x ≡ y}
+    → anti-whisker-right p {q} {q} refl ≡ refl
+  anti-whisker-right-refl refl {q} = opposite-left-inverse (refl-right-unit q)
+
+  anti-whisker-whisker-right : {x y z : A} (p : y ≡ z) {q r : x ≡ y} (h : q ≡ r)
+    → anti-whisker-right p (whisker-right p h) ≡ h
+  anti-whisker-whisker-right refl {q} {r} h =
+    ! (refl-right-unit q) ∘ (refl-right-unit q ∘ (h ∘ ! (refl-right-unit r))) ∘ refl-right-unit r
+      ≡⟨ concat-assoc-131-212
+          (! $ refl-right-unit q)
+          (refl-right-unit q)
+          h
+          (! $ refl-right-unit r)
+          (refl-right-unit r) ⟩
+    (! (refl-right-unit q) ∘ refl-right-unit q) ∘ h ∘ (! (refl-right-unit r) ∘ refl-right-unit r)
+      ≡⟨ ap (λ p → p ∘ h ∘ (! (refl-right-unit r) ∘ refl-right-unit r))
+            $ opposite-left-inverse (refl-right-unit q) ⟩
+    h ∘ (! (refl-right-unit r) ∘ refl-right-unit r)
+      ≡⟨ ap (λ p → h ∘ p) $ opposite-left-inverse (refl-right-unit r) ⟩
+    h ∘ refl
+      ≡⟨ refl-right-unit h ⟩
+    h
+      ∎
+
+  whisker-anti-whisker-right : {x y z : A} (p : y ≡ z) {q r : x ≡ y} (h : q ∘ p ≡ r ∘ p)
+    → whisker-right p (anti-whisker-right p {q} {r} h) ≡ h
+  whisker-anti-whisker-right refl {q} {r} h =
+    refl-right-unit q ∘ (! (refl-right-unit q) ∘ (h ∘ refl-right-unit r)) ∘ ! (refl-right-unit r)
+      ≡⟨ concat-assoc-131-212
+          (refl-right-unit q)
+          (! $ refl-right-unit q)
+          h
+          (refl-right-unit r)
+          (! $ refl-right-unit r) ⟩
+    (refl-right-unit q ∘ ! (refl-right-unit q)) ∘ h ∘ (refl-right-unit r ∘ ! (refl-right-unit r))
+      ≡⟨ ap (λ p → p ∘ h ∘ (refl-right-unit r ∘ ! (refl-right-unit r)))
+            $ opposite-right-inverse (refl-right-unit q) ⟩
+    h ∘ (refl-right-unit r ∘ ! (refl-right-unit r))
+      ≡⟨ ap (λ p → h ∘ p) $ opposite-right-inverse (refl-right-unit r) ⟩
+    h ∘ refl
+      ≡⟨ refl-right-unit h ⟩
+    h
+      ∎
 
   -- Move functions
   -- These functions are used when the goal is to show that path is a

@@ -84,13 +84,8 @@ module Homotopy.Extensions.ProductPushoutToProductToConnected.Magic
               τ-extend-nondep
               ⦃ ≡-is-truncated n₁ $ F-is-trunc x ⦄
               -- The point is to make all artifacts go away when shift = refl _.
-              (λ{(pre , shift) → transport (λ x → l″ x ≡ l x) shift $
-                l″ (h pre)
-                  ≡⟨ ! $ coh″ pre ⟩
-                k pre
-                  ≡⟨ coh pre ⟩∎
-                l (h pre)
-                  ∎})}
+              (λ{(pre , shift) → transport (λ x → l″ x ≡ l x) shift
+                  $ ! (coh″ pre) ∘ coh pre})}
 
           -- The path between the canonical choice and others (pointwise).
           abstract
