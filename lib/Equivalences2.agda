@@ -4,6 +4,8 @@ open import lib.Basics
 open import lib.types.Sigma
 open import lib.types.Pi
 open import lib.types.Paths
+open import lib.types.Unit
+open import lib.types.Empty
 
 module lib.Equivalences2 where
 
@@ -124,3 +126,14 @@ ua-∘e =
   equiv-induction
     (λ {A} {B} e₁ → ∀ {C} → ∀ (e₂ : B ≃ C) → ua (e₂ ∘e e₁) == ua e₁ ∙ ua e₂)
     (λ A → λ e₂ → ap ua (∘e-unit-r e₂) ∙ ap (λ w → (w ∙ ua e₂)) (! (ua-η idp)))
+
+{- Type former equivalences involving Empty may require λ=. -}
+module _ {j} {B : Empty → Type j} where
+  Σ₁-Empty : Σ Empty B ≃ Empty
+  Σ₁-Empty = equiv (⊥-rec ∘ fst) ⊥-rec ⊥-elim (⊥-rec ∘ fst)
+
+  Π₁-Empty : Π Empty B ≃ Unit
+  Π₁-Empty = equiv (cst tt) (cst ⊥-elim) (λ _ → contr-has-all-paths Unit-is-contr _ _) (λ _ → λ= ⊥-elim)
+
+Σ₂-Empty : ∀ {i} {A : Type i} → Σ A (λ _ → Empty) ≃ Empty
+Σ₂-Empty = equiv (⊥-rec ∘ snd) ⊥-rec ⊥-elim (⊥-rec ∘ snd)
