@@ -238,27 +238,29 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k
 {- Pre- and post- concatenation are equivalences -}
 module _ {i} {A : Type i} {x y z : A} where
 
-  pre∙-is-equiv : (p : x == y) → is-equiv (λ (q : y == z) → p ∙ q)
-  pre∙-is-equiv p = is-eq (λ q → p ∙ q) (λ r → ! p ∙ r) f-g g-f
-    where f-g : ∀ r → p ∙ ! p ∙ r == r
-          f-g r = ! (∙-assoc p (! p) r) ∙ ap (λ s → s ∙ r) (!-inv-r p)
+  module _ (p : x == y) where
+    pre∙-is-equiv : is-equiv (λ (q : y == z) → p ∙ q)
+    pre∙-is-equiv = is-eq (λ q → p ∙ q) (λ r → ! p ∙ r) f-g g-f
+      where f-g : ∀ r → p ∙ ! p ∙ r == r
+            f-g r = ! (∙-assoc p (! p) r) ∙ ap (λ s → s ∙ r) (!-inv-r p)
 
-          g-f : ∀ q → ! p ∙ p ∙ q == q
-          g-f q = ! (∙-assoc (! p) p q) ∙ ap (λ s → s ∙ q) (!-inv-l p)
+            g-f : ∀ q → ! p ∙ p ∙ q == q
+            g-f q = ! (∙-assoc (! p) p q) ∙ ap (λ s → s ∙ q) (!-inv-l p)
 
-  post∙-is-equiv : (p : y == z) → is-equiv (λ (q : x == y) → q ∙ p)
-  post∙-is-equiv p = is-eq (λ q → q ∙ p) (λ r → r ∙ ! p) f-g g-f
-    where f-g : ∀ r → (r ∙ ! p) ∙ p == r
-          f-g r = ∙-assoc r (! p) p ∙ ap (λ s → r ∙ s) (!-inv-l p) ∙ ∙-unit-r r
+    pre∙-equiv : (y == z) ≃ (x == z)
+    pre∙-equiv = (_ , pre∙-is-equiv)
 
-          g-f : ∀ q → (q ∙ p) ∙ ! p == q
-          g-f q = ∙-assoc q p (! p) ∙ ap (λ s → q ∙ s) (!-inv-r p) ∙ ∙-unit-r q
+  module _ (q : y == z) where
+    post∙-is-equiv : is-equiv (λ (p : x == y) → p ∙ q)
+    post∙-is-equiv = is-eq (λ p → p ∙ q) (λ r → r ∙ ! q) f-g g-f
+      where f-g : ∀ r → (r ∙ ! q) ∙ q == r
+            f-g r = ∙-assoc r (! q) q ∙ ap (λ s → r ∙ s) (!-inv-l q) ∙ ∙-unit-r r
 
-  pre∙-equiv : (p : x == y) → (y == z) ≃ (x == z)
-  pre∙-equiv p = (_ , pre∙-is-equiv p)
+            g-f : ∀ p → (p ∙ q) ∙ ! q == p
+            g-f p = ∙-assoc p q (! q) ∙ ap (λ s → p ∙ s) (!-inv-r q) ∙ ∙-unit-r p
 
-  post∙-equiv : (p : y == z) → (x == y) ≃ (x == z)
-  post∙-equiv p = (_ , post∙-is-equiv p)
+    post∙-equiv : (x == y) ≃ (x == z)
+    post∙-equiv = (_ , post∙-is-equiv)
 
 {- Homotopy fibers -}
 hfiber : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) (y : B) → Type (lmax i j)
