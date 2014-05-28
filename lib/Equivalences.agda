@@ -254,6 +254,12 @@ module _ {i} {A : Type i} {x y z : A} where
           g-f : ∀ q → (q ∙ p) ∙ ! p == q
           g-f q = ∙-assoc q p (! p) ∙ ap (λ s → q ∙ s) (!-inv-r p) ∙ ∙-unit-r q
 
+  pre∙-equiv : (p : x == y) → (y == z) ≃ (x == z)
+  pre∙-equiv p = (_ , pre∙-is-equiv p)
+
+  post∙-equiv : (p : y == z) → (x == y) ≃ (x == z)
+  post∙-equiv p = (_ , post∙-is-equiv p)
+
 {- Homotopy fibers -}
 hfiber : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) (y : B) → Type (lmax i j)
 hfiber {A = A} f y = Σ A (λ x → f x == y)
