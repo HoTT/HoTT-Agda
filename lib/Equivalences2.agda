@@ -27,6 +27,17 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k}
           f-g = λ k → ap (λ q → λ x → k (q x)) (λ= $ is-equiv.g-f e)
           g-f = λ k → ap (λ q → λ x → k (q x)) (λ= $ is-equiv.f-g e)
 
+{- The same thing on the abstraction level of equivalences -}
+module _ {i j k} {A : Type i} {B : Type j} {C : Type k}
+         (e : A ≃ B) where
+
+  pre∘-equiv : (C → A) ≃ (C → B)
+  pre∘-equiv = (_ , pre∘-is-equiv (snd e))
+
+  post∘-equiv : (B → C) ≃ (A → C)
+  post∘-equiv = (_ , post∘-is-equiv (snd e))
+
+
 is-contr-map : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
   → Type (lmax i j)
 is-contr-map {A = A} {B = B} f = (y : B) → is-contr (Σ A (λ x → f x == y))
