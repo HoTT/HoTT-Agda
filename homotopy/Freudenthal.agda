@@ -128,8 +128,6 @@ module FreudenthalEquiv
     {P = λ y → Codes y → Q y}
     decodeN decodeS
     (λ x' → ↓-→-from-transp (λ= (STS x')))
-    -- (λ x' → coe (↓-→-is-square {B = Codes} {C = Q} 
-    --                decodeN decodeS (merid X x')) (λ= (STS x')))
     x
     where
     abstract
@@ -218,12 +216,11 @@ module FreudenthalEquiv
 
   decode-encode : {x : Suspension X} (tα : Q x) 
     → decode {x} (encode {x} tα) == tα
-  decode-encode {x} tα = Trunc-elim 
+  decode-encode {x} = Trunc-elim 
     {P = λ tα → decode {x} (encode {x} tα) == tα}
     (λ _ → =-preserves-level k Trunc-level)
-    (J (λ y p → decode {y} (encode {y} [ p ]) == [ p ]) 
+    (J (λ y p → decode {y} (encode {y} [ p ]) == [ p ])
        (ap [_] (!-inv-r (merid X x₀))))
-    tα
 
   eqv : Trunc k X ≃ Trunc k (north X == north X)
   eqv = equiv decodeN encode decode-encode encode-decodeN
