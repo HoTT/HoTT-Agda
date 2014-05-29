@@ -62,7 +62,7 @@ module cohomology.WithCoefficients where
 
   unitr-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
     → ap (λ r → r ∙ idp) α == ∙-unit-r p ∙ α
-  unitr-lemma = J' (λ p α → ap (λ r → r ∙ idp) α == ∙-unit-r p ∙ α) idp
+  unitr-lemma idp = idp
 
   assoc-lemma : ∀ {i} {A : Type i} {w x y z : A}
     {p₁ p₂ : w == x} {q₁ q₂ : x == y} {r₁ r₂ : y == z}
@@ -73,11 +73,11 @@ module cohomology.WithCoefficients where
 
   invl-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
     → ap2 _∙_ (ap ! α) α == !-inv-l p
-  invl-lemma = J' (λ p α → ap2 _∙_ (ap ! α) α == !-inv-l p) idp
+  invl-lemma idp = idp
 
   invr-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
     → ap2 _∙_ α (ap ! α) == !-inv-r p
-  invr-lemma = J' (λ p α → ap2 _∙_ α (ap ! α) == !-inv-r p) idp
+  invr-lemma idp = idp
 
 →Ω-Group : ∀ {i j} (X : Ptd i) (Y : Ptd j) → Group (lmax i j)
 →Ω-Group X Y = Trunc-Group (→Ω-group-structure X Y)

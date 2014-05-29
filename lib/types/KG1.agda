@@ -205,8 +205,7 @@ module KG1 {i} (G : Group i) where
         kloop (transport (λ z → fst (Codes z)) (kloop g) y) ∎
 
     decode-encode : ∀ {x} (α : kbase == x) → decode (encode α) == α
-    decode-encode α = 
-      J (λ (x : KG1) (α : kbase == x) → decode (encode α) == α) kloop-ident α
+    decode-encode idp = kloop-ident
 
     abstract
       Ω¹-equiv : (kbase == kbase) ≃ El

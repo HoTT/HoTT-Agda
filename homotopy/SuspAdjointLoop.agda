@@ -37,35 +37,25 @@ module SuspAdjointLoop {i j} (X : Ptd i) (Y : Ptd j) where
       ∙ ∙-unit-r (k a)
 
     -- lemmas generalize to do some path induction for R-L-snd
-    lemma₁ : ∀ {i} {A : Type i} {x : A} {q : x == x} (α : idp == q)
-      (γ : q ∙ ! q == idp) (σ : !-inv-r q == γ ∙ idp)
-      → idp == (ap2 _∙_ α (ap ! (α ∙ idp)) ∙ γ) ∙ idp
-    lemma₁ idp γ σ = σ
-
-    lemma₂ : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) {a₁ a₂ : A} 
+    lemma₁ : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) {a₁ a₂ : A} 
       (p : a₁ == a₂) {q r : f a₁ == f a₂} {s : f a₁ == f a₁}
       (α : ap f p == q) (β : q == r) (γ : q ∙ ! r == s) (δ : s == idp)
       (σ : !-inv-r r == transport (λ t → t ∙ ! r == idp) β (γ ∙ δ))
       → ap (ap f) (!-inv-r p) 
         == (ap-∙ f p (! p) ∙ ap2 _∙_ α (ap-! f p ∙ ap ! (α ∙ β)) ∙ γ) ∙ δ
-    lemma₂ f idp {q = q} α idp γ δ σ = J'
-      (λ s δ → (γ : q ∙ ! q == s) (σ : !-inv-r q == γ ∙ δ)
-        → idp == (ap2 _∙_ α (ap ! (α ∙ idp)) ∙ γ) ∙ δ)
-      (lemma₁ α) δ γ σ
+    lemma₁ f idp idp idp γ idp σ = σ
 
-    lemma₃ : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
+    lemma₂ : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
       → idp == transport (λ t → t ∙ idp == idp) α (∙-unit-r p ∙ α)
-    lemma₃ = J' 
-      (λ p α → idp == transport (λ t → t ∙ idp == idp) α (∙-unit-r p ∙ α))
-      idp
+    lemma₂ idp = idp
 
     R-L-snd : ap (ap (SuspensionRec.f A b b k)) (!-inv-r (merid A a₀))
            == app= (λ= R-L-fst) a₀ ∙ kpt
     R-L-snd = 
       ap (ap (SuspensionRec.f A b b k)) (!-inv-r (merid A a₀))
-        =⟨ lemma₂ (SuspensionRec.f A b b k) (merid A a₀) 
+        =⟨ lemma₁ (SuspensionRec.f A b b k) (merid A a₀) 
              (SuspensionRec.glue-β A b b k a₀) 
-             kpt (∙-unit-r (k a₀)) kpt (lemma₃ kpt) ⟩ 
+             kpt (∙-unit-r (k a₀)) kpt (lemma₂ kpt) ⟩ 
       R-L-fst a₀ ∙ kpt
         =⟨ ! (app=-β R-L-fst a₀) |in-ctx (λ w → w ∙ kpt) ⟩
       app= (λ= R-L-fst) a₀ ∙ kpt ∎
