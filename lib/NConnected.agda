@@ -58,13 +58,10 @@ abstract
           g-f k = λ= $ λ (b : B) → 
             Trunc-elim (λ r → =-preserves-level _ {helper (k ∘ h) b r} (snd (P b)))
                        (λ x → lemma (fst x) b (snd x)) (fst (c b))
-            where Jbase : ∀ {j} (x : B) → {P : (y : B) → (x == y) → Type j} 
-                    → P x idp → (∀ y p → P y p)
-                  Jbase x {P} r .x idp = r
-          
-                  lemma : ∀ xl → ∀ b → (p : h xl == b) →
-                    helper (k ∘ h) b [ (xl , p) ] == k b
-                  lemma xl = Jbase (h xl) idp
+            where           
+            lemma : ∀ xl → ∀ b → (p : h xl == b) →
+              helper (k ∘ h) b [ (xl , p) ] == k b
+            lemma xl ._ idp = idp 
 
 conn-elim : ∀ {i j k} {A : Type i} {B : Type j} {n : ℕ₋₂}
   → {h : A → B} → is-conn-map n h
@@ -78,48 +75,6 @@ conn-elim-β : ∀ {i j k} {A : Type i} {B : Type j} {n : ℕ₋₂}
   → ∀ a → (conn-elim c P f (h a)) == f a
 conn-elim-β c P f = app= (is-equiv.f-g (conn-elim-eqv c P) f)
 
-abstract
-  move-right-on-right-eqv : ∀ {i} {A : Type i} {x y z : A}
-    (p : x == y) (q : x == z) (r : y == z)
-    → (p == q ∙ ! r) ≃ (p ∙ r == q)
-  move-right-on-right-eqv p q idp = 
-    equiv f g f-g g-f
-    where 
-      f : (p == q ∙ ! idp) → (p ∙ idp == q)
-      f v = ∙-unit-r p ∙ v ∙ ∙-unit-r q
-
-      g : (p ∙ idp == q) → (p == q ∙ ! idp)
-      g u = ! (∙-unit-r p) ∙ u ∙ ! (∙-unit-r q)
-
-      f-g : ∀ u → f (g u) == u
-      f-g u =
-          ∙-unit-r p ∙ (! (∙-unit-r p) ∙ u ∙ ! (∙-unit-r q))  ∙ ∙-unit-r q
-            =⟨ ∙-assoc (! (∙-unit-r p)) (u ∙ ! (∙-unit-r q)) (∙-unit-r q)
-              |in-ctx (λ w → ∙-unit-r p ∙ w) ⟩
-          ∙-unit-r p ∙ (! (∙-unit-r p)) ∙ ((u ∙ ! (∙-unit-r q))  ∙ ∙-unit-r q)
-            =⟨ ! (∙-assoc (∙-unit-r p) (! (∙-unit-r p)) ((u ∙ ! (∙-unit-r q))  ∙ ∙-unit-r q)) ⟩
-          (∙-unit-r p ∙ (! (∙-unit-r p))) ∙ ((u ∙ ! (∙-unit-r q))  ∙ ∙-unit-r q)
-            =⟨ !-inv-r (∙-unit-r p) |in-ctx (λ w → w ∙ ((u ∙ ! (∙-unit-r q)) ∙ ∙-unit-r q)) ⟩
-          (u ∙ ! (∙-unit-r q))  ∙ ∙-unit-r q
-            =⟨ ∙-assoc u (! (∙-unit-r q)) (∙-unit-r q) ⟩
-          u ∙ ! (∙-unit-r q)  ∙ ∙-unit-r q
-            =⟨ ap (λ w → u ∙ w) (!-inv-l (∙-unit-r q)) ∙ ∙-unit-r u ⟩
-          u ∎
-
-      g-f : ∀ v → g (f v) == v
-      g-f v = 
-          ! (∙-unit-r p) ∙ (∙-unit-r p ∙ v ∙ ∙-unit-r q)  ∙ ! (∙-unit-r q) 
-            =⟨ ∙-assoc (∙-unit-r p) (v ∙ ∙-unit-r q) (! (∙-unit-r q) ) 
-              |in-ctx (λ w → ! (∙-unit-r p) ∙ w) ⟩
-          ! (∙-unit-r p) ∙ ∙-unit-r p ∙ ((v ∙ ∙-unit-r q)  ∙ ! (∙-unit-r q))
-            =⟨ ! (∙-assoc (! (∙-unit-r p)) (∙-unit-r p) ((v ∙ ∙-unit-r q)  ∙ ! (∙-unit-r q))) ⟩
-          (! (∙-unit-r p) ∙ ∙-unit-r p) ∙ ((v ∙ ∙-unit-r q)  ∙ ! (∙-unit-r q))
-            =⟨ !-inv-l (∙-unit-r p) |in-ctx (λ w → w ∙ ((v ∙ ∙-unit-r q) ∙ ! (∙-unit-r q))) ⟩
-          (v ∙ ∙-unit-r q)  ∙ ! (∙-unit-r q)
-            =⟨ ∙-assoc v (∙-unit-r q) (! (∙-unit-r q)) ⟩
-          v ∙ ∙-unit-r q  ∙ ! (∙-unit-r q)
-            =⟨ ap (λ w → v ∙ w) (!-inv-r (∙-unit-r q)) ∙ ∙-unit-r v ⟩
-          v ∎
 
 {- generalized "almost induction principle" for maps into ≥n-types 
    TODO: rearrange this to use ≤T?                                 -}
@@ -141,6 +96,12 @@ conn-elim-general {B = B} {n = n} {k = S k'} {f = f} c P t =
       (f : A → B) {g h : Π B C} (p : g == h)
       → app= (ap (λ k → k ∘ f) p) == (app= p ∘ f)
     app=-ap f idp = idp
+
+    move-right-on-right-eqv : ∀ {i} {A : Type i} {x y z : A}
+      (p : x == y) (q : x == z) (r : y == z)
+      → (p == q ∙ ! r) ≃ (p ∙ r == q)
+    move-right-on-right-eqv {x = x} p idp idp =
+      (_ , pre∙-is-equiv (∙-unit-r p))
 
     lemma : ∀ g h p q → (H : ∀ x → g x == h x)
       → ((H ∘ f) == app= (p ∙ ! q)) 

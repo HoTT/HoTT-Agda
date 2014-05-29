@@ -4,10 +4,30 @@ open import lib.Basics
 
 module lib.types.Paths where
 
+{- ! is an equivalence -}
 module _ {i} {A : Type i} {x y : A} where
 
   !-equiv : (x == y) ≃ (y == x)
   !-equiv = equiv ! ! !-! !-!
+
+{- Pre- and post- concatenation are equivalences -}
+module _ {i} {A : Type i} {x y z : A} where
+
+  pre∙-is-equiv : (p : x == y) → is-equiv (λ (q : y == z) → p ∙ q)
+  pre∙-is-equiv p = is-eq (λ q → p ∙ q) (λ r → ! p ∙ r) f-g g-f
+    where f-g : ∀ r → p ∙ ! p ∙ r == r
+          f-g r = ! (∙-assoc p (! p) r) ∙ ap (λ s → s ∙ r) (!-inv-r p)
+
+          g-f : ∀ q → ! p ∙ p ∙ q == q
+          g-f q = ! (∙-assoc (! p) p q) ∙ ap (λ s → s ∙ q) (!-inv-l p)
+
+  post∙-is-equiv : (p : y == z) → is-equiv (λ (q : x == y) → q ∙ p)
+  post∙-is-equiv p = is-eq (λ q → q ∙ p) (λ r → r ∙ ! p) f-g g-f
+    where f-g : ∀ r → (r ∙ ! p) ∙ p == r
+          f-g r = ∙-assoc r (! p) p ∙ ap (λ s → r ∙ s) (!-inv-l p) ∙ ∙-unit-r r
+
+          g-f : ∀ q → (q ∙ p) ∙ ! p == q
+          g-f q = ∙-assoc q p (! p) ∙ ap (λ s → q ∙ s) (!-inv-r p) ∙ ∙-unit-r q
 
 module _ {i j} {A : Type i} {B : Type j} {f : A → B} {b : B} where
 
