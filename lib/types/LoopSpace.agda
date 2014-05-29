@@ -8,6 +8,7 @@ open import lib.types.Pi
 open import lib.types.Truncation
 open import lib.types.Pointed
 open import lib.types.Group
+open import lib.types.Paths
 
 module lib.types.LoopSpace where
 
