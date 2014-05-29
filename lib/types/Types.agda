@@ -19,6 +19,7 @@ open import lib.types.Span public
 open import lib.types.Pushout public
 open import lib.types.PushoutFlattening public
 open import lib.types.Suspension public
+open import lib.types.IteratedSuspension public
 open import lib.types.Cofiber public
 open import lib.types.Wedge public
 open import lib.types.BigWedge public
