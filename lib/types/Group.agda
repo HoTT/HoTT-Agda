@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K #-} 
+{-# OPTIONS --without-K #-}
 
 open import lib.Basics
 open import lib.NType2
@@ -21,7 +21,7 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level ⟨0⟩ El)
     invl    : ∀ a → (comp (inv a) a) == ident
     invr    : ∀ a → (comp a (inv a)) == ident
 
-record Group i : Type (lsucc i) where 
+record Group i : Type (lsucc i) where
   constructor group
   field
     El : Type i
@@ -36,19 +36,19 @@ Group₀ : Type (lsucc lzero)
 Group₀ = Group lzero
 
 is-abelian : ∀ {i} → Group i → Type i
-is-abelian G = (a b : El) → comp a b == comp b a
-  where open Group G
+is-abelian G = (a b : Group.El G) → Group.comp G a b == Group.comp G b a
 
-record GroupHom {i j} (G : Group i) (H : Group j) 
+record GroupHom {i j} (G : Group i) (H : Group j)
   : Type (lsucc (lmax i j)) where
   constructor group-hom
-  open Group
-  field
-    f : El G → El H
-    pres-ident : f (ident G) == ident H
-    pres-comp  : ∀ g1 g2 → f (comp G g1 g2) == comp H (f g1) (f g2)
 
-  ptd-f : Σ (El G → El H) (λ f → f (ident G) == ident H)
+  field
+    f : Group.El G → Group.El H
+    pres-ident : f (Group.ident G) == Group.ident H
+    pres-comp  : ∀ g1 g2 → f (Group.comp G g1 g2) == Group.comp H (f g1) (f g2)
+
+  ptd-f : Σ (Group.El G → Group.El H)
+            (λ f → f (Group.ident G) == Group.ident H)
   ptd-f = (f , pres-ident)
 
 
@@ -63,40 +63,38 @@ _∘hom_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
     pres-ident = ap g f-id ∙ g-id;
     pres-comp = λ x₁ x₂ → ap g (f-comp x₁ x₂) ∙ g-comp (f x₁) (f x₂)}
 
-hom= : ∀ {i j} {G : Group i} {H : Group j} (h k : GroupHom G H)
-  → GroupHom.f h == GroupHom.f k → h == k
-hom= {H = H} (group-hom f f-id f-comp) (group-hom g g-id g-comp) p =
-  ap (λ {(h , (h-id , h-comp)) → group-hom h h-id h-comp}) 
-     (pair= p 
-       (prop-has-all-paths-↓ 
-         (×-level (Group.El-level H _ _) 
-                  (Π-level (λ _ → Π-level (λ _ → Group.El-level H _ _))))))
+abstract
+  hom= : ∀ {i j} {G : Group i} {H : Group j} (h k : GroupHom G H)
+    → GroupHom.f h == GroupHom.f k → h == k
+  hom= {H = H} (group-hom f f-id f-comp) (group-hom g g-id g-comp) p =
+    ap (λ {(h , (h-id , h-comp)) → group-hom h h-id h-comp})
+       (pair= p
+         (prop-has-all-paths-↓
+           (×-level (Group.El-level H _ _)
+                    (Π-level (λ _ → Π-level (λ _ → Group.El-level H _ _))))))
 
+module _ {i j} {G : Group i} {H : Group j} (φ : GroupHom G H) where
+  private
+    module G = Group G
+    module H = Group H
+    module φ = GroupHom φ
 
-module _ where
-  open Group
-
-  grouphom-pres-inv : ∀ {i j} {G : Group i} {H : Group j} (h : GroupHom G H)
-    (a : El G) → GroupHom.f h (inv G a) == inv H (GroupHom.f h a)
-  grouphom-pres-inv {G = G} {H = H} h a = 
-    f (inv G a)
-      =⟨ ! (unitr H (f (inv G a))) ⟩
-    comp H (f (inv G a)) (ident H)
-      =⟨ ! (invr H (f a)) |in-ctx (λ w → comp H (f (inv G a)) w) ⟩
-    comp H (f (inv G a)) (comp H (f a) (inv H (f a)))
-      =⟨ ! (assoc H (f (inv G a)) (f a) (inv H (f a))) ⟩
-    comp H (comp H (f (inv G a)) (f a)) (inv H (f a))
-      =⟨ lemma |in-ctx (λ w → comp H w (inv H (f a))) ⟩
-    comp H (ident H) (inv H (f a))
-      =⟨ unitl H (inv H (f a)) ⟩
-    inv H (f a) ∎
-    where 
-    f = GroupHom.f h
-  
-    lemma : comp H (GroupHom.f h (inv G a)) (GroupHom.f h a) == ident H
-    lemma = ! (GroupHom.pres-comp h (inv G a) a) 
-            ∙ ap (GroupHom.f h) (invl G a) 
-            ∙ GroupHom.pres-ident h
+  grouphom-pres-inv : (a : G.El) → φ.f (G.inv a) == H.inv (φ.f a)
+  grouphom-pres-inv a =
+    φ.f (G.inv a)
+      =⟨ ! (H.unitr (φ.f (G.inv a))) ⟩
+    H.comp (φ.f (G.inv a)) H.ident
+      =⟨ ! (H.invr (φ.f a)) |in-ctx (λ w → H.comp (φ.f (G.inv a)) w) ⟩
+    H.comp (φ.f (G.inv a)) (H.comp (φ.f a) (H.inv (φ.f a)))
+      =⟨ ! (H.assoc (φ.f (G.inv a)) (φ.f a) (H.inv (φ.f a))) ⟩
+    H.comp (H.comp (φ.f (G.inv a)) (φ.f a)) (H.inv (φ.f a))
+      =⟨ lemma |in-ctx (λ w → H.comp w (H.inv (φ.f a))) ⟩
+    H.comp H.ident (H.inv (φ.f a))
+      =⟨ H.unitl (H.inv (φ.f a)) ⟩
+    H.inv (φ.f a) ∎
+    where
+    lemma : H.comp (φ.f (G.inv a)) (φ.f a) == H.ident
+    lemma = ! (φ.pres-comp (G.inv a) a) ∙ ap φ.f (G.invl a) ∙ φ.pres-ident
 
 module _ where
   open GroupStructure
@@ -110,15 +108,15 @@ module _ where
       → Path {A = GroupStructure A}
           (group-structure id₁ inv₁ comp₁ unitl₁ unitr₁ assoc₁ invl₁ invr₁)
           (group-structure id₂ inv₂ comp₂ unitl₂ unitr₂ assoc₂ invl₂ invr₂)
-    group-structure= pA {id₁ = id₁} {inv₁ = inv₁} {comp₁ = comp₁} idp idp idp = 
-      ap5 (group-structure id₁ inv₁ comp₁) 
-        (prop-has-all-paths (Π-level (λ _ → pA _ _)) _ _) 
-        (prop-has-all-paths (Π-level (λ _ → pA _ _)) _ _) 
-        (prop-has-all-paths 
-          (Π-level (λ _ → Π-level (λ _ → Π-level (λ _ → pA _ _)))) _ _) 
-        (prop-has-all-paths (Π-level (λ _ → pA _ _)) _ _) 
-        (prop-has-all-paths (Π-level (λ _ → pA _ _)) _ _) 
-      where 
+    group-structure= pA {id₁ = id₁} {inv₁ = inv₁} {comp₁ = comp₁} idp idp idp =
+      ap5 (group-structure id₁ inv₁ comp₁)
+        (prop-has-all-paths (Π-level (λ _ → pA _ _)) _ _)
+        (prop-has-all-paths (Π-level (λ _ → pA _ _)) _ _)
+        (prop-has-all-paths
+          (Π-level (λ _ → Π-level (λ _ → Π-level (λ _ → pA _ _)))) _ _)
+        (prop-has-all-paths (Π-level (λ _ → pA _ _)) _ _)
+        (prop-has-all-paths (Π-level (λ _ → pA _ _)) _ _)
+      where
       ap5 : ∀ {j} {C D E F G H : Type j}
         {c₁ c₂ : C} {d₁ d₂ : D} {e₁ e₂ : E} {f₁ f₂ : F} {g₁ g₂ : G}
         (f : C → D → E → F → G → H)
@@ -126,94 +124,94 @@ module _ where
         → f c₁ d₁ e₁ f₁ g₁ == f c₂ d₂ e₂ f₂ g₂
       ap5 f idp idp idp idp idp = idp
 
-    ↓-group-structure= : ∀ {i} {A B : Type i} 
-      (A-level : has-level ⟨0⟩ A) 
-      {GS : GroupStructure A} {HS : GroupStructure B} (p : A == B) 
-      → (ident GS == ident HS [ (λ C → C) ↓ p ]) 
-      → (inv GS == inv HS [ (λ C → C → C) ↓ p ]) 
+    ↓-group-structure= : ∀ {i} {A B : Type i}
+      (A-level : has-level ⟨0⟩ A)
+      {GS : GroupStructure A} {HS : GroupStructure B} (p : A == B)
+      → (ident GS == ident HS [ (λ C → C) ↓ p ])
+      → (inv GS == inv HS [ (λ C → C → C) ↓ p ])
       → (comp GS == comp HS [ (λ C → C → C → C) ↓ p ])
       → GS == HS [ GroupStructure ↓ p ]
     ↓-group-structure= A-level idp = group-structure= A-level
 
-abstract  
-  group-iso : ∀ {i} {G H : Group i} (h : GroupHom G H)
-    → is-equiv (GroupHom.f h) → G == H
-  group-iso {G = G} {H = H} h e =
-    lemma group 
-      (ua (f , e))
-      (prop-has-all-paths-↓ has-level-is-prop) 
-      (↓-group-structure= (Group.El-level G) (ua (f , e)) ident= inv= comp=)
-    where
-    open GroupHom h
-    open Group
+module _ {i} {G H : Group i} (φ : GroupHom G H) where
+  private
+    module G = Group G
+    module H = Group H
+    module φ = GroupHom φ
 
-    ident= : ident G == ident H [ (λ C → C) ↓ ua (f , e) ]
-    ident= = ↓-idf-ua-in _ pres-ident
+  abstract
+    group-iso : is-equiv (GroupHom.f φ) → G == H
+    group-iso e =
+      lemma group
+        (ua (φ.f , e))
+        (prop-has-all-paths-↓ has-level-is-prop)
+        (↓-group-structure= (G.El-level) (ua (φ.f , e)) ident= inv= comp=)
+      where
+      ident= : G.ident == H.ident [ (λ C → C) ↓ ua (φ.f , e) ]
+      ident= = ↓-idf-ua-in _ φ.pres-ident
 
-    inv= : inv G == inv H [ (λ C → C → C) ↓ ua (f , e) ]
-    inv= =
-      ↓-→-from-transp $ λ= $ λ a → 
-        transport (λ C → C) (ua (f , e)) (inv G a) 
-          =⟨ to-transp (↓-idf-ua-in _ idp) ⟩
-        f (inv G a) 
-          =⟨ grouphom-pres-inv h a ⟩
-        inv H (f a)
-          =⟨ ap (inv H) (! (to-transp (↓-idf-ua-in _ idp))) ⟩
-        inv H (transport (λ C → C) (ua (f , e)) a) ∎
+      inv= : G.inv == H.inv [ (λ C → C → C) ↓ ua (φ.f , e) ]
+      inv= =
+        ↓-→-from-transp $ λ= $ λ a →
+          transport (λ C → C) (ua (φ.f , e)) (G.inv a)
+            =⟨ to-transp (↓-idf-ua-in _ idp) ⟩
+          φ.f (G.inv a)
+            =⟨ grouphom-pres-inv φ a ⟩
+          H.inv (φ.f a)
+            =⟨ ap H.inv (! (to-transp (↓-idf-ua-in _ idp))) ⟩
+          H.inv (transport (λ C → C) (ua (φ.f , e)) a) ∎
 
-    comp=' : (a : El G) 
-      → comp G a == comp H (f a) [ (λ C → C → C) ↓ ua (f , e) ]
-    comp=' a = 
-      ↓-→-from-transp $ λ= $ λ b →
-        transport (λ C → C) (ua (f , e)) (comp G a b)
-          =⟨ to-transp (↓-idf-ua-in _ idp) ⟩
-        f (comp G a b)
-          =⟨ pres-comp a b ⟩
-        comp H (f a) (f b)
-          =⟨ ! (to-transp (↓-idf-ua-in _ idp)) |in-ctx (λ w → comp H (f a) w) ⟩
-        comp H (f a) (transport (λ C → C) (ua (f , e)) b) ∎
+      comp=' : (a : G.El)
+        → G.comp a == H.comp (φ.f a) [ (λ C → C → C) ↓ ua (φ.f , e) ]
+      comp=' a =
+        ↓-→-from-transp $ λ= $ λ b →
+          transport (λ C → C) (ua (φ.f , e)) (G.comp a b)
+            =⟨ to-transp (↓-idf-ua-in _ idp) ⟩
+          φ.f (G.comp a b)
+            =⟨ φ.pres-comp a b ⟩
+          H.comp (φ.f a) (φ.f b)
+            =⟨ ! (to-transp (↓-idf-ua-in _ idp)) |in-ctx (λ w → H.comp (φ.f a) w) ⟩
+          H.comp (φ.f a) (transport (λ C → C) (ua (φ.f , e)) b) ∎
 
-    comp= : comp G == comp H [ (λ C → C → C → C) ↓ ua (f , e) ]
-    comp= =
-      ↓-→-from-transp $ λ= $ λ a →
-        transport (λ C → C → C) (ua (f , e)) (comp G a)
-          =⟨ to-transp (comp=' a) ⟩
-        comp H (f a)
-          =⟨ ! (to-transp (↓-idf-ua-in _ idp)) |in-ctx (λ w → comp H w) ⟩ 
-        comp H (transport (λ C → C) (ua (f , e)) a) ∎
+      comp= : G.comp == H.comp [ (λ C → C → C → C) ↓ ua (φ.f , e) ]
+      comp= =
+        ↓-→-from-transp $ λ= $ λ a →
+          transport (λ C → C → C) (ua (φ.f , e)) (G.comp a)
+            =⟨ to-transp (comp=' a) ⟩
+          H.comp (φ.f a)
+            =⟨ ! (to-transp (↓-idf-ua-in _ idp)) |in-ctx (λ w → H.comp w) ⟩
+          H.comp (transport (λ C → C) (ua (φ.f , e)) a) ∎
 
-    lemma : ∀ {i j k l} {C : Type i} {D : C → Type j} {E : C → Type k} 
-      {F : Type l} {c₁ c₂ : C} {d₁ : D c₁} {d₂ : D c₂} {e₁ : E c₁} {e₂ : E c₂}
-      (f : (c : C) → D c → E c → F) (p : c₁ == c₂) 
-      → (d₁ == d₂ [ D ↓ p ]) → (e₁ == e₂ [ E ↓ p ])
-      → (f c₁ d₁ e₁ == f c₂ d₂ e₂)
-    lemma f idp idp idp = idp
+      lemma : ∀ {i j k l} {C : Type i} {D : C → Type j} {E : C → Type k}
+        {F : Type l} {c₁ c₂ : C} {d₁ : D c₁} {d₂ : D c₂} {e₁ : E c₁} {e₂ : E c₂}
+        (f : (c : C) → D c → E c → F) (p : c₁ == c₂)
+        → (d₁ == d₂ [ D ↓ p ]) → (e₁ == e₂ [ E ↓ p ])
+        → (f c₁ d₁ e₁ == f c₂ d₂ e₂)
+      lemma f idp idp idp = idp
 
 module _ {i} {El : Type i} (GS : GroupStructure El) where
-  open GroupStructure
-  
   private
-    _⊙_ = comp GS
+    open GroupStructure GS
+    _⊙_ = comp
 
-  group-inv-unique-l : (g h : El) → (g ⊙ h == ident GS) → inv GS h == g
-  group-inv-unique-l g h p = 
-    inv GS h              =⟨ ! (unitl GS (inv GS h)) ⟩
-    ident GS ⊙ inv GS h   =⟨ ! p |in-ctx (λ w → w ⊙ inv GS h) ⟩
-    (g ⊙ h) ⊙ inv GS h    =⟨ assoc GS g h (inv GS h) ⟩
-    g ⊙ (h ⊙ inv GS h)    =⟨ invr GS h |in-ctx (λ w → g ⊙ w) ⟩
-    g ⊙ (ident GS)        =⟨ unitr GS g ⟩
+  group-inv-unique-l : (g h : El) → (g ⊙ h == ident) → inv h == g
+  group-inv-unique-l g h p =
+    inv h              =⟨ ! (unitl (inv h)) ⟩
+    ident ⊙ inv h   =⟨ ! p |in-ctx (λ w → w ⊙ inv h) ⟩
+    (g ⊙ h) ⊙ inv h    =⟨ assoc g h (inv h) ⟩
+    g ⊙ (h ⊙ inv h)    =⟨ invr h |in-ctx (λ w → g ⊙ w) ⟩
+    g ⊙ ident        =⟨ unitr g ⟩
     g                     ∎
- 
-  group-inv-unique-r : (g h : El) → (g ⊙ h == ident GS) → inv GS g == h
-  group-inv-unique-r g h p = 
-    inv GS g              =⟨ ! (unitr GS (inv GS g)) ⟩
-    inv GS g ⊙ ident GS   =⟨ ! p |in-ctx (λ w → inv GS g ⊙ w) ⟩
-    inv GS g ⊙ (g ⊙ h)    =⟨ ! (assoc GS (inv GS g) g h) ⟩
-    (inv GS g ⊙ g) ⊙ h    =⟨ invl GS g |in-ctx (λ w → w ⊙ h) ⟩
-    ident GS ⊙ h          =⟨ unitl GS h ⟩
+
+  group-inv-unique-r : (g h : El) → (g ⊙ h == ident) → inv g == h
+  group-inv-unique-r g h p =
+    inv g              =⟨ ! (unitr (inv g)) ⟩
+    inv g ⊙ ident   =⟨ ! p |in-ctx (λ w → inv g ⊙ w) ⟩
+    inv g ⊙ (g ⊙ h)    =⟨ ! (assoc (inv g) g h) ⟩
+    (inv g ⊙ g) ⊙ h    =⟨ invl g |in-ctx (λ w → w ⊙ h) ⟩
+    ident ⊙ h          =⟨ unitl h ⟩
     h                     ∎
 
-  group-inv-ident : inv GS (ident GS) == ident GS
-  group-inv-ident = 
-    group-inv-unique-l (ident GS) (ident GS) (unitl GS (ident GS))
-
+  group-inv-ident : inv ident == ident
+  group-inv-ident =
+    group-inv-unique-l ident ident (unitl ident)
