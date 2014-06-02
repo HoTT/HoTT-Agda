@@ -48,7 +48,7 @@ module _ (n : ℕ) {X Y : Ptd i} where
   {- untruncated version - from pointed spaces to pointed spaces -}
   uCF : fst (X ∙→ Y) → fst (Ptd-uCEl n Y ∙→ Ptd-uCEl n X)
   uCF F = 
-    (λ {G → G ∘ptd F}) ,
+    (λ G → G ∘ptd F) ,
     pair= idp (∙-unit-r _ ∙ ap-cst idp (snd F))
 
   CF : fst (X ∙→ Y) → fst (Ptd-CEl n Y ∙→ Ptd-CEl n X)
@@ -86,10 +86,10 @@ module _ (n : ℕ) {X Y : Ptd i} where
         ((λ x → g (f x) ∙ h (f x)) , ap2 _∙_ (ap g fpt ∙ gpt) (ap h fpt ∙ hpt))
     comp-lemma g h gpt hpt = pair= idp (lemma f g h _∙_ fpt gpt hpt)
 
-{- CF-hom is a functor from pointed spaces to abelian groups -}
+-- CF-hom is a functor from pointed spaces to abelian groups
 module _ (n : ℕ) {X : Ptd i} where
 
-  CF-ident : CF-hom n ((λ x → x) , idp) == idhom (C n X)
+  CF-ident : CF-hom n {X} {X} (ptd-idf X) == idhom (C n X)
   CF-ident = hom= _ _ $ λ= $ Trunc-elim
     {P = λ tx → Trunc-fmap (λ x → x) tx == tx}
     (λ _ → =-preserves-level _ Trunc-level)

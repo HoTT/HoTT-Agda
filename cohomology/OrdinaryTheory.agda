@@ -29,7 +29,7 @@ record OrdinaryTheory i : Type (lsucc i) where
     CF-hom : (n : ℕ) {X Y : Ptd i} → fst (X ∙→ Y) → GroupHom (C n Y) (C n X)
 
     CF-ident : (n : ℕ) {X : Ptd i} 
-      → CF-hom n ((λ x → x) , idp) == idhom (C n X)
+      → CF-hom n {X} {X} (ptd-idf X) == idhom (C n X)
     CF-comp : (n : ℕ) {X Y Z : Ptd i} (g : fst (Y ∙→ Z)) (f : fst (X ∙→ Y))
       → CF-hom n (g ∘ptd f) == CF-hom n f ∘hom CF-hom n g
 
