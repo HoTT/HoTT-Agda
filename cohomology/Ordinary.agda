@@ -329,14 +329,17 @@ module _ (n : ℕ) {A : Type i} (X : A → Ptd i)
 
 {- Dimension Axiom -}
 abstract
-  C-dimensionS : (n : ℕ) → is-contr (CEl (S n) (Ptd-Lift Ptd-Bool))
-  C-dimensionS n = connected-at-level-is-contr 
+  C-dimension-pos : (n : ℕ) → is-contr (CEl (S n) (Ptd-Lift Ptd-Bool))
+  C-dimension-pos n = connected-at-level-is-contr 
     (Trunc-level {n = ⟨0⟩})
     (Trunc-preserves-conn ⟨0⟩ 
       (transport (λ B → is-connected ⟨0⟩ B) 
         (! (Bool∙→-path _))
         (path-conn (connected-≤T (⟨⟩-monotone-≤ (≤-ap-S (O≤ n)))
                                  (KG-conn (S n))))))
+
+  C-dimension-neg : (n : ℕ) → is-contr (CEl O (Ptd-Sphere (S n)))
+  C-dimension-neg n = C-SuspO (Ptd-Sphere n)
 
 C-Cohomology : OrdinaryTheory i
 C-Cohomology = record {
@@ -345,8 +348,8 @@ C-Cohomology = record {
   CF-ident = CF-ident;
   CF-comp = CF-comp;
   C-SuspS = C-SuspS;
-  C-SuspO = C-SuspO;
   C-exact-itok-mere = C-exact-itok-mere;
   C-exact-ktoi-mere = C-exact-ktoi-mere;
   C-additive = C-additive;
-  C-dimensionS = C-dimensionS}
+  C-dimension-pos = C-dimension-pos;
+  C-dimension-neg = C-dimension-neg}

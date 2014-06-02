@@ -19,8 +19,8 @@ Ptd-Susp^-conn O cX = cX
 Ptd-Susp^-conn (S n) cX = Susp-conn (Ptd-Susp^-conn n cX)
 
 
-Ptd-Sphere : (n : ℕ) → Ptd₀
-Ptd-Sphere n = Ptd-Susp^ n Ptd-Bool
+Ptd-Sphere : ∀ {i} → (n : ℕ) → Ptd i
+Ptd-Sphere n = Ptd-Susp^ n (Ptd-Lift Ptd-Bool)
 
-Sphere : (n : ℕ) → Type₀
+Sphere : ∀ {i} → (n : ℕ) → Type i
 Sphere n = fst (Ptd-Sphere n)

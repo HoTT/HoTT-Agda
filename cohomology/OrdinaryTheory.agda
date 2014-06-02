@@ -38,7 +38,6 @@ record OrdinaryTheory i : Type (lsucc i) where
 
   field
     C-SuspS : (n : ℕ) (X : Ptd i) → C (S n) (Ptd-Susp X) == C n X
-    C-SuspO : (X : Ptd i) → is-contr (CEl O (Ptd-Susp X))
 
     C-exact-itok-mere : (n : ℕ) {X Y : Ptd i} (f : fst (X ∙→ Y))
       → is-exact-itok-mere (CF n (ptd-cfcod f)) (CF n f)
@@ -49,6 +48,5 @@ record OrdinaryTheory i : Type (lsucc i) where
       → ((W : I → Type i) → (∀ i → has-level ⟨ n ⟩ (W i)) → has-choice ⟨0⟩ I W)
       → C n (Ptd-BigWedge Z) == ΠG I (C n ∘ Z)
 
-    C-dimensionS : (n : ℕ) → is-contr (CEl (S n) (Ptd-Lift Ptd-Bool))
-
-
+    C-dimension-pos : (n : ℕ) → is-contr (CEl (S n) (Ptd-Sphere O))
+    C-dimension-neg : (n : ℕ) → is-contr (CEl O (Ptd-Sphere (S n)))
