@@ -37,6 +37,8 @@ record OrdinaryTheory i : Type (lsucc i) where
   CF n f = (GroupHom.f (CF-hom n f) , GroupHom.pres-ident (CF-hom n f))
 
   field
+    C-abelian : (n : ℕ) (X : Ptd i) → is-abelian (C n X)
+
     C-SuspS : (n : ℕ) (X : Ptd i) → C (S n) (Ptd-Susp X) == C n X
 
     C-exact-itok-mere : (n : ℕ) {X Y : Ptd i} (f : fst (X ∙→ Y))

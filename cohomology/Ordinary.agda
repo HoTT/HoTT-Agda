@@ -41,6 +41,35 @@ module _ (n : ℕ) (X : Ptd i) where
   uCid : uCEl
   uCid = snd Ptd-uCEl
 
+
+{- C n X is an abelian group -}
+module _ (n : ℕ) (X : Ptd i) where
+
+  C-abelian-lemma : is-abelian (→Ω-Group X (Ptd-Ω (Ptd-KG (S (S n)))))
+  C-abelian-lemma = Trunc-elim 
+    (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level)) 
+    (λ {(f , fpt) → Trunc-elim 
+      (λ _ → =-preserves-level _ Trunc-level) 
+      (λ {(g , gpt) → ap [_] (pair= 
+        (λ= (λ x → conc^2-comm (f x) (g x))) 
+        (↓-app=cst-in $ 
+          ap2 _∙_ fpt gpt
+            =⟨ lemma fpt gpt ⟩
+          conc^2-comm (f (snd X)) (g (snd X)) ∙ ap2 _∙_ gpt fpt
+            =⟨ ! (app=-β _ (snd X)) |in-ctx (λ w → w ∙ ap2 _∙_ gpt fpt) ⟩
+          app= (λ= (λ x → conc^2-comm (f x) (g x))) (snd X) ∙ ap2 _∙_ gpt fpt ∎))})})
+    where
+    lemma : ∀ {i} {X : Ptd i} {α β : Ω^ 2 X} (γ : α == idp^ 2) (δ : β == idp^ 2)
+      → ap2 _∙_ γ δ == conc^2-comm α β ∙ ap2 _∙_ δ γ
+    lemma idp idp = idp
+
+  C-abelian : is-abelian (C n X)
+  C-abelian = transport (is-abelian ∘ →Ω-Group X) spec C-abelian-lemma
+    where
+    spec : Ptd-Ω (Ptd-KG (S (S n))) == Ptd-KG (S n)
+    spec = spectrum (S n)
+
+
 {- CF, the functorial action of C:
  - contravariant functor from pointed spaces to abelian groups -}
 module _ (n : ℕ) {X Y : Ptd i} where
@@ -86,7 +115,7 @@ module _ (n : ℕ) {X Y : Ptd i} where
         ((λ x → g (f x) ∙ h (f x)) , ap2 _∙_ (ap g fpt ∙ gpt) (ap h fpt ∙ hpt))
     comp-lemma g h gpt hpt = pair= idp (lemma f g h _∙_ fpt gpt hpt)
 
--- CF-hom is a functor from pointed spaces to abelian groups
+{- CF-hom is a functor from pointed spaces to abelian groups -}
 module _ (n : ℕ) {X : Ptd i} where
 
   CF-ident : CF-hom n {X} {X} (ptd-idf X) == idhom (C n X)
@@ -347,6 +376,7 @@ C-Cohomology = record {
   CF-hom = CF-hom;
   CF-ident = CF-ident;
   CF-comp = CF-comp;
+  C-abelian = C-abelian;
   C-SuspS = C-SuspS;
   C-exact-itok-mere = C-exact-itok-mere;
   C-exact-ktoi-mere = C-exact-ktoi-mere;
