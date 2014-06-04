@@ -6,11 +6,11 @@ open import cohomology.Choice
 
 module cohomology.OrdinaryTheory where
 
-{- pointed version of the function [cfcod] from lib.types.Cofiber -}
-ptd-cfcod : ∀ {j k} {X : Ptd j} {Y : Ptd k} (F : fst (X ∙→ Y))
-  → fst (Y ∙→ Ptd-Cof (fst F))
-ptd-cfcod {X = X} (f , fpt) = 
-  (cfcod f , ap (cfcod f) (! fpt) ∙ ! (cfglue f (snd X)))
+-- {- pointed version of the function [cfcod] from lib.types.Cofiber -}
+-- ptd-cfcod : ∀ {j k} {X : Ptd j} {Y : Ptd k} (F : fst (X ∙→ Y))
+--   → fst (Y ∙→ Ptd-Cof (fst F))
+-- ptd-cfcod {X = X} (f , fpt) = 
+--   (cfcod f , ap (cfcod f) (! fpt) ∙ ! (cfglue f (snd X)))
 
 record OrdinaryTheory i : Type (lsucc i) where
   field

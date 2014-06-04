@@ -228,14 +228,14 @@ module _ (n : ℕ) {X Y : Ptd i} where
     C-exact-ktoi-mere F = 
       Trunc-elim
         {P = λ tH → fst (CF n F) tH == Cid n X
-           → Trunc ⟨-1⟩ (Σ (CEl n (Ptd-Cof (fst F))) 
+           → Trunc ⟨-1⟩ (Σ (CEl n (Ptd-Cof F)) 
                            (λ tK → fst (CF n (ptd-cfcod F)) tK == tH))}
         (λ _ → Π-level (λ _ → raise-level _ Trunc-level))
         (λ H tp → Trunc-rec Trunc-level (lemma H) (–> (Trunc=-equiv _ _) tp))
         where 
         lemma : (H : uCEl n Y) 
           → fst (uCF n F) H == uCid n X
-          → Trunc ⟨-1⟩ (Σ (CEl n (Ptd-Cof (fst F))) 
+          → Trunc ⟨-1⟩ (Σ (CEl n (Ptd-Cof F)) 
                           (λ tK → fst (CF n (ptd-cfcod F)) tK == [ H ]))
         lemma H p = [ [ fst (uC-exact-ktoi n F H p) ] , 
                         ap [_] (snd (uC-exact-ktoi n F H p)) ]

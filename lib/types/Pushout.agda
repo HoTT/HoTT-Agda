@@ -2,6 +2,7 @@
 
 open import lib.Basics
 open import lib.types.Pi
+open import lib.types.Pointed
 open import lib.types.Sigma
 open import lib.types.Span
 open import lib.types.Paths
@@ -114,3 +115,14 @@ module lib.types.Pushout {i} {j} {k} where
 
 -- _*_ : ∀ {i j} (A : Type i) (B : Type j) → Type (lmax i j)
 -- A * B = A ⊔^[ (A × B) ] B  / (fst , snd)
+
+  Ptd-Pushout : (d : Ptd-Span {i} {j} {k}) → Ptd _
+  Ptd-Pushout d = ∙[ Pushout (ptd-span-out d) , left (snd (Ptd-Span.X d)) ]
+
+  ptd-left : {d : Ptd-Span} → fst (Ptd-Span.X d ∙→ Ptd-Pushout d)
+  ptd-left = (left , idp)
+
+  ptd-right : {d : Ptd-Span} → fst (Ptd-Span.Y d ∙→ Ptd-Pushout d)
+  ptd-right {d} =
+    (right , ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙ ap left (snd f))
+    where open Ptd-Span d
