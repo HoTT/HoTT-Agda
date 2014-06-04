@@ -29,8 +29,8 @@ infixr 2 _∘ptd_
 ptd-idf : ∀ {i} (X : Ptd i) → fst (X ∙→ X)
 ptd-idf A = ((λ x → x) , idp)
 
-ptd-cst : ∀ {i} (X : Ptd i) → fst (X ∙→ X)
-ptd-cst X = ((λ x → snd X) , idp)
+ptd-cst : ∀ {i j} {X : Ptd i} {Y : Ptd j} → fst (X ∙→ Y)
+ptd-cst {Y = Y} = ((λ x → snd Y) , idp)
 
 _∘ptd_ : ∀ {i j k} {A : Ptd i} {B : Ptd j} {C : Ptd k}
   (g : fst (B ∙→ C)) (f : fst (A ∙→ B)) → fst (A ∙→ C)
