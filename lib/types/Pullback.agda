@@ -1,8 +1,10 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
+open import lib.NType
 open import lib.types.Cospan
 open import lib.types.Pointed
+open import lib.types.Sigma
 
 module lib.types.Pullback where
 
@@ -50,3 +52,22 @@ module _ {i j k} (D : Ptd-Cospan {i} {j} {k}) where
     ∙[ Pullback (ptd-cospan-out D) , 
        pullback (snd X) (snd Y) (snd f ∙ ! (snd g)) ]
     where open Ptd-Cospan D
+
+module _ {i j k} (D : Cospan {i} {j} {k}) where
+  open Cospan D
+
+  pullback-decomp-equiv : Pullback D ≃ Σ (A × B) (λ {(a , b) → f a == g b})
+  pullback-decomp-equiv = equiv
+    (λ {(pullback a b h) → ((a , b) , h)})
+    (λ {((a , b) , h) → pullback a b h})
+    (λ _ → idp)
+    (λ _ → idp)
+
+module _ {i j k} (n : ℕ₋₂) {D : Cospan {i} {j} {k}} where
+  open Cospan D
+
+  pullback-level : has-level n A → has-level n B → has-level n C
+    → has-level n (Pullback D)
+  pullback-level pA pB pC = 
+    equiv-preserves-level ((pullback-decomp-equiv D)⁻¹) $
+      Σ-level (×-level pA pB) (λ _ → =-preserves-level _ pC)
