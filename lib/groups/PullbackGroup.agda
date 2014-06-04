@@ -11,7 +11,7 @@ module lib.groups.PullbackGroup where
 -- H → G ← K
 
 record Group-Cospan {i j k : ULevel} : Type (lsucc (lmax (lmax i j) k)) where
-  constructor ptd-cospan
+  constructor group-cospan
   field
     H : Group i
     K : Group j
@@ -19,10 +19,10 @@ record Group-Cospan {i j k : ULevel} : Type (lsucc (lmax (lmax i j) k)) where
     φ : GroupHom H G
     ψ : GroupHom K G
 
-module _ {i j k} (H : Group i) (K : Group j) (G : Group k)
-  (φ : GroupHom H G) (ψ : GroupHom K G) where
+module _ {i j k} (D : Group-Cospan {i} {j} {k}) where
 
   private
+    open Group-Cospan D
     module H = Group H
     module K = Group K
     module G = Group G
@@ -62,3 +62,15 @@ module _ {i j k} (H : Group i) (K : Group j) (G : Group k)
     El = Pullback d;
     El-level = pullback-level ⟨0⟩ H.El-level K.El-level G.El-level;
     group-struct = Pullback-group-struct}
+
+  pfst-hom : GroupHom Pullback-Group H
+  pfst-hom = record {
+    f = Pullback.a;
+    pres-ident = idp;
+    pres-comp = λ _ _ → idp}
+
+  psnd-hom : GroupHom Pullback-Group K
+  psnd-hom = record {
+    f = Pullback.b;
+    pres-ident = idp;
+    pres-comp = λ _ _ → idp}
