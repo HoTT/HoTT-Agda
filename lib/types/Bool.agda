@@ -1,12 +1,16 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
+open import lib.types.Pointed
 
 module lib.types.Bool where
 
 data Bool : Type₀ where
   true : Bool
   false : Bool
+
+Ptd-Bool : Ptd₀
+Ptd-Bool = ∙[ Bool , true ]
 
 if_then_else_ : ∀ {i} {A : Bool → Type i}
   (b : Bool) (t : A true) (e : A false)

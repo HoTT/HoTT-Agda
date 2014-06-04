@@ -2,6 +2,7 @@
 
 open import lib.Basics
 open import lib.types.TLevel
+open import lib.types.Pointed
 open import lib.types.Pi
 open import lib.types.Sigma
 open import lib.NType2
@@ -79,6 +80,11 @@ module TruncRecType {i j} {n : ℕ₋₂} {A : Type i} (d : A → n -Type j) whe
 
     from-to : (x : Σ (Trunc (S n) A) (fst ∘ f)) → from (to x) == x
     from-to (a , b) = from-to-aux a b
+
+
+Ptd-Trunc : ∀ {i} → ℕ₋₂ → Ptd i → Ptd i
+Ptd-Trunc n (A , a) = ∙[ Trunc n A , [ a ] ]
+
 
 module _ {i} {n : ℕ₋₂} {A : Type i} where
 

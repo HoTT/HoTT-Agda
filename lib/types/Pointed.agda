@@ -1,11 +1,12 @@
 {-# OPTIONS --without-K #-}
 
-open import lib.Basics
-open import lib.types.Bool
+open import lib.Base
+open import lib.PathGroupoid
+open import lib.Equivalences
+open import lib.Univalence
+open import lib.NType
 open import lib.types.Pi
 open import lib.types.Sigma
-open import lib.types.Suspension
-open import lib.types.Truncation
 
 module lib.types.Pointed where
 
@@ -44,25 +45,7 @@ _∘ptd_ : ∀ {i j k} {A : Ptd i} {B : Ptd j} {C : Ptd k}
           ap (h ∘ g) fpt ∙ ap h gpt ∙ hpt == ap h (ap g fpt ∙ gpt) ∙ hpt
   lemma idp gpt hpt = idp
 
-
-{- Pointed versions of existing types -}
-module _ where
-  Ptd-Unit : Ptd₀
-  Ptd-Unit = ∙[ Unit , unit ]
-
-  Ptd-Bool : Ptd₀
-  Ptd-Bool = ∙[ Bool , true ]
-
-  Ptd-Lift : ∀ {i j} → Ptd i → Ptd (lmax i j)
-  Ptd-Lift {j = j} (A , a) = ∙[ Lift {j = j} A , lift a ]
-
-  Ptd-Susp : ∀ {i} → Ptd i → Ptd i
-  Ptd-Susp (A , _) = ∙[ Suspension A , north A ]
-
-  Ptd-Trunc : ∀ {i} → ℕ₋₂ → Ptd i → Ptd i
-  Ptd-Trunc n (A , a) = ∙[ Trunc n A , [ a ] ]
-
-{- Equality of pointed types from an equivalence -}
+{- Obtaining equality of pointed types from an equivalence -}
 ptd-ua : ∀ {i} {A B : Type i} {a₀ : A} {b₀ : B}
   (e : A ≃ B) → –> e a₀ == b₀ → ∙[ A , a₀ ] == ∙[ B , b₀ ]
 ptd-ua e p = pair= (ua e) (↓-idf-ua-in e p)

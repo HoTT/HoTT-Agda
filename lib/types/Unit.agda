@@ -3,11 +3,15 @@
 open import lib.Basics
 open import lib.types.Group
 open import lib.types.Lift
+open import lib.types.Pointed
 
 module lib.types.Unit where
 
 ⊤ = Unit
 tt = unit
+
+Ptd-Unit : Ptd₀
+Ptd-Unit = ∙[ Unit , unit ]
 
 abstract
   -- Unit is contractible

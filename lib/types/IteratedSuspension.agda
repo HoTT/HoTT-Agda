@@ -2,9 +2,11 @@
 
 open import lib.Basics
 open import lib.NConnected
+open import lib.types.Bool
+open import lib.types.Lift
 open import lib.types.Nat
-open import lib.types.TLevel
 open import lib.types.Pointed
+open import lib.types.TLevel
 open import lib.types.Suspension
 
 module lib.types.IteratedSuspension where
