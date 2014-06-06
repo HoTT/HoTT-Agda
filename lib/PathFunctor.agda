@@ -90,6 +90,14 @@ coe!-inv-l : {B : Type i} (p : A == B) (a : A)
   → coe! p (coe p a) == a
 coe!-inv-l idp a = idp
 
+coe-inv-adj : {B : Type i} (p : A == B) (a : A) →
+  ap (coe p) (coe!-inv-l p a) == coe!-inv-r p (coe p a)
+coe-inv-adj idp a = idp
+
+coe!-inv-adj : {B : Type i} (p : A == B) (b : B) →
+  ap (coe! p) (coe!-inv-r p b) == coe!-inv-l p (coe! p b)
+coe!-inv-adj idp b = idp
+
 coe-ap-! : ∀ {j} (P : A → Type j) {a b : A} (p : a == b)
   (x : P b)
   → coe (ap P (! p)) x == coe! (ap P p) x

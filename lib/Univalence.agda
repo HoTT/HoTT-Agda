@@ -13,7 +13,7 @@ to the univalence axiom. We do not define it directly by path induction because
 it may be helpful to know definitionally what are the components.
 -}
 coe-equiv : ∀ {i} {A B : Type i} → A == B → A ≃ B
-coe-equiv p = equiv (coe p) (coe! p) (coe!-inv-r p) (coe!-inv-l p)
+coe-equiv p = (coe p , record { g = coe! p ; f-g = coe!-inv-r p ; g-f = coe!-inv-l p ; adj = coe-inv-adj p })
 
 {- We postulate the univalence axiom as three separate axioms because it’s more
 natural this way. But it doesn’t change anything in practice. -}
