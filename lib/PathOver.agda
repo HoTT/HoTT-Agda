@@ -3,8 +3,6 @@
 open import lib.Base
 open import lib.PathGroupoid
 open import lib.Equivalences
-open import lib.Univalence
-open import lib.Funext
 
 {- Structural lemmas about paths over paths
 
@@ -102,6 +100,17 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : Type k} where
     → u == v [ (λ xy → B (fst xy)) ↓ (pair×= p q) ]
     → u == v [ B ↓ p ]
   ↓-cst2×-out idp idp r = r
+
+-- Dependent paths in the universal fibration over the universe
+↓-idf-out : ∀ {i} {A B : Type i} (p : A == B) {u : A} {v : B}
+  → u == v [ (λ x → x) ↓ p ]
+  → coe p u == v
+↓-idf-out idp = idf _
+
+↓-idf-in : ∀ {i} {A B : Type i} (p : A == B) {u : A} {v : B}
+  → coe p u == v
+  → u == v [ (λ x → x) ↓ p ]
+↓-idf-in idp = idf _
 
 -- Dependent paths over [ap f p]
 module _ {i j k} {A : Type i} {B : Type j} (C : B → Type k) (f : A → B) where

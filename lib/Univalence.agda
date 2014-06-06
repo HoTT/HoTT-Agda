@@ -4,6 +4,7 @@ open import lib.Base
 open import lib.PathGroupoid
 open import lib.PathFunctor
 open import lib.Equivalences
+open import lib.PathOver
 
 module lib.Univalence where
 
@@ -41,22 +42,12 @@ coe!-β e a = ap (λ e → <– e a) (coe-equiv-β e)
 ↓-idf-ua-out : ∀ {i} {A B : Type i} (e : A ≃ B) {u : A} {v : B}
   → u == v [ (λ x → x) ↓ (ua e) ]
   → –> e u == v
-↓-idf-ua-out e p = ! (coe-β e _) ∙ aux (ua e) p  where
-
-  aux : ∀ {i} {A B : Type i} (p : A == B) {u : A} {v : B}
-    → u == v [ (λ x → x) ↓ p ]
-    → coe p u == v
-  aux idp = idf _
+↓-idf-ua-out e p = ! (coe-β e _) ∙ ↓-idf-out (ua e) p  where
 
 ↓-idf-ua-in : ∀ {i} {A B : Type i} (e : A ≃ B) {u : A} {v : B}
   → –> e u == v
   → u == v [ (λ x → x) ↓ (ua e) ]
-↓-idf-ua-in e p = aux (ua e) (coe-β e _ ∙ p)  where
-
-  aux : ∀ {i} {A B : Type i} (p : A == B) {u : A} {v : B}
-    → coe p u == v
-    → u == v [ (λ x → x) ↓ p ]
-  aux idp = idf _
+↓-idf-ua-in e p = ↓-idf-in (ua e) (coe-β e _ ∙ p)  where
 
 {- Induction along equivalences
 
