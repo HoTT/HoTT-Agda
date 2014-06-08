@@ -210,3 +210,17 @@ module _ where
     → c₁ == c₂ [ uncurry C ↓ pair×= p q ]
     → (b₁ , c₁) == (b₂ , c₂) [ (λ x → Σ B (C x)) ↓ p ]
   ↓-cst×app-in idp idp idp = idp
+
+
+-- Commutativity of products and derivatives.
+module _ {i j} {A : Type i} {B : Type j} where
+  ×-comm : Σ A (λ _ → B) ≃ Σ B (λ _ → A)
+  ×-comm = equiv (λ {(a , b) → (b , a)}) (λ {(b , a) → (a , b)}) (λ _ → idp) (λ _ → idp)
+
+module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} where
+  Σ₂-×-comm : Σ (Σ A B) (λ ab → C (fst ab)) ≃ Σ (Σ A C) (λ ac → B (fst ac))
+  Σ₂-×-comm = Σ-assoc ⁻¹ ∘e equiv-Σ-snd (λ a → ×-comm) ∘e Σ-assoc
+
+module _ {i j k} {A : Type i} {B : Type j} {C : A → B → Type k} where
+  Σ₁-×-comm : Σ A (λ a → Σ B (λ b → C a b)) ≃ Σ B (λ b → Σ A (λ a → C a b))
+  Σ₁-×-comm = Σ-assoc ∘e equiv-Σ-fst _ (snd ×-comm) ∘e Σ-assoc ⁻¹
