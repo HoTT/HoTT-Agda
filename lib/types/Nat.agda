@@ -39,14 +39,14 @@ _*2 : ℕ → ℕ
 O *2 = O
 (S n) *2 = S (S (n *2))
 
+ℕ-pred : ℕ → ℕ
+ℕ-pred 0 = 0
+ℕ-pred (S n) = n
+
+ℕ-S-inj : (n m : ℕ) (p : S n == S m) → n == m
+ℕ-S-inj n m p = ap ℕ-pred p
+
 private
-  ℕ-get-S : ℕ → ℕ
-  ℕ-get-S 0 = 42
-  ℕ-get-S (S n) = n
-
-  S-injective : (n m : ℕ) (p : S n == S m) → n == m
-  S-injective n m p = ap ℕ-get-S p
-
   ℕ-S≠O-type : ℕ → Type₀
   ℕ-S≠O-type O = Empty
   ℕ-S≠O-type (S n) = Unit
@@ -67,7 +67,7 @@ abstract
   ℕ-has-dec-eq (S n) O = inr (ℕ-S≠O n)
   ℕ-has-dec-eq (S n) (S m) with ℕ-has-dec-eq n m
   ℕ-has-dec-eq (S n) (S m) | inl p = inl (ap S p)
-  ℕ-has-dec-eq (S n) (S m) | inr p⊥ = inr (λ p → p⊥ (S-injective n m p))
+  ℕ-has-dec-eq (S n) (S m) | inr p⊥ = inr (λ p → p⊥ (ℕ-S-inj n m p))
 
   ℕ-is-set : is-set ℕ
   ℕ-is-set = dec-eq-is-set ℕ-has-dec-eq
@@ -118,7 +118,7 @@ O≤ (S m) = inr (O< m)
 <-cancel-S (ltSR lt) = <-trans ltS lt
 
 ≤-cancel-S : {m n : ℕ} → S m ≤ S n → m ≤ n
-≤-cancel-S (inl p) = inl (ap ℕ-get-S p)
+≤-cancel-S (inl p) = inl (ap ℕ-pred p)
 ≤-cancel-S (inr lt) = inr (<-cancel-S lt)
 
 <-+-l : {m n : ℕ} (k : ℕ) → m < n → (k + m) < (k + n)
