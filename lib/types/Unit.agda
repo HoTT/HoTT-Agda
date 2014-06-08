@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
-open import lib.types.Group
 open import lib.types.Lift
 open import lib.types.Pointed
 

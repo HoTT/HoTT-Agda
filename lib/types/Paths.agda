@@ -44,18 +44,22 @@ module _ {i j} {A : Type i} {B : Type j} {f : A → B} {b : B} where
   ↓-app=cst-eqv : {x y : A} {p : x == y} {u : f x == b} {v : f y == b}
     → (u == (ap f p ∙ v)) ≃ (u == v [ (λ x → f x == b) ↓ p ])
   ↓-app=cst-eqv {p = idp} = equiv ↓-app=cst-in ↓-app=cst-out 
-                             
      (λ _ → idp) (λ _ → idp)
 
   ↓-cst=app-in : {x y : A} {p : x == y} {u : b == f x} {v : b == f y}
     → (u ∙' ap f p) == v
     → (u == v [ (λ x → b == f x) ↓ p ])
-  ↓-cst=app-in {p = idp} idp = idp
+  ↓-cst=app-in {p = idp} q = q
 
   ↓-cst=app-out : {x y : A} {p : x == y} {u : b == f x} {v : b == f y}
     → (u == v [ (λ x → b == f x) ↓ p ])
     → (u ∙' ap f p) == v
-  ↓-cst=app-out {p = idp} idp = idp
+  ↓-cst=app-out {p = idp} r = r
+
+  ↓-cst=app-eqv : {x y : A} {p : x == y} {u : b == f x} {v : b == f y}
+    → ((u ∙' ap f p) == v) ≃ (u == v [ (λ x → b == f x) ↓ p ])
+  ↓-cst=app-eqv {p = idp} = equiv ↓-cst=app-in ↓-cst=app-out 
+     (λ _ → idp) (λ _ → idp)
 
 module _ {i} {A : Type i} where
 

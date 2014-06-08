@@ -82,6 +82,18 @@ module _ {i₀ i₁ j₀ j₁} {A₀ : Type i₀} {A₁ : Type i₁}
                  Π A₁ B₁           ≃∎
 
 
+{- Coversions between functions with implicit and explicit arguments -}
+
+expose-equiv : ∀ {i j} {A : Type i} {B : A → Type j}
+  → ({x : A} → B x) ≃ ((x : A) → B x)
+expose-equiv = (λ f a → f {a}) , is-eq
+  _
+  (λ f {a} → f a)
+  (λ _ → idp)
+  (λ _ → idp)
+
+
+
 {- Dependent paths in a Π-type -}
 module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k}
   where
@@ -104,6 +116,20 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k
     → {t : B x} {t' : B x'} (q : t == t' [ B ↓ p ])
     → ↓-Π-out (↓-Π-in f) q == f q
   ↓-Π-β {p = idp} f idp = app=-β (λ x → f (idp {a = x})) _
+
+  ↓-Π-η : {x x' : A} {p : x == x'} {u : Π (B x) (C x)} {u' : Π (B x') (C x')}
+    → (q : (u == u' [ (λ x → Π (B x) (C x)) ↓ p ]))
+    → ↓-Π-in (↓-Π-out q) == q
+  ↓-Π-η {p = idp} q = ! (λ=-η q)
+
+  ↓-Π-equiv : {x x' : A} {p : x == x'} {u : Π (B x) (C x)} {u' : Π (B x') (C x')}
+    → ({t : B x} {t' : B x'} (q : t == t' [ B ↓ p ])
+        → u t == u' t' [ uncurry C ↓ pair= p q ])
+    ≃ (u == u' [ (λ x → Π (B x) (C x)) ↓ p ])
+  ↓-Π-equiv {p = idp} = equiv ↓-Π-in ↓-Π-out ↓-Π-η
+    (λ u → <– (equiv-ap expose-equiv _ _)
+      (λ= (λ t → <– (equiv-ap expose-equiv _ _)
+        (λ= (λ t' → λ= (↓-Π-β u))))))
 
 {- Dependent paths in a Π-type where the codomain is not dependent on anything
 
@@ -308,13 +334,3 @@ module Ap↓-swap! {i j k ℓ} {A : Type i} {B : Type j} {C : Type k}
 ∙-λ= α β = ∙-app= (λ= α) (λ= β)
   ∙ ap λ= (λ= (λ x → ap (λ w → w ∙ app= (λ= β) x) (app=-β α x)
                    ∙ ap (λ w → α x ∙ w) (app=-β β x)))
-
-{- Coversions between functions with implicit and explicit arguments -}
-
-expose-equiv : ∀ {i j} {A : Type i} {B : A → Type j}
-  → ({x : A} → B x) ≃ ((x : A) → B x)
-expose-equiv = (λ f a → f {a}) , is-eq
-  _
-  (λ f {a} → f a)
-  (λ _ → idp)
-  (λ _ → idp)
