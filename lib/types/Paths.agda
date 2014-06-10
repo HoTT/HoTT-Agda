@@ -21,6 +21,9 @@ module _ {i} {A : Type i} {x y z : A} where
           g-f : ∀ q → ! p ∙ p ∙ q == q
           g-f q = ! (∙-assoc (! p) p q) ∙ ap (λ s → s ∙ q) (!-inv-l p)
 
+  pre∙-equiv : (p : x == y) → (y == z) ≃ (x == z)
+  pre∙-equiv p = ((λ q → p ∙ q) , pre∙-is-equiv p)
+
   post∙-is-equiv : (p : y == z) → is-equiv (λ (q : x == y) → q ∙ p)
   post∙-is-equiv p = is-eq (λ q → q ∙ p) (λ r → r ∙ ! p) f-g g-f
     where f-g : ∀ r → (r ∙ ! p) ∙ p == r
@@ -28,6 +31,9 @@ module _ {i} {A : Type i} {x y z : A} where
 
           g-f : ∀ q → (q ∙ p) ∙ ! p == q
           g-f q = ∙-assoc q p (! p) ∙ ap (λ s → q ∙ s) (!-inv-r p) ∙ ∙-unit-r q
+
+  post∙-equiv : (p : y == z) → (x == y) ≃ (x == z)
+  post∙-equiv p = ((λ q → q ∙ p) , post∙-is-equiv p)
 
 module _ {i j} {A : Type i} {B : Type j} {f : A → B} {b : B} where
 
