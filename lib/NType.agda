@@ -2,6 +2,7 @@
 
 open import lib.Base
 open import lib.PathGroupoid
+open import lib.Relation
 
 module lib.NType {i} where
 
@@ -47,7 +48,7 @@ abstract
 {- Having decidable equality is stronger that being a set -}
 
 has-dec-eq : Type i → Type i
-has-dec-eq A = (x y : A) → Coprod (x == y) (x ≠ y)
+has-dec-eq A = Dec (_==_ :> Rel A i)
 
 abstract
   dec-eq-is-set : {A : Type i} → (has-dec-eq A → is-set A)

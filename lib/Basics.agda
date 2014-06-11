@@ -5,6 +5,7 @@ module lib.Basics where
 open import lib.Base public
 open import lib.PathGroupoid public
 open import lib.PathFunctor public
+open import lib.Relation public
 open import lib.NType public
 open import lib.Equivalences public
 open import lib.Univalence public
