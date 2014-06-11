@@ -2,6 +2,7 @@
 
 open import lib.Base
 open import lib.PathGroupoid
+open import lib.Relation
 open import lib.NType
 open import lib.types.Empty
 
@@ -93,6 +94,9 @@ O≤ : (m : ℕ) → O ≤ m
 O≤ O = inl idp
 O≤ (S m) = inr (O< m)
 
+n≮O : ∀ n → ¬ (n < O)
+n≮O _ ()
+
 <-trans : {m n k : ℕ} → m < n → n < k → m < k
 <-trans lt₁ ltS = ltSR lt₁
 <-trans lt₁ (ltSR lt₂) = ltSR (<-trans lt₁ lt₂)
@@ -120,6 +124,13 @@ O≤ (S m) = inr (O< m)
 ≤-cancel-S : {m n : ℕ} → S m ≤ S n → m ≤ n
 ≤-cancel-S (inl p) = inl (ap ℕ-pred p)
 ≤-cancel-S (inr lt) = inr (<-cancel-S lt)
+
+<-dec : Dec _<_
+<-dec _     O     = inr (n≮O _)
+<-dec O     (S m) = inl (O< m)
+<-dec (S n) (S m) with <-dec n m
+<-dec (S n) (S m) | inl p  = inl (<-ap-S p)
+<-dec (S n) (S m) | inr p⊥ = inr (p⊥ ∘ <-cancel-S)
 
 <-+-l : {m n : ℕ} (k : ℕ) → m < n → (k + m) < (k + n)
 <-+-l O lt = lt
