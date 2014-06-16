@@ -8,7 +8,9 @@ open import lib.types.Span
 open import lib.types.Paths
 import lib.types.Generic1HIT as Generic1HIT
 
-module lib.types.Pushout {i} {j} {k} where
+module lib.types.Pushout where
+
+module _ {i j k} where
 
   module _ where
 
@@ -107,22 +109,51 @@ module lib.types.Pushout {i} {j} {k} where
            glue c ∎))
 
     generic-pushout : Pushout d ≃ T
-    generic-pushout = equiv to from to-from from-to  
+    generic-pushout = equiv to from to-from from-to
 
   _⊔^[_]_/_ : (A : Type i) (C : Type k) (B : Type j)
     (fg : (C → A) × (C → B)) → Type (lmax (lmax i j) k)
   A ⊔^[ C ] B  / (f , g) = Pushout (span A B C f g)
 
--- _*_ : ∀ {i j} (A : Type i) (B : Type j) → Type (lmax i j)
--- A * B = A ⊔^[ (A × B) ] B  / (fst , snd)
+  -- _*_ : ∀ {i j} (A : Type i) (B : Type j) → Type (lmax i j)
+  -- A * B = A ⊔^[ (A × B) ] B  / (fst , snd)
 
   Ptd-Pushout : (d : Ptd-Span {i} {j} {k}) → Ptd _
   Ptd-Pushout d = ∙[ Pushout (ptd-span-out d) , left (snd (Ptd-Span.X d)) ]
 
-  ptd-left : {d : Ptd-Span} → fst (Ptd-Span.X d ∙→ Ptd-Pushout d)
-  ptd-left = (left , idp)
+  module _ {d : Ptd-Span {i} {j} {k}} where
 
-  ptd-right : {d : Ptd-Span} → fst (Ptd-Span.Y d ∙→ Ptd-Pushout d)
-  ptd-right {d} =
-    (right , ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙ ap left (snd f))
-    where open Ptd-Span d
+    open Ptd-Span d
+
+    ptd-left : fst (X ∙→ Ptd-Pushout d)
+    ptd-left = (left , idp)
+
+    ptd-right : fst (Y ∙→ Ptd-Pushout d)
+    ptd-right =
+      (right , ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙ ap left (snd f))
+
+    ptd-glue : (ptd-left ∘ptd f) == (ptd-right ∘ptd g)
+    ptd-glue = pair=
+      (λ= glue)
+      (↓-app=cst-in $
+        ap left (snd f) ∙ idp
+          =⟨ ∙-unit-r _ ⟩
+        ap left (snd f)
+          =⟨ lemma (glue (snd Z)) (ap right (snd g)) (ap left (snd f)) ⟩
+        glue (snd Z) ∙ ap right (snd g)
+        ∙ ! (ap right (snd g)) ∙ ! (glue (snd Z)) ∙ ap left (snd f)
+          =⟨ !-ap right (snd g)
+             |in-ctx (λ w → glue (snd Z) ∙ ap right (snd g) ∙ w
+                            ∙ ! (glue (snd Z)) ∙ ap left (snd f)) ⟩
+        glue (snd Z) ∙ ap right (snd g)
+        ∙ ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙ ap left (snd f)
+          =⟨ ! (app=-β glue (snd Z))
+             |in-ctx (λ w → w ∙ ap right (snd g) ∙ ap right (! (snd g))
+                              ∙ ! (glue (snd Z)) ∙ ap left (snd f)) ⟩
+        app= (λ= glue) (snd Z) ∙ ap right (snd g)
+        ∙ ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙ ap left (snd f) ∎)
+      where
+      lemma : ∀ {i} {A : Type i} {x y z w : A}
+        (p : x == y) (q : y == z) (r : x == w)
+        → r == p ∙ q ∙ ! q ∙ ! p ∙ r
+      lemma idp idp idp = idp
