@@ -53,6 +53,4 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (F : fst (X ∙→ Y)) where
 
   ptd-cfcod : fst (Y ∙→ Ptd-Cof)
   ptd-cfcod = 
-    cfcod (fst F) , ap (cfcod (fst F)) (! (snd g)) ∙ ! (cfglue (fst F) (snd X))
-    where open Ptd-Span ptd-cof-span
-
+    cfcod (fst F) , ap (cfcod (fst F)) (! (snd F)) ∙ ! (cfglue (fst F) (snd X))
