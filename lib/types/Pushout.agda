@@ -130,7 +130,7 @@ module _ {i j k} where
 
     ptd-right : fst (Y ∙→ Ptd-Pushout d)
     ptd-right =
-      (right , ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙ ap left (snd f))
+      (right , ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙' ap left (snd f))
 
     ptd-glue : (ptd-left ∘ptd f) == (ptd-right ∘ptd g)
     ptd-glue = pair=
@@ -141,19 +141,19 @@ module _ {i j k} where
         ap left (snd f)
           =⟨ lemma (glue (snd Z)) (ap right (snd g)) (ap left (snd f)) ⟩
         glue (snd Z) ∙ ap right (snd g)
-        ∙ ! (ap right (snd g)) ∙ ! (glue (snd Z)) ∙ ap left (snd f)
+        ∙ ! (ap right (snd g)) ∙ ! (glue (snd Z)) ∙' ap left (snd f)
           =⟨ !-ap right (snd g)
              |in-ctx (λ w → glue (snd Z) ∙ ap right (snd g) ∙ w
-                            ∙ ! (glue (snd Z)) ∙ ap left (snd f)) ⟩
+                            ∙ ! (glue (snd Z)) ∙' ap left (snd f)) ⟩
         glue (snd Z) ∙ ap right (snd g)
-        ∙ ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙ ap left (snd f)
+        ∙ ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙' ap left (snd f)
           =⟨ ! (app=-β glue (snd Z))
              |in-ctx (λ w → w ∙ ap right (snd g) ∙ ap right (! (snd g))
-                              ∙ ! (glue (snd Z)) ∙ ap left (snd f)) ⟩
+                              ∙ ! (glue (snd Z)) ∙' ap left (snd f)) ⟩
         app= (λ= glue) (snd Z) ∙ ap right (snd g)
-        ∙ ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙ ap left (snd f) ∎)
+        ∙ ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙' ap left (snd f) ∎)
       where
       lemma : ∀ {i} {A : Type i} {x y z w : A}
         (p : x == y) (q : y == z) (r : x == w)
-        → r == p ∙ q ∙ ! q ∙ ! p ∙ r
+        → r == p ∙ q ∙ ! q ∙ ! p ∙' r
       lemma idp idp idp = idp
