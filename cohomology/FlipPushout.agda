@@ -1,13 +1,7 @@
 {-# OPTIONS --without-K #-}
 
-open import lib.Basics
-open import lib.Equivalences2
-open import lib.types.Paths
-open import lib.types.Pi
-open import lib.types.Pointed
-open import lib.types.Pushout
-open import lib.types.Sigma
-open import lib.types.Span
+open import HoTT
+open import cohomology.CodomainOverEquiv
 
 {- Flipping the pushout diagram (switching left and right) gives the
  - same pushout. -}
@@ -116,12 +110,10 @@ module _ {i j k} (d : Span {i} {j} {k}) where
   flip-pushout-path = ua flip-pushout-equiv
 
   flip-left : left == right [ (λ D → (A → D)) ↓ flip-pushout-path ]
-  flip-left =
-    ↓-cst→app-in $ λ _ → ↓-idf-ua-in flip-pushout-equiv idp
+  flip-left = codomain-over-equiv _ _ _ (λ _ → idp)
 
   flip-right : right == left [ (λ D → (B → D)) ↓ flip-pushout-path ]
-  flip-right =
-    ↓-cst→app-in $ λ _ → ↓-idf-ua-in flip-pushout-equiv idp
+  flip-right = codomain-over-equiv _ _ _ (λ _ → idp)
 
 {- Path for pointed spans with proofs that the path swaps the pointed
  - injections -}
@@ -138,170 +130,27 @@ module _ {i j k} (ps : Ptd-Span {i} {j} {k}) where
   flip-ptd-pushout-path : Ptd-Pushout ps == Ptd-Pushout (flip-ptd-span ps)
   flip-ptd-pushout-path = ptd-ua (flip-pushout-equiv s) preserves
 
-  test : flip-ptd-pushout-path == ptd-ua (flip-pushout-equiv s) preserves
-  test = idp
+  flip-ptd-left : ptd-left {d = ps} == ptd-right {d = flip-ptd-span ps}
+                  [ (λ W → fst (X ∙→ W)) ↓ flip-ptd-pushout-path ]
+  flip-ptd-left =
+    codomain-over-ptd-equiv _ _ _ preserves (λ _ → idp) (∙'-unit-l _)
 
-  abstract
-    flip-ptd-left : ptd-left {d = ps} == ptd-right {d = flip-ptd-span ps}
-                    [ (λ W → fst (X ∙→ W)) ↓ flip-ptd-pushout-path ]
-    flip-ptd-left = ↓-Σ-in
-      (↓-cst2-in (flip-pushout-path s)
-                 (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-                 (flip-left s))
-      (↓-=-in $ lemma
-        snd (λ r → r (snd X))
-        (pair= (flip-pushout-path s) (↓-idf-ua-in _ preserves))
-        (↓-cst2-in (flip-pushout-path s)
-          (↓-idf-ua-in (flip-pushout-equiv s) preserves) (flip-left s))
-        idp
-        preserves $
-          idp ◃ apd snd (pair= (flip-pushout-path s) (↓-idf-ua-in _ preserves))
-            =⟨ idp◃ _ ⟩
-          apd snd (pair= (flip-pushout-path s) (↓-idf-ua-in _ preserves))
-            =⟨ snd-ptd=-is-↓-cst2 _
-                 (↓-idf-ua-in (flip-pushout-equiv s) preserves) ⟩
-          ↓-cst2-in (flip-pushout-path s)
-                    (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-                    (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-            =⟨ ! (▹-↓-idf-ua-in (flip-pushout-equiv s) idp preserves)
-               |in-ctx (↓-cst2-in _
-                         (↓-idf-ua-in (flip-pushout-equiv s) preserves)) ⟩
-          ↓-cst2-in (flip-pushout-path s)
-                    (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-                    (↓-idf-ua-in (flip-pushout-equiv s) idp ▹ preserves)
-            =⟨ ↓-cst2-in-▹ (flip-pushout-path s)
-                  (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-                  (↓-idf-ua-in (flip-pushout-equiv s) idp)
-                  preserves ⟩
-          ↓-cst2-in (flip-pushout-path s)
-                    (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-                    (↓-idf-ua-in (flip-pushout-equiv s) idp)
-          ▹ preserves
-            =⟨ ! (ap↓-↓-cst→app (λ _ → ↓-idf-ua-in (flip-pushout-equiv s) idp) _)
-               |in-ctx context ⟩
-          ↓-cst2-in (flip-pushout-path s)
-                    (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-                    (ap↓ (λ h → h _) (flip-left s))
-          ▹ preserves
-            =⟨ ↓-cst2-ap↓ (λ h → h (snd X)) (flip-pushout-path s)
-                 (↓-idf-ua-in (flip-pushout-equiv s) preserves) (flip-left s)
-               |in-ctx (λ w → w ▹ preserves) ⟩
-          ap↓ (λ h → h (snd X)) (↓-cst2-in (flip-pushout-path s)
-                                   (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-                                   (flip-left s))
-          ▹ preserves ∎)
-      where
-      lemma : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
-        (f : Π A C) (g : {a : A} → B a → C a)
-        {a₁ a₂ : A} (p : a₁ == a₂)
-        {b₁ : B a₁} {b₂ : B a₂} (q : b₁ == b₂ [ B ↓ p ])
-        (r : g b₁ == f a₁) (s : g b₂ == f a₂)
-        → r ◃ apd f p == ap↓ g q ▹ s
-        → r ◃ apd (f ∘ fst) (pair= p q) == apd (g ∘ snd) (pair= p q) ▹ s
-      lemma f g idp idp r s α = α
-
-      {- Separating this term as its own lemma is a performance hack to help
-       - Agda typecheck it -}
-      context : left (snd X) == right (snd X)
-                [ (λ A → A) ↓ flip-pushout-path s ]
-         → left (snd X) == left (snd Y)
-           [ (λ Z → fst Z) ↓ flip-ptd-pushout-path ]
-      context p =
-        ↓-cst2-in (ua (flip-pushout-equiv s))
-          (↓-idf-ua-in (flip-pushout-equiv s) {u = left (snd X)} preserves) p
-        ▹ preserves
-
-    {- An alternate, probably simpler way to prove this is to prove that
-     - [! flip-ptd-pushout-path == flip-ptd-pushout-path]
-     - and then simply invert [flip-ptd-right] -}
-
-    flip-ptd-right : ptd-right {d = ps} == ptd-left {d = flip-ptd-span ps}
-                    [ (λ W → fst (Y ∙→ W)) ↓ flip-ptd-pushout-path ]
-    flip-ptd-right = ↓-Σ-in
-      (↓-cst2-in (flip-pushout-path s)
-                 (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-                 (flip-right s))
-      (↓-=-in $ lemma₁
-        snd (λ r → r (snd Y))
-        (pair= (flip-pushout-path s) (↓-idf-ua-in _ preserves))
-        (↓-cst2-in (flip-pushout-path s)
-          (↓-idf-ua-in (flip-pushout-equiv s) preserves) (flip-right s))
-        (snd (ptd-right {d = ps}))
-        idp $
-          snd (ptd-right {d = ps}) ◃
-          apd snd (pair= (flip-pushout-path s) (↓-idf-ua-in _ preserves))
-            =⟨ snd-ptd=-is-↓-cst2 _
-                 (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-               |in-ctx (λ w → snd (ptd-right {d = ps}) ◃ w) ⟩
-          snd (ptd-right {d = ps}) ◃
-          ↓-cst2-in (flip-pushout-path s)
-                    (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-                    (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-            =⟨ ! (↓-cst2-in-◃ (flip-pushout-path s)
-                               (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-                               (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-                               (snd (ptd-right {d = ps}))) ⟩
-          ↓-cst2-in (flip-pushout-path s)
-                    (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-                    (snd (ptd-right {d = ps}) ◃
-                     ↓-idf-ua-in (flip-pushout-equiv s) preserves)
-            =⟨ ◃-↓-idf-ua-in (flip-pushout-equiv s)
-                              preserves (snd (ptd-right {d = ps}))
-               |in-ctx context ⟩
-          ↓-cst2-in (flip-pushout-path s)
-                    (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-                    (↓-idf-ua-in (flip-pushout-equiv s)
-                      (ap flip-pushout (snd (ptd-right {d = ps})) ∙ preserves))
-            =⟨ lemma₂ ps |in-ctx context ∘ (↓-idf-ua-in (flip-pushout-equiv s)) ⟩
-          ↓-cst2-in (flip-pushout-path s)
-                    (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-                    (↓-idf-ua-in (flip-pushout-equiv s) idp)
-            =⟨ ! (ap↓-↓-cst→app (λ _ → ↓-idf-ua-in (flip-pushout-equiv s) idp) _)
-               |in-ctx context ⟩
-          ↓-cst2-in (flip-pushout-path s)
-                    (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-                    (ap↓ (λ r → r (snd Y)) (flip-right s))
-            =⟨ ↓-cst2-ap↓ (λ h → h (snd Y)) (flip-pushout-path s)
-                 (↓-idf-ua-in (flip-pushout-equiv s) preserves) (flip-right s) ⟩
-          ap↓ (λ r → r (snd Y)) (↓-cst2-in (flip-pushout-path s)
-                                  (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-                                  (flip-right s))
-            =⟨ ! (▹idp _) ⟩
-          ap↓ (λ r → r (snd Y)) (↓-cst2-in (flip-pushout-path s)
-                                  (↓-idf-ua-in (flip-pushout-equiv s) preserves)
-                                  (flip-right s))
-          ▹ idp ∎)
-      where
-      lemma₁ : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
-        (f : Π A C) (g : {a : A} → B a → C a)
-        {a₁ a₂ : A} (p : a₁ == a₂)
-        {b₁ : B a₁} {b₂ : B a₂} (q : b₁ == b₂ [ B ↓ p ])
-        (r : g b₁ == f a₁) (s : g b₂ == f a₂)
-        → r ◃ apd f p == ap↓ g q ▹ s
-        → r ◃ apd (f ∘ fst) (pair= p q) == apd (g ∘ snd) (pair= p q) ▹ s
-      lemma₁ f g idp idp r s α = α
-
-      lemma₂ : ∀ {i j k} (ps : Ptd-Span {i} {j} {k})
-        → ap flip-pushout (snd (ptd-right {d = ps}))
-          ∙ snd (ptd-right {d = flip-ptd-span ps})
-          == idp
-      lemma₂ = ptd-span-J _ $ λ {A} {B} {Z} f g →
-        ap flip-pushout (! (glue (snd Z))) ∙ ! (glue (snd Z))
-           =⟨ ap-! flip-pushout (glue (snd Z))
-              |in-ctx (λ w → w ∙ ! (glue (snd Z))) ⟩
-        ! (ap flip-pushout (glue (snd Z))) ∙ ! (glue (snd Z))
-           =⟨ FlipPushout.glue-β (snd Z)
-              |in-ctx (λ w → ! w ∙ ! (glue (snd Z))) ⟩
-        ! (! (glue (snd Z))) ∙ ! (glue (snd Z))
-           =⟨ !-inv-l (! (glue (snd Z))) ⟩
-        idp ∎
-
-      {- Separating this term as its own lemma is a performance hack to help
-       - Agda typecheck it -}
-      context : right (snd Y) == left (snd Y)
-                [ (λ A → A) ↓ flip-pushout-path s ]
-         → right (snd Y) == left (snd Y)
-           [ (λ Z → fst Z) ↓ flip-ptd-pushout-path ]
-      context p =
-        ↓-cst2-in (ua (flip-pushout-equiv s))
-          (↓-idf-ua-in (flip-pushout-equiv s) {u = left (snd X)} preserves) p
+  flip-ptd-right : ptd-right {d = ps} == ptd-left {d = flip-ptd-span ps}
+                   [ (λ W → fst (Y ∙→ W)) ↓ flip-ptd-pushout-path ]
+  flip-ptd-right = 
+    codomain-over-ptd-equiv _ _ _ preserves (λ _ → idp) $ ! (lemma ps)
+    where
+    lemma : ∀ {i j k} (ps : Ptd-Span {i} {j} {k})
+      → ap flip-pushout (snd (ptd-right {d = ps}))
+        ∙ snd (ptd-right {d = flip-ptd-span ps})
+        == idp
+    lemma = ptd-span-J _ $ λ {A} {B} {Z} f g →
+      ap flip-pushout (! (glue (snd Z))) ∙ ! (glue (snd Z))
+         =⟨ ap-! flip-pushout (glue (snd Z))
+            |in-ctx (λ w → w ∙ ! (glue (snd Z))) ⟩
+      ! (ap flip-pushout (glue (snd Z))) ∙ ! (glue (snd Z))
+         =⟨ FlipPushout.glue-β (snd Z)
+            |in-ctx (λ w → ! w ∙ ! (glue (snd Z))) ⟩
+      ! (! (glue (snd Z))) ∙ ! (glue (snd Z))
+         =⟨ !-inv-l (! (glue (snd Z))) ⟩
+      idp ∎
