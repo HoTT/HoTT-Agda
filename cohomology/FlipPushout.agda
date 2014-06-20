@@ -1,58 +1,12 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import cohomology.CodomainOverEquiv
+open import cohomology.FunctionOver
 
 {- Flipping the pushout diagram (switching left and right) gives the
  - same pushout. -}
 
 module cohomology.FlipPushout where
-
-{- First some lemmas. Are any of these generally useful? -}
-module _ where
-  ↓-cst2-ap↓ : ∀ {i j k l} {A : Type i} {B : A → Type j} {C : A → Type k}
-    {D : A → Type l} (f : {a : A} → B a → D a)
-    {x y : A} (p : x == y) {b : C x} {c : C y}
-    (q : b == c [ C ↓ p ]) {u : B x} {v : B y}
-    (r : u == v [ B ↓ p ])
-    → ↓-cst2-in p q (ap↓ f r) == ap↓ f (↓-cst2-in p q r)
-  ↓-cst2-ap↓ f idp idp idp = idp
-
-  ap↓-↓-cst→app : ∀ {i j k} {A : Type i} {B : Type j}
-    {C : A → B → Type k} {x x' : A} {p : x == x'}
-    {u : (b : B) → C x b} {u' : (b : B) → C x' b}
-    (α : (b : B) → u b == u' b [ (λ x → C x b) ↓ p ]) (b₀ : B)
-    → ap↓ (λ f → f b₀) (↓-cst→app-in α) == α b₀
-  ap↓-↓-cst→app {p = idp} = app=-β
-
-  ↓-cst2-in-▹ : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
-    {x y : A} (p : x == y) {b : C x} {c : C y}
-    (q : b == c [ C ↓ p ]) {u : B x} {v w : B y}
-    (r : u == v [ B ↓ p ]) (s : v == w)
-    → ↓-cst2-in p q (r ▹ s) == ↓-cst2-in p q r ▹ s
-  ↓-cst2-in-▹ idp idp r s = idp
-
-  ↓-cst2-in-◃ : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
-    {x y : A} (p : x == y) {b : C x} {c : C y}
-    (q : b == c [ C ↓ p ]) {u v : B x} {w : B y}
-    (r : v == w [ B ↓ p ]) (s : u == v)
-    → ↓-cst2-in p q (s ◃ r) == s ◃ ↓-cst2-in p q r
-  ↓-cst2-in-◃ idp idp r s = idp
-
-  ▹-↓-idf-ua-in : ∀ {i} {A B : Type i} (e : A ≃ B) {u : A} {v w : B}
-    (q : –> e u == v) (r : v == w)
-    → ↓-idf-ua-in e q ▹ r == ↓-idf-ua-in e (q ∙ r)
-  ▹-↓-idf-ua-in e idp idp = ▹idp _
-
-  ◃-↓-idf-ua-in : ∀ {i} {A B : Type i} (e : A ≃ B) {u v : A} {w : B}
-    (q : –> e v == w) (r : u == v)
-    → r ◃ ↓-idf-ua-in e q == ↓-idf-ua-in e (ap (–> e) r ∙ q)
-  ◃-↓-idf-ua-in e idp idp = idp◃ _
-
-  snd-ptd=-is-↓-cst2 : ∀ {i} {X Y : Ptd i} (p : fst X == fst Y)
-    (q : snd X == snd Y [ (λ A → A) ↓ p ])
-    → apd snd (pair= p q) == ↓-cst2-in p q q
-  snd-ptd=-is-↓-cst2 idp idp = idp
 
 {- Span-flipping functions -}
 flip-span : ∀ {i j k} → Span {i} {j} {k} → Span {j} {i} {k}
@@ -110,10 +64,10 @@ module _ {i j k} (d : Span {i} {j} {k}) where
   flip-pushout-path = ua flip-pushout-equiv
 
   flip-left : left == right [ (λ D → (A → D)) ↓ flip-pushout-path ]
-  flip-left = codomain-over-equiv _ _ _ (λ _ → idp)
+  flip-left = codomain-over-equiv _ _
 
   flip-right : right == left [ (λ D → (B → D)) ↓ flip-pushout-path ]
-  flip-right = codomain-over-equiv _ _ _ (λ _ → idp)
+  flip-right = codomain-over-equiv _ _
 
 {- Path for pointed spans with proofs that the path swaps the pointed
  - injections -}
@@ -127,24 +81,28 @@ module _ {i j k} (ps : Ptd-Span {i} {j} {k}) where
     preserves : –> (flip-pushout-equiv s) (left (snd X)) == left (snd Y)
     preserves = snd (ptd-right {d = flip-ptd-span ps})
 
+  flip-ptd-pushout : fst (Ptd-Pushout ps ∙→ Ptd-Pushout (flip-ptd-span ps))
+  flip-ptd-pushout = (FlipPushout.f , preserves)
+
   flip-ptd-pushout-path : Ptd-Pushout ps == Ptd-Pushout (flip-ptd-span ps)
   flip-ptd-pushout-path = ptd-ua (flip-pushout-equiv s) preserves
 
   flip-ptd-left : ptd-left {d = ps} == ptd-right {d = flip-ptd-span ps}
                   [ (λ W → fst (X ∙→ W)) ↓ flip-ptd-pushout-path ]
-  flip-ptd-left =
-    codomain-over-ptd-equiv _ _ _ preserves (λ _ → idp) (∙'-unit-l _)
+  flip-ptd-left = codomain-over-ptd-equiv _ _ _
 
   flip-ptd-right : ptd-right {d = ps} == ptd-left {d = flip-ptd-span ps}
                    [ (λ W → fst (Y ∙→ W)) ↓ flip-ptd-pushout-path ]
-  flip-ptd-right = 
-    codomain-over-ptd-equiv _ _ _ preserves (λ _ → idp) $ ! (lemma ps)
+  flip-ptd-right =
+    codomain-over-ptd-equiv _ _ _ ▹ pair= idp (lemma f g)
     where
-    lemma : ∀ {i j k} (ps : Ptd-Span {i} {j} {k})
-      → ap flip-pushout (snd (ptd-right {d = ps}))
-        ∙ snd (ptd-right {d = flip-ptd-span ps})
+    lemma : {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+      (f : fst (Z ∙→ X)) (g : fst (Z ∙→ Y))
+      → ap flip-pushout
+          (ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙' ap left (snd f))
+        ∙ (ap right (! (snd f)) ∙ ! (glue (snd Z)) ∙' ap left (snd g))
         == idp
-    lemma = ptd-span-J _ $ λ {A} {B} {Z} f g →
+    lemma {Z = Z} (f , idp) (g , idp) = 
       ap flip-pushout (! (glue (snd Z))) ∙ ! (glue (snd Z))
          =⟨ ap-! flip-pushout (glue (snd Z))
             |in-ctx (λ w → w ∙ ! (glue (snd Z))) ⟩
@@ -154,3 +112,4 @@ module _ {i j k} (ps : Ptd-Span {i} {j} {k}) where
       ! (! (glue (snd Z))) ∙ ! (glue (snd Z))
          =⟨ !-inv-l (! (glue (snd Z))) ⟩
       idp ∎
+      
