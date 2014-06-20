@@ -28,7 +28,7 @@ module _ {i} (A : Type i) where
   merid : A → north == south
   merid x = glue x
 
-  module SuspensionElim {j} {P : Suspension → Type j} (n : P north) 
+  module SuspensionElim {j} {P : Suspension → Type j} (n : P north)
     (s : P south) (p : (x : A) → n == s [ P ↓ merid x ])
     = PushoutElim (λ _ → n) (λ _ → s) p
 
@@ -39,6 +39,10 @@ module _ {i} (A : Type i) where
 
   module SuspensionRecType {j} (n s : Type j) (p : A → n ≃ s)
     = PushoutRecType {d = suspension-span} (λ _ → n) (λ _ → s) p
+
+suspension-ptd-span : ∀ {i} → Ptd i → Ptd-Span
+suspension-ptd-span X =
+  ptd-span Ptd-Unit Ptd-Unit X (ptd-cst {X = X}) (ptd-cst {X = X})
 
 Ptd-Susp : ∀ {i} → Ptd i → Ptd i
 Ptd-Susp (A , _) = ∙[ Suspension A , north A ]
