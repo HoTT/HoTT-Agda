@@ -165,6 +165,14 @@ module _ {i₀ i₁ j₀ j₁} {A₀ : Type i₀} {A₁ : Type i₁}
   → (pair= p q ∙ pair= p' r) == pair= (p ∙ p') (q ∙ᵈ r)
 Σ-∙ {p = idp} {p' = idp} idp r = idp
 
+-- Implementation of [!] on Σ
+Σ-! : ∀ {i j} {A : Type i} {B : A → Type j}
+  {x y : A} {p : x == y}
+  {u : B x} {v : B y}
+  (q : u == v [ B ↓ p ])
+  → ! (pair= p q) == pair= (! p) (!ᵈ q)
+Σ-! {p = idp} idp = idp
+
 -- Implementation of [_∙'_] on ×
 ×-∙' : ∀ {i j} {A : Type i} {B : Type j}
   {x y z : A} (p : x == y) (p' : y == z)
@@ -178,6 +186,12 @@ module _ {i₀ i₁ j₀ j₁} {A₀ : Type i₀} {A₁ : Type i₁}
   {u v w : B} (q : u == v) (q' : v == w)
   → (pair×= p q ∙ pair×= p' q') == pair×= (p ∙ p') (q ∙ q')
 ×-∙ idp idp idp r = idp
+
+-- Implementation of [!] on ×
+×-! : ∀ {i j} {A : Type i} {B : Type j}
+  {x y : A} (p : x == y) {u v : B} (q : u == v)
+  → ! (pair×= p q) == pair×= (! p) (! q)
+×-! idp idp = idp
 
 -- Special case of [ap-,]
 ap-cst,id : ∀ {i j} {A : Type i} (B : A → Type j)
@@ -210,7 +224,7 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k
 
   ↓-Σ-in : {x x' : A} {p : x == x'} {r : B x} {r' : B x'}
     {s : C x r} {s' : C x' r'}
-    → (q : r == r' [ B ↓ p ])
+    (q : r == r' [ B ↓ p ])
     → s == s' [ uncurry C ↓ pair= p q ]
     → (r , s) == (r' , s') [ (λ x → Σ (B x) (C x)) ↓ p ]
   ↓-Σ-in {p = idp} idp t = pair= idp t
@@ -229,24 +243,35 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k
 
   ↓-Σ-β-fst : {x x' : A} {p : x == x'} {r : B x} {r' : B x'}
     {s : C x r} {s' : C x' r'}
-    → (q : r == r' [ B ↓ p ])
-    → (t : s == s' [ uncurry C ↓ pair= p q ])
+    (q : r == r' [ B ↓ p ])
+    (t : s == s' [ uncurry C ↓ pair= p q ])
     → ↓-Σ-fst (↓-Σ-in q t) == q
   ↓-Σ-β-fst {p = idp} idp idp = idp
 
   ↓-Σ-β-snd : {x x' : A} {p : x == x'} {r : B x} {r' : B x'}
     {s : C x r} {s' : C x' r'}
-    → (q : r == r' [ B ↓ p ])
-    → (t : s == s' [ uncurry C ↓ pair= p q ])
+    (q : r == r' [ B ↓ p ])
+    (t : s == s' [ uncurry C ↓ pair= p q ])
     → ↓-Σ-snd (↓-Σ-in q t) == t
       [ (λ q' → s == s' [ uncurry C ↓ pair= p q' ]) ↓ ↓-Σ-β-fst q t ]
   ↓-Σ-β-snd {p = idp} idp idp = idp
 
   ↓-Σ-η : {x x' : A} {p : x == x'} {r : B x} {r' : B x'}
     {s : C x r} {s' : C x' r'}
-    → (u : (r , s) == (r' , s') [ (λ x → Σ (B x) (C x)) ↓ p ])
+    (u : (r , s) == (r' , s') [ (λ x → Σ (B x) (C x)) ↓ p ])
     → ↓-Σ-in (↓-Σ-fst u) (↓-Σ-snd u) == u
   ↓-Σ-η {p = idp} idp = idp
+
+{- Dependent paths in a ×-type -}
+module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
+  where
+
+  ↓-×-in : {x x' : A} {p : x == x'} {r : B x} {r' : B x'}
+    {s : C x} {s' : C x'}
+    → r == r' [ B ↓ p ]
+    → s == s' [ C ↓ p ]
+    → (r , s) == (r' , s') [ (λ x → B x × C x) ↓ p ]
+  ↓-×-in {p = idp} q t = pair×= q t
 
 module _ where
   -- An orphan lemma.
