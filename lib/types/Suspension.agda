@@ -46,3 +46,16 @@ suspension-ptd-span X =
 
 Ptd-Susp : ∀ {i} → Ptd i → Ptd i
 Ptd-Susp (A , _) = ∙[ Suspension A , north A ]
+
+module _ {i j} where
+
+  module SuspFmap {A : Type i} {B : Type j} (f : A → B) =
+    SuspensionRec A (north B) (south B) (merid B ∘ f)
+
+  susp-fmap : {A : Type i} {B : Type j} (f : A → B)
+    → (Suspension A → Suspension B)
+  susp-fmap = SuspFmap.f
+
+  ptd-susp-fmap : {X : Ptd i} {Y : Ptd j} (f : fst (X ∙→ Y))
+    → fst (Ptd-Susp X ∙→ Ptd-Susp Y)
+  ptd-susp-fmap (f , fpt) = (susp-fmap f , idp)
