@@ -87,6 +87,23 @@ module _ {i j k} (ps : Ptd-Span {i} {j} {k}) where
   flip-ptd-pushout-path : Ptd-Pushout ps == Ptd-Pushout (flip-ptd-span ps)
   flip-ptd-pushout-path = ptd-ua (flip-pushout-equiv s) preserves
 
+  {- action of [flip-pushout] on [snd ptd-right] -}
+  ap-flip-right : ap flip-pushout (snd (ptd-right {d = ps}))
+               == ! (snd (ptd-right {d = flip-ptd-span ps}))
+  ap-flip-right = lemma f g
+    where
+    lemma : {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+        (f : fst (Z ∙→ X)) (g : fst (Z ∙→ Y))
+      → ap (flip-pushout {d = ptd-span-out (ptd-span X Y Z f g)})
+          (ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙' ap left (snd f))
+        == ! (ap right (! (snd f)) ∙ ! (glue (snd Z)) ∙' ap left (snd g))
+    lemma {Z = Z} (f , idp) (g , idp) =
+      ap flip-pushout (! (glue (snd Z)))
+        =⟨ ap-! flip-pushout (glue (snd Z)) ⟩
+      ! (ap flip-pushout (glue (snd Z)))
+        =⟨ FlipPushout.glue-β (snd Z) |in-ctx ! ⟩
+      ! (! (glue (snd Z))) ∎
+
   flip-ptd-left : ptd-left {d = ps} == ptd-right {d = flip-ptd-span ps}
                   [ (λ W → fst (X ∙→ W)) ↓ flip-ptd-pushout-path ]
   flip-ptd-left = codomain-over-ptd-equiv _ _ _
@@ -94,22 +111,5 @@ module _ {i j k} (ps : Ptd-Span {i} {j} {k}) where
   flip-ptd-right : ptd-right {d = ps} == ptd-left {d = flip-ptd-span ps}
                    [ (λ W → fst (Y ∙→ W)) ↓ flip-ptd-pushout-path ]
   flip-ptd-right =
-    codomain-over-ptd-equiv _ _ _ ▹ pair= idp (lemma f g)
-    where
-    lemma : {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-      (f : fst (Z ∙→ X)) (g : fst (Z ∙→ Y))
-      → ap flip-pushout
-          (ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙' ap left (snd f))
-        ∙ (ap right (! (snd f)) ∙ ! (glue (snd Z)) ∙' ap left (snd g))
-        == idp
-    lemma {Z = Z} (f , idp) (g , idp) = 
-      ap flip-pushout (! (glue (snd Z))) ∙ ! (glue (snd Z))
-         =⟨ ap-! flip-pushout (glue (snd Z))
-            |in-ctx (λ w → w ∙ ! (glue (snd Z))) ⟩
-      ! (ap flip-pushout (glue (snd Z))) ∙ ! (glue (snd Z))
-         =⟨ FlipPushout.glue-β (snd Z)
-            |in-ctx (λ w → ! w ∙ ! (glue (snd Z))) ⟩
-      ! (! (glue (snd Z))) ∙ ! (glue (snd Z))
-         =⟨ !-inv-l (! (glue (snd Z))) ⟩
-      idp ∎
-      
+    codomain-over-ptd-equiv _ _ _
+    ▹ pair= idp (ap (λ w → w ∙ preserves) ap-flip-right ∙ !-inv-l preserves)
