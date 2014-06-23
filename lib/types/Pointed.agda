@@ -24,7 +24,7 @@ _∙→_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
 ptd[_,_] = ∙[_,_]
 _ptd->_ = _∙→_
 
-infixr 2 _∘ptd_
+infixr 4 _∘ptd_
 
 ptd-idf : ∀ {i} (X : Ptd i) → fst (X ∙→ X)
 ptd-idf A = ((λ x → x) , idp)
@@ -35,6 +35,10 @@ ptd-cst {Y = Y} = ((λ x → snd Y) , idp)
 _∘ptd_ : ∀ {i j k} {A : Ptd i} {B : Ptd j} {C : Ptd k}
   (g : fst (B ∙→ C)) (f : fst (A ∙→ B)) → fst (A ∙→ C)
 (g , gpt) ∘ptd (f , fpt) = (g ∘ f) , (ap g fpt ∙ gpt)
+
+∘ptd-unit-l : ∀ {i j} {A : Ptd i} {B : Ptd j} (f : fst (A ∙→ B))
+  → ptd-idf B ∘ptd f == f
+∘ptd-unit-l (f , idp) = idp
 
 ∘ptd-assoc : ∀ {i j k l} {A : Ptd i} {B : Ptd j} {C : Ptd k} {D : Ptd l}
   (h : fst (C ∙→ D)) (g : fst (B ∙→ C)) (f : fst (A ∙→ B))
