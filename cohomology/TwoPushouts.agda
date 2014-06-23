@@ -25,7 +25,7 @@ module TwoPushoutsEquiv {i j k l} {A : Type i} {B : Type j} {C : Type k}
     d : Span
     d = span A D B f (h ∘ g)
 
-  module KToL = PushoutRec {d = d₁} {D = Pushout d}
+  module Inner = PushoutRec {d = d₁} {D = Pushout d}
     left
     (right ∘ h)
     glue
@@ -39,7 +39,7 @@ module TwoPushoutsEquiv {i j k l} {A : Type i} {B : Type j} {C : Type k}
   into = Into.f
 
   module Out = PushoutRec {d = d₂} {D = Pushout d}
-    KToL.f
+    Inner.f
     right
     (λ _ → idp)
 
@@ -65,7 +65,7 @@ module TwoPushoutsEquiv {i j k l} {A : Type i} {B : Type j} {C : Type k}
            (ap left (glue b) ∙ glue (g b)) ∙' ! (glue (g b))
              =⟨ ! (Into.glue-β b) |in-ctx (λ w → w ∙' ! (glue (g b))) ⟩
            ap into (glue b) ∙' ! (glue (g b))
-             =⟨ ! (KToL.glue-β b) |in-ctx (λ w → ap into w ∙' ! (glue (g b))) ⟩
+             =⟨ ! (Inner.glue-β b) |in-ctx (λ w → ap into w ∙' ! (glue (g b))) ⟩
            ap into (ap (out ∘ left) (glue b)) ∙' ! (glue (g b))
              =⟨ ∘-ap into (out ∘ left) (glue b)
                |in-ctx (λ w → w ∙' ! (glue (g b))) ⟩
@@ -96,7 +96,7 @@ module TwoPushoutsEquiv {i j k l} {A : Type i} {B : Type j} {C : Type k}
          glue b ∙ idp
            =⟨ ! (Out.glue-β (g b)) |in-ctx (λ w → glue b ∙ w) ⟩
          glue b ∙ ap out (glue (g b))
-           =⟨ ! (KToL.glue-β b)
+           =⟨ ! (Inner.glue-β b)
              |in-ctx (λ w → w ∙ ap out (glue (g b))) ⟩
          ap (out ∘ left) (glue b) ∙ ap out (glue (g b))
            =⟨ ap-∘ out left (glue b)
@@ -125,7 +125,7 @@ module TwoPushoutsEquiv {i j k l} {A : Type i} {B : Type j} {C : Type k}
   two-pushouts-right : lift ∘ right == right [ (λ E → (D → E)) ↓ two-pushouts ]
   two-pushouts-right = codomain-over-equiv _ _
 
-  inner-preserve : (k : Pushout d₁) → into (KToL.f k) == left k
+  inner-preserve : (k : Pushout d₁) → into (Inner.f k) == left k
   inner-preserve = Pushout-elim
     (λ a → idp)
     (λ c → ! (glue c))
@@ -135,16 +135,16 @@ module TwoPushoutsEquiv {i j k l} {A : Type i} {B : Type j} {C : Type k}
       (ap left (glue b) ∙ glue (g b)) ∙' ! (glue (g b))
         =⟨ ! (Into.glue-β b) |in-ctx (λ w → w ∙' ! (glue (g b))) ⟩
       ap into (glue b) ∙' ! (glue (g b))
-        =⟨ ! (KToL.glue-β b) |in-ctx (λ w → ap into w ∙' ! (glue (g b))) ⟩
-      ap into (ap KToL.f (glue b)) ∙' ! (glue (g b))
-        =⟨ ∘-ap into KToL.f (glue b) |in-ctx (λ w → w ∙' ! (glue (g b))) ⟩
-      ap (into ∘ KToL.f) (glue b) ∙' ! (glue (g b)) ∎)
+        =⟨ ! (Inner.glue-β b) |in-ctx (λ w → ap into w ∙' ! (glue (g b))) ⟩
+      ap into (ap Inner.f (glue b)) ∙' ! (glue (g b))
+        =⟨ ∘-ap into Inner.f (glue b) |in-ctx (λ w → w ∙' ! (glue (g b))) ⟩
+      ap (into ∘ Inner.f) (glue b) ∙' ! (glue (g b)) ∎)
     where
     lemma : ∀ {i} {A : Type i} {x y z : A} (p : x == y) (q : y == z)
       → p == (p ∙ q) ∙' ! q
     lemma idp idp = idp
 
-  two-pushouts-inner : lift ∘ KToL.f == left
+  two-pushouts-inner : lift ∘ Inner.f == left
                        [ (λ E → (Pushout d₁ → E)) ↓ two-pushouts ]
   two-pushouts-inner = codomain-over-equiv _ _ ▹ λ= inner-preserve
     
@@ -163,9 +163,7 @@ module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
     ps₂ = ptd-span (Ptd-Pushout ps₁) W Z (ptd-right {d = ps₁}) h
     ps = ptd-span X W Y f (h ∘ptd g)
 
-  open TwoPushoutsEquiv (fst f) (fst g) (fst h)
-    using (two-pushouts-equiv; inner-preserve)
-  module KToL = TwoPushoutsEquiv.KToL (fst f) (fst g) (fst h)
+  open TwoPushoutsEquiv (fst f) (fst g) (fst h) public
 
   two-pushouts-ptd : Ptd-Lift {j = lmax l (lmax k (lmax j i))} (Ptd-Pushout ps)
                      == Ptd-Pushout ps₂
@@ -192,16 +190,16 @@ module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
         ==  ap right (! (snd h)) ∙ ! (glue (snd Z))
             ∙' ap left (snd (ptd-right {d = ptd-span X Z Y f g}))
     lemma {Y = Y} (f , idp) (g , idp) (h , idp) =
-      ap (into ∘ lower) (ap lift (! (glue (snd Y))) ∙ idp) ∙ idp
+      ap (2P.into ∘ lower) (ap lift (! (glue (snd Y))) ∙ idp) ∙ idp
         =⟨ ∙-unit-r _ ⟩
-      ap (into ∘ lower) (ap lift (! (glue (snd Y))) ∙ idp)
-        =⟨ ∙-unit-r _ |in-ctx (ap (into ∘ lower)) ⟩
-      ap (into ∘ lower) (ap lift (! (glue (snd Y))))
-        =⟨ ∘-ap (into ∘ lower) lift _ ⟩
-      ap into (! (glue (snd Y)))
-        =⟨ ap-! into (glue (snd Y)) ⟩
-      ! (ap into (glue (snd Y)))
-        =⟨ Into.glue-β (snd Y) |in-ctx ! ⟩
+      ap (2P.into ∘ lower) (ap lift (! (glue (snd Y))) ∙ idp)
+        =⟨ ∙-unit-r _ |in-ctx (ap (2P.into ∘ lower)) ⟩
+      ap (2P.into ∘ lower) (ap lift (! (glue (snd Y))))
+        =⟨ ∘-ap (2P.into ∘ lower) lift _ ⟩
+      ap 2P.into (! (glue (snd Y)))
+        =⟨ ap-! 2P.into (glue (snd Y)) ⟩
+      ! (ap 2P.into (glue (snd Y)))
+        =⟨ 2P.Into.glue-β (snd Y) |in-ctx ! ⟩
       ! (ap left (glue (snd Y)) ∙ glue (g (snd Y)))
         =⟨ !-∙ (ap left (glue (snd Y))) (glue (g (snd Y))) ⟩
       ! (glue (g (snd Y))) ∙ ! (ap left (glue (snd Y)))
@@ -210,15 +208,15 @@ module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
         =⟨ ∙=∙' (! (glue (g (snd Y)))) (ap left (! (glue (snd Y)))) ⟩
       ! (glue (g (snd Y))) ∙' ap left (! (glue (snd Y))) ∎
       where
-      open TwoPushoutsEquiv f g h
+      module 2P = TwoPushoutsEquiv f g h
 
   ptd-inner-preserve :
-    ((TwoPushoutsEquiv.into (fst f) (fst g) (fst h) ∘ KToL.f) , idp)
+    ((TwoPushoutsEquiv.into (fst f) (fst g) (fst h) ∘ Inner.f) , idp)
     == ptd-left {d = ps₂}
   ptd-inner-preserve = pair= (λ= inner-preserve) $ ↓-app=cst-in $
     ! (∙-unit-r _ ∙ app=-β inner-preserve _)
 
-  two-pushouts-ptd-inner : ptd-lift ∘ptd (KToL.f , idp) == ptd-left {d = ps₂}
+  two-pushouts-ptd-inner : ptd-lift ∘ptd (Inner.f , idp) == ptd-left {d = ps₂}
     [ (λ V → fst (Ptd-Pushout ps₁ ∙→ V)) ↓ two-pushouts-ptd ]
   two-pushouts-ptd-inner =
     codomain-over-ptd-equiv _ _ _ ▹ ptd-inner-preserve
