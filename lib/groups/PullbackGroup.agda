@@ -82,8 +82,9 @@ module _ {i j k} (D : Group-Cospan {i} {j} {k}) where
 
   module _ {l} {J : Group l} (χ : GroupHom J H) (θ : GroupHom J K) where
 
-    module χ = GroupHom χ
-    module θ = GroupHom θ
+    private
+      module χ = GroupHom χ
+      module θ = GroupHom θ
 
     pullback-hom : ((j : Group.El J) → φ.f (χ.f j) == ψ.f (θ.f j))
       → GroupHom J Pullback-Group
