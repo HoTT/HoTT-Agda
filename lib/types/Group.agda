@@ -189,24 +189,24 @@ module _ {i} {G H : Group i} (φ : GroupHom G H) where
         → (f c₁ d₁ e₁ == f c₂ d₂ e₂)
       lemma f idp idp idp = idp
 
-module _ {i} {El : Type i} (GS : GroupStructure El) where
+module _ {i} (G : Group i) where
   private
-    open GroupStructure GS
+    open Group G
     _⊙_ = comp
 
   group-inv-unique-l : (g h : El) → (g ⊙ h == ident) → inv h == g
   group-inv-unique-l g h p =
     inv h              =⟨ ! (unitl (inv h)) ⟩
-    ident ⊙ inv h   =⟨ ! p |in-ctx (λ w → w ⊙ inv h) ⟩
+    ident ⊙ inv h      =⟨ ! p |in-ctx (λ w → w ⊙ inv h) ⟩
     (g ⊙ h) ⊙ inv h    =⟨ assoc g h (inv h) ⟩
     g ⊙ (h ⊙ inv h)    =⟨ invr h |in-ctx (λ w → g ⊙ w) ⟩
-    g ⊙ ident        =⟨ unitr g ⟩
+    g ⊙ ident          =⟨ unitr g ⟩
     g                     ∎
 
   group-inv-unique-r : (g h : El) → (g ⊙ h == ident) → inv g == h
   group-inv-unique-r g h p =
     inv g              =⟨ ! (unitr (inv g)) ⟩
-    inv g ⊙ ident   =⟨ ! p |in-ctx (λ w → inv g ⊙ w) ⟩
+    inv g ⊙ ident      =⟨ ! p |in-ctx (λ w → inv g ⊙ w) ⟩
     inv g ⊙ (g ⊙ h)    =⟨ ! (assoc (inv g) g h) ⟩
     (inv g ⊙ g) ⊙ h    =⟨ invl g |in-ctx (λ w → w ⊙ h) ⟩
     ident ⊙ h          =⟨ unitl h ⟩
@@ -215,3 +215,6 @@ module _ {i} {El : Type i} (GS : GroupStructure El) where
   group-inv-ident : inv ident == ident
   group-inv-ident =
     group-inv-unique-l ident ident (unitl ident)
+
+  inv-inv : (g : El) → inv (inv g) == g
+  inv-inv g = group-inv-unique-r (inv g) g (invl g)
