@@ -338,6 +338,8 @@ data Coprod {i j} (A : Type i) (B : Type j) : Type (lmax i j) where
   inl : A → Coprod A B
   inr : B → Coprod A B
 
+_⊔_ = Coprod
+
 match_withl_withr_ : ∀ {i j k} {A : Type i} {B : Type j}
   {C : Coprod A B → Type k}
   (x : Coprod A B) (l : (a : A) → C (inl a)) (r : (b : B) → C (inr b)) → C x
