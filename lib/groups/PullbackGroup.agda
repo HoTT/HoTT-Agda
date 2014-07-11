@@ -4,6 +4,7 @@ open import lib.Basics
 open import lib.types.Cospan
 open import lib.types.Pullback
 open import lib.types.Group
+open import lib.groups.Homomorphisms
 
 module lib.groups.PullbackGroup where
 
