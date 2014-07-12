@@ -113,7 +113,7 @@ module _ {i} {G H : Group i} (φ : GroupHom G H) where
 
     group-iso-el : (ie : is-equiv φ.f)
       → ap Group.El (group-iso ie) == ua (φ.f , ie)
-    group-iso-el e = ap3-lemma-el _ _ _
+    group-iso-el e = ap3-lemma-el (ua (φ.f , e)) _ _
 
 {- equality of homomorphisms -}
 abstract
@@ -195,8 +195,8 @@ module _ {i j} {G : Group i} {H : Group j} (φ : GroupHom G H) where
       image-prop h = all-paths-is-prop $ λ {(g₁ , p₁) (g₂ , p₂) →
         pair= (inj g₁ g₂ (p₁ ∙ ! p₂)) (prop-has-all-paths-↓ (H.El-level _ _))}
 
-    surj-inj-equiv : is-equiv φ.f
-    surj-inj-equiv = contr-map-is-equiv
+    surj-inj-is-equiv : is-equiv φ.f
+    surj-inj-is-equiv = contr-map-is-equiv
       (λ h → let (g₁ , p₁) = Trunc-rec (image-prop h) (idf _) (surj h) in
         ((g₁ , p₁) , (λ {(g₂ , p₂) →
           pair= (inj g₁ g₂ (p₁ ∙ ! p₂))
@@ -214,7 +214,7 @@ module _ {i} {G H : Group i} (φ : GroupHom G H) where
     (surj : (h : H.El) → Trunc ⟨-1⟩ (Σ G.El (λ g → φ.f g == h))) where
 
     surj-inj-iso : G == H
-    surj-inj-iso = group-iso φ (surj-inj-equiv φ inj surj)
+    surj-inj-iso = group-iso φ (surj-inj-is-equiv φ inj surj)
 
 {- negation is a homomorphism in an abelian gruop -}
 module _ {i} (G : Group i) (G-abelian : is-abelian G) where
