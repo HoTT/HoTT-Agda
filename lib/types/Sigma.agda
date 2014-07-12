@@ -284,6 +284,28 @@ module _ where
     → (b₁ , c₁) == (b₂ , c₂) [ (λ x → Σ B (C x)) ↓ p ]
   ↓-cst×app-in idp idp idp = idp
 
+{- pair= and pair×= where one argument is reflexivity -}
+pair=-idp-l : ∀ {i j} {A : Type i} {B : A → Type j} (a : A) {b₁ b₂ : B a}
+  (q : b₁ == b₂) → pair= {B = B} idp q == ap (λ y → (a , y)) q
+pair=-idp-l _ idp = idp
+
+pair×=-idp-l : ∀ {i j} {A : Type i} {B : Type j} (a : A) {b₁ b₂ : B}
+  (q : b₁ == b₂) → pair×= idp q == ap (λ y → (a , y)) q
+pair×=-idp-l _ idp = idp
+
+pair×=-idp-r : ∀ {i j} {A : Type i} {B : Type j} {a₁ a₂ : A} (p : a₁ == a₂)
+  (b : B) → pair×= p idp == ap (λ x → (x , b)) p
+pair×=-idp-r idp _ = idp
+
+pair×=-split-l : ∀ {i j} {A : Type i} {B : Type j} {a₁ a₂ : A} (p : a₁ == a₂)
+  {b₁ b₂ : B} (q : b₁ == b₂)
+  → pair×= p q == ap (λ a → (a , b₁)) p ∙ ap (λ b → (a₂ , b)) q
+pair×=-split-l idp idp = idp
+
+pair×=-split-r : ∀ {i j} {A : Type i} {B : Type j} {a₁ a₂ : A} (p : a₁ == a₂)
+  {b₁ b₂ : B} (q : b₁ == b₂)
+  → pair×= p q == ap (λ b → (a₁ , b)) q ∙ ap (λ a → (a , b₂)) p
+pair×=-split-r idp idp = idp
 
 -- Commutativity of products and derivatives.
 module _ {i j} {A : Type i} {B : Type j} where
