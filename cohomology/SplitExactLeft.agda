@@ -8,7 +8,7 @@ open import cohomology.FunctionOver
    Assume an exact sequence:
 
              φ   ψ
-       0 → G → H → K → 0
+           G → H → K → 0
 
    where H is abelian. If φ has a left inverse χ, then H == G × K. Over
    this path φ becomes the natural injection and ψ the natural projection.
@@ -27,7 +27,6 @@ private
   module ψ = GroupHom ψ
 
 module SplitExactLeft
-  (ex₁ : is-exact-ktoi-mere (ptd-cst {X = Ptd-Unit}) φ.ptd-f)
   (ex₂-itok : is-exact-itok-mere φ.ptd-f ψ.ptd-f)
   (ex₂-ktoi : is-exact-ktoi-mere φ.ptd-f ψ.ptd-f)
   (ex₃ : is-exact-ktoi-mere ψ.ptd-f (ptd-cst {X = K.Ptd-El} {Y = Ptd-Unit}))
@@ -203,8 +202,7 @@ module SplitExactLeft
     im-in-φ-is-equiv = surj-inj-is-equiv (im-in-hom φ) inj (im-in-surj φ)
       where
       inj = zero-kernel-injective (im-in-hom φ)
-        (λ g p → Trunc-rec (G.El-level _ _)
-          (λ {(_ , q) → ! q}) (ex₁ g (ap fst p)))
+        (λ g p → ! (χ-linv g) ∙ ap (χ.f ∘ fst) p ∙ χ.pres-ident)
 
     G-iso-Imφ : G == Im φ
     G-iso-Imφ = group-iso (im-in-hom φ) im-in-φ-is-equiv

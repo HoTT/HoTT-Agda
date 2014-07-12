@@ -8,7 +8,7 @@ open import cohomology.FunctionOver
    Assume an exact sequence:
 
              φ   ψ
-       0 → G → H → K → 0
+       0 → G → H → K
 
    where H is abelian. If ψ has a right inverse χ, then H == G × K. Over
    this path φ becomes the natural injection and ψ the natural projection.
@@ -30,7 +30,6 @@ module SplitExactRight
   (ex₁ : is-exact-ktoi-mere (ptd-cst {X = Ptd-Unit}) φ.ptd-f)
   (ex₂-itok : is-exact-itok-mere φ.ptd-f ψ.ptd-f)
   (ex₂-ktoi : is-exact-ktoi-mere φ.ptd-f ψ.ptd-f)
-  (ex₃ : is-exact-ktoi-mere ψ.ptd-f (ptd-cst {X = K.Ptd-El} {Y = Ptd-Unit}))
   (χ : GroupHom K H) (χ-rinv : (k : K.El) → ψ.f (GroupHom.f χ k) == k)
   where
 
