@@ -4,6 +4,7 @@ open import lib.Basics
 open import lib.types.Group
 open import lib.types.Sigma
 open import lib.types.Pi
+open import lib.groups.Homomorphisms
 
 module lib.groups.GroupProduct where
 
@@ -66,6 +67,28 @@ _×G_ (group A A-level A-struct) (group B B-level B-struct) =
   f = λ x → (h x , k x);
   pres-ident = pair×= h-id k-id;
   pres-comp = λ x y → pair×= (h-comp x y) (k-comp x y)}
+
+{- projection homomorphisms -}
+×G-fst : ∀ {i j} {G : Group i} {H : Group j} → GroupHom (G ×G H) G
+×G-fst = record {
+  f = λ {(g , _) → g};
+  pres-ident = idp;
+  pres-comp = λ _ _ → idp}
+
+×G-snd : ∀ {i j} {G : Group i} {H : Group j} → GroupHom (G ×G H) H
+×G-snd = record {
+  f = λ {(_ , h) → h};
+  pres-ident = idp;
+  pres-comp = λ _ _ → idp}
+
+{- injection homomorphisms -}
+module _ {i j} {G : Group i} {H : Group j} where
+
+  ×G-inl : GroupHom G (G ×G H)
+  ×G-inl = ×-hom (idhom G) cst-hom
+
+  ×G-inr : GroupHom H (G ×G H)
+  ×G-inr = ×-hom (cst-hom {H = G}) (idhom H)
 
 {- when G is abelian, we can define a map H×K → G as a sum of maps
  - H → G and K → G (that is, the product behaves as a sum)         -}
