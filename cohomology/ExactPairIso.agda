@@ -21,7 +21,7 @@ module _ {i} {G H : Group i} (φ : GroupHom G H) where
       inj : (g₁ g₂ : G.El) → φ.f g₁ == φ.f g₂ → g₁ == g₂
       inj = zero-kernel-injective φ
         (λ g p → Trunc-rec (G.El-level _ _) (λ s → ! (snd s))
-                   (fst (exact-get ex 0) g p))
+                   (ktoi (exact-get ex 0) g p))
 
     exact-pair-iso : G == H
-    exact-pair-iso = surj-inj-iso φ inj (λ h → fst (exact-get ex 1) h idp)
+    exact-pair-iso = surj-inj-iso φ inj (λ h → ktoi (exact-get ex 1) h idp)
