@@ -27,9 +27,7 @@ private
   module ψ = GroupHom ψ
 
 module SplitExactRight
-  (ex₁ : is-exact-ktoi-mere (ptd-cst {X = Ptd-Unit}) φ.ptd-f)
-  (ex₂-itok : is-exact-itok-mere φ.ptd-f ψ.ptd-f)
-  (ex₂-ktoi : is-exact-ktoi-mere φ.ptd-f ψ.ptd-f)
+  (ex : ExactSeq (0G ⟨ cst-hom ⟩→ G ⟨ φ ⟩→ H ⟨ ψ ⟩→ K ⊣|))
   (χ : GroupHom K H) (χ-rinv : (k : K.El) → ψ.f (GroupHom.f χ k) == k)
   where
 
@@ -155,18 +153,18 @@ module SplitExactRight
     {- G == Ker ψ -}
 
     ker-in-φ : GroupHom G (Ker ψ)
-    ker-in-φ = ker-hom ψ φ (λ g → ex₂-itok (φ.f g) [ g , idp ])
+    ker-in-φ = ker-hom ψ φ (λ g → itok (exact-get ex 1) (φ.f g) [ g , idp ])
 
     ker-in-φ-is-equiv : is-equiv (GroupHom.f ker-in-φ)
     ker-in-φ-is-equiv = surj-inj-is-equiv ker-in-φ inj surj
       where
       inj = zero-kernel-injective ker-in-φ
         (λ g p → Trunc-rec (G.El-level _ _)
-          (λ {(_ , q) → ! q}) (ex₁ g (ap fst p)))
+          (λ {(_ , q) → ! q}) (ktoi (exact-get ex 0) g (ap fst p)))
 
       surj = λ {(h , p) → Trunc-fmap
         (λ {(g , q) → (g , pair= q (prop-has-all-paths-↓ (K.El-level _ _)))})
-        (ex₂-ktoi h p)}
+        (ktoi (exact-get ex 1) h p)}
 
     G-iso-Kerψ : G == Ker ψ
     G-iso-Kerψ = group-iso ker-in-φ ker-in-φ-is-equiv
@@ -190,6 +188,7 @@ module SplitExactRight
   private
 
     decomp-φ = ×-hom ker-in-φ (cst-hom {G = G} {H = Im χ})
+    ψ-dinv = ψ ∘hom ×-sum-hom H-abelian (ker-inj ψ) (im-inj χ)
 
     φ-over-decomp : φ == decomp-φ [ (λ J → GroupHom G J) ↓ decomp-iso ]
     φ-over-decomp = hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $ transport
@@ -199,11 +198,8 @@ module SplitExactRight
       where
       lemma : GroupHom.f decomp ∘ φ.f == GroupHom.f decomp-φ
       lemma = λ= (λ g → pair×=
-        (ker-part-kerψ (φ.f g) (ex₂-itok (φ.f g) [ g , idp ]))
-        (im-part-kerψ (φ.f g) (ex₂-itok (φ.f g) [ g , idp ])))
-
-    ψ-dinv : GroupHom (Ker ψ ×G Im χ) K
-    ψ-dinv = ψ ∘hom ×-sum-hom H-abelian (ker-inj ψ) (im-inj χ)
+        (ker-part-kerψ (φ.f g) (itok (exact-get ex 1) (φ.f g) [ g , idp ]))
+        (im-part-kerψ (φ.f g) (itok (exact-get ex 1) (φ.f g) [ g , idp ])))
 
     ψ-over-decomp : ψ == ψ-dinv [ (λ J → GroupHom J K) ↓ decomp-iso ]
     ψ-over-decomp = hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $ transport
@@ -226,7 +222,8 @@ module SplitExactRight
     ψ|imχ-over-K-iso : idhom K == ψ ∘hom im-inj χ
       [ (λ J → GroupHom J K) ↓ K-iso-Imχ ]
     ψ|imχ-over-K-iso = hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $ transport
-      (λ q → idf K.El == ψ.f ∘ GroupHom.f (im-inj χ) [ (λ A → A → K.El) ↓ q ])
+      (λ q → idf K.El == ψ.f ∘ GroupHom.f (im-inj χ)
+             [ (λ A → A → K.El) ↓ q ])
       (! (group-iso-el (im-in-hom χ) im-in-χ-is-equiv))
       (domain!-over-equiv (idf _) (_ , im-in-χ-is-equiv) ▹ lemma)
       where
@@ -242,17 +239,19 @@ module SplitExactRight
       (! (pair×=-split-l (! G-iso-Kerψ) (! K-iso-Imχ)))
       (l ∙ᵈ r)
       where
-      l : decomp-φ == ×-hom (idhom G) (cst-hom {H = Im χ})
+      l : decomp-φ == ×-hom (idhom G) (cst-hom {G = G} {H = Im χ})
         [ (λ {(J₁ , J₂) → GroupHom G (J₁ ×G J₂)})
           ↓ ap (λ J → J , Im χ) (! G-iso-Kerψ) ]
       l = ↓-ap-in _ (λ J → J , Im χ)
-            (ap↓ (λ θ → ×-hom θ cst-hom) (!ᵈ id-over-G-iso))
+            (ap↓ (λ θ → ×-hom θ (cst-hom {G = G} {H = Im χ}))
+              (!ᵈ id-over-G-iso))
 
       r : ×-hom (idhom G) (cst-hom {H = Im χ}) == ×G-inl
         [ (λ {(J₁ , J₂) → GroupHom G (J₁ ×G J₂)})
           ↓ ap (λ J → G , J) (! K-iso-Imχ) ]
       r = ↓-ap-in _ (λ J → G , J)
-            (apd (λ J → ×-hom (idhom G) (cst-hom {H = J})) (! K-iso-Imχ))
+            (apd (λ J → ×-hom (idhom G)
+              (cst-hom {G = G} {H = J})) (! K-iso-Imχ))
 
     ψ-over-G-K-isos : ψ-dinv == ×G-snd {G = G}
       [ (λ J → GroupHom J K) ↓ ap2 _×G_ (! G-iso-Kerψ) (! K-iso-Imχ) ]
@@ -275,7 +274,8 @@ module SplitExactRight
         ψ.f (H.comp (φ.f g) h)
           =⟨ ψ.pres-comp (φ.f g) h ⟩
         K.comp (ψ.f (φ.f g)) (ψ.f h)
-          =⟨ ex₂-itok (φ.f g) [ g , idp ] |in-ctx (λ w → K.comp w (ψ.f h))  ⟩
+          =⟨ itok (exact-get ex 1) (φ.f g) [ g , idp ]
+             |in-ctx (λ w → K.comp w (ψ.f h))  ⟩
         K.comp K.ident (ψ.f h)
           =⟨ K.unitl (ψ.f h) ⟩
         ψ.f h ∎})

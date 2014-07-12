@@ -27,9 +27,7 @@ private
   module ψ = GroupHom ψ
 
 module SplitExactLeft
-  (ex₂-itok : is-exact-itok-mere φ.ptd-f ψ.ptd-f)
-  (ex₂-ktoi : is-exact-ktoi-mere φ.ptd-f ψ.ptd-f)
-  (ex₃ : is-exact-ktoi-mere ψ.ptd-f (ptd-cst {X = K.Ptd-El} {Y = Ptd-Unit}))
+  (ex : ExactSeq (G ⟨ φ ⟩→ H ⟨ ψ ⟩→ K ⟨ cst-hom ⟩→ 0G ⊣|))
   (χ : GroupHom H G) (χ-linv : (g : G.El) → GroupHom.f χ (φ.f g) == g)
   where
 
@@ -163,7 +161,7 @@ module SplitExactLeft
       (Trunc-rec (H.El-level _ _)
         (λ {(g , r) →
           ! r ∙ ap φ.f (! (χ-linv g) ∙ ap χ.f r ∙ p) ∙ φ.pres-ident})
-        (ex₂-ktoi h q))
+        (ktoi (exact-get ex 0) h q))
       (prop-has-all-paths-↓ (G.El-level _ _))
 
     ψ|kerχ-surj : (k : K.El)
@@ -177,7 +175,7 @@ module SplitExactLeft
            =⟨ grouphom-pres-inv ψ (φ.f (χ.f h))
               |in-ctx (λ k → K.comp (ψ.f h) k) ⟩
          K.comp (ψ.f h) (K.inv (ψ.f (φ.f (χ.f h))))
-           =⟨ ex₂-itok (φ.f (χ.f h)) [ χ.f h , idp ]
+           =⟨ itok (exact-get ex 0) (φ.f (χ.f h)) [ χ.f h , idp ]
               |in-ctx (λ k → K.comp (ψ.f h) (K.inv k)) ⟩
          K.comp (ψ.f h) (K.inv K.ident)
            =⟨ group-inv-ident K |in-ctx (λ k → K.comp (ψ.f h) k) ⟩
@@ -186,7 +184,7 @@ module SplitExactLeft
          ψ.f h
            =⟨ p ⟩
          k ∎)})
-      (ex₃ k idp)
+      (ktoi (exact-get ex 1) k idp)
 
     ψ|kerχ-is-equiv : is-equiv (GroupHom.f (ψ ∘hom (ker-inj χ)))
     ψ|kerχ-is-equiv = surj-inj-is-equiv (ψ ∘hom (ker-inj χ))
@@ -261,17 +259,19 @@ module SplitExactLeft
       (! (pair×=-split-l (! G-iso-Imφ) (Kerχ-iso-K)))
       (l ∙ᵈ r)
       where
-      l : decomp-φ == ×-hom (idhom G) (cst-hom {H = Ker χ})
+      l : decomp-φ == ×-hom (idhom G) (cst-hom {G = G} {H = Ker χ})
           [ (λ {(J₁ , J₂) → GroupHom G (J₁ ×G J₂)})
             ↓ ap (λ J → J , Ker χ) (! G-iso-Imφ) ]
       l = ↓-ap-in _ (λ J → J , Ker χ)
-            (ap↓ (λ θ → ×-hom θ cst-hom) (!ᵈ id-over-G-iso))
+            (ap↓ (λ θ → ×-hom θ (cst-hom {G = G} {H = Ker χ}))
+              (!ᵈ id-over-G-iso))
 
-      r : ×-hom (idhom G) (cst-hom {H = Ker χ}) == ×G-inl
+      r : ×-hom (idhom G) (cst-hom {G = G} {H = Ker χ}) == ×G-inl
           [ (λ {(J₁ , J₂) → GroupHom G (J₁ ×G J₂)})
             ↓ ap (λ J → G , J) Kerχ-iso-K ]
       r = ↓-ap-in _ (λ J → G , J)
-            (apd (λ J → ×-hom (idhom G) (cst-hom {H = J})) Kerχ-iso-K)
+            (apd (λ J → ×-hom (idhom G) (cst-hom {G = G} {H = J}))
+              Kerχ-iso-K)
 
     ψ-over-G-K-isos : ψ-dinv == (×G-snd {G = G})
       [ (λ J → GroupHom J K) ↓ ap2 _×G_ (! G-iso-Imφ) Kerχ-iso-K ]
@@ -294,7 +294,8 @@ module SplitExactLeft
         ψ.f (H.comp (φ.f g) h)
           =⟨ ψ.pres-comp (φ.f g) h ⟩
         K.comp (ψ.f (φ.f g)) (ψ.f h)
-          =⟨ ex₂-itok (φ.f g) [ g , idp ] |in-ctx (λ k → K.comp k (ψ.f h)) ⟩
+          =⟨ itok (exact-get ex 0) (φ.f g) [ g , idp ]
+             |in-ctx (λ k → K.comp k (ψ.f h)) ⟩
         K.comp K.ident (ψ.f h)
           =⟨ K.unitl (ψ.f h) ⟩
         ψ.f h ∎}))

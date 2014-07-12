@@ -14,17 +14,14 @@ module _ {i} {G H : Group i} (φ : GroupHom G H) where
     module H = Group H
     module φ = GroupHom φ
 
-  module _
-    (l : is-exact-ktoi-mere
-           (ptd-cst {X = Ptd-Lift {j = i} Ptd-Unit}) φ.ptd-f)
-    (r : is-exact-ktoi-mere
-           φ.ptd-f (ptd-cst {X = H.Ptd-El} {Y = Ptd-Lift {j = i} Ptd-Unit}))
+  module _ (ex : ExactSeq (0G ⟨ cst-hom ⟩→ G ⟨ φ ⟩→ H ⟨ cst-hom ⟩→ 0G ⊣|))
     where
 
     private
       inj : (g₁ g₂ : G.El) → φ.f g₁ == φ.f g₂ → g₁ == g₂
       inj = zero-kernel-injective φ
-        (λ g p → Trunc-rec (G.El-level _ _) (λ s → ! (snd s)) (l g p))
+        (λ g p → Trunc-rec (G.El-level _ _) (λ s → ! (snd s))
+                   (fst (exact-get ex 0) g p))
 
     exact-pair-iso : G == H
-    exact-pair-iso = surj-inj-iso φ inj (λ h → r h idp)
+    exact-pair-iso = surj-inj-iso φ inj (λ h → fst (exact-get ex 1) h idp)

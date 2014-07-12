@@ -26,8 +26,9 @@ Unit-Group = group _ Unit-is-set Unit-group-structure
 LiftUnit-Group : ∀ {i} → Group i
 LiftUnit-Group = Lift-Group Unit-Group
 
-contr-iso-LiftUnit : ∀ {i} (G : Group i) → is-contr (Group.El G)
-  → G == LiftUnit-Group
+0G = LiftUnit-Group
+
+contr-iso-LiftUnit : ∀ {i} (G : Group i) → is-contr (Group.El G) → G == 0G
 contr-iso-LiftUnit G pA = group-iso
   (group-hom (λ _ → lift unit) idp (λ _ _ → idp))
   (snd (contr-equiv-LiftUnit pA))
