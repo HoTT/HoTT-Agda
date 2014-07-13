@@ -68,25 +68,6 @@ exact-get exact-seq-one _ = lift unit
 exact-get (exact-seq-two ex s) O = ex
 exact-get (exact-seq-two ex s) (S n) = exact-get s n
 
-data List {i} (A : Type i) : Type i where
-  nil : List A
-  _::_ : A → List A → List A
-
-data HList {i} : List (Type i) → Type (lsucc i) where
-  nil : HList nil
-  _::_ : {A : Type i} {L : List (Type i)} → A → HList L → HList (A :: L)
-
-hlist-curry-type : ∀ {i j} (L : List (Type i))
-  (B : HList L → Type (lmax i j)) → Type (lmax i j)
-hlist-curry-type nil B = B nil
-hlist-curry-type {j = j} (A :: L) B =
-  (x : A) → hlist-curry-type {j = j} L (λ xs → B (x :: xs))
-
-hlist-curry : ∀ {i j} {L : List (Type i)} {B : HList L → Type (lmax i j)}
-  (f : Π (HList L) B) → hlist-curry-type {j = j} L B
-hlist-curry {L = nil} f = f nil
-hlist-curry {L = A :: _} f = λ x → hlist-curry (λ xs → f (x :: xs))
-
 private
   exact-build-arg-type : ∀ {i} {G H : Group i} → ExactDiag G H → List (Type i)
   exact-build-arg-type (G ⊣|) = nil
