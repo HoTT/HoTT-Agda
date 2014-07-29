@@ -157,3 +157,9 @@ module _ {i j k} where
         (p : x == y) (q : y == z) (r : x == w)
         → r == p ∙ q ∙ ! q ∙ ! p ∙' r
       lemma idp idp idp = idp
+
+  ptd-pushout-J : ∀ {l} (P : Ptd-Span → Type l)
+    → ({A : Type i} {B : Type j} (Z : Ptd k) (f : fst Z → A) (g : fst Z → B)
+       → P (ptd-span (A , f (snd Z)) (B , g (snd Z)) Z (f , idp) (g , idp)))
+    → ((ps : Ptd-Span) → P ps)
+  ptd-pushout-J P t (ptd-span (_ , ._) (_ , ._) Z (f , idp) (g , idp)) = t Z f g
