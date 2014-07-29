@@ -86,3 +86,25 @@ private
 exact-build : ∀ {i} {G H : Group i} (diag : ExactDiag G H)
   → hlist-curry-type (exact-build-arg-type diag) (λ _ → ExactSeq diag)
 exact-build diag = hlist-curry (exact-build-helper diag)
+
+private
+  exact-snoc-diag : ∀ {i} {G H K : Group i}
+    → ExactDiag G H → GroupHom H K → ExactDiag G K
+  exact-snoc-diag (G ⊣|) ψ = G ⟨ ψ ⟩→ _ ⊣|
+  exact-snoc-diag (G ⟨ φ ⟩→ s) ψ = G ⟨ φ ⟩→ exact-snoc-diag s ψ
+
+  exact-concat-diag : ∀ {i} {G H K : Group i}
+    → ExactDiag G H → ExactDiag H K → ExactDiag G K
+  exact-concat-diag (G ⊣|) s₂ = s₂
+  exact-concat-diag (G ⟨ φ ⟩→ s₁) s₂ = G ⟨ φ ⟩→ (exact-concat-diag s₁ s₂)
+
+abstract
+  exact-concat : ∀ {i} {G H K L : Group i}
+    {diag₁ : ExactDiag G H} {φ : GroupHom H K} {diag₂ : ExactDiag K L}
+    → ExactSeq (exact-snoc-diag diag₁ φ) → ExactSeq (H ⟨ φ ⟩→ diag₂)
+    → ExactSeq (exact-concat-diag diag₁ (H ⟨ φ ⟩→ diag₂))
+  exact-concat {diag₁ = G ⊣|} exact-seq-one es₂ = es₂
+  exact-concat {diag₁ = G ⟨ ψ ⟩→ H ⊣|} (exact-seq-two ex _) es₂ =
+    exact-seq-two ex es₂
+  exact-concat {diag₁ = G ⟨ ψ ⟩→ H ⟨ χ ⟩→ s} (exact-seq-two ex es₁) es₂ =
+    exact-seq-two ex (exact-concat {diag₁ = H ⟨ χ ⟩→ s} es₁ es₂)
