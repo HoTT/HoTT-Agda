@@ -21,3 +21,15 @@ co∂-exact-right = transport
   (λ {(_ , (g , h)) → is-exact (CF n h) (CF n g)})
   (cofiber-sequence f)
   (C-exact n (ptd-cfcod (ptd-cfcod f)))
+
+long-exact-diag : ExactDiag _ _
+long-exact-diag =
+  C n (Ptd-Susp Y) ⟨ CF-hom n (ptd-susp-fmap f) ⟩→
+  C n (Ptd-Susp X) ⟨ CF-hom n (ptd-co∂ f)       ⟩→
+  C n (Ptd-Cof f)  ⟨ CF-hom n (ptd-cfcod f)     ⟩→
+  C n Y            ⟨ CF-hom n f                 ⟩→
+  C n X            ⊣|
+
+long-exact-cofiber : ExactSeq long-exact-diag
+long-exact-cofiber = exact-build long-exact-diag
+  co∂-exact-right co∂-exact-left (C-exact n f)
