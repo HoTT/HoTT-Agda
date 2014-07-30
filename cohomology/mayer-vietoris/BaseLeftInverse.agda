@@ -27,31 +27,8 @@ module OutIntoCod = PushoutElim
 
 out-into-cod = OutIntoCod.f
 
-{- Cube move lemmas for the left inverse coherence. These are used to
-   build up a right square (in this case starting from a cube filler  -}
-private
-  top-lemma : ∀ {i} {A : Type i}
-    {a₀₀₀ a₀₁₀ a₁₀₀ a₁₁₀ a₀₀₁ a₀₁₁ a₁₀₁ a₁₁₁ : A}
-    {p₀₋₀ : a₀₀₀ == a₀₁₀} {p₋₀₀ : a₀₀₀ == a₁₀₀}
-    {p₋₁₀ : a₀₁₀ == a₁₁₀} {p₁₋₀ : a₁₀₀ == a₁₁₀}
-    {sq₋₋₀ : Square p₀₋₀ p₋₀₀ p₋₁₀ p₁₋₀} -- left
-
-    {p₀₋₁ : a₀₀₁ == a₀₁₁} {p₋₀₁ : a₀₀₁ == a₁₀₁}
-    {p₋₁₁ : a₀₁₁ == a₁₁₁} {p₁₋₁ : a₁₀₁ == a₁₁₁}
-    {sq₋₋₁ : Square p₀₋₁ p₋₀₁ p₋₁₁ p₁₋₁} -- right
-
-    {p₀₀₋ : a₀₀₀ == a₀₀₁} {p₀₁₋ : a₀₁₀ == a₀₁₁}
-    {p₁₀₋ : a₁₀₀ == a₁₀₁} {p₁₁₋ : a₁₁₀ == a₁₁₁}
-    {q : a₀₀₁ == a₁₀₁}
-    {sq₀₋₋ : Square p₀₋₀ p₀₀₋ p₀₁₋ p₀₋₁} -- back
-    {sq₋₀₋ : Square p₋₀₀ p₀₀₋ p₁₀₋ q} -- top
-    {sq₋₁₋ : Square p₋₁₀ p₀₁₋ p₁₁₋ p₋₁₁} -- bottom
-    {sq₁₋₋ : Square p₁₋₀ p₁₀₋ p₁₁₋ p₁₋₁} -- front
-    (α : q == p₋₀₁)
-    (cu : Cube sq₋₋₀ sq₋₋₁ sq₀₋₋ (sq₋₀₋ ⊡h∙ α) sq₋₁₋ sq₁₋₋)
-    → Cube sq₋₋₀ (α ∙v⊡ sq₋₋₁) sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋
-  top-lemma idp cu = cu
-
+{- Cube move lemma for the left inverse coherence. This is used to
+   build up a right square (in this case starting from a cube filler)  -}
 private
   square-push-rb : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A} {b : A}
     {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == b} {p₁₋ : a₁₀ == a₁₁}
@@ -116,18 +93,15 @@ private
                              (cfglue _ w) (out-into-cod (reglue w))]
 -}
 
-out-into-sql : (x : fst X)
-  → Square idp (ap out (ap into (glue (winl x))))
-               (cfglue _ (winl x)) (cfglue _ (winl x))
-out-into-sql x =
-  ap (ap out) (Into.glue-β (winl x)) ∙v⊡ connection2
+out-into-sql : (x : fst X) → Square idp (ap out (into-glue (winl x)))
+                                    (cfglue _ (winl x)) (cfglue _ (winl x))
+out-into-sql x = connection2
 
 
 out-into-fill : Σ (Square idp (ap out (glue (snd Z))) idp idp) (λ sq →
   Cube (out-into-sql (snd X)) sq
-       (square-push-rb idp (natural-square' (λ _ → idp) wglue))
-       (natural-square' (ap out ∘ ap into ∘ cfglue _) wglue
-        ⊡h∙ ap (ap out) (Into.glue-β (winr (snd Y))))
+       (natural-square' (λ _ → idp) wglue)
+       (natural-square' (ap out ∘ into-glue) wglue)
        (natural-square' (cfglue _) wglue ⊡h' !□h (square-symmetry connection2))
        (square-push-rb (cfglue _ (winr (snd Y)))
          (natural-square' (out-into-cod ∘ reglue) wglue)))
@@ -144,22 +118,23 @@ out-into-fill-cube = snd out-into-fill
    [y], so we can pick it to give the right result at the basepoint.
 -}
 out-into-sqr : (y : fst Y)
-  → Square idp (ap out (ap into (glue (winr y))))
+  → Square idp (ap out (into-glue (winr y)))
            (cfglue _ (winr y)) (cfglue _ (winr y))
-out-into-sqr y =
-  ap (ap out) (Into.glue-β (winr y)) ∙v⊡ out-into-fill-square
-  ⊡v connection2
+out-into-sqr y = out-into-fill-square ⊡v connection2
 
 {- Left inverse -}
 
 out-into : ∀ κ → out (into κ) == κ
 out-into = Cofiber-elim reglue
   idp out-into-cod
-  (↓-∘=idf-from-square out into ∘ Wedge-elim
-     {P = λ w → Square idp (ap out (ap into (glue w)))
-                       (cfglue _ w) (out-into-cod (reglue w))}
-     out-into-sql out-into-sqr
-     (cube-to-↓-square $
-       top-lemma (ap (ap out) (Into.glue-β (winr (snd Y)))) $
-         bot-lemma out-into-fill-square connection2 $
-           out-into-fill-cube))
+  (λ w → ↓-∘=idf-from-square out into $
+     ap (ap out) (Into.glue-β w) ∙v⊡
+       Wedge-elim
+         {P = λ w → Square idp (ap out (into-glue w))
+                           (cfglue _ w) (out-into-cod (reglue w))}
+         out-into-sql
+         out-into-sqr
+         (cube-to-↓-square $
+           bot-lemma out-into-fill-square connection2 $
+             out-into-fill-cube)
+         w)
