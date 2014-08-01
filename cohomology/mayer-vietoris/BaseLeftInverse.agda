@@ -42,28 +42,6 @@ private
     → Square p₀₋ p₋₀ p₋₁ (p₁₋ ∙ q)
   square-pull-rb {p₁₋ = idp} idp sq = sq
 
-  bot-lemma' : ∀ {i} {A : Type i}
-    {a₀₀₀ a₀₁₀ a₁₀₀ a₁₁₀ a₀₀₁ a₀₁₁ a₁₀₁ a₁₁₁ : A}
-    {p₀₋₀ : a₀₀₀ == a₀₁₀} {p₋₀₀ : a₀₀₀ == a₁₀₀}
-    {p₋₁₀ : a₀₁₀ == a₁₁₀} {p₁₋₀ : a₁₀₀ == a₁₁₀}
-    {sq₋₋₀ : Square p₀₋₀ p₋₀₀ p₋₁₀ p₁₋₀} -- left
-
-    {p₀₋₁ : a₀₀₁ == a₀₁₁} {p₋₀₁ : a₀₀₁ == a₁₀₁}
-    {p₋₁₁ : a₀₁₁ == a₁₁₁} {p₁₋₁ : a₁₀₁ == a₁₁₁}
-    (sq₋₋₁ : Square p₀₋₁ p₋₀₁ p₋₁₁ p₁₋₁) -- right
-
-    {p₀₀₋ : a₀₀₀ == a₀₀₁} {p₀₁₋ : a₀₁₀ == a₀₁₁}
-    {p₁₀₋ : a₁₀₀ == a₁₀₁} {p₁₁₋ : a₁₁₀ == a₁₁₁}
-    {sq₀₋₋ : Square p₀₋₀ p₀₀₋ p₀₁₋ (p₀₋₁ ∙ idp)} -- back
-    {sq₋₀₋ : Square p₋₀₀ p₀₀₋ p₁₀₋ p₋₀₁} -- top
-    {sq₋₁₋ : Square p₋₁₀ p₀₁₋ p₁₁₋ p₋₁₁} -- bottom
-    {sq₁₋₋ : Square p₁₋₀ p₁₀₋ p₁₁₋ (p₁₋₁ ∙ idp)} -- front
-    (cu : Cube sq₋₋₀ sq₋₋₁ (square-push-rb idp sq₀₋₋) sq₋₀₋
-               (sq₋₁₋ ⊡h' !□h (square-symmetry vid-square))
-               (square-push-rb idp sq₁₋₋))
-    → Cube sq₋₋₀ (sq₋₋₁ ⊡v vid-square) sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋
-  bot-lemma' ids cu = cu
-
   bot-lemma : ∀ {i} {A : Type i}
     {a₀₀₀ a₀₁₀ a₁₀₀ a₁₁₀ a₀₀₁ a₀₁₁ a₁₀₁ a₁₁₁ b₀ b₁ : A}
     {p₀₋₀ : a₀₀₀ == a₀₁₀} {p₋₀₀ : a₀₀₀ == a₁₀₀}
@@ -87,6 +65,29 @@ private
                (square-push-rb q₁₋ sq₁₋₋))
     → Cube sq₋₋₀ (sq₋₋₁ ⊡v sq') sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋
   bot-lemma sq₋₋₁ ids cu = bot-lemma' sq₋₋₁ cu
+    where
+    bot-lemma' : ∀ {i} {A : Type i}
+      {a₀₀₀ a₀₁₀ a₁₀₀ a₁₁₀ a₀₀₁ a₀₁₁ a₁₀₁ a₁₁₁ : A}
+      {p₀₋₀ : a₀₀₀ == a₀₁₀} {p₋₀₀ : a₀₀₀ == a₁₀₀}
+      {p₋₁₀ : a₀₁₀ == a₁₁₀} {p₁₋₀ : a₁₀₀ == a₁₁₀}
+      {sq₋₋₀ : Square p₀₋₀ p₋₀₀ p₋₁₀ p₁₋₀} -- left
+
+      {p₀₋₁ : a₀₀₁ == a₀₁₁} {p₋₀₁ : a₀₀₁ == a₁₀₁}
+      {p₋₁₁ : a₀₁₁ == a₁₁₁} {p₁₋₁ : a₁₀₁ == a₁₁₁}
+      (sq₋₋₁ : Square p₀₋₁ p₋₀₁ p₋₁₁ p₁₋₁) -- right
+
+      {p₀₀₋ : a₀₀₀ == a₀₀₁} {p₀₁₋ : a₀₁₀ == a₀₁₁}
+      {p₁₀₋ : a₁₀₀ == a₁₀₁} {p₁₁₋ : a₁₁₀ == a₁₁₁}
+      {sq₀₋₋ : Square p₀₋₀ p₀₀₋ p₀₁₋ (p₀₋₁ ∙ idp)} -- back
+      {sq₋₀₋ : Square p₋₀₀ p₀₀₋ p₁₀₋ p₋₀₁} -- top
+      {sq₋₁₋ : Square p₋₁₀ p₀₁₋ p₁₁₋ p₋₁₁} -- bottom
+      {sq₁₋₋ : Square p₁₋₀ p₁₀₋ p₁₁₋ (p₁₋₁ ∙ idp)} -- front
+      (cu : Cube sq₋₋₀ sq₋₋₁ (square-push-rb idp sq₀₋₋) sq₋₀₋
+                 (sq₋₁₋ ⊡h' !□h (square-symmetry vid-square))
+                 (square-push-rb idp sq₁₋₋))
+      → Cube sq₋₋₀ (sq₋₋₁ ⊡v vid-square) sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋
+    bot-lemma' ids cu = cu
+
 
 {- Proving the coherence term for the left inverse. This means proving
    [(w : Wedge X Y) → Square idp (ap out (ap into (glue w)))

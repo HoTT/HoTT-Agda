@@ -15,6 +15,11 @@ module _ (ps : Ptd-Span {i} {i} {i}) where
 
   open Ptd-Span ps
 
+  {- We use path induction (via [ptd-pushout-J]) to assume that the
+     basepoint preservation paths of the span maps are [idp]. The
+     proofs for that case are in [BaseEquivalence] and [BaseFunctionsOver].
+   -}
+
   mv-equiv : Cofiber (reglue ps) ≃ Suspension (fst Z)
   mv-equiv = ptd-pushout-J
     (λ ps' → Cofiber (reglue ps') ≃ Suspension (fst (Ptd-Span.Z ps')))
