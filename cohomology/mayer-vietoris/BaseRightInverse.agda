@@ -16,7 +16,7 @@ private
       (! (Into.glue-β (winl (f z)))) ∙h⊡
         ap-square into (out-square z)
       ⊡h∙ (Into.glue-β (winr (g z))))
-    ⊡v∙ (∘-ap into (cfcod _) (glue z) ∙ IntoCod.glue-β z)
+    ⊡v∙ (∘-ap into (cfcod _) (glue z) ∙ ExtractGlue.glue-β z)
 
 {- Right inverse -}
 into-out : ∀ σ → into (out σ) == σ

@@ -7,16 +7,16 @@ module cohomology.mayer-vietoris.BaseLeftInverse {i j k} {A : Type i}
 
 open import cohomology.mayer-vietoris.BaseEquivMaps Z f g
 open import cohomology.mayer-vietoris.Functions ps
-  using (module Reglue; reglue; ptd-reglue)
 
 {- [out] is right inverse on codomain part of cofiber space,
  - i.e. [out (into (cfcod _ γ)) == cfcod _ γ] -}
 
 out-into-cod-square : (z : fst Z) →
-  Square (cfglue reglue (winl (f z))) (ap (out ∘ into-cod) (glue z))
+  Square (cfglue reglue (winl (f z))) (ap (out ∘ extract-glue) (glue z))
          (ap (cfcod _) (glue z)) (cfglue _ (winr (g z)))
 out-into-cod-square z =
-  (ap-∘ out into-cod (glue z) ∙ ap (ap out) (IntoCod.glue-β z) ∙ Out.glue-β z)
+  (ap-∘ out extract-glue (glue z)
+    ∙ ap (ap out) (ExtractGlue.glue-β z) ∙ Out.glue-β z)
   ∙v⊡ out-square z
 
 module OutIntoCod = PushoutElim

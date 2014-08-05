@@ -20,28 +20,21 @@ G = (g , idp)
 
 open import cohomology.mayer-vietoris.Functions ps
 
-module IntoCod = PushoutRec {d = ptd-span-out ps} {D = Suspension (fst Z)}
-  (λ x → north _)
-  (λ y → south _)
-  (merid _)
-
-into-cod = IntoCod.f
-
 into-glue-square :
-  Square idp idp (ap (into-cod ∘ reglue) wglue) (merid _ (snd Z))
+  Square idp idp (ap (extract-glue ∘ reglue) wglue) (merid _ (snd Z))
 into-glue-square =
-  connection2
-  ⊡v∙ ! (ap-∘ into-cod reglue wglue ∙ ap (ap into-cod) (Reglue.glue-β tt)
-         ∙ IntoCod.glue-β (snd Z))
+  connection2 ⊡v∙
+  ! (ap-∘ extract-glue reglue wglue ∙ ap (ap extract-glue) (Reglue.glue-β tt)
+     ∙ ExtractGlue.glue-β (snd Z))
 
-module IntoGlue = WedgeElim {P = λ xy → north _ == into-cod (reglue xy)}
+module IntoGlue = WedgeElim {P = λ xy → north _ == extract-glue (reglue xy)}
   (λ _ → idp)
   (λ _ → merid _ (snd Z))
   (↓-cst=app-from-square into-glue-square)
 
 into-glue = IntoGlue.f
 
-module Into = CofiberRec reglue (north _) into-cod into-glue
+module Into = CofiberRec reglue (north _) extract-glue into-glue
 
 
 out-glue-and-square : (z : fst Z)
