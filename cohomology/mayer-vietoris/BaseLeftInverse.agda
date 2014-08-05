@@ -8,7 +8,7 @@ module cohomology.mayer-vietoris.BaseLeftInverse {i j k} {A : Type i}
 open import cohomology.mayer-vietoris.BaseEquivMaps Z f g
 open import cohomology.mayer-vietoris.Functions ps
 
-{- [out] is right inverse on codomain part of cofiber space,
+{- [out] is left inverse on codomain part of cofiber space,
  - i.e. [out (into (cfcod _ γ)) == cfcod _ γ] -}
 
 out-into-cod-square : (z : fst Z) →
