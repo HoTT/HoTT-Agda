@@ -9,7 +9,7 @@ open import cohomology.Exactness
 open import cohomology.Choice
 open import cohomology.OrdinaryTheory
 
-module cohomology.Ordinary {i} (G : Group i) (G-abelian : is-abelian G) where
+module cohomology.OrdinaryModel {i} (G : Group i) (G-abelian : is-abelian G) where
 
 open KGnExplicit G G-abelian using (Ptd-KG; KG-level; KG-conn; spectrum)
 
