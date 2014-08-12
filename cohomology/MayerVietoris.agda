@@ -61,7 +61,7 @@ module MayerVietorisBase
       Square idp idp (ap (extract-glue ∘ reglue) wglue) (merid _ (snd Z))
     into-glue-square =
       connection ⊡v∙
-      ! (ap-∘ extract-glue reglue wglue ∙ ap (ap extract-glue) (Reglue.glue-β tt)
+      ! (ap-∘ extract-glue reglue wglue ∙ ap (ap extract-glue) Reglue.glue-β
          ∙ ExtractGlue.glue-β (snd Z))
 
     module IntoGlue = WedgeElim {P = λ xy → north _ == extract-glue (reglue xy)}
