@@ -21,6 +21,8 @@ Ptd₀ = Ptd lzero
 _∙→_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
 (A , a₀) ∙→ (B , b₀) = ∙[ Σ (A → B) (λ f → f a₀ == b₀) , ((λ _ → b₀), idp) ]
 
+infixr 0 _∙→_
+
 ptd[_,_] = ∙[_,_]
 _ptd->_ = _∙→_
 
