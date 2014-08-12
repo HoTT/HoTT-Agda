@@ -200,12 +200,12 @@ module MayerVietorisBase
 
     out-into-fill : Σ (Square idp (ap out (glue (snd Z))) idp idp) (λ sq →
       Cube (out-into-sql (snd X)) sq
-           (natural-square' (λ _ → idp) wglue)
-           (natural-square' (ap out ∘ into-glue) wglue)
-           (natural-square' (cfglue _) wglue
+           (natural-square (λ _ → idp) wglue)
+           (natural-square (ap out ∘ into-glue) wglue)
+           (natural-square (cfglue _) wglue
              ⊡h' !□h (square-symmetry connection))
            (square-push-rb (cfglue _ (winr (snd Y)))
-             (natural-square' (out-into-cod ∘ reglue) wglue)))
+             (natural-square (out-into-cod ∘ reglue) wglue)))
     out-into-fill = fill-cube-right _ _ _ _ _
 
 

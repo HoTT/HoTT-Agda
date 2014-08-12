@@ -253,15 +253,15 @@ module _ {i j} {A : Type i} {B : Type j} {b₀₀ b₀₁ b₁₀ b₁₁ : A �
     {u : Square (p₀₋ x) (p₋₀ x) (p₋₁ x) (p₁₋ x)}
     {v : Square (p₀₋ y) (p₋₀ y) (p₋₁ y) (p₁₋ y)}
     → u == v [ (λ z → Square (p₀₋ z) (p₋₀ z) (p₋₁ z) (p₁₋ z)) ↓ q ]
-    → Cube u v (natural-square' p₀₋ q ) (natural-square' p₋₀ q)
-           (natural-square' p₋₁ q) (natural-square' p₁₋ q)
+    → Cube u v (natural-square p₀₋ q ) (natural-square p₋₀ q)
+           (natural-square p₋₁ q) (natural-square p₁₋ q)
   ↓-square-to-cube {q = idp} r = x-degen-cube r
 
   cube-to-↓-square : {x y : A} {q : x == y}
     {sqx : Square (p₀₋ x) (p₋₀ x) (p₋₁ x) (p₁₋ x)}
     {sqy : Square (p₀₋ y) (p₋₀ y) (p₋₁ y) (p₁₋ y)}
-    → Cube sqx sqy (natural-square' p₀₋ q) (natural-square' p₋₀ q)
-           (natural-square' p₋₁ q) (natural-square' p₁₋ q)
+    → Cube sqx sqy (natural-square p₀₋ q) (natural-square p₋₀ q)
+           (natural-square p₋₁ q) (natural-square p₁₋ q)
     → sqx == sqy [ (λ z → Square (p₀₋ z) (p₋₀ z) (p₋₁ z) (p₁₋ z)) ↓ q ]
   cube-to-↓-square {q = idp} cu = x-degen-cube-out cu
 

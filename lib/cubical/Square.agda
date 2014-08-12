@@ -32,21 +32,12 @@ module _ {i j} {A : Type i} {B : Type j} where
 
   natural-square : {f₁ f₂ : A → B} (p : ∀ a → f₁ a == f₂ a)
     {a₁ a₂ : A} (q : a₁ == a₂)
-    → Square (ap f₁ q) (p a₁) (p a₂) (ap f₂ q)
-  natural-square p idp = vid-square
-
-  natural-square' : {f₁ f₂ : A → B} (p : ∀ a → f₁ a == f₂ a)
-    {a₁ a₂ : A} (q : a₁ == a₂)
     → Square (p a₁) (ap f₁ q) (ap f₂ q) (p a₂)
-  natural-square' p idp = hid-square
+  natural-square p idp = hid-square
 
   natural-square-idp : {f₁ : A → B} {a₁ a₂ : A} (q : a₁ == a₂)
-    → natural-square {f₁ = f₁} (λ _ → idp) q == hid-square
+    → natural-square {f₁ = f₁} (λ _ → idp) q == vid-square
   natural-square-idp idp = idp
-
-  natural-square'-idp : {f₁ : A → B} {a₁ a₂ : A} (q : a₁ == a₂)
-    → natural-square' {f₁ = f₁} (λ _ → idp) q == vid-square
-  natural-square'-idp idp = idp
 
 
 square-to-disc : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
