@@ -28,15 +28,25 @@ vid-square : ∀ {i} {A : Type i} {a₀₀ a₁₀ : A} {p : a₀₀ == a₁₀}
   → Square idp p p idp
 vid-square {p = idp} = ids
 
-natural-square : ∀ {i j} {A : Type i} {B : Type j} {f₁ f₂ : A → B} {a₁ a₂ : A}
-  (p : ∀ a → f₁ a == f₂ a) (q : a₁ == a₂)
-  → Square (ap f₁ q) (p a₁) (p a₂) (ap f₂ q)
-natural-square p idp = vid-square
+module _ {i j} {A : Type i} {B : Type j} where
 
-natural-square' : ∀ {i j} {A : Type i} {B : Type j} {f₁ f₂ : A → B} {a₁ a₂ : A}
-  (p : ∀ a → f₁ a == f₂ a) (q : a₁ == a₂)
-  → Square (p a₁) (ap f₁ q) (ap f₂ q) (p a₂)
-natural-square' p idp = hid-square
+  natural-square : {f₁ f₂ : A → B} (p : ∀ a → f₁ a == f₂ a)
+    {a₁ a₂ : A} (q : a₁ == a₂)
+    → Square (ap f₁ q) (p a₁) (p a₂) (ap f₂ q)
+  natural-square p idp = vid-square
+
+  natural-square' : {f₁ f₂ : A → B} (p : ∀ a → f₁ a == f₂ a)
+    {a₁ a₂ : A} (q : a₁ == a₂)
+    → Square (p a₁) (ap f₁ q) (ap f₂ q) (p a₂)
+  natural-square' p idp = hid-square
+
+  natural-square-idp : {f₁ : A → B} {a₁ a₂ : A} (q : a₁ == a₂)
+    → natural-square {f₁ = f₁} (λ _ → idp) q == hid-square
+  natural-square-idp idp = idp
+
+  natural-square'-idp : {f₁ : A → B} {a₁ a₂ : A} (q : a₁ == a₂)
+    → natural-square' {f₁ = f₁} (λ _ → idp) q == vid-square
+  natural-square'-idp idp = idp
 
 
 square-to-disc : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
@@ -179,38 +189,32 @@ square-right-J : ∀ {i j} {A : Type i} {a₁₀ a₁₁ : A} {p₁₋ : a₁₀
   → P sq
 square-right-J P r ids = r
 
-horiz-degen-J : ∀ {i j} {A : Type i} {a₀ : A}
-  (P : {a₁ : A} {p q : a₀ == a₁} → Square p idp idp q → Type j)
-  (r : P ids)
-  {a₁ : A} {p q : a₀ == a₁} (sq : Square p idp idp q)
-  → P sq
-horiz-degen-J P r sq = transport P
-  (horiz-degen-square-β sq)
-  (lemma (P ∘ horiz-degen-square) r (horiz-degen-path sq))
-  where
-  lemma : ∀ {i j} {A : Type i} {a₀ : A}
-    (P : {a₁ : A} {p q : a₀ == a₁} → p == q → Type j)
-    (r : P (idp {a = idp}))
-    {a₁ : A} {p q : a₀ == a₁} (α : p == q)
-    → P α
-  lemma P r {p = idp} idp = r
+module _ where
+  private
+    lemma : ∀ {i j} {A : Type i} {a₀ : A}
+      (P : {a₁ : A} {p q : a₀ == a₁} → p == q → Type j)
+      (r : P (idp {a = idp}))
+      {a₁ : A} {p q : a₀ == a₁} (α : p == q)
+      → P α
+    lemma P r {p = idp} idp = r
 
-vert-degen-J : ∀ {i j} {A : Type i} {a₀ : A}
-  (P : {a₁ : A} {p q : a₀ == a₁} → Square idp p q idp → Type j)
-  (r : P ids)
-  {a₁ : A} {p q : a₀ == a₁} (sq : Square idp p q idp)
-  → P sq
-vert-degen-J P r sq = transport P
-  (vert-degen-square-β sq)
-  (lemma (P ∘ vert-degen-square) r (vert-degen-path sq))
-  where
-  lemma : ∀ {i j} {A : Type i} {a₀ : A}
-    (P : {a₁ : A} {p q : a₀ == a₁} → p == q → Type j)
-    (r : P (idp {a = idp}))
-    {a₁ : A} {p q : a₀ == a₁} (α : p == q)
-    → P α
-  lemma P r {p = idp} idp = r
+  horiz-degen-J : ∀ {i j} {A : Type i} {a₀ : A}
+    (P : {a₁ : A} {p q : a₀ == a₁} → Square p idp idp q → Type j)
+    (r : P ids)
+    {a₁ : A} {p q : a₀ == a₁} (sq : Square p idp idp q)
+    → P sq
+  horiz-degen-J P r sq = transport P
+    (horiz-degen-square-β sq)
+    (lemma (P ∘ horiz-degen-square) r (horiz-degen-path sq))
 
+  vert-degen-J : ∀ {i j} {A : Type i} {a₀ : A}
+    (P : {a₁ : A} {p q : a₀ == a₁} → Square idp p q idp → Type j)
+    (r : P ids)
+    {a₁ : A} {p q : a₀ == a₁} (sq : Square idp p q idp)
+    → P sq
+  vert-degen-J P r sq = transport P
+    (vert-degen-square-β sq)
+    (lemma (P ∘ vert-degen-square) r (vert-degen-path sq))
 
 fill-square-left : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
   (p₋₀ : a₀₀ == a₁₀) (p₋₁ : a₀₁ == a₁₁) (p₁₋ : a₁₀ == a₁₁)
@@ -402,7 +406,13 @@ infixr 8 _⊡v∙_ _⊡h∙_
 !□v-inv-r ids = idp
 
 
+connection : ∀ {i} {A : Type i} {a₀ a₁ : A} {q : a₀ == a₁}
+  → Square idp idp q q
+connection {q = idp} = ids
+
 connection2 : ∀ {i} {A : Type i} {a₀ a₁ a₂ : A}
   {p : a₀ == a₁} {q : a₁ == a₂}
   → Square p p q q
 connection2 {p = idp} {q = idp} = ids
+
+

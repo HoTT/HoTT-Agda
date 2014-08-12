@@ -60,7 +60,7 @@ module MayerVietorisBase
     into-glue-square :
       Square idp idp (ap (extract-glue ∘ reglue) wglue) (merid _ (snd Z))
     into-glue-square =
-      connection2 ⊡v∙
+      connection ⊡v∙
       ! (ap-∘ extract-glue reglue wglue ∙ ap (ap extract-glue) (Reglue.glue-β tt)
          ∙ ExtractGlue.glue-β (snd Z))
 
@@ -142,12 +142,6 @@ module MayerVietorisBase
       → Square p₀₋ p₋₀ (p₋₁ ∙' ! q) p₁₋
     square-push-rb {p₁₋ = idp} idp sq = sq
 
-    square-pull-rb : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A} {b : A}
-      {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == b} {p₁₋ : a₁₀ == a₁₁}
-      (q : a₁₁ == b) (sq : Square p₀₋ p₋₀ (p₋₁ ∙' ! q) p₁₋)
-      → Square p₀₋ p₋₀ p₋₁ (p₁₋ ∙ q)
-    square-pull-rb {p₁₋ = idp} idp sq = sq
-
     cube-lemma : ∀ {i} {A : Type i}
       {a₀₀₀ a₀₁₀ a₁₀₀ a₁₁₀ a₀₀₁ a₀₁₁ a₁₀₁ a₁₁₁ b₀ b₁ : A}
       {p₀₋₀ : a₀₀₀ == a₀₁₀} {p₋₀₀ : a₀₀₀ == a₁₀₀}
@@ -202,14 +196,14 @@ module MayerVietorisBase
   private
     out-into-sql : (x : fst X) → Square idp (ap out (into-glue (winl x)))
                                         (cfglue _ (winl x)) (cfglue _ (winl x))
-    out-into-sql x = connection2
+    out-into-sql x = connection
 
     out-into-fill : Σ (Square idp (ap out (glue (snd Z))) idp idp) (λ sq →
       Cube (out-into-sql (snd X)) sq
            (natural-square' (λ _ → idp) wglue)
            (natural-square' (ap out ∘ into-glue) wglue)
            (natural-square' (cfglue _) wglue
-             ⊡h' !□h (square-symmetry connection2))
+             ⊡h' !□h (square-symmetry connection))
            (square-push-rb (cfglue _ (winr (snd Y)))
              (natural-square' (out-into-cod ∘ reglue) wglue)))
     out-into-fill = fill-cube-right _ _ _ _ _
@@ -227,7 +221,7 @@ module MayerVietorisBase
     out-into-sqr : (y : fst Y)
       → Square idp (ap out (into-glue (winr y)))
                (cfglue _ (winr y)) (cfglue _ (winr y))
-    out-into-sqr y = out-into-fill-square ⊡v connection2
+    out-into-sqr y = out-into-fill-square ⊡v connection
 
   out-into : ∀ κ → out (into κ) == κ
   out-into = Cofiber-elim reglue
@@ -240,7 +234,7 @@ module MayerVietorisBase
            out-into-sql
            out-into-sqr
            (cube-to-↓-square $
-             cube-lemma out-into-fill-square connection2 $
+             cube-lemma out-into-fill-square connection $
                out-into-fill-cube)
            w)
 
