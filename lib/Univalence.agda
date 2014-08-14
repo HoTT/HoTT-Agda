@@ -42,12 +42,12 @@ coe!-β e a = ap (λ e → <– e a) (coe-equiv-β e)
 ↓-idf-ua-out : ∀ {i} {A B : Type i} (e : A ≃ B) {u : A} {v : B}
   → u == v [ (λ x → x) ↓ (ua e) ]
   → –> e u == v
-↓-idf-ua-out e p = ! (coe-β e _) ∙ ↓-idf-out (ua e) p  where
+↓-idf-ua-out e p = ! (coe-β e _) ∙ ↓-idf-out (ua e) p
 
 ↓-idf-ua-in : ∀ {i} {A B : Type i} (e : A ≃ B) {u : A} {v : B}
   → –> e u == v
   → u == v [ (λ x → x) ↓ (ua e) ]
-↓-idf-ua-in e p = ↓-idf-in (ua e) (coe-β e _ ∙ p)  where
+↓-idf-ua-in e p = ↓-idf-in (ua e) (coe-β e _ ∙ p)
 
 {- Induction along equivalences
 

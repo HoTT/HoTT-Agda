@@ -61,6 +61,10 @@ module _ {i j} {A : Type i} {B : Type j} where
     → snd×= (pair×= p q) == q
   snd×=-β idp idp = idp
 
+  pair×=-η : {ab a'b' : A × B} (p : ab == a'b')
+    → p == pair×= (fst×= p) (snd×= p)
+  pair×=-η {._} {_} idp = idp
+
 module _ {i j} {A : Type i} {B : A → Type j} where
 
   =Σ : (x y : Σ A B) → Type (lmax i j)
@@ -110,10 +114,10 @@ equiv-Σ-fst {A = A} {B = B} P {h = h} e = equiv f g f-g g-f
         f-g (b , s) = pair= (is-equiv.f-g e b) (trans-↓ P (is-equiv.f-g e b) s)
 
         g-f : ∀ x → g (f x) == x
-        g-f (a , r) = 
-          pair= (is-equiv.g-f e a) 
-                (transport (λ q → transport P (! q) r == r [ P ∘ h ↓ is-equiv.g-f e a ]) 
-                           (is-equiv.adj e a) 
+        g-f (a , r) =
+          pair= (is-equiv.g-f e a)
+                (transport (λ q → transport P (! q) r == r [ P ∘ h ↓ is-equiv.g-f e a ])
+                           (is-equiv.adj e a)
                            (trans-ap-↓ P h (is-equiv.g-f e a) r) )
 
 equiv-Σ-snd : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
@@ -161,6 +165,14 @@ module _ {i₀ i₁ j₀ j₁} {A₀ : Type i₀} {A₁ : Type i₁}
   → (pair= p q ∙ pair= p' r) == pair= (p ∙ p') (q ∙ᵈ r)
 Σ-∙ {p = idp} {p' = idp} idp r = idp
 
+-- Implementation of [!] on Σ
+Σ-! : ∀ {i j} {A : Type i} {B : A → Type j}
+  {x y : A} {p : x == y}
+  {u : B x} {v : B y}
+  (q : u == v [ B ↓ p ])
+  → ! (pair= p q) == pair= (! p) (!ᵈ q)
+Σ-! {p = idp} idp = idp
+
 -- Implementation of [_∙'_] on ×
 ×-∙' : ∀ {i j} {A : Type i} {B : Type j}
   {x y z : A} (p : x == y) (p' : y == z)
@@ -174,6 +186,12 @@ module _ {i₀ i₁ j₀ j₁} {A₀ : Type i₀} {A₁ : Type i₁}
   {u v w : B} (q : u == v) (q' : v == w)
   → (pair×= p q ∙ pair×= p' q') == pair×= (p ∙ p') (q ∙ q')
 ×-∙ idp idp idp r = idp
+
+-- Implementation of [!] on ×
+×-! : ∀ {i j} {A : Type i} {B : Type j}
+  {x y : A} (p : x == y) {u v : B} (q : u == v)
+  → ! (pair×= p q) == pair×= (! p) (! q)
+×-! idp idp = idp
 
 -- Special case of [ap-,]
 ap-cst,id : ∀ {i j} {A : Type i} (B : A → Type j)
@@ -200,6 +218,61 @@ module _ {i j} {A : Type i} {B : A → Type j} where
   hfiber-fst : ∀ a → hfiber (fst :> (Σ A B → A)) a ≃ B a
   hfiber-fst a = to a , is-eq (to a) (from a) (to-from a) (from-to a)
 
+{- Dependent paths in a Σ-type -}
+module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k}
+  where
+
+  ↓-Σ-in : {x x' : A} {p : x == x'} {r : B x} {r' : B x'}
+    {s : C x r} {s' : C x' r'}
+    (q : r == r' [ B ↓ p ])
+    → s == s' [ uncurry C ↓ pair= p q ]
+    → (r , s) == (r' , s') [ (λ x → Σ (B x) (C x)) ↓ p ]
+  ↓-Σ-in {p = idp} idp t = pair= idp t
+
+  ↓-Σ-fst : {x x' : A} {p : x == x'} {r : B x} {r' : B x'}
+    {s : C x r} {s' : C x' r'}
+    → (r , s) == (r' , s') [ (λ x → Σ (B x) (C x)) ↓ p ]
+    → r == r' [ B ↓ p ]
+  ↓-Σ-fst {p = idp} u = fst= u
+
+  ↓-Σ-snd : {x x' : A} {p : x == x'} {r : B x} {r' : B x'}
+    {s : C x r} {s' : C x' r'}
+    → (u : (r , s) == (r' , s') [ (λ x → Σ (B x) (C x)) ↓ p ])
+    → s == s' [ uncurry C ↓ pair= p (↓-Σ-fst u) ]
+  ↓-Σ-snd {p = idp} idp = idp
+
+  ↓-Σ-β-fst : {x x' : A} {p : x == x'} {r : B x} {r' : B x'}
+    {s : C x r} {s' : C x' r'}
+    (q : r == r' [ B ↓ p ])
+    (t : s == s' [ uncurry C ↓ pair= p q ])
+    → ↓-Σ-fst (↓-Σ-in q t) == q
+  ↓-Σ-β-fst {p = idp} idp idp = idp
+
+  ↓-Σ-β-snd : {x x' : A} {p : x == x'} {r : B x} {r' : B x'}
+    {s : C x r} {s' : C x' r'}
+    (q : r == r' [ B ↓ p ])
+    (t : s == s' [ uncurry C ↓ pair= p q ])
+    → ↓-Σ-snd (↓-Σ-in q t) == t
+      [ (λ q' → s == s' [ uncurry C ↓ pair= p q' ]) ↓ ↓-Σ-β-fst q t ]
+  ↓-Σ-β-snd {p = idp} idp idp = idp
+
+  ↓-Σ-η : {x x' : A} {p : x == x'} {r : B x} {r' : B x'}
+    {s : C x r} {s' : C x' r'}
+    (u : (r , s) == (r' , s') [ (λ x → Σ (B x) (C x)) ↓ p ])
+    → ↓-Σ-in (↓-Σ-fst u) (↓-Σ-snd u) == u
+  ↓-Σ-η {p = idp} idp = idp
+
+{- Dependent paths in a ×-type -}
+module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
+  where
+
+  ↓-×-in : {x x' : A} {p : x == x'} {r : B x} {r' : B x'}
+    {s : C x} {s' : C x'}
+    → r == r' [ B ↓ p ]
+    → s == s' [ C ↓ p ]
+    → (r , s) == (r' , s') [ (λ x → B x × C x) ↓ p ]
+  ↓-×-in {p = idp} q t = pair×= q t
+
 module _ where
   -- An orphan lemma.
   ↓-cst×app-in : ∀ {i j k} {A : Type i}
@@ -211,6 +284,28 @@ module _ where
     → (b₁ , c₁) == (b₂ , c₂) [ (λ x → Σ B (C x)) ↓ p ]
   ↓-cst×app-in idp idp idp = idp
 
+{- pair= and pair×= where one argument is reflexivity -}
+pair=-idp-l : ∀ {i j} {A : Type i} {B : A → Type j} (a : A) {b₁ b₂ : B a}
+  (q : b₁ == b₂) → pair= {B = B} idp q == ap (λ y → (a , y)) q
+pair=-idp-l _ idp = idp
+
+pair×=-idp-l : ∀ {i j} {A : Type i} {B : Type j} (a : A) {b₁ b₂ : B}
+  (q : b₁ == b₂) → pair×= idp q == ap (λ y → (a , y)) q
+pair×=-idp-l _ idp = idp
+
+pair×=-idp-r : ∀ {i j} {A : Type i} {B : Type j} {a₁ a₂ : A} (p : a₁ == a₂)
+  (b : B) → pair×= p idp == ap (λ x → (x , b)) p
+pair×=-idp-r idp _ = idp
+
+pair×=-split-l : ∀ {i j} {A : Type i} {B : Type j} {a₁ a₂ : A} (p : a₁ == a₂)
+  {b₁ b₂ : B} (q : b₁ == b₂)
+  → pair×= p q == ap (λ a → (a , b₁)) p ∙ ap (λ b → (a₂ , b)) q
+pair×=-split-l idp idp = idp
+
+pair×=-split-r : ∀ {i j} {A : Type i} {B : Type j} {a₁ a₂ : A} (p : a₁ == a₂)
+  {b₁ b₂ : B} (q : b₁ == b₂)
+  → pair×= p q == ap (λ b → (a₁ , b)) q ∙ ap (λ a → (a , b₂)) p
+pair×=-split-r idp idp = idp
 
 -- Commutativity of products and derivatives.
 module _ {i j} {A : Type i} {B : Type j} where

@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Base
+open import lib.PathFunctor
 open import lib.PathGroupoid
 open import lib.Equivalences
 
@@ -124,6 +125,22 @@ module _ {i j k} {A : Type i} {B : Type j} (C : B → Type k) (f : A → B) wher
     → u == v [ C ↓ ap f p ]
     → u == v [ C ∘ f ↓ p ]
   ↓-ap-out idp idp = idp
+
+-- Dependent paths over [ap2 f p q]
+module _ {i j k l} {A : Type i} {B : Type j} {C : Type k} (D : C → Type l)
+  (f : A → B → C) where
+
+  ↓-ap2-in : {x y : A} {p : x == y} {w z : B} {q : w == z}
+    {u : D (f x w)} {v : D (f y z)}
+    → u == v [ D ∘ uncurry f ↓ pair×= p q ]
+    → u == v [ D ↓ ap2 f p q ]
+  ↓-ap2-in {p = idp} {q = idp} α = α
+
+  ↓-ap2-out : {x y : A} {p : x == y} {w z : B} {q : w == z}
+    {u : D (f x w)} {v : D (f y z)}
+    → u == v [ D ↓ ap2 f p q ]
+    → u == v [ D ∘ uncurry f ↓ pair×= p q ]
+  ↓-ap2-out {p = idp} {q = idp} α = α
 
 apd↓ : ∀ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k}
   (f : {a : A} (b : B a) → C a b) {x y : A} {p : x == y}

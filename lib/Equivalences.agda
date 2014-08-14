@@ -100,6 +100,10 @@ module _ {i} {j} {A : Type i} {B : Type j} where
     → (–> e (<– e b) == b)
   <–-inv-r e b = is-equiv.f-g (snd e) b
 
+  <–-inv-adj : (e : A ≃ B) (a : A)
+    → ap (–> e) (<–-inv-l e a) == <–-inv-r e (–> e a)
+  <–-inv-adj e a = is-equiv.adj (snd e) a
+
   -- Equivalences are "injective"
   equiv-inj : (e : A ≃ B) {x y : A}
     → (–> e x == –> e y → x == y)

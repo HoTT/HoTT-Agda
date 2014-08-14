@@ -10,8 +10,8 @@ open import lib.types.Truncation
 open import lib.types.Pointed
 open import lib.types.Group
 open import lib.types.LoopSpace
-
 open import lib.groups.TruncationGroup
+open import lib.groups.Homomorphisms
 
 module lib.groups.HomotopyGroup where
 

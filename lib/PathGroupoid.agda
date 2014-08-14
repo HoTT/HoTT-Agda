@@ -35,6 +35,10 @@ module _ {i} {A : Type i} where
     → (p ∙ q) ∙ r == p ∙ (q ∙ r)
   ∙-assoc idp idp idp = idp
 
+  ∙'-assoc : {x y z t : A} (p : x == y) (q : y == z) (r : z == t)
+    → (p ∙' q) ∙' r == p ∙' (q ∙' r)
+  ∙'-assoc idp idp idp = idp
+
   -- [∙-unit-l] and [∙'-unit-r] are definitional
 
   ∙-unit-r : {x y : A} (q : x == y) → q ∙ idp == q
@@ -71,6 +75,12 @@ module _ {i} {A : Type i} where
 
   ∙-! : {x y z : A} (q : y == z) (p : x == y) → ! q ∙ ! p == ! (p ∙ q)
   ∙-! idp idp = idp
+
+  !-∙' : {x y z : A} (p : x == y) (q : y == z) → ! (p ∙' q) == ! q ∙' ! p
+  !-∙' idp idp = idp
+
+  ∙'-! : {x y z : A} (q : y == z) (p : x == y) → ! q ∙' ! p == ! (p ∙' q)
+  ∙'-! idp idp = idp
 
   !-! : {x y : A} (p : x == y) → ! (! p) == p
   !-! idp = idp
@@ -124,15 +134,14 @@ module _ {i} {A : Type i} where
 
 module _ {i} {A : Type i} where
 
-  -- Useful ?
   anti-whisker-right : {x y z : A} (p : y == z) {q r : x == y}
     → (q ∙ p == r ∙ p → q == r)
   anti-whisker-right idp {q} {r} h =
     ! (∙-unit-r q) ∙ (h ∙ ∙-unit-r r)
 
-  -- anti-whisker-left : {x y z : A} (p : x == y) {q r : y == z}
-  --   → (p ∙ q == p ∙ r → q == r)
-  -- anti-whisker-left idp h = h
+  anti-whisker-left : {x y z : A} (p : x == y) {q r : y == z}
+    → (p ∙ q == p ∙ r → q == r)
+  anti-whisker-left idp h = h
 
 
 {- Dependent stuff -}
@@ -163,6 +172,12 @@ module _ {i j} {A : Type i} {B : A → Type j} where
   ◃idp : {x : A} {v w : B x} (q : w == v)
     → q ◃ idp == q
   ◃idp idp = idp
+
+  idp◃ : {x y : A} {p : x == y}
+    {u : B x} {v : B y} (r : u == v [ B ↓ p ])
+    → idp ◃ r == r
+  idp◃ {p = idp} r = idp
+    
 
   _∙'ᵈ_ : {x y z : A} {p : x == y} {p' : y == z}
     {u : B x} {v : B y} {w : B z}

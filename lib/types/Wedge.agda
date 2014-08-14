@@ -46,16 +46,23 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
   module WedgeElim {k} {P : Wedge X Y → Type k}
-    (f : (x : fst X) → P (winl x)) (g : (y : fst Y) → P (winr y))
-    (p : f (snd X) == g (snd Y) [ P ↓ wglue ])
-    = PushoutElim f g (λ _ → p)
+    (winl* : (x : fst X) → P (winl x)) (winr* : (y : fst Y) → P (winr y))
+    (wglue* : winl* (snd X) == winr* (snd Y) [ P ↓ wglue ]) where
+
+    private
+      module M = PushoutElim winl* winr* (λ _ → wglue*)
+
+    f = M.f
+    glue-β = M.glue-β unit
 
   open WedgeElim public using () renaming (f to Wedge-elim)
 
-  module WedgeRec {k} {C : Type k} (f : fst X → C) (g : fst Y → C)
-    (p : f (snd X) == g (snd Y))
-    = PushoutRec {d = wedge-span X Y} f g (λ _ → p)
 
-  module WedgeRecType {k} (f : fst X → Type k) (g : fst Y → Type k)
-    (p : f (snd X) ≃ g (snd Y))
-    = PushoutRecType {d = wedge-span X Y} f g (λ _ → p)
+  module WedgeRec {k} {C : Type k} (winl* : fst X → C) (winr* : fst Y → C)
+    (wglue* : winl* (snd X) == winr* (snd Y)) where
+
+    private
+      module M = PushoutRec {d = wedge-span X Y} winl* winr* (λ _ → wglue*)
+
+    f = M.f
+    glue-β = M.glue-β unit
