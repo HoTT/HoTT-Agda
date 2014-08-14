@@ -161,7 +161,7 @@ TODO: describe more precisely each file
 This directory contains experimental things (as you can guess).
 
 ACKNOWLEDGMENT
-==============
+--------------
 
 This material is partially based upon work supported by the National Science
 Foundation under Grant Number 1116703. Any opinions, findings, and conclusions
