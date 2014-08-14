@@ -125,7 +125,7 @@ module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
 
   private
     ps₁ = ptd-span X Z Y f g
-    ps₂ = ptd-span (Ptd-Pushout ps₁) W Z (ptd-right {d = ps₁}) h
+    ps₂ = ptd-span (Ptd-Pushout ps₁) W Z (ptd-right ps₁) h
     ps = ptd-span X W Y f (h ∘ptd g)
 
   open TwoPushoutsEquiv (fst f) (fst g) (fst h) public
@@ -136,13 +136,12 @@ module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
   two-pushouts-ptd = ptd-ua (two-pushouts-equiv ∘e lift-equiv) idp
 
   two-pushouts-ptd-left :
-    ptd-lift ∘ptd ptd-left {d = ps}
-    == ptd-left {d = ps₂} ∘ptd ptd-left {d = ps₁}
+    ptd-lift ∘ptd ptd-left ps == ptd-left ps₂ ∘ptd ptd-left ps₁
     [ (λ V → fst (X ∙→ V)) ↓ two-pushouts-ptd ]
   two-pushouts-ptd-left = codomain-over-ptd-equiv _ _ _
 
   two-pushouts-ptd-right :
-    ptd-lift ∘ptd ptd-right {d = ps} == ptd-right {d = ps₂}
+    ptd-lift ∘ptd ptd-right ps == ptd-right ps₂
     [ (λ V → fst (W ∙→ V)) ↓ two-pushouts-ptd ]
   two-pushouts-ptd-right =
     codomain-over-ptd-equiv _ _ _ ▹ pair= idp (lemma f g h)
@@ -151,10 +150,10 @@ module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
       (f : fst (Y ∙→ X)) (g : fst (Y ∙→ Z)) (h : fst (Z ∙→ W))
       → ap (TwoPushoutsEquiv.into (fst f) (fst g) (fst h)
                ∘ lower {j = lmax l (lmax k (lmax j i))})
-              (snd (ptd-lift ∘ptd ptd-right {d = ptd-span X W Y f (h ∘ptd g)}))
+              (snd (ptd-lift ∘ptd ptd-right (ptd-span X W Y f (h ∘ptd g))))
         ∙ idp
         ==  ap right (! (snd h)) ∙ ! (glue (snd Z))
-            ∙' ap left (snd (ptd-right {d = ptd-span X Z Y f g}))
+            ∙' ap left (snd (ptd-right (ptd-span X Z Y f g)))
     lemma {Y = Y} (f , idp) (g , idp) (h , idp) =
       ap (2P.into ∘ lower) (ap lift (! (glue (snd Y))) ∙ idp) ∙ idp
         =⟨ ∙-unit-r _ ⟩
@@ -178,11 +177,11 @@ module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
 
   ptd-into-inner :
     ((TwoPushoutsEquiv.into (fst f) (fst g) (fst h) ∘ Inner.f) , idp)
-    == ptd-left {d = ps₂}
+    == ptd-left ps₂
   ptd-into-inner = pair= (λ= into-inner) $ ↓-app=cst-in $
     ! (∙-unit-r _ ∙ app=-β into-inner (left (snd X)))
 
-  two-pushouts-ptd-inner : ptd-lift ∘ptd (Inner.f , idp) == ptd-left {d = ps₂}
+  two-pushouts-ptd-inner : ptd-lift ∘ptd (Inner.f , idp) == ptd-left ps₂
     [ (λ V → fst (Ptd-Pushout ps₁ ∙→ V)) ↓ two-pushouts-ptd ]
   two-pushouts-ptd-inner =
     codomain-over-ptd-equiv _ _ _ ▹ ptd-into-inner

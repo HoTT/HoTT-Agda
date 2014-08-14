@@ -121,7 +121,7 @@ module _ {i j k} where
   Ptd-Pushout : (d : Ptd-Span {i} {j} {k}) → Ptd _
   Ptd-Pushout d = ∙[ Pushout (ptd-span-out d) , left (snd (Ptd-Span.X d)) ]
 
-  module _ {d : Ptd-Span {i} {j} {k}} where
+  module _ (d : Ptd-Span {i} {j} {k}) where
 
     open Ptd-Span d
 

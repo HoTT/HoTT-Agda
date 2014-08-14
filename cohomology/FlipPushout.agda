@@ -73,7 +73,7 @@ module _ {i j k} (ps : Ptd-Span {i} {j} {k}) where
     s = ptd-span-out ps
 
     preserves : –> (flip-pushout-equiv s) (left (snd X)) == left (snd Y)
-    preserves = snd (ptd-right {d = flip-ptd-span ps})
+    preserves = snd (ptd-right (flip-ptd-span ps))
 
   flip-ptd-pushout : fst (Ptd-Pushout ps ∙→ Ptd-Pushout (flip-ptd-span ps))
   flip-ptd-pushout = (FlipPushout.f , preserves)
@@ -82,8 +82,8 @@ module _ {i j k} (ps : Ptd-Span {i} {j} {k}) where
   flip-ptd-pushout-path = ptd-ua (flip-pushout-equiv s) preserves
 
   {- action of [flip-pushout] on [snd ptd-right] -}
-  ap-flip-right : ap flip-pushout (snd (ptd-right {d = ps}))
-               == ! (snd (ptd-right {d = flip-ptd-span ps}))
+  ap-flip-right : ap flip-pushout (snd (ptd-right ps))
+               == ! (snd (ptd-right (flip-ptd-span ps)))
   ap-flip-right = lemma f g
     where
     lemma : {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
@@ -98,11 +98,11 @@ module _ {i j k} (ps : Ptd-Span {i} {j} {k}) where
         =⟨ FlipPushout.glue-β (snd Z) |in-ctx ! ⟩
       ! (! (glue (snd Z))) ∎
 
-  flip-ptd-left : ptd-left {d = ps} == ptd-right {d = flip-ptd-span ps}
+  flip-ptd-left : ptd-left ps == ptd-right (flip-ptd-span ps)
                   [ (λ W → fst (X ∙→ W)) ↓ flip-ptd-pushout-path ]
   flip-ptd-left = codomain-over-ptd-equiv _ _ _
 
-  flip-ptd-right : ptd-right {d = ps} == ptd-left {d = flip-ptd-span ps}
+  flip-ptd-right : ptd-right ps == ptd-left (flip-ptd-span ps)
                    [ (λ W → fst (Y ∙→ W)) ↓ flip-ptd-pushout-path ]
   flip-ptd-right =
     codomain-over-ptd-equiv _ _ _

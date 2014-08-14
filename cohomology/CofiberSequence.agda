@@ -188,7 +188,7 @@ private
       =⟨ pair= (flip-ptd-pushout-path ptd-span²)
                (↓-×-in (flip-ptd-right ptd-span²) prepend-flip) ⟩
     (Ptd-Pushout (flip-ptd-span ptd-span²) ,
-     ptd-left {d = flip-ptd-span ptd-span²} ,
+     ptd-left (flip-ptd-span ptd-span²) ,
      ptd-cfcod³ ∘ptd flip-ptd-pushout (flip-ptd-span ptd-span²))
       =⟨ ! (pair= 2PDom.two-pushouts-ptd
                   (↓-×-in 2PDom.two-pushouts-ptd-inner
@@ -208,20 +208,19 @@ private
     where
     prepend-flip-lemma :
       (flip-pushout ,
-       ap flip-pushout (! (snd (ptd-right {d = flip-ptd-span ptd-span²})))
-       ∙ idp)
-      == (flip-ptd-pushout (flip-ptd-span ptd-span²))
+       ap flip-pushout (! (snd (ptd-right (flip-ptd-span ptd-span²)))) ∙ idp)
+      == flip-ptd-pushout (flip-ptd-span ptd-span²)
     prepend-flip-lemma = pair= idp $
-      ap flip-pushout (! (snd (ptd-right {d = flip-ptd-span ptd-span²})))
+      ap flip-pushout (! (snd (ptd-right (flip-ptd-span ptd-span²))))
       ∙ idp
         =⟨ ∙-unit-r _ ⟩
-      ap flip-pushout (! (snd (ptd-right {d = flip-ptd-span ptd-span²})))
-        =⟨ ap-! flip-pushout (snd (ptd-right {d = flip-ptd-span ptd-span²})) ⟩
-      ! (ap flip-pushout (snd (ptd-right {d = flip-ptd-span ptd-span²})))
-        =⟨ ap-flip-right (flip-ptd-span ptd-span²) |in-ctx ! ⟩
-      ! (! (snd (ptd-right {d = ptd-span²})))
-        =⟨ !-! (snd (ptd-right {d = ptd-span²})) ⟩
-      snd (ptd-right {d = ptd-span²}) ∎
+      ap flip-pushout (! (snd (ptd-right (flip-ptd-span ptd-span²))))
+        =⟨ ap-! flip-pushout (snd (ptd-right (flip-ptd-span ptd-span²))) ⟩
+      ! (ap flip-pushout (snd (ptd-right (flip-ptd-span ptd-span²))))
+        =⟨ ap ! (ap-flip-right (flip-ptd-span ptd-span²)) ⟩
+      ! (! (snd (ptd-right ptd-span²)))
+        =⟨ !-! (snd (ptd-right ptd-span²)) ⟩
+      snd (ptd-right ptd-span²) ∎
 
     prepend-flip :
       ptd-cfcod³ == (ptd-cfcod³ ∘ptd flip-ptd-pushout (flip-ptd-span ptd-span²))
@@ -260,7 +259,7 @@ cof³-is-susp-cod =
   (Ptd-Cof³ , ptd-cfcod³)
     =⟨ pair= (flip-ptd-pushout-path ptd-span³) (flip-ptd-right ptd-span³) ⟩
   (Ptd-Pushout (flip-ptd-span ptd-span³) ,
-   ptd-left {d = flip-ptd-span ptd-span³})
+   ptd-left (flip-ptd-span ptd-span³))
     =⟨ ! (pair= 2PCod.two-pushouts-ptd 2PCod.two-pushouts-ptd-inner) ⟩
   (Ptd-Lift {j = i} (Ptd-Pushout (suspension-ptd-span Y)) ,
    ptd-lift ∘ptd ptd-cof²-to-susp)
