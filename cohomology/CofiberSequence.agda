@@ -45,26 +45,27 @@ private
     (ptd-cst {X = X} {Y = Ptd-Unit}) f (ptd-cst {X = Y} {Y = Ptd-Unit})
 
 
-  {- The functions susp-to-cof² and cof²-to-susp are intermediate mappings
-   - that appear in the course of proof. These are elimated in the final
-   - result by the equality [resolve] which shows that
-   - flip-pushout ∘ cof²-to-susp ∘ susp-to-cof² == susp-fmap (fst f) -}
+{- The functions susp-to-cof² and cof²-to-susp are intermediate mappings
+ - that appear in the course of proof. These are elimated in the final
+ - result by the equality [resolve] which shows that
+ - flip-pushout ∘ cof²-to-susp ∘ susp-to-cof² == susp-fmap (fst f) -}
 
-  ptd-susp-to-cof² : fst (Ptd-Susp X ∙→ Ptd-Cof²)
-  ptd-susp-to-cof² =
-    flip-ptd-pushout (flip-ptd-span ptd-span²) ∘ptd (2PDom.into , idp)
+ptd-susp-to-cof² : fst (Ptd-Susp X ∙→ Ptd-Cof²)
+ptd-susp-to-cof² =
+  flip-ptd-pushout (flip-ptd-span ptd-span²) ∘ptd (2PDom.into , idp)
 
-  susp-to-cof² = fst ptd-susp-to-cof²
+susp-to-cof² = fst ptd-susp-to-cof²
 
-  cof²-to-susp : fst Ptd-Cof² → fst (Ptd-Susp Y)
-  cof²-to-susp = CofiberRec.f _
-    (north _)
-    (λ _ → south _)
-    (merid _)
+cof²-to-susp : fst Ptd-Cof² → fst (Ptd-Susp Y)
+cof²-to-susp = CofiberRec.f _
+  (north _)
+  (λ _ → south _)
+  (merid _)
 
-  ptd-cof²-to-susp : fst (Ptd-Cof² ∙→ Ptd-Susp Y)
-  ptd-cof²-to-susp = (cof²-to-susp , idp)
+ptd-cof²-to-susp : fst (Ptd-Cof² ∙→ Ptd-Susp Y)
+ptd-cof²-to-susp = (cof²-to-susp , idp)
 
+private
   resolve : flip-ptd-pushout (suspension-ptd-span Y)
             ∘ptd ptd-cof²-to-susp ∘ptd ptd-susp-to-cof²
             == ptd-susp-fmap f
@@ -113,7 +114,6 @@ private
         =⟨ ∘-ap (flip-pushout ∘ cof²-to-susp ∘ flip-pushout) 2PDom.into
                 (merid _ x) ⟩
       ap (flip-pushout ∘ cof²-to-susp ∘ flip-pushout ∘ 2PDom.into) (merid _ x) ∎
-
 
     second : snd (flip-ptd-pushout (suspension-ptd-span Y)
                   ∘ptd ptd-cof²-to-susp ∘ptd ptd-susp-to-cof²)
@@ -247,27 +247,26 @@ private
     (ptd-cst {X = Ptd-Cof f} {Y = Ptd-Unit})
 
 
-  {- SECOND MAIN PATH: Proof that [Cof³(f) == ΣY].
-   - We also compute the effect of this path on the function
-   - [cfcod³(f) : Cof²(f) → Cof³(f)], which is taken to
-   - the intermediate function [ptd-cof²-to-susp : Cof²(f) → ΣY],
-   -}
-  cof³-is-susp-cod : Path
-    {A = Σ (Ptd i) (λ W → fst (Ptd-Cof² ∙→ W))}
-    (Ptd-Cof³ , ptd-cfcod³)
-    (Ptd-Susp Y , ptd-cof²-to-susp)
-
-  cof³-is-susp-cod =
-    (Ptd-Cof³ , ptd-cfcod³)
-      =⟨ pair= (flip-ptd-pushout-path ptd-span³) (flip-ptd-right ptd-span³) ⟩
-    (Ptd-Pushout (flip-ptd-span ptd-span³) ,
-     ptd-left {d = flip-ptd-span ptd-span³})
-      =⟨ ! (pair= 2PCod.two-pushouts-ptd 2PCod.two-pushouts-ptd-inner) ⟩
-    (Ptd-Lift {j = i} (Ptd-Pushout (suspension-ptd-span Y)) ,
-     ptd-lift ∘ptd ptd-cof²-to-susp)
-      =⟨ pair= (ptd-ua lift-equiv idp)
-               (codomain!-over-ptd-equiv ptd-cof²-to-susp _ _) ⟩
-    (Ptd-Susp Y , ptd-cof²-to-susp) ∎
+{- SECOND MAIN PATH: Proof that [Cof³(f) == ΣY].
+ - We also compute the effect of this path on the function
+ - [cfcod³(f) : Cof²(f) → Cof³(f)], which is taken to
+ - the intermediate function [ptd-cof²-to-susp : Cof²(f) → ΣY],
+ -}
+cof³-is-susp-cod : Path
+  {A = Σ (Ptd i) (λ W → fst (Ptd-Cof² ∙→ W))}
+  (Ptd-Cof³ , ptd-cfcod³)
+  (Ptd-Susp Y , ptd-cof²-to-susp)
+cof³-is-susp-cod =
+  (Ptd-Cof³ , ptd-cfcod³)
+    =⟨ pair= (flip-ptd-pushout-path ptd-span³) (flip-ptd-right ptd-span³) ⟩
+  (Ptd-Pushout (flip-ptd-span ptd-span³) ,
+   ptd-left {d = flip-ptd-span ptd-span³})
+    =⟨ ! (pair= 2PCod.two-pushouts-ptd 2PCod.two-pushouts-ptd-inner) ⟩
+  (Ptd-Lift {j = i} (Ptd-Pushout (suspension-ptd-span Y)) ,
+   ptd-lift ∘ptd ptd-cof²-to-susp)
+    =⟨ pair= (ptd-ua lift-equiv idp)
+             (codomain!-over-ptd-equiv ptd-cof²-to-susp _ _) ⟩
+  (Ptd-Susp Y , ptd-cof²-to-susp) ∎
 
 
 {- FIRST EXPORTED RESULT: Long Cofiber Sequence
@@ -281,6 +280,21 @@ private
  -      f    cod(f)          co∂             Σf
  -   X ––> Y –––––> Cof(f) ––––––>   ΣX    ––––––>   ΣY
  -}
+cod-Σf-path : Path {A = Σ (Ptd i) (λ V → fst (Ptd-Susp X ∙→ V))}
+  (Ptd-Cof³ , ptd-cfcod³ ∘ptd ptd-susp-to-cof²)
+  (Ptd-Susp Y , ptd-susp-fmap f)
+cod-Σf-path =
+  (Ptd-Cof³ , ptd-cfcod³ ∘ptd ptd-susp-to-cof²)
+    =⟨ ap (λ {(W , h) → (W , h ∘ptd ptd-susp-to-cof²)}) cof³-is-susp-cod ⟩
+  (Ptd-Susp Y , ptd-cof²-to-susp ∘ptd ptd-susp-to-cof²)
+    =⟨ pair= (flip-ptd-pushout-path (suspension-ptd-span Y))
+              (codomain-over-ptd-equiv
+                (ptd-cof²-to-susp ∘ptd ptd-susp-to-cof²) _ _) ⟩
+  (Ptd-Susp Y , flip-ptd-pushout (suspension-ptd-span Y)
+                ∘ptd ptd-cof²-to-susp ∘ptd ptd-susp-to-cof²)
+    =⟨ ap (λ h → (Ptd-Susp Y , h)) resolve ⟩
+  (Ptd-Susp Y , ptd-susp-fmap f) ∎
+
 cofiber-sequence : Path
   {A = Σ (Ptd i × Ptd i)
          (λ {(U , V) → fst (Ptd-Cof f ∙→ U) × fst (U ∙→ V)})}
@@ -291,19 +305,7 @@ cofiber-sequence =
   ((Ptd-Cof² , Ptd-Cof³) , (ptd-cfcod² , ptd-cfcod³))
     =⟨ ap (λ {(W , (g , h)) → ((W , Ptd-Cof³) , (g , h))}) cof²-is-susp-dom ⟩
   ((Ptd-Susp X , Ptd-Cof³) , (ptd-co∂ , ptd-cfcod³ ∘ptd ptd-susp-to-cof²))
-    =⟨ ap (λ {(W , h) → ((Ptd-Susp X , W) ,
-                         (ptd-co∂ , h ∘ptd ptd-susp-to-cof²))})
-          cof³-is-susp-cod ⟩
-  ((Ptd-Susp X , Ptd-Susp Y) ,
-   (ptd-co∂ , ptd-cof²-to-susp ∘ptd ptd-susp-to-cof²))
-    =⟨ ap (λ {(W , h) → ((Ptd-Susp X , W) , (ptd-co∂ , h))})
-           (pair= (flip-ptd-pushout-path (suspension-ptd-span Y))
-                  (codomain-over-ptd-equiv
-                    (ptd-cof²-to-susp ∘ptd ptd-susp-to-cof²) _ _)) ⟩
-  ((Ptd-Susp X , Ptd-Susp Y) ,
-   (ptd-co∂ , flip-ptd-pushout (suspension-ptd-span Y)
-              ∘ptd ptd-cof²-to-susp ∘ptd ptd-susp-to-cof²))
-    =⟨ ap (λ h → ((Ptd-Susp X , Ptd-Susp Y) , (ptd-co∂ , h))) resolve ⟩
+    =⟨ ap (λ {(W , h) → ((Ptd-Susp X , W) , (ptd-co∂ , h))}) cod-Σf-path ⟩
   ((Ptd-Susp X , Ptd-Susp Y) , (ptd-co∂ , ptd-susp-fmap f)) ∎
 
 
