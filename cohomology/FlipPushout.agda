@@ -31,22 +31,16 @@ flip-pushout-involutive : ∀ {i j k} (d : Span {i} {j} {k})
 flip-pushout-involutive d = Pushout-elim
   (λ a → idp)
   (λ b → idp)
-  (λ c → ↓-app=idf-in $
-    idp ∙' glue c
-      =⟨ ∙'-unit-l _ ⟩
-    glue c
-      =⟨ ! (!-! (glue c)) ⟩
-    ! (! (glue c))
-      =⟨ ap ! (! (FlipPushout.glue-β c)) ⟩
-    ! (ap flip-pushout (glue c))
-      =⟨ !-ap flip-pushout (glue c) ⟩
-    ap flip-pushout (! (glue c))
-      =⟨ ! (FlipPushout.glue-β c) |in-ctx (λ w → ap flip-pushout w) ⟩
-    ap flip-pushout (ap flip-pushout (glue c))
-      =⟨ ∘-ap flip-pushout flip-pushout (glue c) ⟩
-    ap (flip-pushout ∘ flip-pushout) (glue c)
-      =⟨ ! (∙-unit-r _) ⟩
-    ap (flip-pushout ∘ flip-pushout) (glue c) ∙ idp ∎)
+  (λ c → ↓-∘=idf-in flip-pushout flip-pushout $
+     ap flip-pushout (ap flip-pushout (glue c))
+       =⟨ ap (ap flip-pushout) (FlipPushout.glue-β c) ⟩
+     ap flip-pushout (! (glue c))
+       =⟨ ap-! flip-pushout (glue c) ⟩
+     ! (ap flip-pushout (glue c))
+       =⟨ ap ! (FlipPushout.glue-β c) ⟩
+     ! (! (glue c))
+       =⟨ !-! (glue c) ⟩
+     glue c ∎)
 
 {- Equivalence for spans with proofs that the equivalence swaps the
  - injections -}
