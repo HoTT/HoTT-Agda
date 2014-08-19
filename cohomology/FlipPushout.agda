@@ -107,3 +107,19 @@ module _ {i j k} (ps : Ptd-Span {i} {j} {k}) where
   flip-ptd-right =
     codomain-over-ptd-equiv _ _ _
     ▹ pair= idp (ap (λ w → w ∙ preserves) ap-flip-right ∙ !-inv-l preserves)
+
+flip-ptd-pushout-involutive : ∀ {i j k} (ps : Ptd-Span {i} {j} {k})
+  → flip-ptd-pushout (flip-ptd-span ps) ∘ptd flip-ptd-pushout ps == ptd-idf _
+flip-ptd-pushout-involutive ps =
+  ptd-λ= (flip-pushout-involutive _) lemma
+  where
+  lemma :
+    ap flip-pushout (snd (ptd-right (flip-ptd-span ps))) ∙ snd (ptd-right ps)
+    == idp
+  lemma =
+    ap flip-pushout (snd (ptd-right (flip-ptd-span ps))) ∙ snd (ptd-right ps)
+      =⟨ ap-flip-right (flip-ptd-span ps)
+         |in-ctx (λ w → w ∙ snd (ptd-right ps)) ⟩
+    ! (snd (ptd-right ps)) ∙ snd (ptd-right ps)
+      =⟨ !-inv-l (snd (ptd-right ps)) ⟩
+    idp

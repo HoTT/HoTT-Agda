@@ -175,16 +175,10 @@ module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
       where
       module 2P = TwoPushoutsEquiv f g h
 
-  ptd-into-inner :
-    ((TwoPushoutsEquiv.into (fst f) (fst g) (fst h) ∘ Inner.f) , idp)
-    == ptd-left ps₂
-  ptd-into-inner = pair= (λ= into-inner) $ ↓-app=cst-in $
-    ! (∙-unit-r _ ∙ app=-β into-inner (left (snd X)))
-
   two-pushouts-ptd-inner : ptd-lift ∘ptd (Inner.f , idp) == ptd-left ps₂
     [ (λ V → fst (Ptd-Pushout ps₁ ∙→ V)) ↓ two-pushouts-ptd ]
   two-pushouts-ptd-inner =
-    codomain-over-ptd-equiv _ _ _ ▹ ptd-into-inner
+    codomain-over-ptd-equiv _ _ _ ▹ ptd-λ= into-inner idp
 
 open TwoPushoutsEquiv
   using (two-pushouts-equiv; two-pushouts; two-pushouts-left;
