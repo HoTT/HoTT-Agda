@@ -8,6 +8,8 @@ module lib.types.Sigma where
 _×_ : ∀ {i j} (A : Type i) (B : Type j) → Type (lmax i j)
 A × B = Σ A (λ _ → B)
 
+infixr 5 _×_
+
 module _ {i j} {A : Type i} {B : A → Type j} where
 
   pair : (a : A) (b : B a) → Σ A B
