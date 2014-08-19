@@ -49,9 +49,4 @@ LiftUnit-ptd-out-level : ∀ {i j} {X : Ptd i}
   → is-contr (fst (Ptd-Lift {j = j} Ptd-Unit ∙→ X))
 LiftUnit-ptd-out-level {X = X} =
   (ptd-cst {Y = X} ,
-   λ f → pair= (λ= (λ _ → ! (snd f))) (↓-app=cst-in $
-     idp
-       =⟨ ! (!-inv-l (snd f)) ⟩
-     ! (snd f) ∙ snd f
-       =⟨ ! (app=-β (λ _ → ! (snd f)) _) |in-ctx (λ w → w ∙ snd f) ⟩
-     app= (λ= (λ _ → ! (snd f))) _ ∙ snd f ∎))
+   λ f → ptd-λ= (λ _ → ! (snd f)) (! (!-inv-l (snd f))))
