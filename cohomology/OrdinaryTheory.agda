@@ -44,3 +44,16 @@ record OrdinaryTheory i : Type (lsucc i) where
 
     C-dimension-pos : (n : ℕ) → is-contr (CEl (S n) (Ptd-Sphere O))
     C-dimension-neg : (n : ℕ) → is-contr (CEl O (Ptd-Sphere (S n)))
+
+  {- A quick useful special case of C-additive:
+     C n (X ∨ Y) == C n X × C n Y -}
+  C-binary-additive : (n : ℕ) (X Y : Ptd i)
+    → C n (Ptd-Wedge X Y) == C n X ×G C n Y
+  C-binary-additive n X Y =
+    ap (C n) (! (BigWedge-Bool-ptd-path Pick))
+    ∙ C-additive n _ (λ _ _ → Bool-has-choice)
+    ∙ ΠG-Bool-is-×G (C n ∘ Pick)
+    where
+    Pick : Lift {j = i} Bool → Ptd i
+    Pick (lift true) = X
+    Pick (lift false) = Y

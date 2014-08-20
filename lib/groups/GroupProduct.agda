@@ -2,9 +2,11 @@
 
 open import lib.Basics
 open import lib.types.Group
-open import lib.types.Sigma
+open import lib.types.Bool
 open import lib.types.Pi
+open import lib.types.Sigma
 open import lib.groups.Homomorphisms
+open import lib.groups.Lift
 
 module lib.groups.GroupProduct where
 
@@ -78,6 +80,13 @@ _×G_ (group A A-level A-struct) (group B B-level B-struct) =
 ×G-snd : ∀ {i j} {G : Group i} {H : Group j} → GroupHom (G ×G H) H
 ×G-snd = record {
   f = λ {(_ , h) → h};
+  pres-ident = idp;
+  pres-comp = λ _ _ → idp}
+
+ΠG-proj : ∀ {i j} {I : Type i} {F : I → Group j} (i : I)
+  → GroupHom (ΠG I F) (F i)
+ΠG-proj i = record {
+  f = λ f → f i;
   pres-ident = idp;
   pres-comp = λ _ _ → idp}
 
@@ -156,3 +165,18 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
   where
   module φ = GroupHom φ
   module ψ = GroupHom ψ
+
+{- A product ΠG indexed by Bool is the same as a binary product -}
+module _ {i} (Pick : Lift {j = i} Bool → Group i) where
+
+  ΠG-Bool-is-×G : ΠG (Lift Bool) Pick
+               == (Pick (lift true)) ×G (Pick (lift false))
+  ΠG-Bool-is-×G = group-iso φ e
+    where
+    φ = ×-hom (ΠG-proj {F = Pick} (lift true))
+              (ΠG-proj {F = Pick} (lift false))
+
+    e : is-equiv (GroupHom.f φ)
+    e = is-eq _ (λ {(g , h) → λ {(lift true) → g; (lift false) → h}})
+          (λ _ → idp)
+          (λ _ → λ= (λ {(lift true) → idp; (lift false) → idp}))
