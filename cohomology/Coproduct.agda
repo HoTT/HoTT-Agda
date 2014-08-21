@@ -149,7 +149,7 @@ module _ (n : ℕ) (X Y : Ptd i) where
           ! (glue (lift false)) ∙ glue (lift false) ∎
 
     Σ⊔-ptd-path : Σ⊔ == Ptd-Susp (X ∙⊔ Y)
-    Σ⊔-ptd-path = ptd-ua eq idp
+    Σ⊔-ptd-path = ptd-ua Σ⊔-eq idp
 
 
     {- Defining a right inverse to [extract-glue Σ⊔-ps], which gives
