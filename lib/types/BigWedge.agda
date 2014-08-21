@@ -116,10 +116,10 @@ module _ {i} (Pick : Lift {j = i} Bool → Ptd i) where
       (λ {(lift true) → λ _ → idp; (lift false) → λ _ → idp})
       (λ {(lift true) → ↓-∘=idf-from-square g f $
             ap (ap g) (F.glue-β (lift true)) ∙v⊡
-            disc-to-square (!-inv-l (bwglue (lift true)));
+            bl-square (bwglue (lift true));
           (lift false) → ↓-∘=idf-from-square g f $
             (ap (ap g) (F.glue-β (lift false)) ∙ G.glue-β) ∙v⊡
-            disc-to-square (! (∙-unit-r _))})
+            lt-square (! (bwglue (lift true))) ⊡h vid-square})
 
   BigWedge-Bool-path :
     BigWedge Pick == Wedge (Pick (lift true)) (Pick (lift false))

@@ -207,25 +207,26 @@ module _ where
     (vert-degen-square-β sq)
     (lemma (P ∘ vert-degen-square) r (vert-degen-path sq))
 
-fill-square-left : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
-  (p₋₀ : a₀₀ == a₁₀) (p₋₁ : a₀₁ == a₁₁) (p₁₋ : a₁₀ == a₁₁)
-  → Σ (a₀₀ == a₀₁) (λ p₀₋ → Square p₀₋ p₋₀ p₋₁ p₁₋)
-fill-square-left idp idp idp = (idp , ids)
+module _ {i} {A : Type i} where
+  fill-square-left : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    (p₋₀ : a₀₀ == a₁₀) (p₋₁ : a₀₁ == a₁₁) (p₁₋ : a₁₀ == a₁₁)
+    → Σ (a₀₀ == a₀₁) (λ p₀₋ → Square p₀₋ p₋₀ p₋₁ p₁₋)
+  fill-square-left idp idp p = (p , hid-square)
 
-fill-square-top : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
-  (p₀₋ : a₀₀ == a₀₁) (p₋₁ : a₀₁ == a₁₁) (p₁₋ : a₁₀ == a₁₁)
-  → Σ (a₀₀ == a₁₀) (λ p₋₀ → Square p₀₋ p₋₀ p₋₁ p₁₋)
-fill-square-top idp idp idp = (idp , ids)
+  fill-square-top : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    (p₀₋ : a₀₀ == a₀₁) (p₋₁ : a₀₁ == a₁₁) (p₁₋ : a₁₀ == a₁₁)
+    → Σ (a₀₀ == a₁₀) (λ p₋₀ → Square p₀₋ p₋₀ p₋₁ p₁₋)
+  fill-square-top idp p idp = (p , vid-square)
 
-fill-square-bot : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
-  (p₀₋ : a₀₀ == a₀₁) (p₋₀ : a₀₀ == a₁₀) (p₁₋ : a₁₀ == a₁₁)
-  → Σ (a₀₁ == a₁₁) (λ p₋₁ → Square p₀₋ p₋₀ p₋₁ p₁₋)
-fill-square-bot idp idp idp = (idp , ids)
+  fill-square-bot : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    (p₀₋ : a₀₀ == a₀₁) (p₋₀ : a₀₀ == a₁₀) (p₁₋ : a₁₀ == a₁₁)
+    → Σ (a₀₁ == a₁₁) (λ p₋₁ → Square p₀₋ p₋₀ p₋₁ p₁₋)
+  fill-square-bot idp p idp = (p , vid-square)
 
-fill-square-right : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
-  (p₀₋ : a₀₀ == a₀₁) (p₋₀ : a₀₀ == a₁₀) (p₋₁ : a₀₁ == a₁₁)
-  → Σ (a₁₀ == a₁₁) (λ p₁₋ → Square p₀₋ p₋₀ p₋₁ p₁₋)
-fill-square-right idp idp idp = (idp , ids)
+  fill-square-right : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    (p₀₋ : a₀₀ == a₀₁) (p₋₀ : a₀₀ == a₁₀) (p₋₁ : a₀₁ == a₁₁)
+    → Σ (a₁₀ == a₁₁) (λ p₁₋ → Square p₀₋ p₋₀ p₋₁ p₁₋)
+  fill-square-right p idp idp = (p , hid-square)
 
 
 module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
@@ -348,62 +349,109 @@ infixr 8 _⊡v_ _∙v⊡_
 
 infixr 8 _⊡v∙_ _⊡h∙_
 
+module _ {i} {A : Type i} where
+  !□h : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
+    {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+    → Square p₀₋ p₋₀ p₋₁ p₁₋
+    → Square p₁₋ (! p₋₀) (! p₋₁) p₀₋
+  !□h ids = ids
 
-!□h : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
-  {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
-  {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
-  → Square p₀₋ p₋₀ p₋₁ p₁₋
-  → Square p₁₋ (! p₋₀) (! p₋₁) p₀₋
-!□h ids = ids
+  !□v : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
+    {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+    → Square p₀₋ p₋₀ p₋₁ p₁₋
+    → Square (! p₀₋) p₋₁ p₋₀ (! p₁₋)
+  !□v ids = ids
 
-!□v : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
-  {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
-  {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
-  → Square p₀₋ p₋₀ p₋₁ p₁₋
-  → Square (! p₀₋) p₋₁ p₋₀ (! p₁₋)
-!□v ids = ids
+module _ {i} {A : Type i} where
+  !□h-inv-l : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
+    {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+    (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
+    → (!□h sq) ⊡h sq == !-inv-l p₋₀ ∙v⊡ hid-square ⊡v∙ ! (!-inv-l p₋₁)
+  !□h-inv-l ids = idp
 
+  !□h-inv-r : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
+    {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+    (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
+    → sq ⊡h (!□h sq) == !-inv-r p₋₀ ∙v⊡ hid-square ⊡v∙ ! (!-inv-r p₋₁)
+  !□h-inv-r ids = idp
 
-!□h-inv-l : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
-  {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
-  {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
-  (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
-  → (!□h sq) ⊡h sq ==
-    !-inv-l p₋₀ ∙v⊡ hid-square ⊡v∙ ! (!-inv-l p₋₁)
-!□h-inv-l ids = idp
+  !□v-inv-l : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
+    {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+    (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
+    → (!□v sq) ⊡v sq == !-inv-l p₀₋ ∙h⊡ vid-square ⊡h∙ ! (!-inv-l p₁₋)
+  !□v-inv-l ids = idp
 
-!□h-inv-r : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
-  {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
-  {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
-  (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
-  → sq ⊡h (!□h sq) ==
-    !-inv-r p₋₀ ∙v⊡ hid-square ⊡v∙ ! (!-inv-r p₋₁)
-!□h-inv-r ids = idp
+  !□v-inv-r : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
+    {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+    (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
+    → sq ⊡v (!□v sq) == !-inv-r p₀₋ ∙h⊡ vid-square ⊡h∙ ! (!-inv-r p₁₋)
+  !□v-inv-r ids = idp
 
-!□v-inv-l : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
-  {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
-  {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
-  (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
-  → (!□v sq) ⊡v sq ==
-    !-inv-l p₀₋ ∙h⊡ vid-square ⊡h∙ ! (!-inv-l p₁₋)
-!□v-inv-l ids = idp
+module _ {i} {A : Type i} where
+  square-left-unique : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₀₋ p₀₋' : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
+    {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+    → Square p₀₋ p₋₀ p₋₁ p₁₋ → Square p₀₋' p₋₀ p₋₁ p₁₋
+    → p₀₋ == p₀₋'
+  square-left-unique {p₋₀ = idp} {p₋₁ = idp} sq₁ sq₂ =
+    horiz-degen-path (sq₁ ⊡h (!□h sq₂))
 
-!□v-inv-r : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
-  {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
-  {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
-  (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
-  → sq ⊡v (!□v sq) ==
-    !-inv-r p₀₋ ∙h⊡ vid-square ⊡h∙ ! (!-inv-r p₁₋)
-!□v-inv-r ids = idp
+  square-top-unique : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₀₋ : a₀₀ == a₀₁} {p₋₀ p₋₀' : a₀₀ == a₁₀}
+    {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+    → Square p₀₋ p₋₀ p₋₁ p₁₋ → Square p₀₋ p₋₀' p₋₁ p₁₋
+    → p₋₀ == p₋₀'
+  square-top-unique {p₀₋ = idp} {p₁₋ = idp} sq₁ sq₂ =
+    vert-degen-path (sq₁ ⊡v (!□v sq₂))
 
+  square-bot-unique : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
+    {p₋₁ p₋₁' : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+    → Square p₀₋ p₋₀ p₋₁ p₁₋ → Square p₀₋ p₋₀ p₋₁' p₁₋
+    → p₋₁ == p₋₁'
+  square-bot-unique {p₀₋ = idp} {p₁₋ = idp} sq₁ sq₂ =
+    vert-degen-path ((!□v sq₁) ⊡v sq₂)
 
-connection : ∀ {i} {A : Type i} {a₀ a₁ : A} {q : a₀ == a₁}
-  → Square idp idp q q
-connection {q = idp} = ids
+  square-right-unique : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
+    {p₋₁ : a₀₁ == a₁₁} {p₁₋ p₁₋' : a₁₀ == a₁₁}
+    → Square p₀₋ p₋₀ p₋₁ p₁₋ → Square p₀₋ p₋₀ p₋₁ p₁₋'
+    → p₁₋ == p₁₋'
+  square-right-unique {p₋₀ = idp} {p₋₁ = idp} sq₁ sq₂ =
+    horiz-degen-path ((!□h sq₁) ⊡h sq₂)
 
-connection2 : ∀ {i} {A : Type i} {a₀ a₁ a₂ : A}
-  {p : a₀ == a₁} {q : a₁ == a₂}
-  → Square p p q q
-connection2 {p = idp} {q = idp} = ids
+module _ {i} {A : Type i} where
 
+  connection : {a₀ a₁ : A} {q : a₀ == a₁}
+    → Square idp idp q q
+  connection {q = idp} = ids
 
+  connection2 : {a₀ a₁ a₂ : A} {p : a₀ == a₁} {q : a₁ == a₂}
+    → Square p p q q
+  connection2 {p = idp} {q = idp} = ids
+
+  lb-square : {a₀ a₁ : A} (p : a₀ == a₁)
+    → Square p idp (! p) idp
+  lb-square idp = ids
+
+  bl-square : {a₀ a₁ : A} (p : a₀ == a₁)
+    → Square (! p) idp p idp
+  bl-square idp = ids
+
+  ru-square : {a₀ a₁ : A} (p : a₀ == a₁)
+    → Square idp (! p) idp p
+  ru-square idp = ids
+
+  ur-square : {a₀ a₁ : A} (p : a₀ == a₁)
+    → Square idp p idp (! p)
+  ur-square idp = ids
+
+  lt-square : {a₀ a₁ : A} (p : a₀ == a₁)
+    → Square p p idp idp
+  lt-square idp = ids

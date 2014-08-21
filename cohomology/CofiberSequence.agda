@@ -192,9 +192,6 @@ module Cof² {X Y : Ptd i} (f : fst (X ∙→ Y)) where
     ptd-λ= fst-lemma (l snd-lemma)
     ◃ domain-over-ptd-equiv (Σflip Y ∘ptd ptd-susp-fmap f) _ _
     where
-    ur-square : {A : Type i} {a₀ a₁ : A} (p : a₀ == a₁) → Square idp p idp (! p)
-    ur-square idp = ids
-
     fst-lemma : (κ : fst (Ptd-Cof² f))
       → co∂ (ptd-cfcod f) κ == flip-pushout (susp-fmap (fst f) (Equiv.into f κ))
     fst-lemma = Cofiber-elim (cfcod (fst f))
@@ -205,8 +202,7 @@ module Cof² {X Y : Ptd i} (f : fst (X ∙→ Y)) where
         (λ x → ↓-='-from-square $
           ap-cst (south _) (cfglue _ x) ∙v⊡
             connection
-          ⊡v∙ ! (ap-∘ (flip-pushout ∘ susp-fmap (fst f)) (co∂ f)
-                      (cfglue _ x)
+          ⊡v∙ ! (ap-∘ (flip-pushout ∘ susp-fmap (fst f)) (co∂ f) (cfglue _ x)
                  ∙ ap (ap (flip-pushout ∘ susp-fmap (fst f))) (Co∂.glue-β f x)
                  ∙ ap-∘ flip-pushout (susp-fmap (fst f)) (merid _ x)
                  ∙ ap (ap flip-pushout) (SuspFmap.glue-β (fst f) x)
