@@ -7,6 +7,7 @@ open import lib.types.Pi
 open import lib.types.Sigma
 open import lib.groups.Homomorphisms
 open import lib.groups.Lift
+open import lib.groups.Unit
 
 module lib.groups.GroupProduct where
 
@@ -61,7 +62,6 @@ _×G_ (group A A-level A-struct) (group B B-level B-struct) =
   → (∀ i → is-abelian (F i)) → is-abelian (ΠG I F)
 ΠG-abelian aF f₁ f₂ = λ= (λ i → aF i (f₁ i) (f₂ i))
 
-
 {- defining a homomorphism into a binary product -}
 ×-hom : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
   → GroupHom G H → GroupHom G K → GroupHom G (H ×G K)
@@ -72,16 +72,10 @@ _×G_ (group A A-level A-struct) (group B B-level B-struct) =
 
 {- projection homomorphisms -}
 ×G-fst : ∀ {i j} {G : Group i} {H : Group j} → GroupHom (G ×G H) G
-×G-fst = record {
-  f = λ {(g , _) → g};
-  pres-ident = idp;
-  pres-comp = λ _ _ → idp}
+×G-fst = record {f = fst; pres-ident = idp; pres-comp = λ _ _ → idp}
 
 ×G-snd : ∀ {i j} {G : Group i} {H : Group j} → GroupHom (G ×G H) H
-×G-snd = record {
-  f = λ {(_ , h) → h};
-  pres-ident = idp;
-  pres-comp = λ _ _ → idp}
+×G-snd = record {f = snd; pres-ident = idp; pres-comp = λ _ _ → idp}
 
 ΠG-proj : ∀ {i j} {I : Type i} {F : I → Group j} (i : I)
   → GroupHom (ΠG I F) (F i)
@@ -165,6 +159,16 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
   where
   module φ = GroupHom φ
   module ψ = GroupHom ψ
+
+{- 0G is a unit for product -}
+×G-unit-l : ∀ {i} {G : Group i} → 0G {i} ×G G == G
+×G-unit-l = group-iso
+  (×G-snd {G = 0G})
+  (is-eq snd (λ g → (lift unit , g)) (λ _ → idp) (λ _ → idp))
+
+×G-unit-r : ∀ {i} {G : Group i} → G ×G 0G {i} == G
+×G-unit-r = group-iso
+  ×G-fst (is-eq fst (λ g → (g , lift unit)) (λ _ → idp) (λ _ → idp))
 
 {- A product ΠG indexed by Bool is the same as a binary product -}
 module _ {i} (Pick : Lift {j = i} Bool → Group i) where
