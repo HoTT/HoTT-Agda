@@ -375,45 +375,30 @@ module MayerVietorisBase
 {- Main results -}
 module MayerVietoris (ps : Ptd-Span {i} {i} {i}) where
 
-  open MayerVietorisFunctions public
+  private
+    record Results (ps : Ptd-Span {i} {i} {i}) : Type (lsucc i) where
+      open Ptd-Span ps
+      open MayerVietorisFunctions ps public
+      field
+        eq : Cofiber reglue ≃ Suspension (fst Z)
+        path : Cofiber reglue == Suspension (fst Z)
+        ptd-path : Ptd-Cof ptd-reglue == Ptd-Susp Z
+        cfcod-over : ptd-cfcod ptd-reglue == ptd-extract-glue
+                     [ (λ W → fst (Ptd-Pushout ps ∙→ W)) ↓ ptd-path ]
+        co∂-over : ptd-co∂ ptd-reglue == ptd-mv-co∂
+                   [ (λ W → fst (W ∙→ Ptd-Susp (Ptd-Wedge X Y))) ↓ ptd-path ]
 
-  module Equiv (ps : Ptd-Span {i} {i} {i}) where
+    results : Results ps
+    results = ptd-pushout-J Results base-results ps
+      where
+      base-results : ∀ {A} {B} Z (f : fst Z → A) (g : fst Z → B) →
+        Results (ptd-span _ _ Z (f , idp) (g , idp))
+      base-results Z f g = record {
+        eq = eq;
+        path = path;
+        ptd-path = ptd-path;
+        cfcod-over = cfcod-over;
+        co∂-over = co∂-over}
+        where open MayerVietorisBase Z f g
 
-    open Ptd-Span ps
-
-    eq : Cofiber (reglue ps) ≃ Suspension (fst Z)
-    eq = ptd-pushout-J
-      (λ ps' → Cofiber (reglue ps') ≃ Suspension (fst (Ptd-Span.Z ps')))
-      MayerVietorisBase.eq ps
-
-    path : Cofiber (reglue ps) == Suspension (fst Z)
-    path = ua eq
-
-    ptd-path : Ptd-Cof (ptd-reglue ps) == Ptd-Susp Z
-    ptd-path = ptd-pushout-J
-      (λ ps' → Ptd-Cof (ptd-reglue ps') == Ptd-Susp (Ptd-Span.Z ps'))
-      MayerVietorisBase.ptd-path ps
-
-  module Over (ps : Ptd-Span {i} {i} {i}) where
-
-    open Ptd-Span ps
-    open Equiv
-
-    cfcod-over : ptd-cfcod (ptd-reglue ps) == ptd-extract-glue ps
-      [ (λ W → fst (Ptd-Pushout ps ∙→ W)) ↓ ptd-path ps ]
-    cfcod-over = ptd-pushout-J
-      (λ ps' → ptd-cfcod (ptd-reglue ps') == ptd-extract-glue ps'
-        [ (λ W → fst (Ptd-Pushout ps' ∙→ W)) ↓ ptd-path ps' ])
-      MayerVietorisBase.cfcod-over ps
-
-    co∂-over : ptd-co∂ (ptd-reglue ps) == ptd-mv-co∂ ps
-      [ (λ W → fst (W ∙→ Ptd-Susp (Ptd-Wedge X Y))) ↓ ptd-path ps ]
-    co∂-over = ptd-pushout-J
-      (λ ps' → ptd-co∂ (ptd-reglue ps') == ptd-mv-co∂ ps'
-        [ (λ W → fst (W ∙→ Ptd-Susp (Ptd-Wedge (Ptd-Span.X ps')
-                                               (Ptd-Span.Y ps'))))
-          ↓ ptd-path ps' ])
-      MayerVietorisBase.co∂-over ps
-
-  open Equiv ps public
-  open Over ps public
+    open Results results public
