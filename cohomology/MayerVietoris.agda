@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
+open import cohomology.CofiberSequence
 open import cohomology.FunctionOver
 
 module cohomology.MayerVietoris {i} where
@@ -34,6 +35,17 @@ module MayerVietorisFunctions (ps : Ptd-Span {i} {i} {i}) where
   ptd-extract-glue : fst (Ptd-Pushout ps ∙→ Ptd-Susp Z)
   ptd-extract-glue = (extract-glue , idp)
 
+
+  module MVCo∂ = SuspensionRec (fst Z) {C = Suspension (Wedge X Y)}
+    (north _)
+    (north _)
+    (λ z → merid _ (winl (fst f z)) ∙ ! (merid _ (winr (fst g z))))
+
+  mv-co∂ : Suspension (fst Z) → Suspension (Wedge X Y)
+  mv-co∂ = MVCo∂.f
+
+  ptd-mv-co∂ : fst (Ptd-Susp Z ∙→ Ptd-Susp (Ptd-Wedge X Y))
+  ptd-mv-co∂ = (mv-co∂ , idp)
 
 {- We use path induction (via [ptd-pushout-J]) to assume that the
    basepoint preservation paths of the span maps are [idp]. The module
@@ -137,12 +149,12 @@ module MayerVietorisBase
      build up a right square (in this case starting from a cube filler)  -}
   private
     square-push-rb : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A} {b : A}
-      {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == b} {p₁₋ : a₁₀ == a₁₁}
-      (q : a₁₁ == b) (sq : Square p₀₋ p₋₀ p₋₁ (p₁₋ ∙ q))
+      {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == b}
+      (q : b == a₁₁) (sq : Square p₀₋ p₋₀ p₋₁ (p₁₋ ∙ q))
       → Square p₀₋ p₋₀ (p₋₁ ∙' ! q) p₁₋
     square-push-rb {p₁₋ = idp} idp sq = sq
 
-    cube-lemma : ∀ {i} {A : Type i}
+    right-from-bot-lemma : ∀ {i} {A : Type i}
       {a₀₀₀ a₀₁₀ a₁₀₀ a₁₁₀ a₀₀₁ a₀₁₁ a₁₀₁ a₁₁₁ b₀ b₁ : A}
       {p₀₋₀ : a₀₀₀ == a₀₁₀} {p₋₀₀ : a₀₀₀ == a₁₀₀}
       {p₋₁₀ : a₀₁₀ == a₁₁₀} {p₁₋₀ : a₁₀₀ == a₁₁₀}
@@ -152,8 +164,8 @@ module MayerVietorisBase
       {p₋₁₁ : a₀₁₁ == a₁₁₁} {p₁₋₁ : a₁₀₁ == a₁₁₁}
       (sq₋₋₁ : Square p₀₋₁ p₋₀₁ p₋₁₁ p₁₋₁) -- right
 
-      {p₀₀₋ : a₀₀₀ == a₀₀₁} {p₀₁₋ : a₀₁₀ == b₀ {-a₀₁₁-}}
-      {p₁₀₋ : a₁₀₀ == a₁₀₁} {p₁₁₋ : a₁₁₀ == b₁ {-a₁₁₁-}}
+      {p₀₀₋ : a₀₀₀ == a₀₀₁} {p₀₁₋ : a₀₁₀ == b₀}
+      {p₁₀₋ : a₁₀₀ == a₁₀₁} {p₁₁₋ : a₁₁₀ == b₁}
       {q₀₋ : a₀₁₁ == b₀} {q₋₁ : b₀ == b₁} {q₁₋ : a₁₁₁ == b₁}
       {sq₀₋₋ : Square p₀₋₀ p₀₀₋ p₀₁₋ (p₀₋₁ ∙ q₀₋)} -- back
       {sq₋₀₋ : Square p₋₀₀ p₀₀₋ p₁₀₋ p₋₀₁} -- top
@@ -164,9 +176,9 @@ module MayerVietorisBase
                  sq₋₀₋ (sq₋₁₋ ⊡h' !□h (square-symmetry sq'))
                  (square-push-rb q₁₋ sq₁₋₋))
       → Cube sq₋₋₀ (sq₋₋₁ ⊡v sq') sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋
-    cube-lemma sq₋₋₁ ids cu = cube-lemma' sq₋₋₁ cu
+    right-from-bot-lemma sq₋₋₁ ids cu = right-from-bot-lemma' sq₋₋₁ cu
       where
-      cube-lemma' : ∀ {i} {A : Type i}
+      right-from-bot-lemma' : ∀ {i} {A : Type i}
         {a₀₀₀ a₀₁₀ a₁₀₀ a₁₁₀ a₀₀₁ a₀₁₁ a₁₀₁ a₁₁₁ : A}
         {p₀₋₀ : a₀₀₀ == a₀₁₀} {p₋₀₀ : a₀₀₀ == a₁₀₀}
         {p₋₁₀ : a₀₁₀ == a₁₁₀} {p₁₋₀ : a₁₀₀ == a₁₁₀}
@@ -186,7 +198,7 @@ module MayerVietorisBase
                    (sq₋₁₋ ⊡h' !□h (square-symmetry vid-square))
                    (square-push-rb idp sq₁₋₋))
         → Cube sq₋₋₀ (sq₋₋₁ ⊡v vid-square) sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋
-      cube-lemma' ids cu = cu
+      right-from-bot-lemma' ids cu = cu
 
   {- Proving the coherence term for the left inverse. This means proving
      [(w : Wedge X Y) → Square idp (ap out (ap into (glue w)))
@@ -208,11 +220,7 @@ module MayerVietorisBase
              (natural-square (out-into-cod ∘ reglue) wglue)))
     out-into-fill = fill-cube-right _ _ _ _ _
 
-
-    out-into-fill-square = fst out-into-fill
-    out-into-fill-cube = snd out-into-fill
-
-    {- [out-into-fill-square] is chosen so that we can prove
+    {- [fst out-into-fill] is chosen so that we can prove
        [out-into-sql == out-into-sqr [ ⋯ ↓ ⋯ ]];
        this is proven by massaging [out-into-fill-cube] into the right shape.
        The trick is that the type of [out-into-fill-square] is independent of
@@ -221,7 +229,7 @@ module MayerVietorisBase
     out-into-sqr : (y : fst Y)
       → Square idp (ap out (into-glue (winr y)))
                (cfglue _ (winr y)) (cfglue _ (winr y))
-    out-into-sqr y = out-into-fill-square ⊡v connection
+    out-into-sqr y = fst out-into-fill ⊡v connection
 
   out-into : ∀ κ → out (into κ) == κ
   out-into = Cofiber-elim reglue
@@ -234,8 +242,8 @@ module MayerVietorisBase
            out-into-sql
            out-into-sqr
            (cube-to-↓-square $
-             cube-lemma out-into-fill-square connection $
-               out-into-fill-cube)
+             right-from-bot-lemma (fst out-into-fill) connection $
+               (snd out-into-fill))
            w)
 
   {- equivalence and paths -}
@@ -252,7 +260,7 @@ module MayerVietorisBase
   {- Transporting [cfcod reglue] over the equivalence -}
 
   cfcod-over : ptd-cfcod ptd-reglue == ptd-extract-glue
-         [ (λ W → fst (Ptd-Pushout ps ∙→ W)) ↓ ptd-path ]
+              [ (λ W → fst (Ptd-Pushout ps ∙→ W)) ↓ ptd-path ]
   cfcod-over =
     codomain-over-ptd-equiv (ptd-cfcod ptd-reglue) eq idp ▹ lemma
     where
@@ -264,32 +272,148 @@ module MayerVietorisBase
         =⟨ Into.glue-β (winl (snd X)) |in-ctx (λ w → ! w ∙ idp) ⟩
       idp ∎
 
-{- Main results -}
-module _ (ps : Ptd-Span {i} {i} {i}) where
+  {- Transporting [co∂ reglue] over the equivalence. Uses the same sort of
+   - cube technique as in the proof of [ptd-pash]. -}
 
-  open Ptd-Span ps
+  private
+    square-push-rt : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A} {b : A}
+      {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : b == a₁₁}
+      (q : a₁₀ == b) (sq : Square p₀₋ p₋₀ p₋₁ (q ∙' p₁₋))
+      → Square p₀₋ (p₋₀ ∙' q) p₋₁ p₁₋
+    square-push-rt {p₁₋ = idp} idp sq = sq
+
+    right-from-top-lemma : ∀ {i} {A : Type i}
+      {a₀₀₀ a₀₁₀ a₁₀₀ a₁₁₀ a₀₀₁ a₀₁₁ a₁₀₁ a₁₁₁ b₀ b₁ : A}
+      {p₀₋₀ : a₀₀₀ == a₀₁₀} {p₋₀₀ : a₀₀₀ == a₁₀₀}
+      {p₋₁₀ : a₀₁₀ == a₁₁₀} {p₁₋₀ : a₁₀₀ == a₁₁₀}
+      {sq₋₋₀ : Square p₀₋₀ p₋₀₀ p₋₁₀ p₁₋₀} -- left
+
+      {p₀₋₁ : a₀₀₁ == a₀₁₁} {p₋₀₁ : a₀₀₁ == a₁₀₁}
+      {p₋₁₁ : a₀₁₁ == a₁₁₁} {p₁₋₁ : a₁₀₁ == a₁₁₁}
+      (sq₋₋₁ : Square p₀₋₁ p₋₀₁ p₋₁₁ p₁₋₁) -- right
+
+      {p₀₀₋ : a₀₀₀ == b₀ {-a₀₀₁-}} {p₀₁₋ : a₀₁₀ == a₀₁₁}
+      {p₁₀₋ : a₁₀₀ == b₁ {-a₁₀₁-}} {p₁₁₋ : a₁₁₀ == a₁₁₁}
+      {q₀₋ : b₀ == a₀₀₁} {q₋₀ : b₀ == b₁} {q₁₋ : b₁ == a₁₀₁}
+      {sq₀₋₋ : Square p₀₋₀ p₀₀₋ p₀₁₋ (q₀₋ ∙' p₀₋₁)} -- back
+      {sq₋₀₋ : Square p₋₀₀ p₀₀₋ p₁₀₋ q₋₀} -- top
+      {sq₋₁₋ : Square p₋₁₀ p₀₁₋ p₁₁₋ p₋₁₁} -- bottom
+      {sq₁₋₋ : Square p₁₋₀ p₁₀₋ p₁₁₋ (q₁₋ ∙' p₁₋₁)} -- front
+      (sq' : Square q₀₋ q₋₀ p₋₀₁ q₁₋)
+      (cu : Cube sq₋₋₀ sq₋₋₁ (square-push-rt q₀₋ sq₀₋₋)
+                 (sq₋₀₋ ⊡h' square-symmetry sq') sq₋₁₋
+                 (square-push-rt q₁₋ sq₁₋₋))
+      → Cube sq₋₋₀ (sq' ⊡v' sq₋₋₁) sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋
+    right-from-top-lemma sq₋₋₁ ids cu = right-from-top-lemma' sq₋₋₁ cu
+      where
+      right-from-top-lemma' : ∀ {i} {A : Type i}
+        {a₀₀₀ a₀₁₀ a₁₀₀ a₁₁₀ a₀₀₁ a₀₁₁ a₁₀₁ a₁₁₁ : A}
+        {p₀₋₀ : a₀₀₀ == a₀₁₀} {p₋₀₀ : a₀₀₀ == a₁₀₀}
+        {p₋₁₀ : a₀₁₀ == a₁₁₀} {p₁₋₀ : a₁₀₀ == a₁₁₀}
+        {sq₋₋₀ : Square p₀₋₀ p₋₀₀ p₋₁₀ p₁₋₀} -- left
+
+        {p₀₋₁ : a₀₀₁ == a₀₁₁} {p₋₀₁ : a₀₀₁ == a₁₀₁}
+        {p₋₁₁ : a₀₁₁ == a₁₁₁} {p₁₋₁ : a₁₀₁ == a₁₁₁}
+        (sq₋₋₁ : Square p₀₋₁ p₋₀₁ p₋₁₁ p₁₋₁) -- right
+
+        {p₀₀₋ : a₀₀₀ == a₀₀₁} {p₀₁₋ : a₀₁₀ == a₀₁₁}
+        {p₁₀₋ : a₁₀₀ == a₁₀₁} {p₁₁₋ : a₁₁₀ == a₁₁₁}
+        {sq₀₋₋ : Square p₀₋₀ p₀₀₋ p₀₁₋ (idp ∙' p₀₋₁)} -- back
+        {sq₋₀₋ : Square p₋₀₀ p₀₀₋ p₁₀₋ p₋₀₁} -- top
+        {sq₋₁₋ : Square p₋₁₀ p₀₁₋ p₁₁₋ p₋₁₁} -- bottom
+        {sq₁₋₋ : Square p₁₋₀ p₁₀₋ p₁₁₋ (idp ∙' p₁₋₁)} -- front
+        (cu : Cube sq₋₋₀ sq₋₋₁ (square-push-rt idp sq₀₋₋)
+                   (sq₋₀₋ ⊡h' square-symmetry vid-square) sq₋₁₋
+                   (square-push-rt idp sq₁₋₋))
+        → Cube sq₋₋₀ (vid-square ⊡v' sq₋₋₁) sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋
+      right-from-top-lemma' ids cu = cu
+
+  co∂-over : ptd-co∂ ptd-reglue == ptd-mv-co∂
+             [ (λ W → fst (W ∙→ Ptd-Susp (Ptd-Wedge X Y))) ↓ ptd-path ]
+  co∂-over = ptd-λ= fn-lemma idp ◃ domain-over-ptd-equiv ptd-mv-co∂ _ _
+    where
+    fn-lemma : ∀ κ → co∂ ptd-reglue κ == mv-co∂ (into κ)
+    fn-lemma = Cofiber-elim reglue
+      idp fn-cod
+      (λ w → ↓-='-from-square $
+        Co∂.glue-β ptd-reglue w ∙v⊡
+          fn-coh w
+        ⊡v∙ ! (ap-∘ mv-co∂ into (glue w) ∙ ap (ap mv-co∂) (Into.glue-β w)))
+      where
+      fn-cod : (γ : fst (Ptd-Pushout ps))
+        → co∂ ptd-reglue (cfcod _ γ) == mv-co∂ (extract-glue γ)
+      fn-cod = Pushout-elim
+        (λ x → ! (merid _ (winl x)))
+        (λ y → ! (merid _ (winr y)))
+        (λ z → ↓-='-from-square $
+          ap-cst (south _) (glue z) ∙v⊡
+            (bl-square (merid _ (winl (f z))) ⊡h connection)
+          ⊡v∙ ! (ap-∘ mv-co∂ extract-glue (glue z)
+                 ∙ ap (ap mv-co∂) (ExtractGlue.glue-β z)
+                 ∙ MVCo∂.glue-β z))
+
+      fn-fill : Σ (Square idp idp (ap mv-co∂ (merid _ (snd Z))) idp)
+        (λ sq → Cube (ur-square (merid _ (winl (snd X)))) sq
+                     (natural-square (λ _ → idp) wglue)
+                     (natural-square (merid _) wglue
+                       ⊡h' square-symmetry (ur-square (merid _ (winr (snd Y)))))
+                     (natural-square (ap mv-co∂ ∘ into-glue) wglue)
+                     (square-push-rt (! (merid _ (winr (snd Y))))
+                       (natural-square (fn-cod ∘ reglue) wglue)))
+      fn-fill = fill-cube-right _ _ _ _ _
+
+      fn-coh : (w : Wedge X Y)
+        → Square idp (merid _ w) (ap mv-co∂ (into-glue w)) (fn-cod (reglue w))
+      fn-coh = Wedge-elim
+        (λ x → ur-square (merid _ (winl x)))
+          (λ y → ur-square (merid _ (winr y)) ⊡v' (fst fn-fill))
+        (cube-to-↓-square $ right-from-top-lemma
+          (fst fn-fill)
+          (ur-square (merid _ (winr (snd Y))))
+          (snd fn-fill))
+
+{- Main results -}
+module MayerVietoris (ps : Ptd-Span {i} {i} {i}) where
+
   open MayerVietorisFunctions public
 
-  mayer-vietoris-equiv : Cofiber (reglue ps) ≃ Suspension (fst Z)
-  mayer-vietoris-equiv = ptd-pushout-J
-    (λ ps' → Cofiber (reglue ps') ≃ Suspension (fst (Ptd-Span.Z ps')))
-    MayerVietorisBase.eq ps
+  module Equiv (ps : Ptd-Span {i} {i} {i}) where
 
-  mayer-vietoris-path : Cofiber (reglue ps) == Suspension (fst Z)
-  mayer-vietoris-path = ua mayer-vietoris-equiv
+    open Ptd-Span ps
 
-  mayer-vietoris-ptd-path : Ptd-Cof (ptd-reglue ps) == Ptd-Susp Z
-  mayer-vietoris-ptd-path = ptd-pushout-J
-    (λ ps' → Ptd-Cof (ptd-reglue ps') == Ptd-Susp (Ptd-Span.Z ps'))
-    MayerVietorisBase.ptd-path ps
+    eq : Cofiber (reglue ps) ≃ Suspension (fst Z)
+    eq = ptd-pushout-J
+      (λ ps' → Cofiber (reglue ps') ≃ Suspension (fst (Ptd-Span.Z ps')))
+      MayerVietorisBase.eq ps
 
-module _ (ps : Ptd-Span {i} {i} {i}) where
+    path : Cofiber (reglue ps) == Suspension (fst Z)
+    path = ua eq
 
-  open Ptd-Span ps
+    ptd-path : Ptd-Cof (ptd-reglue ps) == Ptd-Susp Z
+    ptd-path = ptd-pushout-J
+      (λ ps' → Ptd-Cof (ptd-reglue ps') == Ptd-Susp (Ptd-Span.Z ps'))
+      MayerVietorisBase.ptd-path ps
 
-  mayer-vietoris-cfcod-over : ptd-cfcod (ptd-reglue ps) == ptd-extract-glue ps
-    [ (λ W → fst (Ptd-Pushout ps ∙→ W)) ↓ mayer-vietoris-ptd-path ps ]
-  mayer-vietoris-cfcod-over = ptd-pushout-J
-    (λ ps' → ptd-cfcod (ptd-reglue ps') == ptd-extract-glue ps'
-      [ (λ W → fst (Ptd-Pushout ps' ∙→ W)) ↓ mayer-vietoris-ptd-path ps' ])
-    MayerVietorisBase.cfcod-over ps
+  module Over (ps : Ptd-Span {i} {i} {i}) where
+
+    open Ptd-Span ps
+    open Equiv
+
+    cfcod-over : ptd-cfcod (ptd-reglue ps) == ptd-extract-glue ps
+      [ (λ W → fst (Ptd-Pushout ps ∙→ W)) ↓ ptd-path ps ]
+    cfcod-over = ptd-pushout-J
+      (λ ps' → ptd-cfcod (ptd-reglue ps') == ptd-extract-glue ps'
+        [ (λ W → fst (Ptd-Pushout ps' ∙→ W)) ↓ ptd-path ps' ])
+      MayerVietorisBase.cfcod-over ps
+
+    co∂-over : ptd-co∂ (ptd-reglue ps) == ptd-mv-co∂ ps
+      [ (λ W → fst (W ∙→ Ptd-Susp (Ptd-Wedge X Y))) ↓ ptd-path ps ]
+    co∂-over = ptd-pushout-J
+      (λ ps' → ptd-co∂ (ptd-reglue ps') == ptd-mv-co∂ ps'
+        [ (λ W → fst (W ∙→ Ptd-Susp (Ptd-Wedge (Ptd-Span.X ps')
+                                               (Ptd-Span.Y ps'))))
+          ↓ ptd-path ps' ])
+      MayerVietorisBase.co∂-over ps
+
+  open Equiv ps public
+  open Over ps public
