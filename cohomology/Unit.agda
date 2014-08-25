@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
+open import cohomology.Exactness
 open import cohomology.OrdinaryTheory
 
 module cohomology.Unit {i} (OT : OrdinaryTheory i) where
@@ -37,7 +38,7 @@ private
     (Cid 0 PLU , λ x → lemma₂ x ∙ app= (ap GroupHom.f (CF-ident 0)) x)
     where
     lemma₁ : (x : CEl 0 (Ptd-Cof (ptd-idf _))) → Cid 0 PLU == fst G x
-    lemma₁ x = ! (C-exact-itok-mere 0 (ptd-idf _) (fst G x) [ x , idp ])
+    lemma₁ x = ! (itok (C-exact 0 (ptd-idf _)) (fst G x) [ x , idp ])
                ∙ app= (ap GroupHom.f (CF-ident 0)) (fst G x)
 
     lemma₂ : (x : CEl 0 PLU) → Cid 0 PLU == fst (CF 0 (ptd-idf _)) x
