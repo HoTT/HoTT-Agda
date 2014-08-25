@@ -283,3 +283,10 @@ cofiber-sequence {Y = Y} f =
           ∙ ap (λ w → w ∘ptd ptd-susp-fmap f)
                (flip-ptd-pushout-involutive (suspension-ptd-span Y))
           ∙ ∘ptd-unit-l (ptd-susp-fmap f)
+
+
+cof-suspend : {X Y : Ptd i} (f : fst (X ∙→ Y)) →
+  Ptd-Cof (ptd-susp-fmap f) == Ptd-Susp (Ptd-Cof f)
+cof-suspend f =
+  ↓-cst-out (apd (λ {(_ , _ , g , _) → Ptd-Cof g}) (! (cofiber-sequence f)))
+  ∙ ap (λ {((_ , _ , W) , _ , _ , _) → W}) (cofiber-sequence f)
