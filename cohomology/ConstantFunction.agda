@@ -13,8 +13,8 @@ open OrdinaryTheory OT
 
 module _ (n : ℕ) {X Y : Ptd i} where
 
-  C-cst : CF-hom n (ptd-cst {X = X} {Y = Y}) == cst-hom
-  C-cst =
+  CF-cst : CF-hom n (ptd-cst {X = X} {Y = Y}) == cst-hom
+  CF-cst =
     CF-hom n (ptd-cst {X = PLU} ∘ptd ptd-cst {X = X})
       =⟨ CF-comp n ptd-cst ptd-cst ⟩
     (CF-hom n (ptd-cst {X = X})) ∘hom (CF-hom n (ptd-cst {X = PLU}))
