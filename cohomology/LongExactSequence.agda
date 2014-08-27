@@ -6,7 +6,7 @@ open import cohomology.OrdinaryTheory
 open import cohomology.CofiberSequence
 
 module cohomology.LongExactSequence {i} (OT : OrdinaryTheory i)
-  (n : ℕ) {X Y : Ptd i} (f : fst (X ∙→ Y)) where
+  (n : ℤ) {X Y : Ptd i} (f : fst (X ∙→ Y)) where
 
 open OrdinaryTheory OT
 

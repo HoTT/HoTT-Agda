@@ -11,7 +11,7 @@ module cohomology.ConstantFunction {i} (OT : OrdinaryTheory i) where
 open import cohomology.Unit OT
 open OrdinaryTheory OT
 
-module _ (n : ℕ) {X Y : Ptd i} where
+module _ (n : ℤ) {X Y : Ptd i} where
 
   CF-cst : CF-hom n (ptd-cst {X = X} {Y = Y}) == cst-hom
   CF-cst =

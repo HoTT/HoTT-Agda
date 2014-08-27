@@ -216,11 +216,12 @@ module KGnExplicit {i} (G : Group i) (G-abelian : is-abelian G) where
   module Kn = KGnImplicit K1.KG1 K1.KG1-conn K1.klevel HSpace.H-KG1 HSpace.μcoh
 
   open Kn public
-  open Kn.BelowDiagonal public using (π-below)
+
+  open BelowDiagonal public using (π-below)
 
   π-diag : (n : ℕ) → ⦃ pn : n ≠ 0 ⦄ → π n ⦃ pn ⦄ (Ptd-KG n) == G
   π-diag n ⦃ pn ⦄ =
-    Kn.OnDiagonal.π-diag n ⦃ pn ⦄ ⦃ ℕ-S≠O 0 ⦄ ∙ K1.π₁.π₁-iso ⦃ ℕ-S≠O 0 ⦄
+    OnDiagonal.π-diag n ⦃ pn ⦄ ⦃ ℕ-S≠O 0 ⦄ ∙ K1.π₁.π₁-iso ⦃ ℕ-S≠O 0 ⦄
 
-  open Kn.AboveDiagonal public using (π-above)
-  open Kn.Spectrum public using (spectrum)
+  open AboveDiagonal public using (π-above)
+  open Spectrum public -- using (spectrum)

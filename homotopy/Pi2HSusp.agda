@@ -7,7 +7,7 @@ open import homotopy.WedgeExtension
 module homotopy.Pi2HSusp where
 
 module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
-  (cA : is-connected ⟨0⟩ A) (A-H : HSS A) 
+  (cA : is-connected ⟨0⟩ A) (A-H : HSS A)
   (μcoh : HSS.μe- A-H (HSS.e A-H) == HSS.μ-e A-H (HSS.e A-H))
   where
 
@@ -15,8 +15,8 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
   private
     Type=-ext : ∀ {i} {A B : Type i} (p q : A == B)
       → ((x : A) → coe p x == coe q x) → p == q
-    Type=-ext p q α = 
-      ! (ua-η p) 
+    Type=-ext p q α =
+      ! (ua-η p)
       ∙ ap ua (pair= (λ= α) (prop-has-all-paths-↓ (is-equiv-is-prop (coe q))))
       ∙ ua-η q
 
@@ -26,11 +26,13 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
   P : Suspension A → Type i
   P x = Trunc ⟨ 1 ⟩ (north A == x)
 
+  module Codes = SuspensionRec A A A (λ a → ua (μ-equiv a))
+
   Codes : Suspension A → Type i
-  Codes = SuspensionRec.f A A A (λ a → ua (μ-equiv a))
+  Codes = Codes.f
 
   Codes-level : (x : Suspension A) → has-level ⟨ 1 ⟩ (Codes x)
-  Codes-level = Suspension-elim A gA gA 
+  Codes-level = Suspension-elim A gA gA
     (λ _ → prop-has-all-paths-↓ has-level-is-prop)
 
   encode₀ : {x : Suspension A} → (north A == x) → Codes x
@@ -42,31 +44,31 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
   decode' : A → P (north A)
   decode' a = [ (merid A a ∙ ! (merid A e)) ]
 
-  abstract 
-    transport-Codes-mer : (a a' : A) 
+  abstract
+    transport-Codes-mer : (a a' : A)
       → transport Codes (merid A a) a' == μ a a'
-    transport-Codes-mer a a' = 
-      coe (ap Codes (merid A a)) a' 
-        =⟨ SuspensionRec.glue-β _ _ _ _ a |in-ctx (λ w → coe w a') ⟩ 
+    transport-Codes-mer a a' =
+      coe (ap Codes (merid A a)) a'
+        =⟨ Codes.glue-β a |in-ctx (λ w → coe w a') ⟩
       coe (ua (μ-equiv a)) a'
         =⟨ coe-β (μ-equiv a) a' ⟩
       μ a a' ∎
 
-    transport-Codes-mer-e-! : (a : A) 
+    transport-Codes-mer-e-! : (a : A)
       → transport Codes (! (merid A e)) a == a
-    transport-Codes-mer-e-! a = 
+    transport-Codes-mer-e-! a =
       coe (ap Codes (! (merid A e))) a
         =⟨ ap-! Codes (merid A e) |in-ctx (λ w → coe w a) ⟩
       coe (! (ap Codes (merid A e))) a
-        =⟨ SuspensionRec.glue-β _ _ _ _ e |in-ctx (λ w → coe (! w) a) ⟩
+        =⟨ Codes.glue-β e |in-ctx (λ w → coe (! w) a) ⟩
       coe (! (ua (μ-equiv e))) a
-        =⟨ Type=-ext (ua (μ-equiv e)) idp (λ x → coe-β _ x ∙ μe- x) 
+        =⟨ Type=-ext (ua (μ-equiv e)) idp (λ x → coe-β _ x ∙ μe- x)
           |in-ctx (λ w → coe (! w) a) ⟩
       coe (! idp) a ∎
 
   abstract
     encode-decode' : (a : A) → encode (decode' a) == a
-    encode-decode' a = 
+    encode-decode' a =
       transport Codes (merid A a ∙ ! (merid A e)) e
         =⟨ trans-∙ {B = Codes} (merid A a) (! (merid A e)) e ⟩
       transport Codes (! (merid A e)) (transport Codes (merid A a) e)
@@ -76,7 +78,7 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
         =⟨ transport-Codes-mer-e-! a ⟩
       a ∎
 
-  abstract 
+  abstract
     homomorphism : (a a' : A)
       → Path {A = Trunc ⟨ 1 ⟩ (north A == south A)}
         [ merid A (μ a a' ) ] [ merid A a' ∙ ! (merid A e) ∙ merid A a ]
@@ -115,9 +117,9 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
                  (λ a → [ merid A a ])
                  (λ a → ↓-→-from-transp (λ= $ STS a))
                  x
-    where 
+    where
     abstract
-      STS : (a a' : A) → transport P (merid A a) (decode' a') 
+      STS : (a a' : A) → transport P (merid A a) (decode' a')
                          == [ merid A (transport Codes (merid A a) a') ]
       STS a a' =
         transport P (merid A a) [ merid A a' ∙ ! (merid A e) ]
@@ -133,9 +135,9 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
         [ merid A (transport Codes (merid A a) a') ] ∎
 
   abstract
-    decode-encode : {x : Suspension A} (tα : P x) 
+    decode-encode : {x : Suspension A} (tα : P x)
       → decode {x} (encode {x} tα) == tα
-    decode-encode {x} = Trunc-elim 
+    decode-encode {x} = Trunc-elim
       {P = λ tα → decode {x} (encode {x} tα) == tα}
       (λ _ → =-preserves-level ⟨ 1 ⟩ Trunc-level)
       (J (λ y p → decode {y} (encode {y} [ p ]) == [ p ])
@@ -176,18 +178,18 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
       ie = is-equiv-ap^ 1 H (snd $ ((unTrunc-equiv A gA)⁻¹ ∘e main-lemma-eqv))
 
   abstract
-    main-lemma-iso : ⦃ p1 : 1 ≠ 0 ⦄ → 
+    main-lemma-iso : ⦃ p1 : 1 ≠ 0 ⦄ →
          Ω^-Group 1 ⦃ p1 ⦄ (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))) Trunc-level
       == Ω^-Group 1 ⦃ p1 ⦄ (Ptd-Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
-    main-lemma-iso = group-iso 
+    main-lemma-iso = group-iso
       (record {f = f; pres-ident = pres-ident; pres-comp = pres-comp})
-      ie 
+      ie
       where open Iso
 
   abstract
-    π₂-Suspension : ⦃ p1 : 1 ≠ 0 ⦄ → ⦃ p2 : 2 ≠ 0 ⦄ 
+    π₂-Suspension : ⦃ p1 : 1 ≠ 0 ⦄ → ⦃ p2 : 2 ≠ 0 ⦄
       → π 2 ⦃ p2 ⦄ (Ptd-Susp (A , e)) == π 1 ⦃ p1 ⦄ (A , e)
-    π₂-Suspension ⦃ p1 ⦄ ⦃ p2 ⦄ = 
+    π₂-Suspension ⦃ p1 ⦄ ⦃ p2 ⦄ =
       π 2 ⦃ p2 ⦄ (Ptd-Susp (A , e))
         =⟨ π-inner-iso 1 ⦃ p1 ⦄ ⦃ p2 ⦄ (Ptd-Susp (A , e)) ⟩
       π 1 ⦃ p1 ⦄ (Ptd-Ω (Ptd-Susp (A , e)))

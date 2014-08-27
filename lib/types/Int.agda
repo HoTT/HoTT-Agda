@@ -3,6 +3,7 @@
 open import lib.Basics
 open import lib.types.Nat
 open import lib.types.Group
+open import lib.types.TLevel
 
 module lib.types.Int where
 
@@ -40,6 +41,24 @@ abstract
 
 succ-equiv : ℤ ≃ ℤ
 succ-equiv = equiv succ pred succ-pred pred-succ
+
+pred-injective : (z₁ z₂ : ℤ) → pred z₁ == pred z₂ → z₁ == z₂
+pred-injective z₁ z₂ p = ! (succ-pred z₁) ∙ ap succ p ∙ succ-pred z₂
+
+succ-injective : (z₁ z₂ : ℤ) → succ z₁ == succ z₂ → z₁ == z₂
+succ-injective z₁ z₂ p = ! (pred-succ z₁) ∙ ap pred p ∙ pred-succ z₂
+
+{- Converting between ℤ, ℕ, and ℕ₋₂ -}
+
+ℤ-to-ℕ₋₂ : ℤ → ℕ₋₂
+ℤ-to-ℕ₋₂ O = ⟨0⟩
+ℤ-to-ℕ₋₂ (pos m) = S ⟨ m ⟩
+ℤ-to-ℕ₋₂ (neg O) = ⟨-1⟩
+ℤ-to-ℕ₋₂ (neg _) = ⟨-2⟩
+
+ℕ-to-ℤ : ℕ → ℤ
+ℕ-to-ℤ n = pred (pos n)
+
 
 {- Proof that [ℤ] has decidable equality and hence is a set -}
 
@@ -212,7 +231,7 @@ private
 ℤ~-inv-l (pos n) = ℤ~-inv-r-neg n
 ℤ~-inv-l (neg n) = ℤ~-inv-r-pos n
 
-ℤ-group-structure : GroupStructure ℤ 
+ℤ-group-structure : GroupStructure ℤ
 ℤ-group-structure = record
   { ident = O
   ; inv = ℤ~

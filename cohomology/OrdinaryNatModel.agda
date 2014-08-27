@@ -7,11 +7,17 @@ open import cohomology.SuspAdjointLoopIso
 open import cohomology.WithCoefficients
 open import cohomology.Exactness
 open import cohomology.Choice
-open import cohomology.OrdinaryTheory
 
-module cohomology.OrdinaryModel {i} (G : Group i) (G-abelian : is-abelian G) where
+module cohomology.OrdinaryNatModel
+  {i} (G : Group i) (G-abelian : is-abelian G) where
 
 open KGnExplicit G G-abelian using (Ptd-KG; KG-level; KG-conn; spectrum)
+
+private
+  Ptd-ℤKG : (n : ℤ) → Ptd i
+  Ptd-ℤKG O = Ptd-Ω (Ptd-KG 1)
+  Ptd-ℤKG (pos m) = Ptd-Ω (Ptd-KG (S (S m)))
+  Ptd-ℤKG (neg m) = Ptd-Ω (Ptd-Lift Ptd-Unit)
 
 {- Definition of cohomology group C -}
 module _ (n : ℕ) (X : Ptd i) where
@@ -19,56 +25,37 @@ module _ (n : ℕ) (X : Ptd i) where
   C : Group i
   C = →Ω-Group X (Ptd-KG (S n))
 
-  {- Underlying space of cohomology group -}
-  CEl : Type i
-  CEl = Group.El C -- Ptd-Trunc ⟨0⟩ (fst (X ∙→ Ptd-Ω (Ptd-KG (S n))))
-
-  {- Basepoint of underlying space -}
-  Cid : CEl
+  {- some convenient abbreviations -}
+  CEl = Group.El C
   Cid = Group.ident C
-
-  {- Underlying pointed space of cohomology group -}
-  Ptd-CEl : Ptd i
   Ptd-CEl = Group.Ptd-El C
 
   {- Untruncated versions of the cohomology spaces -}
-  uCEl : Type i -- CEl ≡ Trunc ⟨0⟩ uCEl
-  uCEl = fst (X ∙→ Ptd-Ω (Ptd-KG (S n)))
-
   Ptd-uCEl : Ptd i
   Ptd-uCEl = X ∙→ Ptd-Ω (Ptd-KG (S n))
 
-  uCid : uCEl
+  uCEl = fst Ptd-uCEl
   uCid = snd Ptd-uCEl
 
-
 {- C n X is an abelian group -}
-module _ (n : ℕ) (X : Ptd i) where
-
-  C-abelian-lemma : is-abelian (→Ω-Group X (Ptd-Ω (Ptd-KG (S (S n)))))
-  C-abelian-lemma = Trunc-elim
+C-abelian : (n : ℕ) (X : Ptd i) → is-abelian (C n X)
+C-abelian n X =
+  transport (is-abelian ∘ →Ω-Group X) (spectrum (S n)) (C-abelian-lemma n X)
+  where
+  C-abelian-lemma : (n : ℕ) (X : Ptd i)
+    → is-abelian (→Ω-Group X (Ptd-Ω (Ptd-KG (S (S n)))))
+  C-abelian-lemma n X = Trunc-elim
     (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
     (λ {(f , fpt) → Trunc-elim
       (λ _ → =-preserves-level _ Trunc-level)
-      (λ {(g , gpt) → ap [_] (pair=
-        (λ= (λ x → conc^2-comm (f x) (g x)))
-        (↓-app=cst-in $
-          ap2 _∙_ fpt gpt
-            =⟨ lemma fpt gpt ⟩
-          conc^2-comm (f (snd X)) (g (snd X)) ∙ ap2 _∙_ gpt fpt
-            =⟨ ! (app=-β _ (snd X)) |in-ctx (λ w → w ∙ ap2 _∙_ gpt fpt) ⟩
-          app= (λ= (λ x → conc^2-comm (f x) (g x))) (snd X) ∙ ap2 _∙_ gpt fpt ∎))})})
+      (λ {(g , gpt) → ap [_] $ ptd-λ=
+        (λ x → conc^2-comm (f x) (g x))
+        (lemma fpt gpt)})})
     where
-    lemma : ∀ {i} {X : Ptd i} {α β : Ω^ 2 X} (γ : α == idp^ 2) (δ : β == idp^ 2)
+    lemma : ∀ {i} {X : Ptd i} {α β : Ω^ 2 X}
+      (γ : α == idp^ 2) (δ : β == idp^ 2)
       → ap2 _∙_ γ δ == conc^2-comm α β ∙ ap2 _∙_ δ γ
     lemma idp idp = idp
-
-  C-abelian : is-abelian (C n X)
-  C-abelian = transport (is-abelian ∘ →Ω-Group X) spec C-abelian-lemma
-    where
-    spec : Ptd-Ω (Ptd-KG (S (S n))) == Ptd-KG (S n)
-    spec = spectrum (S n)
-
 
 {- CF, the functorial action of C:
  - contravariant functor from pointed spaces to abelian groups -}
@@ -145,8 +132,8 @@ abstract
     spec = spectrum (S n)
 
 abstract
-  C-SuspO : (X : Ptd i) → is-contr (CEl 0 (Ptd-Susp X))
-  C-SuspO X = inhab-prop-is-contr
+  C-SuspO : (X : Ptd i) → C 0 (Ptd-Susp X) == 0G
+  C-SuspO X = contr-iso-LiftUnit _ $ inhab-prop-is-contr
     (Cid 0 (Ptd-Susp X))
     (Trunc-preserves-level ⟨0⟩ $
       equiv-preserves-level ((SuspAdjointLoop.eqv X (Ptd-Ω (Ptd-KG 1)))⁻¹)
@@ -355,8 +342,8 @@ module _ (n : ℕ) {A : Type i} (X : A → Ptd i)
 
 {- Dimension Axiom -}
 abstract
-  C-dimension-pos : (n : ℕ) → is-contr (CEl (S n) (Ptd-Lift Ptd-Bool))
-  C-dimension-pos n = connected-at-level-is-contr
+  C-dimension-S : (n : ℕ) → C (S n) (Ptd-Sphere 0) == 0G
+  C-dimension-S n = contr-iso-LiftUnit _ $ connected-at-level-is-contr
     (Trunc-level {n = ⟨0⟩})
     (Trunc-preserves-conn ⟨0⟩
       (transport (λ B → is-connected ⟨0⟩ B)
@@ -364,18 +351,3 @@ abstract
         (path-conn (connected-≤T (⟨⟩-monotone-≤ (≤-ap-S (O≤ n)))
                                  (KG-conn (S n))))))
 
-  C-dimension-neg : (n : ℕ) → is-contr (CEl O (Ptd-Sphere (S n)))
-  C-dimension-neg n = C-SuspO (Ptd-Sphere n)
-
-C-Cohomology : OrdinaryTheory i
-C-Cohomology = record {
-  C = C;
-  CF-hom = CF-hom;
-  CF-ident = CF-ident;
-  CF-comp = CF-comp;
-  C-abelian = C-abelian;
-  C-SuspS = C-SuspS;
-  C-exact = C-exact;
-  C-additive = C-additive;
-  C-dimension-pos = C-dimension-pos;
-  C-dimension-neg = C-dimension-neg}

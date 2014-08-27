@@ -77,7 +77,7 @@ module SuspAdjointLoop {i j} (X : Ptd i) (Y : Ptd j) where
         ap h (merid A a)
           =⟨ fst-lemma h (merid A a) (merid A a₀) ⟩
         ap h (merid A a ∙ ! (merid A a₀)) ∙' ap h (merid A a₀)
-          =⟨ ! (SuspensionRec.glue-β A _ _ _ a)
+          =⟨ ! (SuspensionRec.glue-β A _ _ (fst (R (h , idp))) a)
              |in-ctx (λ w → w ∙' (ap h (merid A a₀))) ⟩
         ap (fst (L (R (h , idp)))) (merid A a) ∙' ap h (merid A a₀)
         ∎)
