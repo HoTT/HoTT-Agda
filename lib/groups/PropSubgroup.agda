@@ -41,7 +41,6 @@ module _ {i} (G : Group i) where
     inj : GroupHom Subgroup G
     inj = record {
       f = λ {(g , _) → g};
-      pres-ident = idp;
       pres-comp = λ _ _ → idp}
 
     module _ {j} {H : Group j} (φ : GroupHom H G) where
@@ -53,7 +52,6 @@ module _ {i} (G : Group i) where
       prop-hom : Π H.El (P ∘ φ.f) → GroupHom H Subgroup
       prop-hom p = record {
         f = λ g → (φ.f g , p g);
-        pres-ident = pair= φ.pres-ident (prop-has-all-paths-↓ (P-level _));
         pres-comp = λ g₁ g₂ →
           pair= (φ.pres-comp g₁ g₂) (prop-has-all-paths-↓ (P-level _))}
 
@@ -66,13 +64,13 @@ module _ {i} {j} {G : Group i} {H : Group j} (φ : GroupHom G H) where
 
     module Ker = PropSubgroup G (λ g → φ.f g == H.ident)
       (λ g → H.El-level _ _) φ.pres-ident
-      (λ p → grouphom-pres-inv φ _ ∙ ap H.inv p ∙ group-inv-ident H)
+      (λ p → φ.pres-inv _ ∙ ap H.inv p ∙ group-inv-ident H)
       (λ p₁ p₂ → φ.pres-comp _ _ ∙ ap2 H.comp p₁ p₂ ∙ H.unitl _)
 
     module Im = PropSubgroup H (λ h → Trunc ⟨-1⟩ (Σ G.El (λ g → φ.f g == h)))
       (λ h → Trunc-level) ([ G.ident , φ.pres-ident ])
       (Trunc-fmap (λ {(g , p) →
-        (G.inv g , grouphom-pres-inv φ g ∙ ap H.inv p)}))
+        (G.inv g , φ.pres-inv g ∙ ap H.inv p)}))
       (Trunc-fmap2 (λ {(g₁ , p₁) (g₂ , p₂) →
         (G.comp g₁ g₂ , φ.pres-comp g₁ g₂ ∙ ap2 H.comp p₁ p₂)}))
 
@@ -88,7 +86,6 @@ module _ {i} {j} {G : Group i} {H : Group j} (φ : GroupHom G H) where
   im-in-hom : GroupHom G Im
   im-in-hom = record {
     f = λ g → (φ.f g , [ g , idp ]);
-    pres-ident = pair= φ.pres-ident (prop-has-all-paths-↓ Trunc-level);
     pres-comp = λ g₁ g₂ →
       pair= (φ.pres-comp g₁ g₂) (prop-has-all-paths-↓ Trunc-level)}
 

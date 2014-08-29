@@ -22,12 +22,12 @@ module FreudenthalEquiv
   up x = merid X x ∙ ! (merid X x₀)
 
   Codes-mer-args : WedgeExt.args {a₀ = x₀} {b₀ = [_] {n = k} x₀}
-  Codes-mer-args = record {n = n; m = n; 
-    cA = cX; 
+  Codes-mer-args = record {n = n; m = n;
+    cA = cX;
     cB = Trunc-preserves-conn k cX;
     P = λ _ _ → (Trunc k X , raise-level-≤T kle Trunc-level);
     f = [_]; g = idf _; p = idp}
-  
+
   Codes-mer : X → Trunc k X → Trunc k X
   Codes-mer = WedgeExt.ext Codes-mer-args
 
@@ -38,7 +38,7 @@ module FreudenthalEquiv
   Codes-mer-β-r = λ= $ WedgeExt.β-r {r = Codes-mer-args}
 
   Codes-mer-coh : app= Codes-mer-β-l x₀ == app= Codes-mer-β-r [ x₀ ]
-  Codes-mer-coh = 
+  Codes-mer-coh =
     app= Codes-mer-β-l x₀
       =⟨ app=-β (WedgeExt.β-l {r = Codes-mer-args}) x₀ ⟩
     WedgeExt.β-l {r = Codes-mer-args} x₀
@@ -50,7 +50,7 @@ module FreudenthalEquiv
   Codes-mer-is-equiv : (x : X) → is-equiv (Codes-mer x)
   Codes-mer-is-equiv =
     conn-elim (pointed-conn-out X x₀ cX)
-      (λ x' → (is-equiv (Codes-mer x') , 
+      (λ x' → (is-equiv (Codes-mer x') ,
                prop-has-level-S (is-equiv-is-prop (Codes-mer x'))))
       (λ tt → transport is-equiv (! (Codes-mer-β-r)) (snd $ ide _))
 
@@ -58,14 +58,14 @@ module FreudenthalEquiv
   Codes-mer-equiv x = (Codes-mer x , Codes-mer-is-equiv x)
 
   Codes-mer-inv-x₀ : <– (Codes-mer-equiv x₀) == idf _
-  Codes-mer-inv-x₀ = 
-       ap is-equiv.g (conn-elim-β 
-          (pointed-conn-out X x₀ cX) 
-          (λ x' → (is-equiv (Codes-mer x') , 
-                   prop-has-level-S (is-equiv-is-prop (Codes-mer x')))) 
-          _ unit) 
+  Codes-mer-inv-x₀ =
+       ap is-equiv.g (conn-elim-β
+          (pointed-conn-out X x₀ cX)
+          (λ x' → (is-equiv (Codes-mer x') ,
+                   prop-has-level-S (is-equiv-is-prop (Codes-mer x'))))
+          _ unit)
      ∙ lemma (! (Codes-mer-β-r)) (snd $ ide _)
-    where lemma : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B} 
+    where lemma : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
             (α : f == g) (e : is-equiv f)
             → is-equiv.g (transport is-equiv α e) == is-equiv.g e
           lemma idp e = idp
@@ -74,7 +74,7 @@ module FreudenthalEquiv
   Codes = SuspensionRec.f X (Trunc k X) (Trunc k X) (ua ∘ Codes-mer-equiv)
 
   Codes-has-level : (x : Suspension X) → has-level k (Codes x)
-  Codes-has-level = Suspension-elim X Trunc-level Trunc-level 
+  Codes-has-level = Suspension-elim X Trunc-level Trunc-level
                       (λ _ → prop-has-all-paths-↓ has-level-is-prop)
 
   decodeN : Codes (north X) → Trunc k (north X == north X)
@@ -96,7 +96,7 @@ module FreudenthalEquiv
     encode-decodeN : (c : Codes (north X)) → encode (decodeN c) == c
     encode-decodeN = Trunc-elim
       (λ _ → =-preserves-level _ Trunc-level)
-      (λ x → 
+      (λ x →
         encode (decodeN [ x ])
           =⟨ idp ⟩
         coe (ap Codes (merid X x ∙ ! (merid X x₀))) [ x₀ ]
@@ -110,7 +110,7 @@ module FreudenthalEquiv
           =⟨ coe-β (Codes-mer-equiv x) [ x₀ ]
             |in-ctx (λ w → coe (ap Codes (! (merid X x₀))) w) ⟩
         coe (ap Codes (! (merid X x₀))) (Codes-mer x [ x₀ ])
-          =⟨ app= Codes-mer-β-l x 
+          =⟨ app= Codes-mer-β-l x
             |in-ctx (λ w → coe (ap Codes (! (merid X x₀))) w) ⟩
         coe (ap Codes (! (merid X x₀))) [ x ]
           =⟨ coe-ap-! Codes (merid X x₀) [ x ] ⟩
@@ -124,7 +124,7 @@ module FreudenthalEquiv
         [ x ] ∎)
 
   decode : {x : Suspension X} → Codes x → Q x
-  decode {x} = Suspension-elim X 
+  decode {x} = Suspension-elim X
     {P = λ y → Codes y → Q y}
     decodeN decodeS
     (λ x' → ↓-→-from-transp (λ= (STS x')))
@@ -143,7 +143,7 @@ module FreudenthalEquiv
          =-preserves-level _ (raise-level-≤T kle Trunc-level))
 
       f : (a : X) → fst (P a x₀)
-      f a = 
+      f a =
         transport Q (merid X a) [ up x₀ ]
           =⟨ transport-Trunc (λ y → north X == y) (merid X a) (up x₀) ⟩
         [ transport (λ y → north X == y) (merid X a) (up x₀) ]
@@ -162,7 +162,7 @@ module FreudenthalEquiv
         Trunc-fmap (merid X) (transport Codes (merid X a) [ x₀ ]) ∎
 
       g : (b : X) → fst (P x₀ b)
-      g b = 
+      g b =
         transport Q (merid X x₀) [ up b ]
           =⟨ transport-Trunc (λ y → north X == y) (merid X x₀) (up b) ⟩
         [ transport (λ y → north X == y) (merid X x₀) (up b) ]
@@ -184,7 +184,7 @@ module FreudenthalEquiv
 
       p : f x₀ == g x₀
       p = ap2
-        (λ p₁ p₂ → 
+        (λ p₁ p₂ →
           transport Q (merid X x₀) [ up x₀ ]
             =⟨ transport-Trunc (λ y → north X == y) (merid X x₀) (up x₀) ⟩
           [ transport (λ y → north X == y) (merid X x₀) (up x₀) ]
@@ -204,19 +204,19 @@ module FreudenthalEquiv
         (coh (merid X x₀)) Codes-mer-coh
 
       STS-args : WedgeExt.args {a₀ = x₀} {b₀ = x₀}
-      STS-args = 
+      STS-args =
         record {n = n; m = n; cA = cX; cB = cX; P = P; f = f; g = g; p = p}
 
-      STS : (x' : X) (c : Codes (north X)) → 
+      STS : (x' : X) (c : Codes (north X)) →
         transport Q (merid X x') (Trunc-fmap up c)
         == Trunc-fmap (merid X) (transport Codes (merid X x') c)
-      STS x' = Trunc-elim (λ _ → =-preserves-level _ Trunc-level) 
+      STS x' = Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
                           (WedgeExt.ext STS-args x')
 
 
-  decode-encode : {x : Suspension X} (tα : Q x) 
+  decode-encode : {x : Suspension X} (tα : Q x)
     → decode {x} (encode {x} tα) == tα
-  decode-encode {x} = Trunc-elim 
+  decode-encode {x} = Trunc-elim
     {P = λ tα → decode {x} (encode {x} tα) == tα}
     (λ _ → =-preserves-level k Trunc-level)
     (J (λ y p → decode {y} (encode {y} [ p ]) == [ p ])
@@ -238,17 +238,14 @@ module FreudenthalIso
 
   open FreudenthalEquiv n (⟨ k ⟩) kle (fst X) (snd X) cX public
 
-  hom : GroupHom 
+  hom : GroupHom
     (Ω^-Group k (Ptd-Trunc ⟨ k ⟩ X) Trunc-level)
     (Ω^-Group k (Ptd-Trunc ⟨ k ⟩ (Ptd-Ω (Ptd-Susp X))) Trunc-level)
-  hom = record { 
+  hom = record {
     f = fst F;
-    pres-ident = snd F;
     pres-comp = ap^-conc^ k (decodeN , decodeN-pt) }
     where F = ap^ k (decodeN , decodeN-pt)
 
   iso : Ω^-Group k (Ptd-Trunc ⟨ k ⟩ X) Trunc-level
      == Ω^-Group k (Ptd-Trunc ⟨ k ⟩ (Ptd-Ω (Ptd-Susp X))) Trunc-level
   iso = group-iso hom (is-equiv-ap^ k (decodeN , decodeN-pt) (snd eqv))
-
-  

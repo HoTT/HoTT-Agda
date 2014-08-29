@@ -43,7 +43,7 @@ module SplitExactRight
         ψ.f (H.comp h (H.inv (χ.f (ψ.f h))))
           =⟨ ψ.pres-comp h (H.inv (χ.f (ψ.f h))) ⟩
         K.comp (ψ.f h) (ψ.f (H.inv (χ.f (ψ.f h))))
-          =⟨ ! (grouphom-pres-inv χ (ψ.f h))
+          =⟨ ! (χ.pres-inv (ψ.f h))
              |in-ctx (λ w → K.comp (ψ.f h) (ψ.f w)) ⟩
         K.comp (ψ.f h) (ψ.f (χ.f (K.inv (ψ.f h))))
           =⟨ χ-rinv (K.inv (ψ.f h)) |in-ctx (λ w → K.comp (ψ.f h) w) ⟩

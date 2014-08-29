@@ -65,23 +65,21 @@ _×G_ (group A A-level A-struct) (group B B-level B-struct) =
 {- defining a homomorphism into a binary product -}
 ×-hom : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
   → GroupHom G H → GroupHom G K → GroupHom G (H ×G K)
-×-hom (group-hom h h-id h-comp) (group-hom k k-id k-comp) = record {
+×-hom (group-hom h h-comp) (group-hom k k-comp) = record {
   f = λ x → (h x , k x);
-  pres-ident = pair×= h-id k-id;
   pres-comp = λ x y → pair×= (h-comp x y) (k-comp x y)}
 
 {- projection homomorphisms -}
 ×G-fst : ∀ {i j} {G : Group i} {H : Group j} → GroupHom (G ×G H) G
-×G-fst = record {f = fst; pres-ident = idp; pres-comp = λ _ _ → idp}
+×G-fst = record {f = fst; pres-comp = λ _ _ → idp}
 
 ×G-snd : ∀ {i j} {G : Group i} {H : Group j} → GroupHom (G ×G H) H
-×G-snd = record {f = snd; pres-ident = idp; pres-comp = λ _ _ → idp}
+×G-snd = record {f = snd; pres-comp = λ _ _ → idp}
 
 ΠG-proj : ∀ {i j} {I : Type i} {F : I → Group j} (i : I)
   → GroupHom (ΠG I F) (F i)
 ΠG-proj i = record {
   f = λ f → f i;
-  pres-ident = idp;
   pres-comp = λ _ _ → idp}
 
 {- injection homomorphisms -}
@@ -124,15 +122,6 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
   ×-sum-hom φ ψ = record {
     f = λ {(h , k) → G.comp (φ.f h) (ψ.f k)};
 
-    pres-ident =
-      G.comp (φ.f H.ident) (ψ.f K.ident)
-        =⟨ φ.pres-ident |in-ctx (λ w → G.comp w (ψ.f K.ident) ) ⟩
-      G.comp G.ident (ψ.f K.ident)
-        =⟨ G.unitl _  ⟩
-      ψ.f K.ident
-        =⟨ ψ.pres-ident ⟩
-      G.ident ∎;
-
     pres-comp = λ {(h₁ , k₁) (h₂ , k₂) →
       G.comp (φ.f (H.comp h₁ h₂)) (ψ.f (K.comp k₁ k₂))
         =⟨ φ.pres-comp h₁ h₂ |in-ctx (λ w → G.comp w (ψ.f (K.comp k₁ k₂))) ⟩
@@ -153,7 +142,6 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
   → GroupHom G₁ H₁ → GroupHom G₂ H₂ → GroupHom (G₁ ×G G₂) (H₁ ×G H₂)
 ×-parallel-hom φ ψ = record {
   f = λ {(h₁ , h₂) → (φ.f h₁ , ψ.f h₂)};
-  pres-ident = pair×= φ.pres-ident ψ.pres-ident;
   pres-comp = λ {(h₁ , h₂) (h₁' , h₂') →
     pair×= (φ.pres-comp h₁ h₁') (ψ.pres-comp h₂ h₂')}}
   where

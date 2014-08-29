@@ -116,8 +116,6 @@ module KG1 {i} (G : Group i) where
     Codes-hom₁ = record {
       f = ua ∘ comp-equiv;
 
-      pres-ident = ap ua comp-equiv-id ∙ ua-η idp;
-
       pres-comp = λ g₁ g₂ →
         ua (comp-equiv (G.comp g₁ g₂))
           =⟨ ap ua (comp-equiv-comp g₁ g₂) ⟩
@@ -128,9 +126,6 @@ module KG1 {i} (G : Group i) where
     Codes-hom₂ : GroupHom Ω-Group 0-Group
     Codes-hom₂ = record {
       f = λ p → pair= p phap;
-
-      pres-ident = ap (pair= idp)
-                      (contr-has-all-paths (has-level-is-prop _ _) _ _);
 
       pres-comp = λ p₁ p₂ →
         pair= (p₁ ∙ p₂) phap
@@ -217,7 +212,6 @@ module KG1 {i} (G : Group i) where
       π₁-iso ⦃ p1 ⦄ = transport (λ pi → pi 1 ⦃ p1 ⦄ Ptd-KG1 == G) π-fold $ ! $
         group-iso
         (record { f = [_] ∘ kloop;
-                  pres-ident = ap [_] kloop-ident;
                   pres-comp = λ g₁ g₂ → ap [_] (kloop-comp g₁ g₂) })
         (snd ((unTrunc-equiv (kbase == kbase) (klevel _ _))⁻¹ ∘e (Ω¹-equiv ⁻¹)))
 

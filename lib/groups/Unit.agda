@@ -30,7 +30,7 @@ LiftUnit-Group = Lift-Group Unit-Group
 
 contr-iso-LiftUnit : ∀ {i} (G : Group i) → is-contr (Group.El G) → G == 0G
 contr-iso-LiftUnit G pA = group-iso
-  (group-hom (λ _ → lift unit) idp (λ _ _ → idp))
+  (group-hom (λ _ → lift unit) (λ _ _ → idp))
   (snd (contr-equiv-LiftUnit pA))
 
 0G-hom-out-level : ∀ {i j} {G : Group i}

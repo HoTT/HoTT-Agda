@@ -10,40 +10,54 @@ open import lib.types.Truncation
 
 module lib.groups.Homomorphisms where
 
+record GroupHom {i j} (G : Group i) (H : Group j)
+  : Type (lsucc (lmax i j)) where
+  constructor group-hom
+
+  field
+    f : Group.El G → Group.El H
+    pres-comp  : ∀ g1 g2 → f (Group.comp G g1 g2) == Group.comp H (f g1) (f g2)
+
+  abstract
+    pres-ident : f (Group.ident G) == Group.ident H
+    pres-ident = group-cancel-l H (f (Group.ident G)) $
+      Group.comp H (f (Group.ident G)) (f (Group.ident G))
+        =⟨ ! (pres-comp (Group.ident G) (Group.ident G)) ⟩
+      f (Group.comp G (Group.ident G) (Group.ident G))
+        =⟨ ap f (Group.unitl G (Group.ident G)) ⟩
+      f (Group.ident G)
+        =⟨ ! (Group.unitr H (f (Group.ident G))) ⟩
+      Group.comp H (f (Group.ident G)) (Group.ident H) ∎
+
+    pres-inv : (g : Group.El G) → f (Group.inv G g) == Group.inv H (f g)
+    pres-inv g =
+      f (Group.inv G g)
+        =⟨ ! (Group.unitr H (f (Group.inv G g))) ⟩
+      Group.comp H (f (Group.inv G g)) (Group.ident H)
+        =⟨ ! (Group.invr H (f g))
+           |in-ctx (λ w → Group.comp H (f (Group.inv G g)) w) ⟩
+      Group.comp H (f (Group.inv G g)) (Group.comp H (f g) (Group.inv H (f g)))
+        =⟨ ! (Group.assoc H (f (Group.inv G g)) (f g) (Group.inv H (f g))) ⟩
+      Group.comp H (Group.comp H (f (Group.inv G g)) (f g)) (Group.inv H (f g))
+        =⟨ ! (pres-comp (Group.inv G g) g) ∙ ap f (Group.invl G g) ∙ pres-ident
+           |in-ctx (λ w → Group.comp H w (Group.inv H (f g))) ⟩
+      Group.comp H (Group.ident H) (Group.inv H (f g))
+        =⟨ Group.unitl H (Group.inv H (f g)) ⟩
+      Group.inv H (f g) ∎
+
+  ptd-f : Σ (Group.El G → Group.El H)
+            (λ f → f (Group.ident G) == Group.ident H)
+  ptd-f = (f , pres-ident)
+
 idhom : ∀ {i} (G : Group i) → GroupHom G G
-idhom G = group-hom (idf _) idp (λ _ _ → idp)
+idhom G = group-hom (idf _) (λ _ _ → idp)
 
 _∘hom_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
   → GroupHom H K → GroupHom G H → GroupHom G K
-(group-hom g g-id g-comp) ∘hom (group-hom f f-id f-comp) =
+(group-hom g g-comp) ∘hom (group-hom f f-comp) =
   record {
     f = g ∘ f;
-    pres-ident = ap g f-id ∙ g-id;
     pres-comp = λ x₁ x₂ → ap g (f-comp x₁ x₂) ∙ g-comp (f x₁) (f x₂)}
-
-{- homomorphism preserves inverse -}
-module _ {i j} {G : Group i} {H : Group j} (φ : GroupHom G H) where
-  private
-    module G = Group G
-    module H = Group H
-    module φ = GroupHom φ
-
-  grouphom-pres-inv : (a : G.El) → φ.f (G.inv a) == H.inv (φ.f a)
-  grouphom-pres-inv a =
-    φ.f (G.inv a)
-      =⟨ ! (H.unitr (φ.f (G.inv a))) ⟩
-    H.comp (φ.f (G.inv a)) H.ident
-      =⟨ ! (H.invr (φ.f a)) |in-ctx (λ w → H.comp (φ.f (G.inv a)) w) ⟩
-    H.comp (φ.f (G.inv a)) (H.comp (φ.f a) (H.inv (φ.f a)))
-      =⟨ ! (H.assoc (φ.f (G.inv a)) (φ.f a) (H.inv (φ.f a))) ⟩
-    H.comp (H.comp (φ.f (G.inv a)) (φ.f a)) (H.inv (φ.f a))
-      =⟨ lemma |in-ctx (λ w → H.comp w (H.inv (φ.f a))) ⟩
-    H.comp H.ident (H.inv (φ.f a))
-      =⟨ H.unitl (H.inv (φ.f a)) ⟩
-    H.inv (φ.f a) ∎
-    where
-    lemma : H.comp (φ.f (G.inv a)) (φ.f a) == H.ident
-    lemma = ! (φ.pres-comp (G.inv a) a) ∙ ap φ.f (G.invl a) ∙ φ.pres-ident
 
 {- a homomorphism which is an equivalence gives a path between groups -}
 module _ {i} {G H : Group i} (φ : GroupHom G H) where
@@ -84,7 +98,7 @@ module _ {i} {G H : Group i} (φ : GroupHom G H) where
           transport (λ C → C) (ua (φ.f , e)) (G.inv a)
             =⟨ to-transp (↓-idf-ua-in _ idp) ⟩
           φ.f (G.inv a)
-            =⟨ grouphom-pres-inv φ a ⟩
+            =⟨ φ.pres-inv a ⟩
           H.inv (φ.f a)
             =⟨ ap H.inv (! (to-transp (↓-idf-ua-in _ idp))) ⟩
           H.inv (transport (λ C → C) (ua (φ.f , e)) a) ∎
@@ -120,11 +134,9 @@ abstract
   hom= : ∀ {i j} {G : Group i} {H : Group j} (φ ψ : GroupHom G H)
     → GroupHom.f φ == GroupHom.f ψ → φ == ψ
   hom= {H = H} _ _ p =
-    ap (λ {(χ , (χ-id , χ-comp)) → group-hom χ χ-id χ-comp})
-       (pair= p
-         (prop-has-all-paths-↓
-           (×-level (Group.El-level H _ _)
-                    (Π-level (λ _ → Π-level (λ _ → Group.El-level H _ _))))))
+   ap (uncurry group-hom)
+      (pair= p (prop-has-all-paths-↓
+                 (Π-level (λ _ → Π-level (λ _ → Group.El-level H _ _)))))
 
   hom=-↓ : ∀ {i j k} {A : Type i} {G : A → Group j} {H : A → Group k} {x y : A}
     {p : x == y} (φ : GroupHom (G x) (H x)) (ψ : GroupHom (G y) (H y))
@@ -148,7 +160,7 @@ module _ {i j} {G : Group i} {H : Group j} (φ : GroupHom G H) where
       φ.f (G.comp (G.inv g₁) g₂)
         =⟨ φ.pres-comp (G.inv g₁) g₂ ⟩
       H.comp (φ.f (G.inv g₁)) (φ.f g₂)
-        =⟨ grouphom-pres-inv φ g₁ |in-ctx (λ w → H.comp w (φ.f g₂)) ⟩
+        =⟨ φ.pres-inv g₁ |in-ctx (λ w → H.comp w (φ.f g₂)) ⟩
       H.comp (H.inv (φ.f g₁)) (φ.f g₂)
         =⟨ p |in-ctx (λ w → H.comp (H.inv w) (φ.f g₂)) ⟩
       H.comp (H.inv (φ.f g₂)) (φ.f g₂)
@@ -158,7 +170,7 @@ module _ {i j} {G : Group i} {H : Group j} (φ : GroupHom G H) where
 {- constant homomorphism -}
 module _ where
   cst-hom : ∀ {i j} {G : Group i} {H : Group j} → GroupHom G H
-  cst-hom {H = H} = group-hom (cst ident) idp (λ _ _ → ! (unitl _))
+  cst-hom {H = H} = group-hom (cst ident) (λ _ _ → ! (unitl _))
     where open Group H
 
   pre∘-cst-hom : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
@@ -225,7 +237,6 @@ module _ {i} (G : Group i) (G-abelian : is-abelian G) where
   inv-hom : GroupHom G G
   inv-hom = record {
     f = G.inv;
-    pres-ident = group-inv-ident G;
     pres-comp = λ g₁ g₂ →
       group-inv-comp G g₁ g₂ ∙ G-abelian (G.inv g₂) (G.inv g₁)}
 
@@ -243,7 +254,6 @@ module _ {i} {G H : Group i} (H-abelian : is-abelian H)
   comp-hom : GroupHom G H
   comp-hom = record {
     f = λ g → H.comp (φ.f g) (ψ.f g);
-    pres-ident = ap2 H.comp φ.pres-ident ψ.pres-ident ∙ H.unitl H.ident;
     pres-comp = λ g₁ g₂ →
       H.comp (φ.f (G.comp g₁ g₂)) (ψ.f (G.comp g₁ g₂))
         =⟨ ap2 H.comp (φ.pres-comp g₁ g₂) (ψ.pres-comp g₁ g₂) ⟩

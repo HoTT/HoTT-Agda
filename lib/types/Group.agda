@@ -35,20 +35,6 @@ Group₀ = Group lzero
 is-abelian : ∀ {i} → Group i → Type i
 is-abelian G = (a b : Group.El G) → Group.comp G a b == Group.comp G b a
 
-record GroupHom {i j} (G : Group i) (H : Group j)
-  : Type (lsucc (lmax i j)) where
-  constructor group-hom
-
-  field
-    f : Group.El G → Group.El H
-    pres-ident : f (Group.ident G) == Group.ident H
-    pres-comp  : ∀ g1 g2 → f (Group.comp G g1 g2) == Group.comp H (f g1) (f g2)
-
-  ptd-f : Σ (Group.El G → Group.El H)
-            (λ f → f (Group.ident G) == Group.ident H)
-  ptd-f = (f , pres-ident)
-
-
 module _ where
   open GroupStructure
 
@@ -130,3 +116,25 @@ module _ {i} (G : Group i) where
 
   group-inv-inv : (g : El) → inv (inv g) == g
   group-inv-inv g = group-inv-unique-r (inv g) g (invl g)
+
+  group-cancel-l : (g : El) {h k : El} → g ⊙ h == g ⊙ k → h == k
+  group-cancel-l g {h} {k} p =
+    h                  =⟨ ! (unitl h) ⟩
+    ident ⊙ h          =⟨ ap (λ w → w ⊙ h) (! (invl g)) ⟩
+    (inv g ⊙ g) ⊙ h    =⟨ assoc (inv g) g h ⟩
+    inv g ⊙ (g ⊙ h)    =⟨ ap (λ w → inv g ⊙ w) p ⟩
+    inv g ⊙ (g ⊙ k)    =⟨ ! (assoc (inv g) g k) ⟩
+    (inv g ⊙ g) ⊙ k    =⟨ ap (λ w → w ⊙ k) (invl g) ⟩
+    ident ⊙ k          =⟨ unitl k ⟩
+    k ∎
+
+  group-cancel-r : (g : El) {h k : El} → h ⊙ g == k ⊙ g → h == k
+  group-cancel-r g {h} {k} p =
+    h                  =⟨ ! (unitr h) ⟩
+    h ⊙ ident          =⟨ ap (λ w → h ⊙ w) (! (invr g)) ⟩
+    h ⊙ (g ⊙ inv g)    =⟨ ! (assoc h g (inv g)) ⟩
+    (h ⊙ g) ⊙ inv g    =⟨ ap (λ w → w ⊙ inv g) p ⟩
+    (k ⊙ g) ⊙ inv g    =⟨ assoc k g (inv g) ⟩
+    k ⊙ (g ⊙ inv g)    =⟨ ap (λ w → k ⊙ w) (invr g) ⟩
+    k ⊙ ident          =⟨ unitr k ⟩
+    k ∎

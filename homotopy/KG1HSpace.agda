@@ -30,19 +30,9 @@ module KG1HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
 
   mult-hom : GroupHom A
     (Ω^-Group 1 ((KG1 → KG1) , (λ x → x)) (Π-level (λ _ → klevel)))
-  mult-hom = record {f = f; pres-ident = pres-ident; pres-comp = pres-comp}
+  mult-hom = record {f = f; pres-comp = pres-comp}
     where
     f = λ g → λ= (mult-loop g)
-
-    pres-ident =
-      ap λ= (λ= (KG1-elim
-        {P = λ x → mult-loop A.ident x == app= (idp {a = idf _}) x}
-        (λ _ → =-preserves-level _ (=-preserves-level _ klevel))
-        (kloop-ident ∙ ! (ap-idf idp))
-        (λ _ → prop-has-all-paths-↓ (klevel _ _ _ _))
-        (set-↓-has-all-paths-↓ (=-preserves-level _ (klevel _ _)))
-        (λ _ _ → set-↓-has-all-paths-↓ (=-preserves-level _ (klevel _ _)))))
-      ∙ ! (λ=-η idp)
 
     pres-comp = λ g₁ g₂ →
       ap λ= (λ= (KG1-elim

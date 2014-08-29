@@ -43,7 +43,7 @@ module _ {i j k} (D : Group-Cospan {i} {j} {k}) where
     ident = pullback H.ident K.ident (φ.pres-ident ∙ ! (ψ.pres-ident));
     inv = λ {(pullback h k p) →
       pullback (H.inv h) (K.inv k)
-        (grouphom-pres-inv φ h ∙ ap G.inv p ∙ ! (grouphom-pres-inv ψ k))};
+        (φ.pres-inv h ∙ ap G.inv p ∙ ! (ψ.pres-inv k))};
     comp = λ {(pullback h₁ k₁ p₁) (pullback h₂ k₂ p₂) →
       pullback (H.comp h₁ h₂) (K.comp k₁ k₂)
         (φ.pres-comp h₁ h₂ ∙ ap2 G.comp p₁ p₂ ∙ ! (ψ.pres-comp k₁ k₂))};
@@ -72,13 +72,11 @@ module _ {i j k} (D : Group-Cospan {i} {j} {k}) where
   pfst-hom : GroupHom Pullback-Group H
   pfst-hom = record {
     f = Pullback.a;
-    pres-ident = idp;
     pres-comp = λ _ _ → idp}
 
   psnd-hom : GroupHom Pullback-Group K
   psnd-hom = record {
     f = Pullback.b;
-    pres-ident = idp;
     pres-comp = λ _ _ → idp}
 
   module _ {l} {J : Group l} (χ : GroupHom J H) (θ : GroupHom J K) where
@@ -91,10 +89,6 @@ module _ {i j k} (D : Group-Cospan {i} {j} {k}) where
       → GroupHom J Pullback-Group
     pullback-hom p = record {
       f = λ j → pullback (χ.f j) (θ.f j) (p j);
-      pres-ident = pullback= (group-cospan-out D)
-        χ.pres-ident
-        θ.pres-ident
-        (prop-has-all-paths (Group.El-level G _ _) _ _);
       pres-comp = λ j₁ j₂ → pullback= (group-cospan-out D)
         (χ.pres-comp j₁ j₂)
         (θ.pres-comp j₁ j₂)

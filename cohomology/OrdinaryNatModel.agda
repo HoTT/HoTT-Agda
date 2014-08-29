@@ -67,13 +67,9 @@ module _ (n : ℕ) {X Y : Ptd i} where
     (λ G → G ∘ptd F) ,
     pair= idp (∙-unit-r _ ∙ ap-cst idp (snd F))
 
-  CF : fst (X ∙→ Y) → fst (Ptd-CEl n Y ∙→ Ptd-CEl n X)
-  CF F = (Trunc-fmap (fst (uCF F)) , ap [_] (snd (uCF F)))
-
   CF-hom : fst (X ∙→ Y) → GroupHom (C n Y) (C n X)
   CF-hom (f , fpt) = record {
     f = T;
-    pres-ident = ap [_] (snd (uCF (f , fpt)));
     pres-comp = λ G H → Trunc-elim
       {P = λ G → ∀ H → T (G □ H) == T G ◯ T H}
       (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
@@ -85,7 +81,7 @@ module _ (n : ℕ) {X Y : Ptd i} where
     where
     _◯_ = Group.comp (C n X)
     _□_ = Group.comp (C n Y)
-    T = fst (CF (f , fpt))
+    T = Trunc-fmap (fst (uCF (f , fpt)))
 
     lemma : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
       {a : A} {b : B} {c₁ c₂ : C}
@@ -101,6 +97,9 @@ module _ (n : ℕ) {X Y : Ptd i} where
         ((λ x → g (f x) ∙ h (f x)) , ap (λ x → g x ∙ h x) fpt ∙ ap2 _∙_ gpt hpt)
         ((λ x → g (f x) ∙ h (f x)) , ap2 _∙_ (ap g fpt ∙ gpt) (ap h fpt ∙ hpt))
     comp-lemma g h gpt hpt = pair= idp (lemma f g h _∙_ fpt gpt hpt)
+
+  CF : fst (X ∙→ Y) → fst (Ptd-CEl n Y ∙→ Ptd-CEl n X)
+  CF F = GroupHom.ptd-f (CF-hom F)
 
 {- CF-hom is a functor from pointed spaces to abelian groups -}
 module _ (n : ℕ) {X : Ptd i} where
@@ -301,11 +300,6 @@ module _ (n : ℕ) {A : Type i} (X : A → Ptd i)
       R'-is-equiv : is-equiv R'
       R'-is-equiv = is-eq R' L' R'-L' L'-R'
 
-    abstract
-      pres-ident : R (Cid n (Ptd-BigWedge X)) == (Cid n ∘ X)
-      pres-ident =
-        λ= (λ a → ap [_] (pair= idp (∙-unit-r _ ∙ ap-cst idp (! (bwglue a)))))
-
     _◯_ = Group.comp (C n (Ptd-BigWedge X))
     _□_ = Group.comp (ΠG A (C n ∘ X))
 
@@ -331,7 +325,7 @@ module _ (n : ℕ) {A : Type i} (X : A → Ptd i)
 
     abstract
       R-hom : GroupHom (C n (Ptd-BigWedge X)) (ΠG A (C n ∘ X))
-      R-hom = group-hom R pres-ident pres-comp
+      R-hom = group-hom R pres-comp
 
       R-is-equiv : is-equiv (GroupHom.f R-hom)
       R-is-equiv = uie ∘ise R'-is-equiv

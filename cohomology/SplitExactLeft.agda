@@ -65,7 +65,7 @@ module SplitExactLeft
         χ.f (H.comp h (H.inv (φ.f (χ.f h))))
           =⟨ χ.pres-comp h (H.inv (φ.f (χ.f h))) ⟩
         G.comp (χ.f h) (χ.f (H.inv (φ.f (χ.f h))))
-          =⟨ ! (grouphom-pres-inv φ (χ.f h))
+          =⟨ ! (φ.pres-inv (χ.f h))
              |in-ctx (λ w → G.comp (χ.f h) (χ.f w)) ⟩
         G.comp (χ.f h) (χ.f (φ.f (G.inv (χ.f h))))
           =⟨ χ-linv (G.inv (χ.f h)) |in-ctx (λ w → G.comp (χ.f h) w) ⟩
@@ -172,7 +172,7 @@ module SplitExactLeft
          ψ.f (H.comp h (H.inv (φ.f (χ.f h))))
            =⟨ ψ.pres-comp h (H.inv (φ.f (χ.f h))) ⟩
          K.comp (ψ.f h) (ψ.f (H.inv (φ.f (χ.f h))))
-           =⟨ grouphom-pres-inv ψ (φ.f (χ.f h))
+           =⟨ ψ.pres-inv (φ.f (χ.f h))
               |in-ctx (λ k → K.comp (ψ.f h) k) ⟩
          K.comp (ψ.f h) (K.inv (ψ.f (φ.f (χ.f h))))
            =⟨ itok (exact-get ex 0) (φ.f (χ.f h)) [ χ.f h , idp ]

@@ -167,9 +167,6 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
         → Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (A , e))
       f = fst F
 
-      pres-ident : f (idp^ 1) == idp^ 1
-      pres-ident = snd F
-
       pres-comp : (p q : Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))))
         → f (conc^ 1 p q) == conc^ 1 (f p) (f q)
       pres-comp = ap^-conc^ 1 H
@@ -182,7 +179,7 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
          Ω^-Group 1 ⦃ p1 ⦄ (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))) Trunc-level
       == Ω^-Group 1 ⦃ p1 ⦄ (Ptd-Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
     main-lemma-iso = group-iso
-      (record {f = f; pres-ident = pres-ident; pres-comp = pres-comp})
+      (record {f = f; pres-comp = pres-comp})
       ie
       where open Iso
 

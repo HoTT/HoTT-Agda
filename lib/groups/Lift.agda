@@ -3,6 +3,7 @@
 open import lib.Basics
 open import lib.types.Group
 open import lib.types.Lift
+open import lib.groups.Homomorphisms
 
 module lib.groups.Lift where
 
@@ -26,7 +27,7 @@ Lift-Group {j = j} G = group (Lift {j = j} El) (Lift-level El-level)
   where open Group G
 
 lift-hom : ∀ {i j} {G : Group i} → GroupHom G (Lift-Group {j = j} G)
-lift-hom = record {f = lift; pres-ident = idp; pres-comp = λ _ _ → idp}
+lift-hom = record {f = lift; pres-comp = λ _ _ → idp}
 
 lower-hom : ∀ {i j} {G : Group i} → GroupHom (Lift-Group {j = j} G) G
-lower-hom = record {f = lower; pres-ident = idp; pres-comp = λ _ _ → idp}
+lower-hom = record {f = lower; pres-comp = λ _ _ → idp}
