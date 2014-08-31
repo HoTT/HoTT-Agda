@@ -133,17 +133,11 @@ C-Wedge = surj-inj-iso cproj
 
 CF-winl : CF-hom n ptd-winl == ×G-fst
           [ (λ K → GroupHom K (C n X)) ↓ C-Wedge ]
-CF-winl = hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $ transport
-  (λ p → fst (CF n ptd-winl) == fst [ (λ A → A → CEl n X) ↓ p ])
-  (! (group-iso-el cproj _))
-  (domain-over-equiv fst _)
+CF-winl = domain-over-iso _ _ _ _ $ domain-over-equiv fst _
 
 CF-winr : CF-hom n ptd-winr == ×G-snd {G = C n X}
           [ (λ K → GroupHom K (C n Y)) ↓ C-Wedge ]
-CF-winr = hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $ transport
-  (λ p → fst (CF n ptd-winr) == snd [ (λ A → A → CEl n Y) ↓ p ])
-  (! (group-iso-el cproj _))
-  (domain-over-equiv snd _)
+CF-winr = domain-over-iso _ _ _ _ $ domain-over-equiv snd _
 
 CF-Wedge-rec : {Z : Ptd i} (winl* : fst X → fst Z) (winr* : fst Y → fst Z)
   (wglue* : winl* (snd X) == winr* (snd Y)) (pt : winl* (snd X) == snd Z)
@@ -151,17 +145,12 @@ CF-Wedge-rec : {Z : Ptd i} (winl* : fst X → fst Z) (winr* : fst Y → fst Z)
     == ×-hom (CF-hom n (winl* , pt)) (CF-hom n (winr* , ! wglue* ∙ pt))
     [ (λ K → GroupHom (C n Z) K) ↓ C-Wedge ]
 CF-Wedge-rec {Z = Z} winl* winr* wglue* pt =
-  hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $ transport
-    (λ p → fst (CF n (rec , pt))
-           == (λ cz → (fst (CF n (winl* , pt)) cz ,
-                       fst (CF n (winr* , ! wglue* ∙ pt)) cz))
-           [ (λ A → CEl n Z → A ) ↓ p ])
-    (! (group-iso-el cproj _))
-    (codomain-over-equiv (fst (CF n (rec , pt))) _
-     ▹ ap2 (λ f g z → (f z , g z))
-         (ap GroupHom.f $ ! (CF-comp n (rec , pt) ptd-winl))
-         (ap GroupHom.f $ ! (CF-comp n (rec , pt) ptd-winr)
-                          ∙ ap (CF-hom n) (pair= idp pt-lemma)))
+  codomain-over-iso _ _ _ _ $
+    codomain-over-equiv (fst (CF n (rec , pt))) _
+    ▹ ap2 (λ f g z → (f z , g z))
+        (ap GroupHom.f $ ! (CF-comp n (rec , pt) ptd-winl))
+        (ap GroupHom.f $ ! (CF-comp n (rec , pt) ptd-winr)
+                         ∙ ap (CF-hom n) (pair= idp pt-lemma))
   where
   rec = WedgeRec.f winl* winr* wglue*
 

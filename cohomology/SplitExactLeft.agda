@@ -214,10 +214,8 @@ module SplitExactLeft
     decomp-φ = ×-hom (im-in-hom φ) (cst-hom {G = G} {H = Ker χ})
 
     φ-over-decomp : φ == decomp-φ [ (λ J → GroupHom G J) ↓ decomp-iso ]
-    φ-over-decomp = hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $ transport
-      (λ q → φ.f == GroupHom.f decomp-φ [ (λ A → G.El → A) ↓ q ])
-      (! (group-iso-el decomp decomp-is-equiv))
-      (codomain-over-equiv φ.f decomp-equiv ▹ lemma)
+    φ-over-decomp = codomain-over-iso _ _ _ _ $
+                      codomain-over-equiv φ.f _ ▹ lemma
       where
       lemma : GroupHom.f decomp ∘ φ.f == GroupHom.f decomp-φ
       lemma = λ= $ λ g → pair×=
@@ -228,29 +226,18 @@ module SplitExactLeft
     ψ-dinv = ψ ∘hom ×-sum-hom H-abelian (im-inj φ) (ker-inj χ)
 
     ψ-over-decomp : ψ == ψ-dinv [ (λ J → GroupHom J K) ↓ decomp-iso ]
-    ψ-over-decomp = hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $ transport
-      (λ q → ψ.f == GroupHom.f ψ-dinv [ (λ A → A → K.El) ↓ q ])
-      (! (group-iso-el decomp decomp-is-equiv))
-      (domain!-over-equiv ψ.f decomp-equiv)
+    ψ-over-decomp = domain-over-iso _ _ _ _ $ domain!-over-equiv ψ.f _
 
     id-over-G-iso : idhom _ == im-in-hom φ [ (λ J → GroupHom G J) ↓ G-iso-Imφ ]
-    id-over-G-iso = hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $ transport
-      (λ q → idf G.El == GroupHom.f (im-in-hom φ) [ (λ A → G.El → A) ↓ q ])
-      (! (group-iso-el (im-in-hom φ) im-in-φ-is-equiv))
-      (codomain-over-equiv (idf _) (_ , im-in-φ-is-equiv))
+    id-over-G-iso = codomain-over-iso _ _ _ _ $ codomain-over-equiv (idf _) _
 
     φ-over-G-iso : φ == im-inj φ [ (λ J → GroupHom J H) ↓ G-iso-Imφ ]
-    φ-over-G-iso = hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $ transport
-      (λ q → φ.f == GroupHom.f (im-inj φ) [ (λ A → A → H.El) ↓ q ])
-      (! (group-iso-el (im-in-hom φ) im-in-φ-is-equiv))
-      (domain-over-equiv (GroupHom.f (im-inj φ)) (_ , im-in-φ-is-equiv))
+    φ-over-G-iso = domain-over-iso _ _ _ _ $
+                     domain-over-equiv (GroupHom.f (im-inj φ)) _
 
     ψ|kerχ-over-K-iso :
       ψ ∘hom ker-inj χ == idhom K [ (λ J → GroupHom J K) ↓ Kerχ-iso-K ]
-    ψ|kerχ-over-K-iso = hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $ transport
-      (λ q → ψ.f ∘ fst == idf K.El [ (λ A → A → K.El) ↓ q ])
-      (! (group-iso-el (ψ ∘hom ker-inj χ) ψ|kerχ-is-equiv))
-      (domain-over-equiv (idf _) (_ , ψ|kerχ-is-equiv))
+    ψ|kerχ-over-K-iso = domain-over-iso _ _ _ _ $ domain-over-equiv (idf _) _
 
     φ-over-G-K-isos : decomp-φ == ×G-inl
       [ (λ J → GroupHom G J) ↓ ap2 _×G_ (! G-iso-Imφ) Kerχ-iso-K ]

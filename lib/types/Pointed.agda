@@ -64,3 +64,13 @@ ptd-λ= : ∀ {i j} {X : Ptd i} {Y : Ptd j} {f g : fst (X ∙→ Y)}
   → f == g
 ptd-λ= {g = g} p α =
   pair= (λ= p) (↓-app=cst-in (α ∙ ap (λ w → w ∙ snd g) (! (app=-β p _))))
+
+{- Obtaining pointed maps from an pointed equivalence -}
+module _ {i j} {X : Ptd i} {Y : Ptd j} (e : fst X ≃ fst Y)
+  (p : –> e (snd X) == snd Y) where
+
+  ∙–> : fst (X ∙→ Y)
+  ∙–> = (–> e , p)
+
+  ∙<– : fst (Y ∙→ X)
+  ∙<– = (<– e , ap (<– e) (! p) ∙ <–-inv-l e (snd X))
