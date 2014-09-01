@@ -89,3 +89,17 @@ module _ {i j k} where
     → ptd-susp-fmap (g ∘ptd f) == ptd-susp-fmap g ∘ptd ptd-susp-fmap f
   ptd-susp-fmap-∘ g f = ptd-λ= (susp-fmap-∘ (fst g) (fst f)) idp
 
+
+{- Extract the 'glue component' of a pushout -}
+module _ {i j k} {s : Span {i} {j} {k}} where
+
+  module ExtGlue = PushoutRec {d = s} {D = Suspension (Span.C s)}
+    (λ _ → north _) (λ _ → south _) (merid _)
+
+  ext-glue = ExtGlue.f
+
+module _ {i j k} {s : Span {i} {j} {k}} {x₀ : Span.A s} where
+
+  ptd-ext-glue :
+    fst ((Pushout s , left x₀) ∙→ (Suspension (Span.C s) , north _))
+  ptd-ext-glue = (ext-glue , idp)

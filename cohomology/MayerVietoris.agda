@@ -26,26 +26,16 @@ module MayerVietorisFunctions (ps : Ptd-Span {i} {i} {i}) where
   ptd-reglue : fst (Ptd-Wedge X Y ∙→ Ptd-Pushout ps)
   ptd-reglue = (reglue , idp)
 
-
-  module ExtractGlue = PushoutRec {d = ptd-span-out ps} {D = Suspension (fst Z)}
-    (λ _ → north _) (λ _ → south _) (merid _)
-
-  extract-glue = ExtractGlue.f
-
-  ptd-extract-glue : fst (Ptd-Pushout ps ∙→ Ptd-Susp Z)
-  ptd-extract-glue = (extract-glue , idp)
-
-
-  module MVCo∂ = SuspensionRec (fst Z) {C = Suspension (Wedge X Y)}
+  module MVDiff = SuspensionRec (fst Z) {C = Suspension (Wedge X Y)}
     (north _)
     (north _)
     (λ z → merid _ (winl (fst f z)) ∙ ! (merid _ (winr (fst g z))))
 
-  mv-co∂ : Suspension (fst Z) → Suspension (Wedge X Y)
-  mv-co∂ = MVCo∂.f
+  mv-diff : Suspension (fst Z) → Suspension (Wedge X Y)
+  mv-diff = MVDiff.f
 
-  ptd-mv-co∂ : fst (Ptd-Susp Z ∙→ Ptd-Susp (Ptd-Wedge X Y))
-  ptd-mv-co∂ = (mv-co∂ , idp)
+  ptd-mv-diff : fst (Ptd-Susp Z ∙→ Ptd-Susp (Ptd-Wedge X Y))
+  ptd-mv-diff = (mv-diff , idp)
 
 {- We use path induction (via [ptd-pushout-J]) to assume that the
    basepoint preservation paths of the span maps are [idp]. The module
@@ -70,20 +60,20 @@ module MayerVietorisBase
 
   private
     into-glue-square :
-      Square idp idp (ap (extract-glue ∘ reglue) wglue) (merid _ (snd Z))
+      Square idp idp (ap (ext-glue ∘ reglue) wglue) (merid _ (snd Z))
     into-glue-square =
       connection ⊡v∙
-      ! (ap-∘ extract-glue reglue wglue ∙ ap (ap extract-glue) Reglue.glue-β
-         ∙ ExtractGlue.glue-β (snd Z))
+      ! (ap-∘ ext-glue reglue wglue ∙ ap (ap ext-glue) Reglue.glue-β
+         ∙ ExtGlue.glue-β (snd Z))
 
-    module IntoGlue = WedgeElim {P = λ xy → north _ == extract-glue (reglue xy)}
+    module IntoGlue = WedgeElim {P = λ xy → north _ == ext-glue (reglue xy)}
       (λ _ → idp)
       (λ _ → merid _ (snd Z))
       (↓-cst=app-from-square into-glue-square)
 
     into-glue = IntoGlue.f
 
-  module Into = CofiberRec reglue (north _) extract-glue into-glue
+  module Into = CofiberRec reglue (north _) ext-glue into-glue
 
   private
     out-glue-and-square : (z : fst Z)
@@ -114,7 +104,7 @@ module MayerVietorisBase
         (! (Into.glue-β (winl (f z)))) ∙h⊡
           ap-square into (out-square z)
         ⊡h∙ (Into.glue-β (winr (g z))))
-      ⊡v∙ (∘-ap into (cfcod _) (glue z) ∙ ExtractGlue.glue-β z)
+      ⊡v∙ (∘-ap into (cfcod _) (glue z) ∙ ExtGlue.glue-β z)
 
   into-out : ∀ σ → into (out σ) == σ
   into-out = Suspension-elim (fst Z)
@@ -130,11 +120,12 @@ module MayerVietorisBase
 
   private
     out-into-cod-square : (z : fst Z) →
-      Square (cfglue reglue (winl (f z))) (ap (out ∘ extract-glue) (glue z))
+      Square (cfglue reglue (winl (f z)))
+             (ap (out ∘ ext-glue {s = ptd-span-out ps}) (glue z))
              (ap (cfcod _) (glue z)) (cfglue _ (winr (g z)))
     out-into-cod-square z =
-      (ap-∘ out extract-glue (glue z)
-        ∙ ap (ap out) (ExtractGlue.glue-β z) ∙ Out.glue-β z)
+      (ap-∘ out ext-glue (glue z)
+        ∙ ap (ap out) (ExtGlue.glue-β z) ∙ Out.glue-β z)
       ∙v⊡ out-square z
 
     module OutIntoCod = PushoutElim
@@ -259,12 +250,12 @@ module MayerVietorisBase
 
   {- Transporting [cfcod reglue] over the equivalence -}
 
-  cfcod-over : ptd-cfcod ptd-reglue == ptd-extract-glue
+  cfcod-over : ptd-cfcod ptd-reglue == ptd-ext-glue
               [ (λ W → fst (Ptd-Pushout ps ∙→ W)) ↓ ptd-path ]
   cfcod-over =
     codomain-over-ptd-equiv (ptd-cfcod ptd-reglue) eq idp ▹ lemma
     where
-    lemma : (into , idp) ∘ptd ptd-cfcod ptd-reglue == ptd-extract-glue
+    lemma : (into , idp) ∘ptd ptd-cfcod ptd-reglue == ptd-ext-glue
     lemma = pair= idp $
       ap into (! (cfglue reglue (winl (snd X)))) ∙ idp
         =⟨ ap-! into (cfglue reglue (winl (snd X))) |in-ctx (λ w → w ∙ idp) ⟩
@@ -328,42 +319,42 @@ module MayerVietorisBase
         → Cube sq₋₋₀ (vid-square ⊡v' sq₋₋₁) sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋
       right-from-top-lemma' ids cu = cu
 
-  co∂-over : ptd-co∂ ptd-reglue == ptd-mv-co∂
+  ext-over : ptd-ext-glue == ptd-mv-diff
              [ (λ W → fst (W ∙→ Ptd-Susp (Ptd-Wedge X Y))) ↓ ptd-path ]
-  co∂-over = ptd-λ= fn-lemma idp ◃ domain-over-ptd-equiv ptd-mv-co∂ _ _
+  ext-over = ptd-λ= fn-lemma idp ◃ domain-over-ptd-equiv ptd-mv-diff _ _
     where
-    fn-lemma : ∀ κ → co∂ ptd-reglue κ == mv-co∂ (into κ)
+    fn-lemma : ∀ κ → ext-glue κ == mv-diff (into κ)
     fn-lemma = Cofiber-elim reglue
       idp fn-cod
       (λ w → ↓-='-from-square $
-        Co∂.glue-β ptd-reglue w ∙v⊡
+        ExtGlue.glue-β w ∙v⊡
           fn-coh w
-        ⊡v∙ ! (ap-∘ mv-co∂ into (glue w) ∙ ap (ap mv-co∂) (Into.glue-β w)))
+        ⊡v∙ ! (ap-∘ mv-diff into (glue w) ∙ ap (ap mv-diff) (Into.glue-β w)))
       where
       fn-cod : (γ : fst (Ptd-Pushout ps))
-        → co∂ ptd-reglue (cfcod _ γ) == mv-co∂ (extract-glue γ)
+        → ext-glue (cfcod reglue γ) == mv-diff (ext-glue γ)
       fn-cod = Pushout-elim
         (λ x → ! (merid _ (winl x)))
         (λ y → ! (merid _ (winr y)))
         (λ z → ↓-='-from-square $
           ap-cst (south _) (glue z) ∙v⊡
             (bl-square (merid _ (winl (f z))) ⊡h connection)
-          ⊡v∙ ! (ap-∘ mv-co∂ extract-glue (glue z)
-                 ∙ ap (ap mv-co∂) (ExtractGlue.glue-β z)
-                 ∙ MVCo∂.glue-β z))
+          ⊡v∙ ! (ap-∘ mv-diff ext-glue (glue z)
+                 ∙ ap (ap mv-diff) (ExtGlue.glue-β z)
+                 ∙ MVDiff.glue-β z))
 
-      fn-fill : Σ (Square idp idp (ap mv-co∂ (merid _ (snd Z))) idp)
+      fn-fill : Σ (Square idp idp (ap mv-diff (merid _ (snd Z))) idp)
         (λ sq → Cube (ur-square (merid _ (winl (snd X)))) sq
                      (natural-square (λ _ → idp) wglue)
                      (natural-square (merid _) wglue
                        ⊡h' square-symmetry (ur-square (merid _ (winr (snd Y)))))
-                     (natural-square (ap mv-co∂ ∘ into-glue) wglue)
+                     (natural-square (ap mv-diff ∘ into-glue) wglue)
                      (square-push-rt (! (merid _ (winr (snd Y))))
                        (natural-square (fn-cod ∘ reglue) wglue)))
       fn-fill = fill-cube-right _ _ _ _ _
 
       fn-coh : (w : Wedge X Y)
-        → Square idp (merid _ w) (ap mv-co∂ (into-glue w)) (fn-cod (reglue w))
+        → Square idp (merid _ w) (ap mv-diff (into-glue w)) (fn-cod (reglue w))
       fn-coh = Wedge-elim
         (λ x → ur-square (merid _ (winl x)))
           (λ y → ur-square (merid _ (winr y)) ⊡v' (fst fn-fill))
@@ -383,9 +374,9 @@ module MayerVietoris (ps : Ptd-Span {i} {i} {i}) where
         eq : Cofiber reglue ≃ Suspension (fst Z)
         path : Cofiber reglue == Suspension (fst Z)
         ptd-path : Ptd-Cof ptd-reglue == Ptd-Susp Z
-        cfcod-over : ptd-cfcod ptd-reglue == ptd-extract-glue
+        cfcod-over : ptd-cfcod ptd-reglue == ptd-ext-glue
                      [ (λ W → fst (Ptd-Pushout ps ∙→ W)) ↓ ptd-path ]
-        co∂-over : ptd-co∂ ptd-reglue == ptd-mv-co∂
+        ext-over : ptd-ext-glue == ptd-mv-diff
                    [ (λ W → fst (W ∙→ Ptd-Susp (Ptd-Wedge X Y))) ↓ ptd-path ]
 
     results : Results ps
@@ -398,7 +389,7 @@ module MayerVietoris (ps : Ptd-Span {i} {i} {i}) where
         path = path;
         ptd-path = ptd-path;
         cfcod-over = cfcod-over;
-        co∂-over = co∂-over}
+        ext-over = ext-over}
         where open MayerVietorisBase Z f g
 
     open Results results public

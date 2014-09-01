@@ -7,19 +7,6 @@ open import cohomology.TwoPushouts
 
 module cohomology.CofiberSequence {i} where
 
-{- Define the coboundary mapping from Cof(f) to ΣX -}
-module _ {X Y : Ptd i} (f : fst (X ∙→ Y)) where
-
-  module Co∂  = CofiberRec (fst f)
-    (north (fst X))
-    (λ _ → south (fst X))
-    (merid (fst X))
-
-  co∂ = Co∂.f
-
-  ptd-co∂ : fst (Ptd-Cof f ∙→ Ptd-Susp X)
-  ptd-co∂ = (co∂ , idp)
-
 {- Lemma: pushing flip-pushout through susp-fmap -}
 ptd-flip-susp-fmap : {X Y : Ptd i} (f : fst (X ∙→ Y))
   → flip-ptd-pushout (suspension-ptd-span Y) ∘ptd ptd-susp-fmap f
@@ -82,15 +69,15 @@ private
  -   ∙ ––> Cof f ––––––––––> Cof² f
  -                cfcod² f
  -
- - The map [cfcod² f : Cof f → Cof² f] becomes [co∂ f : Cof f → ΣX],
- - and the map [co∂ (cfcod f) : Cof² f → ΣY] becomes [susp-fmap f : ΣX → ΣY].
+ - The map [cfcod² f : Cof f → Cof² f] becomes [ext-glue : Cof f → ΣX],
+ - and the map [ext-glue : Cof² f → ΣY] becomes [susp-fmap f : ΣX → ΣY].
  -}
 module Cof² {X Y : Ptd i} (f : fst (X ∙→ Y)) where
 
   module Equiv {X Y : Ptd i} (f : fst (X ∙→ Y)) where
 
     module Into = CofiberRec (cfcod (fst f)) {C = fst (Ptd-Susp X)}
-      (south _) (co∂ f) (λ _ → idp)
+      (south _) ext-glue (λ _ → idp)
 
     into = Into.f
 
@@ -113,7 +100,7 @@ module Cof² {X Y : Ptd i} (f : fst (X ∙→ Y)) where
         ap into (ap (cfcod _) (cfglue _ x)) ∙ idp
           =⟨ ∙-unit-r _ ⟩
         ap into (ap (cfcod _) (cfglue _ x))
-          =⟨ ∘-ap into (cfcod _) (cfglue _ x) ∙ Co∂.glue-β f x ⟩
+          =⟨ ∘-ap into (cfcod _) (cfglue _ x) ∙ ExtGlue.glue-β x ⟩
         merid _ x ∎)
 
     out-into : ∀ κ → out (into κ) == κ
@@ -121,8 +108,8 @@ module Cof² {X Y : Ptd i} (f : fst (X ∙→ Y)) where
       idp
       (Cofiber-elim (fst f) idp (cfglue _)
         (λ x → ↓-='-from-square $
-          (ap-∘ out (co∂ f) (cfglue _ x)
-           ∙ ap (ap out) (Co∂.glue-β f x) ∙ Out.glue-β x)
+          (ap-∘ out ext-glue (cfglue _ x)
+           ∙ ap (ap out) (ExtGlue.glue-β x) ∙ Out.glue-β x)
           ∙v⊡ square-extend-rt (cfglue _ (fst f x)) vid-square))
       (λ y → ↓-∘=idf-from-square out into $
          ap (ap out) (Into.glue-β y) ∙v⊡ connection)
@@ -139,13 +126,13 @@ module Cof² {X Y : Ptd i} (f : fst (X ∙→ Y)) where
     space-path : Ptd-Cof² f == Ptd-Susp X
     space-path = ptd-ua eq (! (merid _ (snd X)))
 
-  cfcod²-over : ptd-cfcod² f == ptd-co∂ f
+  cfcod²-over : ptd-cfcod² f == ptd-ext-glue
                 [ (λ U → fst (Ptd-Cof f ∙→ U)) ↓ Equiv.space-path f ]
   cfcod²-over = ind-lemma f
     where
     {- is there a better way to handle this? -}
     ind-lemma : {X Y : Ptd i} (f : fst (X ∙→ Y))
-      → ptd-cfcod² f == ptd-co∂ f
+      → ptd-cfcod² f == ptd-ext-glue
         [ (λ U → fst (Ptd-Cof f ∙→ U)) ↓ Equiv.space-path f ]
     ind-lemma {X = X} (f , idp) =
       codomain-over-ptd-equiv (ptd-cfcod² (f , idp)) _ _
@@ -170,8 +157,8 @@ module Cof² {X Y : Ptd i} (f : fst (X ∙→ Y)) where
         ∙ ap (Equiv.into F) (! (cfglue _ y₀))
           =⟨ ∘-ap (Equiv.into F) (cfcod (cfcod f)) (cfglue _ x₀)
              |in-ctx (λ w → w ∙ ap (Equiv.into F) (! (cfglue _ y₀))) ⟩
-        ap (co∂ F) (cfglue _ x₀) ∙ ap (Equiv.into F) (! (cfglue _ y₀))
-          =⟨ Co∂.glue-β F x₀
+        ap ext-glue (cfglue _ x₀) ∙ ap (Equiv.into F) (! (cfglue _ y₀))
+          =⟨ ExtGlue.glue-β x₀
              |in-ctx (λ w → w ∙ ap (Equiv.into F) (! (cfglue _ y₀))) ⟩
         merid _ x₀ ∙ ap (Equiv.into F) (! (cfglue _ y₀))
           =⟨ ap-! (Equiv.into F) (cfglue _ y₀) |in-ctx (λ w → merid _ x₀ ∙ w) ⟩
@@ -186,14 +173,14 @@ module Cof² {X Y : Ptd i} (f : fst (X ∙→ Y)) where
       l {p = p} {q = q} α = ap (λ r → r ∙ ! q) α ∙ !-inv-r q
 
   cfcod³-over :
-    ptd-co∂ (ptd-cfcod f) == Σflip Y ∘ptd ptd-susp-fmap f
+    ptd-ext-glue == Σflip Y ∘ptd ptd-susp-fmap f
     [ (λ U → fst (U ∙→ Ptd-Susp Y)) ↓ Equiv.space-path f ]
   cfcod³-over =
     ptd-λ= fst-lemma (l snd-lemma)
     ◃ domain-over-ptd-equiv (Σflip Y ∘ptd ptd-susp-fmap f) _ _
     where
     fst-lemma : (κ : fst (Ptd-Cof² f))
-      → co∂ (ptd-cfcod f) κ == flip-pushout (susp-fmap (fst f) (Equiv.into f κ))
+      → ext-glue κ == flip-pushout (susp-fmap (fst f) (Equiv.into f κ))
     fst-lemma = Cofiber-elim (cfcod (fst f))
       idp
       (Cofiber-elim (fst f)
@@ -202,13 +189,13 @@ module Cof² {X Y : Ptd i} (f : fst (X ∙→ Y)) where
         (λ x → ↓-='-from-square $
           ap-cst (south _) (cfglue _ x) ∙v⊡
             connection
-          ⊡v∙ ! (ap-∘ (flip-pushout ∘ susp-fmap (fst f)) (co∂ f) (cfglue _ x)
-                 ∙ ap (ap (flip-pushout ∘ susp-fmap (fst f))) (Co∂.glue-β f x)
+          ⊡v∙ ! (ap-∘ (flip-pushout ∘ susp-fmap (fst f)) ext-glue (cfglue _ x)
+                 ∙ ap (ap (flip-pushout ∘ susp-fmap (fst f))) (ExtGlue.glue-β x)
                  ∙ ap-∘ flip-pushout (susp-fmap (fst f)) (merid _ x)
                  ∙ ap (ap flip-pushout) (SuspFmap.glue-β (fst f) x)
                  ∙ FlipPushout.glue-β (fst f x))))
       (λ y → ↓-='-from-square $
-        Co∂.glue-β (ptd-cfcod f) y ∙v⊡
+        ExtGlue.glue-β y ∙v⊡
           ur-square (merid _ y)
         ⊡v∙ ! (ap-∘ (flip-pushout ∘ susp-fmap (fst f)) (Equiv.into f)
                     (cfglue _ y)
@@ -243,47 +230,36 @@ module Cof² {X Y : Ptd i} (f : fst (X ∙→ Y)) where
 
   full-path : Path
     {A = Σ (Ptd i) (λ U → fst (Ptd-Cof f ∙→ U) × fst (U ∙→ Ptd-Susp Y))}
-    (_ , ptd-cfcod² f , ptd-co∂ (ptd-cfcod f))
-    (_ , ptd-co∂ f , flip-ptd-pushout d ∘ptd ptd-susp-fmap f)
+    (_ , ptd-cfcod² f , ptd-ext-glue)
+    (_ , ptd-ext-glue , flip-ptd-pushout d ∘ptd ptd-susp-fmap f)
   full-path = pair= space-path (↓-×-in cfcod²-over cfcod³-over)
 
 cofiber-sequence : {X Y : Ptd i} (f : fst (X ∙→ Y)) → Path
   {A = Σ (Ptd i × Ptd i × Ptd i)
          (λ {(U , V , W) → fst (Ptd-Cof f ∙→ U) × fst (U ∙→ V) × fst (V ∙→ W)})}
   (_ , ptd-cfcod² f , ptd-cfcod³ f , ptd-cfcod⁴ f)
-  (_ , ptd-co∂ f , ptd-susp-fmap f , ptd-susp-fmap (ptd-cfcod f))
+  (_ , ptd-ext-glue , ptd-susp-fmap f , ptd-susp-fmap (ptd-cfcod f))
 cofiber-sequence {Y = Y} f =
-  (_ , ptd-cfcod² f , ptd-cfcod³ f , ptd-cfcod⁴ f)
-    =⟨ ap (λ {(_ , g , _) → (_ , ptd-cfcod² f , ptd-cfcod³ f , g)})
-          (Cof².full-path (ptd-cfcod² f)) ⟩
-  (_ , ptd-cfcod² f , ptd-cfcod³ f , ptd-co∂ (ptd-cfcod² f))
-    =⟨ ap (λ {(_ , g , h) → (_ , ptd-cfcod² f , g , h)})
-          (Cof².full-path (ptd-cfcod f)) ⟩
-  (_ , ptd-cfcod² f , ptd-co∂ (ptd-cfcod f) ,
-       Σflip (Ptd-Cof f) ∘ptd ptd-susp-fmap (ptd-cfcod f))
-    =⟨ ap (λ {(_ , g , h) → (_ , g , h , Σflip (Ptd-Cof f) ∘ptd
-                                         ptd-susp-fmap (ptd-cfcod f))})
-          (Cof².full-path f) ⟩
-  (_ , ptd-co∂ f , Σflip Y ∘ptd ptd-susp-fmap f ,
-       Σflip (Ptd-Cof f) ∘ptd ptd-susp-fmap (ptd-cfcod f))
-    =⟨ ap (λ g → (_ , ptd-co∂ f , Σflip Y ∘ptd ptd-susp-fmap f , g))
-          (ptd-flip-susp-fmap (ptd-cfcod f)) ⟩
-  (_ , ptd-co∂ f , Σflip Y ∘ptd ptd-susp-fmap f ,
-       ptd-susp-fmap (ptd-cfcod f) ∘ptd Σflip Y)
-    =⟨ ap (λ {(_ , g , h) → (_ , ptd-co∂ f , g , h)})
-          (pair= (flip-ptd-pushout-path (suspension-ptd-span Y))
-            (↓-×-in (codomain-over-ptd-equiv (Σflip Y ∘ptd ptd-susp-fmap f) _ _
-                      ▹ lemma)
-                    (domain-over-ptd-equiv (ptd-susp-fmap (ptd-cfcod f)) _ _))) ⟩
-  (_ , ptd-co∂ f , ptd-susp-fmap f , ptd-susp-fmap (ptd-cfcod f)) ∎
-
+    ap (λ {(_ , g , _) → (_ , ptd-cfcod² f , ptd-cfcod³ f , g)})
+       (Cof².full-path (ptd-cfcod² f))
+  ∙ ap (λ {(_ , g , h) → (_ , ptd-cfcod² f , g , h)})
+       (Cof².full-path (ptd-cfcod f))
+  ∙ ap (λ {(_ , g , h) → (_ , g , h , Σflip (Ptd-Cof f) ∘ptd
+                                      ptd-susp-fmap (ptd-cfcod f))})
+       (Cof².full-path f)
+  ∙ ap (λ g → (_ , ptd-ext-glue , Σflip Y ∘ptd ptd-susp-fmap f , g))
+       (ptd-flip-susp-fmap (ptd-cfcod f))
+  ∙ ap (λ {(_ , g , h) → (_ , ptd-ext-glue , g , h)})
+       (pair= (flip-ptd-pushout-path (suspension-ptd-span Y))
+          (↓-×-in (codomain-over-ptd-equiv (Σflip Y ∘ptd ptd-susp-fmap f) _ _
+                   ▹ lemma)
+                  (domain-over-ptd-equiv (ptd-susp-fmap (ptd-cfcod f)) _ _)))
   where
   lemma : Σflip Y ∘ptd Σflip Y ∘ptd ptd-susp-fmap f == ptd-susp-fmap f
   lemma = ! (∘ptd-assoc (Σflip Y) (Σflip Y) (ptd-susp-fmap f))
           ∙ ap (λ w → w ∘ptd ptd-susp-fmap f)
                (flip-ptd-pushout-involutive (suspension-ptd-span Y))
           ∙ ∘ptd-unit-l (ptd-susp-fmap f)
-
 
 cof-suspend : {X Y : Ptd i} (f : fst (X ∙→ Y)) →
   Ptd-Cof (ptd-susp-fmap f) == Ptd-Susp (Ptd-Cof f)
