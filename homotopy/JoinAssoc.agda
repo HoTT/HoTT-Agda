@@ -74,7 +74,7 @@ module homotopy.JoinAssoc {i j k} (A : Type i) (B : Type j) (C : Type k) where
   to-from-right-glue' b c =
     ap (λ z → to (from-right z)) (glue (b , c))     =⟪ ap-∘ to from-right (glue (b , c)) ⟫
     ap to (ap from-right (glue (b , c)))            =⟪ FromRight.glue-β (b , c) |in-ctx ap to ⟫
-    ap to (glue ((right b , c) :> (A * B) × C))     =⟪ To.glue-β (right b , c)⟫
+    ap to (glue ((right b , c) :> ((A * B) × C)))   =⟪ To.glue-β (right b , c)⟫
     ap right (glue (b , c)) ∎∎
 
   to-from-right-glue : (bc : B × C) → idp == idp [ (λ x → to (from (right x)) == right x) ↓ glue bc ]
