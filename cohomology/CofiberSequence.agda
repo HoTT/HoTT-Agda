@@ -261,8 +261,22 @@ cofiber-sequence {Y = Y} f =
                (flip-ptd-pushout-involutive (suspension-ptd-span Y))
           ∙ ∘ptd-unit-l (ptd-susp-fmap f)
 
-cof-suspend : {X Y : Ptd i} (f : fst (X ∙→ Y)) →
-  Ptd-Cof (ptd-susp-fmap f) == Ptd-Susp (Ptd-Cof f)
-cof-suspend f =
-  ↓-cst-out (apd (λ {(_ , _ , g , _) → Ptd-Cof g}) (! (cofiber-sequence f)))
-  ∙ ap (λ {((_ , _ , W) , _ , _ , _) → W}) (cofiber-sequence f)
+suspend-cofiber : {X Y : Ptd i} (f : fst (X ∙→ Y)) → Path
+  {A = Σ _ (λ {(U , V , W) → fst (U ∙→ V) × fst (V ∙→ W)})}
+  (_ , ptd-susp-fmap f , ptd-cfcod (ptd-susp-fmap f))
+  (_ , ptd-susp-fmap f , ptd-susp-fmap (ptd-cfcod f))
+suspend-cofiber f =
+  ap (λ {((U , V , W) , _ , g , _) → ((U , V , Ptd-Cof g) , g , ptd-cfcod g)})
+     (! (cofiber-sequence f))
+  ∙ ap (λ {(_ , _ , g , h) → (_ , g , h)}) (cofiber-sequence f)
+
+suspend^-cof= : {X Y Z : Ptd i} (m : ℕ) (f : fst (X ∙→ Y)) (g : fst (Y ∙→ Z))
+  (p : Path {A = Σ _ (λ U → fst (Y ∙→ U))} (Ptd-Cof f , ptd-cfcod f) (Z , g))
+  → Path {A = Σ _ (λ {(U , V , W) → fst (U ∙→ V) × fst (V ∙→ W)})}
+    (_ , ptd-susp^-fmap m f , ptd-cfcod (ptd-susp^-fmap m f))
+    (_ , ptd-susp^-fmap m f , ptd-susp^-fmap m g)
+suspend^-cof= O f g p = ap (λ {(_ , h) → (_ , f , h)}) p
+suspend^-cof= (S m) f g p =
+  suspend-cofiber (ptd-susp^-fmap m f)
+  ∙ ap (λ {(_ , h , k) → (_ , ptd-susp-fmap h , ptd-susp-fmap k)})
+       (suspend^-cof= m f g p)
