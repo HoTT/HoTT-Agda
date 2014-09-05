@@ -78,88 +78,53 @@ module C⊔Part1 (n : ℤ) (X Y : Ptd i) (neq : n ≠ neg O) where
       f-g : ∀ σ → f (g σ) == σ
       f-g = Suspension-elim (fst (X ∙⊔ Y)) idp idp
         (λ {(inl x) → ↓-∘=idf-in f g $
-              ap f (ap g (merid _ (inl x)))
-                =⟨ G.glue-β (inl x) |in-ctx ap f ⟩
-              ap f (ap left (merid _ x) ∙' glue (lift false))
-                =⟨ ap-∙' f (ap left (merid _ x)) (glue (lift false)) ⟩
-              ap f (ap left (merid _ x)) ∙' ap f (glue (lift false))
-                =⟨ F.glue-β (lift false)
-                   |in-ctx (λ w → ap f (ap left (merid _ x)) ∙' w) ⟩
-              ap f (ap left (merid _ x))
-                =⟨ ∘-ap f left (merid _ x) ⟩
-              ap (susp-fmap inl) (merid _ x)
-                =⟨ SuspFmap.glue-β inl x ⟩
-              merid _ (inl x) ∎;
+              ap (ap f) (G.glue-β (inl x))
+              ∙ ap-∙' f (ap left (merid _ x)) (glue (lift false))
+              ∙ ap (λ w → ap f (ap left (merid _ x)) ∙' w)
+                   (F.glue-β (lift false))
+              ∙ ∘-ap f left (merid _ x)
+              ∙ SuspFmap.glue-β inl x;
             (inr y) → ↓-∘=idf-in f g $
-              ap f (ap g (glue (inr y)))
-                =⟨ G.glue-β (inr y) |in-ctx ap f ⟩
-              ap f (glue (lift true) ∙ ap right (merid _ y))
-                =⟨ ap-∙ f (glue (lift true)) (ap right (merid _ y)) ⟩
-              ap f (glue (lift true)) ∙ ap f (ap right (merid _ y))
-                =⟨ F.glue-β (lift true)
-                   |in-ctx (λ w → w ∙ ap f (ap right (merid _ y))) ⟩
-              ap f (ap right (merid _ y))
-                =⟨ ∘-ap f right (merid _ y) ⟩
-              ap (susp-fmap inr) (merid _ y)
-                =⟨ SuspFmap.glue-β inr y ⟩
-              merid _ (inr y) ∎})
+              ap (ap f) (G.glue-β (inr y))
+              ∙ ap-∙ f (glue (lift true)) (ap right (merid _ y))
+              ∙ ap (λ w → w ∙ ap f (ap right (merid _ y)))
+                   (F.glue-β (lift true))
+              ∙ ∘-ap f right (merid _ y)
+              ∙ SuspFmap.glue-β inr y})
 
       g-f : ∀ ξ → g (f ξ) == ξ
       g-f = Pushout-elim g-f-left g-f-right g-f-glue
         where
         g-f-left : ∀ σx → g (f (left σx)) == left σx
         g-f-left = Suspension-elim (fst X) idp (! (glue (lift false)))
-          (λ x → ↓-='-in $
-            ap left (merid _ x)
-              =⟨ ! (!-inv'-r (glue (lift false)))
-                 |in-ctx (λ w → ap left (merid _ x) ∙' w) ⟩
-            ap left (merid _ x) ∙' glue (lift false) ∙' ! (glue (lift false))
-              =⟨ ! (∙'-assoc (ap left (merid _ x)) (glue (lift false))
-                             (! (glue (lift false)))) ⟩
-            (ap left (merid _ x) ∙' glue (lift false)) ∙' ! (glue (lift false))
-              =⟨ ! (G.glue-β (inl x))
-                 |in-ctx (λ w → w ∙' ! (glue (lift false))) ⟩
-            ap g (merid _ (inl x)) ∙' ! (glue (lift false))
-              =⟨ ! (SuspFmap.glue-β inl x)
-                 |in-ctx (λ w → ap g w ∙' ! (glue (lift false))) ⟩
-            ap g (ap (susp-fmap inl) (merid _ x)) ∙' ! (glue (lift false))
-              =⟨ ∘-ap g (susp-fmap inl) (merid _ x)
-                 |in-ctx (λ w → w ∙' ! (glue (lift false))) ⟩
-            ap (g ∘ susp-fmap inl) (merid _ x) ∙' ! (glue (lift false)) ∎)
+          (λ x → ↓-='-from-square $
+            (ap-∘ g (susp-fmap inl) (merid _ x)
+              ∙ ap (ap g) (SuspFmap.glue-β inl x) ∙ G.glue-β (inl x))
+            ∙v⊡ vid-square {p = ap left (merid _ x)}
+                ⊡h' ur-square (glue (lift false)))
 
         g-f-right : ∀ σy → g (f (right σy)) == right σy
         g-f-right = Suspension-elim (fst Y) (glue (lift true)) idp
-          (λ y → ↓-='-in $
-            glue (lift true) ∙ ap right (merid _ y)
-              =⟨ ! (G.glue-β (inr y)) ⟩
-            ap g (merid _ (inr y))
-              =⟨ ! (SuspFmap.glue-β inr y) |in-ctx ap g ⟩
-            ap g (ap (susp-fmap inr) (merid _ y))
-              =⟨ ∘-ap g (susp-fmap inr) (merid _ y)  ⟩
-            ap (g ∘ susp-fmap inr) (merid _ y) ∎)
+          (λ y → ↓-='-from-square $
+            (ap-∘ g (susp-fmap inr) (merid _ y)
+              ∙ ap (ap g) (SuspFmap.glue-β inr y) ∙ G.glue-β (inr y))
+            ∙v⊡ lt-square (glue (lift true))
+                ⊡h vid-square {p = ap right (merid _ y)})
 
         g-f-glue : ∀ b → g-f-left (poles X b) == g-f-right (poles Y b)
                          [ (λ ξ → g (f ξ) == ξ) ↓ glue b ]
         g-f-glue (lift true) = ↓-∘=idf-in g f $
-          ap g (ap f (glue (lift true))) ∙' glue (lift true)
-            =⟨ F.glue-β (lift true)
-               |in-ctx (λ w → ap g w ∙' glue (lift true)) ⟩
-          idp ∙' glue (lift true)
-            =⟨ ∙'-unit-l (glue (lift true)) ⟩
-          glue (lift true) ∎
+          ap (λ w → ap g w ∙' glue (lift true)) (F.glue-β (lift true))
+          ∙ ∙'-unit-l (glue (lift true))
         g-f-glue (lift false) = ↓-∘=idf-in g f $
-          ap g (ap f (glue (lift false)))
-            =⟨ F.glue-β (lift false) |in-ctx ap g ⟩
-          idp
-            =⟨ ! (!-inv-l (glue (lift false))) ⟩
-          ! (glue (lift false)) ∙ glue (lift false) ∎
+          ap (ap g) (F.glue-β (lift false)) ∙ ! (!-inv-l (glue (lift false)))
 
     Σ⊔-ptd-path : Σ⊔ == Ptd-Susp (X ∙⊔ Y)
     Σ⊔-ptd-path = ptd-ua Σ⊔-eq idp
 
 
-    {- Defining a right inverse to [extract-glue Σ⊔-ps], which gives
-     - a left inverse to [Cₙ(Σ(extract-glue Σ⊔-ps))] -}
+    {- Defining a right inverse to [ext-glue], which gives
+     - a left inverse to [Cₙ(Σ(ext-glue))] -}
 
     module InsertGlue = SuspensionRec (Sphere {i} 0) {C = fst Σ⊔}
       (left (north _))
@@ -172,57 +137,44 @@ module C⊔Part1 (n : ℤ) (X Y : Ptd i) (neq : n ≠ neg O) where
     ptd-ins-glue : fst (Ptd-Sphere {i} 1 ∙→ Σ⊔)
     ptd-ins-glue = (ins-glue , idp)
 
+    ext-Σ⊔-glue : fst Σ⊔ → Sphere {i} 1
+    ext-Σ⊔-glue = ext-glue
+
+    ptd-ext-Σ⊔-glue : fst (Σ⊔ ∙→ Ptd-Sphere {i} 1)
+    ptd-ext-Σ⊔-glue = ptd-ext-glue
+
     ins-glue-rinv : (s : Sphere {i} 1) →
-      MV.extract-glue (ins-glue s) == s
+      ext-Σ⊔-glue (ins-glue s) == s
     ins-glue-rinv = Suspension-elim (Sphere {i} 0)
       idp
       idp
-      (λ {(lift true) → ↓-∘=idf-in MV.extract-glue ins-glue $
-            ap MV.extract-glue (ap ins-glue (merid _ (lift true)))
-              =⟨ ap (ap MV.extract-glue) (InsertGlue.glue-β (lift true)) ⟩
-            ap MV.extract-glue (glue (lift true)
-                                     ∙ ap right (merid _ (snd Y)))
-              =⟨ ap-∙ MV.extract-glue
-                   (glue (lift true)) (ap right (merid _ (snd Y))) ⟩
-            ap MV.extract-glue (glue (lift true))
-            ∙ ap MV.extract-glue (ap right (merid _ (snd Y)))
-              =⟨ MV.ExtractGlue.glue-β (lift true) |in-ctx (λ w →
-                   w ∙ ap MV.extract-glue (ap right (merid _ (snd Y)))) ⟩
-            merid _ (lift true)
-            ∙ ap MV.extract-glue (ap right (merid _ (snd Y)))
-              =⟨ ∘-ap MV.extract-glue right (merid _ (snd Y))
-                 ∙ ap-cst (south _) (merid _ (snd Y))
-                 |in-ctx (λ w → merid _ (lift true) ∙ w) ⟩
-            merid _ (lift true) ∙ idp
-              =⟨ ∙-unit-r _ ⟩
-            merid _ (lift true) ∎;
+      (λ {(lift true) → ↓-∘=idf-in ext-Σ⊔-glue ins-glue $
+            ap (ap ext-Σ⊔-glue) (InsertGlue.glue-β (lift true))
+            ∙ ap-∙ ext-Σ⊔-glue (glue (lift true)) (ap right (merid _ (snd Y)))
+            ∙ ap (λ w → w ∙ ap ext-Σ⊔-glue (ap right (merid _ (snd Y))))
+                 (ExtGlue.glue-β (lift true))
+            ∙ ap (λ w → merid _ (lift true) ∙ w)
+                 (∘-ap ext-Σ⊔-glue right (merid _ (snd Y))
+                  ∙ ap-cst (south _) (merid _ (snd Y)))
+            ∙ ∙-unit-r _;
 
-          (lift false) → ↓-∘=idf-in MV.extract-glue ins-glue $
-            ap MV.extract-glue (ap ins-glue (merid _ (lift false)))
-              =⟨ ap (ap MV.extract-glue) (InsertGlue.glue-β (lift false)) ⟩
-            ap MV.extract-glue (ap left (merid _ (snd X))
-                                     ∙ glue (lift false))
-              =⟨ ap-∙ MV.extract-glue
-                   (ap left (merid _ (snd X))) (glue (lift false)) ⟩
-            ap MV.extract-glue (ap left (merid _ (snd X)))
-            ∙ ap MV.extract-glue (glue (lift false))
-              =⟨ ∘-ap MV.extract-glue left (merid _ (snd X))
-                 ∙ ap-cst (north _) (merid _ (snd X))
-                 |in-ctx (λ w → w ∙ ap MV.extract-glue
-                                       (glue (lift false))) ⟩
-            ap MV.extract-glue (glue (lift false))
-              =⟨ MV.ExtractGlue.glue-β (lift false) ⟩
-            merid _ (lift false) ∎})
+          (lift false) → ↓-∘=idf-in ext-Σ⊔-glue ins-glue $
+            ap (ap ext-Σ⊔-glue) (InsertGlue.glue-β (lift false))
+            ∙ ap-∙ ext-Σ⊔-glue (ap left (merid _ (snd X))) (glue (lift false))
+            ∙ ap (λ w → w ∙ ap ext-Σ⊔-glue (glue (lift false)))
+                 (∘-ap ext-Σ⊔-glue left (merid _ (snd X))
+                  ∙ ap-cst (north _) (merid _ (snd X)))
+            ∙ ExtGlue.glue-β (lift false)})
 
-    ptd-ins-glue-rinv : MV.ptd-extract-glue ∘ptd ptd-ins-glue
-                        == ptd-idf (Ptd-Sphere 1)
+    ptd-ins-glue-rinv :
+      ptd-ext-glue ∘ptd ptd-ins-glue == ptd-idf (Ptd-Sphere 1)
     ptd-ins-glue-rinv = ptd-λ= ins-glue-rinv idp
 
     ptd-susp-ins-glue-rinv :
-      ptd-susp-fmap MV.ptd-extract-glue ∘ptd ptd-susp-fmap ptd-ins-glue
+      ptd-susp-fmap ptd-ext-Σ⊔-glue ∘ptd ptd-susp-fmap ptd-ins-glue
       == ptd-idf (Ptd-Sphere 2)
     ptd-susp-ins-glue-rinv =
-      ! (ptd-susp-fmap-∘ MV.ptd-extract-glue ptd-ins-glue)
+      ! (ptd-susp-fmap-∘ ptd-ext-glue ptd-ins-glue)
       ∙ ap ptd-susp-fmap ptd-ins-glue-rinv
       ∙ ptd-susp-fmap-idf (Ptd-Sphere 1)
 
@@ -230,7 +182,7 @@ module C⊔Part1 (n : ℤ) (X Y : Ptd i) (neq : n ≠ neg O) where
     ed : ExactDiag _ _
     ed =
       C (succ (succ n)) (Ptd-Sphere 2)
-        ⟨ CF-hom (succ (succ n)) (ptd-susp-fmap MV.ptd-extract-glue) ⟩→
+        ⟨ CF-hom (succ (succ n)) (ptd-susp-fmap ptd-ext-Σ⊔-glue) ⟩→
       C (succ (succ n)) (Ptd-Susp Σ⊔)
         ⟨ CF-hom (succ (succ n)) (ptd-susp-fmap MV.ptd-reglue) ⟩→
       C (succ (succ n)) (Ptd-Susp (Ptd-Wedge (Ptd-Susp X) (Ptd-Susp Y)))
@@ -261,8 +213,7 @@ module C⊔Part1 (n : ℤ) (X Y : Ptd i) (neq : n ≠ neg O) where
 
       second₂ : is-exact
         (CF (succ (succ n)) (ptd-susp-fmap MV.ptd-reglue))
-        (ptd-cst {X = Ptd-CEl (succ (succ n))
-                        (Ptd-Susp (Ptd-Wedge (Ptd-Susp X) (Ptd-Susp Y)))})
+        (GroupHom.ptd-f cst-hom)
       second₂ = transport
         (λ {(Z , g) → is-exact {Z = Z}
                         (CF (succ (succ n)) (ptd-susp-fmap MV.ptd-reglue)) g})
@@ -285,7 +236,7 @@ module C⊔Part1 (n : ℤ) (X Y : Ptd i) (neq : n ≠ neg O) where
     where
     module SEL = SplitExactLeft
       (C-abelian (succ (succ n)) (Ptd-Susp Σ⊔))
-      (CF-hom (succ (succ n)) (ptd-susp-fmap MV.ptd-extract-glue))
+      (CF-hom (succ (succ n)) (ptd-susp-fmap ptd-ext-Σ⊔-glue))
       (CF-hom (succ (succ n)) (ptd-susp-fmap MV.ptd-reglue))
       es
       (CF-hom (succ (succ n)) (ptd-susp-fmap ptd-ins-glue))
@@ -363,7 +314,7 @@ module C⊔Part2 (n : ℤ) (X Y : Ptd i) (neq₀ : n ≠ O) (neq₁ : n ≠ pos 
     ed : ExactDiag _ _
     ed =
       C n (Ptd-Sphere 1)
-        ⟨ CF-hom n (ptd-co∂ ptd-select) ⟩→
+        ⟨ CF-hom n ptd-ext-glue ⟩→
       C n (Ptd-Cof ptd-select)
         ⟨ CF-hom n (ptd-cfcod ptd-select) ⟩→
       C n (X ∙⊔ Y)
