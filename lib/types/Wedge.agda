@@ -1,11 +1,12 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
-open import lib.types.Span
+open import lib.types.Coproduct
+open import lib.types.Pointed
 open import lib.types.Pushout
 open import lib.types.PushoutFlattening
+open import lib.types.Span
 open import lib.types.Unit
-open import lib.types.Pointed
 
 -- Wedge of two pointed types is defined as a particular case of pushout
 
@@ -66,3 +67,13 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
     f = M.f
     glue-β = M.glue-β unit
+
+
+add-wglue : ∀ {i j} {X : Ptd i} {Y : Ptd j}
+  → fst (X ∙⊔ Y) → Wedge X Y
+add-wglue (inl x) = winl x
+add-wglue (inr y) = winr y
+
+ptd-add-wglue : ∀ {i j} {X : Ptd i} {Y : Ptd j}
+  → fst (X ∙⊔ Y ∙→ Ptd-Wedge X Y)
+ptd-add-wglue = (add-wglue , idp)

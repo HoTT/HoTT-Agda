@@ -63,3 +63,10 @@ X ∙⊔ Y = ∙[ Coprod (fst X) (fst Y) , inl (snd X) ]
 
 _⊔∙_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
 X ⊔∙ Y = ∙[ Coprod (fst X) (fst Y) , inr (snd Y) ]
+
+codiag : ∀ {i} {A : Type i} → A ⊔ A → A
+codiag (inl a) = a
+codiag (inr a) = a
+
+ptd-codiag : ∀ {i} {X : Ptd i} → fst (X ∙⊔ X ∙→ X)
+ptd-codiag = (codiag , idp)

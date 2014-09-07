@@ -7,6 +7,7 @@ open import lib.types.Pushout
 open import lib.types.PushoutFlattening
 open import lib.types.Unit
 open import lib.types.Paths
+open import lib.cubical.Square
 
 -- Suspension is defined as a particular case of pushout
 
@@ -48,6 +49,15 @@ suspension-ptd-span X =
 Ptd-Susp : ∀ {i} → Ptd i → Ptd i
 Ptd-Susp (A , _) = ∙[ Suspension A , north A ]
 
+module FlipSusp {i} {A : Type i} = SuspensionRec A
+  (south A) (north A) (! ∘ merid A)
+
+flip-susp : ∀ {i} {A : Type i} → Suspension A → Suspension A
+flip-susp = FlipSusp.f
+
+ptd-flip-susp : ∀ {i} (X : Ptd i) → fst (Ptd-Susp X ∙→ Ptd-Susp X)
+ptd-flip-susp X = (flip-susp , ! (merid _ (snd X)))
+
 module _ {i j} where
 
   module SuspFmap {A : Type i} {B : Type j} (f : A → B) =
@@ -70,6 +80,17 @@ module _ {i} where
   ptd-susp-fmap-idf : (X : Ptd i)
     → ptd-susp-fmap (ptd-idf X) == ptd-idf (Ptd-Susp X)
   ptd-susp-fmap-idf X = ptd-λ= (susp-fmap-idf (fst X)) idp
+
+module _ {i j} where
+
+  susp-fmap-cst : {A : Type i} {B : Type j} (b : B)
+    (a : Suspension A) → susp-fmap (cst b) a == north _
+  susp-fmap-cst b = Suspension-elim _ idp (! (merid _ b)) $ (λ a →
+    ↓-app=cst-from-square $ SuspFmap.glue-β (cst b) a ∙v⊡ ur-square _)
+
+  ptd-susp-fmap-cst : {X : Ptd i} {Y : Ptd j}
+    → ptd-susp-fmap (ptd-cst {X = X} {Y = Y}) == ptd-cst
+  ptd-susp-fmap-cst = ptd-λ= (susp-fmap-cst _) idp
 
 module _ {i j k} where
 

@@ -16,7 +16,7 @@ open import cohomology.FunctionOver
    The only non-private terms are [iso], [φ-over-iso], and [ψ-over-iso].
 -}
 
-module cohomology.SplitExactRight {i} {G H K : Group i}
+module cohomology.SplitExactRight {i} {L G H K : Group i}
   (H-abelian : is-abelian H) (φ : GroupHom G H) (ψ : GroupHom H K) where
 
 private
@@ -27,7 +27,7 @@ private
   module ψ = GroupHom ψ
 
 module SplitExactRight
-  (ex : ExactSeq (0G ⟨ cst-hom ⟩→ G ⟨ φ ⟩→ H ⟨ ψ ⟩→ K ⊣|))
+  (ex : ExactSeq (L ⟨ cst-hom ⟩→ G ⟨ φ ⟩→ H ⟨ ψ ⟩→ K ⊣|))
   (χ : GroupHom K H) (χ-rinv : (k : K.El) → ψ.f (GroupHom.f χ k) == k)
   where
 

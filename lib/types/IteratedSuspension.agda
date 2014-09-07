@@ -20,8 +20,12 @@ Ptd-Susp^-conn : ∀ {i} (n : ℕ) {X : Ptd i} {m : ℕ₋₂}
 Ptd-Susp^-conn O cX = cX
 Ptd-Susp^-conn (S n) cX = Susp-conn (Ptd-Susp^-conn n cX)
 
+Ptd-Susp^-+ : ∀ {i} (m n : ℕ) {X : Ptd i}
+  → Ptd-Susp^ m (Ptd-Susp^ n X) == Ptd-Susp^ (m + n) X
+Ptd-Susp^-+ O n = idp
+Ptd-Susp^-+ (S m) n = ap Ptd-Susp (Ptd-Susp^-+ m n)
 
-ptd-susp^-fmap : ∀ {i} (n : ℕ) {X Y : Ptd i}
+ptd-susp^-fmap : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
   → fst (X ∙→ Y) → fst (Ptd-Susp^ n X ∙→ Ptd-Susp^ n Y)
 ptd-susp^-fmap O f = f
 ptd-susp^-fmap (S n) f = ptd-susp-fmap (ptd-susp^-fmap n f)
@@ -32,7 +36,13 @@ ptd-susp^-fmap-idf O X = idp
 ptd-susp^-fmap-idf (S n) X =
   ap ptd-susp-fmap (ptd-susp^-fmap-idf n X) ∙ ptd-susp-fmap-idf (Ptd-Susp^ n X)
 
-ptd-susp^-fmap-∘ : ∀ {i} (n : ℕ) {X Y Z : Ptd i}
+ptd-susp^-fmap-cst : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
+  → ptd-susp^-fmap n (ptd-cst {X = X} {Y = Y}) == ptd-cst
+ptd-susp^-fmap-cst O = idp
+ptd-susp^-fmap-cst (S n) = ap ptd-susp-fmap (ptd-susp^-fmap-cst n)
+                           ∙ (ptd-susp-fmap-cst {X = Ptd-Susp^ n _})
+
+ptd-susp^-fmap-∘ : ∀ {i j k} (n : ℕ) {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   (g : fst (Y ∙→ Z)) (f : fst (X ∙→ Y))
   → ptd-susp^-fmap n (g ∘ptd f) == ptd-susp^-fmap n g ∘ptd ptd-susp^-fmap n f
 ptd-susp^-fmap-∘ O g f = idp

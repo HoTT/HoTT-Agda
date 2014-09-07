@@ -7,17 +7,17 @@ module cohomology.ExactPairIso where
 
 {- An exact sequence 0 → G → H → 0 implies that G == H -}
 
-module _ {i} {G H : Group i} {φ : GroupHom G H}
-  (ex : ExactSeq (0G ⟨ cst-hom ⟩→ G ⟨ φ ⟩→ H ⟨ cst-hom ⟩→ 0G ⊣|)) where
+module _ {i} {G H K L : Group i} {φ : GroupHom H K}
+  (ex : ExactSeq (G ⟨ cst-hom ⟩→ H ⟨ φ ⟩→ K ⟨ cst-hom ⟩→ L ⊣|)) where
 
   private
-    inj : (g₁ g₂ : Group.El G) → GroupHom.f φ g₁ == GroupHom.f φ g₂ → g₁ == g₂
+    inj : (h₁ h₂ : Group.El H) → GroupHom.f φ h₁ == GroupHom.f φ h₂ → h₁ == h₂
     inj = zero-kernel-injective φ
-      (λ g p → Trunc-rec (Group.El-level G _ _) (λ s → ! (snd s))
-                 (ktoi (exact-get ex 0) g p))
+      (λ h p → Trunc-rec (Group.El-level H _ _) (λ s → ! (snd s))
+                 (ktoi (exact-get ex 0) h p))
 
-  exact-pair-iso : G == H
-  exact-pair-iso = surj-inj-iso φ inj (λ h → ktoi (exact-get ex 1) h idp)
+  exact-pair-iso : H == K
+  exact-pair-iso = surj-inj-iso φ inj (λ k → ktoi (exact-get ex 1) k idp)
 
 module _ {i} {G H K J : Group i} {φ : GroupHom G H} {ψ : GroupHom H K}
   {χ : GroupHom K J} (p : G == 0G) (q : J == 0G)
