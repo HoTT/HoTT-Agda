@@ -95,3 +95,27 @@ module _ (m : ℕ) where
     pt-lemma : ap rec (! wglue) ∙ pt == ! wglue* ∙ pt
     pt-lemma = ap (λ w → w ∙ pt) $
                  ap-! rec wglue ∙ ap ! (WedgeRec.glue-β winl* winr* wglue*)
+
+  C-susp^-wedge-in : {Z : Ptd i}
+    (f : fst (Ptd-Susp^ m Z ∙→ Ptd-Susp^ m (Ptd-Wedge X Y)))
+    → CF-hom n f
+      == ×-sum-hom (C-abelian n _)
+           (CF-hom n (ptd-susp^-fmap m ptd-projl ∘ptd f))
+           (CF-hom n (ptd-susp^-fmap m ptd-projr ∘ptd f))
+      [ (λ G → GroupHom G (C n (Ptd-Susp^ m Z))) ↓ CSusp^Wedge.iso ]
+  C-susp^-wedge-in f =
+    lemma (C-abelian n _) (C-abelian n _)
+          CSusp^Wedge.inl-over CSusp^Wedge.inr-over
+    ▹ ap2 (×-sum-hom (C-abelian n _))
+        (! (CF-comp n (ptd-susp^-fmap m ptd-projl) f))
+        (! (CF-comp n (ptd-susp^-fmap m ptd-projr) f))
+    where
+    lemma : {G H K L : Group i}
+      (aG : is-abelian G) (aL : is-abelian L) {p : G == H ×G K}
+      {φ : GroupHom H G} {ψ : GroupHom K G} {χ : GroupHom G L}
+      → φ == ×G-inl [ (λ J → GroupHom H J) ↓ p ]
+      → ψ == ×G-inr {G = H} [ (λ J → GroupHom K J) ↓ p ]
+      → χ == ×-sum-hom aL (χ ∘hom φ) (χ ∘hom ψ) [ (λ J → GroupHom J L) ↓ p ]
+    lemma {H = H} {K = K} aG aL {p = idp} {χ = χ} idp idp =
+      ap (λ α → χ ∘hom α) (×-sum-hom-η H K aG)
+      ∙ ! (∘-×-sum-hom aG aL χ (×G-inl {G = H}) (×G-inr {G = H}))

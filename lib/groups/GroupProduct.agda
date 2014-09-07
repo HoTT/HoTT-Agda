@@ -135,6 +135,21 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
       module φ = GroupHom φ
       module ψ = GroupHom ψ
 
+abstract
+  ×-sum-hom-η : ∀ {i j} (G : Group i) (H : Group j)
+    (aGH : is-abelian (G ×G H))
+    → idhom (G ×G H) == ×-sum-hom aGH (×G-inl {G = G}) (×G-inr {G = G})
+  ×-sum-hom-η G H aGH = hom= _ _ $ λ= $ λ {(g , h) →
+    ! (pair×= (Group.unitr G g) (Group.unitl H h))}
+
+  ∘-×-sum-hom : ∀ {i j k l}
+    {G : Group i} {H : Group j} {K : Group k} {L : Group l}
+    (aK : is-abelian K) (aL : is-abelian L)
+    (φ : GroupHom K L) (ψ : GroupHom G K) (χ : GroupHom H K)
+    → ×-sum-hom aL (φ ∘hom ψ) (φ ∘hom χ) == φ ∘hom (×-sum-hom aK ψ χ)
+  ∘-×-sum-hom aK aL φ ψ χ = hom= _ _ $ λ= $ λ {(g , h) →
+    ! (GroupHom.pres-comp φ (GroupHom.f ψ g) (GroupHom.f χ h))}
+
 {- define a homomorphism G₁ × G₂ → H₁ × H₂ from homomorphisms
  - G₁ → H₁ and G₂ → H₂ -}
 ×-parallel-hom : ∀ {i j k l} {G₁ : Group i} {G₂ : Group j}
