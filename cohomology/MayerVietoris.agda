@@ -263,8 +263,8 @@ module MayerVietorisBase
         =⟨ Into.glue-β (winl (snd X)) |in-ctx (λ w → ! w ∙ idp) ⟩
       idp ∎
 
-  {- Transporting [co∂ reglue] over the equivalence. Uses the same sort of
-   - cube technique as in the proof of [ptd-pash]. -}
+  {- Transporting [ext-glue] over the equivalence. Uses the same sort of
+   - cube technique as in the proof of [ptd-path]. -}
 
   private
     square-push-rt : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A} {b : A}
