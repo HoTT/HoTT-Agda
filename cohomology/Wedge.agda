@@ -6,6 +6,7 @@ open import cohomology.Exactness
 open import cohomology.FunctionOver
 open import cohomology.OrdinaryTheory
 open import cohomology.ProductRepr
+open import cohomology.WedgeCofiber
 
 {- Finite additivity is provable (and in a stronger form) without using
  - the additivity axiom. For any m ≥ 0,
@@ -19,41 +20,42 @@ open import cohomology.ProductRepr
        corresponds to Cₙ(Σᵐwinl*) × Cₙ(Σᵐwinr*).
  -}
 
-module cohomology.Wedge {i} (OT : OrdinaryTheory i) (n : ℤ) {X Y : Ptd i} where
+module cohomology.Wedge {i} (OT : OrdinaryTheory i) where
 
-open import cohomology.WedgeCofiber {X = X} {Y = Y}
+module CSusp^Wedge (n : ℤ) (X Y : Ptd i) (m : ℕ) where
 
-open OrdinaryTheory OT
-open import cohomology.ConstantFunction OT
+  open WedgeCofiber X Y
 
-module _ (m : ℕ) where
+  open OrdinaryTheory OT
+  open import cohomology.ConstantFunction OT
 
-  βl : CF-hom n (ptd-susp^-fmap m ptd-winl) ∘hom
-       CF-hom n (ptd-susp^-fmap m ptd-projl)
-       == idhom _
-  βl = ! (CF-comp n (ptd-susp^-fmap m ptd-projl)
-                     (ptd-susp^-fmap m ptd-winl))
-       ∙ ap (CF-hom n)
-            (! (ptd-susp^-fmap-∘ m ptd-projl ptd-winl)
-             ∙ ptd-susp^-fmap-idf m _)
-       ∙ CF-ident n
+  private
+    βl : CF-hom n (ptd-susp^-fmap m ptd-winl) ∘hom
+         CF-hom n (ptd-susp^-fmap m ptd-projl)
+         == idhom _
+    βl = ! (CF-comp n (ptd-susp^-fmap m ptd-projl)
+                       (ptd-susp^-fmap m ptd-winl))
+         ∙ ap (CF-hom n)
+              (! (ptd-susp^-fmap-∘ m ptd-projl ptd-winl)
+               ∙ ptd-susp^-fmap-idf m _)
+         ∙ CF-ident n
 
-  βr : CF-hom n (ptd-susp^-fmap m ptd-winr) ∘hom
-       CF-hom n (ptd-susp^-fmap m ptd-projr)
-       == idhom _
-  βr = ! (CF-comp n (ptd-susp^-fmap m ptd-projr)
-                    (ptd-susp^-fmap m ptd-winr))
-       ∙ ap (CF-hom n)
-            (! (ptd-susp^-fmap-∘ m ptd-projr ptd-winr)
-             ∙ ap (ptd-susp^-fmap m) ptd-projr-winr
-             ∙ ptd-susp^-fmap-idf m _)
-       ∙ CF-ident n
-    where
-    ptd-projr-winr : ptd-projr ∘ptd ptd-winr == ptd-idf _
-    ptd-projr-winr = ptd-λ= (λ _ → idp) $
-      ∙-unit-r _ ∙ ap-! projr wglue ∙ ap ! Projr.glue-β
+    βr : CF-hom n (ptd-susp^-fmap m ptd-winr) ∘hom
+         CF-hom n (ptd-susp^-fmap m ptd-projr)
+         == idhom _
+    βr = ! (CF-comp n (ptd-susp^-fmap m ptd-projr)
+                      (ptd-susp^-fmap m ptd-winr))
+         ∙ ap (CF-hom n)
+              (! (ptd-susp^-fmap-∘ m ptd-projr ptd-winr)
+               ∙ ap (ptd-susp^-fmap m) ptd-projr-winr
+               ∙ ptd-susp^-fmap-idf m _)
+         ∙ CF-ident n
+      where
+      ptd-projr-winr : ptd-projr ∘ptd ptd-winr == ptd-idf _
+      ptd-projr-winr = ptd-λ= (λ _ → idp) $
+        ∙-unit-r _ ∙ ap-! projr wglue ∙ ap ! Projr.glue-β
 
-  module CSusp^Wedge = ProductRepr
+  open ProductRepr
     (CF-hom n (ptd-susp^-fmap m ptd-projl))
     (CF-hom n (ptd-susp^-fmap m ptd-projr))
     (CF-hom n (ptd-susp^-fmap m ptd-winl))
@@ -70,15 +72,16 @@ module _ (m : ℕ) where
       (suspend^-cof= m ptd-winl ptd-projr
         (pair= CofWinl.ptd-path CofWinl.cfcod-over))
       (C-exact n (ptd-susp^-fmap m ptd-winl)))
+    public
 
-  C-susp^-wedge-rec : {Z : Ptd i}
+  wedge-rec-over : {Z : Ptd i}
     (winl* : fst X → fst Z) (winr* : fst Y → fst Z)
     (wglue* : winl* (snd X) == winr* (snd Y)) (pt : winl* (snd X) == snd Z)
     → CF-hom n (ptd-susp^-fmap m (WedgeRec.f winl* winr* wglue* , pt))
       == ×-hom (CF-hom n (ptd-susp^-fmap m (winl* , pt)))
                (CF-hom n (ptd-susp^-fmap m (winr* , ! wglue* ∙ pt)))
-      [ (λ K → GroupHom (C n (Ptd-Susp^ m Z)) K) ↓ CSusp^Wedge.iso ]
-  C-susp^-wedge-rec winl* winr* wglue* pt = codomain-over-iso _ _ _ _ $
+      [ (λ K → GroupHom (C n (Ptd-Susp^ m Z)) K) ↓ iso ]
+  wedge-rec-over winl* winr* wglue* pt = codomain-over-iso _ _ _ _ $
     codomain-over-equiv
       (fst (CF n (ptd-susp^-fmap m (WedgeRec.f winl* winr* wglue* , pt)))) _
     ▹ ap2 (λ f g z → (f z , g z))
@@ -96,16 +99,15 @@ module _ (m : ℕ) where
     pt-lemma = ap (λ w → w ∙ pt) $
                  ap-! rec wglue ∙ ap ! (WedgeRec.glue-β winl* winr* wglue*)
 
-  C-susp^-wedge-in : {Z : Ptd i}
+  wedge-in-over : {Z : Ptd i}
     (f : fst (Ptd-Susp^ m Z ∙→ Ptd-Susp^ m (Ptd-Wedge X Y)))
     → CF-hom n f
       == ×-sum-hom (C-abelian n _)
            (CF-hom n (ptd-susp^-fmap m ptd-projl ∘ptd f))
            (CF-hom n (ptd-susp^-fmap m ptd-projr ∘ptd f))
-      [ (λ G → GroupHom G (C n (Ptd-Susp^ m Z))) ↓ CSusp^Wedge.iso ]
-  C-susp^-wedge-in f =
-    lemma (C-abelian n _) (C-abelian n _)
-          CSusp^Wedge.inl-over CSusp^Wedge.inr-over
+      [ (λ G → GroupHom G (C n (Ptd-Susp^ m Z))) ↓ iso ]
+  wedge-in-over f =
+    lemma (C-abelian n _) (C-abelian n _) inl-over inr-over
     ▹ ap2 (×-sum-hom (C-abelian n _))
         (! (CF-comp n (ptd-susp^-fmap m ptd-projl) f))
         (! (CF-comp n (ptd-susp^-fmap m ptd-projr) f))

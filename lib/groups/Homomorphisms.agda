@@ -52,6 +52,8 @@ record GroupHom {i j} (G : Group i) (H : Group j)
 idhom : ∀ {i} (G : Group i) → GroupHom G G
 idhom G = group-hom (idf _) (λ _ _ → idp)
 
+infixr 4 _∘hom_
+
 _∘hom_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
   → GroupHom H K → GroupHom G H → GroupHom G K
 (group-hom g g-comp) ∘hom (group-hom f f-comp) =
@@ -144,6 +146,17 @@ abstract
       [ (λ a → Group.El (G a) → Group.El (H a)) ↓ p ]
     → φ == ψ [ (λ a → GroupHom (G a) (H a)) ↓ p ]
   hom=-↓ {p = idp} = hom=
+
+{- identity hom is unit -}
+
+∘hom-unit-r : ∀ {i j} {G : Group i} {H : Group j} (φ : GroupHom G H)
+  → φ ∘hom idhom G == φ
+∘hom-unit-r φ = idp
+
+∘hom-unit-l : ∀ {i j} {G : Group i} {H : Group j} (φ : GroupHom G H)
+  → idhom H ∘hom φ == φ
+∘hom-unit-l φ = hom= _ _ $ idp
+
 
 {- homomorphism with kernel zero is injective -}
 module _ {i j} {G : Group i} {H : Group j} (φ : GroupHom G H) where

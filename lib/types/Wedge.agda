@@ -77,3 +77,12 @@ add-wglue (inr y) = winr y
 ptd-add-wglue : ∀ {i j} {X : Ptd i} {Y : Ptd j}
   → fst (X ∙⊔ Y ∙→ Ptd-Wedge X Y)
 ptd-add-wglue = (add-wglue , idp)
+
+
+module Fold {i} {X : Ptd i} =
+  WedgeRec {X = X} {Y = X} (λ x → x) (λ x → x) idp
+
+fold = Fold.f
+
+ptd-fold : ∀ {i} {X : Ptd i} → fst (Ptd-Wedge X X ∙→ X)
+ptd-fold = (fold , idp)
