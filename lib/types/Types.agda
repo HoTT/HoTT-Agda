@@ -23,6 +23,7 @@ open import lib.types.IteratedSuspension public
 open import lib.types.Cofiber public
 open import lib.types.Wedge public
 open import lib.types.BigWedge public
+open import lib.types.Smash public
 open import lib.types.Join public
 open import lib.types.Torus public
 open import lib.types.Truncation public

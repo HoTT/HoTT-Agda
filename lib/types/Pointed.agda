@@ -20,6 +20,9 @@ _∙→_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
 
 infixr 0 _∙→_
 
+_×ptd_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
+(A , a₀) ×ptd (B , b₀) = (A × B , (a₀ , b₀))
+
 ptd[_,_] = ∙[_,_]
 _ptd->_ = _∙→_
 

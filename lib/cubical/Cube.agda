@@ -207,6 +207,26 @@ fill-cube-left-unique : ∀ {i} {A : Type i} {a₀₀₀ : A}
   → sq₋₋₀ == fst (fill-cube-left sq₋₋₁ sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋)
 fill-cube-left-unique idc = idp
 
+fill-cube-right-unique : ∀ {i} {A : Type i} {a₀₀₀ : A}
+  {a₀₁₀ a₁₀₀ a₁₁₀ a₀₀₁ a₀₁₁ a₁₀₁ a₁₁₁ : A}
+  {p₀₋₀ : a₀₀₀ == a₀₁₀} {p₋₀₀ : a₀₀₀ == a₁₀₀}
+  {p₋₁₀ : a₀₁₀ == a₁₁₀} {p₁₋₀ : a₁₀₀ == a₁₁₀}
+  {sq₋₋₀ : Square p₀₋₀ p₋₀₀ p₋₁₀ p₁₋₀} -- left
+
+  {p₀₋₁ : a₀₀₁ == a₀₁₁} {p₋₀₁ : a₀₀₁ == a₁₀₁}
+  {p₋₁₁ : a₀₁₁ == a₁₁₁} {p₁₋₁ : a₁₀₁ == a₁₁₁}
+  {sq₋₋₁ : Square p₀₋₁ p₋₀₁ p₋₁₁ p₁₋₁} -- right
+
+  {p₀₀₋ : a₀₀₀ == a₀₀₁} {p₀₁₋ : a₀₁₀ == a₀₁₁}
+  {p₁₀₋ : a₁₀₀ == a₁₀₁} {p₁₁₋ : a₁₁₀ == a₁₁₁}
+  {sq₀₋₋ : Square p₀₋₀ p₀₀₋ p₀₁₋ p₀₋₁} -- back
+  {sq₋₀₋ : Square p₋₀₀ p₀₀₋ p₁₀₋ p₋₀₁} -- top
+  {sq₋₁₋ : Square p₋₁₀ p₀₁₋ p₁₁₋ p₋₁₁} -- bottom
+  {sq₁₋₋ : Square p₁₋₀ p₁₀₋ p₁₁₋ p₁₋₁} -- front
+  → Cube sq₋₋₀ sq₋₋₁ sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋
+  → sq₋₋₁ == fst (fill-cube-right sq₋₋₀ sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋)
+fill-cube-right-unique idc = idp
+
 module _ {i} {A : Type i} where
 
   x-degen-cube : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
@@ -264,6 +284,21 @@ module _ {i j} {A : Type i} {B : Type j} {b₀₀ b₀₁ b₁₀ b₁₁ : A �
            (natural-square p₋₁ q) (natural-square p₁₋ q)
     → sqx == sqy [ (λ z → Square (p₀₋ z) (p₋₀ z) (p₋₁ z) (p₁₋ z)) ↓ q ]
   cube-to-↓-square {q = idp} cu = x-degen-cube-out cu
+
+module _ {i j} {A : Type i} {B : Type j} {b₀₀ b₀₁ b₁₀ b₁₁ : B}
+  {p₀₋ : (a : A) → b₀₀ == b₀₁} {p₋₀ : (a : A) → b₀₀ == b₁₀}
+  {p₋₁ : (a : A) → b₀₁ == b₁₁} {p₁₋ : (a : A) → b₁₀ == b₁₁}
+  where
+
+  cube-to-disc-square : {x y : A} {q : x == y}
+    {sqx : Square (p₀₋ x) (p₋₀ x) (p₋₁ x) (p₁₋ x)}
+    {sqy : Square (p₀₋ y) (p₋₀ y) (p₋₁ y) (p₁₋ y)}
+    → Cube sqx sqy (natural-square p₀₋ q) (natural-square p₋₀ q)
+           (natural-square p₋₁ q) (natural-square p₁₋ q)
+    → Square (square-to-disc sqx) (ap (λ z → p₀₋ z ∙ p₋₁ z) q)
+             (ap (λ z → p₋₀ z ∙ p₁₋ z) q) (square-to-disc sqy)
+  cube-to-disc-square cu =
+    ↓-='-to-square (ap↓ square-to-disc (cube-to-↓-square cu))
 
 
 ap-cube : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
