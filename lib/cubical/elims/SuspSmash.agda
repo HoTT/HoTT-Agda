@@ -10,13 +10,16 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {C : Type k}
   (f : Suspension (Smash X Y) → C) (g : Suspension (Smash X Y) → C)
   (north* : f (north _) == g (north _))
   (south* : f (south _) == g (south _))
-  (base* : Square north* (ap f (merid _ (cfbase _)))
-                  (ap g (merid _ (cfbase _))) south*)
   (cod* : (s : fst X × fst Y) → Square north* (ap f (merid _ (cfcod _ s)))
                                 (ap g (merid _ (cfcod _ s))) south*)
   where
 
   private
+    base* = transport
+      (λ κ → Square north* (ap f (merid _ κ)) (ap g (merid _ κ)) south*)
+      (! (cfglue _ (winl (snd X))))
+      (cod* (snd X , snd Y))
+
     CubeType : (w : Wedge X Y)
       → Square north* (ap f (merid _ (cfcod _ (fst (∨-in-× X Y) w))))
                (ap g (merid _ (cfcod _ (fst (∨-in-× X Y) w)))) south*

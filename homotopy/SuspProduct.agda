@@ -159,9 +159,6 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
     into-out-s = susp-smash-path-elim _ _
       wglue
       (wglue ∙ ap (winr ∘ winl) (merid _ (cfbase _)))
-      ((ap-∘ into (out ∘ winr ∘ winl) (merid _ (cfbase _))
-        ∙ ap (ap into) (OutSmash.glue-β (cfbase _)))
-       ∙v⊡ disc-to-square idp)
       (λ {(x , y) →
         (ap-∘ into (out ∘ winr ∘ winl) (merid _ (cfcod _ (x , y)))
          ∙ ap (ap into) (OutSmash.glue-β (cfcod _ (x , y)))
