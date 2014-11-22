@@ -28,18 +28,6 @@ vid-square : ∀ {i} {A : Type i} {a₀₀ a₁₀ : A} {p : a₀₀ == a₁₀}
   → Square idp p p idp
 vid-square {p = idp} = ids
 
-module _ {i j} {A : Type i} {B : Type j} where
-
-  natural-square : {f₁ f₂ : A → B} (p : ∀ a → f₁ a == f₂ a)
-    {a₁ a₂ : A} (q : a₁ == a₂)
-    → Square (p a₁) (ap f₁ q) (ap f₂ q) (p a₂)
-  natural-square p idp = hid-square
-
-  natural-square-idp : {f₁ : A → B} {a₁ a₂ : A} (q : a₁ == a₂)
-    → natural-square {f₁ = f₁} (λ _ → idp) q == vid-square
-  natural-square-idp idp = idp
-
-
 square-to-disc : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
   {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
   → Square p₀₋ p₋₀ p₋₁ p₁₋
@@ -134,11 +122,28 @@ module _ {i} {A : Type i} where
     → vert-degen-square (idp {a = p}) == vid-square
   vert-degen-square-idp {p = idp} = idp
 
+{- Flipping squares -}
+module _ {i} {A : Type i} where
 
-square-symmetry : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
-  {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
-  → Square p₀₋ p₋₀ p₋₁ p₁₋ → Square p₋₀ p₀₋ p₁₋ p₋₁
-square-symmetry ids = ids
+  square-symmetry : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+    → Square p₀₋ p₋₀ p₋₁ p₁₋ → Square p₋₀ p₀₋ p₁₋ p₋₁
+  square-symmetry ids = ids
+
+  square-sym-inv : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+    {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+    (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
+    → square-symmetry (square-symmetry sq) == sq
+  square-sym-inv ids = idp
+
+ap-square-symmetry : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
+  {a₀₀ a₀₁ a₁₀ a₁₁ : A} {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
+  {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+  (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
+  → ap-square f (square-symmetry sq) == square-symmetry (ap-square f sq)
+ap-square-symmetry f ids = idp
+
+{- Alternate induction principles -}
 
 square-left-J : ∀ {i j} {A : Type i} {a₀₀ a₀₁ : A} {p₀₋ : a₀₀ == a₀₁}
   (P : {a₁₀ a₁₁ : A} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
@@ -207,6 +212,7 @@ module _ where
     (vert-degen-square-β sq)
     (lemma (P ∘ vert-degen-square) r (vert-degen-path sq))
 
+{- Square filling -}
 module _ {i} {A : Type i} where
   fill-square-left : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
     (p₋₀ : a₀₀ == a₁₀) (p₋₁ : a₀₁ == a₁₁) (p₁₋ : a₁₀ == a₁₁)
@@ -281,6 +287,25 @@ module _  {i j} {A : Type i} {B : Type j} (g : B → A) (f : A → B) where
     → Square u (ap g (ap f p)) p v
   ↓-∘=idf-to-square {p = idp} q = horiz-degen-square q
 
+module _ {i j} {A : Type i} {B : Type j} where
+
+  natural-square : {f₁ f₂ : A → B} (p : ∀ a → f₁ a == f₂ a)
+    {a₁ a₂ : A} (q : a₁ == a₂)
+    → Square (p a₁) (ap f₁ q) (ap f₂ q) (p a₂)
+  natural-square p idp = hid-square
+
+  natural-square-idp : {f₁ : A → B} {a₁ a₂ : A} (q : a₁ == a₂)
+    → natural-square {f₁ = f₁} (λ _ → idp) q == vid-square
+  natural-square-idp idp = idp
+
+  {- Used for getting square equivalents of glue-β terms -}
+  natural-square-β : {f₁ f₂ : A → B} (p : (a : A) → f₁ a == f₂ a)
+    {x y : A} (q : x == y)
+    {sq : Square (p x) (ap f₁ q) (ap f₂ q) (p y)}
+    → apd p q == ↓-='-from-square sq
+    → natural-square p q == sq
+  natural-square-β _ idp α =
+    ! horiz-degen-square-idp ∙ ap horiz-degen-square α ∙ horiz-degen-square-β _
 
 _⊡v_ : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ a₀₂ a₁₂ : A}
   {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
