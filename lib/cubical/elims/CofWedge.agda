@@ -5,6 +5,27 @@ open import lib.cubical.elims.CubeMove
 
 module lib.cubical.elims.CofWedge where
 
+cof-wedge-path-rec : ∀ {i j k l}
+  {X : Ptd i} {Y : Ptd j} {C : Type k} {D : Type l}
+  {f : Wedge X Y → C} {d₁ d₂ : D}
+  → (p : d₁ == d₂)
+  → (q : C → d₁ == d₂)
+  → ((x : fst X) → p == q (f (winl x)))
+  → ((y : fst Y) → p == q (f (winr y)))
+  → ((κ : Cofiber f) → d₁ == d₂)
+cof-wedge-path-rec {X = X} {Y = Y} {f = f} base* cod* winl* winr* =
+  CofiberRec.f _
+    base*
+    cod*
+    (WedgeElim.f
+      winl*
+      (λ y → (winl* (snd X) ∙ ap (cod* ∘ f) wglue)
+             ∙ ! (winr* (snd Y)) ∙ winr* y)
+      (↓-cst=app-from-square $ disc-to-square $ ! $
+        ap (λ w → (winl* (snd X) ∙ ap (cod* ∘ f) wglue) ∙ w)
+           (!-inv-l (winr* (snd Y)))
+        ∙ ∙-unit-r _))
+
 cof-wedge-path-elim : ∀ {i j k l}
   {X : Ptd i} {Y : Ptd j} {C : Type k} {D : Type l}
   {f : Wedge X Y → C} (g h : Cofiber f → D)
