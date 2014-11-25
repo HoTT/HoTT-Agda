@@ -23,6 +23,12 @@ infixr 0 _∙→_
 _×ptd_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
 (A , a₀) ×ptd (B , b₀) = (A × B , (a₀ , b₀))
 
+ptd-fst : ∀ {i j} {X : Ptd i} {Y : Ptd j} → fst (X ×ptd Y ∙→ X)
+ptd-fst = (fst , idp)
+
+ptd-snd : ∀ {i j} {X : Ptd i} {Y : Ptd j} → fst (X ×ptd Y ∙→ Y)
+ptd-snd = (snd , idp)
+
 ptd[_,_] = ∙[_,_]
 _ptd->_ = _∙→_
 

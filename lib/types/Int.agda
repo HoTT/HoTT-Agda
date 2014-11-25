@@ -68,16 +68,10 @@ private
   ℤ-get-pos (pos n) = n
   ℤ-get-pos (neg n) = 0
 
-  pos-injective : (n m : ℕ) (p : pos n == pos m) → n == m
-  pos-injective n m p = ap ℤ-get-pos p
-
   ℤ-get-neg : ℤ → ℕ
   ℤ-get-neg O = 0
   ℤ-get-neg (pos n) = 0
   ℤ-get-neg (neg n) = n
-
-  neg-injective : (n m : ℕ) (p : neg n == neg m) → n == m
-  neg-injective n m p = ap ℤ-get-neg p
 
   ℤ-neg≠O≠pos-type : ℤ → Type₀
   ℤ-neg≠O≠pos-type O = Unit
@@ -90,6 +84,12 @@ private
   ℤ-neg≠pos-type (neg n) = Unit
 
 abstract
+  pos-injective : (n m : ℕ) (p : pos n == pos m) → n == m
+  pos-injective n m p = ap ℤ-get-pos p
+
+  neg-injective : (n m : ℕ) (p : neg n == neg m) → n == m
+  neg-injective n m p = ap ℤ-get-neg p
+
   ℤ-O≠pos : (n : ℕ) → O ≠ pos n
   ℤ-O≠pos n p = transport ℤ-neg≠O≠pos-type p unit
 

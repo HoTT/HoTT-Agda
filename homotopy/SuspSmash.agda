@@ -6,7 +6,7 @@ open import lib.cubical.elims.SuspSmash
 
 {- Σ(X∧Y) ≃ X * Y -}
 
-module homotopy.SuspSmash {i j} {X : Ptd i} {Y : Ptd j} where
+module homotopy.SuspSmash {i j} (X : Ptd i) (Y : Ptd j) where
 
 private
 
@@ -99,11 +99,13 @@ private
     lemma₂ {p = idp} {r = idp} {s = idp} idp idp = idp
 
 
-susp-smash-equiv-join : Suspension (Smash X Y) ≃ fst (X ∙* Y)
-susp-smash-equiv-join = equiv into out into-out out-into
+module SuspSmash where
 
-susp-smash-is-join : Suspension (Smash X Y) == fst (X ∙* Y)
-susp-smash-is-join = ua susp-smash-equiv-join
+  eq : Suspension (Smash X Y) ≃ fst (X ∙* Y)
+  eq = equiv into out into-out out-into
 
-ptd-susp-smash-is-join : Ptd-Susp (Ptd-Smash X Y) == X ∙* Y
-ptd-susp-smash-is-join = ptd-ua susp-smash-equiv-join idp
+  path : Suspension (Smash X Y) == fst (X ∙* Y)
+  path = ua eq
+
+  ptd-path : Ptd-Susp (Ptd-Smash X Y) == X ∙* Y
+  ptd-path = ptd-ua eq idp

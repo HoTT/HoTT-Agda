@@ -82,3 +82,11 @@ module _ {i} (X Y : Ptd i) where
     ∙ ptd-ua swap-equiv (! (glue _))
     ∙ join-S⁰-ptd-path (Y ∙* X)
     ∙ ap (λ A → (Suspension A , north _)) (ua swap-equiv)
+
+module _ {i} (X : Ptd i) where
+
+  ptd-join-sphere : (m : ℕ) → Ptd-Sphere {i} m ∙* X == Ptd-Susp^ (S m) X
+  ptd-join-sphere O = join-S⁰-ptd-path X
+  ptd-join-sphere (S m) = ptd-join-susp-shift (Ptd-Sphere m) X
+                          ∙ ap Ptd-Susp (ptd-join-sphere m)
+

@@ -3,6 +3,7 @@
 open import lib.Basics
 open import lib.types.Group
 open import lib.types.Bool
+open import lib.types.Nat
 open import lib.types.Pi
 open import lib.types.Sigma
 open import lib.groups.Homomorphisms
@@ -90,6 +91,9 @@ module _ {i j} {G : Group i} {H : Group j} where
 
   ×G-inr : GroupHom H (G ×G H)
   ×G-inr = ×-hom (cst-hom {H = G}) (idhom H)
+
+×G-diag : ∀ {i} {G : Group i} → GroupHom G (G ×G G)
+×G-diag = ×-hom (idhom _) (idhom _)
 
 {- when G is abelian, we can define a map H×K → G as a sum of maps
  - H → G and K → G (that is, the product behaves as a sum)         -}
@@ -187,3 +191,32 @@ module _ {i} (Pick : Lift {j = i} Bool → Group i) where
     e = is-eq _ (λ {(g , h) → λ {(lift true) → g; (lift false) → h}})
           (λ _ → idp)
           (λ _ → λ= (λ {(lift true) → idp; (lift false) → idp}))
+
+{- Commutativity of ×G -}
+×G-comm : ∀ {i j} (H : Group i) (K : Group j)
+  → H ×G K == K ×G H
+×G-comm H K = group-iso
+  (record {
+    f = λ {(h , k) → (k , h)};
+    pres-comp = λ _ _ → idp})
+  (snd (equiv _ (λ {(k , h) → (h , k)}) (λ _ → idp) (λ _ → idp)))
+
+{- Associativity of ×G -}
+×G-assoc : ∀ {i j k} (G : Group i) (H : Group j) (K : Group k)
+  → (G ×G H) ×G K == G ×G (H ×G K)
+×G-assoc G H K = group-iso
+  (record {
+    f = λ {((g , h) , k) → (g , (h , k))};
+    pres-comp = λ _ _ → idp})
+  (snd (equiv _ (λ {(g , (h , k)) → ((g , h) , k)}) (λ _ → idp) (λ _ → idp)))
+
+module _ {i} where
+
+  _^G_ : Group i → ℕ → Group i
+  H ^G O = 0G
+  H ^G (S n) = H ×G (H ^G n)
+
+  ^G-sum : (H : Group i) (m n : ℕ) → (H ^G m) ×G (H ^G n) == H ^G (m + n)
+  ^G-sum H O n = ×G-unit-l {G = H ^G n}
+  ^G-sum H (S m) n = ×G-assoc H (H ^G m) (H ^G n)
+                     ∙ ap (λ K → H ×G K) (^G-sum H m n)

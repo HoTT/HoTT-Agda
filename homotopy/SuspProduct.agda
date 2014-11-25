@@ -9,12 +9,6 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
 
   private
 
-    σloop : ∀ {i} (X : Ptd i) → fst X → north (fst X) == north (fst X)
-    σloop (_ , x₀) x = merid _ x ∙ ! (merid _ x₀)
-
-    σloop-pt : ∀ {i} {X : Ptd i} → σloop X (snd X) == idp
-    σloop-pt {X = (_ , x₀)} = !-inv-r (merid _ x₀)
-
     {- into -}
 
     into-glue : fst (X ×ptd Y) → winl (north _) == winr (winr (north _))
