@@ -306,3 +306,12 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} where
 
   join-rearrange-equiv : (A * B) * C ≃ (C * B) * A
   join-rearrange-equiv = equiv switch switch switch-inv switch-inv
+
+  join-rearrange-path : (A * B) * C == (C * B) * A
+  join-rearrange-path = ua join-rearrange-equiv
+
+module _ {i j k} (X : Ptd i) (Y : Ptd j) (Z : Ptd k) where
+
+  join-rearrange-ptd-path : (X ∙* Y) ∙* Z == (Z ∙* Y) ∙* X
+  join-rearrange-ptd-path =
+    ptd-ua join-rearrange-equiv (! (glue (left (snd Z), snd X)))
