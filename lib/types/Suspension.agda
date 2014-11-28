@@ -49,6 +49,14 @@ suspension-ptd-span X =
 Ptd-Susp : ∀ {i} → Ptd i → Ptd i
 Ptd-Susp (A , _) = ∙[ Suspension A , north A ]
 
+
+σloop : ∀ {i} (X : Ptd i) → fst X → north (fst X) == north (fst X)
+σloop (_ , x₀) x = merid _ x ∙ ! (merid _ x₀)
+
+σloop-pt : ∀ {i} {X : Ptd i} → σloop X (snd X) == idp
+σloop-pt {X = (_ , x₀)} = !-inv-r (merid _ x₀)
+
+
 module FlipSusp {i} {A : Type i} = SuspensionRec A
   (south A) (north A) (! ∘ merid A)
 
