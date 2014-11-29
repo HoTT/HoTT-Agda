@@ -51,10 +51,10 @@ private
     paths-flatten b =
       ↓-app→cst-in (λ q → ppt b _ ∙' ap (cct (g b)) (↓-pp-out q))
 
-    module FlattenCurried = W.Elim cct paths-flatten
+  module FlattenCurried = W.Elim cct paths-flatten
 
   flatten-curried : (w : W) → (P w → Wt)
-  flatten-curried = FlattenCurried.f 
+  flatten-curried = W.Elim.f cct paths-flatten
 
   flatten : Σ W P → Wt
   flatten (w , x) = flatten-curried w x

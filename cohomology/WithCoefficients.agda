@@ -118,9 +118,11 @@ abstract
 
 private
   Bool∙→Ω-iso-π₁' : ∀ {i} (X : Ptd i)
-    → →Ω-Group (Ptd-Lift {j = i} Ptd-Bool) X == π 1 X
+    → →Ω-Group (Ptd-Lift {j = i} Ptd-Bool) X == π 1 (ℕ-S≠O _) X
   Bool∙→Ω-iso-π₁' {i} X =
-    transport (λ pi → →Ω-Group (Ptd-Lift Ptd-Bool) X == pi 1 X) π-fold
+    transport
+      (λ pi → →Ω-Group (Ptd-Lift Ptd-Bool) X == pi 1 (ℕ-S≠O _) X)
+      π-fold
       (group-iso
         (record {
           f = Trunc-fmap Bool∙→-out;
@@ -141,17 +143,18 @@ private
     where
     _◯_ = Trunc-fmap2 {n = ⟨0⟩} $ GroupStructure.comp $
             →Ω-group-structure (Ptd-Lift Ptd-Bool) X
-    _□_ = Trunc-fmap2 {n = ⟨0⟩} $ GroupStructure.comp $ Ω^-group-structure 1 X
+    _□_ = Trunc-fmap2 {n = ⟨0⟩} $ GroupStructure.comp $
+            Ω^-group-structure 1 (ℕ-S≠O _) X
 
 {- Agda seems to handle "abstract" more easily when it's separated from
  - the details of the term -}
 abstract
   Bool∙→Ω-iso-π₁ : ∀ {i} (X : Ptd i)
-    → →Ω-Group (Ptd-Lift {j = i} Ptd-Bool) X == π 1 X
+    → →Ω-Group (Ptd-Lift {j = i} Ptd-Bool) X == π 1 (ℕ-S≠O _) X
   Bool∙→Ω-iso-π₁ = Bool∙→Ω-iso-π₁'
 
 Bool∙→KG0-iso-G : ∀ {i} (G : Group i) (abel : is-abelian G)
   → →Ω-Group (Ptd-Lift {j = i} Ptd-Bool) (KGnExplicit.Ptd-KG G abel 1) == G
 Bool∙→KG0-iso-G G abel =
   Bool∙→Ω-iso-π₁ (KGnExplicit.Ptd-KG G abel 1)
-  ∙ KGnExplicit.π-diag G abel 1
+  ∙ KGnExplicit.π-diag G abel 1 (ℕ-S≠O _)

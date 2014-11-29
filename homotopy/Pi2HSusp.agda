@@ -168,31 +168,31 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
       f = fst F
 
       pres-comp : (p q : Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))))
-        → f (conc^ 1 p q) == conc^ 1 (f p) (f q)
-      pres-comp = ap^-conc^ 1 H
+        → f (conc^ 1 (ℕ-S≠O _) p q) == conc^ 1 (ℕ-S≠O _) (f p) (f q)
+      pres-comp = ap^-conc^ 1 (ℕ-S≠O _) H
 
       ie : is-equiv f
       ie = is-equiv-ap^ 1 H (snd $ ((unTrunc-equiv A gA)⁻¹ ∘e main-lemma-eqv))
 
   abstract
-    main-lemma-iso : ⦃ p1 : 1 ≠ 0 ⦄ →
-         Ω^-Group 1 ⦃ p1 ⦄ (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))) Trunc-level
-      == Ω^-Group 1 ⦃ p1 ⦄ (Ptd-Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
-    main-lemma-iso = group-iso
+    main-lemma-iso : (t1 : 1 ≠ 0) →
+         Ω^-Group 1 t1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))) Trunc-level
+      == Ω^-Group 1 t1 (Ptd-Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
+    main-lemma-iso _ = group-iso
       (record {f = f; pres-comp = pres-comp})
       ie
       where open Iso
 
   abstract
-    π₂-Suspension : ⦃ p1 : 1 ≠ 0 ⦄ → ⦃ p2 : 2 ≠ 0 ⦄
-      → π 2 ⦃ p2 ⦄ (Ptd-Susp (A , e)) == π 1 ⦃ p1 ⦄ (A , e)
-    π₂-Suspension ⦃ p1 ⦄ ⦃ p2 ⦄ =
-      π 2 ⦃ p2 ⦄ (Ptd-Susp (A , e))
-        =⟨ π-inner-iso 1 ⦃ p1 ⦄ ⦃ p2 ⦄ (Ptd-Susp (A , e)) ⟩
-      π 1 ⦃ p1 ⦄ (Ptd-Ω (Ptd-Susp (A , e)))
-        =⟨ ! (π-Trunc-shift-iso 1 ⦃ p1 ⦄ (Ptd-Ω (Ptd-Susp (A , e)))) ⟩
-      Ω^-Group 1 ⦃ p1 ⦄ (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))) Trunc-level
-        =⟨ main-lemma-iso ⦃ p1 ⦄ ⟩
-      Ω^-Group 1 ⦃ p1 ⦄ (Ptd-Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
-        =⟨ π-Trunc-shift-iso 1 ⦃ p1 ⦄ (A , e) ⟩
-      π 1 ⦃ p1 ⦄ (A , e) ∎
+    π₂-Suspension : (t1 : 1 ≠ 0) (t2 : 2 ≠ 0)
+      → π 2 t2 (Ptd-Susp (A , e)) == π 1 t1 (A , e)
+    π₂-Suspension t1 t2 =
+      π 2 t2 (Ptd-Susp (A , e))
+        =⟨ π-inner-iso 1 t1 t2 (Ptd-Susp (A , e)) ⟩
+      π 1 t1 (Ptd-Ω (Ptd-Susp (A , e)))
+        =⟨ ! (π-Trunc-shift-iso 1 t1 (Ptd-Ω (Ptd-Susp (A , e)))) ⟩
+      Ω^-Group 1 t1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))) Trunc-level
+        =⟨ main-lemma-iso t1 ⟩
+      Ω^-Group 1 t1 (Ptd-Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
+        =⟨ π-Trunc-shift-iso 1 t1 (A , e) ⟩
+      π 1 t1 (A , e) ∎

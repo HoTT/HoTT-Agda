@@ -274,43 +274,43 @@ Commutation of [ap↓ (ap h)] and [↓-swap!]. This is "just" J, but it’s not 
 easy as it seems.
 -}
 
-module Ap↓-swap! {i j k ℓ} {A : Type i} {B : Type j} {C : Type k}
-  {D : Type ℓ} (h : C → D) (f : A → C) (g : B → C)
-  {a a' : A} {p : a == a'} {b b' : B} {q : b == b'}
-  (r : f a == g b') (s : f a' == g b)
-  (t : r == s ∙ ap g q  [ (λ x → f x == g b') ↓ p ])
-  where
+-- module Ap↓-swap! {i j k ℓ} {A : Type i} {B : Type j} {C : Type k}
+--   {D : Type ℓ} (h : C → D) (f : A → C) (g : B → C)
+--   {a a' : A} {p : a == a'} {b b' : B} {q : b == b'}
+--   (r : f a == g b') (s : f a' == g b)
+--   (t : r == s ∙ ap g q  [ (λ x → f x == g b') ↓ p ])
+--   where
 
-  lhs : ap h (ap f p ∙' s) == ap (h ∘ f) p ∙' ap h s
-  lhs = ap-∙' h (ap f p) s ∙ (ap (λ u → u ∙' ap h s) (∘-ap h f p))
+--   lhs : ap h (ap f p ∙' s) == ap (h ∘ f) p ∙' ap h s
+--   lhs = ap-∙' h (ap f p) s ∙ (ap (λ u → u ∙' ap h s) (∘-ap h f p))
 
-  rhs : ap h (s ∙ ap g q) == ap h s ∙ ap (h ∘ g) q
-  rhs = ap-∙ h s (ap g q) ∙ (ap (λ u → ap h s ∙ u) (∘-ap h g q))
+--   rhs : ap h (s ∙ ap g q) == ap h s ∙ ap (h ∘ g) q
+--   rhs = ap-∙ h s (ap g q) ∙ (ap (λ u → ap h s ∙ u) (∘-ap h g q))
 
-  β : ap↓ (ap h) (↓-swap! f g r s t) ==
-              lhs ◃ ↓-swap! (h ∘ f) (h ∘ g) (ap h r) (ap h s) (ap↓ (ap h) t ▹ rhs)
-  β with a | a' | p | b | b' | q | r | s | t
-  β | a | .a | idp | b | .b | idp | r | s | t = coh r s t  where
+--   β : ap↓ (ap h) (↓-swap! f g r s t) ==
+--               lhs ◃ ↓-swap! (h ∘ f) (h ∘ g) (ap h r) (ap h s) (ap↓ (ap h) t ▹ rhs)
+--   β with a | a' | p | b | b' | q | r | s | t
+--   β | a | .a | idp | b | .b | idp | r | s | t = coh r s t  where
 
-    T : {x x' : C} (r s : x == x') (t : r == s ∙ idp) → Type _
-    T r s t =
-      ap (ap h) (∙'-unit-l s ∙ ! (∙-unit-r s) ∙ ! t) ==
-      (ap-∙' h idp s ∙ idp)
-      ∙
-      (∙'-unit-l (ap h s) ∙
-      ! (∙-unit-r (ap h s)) ∙
-      !
-      (ap (ap h) t ∙'
-        (ap-∙ h s idp ∙ idp)))
+--     T : {x x' : C} (r s : x == x') (t : r == s ∙ idp) → Type _
+--     T r s t =
+--       ap (ap h) (∙'-unit-l s ∙ ! (∙-unit-r s) ∙ ! t) ==
+--       (ap-∙' h idp s ∙ idp)
+--       ∙
+--       (∙'-unit-l (ap h s) ∙
+--       ! (∙-unit-r (ap h s)) ∙
+--       !
+--       (ap (ap h) t ∙'
+--         (ap-∙ h s idp ∙ idp)))
 
-    coh' : {x x' : C} {r s : x == x'} (t : r == s) → T r s (t ∙ ! (∙-unit-r s))
-    coh' {r = idp} {s = .idp} idp = idp
+--     coh' : {x x' : C} {r s : x == x'} (t : r == s) → T r s (t ∙ ! (∙-unit-r s))
+--     coh' {r = idp} {s = .idp} idp = idp
 
-    coh : {x x' : C} (r s : x == x') (t : r == s ∙ idp) → T r s t
-    coh r s t = transport (λ t → T r s t) (coh2 t (∙-unit-r s)) (coh' (t ∙ ∙-unit-r s))  where
+--     coh : {x x' : C} (r s : x == x') (t : r == s ∙ idp) → T r s t
+--     coh r s t = transport (λ t → T r s t) (coh2 t (∙-unit-r s)) (coh' (t ∙ ∙-unit-r s))  where
 
-      coh2 : ∀ {i} {A : Type i} {x y z : A} (p : x == y) (q : y == z) → (p ∙ q) ∙ ! q == p
-      coh2 idp idp = idp
+--       coh2 : ∀ {i} {A : Type i} {x y z : A} (p : x == y) (q : y == z) → (p ∙ q) ∙ ! q == p
+--       coh2 idp idp = idp
 
 
 -- module _ {i j k} {A : Type i} {B B' : Type j} {C : Type k} (f : A → C) (g' : B' → B) (g : B → C) where

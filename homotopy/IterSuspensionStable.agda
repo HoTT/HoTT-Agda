@@ -5,11 +5,11 @@ open import homotopy.Freudenthal
 
 module homotopy.IterSuspensionStable where
 
-{- π (S k) (Ptd-Susp^ (S n) X) == π k (Ptd-Susp^ n X), where k = S k' 
+{- π (S k) (Ptd-Susp^ (S n) X) == π k (Ptd-Susp^ n X), where k = S k'
    Susp^Stable below uses instance arguments instead of proving for S k' -}
 module Susp^StableSucc {i} (X : Ptd i) (cX : is-connected ⟨0⟩ (fst X))
   (n : ℕ) (k' : ℕ) (kle : S k' ≤ n *2) where
-  
+
   {- need k,n ≥ 1 -}
   k : ℕ
   k = S k'
@@ -20,7 +20,7 @@ module Susp^StableSucc {i} (X : Ptd i) (cX : is-connected ⟨0⟩ (fst X))
     kle' = ≤T-trans (⟨⟩-monotone-≤ kle) (inl (lemma n))
       where lemma : (n : ℕ) → ⟨ n *2 ⟩ == S ((n -2) +2+ S (n -2))
             lemma O = idp
-            lemma (S n') = ap S (ap S (lemma n') 
+            lemma (S n') = ap S (ap S (lemma n')
                                  ∙ ! (+2+-βr (S n' -2) (S n' -2)))
 
 
@@ -32,42 +32,42 @@ module Susp^StableSucc {i} (X : Ptd i) (cX : is-connected ⟨0⟩ (fst X))
     nlemma₂ (S k) = ap S (nlemma₂ k)
 
   private
-    module F = FreudenthalIso 
-      (n -2) k kle' (Ptd-Susp^ n X)
+    module F = FreudenthalIso
+      (n -2) k (ℕ-S≠O _) kle' (Ptd-Susp^ n X)
       (transport (λ t → is-connected t (fst (Ptd-Susp^ n X)))
                  (nlemma₁ n) (Ptd-Susp^-conn n cX))
 
-  stable : ⦃ pk : k ≠ 0 ⦄ ⦃ psk : S k ≠ 0 ⦄
-    → π (S k) ⦃ psk ⦄ (Ptd-Susp^ (S n) X) == π k ⦃ pk ⦄ (Ptd-Susp^ n X)
-  stable ⦃ pk ⦄ ⦃ psk ⦄ = 
-    π (S k) ⦃ psk ⦄ (Ptd-Susp^ (S n) X)
-      =⟨ π-inner-iso k ⦃ pk ⦄ ⦃ psk ⦄ (Ptd-Susp^ (S n) X) ⟩
-    π k ⦃ pk ⦄ (Ptd-Ω (Ptd-Susp^ (S n) X)) 
-      =⟨ ! (π-Trunc-shift-iso k ⦃ pk ⦄ (Ptd-Ω (Ptd-Susp^ (S n) X))) ⟩
-    Ω^-Group k ⦃ pk ⦄ (Ptd-Trunc ⟨ k ⟩ (Ptd-Ω (Ptd-Susp^ (S n) X))) Trunc-level
+  stable : (tk : k ≠ 0) (tsk : S k ≠ 0)
+    → π (S k) tsk (Ptd-Susp^ (S n) X) == π k tk (Ptd-Susp^ n X)
+  stable tk tsk =
+    π (S k) tsk (Ptd-Susp^ (S n) X)
+      =⟨ π-inner-iso k tk tsk (Ptd-Susp^ (S n) X) ⟩
+    π k tk (Ptd-Ω (Ptd-Susp^ (S n) X))
+      =⟨ ! (π-Trunc-shift-iso k tk (Ptd-Ω (Ptd-Susp^ (S n) X))) ⟩
+    Ω^-Group k tk (Ptd-Trunc ⟨ k ⟩ (Ptd-Ω (Ptd-Susp^ (S n) X))) Trunc-level
       =⟨ ! F.iso ⟩
-    Ω^-Group k ⦃ pk ⦄ (Ptd-Trunc ⟨ k ⟩ (Ptd-Susp^ n X)) Trunc-level
-      =⟨ π-Trunc-shift-iso k ⦃ pk ⦄ (Ptd-Susp^ n X) ⟩
-    π k ⦃ pk ⦄ (Ptd-Susp^ n X) ∎
+    Ω^-Group k tk (Ptd-Trunc ⟨ k ⟩ (Ptd-Susp^ n X)) Trunc-level
+      =⟨ π-Trunc-shift-iso k tk (Ptd-Susp^ n X) ⟩
+    π k tk (Ptd-Susp^ n X) ∎
 
 {- π (S k) (Ptd-Susp^ (S n) X) == π k (Ptd-Susp^ n X), where k > 0 -}
 module Susp^Stable {i} (X : Ptd i) (cX : is-connected ⟨0⟩ (fst X))
-  (n : ℕ) (k : ℕ) ⦃ pk : k ≠ 0 ⦄ ⦃ psk : S k ≠ 0 ⦄ (kle : k ≤ n *2) where
+  (n : ℕ) (k : ℕ) (tk : k ≠ 0) (tsk : S k ≠ 0) (kle : k ≤ n *2) where
 
   private
-    lemma : ∀ {i} (C : (n : ℕ) ⦃ _ : n ≠ 0 ⦄ ⦃ _ : S n ≠ 0 ⦄ → Type i) 
-      → ((n : ℕ) ⦃ psn : S n ≠ 0 ⦄ ⦃ pssn : S (S n) ≠ 0 ⦄ 
-            → C (S n) ⦃ psn ⦄ ⦃ pssn ⦄)
-      → ((n : ℕ) ⦃ pn : n ≠ 0 ⦄ ⦃ psn : S n ≠ 0 ⦄
-            → C n ⦃ pn ⦄ ⦃ psn ⦄)
-    lemma C f O ⦃ posi ⦄ ⦃ _ ⦄ = ⊥-rec (posi idp)
-    lemma C f (S n) ⦃ psn ⦄ ⦃ pssn ⦄ = f n ⦃ psn ⦄ ⦃ pssn ⦄
+    lemma : ∀ {i} (C : (n : ℕ) → n ≠ 0 → S n ≠ 0 → Type i)
+      → ((n : ℕ) (tsn : S n ≠ 0) (tssn : S (S n) ≠ 0)
+            → C (S n) tsn tssn)
+      → ((n : ℕ) (tn : n ≠ 0) (tsn : S n ≠ 0)
+            → C n tn tsn)
+    lemma C f O tn _ = ⊥-rec (tn idp)
+    lemma C f (S n) tsn tssn = f n tsn tssn
 
   abstract
-    stable : π (S k) ⦃ psk ⦄ (Ptd-Susp^ (S n) X) == π k ⦃ pk ⦄ (Ptd-Susp^ n X)
+    stable : π (S k) tsk (Ptd-Susp^ (S n) X) == π k tk (Ptd-Susp^ n X)
     stable = lemma
-      (λ r → λ ⦃ pr ⦄ → λ ⦃ psr ⦄ → (r ≤ n *2) → 
-         π (S r) ⦃ psr ⦄ (Ptd-Susp^ (S n) X) == π r ⦃ pr ⦄ (Ptd-Susp^ n X))
-      (λ r' → λ ⦃ psr' ⦄ → λ ⦃ pssr' ⦄ → λ rle → 
-        Susp^StableSucc.stable X cX n r' rle ⦃ psr' ⦄ ⦃ pssr' ⦄)
-      k ⦃ pk ⦄ ⦃ psk ⦄ kle
+      (λ r tr tsr → (r ≤ n *2) →
+         π (S r) tsr (Ptd-Susp^ (S n) X) == π r tr (Ptd-Susp^ n X))
+      (λ r' tsr' tssr' → λ rle →
+        Susp^StableSucc.stable X cX n r' rle tsr' tssr')
+      k tk tsk kle
