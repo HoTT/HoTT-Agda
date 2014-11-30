@@ -40,16 +40,16 @@ private
 
   diff = Diff.f
 
-  ptd-diff : fst (Ptd-Susp X ∙→ Ptd-Susp (Ptd-Wedge X X))
-  ptd-diff = (diff , idp)
+  ⊙diff : fst (⊙Susp X ⊙→ ⊙Susp (⊙Wedge X X))
+  ⊙diff = (diff , idp)
 
   module HL = HexagonLemma
-    (CF-hom n (ptd-susp-fmap ptd-fold))
-    (CF-hom n ptd-diff)
+    (CF-hom n (⊙susp-fmap ⊙fold))
+    (CF-hom n ⊙diff)
     (app= $ ap GroupHom.f $
-      ! (CF-comp n (ptd-susp-fmap ptd-fold) ptd-diff)
+      ! (CF-comp n (⊙susp-fmap ⊙fold) ⊙diff)
       ∙ ap (CF-hom n)
-           (ptd-λ= (Suspension-elim _ idp idp
+           (⊙λ= (Suspension-elim _ idp idp
                      (λ x → ↓-app=cst-from-square $ vert-degen-square $
                        ap-∘ (susp-fmap fold) diff (merid _ x)
                        ∙ ap (ap (susp-fmap fold)) (Diff.glue-β x)
@@ -62,11 +62,11 @@ private
                    idp)
       ∙ CF-cst n)
 
-CF-flip : CF-hom n (ptd-flip-susp X) == inv-hom _ (C-abelian n (Ptd-Susp X))
+CF-flip : CF-hom n (⊙flip-susp X) == inv-hom _ (C-abelian n (⊙Susp X))
 CF-flip =
   ! C-right-reduce
   ∙ (hom= _ _ $ λ= $ ! ∘ HL.inv₁)
-  ∙ ap (λ φ → inv-hom _ (C-abelian n (Ptd-Susp X)) ∘hom φ) C-left-reduce
+  ∙ ap (λ φ → inv-hom _ (C-abelian n (⊙Susp X)) ∘hom φ) C-left-reduce
   where
   {- Lemmas are all just reducing compositions -}
 
@@ -83,11 +83,11 @@ CF-flip =
   left-β = β (fold {X = X}) winl projl
   right-β = β (fold {X = X}) winr projr
 
-  left-reduce : ((ptd-susp-fmap {Y = X} ptd-fold
-                 ∘ptd ptd-susp-fmap ptd-winl)
-                 ∘ptd ptd-susp-fmap ptd-projl) ∘ptd ptd-diff
-                == ptd-idf (Ptd-Susp X)
-  left-reduce = ptd-λ=
+  left-reduce : ((⊙susp-fmap {Y = X} ⊙fold
+                 ⊙∘ ⊙susp-fmap ⊙winl)
+                 ⊙∘ ⊙susp-fmap ⊙projl) ⊙∘ ⊙diff
+                == ⊙idf (⊙Susp X)
+  left-reduce = ⊙λ=
     (Suspension-elim (fst X) idp (merid _ (snd X))
       (λ x → ↓-='-from-square $
         (ap-∘ (susp-fmap fold ∘ susp-fmap winl ∘ susp-fmap projl)
@@ -104,11 +104,11 @@ CF-flip =
         ⊡v∙ (∙-unit-r _ ∙ ! (ap-idf (merid _ x)))))
     idp
 
-  right-reduce : ((ptd-susp-fmap {Y = X} ptd-fold
-                 ∘ptd ptd-susp-fmap ptd-winr)
-                 ∘ptd ptd-susp-fmap ptd-projr) ∘ptd ptd-diff
-                == ptd-flip-susp X
-  right-reduce = ptd-λ=
+  right-reduce : ((⊙susp-fmap {Y = X} ⊙fold
+                 ⊙∘ ⊙susp-fmap ⊙winr)
+                 ⊙∘ ⊙susp-fmap ⊙projr) ⊙∘ ⊙diff
+                == ⊙flip-susp X
+  right-reduce = ⊙λ=
     (Suspension-elim (fst X) (merid _ (snd X)) idp
       (λ x → ↓-='-from-square $
         (ap-∘ (susp-fmap fold ∘ susp-fmap winr ∘ susp-fmap projr)
@@ -125,19 +125,19 @@ CF-flip =
         ⊡v∙ ! (FlipSusp.glue-β x)))
     (! (!-inv-r (merid _ (snd X))))
 
-  C-β : {Y Z U V W : Ptd i} (k : fst (V ∙→ W))
-    (h : fst (U ∙→ V)) (g : fst (Z ∙→ U)) (f : fst (Y ∙→ Z))
+  C-β : {Y Z U V W : Ptd i} (k : fst (V ⊙→ W))
+    (h : fst (U ⊙→ V)) (g : fst (Z ⊙→ U)) (f : fst (Y ⊙→ Z))
     → CF-hom n f ∘hom CF-hom n g ∘hom CF-hom n h ∘hom CF-hom n k
-      == CF-hom n (((k ∘ptd h) ∘ptd g) ∘ptd f)
+      == CF-hom n (((k ⊙∘ h) ⊙∘ g) ⊙∘ f)
   C-β k h g f =
     ap (λ w → CF-hom n f ∘hom CF-hom n g ∘hom w) (! (CF-comp n k h))
-    ∙ ap (λ w → CF-hom n f ∘hom w) (! (CF-comp n (k ∘ptd h) g))
-    ∙ ! (CF-comp n ((k ∘ptd h) ∘ptd g) f)
+    ∙ ap (λ w → CF-hom n f ∘hom w) (! (CF-comp n (k ⊙∘ h) g))
+    ∙ ! (CF-comp n ((k ⊙∘ h) ⊙∘ g) f)
 
-  C-left-reduce = C-β (ptd-susp-fmap ptd-fold) (ptd-susp-fmap ptd-winl)
-                      (ptd-susp-fmap ptd-projl) ptd-diff
+  C-left-reduce = C-β (⊙susp-fmap ⊙fold) (⊙susp-fmap ⊙winl)
+                      (⊙susp-fmap ⊙projl) ⊙diff
                   ∙ ap (CF-hom n) left-reduce ∙ CF-ident n
 
-  C-right-reduce = C-β (ptd-susp-fmap ptd-fold) (ptd-susp-fmap ptd-winr)
-                       (ptd-susp-fmap ptd-projr) ptd-diff
+  C-right-reduce = C-β (⊙susp-fmap ⊙fold) (⊙susp-fmap ⊙winr)
+                       (⊙susp-fmap ⊙projr) ⊙diff
                    ∙ ap (CF-hom n) right-reduce

@@ -6,7 +6,7 @@ open import homotopy.KGn
 module cohomology.WithCoefficients where
 
 →Ω-group-structure : ∀ {i j} (X : Ptd i) (Y : Ptd j)
-  → GroupStructure (fst (X ∙→ Ptd-Ω Y))
+  → GroupStructure (fst (X ⊙→ ⊙Ω Y))
 →Ω-group-structure X Y = record {
   ident = ((λ _ → idp) , idp);
   inv = λ F → ((! ∘ fst F) , ap ! (snd F));
@@ -84,21 +84,21 @@ module cohomology.WithCoefficients where
 
 
 {- Some lemmas to be used to calculate cohomology of S⁰ -}
-Bool∙→-out : ∀ {i} {X : Ptd i}
-  → fst (Ptd-Lift {j = i} Ptd-Bool ∙→ X) → fst X
-Bool∙→-out (h , _) = h (lift false)
+Bool⊙→-out : ∀ {i} {X : Ptd i}
+  → fst (⊙Lift {j = i} ⊙Bool ⊙→ X) → fst X
+Bool⊙→-out (h , _) = h (lift false)
 
-Bool∙→-equiv : ∀ {i} (X : Ptd i)
-  → fst (Ptd-Lift {j = i} Ptd-Bool ∙→ X) ≃ fst X
-Bool∙→-equiv {i} X = equiv Bool∙→-out g f-g g-f
+Bool⊙→-equiv : ∀ {i} (X : Ptd i)
+  → fst (⊙Lift {j = i} ⊙Bool ⊙→ X) ≃ fst X
+Bool⊙→-equiv {i} X = equiv Bool⊙→-out g f-g g-f
   where
-  g : fst X → fst (Ptd-Lift {j = i} Ptd-Bool ∙→ X)
+  g : fst X → fst (⊙Lift {j = i} ⊙Bool ⊙→ X)
   g x = ((λ {(lift b) → if b then snd X else x}) , idp)
 
-  f-g : ∀ x → Bool∙→-out (g x) == x
+  f-g : ∀ x → Bool⊙→-out (g x) == x
   f-g x = idp
 
-  g-f : ∀ H → g (Bool∙→-out H) == H
+  g-f : ∀ H → g (Bool⊙→-out H) == H
   g-f (h , hpt) = pair=
     (λ= lemma)
     (↓-app=cst-in $
@@ -112,49 +112,49 @@ Bool∙→-equiv {i} X = equiv Bool∙→-out g f-g g-f
           lemma (lift false) = idp
 
 abstract
-  Bool∙→-path : ∀ {i} (X : Ptd i)
-    → fst (Ptd-Lift {j = i} Ptd-Bool ∙→ X) == fst X
-  Bool∙→-path X = ua (Bool∙→-equiv X)
+  Bool⊙→-path : ∀ {i} (X : Ptd i)
+    → fst (⊙Lift {j = i} ⊙Bool ⊙→ X) == fst X
+  Bool⊙→-path X = ua (Bool⊙→-equiv X)
 
 private
-  Bool∙→Ω-iso-π₁' : ∀ {i} (X : Ptd i)
-    → →Ω-Group (Ptd-Lift {j = i} Ptd-Bool) X == π 1 (ℕ-S≠O _) X
-  Bool∙→Ω-iso-π₁' {i} X =
+  Bool⊙→Ω-iso-π₁' : ∀ {i} (X : Ptd i)
+    → →Ω-Group (⊙Lift {j = i} ⊙Bool) X == π 1 (ℕ-S≠O _) X
+  Bool⊙→Ω-iso-π₁' {i} X =
     transport
-      (λ pi → →Ω-Group (Ptd-Lift Ptd-Bool) X == pi 1 (ℕ-S≠O _) X)
+      (λ pi → →Ω-Group (⊙Lift ⊙Bool) X == pi 1 (ℕ-S≠O _) X)
       π-fold
       (group-iso
         (record {
-          f = Trunc-fmap Bool∙→-out;
+          f = Trunc-fmap Bool⊙→-out;
           pres-comp = λ tg₁ tg₂ →
             Trunc-elim
-              {P = λ tg₁ → Trunc-fmap Bool∙→-out (tg₁ ◯ tg₂)
-                   == (Trunc-fmap Bool∙→-out tg₁) □ (Trunc-fmap Bool∙→-out tg₂)}
+              {P = λ tg₁ → Trunc-fmap Bool⊙→-out (tg₁ ◯ tg₂)
+                   == (Trunc-fmap Bool⊙→-out tg₁) □ (Trunc-fmap Bool⊙→-out tg₂)}
               (λ _ → =-preserves-level _ Trunc-level)
               (λ g₁ →
                 Trunc-elim
-                  {P = λ tg₂ → Trunc-fmap Bool∙→-out ([ g₁ ] ◯ tg₂)
-                       == [ Bool∙→-out g₁ ] □ (Trunc-fmap Bool∙→-out tg₂)}
+                  {P = λ tg₂ → Trunc-fmap Bool⊙→-out ([ g₁ ] ◯ tg₂)
+                       == [ Bool⊙→-out g₁ ] □ (Trunc-fmap Bool⊙→-out tg₂)}
                   (λ _ → =-preserves-level _ Trunc-level)
                   (λ g₂ → idp)
                   tg₂)
               tg₁})
-        (is-equiv-Trunc ⟨0⟩ _ (snd (Bool∙→-equiv (Ptd-Ω X)))))
+        (is-equiv-Trunc ⟨0⟩ _ (snd (Bool⊙→-equiv (⊙Ω X)))))
     where
     _◯_ = Trunc-fmap2 {n = ⟨0⟩} $ GroupStructure.comp $
-            →Ω-group-structure (Ptd-Lift Ptd-Bool) X
+            →Ω-group-structure (⊙Lift ⊙Bool) X
     _□_ = Trunc-fmap2 {n = ⟨0⟩} $ GroupStructure.comp $
             Ω^-group-structure 1 (ℕ-S≠O _) X
 
 {- Agda seems to handle "abstract" more easily when it's separated from
  - the details of the term -}
 abstract
-  Bool∙→Ω-iso-π₁ : ∀ {i} (X : Ptd i)
-    → →Ω-Group (Ptd-Lift {j = i} Ptd-Bool) X == π 1 (ℕ-S≠O _) X
-  Bool∙→Ω-iso-π₁ = Bool∙→Ω-iso-π₁'
+  Bool⊙→Ω-iso-π₁ : ∀ {i} (X : Ptd i)
+    → →Ω-Group (⊙Lift {j = i} ⊙Bool) X == π 1 (ℕ-S≠O _) X
+  Bool⊙→Ω-iso-π₁ = Bool⊙→Ω-iso-π₁'
 
-Bool∙→KG0-iso-G : ∀ {i} (G : Group i) (abel : is-abelian G)
-  → →Ω-Group (Ptd-Lift {j = i} Ptd-Bool) (KGnExplicit.Ptd-KG G abel 1) == G
-Bool∙→KG0-iso-G G abel =
-  Bool∙→Ω-iso-π₁ (KGnExplicit.Ptd-KG G abel 1)
+Bool⊙→KG0-iso-G : ∀ {i} (G : Group i) (abel : is-abelian G)
+  → →Ω-Group (⊙Lift {j = i} ⊙Bool) (KGnExplicit.⊙KG G abel 1) == G
+Bool⊙→KG0-iso-G G abel =
+  Bool⊙→Ω-iso-π₁ (KGnExplicit.⊙KG G abel 1)
   ∙ KGnExplicit.π-diag G abel 1 (ℕ-S≠O _)

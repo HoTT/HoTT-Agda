@@ -121,39 +121,39 @@ module TwoPushoutsEquiv {i j k l} {A : Type i} {B : Type j} {C : Type k}
 --     X --> K --> L
 --
 module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
-  (f : fst (Y ∙→ X)) (g : fst (Y ∙→ Z)) (h : fst (Z ∙→ W)) where
+  (f : fst (Y ⊙→ X)) (g : fst (Y ⊙→ Z)) (h : fst (Z ⊙→ W)) where
 
   private
-    ps₁ = ptd-span X Z Y f g
-    ps₂ = ptd-span (Ptd-Pushout ps₁) W Z (ptd-right ps₁) h
-    ps = ptd-span X W Y f (h ∘ptd g)
+    ps₁ = ⊙span X Z Y f g
+    ps₂ = ⊙span (⊙Pushout ps₁) W Z (⊙right ps₁) h
+    ps = ⊙span X W Y f (h ⊙∘ g)
 
   open TwoPushoutsEquiv (fst f) (fst g) (fst h) public
 
   two-pushouts-ptd :
-    Ptd-Lift {j = lmax l (lmax k (lmax j i))} (Ptd-Pushout ps)
-    == Ptd-Pushout ps₂
-  two-pushouts-ptd = ptd-ua (two-pushouts-equiv ∘e lift-equiv) idp
+    ⊙Lift {j = lmax l (lmax k (lmax j i))} (⊙Pushout ps)
+    == ⊙Pushout ps₂
+  two-pushouts-ptd = ⊙ua (two-pushouts-equiv ∘e lift-equiv) idp
 
-  two-pushouts-ptd-left :
-    ptd-lift ∘ptd ptd-left ps == ptd-left ps₂ ∘ptd ptd-left ps₁
-    [ (λ V → fst (X ∙→ V)) ↓ two-pushouts-ptd ]
-  two-pushouts-ptd-left = codomain-over-ptd-equiv _ _ _
+  two-pushouts-⊙left :
+    ⊙lift ⊙∘ ⊙left ps == ⊙left ps₂ ⊙∘ ⊙left ps₁
+    [ (λ V → fst (X ⊙→ V)) ↓ two-pushouts-ptd ]
+  two-pushouts-⊙left = codomain-over-⊙equiv _ _ _
 
-  two-pushouts-ptd-right :
-    ptd-lift ∘ptd ptd-right ps == ptd-right ps₂
-    [ (λ V → fst (W ∙→ V)) ↓ two-pushouts-ptd ]
-  two-pushouts-ptd-right =
-    codomain-over-ptd-equiv _ _ _ ▹ pair= idp (lemma f g h)
+  two-pushouts-⊙right :
+    ⊙lift ⊙∘ ⊙right ps == ⊙right ps₂
+    [ (λ V → fst (W ⊙→ V)) ↓ two-pushouts-ptd ]
+  two-pushouts-⊙right =
+    codomain-over-⊙equiv _ _ _ ▹ pair= idp (lemma f g h)
     where
     lemma : {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
-      (f : fst (Y ∙→ X)) (g : fst (Y ∙→ Z)) (h : fst (Z ∙→ W))
+      (f : fst (Y ⊙→ X)) (g : fst (Y ⊙→ Z)) (h : fst (Z ⊙→ W))
       → ap (TwoPushoutsEquiv.into (fst f) (fst g) (fst h)
                ∘ lower {j = lmax l (lmax k (lmax j i))})
-              (snd (ptd-lift ∘ptd ptd-right (ptd-span X W Y f (h ∘ptd g))))
+              (snd (⊙lift ⊙∘ ⊙right (⊙span X W Y f (h ⊙∘ g))))
         ∙ idp
         ==  ap right (! (snd h)) ∙ ! (glue (snd Z))
-            ∙' ap left (snd (ptd-right (ptd-span X Z Y f g)))
+            ∙' ap left (snd (⊙right (⊙span X Z Y f g)))
     lemma {Y = Y} (f , idp) (g , idp) (h , idp) =
       ap (2P.into ∘ lower) (ap lift (! (glue (snd Y))) ∙ idp) ∙ idp
         =⟨ ∙-unit-r _ ⟩
@@ -175,15 +175,15 @@ module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
       where
       module 2P = TwoPushoutsEquiv f g h
 
-  two-pushouts-ptd-inner : ptd-lift ∘ptd (Inner.f , idp) == ptd-left ps₂
-    [ (λ V → fst (Ptd-Pushout ps₁ ∙→ V)) ↓ two-pushouts-ptd ]
-  two-pushouts-ptd-inner =
-    codomain-over-ptd-equiv _ _ _ ▹ ptd-λ= into-inner idp
+  two-pushouts-⊙inner : ⊙lift ⊙∘ (Inner.f , idp) == ⊙left ps₂
+    [ (λ V → fst (⊙Pushout ps₁ ⊙→ V)) ↓ two-pushouts-ptd ]
+  two-pushouts-⊙inner =
+    codomain-over-⊙equiv _ _ _ ▹ ⊙λ= into-inner idp
 
 open TwoPushoutsEquiv
   using (two-pushouts-equiv; two-pushouts; two-pushouts-left;
          two-pushouts-right; two-pushouts-inner)
 
 open TwoPushoutsPtd
-  using (two-pushouts-ptd; two-pushouts-ptd-left; two-pushouts-ptd-right;
-         two-pushouts-ptd-inner)
+  using (two-pushouts-ptd; two-pushouts-⊙left; two-pushouts-⊙right;
+         two-pushouts-⊙inner)

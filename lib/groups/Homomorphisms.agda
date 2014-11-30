@@ -45,9 +45,9 @@ record GroupHom {i j} (G : Group i) (H : Group j)
         =⟨ Group.unitl H (Group.inv H (f g)) ⟩
       Group.inv H (f g) ∎
 
-  ptd-f : Σ (Group.El G → Group.El H)
+  ⊙f : Σ (Group.El G → Group.El H)
             (λ f → f (Group.ident G) == Group.ident H)
-  ptd-f = (f , pres-ident)
+  ⊙f = (f , pres-ident)
 
 idhom : ∀ {i} (G : Group i) → GroupHom G G
 idhom G = group-hom (idf _) (λ _ _ → idp)

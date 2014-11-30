@@ -21,8 +21,8 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {C : Type k}
       (cod* (snd X , snd Y))
 
     CubeType : (w : Wedge X Y)
-      → Square north* (ap f (merid _ (cfcod _ (fst (∨-in-× X Y) w))))
-               (ap g (merid _ (cfcod _ (fst (∨-in-× X Y) w)))) south*
+      → Square north* (ap f (merid _ (cfcod _ (∨-in-× X Y w))))
+               (ap g (merid _ (cfcod _ (∨-in-× X Y w)))) south*
       → Type _
     CubeType w sq =
       Cube base* sq
@@ -32,8 +32,8 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {C : Type k}
         (natural-square (λ _ → south*) (cfglue _ w))
 
     fill : (w : Wedge X Y)
-      (sq : Square north* (ap f (merid _ (cfcod _ (fst (∨-in-× X Y) w))))
-                   (ap g (merid _ (cfcod _ (fst (∨-in-× X Y) w)))) south*)
+      (sq : Square north* (ap f (merid _ (cfcod _ (∨-in-× X Y w))))
+                   (ap g (merid _ (cfcod _ (∨-in-× X Y w)))) south*)
       → Σ (Square north* idp idp north*) (λ p → CubeType w (p ⊡h sq))
     fill w sq =
       (fst fill' ,
@@ -55,13 +55,13 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {C : Type k}
                (fill-cube-right-unique (snd (fillY (snd Y)))
                 ∙ ! (fill-cube-right-unique
                        (snd (fill (winr (snd Y)) (cod* (snd X , snd Y)))))
-                ∙ ! (ap (λ w → fst (fill w (cod* (fst (∨-in-× X Y) w)))
+                ∙ ! (ap (λ w → fst (fill w (cod* (∨-in-× X Y w)))
                                 ⊡h cod* (snd X , snd Y))
                      wglue))
       where
       fill-square : (w : Wedge X Y)
-        → Square north* (ap f (merid _ (cfcod _ (fst (∨-in-× X Y) w))))
-                 (ap g (merid _ (cfcod _ (fst (∨-in-× X Y) w)))) south*
+        → Square north* (ap f (merid _ (cfcod _ (∨-in-× X Y w))))
+                 (ap g (merid _ (cfcod _ (∨-in-× X Y w)))) south*
       fill-square w =
         fst (fill-cube-right base*
               (natural-square (λ _ → north*) (cfglue _ w))

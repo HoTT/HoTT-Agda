@@ -26,8 +26,8 @@ record Group i : Type (lsucc i) where
     group-struct : GroupStructure El
   open GroupStructure group-struct public
 
-  Ptd-El : Σ (Type i) (λ A → A)
-  Ptd-El = (El , ident)
+  ⊙El : Σ (Type i) (λ A → A)
+  ⊙El = (El , ident)
 
 Group₀ : Type (lsucc lzero)
 Group₀ = Group lzero

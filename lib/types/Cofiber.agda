@@ -43,14 +43,14 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
     (p : (x : A) → b ≃ c (f x))
     = PushoutRecType {d = cofiber-span} (λ _ → b) c p
 
-module _ {i j} {X : Ptd i} {Y : Ptd j} (F : fst (X ∙→ Y)) where
+module _ {i j} {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙→ Y)) where
 
-  ptd-cof-span : Ptd-Span
-  ptd-cof-span = ptd-span Ptd-Unit Y X ((λ _ → tt) , idp) F
+  ⊙cof-span : ⊙Span
+  ⊙cof-span = ⊙span ⊙Unit Y X ((λ _ → tt) , idp) F
 
-  Ptd-Cof : Ptd (lmax i j)
-  Ptd-Cof = Ptd-Pushout ptd-cof-span
+  ⊙Cof : Ptd (lmax i j)
+  ⊙Cof = ⊙Pushout ⊙cof-span
 
-  ptd-cfcod : fst (Y ∙→ Ptd-Cof)
-  ptd-cfcod = 
+  ⊙cfcod : fst (Y ⊙→ ⊙Cof)
+  ⊙cfcod =
     cfcod (fst F) , ap (cfcod (fst F)) (! (snd F)) ∙ ! (cfglue (fst F) (snd X))

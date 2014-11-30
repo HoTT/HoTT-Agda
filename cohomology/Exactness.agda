@@ -3,7 +3,7 @@ open import HoTT
 module cohomology.Exactness where
 
 module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-  (F : fst (X ∙→ Y)) (G : fst (Y ∙→ Z)) where
+  (F : fst (X ⊙→ Y)) (G : fst (Y ⊙→ Z)) where
 
   private
     f = fst F
@@ -50,7 +50,7 @@ data ExactSeq {i} : {G H : Group i} → ExactDiag G H → Type (lsucc i) where
   exact-seq-zero : {G : Group i} → ExactSeq (G ⊣|)
   exact-seq-one : {G H : Group i} {φ : GroupHom G H} → ExactSeq (G ⟨ φ ⟩→ H ⊣|)
   exact-seq-two : {G H K J : Group i} {φ : GroupHom G H} {ψ : GroupHom H K}
-    {diag : ExactDiag K J} → is-exact (GroupHom.ptd-f φ) (GroupHom.ptd-f ψ)
+    {diag : ExactDiag K J} → is-exact (GroupHom.⊙f φ) (GroupHom.⊙f ψ)
     → ExactSeq (H ⟨ ψ ⟩→ diag) → ExactSeq (G ⟨ φ ⟩→ H ⟨ ψ ⟩→ diag)
 
 private
@@ -58,7 +58,7 @@ private
   exact-get-type (G ⊣|) _ = Lift Unit
   exact-get-type (G ⟨ φ ⟩→ H ⊣|) _ = Lift Unit
   exact-get-type (G ⟨ φ ⟩→ (H ⟨ ψ ⟩→ s)) O =
-    is-exact (GroupHom.ptd-f φ) (GroupHom.ptd-f ψ)
+    is-exact (GroupHom.⊙f φ) (GroupHom.⊙f ψ)
   exact-get-type (_ ⟨ _ ⟩→ s) (S n) = exact-get-type s n
 
 exact-get : ∀ {i} {G H : Group i} {diag : ExactDiag G H}
@@ -73,7 +73,7 @@ private
   exact-build-arg-type (G ⊣|) = nil
   exact-build-arg-type (G ⟨ φ ⟩→ H ⊣|) = nil
   exact-build-arg-type (G ⟨ φ ⟩→ H ⟨ ψ ⟩→ s) =
-    is-exact (GroupHom.ptd-f φ) (GroupHom.ptd-f ψ)
+    is-exact (GroupHom.⊙f φ) (GroupHom.⊙f ψ)
     :: exact-build-arg-type (H ⟨ ψ ⟩→ s)
 
   exact-build-helper : ∀ {i} {G H : Group i} (diag : ExactDiag G H)

@@ -66,7 +66,7 @@ module _ {i} (A∙ : Ptd i)
     to′ idp=p⇑ = ap fst= idp=p⇑
 
     -- The projection map from Ω²(Σ A F) to Ω²(A).
-    to : Ω^ 2 ∙[ Σ A F , (a , a↑) ] → Ω^ 2 A∙
+    to : Ω^ 2 ⊙[ Σ A F , (a , a↑) ] → Ω^ 2 A∙
     to p²⇑ = to′ {p⇑ = idp} p²⇑
 
     -- Auxiliary synthesized path for injection.
@@ -85,7 +85,7 @@ module _ {i} (A∙ : Ptd i)
     from′ idp=p idp=p↑ = pair== idp=p idp=p↑
 
     -- The injection map from Ω²(A) to Ω²(Σ A F).
-    from : Ω^ 2 A∙ → Ω^ 2 ∙[ Σ A F , (a , a↑) ]
+    from : Ω^ 2 A∙ → Ω^ 2 ⊙[ Σ A F , (a , a↑) ]
     from p² = from′ {p = idp} {p↑ = idp} p² (idp=p↑ p²)
 
     -- Injection is left-inverse to projection (with some ends free).

@@ -10,8 +10,8 @@ module lib.types.Unit where
 ⊤ = Unit
 tt = unit
 
-Ptd-Unit : Ptd₀
-Ptd-Unit = ∙[ Unit , unit ]
+⊙Unit : Ptd₀
+⊙Unit = ⊙[ Unit , unit ]
 
 abstract
   -- Unit is contractible
@@ -38,15 +38,15 @@ Unit-level = Unit-is-contr
 ⊤-is-prop = Unit-is-prop
 ⊤-is-set = Unit-is-set
 
-LiftUnit-ptd-in-level : ∀ {i j} {X : Ptd i}
-  → is-contr (fst (X ∙→ Ptd-Lift {j = j} Ptd-Unit))
-LiftUnit-ptd-in-level {X = X} =
-  (ptd-cst {X = X} ,
+LiftUnit-⊙in-level : ∀ {i j} {X : Ptd i}
+  → is-contr (fst (X ⊙→ ⊙Lift {j = j} ⊙Unit))
+LiftUnit-⊙in-level {X = X} =
+  (⊙cst {X = X} ,
    λ f → pair= idp
            (prop-has-all-paths ((Lift-level Unit-is-set) _ _) idp (snd f)))
 
-LiftUnit-ptd-out-level : ∀ {i j} {X : Ptd i}
-  → is-contr (fst (Ptd-Lift {j = j} Ptd-Unit ∙→ X))
-LiftUnit-ptd-out-level {X = X} =
-  (ptd-cst {Y = X} ,
-   λ f → ptd-λ= (λ _ → ! (snd f)) (! (!-inv-l (snd f))))
+LiftUnit-⊙out-level : ∀ {i j} {X : Ptd i}
+  → is-contr (fst (⊙Lift {j = j} ⊙Unit ⊙→ X))
+LiftUnit-⊙out-level {X = X} =
+  (⊙cst {Y = X} ,
+   λ f → ⊙λ= (λ _ → ! (snd f)) (! (!-inv-l (snd f))))

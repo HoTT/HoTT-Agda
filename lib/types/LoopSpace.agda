@@ -14,21 +14,21 @@ module lib.types.LoopSpace where
 
 module _ {i} where
 
-  Ptd-Ω : Ptd i → Ptd i
-  Ptd-Ω (A , a) = ∙[ (a == a) , idp ]
+  ⊙Ω : Ptd i → Ptd i
+  ⊙Ω (A , a) = ⊙[ (a == a) , idp ]
 
   Ω : Ptd i → Type i
-  Ω = fst ∘ Ptd-Ω
+  Ω = fst ∘ ⊙Ω
 
-  Ptd-Ω^ : (n : ℕ) → Ptd i → Ptd i
-  Ptd-Ω^ O X = X
-  Ptd-Ω^ (S n) X = Ptd-Ω (Ptd-Ω^ n X)
+  ⊙Ω^ : (n : ℕ) → Ptd i → Ptd i
+  ⊙Ω^ O X = X
+  ⊙Ω^ (S n) X = ⊙Ω (⊙Ω^ n X)
 
   Ω^ : (n : ℕ) → Ptd i → Type i
-  Ω^ n X = fst (Ptd-Ω^ n X)
+  Ω^ n X = fst (⊙Ω^ n X)
 
 idp^ : ∀ {i} (n : ℕ) {X : Ptd i} → Ω^ n X
-idp^ n {X} = snd (Ptd-Ω^ n X)
+idp^ n {X} = snd (⊙Ω^ n X)
 
 {- for n ≥ 1, we have a group structure on the loop space -}
 module _ {i} where
@@ -41,7 +41,7 @@ module _ {i} where
   conc^ (S n) _ = _∙_
 
 ap^ : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
-  → fst (X ∙→ Y) → fst (Ptd-Ω^ n X ∙→ Ptd-Ω^ n Y)
+  → fst (X ⊙→ Y) → fst (⊙Ω^ n X ⊙→ ⊙Ω^ n Y)
 ap^ O F = F
 ap^ (S n) F =
   let (g , gpt) = ap^ n F
@@ -79,7 +79,7 @@ module _ {i} {X : Ptd i} where
 
 abstract
   ap^-conc^ : ∀ {i j} (n : ℕ) (t : n ≠ O)
-    {X : Ptd i} {Y : Ptd j} (F : fst (X ∙→ Y)) (p q : Ω^ n X)
+    {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙→ Y)) (p q : Ω^ n X)
     → fst (ap^ n F) (conc^ n t p q)
       == conc^ n t (fst (ap^ n F) p) (fst (ap^ n F) q)
   ap^-conc^ O t _ _ _ = ⊥-rec (t idp)
@@ -104,7 +104,7 @@ abstract
 {- ap^ preserves (pointed) equivalences -}
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
-  is-equiv-ap^ : (n : ℕ) (F : fst (X ∙→ Y)) (e : is-equiv (fst F))
+  is-equiv-ap^ : (n : ℕ) (F : fst (X ⊙→ Y)) (e : is-equiv (fst F))
     → is-equiv (fst (ap^ n F))
   is-equiv-ap^ O F e = e
   is-equiv-ap^ (S n) F e =
@@ -112,7 +112,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
     ∘ise post∙-is-equiv (snd (ap^ n F))
     ∘ise snd (equiv-ap (_ , is-equiv-ap^ n F e) _ _)
 
-  equiv-ap^ : (n : ℕ) (F : fst (X ∙→ Y)) (e : is-equiv (fst F))
+  equiv-ap^ : (n : ℕ) (F : fst (X ⊙→ Y)) (e : is-equiv (fst F))
     → Ω^ n X ≃ Ω^ n Y
   equiv-ap^ n F e = (fst (ap^ n F) , is-equiv-ap^ n F e)
 
@@ -140,19 +140,19 @@ module _ {i} {X : Ptd i} where
 module _ {i} where
 
   Trunc-Ω^ : (m : ℕ₋₂) (n : ℕ) (X : Ptd i)
-    → Ptd-Trunc m (Ptd-Ω^ n X) == Ptd-Ω^ n (Ptd-Trunc ((n -2) +2+ m) X)
+    → ⊙Trunc m (⊙Ω^ n X) == ⊙Ω^ n (⊙Trunc ((n -2) +2+ m) X)
   Trunc-Ω^ m O X = idp
   Trunc-Ω^ m (S n) X =
-    Ptd-Trunc m (Ptd-Ω^ (S n) X)
+    ⊙Trunc m (⊙Ω^ (S n) X)
       =⟨ ! (pair= (Trunc=-path [ _ ] [ _ ]) (↓-idf-ua-in _ idp)) ⟩
-    Ptd-Ω (Ptd-Trunc (S m) (Ptd-Ω^ n X))
-      =⟨ ap Ptd-Ω (Trunc-Ω^ (S m) n X) ⟩
-    Ptd-Ω^ (S n) (Ptd-Trunc ((n -2) +2+ S m) X)
-      =⟨ +2+-βr (n -2) m |in-ctx (λ k → Ptd-Ω^ (S n) (Ptd-Trunc k X)) ⟩
-    Ptd-Ω^ (S n) (Ptd-Trunc (S (n -2) +2+ m) X) ∎
+    ⊙Ω (⊙Trunc (S m) (⊙Ω^ n X))
+      =⟨ ap ⊙Ω (Trunc-Ω^ (S m) n X) ⟩
+    ⊙Ω^ (S n) (⊙Trunc ((n -2) +2+ S m) X)
+      =⟨ +2+-βr (n -2) m |in-ctx (λ k → ⊙Ω^ (S n) (⊙Trunc k X)) ⟩
+    ⊙Ω^ (S n) (⊙Trunc (S (n -2) +2+ m) X) ∎
 
   Ω-Trunc-equiv : (m : ℕ₋₂) (X : Ptd i)
-    → Ω (Ptd-Trunc (S m) X) ≃ Trunc m (Ω X)
+    → Ω (⊙Trunc (S m) X) ≃ Trunc m (Ω X)
   Ω-Trunc-equiv m X = Trunc=-equiv [ snd X ] [ snd X ]
 
 {- A loop space is a pregroup, and a group if it has the right level -}
@@ -180,19 +180,19 @@ module _ {i} (n : ℕ) (t : n ≠ O) (X : Ptd i) where
 {- Our definition of Ω^ builds up loops on the outside,
  - but this is equivalent to building up on the inside -}
 module _ {i} where
-  Ptd-Ω^-inner-path : (n : ℕ) (X : Ptd i)
-    → Ptd-Ω^ (S n) X == Ptd-Ω^ n (Ptd-Ω X)
-  Ptd-Ω^-inner-path O X = idp
-  Ptd-Ω^-inner-path (S n) X = ap Ptd-Ω (Ptd-Ω^-inner-path n X)
+  ⊙Ω^-inner-path : (n : ℕ) (X : Ptd i)
+    → ⊙Ω^ (S n) X == ⊙Ω^ n (⊙Ω X)
+  ⊙Ω^-inner-path O X = idp
+  ⊙Ω^-inner-path (S n) X = ap ⊙Ω (⊙Ω^-inner-path n X)
 
-  Ptd-Ω^-inner-out : (n : ℕ) (X : Ptd i)
-    → fst (Ptd-Ω^ (S n) X ∙→ Ptd-Ω^ n (Ptd-Ω X))
-  Ptd-Ω^-inner-out O _ = (idf _ , idp)
-  Ptd-Ω^-inner-out (S n) X = ap^ 1 (Ptd-Ω^-inner-out n X)
+  ⊙Ω^-inner-out : (n : ℕ) (X : Ptd i)
+    → fst (⊙Ω^ (S n) X ⊙→ ⊙Ω^ n (⊙Ω X))
+  ⊙Ω^-inner-out O _ = (idf _ , idp)
+  ⊙Ω^-inner-out (S n) X = ap^ 1 (⊙Ω^-inner-out n X)
 
   Ω^-inner-out : (n : ℕ) (X : Ptd i)
-    → (Ω^ (S n) X → Ω^ n (Ptd-Ω X))
-  Ω^-inner-out n X = fst (Ptd-Ω^-inner-out n X)
+    → (Ω^ (S n) X → Ω^ n (⊙Ω X))
+  Ω^-inner-out n X = fst (⊙Ω^-inner-out n X)
 
   Ω^-inner-out-conc^ : (n : ℕ) (t : n ≠ O)
     (X : Ptd i) (p q : Ω^ (S n) X)
@@ -200,13 +200,13 @@ module _ {i} where
       == conc^ n t (Ω^-inner-out n X p) (Ω^-inner-out n X q)
   Ω^-inner-out-conc^ O t X _ _ = ⊥-rec (t idp)
   Ω^-inner-out-conc^ (S n) t X p q =
-    ap^-conc^ 1 (ℕ-S≠O _) (Ptd-Ω^-inner-out n X) p q
+    ap^-conc^ 1 (ℕ-S≠O _) (⊙Ω^-inner-out n X) p q
 
   Ω^-inner-is-equiv : (n : ℕ) (X : Ptd i)
-    → is-equiv (fst (Ptd-Ω^-inner-out n X))
+    → is-equiv (fst (⊙Ω^-inner-out n X))
   Ω^-inner-is-equiv O X = is-eq (idf _) (idf _) (λ _ → idp) (λ _ → idp)
   Ω^-inner-is-equiv (S n) X =
-    is-equiv-ap^ 1 (Ptd-Ω^-inner-out n X) (Ω^-inner-is-equiv n X)
+    is-equiv-ap^ 1 (⊙Ω^-inner-out n X) (Ω^-inner-is-equiv n X)
 
-  Ω^-inner-equiv : (n : ℕ) (X : Ptd i) → Ω^ (S n) X ≃ Ω^ n (Ptd-Ω X)
+  Ω^-inner-equiv : (n : ℕ) (X : Ptd i) → Ω^ (S n) X ≃ Ω^ n (⊙Ω X)
   Ω^-inner-equiv n X = _ , Ω^-inner-is-equiv n X

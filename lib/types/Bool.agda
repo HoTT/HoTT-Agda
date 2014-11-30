@@ -9,8 +9,8 @@ data Bool : Type₀ where
   true : Bool
   false : Bool
 
-Ptd-Bool : Ptd₀
-Ptd-Bool = ∙[ Bool , true ]
+⊙Bool : Ptd₀
+⊙Bool = ⊙[ Bool , true ]
 
 if_then_else_ : ∀ {i} {A : Bool → Type i}
   (b : Bool) (t : A true) (e : A false)

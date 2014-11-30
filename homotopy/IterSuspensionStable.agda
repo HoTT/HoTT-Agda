@@ -33,24 +33,24 @@ module Susp^StableSucc {i} (X : Ptd i) (cX : is-connected ⟨0⟩ (fst X))
 
   private
     module F = FreudenthalIso
-      (n -2) k (ℕ-S≠O _) kle' (Ptd-Susp^ n X)
-      (transport (λ t → is-connected t (fst (Ptd-Susp^ n X)))
-                 (nlemma₁ n) (Ptd-Susp^-conn n cX))
+      (n -2) k (ℕ-S≠O _) kle' (⊙Susp^ n X)
+      (transport (λ t → is-connected t (fst (⊙Susp^ n X)))
+                 (nlemma₁ n) (⊙Susp^-conn n cX))
 
   stable : (tk : k ≠ 0) (tsk : S k ≠ 0)
-    → π (S k) tsk (Ptd-Susp^ (S n) X) == π k tk (Ptd-Susp^ n X)
+    → π (S k) tsk (⊙Susp^ (S n) X) == π k tk (⊙Susp^ n X)
   stable tk tsk =
-    π (S k) tsk (Ptd-Susp^ (S n) X)
-      =⟨ π-inner-iso k tk tsk (Ptd-Susp^ (S n) X) ⟩
-    π k tk (Ptd-Ω (Ptd-Susp^ (S n) X))
-      =⟨ ! (π-Trunc-shift-iso k tk (Ptd-Ω (Ptd-Susp^ (S n) X))) ⟩
-    Ω^-Group k tk (Ptd-Trunc ⟨ k ⟩ (Ptd-Ω (Ptd-Susp^ (S n) X))) Trunc-level
+    π (S k) tsk (⊙Susp^ (S n) X)
+      =⟨ π-inner-iso k tk tsk (⊙Susp^ (S n) X) ⟩
+    π k tk (⊙Ω (⊙Susp^ (S n) X))
+      =⟨ ! (π-Trunc-shift-iso k tk (⊙Ω (⊙Susp^ (S n) X))) ⟩
+    Ω^-Group k tk (⊙Trunc ⟨ k ⟩ (⊙Ω (⊙Susp^ (S n) X))) Trunc-level
       =⟨ ! F.iso ⟩
-    Ω^-Group k tk (Ptd-Trunc ⟨ k ⟩ (Ptd-Susp^ n X)) Trunc-level
-      =⟨ π-Trunc-shift-iso k tk (Ptd-Susp^ n X) ⟩
-    π k tk (Ptd-Susp^ n X) ∎
+    Ω^-Group k tk (⊙Trunc ⟨ k ⟩ (⊙Susp^ n X)) Trunc-level
+      =⟨ π-Trunc-shift-iso k tk (⊙Susp^ n X) ⟩
+    π k tk (⊙Susp^ n X) ∎
 
-{- π (S k) (Ptd-Susp^ (S n) X) == π k (Ptd-Susp^ n X), where k > 0 -}
+{- π (S k) (⊙Susp^ (S n) X) == π k (⊙Susp^ n X), where k > 0 -}
 module Susp^Stable {i} (X : Ptd i) (cX : is-connected ⟨0⟩ (fst X))
   (n : ℕ) (k : ℕ) (tk : k ≠ 0) (tsk : S k ≠ 0) (kle : k ≤ n *2) where
 
@@ -64,10 +64,10 @@ module Susp^Stable {i} (X : Ptd i) (cX : is-connected ⟨0⟩ (fst X))
     lemma C f (S n) tsn tssn = f n tsn tssn
 
   abstract
-    stable : π (S k) tsk (Ptd-Susp^ (S n) X) == π k tk (Ptd-Susp^ n X)
+    stable : π (S k) tsk (⊙Susp^ (S n) X) == π k tk (⊙Susp^ n X)
     stable = lemma
       (λ r tr tsr → (r ≤ n *2) →
-         π (S r) tsr (Ptd-Susp^ (S n) X) == π r tr (Ptd-Susp^ n X))
+         π (S r) tsr (⊙Susp^ (S n) X) == π r tr (⊙Susp^ n X))
       (λ r' tsr' tssr' → λ rle →
         Susp^StableSucc.stable X cX n r' rle tsr' tssr')
       k tk tsk kle

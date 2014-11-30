@@ -45,10 +45,10 @@ module _ {i} where
 {- π_(n+1) of a space is π_n of its loop space -}
 abstract
   π-inner-iso : ∀ {i} (n : ℕ) (tn : n ≠ 0) (tsn : S n ≠ 0) (X : Ptd i)
-    → π (S n) tsn X == π n tn (Ptd-Ω X)
+    → π (S n) tsn X == π n tn (⊙Ω X)
   π-inner-iso O tn tsn X = ⊥-rec (tn idp)
   π-inner-iso (S n') tn' tn X =
-    transport (λ pi → pi (S n) tn X == pi n tn' (Ptd-Ω X)) π-fold $
+    transport (λ pi → pi (S n) tn X == pi n tn' (⊙Ω X)) π-fold $
       group-iso
         (record {
           f = Trunc-fmap (Ω^-inner-out n X);
@@ -68,8 +68,8 @@ module _ {i} where
     record Ω^Ts-PreIso (m : ℕ₋₂) (n : ℕ) (k : ℕ₋₂) (t : n ≠ O) (X : Ptd i)
       : Type i where
       field
-        F : fst (Ptd-Ω^ n (Ptd-Trunc k X) ∙→ Ptd-Trunc m (Ptd-Ω^ n X))
-        pres-comp : ∀ (p q : Ω^ n (Ptd-Trunc k X))
+        F : fst (⊙Ω^ n (⊙Trunc k X) ⊙→ ⊙Trunc m (⊙Ω^ n X))
+        pres-comp : ∀ (p q : Ω^ n (⊙Trunc k X))
           → fst F (conc^ n t p q) == Trunc-fmap2 (conc^ n t) (fst F p) (fst F q)
         e : is-equiv (fst F)
 
@@ -91,7 +91,7 @@ module _ {i} where
       transport (λ k → Ω^Ts-PreIso m (S (S n)) k t X)
         (+2+-βr (S n -2) m)
         (record {
-           F = H ∘ptd G;
+           F = H ⊙∘ G;
            pres-comp = λ p q →
              ap (fst H) (ap^-conc^ 1 (ℕ-S≠O _) (Ω^Ts-PreIso.F r) p q)
              ∙ (Trunc=-∙-comm (fst G p) (fst G q));
@@ -99,9 +99,9 @@ module _ {i} where
                     ∘e equiv-ap^ 1 (Ω^Ts-PreIso.F r) (Ω^Ts-PreIso.e r))})
 
   π-Trunc-shift-iso : (n : ℕ) (t : n ≠ O) (X : Ptd i)
-    → Ω^-Group n t (Ptd-Trunc ⟨ n ⟩ X) Trunc-level == π n t X
+    → Ω^-Group n t (⊙Trunc ⟨ n ⟩ X) Trunc-level == π n t X
   π-Trunc-shift-iso n t X = transport
-    (λ pi → Ω^-Group n t (Ptd-Trunc ⟨ n ⟩ X) Trunc-level == pi n t X)
+    (λ pi → Ω^-Group n t (⊙Trunc ⟨ n ⟩ X) Trunc-level == pi n t X)
     π-fold
     (group-iso (group-hom (fst F) pres-comp) e)
     where
@@ -115,20 +115,20 @@ module _ {i} where
 
 abstract
   π-Trunc-≤T-iso : ∀ {i} (n : ℕ) (t : n ≠ O) (m : ℕ₋₂) (X : Ptd i)
-    → (⟨ n ⟩ ≤T m) → π n t (Ptd-Trunc m X) == π n t X
+    → (⟨ n ⟩ ≤T m) → π n t (⊙Trunc m X) == π n t X
   π-Trunc-≤T-iso n t m X lte =
-    π n t (Ptd-Trunc m X)
-      =⟨ ! (π-Trunc-shift-iso n t (Ptd-Trunc m X)) ⟩
-    Ω^-Group n t (Ptd-Trunc ⟨ n ⟩ (Ptd-Trunc m X)) Trunc-level
+    π n t (⊙Trunc m X)
+      =⟨ ! (π-Trunc-shift-iso n t (⊙Trunc m X)) ⟩
+    Ω^-Group n t (⊙Trunc ⟨ n ⟩ (⊙Trunc m X)) Trunc-level
       =⟨ lemma ⟩
-    Ω^-Group n t (Ptd-Trunc ⟨ n ⟩ X) Trunc-level
+    Ω^-Group n t (⊙Trunc ⟨ n ⟩ X) Trunc-level
       =⟨ π-Trunc-shift-iso n t X ⟩
     π n t X ∎
     where
-    lemma : Ω^-Group n t (Ptd-Trunc ⟨ n ⟩ (Ptd-Trunc m X)) Trunc-level
-         ==  Ω^-Group n t (Ptd-Trunc ⟨ n ⟩ X) Trunc-level
+    lemma : Ω^-Group n t (⊙Trunc ⟨ n ⟩ (⊙Trunc m X)) Trunc-level
+         ==  Ω^-Group n t (⊙Trunc ⟨ n ⟩ X) Trunc-level
     lemma = ap (uncurry $ Ω^-Group n t) $
       pair=
-        (ptd-ua (fuse-Trunc (fst X) ⟨ n ⟩ m) idp ∙
-         ap (λ k → Ptd-Trunc k X) (minT-out-l lte))
+        (⊙ua (fuse-Trunc (fst X) ⟨ n ⟩ m) idp ∙
+         ap (λ k → ⊙Trunc k X) (minT-out-l lte))
         (prop-has-all-paths-↓ has-level-is-prop)

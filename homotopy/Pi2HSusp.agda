@@ -149,25 +149,25 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
   main-lemma : Trunc ⟨ 1 ⟩ (north A == north A) == A
   main-lemma = ua main-lemma-eqv
 
-  ptd-main-lemma : Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e))) == (A , e)
-  ptd-main-lemma = ptd-ua main-lemma-eqv idp
+  ⊙main-lemma : ⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e))) == (A , e)
+  ⊙main-lemma = ⊙ua main-lemma-eqv idp
 
   {- for main-lemma-iso; separated for performance reasons -}
   module Iso where
     abstract
-      H : fst (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))
-            ∙→ Ptd-Trunc ⟨ 1 ⟩ (A , e))
+      H : fst (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e)))
+            ⊙→ ⊙Trunc ⟨ 1 ⟩ (A , e))
       H = (λ x → [ encode x ]) , idp
 
-      F : fst (Ptd-Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e))))
-            ∙→ Ptd-Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (A , e)))
+      F : fst (⊙Ω^ 1 (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e))))
+            ⊙→ ⊙Ω^ 1 (⊙Trunc ⟨ 1 ⟩ (A , e)))
       F = ap^ 1 H
 
-      f : Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e))))
-        → Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (A , e))
+      f : Ω^ 1 (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e))))
+        → Ω^ 1 (⊙Trunc ⟨ 1 ⟩ (A , e))
       f = fst F
 
-      pres-comp : (p q : Ω^ 1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))))
+      pres-comp : (p q : Ω^ 1 (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e)))))
         → f (conc^ 1 (ℕ-S≠O _) p q) == conc^ 1 (ℕ-S≠O _) (f p) (f q)
       pres-comp = ap^-conc^ 1 (ℕ-S≠O _) H
 
@@ -176,8 +176,8 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
 
   abstract
     main-lemma-iso : (t1 : 1 ≠ 0) →
-         Ω^-Group 1 t1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))) Trunc-level
-      == Ω^-Group 1 t1 (Ptd-Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
+         Ω^-Group 1 t1 (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e)))) Trunc-level
+      == Ω^-Group 1 t1 (⊙Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
     main-lemma-iso _ = group-iso
       (record {f = f; pres-comp = pres-comp})
       ie
@@ -185,14 +185,14 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
 
   abstract
     π₂-Suspension : (t1 : 1 ≠ 0) (t2 : 2 ≠ 0)
-      → π 2 t2 (Ptd-Susp (A , e)) == π 1 t1 (A , e)
+      → π 2 t2 (⊙Susp (A , e)) == π 1 t1 (A , e)
     π₂-Suspension t1 t2 =
-      π 2 t2 (Ptd-Susp (A , e))
-        =⟨ π-inner-iso 1 t1 t2 (Ptd-Susp (A , e)) ⟩
-      π 1 t1 (Ptd-Ω (Ptd-Susp (A , e)))
-        =⟨ ! (π-Trunc-shift-iso 1 t1 (Ptd-Ω (Ptd-Susp (A , e)))) ⟩
-      Ω^-Group 1 t1 (Ptd-Trunc ⟨ 1 ⟩ (Ptd-Ω (Ptd-Susp (A , e)))) Trunc-level
+      π 2 t2 (⊙Susp (A , e))
+        =⟨ π-inner-iso 1 t1 t2 (⊙Susp (A , e)) ⟩
+      π 1 t1 (⊙Ω (⊙Susp (A , e)))
+        =⟨ ! (π-Trunc-shift-iso 1 t1 (⊙Ω (⊙Susp (A , e)))) ⟩
+      Ω^-Group 1 t1 (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e)))) Trunc-level
         =⟨ main-lemma-iso t1 ⟩
-      Ω^-Group 1 t1 (Ptd-Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
+      Ω^-Group 1 t1 (⊙Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
         =⟨ π-Trunc-shift-iso 1 t1 (A , e) ⟩
       π 1 t1 (A , e) ∎

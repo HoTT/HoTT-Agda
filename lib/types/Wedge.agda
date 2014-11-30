@@ -33,16 +33,16 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
 module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
-  Ptd-Wedge : Ptd (lmax i j)
-  Ptd-Wedge = ∙[ Wedge X Y , winl (snd X) ]
+  ⊙Wedge : Ptd (lmax i j)
+  ⊙Wedge = ⊙[ Wedge X Y , winl (snd X) ]
 
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
-  ptd-winl : fst (X ∙→ Ptd-Wedge X Y)
-  ptd-winl = (winl , idp)
+  ⊙winl : fst (X ⊙→ ⊙Wedge X Y)
+  ⊙winl = (winl , idp)
 
-  ptd-winr : fst (Y ∙→ Ptd-Wedge X Y)
-  ptd-winr = (winr , ! wglue)
+  ⊙winr : fst (Y ⊙→ ⊙Wedge X Y)
+  ⊙winr = (winr , ! wglue)
 
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
@@ -70,13 +70,13 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
 
 add-wglue : ∀ {i j} {X : Ptd i} {Y : Ptd j}
-  → fst (X ∙⊔ Y) → Wedge X Y
+  → fst (X ⊙⊔ Y) → Wedge X Y
 add-wglue (inl x) = winl x
 add-wglue (inr y) = winr y
 
-ptd-add-wglue : ∀ {i j} {X : Ptd i} {Y : Ptd j}
-  → fst (X ∙⊔ Y ∙→ Ptd-Wedge X Y)
-ptd-add-wglue = (add-wglue , idp)
+⊙add-wglue : ∀ {i j} {X : Ptd i} {Y : Ptd j}
+  → fst (X ⊙⊔ Y ⊙→ ⊙Wedge X Y)
+⊙add-wglue = (add-wglue , idp)
 
 
 module Fold {i} {X : Ptd i} =
@@ -84,5 +84,5 @@ module Fold {i} {X : Ptd i} =
 
 fold = Fold.f
 
-ptd-fold : ∀ {i} {X : Ptd i} → fst (Ptd-Wedge X X ∙→ X)
-ptd-fold = (fold , idp)
+⊙fold : ∀ {i} {X : Ptd i} → fst (⊙Wedge X X ⊙→ X)
+⊙fold = (fold , idp)

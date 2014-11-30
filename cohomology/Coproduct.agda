@@ -26,12 +26,12 @@ open import cohomology.Sn OT
 
 module CofSelect (X Y : Ptd i) where
 
-  select : Sphere {i} 0 → fst (X ∙⊔ Y)
+  select : Sphere {i} 0 → fst (X ⊙⊔ Y)
   select (lift true) = inl (snd X)
   select (lift false) = inr (snd Y)
 
-  ptd-select : fst (Ptd-Sphere {i} 0 ∙→ X ∙⊔ Y)
-  ptd-select = (select , idp)
+  ⊙select : fst (⊙Sphere {i} 0 ⊙→ X ⊙⊔ Y)
+  ⊙select = (select , idp)
 
   module Into = CofiberRec select {C = Wedge X Y}
     (winl (snd X))
@@ -75,20 +75,20 @@ module CofSelect (X Y : Ptd i) where
   eq : Cofiber select ≃ Wedge X Y
   eq = equiv into out into-out out-into
 
-  ptd-path : Ptd-Cof ptd-select == Ptd-Wedge X Y
-  ptd-path = ptd-ua eq idp
+  ⊙path : ⊙Cof ⊙select == ⊙Wedge X Y
+  ⊙path = ⊙ua eq idp
 
-  cfcod-over : ptd-cfcod ptd-select == ptd-add-wglue
-               [ (λ U → fst (X ∙⊔ Y ∙→ U)) ↓ ptd-path ]
-  cfcod-over = codomain-over-ptd-equiv _ _ _ ▹ pair= idp lemma
+  cfcod-over : ⊙cfcod ⊙select == ⊙add-wglue
+               [ (λ U → fst (X ⊙⊔ Y ⊙→ U)) ↓ ⊙path ]
+  cfcod-over = codomain-over-⊙equiv _ _ _ ▹ pair= idp lemma
     where
     lemma : ap into (! (cfglue _ (lift true))) ∙ idp == idp
     lemma = ∙-unit-r _ ∙ ap-! into (cfglue _ (lift true))
             ∙ ap ! (Into.glue-β (lift true))
 
   ext-glue-cst :
-    ptd-ext-glue == ptd-cst {X = Ptd-Cof ptd-select} {Y = Ptd-Sphere 1}
-  ext-glue-cst = ptd-λ=
+    ⊙ext-glue == ⊙cst {X = ⊙Cof ⊙select} {Y = ⊙Sphere 1}
+  ext-glue-cst = ⊙λ=
     (Cofiber-elim _
       idp
       (λ {(inl _) → ! (merid _ (lift true));
@@ -103,96 +103,95 @@ module CofSelect (X Y : Ptd i) where
             ⊡v∙ ! (ap-cst (north _) (glue (lift false)))}))
     idp
 
-  ext-over : ptd-ext-glue == ptd-cst
-             [ (λ U → fst (U ∙→ Ptd-Sphere 1)) ↓ ptd-path ]
-  ext-over = ext-glue-cst ◃ domain-over-ptd-equiv _ _ _
+  ext-over : ⊙ext-glue == ⊙cst
+             [ (λ U → fst (U ⊙→ ⊙Sphere 1)) ↓ ⊙path ]
+  ext-over = ext-glue-cst ◃ domain-over-⊙equiv _ _ _
 
 module C⊔ (n : ℤ) (m : ℕ) (X Y : Ptd i) where
 
   open CofSelect X Y
 
-  ed : {G : Group i} (φ : GroupHom (C n (Ptd-Susp^ m (X ∙⊔ Y))) G)
+  ed : {G : Group i} (φ : GroupHom (C n (⊙Susp^ m (X ⊙⊔ Y))) G)
     → ExactDiag _ _
   ed {G} φ =
-    C n (Ptd-Susp^ m (Ptd-Sphere 1))
+    C n (⊙Susp^ m (⊙Sphere 1))
       ⟨ cst-hom ⟩→
-    C n (Ptd-Susp^ m (Ptd-Wedge X Y))
-      ⟨ CF-hom n (ptd-susp^-fmap m ptd-add-wglue) ⟩→
-    C n (Ptd-Susp^ m (X ∙⊔ Y))
-      ⟨ φ ⟩→ -- CF-hom n (ptd-susp^-fmap m ptd-select)
-    G ⊣| -- C n (Ptd-Susp^ m (Ptd-Sphere 0))
+    C n (⊙Susp^ m (⊙Wedge X Y))
+      ⟨ CF-hom n (⊙susp^-fmap m ⊙add-wglue) ⟩→
+    C n (⊙Susp^ m (X ⊙⊔ Y))
+      ⟨ φ ⟩→ -- CF-hom n (⊙susp^-fmap m ⊙select)
+    G ⊣| -- C n (⊙Susp^ m (⊙Sphere 0))
 
-  es : ExactSeq (ed (CF-hom n (ptd-susp^-fmap m ptd-select)))
-  es = exact-build (ed (CF-hom n (ptd-susp^-fmap m ptd-select)))
+  es : ExactSeq (ed (CF-hom n (⊙susp^-fmap m ⊙select)))
+  es = exact-build (ed (CF-hom n (⊙susp^-fmap m ⊙select)))
     (transport
-      (λ g → is-exact g (CF n (ptd-susp^-fmap m ptd-add-wglue)))
-      (ap (CF n) (ptd-susp^-fmap-cst m) ∙ ap GroupHom.ptd-f (CF-cst n))
+      (λ g → is-exact g (CF n (⊙susp^-fmap m ⊙add-wglue)))
+      (ap (CF n) (⊙susp^-fmap-cst m) ∙ ap GroupHom.⊙f (CF-cst n))
       (transport
-        (λ {(_ , g , h) → is-exact (CF n (ptd-susp^-fmap m h))
-                                   (CF n (ptd-susp^-fmap m g))})
-        (pair= ptd-path (↓-×-in cfcod-over ext-over))
+        (λ {(_ , g , h) → is-exact (CF n (⊙susp^-fmap m h))
+                                   (CF n (⊙susp^-fmap m g))})
+        (pair= ⊙path (↓-×-in cfcod-over ext-over))
         (transport
           (λ {(_ , g , h) → is-exact (CF n h) (CF n g)})
-          (suspend^-cof= m (ptd-cfcod ptd-select) (ptd-ext-glue)
-            (pair= (Cof².space-path ptd-select) (Cof².cfcod²-over ptd-select)))
-          (C-exact n (ptd-susp^-fmap m (ptd-cfcod ptd-select))))))
+          (suspend^-cof= m (⊙cfcod ⊙select) (⊙ext-glue)
+            (pair= (Cof².space-path ⊙select) (Cof².cfcod²-over ⊙select)))
+          (C-exact n (⊙susp^-fmap m (⊙cfcod ⊙select))))))
     (transport
-      (λ {(_ , g) → is-exact (CF n (ptd-susp^-fmap m g))
-                             (CF n (ptd-susp^-fmap m ptd-select))})
-      (pair= ptd-path cfcod-over)
+      (λ {(_ , g) → is-exact (CF n (⊙susp^-fmap m g))
+                             (CF n (⊙susp^-fmap m ⊙select))})
+      (pair= ⊙path cfcod-over)
       (transport
         (λ {(_ , g , h) → is-exact (CF n h) (CF n g)})
-        (suspend^-cof= m ptd-select _ idp)
-        (C-exact n (ptd-susp^-fmap m ptd-select))))
+        (suspend^-cof= m ⊙select _ idp)
+        (C-exact n (⊙susp^-fmap m ⊙select))))
 
   module Nonzero (neq : n ≠ ℕ-to-ℤ m) where
 
-    iso : C n (Ptd-Susp^ m (Ptd-Wedge X Y)) == C n (Ptd-Susp^ m (X ∙⊔ Y))
+    iso : C n (⊙Susp^ m (⊙Wedge X Y)) == C n (⊙Susp^ m (X ⊙⊔ Y))
     iso = exact-pair-iso $
       transport (λ {(G , φ) → ExactSeq (ed {G} φ)})
-        (pair= (ap (C n) (Ptd-Susp^-+ m O
-                          ∙ ap (λ k → Ptd-Susp^ k (Ptd-Sphere 0)) (+-unit-r m))
+        (pair= (ap (C n) (⊙Susp^-+ m O
+                          ∙ ap (λ k → ⊙Susp^ k (⊙Sphere 0)) (+-unit-r m))
                 ∙ C-Sphere-≠ n m neq)
                (prop-has-all-paths-↓
-                  {B = λ G → GroupHom (C n (Ptd-Susp^ m (X ∙⊔ Y))) G}
+                  {B = λ G → GroupHom (C n (⊙Susp^ m (X ⊙⊔ Y))) G}
                   (contr-is-prop 0G-hom-in-level)))
         es
 
     add-wglue-over :
-      idhom _ == CF-hom n (ptd-susp^-fmap m ptd-add-wglue)
-      [ (λ G → GroupHom (C n (Ptd-Susp^ m (Ptd-Wedge X Y))) G) ↓ iso ]
+      idhom _ == CF-hom n (⊙susp^-fmap m ⊙add-wglue)
+      [ (λ G → GroupHom (C n (⊙Susp^ m (⊙Wedge X Y))) G) ↓ iso ]
     add-wglue-over = codomain-over-iso _ _ _ _ $ codomain-over-equiv _ _
 
   module Any where
 
-    deselect : fst (X ∙⊔ Y) → Sphere {i} 0
+    deselect : fst (X ⊙⊔ Y) → Sphere {i} 0
     deselect (inl _) = lift true
     deselect (inr _) = lift false
 
-    ptd-deselect : fst (X ∙⊔ Y ∙→ Ptd-Sphere {i} 0)
-    ptd-deselect = (deselect , idp)
+    ⊙deselect : fst (X ⊙⊔ Y ⊙→ ⊙Sphere {i} 0)
+    ⊙deselect = (deselect , idp)
 
-    deselect-select : ptd-deselect ∘ptd ptd-select == ptd-idf _
-    deselect-select = ptd-λ= (λ {(lift true) → idp; (lift false) → idp}) idp
+    deselect-select : ⊙deselect ⊙∘ ⊙select == ⊙idf _
+    deselect-select = ⊙λ= (λ {(lift true) → idp; (lift false) → idp}) idp
 
     module SER = SplitExactRight (C-abelian n _)
-      (CF-hom n (ptd-susp^-fmap m ptd-add-wglue))
-      (CF-hom n (ptd-susp^-fmap m ptd-select))
+      (CF-hom n (⊙susp^-fmap m ⊙add-wglue))
+      (CF-hom n (⊙susp^-fmap m ⊙select))
       es
-      (CF-hom n (ptd-susp^-fmap m ptd-deselect))
+      (CF-hom n (⊙susp^-fmap m ⊙deselect))
       (app= $ ap GroupHom.f $ CF-inverse n
-        (ptd-susp^-fmap m ptd-select)
-        (ptd-susp^-fmap m ptd-deselect)
-        (! (ptd-susp^-fmap-∘ m ptd-deselect ptd-select)
-         ∙ ap (ptd-susp^-fmap m) deselect-select
-         ∙ ptd-susp^-fmap-idf m _))
+        (⊙susp^-fmap m ⊙select)
+        (⊙susp^-fmap m ⊙deselect)
+        (! (⊙susp^-fmap-∘ m ⊙deselect ⊙select)
+         ∙ ap (⊙susp^-fmap m) deselect-select
+         ∙ ⊙susp^-fmap-idf m _))
 
-    iso : C n (Ptd-Susp^ m (X ∙⊔ Y))
-        == C n (Ptd-Susp^ m (Ptd-Wedge X Y))
-           ×G C n (Ptd-Susp^ m (Ptd-Sphere 0))
+    iso : C n (⊙Susp^ m (X ⊙⊔ Y))
+       == C n (⊙Susp^ m (⊙Wedge X Y)) ×G C n (⊙Susp^ m (⊙Sphere 0))
     iso = SER.iso
 
     add-wglue-over :
-      CF-hom n (ptd-susp^-fmap m ptd-add-wglue) == ×G-inl
-      [ (λ G → GroupHom (C n (Ptd-Susp^ m (Ptd-Wedge X Y))) G) ↓ iso ]
+      CF-hom n (⊙susp^-fmap m ⊙add-wglue) == ×G-inl
+      [ (λ G → GroupHom (C n (⊙Susp^ m (⊙Wedge X Y))) G) ↓ iso ]
     add-wglue-over = SER.φ-over-iso

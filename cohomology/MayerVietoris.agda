@@ -11,20 +11,20 @@ module cohomology.MayerVietoris {i} where
    to the suspension of Z. -}
 
 {- Relevant functions -}
-module MayerVietorisFunctions (ps : Ptd-Span {i} {i} {i}) where
+module MayerVietorisFunctions (ps : ⊙Span {i} {i} {i}) where
 
-  open Ptd-Span ps
+  open ⊙Span ps
 
 
   module Reglue = WedgeRec
-    {X = Ptd-Span.X ps} {Y = Ptd-Span.Y ps} {C = fst (Ptd-Pushout ps)}
+    {X = ⊙Span.X ps} {Y = ⊙Span.Y ps} {C = fst (⊙Pushout ps)}
     left right (! (ap left (snd f)) ∙ glue (snd Z) ∙' ap right (snd g))
 
-  reglue : Wedge X Y → fst (Ptd-Pushout ps)
+  reglue : Wedge X Y → fst (⊙Pushout ps)
   reglue = Reglue.f
 
-  ptd-reglue : fst (Ptd-Wedge X Y ∙→ Ptd-Pushout ps)
-  ptd-reglue = (reglue , idp)
+  ⊙reglue : fst (⊙Wedge X Y ⊙→ ⊙Pushout ps)
+  ⊙reglue = (reglue , idp)
 
   module MVDiff = SuspensionRec (fst Z) {C = Suspension (Wedge X Y)}
     (north _)
@@ -34,21 +34,21 @@ module MayerVietorisFunctions (ps : Ptd-Span {i} {i} {i}) where
   mv-diff : Suspension (fst Z) → Suspension (Wedge X Y)
   mv-diff = MVDiff.f
 
-  ptd-mv-diff : fst (Ptd-Susp Z ∙→ Ptd-Susp (Ptd-Wedge X Y))
-  ptd-mv-diff = (mv-diff , idp)
+  ⊙mv-diff : fst (⊙Susp Z ⊙→ ⊙Susp (⊙Wedge X Y))
+  ⊙mv-diff = (mv-diff , idp)
 
-{- We use path induction (via [ptd-pushout-J]) to assume that the
+{- We use path induction (via [⊙pushout-J]) to assume that the
    basepoint preservation paths of the span maps are [idp]. The module
    [Base] contains the proof of the theorem for this case. -}
 module MayerVietorisBase
   {A B : Type i} (Z : Ptd i) (f : fst Z → A) (g : fst Z → B) where
 
-  X = ∙[ A , f (snd Z) ]
-  Y = ∙[ B , g (snd Z) ]
-  ps = ptd-span X Y Z (f , idp) (g , idp)
-  F : fst (Z ∙→ X)
+  X = ⊙[ A , f (snd Z) ]
+  Y = ⊙[ B , g (snd Z) ]
+  ps = ⊙span X Y Z (f , idp) (g , idp)
+  F : fst (Z ⊙→ X)
   F = (f , idp)
-  G : fst (Z ∙→ Y)
+  G : fst (Z ⊙→ Y)
   G = (g , idp)
 
   open MayerVietorisFunctions ps
@@ -121,7 +121,7 @@ module MayerVietorisBase
   private
     out-into-cod-square : (z : fst Z) →
       Square (cfglue reglue (winl (f z)))
-             (ap (out ∘ ext-glue {s = ptd-span-out ps}) (glue z))
+             (ap (out ∘ ext-glue {s = ⊙span-out ps}) (glue z))
              (ap (cfcod _) (glue z)) (cfglue _ (winr (g z)))
     out-into-cod-square z =
       (ap-∘ out ext-glue (glue z)
@@ -129,7 +129,7 @@ module MayerVietorisBase
       ∙v⊡ out-square z
 
     module OutIntoCod = PushoutElim
-      {d = ptd-span-out ps} {P = λ γ → out (into (cfcod _ γ)) == cfcod _ γ}
+      {d = ⊙span-out ps} {P = λ γ → out (into (cfcod _ γ)) == cfcod _ γ}
       (λ x → cfglue _ (winl x))
       (λ y → cfglue _ (winr y))
       (λ z → ↓-='-from-square (out-into-cod-square z))
@@ -245,17 +245,17 @@ module MayerVietorisBase
   path : Cofiber reglue == Suspension (fst Z)
   path = ua eq
 
-  ptd-path : Ptd-Cof ptd-reglue == Ptd-Susp Z
-  ptd-path = ptd-ua eq idp
+  ⊙path : ⊙Cof ⊙reglue == ⊙Susp Z
+  ⊙path = ⊙ua eq idp
 
   {- Transporting [cfcod reglue] over the equivalence -}
 
-  cfcod-over : ptd-cfcod ptd-reglue == ptd-ext-glue
-              [ (λ W → fst (Ptd-Pushout ps ∙→ W)) ↓ ptd-path ]
+  cfcod-over : ⊙cfcod ⊙reglue == ⊙ext-glue
+              [ (λ W → fst (⊙Pushout ps ⊙→ W)) ↓ ⊙path ]
   cfcod-over =
-    codomain-over-ptd-equiv (ptd-cfcod ptd-reglue) eq idp ▹ lemma
+    codomain-over-⊙equiv (⊙cfcod ⊙reglue) eq idp ▹ lemma
     where
-    lemma : (into , idp) ∘ptd ptd-cfcod ptd-reglue == ptd-ext-glue
+    lemma : (into , idp) ⊙∘ ⊙cfcod ⊙reglue == ⊙ext-glue
     lemma = pair= idp $
       ap into (! (cfglue reglue (winl (snd X)))) ∙ idp
         =⟨ ap-! into (cfglue reglue (winl (snd X))) |in-ctx (λ w → w ∙ idp) ⟩
@@ -264,7 +264,7 @@ module MayerVietorisBase
       idp ∎
 
   {- Transporting [ext-glue] over the equivalence. Uses the same sort of
-   - cube technique as in the proof of [ptd-path]. -}
+   - cube technique as in the proof of [⊙path]. -}
 
   private
     square-push-rt : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A} {b : A}
@@ -319,9 +319,9 @@ module MayerVietorisBase
         → Cube sq₋₋₀ (vid-square ⊡v' sq₋₋₁) sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋
       right-from-top-lemma' ids cu = cu
 
-  ext-over : ptd-ext-glue == ptd-mv-diff
-             [ (λ W → fst (W ∙→ Ptd-Susp (Ptd-Wedge X Y))) ↓ ptd-path ]
-  ext-over = ptd-λ= fn-lemma idp ◃ domain-over-ptd-equiv ptd-mv-diff _ _
+  ext-over : ⊙ext-glue == ⊙mv-diff
+             [ (λ W → fst (W ⊙→ ⊙Susp (⊙Wedge X Y))) ↓ ⊙path ]
+  ext-over = ⊙λ= fn-lemma idp ◃ domain-over-⊙equiv ⊙mv-diff _ _
     where
     fn-lemma : ∀ κ → ext-glue κ == mv-diff (into κ)
     fn-lemma = Cofiber-elim reglue
@@ -331,7 +331,7 @@ module MayerVietorisBase
           fn-coh w
         ⊡v∙ ! (ap-∘ mv-diff into (glue w) ∙ ap (ap mv-diff) (Into.glue-β w)))
       where
-      fn-cod : (γ : fst (Ptd-Pushout ps))
+      fn-cod : (γ : fst (⊙Pushout ps))
         → ext-glue (cfcod reglue γ) == mv-diff (ext-glue γ)
       fn-cod = Pushout-elim
         (λ x → ! (merid _ (winl x)))
@@ -364,30 +364,30 @@ module MayerVietorisBase
           (snd fn-fill))
 
 {- Main results -}
-module MayerVietoris (ps : Ptd-Span {i} {i} {i}) where
+module MayerVietoris (ps : ⊙Span {i} {i} {i}) where
 
   private
-    record Results (ps : Ptd-Span {i} {i} {i}) : Type (lsucc i) where
-      open Ptd-Span ps
+    record Results (ps : ⊙Span {i} {i} {i}) : Type (lsucc i) where
+      open ⊙Span ps
       open MayerVietorisFunctions ps public
       field
         eq : Cofiber reglue ≃ Suspension (fst Z)
         path : Cofiber reglue == Suspension (fst Z)
-        ptd-path : Ptd-Cof ptd-reglue == Ptd-Susp Z
-        cfcod-over : ptd-cfcod ptd-reglue == ptd-ext-glue
-                     [ (λ W → fst (Ptd-Pushout ps ∙→ W)) ↓ ptd-path ]
-        ext-over : ptd-ext-glue == ptd-mv-diff
-                   [ (λ W → fst (W ∙→ Ptd-Susp (Ptd-Wedge X Y))) ↓ ptd-path ]
+        ⊙path : ⊙Cof ⊙reglue == ⊙Susp Z
+        cfcod-over : ⊙cfcod ⊙reglue == ⊙ext-glue
+                     [ (λ W → fst (⊙Pushout ps ⊙→ W)) ↓ ⊙path ]
+        ext-over : ⊙ext-glue == ⊙mv-diff
+                   [ (λ W → fst (W ⊙→ ⊙Susp (⊙Wedge X Y))) ↓ ⊙path ]
 
     results : Results ps
-    results = ptd-pushout-J Results base-results ps
+    results = ⊙pushout-J Results base-results ps
       where
       base-results : ∀ {A} {B} Z (f : fst Z → A) (g : fst Z → B) →
-        Results (ptd-span _ _ Z (f , idp) (g , idp))
+        Results (⊙span _ _ Z (f , idp) (g , idp))
       base-results Z f g = record {
         eq = eq;
         path = path;
-        ptd-path = ptd-path;
+        ⊙path = ⊙path;
         cfcod-over = cfcod-over;
         ext-over = ext-over}
         where open MayerVietorisBase Z f g

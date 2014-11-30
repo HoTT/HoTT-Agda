@@ -42,12 +42,12 @@ module _ {i} (A : Type i) where
   module SuspensionRecType {j} (n s : Type j) (p : A → n ≃ s)
     = PushoutRecType {d = suspension-span} (λ _ → n) (λ _ → s) p
 
-suspension-ptd-span : ∀ {i} → Ptd i → Ptd-Span
-suspension-ptd-span X =
-  ptd-span Ptd-Unit Ptd-Unit X (ptd-cst {X = X}) (ptd-cst {X = X})
+suspension-⊙span : ∀ {i} → Ptd i → ⊙Span
+suspension-⊙span X =
+  ⊙span ⊙Unit ⊙Unit X (⊙cst {X = X}) (⊙cst {X = X})
 
-Ptd-Susp : ∀ {i} → Ptd i → Ptd i
-Ptd-Susp (A , _) = ∙[ Suspension A , north A ]
+⊙Susp : ∀ {i} → Ptd i → Ptd i
+⊙Susp (A , _) = ⊙[ Suspension A , north A ]
 
 
 σloop : ∀ {i} (X : Ptd i) → fst X → north (fst X) == north (fst X)
@@ -63,8 +63,8 @@ module FlipSusp {i} {A : Type i} = SuspensionRec A
 flip-susp : ∀ {i} {A : Type i} → Suspension A → Suspension A
 flip-susp = FlipSusp.f
 
-ptd-flip-susp : ∀ {i} (X : Ptd i) → fst (Ptd-Susp X ∙→ Ptd-Susp X)
-ptd-flip-susp X = (flip-susp , ! (merid _ (snd X)))
+⊙flip-susp : ∀ {i} (X : Ptd i) → fst (⊙Susp X ⊙→ ⊙Susp X)
+⊙flip-susp X = (flip-susp , ! (merid _ (snd X)))
 
 module _ {i j} where
 
@@ -75,9 +75,9 @@ module _ {i j} where
     → (Suspension A → Suspension B)
   susp-fmap = SuspFmap.f
 
-  ptd-susp-fmap : {X : Ptd i} {Y : Ptd j} (f : fst (X ∙→ Y))
-    → fst (Ptd-Susp X ∙→ Ptd-Susp Y)
-  ptd-susp-fmap (f , fpt) = (susp-fmap f , idp)
+  ⊙susp-fmap : {X : Ptd i} {Y : Ptd j} (f : fst (X ⊙→ Y))
+    → fst (⊙Susp X ⊙→ ⊙Susp Y)
+  ⊙susp-fmap (f , fpt) = (susp-fmap f , idp)
 
 module _ {i} where
 
@@ -85,9 +85,9 @@ module _ {i} where
   susp-fmap-idf A = Suspension-elim _ idp idp $ λ a →
     ↓-='-in (ap-idf (merid _ a) ∙ ! (SuspFmap.glue-β (idf A) a))
 
-  ptd-susp-fmap-idf : (X : Ptd i)
-    → ptd-susp-fmap (ptd-idf X) == ptd-idf (Ptd-Susp X)
-  ptd-susp-fmap-idf X = ptd-λ= (susp-fmap-idf (fst X)) idp
+  ⊙susp-fmap-idf : (X : Ptd i)
+    → ⊙susp-fmap (⊙idf X) == ⊙idf (⊙Susp X)
+  ⊙susp-fmap-idf X = ⊙λ= (susp-fmap-idf (fst X)) idp
 
 module _ {i j} where
 
@@ -96,9 +96,9 @@ module _ {i j} where
   susp-fmap-cst b = Suspension-elim _ idp (! (merid _ b)) $ (λ a →
     ↓-app=cst-from-square $ SuspFmap.glue-β (cst b) a ∙v⊡ ur-square _)
 
-  ptd-susp-fmap-cst : {X : Ptd i} {Y : Ptd j}
-    → ptd-susp-fmap (ptd-cst {X = X} {Y = Y}) == ptd-cst
-  ptd-susp-fmap-cst = ptd-λ= (susp-fmap-cst _) idp
+  ⊙susp-fmap-cst : {X : Ptd i} {Y : Ptd j}
+    → ⊙susp-fmap (⊙cst {X = X} {Y = Y}) == ⊙cst
+  ⊙susp-fmap-cst = ⊙λ= (susp-fmap-cst _) idp
 
 module _ {i j k} where
 
@@ -113,10 +113,10 @@ module _ {i j k} where
       ∙ SuspFmap.glue-β g (f a)
       ∙ ! (SuspFmap.glue-β (g ∘ f) a))
 
-  ptd-susp-fmap-∘ : {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-    (g : fst (Y ∙→ Z)) (f : fst (X ∙→ Y))
-    → ptd-susp-fmap (g ∘ptd f) == ptd-susp-fmap g ∘ptd ptd-susp-fmap f
-  ptd-susp-fmap-∘ g f = ptd-λ= (susp-fmap-∘ (fst g) (fst f)) idp
+  ⊙susp-fmap-∘ : {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+    (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y))
+    → ⊙susp-fmap (g ⊙∘ f) == ⊙susp-fmap g ⊙∘ ⊙susp-fmap f
+  ⊙susp-fmap-∘ g f = ⊙λ= (susp-fmap-∘ (fst g) (fst f)) idp
 
 
 {- Extract the 'glue component' of a pushout -}
@@ -129,6 +129,6 @@ module _ {i j k} {s : Span {i} {j} {k}} where
 
 module _ {i j k} {s : Span {i} {j} {k}} {x₀ : Span.A s} where
 
-  ptd-ext-glue :
-    fst ((Pushout s , left x₀) ∙→ (Suspension (Span.C s) , north _))
-  ptd-ext-glue = (ext-glue , idp)
+  ⊙ext-glue :
+    fst ((Pushout s , left x₀) ⊙→ (Suspension (Span.C s) , north _))
+  ⊙ext-glue = (ext-glue , idp)

@@ -60,8 +60,8 @@ module _ {i} {A : Type i} where
 
 module _ {i} (X : Ptd i) where
 
-  join-S⁰-ptd-path : Ptd-Sphere {i} 0 ∙* X == Ptd-Susp X
-  join-S⁰-ptd-path = ptd-ua join-S⁰-equiv idp
+  join-S⁰-⊙path : ⊙Sphere {i} 0 ⊙* X == ⊙Susp X
+  join-S⁰-⊙path = ⊙ua join-S⁰-equiv idp
 
 module _ {i} {A B : Type i} where
 
@@ -75,18 +75,18 @@ module _ {i} {A B : Type i} where
 
 module _ {i} (X Y : Ptd i) where
 
-  ptd-join-susp-shift : Ptd-Susp X ∙* Y == Ptd-Susp (X ∙* Y)
-  ptd-join-susp-shift =
-    ap (λ Z → Z ∙* Y) (! (join-S⁰-ptd-path X))
-    ∙ join-rearrange-ptd-path (Ptd-Sphere 0) X Y
-    ∙ ptd-ua swap-equiv (! (glue _))
-    ∙ join-S⁰-ptd-path (Y ∙* X)
+  ⊙join-susp-shift : ⊙Susp X ⊙* Y == ⊙Susp (X ⊙* Y)
+  ⊙join-susp-shift =
+    ap (λ Z → Z ⊙* Y) (! (join-S⁰-⊙path X))
+    ∙ join-rearrange-⊙path (⊙Sphere 0) X Y
+    ∙ ⊙ua swap-equiv (! (glue _))
+    ∙ join-S⁰-⊙path (Y ⊙* X)
     ∙ ap (λ A → (Suspension A , north _)) (ua swap-equiv)
 
 module _ {i} (X : Ptd i) where
 
-  ptd-join-sphere : (m : ℕ) → Ptd-Sphere {i} m ∙* X == Ptd-Susp^ (S m) X
-  ptd-join-sphere O = join-S⁰-ptd-path X
-  ptd-join-sphere (S m) = ptd-join-susp-shift (Ptd-Sphere m) X
-                          ∙ ap Ptd-Susp (ptd-join-sphere m)
+  ⊙join-sphere : (m : ℕ) → ⊙Sphere {i} m ⊙* X == ⊙Susp^ (S m) X
+  ⊙join-sphere O = join-S⁰-⊙path X
+  ⊙join-sphere (S m) = ⊙join-susp-shift (⊙Sphere m) X
+                          ∙ ap ⊙Susp (⊙join-sphere m)
 

@@ -82,8 +82,8 @@ module TruncRecType {i j} {n : ℕ₋₂} {A : Type i} (d : A → n -Type j) whe
     from-to (a , b) = from-to-aux a b
 
 
-Ptd-Trunc : ∀ {i} → ℕ₋₂ → Ptd i → Ptd i
-Ptd-Trunc n (A , a) = ∙[ Trunc n A , [ a ] ]
+⊙Trunc : ∀ {i} → ℕ₋₂ → Ptd i → Ptd i
+⊙Trunc n (A , a) = ⊙[ Trunc n A , [ a ] ]
 
 
 module _ {i} {n : ℕ₋₂} {A : Type i} where

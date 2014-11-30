@@ -15,15 +15,15 @@ record Cospan {i j k : ULevel} : Type (lsucc (lmax (lmax i j) k)) where
     f : A → C
     g : B → C
 
-record Ptd-Cospan {i j k : ULevel} : Type (lsucc (lmax (lmax i j) k)) where
-  constructor ptd-cospan
+record ⊙Cospan {i j k : ULevel} : Type (lsucc (lmax (lmax i j) k)) where
+  constructor ⊙cospan
   field
     X : Ptd i
     Y : Ptd j
     Z : Ptd k
-    f : fst (X ∙→ Z)
-    g : fst (Y ∙→ Z)
+    f : fst (X ⊙→ Z)
+    g : fst (Y ⊙→ Z)
 
-ptd-cospan-out : ∀ {i j k} → Ptd-Cospan {i} {j} {k} → Cospan {i} {j} {k}
-ptd-cospan-out (ptd-cospan X Y Z f g) = 
+⊙cospan-out : ∀ {i j k} → ⊙Cospan {i} {j} {k} → Cospan {i} {j} {k}
+⊙cospan-out (⊙cospan X Y Z f g) =
   cospan (fst X) (fst Y) (fst Z) (fst f) (fst g)

@@ -42,21 +42,21 @@ abstract
                    t _
                    ∙ ap g' (↓-idf-ua-out r (↓-fst×-out (ua r) (ua q) β))))))
 
-record Ptd-Span {i j k : ULevel} : Type (lsucc (lmax (lmax i j) k)) where
-  constructor ptd-span
+record ⊙Span {i j k : ULevel} : Type (lsucc (lmax (lmax i j) k)) where
+  constructor ⊙span
   field
     X : Ptd i
     Y : Ptd j
     Z : Ptd k
-    f : fst (Z ∙→ X)
-    g : fst (Z ∙→ Y)
+    f : fst (Z ⊙→ X)
+    g : fst (Z ⊙→ Y)
 
-ptd-span-out : ∀ {i j k} → Ptd-Span {i} {j} {k} → Span {i} {j} {k}
-ptd-span-out (ptd-span X Y Z f g) = span (fst X) (fst Y) (fst Z) (fst f) (fst g)
+⊙span-out : ∀ {i j k} → ⊙Span {i} {j} {k} → Span {i} {j} {k}
+⊙span-out (⊙span X Y Z f g) = span (fst X) (fst Y) (fst Z) (fst f) (fst g)
 
 {- Helper for path induction on pointed spans -}
-ptd-span-J : ∀ {i j k l} (P : Ptd-Span {i} {j} {k} → Type l)
+⊙span-J : ∀ {i j k l} (P : ⊙Span {i} {j} {k} → Type l)
   → ({A : Type i} {B : Type j} {Z : Ptd k} (f : fst Z → A) (g : fst Z → B)
-     → P (ptd-span (A , f (snd Z)) (B , g (snd Z)) Z (f , idp) (g , idp)))
-  → Π Ptd-Span P
-ptd-span-J P t (ptd-span (A , ._) (B , ._) Z (f , idp) (g , idp)) = t f g
+     → P (⊙span (A , f (snd Z)) (B , g (snd Z)) Z (f , idp) (g , idp)))
+  → Π ⊙Span P
+⊙span-J P t (⊙span (A , ._) (B , ._) Z (f , idp) (g , idp)) = t f g

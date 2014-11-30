@@ -18,8 +18,8 @@ module _ {i j} (A : Type i) (B : Type j) where
 
 module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
-  ptd-*-span : Ptd-Span
-  ptd-*-span = ptd-span X Y (X ×ptd Y) ptd-fst ptd-snd
+  *-⊙span : ⊙Span
+  *-⊙span = ⊙span X Y (X ⊙× Y) ⊙fst ⊙snd
 
-  _∙*_ : Ptd _
-  _∙*_ = Ptd-Pushout ptd-*-span
+  _⊙*_ : Ptd _
+  _⊙*_ = ⊙Pushout *-⊙span

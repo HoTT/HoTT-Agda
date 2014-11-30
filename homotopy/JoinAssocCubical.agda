@@ -312,6 +312,6 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} where
 
 module _ {i j k} (X : Ptd i) (Y : Ptd j) (Z : Ptd k) where
 
-  join-rearrange-ptd-path : (X ∙* Y) ∙* Z == (Z ∙* Y) ∙* X
-  join-rearrange-ptd-path =
-    ptd-ua join-rearrange-equiv (! (glue (left (snd Z), snd X)))
+  join-rearrange-⊙path : (X ⊙* Y) ⊙* Z == (Z ⊙* Y) ⊙* X
+  join-rearrange-⊙path =
+    ⊙ua join-rearrange-equiv (! (glue (left (snd Z), snd X)))

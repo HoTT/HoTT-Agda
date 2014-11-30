@@ -34,8 +34,8 @@ module KG1 {i} (G : Group i) where
   kbase : KG1
   kbase = #kg1 #kbase _
 
-  Ptd-KG1 : Ptd i
-  Ptd-KG1 = ∙[ KG1 , kbase ]
+  ⊙KG1 : Ptd i
+  ⊙KG1 = ⊙[ KG1 , kbase ]
 
   postulate  -- HIT
     klevel : has-level ⟨ 1 ⟩ KG1
@@ -210,7 +210,7 @@ module KG1 {i} (G : Group i) where
 
     abstract
       π₁-iso : π 1 (ℕ-S≠O _) (KG1 , kbase) == G
-      π₁-iso = transport (λ pi → pi 1 (ℕ-S≠O _) Ptd-KG1 == G) π-fold $ ! $
+      π₁-iso = transport (λ pi → pi 1 (ℕ-S≠O _) ⊙KG1 == G) π-fold $ ! $
         group-iso
         (record { f = [_] ∘ kloop;
                   pres-comp = λ g₁ g₂ → ap [_] (kloop-comp g₁ g₂) })

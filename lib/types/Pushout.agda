@@ -113,25 +113,22 @@ _⊔^[_]_/_ : (A : Type i) (C : Type k) (B : Type j)
   (fg : (C → A) × (C → B)) → Type (lmax (lmax i j) k)
 A ⊔^[ C ] B  / (f , g) = Pushout (span A B C f g)
 
--- _*_ : ∀ {i j} (A : Type i) (B : Type j) → Type (lmax i j)
--- A * B = A ⊔^[ (A × B) ] B  / (fst , snd)
+⊙Pushout : (d : ⊙Span {i} {j} {k}) → Ptd _
+⊙Pushout d = ⊙[ Pushout (⊙span-out d) , left (snd (⊙Span.X d)) ]
 
-Ptd-Pushout : (d : Ptd-Span {i} {j} {k}) → Ptd _
-Ptd-Pushout d = ∙[ Pushout (ptd-span-out d) , left (snd (Ptd-Span.X d)) ]
+module _ (d : ⊙Span {i} {j} {k}) where
 
-module _ (d : Ptd-Span {i} {j} {k}) where
+  open ⊙Span d
 
-  open Ptd-Span d
+  ⊙left : fst (X ⊙→ ⊙Pushout d)
+  ⊙left = (left , idp)
 
-  ptd-left : fst (X ∙→ Ptd-Pushout d)
-  ptd-left = (left , idp)
-
-  ptd-right : fst (Y ∙→ Ptd-Pushout d)
-  ptd-right =
+  ⊙right : fst (Y ⊙→ ⊙Pushout d)
+  ⊙right =
     (right , ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙' ap left (snd f))
 
-  ptd-glue : (ptd-left ∘ptd f) == (ptd-right ∘ptd g)
-  ptd-glue = pair=
+  ⊙glue : (⊙left ⊙∘ f) == (⊙right ⊙∘ g)
+  ⊙glue = pair=
     (λ= glue)
     (↓-app=cst-in $
       ap left (snd f) ∙ idp
@@ -156,9 +153,9 @@ module _ (d : Ptd-Span {i} {j} {k}) where
       → r == p ∙ q ∙ ! q ∙ ! p ∙' r
     lemma idp idp idp = idp
 
-ptd-pushout-J : ∀ {l} (P : Ptd-Span → Type l)
+⊙pushout-J : ∀ {l} (P : ⊙Span → Type l)
   → ({A : Type i} {B : Type j} (Z : Ptd k) (f : fst Z → A) (g : fst Z → B)
-     → P (ptd-span (A , f (snd Z)) (B , g (snd Z)) Z (f , idp) (g , idp)))
-  → ((ps : Ptd-Span) → P ps)
-ptd-pushout-J P t (ptd-span (_ , ._) (_ , ._) Z (f , idp) (g , idp)) = t Z f g
+     → P (⊙span (A , f (snd Z)) (B , g (snd Z)) Z (f , idp) (g , idp)))
+  → ((ps : ⊙Span) → P ps)
+⊙pushout-J P t (⊙span (_ , ._) (_ , ._) Z (f , idp) (g , idp)) = t Z f g
 

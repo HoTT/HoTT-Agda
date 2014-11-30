@@ -45,13 +45,13 @@ module _ {i j k} (D : Cospan {i} {j} {k}) where
       =⟨ ap-cst _ _ ⟩
     idp ∎
 
-module _ {i j k} (D : Ptd-Cospan {i} {j} {k}) where
+module _ {i j k} (D : ⊙Cospan {i} {j} {k}) where
 
-  Ptd-Pullback : Ptd (lmax i (lmax j k))
-  Ptd-Pullback = 
-    ∙[ Pullback (ptd-cospan-out D) , 
+  ⊙Pullback : Ptd (lmax i (lmax j k))
+  ⊙Pullback = 
+    ⊙[ Pullback (⊙cospan-out D) , 
        pullback (snd X) (snd Y) (snd f ∙ ! (snd g)) ]
-    where open Ptd-Cospan D
+    where open ⊙Cospan D
 
 module _ {i j k} (D : Cospan {i} {j} {k}) where
   open Cospan D

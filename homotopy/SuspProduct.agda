@@ -11,10 +11,10 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
 
     {- into -}
 
-    into-glue : fst (X ×ptd Y) → winl (north _) == winr (winr (north _))
+    into-glue : fst (X ⊙× Y) → winl (north _) == winr (winr (north _))
     into-glue (x , y) =
       ap winl (σloop X x) ∙ wglue
-      ∙ ap (winr ∘ winl) (σloop (Ptd-Smash X Y) (cfcod _ (x , y)))
+      ∙ ap (winr ∘ winl) (σloop (⊙Smash X Y) (cfcod _ (x , y)))
       ∙ ap winr wglue ∙ ap (winr ∘ winr) (σloop Y y)
 
     into-glue-x : (x : fst X) →
@@ -22,7 +22,7 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
     into-glue-x x =
       ap (λ p → ap winl (σloop X x) ∙ wglue ∙ p
                  ∙ ap winr wglue ∙ ap (winr ∘ winr) (σloop Y (snd Y)))
-         (ap (ap (winr ∘ winl) ∘ σloop (Ptd-Smash X Y)) (! (cfglue _ (winl x)))
+         (ap (ap (winr ∘ winl) ∘ σloop (⊙Smash X Y)) (! (cfglue _ (winl x)))
           ∙ ap (ap (winr ∘ winl)) σloop-pt)
       ∙
       ap (λ q → ap winl (σloop X x) ∙ wglue ∙ ap winr wglue
@@ -37,7 +37,7 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
     into-glue-y y =
       ap (λ p → ap winl (σloop X (snd X)) ∙ wglue ∙ p
                  ∙ ap winr wglue ∙ ap (winr ∘ winr) (σloop Y y))
-         (ap (ap (winr ∘ winl) ∘ σloop (Ptd-Smash X Y)) (! (cfglue _ (winr y)))
+         (ap (ap (winr ∘ winl) ∘ σloop (⊙Smash X Y)) (! (cfglue _ (winr y)))
           ∙ ap (ap (winr ∘ winl)) σloop-pt)
       ∙
       ap (λ q → ap winl q ∙ wglue ∙ ap winr wglue
@@ -48,9 +48,9 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
     into-glue-0 = into-glue-x (snd X)
                   ∙ ap (λ p → ap winl p ∙ wglue ∙ ap winr wglue) σloop-pt
 
-    module Into = SuspensionRec (fst (X ×ptd Y))
-      {C = fst (Ptd-Wedge (Ptd-Susp X)
-               (Ptd-Wedge (Ptd-Susp (Ptd-Smash X Y)) (Ptd-Susp Y)))}
+    module Into = SuspensionRec (fst (X ⊙× Y))
+      {C = fst (⊙Wedge (⊙Susp X)
+               (⊙Wedge (⊙Susp (⊙Smash X Y)) (⊙Susp Y)))}
       (winl (north _))
       (winr (winr (north _)))
       into-glue
@@ -80,12 +80,12 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
 
     fill : Σ (idp == idp) (λ p →
       Square (expand₁ (merid _ (snd X , snd Y)) (merid _ (snd X , snd Y))) p
-             (ap (λ w → out-× (fst (∨-in-× X Y) w)) wglue)
+             (ap (λ w → out-× (∨-in-× X Y w)) wglue)
              (expand₂ (merid _ (snd X , snd Y)) (merid _ (snd X , snd Y))))
     fill = fill-square-top _ _ _
 
     module OutSmash = SuspensionRec (Smash X Y)
-      (north (fst (X ×ptd Y)))
+      (north (fst (X ⊙× Y)))
       (north _)
       (CofiberRec.f _
         idp
@@ -96,15 +96,15 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
                  ∙ expand₂ (merid _ (snd X , snd Y)) (merid _ (snd X , y)))
           (↓-cst=app-from-square $ shift (snd fill))))
 
-    module OutWinr = WedgeRec {X = Ptd-Susp (Ptd-Smash X Y)} {Y = Ptd-Susp Y}
-      {C = fst (Ptd-Susp (X ×ptd Y))}
+    module OutWinr = WedgeRec {X = ⊙Susp (⊙Smash X Y)} {Y = ⊙Susp Y}
+      {C = fst (⊙Susp (X ⊙× Y))}
       OutSmash.f
       (susp-fmap (λ y → (snd X , y)))
       idp
 
-    module Out = WedgeRec {X = Ptd-Susp X}
-      {Y = Ptd-Wedge (Ptd-Susp (Ptd-Smash X Y)) (Ptd-Susp Y)}
-      {C = fst (Ptd-Susp (X ×ptd Y))}
+    module Out = WedgeRec {X = ⊙Susp X}
+      {Y = ⊙Wedge (⊙Susp (⊙Smash X Y)) (⊙Susp Y)}
+      {C = fst (⊙Susp (X ⊙× Y))}
       (susp-fmap (λ x → (x , snd Y)))
       OutWinr.f
       idp
@@ -162,7 +162,7 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
              (Into.glue-β (x , y))
              (Into.glue-β (snd X , y) ∙ into-glue-y y))
         ∙v⊡ lemma₂ wglue (ap winr wglue) (ap winl (σloop X x))
-                    (ap (winr ∘ winl) (σloop (Ptd-Smash X Y) (cfcod _ (x , y))))
+                    (ap (winr ∘ winl) (σloop (⊙Smash X Y) (cfcod _ (x , y))))
                     (ap (winr ∘ winr) (σloop Y y))
                     (ap (winr ∘ winl) (merid _ (cfcod _ (x , y))))
                     (ap (winr ∘ winl) (merid _ (cfbase _)))
@@ -209,7 +209,7 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
       (↓-∘=idf-from-square into out $
         ap (ap into) Out.glue-β ∙v⊡ connection)
 
-    out-into-merid : (s : fst (X ×ptd Y))
+    out-into-merid : (s : fst (X ⊙× Y))
       → idp == merid _ (snd X , snd Y) [ (λ σ → out (into σ) == σ) ↓ merid _ s ]
     out-into-merid (x , y) = ↓-∘=idf-from-square out into $
       (ap (ap out) (Into.glue-β (x , y))
@@ -262,12 +262,11 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
 
 
   abstract
-    eq : fst (Ptd-Susp (X ×ptd Y))
-         ≃ fst (Ptd-Wedge (Ptd-Susp X)
-                  (Ptd-Wedge (Ptd-Susp (Ptd-Smash X Y)) (Ptd-Susp Y)))
+    eq : fst (⊙Susp (X ⊙× Y))
+         ≃ fst (⊙Wedge (⊙Susp X)
+                  (⊙Wedge (⊙Susp (⊙Smash X Y)) (⊙Susp Y)))
     eq = equiv into out into-out out-into
 
-    ptd-path : Ptd-Susp (X ×ptd Y)
-               == (Ptd-Wedge (Ptd-Susp X)
-                     (Ptd-Wedge (Ptd-Susp (Ptd-Smash X Y)) (Ptd-Susp Y)))
-    ptd-path = ptd-ua eq idp
+    ⊙path : ⊙Susp (X ⊙× Y)
+            == (⊙Wedge (⊙Susp X) (⊙Wedge (⊙Susp (⊙Smash X Y)) (⊙Susp Y)))
+    ⊙path = ⊙ua eq idp

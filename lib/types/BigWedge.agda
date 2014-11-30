@@ -29,14 +29,14 @@ module _ {i j} {A : Type i} where
   bwin : {X : A → Ptd j} → (a : A) → fst (X a) → BigWedge X
   bwin a x = #bigwedge (#bwin a x) _
 
-  Ptd-BigWedge : (A → Ptd j) → Ptd (lmax i j)
-  Ptd-BigWedge X = ∙[ BigWedge X , bwbase ]
+  ⊙BigWedge : (A → Ptd j) → Ptd (lmax i j)
+  ⊙BigWedge X = ⊙[ BigWedge X , bwbase ]
 
   postulate  -- HIT
     bwglue : {X : A → Ptd j} → (a : A) → bwbase {X} == bwin a (snd (X a))
 
-  ptd-bwin : {X : A → Ptd j} → (a : A) → fst (X a ∙→ Ptd-BigWedge X)
-  ptd-bwin a = (bwin a , ! (bwglue a))
+  ⊙bwin : {X : A → Ptd j} → (a : A) → fst (X a ⊙→ ⊙BigWedge X)
+  ⊙bwin a = (bwin a , ! (bwglue a))
 
   module BigWedgeElim {X : A → Ptd j} {k} {P : BigWedge X → Type k}
     (base* : P bwbase)
@@ -125,6 +125,6 @@ module _ {i} (Pick : Lift {j = i} Bool → Ptd i) where
     BigWedge Pick == Wedge (Pick (lift true)) (Pick (lift false))
   BigWedge-Bool-path = ua BigWedge-Bool-equiv
 
-  BigWedge-Bool-ptd-path :
-    Ptd-BigWedge Pick == Ptd-Wedge (Pick (lift true)) (Pick (lift false))
-  BigWedge-Bool-ptd-path = ptd-ua BigWedge-Bool-equiv idp
+  BigWedge-Bool-⊙path :
+    ⊙BigWedge Pick == ⊙Wedge (Pick (lift true)) (Pick (lift false))
+  BigWedge-Bool-⊙path = ⊙ua BigWedge-Bool-equiv idp

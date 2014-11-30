@@ -8,19 +8,19 @@ module cohomology.SuspAdjointLoopIso where
 
 module SuspAdjointLoopIso {i j} (X : Ptd i) (Y : Ptd j) where
 
-  module ΣAΩ = SuspAdjointLoop X (Ptd-Ω Y)
-  GSΣ = →Ω-group-structure (Ptd-Susp X) Y
-  GSΩ = →Ω-group-structure X (Ptd-Ω Y)
+  module ΣAΩ = SuspAdjointLoop X (⊙Ω Y)
+  GSΣ = →Ω-group-structure (⊙Susp X) Y
+  GSΩ = →Ω-group-structure X (⊙Ω Y)
   open GroupStructure
 
-  comp-path : (p q : fst (Ptd-Ω (Ptd-Ω Y))) → ap2 _∙_ p q == p ∙ q
+  comp-path : (p q : fst (⊙Ω (⊙Ω Y))) → ap2 _∙_ p q == p ∙ q
   comp-path p q = ap2-out _∙_ p q ∙ ap2 _∙_ (lemma p) (ap-idf q)
     where
     lemma : ∀ {i} {A : Type i} {x y : A} {p q : x == y} (α : p == q)
       → ap (λ r → r ∙ idp) α == ∙-unit-r p ∙ α ∙' ! (∙-unit-r q)
     lemma {p = idp} idp = idp
 
-  pres-comp-inner : (H₁ H₂ : fst (Ptd-Susp X ∙→ Ptd-Ω Y))
+  pres-comp-inner : (H₁ H₂ : fst (⊙Susp X ⊙→ ⊙Ω Y))
     → ΣAΩ.R (comp GSΣ H₁ H₂) == comp GSΩ (ΣAΩ.R H₁) (ΣAΩ.R H₂)
   pres-comp-inner H₁ H₂ =
     transport
@@ -44,7 +44,7 @@ module SuspAdjointLoopIso {i j} (X : Ptd i) (Y : Ptd j) where
         =⟨ ! (∙-unit-r _) ⟩
       ap (λ f → f idp idp) (λ= (λ p → λ= (comp-path p))) ∙ idp ∎
 
-  iso : →Ω-Group (Ptd-Susp X) Y == →Ω-Group X (Ptd-Ω Y)
+  iso : →Ω-Group (⊙Susp X) Y == →Ω-Group X (⊙Ω Y)
   iso = group-iso
     (record {
       f = f;

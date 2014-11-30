@@ -21,7 +21,7 @@ private
     reduce-y idp idp = idp
 
   module Into = SuspensionRec (Smash X Y)
-    {C = fst (X ∙* Y)}
+    {C = fst (X ⊙* Y)}
     (left (snd X))
     (right (snd Y))
     (cof-wedge-path-rec
@@ -35,7 +35,7 @@ private
 
   into = Into.f
 
-  module Out = PushoutRec {d = ptd-span-out (ptd-*-span X Y)}
+  module Out = PushoutRec {d = ⊙span-out (*-⊙span X Y)}
     {D = Suspension (Smash X Y)}
     (λ _ → north _)
     (λ _ → south _)
@@ -43,7 +43,7 @@ private
 
   out = Out.f
 
-  into-out : (j : fst (X ∙* Y)) → into (out j) == j
+  into-out : (j : fst (X ⊙* Y)) → into (out j) == j
   into-out = Pushout-elim
     (λ x → glue (snd X , snd Y) ∙ ! (glue (x , snd Y)))
     (λ y → ! (glue (snd X , snd Y)) ∙ glue (snd X , y))
@@ -101,11 +101,11 @@ private
 
 module SuspSmash where
 
-  eq : Suspension (Smash X Y) ≃ fst (X ∙* Y)
+  eq : Suspension (Smash X Y) ≃ fst (X ⊙* Y)
   eq = equiv into out into-out out-into
 
-  path : Suspension (Smash X Y) == fst (X ∙* Y)
+  path : Suspension (Smash X Y) == fst (X ⊙* Y)
   path = ua eq
 
-  ptd-path : Ptd-Susp (Ptd-Smash X Y) == X ∙* Y
-  ptd-path = ptd-ua eq idp
+  ⊙path : ⊙Susp (⊙Smash X Y) == X ⊙* Y
+  ⊙path = ⊙ua eq idp

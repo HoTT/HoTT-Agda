@@ -10,10 +10,12 @@ module lib.types.Smash {i j} (X : Ptd i) (Y : Ptd j) where
 module ∨In× = WedgeRec {X = X} {Y = Y}
   (λ x → (x , snd Y)) (λ y → (snd X , y)) idp
 
-∨-in-× : fst (Ptd-Wedge X Y ∙→ X ×ptd Y)
-∨-in-× = (∨In×.f , idp)
+∨-in-× = ∨In×.f
 
-Ptd-Smash : Ptd (lmax i j)
-Ptd-Smash = Ptd-Cof ∨-in-×
+∨-⊙in-× : fst (⊙Wedge X Y ⊙→ X ⊙× Y)
+∨-⊙in-× = (∨In×.f , idp)
 
-Smash = fst Ptd-Smash
+⊙Smash : Ptd (lmax i j)
+⊙Smash = ⊙Cof ∨-⊙in-×
+
+Smash = fst ⊙Smash

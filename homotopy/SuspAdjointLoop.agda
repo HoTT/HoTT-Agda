@@ -25,7 +25,7 @@ module SuspAdjointLoop {i j} (X : Ptd i) (Y : Ptd j) where
   {- Show that R ∘ L ∼ idf -}
 
   R-L : {b : B} → ∀ K → R {b} (L K) == K
-  R-L {b} (k , kpt) = ptd-λ= R-L-fst R-L-snd
+  R-L {b} (k , kpt) = ⊙λ= R-L-fst R-L-snd
     where
     R-L-fst : (a : A)
       → ap (SuspensionRec.f A b b k) (merid A a ∙ ! (merid A a₀)) == k a
@@ -61,7 +61,7 @@ module SuspAdjointLoop {i j} (X : Ptd i) (Y : Ptd j) where
   {- Show that L ∘ R ∼ idf -}
 
   L-R : {b : B} → ∀ H → L {b} (R H) == H
-  L-R (h , idp) = ptd-λ= L-R-fst idp
+  L-R (h , idp) = ⊙λ= L-R-fst idp
     where
     fst-lemma : ∀ {i j} {A : Type i} {B : Type j} {x y z : A}
       (f : A → B) (p : x == y) (q : z == y)
@@ -86,7 +86,7 @@ module SuspAdjointLoop {i j} (X : Ptd i) (Y : Ptd j) where
 
   pres-ident : {b : B}
     → R {b} ((λ _ → b) , idp) == ((λ _ → idp) , idp)
-  pres-ident {b} = ptd-λ=
+  pres-ident {b} = ⊙λ=
     (λ a → ap-cst b (merid A a ∙ ! (merid A a₀)))
     (ap (ap (λ _ → b)) (!-inv-r (merid A a₀))
        =⟨ lemma (merid A a₀) b ⟩
@@ -127,12 +127,12 @@ module SuspAdjointLoop {i j} (X : Ptd i) (Y : Ptd j) where
     (G : Σ (Suspension A → B) (λ f → f (north A) == c))
     → R (comp-lift (north A) b c _⊙_ F G)
       == comp-lift a₀ idp idp (ap2 _⊙_) (R F) (R G)
-  pres-comp _⊙_ (f , idp) (g , idp) = ptd-λ=
+  pres-comp _⊙_ (f , idp) (g , idp) = ⊙λ=
     (λ a → pres-comp-fst f g _⊙_ (merid A a ∙ ! (merid A a₀)))
     (pres-comp-snd f g _⊙_ (merid A a₀))
 
-  eqv : fst (Ptd-Susp X ∙→ Y) ≃ fst (X ∙→ Ptd-Ω Y)
+  eqv : fst (⊙Susp X ⊙→ Y) ≃ fst (X ⊙→ ⊙Ω Y)
   eqv = equiv R L R-L L-R
 
-  ptd-path : (Ptd-Susp X ∙→ Y) == (X ∙→ Ptd-Ω Y)
-  ptd-path = ptd-ua eqv pres-ident
+  ⊙path : (⊙Susp X ⊙→ Y) == (X ⊙→ ⊙Ω Y)
+  ⊙path = ⊙ua eqv pres-ident

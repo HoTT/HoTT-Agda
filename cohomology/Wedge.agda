@@ -30,68 +30,68 @@ module CSusp^Wedge (n : ℤ) (X Y : Ptd i) (m : ℕ) where
   open import cohomology.ConstantFunction OT
 
   private
-    βl : CF-hom n (ptd-susp^-fmap m ptd-winl) ∘hom
-         CF-hom n (ptd-susp^-fmap m ptd-projl)
+    βl : CF-hom n (⊙susp^-fmap m ⊙winl) ∘hom
+         CF-hom n (⊙susp^-fmap m ⊙projl)
          == idhom _
-    βl = ! (CF-comp n (ptd-susp^-fmap m ptd-projl)
-                       (ptd-susp^-fmap m ptd-winl))
+    βl = ! (CF-comp n (⊙susp^-fmap m ⊙projl)
+                       (⊙susp^-fmap m ⊙winl))
          ∙ ap (CF-hom n)
-              (! (ptd-susp^-fmap-∘ m ptd-projl ptd-winl)
-               ∙ ptd-susp^-fmap-idf m _)
+              (! (⊙susp^-fmap-∘ m ⊙projl ⊙winl)
+               ∙ ⊙susp^-fmap-idf m _)
          ∙ CF-ident n
 
-    βr : CF-hom n (ptd-susp^-fmap m ptd-winr) ∘hom
-         CF-hom n (ptd-susp^-fmap m ptd-projr)
+    βr : CF-hom n (⊙susp^-fmap m ⊙winr) ∘hom
+         CF-hom n (⊙susp^-fmap m ⊙projr)
          == idhom _
-    βr = ! (CF-comp n (ptd-susp^-fmap m ptd-projr)
-                      (ptd-susp^-fmap m ptd-winr))
+    βr = ! (CF-comp n (⊙susp^-fmap m ⊙projr)
+                      (⊙susp^-fmap m ⊙winr))
          ∙ ap (CF-hom n)
-              (! (ptd-susp^-fmap-∘ m ptd-projr ptd-winr)
-               ∙ ap (ptd-susp^-fmap m) ptd-projr-winr
-               ∙ ptd-susp^-fmap-idf m _)
+              (! (⊙susp^-fmap-∘ m ⊙projr ⊙winr)
+               ∙ ap (⊙susp^-fmap m) ⊙projr-winr
+               ∙ ⊙susp^-fmap-idf m _)
          ∙ CF-ident n
       where
-      ptd-projr-winr : ptd-projr ∘ptd ptd-winr == ptd-idf _
-      ptd-projr-winr = ptd-λ= (λ _ → idp) $
+      ⊙projr-winr : ⊙projr ⊙∘ ⊙winr == ⊙idf _
+      ⊙projr-winr = ⊙λ= (λ _ → idp) $
         ∙-unit-r _ ∙ ap-! projr wglue ∙ ap ! Projr.glue-β
 
   open ProductRepr
-    (CF-hom n (ptd-susp^-fmap m ptd-projl))
-    (CF-hom n (ptd-susp^-fmap m ptd-projr))
-    (CF-hom n (ptd-susp^-fmap m ptd-winl))
-    (CF-hom n (ptd-susp^-fmap m ptd-winr))
+    (CF-hom n (⊙susp^-fmap m ⊙projl))
+    (CF-hom n (⊙susp^-fmap m ⊙projr))
+    (CF-hom n (⊙susp^-fmap m ⊙winl))
+    (CF-hom n (⊙susp^-fmap m ⊙winr))
     (app= (ap GroupHom.f βl))
     (app= (ap GroupHom.f βr))
     (transport
       (λ {(_ , f , g) → is-exact (CF n g) (CF n f)})
-      (suspend^-cof= m ptd-winr ptd-projl
-        (pair= CofWinr.ptd-path CofWinr.cfcod-over))
-      (C-exact n (ptd-susp^-fmap m ptd-winr)))
+      (suspend^-cof= m ⊙winr ⊙projl
+        (pair= CofWinr.⊙path CofWinr.cfcod-over))
+      (C-exact n (⊙susp^-fmap m ⊙winr)))
     (transport
       (λ {(_ , f , g) → is-exact (CF n g) (CF n f)})
-      (suspend^-cof= m ptd-winl ptd-projr
-        (pair= CofWinl.ptd-path CofWinl.cfcod-over))
-      (C-exact n (ptd-susp^-fmap m ptd-winl)))
+      (suspend^-cof= m ⊙winl ⊙projr
+        (pair= CofWinl.⊙path CofWinl.cfcod-over))
+      (C-exact n (⊙susp^-fmap m ⊙winl)))
     public
 
   wedge-rec-over : {Z : Ptd i}
     (winl* : fst X → fst Z) (winr* : fst Y → fst Z)
     (wglue* : winl* (snd X) == winr* (snd Y)) (pt : winl* (snd X) == snd Z)
-    → CF-hom n (ptd-susp^-fmap m (WedgeRec.f winl* winr* wglue* , pt))
-      == ×-hom (CF-hom n (ptd-susp^-fmap m (winl* , pt)))
-               (CF-hom n (ptd-susp^-fmap m (winr* , ! wglue* ∙ pt)))
-      [ (λ K → GroupHom (C n (Ptd-Susp^ m Z)) K) ↓ iso ]
+    → CF-hom n (⊙susp^-fmap m (WedgeRec.f winl* winr* wglue* , pt))
+      == ×-hom (CF-hom n (⊙susp^-fmap m (winl* , pt)))
+               (CF-hom n (⊙susp^-fmap m (winr* , ! wglue* ∙ pt)))
+      [ (λ K → GroupHom (C n (⊙Susp^ m Z)) K) ↓ iso ]
   wedge-rec-over winl* winr* wglue* pt = codomain-over-iso _ _ _ _ $
     codomain-over-equiv
-      (fst (CF n (ptd-susp^-fmap m (WedgeRec.f winl* winr* wglue* , pt)))) _
+      (fst (CF n (⊙susp^-fmap m (WedgeRec.f winl* winr* wglue* , pt)))) _
     ▹ ap2 (λ f g z → (f z , g z))
         (ap GroupHom.f $ ! $
-          ap (CF-hom n) (ptd-susp^-fmap-∘ m (rec , pt) ptd-winl)
-          ∙ CF-comp n (ptd-susp^-fmap m (rec , pt)) (ptd-susp^-fmap m ptd-winl))
+          ap (CF-hom n) (⊙susp^-fmap-∘ m (rec , pt) ⊙winl)
+          ∙ CF-comp n (⊙susp^-fmap m (rec , pt)) (⊙susp^-fmap m ⊙winl))
         (ap GroupHom.f $ ! $
-          ap (CF-hom n) (ap (ptd-susp^-fmap m) (pair= idp (! pt-lemma))
-                         ∙ ptd-susp^-fmap-∘ m (rec , pt) ptd-winr)
-          ∙ CF-comp n (ptd-susp^-fmap m (rec , pt)) (ptd-susp^-fmap m ptd-winr))
+          ap (CF-hom n) (ap (⊙susp^-fmap m) (pair= idp (! pt-lemma))
+                         ∙ ⊙susp^-fmap-∘ m (rec , pt) ⊙winr)
+          ∙ CF-comp n (⊙susp^-fmap m (rec , pt)) (⊙susp^-fmap m ⊙winr))
     where
     rec = WedgeRec.f winl* winr* wglue*
 
@@ -100,17 +100,17 @@ module CSusp^Wedge (n : ℤ) (X Y : Ptd i) (m : ℕ) where
                  ap-! rec wglue ∙ ap ! (WedgeRec.glue-β winl* winr* wglue*)
 
   wedge-in-over : {Z : Ptd i}
-    (f : fst (Ptd-Susp^ m Z ∙→ Ptd-Susp^ m (Ptd-Wedge X Y)))
+    (f : fst (⊙Susp^ m Z ⊙→ ⊙Susp^ m (⊙Wedge X Y)))
     → CF-hom n f
       == ×-sum-hom (C-abelian n _)
-           (CF-hom n (ptd-susp^-fmap m ptd-projl ∘ptd f))
-           (CF-hom n (ptd-susp^-fmap m ptd-projr ∘ptd f))
-      [ (λ G → GroupHom G (C n (Ptd-Susp^ m Z))) ↓ iso ]
+           (CF-hom n (⊙susp^-fmap m ⊙projl ⊙∘ f))
+           (CF-hom n (⊙susp^-fmap m ⊙projr ⊙∘ f))
+      [ (λ G → GroupHom G (C n (⊙Susp^ m Z))) ↓ iso ]
   wedge-in-over f =
     lemma (C-abelian n _) (C-abelian n _) inl-over inr-over
     ▹ ap2 (×-sum-hom (C-abelian n _))
-        (! (CF-comp n (ptd-susp^-fmap m ptd-projl) f))
-        (! (CF-comp n (ptd-susp^-fmap m ptd-projr) f))
+        (! (CF-comp n (⊙susp^-fmap m ⊙projl) f))
+        (! (CF-comp n (⊙susp^-fmap m ⊙projr) f))
     where
     lemma : {G H K L : Group i}
       (aG : is-abelian G) (aL : is-abelian L) {p : G == H ×G K}
