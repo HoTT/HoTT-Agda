@@ -20,12 +20,14 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
   Wedge : Type (lmax i j)
   Wedge = Pushout wedge-span
 
+  _∨_ = Wedge
+
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
-  winl : fst X → Wedge X Y
+  winl : fst X → X ∨ Y
   winl x = left x
 
-  winr : fst Y → Wedge X Y
+  winr : fst Y → X ∨ Y
   winr y = right y
 
   wglue : winl (snd X) == winr (snd Y)
@@ -36,17 +38,19 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
   ⊙Wedge : Ptd (lmax i j)
   ⊙Wedge = ⊙[ Wedge X Y , winl (snd X) ]
 
+  _⊙∨_ = ⊙Wedge
+
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
-  ⊙winl : fst (X ⊙→ ⊙Wedge X Y)
+  ⊙winl : fst (X ⊙→ X ⊙∨ Y)
   ⊙winl = (winl , idp)
 
-  ⊙winr : fst (Y ⊙→ ⊙Wedge X Y)
+  ⊙winr : fst (Y ⊙→ X ⊙∨ Y)
   ⊙winr = (winr , ! wglue)
 
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
-  module WedgeElim {k} {P : Wedge X Y → Type k}
+  module WedgeElim {k} {P : X ∨ Y → Type k}
     (winl* : (x : fst X) → P (winl x)) (winr* : (y : fst Y) → P (winr y))
     (wglue* : winl* (snd X) == winr* (snd Y) [ P ↓ wglue ]) where
 
@@ -70,12 +74,12 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
 
 add-wglue : ∀ {i j} {X : Ptd i} {Y : Ptd j}
-  → fst (X ⊙⊔ Y) → Wedge X Y
+  → fst (X ⊙⊔ Y) → X ∨ Y
 add-wglue (inl x) = winl x
 add-wglue (inr y) = winr y
 
 ⊙add-wglue : ∀ {i j} {X : Ptd i} {Y : Ptd j}
-  → fst (X ⊙⊔ Y ⊙→ ⊙Wedge X Y)
+  → fst (X ⊙⊔ Y ⊙→ X ⊙∨ Y)
 ⊙add-wglue = (add-wglue , idp)
 
 
@@ -84,5 +88,5 @@ module Fold {i} {X : Ptd i} =
 
 fold = Fold.f
 
-⊙fold : ∀ {i} {X : Ptd i} → fst (⊙Wedge X X ⊙→ X)
+⊙fold : ∀ {i} {X : Ptd i} → fst (X ⊙∨ X ⊙→ X)
 ⊙fold = (fold , idp)

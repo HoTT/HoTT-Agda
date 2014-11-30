@@ -35,12 +35,12 @@ private
   open CSusp^Wedge n X X 1
 
   module Diff = SuspensionRec (fst X)
-    (north (Wedge X X)) (north (Wedge X X))
+    (north (X ∨ X)) (north (X ∨ X))
     (λ x → merid _ (winl x) ∙ ! (merid _ (winr x)))
 
   diff = Diff.f
 
-  ⊙diff : fst (⊙Susp X ⊙→ ⊙Susp (⊙Wedge X X))
+  ⊙diff : fst (⊙Susp X ⊙→ ⊙Susp (X ⊙∨ X))
   ⊙diff = (diff , idp)
 
   module HL = HexagonLemma

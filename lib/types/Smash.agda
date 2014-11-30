@@ -12,10 +12,13 @@ module ∨In× = WedgeRec {X = X} {Y = Y}
 
 ∨-in-× = ∨In×.f
 
-∨-⊙in-× : fst (⊙Wedge X Y ⊙→ X ⊙× Y)
+∨-⊙in-× : fst (X ⊙∨ Y ⊙→ X ⊙× Y)
 ∨-⊙in-× = (∨In×.f , idp)
 
 ⊙Smash : Ptd (lmax i j)
 ⊙Smash = ⊙Cof ∨-⊙in-×
 
 Smash = fst ⊙Smash
+
+_∧_ = Smash
+_⊙∧_ = ⊙Smash

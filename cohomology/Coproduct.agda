@@ -33,7 +33,7 @@ module CofSelect (X Y : Ptd i) where
   ⊙select : fst (⊙Sphere {i} 0 ⊙→ X ⊙⊔ Y)
   ⊙select = (select , idp)
 
-  module Into = CofiberRec select {C = Wedge X Y}
+  module Into = CofiberRec select {C = X ∨ Y}
     (winl (snd X))
     add-wglue
     (λ {(lift true) → idp; (lift false) → wglue})
@@ -72,10 +72,10 @@ module CofSelect (X Y : Ptd i) where
           (ap (ap out) (Into.glue-β (lift false)) ∙ Out.glue-β)
           ∙v⊡ lt-square (! (cfglue _ (lift true))) ⊡h vid-square})
 
-  eq : Cofiber select ≃ Wedge X Y
+  eq : Cofiber select ≃ X ∨ Y
   eq = equiv into out into-out out-into
 
-  ⊙path : ⊙Cof ⊙select == ⊙Wedge X Y
+  ⊙path : ⊙Cof ⊙select == X ⊙∨ Y
   ⊙path = ⊙ua eq idp
 
   cfcod-over : ⊙cfcod ⊙select == ⊙add-wglue
@@ -116,7 +116,7 @@ module C⊔ (n : ℤ) (m : ℕ) (X Y : Ptd i) where
   ed {G} φ =
     C n (⊙Susp^ m (⊙Sphere 1))
       ⟨ cst-hom ⟩→
-    C n (⊙Susp^ m (⊙Wedge X Y))
+    C n (⊙Susp^ m (X ⊙∨ Y))
       ⟨ CF-hom n (⊙susp^-fmap m ⊙add-wglue) ⟩→
     C n (⊙Susp^ m (X ⊙⊔ Y))
       ⟨ φ ⟩→ -- CF-hom n (⊙susp^-fmap m ⊙select)
@@ -147,7 +147,7 @@ module C⊔ (n : ℤ) (m : ℕ) (X Y : Ptd i) where
 
   module Nonzero (neq : n ≠ ℕ-to-ℤ m) where
 
-    iso : C n (⊙Susp^ m (⊙Wedge X Y)) == C n (⊙Susp^ m (X ⊙⊔ Y))
+    iso : C n (⊙Susp^ m (X ⊙∨ Y)) == C n (⊙Susp^ m (X ⊙⊔ Y))
     iso = exact-pair-iso $
       transport (λ {(G , φ) → ExactSeq (ed {G} φ)})
         (pair= (ap (C n) (⊙Susp^-+ m O
@@ -160,7 +160,7 @@ module C⊔ (n : ℤ) (m : ℕ) (X Y : Ptd i) where
 
     add-wglue-over :
       idhom _ == CF-hom n (⊙susp^-fmap m ⊙add-wglue)
-      [ (λ G → GroupHom (C n (⊙Susp^ m (⊙Wedge X Y))) G) ↓ iso ]
+      [ (λ G → GroupHom (C n (⊙Susp^ m (X ⊙∨ Y))) G) ↓ iso ]
     add-wglue-over = codomain-over-iso _ _ _ _ $ codomain-over-equiv _ _
 
   module Any where
@@ -188,10 +188,10 @@ module C⊔ (n : ℤ) (m : ℕ) (X Y : Ptd i) where
          ∙ ⊙susp^-fmap-idf m _))
 
     iso : C n (⊙Susp^ m (X ⊙⊔ Y))
-       == C n (⊙Susp^ m (⊙Wedge X Y)) ×G C n (⊙Susp^ m (⊙Sphere 0))
+       == C n (⊙Susp^ m (X ⊙∨ Y)) ×G C n (⊙Susp^ m (⊙Sphere 0))
     iso = SER.iso
 
     add-wglue-over :
       CF-hom n (⊙susp^-fmap m ⊙add-wglue) == ×G-inl
-      [ (λ G → GroupHom (C n (⊙Susp^ m (⊙Wedge X Y))) G) ↓ iso ]
+      [ (λ G → GroupHom (C n (⊙Susp^ m (X ⊙∨ Y))) G) ↓ iso ]
     add-wglue-over = SER.φ-over-iso

@@ -7,7 +7,7 @@ open import lib.cubical.elims.CofWedge
 module lib.cubical.elims.SuspSmash where
 
 module _ {i j k} {X : Ptd i} {Y : Ptd j} {C : Type k}
-  (f : Suspension (Smash X Y) → C) (g : Suspension (Smash X Y) → C)
+  (f : Suspension (X ∧ Y) → C) (g : Suspension (X ∧ Y) → C)
   (north* : f (north _) == g (north _))
   (south* : f (south _) == g (south _))
   (cod* : (s : fst X × fst Y) → Square north* (ap f (merid _ (cfcod _ s)))
@@ -20,7 +20,7 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {C : Type k}
       (! (cfglue _ (winl (snd X))))
       (cod* (snd X , snd Y))
 
-    CubeType : (w : Wedge X Y)
+    CubeType : (w : X ∨ Y)
       → Square north* (ap f (merid _ (cfcod _ (∨-in-× X Y w))))
                (ap g (merid _ (cfcod _ (∨-in-× X Y w)))) south*
       → Type _
@@ -31,7 +31,7 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {C : Type k}
         (natural-square (ap g ∘ merid _) (cfglue _ w))
         (natural-square (λ _ → south*) (cfglue _ w))
 
-    fill : (w : Wedge X Y)
+    fill : (w : X ∨ Y)
       (sq : Square north* (ap f (merid _ (cfcod _ (∨-in-× X Y w))))
                    (ap g (merid _ (cfcod _ (∨-in-× X Y w)))) south*)
       → Σ (Square north* idp idp north*) (λ p → CubeType w (p ⊡h sq))
@@ -59,7 +59,7 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {C : Type k}
                                 ⊡h cod* (snd X , snd Y))
                      wglue))
       where
-      fill-square : (w : Wedge X Y)
+      fill-square : (w : X ∨ Y)
         → Square north* (ap f (merid _ (cfcod _ (∨-in-× X Y w))))
                  (ap g (merid _ (cfcod _ (∨-in-× X Y w)))) south*
       fill-square w =
@@ -70,7 +70,7 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {C : Type k}
               (natural-square (λ _ → south*) (cfglue _ w)))
 
     abstract
-      coh : (s : Smash X Y)
+      coh : (s : X ∧ Y)
         → north* == south* [ (λ z → f z == g z) ↓ merid _ s ]
       coh = ↓-='-from-square ∘ cof-wedge-square-elim _ _ _ _
         base*
@@ -86,5 +86,5 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {C : Type k}
               ∙ ⊡h-unit-l (fst (fillY y) ⊡h fst fill0 ⊡h cod* (snd X , y))))
         (snd (fillY y)))
 
-  susp-smash-path-elim : ((σ : Suspension (Smash X Y)) → f σ == g σ)
+  susp-smash-path-elim : ((σ : Suspension (X ∧ Y)) → f σ == g σ)
   susp-smash-path-elim = Suspension-elim _ north* south* coh

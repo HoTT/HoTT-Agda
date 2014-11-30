@@ -7,7 +7,7 @@ module lib.cubical.elims.CofWedge where
 
 cof-wedge-path-rec : ∀ {i j k l}
   {X : Ptd i} {Y : Ptd j} {C : Type k} {D : Type l}
-  {f : Wedge X Y → C} {d₁ d₂ : D}
+  {f : X ∨ Y → C} {d₁ d₂ : D}
   → (p : d₁ == d₂)
   → (q : C → d₁ == d₂)
   → ((x : fst X) → p == q (f (winl x)))
@@ -28,7 +28,7 @@ cof-wedge-path-rec {X = X} {Y = Y} {f = f} base* cod* winl* winr* =
 
 cof-wedge-path-elim : ∀ {i j k l}
   {X : Ptd i} {Y : Ptd j} {C : Type k} {D : Type l}
-  {f : Wedge X Y → C} (g h : Cofiber f → D)
+  {f : X ∨ Y → C} (g h : Cofiber f → D)
   → (p : g (cfbase _) == h (cfbase _))
   → (q : (c : C) → g (cfcod _ c) == h (cfcod _ c))
   → ((x : fst X) → Square p (ap g (cfglue _ (winl x)))
@@ -58,7 +58,7 @@ cof-wedge-path-elim {X = X} {Y = Y} {f = f} g h base* cod* winl* winr* =
 {- Note, only squares with constant endpoints. General case? -}
 cof-wedge-square-elim : ∀ {i j k l}
   {X : Ptd i} {Y : Ptd j} {C : Type k} {D : Type l}
-  {f : Wedge X Y → C} {d₀₀ d₀₁ d₁₀ d₁₁ : D}
+  {f : X ∨ Y → C} {d₀₀ d₀₁ d₁₀ d₁₁ : D}
   (p₀₋ : (κ : Cofiber f) → d₀₀ == d₀₁)
   (p₋₀ : (κ : Cofiber f) → d₀₀ == d₁₀)
   (p₋₁ : (κ : Cofiber f) → d₀₁ == d₁₁)

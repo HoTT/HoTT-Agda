@@ -48,7 +48,7 @@ record OrdinaryTheory i : Type (lsucc i) where
   {- A quick useful special case of C-additive:
      C n (X ∨ Y) == C n X × C n Y -}
   C-binary-additive : (n : ℤ) (X Y : Ptd i)
-    → C n (⊙Wedge X Y) == C n X ×G C n Y
+    → C n (X ⊙∨ Y) == C n X ×G C n Y
   C-binary-additive n X Y =
     ap (C n) (! (BigWedge-Bool-⊙path Pick))
     ∙ C-additive n _ (λ _ _ → Bool-has-choice)

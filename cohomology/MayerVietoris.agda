@@ -20,21 +20,21 @@ module MayerVietorisFunctions (ps : ⊙Span {i} {i} {i}) where
     {X = ⊙Span.X ps} {Y = ⊙Span.Y ps} {C = fst (⊙Pushout ps)}
     left right (! (ap left (snd f)) ∙ glue (snd Z) ∙' ap right (snd g))
 
-  reglue : Wedge X Y → fst (⊙Pushout ps)
+  reglue : X ∨ Y → fst (⊙Pushout ps)
   reglue = Reglue.f
 
-  ⊙reglue : fst (⊙Wedge X Y ⊙→ ⊙Pushout ps)
+  ⊙reglue : fst (X ⊙∨ Y ⊙→ ⊙Pushout ps)
   ⊙reglue = (reglue , idp)
 
-  module MVDiff = SuspensionRec (fst Z) {C = Suspension (Wedge X Y)}
+  module MVDiff = SuspensionRec (fst Z) {C = Suspension (X ∨ Y)}
     (north _)
     (north _)
     (λ z → merid _ (winl (fst f z)) ∙ ! (merid _ (winr (fst g z))))
 
-  mv-diff : Suspension (fst Z) → Suspension (Wedge X Y)
+  mv-diff : Suspension (fst Z) → Suspension (X ∨ Y)
   mv-diff = MVDiff.f
 
-  ⊙mv-diff : fst (⊙Susp Z ⊙→ ⊙Susp (⊙Wedge X Y))
+  ⊙mv-diff : fst (⊙Susp Z ⊙→ ⊙Susp (X ⊙∨ Y))
   ⊙mv-diff = (mv-diff , idp)
 
 {- We use path induction (via [⊙pushout-J]) to assume that the
@@ -192,7 +192,7 @@ module MayerVietorisBase
       right-from-bot-lemma' ids cu = cu
 
   {- Proving the coherence term for the left inverse. This means proving
-     [(w : Wedge X Y) → Square idp (ap out (ap into (glue w)))
+     [(w : X ∨ Y) → Square idp (ap out (ap into (glue w)))
                                (cfglue _ w) (out-into-cod (reglue w))]
   -}
 
@@ -320,7 +320,7 @@ module MayerVietorisBase
       right-from-top-lemma' ids cu = cu
 
   ext-over : ⊙ext-glue == ⊙mv-diff
-             [ (λ W → fst (W ⊙→ ⊙Susp (⊙Wedge X Y))) ↓ ⊙path ]
+             [ (λ W → fst (W ⊙→ ⊙Susp (X ⊙∨ Y))) ↓ ⊙path ]
   ext-over = ⊙λ= fn-lemma idp ◃ domain-over-⊙equiv ⊙mv-diff _ _
     where
     fn-lemma : ∀ κ → ext-glue κ == mv-diff (into κ)
@@ -353,7 +353,7 @@ module MayerVietorisBase
                        (natural-square (fn-cod ∘ reglue) wglue)))
       fn-fill = fill-cube-right _ _ _ _ _
 
-      fn-coh : (w : Wedge X Y)
+      fn-coh : (w : X ∨ Y)
         → Square idp (merid _ w) (ap mv-diff (into-glue w)) (fn-cod (reglue w))
       fn-coh = Wedge-elim
         (λ x → ur-square (merid _ (winl x)))
@@ -377,7 +377,7 @@ module MayerVietoris (ps : ⊙Span {i} {i} {i}) where
         cfcod-over : ⊙cfcod ⊙reglue == ⊙ext-glue
                      [ (λ W → fst (⊙Pushout ps ⊙→ W)) ↓ ⊙path ]
         ext-over : ⊙ext-glue == ⊙mv-diff
-                   [ (λ W → fst (W ⊙→ ⊙Susp (⊙Wedge X Y))) ↓ ⊙path ]
+                   [ (λ W → fst (W ⊙→ ⊙Susp (X ⊙∨ Y))) ↓ ⊙path ]
 
     results : Results ps
     results = ⊙pushout-J Results base-results ps

@@ -49,8 +49,7 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
                   ∙ ap (λ p → ap winl p ∙ wglue ∙ ap winr wglue) σloop-pt
 
     module Into = SuspensionRec (fst (X ⊙× Y))
-      {C = fst (⊙Wedge (⊙Susp X)
-               (⊙Wedge (⊙Susp (⊙Smash X Y)) (⊙Susp Y)))}
+      {C = fst (⊙Susp X ⊙∨ (⊙Susp (X ⊙∧ Y) ⊙∨ ⊙Susp Y))}
       (winl (north _))
       (winr (winr (north _)))
       into-glue
@@ -96,14 +95,14 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
                  ∙ expand₂ (merid _ (snd X , snd Y)) (merid _ (snd X , y)))
           (↓-cst=app-from-square $ shift (snd fill))))
 
-    module OutWinr = WedgeRec {X = ⊙Susp (⊙Smash X Y)} {Y = ⊙Susp Y}
+    module OutWinr = WedgeRec {X = ⊙Susp (X ⊙∧ Y)} {Y = ⊙Susp Y}
       {C = fst (⊙Susp (X ⊙× Y))}
       OutSmash.f
       (susp-fmap (λ y → (snd X , y)))
       idp
 
     module Out = WedgeRec {X = ⊙Susp X}
-      {Y = ⊙Wedge (⊙Susp (⊙Smash X Y)) (⊙Susp Y)}
+      {Y = ⊙Susp (X ⊙∧ Y) ⊙∨ ⊙Susp Y}
       {C = fst (⊙Susp (X ⊙× Y))}
       (susp-fmap (λ x → (x , snd Y)))
       OutWinr.f
@@ -262,11 +261,8 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
 
 
   abstract
-    eq : fst (⊙Susp (X ⊙× Y))
-         ≃ fst (⊙Wedge (⊙Susp X)
-                  (⊙Wedge (⊙Susp (⊙Smash X Y)) (⊙Susp Y)))
+    eq : fst (⊙Susp (X ⊙× Y)) ≃ fst (⊙Susp X ⊙∨ (⊙Susp (X ⊙∧ Y) ⊙∨ ⊙Susp Y))
     eq = equiv into out into-out out-into
 
-    ⊙path : ⊙Susp (X ⊙× Y)
-            == (⊙Wedge (⊙Susp X) (⊙Wedge (⊙Susp (⊙Smash X Y)) (⊙Susp Y)))
+    ⊙path : ⊙Susp (X ⊙× Y) == ⊙Susp X ⊙∨ (⊙Susp (X ⊙∧ Y) ⊙∨ ⊙Susp Y)
     ⊙path = ⊙ua eq idp
