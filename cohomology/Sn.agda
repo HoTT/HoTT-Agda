@@ -2,7 +2,7 @@
 
 open import HoTT
 open import cohomology.Exactness
-open import cohomology.OrdinaryTheory
+open import cohomology.Theory
 
 module cohomology.Sn {i} (OT : OrdinaryTheory i) where
 

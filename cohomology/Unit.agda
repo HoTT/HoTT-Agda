@@ -2,11 +2,11 @@
 
 open import HoTT
 open import cohomology.Exactness
-open import cohomology.OrdinaryTheory
+open import cohomology.Theory
 
-module cohomology.Unit {i} (OT : OrdinaryTheory i) where
+module cohomology.Unit {i} (CT : CohomologyTheory i) where
 
-open OrdinaryTheory OT
+open CohomologyTheory CT
 
 private
   ⊙LU = ⊙Lift {j = i} ⊙Unit

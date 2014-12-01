@@ -4,9 +4,9 @@ open import HoTT
 open import cohomology.Exactness
 open import cohomology.Choice
 
-module cohomology.OrdinaryTheory where
+module cohomology.Theory where
 
-record OrdinaryTheory i : Type (lsucc i) where
+record CohomologyTheory i : Type (lsucc i) where
   field
     C : ℤ → Ptd i → Group i
 
@@ -39,11 +39,8 @@ record OrdinaryTheory i : Type (lsucc i) where
       → is-exact (CF n (⊙cfcod f)) (CF n f)
 
     C-additive : (n : ℤ) {I : Type i} (Z : I → Ptd i)
-      → ((W : I → Type i) → (∀ i → has-level (ℤ-to-ℕ₋₂ n) (W i))
-                                 → has-choice ⟨0⟩ I W)
+      → ((W : I → Type i) → has-choice ⟨0⟩ I W)
       → C n (⊙BigWedge Z) == ΠG I (C n ∘ Z)
-
-    C-dimension : (n : ℤ) → n ≠ O → C n (⊙Sphere O) == 0G
 
   {- A quick useful special case of C-additive:
      C n (X ∨ Y) == C n X × C n Y -}
@@ -51,9 +48,17 @@ record OrdinaryTheory i : Type (lsucc i) where
     → C n (X ⊙∨ Y) == C n X ×G C n Y
   C-binary-additive n X Y =
     ap (C n) (! (BigWedge-Bool-⊙path Pick))
-    ∙ C-additive n _ (λ _ _ → Bool-has-choice)
+    ∙ C-additive n _ (λ _ → Bool-has-choice)
     ∙ ΠG-Bool-is-×G (C n ∘ Pick)
     where
     Pick : Lift {j = i} Bool → Ptd i
     Pick (lift true) = X
     Pick (lift false) = Y
+
+record OrdinaryTheory i : Type (lsucc i) where
+  constructor ordinary-theory
+  field
+    cohomology-theory : CohomologyTheory i
+  open CohomologyTheory cohomology-theory public
+  field
+    C-dimension : (n : ℤ) → n ≠ O → C n (⊙Sphere O) == 0G

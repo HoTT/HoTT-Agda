@@ -2,13 +2,13 @@
 
 open import HoTT
 open import cohomology.Exactness
-open import cohomology.OrdinaryTheory
+open import cohomology.Theory
 open import cohomology.CofiberSequence
 
-module cohomology.LongExactSequence {i} (OT : OrdinaryTheory i)
+module cohomology.LongExactSequence {i} (CT : CohomologyTheory i)
   (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y)) where
 
-open OrdinaryTheory OT
+open CohomologyTheory CT
 
 long-exact-diag : ExactDiag _ _
 long-exact-diag =

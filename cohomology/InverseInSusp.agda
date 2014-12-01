@@ -4,31 +4,31 @@ open import HoTT
 open import cohomology.Exactness
 open import cohomology.FunctionOver
 open import cohomology.ProductRepr
-open import cohomology.OrdinaryTheory
+open import cohomology.Theory
 open import cohomology.WedgeCofiber
 
 {- For the cohomology group of a suspension ΣX, the group inverse has the
-   explicit form Cₙ(flip-susp) : Cₙ(ΣX) → Cₙ(ΣX). The proof is via the
+   explicit form Cⁿ(flip-susp) : Cⁿ(ΣX) → Cⁿ(ΣX). The proof is via the
    hexagon lemma, with the diagram
 
-                Cₙ(X)
+                Cⁿ(X)
                   |
                 fold*
          winl*    ↓    winr*
-   Cₙ(X) ←–––– Cₙ(X∨X) ––––→ Cₙ(X)
+   Cⁿ(X) ←–––– Cⁿ(X∨X) ––––→ Cⁿ(X)
                   |
                 diff*
                   ↓
-                Cₙ(X)
+                Cⁿ(X)
 
 -}
 
-module cohomology.InverseInSusp {i} (OT : OrdinaryTheory i) (n : ℤ) {X : Ptd i}
-  where
+module cohomology.InverseInSusp {i} (CT : CohomologyTheory i)
+  (n : ℤ) {X : Ptd i} where
 
-open OrdinaryTheory OT
-open import cohomology.ConstantFunction OT
-open import cohomology.Wedge OT
+open CohomologyTheory CT
+open import cohomology.ConstantFunction CT
+open import cohomology.Wedge CT
 
 private
   open WedgeCofiber X X

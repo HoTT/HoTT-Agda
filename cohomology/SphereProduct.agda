@@ -4,12 +4,12 @@ open import HoTT
 open import homotopy.SuspProduct
 open import homotopy.SuspSmash
 open import homotopy.JoinSusp
-open import cohomology.OrdinaryTheory
+open import cohomology.Theory
 
-module cohomology.SphereProduct {i} (OT : OrdinaryTheory i) where
+module cohomology.SphereProduct {i} (CT : CohomologyTheory i) where
 
-open OrdinaryTheory OT
-open import cohomology.Wedge OT
+open CohomologyTheory CT
+open import cohomology.Wedge CT
 
 module _ (n : ℤ) (m : ℕ) (X : Ptd i) where
 

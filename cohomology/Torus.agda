@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import cohomology.OrdinaryTheory
+open import cohomology.Theory
 
 {- Cohomology groups of the n-torus (S¹)ⁿ.
  - We have Ĉᵏ(Tⁿ) == C⁰(S⁰)^(n choose' k) where _choose'_ defined as below.
@@ -11,8 +11,8 @@ module cohomology.Torus {i} (OT : OrdinaryTheory i) where
 
 open OrdinaryTheory OT
 open import cohomology.Sn OT
-open import cohomology.SphereProduct OT
-open import cohomology.Unit OT
+open import cohomology.SphereProduct cohomology-theory
+open import cohomology.Unit cohomology-theory
 
 
 {- Almost n choose k, but with n choose' O = 0 for any n. -}

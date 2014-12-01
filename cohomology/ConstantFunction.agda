@@ -2,14 +2,14 @@
 
 open import HoTT
 open import cohomology.Exactness
-open import cohomology.OrdinaryTheory
+open import cohomology.Theory
 
 {- Cohomology functor sends constant functions to constant functions -}
 
-module cohomology.ConstantFunction {i} (OT : OrdinaryTheory i) where
+module cohomology.ConstantFunction {i} (CT : CohomologyTheory i) where
 
-open import cohomology.Unit OT
-open OrdinaryTheory OT
+open import cohomology.Unit CT
+open CohomologyTheory CT
 
 module _ (n : ℤ) {X Y : Ptd i} where
 

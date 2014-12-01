@@ -4,30 +4,30 @@ open import HoTT
 open import cohomology.CofiberSequence
 open import cohomology.Exactness
 open import cohomology.FunctionOver
-open import cohomology.OrdinaryTheory
+open import cohomology.Theory
 open import cohomology.ProductRepr
 open import cohomology.WedgeCofiber
 
 {- Finite additivity is provable (and in a stronger form) without using
  - the additivity axiom. For any m ≥ 0,
 
-         Cₙ(Σᵐ(X ∨ Y)) == Cₙ(ΣᵐX) × Cₙ(ΣᵐY)
+         Cⁿ(Σᵐ(X ∨ Y)) == Cⁿ(ΣᵐX) × Cⁿ(ΣᵐY)
 
  - and over this path
- -   ∙ Cₙ(Σᵐwinl) corresponds to fst : Cₙ(ΣᵐX) × Cₙ(ΣᵐY) → Cₙ(ΣᵐX),
- -   ∙ Cₙ(Σᵐwinr) corresponds to snd : Cₙ(ΣᵐX) × Cₙ(ΣᵐY) → Cₙ(ΣᵐY),
- -   ∙ Cₙ(Σᵐ(Wedge-rec winl* winr* wglue*)) : Cₙ(ΣᵐZ) → Cₙ(Σᵐ(X ∨ Y))
-       corresponds to Cₙ(Σᵐwinl*) × Cₙ(Σᵐwinr*).
+ -   ∙ Cⁿ(Σᵐwinl) corresponds to fst : Cⁿ(ΣᵐX) × Cⁿ(ΣᵐY) → Cⁿ(ΣᵐX),
+ -   ∙ Cⁿ(Σᵐwinr) corresponds to snd : Cⁿ(ΣᵐX) × Cⁿ(ΣᵐY) → Cⁿ(ΣᵐY),
+ -   ∙ Cⁿ(Σᵐ(Wedge-rec winl* winr* wglue*)) : Cⁿ(ΣᵐZ) → Cⁿ(Σᵐ(X ∨ Y))
+       corresponds to Cⁿ(Σᵐwinl*) × Cⁿ(Σᵐwinr*).
  -}
 
-module cohomology.Wedge {i} (OT : OrdinaryTheory i) where
+module cohomology.Wedge {i} (CT : CohomologyTheory i) where
 
 module CSusp^Wedge (n : ℤ) (X Y : Ptd i) (m : ℕ) where
 
   open WedgeCofiber X Y
 
-  open OrdinaryTheory OT
-  open import cohomology.ConstantFunction OT
+  open CohomologyTheory CT
+  open import cohomology.ConstantFunction CT
 
   private
     βl : CF-hom n (⊙susp^-fmap m ⊙winl) ∘hom

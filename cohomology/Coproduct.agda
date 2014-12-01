@@ -7,21 +7,21 @@ open import cohomology.ExactPairIso
 open import cohomology.FunctionOver
 open import cohomology.MayerVietoris
 open import cohomology.SplitExactRight
-open import cohomology.OrdinaryTheory
+open import cohomology.Theory
 
 module cohomology.Coproduct {i} (OT : OrdinaryTheory i) where
 
 open OrdinaryTheory OT
-open import cohomology.ConstantFunction OT
-open import cohomology.Functor OT
+open import cohomology.ConstantFunction cohomology-theory
+open import cohomology.Functor cohomology-theory
 open import cohomology.Sn OT
 
-{- Cₙ(X ⊔ Y) == Cₙ(X ∨ Y) × Cₙ(S⁰). The proof is by constructing a
+{- Cⁿ(X ⊔ Y) == Cⁿ(X ∨ Y) × Cⁿ(S⁰). The proof is by constructing a
  - splitting exact sequence
 
-         0 → Cₙ(X ∨ Y) → Cₙ(X ⊔ Y) → C(S⁰)
+         0 → Cⁿ(X ∨ Y) → Cⁿ(X ⊔ Y) → C(S⁰)
 
- - such by defining a map [select : S⁰ → X ⊔ Y] such that
+ - by defining a map [select : S⁰ → X ⊔ Y] such that
    [Cofiber select == X ∨ Y] and [select] has a left inverse. -}
 
 module CofSelect (X Y : Ptd i) where
