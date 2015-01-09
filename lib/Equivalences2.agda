@@ -13,28 +13,28 @@ module lib.Equivalences2 where
 module _ {i j k} {A : Type i} {B : Type j} {C : Type k}
          {h : A → B} (e : is-equiv h) where
 
-  pre∘-is-equiv : is-equiv (λ (k : C → A) → h ∘ k)
+  pre∘-is-equiv : is-equiv (λ (k : B → C) → k ∘ h)
   pre∘-is-equiv = is-eq f g f-g g-f
-    where f = λ k → h ∘ k
-          g = λ k → is-equiv.g e ∘ k
-          f-g = λ k → ap (λ q → q ∘ k) (λ= $ is-equiv.f-g e)
-          g-f = λ k → ap (λ q → q ∘ k) (λ= $ is-equiv.g-f e)
-
-  post∘-is-equiv : is-equiv (λ (k : B → C) → k ∘ h)
-  post∘-is-equiv = is-eq f g f-g g-f
     where f = λ k → k ∘ h
           g = λ k → k ∘ is-equiv.g e
           f-g = λ k → ap (λ q → λ x → k (q x)) (λ= $ is-equiv.g-f e)
           g-f = λ k → ap (λ q → λ x → k (q x)) (λ= $ is-equiv.f-g e)
 
+  post∘-is-equiv : is-equiv (λ (k : C → A) → h ∘ k)
+  post∘-is-equiv = is-eq f g f-g g-f
+    where f = λ k → h ∘ k
+          g = λ k → is-equiv.g e ∘ k
+          f-g = λ k → ap (λ q → q ∘ k) (λ= $ is-equiv.f-g e)
+          g-f = λ k → ap (λ q → q ∘ k) (λ= $ is-equiv.g-f e)
+
 {- The same thing on the abstraction level of equivalences -}
 module _ {i j k} {A : Type i} {B : Type j} {C : Type k}
          (e : A ≃ B) where
 
-  pre∘-equiv : (C → A) ≃ (C → B)
+  pre∘-equiv : (B → C) ≃ (A → C)
   pre∘-equiv = (_ , pre∘-is-equiv (snd e))
 
-  post∘-equiv : (B → C) ≃ (A → C)
+  post∘-equiv : (C → A) ≃ (C → B)
   post∘-equiv = (_ , post∘-is-equiv (snd e))
 
 
@@ -82,11 +82,11 @@ module _ {i j} {A : Type i} {B : Type j} {f : A → B} (e : is-equiv f) where
 
   equiv-linv-is-contr : is-contr (linv f)
   equiv-linv-is-contr = equiv-preserves-level (equiv-Σ-snd (λ _ → λ=-equiv ⁻¹))
-                          (equiv-is-contr-map (post∘-is-equiv e) (idf A))
+                          (equiv-is-contr-map (pre∘-is-equiv e) (idf A))
 
   equiv-rinv-is-contr : is-contr (rinv f)
   equiv-rinv-is-contr = equiv-preserves-level (equiv-Σ-snd (λ _ → λ=-equiv ⁻¹))
-                          (equiv-is-contr-map (pre∘-is-equiv e) (idf B))
+                          (equiv-is-contr-map (post∘-is-equiv e) (idf B))
 
 module _ {i j} {A : Type i} {B : Type j} {f : A → B} where
 
