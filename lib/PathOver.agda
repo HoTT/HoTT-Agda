@@ -249,6 +249,14 @@ apd=cst-in {p = idp} x = x
   → u == v [ (λ z → C z (f z)) ↓ p ]
 ↓-apd-out C {p = idp} idp idp = idp
 
+↓-ap-out= : ∀ {i j k} {A : Type i} {B : Type j} (C : (b : B) → Type k)
+  (f : A → B) {x y : A} (p : x == y)
+  {q : f x == f y} (r : ap f p == q)
+  {u : C (f x)} {v : C (f y)}
+  → u == v [ C ↓ q ]
+  → u == v [ (λ z → C (f z)) ↓ p ]
+↓-ap-out= C f idp idp idp = idp
+
 -- No idea what that is
 to-transp-weird : ∀ {i j} {A : Type i} {B : A → Type j}
   {u v : A} {d : B u} {d' d'' : B v} {p : u == v}

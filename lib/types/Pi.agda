@@ -242,6 +242,13 @@ apd-∘' g f idp = idp
   → ap↓ g (apd f p) == apd (g ∘ f) p
 ∘'-apd g f idp = idp
 
+{- And when [f] is nondependent, it’s also a bit simpler -}
+apd-∘'' : ∀ {i j k} {A : Type i} {B : Type j} {C : (b : B) → Type k}
+  (g : Π B C) (f : A → B) {x y : A} (p : x == y)
+  {q : f x == f y} (r : ap f p == q)
+  → apd (g ∘ f) p == ↓-ap-out= C f p r (apd g q) --(apd↓ g q)
+apd-∘'' g f idp idp = idp
+
 
 {- 2-dimensional coherence conditions -}
 

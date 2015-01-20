@@ -160,6 +160,8 @@ module _ {i j} {A : Type i} {B : A → Type j} where
 
   {- Dependent concatenation -}
 
+  infixr 8 _∙ᵈ_
+
   _∙ᵈ_ : {x y z : A} {p : x == y} {p' : y == z}
     {u : B x} {v : B y} {w : B z}
     → (u == v [ B ↓ p ]
