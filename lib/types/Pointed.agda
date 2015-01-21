@@ -29,6 +29,15 @@ _⊙×_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
 ⊙snd : ∀ {i j} {X : Ptd i} {Y : Ptd j} → fst (X ⊙× Y ⊙→ Y)
 ⊙snd = (snd , idp)
 
+⊙diag : ∀ {i} {X : Ptd i} → fst (X ⊙→ X ⊙× X)
+⊙diag = ((λ x → (x , x)) , idp)
+
+pair⊙→ : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
+  → fst (X ⊙→ Y) → fst (Z ⊙→ W)
+  → fst ((X ⊙× Z) ⊙→ (Y ⊙× W))
+pair⊙→ (f , fpt) (g , gpt) =
+  ((λ {(x , z) → (f x , g z)}) , pair×= fpt gpt)
+
 infixr 4 _⊙∘_
 
 ⊙idf : ∀ {i} (X : Ptd i) → fst (X ⊙→ X)

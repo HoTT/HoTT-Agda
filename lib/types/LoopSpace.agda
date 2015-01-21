@@ -1,14 +1,17 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
+open import lib.NConnected
 open import lib.types.Nat
 open import lib.types.TLevel
 open import lib.types.Empty
-open import lib.types.Pi
-open import lib.types.Truncation
-open import lib.types.Pointed
 open import lib.types.Group
+open import lib.types.Pi
+open import lib.types.Pointed
 open import lib.types.Paths
+open import lib.types.Sigma
+open import lib.types.Truncation
+open import lib.cubical.Square
 
 module lib.types.LoopSpace where
 
@@ -40,12 +43,105 @@ module _ {i} where
   conc^ O t = ⊥-rec (t idp)
   conc^ (S n) _ = _∙_
 
+{- ap and ap2 for pointed functions -}
+
+⊙ap : ∀ {i j} {X : Ptd i} {Y : Ptd j}
+  → fst (X ⊙→ Y) → fst (⊙Ω X ⊙→ ⊙Ω Y)
+⊙ap (f , fpt) = ((λ p → ! fpt ∙ ap f p ∙ fpt) , !-inv-l fpt)
+
+⊙ap2 : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  → fst (X ⊙× Y ⊙→ Z) → fst (⊙Ω X ⊙× ⊙Ω Y ⊙→ ⊙Ω Z)
+⊙ap2 (f , fpt) = ((λ {(p , q) → ! fpt ∙ ap2 (curry f) p q ∙ fpt}) ,
+                  !-inv-l fpt)
+
+⊙ap-idf : ∀ {i} {X : Ptd i} → ⊙ap (⊙idf X) == ⊙idf _
+⊙ap-idf = pair= (λ= $ λ p → ∙-unit-r _ ∙ ap-idf p)
+                (↓-app=cst-from-square $ vert-degen-square $ app=-β _ _)
+
+⊙ap2-fst : ∀ {i j} {X : Ptd i} {Y : Ptd j}
+  → ⊙ap2 {X = X} {Y = Y} ⊙fst == ⊙fst
+⊙ap2-fst = pair= (λ= (λ {(p , q) → ∙-unit-r _ ∙ ap2-fst p q}))
+                 (↓-app=cst-from-square $ vert-degen-square $ app=-β _ _)
+
+⊙ap2-snd : ∀ {i j} {X : Ptd i} {Y : Ptd j}
+  → ⊙ap2 {X = X} {Y = Y} ⊙snd == ⊙snd
+⊙ap2-snd = pair= (λ= (λ {(p , q) → ∙-unit-r _ ∙ ap2-snd p q}))
+                 (↓-app=cst-from-square $ vert-degen-square $ app=-β _ _)
+
+
+⊙ap-ap2 : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
+  (G : fst (Z ⊙→ W)) (F : fst (X ⊙× Y ⊙→ Z))
+  → ⊙ap G ⊙∘ ⊙ap2 F == ⊙ap2 (G ⊙∘ F)
+⊙ap-ap2 (g , idp) (f , idp) = pair=
+  (λ= $ λ {(p , q) →
+         ap (λ w → w ∙ idp) (ap (ap g) (∙-unit-r _) ∙ ap-ap2 g (curry f) p q)})
+  (↓-app=cst-from-square $ vert-degen-square $ app=-β _ _)
+
+⊙ap2-ap : ∀ {i j k l m}
+  {X : Ptd i} {Y : Ptd j} {U : Ptd k} {V : Ptd l} {Z : Ptd m}
+  (G : fst ((U ⊙× V) ⊙→ Z)) (F₁ : fst (X ⊙→ U)) (F₂ : fst (Y ⊙→ V))
+  → ⊙ap2 G ⊙∘ pair⊙→ (⊙ap F₁) (⊙ap F₂) == ⊙ap2 (G ⊙∘ pair⊙→ F₁ F₂)
+⊙ap2-ap (g , idp) (f₁ , idp) (f₂ , idp) = pair=
+  (λ= $ λ {(p , q) →
+    ∙-unit-r _
+    ∙ ap2 (ap2 (curry g)) (∙-unit-r _) (∙-unit-r _)
+    ∙ ap2-ap-l (curry g) f₁ p (ap f₂ q)
+    ∙ ap2-ap-r (λ x v → g (f₁ x , v)) f₂ p q
+    ∙ ! (∙-unit-r _)})
+  (↓-app=cst-from-square $ vert-degen-square $ app=-β _ _)
+
+⊙ap2-diag : ∀ {i j} {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙× X ⊙→ Y))
+  → ⊙ap2 F ⊙∘ ⊙diag == ⊙ap (F ⊙∘ ⊙diag)
+⊙ap2-diag (f , idp) = pair=
+  (λ= $ λ p → ∙-unit-r _ ∙ ap2-diag (curry f) p ∙ ! (∙-unit-r _))
+  (↓-app=cst-from-square $ vert-degen-square $ app=-β _ _)
+
+{- ap and ap2 for higher loop spaces -}
+
 ap^ : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
   → fst (X ⊙→ Y) → fst (⊙Ω^ n X ⊙→ ⊙Ω^ n Y)
 ap^ O F = F
-ap^ (S n) F =
-  let (g , gpt) = ap^ n F
-  in (λ p → ! gpt ∙ ap g p ∙ gpt), !-inv-l gpt
+ap^ (S n) F = ⊙ap (ap^ n F)
+
+ap2^ : ∀ {i j k} (n : ℕ) {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  → fst ((X ⊙× Y) ⊙→ Z)
+  → fst ((⊙Ω^ n X ⊙× ⊙Ω^ n Y) ⊙→ ⊙Ω^ n Z)
+ap2^ O F = F
+ap2^ (S n) F = ⊙ap2 (ap2^ n F)
+
+ap^-idf : ∀ {i} (n : ℕ) {X : Ptd i} → ap^ n (⊙idf X) == ⊙idf _
+ap^-idf O = idp
+ap^-idf (S n) = ap ⊙ap (ap^-idf n) ∙ ⊙ap-idf
+
+ap^-ap2^ : ∀ {i j k l} (n : ℕ) {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
+  (G : fst (Z ⊙→ W)) (F : fst ((X ⊙× Y) ⊙→ Z))
+  → ap^ n G ⊙∘ ap2^ n F == ap2^ n (G ⊙∘ F)
+ap^-ap2^ O G F = idp
+ap^-ap2^ (S n) G F = ⊙ap-ap2 (ap^ n G) (ap2^ n F) ∙ ap ⊙ap2 (ap^-ap2^ n G F)
+
+ap2^-fst : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
+  → ap2^ n {X} {Y} ⊙fst == ⊙fst
+ap2^-fst O = idp
+ap2^-fst (S n) = ap ⊙ap2 (ap2^-fst n) ∙ ⊙ap2-fst
+
+ap2^-snd : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
+  → ap2^ n {X} {Y} ⊙snd == ⊙snd
+ap2^-snd O = idp
+ap2^-snd (S n) = ap ⊙ap2 (ap2^-snd n) ∙ ⊙ap2-snd
+
+ap2^-ap^ : ∀ {i j k l m} (n : ℕ)
+  {X : Ptd i} {Y : Ptd j} {U : Ptd k} {V : Ptd l} {Z : Ptd m}
+  (G : fst ((U ⊙× V) ⊙→ Z)) (F₁ : fst (X ⊙→ U)) (F₂ : fst (Y ⊙→ V))
+  → ap2^ n G ⊙∘ pair⊙→ (ap^ n F₁) (ap^ n F₂) == ap2^ n (G ⊙∘ pair⊙→ F₁ F₂)
+ap2^-ap^ O G F₁ F₂ = idp
+ap2^-ap^ (S n) G F₁ F₂ =
+  ⊙ap2-ap (ap2^ n G) (ap^ n F₁) (ap^ n F₂) ∙ ap ⊙ap2 (ap2^-ap^ n G F₁ F₂)
+
+ap2^-diag : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙× X ⊙→ Y))
+  → ap2^ n F ⊙∘ ⊙diag == ap^ n (F ⊙∘ ⊙diag)
+ap2^-diag O F = idp
+ap2^-diag (S n) F = ⊙ap2-diag (ap2^ n F) ∙ ap ⊙ap (ap2^-diag n F)
+
 
 module _ {i} {X : Ptd i} where
 
@@ -123,6 +219,13 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
   Ω^-level-in (S m) n X
     (transport (λ k → has-level k (fst X)) (! (+2+-βr (n -2) m)) pX)
     (idp^ n) (idp^ n)
+
+Ω^-conn-in : ∀ {i} (m : ℕ₋₂) (n : ℕ) (X : Ptd i)
+  → (is-connected ((n -2) +2+ m) (fst X)) → is-connected m (Ω^ n X)
+Ω^-conn-in m O X pX = pX
+Ω^-conn-in m (S n) X pX =
+  path-conn $ Ω^-conn-in (S m) n X $
+    transport (λ k → is-connected k (fst X)) (! (+2+-βr (n -2) m)) pX
 
 {- Eckmann-Hilton argument -}
 module _ {i} {X : Ptd i} where

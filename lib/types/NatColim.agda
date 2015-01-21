@@ -159,3 +159,77 @@ ncolim-conn {D = D} d (S m) cD =
                 (contr-has-all-paths (cD n) [ nc-lift d n x ] [ y ])
          ∙ ap (ap (Trunc-fmap (ncin (S n))))
               (contr-has-all-paths (=-preserves-level _ (cD (S n))) _ _)))
+
+{- Type of finite tuples -}
+
+FinTuplesType : ∀ {i} → (ℕ → Ptd i) → ℕ → Ptd i
+FinTuplesType F O = F O
+FinTuplesType F (S n) = F O ⊙× FinTuplesType (F ∘ S) n
+
+fin-tuples-map : ∀ {i} (F : ℕ → Ptd i) (n : ℕ)
+  → fst (FinTuplesType F n ⊙→ FinTuplesType F (S n))
+fin-tuples-map F O = ((λ r → r , snd (F 1)) , idp)
+fin-tuples-map F (S n) =
+  ((λ {(x , r) → (x , fst (fin-tuples-map (F ∘ S) n) r)}) ,
+   pair×= idp (snd (fin-tuples-map (F ∘ S) n)))
+
+⊙FinTuples : ∀ {i} → (ℕ → Ptd i) → Ptd i
+⊙FinTuples {i} F = ⊙ℕColim (fin-tuples-map F)
+
+fin-tuples-cons : ∀ {i} (F : ℕ → Ptd i)
+  → F O ⊙× ⊙FinTuples (F ∘ S) == ⊙FinTuples F
+fin-tuples-cons {i} F =
+  ⊙ua (equiv into out into-out out-into) (! (ncglue O (snd (F O))))
+  where
+  module Into (x : fst (F O)) =
+    ℕColimRec (fst ∘ fin-tuples-map (F ∘ S)) {A = fst (⊙FinTuples F)}
+      (λ n r → ncin (S n) (x , r))
+      (λ n r → ncglue (S n) (x , r))
+
+  into = uncurry Into.f
+
+  out-ncin : (n : ℕ)
+    → fst (FinTuplesType F n) → fst (F O ⊙× ⊙FinTuples (F ∘ S))
+  out-ncin O x = (x , ncin O (snd (F 1)))
+  out-ncin (S n) (x , r) = (x , ncin n r)
+
+  out-ncglue : (n : ℕ) (r : fst (FinTuplesType F n))
+    → out-ncin n r == out-ncin (S n) (fst (fin-tuples-map F n) r)
+  out-ncglue O x = idp
+  out-ncglue (S n) (x , r) = pair= idp (ncglue n r)
+
+  module Out = ℕColimRec _ out-ncin out-ncglue
+  out = Out.f
+
+  into-out-ncin : (n : ℕ) (r : fst (FinTuplesType F n))
+    → into (out-ncin n r) == ncin n r
+  into-out-ncin O x = ! (ncglue O x)
+  into-out-ncin (S n) (x , r) = idp
+
+  into-out-ncglue : (n : ℕ) (r : fst (FinTuplesType F n))
+    → into-out-ncin n r == into-out-ncin (S n) (fst (fin-tuples-map F n) r)
+      [ (λ s → into (out s) == s) ↓ ncglue n r ]
+  into-out-ncglue O x =
+    ↓-∘=idf-from-square into out $
+      ap (ap into) (Out.ncglue-β O x)
+      ∙v⊡ bl-square (ncglue O x)
+  into-out-ncglue (S n) (x , r) =
+    ↓-∘=idf-from-square into out $
+      (ap (ap into) (Out.ncglue-β (S n) (x , r))
+       ∙ ∘-ap into (_,_ x) (ncglue n r)
+       ∙ Into.ncglue-β x n r)
+      ∙v⊡ vid-square
+
+  into-out : (r : fst (⊙FinTuples F)) → into (out r) == r
+  into-out = ℕColimElim.f _
+    into-out-ncin
+    into-out-ncglue
+
+  out-into : (t : fst (F O ⊙× ⊙FinTuples (F ∘ S))) → out (into t) == t
+  out-into = uncurry $ λ x → ℕColimElim.f _
+    (λ n r → idp)
+    (λ n r → ↓-='-from-square $
+      (ap-∘ out (Into.f x) (ncglue n r)
+       ∙ ap (ap out) (Into.ncglue-β x n r)
+       ∙ Out.ncglue-β (S n) (x , r))
+      ∙v⊡ vid-square)

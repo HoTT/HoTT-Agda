@@ -29,6 +29,11 @@ is-conn-map {A = A} {B = B} n f =
 inhab-conn : ∀ {i} (A : Type i) (a : A) → is-connected ⟨-1⟩ A
 inhab-conn A a = ([ a ] , prop-has-all-paths Trunc-level [ a ])
 
+{- connectedness is a prop -}
+is-connected-is-prop : ∀ {i} {n : ℕ₋₂} {A : Type i}
+  → is-prop (is-connected n A)
+is-connected-is-prop = is-contr-is-prop
+
 {- "induction principle" for n-connected maps (where codomain is n-type) -}
 abstract
   conn-elim-eqv : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂}

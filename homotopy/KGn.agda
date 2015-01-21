@@ -67,11 +67,11 @@ module KGnImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
              == π k tk (⊙KG n)
       stable =
         π (S k) tsk (⊙KG (S n))
-          =⟨ π-Trunc-≤T-iso _ tsk _ _ (≤T-ap-S lte) ⟩
+          =⟨ π-below-trunc _ tsk _ _ (≤T-ap-S lte) ⟩
         π (S k) tsk (⊙Susp^ n X)
           =⟨ SS.stable ⟩
         π k tk (⊙Susp^ (S n') X)
-          =⟨ ! (π-Trunc-≤T-iso _ tk _ _ lte) ⟩
+          =⟨ ! (π-below-trunc _ tk _ _ lte) ⟩
         π k tk (⊙KG n) ∎
 
   module BelowDiagonal where
@@ -115,7 +115,7 @@ module KGnImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
     π₁ : (tn : 1 ≠ O) (t1 : 1 ≠ O)
       → π 1 tn (⊙KG 1) == π 1 t1 X
     π₁ tn t1 =
-      π-Trunc-≤T-iso 1 tn ⟨ 1 ⟩ X ≤T-refl
+      π-below-trunc 1 tn ⟨ 1 ⟩ X ≤T-refl
       ∙ ap (λ t → π 1 t X)
            (prop-has-all-paths (Π-level (λ _ → ⊥-is-prop)) tn t1)
 
@@ -125,7 +125,7 @@ module KGnImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
     π₂ : (tn : 2 ≠ O) (t1 : 1 ≠ O)
       → π 2 tn (⊙KG 2) == π 1 t1 X
     π₂ tn t1 =
-      π-Trunc-≤T-iso 2 tn ⟨ 2 ⟩ (⊙Susp X) ≤T-refl
+      π-below-trunc 2 tn ⟨ 2 ⟩ (⊙Susp X) ≤T-refl
       ∙ Π₂.π₂-Suspension t1 tn
 
     π-diag : (n : ℕ) (tn : n ≠ 0) (t1 : 1 ≠ O)

@@ -126,6 +126,10 @@ T-S+2+≠ (S n) k p = T-S+2+≠ n k (ap T-get-S (ap S (! (+2+-βr k n)) ∙ p))
 ≤T-witness (inl p) = (⟨-2⟩ , p)
 ≤T-witness (inr lt) = let w' = <T-witness lt in (S (fst w') , snd w')
 
+<T-to-≤T : {m n : ℕ₋₂} → m <T S n → m ≤T n
+<T-to-≤T ltS = inl idp
+<T-to-≤T (ltSR lt) = inr lt
+
 <T-to-≠ : {m n : ℕ₋₂} → (m <T n) → m ≠ n
 <T-to-≠ {m} {n} lt p = T-S+2+≠ m (fst w) (snd w ∙ ! p)
   where w = <T-witness lt
