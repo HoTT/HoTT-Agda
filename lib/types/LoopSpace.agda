@@ -54,47 +54,50 @@ module _ {i} where
 ⊙ap2 (f , fpt) = ((λ {(p , q) → ! fpt ∙ ap2 (curry f) p q ∙ fpt}) ,
                   !-inv-l fpt)
 
+⊙ap-∘ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y))
+  → ⊙ap (g ⊙∘ f) == ⊙ap g ⊙∘ ⊙ap f
+⊙ap-∘ (g , idp) (f , idp) =
+  ⊙λ= (λ p → ap (λ w → w ∙ idp) (ap-∘ g f p ∙ ! (ap (ap g) (∙-unit-r _))))
+      idp
+
 ⊙ap-idf : ∀ {i} {X : Ptd i} → ⊙ap (⊙idf X) == ⊙idf _
-⊙ap-idf = pair= (λ= $ λ p → ∙-unit-r _ ∙ ap-idf p)
-                (↓-app=cst-from-square $ vert-degen-square $ app=-β _ _)
+⊙ap-idf = ⊙λ= (λ p → ∙-unit-r _ ∙ ap-idf p) idp
 
 ⊙ap2-fst : ∀ {i j} {X : Ptd i} {Y : Ptd j}
   → ⊙ap2 {X = X} {Y = Y} ⊙fst == ⊙fst
-⊙ap2-fst = pair= (λ= (λ {(p , q) → ∙-unit-r _ ∙ ap2-fst p q}))
-                 (↓-app=cst-from-square $ vert-degen-square $ app=-β _ _)
+⊙ap2-fst = ⊙λ= (λ {(p , q) → ∙-unit-r _ ∙ ap2-fst p q}) idp
 
 ⊙ap2-snd : ∀ {i j} {X : Ptd i} {Y : Ptd j}
   → ⊙ap2 {X = X} {Y = Y} ⊙snd == ⊙snd
-⊙ap2-snd = pair= (λ= (λ {(p , q) → ∙-unit-r _ ∙ ap2-snd p q}))
-                 (↓-app=cst-from-square $ vert-degen-square $ app=-β _ _)
-
+⊙ap2-snd = ⊙λ= (λ {(p , q) → ∙-unit-r _ ∙ ap2-snd p q}) idp
 
 ⊙ap-ap2 : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
   (G : fst (Z ⊙→ W)) (F : fst (X ⊙× Y ⊙→ Z))
   → ⊙ap G ⊙∘ ⊙ap2 F == ⊙ap2 (G ⊙∘ F)
-⊙ap-ap2 (g , idp) (f , idp) = pair=
-  (λ= $ λ {(p , q) →
-         ap (λ w → w ∙ idp) (ap (ap g) (∙-unit-r _) ∙ ap-ap2 g (curry f) p q)})
-  (↓-app=cst-from-square $ vert-degen-square $ app=-β _ _)
+⊙ap-ap2 (g , idp) (f , idp) =
+  ⊙λ= (λ {(p , q) → ap (λ w → w ∙ idp)
+                       (ap (ap g) (∙-unit-r _) ∙ ap-ap2 g (curry f) p q)})
+      idp
 
 ⊙ap2-ap : ∀ {i j k l m}
   {X : Ptd i} {Y : Ptd j} {U : Ptd k} {V : Ptd l} {Z : Ptd m}
   (G : fst ((U ⊙× V) ⊙→ Z)) (F₁ : fst (X ⊙→ U)) (F₂ : fst (Y ⊙→ V))
   → ⊙ap2 G ⊙∘ pair⊙→ (⊙ap F₁) (⊙ap F₂) == ⊙ap2 (G ⊙∘ pair⊙→ F₁ F₂)
-⊙ap2-ap (g , idp) (f₁ , idp) (f₂ , idp) = pair=
-  (λ= $ λ {(p , q) →
-    ∙-unit-r _
-    ∙ ap2 (ap2 (curry g)) (∙-unit-r _) (∙-unit-r _)
-    ∙ ap2-ap-l (curry g) f₁ p (ap f₂ q)
-    ∙ ap2-ap-r (λ x v → g (f₁ x , v)) f₂ p q
-    ∙ ! (∙-unit-r _)})
-  (↓-app=cst-from-square $ vert-degen-square $ app=-β _ _)
+⊙ap2-ap (g , idp) (f₁ , idp) (f₂ , idp) =
+  ⊙λ= (λ {(p , q) →
+         ∙-unit-r _
+         ∙ ap2 (ap2 (curry g)) (∙-unit-r _) (∙-unit-r _)
+         ∙ ap2-ap-l (curry g) f₁ p (ap f₂ q)
+         ∙ ap2-ap-r (λ x v → g (f₁ x , v)) f₂ p q
+         ∙ ! (∙-unit-r _)})
+      idp
 
 ⊙ap2-diag : ∀ {i j} {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙× X ⊙→ Y))
   → ⊙ap2 F ⊙∘ ⊙diag == ⊙ap (F ⊙∘ ⊙diag)
-⊙ap2-diag (f , idp) = pair=
-  (λ= $ λ p → ∙-unit-r _ ∙ ap2-diag (curry f) p ∙ ! (∙-unit-r _))
-  (↓-app=cst-from-square $ vert-degen-square $ app=-β _ _)
+⊙ap2-diag (f , idp) =
+  ⊙λ= (λ p → ∙-unit-r _ ∙ ap2-diag (curry f) p ∙ ! (∙-unit-r _))
+      idp
 
 {- ap and ap2 for higher loop spaces -}
 
