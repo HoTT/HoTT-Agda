@@ -16,11 +16,7 @@ module cohomology.ProductRepr where
 
  - there exists an isomorphism G == H₁ × H₂ such that i₁,i₂ correspond
  - to the natural injections and j₁,j₂ correspond to the natural
- - projections.
-
- -   G == H₁ × H₂, such that i₁,i₂ correspond to the natural injections,
- -   G == K₁ × K₂, such that j₁,j₂ correspond to the natural projections.
- -}
+ - projections. -}
 
 module ProductRepr {i j}
   {G : Group (lmax i j)} {H₁ : Group i} {H₂ : Group j}
@@ -81,6 +77,16 @@ module ProductRepr {i j}
     codomain-over-equiv (GroupHom.f i₂) _
     ▹ λ= (λ h₂ → pair×= (itok ex₂ _ [ h₂ , idp ]) (p₂ h₂))
 
+
+  {- Given additionally maps
+
+            i₀    j₀
+         K –––→ G ––→ L
+
+   - such that j₀∘i₀ = 0, we have j₀(i₁(j₁(i₀ k)))⁻¹ = j₀(i₂(j₂(i₀ k))).
+   - (This is called the hexagon lemma in Eilenberg & Steenrod's book.
+   - The hexagon is not visible in this presentation.)
+   -}
 
   module HexagonLemma {k l}
     {K : Group k} {L : Group l}
