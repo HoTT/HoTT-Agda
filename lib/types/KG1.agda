@@ -210,8 +210,7 @@ module KG1 {i} (G : Group i) where
 
     abstract
       π₁-iso : π 1 (ℕ-S≠O _) (KG1 , kbase) == G
-      π₁-iso = transport (λ pi → pi 1 (ℕ-S≠O _) ⊙KG1 == G) π-fold $ ! $
-        group-iso
+      π₁-iso = ! $ group-iso
         (record { f = [_] ∘ kloop;
                   pres-comp = λ g₁ g₂ → ap [_] (kloop-comp g₁ g₂) })
         (snd ((unTrunc-equiv (kbase == kbase) (klevel _ _))⁻¹ ∘e (Ω¹-equiv ⁻¹)))
@@ -227,3 +226,15 @@ module KG1 {i} (G : Group i) where
         (λ _ → prop-has-all-paths-↓ (Trunc-level {n = ⟨0⟩} _ _))
         (set-↓-has-all-paths-↓ (=-preserves-level _ Trunc-level))
         (λ _ _ → set-↓-has-all-paths-↓ (=-preserves-level _ Trunc-level))))
+
+K1-action : ∀ {i j} {G : Group i} {H : Group j}
+  → GroupHom G H → fst (KG1.⊙KG1 G ⊙→ KG1.⊙KG1 H)
+K1-action {G = G} {H = H} (group-hom f pres-comp) =
+  (KG1Rec.f G (klevel H) (kbase H)
+    (record {
+      f = λ g → kloop H (f g);
+      pres-comp = λ g₁ g₂ →
+        ap (kloop H) (pres-comp g₁ g₂) ∙ kloop-comp H (f g₁) (f g₂)}) ,
+   idp)
+  where
+  open KG1

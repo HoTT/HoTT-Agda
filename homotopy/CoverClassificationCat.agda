@@ -16,7 +16,7 @@ module homotopy.CoverClassificationCat {i} (A∙ : Ptd i)
     A = fst A∙
     a₁ : A
     a₁ = snd A∙
-    π1A = concrete-fundamental-group A∙
+    π1A = fundamental-group A∙
 
   postulate
     magic : ∀ {i} {X : Type i} → X

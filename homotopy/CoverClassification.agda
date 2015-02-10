@@ -13,7 +13,7 @@ module homotopy.CoverClassification {i} (A∙ : Ptd i)
     A = fst A∙
     a₁ : A
     a₁ = snd A∙
-    π1A = concrete-fundamental-group A∙
+    π1A = fundamental-group A∙
 
   -- A covering space constructed from a G-set.
   gset-to-cover : ∀ {j} → Gset π1A j → Cover A (lmax i j)

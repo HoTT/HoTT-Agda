@@ -1,3 +1,4 @@
+
 {-# OPTIONS --without-K #-}
 
 open import HoTT
@@ -78,14 +79,12 @@ module KGnImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
 
     π₁ : (n : ℕ) (t1 : 1 ≠ 0 )
       → π 1 t1 (⊙KG (S (S n))) == LiftUnit-Group
-    π₁ n t1 = transport
-      (λ pi → pi 1 t1 (⊙KG (S (S n))) == LiftUnit-Group)
-      π-fold
-      (contr-iso-LiftUnit (π-concrete 1 t1 (⊙KG (S (S n))))
-         (connected-at-level-is-contr
-           (raise-level-≤T (≤T-ap-S (≤T-ap-S (-2≤T (n -2))))
-                           (Trunc-level {n = ⟨0⟩}))
-           (Trunc-preserves-conn ⟨0⟩ (path-conn (KG-conn (S n))))))
+    π₁ n t1 =
+      contr-iso-LiftUnit (π 1 t1 (⊙KG (S (S n))))
+        (connected-at-level-is-contr
+          (raise-level-≤T (≤T-ap-S (≤T-ap-S (-2≤T (n -2))))
+                          (Trunc-level {n = ⟨0⟩}))
+          (Trunc-preserves-conn ⟨0⟩ (path-conn (KG-conn (S n)))))
 
     -- some clutter here arises from the definition of <;
     -- any simple way to avoid this?
@@ -141,14 +140,12 @@ module KGnImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
 
     π-above : (k n : ℕ) (tk : k ≠ 0) → (n < k)
       → π k tk (⊙KG n) == LiftUnit-Group
-    π-above k n tk lt = transport
-      (λ pi → pi k tk (⊙KG n) == LiftUnit-Group)
-      π-fold
-      (contr-iso-LiftUnit (π-concrete k tk (⊙KG n))
+    π-above k n tk lt =
+      contr-iso-LiftUnit (π k tk (⊙KG n))
         (inhab-prop-is-contr
           [ idp^ k ]
           (Trunc-preserves-level ⟨0⟩ (Ω^-level-in ⟨-1⟩ k _
-            (raise-level-≤T (lemma lt) (KG-level n))))))
+            (raise-level-≤T (lemma lt) (KG-level n)))))
       where lemma : {k n : ℕ} → n < k → S (S (n -2)) ≤T ((k -2) +2+ ⟨-1⟩)
             lemma ltS = inl (! (+2+-comm _ ⟨-1⟩))
             lemma (ltSR lt) = ≤T-trans (lemma lt) (inr ltS)
@@ -224,4 +221,4 @@ module KGnExplicit {i} (G : Group i) (G-abelian : is-abelian G) where
     OnDiagonal.π-diag n tn (ℕ-S≠O 0) ∙ K1.π₁.π₁-iso
 
   open AboveDiagonal public using (π-above)
-  open Spectrum public -- using (spectrum)
+  open Spectrum public using (spectrum)

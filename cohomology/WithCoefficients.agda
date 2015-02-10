@@ -39,7 +39,7 @@ module cohomology.WithCoefficients where
   invl = λ F → pair=
     (λ= (!-inv-l ∘ fst F))
     (↓-app=cst-in $
-      ap2 _∙_ (ap ! (snd F)) (snd F)
+     ap2 _∙_ (ap ! (snd F)) (snd F)
         =⟨ invl-lemma (snd F) ⟩
       !-inv-l (fst F (snd X))
         =⟨ ! (app=-β (!-inv-l ∘ fst F) (snd X)) ⟩
@@ -82,7 +82,6 @@ module cohomology.WithCoefficients where
 →Ω-Group : ∀ {i j} (X : Ptd i) (Y : Ptd j) → Group (lmax i j)
 →Ω-Group X Y = Trunc-Group (→Ω-group-structure X Y)
 
-
 {- Some lemmas to be used to calculate cohomology of S⁰ -}
 Bool⊙→-out : ∀ {i} {X : Ptd i}
   → fst (⊙Lift {j = i} ⊙Bool ⊙→ X) → fst X
@@ -116,42 +115,19 @@ abstract
     → fst (⊙Lift {j = i} ⊙Bool ⊙→ X) == fst X
   Bool⊙→-path X = ua (Bool⊙→-equiv X)
 
-private
-  Bool⊙→Ω-iso-π₁' : ∀ {i} (X : Ptd i)
-    → →Ω-Group (⊙Lift {j = i} ⊙Bool) X == π 1 (ℕ-S≠O _) X
-  Bool⊙→Ω-iso-π₁' {i} X =
-    transport
-      (λ pi → →Ω-Group (⊙Lift ⊙Bool) X == pi 1 (ℕ-S≠O _) X)
-      π-fold
-      (group-iso
-        (record {
-          f = Trunc-fmap Bool⊙→-out;
-          pres-comp = λ tg₁ tg₂ →
-            Trunc-elim
-              {P = λ tg₁ → Trunc-fmap Bool⊙→-out (tg₁ ◯ tg₂)
-                   == (Trunc-fmap Bool⊙→-out tg₁) □ (Trunc-fmap Bool⊙→-out tg₂)}
-              (λ _ → =-preserves-level _ Trunc-level)
-              (λ g₁ →
-                Trunc-elim
-                  {P = λ tg₂ → Trunc-fmap Bool⊙→-out ([ g₁ ] ◯ tg₂)
-                       == [ Bool⊙→-out g₁ ] □ (Trunc-fmap Bool⊙→-out tg₂)}
-                  (λ _ → =-preserves-level _ Trunc-level)
-                  (λ g₂ → idp)
-                  tg₂)
-              tg₁})
-        (is-equiv-Trunc ⟨0⟩ _ (snd (Bool⊙→-equiv (⊙Ω X)))))
-    where
-    _◯_ = Trunc-fmap2 {n = ⟨0⟩} $ GroupStructure.comp $
-            →Ω-group-structure (⊙Lift ⊙Bool) X
-    _□_ = Trunc-fmap2 {n = ⟨0⟩} $ GroupStructure.comp $
-            Ω^-group-structure 1 (ℕ-S≠O _) X
-
-{- Agda seems to handle "abstract" more easily when it's separated from
- - the details of the term -}
 abstract
   Bool⊙→Ω-iso-π₁ : ∀ {i} (X : Ptd i)
     → →Ω-Group (⊙Lift {j = i} ⊙Bool) X == π 1 (ℕ-S≠O _) X
-  Bool⊙→Ω-iso-π₁ = Bool⊙→Ω-iso-π₁'
+  Bool⊙→Ω-iso-π₁ {i} X =
+    group-iso
+      (record {
+        f = Trunc-fmap Bool⊙→-out;
+        pres-comp = Trunc-elim {i = i}
+          (λ _ → Π-level {j = i} (λ _ → =-preserves-level _ Trunc-level))
+          (λ g₁ → Trunc-elim
+            (λ _ → =-preserves-level _ Trunc-level)
+            (λ g₂ → idp))})
+      (is-equiv-Trunc ⟨0⟩ _ (snd (Bool⊙→-equiv (⊙Ω X))))
 
 Bool⊙→KG0-iso-G : ∀ {i} (G : Group i) (abel : is-abelian G)
   → →Ω-Group (⊙Lift {j = i} ⊙Bool) (KGnExplicit.⊙KG G abel 1) == G
