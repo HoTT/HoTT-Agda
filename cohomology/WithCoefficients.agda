@@ -13,51 +13,27 @@ module cohomology.WithCoefficients where
   comp = λ F G →
     ((λ x → fst F x ∙ fst G x), ap2 _∙_ (snd F) (snd G));
   unitl = λ G → pair= idp (ap2-idp-l _∙_ {x = idp} (snd G) ∙ ap-idf (snd G));
-  unitr = λ F → pair=
-    (λ= (∙-unit-r ∘ fst F))
-    (↓-app=cst-in $
-      ap2 _∙_ (snd F) idp
-        =⟨ ap2-idp-r _∙_ (snd F) ⟩
-      ap (λ p → p ∙ idp) (snd F)
-        =⟨ unitr-lemma (snd F) ⟩
-      ∙-unit-r (fst F (snd X)) ∙ snd F
-        =⟨ ap (λ w → w ∙ snd F) (! (app=-β (∙-unit-r ∘ fst F) (snd X))) ⟩
-      app= (λ= (∙-unit-r ∘ fst F)) (snd X) ∙ snd F
-      ∎);
-  assoc = λ F G H → pair=
-    (λ= (λ x → ∙-assoc (fst F x) (fst G x) (fst H x)))
-    (↓-app=cst-in $
-      ap2 _∙_ (ap2 _∙_ (snd F) (snd G)) (snd H)
-        =⟨ ! (∙-unit-r _) ∙ assoc-lemma (snd F) (snd G) (snd H) ⟩
-      ∙-assoc (fst F (snd X)) (fst G (snd X)) (fst H (snd X))
-       ∙ ap2 _∙_ (snd F) (ap2 _∙_ (snd G) (snd H))
-        =⟨ ! (app=-β (λ x → ∙-assoc (fst F x) (fst G x) (fst H x)) (snd X))
-           |in-ctx (λ w → w ∙ ap2 _∙_ (snd F) (ap2 _∙_ (snd G) (snd H))) ⟩
-      app= (λ= (λ x → ∙-assoc (fst F x) (fst G x) (fst H x))) (snd X)
-       ∙ ap2 _∙_ (snd F) (ap2 _∙_ (snd G) (snd H))
-      ∎);
-  invl = λ F → pair=
-    (λ= (!-inv-l ∘ fst F))
-    (↓-app=cst-in $
-     ap2 _∙_ (ap ! (snd F)) (snd F)
-        =⟨ invl-lemma (snd F) ⟩
-      !-inv-l (fst F (snd X))
-        =⟨ ! (app=-β (!-inv-l ∘ fst F) (snd X)) ⟩
-      app= (λ= (!-inv-l ∘ fst F)) (snd X)
-        =⟨ ! (∙-unit-r _) ⟩
-      app= (λ= (!-inv-l ∘ fst F)) (snd X) ∙ idp
-      ∎);
-  invr = λ F → pair=
-    (λ= (!-inv-r ∘ fst F))
-    (↓-app=cst-in $
-      ap2 _∙_ (snd F) (ap ! (snd F))
-        =⟨ invr-lemma (snd F) ⟩
-      !-inv-r (fst F (snd X))
-        =⟨ ! (app=-β (!-inv-r ∘ fst F) (snd X)) ⟩
-      app= (λ= (!-inv-r ∘ fst F)) (snd X)
-        =⟨ ! (∙-unit-r _) ⟩
-      app= (λ= (!-inv-r ∘ fst F)) (snd X) ∙ idp
-      ∎)}
+  unitr = λ F → ⊙λ=
+    (∙-unit-r ∘ fst F)
+    (ap2-idp-r _∙_ (snd F) ∙ unitr-lemma (snd F));
+  assoc = λ F G H → ⊙λ=
+    (λ x → ∙-assoc (fst F x) (fst G x) (fst H x))
+    (! (∙-unit-r _) ∙ assoc-lemma (snd F) (snd G) (snd H));
+  invl = λ F → ⊙λ=
+    (!-inv-l ∘ fst F)
+    (invl-lemma (snd F) ∙ ! (∙-unit-r _));
+  invr = λ F → ⊙λ=
+    (!-inv-r ∘ fst F)
+    {!invr-lemma (snd F) ∙ ! (∙-unit-r _)!}}
+    -- (↓-app=cst-in $
+    --   ap2 _∙_ (snd F) (ap ! (snd F))
+    --     =⟨ invr-lemma (snd F) ⟩
+    --   !-inv-r (fst F (snd X))
+    --     =⟨ ! (app=-β (!-inv-r ∘ fst F) (snd X)) ⟩
+    --   app= (λ= (!-inv-r ∘ fst F)) (snd X)
+    --     =⟨ ! (∙-unit-r _) ⟩
+    --   app= (λ= (!-inv-r ∘ fst F)) (snd X) ∙ idp
+    --   ∎)}
   where
 
   unitr-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
