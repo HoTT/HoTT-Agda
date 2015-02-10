@@ -41,21 +41,11 @@ module _ {i} {j} {Y : Ptd i} {Z : Ptd j} (g : fst (Y ⊙→ Z)) where
     (q : –> e (snd X) == snd Y)
     → g ⊙∘ ⊙–> e q == g [ (λ W → fst (W ⊙→ Z)) ↓ ⊙ua e q ]
   domain-over-⊙equiv {X = X} e q =
-    ap (λ w → g ⊙∘ w) lemma
-    ◃ domain-over-⊙path (ua e) (coe-β e (snd X) ∙ q)
+    ap (λ w → g ⊙∘ w) lemma ◃ domain-over-⊙path (ua e) (coe-β e (snd X) ∙ q)
     where
     lemma : Path {A = fst (X ⊙→ Y)}
        (⊙–> e q) (coe (ua e) , coe-β e (snd X) ∙ q)
-    lemma = pair=
-      (λ= (! ∘ coe-β e))
-      (↓-app=cst-in $
-        q
-          =⟨ ap (λ w → w ∙ q) (! (!-inv-l (coe-β e (snd X))))
-             ∙ ∙-assoc (! (coe-β e (snd X))) (coe-β e (snd X)) q ⟩
-        ! (coe-β e (snd X)) ∙ coe-β e (snd X) ∙ q
-          =⟨ ! (app=-β (! ∘ coe-β e) (snd X))
-             |in-ctx (λ w → w ∙ coe-β e (snd X) ∙ q) ⟩
-        app= (λ= (! ∘ coe-β e)) (snd X) ∙ coe-β e (snd X) ∙ q ∎)
+    lemma = ! $ ⊙λ= (coe-β e) idp
 
 module _ {i} {j} {X : Ptd i} {Z : Ptd j} (f : fst (X ⊙→ Z)) where
 
@@ -75,18 +65,8 @@ module _ {i} {j} {X : Ptd i} {Z : Ptd j} (f : fst (X ⊙→ Z)) where
     where
     lemma : {X Y : Ptd i}
       (e : fst X ≃ fst Y) (q : –> e (snd X) == snd Y)
-      → ⊙idf X ==
-        ((<– e , ap (<– e) (! q) ∙ <–-inv-l e (snd X)) ⊙∘ (–> e , q))
-    lemma {X = X} e idp = pair=
-      (λ= (! ∘ <–-inv-l e))
-      (↓-app=cst-in $
-        idp
-          =⟨ ! (!-inv-l (<–-inv-l e (snd X))) ⟩
-        ! (<–-inv-l e (snd X)) ∙ <–-inv-l e (snd X)
-          =⟨ ! (app=-β (! ∘ <–-inv-l e) (snd X))
-             |in-ctx (λ w → w ∙ <–-inv-l e (snd X)) ⟩
-        app= (λ= (! ∘ <–-inv-l e)) (snd X) ∙ <–-inv-l e (snd X) ∎)
-
+      → ⊙idf X == ((<– e , ap (<– e) (! q) ∙ <–-inv-l e (snd X)) ⊙∘ (–> e , q))
+    lemma {X = X} e idp = ! $ ⊙λ= (<–-inv-l e) (! (∙-unit-r _))
 
 {- transporting a function along an equivalence or path in the codomain -}
 module _ {i} {j} {A : Type i} {B : Type j} (f : A → B) where
@@ -121,17 +101,11 @@ module _ {i} {j} {X : Ptd i} {Y : Ptd j} (f : fst (X ⊙→ Y)) where
     (q : –> e (snd Y) == snd Z)
     → f == (–> e , q) ⊙∘ f [ (λ W → fst (X ⊙→ W)) ↓ ⊙ua e q ]
   codomain-over-⊙equiv {Z = Z} e q =
-    codomain-over-⊙path (ua e) (coe-β e (snd Y) ∙ q)
-    ▹ ap (λ w → w ⊙∘ f) lemma
+    codomain-over-⊙path (ua e) (coe-β e (snd Y) ∙ q) ▹ ap (λ w → w ⊙∘ f) lemma
     where
     lemma : Path {A = fst (Y ⊙→ Z)}
       (coe (ua e) , coe-β e (snd Y) ∙ q) (–> e , q)
-    lemma = pair=
-      (λ= (coe-β e))
-      (↓-app=cst-in $
-        coe-β e (snd Y) ∙ q
-          =⟨ ! (app=-β (coe-β e) (snd Y)) |in-ctx (λ w → w ∙ q) ⟩
-        app= (λ= (coe-β e)) (snd Y) ∙ q ∎)
+    lemma = ⊙λ= (coe-β e) idp
 
 module _ {i} {j} {X : Ptd i} {Z : Ptd j} (g : fst (X ⊙→ Z)) where
 
@@ -153,14 +127,8 @@ module _ {i} {j} {X : Ptd i} {Z : Ptd j} (g : fst (X ⊙→ Z)) where
     lemma : {Y Z : Ptd j}
       (e : fst Y ≃ fst Z) (q : –> e (snd Y) == snd Z)
       → ((–> e , q) ⊙∘ (<– e , ap (<– e) (! q) ∙ <–-inv-l e (snd Y))) == ⊙idf Z
-    lemma {Y = Y} e idp = pair=
-      (λ= (<–-inv-r e))
-      (↓-app=cst-in $ ap (λ w → w ∙ idp) $
-        ap (–> e) (<–-inv-l e (snd Y))
-          =⟨ <–-inv-adj e (snd Y) ⟩
-        <–-inv-r e (–> e (snd Y))
-          =⟨ ! (app=-β (<–-inv-r e) (–> e (snd Y))) ⟩
-        app= (λ= (<–-inv-r e)) (–> e (snd Y)) ∎)
+    lemma {Y = Y} e idp =
+      ⊙λ= (<–-inv-r e) (ap (λ w → w ∙ idp) (<–-inv-adj e (snd Y)))
 
 {- transporting a group homomorphism along an isomorphism -}
 
