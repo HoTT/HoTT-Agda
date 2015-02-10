@@ -24,17 +24,7 @@ module cohomology.WithCoefficients where
     (invl-lemma (snd F) ∙ ! (∙-unit-r _));
   invr = λ F → ⊙λ=
     (!-inv-r ∘ fst F)
-    {!invr-lemma (snd F) ∙ ! (∙-unit-r _)!}}
-    -- (↓-app=cst-in $
-    --   ap2 _∙_ (snd F) (ap ! (snd F))
-    --     =⟨ invr-lemma (snd F) ⟩
-    --   !-inv-r (fst F (snd X))
-    --     =⟨ ! (app=-β (!-inv-r ∘ fst F) (snd X)) ⟩
-    --   app= (λ= (!-inv-r ∘ fst F)) (snd X)
-    --     =⟨ ! (∙-unit-r _) ⟩
-    --   app= (λ= (!-inv-r ∘ fst F)) (snd X) ∙ idp
-    --   ∎)}
-  where
+    (invr-lemma (snd F) ∙ ! (∙-unit-r _))}
 
   unitr-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
     → ap (λ r → r ∙ idp) α == ∙-unit-r p ∙ α
