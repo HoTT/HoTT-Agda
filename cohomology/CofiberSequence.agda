@@ -3,7 +3,6 @@
 open import HoTT
 open import cohomology.FunctionOver
 open import cohomology.FlipPushout
-open import cohomology.TwoPushouts
 
 module cohomology.CofiberSequence {i} where
 
