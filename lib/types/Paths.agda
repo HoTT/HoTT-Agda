@@ -35,6 +35,30 @@ module _ {i} {A : Type i} {x y z : A} where
   post∙-equiv : (p : y == z) → (x == y) ≃ (x == z)
   post∙-equiv p = ((λ q → q ∙ p) , post∙-is-equiv p)
 
+  pre∙'-is-equiv : (p : x == y) → is-equiv (λ (q : y == z) → p ∙' q)
+  pre∙'-is-equiv p = is-eq (λ q → p ∙' q) (λ r → ! p ∙' r) f-g g-f
+    where f-g : ∀ r → p ∙' ! p ∙' r == r
+          f-g r = ! (∙'-assoc p (! p) r) ∙ ap (λ s → s ∙' r) (!-inv'-r p)
+                  ∙ ∙'-unit-l r
+
+          g-f : ∀ q → ! p ∙' p ∙' q == q
+          g-f q = ! (∙'-assoc (! p) p q) ∙ ap (λ s → s ∙' q) (!-inv'-l p)
+                  ∙ ∙'-unit-l q
+
+  pre∙'-equiv : (p : x == y) → (y == z) ≃ (x == z)
+  pre∙'-equiv p = ((λ q → p ∙' q) , pre∙'-is-equiv p)
+
+  post∙'-is-equiv : (p : y == z) → is-equiv (λ (q : x == y) → q ∙' p)
+  post∙'-is-equiv p = is-eq (λ q → q ∙' p) (λ r → r ∙' ! p) f-g g-f
+    where f-g : ∀ r → (r ∙' ! p) ∙' p == r
+          f-g r = ∙'-assoc r (! p) p ∙ ap (λ s → r ∙' s) (!-inv'-l p)
+
+          g-f : ∀ q → (q ∙' p) ∙' ! p == q
+          g-f q = ∙'-assoc q p (! p) ∙ ap (λ s → q ∙' s) (!-inv'-r p)
+
+  post∙'-equiv : (p : y == z) → (x == y) ≃ (x == z)
+  post∙'-equiv p = ((λ q → q ∙' p) , post∙'-is-equiv p)
+
 module _ {i j} {A : Type i} {B : Type j} {f : A → B} {b : B} where
 
   ↓-app=cst-in : {x y : A} {p : x == y} {u : f x == b} {v : f y == b}

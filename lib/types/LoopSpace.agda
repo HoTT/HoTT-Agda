@@ -45,59 +45,54 @@ module _ {i} where
 
 {- ap and ap2 for pointed functions -}
 
+private
+  pt-lemma : ∀ {i} {A : Type i} {x y : A} (p : x == y)
+    → ! p ∙ (idp ∙' p) == idp
+  pt-lemma idp = idp
+
 ⊙ap : ∀ {i j} {X : Ptd i} {Y : Ptd j}
   → fst (X ⊙→ Y) → fst (⊙Ω X ⊙→ ⊙Ω Y)
-⊙ap (f , fpt) = ((λ p → ! fpt ∙ ap f p ∙ fpt) , !-inv-l fpt)
+⊙ap (f , fpt) = ((λ p → ! fpt ∙ ap f p ∙' fpt) , pt-lemma fpt)
 
 ⊙ap2 : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   → fst (X ⊙× Y ⊙→ Z) → fst (⊙Ω X ⊙× ⊙Ω Y ⊙→ ⊙Ω Z)
-⊙ap2 (f , fpt) = ((λ {(p , q) → ! fpt ∙ ap2 (curry f) p q ∙ fpt}) ,
-                  !-inv-l fpt)
+⊙ap2 (f , fpt) = ((λ {(p , q) → ! fpt ∙ ap2 (curry f) p q ∙' fpt}) ,
+                  pt-lemma fpt)
 
 ⊙ap-∘ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y))
   → ⊙ap (g ⊙∘ f) == ⊙ap g ⊙∘ ⊙ap f
-⊙ap-∘ (g , idp) (f , idp) =
-  ⊙λ= (λ p → ap (λ w → w ∙ idp) (ap-∘ g f p ∙ ! (ap (ap g) (∙-unit-r _))))
-      idp
+⊙ap-∘ (g , idp) (f , idp) = ⊙λ= (λ p → ap-∘ g f p) idp
 
 ⊙ap-idf : ∀ {i} {X : Ptd i} → ⊙ap (⊙idf X) == ⊙idf _
-⊙ap-idf = ⊙λ= (λ p → ∙-unit-r _ ∙ ap-idf p) idp
+⊙ap-idf = ⊙λ= ap-idf idp
 
 ⊙ap2-fst : ∀ {i j} {X : Ptd i} {Y : Ptd j}
   → ⊙ap2 {X = X} {Y = Y} ⊙fst == ⊙fst
-⊙ap2-fst = ⊙λ= (λ {(p , q) → ∙-unit-r _ ∙ ap2-fst p q}) idp
+⊙ap2-fst = ⊙λ= (uncurry ap2-fst) idp
 
 ⊙ap2-snd : ∀ {i j} {X : Ptd i} {Y : Ptd j}
   → ⊙ap2 {X = X} {Y = Y} ⊙snd == ⊙snd
-⊙ap2-snd = ⊙λ= (λ {(p , q) → ∙-unit-r _ ∙ ap2-snd p q}) idp
+⊙ap2-snd = ⊙λ= (uncurry ap2-snd) idp
 
 ⊙ap-ap2 : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
   (G : fst (Z ⊙→ W)) (F : fst (X ⊙× Y ⊙→ Z))
   → ⊙ap G ⊙∘ ⊙ap2 F == ⊙ap2 (G ⊙∘ F)
 ⊙ap-ap2 (g , idp) (f , idp) =
-  ⊙λ= (λ {(p , q) → ap (λ w → w ∙ idp)
-                       (ap (ap g) (∙-unit-r _) ∙ ap-ap2 g (curry f) p q)})
-      idp
+  ⊙λ= (uncurry (ap-ap2 g (curry f))) idp
 
 ⊙ap2-ap : ∀ {i j k l m}
   {X : Ptd i} {Y : Ptd j} {U : Ptd k} {V : Ptd l} {Z : Ptd m}
   (G : fst ((U ⊙× V) ⊙→ Z)) (F₁ : fst (X ⊙→ U)) (F₂ : fst (Y ⊙→ V))
   → ⊙ap2 G ⊙∘ pair⊙→ (⊙ap F₁) (⊙ap F₂) == ⊙ap2 (G ⊙∘ pair⊙→ F₁ F₂)
 ⊙ap2-ap (g , idp) (f₁ , idp) (f₂ , idp) =
-  ⊙λ= (λ {(p , q) →
-         ∙-unit-r _
-         ∙ ap2 (ap2 (curry g)) (∙-unit-r _) (∙-unit-r _)
-         ∙ ap2-ap-l (curry g) f₁ p (ap f₂ q)
-         ∙ ap2-ap-r (λ x v → g (f₁ x , v)) f₂ p q
-         ∙ ! (∙-unit-r _)})
+  ⊙λ= (λ {(p , q) → ap2-ap-l (curry g) f₁ p (ap f₂ q)
+                  ∙ ap2-ap-r (λ x v → g (f₁ x , v)) f₂ p q})
       idp
 
 ⊙ap2-diag : ∀ {i j} {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙× X ⊙→ Y))
   → ⊙ap2 F ⊙∘ ⊙diag == ⊙ap (F ⊙∘ ⊙diag)
-⊙ap2-diag (f , idp) =
-  ⊙λ= (λ p → ∙-unit-r _ ∙ ap2-diag (curry f) p ∙ ! (∙-unit-r _))
-      idp
+⊙ap2-diag (f , idp) = ⊙λ= (ap2-diag (curry f)) idp
 
 {- ap and ap2 for higher loop spaces -}
 
@@ -183,11 +178,11 @@ abstract
       == conc^ n t (fst (ap^ n F) p) (fst (ap^ n F) q)
   ap^-conc^ O t _ _ _ = ⊥-rec (t idp)
   ap^-conc^ (S n) _ {X = X} {Y = Y} F p q =
-    ! gpt ∙ ap g (p ∙ q) ∙ gpt
-      =⟨ ap-∙ g p q |in-ctx (λ w → ! gpt ∙ w ∙ gpt) ⟩
-    ! gpt ∙ (ap g p ∙ ap g q) ∙ gpt
+    ! gpt ∙ ap g (p ∙ q) ∙' gpt
+      =⟨ ap-∙ g p q |in-ctx (λ w → ! gpt ∙ w ∙' gpt) ⟩
+    ! gpt ∙ (ap g p ∙ ap g q) ∙' gpt
       =⟨ lemma (ap g p) (ap g q) gpt ⟩
-    (! gpt ∙ ap g p ∙ gpt) ∙ (! gpt ∙ ap g q ∙ gpt) ∎
+    (! gpt ∙ ap g p ∙' gpt) ∙ (! gpt ∙ ap g q ∙' gpt) ∎
     where
     g : Ω^ n X → Ω^ n Y
     g = fst (ap^ n F)
@@ -197,8 +192,8 @@ abstract
 
     lemma : ∀ {i} {A : Type i} {x y : A}
       → (p q : x == x) (r : x == y)
-      → ! r ∙ (p ∙ q) ∙ r == (! r ∙ p ∙ r) ∙ (! r ∙ q ∙ r)
-    lemma p q idp = ∙-unit-r (p ∙ q) ∙ (! (∙-unit-r p) ∙2 ! (∙-unit-r q))
+      → ! r ∙ (p ∙ q) ∙' r == (! r ∙ p ∙' r) ∙ (! r ∙ q ∙' r)
+    lemma p q idp = idp
 
 {- ap^ preserves (pointed) equivalences -}
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
@@ -208,7 +203,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
   is-equiv-ap^ O F e = e
   is-equiv-ap^ (S n) F e =
          pre∙-is-equiv (! (snd (ap^ n F)))
-    ∘ise post∙-is-equiv (snd (ap^ n F))
+    ∘ise post∙'-is-equiv (snd (ap^ n F))
     ∘ise snd (equiv-ap (_ , is-equiv-ap^ n F e) _ _)
 
   equiv-ap^ : (n : ℕ) (F : fst (X ⊙→ Y)) (e : is-equiv (fst F))
