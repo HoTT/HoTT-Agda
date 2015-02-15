@@ -38,24 +38,24 @@ module _ {i} (G : Group i) where
     Subgroup : Group (lmax i j)
     Subgroup = group _ (Σ-level G.El-level (raise-level _ ∘ P-level)) struct
 
-    inj : GroupHom Subgroup G
+    inj : Subgroup →ᴳ G
     inj = record {
       f = λ {(g , _) → g};
       pres-comp = λ _ _ → idp}
 
-    module _ {j} {H : Group j} (φ : GroupHom H G) where
+    module _ {j} {H : Group j} (φ : H →ᴳ G) where
 
       private
         module H = Group H
         module φ = GroupHom φ
 
-      prop-hom : Π H.El (P ∘ φ.f) → GroupHom H Subgroup
+      prop-hom : Π H.El (P ∘ φ.f) → (H →ᴳ Subgroup)
       prop-hom p = record {
         f = λ g → (φ.f g , p g);
         pres-comp = λ g₁ g₂ →
           pair= (φ.pres-comp g₁ g₂) (prop-has-all-paths-↓ (P-level _))}
 
-module _ {i} {j} {G : Group i} {H : Group j} (φ : GroupHom G H) where
+module _ {i} {j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
 
   private
     module G = Group G
@@ -83,7 +83,7 @@ module _ {i} {j} {G : Group i} {H : Group j} (φ : GroupHom G H) where
     (struct to im-struct; Subgroup to Im;
      inj to im-inj; prop-hom to im-out-hom)
 
-  im-in-hom : GroupHom G Im
+  im-in-hom : G →ᴳ Im
   im-in-hom = record {
     f = λ g → (φ.f g , [ g , idp ]);
     pres-comp = λ g₁ g₂ →

@@ -28,8 +28,8 @@ module lib.groups.GroupProduct where
   invr = λ {(g , h) → pair×= (invr GS g) (invr HS h)}}
   where open GroupStructure
 
-_×G_ : ∀ {i j} → Group i → Group j → Group (lmax i j)
-_×G_ (group A A-level A-struct) (group B B-level B-struct) =
+_×ᴳ_ : ∀ {i j} → Group i → Group j → Group (lmax i j)
+_×ᴳ_ (group A A-level A-struct) (group B B-level B-struct) =
   group (A × B) (×-level A-level B-level) (×-group-struct A-struct B-struct)
 
 
@@ -48,52 +48,52 @@ _×G_ (group A A-level A-struct) (group B B-level B-struct) =
   invr = λ f → (λ= (λ i → invr (FS i) (f i)))}
   where open GroupStructure
 
-ΠG : ∀ {i j} (I : Type i) (F : I → Group j) → Group (lmax i j)
-ΠG I F = group (Π I (El ∘ F)) (Π-level (λ i → El-level (F i)))
+Πᴳ : ∀ {i j} (I : Type i) (F : I → Group j) → Group (lmax i j)
+Πᴳ I F = group (Π I (El ∘ F)) (Π-level (λ i → El-level (F i)))
                (Π-group-struct (group-struct ∘ F))
   where open Group
 
 
 {- the product of abelian groups is abelian -}
-×G-abelian : ∀ {i j} {G : Group i} {H : Group j}
-  → is-abelian G → is-abelian H → is-abelian (G ×G H)
-×G-abelian aG aH (g₁ , h₁) (g₂ , h₂) = pair×= (aG g₁ g₂) (aH h₁ h₂)
+×ᴳ-abelian : ∀ {i j} {G : Group i} {H : Group j}
+  → is-abelian G → is-abelian H → is-abelian (G ×ᴳ H)
+×ᴳ-abelian aG aH (g₁ , h₁) (g₂ , h₂) = pair×= (aG g₁ g₂) (aH h₁ h₂)
 
-ΠG-abelian : ∀ {i j} {I : Type i} {F : I → Group j}
-  → (∀ i → is-abelian (F i)) → is-abelian (ΠG I F)
-ΠG-abelian aF f₁ f₂ = λ= (λ i → aF i (f₁ i) (f₂ i))
+Πᴳ-abelian : ∀ {i j} {I : Type i} {F : I → Group j}
+  → (∀ i → is-abelian (F i)) → is-abelian (Πᴳ I F)
+Πᴳ-abelian aF f₁ f₂ = λ= (λ i → aF i (f₁ i) (f₂ i))
 
 {- defining a homomorphism into a binary product -}
-×-hom : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
-  → GroupHom G H → GroupHom G K → GroupHom G (H ×G K)
-×-hom (group-hom h h-comp) (group-hom k k-comp) = record {
+×ᴳ-hom-in : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
+  → (G →ᴳ H) → (G →ᴳ K) → (G →ᴳ H ×ᴳ K)
+×ᴳ-hom-in (group-hom h h-comp) (group-hom k k-comp) = record {
   f = λ x → (h x , k x);
   pres-comp = λ x y → pair×= (h-comp x y) (k-comp x y)}
 
 {- projection homomorphisms -}
-×G-fst : ∀ {i j} {G : Group i} {H : Group j} → GroupHom (G ×G H) G
-×G-fst = record {f = fst; pres-comp = λ _ _ → idp}
+×ᴳ-fst : ∀ {i j} {G : Group i} {H : Group j} → (G ×ᴳ H →ᴳ G)
+×ᴳ-fst = record {f = fst; pres-comp = λ _ _ → idp}
 
-×G-snd : ∀ {i j} {G : Group i} {H : Group j} → GroupHom (G ×G H) H
-×G-snd = record {f = snd; pres-comp = λ _ _ → idp}
+×ᴳ-snd : ∀ {i j} {G : Group i} {H : Group j} → (G ×ᴳ H →ᴳ H)
+×ᴳ-snd = record {f = snd; pres-comp = λ _ _ → idp}
 
-ΠG-proj : ∀ {i j} {I : Type i} {F : I → Group j} (i : I)
-  → GroupHom (ΠG I F) (F i)
-ΠG-proj i = record {
+Πᴳ-proj : ∀ {i j} {I : Type i} {F : I → Group j} (i : I)
+  → (Πᴳ I F →ᴳ F i)
+Πᴳ-proj i = record {
   f = λ f → f i;
   pres-comp = λ _ _ → idp}
 
 {- injection homomorphisms -}
 module _ {i j} {G : Group i} {H : Group j} where
 
-  ×G-inl : GroupHom G (G ×G H)
-  ×G-inl = ×-hom (idhom G) cst-hom
+  ×ᴳ-inl : G →ᴳ G ×ᴳ H
+  ×ᴳ-inl = ×ᴳ-hom-in (idhom G) cst-hom
 
-  ×G-inr : GroupHom H (G ×G H)
-  ×G-inr = ×-hom (cst-hom {H = G}) (idhom H)
+  ×ᴳ-inr : H →ᴳ G ×ᴳ H
+  ×ᴳ-inr = ×ᴳ-hom-in (cst-hom {H = G}) (idhom H)
 
-×G-diag : ∀ {i} {G : Group i} → GroupHom G (G ×G G)
-×G-diag = ×-hom (idhom _) (idhom _)
+×ᴳ-diag : ∀ {i} {G : Group i} → (G →ᴳ G ×ᴳ G)
+×ᴳ-diag = ×ᴳ-hom-in (idhom _) (idhom _)
 
 {- when G is abelian, we can define a map H×K → G as a sum of maps
  - H → G and K → G (that is, the product behaves as a sum)         -}
@@ -122,8 +122,8 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
        (g₁ □ g₃) □ (g₂ □ g₄) ∎
        where _□_ = G.comp
 
-  ×-sum-hom : GroupHom H G → GroupHom K G → GroupHom (H ×G K) G
-  ×-sum-hom φ ψ = record {
+  ×ᴳ-sum-hom : (H →ᴳ G) → (K →ᴳ G) → (H ×ᴳ K →ᴳ G)
+  ×ᴳ-sum-hom φ ψ = record {
     f = λ {(h , k) → G.comp (φ.f h) (ψ.f k)};
 
     pres-comp = λ {(h₁ , k₁) (h₂ , k₂) →
@@ -140,26 +140,26 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
       module ψ = GroupHom ψ
 
 abstract
-  ×-sum-hom-η : ∀ {i j} (G : Group i) (H : Group j)
-    (aGH : is-abelian (G ×G H))
-    → idhom (G ×G H) == ×-sum-hom aGH (×G-inl {G = G}) (×G-inr {G = G})
-  ×-sum-hom-η G H aGH = hom= _ _ $ λ= $ λ {(g , h) →
+  ×ᴳ-sum-hom-η : ∀ {i j} (G : Group i) (H : Group j)
+    (aGH : is-abelian (G ×ᴳ H))
+    → idhom (G ×ᴳ H) == ×ᴳ-sum-hom aGH (×ᴳ-inl {G = G}) (×ᴳ-inr {G = G})
+  ×ᴳ-sum-hom-η G H aGH = hom= _ _ $ λ= $ λ {(g , h) →
     ! (pair×= (Group.unitr G g) (Group.unitl H h))}
 
-  ∘-×-sum-hom : ∀ {i j k l}
+  ∘-×ᴳ-sum-hom : ∀ {i j k l}
     {G : Group i} {H : Group j} {K : Group k} {L : Group l}
     (aK : is-abelian K) (aL : is-abelian L)
-    (φ : GroupHom K L) (ψ : GroupHom G K) (χ : GroupHom H K)
-    → ×-sum-hom aL (φ ∘hom ψ) (φ ∘hom χ) == φ ∘hom (×-sum-hom aK ψ χ)
-  ∘-×-sum-hom aK aL φ ψ χ = hom= _ _ $ λ= $ λ {(g , h) →
+    (φ : K →ᴳ L) (ψ : G →ᴳ K) (χ : H →ᴳ K)
+    → ×ᴳ-sum-hom aL (φ ∘ᴳ ψ) (φ ∘ᴳ χ) == φ ∘ᴳ (×ᴳ-sum-hom aK ψ χ)
+  ∘-×ᴳ-sum-hom aK aL φ ψ χ = hom= _ _ $ λ= $ λ {(g , h) →
     ! (GroupHom.pres-comp φ (GroupHom.f ψ g) (GroupHom.f χ h))}
 
 {- define a homomorphism G₁ × G₂ → H₁ × H₂ from homomorphisms
  - G₁ → H₁ and G₂ → H₂ -}
-×-parallel-hom : ∀ {i j k l} {G₁ : Group i} {G₂ : Group j}
+×ᴳ-parallel-hom : ∀ {i j k l} {G₁ : Group i} {G₂ : Group j}
   {H₁ : Group k} {H₂ : Group l}
-  → GroupHom G₁ H₁ → GroupHom G₂ H₂ → GroupHom (G₁ ×G G₂) (H₁ ×G H₂)
-×-parallel-hom φ ψ = record {
+  → (G₁ →ᴳ H₁) → (G₂ →ᴳ H₂) → (G₁ ×ᴳ G₂ →ᴳ H₁ ×ᴳ H₂)
+×ᴳ-parallel-hom φ ψ = record {
   f = λ {(h₁ , h₂) → (φ.f h₁ , ψ.f h₂)};
   pres-comp = λ {(h₁ , h₂) (h₁' , h₂') →
     pair×= (φ.pres-comp h₁ h₁') (ψ.pres-comp h₂ h₂')}}
@@ -167,56 +167,55 @@ abstract
   module φ = GroupHom φ
   module ψ = GroupHom ψ
 
-{- 0G is a unit for product -}
-×G-unit-l : ∀ {i} {G : Group i} → 0G {i} ×G G == G
-×G-unit-l = group-iso
-  (×G-snd {G = 0G})
-  (is-eq snd (λ g → (lift unit , g)) (λ _ → idp) (λ _ → idp))
+{- 0ᴳ is a unit for product -}
+×ᴳ-unit-l : ∀ {i} {G : Group i} → 0ᴳ {i} ×ᴳ G == G
+×ᴳ-unit-l = group-ua
+  (×ᴳ-snd {G = 0ᴳ} ,
+   is-eq snd (λ g → (lift unit , g)) (λ _ → idp) (λ _ → idp))
 
-×G-unit-r : ∀ {i} {G : Group i} → G ×G 0G {i} == G
-×G-unit-r = group-iso
-  ×G-fst (is-eq fst (λ g → (g , lift unit)) (λ _ → idp) (λ _ → idp))
+×ᴳ-unit-r : ∀ {i} {G : Group i} → G ×ᴳ 0ᴳ {i} == G
+×ᴳ-unit-r = group-ua
+  (×ᴳ-fst , (is-eq fst (λ g → (g , lift unit)) (λ _ → idp) (λ _ → idp)))
 
-{- A product ΠG indexed by Bool is the same as a binary product -}
+{- A product Πᴳ indexed by Bool is the same as a binary product -}
 module _ {i} (Pick : Lift {j = i} Bool → Group i) where
 
-  ΠG-Bool-is-×G : ΠG (Lift Bool) Pick
-               == (Pick (lift true)) ×G (Pick (lift false))
-  ΠG-Bool-is-×G = group-iso φ e
+  Πᴳ-Bool-is-×ᴳ :
+    Πᴳ (Lift Bool) Pick == (Pick (lift true)) ×ᴳ (Pick (lift false))
+  Πᴳ-Bool-is-×ᴳ = group-ua (φ , e)
     where
-    φ = ×-hom (ΠG-proj {F = Pick} (lift true))
-              (ΠG-proj {F = Pick} (lift false))
+    φ = ×ᴳ-hom-in (Πᴳ-proj {F = Pick} (lift true))
+                  (Πᴳ-proj {F = Pick} (lift false))
 
     e : is-equiv (GroupHom.f φ)
     e = is-eq _ (λ {(g , h) → λ {(lift true) → g; (lift false) → h}})
           (λ _ → idp)
           (λ _ → λ= (λ {(lift true) → idp; (lift false) → idp}))
 
-{- Commutativity of ×G -}
-×G-comm : ∀ {i j} (H : Group i) (K : Group j)
-  → H ×G K == K ×G H
-×G-comm H K = group-iso
+{- Commutativity of ×ᴳ -}
+×ᴳ-comm : ∀ {i j} (H : Group i) (K : Group j) → H ×ᴳ K ≃ᴳ K ×ᴳ H
+×ᴳ-comm H K =
   (record {
-    f = λ {(h , k) → (k , h)};
-    pres-comp = λ _ _ → idp})
-  (snd (equiv _ (λ {(k , h) → (h , k)}) (λ _ → idp) (λ _ → idp)))
+     f = λ {(h , k) → (k , h)};
+     pres-comp = λ _ _ → idp} ,
+   snd (equiv _ (λ {(k , h) → (h , k)}) (λ _ → idp) (λ _ → idp)))
 
-{- Associativity of ×G -}
-×G-assoc : ∀ {i j k} (G : Group i) (H : Group j) (K : Group k)
-  → (G ×G H) ×G K == G ×G (H ×G K)
-×G-assoc G H K = group-iso
+{- Associativity of ×ᴳ -}
+×ᴳ-assoc : ∀ {i j k} (G : Group i) (H : Group j) (K : Group k)
+  → ((G ×ᴳ H) ×ᴳ K) == (G ×ᴳ (H ×ᴳ K))
+×ᴳ-assoc G H K = group-ua
   (record {
-    f = λ {((g , h) , k) → (g , (h , k))};
-    pres-comp = λ _ _ → idp})
-  (snd (equiv _ (λ {(g , (h , k)) → ((g , h) , k)}) (λ _ → idp) (λ _ → idp)))
+     f = λ {((g , h) , k) → (g , (h , k))};
+     pres-comp = λ _ _ → idp} ,
+   snd (equiv _ (λ {(g , (h , k)) → ((g , h) , k)}) (λ _ → idp) (λ _ → idp)))
 
 module _ {i} where
 
-  _^G_ : Group i → ℕ → Group i
-  H ^G O = 0G
-  H ^G (S n) = H ×G (H ^G n)
+  _^ᴳ_ : Group i → ℕ → Group i
+  H ^ᴳ O = 0ᴳ
+  H ^ᴳ (S n) = H ×ᴳ (H ^ᴳ n)
 
-  ^G-sum : (H : Group i) (m n : ℕ) → (H ^G m) ×G (H ^G n) == H ^G (m + n)
-  ^G-sum H O n = ×G-unit-l {G = H ^G n}
-  ^G-sum H (S m) n = ×G-assoc H (H ^G m) (H ^G n)
-                     ∙ ap (λ K → H ×G K) (^G-sum H m n)
+  ^ᴳ-sum : (H : Group i) (m n : ℕ) → (H ^ᴳ m) ×ᴳ (H ^ᴳ n) == H ^ᴳ (m + n)
+  ^ᴳ-sum H O n = ×ᴳ-unit-l {G = H ^ᴳ n}
+  ^ᴳ-sum H (S m) n =
+    ×ᴳ-assoc H (H ^ᴳ m) (H ^ᴳ n) ∙ ap (λ K → H ×ᴳ K) (^ᴳ-sum H m n)

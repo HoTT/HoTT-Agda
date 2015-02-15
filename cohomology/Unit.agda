@@ -63,16 +63,16 @@ private
 
 C-Unit-is-trivial : (n : ℤ) → C n ⊙LU == LiftUnit-Group
 C-Unit-is-trivial O =
-  contr-iso-LiftUnit _ C₀-Unit-is-contr
+  contr-is-0ᴳ _ C₀-Unit-is-contr
 C-Unit-is-trivial (pos O) =
   ap (C (pos O)) Unit-is-Susp-Unit ∙ C-Susp O ⊙LU
-  ∙ (contr-iso-LiftUnit _ C₀-Unit-is-contr)
+  ∙ (contr-is-0ᴳ _ C₀-Unit-is-contr)
 C-Unit-is-trivial (pos (S m)) =
   ap (C (pos (S m))) Unit-is-Susp-Unit ∙ C-Susp (pos m) ⊙LU
   ∙ C-Unit-is-trivial (pos m)
 C-Unit-is-trivial (neg O) =
   ! (C-Susp (neg O) ⊙LU) ∙ ! (ap (C O) Unit-is-Susp-Unit)
-  ∙ (contr-iso-LiftUnit _ C₀-Unit-is-contr)
+  ∙ (contr-is-0ᴳ _ C₀-Unit-is-contr)
 C-Unit-is-trivial (neg (S m)) =
   ! (C-Susp (neg (S m)) ⊙LU) ∙ ! (ap (C (neg m)) Unit-is-Susp-Unit)
   ∙ C-Unit-is-trivial (neg m)

@@ -42,9 +42,8 @@ module _ {i} {El : Type i} (GS : GroupStructure El) where
 
 Trunc-Group-× : ∀ {i j} {A : Type i} {B : Type j}
   (GS : GroupStructure A) (HS : GroupStructure B)
-  → Trunc-Group (×-group-struct GS HS)
-    == Trunc-Group GS ×G Trunc-Group HS
-Trunc-Group-× GS HS = group-iso
+  → Trunc-Group (×-group-struct GS HS) == Trunc-Group GS ×ᴳ Trunc-Group HS
+Trunc-Group-× GS HS = group-ua
   (record {
     f = Trunc-rec (×-level Trunc-level Trunc-level)
           (λ {(a , b) → ([ a ] , [ b ])});
@@ -54,8 +53,8 @@ Trunc-Group-× GS HS = group-iso
                                  (×-level Trunc-level Trunc-level))))
         (λ a → Trunc-elim
           (λ _ → =-preserves-level _ (×-level Trunc-level Trunc-level))
-          (λ b → idp))})
-  (is-eq _
+          (λ b → idp))} ,
+   is-eq _
     (uncurry (Trunc-rec (→-level Trunc-level)
                (λ a → Trunc-rec Trunc-level (λ b → [ a , b ]))))
     (uncurry (Trunc-elim
@@ -67,20 +66,27 @@ Trunc-Group-× GS HS = group-iso
                         (λ b → idp))))
     (Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp)))
 
+Trunc-Group-hom : ∀ {i j} {A : Type i} {B : Type j}
+  {GS : GroupStructure A} {HS : GroupStructure B} (f : A → B)
+  → ((a₁ a₂ : A) → f (GroupStructure.comp GS a₁ a₂)
+                   == GroupStructure.comp HS (f a₁) (f a₂))
+  → (Trunc-Group GS →ᴳ Trunc-Group HS)
+Trunc-Group-hom f p = record {
+  f = Trunc-fmap f;
+  pres-comp =
+    Trunc-elim (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
+      (λ a₁ → Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+        (λ a₂ → ap [_] (p a₁ a₂)))}
+
 Trunc-Group-iso : ∀ {i} {A B : Type i}
   {GS : GroupStructure A} {HS : GroupStructure B} (f : A → B)
   → ((a₁ a₂ : A) → f (GroupStructure.comp GS a₁ a₂)
                    == GroupStructure.comp HS (f a₁) (f a₂))
-  → is-equiv f → Trunc-Group GS == Trunc-Group HS
-Trunc-Group-iso f pres-comp ie = group-iso
-  (record {
-    f = Trunc-fmap f;
-    pres-comp =
-      Trunc-elim (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
-        (λ a₁ → Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
-          (λ a₂ → ap [_] (pres-comp a₁ a₂)))})
-  (is-eq _ (Trunc-fmap (is-equiv.g ie))
-    (Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
-      (λ b → ap [_] (is-equiv.f-g ie b)))
-    (Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
-      (λ a → ap [_] (is-equiv.g-f ie a))))
+  → is-equiv f → Trunc-Group GS ≃ᴳ Trunc-Group HS
+Trunc-Group-iso f pres-comp ie =
+  (Trunc-Group-hom f pres-comp ,
+   is-eq _ (Trunc-fmap (is-equiv.g ie))
+     (Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+       (λ b → ap [_] (is-equiv.f-g ie b)))
+     (Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+       (λ a → ap [_] (is-equiv.g-f ie a))))

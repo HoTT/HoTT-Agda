@@ -57,7 +57,7 @@ module SpectrumModel where
       ((λ g → g ⊙∘ f) ,
        pair= idp (∙-unit-r _ ∙ ap-cst idp (snd f)))
 
-    CF-hom : fst (X ⊙→ Y) → GroupHom (C n Y) (C n X)
+    CF-hom : fst (X ⊙→ Y) → (C n Y →ᴳ C n X)
     CF-hom f = record {
       f = Trunc-fmap {n = ⟨0⟩} (fst (uCF f));
       pres-comp = Trunc-elim
@@ -85,7 +85,7 @@ module SpectrumModel where
       (λ _ → idp)
 
     CF-comp : {Y Z : Ptd i} (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y))
-      → CF-hom n (g ⊙∘ f) == CF-hom n f ∘hom CF-hom n g
+      → CF-hom n (g ⊙∘ f) == CF-hom n f ∘ᴳ CF-hom n g
     CF-comp g f = hom= _ _ $ λ= $ Trunc-elim
       (λ _ → =-preserves-level _ Trunc-level)
       (λ h → ap [_] (! (⊙∘-assoc h g f)))
@@ -95,9 +95,8 @@ module SpectrumModel where
   {- Suspension Axiom -}
   C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp X) == C n X
   C-Susp n X =
-    SuspAdjointLoopIso.iso X (E (succ (succ n)))
+    group-ua (SuspAdjointLoopIso.iso X (E (succ (succ n))))
     ∙ ap (→Ω-Group X) (spectrum (succ n))
-
 
   {- Non-truncated Exactness Axiom -}
   module _ (n : ℤ) {X Y : Ptd i} where
@@ -105,24 +104,20 @@ module SpectrumModel where
     {- [uCF n (⊙cfcod f) ∘ uCF n f] is constant -}
     uC-exact-itok-lemma : (f : fst (X ⊙→ Y)) (g : uCEl n (⊙Cof f))
       → fst (uCF n f) (fst (uCF n (⊙cfcod f)) g) == uCid n X
-    uC-exact-itok-lemma (f , fpt) (g , gpt) = pair=
-      (λ= (λ x → ap g (! (cfglue f x)) ∙ gpt))
-      (↓-app=cst-in $
-          ap (g ∘ cfcod f) fpt
-          ∙ ap g (ap (cfcod f) (! fpt) ∙ ! (cfglue f (snd X))) ∙ gpt
-            =⟨ lemma (cfcod f) g fpt (! (cfglue f (snd X))) gpt ⟩
-          ap g (! (cfglue f (snd X))) ∙ gpt
-            =⟨ ! (app=-β (λ x → ap g (! (cfglue f x)) ∙ gpt) (snd X)) ⟩
-          app= (λ= (λ x → ap g (! (cfglue f x)) ∙ gpt)) (snd X)
-            =⟨ ! (∙-unit-r _) ⟩
-          app= (λ= (λ x → ap g (! (cfglue f x)) ∙ gpt)) (snd X) ∙ idp ∎)
-
-        where
-        lemma : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
-          {a₁ a₂ : A} {b : B} {c : C} (f : A → B) (g : B → C)
-          (p : a₁ == a₂) (q : f a₁ == b) (r : g b == c)
-          → ap (g ∘ f) p ∙ ap g (ap f (! p) ∙ q) ∙ r == ap g q ∙ r
-        lemma f g idp idp idp = idp
+    uC-exact-itok-lemma (f , fpt) (g , gpt) = ⊙λ=
+      (λ x → ap g (! (cfglue f x)) ∙ gpt)
+      (ap (g ∘ cfcod f) fpt
+       ∙ ap g (ap (cfcod f) (! fpt) ∙ ! (cfglue f (snd X))) ∙ gpt
+         =⟨ lemma (cfcod f) g fpt (! (cfglue f (snd X))) gpt ⟩
+       ap g (! (cfglue f (snd X))) ∙ gpt
+         =⟨ ! (∙-unit-r _) ⟩
+       (ap g (! (cfglue f (snd X))) ∙ gpt) ∙ idp ∎)
+      where
+      lemma : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
+        {a₁ a₂ : A} {b : B} {c : C} (f : A → B) (g : B → C)
+        (p : a₁ == a₂) (q : f a₁ == b) (r : g b == c)
+        → ap (g ∘ f) p ∙ ap g (ap f (! p) ∙ q) ∙ r == ap g q ∙ r
+      lemma f g idp idp idp = idp
 
     {- in kernel of [uCF n f] ⇒ in image of [uCF n (⊙cfcod f)] -}
     uC-exact-ktoi-lemma : (f : fst (X ⊙→ Y)) (g : uCEl n Y)
@@ -242,7 +237,7 @@ module SpectrumModel where
 
     pres-comp : (tf tg : CEl n (⊙BigWedge X))
       → R (Group.comp (C n (⊙BigWedge X)) tf tg)
-        == Group.comp (ΠG A (C n ∘ X)) (R tf) (R tg)
+        == Group.comp (Πᴳ A (C n ∘ X)) (R tf) (R tg)
     pres-comp = Trunc-elim
       (λ _ → Π-level (λ _ → =-preserves-level _ (Π-level (λ _ → Trunc-level))))
       (λ {(f , fpt) → Trunc-elim
@@ -258,8 +253,8 @@ module SpectrumModel where
       comp-snd f g idp idp idp = idp
 
     abstract
-      C-additive : C n (⊙BigWedge X) == ΠG A (C n ∘ X)
-      C-additive = group-iso (group-hom R pres-comp) R-is-equiv
+      C-additive : C n (⊙BigWedge X) == Πᴳ A (C n ∘ X)
+      C-additive = group-ua (group-hom R pres-comp , R-is-equiv)
 
 open SpectrumModel
 
@@ -273,3 +268,6 @@ spectrum-cohomology = record {
   C-Susp = C-Susp;
   C-exact = C-exact;
   C-additive = C-additive}
+
+spectrum-C-S⁰ : (n : ℤ) → C n (⊙Sphere O) == π 1 (ℕ-S≠O _) (E (succ n))
+spectrum-C-S⁰ n = Bool⊙→Ω-is-π₁ (E (succ n))

@@ -20,12 +20,12 @@ record CohomologyTheory i : Type (lsucc i) where
   ⊙CEl n X = ⊙[ CEl n X , Cid n X ]
 
   field
-    CF-hom : (n : ℤ) {X Y : Ptd i} → fst (X ⊙→ Y) → GroupHom (C n Y) (C n X)
+    CF-hom : (n : ℤ) {X Y : Ptd i} → fst (X ⊙→ Y) → (C n Y →ᴳ C n X)
 
     CF-ident : (n : ℤ) {X : Ptd i}
       → CF-hom n {X} {X} (⊙idf X) == idhom (C n X)
     CF-comp : (n : ℤ) {X Y Z : Ptd i} (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y))
-      → CF-hom n (g ⊙∘ f) == CF-hom n f ∘hom CF-hom n g
+      → CF-hom n (g ⊙∘ f) == CF-hom n f ∘ᴳ CF-hom n g
 
   CF : (n : ℤ) {X Y : Ptd i} → fst (X ⊙→ Y) → fst (⊙CEl n Y ⊙→ ⊙CEl n X)
   CF n f = GroupHom.⊙f (CF-hom n f)
@@ -40,16 +40,16 @@ record CohomologyTheory i : Type (lsucc i) where
 
     C-additive : (n : ℤ) {I : Type i} (Z : I → Ptd i)
       → ((W : I → Type i) → has-choice ⟨0⟩ I W)
-      → C n (⊙BigWedge Z) == ΠG I (C n ∘ Z)
+      → C n (⊙BigWedge Z) == Πᴳ I (C n ∘ Z)
 
   {- A quick useful special case of C-additive:
      C n (X ∨ Y) == C n X × C n Y -}
   C-binary-additive : (n : ℤ) (X Y : Ptd i)
-    → C n (X ⊙∨ Y) == C n X ×G C n Y
+    → C n (X ⊙∨ Y) == C n X ×ᴳ C n Y
   C-binary-additive n X Y =
     ap (C n) (! (BigWedge-Bool-⊙path Pick))
     ∙ C-additive n _ (λ _ → Bool-has-choice)
-    ∙ ΠG-Bool-is-×G (C n ∘ Pick)
+    ∙ Πᴳ-Bool-is-×ᴳ (C n ∘ Pick)
     where
     Pick : Lift {j = i} Bool → Ptd i
     Pick (lift true) = X
@@ -61,4 +61,4 @@ record OrdinaryTheory i : Type (lsucc i) where
     cohomology-theory : CohomologyTheory i
   open CohomologyTheory cohomology-theory public
   field
-    C-dimension : (n : ℤ) → n ≠ O → C n (⊙Sphere O) == 0G
+    C-dimension : (n : ℤ) → n ≠ O → C n (⊙Sphere O) == 0ᴳ

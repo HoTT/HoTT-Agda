@@ -80,7 +80,7 @@ module KGnImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
     π₁ : (n : ℕ) (t1 : 1 ≠ 0 )
       → π 1 t1 (⊙KG (S (S n))) == LiftUnit-Group
     π₁ n t1 =
-      contr-iso-LiftUnit (π 1 t1 (⊙KG (S (S n))))
+      contr-is-0ᴳ (π 1 t1 (⊙KG (S (S n))))
         (connected-at-level-is-contr
           (raise-level-≤T (≤T-ap-S (≤T-ap-S (-2≤T (n -2))))
                           (Trunc-level {n = ⟨0⟩}))
@@ -141,7 +141,7 @@ module KGnImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
     π-above : (k n : ℕ) (tk : k ≠ 0) → (n < k)
       → π k tk (⊙KG n) == LiftUnit-Group
     π-above k n tk lt =
-      contr-iso-LiftUnit (π k tk (⊙KG n))
+      contr-is-0ᴳ (π k tk (⊙KG n))
         (inhab-prop-is-contr
           [ idp^ k ]
           (Trunc-preserves-level ⟨0⟩ (Ω^-level-in ⟨-1⟩ k _

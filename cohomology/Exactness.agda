@@ -43,13 +43,13 @@ infixr 2 _⟨_⟩→_
 
 data ExactDiag {i} : Group i → Group i → Type (lsucc i) where
   _⊣| : (G : Group i) → ExactDiag G G
-  _⟨_⟩→_ : (G : Group i) {H K : Group i} (φ : GroupHom G H)
+  _⟨_⟩→_ : (G : Group i) {H K : Group i} (φ : G →ᴳ H)
              → ExactDiag H K → ExactDiag G K
 
 data ExactSeq {i} : {G H : Group i} → ExactDiag G H → Type (lsucc i) where
   exact-seq-zero : {G : Group i} → ExactSeq (G ⊣|)
-  exact-seq-one : {G H : Group i} {φ : GroupHom G H} → ExactSeq (G ⟨ φ ⟩→ H ⊣|)
-  exact-seq-two : {G H K J : Group i} {φ : GroupHom G H} {ψ : GroupHom H K}
+  exact-seq-one : {G H : Group i} {φ : G →ᴳ H} → ExactSeq (G ⟨ φ ⟩→ H ⊣|)
+  exact-seq-two : {G H K J : Group i} {φ : G →ᴳ H} {ψ : H →ᴳ K}
     {diag : ExactDiag K J} → is-exact (GroupHom.⊙f φ) (GroupHom.⊙f ψ)
     → ExactSeq (H ⟨ ψ ⟩→ diag) → ExactSeq (G ⟨ φ ⟩→ H ⟨ ψ ⟩→ diag)
 
@@ -89,7 +89,7 @@ exact-build diag = hlist-curry (exact-build-helper diag)
 
 private
   exact-snoc-diag : ∀ {i} {G H K : Group i}
-    → ExactDiag G H → GroupHom H K → ExactDiag G K
+    → ExactDiag G H → (H →ᴳ K) → ExactDiag G K
   exact-snoc-diag (G ⊣|) ψ = G ⟨ ψ ⟩→ _ ⊣|
   exact-snoc-diag (G ⟨ φ ⟩→ s) ψ = G ⟨ φ ⟩→ exact-snoc-diag s ψ
 
@@ -100,7 +100,7 @@ private
 
 abstract
   exact-concat : ∀ {i} {G H K L : Group i}
-    {diag₁ : ExactDiag G H} {φ : GroupHom H K} {diag₂ : ExactDiag K L}
+    {diag₁ : ExactDiag G H} {φ : H →ᴳ K} {diag₂ : ExactDiag K L}
     → ExactSeq (exact-snoc-diag diag₁ φ) → ExactSeq (H ⟨ φ ⟩→ diag₂)
     → ExactSeq (exact-concat-diag diag₁ (H ⟨ φ ⟩→ diag₂))
   exact-concat {diag₁ = G ⊣|} exact-seq-one es₂ = es₂

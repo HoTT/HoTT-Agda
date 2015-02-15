@@ -26,20 +26,19 @@ Unit-Group = group _ Unit-is-set Unit-group-structure
 LiftUnit-Group : ∀ {i} → Group i
 LiftUnit-Group = Lift-Group Unit-Group
 
-0G = LiftUnit-Group
+0ᴳ = LiftUnit-Group
 
-contr-iso-LiftUnit : ∀ {i} (G : Group i) → is-contr (Group.El G) → G == 0G
-contr-iso-LiftUnit G pA = group-iso
-  (group-hom (λ _ → lift unit) (λ _ _ → idp))
-  (snd (contr-equiv-LiftUnit pA))
+contr-is-0ᴳ : ∀ {i} (G : Group i) → is-contr (Group.El G) → G == 0ᴳ
+contr-is-0ᴳ G pA = group-ua
+  (group-hom (λ _ → lift unit) (λ _ _ → idp) , snd (contr-equiv-LiftUnit pA))
 
-0G-hom-out-level : ∀ {i j} {G : Group i}
-  → is-contr (GroupHom (0G {j}) G)
-0G-hom-out-level {G = G} =
+0ᴳ-hom-out-level : ∀ {i j} {G : Group i}
+  → is-contr (0ᴳ {j} →ᴳ G)
+0ᴳ-hom-out-level {G = G} =
   (cst-hom ,
    λ φ → hom= _ _ (λ= (λ {(lift unit) → ! (GroupHom.pres-ident φ)})))
 
-0G-hom-in-level : ∀ {i j} {G : Group i}
-  → is-contr (GroupHom G (0G {j}))
-0G-hom-in-level {G = G} =
+0ᴳ-hom-in-level : ∀ {i j} {G : Group i}
+  → is-contr (G →ᴳ 0ᴳ {j})
+0ᴳ-hom-in-level {G = G} =
   (cst-hom , λ φ → hom= _ _ (λ= (λ _ → idp)))

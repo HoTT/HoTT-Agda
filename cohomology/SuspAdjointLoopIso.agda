@@ -44,23 +44,5 @@ module SuspAdjointLoopIso {i j} (X : Ptd i) (Y : Ptd j) where
         =⟨ ! (∙-unit-r _) ⟩
       ap (λ f → f idp idp) (λ= (λ p → λ= (comp-path p))) ∙ idp ∎
 
-  iso : →Ω-Group (⊙Susp X) Y == →Ω-Group X (⊙Ω Y)
-  iso = group-iso
-    (record {
-      f = f;
-      pres-comp = λ F G →
-        Trunc-elim
-          {P = λ F → f (Trunc-fmap2 (comp GSΣ) F G)
-                  == Trunc-fmap2 (comp GSΩ) (f F) (f G)}
-          (λ _ → =-preserves-level _ Trunc-level)
-          (λ F' → Trunc-elim
-            {P = λ G → f (Trunc-fmap2 (comp GSΣ) [ F' ] G)
-                    == Trunc-fmap2 (comp GSΩ) (f [ F' ]) (f G)}
-            (λ _ → =-preserves-level _ Trunc-level)
-            (λ G' → ap [_] (pres-comp-inner F' G'))
-            G
-            )
-          F })
-    (uncurry (is-equiv-Trunc ⟨0⟩) ΣAΩ.eqv)
-    where
-    f = Trunc-fmap ΣAΩ.R
+  iso : →Ω-Group (⊙Susp X) Y ≃ᴳ →Ω-Group X (⊙Ω Y)
+  iso = Trunc-Group-iso ΣAΩ.R pres-comp-inner (snd (ΣAΩ.eqv))

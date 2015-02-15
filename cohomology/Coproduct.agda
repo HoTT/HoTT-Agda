@@ -155,7 +155,7 @@ module C⊔ (n : ℤ) (m : ℕ) (X Y : Ptd i) where
                 ∙ C-Sphere-≠ n m neq)
                (prop-has-all-paths-↓
                   {B = λ G → GroupHom (C n (⊙Susp^ m (X ⊙⊔ Y))) G}
-                  (contr-is-prop 0G-hom-in-level)))
+                  (contr-is-prop 0ᴳ-hom-in-level)))
         es
 
     add-wglue-over :
@@ -188,10 +188,10 @@ module C⊔ (n : ℤ) (m : ℕ) (X Y : Ptd i) where
          ∙ ⊙susp^-fmap-idf m _))
 
     iso : C n (⊙Susp^ m (X ⊙⊔ Y))
-       == C n (⊙Susp^ m (X ⊙∨ Y)) ×G C n (⊙Susp^ m (⊙Sphere 0))
+       == C n (⊙Susp^ m (X ⊙∨ Y)) ×ᴳ C n (⊙Susp^ m (⊙Sphere 0))
     iso = SER.iso
 
     add-wglue-over :
-      CF-hom n (⊙susp^-fmap m ⊙add-wglue) == ×G-inl
+      CF-hom n (⊙susp^-fmap m ⊙add-wglue) == ×ᴳ-inl
       [ (λ G → GroupHom (C n (⊙Susp^ m (X ⊙∨ Y))) G) ↓ iso ]
     add-wglue-over = SER.φ-over-iso

@@ -17,8 +17,8 @@ record Group-Cospan {i j k : ULevel} : Type (lsucc (lmax (lmax i j) k)) where
     H : Group i
     K : Group j
     G : Group k
-    φ : GroupHom H G
-    ψ : GroupHom K G
+    φ : H →ᴳ G
+    ψ : K →ᴳ G
 
 group-cospan-out : ∀ {i j k} → Group-Cospan {i} {j} {k} → Cospan {i} {j} {k}
 group-cospan-out (group-cospan H K G φ ψ) =
@@ -69,24 +69,24 @@ module _ {i j k} (D : Group-Cospan {i} {j} {k}) where
     El-level = pullback-level ⟨0⟩ H.El-level K.El-level G.El-level;
     group-struct = Pullback-group-struct}
 
-  pfst-hom : GroupHom Pullback-Group H
+  pfst-hom : Pullback-Group →ᴳ H
   pfst-hom = record {
     f = Pullback.a;
     pres-comp = λ _ _ → idp}
 
-  psnd-hom : GroupHom Pullback-Group K
+  psnd-hom : Pullback-Group →ᴳ K
   psnd-hom = record {
     f = Pullback.b;
     pres-comp = λ _ _ → idp}
 
-  module _ {l} {J : Group l} (χ : GroupHom J H) (θ : GroupHom J K) where
+  module _ {l} {J : Group l} (χ : J →ᴳ H) (θ : J →ᴳ K) where
 
     private
       module χ = GroupHom χ
       module θ = GroupHom θ
 
     pullback-hom : ((j : Group.El J) → φ.f (χ.f j) == ψ.f (θ.f j))
-      → GroupHom J Pullback-Group
+      → J →ᴳ Pullback-Group
     pullback-hom p = record {
       f = λ j → pullback (χ.f j) (θ.f j) (p j);
       pres-comp = λ j₁ j₂ → pullback= (group-cospan-out D)

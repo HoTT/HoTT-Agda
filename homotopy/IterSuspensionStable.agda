@@ -45,7 +45,7 @@ module Susp^StableSucc {i} (X : Ptd i) (cX : is-connected ⟨0⟩ (fst X))
     π k tk (⊙Ω (⊙Susp^ (S n) X))
       =⟨ ! (π-Trunc-shift-iso k tk (⊙Ω (⊙Susp^ (S n) X))) ⟩
     Ω^-Group k tk (⊙Trunc ⟨ k ⟩ (⊙Ω (⊙Susp^ (S n) X))) Trunc-level
-      =⟨ ! F.iso ⟩
+      =⟨ ! (group-ua F.iso) ⟩
     Ω^-Group k tk (⊙Trunc ⟨ k ⟩ (⊙Susp^ n X)) Trunc-level
       =⟨ π-Trunc-shift-iso k tk (⊙Susp^ n X) ⟩
     π k tk (⊙Susp^ n X) ∎

@@ -32,15 +32,14 @@ abstract
   π-inner-iso : ∀ {i} (n : ℕ) (tn : n ≠ 0) (tsn : S n ≠ 0) (X : Ptd i)
     → π (S n) tsn X == π n tn (⊙Ω X)
   π-inner-iso O tn tsn X = ⊥-rec (tn idp)
-  π-inner-iso (S n') tn' tn X =
-    group-iso
-      (record {
-        f = Trunc-fmap (Ω^-inner-out n X);
-        pres-comp =
-          Trunc-elim (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
-            (λ p → Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
-               (λ q → ap [_] (Ω^-inner-out-conc^ n tn' X p q)))})
-      (is-equiv-Trunc ⟨0⟩ (Ω^-inner-out n X) (Ω^-inner-is-equiv n X))
+  π-inner-iso (S n') tn' tn X = group-ua
+    (record {
+       f = Trunc-fmap (Ω^-inner-out n X);
+       pres-comp =
+         Trunc-elim (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
+           (λ p → Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+              (λ q → ap [_] (Ω^-inner-out-conc^ n tn' X p q)))} ,
+     is-equiv-Trunc ⟨0⟩ (Ω^-inner-out n X) (Ω^-inner-is-equiv n X))
     where
     n : ℕ
     n = S n'
@@ -84,7 +83,7 @@ module _ {i} where
 
   π-Trunc-shift-iso : (n : ℕ) (t : n ≠ O) (X : Ptd i)
     → Ω^-Group n t (⊙Trunc ⟨ n ⟩ X) Trunc-level == π n t X
-  π-Trunc-shift-iso n t X = group-iso (group-hom (fst F) pres-comp) e
+  π-Trunc-shift-iso n t X = group-ua (group-hom (fst F) pres-comp , e)
     where
     n-eq : ∀ (n : ℕ) → (n -2) +2+ ⟨0⟩ == ⟨ n ⟩
     n-eq O = idp
@@ -115,22 +114,22 @@ abstract
         (prop-has-all-paths-↓ has-level-is-prop)
 
   π-above-trunc : ∀ {i} (n : ℕ) (t : n ≠ O) (m : ℕ₋₂) (X : Ptd i)
-    → (m <T ⟨ n ⟩) → π n t (⊙Trunc m X) == 0G
+    → (m <T ⟨ n ⟩) → π n t (⊙Trunc m X) == 0ᴳ
   π-above-trunc n t m X lt =
     π n t (⊙Trunc m X)
       =⟨ ! (π-Trunc-shift-iso n t (⊙Trunc m X)) ⟩
     Ω^-Group n t (⊙Trunc ⟨ n ⟩ (⊙Trunc m X)) Trunc-level
-      =⟨ contr-iso-LiftUnit _ $ inhab-prop-is-contr
+      =⟨ contr-is-0ᴳ _ $ inhab-prop-is-contr
            (Group.ident (Ω^-Group n t (⊙Trunc ⟨ n ⟩ (⊙Trunc m X)) Trunc-level))
            (Ω^-level-in ⟨-1⟩ n _ $ Trunc-preserves-level ⟨ n ⟩ $
              raise-level-≤T
                (transport (λ k → m ≤T k) (+2+-comm ⟨-1⟩ (n -2)) (<T-to-≤T lt))
                (Trunc-level {n = m})) ⟩
-    0G ∎
+    0ᴳ ∎
 
   π-above-level : ∀ {i} (n : ℕ) (t : n ≠ O) (m : ℕ₋₂) (X : Ptd i)
     → (m <T ⟨ n ⟩) → has-level m (fst X)
-    → π n t X == 0G
+    → π n t X == 0ᴳ
   π-above-level n t m X lt pX =
     ap (π n t) (! (⊙ua (unTrunc-equiv _ pX) idp))
     ∙ π-above-trunc n t m X lt
@@ -138,9 +137,9 @@ abstract
 {- πₙ(X × Y) == πₙ(X) × πₙ(Y) -}
 module _ {i j} (n : ℕ) (t : n ≠ O) (X : Ptd i) (Y : Ptd  j) where
 
-  π-× : π n t (X ⊙× Y) == π n t X ×G π n t Y
+  π-× : π n t (X ⊙× Y) == π n t X ×ᴳ π n t Y
   π-× =
-    Trunc-Group-iso f pres-comp (is-eq f g f-g g-f)
+    group-ua (Trunc-Group-iso f pres-comp (is-eq f g f-g g-f))
     ∙ Trunc-Group-× _ _
     where
     f : Ω^ n (X ⊙× Y) → Ω^ n X × Ω^ n Y

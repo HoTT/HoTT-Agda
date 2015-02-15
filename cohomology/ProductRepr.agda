@@ -20,8 +20,7 @@ module cohomology.ProductRepr where
 
 module ProductRepr {i j}
   {G : Group (lmax i j)} {H₁ : Group i} {H₂ : Group j}
-  (i₁ : GroupHom H₁ G) (i₂ : GroupHom H₂ G)
-  (j₁ : GroupHom G H₁) (j₂ : GroupHom G H₂)
+  (i₁ : H₁ →ᴳ G) (i₂ : H₂ →ᴳ G) (j₁ : G →ᴳ H₁) (j₂ : G →ᴳ H₂)
   (p₁ : ∀ h₁ → GroupHom.f j₁ (GroupHom.f i₁ h₁) == h₁)
   (p₂ : ∀ h₂ → GroupHom.f j₂ (GroupHom.f i₂ h₂) == h₂)
   (ex₁ : is-exact (GroupHom.⊙f i₁) (GroupHom.⊙f j₂))
@@ -29,7 +28,7 @@ module ProductRepr {i j}
   where
 
   zero-ker : (g : Group.El G)
-    → GroupHom.f (×-hom j₁ j₂) g == Group.ident (H₁ ×G H₂)
+    → GroupHom.f (×ᴳ-hom-in j₁ j₂) g == Group.ident (H₁ ×ᴳ H₂)
     → g == Group.ident G
   zero-ker g q = Trunc-rec (Group.El-level G _ _)
       (lemma g (fst×= q))
@@ -55,24 +54,24 @@ module ProductRepr {i j}
     ∙ ap2 (Group.comp H₂) (itok ex₁ _ [ h₁ , idp ]) (p₂ h₂)
     ∙ Group.unitl H₂ h₂
 
-  iso : G == H₁ ×G H₂
-  iso = surj-inj-iso (×-hom j₁ j₂)
-    (zero-kernel-injective (×-hom j₁ j₂) zero-ker)
+  iso : G == H₁ ×ᴳ H₂
+  iso = surj-inj-= (×ᴳ-hom-in j₁ j₂)
+    (zero-kernel-injective (×ᴳ-hom-in j₁ j₂) zero-ker)
     (λ {(h₁ , h₂) → [ Group.comp G (GroupHom.f i₁ h₁) (GroupHom.f i₂ h₂) ,
                       pair×= (β₁ h₁ h₂) (β₂ h₁ h₂) ]})
 
-  fst-over : j₁ == ×G-fst [ (λ U → GroupHom U H₁) ↓ iso ]
+  fst-over : j₁ == ×ᴳ-fst [ (λ U → U →ᴳ H₁) ↓ iso ]
   fst-over = domain-over-iso _ _ _ _ $ domain-over-equiv fst _
 
-  snd-over : j₂ == ×G-snd {G = H₁} [ (λ U → GroupHom U H₂) ↓ iso ]
+  snd-over : j₂ == ×ᴳ-snd {G = H₁} [ (λ U → U →ᴳ H₂) ↓ iso ]
   snd-over = domain-over-iso _ _ _ _ $ domain-over-equiv snd _
 
-  inl-over : i₁ == ×G-inl [ (λ V → GroupHom H₁ V) ↓ iso ]
+  inl-over : i₁ == ×ᴳ-inl [ (λ V → H₁ →ᴳ V) ↓ iso ]
   inl-over = codomain-over-iso _ _ _ _ $
     codomain-over-equiv (GroupHom.f i₁) _
     ▹ λ= (λ h₁ → pair×= (p₁ h₁) (itok ex₁ _ [ h₁ , idp ]))
 
-  inr-over : i₂ == ×G-inr {G = H₁} [ (λ V → GroupHom H₂ V) ↓ iso ]
+  inr-over : i₂ == ×ᴳ-inr {G = H₁} [ (λ V → H₂ →ᴳ V) ↓ iso ]
   inr-over = codomain-over-iso _ _ _ _ $
     codomain-over-equiv (GroupHom.f i₂) _
     ▹ λ= (λ h₂ → pair×= (itok ex₂ _ [ h₂ , idp ]) (p₂ h₂))
@@ -90,7 +89,7 @@ module ProductRepr {i j}
 
   module HexagonLemma {k l}
     {K : Group k} {L : Group l}
-    (i₀ : GroupHom K G) (j₀ : GroupHom G L)
+    (i₀ : K →ᴳ G) (j₀ : G →ᴳ L)
     (ex₀ : ∀ g → GroupHom.f j₀ (GroupHom.f i₀ g) == Group.ident L)
     where
 
@@ -107,17 +106,17 @@ module ProductRepr {i j}
       (λ {(h₁ , h₂) → pair×= (Group.unitr H₁ h₁) (Group.unitl H₂ h₂)})
 
     cancel : ∀ k →
-      Group.comp L (GroupHom.f (j₀ ∘hom i₁ ∘hom j₁ ∘hom i₀) k)
-                   (GroupHom.f (j₀ ∘hom i₂ ∘hom j₂ ∘hom i₀) k)
+      Group.comp L (GroupHom.f (j₀ ∘ᴳ i₁ ∘ᴳ j₁ ∘ᴳ i₀) k)
+                   (GroupHom.f (j₀ ∘ᴳ i₂ ∘ᴳ j₂ ∘ᴳ i₀) k)
       == Group.ident L
     cancel k = ! (GroupHom.pres-comp j₀ _ _)
              ∙ ap (GroupHom.f j₀) (decomp (GroupHom.f i₀ k))
              ∙ ex₀ k
 
-    inv₁ : ∀ k → Group.inv L (GroupHom.f (j₀ ∘hom i₁ ∘hom j₁ ∘hom i₀) k)
-              == GroupHom.f (j₀ ∘hom i₂ ∘hom j₂ ∘hom i₀) k
+    inv₁ : ∀ k → Group.inv L (GroupHom.f (j₀ ∘ᴳ i₁ ∘ᴳ j₁ ∘ᴳ i₀) k)
+              == GroupHom.f (j₀ ∘ᴳ i₂ ∘ᴳ j₂ ∘ᴳ i₀) k
     inv₁ k = group-inv-unique-r L _ _ (cancel k)
 
-    inv₂ : ∀ k → Group.inv L (GroupHom.f (j₀ ∘hom i₂ ∘hom j₂ ∘hom i₀) k)
-              == GroupHom.f (j₀ ∘hom i₁ ∘hom j₁ ∘hom i₀) k
+    inv₂ : ∀ k → Group.inv L (GroupHom.f (j₀ ∘ᴳ i₂ ∘ᴳ j₂ ∘ᴳ i₀) k)
+              == GroupHom.f (j₀ ∘ᴳ i₁ ∘ᴳ j₁ ∘ᴳ i₀) k
     inv₂ k = group-inv-unique-l L _ _ (cancel k)

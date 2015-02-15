@@ -25,6 +25,7 @@ module cohomology.WithCoefficients where
   invr = λ F → ⊙λ=
     (!-inv-r ∘ fst F)
     (invr-lemma (snd F) ∙ ! (∙-unit-r _))}
+  where
 
   unitr-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
     → ap (λ r → r ∙ idp) α == ∙-unit-r p ∙ α
@@ -82,21 +83,21 @@ abstract
   Bool⊙→-path X = ua (Bool⊙→-equiv X)
 
 abstract
-  Bool⊙→Ω-iso-π₁ : ∀ {i} (X : Ptd i)
+  Bool⊙→Ω-is-π₁ : ∀ {i} (X : Ptd i)
     → →Ω-Group (⊙Lift {j = i} ⊙Bool) X == π 1 (ℕ-S≠O _) X
-  Bool⊙→Ω-iso-π₁ {i} X =
-    group-iso
+  Bool⊙→Ω-is-π₁ {i} X =
+    group-ua
       (record {
-        f = Trunc-fmap Bool⊙→-out;
-        pres-comp = Trunc-elim {i = i}
-          (λ _ → Π-level {j = i} (λ _ → =-preserves-level _ Trunc-level))
-          (λ g₁ → Trunc-elim
-            (λ _ → =-preserves-level _ Trunc-level)
-            (λ g₂ → idp))})
-      (is-equiv-Trunc ⟨0⟩ _ (snd (Bool⊙→-equiv (⊙Ω X))))
+         f = Trunc-fmap Bool⊙→-out;
+         pres-comp = Trunc-elim {i = i}
+           (λ _ → Π-level {j = i} (λ _ → =-preserves-level _ Trunc-level))
+           (λ g₁ → Trunc-elim
+             (λ _ → =-preserves-level _ Trunc-level)
+             (λ g₂ → idp))} ,
+       is-equiv-Trunc ⟨0⟩ _ (snd (Bool⊙→-equiv (⊙Ω X))))
 
-Bool⊙→KG0-iso-G : ∀ {i} (G : Group i) (abel : is-abelian G)
+Bool⊙→KG0-is-G : ∀ {i} (G : Group i) (abel : is-abelian G)
   → →Ω-Group (⊙Lift {j = i} ⊙Bool) (KGnExplicit.⊙KG G abel 1) == G
-Bool⊙→KG0-iso-G G abel =
-  Bool⊙→Ω-iso-π₁ (KGnExplicit.⊙KG G abel 1)
+Bool⊙→KG0-is-G G abel =
+  Bool⊙→Ω-is-π₁ (KGnExplicit.⊙KG G abel 1)
   ∙ KGnExplicit.π-diag G abel 1 (ℕ-S≠O _)

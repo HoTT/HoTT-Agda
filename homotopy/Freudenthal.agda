@@ -238,14 +238,13 @@ module FreudenthalIso
 
   open FreudenthalEquiv n (⟨ k ⟩) kle (fst X) (snd X) cX public
 
-  hom : GroupHom
-    (Ω^-Group k t (⊙Trunc ⟨ k ⟩ X) Trunc-level)
-    (Ω^-Group k t (⊙Trunc ⟨ k ⟩ (⊙Ω (⊙Susp X))) Trunc-level)
+  hom : Ω^-Group k t (⊙Trunc ⟨ k ⟩ X) Trunc-level
+     →ᴳ Ω^-Group k t (⊙Trunc ⟨ k ⟩ (⊙Ω (⊙Susp X))) Trunc-level
   hom = record {
     f = fst F;
     pres-comp = ap^-conc^ k t (decodeN , decodeN-pt) }
     where F = ap^ k (decodeN , decodeN-pt)
 
   iso : Ω^-Group k t (⊙Trunc ⟨ k ⟩ X) Trunc-level
-     == Ω^-Group k t (⊙Trunc ⟨ k ⟩ (⊙Ω (⊙Susp X))) Trunc-level
-  iso = group-iso hom (is-equiv-ap^ k (decodeN , decodeN-pt) (snd eqv))
+     ≃ᴳ Ω^-Group k t (⊙Trunc ⟨ k ⟩ (⊙Ω (⊙Susp X))) Trunc-level
+  iso = (hom , is-equiv-ap^ k (decodeN , decodeN-pt) (snd eqv))

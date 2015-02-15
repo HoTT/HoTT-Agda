@@ -14,7 +14,7 @@ open import cohomology.WedgeCofiber
          Cⁿ(Σᵐ(X ∨ Y)) == Cⁿ(ΣᵐX) × Cⁿ(ΣᵐY)
 
  - and over this path
- -   ∙ Cⁿ(Σᵐwinl) corresponds to fst : Cⁿ(ΣᵐX) × Cⁿ(ΣᵐY) → Cⁿ(ΣᵐX),
+\ -   ∙ Cⁿ(Σᵐwinl) corresponds to fst : Cⁿ(ΣᵐX) × Cⁿ(ΣᵐY) → Cⁿ(ΣᵐX),
  -   ∙ Cⁿ(Σᵐwinr) corresponds to snd : Cⁿ(ΣᵐX) × Cⁿ(ΣᵐY) → Cⁿ(ΣᵐY),
  -   ∙ Cⁿ(Σᵐ(Wedge-rec winl* winr* wglue*)) : Cⁿ(ΣᵐZ) → Cⁿ(Σᵐ(X ∨ Y))
        corresponds to Cⁿ(Σᵐwinl*) × Cⁿ(Σᵐwinr*).
@@ -30,7 +30,7 @@ module CSusp^Wedge (n : ℤ) (X Y : Ptd i) (m : ℕ) where
   open import cohomology.ConstantFunction CT
 
   private
-    βl : CF-hom n (⊙susp^-fmap m ⊙winl) ∘hom
+    βl : CF-hom n (⊙susp^-fmap m ⊙winl) ∘ᴳ
          CF-hom n (⊙susp^-fmap m ⊙projl)
          == idhom _
     βl = ! (CF-comp n (⊙susp^-fmap m ⊙projl)
@@ -40,7 +40,7 @@ module CSusp^Wedge (n : ℤ) (X Y : Ptd i) (m : ℕ) where
                ∙ ⊙susp^-fmap-idf m _)
          ∙ CF-ident n
 
-    βr : CF-hom n (⊙susp^-fmap m ⊙winr) ∘hom
+    βr : CF-hom n (⊙susp^-fmap m ⊙winr) ∘ᴳ
          CF-hom n (⊙susp^-fmap m ⊙projr)
          == idhom _
     βr = ! (CF-comp n (⊙susp^-fmap m ⊙projr)
@@ -78,9 +78,9 @@ module CSusp^Wedge (n : ℤ) (X Y : Ptd i) (m : ℕ) where
     (winl* : fst X → fst Z) (winr* : fst Y → fst Z)
     (wglue* : winl* (snd X) == winr* (snd Y)) (pt : winl* (snd X) == snd Z)
     → CF-hom n (⊙susp^-fmap m (WedgeRec.f winl* winr* wglue* , pt))
-      == ×-hom (CF-hom n (⊙susp^-fmap m (winl* , pt)))
-               (CF-hom n (⊙susp^-fmap m (winr* , ! wglue* ∙ pt)))
-      [ (λ K → GroupHom (C n (⊙Susp^ m Z)) K) ↓ iso ]
+      == ×ᴳ-hom-in (CF-hom n (⊙susp^-fmap m (winl* , pt)))
+                   (CF-hom n (⊙susp^-fmap m (winr* , ! wglue* ∙ pt)))
+      [ (λ K → C n (⊙Susp^ m Z) →ᴳ K) ↓ iso ]
   wedge-rec-over winl* winr* wglue* pt = codomain-over-iso _ _ _ _ $
     codomain-over-equiv
       (fst (CF n (⊙susp^-fmap m (WedgeRec.f winl* winr* wglue* , pt)))) _
@@ -102,22 +102,22 @@ module CSusp^Wedge (n : ℤ) (X Y : Ptd i) (m : ℕ) where
   wedge-in-over : {Z : Ptd i}
     (f : fst (⊙Susp^ m Z ⊙→ ⊙Susp^ m (⊙Wedge X Y)))
     → CF-hom n f
-      == ×-sum-hom (C-abelian n _)
+      == ×ᴳ-sum-hom (C-abelian n _)
            (CF-hom n (⊙susp^-fmap m ⊙projl ⊙∘ f))
            (CF-hom n (⊙susp^-fmap m ⊙projr ⊙∘ f))
-      [ (λ G → GroupHom G (C n (⊙Susp^ m Z))) ↓ iso ]
+      [ (λ G → G →ᴳ C n (⊙Susp^ m Z)) ↓ iso ]
   wedge-in-over f =
     lemma (C-abelian n _) (C-abelian n _) inl-over inr-over
-    ▹ ap2 (×-sum-hom (C-abelian n _))
+    ▹ ap2 (×ᴳ-sum-hom (C-abelian n _))
         (! (CF-comp n (⊙susp^-fmap m ⊙projl) f))
         (! (CF-comp n (⊙susp^-fmap m ⊙projr) f))
     where
     lemma : {G H K L : Group i}
-      (aG : is-abelian G) (aL : is-abelian L) {p : G == H ×G K}
-      {φ : GroupHom H G} {ψ : GroupHom K G} {χ : GroupHom G L}
-      → φ == ×G-inl [ (λ J → GroupHom H J) ↓ p ]
-      → ψ == ×G-inr {G = H} [ (λ J → GroupHom K J) ↓ p ]
-      → χ == ×-sum-hom aL (χ ∘hom φ) (χ ∘hom ψ) [ (λ J → GroupHom J L) ↓ p ]
+      (aG : is-abelian G) (aL : is-abelian L) {p : G == H ×ᴳ K}
+      {φ : H →ᴳ G} {ψ : K →ᴳ G} {χ : G →ᴳ L}
+      → φ == ×ᴳ-inl [ (λ J → H →ᴳ J) ↓ p ]
+      → ψ == ×ᴳ-inr {G = H} [ (λ J → K →ᴳ J) ↓ p ]
+      → χ == ×ᴳ-sum-hom aL (χ ∘ᴳ φ) (χ ∘ᴳ ψ) [ (λ J → J →ᴳ L) ↓ p ]
     lemma {H = H} {K = K} aG aL {p = idp} {χ = χ} idp idp =
-      ap (λ α → χ ∘hom α) (×-sum-hom-η H K aG)
-      ∙ ! (∘-×-sum-hom aG aL χ (×G-inl {G = H}) (×G-inr {G = H}))
+      ap (λ α → χ ∘ᴳ α) (×ᴳ-sum-hom-η H K aG)
+      ∙ ! (∘-×ᴳ-sum-hom aG aL χ (×ᴳ-inl {G = H}) (×ᴳ-inr {G = H}))

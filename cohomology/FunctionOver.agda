@@ -133,25 +133,23 @@ module _ {i} {j} {X : Ptd i} {Z : Ptd j} (g : fst (X ⊙→ Z)) where
 {- transporting a group homomorphism along an isomorphism -}
 
 domain-over-iso : ∀ {i j} {G H : Group i} {K : Group j}
-  (φ : GroupHom G H) (ie : is-equiv (GroupHom.f φ))
-  (ψ : GroupHom G K) (χ : GroupHom H K)
+  (φ : G →ᴳ H) (ie : is-equiv (GroupHom.f φ)) (ψ : G →ᴳ K) (χ : H →ᴳ K)
   → GroupHom.f ψ == GroupHom.f χ
     [ (λ A → A → Group.El K) ↓ ua (GroupHom.f φ , ie) ]
-  → ψ == χ [ (λ J → GroupHom J K) ↓ group-iso φ ie ]
+  → ψ == χ [ (λ J → J →ᴳ K) ↓ group-ua (φ , ie) ]
 domain-over-iso {K = K} φ ie ψ χ p = hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $
   transport
     (λ q → GroupHom.f ψ == GroupHom.f χ [ (λ A → A → Group.El K) ↓ q ])
-    (! (group-iso-el φ ie))
+    (! (group-ua-el (φ , ie)))
     p
 
 codomain-over-iso : ∀ {i j} {G : Group i} {H K : Group j}
-  (φ : GroupHom H K) (ie : is-equiv (GroupHom.f φ))
-  (ψ : GroupHom G H) (χ : GroupHom G K)
+  (φ : H →ᴳ K) (ie : is-equiv (GroupHom.f φ)) (ψ : G →ᴳ H) (χ : G →ᴳ K)
   → GroupHom.f ψ == GroupHom.f χ
     [ (λ A → Group.El G → A) ↓ ua (GroupHom.f φ , ie) ]
-  → ψ == χ [ (λ J → GroupHom G J) ↓ group-iso φ ie ]
+  → ψ == χ [ (λ J → G →ᴳ J) ↓ group-ua (φ , ie) ]
 codomain-over-iso {G = G} φ ie ψ χ p = hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $
   transport
     (λ q → GroupHom.f ψ == GroupHom.f χ [ (λ A → Group.El G → A) ↓ q ])
-    (! (group-iso-el φ ie))
+    (! (group-ua-el (φ , ie)))
     p

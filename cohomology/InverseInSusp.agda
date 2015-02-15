@@ -66,7 +66,7 @@ CF-flip : CF-hom n (⊙flip-susp X) == inv-hom _ (C-abelian n (⊙Susp X))
 CF-flip =
   ! C-right-reduce
   ∙ (hom= _ _ $ λ= $ ! ∘ HL.inv₁)
-  ∙ ap (λ φ → inv-hom _ (C-abelian n (⊙Susp X)) ∘hom φ) C-left-reduce
+  ∙ ap (λ φ → inv-hom _ (C-abelian n (⊙Susp X)) ∘ᴳ φ) C-left-reduce
   where
   {- Lemmas are all just reducing compositions -}
 
@@ -127,11 +127,11 @@ CF-flip =
 
   C-β : {Y Z U V W : Ptd i} (k : fst (V ⊙→ W))
     (h : fst (U ⊙→ V)) (g : fst (Z ⊙→ U)) (f : fst (Y ⊙→ Z))
-    → CF-hom n f ∘hom CF-hom n g ∘hom CF-hom n h ∘hom CF-hom n k
+    → CF-hom n f ∘ᴳ CF-hom n g ∘ᴳ CF-hom n h ∘ᴳ CF-hom n k
       == CF-hom n (((k ⊙∘ h) ⊙∘ g) ⊙∘ f)
   C-β k h g f =
-    ap (λ w → CF-hom n f ∘hom CF-hom n g ∘hom w) (! (CF-comp n k h))
-    ∙ ap (λ w → CF-hom n f ∘hom w) (! (CF-comp n (k ⊙∘ h) g))
+    ap (λ w → CF-hom n f ∘ᴳ CF-hom n g ∘ᴳ w) (! (CF-comp n k h))
+    ∙ ap (λ w → CF-hom n f ∘ᴳ w) (! (CF-comp n (k ⊙∘ h) g))
     ∙ ! (CF-comp n ((k ⊙∘ h) ⊙∘ g) f)
 
   C-left-reduce = C-β (⊙susp-fmap ⊙fold) (⊙susp-fmap ⊙winl)

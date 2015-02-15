@@ -46,7 +46,7 @@ module KG1 {i} (G : Group i) where
   module KG1Rec {j} {C : Type j}
     (C-level : has-level ⟨ 1 ⟩ C)
     (kbase* : C)
-    (hom* : GroupHom G (Ω^-Group 1 (ℕ-S≠O _) (C , kbase*) C-level)) where
+    (hom* : G →ᴳ (Ω^-Group 1 (ℕ-S≠O _) (C , kbase*) C-level)) where
 
     f : KG1 → C
     f (#kg1 #kbase _) = kbase*
@@ -113,7 +113,7 @@ module KG1 {i} (G : Group i) where
     0-Group = Ω^-Group 1 (ℕ-S≠O _)
       ((⟨0⟩ -Type i) , (G.El , G.El-level)) (⟨0⟩ -Type-level i)
 
-    Codes-hom₁ : GroupHom G Ω-Group
+    Codes-hom₁ : G →ᴳ Ω-Group
     Codes-hom₁ = record {
       f = ua ∘ comp-equiv;
 
@@ -124,7 +124,7 @@ module KG1 {i} (G : Group i) where
           =⟨ ua-∘e (comp-equiv g₁) (comp-equiv g₂) ⟩
         ua (comp-equiv g₁) ∙ ua (comp-equiv g₂) ∎}
 
-    Codes-hom₂ : GroupHom Ω-Group 0-Group
+    Codes-hom₂ : Ω-Group →ᴳ 0-Group
     Codes-hom₂ = record {
       f = λ p → pair= p phap;
 
@@ -143,8 +143,8 @@ module KG1 {i} (G : Group i) where
         → G.El-level == G.El-level [ has-level ⟨0⟩ ↓ p ]
       phap = prop-has-all-paths-↓ has-level-is-prop
 
-    Codes-hom : GroupHom G 0-Group
-    Codes-hom = Codes-hom₂ ∘hom Codes-hom₁
+    Codes-hom : G →ᴳ 0-Group
+    Codes-hom = Codes-hom₂ ∘ᴳ Codes-hom₁
 
     Codes : KG1 → ⟨0⟩ -Type i
     Codes = KG1-rec {C = ⟨0⟩ -Type i} (⟨0⟩ -Type-level i)
@@ -210,10 +210,10 @@ module KG1 {i} (G : Group i) where
 
     abstract
       π₁-iso : π 1 (ℕ-S≠O _) (KG1 , kbase) == G
-      π₁-iso = ! $ group-iso
+      π₁-iso = ! $ group-ua
         (record { f = [_] ∘ kloop;
-                  pres-comp = λ g₁ g₂ → ap [_] (kloop-comp g₁ g₂) })
-        (snd ((unTrunc-equiv (kbase == kbase) (klevel _ _))⁻¹ ∘e (Ω¹-equiv ⁻¹)))
+                  pres-comp = λ g₁ g₂ → ap [_] (kloop-comp g₁ g₂) } ,
+         snd ((unTrunc-equiv (kbase == kbase) (klevel _ _))⁻¹ ∘e (Ω¹-equiv ⁻¹)))
 
   {- KG1 is 0-connected -}
   abstract
@@ -226,15 +226,3 @@ module KG1 {i} (G : Group i) where
         (λ _ → prop-has-all-paths-↓ (Trunc-level {n = ⟨0⟩} _ _))
         (set-↓-has-all-paths-↓ (=-preserves-level _ Trunc-level))
         (λ _ _ → set-↓-has-all-paths-↓ (=-preserves-level _ Trunc-level))))
-
-K1-action : ∀ {i j} {G : Group i} {H : Group j}
-  → GroupHom G H → fst (KG1.⊙KG1 G ⊙→ KG1.⊙KG1 H)
-K1-action {G = G} {H = H} (group-hom f pres-comp) =
-  (KG1Rec.f G (klevel H) (kbase H)
-    (record {
-      f = λ g → kloop H (f g);
-      pres-comp = λ g₁ g₂ →
-        ap (kloop H) (pres-comp g₁ g₂) ∙ kloop-comp H (f g₁) (f g₂)}) ,
-   idp)
-  where
-  open KG1

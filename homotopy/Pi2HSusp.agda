@@ -146,42 +146,28 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
   main-lemma-eqv : Trunc ⟨ 1 ⟩ (north A == north A) ≃ A
   main-lemma-eqv = equiv encode decode' encode-decode' decode-encode
 
-  main-lemma : Trunc ⟨ 1 ⟩ (north A == north A) == A
-  main-lemma = ua main-lemma-eqv
-
   ⊙main-lemma : ⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e))) == (A , e)
   ⊙main-lemma = ⊙ua main-lemma-eqv idp
-
-  {- for main-lemma-iso; separated for performance reasons -}
-  module Iso where
-    abstract
-      H : fst (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e)))
-            ⊙→ ⊙Trunc ⟨ 1 ⟩ (A , e))
-      H = (λ x → [ encode x ]) , idp
-
-      F : fst (⊙Ω^ 1 (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e))))
-            ⊙→ ⊙Ω^ 1 (⊙Trunc ⟨ 1 ⟩ (A , e)))
-      F = ap^ 1 H
-
-      f : Ω^ 1 (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e))))
-        → Ω^ 1 (⊙Trunc ⟨ 1 ⟩ (A , e))
-      f = fst F
-
-      pres-comp : (p q : Ω^ 1 (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e)))))
-        → f (conc^ 1 (ℕ-S≠O _) p q) == conc^ 1 (ℕ-S≠O _) (f p) (f q)
-      pres-comp = ap^-conc^ 1 (ℕ-S≠O _) H
-
-      ie : is-equiv f
-      ie = is-equiv-ap^ 1 H (snd $ ((unTrunc-equiv A gA)⁻¹ ∘e main-lemma-eqv))
 
   abstract
     main-lemma-iso : (t1 : 1 ≠ 0) →
          Ω^-Group 1 t1 (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e)))) Trunc-level
-      == Ω^-Group 1 t1 (⊙Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
-    main-lemma-iso _ = group-iso
-      (record {f = f; pres-comp = pres-comp})
-      ie
-      where open Iso
+      ≃ᴳ Ω^-Group 1 t1 (⊙Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
+    main-lemma-iso _ = (record {f = f; pres-comp = pres-comp} , ie)
+      where
+      h : fst (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e)))
+            ⊙→ ⊙Trunc ⟨ 1 ⟩ (A , e))
+      h = (λ x → [ encode x ]) , idp
+
+      f : Ω (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e)))) → Ω (⊙Trunc ⟨ 1 ⟩ (A , e))
+      f = fst (ap^ 1 h)
+
+      pres-comp : (p q : Ω^ 1 (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e)))))
+        → f (conc^ 1 (ℕ-S≠O _) p q) == conc^ 1 (ℕ-S≠O _) (f p) (f q)
+      pres-comp = ap^-conc^ 1 (ℕ-S≠O _) h
+
+      ie : is-equiv f
+      ie = is-equiv-ap^ 1 h (snd $ ((unTrunc-equiv A gA)⁻¹ ∘e main-lemma-eqv))
 
   abstract
     π₂-Suspension : (t1 : 1 ≠ 0) (t2 : 2 ≠ 0)
@@ -192,7 +178,7 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
       π 1 t1 (⊙Ω (⊙Susp (A , e)))
         =⟨ ! (π-Trunc-shift-iso 1 t1 (⊙Ω (⊙Susp (A , e)))) ⟩
       Ω^-Group 1 t1 (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e)))) Trunc-level
-        =⟨ main-lemma-iso t1 ⟩
+        =⟨ group-ua (main-lemma-iso t1) ⟩
       Ω^-Group 1 t1 (⊙Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
         =⟨ π-Trunc-shift-iso 1 t1 (A , e) ⟩
       π 1 t1 (A , e) ∎
