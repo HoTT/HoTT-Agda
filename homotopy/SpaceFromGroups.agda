@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import homotopy.KGn
+open import homotopy.EilenbergMacLane
 
 {- Given sequence of groups (Gₙ : n ≥ 1) such that Gₙ is abelian for n > 1,
  - we can construct a space X such that πₙ(X) == Gₙ.
@@ -11,7 +11,7 @@ module homotopy.SpaceFromGroups where
 
 {- From a sequence of spaces (Fₙ) such that Fₙ is n-connected and
  - n+1-truncated, construct a space X such that πₙ₊₁(X) == πₙ₊₁(Fₙ) -}
-module SpaceFromKGns {i} (F : ℕ → Ptd i)
+module SpaceFromEMs {i} (F : ℕ → Ptd i)
   (pF : (n : ℕ) → has-level ⟨ S n ⟩ (fst (F n)))
   (cF : (n : ℕ) → is-connected ⟨ n ⟩ (fst (F n))) where
 
@@ -21,25 +21,21 @@ module SpaceFromKGns {i} (F : ℕ → Ptd i)
   πₙ : (n : ℕ) → π (S n) (ℕ-S≠O _) X == π (S n) (ℕ-S≠O _) (F n)
   πₙ n =
     prefix-lemma n O F pF
-    ∙ ap (π _ _) (! (fin-tuples-cons (λ k → F (n + k))))
-    ∙ π-× _ _ (F (n + O)) (⊙FinTuples (λ k → F (n + S k)))
-    ∙ ap (λ H → π (S n) (ℕ-S≠O _) (F (n + O)) ×G H)
-         (contr-iso-LiftUnit _ $
-           transport
-             (λ pi → is-contr $ Group.El $ pi (S n) (ℕ-S≠O n) $
-                       ⊙FinTuples (λ k → F (n + S k)))
-             π-fold
-             (connected-at-level-is-contr (Trunc-level {n = ⟨0⟩}) $
-               Trunc-preserves-conn ⟨0⟩ $ Ω^-conn-in _ (S n) _ $
-                 transport
-                   (λ k → is-connected k
-                            (fst (⊙FinTuples (λ k → F (n + S k)))))
-                   (+2+-comm (S (S ⟨-2⟩)) (S (n -2)))
-                   (ncolim-conn _ _ $ connected-lemma _ _ $ λ k →
-                     transport (λ s → is-connected ⟨ s ⟩ (fst (F (n + S k))))
-                       (+-βr n k ∙ +-comm (S n) k)
-                       (cF (n + S k)))))
-    ∙ ×G-unit-r
+    ∙ ap (π (S n) (ℕ-S≠O _)) (! (fin-tuples-cons (λ k → F (n + k))))
+    ∙ π-× (S n) (ℕ-S≠O _) (F (n + O)) (⊙FinTuples (λ k → F (n + S k)))
+    ∙ ap (λ H → π (S n) (ℕ-S≠O _) (F (n + O)) ×ᴳ H)
+         (contr-is-0ᴳ _ $
+           connected-at-level-is-contr (Trunc-level {n = ⟨0⟩}) $
+             Trunc-preserves-conn ⟨0⟩ $ Ω^-conn-in _ (S n) _ $
+               transport
+                 (λ k → is-connected k
+                          (fst (⊙FinTuples (λ k → F (n + S k)))))
+                 (+2+-comm (S (S ⟨-2⟩)) (S (n -2)))
+                 (ncolim-conn _ _ $ connected-lemma _ _ $ λ k →
+                   transport (λ s → is-connected ⟨ s ⟩ (fst (F (n + S k))))
+                     (+-βr n k ∙ +-comm (S n) k)
+                     (cF (n + S k))))
+    ∙ ×ᴳ-unit-r
     ∙ ap (λ k → π (S n) (ℕ-S≠O _) (F k)) (+-unit-r n)
 
     where
@@ -51,13 +47,13 @@ module SpaceFromKGns {i} (F : ℕ → Ptd i)
         == π (S m + n) (ℕ-S≠O _) (⊙FinTuples (λ k → F (n + k)))
     prefix-lemma O m F pF = idp
     prefix-lemma (S n) m F pF =
-      ap (π _ _) (! (fin-tuples-cons F))
-      ∙ π-× _ _ (F O) (⊙FinTuples (F ∘ S))
-      ∙ ap2 _×G_ lemma₁ lemma₂
-      ∙ ×G-unit-l
+      ap (π (S m + S n) (ℕ-S≠O _)) (! (fin-tuples-cons F))
+      ∙ π-× (S m + S n) (ℕ-S≠O _) (F O) (⊙FinTuples (F ∘ S))
+      ∙ ap2 _×ᴳ_ lemma₁ lemma₂
+      ∙ ×ᴳ-unit-l
       where
       {- ignore first space -}
-      lemma₁ : π (S (m + S n)) (ℕ-S≠O _) (F O) == 0G
+      lemma₁ : π (S (m + S n)) (ℕ-S≠O _) (F O) == 0ᴳ
       lemma₁ =
         π-above-level (S (m + S n)) (ℕ-S≠O _) _ (F O)
           (⟨⟩-monotone-< (<-ap-S (<-+-l m (O< n)))) (pF O)
@@ -91,21 +87,22 @@ module SpaceFromGroups {i} (G : ℕ → Group i)
 
   private
     F : ℕ → Ptd i
-    F O = KG1.⊙KG1 (G O)
-    F (S n) = KGnExplicit.⊙KG (G (S n)) (abG n) (S (S n))
+    F O = EM₁.⊙EM₁ (G O)
+    F (S n) = EMExplicit.⊙EM (G (S n)) (abG n) (S (S n))
 
     pF : (n : ℕ) → has-level ⟨ S n ⟩ (fst (F n))
-    pF O = KG1.klevel (G O)
-    pF (S n) = KGnExplicit.KG-level (G (S n)) (abG n) (S (S n))
+    pF O = EM₁.emlevel (G O)
+    pF (S n) = EMExplicit.EM-level (G (S n)) (abG n) (S (S n))
 
     cF : (n : ℕ) → is-connected ⟨ n ⟩ (fst (F n))
-    cF O = KG1.KG1-conn (G O)
-    cF (S n) = KGnExplicit.KG-conn (G (S n)) (abG n) (S n)
+    cF O = EM₁.EM₁-conn (G O)
+    cF (S n) = EMExplicit.EM-conn (G (S n)) (abG n) (S n)
 
-    module M = SpaceFromKGns F pF cF
+    module M = SpaceFromEMs F pF cF
 
   X = M.X
 
   πₙ : (n : ℕ) → π (S n) (ℕ-S≠O _) X == G n
-  πₙ O = M.πₙ O ∙ KG1.π₁.π₁-iso (G O)
-  πₙ (S n) = M.πₙ (S n) ∙ KGnExplicit.π-diag (G (S n)) (abG n) (S (S n)) _
+  πₙ O = M.πₙ O ∙ EM₁.π₁.π₁-iso (G O)
+  πₙ (S n) =
+    M.πₙ (S n) ∙ EMExplicit.π-diag (G (S n)) (abG n) (S (S n)) (ℕ-S≠O _)

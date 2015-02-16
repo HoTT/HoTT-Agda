@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import homotopy.KGn
 
 module cohomology.WithCoefficients where
 
@@ -49,7 +48,8 @@ module cohomology.WithCoefficients where
 →Ω-Group : ∀ {i j} (X : Ptd i) (Y : Ptd j) → Group (lmax i j)
 →Ω-Group X Y = Trunc-Group (→Ω-group-structure X Y)
 
-{- Some lemmas to be used to calculate cohomology of S⁰ -}
+{- Pointed maps out of bool -}
+
 Bool⊙→-out : ∀ {i} {X : Ptd i}
   → fst (⊙Lift {j = i} ⊙Bool ⊙→ X) → fst X
 Bool⊙→-out (h , _) = h (lift false)
@@ -95,9 +95,3 @@ abstract
              (λ _ → =-preserves-level _ Trunc-level)
              (λ g₂ → idp))} ,
        is-equiv-Trunc ⟨0⟩ _ (snd (Bool⊙→-equiv (⊙Ω X))))
-
-Bool⊙→KG0-is-G : ∀ {i} (G : Group i) (abel : is-abelian G)
-  → →Ω-Group (⊙Lift {j = i} ⊙Bool) (KGnExplicit.⊙KG G abel 1) == G
-Bool⊙→KG0-is-G G abel =
-  Bool⊙→Ω-is-π₁ (KGnExplicit.⊙KG G abel 1)
-  ∙ KGnExplicit.π-diag G abel 1 (ℕ-S≠O _)

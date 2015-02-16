@@ -32,7 +32,7 @@ open import lib.types.Pullback public
 open import lib.types.Group public
 open import lib.types.Groupoid public
 open import lib.types.GroupSet public
-open import lib.types.KG1 public
+open import lib.types.EilenbergMacLane1 public
 open import lib.types.Pointed public
 open import lib.types.LoopSpace public
 open import lib.types.PathSet public
