@@ -100,7 +100,7 @@ CF-flip =
            ∙2 (ap-! (susp-fmap fold ∘ susp-fmap winl ∘ susp-fmap projl)
                  (merid _ (winr x))
                ∙ ap ! (left-β (winr x)))))
-        ∙v⊡ (vid-square {p = merid _ x} ⊡h ru-square (merid _ (snd X)))
+        ∙v⊡ (vid-square {p = merid _ x} ⊡h rt-square (merid _ (snd X)))
         ⊡v∙ (∙-unit-r _ ∙ ! (ap-idf (merid _ x)))))
     idp
 

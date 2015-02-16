@@ -499,13 +499,13 @@ module _ {i} {A : Type i} where
     → Square (! p) idp p idp
   bl-square idp = ids
 
-  ru-square : {a₀ a₁ : A} (p : a₀ == a₁)
+  rt-square : {a₀ a₁ : A} (p : a₀ == a₁)
     → Square idp (! p) idp p
-  ru-square idp = ids
+  rt-square idp = ids
 
-  ur-square : {a₀ a₁ : A} (p : a₀ == a₁)
+  tr-square : {a₀ a₁ : A} (p : a₀ == a₁)
     → Square idp p idp (! p)
-  ur-square idp = ids
+  tr-square idp = ids
 
   lt-square : {a₀ a₁ : A} (p : a₀ == a₁)
     → Square p p idp idp

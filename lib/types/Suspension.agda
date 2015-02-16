@@ -94,7 +94,7 @@ module _ {i j} where
   susp-fmap-cst : {A : Type i} {B : Type j} (b : B)
     (a : Suspension A) → susp-fmap (cst b) a == north _
   susp-fmap-cst b = Suspension-elim _ idp (! (merid _ b)) $ (λ a →
-    ↓-app=cst-from-square $ SuspFmap.glue-β (cst b) a ∙v⊡ ur-square _)
+    ↓-app=cst-from-square $ SuspFmap.glue-β (cst b) a ∙v⊡ tr-square _)
 
   ⊙susp-fmap-cst : {X : Ptd i} {Y : Ptd j}
     → ⊙susp-fmap (⊙cst {X = X} {Y = Y}) == ⊙cst

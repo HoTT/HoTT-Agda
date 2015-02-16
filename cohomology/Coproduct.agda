@@ -95,11 +95,11 @@ module CofSelect (X Y : Ptd i) where
           (inr _) → ! (merid _ (lift false))})
       (λ {(lift true) → ↓-='-from-square $
             ExtGlue.glue-β (lift true)
-            ∙v⊡ ur-square (merid _ (lift true))
+            ∙v⊡ tr-square (merid _ (lift true))
             ⊡v∙ ! (ap-cst (north _) (glue (lift true)));
           (lift false) → ↓-='-from-square $
             ExtGlue.glue-β (lift false)
-            ∙v⊡ ur-square (merid _ (lift false))
+            ∙v⊡ tr-square (merid _ (lift false))
             ⊡v∙ ! (ap-cst (north _) (glue (lift false)))}))
     idp
 

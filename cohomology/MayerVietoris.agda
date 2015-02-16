@@ -344,10 +344,10 @@ module MayerVietorisBase
                  ∙ MVDiff.glue-β z))
 
       fn-fill : Σ (Square idp idp (ap mv-diff (merid _ (snd Z))) idp)
-        (λ sq → Cube (ur-square (merid _ (winl (snd X)))) sq
+        (λ sq → Cube (tr-square (merid _ (winl (snd X)))) sq
                      (natural-square (λ _ → idp) wglue)
                      (natural-square (merid _) wglue
-                       ⊡h' square-symmetry (ur-square (merid _ (winr (snd Y)))))
+                       ⊡h' square-symmetry (tr-square (merid _ (winr (snd Y)))))
                      (natural-square (ap mv-diff ∘ into-glue) wglue)
                      (square-push-rt (! (merid _ (winr (snd Y))))
                        (natural-square (fn-cod ∘ reglue) wglue)))
@@ -356,11 +356,11 @@ module MayerVietorisBase
       fn-coh : (w : X ∨ Y)
         → Square idp (merid _ w) (ap mv-diff (into-glue w)) (fn-cod (reglue w))
       fn-coh = Wedge-elim
-        (λ x → ur-square (merid _ (winl x)))
-          (λ y → ur-square (merid _ (winr y)) ⊡v' (fst fn-fill))
+        (λ x → tr-square (merid _ (winl x)))
+          (λ y → tr-square (merid _ (winr y)) ⊡v' (fst fn-fill))
         (cube-to-↓-square $ right-from-top-lemma
           (fst fn-fill)
-          (ur-square (merid _ (winr (snd Y))))
+          (tr-square (merid _ (winr (snd Y))))
           (snd fn-fill))
 
 {- Main results -}

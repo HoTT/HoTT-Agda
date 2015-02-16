@@ -125,7 +125,7 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
          ∙ ∙-assoc (ap winl (merid _ x)) (ap winl (! (merid _ (snd X))))
                    (wglue ∙ ap winr wglue))
         ∙v⊡ (vid-square {p = ap winl (merid _ x)} ⊡h
-             ur-square (ap winl (! (merid _ (snd X))) ∙ wglue ∙ ap winr wglue))
+             tr-square (ap winl (! (merid _ (snd X))) ∙ wglue ∙ ap winr wglue))
         ⊡v∙ ∙-unit-r _)
 
     into-out-y : ∀ σy → into (out (winr (winr σy))) == winr (winr σy)

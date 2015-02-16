@@ -48,7 +48,7 @@ module _ {i} {A : Type i} where
           λ {(lift true , a) →
                 (ap (ap out) (Into.glue-β (lift true , a)) ∙ Out.glue-β a)
                 ∙v⊡ (vid-square {p = glue (lift true , a)}
-                      ⊡h ru-square (glue (lift false , a)))
+                      ⊡h rt-square (glue (lift false , a)))
                 ⊡v∙ ∙-unit-r _;
              (lift false , a) →
                ap (ap out) (Into.glue-β (lift false , a)) ∙v⊡ connection})

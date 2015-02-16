@@ -87,7 +87,7 @@ module Cof² {X Y : Ptd i} (f : fst (X ⊙→ Y)) where
           (ap-∘ out ext-glue (cfglue _ x)
            ∙ ap (ap out) (ExtGlue.glue-β x) ∙ Out.glue-β x)
           ∙v⊡ (vid-square {p = ap (cfcod _) (cfglue _ x)}
-               ⊡h ru-square (cfglue _ (fst f x)))
+               ⊡h rt-square (cfglue _ (fst f x)))
           ⊡v∙ ∙-unit-r _))
       (λ y → ↓-∘=idf-from-square out into $
          ap (ap out) (Into.glue-β y) ∙v⊡ connection)
@@ -167,7 +167,7 @@ module Cof² {X Y : Ptd i} (f : fst (X ⊙→ Y)) where
                  ∙ FlipPushout.glue-β (fst f x))))
       (λ y → ↓-='-from-square $
         ExtGlue.glue-β y ∙v⊡
-          ur-square (merid _ y)
+          tr-square (merid _ y)
         ⊡v∙ ! (ap-∘ (flip-pushout ∘ susp-fmap (fst f)) (Equiv.into f)
                     (cfglue _ y)
                ∙ ap (ap (flip-pushout ∘ susp-fmap (fst f)))
