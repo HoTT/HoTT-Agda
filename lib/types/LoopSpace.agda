@@ -43,12 +43,15 @@ module _ {i} where
   conc^ O t = ⊥-rec (t idp)
   conc^ (S n) _ = _∙_
 
-{- ap and ap2 for pointed functions -}
+{- pointed versions of functions on paths -}
 
 private
   pt-lemma : ∀ {i} {A : Type i} {x y : A} (p : x == y)
     → ! p ∙ (idp ∙' p) == idp
   pt-lemma idp = idp
+
+⊙conc : ∀ {i} {X : Ptd i} → fst (⊙Ω X ⊙× ⊙Ω X ⊙→ ⊙Ω X)
+⊙conc = (uncurry _∙_ , idp)
 
 ⊙ap : ∀ {i j} {X : Ptd i} {Y : Ptd j}
   → fst (X ⊙→ Y) → fst (⊙Ω X ⊙→ ⊙Ω Y)
@@ -227,6 +230,16 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
 {- Eckmann-Hilton argument -}
 module _ {i} {X : Ptd i} where
+
+  ap2-conc-is-conc : (α β : Ω^ 2 X) → ap2 _∙_ α β == conc^ 2 (ℕ-S≠O _) α β
+  ap2-conc-is-conc α β = ap2-out _∙_ α β ∙ ap2 _∙_ (lemma α) (ap-idf β)
+    where
+    lemma : ∀ {i} {A : Type i} {x y : A} {p q : x == y} (α : p == q)
+      → ap (λ r → r ∙ idp) α == ∙-unit-r p ∙ α ∙' ! (∙-unit-r q)
+    lemma {p = idp} idp = idp
+
+  ⊙ap2-conc-is-conc : ⊙ap2 (⊙conc {X = X}) == ⊙conc
+  ⊙ap2-conc-is-conc = ⊙λ= (uncurry ap2-conc-is-conc) idp
 
   conc^2-comm : (α β : Ω^ 2 X) → conc^ 2 (ℕ-S≠O _) α β == conc^ 2 (ℕ-S≠O _) β α
   conc^2-comm α β = ! (⋆2=conc^ α β) ∙ ⋆2=⋆'2 α β ∙ ⋆'2=conc^ α β

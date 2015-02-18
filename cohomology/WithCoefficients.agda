@@ -9,8 +9,7 @@ module cohomology.WithCoefficients where
 →Ω-group-structure X Y = record {
   ident = ((λ _ → idp) , idp);
   inv = λ F → ((! ∘ fst F) , ap ! (snd F));
-  comp = λ F G →
-    ((λ x → fst F x ∙ fst G x), ap2 _∙_ (snd F) (snd G));
+  comp = ⊙comp2 ⊙conc;
   unitl = λ G → pair= idp (ap2-idp-l _∙_ {x = idp} (snd G) ∙ ap-idf (snd G));
   unitr = λ F → ⊙λ=
     (∙-unit-r ∘ fst F)
@@ -47,6 +46,27 @@ module cohomology.WithCoefficients where
 
 →Ω-Group : ∀ {i j} (X : Ptd i) (Y : Ptd j) → Group (lmax i j)
 →Ω-Group X Y = Trunc-Group (→Ω-group-structure X Y)
+
+{- →Ω-Group is functorial in the first argument -}
+
+→Ω-Group-dom-act : ∀ {i j k} {X : Ptd i} {Y : Ptd j}
+  (f : fst (X ⊙→ Y)) (Z : Ptd k)
+  → (→Ω-Group Y Z →ᴳ →Ω-Group X Z)
+→Ω-Group-dom-act {Y = Y} f Z =
+  Trunc-Group-hom (λ g → g ⊙∘ f) (⊙comp2-pre∘ f ⊙conc)
+
+→Ω-Group-dom-idf : ∀ {i j} {X : Ptd i} (Y : Ptd j)
+  → →Ω-Group-dom-act (⊙idf X) Y == idhom (→Ω-Group X Y)
+→Ω-Group-dom-idf Y = hom= _ _ $ λ= $ Trunc-elim
+  (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp)
+
+→Ω-Group-dom-∘ : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y)) (W : Ptd l)
+  → →Ω-Group-dom-act (g ⊙∘ f) W
+    == →Ω-Group-dom-act f W ∘ᴳ →Ω-Group-dom-act g W
+→Ω-Group-dom-∘ g f W = hom= _ _ $ λ= $
+  Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+    (λ h → ap [_] (! (⊙∘-assoc h g f)))
 
 {- Pointed maps out of bool -}
 
@@ -85,13 +105,5 @@ abstract
 abstract
   Bool⊙→Ω-is-π₁ : ∀ {i} (X : Ptd i)
     → →Ω-Group (⊙Lift {j = i} ⊙Bool) X == π 1 (ℕ-S≠O _) X
-  Bool⊙→Ω-is-π₁ {i} X =
-    group-ua
-      (record {
-         f = Trunc-fmap Bool⊙→-out;
-         pres-comp = Trunc-elim {i = i}
-           (λ _ → Π-level {j = i} (λ _ → =-preserves-level _ Trunc-level))
-           (λ g₁ → Trunc-elim
-             (λ _ → =-preserves-level _ Trunc-level)
-             (λ g₂ → idp))} ,
-       is-equiv-Trunc ⟨0⟩ _ (snd (Bool⊙→-equiv (⊙Ω X))))
+  Bool⊙→Ω-is-π₁ {i} X = group-ua $
+    Trunc-Group-iso Bool⊙→-out (λ _ _ → idp) (snd (Bool⊙→-equiv (⊙Ω X)))

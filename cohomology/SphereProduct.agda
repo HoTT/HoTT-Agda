@@ -26,12 +26,12 @@ module _ (n : ℤ) (m : ℕ) (X : Ptd i) where
   C-Sphere× : C n (⊙Sphere {i} m ⊙× X)
            == C n (⊙Sphere m) ×ᴳ (C n (⊙Susp^ m X) ×ᴳ C n X)
   C-Sphere× =
-    ! (C-Susp n (⊙Sphere m ⊙× X))
+    ! (group-ua (C-Susp n (⊙Sphere m ⊙× X)))
     ∙ ap (C (succ n)) space-path
     ∙ C-binary-additive (succ n) (⊙Sphere (S m)) (⊙Susp^ (S m) X ⊙∨ ⊙Susp X)
     ∙ ap (λ H → C (succ n) (⊙Sphere (S m)) ×ᴳ H)
          (C-binary-additive (succ n) (⊙Susp^ (S m) X) (⊙Susp X)
-          ∙ ap2 _×ᴳ_ (C-Susp n (⊙Susp^ m X))
-                     (C-Susp n X))
+          ∙ ap2 _×ᴳ_ (group-ua (C-Susp n (⊙Susp^ m X)))
+                     (group-ua (C-Susp n X)))
     ∙ ap (λ H → H ×ᴳ (C n (⊙Susp^ m X) ×ᴳ C n X))
-         (C-Susp n (⊙Sphere m))
+         (group-ua (C-Susp n (⊙Sphere m)))

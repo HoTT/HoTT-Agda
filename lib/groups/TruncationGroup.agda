@@ -16,23 +16,42 @@ module _ {i} {El : Type i} (GS : GroupStructure El) where
   Trunc-group-struct = record {
     ident = [ ident GS ];
     inv = Trunc-fmap (inv GS);
-    comp = Trunc-fmap2 (comp GS);
-    unitl =
-      Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (ap [_] ∘ unitl GS);
-    unitr =
-      Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (ap [_] ∘ unitr GS);
-    assoc = Trunc-elim
-      (λ _ → Π-level (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level)))
-      (λ a → Trunc-elim
-        (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
-        (λ b → Trunc-elim
-           (λ _ → =-preserves-level _ Trunc-level)
-           (λ c → ap [_] (assoc GS a b c))));
-    invl =
-      Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (ap [_] ∘ invl GS);
-    invr =
-      Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (ap [_] ∘ invr GS) }
-    where open GroupStructure
+    comp = _⊗_;
+    unitl = t-unitl;
+    unitr = t-unitr;
+    assoc = t-assoc;
+    invl = t-invl;
+    invr = t-invr}
+    where
+    open GroupStructure
+    _⊗_ = Trunc-fmap2 (comp GS)
+
+    abstract
+      t-unitl : (t : Trunc ⟨0⟩ El) → [ ident GS ] ⊗ t == t
+      t-unitl = Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+        (ap [_] ∘ unitl GS)
+
+      t-unitr : (t : Trunc ⟨0⟩ El) → t ⊗ [ ident GS ] == t
+      t-unitr = Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+        (ap [_] ∘ unitr GS)
+
+      t-assoc : (t₁ t₂ t₃ : Trunc ⟨0⟩ El) → (t₁ ⊗ t₂) ⊗ t₃ == t₁ ⊗ (t₂ ⊗ t₃)
+      t-assoc = Trunc-elim
+        (λ _ → Π-level (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level)))
+        (λ a → Trunc-elim
+          (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
+          (λ b → Trunc-elim
+             (λ _ → =-preserves-level _ Trunc-level)
+             (λ c → ap [_] (assoc GS a b c))))
+
+      t-invl : (t : Trunc ⟨0⟩ El) → Trunc-fmap (inv GS) t ⊗ t == [ ident GS ]
+      t-invl = Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+        (ap [_] ∘ invl GS)
+
+      t-invr : (t : Trunc ⟨0⟩ El) → t ⊗ Trunc-fmap (inv GS) t == [ ident GS ]
+      t-invr = Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+        (ap [_] ∘ invr GS)
+
 
   Trunc-Group : Group i
   Trunc-Group = record {
@@ -71,12 +90,18 @@ Trunc-Group-hom : ∀ {i j} {A : Type i} {B : Type j}
   → ((a₁ a₂ : A) → f (GroupStructure.comp GS a₁ a₂)
                    == GroupStructure.comp HS (f a₁) (f a₂))
   → (Trunc-Group GS →ᴳ Trunc-Group HS)
-Trunc-Group-hom f p = record {
-  f = Trunc-fmap f;
-  pres-comp =
-    Trunc-elim (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
-      (λ a₁ → Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
-        (λ a₂ → ap [_] (p a₁ a₂)))}
+Trunc-Group-hom {A = A} {GS = GS} {HS = HS} f p =
+  record {f = Trunc-fmap f; pres-comp = pres-comp}
+  where
+  abstract
+    pres-comp : (t₁ t₂ : Trunc ⟨0⟩ A) →
+      Trunc-fmap f (Trunc-fmap2 (GroupStructure.comp GS) t₁ t₂)
+      == Trunc-fmap2 (GroupStructure.comp HS)
+           (Trunc-fmap f t₁) (Trunc-fmap f t₂)
+    pres-comp =
+      Trunc-elim (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
+        (λ a₁ → Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+          (λ a₂ → ap [_] (p a₁ a₂)))
 
 Trunc-Group-iso : ∀ {i} {A B : Type i}
   {GS : GroupStructure A} {HS : GroupStructure B} (f : A → B)

@@ -180,10 +180,16 @@ Trunc-fpmap : ∀ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j} {f g : A → B
 Trunc-fpmap h = Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
                 (ap [_] ∘ h)
 
+Trunc-fmap-idf : ∀ {i} {n : ℕ₋₂} {A : Type i}
+  → ∀ x → Trunc-fmap {n = n} (idf A) x == x
+Trunc-fmap-idf =
+  Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp)
+
 Trunc-fmap-∘ : ∀ {i j k} {n : ℕ₋₂} {A : Type i} {B : Type j} {C : Type k}
-  → (g : B → C) → (f : A → B) 
+  → (g : B → C) → (f : A → B)
   → ∀ x → Trunc-fmap {n = n} g (Trunc-fmap f x) == Trunc-fmap (g ∘ f) x
-Trunc-fmap-∘ g f = Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp)
+Trunc-fmap-∘ g f =
+  Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp)
 
 {- Pushing concatentation through Trunc= -}
 module _ {i} {n : ℕ₋₂} {A : Type i} where

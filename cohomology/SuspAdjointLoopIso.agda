@@ -1,48 +1,64 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
+open import homotopy.PtdAdjoint
 open import homotopy.SuspAdjointLoop
 open import cohomology.WithCoefficients
 
 module cohomology.SuspAdjointLoopIso where
 
-module SuspAdjointLoopIso {i j} (X : Ptd i) (Y : Ptd j) where
+module SuspAdjointLoopIso {i} where
 
-  module ΣAΩ = SuspAdjointLoop X (⊙Ω Y)
-  GSΣ = →Ω-group-structure (⊙Susp X) Y
-  GSΩ = →Ω-group-structure X (⊙Ω Y)
-  open GroupStructure
+  private
+    hadj : HomAdjoint {i} {i} Σ⊣Ω.SuspFunctor Σ⊣Ω.LoopFunctor
+    hadj = counit-unit-to-hom Σ⊣Ω.adj
 
-  comp-path : (p q : fst (⊙Ω (⊙Ω Y))) → ap2 _∙_ p q == p ∙ q
-  comp-path p q = ap2-out _∙_ p q ∙ ap2 _∙_ (lemma p) (ap-idf q)
-    where
-    lemma : ∀ {i} {A : Type i} {x y : A} {p q : x == y} (α : p == q)
-      → ap (λ r → r ∙ idp) α == ∙-unit-r p ∙ α ∙' ! (∙-unit-r q)
-    lemma {p = idp} idp = idp
+    module A = HomAdjoint hadj
 
-  pres-comp-inner : (H₁ H₂ : fst (⊙Susp X ⊙→ ⊙Ω Y))
-    → ΣAΩ.R (comp GSΣ H₁ H₂) == comp GSΩ (ΣAΩ.R H₁) (ΣAΩ.R H₂)
-  pres-comp-inner H₁ H₂ =
-    transport
-       (λ {(op , op-path) →
-          ΣAΩ.R (comp GSΣ H₁ H₂) ==
-          transport (λ b → Σ (fst X → _) (λ h → h (snd X) == b)) op-path
-            (ΣAΩ.comp-lift (snd X) idp idp op (ΣAΩ.R H₁) (ΣAΩ.R H₂))})
-       (pair= (λ= (λ p → λ= (comp-path p)))
-              {b = idp} {b' = idp} (↓-app=cst-in snd-path))
-       (ΣAΩ.pres-comp _∙_ H₁ H₂)
-    where
-    snd-path : idp == ap (λ f → f idp idp) (λ= (λ p → λ= (comp-path p))) ∙ idp
-    snd-path =
-      idp
-        =⟨ ! (app=-β (comp-path idp) idp) ⟩
-      app= (λ= (comp-path idp)) idp
-        =⟨ ap (λ q → app= q idp) (! (app=-β (λ p → λ= (comp-path p)) idp)) ⟩
-      app= (app= (λ= (λ p → λ= (comp-path p))) idp) idp
-        =⟨ ∘-ap (λ z → z idp) (λ z → z idp) (λ= (λ p → λ= (comp-path p))) ⟩
-      ap (λ f → f idp idp) (λ= (λ p → λ= (comp-path p)))
-        =⟨ ! (∙-unit-r _) ⟩
-      ap (λ f → f idp idp) (λ= (λ p → λ= (comp-path p))) ∙ idp ∎
+  module _ (X Y : Ptd i) where
 
-  iso : →Ω-Group (⊙Susp X) Y ≃ᴳ →Ω-Group X (⊙Ω Y)
-  iso = Trunc-Group-iso ΣAΩ.R pres-comp-inner (snd (ΣAΩ.eqv))
+    abstract
+      pres-comp : (h₁ h₂ : fst (⊙Susp X ⊙→ ⊙Ω Y))
+        → –> (A.eq X (⊙Ω Y)) (⊙comp2 ⊙conc h₁ h₂)
+           == ⊙comp2 ⊙conc (–> (A.eq X (⊙Ω Y)) h₁) (–> (A.eq X (⊙Ω Y)) h₂)
+      pres-comp h₁ h₂ =
+        B.nat-cod h₁ h₂ ⊙conc
+        ∙ ap (λ w → ⊙comp2 w (–> (A.eq X (⊙Ω Y)) h₁) (–> (A.eq X (⊙Ω Y)) h₂))
+             arr2-lemma
+        where
+        module A× = RightAdjoint× hadj
+        module B = RightAdjointBinary hadj
+
+        ap2-lemma : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
+          (f : A × B → C) {r s : A × B} (p : r == s)
+          → ap f p == ap2 (curry f) (ap fst p) (ap snd p)
+        ap2-lemma f idp = idp
+
+        ⊙ap2-lemma : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+          (f : fst (X ⊙× Y ⊙→ Z))
+          → ⊙ap f == ⊙ap2 f ⊙∘ ⊙×-in (⊙ap ⊙fst) (⊙ap ⊙snd)
+        ⊙ap2-lemma (f , idp) = ⊙λ= (ap2-lemma f) idp
+
+        arr2-lemma : B.arr2 ⊙conc == ⊙conc
+        arr2-lemma =
+          ⊙ap ⊙conc ⊙∘ A×.⊙out _ _
+            =⟨ ⊙ap2-lemma ⊙conc |in-ctx (λ w → w ⊙∘ A×.⊙out _ _) ⟩
+          (⊙ap2 ⊙conc ⊙∘ A×.⊙into _ _) ⊙∘ A×.⊙out _ _
+            =⟨ ⊙∘-assoc (⊙ap2 ⊙conc) (A×.⊙into _ _) (A×.⊙out _ _) ⟩
+          ⊙ap2 ⊙conc ⊙∘ (A×.⊙into _ _ ⊙∘ A×.⊙out _ _)
+            =⟨ A×.⊙into-out _ _ |in-ctx (λ w → ⊙ap2 ⊙conc ⊙∘ w) ⟩
+          ⊙ap2 ⊙conc
+            =⟨ ⊙ap2-conc-is-conc ⟩
+          ⊙conc ∎
+
+    iso : →Ω-Group (⊙Susp X) Y ≃ᴳ →Ω-Group X (⊙Ω Y)
+    iso = Trunc-Group-iso
+      (–> (A.eq X (⊙Ω Y))) pres-comp (snd (A.eq X (⊙Ω Y)))
+
+  abstract
+    nat-dom : {X Y : Ptd i} (f : fst (X ⊙→ Y)) (Z : Ptd i)
+      → fst (iso X Z) ∘ᴳ →Ω-Group-dom-act (⊙susp-fmap f) Z
+        == →Ω-Group-dom-act f (⊙Ω Z) ∘ᴳ fst (iso Y Z)
+    nat-dom f Z = hom= _ _ $ λ= $ Trunc-elim
+      (λ _ → =-preserves-level _ Trunc-level)
+      (λ g → ap [_] (! (A.nat-dom f (⊙Ω Z) g)))

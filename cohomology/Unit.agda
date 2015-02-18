@@ -65,16 +65,16 @@ C-Unit-is-trivial : (n : ℤ) → C n ⊙LU == LiftUnit-Group
 C-Unit-is-trivial O =
   contr-is-0ᴳ _ C₀-Unit-is-contr
 C-Unit-is-trivial (pos O) =
-  ap (C (pos O)) Unit-is-Susp-Unit ∙ C-Susp O ⊙LU
+  ap (C (pos O)) Unit-is-Susp-Unit ∙ group-ua (C-Susp O ⊙LU)
   ∙ (contr-is-0ᴳ _ C₀-Unit-is-contr)
 C-Unit-is-trivial (pos (S m)) =
-  ap (C (pos (S m))) Unit-is-Susp-Unit ∙ C-Susp (pos m) ⊙LU
+  ap (C (pos (S m))) Unit-is-Susp-Unit ∙ group-ua (C-Susp (pos m) ⊙LU)
   ∙ C-Unit-is-trivial (pos m)
 C-Unit-is-trivial (neg O) =
-  ! (C-Susp (neg O) ⊙LU) ∙ ! (ap (C O) Unit-is-Susp-Unit)
+  ! (group-ua (C-Susp (neg O) ⊙LU)) ∙ ! (ap (C O) Unit-is-Susp-Unit)
   ∙ (contr-is-0ᴳ _ C₀-Unit-is-contr)
 C-Unit-is-trivial (neg (S m)) =
-  ! (C-Susp (neg (S m)) ⊙LU) ∙ ! (ap (C (neg m)) Unit-is-Susp-Unit)
+  ! (group-ua (C-Susp (neg (S m)) ⊙LU)) ∙ ! (ap (C (neg m)) Unit-is-Susp-Unit)
   ∙ C-Unit-is-trivial (neg m)
 
 C-Unit-is-contr : (n : ℤ) → is-contr (CEl n ⊙LU)

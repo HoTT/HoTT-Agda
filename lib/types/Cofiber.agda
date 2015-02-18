@@ -54,3 +54,11 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙→ Y)) where
   ⊙cfcod : fst (Y ⊙→ ⊙Cof)
   ⊙cfcod =
     cfcod (fst F) , ap (cfcod (fst F)) (! (snd F)) ∙ ! (cfglue (fst F) (snd X))
+
+  ⊙cfglue : ⊙cst == ⊙cfcod ⊙∘ F
+  ⊙cfglue = ⊙λ= (cfglue _) (lemma (cfcod _) (cfglue _ (snd X)) (snd F))
+    where
+    lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
+      {x y : A} {z : B} (p : z == f x) (q : x == y)
+      → idp == p ∙ ap f q ∙ ap f (! q) ∙ ! p
+    lemma f idp idp = idp

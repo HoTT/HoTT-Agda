@@ -33,7 +33,11 @@ record CohomologyTheory i : Type (lsucc i) where
   field
     C-abelian : (n : ℤ) (X : Ptd i) → is-abelian (C n X)
 
-    C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp X) == C n X
+    C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp X) ≃ᴳ C n X
+
+    C-SuspF : (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y))
+      → fst (C-Susp n X) ∘ᴳ CF-hom (succ n) (⊙susp-fmap f)
+        == CF-hom n f ∘ᴳ fst (C-Susp n Y)
 
     C-exact : (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y))
       → is-exact (CF n (⊙cfcod f)) (CF n f)

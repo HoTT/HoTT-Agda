@@ -1,138 +1,109 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
+open import homotopy.PtdAdjoint
 
 module homotopy.SuspAdjointLoop where
 
-module SuspAdjointLoop {i j} (X : Ptd i) (Y : Ptd j) where
+module Σ⊣Ω {i} where
 
-  private
-    A = fst X; a₀ = snd X
-    B = fst Y; b₀ = snd Y
+  SuspFunctor : PtdFunctor i i
+  SuspFunctor = record {
+    obj = ⊙Susp;
+    arr = ⊙susp-fmap;
+    id = ⊙susp-fmap-idf;
+    comp = ⊙susp-fmap-∘}
 
-  R : {b : B}
-    → Σ (Suspension A → B) (λ h → h (north A) == b)
-    → Σ (A → (b == b)) (λ k → k a₀ == idp)
-  R (h , idp) =
-    (λ a → ap h (merid A a ∙ ! (merid A a₀))) ,
-    ap (ap h) (!-inv-r (merid A a₀))
+  LoopFunctor : PtdFunctor i i
+  LoopFunctor = record {
+    obj = ⊙Ω;
+    arr = ⊙ap;
+    id = λ _ → ⊙ap-idf;
+    comp = ⊙ap-∘}
 
-  L : {b : B}
-    → Σ (A → (b == b)) (λ k → k a₀ == idp)
-    → Σ (Suspension A → B) (λ h → h (north A) == b)
-  L {b} (k , _) = (SuspensionRec.f A b b k) , idp
+  module _ (X : Ptd i) where
 
-  {- Show that R ∘ L ∼ idf -}
+    η : fst X → Ω (⊙Susp X)
+    η x = merid _ x ∙ ! (merid _ (snd X))
 
-  R-L : {b : B} → ∀ K → R {b} (L K) == K
-  R-L {b} (k , kpt) = ⊙λ= R-L-fst R-L-snd
+    module E = SuspensionRec (Ω X) (snd X) (snd X) (idf _)
+
+    ε : fst (⊙Susp (⊙Ω X)) → fst X
+    ε = E.f
+
+    ⊙η : fst (X ⊙→ ⊙Ω (⊙Susp X))
+    ⊙η = (η , !-inv-r (merid _ (snd X)))
+
+    ⊙ε : fst (⊙Susp (⊙Ω X) ⊙→ X)
+    ⊙ε = (ε , idp)
+
+  η-natural : {X Y : Ptd i} (f : fst (X ⊙→ Y))
+    → ⊙η Y ⊙∘ f == ⊙ap (⊙susp-fmap f) ⊙∘ ⊙η X
+  η-natural {X = X} (f , idp) = ⊙λ=
+    (λ x → ! $
+      ap-∙ (susp-fmap f) (merid _ x) (! (merid _ (snd X)))
+      ∙ SuspFmap.glue-β f x
+        ∙2 (ap-! (susp-fmap f) (merid _ (snd X))
+            ∙ ap ! (SuspFmap.glue-β f (snd X))))
+    (pt-lemma (susp-fmap f) (merid _ (snd X)) (SuspFmap.glue-β f (snd X)))
     where
-    R-L-fst : (a : A)
-      → ap (SuspensionRec.f A b b k) (merid A a ∙ ! (merid A a₀)) == k a
-    R-L-fst a =
-      ap-∙ (SuspensionRec.f A b b k) (merid A a) (! (merid A a₀))
-      ∙ ap2 _∙_ (SuspensionRec.glue-β A b b k a)
-                (ap-! (SuspensionRec.f A b b k) (merid A a₀)
-                 ∙ ap ! (SuspensionRec.glue-β A b b k a₀ ∙ kpt))
-      ∙ ∙-unit-r (k a)
+    pt-lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
+      {x y : A} (p : x == y) {q : f x == f y} (α : ap f p == q)
+      → !-inv-r q == (! $ ap-∙ f p (! p) ∙ α ∙2 (ap-! f p ∙ ap ! α))
+                     ∙ ap (ap f) (!-inv-r p) ∙ idp
+    pt-lemma f idp idp = idp
 
-    -- lemmas generalize to do some path induction for R-L-snd
-    lemma₁ : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) {a₁ a₂ : A}
-      (p : a₁ == a₂) {q r : f a₁ == f a₂} {s : f a₁ == f a₁}
-      (α : ap f p == q) (β : q == r) (γ : q ∙ ! r == s) (δ : s == idp)
-      (σ : !-inv-r r == transport (λ t → t ∙ ! r == idp) β (γ ∙ δ))
-      → ap (ap f) (!-inv-r p)
-        == (ap-∙ f p (! p) ∙ ap2 _∙_ α (ap-! f p ∙ ap ! (α ∙ β)) ∙ γ) ∙ δ
-    lemma₁ f idp idp idp γ idp σ = σ
+  ε-natural : {X Y : Ptd i} (f : fst (X ⊙→ Y))
+    → ⊙ε Y ⊙∘ ⊙susp-fmap (⊙ap f) == f ⊙∘ ⊙ε X
+  ε-natural (f , idp) = ⊙λ=
+    (SuspensionElim.f _ idp idp
+      (λ p → ↓-='-from-square $ vert-degen-square $
+        ap-∘ (ε _) (susp-fmap (ap f)) (merid _ p)
+        ∙ ap (ap (ε _)) (SuspFmap.glue-β (ap f) p)
+        ∙ E.glue-β _ (ap f p)
+        ∙ ap (ap f) (! (E.glue-β _ p))
+        ∙ ∘-ap f (ε _) (merid _ p)))
+    idp
 
-    lemma₂ : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
-      → idp == transport (λ t → t ∙ idp == idp) α (∙-unit-r p ∙ α)
-    lemma₂ idp = idp
-
-    R-L-snd : ap (ap (SuspensionRec.f A b b k)) (!-inv-r (merid A a₀))
-           == R-L-fst a₀ ∙ kpt
-    R-L-snd =
-      ap (ap (SuspensionRec.f A b b k)) (!-inv-r (merid A a₀))
-        =⟨ lemma₁ (SuspensionRec.f A b b k) (merid A a₀)
-             (SuspensionRec.glue-β A b b k a₀)
-             kpt (∙-unit-r (k a₀)) kpt (lemma₂ kpt) ⟩
-      R-L-fst a₀ ∙ kpt ∎
-
-  {- Show that L ∘ R ∼ idf -}
-
-  L-R : {b : B} → ∀ H → L {b} (R H) == H
-  L-R (h , idp) = ⊙λ= L-R-fst idp
-    where
-    fst-lemma : ∀ {i j} {A : Type i} {B : Type j} {x y z : A}
-      (f : A → B) (p : x == y) (q : z == y)
-      → ap f p == ap f (p ∙ ! q) ∙' ap f q
-    fst-lemma _ idp idp = idp
-
-    L-R-fst : (σ : Suspension A) →
-      SuspensionRec.f A (h (north _)) (h (north _)) (fst (R (h , idp))) σ == h σ
-    L-R-fst = Suspension-elim A
+  εΣ-Ση : (X : Ptd i) → ⊙ε (⊙Susp X) ⊙∘ ⊙susp-fmap (⊙η X) == ⊙idf _
+  εΣ-Ση X = ⊙λ=
+    (SuspensionElim.f _
       idp
-      (ap h (merid A a₀))
-      (λ a → ↓-='-in $
-        ap h (merid A a)
-          =⟨ fst-lemma h (merid A a) (merid A a₀) ⟩
-        ap h (merid A a ∙ ! (merid A a₀)) ∙' ap h (merid A a₀)
-          =⟨ ! (SuspensionRec.glue-β A _ _ (fst (R (h , idp))) a)
-             |in-ctx (λ w → w ∙' (ap h (merid A a₀))) ⟩
-        ap (fst (L (R (h , idp)))) (merid A a) ∙' ap h (merid A a₀)
-        ∎)
-
-  {- Show that R respects basepoint -}
-
-  pres-ident : {b : B}
-    → R {b} ((λ _ → b) , idp) == ((λ _ → idp) , idp)
-  pres-ident {b} = ⊙λ=
-    (λ a → ap-cst b (merid A a ∙ ! (merid A a₀)))
-    (ap (ap (λ _ → b)) (!-inv-r (merid A a₀))
-       =⟨ lemma (merid A a₀) b ⟩
-     ap-cst b (merid A a₀ ∙ ! (merid A a₀))
-       =⟨ ! (∙-unit-r _) ⟩
-     ap-cst b (merid A a₀ ∙ ! (merid A a₀)) ∙ idp ∎)
+      (merid _ (snd X))
+      (λ x → ↓-='-from-square $
+        (ap-∘ (ε (⊙Susp X)) (susp-fmap (η X)) (merid _ x)
+         ∙ ap (ap (ε (⊙Susp X))) (SuspFmap.glue-β (η X) x)
+         ∙ E.glue-β _ (merid _ x ∙ ! (merid _ (snd X))))
+        ∙v⊡ square-lemma (merid _ x) (merid _ (snd X))
+        ⊡v∙ ! (ap-idf (merid _ x))))
+    idp
     where
-    lemma : ∀ {i j} {A : Type i} {B : Type j} {x y : A} (p : x == y) (b : B)
-      → ap (ap (λ _ → b)) (!-inv-r p) == ap-cst b (p ∙ ! p)
-    lemma idp b = idp
+    square-lemma : ∀ {i} {A : Type i} {x y z : A}
+      (p : x == y) (q : z == y)
+      → Square idp (p ∙ ! q) p q
+    square-lemma idp idp = ids
 
-  {- Show that if there is a composition operation ⊙ on B, then R respects
-     that composition, that is R {b ⊙ c} (F ⊙ G) == R {b} F ∙ R {c} G -}
+  Ωε-ηΩ : (X : Ptd i) → ⊙ap (⊙ε X) ⊙∘ ⊙η (⊙Ω X) == ⊙idf _
+  Ωε-ηΩ X = ⊙λ=
+    (λ p → ap-∙ (ε X) (merid _ p) (! (merid _ idp))
+         ∙ E.glue-β X p ∙2 (ap-! (ε X) (merid _ idp) ∙ ap ! (E.glue-β X idp))
+         ∙ ∙-unit-r _)
+    (pt-lemma (ε X) (merid _ idp) (E.glue-β X idp))
+    where
+    pt-lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
+      {x y : A} (p : x == y) {q : f x == f y} (α : ap f p == q)
+      → ap (ap f) (!-inv-r p) ∙ idp
+        == (ap-∙ f p (! p) ∙ (α ∙2 (ap-! f p ∙ ap ! α)) ∙ !-inv-r q) ∙ idp
+    pt-lemma f idp idp = idp
 
-  -- lift a composition operation on the codomain to the function space
-  comp-lift : ∀ {i j} {A : Type i} {B C D : Type j}
-    (a : A) (b : B) (c : C) (_⊙_ : B → C → D)
-    → Σ (A → B) (λ f → f a == b)
-    → Σ (A → C) (λ g → g a == c)
-    → Σ (A → D) (λ h → h a == b ⊙ c)
-  comp-lift a b c _⊙_ (f , fpt) (g , gpt) =
-    (λ x → f x ⊙ g x) , ap2 _⊙_ fpt gpt
+  adj : CounitUnitAdjoint SuspFunctor LoopFunctor
+  adj = record {
+    η = ⊙η;
+    ε = ⊙ε;
 
-  pres-comp-fst : ∀ {i j} {A : Type i} {B : Type j} (f g : A → B)
-    (_⊙_ : B → B → B) {a₁ a₂ : A} (p : a₁ == a₂)
-    → ap (λ x → f x ⊙ g x) p == ap2 _⊙_ (ap f p) (ap g p)
-  pres-comp-fst f g _⊙_ idp = idp
+    η-natural = η-natural;
+    ε-natural = ε-natural;
 
-  pres-comp-snd : ∀ {i j} {A : Type i} {B : Type j} (f g : A → B)
-    (_⊙_ : B → B → B) {a₁ a₂ : A} (q : a₁ == a₂)
-    → ap (ap (λ x → f x ⊙ g x)) (!-inv-r q)
-      == pres-comp-fst f g _⊙_ (q ∙ ! q)
-         ∙ ap2 (ap2 _⊙_) (ap (ap f) (!-inv-r q)) (ap (ap g) (!-inv-r q))
-  pres-comp-snd f g _⊙_ idp = idp
+    εF-Fη = εΣ-Ση;
+    Gε-ηG = Ωε-ηΩ}
 
-  pres-comp : {b c : B} (_⊙_ : B → B → B)
-    (F : Σ (Suspension A → B) (λ f → f (north A) == b))
-    (G : Σ (Suspension A → B) (λ f → f (north A) == c))
-    → R (comp-lift (north A) b c _⊙_ F G)
-      == comp-lift a₀ idp idp (ap2 _⊙_) (R F) (R G)
-  pres-comp _⊙_ (f , idp) (g , idp) = ⊙λ=
-    (λ a → pres-comp-fst f g _⊙_ (merid A a ∙ ! (merid A a₀)))
-    (pres-comp-snd f g _⊙_ (merid A a₀))
-
-  eqv : fst (⊙Susp X ⊙→ Y) ≃ fst (X ⊙→ ⊙Ω Y)
-  eqv = equiv R L R-L L-R
-
-  ⊙path : (⊙Susp X ⊙→ Y) == (X ⊙→ ⊙Ω Y)
-  ⊙path = ⊙ua eqv pres-ident

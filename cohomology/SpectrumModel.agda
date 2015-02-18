@@ -7,6 +7,9 @@ open import cohomology.Theory
 open import cohomology.Exactness
 open import cohomology.Choice
 
+{- A spectrum (collection (Eₙ | n : ℤ) such that ΩEₙ₊₁ = Eₙ)
+ - gives rise to a cohomology theory C with Cⁿ(S⁰) = π₁(Eₙ₊₁). -}
+
 module cohomology.SpectrumModel
   {i} (E : ℤ → Ptd i) (spectrum : (n : ℤ) → ⊙Ω (E (succ n)) == E n) where
 
@@ -23,11 +26,7 @@ module SpectrumModel where
     Cid = Group.ident C
 
     {- before truncation -}
-    ⊙uCEl : Ptd i
-    ⊙uCEl = X ⊙→ ⊙Ω (E (succ n))
-
-    uCEl = fst ⊙uCEl
-    uCid = snd ⊙uCEl
+    uCEl = fst (X ⊙→ ⊙Ω (E (succ n)))
 
   {- Cⁿ(X) is an abelian group -}
   C-abelian : (n : ℤ) (X : Ptd i) → is-abelian (C n X)
@@ -51,27 +50,8 @@ module SpectrumModel where
    - contravariant functor from pointed spaces to abelian groups -}
   module _ (n : ℤ) {X Y : Ptd i} where
 
-    {- before truncation - from pointed spaces to pointed spaces -}
-    uCF : fst (X ⊙→ Y) → fst (⊙uCEl n Y ⊙→ ⊙uCEl n X)
-    uCF f =
-      ((λ g → g ⊙∘ f) ,
-       pair= idp (∙-unit-r _ ∙ ap-cst idp (snd f)))
-
     CF-hom : fst (X ⊙→ Y) → (C n Y →ᴳ C n X)
-    CF-hom f = record {
-      f = Trunc-fmap {n = ⟨0⟩} (fst (uCF f));
-      pres-comp = Trunc-elim
-        (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
-        (λ g → Trunc-elim
-          (λ _ → =-preserves-level _ Trunc-level)
-          (λ h → ap [_] $ pair= idp (comp-snd _∙_ f g h)))}
-      where
-      comp-snd : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {C : Type k}
-        {c₁ c₂ : C} (_⊕_ : C → C → C) (f : fst (X ⊙→ Y))
-        (g : fst (Y ⊙→ ⊙[ C , c₁ ])) (h : fst (Y ⊙→ ⊙[ C , c₂ ]))
-        → ap (λ x → fst g x ⊕ fst h x) (snd f) ∙ ap2 _⊕_ (snd g) (snd h)
-          == ap2 _⊕_ (ap (fst g) (snd f) ∙ snd g) (ap (fst h) (snd f) ∙ snd h)
-      comp-snd _⊕_ (_ , idp) (_ , idp) (_ , idp) = idp
+    CF-hom f = →Ω-Group-dom-act f (E (succ n))
 
     CF : fst (X ⊙→ Y) → fst (⊙CEl n Y ⊙→ ⊙CEl n X)
     CF F = GroupHom.⊙f (CF-hom F)
@@ -80,31 +60,41 @@ module SpectrumModel where
   module _ (n : ℤ) {X : Ptd i} where
 
     CF-ident : CF-hom n {X} {X} (⊙idf X) == idhom (C n X)
-    CF-ident = hom= _ _ $ λ= $ Trunc-elim
-      (λ _ → =-preserves-level _ Trunc-level)
-      (λ _ → idp)
+    CF-ident = →Ω-Group-dom-idf (E (succ n))
 
     CF-comp : {Y Z : Ptd i} (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y))
       → CF-hom n (g ⊙∘ f) == CF-hom n f ∘ᴳ CF-hom n g
-    CF-comp g f = hom= _ _ $ λ= $ Trunc-elim
-      (λ _ → =-preserves-level _ Trunc-level)
-      (λ h → ap [_] (! (⊙∘-assoc h g f)))
+    CF-comp g f = →Ω-Group-dom-∘ g f (E (succ n))
 
   {- Eilenberg-Steenrod Axioms -}
 
   {- Suspension Axiom -}
-  C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp X) == C n X
-  C-Susp n X =
-    group-ua (SuspAdjointLoopIso.iso X (E (succ (succ n))))
-    ∙ ap (→Ω-Group X) (spectrum (succ n))
+  private
+    C-Susp' : {E₁ E₀ : Ptd i} (p : ⊙Ω E₁ == E₀) (X : Ptd i)
+      → →Ω-Group (⊙Susp X) E₁ ≃ᴳ →Ω-Group X E₀
+    C-Susp' {E₁ = E₁} idp X = SuspAdjointLoopIso.iso X E₁
+
+    C-SuspF' : {E₁ E₀ : Ptd i} (p : ⊙Ω E₁ == E₀)
+      {X Y : Ptd i} (f : fst (X ⊙→ Y))
+      → fst (C-Susp' p X) ∘ᴳ →Ω-Group-dom-act (⊙susp-fmap f) E₁
+        == →Ω-Group-dom-act f E₀ ∘ᴳ fst (C-Susp' p Y)
+    C-SuspF' {E₁ = E₁} idp f = SuspAdjointLoopIso.nat-dom f E₁
+
+  C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp X) ≃ᴳ C n X
+  C-Susp n X = C-Susp' (spectrum (succ n)) X
+
+  C-SuspF : (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y))
+    → fst (C-Susp n X) ∘ᴳ CF-hom (succ n) (⊙susp-fmap f)
+      == CF-hom n f ∘ᴳ fst (C-Susp n Y)
+  C-SuspF n f = C-SuspF' (spectrum (succ n)) f
 
   {- Non-truncated Exactness Axiom -}
   module _ (n : ℤ) {X Y : Ptd i} where
 
-    {- [uCF n (⊙cfcod f) ∘ uCF n f] is constant -}
-    uC-exact-itok-lemma : (f : fst (X ⊙→ Y)) (g : uCEl n (⊙Cof f))
-      → fst (uCF n f) (fst (uCF n (⊙cfcod f)) g) == uCid n X
-    uC-exact-itok-lemma (f , fpt) (g , gpt) = ⊙λ=
+    {- precomposing ⊙cfcod f and then f gives 0 -}
+    exact-itok-lemma : (f : fst (X ⊙→ Y)) (g : uCEl n (⊙Cof f))
+      → (g ⊙∘ ⊙cfcod f) ⊙∘ f == ⊙cst
+    exact-itok-lemma (f , fpt) (g , gpt) = ⊙λ=
       (λ x → ap g (! (cfglue f x)) ∙ gpt)
       (ap (g ∘ cfcod f) fpt
        ∙ ap g (ap (cfcod f) (! fpt) ∙ ! (cfglue f (snd X))) ∙ gpt
@@ -119,11 +109,11 @@ module SpectrumModel where
         → ap (g ∘ f) p ∙ ap g (ap f (! p) ∙ q) ∙ r == ap g q ∙ r
       lemma f g idp idp idp = idp
 
-    {- in kernel of [uCF n f] ⇒ in image of [uCF n (⊙cfcod f)] -}
-    uC-exact-ktoi-lemma : (f : fst (X ⊙→ Y)) (g : uCEl n Y)
-      → fst (uCF n f) g == uCid n X
-      → Σ (uCEl n (⊙Cof f)) (λ h → fst (uCF n (⊙cfcod f)) h == g)
-    uC-exact-ktoi-lemma (f , fpt) (h , hpt) p =
+    {- if g ⊙∘ f is constant then g factors as h ⊙∘ ⊙cfcod f -}
+    exact-ktoi-lemma : (f : fst (X ⊙→ Y)) (g : uCEl n Y)
+      → g ⊙∘ f == ⊙cst
+      → Σ (uCEl n (⊙Cof f)) (λ h → h ⊙∘ ⊙cfcod f == g)
+    exact-ktoi-lemma (f , fpt) (h , hpt) p =
       ((g , ! q ∙ hpt) ,
        pair= idp (! (∙-assoc q (! q) hpt) ∙ ap (λ w → w ∙ hpt) (!-inv-r q)))
       where
@@ -143,7 +133,7 @@ module SpectrumModel where
       C-exact-itok f =
         itok-alt-in (CF n (⊙cfcod f)) (CF n f) (Trunc-level {n = ⟨0⟩}) $
           Trunc-elim (λ _ → =-preserves-level _ (Trunc-level {n = ⟨0⟩}))
-            (ap [_] ∘ uC-exact-itok-lemma n f)
+            (ap [_] ∘ exact-itok-lemma n f)
 
     {- in kernel of (CF n f) ⇒ in image of (CF n (⊙cfcod f)) -}
     abstract
@@ -154,14 +144,13 @@ module SpectrumModel where
           (λ _ → Π-level (λ _ → raise-level _ Trunc-level))
           (λ h tp → Trunc-rec Trunc-level (lemma h) (–> (Trunc=-equiv _ _) tp))
         where
-        lemma : (h : uCEl n Y)
-          → fst (uCF n f) h == uCid n X
+        lemma : (h : uCEl n Y) → h ⊙∘ f == ⊙cst
           → Trunc ⟨-1⟩ (Σ (CEl n (⊙Cof f))
                           (λ tk → fst (CF n (⊙cfcod f)) tk == [ h ]))
         lemma h p = [ [ fst wit ] , ap [_] (snd wit) ]
           where
-          wit : Σ (uCEl n (⊙Cof f)) (λ k → fst (uCF n (⊙cfcod f)) k == h)
-          wit = uC-exact-ktoi-lemma n f h p
+          wit : Σ (uCEl n (⊙Cof f)) (λ k → k ⊙∘ ⊙cfcod f == h)
+          wit = exact-ktoi-lemma n f h p
 
     C-exact : (f : fst (X ⊙→ Y)) → is-exact (CF n (⊙cfcod f)) (CF n f)
     C-exact f = record {itok = C-exact-itok f; ktoi = C-exact-ktoi f}
@@ -266,6 +255,7 @@ spectrum-cohomology = record {
   CF-comp = CF-comp;
   C-abelian = C-abelian;
   C-Susp = C-Susp;
+  C-SuspF = C-SuspF;
   C-exact = C-exact;
   C-additive = C-additive}
 
