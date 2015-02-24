@@ -27,7 +27,7 @@ private
   module ψ = GroupHom ψ
 
 module SplitExactLeft
-  (ex : ExactSeq (G ⟨ φ ⟩→ H ⟨ ψ ⟩→ K ⟨ cst-hom ⟩→ L ⊣|))
+  (ex : is-exact-seq (G ⟨ φ ⟩→ H ⟨ ψ ⟩→ K ⟨ cst-hom ⟩→ L ⊣|))
   (χ : H →ᴳ G) (χ-linv : (g : G.El) → GroupHom.f χ (φ.f g) == g)
   where
 
@@ -214,8 +214,7 @@ module SplitExactLeft
     decomp-φ = ×ᴳ-hom-in (im-in-hom φ) (cst-hom {G = G} {H = Ker χ})
 
     φ-over-decomp : φ == decomp-φ [ (λ J → G →ᴳ J) ↓ decomp-iso ]
-    φ-over-decomp = codomain-over-iso _ _ _ _ $
-                      codomain-over-equiv φ.f _ ▹ lemma
+    φ-over-decomp = codomain-over-iso $ codomain-over-equiv φ.f _ ▹ lemma
       where
       lemma : GroupHom.f decomp ∘ φ.f == GroupHom.f decomp-φ
       lemma = λ= $ λ g → pair×=
@@ -226,18 +225,18 @@ module SplitExactLeft
     ψ-dinv = ψ ∘ᴳ ×ᴳ-sum-hom H-abelian (im-inj φ) (ker-inj χ)
 
     ψ-over-decomp : ψ == ψ-dinv [ (λ J → J →ᴳ K) ↓ decomp-iso ]
-    ψ-over-decomp = domain-over-iso _ _ _ _ $ domain!-over-equiv ψ.f _
+    ψ-over-decomp = domain-over-iso $ domain!-over-equiv ψ.f _
 
     id-over-G-iso : idhom _ == im-in-hom φ [ (λ J → G →ᴳ J) ↓ G-iso-Imφ ]
-    id-over-G-iso = codomain-over-iso _ _ _ _ $ codomain-over-equiv (idf _) _
+    id-over-G-iso = codomain-over-iso $ codomain-over-equiv (idf _) _
 
     φ-over-G-iso : φ == im-inj φ [ (λ J → J →ᴳ H) ↓ G-iso-Imφ ]
-    φ-over-G-iso = domain-over-iso _ _ _ _ $
-                     domain-over-equiv (GroupHom.f (im-inj φ)) _
+    φ-over-G-iso =
+      domain-over-iso $ domain-over-equiv (GroupHom.f (im-inj φ)) _
 
     ψ|kerχ-over-K-iso :
       ψ ∘ᴳ ker-inj χ == idhom K [ (λ J → J →ᴳ K) ↓ Kerχ-iso-K ]
-    ψ|kerχ-over-K-iso = domain-over-iso _ _ _ _ $ domain-over-equiv (idf _) _
+    ψ|kerχ-over-K-iso = domain-over-iso $ domain-over-equiv (idf _) _
 
     φ-over-G-K-isos : decomp-φ == ×ᴳ-inl
       [ (λ J → G →ᴳ J) ↓ ap2 _×ᴳ_ (! G-iso-Imφ) Kerχ-iso-K ]

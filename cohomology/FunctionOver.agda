@@ -7,7 +7,7 @@ open import HoTT
 
 module cohomology.FunctionOver where
 
-{- transporting a function along an equivalcence or path in the domain -}
+{- transporting a function along an equivalence or path in the domain -}
 module _ {i} {j} {B : Type i} {C : Type j} (g : B → C) where
 
   domain-over-path : {A : Type i} (p : A == B)
@@ -130,26 +130,69 @@ module _ {i} {j} {X : Ptd i} {Z : Ptd j} (g : fst (X ⊙→ Z)) where
     lemma {Y = Y} e idp =
       ⊙λ= (<–-inv-r e) (ap (λ w → w ∙ idp) (<–-inv-adj e (snd Y)))
 
+module _ {i j} where
+
+  function-over-paths : {A₁ B₁ : Type i} {A₂ B₂ : Type j}
+    {f : A₁ → A₂} {g : B₁ → B₂} (p₁ : A₁ == B₁) (p₂ : A₂ == B₂)
+    → coe p₂ ∘ f == g ∘ coe p₁
+    → f == g [ (λ {(A , B) → A → B}) ↓ pair×= p₁ p₂ ]
+  function-over-paths idp idp α = α
+
+  function-over-equivs : {A₁ B₁ : Type i} {A₂ B₂ : Type j}
+    {f : A₁ → A₂} {g : B₁ → B₂} (e₁ : A₁ ≃ B₁) (e₂ : A₂ ≃ B₂)
+    → –> e₂ ∘ f == g ∘ –> e₁
+    → f == g [ (λ {(A , B) → A → B}) ↓ pair×= (ua e₁) (ua e₂) ]
+  function-over-equivs {f = f} {g = g} e₁ e₂ α =
+    function-over-paths (ua e₁) (ua e₂) $
+      transport (λ {(h , k) → h ∘ f == g ∘ k})
+        (pair×= (! (λ= (coe-β e₂))) (! (λ= (coe-β e₁)))) α
+
 {- transporting a group homomorphism along an isomorphism -}
 
 domain-over-iso : ∀ {i j} {G H : Group i} {K : Group j}
-  (φ : G →ᴳ H) (ie : is-equiv (GroupHom.f φ)) (ψ : G →ᴳ K) (χ : H →ᴳ K)
+  {φ : G →ᴳ H} {ie : is-equiv (GroupHom.f φ)} {ψ : G →ᴳ K} {χ : H →ᴳ K}
   → GroupHom.f ψ == GroupHom.f χ
     [ (λ A → A → Group.El K) ↓ ua (GroupHom.f φ , ie) ]
   → ψ == χ [ (λ J → J →ᴳ K) ↓ group-ua (φ , ie) ]
-domain-over-iso {K = K} φ ie ψ χ p = hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $
-  transport
-    (λ q → GroupHom.f ψ == GroupHom.f χ [ (λ A → A → Group.El K) ↓ q ])
-    (! (group-ua-el (φ , ie)))
-    p
+domain-over-iso {K = K} {φ = φ} {ie} {ψ} {χ} p =
+  hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $
+    transport
+      (λ q → GroupHom.f ψ == GroupHom.f χ [ (λ A → A → Group.El K) ↓ q ])
+      (! (group-ua-el (φ , ie)))
+      p
 
 codomain-over-iso : ∀ {i j} {G : Group i} {H K : Group j}
-  (φ : H →ᴳ K) (ie : is-equiv (GroupHom.f φ)) (ψ : G →ᴳ H) (χ : G →ᴳ K)
+  {φ : H →ᴳ K} {ie : is-equiv (GroupHom.f φ)} {ψ : G →ᴳ H} {χ : G →ᴳ K}
   → GroupHom.f ψ == GroupHom.f χ
     [ (λ A → Group.El G → A) ↓ ua (GroupHom.f φ , ie) ]
   → ψ == χ [ (λ J → G →ᴳ J) ↓ group-ua (φ , ie) ]
-codomain-over-iso {G = G} φ ie ψ χ p = hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $
-  transport
-    (λ q → GroupHom.f ψ == GroupHom.f χ [ (λ A → Group.El G → A) ↓ q ])
-    (! (group-ua-el (φ , ie)))
-    p
+codomain-over-iso {G = G} {φ = φ} {ie} {ψ} {χ} p =
+  hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $
+    transport
+      (λ q → GroupHom.f ψ == GroupHom.f χ [ (λ A → Group.El G → A) ↓ q ])
+      (! (group-ua-el (φ , ie)))
+      p
+
+hom-over-isos : ∀ {i j} {G₁ H₁ : Group i} {G₂ H₂ : Group j}
+  {φ₁ : G₁ →ᴳ H₁} {ie₁ : is-equiv (GroupHom.f φ₁)}
+  {φ₂ : G₂ →ᴳ H₂} {ie₂ : is-equiv (GroupHom.f φ₂)}
+  {ψ : G₁ →ᴳ G₂} {χ : H₁ →ᴳ H₂}
+  → GroupHom.f ψ == GroupHom.f χ
+    [ (λ {(A , B) → A → B}) ↓ pair×= (ua (GroupHom.f φ₁ , ie₁))
+                                     (ua (GroupHom.f φ₂ , ie₂)) ]
+  → ψ == χ [ uncurry _→ᴳ_ ↓ pair×= (group-ua (φ₁ , ie₁)) (group-ua (φ₂ , ie₂)) ]
+hom-over-isos {φ₁ = φ₁} {ie₁} {φ₂} {ie₂} {ψ} {χ} p = hom=-↓ _ _ $
+  ↓-ap-out (λ {(A , B) → A → B}) (λ {(G , H) → (Group.El G , Group.El H)}) _ $
+    transport
+      (λ q → GroupHom.f ψ == GroupHom.f χ [ (λ {(A , B) → A → B}) ↓ q ])
+      (ap2 (λ p q → pair×= p q) (! (group-ua-el (φ₁ , ie₁)))
+                                (! (group-ua-el (φ₂ , ie₂)))
+       ∙ ! (lemma Group.El Group.El
+             (group-ua (φ₁ , ie₁)) (group-ua (φ₂ , ie₂))))
+      p
+  where
+  lemma : ∀ {i j k l} {A : Type i} {B : Type j} {C : Type k} {D : Type l}
+    (f : A → C) (g : B → D) {x y : A} {w z : B} (p : x == y) (q : w == z)
+    → ap (λ {(a , b) → (f a , g b)}) (pair×= p q)
+      == pair×= (ap f p) (ap g q)
+  lemma f g idp idp = idp

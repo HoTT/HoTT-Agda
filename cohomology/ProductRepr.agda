@@ -61,18 +61,18 @@ module ProductRepr {i j}
                       pair×= (β₁ h₁ h₂) (β₂ h₁ h₂) ]})
 
   fst-over : j₁ == ×ᴳ-fst [ (λ U → U →ᴳ H₁) ↓ iso ]
-  fst-over = domain-over-iso _ _ _ _ $ domain-over-equiv fst _
+  fst-over = domain-over-iso $ domain-over-equiv fst _
 
   snd-over : j₂ == ×ᴳ-snd {G = H₁} [ (λ U → U →ᴳ H₂) ↓ iso ]
-  snd-over = domain-over-iso _ _ _ _ $ domain-over-equiv snd _
+  snd-over = domain-over-iso $ domain-over-equiv snd _
 
   inl-over : i₁ == ×ᴳ-inl [ (λ V → H₁ →ᴳ V) ↓ iso ]
-  inl-over = codomain-over-iso _ _ _ _ $
+  inl-over = codomain-over-iso $
     codomain-over-equiv (GroupHom.f i₁) _
     ▹ λ= (λ h₁ → pair×= (p₁ h₁) (itok ex₁ _ [ h₁ , idp ]))
 
   inr-over : i₂ == ×ᴳ-inr {G = H₁} [ (λ V → H₂ →ᴳ V) ↓ iso ]
-  inr-over = codomain-over-iso _ _ _ _ $
+  inr-over = codomain-over-iso $
     codomain-over-equiv (GroupHom.f i₂) _
     ▹ λ= (λ h₂ → pair×= (itok ex₂ _ [ h₂ , idp ]) (p₂ h₂))
 

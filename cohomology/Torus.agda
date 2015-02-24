@@ -3,8 +3,8 @@
 open import HoTT
 open import cohomology.Theory
 
-{- Cohomology groups of the n-torus Tⁿ = (S¹)ⁿ.
- - We have Ĉᵏ(Tⁿ) == C⁰(S⁰)^(n choose' k) where _choose'_ defined as below.
+{- Ordinary cohomology groups of the n-torus Tⁿ = (S¹)ⁿ.
+ - We have Cᵏ(Tⁿ) == C⁰(S⁰)^(n choose' k) where _choose'_ defined as below.
  - This argument could give Cᵏ((Sᵐ)ⁿ) with a little more work. -}
 
 module cohomology.Torus {i} (OT : OrdinaryTheory i) where
@@ -31,7 +31,7 @@ O -⊙Torus = ⊙Lift ⊙Unit
 C-nTorus : (k : ℤ) (n : ℕ)
   → C k (n -⊙Torus) == (C O (⊙Sphere 0)) ^ᴳ (n choose' k)
 
-C-nTorus (neg k) O = C-Unit-is-trivial (neg k)
+C-nTorus (neg k) O = C-Unit (neg k)
 
 C-nTorus (neg k) (S n) =
   C-Sphere× (neg k) 1 (n -⊙Torus)
@@ -46,7 +46,7 @@ C-nTorus (neg k) (S n) =
   ∙ group-ua (C-Susp (neg (S k)) (n -⊙Torus))
   ∙ C-nTorus (neg (S k)) n
 
-C-nTorus O O = C-Unit-is-trivial O
+C-nTorus O O = C-Unit O
 
 C-nTorus O (S n) =
   C-Sphere× O 1 (n -⊙Torus)
@@ -60,7 +60,7 @@ C-nTorus O (S n) =
   ∙ C-nTorus (neg O) n
 
 C-nTorus (pos O) O =
-  C-Unit-is-trivial (pos O)
+  C-Unit (pos O)
 
 C-nTorus (pos O) (S n) =
   C-Sphere× (pos O) 1 (n -⊙Torus)
@@ -74,7 +74,7 @@ C-nTorus (pos O) (S n) =
         ∙ ×ᴳ-unit-l {G = C O (⊙Sphere 0) ^ᴳ (n choose' pos O)})
 
 C-nTorus (pos (S k)) O =
-  C-Unit-is-trivial (pos (S k))
+  C-Unit (pos (S k))
 
 C-nTorus (pos (S k)) (S n) =
   C-Sphere× (pos (S k)) 1 (n -⊙Torus)

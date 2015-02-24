@@ -61,6 +61,9 @@ _≃ᴳ_ = GroupIso
 idhom : ∀ {i} (G : Group i) → (G →ᴳ G)
 idhom G = group-hom (idf _) (λ _ _ → idp)
 
+idiso : ∀ {i} (G : Group i) → (G ≃ᴳ G)
+idiso G = (idhom G , idf-is-equiv _)
+
 infixr 4 _∘ᴳ_
 
 _∘ᴳ_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
@@ -73,6 +76,18 @@ _∘ᴳ_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
 _∘eᴳ_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
   → H ≃ᴳ K → G ≃ᴳ H → G ≃ᴳ K
 (φ₂ , ie₂) ∘eᴳ (φ₁ , ie₁) = (φ₂ ∘ᴳ φ₁ , ie₂ ∘ise ie₁)
+
+_⁻¹ᴳ : ∀ {i j} {G : Group i} {H : Group j} → G ≃ᴳ H → H ≃ᴳ G
+_⁻¹ᴳ {G = G} {H = H} (φ , ie) =
+  (record {
+     f = is-equiv.g ie;
+     pres-comp = λ h₁ h₂ →
+       ap2 (λ w₁ w₂ → is-equiv.g ie (Group.comp H w₁ w₂))
+         (! (is-equiv.f-g ie h₁)) (! (is-equiv.f-g ie h₂))
+       ∙ ! (ap (is-equiv.g ie)
+               (GroupHom.pres-comp φ (is-equiv.g ie h₁) (is-equiv.g ie h₂)))
+       ∙ is-equiv.g-f ie (Group.comp G (is-equiv.g ie h₁) (is-equiv.g ie h₂))} ,
+   snd ((_ , ie) ⁻¹))
 
 {- a homomorphism which is an equivalence gives a path between groups -}
 module _ {i} {G H : Group i} (iso : G ≃ᴳ H) where

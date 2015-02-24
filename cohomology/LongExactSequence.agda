@@ -6,28 +6,40 @@ open import cohomology.Theory
 open import cohomology.CofiberSequence
 
 module cohomology.LongExactSequence {i} (CT : CohomologyTheory i)
-  (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y)) where
+  {X Y : Ptd i} (n : ℤ) (f : fst (X ⊙→ Y)) where
 
 open CohomologyTheory CT
+open import cohomology.Functor CT
 
-long-exact-diag : ExactDiag _ _
-long-exact-diag =
-  C n (⊙Susp (⊙Cof f))  ⟨ CF-hom n (⊙susp-fmap (⊙cfcod f)) ⟩→
-  C n (⊙Susp Y)         ⟨ CF-hom n (⊙susp-fmap f)          ⟩→
-  C n (⊙Susp X)         ⟨ CF-hom n ⊙ext-glue               ⟩→
-  C n (⊙Cof f)          ⟨ CF-hom n (⊙cfcod f)              ⟩→
-  C n Y                 ⟨ CF-hom n f                       ⟩→
-  C n X                 ⊣|
+co∂ : C n X →ᴳ C (succ n) (⊙Cof f)
+co∂ = CF-hom (succ n) ⊙ext-glue ∘ᴳ fst ((C-Susp n X)⁻¹ᴳ)
 
-long-exact-cofiber : ExactSeq long-exact-diag
-long-exact-cofiber = transport
-  (λ {(_ , g , h , k) → ExactSeq $
-    _ ⟨ CF-hom n k ⟩→ _ ⟨ CF-hom n h ⟩→ _ ⟨ CF-hom n g ⟩→
-    _ ⟨ CF-hom n (⊙cfcod f) ⟩→ _ ⟨ CF-hom n f ⟩→ _ ⊣|})
-  (cofiber-sequence f)
-  (exact-build
-    (_ ⟨ CF-hom n (⊙cfcod⁴ f) ⟩→ _ ⟨ CF-hom n (⊙cfcod³ f) ⟩→
-     _ ⟨ CF-hom n (⊙cfcod² f) ⟩→ _ ⟨ CF-hom n (⊙cfcod f) ⟩→
-     _ ⟨ CF-hom n f ⟩→ _ ⊣|)
-    (C-exact n (⊙cfcod³ f)) (C-exact n (⊙cfcod² f))
-    (C-exact n (⊙cfcod f)) (C-exact n f))
+long-cofiber-seq : HomSequence _ _
+long-cofiber-seq =
+  C n Y                ⟨ CF-hom n f                 ⟩→
+  C n X                ⟨ co∂                        ⟩→
+  C (succ n) (⊙Cof f)  ⟨ CF-hom (succ n) (⊙cfcod f) ⟩→
+  C (succ n) Y         ⟨ CF-hom (succ n) f          ⟩→
+  C (succ n) X         ⊣|
+
+long-cofiber-exact : is-exact-seq long-cofiber-seq
+long-cofiber-exact =
+  transport
+    (λ {(r , s) → is-exact-seq s})
+    (pair= _ $ sequence-iso-ua _ _ $
+      C-Susp n Y ↓⟨ C-SuspF n f ⟩↓
+      C-Susp n X ↓⟨ hom= _ _ $ ap (λ w → fst (CF (succ n) ⊙ext-glue) ∘ w) $
+                    ! $ λ= $ is-equiv.g-f (snd (C-Susp n X)) ⟩↓
+      idiso _    ↓⟨ hom= _ _ idp ⟩↓
+      idiso _    ↓⟨ hom= _ _ idp ⟩↓
+      idiso _    ↓⊣|)
+    (transport
+      (λ {(_ , g , h) → is-exact-seq $
+        _ ⟨ CF-hom (succ n) h ⟩→ _ ⟨ CF-hom (succ n) g ⟩→
+        _ ⟨ CF-hom (succ n) (⊙cfcod f) ⟩→ _ ⟨ CF-hom (succ n) f ⟩→ _ ⊣|})
+      (cofiber-sequence f)
+      (exact-build
+        (_ ⟨ CF-hom (succ n) (⊙cfcod³ f) ⟩→ _ ⟨ CF-hom (succ n) (⊙cfcod² f) ⟩→
+         _ ⟨ CF-hom (succ n) (⊙cfcod f) ⟩→ _ ⟨ CF-hom (succ n) f ⟩→ _ ⊣|)
+        (C-exact (succ n) (⊙cfcod² f))
+        (C-exact (succ n) (⊙cfcod f)) (C-exact (succ n) f)))

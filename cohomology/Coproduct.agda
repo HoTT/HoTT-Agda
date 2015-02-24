@@ -3,23 +3,20 @@
 open import HoTT
 open import cohomology.CofiberSequence
 open import cohomology.Exactness
-open import cohomology.ExactPairIso
 open import cohomology.FunctionOver
 open import cohomology.MayerVietoris
 open import cohomology.SplitExactRight
 open import cohomology.Theory
 
-module cohomology.Coproduct {i} (OT : OrdinaryTheory i) where
+module cohomology.Coproduct {i} (CT : CohomologyTheory i) where
 
-open OrdinaryTheory OT
-open import cohomology.ConstantFunction cohomology-theory
-open import cohomology.Functor cohomology-theory
-open import cohomology.Sn OT
+open CohomologyTheory CT
+open import cohomology.Functor CT
 
 {- Cⁿ(X ⊔ Y) == Cⁿ(X ∨ Y) × Cⁿ(S⁰). The proof is by constructing a
  - splitting exact sequence
 
-         0 → Cⁿ(X ∨ Y) → Cⁿ(X ⊔ Y) → C(S⁰)
+         0 → Cⁿ(X ∨ Y) → Cⁿ(X ⊔ Y) → Cⁿ(S⁰)
 
  - by defining a map [select : S⁰ → X ⊔ Y] such that
    [Cofiber select == X ∨ Y] and [select] has a left inverse. -}
@@ -109,61 +106,34 @@ module CofSelect (X Y : Ptd i) where
 
 module C⊔ (n : ℤ) (m : ℕ) (X Y : Ptd i) where
 
-  open CofSelect X Y
+  private
 
-  ed : {G : Group i} (φ : GroupHom (C n (⊙Susp^ m (X ⊙⊔ Y))) G)
-    → ExactDiag _ _
-  ed {G} φ =
-    C n (⊙Susp^ m (⊙Sphere 1))
-      ⟨ cst-hom ⟩→
-    C n (⊙Susp^ m (X ⊙∨ Y))
-      ⟨ CF-hom n (⊙susp^-fmap m ⊙add-wglue) ⟩→
-    C n (⊙Susp^ m (X ⊙⊔ Y))
-      ⟨ φ ⟩→ -- CF-hom n (⊙susp^-fmap m ⊙select)
-    G ⊣| -- C n (⊙Susp^ m (⊙Sphere 0))
+    open CofSelect X Y
 
-  es : ExactSeq (ed (CF-hom n (⊙susp^-fmap m ⊙select)))
-  es = exact-build (ed (CF-hom n (⊙susp^-fmap m ⊙select)))
-    (transport
-      (λ g → is-exact g (CF n (⊙susp^-fmap m ⊙add-wglue)))
-      (ap (CF n) (⊙susp^-fmap-cst m) ∙ ap GroupHom.⊙f (CF-cst n))
+    seq : {G : Group i} (φ : GroupHom (C n (X ⊙⊔ Y)) G)
+      → HomSequence _ _
+    seq {G} φ =
+      C n (⊙Sphere 1) ⟨ cst-hom ⟩→
+      C n (X ⊙∨ Y)    ⟨ CF-hom n ⊙add-wglue ⟩→
+      C n (X ⊙⊔ Y)    ⟨ φ ⟩→ -- CF-hom n (⊙susp^-fmap m ⊙select)
+      G ⊣|
+
+    eseq : is-exact-seq (seq (CF-hom n ⊙select))
+    eseq = exact-build (seq (CF-hom n ⊙select))
       (transport
-        (λ {(_ , g , h) → is-exact (CF n (⊙susp^-fmap m h))
-                                   (CF n (⊙susp^-fmap m g))})
-        (pair= ⊙path (↓-×-in cfcod-over ext-over))
+        (λ g → is-exact g (CF n ⊙add-wglue))
+        (ap GroupHom.⊙f (CF-cst n))
         (transport
           (λ {(_ , g , h) → is-exact (CF n h) (CF n g)})
-          (suspend^-cof= m (⊙cfcod ⊙select) (⊙ext-glue)
-            (pair= (Cof².space-path ⊙select) (Cof².cfcod²-over ⊙select)))
-          (C-exact n (⊙susp^-fmap m (⊙cfcod ⊙select))))))
-    (transport
-      (λ {(_ , g) → is-exact (CF n (⊙susp^-fmap m g))
-                             (CF n (⊙susp^-fmap m ⊙select))})
-      (pair= ⊙path cfcod-over)
+          (pair= ⊙path (↓-×-in cfcod-over ext-over))
+          (transport
+            (λ {(_ , g) → is-exact (CF n g) (CF n (⊙cfcod ⊙select))})
+            (pair= (Cof².space-path ⊙select) (Cof².cfcod²-over ⊙select))
+            (C-exact n (⊙cfcod ⊙select)))))
       (transport
-        (λ {(_ , g , h) → is-exact (CF n h) (CF n g)})
-        (suspend^-cof= m ⊙select _ idp)
-        (C-exact n (⊙susp^-fmap m ⊙select))))
-
-  module Nonzero (neq : n ≠ ℕ-to-ℤ m) where
-
-    iso : C n (⊙Susp^ m (X ⊙∨ Y)) == C n (⊙Susp^ m (X ⊙⊔ Y))
-    iso = exact-pair-iso $
-      transport (λ {(G , φ) → ExactSeq (ed {G} φ)})
-        (pair= (ap (C n) (⊙Susp^-+ m O
-                          ∙ ap (λ k → ⊙Susp^ k (⊙Sphere 0)) (+-unit-r m))
-                ∙ C-Sphere-≠ n m neq)
-               (prop-has-all-paths-↓
-                  {B = λ G → GroupHom (C n (⊙Susp^ m (X ⊙⊔ Y))) G}
-                  (contr-is-prop 0ᴳ-hom-in-level)))
-        es
-
-    add-wglue-over :
-      idhom _ == CF-hom n (⊙susp^-fmap m ⊙add-wglue)
-      [ (λ G → GroupHom (C n (⊙Susp^ m (X ⊙∨ Y))) G) ↓ iso ]
-    add-wglue-over = codomain-over-iso _ _ _ _ $ codomain-over-equiv _ _
-
-  module Any where
+        (λ {(_ , g) → is-exact (CF n g) (CF n ⊙select)})
+        (pair= ⊙path cfcod-over)
+        (C-exact n ⊙select))
 
     deselect : fst (X ⊙⊔ Y) → Sphere {i} 0
     deselect (inl _) = lift true
@@ -176,22 +146,14 @@ module C⊔ (n : ℤ) (m : ℕ) (X Y : Ptd i) where
     deselect-select = ⊙λ= (λ {(lift true) → idp; (lift false) → idp}) idp
 
     module SER = SplitExactRight (C-abelian n _)
-      (CF-hom n (⊙susp^-fmap m ⊙add-wglue))
-      (CF-hom n (⊙susp^-fmap m ⊙select))
-      es
-      (CF-hom n (⊙susp^-fmap m ⊙deselect))
-      (app= $ ap GroupHom.f $ CF-inverse n
-        (⊙susp^-fmap m ⊙select)
-        (⊙susp^-fmap m ⊙deselect)
-        (! (⊙susp^-fmap-∘ m ⊙deselect ⊙select)
-         ∙ ap (⊙susp^-fmap m) deselect-select
-         ∙ ⊙susp^-fmap-idf m _))
+      (CF-hom n ⊙add-wglue) (CF-hom n ⊙select)
+      eseq
+      (CF-hom n ⊙deselect)
+      (app= $ ap GroupHom.f $ CF-inverse n ⊙select ⊙deselect deselect-select)
 
-    iso : C n (⊙Susp^ m (X ⊙⊔ Y))
-       == C n (⊙Susp^ m (X ⊙∨ Y)) ×ᴳ C n (⊙Susp^ m (⊙Sphere 0))
-    iso = SER.iso
+    path : C n (X ⊙⊔ Y) == C n (X ⊙∨ Y) ×ᴳ C n (⊙Sphere 0)
+    path = SER.iso
 
     add-wglue-over :
-      CF-hom n (⊙susp^-fmap m ⊙add-wglue) == ×ᴳ-inl
-      [ (λ G → GroupHom (C n (⊙Susp^ m (X ⊙∨ Y))) G) ↓ iso ]
+      CF-hom n ⊙add-wglue == ×ᴳ-inl [ (λ G → GroupHom (C n (X ⊙∨ Y)) G) ↓ path ]
     add-wglue-over = SER.φ-over-iso

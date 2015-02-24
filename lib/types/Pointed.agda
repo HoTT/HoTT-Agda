@@ -118,3 +118,36 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (e : fst X ≃ fst Y)
 
   ⊙<– : fst (Y ⊙→ X)
   ⊙<– = (<– e , ap (<– e) (! p) ∙ <–-inv-l e (snd X))
+
+  ⊙<–-inv-l : ⊙<– ⊙∘ ⊙–> == ⊙idf _
+  ⊙<–-inv-l = ⊙λ= (<–-inv-l e) $
+    ap (<– e) p ∙ ap (<– e) (! p) ∙ <–-inv-l e (snd X)
+      =⟨ ! (∙-assoc (ap (<– e) p) (ap (<– e) (! p)) (<–-inv-l e (snd X))) ⟩
+    (ap (<– e) p ∙ ap (<– e) (! p)) ∙ <–-inv-l e (snd X)
+      =⟨ ∙-ap (<– e) p (! p) ∙ ap (ap (<– e)) (!-inv-r p)
+         |in-ctx (λ w → w ∙ <–-inv-l e (snd X)) ⟩
+    <–-inv-l e (snd X)
+      =⟨ ! (∙-unit-r _) ⟩
+    <–-inv-l e (snd X) ∙ idp ∎
+
+  ⊙<–-inv-r : ⊙–> ⊙∘ ⊙<– == ⊙idf _
+  ⊙<–-inv-r = ⊙λ= (<–-inv-r e) $
+    ap (–> e) (ap (<– e) (! p) ∙ <–-inv-l e (snd X)) ∙ p
+      =⟨ ap-∙ (–> e) (ap (<– e) (! p)) (<–-inv-l e (snd X))
+         |in-ctx (λ w → w ∙ p) ⟩
+    (ap (–> e) (ap (<– e) (! p)) ∙ ap (–> e) (<–-inv-l e (snd X))) ∙ p
+      =⟨ <–-inv-adj e (snd X)
+         |in-ctx (λ w → (ap (–> e) (ap (<– e) (! p)) ∙ w) ∙ p) ⟩
+    (ap (–> e) (ap (<– e) (! p)) ∙ <–-inv-r e (–> e (snd X))) ∙ p
+      =⟨ ∘-ap (–> e) (<– e) (! p)
+         |in-ctx (λ w → (w ∙ <–-inv-r e (–> e (snd X))) ∙ p) ⟩
+    (ap (–> e ∘ <– e) (! p) ∙ <–-inv-r e (–> e (snd X))) ∙ p
+      =⟨ htpy-lemma (<–-inv-r e) p ⟩
+    <–-inv-r e (snd Y)
+      =⟨ ! (∙-unit-r _) ⟩
+    <–-inv-r e (snd Y) ∙ idp ∎
+    where
+    htpy-lemma : ∀ {i} {A : Type i} {f : A → A}
+      (p : ∀ z → f z == z) {x y : A} (q : x == y)
+      → (ap f (! q) ∙ p x) ∙ q == p y
+    htpy-lemma p idp = ∙-unit-r _

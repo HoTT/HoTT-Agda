@@ -8,18 +8,7 @@ open import cohomology.Theory
 open import cohomology.WedgeCofiber
 
 {- For the cohomology group of a suspension ΣX, the group inverse has the
-   explicit form Cⁿ(flip-susp) : Cⁿ(ΣX) → Cⁿ(ΣX). The proof is via the
-   hexagon lemma, with the diagram
-
-                Cⁿ(X)
-                  |
-                fold*
-         winl*    ↓    winr*
-   Cⁿ(X) ←–––– Cⁿ(X∨X) ––––→ Cⁿ(X)
-                  |
-                diff*
-                  ↓
-                Cⁿ(X)
+   explicit form Cⁿ(flip-susp) : Cⁿ(ΣX) → Cⁿ(ΣX).
 
 -}
 
@@ -27,117 +16,106 @@ module cohomology.InverseInSusp {i} (CT : CohomologyTheory i)
   (n : ℤ) {X : Ptd i} where
 
 open CohomologyTheory CT
-open import cohomology.ConstantFunction CT
+open import cohomology.Functor CT
 open import cohomology.Wedge CT
 
 private
-  open WedgeCofiber X X
-  open CSusp^Wedge n X X 1
+  open WedgeCofiber (⊙Susp X) (⊙Susp X)
+  module CW = CWedge n (⊙Susp X) (⊙Susp X)
 
-  module Diff = SuspensionRec (fst X)
-    (north (X ∨ X)) (north (X ∨ X))
-    (λ x → merid _ (winl x) ∙ ! (merid _ (winr x)))
+  module Twice = SuspensionRec (fst X) {C = fst (⊙Susp X ⊙∨ ⊙Susp X)}
+    (winl (north _))
+    (winl (north _))
+    (λ x → ap winl (σloop X x) ∙ wglue ∙ ! (ap winr (σloop X x)) ∙ ! wglue)
 
-  diff = Diff.f
+  twice = Twice.f
 
-  ⊙diff : fst (⊙Susp X ⊙→ ⊙Susp (X ⊙∨ X))
-  ⊙diff = (diff , idp)
+  ⊙twice : fst (⊙Susp X ⊙→ ⊙Susp X ⊙∨ ⊙Susp X)
+  ⊙twice = (twice , idp)
 
-  module HL = HexagonLemma
-    (CF-hom n (⊙susp-fmap ⊙fold))
-    (CF-hom n ⊙diff)
-    (app= $ ap GroupHom.f $
-      ! (CF-comp n (⊙susp-fmap ⊙fold) ⊙diff)
-      ∙ ap (CF-hom n)
-           (⊙λ= (Suspension-elim _ idp idp
-                     (λ x → ↓-app=cst-from-square $ vert-degen-square $
-                       ap-∘ (susp-fmap fold) diff (merid _ x)
-                       ∙ ap (ap (susp-fmap fold)) (Diff.glue-β x)
-                       ∙ ap-∙ (susp-fmap fold) (merid _ (winl x))
-                                               (! (merid _ (winr x)))
-                       ∙ ap2 _∙_ (SuspFmap.glue-β fold (winl x))
-                                 (ap-! (susp-fmap fold) (merid _ (winr x))
-                                  ∙ ap ! (SuspFmap.glue-β fold (winr x)))
-                       ∙ !-inv-r (merid _ x)))
-                   idp)
-      ∙ CF-cst n)
+  {- Convenience lemma for reducing [ap (f ∘ twice) (merid x)] for some f -}
+  ap-on-twice : {A : Type i} (f : fst (⊙Susp X ⊙∨ ⊙Susp X) → A)
+    {p : fst X → f (winl (north _)) == f (winl (south _))}
+    {q : fst X → f (winr (north _)) == f (winr (south _))}
+    {r : f (winl (north _)) == f (winr (north _))}
+    → ap (f ∘ winl) ∘ merid _ == p
+    → ap (f ∘ winr) ∘ merid _ == q
+    → ap f wglue == r
+    → ∀ x → ap f (ap twice (merid _ x))
+            == (p x ∙ ! (p (snd X))) ∙ r ∙ (q (snd X) ∙ ! (q x)) ∙ ! r
+  ap-on-twice f idp idp idp x =
+    ap (ap f) (Twice.glue-β x)
+    ∙ lemma f winl winr (merid _ x) (merid _ (snd X)) wglue wglue
+    where
+    lemma : {A B C : Type i} (g : B → C) (f₁ f₂ : A → B)
+      {x y z : A}
+      (p : x == y) (q : z == y) (r : f₁ z == f₂ z) (s : f₁ x == f₂ x)
+      → ap g (ap f₁ (p ∙ ! q) ∙ r ∙ ! (ap f₂ (p ∙ ! q)) ∙ ! s)
+        == (ap (g ∘ f₁) p ∙ ! (ap (g ∘ f₁) q)) ∙ ap g r
+           ∙ (ap (g ∘ f₂) q ∙ ! (ap (g ∘ f₂) p)) ∙ ! (ap g s)
+    lemma g f₁ f₂ idp idp r s =
+      ap-∙ g r (! s) ∙ ap (λ w → ap g r ∙ w) (ap-! g s)
 
-CF-flip : CF-hom n (⊙flip-susp X) == inv-hom _ (C-abelian n (⊙Susp X))
-CF-flip =
-  ! C-right-reduce
-  ∙ (hom= _ _ $ λ= $ ! ∘ HL.inv₁)
-  ∙ ap (λ φ → inv-hom _ (C-abelian n (⊙Susp X)) ∘ᴳ φ) C-left-reduce
-  where
-  {- Lemmas are all just reducing compositions -}
-
-  β : {A B C D : Type i} (h : C → D) (g : B → C) (f : A → B) (a : A)
-    → ap (susp-fmap h ∘ susp-fmap g ∘ susp-fmap f) (merid _ a)
-      == merid _ (h (g (f a)))
-  β h g f a =
-      ap-∘ (susp-fmap h ∘ susp-fmap g) (susp-fmap f) (merid _ a)
-    ∙ ap (ap (susp-fmap h ∘ susp-fmap g)) (SuspFmap.glue-β f a)
-    ∙ ap-∘ (susp-fmap h) (susp-fmap g) (merid _ (f a))
-    ∙ ap (ap (susp-fmap h)) (SuspFmap.glue-β g (f a))
-    ∙ SuspFmap.glue-β h (g (f a))
-
-  left-β = β (fold {X = X}) winl projl
-  right-β = β (fold {X = X}) winr projr
-
-  left-reduce : ((⊙susp-fmap {Y = X} ⊙fold
-                 ⊙∘ ⊙susp-fmap ⊙winl)
-                 ⊙∘ ⊙susp-fmap ⊙projl) ⊙∘ ⊙diff
-                == ⊙idf (⊙Susp X)
-  left-reduce = ⊙λ=
-    (Suspension-elim (fst X) idp (merid _ (snd X))
-      (λ x → ↓-='-from-square $
-        (ap-∘ (susp-fmap fold ∘ susp-fmap winl ∘ susp-fmap projl)
-           diff (merid _ x)
-         ∙ ap (ap (susp-fmap fold ∘ susp-fmap winl ∘ susp-fmap projl))
-             (Diff.glue-β x)
-         ∙ ap-∙ (susp-fmap fold ∘ susp-fmap winl ∘ susp-fmap projl)
-               (merid _ (winl x)) (! (merid _ (winr x)))
-         ∙ (left-β (winl x)
-           ∙2 (ap-! (susp-fmap fold ∘ susp-fmap winl ∘ susp-fmap projl)
-                 (merid _ (winr x))
-               ∙ ap ! (left-β (winr x)))))
-        ∙v⊡ (vid-square {p = merid _ x} ⊡h rt-square (merid _ (snd X)))
-        ⊡v∙ (∙-unit-r _ ∙ ! (ap-idf (merid _ x)))))
+  ⊙projl-twice : ⊙projl ⊙∘ ⊙twice == ⊙idf (⊙Susp X)
+  ⊙projl-twice = ⊙λ=
+    (Suspension-elim (fst X) idp (merid _ (snd X)) $
+      ↓-∘=idf-from-square projl twice ∘ λ x →
+        (ap-on-twice projl
+           (λ= (ap-idf ∘ merid _)) (λ= (ap-cst _ ∘ merid _)) Projl.glue-β x
+         ∙ ∙-unit-r _)
+        ∙v⊡ square-lemma (merid _ x) (merid _ (snd X)))
     idp
+    where
+    square-lemma : {A : Type i} {x y z : A} (p : x == y) (q : z == y)
+      → Square idp (p ∙ ! q) p q
+    square-lemma idp idp = ids
 
-  right-reduce : ((⊙susp-fmap {Y = X} ⊙fold
-                 ⊙∘ ⊙susp-fmap ⊙winr)
-                 ⊙∘ ⊙susp-fmap ⊙projr) ⊙∘ ⊙diff
-                == ⊙flip-susp X
-  right-reduce = ⊙λ=
-    (Suspension-elim (fst X) (merid _ (snd X)) idp
-      (λ x → ↓-='-from-square $
-        (ap-∘ (susp-fmap fold ∘ susp-fmap winr ∘ susp-fmap projr)
-           diff (merid _ x)
-         ∙ ap (ap (susp-fmap fold ∘ susp-fmap winr ∘ susp-fmap projr))
-             (Diff.glue-β x)
-         ∙ ap-∙ (susp-fmap fold ∘ susp-fmap winr ∘ susp-fmap projr)
-               (merid _ (winl x)) (! (merid _ (winr x)))
-         ∙ (right-β (winl x)
-           ∙2 (ap-! (susp-fmap fold ∘ susp-fmap winr ∘ susp-fmap projr)
-                 (merid _ (winr x))
-               ∙ ap ! (right-β (winr x)))))
-        ∙v⊡ ((lt-square (merid _ (snd X)) ⊡h vid-square {p = ! (merid _ x)}))
-        ⊡v∙ ! (FlipSusp.glue-β x)))
+  ⊙projr-twice : ⊙projr ⊙∘ ⊙twice == ⊙flip-susp X
+  ⊙projr-twice = ⊙λ=
+    (Suspension-elim (fst X) (merid _ (snd X)) idp $
+      ↓-='-from-square ∘ λ x →
+        (ap-∘ projr twice (merid _ x)
+         ∙ ap-on-twice projr
+             (λ= (ap-cst _ ∘ merid _)) (λ= (ap-idf ∘ merid _)) Projr.glue-β x
+         ∙ ∙-unit-r _)
+        ∙v⊡ square-lemma (merid _ x) (merid _ (snd X))
+        ⊡v∙ ! (FlipSusp.glue-β x))
     (! (!-inv-r (merid _ (snd X))))
+    where
+    square-lemma : {A : Type i} {x y z : A} (p : x == y) (q : z == y)
+      → Square q (q ∙ ! p) (! p) idp
+    square-lemma idp idp = ids
 
-  C-β : {Y Z U V W : Ptd i} (k : fst (V ⊙→ W))
-    (h : fst (U ⊙→ V)) (g : fst (Z ⊙→ U)) (f : fst (Y ⊙→ Z))
-    → CF-hom n f ∘ᴳ CF-hom n g ∘ᴳ CF-hom n h ∘ᴳ CF-hom n k
-      == CF-hom n (((k ⊙∘ h) ⊙∘ g) ⊙∘ f)
-  C-β k h g f =
-    ap (λ w → CF-hom n f ∘ᴳ CF-hom n g ∘ᴳ w) (! (CF-comp n k h))
-    ∙ ap (λ w → CF-hom n f ∘ᴳ w) (! (CF-comp n (k ⊙∘ h) g))
-    ∙ ! (CF-comp n ((k ⊙∘ h) ⊙∘ g) f)
+  ⊙fold-twice : ⊙fold ⊙∘ ⊙twice == ⊙cst
+  ⊙fold-twice = ⊙λ=
+    (Suspension-elim (fst X) idp idp $
+      ↓-='-in ∘ ! ∘ λ x →
+        ap-∘ fold twice (merid _ x)
+        ∙ ap-on-twice fold
+            (λ= (ap-idf ∘ merid _)) (λ= (ap-idf ∘ merid _)) Fold.glue-β x
+        ∙ lemma (merid _ x) (merid _ (snd X))
+        ∙ ! (ap-cst (north _) (glue x)))
+    idp
+    where
+    lemma : {A : Type i} {x y z : A} (p : x == y) (q : z == y)
+      → (p ∙ ! q) ∙ (q ∙ ! p) ∙ idp == idp
+    lemma idp idp = idp
 
-  C-left-reduce = C-β (⊙susp-fmap ⊙fold) (⊙susp-fmap ⊙winl)
-                      (⊙susp-fmap ⊙projl) ⊙diff
-                  ∙ ap (CF-hom n) left-reduce ∙ CF-ident n
+  cancel :
+    ×ᴳ-sum-hom (C-abelian n _) (idhom _) (CF-hom n (⊙flip-susp X)) ∘ᴳ ×ᴳ-diag
+    == cst-hom
+  cancel =
+    ap2 (λ φ ψ → ×ᴳ-sum-hom (C-abelian n _) φ ψ ∘ᴳ ×ᴳ-diag)
+        (! (CF-ident n) ∙ ap (CF-hom n) (! ⊙projl-twice))
+        (ap (CF-hom n) (! ⊙projr-twice))
+    ∙ transport (λ {(G , φ , ψ) → φ ∘ᴳ ψ == cst-hom})
+        (pair= (CW.iso) $ ↓-×-in
+          (CW.wedge-in-over ⊙twice)
+          (CW.wedge-rec-over (idf _) (idf _) idp idp
+           ▹ ap2 ×ᴳ-hom-in (CF-ident n) (CF-ident n)))
+        (! (CF-comp n ⊙fold ⊙twice) ∙ ap (CF-hom n) ⊙fold-twice ∙ CF-cst n)
 
-  C-right-reduce = C-β (⊙susp-fmap ⊙fold) (⊙susp-fmap ⊙winr)
-                       (⊙susp-fmap ⊙projr) ⊙diff
-                   ∙ ap (CF-hom n) right-reduce
+C-flip-susp-is-inv :
+  CF-hom n (⊙flip-susp X) == inv-hom (C n (⊙Susp X)) (C-abelian _ _)
+C-flip-susp-is-inv = hom= _ _ $ λ= $ λ g →
+  ! (group-inv-unique-r (C n (⊙Susp X)) g _ (app= (ap GroupHom.f cancel) g))
