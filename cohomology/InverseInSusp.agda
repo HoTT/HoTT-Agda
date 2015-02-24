@@ -17,6 +17,7 @@ module cohomology.InverseInSusp {i} (CT : CohomologyTheory i)
 
 open CohomologyTheory CT
 open import cohomology.Functor CT
+open import cohomology.BaseIndependence CT
 open import cohomology.Wedge CT
 
 private
@@ -56,46 +57,40 @@ private
     lemma g f₁ f₂ idp idp r s =
       ap-∙ g r (! s) ∙ ap (λ w → ap g r ∙ w) (ap-! g s)
 
-  ⊙projl-twice : ⊙projl ⊙∘ ⊙twice == ⊙idf (⊙Susp X)
-  ⊙projl-twice = ⊙λ=
-    (Suspension-elim (fst X) idp (merid _ (snd X)) $
-      ↓-∘=idf-from-square projl twice ∘ λ x →
-        (ap-on-twice projl
-           (λ= (ap-idf ∘ merid _)) (λ= (ap-cst _ ∘ merid _)) Projl.glue-β x
-         ∙ ∙-unit-r _)
-        ∙v⊡ square-lemma (merid _ x) (merid _ (snd X)))
-    idp
+  projl-twice : ∀ σ → projl (twice σ) == σ
+  projl-twice = Suspension-elim (fst X) idp (merid _ (snd X)) $
+    ↓-∘=idf-from-square projl twice ∘ λ x →
+      (ap-on-twice projl
+         (λ= (ap-idf ∘ merid _)) (λ= (ap-cst _ ∘ merid _)) Projl.glue-β x
+       ∙ ∙-unit-r _)
+      ∙v⊡ square-lemma (merid _ x) (merid _ (snd X))
     where
     square-lemma : {A : Type i} {x y z : A} (p : x == y) (q : z == y)
       → Square idp (p ∙ ! q) p q
     square-lemma idp idp = ids
 
-  ⊙projr-twice : ⊙projr ⊙∘ ⊙twice == ⊙flip-susp X
-  ⊙projr-twice = ⊙λ=
-    (Suspension-elim (fst X) (merid _ (snd X)) idp $
-      ↓-='-from-square ∘ λ x →
-        (ap-∘ projr twice (merid _ x)
-         ∙ ap-on-twice projr
-             (λ= (ap-cst _ ∘ merid _)) (λ= (ap-idf ∘ merid _)) Projr.glue-β x
-         ∙ ∙-unit-r _)
-        ∙v⊡ square-lemma (merid _ x) (merid _ (snd X))
-        ⊡v∙ ! (FlipSusp.glue-β x))
-    (! (!-inv-r (merid _ (snd X))))
+  projr-twice : ∀ σ → projr (twice σ) == flip-susp σ
+  projr-twice = Suspension-elim (fst X) (merid _ (snd X)) idp $
+    ↓-='-from-square ∘ λ x →
+      (ap-∘ projr twice (merid _ x)
+       ∙ ap-on-twice projr
+           (λ= (ap-cst _ ∘ merid _)) (λ= (ap-idf ∘ merid _)) Projr.glue-β x
+       ∙ ∙-unit-r _)
+      ∙v⊡ square-lemma (merid _ x) (merid _ (snd X))
+      ⊡v∙ ! (FlipSusp.glue-β x)
     where
     square-lemma : {A : Type i} {x y z : A} (p : x == y) (q : z == y)
       → Square q (q ∙ ! p) (! p) idp
     square-lemma idp idp = ids
 
-  ⊙fold-twice : ⊙fold ⊙∘ ⊙twice == ⊙cst
-  ⊙fold-twice = ⊙λ=
-    (Suspension-elim (fst X) idp idp $
-      ↓-='-in ∘ ! ∘ λ x →
-        ap-∘ fold twice (merid _ x)
-        ∙ ap-on-twice fold
-            (λ= (ap-idf ∘ merid _)) (λ= (ap-idf ∘ merid _)) Fold.glue-β x
-        ∙ lemma (merid _ x) (merid _ (snd X))
-        ∙ ! (ap-cst (north _) (glue x)))
-    idp
+  fold-twice : ∀ σ → fold (twice σ) == north _
+  fold-twice = Suspension-elim (fst X) idp idp $
+    ↓-='-in ∘ ! ∘ λ x →
+      ap-∘ fold twice (merid _ x)
+      ∙ ap-on-twice fold
+          (λ= (ap-idf ∘ merid _)) (λ= (ap-idf ∘ merid _)) Fold.glue-β x
+      ∙ lemma (merid _ x) (merid _ (snd X))
+      ∙ ! (ap-cst (north _) (glue x))
     where
     lemma : {A : Type i} {x y z : A} (p : x == y) (q : z == y)
       → (p ∙ ! q) ∙ (q ∙ ! p) ∙ idp == idp
@@ -106,14 +101,14 @@ private
     == cst-hom
   cancel =
     ap2 (λ φ ψ → ×ᴳ-sum-hom (C-abelian n _) φ ψ ∘ᴳ ×ᴳ-diag)
-        (! (CF-ident n) ∙ ap (CF-hom n) (! ⊙projl-twice))
-        (ap (CF-hom n) (! ⊙projr-twice))
+        (! (CF-ident n) ∙ ! (CF-λ= n projl-twice))
+        (! (CF-λ= n projr-twice))
     ∙ transport (λ {(G , φ , ψ) → φ ∘ᴳ ψ == cst-hom})
         (pair= (CW.iso) $ ↓-×-in
           (CW.wedge-in-over ⊙twice)
           (CW.wedge-rec-over (idf _) (idf _) idp idp
            ▹ ap2 ×ᴳ-hom-in (CF-ident n) (CF-ident n)))
-        (! (CF-comp n ⊙fold ⊙twice) ∙ ap (CF-hom n) ⊙fold-twice ∙ CF-cst n)
+        (! (CF-comp n ⊙fold ⊙twice) ∙ CF-λ= n fold-twice ∙ CF-cst n)
 
 C-flip-susp-is-inv :
   CF-hom n (⊙flip-susp X) == inv-hom (C n (⊙Susp X)) (C-abelian _ _)

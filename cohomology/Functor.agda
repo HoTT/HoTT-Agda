@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
+open import cohomology.FunctionOver
 open import cohomology.Theory
 
 {- Useful lemmas concerning the functorial action of C -}
@@ -36,3 +37,9 @@ CF-iso n f ie =
    is-eq _ (GroupHom.f (CF-hom n (⊙<– (fst f , ie) (snd f))))
      (app= $ ap GroupHom.f $ CF-inverse n f _ $ ⊙<–-inv-l (fst f , ie) (snd f))
      (app= $ ap GroupHom.f $ CF-inverse n _ f $ ⊙<–-inv-r (fst f , ie) (snd f)))
+
+C-Susp-over : (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y))
+  → CF-hom (succ n) (⊙susp-fmap f) == CF-hom n f
+    [ uncurry _→ᴳ_ ↓ pair×= (group-ua (C-Susp n Y)) (group-ua (C-Susp n X)) ]
+C-Susp-over n f =
+  hom-over-isos $ function-over-equivs _ _ $ ap GroupHom.f (C-SuspF n f)
