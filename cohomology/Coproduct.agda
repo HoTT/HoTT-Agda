@@ -115,7 +115,7 @@ module C⊔ (n : ℤ) (m : ℕ) (X Y : Ptd i) where
     seq {G} φ =
       C n (⊙Sphere 1) ⟨ cst-hom ⟩→
       C n (X ⊙∨ Y)    ⟨ CF-hom n ⊙add-wglue ⟩→
-      C n (X ⊙⊔ Y)    ⟨ φ ⟩→ -- CF-hom n (⊙susp^-fmap m ⊙select)
+      C n (X ⊙⊔ Y)    ⟨ φ ⟩→ -- CF-hom n ⊙select
       G ⊣|
 
     eseq : is-exact-seq (seq (CF-hom n ⊙select))
