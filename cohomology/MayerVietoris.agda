@@ -250,10 +250,9 @@ module MayerVietorisBase
 
   {- Transporting [cfcod reglue] over the equivalence -}
 
-  cfcod-over : ⊙cfcod ⊙reglue == ⊙ext-glue
-              [ (λ W → fst (⊙Pushout ps ⊙→ W)) ↓ ⊙path ]
-  cfcod-over =
-    codomain-over-⊙equiv (⊙cfcod ⊙reglue) eq idp ▹ lemma
+  cfcod-over : cfcod reglue == ext-glue
+              [ (λ W → fst (⊙Pushout ps) → fst W) ↓ ⊙path ]
+  cfcod-over = ↓-cst2-in _ _ $ codomain-over-equiv _ _
     where
     lemma : (into , idp) ⊙∘ ⊙cfcod ⊙reglue == ⊙ext-glue
     lemma = pair= idp $
@@ -319,9 +318,9 @@ module MayerVietorisBase
         → Cube sq₋₋₀ (vid-square ⊡v' sq₋₋₁) sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋
       right-from-top-lemma' ids cu = cu
 
-  ext-over : ⊙ext-glue == ⊙mv-diff
-             [ (λ W → fst (W ⊙→ ⊙Susp (X ⊙∨ Y))) ↓ ⊙path ]
-  ext-over = ⊙λ= fn-lemma idp ◃ domain-over-⊙equiv ⊙mv-diff _ _
+  ext-over : ext-glue == mv-diff
+             [ (λ W → fst W → fst (⊙Susp (X ⊙∨ Y))) ↓ ⊙path ]
+  ext-over = ↓-cst2-in _ _ $ λ= fn-lemma ◃ domain-over-equiv _ _
     where
     fn-lemma : ∀ κ → ext-glue κ == mv-diff (into κ)
     fn-lemma = Cofiber-elim reglue
@@ -374,10 +373,10 @@ module MayerVietoris (ps : ⊙Span {i} {i} {i}) where
         eq : Cofiber reglue ≃ Suspension (fst Z)
         path : Cofiber reglue == Suspension (fst Z)
         ⊙path : ⊙Cof ⊙reglue == ⊙Susp Z
-        cfcod-over : ⊙cfcod ⊙reglue == ⊙ext-glue
-                     [ (λ W → fst (⊙Pushout ps ⊙→ W)) ↓ ⊙path ]
-        ext-over : ⊙ext-glue == ⊙mv-diff
-                   [ (λ W → fst (W ⊙→ ⊙Susp (X ⊙∨ Y))) ↓ ⊙path ]
+        cfcod-over : cfcod reglue == ext-glue
+                     [ (λ W → fst (⊙Pushout ps) → fst W) ↓ ⊙path ]
+        ext-over : ext-glue == mv-diff
+                   [ (λ W → fst W → fst (⊙Susp (X ⊙∨ Y))) ↓ ⊙path ]
 
     results : Results ps
     results = ⊙pushout-J Results base-results ps

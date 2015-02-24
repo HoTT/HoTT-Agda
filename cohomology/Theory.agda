@@ -3,6 +3,7 @@
 open import HoTT
 open import cohomology.Exactness
 open import cohomology.Choice
+open import cohomology.FunctionOver
 
 module cohomology.Theory where
 
@@ -58,6 +59,13 @@ record CohomologyTheory i : Type (lsucc i) where
     Pick : Lift {j = i} Bool → Ptd i
     Pick (lift true) = X
     Pick (lift false) = Y
+
+  {- Alternate form of suspension axiom naturality -}
+  C-Susp-↓ : (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y))
+    → CF-hom (succ n) (⊙susp-fmap f) == CF-hom n f
+      [ uncurry _→ᴳ_ ↓ pair×= (group-ua (C-Susp n Y)) (group-ua (C-Susp n X)) ]
+  C-Susp-↓ n f =
+    hom-over-isos $ function-over-equivs _ _ $ ap GroupHom.f (C-SuspF n f)
 
 record OrdinaryTheory i : Type (lsucc i) where
   constructor ordinary-theory

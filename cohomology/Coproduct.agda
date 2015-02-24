@@ -4,7 +4,6 @@ open import HoTT
 open import cohomology.CofiberSequence
 open import cohomology.Exactness
 open import cohomology.FunctionOver
-open import cohomology.MayerVietoris
 open import cohomology.SplitExactRight
 open import cohomology.Theory
 
@@ -12,6 +11,7 @@ module cohomology.Coproduct {i} (CT : CohomologyTheory i) where
 
 open CohomologyTheory CT
 open import cohomology.Functor CT
+open import cohomology.BaseIndependence CT
 
 {- Cⁿ(X ⊔ Y) == Cⁿ(X ∨ Y) × Cⁿ(S⁰). The proof is by constructing a
  - splitting exact sequence
@@ -75,34 +75,26 @@ module CofSelect (X Y : Ptd i) where
   ⊙path : ⊙Cof ⊙select == X ⊙∨ Y
   ⊙path = ⊙ua eq idp
 
-  cfcod-over : ⊙cfcod ⊙select == ⊙add-wglue
-               [ (λ U → fst (X ⊙⊔ Y ⊙→ U)) ↓ ⊙path ]
-  cfcod-over = codomain-over-⊙equiv _ _ _ ▹ pair= idp lemma
-    where
-    lemma : ap into (! (cfglue _ (lift true))) ∙ idp == idp
-    lemma = ∙-unit-r _ ∙ ap-! into (cfglue _ (lift true))
-            ∙ ap ! (Into.glue-β (lift true))
+  cfcod-over : cfcod select == add-wglue
+               [ (λ U → fst (X ⊙⊔ Y) → fst U) ↓ ⊙path ]
+  cfcod-over = ↓-cst2-in _ _ $ codomain-over-equiv _ _
 
-  ext-glue-cst :
-    ⊙ext-glue == ⊙cst {X = ⊙Cof ⊙select} {Y = ⊙Sphere 1}
-  ext-glue-cst = ⊙λ=
-    (Cofiber-elim _
-      idp
-      (λ {(inl _) → ! (merid _ (lift true));
-          (inr _) → ! (merid _ (lift false))})
-      (λ {(lift true) → ↓-='-from-square $
-            ExtGlue.glue-β (lift true)
-            ∙v⊡ tr-square (merid _ (lift true))
-            ⊡v∙ ! (ap-cst (north _) (glue (lift true)));
-          (lift false) → ↓-='-from-square $
-            ExtGlue.glue-β (lift false)
-            ∙v⊡ tr-square (merid _ (lift false))
-            ⊡v∙ ! (ap-cst (north _) (glue (lift false)))}))
+  ext-glue-cst : ext-glue {s = cofiber-span select} == cst (north _)
+  ext-glue-cst = λ= $ Cofiber-elim _
     idp
+    (λ {(inl _) → ! (merid _ (lift true));
+        (inr _) → ! (merid _ (lift false))})
+    (λ {(lift true) → ↓-='-from-square $
+          ExtGlue.glue-β (lift true)
+          ∙v⊡ tr-square (merid _ (lift true))
+          ⊡v∙ ! (ap-cst (north _) (glue (lift true)));
+        (lift false) → ↓-='-from-square $
+          ExtGlue.glue-β (lift false)
+          ∙v⊡ tr-square (merid _ (lift false))
+          ⊡v∙ ! (ap-cst (north _) (glue (lift false)))})
 
-  ext-over : ⊙ext-glue == ⊙cst
-             [ (λ U → fst (U ⊙→ ⊙Sphere 1)) ↓ ⊙path ]
-  ext-over = ext-glue-cst ◃ domain-over-⊙equiv _ _ _
+  ext-over : ext-glue == cst (north _) [ (λ U → fst U → Sphere 1) ↓ ⊙path ]
+  ext-over = ↓-cst2-in _ _ $ ext-glue-cst ◃ domain-over-equiv _ _
 
 module C⊔ (n : ℤ) (m : ℕ) (X Y : Ptd i) where
 
@@ -120,20 +112,25 @@ module C⊔ (n : ℤ) (m : ℕ) (X Y : Ptd i) where
 
     eseq : is-exact-seq (seq (CF-hom n ⊙select))
     eseq = exact-build (seq (CF-hom n ⊙select))
-      (transport
-        (λ g → is-exact g (CF n ⊙add-wglue))
-        (ap GroupHom.⊙f (CF-cst n))
-        (transport
-          (λ {(_ , g , h) → is-exact (CF n h) (CF n g)})
-          (pair= ⊙path (↓-×-in cfcod-over ext-over))
-          (transport
-            (λ {(_ , g) → is-exact (CF n g) (CF n (⊙cfcod ⊙select))})
-            (pair= (Cof².space-path ⊙select) (Cof².cfcod²-over ⊙select))
+      (transport (λ {(φ , ψ) → is-exact (GroupHom.⊙f ψ) (GroupHom.⊙f φ)})
+        (pair×= (CF-base-indep n _ _ _) (CF-base-indep n _ _ _ ∙ CF-cst n))
+        (transport {A = Σ _ (λ {(U , g , h) → (g (inl (snd X)) == snd U)
+                                          × (h (snd U) == north _)})}
+          (λ {((_ , g , h) , (p , q)) → is-exact (CF n (h , q)) (CF n (g , p))})
+          (pair= (pair= ⊙path (↓-×-in cfcod-over ext-over))
+                 (↓-×-in (from-transp _ _ idp) (from-transp _ _ idp)))
+          (transport {A = Σ _ (λ {(U , g) → g (cfbase _) == snd U})}
+            (λ {((_ , g) , p) →
+              is-exact (CF n (g , p)) (CF n (⊙cfcod ⊙select))})
+            (pair= (pair= (Cof².space-path ⊙select) (Cof².cfcod²-over ⊙select))
+                   (from-transp _ _ idp))
             (C-exact n (⊙cfcod ⊙select)))))
-      (transport
-        (λ {(_ , g) → is-exact (CF n g) (CF n ⊙select)})
-        (pair= ⊙path cfcod-over)
-        (C-exact n ⊙select))
+      (transport (λ φ → is-exact (GroupHom.⊙f φ) (CF n ⊙select))
+        (CF-base-indep n _ _ _)
+        (transport {A = Σ _ (λ {(U , g) → g (inl (snd X)) == snd U})}
+          (λ {((_ , g) , p) → is-exact (CF n (g , p)) (CF n ⊙select)})
+          (pair= (pair= ⊙path cfcod-over) (from-transp _ _ idp))
+          (C-exact n ⊙select)))
 
     deselect : fst (X ⊙⊔ Y) → Sphere {i} 0
     deselect (inl _) = lift true
@@ -142,8 +139,9 @@ module C⊔ (n : ℤ) (m : ℕ) (X Y : Ptd i) where
     ⊙deselect : fst (X ⊙⊔ Y ⊙→ ⊙Sphere {i} 0)
     ⊙deselect = (deselect , idp)
 
-    deselect-select : ⊙deselect ⊙∘ ⊙select == ⊙idf _
-    deselect-select = ⊙λ= (λ {(lift true) → idp; (lift false) → idp}) idp
+    deselect-select : (s : Sphere 0) → deselect (select s) == s
+    deselect-select (lift true) = idp
+    deselect-select (lift false) = idp
 
     module SER = SplitExactRight (C-abelian n _)
       (CF-hom n ⊙add-wglue) (CF-hom n ⊙select)

@@ -10,7 +10,6 @@ open import cohomology.Theory
 module cohomology.BaseIndependence {i} (CT : CohomologyTheory i) where
 
 open CohomologyTheory CT
-open import cohomology.Functor CT
 
 C-base-indep : (n : ℤ) {A : Type i} (a₀ a₁ : A)
   → C n (A , a₀) ≃ᴳ C n (A , a₁)
@@ -23,7 +22,7 @@ CF-base-indep : (n : ℤ) {X Y : Ptd i}
 CF-base-indep n {X} {Y} f p₁ p₂ = transport
   (λ q → CF-hom n (f , p₁) == CF-hom n (f , p₂) [ uncurry _→ᴳ_ ↓ q ])
   (!-inv-l (pair×= (group-ua (C-Susp n Y)) (group-ua (C-Susp n X))))
-  (!ᵈ (C-Susp-over n (f , p₁)) ∙ᵈ C-Susp-over n (f , p₂))
+  (!ᵈ (C-Susp-↓ n (f , p₁)) ∙ᵈ C-Susp-↓ n (f , p₂))
 
 CF-λ= : (n : ℤ) {X Y : Ptd i} {f g : fst (X ⊙→ Y)}
   → (∀ x → fst f x == fst g x)

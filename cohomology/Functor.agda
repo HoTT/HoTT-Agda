@@ -11,6 +11,7 @@ module cohomology.Functor {i} (CT : CohomologyTheory i) where
 open CohomologyTheory CT
 
 open import cohomology.Unit CT
+open import cohomology.BaseIndependence CT
 
 CF-cst : (n : ℤ) {X Y : Ptd i} → CF-hom n (⊙cst {X = X} {Y = Y}) == cst-hom
 CF-cst n {X} {Y} =
@@ -27,19 +28,14 @@ CF-cst n {X} {Y} =
   ⊙LU = ⊙Lift {j = i} ⊙Unit
 
 CF-inverse : (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y)) (g : fst (Y ⊙→ X))
-  → g ⊙∘ f == ⊙idf _ → (CF-hom n f) ∘ᴳ (CF-hom n g) == idhom _
-CF-inverse n f g p = ! (CF-comp n g f) ∙ ap (CF-hom  n) p ∙ CF-ident n
+  → (∀ x → fst g (fst f x) == x)
+  → (CF-hom n f) ∘ᴳ (CF-hom n g) == idhom _
+CF-inverse n f g p = ! (CF-comp n g f) ∙ CF-λ= n p ∙ CF-ident n
 
 CF-iso : (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y)) (ie : is-equiv (fst f))
   → C n Y ≃ᴳ C n X
 CF-iso n f ie =
   (CF-hom n f ,
    is-eq _ (GroupHom.f (CF-hom n (⊙<– (fst f , ie) (snd f))))
-     (app= $ ap GroupHom.f $ CF-inverse n f _ $ ⊙<–-inv-l (fst f , ie) (snd f))
-     (app= $ ap GroupHom.f $ CF-inverse n _ f $ ⊙<–-inv-r (fst f , ie) (snd f)))
-
-C-Susp-over : (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y))
-  → CF-hom (succ n) (⊙susp-fmap f) == CF-hom n f
-    [ uncurry _→ᴳ_ ↓ pair×= (group-ua (C-Susp n Y)) (group-ua (C-Susp n X)) ]
-C-Susp-over n f =
-  hom-over-isos $ function-over-equivs _ _ $ ap GroupHom.f (C-SuspF n f)
+     (app= $ ap GroupHom.f $ CF-inverse n f _ $ <–-inv-l (fst f , ie))
+     (app= $ ap GroupHom.f $ CF-inverse n _ f $ <–-inv-r (fst f , ie)))
