@@ -129,16 +129,16 @@ module SpectrumModel where
     {- in image of (CF n (⊙cfcod f)) ⇒ in kernel of (CF n f) -}
     abstract
       C-exact-itok : (f : fst (X ⊙→ Y))
-        → is-exact-itok (CF n (⊙cfcod f)) (CF n f)
+        → is-exact-itok (CF-hom n (⊙cfcod f)) (CF-hom n f)
       C-exact-itok f =
-        itok-alt-in (CF n (⊙cfcod f)) (CF n f) (Trunc-level {n = ⟨0⟩}) $
+        itok-alt-in (CF-hom n (⊙cfcod f)) (CF-hom n f) $
           Trunc-elim (λ _ → =-preserves-level _ (Trunc-level {n = ⟨0⟩}))
             (ap [_] ∘ exact-itok-lemma n f)
 
     {- in kernel of (CF n f) ⇒ in image of (CF n (⊙cfcod f)) -}
     abstract
       C-exact-ktoi : (f : fst (X ⊙→ Y))
-        → is-exact-ktoi (CF n (⊙cfcod f)) (CF n f)
+        → is-exact-ktoi (CF-hom n (⊙cfcod f)) (CF-hom n f)
       C-exact-ktoi f =
         Trunc-elim
           (λ _ → Π-level (λ _ → raise-level _ Trunc-level))
@@ -152,7 +152,7 @@ module SpectrumModel where
           wit : Σ (uCEl n (⊙Cof f)) (λ k → k ⊙∘ ⊙cfcod f == h)
           wit = exact-ktoi-lemma n f h p
 
-    C-exact : (f : fst (X ⊙→ Y)) → is-exact (CF n (⊙cfcod f)) (CF n f)
+    C-exact : (f : fst (X ⊙→ Y)) → is-exact (CF-hom n (⊙cfcod f)) (CF-hom n f)
     C-exact f = record {itok = C-exact-itok f; ktoi = C-exact-ktoi f}
 
   {- Additivity Axiom -}

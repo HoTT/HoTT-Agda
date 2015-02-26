@@ -23,8 +23,7 @@ module ProductRepr {i j}
   (i₁ : H₁ →ᴳ G) (i₂ : H₂ →ᴳ G) (j₁ : G →ᴳ H₁) (j₂ : G →ᴳ H₂)
   (p₁ : ∀ h₁ → GroupHom.f j₁ (GroupHom.f i₁ h₁) == h₁)
   (p₂ : ∀ h₂ → GroupHom.f j₂ (GroupHom.f i₂ h₂) == h₂)
-  (ex₁ : is-exact (GroupHom.⊙f i₁) (GroupHom.⊙f j₂))
-  (ex₂ : is-exact (GroupHom.⊙f i₂) (GroupHom.⊙f j₁))
+  (ex₁ : is-exact i₁ j₂) (ex₂ : is-exact i₂ j₁)
   where
 
   zero-ker : (g : Group.El G)

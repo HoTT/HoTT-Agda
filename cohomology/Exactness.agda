@@ -3,22 +3,25 @@ open import cohomology.FunctionOver
 
 module cohomology.Exactness where
 
-module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-  (F : fst (X ⊙→ Y)) (G : fst (Y ⊙→ Z)) where
+module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
+  (φ : G →ᴳ H) (ψ : H →ᴳ K) where
 
   private
-    f = fst F
-    g = fst G
+    module G = Group G
+    module H = Group H
+    module K = Group K
+    module φ = GroupHom φ
+    module ψ = GroupHom ψ
 
-  {- in image of F ⇒ in kernel of G -}
+  {- in image of φ ⇒ in kernel of ψ -}
   is-exact-itok : Type (lmax k (lmax j i))
-  is-exact-itok = (y : fst Y) → Trunc ⟨-1⟩ (Σ (fst X) (λ x → f x == y))
-    → g y == snd Z
+  is-exact-itok = (h : H.El)
+    → Trunc ⟨-1⟩ (Σ G.El (λ g → φ.f g == h)) → ψ.f h == K.ident
 
-  {- in kernel of G ⇒ in image of F -}
+  {- in kernel of ψ ⇒ in image of φ -}
   is-exact-ktoi : Type (lmax k (lmax j i))
-  is-exact-ktoi = (y : fst Y) → g y == snd Z
-    → Trunc ⟨-1⟩ (Σ (fst X) (λ x → f x == y))
+  is-exact-ktoi = (h : H.El)
+    → ψ.f h == K.ident → Trunc ⟨-1⟩ (Σ G.El (λ g → φ.f g == h))
 
   record is-exact : Type (lmax k (lmax j i)) where
     field
@@ -27,14 +30,12 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
 
   open is-exact public
 
-  {- an equivalent version of is-exact-ktoi if Z is a set -}
-  itok-alt-in : has-level ⟨0⟩ (fst Z)
-    → ((x : fst X) → g (f x) == snd Z) → is-exact-itok
-  itok-alt-in pZ h y = Trunc-rec (pZ _ _)
-    (λ {(x , p) → ap g (! p) ∙ h x})
+  {- an equivalent version of is-exact-ktoi  -}
+  itok-alt-in : ((g : G.El) → ψ.f (φ.f g) == K.ident) → is-exact-itok
+  itok-alt-in r h = Trunc-rec (K.El-level _ _) (λ {(g , p) → ap ψ.f (! p) ∙ r g})
 
-  itok-alt-out : is-exact-itok → ((x : fst X) → g (f x) == snd Z)
-  itok-alt-out h x = h (f x) [ x , idp ]
+  itok-alt-out : is-exact-itok → ((g : G.El) → ψ.f (φ.f g) == K.ident)
+  itok-alt-out s g = s (φ.f g) [ g , idp ]
 
 {- Convenient notation for sequences of homomorphisms -}
 
@@ -103,15 +104,14 @@ data is-exact-seq {i} : {G H : Group i} → HomSequence G H → Type (lsucc i) w
   exact-seq-zero : {G : Group i} → is-exact-seq (G ⊣|)
   exact-seq-one : {G H : Group i} {φ : G →ᴳ H} → is-exact-seq (G ⟨ φ ⟩→ H ⊣|)
   exact-seq-two : {G H K J : Group i} {φ : G →ᴳ H} {ψ : H →ᴳ K}
-    {diag : HomSequence K J} → is-exact (GroupHom.⊙f φ) (GroupHom.⊙f ψ)
+    {diag : HomSequence K J} → is-exact φ ψ
     → is-exact-seq (H ⟨ ψ ⟩→ diag) → is-exact-seq (G ⟨ φ ⟩→ H ⟨ ψ ⟩→ diag)
 
 private
   exact-get-type : ∀ {i} {G H : Group i} → HomSequence G H → ℕ → Type i
   exact-get-type (G ⊣|) _ = Lift Unit
   exact-get-type (G ⟨ φ ⟩→ H ⊣|) _ = Lift Unit
-  exact-get-type (G ⟨ φ ⟩→ (H ⟨ ψ ⟩→ s)) O =
-    is-exact (GroupHom.⊙f φ) (GroupHom.⊙f ψ)
+  exact-get-type (G ⟨ φ ⟩→ (H ⟨ ψ ⟩→ s)) O = is-exact φ ψ
   exact-get-type (_ ⟨ _ ⟩→ s) (S n) = exact-get-type s n
 
 exact-get : ∀ {i} {G H : Group i} {diag : HomSequence G H}
@@ -126,8 +126,7 @@ private
   exact-build-arg-type (G ⊣|) = nil
   exact-build-arg-type (G ⟨ φ ⟩→ H ⊣|) = nil
   exact-build-arg-type (G ⟨ φ ⟩→ H ⟨ ψ ⟩→ s) =
-    is-exact (GroupHom.⊙f φ) (GroupHom.⊙f ψ)
-    :: exact-build-arg-type (H ⟨ ψ ⟩→ s)
+    is-exact φ ψ :: exact-build-arg-type (H ⟨ ψ ⟩→ s)
 
   exact-build-helper : ∀ {i} {G H : Group i} (seq : HomSequence G H)
     → HList (exact-build-arg-type seq) → is-exact-seq seq

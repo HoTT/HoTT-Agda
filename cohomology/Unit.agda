@@ -29,15 +29,15 @@ module _ (n : ℤ) where
     (Cid n ⊙LU , λ x → lemma₂ x ∙ app= (ap GroupHom.f (CF-ident n)) x)
     where
     lemma₁ : (x : CEl n (⊙Cof (⊙idf _)))
-      → Cid n ⊙LU == fst (CF n (⊙cfcod (⊙idf _))) x
+      → Cid n ⊙LU == CF n (⊙cfcod (⊙idf _)) x
     lemma₁ x = ! (itok (C-exact n (⊙idf _)) _ [ x , idp ])
                ∙ app= (ap GroupHom.f (CF-ident n))
-                      (fst (CF n (⊙cfcod (⊙idf _))) x)
+                      (CF n (⊙cfcod (⊙idf _)) x)
 
-    lemma₂ : (x : CEl n ⊙LU) → Cid n ⊙LU == fst (CF n (⊙idf _)) x
+    lemma₂ : (x : CEl n ⊙LU) → Cid n ⊙LU == CF n (⊙idf _) x
     lemma₂ = transport
       {A = Σ (Ptd i) (λ X → fst (⊙LU ⊙→ X))}
-      (λ {(X , H) → (c : CEl n X) → Cid n ⊙LU == fst (CF n H) c})
+      (λ {(X , H) → (c : CEl n X) → Cid n ⊙LU == CF n H c})
       (pair= Cof-Unit-is-Unit
              (prop-has-all-paths-↓ (⊙→-level (Lift-level Unit-is-prop))))
       lemma₁

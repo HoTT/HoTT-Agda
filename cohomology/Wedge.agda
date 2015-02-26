@@ -49,11 +49,11 @@ module CWedge (n : ℤ) (X Y : Ptd i) where
     (CF-hom n ⊙winl) (CF-hom n ⊙winr)
     (app= (ap GroupHom.f βl)) (app= (ap GroupHom.f βr))
     (transport
-      (λ {(_ , g) → is-exact (CF n g) (CF n ⊙winr)})
+      (λ {(_ , g) → is-exact (CF-hom n g) (CF-hom n ⊙winr)})
       (pair= CofWinr.⊙path CofWinr.cfcod-over)
       (C-exact n ⊙winr))
     (transport
-      (λ {(_ , g) → is-exact (CF n g) (CF n ⊙winl)})
+      (λ {(_ , g) → is-exact (CF-hom n g) (CF-hom n ⊙winl)})
       (pair= CofWinl.⊙path CofWinl.cfcod-over)
       (C-exact n ⊙winl))
     public
@@ -67,7 +67,7 @@ module CWedge (n : ℤ) (X Y : Ptd i) where
       [ (λ K → C n Z →ᴳ K) ↓ iso ]
   wedge-rec-over winl* winr* wglue* pt = codomain-over-iso $
     codomain-over-equiv
-      (fst (CF n (WedgeRec.f winl* winr* wglue* , pt))) _
+      (CF n (WedgeRec.f winl* winr* wglue* , pt)) _
     ▹ ap2 (λ f g z → (f z , g z))
         (ap GroupHom.f $ ! $ CF-comp n (rec , pt) ⊙winl)
         (ap GroupHom.f $ ! $

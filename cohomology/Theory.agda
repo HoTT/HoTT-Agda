@@ -28,8 +28,8 @@ record CohomologyTheory i : Type (lsucc i) where
     CF-comp : (n : ℤ) {X Y Z : Ptd i} (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y))
       → CF-hom n (g ⊙∘ f) == CF-hom n f ∘ᴳ CF-hom n g
 
-  CF : (n : ℤ) {X Y : Ptd i} → fst (X ⊙→ Y) → fst (⊙CEl n Y ⊙→ ⊙CEl n X)
-  CF n f = GroupHom.⊙f (CF-hom n f)
+  CF : (n : ℤ) {X Y : Ptd i} → fst (X ⊙→ Y) → CEl n Y → CEl n X
+  CF n f = GroupHom.f (CF-hom n f)
 
   field
     C-abelian : (n : ℤ) (X : Ptd i) → is-abelian (C n X)
@@ -41,7 +41,7 @@ record CohomologyTheory i : Type (lsucc i) where
         == CF-hom n f ∘ᴳ fst (C-Susp n Y)
 
     C-exact : (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y))
-      → is-exact (CF n (⊙cfcod f)) (CF n f)
+      → is-exact (CF-hom n (⊙cfcod f)) (CF-hom n f)
 
     C-additive : (n : ℤ) {I : Type i} (Z : I → Ptd i)
       → ((W : I → Type i) → has-choice ⟨0⟩ I W)

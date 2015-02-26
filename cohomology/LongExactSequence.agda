@@ -30,7 +30,7 @@ long-cofiber-exact =
     (λ {(r , s) → is-exact-seq s})
     (pair= _ $ sequence-iso-ua _ _ $
       C-Susp n Y ↓⟨ C-SuspF n f ⟩↓
-      C-Susp n X ↓⟨ hom= _ _ $ ap (λ w → fst (CF (succ n) ⊙ext-glue) ∘ w) $
+      C-Susp n X ↓⟨ hom= _ _ $ ap (λ w → CF (succ n) ⊙ext-glue ∘ w) $
                     ! $ λ= $ is-equiv.g-f (snd (C-Susp n X)) ⟩↓
       idiso _    ↓⟨ hom= _ _ idp ⟩↓
       idiso _    ↓⟨ hom= _ _ idp ⟩↓

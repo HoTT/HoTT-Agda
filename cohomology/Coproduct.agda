@@ -102,33 +102,33 @@ module C⊔ (n : ℤ) (m : ℕ) (X Y : Ptd i) where
 
     open CofSelect X Y
 
-    seq : {G : Group i} (φ : GroupHom (C n (X ⊙⊔ Y)) G)
-      → HomSequence _ _
-    seq {G} φ =
+    seq : HomSequence _ _
+    seq =
       C n (⊙Sphere 1) ⟨ cst-hom ⟩→
       C n (X ⊙∨ Y)    ⟨ CF-hom n ⊙add-wglue ⟩→
-      C n (X ⊙⊔ Y)    ⟨ φ ⟩→ -- CF-hom n ⊙select
-      G ⊣|
+      C n (X ⊙⊔ Y)    ⟨ CF-hom n ⊙select ⟩→
+      C n (⊙Sphere 0) ⊣|
 
-    eseq : is-exact-seq (seq (CF-hom n ⊙select))
-    eseq = exact-build (seq (CF-hom n ⊙select))
-      (transport (λ {(φ , ψ) → is-exact (GroupHom.⊙f ψ) (GroupHom.⊙f φ)})
+    eseq : is-exact-seq seq
+    eseq = exact-build seq
+      (transport (λ {(φ , ψ) → is-exact ψ φ})
         (pair×= (CF-base-indep n _ _ _) (CF-base-indep n _ _ _ ∙ CF-cst n))
         (transport {A = Σ _ (λ {(U , g , h) → (g (inl (snd X)) == snd U)
                                           × (h (snd U) == north _)})}
-          (λ {((_ , g , h) , (p , q)) → is-exact (CF n (h , q)) (CF n (g , p))})
+          (λ {((_ , g , h) , (p , q)) →
+            is-exact (CF-hom n (h , q)) (CF-hom n (g , p))})
           (pair= (pair= ⊙path (↓-×-in cfcod-over ext-over))
                  (↓-×-in (from-transp _ _ idp) (from-transp _ _ idp)))
           (transport {A = Σ _ (λ {(U , g) → g (cfbase _) == snd U})}
             (λ {((_ , g) , p) →
-              is-exact (CF n (g , p)) (CF n (⊙cfcod ⊙select))})
+              is-exact (CF-hom n (g , p)) (CF-hom n (⊙cfcod ⊙select))})
             (pair= (pair= (Cof².space-path ⊙select) (Cof².cfcod²-over ⊙select))
                    (from-transp _ _ idp))
             (C-exact n (⊙cfcod ⊙select)))))
-      (transport (λ φ → is-exact (GroupHom.⊙f φ) (CF n ⊙select))
+      (transport (λ φ → is-exact φ (CF-hom n ⊙select))
         (CF-base-indep n _ _ _)
         (transport {A = Σ _ (λ {(U , g) → g (inl (snd X)) == snd U})}
-          (λ {((_ , g) , p) → is-exact (CF n (g , p)) (CF n ⊙select)})
+          (λ {((_ , g) , p) → is-exact (CF-hom n (g , p)) (CF-hom n ⊙select)})
           (pair= (pair= ⊙path cfcod-over) (from-transp _ _ idp))
           (C-exact n ⊙select)))
 
