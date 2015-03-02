@@ -16,7 +16,7 @@ module homotopy.PathSetIsInital {i} (A : Type i)
     where
 
     private
-      univ-cover = path-set-cover ∙[ A , a₁ ]
+      univ-cover = path-set-cover ⊙[ A , a₁ ]
 
     -- Weak initiality by transport.
     quotient-cover : CoverHom univ-cover cov
