@@ -18,9 +18,6 @@ module homotopy.CoverClassificationCat {i} (A∙ : Ptd i)
     a₁ = snd A∙
     π1A = fundamental-group A∙
 
-  postulate
-    magic : ∀ {i} {X : Type i} → X
-
   -- A covering space constructed from a G-set.
   cover-hom-to-gset-hom : ∀ {j}
     → {cov₁ cov₂ : Cover A j}
