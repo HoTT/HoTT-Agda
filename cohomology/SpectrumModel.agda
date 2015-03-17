@@ -7,7 +7,7 @@ open import cohomology.Theory
 open import cohomology.Exactness
 open import cohomology.Choice
 
-{- A spectrum (collection (Eₙ | n : ℤ) such that ΩEₙ₊₁ = Eₙ)
+{- A spectrum (family (Eₙ | n : ℤ) such that ΩEₙ₊₁ = Eₙ)
  - gives rise to a cohomology theory C with Cⁿ(S⁰) = π₁(Eₙ₊₁). -}
 
 module cohomology.SpectrumModel
@@ -31,20 +31,15 @@ module SpectrumModel where
   {- Cⁿ(X) is an abelian group -}
   C-abelian : (n : ℤ) (X : Ptd i) → is-abelian (C n X)
   C-abelian n X =
-    transport (is-abelian ∘ →Ω-Group X) (spectrum (succ n)) C-abelian-lemma
+    transport (is-abelian ∘ →Ω-Group X) (spectrum (succ n)) $
+      Trunc-Group-abelian (→Ω-group-structure _ _) $ λ {(f , fpt) (g , gpt) →
+        ⊙λ= (λ x → conc^2-comm (f x) (g x)) (pt-lemma fpt gpt)}
     where
-    pt-lemma : ∀ {i} {X : Ptd i} {α β : Ω^ 2 X}
-      (γ : α == idp^ 2) (δ : β == idp^ 2)
-      → ap2 _∙_ γ δ == conc^2-comm α β ∙ ap2 _∙_ δ γ
+    pt-lemma : ∀ {i} {A : Type i} {x : A} {p q : idp {a = x} == idp {a = x}}
+      (α : p == idp) (β : q == idp)
+      → ap (uncurry _∙_) (ap2 _,_ α β) ∙ idp
+        == conc^2-comm p q ∙ ap (uncurry _∙_) (ap2 _,_ β α) ∙ idp
     pt-lemma idp idp = idp
-
-    C-abelian-lemma = Trunc-elim
-      (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
-      (λ {(f , fpt) → Trunc-elim
-        (λ _ → =-preserves-level _ Trunc-level)
-        (λ {(g , gpt) → ap [_] $ ⊙λ=
-          (λ x → conc^2-comm (f x) (g x))
-          (pt-lemma fpt gpt)})})
 
   {- CF, the functorial action of C:
    - contravariant functor from pointed spaces to abelian groups -}
@@ -66,7 +61,7 @@ module SpectrumModel where
       → CF-hom n (g ⊙∘ f) == CF-hom n f ∘ᴳ CF-hom n g
     CF-comp g f = →Ω-Group-dom-∘ g f (E (succ n))
 
-  {- Eilenberg-Steenrod Axioms -}
+  -- Eilenberg-Steenrod Axioms
 
   {- Suspension Axiom -}
   private
@@ -229,17 +224,11 @@ module SpectrumModel where
         == Group.comp (Πᴳ A (C n ∘ X)) (R tf) (R tg)
     pres-comp = Trunc-elim
       (λ _ → Π-level (λ _ → =-preserves-level _ (Π-level (λ _ → Trunc-level))))
-      (λ {(f , fpt) → Trunc-elim
+      (λ f → Trunc-elim
         (λ _ → =-preserves-level _ (Π-level (λ _ → Trunc-level)))
-        (λ {(g , gpt) → λ= $ λ a → ap [_] $
-          pair= idp (comp-snd f g (! (bwglue a)) fpt gpt)})})
-      where
-      comp-snd : ∀ {i j} {A : Type i} {B : Type j} {a₁ a₂ : A} {b₀ : B}
-        {p q : b₀ == b₀} (f : A → b₀ == b₀) (g : A → b₀ == b₀)
-        (r : a₁ == a₂) (α : f a₂ == p) (β : g a₂ == q)
-        → ap (λ x → f x ∙ g x) r ∙ ap2 _∙_ α β
-          == ap2 _∙_ (ap f r ∙ α) (ap g r ∙ β)
-      comp-snd f g idp idp idp = idp
+        (λ g → λ= $ λ a → ap [_] $
+          ⊙∘-assoc ⊙conc (⊙×-in f g) (⊙bwin a)
+          ∙ ap (λ w → ⊙conc ⊙∘ w) (⊙×-in-pre∘ f g (⊙bwin a))))
 
     abstract
       C-additive : C n (⊙BigWedge X) == Πᴳ A (C n ∘ X)

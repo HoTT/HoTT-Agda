@@ -19,11 +19,11 @@ module SuspAdjointLoopIso {i} where
 
     abstract
       pres-comp : (h₁ h₂ : fst (⊙Susp X ⊙→ ⊙Ω Y))
-        → –> (A.eq X (⊙Ω Y)) (⊙comp2 ⊙conc h₁ h₂)
-           == ⊙comp2 ⊙conc (–> (A.eq X (⊙Ω Y)) h₁) (–> (A.eq X (⊙Ω Y)) h₂)
+        → –> (A.eq X (⊙Ω Y)) (⊙conc ⊙∘ ⊙×-in h₁ h₂)
+           == ⊙conc ⊙∘ ⊙×-in (–> (A.eq X (⊙Ω Y)) h₁) (–> (A.eq X (⊙Ω Y)) h₂)
       pres-comp h₁ h₂ =
         B.nat-cod h₁ h₂ ⊙conc
-        ∙ ap (λ w → ⊙comp2 w (–> (A.eq X (⊙Ω Y)) h₁) (–> (A.eq X (⊙Ω Y)) h₂))
+        ∙ ap (λ w → w ⊙∘ ⊙×-in (–> (A.eq X (⊙Ω Y)) h₁) (–> (A.eq X (⊙Ω Y)) h₂))
              arr2-lemma
         where
         module A× = RightAdjoint× hadj

@@ -164,7 +164,7 @@ module RightAdjoint× {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
   ⊙into-out : ⊙into ⊙∘ ⊙out == ⊙idf _
   ⊙into-out =
     ⊙×-in (G.arr ⊙fst) (G.arr ⊙snd) ⊙∘ ⊙out
-      =⟨ ⊙comp2-pre∘ ⊙out (uncurry _,_ , idp) (G.arr ⊙fst) (G.arr ⊙snd) ⟩
+      =⟨ ⊙×-in-pre∘ (G.arr ⊙fst) (G.arr ⊙snd) ⊙out ⟩
     ⊙×-in (G.arr ⊙fst ⊙∘ ⊙out) (G.arr ⊙snd ⊙∘ ⊙out)
       =⟨ ap2 ⊙×-in
            (A.nat-cod _ ⊙fst (⊙×-in (<– (A.eq _ _) ⊙fst) (<– (A.eq _ _) ⊙snd))
@@ -184,9 +184,9 @@ module RightAdjoint× {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
       =⟨ A.nat-dom (⊙×-in (G.arr ⊙fst) (G.arr ⊙snd)) _
            (⊙×-in (<– (A.eq _ _) ⊙fst) (<– (A.eq _ _) ⊙snd)) ⟩
     –> (A.eq _ _) (⊙×-in (<– (A.eq _ _) ⊙fst) (<– (A.eq _ _) ⊙snd)
-                 ⊙∘ F.arr (⊙×-in (G.arr ⊙fst) (G.arr ⊙snd)))
-      =⟨ ⊙comp2-pre∘ (F.arr (⊙×-in (G.arr ⊙fst) (G.arr ⊙snd)))
-           (uncurry _,_ , idp) (<– (A.eq _ _) ⊙fst) (<– (A.eq _ _) ⊙snd)
+    ⊙∘ F.arr (⊙×-in (G.arr ⊙fst) (G.arr ⊙snd)))
+      =⟨ ⊙×-in-pre∘ (<– (A.eq _ _) ⊙fst) (<– (A.eq _ _) ⊙snd)
+           (F.arr (⊙×-in (G.arr ⊙fst) (G.arr ⊙snd)))
          |in-ctx –> (A.eq _ _) ⟩
     –> (A.eq _ _) (⊙×-in
             (<– (A.eq _ _) ⊙fst ⊙∘ F.arr (⊙×-in (G.arr ⊙fst) (G.arr ⊙snd)))
@@ -199,10 +199,8 @@ module RightAdjoint× {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
             ∙ ap (<– (A.eq _ _)) (⊙snd-⊙×-in (G.arr ⊙fst) (G.arr ⊙snd))
             ∙ ! (A.nat!-cod _ ⊙snd (⊙idf _))) ⟩
     –> (A.eq _ _) (⊙×-in (⊙fst ⊙∘ <– (A.eq _ _) (⊙idf _))
-                       (⊙snd ⊙∘ <– (A.eq _ _) (⊙idf _)))
-      =⟨ ap (–> (A.eq _ _))
-           (! (⊙comp2-pre∘ (<– (A.eq _ _) (⊙idf _)) (uncurry _,_ , idp)
-                 ⊙fst ⊙snd)) ⟩
+                         (⊙snd ⊙∘ <– (A.eq _ _) (⊙idf _)))
+      =⟨ ap (–> (A.eq _ _)) (! (⊙×-in-pre∘ ⊙fst ⊙snd (<– (A.eq _ _) (⊙idf _)))) ⟩
     –> (A.eq _ _) (⊙×-in ⊙fst ⊙snd ⊙∘ <– (A.eq _ _) (⊙idf _))
       =⟨ ⊙∘-unit-l _ |in-ctx –> (A.eq _ _) ⟩
     –> (A.eq _ _) (<– (A.eq _ _) (⊙idf _))
@@ -237,11 +235,9 @@ module RightAdjointBinary {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
   nat-cod : {X : Ptd i} {Y Z W : Ptd j}
     (r₁ : fst (F.obj X ⊙→ Y)) (r₂ : fst (F.obj X ⊙→ Z))
     (o : fst (Y ⊙× Z ⊙→ W))
-    → –> (A.eq X W) (⊙comp2 o r₁ r₂)
-      == ⊙comp2 (arr2 o) (–> (A.eq X Y) r₁) (–> (A.eq X Z) r₂)
+    → –> (A.eq X W) (o ⊙∘ ⊙×-in r₁ r₂)
+      == arr2 o ⊙∘ ⊙×-in (–> (A.eq X Y) r₁) (–> (A.eq X Z) r₂)
   nat-cod {X} {Y} {Z} {W} r₁ r₂ o =
-    –> (A.eq X W) (⊙comp2 o r₁ r₂)
-      =⟨ ap (–> (A.eq X W)) (⊙comp2-factor o r₁ r₂) ⟩
     –> (A.eq X W) (o ⊙∘ ⊙×-in r₁ r₂)
       =⟨ ! (A.nat-cod X o (⊙×-in r₁ r₂)) ⟩
     G.arr o ⊙∘ –> (A.eq X (Y ⊙× Z)) (⊙×-in r₁ r₂)
@@ -252,8 +248,7 @@ module RightAdjointBinary {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
       =⟨ ⊙∘-assoc-lemma (G.arr o) (A×.⊙out Y Z) (A×.⊙into Y Z)
            (–> (A.eq X (Y ⊙× Z)) (⊙×-in r₁ r₂)) ⟩
     arr2 o ⊙∘ A×.⊙into Y Z ⊙∘ –> (A.eq X (Y ⊙× Z)) (⊙×-in r₁ r₂)
-      =⟨ ⊙comp2-pre∘ (–> (A.eq X (Y ⊙× Z)) (⊙×-in r₁ r₂))
-           (uncurry _,_ , idp) (G.arr ⊙fst) (G.arr ⊙snd)
+      =⟨ ⊙×-in-pre∘ (G.arr ⊙fst) (G.arr ⊙snd) (–> (A.eq X (Y ⊙× Z)) (⊙×-in r₁ r₂))
          |in-ctx (λ w → arr2 o ⊙∘ w) ⟩
     arr2 o ⊙∘ ⊙×-in (G.arr ⊙fst ⊙∘ –> (A.eq X (Y ⊙× Z)) (⊙×-in r₁ r₂))
                     (G.arr ⊙snd ⊙∘ –> (A.eq X (Y ⊙× Z)) (⊙×-in r₁ r₂))
@@ -262,16 +257,8 @@ module RightAdjointBinary {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
             ∙ ap (–> (A.eq X Y)) (⊙fst-⊙×-in r₁ r₂))
            (A.nat-cod X ⊙snd (⊙×-in r₁ r₂)
             ∙ ap (–> (A.eq X Z)) (⊙snd-⊙×-in r₁ r₂)) ⟩
-    arr2 o ⊙∘ ⊙×-in (–> (A.eq X Y) r₁) (–> (A.eq X Z) r₂)
-      =⟨ ! (⊙comp2-factor (arr2 o) (–> (A.eq X Y) r₁) (–> (A.eq X Z) r₂)) ⟩
-    ⊙comp2 (arr2 o) (–> (A.eq X Y) r₁) (–> (A.eq X Z) r₂) ∎
+    arr2 o ⊙∘ ⊙×-in (–> (A.eq X Y) r₁) (–> (A.eq X Z) r₂) ∎
     where
-    ⊙comp2-factor : ∀ {i j k l}
-      {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
-      (o : fst (Y ⊙× Z ⊙→ W)) (f : fst (X ⊙→ Y)) (g : fst (X ⊙→ Z))
-      → ⊙comp2 o f g == o ⊙∘ ⊙×-in f g
-    ⊙comp2-factor (o , idp) (f , idp) (g , idp) = idp
-
     ⊙∘-assoc-lemma : ∀ {i j k l m}
       {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {U : Ptd l} {V : Ptd m}
       (k : fst (U ⊙→ V)) (h : fst (Z ⊙→ U))

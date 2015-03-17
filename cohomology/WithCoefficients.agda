@@ -7,41 +7,38 @@ module cohomology.WithCoefficients where
 →Ω-group-structure : ∀ {i j} (X : Ptd i) (Y : Ptd j)
   → GroupStructure (fst (X ⊙→ ⊙Ω Y))
 →Ω-group-structure X Y = record {
-  ident = ((λ _ → idp) , idp);
+  ident = ⊙cst;
   inv = λ F → ((! ∘ fst F) , ap ! (snd F));
-  comp = ⊙comp2 ⊙conc;
-  unitl = λ G → pair= idp (ap2-idp-l _∙_ {x = idp} (snd G) ∙ ap-idf (snd G));
-  unitr = λ F → ⊙λ=
-    (∙-unit-r ∘ fst F)
-    (ap2-idp-r _∙_ (snd F) ∙ unitr-lemma (snd F));
+  comp = λ F G → ⊙conc ⊙∘ ⊙×-in F G;
+  unitl = λ G → pair= idp (unitl-lemma (snd G));
+  unitr = λ F → ⊙λ= (∙-unit-r ∘ fst F) (unitr-lemma (snd F));
   assoc = λ F G H → ⊙λ=
     (λ x → ∙-assoc (fst F x) (fst G x) (fst H x))
-    (! (∙-unit-r _) ∙ assoc-lemma (snd F) (snd G) (snd H));
-  invl = λ F → ⊙λ=
-    (!-inv-l ∘ fst F)
-    (invl-lemma (snd F) ∙ ! (∙-unit-r _));
-  invr = λ F → ⊙λ=
-    (!-inv-r ∘ fst F)
-    (invr-lemma (snd F) ∙ ! (∙-unit-r _))}
+    (assoc-lemma (snd F) (snd G) (snd H));
+  invl = λ F → ⊙λ= (!-inv-l ∘ fst F) (invl-lemma (snd F));
+  invr = λ F → ⊙λ= (!-inv-r ∘ fst F) (invr-lemma (snd F))}
   where
+  unitl-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
+    → ap (uncurry _∙_) (ap2 _,_ idp α) ∙ idp == α
+  unitl-lemma idp = idp
 
   unitr-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
-    → ap (λ r → r ∙ idp) α == ∙-unit-r p ∙ α
+    → ap (uncurry _∙_) (ap2 _,_ α idp) ∙ idp == ∙-unit-r p ∙ α
   unitr-lemma idp = idp
 
-  assoc-lemma : ∀ {i} {A : Type i} {w x y z : A}
-    {p₁ p₂ : w == x} {q₁ q₂ : x == y} {r₁ r₂ : y == z}
-    (α : p₁ == p₂) (β : q₁ == q₂) (γ : r₁ == r₂)
-    → ap2 _∙_ (ap2 _∙_ α β) γ ∙ ∙-assoc p₂ q₂ r₂ ==
-      ∙-assoc p₁ q₁ r₁ ∙ ap2 _∙_ α (ap2 _∙_ β γ)
-  assoc-lemma idp idp idp = ! (∙-unit-r _)
+  assoc-lemma : ∀ {i} {A : Type i} {x : A} {p q r : x == x}
+    (α : p == idp) (β : q == idp) (γ : r == idp)
+    → ap (uncurry _∙_) (ap2 _,_ (ap (uncurry _∙_) (ap2 _,_ α β) ∙ idp) γ) ∙ idp
+      == ∙-assoc p q r
+         ∙ ap (uncurry _∙_) (ap2 _,_ α (ap (uncurry _∙_) (ap2 _,_ β γ) ∙ idp)) ∙ idp
+  assoc-lemma idp idp idp = idp
 
   invl-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
-    → ap2 _∙_ (ap ! α) α == !-inv-l p
+    → ap (uncurry _∙_) (ap2 _,_ (ap ! α) α) ∙ idp == !-inv-l p ∙ idp
   invl-lemma idp = idp
 
   invr-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
-    → ap2 _∙_ α (ap ! α) == !-inv-r p
+    → ap (uncurry _∙_) (ap2 _,_ α (ap ! α)) ∙ idp == !-inv-r p ∙ idp
   invr-lemma idp = idp
 
 →Ω-Group : ∀ {i j} (X : Ptd i) (Y : Ptd j) → Group (lmax i j)
@@ -53,7 +50,9 @@ module cohomology.WithCoefficients where
   (f : fst (X ⊙→ Y)) (Z : Ptd k)
   → (→Ω-Group Y Z →ᴳ →Ω-Group X Z)
 →Ω-Group-dom-act {Y = Y} f Z =
-  Trunc-Group-hom (λ g → g ⊙∘ f) (⊙comp2-pre∘ f ⊙conc)
+  Trunc-Group-hom (λ g → g ⊙∘ f)
+    (λ g₁ g₂ → ⊙∘-assoc ⊙conc (⊙×-in g₁ g₂) f
+               ∙ ap (λ w → ⊙conc ⊙∘ w) (⊙×-in-pre∘ g₁ g₂ f))
 
 →Ω-Group-dom-idf : ∀ {i j} {X : Ptd i} (Y : Ptd j)
   → →Ω-Group-dom-act (⊙idf X) Y == idhom (→Ω-Group X Y)

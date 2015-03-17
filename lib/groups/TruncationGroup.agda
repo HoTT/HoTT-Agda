@@ -115,3 +115,11 @@ Trunc-Group-iso f pres-comp ie =
        (λ b → ap [_] (is-equiv.f-g ie b)))
      (Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
        (λ a → ap [_] (is-equiv.g-f ie a))))
+
+Trunc-Group-abelian : ∀ {i} {A : Type i} (GS : GroupStructure A)
+  → ((a₁ a₂ : A) → GroupStructure.comp GS a₁ a₂ == GroupStructure.comp GS a₂ a₁)
+  → is-abelian (Trunc-Group GS)
+Trunc-Group-abelian GS ab =
+  Trunc-elim (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level)) $
+    λ a₁ → Trunc-elim (λ _ → =-preserves-level _ Trunc-level) $
+      λ a₂ → ap [_] (ab a₁ a₂)
