@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import cohomology.CofiberSequence
 open import cohomology.FunctionOver
 
 module cohomology.MayerVietoris {i} where
@@ -253,14 +252,6 @@ module MayerVietorisBase
   cfcod-over : cfcod reglue == ext-glue
               [ (λ W → fst (⊙Pushout ps) → fst W) ↓ ⊙path ]
   cfcod-over = ↓-cst2-in _ _ $ codomain-over-equiv _ _
-    where
-    lemma : (into , idp) ⊙∘ ⊙cfcod ⊙reglue == ⊙ext-glue
-    lemma = pair= idp $
-      ap into (! (cfglue reglue (winl (snd X)))) ∙ idp
-        =⟨ ap-! into (cfglue reglue (winl (snd X))) |in-ctx (λ w → w ∙ idp) ⟩
-      ! (ap into (cfglue reglue (winl (snd X)))) ∙ idp
-        =⟨ Into.glue-β (winl (snd X)) |in-ctx (λ w → ! w ∙ idp) ⟩
-      idp ∎
 
   {- Transporting [ext-glue] over the equivalence. Uses the same sort of
    - cube technique as in the proof of [⊙path]. -}
