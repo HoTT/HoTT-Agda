@@ -58,16 +58,6 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {C : Type k}
                 ∙ ! (ap (λ w → fst (fill w (cod* (∨-in-× X Y w)))
                                 ⊡h cod* (snd X , snd Y))
                      wglue))
-      where
-      fill-square : (w : X ∨ Y)
-        → Square north* (ap f (merid _ (cfcod _ (∨-in-× X Y w))))
-                 (ap g (merid _ (cfcod _ (∨-in-× X Y w)))) south*
-      fill-square w =
-        fst (fill-cube-right base*
-              (natural-square (λ _ → north*) (cfglue _ w))
-              (natural-square (ap f ∘ merid _) (cfglue _ w))
-              (natural-square (ap g ∘ merid _) (cfglue _ w))
-              (natural-square (λ _ → south*) (cfglue _ w)))
 
     abstract
       coh : (s : X ∧ Y)
@@ -84,7 +74,7 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {C : Type k}
           (! (ap (λ sq' → sq' ⊡h fst (fillY y) ⊡h fst fill0 ⊡h cod* (snd X , y))
                  fillX0
               ∙ ⊡h-unit-l (fst (fillY y) ⊡h fst fill0 ⊡h cod* (snd X , y))))
-        (snd (fillY y)))
+          (snd (fillY y)))
 
   susp-smash-path-elim : ((σ : Suspension (X ∧ Y)) → f σ == g σ)
   susp-smash-path-elim = Suspension-elim _ north* south* coh
