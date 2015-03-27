@@ -39,8 +39,8 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
 
 {- Convenient notation for sequences of homomorphisms -}
 
-infix 2 _⊣|
-infixr 2 _⟨_⟩→_
+infix 15 _⊣|
+infixr 10 _⟨_⟩→_
 
 data HomSequence {i} : Group i → Group i → Type (lsucc i) where
   _⊣| : (G : Group i) → HomSequence G G
@@ -59,8 +59,8 @@ data SequencePath {i} : {G₁ H₁ G₂ H₂ : Group i}
     → SequencePath S₁ S₂ pH pK
     → SequencePath (G₁ ⟨ φ₁ ⟩→ S₁) (G₂ ⟨ φ₂ ⟩→ S₂) pG pK
 
-infix 2 _↓⊣|
-infixr 2 _↓⟨_⟩↓_
+infix 15 _↓⊣|
+infixr 10 _↓⟨_⟩↓_
 
 data SequenceIso {i j} : {G₁ H₁ : Group i} {G₂ H₂ : Group j}
   (S₁ : HomSequence G₁ H₁) (S₂ : HomSequence G₂ H₂)

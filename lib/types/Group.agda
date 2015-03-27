@@ -75,6 +75,7 @@ module _ where
 module _ {i} (G : Group i) where
   private
     open Group G
+    infix 80 _⊙_
     _⊙_ = comp
 
   group-inv-unique-l : (g h : El) → (g ⊙ h == ident) → inv h == g

@@ -20,6 +20,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
   Wedge : Type (lmax i j)
   Wedge = Pushout wedge-span
 
+  infix 80 _∨_
   _∨_ = Wedge
 
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
@@ -38,6 +39,7 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
   ⊙Wedge : Ptd (lmax i j)
   ⊙Wedge = ⊙[ Wedge X Y , winl (snd X) ]
 
+  infix 80 _⊙∨_
   _⊙∨_ = ⊙Wedge
 
 module _ {i j} {X : Ptd i} {Y : Ptd j} where

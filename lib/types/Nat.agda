@@ -16,6 +16,7 @@ data ℕ : Type₀ where
 
 Nat = ℕ
 
+infixl 80 _+_
 _+_ : ℕ → ℕ → ℕ
 0 + n = n
 (S m) + n = S (m + n)
@@ -36,6 +37,7 @@ _+_ : ℕ → ℕ → ℕ
 +-assoc 0     m n = idp
 +-assoc (S k) m n = ap S (+-assoc k m n)
 
+infix 120 _*2
 _*2 : ℕ → ℕ
 O *2 = O
 (S n) *2 = S (S (n *2))
@@ -73,8 +75,8 @@ abstract
 ℕ-level = ℕ-is-set
 
 {- Inequalities -}
-infix 4 _<_
-infix 4 _≤_
+infix 40 _<_
+infix 40 _≤_
 
 data _<_ : ℕ → ℕ → Type₀ where
   ltS : {m : ℕ} → m < (S m)

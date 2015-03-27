@@ -34,24 +34,23 @@ of steps from the beginning or the end:
   ↯ t !2
 -}
 
-infix  2 _∎∎
-infixr 2 _=⟪_⟫_
+infix  15 _∎∎
+infixr 10 _=⟪_⟫_
+infixr 10 _=⟪idp⟫_
 
 data PathSeq {i} {A : Type i} : A → A → Type i where
   _∎∎ : (a : A) → PathSeq a a
   _=⟪_⟫_ : (a : A) {a' a'' : A} (p : a == a') (s : PathSeq a' a'') → PathSeq a a''
 
-infix 4 _=-=_
+infix 30 _=-=_
 _=-=_ = PathSeq
-
-infixr 2 _=⟪idp⟫_
 
 _=⟪idp⟫_ : ∀ {i} {A : Type i} (a : A) {a' : A} (s : PathSeq a a') → PathSeq a a'
 a =⟪idp⟫ s = s
 
 module _ {i} {A : Type i} where
 
-  infix 1 ↯_
+  infix 0 ↯_
 
   ↯_ : {a a' : A} (s : PathSeq a a') → a == a'
   ↯ a ∎∎ = idp
@@ -100,6 +99,7 @@ module _ {i} {A : Type i} where
     split (a =⟪ p ⟫ a' ∎∎) = (a , ((a ∎∎) , p))
     split (a =⟪ p ⟫ s) = let (a'' , (t , q)) = split s in (a'' , ((a =⟪ p ⟫ t) , q))
 
+    infix 80 _∙∙_
     _∙∙_ : {a a' a'' : A} (s : PathSeq a a') (p : a' == a'') → PathSeq a a''
     (a ∎∎) ∙∙ p = a =⟪ p ⟫ _ ∎∎
     (a =⟪ p ⟫ s) ∙∙ p' = a =⟪ p ⟫ s ∙∙ p'
@@ -114,6 +114,7 @@ module _ {i} {A : Type i} where
   #- O (a =⟪ p ⟫ s) = #- O s
   #- (S n) (a =⟪ p ⟫ s) = let (a' , (t , q)) = split (a =⟪ p ⟫ s) in #- n t ∙∙ q
 
+  infix 120 _!0 _!1 _!2 _!3 _!4 _!5
   _!0 = !- 0
   _!1 = !- 1
   _!2 = !- 2
@@ -128,6 +129,7 @@ module _ {i} {A : Type i} where
   4! = 4 -!
   5! = 5 -!
 
+  infix 120 _#0 _#1 _#2 _#3 _#4 _#5
   _#0 = #- 0
   _#1 = #- 1
   _#2 = #- 2

@@ -124,6 +124,19 @@ rule `n` and elimination rules `e1`, …, `en`, then
 - `N=-equiv`/`N=-path` (TODO: `n=-equiv`/`n=-path` would maybe be more natural).
    Note that this equivalence is usually needed in the direction `N= ≃ _==_ {N}`
 
+### Precedence
+
+Precedence convention
+
+1. Separators ```_$_``` and arrows: 0
+2. Layout combinators (equational reasoning): 10-15
+3. Equalities, equivalences: 30
+4. Other relations, operators with line-level separators: 40
+5. Constructors (for example ```_,_```): 60
+6. Binary operators (including type formers like ```_×_```): 80
+7. Prefix operators: 100
+8. Postfix operators: 120
+
 Structure of the source
 -----------------------
 

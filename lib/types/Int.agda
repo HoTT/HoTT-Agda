@@ -139,6 +139,7 @@ abstract
 ℤ~ (neg n) = pos n
 
 -- comp
+infixl 80 _ℤ+_
 _ℤ+_ : ℤ → ℤ → ℤ
 O         ℤ+ z = z
 pos O     ℤ+ z = succ z

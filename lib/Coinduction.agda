@@ -4,7 +4,7 @@ open import lib.Base
 
 module lib.Coinduction where
 
-infix 1000 ♯_
+infix 100 ♯_
 
 postulate  -- Coinduction
   ∞  : ∀ {i} (A : Type i) → Type i

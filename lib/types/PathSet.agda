@@ -15,7 +15,7 @@ _=₀_ x y = Trunc ⟨0⟩ (x == y)
 _=0_ : ∀ {i} {A : Type i} → A → A → Type i
 _=0_ = _=₀_
 
-infix 8 _∙₀_ _∙₀'_ -- \.\0
+infix 80 _∙₀_ _∙₀'_ -- \.\0
 _∙₀_ : ∀ {i} {A : Type i} {x y z : A} → x =₀ y → y =₀ z → x =₀ z
 _∙₀_ = Trunc-fmap2 _∙_
 

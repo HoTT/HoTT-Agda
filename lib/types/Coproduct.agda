@@ -59,6 +59,7 @@ module _ {i j} {A : Type i} {B : Type j} where
   ⊔-level _ pB (inr b₁) (inr b₂) =
     equiv-preserves-level ((inr=inr-equiv b₁ b₂)⁻¹) (pB b₁ b₂)
 
+infix 80 _⊙⊔_
 _⊙⊔_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
 X ⊙⊔ Y = ⊙[ Coprod (fst X) (fst Y) , inl (snd X) ]
 

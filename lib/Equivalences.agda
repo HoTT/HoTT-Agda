@@ -73,7 +73,7 @@ module _ {i} {j} {A : Type i} {B : Type j} where
              |in-ctx (λ q → ap f q ∙ f-g (f a)) ⟩
         ap f (g-f (g (f a))) ∙ f-g (f a) ∎
 
-infix 4 _≃_
+infix 30 _≃_
 
 _≃_ : ∀ {i j} (A : Type i) (B : Type j) → Type (lmax i j)
 A ≃ B = Σ (A → B) is-equiv
@@ -115,8 +115,8 @@ idf-is-equiv A = is-eq _ (idf A) (λ _ → idp) (λ _ → idp)
 ide : ∀ {i} (A : Type i) → A ≃ A
 ide A = equiv (idf A) (idf A) (λ _ → idp) (λ _ → idp)
 
-infixr 4 _∘e_
-infixr 4 _∘ise_
+infixr 80 _∘e_
+infixr 80 _∘ise_
 
 _∘e_ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
   → B ≃ C → A ≃ B → A ≃ C
@@ -135,12 +135,13 @@ _∘ise_ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
   → is-equiv g → is-equiv f → is-equiv (g ∘ f)
 i1 ∘ise i2 = snd ((_ , i1) ∘e (_ , i2))
 
+infix 120 _⁻¹
 _⁻¹ : ∀ {i j} {A : Type i} {B : Type j} → (A ≃ B) → (B ≃ A)
 e ⁻¹ = equiv (<– e) (–> e) (<–-inv-l e) (<–-inv-r e)
 
 {- Equational reasoning for equivalences -}
-infix  2 _≃∎
-infixr 2 _≃⟨_⟩_
+infix 15 _≃∎
+infixr 10 _≃⟨_⟩_
 
 _≃⟨_⟩_ : ∀ {i j k} (A : Type i) {B : Type j} {C : Type k} → A ≃ B → B ≃ C → A ≃ C
 A ≃⟨ u ⟩ v = v ∘e u

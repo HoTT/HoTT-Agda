@@ -24,6 +24,7 @@ module _ {i} {El : Type i} (GS : GroupStructure El) where
     invr = t-invr}
     where
     open GroupStructure
+    infix 80 _⊗_
     _⊗_ = Trunc-fmap2 (comp GS)
 
     abstract

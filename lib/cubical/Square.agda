@@ -369,10 +369,11 @@ _⊡h∙_ : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
   → Square p₀₋ p₋₀ p₋₁ p₁₋'
 sq ⊡h∙ idp = sq
 
-infixr 8 _⊡v_ _∙v⊡_
-         _⊡h_ _∙h⊡_
+infixr 80 _⊡v_ _∙v⊡_
+          _⊡h_ _∙h⊡_
+          _⊡h'_
 
-infixr 8 _⊡v∙_ _⊡h∙_
+infixr 80 _⊡v∙_ _⊡h∙_
 
 module _ {i} {A : Type i} where
   !□h : {a₀₀ a₀₁ a₁₀ a₁₁ : A}

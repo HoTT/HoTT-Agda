@@ -55,7 +55,7 @@ _→ᴳ_ = GroupHom
 GroupIso : ∀ {i j} (G : Group i) (H : Group j) → Type (lsucc (lmax i j))
 GroupIso G H = Σ (G →ᴳ H) (λ φ → is-equiv (GroupHom.f φ))
 
-infix 4 _≃ᴳ_
+infix 30 _≃ᴳ_
 _≃ᴳ_ = GroupIso
 
 idhom : ∀ {i} (G : Group i) → (G →ᴳ G)
@@ -64,7 +64,7 @@ idhom G = group-hom (idf _) (λ _ _ → idp)
 idiso : ∀ {i} (G : Group i) → (G ≃ᴳ G)
 idiso G = (idhom G , idf-is-equiv _)
 
-infixr 4 _∘ᴳ_
+infixr 80 _∘ᴳ_
 
 _∘ᴳ_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
   → (H →ᴳ K) → (G →ᴳ H) → (G →ᴳ K)
@@ -340,4 +340,6 @@ module _ {i} {G H : Group i} (H-abelian : is-abelian H)
        h₁ □ (h₃ □ (h₂ □ h₄))
          =⟨ ! (H.assoc h₁ h₃ (h₂ □ h₄)) ⟩
        (h₁ □ h₃) □ (h₂ □ h₄) ∎
-       where _□_ = H.comp
+       where
+        infix 80 _□_
+        _□_ = H.comp

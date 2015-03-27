@@ -47,11 +47,10 @@ So we’re using the symbol [_:>_], which has the advantage that it can micmic
 Coq’s [u = v :> A].
 -}
 
-infix 10 of-type
-
 of-type : ∀ {i} (A : Type i) (u : A) → A
 of-type A u = u
 
+infix 40 of-type
 syntax of-type A u =  u :> A
 
 {- Identity type
@@ -61,8 +60,7 @@ reserved in Agda.
 The constant path is [idp]. Note that all arguments of [idp] are implicit.
 -}
 
-infix 3 _==_
-
+infix 30 _==_
 data _==_ {i} {A : Type i} (a : A) : A → Type i where
   idp : a == a
 
@@ -108,6 +106,7 @@ PathOver : ∀ {i j} {A : Type i} (B : A → Type j)
   {x y : A} (p : x == y) (u : B x) (v : B y) → Type j
 PathOver B idp u v = (u == v)
 
+infix 30 PathOver
 syntax PathOver B p u v =
   u == v [ B ↓ p ]
 
@@ -176,7 +175,7 @@ Shorter notation for Π-types.
 Σ-types are defined as a record so that we have definitional η.
 -}
 
-infixr 1 _,_
+infixr 60 _,_
 
 record Σ {i j} (A : Type i) (B : A → Type j) : Type (lmax i j) where
   constructor _,_
@@ -260,8 +259,8 @@ If you do want to reason on paths constructed with equational reasoning, check
 out lib.types.PathSeq instead.
 -}
 
-infix  2 _∎
-infixr 2 _=⟨_⟩_
+infix  15 _∎
+infixr 10 _=⟨_⟩_
 
 _=⟨_⟩_ : ∀ {i} {A : Type i} (x : A) {y z : A} → x == y → y == z → x == z
 _ =⟨ idp ⟩ idp = idp
@@ -269,6 +268,7 @@ _ =⟨ idp ⟩ idp = idp
 _∎ : ∀ {i} {A : Type i} (x : A) → x == x
 _ ∎ = idp
 
+infixr 40 ap
 syntax ap f p = p |in-ctx f
 
 {- Various basic functions and function operations
@@ -285,7 +285,7 @@ idf A = λ x → x
 cst : ∀ {i j} {A : Type i} {B : Type j} (b : B) → (A → B)
 cst b = λ _ → b
 
-infixr 4 _∘_
+infixr 80 _∘_
 
 _∘_ : ∀ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → (B a → Type k)}
   → (g : {a : A} → Π (B a) (C a)) → (f : Π A B) → Π A (λ a → C a (f a))

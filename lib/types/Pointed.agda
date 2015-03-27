@@ -20,7 +20,7 @@ _⊙→_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
 
 infixr 0 _⊙→_
 
-infixr 4 _⊙∘_
+infixr 80 _⊙∘_
 
 ⊙idf : ∀ {i} (X : Ptd i) → fst (X ⊙→ X)
 ⊙idf A = ((λ x → x) , idp)
@@ -52,6 +52,7 @@ _⊙∘_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
 ⊙Σ : ∀ {i j} (X : Ptd i) → (fst X → Ptd j) → Ptd (lmax i j)
 ⊙Σ (A , a₀) Y = ⊙[ Σ A (fst ∘ Y) , (a₀ , snd (Y a₀)) ]
 
+infixr 80 _⊙×_
 _⊙×_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
 X ⊙× Y = ⊙Σ X (λ _ → Y)
 

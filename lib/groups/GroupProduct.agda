@@ -28,6 +28,7 @@ module lib.groups.GroupProduct where
   invr = λ {(g , h) → pair×= (invr GS g) (invr HS h)}}
   where open GroupStructure
 
+infix 80 _×ᴳ_
 _×ᴳ_ : ∀ {i j} → Group i → Group j → Group (lmax i j)
 _×ᴳ_ (group A A-level A-struct) (group B B-level B-struct) =
   group (A × B) (×-level A-level B-level) (×-group-struct A-struct B-struct)
@@ -120,7 +121,9 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
        g₁ □ (g₃ □ (g₂ □ g₄))
          =⟨ ! (G.assoc g₁ g₃ (g₂ □ g₄)) ⟩
        (g₁ □ g₃) □ (g₂ □ g₄) ∎
-       where _□_ = G.comp
+       where
+        infix 80 _□_
+        _□_ = G.comp
 
   ×ᴳ-sum-hom : (H →ᴳ G) → (K →ᴳ G) → (H ×ᴳ K →ᴳ G)
   ×ᴳ-sum-hom φ ψ = record {
@@ -211,6 +214,7 @@ module _ {i} (Pick : Lift {j = i} Bool → Group i) where
 
 module _ {i} where
 
+  infixl 80 _^ᴳ_
   _^ᴳ_ : Group i → ℕ → Group i
   H ^ᴳ O = 0ᴳ
   H ^ᴳ (S n) = H ×ᴳ (H ^ᴳ n)

@@ -13,7 +13,7 @@ module _ {i} {A : Type i} where
   sometimes useful to have both (in particular in lib.types.Paths).
   -}
 
-  infixr 8 _∙_ _∙'_
+  infixr 80 _∙_ _∙'_
 
   _∙_ : {x y z : A}
     → (x == y → y == z → x == z)
@@ -87,6 +87,8 @@ module _ {i} {A : Type i} where
 
   {- Horizontal compositions -}
 
+  infixr 80 _∙2_ _∙'2_
+
   _∙2_ : {x y z : A} {p p' : x == y} {q q' : y == z} (α : p == p') (β : q == q')
     → p ∙ q == p' ∙ q'
   _∙2_ {p = idp} idp β = β
@@ -109,6 +111,10 @@ previous one generalized.
 -}
 module _ {i} {A : Type i} where
   {- Whisker and horizontal composition for Eckmann-Hilton argument -}
+
+  infixr 80 _∙ᵣ_ _⋆2_ _⋆'2_
+  infixl 80 _∙ₗ_
+
   _∙ᵣ_ : {x y z : A} {p p' : x == y} (α : p == p') (q : y == z)
     → p ∙ q == p' ∙ q
   _∙ᵣ_ {p = p} {p' = p'} α idp = ∙-unit-r p ∙ α ∙ ! (∙-unit-r p')
@@ -160,7 +166,7 @@ module _ {i j} {A : Type i} {B : A → Type j} where
 
   {- Dependent concatenation -}
 
-  infixr 8 _∙ᵈ_
+  infixr 80 _∙ᵈ_ _∙'ᵈ_ _◃_ _▹_ _!◃_ _▹!_
 
   _∙ᵈ_ : {x y z : A} {p : x == y} {p' : y == z}
     {u : B x} {v : B y} {w : B z}
@@ -227,6 +233,8 @@ module _ {i j} {A : Type i} {B : A → Type j} where
   {-
   This is some kind of dependent horizontal composition (used in [apd∙]).
   -}
+
+  infixr 80 _∙2ᵈ_ _∙'2ᵈ_
 
   _∙2ᵈ_ : {x y z : Π A B}
     {a a' : A} {p : a == a'} {q : x a == y a} {q' : x a' == y a'}

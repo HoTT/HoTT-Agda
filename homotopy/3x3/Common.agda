@@ -86,6 +86,7 @@ module _ {i} {A : Type i} where
                  (α : p , idp =□ idp , q) → ,idp=□idp,-in (,idp=□idp,-out α) == α
   ,idp=□idp,-η {p = idp} α = idp,=□idp,-η α
 
+  infix 40 _∙□-i/_/_/ _∙□-o/_/_/
   _∙□-i/_/_/ : {a b b' c : A} {p : a == b} {q q' : b == c}
          {r r' : a == b'} {s : b' == c}
          → (p , q =□ r , s) → (q' == q) → (r == r')
@@ -98,6 +99,7 @@ module _ {i} {A : Type i} where
          → (p' , q =□ r , s')
   α ∙□-o/ idp / idp / = α
 
+  infix 80 _∙□h_
   _∙□h_ : {a b b' c c' d : A} {p : a == b} {q : b == c} {r : a == b'}
     {s : b' == c} {t : c == d} {u : b' == c'} {v : c' == d}
     → (p , q =□ r , s) → (s , t =□ u , v) → (p , q ∙ t =□ r ∙ u , v)
@@ -140,6 +142,7 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     → α == β → (α , idp =□d-i idp , β)
   ,idp=□d-iidp,-in {α = idp} x = idp,=□d-iidp,-in x
 
+  infix 40 _◃/_/_/
   _◃/_/_/ : {a b : A} {p : a == b} {u v : B a} {w x : B b}
           → (v == w [ B ↓ p ]) → (u == v) → (w == x)
           → (u == x [ B ↓ p ])
