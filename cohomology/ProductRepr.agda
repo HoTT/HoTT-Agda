@@ -14,6 +14,7 @@ module cohomology.ProductRepr where
            ↙   ↘
        H₁ j₁   j₂  H₂
 
+ - assuming i₁,j₂ and i₂,j₁ are exact sequences,
  - there exists an isomorphism G == H₁ × H₂ such that i₁,i₂ correspond
  - to the natural injections and j₁,j₂ correspond to the natural
  - projections. -}
