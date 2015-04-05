@@ -1,12 +1,12 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import lib.cubical.elims.CofWedge
 open import lib.cubical.elims.SuspSmash
+open import lib.cubical.elims.CofPushoutSection
 
-{- Σ(X∧Y) ≃ X * Y -}
+-- Σ(X∧Y) ≃ X * Y
 
-module homotopy.SuspSmash {i j} (X : Ptd i) (Y : Ptd j) where
+module homotopy.SuspSmash {i} (X Y : Ptd i) where
 
 private
 
@@ -24,7 +24,7 @@ private
     {C = fst (X ⊙* Y)}
     (left (snd X))
     (right (snd Y))
-    (cof-wedge-path-rec
+    (CofPushoutSection.rec _ (λ _ → tt) (λ _ → idp)
       (glue (snd X , snd Y))
       (λ {(x , y) →
         glue (snd X , snd Y) ∙ ! (glue (x , snd Y))
@@ -60,7 +60,7 @@ private
       vert-degen-square (∙-unit-r s)
 
   out-into : (σ : Suspension (Smash X Y)) → out (into σ) == σ
-  out-into = susp-smash-path-elim (out ∘ into) (idf _)
+  out-into = susp-smash-path-elim
     idp
     idp
     (λ {(x , y) → vert-degen-square $
@@ -107,5 +107,5 @@ module SuspSmash where
   path : Suspension (Smash X Y) == fst (X ⊙* Y)
   path = ua eq
 
-  ⊙path : ⊙Susp (⊙Smash X Y) == X ⊙* Y
+  ⊙path : ⊙Susp (⊙Smash X Y) == (X ⊙* Y)
   ⊙path = ⊙ua eq idp

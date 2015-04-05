@@ -2,12 +2,12 @@
 
 open import HoTT
 open import lib.cubical.elims.CubeMove
-open import lib.cubical.elims.CofWedge
+open import lib.cubical.elims.CofPushoutSection
 
 module lib.cubical.elims.SuspSmash where
 
 module _ {i j k} {X : Ptd i} {Y : Ptd j} {C : Type k}
-  (f : Suspension (X ∧ Y) → C) (g : Suspension (X ∧ Y) → C)
+  {f : Suspension (X ∧ Y) → C} {g : Suspension (X ∧ Y) → C}
   (north* : f (north _) == g (north _))
   (south* : f (south _) == g (south _))
   (cod* : (s : fst X × fst Y) → Square north* (ap f (merid _ (cfcod _ s)))
@@ -62,7 +62,8 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {C : Type k}
     abstract
       coh : (s : X ∧ Y)
         → north* == south* [ (λ z → f z == g z) ↓ merid _ s ]
-      coh = ↓-='-from-square ∘ cof-wedge-square-elim _ _ _ _
+      coh = ↓-='-from-square ∘ CofPushoutSection.square-elim _
+        (λ _ → tt) (λ _ → idp)
         base*
         (λ {(x , y) →
           fst (fillX x) ⊡h fst (fillY y) ⊡h fst fill0 ⊡h cod* (x , y)})

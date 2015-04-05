@@ -2,6 +2,7 @@
 
 open import HoTT
 open import cohomology.FunctionOver
+open import lib.cubical.elims.CofPushoutSection
 
 module cohomology.MayerVietoris {i} where
 
@@ -38,7 +39,7 @@ module MayerVietorisFunctions (ps : ⊙Span {i} {i} {i}) where
 
 {- We use path induction (via [⊙pushout-J]) to assume that the
    basepoint preservation paths of the span maps are [idp]. The module
-   [Base] contains the proof of the theorem for this case. -}
+   [MayerVietorisBase] contains the proof of the theorem for this case. -}
 module MayerVietorisBase
   {A B : Type i} (Z : Ptd i) (f : fst Z → A) (g : fst Z → B) where
 
@@ -135,106 +136,25 @@ module MayerVietorisBase
 
     out-into-cod = OutIntoCod.f
 
-  {- Cube move lemma for the left inverse coherence. This is used to
-     build up a right square (in this case starting from a cube filler)  -}
-  private
-    square-push-rb : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A} {b : A}
-      {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == b}
-      (q : b == a₁₁) (sq : Square p₀₋ p₋₀ p₋₁ (p₁₋ ∙ q))
-      → Square p₀₋ p₋₀ (p₋₁ ∙' ! q) p₁₋
-    square-push-rb {p₁₋ = idp} idp sq = sq
-
-    right-from-bot-lemma : ∀ {i} {A : Type i}
-      {a₀₀₀ a₀₁₀ a₁₀₀ a₁₁₀ a₀₀₁ a₀₁₁ a₁₀₁ a₁₁₁ b₀ b₁ : A}
-      {p₀₋₀ : a₀₀₀ == a₀₁₀} {p₋₀₀ : a₀₀₀ == a₁₀₀}
-      {p₋₁₀ : a₀₁₀ == a₁₁₀} {p₁₋₀ : a₁₀₀ == a₁₁₀}
-      {sq₋₋₀ : Square p₀₋₀ p₋₀₀ p₋₁₀ p₁₋₀} -- left
-
-      {p₀₋₁ : a₀₀₁ == a₀₁₁} {p₋₀₁ : a₀₀₁ == a₁₀₁}
-      {p₋₁₁ : a₀₁₁ == a₁₁₁} {p₁₋₁ : a₁₀₁ == a₁₁₁}
-      (sq₋₋₁ : Square p₀₋₁ p₋₀₁ p₋₁₁ p₁₋₁) -- right
-
-      {p₀₀₋ : a₀₀₀ == a₀₀₁} {p₀₁₋ : a₀₁₀ == b₀}
-      {p₁₀₋ : a₁₀₀ == a₁₀₁} {p₁₁₋ : a₁₁₀ == b₁}
-      {q₀₋ : a₀₁₁ == b₀} {q₋₁ : b₀ == b₁} {q₁₋ : a₁₁₁ == b₁}
-      {sq₀₋₋ : Square p₀₋₀ p₀₀₋ p₀₁₋ (p₀₋₁ ∙ q₀₋)} -- back
-      {sq₋₀₋ : Square p₋₀₀ p₀₀₋ p₁₀₋ p₋₀₁} -- top
-      {sq₋₁₋ : Square p₋₁₀ p₀₁₋ p₁₁₋ q₋₁} -- bottom
-      {sq₁₋₋ : Square p₁₋₀ p₁₀₋ p₁₁₋ (p₁₋₁ ∙ q₁₋)} -- front
-      (sq' : Square q₀₋ p₋₁₁ q₋₁ q₁₋)
-      (cu : Cube sq₋₋₀ sq₋₋₁ (square-push-rb q₀₋ sq₀₋₋)
-                 sq₋₀₋ (sq₋₁₋ ⊡h' !□h (square-symmetry sq'))
-                 (square-push-rb q₁₋ sq₁₋₋))
-      → Cube sq₋₋₀ (sq₋₋₁ ⊡v sq') sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋
-    right-from-bot-lemma sq₋₋₁ ids cu = right-from-bot-lemma' sq₋₋₁ cu
-      where
-      right-from-bot-lemma' : ∀ {i} {A : Type i}
-        {a₀₀₀ a₀₁₀ a₁₀₀ a₁₁₀ a₀₀₁ a₀₁₁ a₁₀₁ a₁₁₁ : A}
-        {p₀₋₀ : a₀₀₀ == a₀₁₀} {p₋₀₀ : a₀₀₀ == a₁₀₀}
-        {p₋₁₀ : a₀₁₀ == a₁₁₀} {p₁₋₀ : a₁₀₀ == a₁₁₀}
-        {sq₋₋₀ : Square p₀₋₀ p₋₀₀ p₋₁₀ p₁₋₀} -- left
-
-        {p₀₋₁ : a₀₀₁ == a₀₁₁} {p₋₀₁ : a₀₀₁ == a₁₀₁}
-        {p₋₁₁ : a₀₁₁ == a₁₁₁} {p₁₋₁ : a₁₀₁ == a₁₁₁}
-        (sq₋₋₁ : Square p₀₋₁ p₋₀₁ p₋₁₁ p₁₋₁) -- right
-
-        {p₀₀₋ : a₀₀₀ == a₀₀₁} {p₀₁₋ : a₀₁₀ == a₀₁₁}
-        {p₁₀₋ : a₁₀₀ == a₁₀₁} {p₁₁₋ : a₁₁₀ == a₁₁₁}
-        {sq₀₋₋ : Square p₀₋₀ p₀₀₋ p₀₁₋ (p₀₋₁ ∙ idp)} -- back
-        {sq₋₀₋ : Square p₋₀₀ p₀₀₋ p₁₀₋ p₋₀₁} -- top
-        {sq₋₁₋ : Square p₋₁₀ p₀₁₋ p₁₁₋ p₋₁₁} -- bottom
-        {sq₁₋₋ : Square p₁₋₀ p₁₀₋ p₁₁₋ (p₁₋₁ ∙ idp)} -- front
-        (cu : Cube sq₋₋₀ sq₋₋₁ (square-push-rb idp sq₀₋₋) sq₋₀₋
-                   (sq₋₁₋ ⊡h' !□h (square-symmetry vid-square))
-                   (square-push-rb idp sq₁₋₋))
-        → Cube sq₋₋₀ (sq₋₋₁ ⊡v vid-square) sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋
-      right-from-bot-lemma' ids cu = cu
-
-  {- Proving the coherence term for the left inverse. This means proving
-     [(w : X ∨ Y) → Square idp (ap out (ap into (glue w)))
-                               (cfglue _ w) (out-into-cod (reglue w))]
-  -}
-
-  private
-    out-into-sql : (x : fst X) → Square idp (ap out (into-glue (winl x)))
-                                        (cfglue _ (winl x)) (cfglue _ (winl x))
-    out-into-sql x = connection
-
-    out-into-fill : Σ (Square idp (ap out (glue (snd Z))) idp idp) (λ sq →
-      Cube (out-into-sql (snd X)) sq
-           (natural-square (λ _ → idp) wglue)
-           (natural-square (ap out ∘ into-glue) wglue)
-           (natural-square (cfglue _) wglue
-             ⊡h' !□h (square-symmetry connection))
-           (square-push-rb (cfglue _ (winr (snd Y)))
-             (natural-square (out-into-cod ∘ reglue) wglue)))
-    out-into-fill = fill-cube-right _ _ _ _ _
-
-    {- [fst out-into-fill] is chosen so that we can prove
-       [out-into-sql == out-into-sqr [ ⋯ ↓ ⋯ ]];
-       this is proven by massaging [out-into-fill-cube] into the right shape.
-       The trick is that the type of [out-into-fill-square] is independent of
-       [y], so we can pick it to give the right result at the basepoint.
-    -}
-    out-into-sqr : (y : fst Y)
-      → Square idp (ap out (into-glue (winr y)))
-               (cfglue _ (winr y)) (cfglue _ (winr y))
-    out-into-sqr y = fst out-into-fill ⊡v connection
-
   out-into : ∀ κ → out (into κ) == κ
-  out-into = Cofiber-elim reglue
-    idp out-into-cod
-    (λ w → ↓-∘=idf-from-square out into $
-       ap (ap out) (Into.glue-β w) ∙v⊡
-         Wedge-elim
-           {P = λ w → Square idp (ap out (into-glue w))
-                             (cfglue _ w) (out-into-cod (reglue w))}
-           out-into-sql
-           out-into-sqr
-           (cube-to-↓-square $
-             right-from-bot-lemma (fst out-into-fill) connection $
-               (snd out-into-fill))
-           w)
+  out-into = CofPushoutSection.path-elim reglue
+    (λ _ → unit) (λ _ → idp)
+    idp
+    out-into-cod
+    (λ x → (ap-∘ out into (cfglue _ (winl x))
+            ∙ ap (ap out) (Into.glue-β (winl x)))
+           ∙v⊡ connection
+           ⊡v∙ ! (ap-idf (glue (winl x))))
+    (λ y → (ap-∘ out into (cfglue _ (winr y))
+            ∙ ap (ap out) (Into.glue-β (winr y))
+            ∙ Out.glue-β (snd Z)
+            ∙ square-top-unique (out-square (snd Z))
+                (! (ap-cst (cfbase _) wglue) ∙v⊡
+                 natural-square (cfglue _) wglue
+                 ⊡v∙ (ap-∘ (cfcod _) reglue wglue
+                      ∙ ap (ap (cfcod _)) (Reglue.glue-β))))
+           ∙v⊡ connection
+           ⊡v∙ ! (ap-idf (glue (winr y))))
 
   {- equivalence and paths -}
 
@@ -253,77 +173,17 @@ module MayerVietorisBase
               [ (λ W → fst (⊙Pushout ps) → fst W) ↓ ⊙path ]
   cfcod-over = ↓-cst2-in _ _ $ codomain-over-equiv _ _
 
-  {- Transporting [ext-glue] over the equivalence. Uses the same sort of
-   - cube technique as in the proof of [⊙path]. -}
-
-  private
-    square-push-rt : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A} {b : A}
-      {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : b == a₁₁}
-      (q : a₁₀ == b) (sq : Square p₀₋ p₋₀ p₋₁ (q ∙' p₁₋))
-      → Square p₀₋ (p₋₀ ∙' q) p₋₁ p₁₋
-    square-push-rt {p₁₋ = idp} idp sq = sq
-
-    right-from-top-lemma : ∀ {i} {A : Type i}
-      {a₀₀₀ a₀₁₀ a₁₀₀ a₁₁₀ a₀₀₁ a₀₁₁ a₁₀₁ a₁₁₁ b₀ b₁ : A}
-      {p₀₋₀ : a₀₀₀ == a₀₁₀} {p₋₀₀ : a₀₀₀ == a₁₀₀}
-      {p₋₁₀ : a₀₁₀ == a₁₁₀} {p₁₋₀ : a₁₀₀ == a₁₁₀}
-      {sq₋₋₀ : Square p₀₋₀ p₋₀₀ p₋₁₀ p₁₋₀} -- left
-
-      {p₀₋₁ : a₀₀₁ == a₀₁₁} {p₋₀₁ : a₀₀₁ == a₁₀₁}
-      {p₋₁₁ : a₀₁₁ == a₁₁₁} {p₁₋₁ : a₁₀₁ == a₁₁₁}
-      (sq₋₋₁ : Square p₀₋₁ p₋₀₁ p₋₁₁ p₁₋₁) -- right
-
-      {p₀₀₋ : a₀₀₀ == b₀ {-a₀₀₁-}} {p₀₁₋ : a₀₁₀ == a₀₁₁}
-      {p₁₀₋ : a₁₀₀ == b₁ {-a₁₀₁-}} {p₁₁₋ : a₁₁₀ == a₁₁₁}
-      {q₀₋ : b₀ == a₀₀₁} {q₋₀ : b₀ == b₁} {q₁₋ : b₁ == a₁₀₁}
-      {sq₀₋₋ : Square p₀₋₀ p₀₀₋ p₀₁₋ (q₀₋ ∙' p₀₋₁)} -- back
-      {sq₋₀₋ : Square p₋₀₀ p₀₀₋ p₁₀₋ q₋₀} -- top
-      {sq₋₁₋ : Square p₋₁₀ p₀₁₋ p₁₁₋ p₋₁₁} -- bottom
-      {sq₁₋₋ : Square p₁₋₀ p₁₀₋ p₁₁₋ (q₁₋ ∙' p₁₋₁)} -- front
-      (sq' : Square q₀₋ q₋₀ p₋₀₁ q₁₋)
-      (cu : Cube sq₋₋₀ sq₋₋₁ (square-push-rt q₀₋ sq₀₋₋)
-                 (sq₋₀₋ ⊡h' square-symmetry sq') sq₋₁₋
-                 (square-push-rt q₁₋ sq₁₋₋))
-      → Cube sq₋₋₀ (sq' ⊡v' sq₋₋₁) sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋
-    right-from-top-lemma sq₋₋₁ ids cu = right-from-top-lemma' sq₋₋₁ cu
-      where
-      right-from-top-lemma' : ∀ {i} {A : Type i}
-        {a₀₀₀ a₀₁₀ a₁₀₀ a₁₁₀ a₀₀₁ a₀₁₁ a₁₀₁ a₁₁₁ : A}
-        {p₀₋₀ : a₀₀₀ == a₀₁₀} {p₋₀₀ : a₀₀₀ == a₁₀₀}
-        {p₋₁₀ : a₀₁₀ == a₁₁₀} {p₁₋₀ : a₁₀₀ == a₁₁₀}
-        {sq₋₋₀ : Square p₀₋₀ p₋₀₀ p₋₁₀ p₁₋₀} -- left
-
-        {p₀₋₁ : a₀₀₁ == a₀₁₁} {p₋₀₁ : a₀₀₁ == a₁₀₁}
-        {p₋₁₁ : a₀₁₁ == a₁₁₁} {p₁₋₁ : a₁₀₁ == a₁₁₁}
-        (sq₋₋₁ : Square p₀₋₁ p₋₀₁ p₋₁₁ p₁₋₁) -- right
-
-        {p₀₀₋ : a₀₀₀ == a₀₀₁} {p₀₁₋ : a₀₁₀ == a₀₁₁}
-        {p₁₀₋ : a₁₀₀ == a₁₀₁} {p₁₁₋ : a₁₁₀ == a₁₁₁}
-        {sq₀₋₋ : Square p₀₋₀ p₀₀₋ p₀₁₋ (idp ∙' p₀₋₁)} -- back
-        {sq₋₀₋ : Square p₋₀₀ p₀₀₋ p₁₀₋ p₋₀₁} -- top
-        {sq₋₁₋ : Square p₋₁₀ p₀₁₋ p₁₁₋ p₋₁₁} -- bottom
-        {sq₁₋₋ : Square p₁₋₀ p₁₀₋ p₁₁₋ (idp ∙' p₁₋₁)} -- front
-        (cu : Cube sq₋₋₀ sq₋₋₁ (square-push-rt idp sq₀₋₋)
-                   (sq₋₀₋ ⊡h' square-symmetry vid-square) sq₋₁₋
-                   (square-push-rt idp sq₁₋₋))
-        → Cube sq₋₋₀ (vid-square ⊡v' sq₋₋₁) sq₀₋₋ sq₋₀₋ sq₋₁₋ sq₁₋₋
-      right-from-top-lemma' ids cu = cu
+  {- Transporting [ext-glue] over the equivalence. -}
 
   ext-over : ext-glue == mv-diff
              [ (λ W → fst W → fst (⊙Susp (X ⊙∨ Y))) ↓ ⊙path ]
   ext-over = ↓-cst2-in _ _ $ λ= fn-lemma ◃ domain-over-equiv _ _
     where
     fn-lemma : ∀ κ → ext-glue κ == mv-diff (into κ)
-    fn-lemma = Cofiber-elim reglue
-      idp fn-cod
-      (λ w → ↓-='-from-square $
-        ExtGlue.glue-β w ∙v⊡
-          fn-coh w
-        ⊡v∙ ! (ap-∘ mv-diff into (glue w) ∙ ap (ap mv-diff) (Into.glue-β w)))
-      where
-      fn-cod : (γ : fst (⊙Pushout ps))
-        → ext-glue (cfcod reglue γ) == mv-diff (ext-glue γ)
-      fn-cod = Pushout-elim
+    fn-lemma = CofPushoutSection.path-elim reglue
+      (λ _ → unit) (λ _ → idp)
+      idp
+      (Pushout-elim
         (λ x → ! (merid _ (winl x)))
         (λ y → ! (merid _ (winr y)))
         (λ z → ↓-='-from-square $
@@ -331,27 +191,19 @@ module MayerVietorisBase
             (bl-square (merid _ (winl (f z))) ⊡h connection)
           ⊡v∙ ! (ap-∘ mv-diff ext-glue (glue z)
                  ∙ ap (ap mv-diff) (ExtGlue.glue-β z)
-                 ∙ MVDiff.glue-β z))
-
-      fn-fill : Σ (Square idp idp (ap mv-diff (merid _ (snd Z))) idp)
-        (λ sq → Cube (tr-square (merid _ (winl (snd X)))) sq
-                     (natural-square (λ _ → idp) wglue)
-                     (natural-square (merid _) wglue
-                       ⊡h' square-symmetry (tr-square (merid _ (winr (snd Y)))))
-                     (natural-square (ap mv-diff ∘ into-glue) wglue)
-                     (square-push-rt (! (merid _ (winr (snd Y))))
-                       (natural-square (fn-cod ∘ reglue) wglue)))
-      fn-fill = fill-cube-right _ _ _ _ _
-
-      fn-coh : (w : X ∨ Y)
-        → Square idp (merid _ w) (ap mv-diff (into-glue w)) (fn-cod (reglue w))
-      fn-coh = Wedge-elim
-        (λ x → tr-square (merid _ (winl x)))
-          (λ y → tr-square (merid _ (winr y)) ⊡v' (fst fn-fill))
-        (cube-to-↓-square $ right-from-top-lemma
-          (fst fn-fill)
-          (tr-square (merid _ (winr (snd Y))))
-          (snd fn-fill))
+                 ∙ MVDiff.glue-β z)))
+      (λ x → ExtGlue.glue-β (winl x)
+             ∙v⊡ tr-square (merid _ (winl x))
+             ⊡v∙ ! (ap-∘ mv-diff into (cfglue _ (winl x))
+                    ∙ ap (ap mv-diff) (Into.glue-β (winl x))))
+      (λ y → ExtGlue.glue-β (winr y)
+             ∙v⊡ tr-square (merid _ (winr y))
+             ⊡v∙ ! (ap-∘ mv-diff into (cfglue _ (winr y))
+                   ∙ ap (ap mv-diff) (Into.glue-β (winr y))
+                   ∙ MVDiff.glue-β (snd Z)
+                   ∙ ap (λ w → merid _ w ∙ ! (merid _ (winr (g (snd Z)))))
+                        wglue
+                   ∙ !-inv-r (merid _ (winr (g (snd Z))))))
 
 {- Main results -}
 module MayerVietoris (ps : ⊙Span {i} {i} {i}) where

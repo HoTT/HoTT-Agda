@@ -1,21 +1,21 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import lib.cubical.elims.SuspCofSection
+open import lib.cubical.elims.CofPushoutSection
 
 {- If f : X → Y is a section, then ΣY ≃ ΣX ∨ ΣCof(f) -}
 
 module homotopy.SuspSectionDecomp
-  {i j} {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙→ Y))
-  (g : fst Y → fst X) (inv : ∀ x → g (fst F x) == x)
+  {i j} {X : Ptd i} {Y : Ptd j} (⊙f : fst (X ⊙→ Y))
+  (g : fst Y → fst X) (inv : ∀ x → g (fst ⊙f x) == x)
   where
 
 module SuspSectionDecomp where
 
   private
-    f = fst F
+    f = fst ⊙f
 
-  module Into = SuspensionRec (fst Y) {C = fst (⊙Susp X ⊙∨ ⊙Susp (⊙Cof F))}
+  module Into = SuspensionRec (fst Y) {C = fst (⊙Susp X ⊙∨ ⊙Susp (⊙Cof ⊙f))}
     (winl (south _))
     (winr (south _))
     (λ y → ! (ap winl (merid _ (g y))) ∙ wglue ∙ ap winr (merid _ (cfcod _ y)))
@@ -26,7 +26,7 @@ module SuspSectionDecomp where
     (south _) (south _)
     (λ x → ! (merid _ (f x)) ∙ merid _ (snd Y))
 
-  out-winr-glue : fst (⊙Cof F) → south (fst Y) == south (fst Y)
+  out-winr-glue : fst (⊙Cof ⊙f) → south (fst Y) == south (fst Y)
   out-winr-glue = CofiberRec.f _
     idp
     (λ y → ! (merid _ (f (g y))) ∙ merid _ y)
@@ -35,13 +35,13 @@ module SuspSectionDecomp where
          (inv x)
       ∙ !-inv-l (merid _ (f x)))
 
-  module OutWinr = SuspensionRec (fst (⊙Cof F))
+  module OutWinr = SuspensionRec (fst (⊙Cof ⊙f))
     (south _) (south _) out-winr-glue
 
   out-winl = OutWinl.f
   out-winr = OutWinr.f
 
-  module Out = WedgeRec {X = ⊙Susp X} {Y = ⊙Susp (⊙Cof F)}
+  module Out = WedgeRec {X = ⊙Susp X} {Y = ⊙Susp (⊙Cof ⊙f)}
     out-winl out-winr idp
 
   out = Out.f
@@ -131,13 +131,27 @@ module SuspSectionDecomp where
               (ap (ap winl ∘ merid _) (inv x))
               (ap (ap winr ∘ merid _) (cfglue _ x))
               (ap (ap winr ∘ merid _)
-                  (cfglue _ (snd X) ∙ ap (cfcod _) (snd F))))
+                  (cfglue _ (snd X) ∙ ap (cfcod _) (snd ⊙f))))
 
     into-out-winr : ∀ σκ → into (out (winr σκ)) == winr σκ
-    into-out-winr = susp-cof-section-path-elim F g inv
+    into-out-winr = CofPushoutSection.path-elim (λ _ → unit) g inv
       (! (ap winr (merid _ (cfbase _))))
-      idp
-      (λ y →
+      (λ tt → idp)
+      (λ tt → transport
+        (λ κ → Square (! (ap winr (merid _ (cfbase _))))
+                      (ap (into ∘ out ∘ winr) (merid _ κ))
+                      (ap winr (merid _ κ))
+                      idp)
+        (! (cfglue _ (snd X)))
+        (into-out-winr-coh (f (snd X))))
+      into-out-winr-coh
+      where
+      into-out-winr-coh : (y : fst Y)
+        → Square (! (ap winr (merid _ (cfbase _))))
+                 (ap (into ∘ out ∘ winr) (merid _ (cfcod _ y)))
+                 (ap winr (merid _ (cfcod _ y)))
+                 idp
+      into-out-winr-coh y =
         (ap-∘ into out-winr (merid _ (cfcod _ y))
          ∙ ap (ap into) (OutWinr.glue-β (cfcod _ y))
          ∙ ap-∙ into (! (merid _ (f (g y)))) (merid _ y)
@@ -152,7 +166,7 @@ module SuspSectionDecomp where
               (ap winl (merid _ (g y)))
               wglue
               (ap (ap winr ∘ merid _) (cfglue _ (g y)))
-              (ap (ap winl ∘ merid _) (inv (g y))))
+              (ap (ap winl ∘ merid _) (inv (g y)))
 
-  eq : fst (⊙Susp Y) ≃ fst (⊙Susp X ⊙∨ ⊙Susp (⊙Cof F))
+  eq : fst (⊙Susp Y) ≃ fst (⊙Susp X ⊙∨ ⊙Susp (⊙Cof ⊙f))
   eq = equiv into out into-out out-into
