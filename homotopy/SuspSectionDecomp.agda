@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import lib.cubical.elims.CofPushoutSection
+open import homotopy.elims.CofPushoutSection
 
 {- If f : X → Y is a section, then ΣY ≃ ΣX ∨ ΣCof(f) -}
 
@@ -134,24 +134,20 @@ module SuspSectionDecomp where
                   (cfglue _ (snd X) ∙ ap (cfcod _) (snd ⊙f))))
 
     into-out-winr : ∀ σκ → into (out (winr σκ)) == winr σκ
-    into-out-winr = CofPushoutSection.path-elim (λ _ → unit) g inv
+    into-out-winr = CofPushoutSection.elim (λ _ → unit) g inv
       (! (ap winr (merid _ (cfbase _))))
       (λ tt → idp)
       (λ tt → transport
-        (λ κ → Square (! (ap winr (merid _ (cfbase _))))
-                      (ap (into ∘ out ∘ winr) (merid _ κ))
-                      (ap winr (merid _ κ))
-                      idp)
+        (λ κ → ! (ap winr (merid _ (cfbase _))) == idp
+               [ (λ σκ → into (out (winr σκ)) == winr σκ) ↓ merid _ κ ])
         (! (cfglue _ (snd X)))
         (into-out-winr-coh (f (snd X))))
       into-out-winr-coh
       where
       into-out-winr-coh : (y : fst Y)
-        → Square (! (ap winr (merid _ (cfbase _))))
-                 (ap (into ∘ out ∘ winr) (merid _ (cfcod _ y)))
-                 (ap winr (merid _ (cfcod _ y)))
-                 idp
-      into-out-winr-coh y =
+        → ! (ap winr (merid _ (cfbase _))) == idp
+          [ (λ σκ → into (out (winr σκ)) == winr σκ) ↓ merid _ (cfcod _ y) ]
+      into-out-winr-coh y = ↓-='-from-square $
         (ap-∘ into out-winr (merid _ (cfcod _ y))
          ∙ ap (ap into) (OutWinr.glue-β (cfcod _ y))
          ∙ ap-∙ into (! (merid _ (f (g y)))) (merid _ y)

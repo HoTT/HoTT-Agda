@@ -2,7 +2,7 @@
 
 open import HoTT
 open import cohomology.FunctionOver
-open import lib.cubical.elims.CofPushoutSection
+open import homotopy.elims.CofPushoutSection
 
 module cohomology.MayerVietoris {i} where
 
@@ -137,24 +137,26 @@ module MayerVietorisBase
     out-into-cod = OutIntoCod.f
 
   out-into : ∀ κ → out (into κ) == κ
-  out-into = CofPushoutSection.path-elim reglue
+  out-into = CofPushoutSection.elim reglue
     (λ _ → unit) (λ _ → idp)
     idp
     out-into-cod
-    (λ x → (ap-∘ out into (cfglue _ (winl x))
-            ∙ ap (ap out) (Into.glue-β (winl x)))
-           ∙v⊡ connection
-           ⊡v∙ ! (ap-idf (glue (winl x))))
-    (λ y → (ap-∘ out into (cfglue _ (winr y))
-            ∙ ap (ap out) (Into.glue-β (winr y))
-            ∙ Out.glue-β (snd Z)
-            ∙ square-top-unique (out-square (snd Z))
-                (! (ap-cst (cfbase _) wglue) ∙v⊡
-                 natural-square (cfglue _) wglue
-                 ⊡v∙ (ap-∘ (cfcod _) reglue wglue
-                      ∙ ap (ap (cfcod _)) (Reglue.glue-β))))
-           ∙v⊡ connection
-           ⊡v∙ ! (ap-idf (glue (winr y))))
+    (↓-='-from-square ∘ λ x →
+      (ap-∘ out into (cfglue _ (winl x))
+       ∙ ap (ap out) (Into.glue-β (winl x)))
+      ∙v⊡ connection
+      ⊡v∙ ! (ap-idf (glue (winl x))))
+    (↓-='-from-square ∘ λ y →
+      (ap-∘ out into (cfglue _ (winr y))
+       ∙ ap (ap out) (Into.glue-β (winr y))
+       ∙ Out.glue-β (snd Z)
+       ∙ square-top-unique (out-square (snd Z))
+           (! (ap-cst (cfbase _) wglue) ∙v⊡
+            natural-square (cfglue _) wglue
+            ⊡v∙ (ap-∘ (cfcod _) reglue wglue
+                 ∙ ap (ap (cfcod _)) (Reglue.glue-β))))
+      ∙v⊡ connection
+      ⊡v∙ ! (ap-idf (glue (winr y))))
 
   {- equivalence and paths -}
 
@@ -180,7 +182,7 @@ module MayerVietorisBase
   ext-over = ↓-cst2-in _ _ $ λ= fn-lemma ◃ domain-over-equiv _ _
     where
     fn-lemma : ∀ κ → ext-glue κ == mv-diff (into κ)
-    fn-lemma = CofPushoutSection.path-elim reglue
+    fn-lemma = CofPushoutSection.elim reglue
       (λ _ → unit) (λ _ → idp)
       idp
       (Pushout-elim
@@ -192,18 +194,20 @@ module MayerVietorisBase
           ⊡v∙ ! (ap-∘ mv-diff ext-glue (glue z)
                  ∙ ap (ap mv-diff) (ExtGlue.glue-β z)
                  ∙ MVDiff.glue-β z)))
-      (λ x → ExtGlue.glue-β (winl x)
-             ∙v⊡ tr-square (merid _ (winl x))
-             ⊡v∙ ! (ap-∘ mv-diff into (cfglue _ (winl x))
-                    ∙ ap (ap mv-diff) (Into.glue-β (winl x))))
-      (λ y → ExtGlue.glue-β (winr y)
-             ∙v⊡ tr-square (merid _ (winr y))
-             ⊡v∙ ! (ap-∘ mv-diff into (cfglue _ (winr y))
-                   ∙ ap (ap mv-diff) (Into.glue-β (winr y))
-                   ∙ MVDiff.glue-β (snd Z)
-                   ∙ ap (λ w → merid _ w ∙ ! (merid _ (winr (g (snd Z)))))
-                        wglue
-                   ∙ !-inv-r (merid _ (winr (g (snd Z))))))
+      (↓-='-from-square ∘ λ x →
+        ExtGlue.glue-β (winl x)
+        ∙v⊡ tr-square (merid _ (winl x))
+         ⊡v∙ ! (ap-∘ mv-diff into (cfglue _ (winl x))
+                ∙ ap (ap mv-diff) (Into.glue-β (winl x))))
+      (↓-='-from-square ∘ λ y →
+        ExtGlue.glue-β (winr y)
+        ∙v⊡ tr-square (merid _ (winr y))
+        ⊡v∙ ! (ap-∘ mv-diff into (cfglue _ (winr y))
+              ∙ ap (ap mv-diff) (Into.glue-β (winr y))
+              ∙ MVDiff.glue-β (snd Z)
+              ∙ ap (λ w → merid _ w ∙ ! (merid _ (winr (g (snd Z)))))
+                   wglue
+              ∙ !-inv-r (merid _ (winr (g (snd Z))))))
 
 {- Main results -}
 module MayerVietoris (ps : ⊙Span {i} {i} {i}) where
