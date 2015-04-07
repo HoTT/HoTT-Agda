@@ -39,21 +39,22 @@ module _ {i j k l} {s : Span {i} {j} {k}} {D : Type l}
         (Pushout-elim
           cfglue-left*
           (λ b → (fst (fill (r b))) ◃ cfglue-right* b)
-          (λ c →
+          (λ c → ↓↓-from-squareover $
             transport
-              (λ c' → cfglue-left* (f c) == fst (fill c') ◃ cfglue-right* (g c)
-                      [ (λ γ → cfbase* == cfcod* (h γ) [ P ↓ cfglue _ γ ])
-                        ↓ glue c ])
+              (λ c' → SquareOver P (natural-square (cfglue _) (glue c))
+                  (cfglue-left* (f c))
+                  (↓-ap-in P (λ _ → cfbase _) (apd (λ _ → cfbase*) (glue c)))
+                  (↓-ap-in P (cfcod _ ∘ h) (apd (cfcod* ∘ h) (glue c)))
+                  (fst (fill c') ◃ cfglue-right* (g c)))
               (! (inv c))
               (snd (fill c))))
       where
       fill : (c : C)
         → Σ (cfbase* == cfbase*)
-            (λ q → cfglue-left* (f c) == (q ◃ (cfglue-right* (g c)))
-                   [ (λ γ → cfbase* == cfcod* (h γ) [ P ↓ cfglue _ γ ])
-                     ↓ glue c ])
-      fill c =
-        ↓↓-fill (glue c) (cfglue-left* (f c)) (cfglue-right* (g c))
+            (λ q → SquareOver P (natural-square (cfglue _) (glue c))
+                     (cfglue-left* (f c)) _ _ (q ◃ cfglue-right* (g c)))
+      fill c = fill-upper-right _ _ _ _ _
+
 
     rec : ∀ {m} {E : Type m}
       (cfbase* : E) (cfcod* : D → E)

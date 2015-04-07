@@ -4,41 +4,26 @@ open import HoTT
 
 module homotopy.elims.Lemmas where
 
-↓-cancel : ∀ {i j} {A : Type i} {B : A → Type j}
-  {x y : A} {p : x == y}
-  {u v : B x} {w : B y}
-  (α : u == w [ B ↓ p ]) (β : v == w [ B ↓ p ])
-  → u == v
-↓-cancel {p = idp} α idp = α
+fill-upper-right : ∀ {i j} {A : Type i} {B : A → Type j}
+  {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+  {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+  (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
+  {b₀₀ : B a₀₀} {b₀₁ : B a₀₁} {b₁₀ b₁₀' : B a₁₀} {b₁₁ : B a₁₁}
+  (q₀₋ : b₀₀ == b₀₁ [ B ↓ p₀₋ ]) (q₋₀ : b₀₀ == b₁₀ [ B ↓ p₋₀ ])
+  (q₋₁ : b₀₁ == b₁₁ [ B ↓ p₋₁ ]) (q₁₋ : b₁₀' == b₁₁ [ B ↓ p₁₋ ])
+  → Σ (b₁₀ == b₁₀')
+      (λ r → SquareOver B sq q₀₋ q₋₀ q₋₁ (r ◃ q₁₋))
+fill-upper-right ids idp idp idp idp = (idp , ids)
 
-↓-cancel-property : ∀ {i j} {A : Type i} {B : A → Type j}
-  {x y : A} {p : x == y}
-  {u v : B x} {w : B y}
-  (α : u == w [ B ↓ p ]) (β : v == w [ B ↓ p ])
-  → α == (↓-cancel α β) ◃ β
-↓-cancel-property {p = idp} idp idp = idp
-
-↓-cancel-unique : ∀ {i j} {A : Type i} {B : A → Type j}
-  {x y : A} {p : x == y}
-  {u v : B x} {w : B y}
-  (α : u == w [ B ↓ p ]) (β : v == w [ B ↓ p ]) (γ : u == v)
-  → α == γ ◃ β → γ == ↓-cancel α β
-↓-cancel-unique {p = idp} ._ idp idp idp = idp
-
-↓↓-fill : ∀ {i j k} {A : Type i} {B : A → Type j} {C : Type k}
-  {x y : C → A} {u : (c : C) → B (x c)} {v : (c : C) → B (y c)}
-  {p : (c : C) → x c == y c} {c₁ c₂ : C} (q : c₁ == c₂)
-  (α : u c₁ == v c₁ [ B ↓ p c₁ ]) (β : u c₂ == v c₂ [ B ↓ p c₂ ])
-  → Σ (u c₂ == u c₂)
-      (λ γ → α == (γ ◃ β) [ (λ c → u c == v c [ B ↓ p c ]) ↓ q ])
-↓↓-fill idp α β =
-  (↓-cancel α β , ↓-cancel-property α β)
-
-↓↓-fill-unique : ∀ {i j k} {A : Type i} {B : A → Type j} {C : Type k}
-  {x y : C → A} {u : (c : C) → B (x c)} {v : (c : C) → B (y c)}
-  {p : (c : C) → x c == y c} {c₁ c₂ : C} (q : c₁ == c₂)
-  (α : u c₁ == v c₁ [ B ↓ p c₁ ]) (β : u c₂ == v c₂ [ B ↓ p c₂ ])
-  (γ : u c₂ == u c₂)
-  → α == (γ ◃ β) [ (λ c → u c == v c [ B ↓ p c ]) ↓ q ]
-  → γ == fst (↓↓-fill q α β)
-↓↓-fill-unique idp α β γ = ↓-cancel-unique α β γ
+fill-upper-right-unique : ∀ {i j} {A : Type i} {B : A → Type j}
+  {a₀₀ a₀₁ a₁₀ a₁₁ : A}
+  {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
+  (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
+  {b₀₀ : B a₀₀} {b₀₁ : B a₀₁} {b₁₀ b₁₀' : B a₁₀} {b₁₁ : B a₁₁}
+  (q₀₋ : b₀₀ == b₀₁ [ B ↓ p₀₋ ]) (q₋₀ : b₀₀ == b₁₀ [ B ↓ p₋₀ ])
+  (q₋₁ : b₀₁ == b₁₁ [ B ↓ p₋₁ ]) (q₁₋ : b₁₀' == b₁₁ [ B ↓ p₁₋ ])
+  (r : b₁₀ == b₁₀')
+  → SquareOver B sq q₀₋ q₋₀ q₋₁ (r ◃ q₁₋)
+  → r == fst (fill-upper-right sq q₀₋ q₋₀ q₋₁ q₁₋)
+fill-upper-right-unique {B = B} ids idp idp idp idp r sq' =
+  ! (◃idp {B = B} r) ∙ ! (horiz-degen-path sq')

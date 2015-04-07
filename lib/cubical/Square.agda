@@ -2,6 +2,7 @@
 
 open import lib.Base
 open import lib.PathGroupoid
+open import lib.PathOver
 
 module lib.cubical.Square where
 
@@ -9,16 +10,6 @@ data Square {i} {A : Type i} {a₀₀ : A} : {a₀₁ a₁₀ a₁₁ : A}
   → a₀₀ == a₀₁ → a₀₀ == a₁₀ → a₀₁ == a₁₁ → a₁₀ == a₁₁ → Type i
   where
   ids : Square idp idp idp idp
-
-SquareOver : ∀ {i j} {A : Type i} (B : A → Type j) {a₀₀ a₀₁ a₁₀ a₁₁ : A}
-  {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
-  (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
-  {b₀₀ : B a₀₀} {b₀₁ : B a₀₁} {b₁₀ : B a₁₀} {b₁₁ : B a₁₁}
-  (q₀₋ : b₀₀ == b₀₁ [ B ↓ p₀₋ ]) (q₋₀ : b₀₀ == b₁₀ [ B ↓ p₋₀ ])
-  (q₋₁ : b₀₁ == b₁₁ [ B ↓ p₋₁ ]) (q₁₋ : b₁₀ == b₁₁ [ B ↓ p₁₋ ])
-  → Type j
-SquareOver B ids = Square
-
 
 hid-square : ∀ {i} {A : Type i} {a₀₀ a₀₁ : A} {p : a₀₀ == a₀₁}
   → Square p idp idp p
@@ -59,13 +50,6 @@ ap-square : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
   → Square p₀₋ p₋₀ p₋₁ p₁₋
   → Square (ap f p₀₋) (ap f p₋₀) (ap f p₋₁) (ap f p₁₋)
 ap-square f ids = ids
-
-apd-square : ∀ {i j} {A : Type i} {B : A → Type j} (f : Π A B)
-  {a₀₀ a₀₁ a₁₀ a₁₁ : A}
-  {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
-  (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
-  → SquareOver B sq (apd f p₀₋) (apd f p₋₀) (apd f p₋₁) (apd f p₁₋)
-apd-square f ids = ids
 
 ap-square-hid : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
   {a₀ a₁ : A} {p : a₀ == a₁}
@@ -511,18 +495,3 @@ module _ {i} {A : Type i} where
   lt-square : {a₀ a₁ : A} (p : a₀ == a₁)
     → Square p p idp idp
   lt-square idp = ids
-
-
-↓-=-to-squareover : ∀ {i j} {A : Type i} {B : A → Type j}
-  {f g : Π A B} {x y : A} {p : x == y}
-  {u : f x == g x} {v : f y == g y}
-  → u == v [ (λ z → f z == g z) ↓ p ]
-  → SquareOver B vid-square u (apd f p) (apd g p) v
-↓-=-to-squareover {p = idp} idp = hid-square
-
-↓-=-from-squareover : ∀ {i j} {A : Type i} {B : A → Type j}
-  {f g : Π A B} {x y : A} {p : x == y}
-  {u : f x == g x} {v : f y == g y}
-  → SquareOver B vid-square u (apd f p) (apd g p) v
-  → u == v [ (λ z → f z == g z) ↓ p ]
-↓-=-from-squareover {p = idp} sq = horiz-degen-path sq

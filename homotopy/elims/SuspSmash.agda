@@ -20,30 +20,36 @@ private
     base*
     (λ {(x , y) →
       (fst (fillX x) ∙ fst (fillY y)) ◃ fst fill0 ◃ cod* (x , y)})
-    (λ x → snd (fillX x)
-           ▹ ap (λ p → p ◃ fst fill0 ◃ cod* (x , snd Y))
-                (! (ap (λ q → fst (fillX x) ∙ q) fillY-lemma ∙ ∙-unit-r _)))
-    (λ y → snd (fillY y)
-           ▹ ap (λ p → p ◃ fst fill0 ◃ cod* (snd X , y))
-                (! (ap (λ q → q ∙ fst (fillY y)) fillX-lemma)))
+    (↓↓-from-squareover ∘ λ x →
+      snd (fillX x) ↓⊡h∙
+      ap (λ p → p ◃ fst fill0 ◃ cod* (x , snd Y))
+         (! (ap (λ q → fst (fillX x) ∙ q) fillY-lemma ∙ ∙-unit-r _)))
+    (↓↓-from-squareover ∘ λ y →
+      snd (fillY y) ↓⊡h∙
+      ap (λ p → p ◃ fst fill0 ◃ cod* (snd X , y))
+         (! (ap (λ q → q ∙ fst (fillY y)) fillX-lemma)))
     where
     fill-lemma : (w : X ∨ Y)
       (α : north* == south* [ P ↓ merid _ (cfcod _ (∨-in-× X Y w)) ])
       → Σ (north* == north*)
-          (λ p → base* == p ◃ α [ (λ s → north* == south* [ P ↓ merid _ s ])
-                                  ↓ cfglue _ w ])
-    fill-lemma w α = ↓↓-fill _ _ _
+          (λ p → SquareOver P (natural-square (merid _) (cfglue _ w))
+                   base*
+                   (↓-ap-in _ _ (apd (λ _ → north*) (cfglue _ w)))
+                   (↓-ap-in _ _ (apd (λ _ → south*) (cfglue _ w)))
+                   (p ◃ α))
+    fill-lemma w α = fill-upper-right _ _ _ _ _
 
     fill0 = fill-lemma (winl (snd X)) (cod* (snd X , snd Y))
     fillX = λ x → fill-lemma (winl x) (fst fill0 ◃ cod* (x , snd Y))
     fillY = λ y → fill-lemma (winr y) (fst fill0 ◃ cod* (snd X , y))
 
     fillX-lemma : fst (fillX (snd X)) == idp
-    fillX-lemma = ! (↓↓-fill-unique _ _ _ idp (snd fill0 ▹! (idp◃ _)))
+    fillX-lemma = ! $
+      fill-upper-right-unique _ _ _ _ _ idp (snd fill0 ↓⊡h∙ ! (idp◃ _))
 
     fillY-lemma : fst (fillY (snd Y)) == idp
     fillY-lemma = ! $
-      ↓↓-fill-unique _ _ _ _ (snd fill0 ▹! (idp◃ _))
+      fill-upper-right-unique _ _ _ _ _ idp (snd fill0 ↓⊡h∙ ! (idp◃ _))
       ∙ ap (λ w → fst (fill-lemma w (fst fill0 ◃ cod* (∨-in-× X Y w))))
            wglue
 
