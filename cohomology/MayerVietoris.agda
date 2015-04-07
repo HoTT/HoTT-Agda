@@ -179,35 +179,35 @@ module MayerVietorisBase
 
   ext-over : ext-glue == mv-diff
              [ (λ W → fst W → fst (⊙Susp (X ⊙∨ Y))) ↓ ⊙path ]
-  ext-over = ↓-cst2-in _ _ $ λ= fn-lemma ◃ domain-over-equiv _ _
+  ext-over = ↓-cst2-in _ _ $ ! (λ= fn-lemma) ◃ domain-over-equiv _ _
     where
-    fn-lemma : ∀ κ → ext-glue κ == mv-diff (into κ)
+    fn-lemma : ∀ κ → mv-diff (into κ) == ext-glue κ
     fn-lemma = CofPushoutSection.elim reglue
       (λ _ → unit) (λ _ → idp)
       idp
       (Pushout-elim
-        (λ x → ! (merid _ (winl x)))
-        (λ y → ! (merid _ (winr y)))
-        (λ z → ↓-='-from-square $
-          ap-cst (south _) (glue z) ∙v⊡
-            (bl-square (merid _ (winl (f z))) ⊡h connection)
-          ⊡v∙ ! (ap-∘ mv-diff ext-glue (glue z)
-                 ∙ ap (ap mv-diff) (ExtGlue.glue-β z)
-                 ∙ MVDiff.glue-β z)))
+        (λ x → merid _ (winl x))
+        (λ y → merid _ (winr y))
+        (↓-='-from-square ∘ λ z →
+          (ap-∘ mv-diff ext-glue (glue z)
+           ∙ ap (ap mv-diff) (ExtGlue.glue-β z)
+           ∙ MVDiff.glue-β z)
+          ∙v⊡ (lt-square (merid _ (winl (f z)))
+               ⊡h rt-square (merid _ (winr (g z))))
+          ⊡v∙ ! (ap-cst (south _) (glue z))))
       (↓-='-from-square ∘ λ x →
-        ExtGlue.glue-β (winl x)
-        ∙v⊡ tr-square (merid _ (winl x))
-         ⊡v∙ ! (ap-∘ mv-diff into (cfglue _ (winl x))
-                ∙ ap (ap mv-diff) (Into.glue-β (winl x))))
+        (ap-∘ mv-diff into (cfglue _ (winl x))
+         ∙ ap (ap mv-diff) (Into.glue-β (winl x)))
+        ∙v⊡ connection
+        ⊡v∙ ! (ExtGlue.glue-β (winl x)))
       (↓-='-from-square ∘ λ y →
-        ExtGlue.glue-β (winr y)
-        ∙v⊡ tr-square (merid _ (winr y))
-        ⊡v∙ ! (ap-∘ mv-diff into (cfglue _ (winr y))
-              ∙ ap (ap mv-diff) (Into.glue-β (winr y))
-              ∙ MVDiff.glue-β (snd Z)
-              ∙ ap (λ w → merid _ w ∙ ! (merid _ (winr (g (snd Z)))))
-                   wglue
-              ∙ !-inv-r (merid _ (winr (g (snd Z))))))
+        (ap-∘ mv-diff into (cfglue _ (winr y))
+         ∙ ap (ap mv-diff) (Into.glue-β (winr y))
+         ∙ MVDiff.glue-β (snd Z)
+         ∙ ap (λ w → merid _ w ∙ ! (merid _ (winr (g (snd Z))))) wglue
+         ∙ !-inv-r (merid _ (winr (g (snd Z)))))
+        ∙v⊡ connection
+        ⊡v∙ ! (ExtGlue.glue-β (winr y)))
 
 {- Main results -}
 module MayerVietoris (ps : ⊙Span {i} {i} {i}) where
