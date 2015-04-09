@@ -18,12 +18,12 @@ module CofiberComp where
   module IntoCod = CofiberRec (fst f) {C = fst (⊙Cof ⊙h)}
     (cfbase _)
     (cfcod _)
-    (λ x → cfglue _ (left x))
+    (λ x → cfglue _ (winl x))
 
   module Into = CofiberRec (fst (⊙cfcod f ⊙∘ g)) {C = fst (⊙Cof ⊙h)}
     (cfbase _)
     IntoCod.f
-    (λ y → cfglue _ (right y))
+    (λ y → cfglue _ (winr y))
 
   into = Into.f
 
@@ -95,7 +95,7 @@ module CofiberComp where
     out-into-cod
     (↓-∘=idf-from-square out into ∘ vert-degen-square ∘ λ y →
       ap (ap out) (Into.glue-β y)
-      ∙ Out.glue-β (right y))
+      ∙ Out.glue-β (winr y))
     where
     lemma : ∀ {i} {A : Type i} {x y z : A} (p : x == y) (q : y == z)
       → Square p (p ∙ q) q idp
