@@ -143,11 +143,11 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
       (J (λ y p → decode {y} (encode {y} [ p ]) == [ p ])
          (ap [_] (!-inv-r (merid A e))))
 
-  main-lemma-eqv : Trunc ⟨ 1 ⟩ (north A == north A) ≃ A
-  main-lemma-eqv = equiv encode decode' encode-decode' decode-encode
+  main-lemma-eq : Trunc ⟨ 1 ⟩ (north A == north A) ≃ A
+  main-lemma-eq = equiv encode decode' encode-decode' decode-encode
 
   ⊙main-lemma : ⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e))) == (A , e)
-  ⊙main-lemma = ⊙ua main-lemma-eqv idp
+  ⊙main-lemma = ⊙ua (⊙ify-eq main-lemma-eq idp)
 
   abstract
     main-lemma-iso : (t1 : 1 ≠ 0) →
@@ -167,7 +167,7 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
       pres-comp = ap^-conc^ 1 (ℕ-S≠O _) h
 
       ie : is-equiv f
-      ie = is-equiv-ap^ 1 h (snd $ ((unTrunc-equiv A gA)⁻¹ ∘e main-lemma-eqv))
+      ie = is-equiv-ap^ 1 h (snd $ ((unTrunc-equiv A gA)⁻¹ ∘e main-lemma-eq))
 
   abstract
     π₂-Suspension : (t1 : 1 ≠ 0) (t2 : 2 ≠ 0)

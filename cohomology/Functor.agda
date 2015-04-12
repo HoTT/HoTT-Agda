@@ -32,10 +32,9 @@ CF-inverse : (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y)) (g : fst (Y ⊙→ X
   → (CF-hom n f) ∘ᴳ (CF-hom n g) == idhom _
 CF-inverse n f g p = ! (CF-comp n g f) ∙ CF-λ= n p ∙ CF-ident n
 
-CF-iso : (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y)) (ie : is-equiv (fst f))
-  → C n Y ≃ᴳ C n X
-CF-iso n f ie =
+CF-iso : (n : ℤ) {X Y : Ptd i} → X ⊙≃ Y → C n Y ≃ᴳ C n X
+CF-iso n (f , ie) =
   (CF-hom n f ,
-   is-eq _ (GroupHom.f (CF-hom n (⊙<– (fst f , ie) (snd f))))
+   is-eq _ (GroupHom.f (CF-hom n (⊙<– (f , ie))))
      (app= $ ap GroupHom.f $ CF-inverse n f _ $ <–-inv-l (fst f , ie))
      (app= $ ap GroupHom.f $ CF-inverse n _ f $ <–-inv-r (fst f , ie)))

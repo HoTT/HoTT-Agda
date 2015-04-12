@@ -86,7 +86,7 @@ module Σ⊣Ω {i} where
   Ωε-ηΩ : (X : Ptd i) → ⊙ap (⊙ε X) ⊙∘ ⊙η (⊙Ω X) == ⊙idf _
   Ωε-ηΩ X = ⊙λ=
     (λ p → ap-∙ (ε X) (merid _ p) (! (merid _ idp))
-         ∙ E.glue-β X p ∙2 (ap-! (ε X) (merid _ idp) ∙ ap ! (E.glue-β X idp))
+         ∙ (E.glue-β X p ∙2 (ap-! (ε X) (merid _ idp) ∙ ap ! (E.glue-β X idp)))
          ∙ ∙-unit-r _)
     (pt-lemma (ε X) (merid _ idp) (E.glue-β X idp))
     where

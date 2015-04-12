@@ -208,17 +208,17 @@ module RightAdjoint× {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
       =⟨ <–-inv-r (A.eq _ _) (⊙idf _) ⟩
     ⊙idf _ ∎
 
-  eq : fst (G.obj (U ⊙× V)) ≃ fst (G.obj U ⊙× G.obj V)
-  eq = equiv (fst ⊙into) (fst ⊙out)
-    (app= (ap fst ⊙into-out)) (app= (ap fst ⊙out-into))
+  ⊙eq : G.obj (U ⊙× V) ⊙≃ G.obj U ⊙× G.obj V
+  ⊙eq = ⊙ify-eq (equiv (fst ⊙into) (fst ⊙out)
+                  (app= (ap fst ⊙into-out)) (app= (ap fst ⊙out-into)))
+                (snd ⊙into)
 
-  path : G.obj (U ⊙× V) == G.obj U ⊙× G.obj V
-  path = ⊙ua eq (snd ⊙into)
+  ⊙path = ⊙ua ⊙eq
 
 {- Using the equivalence in RightAdjoint× we get a binary
-   "G.arr2" : (X × Y → Z) → (G X × G Y → G Z)
-   and there is some kind of naturality wrt the (FX→Y)≃(X→GY) equivalence
-   (use case: from ⊙ap we get ⊙ap2) -}
+ - "G.arr2" : (X × Y → Z) → (G X × G Y → G Z)
+ - and there is some kind of naturality wrt the (FX→Y)≃(X→GY) equivalence
+ - (use case: from ⊙ap we get ⊙ap2) -}
 module RightAdjointBinary {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
   (adj : HomAdjoint F G)
   where
@@ -330,3 +330,10 @@ module LeftAdjoint∨ {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
     ⊙wedge-rec ⊙winl ⊙winr
       =⟨ ⊙wedge-rec-η ⟩
     ⊙idf _ ∎
+
+  ⊙eq : F.obj U ⊙∨ F.obj V ⊙≃ F.obj (U ⊙∨ V)
+  ⊙eq = ⊙ify-eq (equiv (fst ⊙into) (fst ⊙out)
+                  (app= (ap fst ⊙into-out)) (app= (ap fst ⊙out-into)))
+                (snd ⊙into)
+
+  ⊙path = ⊙ua ⊙eq

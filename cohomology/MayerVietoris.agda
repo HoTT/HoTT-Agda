@@ -158,16 +158,16 @@ module MayerVietorisBase
       ∙v⊡ connection
       ⊡v∙ ! (ap-idf (glue (winr y))))
 
-  {- equivalence and paths -}
+  {- equivalence and path -}
 
   eq : Cofiber reglue ≃ Suspension (fst Z)
   eq = equiv into out into-out out-into
 
-  path : Cofiber reglue == Suspension (fst Z)
-  path = ua eq
+  ⊙eq : ⊙Cof ⊙reglue ⊙≃ ⊙Susp Z
+  ⊙eq = ⊙ify-eq eq idp
 
-  ⊙path : ⊙Cof ⊙reglue == ⊙Susp Z
-  ⊙path = ⊙ua eq idp
+  path = ua eq
+  ⊙path = ⊙ua ⊙eq
 
   {- Transporting [cfcod reglue] over the equivalence -}
 
@@ -218,6 +218,7 @@ module MayerVietoris (ps : ⊙Span {i} {i} {i}) where
       open MayerVietorisFunctions ps public
       field
         eq : Cofiber reglue ≃ Suspension (fst Z)
+        ⊙eq : ⊙Cof ⊙reglue ⊙≃ ⊙Susp Z
         path : Cofiber reglue == Suspension (fst Z)
         ⊙path : ⊙Cof ⊙reglue == ⊙Susp Z
         cfcod-over : cfcod reglue == ext-glue
@@ -232,10 +233,11 @@ module MayerVietoris (ps : ⊙Span {i} {i} {i}) where
         Results (⊙span _ _ Z (f , idp) (g , idp))
       base-results Z f g = record {
         eq = eq;
+        ⊙eq = ⊙eq;
         path = path;
         ⊙path = ⊙path;
         cfcod-over = cfcod-over;
         ext-over = ext-over}
         where open MayerVietorisBase Z f g
 
-    open Results results public
+  open Results results public

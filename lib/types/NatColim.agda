@@ -177,9 +177,9 @@ fin-tuples-map F (S n) =
 ⊙FinTuples {i} F = ⊙ℕColim (fin-tuples-map F)
 
 fin-tuples-cons : ∀ {i} (F : ℕ → Ptd i)
-  → F O ⊙× ⊙FinTuples (F ∘ S) == ⊙FinTuples F
+  → F O ⊙× ⊙FinTuples (F ∘ S) ⊙≃ ⊙FinTuples F
 fin-tuples-cons {i} F =
-  ⊙ua (equiv into out into-out out-into) (! (ncglue O (snd (F O))))
+  ⊙ify-eq (equiv into out into-out out-into) (! (ncglue O (snd (F O))))
   where
   module Into (x : fst (F O)) =
     ℕColimRec (fst ∘ fin-tuples-map (F ∘ S)) {A = fst (⊙FinTuples F)}

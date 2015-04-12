@@ -87,7 +87,7 @@ module Cof² {X Y : Ptd i} (f : fst (X ⊙→ Y)) where
     eq = equiv into out into-out out-into
 
     space-path : ⊙Cof² f == ⊙Susp X
-    space-path = ⊙ua eq (! (merid _ (snd X)))
+    space-path = ⊙ua (⊙ify-eq eq (! (merid _ (snd X))))
 
   cfcod²-over : cfcod² f == ext-glue
                 [ (λ U → fst (⊙Cof f) → fst U) ↓ Equiv.space-path f ]

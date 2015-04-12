@@ -106,4 +106,4 @@ module SuspSmash where
   path = ua eq
 
   ⊙path : ⊙Susp (⊙Smash X Y) == (X ⊙* Y)
-  ⊙path = ⊙ua eq idp
+  ⊙path = ⊙ua (⊙ify-eq eq idp)

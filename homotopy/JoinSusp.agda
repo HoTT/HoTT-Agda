@@ -61,7 +61,7 @@ module _ {i} {A : Type i} where
 module _ {i} (X : Ptd i) where
 
   join-S⁰-⊙path : ⊙Sphere {i} 0 ⊙* X == ⊙Susp X
-  join-S⁰-⊙path = ⊙ua join-S⁰-equiv idp
+  join-S⁰-⊙path = ⊙ua (⊙ify-eq join-S⁰-equiv idp)
 
 module _ {i} {A B : Type i} where
 
@@ -79,7 +79,7 @@ module _ {i} (X Y : Ptd i) where
   ⊙join-susp-shift =
     ap (λ Z → Z ⊙* Y) (! (join-S⁰-⊙path X))
     ∙ join-rearrange-⊙path (⊙Sphere 0) X Y
-    ∙ ⊙ua swap-equiv (! (glue _))
+    ∙ ⊙ua (⊙ify-eq swap-equiv (! (glue _)))
     ∙ join-S⁰-⊙path (Y ⊙* X)
     ∙ ap (λ A → (Suspension A , north _)) (ua swap-equiv)
 

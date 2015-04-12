@@ -79,7 +79,7 @@ module _ {i j k} (ps : ⊙Span {i} {j} {k}) where
   flip-⊙pushout = (FlipPushout.f , preserves)
 
   flip-⊙pushout-path : ⊙Pushout ps == ⊙Pushout (flip-⊙span ps)
-  flip-⊙pushout-path = ⊙ua (flip-pushout-equiv s) preserves
+  flip-⊙pushout-path = ⊙ua (⊙ify-eq (flip-pushout-equiv s) preserves)
 
   {- action of [flip-pushout] on [snd ⊙right] -}
   ap-flip-right : ap flip-pushout (snd (⊙right ps))
@@ -100,12 +100,12 @@ module _ {i j k} (ps : ⊙Span {i} {j} {k}) where
 
   flip-⊙left : ⊙left ps == ⊙right (flip-⊙span ps)
                   [ (λ W → fst (X ⊙→ W)) ↓ flip-⊙pushout-path ]
-  flip-⊙left = codomain-over-⊙equiv _ _ _
+  flip-⊙left = codomain-over-⊙equiv _ _
 
   flip-⊙right : ⊙right ps == ⊙left (flip-⊙span ps)
                    [ (λ W → fst (Y ⊙→ W)) ↓ flip-⊙pushout-path ]
   flip-⊙right =
-    codomain-over-⊙equiv _ _ _
+    codomain-over-⊙equiv _ _
     ▹ pair= idp (ap (λ w → w ∙ preserves) ap-flip-right ∙ !-inv-l preserves)
 
 flip-⊙pushout-involutive : ∀ {i j k} (ps : ⊙Span {i} {j} {k})

@@ -14,15 +14,17 @@ module _ (n : ℤ) where
     ⊙LU = ⊙Lift {j = i} ⊙Unit
 
   Cof-Unit-is-Unit : ⊙Cof (⊙idf ⊙LU) == ⊙LU
-  Cof-Unit-is-Unit = ⊙ua e idp
-    where e = equiv (λ _ → lift unit)
-                    (λ _ → cfbase (idf _))
-                    (λ _ → idp)
-                    (Cofiber-elim (idf _)
-                       {P = λ c → cfbase (idf _) == c}
-                       idp
-                       (λ _ → cfglue (idf _) (lift unit))
-                       (λ _ → ↓-cst=idf-in idp))
+  Cof-Unit-is-Unit = ⊙ua (⊙ify-eq {X = _ , cfbase _} e idp)
+    where
+    e : Cofiber (idf (Lift {j = i} Unit)) ≃ Lift Unit
+    e = equiv (λ _ → lift unit)
+              (λ _ → cfbase (idf _))
+              (λ _ → idp)
+              (Cofiber-elim (idf _)
+                 {P = λ c → cfbase (idf _) == c}
+                 idp
+                 (λ _ → cfglue (idf _) (lift unit))
+                 (λ _ → ↓-cst=idf-in idp))
 
   C-Unit-is-contr : is-contr (CEl n ⊙LU)
   C-Unit-is-contr =

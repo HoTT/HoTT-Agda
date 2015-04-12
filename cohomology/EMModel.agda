@@ -21,14 +21,14 @@ module _ {i} (G : Group i) (G-abelian : is-abelian G) where
     E-spectrum : (n : ℤ) → ⊙Ω (E (succ n)) == E n
     E-spectrum O = spectrum O
     E-spectrum (pos n) = spectrum (S n)
-    E-spectrum (neg O) =
-      ⊙ua (equiv (λ _ → _) (λ _ → idp)
-            (λ _ → idp) (prop-has-all-paths (EM-level _ _ _) _))
-          idp
-    E-spectrum (neg (S n)) =
-      ⊙ua (equiv (λ _ → _) (λ _ → idp)
-            (λ _ → idp) (prop-has-all-paths (Lift-level Unit-is-set _ _) _))
-          idp
+    E-spectrum (neg O) = ⊙ua $ ⊙ify-eq
+      (equiv (λ _ → _) (λ _ → idp)
+             (λ _ → idp) (prop-has-all-paths (EM-level _ _ _) _))
+      idp
+    E-spectrum (neg (S n)) = ⊙ua $ ⊙ify-eq
+      (equiv (λ _ → _) (λ _ → idp)
+             (λ _ → idp) (prop-has-all-paths (Lift-level Unit-is-set _ _) _))
+      idp
 
   EM-Cohomology : CohomologyTheory i
   EM-Cohomology = spectrum-cohomology E E-spectrum

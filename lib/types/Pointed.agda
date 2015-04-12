@@ -21,6 +21,11 @@ _⊙→_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
 _⊙≃_ : ∀ {i j} → Ptd i → Ptd j → Set (lmax i j)
 X ⊙≃ Y = Σ (fst (X ⊙→ Y)) (λ {(f , _) → is-equiv f})
 
+⊙ify-eq : ∀ {i j} {X : Ptd i} {Y : Ptd j}
+  (e : fst X ≃ fst Y) (p : –> e (snd X) == snd Y)
+  → X ⊙≃ Y
+⊙ify-eq (f , ie) p = ((f , p) , ie)
+
 infixr 0 _⊙→_ _⊙≃_
 
 infixr 80 _⊙∘_
@@ -96,11 +101,6 @@ pair⊙→ : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
 pair⊙→ (f , fpt) (g , gpt) =
   ((λ {(x , z) → (f x , g z)}) , pair×= fpt gpt)
 
-{- Obtaining equality of pointed types from an equivalence -}
-⊙ua : ∀ {i} {A B : Type i} {a₀ : A} {b₀ : B}
-  (e : A ≃ B) → –> e a₀ == b₀ → ⊙[ A , a₀ ] == ⊙[ B , b₀ ]
-⊙ua e p = pair= (ua e) (↓-idf-ua-in e p)
-
 {- ⊙→ preserves hlevel -}
 ⊙→-level : ∀ {i j} {X : Ptd i} {Y : Ptd j} {n : ℕ₋₂}
   → has-level n (fst Y) → has-level n (fst (X ⊙→ Y))
@@ -113,12 +113,19 @@ pair⊙→ (f , fpt) (g , gpt) =
 ⊙λ= {g = g} p α =
   pair= (λ= p) (↓-app=cst-in (α ∙ ap (λ w → w ∙ snd g) (! (app=-β p _))))
 
-{- Obtaining pointed maps from an pointed equivalence -}
-module _ {i j} {X : Ptd i} {Y : Ptd j} (e : fst X ≃ fst Y)
-  (p : –> e (snd X) == snd Y) where
+{- Extracting data from an pointed equivalence -}
+module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
+
+  private
+    e : fst X ≃ fst Y
+    e = (fst (fst ⊙e) , snd ⊙e)
+
+    p = snd (fst ⊙e)
+
+  ⊙≃-to-≃ = e
 
   ⊙–> : fst (X ⊙→ Y)
-  ⊙–> = (–> e , p)
+  ⊙–> = fst ⊙e
 
   ⊙<– : fst (Y ⊙→ X)
   ⊙<– = (<– e , ap (<– e) (! p) ∙ <–-inv-l e (snd X))
@@ -155,3 +162,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (e : fst X ≃ fst Y)
       (p : ∀ z → f z == z) {x y : A} (q : x == y)
       → (ap f (! q) ∙ p x) ∙ q == p y
     htpy-lemma p idp = ∙-unit-r _
+
+{- Equality of pointed types -}
+⊙ua : ∀ {i} {X Y : Ptd i} → X ⊙≃ Y → X == Y
+⊙ua ((f , p) , ie) = pair= (ua (f , ie)) (↓-idf-ua-in (f , ie) p)

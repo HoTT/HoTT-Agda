@@ -3,7 +3,8 @@
 open import HoTT
 
 {- Useful lemmas for computing the effect of transporting a function
- - across an equivalence in the domain or codomain -}
+ - across an equivalence in the domain or codomain.
+ - TODO: find a better place for this. -}
 
 module cohomology.FunctionOver where
 
@@ -37,15 +38,12 @@ module _ {i} {j} {Y : Ptd i} {Z : Ptd j} (g : fst (Y ⊙→ Z)) where
     → g ⊙∘ (coe p , q) == g [ (λ W → fst (W ⊙→ Z)) ↓ pair= p (↓-idf-in p q) ]
   domain-over-⊙path idp idp = idp
 
-  domain-over-⊙equiv : {X : Ptd i} (e : fst X ≃ fst Y)
-    (q : –> e (snd X) == snd Y)
-    → g ⊙∘ ⊙–> e q == g [ (λ W → fst (W ⊙→ Z)) ↓ ⊙ua e q ]
-  domain-over-⊙equiv {X = X} e q =
-    ap (λ w → g ⊙∘ w) lemma ◃ domain-over-⊙path (ua e) (coe-β e (snd X) ∙ q)
-    where
-    lemma : Path {A = fst (X ⊙→ Y)}
-       (⊙–> e q) (coe (ua e) , coe-β e (snd X) ∙ q)
-    lemma = ! $ ⊙λ= (coe-β e) idp
+  domain-over-⊙equiv : {X : Ptd i} (e : X ⊙≃ Y)
+    → g ⊙∘ ⊙–> e == g [ (λ W → fst (W ⊙→ Z)) ↓ ⊙ua e ]
+  domain-over-⊙equiv {X = X} e =
+    ap (λ w → g ⊙∘ w) (! $ ⊙λ= (coe-β (⊙≃-to-≃ e)) idp)
+    ◃ domain-over-⊙path (ua (⊙≃-to-≃ e))
+                        (coe-β (⊙≃-to-≃ e) (snd X) ∙ snd (⊙–> e))
 
 module _ {i} {j} {X : Ptd i} {Z : Ptd j} (f : fst (X ⊙→ Z)) where
 
@@ -55,18 +53,11 @@ module _ {i} {j} {X : Ptd i} {Z : Ptd j} (f : fst (X ⊙→ Z)) where
       [ (λ W → fst (W ⊙→ Z)) ↓ pair= p (↓-idf-in p q) ]
   domain!-over-⊙path idp idp = idp
 
-  domain!-over-⊙equiv : {Y : Ptd i} (e : fst X ≃ fst Y)
-    (q : –> e (snd X) == snd Y)
-    → f == f ⊙∘ (⊙<– e q) [ (λ W → fst (W ⊙→ Z)) ↓ ⊙ua e q ]
-  domain!-over-⊙equiv {Y = Y} e q =
-    (ap (λ w → f ⊙∘ w) (lemma e q) ∙ ! (⊙∘-assoc f _ (–> e , q))) ◃
-    domain-over-⊙equiv
-      (f ⊙∘ (<– e , ap (<– e) (! q) ∙ <–-inv-l e (snd X))) e q
-    where
-    lemma : {X Y : Ptd i}
-      (e : fst X ≃ fst Y) (q : –> e (snd X) == snd Y)
-      → ⊙idf X == ((<– e , ap (<– e) (! q) ∙ <–-inv-l e (snd X)) ⊙∘ (–> e , q))
-    lemma {X = X} e idp = ! $ ⊙λ= (<–-inv-l e) (! (∙-unit-r _))
+  domain!-over-⊙equiv : {Y : Ptd i} (e : X ⊙≃ Y)
+    → f == f ⊙∘ (⊙<– e) [ (λ W → fst (W ⊙→ Z)) ↓ ⊙ua e ]
+  domain!-over-⊙equiv {Y = Y} e =
+    (! (ap (λ w → f ⊙∘ w) (⊙<–-inv-l e)) ∙ ! (⊙∘-assoc f _ (⊙–> e)))
+    ◃ domain-over-⊙equiv (f ⊙∘ (⊙<– e)) e
 
 {- transporting a function along an equivalence or path in the codomain -}
 module _ {i} {j} {A : Type i} {B : Type j} (f : A → B) where
@@ -97,15 +88,12 @@ module _ {i} {j} {X : Ptd i} {Y : Ptd j} (f : fst (X ⊙→ Y)) where
     → f == (coe p , q) ⊙∘ f [ (λ W → fst (X ⊙→ W)) ↓ pair= p (↓-idf-in p q) ]
   codomain-over-⊙path idp idp = pair= idp (! (∙-unit-r _ ∙ ap-idf (snd f)))
 
-  codomain-over-⊙equiv : {Z : Ptd j} (e : fst Y ≃ fst Z)
-    (q : –> e (snd Y) == snd Z)
-    → f == (–> e , q) ⊙∘ f [ (λ W → fst (X ⊙→ W)) ↓ ⊙ua e q ]
-  codomain-over-⊙equiv {Z = Z} e q =
-    codomain-over-⊙path (ua e) (coe-β e (snd Y) ∙ q) ▹ ap (λ w → w ⊙∘ f) lemma
-    where
-    lemma : Path {A = fst (Y ⊙→ Z)}
-      (coe (ua e) , coe-β e (snd Y) ∙ q) (–> e , q)
-    lemma = ⊙λ= (coe-β e) idp
+  codomain-over-⊙equiv : {Z : Ptd j} (e : Y ⊙≃ Z)
+    → f == (⊙–> e) ⊙∘ f [ (λ W → fst (X ⊙→ W)) ↓ ⊙ua e ]
+  codomain-over-⊙equiv {Z = Z} e =
+    codomain-over-⊙path (ua (⊙≃-to-≃ e))
+      (coe-β (⊙≃-to-≃ e) (snd Y) ∙ snd (⊙–> e))
+    ▹ ap (λ w → w ⊙∘ f) (⊙λ= (coe-β (⊙≃-to-≃ e)) idp)
 
 module _ {i} {j} {X : Ptd i} {Z : Ptd j} (g : fst (X ⊙→ Z)) where
 
@@ -115,20 +103,11 @@ module _ {i} {j} {X : Ptd i} {Z : Ptd j} (g : fst (X ⊙→ Z)) where
       [ (λ W → fst (X ⊙→ W)) ↓ pair= p (↓-idf-in p q) ]
   codomain!-over-⊙path idp idp = pair= idp (∙-unit-r _ ∙ ap-idf (snd g))
 
-  codomain!-over-⊙equiv : {Y : Ptd j} (e : fst Y ≃ fst Z)
-    (q : –> e (snd Y) == snd Z)
-    → (⊙<– e q) ⊙∘ g == g [ (λ W → fst (X ⊙→ W)) ↓ ⊙ua e q ]
-  codomain!-over-⊙equiv {Y = Y} e q =
-    codomain-over-⊙equiv
-      ((<– e , ap (<– e) (! q) ∙ <–-inv-l e (snd Y)) ⊙∘ g) e q
-    ▹ (! (⊙∘-assoc (–> e , q) _ g) ∙ ap (λ w → w ⊙∘ g) (lemma e q)
-       ∙ ⊙∘-unit-l g)
-    where
-    lemma : {Y Z : Ptd j}
-      (e : fst Y ≃ fst Z) (q : –> e (snd Y) == snd Z)
-      → ((–> e , q) ⊙∘ (<– e , ap (<– e) (! q) ∙ <–-inv-l e (snd Y))) == ⊙idf Z
-    lemma {Y = Y} e idp =
-      ⊙λ= (<–-inv-r e) (ap (λ w → w ∙ idp) (<–-inv-adj e (snd Y)))
+  codomain!-over-⊙equiv : {Y : Ptd j} (e : Y ⊙≃ Z)
+    → (⊙<– e) ⊙∘ g == g [ (λ W → fst (X ⊙→ W)) ↓ ⊙ua e ]
+  codomain!-over-⊙equiv {Y = Y} e =
+    codomain-over-⊙equiv (⊙<– e ⊙∘ g) e
+    ▹ ! (⊙∘-assoc (⊙–> e) _ g) ∙ ap (λ w → w ⊙∘ g) (⊙<–-inv-r e) ∙ ⊙∘-unit-l g
 
 module _ {i j} where
 

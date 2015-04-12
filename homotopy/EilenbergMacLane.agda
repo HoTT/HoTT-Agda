@@ -157,19 +157,19 @@ module EMImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
     spectrum0 : ⊙Ω (⊙EM 1) == ⊙EM 0
     spectrum0 =
       ⊙Ω (⊙EM 1)
-        =⟨ ⊙ua (Trunc=-equiv _ _) idp ⟩
+        =⟨ ⊙ua (⊙ify-eq (Trunc=-equiv _ _) idp) ⟩
       ⊙Trunc ⟨ 0 ⟩ (⊙Ω X)
-        =⟨ ⊙ua (unTrunc-equiv _ (gA a₀ a₀)) idp ⟩
+        =⟨ ⊙ua (⊙ify-eq (unTrunc-equiv _ (gA a₀ a₀)) idp) ⟩
       ⊙Ω X ∎
 
     spectrum1 : ⊙Ω (⊙EM 2) == ⊙EM 1
     spectrum1 =
       ⊙Ω (⊙EM 2)
-        =⟨ ⊙ua (Trunc=-equiv _ _) idp ⟩
+        =⟨ ⊙ua (⊙ify-eq (Trunc=-equiv _ _) idp) ⟩
       ⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp X))
         =⟨ Π₂.⊙main-lemma ⟩
       X
-        =⟨ ! (⊙ua (unTrunc-equiv _ gA) idp) ⟩
+        =⟨ ! (⊙ua (⊙ify-eq (unTrunc-equiv _ gA) idp)) ⟩
       ⊙EM 1 ∎
 
     private
@@ -195,7 +195,7 @@ module EMImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
       → ⊙Ω (⊙EM (S (S (S n)))) == ⊙EM (S (S n))
     spectrumSS n =
       ⊙Ω (⊙EM (S (S (S n))))
-        =⟨ ⊙ua (Trunc=-equiv _ _) idp ⟩
+        =⟨ ⊙ua (⊙ify-eq (Trunc=-equiv _ _) idp) ⟩
       ⊙Trunc ⟨ S (S n) ⟩ (⊙Ω (⊙Susp^ (S (S n)) X))
         =⟨ ! (FS.⊙path n) ⟩
       ⊙EM (S (S n)) ∎
