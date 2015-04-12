@@ -8,12 +8,8 @@ module homotopy.CofiberComp {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
 
 module CofiberComp where
 
-  module H = WedgeRec (fst f) (fst g) (snd f ∙ ! (snd g))
-
-  h = H.f
-
-  ⊙h : fst (X ⊙∨ Y ⊙→ Z)
-  ⊙h = (h , snd f)
+  module H = ⊙WedgeRec f g
+  ⊙h = H.⊙f; h = H.f
 
   module IntoCod = CofiberRec (fst f) {C = fst (⊙Cof ⊙h)}
     (cfbase _)

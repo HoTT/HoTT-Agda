@@ -2,6 +2,7 @@
 
 open import lib.Basics
 open import lib.types.Coproduct
+open import lib.types.Paths
 open import lib.types.Pointed
 open import lib.types.Pushout
 open import lib.types.PushoutFlattening
@@ -84,11 +85,53 @@ add-wglue (inr y) = winr y
   → fst (X ⊙⊔ Y ⊙→ X ⊙∨ Y)
 ⊙add-wglue = (add-wglue , idp)
 
+module ⊙WedgeRec {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  (g : fst (X ⊙→ Z)) (h : fst (Y ⊙→ Z)) where
 
-module Fold {i} {X : Ptd i} =
-  WedgeRec {X = X} {Y = X} (λ x → x) (λ x → x) idp
+  open WedgeRec (fst g) (fst h) (snd g ∙ ! (snd h)) public
 
+  ⊙f : fst (X ⊙∨ Y ⊙→ Z)
+  ⊙f = (f , snd g)
+
+  ⊙winl-β : ⊙f ⊙∘ ⊙winl == g
+  ⊙winl-β = idp
+
+  ⊙winr-β : ⊙f ⊙∘ ⊙winr == h
+  ⊙winr-β = ⊙λ= (λ _ → idp) $
+    ap (λ w → w ∙ snd g)
+       (ap-! f wglue ∙ ap ! glue-β ∙ !-∙ (snd g) (! (snd h)))
+    ∙ ∙-assoc (! (! (snd h))) (! (snd g)) (snd g)
+    ∙ ap (λ w → ! (! (snd h)) ∙ w) (!-inv-l (snd g))
+    ∙ ∙-unit-r (! (! (snd h)))
+    ∙ !-! (snd h)
+
+⊙wedge-rec = ⊙WedgeRec.⊙f
+
+⊙wedge-rec-post∘ : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
+  (k : fst (Z ⊙→ W)) (g : fst (X ⊙→ Z)) (h : fst (Y ⊙→ Z))
+  → k ⊙∘ ⊙wedge-rec g h == ⊙wedge-rec (k ⊙∘ g) (k ⊙∘ h)
+⊙wedge-rec-post∘ k g h = ⊙λ=
+  (Wedge-elim (λ _ → idp) (λ _ → idp)
+    (↓-='-in $ ⊙WedgeRec.glue-β (k ⊙∘ g) (k ⊙∘ h)
+               ∙ lemma (fst k) (snd g) (snd h) (snd k)
+               ∙ ! (ap (ap (fst k)) (⊙WedgeRec.glue-β g h))
+               ∙ ∘-ap (fst k) (fst (⊙wedge-rec g h)) wglue))
+  idp
+  where
+  lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) {x y z : A} {w : B}
+    (p : x == z) (q : y == z) (r : f z == w)
+    → (ap f p ∙ r) ∙ ! (ap f q ∙ r) == ap f (p ∙ ! q)
+  lemma f idp idp idp = idp
+
+⊙wedge-rec-η : ∀ {i j} {X : Ptd i} {Y : Ptd j}
+  → ⊙wedge-rec ⊙winl ⊙winr == ⊙idf (X ⊙∨ Y)
+⊙wedge-rec-η = ⊙λ=
+  (Wedge-elim (λ _ → idp) (λ _ → idp)
+    (↓-='-in $ ap-idf wglue
+               ∙ ! (!-! wglue)
+               ∙ ! (⊙WedgeRec.glue-β ⊙winl ⊙winr)))
+  idp
+
+module Fold {i} {X : Ptd i} = ⊙WedgeRec (⊙idf X) (⊙idf X)
 fold = Fold.f
-
-⊙fold : ∀ {i} {X : Ptd i} → fst (X ⊙∨ X ⊙→ X)
-⊙fold = (fold , idp)
+⊙fold = Fold.⊙f

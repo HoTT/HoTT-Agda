@@ -71,7 +71,7 @@ private
 ⊙ap-idf = ⊙λ= ap-idf idp
 
 ⊙ap2-fst : ∀ {i j} {X : Ptd i} {Y : Ptd j}
-  → ⊙ap2 {X = X} {Y = Y} ⊙fst == ⊙fst {Y = λ _ → ⊙Ω Y}
+  → ⊙ap2 {X = X} {Y = Y} ⊙fst == ⊙fst
 ⊙ap2-fst = ⊙λ= (uncurry ap2-fst) idp
 
 ⊙ap2-snd : ∀ {i j} {X : Ptd i} {Y : Ptd j}
@@ -121,7 +121,7 @@ ap^-ap2^ O G F = idp
 ap^-ap2^ (S n) G F = ⊙ap-ap2 (ap^ n G) (ap2^ n F) ∙ ap ⊙ap2 (ap^-ap2^ n G F)
 
 ap2^-fst : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
-  → ap2^ n {X} {Y} ⊙fst == ⊙fst {Y = λ _ → ⊙Ω^ n Y}
+  → ap2^ n {X} {Y} ⊙fst == ⊙fst
 ap2^-fst O = idp
 ap2^-fst (S n) = ap ⊙ap2 (ap2^-fst n) ∙ ⊙ap2-fst
 

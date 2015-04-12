@@ -18,7 +18,10 @@ Ptd₀ = Ptd lzero
 _⊙→_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
 (A , a₀) ⊙→ (B , b₀) = ⊙[ Σ (A → B) (λ f → f a₀ == b₀) , ((λ _ → b₀), idp) ]
 
-infixr 0 _⊙→_
+_⊙≃_ : ∀ {i j} → Ptd i → Ptd j → Set (lmax i j)
+X ⊙≃ Y = Σ (fst (X ⊙→ Y)) (λ {(f , _) → is-equiv f})
+
+infixr 0 _⊙→_ _⊙≃_
 
 infixr 80 _⊙∘_
 
@@ -56,8 +59,11 @@ infixr 80 _⊙×_
 _⊙×_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
 X ⊙× Y = ⊙Σ X (λ _ → Y)
 
-⊙fst : ∀ {i j} {X : Ptd i} {Y : fst X → Ptd j} → fst (⊙Σ X Y ⊙→ X)
-⊙fst = (fst , idp)
+⊙dfst : ∀ {i j} {X : Ptd i} (Y : fst X → Ptd j) → fst (⊙Σ X Y ⊙→ X)
+⊙dfst Y = (fst , idp)
+
+⊙fst : ∀ {i j} {X : Ptd i} {Y : Ptd j} → fst (X ⊙× Y ⊙→ X)
+⊙fst = ⊙dfst _
 
 ⊙snd : ∀ {i j} {X : Ptd i} {Y : Ptd j} → fst (X ⊙× Y ⊙→ Y)
 ⊙snd = (snd , idp)

@@ -111,8 +111,8 @@ module CΣ (n : ℤ) (X : Ptd i) (Y : fst X → Ptd i) where
     module SER = SplitExactRight (C-abelian n _)
       (CF-hom n ⊙Σbwin) (CF-hom n ⊙select)
       eseq
-      (CF-hom n (⊙fst {Y = Y}))
-      (app= $ ap GroupHom.f $ CF-inverse n ⊙select (⊙fst {Y = Y}) (λ _ → idp))
+      (CF-hom n (⊙dfst Y))
+      (app= $ ap GroupHom.f $ CF-inverse n ⊙select (⊙dfst Y) (λ _ → idp))
 
   path : C n (⊙Σ X Y) == C n (⊙BigWedge Y) ×ᴳ C n X
   path = SER.iso
