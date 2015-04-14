@@ -71,6 +71,12 @@ _×ᴳ_ (group A A-level A-struct) (group B B-level B-struct) =
   f = λ x → (h x , k x);
   pres-comp = λ x y → pair×= (h-comp x y) (k-comp x y)}
 
+×ᴳ-hom-in-pre∘ : ∀ {i j k l}
+  {G : Group i} {H : Group j} {K : Group k} {J : Group l}
+  (φ : G →ᴳ H) (ψ : G →ᴳ K) (χ : J →ᴳ G)
+  → ×ᴳ-hom-in φ ψ ∘ᴳ χ == ×ᴳ-hom-in (φ ∘ᴳ χ) (ψ ∘ᴳ χ)
+×ᴳ-hom-in-pre∘ φ ψ χ = hom= _ _ idp
+
 {- projection homomorphisms -}
 ×ᴳ-fst : ∀ {i j} {G : Group i} {H : Group j} → (G ×ᴳ H →ᴳ G)
 ×ᴳ-fst = record {f = fst; pres-comp = λ _ _ → idp}

@@ -2,6 +2,7 @@
 
 open import HoTT
 open import cohomology.Exactness
+open import cohomology.FunctionOver
 open import cohomology.Theory
 open import cohomology.CofiberSequence
 
@@ -28,13 +29,19 @@ long-cofiber-exact =
   {- apply the suspension isomorphism -}
   transport
     (λ {(r , s) → is-exact-seq s})
-    (pair= _ $ sequence-iso-ua _ _ $
-      C-Susp n Y ↓⟨ C-SuspF n f ⟩↓
-      C-Susp n X ↓⟨ hom= _ _ $ ap (λ w → CF (succ n) ⊙ext-glue ∘ w) $
-                    ! $ λ= $ is-equiv.g-f (snd (C-Susp n X)) ⟩↓
-      idiso _    ↓⟨ hom= _ _ idp ⟩↓
-      idiso _    ↓⟨ hom= _ _ idp ⟩↓
-      idiso _    ↓⊣|)
+    (pair= _ $ sequence= _ _ $
+      group-ua (C-Susp n Y)
+        ∥⟨ C-Susp-↓ n f ⟩∥
+      group-ua (C-Susp n X)
+        ∥⟨ ↓-over-×-in _→ᴳ_
+             (domain-over-iso
+               (λ= (! ∘ ap (GroupHom.f (CF-hom _ ⊙ext-glue))
+                      ∘ is-equiv.g-f (snd (C-Susp n X)))
+                ◃ domain-over-equiv _ _))
+             idp ⟩∥
+      idp    ∥⟨ idp ⟩∥
+      idp    ∥⟨ idp ⟩∥
+      idp    ∥⊣|)
     {- fix the function basepoints -}
     (transport
       (λ {(φ , ψ) → is-exact-seq $

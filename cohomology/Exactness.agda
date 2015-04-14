@@ -47,20 +47,20 @@ data HomSequence {i} : Group i → Group i → Type (lsucc i) where
   _⟨_⟩→_ : (G : Group i) {H K : Group i} (φ : G →ᴳ H)
              → HomSequence H K → HomSequence G K
 
-data SequencePath {i} : {G₁ H₁ G₂ H₂ : Group i}
+data Sequence= {i} : {G₁ H₁ G₂ H₂ : Group i}
   (S₁ : HomSequence G₁ H₁) (S₂ : HomSequence G₂ H₂)
   → G₁ == G₂ → H₁ == H₂ → Type (lsucc i) where
-  seq-path-z : ∀ {G₁ G₂} (p : G₁ == G₂) → SequencePath (G₁ ⊣|) (G₂ ⊣|) p p
-  seq-path-s : ∀ {G₁ G₂} (pG : G₁ == G₂)
+  _∥⊣| : ∀ {G₁ G₂} (p : G₁ == G₂) → Sequence= (G₁ ⊣|) (G₂ ⊣|) p p
+  _∥⟨_⟩∥_ : ∀ {G₁ G₂} (pG : G₁ == G₂)
     {H₁ K₁ H₂ K₂ : Group i} {φ₁ : G₁ →ᴳ H₁} {φ₂ : G₂ →ᴳ H₂}
     {S₁ : HomSequence H₁ K₁} {S₂ : HomSequence H₂ K₂}
     {pH : H₁ == H₂} {pK : K₁ == K₂}
     (over : φ₁ == φ₂ [ uncurry _→ᴳ_ ↓ pair×= pG pH ])
-    → SequencePath S₁ S₂ pH pK
-    → SequencePath (G₁ ⟨ φ₁ ⟩→ S₁) (G₂ ⟨ φ₂ ⟩→ S₂) pG pK
+    → Sequence= S₁ S₂ pH pK
+    → Sequence= (G₁ ⟨ φ₁ ⟩→ S₁) (G₂ ⟨ φ₂ ⟩→ S₂) pG pK
 
-infix 15 _↓⊣|
-infixr 10 _↓⟨_⟩↓_
+infix 15 _↓⊣| _∥⊣|
+infixr 10 _↓⟨_⟩↓_ _∥⟨_⟩∥_
 
 data SequenceIso {i j} : {G₁ H₁ : Group i} {G₂ H₂ : Group j}
   (S₁ : HomSequence G₁ H₁) (S₂ : HomSequence G₂ H₂)
@@ -78,27 +78,27 @@ seq-iso-to-path : ∀ {i} {G₁ H₁ G₂ H₂ : Group i}
   {S₁ : HomSequence G₁ H₁} {S₂ : HomSequence G₂ H₂}
   {isoG : G₁ ≃ᴳ G₂} {isoH : H₁ ≃ᴳ H₂}
   → SequenceIso S₁ S₂ isoG isoH
-  → SequencePath S₁ S₂ (group-ua isoG) (group-ua isoH)
-seq-iso-to-path (iso ↓⊣|) = seq-path-z (group-ua iso)
+  → Sequence= S₁ S₂ (group-ua isoG) (group-ua isoH)
+seq-iso-to-path (iso ↓⊣|) = group-ua iso ∥⊣|
 seq-iso-to-path (iso ↓⟨ over ⟩↓ si') =
-  seq-path-s (group-ua iso)
-    (hom-over-isos $ function-over-equivs _ _ $ ap GroupHom.f over)
-    (seq-iso-to-path si')
+  group-ua iso
+    ∥⟨ hom-over-isos $ function-over-equivs _ _ $ ap GroupHom.f over ⟩∥
+  seq-iso-to-path si'
 
-sequence-path-ua : ∀ {i} {G₁ H₁ G₂ H₂ : Group i}
+sequence= : ∀ {i} {G₁ H₁ G₂ H₂ : Group i}
   {S₁ : HomSequence G₁ H₁} {S₂ : HomSequence G₂ H₂}
-  (pG : G₁ == G₂) (pH : H₁ == H₂) → SequencePath S₁ S₂ pG pH
+  (pG : G₁ == G₂) (pH : H₁ == H₂) → Sequence= S₁ S₂ pG pH
   → S₁ == S₂ [ uncurry HomSequence ↓ pair×= pG pH ]
-sequence-path-ua idp .idp (seq-path-z .idp) = idp
-sequence-path-ua {G₁ = G₁} idp idp
-  (seq-path-s .idp {φ₁ = φ₁} {pH = idp} idp sp') =
-    ap (λ S' → G₁ ⟨ φ₁ ⟩→ S') (sequence-path-ua idp idp sp')
+sequence= idp .idp (.idp ∥⊣|) = idp
+sequence= {G₁ = G₁} idp idp
+  (_∥⟨_⟩∥_ .idp {φ₁ = φ₁} {pH = idp} idp sp') =
+    ap (λ S' → G₁ ⟨ φ₁ ⟩→ S') (sequence= idp idp sp')
 
 sequence-iso-ua : ∀ {i} {G₁ H₁ G₂ H₂ : Group i}
   {S₁ : HomSequence G₁ H₁} {S₂ : HomSequence G₂ H₂}
   (isoG : G₁ ≃ᴳ G₂) (isoH : H₁ ≃ᴳ H₂) → SequenceIso S₁ S₂ isoG isoH
   → S₁ == S₂ [ uncurry HomSequence ↓ pair×= (group-ua isoG) (group-ua isoH) ]
-sequence-iso-ua isoG isoH si = sequence-path-ua _ _ (seq-iso-to-path si)
+sequence-iso-ua isoG isoH si = sequence= _ _ (seq-iso-to-path si)
 
 data is-exact-seq {i} : {G H : Group i} → HomSequence G H → Type (lsucc i) where
   exact-seq-zero : {G : Group i} → is-exact-seq (G ⊣|)

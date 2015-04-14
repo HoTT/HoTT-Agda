@@ -197,16 +197,20 @@ coeᴳ-β (φ , ie) = hom= _ _ $
   ∙ ap coe (group-ua-el (φ , ie))
   ∙ λ= (coe-β (GroupHom.f φ , ie))
 
-{- identity hom is unit -}
+{- algebraic properties -}
 
-∘ᴳ-unit-r : ∀ {i j} {G : Group i} {H : Group j} (φ : (G →ᴳ H))
+∘ᴳ-unit-r : ∀ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H)
   → φ ∘ᴳ idhom G == φ
 ∘ᴳ-unit-r φ = idp
 
-∘ᴳ-unit-l : ∀ {i j} {G : Group i} {H : Group j} (φ : (G →ᴳ H))
+∘ᴳ-unit-l : ∀ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H)
   → idhom H ∘ᴳ φ == φ
 ∘ᴳ-unit-l φ = hom= _ _ $ idp
 
+∘ᴳ-assoc : ∀ {i j k l} {G : Group i} {H : Group j} {K : Group k} {L : Group l}
+  (χ : K →ᴳ L) (ψ : H →ᴳ K) (φ : G →ᴳ H)
+  → (χ ∘ᴳ ψ) ∘ᴳ φ == χ ∘ᴳ ψ ∘ᴳ φ
+∘ᴳ-assoc χ ψ φ = hom= _ _ $ idp
 
 {- homomorphism with kernel zero is injective -}
 module _ {i j} {G : Group i} {H : Group j} (φ : (G →ᴳ H)) where
@@ -288,20 +292,23 @@ module _ {i} {G H : Group i} (φ : G →ᴳ H) where
   module _ (inj : (g₁ g₂ : G.El) → φ.f g₁ == φ.f g₂ → g₁ == g₂)
     (surj : (h : H.El) → Trunc ⟨-1⟩ (Σ G.El (λ g → φ.f g == h))) where
 
-    surj-inj-= : G == H
-    surj-inj-= = group-ua (φ , surj-inj-is-equiv φ inj surj)
+    surj-inj-iso : G ≃ᴳ H
+    surj-inj-iso = (φ , surj-inj-is-equiv φ inj surj)
+
+    surj-inj-path : G == H
+    surj-inj-path = group-ua surj-inj-iso
 
 {- negation is a homomorphism in an abelian gruop -}
-module _ {i} (G : Group i) (G-abelian : is-abelian G) where
+inv-hom : ∀ {i} (G : Group i) (G-abelian : is-abelian G) → GroupHom G G
+inv-hom G G-abelian = record {
+  f = Group.inv G;
+  pres-comp = λ g₁ g₂ →
+    group-inv-comp G g₁ g₂ ∙ G-abelian (Group.inv G g₂) (Group.inv G g₁)}
 
-  private
-    module G = Group G
-
-  inv-hom : GroupHom G G
-  inv-hom = record {
-    f = G.inv;
-    pres-comp = λ g₁ g₂ →
-      group-inv-comp G g₁ g₂ ∙ G-abelian (G.inv g₂) (G.inv g₁)}
+inv-hom-natural : ∀ {i j} {G : Group i} {H : Group j}
+  (G-abelian : is-abelian G) (H-abelian : is-abelian H) (φ : G →ᴳ H)
+  → φ ∘ᴳ inv-hom G G-abelian == inv-hom H H-abelian ∘ᴳ φ
+inv-hom-natural _ _ φ = hom= _ _ $ λ= $ GroupHom.pres-inv φ
 
 {- two homomorphisms into an abelian group can be composed with
  - the group operation -}

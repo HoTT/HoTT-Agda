@@ -54,24 +54,27 @@ module ProductRepr {i j}
     ∙ ap2 (Group.comp H₂) (itok ex₁ _ [ h₁ , idp ]) (p₂ h₂)
     ∙ Group.unitl H₂ h₂
 
-  iso : G == H₁ ×ᴳ H₂
-  iso = surj-inj-= (×ᴳ-hom-in j₁ j₂)
+  iso : G ≃ᴳ (H₁ ×ᴳ H₂)
+  iso = surj-inj-iso (×ᴳ-hom-in j₁ j₂)
     (zero-kernel-injective (×ᴳ-hom-in j₁ j₂) zero-ker)
     (λ {(h₁ , h₂) → [ Group.comp G (GroupHom.f i₁ h₁) (GroupHom.f i₂ h₂) ,
                       pair×= (β₁ h₁ h₂) (β₂ h₁ h₂) ]})
 
-  fst-over : j₁ == ×ᴳ-fst [ (λ U → U →ᴳ H₁) ↓ iso ]
+  path : G == H₁ ×ᴳ H₂
+  path = group-ua iso
+
+  fst-over : j₁ == ×ᴳ-fst [ (λ U → U →ᴳ H₁) ↓ path ]
   fst-over = domain-over-iso $ domain-over-equiv fst _
 
-  snd-over : j₂ == ×ᴳ-snd {G = H₁} [ (λ U → U →ᴳ H₂) ↓ iso ]
+  snd-over : j₂ == ×ᴳ-snd {G = H₁} [ (λ U → U →ᴳ H₂) ↓ path ]
   snd-over = domain-over-iso $ domain-over-equiv snd _
 
-  inl-over : i₁ == ×ᴳ-inl [ (λ V → H₁ →ᴳ V) ↓ iso ]
+  inl-over : i₁ == ×ᴳ-inl [ (λ V → H₁ →ᴳ V) ↓ path ]
   inl-over = codomain-over-iso $
     codomain-over-equiv (GroupHom.f i₁) _
     ▹ λ= (λ h₁ → pair×= (p₁ h₁) (itok ex₁ _ [ h₁ , idp ]))
 
-  inr-over : i₂ == ×ᴳ-inr {G = H₁} [ (λ V → H₂ →ᴳ V) ↓ iso ]
+  inr-over : i₂ == ×ᴳ-inr {G = H₁} [ (λ V → H₂ →ᴳ V) ↓ path ]
   inr-over = codomain-over-iso $
     codomain-over-equiv (GroupHom.f i₂) _
     ▹ λ= (λ h₂ → pair×= (itok ex₂ _ [ h₂ , idp ]) (p₂ h₂))
@@ -101,7 +104,7 @@ module ProductRepr {i j}
          Group.comp G' (GroupHom.f i₁' (GroupHom.f j₁' g))
                        (GroupHom.f i₂' (GroupHom.f j₂' g))
          == g})
-      (! (pair= iso (↓-×-in inl-over (↓-×-in inr-over
+      (! (pair= path (↓-×-in inl-over (↓-×-in inr-over
                                              (↓-×-in fst-over snd-over)))))
       (λ {(h₁ , h₂) → pair×= (Group.unitr H₁ h₁) (Group.unitl H₂ h₂)})
 

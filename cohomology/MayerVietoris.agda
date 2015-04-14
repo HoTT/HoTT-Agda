@@ -16,15 +16,13 @@ module MayerVietorisFunctions (ps : ⊙Span {i} {i} {i}) where
   open ⊙Span ps
 
 
-  module Reglue = WedgeRec
-    {X = ⊙Span.X ps} {Y = ⊙Span.Y ps} {C = fst (⊙Pushout ps)}
-    left right (! (ap left (snd f)) ∙ glue (snd Z) ∙' ap right (snd g))
+  module Reglue = ⊙WedgeRec (⊙left ps) (⊙right ps)
 
   reglue : X ∨ Y → fst (⊙Pushout ps)
   reglue = Reglue.f
 
   ⊙reglue : fst (X ⊙∨ Y ⊙→ ⊙Pushout ps)
-  ⊙reglue = (reglue , idp)
+  ⊙reglue = Reglue.⊙f
 
   module MVDiff = SuspensionRec (fst Z) {C = Suspension (X ∨ Y)}
     (north _)
@@ -63,7 +61,8 @@ module MayerVietorisBase
       Square idp idp (ap (ext-glue ∘ reglue) wglue) (merid _ (snd Z))
     into-glue-square =
       connection ⊡v∙
-      ! (ap-∘ ext-glue reglue wglue ∙ ap (ap ext-glue) Reglue.glue-β
+      ! (ap-∘ ext-glue reglue wglue
+         ∙ ap (ap ext-glue) (Reglue.glue-β ∙ !-! (glue (snd Z)))
          ∙ ExtGlue.glue-β (snd Z))
 
     module IntoGlue = WedgeElim {P = λ xy → north _ == ext-glue (reglue xy)}
@@ -154,7 +153,7 @@ module MayerVietorisBase
            (! (ap-cst (cfbase _) wglue) ∙v⊡
             natural-square (cfglue _) wglue
             ⊡v∙ (ap-∘ (cfcod _) reglue wglue
-                 ∙ ap (ap (cfcod _)) (Reglue.glue-β))))
+                 ∙ ap (ap (cfcod _)) (Reglue.glue-β ∙ !-! (glue (snd Z))))))
       ∙v⊡ connection
       ⊡v∙ ! (ap-idf (glue (winr y))))
 

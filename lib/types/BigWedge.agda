@@ -121,10 +121,6 @@ module _ {i} (Pick : Lift {j = i} Bool → Ptd i) where
             (ap (ap g) (F.glue-β (lift false)) ∙ G.glue-β) ∙v⊡
             lt-square (! (bwglue (lift true))) ⊡h vid-square})
 
-  BigWedge-Bool-path :
-    BigWedge Pick == Wedge (Pick (lift true)) (Pick (lift false))
-  BigWedge-Bool-path = ua BigWedge-Bool-equiv
-
   BigWedge-Bool-⊙path :
     ⊙BigWedge Pick == ⊙Wedge (Pick (lift true)) (Pick (lift false))
-  BigWedge-Bool-⊙path = ⊙ua BigWedge-Bool-equiv idp
+  BigWedge-Bool-⊙path = ⊙ua (⊙ify-eq BigWedge-Bool-equiv idp)

@@ -135,3 +135,13 @@ module ⊙WedgeRec {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
 module Fold {i} {X : Ptd i} = ⊙WedgeRec (⊙idf X) (⊙idf X)
 fold = Fold.f
 ⊙fold = Fold.⊙f
+
+module _ {i j} (X : Ptd i) (Y : Ptd j) where
+
+  module Projl = ⊙WedgeRec (⊙idf X) (⊙cst {X = Y})
+  module Projr = ⊙WedgeRec (⊙cst {X = X}) (⊙idf Y)
+
+  projl = Projl.f
+  projr = Projr.f
+  ⊙projl = Projl.⊙f
+  ⊙projr = Projr.⊙f

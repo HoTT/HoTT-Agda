@@ -10,22 +10,9 @@ module cohomology.WedgeCofiber where
 
 module WedgeCofiber {i} (X Y : Ptd i) where
 
-  module Projl = WedgeRec {X = X} {Y = Y} (λ x → x) (λ y → snd X) idp
-  module Projr = WedgeRec {X = X} {Y = Y} (λ x → snd Y) (λ y → y) idp
-
-  projl = Projl.f
-  projr = Projr.f
-
-  ⊙projl : fst (X ⊙∨ Y ⊙→ X)
-  ⊙projl = (projl , idp)
-
-  ⊙projr : fst (X ⊙∨ Y ⊙→ Y)
-  ⊙projr = (projr , idp)
-
   module CofWinl where
 
-    module Into = CofiberRec (winl {X = X} {Y = Y})
-                    (snd Y) projr (λ _ → idp)
+    module Into = CofiberRec winl (snd Y) (projr X Y) (λ _ → idp)
 
     into = Into.f
 
@@ -40,7 +27,7 @@ module WedgeCofiber {i} (X Y : Ptd i) where
         (λ y → idp)
         (↓-='-from-square $
           (lemma (cfglue _ (snd X)) (ap (cfcod _) wglue)
-           ∙h⊡ (ap-∘ out projr wglue ∙ ap (ap out) Projr.glue-β)
+           ∙h⊡ (ap-∘ out (projr X Y) wglue ∙ ap (ap out) (Projr.glue-β X Y))
                 ∙v⊡ bl-square (ap (cfcod _) wglue))))
       (λ x → ↓-∘=idf-from-square out into $
         ! (∙-unit-r _) ∙h⊡
@@ -55,7 +42,7 @@ module WedgeCofiber {i} (X Y : Ptd i) where
     ⊙path : ⊙Cof (⊙winl {X = X} {Y = Y}) == Y
     ⊙path = ⊙ua (⊙ify-eq (equiv into out (λ _ → idp) out-into) idp)
 
-    cfcod-over : ⊙cfcod ⊙winl == ⊙projr
+    cfcod-over : ⊙cfcod ⊙winl == ⊙projr X Y
                  [ (λ U → fst (X ⊙∨ Y ⊙→ U)) ↓ ⊙path ]
     cfcod-over = codomain-over-⊙equiv (⊙cfcod ⊙winl) _
                  ▹ pair= idp (∙-unit-r _ ∙ ap-! into (cfglue _ (snd X))
@@ -63,8 +50,7 @@ module WedgeCofiber {i} (X Y : Ptd i) where
 
   module CofWinr where
 
-    module Into = CofiberRec (winr {X = X} {Y = Y})
-                    (snd X) projl (λ _ → idp)
+    module Into = CofiberRec winr (snd X) (projl X Y) (λ _ → idp)
 
     into = Into.f
 
@@ -78,7 +64,7 @@ module WedgeCofiber {i} (X Y : Ptd i) where
         (λ x → idp)
         (λ y → (ap (cfcod _) wglue ∙ ! (cfglue _ (snd Y))) ∙ cfglue _ y)
         (↓-='-from-square $
-          (ap-∘ out projl wglue ∙ ap (ap out) Projl.glue-β) ∙v⊡
+          (ap-∘ out (projl X Y) wglue ∙ ap (ap out) (Projl.glue-β X Y)) ∙v⊡
              connection
            ⊡h∙ ! (lemma (ap (cfcod winr) wglue) (cfglue _ (snd Y)))))
       (λ y → ↓-∘=idf-from-square out into $
@@ -94,7 +80,7 @@ module WedgeCofiber {i} (X Y : Ptd i) where
     ⊙path : ⊙Cof ⊙winr == X
     ⊙path = ⊙ua (⊙ify-eq (equiv into out (λ _ → idp) out-into) idp)
 
-    cfcod-over : ⊙cfcod ⊙winr == ⊙projl
+    cfcod-over : ⊙cfcod ⊙winr == ⊙projl X Y
                  [ (λ U → fst (X ⊙∨ Y ⊙→ U)) ↓ ⊙path ]
     cfcod-over = codomain-over-⊙equiv (⊙cfcod ⊙winr) _
                  ▹ pair= idp lemma
@@ -112,8 +98,9 @@ module WedgeCofiber {i} (X Y : Ptd i) where
         ap into (ap (cfcod _) wglue) ∙ ap into (! (cfglue _ (snd Y)))
           =⟨ ∘-ap into (cfcod _) wglue
              |in-ctx (λ w → w ∙ ap into (! (cfglue _ (snd Y)))) ⟩
-        ap projl wglue ∙ ap into (! (cfglue _ (snd Y)))
-          =⟨ Projl.glue-β |in-ctx (λ w → w ∙ ap into (! (cfglue _ (snd Y)))) ⟩
+        ap (projl X Y) wglue ∙ ap into (! (cfglue _ (snd Y)))
+          =⟨ Projl.glue-β X Y
+             |in-ctx (λ w → w ∙ ap into (! (cfglue _ (snd Y)))) ⟩
         ap into (! (cfglue _ (snd Y)))
           =⟨ ap-! into (cfglue _ (snd Y)) ⟩
         ! (ap into (cfglue _ (snd Y)))
