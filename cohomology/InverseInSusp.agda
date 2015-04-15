@@ -25,7 +25,7 @@ private
   module Subtract = SuspensionRec (fst X) {C = fst (⊙Susp X ⊙∨ ⊙Susp X)}
     (winl (south _))
     (winr (south _))
-    (λ x → ! (ap winl (merid _ x)) ∙ wglue ∙ ap winr (merid _ x))
+    (λ x → ap winl (! (merid _ x)) ∙ wglue ∙ ap winr (merid _ x))
 
   subtract = Subtract.f
 
@@ -37,10 +37,9 @@ private
     ↓-='-from-square ∘ vert-degen-square ∘ λ x →
       ap-∘ (projl _ _) subtract (merid _ x)
       ∙ ap (ap (projl _ _)) (Subtract.glue-β x)
-      ∙ ap-∙ (projl _ _) (! (ap winl (merid _ x))) (wglue ∙ ap winr (merid _ x))
-      ∙ ((ap-! (projl _ _) (ap winl (merid _ x))
-          ∙ ap ! (∘-ap (projl _ _) winl (merid _ x))
-          ∙ ap ! (ap-idf _))
+      ∙ ap-∙ (projl _ _) (ap winl (! (merid _ x))) (wglue ∙ ap winr (merid _ x))
+      ∙ ((∘-ap (projl _ _) winl (! (merid _ x))
+          ∙ ap-idf _)
          ∙2 (ap-∙ (projl _ _) wglue (ap winr (merid _ x))
              ∙ (Projl.glue-β _ _
                 ∙2 (∘-ap (projl _ _) winr (merid _ x) ∙ ap-cst _ _))))
@@ -51,12 +50,11 @@ private
   projr-subtract = Suspension-elim (fst X) idp idp $
     ↓-∘=idf-in (projr _ _) subtract ∘ λ x →
       ap (ap (projr _ _)) (Subtract.glue-β x)
-      ∙ ap-∙ (projr _ _) (! (ap winl (merid _ x))) (wglue ∙ ap winr (merid _ x))
-      ∙ (ap-! (projr _ _) (ap winl (merid _ x))
-          ∙ ap ! (∘-ap (projr _ _) winl (merid _ x) ∙ ap-cst _ _))
-        ∙2 (ap-∙ (projr _ _) wglue (ap winr (merid _ x))
-            ∙ (Projr.glue-β _ _
-               ∙2 (∘-ap (projr _ _) winr (merid _ x) ∙ ap-idf _)))
+      ∙ ap-∙ (projr _ _) (ap winl (! (merid _ x))) (wglue ∙ ap winr (merid _ x))
+      ∙ ((∘-ap (projr _ _) winl (! (merid _ x)) ∙ ap-cst _ _)
+         ∙2 (ap-∙ (projr _ _) wglue (ap winr (merid _ x))
+             ∙ (Projr.glue-β _ _
+                ∙2 (∘-ap (projr _ _) winr (merid _ x) ∙ ap-idf _))))
 
   fold-subtract : ∀ σ → fold (subtract σ) == south _
   fold-subtract = Suspension-elim (fst X) idp idp $
@@ -64,9 +62,8 @@ private
       ∙-unit-r _
       ∙ ap-∘ fold subtract (merid _ x)
       ∙ ap (ap fold) (Subtract.glue-β x)
-      ∙ ap-∙ fold (! (ap winl (merid _ x))) (wglue ∙ ap winr (merid _ x))
-      ∙ ((ap-! fold (ap winl (merid _ x))
-          ∙ ap ! (∘-ap fold winl (merid _ x) ∙ ap-idf _))
+      ∙ ap-∙ fold (ap winl (! (merid _ x))) (wglue ∙ ap winr (merid _ x))
+      ∙ ((∘-ap fold winl (! (merid _ x)) ∙ ap-idf _)
          ∙2 (ap-∙ fold wglue (ap winr (merid _ x))
              ∙ (Fold.glue-β
                 ∙2 (∘-ap fold winr (merid _ x) ∙ ap-idf _))))
