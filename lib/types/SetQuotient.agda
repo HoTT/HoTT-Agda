@@ -29,7 +29,10 @@ module _ {i} {A : Type i} {j} where
     postulate  -- HIT
       quot-rel : {a₁ a₂ : A} → R a₁ a₂ → q[ a₁ ] == q[ a₂ ]
 
+    postulate  -- HIT
       SetQuotient-level : is-set (SetQuotient R)
+
+    SetQuotient-is-set = SetQuotient-level
 
     module SetQuotElim {k} {P : SetQuotient R → Type k}
       (p : (x : SetQuotient R) → is-set (P x)) (q[_]* : (a : A) → P q[ a ])
