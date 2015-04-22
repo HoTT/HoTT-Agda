@@ -96,25 +96,25 @@ module _ {i} {A : Type i} where
         (λ q a → coe-∙ p q a))
 
     trans₀-∙₀ : ∀ {j} {B : A → Type j}
-      → (B-level : ∀ {a} → is-set (B a))
+      → (B-level : ∀ a → is-set (B a))
       → {x y z : A} (p : x =₀ y) (q : y =₀ z) (b : B x)
-      → transport₀ B B-level (p ∙₀ q) b
-      == transport₀ B B-level q (transport₀ B B-level p b)
+      → transport₀ B (B-level _) (p ∙₀ q) b
+      == transport₀ B (B-level _) q (transport₀ B (B-level _) p b)
     trans₀-∙₀ B-level = Trunc-elim
-      (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-level ⟨0⟩ B-level)
+      (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-level ⟨0⟩ $ B-level _)
       (λ p → Trunc-elim
-        (λ _ → Π-is-set λ _ → =-preserves-level ⟨0⟩ B-level)
+        (λ _ → Π-is-set λ _ → =-preserves-level ⟨0⟩ $ B-level _)
         (λ q b → trans-∙ p q b))
 
     trans₀-∙₀' : ∀ {j} {B : A → Type j}
-      → (B-level : ∀ {a} → is-set (B a))
+      → (B-level : ∀ a → is-set (B a))
       → {x y z : A} (p : x =₀ y) (q : y =₀ z) (b : B x)
-      → transport₀ B B-level (p ∙₀' q) b
-      == transport₀ B B-level q (transport₀ B B-level p b)
+      → transport₀ B (B-level _) (p ∙₀' q) b
+      == transport₀ B (B-level _) q (transport₀ B (B-level _) p b)
     trans₀-∙₀' B-level = Trunc-elim
-      (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-level ⟨0⟩ B-level)
+      (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-level ⟨0⟩ $ B-level _)
       (λ p → Trunc-elim
-        (λ _ → Π-is-set λ _ → =-preserves-level ⟨0⟩ B-level)
+        (λ _ → Π-is-set λ _ → =-preserves-level ⟨0⟩ $ B-level _)
         (λ q b → trans-∙' p q b))
 
 {-

@@ -141,7 +141,7 @@ module _ {i} {A : Type i} where
       → (p : a₁ =₀ a₂)
       → cover-trace cov (cover-trace cov a↑ loop) p
       == cover-trace cov a↑ (loop ∙₀ p)
-    cover-paste cov a↑ loop p = ! $ trans₀-∙₀ (λ {a} → Fiber-is-set cov a) loop p a↑
+    cover-paste cov a↑ loop p = ! $ trans₀-∙₀ (Fiber-is-set cov) loop p a↑
 
 -- Path sets form a covering space
 module _ {i} (A∙ : Ptd i) where
