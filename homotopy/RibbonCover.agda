@@ -18,34 +18,24 @@ module homotopy.RibbonCover {i : ULevel} where
   private
     π1 = fundamental-group
 
-  private
-    module _ (A∙ : Ptd i) {j} (gs : Gset (π1 A∙) j) where
-      private
-        A = fst A∙
-        a = snd A∙
-        El = Gset.El gs
-        El-level = Gset.El-level gs
-        _⊙_ = Gset.act gs
+  module _ (A∙ : Ptd i) {j} (gs : Gset (fundamental-group A∙) j) (a₂ : fst A∙) where
+    private
+      A = fst A∙
+      a₁ = snd A∙
+      El = Gset.El gs
+      El-level = Gset.El-level gs
+      infix 80 _⊙_
+      _⊙_ = Gset.act gs
 
-      {-
-        What the following data type definition should be
-        when we have a proof assistant for HoTT:
+    RibbonSet : Type (lmax i j)
+    RibbonSet = El × (a₁ =₀ a₂)
 
-        data Ribbon (a₂ : A) : Set where
-          trace : El → a =₀ a₂ → Ribbon a₂
-          paste : ∀ el loop (p : a =₀ a₂)
-                → trace (el ⊙ loop) p == trace el (loop ∙₀ p)
-      -}
+    data RibbonRel : RibbonSet → RibbonSet → Type (lmax i j) where
+      ribbon-rel : ∀ el loop (p : a₁ =₀ a₂)
+        → RibbonRel (el ⊙ loop , p) (el , loop ∙₀ p)
 
-      data #Ribbon-aux (a₂ : A) : Type (lmax i j) where
-        #trace : El → a =₀ a₂ → #Ribbon-aux a₂
-
-      data #Ribbon (a₂ : A) : Type (lmax i j) where
-        #ribbon : #Ribbon-aux a₂ → (Unit → Unit) → #Ribbon a₂
-
-  Ribbon : ∀ (A∙ : Ptd i) {j} (gs : Gset (π1 A∙) j)
-    → fst A∙ → Type (lmax i j)
-  Ribbon = #Ribbon
+    Ribbon : Type (lmax i j)
+    Ribbon = SetQuotient RibbonRel
 
   module _ {A∙ : Ptd i} {j} {gs : Gset (fundamental-group A∙) j} {a₂ : fst A∙} where
     private
@@ -53,6 +43,7 @@ module homotopy.RibbonCover {i : ULevel} where
       a = snd A∙
       El = Gset.El gs
       El-level = Gset.El-level gs
+      infix 80 _⊙_
       _⊙_ = Gset.act gs
 
     -- A point in the fiber [a₂].
@@ -61,38 +52,43 @@ module homotopy.RibbonCover {i : ULevel} where
       [p] is a path to transport [y] to fiber [a₂].
     -}
     trace : El → a =₀ a₂ → Ribbon A∙ gs a₂
-    trace el p = #ribbon (#trace el p) _
+    trace el p = q[ el , p ]
 
     {-
       A loop based at [a] can used as a group action
       or for concatination.  Both should be equivalent.
     -}
-    postulate -- HIT
-      paste : ∀ el loop (p : a =₀ a₂)
-        → trace (el ⊙ loop) p == trace el (loop ∙₀ p)
+    paste : ∀ el loop (p : a =₀ a₂) → trace (el ⊙ loop) p == trace el (loop ∙₀ p)
+    paste el loop p = quot-rel (ribbon-rel el loop p)
 
     {-
       Make each fiber a set and cancel all higher structures
       due to [paste].
     -}
-    postulate -- HIT
-      Ribbon-is-set : is-set (Ribbon A∙ gs a₂)
+    Ribbon-level : is-set (Ribbon A∙ gs a₂)
+    Ribbon-level = SetQuotient-level
 
-    Ribbon-level = Ribbon-is-set
+    Ribbon-is-set = Ribbon-level
 
     -- Elimination rules.
     module RibbonElim {j} {P : Ribbon A∙ gs a₂ → Type j}
-      (P-level : ∀ {r} → is-set (P r))
+      (P-level : ∀ r → is-set (P r))
       (trace* : ∀ el p → P (trace el p))
       (paste* : ∀ el loop p
                 → trace* (el ⊙ loop) p == trace* el (loop ∙₀ p)
                   [ P ↓ paste el loop p ]) where
 
-      f : Π (Ribbon A∙ gs a₂) P
-      f = f-aux phantom phantom where
+      private
+        q[_]* : (α : RibbonSet A∙ gs a₂) → P q[ α ]
+        q[ el , p ]* = trace* el p
 
-        f-aux : Phantom trace* → Phantom paste* → Π (Ribbon A∙ gs a₂) P
-        f-aux phantom phantom (#ribbon (#trace el p) _) = trace* el p
+        rel* : ∀ {α₁ α₂} (r : RibbonRel A∙ gs a₂ α₁ α₂) → q[ α₁ ]* == q[ α₂ ]* [ P ↓ quot-rel r ]
+        rel* (ribbon-rel el loop p) = paste* el loop p
+
+        module M = SetQuotElim P-level q[_]* rel*
+
+      f : Π (Ribbon A∙ gs a₂) P
+      f = M.f
 
     open RibbonElim public using () renaming (f to Ribbon-elim)
 
@@ -103,7 +99,7 @@ module homotopy.RibbonCover {i : ULevel} where
                 → trace* (el ⊙ loop) p == trace* el (loop ∙₀ p)) where
 
       private
-        module M = RibbonElim P-level trace*
+        module M = RibbonElim (λ _ → P-level) trace*
           (λ el loop p → ↓-cst-in (paste* el loop p))
 
       f : Ribbon A∙ gs a₂ → P

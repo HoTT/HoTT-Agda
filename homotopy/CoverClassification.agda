@@ -95,7 +95,7 @@ module homotopy.CoverClassification {i} (A∙ : Ptd i)
         → fiber-to-ribbon cov (ribbon-to-fiber cov r) == r
       ribbon-to-fiber-to-ribbon cov {a₂} = Ribbon-elim
         {P = λ r → fiber-to-ribbon cov (ribbon-to-fiber cov r) == r}
-        (λ {_} → =-preserves-set Ribbon-is-set)
+        (λ _ → =-preserves-set Ribbon-is-set)
         (λ a↑ p → Trunc-elim
           -- All ugly things will go away when bp = proj bp′
           (λ bp → Ribbon-is-set
@@ -161,7 +161,7 @@ module homotopy.CoverClassification {i} (A∙ : Ptd i)
       (λ a↑ → unit-r a↑)
       (Ribbon-elim
         {P = λ r → trace (ribbon-a₁-to-El r) idp₀ == r}
-        (=-preserves-set Ribbon-is-set)
+        (λ _ → =-preserves-set Ribbon-is-set)
         (λ y p →
           trace (act y p) idp₀
             =⟨ paste y p idp₀ ⟩
