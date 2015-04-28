@@ -41,6 +41,7 @@ open import lib.types.FundamentalGroupoid public
 open import lib.types.Cover public
 open import lib.types.PathSeq public
 open import lib.types.List public
+open import lib.types.FreeGroup public
 open import lib.types.NatColim public
 
 -- This should probably not be exported

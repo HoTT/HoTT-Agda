@@ -67,6 +67,15 @@ abstract
       → has-level (S n) (Σ A P))
   subtype-level p q = Σ-level p (λ x → prop-has-level-S (q x))
 
+subtype= : ∀ {i j} {A : Type i} {P : A → Type j}
+  → (x y : Σ A P) → Type i
+subtype= (a₁ , _) (a₂ , _) = a₁ == a₂
+
+subtype=-in : ∀ {i j} {A : Type i} {P : A → Type j}
+  → (p : (x : A) → is-prop (P x)) → {x y : Σ A P}
+  → subtype= x y → x == y
+subtype=-in p idp = pair= idp (fst (p _ _ _))
+
 -- Groupoids
 
 is-gpd : {i : ULevel} → Type i → Type i
@@ -114,10 +123,10 @@ abstract
   universe-=-is-set = universe-=-level
 
   nType= : ∀ {i} {n : ℕ₋₂} (A B : n -Type i) → Type (lsucc i)
-  nType= (A , _) (B , _) = A == B
+  nType= = subtype=
 
   nType=-in : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} → fst A == fst B → A == B
-  nType=-in idp = pair= idp (fst (has-level-is-prop _ _))
+  nType=-in = subtype=-in (λ _ → has-level-is-prop)
 
   nType=-β : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} (p : fst A == fst B)
     → fst= (nType=-in {A = A} {B = B} p) == p
