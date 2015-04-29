@@ -54,3 +54,5 @@ module SetQuotRec {i} {A : Type i} {j} {R : A → A → Type j} {k} {B : Type k}
 
   f : SetQuotient R → B
   f = M.f
+
+open SetQuotRec public renaming (f to SetQuot-rec)
