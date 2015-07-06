@@ -17,9 +17,9 @@ module lib.NConnected where
 is-connected : ∀ {i} → ℕ₋₂ → Type i → Type i
 is-connected n A = is-contr (Trunc n A)
 
-is-conn-map : ∀ {i j} {A : Type i} {B : Type j} → ℕ₋₂ → (A → B) → Type (lmax i j)
-is-conn-map {A = A} {B = B} n f =
-  Π B (λ b → is-connected n (Σ A (λ a → f a == b)))
+has-conn-fibers : ∀ {i j} {A : Type i} {B : Type j} → ℕ₋₂ → (A → B) → Type (lmax i j)
+has-conn-fibers {A = A} {B = B} n f =
+  Π B (λ b → is-connected n (hfiber f b))
 
 {- all types are ⟨-2⟩-connected -}
 -2-conn : ∀ {i} (A : Type i) → is-connected ⟨-2⟩ A
@@ -37,7 +37,7 @@ is-connected-is-prop = is-contr-is-prop
 {- "induction principle" for n-connected maps (where codomain is n-type) -}
 abstract
   conn-elim-eqv : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂}
-    → {h : A → B} → is-conn-map n h
+    → {h : A → B} → has-conn-fibers n h
     → (∀ {k} (P : B → n -Type k) → is-equiv (λ (s : Π B (fst ∘ P)) → s ∘ h))
   conn-elim-eqv {A = A} {B = B} {n = n} {h = h} c P = is-eq f g f-g g-f
     where f : Π B (fst ∘ P) → Π A (fst ∘ P ∘ h)
@@ -69,13 +69,13 @@ abstract
             lemma xl ._ idp = idp 
 
 conn-elim : ∀ {i j k} {A : Type i} {B : Type j} {n : ℕ₋₂}
-  → {h : A → B} → is-conn-map n h
+  → {h : A → B} → has-conn-fibers n h
   → (P : B → n -Type k) 
   → Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)
 conn-elim c P f = is-equiv.g (conn-elim-eqv c P) f
 
 conn-elim-β : ∀ {i j k} {A : Type i} {B : Type j} {n : ℕ₋₂}
-  {h : A → B} (c : is-conn-map n h)
+  {h : A → B} (c : has-conn-fibers n h)
   (P : B → n -Type k) (f : Π A (fst ∘ P ∘ h))
   → ∀ a → (conn-elim c P f (h a)) == f a
 conn-elim-β c P f = app= (is-equiv.f-g (conn-elim-eqv c P) f)
@@ -84,7 +84,7 @@ conn-elim-β c P f = app= (is-equiv.f-g (conn-elim-eqv c P) f)
 {- generalized "almost induction principle" for maps into ≥n-types 
    TODO: rearrange this to use ≤T?                                 -}
 conn-elim-general : ∀ {i j} {A : Type i} {B : Type j} {n k : ℕ₋₂}
-  → {f : A → B} → is-conn-map n f
+  → {f : A → B} → has-conn-fibers n f
   → ∀ {l} (P : B → (k +2+ n) -Type l) 
   → ∀ t → has-level k (Σ (Π B (fst ∘ P)) (λ s → (s ∘ f) == t))
 conn-elim-general {k = ⟨-2⟩} c P t = 
@@ -130,7 +130,7 @@ conn-intro : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} {h : A → B}
   → (∀ (P : B → n -Type (lmax i j))
      → Σ (Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)) 
          (λ u → ∀ (t : Π A (fst ∘ P ∘ h)) →  (u t ∘ h) == t))
-  → is-conn-map n h
+  → has-conn-fibers n h
 conn-intro {A = A} {B = B} {h = h} sec b = 
   let s = sec (λ b → (Trunc _ (Σ A (λ a → h a == b)) , Trunc-level))
   in (fst s (λ a → [ a , idp ]) b , 
@@ -143,7 +143,7 @@ conn-intro {A = A} {B = B} {h = h} sec b =
 
 abstract
   pointed-conn-in : ∀ {i} {n : ℕ₋₂} (A : Type i) (a₀ : A)
-    → is-conn-map {A = ⊤} n (cst a₀) → is-connected (S n) A
+    → has-conn-fibers {A = ⊤} n (cst a₀) → is-connected (S n) A
   pointed-conn-in {n = n} A a₀ c =
     ([ a₀ ] , 
      Trunc-elim (λ _ → =-preserves-level _ Trunc-level) 
@@ -152,7 +152,7 @@ abstract
 
 abstract
   pointed-conn-out : ∀ {i} {n : ℕ₋₂} (A : Type i) (a₀ : A)
-    → is-connected (S n) A → is-conn-map {A = ⊤} n (cst a₀)
+    → is-connected (S n) A → has-conn-fibers {A = ⊤} n (cst a₀)
   pointed-conn-out {n = n} A a₀ c a = 
     (point , 
      λ y → ! (cancel point)
