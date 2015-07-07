@@ -299,3 +299,8 @@ connected-≤T {m = m} {n = n} {A = A} leq cA =
   transport (λ B → is-contr B) 
             (ua (fuse-Trunc A m n) ∙ ap (λ k → Trunc k A) (minT-out-l leq)) 
             (Trunc-preserves-level m cA)
+
+{- Equivalent types have the same connectedness -}
+equiv-preserves-conn : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} (e : A ≃ B)
+  → (is-connected n A → is-connected n B)
+equiv-preserves-conn {n = n} e = equiv-preserves-level (equiv-Trunc n e)
