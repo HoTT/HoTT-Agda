@@ -132,7 +132,7 @@ conn-intro : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} {h : A → B}
          (λ u → ∀ (t : Π A (fst ∘ P ∘ h)) →  (u t ∘ h) == t))
   → has-conn-fibers n h
 conn-intro {A = A} {B = B} {h = h} sec b = 
-  let s = sec (λ b → (Trunc _ (Σ A (λ a → h a == b)) , Trunc-level))
+  let s = sec (λ b → (Trunc _ (hfiber h b) , Trunc-level))
   in (fst s (λ a → [ a , idp ]) b , 
       λ kt → Trunc-elim (λ kt → =-preserves-level _ {_} {kt} Trunc-level) 
         (λ k → transport 
