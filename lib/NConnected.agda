@@ -129,7 +129,7 @@ conn-elim-general {B = B} {n = n} {k = S k'} {f = f} c P t =
 conn-intro : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} {h : A → B}
   → (∀ (P : B → n -Type (lmax i j))
      → Σ (Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)) 
-         (λ u → ∀ (t : Π A (fst ∘ P ∘ h)) →  (u t ∘ h) == t))
+         (λ u → ∀ (t : Π A (fst ∘ P ∘ h)) → ∀ x → (u t ∘ h) x == t x))
   → has-conn-fibers n h
 conn-intro {A = A} {B = B} {h = h} sec b = 
   let s = sec (λ b → (Trunc _ (hfiber h b) , Trunc-level))
@@ -138,7 +138,7 @@ conn-intro {A = A} {B = B} {h = h} sec b =
         (λ k → transport 
                  (λ v → fst s (λ a → [ a , idp ]) (fst v) == [ fst k , snd v ])
                  (snd (pathfrom-is-contr (h (fst k))) (b , snd k)) 
-                 (app= (snd s (λ a → [ a , idp ])) (fst k)))
+                 (snd s (λ a → [ a , idp ]) (fst k)))
         kt)
 
 abstract
@@ -304,3 +304,21 @@ connected-≤T {m = m} {n = n} {A = A} leq cA =
 equiv-preserves-conn : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} (e : A ≃ B)
   → (is-connected n A → is-connected n B)
 equiv-preserves-conn {n = n} e = equiv-preserves-level (equiv-Trunc n e)
+
+{- Composite of two connected functions is connected -}
+∘-conn : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
+  → {n : ℕ₋₂} → (f : A → B) → (g : B → C)
+  → has-conn-fibers n f
+  → has-conn-fibers n g
+  → has-conn-fibers n (g ∘ f)
+∘-conn {n = n} f g cf cg =
+  conn-intro (λ P → conn-elim cg P ∘ conn-elim cf (P ∘ g) , lemma P)
+    where
+      lemma : ∀ P h x → conn-elim cg P (conn-elim cf (P ∘ g) h) (g (f x)) == h x
+      lemma P h x =
+        conn-elim cg P (conn-elim cf (P ∘ g) h) (g (f x))
+          =⟨ conn-elim-β cg P (conn-elim cf (P ∘ g) h) (f x) ⟩
+        conn-elim cf (P ∘ g) h (f x)
+          =⟨ conn-elim-β cf (P ∘ g) h x ⟩
+        h x
+          ∎
