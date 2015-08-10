@@ -28,9 +28,9 @@ module _ (n : ℤ) (m : ℕ) (X : Ptd i) where
   C-Sphere× =
     ! (group-ua (C-Susp n (⊙Sphere m ⊙× X)))
     ∙ ap (C (succ n)) space-path
-    ∙ C-binary-additive (succ n) (⊙Sphere (S m)) (⊙Susp X ⊙∨ ⊙Susp^ (S m) X)
+    ∙ CWedge.path (succ n) (⊙Sphere (S m)) (⊙Susp X ⊙∨ ⊙Susp^ (S m) X)
     ∙ ap (λ H → C (succ n) (⊙Sphere (S m)) ×ᴳ H)
-         (C-binary-additive (succ n) (⊙Susp X) (⊙Susp^ (S m) X)
+         (CWedge.path (succ n) (⊙Susp X) (⊙Susp^ (S m) X)
           ∙ ap2 _×ᴳ_ (group-ua (C-Susp n X))
                      (group-ua (C-Susp n (⊙Susp^ m X))))
     ∙ ap (λ H → H ×ᴳ (C n X ×ᴳ C n (⊙Susp^ m X)))

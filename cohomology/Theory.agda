@@ -45,20 +45,7 @@ record CohomologyTheory i : Type (lsucc i) where
 
     C-additive : (n : ℤ) {I : Type i} (Z : I → Ptd i)
       → ((W : I → Type i) → has-choice ⟨0⟩ I W)
-      → C n (⊙BigWedge Z) == Πᴳ I (C n ∘ Z)
-
-  {- A quick useful special case of C-additive:
-     C n (X ∨ Y) == C n X × C n Y -}
-  C-binary-additive : (n : ℤ) (X Y : Ptd i)
-    → C n (X ⊙∨ Y) == C n X ×ᴳ C n Y
-  C-binary-additive n X Y =
-    ap (C n) (! (BigWedge-Bool-⊙path Pick))
-    ∙ C-additive n _ (λ _ → Bool-has-choice)
-    ∙ Πᴳ-Bool-is-×ᴳ (C n ∘ Pick)
-    where
-    Pick : Lift {j = i} Bool → Ptd i
-    Pick (lift true) = X
-    Pick (lift false) = Y
+      → is-equiv (GroupHom.f (Πᴳ-hom-in (CF-hom n ∘ ⊙bwin {X = Z})))
 
   {- Alternate form of suspension axiom naturality -}
   C-Susp-↓ : (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y))

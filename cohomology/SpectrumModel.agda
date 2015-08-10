@@ -155,84 +155,66 @@ module SpectrumModel where
     (ac : (W : A → Type i) → has-choice ⟨0⟩ A W)
     where
 
-    uie : has-choice ⟨0⟩ A (uCEl n ∘ X)
-    uie = ac (uCEl n ∘ X)
+    into : CEl n (⊙BigWedge X) → Trunc ⟨0⟩ (Π A (uCEl n ∘ X))
+    into = Trunc-rec Trunc-level (λ H → [ (λ a → H ⊙∘ ⊙bwin a) ])
 
-    R' : CEl n (⊙BigWedge X) → Trunc ⟨0⟩ (Π A (uCEl n ∘ X))
-    R' = Trunc-rec Trunc-level (λ H → [ (λ a → H ⊙∘ ⊙bwin a) ])
+    module Out' (K : Π A (uCEl n ∘ X)) = BigWedgeRec
+      idp
+      (fst ∘ K)
+      (! ∘ snd ∘ K)
 
-    L' : Trunc ⟨0⟩ (Π A (uCEl n ∘ X)) → CEl n (⊙BigWedge X)
-    L' = Trunc-rec Trunc-level
-      (λ k → [ BigWedgeRec.f idp (fst ∘ k) (! ∘ snd ∘ k) , idp ])
+    out : Trunc ⟨0⟩ (Π A (uCEl n ∘ X)) → CEl n (⊙BigWedge X)
+    out = Trunc-rec Trunc-level (λ K → [ Out'.f K , idp ])
 
-    R = unchoose ∘ R'
-    L = L' ∘ (is-equiv.g uie)
-
-    R'-L' : ∀ y → R' (L' y) == y
-    R'-L' = Trunc-elim
+    into-out : ∀ y → into (out y) == y
+    into-out = Trunc-elim
       (λ _ → =-preserves-level _ Trunc-level)
       (λ K → ap [_] (λ= (λ a → pair= idp $
-        ap (BigWedgeRec.f idp (fst ∘ K) (! ∘ snd ∘ K)) (! (bwglue a)) ∙ idp
+        ap (Out'.f K) (! (bwglue a)) ∙ idp
           =⟨ ∙-unit-r _ ⟩
-        ap (BigWedgeRec.f idp (fst ∘ K) (! ∘ snd ∘ K)) (! (bwglue a))
-          =⟨ ap-! (BigWedgeRec.f idp (fst ∘ K) (! ∘ snd ∘ K)) (bwglue a) ⟩
-        ! (ap (BigWedgeRec.f idp (fst ∘ K) (! ∘ snd ∘ K)) (bwglue a))
-          =⟨ ap ! (BigWedgeRec.glue-β idp (fst ∘ K) (! ∘ snd ∘ K) a) ⟩
+        ap (Out'.f K) (! (bwglue a))
+          =⟨ ap-! (Out'.f K) (bwglue a) ⟩
+        ! (ap (Out'.f K) (bwglue a))
+          =⟨ ap ! (Out'.glue-β K a) ⟩
         ! (! (snd (K a)))
           =⟨ !-! (snd (K a)) ⟩
         snd (K a) ∎)))
 
-    L'-R' : ∀ x → L' (R' x) == x
-    L'-R' = Trunc-elim
-      {P = λ tH → L' (R' tH) == tH}
+    out-into : ∀ x → out (into x) == x
+    out-into = Trunc-elim
+      {P = λ tH → out (into tH) == tH}
       (λ _ → =-preserves-level _ Trunc-level)
-      (λ {(h , hpt) → ap [_] (pair=
-         (λ= (L-R-fst (h , hpt)))
+      (λ {(h , hpt) → ap [_] $ pair=
+         (λ= (out-into-fst (h , hpt)))
          (↓-app=cst-in $ ! $
-            ap (λ w → w ∙ hpt) (app=-β (L-R-fst (h , hpt)) bwbase)
-            ∙ !-inv-l hpt))})
+            ap (λ w → w ∙ hpt) (app=-β (out-into-fst (h , hpt)) bwbase)
+            ∙ !-inv-l hpt)})
       where
       lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
         {a₁ a₂ : A} {b : B} (p : a₁ == a₂) (q : f a₁ == b)
         → ! q ∙ ap f p == ! (ap f (! p) ∙ q)
       lemma f idp idp = idp
 
-      l∘r : fst (⊙BigWedge X ⊙→ ⊙Ω (E (succ n)))
-        → (BigWedge X → Ω (E (succ n)))
-      l∘r (h , hpt) =
-        BigWedgeRec.f idp (λ a → h ∘ bwin a)
-          (λ a → ! (ap h (! (bwglue a)) ∙ hpt))
-
-      L-R-fst : (h : fst (⊙BigWedge X ⊙→ ⊙Ω (E (succ n))))
-        → ∀ w → (l∘r h) w == fst h w
-      L-R-fst (h , hpt) = BigWedge-elim
+      out-into-fst : (H : fst (⊙BigWedge X ⊙→ ⊙Ω (E (succ n))))
+        → ∀ w → Out'.f (λ a → H ⊙∘ ⊙bwin a) w == fst H w
+      out-into-fst (h , hpt) = BigWedge-elim
         (! hpt)
         (λ _ _ → idp)
         (λ a → ↓-='-in $
            ! hpt ∙ ap h (bwglue a)
              =⟨ lemma h (bwglue a) hpt ⟩
            ! (ap h (! (bwglue a)) ∙ hpt)
-             =⟨ ! (BigWedgeRec.glue-β idp (λ a → h ∘ bwin a)
-                     (λ a → ! (ap h (! (bwglue a)) ∙ hpt)) a) ⟩
-           ap (l∘r (h , hpt)) (bwglue a) ∎)
-
-    R-is-equiv : is-equiv R
-    R-is-equiv = uie ∘ise (is-eq R' L' R'-L' L'-R')
-
-    pres-comp : (tf tg : CEl n (⊙BigWedge X))
-      → R (Group.comp (C n (⊙BigWedge X)) tf tg)
-        == Group.comp (Πᴳ A (C n ∘ X)) (R tf) (R tg)
-    pres-comp = Trunc-elim
-      (λ _ → Π-level (λ _ → =-preserves-level _ (Π-level (λ _ → Trunc-level))))
-      (λ f → Trunc-elim
-        (λ _ → =-preserves-level _ (Π-level (λ _ → Trunc-level)))
-        (λ g → λ= $ λ a → ap [_] $
-          ⊙∘-assoc ⊙conc (⊙×-in f g) (⊙bwin a)
-          ∙ ap (λ w → ⊙conc ⊙∘ w) (⊙×-in-pre∘ f g (⊙bwin a))))
+             =⟨ ! (Out'.glue-β (λ a → (h , hpt) ⊙∘ ⊙bwin a) a) ⟩
+           ap (Out'.f (λ a → (h , hpt) ⊙∘ ⊙bwin a)) (bwglue a) ∎)
 
     abstract
-      C-additive : C n (⊙BigWedge X) == Πᴳ A (C n ∘ X)
-      C-additive = group-ua (group-hom R pres-comp , R-is-equiv)
+      C-additive : is-equiv (GroupHom.f (Πᴳ-hom-in (CF-hom n ∘ ⊙bwin {X = X})))
+      C-additive = transport is-equiv
+        (λ= $ Trunc-elim
+          (λ _ → =-preserves-level _ $ Π-level $ λ _ → Trunc-level)
+          (λ _ → idp))
+        ((ac (uCEl n ∘ X)) ∘ise (is-eq into out into-out out-into))
+
 
 open SpectrumModel
 

@@ -64,12 +64,18 @@ _×ᴳ_ (group A A-level A-struct) (group B B-level B-struct) =
   → (∀ i → is-abelian (F i)) → is-abelian (Πᴳ I F)
 Πᴳ-abelian aF f₁ f₂ = λ= (λ i → aF i (f₁ i) (f₂ i))
 
-{- defining a homomorphism into a binary product -}
+{- defining a homomorphism into a product -}
 ×ᴳ-hom-in : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
   → (G →ᴳ H) → (G →ᴳ K) → (G →ᴳ H ×ᴳ K)
 ×ᴳ-hom-in (group-hom h h-comp) (group-hom k k-comp) = record {
   f = λ x → (h x , k x);
   pres-comp = λ x y → pair×= (h-comp x y) (k-comp x y)}
+
+Πᴳ-hom-in : ∀ {i j k} {I : Type i} {G : Group j} {F : I → Group k}
+  → ((i : I) → G →ᴳ F i) → (G →ᴳ Πᴳ I F)
+Πᴳ-hom-in h = record {
+  f = λ x i → GroupHom.f (h i) x;
+  pres-comp = λ x y → λ= (λ i → GroupHom.pres-comp (h i) x y)}
 
 ×ᴳ-hom-in-pre∘ : ∀ {i j k l}
   {G : Group i} {H : Group j} {K : Group k} {J : Group l}
