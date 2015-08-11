@@ -21,7 +21,7 @@ module SpaceFromEMs {i} (F : ℕ → Ptd i)
   πₙ : (n : ℕ) → π (S n) (ℕ-S≠O _) X == π (S n) (ℕ-S≠O _) (F n)
   πₙ n =
     prefix-lemma n O F pF
-    ∙ ap (π (S n) (ℕ-S≠O _)) (! (fin-tuples-cons (λ k → F (n + k))))
+    ∙ ap (π (S n) (ℕ-S≠O _)) (! (⊙ua (⊙fin-tuples-cons (λ k → F (n + k)))))
     ∙ π-× (S n) (ℕ-S≠O _) (F (n + O)) (⊙FinTuples (λ k → F (n + S k)))
     ∙ ap (λ H → π (S n) (ℕ-S≠O _) (F (n + O)) ×ᴳ H)
          (contr-is-0ᴳ _ $
@@ -47,7 +47,7 @@ module SpaceFromEMs {i} (F : ℕ → Ptd i)
         == π (S m + n) (ℕ-S≠O _) (⊙FinTuples (λ k → F (n + k)))
     prefix-lemma O m F pF = idp
     prefix-lemma (S n) m F pF =
-      ap (π (S m + S n) (ℕ-S≠O _)) (! (fin-tuples-cons F))
+      ap (π (S m + S n) (ℕ-S≠O _)) (! (⊙ua (⊙fin-tuples-cons F)))
       ∙ π-× (S m + S n) (ℕ-S≠O _) (F O) (⊙FinTuples (F ∘ S))
       ∙ ap2 _×ᴳ_ lemma₁ lemma₂
       ∙ ×ᴳ-unit-l
@@ -74,7 +74,8 @@ module SpaceFromEMs {i} (F : ℕ → Ptd i)
     connected-lemma : (m : ℕ) (F : ℕ → Ptd i)
       (cA' : (n : ℕ) → is-connected ⟨ n + m ⟩ (fst (F n)))
       (n : ℕ) → is-connected ⟨ m ⟩ (fst (FinTuplesType F n))
-    connected-lemma m F cA' O = cA' O
+    connected-lemma m F cA' O =
+      Trunc-preserves-level ⟨ m ⟩ (Lift-level Unit-is-contr)
     connected-lemma m F cA' (S n) = ×-conn
       (cA' O)
       (connected-lemma m (F ∘ S)

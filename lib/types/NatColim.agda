@@ -4,10 +4,13 @@ open import lib.Basics
 open import lib.NConnected
 open import lib.NType2
 open import lib.cubical.Square
+open import lib.types.Lift
 open import lib.types.Nat
 open import lib.types.Pointed
+open import lib.types.Sigma
 open import lib.types.TLevel
 open import lib.types.Truncation
+open import lib.types.Unit
 
 {- Sequential colimits -}
 
@@ -163,12 +166,12 @@ ncolim-conn {D = D} d (S m) cD =
 {- Type of finite tuples -}
 
 FinTuplesType : ∀ {i} → (ℕ → Ptd i) → ℕ → Ptd i
-FinTuplesType F O = F O
+FinTuplesType F O = ⊙Lift ⊙Unit
 FinTuplesType F (S n) = F O ⊙× FinTuplesType (F ∘ S) n
 
 fin-tuples-map : ∀ {i} (F : ℕ → Ptd i) (n : ℕ)
   → fst (FinTuplesType F n ⊙→ FinTuplesType F (S n))
-fin-tuples-map F O = ((λ r → r , snd (F 1)) , idp)
+fin-tuples-map F O = (_ , idp)
 fin-tuples-map F (S n) =
   ((λ {(x , r) → (x , fst (fin-tuples-map (F ∘ S) n) r)}) ,
    pair×= idp (snd (fin-tuples-map (F ∘ S) n)))
@@ -176,11 +179,11 @@ fin-tuples-map F (S n) =
 ⊙FinTuples : ∀ {i} → (ℕ → Ptd i) → Ptd i
 ⊙FinTuples {i} F = ⊙ℕColim (fin-tuples-map F)
 
-fin-tuples-cons : ∀ {i} (F : ℕ → Ptd i)
-  → F O ⊙× ⊙FinTuples (F ∘ S) ⊙≃ ⊙FinTuples F
-fin-tuples-cons {i} F =
-  ⊙ify-eq (equiv into out into-out out-into) (! (ncglue O (snd (F O))))
-  where
+FinTuples : ∀ {i} → (ℕ → Ptd i) → Type i
+FinTuples = fst ∘ ⊙FinTuples
+
+module FinTuplesCons {i} (F : ℕ → Ptd i) where
+
   module Into (x : fst (F O)) =
     ℕColimRec (fst ∘ fin-tuples-map (F ∘ S)) {A = fst (⊙FinTuples F)}
       (λ n r → ncin (S n) (x , r))
@@ -190,7 +193,7 @@ fin-tuples-cons {i} F =
 
   out-ncin : (n : ℕ)
     → fst (FinTuplesType F n) → fst (F O ⊙× ⊙FinTuples (F ∘ S))
-  out-ncin O x = (x , ncin O (snd (F 1)))
+  out-ncin O x = (snd (F O) , ncin O _)
   out-ncin (S n) (x , r) = (x , ncin n r)
 
   out-ncglue : (n : ℕ) (r : fst (FinTuplesType F n))
@@ -233,3 +236,12 @@ fin-tuples-cons {i} F =
        ∙ ap (ap out) (Into.ncglue-β x n r)
        ∙ Out.ncglue-β (S n) (x , r))
       ∙v⊡ vid-square)
+
+fin-tuples-cons : ∀ {i} (F : ℕ → Ptd i)
+  → fst (F O) × FinTuples (F ∘ S) ≃ FinTuples F
+fin-tuples-cons {i} F = equiv into out into-out out-into
+  where open FinTuplesCons F
+
+⊙fin-tuples-cons : ∀ {i} (F : ℕ → Ptd i)
+  → (F O ⊙× ⊙FinTuples (F ∘ S)) ⊙≃ ⊙FinTuples F
+⊙fin-tuples-cons F = ⊙ify-eq (fin-tuples-cons F) (! (ncglue O _))
