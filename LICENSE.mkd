@@ -1,8 +1,8 @@
 LICENSE
 =======
 
-Copyright (c) 2013 Guillaume Brunerie, Evan Cavallo, Favonia, Nicolai Kraus,
-Dan Licata, Christian Sattler
+Copyright (c) 2013-2015 Guillaume Brunerie, Evan Cavallo, Kuen-Bang Hou (Favonia),
+Nicolai Kraus, Dan Licata, Christian Sattler
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
