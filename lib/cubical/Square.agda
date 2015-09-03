@@ -224,7 +224,7 @@ module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
   ↓-='-to-square : {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
     → u == v [ (λ z → f z == g z) ↓ p ]
     → Square u (ap f p) (ap g p) v
-  ↓-='-to-square {p = idp} q = horiz-degen-square q
+  ↓-='-to-square {p = idp} α = horiz-degen-square α
 
   ↓-='-from-square : {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
     → Square u (ap f p) (ap g p) v
@@ -243,7 +243,7 @@ module _  {i j} {A : Type i} {B : Type j} {f : A → B} {b : B} where
     {u : b == f x} {v : b == f y}
     → u == v [ (λ z → b == f z) ↓ p ]
     → Square u idp (ap f p) v
-  ↓-cst=app-to-square {p = idp} sq = horiz-degen-square sq
+  ↓-cst=app-to-square {p = idp} α = horiz-degen-square α
 
   ↓-app=cst-from-square : {x y : A} {p : x == y}
     {u : f x == b} {v : f y == b}
@@ -255,7 +255,7 @@ module _  {i j} {A : Type i} {B : Type j} {f : A → B} {b : B} where
     {u : f x == b} {v : f y == b}
     → u == v [ (λ z → f z == b) ↓ p ]
     → Square u (ap f p) idp v
-  ↓-app=cst-to-square {p = idp} sq = horiz-degen-square sq
+  ↓-app=cst-to-square {p = idp} α = horiz-degen-square α
 
 module _  {i j} {A : Type i} {B : Type j} (g : B → A) (f : A → B) where
 
@@ -269,7 +269,7 @@ module _  {i j} {A : Type i} {B : Type j} (g : B → A) (f : A → B) where
     {u : g (f x) == x} {v : g (f y) == y}
     → (u == v [ (λ z → g (f z) == z) ↓ p ])
     → Square u (ap g (ap f p)) p v
-  ↓-∘=idf-to-square {p = idp} q = horiz-degen-square q
+  ↓-∘=idf-to-square {p = idp} α = horiz-degen-square α
 
 module _ {i j} {A : Type i} {B : Type j} where
 
