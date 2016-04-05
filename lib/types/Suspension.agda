@@ -31,13 +31,15 @@ module _ {i} (A : Type i) where
   merid x = glue x
 
   module SuspensionElim {j} {P : Suspension → Type j} (n : P north)
-    (s : P south) (p : (x : A) → n == s [ P ↓ merid x ])
-    = PushoutElim (λ _ → n) (λ _ → s) p
+    (s : P south) (p : (x : A) → n == s [ P ↓ merid x ]) where
+    open module P = PushoutElim (λ _ → n) (λ _ → s) p
+      public using (f) renaming (glue-β to merid-β)
 
   open SuspensionElim public using () renaming (f to Suspension-elim)
 
-  module SuspensionRec {j} {C : Type j} (n s : C) (p : A → n == s)
-    = PushoutRec {d = suspension-span} (λ _ → n) (λ _ → s) p
+  module SuspensionRec {j} {C : Type j} (n s : C) (p : A → n == s) where
+    open module P = PushoutRec {d = suspension-span} (λ _ → n) (λ _ → s) p
+      public using (f) renaming (glue-β to merid-β)
 
   module SuspensionRecType {j} (n s : Type j) (p : A → n ≃ s)
     = PushoutRecType {d = suspension-span} (λ _ → n) (λ _ → s) p
@@ -83,7 +85,7 @@ module _ {i} where
 
   susp-fmap-idf : (A : Type i) → ∀ a → susp-fmap (idf A) a == a
   susp-fmap-idf A = Suspension-elim _ idp idp $ λ a →
-    ↓-='-in (ap-idf (merid _ a) ∙ ! (SuspFmap.glue-β (idf A) a))
+    ↓-='-in (ap-idf (merid _ a) ∙ ! (SuspFmap.merid-β (idf A) a))
 
   ⊙susp-fmap-idf : (X : Ptd i)
     → ⊙susp-fmap (⊙idf X) == ⊙idf (⊙Susp X)
@@ -94,7 +96,7 @@ module _ {i j} where
   susp-fmap-cst : {A : Type i} {B : Type j} (b : B)
     (a : Suspension A) → susp-fmap (cst b) a == north _
   susp-fmap-cst b = Suspension-elim _ idp (! (merid _ b)) $ (λ a →
-    ↓-app=cst-from-square $ SuspFmap.glue-β (cst b) a ∙v⊡ tr-square _)
+    ↓-app=cst-from-square $ SuspFmap.merid-β (cst b) a ∙v⊡ tr-square _)
 
   ⊙susp-fmap-cst : {X : Ptd i} {Y : Ptd j}
     → ⊙susp-fmap (⊙cst {X = X} {Y = Y}) == ⊙cst
@@ -109,9 +111,9 @@ module _ {i j k} where
     idp
     (λ a → ↓-='-in $
       ap-∘ (susp-fmap g) (susp-fmap f) (merid _ a)
-      ∙ ap (ap (susp-fmap g)) (SuspFmap.glue-β f a)
-      ∙ SuspFmap.glue-β g (f a)
-      ∙ ! (SuspFmap.glue-β (g ∘ f) a))
+      ∙ ap (ap (susp-fmap g)) (SuspFmap.merid-β f a)
+      ∙ SuspFmap.merid-β g (f a)
+      ∙ ! (SuspFmap.merid-β (g ∘ f) a))
 
   ⊙susp-fmap-∘ : {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
     (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y))
