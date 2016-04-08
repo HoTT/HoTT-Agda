@@ -123,6 +123,10 @@ htpy-natural-toid : ∀ {i} {A : Type i} {f : A → A}
 htpy-natural-toid {f = f} p x = anti-whisker-right (p x) $ 
   htpy-natural p (p x) ∙ ap (λ q → p (f x) ∙ q) (ap-idf (p x))
 
+htpy-natural-fromcst : ∀ {i j} {A : Type i} {B : Type j} {x y : A} {f : A → B} {b : B}
+  (p : ∀ x → (b == f x)) (q : x == y) → p x ∙ ap f q == p y
+htpy-natural-fromcst p idp = ∙-unit-r _
+
 {- for functions with two arguments -}
 module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C) where
 
