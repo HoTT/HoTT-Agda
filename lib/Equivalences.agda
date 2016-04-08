@@ -34,6 +34,23 @@ module _ {i} {j} {A : Type i} {B : Type j} where
       g-f : (a : A) → g (f a) == a
       adj : (a : A) → ap f (g-f a) == f-g (f a)
 
+    adj' : (b : B) → ap g (f-g b) == g-f (g b)
+    adj' b = anti-whisker-left (ap g (f-g (f (g b)))) $ ! $
+        ap g (f-g (f (g b))) ∙ g-f (g b)
+          =⟨ ! $ htpy-natural-toid f-g b |in-ctx (λ p → ap g p ∙ g-f (g b)) ⟩
+        ap g (ap (f ∘ g) (f-g b)) ∙ g-f (g b)
+          =⟨ ! $ ap-∘ g (f ∘ g) (f-g b) |in-ctx (λ p → p ∙ g-f (g b)) ⟩
+        ap (g ∘ f ∘ g) (f-g b) ∙ g-f (g b)
+          =⟨ htpy-natural (g-f ∘ g) (f-g b) ⟩
+        g-f (g (f (g b))) ∙ ap g (f-g b)
+          =⟨ ! $ htpy-natural-toid g-f (g b) |in-ctx (λ p → p ∙ ap g (f-g b)) ⟩
+        ap (g ∘ f) (g-f (g b)) ∙ ap g (f-g b)
+          =⟨ ap-∘ g f (g-f (g b)) |in-ctx (λ p → p ∙ ap g (f-g b)) ⟩
+        ap g (ap f (g-f (g b))) ∙ ap g (f-g b)
+          =⟨ adj (g b) |in-ctx (λ p → ap g p ∙ ap g (f-g b)) ⟩
+        ap g (f-g (f (g b))) ∙ ap g (f-g b)
+          ∎
+
   {-
   In order to prove that something is an equivalence, you have to give an inverse
   and a proof that it’s an inverse (you don’t need the adj part).
@@ -103,6 +120,10 @@ module _ {i} {j} {A : Type i} {B : Type j} where
   <–-inv-adj : (e : A ≃ B) (a : A)
     → ap (–> e) (<–-inv-l e a) == <–-inv-r e (–> e a)
   <–-inv-adj e a = is-equiv.adj (snd e) a
+
+  <–-inv-adj' : (e : A ≃ B) (b : B)
+    → ap (<– e) (<–-inv-r e b) == <–-inv-l e (<– e b)
+  <–-inv-adj' e b = is-equiv.adj' (snd e) b
 
   -- Equivalences are "injective"
   equiv-inj : (e : A ≃ B) {x y : A}
