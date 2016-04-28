@@ -10,7 +10,7 @@ foundations in Agda.  The structure of the source code is described below.
 Code Organization and Setup
 ---------------------------
 
-The code is loosely broken into `core` and `theorem` libraries.
+The code is loosely broken into `core` and `theorems` libraries.
 You need to include at least the path to `core.agda` in your library list.
 See `CHANGELOG` of Agda 2.5 for more information.
 
