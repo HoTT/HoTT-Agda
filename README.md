@@ -7,11 +7,18 @@ Introduction
 This repository contains a development of homotopy type theory and univalent
 foundations in Agda.  The structure of the source code is described below.
 
+Code Organization and Setup
+---------------------------
+
+The code is loosely broken into `core` and `theorem` libraries.
+You need to include at least the path to `core.agda` in your library list.
+See `CHANGELOG` of Agda 2.5 for more information.
+
 Agda Options
 ------------
 
-This library is assuming the options `--universe-polymorphism` (on by default)
-and the experimental one `--without-K`.
+Each Agda file should have `--without-K` in the header.
+It is to restrict pattern matching so that the uniqueness of identity proofs is not admissible.
 
 Style and naming conventions
 ----------------------------
