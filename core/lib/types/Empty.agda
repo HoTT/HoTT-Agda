@@ -4,11 +4,6 @@ open import lib.Basics
 
 module lib.types.Empty where
 
-⊥ = Empty
-
-⊥-elim : ∀ {i} {P : ⊥ → Type i} → ((x : ⊥) → P x)
-⊥-elim = Empty-elim
-
 Empty-rec : ∀ {i} {A : Type i} → (Empty → A)
 Empty-rec = Empty-elim
 

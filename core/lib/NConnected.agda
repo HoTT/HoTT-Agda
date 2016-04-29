@@ -21,12 +21,12 @@ has-conn-fibers : ∀ {i j} {A : Type i} {B : Type j} → ℕ₋₂ → (A → B
 has-conn-fibers {A = A} {B = B} n f =
   Π B (λ b → is-connected n (hfiber f b))
 
-{- all types are ⟨-2⟩-connected -}
+{- all types are -2-connected -}
 -2-conn : ∀ {i} (A : Type i) → is-connected ⟨-2⟩ A
 -2-conn A = Trunc-level
 
-{- all inhabited types are ⟨-1⟩-connected -}
-inhab-conn : ∀ {i} (A : Type i) (a : A) → is-connected ⟨-1⟩ A
+{- all inhabited types are -1-connected -}
+inhab-conn : ∀ {i} (A : Type i) (a : A) → is-connected -1 A
 inhab-conn A a = ([ a ] , prop-has-all-paths Trunc-level [ a ])
 
 {- connectedness is a prop -}
@@ -187,7 +187,7 @@ abstract
       point : Trunc n (Σ ⊤ (λ _ → a₀ == a))
       point = out $ contr-has-all-paths c [ a₀ ] [ a ]
 
-prop-over-connected :  ∀ {i j} {A : Type i} {a : A} (p : is-connected ⟨0⟩ A)
+prop-over-connected :  ∀ {i j} {A : Type i} {a : A} (p : is-connected 0 A)
   → (P : A → hProp j)
   → fst (P a) → Π A (fst ∘ P)
 prop-over-connected p P x = conn-elim (pointed-conn-out _ _ p) P (λ _ → x)
@@ -271,7 +271,7 @@ abstract
       → ap ([_] {n = S n}) (merid A x) 
         == Trunc-rec (Trunc-level {n = S n} _ _) 
                      (λ a → ap [_] (merid A a)) [ x' ]
-    mers-eq ⟨-2⟩ cA x x' = contr-has-all-paths (Trunc-level {n = ⟨-1⟩} _ _) _ _
+    mers-eq ⟨-2⟩ cA x x' = contr-has-all-paths (Trunc-level {n = -1} _ _) _ _
     mers-eq {A = A} (S n) cA x x' = 
       conn-elim (pointed-conn-out A x cA) 
         (λ y → ((ap [_] (merid A x) == ap [_] (merid A y)) ,

@@ -8,36 +8,49 @@ open import lib.types.TLevel
 module lib.types.Int where
 
 data ℤ : Type₀ where
-  O : ℤ
   pos : (n : ℕ) → ℤ
-  neg : (n : ℕ) → ℤ
+  negsucc : (n : ℕ) → ℤ
 
 Int = ℤ
 
+{-# BUILTIN INTEGER Int #-}
+{-# BUILTIN INTEGERPOS pos #-}
+{-# BUILTIN INTEGERNEGSUC negsucc #-}
+
+{- literal overloading -}
+
+instance
+  ℤ-reader : FromNat ℤ
+  FromNat.in-range ℤ-reader _ = ⊤
+  FromNat.read ℤ-reader n = pos n
+
+  ℤ-neg-reader : FromNeg ℤ
+  FromNeg.in-range ℤ-neg-reader _ = ⊤
+  FromNeg.read ℤ-neg-reader O = pos O
+  FromNeg.read ℤ-neg-reader (S n) = negsucc n
+
+{- succ and pred -}
+
 succ : ℤ → ℤ
-succ O = pos O
 succ (pos n) = pos (S n)
-succ (neg O) = O
-succ (neg (S n)) = neg n
+succ (negsucc O) = pos O
+succ (negsucc (S n)) = negsucc n
 
 pred : ℤ → ℤ
-pred O = neg O
-pred (pos O) = O
+pred (pos O) = negsucc O
 pred (pos (S n)) = pos n
-pred (neg n) = neg (S n)
+pred (negsucc n) = negsucc (S n)
 
 abstract
   succ-pred : (n : ℤ) → succ (pred n) == n
-  succ-pred O = idp
   succ-pred (pos O) = idp
   succ-pred (pos (S n)) = idp
-  succ-pred (neg n) = idp
+  succ-pred (negsucc n) = idp
 
   pred-succ : (n : ℤ) → pred (succ n) == n
-  pred-succ O = idp
   pred-succ (pos n) = idp
-  pred-succ (neg O) = idp
-  pred-succ (neg (S n)) = idp
+  pred-succ (negsucc O) = idp
+  pred-succ (negsucc (S n)) = idp
 
 succ-equiv : ℤ ≃ ℤ
 succ-equiv = equiv succ pred succ-pred pred-succ
@@ -51,77 +64,51 @@ succ-injective z₁ z₂ p = ! (pred-succ z₁) ∙ ap pred p ∙ pred-succ z₂
 {- Converting between ℤ, ℕ, and ℕ₋₂ -}
 
 ℤ-to-ℕ₋₂ : ℤ → ℕ₋₂
-ℤ-to-ℕ₋₂ O = ⟨0⟩
-ℤ-to-ℕ₋₂ (pos m) = S ⟨ m ⟩
-ℤ-to-ℕ₋₂ (neg O) = ⟨-1⟩
-ℤ-to-ℕ₋₂ (neg _) = ⟨-2⟩
+ℤ-to-ℕ₋₂ (pos m) = ⟨ m ⟩
+ℤ-to-ℕ₋₂ (negsucc O) = -1
+ℤ-to-ℕ₋₂ (negsucc _) = -2
 
 ℕ-to-ℤ : ℕ → ℤ
-ℕ-to-ℤ n = pred (pos n)
+ℕ-to-ℤ n = pos n
 
 
 {- Proof that [ℤ] has decidable equality and hence is a set -}
 
 private
   ℤ-get-pos : ℤ → ℕ
-  ℤ-get-pos O = 0
   ℤ-get-pos (pos n) = n
-  ℤ-get-pos (neg n) = 0
+  ℤ-get-pos (negsucc n) = O
 
-  ℤ-get-neg : ℤ → ℕ
-  ℤ-get-neg O = 0
-  ℤ-get-neg (pos n) = 0
-  ℤ-get-neg (neg n) = n
+  ℤ-get-negsucc : ℤ → ℕ
+  ℤ-get-negsucc (pos n) = O
+  ℤ-get-negsucc (negsucc n) = n
 
-  ℤ-neg≠O≠pos-type : ℤ → Type₀
-  ℤ-neg≠O≠pos-type O = Unit
-  ℤ-neg≠O≠pos-type (pos n) = Empty
-  ℤ-neg≠O≠pos-type (neg n) = Empty
-
-  ℤ-neg≠pos-type : ℤ → Type₀
-  ℤ-neg≠pos-type O = Unit
-  ℤ-neg≠pos-type (pos n) = Empty
-  ℤ-neg≠pos-type (neg n) = Unit
+  ℤ-negsucc≠pos-type : ℤ → Type₀
+  ℤ-negsucc≠pos-type (pos n) = Empty
+  ℤ-negsucc≠pos-type (negsucc n) = Unit
 
 abstract
   pos-injective : (n m : ℕ) (p : pos n == pos m) → n == m
   pos-injective n m p = ap ℤ-get-pos p
 
-  neg-injective : (n m : ℕ) (p : neg n == neg m) → n == m
-  neg-injective n m p = ap ℤ-get-neg p
+  negsucc-injective : (n m : ℕ) (p : negsucc n == negsucc m) → n == m
+  negsucc-injective n m p = ap ℤ-get-negsucc p
 
-  ℤ-O≠pos : (n : ℕ) → O ≠ pos n
-  ℤ-O≠pos n p = transport ℤ-neg≠O≠pos-type p unit
+  ℤ-negsucc≠pos : (n m : ℕ) → negsucc n ≠ pos m
+  ℤ-negsucc≠pos n m p = transport ℤ-negsucc≠pos-type p unit
 
-  ℤ-pos≠O : (n : ℕ) → pos n ≠ O
-  ℤ-pos≠O n p = transport ℤ-neg≠O≠pos-type (! p) unit
-
-  ℤ-O≠neg : (n : ℕ) → O ≠ neg n
-  ℤ-O≠neg n p = transport ℤ-neg≠O≠pos-type p unit
-
-  ℤ-neg≠O : (n : ℕ) → neg n ≠ O
-  ℤ-neg≠O n p = transport ℤ-neg≠O≠pos-type (! p) unit
-
-  ℤ-neg≠pos : (n m : ℕ) → neg n ≠ pos m
-  ℤ-neg≠pos n m p = transport ℤ-neg≠pos-type p unit
-
-  ℤ-pos≠neg : (n m : ℕ) → pos n ≠ neg m
-  ℤ-pos≠neg n m p = transport ℤ-neg≠pos-type (! p) unit
+  ℤ-pos≠negsucc : (n m : ℕ) → pos n ≠ negsucc m
+  ℤ-pos≠negsucc n m p = transport ℤ-negsucc≠pos-type (! p) unit
 
   ℤ-has-dec-eq : has-dec-eq ℤ
-  ℤ-has-dec-eq O O = inl idp
-  ℤ-has-dec-eq O (pos n) = inr (ℤ-O≠pos n)
-  ℤ-has-dec-eq O (neg n) = inr (ℤ-O≠neg n)
-  ℤ-has-dec-eq (pos n) O = inr (ℤ-pos≠O n)
   ℤ-has-dec-eq (pos n) (pos m) with ℕ-has-dec-eq n m
   ℤ-has-dec-eq (pos n) (pos m) | inl p = inl (ap pos p)
   ℤ-has-dec-eq (pos n) (pos m) | inr p⊥ = inr (λ p → p⊥ (pos-injective n m p))
-  ℤ-has-dec-eq (pos n) (neg m) = inr (ℤ-pos≠neg n m)
-  ℤ-has-dec-eq (neg n) O = inr (ℤ-neg≠O n)
-  ℤ-has-dec-eq (neg n) (pos m) = inr (ℤ-neg≠pos n m)
-  ℤ-has-dec-eq (neg n) (neg m) with ℕ-has-dec-eq n m
-  ℤ-has-dec-eq (neg n) (neg m) | inl p = inl (ap neg p)
-  ℤ-has-dec-eq (neg n) (neg m) | inr p⊥ = inr (λ p → p⊥ (neg-injective n m p))
+  ℤ-has-dec-eq (pos n) (negsucc m) = inr (ℤ-pos≠negsucc n m)
+  ℤ-has-dec-eq (negsucc n) (pos m) = inr (ℤ-negsucc≠pos n m)
+  ℤ-has-dec-eq (negsucc n) (negsucc m) with ℕ-has-dec-eq n m
+  ℤ-has-dec-eq (negsucc n) (negsucc m) | inl p = inl (ap negsucc p)
+  ℤ-has-dec-eq (negsucc n) (negsucc m) | inr p⊥ = inr (λ p → p⊥ (negsucc-injective n m p))
 
   ℤ-is-set : is-set ℤ
   ℤ-is-set = dec-eq-is-set ℤ-has-dec-eq
@@ -134,38 +121,37 @@ abstract
 
 -- inv
 ℤ~ : ℤ → ℤ
-ℤ~ O = O
-ℤ~ (pos n) = neg n
-ℤ~ (neg n) = pos n
+ℤ~ (pos (S n)) = negsucc n
+ℤ~ (pos O) = pos O
+ℤ~ (negsucc n) = pos (S n)
 
 -- comp
 infixl 80 _ℤ+_
 _ℤ+_ : ℤ → ℤ → ℤ
-O         ℤ+ z = z
-pos O     ℤ+ z = succ z
-pos (S n) ℤ+ z = succ (pos n ℤ+ z)
-neg O     ℤ+ z = pred z
-neg (S n) ℤ+ z = pred (neg n ℤ+ z)
+pos O         ℤ+ z = z
+pos (S n)     ℤ+ z = succ (pos n ℤ+ z)
+negsucc O     ℤ+ z = pred z
+negsucc (S n) ℤ+ z = pred (negsucc n ℤ+ z)
 
 -- unit-l
-ℤ+-unit-l : ∀ z → O ℤ+ z == z
+ℤ+-unit-l : ∀ z → pos O ℤ+ z == z
 ℤ+-unit-l _ = idp
 
 -- unit-r
 private
-  ℤ+-unit-r-pos : ∀ n → pos n ℤ+ O == pos n
+  ℤ+-unit-r-pos : ∀ n → pos n ℤ+ pos O == pos n
   ℤ+-unit-r-pos O     = idp
   ℤ+-unit-r-pos (S n) = ap succ $ ℤ+-unit-r-pos n
 
-  ℤ+-unit-r-neg : ∀ n → neg n ℤ+ O == neg n
-  ℤ+-unit-r-neg O     = idp
-  ℤ+-unit-r-neg (S n) = ap pred $ ℤ+-unit-r-neg n
+  ℤ+-unit-r-negsucc : ∀ n → negsucc n ℤ+ pos O == negsucc n
+  ℤ+-unit-r-negsucc O     = idp
+  ℤ+-unit-r-negsucc (S n) = ap pred $ ℤ+-unit-r-negsucc n
 
-ℤ+-unit-r : ∀ z → z ℤ+ O == z
-ℤ+-unit-r O = idp
+ℤ+-unit-r : ∀ z → z ℤ+ pos O == z
 ℤ+-unit-r (pos n) = ℤ+-unit-r-pos n
-ℤ+-unit-r (neg n) = ℤ+-unit-r-neg n
+ℤ+-unit-r (negsucc n) = ℤ+-unit-r-negsucc n
 
+{-
 -- assoc
 succ-ℤ+ : ∀ z₁ z₂ → succ z₁ ℤ+ z₂ == succ (z₁ ℤ+ z₂)
 succ-ℤ+ O _ = idp
@@ -246,3 +232,4 @@ private
 
 ℤ-group : Group₀
 ℤ-group = group _ ℤ-is-set ℤ-group-structure
+-}

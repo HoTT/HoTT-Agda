@@ -7,7 +7,6 @@ open import lib.types.Pointed
 
 module lib.types.Unit where
 
-⊤ = Unit
 tt = unit
 
 ⊙Unit : Ptd₀

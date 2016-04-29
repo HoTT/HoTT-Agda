@@ -15,7 +15,7 @@ module _ {i} (G : Group i) where
     module G = Group G
 
   module PropSubgroup {j} (P : G.El → Type j)
-    (P-level : ∀ g → has-level ⟨-1⟩ (P g))
+    (P-level : ∀ g → has-level -1 (P g))
     (P-ident : P G.ident) (P-inv : ∀ {g} → P g → P (G.inv g))
     (P-comp : ∀ {g₁ g₂} → P g₁ → P g₂ → P (G.comp g₁ g₂)) where
 
@@ -67,7 +67,7 @@ module _ {i} {j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
       (λ p → φ.pres-inv _ ∙ ap H.inv p ∙ group-inv-ident H)
       (λ p₁ p₂ → φ.pres-comp _ _ ∙ ap2 H.comp p₁ p₂ ∙ H.unitl _)
 
-    module Im = PropSubgroup H (λ h → Trunc ⟨-1⟩ (Σ G.El (λ g → φ.f g == h)))
+    module Im = PropSubgroup H (λ h → Trunc -1 (Σ G.El (λ g → φ.f g == h)))
       (λ h → Trunc-level) ([ G.ident , φ.pres-ident ])
       (Trunc-fmap (λ {(g , p) →
         (G.inv g , φ.pres-inv g ∙ ap H.inv p)}))
@@ -90,6 +90,6 @@ module _ {i} {j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
       pair= (φ.pres-comp g₁ g₂) (prop-has-all-paths-↓ Trunc-level)}
 
   im-in-surj : (h : Group.El Im)
-    → Trunc ⟨-1⟩ (Σ G.El (λ g → GroupHom.f im-in-hom g == h))
+    → Trunc -1 (Σ G.El (λ g → GroupHom.f im-in-hom g == h))
   im-in-surj (_ , s) = Trunc-fmap (λ {(g , p) →
     (g , pair= p (prop-has-all-paths-↓ Trunc-level))}) s

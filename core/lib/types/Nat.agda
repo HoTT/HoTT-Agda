@@ -8,18 +8,12 @@ open import lib.types.Empty
 
 module lib.types.Nat where
 
-data ℕ : Type₀ where
-  O : ℕ
-  S : (n : ℕ) → ℕ
-
-{-# BUILTIN NATURAL ℕ #-}
-
-Nat = ℕ
-
 infixl 80 _+_
 _+_ : ℕ → ℕ → ℕ
 0 + n = n
 (S m) + n = S (m + n)
+
+{-# BUILTIN NATPLUS _+_ #-}
 
 +-unit-r : (m : ℕ) → m + 0 == m
 +-unit-r 0     = idp
@@ -85,6 +79,7 @@ data _<_ : ℕ → ℕ → Type₀ where
 _≤_ : ℕ → ℕ → Type₀
 m ≤ n = Coprod (m == n) (m < n) 
 
+{-
 O< : (m : ℕ) → O < S m
 O< O = ltS
 O< (S m) = ltSR (O< m)
@@ -166,3 +161,4 @@ n≮O _ ()
 *2-monotone-≤ : {m n : ℕ} → m ≤ n → m *2 ≤ n *2
 *2-monotone-≤ (inl p) = inl (ap _*2 p)
 *2-monotone-≤ (inr lt) = inr (*2-monotone-< lt)
+-}

@@ -15,8 +15,8 @@ has-level : ℕ₋₂ → (Type i → Type i)
 has-level ⟨-2⟩ A = is-contr A
 has-level (S n) A = (x y : A) → has-level n (x == y)
 
-is-prop = has-level ⟨-1⟩
-is-set  = has-level ⟨0⟩
+is-prop = has-level -1
+is-set  = has-level 0
 
 {- To be a mere proposition, it is sufficient that all points are equal -}
 
@@ -119,10 +119,10 @@ module _ {A : Type i} where
     =-preserves-level (S n) {x} {y} p = raise-level n (p x y)
 
     =-preserves-set : {x y : A} → (is-set A → is-set (x == y))
-    =-preserves-set = =-preserves-level ⟨0⟩
+    =-preserves-set = =-preserves-level 0
 
     =-preserves-prop : {x y : A} → (is-prop A → is-prop (x == y))
-    =-preserves-prop = =-preserves-level ⟨-1⟩
+    =-preserves-prop = =-preserves-level -1
 
   {- The type of paths from a fixed point is contractible -}
   pathfrom-is-contr : (x : A) → is-contr (Σ A (λ t → x == t))

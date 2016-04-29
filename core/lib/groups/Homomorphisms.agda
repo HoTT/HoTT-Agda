@@ -255,7 +255,7 @@ module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
     module φ = GroupHom φ
 
   module _ (inj : (g₁ g₂ : G.El) → φ.f g₁ == φ.f g₂ → g₁ == g₂)
-    (msurj : (h : H.El) → Trunc ⟨-1⟩ (Σ G.El (λ g → φ.f g == h))) where
+    (msurj : (h : H.El) → Trunc -1 (Σ G.El (λ g → φ.f g == h))) where
 
 
 {- a surjective and injective homomorphism is an isomorphism -}
@@ -267,7 +267,7 @@ module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
     module φ = GroupHom φ
 
   module _ (inj : (g₁ g₂ : G.El) → φ.f g₁ == φ.f g₂ → g₁ == g₂)
-    (surj : (h : H.El) → Trunc ⟨-1⟩ (Σ G.El (λ g → φ.f g == h))) where
+    (surj : (h : H.El) → Trunc -1 (Σ G.El (λ g → φ.f g == h))) where
 
     private
       image-prop : (h : H.El) → is-prop (Σ G.El (λ g → φ.f g == h))
@@ -290,7 +290,7 @@ module _ {i} {G H : Group i} (φ : G →ᴳ H) where
     module φ = GroupHom φ
 
   module _ (inj : (g₁ g₂ : G.El) → φ.f g₁ == φ.f g₂ → g₁ == g₂)
-    (surj : (h : H.El) → Trunc ⟨-1⟩ (Σ G.El (λ g → φ.f g == h))) where
+    (surj : (h : H.El) → Trunc -1 (Σ G.El (λ g → φ.f g == h))) where
 
     surj-inj-iso : G ≃ᴳ H
     surj-inj-iso = (φ , surj-inj-is-equiv φ inj surj)

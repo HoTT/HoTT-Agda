@@ -66,7 +66,7 @@ module _ {i j k} (D : Group-Cospan {i} {j} {k}) where
   Pullback-Group : Group (lmax i (lmax j k))
   Pullback-Group = record {
     El = Pullback d;
-    El-level = pullback-level ⟨0⟩ H.El-level K.El-level G.El-level;
+    El-level = pullback-level 0 H.El-level K.El-level G.El-level;
     group-struct = Pullback-group-struct}
 
   pfst-hom : Pullback-Group →ᴳ H

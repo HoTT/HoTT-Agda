@@ -9,7 +9,7 @@ open import lib.types.Pi
 module lib.types.Groupoid where
 
 record GroupoidStructure {i j} {El : Type i} (Arr : El → El → Type j)
-  (_ : ∀ x y → has-level ⟨0⟩ (Arr x y)) : Type (lmax i j) where
+  (_ : ∀ x y → has-level 0 (Arr x y)) : Type (lmax i j) where
   field
     id : ∀ {x} → Arr x x
     inv : ∀ {x y} → Arr x y → Arr y x
@@ -26,5 +26,5 @@ record Groupoid {i j} : Type (lsucc (lmax i j)) where
   field
     El : Type i
     Arr : El → El → Type j
-    Arr-level : ∀ x y → has-level ⟨0⟩ (Arr x y)
+    Arr-level : ∀ x y → has-level 0 (Arr x y)
     groupoid-struct : GroupoidStructure Arr Arr-level

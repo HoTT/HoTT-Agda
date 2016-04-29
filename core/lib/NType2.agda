@@ -79,7 +79,7 @@ subtype=-in p idp = pair= idp (fst (p _ _ _))
 -- Groupoids
 
 is-gpd : {i : ULevel} → Type i → Type i
-is-gpd = has-level ⟨1⟩
+is-gpd = has-level 1
 
 -- Type of all n-truncated types
 
@@ -87,10 +87,10 @@ _-Type_ : (n : ℕ₋₂) (i : ULevel) → Type (lsucc i)
 n -Type i = Σ (Type i) (has-level n)
 
 hProp : (i : ULevel) → Type (lsucc i)
-hProp i = ⟨-1⟩ -Type i
+hProp i = -1 -Type i
 
 hSet : (i : ULevel) → Type (lsucc i)
-hSet i = ⟨0⟩ -Type i
+hSet i = 0 -Type i
 
 _-Type₀ : (n : ℕ₋₂) → Type₁
 n -Type₀ = n -Type lzero
@@ -149,10 +149,10 @@ abstract
                           (universe-=-level (snd A) (snd B))
 
   hProp-is-set : (i : ULevel) → is-set (hProp i)
-  hProp-is-set i = ⟨-1⟩ -Type-level i
+  hProp-is-set i = -1 -Type-level i
 
-  hSet-level : (i : ULevel) → has-level ⟨1⟩ (hSet i)
-  hSet-level i = ⟨0⟩ -Type-level i
+  hSet-level : (i : ULevel) → has-level 1 (hSet i)
+  hSet-level i = 0 -Type-level i
 
 {- The following two lemmas are in NType2 instead of NType because of cyclic
    dependencies -}

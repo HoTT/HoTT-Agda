@@ -111,7 +111,7 @@ module EM₁ {i} (G : Group i) where
 
     0-Group : Group (lsucc i)
     0-Group = Ω^-Group 1 (ℕ-S≠O _)
-      ((⟨0⟩ -Type i) , (G.El , G.El-level)) (⟨0⟩ -Type-level i)
+      ((0 -Type i) , (G.El , G.El-level)) (0 -Type-level i)
 
     Codes-hom₁ : G →ᴳ Ω-Group
     Codes-hom₁ = record {
@@ -140,14 +140,14 @@ module EM₁ {i} (G : Group i) where
       where
       -- saving some space
       phap : (p : G.El == G.El)
-        → G.El-level == G.El-level [ has-level ⟨0⟩ ↓ p ]
+        → G.El-level == G.El-level [ has-level 0 ↓ p ]
       phap p = prop-has-all-paths-↓ has-level-is-prop
 
     Codes-hom : G →ᴳ 0-Group
     Codes-hom = Codes-hom₂ ∘ᴳ Codes-hom₁
 
-    Codes : EM₁ → ⟨0⟩ -Type i
-    Codes = EM₁-rec {C = ⟨0⟩ -Type i} (⟨0⟩ -Type-level i)
+    Codes : EM₁ → 0 -Type i
+    Codes = EM₁-rec {C = 0 -Type i} (0 -Type-level i)
                     (G.El , G.El-level)
                     Codes-hom
 
@@ -157,7 +157,7 @@ module EM₁ {i} (G : Group i) where
         ↓-ap-out fst Codes (emloop g) $
         ↓-ap-out (idf _) fst (ap Codes (emloop g)) $
         transport (λ w → g' == G.comp g' g [ idf _ ↓ ap fst w ])
-                  (! (EM₁Rec.emloop-β (⟨0⟩ -Type-level i)
+                  (! (EM₁Rec.emloop-β (0 -Type-level i)
                                      (G.El , G.El-level) Codes-hom g)) $
         transport (λ w → g' == G.comp g' g [ idf _ ↓ w ])
                   (! (fst=-β (ua $ comp-equiv g) _)) $
@@ -205,8 +205,8 @@ module EM₁ {i} (G : Group i) where
       Ω¹-path = ua Ω¹-equiv
 
     abstract
-      π₁-path : Trunc ⟨0⟩ (embase == embase) == G.El
-      π₁-path = ap (Trunc ⟨0⟩) Ω¹-path ∙ ua (unTrunc-equiv G.El G.El-level)
+      π₁-path : Trunc 0 (embase == embase) == G.El
+      π₁-path = ap (Trunc 0) Ω¹-path ∙ ua (unTrunc-equiv G.El G.El-level)
 
     abstract
       π₁-iso : π 1 (ℕ-S≠O _) (EM₁ , embase) == G
@@ -218,12 +218,12 @@ module EM₁ {i} (G : Group i) where
 
   {- EM₁ is 0-connected -}
   abstract
-    EM₁-conn : is-connected ⟨0⟩ EM₁
+    EM₁-conn : is-connected 0 EM₁
     EM₁-conn = ([ embase ] , Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
       (EM₁-elim
         {P = λ x → [ embase ] == [ x ]}
         (λ _ → raise-level _ (=-preserves-level _ Trunc-level))
         idp
-        (λ _ → prop-has-all-paths-↓ (Trunc-level {n = ⟨0⟩} _ _))
+        (λ _ → prop-has-all-paths-↓ (Trunc-level {n = 0} _ _))
         (set-↓-has-all-paths-↓ (=-preserves-level _ Trunc-level))
         (λ _ _ → set-↓-has-all-paths-↓ (=-preserves-level _ Trunc-level))))

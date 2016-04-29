@@ -39,7 +39,7 @@ abstract
          Trunc-elim (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
            (λ p → Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
               (λ q → ap [_] (Ω^-inner-out-conc^ n tn' X p q)))} ,
-     is-equiv-Trunc ⟨0⟩ (Ω^-inner-out n X) (Ω^-inner-is-equiv n X))
+     is-equiv-Trunc 0 (Ω^-inner-out n X) (Ω^-inner-is-equiv n X))
     where
     n : ℕ
     n = S n'
@@ -57,7 +57,7 @@ module _ {i} where
         e : is-equiv (fst F)
 
     Ω^-Trunc-shift-preiso : (n : ℕ) (m : ℕ₋₂) (t : n ≠ O) (X : Ptd i)
-      → Ω^Ts-PreIso m n ((n -2) +2+ m) t X
+      → Ω^Ts-PreIso m n (⟨ n ⟩₋₂ +2+ m) t X
     Ω^-Trunc-shift-preiso O m t X = ⊥-rec (t idp)
     Ω^-Trunc-shift-preiso (S O) m _ X =
       record { F = (–> (Trunc=-equiv [ snd X ] [ snd X ]) , idp);
@@ -65,14 +65,14 @@ module _ {i} where
                e = snd (Trunc=-equiv [ snd X ] [ snd X ]) }
     Ω^-Trunc-shift-preiso (S (S n)) m t X =
       let
-        r : Ω^Ts-PreIso (S m) (S n) ((S n -2) +2+ S m) (ℕ-S≠O _) X
+        r : Ω^Ts-PreIso (S m) (S n) (⟨ S n ⟩₋₂ +2+ S m) (ℕ-S≠O _) X
         r = Ω^-Trunc-shift-preiso (S n) (S m) (ℕ-S≠O _) X
 
         H = (–> (Trunc=-equiv [ idp^ (S n) ] [ idp^ (S n) ]) , idp)
         G = ap^ 1 (Ω^Ts-PreIso.F r)
       in
       transport (λ k → Ω^Ts-PreIso m (S (S n)) k t X)
-        (+2+-βr (S n -2) m)
+        (+2+-βr ⟨ S n ⟩₋₂ m)
         (record {
            F = H ⊙∘ G;
            pres-comp = λ p q →
@@ -85,12 +85,12 @@ module _ {i} where
     → Ω^-Group n t (⊙Trunc ⟨ n ⟩ X) Trunc-level == π n t X
   π-Trunc-shift-iso n t X = group-ua (group-hom (fst F) pres-comp , e)
     where
-    n-eq : ∀ (n : ℕ) → (n -2) +2+ ⟨0⟩ == ⟨ n ⟩
+    n-eq : ∀ (n : ℕ) → ⟨ n ⟩₋₂ +2+ 0 == ⟨ n ⟩
     n-eq O = idp
     n-eq (S n) = ap S (n-eq n)
 
-    r = transport (λ k → Ω^Ts-PreIso ⟨0⟩ n k t X)
-                  (n-eq n) (Ω^-Trunc-shift-preiso n ⟨0⟩ t X)
+    r = transport (λ k → Ω^Ts-PreIso 0 n k t X)
+                  (n-eq n) (Ω^-Trunc-shift-preiso n 0 t X)
     open Ω^Ts-PreIso r
 
 abstract
@@ -121,9 +121,9 @@ abstract
     Ω^-Group n t (⊙Trunc ⟨ n ⟩ (⊙Trunc m X)) Trunc-level
       =⟨ contr-is-0ᴳ _ $ inhab-prop-is-contr
            (Group.ident (Ω^-Group n t (⊙Trunc ⟨ n ⟩ (⊙Trunc m X)) Trunc-level))
-           (Ω^-level-in ⟨-1⟩ n _ $ Trunc-preserves-level ⟨ n ⟩ $
+           (Ω^-level-in -1 n _ $ Trunc-preserves-level ⟨ n ⟩ $
              raise-level-≤T
-               (transport (λ k → m ≤T k) (+2+-comm ⟨-1⟩ (n -2)) (<T-to-≤T lt))
+               (transport (λ k → m ≤T k) (+2+-comm -1 ⟨ n ⟩₋₂) (<T-to-≤T lt))
                (Trunc-level {n = m})) ⟩
     0ᴳ ∎
 

@@ -5,7 +5,7 @@ open import lib.types.Pi
 
 module lib.types.Group where
 
-record GroupStructure {i} (El : Type i) --(El-level : has-level ⟨0⟩ El)
+record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
   : Type i where
   constructor group-structure
   field
@@ -22,7 +22,7 @@ record Group i : Type (lsucc i) where
   constructor group
   field
     El : Type i
-    El-level : has-level ⟨0⟩ El
+    El-level : has-level 0 El
     group-struct : GroupStructure El
   open GroupStructure group-struct public
 
@@ -39,7 +39,7 @@ module _ where
   open GroupStructure
 
   abstract
-    group-structure= : ∀ {i} {A : Type i} (pA : has-level ⟨0⟩ A)
+    group-structure= : ∀ {i} {A : Type i} (pA : has-level 0 A)
       {id₁ id₂ : A} {inv₁ inv₂ : A → A} {comp₁ comp₂ : A → A → A}
       → ∀ {unitl₁ unitl₂} → ∀ {unitr₁ unitr₂} → ∀ {assoc₁ assoc₂}
       → ∀ {invr₁ invr₂} → ∀ {invl₁ invl₂}
@@ -64,7 +64,7 @@ module _ where
       ap5 f idp idp idp idp idp = idp
 
     ↓-group-structure= : ∀ {i} {A B : Type i}
-      (A-level : has-level ⟨0⟩ A)
+      (A-level : has-level 0 A)
       {GS : GroupStructure A} {HS : GroupStructure B} (p : A == B)
       → (ident GS == ident HS [ (λ C → C) ↓ p ])
       → (inv GS == inv HS [ (λ C → C → C) ↓ p ])

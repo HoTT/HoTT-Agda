@@ -9,6 +9,10 @@ data Bool : Type₀ where
   true : Bool
   false : Bool
 
+{-# BUILTIN BOOL Bool #-}
+{-# BUILTIN FALSE false #-}
+{-# BUILTIN TRUE true #-}
+
 ⊙Bool : Ptd₀
 ⊙Bool = ⊙[ Bool , true ]
 

@@ -110,7 +110,7 @@ module _ {i j} {A : Type i} {B : Type j} {f : A → B} where
 equiv-rcoh-is-contr : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
                       (e : is-equiv f) → (v : rinv f) → is-contr (rcoh f v)
 equiv-rcoh-is-contr {f = f} e v = equiv-preserves-level ((rcoh-eqv v)⁻¹)
-  (Π-level (λ x → =-preserves-level ⟨-2⟩ (equiv-is-contr-map e (f x))))
+  (Π-level (λ x → =-preserves-level -2 (equiv-is-contr-map e (f x))))
 
 rinv-and-rcoh-eqv-is-equiv : ∀ {i j} {A : Type i} {B : Type j} {h : A → B}
   → Σ (rinv h) (rcoh h) ≃ is-equiv h

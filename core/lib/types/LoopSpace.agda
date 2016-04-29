@@ -214,19 +214,19 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
   equiv-ap^ n F e = (fst (ap^ n F) , is-equiv-ap^ n F e)
 
 Ω^-level-in : ∀ {i} (m : ℕ₋₂) (n : ℕ) (X : Ptd i)
-  → (has-level ((n -2) +2+ m) (fst X) → has-level m (Ω^ n X))
+  → (has-level (⟨ n ⟩₋₂ +2+ m) (fst X) → has-level m (Ω^ n X))
 Ω^-level-in m O X pX = pX
 Ω^-level-in m (S n) X pX =
   Ω^-level-in (S m) n X
-    (transport (λ k → has-level k (fst X)) (! (+2+-βr (n -2) m)) pX)
+    (transport (λ k → has-level k (fst X)) (! (+2+-βr ⟨ n ⟩₋₂ m)) pX)
     (idp^ n) (idp^ n)
 
 Ω^-conn-in : ∀ {i} (m : ℕ₋₂) (n : ℕ) (X : Ptd i)
-  → (is-connected ((n -2) +2+ m) (fst X)) → is-connected m (Ω^ n X)
+  → (is-connected (⟨ n ⟩₋₂ +2+ m) (fst X)) → is-connected m (Ω^ n X)
 Ω^-conn-in m O X pX = pX
 Ω^-conn-in m (S n) X pX =
   path-conn $ Ω^-conn-in (S m) n X $
-    transport (λ k → is-connected k (fst X)) (! (+2+-βr (n -2) m)) pX
+    transport (λ k → is-connected k (fst X)) (! (+2+-βr ⟨ n ⟩₋₂ m)) pX
 
 {- Eckmann-Hilton argument -}
 module _ {i} {X : Ptd i} where
@@ -254,16 +254,16 @@ module _ {i} {X : Ptd i} where
 module _ {i} where
 
   Trunc-Ω^ : (m : ℕ₋₂) (n : ℕ) (X : Ptd i)
-    → ⊙Trunc m (⊙Ω^ n X) == ⊙Ω^ n (⊙Trunc ((n -2) +2+ m) X)
+    → ⊙Trunc m (⊙Ω^ n X) == ⊙Ω^ n (⊙Trunc (⟨ n ⟩₋₂ +2+ m) X)
   Trunc-Ω^ m O X = idp
   Trunc-Ω^ m (S n) X =
     ⊙Trunc m (⊙Ω^ (S n) X)
       =⟨ ! (pair= (Trunc=-path [ _ ] [ _ ]) (↓-idf-ua-in _ idp)) ⟩
     ⊙Ω (⊙Trunc (S m) (⊙Ω^ n X))
       =⟨ ap ⊙Ω (Trunc-Ω^ (S m) n X) ⟩
-    ⊙Ω^ (S n) (⊙Trunc ((n -2) +2+ S m) X)
-      =⟨ +2+-βr (n -2) m |in-ctx (λ k → ⊙Ω^ (S n) (⊙Trunc k X)) ⟩
-    ⊙Ω^ (S n) (⊙Trunc (S (n -2) +2+ m) X) ∎
+    ⊙Ω^ (S n) (⊙Trunc (⟨ n ⟩₋₂ +2+ S m) X)
+      =⟨ +2+-βr ⟨ n ⟩₋₂ m |in-ctx (λ k → ⊙Ω^ (S n) (⊙Trunc k X)) ⟩
+    ⊙Ω^ (S n) (⊙Trunc (S ⟨ n ⟩₋₂ +2+ m) X) ∎
 
   Ω-Trunc-equiv : (m : ℕ₋₂) (X : Ptd i)
     → Ω (⊙Trunc (S m) X) ≃ Trunc m (Ω X)
@@ -287,8 +287,8 @@ module _ {i} (n : ℕ) (t : n ≠ O) (X : Ptd i) where
   Ω^-Group : has-level ⟨ n ⟩ (fst X) → Group i
   Ω^-Group pX = group
     (Ω^ n X)
-    (Ω^-level-in ⟨0⟩ n X $
-       transport (λ t → has-level t (fst X)) (+2+-comm ⟨0⟩ (n -2)) pX)
+    (Ω^-level-in 0 n X $
+       transport (λ t → has-level t (fst X)) (+2+-comm 0 ⟨ n ⟩₋₂) pX)
     Ω^-group-structure
 
 {- Our definition of Ω^ builds up loops on the outside,

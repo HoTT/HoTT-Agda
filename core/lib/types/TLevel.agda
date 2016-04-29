@@ -7,21 +7,8 @@ open import lib.types.Nat
 
 module lib.types.TLevel where
 
-infix 120 _-2
-infix 120 _-1
-
-_-2 : ℕ → ℕ₋₂
-O -2 = ⟨-2⟩
-(S n) -2 = S (n -2)
-
-_-1 : ℕ → ℕ₋₂
-n -1 = S (n -2)
-
 ⟨_⟩ : ℕ → ℕ₋₂
-⟨ n ⟩ = S (n -1)
-
-⟨1⟩ = ⟨ 1 ⟩
-⟨2⟩ = ⟨ 2 ⟩
+⟨ n ⟩ = from-nat n
 
 infixl 80 _+2+_
 _+2+_ : ℕ₋₂ → ℕ₋₂ → ℕ₋₂
@@ -145,6 +132,7 @@ T-S+2+≠ (S n) k p = T-S+2+≠ n k (ap T-get-S (ap S (! (+2+-βr k n)) ∙ p))
 <T-to-≱T lt (inl p) = <T-to-≠ lt (! p)
 <T-to-≱T lt (inr gt) = <T-to-≯T lt gt
 
+{-
 -2-monotone-< : {m n : ℕ} → (m < n) → (m -2 <T n -2)
 -2-monotone-< ltS = ltS
 -2-monotone-< (ltSR lt) = ltSR (-2-monotone-< lt)
@@ -160,6 +148,7 @@ T-S+2+≠ (S n) k p = T-S+2+≠ n k (ap T-get-S (ap S (! (+2+-βr k n)) ∙ p))
 ⟨⟩-monotone-≤ : {m n : ℕ} → (m ≤ n) → (⟨ m ⟩ ≤T ⟨ n ⟩)
 ⟨⟩-monotone-≤ (inl p) = inl (ap ⟨_⟩ p)
 ⟨⟩-monotone-≤ (inr lt) = inr (⟨⟩-monotone-< lt)
+-}
 
 minT : ℕ₋₂ → ℕ₋₂ → ℕ₋₂
 minT ⟨-2⟩ n = ⟨-2⟩

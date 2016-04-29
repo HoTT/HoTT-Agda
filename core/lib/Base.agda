@@ -67,7 +67,7 @@ data _==_ {i} {A : Type i} (a : A) : A → Type i where
 Path = _==_
 
 {-# BUILTIN EQUALITY _==_ #-}
-{-# BUILTIN REFL  idp #-}
+{-# BUILTIN REFL idp #-}
 
 {- Paulin-Mohring J rule
 
@@ -89,8 +89,13 @@ J' B d idp = d
 The unit type is defined as record so that we also get the η-rule definitionally.
 -}
 
-record Unit : Type₀ where
-  constructor unit
+record ⊤ : Type₀ where
+  instance constructor unit
+
+Unit = ⊤
+
+{-# BUILTIN UNIT ⊤ #-}
+
 
 {- Dependent paths
 
@@ -203,19 +208,33 @@ absurd patterns are not consistent with HIT, we will not use empty patterns
 anymore after that.
 -}
 
-data Empty : Type₀ where
+data ⊥ : Type₀ where
 
-Empty-elim : ∀ {i} {P : Empty → Type i} → ((x : Empty) → P x)
-Empty-elim ()
+Empty = ⊥
 
+⊥-elim : ∀ {i} {P : ⊥ → Type i} → ((x : ⊥) → P x)
+⊥-elim ()
+
+Empty-elim = ⊥-elim
 
 {- Negation and disequality -}
 
 ¬ : ∀ {i} (A : Type i) → Type i
-¬ A = A → Empty
+¬ A = A → ⊥
 
 _≠_ : ∀ {i} {A : Type i} → (A → A → Type i)
 x ≠ y = ¬ (x == y)
+
+
+{- Natural numbers -}
+
+data ℕ : Type₀ where
+  O : ℕ
+  S : (n : ℕ) → ℕ
+
+Nat = ℕ
+
+{-# BUILTIN NATURAL ℕ #-}
 
 
 {- Lifting to a higher universe level
@@ -326,11 +345,9 @@ data TLevel : Type₀ where
 
 ℕ₋₂ = TLevel
 
-⟨-1⟩ : TLevel
-⟨-1⟩ = S ⟨-2⟩
-
-⟨0⟩ : TLevel
-⟨0⟩ = S ⟨-1⟩
+⟨_⟩₋₂ : ℕ → ℕ₋₂
+⟨ O ⟩₋₂ = ⟨-2⟩
+⟨ S n ⟩₋₂ = S ⟨ n ⟩₋₂
 
 {- Coproducts and case analysis -}
 
@@ -361,3 +378,46 @@ module ADMIT where
   postulate
     ADMIT : ∀ {i} {A : Type i} → A
 -}
+
+{- Numeric literal overloading
+ -
+ - This enables writing numeric literals
+ -}
+
+record FromNat {i} (A : Type i) : Type (lsucc i) where
+  field
+    in-range : ℕ → Type i
+    read : ∀ n → ⦃ _ : in-range n ⦄ → A
+
+open FromNat ⦃...⦄ public using () renaming (read to from-nat)
+
+{-# BUILTIN FROMNAT from-nat #-}
+
+record FromNeg {i} (A : Type i) : Type (lsucc i) where
+  field
+    in-range : ℕ → Type i
+    read : ∀ n → ⦃ _ : in-range n ⦄ → A
+
+open FromNeg ⦃...⦄ public using () renaming (read to from-neg)
+
+{-# BUILTIN FROMNEG from-neg #-}
+
+instance
+  ℕ-reader : FromNat ℕ
+  FromNat.in-range ℕ-reader _ = ⊤
+  FromNat.read ℕ-reader n = n
+
+  TLevel-reader : FromNat TLevel
+  FromNat.in-range TLevel-reader _ = ⊤
+  FromNat.read TLevel-reader n = S (S ⟨ n ⟩₋₂)
+
+  TLevel-neg-reader : FromNeg TLevel
+  FromNeg.in-range TLevel-neg-reader O = ⊤
+  FromNeg.in-range TLevel-neg-reader (S O) = ⊤
+  FromNeg.in-range TLevel-neg-reader (S (S O)) = ⊤
+  FromNeg.in-range TLevel-neg-reader (S (S (S _))) = ⊥
+  FromNeg.read TLevel-neg-reader O = S (S ⟨-2⟩)
+  FromNeg.read TLevel-neg-reader (S O) = S ⟨-2⟩
+  FromNeg.read TLevel-neg-reader (S (S O)) = ⟨-2⟩
+  FromNeg.read TLevel-neg-reader (S (S (S _))) ⦃()⦄
+

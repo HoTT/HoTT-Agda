@@ -16,7 +16,7 @@ module lib.types.IteratedSuspension where
 ⊙Susp^ (S n) X = ⊙Susp (⊙Susp^ n X)
 
 ⊙Susp^-conn : ∀ {i} (n : ℕ) {X : Ptd i} {m : ℕ₋₂}
-  → is-connected m (fst X) → is-connected ((n -2) +2+ m) (fst (⊙Susp^ n X))
+  → is-connected m (fst X) → is-connected (⟨ n ⟩₋₂ +2+ m) (fst (⊙Susp^ n X))
 ⊙Susp^-conn O cX = cX
 ⊙Susp^-conn (S n) cX = Susp-conn (⊙Susp^-conn n cX)
 

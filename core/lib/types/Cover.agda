@@ -41,7 +41,7 @@ module _ {i} {A : Type i} {j} where
 
   -- The definition of universality in terms of connectedness.
   is-universal : Cover A j → Type (lmax i j)
-  is-universal cov = is-connected ⟨1⟩ $ TotalSpace cov
+  is-universal cov = is-connected 1 $ TotalSpace cov
 
   -- In terms of connectedness
   UniversalCover : Type (lmax i (lsucc j))
