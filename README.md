@@ -50,8 +50,8 @@ The numbering is the homotopy-theoretic numbering, parametrized by the type
 
     ℕ₋₂ = TLevel
 
-There are also terms `⟨-1⟩`, `⟨0⟩`, `⟨1⟩`, `⟨2⟩` and `⟨_⟩ : ℕ → ℕ₋₂` with the
-obvious definitions.
+Numeric literals (including negative ones) are overloaded.
+There is also explicit conversion `⟨_⟩ : ℕ → ℕ₋₂` with the obvious definition.
 
 ### Properties of types
 
