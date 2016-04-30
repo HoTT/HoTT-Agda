@@ -7,10 +7,10 @@ Introduction
 This repository contains a development of homotopy type theory and univalent
 foundations in Agda.  The structure of the source code is described below.
 
-Code Organization and Setup
----------------------------
+Setup
+-----
 
-The code is loosely broken into `core` and `theorems` libraries.
+The code is loosely broken into `core` and `theorems` Agda libraries.
 You need to include at least the path to `core.agda` in your library list.
 See `CHANGELOG` of Agda 2.5 for more information.
 
@@ -149,13 +149,13 @@ Structure of the source
 
 The structure of the source is roughly the following:
 
-### Old library (directory `old/`)
+### Old code (directory `old/`)
 
 The old library is still present, mainly to facilitate code transfer to the new
 library. Once everything has been ported to the new library, this directory will
 be removed.
 
-### Library (directory `lib/`)
+### Core library (directory `core/`)
 
 The main library is more or less divided in three parts.
 
@@ -170,9 +170,21 @@ library should contain `open import HoTT`.
 
 TODO: describe more precisely each file
 
-### Homotopy (directory `homotopy/`)
+### Homotopy (directory `theorems/homotopy/`)
 
 This directory contains proofs of interesting homotopy-theoretic theorems.
+
+TODO: describe more precisely each file
+
+### Cohomology (directory `theorems/cohomology/`)
+
+This directory contains proofs of interesting cohomology-theoretic theorems.
+
+TODO: describe more precisely each file
+
+### CW complexes (directory `theorems/cw/`)
+
+This directory contains proofs of interesting theorems about CW complexes.
 
 TODO: describe more precisely each file
 
