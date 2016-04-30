@@ -4,7 +4,7 @@ open import HoTT
 open import homotopy.HSpace
 open import homotopy.PushoutComm using (flip; Pushout-comm)
 
-module homotopy.HopfConstruction {i} (A : Type i) (c : is-connected ⟨0⟩ A)
+module homotopy.HopfConstruction {i} (A : Type i) (c : is-connected 0 A)
   (hA : HSpaceStructure A) where
 
 open HSpaceStructure hA

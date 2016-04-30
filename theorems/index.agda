@@ -16,9 +16,15 @@ module index where
 import homotopy.LoopSpaceCircle
 import homotopy.HopfJunior
 -- import homotopy.Hopf
+
+import cohomology.EMModel
+
+import homotopy.SpaceFromGroups
+
 import homotopy.CoverClassification
 import homotopy.AnyUniversalCoverIsPathSet
 import homotopy.PathSetIsInital
+
 -- import Spaces.LoopSpaceDecidableWedgeCircles
 -- import Homotopy.PullbackIsPullback
 -- import Homotopy.PushoutIsPushout

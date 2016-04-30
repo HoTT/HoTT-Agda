@@ -39,7 +39,7 @@ module SplitExactLeft
     im-part : H →ᴳ Im φ
     im-part = im-in-hom φ ∘ᴳ χ
 
-    im-part-imφ : (h : H.El) (s : Trunc ⟨-1⟩ (Σ G.El (λ g → φ.f g == h)))
+    im-part-imφ : (h : H.El) (s : Trunc -1 (Σ G.El (λ g → φ.f g == h)))
       → GroupHom.f im-part h == (h , s)
     im-part-imφ h s = pair=
       (Trunc-rec (Group.El-level H _ _)
@@ -73,7 +73,7 @@ module SplitExactLeft
           =⟨ G.invr (χ.f h) ⟩
         G.ident ∎)
 
-    ker-part-imφ : (h : H.El) → Trunc ⟨-1⟩ (Σ G.El (λ g → φ.f g == h))
+    ker-part-imφ : (h : H.El) → Trunc -1 (Σ G.El (λ g → φ.f g == h))
       → GroupHom.f ker-part h == Group.ident (Ker χ)
     ker-part-imφ h = Trunc-rec (Group.El-level (Ker χ) _ _) $
       λ {(g , p) → pair=
@@ -165,7 +165,7 @@ module SplitExactLeft
       (prop-has-all-paths-↓ (G.El-level _ _))
 
     ψ|kerχ-surj : (k : K.El)
-      → Trunc ⟨-1⟩ (Σ (Group.El (Ker χ))
+      → Trunc -1 (Σ (Group.El (Ker χ))
                       (λ h → ψ.f (GroupHom.f (ker-inj χ) h) == k))
     ψ|kerχ-surj k = Trunc-fmap
       (λ {(h , p) → (GroupHom.f ker-part h ,

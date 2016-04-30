@@ -3,7 +3,7 @@
 open import HoTT
 
 module homotopy.PathSetIsInital {i} (A : Type i)
-  -- (A-conn : is-connected ⟨0⟩ A)
+  -- (A-conn : is-connected 0 A)
   where
 
   open Cover
@@ -12,7 +12,7 @@ module homotopy.PathSetIsInital {i} (A : Type i)
     (a₁ : A)
     -- And an arbitrary covering.
     {k} (cov : Cover A k)
-    -- (cov-conn : is-connected ⟨0⟩ (Cover.TotalSpace cov))
+    -- (cov-conn : is-connected 0 (Cover.TotalSpace cov))
     (a↑₁ : Fiber cov a₁)
     where
 
@@ -35,7 +35,7 @@ module homotopy.PathSetIsInital {i} (A : Type i)
 
         lemma₂ : ∀ a p → cover-hom a p == quotient-cover a p
         lemma₂ a = Trunc-elim
-          (λ p → =-preserves-level ⟨0⟩ (Cover.Fiber-level cov a))
+          (λ p → =-preserves-level 0 (Cover.Fiber-level cov a))
           (lemma₁ a)
 
       theorem : cover-hom == quotient-cover

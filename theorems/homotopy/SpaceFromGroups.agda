@@ -25,12 +25,12 @@ module SpaceFromEMs {i} (F : ℕ → Ptd i)
     ∙ π-× (S n) (ℕ-S≠O _) (F (n + O)) (⊙FinTuples (λ k → F (n + S k)))
     ∙ ap (λ H → π (S n) (ℕ-S≠O _) (F (n + O)) ×ᴳ H)
          (contr-is-0ᴳ _ $
-           connected-at-level-is-contr (Trunc-level {n = ⟨0⟩}) $
-             Trunc-preserves-conn ⟨0⟩ $ Ω^-conn-in _ (S n) _ $
+           connected-at-level-is-contr (Trunc-level {n = 0}) $
+             Trunc-preserves-conn 0 $ Ω^-conn-in _ (S n) _ $
                transport
                  (λ k → is-connected k
                           (fst (⊙FinTuples (λ k → F (n + S k)))))
-                 (+2+-comm (S (S ⟨-2⟩)) (S (n -2)))
+                 (+2+-comm 0 ⟨ n ⟩₋₁)
                  (ncolim-conn _ _ $ connected-lemma _ _ $ λ k →
                    transport (λ s → is-connected ⟨ s ⟩ (fst (F (n + S k))))
                      (+-βr n k ∙ +-comm (S n) k)

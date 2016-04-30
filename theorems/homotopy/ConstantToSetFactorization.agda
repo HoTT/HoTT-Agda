@@ -27,7 +27,7 @@ module homotopy.ConstantToSetFactorization
     Skel-lift : Skel → B
     Skel-lift = SetQuot-rec B-is-set f (λ {a₁ a₂} _ → f-is-const a₁ a₂)
 
-  cst-extend : Trunc ⟨-1⟩ A → B
+  cst-extend : Trunc -1 A → B
   cst-extend = Skel-lift ∘ Trunc-rec Skel-is-prop q[_]
 
   -- The beta rule.

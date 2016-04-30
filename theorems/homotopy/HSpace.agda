@@ -12,7 +12,7 @@ record HSpaceStructure {i} (A : Type i) : Type i where
     μe- : (a : A) → μ e a == a
     μ-e : (a : A) → μ a e == a
 
-module ConnectedHSpace {i} (A : Type i) (c : is-connected ⟨0⟩ A)
+module ConnectedHSpace {i} (A : Type i) (c : is-connected 0 A)
   (hA : HSpaceStructure A) where
 
   open HSpaceStructure hA

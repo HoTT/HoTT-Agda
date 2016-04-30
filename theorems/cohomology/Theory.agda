@@ -44,7 +44,7 @@ record CohomologyTheory i : Type (lsucc i) where
       → is-exact (CF-hom n (⊙cfcod f)) (CF-hom n f)
 
     C-additive : (n : ℤ) {I : Type i} (Z : I → Ptd i)
-      → ((W : I → Type i) → has-choice ⟨0⟩ I W)
+      → ((W : I → Type i) → has-choice 0 I W)
       → is-equiv (GroupHom.f (Πᴳ-hom-in (CF-hom n ∘ ⊙bwin {X = Z})))
 
   {- Alternate form of suspension axiom naturality -}
@@ -60,4 +60,4 @@ record OrdinaryTheory i : Type (lsucc i) where
     cohomology-theory : CohomologyTheory i
   open CohomologyTheory cohomology-theory public
   field
-    C-dimension : (n : ℤ) → n ≠ O → C n (⊙Sphere O) == 0ᴳ
+    C-dimension : (n : ℤ) → n ≠ 0 → C n (⊙Sphere O) == 0ᴳ

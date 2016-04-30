@@ -10,8 +10,8 @@ open import homotopy.EM1HSpace
 module homotopy.EilenbergMacLane where
 
 -- EM(G,n) when G is π₁(A,a₀)
-module EMImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
-  (gA : has-level ⟨ 1 ⟩ A) (A-H : HSS A)
+module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
+  (gA : has-level 1 A) (A-H : HSS A)
   (μcoh : HSS.μe- A-H (HSS.e A-H) == HSS.μ-e A-H (HSS.e A-H)) where
 
   private
@@ -33,16 +33,13 @@ module EMImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
   EM-conn : (n : ℕ) → is-connected ⟨ n ⟩ (EM (S n))
   EM-conn n = Trunc-preserves-conn ⟨ S n ⟩
                   (transport (λ t → is-connected t (fst (⊙Susp^ n X)))
-                    (nlemma n) (⊙Susp^-conn n cA))
-    where nlemma : (n : ℕ) → (n -2) +2+ ⟨0⟩ == ⟨ n ⟩
-          nlemma O = idp
-          nlemma (S n) = ap S (nlemma n)
+                    (+2+0 ⟨ n ⟩₋₂) (⊙Susp^-conn n cA))
 
   {-
   π (S k) (EM (S n)) (embase (S n)) == π k (EM n) (embase n)
   where k > 0 and n = S (S n')
   -}
-  module Stable (k n' : ℕ) (tk : k ≠ 0) (tsk : S k ≠ 0)
+  module Stable (k n' : ℕ) (tk : k ≠ O) (tsk : S k ≠ O)
     (indexing : k ≤ S (S n'))
     where
 
@@ -81,9 +78,9 @@ module EMImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
     π₁ n t1 =
       contr-is-0ᴳ (π 1 t1 (⊙EM (S (S n))))
         (connected-at-level-is-contr
-          (raise-level-≤T (≤T-ap-S (≤T-ap-S (-2≤T (n -2))))
-                          (Trunc-level {n = ⟨0⟩}))
-          (Trunc-preserves-conn ⟨0⟩ (path-conn (EM-conn (S n)))))
+          (raise-level-≤T (≤T-ap-S (≤T-ap-S (-2≤T ⟨ n ⟩₋₂)))
+                          (Trunc-level {n = 0}))
+          (Trunc-preserves-conn 0 (path-conn (EM-conn (S n)))))
 
     -- some clutter here arises from the definition of <;
     -- any simple way to avoid this?
@@ -113,7 +110,7 @@ module EMImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
     π₁ : (tn : 1 ≠ O) (t1 : 1 ≠ O)
       → π 1 tn (⊙EM 1) == π 1 t1 X
     π₁ tn t1 =
-      π-below-trunc 1 tn ⟨ 1 ⟩ X ≤T-refl
+      π-below-trunc 1 tn 1 X ≤T-refl
       ∙ ap (λ t → π 1 t X)
            (prop-has-all-paths (Π-level (λ _ → ⊥-is-prop)) tn t1)
 
@@ -123,7 +120,7 @@ module EMImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
     π₂ : (tn : 2 ≠ O) (t1 : 1 ≠ O)
       → π 2 tn (⊙EM 2) == π 1 t1 X
     π₂ tn t1 =
-      π-below-trunc 2 tn ⟨ 2 ⟩ (⊙Susp X) ≤T-refl
+      π-below-trunc 2 tn 2 (⊙Susp X) ≤T-refl
       ∙ Π₂.π₂-Suspension t1 tn
 
     π-diag : (n : ℕ) (tn : n ≠ 0) (t1 : 1 ≠ O)
@@ -143,10 +140,10 @@ module EMImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
       contr-is-0ᴳ (π k tk (⊙EM n))
         (inhab-prop-is-contr
           [ idp^ k ]
-          (Trunc-preserves-level ⟨0⟩ (Ω^-level-in ⟨-1⟩ k _
+          (Trunc-preserves-level 0 (Ω^-level-in -1 k _
             (raise-level-≤T (lemma lt) (EM-level n)))))
-      where lemma : {k n : ℕ} → n < k → S (S (n -2)) ≤T ((k -2) +2+ ⟨-1⟩)
-            lemma ltS = inl (! (+2+-comm _ ⟨-1⟩))
+      where lemma : {k n : ℕ} → n < k → ⟨ n ⟩ ≤T (⟨ k ⟩₋₂ +2+ -1)
+            lemma ltS = inl (! (+2+-comm _ -1))
             lemma (ltSR lt) = ≤T-trans (lemma lt) (inr ltS)
 
   module Spectrum where
@@ -158,7 +155,7 @@ module EMImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
     spectrum0 =
       ⊙Ω (⊙EM 1)
         =⟨ ⊙ua (⊙ify-eq (Trunc=-equiv _ _) idp) ⟩
-      ⊙Trunc ⟨ 0 ⟩ (⊙Ω X)
+      ⊙Trunc 0 (⊙Ω X)
         =⟨ ⊙ua (⊙ify-eq (unTrunc-equiv _ (gA a₀ a₀)) idp) ⟩
       ⊙Ω X ∎
 
@@ -166,29 +163,25 @@ module EMImplicit {i} (A : Type i) (cA : is-connected ⟨0⟩ A)
     spectrum1 =
       ⊙Ω (⊙EM 2)
         =⟨ ⊙ua (⊙ify-eq (Trunc=-equiv _ _) idp) ⟩
-      ⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp X))
+      ⊙Trunc 1 (⊙Ω (⊙Susp X))
         =⟨ Π₂.⊙main-lemma ⟩
       X
         =⟨ ! (⊙ua (⊙ify-eq (unTrunc-equiv _ gA) idp)) ⟩
       ⊙EM 1 ∎
 
     private
-      nlemma : (n : ℕ) → Path {A = ℕ₋₂} (S ((n -2) +2+ ⟨0⟩)) (S (S (n -1)))
-      nlemma O = idp
-      nlemma (S n) = ap S (nlemma n)
-
-      sconn : (n : ℕ) → is-connected (S (S (n -1))) (fst (⊙Susp^ (S n) X))
+      sconn : (n : ℕ) → is-connected ⟨ S n ⟩ (fst (⊙Susp^ (S n) X))
       sconn n = transport (λ t → is-connected t (fst (⊙Susp^ (S n) X)))
-                          (nlemma n) (⊙Susp^-conn (S n) cA)
+                          (+2+0 ⟨ n ⟩₋₁) (⊙Susp^-conn (S n) cA)
 
-      kle : (n : ℕ) → ⟨ S (S n) ⟩ ≤T S ((n -1) +2+ S (n -1))
+      kle : (n : ℕ) → ⟨ S (S n) ⟩ ≤T ⟨ n ⟩ +2+ ⟨ n ⟩
       kle O = inl idp
       kle (S n) = ≤T-trans (≤T-ap-S (kle n))
-                   (≤T-trans (inl (! (+2+-βr (S n -1) (S n -1))))
+                   (≤T-trans (inl (! (+2+-βr ⟨ n ⟩ ⟨ n ⟩)))
                                (inr ltS))
 
       module FS (n : ℕ) =
-        FreudenthalEquiv (n -1) (⟨ S (S n) ⟩) (kle n)
+        FreudenthalEquiv ⟨ n ⟩₋₁ ⟨ S (S n) ⟩ (kle n)
           (fst (⊙Susp^ (S n) X)) (snd (⊙Susp^ (S n) X)) (sconn n)
 
     spectrumSS : (n : ℕ)

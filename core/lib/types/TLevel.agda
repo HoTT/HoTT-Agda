@@ -7,6 +7,9 @@ open import lib.types.Nat
 
 module lib.types.TLevel where
 
+⟨_⟩₋₁ : ℕ → ℕ₋₂
+⟨ n ⟩₋₁ = S ⟨ n ⟩₋₂
+
 ⟨_⟩ : ℕ → ℕ₋₂
 ⟨ n ⟩ = from-nat n
 
@@ -26,6 +29,9 @@ S m +2+ n = S (m +2+ n)
 +2+-comm : (m n : ℕ₋₂) → m +2+ n == n +2+ m
 +2+-comm m ⟨-2⟩ = +2+-unit-r m
 +2+-comm m (S n) = +2+-βr m n ∙ ap S (+2+-comm m n)
+
++2+0 : (n : ℕ₋₂) → n +2+ 0 == S (S n)
++2+0 n = +2+-comm n 0
 
 {- Inequalities -}
 infix 40 _<T_
@@ -140,6 +146,7 @@ T-S+2+≠ (S n) k p = T-S+2+≠ n k (ap T-get-S (ap S (! (+2+-βr k n)) ∙ p))
 -2-monotone-≤ : {m n : ℕ} → (m ≤ n) → (m -2 ≤T n -2)
 -2-monotone-≤ (inl p) = inl (ap _-2 p)
 -2-monotone-≤ (inr lt) = inr (-2-monotone-< lt)
+-}
 
 ⟨⟩-monotone-< : {m n : ℕ} → (m < n) → (⟨ m ⟩ <T ⟨ n ⟩)
 ⟨⟩-monotone-< ltS = ltS
@@ -148,7 +155,6 @@ T-S+2+≠ (S n) k p = T-S+2+≠ n k (ap T-get-S (ap S (! (+2+-βr k n)) ∙ p))
 ⟨⟩-monotone-≤ : {m n : ℕ} → (m ≤ n) → (⟨ m ⟩ ≤T ⟨ n ⟩)
 ⟨⟩-monotone-≤ (inl p) = inl (ap ⟨_⟩ p)
 ⟨⟩-monotone-≤ (inr lt) = inr (⟨⟩-monotone-< lt)
--}
 
 minT : ℕ₋₂ → ℕ₋₂ → ℕ₋₂
 minT ⟨-2⟩ n = ⟨-2⟩

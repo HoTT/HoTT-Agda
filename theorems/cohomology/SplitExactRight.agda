@@ -65,7 +65,7 @@ module SplitExactRight
        h ∎)
       (prop-has-all-paths-↓ (K.El-level _ _))
 
-    ker-part-imχ : (h : H.El) → Trunc ⟨-1⟩ (Σ K.El (λ k → χ.f k == h))
+    ker-part-imχ : (h : H.El) → Trunc -1 (Σ K.El (λ k → χ.f k == h))
       → GroupHom.f ker-part h == Group.ident (Ker ψ)
     ker-part-imχ h = Trunc-rec (Group.El-level (Ker ψ) _ _) $
       (λ {(k , p) → pair=
@@ -88,7 +88,7 @@ module SplitExactRight
       (ap χ.f p ∙ χ.pres-ident)
       (prop-has-all-paths-↓ Trunc-level)
 
-    im-part-imχ : (h : H.El) (s : Trunc ⟨-1⟩ (Σ K.El (λ k → χ.f k == h)))
+    im-part-imχ : (h : H.El) (s : Trunc -1 (Σ K.El (λ k → χ.f k == h)))
       → GroupHom.f im-part h == (h , s)
     im-part-imχ h s = pair=
       (Trunc-rec (Group.El-level H _ _)

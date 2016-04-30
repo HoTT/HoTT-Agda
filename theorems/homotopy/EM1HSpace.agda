@@ -54,7 +54,7 @@ module EM₁HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
     μe- : (x : EM₁) → mult embase x == x
     μe- = EM₁-elim
       {P = λ x → mult embase x == x}
-      (λ _ → =-preserves-level ⟨ 1 ⟩ emlevel)
+      (λ _ → =-preserves-level 1 emlevel)
       idp
       (λ g → ↓-app=idf-in $ ∙'-unit-l (emloop g) ∙ (! (ap-idf (emloop g)))
                             ∙ ! (∙-unit-r (ap (mult embase) (emloop g))))
@@ -64,7 +64,7 @@ module EM₁HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
     μ-e : (x : EM₁) → mult x embase == x
     μ-e = EM₁-elim
       {P = λ x → mult x embase == x}
-      (λ _ → =-preserves-level ⟨ 1 ⟩ emlevel)
+      (λ _ → =-preserves-level 1 emlevel)
       idp
       (λ g → ↓-app=idf-in $
          idp ∙' emloop g

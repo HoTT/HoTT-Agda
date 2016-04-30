@@ -104,7 +104,7 @@ module FreudenthalEquiv
         coe (ap Codes (merid X x) ∙ ap Codes (! (merid X x₀))) [ x₀ ]
           =⟨ coe-∙ (ap Codes (merid X x)) (ap Codes (! (merid X x₀))) [ x₀ ] ⟩
         coe (ap Codes (! (merid X x₀))) (coe (ap Codes (merid X x)) [ x₀ ])
-          =⟨ SuspensionRec.glue-β X _ _ (ua ∘ Codes-mer-equiv) x
+          =⟨ SuspensionRec.merid-β X _ _ (ua ∘ Codes-mer-equiv) x
             |in-ctx (λ w → coe (ap Codes (! (merid X x₀))) (coe w [ x₀ ])) ⟩
         coe (ap Codes (! (merid X x₀))) (coe (ua (Codes-mer-equiv x)) [ x₀ ])
           =⟨ coe-β (Codes-mer-equiv x) [ x₀ ]
@@ -115,7 +115,7 @@ module FreudenthalEquiv
         coe (ap Codes (! (merid X x₀))) [ x ]
           =⟨ coe-ap-! Codes (merid X x₀) [ x ] ⟩
         coe! (ap Codes (merid X x₀)) [ x ]
-          =⟨ SuspensionRec.glue-β X _ _ (ua ∘ Codes-mer-equiv) x₀
+          =⟨ SuspensionRec.merid-β X _ _ (ua ∘ Codes-mer-equiv) x₀
             |in-ctx (λ w → coe! w [ x ]) ⟩
         coe! (ua (Codes-mer-equiv x₀)) [ x ]
           =⟨ coe!-β (Codes-mer-equiv x₀) [ x ] ⟩
@@ -157,7 +157,7 @@ module FreudenthalEquiv
         Trunc-fmap (merid X) (Codes-mer a [ x₀ ])
           =⟨ ap (Trunc-fmap (merid X)) (! (coe-β (Codes-mer-equiv a) [ x₀ ])) ⟩
         Trunc-fmap (merid X) (coe (ua (Codes-mer-equiv a)) [ x₀ ])
-          =⟨ ! (SuspensionRec.glue-β X _ _ (ua ∘ Codes-mer-equiv) a)
+          =⟨ ! (SuspensionRec.merid-β X _ _ (ua ∘ Codes-mer-equiv) a)
             |in-ctx (λ w → Trunc-fmap (merid X) (coe w [ x₀ ])) ⟩
         Trunc-fmap (merid X) (transport Codes (merid X a) [ x₀ ]) ∎
 
@@ -178,7 +178,7 @@ module FreudenthalEquiv
         Trunc-fmap (merid X) (Codes-mer x₀ [ b ])
           =⟨ ap (Trunc-fmap (merid X)) (! (coe-β (Codes-mer-equiv x₀) [ b ])) ⟩
         Trunc-fmap (merid X) (coe (ua (Codes-mer-equiv x₀)) [ b ])
-          =⟨ ! (SuspensionRec.glue-β X _ _ (ua ∘ Codes-mer-equiv) x₀)
+          =⟨ ! (SuspensionRec.merid-β X _ _ (ua ∘ Codes-mer-equiv) x₀)
             |in-ctx (λ w → Trunc-fmap (merid X) (coe w [ b ])) ⟩
         Trunc-fmap (merid X) (transport Codes (merid X x₀) [ b ]) ∎
 
@@ -198,7 +198,7 @@ module FreudenthalEquiv
           Trunc-fmap (merid X) (Codes-mer x₀ [ x₀ ])
             =⟨ ap (Trunc-fmap (merid X)) (! (coe-β (Codes-mer-equiv x₀) [ x₀ ])) ⟩
           Trunc-fmap (merid X) (coe (ua (Codes-mer-equiv x₀)) [ x₀ ])
-            =⟨ ! (SuspensionRec.glue-β X _ _ (ua ∘ Codes-mer-equiv) x₀)
+            =⟨ ! (SuspensionRec.merid-β X _ _ (ua ∘ Codes-mer-equiv) x₀)
               |in-ctx (λ w → Trunc-fmap (merid X) (coe w [ x₀ ])) ⟩
           Trunc-fmap (merid X) (transport Codes (merid X x₀) [ x₀ ]) ∎)
         (coh (merid X x₀)) Codes-mer-coh
@@ -236,7 +236,7 @@ module FreudenthalIso
   {i} (n : ℕ₋₂) (k : ℕ) (t : k ≠ O) (kle : ⟨ k ⟩ ≤T S (n +2+ S n))
   (X : Ptd i) (cX : is-connected (S (S n)) (fst X)) where
 
-  open FreudenthalEquiv n (⟨ k ⟩) kle (fst X) (snd X) cX public
+  open FreudenthalEquiv n ⟨ k ⟩ kle (fst X) (snd X) cX public
 
   hom : Ω^-Group k t (⊙Trunc ⟨ k ⟩ X) Trunc-level
      →ᴳ Ω^-Group k t (⊙Trunc ⟨ k ⟩ (⊙Ω (⊙Susp X))) Trunc-level

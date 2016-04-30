@@ -16,12 +16,12 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
   {- in image of φ ⇒ in kernel of ψ -}
   is-exact-itok : Type (lmax k (lmax j i))
   is-exact-itok = (h : H.El)
-    → Trunc ⟨-1⟩ (Σ G.El (λ g → φ.f g == h)) → ψ.f h == K.ident
+    → Trunc -1 (Σ G.El (λ g → φ.f g == h)) → ψ.f h == K.ident
 
   {- in kernel of ψ ⇒ in image of φ -}
   is-exact-ktoi : Type (lmax k (lmax j i))
   is-exact-ktoi = (h : H.El)
-    → ψ.f h == K.ident → Trunc ⟨-1⟩ (Σ G.El (λ g → φ.f g == h))
+    → ψ.f h == K.ident → Trunc -1 (Σ G.El (λ g → φ.f g == h))
 
   record is-exact : Type (lmax k (lmax j i)) where
     field

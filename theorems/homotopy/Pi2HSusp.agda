@@ -6,8 +6,8 @@ open import homotopy.WedgeExtension
 
 module homotopy.Pi2HSusp where
 
-module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
-  (cA : is-connected ⟨0⟩ A) (A-H : HSS A)
+module Pi2HSusp {i} (A : Type i) (gA : has-level 1 A)
+  (cA : is-connected 0 A) (A-H : HSS A)
   (μcoh : HSS.μe- A-H (HSS.e A-H) == HSS.μ-e A-H (HSS.e A-H))
   where
 
@@ -20,18 +20,18 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
       ∙ ap ua (pair= (λ= α) (prop-has-all-paths-↓ (is-equiv-is-prop (coe q))))
       ∙ ua-η q
 
-  open HSpaceStructure A-H
+  open HSS A-H
   open ConnectedHSpace A cA A-H
 
   P : Suspension A → Type i
-  P x = Trunc ⟨ 1 ⟩ (north A == x)
+  P x = Trunc 1 (north A == x)
 
   module Codes = SuspensionRec A A A (λ a → ua (μ-equiv a))
 
   Codes : Suspension A → Type i
   Codes = Codes.f
 
-  Codes-level : (x : Suspension A) → has-level ⟨ 1 ⟩ (Codes x)
+  Codes-level : (x : Suspension A) → has-level 1 (Codes x)
   Codes-level = Suspension-elim A gA gA
     (λ _ → prop-has-all-paths-↓ has-level-is-prop)
 
@@ -49,7 +49,7 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
       → transport Codes (merid A a) a' == μ a a'
     transport-Codes-mer a a' =
       coe (ap Codes (merid A a)) a'
-        =⟨ Codes.glue-β a |in-ctx (λ w → coe w a') ⟩
+        =⟨ Codes.merid-β a |in-ctx (λ w → coe w a') ⟩
       coe (ua (μ-equiv a)) a'
         =⟨ coe-β (μ-equiv a) a' ⟩
       μ a a' ∎
@@ -60,7 +60,7 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
       coe (ap Codes (! (merid A e))) a
         =⟨ ap-! Codes (merid A e) |in-ctx (λ w → coe w a) ⟩
       coe (! (ap Codes (merid A e))) a
-        =⟨ Codes.glue-β e |in-ctx (λ w → coe (! w) a) ⟩
+        =⟨ Codes.merid-β e |in-ctx (λ w → coe (! w) a) ⟩
       coe (! (ua (μ-equiv e))) a
         =⟨ Type=-ext (ua (μ-equiv e)) idp (λ x → coe-β _ x ∙ μe- x)
           |in-ctx (λ w → coe (! w) a) ⟩
@@ -80,13 +80,13 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
 
   abstract
     homomorphism : (a a' : A)
-      → Path {A = Trunc ⟨ 1 ⟩ (north A == south A)}
+      → Path {A = Trunc 1 (north A == south A)}
         [ merid A (μ a a' ) ] [ merid A a' ∙ ! (merid A e) ∙ merid A a ]
     homomorphism = WedgeExt.ext args
       where
       args : WedgeExt.args {a₀ = e} {b₀ = e}
-      args = record {m = ⟨-2⟩; n = ⟨-2⟩; cA = cA; cB = cA;
-        P = λ a a' → (_ , Trunc-level {n = ⟨ 1 ⟩} _ _);
+      args = record {m = -2; n = -2; cA = cA; cB = cA;
+        P = λ a a' → (_ , Trunc-level {n = 1} _ _);
         f = λ a →  ap [_] $
               merid A (μ a e)
                 =⟨ ap (merid A) (μ-e a) ⟩
@@ -139,30 +139,30 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
       → decode {x} (encode {x} tα) == tα
     decode-encode {x} = Trunc-elim
       {P = λ tα → decode {x} (encode {x} tα) == tα}
-      (λ _ → =-preserves-level ⟨ 1 ⟩ Trunc-level)
+      (λ _ → =-preserves-level 1 Trunc-level)
       (J (λ y p → decode {y} (encode {y} [ p ]) == [ p ])
          (ap [_] (!-inv-r (merid A e))))
 
-  main-lemma-eq : Trunc ⟨ 1 ⟩ (north A == north A) ≃ A
+  main-lemma-eq : Trunc 1 (north A == north A) ≃ A
   main-lemma-eq = equiv encode decode' encode-decode' decode-encode
 
-  ⊙main-lemma : ⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e))) == (A , e)
+  ⊙main-lemma : ⊙Trunc 1 (⊙Ω (⊙Susp (A , e))) == (A , e)
   ⊙main-lemma = ⊙ua (⊙ify-eq main-lemma-eq idp)
 
   abstract
     main-lemma-iso : (t1 : 1 ≠ 0) →
-         Ω^-Group 1 t1 (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e)))) Trunc-level
-      ≃ᴳ Ω^-Group 1 t1 (⊙Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
+         Ω^-Group 1 t1 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))) Trunc-level
+      ≃ᴳ Ω^-Group 1 t1 (⊙Trunc 1 (A , e)) Trunc-level
     main-lemma-iso _ = (record {f = f; pres-comp = pres-comp} , ie)
       where
-      h : fst (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e)))
-            ⊙→ ⊙Trunc ⟨ 1 ⟩ (A , e))
+      h : fst (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))
+            ⊙→ ⊙Trunc 1 (A , e))
       h = (λ x → [ encode x ]) , idp
 
-      f : Ω (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e)))) → Ω (⊙Trunc ⟨ 1 ⟩ (A , e))
+      f : Ω (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))) → Ω (⊙Trunc 1 (A , e))
       f = fst (ap^ 1 h)
 
-      pres-comp : (p q : Ω^ 1 (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e)))))
+      pres-comp : (p q : Ω^ 1 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))))
         → f (conc^ 1 (ℕ-S≠O _) p q) == conc^ 1 (ℕ-S≠O _) (f p) (f q)
       pres-comp = ap^-conc^ 1 (ℕ-S≠O _) h
 
@@ -177,8 +177,8 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level ⟨ 1 ⟩ A)
         =⟨ π-inner-iso 1 t1 t2 (⊙Susp (A , e)) ⟩
       π 1 t1 (⊙Ω (⊙Susp (A , e)))
         =⟨ ! (π-Trunc-shift-iso 1 t1 (⊙Ω (⊙Susp (A , e)))) ⟩
-      Ω^-Group 1 t1 (⊙Trunc ⟨ 1 ⟩ (⊙Ω (⊙Susp (A , e)))) Trunc-level
+      Ω^-Group 1 t1 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))) Trunc-level
         =⟨ group-ua (main-lemma-iso t1) ⟩
-      Ω^-Group 1 t1 (⊙Trunc ⟨ 1 ⟩ (A , e)) Trunc-level
+      Ω^-Group 1 t1 (⊙Trunc 1 (A , e)) Trunc-level
         =⟨ π-Trunc-shift-iso 1 t1 (A , e) ⟩
       π 1 t1 (A , e) ∎

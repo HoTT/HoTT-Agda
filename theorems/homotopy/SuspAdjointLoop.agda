@@ -42,10 +42,10 @@ module Σ⊣Ω {i} where
   η-natural {X = X} (f , idp) = ⊙λ=
     (λ x → ! $
       ap-∙ (susp-fmap f) (merid _ x) (! (merid _ (snd X)))
-      ∙ SuspFmap.glue-β f x
+      ∙ SuspFmap.merid-β f x
         ∙2 (ap-! (susp-fmap f) (merid _ (snd X))
-            ∙ ap ! (SuspFmap.glue-β f (snd X))))
-    (pt-lemma (susp-fmap f) (merid _ (snd X)) (SuspFmap.glue-β f (snd X)))
+            ∙ ap ! (SuspFmap.merid-β f (snd X))))
+    (pt-lemma (susp-fmap f) (merid _ (snd X)) (SuspFmap.merid-β f (snd X)))
     where
     pt-lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
       {x y : A} (p : x == y) {q : f x == f y} (α : ap f p == q)
@@ -59,9 +59,9 @@ module Σ⊣Ω {i} where
     (SuspensionElim.f _ idp idp
       (λ p → ↓-='-from-square $ vert-degen-square $
         ap-∘ (ε _) (susp-fmap (ap f)) (merid _ p)
-        ∙ ap (ap (ε _)) (SuspFmap.glue-β (ap f) p)
-        ∙ E.glue-β _ (ap f p)
-        ∙ ap (ap f) (! (E.glue-β _ p))
+        ∙ ap (ap (ε _)) (SuspFmap.merid-β (ap f) p)
+        ∙ E.merid-β _ (ap f p)
+        ∙ ap (ap f) (! (E.merid-β _ p))
         ∙ ∘-ap f (ε _) (merid _ p)))
     idp
 
@@ -72,8 +72,8 @@ module Σ⊣Ω {i} where
       (merid _ (snd X))
       (λ x → ↓-='-from-square $
         (ap-∘ (ε (⊙Susp X)) (susp-fmap (η X)) (merid _ x)
-         ∙ ap (ap (ε (⊙Susp X))) (SuspFmap.glue-β (η X) x)
-         ∙ E.glue-β _ (merid _ x ∙ ! (merid _ (snd X))))
+         ∙ ap (ap (ε (⊙Susp X))) (SuspFmap.merid-β (η X) x)
+         ∙ E.merid-β _ (merid _ x ∙ ! (merid _ (snd X))))
         ∙v⊡ square-lemma (merid _ x) (merid _ (snd X))
         ⊡v∙ ! (ap-idf (merid _ x))))
     idp
@@ -86,9 +86,9 @@ module Σ⊣Ω {i} where
   Ωε-ηΩ : (X : Ptd i) → ⊙ap (⊙ε X) ⊙∘ ⊙η (⊙Ω X) == ⊙idf _
   Ωε-ηΩ X = ⊙λ=
     (λ p → ap-∙ (ε X) (merid _ p) (! (merid _ idp))
-         ∙ (E.glue-β X p ∙2 (ap-! (ε X) (merid _ idp) ∙ ap ! (E.glue-β X idp)))
+         ∙ (E.merid-β X p ∙2 (ap-! (ε X) (merid _ idp) ∙ ap ! (E.merid-β X idp)))
          ∙ ∙-unit-r _)
-    (pt-lemma (ε X) (merid _ idp) (E.glue-β X idp))
+    (pt-lemma (ε X) (merid _ idp) (E.merid-β X idp))
     where
     pt-lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
       {x y : A} (p : x == y) {q : f x == f y} (α : ap f p == q)

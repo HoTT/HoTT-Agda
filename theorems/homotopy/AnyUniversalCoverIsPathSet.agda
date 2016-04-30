@@ -3,7 +3,7 @@
 open import HoTT
 
 module homotopy.AnyUniversalCoverIsPathSet {i} (A : Type i)
-  -- (A-conn : is-connected ⟨0⟩ A)
+  -- (A-conn : is-connected 0 A)
   where
 
   open Cover
@@ -29,7 +29,7 @@ module homotopy.AnyUniversalCoverIsPathSet {i} (A : Type i)
         → has-all-paths (a⇑₁ =₀ a⇑₂)
       [path]-has-all-paths {a⇑₁} {a⇑₂} =
         coe (ap has-all-paths $ ua (Trunc=-equiv [ a⇑₁ ] [ a⇑₂ ]))
-        $ contr-has-all-paths (raise-level ⟨-2⟩ univ-cov-univ [ a⇑₁ ] [ a⇑₂ ])
+        $ contr-has-all-paths (raise-level -2 univ-cov-univ [ a⇑₁ ] [ a⇑₂ ])
 
       to : ∀ {a₂} → Fiber univ-cov a₂ → a₁ =₀ a₂
       to {a₂} a⇑₂ = ap₀ fst ([path] (a₁ , a⇑₁) (a₂ , a⇑₂))

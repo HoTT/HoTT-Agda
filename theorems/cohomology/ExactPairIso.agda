@@ -28,7 +28,7 @@ module _ {i} {G H K J : Group i} {φ : G →ᴳ H} {ψ : H →ᴳ K}
     ex₁ = transport
       (λ {(G' , φ') → is-exact-seq (G' ⟨ φ' ⟩→ H ⟨ ψ ⟩→ K ⟨ χ ⟩→ J ⊣|)})
       (pair= p (prop-has-all-paths-↓ {B = λ L → L →ᴳ H}
-                 (raise-level ⟨-2⟩ 0ᴳ-hom-out-level)))
+                 (raise-level -2 0ᴳ-hom-out-level)))
       ex
 
     ex₂ : is-exact-seq (0ᴳ ⟨ cst-hom ⟩→ H ⟨ ψ ⟩→ K ⟨ cst-hom ⟩→ 0ᴳ ⊣|)

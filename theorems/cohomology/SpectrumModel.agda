@@ -127,7 +127,7 @@ module SpectrumModel where
         → is-exact-itok (CF-hom n (⊙cfcod f)) (CF-hom n f)
       C-exact-itok f =
         itok-alt-in (CF-hom n (⊙cfcod f)) (CF-hom n f) $
-          Trunc-elim (λ _ → =-preserves-level _ (Trunc-level {n = ⟨0⟩}))
+          Trunc-elim (λ _ → =-preserves-level _ (Trunc-level {n = 0}))
             (ap [_] ∘ exact-itok-lemma n f)
 
     {- in kernel of (CF n f) ⇒ in image of (CF n (⊙cfcod f)) -}
@@ -140,7 +140,7 @@ module SpectrumModel where
           (λ h tp → Trunc-rec Trunc-level (lemma h) (–> (Trunc=-equiv _ _) tp))
         where
         lemma : (h : uCEl n Y) → h ⊙∘ f == ⊙cst
-          → Trunc ⟨-1⟩ (Σ (CEl n (⊙Cof f))
+          → Trunc -1 (Σ (CEl n (⊙Cof f))
                           (λ tk → fst (CF n (⊙cfcod f)) tk == [ h ]))
         lemma h p = [ [ fst wit ] , ap [_] (snd wit) ]
           where
@@ -152,10 +152,10 @@ module SpectrumModel where
 
   {- Additivity Axiom -}
   module _ (n : ℤ) {A : Type i} (X : A → Ptd i)
-    (ac : (W : A → Type i) → has-choice ⟨0⟩ A W)
+    (ac : (W : A → Type i) → has-choice 0 A W)
     where
 
-    into : CEl n (⊙BigWedge X) → Trunc ⟨0⟩ (Π A (uCEl n ∘ X))
+    into : CEl n (⊙BigWedge X) → Trunc 0 (Π A (uCEl n ∘ X))
     into = Trunc-rec Trunc-level (λ H → [ (λ a → H ⊙∘ ⊙bwin a) ])
 
     module Out' (K : Π A (uCEl n ∘ X)) = BigWedgeRec
@@ -163,7 +163,7 @@ module SpectrumModel where
       (fst ∘ K)
       (! ∘ snd ∘ K)
 
-    out : Trunc ⟨0⟩ (Π A (uCEl n ∘ X)) → CEl n (⊙BigWedge X)
+    out : Trunc 0 (Π A (uCEl n ∘ X)) → CEl n (⊙BigWedge X)
     out = Trunc-rec Trunc-level (λ K → [ Out'.f K , idp ])
 
     into-out : ∀ y → into (out y) == y

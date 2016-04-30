@@ -39,7 +39,7 @@ S¹Cover : S¹ → Type₀
 S¹Cover = S¹Cover.f
 
 encode : {x : S¹} (p : base == x) → S¹Cover x
-encode p = transport S¹Cover p O
+encode p = transport S¹Cover p 0
 
 {- 2. Encoding [loop^ n] (common to Mike’s proof and the encode-decode proof) -}
 
@@ -47,63 +47,60 @@ encode p = transport S¹Cover p O
 -- integer [n], this is the loop winding around the circle [n] times.
 -- This is easy by induction on [n]
 loop^ : (n : ℤ) → base == base
-loop^ O = idp
-loop^ (pos O) = loop
+loop^ (pos O) = idp
 loop^ (pos (S n)) = loop^ (pos n) ∙ loop
-loop^ (neg O) = ! loop
-loop^ (neg (S n)) = loop^ (neg n) ∙ (! loop)
+loop^ (negsucc O) = ! loop
+loop^ (negsucc (S n)) = loop^ (negsucc n) ∙ (! loop)
 
 -- Compatibility of [loop^] with the successor function
 -- This is again not difficult by induction on [n]
 loop^succ : (n : ℤ) → loop^ n ∙ loop == loop^ (succ n)
-loop^succ O = idp
 loop^succ (pos n) = idp
-loop^succ (neg O) = !-inv-l loop
-loop^succ (neg (S n)) =
-  (loop^ (neg n) ∙ ! loop) ∙ loop
-        =⟨ ∙-assoc (loop^ (neg n)) (! loop) loop ⟩
-   loop^ (neg n) ∙ (! loop ∙ loop)
-        =⟨ !-inv-l loop |in-ctx (λ u → loop^ (neg n) ∙ u) ⟩
-   loop^ (neg n) ∙ idp
+loop^succ (negsucc O) = !-inv-l loop
+loop^succ (negsucc (S n)) =
+  (loop^ (negsucc n) ∙ ! loop) ∙ loop
+        =⟨ ∙-assoc (loop^ (negsucc n)) (! loop) loop ⟩
+   loop^ (negsucc n) ∙ (! loop ∙ loop)
+        =⟨ !-inv-l loop |in-ctx (λ u → loop^ (negsucc n) ∙ u) ⟩
+   loop^ (negsucc n) ∙ idp
         =⟨ ∙-unit-r _ ⟩
-   loop^ (neg n) ∎
+   loop^ (negsucc n) ∎
 
 -- Now we check that encoding [loop^ n] gives indeed [n], again by induction
 -- on [n]
 encode-loop^ : (n : ℤ) → encode (loop^ n) == n
-encode-loop^ O = idp
-encode-loop^ (pos O) = S¹Cover.coe-loop-β O
+encode-loop^ (pos O) = idp
 encode-loop^ (pos (S n)) =
   encode (loop^ (pos n) ∙ loop) =⟨ idp ⟩
-  coe (ap S¹Cover (loop^ (pos n) ∙ loop)) O
-       =⟨ ap-∙ S¹Cover (loop^ (pos n)) loop |in-ctx (λ u → coe u O) ⟩
-  coe (ap S¹Cover (loop^ (pos n)) ∙ ap S¹Cover loop) O
+  coe (ap S¹Cover (loop^ (pos n) ∙ loop)) 0
+       =⟨ ap-∙ S¹Cover (loop^ (pos n)) loop |in-ctx (λ u → coe u 0) ⟩
+  coe (ap S¹Cover (loop^ (pos n)) ∙ ap S¹Cover loop) 0
        =⟨ coe-∙ (ap S¹Cover (loop^ (pos n)))
-                (ap S¹Cover loop) O ⟩
-  coe (ap S¹Cover loop) (coe (ap S¹Cover (loop^ (pos n))) O)
+                (ap S¹Cover loop) 0 ⟩
+  coe (ap S¹Cover loop) (coe (ap S¹Cover (loop^ (pos n))) 0)
        =⟨ encode-loop^ (pos n) |in-ctx coe (ap S¹Cover loop) ⟩
   coe (ap S¹Cover loop) (pos n)
        =⟨ S¹Cover.coe-loop-β (pos n) ⟩
   pos (S n) ∎
-encode-loop^ (neg O) =
-  coe (ap S¹Cover (! loop)) O =⟨ coe-ap-! S¹Cover loop O ⟩
-  coe! (ap S¹Cover loop) O =⟨ S¹Cover.coe!-loop-β O ⟩
-  neg O ∎
-encode-loop^ (neg (S n)) =
-  encode (loop^ (neg n) ∙ ! loop) =⟨ idp ⟩
-  coe (ap S¹Cover (loop^ (neg n) ∙ ! loop)) O
-       =⟨ ap-∙ S¹Cover (loop^ (neg n)) (! loop)
-          |in-ctx (λ u → coe u O) ⟩
-  coe (ap S¹Cover (loop^ (neg n)) ∙ ap S¹Cover (! loop)) O
-       =⟨ coe-∙ (ap S¹Cover (loop^ (neg n)))
-                (ap S¹Cover (! loop)) O ⟩
-  coe (ap S¹Cover (! loop)) (coe (ap S¹Cover (loop^ (neg n))) O)
-       =⟨ encode-loop^ (neg n) |in-ctx coe (ap S¹Cover (! loop)) ⟩
-  coe (ap S¹Cover (! loop)) (neg n)
-       =⟨ coe-ap-! S¹Cover loop (neg n) ⟩
-  coe! (ap S¹Cover loop) (neg n)
-       =⟨ S¹Cover.coe!-loop-β (neg n) ⟩
-  neg (S n) ∎
+encode-loop^ (negsucc O) =
+  coe (ap S¹Cover (! loop)) 0 =⟨ coe-ap-! S¹Cover loop 0 ⟩
+  coe! (ap S¹Cover loop) 0 =⟨ S¹Cover.coe!-loop-β 0 ⟩
+  negsucc O ∎
+encode-loop^ (negsucc (S n)) =
+  encode (loop^ (negsucc n) ∙ ! loop) =⟨ idp ⟩
+  coe (ap S¹Cover (loop^ (negsucc n) ∙ ! loop)) 0
+       =⟨ ap-∙ S¹Cover (loop^ (negsucc n)) (! loop)
+          |in-ctx (λ u → coe u 0) ⟩
+  coe (ap S¹Cover (loop^ (negsucc n)) ∙ ap S¹Cover (! loop)) 0
+       =⟨ coe-∙ (ap S¹Cover (loop^ (negsucc n)))
+                (ap S¹Cover (! loop)) 0 ⟩
+  coe (ap S¹Cover (! loop)) (coe (ap S¹Cover (loop^ (negsucc n))) 0)
+       =⟨ encode-loop^ (negsucc n) |in-ctx coe (ap S¹Cover (! loop)) ⟩
+  coe (ap S¹Cover (! loop)) (negsucc n)
+       =⟨ coe-ap-! S¹Cover loop (negsucc n) ⟩
+  coe! (ap S¹Cover loop) (negsucc n)
+       =⟨ S¹Cover.coe!-loop-β (negsucc n) ⟩
+  negsucc (S n) ∎
 
 {- 3. Dan’s encode-decode proof -}
 
@@ -126,13 +123,13 @@ decode-encode _ p = J (λ x p → decode x (encode p) == p) idp p  -- Magic!
 {- 4. Mike’s proof that [Σ S¹ Cover] is contractible -}
 
 -- We want to prove that every point of [Σ S¹ S¹Cover] is equal to [(base , O)]
-paths-mike : (xt : Σ S¹ S¹Cover) → (base , O) == xt
+paths-mike : (xt : Σ S¹ S¹Cover) → (base , 0) == xt
 paths-mike (x , t) = paths-mike-c x t where
 
   -- We do it by circle-induction on the first component. When it’s [base],
   -- we use the [↓-loop^] below (which is essentially [encode-loop^]) and
   -- for [loop] we use [loop^succ] and the fact that [ℤ] is a set.
-  paths-mike-c : (x : S¹) (t : S¹Cover x) → (base , O) == (x , t) :> Σ S¹ S¹Cover
+  paths-mike-c : (x : S¹) (t : S¹Cover x) → (base , 0) == (x , t) :> Σ S¹ S¹Cover
   paths-mike-c = S¹-elim
     (λ n → pair= (loop^ n) (↓-loop^ n))
     (↓-Π-in (λ {n} {n'} q →
@@ -144,11 +141,11 @@ paths-mike (x , t) = paths-mike-c x t where
                             (set-↓-has-all-paths-↓ ℤ-is-set) ⟩
         pair= (loop^ n') (↓-loop^ n') ∎))) where
 
-    ↓-loop^ : (n : ℤ) → O == n [ S¹Cover ↓ loop^ n ]
+    ↓-loop^ : (n : ℤ) → 0 == n [ S¹Cover ↓ loop^ n ]
     ↓-loop^ n = from-transp _ _ (encode-loop^ n)
 
 contr-mike : is-contr (Σ S¹ S¹Cover)
-contr-mike = ((base , O) , paths-mike)
+contr-mike = ((base , 0) , paths-mike)
 
 {- 5. Flattening lemma proof that [Σ S¹ Cover] is contractible -}
 
@@ -159,36 +156,34 @@ open S¹Cover using (module Wt; Wt; cct; ppt; flattening-S¹)
 -- We prove that the flattened HIT corresponding to the universal cover of the
 -- circle (the real line) is contractible
 Wt-is-contr : is-contr Wt
-Wt-is-contr = (cct tt O , Wt.elim (base* ∘ snd) (loop* ∘ snd)) where
+Wt-is-contr = (cct tt 0 , Wt.elim (base* ∘ snd) (loop* ∘ snd)) where
 
   -- This is basically [loop^]
-  base* : (n : ℤ) → cct tt O == cct tt n
-  base* O = idp
-  base* (pos O) = ppt tt O
+  base* : (n : ℤ) → cct tt 0 == cct tt n
+  base* (pos O) = idp
   base* (pos (S n)) = base* (pos n) ∙ ppt tt (pos n)
-  base* (neg O) = ! (ppt tt (neg O))
-  base* (neg (S n)) = base* (neg n) ∙ ! (ppt tt (neg (S n)))
+  base* (negsucc O) = ! (ppt tt (negsucc O))
+  base* (negsucc (S n)) = base* (negsucc n) ∙ ! (ppt tt (negsucc (S n)))
 
   loop* : (n : ℤ)
-    → base* n == base* (succ n) [ (λ x → cct tt O == x) ↓ ppt tt n ]
+    → base* n == base* (succ n) [ (λ x → cct tt 0 == x) ↓ ppt tt n ]
   loop* n = ↓-cst=idf-in (aux n) where
 
     -- This is basically [loop^succ]
     aux : (n : ℤ) → base* n ∙ ppt tt n == base* (succ n)
-    aux O = idp
     aux (pos n) = idp
-    aux (neg O) = !-inv-l (ppt tt (neg O))
-    aux (neg (S n)) =
-      base* (neg (S n)) ∙ ppt tt (neg (S n))
+    aux (negsucc O) = !-inv-l (ppt tt (negsucc O))
+    aux (negsucc (S n)) =
+      base* (negsucc (S n)) ∙ ppt tt (negsucc (S n))
                 =⟨ idp ⟩
-      (base* (neg n) ∙ ! (ppt tt (neg (S n)))) ∙ ppt tt (neg (S n))
-                =⟨ ∙-assoc (base* (neg n)) _ _ ⟩
-      base* (neg n) ∙ (! (ppt tt (neg (S n))) ∙ ppt tt (neg (S n)))
-                =⟨ !-inv-l (ppt tt (neg (S n)))
-                       |in-ctx (λ u → base* (neg n) ∙ u) ⟩
-      base* (neg n) ∙ idp
+      (base* (negsucc n) ∙ ! (ppt tt (negsucc (S n)))) ∙ ppt tt (negsucc (S n))
+                =⟨ ∙-assoc (base* (negsucc n)) _ _ ⟩
+      base* (negsucc n) ∙ (! (ppt tt (negsucc (S n))) ∙ ppt tt (negsucc (S n)))
+                =⟨ !-inv-l (ppt tt (negsucc (S n)))
+                       |in-ctx (λ u → base* (negsucc n) ∙ u) ⟩
+      base* (negsucc n) ∙ idp
                 =⟨ ∙-unit-r _ ⟩
-      base* (neg n) ∎
+      base* (negsucc n) ∎
 
 -- Then, using the flattening lemma we get that the total space of [Cover] is
 -- contractible
@@ -236,6 +231,6 @@ S¹Cover-is-set = S¹-elim ℤ-is-set (prop-has-all-paths-↓ is-set-is-prop)
 ΩS¹-is-set y = equiv-preserves-level ((encode {y} , encode-is-equiv y) ⁻¹)
                                      (S¹Cover-is-set y)
 
-S¹-level : has-level ⟨1⟩ S¹
+S¹-level : has-level 1 S¹
 S¹-level =
   S¹-elim ΩS¹-is-set (prop-has-all-paths-↓ (Π-level (λ x → is-set-is-prop)))

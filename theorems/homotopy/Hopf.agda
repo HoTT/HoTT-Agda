@@ -15,10 +15,10 @@ S² = Suspension S¹
 S³ = Suspension S²
 
 -- To move
-S¹-connected : is-connected ⟨0⟩ S¹
+S¹-connected : is-connected 0 S¹
 S¹-connected =
-  ([ base ] , Trunc-elim (λ x → =-preserves-level ⟨0⟩ Trunc-level)
-             (S¹-elim idp (prop-has-all-paths-↓ ((Trunc-level :> is-set (Trunc ⟨0⟩ S¹)) _ _))))
+  ([ base ] , Trunc-elim (λ x → =-preserves-level 0 Trunc-level)
+             (S¹-elim idp (prop-has-all-paths-↓ ((Trunc-level :> is-set (Trunc 0 S¹)) _ _))))
 
 module Hopf = homotopy.HopfConstruction S¹ S¹-connected S¹-hSpace
 

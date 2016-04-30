@@ -4,7 +4,7 @@ open import HoTT
 open import homotopy.RibbonCover
 
 module homotopy.CoverClassification {i} (A∙ : Ptd i)
-  (A-conn : is-connected ⟨0⟩ (fst A∙)) where
+  (A-conn : is-connected 0 (fst A∙)) where
 
   open Cover
 
@@ -38,7 +38,7 @@ module homotopy.CoverClassification {i} (A∙ : Ptd i)
   -- This is derivable from connectedness condition.
   module _ where
     abstract
-      [base-path] : ∀ {a₂ : A} → Trunc ⟨-1⟩ (a₁ == a₂)
+      [base-path] : ∀ {a₂ : A} → Trunc -1 (a₁ == a₂)
       [base-path] {a₂} =
         –> (Trunc=-equiv [ a₁ ] [ a₂ ]) (contr-has-all-paths A-conn [ a₁ ] [ a₂ ])
 
@@ -69,7 +69,7 @@ module homotopy.CoverClassification {i} (A∙ : Ptd i)
       open import homotopy.ConstantToSetFactorization
 
       fiber+path₋₁-to-ribbon : ∀ {a₂} (a↑ : Cover.Fiber cov a₂)
-        → Trunc ⟨-1⟩ (a₁ == a₂) → Ribbon A∙ (cover-to-gset cov) a₂
+        → Trunc -1 (a₁ == a₂) → Ribbon A∙ (cover-to-gset cov) a₂
       fiber+path₋₁-to-ribbon a↑ = cst-extend
         Ribbon-is-set
         (fiber+path-to-ribbon a↑)
