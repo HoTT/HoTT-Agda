@@ -12,8 +12,11 @@ Agda will generate index.html.
 module index where
 
 -- import Spaces.IntervalProps
+
 -- import Algebra.F2NotCommutative
+
 import homotopy.LoopSpaceCircle
+
 import homotopy.HopfJunior
 -- import homotopy.Hopf
 
@@ -26,9 +29,18 @@ import homotopy.AnyUniversalCoverIsPathSet
 import homotopy.PathSetIsInital
 
 -- import Spaces.LoopSpaceDecidableWedgeCircles
+
 -- import Homotopy.PullbackIsPullback
+
 -- import Homotopy.PushoutIsPushout
+
 -- import Homotopy.Truncation
+
 -- import Sets.QuotientUP
+
 -- import Spaces.PikSn
+
 -- import Homotopy.VanKampen
+
+import cw.CW
+import cw.Sphere

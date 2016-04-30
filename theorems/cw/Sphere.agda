@@ -1,9 +1,9 @@
 {-# OPTIONS --without-K --termination-depth=2 #-}
 
 open import HoTT
-open import homotopy.CellComplex
+open import cw.CW
 
-module homotopy.CellularSphere where
+module cw.Sphere where
 
 CWSphere-skel : ∀ {i} n → Skeleton {i} n
 

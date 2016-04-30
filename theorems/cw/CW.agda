@@ -7,7 +7,7 @@
 
 open import HoTT
 
-module homotopy.CellComplex where
+module cw.CW where
 
 attach-span : ∀ {i j k} {A : Type i} {B : Type j}
   (n : ℕ) (boundary : A × Sphere {k} n → B) → Span {i} {j} {lmax i k}
