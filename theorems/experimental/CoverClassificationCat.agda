@@ -4,7 +4,7 @@ open import HoTT
 open import homotopy.RibbonCover
 import homotopy.CoverClassification
 
-module homotopy.CoverClassificationCat {i} (A∙ : Ptd i)
+module experimental.CoverClassificationCat {i} (A∙ : Ptd i)
   (A-conn : is-connected 0 (fst A∙)) where
 
   open Cover

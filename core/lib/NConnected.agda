@@ -22,7 +22,7 @@ has-conn-fibers {A = A} {B = B} n f =
   Π B (λ b → is-connected n (hfiber f b))
 
 {- all types are -2-connected -}
--2-conn : ∀ {i} (A : Type i) → is-connected ⟨-2⟩ A
+-2-conn : ∀ {i} (A : Type i) → is-connected -2 A
 -2-conn A = Trunc-level
 
 {- all inhabited types are -1-connected -}
@@ -156,7 +156,7 @@ abstract
   pointed-conn-out {n = n} A a₀ c a = 
     (point , 
      λ y → ! (cancel point)
-           ∙ (ap out $ contr-has-all-paths (=-preserves-level ⟨-2⟩ c) 
+           ∙ (ap out $ contr-has-all-paths (=-preserves-level -2 c) 
                                            (into point) (into y)) 
            ∙ cancel y)
     where 
