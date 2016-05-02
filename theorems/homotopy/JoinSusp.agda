@@ -32,7 +32,7 @@ module _ {i} {A : Type i} where
         idp
         idp
         (↓-∘=idf-from-square into out ∘ λ a → vert-degen-square $
-           ap (ap into) (Out.glue-β a)
+           ap (ap into) (Out.merid-β a)
            ∙ ap-∙ into (glue (lift true , a)) (! (glue (lift false , a)))
            ∙ (Into.glue-β (lift true , a)
               ∙2 (ap-! into (glue (lift false , a))
@@ -46,7 +46,7 @@ module _ {i} {A : Type i} where
         (λ a → glue (lift false , a))
         (↓-∘=idf-from-square out into ∘
           λ {(lift true , a) →
-                (ap (ap out) (Into.glue-β (lift true , a)) ∙ Out.glue-β a)
+                (ap (ap out) (Into.glue-β (lift true , a)) ∙ Out.merid-β a)
                 ∙v⊡ (vid-square {p = glue (lift true , a)}
                       ⊡h rt-square (glue (lift false , a)))
                 ⊡v∙ ∙-unit-r _;

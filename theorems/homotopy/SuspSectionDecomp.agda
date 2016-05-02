@@ -51,7 +51,7 @@ module SuspSectionDecomp where
     (! (merid _ (snd Y)))
     idp
     (↓-∘=idf-from-square out into ∘ λ y →
-      (ap (ap out) (Into.glue-β y)
+      (ap (ap out) (Into.merid-β y)
        ∙ ap-∙ out (! (ap winl (merid _ (g y))))
                   (wglue ∙ ap winr (merid _ (cfcod _ y)))
        ∙ part₁ y
@@ -64,7 +64,7 @@ module SuspSectionDecomp where
     part₁ y =
       ap-! out (ap winl (merid _ (g y)))
       ∙ ap ! (∘-ap out winl (merid _ (g y)))
-      ∙ ap ! (OutWinl.glue-β (g y))
+      ∙ ap ! (OutWinl.merid-β (g y))
       ∙ !-∙ (! (merid _ (f (g y)))) (merid _ (snd Y))
       ∙ ap (λ w → ! (merid _ (snd Y)) ∙ w)
            (!-! (merid _ (f (g y))))
@@ -73,7 +73,7 @@ module SuspSectionDecomp where
                        == ! (merid _ (f (g y))) ∙ merid _ y
     part₂ y =
       ∘-ap out winr (merid _ (cfcod _ y))
-      ∙ OutWinr.glue-β (cfcod _ y)
+      ∙ OutWinr.merid-β (cfcod _ y)
 
     square-lemma : ∀ {i} {A : Type i} {x y z w : A}
       (p : x == y) (q : x == z) (r : x == w)
@@ -115,11 +115,11 @@ module SuspSectionDecomp where
        ∙ ap winl (merid _ (g (snd Y))))
       (↓-='-from-square ∘ λ x →
         (ap-∘ into out-winl (merid _ x)
-         ∙ ap (ap into) (OutWinl.glue-β x)
+         ∙ ap (ap into) (OutWinl.merid-β x)
          ∙ ap-∙ into (! (merid _ (f x))) (merid _ (snd Y))
          ∙ (ap-! into (merid _ (f x))
-            ∙ ap ! (Into.glue-β (f x)))
-           ∙2 Into.glue-β (snd Y))
+            ∙ ap ! (Into.merid-β (f x)))
+           ∙2 Into.merid-β (snd Y))
         ∙v⊡ winl-square-lemma
               (ap winl (merid _ (g (f x))))
               (ap winl (merid _ x))
@@ -149,11 +149,11 @@ module SuspSectionDecomp where
           [ (λ σκ → into (out (winr σκ)) == winr σκ) ↓ merid _ (cfcod _ y) ]
       into-out-winr-coh y = ↓-='-from-square $
         (ap-∘ into out-winr (merid _ (cfcod _ y))
-         ∙ ap (ap into) (OutWinr.glue-β (cfcod _ y))
+         ∙ ap (ap into) (OutWinr.merid-β (cfcod _ y))
          ∙ ap-∙ into (! (merid _ (f (g y)))) (merid _ y)
          ∙ (ap-! into (merid _ (f (g y)))
-            ∙ ap ! (Into.glue-β (f (g y))))
-           ∙2 Into.glue-β y)
+            ∙ ap ! (Into.merid-β (f (g y))))
+           ∙2 Into.merid-β y)
         ∙v⊡ winr-square-lemma
               (ap winr (merid _ (cfbase _)))
               (ap winr (merid _ (cfcod _ (f (g y)))))

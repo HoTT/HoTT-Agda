@@ -49,7 +49,7 @@ to-from = Pushout-elim to-from-left (λ a → glue (true , a)) to-from-glue  whe
     glue (true , a) ∎
   to-from-glue' false a =
     ap to (ap from (glue (false , a))) ∙' glue (true , a)   =⟨ From.glue-β (false , a) |in-ctx (λ u → ap to u ∙' glue (true , a)) ⟩
-    ap to (merid A a) ∙' glue (true , a)   =⟨ To.glue-β a |in-ctx (λ u → u ∙' glue (true , a)) ⟩
+    ap to (merid A a) ∙' glue (true , a)   =⟨ To.merid-β a |in-ctx (λ u → u ∙' glue (true , a)) ⟩
     (glue (false , a) ∙ ! (glue (true , a))) ∙' glue (true , a)   =⟨ coh (glue (false , a)) (glue (true , a)) ⟩
     glue (false , a) ∎  where
 
@@ -67,7 +67,7 @@ from-to = Suspension-elim A idp idp from-to-merid  where
 
   from-to-merid' : (a : A) → ap from (ap to (merid A a)) == merid A a
   from-to-merid' a =
-    ap from (ap to (merid A a))   =⟨ To.glue-β a |in-ctx ap from ⟩
+    ap from (ap to (merid A a))   =⟨ To.merid-β a |in-ctx ap from ⟩
     ap from (glue (false , a) ∙ ! (glue (true , a)))   =⟨ ap-∙ from (glue (false , a)) (! (glue (true , a))) ⟩
     ap from (glue (false , a)) ∙ ap from (! (glue (true , a)))   =⟨ ap-! from (glue (true , a)) |in-ctx (λ u → ap from (glue (false , a)) ∙ u) ⟩
     ap from (glue (false , a)) ∙ ! (ap from (glue (true , a)))   =⟨ From.glue-β (false , a) |in-ctx (λ u → u ∙ ! (ap from (glue (true , a)))) ⟩

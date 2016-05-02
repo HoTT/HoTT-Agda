@@ -18,7 +18,7 @@ module index where
 import homotopy.LoopSpaceCircle
 
 import homotopy.HopfJunior
--- import homotopy.Hopf
+import homotopy.Hopf
 
 import cohomology.EMModel
 

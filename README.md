@@ -11,7 +11,7 @@ Setup
 -----
 
 The code is loosely broken into `core` and `theorems` Agda libraries.
-You need to include at least the path to `core.agda` in your library list.
+You need to include at least the path to `core.agda-lib` in your library list.
 See `CHANGELOG` of Agda 2.5 for more information.
 
 Agda Options

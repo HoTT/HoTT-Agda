@@ -49,7 +49,7 @@ private
     (λ y → ! (glue (snd X , snd Y)) ∙ glue (snd X , y))
     (↓-∘=idf-from-square into out ∘ λ {(x , y) →
       (ap (ap into) (Out.glue-β (x , y))
-       ∙ Into.glue-β (cfcod _ (x ,  y)))
+       ∙ Into.merid-β (cfcod _ (x ,  y)))
       ∙v⊡ lemma (glue (snd X , snd Y)) (glue (x , snd Y))
                 (glue (snd X , y)) (glue (x , y))})
     where
@@ -64,7 +64,7 @@ private
     idp
     idp
     (↓-∘=idf-in out into ∘ λ {(x , y) →
-      ap (ap out) (Into.glue-β (cfcod _ (x , y)))
+      ap (ap out) (Into.merid-β (cfcod _ (x , y)))
       ∙ lemma₁ out (Out.glue-β (snd X , snd Y))
                    (Out.glue-β (x , snd Y))
                    (Out.glue-β (x , y))

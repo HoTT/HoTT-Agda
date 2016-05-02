@@ -16,7 +16,7 @@ private
   to : Pushout s → Pushout flip
   to = To.f  module M where
 
-    module To = PushoutRec right left (! ∘ glue)
+    module To = PushoutRec right left (λ (c : C) → ! (glue c))
 
   open M public
 
