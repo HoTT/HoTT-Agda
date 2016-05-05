@@ -161,3 +161,5 @@ to-from {i} (S n) = PushoutElim.f to-from-left to-from-right to-from-glue
       idp ∙' glue (lift false , x)
         ∎
 
+CWSphere≃Sphere : ∀ {i} n → CWSphere {i} n ≃ Sphere {i} n
+CWSphere≃Sphere n = _ , Sphere⇒CWSphere-is-equiv n

@@ -9,21 +9,62 @@ open import HoTT
 
 module cw.CW where
 
-attach-span : ∀ {i j k} {A : Type i} {B : Type j}
-  (n : ℕ) (boundary : A × Sphere {k} n → B) → Span {i} {j} {lmax i k}
-attach-span {A = A} {B} n boundary = span A B (A × Sphere n) fst boundary
+open import cw.Attach public
 
-Attach : ∀ {i j k} {A : Type i} {B : Type j}
-  (n : ℕ) (boundary : A × Sphere {k} n → B) → Type (lmax i (lmax j k))
-Attach {A = A} {B} n boundary = Pushout (attach-span {A = A} {B} n boundary)
+-- skeleton
 
 Skeleton : ∀ {i} → ℕ → Type (lsucc i)
-realizer : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
+realize : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
 
 Skeleton {i} O = Type i
-Skeleton {i} (S n) = Σ (Skeleton {i} n) (λ s → Σ (Type i) λ A → A × Sphere {i} n → realizer s)
+Skeleton {i} (S n) = Σ (Skeleton {i} n) (λ s → Σ (Type i) λ A → Boundry A (realize s) n i)
 
-realizer {n = O} A = A
-realizer {n = S n} (s , (A , boundary)) = Attach n boundary
+realize {n = O} A = A
+realize {n = S n} (s , (A , boundary)) = Attach n boundary
 
-⟦_⟧ = realizer
+⟦_⟧ = realize
+
+-- Empty
+
+CWEmpty-skel : Skeleton {lzero} 0
+CWEmpty-skel = Empty
+CWEmpty = ⟦ CWEmpty-skel ⟧
+
+CWEmpty≃Empty : CWEmpty ≃ Empty 
+CWEmpty≃Empty = ide _
+
+-- Unit
+
+CWUnit-skel : Skeleton {lzero} 0
+CWUnit-skel = Unit
+CWUnit = ⟦ CWUnit-skel ⟧
+
+CWUnit≃Unit : CWUnit ≃ Unit
+CWUnit≃Unit = ide _
+
+-- lifting
+
+cw-lift₁ : ∀ {i} {n : ℕ} → Skeleton {i} n → Skeleton {i} (S n)
+cw-lift₁ skel = skel , Lift Empty , λ{(lift ()) _}
+
+-- This slightly extends the naming convension
+-- to two skeletons being extensionally equal.
+cw-lift₁-equiv : ∀ {i} {n} (skel : Skeleton {i} n)
+  → ⟦ cw-lift₁ skel ⟧ ≃ ⟦ skel ⟧
+cw-lift₁-equiv {n = n} skel = equiv to from to-from from-to
+  where
+    to : ⟦ cw-lift₁ skel ⟧ → ⟦ skel ⟧
+    to = Attach-rec {n = n} (idf ⟦ skel ⟧) (λ{(lift ())}) (λ{(lift ()) _})
+
+    from : ⟦ skel ⟧ → ⟦ cw-lift₁ skel ⟧
+    from = ground {n = n}
+
+    to-from : ∀ x → to (from x) == x
+    to-from _ = idp
+
+    from-to : ∀ x → from (to x) == x
+    from-to = Attach-elim {n = n} (λ _ → idp) (λ{(lift ())}) (λ{(lift ()) _})
+
+cw-lift : ∀ {i} {n m : ℕ} → n < m → Skeleton {i} n → Skeleton {i} m
+cw-lift ltS = cw-lift₁
+cw-lift (ltSR lt) = cw-lift₁ ∘ cw-lift lt
