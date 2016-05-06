@@ -12,16 +12,28 @@ CWSphere n = ⟦ CWSphere-skel n ⟧
 
 Sphere⇒CWSphere : ∀ {i} n → Sphere {i} n → CWSphere {i} n
 
-CWSphere-skel {i} O = Lift {j = i} Bool
+CWSphere-skel {i} O = Lift Bool
 CWSphere-skel {i} (S n) =
-  (CWSphere-skel n , Lift {j = i} Bool , Sphere⇒CWSphere {i} n ∘ snd)
+  (CWSphere-skel n , Lift Bool , cst (Sphere⇒CWSphere {i} n))
+
+{-
+  mapping:
+
+  hub true <-> north
+  hub false <-> south
+  incl _ -> north
+  spoke true x -> idp
+  spoke fales x -> merid x
+  ! spoke true x ∙ spoke false x  <- merid x
+-}
+
 
 private
   module PosToCW i n = SuspensionRec
     (Sphere {i} n)
     {C = CWSphere {i} (S n)}
-    (left (lift true)) (left (lift false))
-    (λ x → glue (lift true , x) ∙ (! (glue (lift false , x))))
+    (hub (lift true)) (hub (lift false))
+    (λ x → (! (spoke (lift true) x)) ∙' spoke (lift false) x)
 
 Sphere⇒CWSphere O = idf _
 Sphere⇒CWSphere {i} (S n) = PosToCW.f i n
@@ -31,24 +43,24 @@ Sphere⇒CWSphere {i} (S n) = PosToCW.f i n
 -}
 
 private
-  CWSphere⇒Sphere-left : ∀ {i} n → Lift {j = i} Bool → Sphere {i} (S n)
-  CWSphere⇒Sphere-left _ (lift true) = north _
-  CWSphere⇒Sphere-left _ (lift false) = south _
+  CWSphere⇒Sphere-incl : ∀ {i} n → CWSphere {i} n → Sphere {i} (S n)
+  CWSphere⇒Sphere-incl _ _ = north _
 
-  CWSphere⇒Sphere-right : ∀ {i} n → CWSphere {i} n → Sphere {i} (S n)
-  CWSphere⇒Sphere-right _ _ = south _
+  CWSphere⇒Sphere-hub : ∀ {i} n → Lift {j = i} Bool → Sphere {i} (S n)
+  CWSphere⇒Sphere-hub _ (lift true) = north _
+  CWSphere⇒Sphere-hub _ (lift false) = south _
 
-  CWSphere⇒Sphere-glue : ∀ {i} n (bs : Lift Bool × Sphere {i} n)
-    →  CWSphere⇒Sphere-left n (fst bs)
-    == CWSphere⇒Sphere-right n (Sphere⇒CWSphere n (snd bs))
-  CWSphere⇒Sphere-glue _ (lift true , x) = merid _ x
-  CWSphere⇒Sphere-glue _ (lift false , _) = idp
+  CWSphere⇒Sphere-spoke : ∀ {i} n (b : Lift Bool) (x : Sphere {i} n)
+    → CWSphere⇒Sphere-incl n (Sphere⇒CWSphere n x)
+    == CWSphere⇒Sphere-hub n b
+  CWSphere⇒Sphere-spoke _ (lift true) _ = idp
+  CWSphere⇒Sphere-spoke _ (lift false) x = merid _ x
 
-  module PosFromCW i n = PushoutRec
-    {d = attach-span n (Sphere⇒CWSphere {i} n ∘ snd)}
-    (CWSphere⇒Sphere-left {i} n)
-    (CWSphere⇒Sphere-right {i} n)
-    (CWSphere⇒Sphere-glue {i} n)
+  module PosFromCW i n = AttachRec
+    {boundary = cst (Sphere⇒CWSphere {i} n)}
+    (CWSphere⇒Sphere-incl {i} n)
+    (CWSphere⇒Sphere-hub {i} n)
+    (CWSphere⇒Sphere-spoke {i} n)
 
 CWSphere⇒Sphere : ∀ {i} n → CWSphere {i} n → Sphere {i} n
 CWSphere⇒Sphere O = idf _
@@ -72,18 +84,14 @@ from-to {i} (S n) = SuspensionElim.f _ idp idp path
         =⟨ ap-∘ from to (merid _ x) ⟩
       ap from (ap to (merid _ x))
         =⟨ To.merid-β x |in-ctx ap from ⟩
-      ap from (glue (lift true , x) ∙ (! (glue (lift false , x))))
-        =⟨ ap-∙ from (glue (lift true , x)) (! (glue (lift false , x))) ⟩
-      ap from (glue (lift true , x)) ∙ ap from (! (glue (lift false , x)))
-        =⟨ ap-! from (glue (lift false , x)) |in-ctx (λ p → ap from (glue (lift true , x)) ∙ p) ⟩
-      ap from (glue (lift true , x)) ∙ ! (ap from (glue (lift false , x)))
-        =⟨ From.glue-β (lift false , x) |in-ctx ( λ p → ap from (glue (lift true , x)) ∙ ! p) ⟩
-      ap from (glue (lift true , x)) ∙ idp
-        =⟨ ∙-unit-r $ ap from (glue (lift true , x)) ⟩
-      ap from (glue (lift true , x))
-        =⟨ From.glue-β (lift true , x) ⟩
-      merid _ x
-        =⟨ ! $ ∙'-unit-l $ merid _ x ⟩
+      ap from (! (spoke (lift true) x) ∙' spoke (lift false) x)
+        =⟨ ap-∙' from (! (spoke (lift true) x)) (spoke (lift false) x) ⟩
+      ap from (! (spoke (lift true) x)) ∙' ap from (spoke (lift false) x)
+        =⟨ ap-! from (spoke (lift true) x) |in-ctx (λ p → p ∙' ap from (spoke (lift false) x)) ⟩
+      ! (ap from (spoke (lift true) x)) ∙' ap from (spoke (lift false) x)
+        =⟨ From.spoke-β (lift true) x |in-ctx (λ p → ! p ∙' ap from (spoke (lift false) x)) ⟩
+      idp ∙' ap from (spoke (lift false) x)
+        =⟨ From.spoke-β (lift false) x |in-ctx (λ p → idp ∙' p) ⟩
       idp ∙' merid _ x
         ∎
 
@@ -93,73 +101,67 @@ private
 Sphere⇒CWSphere-is-equiv {i} n = is-eq _ (CWSphere⇒Sphere {i} n) (to-from {i} n) (from-to {i} n)
 
 to-from O _ = idp
-to-from {i} (S n) = PushoutElim.f to-from-left to-from-right to-from-glue
+to-from {i} (S n) = AttachElim.f to-from-incl to-from-hub to-from-spoke
   where
     to = Sphere⇒CWSphere {i} (S n)
     from = CWSphere⇒Sphere {i} (S n)
     module To = PosToCW i n
     module From = PosFromCW i n
 
-    to-from-left : ∀ b → to (from (left b)) == left b
-    to-from-left (lift true) = idp
-    to-from-left (lift false) = idp
+    to-from-incl : ∀ (c : CWSphere {i} n)
+      → to (from (incl c)) == incl c
+    to-from-incl c =
+        ! (spoke (lift true) (CWSphere⇒Sphere n c))
+      ∙ ap incl (is-equiv.f-g (Sphere⇒CWSphere-is-equiv n) c)
 
-    to-from-right : ∀ (c : CWSphere {i} n)
-      → to (from (right c)) == right c
-    to-from-right c =
-        glue (lift false , CWSphere⇒Sphere n c)
-      ∙ ap right (is-equiv.f-g (Sphere⇒CWSphere-is-equiv n) c)
+    to-from-hub : ∀ b → to (from (hub b)) == hub b
+    to-from-hub (lift true) = idp
+    to-from-hub (lift false) = idp
 
-    to-from-right-to : ∀ (x : Sphere {i} n)
-      → to-from-right (Sphere⇒CWSphere n x) == glue (lift false , x)
-    to-from-right-to x =
-      glue (lift false , CWSphere⇒Sphere n (Sphere⇒CWSphere n x))
-        ∙ ap right (is-equiv.f-g (Sphere⇒CWSphere-is-equiv n) (Sphere⇒CWSphere n x))
-          =⟨ ! $ is-equiv.adj (Sphere⇒CWSphere-is-equiv n) x
-            |in-ctx (λ p → glue (lift false , CWSphere⇒Sphere n (Sphere⇒CWSphere n x)) ∙ ap right p) ⟩
-      glue (lift false , CWSphere⇒Sphere n (Sphere⇒CWSphere n x))
-        ∙ ap right (ap (Sphere⇒CWSphere n) (is-equiv.g-f (Sphere⇒CWSphere-is-equiv n) x))
-          =⟨ ! $ ap-∘ right (Sphere⇒CWSphere n) (is-equiv.g-f (Sphere⇒CWSphere-is-equiv n) x)
-            |in-ctx (λ p → glue (lift false , CWSphere⇒Sphere n (Sphere⇒CWSphere n x)) ∙ p) ⟩
-      glue (lift false , CWSphere⇒Sphere n (Sphere⇒CWSphere n x))
-        ∙ ap (right ∘ Sphere⇒CWSphere n) (is-equiv.g-f (Sphere⇒CWSphere-is-equiv n) x)
-          =⟨ htpy-natural-fromcst (λ x → glue (lift false , x)) (is-equiv.g-f (Sphere⇒CWSphere-is-equiv n) x) ⟩
-      glue (lift false , x)
+    to-from-incl-to : ∀ (x : Sphere {i} n)
+      → to-from-incl (Sphere⇒CWSphere n x) == ! (spoke (lift true) x)
+    to-from-incl-to x =
+      ! (spoke (lift true) (CWSphere⇒Sphere n (Sphere⇒CWSphere n x)))
+      ∙ ap incl (is-equiv.f-g (Sphere⇒CWSphere-is-equiv n) (Sphere⇒CWSphere n x))
+        =⟨ ! $ is-equiv.adj (Sphere⇒CWSphere-is-equiv n) x
+          |in-ctx (λ p → ! (spoke (lift true) (CWSphere⇒Sphere n (Sphere⇒CWSphere n x))) ∙ ap incl p) ⟩
+      ! (spoke (lift true) (CWSphere⇒Sphere n (Sphere⇒CWSphere n x)))
+      ∙ ap incl (ap (Sphere⇒CWSphere n) (is-equiv.g-f (Sphere⇒CWSphere-is-equiv n) x))
+        =⟨ ! $ ap-∘ incl (Sphere⇒CWSphere n) (is-equiv.g-f (Sphere⇒CWSphere-is-equiv n) x)
+          |in-ctx (λ p → ! (spoke (lift true) (CWSphere⇒Sphere n (Sphere⇒CWSphere n x))) ∙ p) ⟩
+      ! (spoke (lift true) (CWSphere⇒Sphere n (Sphere⇒CWSphere n x)))
+      ∙ ap (incl ∘ Sphere⇒CWSphere n) (is-equiv.g-f (Sphere⇒CWSphere-is-equiv n) x)
+          =⟨ htpy-natural-fromcst (λ x → ! (spoke (lift true) x)) (is-equiv.g-f (Sphere⇒CWSphere-is-equiv n) x) ⟩
+      ! (spoke (lift true) x)
           ∎
 
-    to-from-glue : ∀ (bs : Lift Bool × Sphere {i} n)
-      → to-from-left (fst bs) == to-from-right (Sphere⇒CWSphere n (snd bs))
-          [ (λ x → to (from x) == x) ↓ glue bs ]
-    to-from-glue (lift true , x) = ↓-app=idf-in $ ! $
-      ap (to ∘ from) (glue (lift true , x)) ∙ to-from-right (Sphere⇒CWSphere n x)
-        =⟨ to-from-right-to x |in-ctx (λ p → ap (to ∘ from) (glue (lift true , x)) ∙ p) ⟩
-      ap (to ∘ from) (glue (lift true , x)) ∙ glue (lift false , x)
-        =⟨ ap-∘ to from (glue (lift true , x)) |in-ctx (λ p → p ∙ glue (lift false , x)) ⟩
-      ap to (ap from (glue (lift true , x))) ∙ glue (lift false , x)
-        =⟨ From.glue-β (lift true , x) |in-ctx (λ p → ap to p ∙ glue (lift false , x)) ⟩
-      ap to (merid _ x) ∙ glue (lift false , x)
-        =⟨ To.merid-β x |in-ctx (λ p → p ∙ glue (lift false , x)) ⟩
-      (glue (lift true , x) ∙ (! (glue (lift false , x)))) ∙ glue (lift false , x)
-        =⟨ ∙-assoc (glue (lift true , x)) (! (glue (lift false , x))) (glue (lift false , x)) ⟩
-      glue (lift true , x) ∙ ((! (glue (lift false , x))) ∙ glue (lift false , x))
-        =⟨ !-inv-l (glue (lift false , x)) |in-ctx (λ p → glue (lift true , x) ∙ p) ⟩
-      glue (lift true , x) ∙ idp
-        =⟨ ∙-unit-r (glue (lift true , x)) ⟩
-      glue (lift true , x)
-        =⟨ ! $ ∙'-unit-l (glue (lift true , x)) ⟩
-      idp ∙' glue (lift true , x)
+    to-from-spoke : ∀ (b : Lift Bool) (x : Sphere {i} n)
+      → to-from-incl (Sphere⇒CWSphere n x) == to-from-hub b
+          [ (λ x → to (from x) == x) ↓ spoke b x ]
+    to-from-spoke (lift true) x = ↓-app=idf-in $
+      to-from-incl (Sphere⇒CWSphere n x) ∙' spoke (lift true) x
+        =⟨ to-from-incl-to x |in-ctx (λ p → p ∙' spoke (lift true) x) ⟩
+      ! (spoke (lift true) x) ∙' spoke (lift true) x
+        =⟨ !-inv'-l (spoke (lift true) x) ⟩
+      idp
+        =⟨ ! $ From.spoke-β (lift true) x |in-ctx (λ p → ap to p ∙ idp) ⟩
+      ap to (ap from (spoke (lift true) x)) ∙ idp
+        =⟨ ∘-ap to from (spoke (lift true) x) |in-ctx (λ p → p ∙ idp) ⟩
+      ap (to ∘ from) (spoke (lift true) x) ∙ idp
         ∎
-    to-from-glue (lift false , x) = ↓-app=idf-in $ ! $
-      ap (to ∘ from) (glue (lift false , x)) ∙ to-from-right (Sphere⇒CWSphere n x)
-        =⟨ to-from-right-to x |in-ctx (λ p → ap (to ∘ from) (glue (lift false , x)) ∙ p) ⟩
-      ap (to ∘ from) (glue (lift false , x)) ∙ glue (lift false , x)
-        =⟨ ap-∘ to from (glue (lift false , x)) |in-ctx (λ p → p ∙ glue (lift false , x)) ⟩
-      ap to (ap from (glue (lift false , x))) ∙ glue (lift false , x)
-        =⟨ From.glue-β (lift false , x) |in-ctx (λ p → ap to p ∙ glue (lift false , x)) ⟩
-      glue (lift false , x)
-        =⟨ ! $ ∙'-unit-l (glue (lift false , x)) ⟩
-      idp ∙' glue (lift false , x)
+    to-from-spoke (lift false) x = ↓-app=idf-in $
+      to-from-incl (Sphere⇒CWSphere n x) ∙' spoke (lift false) x
+        =⟨ to-from-incl-to x |in-ctx (λ p → p ∙' spoke (lift false) x) ⟩
+      ! (spoke (lift true) x) ∙' spoke (lift false) x
+        =⟨ ! $ To.merid-β x ⟩
+      ap to (merid _ x)
+        =⟨ ! $ From.spoke-β (lift false) x |in-ctx (ap to) ⟩
+      ap to (ap from (spoke (lift false) x))
+        =⟨ ∘-ap to from (spoke (lift false) x) ⟩
+      ap (to ∘ from) (spoke (lift false) x)
+        =⟨ ! $ ∙-unit-r _ ⟩
+      ap (to ∘ from) (spoke (lift false) x) ∙ idp
         ∎
 
-CWSphere≃Sphere : ∀ {i} n → CWSphere {i} n ≃ Sphere {i} n
-CWSphere≃Sphere n = _ , Sphere⇒CWSphere-is-equiv n
+Sphere≃CWSphere : ∀ {i} n → Sphere {i} n ≃ CWSphere {i} n
+Sphere≃CWSphere n = _ , Sphere⇒CWSphere-is-equiv n

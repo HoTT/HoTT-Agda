@@ -2,58 +2,56 @@
 
 open import HoTT
 
-module cw.Attach {i j} where
+module cw.Attach {i j k : ULevel} where
 
-Boundry : (A : Type i) (B : Type j) (n : ℕ) (k : ULevel) → Type (lmax i (lmax j k))
-Boundry A B n k = A → Sphere {k} n → B
+Boundry : (A : Type i) (B : Type j) (C : Type k) → Type (lmax i (lmax j k))
+Boundry A B C = B → C → A
 
-module _ {k : ULevel} {A : Type i} {B : Type j} (n : ℕ) where
+module _ {A : Type i} {B : Type j} {C : Type k} where
 
-  Attach-span : Boundry A B n k → Span {i} {j} {lmax i k}
-  Attach-span boundary = span A B (A × Sphere n) fst (uncurry boundary)
+  Attach-span : Boundry A B C → Span {i} {j} {lmax j k}
+  Attach-span boundary = span A B (B × C) (uncurry boundary) fst
 
-  Attach : Boundry A B n k → Type (lmax i (lmax j k))
+  Attach : Boundry A B C → Type (lmax i (lmax j k))
   Attach boundary = Pushout (Attach-span boundary)
 
-module _ {k : ULevel} {A : Type i} {B : Type j} {n : ℕ} {boundary : Boundry A B n k} where
+module _ {A : Type i} {B : Type j} {C : Type k} {boundary : Boundry A B C} where
 
-  -- Inspired by mountains
+  incl : A → Attach boundary
+  incl = left
 
-  ground : B → Attach n boundary
-  ground b = right b
+  hub : B → Attach boundary
+  hub = right
 
-  peak : A → Attach n boundary
-  peak a = left a
+  spoke : ∀ b c → incl (boundary b c) == hub b
+  spoke = curry glue
 
-  attach : (a : A) (s : Sphere {k} n) → peak a == ground (boundary a s)
-  attach a s = glue (a , s)
-
-  module AttachElim {l} {P : Attach n boundary → Type l}
-    (ground* : (b : B) → P (ground b))
-    (peak* : (a : A) → P (peak a))
-    (attach* : (a : A) (s : Sphere {k} n)
-      → peak* a == ground* (boundary a s) [ P ↓ attach a s ]) where
+  module AttachElim {l} {P : Attach boundary → Type l}
+    (incl* : (a : A) → P (incl a))
+    (hub* : (b : B) → P (hub b))
+    (spoke* : (b : B) (c : C)
+      → incl* (boundary b c) == hub* b [ P ↓ spoke b c ]) where
 
     module P = PushoutElim
-      {d = Attach-span n boundary} {P = P}
-      peak* ground* (uncurry attach*)
+      {d = Attach-span boundary} {P = P}
+      incl* hub* (uncurry spoke*)
 
     f = P.f
-    attach-β = curry P.glue-β
+    spoke-β = curry P.glue-β
 
   open AttachElim public using () renaming (f to Attach-elim)
 
   module AttachRec {l} {D : Type l}
-    (ground* : (b : B) → D)
-    (peak* : (a : A) → D)
-    (attach* : (a : A) (s : Sphere {k} n) → peak* a == ground* (boundary a s)) where
+    (incl* : (a : A) → D)
+    (hub* : (b : B) → D)
+    (spoke* : (b : B) (c : C) → incl* (boundary b c) == hub* b) where
 
     module P = PushoutRec
-      {d = Attach-span n boundary} {D = D}
-      peak* ground* (uncurry attach*)
+      {d = Attach-span boundary} {D = D}
+      incl* hub* (uncurry spoke*)
 
     f = P.f
-    attach-β = curry P.glue-β
+    spoke-β = curry P.glue-β
 
   open AttachRec public using () renaming (f to Attach-rec)
 

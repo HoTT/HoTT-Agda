@@ -14,15 +14,15 @@ open import cw.Attach public
 -- skeleton
 
 Skeleton : ∀ {i} → ℕ → Type (lsucc i)
-realize : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
+Realizer : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
 
 Skeleton {i} O = Type i
-Skeleton {i} (S n) = Σ (Skeleton {i} n) (λ s → Σ (Type i) λ A → Boundry A (realize s) n i)
+Skeleton {i} (S n) = Σ (Skeleton {i} n) (λ s → Σ (Type i) λ A → Boundry (Realizer s) A (Sphere {i} n))
 
-realize {n = O} A = A
-realize {n = S n} (s , (A , boundary)) = Attach n boundary
+Realizer {n = O} A = A
+Realizer {n = S n} (s , (A , boundary)) = Attach boundary
 
-⟦_⟧ = realize
+⟦_⟧ = Realizer
 
 -- Empty
 
@@ -51,19 +51,16 @@ cw-lift₁ skel = skel , Lift Empty , λ{(lift ()) _}
 -- to two skeletons being extensionally equal.
 cw-lift₁-equiv : ∀ {i} {n} (skel : Skeleton {i} n)
   → ⟦ cw-lift₁ skel ⟧ ≃ ⟦ skel ⟧
-cw-lift₁-equiv {n = n} skel = equiv to from to-from from-to
+cw-lift₁-equiv skel = equiv to incl to-incl incl-to
   where
     to : ⟦ cw-lift₁ skel ⟧ → ⟦ skel ⟧
-    to = Attach-rec {n = n} (idf ⟦ skel ⟧) (λ{(lift ())}) (λ{(lift ()) _})
+    to = Attach-rec (idf ⟦ skel ⟧) (λ{(lift ())}) (λ{(lift ()) _})
 
-    from : ⟦ skel ⟧ → ⟦ cw-lift₁ skel ⟧
-    from = ground {n = n}
+    to-incl : ∀ x → to (incl x) == x
+    to-incl _ = idp
 
-    to-from : ∀ x → to (from x) == x
-    to-from _ = idp
-
-    from-to : ∀ x → from (to x) == x
-    from-to = Attach-elim {n = n} (λ _ → idp) (λ{(lift ())}) (λ{(lift ()) _})
+    incl-to : ∀ x → incl (to x) == x
+    incl-to = Attach-elim (λ _ → idp) (λ{(lift ())}) (λ{(lift ()) _})
 
 cw-lift : ∀ {i} {n m : ℕ} → n < m → Skeleton {i} n → Skeleton {i} m
 cw-lift ltS = cw-lift₁
