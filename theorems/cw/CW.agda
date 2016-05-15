@@ -65,3 +65,36 @@ cw-lift₁-equiv skel = equiv to incl to-incl incl-to
 cw-lift : ∀ {i} {n m : ℕ} → n < m → Skeleton {i} n → Skeleton {i} m
 cw-lift ltS = cw-lift₁
 cw-lift (ltSR lt) = cw-lift₁ ∘ cw-lift lt
+
+cw-cells-top : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
+cw-cells-top {n = O}   skel            = skel
+cw-cells-top {n = S n} (_ , cells , _) = cells
+
+-- Access the [i]th dimension
+
+Sphere₋₁ : ∀ {i} → ℕ → Type i
+Sphere₋₁ O = Lift Empty
+Sphere₋₁ (S n) = Sphere n
+
+realize₋₁ : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
+realize₋₁ {n = O}   _          = Lift Empty
+realize₋₁ {n = S n} (skel , _) = ⟦ skel ⟧
+
+⟦_⟧₋₁ = realize₋₁
+
+cw-boundary-top : ∀ {i} {n : ℕ} (s : Skeleton {i} n)
+  → cw-cells-top s → (Sphere₋₁ {i} n → ⟦ s ⟧₋₁)
+cw-boundary-top {n = O}    _                 = λ{_ (lift ())}
+cw-boundary-top {n = S n} (_ , _ , boundary) = boundary
+
+cw-cut : ∀ {i} {n : ℕ} (m : Bounded n) → Skeleton {i} n → Skeleton {i} (n -B m)
+cw-cut O      skel      = skel
+cw-cut (S n) (skel , _) = cw-cut n skel
+
+-- Indexes are in reverse order.
+cw-cells : ∀ {i} {n : ℕ} (m : Bounded n) → Skeleton {i} n → Type i
+cw-cells m = cw-cells-top ∘ cw-cut m
+
+cw-boundary : ∀ {i} {n : ℕ} (m : Bounded n) (skel : Skeleton {i} n)
+  → cw-cells m skel → Sphere₋₁ (n -B m) → ⟦ cw-cut m skel ⟧₋₁
+cw-boundary m = cw-boundary-top ∘ cw-cut m
