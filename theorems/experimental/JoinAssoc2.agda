@@ -4,9 +4,9 @@ open import HoTT
 
 -- Associativity of the join (work in progress)
 
-module homotopy.JoinAssoc2 where
+module experimental.JoinAssoc2 where
 
-import homotopy.JoinAssoc as Assoc
+import experimental.JoinAssoc as Assoc
 
 module Assoc2 {i j k} (A : Type i) (B : Type j) (C : Type k) where
 

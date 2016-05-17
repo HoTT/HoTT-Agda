@@ -4,7 +4,7 @@ open import HoTT
 
 -- Associativity of the join (work in progress)
 
-module homotopy.JoinAssoc {i j k} (A : Type i) (B : Type j) (C : Type k) where
+module experimental.JoinAssoc {i j k} (A : Type i) (B : Type j) (C : Type k) where
 
   {- First map -}
 
