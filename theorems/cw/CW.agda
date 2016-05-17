@@ -30,7 +30,7 @@ CWEmpty-skel : Skeleton {lzero} 0
 CWEmpty-skel = Empty
 CWEmpty = ⟦ CWEmpty-skel ⟧
 
-CWEmpty≃Empty : CWEmpty ≃ Empty 
+CWEmpty≃Empty : CWEmpty ≃ Empty
 CWEmpty≃Empty = ide _
 
 -- Unit
