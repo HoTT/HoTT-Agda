@@ -7,7 +7,6 @@ open import lib.types.Empty public
 open import lib.types.Unit public
 open import lib.types.Bool public
 open import lib.types.Nat public
-open import lib.types.Bounded public
 open import lib.types.Int public
 open import lib.types.TLevel public
 open import lib.types.Paths public

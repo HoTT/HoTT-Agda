@@ -87,14 +87,16 @@ cw-boundary-top : ∀ {i} {n : ℕ} (s : Skeleton {i} n)
 cw-boundary-top {n = O}    _                 = λ{_ (lift ())}
 cw-boundary-top {n = S n} (_ , _ , boundary) = boundary
 
-cw-cut : ∀ {i} {n : ℕ} (m : Bounded n) → Skeleton {i} n → Skeleton {i} (n -B m)
-cw-cut O      skel      = skel
-cw-cut (S n) (skel , _) = cw-cut n skel
+cw-drop : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) → Skeleton {i} n → Skeleton {i} (ℕ-drop m n m≤n)
+cw-drop {m = O}             _        skel       = skel
+cw-drop {m = S m} {n = O}   (inl ()) _
+cw-drop {m = S m} {n = O}   (inr ()) _
+cw-drop {m = S m} {n = S n} Sm≤Sn    (skel , _) = cw-drop (≤-cancel-S Sm≤Sn) skel
 
 -- Indexes are in reverse order.
-cw-cells : ∀ {i} {n : ℕ} (m : Bounded n) → Skeleton {i} n → Type i
-cw-cells m = cw-cells-top ∘ cw-cut m
+cw-cells : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) → Skeleton {i} n → Type i
+cw-cells m≤n = cw-cells-top ∘ cw-drop m≤n
 
-cw-boundary : ∀ {i} {n : ℕ} (m : Bounded n) (skel : Skeleton {i} n)
-  → cw-cells m skel → Sphere₋₁ (n -B m) → ⟦ cw-cut m skel ⟧₋₁
-cw-boundary m = cw-boundary-top ∘ cw-cut m
+cw-boundary : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) (skel : Skeleton {i} n)
+  → cw-cells m≤n skel → Sphere₋₁ (ℕ-drop m n m≤n) → ⟦ cw-drop m≤n skel ⟧₋₁
+cw-boundary m≤n = cw-boundary-top ∘ cw-drop m≤n
