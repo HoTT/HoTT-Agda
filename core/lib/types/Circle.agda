@@ -1,8 +1,11 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
+open import lib.NConnected
+open import lib.NType2
 open import lib.types.Paths
 open import lib.types.Pi
+open import lib.types.Truncation
 open import lib.types.Unit
 
 module lib.types.Circle where
@@ -134,3 +137,8 @@ module S¹RecType {i} (A : Type i) (e : A ≃ A) where
 
   flattening-S¹ : Σ S¹ f == Wt
   flattening-S¹ = generic-S¹ ∙ ua FlatteningS¹.flattening-equiv
+
+S¹-connected : is-connected 0 S¹
+S¹-connected =
+  ([ base ] , Trunc-elim (λ x → =-preserves-level 0 Trunc-level)
+              (S¹-elim idp (prop-has-all-paths-↓ ((Trunc-level :> is-set (Trunc 0 S¹)) _ _))))
