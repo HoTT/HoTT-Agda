@@ -17,7 +17,9 @@ Skeleton : ∀ {i} → ℕ → Type (lsucc i)
 Realizer : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
 
 Skeleton {i} O = Type i
-Skeleton {i} (S n) = Σ (Skeleton {i} n) (λ s → Σ (Type i) λ A → Boundry (Realizer s) A (Sphere {i} n))
+Skeleton {i} (S n) =
+  Σ (Skeleton {i} n)
+    (λ s → Σ (Type i) λ A → Boundry (Realizer s) A (Sphere {i} n))
 
 Realizer {n = O} A = A
 Realizer {n = S n} (s , (A , boundary)) = Attach boundary
@@ -87,16 +89,20 @@ cw-boundary-top : ∀ {i} {n : ℕ} (s : Skeleton {i} n)
 cw-boundary-top {n = O}    _                 = λ{_ (lift ())}
 cw-boundary-top {n = S n} (_ , _ , boundary) = boundary
 
-cw-drop : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) → Skeleton {i} n → Skeleton {i} (ℕ-drop m n m≤n)
-cw-drop {m = O}             _        skel       = skel
-cw-drop {m = S m} {n = O}   (inl ()) _
-cw-drop {m = S m} {n = O}   (inr ()) _
-cw-drop {m = S m} {n = S n} Sm≤Sn    (skel , _) = cw-drop (≤-cancel-S Sm≤Sn) skel
+cw-take : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) → Skeleton {i} n → Skeleton {i} m
+cw-take (inl idp)        skel       = skel
+cw-take (inr ltS)        (skel , _) = skel
+cw-take (inr (ltSR m≤n)) (skel , _) = cw-take (inr m≤n) skel
 
 -- Indexes are in reverse order.
 cw-cells : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) → Skeleton {i} n → Type i
-cw-cells m≤n = cw-cells-top ∘ cw-drop m≤n
+cw-cells m≤n = cw-cells-top ∘ cw-take m≤n
 
 cw-boundary : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) (skel : Skeleton {i} n)
-  → cw-cells m≤n skel → Sphere₋₁ (ℕ-drop m n m≤n) → ⟦ cw-drop m≤n skel ⟧₋₁
-cw-boundary m≤n = cw-boundary-top ∘ cw-drop m≤n
+  → cw-cells m≤n skel → Sphere₋₁ m → ⟦ cw-take m≤n skel ⟧₋₁
+cw-boundary m≤n = cw-boundary-top ∘ cw-take m≤n
+
+-- Extra conditions on CW complexes
+-- XXX Needs a better name
+has-dec-eq-cells : ∀ {i} {n} → Skeleton {i} n → Type i
+has-dec-eq-cells {n = n} skel = ∀ {m} (m≤n : m ≤ n) → has-dec-eq (cw-cells m≤n skel)
