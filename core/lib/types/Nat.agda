@@ -226,23 +226,3 @@ O≤ (S m) = inr (O<S m)
 *2-monotone-≤ : {m n : ℕ} → m ≤ n → m *2 ≤ n *2
 *2-monotone-≤ (inl p) = inl (ap _*2 p)
 *2-monotone-≤ (inr lt) = inr (*2-monotone-< lt)
-
-{- [min], [max] and difference -}
-
-min : ℕ → ℕ → ℕ
-min O _ = O
-min (S _) O = O
-min (S m) (S n) = S (min m n)
-
-min≤₁ : ∀ m n → min m n ≤ m
-min≤₁ O n = inl idp
-min≤₁ (S m) O = inr (O<S m)
-min≤₁ (S m) (S n) = ≤-ap-S (min≤₁ m n)
-
--- TODO correct the precedence
-infixl 80 ℕ-drop
-ℕ-drop : (m n : ℕ) → m ≤ n → ℕ
-ℕ-drop O n _ = n
-ℕ-drop (S m) O (inl ())
-ℕ-drop (S m) O (inr ())
-ℕ-drop (S m) (S n) Sm≤Sn = ℕ-drop m n (≤-cancel-S Sm≤Sn)
