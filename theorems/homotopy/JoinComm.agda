@@ -48,3 +48,6 @@ module _ {i j} {A : Type i} {B : Type j} where
 
   swap-equiv : (A * B) ≃ (B * A)
   swap-equiv = equiv swap swap swap-swap swap-swap
+
+  swap-path : (A * B) == (B * A)
+  swap-path = ua swap-equiv

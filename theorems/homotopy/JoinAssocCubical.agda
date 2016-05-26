@@ -5,7 +5,13 @@ open import HoTT
 {- A proof that (A * B) * C ≃ (C * B) * A, which combined with commutativity
  - proves associativity.
  -
- - Agda has a hard time compiling this but sometimes it succeeds. -}
+ - Agda has a hard time compiling this but sometimes it succeeds.
+ -
+ - Favonia (2016 May): I have consistent success in compiling this file.
+ -
+ -}
+
+open import homotopy.JoinComm
 
 module homotopy.JoinAssocCubical where
 
@@ -309,6 +315,11 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} where
 
   join-rearrange-path : (A * B) * C == (C * B) * A
   join-rearrange-path = ua join-rearrange-equiv
+
+  join-assoc-path : (A * B) * C == A * (B * C)
+  join-assoc-path = join-rearrange-path ∙ swap-path ∙ ap (A *_) swap-path
+
+  *-assoc = join-assoc-path
 
 module _ {i j k} (X : Ptd i) (Y : Ptd j) (Z : Ptd k) where
 
