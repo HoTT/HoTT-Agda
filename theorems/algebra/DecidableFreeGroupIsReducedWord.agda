@@ -21,8 +21,8 @@ module algebra.DecidableFreeGroupIsReducedWord {i} (A : Type i) (dec : has-dec-e
 
   -- Conversion function.
 
-  ReducedWord⇒FreeGroup : ReducedWord → FreeGroup A
-  ReducedWord⇒FreeGroup (w , red) = f w red
+  ReducedWord→FreeGroup : ReducedWord → FreeGroup A
+  ReducedWord→FreeGroup (w , red) = f w red
     where
       f : (w : Word) → is-reduced w → FreeGroup A
       f nil         _ = fg-nil
@@ -81,8 +81,8 @@ module algebra.DecidableFreeGroupIsReducedWord {i} (A : Type i) (dec : has-dec-e
     rw-inv-l x ((y    :: w)         , red) | inl x=x = idp
     rw-inv-l x ((y    :: w)         , red) | inr x≠x = ⊥-rec (x≠x idp)
 
-  FreeGroup⇒ReducedWord : FreeGroup A → ReducedWord
-  FreeGroup⇒ReducedWord = FreeGroup-rec ReducedWord-is-set
+  FreeGroup→ReducedWord : FreeGroup A → ReducedWord
+  FreeGroup→ReducedWord = FreeGroup-rec ReducedWord-is-set
     (nil , lift unit)
     (λ x  _  rw → x     rw:: rw)
     (λ x  _  rw → x rw-inv:: rw)
@@ -107,61 +107,61 @@ module algebra.DecidableFreeGroupIsReducedWord {i} (A : Type i) (dec : has-dec-e
     rw-inv::-reduced x (y    :: w) red | inl x=y = ⊥-rec (fst red x=y)
     rw-inv::-reduced x (y    :: w) red | inr x≠y = ReducedWord=-in idp
 
-  ReducedWord⇒FreeGroup⇒ReducedWord :
-    ∀ w → FreeGroup⇒ReducedWord (ReducedWord⇒FreeGroup w) == w 
-  ReducedWord⇒FreeGroup⇒ReducedWord (w , red) = f w red
+  ReducedWord→FreeGroup→ReducedWord :
+    ∀ w → FreeGroup→ReducedWord (ReducedWord→FreeGroup w) == w 
+  ReducedWord→FreeGroup→ReducedWord (w , red) = f w red
     where
-      f : ∀ w red → FreeGroup⇒ReducedWord (ReducedWord⇒FreeGroup (w , red)) == w , red
+      f : ∀ w red → FreeGroup→ReducedWord (ReducedWord→FreeGroup (w , red)) == w , red
       f nil _ = idp
       f (x :: w) red =
-        x rw:: FreeGroup⇒ReducedWord (ReducedWord⇒FreeGroup (w , tail-is-reduced x w red))
+        x rw:: FreeGroup→ReducedWord (ReducedWord→FreeGroup (w , tail-is-reduced x w red))
           =⟨ f w (tail-is-reduced x w red) |in-ctx (λ w → x rw:: w) ⟩
         x rw:: (w , tail-is-reduced x w red)
           =⟨ rw::-reduced x w red ⟩
         (x :: w) , red
           ∎
       f (x inv:: w) red =
-        x rw-inv:: FreeGroup⇒ReducedWord (ReducedWord⇒FreeGroup (w , tail'-is-reduced x w red))
+        x rw-inv:: FreeGroup→ReducedWord (ReducedWord→FreeGroup (w , tail'-is-reduced x w red))
           =⟨ f w (tail'-is-reduced x w red) |in-ctx (λ w → x rw-inv:: w) ⟩
         x rw-inv:: (w , tail'-is-reduced x w red)
           =⟨ rw-inv::-reduced x w red ⟩
         (x inv:: w) , red
           ∎
 
-  ReducedWord⇒FreeGroup-rw:: : ∀ x w
-    → ReducedWord⇒FreeGroup (x rw:: w) == x fg:: ReducedWord⇒FreeGroup w
-  ReducedWord⇒FreeGroup-rw:: x (nil , red) = idp
-  ReducedWord⇒FreeGroup-rw:: x ((y     :: w) , red) = idp
-  ReducedWord⇒FreeGroup-rw:: x ((y  inv:: w) , red) with dec x y
-  ReducedWord⇒FreeGroup-rw:: x ((.x inv:: w) , red) | inl idp =
-    ! (fg-inv-r x (ReducedWord⇒FreeGroup (w , tail'-is-reduced x w red)))
-  ReducedWord⇒FreeGroup-rw:: x ((y  inv:: w) , red) | inr x≠y = idp
+  ReducedWord→FreeGroup-rw:: : ∀ x w
+    → ReducedWord→FreeGroup (x rw:: w) == x fg:: ReducedWord→FreeGroup w
+  ReducedWord→FreeGroup-rw:: x (nil , red) = idp
+  ReducedWord→FreeGroup-rw:: x ((y     :: w) , red) = idp
+  ReducedWord→FreeGroup-rw:: x ((y  inv:: w) , red) with dec x y
+  ReducedWord→FreeGroup-rw:: x ((.x inv:: w) , red) | inl idp =
+    ! (fg-inv-r x (ReducedWord→FreeGroup (w , tail'-is-reduced x w red)))
+  ReducedWord→FreeGroup-rw:: x ((y  inv:: w) , red) | inr x≠y = idp
 
-  ReducedWord⇒FreeGroup-rw-inv:: : ∀ x w
-    → ReducedWord⇒FreeGroup (x rw-inv:: w) == x fg-inv:: ReducedWord⇒FreeGroup w
-  ReducedWord⇒FreeGroup-rw-inv:: x (nil , red) = idp
-  ReducedWord⇒FreeGroup-rw-inv:: x ((y  inv:: w) , red) = idp
-  ReducedWord⇒FreeGroup-rw-inv:: x ((y     :: w) , red) with dec x y
-  ReducedWord⇒FreeGroup-rw-inv:: x ((.x    :: w) , red) | inl idp =
-    ! (fg-inv-l x (ReducedWord⇒FreeGroup (w , tail-is-reduced x w red)))
-  ReducedWord⇒FreeGroup-rw-inv:: x ((y     :: w) , red) | inr x≠y = idp
+  ReducedWord→FreeGroup-rw-inv:: : ∀ x w
+    → ReducedWord→FreeGroup (x rw-inv:: w) == x fg-inv:: ReducedWord→FreeGroup w
+  ReducedWord→FreeGroup-rw-inv:: x (nil , red) = idp
+  ReducedWord→FreeGroup-rw-inv:: x ((y  inv:: w) , red) = idp
+  ReducedWord→FreeGroup-rw-inv:: x ((y     :: w) , red) with dec x y
+  ReducedWord→FreeGroup-rw-inv:: x ((.x    :: w) , red) | inl idp =
+    ! (fg-inv-l x (ReducedWord→FreeGroup (w , tail-is-reduced x w red)))
+  ReducedWord→FreeGroup-rw-inv:: x ((y     :: w) , red) | inr x≠y = idp
 
-  FreeGroup⇒ReducedWord⇒FreeGroup : ∀ fg
-    → ReducedWord⇒FreeGroup (FreeGroup⇒ReducedWord fg) == fg
-  FreeGroup⇒ReducedWord⇒FreeGroup = FreeGroup-elim
+  FreeGroup→ReducedWord→FreeGroup : ∀ fg
+    → ReducedWord→FreeGroup (FreeGroup→ReducedWord fg) == fg
+  FreeGroup→ReducedWord→FreeGroup = FreeGroup-elim
     (λ _ → =-preserves-set FreeGroup-is-set)
     idp
     (λ x {fg} fg* → 
-      ReducedWord⇒FreeGroup (x rw:: FreeGroup⇒ReducedWord fg)
-        =⟨ ReducedWord⇒FreeGroup-rw:: x (FreeGroup⇒ReducedWord fg) ⟩
-      x fg:: ReducedWord⇒FreeGroup (FreeGroup⇒ReducedWord fg)
+      ReducedWord→FreeGroup (x rw:: FreeGroup→ReducedWord fg)
+        =⟨ ReducedWord→FreeGroup-rw:: x (FreeGroup→ReducedWord fg) ⟩
+      x fg:: ReducedWord→FreeGroup (FreeGroup→ReducedWord fg)
         =⟨ fg* |in-ctx (_fg::_ x) ⟩
       x fg:: fg
         ∎)
     (λ x {fg} fg* → 
-      ReducedWord⇒FreeGroup (x rw-inv:: FreeGroup⇒ReducedWord fg)
-        =⟨ ReducedWord⇒FreeGroup-rw-inv:: x (FreeGroup⇒ReducedWord fg) ⟩
-      x fg-inv:: ReducedWord⇒FreeGroup (FreeGroup⇒ReducedWord fg)
+      ReducedWord→FreeGroup (x rw-inv:: FreeGroup→ReducedWord fg)
+        =⟨ ReducedWord→FreeGroup-rw-inv:: x (FreeGroup→ReducedWord fg) ⟩
+      x fg-inv:: ReducedWord→FreeGroup (FreeGroup→ReducedWord fg)
         =⟨ fg* |in-ctx (_fg-inv::_ x) ⟩
       x fg-inv:: fg
         ∎)
@@ -169,9 +169,9 @@ module algebra.DecidableFreeGroupIsReducedWord {i} (A : Type i) (dec : has-dec-e
     (λ x {fg} fg* → prop-has-all-paths-↓ (FreeGroup-is-set _ _))
 
 FreeGroup≃ReducedWord : FreeGroup A ≃ ReducedWord
-FreeGroup≃ReducedWord = FreeGroup⇒ReducedWord ,
+FreeGroup≃ReducedWord = FreeGroup→ReducedWord ,
   is-eq
     _
-    ReducedWord⇒FreeGroup
-    ReducedWord⇒FreeGroup⇒ReducedWord
-    FreeGroup⇒ReducedWord⇒FreeGroup
+    ReducedWord→FreeGroup
+    ReducedWord→FreeGroup→ReducedWord
+    FreeGroup→ReducedWord→FreeGroup
