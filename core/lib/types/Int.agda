@@ -71,7 +71,6 @@ succ-injective z₁ z₂ p = ! (pred-succ z₁) ∙ ap pred p ∙ pred-succ z₂
 ℕ-to-ℤ : ℕ → ℤ
 ℕ-to-ℤ n = pos n
 
-
 {- Proof that [ℤ] has decidable equality and hence is a set -}
 
 private
@@ -151,76 +150,59 @@ private
 ℤ+-unit-r (pos n) = ℤ+-unit-r-pos n
 ℤ+-unit-r (negsucc n) = ℤ+-unit-r-negsucc n
 
-{-
 -- assoc
 succ-ℤ+ : ∀ z₁ z₂ → succ z₁ ℤ+ z₂ == succ (z₁ ℤ+ z₂)
-succ-ℤ+ O _ = idp
 succ-ℤ+ (pos n) _ = idp
-succ-ℤ+ (neg O) _ = ! $ succ-pred _
-succ-ℤ+ (neg (S n)) _ = ! $ succ-pred _
+succ-ℤ+ (negsucc O) _ = ! $ succ-pred _
+succ-ℤ+ (negsucc (S _)) _ = ! $ succ-pred _
 
 pred-ℤ+ : ∀ z₁ z₂ → pred z₁ ℤ+ z₂ == pred (z₁ ℤ+ z₂)
-pred-ℤ+ O _ = idp
-pred-ℤ+ (neg n) _ = idp
-pred-ℤ+ (pos O) _ = ! $ pred-succ _
+pred-ℤ+ (negsucc _) _ = idp
+pred-ℤ+ (pos O) _ = idp
 pred-ℤ+ (pos (S n)) _ = ! $ pred-succ _
 
-private
-  ℤ+-assoc-pos : ∀ n₁ z₂ z₃ → (pos n₁ ℤ+ z₂) ℤ+ z₃ == pos n₁ ℤ+ (z₂ ℤ+ z₃)
-  ℤ+-assoc-pos O      z₂ z₃ = succ-ℤ+ z₂ z₃
-  ℤ+-assoc-pos (S n₁) z₂ z₃ =
-    succ (pos n₁ ℤ+ z₂) ℤ+ z₃     =⟨ succ-ℤ+ (pos n₁ ℤ+ z₂) z₃ ⟩
-    succ ((pos n₁ ℤ+ z₂) ℤ+ z₃)   =⟨ ap succ $ ℤ+-assoc-pos n₁ z₂ z₃ ⟩
-    succ (pos n₁ ℤ+ (z₂ ℤ+ z₃))   ∎
-
-  ℤ+-assoc-neg : ∀ n₁ z₂ z₃ → (neg n₁ ℤ+ z₂) ℤ+ z₃ == neg n₁ ℤ+ (z₂ ℤ+ z₃)
-  ℤ+-assoc-neg O      z₂ z₃ = pred-ℤ+ z₂ z₃
-  ℤ+-assoc-neg (S n₁) z₂ z₃ =
-    pred (neg n₁ ℤ+ z₂) ℤ+ z₃     =⟨ pred-ℤ+ (neg n₁ ℤ+ z₂) z₃ ⟩
-    pred ((neg n₁ ℤ+ z₂) ℤ+ z₃)   =⟨ ap pred $ ℤ+-assoc-neg n₁ z₂ z₃ ⟩
-    pred (neg n₁ ℤ+ (z₂ ℤ+ z₃))   ∎
-
 ℤ+-assoc : ∀ z₁ z₂ z₃ → (z₁ ℤ+ z₂) ℤ+ z₃ == z₁ ℤ+ (z₂ ℤ+ z₃)
-ℤ+-assoc O        _ _ = idp
-ℤ+-assoc (pos n₁) _ _ = ℤ+-assoc-pos n₁ _ _
-ℤ+-assoc (neg n₁) _ _ = ℤ+-assoc-neg n₁ _ _
+ℤ+-assoc (pos O)      z₂ z₃ = idp
+ℤ+-assoc (pos (S n₁)) z₂ z₃ =
+  succ (pos n₁ ℤ+ z₂) ℤ+ z₃     =⟨ succ-ℤ+ (pos n₁ ℤ+ z₂) z₃ ⟩
+  succ ((pos n₁ ℤ+ z₂) ℤ+ z₃)   =⟨ ap succ $ ℤ+-assoc (pos n₁) z₂ z₃ ⟩
+  succ (pos n₁ ℤ+ (z₂ ℤ+ z₃))   ∎
+ℤ+-assoc (negsucc O)      z₂ z₃ = pred-ℤ+ z₂ z₃
+ℤ+-assoc (negsucc (S n₁)) z₂ z₃ =
+  pred (negsucc n₁ ℤ+ z₂) ℤ+ z₃     =⟨ pred-ℤ+ (negsucc n₁ ℤ+ z₂) z₃ ⟩
+  pred ((negsucc n₁ ℤ+ z₂) ℤ+ z₃)   =⟨ ap pred $ ℤ+-assoc (negsucc n₁) z₂ z₃ ⟩
+  pred (negsucc n₁ ℤ+ (z₂ ℤ+ z₃))   ∎
 
 private
-  pos-S-ℤ+-neg-S : ∀ n₁ n₂ → pos (S n₁) ℤ+ neg (S n₂) == pos n₁ ℤ+ neg n₂
-  pos-S-ℤ+-neg-S O      n₂ = idp
-  pos-S-ℤ+-neg-S (S n₁) n₂ = ap succ $ pos-S-ℤ+-neg-S n₁ n₂
+  pos-S-ℤ+-negsucc-S : ∀ n₁ n₂ → pos (S n₁) ℤ+ negsucc (S n₂) == pos n₁ ℤ+ negsucc n₂
+  pos-S-ℤ+-negsucc-S O      n₂ = idp
+  pos-S-ℤ+-negsucc-S (S n₁) n₂ = ap succ $ pos-S-ℤ+-negsucc-S n₁ n₂
 
-  neg-S-ℤ+-pos-S : ∀ n₁ n₂ → neg (S n₁) ℤ+ pos (S n₂) == neg n₁ ℤ+ pos n₂
-  neg-S-ℤ+-pos-S O      n₂ = idp
-  neg-S-ℤ+-pos-S (S n₁) n₂ = ap pred $ neg-S-ℤ+-pos-S n₁ n₂
+  negsucc-S-ℤ+-pos-S : ∀ n₁ n₂ → negsucc (S n₁) ℤ+ pos (S n₂) == negsucc n₁ ℤ+ pos n₂
+  negsucc-S-ℤ+-pos-S O      n₂ = idp
+  negsucc-S-ℤ+-pos-S (S n₁) n₂ = ap pred $ negsucc-S-ℤ+-pos-S n₁ n₂
 
-  ℤ~-inv-r-pos : ∀ n → pos n ℤ+ neg n == O
-  ℤ~-inv-r-pos O     = idp
-  ℤ~-inv-r-pos (S n) =
-    pos (S n) ℤ+ neg (S n)  =⟨ pos-S-ℤ+-neg-S n n ⟩
-    pos n ℤ+ neg n          =⟨ ℤ~-inv-r-pos n ⟩
-    O                       ∎
+ℤ~-inv-r : ∀ z → z ℤ+ ℤ~ z == 0
+ℤ~-inv-r (pos O)     = idp
+ℤ~-inv-r (pos (S O)) = idp
+ℤ~-inv-r (pos (S (S n))) =
+  pos (S (S n)) ℤ+ negsucc (S n)  =⟨ pos-S-ℤ+-negsucc-S (S n) n ⟩
+  pos (S n) ℤ+ negsucc n          =⟨ ℤ~-inv-r (pos (S n)) ⟩
+  0                               ∎
+ℤ~-inv-r (negsucc O) = idp
+ℤ~-inv-r (negsucc (S n)) =
+  negsucc (S n) ℤ+ pos (S (S n))  =⟨ negsucc-S-ℤ+-pos-S n (S n) ⟩
+  negsucc n ℤ+ pos (S n)          =⟨ ℤ~-inv-r (negsucc n) ⟩
+  0                               ∎
 
-  ℤ~-inv-r-neg : ∀ n → neg n ℤ+ pos n == O
-  ℤ~-inv-r-neg O     = idp
-  ℤ~-inv-r-neg (S n) =
-    neg (S n) ℤ+ pos (S n)  =⟨ neg-S-ℤ+-pos-S n n ⟩
-    neg n ℤ+ pos n          =⟨ ℤ~-inv-r-neg n ⟩
-    O                       ∎
-
-ℤ~-inv-r : ∀ z → z ℤ+ ℤ~ z == O
-ℤ~-inv-r O       = idp
-ℤ~-inv-r (pos n) = ℤ~-inv-r-pos n
-ℤ~-inv-r (neg n) = ℤ~-inv-r-neg n
-
-ℤ~-inv-l : ∀ z → ℤ~ z ℤ+ z == O
-ℤ~-inv-l O       = idp
-ℤ~-inv-l (pos n) = ℤ~-inv-r-neg n
-ℤ~-inv-l (neg n) = ℤ~-inv-r-pos n
+ℤ~-inv-l : ∀ z → ℤ~ z ℤ+ z == 0
+ℤ~-inv-l (pos O) = idp
+ℤ~-inv-l (pos (S n)) = ℤ~-inv-r (negsucc n)
+ℤ~-inv-l (negsucc n) = ℤ~-inv-r (pos (S n))
 
 ℤ-group-structure : GroupStructure ℤ
 ℤ-group-structure = record
-  { ident = O
+  { ident = 0
   ; inv = ℤ~
   ; comp = _ℤ+_
   ; unitl = ℤ+-unit-l
@@ -232,4 +214,3 @@ private
 
 ℤ-group : Group₀
 ℤ-group = group _ ℤ-is-set ℤ-group-structure
--}
