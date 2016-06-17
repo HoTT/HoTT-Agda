@@ -11,63 +11,63 @@ module CofiberComp where
   module H = ⊙WedgeRec f g
   ⊙h = H.⊙f; h = H.f
 
-  module IntoCod = CofiberRec (fst f) {C = fst (⊙Cof ⊙h)}
-    (cfbase _)
-    (cfcod _)
-    (λ x → cfglue _ (winl x))
+  module IntoCod = CofiberRec {f = fst f} {C = fst (⊙Cof ⊙h)}
+    cfbase
+    cfcod
+    (λ x → cfglue (winl x))
 
-  module Into = CofiberRec (fst (⊙cfcod f ⊙∘ g)) {C = fst (⊙Cof ⊙h)}
-    (cfbase _)
+  module Into = CofiberRec {f = fst (⊙cfcod' f ⊙∘ g)} {C = fst (⊙Cof ⊙h)}
+    cfbase
     IntoCod.f
-    (λ y → cfglue _ (winr y))
+    (λ y → cfglue (winr y))
 
   into = Into.f
 
   out-glue : (w : X ∨ Y)
-    → cfbase (fst (⊙cfcod f ⊙∘ g)) == cfcod _ (cfcod _ (h w))
+    → cfbase' (fst (⊙cfcod' f ⊙∘ g)) == cfcod (cfcod (h w))
   out-glue = Wedge-elim
-    (λ x → (cfglue _ (snd Y)
-            ∙ ! (ap (cfcod _ ∘ cfcod _) (snd f ∙ ! (snd g)))
-            ∙ ! (ap (cfcod _) (cfglue _ (snd X))))
-           ∙ ap (cfcod _) (cfglue _ x))
-    (λ y → cfglue _ y)
+    (λ x → (cfglue (snd Y)
+            ∙ ! (ap (cfcod ∘ cfcod) (snd f ∙ ! (snd g)))
+            ∙ ! (ap cfcod (cfglue (snd X))))
+           ∙ ap cfcod (cfglue x))
+    cfglue
     (↓-cst=app-from-square $
       out-square-lemma
-        (cfglue _ (snd Y))
-        (ap (cfcod _ ∘ cfcod _) (snd f ∙ ! (snd g)))
-        (ap (cfcod _) (cfglue _ (snd X)))
-      ⊡v∙ ! (ap-∘ (cfcod _ ∘ cfcod _) h wglue
-             ∙ ap (ap (cfcod _ ∘ cfcod _)) H.glue-β))
+        (cfglue (snd Y))
+        (ap (cfcod ∘ cfcod) (snd f ∙ ! (snd g)))
+        (ap cfcod (cfglue (snd X)))
+      ⊡v∙ ! (ap-∘ (cfcod ∘ cfcod) h wglue
+             ∙ ap (ap (cfcod ∘ cfcod)) H.glue-β))
     where
     out-square-lemma : ∀ {i} {A : Type i} {x y z w : A}
       (p : x == y) (q : z == y) (r : w == z)
       → Square ((p ∙ ! q ∙ ! r) ∙ r) idp q p
     out-square-lemma idp idp idp = ids
 
-  module Out = CofiberRec (fst ⊙h) {C = fst (⊙Cof (⊙cfcod f ⊙∘ g))}
-    (cfbase _)
-    (λ z → cfcod _ (cfcod _ z))
+  module Out = CofiberRec {C = fst (⊙Cof (⊙cfcod' f ⊙∘ g))}
+    cfbase
+    (λ z → cfcod (cfcod z))
     out-glue
 
   out = Out.f
 
   into-out : ∀ c → into (out c) == c
-  into-out = CofPushoutSection.elim h (λ _ → unit) (λ _ → idp)
+  into-out = CofPushoutSection.elim {h = h} (λ _ → unit) (λ _ → idp)
     idp
     (λ _ → idp)
     (↓-∘=idf-in into out ∘ λ x →
       ap (ap into) (Out.glue-β (winl x))
       ∙ lemma₁ into
           (Into.glue-β (snd Y))
-          (ap-! into (ap (cfcod _ ∘ cfcod _) (snd f ∙ ! (snd g)))
-           ∙ ap ! (∘-ap into (cfcod _ ∘ cfcod _) (snd f ∙ ! (snd g)))
-           ∙ ap (! ∘ ap (cfcod _)) (! H.glue-β)
-           ∙ ap ! (∘-ap (cfcod _) h wglue))
-          (ap-! into (ap (cfcod _) (cfglue _ (snd X)))
-           ∙ ap ! (∘-ap into (cfcod _) (cfglue _ (snd X))
+          (ap-! into (ap (cfcod ∘ cfcod) (snd f ∙ ! (snd g)))
+           ∙ ap ! (∘-ap into (cfcod ∘ cfcod) (snd f ∙ ! (snd g)))
+           ∙ ap (! ∘ ap cfcod) (! H.glue-β)
+           ∙ ap ! (∘-ap cfcod h wglue))
+          (ap-! into (ap cfcod (cfglue (snd X)))
+           ∙ ap ! (∘-ap into cfcod (cfglue (snd X))
                    ∙ IntoCod.glue-β (snd X)))
-          (∘-ap into (cfcod _) (cfglue _ x) ∙ IntoCod.glue-β x)
-      ∙ ap (λ w → w ∙ cfglue _ (winl x)) (lemma₂ (cfglue _) wglue))
+          (∘-ap into cfcod (cfglue x) ∙ IntoCod.glue-β x)
+      ∙ ap (λ w → w ∙ cfglue (winl x)) (lemma₂ cfglue wglue))
     (↓-∘=idf-in into out ∘ λ y →
       ap (ap into) (Out.glue-β (winr y))
       ∙ Into.glue-β y)
@@ -86,7 +86,7 @@ module CofiberComp where
     lemma₂ p {x} idp = !-inv-r (p x)
 
   out-into : ∀ κ → out (into κ) == κ
-  out-into = Cofiber-elim _
+  out-into = Cofiber-elim
     idp
     out-into-cod
     (↓-∘=idf-from-square out into ∘ vert-degen-square ∘ λ y →
@@ -97,20 +97,20 @@ module CofiberComp where
       → Square p (p ∙ q) q idp
     lemma idp idp = ids
 
-    out-into-cod : ∀ c → out (into (cfcod _ c)) == cfcod _ c
-    out-into-cod = Cofiber-elim _
-      (cfglue _ (snd Y)
-       ∙ ! (ap (cfcod _ ∘ cfcod _) (snd f ∙ ! (snd g)))
-       ∙ ! (ap (cfcod _) (cfglue _ (snd X))))
+    out-into-cod : ∀ c → out (into (cfcod c)) == cfcod c
+    out-into-cod = Cofiber-elim
+      (cfglue (snd Y)
+       ∙ ! (ap (cfcod ∘ cfcod) (snd f ∙ ! (snd g)))
+       ∙ ! (ap cfcod (cfglue (snd X))))
       (λ y → idp)
       (↓-='-from-square ∘ λ x →
-        (ap-∘ out IntoCod.f (cfglue _ x)
+        (ap-∘ out IntoCod.f (cfglue x)
          ∙ ap (ap out) (IntoCod.glue-β x)
          ∙ Out.glue-β (winl x))
         ∙v⊡ lemma _ _)
 
-  eq : fst (⊙Cof (⊙cfcod f ⊙∘ g)) ≃ fst (⊙Cof ⊙h)
+  eq : fst (⊙Cof (⊙cfcod' f ⊙∘ g)) ≃ fst (⊙Cof ⊙h)
   eq = equiv into out into-out out-into
 
-  ⊙path : ⊙Cof (⊙cfcod f ⊙∘ g) == ⊙Cof ⊙h
-  ⊙path = ⊙ua (⊙ify-eq eq idp)
+  ⊙path : ⊙Cof (⊙cfcod' f ⊙∘ g) == ⊙Cof ⊙h
+  ⊙path = ⊙ua (⊙≃-in eq idp)

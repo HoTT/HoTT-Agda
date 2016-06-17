@@ -43,6 +43,10 @@ module _ {i j} {A : Type i} {B : A → Type j} (f : Π A B) where
     → apd f (p ∙' q) == apd f p ∙'ᵈ apd f q
   apd-∙' idp idp = idp
 
+  apd-! : {x y : A} (p : x == y)
+    → apd f (! p) == !ᵈ (apd f p)
+  apd-! idp = idp
+
 {- Over stuff -}
 module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
   (f : {a : A} → B a → C a) where
@@ -118,14 +122,18 @@ htpy-natural : ∀ {i j} {A : Type i} {B : Type j} {x y : A} {f g : A → B}
   (p : ∀ x → (f x == g x)) (q : x == y) → ap f q ∙ p y == p x ∙ ap g q
 htpy-natural p idp = ! (∙-unit-r _)
 
-htpy-natural-toid : ∀ {i} {A : Type i} {f : A → A}
+htpy-natural-app=idf : ∀ {i} {A : Type i} {f : A → A}
   (p : ∀ (x : A) → f x == x) → (∀ x → ap f (p x) == p (f x))
-htpy-natural-toid {f = f} p x = anti-whisker-right (p x) $ 
+htpy-natural-app=idf {f = f} p x = anti-whisker-right (p x) $ 
   htpy-natural p (p x) ∙ ap (λ q → p (f x) ∙ q) (ap-idf (p x))
 
-htpy-natural-fromcst : ∀ {i j} {A : Type i} {B : Type j} {x y : A} {f : A → B} {b : B}
+htpy-natural-cst=app : ∀ {i j} {A : Type i} {B : Type j} {x y : A} {f : A → B} {b : B}
   (p : ∀ x → (b == f x)) (q : x == y) → p x ∙ ap f q == p y
-htpy-natural-fromcst p idp = ∙-unit-r _
+htpy-natural-cst=app p idp = ∙-unit-r _
+
+htpy-natural'-app=cst : ∀ {i j} {A : Type i} {B : Type j} {x y : A} {f : A → B} {b : B}
+  (p : ∀ x → (f x == b)) (q : x == y) → ap f q ∙' p y == p x
+htpy-natural'-app=cst p idp = ∙'-unit-l _
 
 {- for functions with two arguments -}
 module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C) where

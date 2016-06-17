@@ -23,10 +23,10 @@ Unit-group-structure = record
 Unit-Group : Group lzero
 Unit-Group = group _ Unit-is-set Unit-group-structure
 
-LiftUnit-Group : ∀ {i} → Group i
-LiftUnit-Group = Lift-Group Unit-Group
+Lift-Unit-Group : ∀ {i} → Group i
+Lift-Unit-Group = Lift-Group Unit-Group
 
-0ᴳ = LiftUnit-Group
+0ᴳ = Lift-Unit-Group
 
 contr-is-0ᴳ : ∀ {i} (G : Group i) → is-contr (Group.El G) → G == 0ᴳ
 contr-is-0ᴳ G pA = group-ua

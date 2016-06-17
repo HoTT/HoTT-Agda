@@ -15,20 +15,23 @@ Ptd₀ = Ptd lzero
 ⊙[_,_] : ∀ {i} (A : Type i) (a : A) → Ptd i
 ⊙[_,_] = _,_
 
+infixr 0 _⊙→_
 _⊙→_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
 (A , a₀) ⊙→ (B , b₀) = ⊙[ Σ (A → B) (λ f → f a₀ == b₀) , ((λ _ → b₀), idp) ]
 
-_⊙≃_ : ∀ {i j} → Ptd i → Ptd j → Set (lmax i j)
+infix 30 _⊙≃_
+_⊙≃_ : ∀ {i j} → Ptd i → Ptd j → Type (lmax i j)
 X ⊙≃ Y = Σ (fst (X ⊙→ Y)) (λ {(f , _) → is-equiv f})
 
-⊙ify-eq : ∀ {i j} {X : Ptd i} {Y : Ptd j}
+⊙≃-in : ∀ {i j} {X : Ptd i} {Y : Ptd j}
   (e : fst X ≃ fst Y) (p : –> e (snd X) == snd Y)
   → X ⊙≃ Y
-⊙ify-eq (f , ie) p = ((f , p) , ie)
+⊙≃-in (f , ie) p = ((f , p) , ie)
 
-infixr 0 _⊙→_ _⊙≃_
-
-infixr 80 _⊙∘_
+⊙≃-out : ∀ {i j} {X : Ptd i} {Y : Ptd j}
+  → X ⊙≃ Y
+  → Σ (fst X ≃ fst Y) (λ e → –> e (snd X) == snd Y)
+⊙≃-out ((f , p) , ie) = (f , ie) , p
 
 ⊙idf : ∀ {i} (X : Ptd i) → fst (X ⊙→ X)
 ⊙idf A = ((λ x → x) , idp)
@@ -36,9 +39,15 @@ infixr 80 _⊙∘_
 ⊙cst : ∀ {i j} {X : Ptd i} {Y : Ptd j} → fst (X ⊙→ Y)
 ⊙cst {Y = Y} = ((λ x → snd Y) , idp)
 
+infixr 80 _⊙∘_
 _⊙∘_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y)) → fst (X ⊙→ Z)
 (g , gpt) ⊙∘ (f , fpt) = (g ∘ f) , (ap g fpt ∙ gpt)
+
+infixr 80 _⊙∘e_
+_⊙∘e_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  (g : Y ⊙≃ Z) (f : X ⊙≃ Y) → X ⊙≃ Z
+(g , g-eq) ⊙∘e (f , f-eq) = (g ⊙∘ f , g-eq ∘ise f-eq)
 
 ⊙∘-unit-l : ∀ {i j} {X : Ptd i} {Y : Ptd j} (f : fst (X ⊙→ Y))
   → ⊙idf Y ⊙∘ f == f

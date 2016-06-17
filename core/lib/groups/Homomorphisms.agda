@@ -73,9 +73,13 @@ _∘ᴳ_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
     f = g ∘ f;
     pres-comp = λ x₁ x₂ → ap g (f-comp x₁ x₂) ∙ g-comp (f x₁) (f x₂)}
 
+infixr 80 _∘eᴳ_
+
 _∘eᴳ_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
   → H ≃ᴳ K → G ≃ᴳ H → G ≃ᴳ K
 (φ₂ , ie₂) ∘eᴳ (φ₁ , ie₁) = (φ₂ ∘ᴳ φ₁ , ie₂ ∘ise ie₁)
+
+infixl 120 _⁻¹ᴳ
 
 _⁻¹ᴳ : ∀ {i j} {G : Group i} {H : Group j} → G ≃ᴳ H → H ≃ᴳ G
 _⁻¹ᴳ {G = G} {H = H} (φ , ie) =

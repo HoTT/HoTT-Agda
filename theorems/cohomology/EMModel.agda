@@ -19,11 +19,11 @@ module _ {i} (G : Group i) (G-abelian : is-abelian G) where
 
     E-spectrum : (n : ℤ) → ⊙Ω (E (succ n)) == E n
     E-spectrum (pos n) = spectrum n
-    E-spectrum (negsucc O) = ⊙ua $ ⊙ify-eq
+    E-spectrum (negsucc O) = ⊙ua $ ⊙≃-in
       (equiv (λ _ → _) (λ _ → idp)
              (λ _ → idp) (prop-has-all-paths (EM-level _ _ _) _))
       idp
-    E-spectrum (negsucc (S n)) = ⊙ua $ ⊙ify-eq
+    E-spectrum (negsucc (S n)) = ⊙ua $ ⊙≃-in
       (equiv (λ _ → _) (λ _ → idp)
              (λ _ → idp) (prop-has-all-paths (Lift-level Unit-is-set _ _) _))
       idp
@@ -33,7 +33,7 @@ module _ {i} (G : Group i) (G-abelian : is-abelian G) where
 
   open CohomologyTheory EM-Cohomology
 
-  EM-dimension : (n : ℤ) → n ≠ 0 → C n (⊙Sphere O) == 0ᴳ
+  EM-dimension : (n : ℤ) → n ≠ 0 → C n (⊙Lift ⊙S⁰) == 0ᴳ
   EM-dimension (pos O) neq = ⊥-rec (neq idp)
   EM-dimension (pos (S n)) _ =
     contr-is-0ᴳ _ $ connected-at-level-is-contr

@@ -2,8 +2,10 @@
 
 open import HoTT
 
-{- Adjoint functors F,G : Ptd → Ptd
- - This could be generalized... -}
+{- The pseudo-adjoint functors F,G : Ptd → Ptd
+ - It stops at composition and ignores
+ - all the higher associahedrons.
+ -}
 
 module homotopy.PtdAdjoint where
 
@@ -209,7 +211,7 @@ module RightAdjoint× {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
     ⊙idf _ ∎
 
   ⊙eq : G.obj (U ⊙× V) ⊙≃ G.obj U ⊙× G.obj V
-  ⊙eq = ⊙ify-eq (equiv (fst ⊙into) (fst ⊙out)
+  ⊙eq = ⊙≃-in (equiv (fst ⊙into) (fst ⊙out)
                   (app= (ap fst ⊙into-out)) (app= (ap fst ⊙out-into)))
                 (snd ⊙into)
 
@@ -332,7 +334,7 @@ module LeftAdjoint∨ {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
     ⊙idf _ ∎
 
   ⊙eq : F.obj U ⊙∨ F.obj V ⊙≃ F.obj (U ⊙∨ V)
-  ⊙eq = ⊙ify-eq (equiv (fst ⊙into) (fst ⊙out)
+  ⊙eq = ⊙≃-in (equiv (fst ⊙into) (fst ⊙out)
                   (app= (ap fst ⊙into-out)) (app= (ap fst ⊙out-into)))
                 (snd ⊙into)
 

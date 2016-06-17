@@ -109,7 +109,7 @@ abstract
          ==  Ω^-Group n t (⊙Trunc ⟨ n ⟩ X) Trunc-level
     lemma = ap (uncurry $ Ω^-Group n t) $
       pair=
-        (⊙ua (⊙ify-eq (fuse-Trunc (fst X) ⟨ n ⟩ m) idp) ∙
+        (⊙ua (⊙≃-in (fuse-Trunc (fst X) ⟨ n ⟩ m) idp) ∙
          ap (λ k → ⊙Trunc k X) (minT-out-l lte))
         (prop-has-all-paths-↓ has-level-is-prop)
 
@@ -131,7 +131,7 @@ abstract
     → (m <T ⟨ n ⟩) → has-level m (fst X)
     → π n t X == 0ᴳ
   π-above-level n t m X lt pX =
-    ap (π n t) (! (⊙ua (⊙ify-eq (unTrunc-equiv _ pX) idp)))
+    ap (π n t) (! (⊙ua (⊙≃-in (unTrunc-equiv _ pX) idp)))
     ∙ π-above-trunc n t m X lt
 
 {- πₙ(X × Y) == πₙ(X) × πₙ(Y) -}

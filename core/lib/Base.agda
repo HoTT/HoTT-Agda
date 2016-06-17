@@ -244,7 +244,7 @@ It’s a bit annoying to use, but it’s not used much (for now).
 -}
 
 record Lift {i j} (A : Type i) : Type (lmax i j) where
-  constructor lift
+  instance constructor lift
   field
     lower : A
 open Lift public
@@ -413,11 +413,11 @@ instance
 
   TLevel-neg-reader : FromNeg TLevel
   FromNeg.in-range TLevel-neg-reader O = ⊤
-  FromNeg.in-range TLevel-neg-reader (S O) = ⊤
-  FromNeg.in-range TLevel-neg-reader (S (S O)) = ⊤
+  FromNeg.in-range TLevel-neg-reader 1 = ⊤
+  FromNeg.in-range TLevel-neg-reader 2 = ⊤
   FromNeg.in-range TLevel-neg-reader (S (S (S _))) = ⊥
   FromNeg.read TLevel-neg-reader O = S (S ⟨-2⟩)
-  FromNeg.read TLevel-neg-reader (S O) = S ⟨-2⟩
-  FromNeg.read TLevel-neg-reader (S (S O)) = ⟨-2⟩
+  FromNeg.read TLevel-neg-reader 1 = S ⟨-2⟩
+  FromNeg.read TLevel-neg-reader 2 = ⟨-2⟩
   FromNeg.read TLevel-neg-reader (S (S (S _))) ⦃()⦄
 

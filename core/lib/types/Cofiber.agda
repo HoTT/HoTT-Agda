@@ -19,16 +19,27 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
   Cofiber : Type (lmax i j)
   Cofiber = Pushout cofiber-span
 
-  cfbase : Cofiber
-  cfbase = left tt
+  cfbase' : Cofiber
+  cfbase' = left tt
 
-  cfcod : B → Cofiber
-  cfcod b = right b
+  cfcod' : B → Cofiber
+  cfcod' b = right b
+
+  cfglue' : (a : A) → cfbase' == cfcod' (f a)
+  cfglue' a = glue a
+
+module _ {i j} {A : Type i} {B : Type j} {f : A → B} where
+
+  cfbase : Cofiber f
+  cfbase = cfbase' f
+
+  cfcod : B → Cofiber f
+  cfcod = cfcod' f
 
   cfglue : (a : A) → cfbase == cfcod (f a)
-  cfglue a = glue a
+  cfglue = cfglue' f
 
-  module CofiberElim {k} {P : Cofiber → Type k}
+  module CofiberElim {k} {P : Cofiber f → Type k}
     (b : P cfbase) (c : (y : B) → P (cfcod y)) 
     (p : (x : A) → b == c (f x) [ P ↓ cfglue x ])
     = PushoutElim (λ _ → b) c p
@@ -37,11 +48,11 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
 
   module CofiberRec {k} {C : Type k} (b : C) (c : B → C)
     (p : (x : A) → b == c (f x))
-    = PushoutRec {d = cofiber-span} (λ _ → b) c p
+    = PushoutRec {d = cofiber-span f} (λ _ → b) c p
 
   module CofiberRecType {k} (b : Type k) (c : B → Type k)
     (p : (x : A) → b ≃ c (f x))
-    = PushoutRecType {d = cofiber-span} (λ _ → b) c p
+    = PushoutRecType {d = cofiber-span f} (λ _ → b) c p
 
 module _ {i j} {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙→ Y)) where
 
@@ -51,14 +62,21 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙→ Y)) where
   ⊙Cof : Ptd (lmax i j)
   ⊙Cof = ⊙Pushout ⊙cof-span
 
-  ⊙cfcod : fst (Y ⊙→ ⊙Cof)
-  ⊙cfcod =
-    cfcod (fst F) , ap (cfcod (fst F)) (! (snd F)) ∙ ! (cfglue (fst F) (snd X))
+  ⊙cfcod' : fst (Y ⊙→ ⊙Cof)
+  ⊙cfcod' = cfcod , ap cfcod (! (snd F)) ∙ ! (cfglue (snd X))
 
-  ⊙cfglue : ⊙cst == ⊙cfcod ⊙∘ F
-  ⊙cfglue = ⊙λ= (cfglue _) (lemma (cfcod _) (cfglue _ (snd X)) (snd F))
+  ⊙cfglue' : ⊙cst == ⊙cfcod' ⊙∘ F
+  ⊙cfglue' = ⊙λ= cfglue (lemma cfcod (cfglue (snd X)) (snd F))
     where
     lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
       {x y : A} {z : B} (p : z == f x) (q : x == y)
       → idp == p ∙ ap f q ∙ ap f (! q) ∙ ! p
     lemma f idp idp = idp
+
+module _ {i j} {X : Ptd i} {Y : Ptd j} {F : fst (X ⊙→ Y)} where
+
+  ⊙cfcod : fst (Y ⊙→ ⊙Cof F)
+  ⊙cfcod = ⊙cfcod' F
+
+  ⊙cfglue : ⊙cst == ⊙cfcod ⊙∘ F
+  ⊙cfglue = ⊙cfglue' F

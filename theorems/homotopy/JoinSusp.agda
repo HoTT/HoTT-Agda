@@ -10,83 +10,92 @@ module _ {i} {A : Type i} where
 
   private
 
-      module Into = PushoutRec {d = *-span (Lift {j = i} Bool) A}
+      module Into = JoinRec {A = Bool} {B = A}
         {D = Suspension A}
-        (λ {(lift true) → north _;
-            (lift false) → south _})
-        (λ _ → south _)
-        (λ {(lift true , a) → merid _ a;
-            (lift false , a) → idp})
+        (if_then north else south)
+        (λ _ → south)
+        (λ {(true , a) → merid a;
+            (false , a) → idp})
 
       into = Into.f
 
-      module Out = SuspensionRec A {C = Lift {j = i} Bool * A}
-        (left (lift true))
-        (left (lift false))
-        (λ a → glue (lift true , a) ∙ ! (glue (lift false , a)))
+      module Out = SuspensionRec {C = Bool * A}
+        (left true)
+        (left false)
+        (λ a → glue (true , a) ∙ ! (glue (false , a)))
 
       out = Out.f
 
       into-out : ∀ σ → into (out σ) == σ
-      into-out = Suspension-elim _
+      into-out = Suspension-elim
         idp
         idp
         (↓-∘=idf-from-square into out ∘ λ a → vert-degen-square $
            ap (ap into) (Out.merid-β a)
-           ∙ ap-∙ into (glue (lift true , a)) (! (glue (lift false , a)))
-           ∙ (Into.glue-β (lift true , a)
-              ∙2 (ap-! into (glue (lift false , a))
-                  ∙ ap ! (Into.glue-β (lift false , a))))
+           ∙ ap-∙ into (glue (true , a)) (! (glue (false , a)))
+           ∙ (Into.glue-β (true , a)
+              ∙2 (ap-! into (glue (false , a))
+                  ∙ ap ! (Into.glue-β (false , a))))
            ∙ ∙-unit-r _)
 
       out-into : ∀ j → out (into j) == j
-      out-into = Pushout-elim
-        (λ {(lift true) → idp;
-            (lift false) → idp})
-        (λ a → glue (lift false , a))
+      out-into = Join-elim
+        (λ{true → idp ; false → idp})
+        (λ a → glue (false , a))
         (↓-∘=idf-from-square out into ∘
-          λ {(lift true , a) →
-                (ap (ap out) (Into.glue-β (lift true , a)) ∙ Out.merid-β a)
-                ∙v⊡ (vid-square {p = glue (lift true , a)}
-                      ⊡h rt-square (glue (lift false , a)))
+          λ {(true , a) →
+                (ap (ap out) (Into.glue-β (true , a)) ∙ Out.merid-β a)
+                ∙v⊡ (vid-square {p = glue (true , a)}
+                      ⊡h rt-square (glue (false , a)))
                 ⊡v∙ ∙-unit-r _;
-             (lift false , a) →
-               ap (ap out) (Into.glue-β (lift false , a)) ∙v⊡ connection})
+             (false , a) →
+               ap (ap out) (Into.glue-β (false , a)) ∙v⊡ connection})
 
-  join-S⁰-equiv : Lift {j = i} Bool * A ≃ Suspension A
-  join-S⁰-equiv = equiv into out into-out out-into
+  *-Bool-equiv : Bool * A ≃ Suspension A
+  *-Bool-equiv = equiv into out into-out out-into
 
-  join-S⁰-path = ua join-S⁰-equiv
+  *-Lift-Bool-equiv : Lift {j = i} Bool * A ≃ Suspension A
+  *-Lift-Bool-equiv = *-Bool-equiv ∘e *-equiv lower-equiv (ide A)
+
+  *-Bool-path = ua *-Bool-equiv
 
 module _ {i} (X : Ptd i) where
 
-  join-S⁰-⊙path : ⊙Sphere {i} 0 ⊙* X == ⊙Susp X
-  join-S⁰-⊙path = ⊙ua (⊙ify-eq join-S⁰-equiv idp)
+  ⊙*-⊙Bool-path : ⊙Bool ⊙* X == ⊙Susp X
+  ⊙*-⊙Bool-path = ⊙ua (⊙≃-in *-Bool-equiv idp)
 
-module _ {i} {A B : Type i} where
+  ⊙*-⊙Lift-⊙Bool-path : ⊙Lift {j = i} ⊙Bool ⊙* X == ⊙Susp X
+  ⊙*-⊙Lift-⊙Bool-path = ⊙ua (⊙≃-in *-Lift-Bool-equiv idp)
 
-  join-susp-shift : Suspension A * B == Suspension (A * B)
-  join-susp-shift =
-    ap (λ C → C * B) (! join-S⁰-path)
+module _ {i j} {A : Type i} {B : Type j} where
+
+  *-Suspension-path : Suspension A * B == Suspension (A * B)
+  *-Suspension-path =
+    ap (_* B) (! *-Bool-path)
     ∙ join-rearrange-path
     ∙ ua swap-equiv
-    ∙ join-S⁰-path
+    ∙ *-Bool-path
     ∙ ap Suspension (ua swap-equiv)
 
-module _ {i} (X Y : Ptd i) where
+module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
-  ⊙join-susp-shift : ⊙Susp X ⊙* Y == ⊙Susp (X ⊙* Y)
-  ⊙join-susp-shift =
-    ap (λ Z → Z ⊙* Y) (! (join-S⁰-⊙path X))
+  ⊙*-⊙Susp : ⊙Susp X ⊙* Y == ⊙Susp (X ⊙* Y)
+  ⊙*-⊙Susp =
+    ap (_⊙* Y) (! (⊙*-⊙Bool-path X))
     ∙ join-rearrange-⊙path (⊙Sphere 0) X Y
-    ∙ ⊙ua (⊙ify-eq swap-equiv (! (glue _)))
-    ∙ join-S⁰-⊙path (Y ⊙* X)
-    ∙ ap (λ A → (Suspension A , north _)) (ua swap-equiv)
+    ∙ ⊙ua (⊙≃-in swap-equiv (! (glue _)))
+    ∙ ⊙*-⊙Bool-path (Y ⊙* X)
+    ∙ ap (λ A → (Suspension A , north)) (ua swap-equiv)
 
-module _ {i} (X : Ptd i) where
+module _ {i} where
 
-  ⊙join-sphere : (m : ℕ) → ⊙Sphere {i} m ⊙* X == ⊙Susp^ (S m) X
-  ⊙join-sphere O = join-S⁰-⊙path X
-  ⊙join-sphere (S m) = ⊙join-susp-shift (⊙Sphere m) X
-                          ∙ ap ⊙Susp (⊙join-sphere m)
+  ⊙*-⊙Sphere : (m : ℕ) (X : Ptd i) → ⊙Sphere m ⊙* X == ⊙Susp^ (S m) X
+  ⊙*-⊙Sphere O X = ⊙*-⊙Bool-path X
+  ⊙*-⊙Sphere (S m) X = ⊙*-⊙Susp (⊙Sphere m) X
+                     ∙ ap ⊙Susp (⊙*-⊙Sphere m X)
 
+  ⊙*-⊙Lift-⊙Sphere : (m : ℕ) (X : Ptd i) → ⊙Lift {j = i} (⊙Sphere m) ⊙* X == ⊙Susp^ (S m) X
+  ⊙*-⊙Lift-⊙Sphere O X = ⊙*-⊙Lift-⊙Bool-path X
+  ⊙*-⊙Lift-⊙Sphere (S m) X = ap (_⊙* X) (! $ ⊙Susp-⊙Lift-path (⊙Sphere m))
+                           ∙ ⊙*-⊙Susp (⊙Lift (⊙Sphere m)) X
+                           ∙ ap ⊙Susp (⊙*-⊙Lift-⊙Sphere m X)

@@ -7,6 +7,7 @@ open import cohomology.FunctionOver
 
 module cohomology.Theory where
 
+-- [i] for the universe level of the group
 record CohomologyTheory i : Type (lsucc i) where
   field
     C : ℤ → Ptd i → Group i
@@ -41,7 +42,7 @@ record CohomologyTheory i : Type (lsucc i) where
         == CF-hom n f ∘ᴳ fst (C-Susp n Y)
 
     C-exact : (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y))
-      → is-exact (CF-hom n (⊙cfcod f)) (CF-hom n f)
+      → is-exact (CF-hom n (⊙cfcod' f)) (CF-hom n f)
 
     C-additive : (n : ℤ) {I : Type i} (Z : I → Ptd i)
       → ((W : I → Type i) → has-choice 0 I W)
@@ -60,4 +61,4 @@ record OrdinaryTheory i : Type (lsucc i) where
     cohomology-theory : CohomologyTheory i
   open CohomologyTheory cohomology-theory public
   field
-    C-dimension : (n : ℤ) → n ≠ 0 → C n (⊙Sphere O) == 0ᴳ
+    C-dimension : (n : ℤ) → n ≠ 0 → C n (⊙Lift ⊙S⁰) == 0ᴳ

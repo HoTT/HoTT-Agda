@@ -20,7 +20,9 @@ import homotopy.LoopSpaceCircle
 import homotopy.HopfJunior
 import homotopy.Hopf
 
+-- cohomology
 import cohomology.EMModel
+import cohomology.Torus
 
 import homotopy.SpaceFromGroups
 

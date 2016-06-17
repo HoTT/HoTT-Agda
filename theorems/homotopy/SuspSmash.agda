@@ -6,7 +6,7 @@ open import homotopy.elims.CofPushoutSection
 
 -- Σ(X∧Y) ≃ X * Y
 
-module homotopy.SuspSmash {i} (X Y : Ptd i) where
+module homotopy.SuspSmash {i j} (X : Ptd i) (Y : Ptd j) where
 
 private
 
@@ -20,11 +20,11 @@ private
       → p ∙ ! p ∙ q ∙ ! q ∙ p == p
     reduce-y idp idp = idp
 
-  module Into = SuspensionRec (Smash X Y)
+  module Into = SuspensionRec {A = Smash X Y}
     {C = fst (X ⊙* Y)}
     (left (snd X))
     (right (snd Y))
-    (CofPushoutSection.rec _ (λ _ → tt) (λ _ → idp)
+    (CofPushoutSection.rec (λ _ → tt) (λ _ → idp)
       (glue (snd X , snd Y))
       (λ {(x , y) →
         glue (snd X , snd Y) ∙ ! (glue (x , snd Y))
@@ -37,9 +37,9 @@ private
 
   module Out = PushoutRec {d = ⊙span-out (*-⊙span X Y)}
     {D = Suspension (Smash X Y)}
-    (λ _ → north _)
-    (λ _ → south _)
-    (λ {(x , y) → merid _ (cfcod _ (x , y))})
+    (λ _ → north)
+    (λ _ → south)
+    (λ {(x , y) → merid (cfcod (x , y))})
 
   out = Out.f
 
@@ -49,7 +49,7 @@ private
     (λ y → ! (glue (snd X , snd Y)) ∙ glue (snd X , y))
     (↓-∘=idf-from-square into out ∘ λ {(x , y) →
       (ap (ap into) (Out.glue-β (x , y))
-       ∙ Into.merid-β (cfcod _ (x ,  y)))
+       ∙ Into.merid-β (cfcod (x ,  y)))
       ∙v⊡ lemma (glue (snd X , snd Y)) (glue (x , snd Y))
                 (glue (snd X , y)) (glue (x , y))})
     where
@@ -64,19 +64,19 @@ private
     idp
     idp
     (↓-∘=idf-in out into ∘ λ {(x , y) →
-      ap (ap out) (Into.merid-β (cfcod _ (x , y)))
+      ap (ap out) (Into.merid-β (cfcod (x , y)))
       ∙ lemma₁ out (Out.glue-β (snd X , snd Y))
                    (Out.glue-β (x , snd Y))
                    (Out.glue-β (x , y))
                    (Out.glue-β (snd X , y))
                    (Out.glue-β (snd X , snd Y))
-      ∙ lemma₂ {p = merid _ (cfcod _ (snd X , snd Y))}
-               {q = merid _ (cfcod _ (x , snd Y))}
-               {r = merid _ (cfcod _ (x , y))}
-               {s = merid _ (cfcod _ (snd X , y))}
-               {t = merid _ (cfcod _ (snd X , snd Y))}
-          (ap (merid _) (! (cfglue _ (winl (snd X))) ∙ cfglue _ (winl x)))
-          (ap (merid _) (! (cfglue _ (winr y)) ∙ cfglue _ (winr (snd Y))))})
+      ∙ lemma₂ {p = merid (cfcod (snd X , snd Y))}
+               {q = merid (cfcod (x , snd Y))}
+               {r = merid (cfcod (x , y))}
+               {s = merid (cfcod (snd X , y))}
+               {t = merid (cfcod (snd X , snd Y))}
+          (ap merid (! (cfglue (winl (snd X))) ∙ cfglue (winl x)))
+          (ap merid (! (cfglue (winr y)) ∙ cfglue (winr (snd Y))))})
     where
     lemma₁ : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
       {x y z u v w : A}
@@ -106,4 +106,4 @@ module SuspSmash where
   path = ua eq
 
   ⊙path : ⊙Susp (⊙Smash X Y) == (X ⊙* Y)
-  ⊙path = ⊙ua (⊙ify-eq eq idp)
+  ⊙path = ⊙ua (⊙≃-in eq idp)

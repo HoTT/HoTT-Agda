@@ -144,6 +144,15 @@ Precedence convention
 7. Prefix operators: 100
 8. Postfix operators: 120
 
+### Inductive types and higher ones
+
+- See ```core/lib/types/Pushout.agda``` for an example of higher inductive types.
+
+- Constructors should make all the parameters implicit, and varients which make
+  commonly specified parameters explicit should have the suffix ```'```.
+
+- ```S0``` is defined as ```Bool```, and the circle is the suspension of ```Bool```.
+
 Structure of the source
 -----------------------
 

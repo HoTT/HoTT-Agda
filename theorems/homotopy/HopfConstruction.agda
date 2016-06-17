@@ -16,7 +16,7 @@ suspension of [A] with fiber [A] and applying [μ a] when you move along
 [merid a].
 -}
 
-module H = SuspensionRecType A A A μ-equiv
+module H = SuspensionRecType A A μ-equiv
 
 {-
 The total space of the previous fibration is the pushout of the following span

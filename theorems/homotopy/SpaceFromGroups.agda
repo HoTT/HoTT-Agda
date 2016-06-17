@@ -56,7 +56,7 @@ module SpaceFromEMs {i} (F : ℕ → Ptd i)
       lemma₁ : π (S (m + S n)) (ℕ-S≠O _) (F O) == 0ᴳ
       lemma₁ =
         π-above-level (S (m + S n)) (ℕ-S≠O _) _ (F O)
-          (⟨⟩-monotone-< (<-ap-S (<-+-l m (O< n)))) (pF O)
+          (⟨⟩-monotone-< (<-ap-S (<-+-l m (O<S n)))) (pF O)
 
       {- ignore the rest by recursive call -}
       lemma₂ : π (S (m + S n)) (ℕ-S≠O _) (⊙FinTuples (F ∘ S))

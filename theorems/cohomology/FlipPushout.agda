@@ -79,7 +79,7 @@ module _ {i j k} (ps : ⊙Span {i} {j} {k}) where
   flip-⊙pushout = (FlipPushout.f , preserves)
 
   flip-⊙pushout-path : ⊙Pushout ps == ⊙Pushout (flip-⊙span ps)
-  flip-⊙pushout-path = ⊙ua (⊙ify-eq (flip-pushout-equiv s) preserves)
+  flip-⊙pushout-path = ⊙ua (⊙≃-in (flip-pushout-equiv s) preserves)
 
   {- action of [flip-pushout] on [snd ⊙right] -}
   ap-flip-right : ap flip-pushout (snd (⊙right ps))

@@ -90,6 +90,9 @@ abstract
   pos-injective : (n m : ℕ) (p : pos n == pos m) → n == m
   pos-injective n m p = ap ℤ-get-pos p
 
+  pos-≠ : {n m : ℕ} (p : n ≠ m) → pos n ≠ pos m
+  pos-≠ p = p ∘ pos-injective _ _
+
   negsucc-injective : (n m : ℕ) (p : negsucc n == negsucc m) → n == m
   negsucc-injective n m p = ap ℤ-get-negsucc p
 
@@ -102,7 +105,7 @@ abstract
   ℤ-has-dec-eq : has-dec-eq ℤ
   ℤ-has-dec-eq (pos n) (pos m) with ℕ-has-dec-eq n m
   ℤ-has-dec-eq (pos n) (pos m) | inl p = inl (ap pos p)
-  ℤ-has-dec-eq (pos n) (pos m) | inr p⊥ = inr (λ p → p⊥ (pos-injective n m p))
+  ℤ-has-dec-eq (pos n) (pos m) | inr p⊥ = inr (pos-≠ p⊥)
   ℤ-has-dec-eq (pos n) (negsucc m) = inr (ℤ-pos≠negsucc n m)
   ℤ-has-dec-eq (negsucc n) (pos m) = inr (ℤ-negsucc≠pos n m)
   ℤ-has-dec-eq (negsucc n) (negsucc m) with ℕ-has-dec-eq n m

@@ -123,4 +123,4 @@ module _ {i} (Pick : Lift {j = i} Bool → Ptd i) where
 
   BigWedge-Bool-⊙path :
     ⊙BigWedge Pick == ⊙Wedge (Pick (lift true)) (Pick (lift false))
-  BigWedge-Bool-⊙path = ⊙ua (⊙ify-eq BigWedge-Bool-equiv idp)
+  BigWedge-Bool-⊙path = ⊙ua (⊙≃-in BigWedge-Bool-equiv idp)

@@ -163,7 +163,7 @@ module MayerVietorisBase
   eq = equiv into out into-out out-into
 
   ⊙eq : ⊙Cof ⊙reglue ⊙≃ ⊙Susp Z
-  ⊙eq = ⊙ify-eq eq idp
+  ⊙eq = ⊙≃-in eq idp
 
   path = ua eq
   ⊙path = ⊙ua ⊙eq

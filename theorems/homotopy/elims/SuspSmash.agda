@@ -6,17 +6,17 @@ open import homotopy.elims.CofPushoutSection
 
 module homotopy.elims.SuspSmash {i j k} {X : Ptd i} {Y : Ptd j}
   {P : Suspension (X ∧ Y) → Type k}
-  (north* : P (north _)) (south* : P (south _))
-  (cod* : (s : fst X × fst Y) → north* == south* [ P ↓ merid _ (cfcod _ s) ])
+  (north* : P north) (south* : P south)
+  (cod* : (s : fst X × fst Y) → north* == south* [ P ↓ merid (cfcod s) ])
   where
 
 private
-  base* = transport (λ κ → north* == south* [ P ↓ merid _ κ ])
-    (! (cfglue _ (winl (snd X))))
+  base* = transport (λ κ → north* == south* [ P ↓ merid κ ])
+    (! (cfglue (winl (snd X))))
     (cod* (snd X , snd Y))
 
-  coh* : (s : X ∧ Y) → north* == south* [ P ↓ merid _ s ]
-  coh* = CofPushoutSection.elim _ (λ _ → tt) (λ _ → idp)
+  coh* : (s : X ∧ Y) → north* == south* [ P ↓ merid s ]
+  coh* = CofPushoutSection.elim (λ _ → tt) (λ _ → idp)
     base*
     (λ {(x , y) →
       (fst (fillX x) ∙ fst (fillY y)) ◃ fst fill0 ◃ cod* (x , y)})
@@ -30,12 +30,12 @@ private
          (! (ap (λ q → q ∙ fst (fillY y)) fillX-lemma)))
     where
     fill-lemma : (w : X ∨ Y)
-      (α : north* == south* [ P ↓ merid _ (cfcod _ (∨-in-× X Y w)) ])
+      (α : north* == south* [ P ↓ merid (cfcod (∨-in-× X Y w)) ])
       → Σ (north* == north*)
-          (λ p → SquareOver P (natural-square (merid _) (cfglue _ w))
+          (λ p → SquareOver P (natural-square merid (cfglue w))
                    base*
-                   (↓-ap-in _ _ (apd (λ _ → north*) (cfglue _ w)))
-                   (↓-ap-in _ _ (apd (λ _ → south*) (cfglue _ w)))
+                   (↓-ap-in _ _ (apd (λ _ → north*) (cfglue w)))
+                   (↓-ap-in _ _ (apd (λ _ → south*) (cfglue w)))
                    (p ◃ α))
     fill-lemma w α = fill-upper-right _ _ _ _ _
 
@@ -54,4 +54,4 @@ private
            wglue
 
 susp-smash-elim : Π (Suspension (X ∧ Y)) P
-susp-smash-elim = Suspension-elim _ north* south* coh*
+susp-smash-elim = Suspension-elim north* south* coh*

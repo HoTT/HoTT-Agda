@@ -24,42 +24,42 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level 1 A)
   open ConnectedHSpace A cA A-H
 
   P : Suspension A → Type i
-  P x = Trunc 1 (north A == x)
+  P x = Trunc 1 (north == x)
 
-  module Codes = SuspensionRec A A A (λ a → ua (μ-equiv a))
+  module Codes = SuspensionRec A A (λ a → ua (μ-equiv a))
 
   Codes : Suspension A → Type i
   Codes = Codes.f
 
   Codes-level : (x : Suspension A) → has-level 1 (Codes x)
-  Codes-level = Suspension-elim A gA gA
+  Codes-level = Suspension-elim gA gA
     (λ _ → prop-has-all-paths-↓ has-level-is-prop)
 
-  encode₀ : {x : Suspension A} → (north A == x) → Codes x
+  encode₀ : {x : Suspension A} → (north == x) → Codes x
   encode₀ α = transport Codes α e
 
   encode : {x : Suspension A} → P x → Codes x
   encode {x} = Trunc-rec (Codes-level x) encode₀
 
-  decode' : A → P (north A)
-  decode' a = [ (merid A a ∙ ! (merid A e)) ]
+  decode' : A → P north
+  decode' a = [ (merid a ∙ ! (merid e)) ]
 
   abstract
     transport-Codes-mer : (a a' : A)
-      → transport Codes (merid A a) a' == μ a a'
+      → transport Codes (merid a) a' == μ a a'
     transport-Codes-mer a a' =
-      coe (ap Codes (merid A a)) a'
+      coe (ap Codes (merid a)) a'
         =⟨ Codes.merid-β a |in-ctx (λ w → coe w a') ⟩
       coe (ua (μ-equiv a)) a'
         =⟨ coe-β (μ-equiv a) a' ⟩
       μ a a' ∎
 
     transport-Codes-mer-e-! : (a : A)
-      → transport Codes (! (merid A e)) a == a
+      → transport Codes (! (merid e)) a == a
     transport-Codes-mer-e-! a =
-      coe (ap Codes (! (merid A e))) a
-        =⟨ ap-! Codes (merid A e) |in-ctx (λ w → coe w a) ⟩
-      coe (! (ap Codes (merid A e))) a
+      coe (ap Codes (! (merid e))) a
+        =⟨ ap-! Codes (merid e) |in-ctx (λ w → coe w a) ⟩
+      coe (! (ap Codes (merid e))) a
         =⟨ Codes.merid-β e |in-ctx (λ w → coe (! w) a) ⟩
       coe (! (ua (μ-equiv e))) a
         =⟨ Type=-ext (ua (μ-equiv e)) idp (λ x → coe-β _ x ∙ μe- x)
@@ -69,70 +69,70 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level 1 A)
   abstract
     encode-decode' : (a : A) → encode (decode' a) == a
     encode-decode' a =
-      transport Codes (merid A a ∙ ! (merid A e)) e
-        =⟨ trans-∙ {B = Codes} (merid A a) (! (merid A e)) e ⟩
-      transport Codes (! (merid A e)) (transport Codes (merid A a) e)
+      transport Codes (merid a ∙ ! (merid e)) e
+        =⟨ trans-∙ {B = Codes} (merid a) (! (merid e)) e ⟩
+      transport Codes (! (merid e)) (transport Codes (merid a) e)
         =⟨ transport-Codes-mer a e ∙ μ-e a
-          |in-ctx (λ w → transport Codes (! (merid A e)) w) ⟩
-      transport Codes (! (merid A e)) a
+          |in-ctx (λ w → transport Codes (! (merid e)) w) ⟩
+      transport Codes (! (merid e)) a
         =⟨ transport-Codes-mer-e-! a ⟩
       a ∎
 
   abstract
     homomorphism : (a a' : A)
-      → Path {A = Trunc 1 (north A == south A)}
-        [ merid A (μ a a' ) ] [ merid A a' ∙ ! (merid A e) ∙ merid A a ]
+      → Path {A = Trunc 1 (north == south)}
+        [ merid (μ a a' ) ] [ merid a' ∙ ! (merid e) ∙ merid a ]
     homomorphism = WedgeExt.ext args
       where
       args : WedgeExt.args {a₀ = e} {b₀ = e}
       args = record {m = -2; n = -2; cA = cA; cB = cA;
         P = λ a a' → (_ , Trunc-level {n = 1} _ _);
         f = λ a →  ap [_] $
-              merid A (μ a e)
-                =⟨ ap (merid A) (μ-e a) ⟩
-              merid A a
-                =⟨ ap (λ w → w ∙ merid A a) (! (!-inv-r (merid A e)))
-                   ∙ ∙-assoc (merid A e) (! (merid A e)) (merid A a)  ⟩
-              merid A e ∙ ! (merid A e) ∙ merid A a ∎;
+              merid (μ a e)
+                =⟨ ap merid (μ-e a) ⟩
+              merid a
+                =⟨ ap (λ w → w ∙ merid a) (! (!-inv-r (merid e)))
+                   ∙ ∙-assoc (merid e) (! (merid e)) (merid a)  ⟩
+              merid e ∙ ! (merid e) ∙ merid a ∎;
         g = λ a' → ap [_] $
-              merid A (μ e a')
-                =⟨ ap (merid A) (μe- a') ⟩
-              merid A a'
-                =⟨ ! (∙-unit-r (merid A a'))
-                   ∙ ap (λ w → merid A a' ∙ w) (! (!-inv-l (merid A e))) ⟩
-              merid A a' ∙ ! (merid A e) ∙ merid A e ∎ ;
+              merid (μ e a')
+                =⟨ ap merid (μe- a') ⟩
+              merid a'
+                =⟨ ! (∙-unit-r (merid a'))
+                   ∙ ap (λ w → merid a' ∙ w) (! (!-inv-l (merid e))) ⟩
+              merid a' ∙ ! (merid e) ∙ merid e ∎ ;
         p = ap (λ {(p₁ , p₂) → ap [_] $
-              merid A (μ e e) =⟨ p₁ ⟩
-              merid A e       =⟨ p₂ ⟩
-              merid A e ∙ ! (merid A e) ∙ merid A e ∎})
-             (pair×= (ap (λ x → ap (merid A) x) (! μcoh)) (coh (merid A e)))}
+              merid (μ e e) =⟨ p₁ ⟩
+              merid e       =⟨ p₂ ⟩
+              merid e ∙ ! (merid e) ∙ merid e ∎})
+             (pair×= (ap (λ x → ap merid x) (! μcoh)) (coh (merid e)))}
         where coh : {B : Type i} {b b' : B} (p : b == b')
                 → ap (λ w → w ∙ p) (! (!-inv-r p)) ∙ ∙-assoc p (! p) p
                   == ! (∙-unit-r p) ∙ ap (λ w → p ∙ w) (! (!-inv-l p))
               coh idp = idp
 
   decode : {x : Suspension A} → Codes x → P x
-  decode {x} = Suspension-elim A {P = λ x → Codes x → P x}
+  decode {x} = Suspension-elim {P = λ x → Codes x → P x}
                  decode'
-                 (λ a → [ merid A a ])
+                 (λ a → [ merid a ])
                  (λ a → ↓-→-from-transp (λ= $ STS a))
                  x
     where
     abstract
-      STS : (a a' : A) → transport P (merid A a) (decode' a')
-                         == [ merid A (transport Codes (merid A a) a') ]
+      STS : (a a' : A) → transport P (merid a) (decode' a')
+                         == [ merid (transport Codes (merid a) a') ]
       STS a a' =
-        transport P (merid A a) [ merid A a' ∙ ! (merid A e) ]
-          =⟨ transport-Trunc (λ x → north A == x) (merid A a) _ ⟩
-        [ transport (λ x → north A == x) (merid A a) (merid A a' ∙ ! (merid A e)) ]
-          =⟨ ap [_] (trans-pathfrom {A = Suspension A} (merid A a) _) ⟩
-        [ (merid A a' ∙ ! (merid A e)) ∙ merid A a  ]
-          =⟨ ap [_] (∙-assoc (merid A a') (! (merid A e)) (merid A a)) ⟩
-        [ merid A a' ∙ ! (merid A e) ∙ merid A a  ]
+        transport P (merid a) [ merid a' ∙ ! (merid e) ]
+          =⟨ transport-Trunc (north ==_) (merid a) _ ⟩
+        [ transport (north ==_) (merid a) (merid a' ∙ ! (merid e)) ]
+          =⟨ ap [_] (trans-pathfrom {A = Suspension A} (merid a) _) ⟩
+        [ (merid a' ∙ ! (merid e)) ∙ merid a ]
+          =⟨ ap [_] (∙-assoc (merid a') (! (merid e)) (merid a)) ⟩
+        [ merid a' ∙ ! (merid e) ∙ merid a ]
           =⟨ ! (homomorphism a a') ⟩
-        [ merid A (μ a a') ]
-          =⟨ ap ([_] ∘ merid A) (! (transport-Codes-mer a a')) ⟩
-        [ merid A (transport Codes (merid A a) a') ] ∎
+        [ merid (μ a a') ]
+          =⟨ ap ([_] ∘ merid) (! (transport-Codes-mer a a')) ⟩
+        [ merid (transport Codes (merid a) a') ] ∎
 
   abstract
     decode-encode : {x : Suspension A} (tα : P x)
@@ -141,13 +141,13 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level 1 A)
       {P = λ tα → decode {x} (encode {x} tα) == tα}
       (λ _ → =-preserves-level 1 Trunc-level)
       (J (λ y p → decode {y} (encode {y} [ p ]) == [ p ])
-         (ap [_] (!-inv-r (merid A e))))
+         (ap [_] (!-inv-r (merid e))))
 
-  main-lemma-eq : Trunc 1 (north A == north A) ≃ A
+  main-lemma-eq : Trunc 1 (north' A == north) ≃ A
   main-lemma-eq = equiv encode decode' encode-decode' decode-encode
 
   ⊙main-lemma : ⊙Trunc 1 (⊙Ω (⊙Susp (A , e))) == (A , e)
-  ⊙main-lemma = ⊙ua (⊙ify-eq main-lemma-eq idp)
+  ⊙main-lemma = ⊙ua (⊙≃-in main-lemma-eq idp)
 
   abstract
     main-lemma-iso : (t1 : 1 ≠ 0) →

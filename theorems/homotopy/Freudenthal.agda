@@ -16,10 +16,10 @@ module FreudenthalEquiv
   (X : Type i) (x₀ : X) (cX : is-connected (S (S n)) X) where
 
   Q : Suspension X → Type i
-  Q x = Trunc k (north X == x)
+  Q x = Trunc k (north == x)
 
-  up : X → north X == north X
-  up x = merid X x ∙ ! (merid X x₀)
+  up : X → north' X == north
+  up x = merid x ∙ ! (merid x₀)
 
   Codes-mer-args : WedgeExt.args {a₀ = x₀} {b₀ = [_] {n = k} x₀}
   Codes-mer-args = record {n = n; m = n;
@@ -71,51 +71,51 @@ module FreudenthalEquiv
           lemma idp e = idp
 
   Codes : Suspension X → Type i
-  Codes = SuspensionRec.f X (Trunc k X) (Trunc k X) (ua ∘ Codes-mer-equiv)
+  Codes = SuspensionRec.f (Trunc k X) (Trunc k X) (ua ∘ Codes-mer-equiv)
 
   Codes-has-level : (x : Suspension X) → has-level k (Codes x)
-  Codes-has-level = Suspension-elim X Trunc-level Trunc-level
+  Codes-has-level = Suspension-elim Trunc-level Trunc-level
                       (λ _ → prop-has-all-paths-↓ has-level-is-prop)
 
-  decodeN : Codes (north X) → Trunc k (north X == north X)
+  decodeN : Codes north → Trunc k (north' X == north)
   decodeN = Trunc-fmap up
 
   decodeN-pt : decodeN [ x₀ ] == [ idp ]
-  decodeN-pt = ap [_] (!-inv-r (merid X x₀))
+  decodeN-pt = ap [_] (!-inv-r (merid x₀))
 
-  decodeS : Codes (south X) → Q (south X)
-  decodeS = Trunc-fmap (merid X)
+  decodeS : Codes south → Q south
+  decodeS = Trunc-fmap merid
 
-  encode₀ : {x : Suspension X} → north X == x → Codes x
+  encode₀ : {x : Suspension X} → north == x → Codes x
   encode₀ α = transport Codes α [ x₀ ]
 
-  encode : {x : Suspension X} → Trunc k (north X == x) → Codes x
+  encode : {x : Suspension X} → Trunc k (north == x) → Codes x
   encode {x} tα = Trunc-rec (Codes-has-level x) encode₀ tα
 
   abstract
-    encode-decodeN : (c : Codes (north X)) → encode (decodeN c) == c
+    encode-decodeN : (c : Codes north) → encode (decodeN c) == c
     encode-decodeN = Trunc-elim
       (λ _ → =-preserves-level _ Trunc-level)
       (λ x →
         encode (decodeN [ x ])
           =⟨ idp ⟩
-        coe (ap Codes (merid X x ∙ ! (merid X x₀))) [ x₀ ]
-          =⟨ ap-∙ Codes (merid X x) (! (merid X x₀)) |in-ctx (λ w → coe w [ x₀ ]) ⟩
-        coe (ap Codes (merid X x) ∙ ap Codes (! (merid X x₀))) [ x₀ ]
-          =⟨ coe-∙ (ap Codes (merid X x)) (ap Codes (! (merid X x₀))) [ x₀ ] ⟩
-        coe (ap Codes (! (merid X x₀))) (coe (ap Codes (merid X x)) [ x₀ ])
-          =⟨ SuspensionRec.merid-β X _ _ (ua ∘ Codes-mer-equiv) x
-            |in-ctx (λ w → coe (ap Codes (! (merid X x₀))) (coe w [ x₀ ])) ⟩
-        coe (ap Codes (! (merid X x₀))) (coe (ua (Codes-mer-equiv x)) [ x₀ ])
+        coe (ap Codes (merid x ∙ ! (merid x₀))) [ x₀ ]
+          =⟨ ap-∙ Codes (merid x) (! (merid x₀)) |in-ctx (λ w → coe w [ x₀ ]) ⟩
+        coe (ap Codes (merid x) ∙ ap Codes (! (merid x₀))) [ x₀ ]
+          =⟨ coe-∙ (ap Codes (merid x)) (ap Codes (! (merid x₀))) [ x₀ ] ⟩
+        coe (ap Codes (! (merid x₀))) (coe (ap Codes (merid x)) [ x₀ ])
+          =⟨ SuspensionRec.merid-β _ _ (ua ∘ Codes-mer-equiv) x
+            |in-ctx (λ w → coe (ap Codes (! (merid x₀))) (coe w [ x₀ ])) ⟩
+        coe (ap Codes (! (merid x₀))) (coe (ua (Codes-mer-equiv x)) [ x₀ ])
           =⟨ coe-β (Codes-mer-equiv x) [ x₀ ]
-            |in-ctx (λ w → coe (ap Codes (! (merid X x₀))) w) ⟩
-        coe (ap Codes (! (merid X x₀))) (Codes-mer x [ x₀ ])
+            |in-ctx (λ w → coe (ap Codes (! (merid x₀))) w) ⟩
+        coe (ap Codes (! (merid x₀))) (Codes-mer x [ x₀ ])
           =⟨ app= Codes-mer-β-l x
-            |in-ctx (λ w → coe (ap Codes (! (merid X x₀))) w) ⟩
-        coe (ap Codes (! (merid X x₀))) [ x ]
-          =⟨ coe-ap-! Codes (merid X x₀) [ x ] ⟩
-        coe! (ap Codes (merid X x₀)) [ x ]
-          =⟨ SuspensionRec.merid-β X _ _ (ua ∘ Codes-mer-equiv) x₀
+            |in-ctx (λ w → coe (ap Codes (! (merid x₀))) w) ⟩
+        coe (ap Codes (! (merid x₀))) [ x ]
+          =⟨ coe-ap-! Codes (merid x₀) [ x ] ⟩
+        coe! (ap Codes (merid x₀)) [ x ]
+          =⟨ SuspensionRec.merid-β _ _ (ua ∘ Codes-mer-equiv) x₀
             |in-ctx (λ w → coe! w [ x ]) ⟩
         coe! (ua (Codes-mer-equiv x₀)) [ x ]
           =⟨ coe!-β (Codes-mer-equiv x₀) [ x ] ⟩
@@ -124,7 +124,7 @@ module FreudenthalEquiv
         [ x ] ∎)
 
   decode : {x : Suspension X} → Codes x → Q x
-  decode {x} = Suspension-elim X
+  decode {x} = Suspension-elim
     {P = λ y → Codes y → Q y}
     decodeN decodeS
     (λ x' → ↓-→-from-transp (λ= (STS x')))
@@ -138,78 +138,78 @@ module FreudenthalEquiv
 
       P : X → X → (S (n +2+ (S n))) -Type (lmax i i)
       P = λ x₁ x₂ →
-        ((transport Q (merid X x₁) (Trunc-fmap up [ x₂ ])
-          == Trunc-fmap (merid X) (transport Codes (merid X x₁) [ x₂ ])),
+        ((transport Q (merid x₁) (Trunc-fmap up [ x₂ ])
+          == Trunc-fmap (merid) (transport Codes (merid x₁) [ x₂ ])),
          =-preserves-level _ (raise-level-≤T kle Trunc-level))
 
       f : (a : X) → fst (P a x₀)
       f a =
-        transport Q (merid X a) [ up x₀ ]
-          =⟨ transport-Trunc (λ y → north X == y) (merid X a) (up x₀) ⟩
-        [ transport (λ y → north X == y) (merid X a) (up x₀) ]
-          =⟨ ap [_] $ trans-pathfrom {A = Suspension X} (merid X a) (up x₀)  ⟩
-        [ (merid X x₀ ∙ ! (merid X x₀)) ∙ merid X a ]
-          =⟨ ap [_] $ ap (λ s → s ∙ merid X a) (!-inv-r (merid X x₀)) ⟩
-        [ merid X a ]
+        transport Q (merid a) [ up x₀ ]
+          =⟨ transport-Trunc (north ==_) (merid a) (up x₀) ⟩
+        [ transport (north ==_) (merid a) (up x₀) ]
+          =⟨ ap [_] $ trans-pathfrom {A = Suspension X} (merid a) (up x₀)  ⟩
+        [ (merid x₀ ∙ ! (merid x₀)) ∙ merid a ]
+          =⟨ ap [_] $ ap (λ s → s ∙ merid a) (!-inv-r (merid x₀)) ⟩
+        [ merid a ]
           =⟨ idp ⟩
-        Trunc-fmap (merid X) [ a ]
-          =⟨ ap (Trunc-fmap (merid X)) (! (app= Codes-mer-β-l a)) ⟩
-        Trunc-fmap (merid X) (Codes-mer a [ x₀ ])
-          =⟨ ap (Trunc-fmap (merid X)) (! (coe-β (Codes-mer-equiv a) [ x₀ ])) ⟩
-        Trunc-fmap (merid X) (coe (ua (Codes-mer-equiv a)) [ x₀ ])
-          =⟨ ! (SuspensionRec.merid-β X _ _ (ua ∘ Codes-mer-equiv) a)
-            |in-ctx (λ w → Trunc-fmap (merid X) (coe w [ x₀ ])) ⟩
-        Trunc-fmap (merid X) (transport Codes (merid X a) [ x₀ ]) ∎
+        Trunc-fmap (merid) [ a ]
+          =⟨ ap (Trunc-fmap (merid)) (! (app= Codes-mer-β-l a)) ⟩
+        Trunc-fmap (merid) (Codes-mer a [ x₀ ])
+          =⟨ ap (Trunc-fmap (merid)) (! (coe-β (Codes-mer-equiv a) [ x₀ ])) ⟩
+        Trunc-fmap (merid) (coe (ua (Codes-mer-equiv a)) [ x₀ ])
+          =⟨ ! (SuspensionRec.merid-β _ _ (ua ∘ Codes-mer-equiv) a)
+            |in-ctx (λ w → Trunc-fmap (merid) (coe w [ x₀ ])) ⟩
+        Trunc-fmap (merid) (transport Codes (merid a) [ x₀ ]) ∎
 
       g : (b : X) → fst (P x₀ b)
       g b =
-        transport Q (merid X x₀) [ up b ]
-          =⟨ transport-Trunc (λ y → north X == y) (merid X x₀) (up b) ⟩
-        [ transport (λ y → north X == y) (merid X x₀) (up b) ]
-          =⟨ ap [_] $ trans-pathfrom {A = Suspension X} (merid X x₀) (up b)  ⟩
-        [ (merid X b ∙ ! (merid X x₀)) ∙ merid X x₀ ]
-          =⟨ ap [_] $ ∙-assoc (merid X b) (! (merid X x₀)) (merid X x₀)
-                      ∙ ap (λ s → merid X b ∙ s) (!-inv-l (merid X x₀))
-                      ∙ ∙-unit-r (merid X b) ⟩
-        [ merid X b ]
+        transport Q (merid x₀) [ up b ]
+          =⟨ transport-Trunc (north ==_) (merid x₀) (up b) ⟩
+        [ transport (north ==_) (merid x₀) (up b) ]
+          =⟨ ap [_] $ trans-pathfrom {A = Suspension X} (merid x₀) (up b)  ⟩
+        [ (merid b ∙ ! (merid x₀)) ∙ merid x₀ ]
+          =⟨ ap [_] $ ∙-assoc (merid b) (! (merid x₀)) (merid x₀)
+                      ∙ ap (λ s → merid b ∙ s) (!-inv-l (merid x₀))
+                      ∙ ∙-unit-r (merid b) ⟩
+        [ merid b ]
           =⟨ idp ⟩
-        Trunc-fmap (merid X) [ b ]
-          =⟨ ap (Trunc-fmap (merid X)) (! (app= Codes-mer-β-r [ b ])) ⟩
-        Trunc-fmap (merid X) (Codes-mer x₀ [ b ])
-          =⟨ ap (Trunc-fmap (merid X)) (! (coe-β (Codes-mer-equiv x₀) [ b ])) ⟩
-        Trunc-fmap (merid X) (coe (ua (Codes-mer-equiv x₀)) [ b ])
-          =⟨ ! (SuspensionRec.merid-β X _ _ (ua ∘ Codes-mer-equiv) x₀)
-            |in-ctx (λ w → Trunc-fmap (merid X) (coe w [ b ])) ⟩
-        Trunc-fmap (merid X) (transport Codes (merid X x₀) [ b ]) ∎
+        Trunc-fmap (merid) [ b ]
+          =⟨ ap (Trunc-fmap (merid)) (! (app= Codes-mer-β-r [ b ])) ⟩
+        Trunc-fmap (merid) (Codes-mer x₀ [ b ])
+          =⟨ ap (Trunc-fmap (merid)) (! (coe-β (Codes-mer-equiv x₀) [ b ])) ⟩
+        Trunc-fmap (merid) (coe (ua (Codes-mer-equiv x₀)) [ b ])
+          =⟨ ! (SuspensionRec.merid-β _ _ (ua ∘ Codes-mer-equiv) x₀)
+            |in-ctx (λ w → Trunc-fmap (merid) (coe w [ b ])) ⟩
+        Trunc-fmap (merid) (transport Codes (merid x₀) [ b ]) ∎
 
       p : f x₀ == g x₀
       p = ap2
         (λ p₁ p₂ →
-          transport Q (merid X x₀) [ up x₀ ]
-            =⟨ transport-Trunc (λ y → north X == y) (merid X x₀) (up x₀) ⟩
-          [ transport (λ y → north X == y) (merid X x₀) (up x₀) ]
-            =⟨ ap [_] $ trans-pathfrom {A = Suspension X} (merid X x₀) (up x₀) ⟩
-          [ (merid X x₀ ∙ ! (merid X x₀)) ∙ merid X x₀ ]
+          transport Q (merid x₀) [ up x₀ ]
+            =⟨ transport-Trunc (north ==_) (merid x₀) (up x₀) ⟩
+          [ transport (north ==_) (merid x₀) (up x₀) ]
+            =⟨ ap [_] $ trans-pathfrom {A = Suspension X} (merid x₀) (up x₀) ⟩
+          [ (merid x₀ ∙ ! (merid x₀)) ∙ merid x₀ ]
             =⟨ ap [_] p₁ ⟩
-          [ merid X x₀ ]
+          [ merid x₀ ]
             =⟨ idp ⟩
-          Trunc-fmap (merid X) [ x₀ ]
-            =⟨ ap (Trunc-fmap (merid X)) (! p₂) ⟩
-          Trunc-fmap (merid X) (Codes-mer x₀ [ x₀ ])
-            =⟨ ap (Trunc-fmap (merid X)) (! (coe-β (Codes-mer-equiv x₀) [ x₀ ])) ⟩
-          Trunc-fmap (merid X) (coe (ua (Codes-mer-equiv x₀)) [ x₀ ])
-            =⟨ ! (SuspensionRec.merid-β X _ _ (ua ∘ Codes-mer-equiv) x₀)
-              |in-ctx (λ w → Trunc-fmap (merid X) (coe w [ x₀ ])) ⟩
-          Trunc-fmap (merid X) (transport Codes (merid X x₀) [ x₀ ]) ∎)
-        (coh (merid X x₀)) Codes-mer-coh
+          Trunc-fmap (merid) [ x₀ ]
+            =⟨ ap (Trunc-fmap (merid)) (! p₂) ⟩
+          Trunc-fmap (merid) (Codes-mer x₀ [ x₀ ])
+            =⟨ ap (Trunc-fmap (merid)) (! (coe-β (Codes-mer-equiv x₀) [ x₀ ])) ⟩
+          Trunc-fmap (merid) (coe (ua (Codes-mer-equiv x₀)) [ x₀ ])
+            =⟨ ! (SuspensionRec.merid-β _ _ (ua ∘ Codes-mer-equiv) x₀)
+              |in-ctx (λ w → Trunc-fmap (merid) (coe w [ x₀ ])) ⟩
+          Trunc-fmap (merid) (transport Codes (merid x₀) [ x₀ ]) ∎)
+        (coh (merid x₀)) Codes-mer-coh
 
       STS-args : WedgeExt.args {a₀ = x₀} {b₀ = x₀}
       STS-args =
         record {n = n; m = n; cA = cX; cB = cX; P = P; f = f; g = g; p = p}
 
-      STS : (x' : X) (c : Codes (north X)) →
-        transport Q (merid X x') (Trunc-fmap up c)
-        == Trunc-fmap (merid X) (transport Codes (merid X x') c)
+      STS : (x' : X) (c : Codes north) →
+        transport Q (merid x') (Trunc-fmap up c)
+        == Trunc-fmap (merid) (transport Codes (merid x') c)
       STS x' = Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
                           (WedgeExt.ext STS-args x')
 
@@ -220,16 +220,16 @@ module FreudenthalEquiv
     {P = λ tα → decode {x} (encode {x} tα) == tα}
     (λ _ → =-preserves-level k Trunc-level)
     (J (λ y p → decode {y} (encode {y} [ p ]) == [ p ])
-       (ap [_] (!-inv-r (merid X x₀))))
+       (ap [_] (!-inv-r (merid x₀))))
 
-  eq : Trunc k X ≃ Trunc k (north X == north X)
+  eq : Trunc k X ≃ Trunc k (north' X == north)
   eq = equiv decodeN encode decode-encode encode-decodeN
 
-  path : Trunc k X == Trunc k (north X == north X)
+  path : Trunc k X == Trunc k (north' X == north)
   path = ua eq
 
   ⊙path : ⊙Trunc k (X , x₀) == ⊙Trunc k (⊙Ω (⊙Susp (X , x₀)))
-  ⊙path = ⊙ua (⊙ify-eq eq (ap [_] (!-inv-r (merid X x₀))))
+  ⊙path = ⊙ua (⊙≃-in eq (ap [_] (!-inv-r (merid x₀))))
 
 {- Used to prove stability in iterated suspensions -}
 module FreudenthalIso

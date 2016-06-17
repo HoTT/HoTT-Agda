@@ -325,4 +325,4 @@ module _ {i j k} (X : Ptd i) (Y : Ptd j) (Z : Ptd k) where
 
   join-rearrange-⊙path : (X ⊙* Y) ⊙* Z == (Z ⊙* Y) ⊙* X
   join-rearrange-⊙path =
-    ⊙ua (⊙ify-eq join-rearrange-equiv (! (glue (left (snd Z), snd X))))
+    ⊙ua (⊙≃-in join-rearrange-equiv (! (glue (left (snd Z), snd X))))

@@ -14,16 +14,16 @@ module _ (n : ℤ) where
     ⊙LU = ⊙Lift {j = i} ⊙Unit
 
   Cof-Unit-is-Unit : ⊙Cof (⊙idf ⊙LU) == ⊙LU
-  Cof-Unit-is-Unit = ⊙ua (⊙ify-eq {X = _ , cfbase _} e idp)
+  Cof-Unit-is-Unit = ⊙ua (⊙≃-in {X = _ , cfbase} e idp)
     where
     e : Cofiber (idf (Lift {j = i} Unit)) ≃ Lift Unit
     e = equiv (λ _ → lift unit)
-              (λ _ → cfbase (idf _))
+              (λ _ → cfbase)
               (λ _ → idp)
-              (Cofiber-elim (idf _)
-                 {P = λ c → cfbase (idf _) == c}
+              (Cofiber-elim {f = idf _}
+                 {P = λ c → cfbase == c}
                  idp
-                 (λ _ → cfglue (idf _) (lift unit))
+                 (λ _ → cfglue (lift unit))
                  (λ _ → ↓-cst=idf-in idp))
 
   C-Unit-is-contr : is-contr (CEl n ⊙LU)
@@ -31,10 +31,10 @@ module _ (n : ℤ) where
     (Cid n ⊙LU , λ x → lemma₂ x ∙ app= (ap GroupHom.f (CF-ident n)) x)
     where
     lemma₁ : (x : CEl n (⊙Cof (⊙idf _)))
-      → Cid n ⊙LU == CF n (⊙cfcod (⊙idf _)) x
+      → Cid n ⊙LU == CF n (⊙cfcod' (⊙idf _)) x
     lemma₁ x = ! (itok (C-exact n (⊙idf _)) _ [ x , idp ])
                ∙ app= (ap GroupHom.f (CF-ident n))
-                      (CF n (⊙cfcod (⊙idf _)) x)
+                      (CF n (⊙cfcod' (⊙idf _)) x)
 
     lemma₂ : (x : CEl n ⊙LU) → Cid n ⊙LU == CF n (⊙idf _) x
     lemma₂ = transport

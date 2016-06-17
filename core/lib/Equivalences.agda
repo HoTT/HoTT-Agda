@@ -37,13 +37,13 @@ module _ {i} {j} {A : Type i} {B : Type j} where
     adj' : (b : B) → ap g (f-g b) == g-f (g b)
     adj' b = anti-whisker-left (ap g (f-g (f (g b)))) $ ! $
         ap g (f-g (f (g b))) ∙ g-f (g b)
-          =⟨ ! $ htpy-natural-toid f-g b |in-ctx (λ p → ap g p ∙ g-f (g b)) ⟩
+          =⟨ ! $ htpy-natural-app=idf f-g b |in-ctx (λ p → ap g p ∙ g-f (g b)) ⟩
         ap g (ap (f ∘ g) (f-g b)) ∙ g-f (g b)
           =⟨ ! $ ap-∘ g (f ∘ g) (f-g b) |in-ctx (λ p → p ∙ g-f (g b)) ⟩
         ap (g ∘ f ∘ g) (f-g b) ∙ g-f (g b)
           =⟨ htpy-natural (g-f ∘ g) (f-g b) ⟩
         g-f (g (f (g b))) ∙ ap g (f-g b)
-          =⟨ ! $ htpy-natural-toid g-f (g b) |in-ctx (λ p → p ∙ ap g (f-g b)) ⟩
+          =⟨ ! $ htpy-natural-app=idf g-f (g b) |in-ctx (λ p → p ∙ ap g (f-g b)) ⟩
         ap (g ∘ f) (g-f (g b)) ∙ ap g (f-g b)
           =⟨ ap-∘ g f (g-f (g b)) |in-ctx (λ p → p ∙ ap g (f-g b)) ⟩
         ap g (ap f (g-f (g b))) ∙ ap g (f-g b)
@@ -78,7 +78,7 @@ module _ {i} {j} {A : Type i} {B : Type j} where
            == ap f (g-f (g (f a))) ∙ f-g (f a)
       lemma = 
         ap (f ∘ g) (f-g (f a)) ∙ ap f (g-f a)
-          =⟨ htpy-natural-toid f-g (f a) |in-ctx (λ q → q ∙ ap f (g-f a)) ⟩
+          =⟨ htpy-natural-app=idf f-g (f a) |in-ctx (λ q → q ∙ ap f (g-f a)) ⟩
         f-g (f (g (f a))) ∙ ap f (g-f a)
           =⟨ ! (ap-idf (ap f (g-f a))) |in-ctx (λ q → f-g (f (g (f a))) ∙ q) ⟩
         f-g (f (g (f a))) ∙ ap (idf B) (ap f (g-f a))
@@ -86,7 +86,7 @@ module _ {i} {j} {A : Type i} {B : Type j} where
         ap (f ∘ g) (ap f (g-f a)) ∙ f-g (f a)
           =⟨ ap-∘ f g (ap f (g-f a)) |in-ctx (λ q → q ∙ f-g (f a)) ⟩
         ap f (ap g (ap f (g-f a))) ∙ f-g (f a)
-          =⟨ ∘-ap g f (g-f a) ∙ htpy-natural-toid g-f a 
+          =⟨ ∘-ap g f (g-f a) ∙ htpy-natural-app=idf g-f a 
              |in-ctx (λ q → ap f q ∙ f-g (f a)) ⟩
         ap f (g-f (g (f a))) ∙ f-g (f a) ∎
 
@@ -172,8 +172,8 @@ _≃∎ = ide
 
 
 {- lifting is an equivalence -}
-lift-equiv : ∀ {i j} {A : Type i} → Lift {j = j} A ≃ A
-lift-equiv = equiv lower lift (λ _ → idp) (λ _ → idp)
+lower-equiv : ∀ {i j} {A : Type i} → Lift {j = j} A ≃ A
+lower-equiv = equiv lower lift (λ _ → idp) (λ _ → idp)
 
 {- Any contractible type is equivalent to (all liftings of) the unit type -}
 module _ {i} {A : Type i} (h : is-contr A) where
@@ -181,7 +181,7 @@ module _ {i} {A : Type i} (h : is-contr A) where
   contr-equiv-Unit = equiv (λ _ → unit) (λ _ → fst h) (λ _ → idp) (snd h)
 
   contr-equiv-LiftUnit : ∀ {j} → A ≃ Lift {j = j} Unit
-  contr-equiv-LiftUnit = lift-equiv ⁻¹ ∘e contr-equiv-Unit
+  contr-equiv-LiftUnit = lower-equiv ⁻¹ ∘e contr-equiv-Unit
 
 
 {- An equivalence induces an equivalence on the path spaces -}

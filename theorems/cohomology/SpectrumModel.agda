@@ -86,17 +86,17 @@ module SpectrumModel where
   {- Non-truncated Exactness Axiom -}
   module _ (n : ℤ) {X Y : Ptd i} where
 
-    {- precomposing ⊙cfcod f and then f gives 0 -}
+    {- precomposing [⊙cfcod' f] and then [f] gives [0] -}
     exact-itok-lemma : (f : fst (X ⊙→ Y)) (g : uCEl n (⊙Cof f))
-      → (g ⊙∘ ⊙cfcod f) ⊙∘ f == ⊙cst
+      → (g ⊙∘ ⊙cfcod' f) ⊙∘ f == ⊙cst
     exact-itok-lemma (f , fpt) (g , gpt) = ⊙λ=
-      (λ x → ap g (! (cfglue f x)) ∙ gpt)
-      (ap (g ∘ cfcod f) fpt
-       ∙ ap g (ap (cfcod f) (! fpt) ∙ ! (cfglue f (snd X))) ∙ gpt
-         =⟨ lemma (cfcod f) g fpt (! (cfglue f (snd X))) gpt ⟩
-       ap g (! (cfglue f (snd X))) ∙ gpt
+      (λ x → ap g (! (cfglue' f x)) ∙ gpt)
+      (ap (g ∘ cfcod) fpt
+       ∙ ap g (ap cfcod (! fpt) ∙ ! (cfglue (snd X))) ∙ gpt
+         =⟨ lemma cfcod g fpt (! (cfglue (snd X))) gpt ⟩
+       ap g (! (cfglue (snd X))) ∙ gpt
          =⟨ ! (∙-unit-r _) ⟩
-       (ap g (! (cfglue f (snd X))) ∙ gpt) ∙ idp ∎)
+       (ap g (! (cfglue (snd X))) ∙ gpt) ∙ idp ∎)
       where
       lemma : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
         {a₁ a₂ : A} {b : B} {c : C} (f : A → B) (g : B → C)
@@ -104,36 +104,36 @@ module SpectrumModel where
         → ap (g ∘ f) p ∙ ap g (ap f (! p) ∙ q) ∙ r == ap g q ∙ r
       lemma f g idp idp idp = idp
 
-    {- if g ⊙∘ f is constant then g factors as h ⊙∘ ⊙cfcod f -}
+    {- if g ⊙∘ f is constant then g factors as h ⊙∘ ⊙cfcod' f -}
     exact-ktoi-lemma : (f : fst (X ⊙→ Y)) (g : uCEl n Y)
       → g ⊙∘ f == ⊙cst
-      → Σ (uCEl n (⊙Cof f)) (λ h → h ⊙∘ ⊙cfcod f == g)
+      → Σ (uCEl n (⊙Cof f)) (λ h → h ⊙∘ ⊙cfcod' f == g)
     exact-ktoi-lemma (f , fpt) (h , hpt) p =
       ((g , ! q ∙ hpt) ,
-       pair= idp (! (∙-assoc q (! q) hpt) ∙ ap (λ w → w ∙ hpt) (!-inv-r q)))
+       pair= idp (! (∙-assoc q (! q) hpt) ∙ ap (_∙ hpt) (!-inv-r q)))
       where
       g : Cofiber f → Ω (E (succ n))
-      g = CofiberRec.f f idp h (! ∘ app= (ap fst p))
+      g = CofiberRec.f idp h (! ∘ app= (ap fst p))
 
-      q : h (snd Y) == g (cfbase f)
-      q = ap g (snd (⊙cfcod (f , fpt)))
+      q : h (snd Y) == g (cfbase' f)
+      q = ap g (snd (⊙cfcod' (f , fpt)))
 
   {- Truncated Exactness Axiom -}
   module _ (n : ℤ) {X Y : Ptd i} where
 
-    {- in image of (CF n (⊙cfcod f)) ⇒ in kernel of (CF n f) -}
+    {- in image of (CF n (⊙cfcod' f)) ⇒ in kernel of (CF n f) -}
     abstract
       C-exact-itok : (f : fst (X ⊙→ Y))
-        → is-exact-itok (CF-hom n (⊙cfcod f)) (CF-hom n f)
+        → is-exact-itok (CF-hom n (⊙cfcod' f)) (CF-hom n f)
       C-exact-itok f =
-        itok-alt-in (CF-hom n (⊙cfcod f)) (CF-hom n f) $
+        itok-alt-in (CF-hom n (⊙cfcod' f)) (CF-hom n f) $
           Trunc-elim (λ _ → =-preserves-level _ (Trunc-level {n = 0}))
             (ap [_] ∘ exact-itok-lemma n f)
 
-    {- in kernel of (CF n f) ⇒ in image of (CF n (⊙cfcod f)) -}
+    {- in kernel of (CF n f) ⇒ in image of (CF n (⊙cfcod' f)) -}
     abstract
       C-exact-ktoi : (f : fst (X ⊙→ Y))
-        → is-exact-ktoi (CF-hom n (⊙cfcod f)) (CF-hom n f)
+        → is-exact-ktoi (CF-hom n (⊙cfcod' f)) (CF-hom n f)
       C-exact-ktoi f =
         Trunc-elim
           (λ _ → Π-level (λ _ → raise-level _ Trunc-level))
@@ -141,13 +141,13 @@ module SpectrumModel where
         where
         lemma : (h : uCEl n Y) → h ⊙∘ f == ⊙cst
           → Trunc -1 (Σ (CEl n (⊙Cof f))
-                          (λ tk → fst (CF n (⊙cfcod f)) tk == [ h ]))
+                          (λ tk → fst (CF n (⊙cfcod' f)) tk == [ h ]))
         lemma h p = [ [ fst wit ] , ap [_] (snd wit) ]
           where
-          wit : Σ (uCEl n (⊙Cof f)) (λ k → k ⊙∘ ⊙cfcod f == h)
+          wit : Σ (uCEl n (⊙Cof f)) (λ k → k ⊙∘ ⊙cfcod' f == h)
           wit = exact-ktoi-lemma n f h p
 
-    C-exact : (f : fst (X ⊙→ Y)) → is-exact (CF-hom n (⊙cfcod f)) (CF-hom n f)
+    C-exact : (f : fst (X ⊙→ Y)) → is-exact (CF-hom n (⊙cfcod' f)) (CF-hom n f)
     C-exact f = record {itok = C-exact-itok f; ktoi = C-exact-ktoi f}
 
   {- Additivity Axiom -}
@@ -230,5 +230,5 @@ spectrum-cohomology = record {
   C-exact = C-exact;
   C-additive = C-additive}
 
-spectrum-C-S⁰ : (n : ℤ) → C n (⊙Sphere O) == π 1 (ℕ-S≠O _) (E (succ n))
+spectrum-C-S⁰ : (n : ℤ) → C n (⊙Lift ⊙S⁰) == π 1 (ℕ-S≠O _) (E (succ n))
 spectrum-C-S⁰ n = Bool⊙→Ω-is-π₁ (E (succ n))

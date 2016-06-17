@@ -7,6 +7,9 @@ open import lib.types.Paths
 open import lib.types.Pi
 open import lib.types.Truncation
 open import lib.types.Unit
+open import lib.types.Bool
+open import lib.types.Suspension
+open import lib.types.IteratedSuspension
 
 module lib.types.Circle where
 
@@ -21,34 +24,62 @@ I’m using Dan Licata’s trick to have a higher inductive type with definition
 reduction rule for [base]
 -}
 
+{-
+  favonia (2016/05): Now [Circle] is defined as [Sphere 1].
+-}
+
 module _ where
-  private
-    data #S¹-aux : Type₀ where
-      #base : #S¹-aux
-
-    data #S¹ : Type₀ where
-      #s¹ : #S¹-aux → (Unit → Unit) → #S¹
-
-  S¹ : Type₀
-  S¹ = #S¹
+  -- (already defined in IteratedSuspension.agda)
+  -- S¹ : Type₀
+  -- S¹ = Sphere 1
 
   base : S¹
-  base = #s¹ #base _
+  base = north
 
-  postulate  -- HIT
-    loop : base == base
+  loop : base == base
+  loop = merid true ∙' ! (merid false)
 
   module S¹Elim {i} {P : S¹ → Type i} (base* : P base)
     (loop* : base* == base* [ P ↓ loop ]) where
 
+    private
+      north* = base*
+      south* = transport P (merid false) base*
+      merid*-general :
+        ∀ {x : S¹} (p q : base == x) (loop* :  base* == base* [ P ↓ p ∙' ! q ]) (b : Bool)
+        → base* == transport P q base* [ P ↓ if b then p else q ]
+      merid*-general p idp loop* true = loop*
+      merid*-general p idp loop* false = idp
+
+      merid* : ∀ (b : Bool) → north* == south* [ P ↓ merid b ]
+      merid* true = merid*-general (merid true) (merid false) loop* true
+      merid* false = merid*-general (merid true) (merid false) loop* false
+
+      module SE = SuspensionElim north* south* merid*
+
     f : Π S¹ P
-    f = f-aux phantom where
+    f = SE.f
 
-     f-aux : Phantom loop* → Π S¹ P
-     f-aux phantom (#s¹ #base _) = base*
+    private
+      merid*-general-lemma :
+        ∀ {x : S¹} (p q : base == x) (loop* :  base* == base* [ P ↓ p ∙' ! q ])
+        → merid*-general p q loop* true ▹ !ᵈ (merid*-general p q loop* false) == loop*
+      merid*-general-lemma p idp loop* = ▹idp _
 
-    postulate  -- HIT
-      loop-β : apd f loop == loop*
+    loop-β : apd f loop == loop*
+    loop-β =
+      apd f loop
+        =⟨ apd-∙' f (merid true) (! (merid false)) ⟩
+      apd f (merid true) ▹ apd f (! (merid false))
+        =⟨ apd-! f (merid false) |in-ctx apd f (merid true) ▹_ ⟩
+      apd f (merid true) ▹ !ᵈ (apd f (merid false))
+        =⟨ SE.merid-β true |in-ctx _▹ !ᵈ (apd f (merid false)) ⟩
+      merid* true ▹ !ᵈ (apd f (merid false))
+        =⟨ SE.merid-β false |in-ctx (λ p → merid* true ▹ !ᵈ p) ⟩
+      merid* true ▹ !ᵈ (merid* false)
+        =⟨ merid*-general-lemma (merid true) (merid false) loop* ⟩
+      loop*
+        ∎
 
 open S¹Elim public using () renaming (f to S¹-elim)
 

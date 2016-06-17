@@ -19,7 +19,7 @@ Realizer : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
 Skeleton {i} O = Type i
 Skeleton {i} (S n) =
   Σ (Skeleton {i} n)
-    (λ s → Σ (Type i) λ A → Boundry (Realizer s) A (Sphere {i} n))
+    (λ s → Σ (Type i) λ A → Boundry (Realizer s) A (Sphere n))
 
 Realizer {n = O} A = A
 Realizer {n = S n} (s , (A , boundary)) = Attach boundary
@@ -64,8 +64,8 @@ cw-cells m≤n = cw-cells-top ∘ cw-take m≤n
 
 -- Access the [m]th boundary map
 
-Sphere₋₁ : ∀ {i} → ℕ → Type i
-Sphere₋₁ O = Lift Empty
+Sphere₋₁ : ℕ → Type₀
+Sphere₋₁ O = Empty
 Sphere₋₁ (S n) = Sphere n
 
 realize₋₁ : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
@@ -75,8 +75,8 @@ realize₋₁ {n = S n} (skel , _) = ⟦ skel ⟧
 ⟦_⟧₋₁ = realize₋₁
 
 cw-boundary-top : ∀ {i} {n : ℕ} (s : Skeleton {i} n)
-  → cw-cells-top s → (Sphere₋₁ {i} n → ⟦ s ⟧₋₁)
-cw-boundary-top {n = O}    _                 = λ{_ (lift ())}
+  → cw-cells-top s → (Sphere₋₁ n → ⟦ s ⟧₋₁)
+cw-boundary-top {n = O}    _                 = λ{_ ()}
 cw-boundary-top {n = S n} (_ , _ , boundary) = boundary
 
 cw-boundary : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) (skel : Skeleton {i} n)

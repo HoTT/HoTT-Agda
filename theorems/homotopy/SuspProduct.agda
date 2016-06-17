@@ -16,14 +16,14 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
     i₂ = ((λ y → (snd X , y)) , idp)
 
     j₂ : fst (⊙Cof i₁) → fst Y
-    j₂ = CofiberRec.f _ (snd Y) snd (λ x → idp)
+    j₂ = CofiberRec.f (snd Y) snd (λ x → idp)
 
   ⊙path : ⊙Susp (X ⊙× Y) == ⊙Susp X ⊙∨ (⊙Susp Y ⊙∨ ⊙Susp (X ⊙∧ Y))
   ⊙path =
-    ⊙ua (⊙ify-eq (SuspSectionDecomp.eq i₁ fst (λ x → idp))
-                 (! $ ap winl $ merid _ (snd X)))
+    ⊙ua (⊙≃-in (SuspSectionDecomp.eq i₁ fst (λ x → idp))
+                 (! $ ap winl $ merid (snd X)))
     ∙ ap (λ Z → ⊙Susp X ⊙∨ Z)
-         (⊙ua (⊙ify-eq (SuspSectionDecomp.eq (⊙cfcod i₁ ⊙∘ i₂) j₂ (λ y → idp))
-                       (! $ ap winl $ merid _ (snd Y))))
+         (⊙ua (⊙≃-in (SuspSectionDecomp.eq (⊙cfcod' i₁ ⊙∘ i₂) j₂ (λ y → idp))
+                       (! $ ap winl $ merid (snd Y))))
     ∙ ap (λ Z → ⊙Susp X ⊙∨ (⊙Susp Y ⊙∨ ⊙Susp Z))
          (CofiberComp.⊙path i₁ i₂)

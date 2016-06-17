@@ -51,8 +51,18 @@ module lib.types.IteratedSuspension where
   ∙ ⊙susp-fmap-∘ (⊙susp^-fmap n g) (⊙susp^-fmap n f)
 
 
-⊙Sphere : ∀ {i} → (n : ℕ) → Ptd i
-⊙Sphere n = ⊙Susp^ n (⊙Lift ⊙Bool)
+⊙Sphere : (n : ℕ) → Ptd₀
+⊙Sphere n = ⊙Susp^ n ⊙Bool
 
-Sphere : ∀ {i} → (n : ℕ) → Type i
+Sphere : (n : ℕ) → Type₀
 Sphere n = fst (⊙Sphere n)
+
+-- favonia: [S¹] has its own elim rules in Circle.agda.
+⊙S⁰ = ⊙Sphere 0
+⊙S¹ = ⊙Sphere 1
+⊙S² = ⊙Sphere 2
+⊙S³ = ⊙Sphere 3
+S⁰ = Sphere 0
+S¹ = Sphere 1
+S² = Sphere 2
+S³ = Sphere 3

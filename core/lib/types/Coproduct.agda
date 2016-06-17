@@ -39,10 +39,10 @@ module _ {i j} {A : Type i} {B : Type j} where
           g-f (inr _) .(inr _) idp = idp
 
   inl=inl-equiv : (a₁ a₂ : A) → (inl a₁ == inl a₂) ≃ (a₁ == a₂)
-  inl=inl-equiv a₁ a₂ = lift-equiv ∘e ⊔-code-equiv (inl a₁) (inl a₂)
+  inl=inl-equiv a₁ a₂ = lower-equiv ∘e ⊔-code-equiv (inl a₁) (inl a₂)
 
   inr=inr-equiv : (b₁ b₂ : B) → (inr b₁ == inr b₂) ≃ (b₁ == b₂)
-  inr=inr-equiv b₁ b₂ = lift-equiv ∘e ⊔-code-equiv (inr b₁) (inr b₂)
+  inr=inr-equiv b₁ b₂ = lower-equiv ∘e ⊔-code-equiv (inr b₁) (inr b₂)
 
   inl≠inr : (a₁ : A) (b₂ : B) → (inl a₁ ≠ inr b₂)
   inl≠inr a₁ b₂ p = lower $ ⊔-encode p
@@ -74,22 +74,22 @@ codiag (inr a) = a
 ⊙codiag = (codiag , idp)
 
 -- A binary sigma is a coproduct
-ΣBool-equiv-⊔ : ∀ {i} (Pick : Lift {j = i} Bool → Type i)
-  → Σ _ Pick ≃ (Pick (lift true) ⊔ Pick (lift false))
+ΣBool-equiv-⊔ : ∀ {i} (Pick : Bool → Type i)
+  → Σ _ Pick ≃ (Pick true ⊔ Pick false)
 ΣBool-equiv-⊔ Pick = equiv into out into-out out-into
   where
-  into : Σ _ Pick → (Pick (lift true) ⊔ Pick (lift false))
-  into (lift true , a) = inl a
-  into (lift false , b) = inr b
+  into : Σ _ Pick → Pick true ⊔ Pick false
+  into (true , a) = inl a
+  into (false , b) = inr b
 
-  out : (Pick (lift true) ⊔ Pick (lift false)) → Σ _ Pick
-  out (inl a) = (lift true , a)
-  out (inr b) = (lift false , b)
+  out : (Pick true ⊔ Pick false) → Σ _ Pick
+  out (inl a) = (true , a)
+  out (inr b) = (false , b)
 
   into-out : ∀ c → into (out c) == c
   into-out (inl a) = idp
   into-out (inr b) = idp
 
   out-into : ∀ s → out (into s) == s
-  out-into (lift true , a) = idp
-  out-into (lift false , b) = idp
+  out-into (true , a) = idp
+  out-into (false , b) = idp

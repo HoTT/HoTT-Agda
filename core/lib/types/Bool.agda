@@ -16,9 +16,9 @@ data Bool : Type₀ where
 ⊙Bool : Ptd₀
 ⊙Bool = ⊙[ Bool , true ]
 
-if_then_else_ : ∀ {i} {A : Bool → Type i}
-  (b : Bool) (t : A true) (e : A false)
-  → A b
+-- Non-dependent
+if_then_else_ : ∀ {i} {A : Type i}
+  → Bool → A → A → A
 if true then t else e = t
 if false then t else e = e
 

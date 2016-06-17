@@ -19,21 +19,21 @@ open import homotopy.elims.Lemmas
 module homotopy.elims.CofPushoutSection where
 
 module _ {i j k l} {s : Span {i} {j} {k}} {D : Type l}
-  (h : Pushout s → D) where
+  {h : Pushout s → D} where
 
   open Span s
 
   module CofPushoutSection (r : B → C) (inv : ∀ c → r (g c) == c) where
 
     elim : ∀ {m} {P : Cofiber h → Type m}
-      (cfbase* : P (cfbase _)) (cfcod* : (d : D) → P (cfcod _ d))
+      (cfbase* : P cfbase) (cfcod* : (d : D) → P (cfcod d))
       (cfglue-left* : (a : A) →
-        cfbase* == cfcod* (h (left a)) [ P ↓ cfglue _ (left a) ])
+        cfbase* == cfcod* (h (left a)) [ P ↓ cfglue (left a) ])
       (cfglue-right* : (b : B) →
-        cfbase* == cfcod* (h (right b)) [ P ↓ cfglue _ (right b) ])
+        cfbase* == cfcod* (h (right b)) [ P ↓ cfglue (right b) ])
       → Π (Cofiber h) P
     elim {P = P} cfbase* cfcod* cfglue-left* cfglue-right* =
-      Cofiber-elim _
+      Cofiber-elim
         cfbase*
         cfcod*
         (Pushout-elim
@@ -41,17 +41,17 @@ module _ {i j k l} {s : Span {i} {j} {k}} {D : Type l}
           (λ b → (fst (fill (r b))) ◃ cfglue-right* b)
           (λ c → ↓↓-from-squareover $
             transport
-              (λ c' → SquareOver P (natural-square (cfglue _) (glue c))
+              (λ c' → SquareOver P (natural-square cfglue (glue c))
                   (cfglue-left* (f c))
-                  (↓-ap-in P (λ _ → cfbase _) (apd (λ _ → cfbase*) (glue c)))
-                  (↓-ap-in P (cfcod _ ∘ h) (apd (cfcod* ∘ h) (glue c)))
+                  (↓-ap-in P (λ _ → cfbase) (apd (λ _ → cfbase*) (glue c)))
+                  (↓-ap-in P (cfcod ∘ h) (apd (cfcod* ∘ h) (glue c)))
                   (fst (fill c') ◃ cfglue-right* (g c)))
               (! (inv c))
               (snd (fill c))))
       where
       fill : (c : C)
         → Σ (cfbase* == cfbase*)
-            (λ q → SquareOver P (natural-square (cfglue _) (glue c))
+            (λ q → SquareOver P (natural-square cfglue (glue c))
                      (cfglue-left* (f c)) _ _ (q ◃ cfglue-right* (g c)))
       fill c = fill-upper-right _ _ _ _ _
 

@@ -74,7 +74,7 @@ module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
   module BelowDiagonal where
 
     π₁ : (n : ℕ) (t1 : 1 ≠ 0 )
-      → π 1 t1 (⊙EM (S (S n))) == LiftUnit-Group
+      → π 1 t1 (⊙EM (S (S n))) == Lift-Unit-Group
     π₁ n t1 =
       contr-is-0ᴳ (π 1 t1 (⊙EM (S (S n))))
         (connected-at-level-is-contr
@@ -85,7 +85,7 @@ module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
     -- some clutter here arises from the definition of <;
     -- any simple way to avoid this?
     π-below : (k n : ℕ) (tk : k ≠ 0) → (k < n)
-      → π k tk (⊙EM n) == LiftUnit-Group
+      → π k tk (⊙EM n) == Lift-Unit-Group
     π-below 0 _ tk lt = ⊥-rec (tk idp)
     π-below 1 .2 tk ltS = π₁ 0 tk
     π-below 1 .3 tk (ltSR ltS) = π₁ 1 tk
@@ -135,7 +135,7 @@ module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
   module AboveDiagonal where
 
     π-above : (k n : ℕ) (tk : k ≠ 0) → (n < k)
-      → π k tk (⊙EM n) == LiftUnit-Group
+      → π k tk (⊙EM n) == Lift-Unit-Group
     π-above k n tk lt =
       contr-is-0ᴳ (π k tk (⊙EM n))
         (inhab-prop-is-contr
@@ -154,19 +154,19 @@ module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
     spectrum0 : ⊙Ω (⊙EM 1) == ⊙EM 0
     spectrum0 =
       ⊙Ω (⊙EM 1)
-        =⟨ ⊙ua (⊙ify-eq (Trunc=-equiv _ _) idp) ⟩
+        =⟨ ⊙ua (⊙≃-in (Trunc=-equiv _ _) idp) ⟩
       ⊙Trunc 0 (⊙Ω X)
-        =⟨ ⊙ua (⊙ify-eq (unTrunc-equiv _ (gA a₀ a₀)) idp) ⟩
+        =⟨ ⊙ua (⊙≃-in (unTrunc-equiv _ (gA a₀ a₀)) idp) ⟩
       ⊙Ω X ∎
 
     spectrum1 : ⊙Ω (⊙EM 2) == ⊙EM 1
     spectrum1 =
       ⊙Ω (⊙EM 2)
-        =⟨ ⊙ua (⊙ify-eq (Trunc=-equiv _ _) idp) ⟩
+        =⟨ ⊙ua (⊙≃-in (Trunc=-equiv _ _) idp) ⟩
       ⊙Trunc 1 (⊙Ω (⊙Susp X))
         =⟨ Π₂.⊙main-lemma ⟩
       X
-        =⟨ ! (⊙ua (⊙ify-eq (unTrunc-equiv _ gA) idp)) ⟩
+        =⟨ ! (⊙ua (⊙≃-in (unTrunc-equiv _ gA) idp)) ⟩
       ⊙EM 1 ∎
 
     private
@@ -188,7 +188,7 @@ module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
       → ⊙Ω (⊙EM (S (S (S n)))) == ⊙EM (S (S n))
     spectrumSS n =
       ⊙Ω (⊙EM (S (S (S n))))
-        =⟨ ⊙ua (⊙ify-eq (Trunc=-equiv _ _) idp) ⟩
+        =⟨ ⊙ua (⊙≃-in (Trunc=-equiv _ _) idp) ⟩
       ⊙Trunc ⟨ S (S n) ⟩ (⊙Ω (⊙Susp^ (S (S n)) X))
         =⟨ ! (FS.⊙path n) ⟩
       ⊙EM (S (S n)) ∎

@@ -43,6 +43,9 @@ O *2 = O
 ℕ-S-inj : (n m : ℕ) (p : S n == S m) → n == m
 ℕ-S-inj n m p = ap ℕ-pred p
 
+ℕ-S-≠ : ∀ {n m : ℕ} (p : n ≠ m) → S n ≠ S m
+ℕ-S-≠ p = p ∘ ℕ-S-inj _ _
+
 private
   ℕ-S≠O-type : ℕ → Type₀
   ℕ-S≠O-type O = Empty

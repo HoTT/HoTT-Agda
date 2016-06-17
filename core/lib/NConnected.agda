@@ -251,30 +251,30 @@ abstract
   Susp-conn : ∀ {i} {A : Type i} {n : ℕ₋₂} 
     → is-connected n A → is-connected (S n) (Suspension A)
   Susp-conn {A = A} {n = n} cA = 
-    ([ north A ] ,
+    ([ north ] ,
      Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
-       (Suspension-elim A 
+       (Suspension-elim 
          idp 
          (Trunc-rec (Trunc-level {n = S n} _ _)
-                    (λ a → ap [_] (merid A a)) 
+                    (λ a → ap [_] (merid a)) 
                     (fst cA))
          (λ x → Trunc-elim
             {P = λ y → idp == 
-              Trunc-rec (Trunc-level {n = S n} _ _) (λ a → ap [_] (merid A a)) y
-              [ (λ z → [ north A ] == [ z ]) ↓ (merid A x) ]}
+              Trunc-rec (Trunc-level {n = S n} _ _) (λ a → ap [_] (merid a)) y
+              [ (λ z → [ north ] == [ z ]) ↓ (merid x) ]}
             (λ _ → ↓-preserves-level _ (λ _ → Trunc-level {n = S n} _ _))
             (λ x' → ↓-cst=app-in (∙'-unit-l _ ∙ mers-eq n cA x x'))
             (fst cA))))
     where 
     mers-eq : ∀ {i} {A : Type i} (n : ℕ₋₂) 
       → is-connected n A → (x x' : A)
-      → ap ([_] {n = S n}) (merid A x) 
+      → ap ([_] {n = S n}) (merid x) 
         == Trunc-rec (Trunc-level {n = S n} _ _) 
-                     (λ a → ap [_] (merid A a)) [ x' ]
+                     (λ a → ap [_] (merid a)) [ x' ]
     mers-eq ⟨-2⟩ cA x x' = contr-has-all-paths (Trunc-level {n = -1} _ _) _ _
     mers-eq {A = A} (S n) cA x x' = 
       conn-elim (pointed-conn-out A x cA) 
-        (λ y → ((ap [_] (merid A x) == ap [_] (merid A y)) ,
+        (λ y → ((ap [_] (merid x) == ap [_] (merid y)) ,
                 Trunc-level {n = S (S n)} _ _ _ _)) 
         (λ _ → idp) x'
 
