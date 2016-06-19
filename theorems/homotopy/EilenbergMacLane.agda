@@ -11,8 +11,7 @@ module homotopy.EilenbergMacLane where
 
 -- EM(G,n) when G is π₁(A,a₀)
 module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
-  (gA : has-level 1 A) (A-H : HSS A)
-  (μcoh : HSS.μe- A-H (HSS.e A-H) == HSS.μ-e A-H (HSS.e A-H)) where
+  (gA : has-level 1 A) (A-H : HSS A) where
 
   private
     a₀ = HSS.e A-H
@@ -115,7 +114,7 @@ module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
            (prop-has-all-paths (Π-level (λ _ → ⊥-is-prop)) tn t1)
 
     private
-      module Π₂ = Pi2HSusp A gA cA A-H μcoh
+      module Π₂ = Pi2HSusp A gA cA A-H
 
     π₂ : (tn : 2 ≠ O) (t1 : 1 ≠ O)
       → π 2 tn (⊙EM 2) == π 1 t1 X
@@ -149,7 +148,7 @@ module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
   module Spectrum where
 
     private
-      module Π₂ = Pi2HSusp A gA cA A-H μcoh
+      module Π₂ = Pi2HSusp A gA cA A-H
 
     spectrum0 : ⊙Ω (⊙EM 1) == ⊙EM 0
     spectrum0 =
@@ -202,7 +201,7 @@ module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
 module EMExplicit {i} (G : Group i) (G-abelian : is-abelian G) where
   module K₁ = EM₁ G
   module HSpace = EM₁HSpace G G-abelian
-  open EMImplicit K₁.EM₁ K₁.EM₁-conn K₁.emlevel HSpace.H-EM₁ HSpace.μcoh public
+  open EMImplicit K₁.EM₁ K₁.EM₁-conn K₁.emlevel HSpace.H-EM₁ public
 
   open BelowDiagonal public using (π-below)
 

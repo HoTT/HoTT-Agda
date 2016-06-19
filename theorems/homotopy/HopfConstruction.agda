@@ -16,7 +16,7 @@ suspension of [A] with fiber [A] and applying [μ a] when you move along
 [merid a].
 -}
 
-module H = SuspensionRecType A A μ-equiv
+module H = SuspensionRecType A A μ-e-r-equiv
 
 {-
 The total space of the previous fibration is the pushout of the following span
@@ -47,13 +47,13 @@ x = span= (equiv snd (_,_ tt) (λ b → idp) (λ a → idp))
     to (a , a') = (μ a a' , a')
 
     from : A × A → A × A
-    from (a , a') = (<– (μ'-equiv a') a , a')
+    from (a , a') = (<– (μ-e-l-equiv a') a , a')
 
     to-from : (a : A × A) → to (from a) == a
-    to-from (a , a') = pair×= (<–-inv-r (μ'-equiv a') a) idp
+    to-from (a , a') = pair×= (<–-inv-r (μ-e-l-equiv a') a) idp
 
     from-to : (a : A × A) → from (to a) == a
-    from-to (a , a') = pair×= (<–-inv-l (μ'-equiv a') a) idp
+    from-to (a , a') = pair×= (<–-inv-l (μ-e-l-equiv a') a) idp
 
 lemma2 : (A * A) ≃ (Pushout (flip (*-span A A)))
 lemma2 = Pushout-comm (*-span A A)
