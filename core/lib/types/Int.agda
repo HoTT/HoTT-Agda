@@ -176,6 +176,59 @@ pred-ℤ+ (pos (S n)) _ = ! $ pred-succ _
   pred ((negsucc n₁ ℤ+ z₂) ℤ+ z₃)   =⟨ ap pred $ ℤ+-assoc (negsucc n₁) z₂ z₃ ⟩
   pred (negsucc n₁ ℤ+ (z₂ ℤ+ z₃))   ∎
 
+--comm
+ℤ+-succ : ∀ z₁ z₂ → z₁ ℤ+ succ z₂ == succ (z₁ ℤ+ z₂)
+ℤ+-succ (pos O) z₂ = idp
+ℤ+-succ (pos (S n)) z₂ = ap succ (ℤ+-succ (pos n) z₂)
+ℤ+-succ (negsucc O) z₂ = pred-succ z₂ ∙ ! (succ-pred z₂)
+ℤ+-succ (negsucc (S n)) z₂ =
+  pred (negsucc n ℤ+ succ z₂)
+    =⟨ ap pred (ℤ+-succ (negsucc n) z₂) ⟩
+  pred (succ (negsucc n ℤ+ z₂))
+    =⟨ pred-succ (negsucc n ℤ+ z₂) ⟩
+  negsucc n ℤ+ z₂
+    =⟨ ! $ succ-pred (negsucc n ℤ+ z₂) ⟩
+  succ (pred (negsucc n ℤ+ z₂))
+    ∎
+
+ℤ+-pred : ∀ z₁ z₂ → z₁ ℤ+ pred z₂ == pred (z₁ ℤ+ z₂)
+ℤ+-pred (pos O) z₂ = idp
+ℤ+-pred (pos (S n)) z₂ =
+  succ (pos n ℤ+ pred z₂)
+    =⟨ ap succ (ℤ+-pred (pos n) z₂) ⟩
+  succ (pred (pos n ℤ+ z₂))
+    =⟨ succ-pred (pos n ℤ+ z₂) ⟩
+  pos n ℤ+ z₂
+    =⟨ ! $ pred-succ (pos n ℤ+ z₂) ⟩
+  pred (succ (pos n ℤ+ z₂))
+    ∎
+ℤ+-pred (negsucc O) z₂ = idp
+ℤ+-pred (negsucc (S n)) z₂ = ap pred (ℤ+-pred (negsucc n) z₂)
+
+ℤ+-comm : ∀ z₁ z₂ → z₁ ℤ+ z₂ == z₂ ℤ+ z₁
+ℤ+-comm (pos O) z₂ = ! $ ℤ+-unit-r z₂
+ℤ+-comm (pos (S n₁)) z₂ =
+  succ (pos n₁ ℤ+ z₂)
+    =⟨ ℤ+-comm (pos n₁) z₂ |in-ctx succ ⟩
+  succ (z₂ ℤ+ pos n₁)
+    =⟨ ! $ ℤ+-succ z₂ (pos n₁) ⟩
+  z₂ ℤ+ pos (S n₁)
+    ∎
+ℤ+-comm (negsucc O) z₂ =
+  pred z₂
+    =⟨ ! $ ℤ+-unit-r z₂ |in-ctx pred ⟩
+  pred (z₂ ℤ+ pos O)
+    =⟨ ! $ ℤ+-pred z₂ (pos O) ⟩
+  z₂ ℤ+ negsucc O
+    ∎
+ℤ+-comm (negsucc (S n)) z₂ =
+  pred (negsucc n ℤ+ z₂)
+    =⟨ ℤ+-comm (negsucc n) z₂ |in-ctx pred ⟩
+  pred (z₂ ℤ+ negsucc n)
+    =⟨ ! $ ℤ+-pred z₂ (negsucc n) ⟩
+  z₂ ℤ+ negsucc (S n)
+    ∎
+
 private
   pos-S-ℤ+-negsucc-S : ∀ n₁ n₂ → pos (S n₁) ℤ+ negsucc (S n₂) == pos n₁ ℤ+ negsucc n₂
   pos-S-ℤ+-negsucc-S O      n₂ = idp
