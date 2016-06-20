@@ -72,69 +72,21 @@ abstract
 ℕ-level = ℕ-is-set
 
 {- Inequalities -}
-infix 40 _<_ _<'_ _≤_ _≤'_
-infix 40 _>_ _>'_
+infix 40 _<_ _≤_
 
 data _<_ : ℕ → ℕ → Type₀ where
   ltS : {m : ℕ} → m < (S m)
   ltSR : {m n : ℕ} → m < n → m < (S n)
 
-data _<'_ : ℕ → ℕ → Type₀ where
-  lt'O : {m : ℕ} → O <' S m
-  lt'S : {m n : ℕ} → m <' n → (S m) <' (S n)
-
 _≤_ : ℕ → ℕ → Type₀
 m ≤ n = Coprod (m == n) (m < n)
 
-_≤'_ : ℕ → ℕ → Type₀
-m ≤' n = Coprod (m == n) (m <' n)
-
-_>_ : ℕ → ℕ → Type₀
-m > n = n < m
-
-_>'_ : ℕ → ℕ → Type₀
-m >' n = n <' m
-
--- [<] and [<'] are the same
-
-<'-ltS : {m : ℕ} → m <' (S m)
-<'-ltS {m = O} = lt'O
-<'-ltS {m = S m} = lt'S <'-ltS
-
-<'-ltSR : {m n : ℕ} → m <' n → m <' (S n)
-<'-ltSR lt'O = lt'O
-<'-ltSR (lt'S lt') = lt'S (<'-ltSR lt')
-
-<-lt'O : {m : ℕ} → O < S m
-<-lt'O {m = O} = ltS
-<-lt'O {m = S m} = ltSR <-lt'O
-
-<-lt'S : {m n : ℕ} → m < n → (S m) < (S n)
-<-lt'S ltS = ltS
-<-lt'S (ltSR lt) = ltSR (<-lt'S lt)
-
-<-to-<' : {m n : ℕ} → m < n → m <' n
-<-to-<' ltS = <'-ltS
-<-to-<' (ltSR lt) = <'-ltSR (<-to-<' lt)
-
-<'-to-< : {m n : ℕ} → m <' n → m < n
-<'-to-< lt'O = <-lt'O
-<'-to-< (lt'S lt') = <-lt'S (<'-to-< lt')
-
-≤-to-≤' : {m n : ℕ} → m ≤ n → m ≤' n
-≤-to-≤' (inl p) = inl p
-≤-to-≤' (inr lt) = inr (<-to-<' lt)
-
-≤'-to-≤ : {m n : ℕ} → m ≤' n → m ≤ n
-≤'-to-≤ (inl p) = inl p
-≤'-to-≤ (inr lt') = inr (<'-to-< lt')
-
 -- properties of [<]
 
-O<S : (m : ℕ) → O < S m
-O<S m = <-lt'O
-
-S>O = O<S
+instance
+  O<S : (m : ℕ) → O < S m
+  O<S O = ltS
+  O<S (S m) = ltSR (O<S m)
 
 O≤ : (m : ℕ) → O ≤ m
 O≤ O = inl idp
@@ -156,30 +108,20 @@ O≤ (S m) = inr (O<S m)
 ≤-trans (inr lt₁) (inr lt₂) = inr (<-trans lt₁ lt₂)
 
 <-ap-S : {m n : ℕ} → m < n → S m < S n
-<-ap-S = <-lt'S
+<-ap-S ltS = ltS
+<-ap-S (ltSR lt) = ltSR (<-ap-S lt)
 
 ≤-ap-S : {m n : ℕ} → m ≤ n → S m ≤ S n
 ≤-ap-S (inl p) = inl (ap S p)
 ≤-ap-S (inr lt) = inr (<-ap-S lt)
 
-≤'-ap-S : {m n : ℕ} → m ≤' n → S m ≤' S n
-≤'-ap-S (inl p) = inl (ap S p)
-≤'-ap-S (inr lt') = inr (lt'S lt')
-
 <-cancel-S : {m n : ℕ} → S m < S n → m < n
 <-cancel-S ltS = ltS
 <-cancel-S (ltSR lt) = <-trans ltS lt
 
-<'-cancel-S : {m n : ℕ} → S m <' S n → m <' n
-<'-cancel-S (lt'S lt') = lt'
-
 ≤-cancel-S : {m n : ℕ} → S m ≤ S n → m ≤ n
 ≤-cancel-S (inl p) = inl (ap ℕ-pred p)
 ≤-cancel-S (inr lt) = inr (<-cancel-S lt)
-
-≤'-cancel-S : {m n : ℕ} → S m ≤' S n → m ≤' n
-≤'-cancel-S (inl p) = inl (ap ℕ-pred p)
-≤'-cancel-S (inr lt) = inr (<'-cancel-S lt)
 
 <-dec : Dec _<_
 <-dec _     O     = inr (≮O _)
@@ -188,10 +130,10 @@ O≤ (S m) = inr (O<S m)
 <-dec (S n) (S m) | inl p  = inl (<-ap-S p)
 <-dec (S n) (S m) | inr p⊥ = inr (p⊥ ∘ <-cancel-S)
 
-≯-to-≤ : {m n : ℕ} → ¬ (m > n) → m ≤ n
+≯-to-≤ : {m n : ℕ} → ¬ (n < m) → m ≤ n
 ≯-to-≤ {O} {O} _ = inl idp
 ≯-to-≤ {O} {S n} _ = inr (O<S n)
-≯-to-≤ {S m} {O} neggt = ⊥-elim $ neggt (S>O m)
+≯-to-≤ {S m} {O} neggt = ⊥-elim $ neggt (O<S m)
 ≯-to-≤ {S m} {S n} neggt = ≤-ap-S (≯-to-≤ (neggt ∘ <-ap-S))
 
 <-+-l : {m n : ℕ} (k : ℕ) → m < n → (k + m) < (k + n)
