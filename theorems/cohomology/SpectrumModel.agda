@@ -230,5 +230,5 @@ spectrum-cohomology = record {
   C-exact = C-exact;
   C-additive = C-additive}
 
-spectrum-C-S⁰ : (n : ℤ) → C n (⊙Lift ⊙S⁰) == π 1 (ℕ-S≠O _) (E (succ n))
+spectrum-C-S⁰ : (n : ℤ) → C n (⊙Lift ⊙S⁰) == πS 0 (E (succ n))
 spectrum-C-S⁰ n = Bool⊙→Ω-is-π₁ (E (succ n))

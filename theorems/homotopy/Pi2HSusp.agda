@@ -149,10 +149,9 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level 1 A)
   ⊙main-lemma = ⊙ua (⊙≃-in main-lemma-eq idp)
 
   abstract
-    main-lemma-iso : (t1 : 1 ≠ 0) →
-         Ω^-Group 1 t1 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))) Trunc-level
-      ≃ᴳ Ω^-Group 1 t1 (⊙Trunc 1 (A , e)) Trunc-level
-    main-lemma-iso _ = (record {f = f; pres-comp = pres-comp} , ie)
+    main-lemma-iso : Ω^S-Group 0 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))) Trunc-level
+                  ≃ᴳ Ω^S-Group 0 (⊙Trunc 1 (A , e)) Trunc-level
+    main-lemma-iso = (record {f = f; pres-comp = pres-comp} , ie)
       where
       h : fst (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))
             ⊙→ ⊙Trunc 1 (A , e))
@@ -162,22 +161,21 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level 1 A)
       f = fst (ap^ 1 h)
 
       pres-comp : (p q : Ω^ 1 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))))
-        → f (conc^ 1 (ℕ-S≠O _) p q) == conc^ 1 (ℕ-S≠O _) (f p) (f q)
-      pres-comp = ap^-conc^ 1 (ℕ-S≠O _) h
+        → f (conc^S 0 p q) == conc^S 0 (f p) (f q)
+      pres-comp = ap^S-conc^S 0 h
 
       ie : is-equiv f
       ie = is-equiv-ap^ 1 h (snd $ ((unTrunc-equiv A gA)⁻¹ ∘e main-lemma-eq))
 
   abstract
-    π₂-Suspension : (t1 : 1 ≠ 0) (t2 : 2 ≠ 0)
-      → π 2 t2 (⊙Susp (A , e)) == π 1 t1 (A , e)
-    π₂-Suspension t1 t2 =
-      π 2 t2 (⊙Susp (A , e))
-        =⟨ π-inner-iso 1 t1 t2 (⊙Susp (A , e)) ⟩
-      π 1 t1 (⊙Ω (⊙Susp (A , e)))
-        =⟨ ! (π-Trunc-shift-iso 1 t1 (⊙Ω (⊙Susp (A , e)))) ⟩
-      Ω^-Group 1 t1 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))) Trunc-level
-        =⟨ group-ua (main-lemma-iso t1) ⟩
-      Ω^-Group 1 t1 (⊙Trunc 1 (A , e)) Trunc-level
-        =⟨ π-Trunc-shift-iso 1 t1 (A , e) ⟩
-      π 1 t1 (A , e) ∎
+    π₂-Suspension : πS 1 (⊙Susp (A , e)) == πS 0 (A , e)
+    π₂-Suspension =
+      πS 1 (⊙Susp (A , e))
+        =⟨ πS-inner-iso 0 (⊙Susp (A , e)) ⟩
+      πS 0 (⊙Ω (⊙Susp (A , e)))
+        =⟨ ! (πS-Trunc-shift-iso 0 (⊙Ω (⊙Susp (A , e)))) ⟩
+      Ω^S-Group 0 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))) Trunc-level
+        =⟨ group-ua main-lemma-iso ⟩
+      Ω^S-Group 0 (⊙Trunc 1 (A , e)) Trunc-level
+        =⟨ πS-Trunc-shift-iso 0 (A , e) ⟩
+      πS 0 (A , e) ∎

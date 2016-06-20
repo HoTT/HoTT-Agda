@@ -46,7 +46,7 @@ module EM₁ {i} (G : Group i) where
   module EM₁Rec {j} {C : Type j}
     (C-level : has-level ⟨ 1 ⟩ C)
     (embase* : C)
-    (hom* : G →ᴳ (Ω^-Group 1 (ℕ-S≠O _) (C , embase*) C-level)) where
+    (hom* : G →ᴳ (Ω^S-Group 0 (C , embase*) C-level)) where
 
     f : EM₁ → C
     f (#em₁ #embase _) = embase*
@@ -107,10 +107,10 @@ module EM₁ {i} (G : Group i) where
 
     Ω-Group : Group (lsucc i)
     Ω-Group = group (G.El == G.El) (universe-=-level G.El-level G.El-level)
-                    (Ω^-group-structure 1 (ℕ-S≠O _) (Type i , G.El))
+                    (Ω^S-group-structure 0 (Type i , G.El))
 
     0-Group : Group (lsucc i)
-    0-Group = Ω^-Group 1 (ℕ-S≠O _)
+    0-Group = Ω^S-Group 0
       ((0 -Type i) , (G.El , G.El-level)) (0 -Type-level i)
 
     Codes-hom₁ : G →ᴳ Ω-Group
@@ -209,7 +209,7 @@ module EM₁ {i} (G : Group i) where
       π₁-path = ap (Trunc 0) Ω¹-path ∙ ua (unTrunc-equiv G.El G.El-level)
 
     abstract
-      π₁-iso : π 1 (ℕ-S≠O _) (EM₁ , embase) == G
+      π₁-iso : πS 0 (EM₁ , embase) == G
       π₁-iso = ! $ group-ua
         (record { f = [_] ∘ emloop;
                   pres-comp = λ g₁ g₂ → ap [_] (emloop-comp g₁ g₂) } ,

@@ -103,6 +103,6 @@ abstract
 
 abstract
   Bool⊙→Ω-is-π₁ : ∀ {i} (X : Ptd i)
-    → →Ω-Group (⊙Lift {j = i} ⊙Bool) X == π 1 (ℕ-S≠O _) X
+    → →Ω-Group (⊙Lift {j = i} ⊙Bool) X == πS 0 X
   Bool⊙→Ω-is-π₁ {i} X = group-ua $
     Trunc-Group-iso Bool⊙→-out (λ _ _ → idp) (snd (Bool⊙→-equiv (⊙Ω X)))

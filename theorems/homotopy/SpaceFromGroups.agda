@@ -18,12 +18,12 @@ module SpaceFromEMs {i} (F : ℕ → Ptd i)
   X : Ptd i
   X = ⊙FinTuples F
 
-  πₙ : (n : ℕ) → π (S n) (ℕ-S≠O _) X == π (S n) (ℕ-S≠O _) (F n)
-  πₙ n =
+  πS-X : (n : ℕ) → πS n X == πS n (F n)
+  πS-X n =
     prefix-lemma n O F pF
-    ∙ ap (π (S n) (ℕ-S≠O _)) (! (⊙ua (⊙fin-tuples-cons (λ k → F (n + k)))))
-    ∙ π-× (S n) (ℕ-S≠O _) (F (n + O)) (⊙FinTuples (λ k → F (n + S k)))
-    ∙ ap (λ H → π (S n) (ℕ-S≠O _) (F (n + O)) ×ᴳ H)
+    ∙ ap (πS n) (! (⊙ua (⊙fin-tuples-cons (λ k → F (n + k)))))
+    ∙ πS-× n (F (n + O)) (⊙FinTuples (λ k → F (n + S k)))
+    ∙ ap (λ H → πS n (F (n + O)) ×ᴳ H)
          (contr-is-0ᴳ _ $
            connected-at-level-is-contr (Trunc-level {n = 0}) $
              Trunc-preserves-conn 0 $ Ω^-conn-in _ (S n) _ $
@@ -36,34 +36,34 @@ module SpaceFromEMs {i} (F : ℕ → Ptd i)
                      (+-βr n k ∙ +-comm (S n) k)
                      (cF (n + S k))))
     ∙ ×ᴳ-unit-r
-    ∙ ap (λ k → π (S n) (ℕ-S≠O _) (F k)) (+-unit-r n)
+    ∙ ap (λ k → πS n (F k)) (+-unit-r n)
 
     where
     {- In computing πₙ₊₁, spaces before Fₙ are ignored because of their
      - truncation level -}
     prefix-lemma : (n : ℕ) (m : ℕ) (F : ℕ → Ptd i)
       (pF : (k : ℕ) → has-level ⟨ S m + k ⟩ (fst (F k)))
-      → π (S m + n) (ℕ-S≠O _) (⊙FinTuples F)
-        == π (S m + n) (ℕ-S≠O _) (⊙FinTuples (λ k → F (n + k)))
+      → πS (m + n) (⊙FinTuples F)
+        == πS (m + n) (⊙FinTuples (λ k → F (n + k)))
     prefix-lemma O m F pF = idp
     prefix-lemma (S n) m F pF =
-      ap (π (S m + S n) (ℕ-S≠O _)) (! (⊙ua (⊙fin-tuples-cons F)))
-      ∙ π-× (S m + S n) (ℕ-S≠O _) (F O) (⊙FinTuples (F ∘ S))
+      ap (πS (m + S n)) (! (⊙ua (⊙fin-tuples-cons F)))
+      ∙ πS-× (m + S n) (F O) (⊙FinTuples (F ∘ S))
       ∙ ap2 _×ᴳ_ lemma₁ lemma₂
       ∙ ×ᴳ-unit-l
       where
       {- ignore first space -}
-      lemma₁ : π (S (m + S n)) (ℕ-S≠O _) (F O) == 0ᴳ
+      lemma₁ : πS (m + S n) (F O) == 0ᴳ
       lemma₁ =
-        π-above-level (S (m + S n)) (ℕ-S≠O _) _ (F O)
+        πS-above-level (m + S n) _ (F O)
           (⟨⟩-monotone-< (<-ap-S (<-+-l m (O<S n)))) (pF O)
 
       {- ignore the rest by recursive call -}
-      lemma₂ : π (S (m + S n)) (ℕ-S≠O _) (⊙FinTuples (F ∘ S))
-        == π (S (m + S n)) (ℕ-S≠O (m + S n)) (⊙FinTuples (λ k → F (S (n + k))))
+      lemma₂ : πS (m + S n) (⊙FinTuples (F ∘ S))
+        == πS (m + S n) (⊙FinTuples (λ k → F (S (n + k))))
       lemma₂ =
-        transport (λ s → π (S s) (ℕ-S≠O s) (⊙FinTuples (F ∘ S))
-                      == π (S s) (ℕ-S≠O s) (⊙FinTuples (λ k → F (S n + k))))
+        transport (λ s → πS s (⊙FinTuples (F ∘ S))
+                      == πS s (⊙FinTuples (λ k → F (S n + k))))
           (! (+-βr m n))
           (prefix-lemma n (S m) (F ∘ S)
             (λ k → transport (λ s → has-level ⟨ s ⟩ (fst (F (S k))))
@@ -103,7 +103,7 @@ module SpaceFromGroups {i} (G : ℕ → Group i)
 
   X = M.X
 
-  πₙ : (n : ℕ) → π (S n) (ℕ-S≠O _) X == G n
-  πₙ O = M.πₙ O ∙ EM₁.π₁.π₁-iso (G O)
-  πₙ (S n) =
-    M.πₙ (S n) ∙ EMExplicit.π-diag (G (S n)) (abG n) (S (S n)) (ℕ-S≠O _)
+  πS-X : (n : ℕ) → πS n X == G n
+  πS-X O = M.πS-X O ∙ EM₁.π₁.π₁-iso (G O)
+  πS-X (S n) =
+    M.πS-X (S n) ∙ EMExplicit.πS-diag (G (S n)) (abG n) (S n)

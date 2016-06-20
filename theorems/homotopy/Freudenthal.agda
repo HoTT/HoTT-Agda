@@ -233,18 +233,18 @@ module FreudenthalEquiv
 
 {- Used to prove stability in iterated suspensions -}
 module FreudenthalIso
-  {i} (n : ℕ₋₂) (k : ℕ) (t : k ≠ O) (kle : ⟨ k ⟩ ≤T S (n +2+ S n))
+  {i} (n : ℕ₋₂) (k : ℕ) (kle : ⟨ S k ⟩ ≤T S (n +2+ S n))
   (X : Ptd i) (cX : is-connected (S (S n)) (fst X)) where
 
-  open FreudenthalEquiv n ⟨ k ⟩ kle (fst X) (snd X) cX public
+  open FreudenthalEquiv n ⟨ S k ⟩ kle (fst X) (snd X) cX public
 
-  hom : Ω^-Group k t (⊙Trunc ⟨ k ⟩ X) Trunc-level
-     →ᴳ Ω^-Group k t (⊙Trunc ⟨ k ⟩ (⊙Ω (⊙Susp X))) Trunc-level
+  hom : Ω^S-Group k (⊙Trunc ⟨ S k ⟩ X) Trunc-level
+     →ᴳ Ω^S-Group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp X))) Trunc-level
   hom = record {
     f = fst F;
-    pres-comp = ap^-conc^ k t (decodeN , decodeN-pt) }
-    where F = ap^ k (decodeN , decodeN-pt)
+    pres-comp = ap^S-conc^S k (decodeN , decodeN-pt) }
+    where F = ap^ (S k) (decodeN , decodeN-pt)
 
-  iso : Ω^-Group k t (⊙Trunc ⟨ k ⟩ X) Trunc-level
-     ≃ᴳ Ω^-Group k t (⊙Trunc ⟨ k ⟩ (⊙Ω (⊙Susp X))) Trunc-level
-  iso = (hom , is-equiv-ap^ k (decodeN , decodeN-pt) (snd eq))
+  iso : Ω^S-Group k (⊙Trunc ⟨ S k ⟩ X) Trunc-level
+     ≃ᴳ Ω^S-Group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp X))) Trunc-level
+  iso = (hom , is-equiv-ap^ (S k) (decodeN , decodeN-pt) (snd eq))

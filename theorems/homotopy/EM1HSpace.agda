@@ -29,7 +29,7 @@ module EM₁HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
         emloop g' ∙' emloop g    ∎
 
   mult-hom : GroupHom A
-    (Ω^-Group 1 (ℕ-S≠O _) ((EM₁ → EM₁) , (λ x → x)) (Π-level (λ _ → emlevel)))
+    (Ω^S-Group 0 ((EM₁ → EM₁) , (λ x → x)) (Π-level (λ _ → emlevel)))
   mult-hom = record {f = f; pres-comp = pres-comp}
     where
     f = λ g → λ= (mult-loop g)
