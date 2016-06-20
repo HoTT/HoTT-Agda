@@ -276,8 +276,8 @@ module _ {i} (n : ℕ) (X : Ptd i) where
     invl = !^S-inv-l n
     }
 
-  Ω^S-Group : has-level ⟨ S n ⟩ (fst X) → Group i
-  Ω^S-Group pX = group
+  Ω^S-group : has-level ⟨ S n ⟩ (fst X) → Group i
+  Ω^S-group pX = group
     (Ω^ (S n) X)
     (Ω^-level-in 0 (S n) X $
        transport (λ t → has-level t (fst X)) (+2+-comm 0 ⟨ S n ⟩₋₂) pX)

@@ -18,7 +18,7 @@ module SpectrumModel where
   {- Definition of cohomology group C -}
   module _ (n : ℤ) (X : Ptd i) where
     C : Group i
-    C = →Ω-Group X (E (succ n))
+    C = →Ω-group X (E (succ n))
 
     {- convenient abbreviations -}
     CEl = Group.El C
@@ -31,8 +31,8 @@ module SpectrumModel where
   {- Cⁿ(X) is an abelian group -}
   C-abelian : (n : ℤ) (X : Ptd i) → is-abelian (C n X)
   C-abelian n X =
-    transport (is-abelian ∘ →Ω-Group X) (spectrum (succ n)) $
-      Trunc-Group-abelian (→Ω-group-structure _ _) $ λ {(f , fpt) (g , gpt) →
+    transport (is-abelian ∘ →Ω-group X) (spectrum (succ n)) $
+      Trunc-group-abelian (→Ω-group-structure _ _) $ λ {(f , fpt) (g , gpt) →
         ⊙λ= (λ x → conc^2-comm (f x) (g x)) (pt-lemma fpt gpt)}
     where
     pt-lemma : ∀ {i} {A : Type i} {x : A} {p q : idp {a = x} == idp {a = x}}
@@ -46,7 +46,7 @@ module SpectrumModel where
   module _ (n : ℤ) {X Y : Ptd i} where
 
     CF-hom : fst (X ⊙→ Y) → (C n Y →ᴳ C n X)
-    CF-hom f = →Ω-Group-dom-act f (E (succ n))
+    CF-hom f = →Ω-group-dom-act f (E (succ n))
 
     CF : fst (X ⊙→ Y) → fst (⊙CEl n Y ⊙→ ⊙CEl n X)
     CF F = GroupHom.⊙f (CF-hom F)
@@ -55,24 +55,24 @@ module SpectrumModel where
   module _ (n : ℤ) {X : Ptd i} where
 
     CF-ident : CF-hom n {X} {X} (⊙idf X) == idhom (C n X)
-    CF-ident = →Ω-Group-dom-idf (E (succ n))
+    CF-ident = →Ω-group-dom-idf (E (succ n))
 
     CF-comp : {Y Z : Ptd i} (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y))
       → CF-hom n (g ⊙∘ f) == CF-hom n f ∘ᴳ CF-hom n g
-    CF-comp g f = →Ω-Group-dom-∘ g f (E (succ n))
+    CF-comp g f = →Ω-group-dom-∘ g f (E (succ n))
 
   -- Eilenberg-Steenrod Axioms
 
   {- Suspension Axiom -}
   private
     C-Susp' : {E₁ E₀ : Ptd i} (p : ⊙Ω E₁ == E₀) (X : Ptd i)
-      → →Ω-Group (⊙Susp X) E₁ ≃ᴳ →Ω-Group X E₀
+      → →Ω-group (⊙Susp X) E₁ ≃ᴳ →Ω-group X E₀
     C-Susp' {E₁ = E₁} idp X = SuspAdjointLoopIso.iso X E₁
 
     C-SuspF' : {E₁ E₀ : Ptd i} (p : ⊙Ω E₁ == E₀)
       {X Y : Ptd i} (f : fst (X ⊙→ Y))
-      → fst (C-Susp' p X) ∘ᴳ →Ω-Group-dom-act (⊙susp-fmap f) E₁
-        == →Ω-Group-dom-act f E₀ ∘ᴳ fst (C-Susp' p Y)
+      → fst (C-Susp' p X) ∘ᴳ →Ω-group-dom-act (⊙susp-fmap f) E₁
+        == →Ω-group-dom-act f E₀ ∘ᴳ fst (C-Susp' p Y)
     C-SuspF' {E₁ = E₁} idp f = SuspAdjointLoopIso.nat-dom f E₁
 
   C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp X) ≃ᴳ C n X

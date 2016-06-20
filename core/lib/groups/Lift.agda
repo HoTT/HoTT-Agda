@@ -21,19 +21,19 @@ Lift-group-structure GS = record
   }
   where open GroupStructure GS
 
-Lift-Group : ∀ {i j} → Group i → Group (lmax i j)
-Lift-Group {j = j} G = group (Lift {j = j} El) (Lift-level El-level)
+Lift-group : ∀ {i j} → Group i → Group (lmax i j)
+Lift-group {j = j} G = group (Lift {j = j} El) (Lift-level El-level)
                              (Lift-group-structure group-struct)
   where open Group G
 
-lift-hom : ∀ {i j} {G : Group i} → (G →ᴳ Lift-Group {j = j} G)
+lift-hom : ∀ {i j} {G : Group i} → (G →ᴳ Lift-group {j = j} G)
 lift-hom = record {f = lift; pres-comp = λ _ _ → idp}
 
-lower-hom : ∀ {i j} {G : Group i} → (Lift-Group {j = j} G →ᴳ G)
+lower-hom : ∀ {i j} {G : Group i} → (Lift-group {j = j} G →ᴳ G)
 lower-hom = record {f = lower; pres-comp = λ _ _ → idp}
 
-lift-iso : ∀ {i j} {G : Group i} → (G ≃ᴳ Lift-Group {j = j} G)
+lift-iso : ∀ {i j} {G : Group i} → (G ≃ᴳ Lift-group {j = j} G)
 lift-iso = (lift-hom , snd lift-equiv)
 
-lower-iso : ∀ {i j} {G : Group i} → (Lift-Group {j = j} G ≃ᴳ G)
+lower-iso : ∀ {i j} {G : Group i} → (Lift-group {j = j} G ≃ᴳ G)
 lower-iso = (lower-hom , snd lower-equiv)

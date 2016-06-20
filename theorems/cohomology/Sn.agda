@@ -9,7 +9,7 @@ module cohomology.Sn {i} (OT : OrdinaryTheory i) where
 open OrdinaryTheory OT
 
 C-Sphere-≠ : (n : ℤ) (m : ℕ) → (n ≠ ℕ-to-ℤ m)
-  → C n (⊙Lift (⊙Sphere m)) == Lift-Unit-Group
+  → C n (⊙Lift (⊙Sphere m)) == Lift-Unit-group
 C-Sphere-≠ n O neq = C-dimension n neq
 C-Sphere-≠ n (S m) neq =
   C n (⊙Lift (⊙Sphere (S m)))
@@ -20,7 +20,7 @@ C-Sphere-≠ n (S m) neq =
     =⟨ group-ua (C-Susp (pred n) (⊙Lift (⊙Sphere m))) ⟩
   C (pred n) (⊙Lift (⊙Sphere m))
     =⟨ C-Sphere-≠ (pred n) m (λ p → neq (pred-injective n (ℕ-to-ℤ (S m)) p)) ⟩
-  Lift-Unit-Group
+  Lift-Unit-group
     ∎
 
 C-Sphere-diag : (m : ℕ) → C (ℕ-to-ℤ m) (⊙Lift (⊙Sphere m)) == C 0 (⊙Lift ⊙S⁰)

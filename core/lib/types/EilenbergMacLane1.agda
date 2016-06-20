@@ -46,7 +46,7 @@ module EM₁ {i} (G : Group i) where
   module EM₁Rec {j} {C : Type j}
     (C-level : has-level ⟨ 1 ⟩ C)
     (embase* : C)
-    (hom* : G →ᴳ (Ω^S-Group 0 (C , embase*) C-level)) where
+    (hom* : G →ᴳ (Ω^S-group 0 (C , embase*) C-level)) where
 
     f : EM₁ → C
     f (#em₁ #embase _) = embase*
@@ -105,15 +105,15 @@ module EM₁ {i} (G : Group i) where
       pair= (λ= (λ x → ! (G.assoc x g₁ g₂)))
             (prop-has-all-paths-↓ {B = is-equiv} (is-equiv-is-prop _))
 
-    Ω-Group : Group (lsucc i)
-    Ω-Group = group (G.El == G.El) (universe-=-level G.El-level G.El-level)
+    Ω-group : Group (lsucc i)
+    Ω-group = group (G.El == G.El) (universe-=-level G.El-level G.El-level)
                     (Ω^S-group-structure 0 (Type i , G.El))
 
-    0-Group : Group (lsucc i)
-    0-Group = Ω^S-Group 0
+    0-group : Group (lsucc i)
+    0-group = Ω^S-group 0
       ((0 -Type i) , (G.El , G.El-level)) (0 -Type-level i)
 
-    Codes-hom₁ : G →ᴳ Ω-Group
+    Codes-hom₁ : G →ᴳ Ω-group
     Codes-hom₁ = record {
       f = ua ∘ comp-equiv;
 
@@ -124,7 +124,7 @@ module EM₁ {i} (G : Group i) where
           =⟨ ua-∘e (comp-equiv g₁) (comp-equiv g₂) ⟩
         ua (comp-equiv g₁) ∙ ua (comp-equiv g₂) ∎}
 
-    Codes-hom₂ : Ω-Group →ᴳ 0-Group
+    Codes-hom₂ : Ω-group →ᴳ 0-group
     Codes-hom₂ = record {
       f = λ p → pair= p (phap p);
 
@@ -143,7 +143,7 @@ module EM₁ {i} (G : Group i) where
         → G.El-level == G.El-level [ has-level 0 ↓ p ]
       phap p = prop-has-all-paths-↓ has-level-is-prop
 
-    Codes-hom : G →ᴳ 0-Group
+    Codes-hom : G →ᴳ 0-group
     Codes-hom = Codes-hom₂ ∘ᴳ Codes-hom₁
 
     Codes : EM₁ → 0 -Type i

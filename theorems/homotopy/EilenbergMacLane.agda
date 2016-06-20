@@ -71,7 +71,7 @@ module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
 
   module BelowDiagonal where
 
-    π₁ : (n : ℕ) → πS 0 (⊙EM (S (S n))) == Lift-Unit-Group
+    π₁ : (n : ℕ) → πS 0 (⊙EM (S (S n))) == Lift-Unit-group
     π₁ n =
       contr-is-0ᴳ (πS 0 (⊙EM (S (S n))))
         (connected-at-level-is-contr
@@ -82,7 +82,7 @@ module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
     -- some clutter here arises from the definition of <;
     -- any simple way to avoid this?
     πS-below : (k n : ℕ) → (S k < n)
-      → πS k (⊙EM n) == Lift-Unit-Group
+      → πS k (⊙EM n) == Lift-Unit-group
     πS-below 0 .2 ltS = π₁ 0
     πS-below 0 .3 (ltSR ltS) = π₁ 1
     πS-below 0 (S (S n)) (ltSR (ltSR _)) = π₁ n
@@ -124,7 +124,7 @@ module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
   module AboveDiagonal where
 
     πS-above : (k n : ℕ) → (n < S k)
-      → πS k (⊙EM n) == Lift-Unit-Group
+      → πS k (⊙EM n) == Lift-Unit-group
     πS-above k n lt =
       contr-is-0ᴳ (πS k (⊙EM n))
         (inhab-prop-is-contr

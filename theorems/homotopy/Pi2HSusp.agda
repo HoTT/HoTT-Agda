@@ -149,8 +149,8 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level 1 A)
   ⊙main-lemma = ⊙ua (⊙≃-in main-lemma-eq idp)
 
   abstract
-    main-lemma-iso : Ω^S-Group 0 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))) Trunc-level
-                  ≃ᴳ Ω^S-Group 0 (⊙Trunc 1 (A , e)) Trunc-level
+    main-lemma-iso : Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))) Trunc-level
+                  ≃ᴳ Ω^S-group 0 (⊙Trunc 1 (A , e)) Trunc-level
     main-lemma-iso = (record {f = f; pres-comp = pres-comp} , ie)
       where
       h : fst (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))
@@ -174,8 +174,8 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level 1 A)
         =⟨ πS-inner-iso 0 (⊙Susp (A , e)) ⟩
       πS 0 (⊙Ω (⊙Susp (A , e)))
         =⟨ ! (πS-Trunc-shift-iso 0 (⊙Ω (⊙Susp (A , e)))) ⟩
-      Ω^S-Group 0 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))) Trunc-level
+      Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))) Trunc-level
         =⟨ group-ua main-lemma-iso ⟩
-      Ω^S-Group 0 (⊙Trunc 1 (A , e)) Trunc-level
+      Ω^S-group 0 (⊙Trunc 1 (A , e)) Trunc-level
         =⟨ πS-Trunc-shift-iso 0 (A , e) ⟩
       πS 0 (A , e) ∎

@@ -20,13 +20,13 @@ Unit-group-structure = record
   ; invl = λ _ → idp
   }
 
-Unit-Group : Group lzero
-Unit-Group = group _ Unit-is-set Unit-group-structure
+Unit-group : Group lzero
+Unit-group = group _ Unit-is-set Unit-group-structure
 
-Lift-Unit-Group : ∀ {i} → Group i
-Lift-Unit-Group = Lift-Group Unit-Group
+Lift-Unit-group : ∀ {i} → Group i
+Lift-Unit-group = Lift-group Unit-group
 
-0ᴳ = Lift-Unit-Group
+0ᴳ = Lift-Unit-group
 
 contr-is-0ᴳ : ∀ {i} (G : Group i) → is-contr (Group.El G) → G == 0ᴳ
 contr-is-0ᴳ G pA = group-ua

@@ -63,18 +63,18 @@ module _ {i j k} (D : Group-Cospan {i} {j} {k}) where
       pullback= d (H.invr h) (K.invr k)
         (prop-has-all-paths (G.El-level _ _) _ _)}}
 
-  Pullback-Group : Group (lmax i (lmax j k))
-  Pullback-Group = record {
+  Pullback-group : Group (lmax i (lmax j k))
+  Pullback-group = record {
     El = Pullback d;
     El-level = pullback-level 0 H.El-level K.El-level G.El-level;
     group-struct = Pullback-group-struct}
 
-  pfst-hom : Pullback-Group →ᴳ H
+  pfst-hom : Pullback-group →ᴳ H
   pfst-hom = record {
     f = Pullback.a;
     pres-comp = λ _ _ → idp}
 
-  psnd-hom : Pullback-Group →ᴳ K
+  psnd-hom : Pullback-group →ᴳ K
   psnd-hom = record {
     f = Pullback.b;
     pres-comp = λ _ _ → idp}
@@ -86,7 +86,7 @@ module _ {i j k} (D : Group-Cospan {i} {j} {k}) where
       module θ = GroupHom θ
 
     pullback-hom : ((j : Group.El J) → φ.f (χ.f j) == ψ.f (θ.f j))
-      → J →ᴳ Pullback-Group
+      → J →ᴳ Pullback-group
     pullback-hom p = record {
       f = λ j → pullback (χ.f j) (θ.f j) (p j);
       pres-comp = λ j₁ j₂ → pullback= (group-cospan-out D)

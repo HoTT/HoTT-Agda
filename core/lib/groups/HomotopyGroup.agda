@@ -22,7 +22,7 @@ module lib.groups.HomotopyGroup where
 module _ {i} where
 
   πS : (n : ℕ) (X : Ptd i) → Group i
-  πS n X = Trunc-Group (Ω^S-group-structure n X)
+  πS n X = Trunc-group (Ω^S-group-structure n X)
 
   fundamental-group : (X : Ptd i) → Group i
   fundamental-group X = πS 0 X
@@ -77,7 +77,7 @@ module _ {i} where
                     ∘e equiv-ap^ 1 (Ω^STs-PreIso.F r) (Ω^STs-PreIso.e r))})
 
   πS-Trunc-shift-iso : (n : ℕ) (X : Ptd i)
-    → Ω^S-Group n (⊙Trunc ⟨ S n ⟩ X) Trunc-level == πS n X
+    → Ω^S-group n (⊙Trunc ⟨ S n ⟩ X) Trunc-level == πS n X
   πS-Trunc-shift-iso n X = group-ua (group-hom (fst F) pres-comp , e)
     where
     n-eq : ∀ (n : ℕ) → ⟨ n ⟩₋₂ +2+ 0 == ⟨ n ⟩
@@ -94,15 +94,15 @@ abstract
   πS-below-trunc n m X lte =
     πS n (⊙Trunc m X)
       =⟨ ! (πS-Trunc-shift-iso n (⊙Trunc m X)) ⟩
-    Ω^S-Group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X)) Trunc-level
+    Ω^S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X)) Trunc-level
       =⟨ lemma ⟩
-    Ω^S-Group n (⊙Trunc ⟨ S n ⟩ X) Trunc-level
+    Ω^S-group n (⊙Trunc ⟨ S n ⟩ X) Trunc-level
       =⟨ πS-Trunc-shift-iso n X ⟩
     πS n X ∎
     where
-    lemma : Ω^S-Group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X)) Trunc-level
-         ==  Ω^S-Group n (⊙Trunc ⟨ S n ⟩ X) Trunc-level
-    lemma = ap (uncurry $ Ω^S-Group n) $
+    lemma : Ω^S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X)) Trunc-level
+         ==  Ω^S-group n (⊙Trunc ⟨ S n ⟩ X) Trunc-level
+    lemma = ap (uncurry $ Ω^S-group n) $
       pair=
         (⊙ua (⊙≃-in (fuse-Trunc (fst X) ⟨ S n ⟩ m) idp) ∙
          ap (λ k → ⊙Trunc k X) (minT-out-l lte))
@@ -113,9 +113,9 @@ abstract
   πS-above-trunc n m X lt =
     πS n (⊙Trunc m X)
       =⟨ ! (πS-Trunc-shift-iso n (⊙Trunc m X)) ⟩
-    Ω^S-Group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X)) Trunc-level
+    Ω^S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X)) Trunc-level
       =⟨ contr-is-0ᴳ _ $ inhab-prop-is-contr
-           (Group.ident (Ω^S-Group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X)) Trunc-level))
+           (Group.ident (Ω^S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X)) Trunc-level))
            (Ω^-level-in -1 (S n) _ $ Trunc-preserves-level ⟨ S n ⟩ $
              raise-level-≤T
                (transport (λ k → m ≤T k) (+2+-comm -1 ⟨ S n ⟩₋₂) (<T-to-≤T lt))
@@ -134,8 +134,8 @@ module _ {i j} (n : ℕ) (X : Ptd i) (Y : Ptd  j) where
 
   πS-× : πS n (X ⊙× Y) == πS n X ×ᴳ πS n Y
   πS-× =
-    group-ua (Trunc-Group-iso f pres-comp (is-eq f g f-g g-f))
-    ∙ Trunc-Group-× _ _
+    group-ua (Trunc-group-iso f pres-comp (is-eq f g f-g g-f))
+    ∙ Trunc-group-× _ _
     where
     f : Ω^ (S n) (X ⊙× Y) → Ω^ (S n) X × Ω^ (S n) Y
     f r = (fst (ap^ (S n) ⊙fst) r , fst (ap^ (S n) ⊙snd) r)

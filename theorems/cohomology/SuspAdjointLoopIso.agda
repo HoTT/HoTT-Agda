@@ -51,14 +51,14 @@ module SuspAdjointLoopIso {i} where
             =⟨ ⊙ap2-conc-is-conc ⟩
           ⊙conc ∎
 
-    iso : →Ω-Group (⊙Susp X) Y ≃ᴳ →Ω-Group X (⊙Ω Y)
-    iso = Trunc-Group-iso
+    iso : →Ω-group (⊙Susp X) Y ≃ᴳ →Ω-group X (⊙Ω Y)
+    iso = Trunc-group-iso
       (–> (A.eq X (⊙Ω Y))) pres-comp (snd (A.eq X (⊙Ω Y)))
 
   abstract
     nat-dom : {X Y : Ptd i} (f : fst (X ⊙→ Y)) (Z : Ptd i)
-      → fst (iso X Z) ∘ᴳ →Ω-Group-dom-act (⊙susp-fmap f) Z
-        == →Ω-Group-dom-act f (⊙Ω Z) ∘ᴳ fst (iso Y Z)
+      → fst (iso X Z) ∘ᴳ →Ω-group-dom-act (⊙susp-fmap f) Z
+        == →Ω-group-dom-act f (⊙Ω Z) ∘ᴳ fst (iso Y Z)
     nat-dom f Z = hom= _ _ $ λ= $ Trunc-elim
       (λ _ → =-preserves-level _ Trunc-level)
       (λ g → ap [_] (! (A.nat-dom f (⊙Ω Z) g)))

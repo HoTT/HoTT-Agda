@@ -41,29 +41,29 @@ module cohomology.WithCoefficients where
     → ap (uncurry _∙_) (ap2 _,_ α (ap ! α)) ∙ idp == !-inv-r p ∙ idp
   invr-lemma idp = idp
 
-→Ω-Group : ∀ {i j} (X : Ptd i) (Y : Ptd j) → Group (lmax i j)
-→Ω-Group X Y = Trunc-Group (→Ω-group-structure X Y)
+→Ω-group : ∀ {i j} (X : Ptd i) (Y : Ptd j) → Group (lmax i j)
+→Ω-group X Y = Trunc-group (→Ω-group-structure X Y)
 
-{- →Ω-Group is functorial in the first argument -}
+{- →Ω-group is functorial in the first argument -}
 
-→Ω-Group-dom-act : ∀ {i j k} {X : Ptd i} {Y : Ptd j}
+→Ω-group-dom-act : ∀ {i j k} {X : Ptd i} {Y : Ptd j}
   (f : fst (X ⊙→ Y)) (Z : Ptd k)
-  → (→Ω-Group Y Z →ᴳ →Ω-Group X Z)
-→Ω-Group-dom-act {Y = Y} f Z =
-  Trunc-Group-hom (λ g → g ⊙∘ f)
+  → (→Ω-group Y Z →ᴳ →Ω-group X Z)
+→Ω-group-dom-act {Y = Y} f Z =
+  Trunc-group-hom (λ g → g ⊙∘ f)
     (λ g₁ g₂ → ⊙∘-assoc ⊙conc (⊙×-in g₁ g₂) f
                ∙ ap (λ w → ⊙conc ⊙∘ w) (⊙×-in-pre∘ g₁ g₂ f))
 
-→Ω-Group-dom-idf : ∀ {i j} {X : Ptd i} (Y : Ptd j)
-  → →Ω-Group-dom-act (⊙idf X) Y == idhom (→Ω-Group X Y)
-→Ω-Group-dom-idf Y = hom= _ _ $ λ= $ Trunc-elim
+→Ω-group-dom-idf : ∀ {i j} {X : Ptd i} (Y : Ptd j)
+  → →Ω-group-dom-act (⊙idf X) Y == idhom (→Ω-group X Y)
+→Ω-group-dom-idf Y = hom= _ _ $ λ= $ Trunc-elim
   (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp)
 
-→Ω-Group-dom-∘ : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+→Ω-group-dom-∘ : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y)) (W : Ptd l)
-  → →Ω-Group-dom-act (g ⊙∘ f) W
-    == →Ω-Group-dom-act f W ∘ᴳ →Ω-Group-dom-act g W
-→Ω-Group-dom-∘ g f W = hom= _ _ $ λ= $
+  → →Ω-group-dom-act (g ⊙∘ f) W
+    == →Ω-group-dom-act f W ∘ᴳ →Ω-group-dom-act g W
+→Ω-group-dom-∘ g f W = hom= _ _ $ λ= $
   Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
     (λ h → ap [_] (! (⊙∘-assoc h g f)))
 
@@ -103,6 +103,6 @@ abstract
 
 abstract
   Bool⊙→Ω-is-π₁ : ∀ {i} (X : Ptd i)
-    → →Ω-Group (⊙Lift {j = i} ⊙Bool) X == πS 0 X
+    → →Ω-group (⊙Lift {j = i} ⊙Bool) X == πS 0 X
   Bool⊙→Ω-is-π₁ {i} X = group-ua $
-    Trunc-Group-iso Bool⊙→-out (λ _ _ → idp) (snd (Bool⊙→-equiv (⊙Ω X)))
+    Trunc-group-iso Bool⊙→-out (λ _ _ → idp) (snd (Bool⊙→-equiv (⊙Ω X)))
