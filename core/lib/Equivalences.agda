@@ -34,8 +34,9 @@ module _ {i} {j} {A : Type i} {B : Type j} where
       g-f : (a : A) → g (f a) == a
       adj : (a : A) → ap f (g-f a) == f-g (f a)
 
-    adj' : (b : B) → ap g (f-g b) == g-f (g b)
-    adj' b = anti-whisker-left (ap g (f-g (f (g b)))) $ ! $
+    abstract
+      adj' : (b : B) → ap g (f-g b) == g-f (g b)
+      adj' b = anti-whisker-left (ap g (f-g (f (g b)))) $ ! $
         ap g (f-g (f (g b))) ∙ g-f (g b)
           =⟨ ! $ htpy-natural-app=idf f-g b |in-ctx (λ p → ap g p ∙ g-f (g b)) ⟩
         ap g (ap (f ∘ g) (f-g b)) ∙ g-f (g b)
