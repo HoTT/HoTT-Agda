@@ -55,7 +55,7 @@ module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
               lemma (S n') = ≤-trans (≤-ap-S (lemma n')) (inr ltS)
 
     private
-      module SS = Susp^StableSucc X cA (S n) k Skle
+      module SS = Susp^StableSucc X cA k (S n) Skle
 
     abstract
       stable : πS (S k) (⊙EM (S SSn))

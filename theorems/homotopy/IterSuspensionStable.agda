@@ -8,7 +8,7 @@ module homotopy.IterSuspensionStable where
 {- π (S k) (Ptd-Susp^ (S n) X) == π k (Ptd-Susp^ n X), where k = S k'
    Susp^Stable below assumes k ≠ O instead of taking k' as the argument -}
 module Susp^StableSucc {i} (X : Ptd i) (cX : is-connected 0 (fst X))
-  (n : ℕ) (k : ℕ) (Skle : S k ≤ n *2) where
+  (k n : ℕ) (Skle : S k ≤ n *2) where
 
   {- some numeric computations -}
   private

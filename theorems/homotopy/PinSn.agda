@@ -4,8 +4,9 @@ open import HoTT
 open import homotopy.CircleHSpace
 open import homotopy.LoopSpaceCircle
 open import homotopy.Pi2HSusp
+open import homotopy.IterSuspensionStable
 
--- This summerizes all [πn(Sn)]
+-- This summerizes all [πₙ Sⁿ]
 module homotopy.PinSn where
 
   private
@@ -78,3 +79,22 @@ module homotopy.PinSn where
       =⟨ π₁S¹ ⟩
     ℤ-group
       ∎
+
+  private
+    πₙ₊₂Sⁿ⁺² : ∀ n → πS (S n) (⊙Susp^ (S n) ⊙S¹) == ℤ-group
+    πₙ₊₂Sⁿ⁺² 0 = π₂S²
+    πₙ₊₂Sⁿ⁺² (S n) =
+      πS (S (S n)) (⊙Susp^ (S (S n)) ⊙S¹)
+        =⟨ Susp^StableSucc.stable ⊙S¹ S¹-connected
+             (S n) (S n) (≤-ap-S $ ≤-ap-S $ *2-increasing n) ⟩
+      πS (S n) (⊙Susp^ (S n) ⊙S¹)
+        =⟨ πₙ₊₂Sⁿ⁺² n ⟩
+      ℤ-group
+        ∎
+
+    lemma : ∀ n → ⊙Susp^ n ⊙S¹ == ⊙Sphere (S n)
+    lemma n = ⊙Susp^-+ n 1 ∙ ap ⊙Sphere (+-comm n 1)
+
+  πₙ₊₁Sⁿ⁺¹ : ∀ n → πS n (⊙Sphere (S n)) == ℤ-group
+  πₙ₊₁Sⁿ⁺¹ 0 = π₁S¹
+  πₙ₊₁Sⁿ⁺¹ (S n) = ap (πS (S n)) (! $ lemma (S n)) ∙ πₙ₊₂Sⁿ⁺² n
