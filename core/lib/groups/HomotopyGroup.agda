@@ -158,3 +158,8 @@ module _ {i j} (n : ℕ) (X : Ptd i) (Y : Ptd  j) where
       → f (conc^S n p q) == (conc^S n (fst (f p)) (fst (f q)) ,
                              conc^S n (snd (f p)) (snd (f q)))
     pres-comp p q = pair×= (ap^S-conc^S n ⊙fst p q) (ap^S-conc^S n ⊙snd p q)
+
+module _ {i j} (n : ℕ) (X : Ptd i) (Y : Ptd j) (f : fst (X ⊙→ Y)) where
+
+  πS-fmap : πS n X →ᴳ πS n Y
+  πS-fmap = Trunc-group-hom (fst (ap^ (S n) f)) (ap^S-conc^S n f)

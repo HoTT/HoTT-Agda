@@ -40,9 +40,10 @@ import homotopy.PathSetIsInital
 
 -- import Sets.QuotientUP
 
--- import Spaces.PikSn
+import homotopy.PinSn
 
 -- import Homotopy.VanKampen
 
 import cw.CW
 import cw.Sphere
+import cw.Degree
