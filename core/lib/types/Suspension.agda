@@ -150,8 +150,8 @@ module _ {i j k} {s : Span {i} {j} {k}} where
 
 module _ {i j} {A : Type i} {B : Type j} where
 
-  Suspension-equiv : A ≃ B → Suspension A ≃ Suspension B
-  Suspension-equiv eq = equiv to from to-from from-to where
+  equiv-Suspension : A ≃ B → Suspension A ≃ Suspension B
+  equiv-Suspension eq = equiv to from to-from from-to where
     module To = SuspensionRec north south (λ a → merid (–> eq a))
     module From = SuspensionRec north south (λ b → merid (<– eq b))
 
@@ -201,22 +201,22 @@ module _ {i j} {A : Type i} {B : Type j} where
 
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
-  ⊙Susp-equiv : X ⊙≃ Y → ⊙Susp X ⊙≃ ⊙Susp Y
-  ⊙Susp-equiv ⊙eq = ⊙≃-in (Suspension-equiv (fst (⊙≃-out ⊙eq))) idp
+  ⊙equiv-⊙Susp : X ⊙≃ Y → ⊙Susp X ⊙≃ ⊙Susp Y
+  ⊙equiv-⊙Susp ⊙eq = ⊙≃-in (equiv-Suspension (fst (⊙≃-out ⊙eq))) idp
 
 {- Interaction with [Lift] -}
 module _ {i j} (X : Type i) where
 
-  Suspension-Lift-equiv : Suspension (Lift {j = j} X) ≃ Lift {j = j} (Suspension X)
-  Suspension-Lift-equiv = lift-equiv ∘e Suspension-equiv lower-equiv
+  Suspension-Lift-equiv-Lift-Suspension : Suspension (Lift {j = j} X) ≃ Lift {j = j} (Suspension X)
+  Suspension-Lift-equiv-Lift-Suspension = lift-equiv ∘e equiv-Suspension lower-equiv
 
-  Suspension-Lift-path : Suspension (Lift {j = j} X) == Lift {j = j} (Suspension X)
-  Suspension-Lift-path = ua Suspension-Lift-equiv
+  Suspension-Lift : Suspension (Lift {j = j} X) == Lift {j = j} (Suspension X)
+  Suspension-Lift = ua Suspension-Lift-equiv-Lift-Suspension
 
 module _ {i j} (X : Ptd i) where
 
-  ⊙Susp-⊙Lift-equiv : ⊙Susp (⊙Lift {j = j} X) ⊙≃ ⊙Lift {j = j} (⊙Susp X)
-  ⊙Susp-⊙Lift-equiv = ⊙lift-equiv {j = j} ⊙∘e ⊙Susp-equiv {X = ⊙Lift {j = j} X} {Y = X} ⊙lower-equiv
+  ⊙Susp-⊙Lift-⊙equiv-⊙Lift-⊙Susp : ⊙Susp (⊙Lift {j = j} X) ⊙≃ ⊙Lift {j = j} (⊙Susp X)
+  ⊙Susp-⊙Lift-⊙equiv-⊙Lift-⊙Susp = ⊙lift-equiv {j = j} ⊙∘e ⊙equiv-⊙Susp {X = ⊙Lift {j = j} X} {Y = X} ⊙lower-equiv
 
-  ⊙Susp-⊙Lift-path : ⊙Susp (⊙Lift {j = j} X) == ⊙Lift {j = j} (⊙Susp X)
-  ⊙Susp-⊙Lift-path = ⊙ua ⊙Susp-⊙Lift-equiv
+  ⊙Susp-⊙Lift : ⊙Susp (⊙Lift {j = j} X) == ⊙Lift {j = j} (⊙Susp X)
+  ⊙Susp-⊙Lift = ⊙ua ⊙Susp-⊙Lift-⊙equiv-⊙Lift-⊙Susp

@@ -43,8 +43,8 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
 module _ {i i' j j'} {A : Type i} {A' : Type i'} {B : Type j} {B' : Type j'} where
 
-  *-equiv : A ≃ A' → B ≃ B' → A * B ≃ A' * B'
-  *-equiv eqA eqB = equiv to from to-from from-to where
+  equiv-* : A ≃ A' → B ≃ B' → A * B ≃ A' * B'
+  equiv-* eqA eqB = equiv to from to-from from-to where
     module To = JoinRec {D = A' * B'} (left ∘ –> eqA) (right ∘ –> eqB) (λ{(a , b) → glue (–> eqA a , –> eqB b)})
     module From = JoinRec {D = A * B} (left ∘ <– eqA) (right ∘ <– eqB) (λ{(a , b) → glue (<– eqA a , <– eqB b)})
 
@@ -92,5 +92,5 @@ module _ {i i' j j'} {A : Type i} {A' : Type i'} {B : Type j} {B' : Type j'} whe
 
 module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'} where
 
-  ⊙*-equiv : X ⊙≃ X' → Y ⊙≃ Y' → X ⊙* Y ⊙≃ X' ⊙* Y'
-  ⊙*-equiv ⊙eqX ⊙eqY = ⊙≃-in (*-equiv (fst (⊙≃-out ⊙eqX)) (fst (⊙≃-out ⊙eqY))) (ap left (snd (⊙≃-out ⊙eqX)))
+  ⊙equiv-⊙* : X ⊙≃ X' → Y ⊙≃ Y' → X ⊙* Y ⊙≃ X' ⊙* Y'
+  ⊙equiv-⊙* ⊙eqX ⊙eqY = ⊙≃-in (equiv-* (fst (⊙≃-out ⊙eqX)) (fst (⊙≃-out ⊙eqY))) (ap left (snd (⊙≃-out ⊙eqX)))

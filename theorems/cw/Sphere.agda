@@ -162,5 +162,5 @@ to-from (S n) = AttachElim.f to-from-incl to-from-hub to-from-spoke
       ap (to ∘ from) (spoke false x) ∙ idp
         ∎
 
-Sphere-to-CWSphere-equiv : ∀ n → Sphere n ≃ CWSphere n
-Sphere-to-CWSphere-equiv n = _ , Sphere-to-CWSphere-is-equiv n
+Sphere-equiv-CWSphere : ∀ n → Sphere n ≃ CWSphere n
+Sphere-equiv-CWSphere n = _ , Sphere-to-CWSphere-is-equiv n

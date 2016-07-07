@@ -153,6 +153,16 @@ Precedence convention
 
 - ```S0``` is defined as ```Bool```, and the circle is the suspension of ```Bool```.
 
+### Type constructors
+
+Several functions related to an arity-1 type constructor `N` should be named as follows:
+
+- `equiv-N` which takes an equivalence between `A` and `B` to an equivalence between `N A` and `N B`.
+
+### Algebraic rules
+
+### Groups
+
 Structure of the source
 -----------------------
 

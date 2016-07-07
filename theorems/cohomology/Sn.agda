@@ -13,7 +13,7 @@ C-Sphere-≠ : (n : ℤ) (m : ℕ) → (n ≠ ℕ-to-ℤ m)
 C-Sphere-≠ n O neq = C-dimension n neq
 C-Sphere-≠ n (S m) neq =
   C n (⊙Lift (⊙Sphere (S m)))
-    =⟨ ! $ ⊙Susp-⊙Lift-path (⊙Sphere m) |in-ctx C n ⟩
+    =⟨ ! $ ⊙Susp-⊙Lift (⊙Sphere m) |in-ctx C n ⟩
   C n (⊙Susp (⊙Lift (⊙Sphere m)))
     =⟨ ! (succ-pred n) |in-ctx (λ k → C k (⊙Susp (⊙Lift (⊙Sphere m)))) ⟩
   C (succ (pred n)) (⊙Susp (⊙Lift (⊙Sphere m)))
@@ -27,7 +27,7 @@ C-Sphere-diag : (m : ℕ) → C (ℕ-to-ℤ m) (⊙Lift (⊙Sphere m)) == C 0 (�
 C-Sphere-diag O = idp
 C-Sphere-diag (S m) =
   C (ℕ-to-ℤ (S m)) (⊙Lift (⊙Sphere (S m)))
-    =⟨ ! $ ⊙Susp-⊙Lift-path (⊙Sphere m) |in-ctx C (ℕ-to-ℤ (S m)) ⟩
+    =⟨ ! $ ⊙Susp-⊙Lift (⊙Sphere m) |in-ctx C (ℕ-to-ℤ (S m)) ⟩
   C (ℕ-to-ℤ (S m)) (⊙Susp (⊙Lift (⊙Sphere m)))
     =⟨ group-ua (C-Susp (ℕ-to-ℤ m) (⊙Lift (⊙Sphere m))) ⟩
   C (ℕ-to-ℤ m) (⊙Lift (⊙Sphere m))

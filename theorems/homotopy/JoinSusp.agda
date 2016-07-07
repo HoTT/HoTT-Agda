@@ -51,51 +51,51 @@ module _ {i} {A : Type i} where
              (false , a) →
                ap (ap out) (Into.glue-β (false , a)) ∙v⊡ connection})
 
-  *-Bool-equiv : Bool * A ≃ Suspension A
-  *-Bool-equiv = equiv into out into-out out-into
+  *-Bool-equiv-Suspension : Bool * A ≃ Suspension A
+  *-Bool-equiv-Suspension = equiv into out into-out out-into
 
-  *-Lift-Bool-equiv : Lift {j = i} Bool * A ≃ Suspension A
-  *-Lift-Bool-equiv = *-Bool-equiv ∘e *-equiv lower-equiv (ide A)
+  *-Lift-Bool-equiv-Suspension : Lift {j = i} Bool * A ≃ Suspension A
+  *-Lift-Bool-equiv-Suspension = *-Bool-equiv-Suspension ∘e equiv-* lower-equiv (ide A)
 
-  *-Bool-path = ua *-Bool-equiv
+  *-Bool = ua *-Bool-equiv-Suspension
 
 module _ {i} (X : Ptd i) where
 
-  ⊙*-⊙Bool-path : ⊙Bool ⊙* X == ⊙Susp X
-  ⊙*-⊙Bool-path = ⊙ua (⊙≃-in *-Bool-equiv idp)
+  ⊙*-⊙Bool : ⊙Bool ⊙* X == ⊙Susp X
+  ⊙*-⊙Bool = ⊙ua (⊙≃-in *-Bool-equiv-Suspension idp)
 
-  ⊙*-⊙Lift-⊙Bool-path : ⊙Lift {j = i} ⊙Bool ⊙* X == ⊙Susp X
-  ⊙*-⊙Lift-⊙Bool-path = ⊙ua (⊙≃-in *-Lift-Bool-equiv idp)
+  ⊙*-⊙Lift-⊙Bool : ⊙Lift {j = i} ⊙Bool ⊙* X == ⊙Susp X
+  ⊙*-⊙Lift-⊙Bool = ⊙ua (⊙≃-in *-Lift-Bool-equiv-Suspension idp)
 
 module _ {i j} {A : Type i} {B : Type j} where
 
-  *-Suspension-path : Suspension A * B == Suspension (A * B)
-  *-Suspension-path =
-    ap (_* B) (! *-Bool-path)
+  *-Suspension : Suspension A * B == Suspension (A * B)
+  *-Suspension =
+    ap (_* B) (! *-Bool)
     ∙ join-rearrange-path
     ∙ ua swap-equiv
-    ∙ *-Bool-path
+    ∙ *-Bool
     ∙ ap Suspension (ua swap-equiv)
 
 module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
   ⊙*-⊙Susp : ⊙Susp X ⊙* Y == ⊙Susp (X ⊙* Y)
   ⊙*-⊙Susp =
-    ap (_⊙* Y) (! (⊙*-⊙Bool-path X))
+    ap (_⊙* Y) (! (⊙*-⊙Bool X))
     ∙ join-rearrange-⊙path (⊙Sphere 0) X Y
     ∙ ⊙ua (⊙≃-in swap-equiv (! (glue _)))
-    ∙ ⊙*-⊙Bool-path (Y ⊙* X)
+    ∙ ⊙*-⊙Bool (Y ⊙* X)
     ∙ ap (λ A → (Suspension A , north)) (ua swap-equiv)
 
 module _ {i} where
 
   ⊙*-⊙Sphere : (m : ℕ) (X : Ptd i) → ⊙Sphere m ⊙* X == ⊙Susp^ (S m) X
-  ⊙*-⊙Sphere O X = ⊙*-⊙Bool-path X
+  ⊙*-⊙Sphere O X = ⊙*-⊙Bool X
   ⊙*-⊙Sphere (S m) X = ⊙*-⊙Susp (⊙Sphere m) X
                      ∙ ap ⊙Susp (⊙*-⊙Sphere m X)
 
   ⊙*-⊙Lift-⊙Sphere : (m : ℕ) (X : Ptd i) → ⊙Lift {j = i} (⊙Sphere m) ⊙* X == ⊙Susp^ (S m) X
-  ⊙*-⊙Lift-⊙Sphere O X = ⊙*-⊙Lift-⊙Bool-path X
-  ⊙*-⊙Lift-⊙Sphere (S m) X = ap (_⊙* X) (! $ ⊙Susp-⊙Lift-path (⊙Sphere m))
+  ⊙*-⊙Lift-⊙Sphere O X = ⊙*-⊙Lift-⊙Bool X
+  ⊙*-⊙Lift-⊙Sphere (S m) X = ap (_⊙* X) (! $ ⊙Susp-⊙Lift (⊙Sphere m))
                            ∙ ⊙*-⊙Susp (⊙Lift (⊙Sphere m)) X
                            ∙ ap ⊙Susp (⊙*-⊙Lift-⊙Sphere m X)
