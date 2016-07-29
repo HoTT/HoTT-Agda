@@ -11,6 +11,10 @@ module cw.CW where
 
 open import cw.Attach public
 
+{-
+  Naming convension: most of them have the "cw-" prefix
+-}
+
 -- skeleton
 
 Skeleton : ∀ {i} → ℕ → Type (lsucc i)
@@ -55,12 +59,12 @@ incl^ {n = S (S n)} (skel , _) c = incl (incl^ skel c)
 
 -- Access the [m]th cells
 
-cw-cells-top : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
-cw-cells-top {n = O}   skel            = skel
-cw-cells-top {n = S n} (_ , cells , _) = cells
+cells-last : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
+cells-last {n = O}   skel            = skel
+cells-last {n = S n} (_ , cells , _) = cells
 
-cw-cells : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) → Skeleton {i} n → Type i
-cw-cells m≤n = cw-cells-top ∘ cw-take m≤n
+cells-at : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) → Skeleton {i} n → Type i
+cells-at m≤n = cells-last ∘ cw-take m≤n
 
 -- Access the [m]th boundary map
 
@@ -68,27 +72,37 @@ Sphere₋₁ : ℕ → Type₀
 Sphere₋₁ O = Empty
 Sphere₋₁ (S n) = Sphere n
 
-realize₋₁ : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
-realize₋₁ {n = O}   _          = Lift Empty
-realize₋₁ {n = S n} (skel , _) = ⟦ skel ⟧
+Realizer₋₁ : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
+Realizer₋₁ {n = O}   _          = Lift Empty
+Realizer₋₁ {n = S n} (skel , _) = ⟦ skel ⟧
 
-⟦_⟧₋₁ = realize₋₁
+⟦_⟧₋₁ = Realizer₋₁
 
-cw-boundary-top : ∀ {i} {n : ℕ} (s : Skeleton {i} n)
-  → cw-cells-top s → (Sphere₋₁ n → ⟦ s ⟧₋₁)
-cw-boundary-top {n = O}    _                 = λ{_ ()}
-cw-boundary-top {n = S n} (_ , _ , boundary) = boundary
+boundary-last : ∀ {i} {n : ℕ} (s : Skeleton {i} n)
+  → cells-last s → (Sphere₋₁ n → ⟦ s ⟧₋₁)
+boundary-last {n = O}    _                 = λ{_ ()}
+boundary-last {n = S n} (_ , _ , boundary) = boundary
 
-cw-boundary : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) (skel : Skeleton {i} n)
-  → cw-cells m≤n skel → Sphere₋₁ m → ⟦ cw-take m≤n skel ⟧₋₁
-cw-boundary m≤n = cw-boundary-top ∘ cw-take m≤n
+boundary-at : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) (skel : Skeleton {i} n)
+  → cells-at m≤n skel → Sphere₋₁ m → ⟦ cw-take m≤n skel ⟧₋₁
+boundary-at m≤n = boundary-last ∘ cw-take m≤n
 
 -- Misc
 
 -- Extra conditions on CW complexes
 -- XXX Needs a better name
-has-dec-eq-cells : ∀ {i} {n} → Skeleton {i} n → Type i
-has-dec-eq-cells {n = n} skel = ∀ {m} (m≤n : m ≤ n) → has-dec-eq (cw-cells m≤n skel)
+has-dec-cells : ∀ {i} {n} → Skeleton {i} n → Type i
+has-dec-cells {n = 0} skel = has-dec-eq skel
+has-dec-cells {n = S n} (skel , cells , _) = has-dec-cells skel × has-dec-eq cells
+
+-- Extra conditions on CW complexes for constructive degrees
+-- The ideas is that boundaries maps need to be pointed after contraction
+-- XXX Needs a better name
+is-aligned : ∀ {i} {n} → Skeleton {i} n → Type i
+is-aligned {n = 0} _ = Lift ⊤
+is-aligned {n = 1} _ = Lift ⊤
+is-aligned {n = S (S n)} (skel , _ , boundary) =
+  is-aligned skel × (∀ c → hfiber incl (boundary c north))
 
 {- Some basic CWs -}
 
@@ -101,6 +115,9 @@ CWEmpty = ⟦ CWEmpty-skel ⟧
 CWEmpty≃Empty : CWEmpty ≃ Empty
 CWEmpty≃Empty = ide _
 
+CWEmpty-is-aligned : is-aligned CWEmpty-skel
+CWEmpty-is-aligned = lift tt
+
 -- Unit
 
 CWUnit-skel : Skeleton {lzero} 0
@@ -109,6 +126,9 @@ CWUnit = ⟦ CWUnit-skel ⟧
 
 CWUnit≃Unit : CWUnit ≃ Unit
 CWUnit≃Unit = ide _
+
+CWUnit-is-aligned : is-aligned CWUnit-skel
+CWUnit-is-aligned = lift tt
 
 {- Basic transformation  -}
 

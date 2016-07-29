@@ -164,3 +164,14 @@ to-from (S n) = AttachElim.f to-from-incl to-from-hub to-from-spoke
 
 Sphere-equiv-CWSphere : ∀ n → Sphere n ≃ CWSphere n
 Sphere-equiv-CWSphere n = _ , Sphere-to-CWSphere-is-equiv n
+
+CWSphere-has-dec-cells : ∀ n → has-dec-cells (CWSphere-skel n)
+CWSphere-has-dec-cells 0 = Bool-has-dec-eq
+CWSphere-has-dec-cells (S n) = CWSphere-has-dec-cells n , Bool-has-dec-eq
+
+CWSphere-is-aligned : ∀ n → is-aligned (CWSphere-skel n)
+CWSphere-is-aligned 0 = lift tt
+CWSphere-is-aligned 1 = lift tt
+CWSphere-is-aligned 2 = lift tt , (λ _ → true , spoke true true)
+CWSphere-is-aligned (S (S (S n))) =
+  CWSphere-is-aligned (S (S n)) , (λ _ → hub true , spoke true north)
