@@ -55,8 +55,8 @@ private
   CWSphere-to-Sphere-spoke _ true _ = idp
   CWSphere-to-Sphere-spoke _ false x = merid x
 
-  module PosFromCW n = AttachRec
-    {boundary = cst (Sphere-to-CWSphere n)}
+  module PosFromCW n = AttachedRec
+    {attaching = cst (Sphere-to-CWSphere n)}
     (CWSphere-to-Sphere-incl n)
     (CWSphere-to-Sphere-hub n)
     (CWSphere-to-Sphere-spoke n)
@@ -100,7 +100,7 @@ private
 Sphere-to-CWSphere-is-equiv n = is-eq _ (CWSphere-to-Sphere n) (to-from n) (from-to n)
 
 to-from O _ = idp
-to-from (S n) = AttachElim.f to-from-incl to-from-hub to-from-spoke
+to-from (S n) = AttachedElim.f to-from-incl to-from-hub to-from-spoke
   where
     to = Sphere-to-CWSphere (S n)
     from = CWSphere-to-Sphere (S n)

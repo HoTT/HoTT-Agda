@@ -9,7 +9,7 @@ open import HoTT
 
 module cw.CW where
 
-open import cw.Attach public
+open import cw.Attached public
 
 {-
   Naming convension: most of them have the "cw-" prefix
@@ -23,10 +23,10 @@ Realizer : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
 Skeleton {i} O = Type i
 Skeleton {i} (S n) =
   Σ (Skeleton {i} n)
-    (λ s → Σ (Type i) λ A → Boundry (Realizer s) A (Sphere n))
+    (λ s → Σ (Type i) λ A → Attaching (Realizer s) A (Sphere n))
 
 Realizer {n = O} A = A
-Realizer {n = S n} (s , (A , boundary)) = Attach boundary
+Realizer {n = S n} (s , (A , attaching)) = Attached attaching
 
 ⟦_⟧ = Realizer
 
@@ -53,7 +53,7 @@ incl^ {n = S (S n)} (skel , _) c = incl (incl^ skel c)
 ⊙Skeleton n = Σ (Skeleton n) cw-head
 
 ⊙Realizer : ∀ {i} {n : ℕ} → ⊙Skeleton {i} n → Ptd i
-⊙Realizer (skel , pt) = (⟦ skel ⟧ , incl^ skel pt)
+⊙Realizer (skel , pt) = ⟦ skel ⟧ , incl^ skel pt
 
 ⊙⟦_⟧ = ⊙Realizer
 
@@ -63,10 +63,10 @@ cells-last : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
 cells-last {n = O}   skel            = skel
 cells-last {n = S n} (_ , cells , _) = cells
 
-cells-at : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) → Skeleton {i} n → Type i
-cells-at m≤n = cells-last ∘ cw-take m≤n
+cells-nth : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) → Skeleton {i} n → Type i
+cells-nth m≤n = cells-last ∘ cw-take m≤n
 
--- Access the [m]th boundary map
+-- Access the [m]th dimensional attaching map
 
 Sphere₋₁ : ℕ → Type₀
 Sphere₋₁ O = Empty
@@ -78,14 +78,14 @@ Realizer₋₁ {n = S n} (skel , _) = ⟦ skel ⟧
 
 ⟦_⟧₋₁ = Realizer₋₁
 
-boundary-last : ∀ {i} {n : ℕ} (s : Skeleton {i} n)
+attaching-last : ∀ {i} {n : ℕ} (s : Skeleton {i} n)
   → cells-last s → (Sphere₋₁ n → ⟦ s ⟧₋₁)
-boundary-last {n = O}    _                 = λ{_ ()}
-boundary-last {n = S n} (_ , _ , boundary) = boundary
+attaching-last {n = O}    _                  = λ{_ ()}
+attaching-last {n = S n} (_ , _ , attaching) = attaching
 
-boundary-at : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) (skel : Skeleton {i} n)
-  → cells-at m≤n skel → Sphere₋₁ m → ⟦ cw-take m≤n skel ⟧₋₁
-boundary-at m≤n = boundary-last ∘ cw-take m≤n
+attaching-nth : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) (skel : Skeleton {i} n)
+  → cells-nth m≤n skel → Sphere₋₁ m → ⟦ cw-take m≤n skel ⟧₋₁
+attaching-nth m≤n = attaching-last ∘ cw-take m≤n
 
 -- Misc
 
@@ -144,13 +144,13 @@ cw-lift₁-equiv : ∀ {i} {n} (skel : Skeleton {i} n)
 cw-lift₁-equiv skel = equiv to incl to-incl incl-to
   where
     to : ⟦ cw-lift₁ skel ⟧ → ⟦ skel ⟧
-    to = Attach-rec (idf ⟦ skel ⟧) (λ{(lift ())}) (λ{(lift ()) _})
+    to = Attached-rec (idf ⟦ skel ⟧) (λ{(lift ())}) (λ{(lift ()) _})
 
     to-incl : ∀ x → to (incl x) == x
     to-incl _ = idp
 
     incl-to : ∀ x → incl (to x) == x
-    incl-to = Attach-elim (λ _ → idp) (λ{(lift ())}) (λ{(lift ()) _})
+    incl-to = Attached-elim (λ _ → idp) (λ{(lift ())}) (λ{(lift ()) _})
 
 cw-lift : ∀ {i} {n m : ℕ} → n < m → Skeleton {i} n → Skeleton {i} m
 cw-lift ltS = cw-lift₁

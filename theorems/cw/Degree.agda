@@ -10,7 +10,7 @@ module cw.Degree
   (skel-is-aligned : is-aligned skel)
   -- the cells at the upper and lower dimensions
   (upper : cells-last skel)
-  (lower : cells-at (inr ltS) skel)
+  (lower : cells-nth (inr ltS) skel)
   where
 
 private
@@ -20,7 +20,7 @@ private
 
 -- squash the lower CW complex except one of its cells [lower]
 cw-squash-lower-to-Sphere : ⟦ lower-skel ⟧ → Sphere (S n)
-cw-squash-lower-to-Sphere = Attach-rec (λ _ → north) squash-hubs squash-spokes where
+cw-squash-lower-to-Sphere = Attached-rec (λ _ → north) squash-hubs squash-spokes where
   -- squash cells except [lower]
   squash-hubs : lower-cells → Sphere (S n)
   squash-hubs c with lower-cells-has-dec-eq c lower
@@ -34,7 +34,7 @@ cw-squash-lower-to-Sphere = Attach-rec (λ _ → north) squash-hubs squash-spoke
   ... | (inr _) = idp
 
 degree-map : Sphere (S n) → Sphere (S n)
-degree-map = cw-squash-lower-to-Sphere ∘ boundary-last skel upper
+degree-map = cw-squash-lower-to-Sphere ∘ attaching-last skel upper
 
 degree-⊙map : fst (⊙Sphere (S n) ⊙→ ⊙Sphere (S n))
 degree-⊙map = degree-map , ap cw-squash-lower-to-Sphere (! (snd (snd skel-is-aligned upper)))
