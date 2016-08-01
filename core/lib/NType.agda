@@ -48,7 +48,7 @@ abstract
 {- Having decidable equality is stronger that being a set -}
 
 has-dec-eq : Type i → Type i
-has-dec-eq A = Dec (_==_ :> Rel A i)
+has-dec-eq A = Decidable (_==_ :> Rel A i)
 
 abstract
   dec-eq-is-set : {A : Type i} → (has-dec-eq A → is-set A)

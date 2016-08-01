@@ -270,3 +270,27 @@ private
 
 ℤ-group : Group₀
 ℤ-group = group _ ℤ-is-set ℤ-group-structure
+
+-- More properties about [ℤ~]
+
+ℤ~-succ : ∀ z → ℤ~ (succ z) == pred (ℤ~ z)
+ℤ~-succ (pos 0) = idp
+ℤ~-succ (pos (S n)) = idp
+ℤ~-succ (negsucc 0) = idp
+ℤ~-succ (negsucc (S n)) = idp
+
+ℤ~-pred : ∀ z → ℤ~ (pred z) == succ (ℤ~ z)
+ℤ~-pred (pos 0) = idp
+ℤ~-pred (pos 1) = idp
+ℤ~-pred (pos (S (S n))) = idp
+ℤ~-pred (negsucc 0) = idp
+ℤ~-pred (negsucc (S n)) = idp
+
+ℤ~-ℤ+ : ∀ z₁ z₂ → ℤ~ (z₁ ℤ+ z₂) == ℤ~ z₁ ℤ+ ℤ~ z₂
+ℤ~-ℤ+ (pos 0)         z₂ = idp
+ℤ~-ℤ+ (pos 1)         z₂ = ℤ~-succ z₂
+ℤ~-ℤ+ (pos (S (S n))) z₂ =
+  ℤ~-succ (pos (S n) ℤ+ z₂) ∙ ap pred (ℤ~-ℤ+ (pos (S n)) z₂)
+ℤ~-ℤ+ (negsucc O)     z₂ = ℤ~-pred z₂
+ℤ~-ℤ+ (negsucc (S n)) z₂ =
+  ℤ~-pred (negsucc n ℤ+ z₂) ∙ ap succ (ℤ~-ℤ+ (negsucc n) z₂)

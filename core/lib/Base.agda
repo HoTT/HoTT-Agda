@@ -355,6 +355,7 @@ data Coprod {i j} (A : Type i) (B : Type j) : Type (lmax i j) where
   inl : A → Coprod A B
   inr : B → Coprod A B
 
+infixr 80 _⊔_
 _⊔_ = Coprod
 
 match_withl_withr_ : ∀ {i j k} {A : Type i} {B : Type j}
@@ -362,6 +363,9 @@ match_withl_withr_ : ∀ {i j k} {A : Type i} {B : Type j}
   (x : Coprod A B) (l : (a : A) → C (inl a)) (r : (b : B) → C (inr b)) → C x
 match (inl a) withl l withr r = l a
 match (inr b) withl l withr r = r b
+
+Dec : ∀ {i} (P : Type i) → Type i
+Dec P = P ⊔ ¬ P
 
 {-
 Used in a hack to make HITs maybe consistent. This is just a parametrized unit

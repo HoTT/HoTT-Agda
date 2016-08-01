@@ -5,6 +5,7 @@ open import lib.types.Pointed
 
 module lib.types.Bool where
 
+{-
 data Bool : Type₀ where
   true : Bool
   false : Bool
@@ -12,6 +13,12 @@ data Bool : Type₀ where
 {-# BUILTIN BOOL Bool #-}
 {-# BUILTIN FALSE false #-}
 {-# BUILTIN TRUE true #-}
+-}
+
+Bool = ⊤ ⊔ ⊤
+
+pattern true = inl unit
+pattern false = inr unit
 
 ⊙Bool : Ptd₀
 ⊙Bool = ⊙[ Bool , true ]

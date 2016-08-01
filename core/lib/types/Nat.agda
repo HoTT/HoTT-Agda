@@ -123,7 +123,7 @@ O≤ (S m) = inr (O<S m)
 ≤-cancel-S (inl p) = inl (ap ℕ-pred p)
 ≤-cancel-S (inr lt) = inr (<-cancel-S lt)
 
-<-dec : Dec _<_
+<-dec : Decidable _<_
 <-dec _     O     = inr (≮O _)
 <-dec O     (S m) = inl (O<S m)
 <-dec (S n) (S m) with <-dec n m

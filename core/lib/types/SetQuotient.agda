@@ -1,22 +1,23 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
+open import lib.Relation
 
 module lib.types.SetQuotient where
 
 module _ {i} {A : Type i} {j} where
 
   private
-    data #SetQuotient-aux (R : A → A → Type j) : Type i where
+    data #SetQuotient-aux (R : Rel A j) : Type i where
       #q[_] : A → #SetQuotient-aux R 
 
-    data #SetQuotient (R : A → A → Type j) : Type i where
+    data #SetQuotient (R : Rel A j) : Type i where
       #setquot : #SetQuotient-aux R → (Unit → Unit) → #SetQuotient R
 
-  SetQuotient : (R : A → A → Type j) → Type i
+  SetQuotient : (R : Rel A j) → Type i
   SetQuotient = #SetQuotient
 
-  module _ {R : A → A → Type j} where
+  module _ {R : Rel A j} where
 
     q[_] : (a : A) → SetQuotient R
     q[ a ] = #setquot #q[ a ] _
@@ -46,7 +47,7 @@ module _ {i} {A : Type i} {j} where
 
 open SetQuotElim public renaming (f to SetQuot-elim)
 
-module SetQuotRec {i} {A : Type i} {j} {R : A → A → Type j} {k} {B : Type k} (p : is-set B)
+module SetQuotRec {i} {A : Type i} {j} {R : Rel A j} {k} {B : Type k} (p : is-set B)
   (q[_]* : A → B) (rel* : ∀ {a₁ a₂} (r : R a₁ a₂) → q[ a₁ ]* == q[ a₂ ]*) where
 
   private
