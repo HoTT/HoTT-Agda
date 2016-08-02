@@ -53,17 +53,16 @@ module _ {A : Type i} {dec : has-dec-eq A} where
   coef = SetQuot-rec (→-is-set ℤ-is-set) (coef-pre dec) λ=
 
   -- extensionality of formal sums.
-  coef=' : ∀ fs₁ fs₂ → (∀ a → coef fs₁ a == coef fs₂ a) → fs₁ == fs₂
-  coef=' = SetQuot-elim
-    (λ _ → Π-is-set λ _ → →-is-set $ =-preserves-set SetQuotient-is-set)
-    (λ l₁ → SetQuot-elim
-      (λ _ → →-is-set $ =-preserves-set SetQuotient-is-set)
-      (λ l₂ r → quot-rel r)
-      (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → SetQuotient-is-set _ _)))
-    (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → Π-is-prop λ _ → SetQuotient-is-set _ _))
-
-  coef= : ∀ {fs₁ fs₂} → (∀ a → coef fs₁ a == coef fs₂ a) → fs₁ == fs₂
-  coef= {fs₁} {fs₂} = coef=' fs₁ fs₂
+  coef-ext : ∀ {fs₁ fs₂} → (∀ a → coef fs₁ a == coef fs₂ a) → fs₁ == fs₂
+  coef-ext {fs₁} {fs₂} = ext' fs₁ fs₂ where
+    ext' : ∀ fs₁ fs₂ → (∀ a → coef fs₁ a == coef fs₂ a) → fs₁ == fs₂
+    ext' = SetQuot-elim
+      (λ _ → Π-is-set λ _ → →-is-set $ =-preserves-set SetQuotient-is-set)
+      (λ l₁ → SetQuot-elim
+        (λ _ → →-is-set $ =-preserves-set SetQuotient-is-set)
+        (λ l₂ r → quot-rel r)
+        (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → SetQuotient-is-set _ _)))
+      (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → Π-is-prop λ _ → SetQuotient-is-set _ _))
 
   -- TODO Use abstract [FormalSum].
 
@@ -112,7 +111,7 @@ module _ {A : Type i} {dec : has-dec-eq A} where
 
 {-
   -- Favonia: These commented-out proofs are valid, but I want to promote
-  -- the usage of [coef=].
+  -- the usage of [coef-ext].
 
   ⊞-unit-l : ∀ fs → ⊞-unit ⊞ fs == fs
   ⊞-unit-l = SetQuot-elim
@@ -128,13 +127,13 @@ module _ {A : Type i} {dec : has-dec-eq A} where
 -}
 
   ⊞-unit-l : ∀ fs → ⊞-unit ⊞ fs == fs
-  ⊞-unit-l fs = coef= λ a → coef-⊞ ⊞-unit fs a
+  ⊞-unit-l fs = coef-ext λ a → coef-⊞ ⊞-unit fs a
 
   ⊞-unit-r : ∀ fs → fs ⊞ ⊞-unit == fs
-  ⊞-unit-r fs = coef= λ a → coef-⊞ fs ⊞-unit a ∙ ℤ+-unit-r _
+  ⊞-unit-r fs = coef-ext λ a → coef-⊞ fs ⊞-unit a ∙ ℤ+-unit-r _
 
   ⊞-assoc : ∀ fs₁ fs₂ fs₃ → (fs₁ ⊞ fs₂) ⊞ fs₃ == fs₁ ⊞ (fs₂ ⊞ fs₃)
-  ⊞-assoc fs₁ fs₂ fs₃ = coef= λ a →
+  ⊞-assoc fs₁ fs₂ fs₃ = coef-ext λ a →
     coef ((fs₁ ⊞ fs₂) ⊞ fs₃) a
       =⟨ coef-⊞ (fs₁ ⊞ fs₂) fs₃ a ⟩
     coef (fs₁ ⊞ fs₂) a ℤ+ coef fs₃ a
@@ -149,14 +148,14 @@ module _ {A : Type i} {dec : has-dec-eq A} where
       ∎
 
   ⊟-inv-r : ∀ fs → fs ⊞ (⊟ fs) == ⊞-unit
-  ⊟-inv-r fs = coef= λ a → coef-⊞ fs (⊟ fs) a
-                         ∙ ap (coef fs a ℤ+_) (coef-⊟ fs a)
-                         ∙ ℤ~-inv-r (coef fs a)
+  ⊟-inv-r fs = coef-ext λ a → coef-⊞ fs (⊟ fs) a
+                            ∙ ap (coef fs a ℤ+_) (coef-⊟ fs a)
+                            ∙ ℤ~-inv-r (coef fs a)
 
   ⊟-inv-l : ∀ fs → (⊟ fs) ⊞ fs == ⊞-unit
-  ⊟-inv-l fs = coef= λ a → coef-⊞ (⊟ fs) fs a
-                         ∙ ap (_ℤ+ coef fs a) (coef-⊟ fs a)
-                         ∙ ℤ~-inv-l (coef fs a)
+  ⊟-inv-l fs = coef-ext λ a → coef-⊞ (⊟ fs) fs a
+                            ∙ ap (_ℤ+ coef fs a) (coef-⊟ fs a)
+                            ∙ ℤ~-inv-l (coef fs a)
 
   FormalSum-group-structure : GroupStructure (FormalSum dec)
   FormalSum-group-structure = record
@@ -179,5 +178,5 @@ module _ {A : Type i} {dec : has-dec-eq A} where
   has-finite-supports-is-prop : ∀ f → is-prop (has-finite-supports f)
   has-finite-supports-is-prop f = all-paths-is-prop
     λ{(fs₁ , match₁) (fs₂ , match₂) → pair=
-      (coef= λ a → ! (match₁ a) ∙ match₂ a)
+      (coef-ext λ a → ! (match₁ a) ∙ match₂ a)
       (prop-has-all-paths-↓ $ Π-is-prop λ _ → ℤ-is-set _ _)}
