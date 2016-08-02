@@ -181,5 +181,3 @@ module _ {A : Type i} {dec : has-dec-eq A} where
     λ{(fs₁ , match₁) (fs₂ , match₂) → pair=
       (coef= λ a → ! (match₁ a) ∙ match₂ a)
       (prop-has-all-paths-↓ $ Π-is-prop λ _ → ℤ-is-set _ _)}
-
-  -- TODO Create a quotient of formal sums with finite supports
