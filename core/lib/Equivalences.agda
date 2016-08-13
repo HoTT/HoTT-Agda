@@ -142,15 +142,26 @@ infixr 80 _∘ise_
 
 _∘e_ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
   → B ≃ C → A ≃ B → A ≃ C
-e1 ∘e e2 = equiv (–> e1 ∘ –> e2) (<– e2 ∘ <– e1)
-  (λ c → –> e1 (–> e2 (<– e2 (<– e1 c)))
-                   =⟨ <–-inv-r e2 (<– e1 c) |in-ctx (–> e1) ⟩
-         –> e1 (<– e1 c)  =⟨ <–-inv-r e1 c ⟩
-         c ∎)
-  (λ a → <– e2 (<– e1 (–> e1 (–> e2 a)))
-                   =⟨ <–-inv-l e1 (–> e2 a) |in-ctx (<– e2) ⟩
-         <– e2 (–> e2 a)  =⟨ <–-inv-l e2 a ⟩
-         a ∎)
+e1 ∘e e2 = ((–> e1 ∘ –> e2) , record {g = (<– e2 ∘ <– e1);
+  f-g = (λ c → ap (–> e1) (<–-inv-r e2 (<– e1 c)) ∙ <–-inv-r e1 c);
+  g-f = (λ a → ap (<– e2) (<–-inv-l e1 (–> e2 a)) ∙ <–-inv-l e2 a);
+  adj = λ a → 
+      ap (–> e1 ∘ –> e2) (ap (<– e2) (<–-inv-l e1 (–> e2 a)) ∙ <–-inv-l e2 a)
+          =⟨ ap-∘ (–> e1) (–> e2) (ap (<– e2) (<–-inv-l e1 (–> e2 a)) ∙ <–-inv-l e2 a) ⟩
+      ap (–> e1) (ap (–> e2) (ap (<– e2) (<–-inv-l e1 (–> e2 a)) ∙ <–-inv-l e2 a))
+          =⟨ ap-∙ (–> e2) (ap (<– e2) (<–-inv-l e1 (–> e2 a))) (<–-inv-l e2 a)  |in-ctx ap (–> e1) ⟩
+      ap (–> e1) (ap (–> e2) (ap (<– e2) (<–-inv-l e1 (–> e2 a))) ∙ ap (–> e2) (<–-inv-l e2 a))
+          =⟨ ! (ap-∘ (–> e2) (<– e2) (<–-inv-l e1 (–> e2 a))) ∙2 <–-inv-adj e2 a |in-ctx ap (–> e1) ⟩
+      ap (–> e1) (ap (–> e2 ∘ <– e2) (<–-inv-l e1 (–> e2 a)) ∙ <–-inv-r e2 (–> e2 a))
+          =⟨ htpy-natural (<–-inv-r e2) (<–-inv-l e1 (–> e2 a))    |in-ctx ap (–> e1) ⟩
+      ap (–> e1) (<–-inv-r e2 (<– e1 ((–> e1 ∘ –> e2) a)) ∙ ap (λ z → z) (<–-inv-l e1 (–> e2 a)))
+          =⟨ <–-inv-r e2 (<– e1 ((–> e1 ∘ –> e2) a)) ∙ₗ ap-idf (<–-inv-l e1 (–> e2 a)) |in-ctx ap (–> e1) ⟩
+      ap (–> e1) (<–-inv-r e2 (<– e1 ((–> e1 ∘ –> e2) a)) ∙ <–-inv-l e1 (–> e2 a))
+          =⟨ ap-∙ (–> e1) (<–-inv-r e2 (<– e1 ((–> e1 ∘ –> e2) a))) (<–-inv-l e1 (–> e2 a)) ⟩
+      ap (–> e1) (<–-inv-r e2 (<– e1 ((–> e1 ∘ –> e2) a))) ∙ ap (–> e1) (<–-inv-l e1 (–> e2 a))
+          =⟨  ap (–> e1) (<–-inv-r e2 (<– e1 ((–> e1 ∘ –> e2) a))) ∙ₗ (<–-inv-adj e1 (–> e2 a)) ⟩
+      ap (–> e1) (<–-inv-r e2 (<– e1 ((–> e1 ∘ –> e2) a))) ∙ <–-inv-r e1 ((–> e1 ∘ –> e2) a)
+      ∎})
 
 _∘ise_ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
   {f : A → B} {g : B → C}
