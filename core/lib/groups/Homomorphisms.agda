@@ -163,6 +163,7 @@ module _ {i} {G H : Group i} (iso : G ≃ᴳ H) where
     group-ua-el : ap Group.El group-ua == ua (φ.f , ie)
     group-ua-el = ap3-lemma-el (ua (φ.f , ie)) _ _
 
+-- XXX TODO rename [hom=] to [hom=-in]
 {- equality of homomorphisms -}
 abstract
   hom= : ∀ {i j} {G : Group i} {H : Group j} (φ ψ : (G →ᴳ H))

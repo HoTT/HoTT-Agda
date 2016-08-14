@@ -9,6 +9,8 @@ open import homotopy.IterSuspensionStable
 -- This summerizes all [πₙ Sⁿ]
 module homotopy.PinSn where
 
+  -- XXX TODO Give group isomorphisms instead of group identifications
+
   private
     -- another way is to use path induction to prove the other direction,
     -- but personally I do not feel it is easier.
