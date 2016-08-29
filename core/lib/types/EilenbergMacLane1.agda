@@ -11,7 +11,7 @@ open import lib.types.TLevel
 open import lib.types.Truncation
 open import lib.types.Group
 open import lib.types.Pointed
-open import lib.types.LoopSpace
+open import lib.groups.LoopSpace
 open import lib.groups.Homomorphisms
 open import lib.groups.HomotopyGroup
 
@@ -83,7 +83,7 @@ module EM₁ {i} (G : Group i) where
       cancels-inverse p idp r = ! (∙-unit-r p) ∙ r
 
       lemma : emloop (G.inv g) ∙ emloop g  == idp
-      lemma = ! (emloop-comp (G.inv g) g) ∙ ap emloop (G.invl g) ∙ emloop-ident
+      lemma = ! (emloop-comp (G.inv g) g) ∙ ap emloop (G.inv-l g) ∙ emloop-ident
 
   module π₁ where
 
@@ -91,12 +91,12 @@ module EM₁ {i} (G : Group i) where
     comp-equiv g = equiv
       (λ x → G.comp x g)
       (λ x → G.comp x (G.inv g))
-      (λ x → G.assoc x (G.inv g) g ∙ ap (G.comp x) (G.invl g) ∙ G.unitr x)
-      (λ x → G.assoc x g (G.inv g) ∙ ap (G.comp x) (G.invr g) ∙ G.unitr x)
+      (λ x → G.assoc x (G.inv g) g ∙ ap (G.comp x) (G.inv-l g) ∙ G.unit-r x)
+      (λ x → G.assoc x g (G.inv g) ∙ ap (G.comp x) (G.inv-r g) ∙ G.unit-r x)
 
     comp-equiv-id : comp-equiv G.ident == ide G.El
     comp-equiv-id =
-      pair= (λ= G.unitr)
+      pair= (λ= G.unit-r)
             (prop-has-all-paths-↓ {B = is-equiv} (is-equiv-is-prop $ idf G.El))
 
     comp-equiv-comp : (g₁ g₂ : G.El) → comp-equiv (G.comp g₁ g₂)
@@ -106,45 +106,21 @@ module EM₁ {i} (G : Group i) where
             (prop-has-all-paths-↓ {B = is-equiv} (is-equiv-is-prop _))
 
     Ω-group : Group (lsucc i)
-    Ω-group = group (G.El == G.El) (universe-=-level G.El-level G.El-level)
-                    (Ω^S-group-structure 0 (Type i , G.El))
-
-    0-group : Group (lsucc i)
-    0-group = Ω^S-group 0
+    Ω-group = Ω^S-group 0
       ((0 -Type i) , (G.El , G.El-level)) (0 -Type-level i)
 
-    Codes-hom₁ : G →ᴳ Ω-group
-    Codes-hom₁ = record {
-      f = ua ∘ comp-equiv;
-
-      pres-comp = λ g₁ g₂ →
-        ua (comp-equiv (G.comp g₁ g₂))
-          =⟨ ap ua (comp-equiv-comp g₁ g₂) ⟩
-        ua (comp-equiv g₂ ∘e comp-equiv g₁)
-          =⟨ ua-∘e (comp-equiv g₁) (comp-equiv g₂) ⟩
-        ua (comp-equiv g₁) ∙ ua (comp-equiv g₂) ∎}
-
-    Codes-hom₂ : Ω-group →ᴳ 0-group
-    Codes-hom₂ = record {
-      f = λ p → pair= p (phap p);
-
-      pres-comp = λ p₁ p₂ →
-        pair= (p₁ ∙ p₂) (phap (p₁ ∙ p₂))
-          =⟨ prop-has-all-paths (↓-level (λ _ →
-                                   raise-level _ has-level-is-prop)) _ _
-              |in-ctx (λ w → pair= (p₁ ∙ p₂)  w) ⟩
-        pair= (p₁ ∙ p₂) (phap p₁ ∙ᵈ phap p₂)
-          =⟨ ! (Σ-∙ (phap p₁) (phap p₂)) ⟩
-        pair= p₁ (phap p₁) ∙ pair= p₂ (phap p₂) ∎}
-
-      where
-      -- saving some space
-      phap : (p : G.El == G.El)
-        → G.El-level == G.El-level [ has-level 0 ↓ p ]
-      phap p = prop-has-all-paths-↓ has-level-is-prop
-
-    Codes-hom : G →ᴳ 0-group
-    Codes-hom = Codes-hom₂ ∘ᴳ Codes-hom₁
+    Codes-hom : G →ᴳ Ω-group
+    Codes-hom = group-hom
+      (nType=-in ∘ ua ∘ comp-equiv)
+      (λ g₁ g₂ →
+        nType=-in (ua (comp-equiv (G.comp g₁ g₂)))
+          =⟨ comp-equiv-comp g₁ g₂ |in-ctx nType=-in ∘ ua ⟩
+        nType=-in (ua (comp-equiv g₂ ∘e comp-equiv g₁))
+          =⟨ ua-∘e (comp-equiv g₁) (comp-equiv g₂) |in-ctx nType=-in ⟩
+        nType=-in (ua (comp-equiv g₁) ∙ ua (comp-equiv g₂))
+          =⟨ ! $ nType-∙ (ua (comp-equiv g₁)) (ua (comp-equiv g₂)) ⟩
+        nType=-in (ua (comp-equiv g₁)) ∙ nType=-in (ua (comp-equiv g₂))
+          =∎)
 
     Codes : EM₁ → 0 -Type i
     Codes = EM₁-rec {C = 0 -Type i} (0 -Type-level i)
@@ -170,7 +146,7 @@ module EM₁ {i} (G : Group i) where
     encode-emloop : ∀ g → encode (emloop g) == g
     encode-emloop g = to-transp $
       transport (λ x → G.ident == x [ fst ∘ Codes ↓ emloop g ])
-                 (G.unitl g) (↓-Codes-loop g G.ident)
+                 (G.unit-l g) (↓-Codes-loop g G.ident)
 
     decode : {x : EM₁} → fst (Codes x) → embase == x
     decode {x} =
@@ -179,7 +155,7 @@ module EM₁ {i} (G : Group i) where
         emloop
         loop'
         (prop-has-all-paths-↓ (Π-level (λ _ → emlevel _ _) _ _))
-        (λ _ _ → prop-has-all-paths-↓ (↓-level (λ _ → Π-level (λ _ → emlevel _ _))))
+        (λ _ _ → prop-has-all-paths-↓ (↓-level (Π-level (λ _ → emlevel _ _))))
         x
       where
       loop' : (g : G.El)
@@ -191,7 +167,7 @@ module EM₁ {i} (G : Group i) where
           =⟨ ! (emloop-comp y g) ⟩
         emloop (G.comp y g)
           =⟨ ap emloop (! (to-transp (↓-Codes-loop g y))) ⟩
-        emloop (transport (λ z → fst (Codes z)) (emloop g) y) ∎
+        emloop (transport (λ z → fst (Codes z)) (emloop g) y) =∎
 
     decode-encode : ∀ {x} (α : embase == x) → decode (encode α) == α
     decode-encode idp = emloop-ident
@@ -209,12 +185,12 @@ module EM₁ {i} (G : Group i) where
       π₁-path = ap (Trunc 0) Ω¹-path ∙ ua (unTrunc-equiv G.El G.El-level)
 
     abstract
-      π₁-iso : πS 0 (EM₁ , embase) == G
-      π₁-iso = ! $ group-ua
+      π₁-iso : πS 0 (EM₁ , embase) ≃ᴳ G
+      π₁-iso =
         (record { f = [_] ∘ emloop;
                   pres-comp = λ g₁ g₂ → ap [_] (emloop-comp g₁ g₂) } ,
          snd ((unTrunc-equiv (embase == embase) (emlevel _ _))⁻¹
-              ∘e (Ω¹-equiv ⁻¹)))
+              ∘e (Ω¹-equiv ⁻¹))) ⁻¹ᴳ
 
   {- EM₁ is 0-connected -}
   abstract

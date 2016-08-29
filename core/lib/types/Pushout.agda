@@ -98,13 +98,13 @@ module PushoutGeneric {d : Span {i} {j} {k}} where
         to-from-pp c = ↓-∘=idf-in to from
           (ap to (ap from (pp c))   =⟨ From.pp-β c |in-ctx ap to ⟩
            ap to (glue c)           =⟨ To.glue-β c ⟩
-           pp c ∎)
+           pp c =∎)
 
       from-to : (x : Pushout d) → from (to x) == x
       from-to = Pushout-elim (λ a → idp) (λ b → idp) (λ c → ↓-∘=idf-in from to
         (ap from (ap to (glue c))   =⟨ To.glue-β c |in-ctx ap from ⟩
          ap from (pp c)             =⟨ From.pp-β c ⟩
-         glue c ∎))
+         glue c =∎))
 
   generic-pushout : Pushout d ≃ T
   generic-pushout = equiv to from to-from from-to
@@ -146,7 +146,7 @@ module _ (d : ⊙Span {i} {j} {k}) where
            |in-ctx (λ w → w ∙ ap right (snd g) ∙ ap right (! (snd g))
                             ∙ ! (glue (snd Z)) ∙' ap left (snd f)) ⟩
       app= (λ= glue) (snd Z) ∙ ap right (snd g)
-      ∙ ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙' ap left (snd f) ∎)
+      ∙ ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙' ap left (snd f) =∎)
     where
     lemma : ∀ {i} {A : Type i} {x y z w : A}
       (p : x == y) (q : y == z) (r : x == w)

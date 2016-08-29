@@ -51,51 +51,26 @@ module _ {i} {A : Type i} where
              (false , a) →
                ap (ap out) (Into.glue-β (false , a)) ∙v⊡ connection})
 
-  *-Bool-equiv-Suspension : Bool * A ≃ Suspension A
-  *-Bool-equiv-Suspension = equiv into out into-out out-into
-
-  *-Lift-Bool-equiv-Suspension : Lift {j = i} Bool * A ≃ Suspension A
-  *-Lift-Bool-equiv-Suspension = *-Bool-equiv-Suspension ∘e equiv-* lower-equiv (ide A)
-
-  *-Bool = ua *-Bool-equiv-Suspension
+  *-Bool-l : Bool * A ≃ Suspension A
+  *-Bool-l = equiv into out into-out out-into
 
 module _ {i} (X : Ptd i) where
 
-  ⊙*-⊙Bool : ⊙Bool ⊙* X == ⊙Susp X
-  ⊙*-⊙Bool = ⊙ua (⊙≃-in *-Bool-equiv-Suspension idp)
-
-  ⊙*-⊙Lift-⊙Bool : ⊙Lift {j = i} ⊙Bool ⊙* X == ⊙Susp X
-  ⊙*-⊙Lift-⊙Bool = ⊙ua (⊙≃-in *-Lift-Bool-equiv-Suspension idp)
+  ⊙*-Bool-l : ⊙Bool ⊙* X ⊙≃ ⊙Susp X
+  ⊙*-Bool-l = ≃-to-⊙≃ *-Bool-l idp
 
 module _ {i j} {A : Type i} {B : Type j} where
 
-  *-Suspension : Suspension A * B == Suspension (A * B)
-  *-Suspension =
-    ap (_* B) (! *-Bool)
-    ∙ join-rearrange-path
-    ∙ ua swap-equiv
-    ∙ *-Bool
-    ∙ ap Suspension (ua swap-equiv)
+  *-Susp-l : Suspension A * B ≃ Suspension (A * B)
+  *-Susp-l = *-Bool-l ∘e *-assoc ∘e *-emap *-Bool-l (ide B) ⁻¹
 
 module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
-  ⊙*-⊙Susp : ⊙Susp X ⊙* Y == ⊙Susp (X ⊙* Y)
-  ⊙*-⊙Susp =
-    ap (_⊙* Y) (! (⊙*-⊙Bool X))
-    ∙ join-rearrange-⊙path (⊙Sphere 0) X Y
-    ∙ ⊙ua (⊙≃-in swap-equiv (! (glue _)))
-    ∙ ⊙*-⊙Bool (Y ⊙* X)
-    ∙ ap (λ A → (Suspension A , north)) (ua swap-equiv)
+  ⊙*-Susp-l : ⊙Susp X ⊙* Y ⊙≃ ⊙Susp (X ⊙* Y)
+  ⊙*-Susp-l = ≃-to-⊙≃ *-Susp-l idp
 
 module _ {i} where
 
-  ⊙*-⊙Sphere : (m : ℕ) (X : Ptd i) → ⊙Sphere m ⊙* X == ⊙Susp^ (S m) X
-  ⊙*-⊙Sphere O X = ⊙*-⊙Bool X
-  ⊙*-⊙Sphere (S m) X = ⊙*-⊙Susp (⊙Sphere m) X
-                     ∙ ap ⊙Susp (⊙*-⊙Sphere m X)
-
-  ⊙*-⊙Lift-⊙Sphere : (m : ℕ) (X : Ptd i) → ⊙Lift {j = i} (⊙Sphere m) ⊙* X == ⊙Susp^ (S m) X
-  ⊙*-⊙Lift-⊙Sphere O X = ⊙*-⊙Lift-⊙Bool X
-  ⊙*-⊙Lift-⊙Sphere (S m) X = ap (_⊙* X) (! $ ⊙Susp-⊙Lift (⊙Sphere m))
-                           ∙ ⊙*-⊙Susp (⊙Lift (⊙Sphere m)) X
-                           ∙ ap ⊙Susp (⊙*-⊙Lift-⊙Sphere m X)
+  ⊙*-Sphere-l : (m : ℕ) (X : Ptd i) → ⊙Sphere m ⊙* X ⊙≃ ⊙Susp^ (S m) X
+  ⊙*-Sphere-l O X = ⊙*-Bool-l X
+  ⊙*-Sphere-l (S m) X = ⊙Susp-emap (⊙*-Sphere-l m X) ⊙∘e ⊙*-Susp-l (⊙Sphere m) X

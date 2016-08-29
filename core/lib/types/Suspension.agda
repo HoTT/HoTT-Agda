@@ -22,6 +22,8 @@ module _ {i} (A : Type i) where
   Suspension : Type i
   Suspension = Pushout suspension-span
 
+  Susp = Suspension
+
   -- [north'] and [south'] explictly ask for [A]
 
   north' : Suspension
@@ -45,17 +47,22 @@ module _ {i} {A : Type i} where
     (s : P south) (p : (x : A) → n == s [ P ↓ merid x ]) where
     open module P = PushoutElim (λ _ → n) (λ _ → s) p
       public using (f) renaming (glue-β to merid-β)
+  module SuspElim = SuspensionElim
 
   open SuspensionElim public using () renaming (f to Suspension-elim)
+  Susp-elim = Suspension-elim
 
   module SuspensionRec {j} {C : Type j} (n s : C) (p : A → n == s) where
     open module P = PushoutRec {d = suspension-span A} (λ _ → n) (λ _ → s) p
       public using (f) renaming (glue-β to merid-β)
+  module SuspRec = SuspensionRec
 
   open SuspensionRec public using () renaming (f to Suspension-rec)
+  Susp-rec = Suspension-rec
 
   module SuspensionRecType {j} (n s : Type j) (p : A → n ≃ s)
     = PushoutRecType {d = suspension-span A} (λ _ → n) (λ _ → s) p
+  module SuspRecType = SuspensionRecType
 
 suspension-⊙span : ∀ {i} → Ptd i → ⊙Span
 suspension-⊙span X =
@@ -75,63 +82,63 @@ suspension-⊙span X =
 module FlipSusp {i} {A : Type i} = SuspensionRec
   (south' A) north (! ∘ merid)
 
-flip-susp : ∀ {i} {A : Type i} → Suspension A → Suspension A
-flip-susp = FlipSusp.f
+Susp-flip : ∀ {i} {A : Type i} → Suspension A → Suspension A
+Susp-flip = FlipSusp.f
 
-⊙flip-susp : ∀ {i} (X : Ptd i) → fst (⊙Susp X ⊙→ ⊙Susp X)
-⊙flip-susp X = (flip-susp , ! (merid (snd X)))
+⊙Susp-flip : ∀ {i} (X : Ptd i) → fst (⊙Susp X ⊙→ ⊙Susp X)
+⊙Susp-flip X = (Susp-flip , ! (merid (snd X)))
 
 module _ {i j} where
 
   module SuspFmap {A : Type i} {B : Type j} (f : A → B) =
     SuspensionRec north south (merid ∘ f)
 
-  susp-fmap : {A : Type i} {B : Type j} (f : A → B)
+  Susp-fmap : {A : Type i} {B : Type j} (f : A → B)
     → (Suspension A → Suspension B)
-  susp-fmap = SuspFmap.f
+  Susp-fmap = SuspFmap.f
 
-  ⊙susp-fmap : {X : Ptd i} {Y : Ptd j} (f : fst (X ⊙→ Y))
+  ⊙Susp-fmap : {X : Ptd i} {Y : Ptd j} (f : fst (X ⊙→ Y))
     → fst (⊙Susp X ⊙→ ⊙Susp Y)
-  ⊙susp-fmap (f , fpt) = (susp-fmap f , idp)
+  ⊙Susp-fmap (f , fpt) = (Susp-fmap f , idp)
 
 module _ {i} where
 
-  susp-fmap-idf : (A : Type i) → ∀ a → susp-fmap (idf A) a == a
-  susp-fmap-idf A = Suspension-elim idp idp $ λ a →
+  Susp-fmap-idf : (A : Type i) → ∀ a → Susp-fmap (idf A) a == a
+  Susp-fmap-idf A = Suspension-elim idp idp $ λ a →
     ↓-='-in (ap-idf (merid a) ∙ ! (SuspFmap.merid-β (idf A) a))
 
-  ⊙susp-fmap-idf : (X : Ptd i)
-    → ⊙susp-fmap (⊙idf X) == ⊙idf (⊙Susp X)
-  ⊙susp-fmap-idf X = ⊙λ= (susp-fmap-idf (fst X)) idp
+  ⊙Susp-fmap-idf : (X : Ptd i)
+    → ⊙Susp-fmap (⊙idf X) == ⊙idf (⊙Susp X)
+  ⊙Susp-fmap-idf X = ⊙λ= (Susp-fmap-idf (fst X)) idp
 
 module _ {i j} where
 
-  susp-fmap-cst : {A : Type i} {B : Type j} (b : B)
-    (a : Suspension A) → susp-fmap (cst b) a == north
-  susp-fmap-cst b = Suspension-elim idp (! (merid b)) $ (λ a →
+  Susp-fmap-cst : {A : Type i} {B : Type j} (b : B)
+    (a : Suspension A) → Susp-fmap (cst b) a == north
+  Susp-fmap-cst b = Suspension-elim idp (! (merid b)) $ (λ a →
     ↓-app=cst-from-square $ SuspFmap.merid-β (cst b) a ∙v⊡ tr-square _)
 
-  ⊙susp-fmap-cst : {X : Ptd i} {Y : Ptd j}
-    → ⊙susp-fmap (⊙cst {X = X} {Y = Y}) == ⊙cst
-  ⊙susp-fmap-cst = ⊙λ= (susp-fmap-cst _) idp
+  ⊙Susp-fmap-cst : {X : Ptd i} {Y : Ptd j}
+    → ⊙Susp-fmap (⊙cst {X = X} {Y = Y}) == ⊙cst
+  ⊙Susp-fmap-cst = ⊙λ= (Susp-fmap-cst _) idp
 
 module _ {i j k} where
 
-  susp-fmap-∘ : {A : Type i} {B : Type j} {C : Type k} (g : B → C) (f : A → B)
-    (σ : Suspension A) → susp-fmap (g ∘ f) σ == susp-fmap g (susp-fmap f σ)
-  susp-fmap-∘ g f = Suspension-elim
+  Susp-fmap-∘ : {A : Type i} {B : Type j} {C : Type k} (g : B → C) (f : A → B)
+    (σ : Suspension A) → Susp-fmap (g ∘ f) σ == Susp-fmap g (Susp-fmap f σ)
+  Susp-fmap-∘ g f = Suspension-elim
     idp
     idp
     (λ a → ↓-='-in $
-      ap-∘ (susp-fmap g) (susp-fmap f) (merid a)
-      ∙ ap (ap (susp-fmap g)) (SuspFmap.merid-β f a)
+      ap-∘ (Susp-fmap g) (Susp-fmap f) (merid a)
+      ∙ ap (ap (Susp-fmap g)) (SuspFmap.merid-β f a)
       ∙ SuspFmap.merid-β g (f a)
       ∙ ! (SuspFmap.merid-β (g ∘ f) a))
 
-  ⊙susp-fmap-∘ : {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  ⊙Susp-fmap-∘ : {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
     (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y))
-    → ⊙susp-fmap (g ⊙∘ f) == ⊙susp-fmap g ⊙∘ ⊙susp-fmap f
-  ⊙susp-fmap-∘ g f = ⊙λ= (susp-fmap-∘ (fst g) (fst f)) idp
+    → ⊙Susp-fmap (g ⊙∘ f) == ⊙Susp-fmap g ⊙∘ ⊙Susp-fmap f
+  ⊙Susp-fmap-∘ g f = ⊙λ= (Susp-fmap-∘ (fst g) (fst f)) idp
 
 
 {- Extract the 'glue component' of a pushout -}
@@ -150,8 +157,8 @@ module _ {i j k} {s : Span {i} {j} {k}} where
 
 module _ {i j} {A : Type i} {B : Type j} where
 
-  equiv-Suspension : A ≃ B → Suspension A ≃ Suspension B
-  equiv-Suspension eq = equiv to from to-from from-to where
+  Susp-emap : A ≃ B → Suspension A ≃ Suspension B
+  Susp-emap eq = equiv to from to-from from-to where
     module To = SuspensionRec north south (λ a → merid (–> eq a))
     module From = SuspensionRec north south (λ b → merid (<– eq b))
 
@@ -178,7 +185,7 @@ module _ {i j} {A : Type i} {B : Type j} where
         ap (to ∘ from) (merid b)
           =⟨ ! $ ∙-unit-r (ap (to ∘ from) (merid b)) ⟩
         ap (to ∘ from) (merid b) ∙ idp
-          ∎
+          =∎
 
     from-to : ∀ a → from (to a) == a
     from-to = Suspension-elim idp idp from-to-merid where
@@ -197,26 +204,26 @@ module _ {i j} {A : Type i} {B : Type j} where
         ap (from ∘ to) (merid a)
           =⟨ ! $ ∙-unit-r (ap (from ∘ to) (merid a)) ⟩
         ap (from ∘ to) (merid a) ∙ idp
-          ∎
+          =∎
 
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
-  ⊙equiv-⊙Susp : X ⊙≃ Y → ⊙Susp X ⊙≃ ⊙Susp Y
-  ⊙equiv-⊙Susp ⊙eq = ⊙≃-in (equiv-Suspension (fst (⊙≃-out ⊙eq))) idp
+  ⊙Susp-emap : X ⊙≃ Y → ⊙Susp X ⊙≃ ⊙Susp Y
+  ⊙Susp-emap ⊙eq = ≃-to-⊙≃ (Susp-emap (⊙≃-to-≃ ⊙eq)) idp
 
 {- Interaction with [Lift] -}
 module _ {i j} (X : Type i) where
 
-  Suspension-Lift-equiv-Lift-Suspension : Suspension (Lift {j = j} X) ≃ Lift {j = j} (Suspension X)
-  Suspension-Lift-equiv-Lift-Suspension = lift-equiv ∘e equiv-Suspension lower-equiv
+  Susp-Lift-econv : Suspension (Lift {j = j} X) ≃ Lift {j = j} (Suspension X)
+  Susp-Lift-econv = lift-equiv ∘e Susp-emap lower-equiv
 
-  Suspension-Lift : Suspension (Lift {j = j} X) == Lift {j = j} (Suspension X)
-  Suspension-Lift = ua Suspension-Lift-equiv-Lift-Suspension
+  Susp-Lift-conv : Suspension (Lift {j = j} X) == Lift {j = j} (Suspension X)
+  Susp-Lift-conv = ua Susp-Lift-econv
 
 module _ {i j} (X : Ptd i) where
 
-  ⊙Susp-⊙Lift-⊙equiv-⊙Lift-⊙Susp : ⊙Susp (⊙Lift {j = j} X) ⊙≃ ⊙Lift {j = j} (⊙Susp X)
-  ⊙Susp-⊙Lift-⊙equiv-⊙Lift-⊙Susp = ⊙lift-equiv {j = j} ⊙∘e ⊙equiv-⊙Susp {X = ⊙Lift {j = j} X} {Y = X} ⊙lower-equiv
+  ⊙Susp-Lift-econv : ⊙Susp (⊙Lift {j = j} X) ⊙≃ ⊙Lift {j = j} (⊙Susp X)
+  ⊙Susp-Lift-econv = ⊙lift-equiv {j = j} ⊙∘e ⊙Susp-emap {X = ⊙Lift {j = j} X} {Y = X} ⊙lower-equiv
 
-  ⊙Susp-⊙Lift : ⊙Susp (⊙Lift {j = j} X) == ⊙Lift {j = j} (⊙Susp X)
-  ⊙Susp-⊙Lift = ⊙ua ⊙Susp-⊙Lift-⊙equiv-⊙Lift-⊙Susp
+  ⊙Susp-Lift-conv : ⊙Susp (⊙Lift {j = j} X) == ⊙Lift {j = j} (⊙Susp X)
+  ⊙Susp-Lift-conv = ⊙ua ⊙Susp-Lift-econv

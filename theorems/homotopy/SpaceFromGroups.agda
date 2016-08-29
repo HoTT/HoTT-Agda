@@ -18,15 +18,19 @@ module SpaceFromEMs {i} (F : ℕ → Ptd i)
   X : Ptd i
   X = ⊙FinTuples F
 
-  πS-X : (n : ℕ) → πS n X == πS n (F n)
+  πS-X : (n : ℕ) → πS n X ≃ᴳ πS n (F n)
   πS-X n =
-    prefix-lemma n O F pF
-    ∙ ap (πS n) (! (⊙ua (⊙fin-tuples-cons (λ k → F (n + k)))))
-    ∙ πS-× n (F (n + O)) (⊙FinTuples (λ k → F (n + S k)))
-    ∙ ap (λ H → πS n (F (n + O)) ×ᴳ H)
-         (contr-is-0ᴳ _ $
+    πS n (⊙FinTuples F)
+      ≃ᴳ⟨ prefix-lemma n O F pF ⟩
+    πS n (⊙FinTuples (λ k → F (n + k)))
+      ≃ᴳ⟨ πS-emap n (⊙fin-tuples-cons (λ k → F (n + k))) ⁻¹ᴳ ⟩
+    πS n (F (n + O) ⊙× ⊙FinTuples (λ k → F (n + S k)))
+      ≃ᴳ⟨ πS-× n (F (n + O)) (⊙FinTuples (λ k → F (n + S k))) ⟩
+    πS n (F (n + O)) ×ᴳ πS n (⊙FinTuples (λ k → F (n + S k)))
+      ≃ᴳ⟨ ×ᴳ-emap (idiso (πS n (F (n + O))) )
+         (contr-iso-0ᴳ _ $
            connected-at-level-is-contr (Trunc-level {n = 0}) $
-             Trunc-preserves-conn 0 $ Ω^-conn-in _ (S n) _ $
+             Trunc-preserves-conn 0 $ Ω^-conn _ (S n) _ $
                transport
                  (λ k → is-connected k
                           (fst (⊙FinTuples (λ k → F (n + S k)))))
@@ -34,42 +38,54 @@ module SpaceFromEMs {i} (F : ℕ → Ptd i)
                  (ncolim-conn _ _ $ connected-lemma _ _ $ λ k →
                    transport (λ s → is-connected ⟨ s ⟩ (fst (F (n + S k))))
                      (+-βr n k ∙ +-comm (S n) k)
-                     (cF (n + S k))))
-    ∙ ×ᴳ-unit-r
-    ∙ ap (λ k → πS n (F k)) (+-unit-r n)
-
+                     (cF (n + S k)))) ⟩
+    πS n (F (n + O)) ×ᴳ 0ᴳ
+      ≃ᴳ⟨ ×ᴳ-unit-r _ ⟩
+    πS n (F (n + O))
+      ≃ᴳ⟨ ≃ᴳ-over-= (λ k → πS n (F k)) (+-unit-r n) ⟩
+    πS n (F n)
+      ≃ᴳ∎
     where
     {- In computing πₙ₊₁, spaces before Fₙ are ignored because of their
      - truncation level -}
     prefix-lemma : (n : ℕ) (m : ℕ) (F : ℕ → Ptd i)
       (pF : (k : ℕ) → has-level ⟨ S m + k ⟩ (fst (F k)))
       → πS (m + n) (⊙FinTuples F)
-        == πS (m + n) (⊙FinTuples (λ k → F (n + k)))
-    prefix-lemma O m F pF = idp
+        ≃ᴳ πS (m + n) (⊙FinTuples (λ k → F (n + k)))
+    prefix-lemma O m F pF = idiso _
     prefix-lemma (S n) m F pF =
-      ap (πS (m + S n)) (! (⊙ua (⊙fin-tuples-cons F)))
-      ∙ πS-× (m + S n) (F O) (⊙FinTuples (F ∘ S))
-      ∙ ap2 _×ᴳ_ lemma₁ lemma₂
-      ∙ ×ᴳ-unit-l
+      πS (m + S n) (⊙FinTuples F)
+        ≃ᴳ⟨ πS-emap (m + S n) (⊙fin-tuples-cons F) ⁻¹ᴳ ⟩
+      πS (m + S n) (F O ⊙× ⊙FinTuples (F ∘ S))
+        ≃ᴳ⟨ πS-× (m + S n) (F O) (⊙FinTuples (F ∘ S)) ⟩
+      πS (m + S n) (F O) ×ᴳ πS (m + S n) (⊙FinTuples (F ∘ S))
+        ≃ᴳ⟨ ×ᴳ-emap lemma₁ lemma₂ ⟩
+      0ᴳ ×ᴳ πS (m + S n) (⊙FinTuples (λ k → F (S (n + k))))
+        ≃ᴳ⟨ ×ᴳ-unit-l _ ⟩
+      πS (m + S n) (⊙FinTuples (λ k → F (S (n + k))))
+        ≃ᴳ∎
       where
       {- ignore first space -}
-      lemma₁ : πS (m + S n) (F O) == 0ᴳ
+      lemma₁ : πS (m + S n) (F O) ≃ᴳ 0ᴳ
       lemma₁ =
-        πS-above-level (m + S n) _ (F O)
+        πS->level-econv (m + S n) _ (F O)
           (⟨⟩-monotone-< (<-ap-S (<-+-l m (O<S n)))) (pF O)
 
       {- ignore the rest by recursive call -}
       lemma₂ : πS (m + S n) (⊙FinTuples (F ∘ S))
-        == πS (m + S n) (⊙FinTuples (λ k → F (S (n + k))))
+        ≃ᴳ πS (m + S n) (⊙FinTuples (λ k → F (S (n + k))))
       lemma₂ =
-        transport (λ s → πS s (⊙FinTuples (F ∘ S))
-                      == πS s (⊙FinTuples (λ k → F (S n + k))))
-          (! (+-βr m n))
-          (prefix-lemma n (S m) (F ∘ S)
-            (λ k → transport (λ s → has-level ⟨ s ⟩ (fst (F (S k))))
+        πS (m + S n) (⊙FinTuples (F ∘ S))
+          ≃ᴳ⟨ ≃ᴳ-over-= (λ s → πS s (⊙FinTuples (F ∘ S))) (+-βr m n) ⟩
+        πS (S m + n) (⊙FinTuples (F ∘ S))
+          ≃ᴳ⟨ prefix-lemma n (S m) (F ∘ S)
+                (λ k → transport (λ s → has-level ⟨ s ⟩ (fst (F (S k))))
                      (+-βr (S m) k)
-                     (pF (S k))))
-
+                     (pF (S k))) ⟩
+        πS (S m + n) (⊙FinTuples (λ k → F (S (n + k))))
+          ≃ᴳ⟨ ≃ᴳ-over-= (λ s → πS s (⊙FinTuples (λ k → F (S (n + k))))) (+-βr m n) ⁻¹ᴳ ⟩
+        πS (m + S n) (⊙FinTuples (λ k → F (S (n + k))))
+          ≃ᴳ∎
 
     connected-lemma : (m : ℕ) (F : ℕ → Ptd i)
       (cA' : (n : ℕ) → is-connected ⟨ n + m ⟩ (fst (F n)))
@@ -103,7 +119,7 @@ module SpaceFromGroups {i} (G : ℕ → Group i)
 
   X = M.X
 
-  πS-X : (n : ℕ) → πS n X == G n
-  πS-X O = M.πS-X O ∙ EM₁.π₁.π₁-iso (G O)
+  πS-X : (n : ℕ) → πS n X ≃ᴳ G n
+  πS-X O = EM₁.π₁.π₁-iso (G O) ∘eᴳ M.πS-X O
   πS-X (S n) =
-    M.πS-X (S n) ∙ EMExplicit.πS-diag (G (S n)) (abG n) (S n)
+    EMExplicit.πS-diag (G (S n)) (abG n) (S n) ∘eᴳ M.πS-X (S n)

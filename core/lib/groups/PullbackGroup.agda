@@ -47,20 +47,20 @@ module _ {i j k} (D : Group-Cospan {i} {j} {k}) where
     comp = λ {(pullback h₁ k₁ p₁) (pullback h₂ k₂ p₂) →
       pullback (H.comp h₁ h₂) (K.comp k₁ k₂)
         (φ.pres-comp h₁ h₂ ∙ ap2 G.comp p₁ p₂ ∙ ! (ψ.pres-comp k₁ k₂))};
-    unitl = λ {(pullback h k p) →
-      pullback= d (H.unitl h) (K.unitl k)
+    unit-l = λ {(pullback h k p) →
+      pullback= d (H.unit-l h) (K.unit-l k)
         (prop-has-all-paths (G.El-level _ _) _ _)};
-    unitr = λ {(pullback h k p) →
-      pullback= d (H.unitr h) (K.unitr k)
+    unit-r = λ {(pullback h k p) →
+      pullback= d (H.unit-r h) (K.unit-r k)
         (prop-has-all-paths (G.El-level _ _) _ _)};
     assoc = λ {(pullback h₁ k₁ p₁) (pullback h₂ k₂ p₂) (pullback h₃ k₃ p₃) →
       pullback= d (H.assoc h₁ h₂ h₃) (K.assoc k₁ k₂ k₃)
         (prop-has-all-paths (G.El-level _ _) _ _)};
-    invl = λ {(pullback h k p) →
-      pullback= d (H.invl h) (K.invl k)
+    inv-l = λ {(pullback h k p) →
+      pullback= d (H.inv-l h) (K.inv-l k)
         (prop-has-all-paths (G.El-level _ _) _ _)};
-    invr = λ {(pullback h k p) →
-      pullback= d (H.invr h) (K.invr k)
+    inv-r = λ {(pullback h k p) →
+      pullback= d (H.inv-r h) (K.inv-r k)
         (prop-has-all-paths (G.El-level _ _) _ _)}}
 
   Pullback-group : Group (lmax i (lmax j k))

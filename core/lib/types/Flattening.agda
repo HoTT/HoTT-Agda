@@ -95,7 +95,7 @@ private
                                 (↓-pp-in idp) ⟩
        ppt b d ∙' ap (cct (g b)) (↓-pp-out (↓-pp-in idp))
                  =⟨ ↓-pp-β idp |in-ctx (λ u → ppt b d ∙' ap (cct (g b)) u) ⟩
-       ppt b d ∎))
+       ppt b d =∎))
 
   {- Second composition -}
 
@@ -128,7 +128,7 @@ private
                  =⟨ Σ-∙' (↓-pp-in idp) (↓-pp-out q) ⟩
        pair= (pp b) (↓-pp-in idp ∙'ᵈ ↓-pp-out q)
                  =⟨ to-transp-weird q (coe-pp-β _ _) |in-ctx pair= (pp b) ⟩
-       pair= (pp b) q ∎)))
+       pair= (pp b) q =∎)))
 
   unflatten-flatten : (wx : Σ W P) → unflatten (flatten wx) == wx
   unflatten-flatten (w , x) = unflatten-flatten-curried w x

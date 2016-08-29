@@ -58,22 +58,22 @@ module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
       module SS = Susp^StableSucc X cA k (S n) Skle
 
     abstract
-      stable : πS (S k) (⊙EM (S SSn))
-             == πS k (⊙EM SSn)
+      stable : πS (S k) (⊙EM (S SSn)) ≃ᴳ πS k (⊙EM SSn)
       stable =
         πS (S k) (⊙EM (S SSn))
-          =⟨ πS-below-trunc _ _ _ (≤T-ap-S lte) ⟩
+          ≃ᴳ⟨ πS-Trunc-fuse-≤-iso _ _ _ (≤T-ap-S lte) ⟩
         πS (S k) (⊙Susp^ SSn X)
-          =⟨ SS.stable ⟩
+          ≃ᴳ⟨ SS.stable ⟩
         πS k (⊙Susp^ (S n) X)
-          =⟨ ! (πS-below-trunc _ _ _ lte) ⟩
-        πS k (⊙EM SSn) ∎
+          ≃ᴳ⟨ πS-Trunc-fuse-≤-iso _ _ _ lte ⁻¹ᴳ ⟩
+        πS k (⊙EM SSn)
+          ≃ᴳ∎
 
   module BelowDiagonal where
 
-    π₁ : (n : ℕ) → πS 0 (⊙EM (S (S n))) == Lift-Unit-group
+    π₁ : (n : ℕ) → πS 0 (⊙EM (S (S n))) ≃ᴳ 0ᴳ
     π₁ n =
-      contr-is-0ᴳ (πS 0 (⊙EM (S (S n))))
+      contr-iso-0ᴳ (πS 0 (⊙EM (S (S n))))
         (connected-at-level-is-contr
           (raise-level-≤T (≤T-ap-S (≤T-ap-S (-2≤T ⟨ n ⟩₋₂)))
                           (Trunc-level {n = 0}))
@@ -82,54 +82,51 @@ module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
     -- some clutter here arises from the definition of <;
     -- any simple way to avoid this?
     πS-below : (k n : ℕ) → (S k < n)
-      → πS k (⊙EM n) == Lift-Unit-group
+      → πS k (⊙EM n) ≃ᴳ 0ᴳ
     πS-below 0 .2 ltS = π₁ 0
     πS-below 0 .3 (ltSR ltS) = π₁ 1
     πS-below 0 (S (S n)) (ltSR (ltSR _)) = π₁ n
     πS-below (S k) ._ ltS =
-      Stable.stable k k (inr ltS)
-      ∙ πS-below k _ ltS
+      πS-below k _ ltS
+      ∘eᴳ Stable.stable k k (inr ltS)
     πS-below (S k) ._ (ltSR ltS) =
-      Stable.stable k (S k) (inr (ltSR ltS))
-      ∙ πS-below k _ (ltSR ltS)
+      πS-below k _ (ltSR ltS)
+      ∘eᴳ Stable.stable k (S k) (inr (ltSR ltS))
     πS-below (S k) ._ (ltSR (ltSR ltS)) =
-      Stable.stable k (S (S k)) (inr (ltSR (ltSR ltS)))
-      ∙ πS-below k _ (ltSR (ltSR ltS))
+      πS-below k _ (ltSR (ltSR ltS))
+      ∘eᴳ Stable.stable k (S (S k)) (inr (ltSR (ltSR ltS)))
     πS-below (S k) (S (S (S n))) (ltSR (ltSR (ltSR lt))) =
-      Stable.stable k n
-        (inr (<-cancel-S (ltSR (ltSR (ltSR lt)))))
-      ∙ πS-below k _ (<-cancel-S (ltSR (ltSR (ltSR lt))))
+      πS-below k _ (<-cancel-S (ltSR (ltSR (ltSR lt))))
+      ∘eᴳ Stable.stable k n (inr (<-cancel-S (ltSR (ltSR (ltSR lt)))))
 
 
   module OnDiagonal where
 
-    π₁ : πS 0 (⊙EM 1) == πS 0 X
-    π₁ = πS-below-trunc 0 1 X ≤T-refl
+    π₁ : πS 0 (⊙EM 1) ≃ᴳ πS 0 X
+    π₁ = πS-Trunc-fuse-≤-iso 0 1 X ≤T-refl
 
     private
       module Π₂ = Pi2HSusp A gA cA A-H
 
-    π₂ : πS 1 (⊙EM 2) == πS 0 X
-    π₂ =
-      πS-below-trunc 1 2 (⊙Susp X) ≤T-refl
-      ∙ Π₂.π₂-Suspension
+    π₂ : πS 1 (⊙EM 2) ≃ᴳ πS 0 X
+    π₂ = Π₂.π₂-Suspension
+     ∘eᴳ πS-Trunc-fuse-≤-iso 1 2 (⊙Susp X) ≤T-refl
 
-    πS-diag : (n : ℕ) → πS n (⊙EM (S n)) == πS 0 X
+    πS-diag : (n : ℕ) → πS n (⊙EM (S n)) ≃ᴳ πS 0 X
     πS-diag 0 = π₁
     πS-diag 1 = π₂
-    πS-diag (S (S n)) =
-      Stable.stable (S n) n ≤-refl
-      ∙ πS-diag (S n)
+    πS-diag (S (S n)) = πS-diag (S n)
+                    ∘eᴳ Stable.stable (S n) n ≤-refl
 
   module AboveDiagonal where
 
-    πS-above : (k n : ℕ) → (n < S k)
-      → πS k (⊙EM n) == Lift-Unit-group
+    πS-above : ∀ (k n : ℕ) → (n < S k)
+      → πS k (⊙EM n) ≃ᴳ 0ᴳ
     πS-above k n lt =
-      contr-is-0ᴳ (πS k (⊙EM n))
+      contr-iso-0ᴳ (πS k (⊙EM n))
         (inhab-prop-is-contr
           [ idp^ (S k) ]
-          (Trunc-preserves-level 0 (Ω^-level-in -1 (S k) _
+          (Trunc-preserves-level 0 (Ω^-level -1 (S k) _
             (raise-level-≤T (lemma lt) (EM-level n)))))
       where lemma : {k n : ℕ} → n < k → ⟨ n ⟩ ≤T (⟨ k ⟩₋₂ +2+ -1)
             lemma ltS = inl (! (+2+-comm _ -1))
@@ -140,23 +137,23 @@ module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
     private
       module Π₂ = Pi2HSusp A gA cA A-H
 
-    spectrum0 : ⊙Ω (⊙EM 1) == ⊙EM 0
+    spectrum0 : ⊙Ω (⊙EM 1) ⊙≃ ⊙EM 0
     spectrum0 =
       ⊙Ω (⊙EM 1)
-        =⟨ ⊙ua (⊙≃-in (Trunc=-equiv _ _) idp) ⟩
+        ⊙≃⟨ ≃-to-⊙≃ (Trunc=-equiv _ _) idp ⟩
       ⊙Trunc 0 (⊙Ω X)
-        =⟨ ⊙ua (⊙≃-in (unTrunc-equiv _ (gA a₀ a₀)) idp) ⟩
-      ⊙Ω X ∎
+        ⊙≃⟨ ≃-to-⊙≃ (unTrunc-equiv _ (gA a₀ a₀)) idp ⟩
+      ⊙Ω X ⊙≃∎
 
-    spectrum1 : ⊙Ω (⊙EM 2) == ⊙EM 1
+    spectrum1 : ⊙Ω (⊙EM 2) ⊙≃ ⊙EM 1
     spectrum1 =
       ⊙Ω (⊙EM 2)
-        =⟨ ⊙ua (⊙≃-in (Trunc=-equiv _ _) idp) ⟩
+        ⊙≃⟨ ≃-to-⊙≃ (Trunc=-equiv _ _) idp ⟩
       ⊙Trunc 1 (⊙Ω (⊙Susp X))
-        =⟨ Π₂.⊙main-lemma ⟩
+        ⊙≃⟨ Π₂.⊙main-lemma ⟩
       X
-        =⟨ ! (⊙ua (⊙≃-in (unTrunc-equiv _ gA) idp)) ⟩
-      ⊙EM 1 ∎
+        ⊙≃⟨ ≃-to-⊙≃ (unTrunc-equiv _ gA) idp ⊙⁻¹ ⟩
+      ⊙EM 1 ⊙≃∎
 
     private
       sconn : (n : ℕ) → is-connected ⟨ S n ⟩ (fst (⊙Susp^ (S n) X))
@@ -174,16 +171,16 @@ module EMImplicit {i} (A : Type i) (cA : is-connected 0 A)
           (fst (⊙Susp^ (S n) X)) (snd (⊙Susp^ (S n) X)) (sconn n)
 
     spectrumSS : (n : ℕ)
-      → ⊙Ω (⊙EM (S (S (S n)))) == ⊙EM (S (S n))
+      → ⊙Ω (⊙EM (S (S (S n)))) ⊙≃ ⊙EM (S (S n))
     spectrumSS n =
       ⊙Ω (⊙EM (S (S (S n))))
-        =⟨ ⊙ua (⊙≃-in (Trunc=-equiv _ _) idp) ⟩
+        ⊙≃⟨ ≃-to-⊙≃ (Trunc=-equiv _ _) idp ⟩
       ⊙Trunc ⟨ S (S n) ⟩ (⊙Ω (⊙Susp^ (S (S n)) X))
-        =⟨ ! (FS.⊙path n) ⟩
-      ⊙EM (S (S n)) ∎
+        ⊙≃⟨ FS.⊙eq n ⊙⁻¹ ⟩
+      ⊙EM (S (S n)) ⊙≃∎
 
     abstract
-      spectrum : (n : ℕ) → ⊙Ω (⊙EM (S n)) == ⊙EM n
+      spectrum : (n : ℕ) → ⊙Ω (⊙EM (S n)) ⊙≃ ⊙EM n
       spectrum 0 = spectrum0
       spectrum 1 = spectrum1
       spectrum (S (S n)) = spectrumSS n
@@ -195,8 +192,8 @@ module EMExplicit {i} (G : Group i) (G-abelian : is-abelian G) where
 
   open BelowDiagonal public using (πS-below)
 
-  πS-diag : (n : ℕ) → πS n (⊙EM (S n)) == G
-  πS-diag n = OnDiagonal.πS-diag n ∙ K₁.π₁.π₁-iso
+  πS-diag : (n : ℕ) → πS n (⊙EM (S n)) ≃ᴳ G
+  πS-diag n = K₁.π₁.π₁-iso ∘eᴳ OnDiagonal.πS-diag n
 
   open AboveDiagonal public using (πS-above)
   open Spectrum public using (spectrum)

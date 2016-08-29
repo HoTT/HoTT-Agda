@@ -50,7 +50,7 @@ module _ {i} {j} {A : Type i} {B : Type j} where
         ap g (ap f (g-f (g b))) ∙ ap g (f-g b)
           =⟨ adj (g b) |in-ctx (λ p → ap g p ∙ ap g (f-g b)) ⟩
         ap g (f-g (f (g b))) ∙ ap g (f-g b)
-          ∎
+          =∎
 
   {-
   In order to prove that something is an equivalence, you have to give an inverse
@@ -73,7 +73,7 @@ module _ {i} {j} {A : Type i} {B : Type j} where
         =⟨ ∙-assoc (! (ap (f ∘ g) (f-g (f a)))) (ap (f ∘ g) (f-g (f a))) _ ⟩
       ! (ap (f ∘ g) (f-g (f a))) ∙ ap (f ∘ g) (f-g (f a)) ∙ ap f (g-f a)
         =⟨ lemma |in-ctx (λ q → ! (ap (f ∘ g) (f-g (f a))) ∙ q) ⟩
-      ! (ap (f ∘ g) (f-g (f a))) ∙ ap f (g-f (g (f a))) ∙ f-g (f a) ∎ 
+      ! (ap (f ∘ g) (f-g (f a))) ∙ ap f (g-f (g (f a))) ∙ f-g (f a) =∎
       where 
       lemma : ap (f ∘ g) (f-g (f a)) ∙ ap f (g-f a) 
            == ap f (g-f (g (f a))) ∙ f-g (f a)
@@ -89,7 +89,7 @@ module _ {i} {j} {A : Type i} {B : Type j} where
         ap f (ap g (ap f (g-f a))) ∙ f-g (f a)
           =⟨ ∘-ap g f (g-f a) ∙ htpy-natural-app=idf g-f a 
              |in-ctx (λ q → ap f q ∙ f-g (f a)) ⟩
-        ap f (g-f (g (f a))) ∙ f-g (f a) ∎
+        ap f (g-f (g (f a))) ∙ f-g (f a) =∎
 
 infix 30 _≃_
 
@@ -137,6 +137,10 @@ idf-is-equiv A = is-eq _ (idf A) (λ _ → idp) (λ _ → idp)
 ide : ∀ {i} (A : Type i) → A ≃ A
 ide A = equiv (idf A) (idf A) (λ _ → idp) (λ _ → idp)
 
+≃-over-= : ∀ {i j} {A : Type i} (B : A → Type j) {a₁ a₂ : A} (p : a₁ == a₂)
+  → B a₁ ≃ B a₂
+≃-over-= B idp = ide _
+
 infixr 80 _∘e_
 infixr 80 _∘ise_
 
@@ -161,16 +165,20 @@ e1 ∘e e2 = ((–> e1 ∘ –> e2) , record {g = (<– e2 ∘ <– e1);
       ap (–> e1) (<–-inv-r e2 (<– e1 ((–> e1 ∘ –> e2) a))) ∙ ap (–> e1) (<–-inv-l e1 (–> e2 a))
           =⟨  ap (–> e1) (<–-inv-r e2 (<– e1 ((–> e1 ∘ –> e2) a))) ∙ₗ (<–-inv-adj e1 (–> e2 a)) ⟩
       ap (–> e1) (<–-inv-r e2 (<– e1 ((–> e1 ∘ –> e2) a))) ∙ <–-inv-r e1 ((–> e1 ∘ –> e2) a)
-      ∎})
+          =∎})
 
 _∘ise_ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
   {f : A → B} {g : B → C}
   → is-equiv g → is-equiv f → is-equiv (g ∘ f)
 i1 ∘ise i2 = snd ((_ , i1) ∘e (_ , i2))
 
+is-equiv-inv : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
+  → (f-is-equiv : is-equiv f) → is-equiv (is-equiv.g f-is-equiv)
+is-equiv-inv ise = record { g = _ ; f-g = is-equiv.g-f ise ; g-f = is-equiv.f-g ise ; adj = is-equiv.adj' ise }
+
 infix 120 _⁻¹
 _⁻¹ : ∀ {i j} {A : Type i} {B : Type j} → (A ≃ B) → (B ≃ A)
-e ⁻¹ = equiv (<– e) (–> e) (<–-inv-l e) (<–-inv-r e)
+(_ , ise) ⁻¹ = (is-equiv.g ise , is-equiv-inv ise)
 
 {- Equational reasoning for equivalences -}
 infix 15 _≃∎
@@ -197,16 +205,17 @@ module _ {i} {A : Type i} (h : is-contr A) where
 
 
 {- An equivalence induces an equivalence on the path spaces -}
-module _ {i j} {A : Type i} {B : Type j} (e : A ≃ B) where
+module _ {i j} {A : Type i} {B : Type j} where
 
   private
     abstract
-      left-inverse : {x y : A} (p : x == y) → equiv-inj e (ap (–> e) p) == p
-      left-inverse idp = !-inv-l (<–-inv-l e _)
+      left-inverse : (e : A ≃ B) {x y : A} (p : x == y)
+        → equiv-inj e (ap (–> e) p) == p
+      left-inverse e idp = !-inv-l (<–-inv-l e _)
 
-      right-inverse : {x y : A} (p : –> e x == –> e y) 
+      right-inverse : (e : A ≃ B) {x y : A} (p : –> e x == –> e y) 
         → ap (–> e) (equiv-inj e p) == p
-      right-inverse {x} {y} p = 
+      right-inverse e {x} {y} p = 
         ap f (! (g-f x) ∙ ap g p ∙ (g-f y))
           =⟨ ap-∙ f (! (g-f x)) (ap g p ∙ (g-f y)) ⟩
         ap f (! (g-f x)) ∙ ap f (ap g p ∙ (g-f y))
@@ -224,14 +233,20 @@ module _ {i j} {A : Type i} {B : Type j} (e : A ≃ B) where
         ! (f-g (f x)) ∙ (f-g (f x)) ∙ ap (idf B) p
           =⟨ ! (∙-assoc (! (f-g (f x))) (f-g (f x)) (ap (idf B) p))
              ∙ ap (λ q → q ∙ ap (idf B) p) (!-inv-l (f-g (f x))) ∙ ap-idf p ⟩
-        p ∎
+        p =∎
         where f : A → B
               f = fst e
 
               open is-equiv (snd e)
 
-  equiv-ap : (x y : A) → (x == y) ≃ (–> e x == –> e y)
-  equiv-ap x y = equiv (ap (–> e)) (equiv-inj e) right-inverse left-inverse
+  ap-equiv-is-equiv : {f : A → B} → is-equiv f
+    → (x y : A) → is-equiv (ap f :> (x == y → f x == f y))
+  ap-equiv-is-equiv {f} e x y =
+    is-eq (ap f) (equiv-inj (_ , e)) (right-inverse (_ , e)) (left-inverse (_ , e))
+
+  ap-equiv-equiv : (e : A ≃ B) (x y : A) → (x == y) ≃ (–> e x == –> e y)
+  ap-equiv-equiv e x y = _ , ap-equiv-is-equiv (snd e) x y
+
 
 {- Equivalent types have the same truncation level -}
 equiv-preserves-level : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} (e : A ≃ B)
@@ -239,7 +254,7 @@ equiv-preserves-level : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} (e :
 equiv-preserves-level {n = ⟨-2⟩} e (x , p) =
   (–> e x , (λ y → ap (–> e) (p _) ∙ <–-inv-r e y))
 equiv-preserves-level {n = S n} e c = λ x y →
-   equiv-preserves-level (equiv-ap (e ⁻¹) x y ⁻¹) (c (<– e x) (<– e y))
+   equiv-preserves-level (ap-equiv-equiv (e ⁻¹) x y ⁻¹) (c (<– e x) (<– e y))
 
 {- This is a collection of type equivalences involving basic type formers.
    We exclude Empty since Π₁-Empty requires λ=.
@@ -272,6 +287,7 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k
     where f = λ c → ((λ a → fst (c a)) , (λ a → snd (c a)))
           g = λ d → (λ a → (fst d a , snd d a))
 
+-- XXX Maybe another place for this?
 {- Homotopy fibers -}
 hfiber : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) (y : B) → Type (lmax i j)
 hfiber {A = A} f y = Σ A (λ x → f x == y)

@@ -310,19 +310,14 @@ private
 
 module _ {i j k} {A : Type i} {B : Type j} {C : Type k} where
 
-  join-rearrange-equiv : (A * B) * C ≃ (C * B) * A
-  join-rearrange-equiv = equiv switch switch switch-inv switch-inv
+  *-rearrange-equiv : (A * B) * C ≃ (C * B) * A
+  *-rearrange-equiv = equiv switch switch switch-inv switch-inv
 
-  join-rearrange-path : (A * B) * C == (C * B) * A
-  join-rearrange-path = ua join-rearrange-equiv
-
-  join-assoc-path : (A * B) * C == A * (B * C)
-  join-assoc-path = join-rearrange-path ∙ swap-path ∙ ap (A *_) swap-path
-
-  *-assoc = join-assoc-path
+  *-assoc : (A * B) * C ≃ A * (B * C)
+  *-assoc = *-emap (ide A) *-comm ∘e *-comm ∘e *-rearrange-equiv
 
 module _ {i j k} (X : Ptd i) (Y : Ptd j) (Z : Ptd k) where
 
-  join-rearrange-⊙path : (X ⊙* Y) ⊙* Z == (Z ⊙* Y) ⊙* X
-  join-rearrange-⊙path =
-    ⊙ua (⊙≃-in join-rearrange-equiv (! (glue (left (snd Z), snd X))))
+  ⊙*-rearrange-equiv : (X ⊙* Y) ⊙* Z ⊙≃ (Z ⊙* Y) ⊙* X
+  ⊙*-rearrange-equiv =
+    ≃-to-⊙≃ *-rearrange-equiv (! (glue (left (snd Z), snd X)))

@@ -21,3 +21,8 @@ You can also use coinductive records and copatterns instead, that’s prettier
 -}
 module Coinduction where
   open import lib.Coinduction public
+
+-- deprecated operators
+module _ where
+  infix 15 _∎
+  _∎ = _=∎

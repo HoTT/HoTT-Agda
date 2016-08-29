@@ -79,7 +79,7 @@ module _ where
       merid* true ▹ !ᵈ (merid* false)
         =⟨ merid*-general-lemma (merid true) (merid false) loop* ⟩
       loop*
-        ∎
+        =∎
 
 open S¹Elim public using () renaming (f to S¹-elim)
 
@@ -102,19 +102,19 @@ module S¹RecType {i} (A : Type i) (e : A ≃ A) where
   coe-loop-β a =
     coe (ap f loop) a   =⟨ loop-β |in-ctx (λ u → coe u a) ⟩
     coe (ua e) a        =⟨ coe-β e a ⟩
-    –> e a ∎
+    –> e a =∎
 
   coe!-loop-β : (a : A) → coe! (ap f loop) a == <– e a
   coe!-loop-β a =
     coe! (ap f loop) a   =⟨ loop-β |in-ctx (λ u → coe! u a) ⟩
     coe! (ua e) a        =⟨ coe!-β e a ⟩
-    <– e a ∎
+    <– e a =∎
 
   ↓-loop-out : {a a' : A} → a == a' [ f ↓ loop ] → –> e a == a'
   ↓-loop-out {a} {a'} p =
     –> e a              =⟨ ! (coe-loop-β a) ⟩
     coe (ap f loop) a   =⟨ to-transp p ⟩
-    a' ∎
+    a' =∎
 
   import lib.types.Generic1HIT as Generic1HIT
   module S¹G = Generic1HIT Unit Unit (idf _) (idf _)
@@ -136,13 +136,13 @@ module S¹RecType {i} (A : Type i) (e : A ≃ A) where
         to-from = S¹G.elim (λ _ → idp) (λ _ → ↓-∘=idf-in to from
           (ap to (ap from (S¹G.pp tt)) =⟨ From.pp-β tt |in-ctx ap to ⟩
            ap to loop                  =⟨ To.loop-β ⟩
-           S¹G.pp tt ∎))
+           S¹G.pp tt =∎))
 
         from-to : (x : S¹) → from (to x) == x
         from-to = S¹-elim idp (↓-∘=idf-in from to
           (ap from (ap to loop)   =⟨ To.loop-β |in-ctx ap from ⟩
            ap from (S¹G.pp tt)    =⟨ From.pp-β tt ⟩
-           loop ∎))
+           loop =∎))
 
       eqv : S¹ ≃ S¹G.T
       eqv = equiv to from to-from from-to
@@ -155,7 +155,7 @@ module S¹RecType {i} (A : Type i) (e : A ≃ A) where
              ap P.f (ap to loop)        =⟨ To.loop-β |in-ctx ap P.f ⟩
              ap P.f (S¹G.pp tt)         =⟨ P.pp-β tt ⟩
              ua e                       =⟨ ! loop-β ⟩
-             ap f loop ∎))
+             ap f loop =∎))
         t ∙ ap P.f (↓-idf-ua-out eqv p))
 
       eqv-tot : Σ S¹ f == Σ S¹G.T P.f
@@ -169,7 +169,7 @@ module S¹RecType {i} (A : Type i) (e : A ≃ A) where
   flattening-S¹ : Σ S¹ f == Wt
   flattening-S¹ = generic-S¹ ∙ ua FlatteningS¹.flattening-equiv
 
-S¹-connected : is-connected 0 S¹
-S¹-connected =
+S¹-conn : is-connected 0 S¹
+S¹-conn =
   ([ base ] , Trunc-elim (λ x → =-preserves-level 0 Trunc-level)
               (S¹-elim idp (prop-has-all-paths-↓ ((Trunc-level :> is-set (Trunc 0 S¹)) _ _))))

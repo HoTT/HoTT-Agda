@@ -95,15 +95,6 @@ has-dec-cells : ∀ {i} {n} → Skeleton {i} n → Type i
 has-dec-cells {n = 0} skel = has-dec-eq skel
 has-dec-cells {n = S n} (skel , cells , _) = has-dec-cells skel × has-dec-eq cells
 
--- Extra conditions on CW complexes for constructive degrees
--- The ideas is that boundaries maps need to be pointed after contraction
--- XXX Needs a better name
-is-aligned : ∀ {i} {n} → Skeleton {i} n → Type i
-is-aligned {n = 0} _ = Lift ⊤
-is-aligned {n = 1} _ = Lift ⊤
-is-aligned {n = S (S n)} (skel , _ , boundary) =
-  is-aligned skel × (∀ c → hfiber incl (boundary c north))
-
 {- Some basic CWs -}
 
 -- Empty
@@ -115,9 +106,6 @@ CWEmpty = ⟦ CWEmpty-skel ⟧
 CWEmpty≃Empty : CWEmpty ≃ Empty
 CWEmpty≃Empty = ide _
 
-CWEmpty-is-aligned : is-aligned CWEmpty-skel
-CWEmpty-is-aligned = lift tt
-
 -- Unit
 
 CWUnit-skel : Skeleton {lzero} 0
@@ -126,9 +114,6 @@ CWUnit = ⟦ CWUnit-skel ⟧
 
 CWUnit≃Unit : CWUnit ≃ Unit
 CWUnit≃Unit = ide _
-
-CWUnit-is-aligned : is-aligned CWUnit-skel
-CWUnit-is-aligned = lift tt
 
 {- Basic transformation  -}
 

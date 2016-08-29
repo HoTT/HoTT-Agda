@@ -278,16 +278,16 @@ If you do want to reason on paths constructed with equational reasoning, check
 out lib.types.PathSeq instead.
 -}
 
-infix  15 _∎
 infixr 10 _=⟨_⟩_
+infix  15 _=∎
 
 _=⟨_⟩_ : ∀ {i} {A : Type i} (x : A) {y z : A} → x == y → y == z → x == z
 _ =⟨ idp ⟩ idp = idp
 
-_∎ : ∀ {i} {A : Type i} (x : A) → x == x
-_ ∎ = idp
+_=∎ : ∀ {i} {A : Type i} (x : A) → x == x
+_ =∎ = idp
 
-infixr 40 ap
+infixl 40 ap
 syntax ap f p = p |in-ctx f
 
 {- Various basic functions and function operations

@@ -163,6 +163,10 @@ unTrunc-equiv A nA = equiv f [_] (λ _ → idp) g-f where
   f = Trunc-rec nA (idf _)
   g-f = Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp)
 
+⊙unTrunc-equiv : ∀ {i} {n : ℕ₋₂} (X : Ptd i)
+  → has-level n (fst X) → ⊙Trunc n X ⊙≃ X
+⊙unTrunc-equiv {n = n} X nX = ≃-to-⊙≃ (unTrunc-equiv (fst X) nX) idp
+
 -- Equivalence associated to the universal property
 Trunc-extend-equiv : ∀ {i j} (n : ℕ₋₂) (A : Type i) (B : Type j)
   (p : has-level n B) → (A → B) ≃ (Trunc n A → B)
@@ -175,6 +179,7 @@ Trunc-fmap2 : ∀ {i j k} {n : ℕ₋₂} {A : Type i} {B : Type j} {C : Type k}
   → ((A → B → C) → (Trunc n A → Trunc n B → Trunc n C))
 Trunc-fmap2 f = Trunc-rec (Π-level (λ _ → Trunc-level)) (λ a → Trunc-fmap (f a))
 
+-- XXX What is the naming convention?
 Trunc-fpmap : ∀ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j} {f g : A → B} (h : (a : A) → f a == g a)
   → ((a : Trunc n A) → Trunc-fmap f a == Trunc-fmap g a)
 Trunc-fpmap h = Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
@@ -233,30 +238,30 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
  - when we need to know the forward or backward function explicitly -}
 module _ {i j} (n : ℕ₋₂) {A : Type i} {B : Type j} where
 
-  equiv-Trunc : A ≃ B → Trunc n A ≃ Trunc n B
-  equiv-Trunc e = equiv f g f-g g-f where
-    f = Trunc-fmap (–> e)
-    g = Trunc-fmap (<– e)
+  Trunc-isemap : {f : A → B} → is-equiv f → is-equiv (Trunc-fmap {n = n} f)
+  Trunc-isemap {f-orig} ie = is-eq f g f-g g-f where
+    f = Trunc-fmap f-orig
+    g = Trunc-fmap (is-equiv.g ie)
 
     f-g : ∀ tb → f (g tb) == tb
     f-g = Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
-            (ap [_] ∘ <–-inv-r e)
+            (ap [_] ∘ is-equiv.f-g ie)
 
     g-f : ∀ ta → g (f ta) == ta
     g-f = Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
-            (ap [_] ∘ <–-inv-l e)
+            (ap [_] ∘ is-equiv.g-f ie)
 
-  is-equiv-Trunc : (f : A → B) → is-equiv f → is-equiv (Trunc-fmap {n = n} f)
-  is-equiv-Trunc f ie = snd (equiv-Trunc (f , ie))
+  Trunc-emap : A ≃ B → Trunc n A ≃ Trunc n B
+  Trunc-emap (f , f-ie) = Trunc-fmap f , Trunc-isemap f-ie
 
 transport-Trunc : ∀ {i j} {A : Type i} {n : ℕ₋₂} (P : A → Type j) 
   {x y : A} (p : x == y) (b : P x)
   → transport (Trunc n ∘ P) p [ b ] == [ transport P p b ]
 transport-Trunc _ idp _ = idp
 
-fuse-Trunc : ∀ {i} (A : Type i) (m n : ℕ₋₂)
+Trunc-fuse : ∀ {i} (A : Type i) (m n : ℕ₋₂)
   → Trunc m (Trunc n A) ≃ Trunc (minT m n) A
-fuse-Trunc A m n = equiv
+Trunc-fuse A m n = equiv
   (Trunc-rec (raise-level-≤T (minT≤l m n) Trunc-level) 
     (Trunc-rec (raise-level-≤T (minT≤r m n) Trunc-level) 
       [_]))
@@ -274,10 +279,23 @@ fuse-Trunc A m n = equiv
                       (transport (λ k → has-level k (Trunc n A))
                                  (! q) Trunc-level)
 
+Trunc-fuse-≤ : ∀ {i} (A : Type i) {m n : ℕ₋₂} (m≤n : m ≤T n)
+  → Trunc m (Trunc n A) ≃ Trunc m A
+Trunc-fuse-≤ A m≤n = equiv
+  (Trunc-rec Trunc-level
+    (Trunc-rec (raise-level-≤T m≤n Trunc-level)
+      [_]))
+  (Trunc-rec Trunc-level ([_] ∘ [_]))
+  (Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp))
+  (Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+     (Trunc-elim 
+       (λ _ → =-preserves-level _ (Trunc-preserves-level _ Trunc-level)) 
+       (λ _ → idp)))
+
 {- Truncating a binary product is equivalent to truncating its components -}
-Trunc-×-equiv : ∀ {i} {j} (n : ℕ₋₂) (A : Type i) (B : Type j)
+Trunc-×-econv : ∀ {i} {j} (n : ℕ₋₂) (A : Type i) (B : Type j)
   → Trunc n (A × B) ≃ Trunc n A × Trunc n B
-Trunc-×-equiv n A B = equiv f g f-g g-f
+Trunc-×-econv n A B = equiv f g f-g g-f
   where
   f : Trunc n (A × B) → Trunc n A × Trunc n B
   f = Trunc-rec (×-level Trunc-level Trunc-level) 
@@ -307,6 +325,6 @@ Trunc-×-equiv n A B = equiv f g f-g g-f
     (λ _ → =-preserves-level _ Trunc-level)
     (λ ab → idp)
 
-Trunc-×-path : ∀ {i} {j} (n : ℕ₋₂) (A : Type i) (B : Type j)
+Trunc-×-conv : ∀ {i} {j} (n : ℕ₋₂) (A : Type i) (B : Type j)
   → Trunc n (A × B) == Trunc n A × Trunc n B
-Trunc-×-path n A B = ua (Trunc-×-equiv n A B)
+Trunc-×-conv n A B = ua (Trunc-×-econv n A B)

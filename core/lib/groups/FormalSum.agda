@@ -145,7 +145,7 @@ module _ {A : Type i} {dec : has-dec-eq A} where
     coef fs₁ a ℤ+ coef (fs₂ ⊞ fs₃) a
       =⟨ ! $ coef-⊞ fs₁ (fs₂ ⊞ fs₃) a ⟩
     coef (fs₁ ⊞ (fs₂ ⊞ fs₃)) a
-      ∎
+      =∎
 
   ⊟-inv-r : ∀ fs → fs ⊞ (⊟ fs) == ⊞-unit
   ⊟-inv-r fs = coef-ext λ a → coef-⊞ fs (⊟ fs) a
@@ -162,11 +162,11 @@ module _ {A : Type i} {dec : has-dec-eq A} where
     { ident = ⊞-unit
     ; inv = ⊟
     ; comp = _⊞_
-    ; unitl = ⊞-unit-l
-    ; unitr = ⊞-unit-r
+    ; unit-l = ⊞-unit-l
+    ; unit-r = ⊞-unit-r
     ; assoc = ⊞-assoc
-    ; invr = ⊟-inv-r
-    ; invl = ⊟-inv-l
+    ; inv-r = ⊟-inv-r
+    ; inv-l = ⊟-inv-l
     }
 
   FormalSum-group : Group i

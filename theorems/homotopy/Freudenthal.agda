@@ -225,11 +225,14 @@ module FreudenthalEquiv
   eq : Trunc k X ≃ Trunc k (north' X == north)
   eq = equiv decodeN encode decode-encode encode-decodeN
 
+  ⊙eq : ⊙Trunc k (X , x₀) ⊙≃ ⊙Trunc k (⊙Ω (⊙Susp (X , x₀)))
+  ⊙eq = ≃-to-⊙≃ eq (ap [_] (!-inv-r (merid x₀)))
+
   path : Trunc k X == Trunc k (north' X == north)
   path = ua eq
 
   ⊙path : ⊙Trunc k (X , x₀) == ⊙Trunc k (⊙Ω (⊙Susp (X , x₀)))
-  ⊙path = ⊙ua (⊙≃-in eq (ap [_] (!-inv-r (merid x₀))))
+  ⊙path = ⊙ua ⊙eq
 
 {- Used to prove stability in iterated suspensions -}
 module FreudenthalIso
@@ -240,11 +243,8 @@ module FreudenthalIso
 
   hom : Ω^S-group k (⊙Trunc ⟨ S k ⟩ X) Trunc-level
      →ᴳ Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp X))) Trunc-level
-  hom = record {
-    f = fst F;
-    pres-comp = ap^S-conc^S k (decodeN , decodeN-pt) }
-    where F = ap^ (S k) (decodeN , decodeN-pt)
+  hom = Ω^S-group-fmap k Trunc-level Trunc-level (decodeN , decodeN-pt)
 
   iso : Ω^S-group k (⊙Trunc ⟨ S k ⟩ X) Trunc-level
      ≃ᴳ Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp X))) Trunc-level
-  iso = (hom , is-equiv-ap^ (S k) (decodeN , decodeN-pt) (snd eq))
+  iso = Ω^S-group-emap k Trunc-level Trunc-level ⊙eq

@@ -13,11 +13,11 @@ module _ {A : Type i} {B : Type j} {C : Type k} where
 
   -- [Attached] is the type with all the cells attached.
 
-  Attached-span : Attaching A B C → Span {i} {j} {lmax j k}
-  Attached-span attaching = span A B (B × C) (uncurry attaching) fst
+  attached-span : Attaching A B C → Span {i} {j} {lmax j k}
+  attached-span attaching = span A B (B × C) (uncurry attaching) fst
 
   Attached : Attaching A B C → Type (lmax i (lmax j k))
-  Attached attaching = Pushout (Attached-span attaching)
+  Attached attaching = Pushout (attached-span attaching)
 
 module _ {A : Type i} {B : Type j} {C : Type k} {attaching : Attaching A B C} where
 
@@ -37,7 +37,7 @@ module _ {A : Type i} {B : Type j} {C : Type k} {attaching : Attaching A B C} wh
       → incl* (attaching b c) == hub* b [ P ↓ spoke b c ]) where
 
     module P = PushoutElim
-      {d = Attached-span attaching} {P = P}
+      {d = attached-span attaching} {P = P}
       incl* hub* (uncurry spoke*)
 
     f = P.f
@@ -51,7 +51,7 @@ module _ {A : Type i} {B : Type j} {C : Type k} {attaching : Attaching A B C} wh
     (spoke* : (b : B) (c : C) → incl* (attaching b c) == hub* b) where
 
     module P = PushoutRec
-      {d = Attached-span attaching} {D = D}
+      {d = attached-span attaching} {D = D}
       incl* hub* (uncurry spoke*)
 
     f = P.f

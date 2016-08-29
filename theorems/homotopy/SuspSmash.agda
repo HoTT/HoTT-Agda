@@ -102,8 +102,5 @@ module SuspSmash where
   eq : Suspension (Smash X Y) ≃ fst (X ⊙* Y)
   eq = equiv into out into-out out-into
 
-  path : Suspension (Smash X Y) == fst (X ⊙* Y)
-  path = ua eq
-
-  ⊙path : ⊙Susp (⊙Smash X Y) == (X ⊙* Y)
-  ⊙path = ⊙ua (⊙≃-in eq idp)
+  ⊙eq : ⊙Susp (⊙Smash X Y) ⊙≃ (X ⊙* Y)
+  ⊙eq = ≃-to-⊙≃ eq idp

@@ -7,71 +7,204 @@ open import lib.types.Group
 open import lib.types.Pi
 open import lib.types.Sigma
 open import lib.types.Truncation
+open import lib.types.Pointed
 
 module lib.groups.Homomorphisms where
 
-record GroupHom {i j} (G : Group i) (H : Group j)
-  : Type (lsucc (lmax i j)) where
-  constructor group-hom
+{-
+Group homomorphisms.
+-}
 
+preserves-comp : ∀ {i j} {A : Type i} {B : Type j}
+  (A-comp : A → A → A) (B-comp : B → B → B) (f : A → B)
+  → Type (lmax i j)
+preserves-comp Ac Bc f = ∀ a₁ a₂ → f (Ac a₁ a₂) == Bc (f a₁) (f a₂)
+
+record GroupStructureHom {i j} {GEl : Type i} {HEl : Type j}
+  (GS : GroupStructure GEl) (HS : GroupStructure HEl) : Type (lmax i j) where
+  constructor group-structure-hom
+  private
+    module G = GroupStructure GS
+    module H = GroupStructure HS
   field
-    f : Group.El G → Group.El H
-    pres-comp  : ∀ g1 g2 → f (Group.comp G g1 g2) == Group.comp H (f g1) (f g2)
+    f : GEl → HEl
+    pres-comp : preserves-comp G.comp H.comp f
 
   abstract
-    pres-ident : f (Group.ident G) == Group.ident H
-    pres-ident = group-cancel-l H (f (Group.ident G)) $
-      Group.comp H (f (Group.ident G)) (f (Group.ident G))
-        =⟨ ! (pres-comp (Group.ident G) (Group.ident G)) ⟩
-      f (Group.comp G (Group.ident G) (Group.ident G))
-        =⟨ ap f (Group.unitl G (Group.ident G)) ⟩
-      f (Group.ident G)
-        =⟨ ! (Group.unitr H (f (Group.ident G))) ⟩
-      Group.comp H (f (Group.ident G)) (Group.ident H) ∎
+    pres-ident : f G.ident == H.ident
+    pres-ident = H.cancel-l (f G.ident) $
+      H.comp (f G.ident) (f G.ident)
+        =⟨ ! (pres-comp G.ident G.ident) ⟩
+      f (G.comp G.ident G.ident)
+        =⟨ ap f (G.unit-l G.ident) ⟩
+      f G.ident
+        =⟨ ! (H.unit-r (f G.ident)) ⟩
+      H.comp (f G.ident) H.ident =∎
 
-    pres-inv : (g : Group.El G) → f (Group.inv G g) == Group.inv H (f g)
-    pres-inv g =
-      f (Group.inv G g)
-        =⟨ ! (Group.unitr H (f (Group.inv G g))) ⟩
-      Group.comp H (f (Group.inv G g)) (Group.ident H)
-        =⟨ ! (Group.invr H (f g))
-           |in-ctx (λ w → Group.comp H (f (Group.inv G g)) w) ⟩
-      Group.comp H (f (Group.inv G g)) (Group.comp H (f g) (Group.inv H (f g)))
-        =⟨ ! (Group.assoc H (f (Group.inv G g)) (f g) (Group.inv H (f g))) ⟩
-      Group.comp H (Group.comp H (f (Group.inv G g)) (f g)) (Group.inv H (f g))
-        =⟨ ! (pres-comp (Group.inv G g) g) ∙ ap f (Group.invl G g) ∙ pres-ident
-           |in-ctx (λ w → Group.comp H w (Group.inv H (f g))) ⟩
-      Group.comp H (Group.ident H) (Group.inv H (f g))
-        =⟨ Group.unitl H (Group.inv H (f g)) ⟩
-      Group.inv H (f g) ∎
+    pres-inv : ∀ a → f (G.inv a) == H.inv (f a)
+    pres-inv a =
+      f (G.inv a)
+        =⟨ ! (H.unit-r (f (G.inv a))) ⟩
+      H.comp (f (G.inv a)) H.ident
+        =⟨ ! (H.inv-r (f a))
+           |in-ctx (λ w → H.comp (f (G.inv a)) w) ⟩
+      H.comp (f (G.inv a)) (H.comp (f a) (H.inv (f a)))
+        =⟨ ! (H.assoc (f (G.inv a)) (f a) (H.inv (f a))) ⟩
+      H.comp (H.comp (f (G.inv a)) (f a)) (H.inv (f a))
+        =⟨ ! (pres-comp (G.inv a) a) ∙ ap f (G.inv-l a) ∙ pres-ident
+           |in-ctx (λ w → H.comp w (H.inv (f a))) ⟩
+      H.comp H.ident (H.inv (f a))
+        =⟨ H.unit-l (H.inv (f a)) ⟩
+      H.inv (f a) =∎
 
-  ⊙f : Σ (Group.El G → Group.El H)
-            (λ f → f (Group.ident G) == Group.ident H)
-  ⊙f = (f , pres-ident)
+  ⊙f : fst ((GEl , G.ident) ⊙→ (HEl , H.ident))
+  ⊙f = f , pres-ident
+
+infix 0 _→ᴳˢ_ -- [ˢ] for structures
+_→ᴳˢ_ = GroupStructureHom
+
+record GroupHom {i j} (G : Group i) (H : Group j) : Type (lmax i j) where
+  constructor group-hom
+  private
+    module G = Group G
+    module H = Group H
+  field
+    f : G.El → H.El
+    pres-comp : ∀ g₁ g₂ → f (G.comp g₁ g₂) == H.comp (f g₁) (f g₂)
+  open GroupStructureHom {GS = G.group-struct} {HS = H.group-struct}
+    record {f = f ; pres-comp = pres-comp} hiding (f ; pres-comp) public
 
 infix 0 _→ᴳ_
 _→ᴳ_ = GroupHom
 
-GroupIso : ∀ {i j} (G : Group i) (H : Group j) → Type (lsucc (lmax i j))
-GroupIso G H = Σ (G →ᴳ H) (λ φ → is-equiv (GroupHom.f φ))
+→ᴳˢ-to-→ᴳ : ∀ {i j} {G : Group i} {H : Group j}
+  → (Group.group-struct G →ᴳˢ Group.group-struct H) → (G →ᴳ H)
+→ᴳˢ-to-→ᴳ (group-structure-hom f pres-comp) = group-hom f pres-comp
 
-infix 30 _≃ᴳ_
-_≃ᴳ_ = GroupIso
+GroupStructureIso : ∀ {i j} {GEl : Type i} {HEl : Type j}
+  (GS : GroupStructure GEl) (HS : GroupStructure HEl) → Type (lmax i j)
+GroupStructureIso GS HS = Σ (GroupStructureHom GS HS) (λ φ → is-equiv (GroupStructureHom.f φ))
 
 idhom : ∀ {i} (G : Group i) → (G →ᴳ G)
 idhom G = group-hom (idf _) (λ _ _ → idp)
 
-idiso : ∀ {i} (G : Group i) → (G ≃ᴳ G)
-idiso G = (idhom G , idf-is-equiv _)
+{- constant homomorphism -}
+module _ where
+  cst-hom : ∀ {i j} {G : Group i} {H : Group j} → (G →ᴳ H)
+  cst-hom {H = H} = group-hom (cst (Group.ident H)) (λ _ _ → ! (Group.unit-l H _))
+
+{- negation is a homomorphism in an abelian gruop -}
+inv-hom : ∀ {i} (G : Group i) (G-abelian : is-abelian G) → GroupHom G G
+inv-hom G G-abelian = group-hom
+  (Group.inv G)
+  (λ g₁ g₂ → Group.inv-comp G g₁ g₂ ∙ G-abelian (Group.inv G g₂) (Group.inv G g₁))
+
+{- equality of homomorphisms -}
+abstract
+  group-hom= : ∀ {i j} {G : Group i} {H : Group j} {φ ψ : G →ᴳ H}
+    → GroupHom.f φ == GroupHom.f ψ → φ == ψ
+  group-hom= {H = H} p = ap (uncurry group-hom) $
+    Subtype=-in (Π-level (λ _ → Π-level (λ _ → Group.El-level H _ _))) p
+
+  group-hom=-↓ : ∀ {i j k} {A : Type i} {G : A → Group j} {H : A → Group k} {x y : A}
+    {p : x == y} {φ : G x →ᴳ H x} {ψ : G y →ᴳ H y}
+    → GroupHom.f φ == GroupHom.f ψ
+      [ (λ a → Group.El (G a) → Group.El (H a)) ↓ p ]
+    → φ == ψ [ (λ a → G a →ᴳ H a) ↓ p ]
+  group-hom=-↓ {p = idp} = group-hom=
 
 infixr 80 _∘ᴳ_
 
 _∘ᴳ_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
   → (H →ᴳ K) → (G →ᴳ H) → (G →ᴳ K)
-(group-hom g g-comp) ∘ᴳ (group-hom f f-comp) =
-  record {
-    f = g ∘ f;
-    pres-comp = λ x₁ x₂ → ap g (f-comp x₁ x₂) ∙ g-comp (f x₁) (f x₂)}
+ψ ∘ᴳ φ = group-hom
+  (GroupHom.f ψ ∘ GroupHom.f φ)
+  (λ x₁ x₂ → ap (GroupHom.f ψ) (GroupHom.pres-comp φ x₁ x₂)
+           ∙ GroupHom.pres-comp ψ (GroupHom.f φ x₁) (GroupHom.f φ x₂))
+
+{- algebraic properties -}
+
+∘ᴳ-unit-r : ∀ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H)
+  → φ ∘ᴳ idhom G == φ
+∘ᴳ-unit-r φ = idp
+
+∘ᴳ-unit-l : ∀ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H)
+  → idhom H ∘ᴳ φ == φ
+∘ᴳ-unit-l φ = group-hom= idp
+
+∘ᴳ-assoc : ∀ {i j k l} {G : Group i} {H : Group j} {K : Group k} {L : Group l}
+  (χ : K →ᴳ L) (ψ : H →ᴳ K) (φ : G →ᴳ H)
+  → (χ ∘ᴳ ψ) ∘ᴳ φ == χ ∘ᴳ ψ ∘ᴳ φ
+∘ᴳ-assoc χ ψ φ = group-hom= idp
+
+pre∘-cst-hom : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
+  (φ : H →ᴳ K)
+  → φ ∘ᴳ cst-hom {G = G} {H = H} == cst-hom
+pre∘-cst-hom φ = group-hom= $ λ= λ g → GroupHom.pres-ident φ
+
+inv-hom-natural : ∀ {i j} {G : Group i} {H : Group j}
+  (G-abelian : is-abelian G) (H-abelian : is-abelian H) (φ : G →ᴳ H)
+  → φ ∘ᴳ inv-hom G G-abelian == inv-hom H H-abelian ∘ᴳ φ
+inv-hom-natural _ _ φ = group-hom= $ λ= $ GroupHom.pres-inv φ
+
+{-
+Group isomorphisms.
+-}
+
+infix 30 _≃ᴳˢ_ -- [ˢ] for structures
+_≃ᴳˢ_ = GroupStructureIso
+
+GroupIso : ∀ {i j} (G : Group i) (H : Group j) → Type (lmax i j)
+GroupIso G H = Σ (G →ᴳ H) (λ φ → is-equiv (GroupHom.f φ))
+
+infix 30 _≃ᴳ_
+_≃ᴳ_ = GroupIso
+
+≃ᴳˢ-to-≃ᴳ : ∀ {i j} {G : Group i} {H : Group j}
+  → (Group.group-struct G ≃ᴳˢ Group.group-struct H) → (G ≃ᴳ H)
+≃ᴳˢ-to-≃ᴳ (φ , φ-is-equiv) = →ᴳˢ-to-→ᴳ φ , φ-is-equiv
+
+≃-to-≃ᴳ : ∀ {i j} {G : Group i} {H : Group j} (e : Group.El G ≃ Group.El H)
+  → preserves-comp (Group.comp G) (Group.comp H) (–> e) → G ≃ᴳ H
+≃-to-≃ᴳ (f , f-is-equiv) pres-comp = group-hom f pres-comp , f-is-equiv
+
+≃-to-≃ᴳˢ : ∀ {i j} {GEl : Type i} {HEl : Type j}
+  {GS : GroupStructure GEl} {HS : GroupStructure HEl} (e : GEl ≃ HEl)
+  → preserves-comp (GroupStructure.comp GS) (GroupStructure.comp HS) (–> e)
+  → GS ≃ᴳˢ HS
+≃-to-≃ᴳˢ (f , f-is-equiv) pres-comp = group-structure-hom f pres-comp , f-is-equiv
+
+module GroupIso {i j} {G : Group i} {H : Group j} (iso : GroupIso G H) where
+
+  f-hom : G →ᴳ H
+  f-hom = fst iso
+
+  open GroupHom {G = G} {H = H} f-hom public
+
+  f-is-equiv : is-equiv f 
+  f-is-equiv = snd iso
+
+  open is-equiv f-is-equiv public
+
+  f-equiv : Group.El G ≃ Group.El H
+  f-equiv = f , f-is-equiv
+
+idiso : ∀ {i} (G : Group i) → (G ≃ᴳ G)
+idiso G = idhom G , idf-is-equiv _
+
+≃ᴳ-over-= : ∀ {i j} {A : Type i} (B : A → Group j) {a₁ a₂ : A} (p : a₁ == a₂)
+  → B a₁ ≃ᴳ B a₂
+≃ᴳ-over-= B idp = idiso _
+
+{- equality of isomomorphisms -}
+abstract
+  group-hom=-to-iso= : ∀ {i j} {G : Group i} {H : Group j} {φ ψ : G ≃ᴳ H}
+    → GroupIso.f-hom φ == GroupIso.f-hom ψ → φ == ψ
+  group-hom=-to-iso= p = Subtype=-in (is-equiv-is-prop _) p
+
+  group-iso= : ∀ {i j} {G : Group i} {H : Group j} {φ ψ : G ≃ᴳ H}
+    → GroupIso.f φ == GroupIso.f ψ → φ == ψ
+  group-iso= {H = H} p = group-hom=-to-iso= $ group-hom= p
 
 infixr 80 _∘eᴳ_
 
@@ -79,27 +212,35 @@ _∘eᴳ_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
   → H ≃ᴳ K → G ≃ᴳ H → G ≃ᴳ K
 (φ₂ , ie₂) ∘eᴳ (φ₁ , ie₁) = (φ₂ ∘ᴳ φ₁ , ie₂ ∘ise ie₁)
 
+infixr 10 _≃ᴳ⟨_⟩_
+infix  15 _≃ᴳ∎
+
+_≃ᴳ⟨_⟩_ : ∀ {i j k} (G : Group i) {H : Group j} {K : Group k}
+  → G ≃ᴳ H → H ≃ᴳ K → G ≃ᴳ K
+G ≃ᴳ⟨ e₁ ⟩ e₂ = e₂ ∘eᴳ e₁
+
+_≃ᴳ∎ : ∀ {i} (G : Group i) → (G ≃ᴳ G)
+_≃ᴳ∎ = idiso
+
 infixl 120 _⁻¹ᴳ
 
 _⁻¹ᴳ : ∀ {i j} {G : Group i} {H : Group j} → G ≃ᴳ H → H ≃ᴳ G
 _⁻¹ᴳ {G = G} {H = H} (φ , ie) =
-  (record {
-     f = is-equiv.g ie;
-     pres-comp = λ h₁ h₂ →
-       ap2 (λ w₁ w₂ → is-equiv.g ie (Group.comp H w₁ w₂))
-         (! (is-equiv.f-g ie h₁)) (! (is-equiv.f-g ie h₂))
-       ∙ ! (ap (is-equiv.g ie)
-               (GroupHom.pres-comp φ (is-equiv.g ie h₁) (is-equiv.g ie h₂)))
-       ∙ is-equiv.g-f ie (Group.comp G (is-equiv.g ie h₁) (is-equiv.g ie h₂))} ,
-   snd ((_ , ie) ⁻¹))
+  group-hom
+    (is-equiv.g ie)
+    (λ h₁ h₂ →
+      ap2 (λ w₁ w₂ → is-equiv.g ie (Group.comp H w₁ w₂))
+          (! (is-equiv.f-g ie h₁)) (! (is-equiv.f-g ie h₂))
+        ∙ ! (ap (is-equiv.g ie) (GroupHom.pres-comp φ (is-equiv.g ie h₁) (is-equiv.g ie h₂)))
+        ∙ is-equiv.g-f ie (Group.comp G (is-equiv.g ie h₁) (is-equiv.g ie h₂))) ,
+  is-equiv-inv ie
 
-{- a homomorphism which is an equivalence gives a path between groups -}
-module _ {i} {G H : Group i} (iso : G ≃ᴳ H) where
+module _ {i} {G H : Group i} (iso : GroupIso G H) where
   private
     module G = Group G
     module H = Group H
-    module φ = GroupHom (fst iso)
-    ie = snd iso
+    open module φ = GroupIso {G = G} {H = H} iso
+  El= = ua f-equiv
 
   private
     ap3-lemma : ∀ {i j k l} {C : Type i} {D : C → Type j} {E : C → Type k}
@@ -109,76 +250,61 @@ module _ {i} {G H : Group i} (iso : G ≃ᴳ H) where
       → (f c₁ d₁ e₁ == f c₂ d₂ e₂)
     ap3-lemma f idp idp idp = idp
 
-    ap3-lemma-el : ∀ {i} {G H : Group i}
+    ap3-lemma-El : ∀ {i} {G H : Group i}
       (p : Group.El G == Group.El H)
       (q : Group.El-level G == Group.El-level H [ _ ↓ p ])
       (r : Group.group-struct G == Group.group-struct H [ _ ↓ p ])
       → ap Group.El (ap3-lemma group p q r) == p
-    ap3-lemma-el idp idp idp = idp
+    ap3-lemma-El idp idp idp = idp
 
+  {- a homomorphism which is an equivalence gives a path between groups -}
   abstract
-    group-ua : G == H
-    group-ua =
+    uaᴳ : G == H
+    uaᴳ =
       ap3-lemma group
-        (ua (φ.f , ie))
+        El=
         (prop-has-all-paths-↓ has-level-is-prop)
-        (↓-group-structure= (G.El-level) (ua (φ.f , ie)) ident= inv= comp=)
+        (↓-group-structure= (G.El-level) El= ident= inv= comp=)
       where
-      ident= : G.ident == H.ident [ (λ C → C) ↓ ua (φ.f , ie) ]
-      ident= = ↓-idf-ua-in _ φ.pres-ident
+      ident= : G.ident == H.ident [ (λ C → C) ↓ El= ]
+      ident= = ↓-idf-ua-in _ pres-ident
 
-      inv= : G.inv == H.inv [ (λ C → C → C) ↓ ua (φ.f , ie) ]
+      inv= : G.inv == H.inv [ (λ C → C → C) ↓ El= ]
       inv= =
-        ↓-→-from-transp $ λ= $ λ a →
-          transport (λ C → C) (ua (φ.f , ie)) (G.inv a)
+        ↓-→-from-transp $ λ= λ a →
+          transport (λ C → C) El= (G.inv a)
             =⟨ to-transp (↓-idf-ua-in _ idp) ⟩
-          φ.f (G.inv a)
-            =⟨ φ.pres-inv a ⟩
-          H.inv (φ.f a)
+          f (G.inv a)
+            =⟨ pres-inv a ⟩
+          H.inv (f a)
             =⟨ ap H.inv (! (to-transp (↓-idf-ua-in _ idp))) ⟩
-          H.inv (transport (λ C → C) (ua (φ.f , ie)) a) ∎
+          H.inv (transport (λ C → C) El= a) =∎
 
       comp=' : (a : G.El)
-        → G.comp a == H.comp (φ.f a) [ (λ C → C → C) ↓ ua (φ.f , ie) ]
+        → G.comp a == H.comp (f a) [ (λ C → C → C) ↓ El= ]
       comp=' a =
-        ↓-→-from-transp $ λ= $ λ b →
-          transport (λ C → C) (ua (φ.f , ie)) (G.comp a b)
+        ↓-→-from-transp $ λ= λ b →
+          transport (λ C → C) El= (G.comp a b)
             =⟨ to-transp (↓-idf-ua-in _ idp) ⟩
-          φ.f (G.comp a b)
-            =⟨ φ.pres-comp a b ⟩
-          H.comp (φ.f a) (φ.f b)
+          f (G.comp a b)
+            =⟨ pres-comp a b ⟩
+          H.comp (f a) (f b)
             =⟨ ! (to-transp (↓-idf-ua-in _ idp))
-               |in-ctx (λ w → H.comp (φ.f a) w) ⟩
-          H.comp (φ.f a) (transport (λ C → C) (ua (φ.f , ie)) b) ∎
+               |in-ctx (λ w → H.comp (f a) w) ⟩
+          H.comp (f a) (transport (λ C → C) El= b) =∎
 
-      comp= : G.comp == H.comp [ (λ C → C → C → C) ↓ ua (φ.f , ie) ]
+      comp= : G.comp == H.comp [ (λ C → C → C → C) ↓ El= ]
       comp= =
-        ↓-→-from-transp $ λ= $ λ a →
-          transport (λ C → C → C) (ua (φ.f , ie)) (G.comp a)
+        ↓-→-from-transp $ λ= λ a →
+          transport (λ C → C → C) El= (G.comp a)
             =⟨ to-transp (comp=' a) ⟩
-          H.comp (φ.f a)
+          H.comp (f a)
             =⟨ ! (to-transp (↓-idf-ua-in _ idp)) |in-ctx (λ w → H.comp w) ⟩
-          H.comp (transport (λ C → C) (ua (φ.f , ie)) a) ∎
+          H.comp (transport (λ C → C) El= a) =∎
 
-    group-ua-el : ap Group.El group-ua == ua (φ.f , ie)
-    group-ua-el = ap3-lemma-el (ua (φ.f , ie)) _ _
-
--- XXX TODO rename [hom=] to [hom=-in]
-{- equality of homomorphisms -}
-abstract
-  hom= : ∀ {i j} {G : Group i} {H : Group j} (φ ψ : (G →ᴳ H))
-    → GroupHom.f φ == GroupHom.f ψ → φ == ψ
-  hom= {H = H} _ _ p =
-   ap (uncurry group-hom)
-      (pair= p (prop-has-all-paths-↓
-                 (Π-level (λ _ → Π-level (λ _ → Group.El-level H _ _)))))
-
-  hom=-↓ : ∀ {i j k} {A : Type i} {G : A → Group j} {H : A → Group k} {x y : A}
-    {p : x == y} (φ : G x →ᴳ H x) (ψ : G y →ᴳ H y)
-    → GroupHom.f φ == GroupHom.f ψ
-      [ (λ a → Group.El (G a) → Group.El (H a)) ↓ p ]
-    → φ == ψ [ (λ a → G a →ᴳ H a) ↓ p ]
-  hom=-↓ {p = idp} = hom=
+    -- XXX This stretches the naming convention a little bit.
+    El=-β : ap Group.El uaᴳ == El=
+    El=-β = ap3-lemma-El El= _ _
 
 {- homomorphism from equality of groups -}
 coeᴳ : ∀ {i} {G H : Group i} → G == H → (G →ᴳ H)
@@ -196,39 +322,25 @@ coe!ᴳ-fun : ∀ {i} {G H : Group i} (p : G == H)
 coe!ᴳ-fun idp = idp
 
 coeᴳ-β : ∀ {i} {G H : Group i} (iso : G ≃ᴳ H)
-  → coeᴳ (group-ua iso) == fst iso
-coeᴳ-β (φ , ie) = hom= _ _ $
-  coeᴳ-fun (group-ua (φ , ie))
-  ∙ ap coe (group-ua-el (φ , ie))
-  ∙ λ= (coe-β (GroupHom.f φ , ie))
+  → coeᴳ (uaᴳ iso) == GroupIso.f-hom iso
+coeᴳ-β iso = group-hom= $
+  coeᴳ-fun (uaᴳ iso)
+  ∙ ap coe (El=-β iso)
+  ∙ λ= (coe-β (GroupIso.f-equiv iso))
 
-{- algebraic properties -}
-
-∘ᴳ-unit-r : ∀ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H)
-  → φ ∘ᴳ idhom G == φ
-∘ᴳ-unit-r φ = idp
-
-∘ᴳ-unit-l : ∀ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H)
-  → idhom H ∘ᴳ φ == φ
-∘ᴳ-unit-l φ = hom= _ _ $ idp
-
-∘ᴳ-assoc : ∀ {i j k l} {G : Group i} {H : Group j} {K : Group k} {L : Group l}
-  (χ : K →ᴳ L) (ψ : H →ᴳ K) (φ : G →ᴳ H)
-  → (χ ∘ᴳ ψ) ∘ᴳ φ == χ ∘ᴳ ψ ∘ᴳ φ
-∘ᴳ-assoc χ ψ φ = hom= _ _ $ idp
-
+-- TODO move this to PropSubgroup?
 {- homomorphism with kernel zero is injective -}
 module _ {i j} {G : Group i} {H : Group j} (φ : (G →ᴳ H)) where
 
   private
     module G = Group G
     module H = Group H
-    module φ = GroupHom φ
+    module φ = GroupHom {G = G} {H = H} φ
 
-  zero-kernel-injective : ((g : G.El) → φ.f g == H.ident → g == G.ident)
+  zero-ker-inj : ((g : G.El) → φ.f g == H.ident → g == G.ident)
     → ((g₁ g₂ : G.El) → φ.f g₁ == φ.f g₂ → g₁ == g₂)
-  zero-kernel-injective f g₁ g₂ p =
-    ! (group-inv-inv G g₁) ∙ group-inv-unique-r G (G.inv g₁) g₂ (f _ $
+  zero-ker-inj f g₁ g₂ p =
+    ! (G.inv-inv g₁) ∙ G.inv-unique-r (G.inv g₁) g₂ (f _ $
       φ.f (G.comp (G.inv g₁) g₂)
         =⟨ φ.pres-comp (G.inv g₁) g₂ ⟩
       H.comp (φ.f (G.inv g₁)) (φ.f g₂)
@@ -236,32 +348,8 @@ module _ {i j} {G : Group i} {H : Group j} (φ : (G →ᴳ H)) where
       H.comp (H.inv (φ.f g₁)) (φ.f g₂)
         =⟨ p |in-ctx (λ w → H.comp (H.inv w) (φ.f g₂)) ⟩
       H.comp (H.inv (φ.f g₂)) (φ.f g₂)
-        =⟨ H.invl (φ.f g₂) ⟩
-      H.ident ∎)
-
-{- constant homomorphism -}
-module _ where
-  cst-hom : ∀ {i j} {G : Group i} {H : Group j} → (G →ᴳ H)
-  cst-hom {H = H} = group-hom (cst ident) (λ _ _ → ! (unitl _))
-    where open Group H
-
-  pre∘-cst-hom : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
-    (φ : H →ᴳ K)
-    → φ ∘ᴳ cst-hom {G = G} {H = H} == cst-hom
-  pre∘-cst-hom φ = hom= _ _ (λ= (λ g → GroupHom.pres-ident φ))
-
-{- if an injective homomorphism is merely surjective, then it is
- - fully surjective -}
-module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
-
-  private
-    module G = Group G
-    module H = Group H
-    module φ = GroupHom φ
-
-  module _ (inj : (g₁ g₂ : G.El) → φ.f g₁ == φ.f g₂ → g₁ == g₂)
-    (msurj : (h : H.El) → Trunc -1 (Σ G.El (λ g → φ.f g == h))) where
-
+        =⟨ H.inv-l (φ.f g₂) ⟩
+      H.ident =∎)
 
 {- a surjective and injective homomorphism is an isomorphism -}
 module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
@@ -269,7 +357,7 @@ module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
   private
     module G = Group G
     module H = Group H
-    module φ = GroupHom φ
+    module φ = GroupHom {G = G} {H = H} φ
 
   module _ (inj : (g₁ g₂ : G.El) → φ.f g₁ == φ.f g₂ → g₁ == g₂)
     (surj : (h : H.El) → Trunc -1 (Σ G.El (λ g → φ.f g == h))) where
@@ -286,34 +374,21 @@ module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
           pair= (inj g₁ g₂ (p₁ ∙ ! p₂))
                 (prop-has-all-paths-↓ (H.El-level _ _))})))
 
+    surj-inj-iso : G ≃ᴳ H
+    surj-inj-iso = φ , surj-inj-is-equiv
 
 module _ {i} {G H : Group i} (φ : G →ᴳ H) where
 
   private
     module G = Group G
     module H = Group H
-    module φ = GroupHom φ
+    module φ = GroupHom {G = G} {H = H} φ
 
   module _ (inj : (g₁ g₂ : G.El) → φ.f g₁ == φ.f g₂ → g₁ == g₂)
     (surj : (h : H.El) → Trunc -1 (Σ G.El (λ g → φ.f g == h))) where
 
-    surj-inj-iso : G ≃ᴳ H
-    surj-inj-iso = (φ , surj-inj-is-equiv φ inj surj)
-
     surj-inj-path : G == H
-    surj-inj-path = group-ua surj-inj-iso
-
-{- negation is a homomorphism in an abelian gruop -}
-inv-hom : ∀ {i} (G : Group i) (G-abelian : is-abelian G) → GroupHom G G
-inv-hom G G-abelian = record {
-  f = Group.inv G;
-  pres-comp = λ g₁ g₂ →
-    group-inv-comp G g₁ g₂ ∙ G-abelian (Group.inv G g₂) (Group.inv G g₁)}
-
-inv-hom-natural : ∀ {i j} {G : Group i} {H : Group j}
-  (G-abelian : is-abelian G) (H-abelian : is-abelian H) (φ : G →ᴳ H)
-  → φ ∘ᴳ inv-hom G G-abelian == inv-hom H H-abelian ∘ᴳ φ
-inv-hom-natural _ _ φ = hom= _ _ $ λ= $ GroupHom.pres-inv φ
+    surj-inj-path = uaᴳ (surj-inj-iso φ inj surj)
 
 {- two homomorphisms into an abelian group can be composed with
  - the group operation -}
@@ -323,18 +398,18 @@ module _ {i} {G H : Group i} (H-abelian : is-abelian H)
   private
     module G = Group G
     module H = Group H
-    module φ = GroupHom φ
-    module ψ = GroupHom ψ
+    module φ = GroupHom {G = G} {H = H} φ
+    module ψ = GroupHom {G = G} {H = H} ψ
 
-  comp-hom : G →ᴳ H
-  comp-hom = record {
-    f = λ g → H.comp (φ.f g) (ψ.f g);
-    pres-comp = λ g₁ g₂ →
+  hom-comp : G →ᴳ H
+  hom-comp = group-hom
+    (λ g → H.comp (φ.f g) (ψ.f g))
+    (λ g₁ g₂ →
       H.comp (φ.f (G.comp g₁ g₂)) (ψ.f (G.comp g₁ g₂))
         =⟨ ap2 H.comp (φ.pres-comp g₁ g₂) (ψ.pres-comp g₁ g₂) ⟩
       H.comp (H.comp (φ.f g₁) (φ.f g₂)) (H.comp (ψ.f g₁) (ψ.f g₂))
         =⟨ lemma (φ.f g₁) (φ.f g₂) (ψ.f g₁) (ψ.f g₂) ⟩
-      H.comp (H.comp (φ.f g₁) (ψ.f g₁)) (H.comp (φ.f g₂) (ψ.f g₂)) ∎}
+      H.comp (H.comp (φ.f g₁) (ψ.f g₁)) (H.comp (φ.f g₂) (ψ.f g₂)) =∎)
 
     where
     lemma : (h₁ h₂ h₃ h₄ : H.El) →
@@ -351,7 +426,30 @@ module _ {i} {G H : Group i} (H-abelian : is-abelian H)
          =⟨ H-abelian (h₂ □ h₄) h₃ |in-ctx (λ w → h₁ □ w) ⟩
        h₁ □ (h₃ □ (h₂ □ h₄))
          =⟨ ! (H.assoc h₁ h₃ (h₂ □ h₄)) ⟩
-       (h₁ □ h₃) □ (h₂ □ h₄) ∎
+       (h₁ □ h₃) □ (h₂ □ h₄) =∎
        where
         infix 80 _□_
         _□_ = H.comp
+
+-- Isomorphisms preserve abelianess.
+module _ {i} {G H : Group i} (iso : G ≃ᴳ H) (G-abelian : is-abelian G) where
+  private
+    module G = Group G
+    module H = Group H
+    open GroupIso iso
+
+  abstract
+    iso-preserves-abelian : is-abelian H
+    iso-preserves-abelian h₁ h₂ =
+      H.comp h₁ h₂
+        =⟨ ap2 H.comp (! $ f-g h₁) (! $ f-g h₂) ⟩
+      H.comp (f (g h₁)) (f (g h₂))
+        =⟨ ! $ pres-comp (g h₁) (g h₂) ⟩
+      f (G.comp (g h₁) (g h₂))
+        =⟨ G-abelian (g h₁) (g h₂) |in-ctx f ⟩
+      f (G.comp (g h₂) (g h₁))
+        =⟨ pres-comp (g h₂) (g h₁) ⟩
+      H.comp (f (g h₂)) (f (g h₁))
+        =⟨ ap2 H.comp (f-g h₂) (f-g h₁) ⟩
+      H.comp h₂ h₁
+        =∎

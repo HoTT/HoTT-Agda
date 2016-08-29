@@ -61,42 +61,30 @@ module homotopy.PinSn where
       loop^ (z₁ ℤ+ z₂) == loop^ z₁ ∙ loop^ z₂
     loop^-ℤ+ z₁ z₂ = ap loop^ (ℤ+-comm z₁ z₂) ∙ loop^-ℤ+' z₂ z₁
 
-    ℤ-to-π₁S¹ : ℤ-group →ᴳ πS 0 ⊙S¹
-    ℤ-to-π₁S¹ =
-      record { f = [_] ∘ loop^
-             ; pres-comp = λ z₁ z₂ → ap [_] $ loop^-ℤ+ z₁ z₂
-             }
-
-    ℤ-to-π₁S¹-equiv : ℤ-group ≃ᴳ πS 0 ⊙S¹
-    ℤ-to-π₁S¹-equiv = ℤ-to-π₁S¹ , snd (unTrunc-equiv (Ω^ 1 ⊙S¹) (ΩS¹-is-set base) ⁻¹ ∘e ΩS¹≃ℤ ⁻¹)
-
-  π₁S¹ : πS 0 ⊙S¹ == ℤ-group
-  π₁S¹ = ! $ group-ua ℤ-to-π₁S¹-equiv
-
-  π₂S² : πS 1 ⊙S² == ℤ-group
-  π₂S² =
-    πS 1 ⊙S²
-      =⟨ Pi2HSusp.π₂-Suspension S¹ S¹-level S¹-connected S¹-hSpace ⟩
-    πS 0 ⊙S¹
-      =⟨ π₁S¹ ⟩
-    ℤ-group
-      ∎
+    ℤ-iso-π1S¹ : ℤ-group ≃ᴳ πS 0 ⊙S¹
+    ℤ-iso-π1S¹ = ≃-to-≃ᴳ
+      (unTrunc-equiv (Ω^ 1 ⊙S¹) (ΩS¹-is-set base) ⁻¹ ∘e ΩS¹≃ℤ ⁻¹)
+      (λ z₁ z₂ → ap [_] $ loop^-ℤ+ z₁ z₂)
 
   private
-    πₙ₊₂Sⁿ⁺² : ∀ n → πS (S n) (⊙Susp^ (S n) ⊙S¹) == ℤ-group
-    πₙ₊₂Sⁿ⁺² 0 = π₂S²
-    πₙ₊₂Sⁿ⁺² (S n) =
+    πS-SphereS'-iso-ℤ : ∀ n → πS n (⊙Susp^ n ⊙S¹) ≃ᴳ ℤ-group
+    πS-SphereS'-iso-ℤ 0 = ℤ-iso-π1S¹ ⁻¹ᴳ
+    πS-SphereS'-iso-ℤ 1 =
+      πS 1 ⊙S²
+        ≃ᴳ⟨ Pi2HSusp.π₂-Suspension S¹ S¹-level S¹-conn S¹-hSpace ⟩
+      πS 0 ⊙S¹
+        ≃ᴳ⟨ πS-SphereS'-iso-ℤ O ⟩
+      ℤ-group
+        ≃ᴳ∎
+    πS-SphereS'-iso-ℤ (S (S n)) =
       πS (S (S n)) (⊙Susp^ (S (S n)) ⊙S¹)
-        =⟨ Susp^StableSucc.stable ⊙S¹ S¹-connected
+        ≃ᴳ⟨ Susp^StableSucc.stable ⊙S¹ S¹-conn
              (S n) (S n) (≤-ap-S $ ≤-ap-S $ *2-increasing n) ⟩
       πS (S n) (⊙Susp^ (S n) ⊙S¹)
-        =⟨ πₙ₊₂Sⁿ⁺² n ⟩
+        ≃ᴳ⟨ πS-SphereS'-iso-ℤ (S n) ⟩
       ℤ-group
-        ∎
+        ≃ᴳ∎
 
-    lemma : ∀ n → ⊙Susp^ n ⊙S¹ == ⊙Sphere (S n)
-    lemma n = ⊙Susp^-+ n 1 ∙ ap ⊙Sphere (+-comm n 1)
-
-  πₙ₊₁Sⁿ⁺¹ : ∀ n → πS n (⊙Sphere (S n)) == ℤ-group
-  πₙ₊₁Sⁿ⁺¹ 0 = π₁S¹
-  πₙ₊₁Sⁿ⁺¹ (S n) = ap (πS (S n)) (! $ lemma (S n)) ∙ πₙ₊₂Sⁿ⁺² n
+  πS-SphereS-iso-ℤ : ∀ n → πS n (⊙Sphere (S n)) ≃ᴳ ℤ-group
+  πS-SphereS-iso-ℤ n = πS-SphereS'-iso-ℤ n
+                   ∘eᴳ πS-emap n (⊙Susp^-Susp-split-iso n ⊙S⁰)

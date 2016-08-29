@@ -33,7 +33,7 @@ module _ {i j k} (D : Cospan {i} {j} {k}) where
       =⟨ ∘-ap Pullback.a (pullback _ _) _ ⟩
     ap (λ _ → _) (! (∙-unit-r _) ∙ r)
       =⟨ ap-cst _ _ ⟩
-    idp ∎
+    idp =∎
 
   pullback-bβ : {a a' : A} (p : a == a') {b b' : B} (q : b == b')
     {h : f a == g b} {h' : f a' == g b'} (r : h ∙ ap g q == ap f p ∙ h')
@@ -43,7 +43,7 @@ module _ {i j k} (D : Cospan {i} {j} {k}) where
       =⟨ ∘-ap Pullback.b (pullback _ _) _ ⟩
     ap (λ _ → _) (! (∙-unit-r _) ∙ r)
       =⟨ ap-cst _ _ ⟩
-    idp ∎
+    idp =∎
 
 module _ {i j k} (D : ⊙Cospan {i} {j} {k}) where
 

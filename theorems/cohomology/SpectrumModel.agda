@@ -11,14 +11,14 @@ open import cohomology.Choice
  - gives rise to a cohomology theory C with Cⁿ(S⁰) = π₁(Eₙ₊₁). -}
 
 module cohomology.SpectrumModel
-  {i} (E : ℤ → Ptd i) (spectrum : (n : ℤ) → ⊙Ω (E (succ n)) == E n) where
+  {i} (E : ℤ → Ptd i) (spectrum : (n : ℤ) → ⊙Ω (E (succ n)) ⊙≃ E n) where
 
 module SpectrumModel where
 
   {- Definition of cohomology group C -}
   module _ (n : ℤ) (X : Ptd i) where
     C : Group i
-    C = →Ω-group X (E (succ n))
+    C = Trunc-⊙→Ω-group X (E (succ n))
 
     {- convenient abbreviations -}
     CEl = Group.El C
@@ -31,14 +31,14 @@ module SpectrumModel where
   {- Cⁿ(X) is an abelian group -}
   C-abelian : (n : ℤ) (X : Ptd i) → is-abelian (C n X)
   C-abelian n X =
-    transport (is-abelian ∘ →Ω-group X) (spectrum (succ n)) $
-      Trunc-group-abelian (→Ω-group-structure _ _) $ λ {(f , fpt) (g , gpt) →
-        ⊙λ= (λ x → conc^2-comm (f x) (g x)) (pt-lemma fpt gpt)}
+    iso-preserves-abelian (Trunc-⊙→Ω-group-emap-codom X (spectrum (succ n))) $
+      Trunc-group-abelian (⊙→Ω-group-structure _ _) $ λ {(f , fpt) (g , gpt) →
+        ⊙λ= (λ x → Ω^2-∙-comm (f x) (g x)) (pt-lemma fpt gpt)}
     where
     pt-lemma : ∀ {i} {A : Type i} {x : A} {p q : idp {a = x} == idp {a = x}}
       (α : p == idp) (β : q == idp)
-      → ap (uncurry _∙_) (ap2 _,_ α β) ∙ idp
-        == conc^2-comm p q ∙ ap (uncurry _∙_) (ap2 _,_ β α) ∙ idp
+      → ap (uncurry _∙_) (pair×= α β) ∙ idp
+        == Ω^2-∙-comm p q ∙ ap (uncurry _∙_) (pair×= β α) ∙ idp
     pt-lemma idp idp = idp
 
   {- CF, the functorial action of C:
@@ -46,7 +46,7 @@ module SpectrumModel where
   module _ (n : ℤ) {X Y : Ptd i} where
 
     CF-hom : fst (X ⊙→ Y) → (C n Y →ᴳ C n X)
-    CF-hom f = →Ω-group-dom-act f (E (succ n))
+    CF-hom f = Trunc-⊙→Ω-group-fmap-dom f (E (succ n))
 
     CF : fst (X ⊙→ Y) → fst (⊙CEl n Y ⊙→ ⊙CEl n X)
     CF F = GroupHom.⊙f (CF-hom F)
@@ -55,31 +55,49 @@ module SpectrumModel where
   module _ (n : ℤ) {X : Ptd i} where
 
     CF-ident : CF-hom n {X} {X} (⊙idf X) == idhom (C n X)
-    CF-ident = →Ω-group-dom-idf (E (succ n))
+    CF-ident = Trunc-⊙→Ω-group-fmap-dom-idf (E (succ n))
 
     CF-comp : {Y Z : Ptd i} (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y))
       → CF-hom n (g ⊙∘ f) == CF-hom n f ∘ᴳ CF-hom n g
-    CF-comp g f = →Ω-group-dom-∘ g f (E (succ n))
+    CF-comp g f = Trunc-⊙→Ω-group-fmap-dom-∘ g f (E (succ n))
 
   -- Eilenberg-Steenrod Axioms
 
   {- Suspension Axiom -}
   private
-    C-Susp' : {E₁ E₀ : Ptd i} (p : ⊙Ω E₁ == E₀) (X : Ptd i)
-      → →Ω-group (⊙Susp X) E₁ ≃ᴳ →Ω-group X E₀
-    C-Susp' {E₁ = E₁} idp X = SuspAdjointLoopIso.iso X E₁
+    C-Susp' : {E₁ E₀ : Ptd i} (iso : ⊙Ω E₁ ⊙≃ E₀) (X : Ptd i)
+      → Trunc-⊙→Ω-group (⊙Susp X) E₁ ≃ᴳ Trunc-⊙→Ω-group X E₀
+    C-Susp' {E₁ = E₁} iso X = Trunc-⊙→Ω-group-emap-codom X iso
+                          ∘eᴳ SuspAdjointLoopIso.iso X E₁
 
-    C-SuspF' : {E₁ E₀ : Ptd i} (p : ⊙Ω E₁ == E₀)
+    -- This can be further simplified
+    C-SuspF' : {E₁ E₀ : Ptd i} (iso : ⊙Ω E₁ ⊙≃ E₀)
       {X Y : Ptd i} (f : fst (X ⊙→ Y))
-      → fst (C-Susp' p X) ∘ᴳ →Ω-group-dom-act (⊙susp-fmap f) E₁
-        == →Ω-group-dom-act f E₀ ∘ᴳ fst (C-Susp' p Y)
-    C-SuspF' {E₁ = E₁} idp f = SuspAdjointLoopIso.nat-dom f E₁
+      → fst (C-Susp' iso X) ∘ᴳ Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap f) E₁
+        == Trunc-⊙→Ω-group-fmap-dom f E₀ ∘ᴳ fst (C-Susp' iso Y)
+    C-SuspF' {E₁} {E₀} iso {X} {Y} f = group-hom= $
+        ( GroupHom.f (Trunc-⊙→Ω-group-fmap-codom X (fst iso))
+        ∘ GroupIso.f (SuspAdjointLoopIso.iso X E₁)
+        ∘ GroupHom.f (Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap f) E₁)
+        ) =⟨ SuspAdjointLoopIso.nat-dom f E₁
+            |in-ctx GroupHom.f
+            |in-ctx GroupHom.f (Trunc-⊙→Ω-group-fmap-codom X (fst iso)) ∘_ ⟩
+        ( GroupHom.f (Trunc-⊙→Ω-group-fmap-codom X (fst iso))
+        ∘ GroupHom.f (Trunc-⊙→Ω-group-fmap-dom f (⊙Ω E₁))
+        ∘ GroupIso.f (SuspAdjointLoopIso.iso Y E₁)
+        ) =⟨ ! $ Trunc-⊙→Ω-group-fmap-nat f (fst iso)
+            |in-ctx GroupHom.f
+            |in-ctx _∘ GroupIso.f (SuspAdjointLoopIso.iso Y E₁) ⟩
+        ( GroupHom.f (Trunc-⊙→Ω-group-fmap-dom f E₀)
+        ∘ GroupHom.f (Trunc-⊙→Ω-group-fmap-codom Y (fst iso))
+        ∘ GroupIso.f (SuspAdjointLoopIso.iso Y E₁)
+        ) =∎
 
   C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp X) ≃ᴳ C n X
   C-Susp n X = C-Susp' (spectrum (succ n)) X
 
   C-SuspF : (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y))
-    → fst (C-Susp n X) ∘ᴳ CF-hom (succ n) (⊙susp-fmap f)
+    → fst (C-Susp n X) ∘ᴳ CF-hom (succ n) (⊙Susp-fmap f)
       == CF-hom n f ∘ᴳ fst (C-Susp n Y)
   C-SuspF n f = C-SuspF' (spectrum (succ n)) f
 
@@ -208,7 +226,7 @@ module SpectrumModel where
            ap (Out'.f (λ a → (h , hpt) ⊙∘ ⊙bwin a)) (bwglue a) ∎)
 
     abstract
-      C-additive : is-equiv (GroupHom.f (Πᴳ-hom-in (CF-hom n ∘ ⊙bwin {X = X})))
+      C-additive : is-equiv (GroupHom.f (Πᴳ-fanout (CF-hom n ∘ ⊙bwin {X = X})))
       C-additive = transport is-equiv
         (λ= $ Trunc-elim
           (λ _ → =-preserves-level _ $ Π-level $ λ _ → Trunc-level)
@@ -230,5 +248,5 @@ spectrum-cohomology = record {
   C-exact = C-exact;
   C-additive = C-additive}
 
-spectrum-C-S⁰ : (n : ℤ) → C n (⊙Lift ⊙S⁰) == πS 0 (E (succ n))
-spectrum-C-S⁰ n = Bool⊙→Ω-is-π₁ (E (succ n))
+spectrum-C-S⁰ : (n : ℤ) → C n (⊙Lift ⊙S⁰) ≃ᴳ πS 0 (E (succ n))
+spectrum-C-S⁰ n = Trunc-⊙Bool→Ω-iso-π₁ (E (succ n)) ∘eᴳ Trunc-⊙→Ω-group-emap-dom ⊙lift-equiv (E (succ n))

@@ -15,26 +15,18 @@ Ptd₀ = Ptd lzero
 ⊙[_,_] : ∀ {i} (A : Type i) (a : A) → Ptd i
 ⊙[_,_] = _,_
 
+{-
+Pointed maps.
+
+Note that [A ⊙→ B] will be pointed as well.
+-}
+
 infixr 0 _⊙→_
 _⊙→_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
 (A , a₀) ⊙→ (B , b₀) = ⊙[ Σ (A → B) (λ f → f a₀ == b₀) , ((λ _ → b₀), idp) ]
 
-infix 30 _⊙≃_
-_⊙≃_ : ∀ {i j} → Ptd i → Ptd j → Type (lmax i j)
-X ⊙≃ Y = Σ (fst (X ⊙→ Y)) (λ {(f , _) → is-equiv f})
-
-⊙≃-in : ∀ {i j} {X : Ptd i} {Y : Ptd j}
-  (e : fst X ≃ fst Y) (p : –> e (snd X) == snd Y)
-  → X ⊙≃ Y
-⊙≃-in (f , ie) p = ((f , p) , ie)
-
-⊙≃-out : ∀ {i j} {X : Ptd i} {Y : Ptd j}
-  → X ⊙≃ Y
-  → Σ (fst X ≃ fst Y) (λ e → –> e (snd X) == snd Y)
-⊙≃-out ((f , p) , ie) = (f , ie) , p
-
 ⊙idf : ∀ {i} (X : Ptd i) → fst (X ⊙→ X)
-⊙idf A = ((λ x → x) , idp)
+⊙idf X = ((λ x → x) , idp)
 
 ⊙cst : ∀ {i j} {X : Ptd i} {Y : Ptd j} → fst (X ⊙→ Y)
 ⊙cst {Y = Y} = ((λ x → snd Y) , idp)
@@ -43,11 +35,6 @@ infixr 80 _⊙∘_
 _⊙∘_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y)) → fst (X ⊙→ Z)
 (g , gpt) ⊙∘ (f , fpt) = (g ∘ f) , (ap g fpt ∙ gpt)
-
-infixr 80 _⊙∘e_
-_⊙∘e_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-  (g : Y ⊙≃ Z) (f : X ⊙≃ Y) → X ⊙≃ Z
-(g , g-eq) ⊙∘e (f , f-eq) = (g ⊙∘ f , g-eq ∘ise f-eq)
 
 ⊙∘-unit-l : ∀ {i j} {X : Ptd i} {Y : Ptd j} (f : fst (X ⊙→ Y))
   → ⊙idf Y ⊙∘ f == f
@@ -66,63 +53,50 @@ _⊙∘e_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
           ap (h ∘ g) fpt ∙ ap h gpt ∙ hpt == ap h (ap g fpt ∙ gpt) ∙ hpt
   lemma idp gpt hpt = idp
 
-⊙Σ : ∀ {i j} (X : Ptd i) → (fst X → Ptd j) → Ptd (lmax i j)
-⊙Σ (A , a₀) Y = ⊙[ Σ A (fst ∘ Y) , (a₀ , snd (Y a₀)) ]
-
-infixr 80 _⊙×_
-_⊙×_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
-X ⊙× Y = ⊙Σ X (λ _ → Y)
-
-⊙dfst : ∀ {i j} {X : Ptd i} (Y : fst X → Ptd j) → fst (⊙Σ X Y ⊙→ X)
-⊙dfst Y = (fst , idp)
-
-⊙fst : ∀ {i j} {X : Ptd i} {Y : Ptd j} → fst (X ⊙× Y ⊙→ X)
-⊙fst = ⊙dfst _
-
-⊙snd : ∀ {i j} {X : Ptd i} {Y : Ptd j} → fst (X ⊙× Y ⊙→ Y)
-⊙snd = (snd , idp)
-
-⊙diag : ∀ {i} {X : Ptd i} → fst (X ⊙→ X ⊙× X)
-⊙diag = ((λ x → (x , x)) , idp)
-
-⊙×-in : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-  → fst (X ⊙→ Y) → fst (X ⊙→ Z) → fst (X ⊙→ Y ⊙× Z)
-⊙×-in (f , fpt) (g , gpt) = (λ x → (f x , g x)) , ap2 _,_ fpt gpt
-
-⊙fst-⊙×-in : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-  (f : fst (X ⊙→ Y)) (g : fst (X ⊙→ Z))
-  → ⊙fst ⊙∘ ⊙×-in f g == f
-⊙fst-⊙×-in (f , idp) (g , idp) = idp
-
-⊙snd-⊙×-in : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-  (f : fst (X ⊙→ Y)) (g : fst (X ⊙→ Z))
-  → ⊙snd ⊙∘ ⊙×-in f g == g
-⊙snd-⊙×-in (f , idp) (g , idp) = idp
-
-⊙×-in-pre∘ : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
-  (f : fst (Y ⊙→ Z)) (g : fst (Y ⊙→ W)) (h : fst (X ⊙→ Y))
-  → ⊙×-in f g ⊙∘ h == ⊙×-in (f ⊙∘ h) (g ⊙∘ h)
-⊙×-in-pre∘ (f , idp) (g , idp) (h , idp) = idp
-
-pair⊙→ : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
-  → fst (X ⊙→ Y) → fst (Z ⊙→ W)
-  → fst ((X ⊙× Z) ⊙→ (Y ⊙× W))
-pair⊙→ (f , fpt) (g , gpt) =
-  ((λ {(x , z) → (f x , g z)}) , pair×= fpt gpt)
-
-{- ⊙→ preserves hlevel -}
+-- [⊙→] preserves hlevel
 ⊙→-level : ∀ {i j} {X : Ptd i} {Y : Ptd j} {n : ℕ₋₂}
   → has-level n (fst Y) → has-level n (fst (X ⊙→ Y))
 ⊙→-level pY = Σ-level (Π-level (λ _ → pY)) (λ _ → =-preserves-level _ pY)
 
-{- function extensionality for pointed functions -}
+-- function extensionality for pointed functions
 ⊙λ= : ∀ {i j} {X : Ptd i} {Y : Ptd j} {f g : fst (X ⊙→ Y)}
   (p : ∀ x → fst f x == fst g x) (α : snd f == p (snd X) ∙ snd g)
   → f == g
 ⊙λ= {g = g} p α =
   pair= (λ= p) (↓-app=cst-in (α ∙ ap (λ w → w ∙ snd g) (! (app=-β p _))))
 
-{- Extracting data from an pointed equivalence -}
+{-
+Pointed equivalences
+-}
+
+infix 30 _⊙≃_
+_⊙≃_ : ∀ {i j} → Ptd i → Ptd j → Type (lmax i j)
+X ⊙≃ Y = Σ (fst (X ⊙→ Y)) (λ {(f , _) → is-equiv f})
+
+≃-to-⊙≃ : ∀ {i j} {X : Ptd i} {Y : Ptd j}
+  (e : fst X ≃ fst Y) (p : –> e (snd X) == snd Y)
+  → X ⊙≃ Y
+≃-to-⊙≃ (f , ie) p = ((f , p) , ie)
+
+⊙ide : ∀ {i} (X : Ptd i) → (X ⊙≃ X)
+⊙ide X = ⊙idf X , idf-is-equiv (fst X)
+
+infixr 80 _⊙∘e_
+_⊙∘e_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  (g : Y ⊙≃ Z) (f : X ⊙≃ Y) → X ⊙≃ Z
+(g , g-eq) ⊙∘e (f , f-eq) = (g ⊙∘ f , g-eq ∘ise f-eq)
+
+infix 15 _⊙≃∎
+infixr 10 _⊙≃⟨_⟩_
+
+_⊙≃⟨_⟩_ : ∀ {i j k} (X : Ptd i) {Y : Ptd j} {Z : Ptd k}
+  → X ⊙≃ Y → Y ⊙≃ Z → X ⊙≃ Z
+X ⊙≃⟨ u ⟩ v = v ⊙∘e u
+
+_⊙≃∎ : ∀ {i} (X : Ptd i) → X ⊙≃ X
+_⊙≃∎ = ⊙ide
+
+-- Extracting data from an pointed equivalence
 module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
 
   private
@@ -139,6 +113,10 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
   ⊙<– : fst (Y ⊙→ X)
   ⊙<– = (<– e , ap (<– e) (! p) ∙ <–-inv-l e (snd X))
 
+  infix 120 _⊙⁻¹
+  _⊙⁻¹ : Y ⊙≃ X
+  _⊙⁻¹ = ⊙<– , is-equiv-inv (snd ⊙e)
+
   ⊙<–-inv-l : ⊙<– ⊙∘ ⊙–> == ⊙idf _
   ⊙<–-inv-l = ⊙λ= (<–-inv-l e) $
     ap (<– e) p ∙ ap (<– e) (! p) ∙ <–-inv-l e (snd X)
@@ -148,7 +126,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
          |in-ctx (λ w → w ∙ <–-inv-l e (snd X)) ⟩
     <–-inv-l e (snd X)
       =⟨ ! (∙-unit-r _) ⟩
-    <–-inv-l e (snd X) ∙ idp ∎
+    <–-inv-l e (snd X) ∙ idp =∎
 
   ⊙<–-inv-r : ⊙–> ⊙∘ ⊙<– == ⊙idf _
   ⊙<–-inv-r = ⊙λ= (<–-inv-r e) $
@@ -165,13 +143,83 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
       =⟨ htpy-lemma (<–-inv-r e) p ⟩
     <–-inv-r e (snd Y)
       =⟨ ! (∙-unit-r _) ⟩
-    <–-inv-r e (snd Y) ∙ idp ∎
+    <–-inv-r e (snd Y) ∙ idp =∎
     where
     htpy-lemma : ∀ {i} {A : Type i} {f : A → A}
       (p : ∀ z → f z == z) {x y : A} (q : x == y)
       → (ap f (! q) ∙ p x) ∙ q == p y
     htpy-lemma p idp = ∙-unit-r _
 
-{- Equality of pointed types -}
+module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} (⊙e : X ⊙≃ Y) where
+
+  post⊙∘-is-equiv : is-equiv (λ (k : fst (Z ⊙→ X)) → ⊙–> ⊙e ⊙∘ k)
+  post⊙∘-is-equiv = is-eq f g f-g g-f
+    where f = ⊙–> ⊙e ⊙∘_
+          g = ⊙<– ⊙e ⊙∘_
+          f-g = λ k → ! (⊙∘-assoc (⊙–> ⊙e) (⊙<– ⊙e) k) ∙ ap (_⊙∘ k) (⊙<–-inv-r ⊙e) ∙ ⊙∘-unit-l k
+          g-f = λ k → ! (⊙∘-assoc (⊙<– ⊙e) (⊙–> ⊙e) k) ∙ ap (_⊙∘ k) (⊙<–-inv-l ⊙e) ∙ ⊙∘-unit-l k
+
+  pre⊙∘-is-equiv : is-equiv (λ (k : fst (Y ⊙→ Z)) → k ⊙∘ ⊙–> ⊙e)
+  pre⊙∘-is-equiv = is-eq f g f-g g-f
+    where f = _⊙∘ ⊙–> ⊙e
+          g = _⊙∘ ⊙<– ⊙e
+          f-g = λ k → ⊙∘-assoc k (⊙<– ⊙e) (⊙–> ⊙e) ∙ ap (k ⊙∘_) (⊙<–-inv-l ⊙e) ∙ ⊙∘-unit-r k
+          g-f = λ k → ⊙∘-assoc k (⊙–> ⊙e) (⊙<– ⊙e) ∙ ap (k ⊙∘_) (⊙<–-inv-r ⊙e) ∙ ⊙∘-unit-r k
+
+  pre⊙∘-equiv : fst (Y ⊙→ Z) ≃ fst (X ⊙→ Z)
+  pre⊙∘-equiv = _ , pre⊙∘-is-equiv
+
+-- [ua] for pointed types
 ⊙ua : ∀ {i} {X Y : Ptd i} → X ⊙≃ Y → X == Y
 ⊙ua ((f , p) , ie) = pair= (ua (f , ie)) (↓-idf-ua-in (f , ie) p)
+
+{-
+Pointed Σ
+-}
+
+⊙Σ : ∀ {i j} (X : Ptd i) → (fst X → Ptd j) → Ptd (lmax i j)
+⊙Σ (A , a₀) Y = ⊙[ Σ A (fst ∘ Y) , (a₀ , snd (Y a₀)) ]
+
+infixr 80 _⊙×_
+_⊙×_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
+X ⊙× Y = ⊙Σ X (λ _ → Y)
+
+-- XXX Do we really need two versions of [⊙fst]?
+⊙fstᵈ : ∀ {i j} {X : Ptd i} (Y : fst X → Ptd j) → fst (⊙Σ X Y ⊙→ X)
+⊙fstᵈ Y = (fst , idp)
+
+⊙fst : ∀ {i j} {X : Ptd i} {Y : Ptd j} → fst (X ⊙× Y ⊙→ X)
+⊙fst = ⊙fstᵈ _
+
+⊙snd : ∀ {i j} {X : Ptd i} {Y : Ptd j} → fst (X ⊙× Y ⊙→ Y)
+⊙snd = (snd , idp)
+
+⊙diag : ∀ {i} {X : Ptd i} → fst (X ⊙→ X ⊙× X)
+⊙diag = ((λ x → (x , x)) , idp)
+
+⊙fanout : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  → fst (X ⊙→ Y) → fst (X ⊙→ Z) → fst (X ⊙→ Y ⊙× Z)
+⊙fanout (f , fpt) (g , gpt) = fanout f g , pair×= fpt gpt
+
+⊙fst-fanout : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  (f : fst (X ⊙→ Y)) (g : fst (X ⊙→ Z))
+  → ⊙fst ⊙∘ ⊙fanout f g == f
+⊙fst-fanout (f , idp) (g , idp) = idp
+
+⊙snd-fanout : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  (f : fst (X ⊙→ Y)) (g : fst (X ⊙→ Z))
+  → ⊙snd ⊙∘ ⊙fanout f g == g
+⊙snd-fanout (f , idp) (g , idp) = idp
+
+⊙fanout-pre∘ : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
+  (f : fst (Y ⊙→ Z)) (g : fst (Y ⊙→ W)) (h : fst (X ⊙→ Y))
+  → ⊙fanout f g ⊙∘ h == ⊙fanout (f ⊙∘ h) (g ⊙∘ h)
+⊙fanout-pre∘ (f , idp) (g , idp) (h , idp) = idp
+
+⊙×-fmap : ∀ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
+  → fst (X ⊙→ X') → fst (Y ⊙→ Y') → fst (X ⊙× Y ⊙→ X' ⊙× Y')
+⊙×-fmap (f , fpt) (g , gpt) = ×-fmap f g , pair×= fpt gpt
+
+⊙×-emap : ∀ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
+  → X ⊙≃ X' → Y ⊙≃ Y' → X ⊙× Y ⊙≃ X' ⊙× Y'
+⊙×-emap (F , F-ise) (G , G-ise) = ⊙×-fmap F G , ×-isemap F-ise G-ise

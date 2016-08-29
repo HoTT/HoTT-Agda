@@ -13,32 +13,31 @@ Unit-group-structure = record
   { ident = unit
   ; inv = λ _ → unit
   ; comp = λ _ _ → unit
-  ; unitl = λ _ → idp
-  ; unitr = λ _ → idp
+  ; unit-l = λ _ → idp
+  ; unit-r = λ _ → idp
   ; assoc = λ _ _ _ → idp
-  ; invr = λ _ → idp
-  ; invl = λ _ → idp
+  ; inv-r = λ _ → idp
+  ; inv-l = λ _ → idp
   }
 
 Unit-group : Group lzero
 Unit-group = group _ Unit-is-set Unit-group-structure
 
-Lift-Unit-group : ∀ {i} → Group i
-Lift-Unit-group = Lift-group Unit-group
+0ᴳ = Unit-group
 
-0ᴳ = Lift-Unit-group
+contr-iso-0ᴳ : ∀ {i} (G : Group i) → is-contr (Group.El G) → G ≃ᴳ 0ᴳ
+contr-iso-0ᴳ G pA = ≃-to-≃ᴳ (contr-equiv-Unit pA) (λ _ _ → idp)
 
+{-
 contr-is-0ᴳ : ∀ {i} (G : Group i) → is-contr (Group.El G) → G == 0ᴳ
-contr-is-0ᴳ G pA = group-ua
-  (group-hom (λ _ → lift unit) (λ _ _ → idp) , snd (contr-equiv-LiftUnit pA))
+contr-is-0ᴳ G pA = uaᴳ $ contr-iso-0ᴳ G pA
+-}
 
-0ᴳ-hom-out-level : ∀ {i j} {G : Group i}
-  → is-contr (0ᴳ {j} →ᴳ G)
+0ᴳ-hom-out-level : ∀ {i} {G : Group i}
+  → is-contr (0ᴳ →ᴳ G)
 0ᴳ-hom-out-level {G = G} =
-  (cst-hom ,
-   λ φ → hom= _ _ (λ= (λ {(lift unit) → ! (GroupHom.pres-ident φ)})))
+  cst-hom , λ φ → group-hom= $ λ= λ _ → ! (GroupHom.pres-ident φ)
 
-0ᴳ-hom-in-level : ∀ {i j} {G : Group i}
-  → is-contr (G →ᴳ 0ᴳ {j})
-0ᴳ-hom-in-level {G = G} =
-  (cst-hom , λ φ → hom= _ _ (λ= (λ _ → idp)))
+0ᴳ-hom-in-level : ∀ {i} {G : Group i}
+  → is-contr (G →ᴳ 0ᴳ)
+0ᴳ-hom-in-level {G = G} = cst-hom , λ φ → group-hom= $ λ= λ _ → idp

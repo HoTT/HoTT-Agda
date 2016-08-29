@@ -52,17 +52,17 @@ module _ where
     private
       lhs : apd f (loopT1 ∙ loopT2) == loopT1* ∙ᵈ loopT2*
       lhs =
-        apd f (loopT1 ∙ loopT2)                   =⟨ apd-∙ f loopT1 loopT2 ⟩
+        apd f (loopT1 ∙ loopT2)                 =⟨ apd-∙ f loopT1 loopT2 ⟩
         apd f loopT1 ∙ᵈ apd f loopT2            =⟨ loopT1-β |in-ctx (λ u → u ∙ᵈ apd f loopT2) ⟩
         loopT1* ∙ᵈ apd f loopT2                 =⟨ loopT2-β |in-ctx (λ u → loopT1* ∙ᵈ u) ⟩
-        loopT1* ∙ᵈ loopT2* ∎
+        loopT1* ∙ᵈ loopT2* =∎
 
       rhs : apd f (loopT2 ∙ loopT1) == loopT2* ∙ᵈ loopT1*
       rhs =
-        apd f (loopT2 ∙ loopT1)                   =⟨ apd-∙ f loopT2 loopT1 ⟩
+        apd f (loopT2 ∙ loopT1)                 =⟨ apd-∙ f loopT2 loopT1 ⟩
         apd f loopT2 ∙ᵈ apd f loopT1            =⟨ loopT2-β |in-ctx (λ u → u ∙ᵈ apd f loopT1) ⟩
         loopT2* ∙ᵈ apd f loopT1                 =⟨ loopT1-β |in-ctx (λ u → loopT2* ∙ᵈ u) ⟩
-        loopT2* ∙ᵈ loopT1* ∎
+        loopT2* ∙ᵈ loopT1* =∎
 
     postulate  -- HIT
       surfT-β : apd (apd f) surfT == lhs ◃ (surfT* ▹! rhs)
@@ -90,14 +90,14 @@ module TorusRec {i} {A : Type i} (baseT* : A) (loopT1* loopT2* : baseT* == baseT
       ap f (loopT1 ∙ loopT2)      =⟨ ap-∙ f loopT1 loopT2 ⟩
       ap f loopT1 ∙ ap f loopT2   =⟨ loopT1-β |in-ctx (λ u → u ∙ ap f loopT2) ⟩
       loopT1* ∙ ap f loopT2       =⟨ loopT2-β |in-ctx (λ u → loopT1* ∙ u) ⟩
-      loopT1* ∙ loopT2* ∎
+      loopT1* ∙ loopT2* =∎
 
     rhs : ap f (loopT2 ∙ loopT1) == loopT2* ∙ loopT1*
     rhs =
       ap f (loopT2 ∙ loopT1)      =⟨ ap-∙ f loopT2 loopT1 ⟩
       ap f loopT2 ∙ ap f loopT1   =⟨ loopT2-β |in-ctx (λ u → u ∙ ap f loopT1) ⟩
       loopT2* ∙ ap f loopT1       =⟨ loopT1-β |in-ctx (λ u → loopT2* ∙ u) ⟩
-      loopT2* ∙ loopT1* ∎
+      loopT2* ∙ loopT1* =∎
 
   postulate  -- Does not look easy
     surfT-β : ap (ap f) surfT == (lhs ∙ surfT*) ∙ (! rhs)

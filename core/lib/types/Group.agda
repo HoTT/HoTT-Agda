@@ -2,6 +2,7 @@
 
 open import lib.Basics
 open import lib.types.Pi
+open import lib.types.Pointed
 
 module lib.types.Group where
 
@@ -9,14 +10,83 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
   : Type i where
   constructor group-structure
   field
-    ident : El
-    inv : El → El
-    comp : El → El → El
-    unitl : ∀ a → comp ident a == a
-    unitr : ∀ a → comp a ident == a
-    assoc   : ∀ a b c → comp (comp a b) c == comp a (comp b c)
-    invl    : ∀ a → (comp (inv a) a) == ident
-    invr    : ∀ a → (comp a (inv a)) == ident
+    ident  : El
+    inv    : El → El
+    comp   : El → El → El
+    unit-l : ∀ a → comp ident a == a
+    unit-r : ∀ a → comp a ident == a
+    assoc  : ∀ a b c → comp (comp a b) c == comp a (comp b c)
+    inv-l  : ∀ a → (comp (inv a) a) == ident
+    inv-r  : ∀ a → (comp a (inv a)) == ident
+
+  ⊙El : Ptd i
+  ⊙El = (El , ident)
+
+  private
+    infix 80 _⊙_
+    _⊙_ = comp
+
+  abstract
+    inv-unique-l : (g h : El) → (g ⊙ h == ident) → inv h == g
+    inv-unique-l g h p =
+      inv h              =⟨ ! (unit-l (inv h)) ⟩
+      ident ⊙ inv h      =⟨ ! p |in-ctx (λ w → w ⊙ inv h) ⟩
+      (g ⊙ h) ⊙ inv h    =⟨ assoc g h (inv h) ⟩
+      g ⊙ (h ⊙ inv h)    =⟨ inv-r h |in-ctx (λ w → g ⊙ w) ⟩
+      g ⊙ ident          =⟨ unit-r g ⟩
+      g                  =∎
+
+    inv-unique-r : (g h : El) → (g ⊙ h == ident) → inv g == h
+    inv-unique-r g h p =
+      inv g              =⟨ ! (unit-r (inv g)) ⟩
+      inv g ⊙ ident      =⟨ ! p |in-ctx (λ w → inv g ⊙ w) ⟩
+      inv g ⊙ (g ⊙ h)    =⟨ ! (assoc (inv g) g h) ⟩
+      (inv g ⊙ g) ⊙ h    =⟨ inv-l g |in-ctx (λ w → w ⊙ h) ⟩
+      ident ⊙ h          =⟨ unit-l h ⟩
+      h                  =∎
+
+    inv-ident : inv ident == ident
+    inv-ident = inv-unique-l ident ident (unit-l ident)
+
+    inv-comp : (g₁ g₂ : El) → inv (g₁ ⊙ g₂) == inv g₂ ⊙ inv g₁
+    inv-comp g₁ g₂ =
+      inv-unique-r (g₁ ⊙ g₂) (inv g₂ ⊙ inv g₁) $
+        (g₁ ⊙ g₂) ⊙ (inv g₂ ⊙ inv g₁)
+          =⟨ assoc g₁ g₂ (inv g₂ ⊙ inv g₁) ⟩
+        g₁ ⊙ (g₂ ⊙ (inv g₂ ⊙ inv g₁))
+          =⟨ ! (assoc g₂ (inv g₂) (inv g₁)) |in-ctx (λ w → g₁ ⊙ w) ⟩
+        g₁ ⊙ ((g₂ ⊙ inv g₂) ⊙ inv g₁)
+          =⟨ inv-r g₂ |in-ctx (λ w → g₁ ⊙ (w ⊙ inv g₁)) ⟩
+        g₁ ⊙ (ident ⊙ inv g₁)
+          =⟨ unit-l (inv g₁) |in-ctx (λ w → g₁ ⊙ w) ⟩
+        g₁ ⊙ inv g₁
+          =⟨ inv-r g₁ ⟩
+        ident =∎
+
+    inv-inv : (g : El) → inv (inv g) == g
+    inv-inv g = inv-unique-r (inv g) g (inv-l g)
+
+    cancel-l : (g : El) {h k : El} → g ⊙ h == g ⊙ k → h == k
+    cancel-l g {h} {k} p =
+      h                  =⟨ ! (unit-l h) ⟩
+      ident ⊙ h          =⟨ ap (λ w → w ⊙ h) (! (inv-l g)) ⟩
+      (inv g ⊙ g) ⊙ h    =⟨ assoc (inv g) g h ⟩
+      inv g ⊙ (g ⊙ h)    =⟨ ap (λ w → inv g ⊙ w) p ⟩
+      inv g ⊙ (g ⊙ k)    =⟨ ! (assoc (inv g) g k) ⟩
+      (inv g ⊙ g) ⊙ k    =⟨ ap (λ w → w ⊙ k) (inv-l g) ⟩
+      ident ⊙ k          =⟨ unit-l k ⟩
+      k =∎
+
+    cancel-r : (g : El) {h k : El} → h ⊙ g == k ⊙ g → h == k
+    cancel-r g {h} {k} p =
+      h                  =⟨ ! (unit-r h) ⟩
+      h ⊙ ident          =⟨ ap (λ w → h ⊙ w) (! (inv-r g)) ⟩
+      h ⊙ (g ⊙ inv g)    =⟨ ! (assoc h g (inv g)) ⟩
+      (h ⊙ g) ⊙ inv g    =⟨ ap (λ w → w ⊙ inv g) p ⟩
+      (k ⊙ g) ⊙ inv g    =⟨ assoc k g (inv g) ⟩
+      k ⊙ (g ⊙ inv g)    =⟨ ap (λ w → k ⊙ w) (inv-r g) ⟩
+      k ⊙ ident          =⟨ unit-r k ⟩
+      k =∎
 
 record Group i : Type (lsucc i) where
   constructor group
@@ -25,9 +95,6 @@ record Group i : Type (lsucc i) where
     El-level : has-level 0 El
     group-struct : GroupStructure El
   open GroupStructure group-struct public
-
-  ⊙El : Σ (Type i) (λ A → A)
-  ⊙El = (El , ident)
 
 Group₀ : Type (lsucc lzero)
 Group₀ = Group lzero
@@ -41,12 +108,12 @@ module _ where
   abstract
     group-structure= : ∀ {i} {A : Type i} (pA : has-level 0 A)
       {id₁ id₂ : A} {inv₁ inv₂ : A → A} {comp₁ comp₂ : A → A → A}
-      → ∀ {unitl₁ unitl₂} → ∀ {unitr₁ unitr₂} → ∀ {assoc₁ assoc₂}
-      → ∀ {invr₁ invr₂} → ∀ {invl₁ invl₂}
+      → ∀ {unit-l₁ unit-l₂} → ∀ {unit-r₁ unit-r₂} → ∀ {assoc₁ assoc₂}
+      → ∀ {inv-r₁ inv-r₂} → ∀ {inv-l₁ inv-l₂}
       → (id₁ == id₂) → (inv₁ == inv₂) → (comp₁ == comp₂)
       → Path {A = GroupStructure A}
-          (group-structure id₁ inv₁ comp₁ unitl₁ unitr₁ assoc₁ invl₁ invr₁)
-          (group-structure id₂ inv₂ comp₂ unitl₂ unitr₂ assoc₂ invl₂ invr₂)
+          (group-structure id₁ inv₁ comp₁ unit-l₁ unit-r₁ assoc₁ inv-l₁ inv-r₁)
+          (group-structure id₂ inv₂ comp₂ unit-l₂ unit-r₂ assoc₂ inv-l₂ inv-r₂)
     group-structure= pA {id₁ = id₁} {inv₁ = inv₁} {comp₁ = comp₁} idp idp idp =
       ap5 (group-structure id₁ inv₁ comp₁)
         (prop-has-all-paths (Π-level (λ _ → pA _ _)) _ _)
@@ -71,71 +138,3 @@ module _ where
       → (comp GS == comp HS [ (λ C → C → C → C) ↓ p ])
       → GS == HS [ GroupStructure ↓ p ]
     ↓-group-structure= A-level idp = group-structure= A-level
-
-module _ {i} (G : Group i) where
-  private
-    open Group G
-    infix 80 _⊙_
-    _⊙_ = comp
-
-  group-inv-unique-l : (g h : El) → (g ⊙ h == ident) → inv h == g
-  group-inv-unique-l g h p =
-    inv h              =⟨ ! (unitl (inv h)) ⟩
-    ident ⊙ inv h      =⟨ ! p |in-ctx (λ w → w ⊙ inv h) ⟩
-    (g ⊙ h) ⊙ inv h    =⟨ assoc g h (inv h) ⟩
-    g ⊙ (h ⊙ inv h)    =⟨ invr h |in-ctx (λ w → g ⊙ w) ⟩
-    g ⊙ ident          =⟨ unitr g ⟩
-    g                     ∎
-
-  group-inv-unique-r : (g h : El) → (g ⊙ h == ident) → inv g == h
-  group-inv-unique-r g h p =
-    inv g              =⟨ ! (unitr (inv g)) ⟩
-    inv g ⊙ ident      =⟨ ! p |in-ctx (λ w → inv g ⊙ w) ⟩
-    inv g ⊙ (g ⊙ h)    =⟨ ! (assoc (inv g) g h) ⟩
-    (inv g ⊙ g) ⊙ h    =⟨ invl g |in-ctx (λ w → w ⊙ h) ⟩
-    ident ⊙ h          =⟨ unitl h ⟩
-    h                     ∎
-
-  group-inv-ident : inv ident == ident
-  group-inv-ident =
-    group-inv-unique-l ident ident (unitl ident)
-
-  group-inv-comp : (g₁ g₂ : El) → inv (g₁ ⊙ g₂) == inv g₂ ⊙ inv g₁
-  group-inv-comp g₁ g₂ =
-    group-inv-unique-r (g₁ ⊙ g₂) (inv g₂ ⊙ inv g₁) $
-      (g₁ ⊙ g₂) ⊙ (inv g₂ ⊙ inv g₁)
-        =⟨ assoc g₁ g₂ (inv g₂ ⊙ inv g₁) ⟩
-      g₁ ⊙ (g₂ ⊙ (inv g₂ ⊙ inv g₁))
-        =⟨ ! (assoc g₂ (inv g₂) (inv g₁)) |in-ctx (λ w → g₁ ⊙ w) ⟩
-      g₁ ⊙ ((g₂ ⊙ inv g₂) ⊙ inv g₁)
-        =⟨ invr g₂ |in-ctx (λ w → g₁ ⊙ (w ⊙ inv g₁)) ⟩
-      g₁ ⊙ (ident ⊙ inv g₁)
-        =⟨ unitl (inv g₁) |in-ctx (λ w → g₁ ⊙ w) ⟩
-      g₁ ⊙ inv g₁
-        =⟨ invr g₁ ⟩
-      ident ∎
-
-  group-inv-inv : (g : El) → inv (inv g) == g
-  group-inv-inv g = group-inv-unique-r (inv g) g (invl g)
-
-  group-cancel-l : (g : El) {h k : El} → g ⊙ h == g ⊙ k → h == k
-  group-cancel-l g {h} {k} p =
-    h                  =⟨ ! (unitl h) ⟩
-    ident ⊙ h          =⟨ ap (λ w → w ⊙ h) (! (invl g)) ⟩
-    (inv g ⊙ g) ⊙ h    =⟨ assoc (inv g) g h ⟩
-    inv g ⊙ (g ⊙ h)    =⟨ ap (λ w → inv g ⊙ w) p ⟩
-    inv g ⊙ (g ⊙ k)    =⟨ ! (assoc (inv g) g k) ⟩
-    (inv g ⊙ g) ⊙ k    =⟨ ap (λ w → w ⊙ k) (invl g) ⟩
-    ident ⊙ k          =⟨ unitl k ⟩
-    k ∎
-
-  group-cancel-r : (g : El) {h k : El} → h ⊙ g == k ⊙ g → h == k
-  group-cancel-r g {h} {k} p =
-    h                  =⟨ ! (unitr h) ⟩
-    h ⊙ ident          =⟨ ap (λ w → h ⊙ w) (! (invr g)) ⟩
-    h ⊙ (g ⊙ inv g)    =⟨ ! (assoc h g (inv g)) ⟩
-    (h ⊙ g) ⊙ inv g    =⟨ ap (λ w → w ⊙ inv g) p ⟩
-    (k ⊙ g) ⊙ inv g    =⟨ assoc k g (inv g) ⟩
-    k ⊙ (g ⊙ inv g)    =⟨ ap (λ w → k ⊙ w) (invr g) ⟩
-    k ⊙ ident          =⟨ unitr k ⟩
-    k ∎

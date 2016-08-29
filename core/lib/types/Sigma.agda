@@ -10,6 +10,13 @@ A × B = Σ A (λ _ → B)
 
 infixr 80 _×_
 
+fanout : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
+  → (A → B) → (A → C) → (A → B × C)
+fanout f g x = f x , g x
+
+diag : ∀ {i} {A : Type i} → (A → A × A)
+diag a = a , a
+
 module _ {i j} {A : Type i} {B : A → Type j} where
 
   pair : (a : A) (b : B a) → Σ A B
@@ -72,14 +79,14 @@ module _ {i j} {A : Type i} {B : A → Type j} where
   =Σ : (x y : Σ A B) → Type (lmax i j)
   =Σ (a , b) (a' , b') = Σ (a == a') (λ p → b == b' [ B ↓ p ])
 
-  =Σ-eqv : (x y : Σ A B) →  (=Σ x y) ≃ (x == y)
-  =Σ-eqv x y =
+  =Σ-econv : (x y : Σ A B) →  (=Σ x y) ≃ (x == y)
+  =Σ-econv x y =
     equiv (λ pq → pair= (fst pq) (snd pq)) (λ p → fst= p , snd= p)
           (λ p → ! (pair=-η p))
           (λ pq → pair= (fst=-β (fst pq) (snd pq)) (snd=-β (fst pq) (snd pq)))
 
-  =Σ-path : (x y : Σ A B) → (=Σ x y) == (x == y)
-  =Σ-path x y = ua (=Σ-eqv x y)
+  =Σ-conv : (x y : Σ A B) → (=Σ x y) == (x == y)
+  =Σ-conv x y = ua (=Σ-econv x y)
 
 Σ= : ∀ {i j} {A A' : Type i} (p : A == A') {B : A → Type j} {B' : A' → Type j}
   (q : B == B' [ (λ X → (X → Type j)) ↓ p ]) → Σ A B == Σ A' B'
@@ -93,7 +100,7 @@ abstract
   Σ-level {n = ⟨-2⟩} p q =
     ((fst p , (fst (q (fst p)))) ,
       (λ y → pair= (snd p _) (from-transp! _ _ (snd (q _) _))))
-  Σ-level {n = S n} p q = λ x y → equiv-preserves-level (=Σ-eqv x y)
+  Σ-level {n = S n} p q = λ x y → equiv-preserves-level (=Σ-econv x y)
     (Σ-level (p _ _)
       (λ _ → equiv-preserves-level ((to-transp-equiv _ _)⁻¹) (q _ _ _)))
 
@@ -103,11 +110,18 @@ abstract
 
 -- Equivalences in a Σ-type
 
-equiv-Σ-fst : ∀ {i j k} {A : Type i} {B : Type j} (P : B → Type k) {h : A → B}
-                  → is-equiv h → (Σ A (P ∘ h)) ≃ (Σ B P)
-equiv-Σ-fst {A = A} {B = B} P {h = h} e = equiv f g f-g g-f
-  where f : Σ A (P ∘ h) → Σ B P
-        f (a , r) = (h a , r)
+Σ-fmap-l : ∀ {i j k} {A : Type i} {B : Type j} (P : B → Type k)
+  → (f : A → B) → (Σ A (P ∘ f) → Σ B P)
+Σ-fmap-l P f (a , r) = (f a , r)
+
+×-fmap-l : ∀ {i₀ i₁ j} {A₀ : Type i₀} {A₁ : Type i₁} (B : Type j)
+  → (f : A₀ → A₁) → (A₀ × B → A₁ × B)
+×-fmap-l B = Σ-fmap-l (λ _ → B)
+
+Σ-isemap-l : ∀ {i j k} {A : Type i} {B : Type j} (P : B → Type k) {h : A → B}
+  → is-equiv h → is-equiv (Σ-fmap-l P h)
+Σ-isemap-l {A = A} {B = B} P {h} e = is-eq _ g f-g g-f
+  where f = Σ-fmap-l P h
 
         g : Σ B P → Σ A (P ∘ h)
         g (b , s) = (is-equiv.g e b , transport P (! (is-equiv.f-g e b)) s)
@@ -120,36 +134,82 @@ equiv-Σ-fst {A = A} {B = B} P {h = h} e = equiv f g f-g g-f
           pair= (is-equiv.g-f e a)
                 (transport (λ q → transport P (! q) r == r [ P ∘ h ↓ is-equiv.g-f e a ])
                            (is-equiv.adj e a)
-                           (trans-ap-↓ P h (is-equiv.g-f e a) r) )
+                           (trans-ap-↓ P h (is-equiv.g-f e a) r))
 
-equiv-Σ-snd : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
-  → (∀ x → B x ≃ C x) → Σ A B ≃ Σ A C
-equiv-Σ-snd {A = A} {B = B} {C = C} k = equiv f g f-g g-f
-  where f : Σ A B → Σ A C
-        f (a , b) = (a , fst (k a) b)
+×-isemap-l : ∀ {i₀ i₁ j} {A₀ : Type i₀} {A₁ : Type i₁} (B : Type j) {h : A₀ → A₁}
+  → is-equiv h → is-equiv (×-fmap-l B h)
+×-isemap-l B = Σ-isemap-l (λ _ → B)
+
+Σ-emap-l : ∀ {i j k} {A : Type i} {B : Type j} (P : B → Type k)
+  → (e : A ≃ B) → (Σ A (P ∘ –> e) ≃ Σ B P)
+Σ-emap-l P (f , e) = _ , Σ-isemap-l P e
+
+×-emap-l : ∀ {i₀ i₁ j} {A₀ : Type i₀} {A₁ : Type i₁} (B : Type j)
+  → (e : A₀ ≃ A₁) → (A₀ × B ≃ A₁ × B)
+×-emap-l B = Σ-emap-l (λ _ → B)
+
+Σ-fmap-r : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
+  → (∀ x → B x → C x) → (Σ A B → Σ A C)
+Σ-fmap-r h (a , b) = (a , h a b)
+
+×-fmap-r : ∀ {i j₀ j₁} (A : Type i) {B₀ : Type j₀} {B₁ : Type j₁}
+  → (h : B₀ → B₁) → (A × B₀ → A × B₁)
+×-fmap-r A h = Σ-fmap-r (λ _ → h)
+
+Σ-isemap-r : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
+  {h : ∀ x → B x → C x} → (∀ x → is-equiv (h x)) → is-equiv (Σ-fmap-r h)
+Σ-isemap-r {A = A} {B = B} {C = C} {h} k = is-eq _ g f-g g-f
+  where f = Σ-fmap-r h
 
         g : Σ A C → Σ A B
-        g (a , c) = (a , is-equiv.g (snd (k a)) c)
+        g (a , c) = (a , is-equiv.g (k a) c)
 
         f-g : ∀ p → f (g p) == p
-        f-g (a , c) = pair= idp (is-equiv.f-g (snd (k a)) c)
+        f-g (a , c) = pair= idp (is-equiv.f-g (k a) c)
 
         g-f : ∀ p → g (f p) == p
-        g-f (a , b) = pair= idp (is-equiv.g-f (snd (k a)) b)
+        g-f (a , b) = pair= idp (is-equiv.g-f (k a) b)
+
+×-isemap-r : ∀ {i j₀ j₁} (A : Type i) {B₀ : Type j₀} {B₁ : Type j₁}
+  → {h : B₀ → B₁} → is-equiv h → is-equiv (×-fmap-r A h)
+×-isemap-r A e = Σ-isemap-r (λ _ → e)
+
+Σ-emap-r : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
+  → (∀ x → B x ≃ C x) → (Σ A B ≃ Σ A C)
+Σ-emap-r k = _ , Σ-isemap-r (λ x → snd (k x))
+
+×-emap-r : ∀ {i j₀ j₁} (A : Type i) {B₀ : Type j₀} {B₁ : Type j₁}
+  → (e : B₀ ≃ B₁) → (A × B₀ ≃ A × B₁)
+×-emap-r A e = Σ-emap-r (λ _ → e)
+
+{-
+-- 2016/08/20 favonia: no one is using the following two functions.
 
 -- Two ways of simultaneously applying equivalences in each component.
 module _ {i₀ i₁ j₀ j₁} {A₀ : Type i₀} {A₁ : Type i₁}
          {B₀ : A₀ → Type j₀} {B₁ : A₁ → Type j₁} where
-  equiv-Σ : (u : A₀ ≃ A₁) (v : ∀ a → B₀ (<– u a) ≃ B₁ a) → Σ A₀ B₀ ≃ Σ A₁ B₁
-  equiv-Σ u v = Σ A₀ B₀           ≃⟨ equiv-Σ-fst _ (snd (u ⁻¹)) ⁻¹ ⟩
-                Σ A₁ (B₀ ∘ <– u)  ≃⟨ equiv-Σ-snd v ⟩
+  Σ-emap : (u : A₀ ≃ A₁) (v : ∀ a → B₀ (<– u a) ≃ B₁ a) → Σ A₀ B₀ ≃ Σ A₁ B₁
+  Σ-emap u v = Σ A₀ B₀           ≃⟨ Σ-emap-l _ (u ⁻¹) ⁻¹ ⟩
+               Σ A₁ (B₀ ∘ <– u)  ≃⟨ Σ-emap-r v ⟩
+               Σ A₁ B₁           ≃∎
+
+  Σ-emap' : (u : A₀ ≃ A₁) (v : ∀ a → B₀ a ≃ B₁ (–> u a)) → Σ A₀ B₀ ≃ Σ A₁ B₁
+  Σ-emap' u v = Σ A₀ B₀           ≃⟨ Σ-emap-r v ⟩
+                Σ A₀ (B₁ ∘ –> u)  ≃⟨ Σ-emap-l _ u ⟩
                 Σ A₁ B₁           ≃∎
+-}
 
-  equiv-Σ' : (u : A₀ ≃ A₁) (v : ∀ a → B₀ a ≃ B₁ (–> u a)) → Σ A₀ B₀ ≃ Σ A₁ B₁
-  equiv-Σ' u v = Σ A₀ B₀           ≃⟨ equiv-Σ-snd v ⟩
-                 Σ A₀ (B₁ ∘ –> u)  ≃⟨ equiv-Σ-fst _ (snd u) ⟩
-                 Σ A₁ B₁           ≃∎
+×-fmap : ∀ {i₀ i₁ j₀ j₁} {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
+  → (h : A₀ → A₁) (k : B₀ → B₁) → (A₀ × B₀ → A₁ × B₁)
+×-fmap u v = ×-fmap-r _ v ∘ ×-fmap-l _ u
 
+×-isemap : ∀ {i₀ i₁ j₀ j₁} {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
+  {h : A₀ → A₁} {k : B₀ → B₁} → is-equiv h → is-equiv k → is-equiv (×-fmap h k)
+×-isemap eh ek = ×-isemap-r _ ek ∘ise ×-isemap-l _ eh
+
+×-emap : ∀ {i₀ i₁ j₀ j₁} {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
+  → (u : A₀ ≃ A₁) (v : B₀ ≃ B₁) → (A₀ × B₀ ≃ A₁ × B₁)
+×-emap u v = ×-emap-r _ v ∘e ×-emap-l _ u
 
 -- Implementation of [_∙'_] on Σ
 Σ-∙' : ∀ {i j} {A : Type i} {B : A → Type j}
@@ -334,8 +394,8 @@ module _ {i j} {A : Type i} {B : Type j} where
 
 module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} where
   Σ₂-×-comm : Σ (Σ A B) (λ ab → C (fst ab)) ≃ Σ (Σ A C) (λ ac → B (fst ac))
-  Σ₂-×-comm = Σ-assoc ⁻¹ ∘e equiv-Σ-snd (λ a → ×-comm) ∘e Σ-assoc
+  Σ₂-×-comm = Σ-assoc ⁻¹ ∘e Σ-emap-r (λ a → ×-comm) ∘e Σ-assoc
 
 module _ {i j k} {A : Type i} {B : Type j} {C : A → B → Type k} where
   Σ₁-×-comm : Σ A (λ a → Σ B (λ b → C a b)) ≃ Σ B (λ b → Σ A (λ a → C a b))
-  Σ₁-×-comm = Σ-assoc ∘e equiv-Σ-fst _ (snd ×-comm) ∘e Σ-assoc ⁻¹
+  Σ₁-×-comm = Σ-assoc ∘e Σ-emap-l _ ×-comm ∘e Σ-assoc ⁻¹

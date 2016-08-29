@@ -112,5 +112,5 @@ module CofiberComp where
   eq : fst (⊙Cof (⊙cfcod' f ⊙∘ g)) ≃ fst (⊙Cof ⊙h)
   eq = equiv into out into-out out-into
 
-  ⊙path : ⊙Cof (⊙cfcod' f ⊙∘ g) == ⊙Cof ⊙h
-  ⊙path = ⊙ua (⊙≃-in eq idp)
+  ⊙eq : ⊙Cof (⊙cfcod' f ⊙∘ g) ⊙≃ ⊙Cof ⊙h
+  ⊙eq = ≃-to-⊙≃ eq idp

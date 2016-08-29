@@ -108,7 +108,7 @@ module _ {i} (Pick : Lift {j = i} Bool → Ptd i) where
              |in-ctx (λ w → ! w ∙ ap f (bwglue (lift false))) ⟩
         ap f (bwglue (lift false))
           =⟨ F.glue-β (lift false) ⟩
-        wglue ∎)
+        wglue =∎)
 
     g-f : ∀ bw → g (f bw) == bw
     g-f = BigWedge-elim
@@ -123,4 +123,4 @@ module _ {i} (Pick : Lift {j = i} Bool → Ptd i) where
 
   BigWedge-Bool-⊙path :
     ⊙BigWedge Pick == ⊙Wedge (Pick (lift true)) (Pick (lift false))
-  BigWedge-Bool-⊙path = ⊙ua (⊙≃-in BigWedge-Bool-equiv idp)
+  BigWedge-Bool-⊙path = ⊙ua (≃-to-⊙≃ BigWedge-Bool-equiv idp)

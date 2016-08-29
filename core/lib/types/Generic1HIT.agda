@@ -66,7 +66,7 @@ module RecType {k} (C : A → Type k) (D : (b : B) → C (g b) ≃ C (h b)) wher
   coe-pp-β b d =
     coe (ap f (pp b)) d   =⟨ pp-β _ |in-ctx (λ u → coe u d) ⟩
     coe (ua (D b)) d      =⟨ coe-β (D b) d ⟩
-    –> (D b) d ∎
+    –> (D b) d            =∎
 
   -- Dependent path in [P] over [pp b]
   module _ {b : B} {d : C (g b)} {d' : C (h b)} where
@@ -84,7 +84,7 @@ module RecType {k} (C : A → Type k) (D : (b : B) → C (g b) ≃ C (h b)) wher
                  =⟨ to-transp-β f (pp b) (coe-pp-β b d ∙' q) |in-ctx (λ u → ! (coe-pp-β b d) ∙ u) ⟩
       ! (coe-pp-β b d) ∙ (coe-pp-β b d ∙' q)
                  =⟨ lem (coe-pp-β b d) q ⟩
-      q ∎  where
+      q =∎  where
 
         lem : ∀ {i} {A : Type i} {x y z : A} (p : x == y) (q : y == z)
           → ! p ∙ (p ∙' q) == q

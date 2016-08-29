@@ -40,7 +40,7 @@ module WedgeCofiber {i} (X Y : Ptd i) where
       lemma idp idp = idp
 
     ⊙path : ⊙Cof (⊙winl {X = X} {Y = Y}) == Y
-    ⊙path = ⊙ua (⊙≃-in (equiv into out (λ _ → idp) out-into) idp)
+    ⊙path = ⊙ua (≃-to-⊙≃ (equiv into out (λ _ → idp) out-into) idp)
 
     cfcod-over : ⊙cfcod' ⊙winl == ⊙projr X Y
                  [ (λ U → fst (X ⊙∨ Y ⊙→ U)) ↓ ⊙path ]
@@ -78,7 +78,7 @@ module WedgeCofiber {i} (X Y : Ptd i) where
       lemma idp idp = idp
 
     ⊙path : ⊙Cof ⊙winr == X
-    ⊙path = ⊙ua (⊙≃-in (equiv into out (λ _ → idp) out-into) idp)
+    ⊙path = ⊙ua (≃-to-⊙≃ (equiv into out (λ _ → idp) out-into) idp)
 
     cfcod-over : ⊙cfcod' ⊙winr == ⊙projl X Y
                  [ (λ U → fst (X ⊙∨ Y ⊙→ U)) ↓ ⊙path ]

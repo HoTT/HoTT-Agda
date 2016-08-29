@@ -30,7 +30,10 @@ Style and naming conventions
 - Directories are in lowercase and modules are in CamelCase
 - Types are Capitalized unless they represent properties (like `is-prop`)
 - Terms are in lowercase-with-hyphens-between-words
+  unless the words refer to types.
 - Try to avoid names of free variables in identifiers
+
+TODO: principles of variable names
 
 ### Identity type
 
@@ -96,6 +99,13 @@ called `T-level`:
     →-level : (n : ℕ₋₂) → (has-level n B)
            → has-level n (A → B))
 
+Similar suffices include `conn` for connectivity.
+
+### Lemmas of types
+
+Modules of the same name as a type collects useful properties
+given an element of that type. Records have this functionality built-in.
+
 ### Functions and equivalences
 
 - A natural function between two types `A` and `B` is often called `A-to-B`
@@ -111,6 +121,20 @@ We have
     A-to-B-is-equiv : is-equiv (A-to-B)
     A-to-B-equiv : A ≃ B
     A-equiv-B : A ≃ B
+    A-to-B-path : A == B
+    A-is-B : A == B
+
+Another form of equivalences only has the beginning types.
+Suffixes `-econv` may be added for clarity.
+The suffix `-conv` refers to the derived path.
+
+    A : A == B
+    A-econv : A ≃ B
+    A-conv : A == B
+
+TODO: `pres` and `preserves`.
+
+TODO: `-inj` and `-surj` for injectivity and surjectivity.
 
 ### Negative types
 
@@ -130,6 +154,30 @@ rule `n` and elimination rules `e1`, …, `en`, then
 - The equivalence/path between `N=` and `_==_ {N}` is called
 - `N=-equiv`/`N=-path` (TODO: `n=-equiv`/`n=-path` would maybe be more natural).
    Note that this equivalence is usually needed in the direction `N= ≃ _==_ {N}`
+
+If a positive type `N` behaves like a negative one through
+some access function `f : N → M`,
+the property is called `f-ext : (n₁ n₂ : N) → f n₁ = f n₂ → n₁ = n₂` 
+
+### Functoriality
+
+A family of some structures indexed by another structures
+often behaves like a functor which maps functions between structures
+to functions between corresponding structures.
+Here is a list of standardized suffices that denote different kind of functoriality:
+
+- `X-fmap`: `X` maps morphisms to morphisms (covariantly or contravariantly).
+- `X-emap`: `X` maps isomorphisms to isomorphisms.
+- `X-isemap`: Usually a part of `X-emap` which lifts the proof of being an isomorphism.
+
+For types, morphisms are functions and isomorphisms are equivalences.
+Bi-functors are not standardized (yet).
+
+TODO: `X-fmap-id`, `X-fmap-∘`
+
+### Pointed Types
+
+If pointedness can be inferred, `⊙` may be suppressed.
 
 ### Precedence
 

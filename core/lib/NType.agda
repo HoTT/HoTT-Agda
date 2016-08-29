@@ -31,7 +31,7 @@ abstract
     canon-path {.y} {y} idp =
       c y y               =⟨ lemma (! (c y y)) ⟩
       (! (c y y)) ∙ c y y =⟨ !-inv-l (c y y) ⟩
-      idp ∎  where
+      idp =∎  where
 
       lemma : {x y : A} (p : x == y) → c x y == p ∙ c y y
       lemma idp = idp

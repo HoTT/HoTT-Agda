@@ -17,13 +17,13 @@ module _ {i} (G : Group i) (G-abelian : is-abelian G) where
     E (pos m) = ⊙EM m
     E (negsucc m) = ⊙Lift ⊙Unit
 
-    E-spectrum : (n : ℤ) → ⊙Ω (E (succ n)) == E n
+    E-spectrum : (n : ℤ) → ⊙Ω (E (succ n)) ⊙≃ E n
     E-spectrum (pos n) = spectrum n
-    E-spectrum (negsucc O) = ⊙ua $ ⊙≃-in
+    E-spectrum (negsucc O) = ≃-to-⊙≃ {X = ⊙Ω (E 0)}
       (equiv (λ _ → _) (λ _ → idp)
              (λ _ → idp) (prop-has-all-paths (EM-level _ _ _) _))
       idp
-    E-spectrum (negsucc (S n)) = ⊙ua $ ⊙≃-in
+    E-spectrum (negsucc (S n)) = ≃-to-⊙≃ {X = ⊙Ω (E (negsucc n))}
       (equiv (λ _ → _) (λ _ → idp)
              (λ _ → idp) (prop-has-all-paths (Lift-level Unit-is-set _ _) _))
       idp
@@ -33,21 +33,21 @@ module _ {i} (G : Group i) (G-abelian : is-abelian G) where
 
   open CohomologyTheory EM-Cohomology
 
-  EM-dimension : (n : ℤ) → n ≠ 0 → C n (⊙Lift ⊙S⁰) == 0ᴳ
+  EM-dimension : (n : ℤ) → n ≠ 0 → C n (⊙Lift ⊙S⁰) ≃ᴳ 0ᴳ
   EM-dimension (pos O) neq = ⊥-rec (neq idp)
   EM-dimension (pos (S n)) _ =
-    contr-is-0ᴳ _ $ connected-at-level-is-contr
+    contr-iso-0ᴳ _ $ connected-at-level-is-contr
       (Trunc-level {n = 0})
       (Trunc-preserves-conn 0
-        (transport (λ B → is-connected 0 B)
-          (! (Bool⊙→-path _))
+        (equiv-preserves-conn
+          (pre⊙∘-equiv ⊙lower-equiv ∘e ⊙Bool→-equiv-idf _ ⁻¹)
           (path-conn (connected-≤T (⟨⟩-monotone-≤ (≤-ap-S (O≤ n)))
                                    (EM-conn (S n))))))
   EM-dimension (negsucc O) _ =
-    contr-is-0ᴳ _ $ Trunc-preserves-level 0 $ ⊙→-level $
+    contr-iso-0ᴳ _ $ Trunc-preserves-level 0 $ ⊙→-level $
       inhab-prop-is-contr idp (EM-level O _ _)
   EM-dimension (negsucc (S n)) _ =
-    contr-is-0ᴳ _ $ Trunc-preserves-level 0 $ ⊙→-level $
+    contr-iso-0ᴳ _ $ Trunc-preserves-level 0 $ ⊙→-level $
       Lift-level Unit-is-prop _ _
 
   EM-Ordinary : OrdinaryTheory i

@@ -34,30 +34,27 @@ module _ {i j} {A : Type i} {B : Type j} where
     →-is-prop = →-level
 
 {- Equivalences in a Π-type -}
-equiv-Π-l : ∀ {i j k} {A : Type i} {B : Type j} (P : B → Type k) {h : A → B}
-            → is-equiv h → Π A (P ∘ h) ≃ Π B P
-equiv-Π-l {A = A} {B = B} P {h = h} e = equiv f g f-g g-f where
-  w : A ≃ B
-  w = (h , e)
+Π-emap-l : ∀ {i j k} {A : Type i} {B : Type j} (P : B → Type k)
+            → (e : A ≃ B) → Π A (P ∘ –> e) ≃ Π B P
+Π-emap-l {A = A} {B = B} P e = equiv f g f-g g-f where
+  f : Π A (P ∘ –> e) → Π B P
+  f u b = transport P (<–-inv-r e b) (u (<– e b))
 
-  f : Π A (P ∘ h) → Π B P
-  f u b = transport P (<–-inv-r w b) (u (<– w b))
-
-  g : Π B P → Π A (P ∘ h)
-  g v a = v (–> w a)
+  g : Π B P → Π A (P ∘ –> e)
+  g v a = v (–> e a)
 
   f-g : ∀ v → f (g v) == v
-  f-g v = λ= λ b → to-transp (apd v (<–-inv-r w b))
+  f-g v = λ= λ b → to-transp (apd v (<–-inv-r e b))
 
   g-f : ∀ u → g (f u) == u
   g-f u = λ= λ a → to-transp $ transport (λ p → u _ == _ [ P ↓ p ])
-                                         (is-equiv.adj e a)
-                                         (↓-ap-in P (–> w)
-                                                    (apd u $ <–-inv-l w a))
+                                         (<–-inv-adj e a)
+                                         (↓-ap-in P (–> e)
+                                                    (apd u $ <–-inv-l e a))
 
-equiv-Π-r : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
+Π-emap-r : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
   → (∀ x → B x ≃ C x) → Π A B ≃ Π A C
-equiv-Π-r {A = A} {B = B} {C = C} k = equiv f g f-g g-f
+Π-emap-r {A = A} {B = B} {C = C} k = equiv f g f-g g-f
   where f : Π A B → Π A C
         f c x = –> (k x) (c x)
 
@@ -70,17 +67,21 @@ equiv-Π-r {A = A} {B = B} {C = C} k = equiv f g f-g g-f
         g-f : ∀ c → g (f c) == c
         g-f c = λ= (λ x → <–-inv-l (k x) (c x))
 
+{-
+favonia: This part is not used.
+
 module _ {i₀ i₁ j₀ j₁} {A₀ : Type i₀} {A₁ : Type i₁}
          {B₀ : A₀ → Type j₀} {B₁ : A₁ → Type j₁} where
-  equiv-Π : (u : A₀ ≃ A₁) (v : ∀ a → B₀ (<– u a) ≃ B₁ a) → Π A₀ B₀ ≃ Π A₁ B₁
-  equiv-Π u v = Π A₀ B₀           ≃⟨ equiv-Π-l _ (snd (u ⁻¹)) ⁻¹ ⟩
-                Π A₁ (B₀ ∘ <– u)  ≃⟨ equiv-Π-r v ⟩
-                Π A₁ B₁           ≃∎
+  Π-emap : (u : A₀ ≃ A₁) (v : ∀ a → B₀ (<– u a) ≃ B₁ a) → Π A₀ B₀ ≃ Π A₁ B₁
+  Π-emap u v = Π A₀ B₀           ≃⟨ Π-emap-l _ (u ⁻¹) ⁻¹ ⟩
+               Π A₁ (B₀ ∘ <– u)  ≃⟨ Π-emap-r v ⟩
+               Π A₁ B₁           ≃∎
 
-  equiv-Π' : (u : A₀ ≃ A₁) (v : ∀ a → B₀ a ≃ B₁ (–> u a)) → Π A₀ B₀ ≃ Π A₁ B₁
-  equiv-Π' u v = Π A₀ B₀           ≃⟨ equiv-Π-r v ⟩
-                 Π A₀ (B₁ ∘ –> u)  ≃⟨ equiv-Π-l _ (snd u) ⟩
-                 Π A₁ B₁           ≃∎
+  Π-emap' : (u : A₀ ≃ A₁) (v : ∀ a → B₀ a ≃ B₁ (–> u a)) → Π A₀ B₀ ≃ Π A₁ B₁
+  Π-emap' u v = Π A₀ B₀           ≃⟨ Π-emap-r v ⟩
+                Π A₀ (B₁ ∘ –> u)  ≃⟨ Π-emap-l _ u ⟩
+                Π A₁ B₁           ≃∎
+-}
 
 
 {- Coversions between functions with implicit and explicit arguments -}
@@ -128,8 +129,8 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k
         → u t == u' t' [ uncurry C ↓ pair= p q ])
     ≃ (u == u' [ (λ x → Π (B x) (C x)) ↓ p ])
   ↓-Π-equiv {p = idp} = equiv ↓-Π-in ↓-Π-out ↓-Π-η
-    (λ u → <– (equiv-ap expose-equiv _ _)
-      (λ= (λ t → <– (equiv-ap expose-equiv _ _)
+    (λ u → <– (ap-equiv-equiv expose-equiv _ _)
+      (λ= (λ t → <– (ap-equiv-equiv expose-equiv _ _)
         (λ= (λ t' → λ= (↓-Π-β u))))))
 
 {- Dependent paths in a Π-type where the codomain is not dependent on anything
@@ -165,7 +166,7 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : Type k} {x x' : A}
                       ↓-cst-out ⟩
     ↓-cst-out (↓-cst-in {p = pair= p q} (f q))
              =⟨ ↓-cst-β (pair= p q) (f q) ⟩
-    f q ∎
+    f q =∎
 
 {- Dependent paths in an arrow type -}
 module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}

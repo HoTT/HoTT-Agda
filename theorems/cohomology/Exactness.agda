@@ -1,6 +1,8 @@
 open import HoTT
 open import cohomology.FunctionOver
 
+-- TODO Checking naming convensions
+
 module cohomology.Exactness where
 
 module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
@@ -78,10 +80,10 @@ seq-iso-to-path : ∀ {i} {G₁ H₁ G₂ H₂ : Group i}
   {S₁ : HomSequence G₁ H₁} {S₂ : HomSequence G₂ H₂}
   {isoG : G₁ ≃ᴳ G₂} {isoH : H₁ ≃ᴳ H₂}
   → SequenceIso S₁ S₂ isoG isoH
-  → Sequence= S₁ S₂ (group-ua isoG) (group-ua isoH)
-seq-iso-to-path (iso ↓⊣|) = group-ua iso ∥⊣|
+  → Sequence= S₁ S₂ (uaᴳ isoG) (uaᴳ isoH)
+seq-iso-to-path (iso ↓⊣|) = uaᴳ iso ∥⊣|
 seq-iso-to-path (iso ↓⟨ over ⟩↓ si') =
-  group-ua iso
+  uaᴳ iso
     ∥⟨ hom-over-isos $ function-over-equivs _ _ $ ap GroupHom.f over ⟩∥
   seq-iso-to-path si'
 
@@ -97,7 +99,7 @@ sequence= {G₁ = G₁} idp idp
 sequence-iso-ua : ∀ {i} {G₁ H₁ G₂ H₂ : Group i}
   {S₁ : HomSequence G₁ H₁} {S₂ : HomSequence G₂ H₂}
   (isoG : G₁ ≃ᴳ G₂) (isoH : H₁ ≃ᴳ H₂) → SequenceIso S₁ S₂ isoG isoH
-  → S₁ == S₂ [ uncurry HomSequence ↓ pair×= (group-ua isoG) (group-ua isoH) ]
+  → S₁ == S₂ [ uncurry HomSequence ↓ pair×= (uaᴳ isoG) (uaᴳ isoH) ]
 sequence-iso-ua isoG isoH si = sequence= _ _ (seq-iso-to-path si)
 
 data is-exact-seq {i} : {G H : Group i} → HomSequence G H → Type (lsucc i) where

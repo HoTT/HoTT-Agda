@@ -244,4 +244,4 @@ fin-tuples-cons {i} F = equiv into out into-out out-into
 
 ⊙fin-tuples-cons : ∀ {i} (F : ℕ → Ptd i)
   → (F O ⊙× ⊙FinTuples (F ∘ S)) ⊙≃ ⊙FinTuples F
-⊙fin-tuples-cons F = ⊙≃-in (fin-tuples-cons F) (! (ncglue O _))
+⊙fin-tuples-cons F = ≃-to-⊙≃ (fin-tuples-cons F) (! (ncglue O _))

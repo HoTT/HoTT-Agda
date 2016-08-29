@@ -34,12 +34,13 @@ is-connected-is-prop : ∀ {i} {n : ℕ₋₂} {A : Type i}
   → is-prop (is-connected n A)
 is-connected-is-prop = is-contr-is-prop
 
+-- XXX What is the naming convention?
 {- "induction principle" for n-connected maps (where codomain is n-type) -}
 abstract
-  conn-elim-eqv : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂}
+  conn-elim-iseconv : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂}
     → {h : A → B} → has-conn-fibers n h
     → (∀ {k} (P : B → n -Type k) → is-equiv (λ (s : Π B (fst ∘ P)) → s ∘ h))
-  conn-elim-eqv {A = A} {B = B} {n = n} {h = h} c P = is-eq f g f-g g-f
+  conn-elim-iseconv {A = A} {B = B} {n = n} {h = h} c P = is-eq f g f-g g-f
     where f : Π B (fst ∘ P) → Π A (fst ∘ P ∘ h)
           f k a = k (h a)
 
@@ -72,13 +73,13 @@ conn-elim : ∀ {i j k} {A : Type i} {B : Type j} {n : ℕ₋₂}
   → {h : A → B} → has-conn-fibers n h
   → (P : B → n -Type k) 
   → Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)
-conn-elim c P f = is-equiv.g (conn-elim-eqv c P) f
+conn-elim c P f = is-equiv.g (conn-elim-iseconv c P) f
 
 conn-elim-β : ∀ {i j k} {A : Type i} {B : Type j} {n : ℕ₋₂}
   {h : A → B} (c : has-conn-fibers n h)
   (P : B → n -Type k) (f : Π A (fst ∘ P ∘ h))
   → ∀ a → (conn-elim c P f (h a)) == f a
-conn-elim-β c P f = app= (is-equiv.f-g (conn-elim-eqv c P) f)
+conn-elim-β c P f = app= (is-equiv.f-g (conn-elim-iseconv c P) f)
 
 
 {- generalized "almost induction principle" for maps into ≥n-types 
@@ -88,7 +89,7 @@ conn-elim-general : ∀ {i j} {A : Type i} {B : Type j} {n k : ℕ₋₂}
   → ∀ {l} (P : B → (k +2+ n) -Type l) 
   → ∀ t → has-level k (Σ (Π B (fst ∘ P)) (λ s → (s ∘ f) == t))
 conn-elim-general {k = ⟨-2⟩} c P t = 
-  equiv-is-contr-map (conn-elim-eqv c P) t
+  equiv-is-contr-map (conn-elim-iseconv c P) t
 conn-elim-general {B = B} {n = n} {k = S k'} {f = f} c P t =
   λ {(g , p) (h , q) → 
     equiv-preserves-level (e g h p q) $ 
@@ -102,28 +103,28 @@ conn-elim-general {B = B} {n = n} {k = S k'} {f = f} c P t =
       → app= (ap (λ k → k ∘ f) p) == (app= p ∘ f)
     app=-ap f idp = idp
 
-    move-right-on-right-eqv : ∀ {i} {A : Type i} {x y z : A}
+    move-right-on-right-econv : ∀ {i} {A : Type i} {x y z : A}
       (p : x == y) (q : x == z) (r : y == z)
       → (p == q ∙ ! r) ≃ (p ∙ r == q)
-    move-right-on-right-eqv {x = x} p idp idp =
+    move-right-on-right-econv {x = x} p idp idp =
       (_ , pre∙-is-equiv (∙-unit-r p))
 
     lemma : ∀ g h p q → (H : ∀ x → g x == h x)
       → ((H ∘ f) == app= (p ∙ ! q)) 
          ≃ (ap (λ v → v ∘ f) (λ= H) ∙ q == p)
     lemma g h p q H = 
-      move-right-on-right-eqv (ap (λ v → v ∘ f) (λ= H)) p q 
+      move-right-on-right-econv (ap (λ v → v ∘ f) (λ= H)) p q 
       ∘e transport (λ w → (w == app= (p ∙ ! q)) 
                       ≃ (ap (λ v → v ∘ f) (λ= H) == p ∙ ! q))
                    (app=-ap f (λ= H) ∙ ap (λ k → k ∘ f) (λ= $ app=-β H))
-                   ((equiv-ap app=-equiv _ _)⁻¹)
+                   (ap-equiv-equiv app=-equiv _ _ ⁻¹)
 
     e : ∀ g h p q  →
       (Σ (∀ x → g x == h x) (λ r → (r ∘ f) == app= (p ∙ ! q)))
       ≃ ((g , p) == (h , q)) 
     e g h p q = 
-      ((=Σ-eqv _ _ ∘e equiv-Σ-snd (λ u → ↓-app=cst-eqv ∘e !-equiv))
-      ∘e (equiv-Σ-fst _ (snd λ=-equiv))) ∘e equiv-Σ-snd (lemma g h p q)
+      ((=Σ-econv _ _ ∘e Σ-emap-r (λ u → ↓-app=cst-eqv ∘e !-equiv))
+      ∘e (Σ-emap-l _ λ=-equiv)) ∘e Σ-emap-r (lemma g h p q)
               
 
 conn-intro : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} {h : A → B}
@@ -182,7 +183,7 @@ abstract
         Trunc-fmap (λ q → (tt , (snd q))) x
           =⟨ Trunc-elim {P = λ x → Trunc-fmap (λ q → (tt , snd q)) x == x}
                (λ _ → =-preserves-level n Trunc-level) (λ _ → idp) x ⟩
-        x ∎
+        x =∎
 
       point : Trunc n (Σ ⊤ (λ _ → a₀ == a))
       point = out $ contr-has-all-paths c [ a₀ ] [ a ]
@@ -262,7 +263,7 @@ abstract
             {P = λ y → idp == 
               Trunc-rec (Trunc-level {n = S n} _ _) (λ a → ap [_] (merid a)) y
               [ (λ z → [ north ] == [ z ]) ↓ (merid x) ]}
-            (λ _ → ↓-preserves-level _ (λ _ → Trunc-level {n = S n} _ _))
+            (λ _ → ↓-preserves-level _ (Trunc-level {n = S n} _ _))
             (λ x' → ↓-cst=app-in (∙'-unit-l _ ∙ mers-eq n cA x x'))
             (fst cA))))
     where 
@@ -297,13 +298,13 @@ connected-≤T : ∀ {i} {m n : ℕ₋₂} {A : Type i}
   → m ≤T n → is-connected n A → is-connected m A
 connected-≤T {m = m} {n = n} {A = A} leq cA = 
   transport (λ B → is-contr B) 
-            (ua (fuse-Trunc A m n) ∙ ap (λ k → Trunc k A) (minT-out-l leq)) 
+            (ua (Trunc-fuse A m n) ∙ ap (λ k → Trunc k A) (minT-out-l leq)) 
             (Trunc-preserves-level m cA)
 
 {- Equivalent types have the same connectedness -}
 equiv-preserves-conn : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} (e : A ≃ B)
   → (is-connected n A → is-connected n B)
-equiv-preserves-conn {n = n} e = equiv-preserves-level (equiv-Trunc n e)
+equiv-preserves-conn {n = n} e = equiv-preserves-level (Trunc-emap n e)
 
 {- Composite of two connected functions is connected -}
 ∘-conn : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
@@ -321,4 +322,4 @@ equiv-preserves-conn {n = n} e = equiv-preserves-level (equiv-Trunc n e)
         conn-elim cf (P ∘ g) h (f x)
           =⟨ conn-elim-β cf (P ∘ g) h x ⟩
         h x
-          ∎
+          =∎

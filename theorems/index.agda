@@ -23,6 +23,7 @@ import homotopy.Hopf
 -- cohomology
 import cohomology.EMModel
 import cohomology.Torus
+import cohomology.MayerVietorisExact
 
 import homotopy.SpaceFromGroups
 

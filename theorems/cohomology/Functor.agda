@@ -18,7 +18,7 @@ CF-cst n {X} {Y} =
   CF-hom n (⊙cst {X = ⊙LU} ⊙∘ ⊙cst {X = X})
     =⟨ CF-comp n ⊙cst ⊙cst ⟩
   (CF-hom n (⊙cst {X = X})) ∘ᴳ (CF-hom n (⊙cst {X = ⊙LU}))
-    =⟨ hom= (CF-hom n (⊙cst {X = ⊙LU})) cst-hom
+    =⟨ group-hom= {φ = CF-hom n (⊙cst {X = ⊙LU})} {ψ = cst-hom}
             (contr-has-all-paths (→-level (C-Unit-is-contr n)) _ _)
        |in-ctx (λ w → CF-hom n (⊙cst {X = X} {Y = ⊙LU}) ∘ᴳ w) ⟩
   (CF-hom n (⊙cst {X = X} {Y = ⊙LU})) ∘ᴳ cst-hom

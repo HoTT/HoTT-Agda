@@ -6,6 +6,8 @@ open import HoTT
  - across an equivalence in the domain or codomain.
  - TODO: find a better place for this. -}
 
+-- XXX Naming convensions?
+
 module cohomology.FunctionOver where
 
 {- transporting a function along an equivalence or path in the domain -}
@@ -132,24 +134,24 @@ domain-over-iso : ∀ {i j} {G H : Group i} {K : Group j}
   {φ : G →ᴳ H} {ie : is-equiv (GroupHom.f φ)} {ψ : G →ᴳ K} {χ : H →ᴳ K}
   → GroupHom.f ψ == GroupHom.f χ
     [ (λ A → A → Group.El K) ↓ ua (GroupHom.f φ , ie) ]
-  → ψ == χ [ (λ J → J →ᴳ K) ↓ group-ua (φ , ie) ]
+  → ψ == χ [ (λ J → J →ᴳ K) ↓ uaᴳ (φ , ie) ]
 domain-over-iso {K = K} {φ = φ} {ie} {ψ} {χ} p =
-  hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $
+  group-hom=-↓ $ ↓-ap-out _ Group.El _ $
     transport
       (λ q → GroupHom.f ψ == GroupHom.f χ [ (λ A → A → Group.El K) ↓ q ])
-      (! (group-ua-el (φ , ie)))
+      (! (El=-β (φ , ie)))
       p
 
 codomain-over-iso : ∀ {i j} {G : Group i} {H K : Group j}
   {φ : H →ᴳ K} {ie : is-equiv (GroupHom.f φ)} {ψ : G →ᴳ H} {χ : G →ᴳ K}
   → GroupHom.f ψ == GroupHom.f χ
     [ (λ A → Group.El G → A) ↓ ua (GroupHom.f φ , ie) ]
-  → ψ == χ [ (λ J → G →ᴳ J) ↓ group-ua (φ , ie) ]
+  → ψ == χ [ (λ J → G →ᴳ J) ↓ uaᴳ (φ , ie) ]
 codomain-over-iso {G = G} {φ = φ} {ie} {ψ} {χ} p =
-  hom=-↓ _ _ $ ↓-ap-out _ Group.El _ $
+  group-hom=-↓ $ ↓-ap-out _ Group.El _ $
     transport
       (λ q → GroupHom.f ψ == GroupHom.f χ [ (λ A → Group.El G → A) ↓ q ])
-      (! (group-ua-el (φ , ie)))
+      (! (El=-β (φ , ie)))
       p
 
 hom-over-isos : ∀ {i j} {G₁ H₁ : Group i} {G₂ H₂ : Group j}
@@ -159,15 +161,15 @@ hom-over-isos : ∀ {i j} {G₁ H₁ : Group i} {G₂ H₂ : Group j}
   → GroupHom.f ψ == GroupHom.f χ
     [ (λ {(A , B) → A → B}) ↓ pair×= (ua (GroupHom.f φ₁ , ie₁))
                                      (ua (GroupHom.f φ₂ , ie₂)) ]
-  → ψ == χ [ uncurry _→ᴳ_ ↓ pair×= (group-ua (φ₁ , ie₁)) (group-ua (φ₂ , ie₂)) ]
-hom-over-isos {φ₁ = φ₁} {ie₁} {φ₂} {ie₂} {ψ} {χ} p = hom=-↓ _ _ $
+  → ψ == χ [ uncurry _→ᴳ_ ↓ pair×= (uaᴳ (φ₁ , ie₁)) (uaᴳ (φ₂ , ie₂)) ]
+hom-over-isos {φ₁ = φ₁} {ie₁} {φ₂} {ie₂} {ψ} {χ} p = group-hom=-↓ $
   ↓-ap-out (λ {(A , B) → A → B}) (λ {(G , H) → (Group.El G , Group.El H)}) _ $
     transport
       (λ q → GroupHom.f ψ == GroupHom.f χ [ (λ {(A , B) → A → B}) ↓ q ])
-      (ap2 (λ p q → pair×= p q) (! (group-ua-el (φ₁ , ie₁)))
-                                (! (group-ua-el (φ₂ , ie₂)))
+      (ap2 (λ p q → pair×= p q) (! (El=-β (φ₁ , ie₁)))
+                                (! (El=-β (φ₂ , ie₂)))
        ∙ ! (lemma Group.El Group.El
-             (group-ua (φ₁ , ie₁)) (group-ua (φ₂ , ie₂))))
+             (uaᴳ (φ₁ , ie₁)) (uaᴳ (φ₂ , ie₂))))
       p
   where
   lemma : ∀ {i j k l} {A : Type i} {B : Type j} {C : Type k} {D : Type l}

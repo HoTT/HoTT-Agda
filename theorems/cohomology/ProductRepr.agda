@@ -28,7 +28,7 @@ module ProductRepr {i j}
   where
 
   zero-ker : (g : Group.El G)
-    → GroupHom.f (×ᴳ-hom-in j₁ j₂) g == Group.ident (H₁ ×ᴳ H₂)
+    → GroupHom.f (×ᴳ-fanout j₁ j₂) g == Group.ident (H₁ ×ᴳ H₂)
     → g == Group.ident G
   zero-ker g q = Trunc-rec (Group.El-level G _ _)
       (lemma g (fst×= q))
@@ -45,23 +45,23 @@ module ProductRepr {i j}
   β₁ h₁ h₂ =
     GroupHom.pres-comp j₁ (GroupHom.f i₁ h₁) (GroupHom.f i₂ h₂)
     ∙ ap2 (Group.comp H₁) (p₁ h₁) (itok ex₂ _ [ h₂ , idp ])
-    ∙ Group.unitr H₁ h₁
+    ∙ Group.unit-r H₁ h₁
 
   β₂ : (h₁ : Group.El H₁) (h₂ : Group.El H₂)
     → GroupHom.f j₂ (Group.comp G (GroupHom.f i₁ h₁) (GroupHom.f i₂ h₂)) == h₂
   β₂ h₁ h₂ =
     GroupHom.pres-comp j₂ (GroupHom.f i₁ h₁) (GroupHom.f i₂ h₂)
     ∙ ap2 (Group.comp H₂) (itok ex₁ _ [ h₁ , idp ]) (p₂ h₂)
-    ∙ Group.unitl H₂ h₂
+    ∙ Group.unit-l H₂ h₂
 
   iso : G ≃ᴳ (H₁ ×ᴳ H₂)
-  iso = surj-inj-iso (×ᴳ-hom-in j₁ j₂)
-    (zero-kernel-injective (×ᴳ-hom-in j₁ j₂) zero-ker)
+  iso = surj-inj-iso (×ᴳ-fanout j₁ j₂)
+    (zero-ker-inj (×ᴳ-fanout j₁ j₂) zero-ker)
     (λ {(h₁ , h₂) → [ Group.comp G (GroupHom.f i₁ h₁) (GroupHom.f i₂ h₂) ,
                       pair×= (β₁ h₁ h₂) (β₂ h₁ h₂) ]})
 
   path : G == H₁ ×ᴳ H₂
-  path = group-ua iso
+  path = uaᴳ iso
 
   fst-over : j₁ == ×ᴳ-fst [ (λ U → U →ᴳ H₁) ↓ path ]
   fst-over = domain-over-iso $ domain-over-equiv fst _
@@ -106,7 +106,7 @@ module ProductRepr {i j}
          == g})
       (! (pair= path (↓-×-in inl-over (↓-×-in inr-over
                                              (↓-×-in fst-over snd-over)))))
-      (λ {(h₁ , h₂) → pair×= (Group.unitr H₁ h₁) (Group.unitl H₂ h₂)})
+      (λ {(h₁ , h₂) → pair×= (Group.unit-r H₁ h₁) (Group.unit-l H₂ h₂)})
 
     cancel : ∀ k →
       Group.comp L (GroupHom.f (j₀ ∘ᴳ i₁ ∘ᴳ j₁ ∘ᴳ i₀) k)
@@ -118,8 +118,8 @@ module ProductRepr {i j}
 
     inv₁ : ∀ k → Group.inv L (GroupHom.f (j₀ ∘ᴳ i₁ ∘ᴳ j₁ ∘ᴳ i₀) k)
               == GroupHom.f (j₀ ∘ᴳ i₂ ∘ᴳ j₂ ∘ᴳ i₀) k
-    inv₁ k = group-inv-unique-r L _ _ (cancel k)
+    inv₁ k = Group.inv-unique-r L _ _ (cancel k)
 
     inv₂ : ∀ k → Group.inv L (GroupHom.f (j₀ ∘ᴳ i₂ ∘ᴳ j₂ ∘ᴳ i₀) k)
               == GroupHom.f (j₀ ∘ᴳ i₁ ∘ᴳ j₁ ∘ᴳ i₀) k
-    inv₂ k = group-inv-unique-l L _ _ (cancel k)
+    inv₂ k = Group.inv-unique-l L _ _ (cancel k)

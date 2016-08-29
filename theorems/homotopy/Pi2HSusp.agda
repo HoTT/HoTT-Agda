@@ -145,8 +145,8 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level 1 A)
   main-lemma-eq : Trunc 1 (north' A == north) ≃ A
   main-lemma-eq = equiv encode decode' encode-decode' decode-encode
 
-  ⊙main-lemma : ⊙Trunc 1 (⊙Ω (⊙Susp (A , e))) == (A , e)
-  ⊙main-lemma = ⊙ua (⊙≃-in main-lemma-eq idp)
+  ⊙main-lemma : ⊙Trunc 1 (⊙Ω (⊙Susp (A , e))) ⊙≃ (A , e)
+  ⊙main-lemma = ≃-to-⊙≃ main-lemma-eq idp
 
   abstract
     main-lemma-iso : Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))) Trunc-level
@@ -158,24 +158,24 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level 1 A)
       h = (λ x → [ encode x ]) , idp
 
       f : Ω (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))) → Ω (⊙Trunc 1 (A , e))
-      f = fst (ap^ 1 h)
+      f = Ω-fmap h
 
       pres-comp : (p q : Ω^ 1 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))))
-        → f (conc^S 0 p q) == conc^S 0 (f p) (f q)
-      pres-comp = ap^S-conc^S 0 h
+        → f (Ω^S-∙ 0 p q) == Ω^S-∙ 0 (f p) (f q)
+      pres-comp = Ω^S-fmap-∙ 0 h
 
       ie : is-equiv f
-      ie = is-equiv-ap^ 1 h (snd $ ((unTrunc-equiv A gA)⁻¹ ∘e main-lemma-eq))
+      ie = Ω^-isemap 1 h (snd $ ((unTrunc-equiv A gA)⁻¹ ∘e main-lemma-eq))
 
   abstract
-    π₂-Suspension : πS 1 (⊙Susp (A , e)) == πS 0 (A , e)
+    π₂-Suspension : πS 1 (⊙Susp (A , e)) ≃ᴳ πS 0 (A , e)
     π₂-Suspension =
       πS 1 (⊙Susp (A , e))
-        =⟨ πS-inner-iso 0 (⊙Susp (A , e)) ⟩
+        ≃ᴳ⟨ πS-Ω-split-iso 0 (⊙Susp (A , e)) ⟩
       πS 0 (⊙Ω (⊙Susp (A , e)))
-        =⟨ ! (πS-Trunc-shift-iso 0 (⊙Ω (⊙Susp (A , e)))) ⟩
+        ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso 0 (⊙Ω (⊙Susp (A , e))) ⁻¹ᴳ ⟩
       Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))) Trunc-level
-        =⟨ group-ua main-lemma-iso ⟩
+        ≃ᴳ⟨ main-lemma-iso ⟩
       Ω^S-group 0 (⊙Trunc 1 (A , e)) Trunc-level
-        =⟨ πS-Trunc-shift-iso 0 (A , e) ⟩
-      πS 0 (A , e) ∎
+        ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso 0 (A , e) ⟩
+      πS 0 (A , e) ≃ᴳ∎

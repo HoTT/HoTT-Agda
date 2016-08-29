@@ -12,12 +12,12 @@ module lib.NType2 where
 module _ {i j} {A : Type i} {B : A → Type j} where
   abstract
     ↓-level : {a b : A} {p : a == b} {u : B a} {v : B b} {n : ℕ₋₂}
-      → ((x : A) → has-level (S n) (B x)) → has-level n (u == v [ B ↓ p ])
-    ↓-level {p = idp} k = k _ _ _
+      → has-level (S n) (B b) → has-level n (u == v [ B ↓ p ])
+    ↓-level {p = idp} k = k _ _
 
     ↓-preserves-level : {a b : A} {p : a == b} {u : B a} {v : B b} (n : ℕ₋₂)
-      → ((x : A) → has-level n (B x)) → has-level n (u == v [ B ↓ p ])
-    ↓-preserves-level {p = idp} n k = =-preserves-level n (k _)
+      → has-level n (B b) → has-level n (u == v [ B ↓ p ])
+    ↓-preserves-level {p = idp} n k = =-preserves-level n k
 
     prop-has-all-paths-↓ : {x y : A} {p : x == y} {u : B x} {v : B y}
       → (is-prop (B y) → u == v [ B ↓ p ])
@@ -61,20 +61,32 @@ abstract
   is-set-is-prop : ∀ {i} {A : Type i} → is-prop (is-set A)
   is-set-is-prop = has-level-is-prop
 
-  subtype-level : ∀ {i j} {n : ℕ₋₂}
+  Subtype-level : ∀ {i j} {n : ℕ₋₂}
     {A : Type i} {P : A → Type j}
     → (has-level (S n) A → ((x : A) → is-prop (P x))
       → has-level (S n) (Σ A P))
-  subtype-level p q = Σ-level p (λ x → prop-has-level-S (q x))
+  Subtype-level p q = Σ-level p (λ x → prop-has-level-S (q x))
 
-subtype= : ∀ {i j} {A : Type i} {P : A → Type j}
+Subtype= : ∀ {i j} {A : Type i} {P : A → Type j}
   → (x y : Σ A P) → Type i
-subtype= (a₁ , _) (a₂ , _) = a₁ == a₂
+Subtype= x y = fst x == fst y
 
-subtype=-in : ∀ {i j} {A : Type i} {P : A → Type j}
-  → (p : (x : A) → is-prop (P x)) → {x y : Σ A P}
-  → subtype= x y → x == y
-subtype=-in p idp = pair= idp (fst (p _ _ _))
+Subtype=-in : ∀ {i j} {A : Type i} {P : A → Type j} {x y : Σ A P}
+  → is-prop (P (fst y)) → Subtype= x y → x == y
+Subtype=-in nP p = pair= p (prop-has-all-paths-↓ nP)
+
+Subtype-∙ : ∀ {i j} {A : Type i} {P : A → Type j} {x y z : Σ A P}
+  (nPy : is-prop (P (fst y))) (nPz : is-prop (P (fst z))) (p : Subtype= x y) (q : Subtype= y z)
+  → (Subtype=-in {x = x} nPy p ∙ Subtype=-in {x = y} nPz q)
+  == Subtype=-in {x = x} {y = z} nPz (p ∙ q)
+Subtype-∙ nPy nPz p q =
+  Subtype=-in nPy p ∙ Subtype=-in nPz q
+    =⟨ Σ-∙ {p = p} {p' = q} (prop-has-all-paths-↓ nPy) (prop-has-all-paths-↓ nPz) ⟩
+  pair= (p ∙ q) (prop-has-all-paths-↓ {p = p} nPy ∙ᵈ prop-has-all-paths-↓ nPz)
+    =⟨ contr-has-all-paths (↓-level nPz) _ (prop-has-all-paths-↓ nPz)
+      |in-ctx pair= (p ∙ q) ⟩
+  Subtype=-in nPz (p ∙ q)
+    =∎
 
 -- Groupoids
 
@@ -122,25 +134,30 @@ abstract
     → (is-set A → is-set B → is-set (A == B))
   universe-=-is-set = universe-=-level
 
-  nType= : ∀ {i} {n : ℕ₋₂} (A B : n -Type i) → Type (lsucc i)
-  nType= = subtype=
+nType= : ∀ {i} {n : ℕ₋₂} (A B : n -Type i) → Type (lsucc i)
+nType= = Subtype=
 
-  nType=-in : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} → fst A == fst B → A == B
-  nType=-in = subtype=-in (λ _ → has-level-is-prop)
+nType=-in : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} → nType= A B → A == B
+nType=-in = Subtype=-in has-level-is-prop
 
-  nType=-β : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} (p : fst A == fst B)
+abstract
+  nType=-β : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} (p : nType= A B)
     → fst= (nType=-in {A = A} {B = B} p) == p
   nType=-β idp = fst=-β idp _
 
   nType=-η : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} (p : A == B)
     → nType=-in (fst= p) == p
-  nType=-η {A = A} {B = .A} idp = ap (pair= idp)
-    (ap fst {x = has-level-is-prop _ _}
-            {y = (idp , (λ p → fst (prop-is-set has-level-is-prop _ _ _ _)))}
-        (fst (is-contr-is-prop _ _)))
+  nType=-η {n = n} {A = A} idp = ap (pair= idp)
+    (contr-has-all-paths (has-level-is-prop _ _) _ _)
 
   nType=-equiv : ∀ {i} {n : ℕ₋₂} (A B : n -Type i) → (nType= A B) ≃ (A == B)
   nType=-equiv A B = equiv nType=-in fst= nType=-η nType=-β
+
+  nType-∙ : ∀ {i} {n : ℕ₋₂} {A B C : n -Type i}
+    (p : nType= A B) (q : nType= B C)
+    → (nType=-in {A = A} p ∙ nType=-in {A = B} q)
+    == nType=-in {A = A} {B = C} (p ∙ q)
+  nType-∙ = Subtype-∙ has-level-is-prop has-level-is-prop
 
   _-Type-level_ : (n : ℕ₋₂) (i : ULevel)
     → has-level (S n) (n -Type i)

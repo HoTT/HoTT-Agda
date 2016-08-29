@@ -24,16 +24,16 @@ module _ {i} (G : Group i) where
       ident = (G.ident , P-ident);
       inv = λ {(g , p) → (G.inv g , P-inv p)};
       comp = λ {(g₁ , p₁) (g₂ , p₂) → (G.comp g₁ g₂ , P-comp p₁ p₂)};
-      unitl = λ {(g , _) →
-        pair= (G.unitl g) (prop-has-all-paths-↓ (P-level _))};
-      unitr = λ {(g , _) →
-        pair= (G.unitr g) (prop-has-all-paths-↓ (P-level _))};
+      unit-l = λ {(g , _) →
+        pair= (G.unit-l g) (prop-has-all-paths-↓ (P-level _))};
+      unit-r = λ {(g , _) →
+        pair= (G.unit-r g) (prop-has-all-paths-↓ (P-level _))};
       assoc = λ {(g₁ , _) (g₂ , _) (g₃ , _) →
         pair= (G.assoc g₁ g₂ g₃) (prop-has-all-paths-↓ (P-level _))};
-      invl = λ {(g , _) →
-        pair= (G.invl g) (prop-has-all-paths-↓ (P-level _))};
-      invr = λ {(g , _) →
-        pair= (G.invr g) (prop-has-all-paths-↓ (P-level _))}}
+      inv-l = λ {(g , _) →
+        pair= (G.inv-l g) (prop-has-all-paths-↓ (P-level _))};
+      inv-r = λ {(g , _) →
+        pair= (G.inv-r g) (prop-has-all-paths-↓ (P-level _))}}
 
     Subgroup : Group (lmax i j)
     Subgroup = group _ (Σ-level G.El-level (raise-level _ ∘ P-level)) struct
@@ -64,8 +64,8 @@ module _ {i} {j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
 
     module Ker = PropSubgroup G (λ g → φ.f g == H.ident)
       (λ g → H.El-level _ _) φ.pres-ident
-      (λ p → φ.pres-inv _ ∙ ap H.inv p ∙ group-inv-ident H)
-      (λ p₁ p₂ → φ.pres-comp _ _ ∙ ap2 H.comp p₁ p₂ ∙ H.unitl _)
+      (λ p → φ.pres-inv _ ∙ ap H.inv p ∙ H.inv-ident)
+      (λ p₁ p₂ → φ.pres-comp _ _ ∙ ap2 H.comp p₁ p₂ ∙ H.unit-l _)
 
     module Im = PropSubgroup H (λ h → Trunc -1 (Σ G.El (λ g → φ.f g == h)))
       (λ h → Trunc-level) ([ G.ident , φ.pres-ident ])

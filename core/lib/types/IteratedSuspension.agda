@@ -25,30 +25,35 @@ module lib.types.IteratedSuspension where
 ⊙Susp^-+ O n = idp
 ⊙Susp^-+ (S m) n = ap ⊙Susp (⊙Susp^-+ m n)
 
-⊙susp^-fmap : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
+⊙Susp^-fmap : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
   → fst (X ⊙→ Y) → fst (⊙Susp^ n X ⊙→ ⊙Susp^ n Y)
-⊙susp^-fmap O f = f
-⊙susp^-fmap (S n) f = ⊙susp-fmap (⊙susp^-fmap n f)
+⊙Susp^-fmap O f = f
+⊙Susp^-fmap (S n) f = ⊙Susp-fmap (⊙Susp^-fmap n f)
 
-⊙susp^-fmap-idf : ∀ {i} (n : ℕ) (X : Ptd i)
-  → ⊙susp^-fmap n (⊙idf X) == ⊙idf (⊙Susp^ n X)
-⊙susp^-fmap-idf O X = idp
-⊙susp^-fmap-idf (S n) X =
-  ap ⊙susp-fmap (⊙susp^-fmap-idf n X) ∙ ⊙susp-fmap-idf (⊙Susp^ n X)
+⊙Susp^-fmap-idf : ∀ {i} (n : ℕ) (X : Ptd i)
+  → ⊙Susp^-fmap n (⊙idf X) == ⊙idf (⊙Susp^ n X)
+⊙Susp^-fmap-idf O X = idp
+⊙Susp^-fmap-idf (S n) X =
+  ap ⊙Susp-fmap (⊙Susp^-fmap-idf n X) ∙ ⊙Susp-fmap-idf (⊙Susp^ n X)
 
-⊙susp^-fmap-cst : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
-  → ⊙susp^-fmap n (⊙cst {X = X} {Y = Y}) == ⊙cst
-⊙susp^-fmap-cst O = idp
-⊙susp^-fmap-cst (S n) = ap ⊙susp-fmap (⊙susp^-fmap-cst n)
-                           ∙ (⊙susp-fmap-cst {X = ⊙Susp^ n _})
+⊙Susp^-fmap-cst : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
+  → ⊙Susp^-fmap n (⊙cst {X = X} {Y = Y}) == ⊙cst
+⊙Susp^-fmap-cst O = idp
+⊙Susp^-fmap-cst (S n) = ap ⊙Susp-fmap (⊙Susp^-fmap-cst n)
+                           ∙ (⊙Susp-fmap-cst {X = ⊙Susp^ n _})
 
-⊙susp^-fmap-∘ : ∀ {i j k} (n : ℕ) {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+⊙Susp^-fmap-∘ : ∀ {i j k} (n : ℕ) {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y))
-  → ⊙susp^-fmap n (g ⊙∘ f) == ⊙susp^-fmap n g ⊙∘ ⊙susp^-fmap n f
-⊙susp^-fmap-∘ O g f = idp
-⊙susp^-fmap-∘ (S n) g f =
-  ap ⊙susp-fmap (⊙susp^-fmap-∘ n g f)
-  ∙ ⊙susp-fmap-∘ (⊙susp^-fmap n g) (⊙susp^-fmap n f)
+  → ⊙Susp^-fmap n (g ⊙∘ f) == ⊙Susp^-fmap n g ⊙∘ ⊙Susp^-fmap n f
+⊙Susp^-fmap-∘ O g f = idp
+⊙Susp^-fmap-∘ (S n) g f =
+  ap ⊙Susp-fmap (⊙Susp^-fmap-∘ n g f)
+  ∙ ⊙Susp-fmap-∘ (⊙Susp^-fmap n g) (⊙Susp^-fmap n f)
+
+⊙Susp^-Susp-split-iso : ∀ {i} (n : ℕ) (X : Ptd i)
+  → ⊙Susp^ (S n) X ⊙≃ ⊙Susp^ n (⊙Susp X)
+⊙Susp^-Susp-split-iso O     X = ⊙ide _
+⊙Susp^-Susp-split-iso (S n) X = ⊙Susp-emap (⊙Susp^-Susp-split-iso n X)
 
 
 ⊙Sphere : (n : ℕ) → Ptd₀

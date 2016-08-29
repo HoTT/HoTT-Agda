@@ -15,17 +15,17 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k}
 
   pre∘-is-equiv : is-equiv (λ (k : B → C) → k ∘ h)
   pre∘-is-equiv = is-eq f g f-g g-f
-    where f = λ k → k ∘ h
-          g = λ k → k ∘ is-equiv.g e
-          f-g = λ k → ap (λ q → λ x → k (q x)) (λ= $ is-equiv.g-f e)
-          g-f = λ k → ap (λ q → λ x → k (q x)) (λ= $ is-equiv.f-g e)
+    where f = _∘ h
+          g = _∘ is-equiv.g e
+          f-g = λ k → ap (k ∘_) (λ= $ is-equiv.g-f e)
+          g-f = λ k → ap (k ∘_) (λ= $ is-equiv.f-g e)
 
   post∘-is-equiv : is-equiv (λ (k : C → A) → h ∘ k)
   post∘-is-equiv = is-eq f g f-g g-f
-    where f = λ k → h ∘ k
-          g = λ k → is-equiv.g e ∘ k
-          f-g = λ k → ap (λ q → q ∘ k) (λ= $ is-equiv.f-g e)
-          g-f = λ k → ap (λ q → q ∘ k) (λ= $ is-equiv.g-f e)
+    where f = h ∘_
+          g = is-equiv.g e ∘_
+          f-g = λ k → ap (_∘ k) (λ= $ is-equiv.f-g e)
+          g-f = λ k → ap (_∘ k) (λ= $ is-equiv.g-f e)
 
 {- The same thing on the abstraction level of equivalences -}
 module _ {i j k} {A : Type i} {B : Type j} {C : Type k}
@@ -45,7 +45,7 @@ is-contr-map {A = A} {B = B} f = (y : B) → is-contr (Σ A (λ x → f x == y))
 equiv-is-contr-map : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
   → (is-equiv f → is-contr-map f)
 equiv-is-contr-map e y =
-   equiv-preserves-level ((equiv-Σ-fst (λ z → z == y) e) ⁻¹) (pathto-is-contr y)
+   equiv-preserves-level (Σ-emap-l (λ z → z == y) (_ , e) ⁻¹) (pathto-is-contr y)
 
 contr-map-is-equiv : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
   → (is-contr-map f → is-equiv f)
@@ -58,7 +58,7 @@ contr-map-is-equiv {f = f} cm = is-eq _
 fiber=-eqv : ∀ {i j} {A : Type i} {B : Type j} {h : A → B} {y : B}
   (r s : Σ A (λ x → h x == y))
   → (r == s) ≃ Σ (fst r == fst s) (λ γ → ap h γ ∙ snd s == snd r)
-fiber=-eqv r s = equiv-Σ-snd (λ γ → !-equiv ∘e (↓-app=cst-eqv ⁻¹)) ∘e ((=Σ-eqv r s)⁻¹)
+fiber=-eqv r s = Σ-emap-r (λ γ → !-equiv ∘e (↓-app=cst-eqv ⁻¹)) ∘e ((=Σ-econv r s)⁻¹)
 
 
 module _ {i j} {A : Type i} {B : Type j} where
@@ -81,30 +81,30 @@ module _ {i j} {A : Type i} {B : Type j} where
 module _ {i j} {A : Type i} {B : Type j} {f : A → B} (e : is-equiv f) where
 
   equiv-linv-is-contr : is-contr (linv f)
-  equiv-linv-is-contr = equiv-preserves-level (equiv-Σ-snd (λ _ → λ=-equiv ⁻¹))
+  equiv-linv-is-contr = equiv-preserves-level (Σ-emap-r λ _ → λ=-equiv ⁻¹)
                           (equiv-is-contr-map (pre∘-is-equiv e) (idf A))
 
   equiv-rinv-is-contr : is-contr (rinv f)
-  equiv-rinv-is-contr = equiv-preserves-level (equiv-Σ-snd (λ _ → λ=-equiv ⁻¹))
+  equiv-rinv-is-contr = equiv-preserves-level (Σ-emap-r λ _ → λ=-equiv ⁻¹)
                           (equiv-is-contr-map (post∘-is-equiv e) (idf B))
 
 module _ {i j} {A : Type i} {B : Type j} {f : A → B} where
 
   rcoh-eqv : (v : rinv f)
     → rcoh f v ≃ Π A (λ x → (fst v (f x) , snd v (f x)) == (x , idp {a = f x}))
-  rcoh-eqv v = equiv-Π-r (λ x → ((fiber=-eqv {h = f} _ _)⁻¹) ∘e apply-unit-r x) ∘e choice ⁻¹
+  rcoh-eqv v = Π-emap-r (λ x → ((fiber=-eqv {h = f} _ _)⁻¹) ∘e apply-unit-r x) ∘e choice ⁻¹
     where
       apply-unit-r : ∀ x → Σ _ (λ γ → ap f γ == _) ≃ Σ _ (λ γ → ap f γ ∙ idp == _)
-      apply-unit-r x = equiv-Σ-snd $
-        λ γ → coe-equiv (ap (λ q → q == snd v (f x)) (! (∙-unit-r _)))
+      apply-unit-r x = Σ-emap-r λ γ
+        → coe-equiv (ap (λ q → q == snd v (f x)) (! (∙-unit-r _)))
 
   lcoh-eqv : (v : linv f)
     → lcoh f v ≃ Π B (λ y → (f (fst v y) , snd v (fst v y)) == (y , idp))
-  lcoh-eqv v = equiv-Π-r (λ y → ((fiber=-eqv {h = fst v} _ _)⁻¹) ∘e apply-unit-r y) ∘e choice ⁻¹
+  lcoh-eqv v = Π-emap-r (λ y → ((fiber=-eqv {h = fst v} _ _)⁻¹) ∘e apply-unit-r y) ∘e choice ⁻¹
     where
       apply-unit-r : ∀ y → Σ _ (λ γ → ap (fst v) γ == _) ≃ Σ _ (λ γ → ap (fst v) γ ∙ idp == _)
-      apply-unit-r y = equiv-Σ-snd $
-        λ γ → coe-equiv (ap (λ q → q == snd v (fst v y)) (! (∙-unit-r _)))
+      apply-unit-r y = Σ-emap-r λ γ
+        → coe-equiv (ap (λ q → q == snd v (fst v y)) (! (∙-unit-r _)))
 
 
 equiv-rcoh-is-contr : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}

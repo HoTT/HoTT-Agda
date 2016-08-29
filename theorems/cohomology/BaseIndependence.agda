@@ -21,7 +21,7 @@ CF-base-indep : (n : ℤ) {X Y : Ptd i}
   → CF-hom n (f , p₁) == CF-hom n (f , p₂)
 CF-base-indep n {X} {Y} f p₁ p₂ = transport
   (λ q → CF-hom n (f , p₁) == CF-hom n (f , p₂) [ uncurry _→ᴳ_ ↓ q ])
-  (!-inv-l (pair×= (group-ua (C-Susp n Y)) (group-ua (C-Susp n X))))
+  (!-inv-l (pair×= (uaᴳ (C-Susp n Y)) (uaᴳ (C-Susp n X))))
   (!ᵈ (C-Susp-↓ n (f , p₁)) ∙ᵈ C-Susp-↓ n (f , p₂))
 
 CF-λ= : (n : ℤ) {X Y : Ptd i} {f g : fst (X ⊙→ Y)}

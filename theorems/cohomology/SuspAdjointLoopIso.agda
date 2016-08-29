@@ -19,11 +19,11 @@ module SuspAdjointLoopIso {i} where
 
     abstract
       pres-comp : (h₁ h₂ : fst (⊙Susp X ⊙→ ⊙Ω Y))
-        → –> (A.eq X (⊙Ω Y)) (⊙conc ⊙∘ ⊙×-in h₁ h₂)
-           == ⊙conc ⊙∘ ⊙×-in (–> (A.eq X (⊙Ω Y)) h₁) (–> (A.eq X (⊙Ω Y)) h₂)
+        → –> (A.eq X (⊙Ω Y)) (⊙Ω-∙ ⊙∘ ⊙fanout h₁ h₂)
+           == ⊙Ω-∙ ⊙∘ ⊙fanout (–> (A.eq X (⊙Ω Y)) h₁) (–> (A.eq X (⊙Ω Y)) h₂)
       pres-comp h₁ h₂ =
-        B.nat-cod h₁ h₂ ⊙conc
-        ∙ ap (λ w → w ⊙∘ ⊙×-in (–> (A.eq X (⊙Ω Y)) h₁) (–> (A.eq X (⊙Ω Y)) h₂))
+        B.nat-cod h₁ h₂ ⊙Ω-∙
+        ∙ ap (_⊙∘ ⊙fanout (–> (A.eq X (⊙Ω Y)) h₁) (–> (A.eq X (⊙Ω Y)) h₂))
              arr2-lemma
         where
         module A× = RightAdjoint× hadj
@@ -36,29 +36,28 @@ module SuspAdjointLoopIso {i} where
 
         ⊙ap2-lemma : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
           (f : fst (X ⊙× Y ⊙→ Z))
-          → ⊙ap f == ⊙ap2 f ⊙∘ ⊙×-in (⊙ap ⊙fst) (⊙ap ⊙snd)
+          → ⊙Ω-fmap f == ⊙Ω-fmap2 f ⊙∘ ⊙fanout (⊙Ω-fmap ⊙fst) (⊙Ω-fmap ⊙snd)
         ⊙ap2-lemma (f , idp) = ⊙λ= (ap2-lemma f) idp
 
-        arr2-lemma : B.arr2 ⊙conc == ⊙conc
+        arr2-lemma : B.arr2 ⊙Ω-∙ == ⊙Ω-∙
         arr2-lemma =
-          ⊙ap ⊙conc ⊙∘ A×.⊙out _ _
-            =⟨ ⊙ap2-lemma ⊙conc |in-ctx (λ w → w ⊙∘ A×.⊙out _ _) ⟩
-          (⊙ap2 ⊙conc ⊙∘ A×.⊙into _ _) ⊙∘ A×.⊙out _ _
-            =⟨ ⊙∘-assoc (⊙ap2 ⊙conc) (A×.⊙into _ _) (A×.⊙out _ _) ⟩
-          ⊙ap2 ⊙conc ⊙∘ (A×.⊙into _ _ ⊙∘ A×.⊙out _ _)
-            =⟨ A×.⊙into-out _ _ |in-ctx (λ w → ⊙ap2 ⊙conc ⊙∘ w) ⟩
-          ⊙ap2 ⊙conc
-            =⟨ ⊙ap2-conc-is-conc ⟩
-          ⊙conc ∎
+          ⊙Ω-fmap ⊙Ω-∙ ⊙∘ A×.⊙out _ _
+            =⟨ ⊙ap2-lemma ⊙Ω-∙ |in-ctx _⊙∘ A×.⊙out _ _ ⟩
+          (⊙Ω-fmap2 ⊙Ω-∙ ⊙∘ A×.⊙into _ _) ⊙∘ A×.⊙out _ _
+            =⟨ ⊙∘-assoc (⊙Ω-fmap2 ⊙Ω-∙) (A×.⊙into _ _) (A×.⊙out _ _) ⟩
+          ⊙Ω-fmap2 ⊙Ω-∙ ⊙∘ (A×.⊙into _ _ ⊙∘ A×.⊙out _ _)
+            =⟨ A×.⊙into-out _ _ |in-ctx ⊙Ω-fmap2 ⊙Ω-∙ ⊙∘_ ⟩
+          ⊙Ω-fmap2 ⊙Ω-∙
+            =⟨ ⊙Ω-fmap2-∙ ⟩
+          ⊙Ω-∙ ∎
 
-    iso : →Ω-group (⊙Susp X) Y ≃ᴳ →Ω-group X (⊙Ω Y)
-    iso = Trunc-group-iso
-      (–> (A.eq X (⊙Ω Y))) pres-comp (snd (A.eq X (⊙Ω Y)))
+    iso : Trunc-⊙→Ω-group (⊙Susp X) Y ≃ᴳ Trunc-⊙→Ω-group X (⊙Ω Y)
+    iso = Trunc-group-emap (≃-to-≃ᴳˢ (A.eq X (⊙Ω Y)) pres-comp)
 
   abstract
     nat-dom : {X Y : Ptd i} (f : fst (X ⊙→ Y)) (Z : Ptd i)
-      → fst (iso X Z) ∘ᴳ →Ω-group-dom-act (⊙susp-fmap f) Z
-        == →Ω-group-dom-act f (⊙Ω Z) ∘ᴳ fst (iso Y Z)
-    nat-dom f Z = hom= _ _ $ λ= $ Trunc-elim
+      → fst (iso X Z) ∘ᴳ Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap f) Z
+        == Trunc-⊙→Ω-group-fmap-dom f (⊙Ω Z) ∘ᴳ fst (iso Y Z)
+    nat-dom f Z = group-hom= $ λ= $ Trunc-elim
       (λ _ → =-preserves-level _ Trunc-level)
       (λ g → ap [_] (! (A.nat-dom f (⊙Ω Z) g)))

@@ -18,12 +18,13 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
     j₂ : fst (⊙Cof i₁) → fst Y
     j₂ = CofiberRec.f (snd Y) snd (λ x → idp)
 
-  ⊙path : ⊙Susp (X ⊙× Y) == ⊙Susp X ⊙∨ (⊙Susp Y ⊙∨ ⊙Susp (X ⊙∧ Y))
-  ⊙path =
-    ⊙ua (⊙≃-in (SuspSectionDecomp.eq i₁ fst (λ x → idp))
-                 (! $ ap winl $ merid (snd X)))
-    ∙ ap (λ Z → ⊙Susp X ⊙∨ Z)
-         (⊙ua (⊙≃-in (SuspSectionDecomp.eq (⊙cfcod' i₁ ⊙∘ i₂) j₂ (λ y → idp))
-                       (! $ ap winl $ merid (snd Y))))
-    ∙ ap (λ Z → ⊙Susp X ⊙∨ (⊙Susp Y ⊙∨ ⊙Susp Z))
-         (CofiberComp.⊙path i₁ i₂)
+  ⊙eq : ⊙Susp (X ⊙× Y) ⊙≃ ⊙Susp X ⊙∨ (⊙Susp Y ⊙∨ ⊙Susp (X ⊙∧ Y))
+  ⊙eq =
+    ⊙∨-emap (⊙ide (⊙Susp X))
+      (⊙∨-emap (⊙ide (⊙Susp Y))
+        (⊙Susp-emap (CofiberComp.⊙eq i₁ i₂)))
+    ⊙∘e ⊙∨-emap (⊙ide (⊙Susp X))
+        (≃-to-⊙≃ (SuspSectionDecomp.eq (⊙cfcod' i₁ ⊙∘ i₂) j₂ (λ y → idp))
+                 (! $ ap winl $ merid (snd Y)))
+    ⊙∘e ≃-to-⊙≃ (SuspSectionDecomp.eq i₁ fst (λ x → idp))
+                (! $ ap winl $ merid (snd X))

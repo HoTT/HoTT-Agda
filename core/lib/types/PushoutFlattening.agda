@@ -23,14 +23,14 @@ module PushoutRecType {l} (left* : A → Type l) (right* : B → Type l)
     coe-glue-β c a =
       coe (ap f (glue c)) a  =⟨ glue-β c |in-ctx (λ u → coe u a) ⟩
       coe (ua (glue* c)) a   =⟨ coe-β (glue* c) a ⟩
-      –> (glue* c) a ∎
+      –> (glue* c) a =∎
 
     coe!-glue-β : (c : C) (b : right* (h c))
       → coe! (ap f (glue c)) b == <– (glue* c) b
     coe!-glue-β c b =
       coe! (ap f (glue c)) b  =⟨ glue-β c |in-ctx (λ u → coe! u b) ⟩
       coe! (ua (glue* c)) b   =⟨ coe!-β (glue* c) b ⟩
-      <– (glue* c) b ∎
+      <– (glue* c) b =∎
 
     ↓-glue-out : (c : C) {a : left* (g c)} {b : right* (h c)}
       → a == b [ f ↓ glue c ]
@@ -38,7 +38,7 @@ module PushoutRecType {l} (left* : A → Type l) (right* : B → Type l)
     ↓-glue-out c {a} {b} p =
       –> (glue* c) a          =⟨ ! (coe-glue-β c a) ⟩
       coe (ap f (glue c)) a   =⟨ to-transp p ⟩
-      b ∎
+      b =∎
 
     ↓-glue-in : (c : C) {a : left* (g c)} {b : right* (h c)}
       → –> (glue* c) a == b
@@ -96,7 +96,7 @@ module PushoutRecType {l} (left* : A → Type l) (right* : B → Type l)
                 ap P.f (ap (–> p-equiv) (glue c))   =⟨ G.To.glue-β c |in-ctx ap P.f ⟩
                 ap P.f (pp c)                       =⟨ P.pp-β c ⟩
                 ua (glue* c)                        =⟨ ! (glue-β c) ⟩
-                ap f (glue c) ∎))
+                ap f (glue c) =∎))
          t ∙ ap P.f (↓-idf-ua-out _ q))
 
     --
@@ -149,7 +149,7 @@ module PushoutRecType {l} (left* : A → Type l) (right* : B → Type l)
           to-from-pp c = ↓-∘=idf-in to from
             (ap to (ap from (fG.pp c))   =⟨ From.pp-β c |in-ctx ap to ⟩
              ap to (fG'.pp c)            =⟨ To.pp-β c ⟩
-             fG.pp c ∎)
+             fG.pp c =∎)
 
         from-to : (x : fG'.T) → from (to x) == x
         from-to = fG'.elim from-to-cc from-to-pp  where
@@ -162,7 +162,7 @@ module PushoutRecType {l} (left* : A → Type l) (right* : B → Type l)
           from-to-pp b = ↓-∘=idf-in from to
             (ap from (ap to (fG'.pp b))   =⟨ To.pp-β b |in-ctx ap from ⟩
              ap from (fG.pp b)            =⟨ From.pp-β b ⟩
-             fG'.pp b ∎)
+             fG'.pp b =∎)
 
     --
 
