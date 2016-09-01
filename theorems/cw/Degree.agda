@@ -5,10 +5,26 @@ open import cw.CW
 open import homotopy.PinSn
 open import cw.SphereEndomorphism
 
-module cw.Degree {i} where
+module cw.Degree where
 
+  pointed-degree-map-to-degree-map : ∀ n
+    → fst (⊙Trunc 0 (⊙Sphere (S n) ⊙→ ⊙Sphere (S n)))
+    → Trunc 0 (Sphere (S n) → Sphere (S n))
+  pointed-degree-map-to-degree-map n = Trunc-rec Trunc-level ([_] ∘ fst)
 
-  module _ {n : ℕ} (skel : Skeleton {i} (S (S n)))
+  postulate
+    -- true, but not the main part of the cohomology argument
+    -- TODO Prove this!
+    pointed-degree-map-to-degree-map-is-equiv :
+      ∀ n → is-equiv (pointed-degree-map-to-degree-map n)
+
+  pointed-degree-map-equiv-degree-map : ∀ n
+    → fst (⊙Trunc 0 (⊙Sphere (S n) ⊙→ ⊙Sphere (S n)))
+    ≃ Trunc 0 (Sphere (S n) → Sphere (S n))
+  pointed-degree-map-equiv-degree-map n =
+    _ , pointed-degree-map-to-degree-map-is-equiv n
+
+  module _ {i} {n : ℕ} (skel : Skeleton {i} (S (S n)))
     (skel-has-dec-cells : has-dec-cells skel)
     -- the cells at the upper and lower dimensions
     (upper : cells-last skel)
@@ -38,15 +54,14 @@ module cw.Degree {i} where
     degree-map : Sphere (S n) → Sphere (S n)
     degree-map = cw-squash-lower-to-Sphere ∘ attaching-last skel upper
 
-    {-
-    degree-⊙map : fst (⊙Sphere (S n) ⊙→ ⊙Sphere (S n))
-    degree-⊙map = degree-map , ap cw-squash-lower-to-Sphere (! (snd (snd skel-is-aligned upper)))
+    degree-map' : ℤ-group →ᴳ ℤ-group
+    degree-map' = –>ᴳ (πS-SphereS-iso-ℤ n)
+               ∘ᴳ Trunc-rec →ᴳ-level (πS-fmap n)
+                    (<– (pointed-degree-map-equiv-degree-map n) [ degree-map ])
+               ∘ᴳ <–ᴳ (πS-SphereS-iso-ℤ n)
 
     degree' : ℤ → ℤ
-    degree' = transport Group.El (πₙ₊₁Sⁿ⁺¹ n)
-            ∘ GroupHom.f (πS-fmap n degree-⊙map)
-            ∘ transport! Group.El (πₙ₊₁Sⁿ⁺¹ n)
+    degree' = GroupHom.f degree-map'
 
     degree : ℤ
     degree = degree' 1
-    -}

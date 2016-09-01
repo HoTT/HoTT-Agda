@@ -113,6 +113,16 @@ abstract
     → φ == ψ [ (λ a → G a →ᴳ H a) ↓ p ]
   group-hom=-↓ {p = idp} = group-hom=
 
+abstract
+  GroupHom-level : ∀ {i j} {G : Group i} {H : Group j} → is-set (G →ᴳ H)
+  GroupHom-level {H = H} = equiv-preserves-level
+    (equiv (uncurry group-hom) (λ x → GroupHom.f x , GroupHom.pres-comp x)
+           (λ _ → idp) (λ _ → idp))
+    (Subtype-level (→-level (Group.El-level H))
+                   (λ _ → Π-level λ _ → Π-level λ _ → Group.El-level H _ _))
+
+→ᴳ-level = GroupHom-level
+
 infixr 80 _∘ᴳ_
 
 _∘ᴳ_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
@@ -174,6 +184,15 @@ _≃ᴳ_ = GroupIso
   → GS ≃ᴳˢ HS
 ≃-to-≃ᴳˢ (f , f-is-equiv) pres-comp = group-structure-hom f pres-comp , f-is-equiv
 
+preserves-comp-inv : ∀ {i j} {A : Type i} {B : Type j}
+  (A-comp : A → A → A) (B-comp : B → B → B) {f : A → B} (f-ie : is-equiv f)
+  → preserves-comp A-comp B-comp f
+  → preserves-comp B-comp A-comp (is-equiv.g f-ie)
+preserves-comp-inv Ac Bc ie pc b₁ b₂ = let open is-equiv ie in
+  ap2 (λ w₁ w₂ → g (Bc w₁ w₂)) (! (f-g b₁)) (! (f-g b₂))
+  ∙ ! (ap g (pc (g b₁) (g b₂)))
+  ∙ g-f (Ac (g b₁) (g b₂))
+
 module GroupIso {i j} {G : Group i} {H : Group j} (iso : GroupIso G H) where
 
   f-hom : G →ᴳ H
@@ -188,6 +207,9 @@ module GroupIso {i j} {G : Group i} {H : Group j} (iso : GroupIso G H) where
 
   f-equiv : Group.El G ≃ Group.El H
   f-equiv = f , f-is-equiv
+
+  g-hom : H →ᴳ G
+  g-hom = group-hom g (preserves-comp-inv (Group.comp G) (Group.comp H) f-is-equiv pres-comp)
 
 idiso : ∀ {i} (G : Group i) → (G ≃ᴳ G)
 idiso G = idhom G , idf-is-equiv _
@@ -228,12 +250,14 @@ _⁻¹ᴳ : ∀ {i j} {G : Group i} {H : Group j} → G ≃ᴳ H → H ≃ᴳ G
 _⁻¹ᴳ {G = G} {H = H} (φ , ie) =
   group-hom
     (is-equiv.g ie)
-    (λ h₁ h₂ →
-      ap2 (λ w₁ w₂ → is-equiv.g ie (Group.comp H w₁ w₂))
-          (! (is-equiv.f-g ie h₁)) (! (is-equiv.f-g ie h₂))
-        ∙ ! (ap (is-equiv.g ie) (GroupHom.pres-comp φ (is-equiv.g ie h₁) (is-equiv.g ie h₂)))
-        ∙ is-equiv.g-f ie (Group.comp G (is-equiv.g ie h₁) (is-equiv.g ie h₂))) ,
+    (preserves-comp-inv (Group.comp G) (Group.comp H) ie (GroupHom.pres-comp φ)) ,
   is-equiv-inv ie
+
+–>ᴳ : ∀ {i j} {G : Group i} {H : Group j} → (G ≃ᴳ H) → (G →ᴳ H)
+–>ᴳ = GroupIso.f-hom
+
+<–ᴳ : ∀ {i j} {G : Group i} {H : Group j} → (G ≃ᴳ H) → (H →ᴳ G)
+<–ᴳ = GroupIso.g-hom
 
 module _ {i} {G H : Group i} (iso : GroupIso G H) where
   private
