@@ -10,7 +10,7 @@ open import cohomology.Theory
 module cohomology.Torus {i} (OT : OrdinaryTheory i) where
 
 open OrdinaryTheory OT
-open import cohomology.Sn OT
+open import cohomology.Sphere OT
 open import cohomology.SphereProduct cohomology-theory
 open import cohomology.Unit cohomology-theory
 

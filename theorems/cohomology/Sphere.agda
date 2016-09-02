@@ -4,7 +4,7 @@ open import HoTT
 open import cohomology.Exactness
 open import cohomology.Theory
 
-module cohomology.Sn {i} (OT : OrdinaryTheory i) where
+module cohomology.Sphere {i} (OT : OrdinaryTheory i) where
 
 open OrdinaryTheory OT
 
