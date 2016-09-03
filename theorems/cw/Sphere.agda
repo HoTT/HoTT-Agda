@@ -5,16 +5,16 @@ open import cw.CW
 
 module cw.Sphere where
 
-CWSphere-skel : ∀ n → Skeleton {lzero} n
+cw-sphere-skel : ∀ n → Skeleton {lzero} n
 
 CWSphere : ℕ → Type₀
-CWSphere n = ⟦ CWSphere-skel n ⟧
+CWSphere n = ⟦ cw-sphere-skel n ⟧
 
 Sphere-to-CWSphere : (n : ℕ) → Sphere n → CWSphere n
 
-CWSphere-skel O = Bool
-CWSphere-skel (S n) =
-  (CWSphere-skel n , Bool , cst (Sphere-to-CWSphere n))
+cw-sphere-skel O = Bool
+cw-sphere-skel (S n) =
+  (cw-sphere-skel n , Bool , cst (Sphere-to-CWSphere n))
 
 {-
   mapping:
@@ -165,6 +165,6 @@ to-from (S n) = AttachedElim.f to-from-incl to-from-hub to-from-spoke
 Sphere-equiv-CWSphere : ∀ n → Sphere n ≃ CWSphere n
 Sphere-equiv-CWSphere n = _ , Sphere-to-CWSphere-is-equiv n
 
-CWSphere-has-dec-cells : ∀ n → has-dec-cells (CWSphere-skel n)
-CWSphere-has-dec-cells 0 = Bool-has-dec-eq
-CWSphere-has-dec-cells (S n) = CWSphere-has-dec-cells n , Bool-has-dec-eq
+cw-sphere-has-dec-eq : ∀ n → has-cells-with-dec-eq (cw-sphere-skel n)
+cw-sphere-has-dec-eq 0 = Bool-has-dec-eq
+cw-sphere-has-dec-eq (S n) = cw-sphere-has-dec-eq n , Bool-has-dec-eq

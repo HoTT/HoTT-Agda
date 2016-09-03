@@ -20,12 +20,12 @@ module _ {A : Type i} (dec : has-dec-eq A) where
   coef-pre l a = ℤsum $ map fst $ filter (λ{(_ , a') → dec a' a}) l
   
   -- Extensional equality
-  FormalSum-rel : Rel (PreFormalSum A) i
-  FormalSum-rel l₁ l₂ = ∀ a → coef-pre l₁ a == coef-pre l₂ a
+  formal-sum-rel : Rel (PreFormalSum A) i
+  formal-sum-rel l₁ l₂ = ∀ a → coef-pre l₁ a == coef-pre l₂ a
 
   -- The quotient
   FormalSum : Type i
-  FormalSum = SetQuotient FormalSum-rel
+  FormalSum = SetQuotient formal-sum-rel
 
   -- Properties of [coef-pre]
   coef-pre-++ : ∀ l₁ l₂ a

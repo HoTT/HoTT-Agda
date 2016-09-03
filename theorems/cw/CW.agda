@@ -99,18 +99,18 @@ has-cells-with-dec-eq {n = S n} (skel , cells , _) = has-cells-with-dec-eq skel
 
 -- Empty
 
-CWEmpty-skel : Skeleton {lzero} 0
-CWEmpty-skel = Empty
-CWEmpty = ⟦ CWEmpty-skel ⟧
+cw-empty-skel : Skeleton {lzero} 0
+cw-empty-skel = Empty
+CWEmpty = ⟦ cw-empty-skel ⟧
 
 CWEmpty≃Empty : CWEmpty ≃ Empty
 CWEmpty≃Empty = ide _
 
 -- Unit
 
-CWUnit-skel : Skeleton {lzero} 0
-CWUnit-skel = Unit
-CWUnit = ⟦ CWUnit-skel ⟧
+cw-unit-skel : Skeleton {lzero} 0
+cw-unit-skel = Unit
+CWUnit = ⟦ cw-unit-skel ⟧
 
 CWUnit≃Unit : CWUnit ≃ Unit
 CWUnit≃Unit = ide _
