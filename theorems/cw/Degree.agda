@@ -7,25 +7,8 @@ open import cw.SphereEndomorphism
 
 module cw.Degree where
 
-  pointed-degree-map-to-degree-map : ∀ n
-    → fst (⊙Trunc 0 (⊙Sphere (S n) ⊙→ ⊙Sphere (S n)))
-    → Trunc 0 (Sphere (S n) → Sphere (S n))
-  pointed-degree-map-to-degree-map n = Trunc-rec Trunc-level ([_] ∘ fst)
-
-  postulate
-    -- true, but not the main part of the cohomology argument
-    -- TODO Prove this!
-    pointed-degree-map-to-degree-map-is-equiv :
-      ∀ n → is-equiv (pointed-degree-map-to-degree-map n)
-
-  pointed-degree-map-equiv-degree-map : ∀ n
-    → fst (⊙Trunc 0 (⊙Sphere (S n) ⊙→ ⊙Sphere (S n)))
-    ≃ Trunc 0 (Sphere (S n) → Sphere (S n))
-  pointed-degree-map-equiv-degree-map n =
-    _ , pointed-degree-map-to-degree-map-is-equiv n
-
-  module _ {i} {n : ℕ} (skel : Skeleton {i} (S (S n)))
-    (skel-has-dec-cells : has-dec-cells skel)
+  module DegreeAboveOne {i} {n : ℕ} (skel : Skeleton {i} (S (S n)))
+    (skel-has-dec-cells : has-cells-with-dec-eq skel)
     -- the cells at the upper and lower dimensions
     (upper : cells-last skel)
     (lower : cells-nth (inr ltS) skel)
@@ -57,7 +40,7 @@ module cw.Degree where
     degree-map' : ℤ-group →ᴳ ℤ-group
     degree-map' = –>ᴳ (πS-SphereS-iso-ℤ n)
                ∘ᴳ Trunc-rec →ᴳ-level (πS-fmap n)
-                    (<– (pointed-degree-map-equiv-degree-map n) [ degree-map ])
+                    (⊙Sphere-endo-in n [ degree-map ])
                ∘ᴳ <–ᴳ (πS-SphereS-iso-ℤ n)
 
     degree' : ℤ → ℤ
@@ -65,3 +48,24 @@ module cw.Degree where
 
     degree : ℤ
     degree = degree' 1
+
+  module DegreeAtOne {i} {n : ℕ} (skel : Skeleton {i} 1)
+    (skel-has-dec-cells : has-cells-with-dec-eq skel)
+    -- the cells at the upper and lower dimensions
+    (line : cells-last skel)
+    (point : cells-nth (inr ltS) skel) where
+
+    private
+      points = cw-take (inr ltS) skel
+      points-dec-eq = fst skel-has-dec-cells
+      lines = cells-last skel
+      line-attaching = attaching-last skel
+
+    -- Maybe [true] can or should be mapped to [-1]. Not sure.
+    degree : ℤ
+    degree with points-dec-eq (line-attaching line true) point
+    degree | inl _ = 1
+    degree | inr _ with points-dec-eq (line-attaching line false) point
+    degree | inr _ | inl _ = -1
+    degree | inr _ | inr _ = 0
+

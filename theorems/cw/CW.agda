@@ -90,10 +90,10 @@ attaching-nth m≤n = attaching-last ∘ cw-take m≤n
 -- Misc
 
 -- Extra conditions on CW complexes
--- XXX Needs a better name
-has-dec-cells : ∀ {i} {n} → Skeleton {i} n → Type i
-has-dec-cells {n = 0} skel = has-dec-eq skel
-has-dec-cells {n = S n} (skel , cells , _) = has-dec-cells skel × has-dec-eq cells
+has-cells-with-dec-eq : ∀ {i} {n} → Skeleton {i} n → Type i
+has-cells-with-dec-eq {n = 0} skel = has-dec-eq skel
+has-cells-with-dec-eq {n = S n} (skel , cells , _) = has-cells-with-dec-eq skel
+                                                   × has-dec-eq cells
 
 {- Some basic CWs -}
 
