@@ -8,13 +8,13 @@ module lib.types.SetQuotient where
 module _ {i} {A : Type i} {j} where
 
   private
-    data #SetQuotient-aux (R : Rel A j) : Type i where
+    data #SetQuotient-aux (R : Rel A j) : Type (lmax i j) where
       #q[_] : A → #SetQuotient-aux R 
 
-    data #SetQuotient (R : Rel A j) : Type i where
+    data #SetQuotient (R : Rel A j) : Type (lmax i j) where
       #setquot : #SetQuotient-aux R → (Unit → Unit) → #SetQuotient R
 
-  SetQuotient : (R : Rel A j) → Type i
+  SetQuotient : (R : Rel A j) → Type (lmax i j)
   SetQuotient = #SetQuotient
 
   module _ {R : Rel A j} where

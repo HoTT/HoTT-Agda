@@ -94,3 +94,6 @@ module QuotientGroup {i j} (G : Group i) {P : Group.El G → Type j}
         (λ _ → =-preserves-set SetQuotient-level)
         (ap q[_] ∘ G.inv-r)
         (λ _ → prop-has-all-paths-↓ (SetQuotient-level _ _))
+
+  QuotientGroup : Group (lmax i j)
+  QuotientGroup = group _ SetQuotient-level struct
