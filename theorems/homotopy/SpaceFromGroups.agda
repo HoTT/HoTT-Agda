@@ -42,7 +42,7 @@ module SpaceFromEMs {i} (F : ℕ → Ptd i)
     πS n (F (n + O)) ×ᴳ 0ᴳ
       ≃ᴳ⟨ ×ᴳ-unit-r _ ⟩
     πS n (F (n + O))
-      ≃ᴳ⟨ ≃ᴳ-over-= (λ k → πS n (F k)) (+-unit-r n) ⟩
+      ≃ᴳ⟨ transportᴳ-equiv (λ k → πS n (F k)) (+-unit-r n) ⟩
     πS n (F n)
       ≃ᴳ∎
     where
@@ -76,14 +76,14 @@ module SpaceFromEMs {i} (F : ℕ → Ptd i)
         ≃ᴳ πS (m + S n) (⊙FinTuples (λ k → F (S (n + k))))
       lemma₂ =
         πS (m + S n) (⊙FinTuples (F ∘ S))
-          ≃ᴳ⟨ ≃ᴳ-over-= (λ s → πS s (⊙FinTuples (F ∘ S))) (+-βr m n) ⟩
+          ≃ᴳ⟨ transportᴳ-equiv (λ s → πS s (⊙FinTuples (F ∘ S))) (+-βr m n) ⟩
         πS (S m + n) (⊙FinTuples (F ∘ S))
           ≃ᴳ⟨ prefix-lemma n (S m) (F ∘ S)
                 (λ k → transport (λ s → has-level ⟨ s ⟩ (fst (F (S k))))
                      (+-βr (S m) k)
                      (pF (S k))) ⟩
         πS (S m + n) (⊙FinTuples (λ k → F (S (n + k))))
-          ≃ᴳ⟨ ≃ᴳ-over-= (λ s → πS s (⊙FinTuples (λ k → F (S (n + k))))) (+-βr m n) ⁻¹ᴳ ⟩
+          ≃ᴳ⟨ transportᴳ-equiv (λ s → πS s (⊙FinTuples (λ k → F (S (n + k))))) (+-βr m n) ⁻¹ᴳ ⟩
         πS (m + S n) (⊙FinTuples (λ k → F (S (n + k))))
           ≃ᴳ∎
 

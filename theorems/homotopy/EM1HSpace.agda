@@ -16,7 +16,6 @@ module EM₁HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
     (λ _ → =-preserves-level _ emlevel)
     (emloop g)
     loop'
-    (set-↓-has-all-paths-↓ (emlevel embase embase))
     (λ _ _ → set-↓-has-all-paths-↓ (emlevel embase embase))
     where
     abstract
@@ -41,7 +40,6 @@ module EM₁HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
         (λ _ →  =-preserves-level _ (=-preserves-level _ emlevel))
         (emloop-comp g₁ g₂)
         (λ _ → prop-has-all-paths-↓ (emlevel _ _ _ _))
-        (set-↓-has-all-paths-↓ (=-preserves-level _ (emlevel _ _)))
         (λ _ _ → set-↓-has-all-paths-↓ (=-preserves-level _ (emlevel _ _)))))
       ∙ ! (∙-λ= _ _)
 
@@ -58,7 +56,6 @@ module EM₁HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
       idp
       (λ g → ↓-app=idf-in $ ∙'-unit-l (emloop g) ∙ (! (ap-idf (emloop g)))
                             ∙ ! (∙-unit-r (ap (mult embase) (emloop g))))
-      (set-↓-has-all-paths-↓ (emlevel _ _))
       (λ _ _ → set-↓-has-all-paths-↓ (emlevel _ _))
 
     μ-e-r : (x : EM₁) → mult x embase == x
@@ -80,7 +77,6 @@ module EM₁HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
          ap (λ z → mult z embase) (emloop g)
            =⟨ ! (∙-unit-r (ap (λ z → mult z embase) (emloop g))) ⟩
          ap (λ z → mult z embase) (emloop g) ∙ idp ∎)
-      (set-↓-has-all-paths-↓ (emlevel _ _))
       (λ _ _ → set-↓-has-all-paths-↓ (emlevel _ _))
 
     μ-coh : μ-e-l embase == μ-e-r embase
