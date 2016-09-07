@@ -9,23 +9,23 @@ open import lib.types.Int
 open import lib.types.List
 open import lib.types.SetQuotient
 
-module lib.groups.FormalSum {i} where
+module lib.groups.FreeAbelianGroup {i} where
 
-PreFormalSum : Type i → Type i
-PreFormalSum A = List (ℤ × A)
+PreFreeAbelianGroup : Type i → Type i
+PreFreeAbelianGroup A = List (ℤ × A)
 
 module _ {A : Type i} (dec : has-dec-eq A) where
 
-  coef-pre : PreFormalSum A → (A → ℤ)
+  coef-pre : PreFreeAbelianGroup A → (A → ℤ)
   coef-pre l a = ℤsum $ map fst $ filter (λ{(_ , a') → dec a' a}) l
   
   -- Extensional equality
-  formal-sum-rel : Rel (PreFormalSum A) i
+  formal-sum-rel : Rel (PreFreeAbelianGroup A) i
   formal-sum-rel l₁ l₂ = ∀ a → coef-pre l₁ a == coef-pre l₂ a
 
   -- The quotient
-  FormalSum : Type i
-  FormalSum = SetQuotient formal-sum-rel
+  FreeAbelianGroup : Type i
+  FreeAbelianGroup = SetQuotient formal-sum-rel
 
   -- Properties of [coef-pre]
   coef-pre-++ : ∀ l₁ l₂ a
@@ -36,7 +36,7 @@ module _ {A : Type i} (dec : has-dec-eq A) where
               ∙ ! (ℤ+-assoc z (coef-pre l₁ a) (coef-pre l₂ a))
   ... | inr _ = coef-pre-++ l₁ l₂ a
 
-  flip-pre : PreFormalSum A → PreFormalSum A
+  flip-pre : PreFreeAbelianGroup A → PreFreeAbelianGroup A
   flip-pre = map λ{(z , a) → (ℤ~ z , a)}
 
   coef-pre-flip-pre : ∀ l a
@@ -49,7 +49,7 @@ module _ {A : Type i} (dec : has-dec-eq A) where
 
 module _ {A : Type i} {dec : has-dec-eq A} where
 
-  coef : FormalSum dec → (A → ℤ)
+  coef : FreeAbelianGroup dec → (A → ℤ)
   coef = SetQuot-rec (→-is-set ℤ-is-set) (coef-pre dec) λ=
 
   -- extensionality of formal sums.
@@ -64,10 +64,10 @@ module _ {A : Type i} {dec : has-dec-eq A} where
         (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → SetQuotient-is-set _ _)))
       (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → Π-is-prop λ _ → SetQuotient-is-set _ _))
 
-  -- TODO Use abstract [FormalSum].
+  -- TODO Use abstract [FreeAbelianGroup].
 
   infixl 80 _⊞_
-  _⊞_ : FormalSum dec → FormalSum dec → FormalSum dec
+  _⊞_ : FreeAbelianGroup dec → FreeAbelianGroup dec → FreeAbelianGroup dec
   _⊞_ = SetQuot-rec
     (→-is-set SetQuotient-is-set)
     (λ l₁ → SetQuot-rec SetQuotient-is-set (q[_] ∘ (l₁ ++_))
@@ -92,7 +92,7 @@ module _ {A : Type i} {dec : has-dec-eq A} where
       (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → ℤ-is-set _ _)))
     (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → Π-is-prop λ _ → ℤ-is-set _ _))
 
-  ⊟ : FormalSum dec → FormalSum dec
+  ⊟ : FreeAbelianGroup dec → FreeAbelianGroup dec
   ⊟ = SetQuot-rec SetQuotient-is-set (q[_] ∘ flip-pre dec)
     λ {l₁} {l₂} r → quot-rel λ a
       → coef-pre-flip-pre dec l₁ a ∙ ap ℤ~ (r a) ∙ ! (coef-pre-flip-pre dec l₂ a)
@@ -103,7 +103,7 @@ module _ {A : Type i} {dec : has-dec-eq A} where
     (λ l a → coef-pre-flip-pre dec l a)
     (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → ℤ-is-set _ _))
 
-  ⊞-unit : FormalSum dec
+  ⊞-unit : FreeAbelianGroup dec
   ⊞-unit = q[ nil ]
 
   coef-⊞-unit : ∀ a → coef ⊞-unit a == 0
@@ -157,8 +157,8 @@ module _ {A : Type i} {dec : has-dec-eq A} where
                             ∙ ap (_ℤ+ coef fs a) (coef-⊟ fs a)
                             ∙ ℤ~-inv-l (coef fs a)
 
-  FormalSum-group-structure : GroupStructure (FormalSum dec)
-  FormalSum-group-structure = record
+  FreeAbelianGroup-group-structure : GroupStructure (FreeAbelianGroup dec)
+  FreeAbelianGroup-group-structure = record
     { ident = ⊞-unit
     ; inv = ⊟
     ; comp = _⊞_
@@ -169,11 +169,11 @@ module _ {A : Type i} {dec : has-dec-eq A} where
     ; inv-l = ⊟-inv-l
     }
 
-  FormalSum-group : Group i
-  FormalSum-group = group _ SetQuotient-is-set FormalSum-group-structure
+  FreeAbelianGroup-group : Group i
+  FreeAbelianGroup-group = group _ SetQuotient-is-set FreeAbelianGroup-group-structure
 
   has-finite-supports : (A → ℤ) → Type i
-  has-finite-supports f = Σ (FormalSum dec) λ fs → ∀ a → f a == coef fs a
+  has-finite-supports f = Σ (FreeAbelianGroup dec) λ fs → ∀ a → f a == coef fs a
 
   has-finite-supports-is-prop : ∀ f → is-prop (has-finite-supports f)
   has-finite-supports-is-prop f = all-paths-is-prop
