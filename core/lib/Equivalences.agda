@@ -137,9 +137,9 @@ idf-is-equiv A = is-eq _ (idf A) (λ _ → idp) (λ _ → idp)
 ide : ∀ {i} (A : Type i) → A ≃ A
 ide A = equiv (idf A) (idf A) (λ _ → idp) (λ _ → idp)
 
-≃-over-= : ∀ {i j} {A : Type i} (B : A → Type j) {a₁ a₂ : A} (p : a₁ == a₂)
-  → B a₁ ≃ B a₂
-≃-over-= B idp = ide _
+transport-equiv : ∀ {i j} {A : Type i} (B : A → Type j) {x y : A} (p : x == y)
+  → (B x ≃ B y)
+transport-equiv B idp = ide _
 
 infixr 80 _∘e_
 infixr 80 _∘ise_
