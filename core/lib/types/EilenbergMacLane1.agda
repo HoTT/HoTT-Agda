@@ -40,16 +40,22 @@ module EM₁ {i} (G : Group i) where
   postulate  -- HIT
     emlevel : has-level ⟨ 1 ⟩ EM₁
     emloop : G.El → embase == embase
-    emloop-ident : emloop G.ident == idp
     emloop-comp : ∀ g₁ g₂ → emloop (G.comp g₁ g₂) == emloop g₁ ∙ emloop g₂
+  emloop-ident : emloop G.ident == idp
+  emloop-ident = ! $ anti-whisker-right (emloop G.ident) $
+    ap emloop (! $ G.unit-r G.ident) ∙ emloop-comp G.ident G.ident
 
   module EM₁Rec {j} {C : Type j}
     (C-level : has-level ⟨ 1 ⟩ C)
     (embase* : C)
     (hom* : G →ᴳ (Ω^S-group 0 (C , embase*) C-level)) where
 
+    -- XXX Should be defined in terms of the dependent one.
     f : EM₁ → C
-    f (#em₁ #embase _) = embase*
+    f = f-aux phantom  where
+
+      f-aux : Phantom hom* → (EM₁ → C)
+      f-aux phantom (#em₁ #embase _) = embase*
 
     postulate  -- HIT
       emloop-β : (g : G.El) → ap f (emloop g) == GroupHom.f hom* g
@@ -60,15 +66,16 @@ module EM₁ {i} (G : Group i) where
     (P-level : (x : EM₁) → has-level ⟨ 1 ⟩ (P x))
     (embase* : P embase)
     (emloop* : (g : G.El) → embase* == embase* [ P ↓ emloop g ])
-    (preserves-ident : emloop* G.ident == idp
-       [ (λ p → embase* == embase* [ P ↓ p ]) ↓ emloop-ident ])
-    (preserves-comp : (g₁ g₂ : G.El) →
+    (emloop-comp* : (g₁ g₂ : G.El) →
        emloop* (G.comp g₁ g₂) == emloop* g₁ ∙ᵈ emloop* g₂
        [ (λ p → embase* == embase* [ P ↓ p ]) ↓ emloop-comp g₁ g₂ ])
     where
 
     f : Π EM₁ P
-    f (#em₁ #embase _) = embase*
+    f = f-aux phantom phantom where
+
+      f-aux : Phantom emloop* → Phantom emloop-comp* → Π EM₁ P
+      f-aux phantom phantom (#em₁ #embase _) = embase*
 
     postulate  -- HIT
       emloop-β : (g : G.El) → apd f (emloop g) == emloop* g
@@ -110,17 +117,23 @@ module EM₁ {i} (G : Group i) where
       ((0 -Type i) , (G.El , G.El-level)) (0 -Type-level i)
 
     Codes-hom : G →ᴳ Ω-group
-    Codes-hom = group-hom
-      (nType=-in ∘ ua ∘ comp-equiv)
-      (λ g₁ g₂ →
-        nType=-in (ua (comp-equiv (G.comp g₁ g₂)))
-          =⟨ comp-equiv-comp g₁ g₂ |in-ctx nType=-in ∘ ua ⟩
-        nType=-in (ua (comp-equiv g₂ ∘e comp-equiv g₁))
-          =⟨ ua-∘e (comp-equiv g₁) (comp-equiv g₂) |in-ctx nType=-in ⟩
-        nType=-in (ua (comp-equiv g₁) ∙ ua (comp-equiv g₂))
-          =⟨ ! $ nType-∙ (ua (comp-equiv g₁)) (ua (comp-equiv g₂)) ⟩
-        nType=-in (ua (comp-equiv g₁)) ∙ nType=-in (ua (comp-equiv g₂))
-          =∎)
+    Codes-hom = group-hom (nType=-in ∘ ua ∘ comp-equiv) pres-comp where
+      abstract
+        pres-comp : ∀ g₁ g₂
+          → nType=-in {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv (G.comp g₁ g₂)))
+          == nType=-in {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₁))
+          ∙ nType=-in {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₂))
+        pres-comp g₁ g₂ =
+          nType=-in {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv (G.comp g₁ g₂)))
+            =⟨ comp-equiv-comp g₁ g₂ |in-ctx nType=-in ∘ ua ⟩
+          nType=-in {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₂ ∘e comp-equiv g₁))
+            =⟨ ua-∘e (comp-equiv g₁) (comp-equiv g₂) |in-ctx nType=-in ⟩
+          nType=-in {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₁) ∙ ua (comp-equiv g₂))
+            =⟨ ! $ nType-∙ {A = G.El , G.El-level} {B = G.El , G.El-level} {C = G.El , G.El-level}
+                  (ua (comp-equiv g₁)) (ua (comp-equiv g₂)) ⟩
+          nType=-in {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₁))
+          ∙ nType=-in {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₂))
+            =∎
 
     Codes : EM₁ → 0 -Type i
     Codes = EM₁-rec {C = 0 -Type i} (0 -Type-level i)
@@ -154,7 +167,6 @@ module EM₁ {i} (G : Group i) where
         (λ _ → Π-level (λ _ → =-preserves-level _ emlevel))
         emloop
         loop'
-        (prop-has-all-paths-↓ (Π-level (λ _ → emlevel _ _) _ _))
         (λ _ _ → prop-has-all-paths-↓ (↓-level (Π-level (λ _ → emlevel _ _))))
         x
       where
@@ -201,5 +213,4 @@ module EM₁ {i} (G : Group i) where
         (λ _ → raise-level _ (=-preserves-level _ Trunc-level))
         idp
         (λ _ → prop-has-all-paths-↓ (Trunc-level {n = 0} _ _))
-        (set-↓-has-all-paths-↓ (=-preserves-level _ Trunc-level))
         (λ _ _ → set-↓-has-all-paths-↓ (=-preserves-level _ Trunc-level))))
