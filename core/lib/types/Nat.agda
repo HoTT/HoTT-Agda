@@ -130,12 +130,6 @@ O≤ (S m) = inr (O<S m)
 <-dec (S n) (S m) | inl p  = inl (<-ap-S p)
 <-dec (S n) (S m) | inr p⊥ = inr (p⊥ ∘ <-cancel-S)
 
-≯-to-≤ : {m n : ℕ} → ¬ (n < m) → m ≤ n
-≯-to-≤ {O} {O} _ = inl idp
-≯-to-≤ {O} {S n} _ = inr (O<S n)
-≯-to-≤ {S m} {O} neggt = ⊥-elim $ neggt (O<S m)
-≯-to-≤ {S m} {S n} neggt = ≤-ap-S (≯-to-≤ (neggt ∘ <-ap-S))
-
 <-+-l : {m n : ℕ} (k : ℕ) → m < n → (k + m) < (k + n)
 <-+-l O lt = lt
 <-+-l (S k) lt = <-ap-S (<-+-l k lt)
