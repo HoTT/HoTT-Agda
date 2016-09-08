@@ -9,6 +9,10 @@ open import homotopy.IterSuspensionStable
 -- This summerizes all [πₙ Sⁿ]
 module homotopy.PinSn where
 
+  -- TODO
+  -- The lemmas about [loop^] should be generalized to generic exponential
+  -- functions, and then these lemmas are just special cases on loop spaces.
+
   private
     -- another way is to use path induction to prove the other direction,
     -- but personally I do not feel it is easier.
