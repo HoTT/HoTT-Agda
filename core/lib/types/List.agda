@@ -39,9 +39,9 @@ _++_ : ∀ {i} {A : Type i} → List A → List A → List A
 nil ++ l = l
 (x :: l₁) ++ l₂ = x :: (l₁ ++ l₂)
 
-++-nil-r : ∀ {i} {A : Type i} (l : List A) → l ++ nil == l
-++-nil-r nil      = idp
-++-nil-r (a :: l) = ap (a ::_) $ ++-nil-r l
+++-unit-r : ∀ {i} {A : Type i} (l : List A) → l ++ nil == l
+++-unit-r nil      = idp
+++-unit-r (a :: l) = ap (a ::_) $ ++-unit-r l
 
 ++-assoc : ∀ {i} {A : Type i} (l₁ l₂ l₃ : List A) → (l₁ ++ l₂) ++ l₃ == l₁ ++ (l₂ ++ l₃)
 ++-assoc nil l₂ l₃ = idp
