@@ -32,6 +32,7 @@ Style and naming conventions
 - Terms are in lowercase-with-hyphens-between-words
   unless the words refer to types.
 - Try to avoid names of free variables in identifiers
+- Pointedness and other disambiguating labels may be omitted if inferable.
 
 TODO: principles of variable names
 
@@ -174,10 +175,6 @@ For types, morphisms are functions and isomorphisms are equivalences.
 Bi-functors are not standardized (yet).
 
 TODO: `X-fmap-id`, `X-fmap-∘`
-
-### Pointed Types
-
-If pointedness can be inferred, `⊙` may be suppressed.
 
 ### Precedence
 

@@ -3,6 +3,7 @@
 open import lib.Base
 open import lib.NType
 open import lib.Relation
+open import lib.Equivalences
 open import lib.types.Bool
 open import lib.types.Int
 
@@ -29,6 +30,10 @@ hlist-curry : ∀ {i j} {L : List (Type i)} {B : HList L → Type (lmax i j)}
 hlist-curry {L = nil} f = f nil
 hlist-curry {L = A :: _} f = λ x → hlist-curry (λ xs → f (x :: xs))
 
+-- singleton
+l[_] : ∀ {i} {A : Type i} → A → List A
+l[ x ] = x :: nil
+
 infixr 80 _++_
 _++_ : ∀ {i} {A : Type i} → List A → List A → List A
 nil ++ l = l
@@ -37,6 +42,10 @@ nil ++ l = l
 ++-nil-r : ∀ {i} {A : Type i} (l : List A) → l ++ nil == l
 ++-nil-r nil      = idp
 ++-nil-r (a :: l) = ap (a ::_) $ ++-nil-r l
+
+++-assoc : ∀ {i} {A : Type i} (l₁ l₂ l₃ : List A) → (l₁ ++ l₂) ++ l₃ == l₁ ++ (l₂ ++ l₃)
+++-assoc nil l₂ l₃ = idp
+++-assoc (x :: l₁) l₂ l₃ = ap (x ::_) (++-assoc l₁ l₂ l₃)
 
 -- [any] in Haskell
 data Any {i j} {A : Type i} (P : A → Type j) : List A → Type (lmax i j) where
@@ -99,7 +108,17 @@ foldr f b (a :: l) = f a (foldr f b l)
 concat : ∀ {i} {A : Type i} → List (List A) → List A
 concat l = foldr _++_ nil l
 
+-- [sum] in Haskell, specialized to ℤ
 ℤsum = foldr _ℤ+_ 0
+
+-- [length] in Haskell
+length : ∀ {i} {A : Type i} → List A → ℕ
+length = foldr (λ _ n → S n) 0
+
+-- [Vector]
+-- TODO Should we use sized types instead?
+Vector : ∀ {i} (A : Type i) n → Type i
+Vector A n = hfiber (length {A = A}) n
 
 -- [filter] in Haskell
 -- Note that [Bool] is currently defined as a coproduct.
@@ -109,3 +128,8 @@ filter p nil = nil
 filter p (a :: l) with p a
 ... | inl _ = a :: filter p l
 ... | inr _ = filter p l
+
+-- [all] in Haskell
+data All {i j} {A : Type i} (P : A → Type j) : List A → Type (lmax i j) where
+  nil : All P nil
+  _::_ : ∀ {a} {l} → P a → All P l → All P (a :: l)
