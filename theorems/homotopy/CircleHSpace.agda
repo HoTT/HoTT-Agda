@@ -5,8 +5,8 @@ open import homotopy.HSpace
 
 module homotopy.CircleHSpace where
 
-S¹-hSpace : HSpaceStructure S¹
-S¹-hSpace = hSpaceStructure base μ μ-e-l μ-e-r μ-coh where
+⊙S¹-hSpace : HSpaceStructure ⊙S¹
+⊙S¹-hSpace = hSpaceStructure μ μ-e-l μ-e-r μ-coh where
 
   turn-around : (x : S¹) → x == x
   turn-around = S¹-elim loop (↓-idf=idf-in (∙=∙' loop loop))

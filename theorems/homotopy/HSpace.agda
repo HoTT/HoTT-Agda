@@ -6,19 +6,24 @@ module homotopy.HSpace where
 
 -- This is just an approximation because
 -- not all higher cells are killed.
-record HSpaceStructure {i} (A : Type i) : Type i where
+record HSpaceStructure {i} (X : Ptd i) : Type i where
   constructor hSpaceStructure
+  private
+    A = fst X
+    e = snd X
   field
-    e : A
     μ : A → A → A
     μ-e-l : (a : A) → μ e a == a
     μ-e-r : (a : A) → μ a e == a
     μ-coh : μ-e-l e == μ-e-r e
 
-module ConnectedHSpace {i} (A : Type i) (c : is-connected 0 A)
-  (hA : HSpaceStructure A) where
+module ConnectedHSpace {i} {X : Ptd i} (c : is-connected 0 (fst X))
+  (hX : HSpaceStructure X) where
 
-  open HSpaceStructure hA
+  open HSpaceStructure hX
+  private
+    A = fst X
+    e = snd X
 
   {-
   Given that [A] is 0-connected, to prove that each [μ a] is an equivalence we

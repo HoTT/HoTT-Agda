@@ -46,8 +46,8 @@ module EM₁HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
   mult : EM₁ → EM₁ → EM₁
   mult = EM₁-rec {C = EM₁ → EM₁} (Π-level (λ _ → emlevel)) (λ x → x) mult-hom
 
-  H-EM₁ : HSpaceStructure EM₁
-  H-EM₁ = record { e = embase; μ = mult; μ-e-l = μ-e-l; μ-e-r = μ-e-r; μ-coh = μ-coh }
+  H-⊙EM₁ : HSpaceStructure ⊙EM₁
+  H-⊙EM₁ = record { μ = mult; μ-e-l = μ-e-l; μ-e-r = μ-e-r; μ-coh = μ-coh }
     where
     μ-e-l : (x : EM₁) → mult embase x == x
     μ-e-l = EM₁-elim
@@ -82,4 +82,4 @@ module EM₁HSpace {i} (A : Group i) (A-abelian : is-abelian A) where
     μ-coh : μ-e-l embase == μ-e-r embase
     μ-coh = idp
 
-  open HSpaceStructure H-EM₁
+  open HSpaceStructure H-⊙EM₁

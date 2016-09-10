@@ -8,7 +8,7 @@ import homotopy.JoinAssocCubical
 
 module homotopy.Hopf where
 
-module Hopf = homotopy.HopfConstruction S¹ S¹-conn S¹-hSpace
+module Hopf = homotopy.HopfConstruction S¹-conn ⊙S¹-hSpace
 
 Hopf : S² → Type₀
 Hopf = Hopf.H.f

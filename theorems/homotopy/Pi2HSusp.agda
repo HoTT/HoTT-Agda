@@ -6,8 +6,8 @@ open import homotopy.WedgeExtension
 
 module homotopy.Pi2HSusp where
 
-module Pi2HSusp {i} (A : Type i) (gA : has-level 1 A)
-  (cA : is-connected 0 A) (A-H : HSS A)
+module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (fst X))
+  (cA : is-connected 0 (fst X)) (H-X : HSS X)
   where
 
   {- TODO this belongs somewhere else, but where? -}
@@ -19,8 +19,11 @@ module Pi2HSusp {i} (A : Type i) (gA : has-level 1 A)
       ∙ ap ua (pair= (λ= α) (prop-has-all-paths-↓ (is-equiv-is-prop (coe q))))
       ∙ ua-η q
 
-  open HSS A-H
-  open ConnectedHSpace A cA A-H
+  open HSS H-X
+  open ConnectedHSpace cA H-X
+  private
+    A = fst X
+    e = snd X
 
   P : Suspension A → Type i
   P x = Trunc 1 (north == x)

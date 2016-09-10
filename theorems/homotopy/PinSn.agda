@@ -73,7 +73,7 @@ module homotopy.PinSn where
     πS-SphereS'-iso-ℤ 0 = ℤ-iso-π1S¹ ⁻¹ᴳ
     πS-SphereS'-iso-ℤ 1 =
       πS 1 ⊙S²
-        ≃ᴳ⟨ Pi2HSusp.π₂-Suspension S¹ S¹-level S¹-conn S¹-hSpace ⟩
+        ≃ᴳ⟨ Pi2HSusp.π₂-Suspension S¹-level S¹-conn ⊙S¹-hSpace ⟩
       πS 0 ⊙S¹
         ≃ᴳ⟨ πS-SphereS'-iso-ℤ O ⟩
       ℤ-group
