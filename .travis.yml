@@ -14,7 +14,7 @@ cache:
 addons:
   apt:
     sources:
-    - fpcomplete-trusty
+    - fpcomplete-precise
     packages:
     - stack
 
