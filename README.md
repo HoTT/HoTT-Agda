@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/HoTT/HoTT-Agda.svg)](https://travis-ci.org/HoTT/HoTT-Agda)
+
 Homotopy Type Theory in Agda
 ============================
 
