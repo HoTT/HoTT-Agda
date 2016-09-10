@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import cohomology.FunctionOver
+open import homotopy.FunctionOver
 
 module cohomology.TwoPushouts where
 

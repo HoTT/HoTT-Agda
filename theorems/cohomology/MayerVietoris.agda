@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import cohomology.FunctionOver
+open import homotopy.FunctionOver
 open import homotopy.elims.CofPushoutSection
 
 module cohomology.MayerVietoris {i} where

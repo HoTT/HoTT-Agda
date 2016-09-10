@@ -2,7 +2,7 @@
 
 open import HoTT
 open import cohomology.Exactness
-open import cohomology.FunctionOver
+open import homotopy.FunctionOver
 open import cohomology.Theory
 open import cohomology.CofiberSequence
 

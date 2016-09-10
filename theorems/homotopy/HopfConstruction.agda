@@ -2,7 +2,7 @@
 
 open import HoTT
 open import homotopy.HSpace
-open import homotopy.PushoutComm using (flip; Pushout-comm)
+open import homotopy.PushoutFlip using (Span-flip; Pushout-flip-equiv)
 
 module homotopy.HopfConstruction {i} (A : Type i) (c : is-connected 0 A)
   (hA : HSpaceStructure A) where
@@ -35,7 +35,7 @@ But that span is equal to the following span, which is almost the same as
 the span for the join.
 -}
 
-x : s == flip (*-span A A)
+x : s == Span-flip (*-span A A)
 x = span= (equiv snd (_,_ tt) (λ b → idp) (λ a → idp))
           (equiv snd (_,_ tt) (λ b → idp) (λ a → idp))
           eq (λ a → idp) (λ a → idp)  where
@@ -55,8 +55,8 @@ x = span= (equiv snd (_,_ tt) (λ b → idp) (λ a → idp))
     from-to : (a : A × A) → from (to a) == a
     from-to (a , a') = pair×= (<–-inv-l (μ-e-l-equiv a') a) idp
 
-lemma2 : (A * A) ≃ (Pushout (flip (*-span A A)))
-lemma2 = Pushout-comm (*-span A A)
+lemma2 : (A * A) ≃ (Pushout (Span-flip (*-span A A)))
+lemma2 = Pushout-flip-equiv (*-span A A)
 
 theorem : Σ (Suspension A) H.f == (A * A)
 theorem = lemma ∙ ap Pushout x ∙ ! (ua lemma2)

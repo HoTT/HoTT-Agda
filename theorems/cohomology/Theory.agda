@@ -3,7 +3,7 @@
 open import HoTT
 open import cohomology.Exactness
 open import cohomology.Choice
-open import cohomology.FunctionOver
+open import homotopy.FunctionOver
 
 module cohomology.Theory where
 

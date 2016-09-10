@@ -3,7 +3,7 @@
 open import HoTT
 open import cohomology.CofiberSequence
 open import cohomology.Exactness
-open import cohomology.FunctionOver
+open import homotopy.FunctionOver
 open import cohomology.SplitExactRight
 open import cohomology.Theory
 

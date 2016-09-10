@@ -4,11 +4,11 @@ open import HoTT
 
 {- Useful lemmas for computing the effect of transporting a function
  - across an equivalence in the domain or codomain.
- - TODO: find a better place for this. -}
+ - TODO find a better place for this. -}
 
 -- XXX Naming convensions?
 
-module cohomology.FunctionOver where
+module homotopy.FunctionOver where
 
 {- transporting a function along an equivalence or path in the domain -}
 module _ {i} {j} {B : Type i} {C : Type j} (g : B → C) where

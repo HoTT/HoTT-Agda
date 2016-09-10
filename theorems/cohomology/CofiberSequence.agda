@@ -1,8 +1,8 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import cohomology.FunctionOver
-open import cohomology.FlipPushout
+open import homotopy.FunctionOver
+open import homotopy.PushoutFlip
 
 module cohomology.CofiberSequence {i} where
 
@@ -129,5 +129,5 @@ cofiber-sequence {X} {Y} f =
        (pair= (Cof².space-path f)
          (↓-×-in (Cof².cfcod²-over f) (Cof².cfcod³-over f)))
   ∙ ap (λ {(Z , g) → ((⊙Susp X , Z) , ext-glue , g)})
-       (pair= (flip-⊙pushout-path (suspension-⊙span Y))
+       (pair= (⊙Pushout-flip-path (suspension-⊙span Y))
               (↓-cst2-in _ _ $ codomain!-over-equiv _ _))

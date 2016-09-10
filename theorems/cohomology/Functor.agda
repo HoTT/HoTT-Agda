@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import cohomology.FunctionOver
+open import homotopy.FunctionOver
 open import cohomology.Theory
 
 {- Useful lemmas concerning the functorial action of C -}

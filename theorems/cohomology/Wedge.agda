@@ -3,7 +3,7 @@
 open import HoTT
 open import cohomology.CofiberSequence
 open import cohomology.Exactness
-open import cohomology.FunctionOver
+open import homotopy.FunctionOver
 open import cohomology.Theory
 open import cohomology.ProductRepr
 open import cohomology.WedgeCofiber

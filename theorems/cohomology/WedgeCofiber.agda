@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import cohomology.FunctionOver
+open import homotopy.FunctionOver
 
 {- The cofiber space of [winl : X → X ∨ Y] is equivalent to [Y],
  - and the cofiber space of [winr : Y → X ∨ Y] is equivalent to [X]. -}

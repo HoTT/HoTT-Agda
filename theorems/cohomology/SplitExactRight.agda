@@ -2,7 +2,7 @@
 
 open import HoTT
 open import cohomology.Exactness
-open import cohomology.FunctionOver
+open import homotopy.FunctionOver
 
 {- Splitting Lemma - Right Split
    Assume an exact sequence:
