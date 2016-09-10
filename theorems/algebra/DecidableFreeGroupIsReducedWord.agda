@@ -168,10 +168,10 @@ module algebra.DecidableFreeGroupIsReducedWord {i} (A : Type i) (dec : has-dec-e
     (λ x {fg} fg* → prop-has-all-paths-↓ (FreeGroup-is-set _ _))
     (λ x {fg} fg* → prop-has-all-paths-↓ (FreeGroup-is-set _ _))
 
-FreeGroup≃ReducedWord : FreeGroup A ≃ ReducedWord
-FreeGroup≃ReducedWord = FreeGroup→ReducedWord ,
-  is-eq
-    _
-    ReducedWord→FreeGroup
-    ReducedWord→FreeGroup→ReducedWord
-    FreeGroup→ReducedWord→FreeGroup
+  FreeGroup≃ReducedWord : FreeGroup A ≃ ReducedWord
+  FreeGroup≃ReducedWord = FreeGroup→ReducedWord ,
+    is-eq
+      _
+      ReducedWord→FreeGroup
+      ReducedWord→FreeGroup→ReducedWord
+      FreeGroup→ReducedWord→FreeGroup

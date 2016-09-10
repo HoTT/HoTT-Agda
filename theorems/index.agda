@@ -15,6 +15,8 @@ module index where
 
 -- import Algebra.F2NotCommutative
 
+import algebra.DecidableFreeGroupIsReducedWord
+
 import homotopy.LoopSpaceCircle
 
 import homotopy.HopfJunior
@@ -47,4 +49,3 @@ import homotopy.PinSn
 
 import cw.CW
 import cw.Sphere
-import cw.Degree

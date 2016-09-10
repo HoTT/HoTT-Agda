@@ -57,10 +57,10 @@ module algebra.ReducedWord {i} (A : Type i) (dec : has-dec-eq A) where
   is-reduced-is-prop (x inv:: y inv:: w) = is-reduced-is-prop (y inv:: w)
 
   ReducedWord-is-set : is-set ReducedWord
-  ReducedWord-is-set = subtype-level Word-is-set is-reduced-is-prop
+  ReducedWord-is-set = Subtype-level Word-is-set is-reduced-is-prop
 
   ReducedWord= : ReducedWord → ReducedWord → Type i
-  ReducedWord= = subtype=
+  ReducedWord= = Subtype=
 
   ReducedWord=-in : {x y : ReducedWord} → ReducedWord= x y → x == y
-  ReducedWord=-in = subtype=-in is-reduced-is-prop
+  ReducedWord=-in {x} {y} = Subtype=-in (is-reduced-is-prop (fst y))
