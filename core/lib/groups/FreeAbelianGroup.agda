@@ -47,7 +47,26 @@ module _ {A : Type i} where
 FormalSum : Type i → Type i
 FormalSum A = SetQuotient (FormalSumRel {A})
 
+□[_] : {A : Type i} → PreFormalSum A → FormalSum A
+□[_] = q[_]
+
+FormalSum-level : {A : Type i} → is-set (FormalSum A)
+FormalSum-level = SetQuotient-level
+
+FormalSum-is-set = FormalSum-level
+
 module _ {A : Type i} where
+
+  module FormalSumElim {k} {P : FormalSum A → Type k}
+    (p : (x : FormalSum A) → is-set (P x)) (incl* : (a : PreFormalSum A) → P □[ a ])
+    (rel* : ∀ {a₁ a₂} (r : FormalSumRel a₁ a₂) → incl* a₁ == incl* a₂ [ P ↓ quot-rel r ])
+    = SetQuotElim p incl* rel*
+  open FormalSumElim public renaming (f to FormalSum-elim) hiding (quot-rel-β)
+
+  module FormalSumRec {k} {B : Type k} (p : is-set B) (incl* : PreFormalSum A → B)
+    (rel* : ∀ {a₁ a₂} (r : FormalSumRel a₁ a₂) → incl* a₁ == incl* a₂)
+    = SetQuotRec p incl* rel*
+  open FormalSumRec public renaming (f to FormalSum-rec)
 
   abstract
     FormalSumRel-cong-++-l :
@@ -69,14 +88,14 @@ module _ {A : Type i} where
 
   infixl 80 _⊞_
   _⊞_ : FormalSum A → FormalSum A → FormalSum A
-  _⊞_ = SetQuot-rec
-    (→-is-set SetQuotient-is-set)
-    (λ l₁ → SetQuot-rec SetQuotient-is-set (λ l₂ → q[ l₁ ++ l₂ ])
+  _⊞_ = FormalSum-rec
+    (→-is-set FormalSum-is-set)
+    (λ l₁ → FormalSum-rec FormalSum-is-set (λ l₂ → q[ l₁ ++ l₂ ])
       (λ r → quot-rel $ FormalSumRel-cong-++-r l₁ r))
-    (λ {l₁} {l₁'} r → λ= $ SetQuot-elim
-      (λ _ → =-preserves-set SetQuotient-is-set)
+    (λ {l₁} {l₁'} r → λ= $ FormalSum-elim
+      (λ _ → =-preserves-set FormalSum-is-set)
       (λ l₂ → quot-rel $ FormalSumRel-cong-++-l r l₂)
-      (λ _ → prop-has-all-paths-↓ (SetQuotient-is-set _ _)))
+      (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _)))
 
   abstract
     FormalSumRel-cong-flip-all : ∀ {l₁ l₂}
@@ -89,41 +108,37 @@ module _ {A : Type i} where
     FormalSumRel-cong-flip-all (fsr-flip (inr x) l) = fsr-flip (inl x) (flip-all l)
 
   ⊟ : FormalSum A → FormalSum A
-  ⊟ = SetQuot-rec SetQuotient-is-set (q[_] ∘ flip-all)
+  ⊟ = FormalSum-rec FormalSum-is-set (q[_] ∘ flip-all)
     (λ r → quot-rel $ FormalSumRel-cong-flip-all r)
 
   ⊞-unit : FormalSum A
   ⊞-unit = q[ nil ]
 
-  ⊞-unit-l : ∀ fs → ⊞-unit ⊞ fs == fs
-  ⊞-unit-l = SetQuot-elim
-    (λ _ → =-preserves-set SetQuotient-is-set)
+  ⊞-unit-l : ∀ g → ⊞-unit ⊞ g == g
+  ⊞-unit-l = FormalSum-elim
+    (λ _ → =-preserves-set FormalSum-is-set)
     (λ _ → idp)
-    (λ _ → prop-has-all-paths-↓ (SetQuotient-is-set _ _))
+    (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _))
 
-  ⊞-unit-r : ∀ fs → fs ⊞ ⊞-unit == fs
-  ⊞-unit-r = SetQuot-elim
-    (λ _ → =-preserves-set SetQuotient-is-set)
+  ⊞-unit-r : ∀ g → g ⊞ ⊞-unit == g
+  ⊞-unit-r = FormalSum-elim
+    (λ _ → =-preserves-set FormalSum-is-set)
     (λ _ → ap q[_] $ ++-unit-r _)
-    (λ _ → prop-has-all-paths-↓ (SetQuotient-is-set _ _))
+    (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _))
 
-  ⊞-assoc : ∀ fs₁ fs₂ fs₃ → (fs₁ ⊞ fs₂) ⊞ fs₃ == fs₁ ⊞ (fs₂ ⊞ fs₃)
-  ⊞-assoc = SetQuot-elim (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set SetQuotient-is-set)
-    (λ l₁ → SetQuot-elim (λ _ → Π-is-set λ _ → =-preserves-set SetQuotient-is-set)
-      (λ l₂ → SetQuot-elim (λ _ → =-preserves-set SetQuotient-is-set)
+  ⊞-assoc : ∀ g₁ g₂ g₃ → (g₁ ⊞ g₂) ⊞ g₃ == g₁ ⊞ (g₂ ⊞ g₃)
+  ⊞-assoc = FormalSum-elim (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set FormalSum-is-set)
+    (λ l₁ → FormalSum-elim (λ _ → Π-is-set λ _ → =-preserves-set FormalSum-is-set)
+      (λ l₂ → FormalSum-elim (λ _ → =-preserves-set FormalSum-is-set)
         (λ l₃ → ap q[_] $ ++-assoc l₁ l₂ l₃)
-        (λ _ → prop-has-all-paths-↓ $ SetQuotient-is-set _ _))
-      (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → SetQuotient-is-set _ _))
-    (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → Π-is-prop λ _ → SetQuotient-is-set _ _)
+        (λ _ → prop-has-all-paths-↓ $ FormalSum-is-set _ _))
+      (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → FormalSum-is-set _ _))
+    (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → Π-is-prop λ _ → FormalSum-is-set _ _)
 
   abstract
     FormalSumRel-swap1 : ∀ x l₁ l₂ → FormalSumRel {A} (l₁ ++ l[ x ] ++ l₂) (x :: l₁ ++ l₂)
     FormalSumRel-swap1 x nil l₂ = fsr-refl idp
     FormalSumRel-swap1 x (x₁ :: l₁) l₂ = fsr-trans (fsr-cons x₁ (FormalSumRel-swap1 x l₁ l₂)) (fsr-swap x₁ x (l₁ ++ l₂))
-
-    FormalSumRel-swap : ∀ l₁ l₂ l₃ → FormalSumRel {A} (l₁ ++ l₂ ++ l₃) (l₂ ++ l₁ ++ l₃)
-    FormalSumRel-swap l₁ nil l₃ = fsr-refl idp
-    FormalSumRel-swap l₁ (x :: l₂) l₃ = fsr-trans (FormalSumRel-swap1 x l₁ (l₂ ++ l₃)) (fsr-cons x (FormalSumRel-swap l₁ l₂ l₃))
 
     PreFormalSum-inv-r : ∀ l → FormalSumRel {A} (l ++ flip-all l) nil
     PreFormalSum-inv-r nil = fsr-refl idp
@@ -131,11 +146,11 @@ module _ {A : Type i} where
       fsr-trans (FormalSumRel-swap1 (flip x) (x :: l) (flip-all l)) $
       fsr-trans (fsr-flip x (l ++ flip-all l)) (PreFormalSum-inv-r l)
 
-  ⊟-inv-r : ∀ fs → fs ⊞ (⊟ fs) == ⊞-unit
-  ⊟-inv-r = SetQuot-elim
-    (λ _ → =-preserves-set SetQuotient-is-set)
+  ⊟-inv-r : ∀ g → g ⊞ (⊟ g) == ⊞-unit
+  ⊟-inv-r = FormalSum-elim
+    (λ _ → =-preserves-set FormalSum-is-set)
     (λ l → quot-rel (PreFormalSum-inv-r l))
-    (λ _ → prop-has-all-paths-↓ (SetQuotient-is-set _ _))
+    (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _))
 
   abstract
     PreFormalSum-inv-l : ∀ l → FormalSumRel {A} (flip-all l ++ l) nil
@@ -145,11 +160,24 @@ module _ {A : Type i} where
       fsr-trans (fsr-refl (ap (_:: flip x :: flip-all l ++ l) (! (flip-flip x)))) $
       fsr-trans (fsr-flip (flip x) (flip-all l ++ l)) (PreFormalSum-inv-l l)
 
-  ⊟-inv-l : ∀ fs → (⊟ fs) ⊞ fs == ⊞-unit
-  ⊟-inv-l = SetQuot-elim
-    (λ _ → =-preserves-set SetQuotient-is-set)
+  ⊟-inv-l : ∀ g → (⊟ g) ⊞ g == ⊞-unit
+  ⊟-inv-l = FormalSum-elim
+    (λ _ → =-preserves-set FormalSum-is-set)
     (λ l → quot-rel (PreFormalSum-inv-l l))
-    (λ _ → prop-has-all-paths-↓ (SetQuotient-is-set _ _))
+    (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _))
+
+  abstract
+    FormalSumRel-swap : ∀ l₁ l₂ → FormalSumRel {A} (l₁ ++ l₂) (l₂ ++ l₁)
+    FormalSumRel-swap l₁ nil = fsr-refl (++-unit-r l₁)
+    FormalSumRel-swap l₁ (x :: l₂) = fsr-trans (FormalSumRel-swap1 x l₁ l₂) (fsr-cons x (FormalSumRel-swap l₁ l₂))
+
+  ⊞-comm : ∀ g₁ g₂ → g₁ ⊞ g₂ == g₂ ⊞ g₁
+  ⊞-comm = FormalSum-elim
+    (λ _ → Π-is-set λ _ → =-preserves-set FormalSum-is-set)
+    (λ l₁ → FormalSum-elim (λ _ → =-preserves-set FormalSum-is-set)
+      (λ l₂ → quot-rel $ FormalSumRel-swap l₁ l₂)
+      (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _)))
+    (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → FormalSum-is-set _ _))
 
 FormalSum-group-structure : (A : Type i) → GroupStructure (FormalSum A)
 FormalSum-group-structure A = record
@@ -164,7 +192,10 @@ FormalSum-group-structure A = record
   }
 
 FreeAbelianGroup : Type i → Group i
-FreeAbelianGroup A = group _ SetQuotient-is-set (FormalSum-group-structure A)
+FreeAbelianGroup A = group _ FormalSum-is-set (FormalSum-group-structure A)
+
+FreeAbelianGroup-is-abelian : (A : Type i) → is-abelian (FreeAbelianGroup A)
+FreeAbelianGroup-is-abelian A = ⊞-comm
 
 module _ {A : Type i} {j} (G : AbelianGroup j) where
 
@@ -205,11 +236,11 @@ module _ {A : Type i} {j} (G : AbelianGroup j) where
 
   FreeAbelianGroup-lift : (A → G.El) → (FreeAbelianGroup A →ᴳ G.grp)
   FreeAbelianGroup-lift f = record {
-    f = SetQuot-rec G.El-level (PreFormalSum-lift f)
+    f = FormalSum-rec G.El-level (PreFormalSum-lift f)
           (λ r → PreFormalSum-lift-emap f r);
     pres-comp =
-      SetQuot-elim (λ _ → Π-is-set λ _ → =-preserves-set G.El-level)
-        (λ l₁ → SetQuot-elim
+      FormalSum-elim (λ _ → Π-is-set λ _ → =-preserves-set G.El-level)
+        (λ l₁ → FormalSum-elim
           (λ _ → =-preserves-set G.El-level)
           (λ l₂ → PreFormalSum-lift-++ f l₁ l₂)
           (λ _ → prop-has-all-paths-↓ (G.El-level _ _)))
@@ -236,7 +267,7 @@ module _ {A : Type i} {j} (G : AbelianGroup j) where
       from = f*
 
       to-from : ∀ h → to (from h) == h
-      to-from h = group-hom= $ λ= $ SetQuot-elim
+      to-from h = group-hom= $ λ= $ FormalSum-elim
         (λ _ → =-preserves-set G.El-level)
         (λ l → PreFormalSum-lift-hom h l)
         (λ _ → prop-has-all-paths-↓ (G.El-level _ _))
@@ -248,11 +279,11 @@ module _ {A : Type i} {j} (G : AbelianGroup j) where
   TODO Recreate [has-finite-supports]
 
   has-finite-supports : (A → ℤ) → Type i
-  has-finite-supports f = Σ (FormalSum dec) λ fs → ∀ a → f a == coef fs a
+  has-finite-supports f = Σ (FormalSum dec) λ g → ∀ a → f a == coef g a
 
   has-finite-supports-is-prop : ∀ f → is-prop (has-finite-supports f)
   has-finite-supports-is-prop f = all-paths-is-prop
-    λ{(fs₁ , match₁) (fs₂ , match₂) → pair=
+    λ{(g₁ , match₁) (g₂ , match₂) → pair=
       (coef-ext λ a → ! (match₁ a) ∙ match₂ a)
       (prop-has-all-paths-↓ $ Π-is-prop λ _ → ℤ-is-set _ _)}
 -}
