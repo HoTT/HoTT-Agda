@@ -19,7 +19,7 @@ addons:
     - stack
 
 install:
-- stack --no-terminal --install-ghc install agda
+- stack --no-terminal --install-ghc install Agda
 
 script:
-- agda --library-file=libraries-travis theorems/index.agda
+- stack exec agda --library-file=libraries-travis theorems/index.agda
