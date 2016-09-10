@@ -5,7 +5,7 @@ open import cw.CW
 open import homotopy.PinSn
 open import cw.SphereEndomorphism
 
-module cw.Degree where
+module cw.DegreeBySquashing where
 
   module DegreeAboveOne {i} {n : ℕ} (skel : Skeleton {i} (S (S n)))
     (skel-has-dec-cells : has-cells-with-dec-eq skel)
