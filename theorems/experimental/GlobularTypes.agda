@@ -5,7 +5,7 @@ open import HoTT
 module experimental.GlobularTypes where
 
 {- Globular types as a coinductive record -}
-record Glob (i : ULevel) : Type (suc i) where
+record Glob (i : ULevel) : Type (lsucc i) where
   coinductive
   constructor glob
   field
@@ -14,17 +14,17 @@ record Glob (i : ULevel) : Type (suc i) where
 open Glob public
 
 {- The terminal globular type -}
-Unit-glob : Glob zero
+Unit-glob : Glob lzero
 Ob Unit-glob = Unit
 Hom Unit-glob _ _ = Unit-glob
 
 {- The tower of identity types -}
-Id-glob : ∀ {i} (A : Type i) → Glob zero
+Id-glob : ∀ {i} (A : Type i) → Glob i
 Ob (Id-glob A) = A
 Hom (Id-glob A) a b = Id-glob (a == b)
 
 {- Bisimulation between globular types -}
-record _~_ {i} (G H : Glob i) : Type (suc i) where
+record _~_ {i} (G H : Glob i) : Type (lsucc i) where
   coinductive
   constructor glob~
   field
@@ -61,12 +61,12 @@ The type of globular types is the terminal coalgebra of the appropriate thing.
 This is proved in the following two lemmas.
 -}
 
-Glob-corec : ∀ {i} {A : Type (suc i)} (Ob* : A → Type i)
+Glob-corec : ∀ {i} {A : Type (lsucc i)} (Ob* : A → Type i)
   (Hom* : (x : A) (a b : Ob* x) → A) → (A → Glob i)
 Ob (Glob-corec Ob* Hom* x) = Ob* x
 Hom (Glob-corec Ob* Hom* x) a b = Glob-corec Ob* Hom* (Hom* x a b)
 
-eta : ∀ {i} {A : Type (suc i)} (Ob* : A → Type i)
+eta : ∀ {i} {A : Type (lsucc i)} (Ob* : A → Type i)
   (Hom* : (x : A) (a b : Ob* x) → A)
   (f g : A → Glob i) (s : (x : A) → f x ~ g x) → f == g
-eta Ob* Hom* f g s = funext (λ x → bisim (s x))
+eta Ob* Hom* f g s = λ= λ x → bisim (s x)

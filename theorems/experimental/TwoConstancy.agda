@@ -24,11 +24,11 @@ module experimental.TwoConstancy
       lemma₂ a₁ a₂ = ↓-cst→app-in $
         TwoConstancy-elim
           {P = λ t₂ → lemma₁ a₁ t₂ == lemma₁ a₂ t₂ [ (λ t₁ → t₁ == t₂) ↓ link₀ a₁ a₂ ]}
-          (λ _ → ↓-preserves-level 1 λ _ → =-preserves-level 1 TwoConstancy-level)
+          (λ _ → ↓-preserves-level 1 $ =-preserves-level 1 TwoConstancy-level)
           (λ b → ↓-idf=cst-in $ ! $ link₁ a₁ a₂ b)
-          (λ b₁ b₂ → prop-has-all-paths-↓ $ ↓-level λ _ → TwoConstancy-level _ _)
+          (λ b₁ b₂ → prop-has-all-paths-↓ $ ↓-level $ TwoConstancy-level _ _)
           (λ b₁ b₂ b₃ → prop-has-all-paths-↓ $ contr-is-prop
-            $ ↓-level λ _ → ↓-level λ _ → TwoConstancy-level _ _)
+            $ ↓-level $ ↓-level $ TwoConstancy-level _ _)
 
       TwoConstancy-has-all-paths : has-all-paths (TwoConstancy A)
       TwoConstancy-has-all-paths =
@@ -37,7 +37,7 @@ module experimental.TwoConstancy
           lemma₁
           lemma₂
           (λ a₁ a₂ a₃ → prop-has-all-paths-↓
-            $ ↓-level λ t₁ → Π-is-set λ t₂ → TwoConstancy-level t₁ t₂)
+            $ ↓-level $ Π-is-set λ t₂ → TwoConstancy-level _ t₂)
 
   TwoConstancy-is-prop : is-prop (TwoConstancy A)
   TwoConstancy-is-prop = all-paths-is-prop TwoConstancy-has-all-paths

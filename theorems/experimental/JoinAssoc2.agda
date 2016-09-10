@@ -30,6 +30,8 @@ module Assoc2 {i j k} (A : Type i) (B : Type j) (C : Type k) where
 
   -}
 
+{- favonia: comment out the rest because [Ap↓-swap!.β] is no longer available.
+
   to-from-glue-glue' : (a : A) (b : B) (c : C)
    → (↯ to-from-glue-left' a b) == (↯ to-from-glue-right' a c) [ (λ x → ap to (ap from (glue (a , x))) ∙' to-from-right x == glue (a , x)) ↓ glue (b , c) ]
   to-from-glue-glue' a b c =
@@ -118,3 +120,4 @@ module Assoc2 {i j k} (A : Type i) (B : Type j) (C : Type k) where
 
   -- *-assoc : (A * B) * C ≃ A * (B * C)
   -- *-assoc = equiv to from to-from from-to
+-}
