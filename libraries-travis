@@ -1,1 +1,1 @@
-$TRAVIS_BUILD_DIR/core.agda-lib
+${TRAVIS_BUILD_DIR}/core.agda-lib
