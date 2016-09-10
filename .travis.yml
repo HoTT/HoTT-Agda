@@ -1,0 +1,25 @@
+language: haskell
+
+branches:
+  only:
+  - master
+
+git:
+  depth: 3
+
+cache:
+  directories:
+  - $HOME/.stack
+
+addons:
+  apt:
+    sources:
+    - fpcomplete-trusty
+    packages:
+    - stack
+
+install:
+- stack --no-terminal install agda
+
+script:
+- agda --library-file=libraries-travis theorems/index.agda
