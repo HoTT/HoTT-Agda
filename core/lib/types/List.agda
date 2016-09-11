@@ -4,6 +4,7 @@ open import lib.Base
 open import lib.NType
 open import lib.Relation
 open import lib.Equivalences
+open import lib.types.Sigma
 open import lib.types.Bool
 open import lib.types.Int
 
@@ -129,7 +130,23 @@ filter p (a :: l) with p a
 ... | inl _ = a :: filter p l
 ... | inr _ = filter p l
 
+-- [reverse] in Haskell
+reverse : ∀ {i} {A : Type i} → List A → List A
+reverse nil = nil
+reverse (x :: l) = reverse l ++ l[ x ]
+
 -- [all] in Haskell
 data All {i j} {A : Type i} (P : A → Type j) : List A → Type (lmax i j) where
   nil : All P nil
   _::_ : ∀ {a} {l} → P a → All P l → All P (a :: l)
+
+-- Reasoning about identifications
+List= : ∀ {i} {A : Type i} (l₁ l₂ : List A) → Type i
+List= nil       nil       = Lift ⊤
+List= nil       (y :: l₂) = Lift ⊥
+List= (x :: l₁) nil       = Lift ⊥
+List= (x :: l₁) (y :: l₂) = (x == y) × (l₁ == l₂)
+
+List=-in : ∀ {i} {A : Type i} {l₁ l₂ : List A} → l₁ == l₂ → List= l₁ l₂
+List=-in {l₁ = nil} idp = lift unit
+List=-in {l₁ = x :: l} idp = idp , idp

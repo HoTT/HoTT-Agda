@@ -37,11 +37,11 @@ module PropSubgroup {i j} {G : Group i} {P : Group.El G → Type j}
     ident = (G.ident , P.ident);
     inv = λ {(g , p) → (G.inv g , P.inv p)};
     comp = λ {(g₁ , p₁) (g₂ , p₂) → (G.comp g₁ g₂ , P.comp p₁ p₂)};
-    unit-l = λ {(g , _) → Subtype=-in (P.level _) (G.unit-l g)};
-    unit-r = λ {(g , _) → Subtype=-in (P.level _) (G.unit-r g)};
-    assoc = λ {(g₁ , _) (g₂ , _) (g₃ , _) → Subtype=-in (P.level _) (G.assoc g₁ g₂ g₃)};
-    inv-l = λ {(g , _) → Subtype=-in (P.level _) (G.inv-l g)};
-    inv-r = λ {(g , _) → Subtype=-in (P.level _) (G.inv-r g)}}
+    unit-l = λ {(g , _) → Subtype=-out (P.level _) (G.unit-l g)};
+    unit-r = λ {(g , _) → Subtype=-out (P.level _) (G.unit-r g)};
+    assoc = λ {(g₁ , _) (g₂ , _) (g₃ , _) → Subtype=-out (P.level _) (G.assoc g₁ g₂ g₃)};
+    inv-l = λ {(g , _) → Subtype=-out (P.level _) (G.inv-l g)};
+    inv-r = λ {(g , _) → Subtype=-out (P.level _) (G.inv-r g)}}
 
   Subgroup : Group (lmax i j)
   Subgroup = group _ (Subtype-level G.El-level P.level) struct
@@ -55,7 +55,7 @@ module PropSubgroup {i j} {G : Group i} {P : Group.El G → Type j}
     → Π (Group.El H) (P ∘ GroupHom.f φ) → (H →ᴳ Subgroup)
   prop-hom {H = H} φ p = record {
     f = λ g → (φ.f g , p g);
-    pres-comp = λ g₁ g₂ → Subtype=-in (P.level _) (φ.pres-comp g₁ g₂)}
+    pres-comp = λ g₁ g₂ → Subtype=-out (P.level _) (φ.pres-comp g₁ g₂)}
     where
       module H = Group H
       module φ = GroupHom φ
@@ -101,7 +101,7 @@ module _ {i} {j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
   im-in-hom : G →ᴳ Im
   im-in-hom = record {
     f = λ g → (φ.f g , [ g , idp ]);
-    pres-comp = λ g₁ g₂ → Subtype=-in Trunc-level (φ.pres-comp g₁ g₂)}
+    pres-comp = λ g₁ g₂ → Subtype=-out Trunc-level (φ.pres-comp g₁ g₂)}
 
   im-in-surj : (h : Group.El Im) → Trunc -1 (hfiber (GroupHom.f im-in-hom) h)
-  im-in-surj (_ , s) = Trunc-fmap (λ {(g , p) → (g , Subtype=-in Trunc-level p)}) s
+  im-in-surj (_ , s) = Trunc-fmap (λ {(g , p) → (g , Subtype=-out Trunc-level p)}) s

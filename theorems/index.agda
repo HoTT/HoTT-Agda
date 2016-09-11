@@ -15,7 +15,8 @@ module index where
 
 -- import Algebra.F2NotCommutative
 
-import algebra.DecidableFreeGroupIsReducedWord
+-- XXX
+-- import algebra.DecidableFreeGroupIsReducedWord
 
 import homotopy.LoopSpaceCircle
 

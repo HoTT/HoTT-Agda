@@ -117,22 +117,22 @@ module EM₁ {i} (G : Group i) where
       ((0 -Type i) , (G.El , G.El-level)) (0 -Type-level i)
 
     Codes-hom : G →ᴳ Ω-group
-    Codes-hom = group-hom (nType=-in ∘ ua ∘ comp-equiv) pres-comp where
+    Codes-hom = group-hom (nType=-out ∘ ua ∘ comp-equiv) pres-comp where
       abstract
         pres-comp : ∀ g₁ g₂
-          → nType=-in {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv (G.comp g₁ g₂)))
-          == nType=-in {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₁))
-          ∙ nType=-in {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₂))
+          → nType=-out {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv (G.comp g₁ g₂)))
+          == nType=-out {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₁))
+          ∙ nType=-out {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₂))
         pres-comp g₁ g₂ =
-          nType=-in {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv (G.comp g₁ g₂)))
-            =⟨ comp-equiv-comp g₁ g₂ |in-ctx nType=-in ∘ ua ⟩
-          nType=-in {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₂ ∘e comp-equiv g₁))
-            =⟨ ua-∘e (comp-equiv g₁) (comp-equiv g₂) |in-ctx nType=-in ⟩
-          nType=-in {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₁) ∙ ua (comp-equiv g₂))
+          nType=-out {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv (G.comp g₁ g₂)))
+            =⟨ comp-equiv-comp g₁ g₂ |in-ctx nType=-out ∘ ua ⟩
+          nType=-out {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₂ ∘e comp-equiv g₁))
+            =⟨ ua-∘e (comp-equiv g₁) (comp-equiv g₂) |in-ctx nType=-out ⟩
+          nType=-out {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₁) ∙ ua (comp-equiv g₂))
             =⟨ ! $ nType-∙ {A = G.El , G.El-level} {B = G.El , G.El-level} {C = G.El , G.El-level}
                   (ua (comp-equiv g₁)) (ua (comp-equiv g₂)) ⟩
-          nType=-in {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₁))
-          ∙ nType=-in {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₂))
+          nType=-out {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₁))
+          ∙ nType=-out {A = G.El , G.El-level} {B = G.El , G.El-level} (ua (comp-equiv g₂))
             =∎
 
     Codes : EM₁ → 0 -Type i

@@ -104,7 +104,7 @@ abstract
   group-hom= : ∀ {i j} {G : Group i} {H : Group j} {φ ψ : G →ᴳ H}
     → GroupHom.f φ == GroupHom.f ψ → φ == ψ
   group-hom= {H = H} p = ap (uncurry group-hom) $
-    Subtype=-in (Π-level (λ _ → Π-level (λ _ → Group.El-level H _ _))) p
+    Subtype=-out (Π-level (λ _ → Π-level (λ _ → Group.El-level H _ _))) p
 
   group-hom=-↓ : ∀ {i j k} {A : Type i} {G : A → Group j} {H : A → Group k} {x y : A}
     {p : x == y} {φ : G x →ᴳ H x} {ψ : G y →ᴳ H y}
@@ -222,7 +222,7 @@ transportᴳ-equiv B idp = idiso _
 abstract
   group-hom=-to-iso= : ∀ {i j} {G : Group i} {H : Group j} {φ ψ : G ≃ᴳ H}
     → GroupIso.f-hom φ == GroupIso.f-hom ψ → φ == ψ
-  group-hom=-to-iso= p = Subtype=-in (is-equiv-is-prop _) p
+  group-hom=-to-iso= p = Subtype=-out (is-equiv-is-prop _) p
 
   group-iso= : ∀ {i j} {G : Group i} {H : Group j} {φ ψ : G ≃ᴳ H}
     → GroupIso.f φ == GroupIso.f ψ → φ == ψ

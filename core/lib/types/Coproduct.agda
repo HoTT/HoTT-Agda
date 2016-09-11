@@ -10,45 +10,45 @@ module lib.types.Coproduct where
 
 module _ {i j} {A : Type i} {B : Type j} where
 
-  ⊔-code : Coprod A B → Coprod A B → Type (lmax i j)
-  ⊔-code (inl a₁) (inl a₂) = Lift {j = (lmax i j)} $ a₁ == a₂
-  ⊔-code (inl a₁) (inr b₂) = Lift Empty
-  ⊔-code (inr b₁) (inl a₂) = Lift Empty
-  ⊔-code (inr b₁) (inr b₂) = Lift {j = (lmax i j)} $ b₁ == b₂
+  Coprod= : Coprod A B → Coprod A B → Type (lmax i j)
+  Coprod= (inl a₁) (inl a₂) = Lift {j = (lmax i j)} $ a₁ == a₂
+  Coprod= (inl a₁) (inr b₂) = Lift Empty
+  Coprod= (inr b₁) (inl a₂) = Lift Empty
+  Coprod= (inr b₁) (inr b₂) = Lift {j = (lmax i j)} $ b₁ == b₂
 
-  ⊔-encode : {x y : Coprod A B} → (x == y) → ⊔-code x y
-  ⊔-encode {inl a₁} {y} p = transport (⊔-code $ inl a₁) p (lift $ idp {a = a₁})
-  ⊔-encode {inr b₁} {y} p = transport (⊔-code $ inr b₁) p (lift $ idp {a = b₁})
+  Coprod=-in : {x y : Coprod A B} → (x == y) → Coprod= x y
+  Coprod=-in {inl _} idp = lift idp
+  Coprod=-in {inr _} idp = lift idp
 
-  ⊔-decode : {x y : Coprod A B} → ⊔-code x y → (x == y)
-  ⊔-decode {inl _} {inl _} c = ap inl $ lower c
-  ⊔-decode {inl _} {inr _} c = Empty-rec $ lower c
-  ⊔-decode {inr _} {inl _} c = Empty-rec $ lower c
-  ⊔-decode {inr _} {inr _} c = ap inr (lower c)
+  Coprod=-out : {x y : Coprod A B} → Coprod= x y → (x == y)
+  Coprod=-out {inl _} {inl _} c = ap inl $ lower c
+  Coprod=-out {inl _} {inr _} c = Empty-rec $ lower c
+  Coprod=-out {inr _} {inl _} c = Empty-rec $ lower c
+  Coprod=-out {inr _} {inr _} c = ap inr (lower c)
 
-  ⊔-code-equiv : (x y : Coprod A B) → (x == y) ≃ ⊔-code x y
-  ⊔-code-equiv x y = equiv ⊔-encode ⊔-decode (f-g x y) (g-f x y)
-    where f-g : ∀ x' y' → ∀ c → ⊔-encode (⊔-decode {x'} {y'} c) == c
+  Coprod=-in-equiv : (x y : Coprod A B) → (x == y) ≃ Coprod= x y
+  Coprod=-in-equiv x y = equiv Coprod=-in Coprod=-out (f-g x y) (g-f x y)
+    where f-g : ∀ x' y' → ∀ c → Coprod=-in (Coprod=-out {x'} {y'} c) == c
           f-g (inl a₁) (inl .a₁) (lift idp) = idp
           f-g (inl a₁) (inr b₂) b = Empty-rec $ lower b
           f-g (inr b₁) (inl a₂) b = Empty-rec $ lower b
           f-g (inr b₁) (inr .b₁) (lift idp) = idp
 
-          g-f : ∀ x' y' → ∀ p → ⊔-decode (⊔-encode {x'} {y'} p) == p
+          g-f : ∀ x' y' → ∀ p → Coprod=-out (Coprod=-in {x'} {y'} p) == p
           g-f (inl _) .(inl _) idp = idp
           g-f (inr _) .(inr _) idp = idp
 
   inl=inl-equiv : (a₁ a₂ : A) → (inl a₁ == inl a₂) ≃ (a₁ == a₂)
-  inl=inl-equiv a₁ a₂ = lower-equiv ∘e ⊔-code-equiv (inl a₁) (inl a₂)
+  inl=inl-equiv a₁ a₂ = lower-equiv ∘e Coprod=-in-equiv (inl a₁) (inl a₂)
 
   inr=inr-equiv : (b₁ b₂ : B) → (inr b₁ == inr b₂) ≃ (b₁ == b₂)
-  inr=inr-equiv b₁ b₂ = lower-equiv ∘e ⊔-code-equiv (inr b₁) (inr b₂)
+  inr=inr-equiv b₁ b₂ = lower-equiv ∘e Coprod=-in-equiv (inr b₁) (inr b₂)
 
   inl≠inr : (a₁ : A) (b₂ : B) → (inl a₁ ≠ inr b₂)
-  inl≠inr a₁ b₂ p = lower $ ⊔-encode p
+  inl≠inr a₁ b₂ p = lower $ Coprod=-in p
 
   inr≠inl : (b₁ : B) (a₂ : A) → (inr b₁ ≠ inl a₂)
-  inr≠inl a₁ b₂ p = lower $ ⊔-encode p
+  inr≠inl a₁ b₂ p = lower $ Coprod=-in p
 
   ⊔-level : ∀ {n} → has-level (S (S n)) A → has-level (S (S n)) B
             → has-level (S (S n)) (Coprod A B)

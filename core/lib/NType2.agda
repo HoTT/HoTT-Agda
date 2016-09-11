@@ -71,21 +71,21 @@ Subtype= : ∀ {i j} {A : Type i} {P : A → Type j}
   → (x y : Σ A P) → Type i
 Subtype= x y = fst x == fst y
 
-Subtype=-in : ∀ {i j} {A : Type i} {P : A → Type j} {x y : Σ A P}
+Subtype=-out : ∀ {i j} {A : Type i} {P : A → Type j} {x y : Σ A P}
   → is-prop (P (fst y)) → Subtype= x y → x == y
-Subtype=-in nP p = pair= p (prop-has-all-paths-↓ nP)
+Subtype=-out nP p = pair= p (prop-has-all-paths-↓ nP)
 
 Subtype-∙ : ∀ {i j} {A : Type i} {P : A → Type j} {x y z : Σ A P}
   (nPy : is-prop (P (fst y))) (nPz : is-prop (P (fst z))) (p : Subtype= x y) (q : Subtype= y z)
-  → (Subtype=-in {x = x} nPy p ∙ Subtype=-in {x = y} nPz q)
-  == Subtype=-in {x = x} {y = z} nPz (p ∙ q)
+  → (Subtype=-out {x = x} nPy p ∙ Subtype=-out {x = y} nPz q)
+  == Subtype=-out {x = x} {y = z} nPz (p ∙ q)
 Subtype-∙ nPy nPz p q =
-  Subtype=-in nPy p ∙ Subtype=-in nPz q
+  Subtype=-out nPy p ∙ Subtype=-out nPz q
     =⟨ Σ-∙ {p = p} {p' = q} (prop-has-all-paths-↓ nPy) (prop-has-all-paths-↓ nPz) ⟩
   pair= (p ∙ q) (prop-has-all-paths-↓ {p = p} nPy ∙ᵈ prop-has-all-paths-↓ nPz)
     =⟨ contr-has-all-paths (↓-level nPz) _ (prop-has-all-paths-↓ nPz)
       |in-ctx pair= (p ∙ q) ⟩
-  Subtype=-in nPz (p ∙ q)
+  Subtype=-out nPz (p ∙ q)
     =∎
 
 -- Groupoids
@@ -137,26 +137,26 @@ abstract
 nType= : ∀ {i} {n : ℕ₋₂} (A B : n -Type i) → Type (lsucc i)
 nType= = Subtype=
 
-nType=-in : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} → nType= A B → A == B
-nType=-in = Subtype=-in has-level-is-prop
+nType=-out : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} → nType= A B → A == B
+nType=-out = Subtype=-out has-level-is-prop
 
 abstract
   nType=-β : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} (p : nType= A B)
-    → fst= (nType=-in {A = A} {B = B} p) == p
+    → fst= (nType=-out {A = A} {B = B} p) == p
   nType=-β idp = fst=-β idp _
 
   nType=-η : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} (p : A == B)
-    → nType=-in (fst= p) == p
+    → nType=-out (fst= p) == p
   nType=-η {n = n} {A = A} idp = ap (pair= idp)
     (contr-has-all-paths (has-level-is-prop _ _) _ _)
 
   nType=-equiv : ∀ {i} {n : ℕ₋₂} (A B : n -Type i) → (nType= A B) ≃ (A == B)
-  nType=-equiv A B = equiv nType=-in fst= nType=-η nType=-β
+  nType=-equiv A B = equiv nType=-out fst= nType=-η nType=-β
 
   nType-∙ : ∀ {i} {n : ℕ₋₂} {A B C : n -Type i}
     (p : nType= A B) (q : nType= B C)
-    → (nType=-in {A = A} p ∙ nType=-in {A = B} q)
-    == nType=-in {A = A} {B = C} (p ∙ q)
+    → (nType=-out {A = A} p ∙ nType=-out {A = B} q)
+    == nType=-out {A = A} {B = C} (p ∙ q)
   nType-∙ = Subtype-∙ has-level-is-prop has-level-is-prop
 
   _-Type-level_ : (n : ℕ₋₂) (i : ULevel)

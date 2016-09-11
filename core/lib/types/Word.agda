@@ -1,14 +1,55 @@
 {-# OPTIONS --without-K #-}
 
-open import HoTT hiding (_::_)
+open import lib.Basics
+open import lib.NType2
+open import lib.types.Empty
+open import lib.types.Sigma
+open import lib.types.Pi
+open import lib.types.Group
+open import lib.types.Nat
+open import lib.types.List
 
-module algebra.Word {i} (A : Type i) where
+module lib.types.Word {i} where
 
-  data Word : Type i where
-    nil : Word
-    _::_ : A → Word → Word
-    _inv::_ : A → Word → Word
-  infixr 60 _::_ _inv::_
+module _ (A : Type i) where
+
+  PlusMinus : Type i
+  PlusMinus = Coprod A A
+
+  Word : Type i
+  Word = List PlusMinus
+
+module _ {A : Type i} where
+
+  flip : PlusMinus A → PlusMinus A
+  flip (inl a) = inr a
+  flip (inr a) = inl a
+
+  flip-flip : ∀ x → flip (flip x) == x
+  flip-flip (inl x) = idp
+  flip-flip (inr x) = idp
+
+  Word-flip : Word A → Word A
+  Word-flip = map flip
+
+module _ {A : Type i} {j} (G : Group j) where
+  private
+    module G = Group G
+
+  PlusMinus-liftᴳ : (A → G.El) → (PlusMinus A → G.El)
+  PlusMinus-liftᴳ f (inl a) = f a
+  PlusMinus-liftᴳ f (inr a) = G.inv (f a)
+
+  Word-liftᴳ : (A → G.El) → (Word A → G.El)
+  Word-liftᴳ f = foldr G.comp G.ident ∘ map (PlusMinus-liftᴳ f)
+  
+  abstract
+    Word-liftᴳ-++ : ∀ f l₁ l₂
+      → Word-liftᴳ f (l₁ ++ l₂) == G.comp (Word-liftᴳ f l₁) (Word-liftᴳ f l₂)
+    Word-liftᴳ-++ f nil l₂ = ! $ G.unit-l _
+    Word-liftᴳ-++ f (x :: l₁) l₂ =
+        ap (G.comp (PlusMinus-liftᴳ f x)) (Word-liftᴳ-++ f l₁ l₂)
+      ∙ ! (G.assoc (PlusMinus-liftᴳ f x) (Word-liftᴳ f l₁)  (Word-liftᴳ f l₂))
 
   -- The following six functions prove things like if [x ∷ v ≡ y ∷ w],
   -- then [x ≡ y].
@@ -16,6 +57,7 @@ module algebra.Word {i} (A : Type i) where
   -- (because [x ∷ v] is not a general element of type word), so you have to
   -- extract the head, but it’s not always possible…
 
+  {-
   Word= : (v w : Word) → Type i
   Word= nil         nil         = Lift ⊤
   Word= nil         (y    :: w) = Lift ⊥
@@ -54,4 +96,4 @@ module algebra.Word {i} (A : Type i) where
 
   Word-snd=' : {x y : A} {v w : Word} (p : x inv:: v == y inv:: w) → v == w
   Word-snd=' p = snd (Word=-out p)
-
+  -}
