@@ -38,8 +38,8 @@ cw-take (inr ltS)        (skel , _) = skel
 cw-take (inr (ltSR m≤n)) (skel , _) = cw-take (inr m≤n) skel
 
 cw-head : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
-cw-head {n = O}   = cw-take (inl idp)
-cw-head {n = S n} = cw-take (inr (O<S n))
+cw-head {n = O}   skel       = skel
+cw-head {n = S n} (skel , _) = cw-head skel
 
 incl^ : ∀ {i} {n : ℕ} (skel : Skeleton {i} n)
   → cw-head skel → ⟦ skel ⟧
