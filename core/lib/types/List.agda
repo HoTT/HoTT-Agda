@@ -4,13 +4,14 @@ open import lib.Base
 open import lib.NType
 open import lib.Relation
 open import lib.Equivalences
+open import lib.PathFunctor
 open import lib.types.Sigma
 open import lib.types.Bool
 open import lib.types.Int
 
 module lib.types.List where
 
-infixr 80 _::_
+infixr 60 _::_
 
 data List {i} (A : Type i) : Type i where
   nil : List A
@@ -150,3 +151,9 @@ List= (x :: l₁) (y :: l₂) = (x == y) × (l₁ == l₂)
 List=-in : ∀ {i} {A : Type i} {l₁ l₂ : List A} → l₁ == l₂ → List= l₁ l₂
 List=-in {l₁ = nil} idp = lift unit
 List=-in {l₁ = x :: l} idp = idp , idp
+
+List=-out : ∀ {i} {A : Type i} {l₁ l₂ : List A} → List= l₁ l₂ → l₁ == l₂
+List=-out {l₁ = nil} {l₂ = nil} _ = idp
+List=-out {l₁ = nil} {l₂ = y :: l₂} (lift ())
+List=-out {l₁ = x :: l₁} {l₂ = nil} (lift ())
+List=-out {l₁ = x :: l₁} {l₂ = y :: l₂} (x=y , l₁=l₂) = ap2 _::_ x=y l₁=l₂
