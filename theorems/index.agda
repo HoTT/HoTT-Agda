@@ -49,4 +49,4 @@ import homotopy.PinSn
 -- import Homotopy.VanKampen
 
 import cw.CW
-import cw.Sphere
+import cw.examples.Sphere

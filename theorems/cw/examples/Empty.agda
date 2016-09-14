@@ -3,7 +3,7 @@
 open import HoTT
 open import cw.CW
 
-module cw.representable.Empty where
+module cw.examples.Empty where
 
 cw-empty-skel : Skeleton {lzero} 0
 cw-empty-skel = skel-base (Empty , Empty-is-set)

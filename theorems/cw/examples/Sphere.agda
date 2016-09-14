@@ -3,7 +3,7 @@
 open import HoTT
 open import cw.CW
 
-module cw.representable.Sphere where
+module cw.examples.Sphere where
 
 cw-sphere-skel : ∀ n → Skeleton {lzero} n
 

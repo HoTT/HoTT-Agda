@@ -3,7 +3,7 @@
 open import HoTT
 open import cw.CW
 
-module cw.representable.Unit where
+module cw.examples.Unit where
 
 cw-unit-skel : Skeleton {lzero} 0
 cw-unit-skel = skel-base (Unit , Unit-is-set)
