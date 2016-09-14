@@ -3,7 +3,7 @@
 open import HoTT
 open import cw.CW
 
-module cw.Sphere where
+module cw.representable.Sphere where
 
 cw-sphere-skel : ∀ n → Skeleton {lzero} n
 
@@ -12,9 +12,9 @@ CWSphere n = ⟦ cw-sphere-skel n ⟧
 
 Sphere-to-CWSphere : (n : ℕ) → Sphere n → CWSphere n
 
-cw-sphere-skel O = Bool
-cw-sphere-skel (S n) =
-  (cw-sphere-skel n , Bool , cst (Sphere-to-CWSphere n))
+cw-sphere-skel O = skel-base (Bool , Bool-is-set)
+cw-sphere-skel (S n) = skel-attach
+  (cw-sphere-skel n) (Bool , Bool-is-set) (cst (Sphere-to-CWSphere n))
 
 {-
   mapping:

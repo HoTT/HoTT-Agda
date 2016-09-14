@@ -7,7 +7,7 @@
 
 open import HoTT
 
-module cw.CW where
+module cw.CW {i} where
 
 open import cw.Attached public
 
@@ -17,53 +17,53 @@ open import cw.Attached public
 
 -- skeleton
 
-Skeleton : ∀ {i} → ℕ → Type (lsucc i)
-Realizer : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
+data Skeleton : ℕ → Type (lsucc i)
+Realizer : {n : ℕ} → Skeleton n → Type i
 
-Skeleton {i} O = Type i
-Skeleton {i} (S n) =
-  Σ (Skeleton {i} n)
-    (λ s → Σ (Type i) λ A → Attaching (Realizer s) A (Sphere n))
+data Skeleton where
+  skel-base : hSet i → Skeleton O
+  skel-attach : ∀ {n} (skel : Skeleton n) (cells : hSet i)
+    → Attaching (Realizer skel) (fst cells) (Sphere n)
+    → Skeleton (S n)
 
-Realizer {n = O} A = A
-Realizer {n = S n} (s , (A , attaching)) = Attached attaching
+Realizer (skel-base A) = fst A
+Realizer (skel-attach s _ α) = Attached α
 
 ⟦_⟧ = Realizer
 
 -- Take a prefix of a skeleton
 
-cw-take : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) → Skeleton {i} n → Skeleton {i} m
-cw-take (inl idp)        skel       = skel
-cw-take (inr ltS)        (skel , _) = skel
-cw-take (inr (ltSR m≤n)) (skel , _) = cw-take (inr m≤n) skel
+cw-take : ∀ {m n : ℕ} (m≤n : m ≤ n) → Skeleton n → Skeleton m
+cw-take (inl idp)        skel                   = skel
+cw-take (inr ltS)        (skel-attach skel _ _) = skel
+cw-take (inr (ltSR m≤n)) (skel-attach skel _ _) = cw-take (inr m≤n) skel
 
-cw-head : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
-cw-head {n = O}   skel       = skel
-cw-head {n = S n} (skel , _) = cw-head skel
+cw-head : ∀ {n : ℕ} → Skeleton n → hSet i
+cw-head (skel-base   pts)      = pts
+cw-head (skel-attach skel _ _) = cw-head skel
 
-incl^ : ∀ {i} {n : ℕ} (skel : Skeleton {i} n)
-  → cw-head skel → ⟦ skel ⟧
-incl^ {n = O}       skel       c = c
-incl^ {n = S O}     (skel , _) c = incl c
-incl^ {n = S (S n)} (skel , _) c = incl (incl^ skel c)
+incl^ : ∀ {n : ℕ} (skel : Skeleton n)
+  → fst (cw-head skel) → ⟦ skel ⟧
+incl^ (skel-base _)       c = c
+incl^ (skel-attach s _ _) c = incl (incl^ s c)
 
 -- Pointedness
 
-⊙Skeleton : ∀ {i} (n : ℕ) → Type (lsucc i)
-⊙Skeleton n = Σ (Skeleton n) cw-head
+⊙Skeleton : ℕ → Type (lsucc i)
+⊙Skeleton n = Σ (Skeleton n) (fst ∘ cw-head)
 
-⊙Realizer : ∀ {i} {n : ℕ} → ⊙Skeleton {i} n → Ptd i
+⊙Realizer : {n : ℕ} → ⊙Skeleton n → Ptd i
 ⊙Realizer (skel , pt) = ⟦ skel ⟧ , incl^ skel pt
 
 ⊙⟦_⟧ = ⊙Realizer
 
 -- Access the [m]th cells
 
-cells-last : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
-cells-last {n = O}   skel            = skel
-cells-last {n = S n} (_ , cells , _) = cells
+cells-last : ∀ {n : ℕ} → Skeleton n → hSet i
+cells-last (skel-base     cells)   = cells
+cells-last (skel-attach _ cells _) = cells
 
-cells-nth : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) → Skeleton {i} n → Type i
+cells-nth : ∀ {m n : ℕ} (m≤n : m ≤ n) → Skeleton n → hSet i
 cells-nth m≤n = cells-last ∘ cw-take m≤n
 
 -- Access the [m]th dimensional attaching map
@@ -72,59 +72,45 @@ Sphere₋₁ : ℕ → Type₀
 Sphere₋₁ O = Empty
 Sphere₋₁ (S n) = Sphere n
 
-Realizer₋₁ : ∀ {i} {n : ℕ} → Skeleton {i} n → Type i
-Realizer₋₁ {n = O}   _          = Lift Empty
-Realizer₋₁ {n = S n} (skel , _) = ⟦ skel ⟧
+Realizer₋₁ : ∀ {n : ℕ} → Skeleton n → Type i
+Realizer₋₁ (skel-base _)          = Lift Empty
+Realizer₋₁ (skel-attach skel _ _) = ⟦ skel ⟧
 
 ⟦_⟧₋₁ = Realizer₋₁
 
-attaching-last : ∀ {i} {n : ℕ} (s : Skeleton {i} n)
-  → cells-last s → (Sphere₋₁ n → ⟦ s ⟧₋₁)
-attaching-last {n = O}    _                  = λ{_ ()}
-attaching-last {n = S n} (_ , _ , attaching) = attaching
+attaching-last : ∀ {n : ℕ} (s : Skeleton n)
+  → fst (cells-last s) → (Sphere₋₁ n → ⟦ s ⟧₋₁)
+attaching-last (skel-base _)               = λ{_ ()}
+attaching-last (skel-attach _ _ attaching) = attaching
 
-attaching-nth : ∀ {i} {m n : ℕ} (m≤n : m ≤ n) (skel : Skeleton {i} n)
-  → cells-nth m≤n skel → Sphere₋₁ m → ⟦ cw-take m≤n skel ⟧₋₁
+attaching-nth : ∀ {m n : ℕ} (m≤n : m ≤ n) (skel : Skeleton n)
+  → fst (cells-nth m≤n skel) → Sphere₋₁ m → ⟦ cw-take m≤n skel ⟧₋₁
 attaching-nth m≤n = attaching-last ∘ cw-take m≤n
 
--- Misc
-
 -- Extra conditions on CW complexes
-has-cells-with-dec-eq : ∀ {i} {n} → Skeleton {i} n → Type i
-has-cells-with-dec-eq {n = 0} skel = has-dec-eq skel
-has-cells-with-dec-eq {n = S n} (skel , cells , _) = has-cells-with-dec-eq skel
-                                                   × has-dec-eq cells
 
-{- Some basic CWs -}
+has-cells-with-dec-eq : ∀ {n} → Skeleton n → Type i
+has-cells-with-dec-eq (skel-base cells) = has-dec-eq (fst cells)
+has-cells-with-dec-eq (skel-attach skel cells _) =
+  has-cells-with-dec-eq skel × has-dec-eq (fst cells)
 
--- Empty
+has-cells-with-dec-eq-is-prop : ∀ {n} {skel : Skeleton n}
+  → is-prop (has-cells-with-dec-eq skel)
+has-cells-with-dec-eq-is-prop {skel = skel-base _} =
+  has-dec-eq-is-prop
+has-cells-with-dec-eq-is-prop {skel = skel-attach _ _ _} =
+  ×-level has-cells-with-dec-eq-is-prop has-dec-eq-is-prop
 
-cw-empty-skel : Skeleton {lzero} 0
-cw-empty-skel = Empty
-CWEmpty = ⟦ cw-empty-skel ⟧
+-- Dimensional lifting
 
-CWEmpty≃Empty : CWEmpty ≃ Empty
-CWEmpty≃Empty = ide _
-
--- Unit
-
-cw-unit-skel : Skeleton {lzero} 0
-cw-unit-skel = Unit
-CWUnit = ⟦ cw-unit-skel ⟧
-
-CWUnit≃Unit : CWUnit ≃ Unit
-CWUnit≃Unit = ide _
-
-{- Basic transformation  -}
-
--- dimension lifting
-
-cw-lift₁ : ∀ {i} {n : ℕ} → Skeleton {i} n → Skeleton {i} (S n)
-cw-lift₁ skel = skel , Lift Empty , λ{(lift ()) _}
+cw-lift₁ : ∀ {n : ℕ} → Skeleton n → Skeleton (S n)
+cw-lift₁ skel = skel-attach skel
+  (Lift Empty , Lift-level Empty-is-set)
+  λ{(lift ()) _}
 
 -- This slightly extends the naming convension
 -- to two skeletons being extensionally equal.
-cw-lift₁-equiv : ∀ {i} {n} (skel : Skeleton {i} n)
+cw-lift₁-equiv : ∀ {n} (skel : Skeleton n)
   → ⟦ cw-lift₁ skel ⟧ ≃ ⟦ skel ⟧
 cw-lift₁-equiv skel = equiv to incl to-incl incl-to
   where
@@ -137,6 +123,6 @@ cw-lift₁-equiv skel = equiv to incl to-incl incl-to
     incl-to : ∀ x → incl (to x) == x
     incl-to = Attached-elim (λ _ → idp) (λ{(lift ())}) (λ{(lift ()) _})
 
-cw-lift : ∀ {i} {n m : ℕ} → n < m → Skeleton {i} n → Skeleton {i} m
+cw-lift : ∀ {n m : ℕ} → n < m → Skeleton n → Skeleton m
 cw-lift ltS = cw-lift₁
 cw-lift (ltSR lt) = cw-lift₁ ∘ cw-lift lt

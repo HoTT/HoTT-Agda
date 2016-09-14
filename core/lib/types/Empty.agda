@@ -10,11 +10,17 @@ Empty-rec = Empty-elim
 ⊥-rec : ∀ {i} {A : Type i} → (⊥ → A)
 ⊥-rec = Empty-rec
 
-Empty-is-prop : is-prop Empty
-Empty-is-prop = Empty-elim
+abstract
+  Empty-is-prop : is-prop Empty
+  Empty-is-prop = Empty-elim
 
-⊥-is-prop : is-prop ⊥
-⊥-is-prop = Empty-is-prop
+  Empty-is-set : is-set Empty
+  Empty-is-set = raise-level -1 Empty-is-prop
+
+  Empty-level = Empty-is-prop
+  ⊥-is-prop = Empty-is-prop
+  ⊥-is-set = Empty-is-set
+  ⊥-level = Empty-level
 
 negated-equiv-Empty : ∀ {i} (A : Type i) → (¬ A) → (Empty ≃ A)
 negated-equiv-Empty A notA = equiv Empty-elim

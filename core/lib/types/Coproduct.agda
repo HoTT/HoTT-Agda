@@ -4,6 +4,7 @@ open import lib.Basics
 open import lib.types.Bool
 open import lib.types.Empty
 open import lib.types.Lift
+open import lib.types.Pi
 open import lib.types.Pointed
 
 module lib.types.Coproduct where
@@ -53,11 +54,24 @@ module _ {i j} {A : Type i} {B : Type j} where
   ⊔-level : ∀ {n} → has-level (S (S n)) A → has-level (S (S n)) B
             → has-level (S (S n)) (Coprod A B)
   ⊔-level pA _ (inl a₁) (inl a₂) =
-    equiv-preserves-level ((inl=inl-equiv a₁ a₂)⁻¹) (pA a₁ a₂)
+    equiv-preserves-level (inl=inl-equiv a₁ a₂ ⁻¹) (pA a₁ a₂)
   ⊔-level _ _ (inl a₁) (inr b₂) = λ p → Empty-rec (inl≠inr a₁ b₂ p)
   ⊔-level _ _ (inr b₁) (inl a₂) = λ p → Empty-rec (inr≠inl b₁ a₂ p)
   ⊔-level _ pB (inr b₁) (inr b₂) =
     equiv-preserves-level ((inr=inr-equiv b₁ b₂)⁻¹) (pB b₁ b₂)
+
+  Coprod-level = ⊔-level
+
+module _ {i} {P : Type i} where
+
+  Dec-level : ∀ {n} → has-level (S n) P → has-level (S n) (Dec P)
+  Dec-level pP (inl p₁) (inl p₂) =
+    equiv-preserves-level (inl=inl-equiv p₁ p₂ ⁻¹) (pP p₁ p₂)
+  Dec-level pP (inl p) (inr p⊥) = ⊥-rec $ p⊥ p
+  Dec-level pP (inr p⊥) (inl p) = ⊥-rec $ p⊥ p
+  Dec-level {n} pP (inr p⊥₁) (inr p⊥₂) =
+    equiv-preserves-level (inr=inr-equiv p⊥₁ p⊥₂ ⁻¹)
+      (→-level (prop-has-level-S ⊥-is-prop) p⊥₁ p⊥₂)
 
 infix 80 _⊙⊔_
 _⊙⊔_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)

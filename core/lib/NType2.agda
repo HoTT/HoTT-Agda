@@ -6,8 +6,14 @@ open import lib.types.Paths
 open import lib.types.Pi
 open import lib.types.Sigma
 open import lib.types.TLevel
+open import lib.types.Coproduct
 
 module lib.NType2 where
+
+abstract
+  has-dec-eq-is-prop : ∀ {i} {A : Type i} → is-prop (has-dec-eq A)
+  has-dec-eq-is-prop dec =
+    (Π-is-prop λ a₁ → Π-is-prop λ a₂ → Dec-level (dec-eq-is-set dec a₁ a₂)) dec
 
 module _ {i j} {A : Type i} {B : A → Type j} where
   abstract
