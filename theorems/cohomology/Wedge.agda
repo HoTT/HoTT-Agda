@@ -2,10 +2,10 @@
 
 open import HoTT
 open import cohomology.CofiberSequence
-open import cohomology.Exactness
+open import groups.Exactness
 open import homotopy.FunctionOver
 open import cohomology.Theory
-open import cohomology.ProductRepr
+open import groups.ProductRepr
 open import cohomology.WedgeCofiber
 
 {- Finite additivity is provable (and in a stronger form) without using

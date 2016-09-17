@@ -1,10 +1,10 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import cohomology.Exactness
+open import groups.Exactness
 open import homotopy.FunctionOver
 
-module cohomology.ProductRepr where
+module groups.ProductRepr where
 
 {- Given the following commutative diagram of homomorphisms,
 

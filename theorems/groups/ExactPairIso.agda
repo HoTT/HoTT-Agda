@@ -1,9 +1,9 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import cohomology.Exactness
+open import groups.Exactness
 
-module cohomology.ExactPairIso where
+module groups.ExactPairIso where
 
 {- An exact sequence 0 → G → H → 0 implies that G == H -}
 

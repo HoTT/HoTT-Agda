@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Base
-open import lib.Equivalences
+open import lib.Equivalence
 open import lib.Univalence
 open import lib.NType
 open import lib.PathGroupoid
@@ -46,7 +46,7 @@ module FunextNonDep {j} {B : Type j} {f g : A → B} (h : (x : A) → f x == g x
                                      fst-is-equiv)
 
       d==e : d == e
-      d==e = equiv-inj (_ , comp-fst-is-equiv) idp
+      d==e = equiv-is-inj comp-fst-is-equiv _ _ idp
 
   λ=-nondep : f == g
   λ=-nondep = ap (λ f' x → fst (snd (f' x))) d==e

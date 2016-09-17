@@ -3,7 +3,7 @@
 open import HoTT
 open import homotopy.PtdAdjoint
 open import homotopy.SuspAdjointLoop
-open import cohomology.Exactness
+open import groups.Exactness
 open import homotopy.FunctionOver
 open import cohomology.MayerVietoris
 open import cohomology.Theory

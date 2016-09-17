@@ -13,7 +13,7 @@ open import lib.types.Group
 open import lib.types.LoopSpace
 open import lib.groups.TruncationGroup
 open import lib.groups.GroupProduct
-open import lib.groups.Homomorphisms
+open import lib.groups.Homomorphism
 open import lib.groups.Unit
 open import lib.groups.LoopSpace
 

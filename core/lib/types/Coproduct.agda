@@ -62,17 +62,6 @@ module _ {i j} {A : Type i} {B : Type j} where
 
   Coprod-level = ⊔-level
 
-module _ {i} {P : Type i} where
-
-  Dec-level : ∀ {n} → has-level (S n) P → has-level (S n) (Dec P)
-  Dec-level pP (inl p₁) (inl p₂) =
-    equiv-preserves-level (inl=inl-equiv p₁ p₂ ⁻¹) (pP p₁ p₂)
-  Dec-level pP (inl p) (inr p⊥) = ⊥-rec $ p⊥ p
-  Dec-level pP (inr p⊥) (inl p) = ⊥-rec $ p⊥ p
-  Dec-level {n} pP (inr p⊥₁) (inr p⊥₂) =
-    equiv-preserves-level (inr=inr-equiv p⊥₁ p⊥₂ ⁻¹)
-      (→-level (prop-has-level-S ⊥-is-prop) p⊥₁ p⊥₂)
-
 infix 80 _⊙⊔_
 _⊙⊔_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
 X ⊙⊔ Y = ⊙[ Coprod (fst X) (fst Y) , inl (snd X) ]

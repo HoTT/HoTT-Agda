@@ -2,7 +2,7 @@
 
 open import lib.Basics
 open import lib.NType2
-open import lib.Equivalences2
+open import lib.Equivalence2
 open import lib.NConnected
 open import lib.types.Nat
 open import lib.types.Pi
@@ -12,7 +12,7 @@ open import lib.types.Truncation
 open import lib.types.Group
 open import lib.types.Pointed
 open import lib.groups.LoopSpace
-open import lib.groups.Homomorphisms
+open import lib.groups.Homomorphism
 open import lib.groups.HomotopyGroup
 
 module lib.types.EilenbergMacLane1 where

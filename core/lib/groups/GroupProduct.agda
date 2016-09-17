@@ -6,7 +6,7 @@ open import lib.types.Bool
 open import lib.types.Nat
 open import lib.types.Pi
 open import lib.types.Sigma
-open import lib.groups.Homomorphisms
+open import lib.groups.Homomorphism
 open import lib.groups.Lift
 open import lib.groups.Unit
 

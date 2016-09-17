@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import cohomology.Exactness
+open import groups.Exactness
 open import cohomology.Theory
 
 module cohomology.Sphere {i} (OT : OrdinaryTheory i) where
@@ -19,7 +19,7 @@ C-Sphere-≠ n (S m) neq =
   C (succ (pred n)) (⊙Susp (⊙Lift (⊙Sphere m)))
     ≃ᴳ⟨ C-Susp (pred n) (⊙Lift (⊙Sphere m)) ⟩
   C (pred n) (⊙Lift (⊙Sphere m))
-    ≃ᴳ⟨ C-Sphere-≠ (pred n) m (λ p → neq (pred-inj n (ℕ-to-ℤ (S m)) p)) ⟩
+    ≃ᴳ⟨ C-Sphere-≠ (pred n) m (λ p → neq (pred-is-inj n (ℕ-to-ℤ (S m)) p)) ⟩
   0ᴳ
     ≃ᴳ∎
 

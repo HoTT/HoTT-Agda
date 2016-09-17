@@ -10,7 +10,7 @@ open import lib.types.Nat
 open import lib.types.List
 open import lib.types.Word
 open import lib.types.SetQuotient
-open import lib.groups.Homomorphisms
+open import lib.groups.Homomorphism
 
 module lib.groups.FreeGroup {i} where
 
@@ -18,7 +18,7 @@ data QuotWordRel {A : Type i} : Word A → Word A → Type i where
   qwr-refl : ∀ {l₁ l₂} → l₁ == l₂ → QuotWordRel l₁ l₂
   qwr-trans : ∀ {l₁ l₂ l₃} → QuotWordRel l₁ l₂ → QuotWordRel l₂ l₃ → QuotWordRel l₁ l₃
   qwr-cons : ∀ x {l₁ l₂} → QuotWordRel l₁ l₂ → QuotWordRel (x :: l₁) (x :: l₂)
-  qwr-flip : ∀ x₁ l → QuotWordRel (flip x₁ :: x₁ :: l) l
+  qwr-flip : ∀ x₁ l → QuotWordRel (x₁ :: flip x₁ :: l) l
 
 -- The quotient
 QuotWord : Type i → Type i
@@ -90,12 +90,12 @@ module _ (A : Type i) where
       QuotWordRel-cong-reverse (qwr-trans qwr qwr₁) = qwr-trans (QuotWordRel-cong-reverse qwr) (QuotWordRel-cong-reverse qwr₁)
       QuotWordRel-cong-reverse (qwr-cons x qwr) = QuotWordRel-cong-++-l (QuotWordRel-cong-reverse qwr) (x :: nil)
       QuotWordRel-cong-reverse (qwr-flip (inl x) l) =
-        qwr-trans (qwr-refl (++-assoc (reverse l) (inl x :: nil) (inr x :: nil))) $
+        qwr-trans (qwr-refl (++-assoc (reverse l) (inr x :: nil) (inl x :: nil))) $
         qwr-trans (QuotWordRel-cong-++-r (reverse l) (qwr-flip (inr x) nil)) $
         qwr-refl (++-unit-r (reverse l))
       QuotWordRel-cong-reverse (qwr-flip (inr x) l) =
-        qwr-trans (qwr-refl (++-assoc (reverse l) (inr x :: nil) (inl x :: nil))) $
-        qwr-trans  (QuotWordRel-cong-++-r (reverse l) (qwr-flip (inl x) nil)) $
+        qwr-trans (qwr-refl (++-assoc (reverse l) (inl x :: nil) (inr x :: nil))) $
+        qwr-trans (QuotWordRel-cong-++-r (reverse l) (qwr-flip (inl x) nil)) $
         qwr-refl (++-unit-r (reverse l))
 
     ⊟ : QuotWord A → QuotWord A
@@ -129,14 +129,10 @@ module _ (A : Type i) where
     abstract
       Word-inv-r : ∀ l → QuotWordRel {A} (l ++ reverse (Word-flip l)) nil
       Word-inv-r nil = qwr-refl idp
-      Word-inv-r (inl x :: l) =
-        qwr-trans (qwr-refl (ap (inl x ::_) (! (++-assoc l (reverse (Word-flip l)) l[ inr x ])))) $
-        qwr-trans (qwr-cons (inl x) (QuotWordRel-cong-++-l (Word-inv-r l) l[ inr x ])) $
-        qwr-flip (inr x) nil
-      Word-inv-r (inr x :: l) =
-        qwr-trans (qwr-refl (ap (inr x ::_) (! (++-assoc l (reverse (Word-flip l)) l[ inl x ])))) $
-        qwr-trans (qwr-cons (inr x) (QuotWordRel-cong-++-l (Word-inv-r l) l[ inl x ])) $
-        qwr-flip (inl x) nil
+      Word-inv-r (x :: l) =
+        qwr-trans (qwr-refl (ap (x ::_) (! (++-assoc l (reverse (Word-flip l)) (flip x :: nil))))) $
+        qwr-trans (qwr-cons x (QuotWordRel-cong-++-l (Word-inv-r l) (flip x :: nil))) $
+        qwr-flip x nil
 
     ⊟-inv-r : ∀ g → g ⊞ (⊟ g) == ⊞-unit
     ⊟-inv-r = QuotWord-elim
@@ -147,9 +143,13 @@ module _ (A : Type i) where
     abstract
       Word-inv-l : ∀ l → QuotWordRel {A} (reverse (Word-flip l) ++ l) nil
       Word-inv-l nil = qwr-refl idp
-      Word-inv-l (x :: l) =
-        qwr-trans (qwr-refl (++-assoc (reverse (Word-flip l)) l[ flip x ] (x :: l))) $
-        qwr-trans (QuotWordRel-cong-++-r (reverse (Word-flip l)) (qwr-flip x l)) $
+      Word-inv-l (inl x :: l) =
+        qwr-trans (qwr-refl (++-assoc (reverse (Word-flip l)) (inr x :: nil) (inl x :: l))) $
+        qwr-trans (QuotWordRel-cong-++-r (reverse (Word-flip l)) (qwr-flip (inr x) l)) $
+        Word-inv-l l
+      Word-inv-l (inr x :: l) =
+        qwr-trans (qwr-refl (++-assoc (reverse (Word-flip l)) (inl x :: nil) (inr x :: l))) $
+        qwr-trans (QuotWordRel-cong-++-r (reverse (Word-flip l)) (qwr-flip (inl x) l)) $
         Word-inv-l l
 
     ⊟-inv-l : ∀ g → (⊟ g) ⊞ g == ⊞-unit
@@ -180,28 +180,28 @@ module _ {A : Type i} {j} (G : Group j) where
     module G = Group G
 
     abstract
-      Word-liftᴳ-emap : ∀ f {l₁ l₂}
+      Word-extendᴳ-emap : ∀ f {l₁ l₂}
         → QuotWordRel {A} l₁ l₂
-        → Word-liftᴳ G f l₁ == Word-liftᴳ G f l₂
-      Word-liftᴳ-emap f (qwr-refl idp) = idp
-      Word-liftᴳ-emap f (qwr-trans qwr qwr₁) = (Word-liftᴳ-emap f qwr) ∙ (Word-liftᴳ-emap f qwr₁)
-      Word-liftᴳ-emap f (qwr-cons x qwr) = ap (G.comp (PlusMinus-liftᴳ G f x)) (Word-liftᴳ-emap f qwr)
-      Word-liftᴳ-emap f (qwr-flip (inl x) l) =
-          ! (G.assoc (G.inv (f x)) (f x) (Word-liftᴳ G f l))
-        ∙ ap (λ g → G.comp g (Word-liftᴳ G f l)) (G.inv-l (f x)) ∙ G.unit-l _
-      Word-liftᴳ-emap f (qwr-flip (inr x) l) =
-          ! (G.assoc (f x) (G.inv (f x)) (Word-liftᴳ G f l))
-        ∙ ap (λ g → G.comp g (Word-liftᴳ G f l)) (G.inv-r (f x)) ∙ G.unit-l _
+        → Word-extendᴳ G f l₁ == Word-extendᴳ G f l₂
+      Word-extendᴳ-emap f (qwr-refl idp) = idp
+      Word-extendᴳ-emap f (qwr-trans qwr qwr₁) = (Word-extendᴳ-emap f qwr) ∙ (Word-extendᴳ-emap f qwr₁)
+      Word-extendᴳ-emap f (qwr-cons x qwr) = ap (G.comp (PlusMinus-extendᴳ G f x)) (Word-extendᴳ-emap f qwr)
+      Word-extendᴳ-emap f (qwr-flip (inl x) l) =
+          ! (G.assoc (f x) (G.inv (f x)) (Word-extendᴳ G f l))
+        ∙ ap (λ g → G.comp g (Word-extendᴳ G f l)) (G.inv-r (f x)) ∙ G.unit-l _
+      Word-extendᴳ-emap f (qwr-flip (inr x) l) =
+          ! (G.assoc (G.inv (f x)) (f x) (Word-extendᴳ G f l))
+        ∙ ap (λ g → G.comp g (Word-extendᴳ G f l)) (G.inv-l (f x)) ∙ G.unit-l _
 
-  FreeGroup-lift : (A → G.El) → (FreeGroup A →ᴳ G)
-  FreeGroup-lift f = record {
-    f = QuotWord-rec G.El-level (Word-liftᴳ G f)
-          (λ r → Word-liftᴳ-emap f r);
+  FreeGroup-extend : (A → G.El) → (FreeGroup A →ᴳ G)
+  FreeGroup-extend f = record {
+    f = QuotWord-rec G.El-level (Word-extendᴳ G f)
+          (λ r → Word-extendᴳ-emap f r);
     pres-comp =
       QuotWord-elim (λ _ → Π-is-set λ _ → =-preserves-set G.El-level)
         (λ l₁ → QuotWord-elim
           (λ _ → =-preserves-set G.El-level)
-          (λ l₂ → Word-liftᴳ-++ G f l₁ l₂)
+          (λ l₂ → Word-extendᴳ-++ G f l₁ l₂)
           (λ _ → prop-has-all-paths-↓ (G.El-level _ _)))
         (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → G.El-level _ _))}
 
@@ -212,24 +212,24 @@ module _ {A : Type i} {j} (G : Group j) where
       f* a = f □[ inl a :: nil ]
 
       abstract
-        PlusMinus-liftᴳ-hom : ∀ x → PlusMinus-liftᴳ G f* x == f □[ x :: nil ]
-        PlusMinus-liftᴳ-hom (inl x) = idp
-        PlusMinus-liftᴳ-hom (inr x) = ! $ pres-inv □[ inl x :: nil ]
+        PlusMinus-extendᴳ-hom : ∀ x → PlusMinus-extendᴳ G f* x == f □[ x :: nil ]
+        PlusMinus-extendᴳ-hom (inl x) = idp
+        PlusMinus-extendᴳ-hom (inr x) = ! $ pres-inv □[ inl x :: nil ]
 
-        Word-liftᴳ-hom : ∀ l → Word-liftᴳ G f* l == f □[ l ]
-        Word-liftᴳ-hom nil = ! pres-ident
-        Word-liftᴳ-hom (x :: l) = ap2 G.comp (PlusMinus-liftᴳ-hom x) (Word-liftᴳ-hom l) ∙ ! (pres-comp _ _)
+        Word-extendᴳ-hom : ∀ l → Word-extendᴳ G f* l == f □[ l ]
+        Word-extendᴳ-hom nil = ! pres-ident
+        Word-extendᴳ-hom (x :: l) = ap2 G.comp (PlusMinus-extendᴳ-hom x) (Word-extendᴳ-hom l) ∙ ! (pres-comp _ _)
     open Lemma
 
-  FreeGroup-lift-is-equiv : is-equiv FreeGroup-lift
-  FreeGroup-lift-is-equiv = is-eq _ from to-from from-to where
-    to = FreeGroup-lift
+  FreeGroup-extend-is-equiv : is-equiv FreeGroup-extend
+  FreeGroup-extend-is-equiv = is-eq _ from to-from from-to where
+    to = FreeGroup-extend
     from = f*
 
     to-from : ∀ h → to (from h) == h
     to-from h = group-hom= $ λ= $ QuotWord-elim
       (λ _ → =-preserves-set G.El-level)
-      (λ l → Word-liftᴳ-hom h l)
+      (λ l → Word-extendᴳ-hom h l)
       (λ _ → prop-has-all-paths-↓ (G.El-level _ _))
 
     from-to : ∀ f → from (to f) == f

@@ -1,12 +1,12 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
-open import lib.Equivalences2
+open import lib.Equivalence2
+open import lib.Relation2
 open import lib.types.Paths
 open import lib.types.Pi
 open import lib.types.Sigma
 open import lib.types.TLevel
-open import lib.types.Coproduct
 
 module lib.NType2 where
 

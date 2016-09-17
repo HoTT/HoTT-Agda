@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
-open import lib.Equivalences2
+open import lib.Equivalence2
 open import lib.NType2
 open import lib.types.Group
 open import lib.types.Pi
@@ -9,7 +9,7 @@ open import lib.types.Sigma
 open import lib.types.Truncation
 open import lib.types.Pointed
 
-module lib.groups.Homomorphisms where
+module lib.groups.Homomorphism where
 
 {-
 Group homomorphisms.

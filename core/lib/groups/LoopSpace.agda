@@ -5,7 +5,7 @@ open import lib.types.Pointed
 open import lib.types.TLevel
 open import lib.types.Group
 open import lib.types.LoopSpace
-open import lib.groups.Homomorphisms
+open import lib.groups.Homomorphism
 
 module lib.groups.LoopSpace where
 

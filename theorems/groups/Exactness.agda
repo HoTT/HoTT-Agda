@@ -3,7 +3,7 @@ open import homotopy.FunctionOver
 
 -- TODO Checking naming convensions
 
-module cohomology.Exactness where
+module groups.Exactness where
 
 module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
   (φ : G →ᴳ H) (ψ : H →ᴳ K) where

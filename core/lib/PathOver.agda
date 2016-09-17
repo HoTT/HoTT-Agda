@@ -3,7 +3,7 @@
 open import lib.Base
 open import lib.PathFunctor
 open import lib.PathGroupoid
-open import lib.Equivalences
+open import lib.Equivalence
 
 {- Structural lemmas about paths over paths
 

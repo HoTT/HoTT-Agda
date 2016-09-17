@@ -1,11 +1,12 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Base
-open import lib.PathGroupoid
-open import lib.PathFunctor
 open import lib.NType
+open import lib.PathFunctor
+open import lib.PathGroupoid
+open import lib.Function
 
-module lib.Equivalences where
+module lib.Equivalence where
 
 {-
 We use the half-adjoint definition of equivalences (but this fact should be
@@ -127,9 +128,11 @@ module _ {i} {j} {A : Type i} {B : Type j} where
   <–-inv-adj' e b = is-equiv.adj' (snd e) b
 
   -- Equivalences are "injective"
-  equiv-inj : (e : A ≃ B) {x y : A}
-    → (–> e x == –> e y → x == y)
-  equiv-inj e {x} {y} p = ! (<–-inv-l e x) ∙ ap (<– e) p ∙ <–-inv-l e y
+  –>-is-inj : (e : A ≃ B) → is-inj (–> e)
+  –>-is-inj e x y p = ! (<–-inv-l e x) ∙ ap (<– e) p ∙ <–-inv-l e y
+
+  equiv-is-inj : {f : A → B} → is-equiv f → is-inj f
+  equiv-is-inj ise = –>-is-inj (_ , ise)
 
 idf-is-equiv : ∀ {i} (A : Type i) → is-equiv (idf A)
 idf-is-equiv A = is-eq _ (idf A) (λ _ → idp) (λ _ → idp)
@@ -210,11 +213,11 @@ module _ {i j} {A : Type i} {B : Type j} where
   private
     abstract
       left-inverse : (e : A ≃ B) {x y : A} (p : x == y)
-        → equiv-inj e (ap (–> e) p) == p
+        → –>-is-inj e _ _ (ap (–> e) p) == p
       left-inverse e idp = !-inv-l (<–-inv-l e _)
 
       right-inverse : (e : A ≃ B) {x y : A} (p : –> e x == –> e y) 
-        → ap (–> e) (equiv-inj e p) == p
+        → ap (–> e) (–>-is-inj e _ _ p) == p
       right-inverse e {x} {y} p = 
         ap f (! (g-f x) ∙ ap g p ∙ (g-f y))
           =⟨ ap-∙ f (! (g-f x)) (ap g p ∙ (g-f y)) ⟩
@@ -242,7 +245,7 @@ module _ {i j} {A : Type i} {B : Type j} where
   ap-equiv-is-equiv : {f : A → B} → is-equiv f
     → (x y : A) → is-equiv (ap f :> (x == y → f x == f y))
   ap-equiv-is-equiv {f} e x y =
-    is-eq (ap f) (equiv-inj (_ , e)) (right-inverse (_ , e)) (left-inverse (_ , e))
+    is-eq (ap f) (equiv-is-inj e _ _) (right-inverse (_ , e)) (left-inverse (_ , e))
 
   ap-equiv-equiv : (e : A ≃ B) (x y : A) → (x == y) ≃ (–> e x == –> e y)
   ap-equiv-equiv e x y = _ , ap-equiv-is-equiv (snd e) x y
@@ -286,8 +289,3 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k
   choice = equiv f g (λ _ → idp) (λ _ → idp)
     where f = λ c → ((λ a → fst (c a)) , (λ a → snd (c a)))
           g = λ d → (λ a → (fst d a , snd d a))
-
--- XXX Maybe another place for this?
-{- Homotopy fibers -}
-hfiber : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) (y : B) → Type (lmax i j)
-hfiber {A = A} f y = Σ A (λ x → f x == y)

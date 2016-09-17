@@ -3,7 +3,7 @@
 open import lib.Basics
 open import lib.types.Group
 open import lib.types.Lift
-open import lib.groups.Homomorphisms
+open import lib.groups.Homomorphism
 
 module lib.groups.Lift where
 

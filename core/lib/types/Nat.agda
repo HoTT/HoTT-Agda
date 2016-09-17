@@ -1,9 +1,10 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Base
+open import lib.Function
+open import lib.NType
 open import lib.PathGroupoid
 open import lib.Relation
-open import lib.NType
 open import lib.types.Empty
 
 module lib.types.Nat where
@@ -37,11 +38,11 @@ abstract
 ℕ-pred (S n) = n
 
 abstract
-  ℕ-S-inj : (n m : ℕ) (p : S n == S m :> ℕ) → n == m
-  ℕ-S-inj n m p = ap ℕ-pred p
+  ℕ-S-is-inj : is-inj (S :> (ℕ → ℕ))
+  ℕ-S-is-inj n m p = ap ℕ-pred p
 
   ℕ-S-≠ : ∀ {n m : ℕ} (p : n ≠ m) → S n ≠ S m :> ℕ
-  ℕ-S-≠ {n} {m} p = p ∘ ℕ-S-inj n m
+  ℕ-S-≠ {n} {m} p = p ∘ ℕ-S-is-inj n m
 
   private
     ℕ-S≠O-type : ℕ → Type₀
@@ -60,7 +61,7 @@ abstract
   ℕ-has-dec-eq (S n) O = inr (ℕ-S≠O n)
   ℕ-has-dec-eq (S n) (S m) with ℕ-has-dec-eq n m
   ℕ-has-dec-eq (S n) (S m) | inl p = inl (ap S p)
-  ℕ-has-dec-eq (S n) (S m) | inr p⊥ = inr (λ p → p⊥ (ℕ-S-inj n m p))
+  ℕ-has-dec-eq (S n) (S m) | inr p⊥ = inr (λ p → p⊥ (ℕ-S-is-inj n m p))
 
   ℕ-is-set : is-set ℕ
   ℕ-is-set = dec-eq-is-set ℕ-has-dec-eq

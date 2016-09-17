@@ -10,7 +10,7 @@ open import lib.types.Nat
 open import lib.types.List
 open import lib.types.Word
 open import lib.types.SetQuotient
-open import lib.groups.Homomorphisms
+open import lib.groups.Homomorphism
 
 module lib.groups.FreeAbelianGroup {i} where
 
@@ -19,7 +19,7 @@ data FormalSumRel {A : Type i} : Word A → Word A → Type i where
   fsr-trans : ∀ {l₁ l₂ l₃} → FormalSumRel l₁ l₂ → FormalSumRel l₂ l₃ → FormalSumRel l₁ l₃
   fsr-cons : ∀ x {l₁ l₂} → FormalSumRel l₁ l₂ → FormalSumRel (x :: l₁) (x :: l₂)
   fsr-swap : ∀ x₁ x₂ l → FormalSumRel (x₁ :: x₂ :: l) (x₂ :: x₁ :: l)
-  fsr-flip : ∀ x₁ l → FormalSumRel (flip x₁ :: x₁ :: l) l
+  fsr-flip : ∀ x₁ l → FormalSumRel (x₁ :: flip x₁ :: l) l
 
 -- The quotient
 FormalSum : Type i → Type i
@@ -116,7 +116,7 @@ module _ (A : Type i) where
       (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → Π-is-prop λ _ → FormalSum-is-set _ _)
 
     abstract
-      FormalSumRel-swap1 : ∀ x l₁ l₂ → FormalSumRel {A} (l₁ ++ l[ x ] ++ l₂) (x :: l₁ ++ l₂)
+      FormalSumRel-swap1 : ∀ x l₁ l₂ → FormalSumRel {A} (l₁ ++ (x :: l₂)) (x :: l₁ ++ l₂)
       FormalSumRel-swap1 x nil l₂ = fsr-refl idp
       FormalSumRel-swap1 x (x₁ :: l₁) l₂ = fsr-trans (fsr-cons x₁ (FormalSumRel-swap1 x l₁ l₂)) (fsr-swap x₁ x (l₁ ++ l₂))
 
@@ -124,6 +124,7 @@ module _ (A : Type i) where
       Word-inv-r nil = fsr-refl idp
       Word-inv-r (x :: l) =
         fsr-trans (FormalSumRel-swap1 (flip x) (x :: l) (Word-flip l)) $
+        fsr-trans (fsr-swap (flip x) x (l ++ Word-flip l)) $
         fsr-trans (fsr-flip x (l ++ Word-flip l)) (Word-inv-r l)
 
     ⊟-inv-r : ∀ g → g ⊞ (⊟ g) == ⊞-unit
@@ -137,8 +138,7 @@ module _ (A : Type i) where
       Word-inv-l nil = fsr-refl idp
       Word-inv-l (x :: l) =
         fsr-trans (FormalSumRel-swap1 x (flip x :: Word-flip l) l) $
-        fsr-trans (fsr-refl (ap (_:: flip x :: Word-flip l ++ l) (! (flip-flip x)))) $
-        fsr-trans (fsr-flip (flip x) (Word-flip l ++ l)) (Word-inv-l l)
+        fsr-trans (fsr-flip x (Word-flip l ++ l)) (Word-inv-l l)
 
     ⊟-inv-l : ∀ g → (⊟ g) ⊞ g == ⊞-unit
     ⊟-inv-l = FormalSum-elim
@@ -184,32 +184,32 @@ module _ {A : Type i} {j} (G : AbelianGroup j) where
     module G = AbelianGroup G
 
     abstract
-      Word-liftᴳ-emap : ∀ f {l₁ l₂}
+      Word-extendᴳ-emap : ∀ f {l₁ l₂}
         → FormalSumRel {A} l₁ l₂
-        → Word-liftᴳ G.grp f l₁ == Word-liftᴳ G.grp f l₂
-      Word-liftᴳ-emap f (fsr-refl idp) = idp
-      Word-liftᴳ-emap f (fsr-trans fsr fsr₁) = (Word-liftᴳ-emap f fsr) ∙ (Word-liftᴳ-emap f fsr₁)
-      Word-liftᴳ-emap f (fsr-cons x fsr) = ap (G.comp (PlusMinus-liftᴳ G.grp f x)) (Word-liftᴳ-emap f fsr)
-      Word-liftᴳ-emap f (fsr-swap x₁ x₂ l) =
-          ! (G.assoc (PlusMinus-liftᴳ G.grp f x₁) (PlusMinus-liftᴳ G.grp f x₂) (Word-liftᴳ G.grp f l))
-        ∙ ap (λ g → G.comp g (Word-liftᴳ G.grp f l)) (G.comm (PlusMinus-liftᴳ G.grp f x₁) (PlusMinus-liftᴳ G.grp f x₂))
-        ∙ G.assoc (PlusMinus-liftᴳ G.grp f x₂) (PlusMinus-liftᴳ G.grp f x₁) (Word-liftᴳ G.grp f l)
-      Word-liftᴳ-emap f (fsr-flip (inl x) l) =
-          ! (G.assoc (G.inv (f x)) (f x) (Word-liftᴳ G.grp f l))
-        ∙ ap (λ g → G.comp g (Word-liftᴳ G.grp f l)) (G.inv-l (f x)) ∙ G.unit-l _
-      Word-liftᴳ-emap f (fsr-flip (inr x) l) =
-          ! (G.assoc (f x) (G.inv (f x)) (Word-liftᴳ G.grp f l))
-        ∙ ap (λ g → G.comp g (Word-liftᴳ G.grp f l)) (G.inv-r (f x)) ∙ G.unit-l _
+        → Word-extendᴳ G.grp f l₁ == Word-extendᴳ G.grp f l₂
+      Word-extendᴳ-emap f (fsr-refl idp) = idp
+      Word-extendᴳ-emap f (fsr-trans fsr fsr₁) = (Word-extendᴳ-emap f fsr) ∙ (Word-extendᴳ-emap f fsr₁)
+      Word-extendᴳ-emap f (fsr-cons x fsr) = ap (G.comp (PlusMinus-extendᴳ G.grp f x)) (Word-extendᴳ-emap f fsr)
+      Word-extendᴳ-emap f (fsr-swap x₁ x₂ l) =
+          ! (G.assoc (PlusMinus-extendᴳ G.grp f x₁) (PlusMinus-extendᴳ G.grp f x₂) (Word-extendᴳ G.grp f l))
+        ∙ ap (λ g → G.comp g (Word-extendᴳ G.grp f l)) (G.comm (PlusMinus-extendᴳ G.grp f x₁) (PlusMinus-extendᴳ G.grp f x₂))
+        ∙ G.assoc (PlusMinus-extendᴳ G.grp f x₂) (PlusMinus-extendᴳ G.grp f x₁) (Word-extendᴳ G.grp f l)
+      Word-extendᴳ-emap f (fsr-flip (inl x) l) =
+          ! (G.assoc (f x) (G.inv (f x)) (Word-extendᴳ G.grp f l))
+        ∙ ap (λ g → G.comp g (Word-extendᴳ G.grp f l)) (G.inv-r (f x)) ∙ G.unit-l _
+      Word-extendᴳ-emap f (fsr-flip (inr x) l) =
+          ! (G.assoc (G.inv (f x)) (f x) (Word-extendᴳ G.grp f l))
+        ∙ ap (λ g → G.comp g (Word-extendᴳ G.grp f l)) (G.inv-l (f x)) ∙ G.unit-l _
 
-  FreeAbelianGroup-lift : (A → G.El) → (FreeAbelianGroup A →ᴳ G.grp)
-  FreeAbelianGroup-lift f = record {
-    f = FormalSum-rec G.El-level (Word-liftᴳ G.grp f)
-          (λ r → Word-liftᴳ-emap f r);
+  FreeAbelianGroup-extend : (A → G.El) → (FreeAbelianGroup A →ᴳ G.grp)
+  FreeAbelianGroup-extend f = record {
+    f = FormalSum-rec G.El-level (Word-extendᴳ G.grp f)
+          (λ r → Word-extendᴳ-emap f r);
     pres-comp =
       FormalSum-elim (λ _ → Π-is-set λ _ → =-preserves-set G.El-level)
         (λ l₁ → FormalSum-elim
           (λ _ → =-preserves-set G.El-level)
-          (λ l₂ → Word-liftᴳ-++ G.grp f l₁ l₂)
+          (λ l₂ → Word-extendᴳ-++ G.grp f l₁ l₂)
           (λ _ → prop-has-all-paths-↓ (G.El-level _ _)))
         (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → G.El-level _ _))}
 
@@ -220,24 +220,24 @@ module _ {A : Type i} {j} (G : AbelianGroup j) where
       f* a = f fs[ inl a :: nil ]
 
       abstract
-        PlusMinus-lift-hom : ∀ x → PlusMinus-liftᴳ G.grp f* x == f fs[ x :: nil ]
-        PlusMinus-lift-hom (inl x) = idp
-        PlusMinus-lift-hom (inr x) = ! $ pres-inv fs[ inl x :: nil ]
+        PlusMinus-extend-hom : ∀ x → PlusMinus-extendᴳ G.grp f* x == f fs[ x :: nil ]
+        PlusMinus-extend-hom (inl x) = idp
+        PlusMinus-extend-hom (inr x) = ! $ pres-inv fs[ inl x :: nil ]
 
-        Word-lift-hom : ∀ l → Word-liftᴳ G.grp f* l == f fs[ l ]
-        Word-lift-hom nil = ! pres-ident
-        Word-lift-hom (x :: l) = ap2 G.comp (PlusMinus-lift-hom x) (Word-lift-hom l) ∙ ! (pres-comp _ _)
+        Word-extend-hom : ∀ l → Word-extendᴳ G.grp f* l == f fs[ l ]
+        Word-extend-hom nil = ! pres-ident
+        Word-extend-hom (x :: l) = ap2 G.comp (PlusMinus-extend-hom x) (Word-extend-hom l) ∙ ! (pres-comp _ _)
     open Lemma
 
-  FreeAbelianGroup-lift-is-equiv : is-equiv FreeAbelianGroup-lift
-  FreeAbelianGroup-lift-is-equiv = is-eq _ from to-from from-to where
-    to = FreeAbelianGroup-lift
+  FreeAbelianGroup-extend-is-equiv : is-equiv FreeAbelianGroup-extend
+  FreeAbelianGroup-extend-is-equiv = is-eq _ from to-from from-to where
+    to = FreeAbelianGroup-extend
     from = f*
 
     to-from : ∀ h → to (from h) == h
     to-from h = group-hom= $ λ= $ FormalSum-elim
       (λ _ → =-preserves-set G.El-level)
-      (λ l → Word-lift-hom h l)
+      (λ l → Word-extend-hom h l)
       (λ _ → prop-has-all-paths-↓ (G.El-level _ _))
 
     from-to : ∀ f → from (to f) == f

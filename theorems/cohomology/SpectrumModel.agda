@@ -4,7 +4,7 @@ open import HoTT
 open import cohomology.SuspAdjointLoopIso
 open import cohomology.WithCoefficients
 open import cohomology.Theory
-open import cohomology.Exactness
+open import groups.Exactness
 open import cohomology.Choice
 
 {- A spectrum (family (Eₙ | n : ℤ) such that ΩEₙ₊₁ = Eₙ)

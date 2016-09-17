@@ -6,7 +6,7 @@ open import lib.types.Pi
 open import lib.types.Sigma
 open import lib.types.Truncation
 open import lib.groups.GroupProduct
-open import lib.groups.Homomorphisms
+open import lib.groups.Homomorphism
 
 module lib.groups.TruncationGroup where
 

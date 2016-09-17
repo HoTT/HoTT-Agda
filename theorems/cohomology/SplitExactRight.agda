@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import cohomology.Exactness
+open import groups.Exactness
 open import homotopy.FunctionOver
 
 {- Splitting Lemma - Right Split

@@ -32,24 +32,28 @@ module _ {A : Type i} where
   Word-flip : Word A → Word A
   Word-flip = map flip
 
+  Word-flip-flip : ∀ w → Word-flip (Word-flip w) == w
+  Word-flip-flip nil = idp
+  Word-flip-flip (x :: l) = ap2 _::_ (flip-flip x) (Word-flip-flip l)
+
 module _ {A : Type i} {j} (G : Group j) where
   private
     module G = Group G
 
-  PlusMinus-liftᴳ : (A → G.El) → (PlusMinus A → G.El)
-  PlusMinus-liftᴳ f (inl a) = f a
-  PlusMinus-liftᴳ f (inr a) = G.inv (f a)
+  PlusMinus-extendᴳ : (A → G.El) → (PlusMinus A → G.El)
+  PlusMinus-extendᴳ f (inl a) = f a
+  PlusMinus-extendᴳ f (inr a) = G.inv (f a)
 
-  Word-liftᴳ : (A → G.El) → (Word A → G.El)
-  Word-liftᴳ f = foldr G.comp G.ident ∘ map (PlusMinus-liftᴳ f)
-  
+  Word-extendᴳ : (A → G.El) → (Word A → G.El)
+  Word-extendᴳ f = foldr G.comp G.ident ∘ map (PlusMinus-extendᴳ f)
+
   abstract
-    Word-liftᴳ-++ : ∀ f l₁ l₂
-      → Word-liftᴳ f (l₁ ++ l₂) == G.comp (Word-liftᴳ f l₁) (Word-liftᴳ f l₂)
-    Word-liftᴳ-++ f nil l₂ = ! $ G.unit-l _
-    Word-liftᴳ-++ f (x :: l₁) l₂ =
-        ap (G.comp (PlusMinus-liftᴳ f x)) (Word-liftᴳ-++ f l₁ l₂)
-      ∙ ! (G.assoc (PlusMinus-liftᴳ f x) (Word-liftᴳ f l₁)  (Word-liftᴳ f l₂))
+    Word-extendᴳ-++ : ∀ f l₁ l₂
+      → Word-extendᴳ f (l₁ ++ l₂) == G.comp (Word-extendᴳ f l₁) (Word-extendᴳ f l₂)
+    Word-extendᴳ-++ f nil l₂ = ! $ G.unit-l _
+    Word-extendᴳ-++ f (x :: l₁) l₂ =
+        ap (G.comp (PlusMinus-extendᴳ f x)) (Word-extendᴳ-++ f l₁ l₂)
+      ∙ ! (G.assoc (PlusMinus-extendᴳ f x) (Word-extendᴳ f l₁)  (Word-extendᴳ f l₂))
 
   -- The following six functions prove things like if [x ∷ v ≡ y ∷ w],
   -- then [x ≡ y].

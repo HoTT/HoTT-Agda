@@ -3,7 +3,7 @@
 open import lib.Base
 open import lib.PathGroupoid
 open import lib.PathFunctor
-open import lib.Equivalences
+open import lib.Equivalence
 open import lib.PathOver
 
 module lib.Univalence where

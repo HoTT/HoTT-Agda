@@ -1,9 +1,9 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import cohomology.Exactness
+open import groups.Exactness
 open import homotopy.FunctionOver
-open import cohomology.ProductRepr
+open import groups.ProductRepr
 open import cohomology.Theory
 open import cohomology.WedgeCofiber
 

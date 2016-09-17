@@ -2,7 +2,7 @@
 
 open import lib.Basics
 open import lib.NType2
-open import lib.Equivalences2
+open import lib.Equivalence2
 open import lib.types.Unit
 open import lib.types.Nat
 open import lib.types.Pi
