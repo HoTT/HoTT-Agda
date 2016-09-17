@@ -339,10 +339,6 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
       reduce-emap (qwr-cons x qwr) = ap (rw-cons x) (reduce-emap qwr)
       reduce-emap (qwr-flip x w) = rw-cons-cons-flip x (reduce w)
 
-      reduce-++ : ∀ w₁ w₂ → reduce (w₁ ++ w₂) == rw-++' w₁ (reduce w₂)
-      reduce-++ nil _ = idp
-      reduce-++ (x :: w₁) w₂ = ap (rw-cons x) (reduce-++ w₁ w₂)
-
     to = GroupHom.f ReducedWord-to-FreeGroup
 
     from : QuotWord A → ReducedWord
@@ -356,13 +352,13 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
         qwr-trans (qwr-cons x (QuotWordRel-reduce w)) $
         uncurry (QuotWordRel-cons x) (reduce w)
 
-    to-from : ∀ qw → to (from qw) == qw
-    to-from = QuotWord-elim (λ _ → =-preserves-set QuotWord-is-set)
-      (λ w → ! $ quot-rel $ QuotWordRel-reduce w)
-      (λ _ → prop-has-all-paths-↓ (QuotWord-is-set _ _))
+      to-from : ∀ qw → to (from qw) == qw
+      to-from = QuotWord-elim (λ _ → =-preserves-set QuotWord-is-set)
+        (λ w → ! $ quot-rel $ QuotWordRel-reduce w)
+        (λ _ → prop-has-all-paths-↓ (QuotWord-is-set _ _))
 
-    from-to : ∀ rw → from (to rw) == rw
-    from-to = uncurry rw-++-unit-r'
+      from-to : ∀ rw → from (to rw) == rw
+      from-to = uncurry rw-++-unit-r'
 
   ReducedWord-iso-FreeGroup : ReducedWord-group ≃ᴳ FreeGroup A
   ReducedWord-iso-FreeGroup = ReducedWord-to-FreeGroup , is-eq to from to-from from-to
