@@ -122,6 +122,7 @@ record Group i : Type (lsucc i) where
     El-level : has-level 0 El
     group-struct : GroupStructure El
   open GroupStructure group-struct public
+  El-is-set = El-level
 
 Group₀ : Type (lsucc lzero)
 Group₀ = Group lzero

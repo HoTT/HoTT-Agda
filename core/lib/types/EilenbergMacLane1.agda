@@ -104,13 +104,13 @@ module EM₁ {i} (G : Group i) where
     comp-equiv-id : comp-equiv G.ident == ide G.El
     comp-equiv-id =
       pair= (λ= G.unit-r)
-            (prop-has-all-paths-↓ {B = is-equiv} (is-equiv-is-prop $ idf G.El))
+            (prop-has-all-paths-↓ {B = is-equiv} is-equiv-is-prop)
 
     comp-equiv-comp : (g₁ g₂ : G.El) → comp-equiv (G.comp g₁ g₂)
                       == (comp-equiv g₂ ∘e comp-equiv g₁)
     comp-equiv-comp g₁ g₂ =
       pair= (λ= (λ x → ! (G.assoc x g₁ g₂)))
-            (prop-has-all-paths-↓ {B = is-equiv} (is-equiv-is-prop _))
+            (prop-has-all-paths-↓ {B = is-equiv} is-equiv-is-prop)
 
     Ω-group : Group (lsucc i)
     Ω-group = Ω^S-group 0

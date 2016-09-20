@@ -37,7 +37,6 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k}
   post∘-equiv : (C → A) ≃ (C → B)
   post∘-equiv = (_ , post∘-is-equiv (snd e))
 
-
 is-contr-map : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
   → Type (lmax i j)
 is-contr-map {A = A} {B = B} f = (y : B) → is-contr (Σ A (λ x → f x == y))
@@ -45,7 +44,7 @@ is-contr-map {A = A} {B = B} f = (y : B) → is-contr (Σ A (λ x → f x == y))
 equiv-is-contr-map : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
   → (is-equiv f → is-contr-map f)
 equiv-is-contr-map e y =
-   equiv-preserves-level (Σ-emap-l (λ z → z == y) (_ , e) ⁻¹) (pathto-is-contr y)
+   equiv-preserves-level (Σ-emap-l (_== y) (_ , e) ⁻¹) (pathto-is-contr y)
 
 contr-map-is-equiv : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
   → (is-contr-map f → is-equiv f)
@@ -121,15 +120,18 @@ rinv-and-rcoh-eqv-is-equiv {h = h} = equiv f g (λ _ → idp) (λ _ → idp)
         g : is-equiv h → Σ (rinv h) (rcoh h)
         g t = ((is-equiv.g t , is-equiv.f-g t) , (is-equiv.g-f t , is-equiv.adj t))
 
-is-equiv-is-prop : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
+is-equiv-is-prop : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
   → is-prop (is-equiv f)
-is-equiv-is-prop _ = inhab-to-contr-is-prop $ λ e →
+is-equiv-is-prop = inhab-to-contr-is-prop λ e →
   equiv-preserves-level rinv-and-rcoh-eqv-is-equiv
     (Σ-level (equiv-rinv-is-contr e) (equiv-rcoh-is-contr e))
 
+is-equiv-prop : ∀ {i j} {A : Type i} {B : Type j}
+  → SubtypeProp (A → B) (lmax i j)
+is-equiv-prop = is-equiv , λ f → is-equiv-is-prop
+
 ∘e-unit-r : ∀ {i} {A B : Type i} (e : A ≃ B) → (e ∘e ide A) == e
-∘e-unit-r e =
-  pair= idp (prop-has-all-paths (is-equiv-is-prop (fst e)) _ _)
+∘e-unit-r e = pair= idp (prop-has-all-paths is-equiv-is-prop _ _)
 
 ua-∘e : ∀ {i} {A B : Type i}
   (e₁ : A ≃ B) {C : Type i} (e₂ : B ≃ C) → ua (e₂ ∘e e₁) == ua e₁ ∙ ua e₂

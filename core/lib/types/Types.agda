@@ -37,6 +37,7 @@ open import lib.types.SetQuotient public
 open import lib.types.Sigma public
 open import lib.types.Smash public
 open import lib.types.Span public
+open import lib.types.Subtype public
 open import lib.types.Suspension public
 open import lib.types.TLevel public
 open import lib.types.Torus public

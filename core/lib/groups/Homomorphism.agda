@@ -2,12 +2,15 @@
 
 open import lib.Basics
 open import lib.Equivalence2
+open import lib.Function2
 open import lib.NType2
 open import lib.types.Group
 open import lib.types.Pi
-open import lib.types.Sigma
-open import lib.types.Truncation
 open import lib.types.Pointed
+open import lib.types.Sigma
+open import lib.types.Subtype
+open import lib.types.Truncation
+open import lib.groups.SubgroupProp
 
 module lib.groups.Homomorphism where
 
@@ -19,6 +22,17 @@ preserves-comp : ∀ {i j} {A : Type i} {B : Type j}
   (A-comp : A → A → A) (B-comp : B → B → B) (f : A → B)
   → Type (lmax i j)
 preserves-comp Ac Bc f = ∀ a₁ a₂ → f (Ac a₁ a₂) == Bc (f a₁) (f a₂)
+
+preserves-comp-is-prop : ∀ {i j} {A : Type i} {B : Type j}
+  (pB : is-set B) (A-comp : A → A → A) (B-comp : B → B → B)
+  → (f : A → B) → is-prop (preserves-comp A-comp B-comp f)
+preserves-comp-is-prop pB Ac Bc f = Π-is-prop λ _ → Π-is-prop λ _ → pB _ _
+
+preserves-comp-prop : ∀ {i j} {A : Type i} {B : Type j}
+  (pB : is-set B) (A-comp : A → A → A) (B-comp : B → B → B)
+  → SubtypeProp (A → B) (lmax i j)
+preserves-comp-prop pB Ac Bc =
+  preserves-comp Ac Bc , preserves-comp-is-prop pB Ac Bc
 
 record GroupStructureHom {i j} {GEl : Type i} {HEl : Type j}
   (GS : GroupStructure GEl) (HS : GroupStructure HEl) : Type (lmax i j) where
@@ -103,8 +117,8 @@ inv-hom G G-abelian = group-hom
 abstract
   group-hom= : ∀ {i j} {G : Group i} {H : Group j} {φ ψ : G →ᴳ H}
     → GroupHom.f φ == GroupHom.f ψ → φ == ψ
-  group-hom= {H = H} p = ap (uncurry group-hom) $
-    Subtype=-out (Π-level (λ _ → Π-level (λ _ → Group.El-level H _ _))) p
+  group-hom= {G = G} {H = H} p = ap (uncurry group-hom) $
+    Subtype=-out (preserves-comp-prop (Group.El-level H) (Group.comp G) (Group.comp H)) p
 
   group-hom=-↓ : ∀ {i j k} {A : Type i} {G : A → Group j} {H : A → Group k} {x y : A}
     {p : x == y} {φ : G x →ᴳ H x} {ψ : G y →ᴳ H y}
@@ -115,11 +129,12 @@ abstract
 
 abstract
   GroupHom-level : ∀ {i j} {G : Group i} {H : Group j} → is-set (G →ᴳ H)
-  GroupHom-level {H = H} = equiv-preserves-level
+  GroupHom-level {G = G} {H = H} = equiv-preserves-level
     (equiv (uncurry group-hom) (λ x → GroupHom.f x , GroupHom.pres-comp x)
            (λ _ → idp) (λ _ → idp))
-    (Subtype-level (→-level (Group.El-level H))
-                   (λ _ → Π-level λ _ → Π-level λ _ → Group.El-level H _ _))
+    (Subtype-level
+      (preserves-comp-prop (Group.El-level H) (Group.comp G) (Group.comp H))
+      (→-level (Group.El-is-set H)))
 
 →ᴳ-level = GroupHom-level
 
@@ -156,6 +171,14 @@ inv-hom-natural : ∀ {i j} {G : Group i} {H : Group j}
   (G-abelian : is-abelian G) (H-abelian : is-abelian H) (φ : G →ᴳ H)
   → φ ∘ᴳ inv-hom G G-abelian == inv-hom H H-abelian ∘ᴳ φ
 inv-hom-natural _ _ φ = group-hom= $ λ= $ GroupHom.pres-inv φ
+
+is-injᴳ : ∀ {i j} {G : Group i} {H : Group j}
+  → (G →ᴳ H) → Type (lmax i j)
+is-injᴳ hom = is-inj (GroupHom.f hom)
+
+is-surjᴳ : ∀ {i j} {G : Group i} {H : Group j}
+  → (G →ᴳ H) → Type (lmax i j)
+is-surjᴳ hom = is-surj (GroupHom.f hom)
 
 {-
 Group isomorphisms.
@@ -222,7 +245,7 @@ transportᴳ-equiv B idp = idiso _
 abstract
   group-hom=-to-iso= : ∀ {i j} {G : Group i} {H : Group j} {φ ψ : G ≃ᴳ H}
     → GroupIso.f-hom φ == GroupIso.f-hom ψ → φ == ψ
-  group-hom=-to-iso= p = Subtype=-out (is-equiv-is-prop _) p
+  group-hom=-to-iso= = Subtype=-out (is-equiv-prop ∘sub GroupHom.f)
 
   group-iso= : ∀ {i j} {G : Group i} {H : Group j} {φ ψ : G ≃ᴳ H}
     → GroupIso.f φ == GroupIso.f ψ → φ == ψ
@@ -352,19 +375,41 @@ coeᴳ-β iso = group-hom= $
   ∙ ap coe (El=-β iso)
   ∙ λ= (coe-β (GroupIso.f-equiv iso))
 
--- TODO move this to PropSubgroup?
-{- homomorphism with kernel zero is injective -}
-module _ {i j} {G : Group i} {H : Group j} (φ : (G →ᴳ H)) where
+{- Lemmas and definitions about kernels and images -}
 
+module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
   private
     module G = Group G
     module H = Group H
-    module φ = GroupHom {G = G} {H = H} φ
+    module φ = GroupHom φ
 
-  zero-ker-inj : ((g : G.El) → φ.f g == H.ident → g == G.ident)
-    → ((g₁ g₂ : G.El) → φ.f g₁ == φ.f g₂ → g₁ == g₂)
-  zero-ker-inj f g₁ g₂ p =
-    ! (G.inv-inv g₁) ∙ G.inv-unique-r (G.inv g₁) g₂ (f _ $
+  ker-propᴳ : SubgroupProp G j
+  ker-propᴳ = record {
+    prop = λ g → φ.f g == H.ident;
+    level = λ g → H.El-level _ _;
+    inhab = G.ident , φ.pres-ident;
+    comp-inv-r = λ p₁ p₂
+      → φ.pres-comp _ _
+      ∙ ap2 H.comp p₁ (φ.pres-inv _ ∙ ap H.inv p₂ ∙ H.inv-ident)
+      ∙ H.unit-l _ }
+
+  im-propᴳ : SubgroupProp H (lmax i j)
+  im-propᴳ = record {
+    prop = λ h → Trunc -1 (hfiber φ.f h);
+    level = λ h → Trunc-level;
+    inhab = H.ident , [ G.ident , φ.pres-ident ];
+    comp-inv-r = Trunc-fmap2 (λ {(g₁ , p₁) (g₂ , p₂)
+      → G.comp g₁ (G.inv g₂)
+      , φ.pres-comp g₁ (G.inv g₂)
+      ∙ ap2 H.comp p₁ (φ.pres-inv g₂ ∙ ap H.inv p₂)})}
+
+  has-trivial-kerᴳ : Type (lmax i j)
+  has-trivial-kerᴳ = ker-propᴳ ⊆ᴳ trivial-propᴳ G
+
+  -- any homomorphism with trivial kernel is injective
+  has-trivial-ker-is-injᴳ : has-trivial-kerᴳ → is-injᴳ φ
+  has-trivial-ker-is-injᴳ tk g₁ g₂ p =
+    ! (G.inv-inv g₁) ∙ G.inv-unique-r (G.inv g₁) g₂ (tk _ $
       φ.f (G.comp (G.inv g₁) g₂)
         =⟨ φ.pres-comp (G.inv g₁) g₂ ⟩
       H.comp (φ.f (G.inv g₁)) (φ.f g₂)
@@ -375,44 +420,22 @@ module _ {i j} {G : Group i} {H : Group j} (φ : (G →ᴳ H)) where
         =⟨ H.inv-l (φ.f g₂) ⟩
       H.ident =∎)
 
-{- a surjective and injective homomorphism is an isomorphism -}
-module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
-
-  private
-    module G = Group G
-    module H = Group H
-    module φ = GroupHom {G = G} {H = H} φ
-
-  module _ (inj : (g₁ g₂ : G.El) → φ.f g₁ == φ.f g₂ → g₁ == g₂)
-    (surj : (h : H.El) → Trunc -1 (Σ G.El (λ g → φ.f g == h))) where
-
+  -- a surjective and injective homomorphism is an isomorphism
+  module _ (inj : is-injᴳ φ) (surj : is-surjᴳ φ) where
     private
-      image-prop : (h : H.El) → is-prop (Σ G.El (λ g → φ.f g == h))
+      image-prop : (h : H.El) → is-prop (hfiber φ.f h)
       image-prop h = all-paths-is-prop $ λ {(g₁ , p₁) (g₂ , p₂) →
         pair= (inj g₁ g₂ (p₁ ∙ ! p₂)) (prop-has-all-paths-↓ (H.El-level _ _))}
 
-    surj-inj-is-equiv : is-equiv φ.f
-    surj-inj-is-equiv = contr-map-is-equiv
+    surjᴳ-injᴳ-is-equiv : is-equiv φ.f
+    surjᴳ-injᴳ-is-equiv = contr-map-is-equiv
       (λ h → let (g₁ , p₁) = Trunc-rec (image-prop h) (idf _) (surj h) in
         ((g₁ , p₁) , (λ {(g₂ , p₂) →
           pair= (inj g₁ g₂ (p₁ ∙ ! p₂))
                 (prop-has-all-paths-↓ (H.El-level _ _))})))
 
-    surj-inj-iso : G ≃ᴳ H
-    surj-inj-iso = φ , surj-inj-is-equiv
-
-module _ {i} {G H : Group i} (φ : G →ᴳ H) where
-
-  private
-    module G = Group G
-    module H = Group H
-    module φ = GroupHom {G = G} {H = H} φ
-
-  module _ (inj : (g₁ g₂ : G.El) → φ.f g₁ == φ.f g₂ → g₁ == g₂)
-    (surj : (h : H.El) → Trunc -1 (Σ G.El (λ g → φ.f g == h))) where
-
-    surj-inj-path : G == H
-    surj-inj-path = uaᴳ (surj-inj-iso φ inj surj)
+    surjᴳ-injᴳ-iso : G ≃ᴳ H
+    surjᴳ-injᴳ-iso = φ , surjᴳ-injᴳ-is-equiv
 
 {- two homomorphisms into an abelian group can be composed with
  - the group operation -}

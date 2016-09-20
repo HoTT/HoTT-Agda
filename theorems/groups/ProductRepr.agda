@@ -27,10 +27,8 @@ module ProductRepr {i j}
   (ex₁ : is-exact i₁ j₂) (ex₂ : is-exact i₂ j₁)
   where
 
-  zero-ker : (g : Group.El G)
-    → GroupHom.f (×ᴳ-fanout j₁ j₂) g == Group.ident (H₁ ×ᴳ H₂)
-    → g == Group.ident G
-  zero-ker g q = Trunc-rec (Group.El-level G _ _)
+  fanout-has-trivial-ker : has-trivial-kerᴳ (×ᴳ-fanout j₁ j₂)
+  fanout-has-trivial-ker g q = Trunc-rec (Group.El-level G _ _)
       (lemma g (fst×= q))
       (ktoi ex₁ g (snd×= q))
     where
@@ -55,8 +53,8 @@ module ProductRepr {i j}
     ∙ Group.unit-l H₂ h₂
 
   iso : G ≃ᴳ (H₁ ×ᴳ H₂)
-  iso = surj-inj-iso (×ᴳ-fanout j₁ j₂)
-    (zero-ker-inj (×ᴳ-fanout j₁ j₂) zero-ker)
+  iso = surjᴳ-injᴳ-iso (×ᴳ-fanout j₁ j₂)
+    (has-trivial-ker-is-injᴳ (×ᴳ-fanout j₁ j₂) fanout-has-trivial-ker)
     (λ {(h₁ , h₂) → [ Group.comp G (GroupHom.f i₁ h₁) (GroupHom.f i₂ h₂) ,
                       pair×= (β₁ h₁ h₂) (β₂ h₁ h₂) ]})
 

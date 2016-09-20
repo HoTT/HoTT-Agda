@@ -67,32 +67,48 @@ abstract
   is-set-is-prop : ∀ {i} {A : Type i} → is-prop (is-set A)
   is-set-is-prop = has-level-is-prop
 
-  Subtype-level : ∀ {i j} {n : ℕ₋₂}
-    {A : Type i} {P : A → Type j}
-    → (has-level (S n) A → ((x : A) → is-prop (P x))
-      → has-level (S n) (Σ A P))
-  Subtype-level p q = Σ-level p (λ x → prop-has-level-S (q x))
+{- Subtypes. -}
 
-Subtype= : ∀ {i j} {A : Type i} {P : A → Type j}
-  → (x y : Σ A P) → Type i
-Subtype= x y = fst x == fst y
+module _ {i j} {A : Type i} (P : SubtypeProp A j) where
+  private
+    module P = SubtypeProp P
 
-Subtype=-out : ∀ {i j} {A : Type i} {P : A → Type j} {x y : Σ A P}
-  → is-prop (P (fst y)) → Subtype= x y → x == y
-Subtype=-out nP p = pair= p (prop-has-all-paths-↓ nP)
+  Subtype-level : ∀ {n : ℕ₋₂}
+    → has-level (S n) A
+    → has-level (S n) (Subtype P)
+  Subtype-level p = Σ-level p (λ x → prop-has-level-S (P.level x))
 
-Subtype-∙ : ∀ {i j} {A : Type i} {P : A → Type j} {x y z : Σ A P}
-  (nPy : is-prop (P (fst y))) (nPz : is-prop (P (fst z))) (p : Subtype= x y) (q : Subtype= y z)
-  → (Subtype=-out {x = x} nPy p ∙ Subtype=-out {x = y} nPz q)
-  == Subtype=-out {x = x} {y = z} nPz (p ∙ q)
-Subtype-∙ nPy nPz p q =
-  Subtype=-out nPy p ∙ Subtype=-out nPz q
-    =⟨ Σ-∙ {p = p} {p' = q} (prop-has-all-paths-↓ nPy) (prop-has-all-paths-↓ nPz) ⟩
-  pair= (p ∙ q) (prop-has-all-paths-↓ {p = p} nPy ∙ᵈ prop-has-all-paths-↓ nPz)
-    =⟨ contr-has-all-paths (↓-level nPz) _ (prop-has-all-paths-↓ nPz)
-      |in-ctx pair= (p ∙ q) ⟩
-  Subtype=-out nPz (p ∙ q)
-    =∎
+  Subtype= : (x y : Subtype P) → Type i
+  Subtype= x y = fst x == fst y
+
+  Subtype=-out : ∀ {x y : Subtype P} → Subtype= x y → x == y
+  Subtype=-out p = pair= p (prop-has-all-paths-↓ (P.level _))
+
+  Subtype=-β : {x y : Subtype P} (p : Subtype= x y)
+    → fst= (Subtype=-out {x = x} {y = y} p) == p
+  Subtype=-β idp = fst=-β idp _
+
+  Subtype=-η : {x y : Subtype P} (p : x == y)
+    → Subtype=-out (fst= p) == p
+  Subtype=-η idp = ap (pair= idp)
+    (contr-has-all-paths (P.level _ _ _) _ _)
+
+  Subtype=-econv : (x y : Subtype P) → (Subtype= x y) ≃ (x == y)
+  Subtype=-econv x y = equiv Subtype=-out fst= Subtype=-η Subtype=-β
+
+  abstract
+    Subtype-∙ : ∀ {x y z : Subtype P}
+      (p : Subtype= x y) (q : Subtype= y z)
+      → (Subtype=-out {x} {y} p ∙ Subtype=-out {y} {z} q)
+      == Subtype=-out {x} {z} (p ∙ q)
+    Subtype-∙ {x} {y} {z} p q =
+      Subtype=-out p ∙ Subtype=-out q
+        =⟨ Σ-∙ {p = p} {p' = q} (prop-has-all-paths-↓ (P.level (fst y))) (prop-has-all-paths-↓ (P.level (fst z))) ⟩
+      pair= (p ∙ q) (prop-has-all-paths-↓ {p = p} (P.level (fst y)) ∙ᵈ prop-has-all-paths-↓ (P.level (fst z)))
+        =⟨ contr-has-all-paths (↓-level (P.level (fst z))) _ (prop-has-all-paths-↓ (P.level (fst z)))
+          |in-ctx pair= (p ∙ q) ⟩
+      Subtype=-out (p ∙ q)
+        =∎
 
 -- Groupoids
 
@@ -101,8 +117,11 @@ is-gpd = has-level 1
 
 -- Type of all n-truncated types
 
+has-level-prop : ∀ {i} → ℕ₋₂ → SubtypeProp (Type i) i
+has-level-prop n = has-level n , λ _ → has-level-is-prop
+
 _-Type_ : (n : ℕ₋₂) (i : ULevel) → Type (lsucc i)
-n -Type i = Σ (Type i) (has-level n)
+n -Type i = Subtype (has-level-prop {i} n)
 
 hProp : (i : ULevel) → Type (lsucc i)
 hProp i = -1 -Type i
@@ -124,9 +143,9 @@ abstract
   ≃-level {n = ⟨-2⟩} pA pB =
     ((cst (fst pB) , contr-to-contr-is-equiv _ pA pB)
     , (λ e → pair= (λ= (λ _ → snd pB _))
-                   (from-transp is-equiv _ (fst (is-equiv-is-prop _ _ _)))))
+                   (from-transp is-equiv _ (fst (is-equiv-is-prop _ _)))))
   ≃-level {n = S n} pA pB =
-    Σ-level (→-level pB) (λ _ → prop-has-level-S (is-equiv-is-prop _))
+    Σ-level (→-level pB) (λ _ → prop-has-level-S is-equiv-is-prop)
 
   ≃-is-set : ∀ {i j} {A : Type i} {B : Type j}
             → is-set A → is-set B → is-set (A ≃ B)
@@ -140,35 +159,40 @@ abstract
     → (is-set A → is-set B → is-set (A == B))
   universe-=-is-set = universe-=-level
 
-nType= : ∀ {i} {n : ℕ₋₂} (A B : n -Type i) → Type (lsucc i)
-nType= = Subtype=
+module _ {i} {n} where
+  private
+    prop : SubtypeProp {lsucc i} (Type i) i
+    prop = has-level-prop n
 
-nType=-out : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} → nType= A B → A == B
-nType=-out = Subtype=-out has-level-is-prop
+  nType= : (A B : n -Type i) → Type (lsucc i)
+  nType= = Subtype= prop
+
+  nType=-out : {A B : n -Type i} → nType= A B → A == B
+  nType=-out = Subtype=-out prop
+
+  abstract
+    nType=-β : {A B : n -Type i} (p : nType= A B)
+      → fst= (nType=-out {A = A} {B = B} p) == p
+    nType=-β = Subtype=-β prop
+
+    nType=-η : {A B : n -Type i} (p : A == B)
+      → nType=-out (fst= p) == p
+    nType=-η = Subtype=-η prop
+
+    nType=-econv : (A B : n -Type i) → (nType= A B) ≃ (A == B)
+    nType=-econv = Subtype=-econv prop
+
+    nType-∙ : {A B C : n -Type i}
+      (p : nType= A B) (q : nType= B C)
+      → (nType=-out {A = A} p ∙ nType=-out {A = B} q)
+      == nType=-out {A = A} {B = C} (p ∙ q)
+    nType-∙ = Subtype-∙ prop
 
 abstract
-  nType=-β : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} (p : nType= A B)
-    → fst= (nType=-out {A = A} {B = B} p) == p
-  nType=-β idp = fst=-β idp _
-
-  nType=-η : ∀ {i} {n : ℕ₋₂} {A B : n -Type i} (p : A == B)
-    → nType=-out (fst= p) == p
-  nType=-η {n = n} {A = A} idp = ap (pair= idp)
-    (contr-has-all-paths (has-level-is-prop _ _) _ _)
-
-  nType=-equiv : ∀ {i} {n : ℕ₋₂} (A B : n -Type i) → (nType= A B) ≃ (A == B)
-  nType=-equiv A B = equiv nType=-out fst= nType=-η nType=-β
-
-  nType-∙ : ∀ {i} {n : ℕ₋₂} {A B C : n -Type i}
-    (p : nType= A B) (q : nType= B C)
-    → (nType=-out {A = A} p ∙ nType=-out {A = B} q)
-    == nType=-out {A = A} {B = C} (p ∙ q)
-  nType-∙ = Subtype-∙ has-level-is-prop has-level-is-prop
-
   _-Type-level_ : (n : ℕ₋₂) (i : ULevel)
     → has-level (S n) (n -Type i)
   (n -Type-level i) A B =
-    equiv-preserves-level (nType=-equiv A B)
+    equiv-preserves-level (nType=-econv A B)
                           (universe-=-level (snd A) (snd B))
 
   hProp-is-set : (i : ULevel) → is-set (hProp i)

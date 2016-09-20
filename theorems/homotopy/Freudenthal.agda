@@ -50,8 +50,7 @@ module FreudenthalEquiv
   Codes-mer-is-equiv : (x : X) → is-equiv (Codes-mer x)
   Codes-mer-is-equiv =
     conn-elim (pointed-conn-out X x₀ cX)
-      (λ x' → (is-equiv (Codes-mer x') ,
-               prop-has-level-S (is-equiv-is-prop (Codes-mer x'))))
+      (λ x' → (is-equiv (Codes-mer x') , prop-has-level-S is-equiv-is-prop))
       (λ tt → transport is-equiv (! (Codes-mer-β-r)) (snd $ ide _))
 
   Codes-mer-equiv : (x : X) → Trunc k X ≃ Trunc k X
@@ -61,8 +60,7 @@ module FreudenthalEquiv
   Codes-mer-inv-x₀ =
        ap is-equiv.g (conn-elim-β
           (pointed-conn-out X x₀ cX)
-          (λ x' → (is-equiv (Codes-mer x') ,
-                   prop-has-level-S (is-equiv-is-prop (Codes-mer x'))))
+          (λ x' → (is-equiv (Codes-mer x') , prop-has-level-S is-equiv-is-prop))
           _ unit)
      ∙ lemma (! (Codes-mer-β-r)) (snd $ ide _)
     where lemma : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}

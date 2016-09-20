@@ -16,7 +16,7 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (fst X))
       → ((x : A) → coe p x == coe q x) → p == q
     Type=-ext p q α =
       ! (ua-η p)
-      ∙ ap ua (pair= (λ= α) (prop-has-all-paths-↓ (is-equiv-is-prop (coe q))))
+      ∙ ap ua (Subtype=-out is-equiv-prop (λ= α))
       ∙ ua-η q
 
   open HSS H-X

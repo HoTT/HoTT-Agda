@@ -12,9 +12,6 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
   is-reduced (inr x :: inl y :: w) = (x ≠ y) × is-reduced (inl y :: w)
   is-reduced (inr x :: inr y :: w) = is-reduced (inr y :: w)
 
-  ReducedWord : Type i
-  ReducedWord = Σ (Word A) is-reduced
-
   -- Everything is a set.
 
   A-is-set : is-set A
@@ -43,24 +40,32 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
   Word-is-set : is-set (Word A)
   Word-is-set = dec-eq-is-set Word-has-dec-eq
 
-  is-reduced-is-prop : (w : Word A) → is-prop (is-reduced w)
-  is-reduced-is-prop nil                 = Lift-level Unit-is-prop
-  is-reduced-is-prop (x    :: nil)       = Lift-level Unit-is-prop
-  is-reduced-is-prop (inl x :: inl y :: l) = is-reduced-is-prop (inl y :: l)
-  is-reduced-is-prop (inl x :: inr y :: l) = ×-level (→-is-prop (λ x₁ → λ ())) (is-reduced-is-prop (inr y :: l))
-  is-reduced-is-prop (inr x :: inl y :: l) = ×-level (→-is-prop (λ x₁ → λ ())) (is-reduced-is-prop (inl y :: l))
-  is-reduced-is-prop (inr x :: inr y :: l) = is-reduced-is-prop (inr y :: l)
+  is-reduced-is-prop : {w : Word A} → is-prop (is-reduced w)
+  is-reduced-is-prop {nil}                 = Lift-level Unit-is-prop
+  is-reduced-is-prop {x    :: nil}         = Lift-level Unit-is-prop
+  is-reduced-is-prop {inl x :: inl y :: l} = is-reduced-is-prop {inl y :: l}
+  is-reduced-is-prop {inl x :: inr y :: l} = ×-level (→-is-prop (λ x₁ → λ ())) (is-reduced-is-prop {inr y :: l})
+  is-reduced-is-prop {inr x :: inl y :: l} = ×-level (→-is-prop (λ x₁ → λ ())) (is-reduced-is-prop {inl y :: l})
+  is-reduced-is-prop {inr x :: inr y :: l} = is-reduced-is-prop {inr y :: l}
+
+  is-reduced-prop : SubtypeProp (Word A) i
+  is-reduced-prop = is-reduced , λ w → is-reduced-is-prop {w}
+
+  -- The subtype
+
+  ReducedWord : Type i
+  ReducedWord = Subtype is-reduced-prop
 
   ReducedWord-is-set : is-set ReducedWord
-  ReducedWord-is-set = Subtype-level Word-is-set is-reduced-is-prop
+  ReducedWord-is-set = Subtype-level is-reduced-prop Word-is-set
 
   -- Identifications in [ReducedWord].
 
   ReducedWord= : ReducedWord → ReducedWord → Type i
-  ReducedWord= = Subtype=
+  ReducedWord= = Subtype= is-reduced-prop
 
   ReducedWord=-out : {x y : ReducedWord} → ReducedWord= x y → x == y
-  ReducedWord=-out {x} {y} = Subtype=-out (is-reduced-is-prop (fst y))
+  ReducedWord=-out = Subtype=-out is-reduced-prop
 
   -- The group structure of reduced words
 

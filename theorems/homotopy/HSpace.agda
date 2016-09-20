@@ -33,12 +33,12 @@ module ConnectedHSpace {i} {X : Ptd i} (c : is-connected 0 (fst X))
 
   μ-e-l-is-equiv : (a : A) → is-equiv (λ a' → μ a' a)
   μ-e-l-is-equiv = prop-over-connected {a = e} c
-    (λ a → (is-equiv (λ a' → μ a' a) , is-equiv-is-prop (λ a' → μ a' a)))
+    (λ a → (is-equiv (λ a' → μ a' a) , is-equiv-is-prop))
     (transport! is-equiv (λ= μ-e-r) (idf-is-equiv A))
 
   μ-e-r-is-equiv : (a : A) → is-equiv (μ a)
   μ-e-r-is-equiv = prop-over-connected {a = e} c
-    (λ a → (is-equiv (μ a) , is-equiv-is-prop (μ a)))
+    (λ a → (is-equiv (μ a) , is-equiv-is-prop))
     (transport! is-equiv (λ= μ-e-l) (idf-is-equiv A))
 
   μ-e-l-equiv : A → A ≃ A
