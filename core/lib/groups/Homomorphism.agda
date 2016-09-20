@@ -445,8 +445,8 @@ module _ {i} {G H : Group i} (H-abelian : is-abelian H)
   private
     module G = Group G
     module H = Group H
-    module φ = GroupHom {G = G} {H = H} φ
-    module ψ = GroupHom {G = G} {H = H} ψ
+    module φ = GroupHom φ
+    module ψ = GroupHom ψ
 
   hom-comp : G →ᴳ H
   hom-comp = group-hom
