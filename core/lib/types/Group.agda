@@ -26,8 +26,8 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
     infix 80 _⊙_
     _⊙_ = comp
 
-  cong : El → El → El
-  cong g₁ g₂ = (g₁ ⊙ g₂) ⊙ inv g₁
+  conj : El → El → El
+  conj g₁ g₂ = (g₁ ⊙ g₂) ⊙ inv g₁
 
   abstract
     inv-unique-l : (g h : El) → (g ⊙ h == ident) → inv h == g
@@ -92,14 +92,14 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
       k =∎
 
     {- NOT USED
-    cong-unit-l : ∀ g → cong ident g == g
-    cong-unit-l g = ap2 _⊙_ (unit-l _) inv-ident ∙ unit-r _
+    conj-unit-l : ∀ g → conj ident g == g
+    conj-unit-l g = ap2 _⊙_ (unit-l _) inv-ident ∙ unit-r _
 
-    cong-ident-r : ∀ g → cong g ident == ident
-    cong-ident-r g = ap (_⊙ inv g) (unit-r _) ∙ inv-r g 
+    conj-ident-r : ∀ g → conj g ident == ident
+    conj-ident-r g = ap (_⊙ inv g) (unit-r _) ∙ inv-r g 
 
-    cong-comp-l : ∀ g₁ g₂ g₃ → cong (g₁ ⊙ g₂) g₃ == cong g₁ (cong g₂ g₃)
-    cong-comp-l g₁ g₂ g₃ =
+    conj-comp-l : ∀ g₁ g₂ g₃ → conj (g₁ ⊙ g₂) g₃ == conj g₁ (conj g₂ g₃)
+    conj-comp-l g₁ g₂ g₃ =
       ((g₁ ⊙ g₂) ⊙ g₃) ⊙ inv (g₁ ⊙ g₂)
         =⟨ ap2 _⊙_ (assoc g₁ g₂ g₃) (inv-comp g₁ g₂) ⟩
       (g₁ ⊙ (g₂ ⊙ g₃)) ⊙ (inv g₂ ⊙ inv g₁)
@@ -109,8 +109,8 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
       (g₁ ⊙ ((g₂ ⊙ g₃) ⊙ inv g₂)) ⊙ inv g₁
         =∎
 
-    inv-cong : ∀ g₁ g₂ → inv (cong g₁ g₂) == cong g₁ (inv g₂)
-    inv-cong g₁ g₂ = inv-comp (g₁ ⊙ g₂) (inv g₁)
+    inv-conj : ∀ g₁ g₂ → inv (conj g₁ g₂) == conj g₁ (inv g₂)
+    inv-conj g₁ g₂ = inv-comp (g₁ ⊙ g₂) (inv g₁)
                    ∙ ap2 _⊙_ (inv-inv g₁) (inv-comp g₁ g₂)
                    ∙ ! (assoc g₁ (inv g₂) (inv g₁))
     -}

@@ -47,12 +47,12 @@ is-fullᴳ P = ∀ g → SubgroupProp.prop P g
 
 -- Normal subgroups
 
-is-closed-under-congruence : ∀ {i j} {G : Group i} → SubgroupProp G j → Type (lmax i j)
-is-closed-under-congruence {G = G} P =
-  ∀ g₁ {g₂} → SubgroupProp.prop P g₂ → SubgroupProp.prop P (Group.cong G g₁ g₂)
+is-normal : ∀ {i j} {G : Group i} → SubgroupProp G j → Type (lmax i j)
+is-normal {G = G} P = ∀ g₁ {g₂} → P.prop g₂ → P.prop (Group.conj G g₁ g₂)
+  where module P = SubgroupProp P
 
 NormalSubgroupProp : ∀ {i} (G : Group i) j → Type (lmax i (lsucc j))
-NormalSubgroupProp {i} G j = Σ (SubgroupProp G j) is-closed-under-congruence
+NormalSubgroupProp {i} G j = Σ (SubgroupProp G j) is-normal
 
 module NormalSubgroupProp {i j} {G : Group i} (normal-prop : NormalSubgroupProp G j) where
   private
@@ -62,8 +62,8 @@ module NormalSubgroupProp {i j} {G : Group i} (normal-prop : NormalSubgroupProp 
   subgrp-prop = fst normal-prop
   open SubgroupProp subgrp-prop public
 
-  cong : ∀ g₁ {g₂} → prop g₂ → prop (G.cong g₁ g₂)
-  cong = snd normal-prop
+  conj : is-normal subgrp-prop
+  conj = snd normal-prop
 
   abstract
     comm : ∀ g₁ g₂ → prop (G.comp g₁ g₂) → prop (G.comp g₂ g₁)
@@ -72,19 +72,19 @@ module NormalSubgroupProp {i j} {G : Group i} (normal-prop : NormalSubgroupProp 
       ∙ G.assoc (G.comp g₂ g₁) g₂ (G.inv g₂)
       ∙ ap (G.comp (G.comp g₂ g₁)) (G.inv-r g₂)
       ∙ G.unit-r (G.comp g₂ g₁))
-      (cong g₂ pg₁g₂)
+      (conj g₂ pg₁g₂)
     {- So far this is not used.
-    uncong : ∀ g₁ g₂ → prop (G.cong g₁ g₂) → prop g₂
-    uncong g₁ g₂ pg₁g₂ = transport prop path (cong (G.inv g₁) pg₁g₂) where
-      path : G.cong (G.inv g₁) (G.cong g₁ g₂) == g₂
-      path = ! (G.cong-comp-l (G.inv g₁) g₁ g₂) ∙ ap (λ g → G.cong g g₂) (G.inv-l g₁) ∙ G.cong-unit-l g₂
+    unconj : ∀ g₁ g₂ → prop (G.conj g₁ g₂) → prop g₂
+    unconj g₁ g₂ pg₁g₂ = transport prop path (conj (G.inv g₁) pg₁g₂) where
+      path : G.conj (G.inv g₁) (G.conj g₁ g₂) == g₂
+      path = ! (G.conj-comp-l (G.inv g₁) g₁ g₂) ∙ ap (λ g → G.conj g g₂) (G.inv-l g₁) ∙ G.conj-unit-l g₂
     -}
 
 abstract
   abelian-subgroup-is-normal : ∀ {i j} {G : Group i} (P : SubgroupProp G j)
     → (∀ g₁ g₂ → SubgroupProp.prop P (Group.comp G g₁ g₂)
                → SubgroupProp.prop P (Group.comp G g₂ g₁))
-    → is-closed-under-congruence P
+    → is-normal P
   abelian-subgroup-is-normal {G = G} P P-comm g₁ {g₂} Pg₂ =
     transport! P.prop (G.assoc g₁ g₂ (G.inv g₁)) $
       P-comm (G.comp g₂ (G.inv g₁)) g₁ $
@@ -105,7 +105,7 @@ abstract
   sub-abelian-group-is-normal : ∀ {i j} {G : Group i}
     → (G-is-abelian : is-abelian G)
     → (P : SubgroupProp G j)
-    → is-closed-under-congruence P
+    → is-normal P
   sub-abelian-group-is-normal {G = G} G-is-abelian P =
     abelian-subgroup-is-normal P λ g₁ g₂ Pg₁g₂ → transport P.prop (G.comm g₁ g₂) Pg₁g₂
     where module G = AbelianGroup (G , G-is-abelian)

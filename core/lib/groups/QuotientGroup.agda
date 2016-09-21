@@ -43,7 +43,7 @@ module _ {i j} {G : Group i} (P : NormalSubgroupProp G j) where
             ( ap (_⊙ G.inv g₁) (! $ G.assoc g₁ g₂ (G.inv g₂'))
             ∙ G.assoc (g₁ ⊙ g₂) (G.inv g₂') (G.inv g₁)
             ∙ ap ((g₁ ⊙ g₂) ⊙_) (! $ G.inv-comp g₁ g₂'))
-            (P.cong g₁ pg₂g₂'⁻¹)))
+            (P.conj g₁ pg₂g₂'⁻¹)))
         (λ {g₁} {g₁'} pg₁g₁'⁻¹ → λ= $ SetQuot-elim
           (λ _ → =-preserves-set SetQuotient-level)
           (λ g₂ → quot-rel $ transport! P.prop
