@@ -32,7 +32,7 @@ module _ (n : ℤ) where
     where
     lemma₁ : (x : CEl n (⊙Cof (⊙idf _)))
       → Cid n ⊙LU == CF n (⊙cfcod' (⊙idf _)) x
-    lemma₁ x = ! (itok (C-exact n (⊙idf _)) _ [ x , idp ])
+    lemma₁ x = ! (im-sub-ker (C-exact n (⊙idf _)) _ [ x , idp ])
                ∙ app= (ap GroupHom.f (CF-ident n))
                       (CF n (⊙cfcod' (⊙idf _)) x)
 

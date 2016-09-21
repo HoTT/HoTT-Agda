@@ -42,6 +42,9 @@ trivial-propᴳ G = record {
     ∙ G.unit-r G.ident}
   where module G = Group G
 
+is-fullᴳ : ∀ {i j} {G : Group i} → SubgroupProp G j → Type (lmax i j)
+is-fullᴳ P = ∀ g → SubgroupProp.prop P g
+
 -- Normal subgroups
 
 is-closed-under-congruence : ∀ {i j} {G : Group i} → SubgroupProp G j → Type (lmax i j)

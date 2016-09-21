@@ -1,53 +1,187 @@
 {-# OPTIONS --without-K #-}
 
-open import lib.Basics
-open import lib.NType2
-open import lib.types.Empty
-open import lib.types.Sigma
-open import lib.types.Pi
-open import lib.types.Group
-open import lib.types.Nat
-open import lib.types.Int
-open import lib.types.List
-open import lib.types.SetQuotient
-open import lib.groups.Homomorphisms
+open import HoTT
 
--- TODO 1. Get rid of coeffients.
--- TODO 2. Use another quotient relations without [dec].
--- TODO 3. Define [FormalSum] as an abstract type.
+module groups.CoefficientExtensionality {i} {A : Type i} where
 
-module lib.groups.OldFreeAbelianGroup {i} where
+module _ (dec : has-dec-eq A) where
 
-PreFormalSum : Type i → Type i
-PreFormalSum A = List (ℤ × A)
+  Word-coef : Word A → (A → ℤ)
+  Word-coef nil a = 0
+  Word-coef (inl a' :: w) a with dec a' a
+  Word-coef (inl a' :: w) a | inl a'=a = succ $ Word-coef w a
+  Word-coef (inl a' :: w) a | inr a'≠a = Word-coef w a
+  Word-coef (inr a' :: w) a with dec a' a
+  Word-coef (inr a' :: w) a | inl a'=a = pred $ Word-coef w a
+  Word-coef (inr a' :: w) a | inr a'≠a = Word-coef w a
 
-module _ {A : Type i} where
+  abstract
+    Word-coef-++ : ∀ w₁ w₂ a → Word-coef (w₁ ++ w₂) a
+      == Word-coef w₁ a ℤ+ Word-coef w₂ a
+    Word-coef-++ nil w₂ a = idp
+    Word-coef-++ (inl a' :: w₁) w₂ a with dec a' a
+    Word-coef-++ (inl a' :: w₁) w₂ a | inl a'=a =
+        ap succ (Word-coef-++ w₁ w₂ a)
+      ∙ ! (succ-+ (Word-coef w₁ a) (Word-coef w₂ a))
+    Word-coef-++ (inl a' :: w₁) w₂ a | inr a'≠a = Word-coef-++ w₁ w₂ a
+    Word-coef-++ (inr a' :: w₁) w₂ a with dec a' a
+    Word-coef-++ (inr a' :: w₁) w₂ a | inl a'=a =
+        ap pred (Word-coef-++ w₁ w₂ a)
+      ∙ ! (pred-+ (Word-coef w₁ a) (Word-coef w₂ a))
+    Word-coef-++ (inr a' :: w₁) w₂ a | inr a'≠a = Word-coef-++ w₁ w₂ a
 
-  flip-pre : PreFormalSum A → PreFormalSum A
-  flip-pre = map λ{(z , a) → (ℤ~ z , a)}
+    Word-coef-flip : ∀ w a → Word-coef (Word-flip w) a == ℤ~ (Word-coef w a)
+    Word-coef-flip nil a = idp
+    Word-coef-flip (inl a' :: w) a with dec a' a
+    Word-coef-flip (inl a' :: w) a | inl a'=a =
+        ap pred (Word-coef-flip w a) ∙ ! (ℤ~-succ (Word-coef w a))
+    Word-coef-flip (inl a' :: w) a | inr a'≠a = Word-coef-flip w a
+    Word-coef-flip (inr a' :: w) a with dec a' a
+    Word-coef-flip (inr a' :: w) a | inl a'=a =
+        ap succ (Word-coef-flip w a) ∙ ! (ℤ~-pred (Word-coef w a))
+    Word-coef-flip (inr a' :: w) a | inr a'≠a = Word-coef-flip w a
 
-module _ {A : Type i} (dec : has-dec-eq A) where
+  private
+    abstract
+      FormalSum-coef-rel : {w₁ w₂ : Word A} → FormalSumRel w₁ w₂
+        → ∀ a → Word-coef w₁ a == Word-coef w₂ a
+      FormalSum-coef-rel (fsr-refl p) a = ap (λ w → Word-coef w a) p
+      FormalSum-coef-rel (fsr-trans fwr₁ fwr₂) a = (FormalSum-coef-rel fwr₁ a) ∙ (FormalSum-coef-rel fwr₂ a)
+      FormalSum-coef-rel (fsr-cons x fwr) a =
+          Word-coef-++ (x :: nil) _ a
+        ∙ ap (Word-coef (x :: nil) a ℤ+_) (FormalSum-coef-rel fwr a)
+        ∙ ! (Word-coef-++ (x :: nil) _ a)
+      FormalSum-coef-rel (fsr-swap x y w) a =
+          Word-coef-++ (x :: y :: nil) _ a
+        ∙ ap (_ℤ+ Word-coef w a)
+            ( Word-coef-++ (x :: nil) (y :: nil) a
+            ∙ ℤ+-comm (Word-coef (x :: nil) a) (Word-coef (y :: nil) a)
+            ∙ ! (Word-coef-++ (y :: nil) (x :: nil) a))
+        ∙ ! (Word-coef-++ (y :: x :: nil) _ a)
+      FormalSum-coef-rel (fsr-flip x w) a =
+          Word-coef-++ (x :: flip x :: nil) w a
+        ∙ ap (_ℤ+ Word-coef w a)
+            ( Word-coef-++ (x :: nil) (flip x :: nil) a
+            ∙ ap (Word-coef (x :: nil) a ℤ+_) (Word-coef-flip (x :: nil) a)
+            ∙ ℤ~-inv-r (Word-coef (x :: nil) a) )
+        ∙ ℤ+-unit-l (Word-coef w a)
 
-  coef-pre : PreFormalSum A → (A → ℤ)
-  coef-pre l a = ℤsum $ map fst $ filter (λ{(_ , a') → dec a' a}) l
+  FormalSum-coef : FormalSum A → (A → ℤ)
+  FormalSum-coef = FormalSum-rec (→-is-set ℤ-is-set) Word-coef (λ r → λ= $ FormalSum-coef-rel r)
 
-  -- Extensional equality
-  formal-sum-rel : Rel (PreFormalSum A) i
-  formal-sum-rel l₁ l₂ = ∀ a → coef-pre l₁ a == coef-pre l₂ a
+  -- Theorem : if coef w a == 0 then FormalSumRel w nil
 
-  -- The quotient
-  FormalSum : Type i
-  FormalSum = SetQuotient formal-sum-rel
+  private
+    exp : A → ℤ → Word A
+    exp a (pos 0) = nil
+    exp a (pos (S n)) = inl a :: exp a (pos n)
+    exp a (negsucc 0) = inr a :: nil
+    exp a (negsucc (S n)) = inr a :: exp a (negsucc n)
 
-  -- Properties of [coef-pre]
-  coef-pre-++ : ∀ l₁ l₂ a
-    → coef-pre (l₁ ++ l₂) a == coef-pre l₁ a ℤ+ coef-pre l₂ a
-  coef-pre-++ nil              l₂ a = idp
-  coef-pre-++ ((z , a') :: l₁) l₂ a with dec a' a
-  ... | inl _ = ap (z ℤ+_) (coef-pre-++ l₁ l₂ a)
-              ∙ ! (ℤ+-assoc z (coef-pre l₁ a) (coef-pre l₂ a))
-  ... | inr _ = coef-pre-++ l₁ l₂ a
+    exp-succ : ∀ a z → FormalSumRel (inl a :: exp a z) (exp a (succ z))
+    exp-succ a (pos _) = fsr-refl idp
+    exp-succ a (negsucc 0) = fsr-flip (inl a) nil
+    exp-succ a (negsucc (S n)) = fsr-flip (inl a) (exp a (negsucc n))
 
+    exp-pred : ∀ a z → FormalSumRel (inr a :: exp a z) (exp a (pred z))
+    exp-pred a (pos O) = fsr-refl idp
+    exp-pred a (pos (S n)) = fsr-flip (inr a) (exp a (pos n))
+    exp-pred a (negsucc n) = fsr-refl idp
+
+    Word-coef-inl-eq : ∀ {a b} (p : b == a) w
+      → Word-coef (inl b :: w) a == succ (Word-coef w a)
+    Word-coef-inl-eq {a} {b} p w with dec b a
+    Word-coef-inl-eq {a} {b} p w | inl _ = idp
+    Word-coef-inl-eq {a} {b} p w | inr p⊥ = ⊥-rec (p⊥ p)
+
+    Word-coef-inr-eq : ∀ {a b} (p : b == a) w
+      → Word-coef (inr b :: w) a == pred (Word-coef w a)
+    Word-coef-inr-eq {a} {b} p w with dec b a
+    Word-coef-inr-eq {a} {b} p w | inl _ = idp
+    Word-coef-inr-eq {a} {b} p w | inr p⊥ = ⊥-rec (p⊥ p)
+
+    Word-coef-inl-neq : ∀ {a b} (p : b ≠ a) w
+      → Word-coef (inl b :: w) a == Word-coef w a
+    Word-coef-inl-neq {a} {b} p⊥ w with dec b a
+    Word-coef-inl-neq {a} {b} p⊥ w | inl p = ⊥-rec (p⊥ p)
+    Word-coef-inl-neq {a} {b} p⊥ w | inr _ = idp
+
+    Word-coef-inr-neq : ∀ {a b} (p : b ≠ a) w
+      → Word-coef (inr b :: w) a == Word-coef w a
+    Word-coef-inr-neq {a} {b} p⊥ w with dec b a
+    Word-coef-inr-neq {a} {b} p⊥ w | inl p = ⊥-rec (p⊥ p)
+    Word-coef-inr-neq {a} {b} p⊥ w | inr _ = idp
+
+    Word-coef-exp : ∀ {a b} (p : b == a) z → Word-coef (exp b z) a == z
+    Word-coef-exp p (pos 0) = idp
+    Word-coef-exp p (pos (S n)) =
+      Word-coef-inl-eq p (exp _ (pos n)) ∙ ap succ (Word-coef-exp p (pos n))
+    Word-coef-exp p (negsucc 0) = Word-coef-inr-eq p _
+    Word-coef-exp p (negsucc (S n)) =
+      Word-coef-inr-eq p (exp _ (negsucc n)) ∙ ap pred (Word-coef-exp p (negsucc n))
+
+    -- XXX Maybe there is another way to prove this.
+    record CollectSplitIH (a : A) {n : ℕ} (w : Word A) (len : length w == n) : Type i where
+      field
+        left-exponent : ℤ
+        left-captures-all : Word-coef w a == left-exponent
+        right-list : Word A
+        right-shorter : length right-list ≤ n
+        fsr : FormalSumRel w (exp a left-exponent ++ right-list)
+        pres-coef : ∀ a' → Word-coef (exp a left-exponent) a' ℤ+ Word-coef right-list a'
+                        == Word-coef w a'
+
+{-
+    abstract
+      collect-split : ∀ a {n} (v : Vector (ℤ × A) n) → CollectSplitIH a v
+      collect-split a (nil , idp) = record {
+        left-exponent = 0;
+        left-captures-all = idp;
+        right = nil;
+        right-shorter = inl idp;
+        fsr = fsr-refl idp;
+        pres-coef = λ _ → idp}
+      collect-split a (inl b :: w , idp) with dec b a
+      ... | inl b=a = record {
+        left-exponent = succ left-exponent;
+        left-captures-all = Word-coef-++ (inl b :: nil) w a
+          ∙ ap (Word-coef (inl b :: nil) a ℤ+_) left-captures-all
+          ∙ ! (coef-pre-++ dec l[ z , a ] l a₀);
+        right = right;
+        right-shorter = ≤-trans right-shorter (inr ltS);
+        pres-sum-of-exp = G.assoc (exp (f a) z) (sum-of-exp f left) (sum-of-exp f right)
+                        ∙ ap (G.comp (exp (f a) z)) pres-sum-of-exp;
+        pres-coef = λ a'
+          → ap (_ℤ+ coef-pre dec right a') (coef-pre-++ dec l[ z , a ] left a')
+          ∙ ℤ+-assoc (coef-pre dec l[ z , a ] a') (coef-pre dec left a') (coef-pre dec right a')
+          ∙ ap (coef-pre dec l[ z , a ] a' ℤ+_) (pres-coef a')
+          ∙ ! (coef-pre-++ dec l[ z , a ] l a')}
+        where open CollectSplitIH (collect-split a (w , idp))
+      ... | inr p⊥ = record {
+        left = left;
+        left-same-base = left-same-base;
+        left-captures-all = left-captures-all';
+        right = (z , a) :: right;
+        right-shorter = ≤-ap-S right-shorter;
+        pres-sum-of-exp = ! (G.assoc (sum-of-exp f left) (exp (f a) z) (sum-of-exp f right))
+          ∙ ap (λ g → G.comp g (sum-of-exp f right)) (G-is-abelian (sum-of-exp f left) (exp (f a) z))
+          ∙ G.assoc (exp (f a) z) (sum-of-exp f left) (sum-of-exp f right)
+          ∙ ap (G.comp (exp (f a) z)) pres-sum-of-exp;
+        pres-coef = λ a'
+          → ap (coef-pre dec left a' ℤ+_) (coef-pre-++ dec l[ z , a ] right a')
+          ∙ ! (ℤ+-assoc (coef-pre dec left a') (coef-pre dec l[ z , a ] a') (coef-pre dec right a'))
+          ∙ ap (_ℤ+ coef-pre dec right a') (ℤ+-comm (coef-pre dec left a') (coef-pre dec l[ z , a ] a'))
+          ∙ ℤ+-assoc (coef-pre dec l[ z , a ] a') (coef-pre dec left a') (coef-pre dec right a')
+          ∙ ap (coef-pre dec l[ z , a ] a' ℤ+_) (pres-coef a')
+          ∙ ! (coef-pre-++ dec l[ z , a ] l a')}
+        where
+          open CollectSplitIH (collect-split f a₀ (l , idp))
+          left-captures-all' : coef-pre dec left a₀ == coef-pre dec ((z , a) :: l) a₀
+          left-captures-all' with dec a a₀
+          ... | inr _ = left-captures-all
+          ... | inl p = ⊥-rec (p⊥ p)
+-}
+{-
   coef-pre-matching : ∀ z {a x} (p : x == a) l
     → coef-pre ((z , x) :: l) a == z ℤ+ coef-pre l a
   coef-pre-matching z {a} {x} p l with dec x a
@@ -465,3 +599,4 @@ module _ {A : Type i} {dec : has-dec-eq A} where
 
       from-to : ∀ f → from (to f) == f
       from-to f = λ= λ a → G.unit-r (f a)
+-}

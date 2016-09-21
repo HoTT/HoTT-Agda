@@ -47,25 +47,25 @@ module _ {A : Type i} where
   open FormalSumRec public renaming (f to FormalSum-rec)
 
 module _ (A : Type i) where
+  abstract
+    FormalSumRel-cong-++-l :
+      ∀ {l₁ l₁'} → FormalSumRel {A} l₁ l₁'
+      → (l₂ : Word A)
+      → FormalSumRel (l₁ ++ l₂) (l₁' ++ l₂)
+    FormalSumRel-cong-++-l (fsr-refl idp) l₂ = fsr-refl idp
+    FormalSumRel-cong-++-l (fsr-trans fsr₁ fsr₂) l₂ = fsr-trans (FormalSumRel-cong-++-l fsr₁ l₂) (FormalSumRel-cong-++-l fsr₂ l₂)
+    FormalSumRel-cong-++-l (fsr-cons x fsr₁) l₂ = fsr-cons x (FormalSumRel-cong-++-l fsr₁ l₂)
+    FormalSumRel-cong-++-l (fsr-swap x₁ x₂ l₁) l₂ = fsr-swap x₁ x₂ (l₁ ++ l₂)
+    FormalSumRel-cong-++-l (fsr-flip x₁ l₁) l₂ = fsr-flip x₁ (l₁ ++ l₂)
+
+    FormalSumRel-cong-++-r :
+      ∀ (l₁ : Word A)
+      → ∀ {l₂ l₂'} → FormalSumRel l₂ l₂'
+      → FormalSumRel (l₁ ++ l₂) (l₁ ++ l₂')
+    FormalSumRel-cong-++-r nil fsr₂ = fsr₂
+    FormalSumRel-cong-++-r (x :: l₁) fsr₂ = fsr-cons x (FormalSumRel-cong-++-r l₁ fsr₂)
+
   private
-    abstract
-      FormalSumRel-cong-++-l :
-        ∀ {l₁ l₁'} → FormalSumRel {A} l₁ l₁'
-        → (l₂ : Word A)
-        → FormalSumRel (l₁ ++ l₂) (l₁' ++ l₂)
-      FormalSumRel-cong-++-l (fsr-refl idp) l₂ = fsr-refl idp
-      FormalSumRel-cong-++-l (fsr-trans fsr₁ fsr₂) l₂ = fsr-trans (FormalSumRel-cong-++-l fsr₁ l₂) (FormalSumRel-cong-++-l fsr₂ l₂)
-      FormalSumRel-cong-++-l (fsr-cons x fsr₁) l₂ = fsr-cons x (FormalSumRel-cong-++-l fsr₁ l₂)
-      FormalSumRel-cong-++-l (fsr-swap x₁ x₂ l₁) l₂ = fsr-swap x₁ x₂ (l₁ ++ l₂)
-      FormalSumRel-cong-++-l (fsr-flip x₁ l₁) l₂ = fsr-flip x₁ (l₁ ++ l₂)
-
-      FormalSumRel-cong-++-r :
-        ∀ (l₁ : Word A)
-        → ∀ {l₂ l₂'} → FormalSumRel l₂ l₂'
-        → FormalSumRel (l₁ ++ l₂) (l₁ ++ l₂')
-      FormalSumRel-cong-++-r nil fsr₂ = fsr₂
-      FormalSumRel-cong-++-r (x :: l₁) fsr₂ = fsr-cons x (FormalSumRel-cong-++-r l₁ fsr₂)
-
     infixl 80 _⊞_
     _⊞_ : FormalSum A → FormalSum A → FormalSum A
     _⊞_ = FormalSum-rec
@@ -115,11 +115,13 @@ module _ (A : Type i) where
         (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → FormalSum-is-set _ _))
       (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → Π-is-prop λ _ → FormalSum-is-set _ _)
 
-    abstract
-      FormalSumRel-swap1 : ∀ x l₁ l₂ → FormalSumRel {A} (l₁ ++ (x :: l₂)) (x :: l₁ ++ l₂)
-      FormalSumRel-swap1 x nil l₂ = fsr-refl idp
-      FormalSumRel-swap1 x (x₁ :: l₁) l₂ = fsr-trans (fsr-cons x₁ (FormalSumRel-swap1 x l₁ l₂)) (fsr-swap x₁ x (l₁ ++ l₂))
+  abstract
+    FormalSumRel-swap1 : ∀ x l₁ l₂ → FormalSumRel {A} (l₁ ++ (x :: l₂)) (x :: l₁ ++ l₂)
+    FormalSumRel-swap1 x nil l₂ = fsr-refl idp
+    FormalSumRel-swap1 x (x₁ :: l₁) l₂ = fsr-trans (fsr-cons x₁ (FormalSumRel-swap1 x l₁ l₂)) (fsr-swap x₁ x (l₁ ++ l₂))
 
+  private
+    abstract
       Word-inv-r : ∀ l → FormalSumRel {A} (l ++ Word-flip l) nil
       Word-inv-r nil = fsr-refl idp
       Word-inv-r (x :: l) =

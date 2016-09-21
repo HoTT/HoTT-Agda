@@ -333,7 +333,7 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
 
   -- freeness
   ReducedWord-to-FreeGroup : ReducedWord-group →ᴳ FreeGroup A
-  ReducedWord-to-FreeGroup = group-hom (λ rw → □[ fst rw ])
+  ReducedWord-to-FreeGroup = group-hom (λ rw → qw[ fst rw ])
     (λ rw₁ rw₂ → ! $ quot-rel $ QuotWordRel-++ (fst rw₁) rw₂)
 
   private

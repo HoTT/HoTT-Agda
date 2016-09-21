@@ -139,20 +139,18 @@ module SpectrumModel where
   {- Truncated Exactness Axiom -}
   module _ (n : ℤ) {X Y : Ptd i} where
 
-    {- in image of (CF n (⊙cfcod' f)) ⇒ in kernel of (CF n f) -}
     abstract
-      C-exact-itok : (f : fst (X ⊙→ Y))
-        → is-exact-itok (CF-hom n (⊙cfcod' f)) (CF-hom n f)
-      C-exact-itok f =
-        itok-alt-in (CF-hom n (⊙cfcod' f)) (CF-hom n f) $
+      C-im-sub-ker : (f : fst (X ⊙→ Y))
+        → im-propᴳ (CF-hom n (⊙cfcod' f)) ⊆ᴳ ker-propᴳ (CF-hom n f)
+      C-im-sub-ker f =
+        im-sub-ker'-out (CF-hom n (⊙cfcod' f)) (CF-hom n f) $
           Trunc-elim (λ _ → =-preserves-level _ (Trunc-level {n = 0}))
             (ap [_] ∘ exact-itok-lemma n f)
 
-    {- in kernel of (CF n f) ⇒ in image of (CF n (⊙cfcod' f)) -}
     abstract
-      C-exact-ktoi : (f : fst (X ⊙→ Y))
-        → is-exact-ktoi (CF-hom n (⊙cfcod' f)) (CF-hom n f)
-      C-exact-ktoi f =
+      C-ker-sub-im : (f : fst (X ⊙→ Y))
+        → ker-propᴳ (CF-hom n f) ⊆ᴳ im-propᴳ (CF-hom n (⊙cfcod' f))
+      C-ker-sub-im f =
         Trunc-elim
           (λ _ → Π-level (λ _ → raise-level _ Trunc-level))
           (λ h tp → Trunc-rec Trunc-level (lemma h) (–> (Trunc=-equiv _ _) tp))
@@ -166,7 +164,7 @@ module SpectrumModel where
           wit = exact-ktoi-lemma n f h p
 
     C-exact : (f : fst (X ⊙→ Y)) → is-exact (CF-hom n (⊙cfcod' f)) (CF-hom n f)
-    C-exact f = record {itok = C-exact-itok f; ktoi = C-exact-ktoi f}
+    C-exact f = record {im-sub-ker = C-im-sub-ker f; ker-sub-im = C-ker-sub-im f}
 
   {- Additivity Axiom -}
   module _ (n : ℤ) {A : Type i} (X : A → Ptd i)

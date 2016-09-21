@@ -15,29 +15,19 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
     module φ = GroupHom φ
     module ψ = GroupHom ψ
 
-  {- in image of φ ⇒ in kernel of ψ -}
-  is-exact-itok : Type (lmax k (lmax j i))
-  is-exact-itok = (h : H.El)
-    → Trunc -1 (Σ G.El (λ g → φ.f g == h)) → ψ.f h == K.ident
-
-  {- in kernel of ψ ⇒ in image of φ -}
-  is-exact-ktoi : Type (lmax k (lmax j i))
-  is-exact-ktoi = (h : H.El)
-    → ψ.f h == K.ident → Trunc -1 (Σ G.El (λ g → φ.f g == h))
-
   record is-exact : Type (lmax k (lmax j i)) where
     field
-      itok : is-exact-itok
-      ktoi : is-exact-ktoi
+      im-sub-ker : im-propᴳ φ ⊆ᴳ ker-propᴳ ψ
+      ker-sub-im : ker-propᴳ ψ ⊆ᴳ  im-propᴳ φ
 
   open is-exact public
 
   {- an equivalent version of is-exact-ktoi  -}
-  itok-alt-in : ((g : G.El) → ψ.f (φ.f g) == K.ident) → is-exact-itok
-  itok-alt-in r h = Trunc-rec (K.El-level _ _) (λ {(g , p) → ap ψ.f (! p) ∙ r g})
+  im-sub-ker'-out : is-fullᴳ (ker-propᴳ (ψ ∘ᴳ φ)) → im-propᴳ φ ⊆ᴳ ker-propᴳ ψ
+  im-sub-ker'-out r h = Trunc-rec (K.El-level _ _) (λ {(g , p) → ap ψ.f (! p) ∙ r g})
 
-  itok-alt-out : is-exact-itok → ((g : G.El) → ψ.f (φ.f g) == K.ident)
-  itok-alt-out s g = s (φ.f g) [ g , idp ]
+  im-sub-ker'-in : im-propᴳ φ ⊆ᴳ ker-propᴳ ψ → is-fullᴳ (ker-propᴳ (ψ ∘ᴳ φ))
+  im-sub-ker'-in s g = s (φ.f g) [ g , idp ]
 
 {- Convenient notation for sequences of homomorphisms -}
 
@@ -48,6 +38,9 @@ data HomSequence {i} : Group i → Group i → Type (lsucc i) where
   _⊣| : (G : Group i) → HomSequence G G
   _⟨_⟩→_ : (G : Group i) {H K : Group i} (φ : G →ᴳ H)
              → HomSequence H K → HomSequence G K
+
+infix 15 _↓⊣| _∥⊣|
+infixr 10 _↓⟨_⟩↓_ _∥⟨_⟩∥_
 
 data Sequence= {i} : {G₁ H₁ G₂ H₂ : Group i}
   (S₁ : HomSequence G₁ H₁) (S₂ : HomSequence G₂ H₂)
@@ -60,9 +53,6 @@ data Sequence= {i} : {G₁ H₁ G₂ H₂ : Group i}
     (over : φ₁ == φ₂ [ uncurry _→ᴳ_ ↓ pair×= pG pH ])
     → Sequence= S₁ S₂ pH pK
     → Sequence= (G₁ ⟨ φ₁ ⟩→ S₁) (G₂ ⟨ φ₂ ⟩→ S₂) pG pK
-
-infix 15 _↓⊣| _∥⊣|
-infixr 10 _↓⟨_⟩↓_ _∥⟨_⟩∥_
 
 data SequenceIso {i j} : {G₁ H₁ : Group i} {G₂ H₂ : Group j}
   (S₁ : HomSequence G₁ H₁) (S₂ : HomSequence G₂ H₂)
@@ -105,7 +95,7 @@ sequence-iso-ua isoG isoH si = sequence= _ _ (seq-iso-to-path si)
 data is-exact-seq {i} : {G H : Group i} → HomSequence G H → Type (lsucc i) where
   exact-seq-zero : {G : Group i} → is-exact-seq (G ⊣|)
   exact-seq-one : {G H : Group i} {φ : G →ᴳ H} → is-exact-seq (G ⟨ φ ⟩→ H ⊣|)
-  exact-seq-two : {G H K J : Group i} {φ : G →ᴳ H} {ψ : H →ᴳ K}
+  exact-seq-more : {G H K J : Group i} {φ : G →ᴳ H} {ψ : H →ᴳ K}
     {diag : HomSequence K J} → is-exact φ ψ
     → is-exact-seq (H ⟨ ψ ⟩→ diag) → is-exact-seq (G ⟨ φ ⟩→ H ⟨ ψ ⟩→ diag)
 
@@ -120,8 +110,8 @@ exact-get : ∀ {i} {G H : Group i} {diag : HomSequence G H}
   → is-exact-seq diag → (n : ℕ) → exact-get-type diag n
 exact-get exact-seq-zero _ = lift unit
 exact-get exact-seq-one _ = lift unit
-exact-get (exact-seq-two ex s) O = ex
-exact-get (exact-seq-two ex s) (S n) = exact-get s n
+exact-get (exact-seq-more ex s) O = ex
+exact-get (exact-seq-more ex s) (S n) = exact-get s n
 
 private
   exact-build-arg-type : ∀ {i} {G H : Group i} → HomSequence G H → List (Type i)
@@ -135,7 +125,7 @@ private
   exact-build-helper (G ⊣|) nil = exact-seq-zero
   exact-build-helper (G ⟨ φ ⟩→ H ⊣|) nil = exact-seq-one
   exact-build-helper (G ⟨ φ ⟩→ H ⟨ ψ ⟩→ s) (ie :: ies) =
-    exact-seq-two ie (exact-build-helper (H ⟨ ψ ⟩→ s) ies)
+    exact-seq-more ie (exact-build-helper (H ⟨ ψ ⟩→ s) ies)
 
 exact-build : ∀ {i} {G H : Group i} (seq : HomSequence G H)
   → hlist-curry-type (exact-build-arg-type seq) (λ _ → is-exact-seq seq)
@@ -158,7 +148,7 @@ abstract
     → is-exact-seq (hom-seq-snoc seq₁ φ) → is-exact-seq (H ⟨ φ ⟩→ seq₂)
     → is-exact-seq (hom-seq-concat seq₁ (H ⟨ φ ⟩→ seq₂))
   exact-concat {seq₁ = G ⊣|} exact-seq-one es₂ = es₂
-  exact-concat {seq₁ = G ⟨ ψ ⟩→ H ⊣|} (exact-seq-two ex _) es₂ =
-    exact-seq-two ex es₂
-  exact-concat {seq₁ = G ⟨ ψ ⟩→ H ⟨ χ ⟩→ s} (exact-seq-two ex es₁) es₂ =
-    exact-seq-two ex (exact-concat {seq₁ = H ⟨ χ ⟩→ s} es₁ es₂)
+  exact-concat {seq₁ = G ⟨ ψ ⟩→ H ⊣|} (exact-seq-more ex _) es₂ =
+    exact-seq-more ex es₂
+  exact-concat {seq₁ = G ⟨ ψ ⟩→ H ⟨ χ ⟩→ s} (exact-seq-more ex es₁) es₂ =
+    exact-seq-more ex (exact-concat {seq₁ = H ⟨ χ ⟩→ s} es₁ es₂)
