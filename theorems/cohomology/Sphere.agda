@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import groups.Exactness
 open import cohomology.Theory
 
 module cohomology.Sphere {i} (OT : OrdinaryTheory i) where

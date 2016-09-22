@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import groups.Exactness
 open import homotopy.FunctionOver
 
 module groups.ProductRepr where
@@ -27,38 +26,46 @@ module ProductRepr {i j}
   (ex₁ : is-exact i₁ j₂) (ex₂ : is-exact i₂ j₁)
   where
 
+  private
+    module G = Group G
+    module H₁ = Group H₁
+    module H₂ = Group H₂
+    module i₁ = GroupHom i₁
+    module i₂ = GroupHom i₂
+    module j₁ = GroupHom j₁
+    module j₂ = GroupHom j₂
+
   fanout-has-trivial-ker : has-trivial-kerᴳ (×ᴳ-fanout j₁ j₂)
-  fanout-has-trivial-ker g q = Trunc-rec (Group.El-level G _ _)
+  fanout-has-trivial-ker g q = Trunc-rec (G.El-level _ _)
       (lemma g (fst×= q))
       (ker-sub-im ex₁ g (snd×= q))
     where
-    lemma : (g : Group.El G) (r : GroupHom.f j₁ g == Group.ident H₁)
-      → Σ (Group.El H₁) (λ h → GroupHom.f i₁ h == g)
-      → g == Group.ident G
+    lemma : ∀ g → j₁.f g == H₁.ident
+      → hfiber i₁.f g → g == G.ident
     lemma ._ r (h , idp) =
-      ap (GroupHom.f i₁) (! (p₁ h) ∙ r) ∙ GroupHom.pres-ident i₁
+      ap i₁.f (! (p₁ h) ∙ r) ∙ i₁.pres-ident
 
-  β₁ : (h₁ : Group.El H₁) (h₂ : Group.El H₂)
-    → GroupHom.f j₁ (Group.comp G (GroupHom.f i₁ h₁) (GroupHom.f i₂ h₂)) == h₁
+  β₁ : (h₁ : H₁.El) (h₂ : H₂.El)
+    → j₁.f (G.comp (i₁.f h₁) (i₂.f h₂)) == h₁
   β₁ h₁ h₂ =
-    GroupHom.pres-comp j₁ (GroupHom.f i₁ h₁) (GroupHom.f i₂ h₂)
-    ∙ ap2 (Group.comp H₁) (p₁ h₁) (im-sub-ker ex₂ _ [ h₂ , idp ])
-    ∙ Group.unit-r H₁ h₁
+    j₁.pres-comp (i₁.f h₁) (i₂.f h₂)
+    ∙ ap2 H₁.comp (p₁ h₁) (im-sub-ker ex₂ _ [ h₂ , idp ])
+    ∙ H₁.unit-r h₁
 
-  β₂ : (h₁ : Group.El H₁) (h₂ : Group.El H₂)
-    → GroupHom.f j₂ (Group.comp G (GroupHom.f i₁ h₁) (GroupHom.f i₂ h₂)) == h₂
+  β₂ : (h₁ : H₁.El) (h₂ : H₂.El)
+    → j₂.f (G.comp (i₁.f h₁) (i₂.f h₂)) == h₂
   β₂ h₁ h₂ =
-    GroupHom.pres-comp j₂ (GroupHom.f i₁ h₁) (GroupHom.f i₂ h₂)
-    ∙ ap2 (Group.comp H₂) (im-sub-ker ex₁ _ [ h₁ , idp ]) (p₂ h₂)
-    ∙ Group.unit-l H₂ h₂
+    j₂.pres-comp (i₁.f h₁) (i₂.f h₂)
+    ∙ ap2 H₂.comp (im-sub-ker ex₁ _ [ h₁ , idp ]) (p₂ h₂)
+    ∙ H₂.unit-l h₂
 
   iso : G ≃ᴳ (H₁ ×ᴳ H₂)
   iso = surjᴳ-injᴳ-iso (×ᴳ-fanout j₁ j₂)
     (has-trivial-ker-is-injᴳ (×ᴳ-fanout j₁ j₂) fanout-has-trivial-ker)
-    (λ {(h₁ , h₂) → [ Group.comp G (GroupHom.f i₁ h₁) (GroupHom.f i₂ h₂) ,
+    (λ {(h₁ , h₂) → [ G.comp (i₁.f h₁) (i₂.f h₂) ,
                       pair×= (β₁ h₁ h₂) (β₂ h₁ h₂) ]})
 
-  path : G == H₁ ×ᴳ H₂
+  path : G == (H₁ ×ᴳ H₂)
   path = uaᴳ iso
 
   fst-over : j₁ == ×ᴳ-fst [ (λ U → U →ᴳ H₁) ↓ path ]
@@ -69,12 +76,12 @@ module ProductRepr {i j}
 
   inl-over : i₁ == ×ᴳ-inl [ (λ V → H₁ →ᴳ V) ↓ path ]
   inl-over = codomain-over-iso $
-    codomain-over-equiv (GroupHom.f i₁) _
+    codomain-over-equiv i₁.f _
     ▹ λ= (λ h₁ → pair×= (p₁ h₁) (im-sub-ker ex₁ _ [ h₁ , idp ]))
 
   inr-over : i₂ == ×ᴳ-inr {G = H₁} [ (λ V → H₂ →ᴳ V) ↓ path ]
   inr-over = codomain-over-iso $
-    codomain-over-equiv (GroupHom.f i₂) _
+    codomain-over-equiv i₂.f _
     ▹ λ= (λ h₂ → pair×= (im-sub-ker ex₂ _ [ h₂ , idp ]) (p₂ h₂))
 
 
@@ -94,9 +101,7 @@ module ProductRepr {i j}
     (ex₀ : ∀ g → GroupHom.f j₀ (GroupHom.f i₀ g) == Group.ident L)
     where
 
-    decomp : ∀ g → Group.comp G (GroupHom.f i₁ (GroupHom.f j₁ g))
-                                (GroupHom.f i₂ (GroupHom.f j₂ g))
-                   == g
+    decomp : ∀ g → G.comp (i₁.f (j₁.f g)) (i₂.f (j₂.f g)) == g
     decomp = transport
       (λ {(G' , i₁' , i₂' , j₁' , j₂') → ∀ g →
          Group.comp G' (GroupHom.f i₁' (GroupHom.f j₁' g))
@@ -104,7 +109,7 @@ module ProductRepr {i j}
          == g})
       (! (pair= path (↓-×-in inl-over (↓-×-in inr-over
                                              (↓-×-in fst-over snd-over)))))
-      (λ {(h₁ , h₂) → pair×= (Group.unit-r H₁ h₁) (Group.unit-l H₂ h₂)})
+      (λ {(h₁ , h₂) → pair×= (H₁.unit-r h₁) (H₂.unit-l h₂)})
 
     cancel : ∀ k →
       Group.comp L (GroupHom.f (j₀ ∘ᴳ i₁ ∘ᴳ j₁ ∘ᴳ i₀) k)

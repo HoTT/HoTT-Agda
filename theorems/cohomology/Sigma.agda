@@ -1,9 +1,8 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import cohomology.CofiberSequence
-open import groups.Exactness
 open import homotopy.FunctionOver
+open import cohomology.CofiberSequence
 open import cohomology.SplitExactRight
 open import cohomology.Theory
 

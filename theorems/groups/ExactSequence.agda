@@ -3,31 +3,7 @@ open import homotopy.FunctionOver
 
 -- TODO Checking naming convensions
 
-module groups.Exactness where
-
-module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
-  (φ : G →ᴳ H) (ψ : H →ᴳ K) where
-
-  private
-    module G = Group G
-    module H = Group H
-    module K = Group K
-    module φ = GroupHom φ
-    module ψ = GroupHom ψ
-
-  record is-exact : Type (lmax k (lmax j i)) where
-    field
-      im-sub-ker : im-propᴳ φ ⊆ᴳ ker-propᴳ ψ
-      ker-sub-im : ker-propᴳ ψ ⊆ᴳ  im-propᴳ φ
-
-  open is-exact public
-
-  {- an equivalent version of is-exact-ktoi  -}
-  im-sub-ker'-out : is-fullᴳ (ker-propᴳ (ψ ∘ᴳ φ)) → im-propᴳ φ ⊆ᴳ ker-propᴳ ψ
-  im-sub-ker'-out r h = Trunc-rec (K.El-level _ _) (λ {(g , p) → ap ψ.f (! p) ∙ r g})
-
-  im-sub-ker'-in : im-propᴳ φ ⊆ᴳ ker-propᴳ ψ → is-fullᴳ (ker-propᴳ (ψ ∘ᴳ φ))
-  im-sub-ker'-in s g = s (φ.f g) [ g , idp ]
+module groups.ExactSequence where
 
 {- Convenient notation for sequences of homomorphisms -}
 

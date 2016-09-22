@@ -1,11 +1,10 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import cohomology.CofiberSequence
-open import groups.Exactness
-open import homotopy.FunctionOver
-open import cohomology.Theory
 open import groups.ProductRepr
+open import homotopy.FunctionOver
+open import cohomology.CofiberSequence
+open import cohomology.Theory
 open import cohomology.WedgeCofiber
 
 {- Finite additivity is provable (and in a stronger form) without using

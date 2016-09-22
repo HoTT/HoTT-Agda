@@ -4,7 +4,6 @@ open import HoTT
 open import cohomology.SuspAdjointLoopIso
 open import cohomology.WithCoefficients
 open import cohomology.Theory
-open import groups.Exactness
 open import cohomology.Choice
 
 {- A spectrum (family (Eₙ | n : ℤ) such that ΩEₙ₊₁ = Eₙ)
@@ -143,7 +142,7 @@ module SpectrumModel where
       C-im-sub-ker : (f : fst (X ⊙→ Y))
         → im-propᴳ (CF-hom n (⊙cfcod' f)) ⊆ᴳ ker-propᴳ (CF-hom n f)
       C-im-sub-ker f =
-        im-sub-ker'-out (CF-hom n (⊙cfcod' f)) (CF-hom n f) $
+        im-sub-ker-in (CF-hom n (⊙cfcod' f)) (CF-hom n f) $
           Trunc-elim (λ _ → =-preserves-level _ (Trunc-level {n = 0}))
             (ap [_] ∘ exact-itok-lemma n f)
 

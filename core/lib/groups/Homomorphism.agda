@@ -478,6 +478,32 @@ module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
     surjᴳ-injᴳ-iso : G ≃ᴳ H
     surjᴳ-injᴳ-iso = φ , surjᴳ-injᴳ-is-equiv
 
+{- exactness -}
+
+module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
+  (φ : G →ᴳ H) (ψ : H →ᴳ K) where
+
+  private
+    module G = Group G
+    module H = Group H
+    module K = Group K
+    module φ = GroupHom φ
+    module ψ = GroupHom ψ
+
+  record is-exact : Type (lmax k (lmax j i)) where
+    field
+      im-sub-ker : im-propᴳ φ ⊆ᴳ ker-propᴳ ψ
+      ker-sub-im : ker-propᴳ ψ ⊆ᴳ  im-propᴳ φ
+
+  open is-exact public
+
+  {- an equivalent version of is-exact-ktoi  -}
+  im-sub-ker-in : is-fullᴳ (ker-propᴳ (ψ ∘ᴳ φ)) → im-propᴳ φ ⊆ᴳ ker-propᴳ ψ
+  im-sub-ker-in r h = Trunc-rec (K.El-level _ _) (λ {(g , p) → ap ψ.f (! p) ∙ r g})
+
+  im-sub-ker-out : im-propᴳ φ ⊆ᴳ ker-propᴳ ψ → is-fullᴳ (ker-propᴳ (ψ ∘ᴳ φ))
+  im-sub-ker-out s g = s (φ.f g) [ g , idp ]
+
 {- two homomorphisms into an abelian group can be composed with
  - the group operation -}
 module _ {i} {G H : Group i} (H-abelian : is-abelian H)

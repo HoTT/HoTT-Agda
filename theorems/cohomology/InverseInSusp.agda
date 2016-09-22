@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import groups.Exactness
 open import homotopy.FunctionOver
 open import groups.ProductRepr
 open import cohomology.Theory

@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import groups.Exactness
+open import groups.ExactSequence
 open import homotopy.FunctionOver
 open import cohomology.Theory
 open import cohomology.CofiberSequence

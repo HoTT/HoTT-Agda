@@ -1,10 +1,10 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
+open import groups.ExactSequence
+open import homotopy.FunctionOver
 open import homotopy.PtdAdjoint
 open import homotopy.SuspAdjointLoop
-open import groups.Exactness
-open import homotopy.FunctionOver
 open import cohomology.MayerVietoris
 open import cohomology.Theory
 
