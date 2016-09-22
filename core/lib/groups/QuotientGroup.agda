@@ -8,6 +8,7 @@ open import lib.types.Pi
 open import lib.types.Truncation
 open import lib.types.SetQuotient
 open import lib.groups.Homomorphism
+open import lib.groups.Subgroup
 open import lib.groups.SubgroupProp
 
 module lib.groups.QuotientGroup where
@@ -100,10 +101,68 @@ module _ {i j} {G : Group i} {P : NormalSubgroupProp G j} where
   q[_]ᴳ : G →ᴳ QuotientGroup P
   q[_]ᴳ = group-hom q[_] λ _ _ → idp
 
-{-
-module _ {i j k} (G : Group i)
-  {P : Group.El G → Type j} (P-is-subgroup-prop : induces-normal-subgroup G P)
-  {Q : Group.El G → Type k} (Q-is-normal-subgroup-prop
-  (P-closed-under-Q :
-  where
--}
+module _ {i j k} {G : Group i}
+  (Q : NormalSubgroupProp G j) (P : SubgroupProp G k)
+  (prop-respects-quot : NormalSubgroupProp.subgrp-prop Q ⊆ᴳ P) where
+
+  private
+    module G = Group G
+    module Q = NormalSubgroupProp Q
+    module P = SubgroupProp P
+
+  prop-over-quot : SubgroupProp (QuotientGroup Q) k
+  prop-over-quot = record {M; comp-inv-r = λ {g₁} {g₂} → M.comp-inv-r' g₁ g₂} where
+    module M where
+      module QG = Group (QuotientGroup Q)
+      private
+        abstract
+          prop'-rel : ∀ {g₁ g₂} (qg₁g₂⁻¹ : quotient-group-rel Q g₁ g₂)
+            → P.prop g₁ == P.prop g₂
+          prop'-rel {g₁} {g₂} qg₁g₂⁻¹ = ua $
+            equiv (λ pg₁ → transport P.prop
+                    ( ap (λ g → G.comp g g₁) (G.inv-comp g₁ (G.inv g₂))
+                    ∙ G.assoc (G.inv (G.inv g₂)) (G.inv g₁) g₁
+                    ∙ ap2 G.comp (G.inv-inv g₂) (G.inv-l g₁)
+                    ∙ G.unit-r g₂)
+                    (P.comp (P.inv pg₁g₂⁻¹) pg₁))
+                  (λ pg₂ → transport P.prop
+                    ( G.assoc g₁ (G.inv g₂) g₂
+                    ∙ ap (G.comp g₁) (G.inv-l g₂)
+                    ∙ G.unit-r g₁)
+                    (P.comp pg₁g₂⁻¹ pg₂))
+                  (λ _ → prop-has-all-paths (P.level g₂) _ _)
+                  (λ _ → prop-has-all-paths (P.level g₁) _ _)
+            where pg₁g₂⁻¹ : P.prop (G.comp g₁ (G.inv g₂))
+                  pg₁g₂⁻¹ = prop-respects-quot (G.comp g₁ (G.inv g₂)) qg₁g₂⁻¹
+
+        prop' : Group.El (QuotientGroup Q) → hProp k
+        prop' = SetQuot-rec
+          (hProp-is-set k)
+          (λ g → P.prop g , P.level g)
+          (nType=-out ∘ prop'-rel)
+
+      prop : QG.El → Type k
+      prop g' = fst (prop' g')
+
+      abstract
+        level : ∀ g' → is-prop (prop g')
+        level g' = snd (prop' g')
+
+      ident : prop q[ G.ident ]
+      ident = P.ident
+
+      abstract
+        comp-inv-r' : ∀ g₁' g₂' → prop g₁' → prop g₂' → prop (QG.comp g₁' (QG.inv g₂'))
+        comp-inv-r' = SetQuot-elim
+          {P = λ g₁' → ∀ g₂' → prop g₁' → prop g₂' → prop (QG.comp g₁' (QG.inv g₂'))}
+          (λ g₁' → Π-is-set λ g₂' → →-is-set $ →-is-set $ prop-has-level-S (level (QG.comp g₁' (QG.inv g₂'))))
+          (λ g₁ → SetQuot-elim (λ g₂' → →-is-set $ →-is-set $ prop-has-level-S (level (QG.comp q[ g₁ ] (QG.inv g₂'))))
+            (λ g₂ pg₁ pg₂ → P.comp-inv-r pg₁ pg₂)
+            (λ {_} {g₂} _ → prop-has-all-paths-↓ (→-is-prop $ →-is-prop $ level q[ G.comp g₁ (G.inv g₂) ])))
+          (λ {_} {g₁} _ → prop-has-all-paths-↓ (Π-is-prop λ g₂' → →-is-prop $ →-is-prop $ level (QG.comp q[ g₁ ] (QG.inv g₂'))))
+
+  rel-over-sub : NormalSubgroupProp (Subgroup P) j
+  rel-over-sub = Q ∘nsubᴳ SG.inject where module SG = Subgroup P
+
+  -- Maybe this is needed at some point.
+  -- QuotientGroup rel-over-sub ≃ᴳ Subgroup prop-over-quot

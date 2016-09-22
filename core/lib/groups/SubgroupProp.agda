@@ -14,16 +14,20 @@ record SubgroupProp {i} (G : Group i) j : Type (lmax i (lsucc j)) where
   field
     prop : G.El → Type j
     level : ∀ g → is-prop (prop g)
+    -- In theory being inhabited implies that the identity is included,
+    -- but in practice let's just prove the identity case.
+    ident : prop G.ident
+    comp-inv-r : ∀ {g₁ g₂} → prop g₁ → prop g₂ → prop (G.comp g₁ (G.inv g₂))
+
   sub-El-prop : SubtypeProp G.El j
   sub-El-prop = prop , level
   SubEl = Subtype sub-El-prop
-  field
-    inhab : SubEl
-    comp-inv-r : ∀ {g₁ g₂} → prop g₁ → prop g₂ → prop (G.comp g₁ (G.inv g₂))
 
   abstract
-    ident : prop G.ident
-    ident = transport prop (G.inv-r (fst inhab)) (comp-inv-r (snd inhab) (snd inhab))
+    {-
+      ident : prop G.ident
+      ident = transport prop (G.inv-r (fst inhab)) (comp-inv-r (snd inhab) (snd inhab))
+    -}
 
     inv : ∀ {g} → prop g → prop (G.inv g)
     inv pg = transport prop (G.unit-l _) (comp-inv-r ident pg)
@@ -36,7 +40,7 @@ trivial-propᴳ : ∀ {i} (G : Group i) → SubgroupProp G i
 trivial-propᴳ G = record {
   prop = λ g → g == G.ident;
   level = λ g → G.El-level g G.ident;
-  inhab = G.ident , idp;
+  ident = idp;
   comp-inv-r = λ g₁=id g₂=id
     → ap2 G.comp g₁=id (ap G.inv g₂=id ∙ G.inv-ident)
     ∙ G.unit-r G.ident}
@@ -110,13 +114,6 @@ abstract
     abelian-subgroup-is-normal P λ g₁ g₂ Pg₁g₂ → transport P.prop (G.comm g₁ g₂) Pg₁g₂
     where module G = AbelianGroup (G , G-is-abelian)
           module P = SubgroupProp P
-
-is-closed-under-comp-with : ∀ {i j k} {G : Group i}
-  → SubgroupProp G j → SubgroupProp G k → Type (lmax i (lmax j k))
-is-closed-under-comp-with {G = G} P Q =
-  ∀ {g₁ g₂} → P.prop g₁ → Q.prop g₂ → P.prop (Group.comp G g₁ g₂)
-  where module P = SubgroupProp P
-        module Q = SubgroupProp Q
 
 {- Subgroups of subgroups -}
 

@@ -55,9 +55,7 @@ module Subgroup {i j} {G : Group i} (P : SubgroupProp G j) where
   open Group (Subgroup P) public
 
   inject : Subgroup P →ᴳ G
-  inject = record {
-    f = λ {(g , _) → g};
-    pres-comp = λ _ _ → idp}
+  inject = record {f = fst; pres-comp = λ _ _ → idp}
 
   inject-lift : ∀ {j} {H : Group j} (φ : H →ᴳ G)
     → Π (Group.El H) (P.prop ∘ GroupHom.f φ)

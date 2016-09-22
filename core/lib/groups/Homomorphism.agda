@@ -375,6 +375,39 @@ coeᴳ-β iso = group-hom= $
   ∙ ap coe (El=-β iso)
   ∙ λ= (coe-β (GroupIso.f-equiv iso))
 
+
+{- Subgroups -}
+
+infix 80 _∘subᴳ_
+_∘subᴳ_ : ∀ {i j k} {G : Group i} {H : Group j}
+  → SubgroupProp H k → (G →ᴳ H) → SubgroupProp G k
+_∘subᴳ_ {G = G} {H} P φ = record {
+  prop = P.prop ∘ φ.f;
+  level = P.level ∘ φ.f;
+  ident = transport! P.prop φ.pres-ident P.ident;
+  comp-inv-r = λ {g₁} {g₂} pφg₁ pφg₂ → transport! P.prop
+    (φ.pres-comp g₁ (G.inv g₂) ∙ ap (H.comp (φ.f g₁)) (φ.pres-inv g₂))
+    (P.comp-inv-r pφg₁ pφg₂)}
+  where module G = Group G
+        module H = Group H
+        module P = SubgroupProp P
+        module φ = GroupHom φ
+
+infix 80 _∘nsubᴳ_
+_∘nsubᴳ_ : ∀ {i j k} {G : Group i} {H : Group j}
+  → NormalSubgroupProp H k → (G →ᴳ H) → NormalSubgroupProp G k
+_∘nsubᴳ_ {G = G} {H} P φ = P.subgrp-prop ∘subᴳ φ , P-φ-is-normal
+  where module G = Group G
+        module H = Group H
+        module P = NormalSubgroupProp P
+        module φ = GroupHom φ
+        abstract
+          P-φ-is-normal : is-normal (P.subgrp-prop ∘subᴳ φ)
+          P-φ-is-normal g₁ {g₂} pφg₂ = transport! P.prop
+            ( φ.pres-comp (G.comp g₁ g₂) (G.inv g₁)
+            ∙ ap2 H.comp (φ.pres-comp g₁ g₂) (φ.pres-inv g₁))
+            (P.conj (φ.f g₁) pφg₂)
+
 {- Lemmas and definitions about kernels and images -}
 
 module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
@@ -387,17 +420,25 @@ module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
   ker-propᴳ = record {
     prop = λ g → φ.f g == H.ident;
     level = λ g → H.El-level _ _;
-    inhab = G.ident , φ.pres-ident;
-    comp-inv-r = λ p₁ p₂
-      → φ.pres-comp _ _
-      ∙ ap2 H.comp p₁ (φ.pres-inv _ ∙ ap H.inv p₂ ∙ H.inv-ident)
-      ∙ H.unit-l _ }
+    ident = φ.pres-ident;
+    comp-inv-r = λ {g₁} {g₂} p₁ p₂
+      → φ.pres-comp g₁ (G.inv g₂)
+      ∙ ap2 H.comp p₁ ( φ.pres-inv g₂
+                      ∙ ap H.inv p₂ ∙ H.inv-ident)
+      ∙ H.unit-l H.ident }
+
+  ker-is-normal : is-normal ker-propᴳ
+  ker-is-normal g₁ {g₂} pg₂ =
+      φ.pres-comp (G.comp g₁ g₂) (G.inv g₁)
+    ∙ ap2 H.comp (φ.pres-comp g₁ g₂ ∙ ap (H.comp (φ.f g₁)) pg₂ ∙ H.unit-r (φ.f g₁))
+                 (φ.pres-inv g₁)
+    ∙ H.inv-r (φ.f g₁)
 
   im-propᴳ : SubgroupProp H (lmax i j)
   im-propᴳ = record {
     prop = λ h → Trunc -1 (hfiber φ.f h);
     level = λ h → Trunc-level;
-    inhab = H.ident , [ G.ident , φ.pres-ident ];
+    ident = [ G.ident , φ.pres-ident ];
     comp-inv-r = Trunc-fmap2 (λ {(g₁ , p₁) (g₂ , p₂)
       → G.comp g₁ (G.inv g₂)
       , φ.pres-comp g₁ (G.inv g₂)
