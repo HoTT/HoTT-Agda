@@ -3,7 +3,7 @@
 open import HoTT
 open import homotopy.FunctionOver
 
-module cohomology.TwoPushouts where
+module homotopy.TwoPushouts where
 
 --        g     h
 --     B --> C --> D    K = A ⊔^B C / (f,g)        d₁ = A <- B -> C
@@ -99,8 +99,10 @@ module TwoPushoutsEquiv {i j k l} {A : Type i} {B : Type j} {C : Type k}
   two-pushouts-equiv : Pushout d ≃ Pushout d₂
   two-pushouts-equiv = equiv into out into-out out-into
 
+{-
   two-pushouts : Lift {j = lmax l (lmax k (lmax j i))} (Pushout d) == Pushout d₂
   two-pushouts = ua (two-pushouts-equiv ∘e lift-equiv)
+-}
 
   two-pushouts-left : lift ∘ left == left ∘ left
                       [ (λ E → (A → E)) ↓ two-pushouts ]

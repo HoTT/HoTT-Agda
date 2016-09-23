@@ -12,14 +12,14 @@ module homotopy.ConstantToSetExtendsToProp
     abstract
       Skel-has-all-paths : has-all-paths Skel
       Skel-has-all-paths =
-        SetQuot-elim (λ _ → Π-is-set λ _ → =-preserves-set SetQuotient-is-set)
+        SetQuot-elim (λ _ → Π-is-set λ _ → =-preserves-set SetQuot-is-set)
           (λ a₁ →
             SetQuot-elim {P = λ s₂ → q[ a₁ ] == s₂}
-              (λ _ → =-preserves-set SetQuotient-is-set)
+              (λ _ → =-preserves-set SetQuot-is-set)
               (λ _ → quot-rel _)
-              (λ _ → prop-has-all-paths-↓ (SetQuotient-is-set _ _)))
-          (λ {a₁ a₂} _ → ↓-cst→app-in λ s₂ →
-              prop-has-all-paths-↓ (SetQuotient-is-set _ _))
+              (λ _ → prop-has-all-paths-↓ (SetQuot-is-set _ _)))
+          (λ {a₁ a₂} _ → ↓-Π-cst-app-in λ s₂ →
+              prop-has-all-paths-↓ (SetQuot-is-set _ _))
 
     Skel-is-prop : is-prop Skel
     Skel-is-prop = all-paths-is-prop Skel-has-all-paths

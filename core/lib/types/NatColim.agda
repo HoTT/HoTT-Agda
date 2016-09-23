@@ -7,6 +7,7 @@ open import lib.cubical.Square
 open import lib.types.Lift
 open import lib.types.Nat
 open import lib.types.Pointed
+open import lib.types.PointedSigma
 open import lib.types.Sigma
 open import lib.types.TLevel
 open import lib.types.Truncation

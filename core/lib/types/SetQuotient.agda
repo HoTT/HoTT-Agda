@@ -27,9 +27,9 @@ module _ where
       quot-rel : {a₁ a₂ : A} → R a₁ a₂ → q[ a₁ ] == q[ a₂ ]
 
     postulate  -- HIT
-      SetQuotient-level : is-set (SetQuotient R)
+      SetQuot-level : is-set (SetQuotient R)
 
-    SetQuotient-is-set = SetQuotient-level
+    SetQuot-is-set = SetQuot-level
 
     module SetQuotElim {k} {P : SetQuotient R → Type k}
       (p : (x : SetQuotient R) → is-set (P x)) (q[_]* : (a : A) → P q[ a ])
@@ -63,10 +63,8 @@ open SetQuotRec public renaming (f to SetQuot-rec)
 
 module _ {R : Rel A j}
   (R-is-prop : ∀ {a b} → is-prop (R a b))
-  (R-is-refl : ∀ a → R a a)
-  (R-is-sym : ∀ {a b} → R a b → R b a)
-  (R-is-trans : ∀ {a b c} → R a b → R b c → R a c)
-  where
+  (R-is-refl : is-refl R) (R-is-sym : is-sym R)
+  (R-is-trans : is-trans R) where
 
   private
     Q : Type (lmax i j)
@@ -116,5 +114,5 @@ module _ {R : Rel A j}
   quot-rel-equiv : ∀ {a₁ a₂ : A} → R a₁ a₂ ≃ (q[ a₁ ] == q[ a₂ ])
   quot-rel-equiv {a₁} {a₂} = equiv
     quot-rel (path-to-R-over-quot {q[ a₁ ]} {q[ a₂ ]})
-    (λ _ → prop-has-all-paths (SetQuotient-is-set _ _) _ _)
+    (λ _ → prop-has-all-paths (SetQuot-is-set _ _) _ _)
     (λ _ → prop-has-all-paths R-is-prop _ _)

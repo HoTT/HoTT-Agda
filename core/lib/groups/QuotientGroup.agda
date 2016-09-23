@@ -31,14 +31,14 @@ module _ {i j} {G : Group i} (P : NormalSubgroupProp G j) where
       ident = q[ G.ident ]
 
       inv : SetQuotient quotient-group-rel → SetQuotient quotient-group-rel
-      inv = SetQuot-rec SetQuotient-level (λ g → q[ G.inv g ])
+      inv = SetQuot-rec SetQuot-level (λ g → q[ G.inv g ])
         (λ {g₁} {g₂} pg₁g₂⁻¹
           → ! $ quot-rel $ transport! (λ g → P.prop (G.inv g₂ ⊙ g))
               (G.inv-inv g₁) $ P.comm g₁ (G.inv g₂) pg₁g₂⁻¹ )
 
       comp : SetQuotient quotient-group-rel → SetQuotient quotient-group-rel → SetQuotient quotient-group-rel
-      comp = SetQuot-rec (→-is-set SetQuotient-level)
-        (λ g₁ → SetQuot-rec SetQuotient-level
+      comp = SetQuot-rec (→-is-set SetQuot-level)
+        (λ g₁ → SetQuot-rec SetQuot-level
           (λ g₂ → q[ g₁ ⊙ g₂ ])
           (λ {g₂} {g₂'} pg₂g₂'⁻¹ → quot-rel $ transport P.prop
             ( ap (_⊙ G.inv g₁) (! $ G.assoc g₁ g₂ (G.inv g₂'))
@@ -46,7 +46,7 @@ module _ {i j} {G : Group i} (P : NormalSubgroupProp G j) where
             ∙ ap ((g₁ ⊙ g₂) ⊙_) (! $ G.inv-comp g₁ g₂'))
             (P.conj g₁ pg₂g₂'⁻¹)))
         (λ {g₁} {g₁'} pg₁g₁'⁻¹ → λ= $ SetQuot-elim
-          (λ _ → =-preserves-set SetQuotient-level)
+          (λ _ → =-preserves-set SetQuot-level)
           (λ g₂ → quot-rel $ transport! P.prop
             ( ap ((g₁ ⊙ g₂) ⊙_) (G.inv-comp g₁' g₂)
             ∙ ! (G.assoc (g₁ ⊙ g₂) (G.inv g₂) (G.inv g₁') )
@@ -55,46 +55,46 @@ module _ {i j} {G : Group i} (P : NormalSubgroupProp G j) where
               ∙ ap (g₁ ⊙_) (G.inv-r g₂)
               ∙ G.unit-r g₁))
             pg₁g₁'⁻¹)
-          (λ _ → prop-has-all-paths-↓ (SetQuotient-level _ _)))
+          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _)))
       abstract
         unit-l : ∀ g → comp ident g == g
         unit-l = SetQuot-elim
-          (λ _ → =-preserves-set SetQuotient-level)
+          (λ _ → =-preserves-set SetQuot-level)
           (ap q[_] ∘ G.unit-l)
-          (λ _ → prop-has-all-paths-↓ (SetQuotient-level _ _))
+          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
 
         unit-r : ∀ g → comp g ident == g
         unit-r = SetQuot-elim
-          (λ _ → =-preserves-set SetQuotient-level)
+          (λ _ → =-preserves-set SetQuot-level)
           (ap q[_] ∘ G.unit-r)
-          (λ _ → prop-has-all-paths-↓ (SetQuotient-level _ _))
+          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
 
         assoc : ∀ g₁ g₂ g₃ → comp (comp g₁ g₂) g₃ == comp g₁ (comp g₂ g₃)
         assoc = SetQuot-elim
-          (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set SetQuotient-level)
+          (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set SetQuot-level)
           (λ g₁ → SetQuot-elim
-            (λ _ → Π-is-set λ _ → =-preserves-set SetQuotient-level)
+            (λ _ → Π-is-set λ _ → =-preserves-set SetQuot-level)
             (λ g₂ → SetQuot-elim
-              (λ _ → =-preserves-set SetQuotient-level)
+              (λ _ → =-preserves-set SetQuot-level)
               (λ g₃ → ap q[_] $ G.assoc g₁ g₂ g₃)
-              (λ _ → prop-has-all-paths-↓ (SetQuotient-level _ _)))
-            (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → SetQuotient-level _ _)))
-          (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → Π-is-prop λ _ → SetQuotient-level _ _))
+              (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _)))
+            (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → SetQuot-level _ _)))
+          (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → Π-is-prop λ _ → SetQuot-level _ _))
 
       inv-l : ∀ g → comp (inv g) g == ident
       inv-l = SetQuot-elim
-        (λ _ → =-preserves-set SetQuotient-level)
+        (λ _ → =-preserves-set SetQuot-level)
         (ap q[_] ∘ G.inv-l)
-        (λ _ → prop-has-all-paths-↓ (SetQuotient-level _ _))
+        (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
 
       inv-r : ∀ g → comp g (inv g) == ident
       inv-r = SetQuot-elim
-        (λ _ → =-preserves-set SetQuotient-level)
+        (λ _ → =-preserves-set SetQuot-level)
         (ap q[_] ∘ G.inv-r)
-        (λ _ → prop-has-all-paths-↓ (SetQuotient-level _ _))
+        (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
 
   QuotientGroup : Group (lmax i j)
-  QuotientGroup = group _ SetQuotient-level quotient-group-struct
+  QuotientGroup = group _ SetQuot-level quotient-group-struct
 
 {- helper functions -}
 module _ {i j} {G : Group i} {P : NormalSubgroupProp G j} where
@@ -111,19 +111,14 @@ module _ {i j} {G : Group i} {P : NormalSubgroupProp G j} where
 
   private
     abstract
-      quotient-group-rel-is-refl : ∀ g → quotient-group-rel P g g
+      quotient-group-rel-is-refl : is-refl (quotient-group-rel P)
       quotient-group-rel-is-refl g = transport! P.prop (G.inv-r g) P.ident
 
-      quotient-group-rel-is-sym : ∀ {g₁ g₂}
-        → quotient-group-rel P g₁ g₂
-        → quotient-group-rel P g₂ g₁
+      quotient-group-rel-is-sym : is-sym (quotient-group-rel P)
       quotient-group-rel-is-sym {g₁} {g₂} pg₁g₂⁻¹ =
         transport P.prop (G.inv-comp g₁ (G.inv g₂) ∙ ap (_⊙ G.inv g₁) (G.inv-inv g₂)) (P.inv pg₁g₂⁻¹)
 
-      quotient-group-rel-is-trans : ∀ {g₁ g₂ g₃}
-        → quotient-group-rel P g₁ g₂
-        → quotient-group-rel P g₂ g₃
-        → quotient-group-rel P g₁ g₃
+      quotient-group-rel-is-trans : is-trans (quotient-group-rel P)
       quotient-group-rel-is-trans {g₁} {g₂} {g₃} pg₁g₂⁻¹ pg₂g₃⁻¹ =
         transport P.prop
           ( G.assoc g₁ (G.inv g₂) (g₂ ⊙ G.inv g₃)

@@ -7,6 +7,7 @@ open import lib.types.TLevel
 open import lib.types.Empty
 open import lib.types.Pi
 open import lib.types.Pointed
+open import lib.types.PointedSigma
 open import lib.types.Paths
 open import lib.types.Sigma
 open import lib.types.Truncation
@@ -54,7 +55,7 @@ module _ {i} (n : ℕ) {X : Ptd i} where
 
 Ω-isemap : ∀ {i j} {X : Ptd i} {Y : Ptd j}
   (F : fst (X ⊙→ Y)) → is-equiv (fst F) → is-equiv (Ω-fmap F)
-Ω-isemap (f , idp) e = ap-equiv-is-equiv e _ _
+Ω-isemap (f , idp) e = ap-is-equiv e _ _
 
 Ω-emap : ∀ {i j} {X : Ptd i} {Y : Ptd j}
   → (X ⊙≃ Y) → (Ω X ≃ Ω Y)

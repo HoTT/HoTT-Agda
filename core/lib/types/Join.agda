@@ -5,6 +5,7 @@ open import lib.types.Paths
 open import lib.types.Sigma
 open import lib.types.Span
 open import lib.types.Pointed
+open import lib.types.PointedSigma
 open import lib.types.Pushout
 
 module lib.types.Join  where

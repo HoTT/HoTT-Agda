@@ -65,7 +65,7 @@ thing y =
   from-c-loop' y ∎
 
 to-from-c : (x y : S¹) → to (from-c x y) == (x , y)
-to-from-c = {!!} --S¹-elim to-from-c-base (↓-cst→app-in to-from-c-loop)
+to-from-c = {!!} --S¹-elim to-from-c-base (↓-Π-cst-app-in to-from-c-loop)
   where
 
   to-from-c-base-loop' : ap (to ∘ from-c-base) loop =-= ap (λ y → (base , y)) loop

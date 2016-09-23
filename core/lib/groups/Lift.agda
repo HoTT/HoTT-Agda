@@ -4,6 +4,7 @@ open import lib.Basics
 open import lib.types.Group
 open import lib.types.Lift
 open import lib.groups.Homomorphism
+open import lib.groups.Isomorphism
 
 module lib.groups.Lift where
 

@@ -14,6 +14,7 @@ open import lib.types.Pointed
 open import lib.groups.LoopSpace
 open import lib.groups.Homomorphism
 open import lib.groups.HomotopyGroup
+open import lib.groups.Isomorphism
 
 module lib.types.EilenbergMacLane1 where
 

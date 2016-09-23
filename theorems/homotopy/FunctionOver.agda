@@ -4,7 +4,7 @@ open import HoTT
 
 {- Useful lemmas for computing the effect of transporting a function
  - across an equivalence in the domain or codomain.
- - TODO find a better place for this. -}
+ - TODO move these lemmas into lib.types.Pi or lib.types.PointedPi -}
 
 -- XXX Naming convensions?
 
@@ -70,7 +70,7 @@ module _ {i} {j} {A : Type i} {B : Type j} (f : A → B) where
 
   codomain-over-equiv : {C : Type j} (e : B ≃ C)
     → f == –> e ∘ f [ (λ D → (A → D)) ↓ ua e ]
-  codomain-over-equiv e = ↓-cst→app-in $ λ _ → ↓-idf-ua-in e idp
+  codomain-over-equiv e = ↓-Π-cst-app-in $ λ _ → ↓-idf-ua-in e idp
 
 module _ {i} {j} {A : Type i} {C : Type j} (g : A → C) where
 
@@ -80,7 +80,7 @@ module _ {i} {j} {A : Type i} {C : Type j} (g : A → C) where
 
   codomain!-over-equiv : {B : Type j} (e : B ≃ C)
     → <– e ∘ g == g [ (λ D → (A → D)) ↓ ua e ]
-  codomain!-over-equiv e = ↓-cst→app-in $ λ _ → ↓-idf-ua-in e (<–-inv-r e _)
+  codomain!-over-equiv e = ↓-Π-cst-app-in $ λ _ → ↓-idf-ua-in e (<–-inv-r e _)
 
 {- transporting a ptd function along a equivalence or path in the codomain -}
 module _ {i} {j} {X : Ptd i} {Y : Ptd j} (f : fst (X ⊙→ Y)) where

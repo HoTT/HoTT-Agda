@@ -117,13 +117,13 @@ conn-elim-general {B = B} {n = n} {k = S k'} {f = f} c P t =
       ∘e transport (λ w → (w == app= (p ∙ ! q)) 
                       ≃ (ap (λ v → v ∘ f) (λ= H) == p ∙ ! q))
                    (app=-ap f (λ= H) ∙ ap (λ k → k ∘ f) (λ= $ app=-β H))
-                   (ap-equiv-equiv app=-equiv _ _ ⁻¹)
+                   (ap-equiv app=-equiv _ _ ⁻¹)
 
     e : ∀ g h p q  →
       (Σ (∀ x → g x == h x) (λ r → (r ∘ f) == app= (p ∙ ! q)))
       ≃ ((g , p) == (h , q)) 
     e g h p q = 
-      ((=Σ-econv _ _ ∘e Σ-emap-r (λ u → ↓-app=cst-eqv ∘e !-equiv))
+      ((=Σ-econv _ _ ∘e Σ-emap-r (λ u → ↓-app=cst-econv ∘e !-equiv))
       ∘e (Σ-emap-l _ λ=-equiv)) ∘e Σ-emap-r (lemma g h p q)
               
 

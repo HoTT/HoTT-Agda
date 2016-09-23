@@ -129,8 +129,8 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k
         → u t == u' t' [ uncurry C ↓ pair= p q ])
     ≃ (u == u' [ (λ x → Π (B x) (C x)) ↓ p ])
   ↓-Π-equiv {p = idp} = equiv ↓-Π-in ↓-Π-out ↓-Π-η
-    (λ u → <– (ap-equiv-equiv expose-equiv _ _)
-      (λ= (λ t → <– (ap-equiv-equiv expose-equiv _ _)
+    (λ u → <– (ap-equiv expose-equiv _ _)
+      (λ= (λ t → <– (ap-equiv expose-equiv _ _)
         (λ= (λ t' → λ= (↓-Π-β u))))))
 
 {- Dependent paths in a Π-type where the codomain is not dependent on anything
@@ -168,6 +168,25 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : Type k} {x x' : A}
              =⟨ ↓-cst-β (pair= p q) (f q) ⟩
     f q =∎
 
+{- Similar to above, with domain being the identity function. -}
+{- These lemmas were in homotopy.FunctionOver and in different conventions. -}
+
+module _ {i j} {A B : Type i} {C : Type j}
+  {u : A → C} {v : B → C} (e : A ≃ B) where
+
+  ↓-idf→cst-in : u == v ∘ –> e
+               → u == v [ (λ x → x → C) ↓ ua e ]
+  ↓-idf→cst-in q = lemma (ua e) (q ∙ ap (v ∘_) (λ= (! ∘ coe-β e)))
+    where
+      lemma : {A B : Type i} {u : A → C} {v : B → C} (p : A == B)
+        → u == v ∘ coe p → u == v [ (λ x → x → C) ↓ p ]
+      lemma idp q = q
+
+  ↓-idf→cst-in' : u ∘ <– e == v
+                → u == v [ (λ x → x → C) ↓ ua e ]
+  ↓-idf→cst-in' q = ↓-idf→cst-in
+    (λ= λ a → ap u (! (<–-inv-l e a)) ∙ app= q (–> e a))
+
 {- Dependent paths in an arrow type -}
 module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
   {x x' : A} {p : x == x'} {u : B x → C x} {u' : B x' → C x'} where
@@ -202,17 +221,17 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} where
 -- Dependent paths in a Π-type where the domain is constant
 module _ {i j k} {A : Type i} {B : Type j} {C : A → B → Type k} where
 
-  ↓-cst→app-in : {x x' : A} {p : x == x'}
+  ↓-Π-cst-app-in : {x x' : A} {p : x == x'}
     {u : (b : B) → C x b} {u' : (b : B) → C x' b}
     → ((b : B) → u b == u' b [ (λ x → C x b) ↓ p ])
     → (u == u' [ (λ x → (b : B) → C x b) ↓ p ])
-  ↓-cst→app-in {p = idp} f = λ= f
+  ↓-Π-cst-app-in {p = idp} f = λ= f
 
-  ↓-cst→app-out : {x x' : A} {p : x == x'}
+  ↓-Π-cst-app-out : {x x' : A} {p : x == x'}
     {u : (b : B) → C x b} {u' : (b : B) → C x' b}
     → (u == u' [ (λ x → (b : B) → C x b) ↓ p ])
     → ((b : B) → u b == u' b [ (λ x → C x b) ↓ p ])
-  ↓-cst→app-out {p = idp} q = app= q
+  ↓-Π-cst-app-out {p = idp} q = app= q
 
 split-ap2 : ∀ {i j k} {A : Type i} {B : A → Type j} {C : Type k} (f : Σ A B → C)
   {x y : A} (p : x == y)

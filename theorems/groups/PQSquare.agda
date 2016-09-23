@@ -4,14 +4,15 @@ open import HoTT
 open import homotopy.ConstantToSetExtendsToProp
 
 {-
-        q[_]ᴳ
-   G/Q<-----<G
-    ^        ^
-    ^ φ₂     ^ inject
-    |   φ₁   |
-    K<------<P
+          q[_]ᴳ
+     G/Q ←-----↢ G
+      ↟          ↟
+   φ₂ ╎          ╎ inject
+      ╎          ╎
+      K ←------↢ P
+           φ₁
 
-    Then, K ≃ᴳ P/Q
+     Then, K ≃ᴳ P/Q.
 -}
 
 module groups.PQSquare {i j₁ j₂ k l₁ l₂}

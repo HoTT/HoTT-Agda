@@ -39,7 +39,7 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k}
 
 is-contr-map : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
   → Type (lmax i j)
-is-contr-map {A = A} {B = B} f = (y : B) → is-contr (Σ A (λ x → f x == y))
+is-contr-map {A = A} {B = B} f = (y : B) → is-contr (hfiber f y)
 
 equiv-is-contr-map : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
   → (is-equiv f → is-contr-map f)
@@ -54,10 +54,10 @@ contr-map-is-equiv {f = f} cm = is-eq _
   (λ a → ap fst (snd (cm (f a)) (a , idp)))
 
 
-fiber=-eqv : ∀ {i j} {A : Type i} {B : Type j} {h : A → B} {y : B}
+fiber=-econv : ∀ {i j} {A : Type i} {B : Type j} {h : A → B} {y : B}
   (r s : Σ A (λ x → h x == y))
   → (r == s) ≃ Σ (fst r == fst s) (λ γ → ap h γ ∙ snd s == snd r)
-fiber=-eqv r s = Σ-emap-r (λ γ → !-equiv ∘e (↓-app=cst-eqv ⁻¹)) ∘e ((=Σ-econv r s)⁻¹)
+fiber=-econv r s = Σ-emap-r (λ γ → !-equiv ∘e (↓-app=cst-econv ⁻¹)) ∘e ((=Σ-econv r s)⁻¹)
 
 
 module _ {i j} {A : Type i} {B : Type j} where
@@ -89,17 +89,17 @@ module _ {i j} {A : Type i} {B : Type j} {f : A → B} (e : is-equiv f) where
 
 module _ {i j} {A : Type i} {B : Type j} {f : A → B} where
 
-  rcoh-eqv : (v : rinv f)
+  rcoh-econv : (v : rinv f)
     → rcoh f v ≃ Π A (λ x → (fst v (f x) , snd v (f x)) == (x , idp {a = f x}))
-  rcoh-eqv v = Π-emap-r (λ x → ((fiber=-eqv {h = f} _ _)⁻¹) ∘e apply-unit-r x) ∘e choice ⁻¹
+  rcoh-econv v = Π-emap-r (λ x → ((fiber=-econv {h = f} _ _)⁻¹) ∘e apply-unit-r x) ∘e choice ⁻¹
     where
       apply-unit-r : ∀ x → Σ _ (λ γ → ap f γ == _) ≃ Σ _ (λ γ → ap f γ ∙ idp == _)
       apply-unit-r x = Σ-emap-r λ γ
         → coe-equiv (ap (λ q → q == snd v (f x)) (! (∙-unit-r _)))
 
-  lcoh-eqv : (v : linv f)
+  lcoh-econv : (v : linv f)
     → lcoh f v ≃ Π B (λ y → (f (fst v y) , snd v (fst v y)) == (y , idp))
-  lcoh-eqv v = Π-emap-r (λ y → ((fiber=-eqv {h = fst v} _ _)⁻¹) ∘e apply-unit-r y) ∘e choice ⁻¹
+  lcoh-econv v = Π-emap-r (λ y → ((fiber=-econv {h = fst v} _ _)⁻¹) ∘e apply-unit-r y) ∘e choice ⁻¹
     where
       apply-unit-r : ∀ y → Σ _ (λ γ → ap (fst v) γ == _) ≃ Σ _ (λ γ → ap (fst v) γ ∙ idp == _)
       apply-unit-r y = Σ-emap-r λ γ
@@ -108,12 +108,12 @@ module _ {i j} {A : Type i} {B : Type j} {f : A → B} where
 
 equiv-rcoh-is-contr : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
                       (e : is-equiv f) → (v : rinv f) → is-contr (rcoh f v)
-equiv-rcoh-is-contr {f = f} e v = equiv-preserves-level ((rcoh-eqv v)⁻¹)
+equiv-rcoh-is-contr {f = f} e v = equiv-preserves-level ((rcoh-econv v)⁻¹)
   (Π-level (λ x → =-preserves-level -2 (equiv-is-contr-map e (f x))))
 
-rinv-and-rcoh-eqv-is-equiv : ∀ {i j} {A : Type i} {B : Type j} {h : A → B}
+rinv-and-rcoh-is-equiv : ∀ {i j} {A : Type i} {B : Type j} {h : A → B}
   → Σ (rinv h) (rcoh h) ≃ is-equiv h
-rinv-and-rcoh-eqv-is-equiv {h = h} = equiv f g (λ _ → idp) (λ _ → idp)
+rinv-and-rcoh-is-equiv {h = h} = equiv f g (λ _ → idp) (λ _ → idp)
   where f : Σ (rinv h) (rcoh h) → is-equiv h
         f s = record {g = fst (fst s); f-g = snd (fst s);
                       g-f = fst (snd s); adj = snd (snd s)}
@@ -123,7 +123,7 @@ rinv-and-rcoh-eqv-is-equiv {h = h} = equiv f g (λ _ → idp) (λ _ → idp)
 is-equiv-is-prop : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
   → is-prop (is-equiv f)
 is-equiv-is-prop = inhab-to-contr-is-prop λ e →
-  equiv-preserves-level rinv-and-rcoh-eqv-is-equiv
+  equiv-preserves-level rinv-and-rcoh-is-equiv
     (Σ-level (equiv-rinv-is-contr e) (equiv-rcoh-is-contr e))
 
 is-equiv-prop : ∀ {i j} {A : Type i} {B : Type j}
@@ -139,6 +139,19 @@ ua-∘e =
   equiv-induction
     (λ {A} {B} e₁ → ∀ {C} → ∀ (e₂ : B ≃ C) → ua (e₂ ∘e e₁) == ua e₁ ∙ ua e₂)
     (λ A → λ e₂ → ap ua (∘e-unit-r e₂) ∙ ap (λ w → (w ∙ ua e₂)) (! (ua-η idp)))
+
+{- Not sure about the interface.
+
+{- Adjointion where hom = path -}
+
+module _ {i j} {A : Type i} {B : Type j} (e : A ≃ B) where
+
+  =-adjunct : ∀ {a b} → (–> e a == b) → (a == <– e b)
+  =-adjunct p = ! (<–-inv-l e _) ∙ ap (<– e) p
+
+  =-adjunct' : ∀ {a b} → (a == <– e b) → (–> e a == b)
+  =-adjunct' p = ap (–> e) p ∙ (<–-inv-r e _)
+-}
 
 {- Type former equivalences involving Empty may require λ=. -}
 module _ {j} {B : Empty → Type j} where

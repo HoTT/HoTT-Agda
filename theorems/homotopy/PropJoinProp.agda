@@ -56,7 +56,7 @@ relating [coh1], [coh2], [coh3] and [coh4].
 
 eq : (x y : A * B) → x == y
 eq = Pushout-elim eq-left eq-right
-       (λ {(a , b) → ↓-cst→app-in (Pushout-elim (λ a' → ↓-idf=cst-in (coh3 (pA a a')))
+       (λ {(a , b) → ↓-Π-cst-app-in (Pushout-elim (λ a' → ↓-idf=cst-in (coh3 (pA a a')))
                                                 (λ b' → ↓-idf=cst-in (coh4 (pB b b')))
                                                 (λ {(a' , b') → ↓-idf=cst-in=↓ (↓-=-in
    (coh3 (pA a a') ◃ apd (λ x → glue (a , b) ∙' eq-right b x) (glue (a' , b'))

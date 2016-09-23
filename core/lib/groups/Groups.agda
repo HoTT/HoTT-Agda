@@ -9,6 +9,7 @@ open import lib.groups.GroupProduct public
 open import lib.groups.Homomorphism public
 open import lib.groups.HomotopyGroup public
 open import lib.groups.Int public
+open import lib.groups.Isomorphism public
 open import lib.groups.Lift public
 open import lib.groups.LoopSpace public
 open import lib.groups.QuotientGroup public

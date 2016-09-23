@@ -30,7 +30,7 @@ module _ {A : Type i} where
   qw[_] = q[_]
 
   QuotWord-level : is-set (QuotWord A)
-  QuotWord-level = SetQuotient-level
+  QuotWord-level = SetQuot-level
 
   QuotWord-is-set = QuotWord-level
 

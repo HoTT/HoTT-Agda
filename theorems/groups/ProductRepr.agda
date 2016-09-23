@@ -60,7 +60,7 @@ module ProductRepr {i j}
     ∙ H₂.unit-l h₂
 
   iso : G ≃ᴳ (H₁ ×ᴳ H₂)
-  iso = surjᴳ-injᴳ-iso (×ᴳ-fanout j₁ j₂)
+  iso = surjᴳ-and-injᴳ-iso (×ᴳ-fanout j₁ j₂)
     (has-trivial-ker-is-injᴳ (×ᴳ-fanout j₁ j₂) fanout-has-trivial-ker)
     (λ {(h₁ , h₂) → [ G.comp (i₁.f h₁) (i₂.f h₂) ,
                       pair×= (β₁ h₁ h₂) (β₂ h₁ h₂) ]})

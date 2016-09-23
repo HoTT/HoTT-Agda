@@ -242,13 +242,13 @@ module _ {i j} {A : Type i} {B : Type j} where
 
               open is-equiv (snd e)
 
-  ap-equiv-is-equiv : {f : A → B} → is-equiv f
+  ap-is-equiv : {f : A → B} → is-equiv f
     → (x y : A) → is-equiv (ap f :> (x == y → f x == f y))
-  ap-equiv-is-equiv {f} e x y =
+  ap-is-equiv {f} e x y =
     is-eq (ap f) (equiv-is-inj e _ _) (right-inverse (_ , e)) (left-inverse (_ , e))
 
-  ap-equiv-equiv : (e : A ≃ B) (x y : A) → (x == y) ≃ (–> e x == –> e y)
-  ap-equiv-equiv e x y = _ , ap-equiv-is-equiv (snd e) x y
+  ap-equiv : (e : A ≃ B) (x y : A) → (x == y) ≃ (–> e x == –> e y)
+  ap-equiv e x y = _ , ap-is-equiv (snd e) x y
 
 
 {- Equivalent types have the same truncation level -}
@@ -257,7 +257,7 @@ equiv-preserves-level : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} (e :
 equiv-preserves-level {n = ⟨-2⟩} e (x , p) =
   (–> e x , (λ y → ap (–> e) (p _) ∙ <–-inv-r e y))
 equiv-preserves-level {n = S n} e c = λ x y →
-   equiv-preserves-level (ap-equiv-equiv (e ⁻¹) x y ⁻¹) (c (<– e x) (<– e y))
+   equiv-preserves-level (ap-equiv (e ⁻¹) x y ⁻¹) (c (<– e x) (<– e y))
 
 {- This is a collection of type equivalences involving basic type formers.
    We exclude Empty since Π₁-Empty requires λ=.

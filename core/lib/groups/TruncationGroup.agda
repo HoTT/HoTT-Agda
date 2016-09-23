@@ -7,6 +7,7 @@ open import lib.types.Sigma
 open import lib.types.Truncation
 open import lib.groups.GroupProduct
 open import lib.groups.Homomorphism
+open import lib.groups.Isomorphism
 
 module lib.groups.TruncationGroup where
 

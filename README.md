@@ -33,7 +33,7 @@ Style and naming conventions
 - Terms are in lowercase-with-hyphens-between-words
   unless the words refer to types.
 - Try to avoid names of free variables in identifiers
-- Pointedness and other disambiguating labels may be omitted if inferable.
+- Pointedness and other disambiguating labels may be omitted if inferable from prefixes.
 
 TODO: principles of variable names
 
@@ -126,7 +126,7 @@ We have
     A-to-B-path : A == B
     A-is-B : A == B
 
-Another form of equivalences only has the beginning types.
+Another way of naming of equivalences only specifies one side.
 Suffixes `-econv` may be added for clarity.
 The suffix `-conv` refers to the derived path.
 
@@ -137,6 +137,8 @@ The suffix `-conv` refers to the derived path.
 TODO: `pres` and `preserves`.
 
 TODO: `-inj` and `-surj` for injectivity and surjectivity.
+
+TODO: `-nat` for naturality.
 
 ### Negative types
 
@@ -253,9 +255,9 @@ This directory contains proofs of interesting theorems about CW complexes.
 
 TODO: describe more precisely each file
 
-### Experimental (directory `experimental/`)
+### Experimental and unfinished (directory `stash/`)
 
-This directory contains experimental things (as you can guess).
+This directory contains experimental or unfinished work.
 
 ACKNOWLEDGMENT
 --------------

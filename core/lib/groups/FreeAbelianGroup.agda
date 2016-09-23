@@ -31,7 +31,7 @@ module _ {A : Type i} where
   fs[_] = q[_]
 
   FormalSum-level : is-set (FormalSum A)
-  FormalSum-level = SetQuotient-level
+  FormalSum-level = SetQuot-level
 
   FormalSum-is-set = FormalSum-level
 

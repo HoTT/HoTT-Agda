@@ -206,29 +206,29 @@ module _ {A : Type i} {dec : has-dec-eq A} where
   coef-ext {fs₁} {fs₂} = ext' fs₁ fs₂ where
     ext' : ∀ fs₁ fs₂ → (∀ a → coef fs₁ a == coef fs₂ a) → fs₁ == fs₂
     ext' = SetQuot-elim
-      (λ _ → Π-is-set λ _ → →-is-set $ =-preserves-set SetQuotient-is-set)
+      (λ _ → Π-is-set λ _ → →-is-set $ =-preserves-set SetQuot-is-set)
       (λ l₁ → SetQuot-elim
-        (λ _ → →-is-set $ =-preserves-set SetQuotient-is-set)
+        (λ _ → →-is-set $ =-preserves-set SetQuot-is-set)
         (λ l₂ r → quot-rel r)
-        (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → SetQuotient-is-set _ _)))
-      (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → Π-is-prop λ _ → SetQuotient-is-set _ _))
+        (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → SetQuot-is-set _ _)))
+      (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → Π-is-prop λ _ → SetQuot-is-set _ _))
 
   infixl 80 _⊞_
   _⊞_ : FormalSum dec → FormalSum dec → FormalSum dec
   _⊞_ = SetQuot-rec
-    (→-is-set SetQuotient-is-set)
-    (λ l₁ → SetQuot-rec SetQuotient-is-set (q[_] ∘ (l₁ ++_))
+    (→-is-set SetQuot-is-set)
+    (λ l₁ → SetQuot-rec SetQuot-is-set (q[_] ∘ (l₁ ++_))
       (λ {l₂} {l₂'} r → quot-rel λ a
         → coef-pre-++ dec l₁ l₂ a
         ∙ ap (coef-pre dec l₁ a ℤ+_) (r a)
         ∙ ! (coef-pre-++ dec l₁ l₂' a)))
     (λ {l₁} {l₁'} r → λ= $ SetQuot-elim
-      (λ _ → =-preserves-set SetQuotient-is-set)
+      (λ _ → =-preserves-set SetQuot-is-set)
       (λ l₂ → quot-rel λ a
         → coef-pre-++ dec l₁ l₂ a
         ∙ ap (_ℤ+ coef-pre dec l₂ a) (r a)
         ∙ ! (coef-pre-++ dec l₁' l₂ a))
-      (λ _ → prop-has-all-paths-↓ (SetQuotient-is-set _ _)))
+      (λ _ → prop-has-all-paths-↓ (SetQuot-is-set _ _)))
 
   coef-⊞ : ∀ fs₁ fs₂ a → coef (fs₁ ⊞ fs₂) a == coef fs₁ a ℤ+ coef fs₂ a
   coef-⊞ = SetQuot-elim
@@ -240,7 +240,7 @@ module _ {A : Type i} {dec : has-dec-eq A} where
     (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → Π-is-prop λ _ → ℤ-is-set _ _))
 
   ⊟ : FormalSum dec → FormalSum dec
-  ⊟ = SetQuot-rec SetQuotient-is-set (q[_] ∘ flip-pre)
+  ⊟ = SetQuot-rec SetQuot-is-set (q[_] ∘ flip-pre)
     λ {l₁} {l₂} r → quot-rel λ a
       → coef-pre-flip dec l₁ a ∙ ap ℤ~ (r a) ∙ ! (coef-pre-flip dec l₂ a)
 
@@ -262,15 +262,15 @@ module _ {A : Type i} {dec : has-dec-eq A} where
 
   ⊞-unit-l : ∀ fs → ⊞-unit ⊞ fs == fs
   ⊞-unit-l = SetQuot-elim
-    (λ _ → =-preserves-set SetQuotient-is-set)
+    (λ _ → =-preserves-set SetQuot-is-set)
     (λ l → idp)
-    (λ _ → prop-has-all-paths-↓ (SetQuotient-is-set _ _))
+    (λ _ → prop-has-all-paths-↓ (SetQuot-is-set _ _))
 
   ⊞-unit-r : ∀ fs → fs ⊞ ⊞-unit == fs
   ⊞-unit-r = SetQuot-elim
-    (λ _ → =-preserves-set SetQuotient-is-set)
+    (λ _ → =-preserves-set SetQuot-is-set)
     (λ l → ap q[_] $ ++-unit-r l)
-    (λ _ → prop-has-all-paths-↓ (SetQuotient-is-set _ _))
+    (λ _ → prop-has-all-paths-↓ (SetQuot-is-set _ _))
 -}
 
   ⊞-unit-l : ∀ fs → ⊞-unit ⊞ fs == fs
@@ -317,7 +317,7 @@ module _ {A : Type i} {dec : has-dec-eq A} where
     }
 
   FreeAbelianGroup : Group i
-  FreeAbelianGroup = group _ SetQuotient-is-set FormalSum-group-structure
+  FreeAbelianGroup = group _ SetQuot-is-set FormalSum-group-structure
 
   has-finite-supports : (A → ℤ) → Type i
   has-finite-supports f = Σ (FormalSum dec) λ fs → ∀ a → f a == coef fs a

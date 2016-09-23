@@ -3,6 +3,7 @@
 open import lib.Basics
 open import lib.types.Cofiber
 open import lib.types.Pointed
+open import lib.types.PointedSigma
 open import lib.types.Wedge
 
 module lib.types.Smash {i j} (X : Ptd i) (Y : Ptd j) where

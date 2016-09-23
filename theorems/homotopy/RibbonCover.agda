@@ -66,7 +66,7 @@ module homotopy.RibbonCover {i : ULevel} where
       due to [paste].
     -}
     Ribbon-level : is-set (Ribbon A∙ gs a₂)
-    Ribbon-level = SetQuotient-level
+    Ribbon-level = SetQuot-level
 
     Ribbon-is-set = Ribbon-level
 
