@@ -78,7 +78,7 @@ module _ {R : Rel A j}
         (λ b → R a b , R-is-prop)
         (nType=-out ∘ lemma-a))
       (λ ra₁a₂ → λ= $ SetQuot-elim
-        (λ _ → prop-has-level-S $ hProp-is-set j _ _)
+        (λ _ → raise-level -1 $ hProp-is-set j _ _)
         (λ _ → nType=-out $ lemma-b ra₁a₂)
         (λ _ → prop-has-all-paths-↓ $ hProp-is-set j _ _))
       where
@@ -106,7 +106,7 @@ module _ {R : Rel A j}
 
       R-over-quot-is-refl : (q : Q) → R-over-quot q q
       R-over-quot-is-refl = SetQuot-elim
-        (λ q → prop-has-level-S (R-over-quot-is-prop {q} {q}))
+        (λ q → raise-level -1 (R-over-quot-is-prop {q} {q}))
         (λ a → R-is-refl a)
         (λ _ → prop-has-all-paths-↓ R-is-prop)
 

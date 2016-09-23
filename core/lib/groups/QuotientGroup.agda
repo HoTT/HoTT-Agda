@@ -203,8 +203,8 @@ module _ {i j k} {G : Group i}
         comp-inv-r' : ∀ g₁' g₂' → prop g₁' → prop g₂' → prop (QG.comp g₁' (QG.inv g₂'))
         comp-inv-r' = SetQuot-elim
           {P = λ g₁' → ∀ g₂' → prop g₁' → prop g₂' → prop (QG.comp g₁' (QG.inv g₂'))}
-          (λ g₁' → Π-is-set λ g₂' → →-is-set $ →-is-set $ prop-has-level-S (level (QG.comp g₁' (QG.inv g₂'))))
-          (λ g₁ → SetQuot-elim (λ g₂' → →-is-set $ →-is-set $ prop-has-level-S (level (QG.comp q[ g₁ ] (QG.inv g₂'))))
+          (λ g₁' → Π-is-set λ g₂' → →-is-set $ →-is-set $ raise-level -1 (level (QG.comp g₁' (QG.inv g₂'))))
+          (λ g₁ → SetQuot-elim (λ g₂' → →-is-set $ →-is-set $ raise-level -1 (level (QG.comp q[ g₁ ] (QG.inv g₂'))))
             (λ g₂ pg₁ pg₂ → P.comp-inv-r pg₁ pg₂)
             (λ {_} {g₂} _ → prop-has-all-paths-↓ (→-is-prop $ →-is-prop $ level q[ G.comp g₁ (G.inv g₂) ])))
           (λ {_} {g₁} _ → prop-has-all-paths-↓ (Π-is-prop λ g₂' → →-is-prop $ →-is-prop $ level (QG.comp q[ g₁ ] (QG.inv g₂'))))

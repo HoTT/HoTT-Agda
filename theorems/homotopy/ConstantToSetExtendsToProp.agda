@@ -2,7 +2,7 @@
 
 open import HoTT
 
-module homotopy.ConstantToSetFactorization
+module homotopy.ConstantToSetExtendsToProp
   {i j} {A : Type i} {B : Type j} (B-is-set : is-set B)
   (f : A → B) (f-is-const : ∀ a₁ a₂ → f a₁ == f a₂) where
 
@@ -30,7 +30,16 @@ module homotopy.ConstantToSetFactorization
   cst-extend : Trunc -1 A → B
   cst-extend = Skel-lift ∘ Trunc-rec Skel-is-prop q[_]
 
-  -- The beta rule.
-  -- This is definitionally true, so you don't need it.
-  cst-extend-β : cst-extend ∘ [_] == f
-  cst-extend-β = idp
+  abstract
+    cst-extend-is-const : ∀ a₁ a₂ → cst-extend a₁ == cst-extend a₂
+    cst-extend-is-const = Trunc-elim
+      (λ a₁ → Π-is-prop λ a₂ → B-is-set _ _)
+      (λ a₁ → Trunc-elim (λ a₂ → B-is-set _ _)
+        (λ a₂ → f-is-const a₁ a₂))
+
+  private
+    abstract
+      -- The beta rule.
+      -- This is definitionally true, so you don't need it.
+      cst-extend-β : cst-extend ∘ [_] == f
+      cst-extend-β = idp

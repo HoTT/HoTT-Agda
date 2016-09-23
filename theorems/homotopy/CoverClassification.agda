@@ -66,7 +66,7 @@ module homotopy.CoverClassification {i} (A∙ : Ptd i)
           trace a↑ idp₀
             ∎
 
-      open import homotopy.ConstantToSetFactorization
+      open import homotopy.ConstantToSetExtendsToProp
 
       fiber+path₋₁-to-ribbon : ∀ {a₂} (a↑ : Cover.Fiber cov a₂)
         → Trunc -1 (a₁ == a₂) → Ribbon A∙ (cover-to-gset cov) a₂
