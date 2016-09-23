@@ -96,10 +96,58 @@ module _ {i j} {G : Group i} (P : NormalSubgroupProp G j) where
   QuotientGroup : Group (lmax i j)
   QuotientGroup = group _ SetQuotient-level quotient-group-struct
 
+{- helper functions -}
 module _ {i j} {G : Group i} {P : NormalSubgroupProp G j} where
+  private
+    module G = Group G
+    module P = NormalSubgroupProp P
+    infix 80 _⊙_
+    _⊙_ = G.comp
 
   q[_]ᴳ : G →ᴳ QuotientGroup P
   q[_]ᴳ = group-hom q[_] λ _ _ → idp
+
+  quot-relᴳ = quot-rel {R = quotient-group-rel P}
+
+  private
+    abstract
+      quotient-group-rel-is-refl : ∀ g → quotient-group-rel P g g
+      quotient-group-rel-is-refl g = transport! P.prop (G.inv-r g) P.ident
+
+      quotient-group-rel-is-sym : ∀ {g₁ g₂}
+        → quotient-group-rel P g₁ g₂
+        → quotient-group-rel P g₂ g₁
+      quotient-group-rel-is-sym {g₁} {g₂} pg₁g₂⁻¹ =
+        transport P.prop (G.inv-comp g₁ (G.inv g₂) ∙ ap (_⊙ G.inv g₁) (G.inv-inv g₂)) (P.inv pg₁g₂⁻¹)
+
+      quotient-group-rel-is-trans : ∀ {g₁ g₂ g₃}
+        → quotient-group-rel P g₁ g₂
+        → quotient-group-rel P g₂ g₃
+        → quotient-group-rel P g₁ g₃
+      quotient-group-rel-is-trans {g₁} {g₂} {g₃} pg₁g₂⁻¹ pg₂g₃⁻¹ =
+        transport P.prop
+          ( G.assoc g₁ (G.inv g₂) (g₂ ⊙ G.inv g₃)
+          ∙ ap (g₁ ⊙_) ( ! (G.assoc (G.inv g₂) g₂ (G.inv g₃))
+                       ∙ ap (_⊙ G.inv g₃) (G.inv-l g₂)
+                       ∙ G.unit-l (G.inv g₃)))
+          (P.comp pg₁g₂⁻¹ pg₂g₃⁻¹)
+
+  quot-relᴳ-equiv : {g₁ g₂ : G.El} → P.prop (g₁ ⊙ G.inv g₂) ≃ (q[ g₁ ] == q[ g₂ ])
+  quot-relᴳ-equiv = quot-rel-equiv {R = quotient-group-rel P} (P.level _)
+    quotient-group-rel-is-refl
+    quotient-group-rel-is-sym
+    quotient-group-rel-is-trans
+
+module _ {i j k} {G : Group i}
+  (P : SubgroupProp G j) (Q : NormalSubgroupProp G k) where
+
+  quot-of-sub : NormalSubgroupProp (Subgroup P) k
+  quot-of-sub = Q ∘nsubᴳ Subgroup.inject P
+
+{- interactions between quotients and subgroups (work in progress) -}
+{- So far not used.
+
+-- QuotientGroup rel-over-sub ≃ᴳ Subgroup prop-over-quot
 
 module _ {i j k} {G : Group i}
   (Q : NormalSubgroupProp G j) (P : SubgroupProp G k)
@@ -161,8 +209,4 @@ module _ {i j k} {G : Group i}
             (λ {_} {g₂} _ → prop-has-all-paths-↓ (→-is-prop $ →-is-prop $ level q[ G.comp g₁ (G.inv g₂) ])))
           (λ {_} {g₁} _ → prop-has-all-paths-↓ (Π-is-prop λ g₂' → →-is-prop $ →-is-prop $ level (QG.comp q[ g₁ ] (QG.inv g₂'))))
 
-  rel-over-sub : NormalSubgroupProp (Subgroup P) j
-  rel-over-sub = Q ∘nsubᴳ SG.inject where module SG = Subgroup P
-
-  -- Maybe this is needed at some point.
-  -- QuotientGroup rel-over-sub ≃ᴳ Subgroup prop-over-quot
+-}
