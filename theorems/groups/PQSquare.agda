@@ -5,11 +5,11 @@ open import homotopy.ConstantToSetExtendsToProp
 
 {-
           q[_]ᴳ
-     G/Q ←-----↢ G
-      ↟          ↟
+     G/Q ↞------ G
+      ↑          ↑
    φ₂ ╎          ╎ inject
-      ╎          ╎
-      K ←------↢ P
+      ↑          ↑
+      K ↞------- P
            φ₁
 
      Then, K ≃ᴳ P/Q.
