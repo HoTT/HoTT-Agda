@@ -22,6 +22,7 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
   cfbase' : Cofiber
   cfbase' = left tt
 
+  -- codomain
   cfcod' : B → Cofiber
   cfcod' b = right b
 
