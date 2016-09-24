@@ -45,10 +45,10 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
-  ⊙winl : fst (X ⊙→ X ⊙∨ Y)
+  ⊙winl : X ⊙→ X ⊙∨ Y
   ⊙winl = (winl , idp)
 
-  ⊙winr : fst (Y ⊙→ X ⊙∨ Y)
+  ⊙winr : Y ⊙→ X ⊙∨ Y
   ⊙winr = (winr , ! wglue)
 
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
@@ -77,11 +77,11 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
   open WedgeRec public using () renaming (f to Wedge-rec)
 
 module ⊙WedgeRec {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-  (g : fst (X ⊙→ Z)) (h : fst (Y ⊙→ Z)) where
+  (g : X ⊙→ Z) (h : Y ⊙→ Z) where
 
   open WedgeRec (fst g) (fst h) (snd g ∙ ! (snd h)) public
 
-  ⊙f : fst (X ⊙∨ Y ⊙→ Z)
+  ⊙f : X ⊙∨ Y ⊙→ Z
   ⊙f = (f , snd g)
 
   ⊙winl-β : ⊙f ⊙∘ ⊙winl == g
@@ -99,7 +99,7 @@ module ⊙WedgeRec {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
 ⊙Wedge-rec = ⊙WedgeRec.⊙f
 
 ⊙Wedge-rec-post∘ : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
-  (k : fst (Z ⊙→ W)) (g : fst (X ⊙→ Z)) (h : fst (Y ⊙→ Z))
+  (k : Z ⊙→ W) (g : X ⊙→ Z) (h : Y ⊙→ Z)
   → k ⊙∘ ⊙Wedge-rec g h == ⊙Wedge-rec (k ⊙∘ g) (k ⊙∘ h)
 ⊙Wedge-rec-post∘ k g h = ⊙λ=
   (Wedge-elim (λ _ → idp) (λ _ → idp)
@@ -129,7 +129,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
   add-wglue (inl x) = winl x
   add-wglue (inr y) = winr y
 
-  ⊙add-wglue : fst (X ⊙⊔ Y ⊙→ X ⊙∨ Y)
+  ⊙add-wglue : X ⊙⊔ Y ⊙→ X ⊙∨ Y
   ⊙add-wglue = add-wglue , idp
 
 module Fold {i} {X : Ptd i} = ⊙WedgeRec (⊙idf X) (⊙idf X)
@@ -150,12 +150,12 @@ module _ where
 
   private
     module WedgeFMap {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
-      (F : fst (X ⊙→ X')) (G : fst (Y ⊙→ Y'))
+      (F : X ⊙→ X') (G : Y ⊙→ Y')
       = WedgeRec {C = X' ∨ Y'} (winl ∘ fst F) (winr ∘ fst G)
         (ap winl (snd F) ∙ (wglue ∙' ! (ap winr (snd G))))
 
   ∨-fmap : ∀ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
-    → fst (X ⊙→ X') → fst (Y ⊙→ Y') → (X ∨ Y → X' ∨ Y')
+    → X ⊙→ X' → Y ⊙→ Y' → (X ∨ Y → X' ∨ Y')
   ∨-fmap = WedgeFMap.f
 
   -- XXX Needs some clean-ups.
@@ -272,10 +272,10 @@ module _ where
 module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'} where
 
   private
-    module ⊙WedgeFMap (F : fst (X ⊙→ X')) (G : fst (Y ⊙→ Y'))
+    module ⊙WedgeFMap (F : X ⊙→ X') (G : Y ⊙→ Y')
       = ⊙WedgeRec {Z = X' ⊙∨ Y'} (winl ∘ fst F , ap winl (snd F)) (winr ∘ fst G , ! (wglue ∙' ! (ap winr (snd G))))
 
-  ⊙∨-fmap : fst (X ⊙→ X') → fst (Y ⊙→ Y') → fst (X ⊙∨ Y ⊙→ X' ⊙∨ Y')
+  ⊙∨-fmap : X ⊙→ X' → Y ⊙→ Y' → X ⊙∨ Y ⊙→ X' ⊙∨ Y'
   ⊙∨-fmap = ⊙WedgeFMap.⊙f
 
   ⊙∨-emap : X ⊙≃ X' → Y ⊙≃ Y' → X ⊙∨ Y ⊙≃ X' ⊙∨ Y'

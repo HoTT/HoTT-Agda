@@ -26,7 +26,7 @@ module lib.types.IteratedSuspension where
 ⊙Susp^-+ (S m) n = ap ⊙Susp (⊙Susp^-+ m n)
 
 ⊙Susp^-fmap : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
-  → fst (X ⊙→ Y) → fst (⊙Susp^ n X ⊙→ ⊙Susp^ n Y)
+  → X ⊙→ Y → ⊙Susp^ n X ⊙→ ⊙Susp^ n Y
 ⊙Susp^-fmap O f = f
 ⊙Susp^-fmap (S n) f = ⊙Susp-fmap (⊙Susp^-fmap n f)
 
@@ -43,7 +43,7 @@ module lib.types.IteratedSuspension where
                            ∙ (⊙Susp-fmap-cst {X = ⊙Susp^ n _})
 
 ⊙Susp^-fmap-∘ : ∀ {i j k} (n : ℕ) {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-  (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y))
+  (g : Y ⊙→ Z) (f : X ⊙→ Y)
   → ⊙Susp^-fmap n (g ⊙∘ f) == ⊙Susp^-fmap n g ⊙∘ ⊙Susp^-fmap n f
 ⊙Susp^-fmap-∘ O g f = idp
 ⊙Susp^-fmap-∘ (S n) g f =

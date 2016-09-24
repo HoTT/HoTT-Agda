@@ -27,7 +27,7 @@ CF-cst n {X} {Y} =
   where
   ⊙LU = ⊙Lift {j = i} ⊙Unit
 
-CF-inverse : (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y)) (g : fst (Y ⊙→ X))
+CF-inverse : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y) (g : Y ⊙→ X)
   → (∀ x → fst g (fst f x) == x)
   → (CF-hom n f) ∘ᴳ (CF-hom n g) == idhom _
 CF-inverse n f g p = ! (CF-comp n g f) ∙ CF-λ= n p ∙ CF-ident n

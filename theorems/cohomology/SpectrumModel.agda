@@ -25,7 +25,7 @@ module SpectrumModel where
     Cid = Group.ident C
 
     {- before truncation -}
-    uCEl = fst (X ⊙→ ⊙Ω (E (succ n)))
+    uCEl = X ⊙→ ⊙Ω (E (succ n))
 
   {- Cⁿ(X) is an abelian group -}
   C-abelian : (n : ℤ) (X : Ptd i) → is-abelian (C n X)
@@ -44,10 +44,10 @@ module SpectrumModel where
    - contravariant functor from pointed spaces to abelian groups -}
   module _ (n : ℤ) {X Y : Ptd i} where
 
-    CF-hom : fst (X ⊙→ Y) → (C n Y →ᴳ C n X)
+    CF-hom : X ⊙→ Y → (C n Y →ᴳ C n X)
     CF-hom f = Trunc-⊙→Ω-group-fmap-dom f (E (succ n))
 
-    CF : fst (X ⊙→ Y) → fst (⊙CEl n Y ⊙→ ⊙CEl n X)
+    CF : X ⊙→ Y → ⊙CEl n Y ⊙→ ⊙CEl n X
     CF F = GroupHom.⊙f (CF-hom F)
 
   {- CF-hom is a functor from pointed spaces to abelian groups -}
@@ -56,7 +56,7 @@ module SpectrumModel where
     CF-ident : CF-hom n {X} {X} (⊙idf X) == idhom (C n X)
     CF-ident = Trunc-⊙→Ω-group-fmap-dom-idf (E (succ n))
 
-    CF-comp : {Y Z : Ptd i} (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y))
+    CF-comp : {Y Z : Ptd i} (g : Y ⊙→ Z) (f : X ⊙→ Y)
       → CF-hom n (g ⊙∘ f) == CF-hom n f ∘ᴳ CF-hom n g
     CF-comp g f = Trunc-⊙→Ω-group-fmap-dom-∘ g f (E (succ n))
 
@@ -71,7 +71,7 @@ module SpectrumModel where
 
     -- This can be further simplified
     C-SuspF' : {E₁ E₀ : Ptd i} (iso : ⊙Ω E₁ ⊙≃ E₀)
-      {X Y : Ptd i} (f : fst (X ⊙→ Y))
+      {X Y : Ptd i} (f : X ⊙→ Y)
       → fst (C-Susp' iso X) ∘ᴳ Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap f) E₁
         == Trunc-⊙→Ω-group-fmap-dom f E₀ ∘ᴳ fst (C-Susp' iso Y)
     C-SuspF' {E₁} {E₀} iso {X} {Y} f = group-hom= $
@@ -95,7 +95,7 @@ module SpectrumModel where
   C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp X) ≃ᴳ C n X
   C-Susp n X = C-Susp' (spectrum (succ n)) X
 
-  C-SuspF : (n : ℤ) {X Y : Ptd i} (f : fst (X ⊙→ Y))
+  C-SuspF : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
     → fst (C-Susp n X) ∘ᴳ CF-hom (succ n) (⊙Susp-fmap f)
       == CF-hom n f ∘ᴳ fst (C-Susp n Y)
   C-SuspF n f = C-SuspF' (spectrum (succ n)) f
@@ -104,7 +104,7 @@ module SpectrumModel where
   module _ (n : ℤ) {X Y : Ptd i} where
 
     {- precomposing [⊙cfcod' f] and then [f] gives [0] -}
-    exact-itok-lemma : (f : fst (X ⊙→ Y)) (g : uCEl n (⊙Cof f))
+    exact-itok-lemma : (f : X ⊙→ Y) (g : uCEl n (⊙Cof f))
       → (g ⊙∘ ⊙cfcod' f) ⊙∘ f == ⊙cst
     exact-itok-lemma (f , fpt) (g , gpt) = ⊙λ=
       (λ x → ap g (! (cfglue' f x)) ∙ gpt)
@@ -122,7 +122,7 @@ module SpectrumModel where
       lemma f g idp idp idp = idp
 
     {- if g ⊙∘ f is constant then g factors as h ⊙∘ ⊙cfcod' f -}
-    exact-ktoi-lemma : (f : fst (X ⊙→ Y)) (g : uCEl n Y)
+    exact-ktoi-lemma : (f : X ⊙→ Y) (g : uCEl n Y)
       → g ⊙∘ f == ⊙cst
       → Σ (uCEl n (⊙Cof f)) (λ h → h ⊙∘ ⊙cfcod' f == g)
     exact-ktoi-lemma (f , fpt) (h , hpt) p =
@@ -139,7 +139,7 @@ module SpectrumModel where
   module _ (n : ℤ) {X Y : Ptd i} where
 
     abstract
-      C-im-sub-ker : (f : fst (X ⊙→ Y))
+      C-im-sub-ker : (f : X ⊙→ Y)
         → im-propᴳ (CF-hom n (⊙cfcod' f)) ⊆ᴳ ker-propᴳ (CF-hom n f)
       C-im-sub-ker f =
         im-sub-ker-in (CF-hom n (⊙cfcod' f)) (CF-hom n f) $
@@ -147,7 +147,7 @@ module SpectrumModel where
             (ap [_] ∘ exact-itok-lemma n f)
 
     abstract
-      C-ker-sub-im : (f : fst (X ⊙→ Y))
+      C-ker-sub-im : (f : X ⊙→ Y)
         → ker-propᴳ (CF-hom n f) ⊆ᴳ im-propᴳ (CF-hom n (⊙cfcod' f))
       C-ker-sub-im f =
         Trunc-elim
@@ -162,7 +162,7 @@ module SpectrumModel where
           wit : Σ (uCEl n (⊙Cof f)) (λ k → k ⊙∘ ⊙cfcod' f == h)
           wit = exact-ktoi-lemma n f h p
 
-    C-exact : (f : fst (X ⊙→ Y)) → is-exact (CF-hom n (⊙cfcod' f)) (CF-hom n f)
+    C-exact : (f : X ⊙→ Y) → is-exact (CF-hom n (⊙cfcod' f)) (CF-hom n f)
     C-exact f = record {im-sub-ker = C-im-sub-ker f; ker-sub-im = C-ker-sub-im f}
 
   {- Additivity Axiom -}
@@ -210,7 +210,7 @@ module SpectrumModel where
         → ! q ∙ ap f p == ! (ap f (! p) ∙ q)
       lemma f idp idp = idp
 
-      out-into-fst : (H : fst (⊙BigWedge X ⊙→ ⊙Ω (E (succ n))))
+      out-into-fst : (H : ⊙BigWedge X ⊙→ ⊙Ω (E (succ n)))
         → ∀ w → Out'.f (λ a → H ⊙∘ ⊙bwin a) w == fst H w
       out-into-fst (h , hpt) = BigWedge-elim
         (! hpt)

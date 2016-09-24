@@ -25,10 +25,10 @@ module CofSelect (X : Ptd i) (Y : fst X → Ptd i) where
   select : fst X → fst (⊙Σ X Y)
   select x = (x , snd (Y x))
 
-  ⊙select : fst (X ⊙→ ⊙Σ X Y)
+  ⊙select : X ⊙→ ⊙Σ X Y
   ⊙select = (select , idp)
 
-  ⊙Σbwin : fst (⊙Σ X Y ⊙→ ⊙BigWedge Y)
+  ⊙Σbwin : ⊙Σ X Y ⊙→ ⊙BigWedge Y
   ⊙Σbwin = (uncurry bwin , ! (bwglue (snd X)))
 
   eq : Cofiber select ≃ BigWedge Y

@@ -31,13 +31,13 @@ module Σ⊣Ω {i} where
     ε : fst (⊙Susp (⊙Ω X)) → fst X
     ε = E.f
 
-    ⊙η : fst (X ⊙→ ⊙Ω (⊙Susp X))
+    ⊙η : X ⊙→ ⊙Ω (⊙Susp X)
     ⊙η = (η , !-inv-r (merid (snd X)))
 
-    ⊙ε : fst (⊙Susp (⊙Ω X) ⊙→ X)
+    ⊙ε : ⊙Susp (⊙Ω X) ⊙→ X
     ⊙ε = (ε , idp)
 
-  η-natural : {X Y : Ptd i} (f : fst (X ⊙→ Y))
+  η-natural : {X Y : Ptd i} (f : X ⊙→ Y)
     → ⊙η Y ⊙∘ f == ⊙Ω-fmap (⊙Susp-fmap f) ⊙∘ ⊙η X
   η-natural {X = X} (f , idp) = ⊙λ=
     (λ x → ! $
@@ -53,7 +53,7 @@ module Σ⊣Ω {i} where
                      ∙ ap (ap f) (!-inv-r p) ∙ idp
     pt-lemma f idp idp = idp
 
-  ε-natural : {X Y : Ptd i} (f : fst (X ⊙→ Y))
+  ε-natural : {X Y : Ptd i} (f : X ⊙→ Y)
     → ⊙ε Y ⊙∘ ⊙Susp-fmap (⊙Ω-fmap f) == f ⊙∘ ⊙ε X
   ε-natural (f , idp) = ⊙λ=
     (SuspensionElim.f idp idp

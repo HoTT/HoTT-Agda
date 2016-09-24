@@ -69,7 +69,7 @@ module _ {i} {D : ℕ → Type i} where
     ncglue-β : (n : ℕ) (x : D n) → ap f (ncglue n x) == ncglue* n x
     ncglue-β n x = apd=cst-in {f = f} (M.ncglue-β n x)
 
-⊙ℕColim : ∀ {i} {D : ℕ → Ptd i} (d : (n : ℕ) → fst (D n ⊙→ D (S n))) → Ptd i
+⊙ℕColim : ∀ {i} {D : ℕ → Ptd i} (d : (n : ℕ) → (D n ⊙→ D (S n))) → Ptd i
 ⊙ℕColim {D = D} d = ⊙[ ℕColim (fst ∘ d) , ncin 0 (snd (D 0)) ]
 
 {- Can define a function [nc-raise d : ℕColim d → ℕColim d]
@@ -171,7 +171,7 @@ FinTuplesType F O = ⊙Lift ⊙Unit
 FinTuplesType F (S n) = F O ⊙× FinTuplesType (F ∘ S) n
 
 fin-tuples-map : ∀ {i} (F : ℕ → Ptd i) (n : ℕ)
-  → fst (FinTuplesType F n ⊙→ FinTuplesType F (S n))
+  → (FinTuplesType F n ⊙→ FinTuplesType F (S n))
 fin-tuples-map F O = (_ , idp)
 fin-tuples-map F (S n) =
   ((λ {(x , r) → (x , fst (fin-tuples-map (F ∘ S) n) r)}) ,

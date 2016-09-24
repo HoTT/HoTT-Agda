@@ -85,7 +85,7 @@ module FlipSusp {i} {A : Type i} = SuspensionRec
 Susp-flip : ∀ {i} {A : Type i} → Suspension A → Suspension A
 Susp-flip = FlipSusp.f
 
-⊙Susp-flip : ∀ {i} (X : Ptd i) → fst (⊙Susp X ⊙→ ⊙Susp X)
+⊙Susp-flip : ∀ {i} (X : Ptd i) → ⊙Susp X ⊙→ ⊙Susp X
 ⊙Susp-flip X = (Susp-flip , ! (merid (snd X)))
 
 module _ {i j} where
@@ -97,8 +97,8 @@ module _ {i j} where
     → (Suspension A → Suspension B)
   Susp-fmap = SuspFmap.f
 
-  ⊙Susp-fmap : {X : Ptd i} {Y : Ptd j} (f : fst (X ⊙→ Y))
-    → fst (⊙Susp X ⊙→ ⊙Susp Y)
+  ⊙Susp-fmap : {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y)
+    → ⊙Susp X ⊙→ ⊙Susp Y
   ⊙Susp-fmap (f , fpt) = (Susp-fmap f , idp)
 
 module _ {i} where
@@ -136,7 +136,7 @@ module _ {i j k} where
       ∙ ! (SuspFmap.merid-β (g ∘ f) a))
 
   ⊙Susp-fmap-∘ : {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-    (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y))
+    (g : Y ⊙→ Z) (f : X ⊙→ Y)
     → ⊙Susp-fmap (g ⊙∘ f) == ⊙Susp-fmap g ⊙∘ ⊙Susp-fmap f
   ⊙Susp-fmap-∘ g f = ⊙λ= (Susp-fmap-∘ (fst g) (fst f)) idp
 
@@ -151,8 +151,7 @@ module _ {i j k} {s : Span {i} {j} {k}} where
 
   module _ {x₀ : Span.A s} where
 
-    ⊙ext-glue :
-      fst ((Pushout s , left x₀) ⊙→ (Suspension (Span.C s) , north))
+    ⊙ext-glue : (Pushout s , left x₀) ⊙→ (Suspension (Span.C s) , north)
     ⊙ext-glue = (ext-glue , idp)
 
 module _ {i j} {A : Type i} {B : Type j} where

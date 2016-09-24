@@ -28,7 +28,7 @@ private
 
   subtract = Subtract.f
 
-  ⊙subtract : fst (⊙Susp X ⊙→ ⊙Susp X ⊙∨ ⊙Susp X)
+  ⊙subtract : ⊙Susp X ⊙→ ⊙Susp X ⊙∨ ⊙Susp X
   ⊙subtract = (subtract , ! (ap winl (merid (snd X))))
 
   projl-subtract : ∀ σ → projl _ _ (subtract σ) == Susp-flip σ

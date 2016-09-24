@@ -70,7 +70,7 @@ record GroupStructureHom {i j} {GEl : Type i} {HEl : Type j}
         =⟨ H.unit-l (H.inv (f a)) ⟩
       H.inv (f a) =∎
 
-  ⊙f : fst ((GEl , G.ident) ⊙→ (HEl , H.ident))
+  ⊙f : (GEl , G.ident) ⊙→ (HEl , H.ident)
   ⊙f = f , pres-ident
 
 infix 0 _→ᴳˢ_ -- [ˢ] for structures

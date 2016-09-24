@@ -123,7 +123,7 @@ module TwoPushoutsEquiv {i j k l} {A : Type i} {B : Type j} {C : Type k}
 --     X --> K --> L
 --
 module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
-  (f : fst (Y ⊙→ X)) (g : fst (Y ⊙→ Z)) (h : fst (Z ⊙→ W)) where
+  (f : Y ⊙→ X) (g : Y ⊙→ Z) (h : Z ⊙→ W) where
 
   private
     ps₁ = ⊙span X Z Y f g
@@ -139,17 +139,17 @@ module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
 
   two-pushouts-⊙left :
     ⊙lift ⊙∘ ⊙left ps == ⊙left ps₂ ⊙∘ ⊙left ps₁
-    [ (λ V → fst (X ⊙→ V)) ↓ two-pushouts-ptd ]
+    [ (λ V → X ⊙→ V) ↓ two-pushouts-ptd ]
   two-pushouts-⊙left = codomain-over-⊙equiv _ _ _
 
   two-pushouts-⊙right :
     ⊙lift ⊙∘ ⊙right ps == ⊙right ps₂
-    [ (λ V → fst (W ⊙→ V)) ↓ two-pushouts-ptd ]
+    [ (λ V → W ⊙→ V) ↓ two-pushouts-ptd ]
   two-pushouts-⊙right =
     codomain-over-⊙equiv _ _ _ ▹ pair= idp (lemma f g h)
     where
     lemma : {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
-      (f : fst (Y ⊙→ X)) (g : fst (Y ⊙→ Z)) (h : fst (Z ⊙→ W))
+      (f : Y ⊙→ X) (g : Y ⊙→ Z) (h : Z ⊙→ W)
       → ap (TwoPushoutsEquiv.into (fst f) (fst g) (fst h)
                ∘ lower {j = lmax l (lmax k (lmax j i))})
               (snd (⊙lift ⊙∘ ⊙right (⊙span X W Y f (h ⊙∘ g))))
@@ -178,7 +178,7 @@ module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
       module 2P = TwoPushoutsEquiv f g h
 
   two-pushouts-⊙inner : ⊙lift ⊙∘ (Inner.f , idp) == ⊙left ps₂
-    [ (λ V → fst (⊙Pushout ps₁ ⊙→ V)) ↓ two-pushouts-ptd ]
+    [ (λ V → ⊙Pushout ps₁ ⊙→ V) ↓ two-pushouts-ptd ]
   two-pushouts-⊙inner =
     codomain-over-⊙equiv _ _ _ ▹ ⊙λ= into-inner idp
 

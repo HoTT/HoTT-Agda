@@ -71,14 +71,14 @@ mayer-vietoris-exact =
                            ∘ᴳ fst (C-Susp n (X ⊙∨ Y) ⁻¹ᴳ)
 
   {- Variations on suspension axiom naturality -}
-  natural-lemma₁ : {X Y : Ptd i} (n : ℤ) (f : fst (X ⊙→ Y))
+  natural-lemma₁ : {X Y : Ptd i} (n : ℤ) (f : X ⊙→ Y)
     → (fst (C-Susp n X) ∘ᴳ CF-hom _ (⊙Susp-fmap f)) ∘ᴳ fst (C-Susp n Y ⁻¹ᴳ)
       == CF-hom n f
   natural-lemma₁ {X} {Y} n f =
     ap (λ φ → φ ∘ᴳ fst (C-Susp n Y ⁻¹ᴳ)) (C-SuspF n f)
     ∙ group-hom= (λ= (ap (CF n f) ∘ is-equiv.f-g (snd (C-Susp n Y))))
 
-  natural-lemma₂ : {X Y : Ptd i} (n : ℤ) (f : fst (X ⊙→ Y))
+  natural-lemma₂ : {X Y : Ptd i} (n : ℤ) (f : X ⊙→ Y)
     → CF-hom _ (⊙Susp-fmap f) ∘ᴳ fst (C-Susp n Y ⁻¹ᴳ)
       == fst (C-Susp n X ⁻¹ᴳ) ∘ᴳ CF-hom n f
   natural-lemma₂ {X} {Y} n f =

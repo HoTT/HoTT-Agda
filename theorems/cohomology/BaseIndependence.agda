@@ -24,20 +24,20 @@ CF-base-indep n {X} {Y} f p₁ p₂ = transport
   (!-inv-l (pair×= (uaᴳ (C-Susp n Y)) (uaᴳ (C-Susp n X))))
   (!ᵈ (C-Susp-↓ n (f , p₁)) ∙ᵈ C-Susp-↓ n (f , p₂))
 
-CF-λ= : (n : ℤ) {X Y : Ptd i} {f g : fst (X ⊙→ Y)}
+CF-λ= : (n : ℤ) {X Y : Ptd i} {f g : X ⊙→ Y}
   → (∀ x → fst f x == fst g x)
   → CF-hom n f == CF-hom n g
 CF-λ= n h = CF-base-indep n _ _ _ ∙ ap (CF-hom n) (⊙λ= h idp)
 
 CF-↓dom= : (n : ℤ) {X Y Z : Ptd i}
-  {f : fst (X ⊙→ Y)} {g : fst (X ⊙→ Z)} {p : Y == Z}
+  {f : X ⊙→ Y} {g : X ⊙→ Z} {p : Y == Z}
   → fst f == fst g [ (λ V → fst X → fst V) ↓ p ]
   → CF-hom n f == CF-hom n g [ (λ G → G →ᴳ C n X) ↓ ap (C n) p ]
 CF-↓dom= n {p = idp} r =
   CF-base-indep n _ _ _ ∙ ap (CF-hom n) (pair= r (from-transp! _ _ idp))
 
 CF-↓cod= : (n : ℤ) {X Y Z : Ptd i}
-  {f : fst (X ⊙→ Z)} {g : fst (Y ⊙→ Z)} {p : X == Y}
+  {f : X ⊙→ Z} {g : Y ⊙→ Z} {p : X == Y}
   → fst f == fst g [ (λ U → fst U → fst Z) ↓ p ]
   → CF-hom n f == CF-hom n g [ (λ G → C n Z →ᴳ G) ↓ ap (C n) p ]
 CF-↓cod= n {p = idp} r =

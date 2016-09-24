@@ -18,34 +18,34 @@ Ptd₀ = Ptd lzero
 {-
 Pointed maps.
 
-Note that [A ⊙→ B] will be pointed as well.
+[A ⊙→ B] was pointed, but it was never used as a pointed type.
 -}
 
 infixr 0 _⊙→_
-_⊙→_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
-(A , a₀) ⊙→ (B , b₀) = ⊙[ Σ (A → B) (λ f → f a₀ == b₀) , ((λ _ → b₀), idp) ]
+_⊙→_ : ∀ {i j} → Ptd i → Ptd j → Type (lmax i j)
+(A , a₀) ⊙→ (B , b₀) = Σ (A → B) (λ f → f a₀ == b₀)
 
-⊙idf : ∀ {i} (X : Ptd i) → fst (X ⊙→ X)
+⊙idf : ∀ {i} (X : Ptd i) → X ⊙→ X
 ⊙idf X = ((λ x → x) , idp)
 
-⊙cst : ∀ {i j} {X : Ptd i} {Y : Ptd j} → fst (X ⊙→ Y)
+⊙cst : ∀ {i j} {X : Ptd i} {Y : Ptd j} → X ⊙→ Y
 ⊙cst {Y = Y} = ((λ x → snd Y) , idp)
 
 infixr 80 _⊙∘_
 _⊙∘_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-  (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y)) → fst (X ⊙→ Z)
+  (g : Y ⊙→ Z) (f : X ⊙→ Y) → X ⊙→ Z
 (g , gpt) ⊙∘ (f , fpt) = (g ∘ f) , (ap g fpt ∙ gpt)
 
-⊙∘-unit-l : ∀ {i j} {X : Ptd i} {Y : Ptd j} (f : fst (X ⊙→ Y))
+⊙∘-unit-l : ∀ {i j} {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y)
   → ⊙idf Y ⊙∘ f == f
 ⊙∘-unit-l (f , idp) = idp
 
-⊙∘-unit-r : ∀ {i j} {X : Ptd i} {Y : Ptd j} (f : fst (X ⊙→ Y))
+⊙∘-unit-r : ∀ {i j} {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y)
   → f ⊙∘ ⊙idf X == f
 ⊙∘-unit-r f = idp
 
 ⊙∘-assoc : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
-  (h : fst (Z ⊙→ W)) (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y))
+  (h : Z ⊙→ W) (g : Y ⊙→ Z) (f : X ⊙→ Y)
   → ((h ⊙∘ g) ⊙∘ f) == (h ⊙∘ (g ⊙∘ f))
 ⊙∘-assoc (h , hpt) (g , gpt) (f , fpt) = pair= idp (lemma fpt gpt hpt)
   where
@@ -55,11 +55,11 @@ _⊙∘_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
 
 -- [⊙→] preserves hlevel
 ⊙→-level : ∀ {i j} {X : Ptd i} {Y : Ptd j} {n : ℕ₋₂}
-  → has-level n (fst Y) → has-level n (fst (X ⊙→ Y))
+  → has-level n (fst Y) → has-level n (X ⊙→ Y)
 ⊙→-level pY = Σ-level (Π-level (λ _ → pY)) (λ _ → =-preserves-level _ pY)
 
 -- function extensionality for pointed functions
-⊙λ= : ∀ {i j} {X : Ptd i} {Y : Ptd j} {f g : fst (X ⊙→ Y)}
+⊙λ= : ∀ {i j} {X : Ptd i} {Y : Ptd j} {f g : X ⊙→ Y}
   (p : ∀ x → fst f x == fst g x) (α : snd f == p (snd X) ∙ snd g)
   → f == g
 ⊙λ= {g = g} p α =
@@ -71,7 +71,7 @@ Pointed equivalences
 
 infix 30 _⊙≃_
 _⊙≃_ : ∀ {i j} → Ptd i → Ptd j → Type (lmax i j)
-X ⊙≃ Y = Σ (fst (X ⊙→ Y)) (λ {(f , _) → is-equiv f})
+X ⊙≃ Y = Σ (X ⊙→ Y) (λ {(f , _) → is-equiv f})
 
 ≃-to-⊙≃ : ∀ {i j} {X : Ptd i} {Y : Ptd j}
   (e : fst X ≃ fst Y) (p : –> e (snd X) == snd Y)
@@ -107,10 +107,10 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
 
   ⊙≃-to-≃ = e
 
-  ⊙–> : fst (X ⊙→ Y)
+  ⊙–> : X ⊙→ Y
   ⊙–> = fst ⊙e
 
-  ⊙<– : fst (Y ⊙→ X)
+  ⊙<– : Y ⊙→ X
   ⊙<– = (<– e , ap (<– e) (! p) ∙ <–-inv-l e (snd X))
 
   infix 120 _⊙⁻¹
@@ -152,21 +152,21 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
 
 module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} (⊙e : X ⊙≃ Y) where
 
-  post⊙∘-is-equiv : is-equiv (λ (k : fst (Z ⊙→ X)) → ⊙–> ⊙e ⊙∘ k)
+  post⊙∘-is-equiv : is-equiv (λ (k : Z ⊙→ X) → ⊙–> ⊙e ⊙∘ k)
   post⊙∘-is-equiv = is-eq f g f-g g-f
     where f = ⊙–> ⊙e ⊙∘_
           g = ⊙<– ⊙e ⊙∘_
           f-g = λ k → ! (⊙∘-assoc (⊙–> ⊙e) (⊙<– ⊙e) k) ∙ ap (_⊙∘ k) (⊙<–-inv-r ⊙e) ∙ ⊙∘-unit-l k
           g-f = λ k → ! (⊙∘-assoc (⊙<– ⊙e) (⊙–> ⊙e) k) ∙ ap (_⊙∘ k) (⊙<–-inv-l ⊙e) ∙ ⊙∘-unit-l k
 
-  pre⊙∘-is-equiv : is-equiv (λ (k : fst (Y ⊙→ Z)) → k ⊙∘ ⊙–> ⊙e)
+  pre⊙∘-is-equiv : is-equiv (λ (k : Y ⊙→ Z) → k ⊙∘ ⊙–> ⊙e)
   pre⊙∘-is-equiv = is-eq f g f-g g-f
     where f = _⊙∘ ⊙–> ⊙e
           g = _⊙∘ ⊙<– ⊙e
           f-g = λ k → ⊙∘-assoc k (⊙<– ⊙e) (⊙–> ⊙e) ∙ ap (k ⊙∘_) (⊙<–-inv-l ⊙e) ∙ ⊙∘-unit-r k
           g-f = λ k → ⊙∘-assoc k (⊙–> ⊙e) (⊙<– ⊙e) ∙ ap (k ⊙∘_) (⊙<–-inv-r ⊙e) ∙ ⊙∘-unit-r k
 
-  pre⊙∘-equiv : fst (Y ⊙→ Z) ≃ fst (X ⊙→ Z)
+  pre⊙∘-equiv : (Y ⊙→ Z) ≃ (X ⊙→ Z)
   pre⊙∘-equiv = _ , pre⊙∘-is-equiv
 
 -- [ua] for pointed types

@@ -48,8 +48,8 @@ record ⊙Span {i j k : ULevel} : Type (lsucc (lmax (lmax i j) k)) where
     X : Ptd i
     Y : Ptd j
     Z : Ptd k
-    f : fst (Z ⊙→ X)
-    g : fst (Z ⊙→ Y)
+    f : Z ⊙→ X
+    g : Z ⊙→ Y
 
 ⊙span-out : ∀ {i j k} → ⊙Span {i} {j} {k} → Span {i} {j} {k}
 ⊙span-out (⊙span X Y Z f g) = span (fst X) (fst Y) (fst Z) (fst f) (fst g)

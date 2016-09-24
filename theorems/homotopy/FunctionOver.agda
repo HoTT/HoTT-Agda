@@ -33,30 +33,30 @@ module _ {i} {j} {A : Type i} {C : Type j} (f : A → C) where
     λ q → ap f (! (<–-inv-l e _) ∙ ap (<– e) (↓-idf-ua-out e q))
 
 {- transporting a ptd function along a equivalence or path in the domain -}
-module _ {i} {j} {Y : Ptd i} {Z : Ptd j} (g : fst (Y ⊙→ Z)) where
+module _ {i} {j} {Y : Ptd i} {Z : Ptd j} (g : Y ⊙→ Z) where
 
   domain-over-⊙path : {X : Ptd i} (p : fst X == fst Y)
     (q : coe p (snd X) == snd Y)
-    → g ⊙∘ (coe p , q) == g [ (λ W → fst (W ⊙→ Z)) ↓ pair= p (↓-idf-in p q) ]
+    → g ⊙∘ (coe p , q) == g [ (λ W → W ⊙→ Z) ↓ pair= p (↓-idf-in p q) ]
   domain-over-⊙path idp idp = idp
 
   domain-over-⊙equiv : {X : Ptd i} (e : X ⊙≃ Y)
-    → g ⊙∘ ⊙–> e == g [ (λ W → fst (W ⊙→ Z)) ↓ ⊙ua e ]
+    → g ⊙∘ ⊙–> e == g [ (λ W → W ⊙→ Z) ↓ ⊙ua e ]
   domain-over-⊙equiv {X = X} e =
     ap (λ w → g ⊙∘ w) (! $ ⊙λ= (coe-β (⊙≃-to-≃ e)) idp)
     ◃ domain-over-⊙path (ua (⊙≃-to-≃ e))
                         (coe-β (⊙≃-to-≃ e) (snd X) ∙ snd (⊙–> e))
 
-module _ {i} {j} {X : Ptd i} {Z : Ptd j} (f : fst (X ⊙→ Z)) where
+module _ {i} {j} {X : Ptd i} {Z : Ptd j} (f : X ⊙→ Z) where
 
   domain!-over-⊙path : {Y : Ptd i} (p : fst X == fst Y)
     (q : coe p (snd X) == snd Y)
     → f == f ⊙∘ (coe! p , ap (coe! p) (! q) ∙ coe!-inv-l p (snd X))
-      [ (λ W → fst (W ⊙→ Z)) ↓ pair= p (↓-idf-in p q) ]
+      [ (λ W → W ⊙→ Z) ↓ pair= p (↓-idf-in p q) ]
   domain!-over-⊙path idp idp = idp
 
   domain!-over-⊙equiv : {Y : Ptd i} (e : X ⊙≃ Y)
-    → f == f ⊙∘ (⊙<– e) [ (λ W → fst (W ⊙→ Z)) ↓ ⊙ua e ]
+    → f == f ⊙∘ (⊙<– e) [ (λ W → W ⊙→ Z) ↓ ⊙ua e ]
   domain!-over-⊙equiv {Y = Y} e =
     (! (ap (λ w → f ⊙∘ w) (⊙<–-inv-l e)) ∙ ! (⊙∘-assoc f _ (⊙–> e)))
     ◃ domain-over-⊙equiv (f ⊙∘ (⊙<– e)) e
@@ -83,30 +83,30 @@ module _ {i} {j} {A : Type i} {C : Type j} (g : A → C) where
   codomain!-over-equiv e = ↓-Π-cst-app-in $ λ _ → ↓-idf-ua-in e (<–-inv-r e _)
 
 {- transporting a ptd function along a equivalence or path in the codomain -}
-module _ {i} {j} {X : Ptd i} {Y : Ptd j} (f : fst (X ⊙→ Y)) where
+module _ {i} {j} {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y) where
 
   codomain-over-⊙path : {Z : Ptd j} (p : fst Y == fst Z)
     (q : coe p (snd Y) == snd Z)
-    → f == (coe p , q) ⊙∘ f [ (λ W → fst (X ⊙→ W)) ↓ pair= p (↓-idf-in p q) ]
+    → f == (coe p , q) ⊙∘ f [ (λ W → X ⊙→ W) ↓ pair= p (↓-idf-in p q) ]
   codomain-over-⊙path idp idp = pair= idp (! (∙-unit-r _ ∙ ap-idf (snd f)))
 
   codomain-over-⊙equiv : {Z : Ptd j} (e : Y ⊙≃ Z)
-    → f == (⊙–> e) ⊙∘ f [ (λ W → fst (X ⊙→ W)) ↓ ⊙ua e ]
+    → f == (⊙–> e) ⊙∘ f [ (λ W → X ⊙→ W) ↓ ⊙ua e ]
   codomain-over-⊙equiv {Z = Z} e =
     codomain-over-⊙path (ua (⊙≃-to-≃ e))
       (coe-β (⊙≃-to-≃ e) (snd Y) ∙ snd (⊙–> e))
     ▹ ap (λ w → w ⊙∘ f) (⊙λ= (coe-β (⊙≃-to-≃ e)) idp)
 
-module _ {i} {j} {X : Ptd i} {Z : Ptd j} (g : fst (X ⊙→ Z)) where
+module _ {i} {j} {X : Ptd i} {Z : Ptd j} (g : X ⊙→ Z) where
 
   codomain!-over-⊙path : {Y : Ptd j} (p : fst Y == fst Z)
     (q : coe p (snd Y) == snd Z)
     → (coe! p , ap (coe! p) (! q) ∙ coe!-inv-l p (snd Y)) ⊙∘ g == g
-      [ (λ W → fst (X ⊙→ W)) ↓ pair= p (↓-idf-in p q) ]
+      [ (λ W → X ⊙→ W) ↓ pair= p (↓-idf-in p q) ]
   codomain!-over-⊙path idp idp = pair= idp (∙-unit-r _ ∙ ap-idf (snd g))
 
   codomain!-over-⊙equiv : {Y : Ptd j} (e : Y ⊙≃ Z)
-    → (⊙<– e) ⊙∘ g == g [ (λ W → fst (X ⊙→ W)) ↓ ⊙ua e ]
+    → (⊙<– e) ⊙∘ g == g [ (λ W → X ⊙→ W) ↓ ⊙ua e ]
   codomain!-over-⊙equiv {Y = Y} e =
     codomain-over-⊙equiv (⊙<– e ⊙∘ g) e
     ▹ ! (⊙∘-assoc (⊙–> e) _ g) ∙ ap (λ w → w ⊙∘ g) (⊙<–-inv-r e) ∙ ⊙∘-unit-l g

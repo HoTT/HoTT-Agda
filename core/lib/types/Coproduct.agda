@@ -73,7 +73,7 @@ codiag : ∀ {i} {A : Type i} → A ⊔ A → A
 codiag (inl a) = a
 codiag (inr a) = a
 
-⊙codiag : ∀ {i} {X : Ptd i} → fst (X ⊙⊔ X ⊙→ X)
+⊙codiag : ∀ {i} {X : Ptd i} → X ⊙⊔ X ⊙→ X
 ⊙codiag = (codiag , idp)
 
 -- A binary sigma is a coproduct

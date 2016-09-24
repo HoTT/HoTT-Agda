@@ -21,7 +21,7 @@ module MayerVietorisFunctions (ps : ⊙Span {i} {i} {i}) where
   reglue : X ∨ Y → fst (⊙Pushout ps)
   reglue = Reglue.f
 
-  ⊙reglue : fst (X ⊙∨ Y ⊙→ ⊙Pushout ps)
+  ⊙reglue : X ⊙∨ Y ⊙→ ⊙Pushout ps
   ⊙reglue = Reglue.⊙f
 
   module MVDiff = SuspensionRec {C = Suspension (X ∨ Y)}
@@ -32,7 +32,7 @@ module MayerVietorisFunctions (ps : ⊙Span {i} {i} {i}) where
   mv-diff : Suspension (fst Z) → Suspension (X ∨ Y)
   mv-diff = MVDiff.f
 
-  ⊙mv-diff : fst (⊙Susp Z ⊙→ ⊙Susp (X ⊙∨ Y))
+  ⊙mv-diff : ⊙Susp Z ⊙→ ⊙Susp (X ⊙∨ Y)
   ⊙mv-diff = (mv-diff , idp)
 
 {- We use path induction (via [⊙pushout-J]) to assume that the
@@ -44,9 +44,9 @@ module MayerVietorisBase
   X = ⊙[ A , f (snd Z) ]
   Y = ⊙[ B , g (snd Z) ]
   ps = ⊙span X Y Z (f , idp) (g , idp)
-  F : fst (Z ⊙→ X)
+  F : Z ⊙→ X
   F = (f , idp)
-  G : fst (Z ⊙→ Y)
+  G : Z ⊙→ Y
   G = (g , idp)
 
   open MayerVietorisFunctions ps

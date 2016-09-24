@@ -54,7 +54,7 @@ module _ {i j} {A : Type i} {B : Type j} {f : A → B} where
     (p : (x : A) → b ≃ c (f x))
     = PushoutRecType {d = cofiber-span f} (λ _ → b) c p
 
-module _ {i j} {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙→ Y)) where
+module _ {i j} {X : Ptd i} {Y : Ptd j} (F : X ⊙→ Y) where
 
   ⊙cof-span : ⊙Span
   ⊙cof-span = ⊙span ⊙Unit Y X ((λ _ → tt) , idp) F
@@ -62,7 +62,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙→ Y)) where
   ⊙Cof : Ptd (lmax i j)
   ⊙Cof = ⊙Pushout ⊙cof-span
 
-  ⊙cfcod' : fst (Y ⊙→ ⊙Cof)
+  ⊙cfcod' : Y ⊙→ ⊙Cof
   ⊙cfcod' = cfcod , ap cfcod (! (snd F)) ∙ ! (cfglue (snd X))
 
   ⊙cfglue' : ⊙cst == ⊙cfcod' ⊙∘ F
@@ -73,9 +73,9 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙→ Y)) where
       → idp == p ∙ ap f q ∙ ap f (! q) ∙ ! p
     lemma f idp idp = idp
 
-module _ {i j} {X : Ptd i} {Y : Ptd j} {F : fst (X ⊙→ Y)} where
+module _ {i j} {X : Ptd i} {Y : Ptd j} {F : X ⊙→ Y} where
 
-  ⊙cfcod : fst (Y ⊙→ ⊙Cof F)
+  ⊙cfcod : Y ⊙→ ⊙Cof F
   ⊙cfcod = ⊙cfcod' F
 
   ⊙cfglue : ⊙cst == ⊙cfcod ⊙∘ F

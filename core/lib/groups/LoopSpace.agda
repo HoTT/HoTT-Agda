@@ -33,11 +33,11 @@ module _ {i} (n : ℕ) (X : Ptd i) where
     Ω^S-group-structure
 
 module _ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j} where
-  Ω^S-group-structure-fmap : fst (X ⊙→ Y)
+  Ω^S-group-structure-fmap : X ⊙→ Y
     → GroupStructureHom (Ω^S-group-structure n X) (Ω^S-group-structure n Y)  
   Ω^S-group-structure-fmap F = group-structure-hom (Ω^-fmap (S n) F) (Ω^S-fmap-∙ n F)
 
-  Ω^S-group-structure-isemap : {F : fst (X ⊙→ Y)}
+  Ω^S-group-structure-isemap : {F : X ⊙→ Y}
     → is-equiv (fst F) → is-equiv (GroupStructureHom.f (Ω^S-group-structure-fmap F))
   Ω^S-group-structure-isemap {F} F-is-equiv = Ω^-isemap (S n) F F-is-equiv
 
@@ -51,7 +51,7 @@ module _ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
   (Y-level : has-level ⟨ S n ⟩ (fst Y))
   where
 
-  Ω^S-group-fmap : fst (X ⊙→ Y) → Ω^S-group n X X-level →ᴳ Ω^S-group n Y Y-level
+  Ω^S-group-fmap : X ⊙→ Y → Ω^S-group n X X-level →ᴳ Ω^S-group n Y Y-level
   Ω^S-group-fmap = →ᴳˢ-to-→ᴳ ∘ Ω^S-group-structure-fmap n
 
   Ω^S-group-emap : X ⊙≃ Y → Ω^S-group n X X-level ≃ᴳ Ω^S-group n Y Y-level

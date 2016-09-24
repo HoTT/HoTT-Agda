@@ -42,19 +42,19 @@ module _ {i} (n : ℕ) {X : Ptd i} where
 
 {- pointed versions of functions on paths -}
 
-⊙Ω-∙ : ∀ {i} {X : Ptd i} → fst (⊙Ω X ⊙× ⊙Ω X ⊙→ ⊙Ω X)
+⊙Ω-∙ : ∀ {i} {X : Ptd i} → ⊙Ω X ⊙× ⊙Ω X ⊙→ ⊙Ω X
 ⊙Ω-∙ = (uncurry _∙_ , idp)
 
 ⊙Ω-fmap : ∀ {i j} {X : Ptd i} {Y : Ptd j}
-  → fst (X ⊙→ Y) → fst (⊙Ω X ⊙→ ⊙Ω Y)
+  → X ⊙→ Y → ⊙Ω X ⊙→ ⊙Ω Y
 ⊙Ω-fmap (f , idp) = ap f , idp
 
 Ω-fmap : ∀ {i j} {X : Ptd i} {Y : Ptd j}
-  → fst (X ⊙→ Y) → (Ω X → Ω Y)
+  → X ⊙→ Y → (Ω X → Ω Y)
 Ω-fmap F = fst (⊙Ω-fmap F)
 
 Ω-isemap : ∀ {i j} {X : Ptd i} {Y : Ptd j}
-  (F : fst (X ⊙→ Y)) → is-equiv (fst F) → is-equiv (Ω-fmap F)
+  (F : X ⊙→ Y) → is-equiv (fst F) → is-equiv (Ω-fmap F)
 Ω-isemap (f , idp) e = ap-is-equiv e _ _
 
 Ω-emap : ∀ {i j} {X : Ptd i} {Y : Ptd j}
@@ -66,11 +66,11 @@ module _ {i} (n : ℕ) {X : Ptd i} where
 ⊙Ω-emap (F , F-is-equiv) = ⊙Ω-fmap F , Ω-isemap F F-is-equiv
 
 ⊙Ω-fmap2 : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-  → fst (X ⊙× Y ⊙→ Z) → fst (⊙Ω X ⊙× ⊙Ω Y ⊙→ ⊙Ω Z)
+  → X ⊙× Y ⊙→ Z → ⊙Ω X ⊙× ⊙Ω Y ⊙→ ⊙Ω Z
 ⊙Ω-fmap2 (f , idp) = (λ{(p , q) → ap2 (curry f) p q}) , idp
 
 ⊙Ω-fmap-∘ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-  (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y))
+  (g : Y ⊙→ Z) (f : X ⊙→ Y)
   → ⊙Ω-fmap (g ⊙∘ f) == ⊙Ω-fmap g ⊙∘ ⊙Ω-fmap f
 ⊙Ω-fmap-∘ (g , idp) (f , idp) = ⊙λ= (λ p → ap-∘ g f p) idp
 
@@ -86,43 +86,43 @@ module _ {i} (n : ℕ) {X : Ptd i} where
 ⊙Ω-fmap2-snd = ⊙λ= (uncurry ap2-snd) idp
 
 ⊙Ω-fmap-fmap2 : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
-  (G : fst (Z ⊙→ W)) (F : fst (X ⊙× Y ⊙→ Z))
+  (G : Z ⊙→ W) (F : X ⊙× Y ⊙→ Z)
   → ⊙Ω-fmap G ⊙∘ ⊙Ω-fmap2 F == ⊙Ω-fmap2 (G ⊙∘ F)
 ⊙Ω-fmap-fmap2 (g , idp) (f , idp) =
   ⊙λ= (uncurry (ap-ap2 g (curry f))) idp
 
 ⊙Ω-fmap2-fmap : ∀ {i j k l m}
   {X : Ptd i} {Y : Ptd j} {U : Ptd k} {V : Ptd l} {Z : Ptd m}
-  (G : fst ((U ⊙× V) ⊙→ Z)) (F₁ : fst (X ⊙→ U)) (F₂ : fst (Y ⊙→ V))
+  (G : (U ⊙× V) ⊙→ Z) (F₁ : X ⊙→ U) (F₂ : Y ⊙→ V)
   → ⊙Ω-fmap2 G ⊙∘ ⊙×-fmap (⊙Ω-fmap F₁) (⊙Ω-fmap F₂) == ⊙Ω-fmap2 (G ⊙∘ ⊙×-fmap F₁ F₂)
 ⊙Ω-fmap2-fmap (g , idp) (f₁ , idp) (f₂ , idp) =
   ⊙λ= (λ {(p , q) → ap2-ap-l (curry g) f₁ p (ap f₂ q)
                   ∙ ap2-ap-r (λ x v → g (f₁ x , v)) f₂ p q})
       idp
 
-⊙Ω-fmap2-diag : ∀ {i j} {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙× X ⊙→ Y))
+⊙Ω-fmap2-diag : ∀ {i j} {X : Ptd i} {Y : Ptd j} (F : X ⊙× X ⊙→ Y)
   → ⊙Ω-fmap2 F ⊙∘ ⊙diag == ⊙Ω-fmap (F ⊙∘ ⊙diag)
 ⊙Ω-fmap2-diag (f , idp) = ⊙λ= (ap2-diag (curry f)) idp
 
 {- [⊙Ω^-fmap] and [⊙Ω^-fmap2] for higher loop spaces -}
 
 ⊙Ω^-fmap : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
-  → fst (X ⊙→ Y) → fst (⊙Ω^ n X ⊙→ ⊙Ω^ n Y)
+  → X ⊙→ Y → ⊙Ω^ n X ⊙→ ⊙Ω^ n Y
 ⊙Ω^-fmap O F = F
 ⊙Ω^-fmap (S n) F = ⊙Ω-fmap (⊙Ω^-fmap n F)
 
 Ω^-fmap : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
-  → fst (X ⊙→ Y) → (fst (⊙Ω^ n X) → fst (⊙Ω^ n Y))
+  → X ⊙→ Y → (fst (⊙Ω^ n X) → fst (⊙Ω^ n Y))
 Ω^-fmap n F = fst (⊙Ω^-fmap n F)
 
 ⊙Ω^-fmap2 : ∀ {i j k} (n : ℕ) {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-  → fst ((X ⊙× Y) ⊙→ Z)
-  → fst ((⊙Ω^ n X ⊙× ⊙Ω^ n Y) ⊙→ ⊙Ω^ n Z)
+  → ((X ⊙× Y) ⊙→ Z)
+  → ((⊙Ω^ n X ⊙× ⊙Ω^ n Y) ⊙→ ⊙Ω^ n Z)
 ⊙Ω^-fmap2 O F = F
 ⊙Ω^-fmap2 (S n) F = ⊙Ω-fmap2 (⊙Ω^-fmap2 n F)
 
 Ω^-fmap2 : ∀ {i j k} (n : ℕ) {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-  → fst ((X ⊙× Y) ⊙→ Z)
+  → ((X ⊙× Y) ⊙→ Z)
   → ((Ω^ n X) × (Ω^ n Y) → Ω^ n Z)
 Ω^-fmap2 n F = fst (⊙Ω^-fmap2 n F)
 
@@ -134,13 +134,13 @@ module _ {i} (n : ℕ) {X : Ptd i} where
 Ω^-fmap-idf n = fst= $ ⊙Ω^-fmap-idf n
 
 ⊙Ω^-fmap-fmap2 : ∀ {i j k l} (n : ℕ) {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
-  (G : fst (Z ⊙→ W)) (F : fst ((X ⊙× Y) ⊙→ Z))
+  (G : Z ⊙→ W) (F : (X ⊙× Y) ⊙→ Z)
   → ⊙Ω^-fmap n G ⊙∘ ⊙Ω^-fmap2 n F == ⊙Ω^-fmap2 n (G ⊙∘ F)
 ⊙Ω^-fmap-fmap2 O G F = idp
 ⊙Ω^-fmap-fmap2 (S n) G F = ⊙Ω-fmap-fmap2 (⊙Ω^-fmap n G) (⊙Ω^-fmap2 n F) ∙ ap ⊙Ω-fmap2 (⊙Ω^-fmap-fmap2 n G F)
 
 Ω^-fmap-fmap2 : ∀ {i j k l} (n : ℕ) {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
-  (G : fst (Z ⊙→ W)) (F : fst ((X ⊙× Y) ⊙→ Z))
+  (G : Z ⊙→ W) (F : (X ⊙× Y) ⊙→ Z)
   → Ω^-fmap n G ∘ Ω^-fmap2 n F == Ω^-fmap2 n (G ⊙∘ F)
 Ω^-fmap-fmap2 n G F = fst= $ ⊙Ω^-fmap-fmap2 n G F
 
@@ -164,7 +164,7 @@ module _ {i} (n : ℕ) {X : Ptd i} where
 
 ⊙Ω^-fmap2-fmap : ∀ {i j k l m} (n : ℕ)
   {X : Ptd i} {Y : Ptd j} {U : Ptd k} {V : Ptd l} {Z : Ptd m}
-  (G : fst ((U ⊙× V) ⊙→ Z)) (F₁ : fst (X ⊙→ U)) (F₂ : fst (Y ⊙→ V))
+  (G : (U ⊙× V) ⊙→ Z) (F₁ : X ⊙→ U) (F₂ : Y ⊙→ V)
   → ⊙Ω^-fmap2 n G ⊙∘ ⊙×-fmap (⊙Ω^-fmap n F₁) (⊙Ω^-fmap n F₂) == ⊙Ω^-fmap2 n (G ⊙∘ ⊙×-fmap F₁ F₂)
 ⊙Ω^-fmap2-fmap O G F₁ F₂ = idp
 ⊙Ω^-fmap2-fmap (S n) G F₁ F₂ =
@@ -172,16 +172,16 @@ module _ {i} (n : ℕ) {X : Ptd i} where
 
 Ω^-fmap2-fmap : ∀ {i j k l m} (n : ℕ)
   {X : Ptd i} {Y : Ptd j} {U : Ptd k} {V : Ptd l} {Z : Ptd m}
-  (G : fst ((U ⊙× V) ⊙→ Z)) (F₁ : fst (X ⊙→ U)) (F₂ : fst (Y ⊙→ V))
+  (G : (U ⊙× V) ⊙→ Z) (F₁ : X ⊙→ U) (F₂ : Y ⊙→ V)
   → Ω^-fmap2 n G ∘ ×-fmap (Ω^-fmap n F₁) (Ω^-fmap n F₂) == Ω^-fmap2 n (G ⊙∘ ⊙×-fmap F₁ F₂)
 Ω^-fmap2-fmap n G F₁ F₂ = fst= $ ⊙Ω^-fmap2-fmap n G F₁ F₂
 
-⊙Ω^-fmap2-diag : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙× X ⊙→ Y))
+⊙Ω^-fmap2-diag : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j} (F : X ⊙× X ⊙→ Y)
   → ⊙Ω^-fmap2 n F ⊙∘ ⊙diag == ⊙Ω^-fmap n (F ⊙∘ ⊙diag)
 ⊙Ω^-fmap2-diag O F = idp
 ⊙Ω^-fmap2-diag (S n) F = ⊙Ω-fmap2-diag (⊙Ω^-fmap2 n F) ∙ ap ⊙Ω-fmap (⊙Ω^-fmap2-diag n F)
 
-Ω^-fmap2-diag : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙× X ⊙→ Y))
+Ω^-fmap2-diag : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j} (F : X ⊙× X ⊙→ Y)
   → Ω^-fmap2 n F ∘ diag == Ω^-fmap n (F ⊙∘ ⊙diag)
 Ω^-fmap2-diag n F = fst= $ ⊙Ω^-fmap2-diag n F
 
@@ -211,12 +211,12 @@ module _ {i} {X : Ptd i} (n : ℕ) where
   Ω^S-!-inv-r = !-inv-r
 
 module _ where
-  Ω-fmap-∙ : ∀ {i j} {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙→ Y)) (p q : Ω X)
+  Ω-fmap-∙ : ∀ {i j} {X : Ptd i} {Y : Ptd j} (F : X ⊙→ Y) (p q : Ω X)
     → Ω-fmap F (p ∙ q) == Ω-fmap F p ∙ Ω-fmap F q
   Ω-fmap-∙ (f , idp) p q = ap-∙ f p q
 
   Ω^S-fmap-∙ : ∀ {i j} (n : ℕ)
-    {X : Ptd i} {Y : Ptd j} (F : fst (X ⊙→ Y)) (p q : Ω^ (S n) X)
+    {X : Ptd i} {Y : Ptd j} (F : X ⊙→ Y) (p q : Ω^ (S n) X)
     → Ω^-fmap (S n) F (Ω^S-∙ n p q)
       == Ω^S-∙ n (Ω^-fmap (S n) F p) (Ω^-fmap (S n) F q)
   Ω^S-fmap-∙ n F = Ω-fmap-∙ (⊙Ω^-fmap n F)
@@ -224,7 +224,7 @@ module _ where
 {- [Ω^] preserves (pointed) equivalences -}
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
-  Ω^-isemap : (n : ℕ) (F : fst (X ⊙→ Y)) (e : is-equiv (fst F))
+  Ω^-isemap : (n : ℕ) (F : X ⊙→ Y) (e : is-equiv (fst F))
     → is-equiv (Ω^-fmap n F)
   Ω^-isemap O F e = e
   Ω^-isemap (S n) F e = Ω-isemap (⊙Ω^-fmap n F) (Ω^-isemap n F e)
@@ -297,7 +297,7 @@ module _ {i} where
  - but this is equivalent to building up on the inside -}
 module _ {i} where
   ⊙Ω^-Ω-split : (n : ℕ) (X : Ptd i)
-    → fst (⊙Ω^ (S n) X ⊙→ ⊙Ω^ n (⊙Ω X))
+    → (⊙Ω^ (S n) X ⊙→ ⊙Ω^ n (⊙Ω X))
   ⊙Ω^-Ω-split O _ = (idf _ , idp)
   ⊙Ω^-Ω-split (S n) X = ⊙Ω-fmap (⊙Ω^-Ω-split n X)
 

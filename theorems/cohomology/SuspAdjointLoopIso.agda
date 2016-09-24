@@ -18,7 +18,7 @@ module SuspAdjointLoopIso {i} where
   module _ (X Y : Ptd i) where
 
     abstract
-      pres-comp : (h₁ h₂ : fst (⊙Susp X ⊙→ ⊙Ω Y))
+      pres-comp : (h₁ h₂ : ⊙Susp X ⊙→ ⊙Ω Y)
         → –> (A.eq X (⊙Ω Y)) (⊙Ω-∙ ⊙∘ ⊙fanout h₁ h₂)
            == ⊙Ω-∙ ⊙∘ ⊙fanout (–> (A.eq X (⊙Ω Y)) h₁) (–> (A.eq X (⊙Ω Y)) h₂)
       pres-comp h₁ h₂ =
@@ -35,7 +35,7 @@ module SuspAdjointLoopIso {i} where
         ap2-lemma f idp = idp
 
         ⊙ap2-lemma : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-          (f : fst (X ⊙× Y ⊙→ Z))
+          (f : X ⊙× Y ⊙→ Z)
           → ⊙Ω-fmap f == ⊙Ω-fmap2 f ⊙∘ ⊙fanout (⊙Ω-fmap ⊙fst) (⊙Ω-fmap ⊙snd)
         ⊙ap2-lemma (f , idp) = ⊙λ= (ap2-lemma f) idp
 
@@ -55,7 +55,7 @@ module SuspAdjointLoopIso {i} where
     iso = Trunc-group-emap (≃-to-≃ᴳˢ (A.eq X (⊙Ω Y)) pres-comp)
 
   abstract
-    nat-dom : {X Y : Ptd i} (f : fst (X ⊙→ Y)) (Z : Ptd i)
+    nat-dom : {X Y : Ptd i} (f : X ⊙→ Y) (Z : Ptd i)
       → fst (iso X Z) ∘ᴳ Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap f) Z
         == Trunc-⊙→Ω-group-fmap-dom f (⊙Ω Z) ∘ᴳ fst (iso Y Z)
     nat-dom f Z = group-hom= $ λ= $ Trunc-elim

@@ -6,7 +6,7 @@ open import homotopy.elims.CofPushoutSection
 {- If f : X → Y is a section, then ΣY ≃ ΣX ∨ ΣCof(f) -}
 
 module homotopy.SuspSectionDecomp
-  {i j} {X : Ptd i} {Y : Ptd j} (⊙f : fst (X ⊙→ Y))
+  {i j} {X : Ptd i} {Y : Ptd j} (⊙f : X ⊙→ Y)
   (g : fst Y → fst X) (inv : ∀ x → g (fst ⊙f x) == x)
   where
 

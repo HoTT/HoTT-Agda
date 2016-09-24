@@ -4,7 +4,7 @@ open import HoTT
 open import homotopy.elims.CofPushoutSection
 
 module homotopy.CofiberComp {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-  (f : fst (X ⊙→ Z)) (g : fst (Y ⊙→ Z)) where
+  (f : X ⊙→ Z) (g : Y ⊙→ Z) where
 
 module CofiberComp where
 

@@ -7,7 +7,7 @@ open import HoTT
 module cohomology.WithCoefficients where
 
 ⊙→Ω-group-structure : ∀ {i j} (X : Ptd i) (Y : Ptd j)
-  → GroupStructure (fst (X ⊙→ ⊙Ω Y))
+  → GroupStructure (X ⊙→ ⊙Ω Y)
 ⊙→Ω-group-structure X Y = record {
   ident = ⊙cst;
   inv = λ F → ((! ∘ fst F) , ap ! (snd F));
@@ -51,14 +51,14 @@ Trunc-⊙→Ω-group X Y = Trunc-group (⊙→Ω-group-structure X Y)
 {- [Trunc-→Ω-group] is functorial in the first argument -}
 
 ⊙→Ω-group-structure-fmap-dom : ∀ {i j k} {X : Ptd i} {Y : Ptd j}
-  (f : fst (X ⊙→ Y)) (Z : Ptd k)
+  (f : X ⊙→ Y) (Z : Ptd k)
   → (⊙→Ω-group-structure Y Z →ᴳˢ ⊙→Ω-group-structure X Z)
 ⊙→Ω-group-structure-fmap-dom F Z = group-structure-hom (_⊙∘ F)
   (λ g₁ g₂ → ⊙∘-assoc ⊙Ω-∙ (⊙fanout g₁ g₂) F
            ∙ ap (⊙Ω-∙ ⊙∘_) (⊙fanout-pre∘ g₁ g₂ F))
 
 Trunc-⊙→Ω-group-fmap-dom : ∀ {i j k} {X : Ptd i} {Y : Ptd j}
-  (f : fst (X ⊙→ Y)) (Z : Ptd k)
+  (f : X ⊙→ Y) (Z : Ptd k)
   → (Trunc-⊙→Ω-group Y Z →ᴳ Trunc-⊙→Ω-group X Z)
 Trunc-⊙→Ω-group-fmap-dom F Z =
   Trunc-group-fmap $ ⊙→Ω-group-structure-fmap-dom F Z
@@ -81,7 +81,7 @@ Trunc-⊙→Ω-group-fmap-dom-idf Y = group-hom= $ λ= $ Trunc-elim
   (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp)
 
 Trunc-⊙→Ω-group-fmap-dom-∘ : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-  (g : fst (Y ⊙→ Z)) (f : fst (X ⊙→ Y)) (W : Ptd l)
+  (g : Y ⊙→ Z) (f : X ⊙→ Y) (W : Ptd l)
   → Trunc-⊙→Ω-group-fmap-dom (g ⊙∘ f) W
     == Trunc-⊙→Ω-group-fmap-dom f W ∘ᴳ Trunc-⊙→Ω-group-fmap-dom g W
 Trunc-⊙→Ω-group-fmap-dom-∘ g f W = group-hom= $ λ= $
@@ -89,7 +89,7 @@ Trunc-⊙→Ω-group-fmap-dom-∘ g f W = group-hom= $ λ= $
     (λ h → ap [_] (! (⊙∘-assoc h g f)))
 
 ⊙→Ω-group-structure-fmap-codom : ∀ {i j k} (X : Ptd i) {Y : Ptd j} {Z : Ptd k}
-  → fst (Y ⊙→ Z) → (⊙→Ω-group-structure X Y →ᴳˢ ⊙→Ω-group-structure X Z)
+  → Y ⊙→ Z → (⊙→Ω-group-structure X Y →ᴳˢ ⊙→Ω-group-structure X Z)
 ⊙→Ω-group-structure-fmap-codom X {Y} {Z} F = group-structure-hom
     (⊙Ω-fmap F ⊙∘_)
     (λ G H → ⊙λ= (λ x → Ω-fmap-∙ F ((fst G) x) ((fst H) x))
@@ -107,7 +107,7 @@ Trunc-⊙→Ω-group-fmap-dom-∘ g f W = group-hom= $ λ= $
       lemma idp idp idp = idp
 
 Trunc-⊙→Ω-group-fmap-codom : ∀ {i j k} (X : Ptd i) {Y : Ptd j} {Z : Ptd k}
-  → fst (Y ⊙→ Z) → Trunc-⊙→Ω-group X Y →ᴳ Trunc-⊙→Ω-group X Z
+  → Y ⊙→ Z → Trunc-⊙→Ω-group X Y →ᴳ Trunc-⊙→Ω-group X Z
 Trunc-⊙→Ω-group-fmap-codom X = Trunc-group-fmap ∘ ⊙→Ω-group-structure-fmap-codom X
 
 ⊙→Ω-group-structure-emap-codom : ∀ {i j k} (X : Ptd i) {Y : Ptd j} {Z : Ptd k}
@@ -122,7 +122,7 @@ Trunc-⊙→Ω-group-emap-codom X = Trunc-group-emap ∘ ⊙→Ω-group-structur
 -- TODO Check naming convensions.
 Trunc-⊙→Ω-group-fmap-nat : ∀ {i₀ i₁ j₀ j₁}
   {X₀ : Ptd i₀} {X₁ : Ptd i₁} {Y₀ : Ptd j₀} {Y₁ : Ptd j₁}
-  (F : fst (X₀ ⊙→ X₁)) (G : fst (Y₀ ⊙→ Y₁)) 
+  (F : X₀ ⊙→ X₁) (G : Y₀ ⊙→ Y₁) 
   →  Trunc-⊙→Ω-group-fmap-dom   F  Y₁ ∘ᴳ Trunc-⊙→Ω-group-fmap-codom X₁ G
   == Trunc-⊙→Ω-group-fmap-codom X₀ G  ∘ᴳ Trunc-⊙→Ω-group-fmap-dom   F  Y₀
 Trunc-⊙→Ω-group-fmap-nat F G = group-hom= $ λ= $ Trunc-elim
@@ -145,14 +145,14 @@ Trunc-⊙→Ω-group-emap-nat F G = group-hom=-to-iso= $ Trunc-⊙→Ω-group-fm
 -- intuition : [f true] is fixed and the only changable part is [f false].
 
 ⊙Bool→-to-idf : ∀ {i} {X : Ptd i}
-  → fst (⊙Bool ⊙→ X) → fst X
+  → ⊙Bool ⊙→ X → fst X
 ⊙Bool→-to-idf (h , _) = h false
 
 ⊙Bool→-equiv-idf : ∀ {i} (X : Ptd i)
-  → fst (⊙Bool ⊙→ X) ≃ fst X
+  → (⊙Bool ⊙→ X) ≃ fst X
 ⊙Bool→-equiv-idf {i} X = equiv ⊙Bool→-to-idf g f-g g-f
   where
-  g : fst X → fst (⊙Bool ⊙→ X)
+  g : fst X → ⊙Bool ⊙→ X
   g x = (if_then snd X else x) , idp
 
   f-g : ∀ x → ⊙Bool→-to-idf (g x) == x

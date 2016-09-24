@@ -7,7 +7,7 @@ open import cohomology.Theory
 open import cohomology.CofiberSequence
 
 module cohomology.LongExactSequence {i} (CT : CohomologyTheory i)
-  {X Y : Ptd i} (n : ℤ) (f : fst (X ⊙→ Y)) where
+  {X Y : Ptd i} (n : ℤ) (f : X ⊙→ Y) where
 
 open CohomologyTheory CT
 open import cohomology.Functor CT

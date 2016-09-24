@@ -120,10 +120,10 @@ module _ (d : ⊙Span {i} {j} {k}) where
 
   open ⊙Span d
 
-  ⊙left : fst (X ⊙→ ⊙Pushout d)
+  ⊙left : X ⊙→ ⊙Pushout d
   ⊙left = (left , idp)
 
-  ⊙right : fst (Y ⊙→ ⊙Pushout d)
+  ⊙right : Y ⊙→ ⊙Pushout d
   ⊙right =
     (right , ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙' ap left (snd f))
 

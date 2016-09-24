@@ -8,10 +8,10 @@ module lib.types.Lift where
 ⊙Lift : ∀ {i j} → Ptd i → Ptd (lmax i j)
 ⊙Lift {j = j} (A , a) =  ⊙[ Lift {j = j} A , lift a ]
 
-⊙lift : ∀ {i j} {X : Ptd i} → fst (X ⊙→ ⊙Lift {j = j} X)
+⊙lift : ∀ {i j} {X : Ptd i} → X ⊙→ ⊙Lift {j = j} X
 ⊙lift = (lift , idp)
 
-⊙lower : ∀ {i j} {X : Ptd i} → fst (⊙Lift {j = j} X ⊙→ X)
+⊙lower : ∀ {i j} {X : Ptd i} → ⊙Lift {j = j} X ⊙→ X
 ⊙lower = (lower , idp)
 
 lift-equiv : ∀ {i j} {A : Type i} → A ≃ Lift {j = j} A

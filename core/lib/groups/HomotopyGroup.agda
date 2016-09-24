@@ -32,7 +32,7 @@ module _ {i} where
 
 module _ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j} where
 
-  πS-fmap : fst (X ⊙→ Y) → (πS n X →ᴳ πS n Y)
+  πS-fmap : X ⊙→ Y → (πS n X →ᴳ πS n Y)
   πS-fmap F = Trunc-group-fmap (Ω^S-group-structure-fmap n F)
 
   πS-emap : (X ⊙≃ Y) → (πS n X ≃ᴳ πS n Y)
@@ -57,7 +57,7 @@ module _ {i} where
     record Ω^STruncPreIso (n : ℕ) (m : ℕ₋₂) (k : ℕ₋₂) (X : Ptd i)
       : Type i where
       field
-        F : fst (⊙Ω^ (S n) (⊙Trunc k X) ⊙→ ⊙Trunc m (⊙Ω^ (S n) X))
+        F : ⊙Ω^ (S n) (⊙Trunc k X) ⊙→ ⊙Trunc m (⊙Ω^ (S n) X)
         pres-comp : ∀ (p q : Ω^ (S n) (⊙Trunc k X))
           → fst F (Ω^S-∙ n p q) == Trunc-fmap2 (Ω^S-∙ n) (fst F p) (fst F q)
         e : is-equiv (fst F)

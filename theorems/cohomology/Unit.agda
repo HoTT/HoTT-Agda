@@ -37,7 +37,7 @@ module _ (n : ℤ) where
 
     lemma₂ : (x : CEl n ⊙LU) → Cid n ⊙LU == CF n (⊙idf _) x
     lemma₂ = transport
-      {A = Σ (Ptd i) (λ X → fst (⊙LU ⊙→ X))}
+      {A = Σ (Ptd i) (λ X → ⊙LU ⊙→ X)}
       (λ {(X , H) → (c : CEl n X) → Cid n ⊙LU == CF n H c})
       (pair= (⊙ua ⊙Cof-Lift-Unit-equiv-Lift-Unit)
              (prop-has-all-paths-↓ (⊙→-level (Lift-level Unit-is-prop))))

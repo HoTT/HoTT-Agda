@@ -35,7 +35,7 @@ module _ {i j} {A : Type i} where
   postulate  -- HIT
     bwglue : {X : A → Ptd j} → (a : A) → bwbase {X} == bwin a (snd (X a))
 
-  ⊙bwin : {X : A → Ptd j} → (a : A) → fst (X a ⊙→ ⊙BigWedge X)
+  ⊙bwin : {X : A → Ptd j} → (a : A) → X a ⊙→ ⊙BigWedge X
   ⊙bwin a = (bwin a , ! (bwglue a))
 
   module BigWedgeElim {X : A → Ptd j} {k} {P : BigWedge X → Type k}

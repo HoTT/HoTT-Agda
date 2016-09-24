@@ -75,7 +75,7 @@ module _ {i j k} (ps : ⊙Span {i} {j} {k}) where
     preserves : –> (Pushout-flip-equiv s) (left (snd X)) == left (snd Y)
     preserves = snd (⊙right (⊙Span-flip ps))
 
-  ⊙Pushout-flip : fst (⊙Pushout ps ⊙→ ⊙Pushout (⊙Span-flip ps))
+  ⊙Pushout-flip : ⊙Pushout ps ⊙→ ⊙Pushout (⊙Span-flip ps)
   ⊙Pushout-flip = (FlipPushout.f , preserves)
 
   ⊙Pushout-flip-path : ⊙Pushout ps == ⊙Pushout (⊙Span-flip ps)
@@ -87,7 +87,7 @@ module _ {i j k} (ps : ⊙Span {i} {j} {k}) where
   ap-flip-right = lemma f g
     where
     lemma : {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-        (f : fst (Z ⊙→ X)) (g : fst (Z ⊙→ Y))
+        (f : Z ⊙→ X) (g : Z ⊙→ Y)
       → ap (Pushout-flip {d = ⊙span-out (⊙span X Y Z f g)})
           (ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙' ap left (snd f))
         == ! (ap right (! (snd f)) ∙ ! (glue (snd Z)) ∙' ap left (snd g))
@@ -100,12 +100,12 @@ module _ {i j k} (ps : ⊙Span {i} {j} {k}) where
 
   -- XXX Naming convension
   flip-⊙left : ⊙left ps == ⊙right (⊙Span-flip ps)
-                  [ (λ W → fst (X ⊙→ W)) ↓ ⊙Pushout-flip-path ]
+                  [ (λ W → X ⊙→ W) ↓ ⊙Pushout-flip-path ]
   flip-⊙left = codomain-over-⊙equiv _ _
 
   -- XXX Naming convension
   flip-⊙right : ⊙right ps == ⊙left (⊙Span-flip ps)
-                   [ (λ W → fst (Y ⊙→ W)) ↓ ⊙Pushout-flip-path ]
+                   [ (λ W → Y ⊙→ W) ↓ ⊙Pushout-flip-path ]
   flip-⊙right =
     codomain-over-⊙equiv _ _
     ▹ pair= idp (ap (λ w → w ∙ preserves) ap-flip-right ∙ !-inv-l preserves)

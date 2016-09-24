@@ -19,7 +19,7 @@ Susp-flip-fmap f = Suspension-elim idp idp $ λ y → ↓-='-in $
   ∙ ∘-ap Susp-flip (Susp-fmap f) (merid y)
 
 {- Useful abbreviations -}
-module _ {X Y : Ptd i} (f : fst (X ⊙→ Y)) where
+module _ {X Y : Ptd i} (f : X ⊙→ Y) where
 
   ⊙Cof² = ⊙Cof (⊙cfcod' f)
   ⊙cfcod² = ⊙cfcod' (⊙cfcod' f)
@@ -43,16 +43,16 @@ module _ {X Y : Ptd i} (f : fst (X ⊙→ Y)) where
  - The map [cfcod² f : Cof f → Cof² f] becomes [ext-glue : Cof f → ΣX],
  - and the map [ext-glue : Cof² f → ΣY] becomes [Susp-fmap f : ΣX → ΣY].
  -}
-module Cof² {X Y : Ptd i} (f : fst (X ⊙→ Y)) where
+module Cof² {X Y : Ptd i} (f : X ⊙→ Y) where
 
-  module Equiv {X Y : Ptd i} (f : fst (X ⊙→ Y)) where
+  module Equiv {X Y : Ptd i} (f : X ⊙→ Y) where
 
     module Into = CofiberRec {f = cfcod' (fst f)} {C = fst (⊙Susp X)}
       south ext-glue (λ _ → idp)
 
     into = Into.f
 
-    ⊙into : fst (⊙Cof² f ⊙→ ⊙Susp X)
+    ⊙into : ⊙Cof² f ⊙→ ⊙Susp X
     ⊙into = (into , ! (merid (snd X)))
 
     module Out = SuspensionRec {C = fst (⊙Cof² f)}
@@ -117,7 +117,7 @@ module Cof² {X Y : Ptd i} (f : fst (X ⊙→ Y)) where
 
   open Equiv f public
 
-cofiber-sequence : {X Y : Ptd i} (f : fst (X ⊙→ Y)) → Path
+cofiber-sequence : {X Y : Ptd i} (f : X ⊙→ Y) → Path
   {A = Σ (Ptd i × Ptd i)
          (λ {(U , V) → (fst (⊙Cof f) → fst U) × (fst U → fst V)})}
   ((⊙Cof² f , ⊙Cof³ f) , cfcod² f , cfcod³ f)

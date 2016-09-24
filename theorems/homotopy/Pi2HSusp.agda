@@ -148,22 +148,21 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (fst X))
   main-lemma-eq : Trunc 1 (north' A == north) ≃ A
   main-lemma-eq = equiv encode decode' encode-decode' decode-encode
 
-  ⊙main-lemma : ⊙Trunc 1 (⊙Ω (⊙Susp (A , e))) ⊙≃ (A , e)
+  ⊙main-lemma : ⊙Trunc 1 (⊙Ω (⊙Susp X)) ⊙≃ X
   ⊙main-lemma = ≃-to-⊙≃ main-lemma-eq idp
 
   abstract
-    main-lemma-iso : Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))) Trunc-level
-                  ≃ᴳ Ω^S-group 0 (⊙Trunc 1 (A , e)) Trunc-level
+    main-lemma-iso : Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp X))) Trunc-level
+                  ≃ᴳ Ω^S-group 0 (⊙Trunc 1 X) Trunc-level
     main-lemma-iso = (record {f = f; pres-comp = pres-comp} , ie)
       where
-      h : fst (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))
-            ⊙→ ⊙Trunc 1 (A , e))
+      h : ⊙Trunc 1 (⊙Ω (⊙Susp X)) ⊙→ ⊙Trunc 1 X
       h = (λ x → [ encode x ]) , idp
 
-      f : Ω (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))) → Ω (⊙Trunc 1 (A , e))
+      f : Ω (⊙Trunc 1 (⊙Ω (⊙Susp X))) → Ω (⊙Trunc 1 X)
       f = Ω-fmap h
 
-      pres-comp : (p q : Ω^ 1 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))))
+      pres-comp : (p q : Ω^ 1 (⊙Trunc 1 (⊙Ω (⊙Susp X))))
         → f (Ω^S-∙ 0 p q) == Ω^S-∙ 0 (f p) (f q)
       pres-comp = Ω^S-fmap-∙ 0 h
 
@@ -171,14 +170,14 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (fst X))
       ie = Ω^-isemap 1 h (snd $ ((unTrunc-equiv A gA)⁻¹ ∘e main-lemma-eq))
 
   abstract
-    π₂-Suspension : πS 1 (⊙Susp (A , e)) ≃ᴳ πS 0 (A , e)
+    π₂-Suspension : πS 1 (⊙Susp X) ≃ᴳ πS 0 X
     π₂-Suspension =
-      πS 1 (⊙Susp (A , e))
-        ≃ᴳ⟨ πS-Ω-split-iso 0 (⊙Susp (A , e)) ⟩
-      πS 0 (⊙Ω (⊙Susp (A , e)))
-        ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso 0 (⊙Ω (⊙Susp (A , e))) ⁻¹ᴳ ⟩
-      Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp (A , e)))) Trunc-level
+      πS 1 (⊙Susp X)
+        ≃ᴳ⟨ πS-Ω-split-iso 0 (⊙Susp X) ⟩
+      πS 0 (⊙Ω (⊙Susp X))
+        ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso 0 (⊙Ω (⊙Susp X)) ⁻¹ᴳ ⟩
+      Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp X))) Trunc-level
         ≃ᴳ⟨ main-lemma-iso ⟩
-      Ω^S-group 0 (⊙Trunc 1 (A , e)) Trunc-level
-        ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso 0 (A , e) ⟩
-      πS 0 (A , e) ≃ᴳ∎
+      Ω^S-group 0 (⊙Trunc 1 X) Trunc-level
+        ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso 0 X ⟩
+      πS 0 X ≃ᴳ∎

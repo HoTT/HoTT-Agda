@@ -57,7 +57,7 @@ module CWedge (n : ℤ) (X Y : Ptd i) where
       (C-exact n ⊙winl))
     public
 
-  ⊙Wedge-rec-over : {Z : Ptd i} (winl* : fst (X ⊙→ Z)) (winr* : fst (Y ⊙→ Z))
+  ⊙Wedge-rec-over : {Z : Ptd i} (winl* : X ⊙→ Z) (winr* : Y ⊙→ Z)
     → CF-hom n (⊙Wedge-rec winl* winr*)
       == ×ᴳ-fanout (CF-hom n winl*) (CF-hom n (winr*))
       [ (λ K → C n Z →ᴳ K) ↓ path ]
@@ -86,7 +86,7 @@ module CWedge (n : ℤ) (X Y : Ptd i) where
       ap (λ α → χ ∘ᴳ α) (×ᴳ-fanin-η H K aG)
       ∙ ! (×ᴳ-fanin-pre∘ aG aL χ (×ᴳ-inl {G = H}) (×ᴳ-inr {G = H}))
 
-  Wedge-in-over : {Z : Ptd i} (f : fst (Z ⊙→ ⊙Wedge X Y))
+  Wedge-in-over : {Z : Ptd i} (f : Z ⊙→ ⊙Wedge X Y)
     → CF-hom n f
       == ×ᴳ-fanin (C-abelian n _) (CF-hom n (⊙projl X Y ⊙∘ f))
                                     (CF-hom n (⊙projr X Y ⊙∘ f))

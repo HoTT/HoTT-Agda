@@ -21,8 +21,8 @@ record ⊙Cospan {i j k : ULevel} : Type (lsucc (lmax (lmax i j) k)) where
     X : Ptd i
     Y : Ptd j
     Z : Ptd k
-    f : fst (X ⊙→ Z)
-    g : fst (Y ⊙→ Z)
+    f : X ⊙→ Z
+    g : Y ⊙→ Z
 
 ⊙cospan-out : ∀ {i j k} → ⊙Cospan {i} {j} {k} → Cospan {i} {j} {k}
 ⊙cospan-out (⊙cospan X Y Z f g) =
