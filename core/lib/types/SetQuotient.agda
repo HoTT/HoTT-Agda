@@ -59,7 +59,7 @@ module SetQuotRec {R : Rel A j} {k} {B : Type k} (p : is-set B)
 
 open SetQuotRec public renaming (f to SetQuot-rec)
 
--- Sufficient conditions for [quot-rel] to be an equivalence.
+-- If [R] is an equivalence relation, then [quot-rel] is an equivalence.
 
 module _ {R : Rel A j}
   (R-is-prop : ∀ {a b} → is-prop (R a b))

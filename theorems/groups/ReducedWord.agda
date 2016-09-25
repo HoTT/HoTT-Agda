@@ -341,6 +341,7 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
       reduce-emap : ∀ {w₁ w₂} → QuotWordRel w₁ w₂ → reduce w₁ == reduce w₂
       reduce-emap (qwr-refl p) = ap reduce p
       reduce-emap (qwr-trans qwr₁ qwr₂) = reduce-emap qwr₁ ∙ reduce-emap qwr₂
+      reduce-emap (qwr-sym qwr) = ! (reduce-emap qwr)
       reduce-emap (qwr-cons x qwr) = ap (rw-cons x) (reduce-emap qwr)
       reduce-emap (qwr-flip x w) = rw-cons-cons-flip x (reduce w)
 

@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
+open import lib.types.Int
 open import lib.types.Pi
 open import lib.types.Pointed
 
@@ -25,9 +26,6 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
   private
     infix 80 _⊙_
     _⊙_ = comp
-
-  conj : El → El → El
-  conj g₁ g₂ = (g₁ ⊙ g₂) ⊙ inv g₁
 
   abstract
     inv-unique-l : (g h : El) → (g ⊙ h == ident) → inv h == g
@@ -69,6 +67,9 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
     inv-inv : (g : El) → inv (inv g) == g
     inv-inv g = inv-unique-r (inv g) g (inv-l g)
 
+    inv-is-inj : is-inj inv
+    inv-is-inj g₁ g₂ p = ! (inv-inv g₁) ∙ ap inv p ∙ inv-inv g₂
+
     cancel-l : (g : El) {h k : El} → g ⊙ h == g ⊙ k → h == k
     cancel-l g {h} {k} p =
       h                  =⟨ ! (unit-l h) ⟩
@@ -91,7 +92,11 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
       k ⊙ ident          =⟨ unit-r k ⟩
       k =∎
 
-    {- NOT USED
+  conj : El → El → El
+  conj g₁ g₂ = (g₁ ⊙ g₂) ⊙ inv g₁
+
+  {- NOT USED
+  abstract
     conj-unit-l : ∀ g → conj ident g == g
     conj-unit-l g = ap2 _⊙_ (unit-l _) inv-ident ∙ unit-r _
 
@@ -113,7 +118,14 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
     inv-conj g₁ g₂ = inv-comp (g₁ ⊙ g₂) (inv g₁)
                    ∙ ap2 _⊙_ (inv-inv g₁) (inv-comp g₁ g₂)
                    ∙ ! (assoc g₁ (inv g₂) (inv g₁))
-    -}
+  -}
+
+  exp : El → ℤ → El
+  exp a (pos 0) = ident
+  exp a (pos 1) = a
+  exp a (pos (S n)) = comp a (exp a (pos n))
+  exp a (negsucc 0) = inv a
+  exp a (negsucc (S n)) = comp (inv a) (exp a (negsucc n))
 
 record Group i : Type (lsucc i) where
   constructor group

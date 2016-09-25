@@ -2,7 +2,6 @@
 
 open import lib.Basics
 open import lib.types.Nat
-open import lib.types.Group
 open import lib.types.TLevel
 
 module lib.types.Int where

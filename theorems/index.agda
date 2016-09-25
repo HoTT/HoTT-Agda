@@ -16,6 +16,7 @@ module index where
 -- import Algebra.F2NotCommutative
 
 import groups.ReducedWord
+import groups.CoefficientExtensionality
 
 import homotopy.LoopSpaceCircle
 

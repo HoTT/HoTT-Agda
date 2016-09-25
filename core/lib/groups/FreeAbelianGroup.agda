@@ -14,9 +14,14 @@ open import lib.groups.Homomorphism
 
 module lib.groups.FreeAbelianGroup {i} where
 
+-- the relation for making the quotient.
+
+-- [fsr-sym] is not needed, but it seems more principled to
+-- make [FormalSumRel] an equivalence relation.
 data FormalSumRel {A : Type i} : Word A → Word A → Type i where
   fsr-refl : ∀ {l₁ l₂} → l₁ == l₂ → FormalSumRel l₁ l₂
   fsr-trans : ∀ {l₁ l₂ l₃} → FormalSumRel l₁ l₂ → FormalSumRel l₂ l₃ → FormalSumRel l₁ l₃
+  fsr-sym : ∀ {l₁ l₂} → FormalSumRel l₁ l₂ → FormalSumRel l₂ l₁
   fsr-cons : ∀ x {l₁ l₂} → FormalSumRel l₁ l₂ → FormalSumRel (x :: l₁) (x :: l₂)
   fsr-swap : ∀ x₁ x₂ l → FormalSumRel (x₁ :: x₂ :: l) (x₂ :: x₁ :: l)
   fsr-flip : ∀ x₁ l → FormalSumRel (x₁ :: flip x₁ :: l) l
@@ -46,7 +51,8 @@ module _ {A : Type i} where
     = SetQuotRec p incl* rel*
   open FormalSumRec public renaming (f to FormalSum-rec)
 
-module _ (A : Type i) where
+module _ {A : Type i} where
+  -- useful properties that remain public
   abstract
     FormalSumRel-cong-++-l :
       ∀ {l₁ l₁'} → FormalSumRel {A} l₁ l₁'
@@ -54,6 +60,7 @@ module _ (A : Type i) where
       → FormalSumRel (l₁ ++ l₂) (l₁' ++ l₂)
     FormalSumRel-cong-++-l (fsr-refl idp) l₂ = fsr-refl idp
     FormalSumRel-cong-++-l (fsr-trans fsr₁ fsr₂) l₂ = fsr-trans (FormalSumRel-cong-++-l fsr₁ l₂) (FormalSumRel-cong-++-l fsr₂ l₂)
+    FormalSumRel-cong-++-l (fsr-sym fsr) l₂ = fsr-sym (FormalSumRel-cong-++-l fsr l₂)
     FormalSumRel-cong-++-l (fsr-cons x fsr₁) l₂ = fsr-cons x (FormalSumRel-cong-++-l fsr₁ l₂)
     FormalSumRel-cong-++-l (fsr-swap x₁ x₂ l₁) l₂ = fsr-swap x₁ x₂ (l₁ ++ l₂)
     FormalSumRel-cong-++-l (fsr-flip x₁ l₁) l₂ = fsr-flip x₁ (l₁ ++ l₂)
@@ -65,6 +72,11 @@ module _ (A : Type i) where
     FormalSumRel-cong-++-r nil fsr₂ = fsr₂
     FormalSumRel-cong-++-r (x :: l₁) fsr₂ = fsr-cons x (FormalSumRel-cong-++-r l₁ fsr₂)
 
+    FormalSumRel-swap1 : ∀ x l₁ l₂ → FormalSumRel {A} (l₁ ++ (x :: l₂)) (x :: l₁ ++ l₂)
+    FormalSumRel-swap1 x nil l₂ = fsr-refl idp
+    FormalSumRel-swap1 x (x₁ :: l₁) l₂ = fsr-trans (fsr-cons x₁ (FormalSumRel-swap1 x l₁ l₂)) (fsr-swap x₁ x (l₁ ++ l₂))
+
+module _ (A : Type i) where
   private
     infixl 80 _⊞_
     _⊞_ : FormalSum A → FormalSum A → FormalSum A
@@ -82,6 +94,7 @@ module _ (A : Type i) where
         → FormalSumRel {A} l₁ l₂ → FormalSumRel (Word-flip l₁) (Word-flip l₂)
       FormalSumRel-cong-flip (fsr-refl idp) = fsr-refl idp
       FormalSumRel-cong-flip (fsr-trans fsr₁ fsr₂) = fsr-trans (FormalSumRel-cong-flip fsr₁) (FormalSumRel-cong-flip fsr₂)
+      FormalSumRel-cong-flip (fsr-sym fsr) = fsr-sym (FormalSumRel-cong-flip fsr)
       FormalSumRel-cong-flip (fsr-cons x fsr₁) = fsr-cons (flip x) (FormalSumRel-cong-flip fsr₁)
       FormalSumRel-cong-flip (fsr-swap x₁ x₂ l) = fsr-swap (flip x₁) (flip x₂) (Word-flip l)
       FormalSumRel-cong-flip (fsr-flip (inl x) l) = fsr-flip (inr x) (Word-flip l)
@@ -115,12 +128,6 @@ module _ (A : Type i) where
         (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → FormalSum-is-set _ _))
       (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → Π-is-prop λ _ → FormalSum-is-set _ _)
 
-  abstract
-    FormalSumRel-swap1 : ∀ x l₁ l₂ → FormalSumRel {A} (l₁ ++ (x :: l₂)) (x :: l₁ ++ l₂)
-    FormalSumRel-swap1 x nil l₂ = fsr-refl idp
-    FormalSumRel-swap1 x (x₁ :: l₁) l₂ = fsr-trans (fsr-cons x₁ (FormalSumRel-swap1 x l₁ l₂)) (fsr-swap x₁ x (l₁ ++ l₂))
-
-  private
     abstract
       Word-inv-r : ∀ l → FormalSumRel {A} (l ++ Word-flip l) nil
       Word-inv-r nil = fsr-refl idp
@@ -191,6 +198,7 @@ module _ {A : Type i} {j} (G : AbelianGroup j) where
         → Word-extendᴳ G.grp f l₁ == Word-extendᴳ G.grp f l₂
       Word-extendᴳ-emap f (fsr-refl idp) = idp
       Word-extendᴳ-emap f (fsr-trans fsr fsr₁) = (Word-extendᴳ-emap f fsr) ∙ (Word-extendᴳ-emap f fsr₁)
+      Word-extendᴳ-emap f (fsr-sym fsr) = ! (Word-extendᴳ-emap f fsr)
       Word-extendᴳ-emap f (fsr-cons x fsr) = ap (G.comp (PlusMinus-extendᴳ G.grp f x)) (Word-extendᴳ-emap f fsr)
       Word-extendᴳ-emap f (fsr-swap x₁ x₂ l) =
           ! (G.assoc (PlusMinus-extendᴳ G.grp f x₁) (PlusMinus-extendᴳ G.grp f x₂) (Word-extendᴳ G.grp f l))
@@ -244,16 +252,3 @@ module _ {A : Type i} {j} (G : AbelianGroup j) where
 
     from-to : ∀ f → from (to f) == f
     from-to f = λ= λ a → G.unit-r (f a)
-
-{-
-  TODO Recreate [has-finite-supports]
-
-  has-finite-supports : (A → ℤ) → Type i
-  has-finite-supports f = Σ (FormalSum dec) λ g → ∀ a → f a == coef g a
-
-  has-finite-supports-is-prop : ∀ f → is-prop (has-finite-supports f)
-  has-finite-supports-is-prop f = all-paths-is-prop
-    λ{(g₁ , match₁) (g₂ , match₂) → pair=
-      (coef-ext λ a → ! (match₁ a) ∙ match₂ a)
-      (prop-has-all-paths-↓ $ Π-is-prop λ _ → ℤ-is-set _ _)}
--}

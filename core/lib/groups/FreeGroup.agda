@@ -14,9 +14,12 @@ open import lib.groups.Homomorphism
 
 module lib.groups.FreeGroup {i} where
 
+-- [qwr-sym] is not needed, but it seems more principled to
+-- make [QuotWordRel] an equivalence relation.
 data QuotWordRel {A : Type i} : Word A → Word A → Type i where
   qwr-refl : ∀ {l₁ l₂} → l₁ == l₂ → QuotWordRel l₁ l₂
   qwr-trans : ∀ {l₁ l₂ l₃} → QuotWordRel l₁ l₂ → QuotWordRel l₂ l₃ → QuotWordRel l₁ l₃
+  qwr-sym : ∀ {l₁ l₂} → QuotWordRel l₁ l₂ → QuotWordRel l₂ l₁
   qwr-cons : ∀ x {l₁ l₂} → QuotWordRel l₁ l₂ → QuotWordRel (x :: l₁) (x :: l₂)
   qwr-flip : ∀ x₁ l → QuotWordRel (x₁ :: flip x₁ :: l) l
 
@@ -54,6 +57,7 @@ module _ (A : Type i) where
         → QuotWordRel (l₁ ++ l₂) (l₁' ++ l₂)
       QuotWordRel-cong-++-l (qwr-refl idp) l₂ = qwr-refl idp
       QuotWordRel-cong-++-l (qwr-trans qwr₁ qwr₂) l₂ = qwr-trans (QuotWordRel-cong-++-l qwr₁ l₂) (QuotWordRel-cong-++-l qwr₂ l₂)
+      QuotWordRel-cong-++-l (qwr-sym qwr) l₂ = qwr-sym (QuotWordRel-cong-++-l qwr l₂)
       QuotWordRel-cong-++-l (qwr-cons x qwr₁) l₂ = qwr-cons x (QuotWordRel-cong-++-l qwr₁ l₂)
       QuotWordRel-cong-++-l (qwr-flip x₁ l₁) l₂ = qwr-flip x₁ (l₁ ++ l₂)
 
@@ -80,6 +84,7 @@ module _ (A : Type i) where
         → QuotWordRel {A} l₁ l₂ → QuotWordRel (Word-flip l₁) (Word-flip l₂)
       QuotWordRel-cong-flip (qwr-refl idp) = qwr-refl idp
       QuotWordRel-cong-flip (qwr-trans qwr₁ qwr₂) = qwr-trans (QuotWordRel-cong-flip qwr₁) (QuotWordRel-cong-flip qwr₂)
+      QuotWordRel-cong-flip (qwr-sym qwr) = qwr-sym (QuotWordRel-cong-flip qwr)
       QuotWordRel-cong-flip (qwr-cons x qwr₁) = qwr-cons (flip x) (QuotWordRel-cong-flip qwr₁)
       QuotWordRel-cong-flip (qwr-flip (inl x) l) = qwr-flip (inr x) (Word-flip l)
       QuotWordRel-cong-flip (qwr-flip (inr x) l) = qwr-flip (inl x) (Word-flip l)
@@ -88,6 +93,7 @@ module _ (A : Type i) where
         → QuotWordRel {A} l₁ l₂ → QuotWordRel (reverse l₁) (reverse l₂)
       QuotWordRel-cong-reverse (qwr-refl x) = qwr-refl (ap reverse x)
       QuotWordRel-cong-reverse (qwr-trans qwr qwr₁) = qwr-trans (QuotWordRel-cong-reverse qwr) (QuotWordRel-cong-reverse qwr₁)
+      QuotWordRel-cong-reverse (qwr-sym qwr) = qwr-sym (QuotWordRel-cong-reverse qwr)
       QuotWordRel-cong-reverse (qwr-cons x qwr) = QuotWordRel-cong-++-l (QuotWordRel-cong-reverse qwr) (x :: nil)
       QuotWordRel-cong-reverse (qwr-flip (inl x) l) =
         qwr-trans (qwr-refl (++-assoc (reverse l) (inr x :: nil) (inl x :: nil))) $
@@ -185,6 +191,7 @@ module _ {A : Type i} {j} (G : Group j) where
         → Word-extendᴳ G f l₁ == Word-extendᴳ G f l₂
       Word-extendᴳ-emap f (qwr-refl idp) = idp
       Word-extendᴳ-emap f (qwr-trans qwr qwr₁) = (Word-extendᴳ-emap f qwr) ∙ (Word-extendᴳ-emap f qwr₁)
+      Word-extendᴳ-emap f (qwr-sym qwr) = ! (Word-extendᴳ-emap f qwr)
       Word-extendᴳ-emap f (qwr-cons x qwr) = ap (G.comp (PlusMinus-extendᴳ G f x)) (Word-extendᴳ-emap f qwr)
       Word-extendᴳ-emap f (qwr-flip (inl x) l) =
           ! (G.assoc (f x) (G.inv (f x)) (Word-extendᴳ G f l))
