@@ -11,42 +11,40 @@ Agda will generate index.html.
 
 module index where
 
--- import Spaces.IntervalProps
-
--- import Algebra.F2NotCommutative
-
+{- some group theory results -}
 import groups.ReducedWord
 import groups.CoefficientExtensionality
 
+{- homotopy groups of circles -}
 import homotopy.LoopSpaceCircle
-
+import homotopy.PinSn
 import homotopy.HopfJunior
 import homotopy.Hopf
 
--- cohomology
+{- cohomology -}
 import cohomology.EMModel
 import cohomology.Torus
-import cohomology.MayerVietorisExact
+-- this will be commented out till the long exact sequences are (re)done.
+-- import cohomology.MayerVietorisExact
 
 import homotopy.SpaceFromGroups
 
+{- covering spaces -}
 import homotopy.CoverClassification
 import homotopy.AnyUniversalCoverIsPathSet
 import homotopy.PathSetIsInital
 
--- import Spaces.LoopSpaceDecidableWedgeCircles
-
--- import Homotopy.PullbackIsPullback
-
--- import Homotopy.PushoutIsPushout
-
--- import Homotopy.Truncation
-
--- import Sets.QuotientUP
-
-import homotopy.PinSn
-
--- import Homotopy.VanKampen
-
+{- cw complexes -}
 import cw.CW
 import cw.examples.Sphere
+
+-- There are some unported theorems
+
+-- import Spaces.IntervalProps
+-- import Algebra.F2NotCommutative
+-- import Homotopy.VanKampen
+-- import Spaces.LoopSpaceDecidableWedgeCircles
+-- import Homotopy.PullbackIsPullback
+-- import Homotopy.PushoutIsPushout
+-- import Homotopy.Truncation
+-- import Sets.QuotientUP
