@@ -15,7 +15,7 @@ open import homotopy.ConstantToSetExtendsToProp
      Then, K ≃ᴳ P/Q.
 -}
 
-module groups.PQSquare {i j₁ j₂ k l₁ l₂}
+module groups.PropQuotUniqueFactorization {i j₁ j₂ k l₁ l₂}
   {G : Group i} {H₁ : Group j₁} {H₂ : Group j₂} {K : Group k}
   (P : SubgroupProp G l₁)
   (Q : NormalSubgroupProp G l₂)
