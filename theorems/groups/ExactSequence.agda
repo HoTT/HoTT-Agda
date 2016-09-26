@@ -1,73 +1,101 @@
 open import HoTT
-open import homotopy.FunctionOver
-
--- TODO Checking naming convensions
+-- open import homotopy.FunctionOver
+open import groups.HomSequence
 
 module groups.ExactSequence where
 
-{- Convenient notation for sequences of homomorphisms -}
+is-exact-seq : ∀ {i} {G H : Group i}
+  → HomSequence G H → Type i
+is-exact-seq (_ ⊣|ᴳ) = Lift ⊤
+is-exact-seq (_ →⟨ φ ⟩ᴳ _ ⊣|ᴳ) = Lift ⊤
+is-exact-seq (_ →⟨ φ ⟩ᴳ _ →⟨ ψ ⟩ᴳ seq) =
+  is-exact φ ψ × is-exact-seq (_ →⟨ ψ ⟩ᴳ seq)
 
-infix 15 _⊣|
-infixr 10 _⟨_⟩→_
+{- equivalences preserve exactness -}
 
-data HomSequence {i} : Group i → Group i → Type (lsucc i) where
-  _⊣| : (G : Group i) → HomSequence G G
-  _⟨_⟩→_ : (G : Group i) {H K : Group i} (φ : G →ᴳ H)
-             → HomSequence H K → HomSequence G K
+abstract
+  hom-pair-equiv-preserves-exact : ∀ {i} {G₀ G₁ H₀ H₁ K₀ K₁ : Group i}
+    {φ₀ : G₀ →ᴳ H₀} {ψ₀ : H₀ →ᴳ K₀} {φ₁ : G₁ →ᴳ H₁} {ψ₁ : H₁ →ᴳ K₁}
+    {ξG : G₀ →ᴳ G₁} {ξK : K₀ →ᴳ K₁}
+    (seq-map : HomSeqMap
+      (G₀ →⟨ φ₀ ⟩ᴳ H₀ →⟨ ψ₀ ⟩ᴳ K₀ ⊣|ᴳ)
+      (G₁ →⟨ φ₁ ⟩ᴳ H₁ →⟨ ψ₁ ⟩ᴳ K₁ ⊣|ᴳ)
+      ξG ξK)
+    → is-equiv-seqᴳ seq-map
+    → is-exact φ₀ ψ₀
+    → is-exact φ₁ ψ₁
+  hom-pair-equiv-preserves-exact
+    {K₀ = K₀} {K₁} {φ₀ = φ₀} {ψ₀} {φ₁} {ψ₁}
+    (ξG ↓⟨ φ□ ⟩ᴳ ξH ↓⟨ ψ□ ⟩ᴳ ξK ↓|ᴳ)
+    (ξG-ise , ξH-ise , ξK-ise) exact₀
+    = record {
+      im-sub-ker = λ h₁ → Trunc-rec (SubgroupProp.level (ker-propᴳ ψ₁) h₁)
+        (λ{(g₁ , φ₁g₁=h₁) → 
+          ψ₁.f h₁
+            =⟨ ap ψ₁.f $ ! $ ξH.f-g h₁ ⟩
+          ψ₁.f (ξH.f (ξH.g h₁))
+            =⟨ ! $ commutesᴳ ψ□ (ξH.g h₁) ⟩
+          ξK.f (ψ₀.f (ξH.g h₁))
+            =⟨ ap ξK.f $ im-sub-ker exact₀ (ξH.g h₁) [ _,_ (ξG.g g₁) $ 
+                φ₀.f (ξG.g g₁)
+                  =⟨ ! (ξH.g-f (φ₀.f (ξG.g g₁))) ⟩
+                ξH.g (ξH.f (φ₀.f (ξG.g g₁)))
+                  =⟨ ap ξH.g $ commutesᴳ φ□ (ξG.g g₁) ∙ ap φ₁.f (ξG.f-g g₁) ∙ φ₁g₁=h₁ ⟩
+                ξH.g h₁
+                  =∎ ] ⟩
+          ξK.f (Group.ident K₀)
+            =⟨ ξK.pres-ident ⟩
+          Group.ident K₁
+            =∎});
+      ker-sub-im = λ h₁ ψ₁h₁=0 →
+        Trunc-rec (SubgroupProp.level (im-propᴳ φ₁) h₁)
+          (λ{(g₀ , φ₀g₀=ξH⁻¹h₁) → [ _,_ (ξG.f g₀) $
+            φ₁.f (ξG.f g₀)
+              =⟨ ! $ commutesᴳ φ□ g₀ ⟩
+            ξH.f (φ₀.f g₀)
+              =⟨ ap ξH.f φ₀g₀=ξH⁻¹h₁ ⟩
+            ξH.f (ξH.g h₁)
+              =⟨ ξH.f-g h₁ ⟩
+            h₁
+              =∎ ]})
+          (ker-sub-im exact₀ (ξH.g h₁) $
+            ψ₀.f (ξH.g h₁)
+              =⟨ ! $ ξK.g-f (ψ₀.f (ξH.g h₁)) ⟩
+            ξK.g (ξK.f (ψ₀.f (ξH.g h₁)))
+              =⟨ ap ξK.g $ commutesᴳ ψ□ (ξH.g h₁) ∙ ap ψ₁.f (ξH.f-g h₁) ∙ ψ₁h₁=0 ⟩
+            ξK.g (Group.ident K₁)
+              =⟨ GroupHom.pres-ident ξK.g-hom ⟩
+            Group.ident K₀
+              =∎)}
+    where
+      module φ₀ = GroupHom φ₀
+      module φ₁ = GroupHom φ₁
+      module ψ₀ = GroupHom ψ₀
+      module ψ₁ = GroupHom ψ₁
+      module ξG = GroupIso (ξG , ξG-ise)
+      module ξH = GroupIso (ξH , ξH-ise)
+      module ξK = GroupIso (ξK , ξK-ise)
 
-infix 15 _↓⊣| _∥⊣|
-infixr 10 _↓⟨_⟩↓_ _∥⟨_⟩∥_
+  hom-seq-equiv-preserves-exact : ∀ {i} {G₀ G₁ H₀ H₁ : Group i}
+    {seq₀ : HomSequence G₀ H₀} {seq₁ : HomSequence G₁ H₁}
+    {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁} (seq-map : HomSeqMap seq₀ seq₁ ξG ξH)
+    → is-equiv-seqᴳ seq-map → is-exact-seq seq₀ → is-exact-seq seq₁
+  hom-seq-equiv-preserves-exact (_ ↓|ᴳ) _ _ = lift tt
+  hom-seq-equiv-preserves-exact (_ ↓⟨ _ ⟩ᴳ _ ↓|ᴳ) _ _ = lift tt
+  hom-seq-equiv-preserves-exact
+    (ξG ↓⟨ φ□ ⟩ᴳ ξH ↓⟨ ψ□ ⟩ᴳ seq-map)
+    (ξG-ise , ξH-ise , seq-map-ise)
+    (φ₀-ψ₀-is-exact , ψ₀-seq₀-is-exact-seq) =
+      hom-pair-equiv-preserves-exact
+        (ξG ↓⟨ φ□ ⟩ᴳ ξH ↓⟨ ψ□ ⟩ᴳ _ ↓|ᴳ)
+        (ξG-ise , ξH-ise , is-equiv-seqᴳ-head seq-map-ise)
+        φ₀-ψ₀-is-exact ,
+      hom-seq-equiv-preserves-exact
+        (ξH ↓⟨ ψ□ ⟩ᴳ seq-map)
+        (ξH-ise , seq-map-ise)
+        ψ₀-seq₀-is-exact-seq
 
-data Sequence= {i} : {G₁ H₁ G₂ H₂ : Group i}
-  (S₁ : HomSequence G₁ H₁) (S₂ : HomSequence G₂ H₂)
-  → G₁ == G₂ → H₁ == H₂ → Type (lsucc i) where
-  _∥⊣| : ∀ {G₁ G₂} (p : G₁ == G₂) → Sequence= (G₁ ⊣|) (G₂ ⊣|) p p
-  _∥⟨_⟩∥_ : ∀ {G₁ G₂} (pG : G₁ == G₂)
-    {H₁ K₁ H₂ K₂ : Group i} {φ₁ : G₁ →ᴳ H₁} {φ₂ : G₂ →ᴳ H₂}
-    {S₁ : HomSequence H₁ K₁} {S₂ : HomSequence H₂ K₂}
-    {pH : H₁ == H₂} {pK : K₁ == K₂}
-    (over : φ₁ == φ₂ [ uncurry _→ᴳ_ ↓ pair×= pG pH ])
-    → Sequence= S₁ S₂ pH pK
-    → Sequence= (G₁ ⟨ φ₁ ⟩→ S₁) (G₂ ⟨ φ₂ ⟩→ S₂) pG pK
-
-data SequenceIso {i j} : {G₁ H₁ : Group i} {G₂ H₂ : Group j}
-  (S₁ : HomSequence G₁ H₁) (S₂ : HomSequence G₂ H₂)
-  → G₁ ≃ᴳ G₂ → H₁ ≃ᴳ H₂ → Type (lsucc (lmax i j)) where
-  _↓⊣| : ∀ {G₁ G₂} (iso : G₁ ≃ᴳ G₂) → SequenceIso (G₁ ⊣|) (G₂ ⊣|) iso iso
-  _↓⟨_⟩↓_ : ∀ {G₁ G₂} (isoG : G₁ ≃ᴳ G₂)
-    {H₁ K₁ : Group i} {H₂ K₂ : Group j} {φ₁ : G₁ →ᴳ H₁} {φ₂ : G₂ →ᴳ H₂}
-    {S₁ : HomSequence H₁ K₁} {S₂ : HomSequence H₂ K₂}
-    {isoH : H₁ ≃ᴳ H₂} {isoK : K₁ ≃ᴳ K₂}
-    (over : fst isoH ∘ᴳ φ₁ == φ₂ ∘ᴳ fst isoG)
-    → SequenceIso S₁ S₂ isoH isoK
-    → SequenceIso (G₁ ⟨ φ₁ ⟩→ S₁) (G₂ ⟨ φ₂ ⟩→ S₂) isoG isoK
-
-seq-iso-to-path : ∀ {i} {G₁ H₁ G₂ H₂ : Group i}
-  {S₁ : HomSequence G₁ H₁} {S₂ : HomSequence G₂ H₂}
-  {isoG : G₁ ≃ᴳ G₂} {isoH : H₁ ≃ᴳ H₂}
-  → SequenceIso S₁ S₂ isoG isoH
-  → Sequence= S₁ S₂ (uaᴳ isoG) (uaᴳ isoH)
-seq-iso-to-path (iso ↓⊣|) = uaᴳ iso ∥⊣|
-seq-iso-to-path (iso ↓⟨ over ⟩↓ si') =
-  uaᴳ iso
-    ∥⟨ hom-over-isos $ function-over-equivs _ _ $ ap GroupHom.f over ⟩∥
-  seq-iso-to-path si'
-
-sequence= : ∀ {i} {G₁ H₁ G₂ H₂ : Group i}
-  {S₁ : HomSequence G₁ H₁} {S₂ : HomSequence G₂ H₂}
-  (pG : G₁ == G₂) (pH : H₁ == H₂) → Sequence= S₁ S₂ pG pH
-  → S₁ == S₂ [ uncurry HomSequence ↓ pair×= pG pH ]
-sequence= idp .idp (.idp ∥⊣|) = idp
-sequence= {G₁ = G₁} idp idp
-  (_∥⟨_⟩∥_ .idp {φ₁ = φ₁} {pH = idp} idp sp') =
-    ap (λ S' → G₁ ⟨ φ₁ ⟩→ S') (sequence= idp idp sp')
-
-sequence-iso-ua : ∀ {i} {G₁ H₁ G₂ H₂ : Group i}
-  {S₁ : HomSequence G₁ H₁} {S₂ : HomSequence G₂ H₂}
-  (isoG : G₁ ≃ᴳ G₂) (isoH : H₁ ≃ᴳ H₂) → SequenceIso S₁ S₂ isoG isoH
-  → S₁ == S₂ [ uncurry HomSequence ↓ pair×= (uaᴳ isoG) (uaᴳ isoH) ]
-sequence-iso-ua isoG isoH si = sequence= _ _ (seq-iso-to-path si)
-
+{-
 data is-exact-seq {i} : {G H : Group i} → HomSequence G H → Type (lsucc i) where
   exact-seq-zero : {G : Group i} → is-exact-seq (G ⊣|)
   exact-seq-one : {G H : Group i} {φ : G →ᴳ H} → is-exact-seq (G ⟨ φ ⟩→ H ⊣|)
@@ -128,3 +156,4 @@ abstract
     exact-seq-more ex es₂
   exact-concat {seq₁ = G ⟨ ψ ⟩→ H ⟨ χ ⟩→ s} (exact-seq-more ex es₁) es₂ =
     exact-seq-more ex (exact-concat {seq₁ = H ⟨ χ ⟩→ s} es₁ es₂)
+-}
