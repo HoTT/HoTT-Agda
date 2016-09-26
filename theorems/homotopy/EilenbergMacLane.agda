@@ -6,6 +6,7 @@ open import homotopy.Freudenthal
 open import homotopy.IterSuspensionStable
 open import homotopy.Pi2HSusp
 open import homotopy.EM1HSpace
+open import homotopy.EilenbergMacLane1
 
 module homotopy.EilenbergMacLane where
 
@@ -23,7 +24,6 @@ module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (fst X))
 
   module _ (n : ℕ) where
     EM = fst (⊙EM n)
-    embase = snd (⊙EM n)
 
   EM-level : (n : ℕ) → has-level ⟨ n ⟩ (fst (⊙EM n))
   EM-level O = gA a₀ a₀
@@ -185,15 +185,14 @@ module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (fst X))
       spectrum 1 = spectrum1
       spectrum (S (S n)) = spectrumSS n
 
-module EMExplicit {i} (G : Group i) (G-abelian : is-abelian G) where
-  module K₁ = EM₁ G
-  module HSpace = EM₁HSpace G G-abelian
-  open EMImplicit K₁.EM₁-conn K₁.emlevel HSpace.H-⊙EM₁ public
+module EMExplicit {i} (G : AbelianGroup i) where
+  module HSpace = EM₁HSpace G
+  open EMImplicit EM₁-conn EM₁-level HSpace.H-⊙EM₁ public
 
   open BelowDiagonal public using (πS-below)
 
-  πS-diag : (n : ℕ) → πS n (⊙EM (S n)) ≃ᴳ G
-  πS-diag n = K₁.π₁.π₁-iso ∘eᴳ OnDiagonal.πS-diag n
+  πS-diag : (n : ℕ) → πS n (⊙EM (S n)) ≃ᴳ AbelianGroup.grp G
+  πS-diag n = π₁-EM₁ (AbelianGroup.grp G) ∘eᴳ OnDiagonal.πS-diag n
 
   open AboveDiagonal public using (πS-above)
   open Spectrum public using (spectrum)

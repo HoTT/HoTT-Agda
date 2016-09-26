@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
+open import homotopy.EilenbergMacLane1
 open import homotopy.EilenbergMacLane
 
 {- Given sequence of groups (Gₙ : n ≥ 1) such that Gₙ is abelian for n > 1,
@@ -100,26 +101,26 @@ module SpaceFromEMs {i} (F : ℕ → Ptd i)
 {- Given sequence of groups (Gₙ : n ≥ 1) such that Gₙ is abelian for n > 1,
  - construct a space X such that πₙ(X) == Gₙ. -}
 module SpaceFromGroups {i} (G : ℕ → Group i)
-  (abG : (n : ℕ) → is-abelian (G (S n))) where
+  (abG-S : (n : ℕ) → is-abelian (G (S n))) where
 
   private
     F : ℕ → Ptd i
-    F O = EM₁.⊙EM₁ (G O)
-    F (S n) = EMExplicit.⊙EM (G (S n)) (abG n) (S (S n))
+    F O = ⊙EM₁ (G O)
+    F (S n) = EMExplicit.⊙EM (G (S n) , abG-S n) (S (S n))
 
     pF : (n : ℕ) → has-level ⟨ S n ⟩ (fst (F n))
-    pF O = EM₁.emlevel (G O)
-    pF (S n) = EMExplicit.EM-level (G (S n)) (abG n) (S (S n))
+    pF O = EM₁-level {G = G O}
+    pF (S n) = EMExplicit.EM-level (G (S n) , abG-S n) (S (S n))
 
     cF : (n : ℕ) → is-connected ⟨ n ⟩ (fst (F n))
-    cF O = EM₁.EM₁-conn (G O)
-    cF (S n) = EMExplicit.EM-conn (G (S n)) (abG n) (S n)
+    cF O = EM₁-conn {G = G O}
+    cF (S n) = EMExplicit.EM-conn (G (S n) , abG-S n) (S n)
 
     module M = SpaceFromEMs F pF cF
 
   X = M.X
 
   πS-X : (n : ℕ) → πS n X ≃ᴳ G n
-  πS-X O = EM₁.π₁.π₁-iso (G O) ∘eᴳ M.πS-X O
+  πS-X O = π₁-EM₁ (G O) ∘eᴳ M.πS-X O
   πS-X (S n) =
-    EMExplicit.πS-diag (G (S n)) (abG n) (S n) ∘eᴳ M.πS-X (S n)
+    EMExplicit.πS-diag (G (S n) , abG-S n) (S n) ∘eᴳ M.πS-X (S n)

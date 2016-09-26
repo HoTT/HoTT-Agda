@@ -120,3 +120,10 @@ Trunc-group-abelian GS ab =
   Trunc-elim (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level)) $
     λ a₁ → Trunc-elim (λ _ → =-preserves-level _ Trunc-level) $
       λ a₂ → ap [_] (ab a₁ a₂)
+
+unTrunc-iso : ∀ {i} {A : Type i} (GS : GroupStructure A)
+  → (A-is-set : is-set A) → Trunc-group GS ≃ᴳ group A A-is-set GS
+unTrunc-iso _ A-is-set = ≃-to-≃ᴳ (unTrunc-equiv _ A-is-set)
+  (Trunc-elim (λ _ → Π-is-set λ _ → =-preserves-set A-is-set)
+    (λ a₁ → Trunc-elim (λ _ → =-preserves-set A-is-set)
+      (λ a₂ → idp)))

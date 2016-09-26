@@ -8,9 +8,9 @@ open import cohomology.WithCoefficients
 
 module cohomology.EMModel where
 
-module _ {i} (G : Group i) (G-abelian : is-abelian G) where
+module _ {i} (G : AbelianGroup i) where
 
-  open EMExplicit G G-abelian using (⊙EM; EM-level; EM-conn; spectrum)
+  open EMExplicit G using (⊙EM; EM-level; EM-conn; spectrum)
 
   private
     E : (n : ℤ) → Ptd i
