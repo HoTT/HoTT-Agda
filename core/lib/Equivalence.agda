@@ -25,6 +25,20 @@ The identity equivalence on [A] is [ide A], the composition of two equivalences
 is [_∘e_] (function composition order) and the inverse of an equivalence is [_⁻¹]
 -}
 
+{- These lemmas are here because lib.Path is not available at this point.
+   Otherwise they are just combinations of [↓-='-out] and [apd]. -}
+
+private
+  htpy-natural : ∀ {i j} {A : Type i} {B : Type j} {x y : A} {f g : A → B}
+    (p : ∀ x → (f x == g x)) (q : x == y) → ap f q ∙ p y == p x ∙ ap g q
+  htpy-natural p idp = ! (∙-unit-r _)
+
+  htpy-natural-app=idf : ∀ {i} {A : Type i} {f : A → A}
+    (p : ∀ (x : A) → f x == x) → (∀ x → ap f (p x) == p (f x))
+  htpy-natural-app=idf {f = f} p x = anti-whisker-right (p x) $
+    htpy-natural p (p x) ∙ ap (p (f x) ∙_) (ap-idf (p x))
+
+
 module _ {i} {j} {A : Type i} {B : Type j} where
 
   record is-equiv (f : A → B) : Type (lmax i j)
@@ -52,6 +66,7 @@ module _ {i} {j} {A : Type i} {B : Type j} where
           =⟨ adj (g b) |in-ctx (λ p → ap g p ∙ ap g (f-g b)) ⟩
         ap g (f-g (f (g b))) ∙ ap g (f-g b)
           =∎
+
 
   {-
   In order to prove that something is an equivalence, you have to give an inverse

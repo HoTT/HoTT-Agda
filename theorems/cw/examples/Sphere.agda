@@ -130,7 +130,7 @@ to-from (S n) = AttachedElim.f to-from-incl to-from-hub to-from-spoke
           |in-ctx (λ p → ! (spoke true (CWSphere-to-Sphere n (Sphere-to-CWSphere n x))) ∙ p) ⟩
       ! (spoke true (CWSphere-to-Sphere n (Sphere-to-CWSphere n x)))
       ∙ ap (incl ∘ Sphere-to-CWSphere n) (is-equiv.g-f (Sphere-to-CWSphere-is-equiv n) x)
-          =⟨ htpy-natural-cst=app (λ x → ! (spoke true x)) (is-equiv.g-f (Sphere-to-CWSphere-is-equiv n) x) ⟩
+          =⟨ ↓-cst=app-out' $ apd (λ x → ! (spoke true x)) (is-equiv.g-f (Sphere-to-CWSphere-is-equiv n) x) ⟩
       ! (spoke true x)
           ∎
 

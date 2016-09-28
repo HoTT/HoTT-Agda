@@ -62,9 +62,9 @@ module _ {i i' j j'} {A : Type i} {A' : Type i'} {B : Type j} {B' : Type j'} whe
           → ap left (<–-inv-r eqA (fst ab)) == ap right (<–-inv-r eqB (snd ab)) [ (λ y → to (from y) == y) ↓ glue ab ]
         to-from-glue (a , b) = ↓-app=idf-in $
           ap left (<–-inv-r eqA a) ∙' glue (a , b)
-            =⟨ htpy-natural'-app=cst (λ a → glue (a , b)) (<–-inv-r eqA a) ⟩
+            =⟨ ! $ ↓-app=cst-out' $ apd (λ a → glue (a , b)) (<–-inv-r eqA a) ⟩
           glue (–> eqA (<– eqA a) , b)
-            =⟨ ! $ htpy-natural-cst=app (λ b → glue (–> eqA (<– eqA a) , b)) (<–-inv-r eqB b) ⟩
+            =⟨ ! $ ↓-cst=app-out' $ apd (λ b → glue (–> eqA (<– eqA a) , b)) (<–-inv-r eqB b) ⟩
           glue (–> eqA (<– eqA a) , –> eqB (<– eqB b)) ∙ ap right (<–-inv-r eqB b)
             =⟨ ! $ To.glue-β (<– eqA a , <– eqB b) |in-ctx (_∙ ap right (<–-inv-r eqB b)) ⟩
           ap to (glue (<– eqA a , <– eqB b)) ∙ ap right (<–-inv-r eqB b)
@@ -80,9 +80,9 @@ module _ {i i' j j'} {A : Type i} {A' : Type i'} {B : Type j} {B' : Type j'} whe
           → ap left (<–-inv-l eqA (fst ab)) == ap right (<–-inv-l eqB (snd ab)) [ (λ x → from (to x) == x) ↓ glue ab ]
         from-to-glue (a , b) = ↓-app=idf-in $
           ap left (<–-inv-l eqA a) ∙' glue (a , b)
-            =⟨ htpy-natural'-app=cst (λ a → glue (a , b)) (<–-inv-l eqA a) ⟩
+            =⟨ ! $ ↓-app=cst-out' $ apd (λ a → glue (a , b)) (<–-inv-l eqA a) ⟩
           glue (<– eqA (–> eqA a) , b)
-            =⟨ ! $ htpy-natural-cst=app (λ b → glue (<– eqA (–> eqA a) , b)) (<–-inv-l eqB b) ⟩
+            =⟨ ! $ ↓-cst=app-out' $ apd (λ b → glue (<– eqA (–> eqA a) , b)) (<–-inv-l eqB b) ⟩
           glue (<– eqA (–> eqA a) , <– eqB (–> eqB b)) ∙ ap right (<–-inv-l eqB b)
             =⟨ ! $ From.glue-β (–> eqA a , –> eqB b) |in-ctx (_∙ ap right (<–-inv-l eqB b)) ⟩
           ap from (glue (–> eqA a , –> eqB b)) ∙ ap right (<–-inv-l eqB b)

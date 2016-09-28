@@ -140,15 +140,14 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
       =⟨ ∘-ap (–> e) (<– e) (! p)
          |in-ctx (λ w → (w ∙ <–-inv-r e (–> e (snd X))) ∙ p) ⟩
     (ap (–> e ∘ <– e) (! p) ∙ <–-inv-r e (–> e (snd X))) ∙ p
-      =⟨ htpy-lemma (<–-inv-r e) p ⟩
-    <–-inv-r e (snd Y)
-      =⟨ ! (∙-unit-r _) ⟩
+      =⟨ ap (_∙ p) (! (↓-app=idf-out (apd (<–-inv-r e) (! p))))  ⟩
+    (<–-inv-r e (snd Y) ∙' (! p)) ∙ p
+      =⟨ ∙'=∙ (<–-inv-r e (snd Y)) (! p) |in-ctx _∙ p ⟩
+    (<–-inv-r e (snd Y) ∙ (! p)) ∙ p
+      =⟨ ∙-assoc (<–-inv-r e (snd Y)) (! p) p ⟩
+    <–-inv-r e (snd Y) ∙ (! p ∙ p)
+      =⟨ !-inv-l p |in-ctx (<–-inv-r e (snd Y)) ∙_ ⟩
     <–-inv-r e (snd Y) ∙ idp =∎
-    where
-    htpy-lemma : ∀ {i} {A : Type i} {f : A → A}
-      (p : ∀ z → f z == z) {x y : A} (q : x == y)
-      → (ap f (! q) ∙ p x) ∙ q == p y
-    htpy-lemma p idp = ∙-unit-r _
 
 module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} (⊙e : X ⊙≃ Y) where
 
