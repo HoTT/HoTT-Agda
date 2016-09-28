@@ -2,7 +2,6 @@
 
 open import HoTT
 open import homotopy.HSpace
-open import homotopy.PushoutFlip using (Span-flip; Pushout-flip-equiv)
 
 module homotopy.HopfConstruction {i} {X : Ptd i} (c : is-connected 0 (fst X))
   (hX : HSpaceStructure X) where
