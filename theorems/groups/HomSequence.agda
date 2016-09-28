@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
+open import groups.HomMap
 
 module groups.HomSequence where
 

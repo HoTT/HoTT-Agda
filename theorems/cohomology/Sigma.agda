@@ -58,8 +58,8 @@ module CofSelect (X : Ptd i) (Y : fst X → Ptd i) where
   cfcod-over : cfcod _ == uncurry bwin [ (λ U → fst (⊙Σ X Y) → fst U) ↓ ⊙path ]
   cfcod-over = ↓-cst2-in _ _ $ codomain-over-equiv _ _
 
-  ext-glue-cst : ext-glue {s = cofiber-span select} == cst (north _)
-  ext-glue-cst = λ= $ Cofiber-elim _
+  extract-glue-cst : extract-glue {s = cofiber-span select} == cst (north _)
+  extract-glue-cst = λ= $ Cofiber-elim _
     idp
     (λ {(x , y) → ! (merid _ x)})
     (↓-='-from-square ∘ λ x →
@@ -67,9 +67,9 @@ module CofSelect (X : Ptd i) (Y : fst X → Ptd i) where
         tr-square (merid _ x)
       ⊡v∙ ! (ap-cst (north _) (cfglue _ x)))
 
-  ext-over : ext-glue == cst (north _)
+  ext-over : extract-glue == cst (north _)
              [ (λ U → fst U → fst (⊙Susp X)) ↓ ⊙path ]
-  ext-over = ↓-cst2-in _ _ $ ext-glue-cst ◃ domain-over-equiv _ _
+  ext-over = ↓-cst2-in _ _ $ extract-glue-cst ◃ domain-over-equiv _ _
 
 
 module CΣ (n : ℤ) (X : Ptd i) (Y : fst X → Ptd i) where

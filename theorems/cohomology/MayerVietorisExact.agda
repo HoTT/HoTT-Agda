@@ -35,7 +35,7 @@ mayer-vietoris-seq =
     ⟨ ×ᴳ-fanin (C-abelian _ _) (CF-hom n f)
                (inv-hom _ (C-abelian _ _) ∘ᴳ (CF-hom n g)) ⟩→
   C n Z
-    ⟨ CF-hom (succ n) ⊙ext-glue ∘ᴳ fst ((C-Susp n Z)⁻¹ᴳ) ⟩→
+    ⟨ CF-hom (succ n) ⊙extract-glue ∘ᴳ fst ((C-Susp n Z)⁻¹ᴳ) ⟩→
   C (succ n) (⊙Pushout ps)
     ⟨ ×ᴳ-fanout (CF-hom _ (⊙left ps)) (CF-hom _ (⊙right ps)) ⟩→
   C (succ n) X ×ᴳ C (succ n) Y ⊣|
@@ -57,7 +57,7 @@ mayer-vietoris-exact =
         ∥⟨ ↓-over-×-in _→ᴳ_
             (CF-↓dom= (succ n) MV.cfcod-over
              ∙ᵈ domain-over-iso
-                  (! (ap (λ h → CF _ ⊙ext-glue ∘ h)
+                  (! (ap (λ h → CF _ ⊙extract-glue ∘ h)
                      (λ= (is-equiv.g-f (snd (C-Susp n Z)))))
                    ◃ domain-over-equiv _ _))
             idp                                              ⟩∥

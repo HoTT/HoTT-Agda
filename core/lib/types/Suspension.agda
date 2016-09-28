@@ -79,14 +79,17 @@ suspension-⊙span X =
 σloop-pt {X = (_ , x₀)} = !-inv-r (merid x₀)
 
 
-module FlipSusp {i} {A : Type i} = SuspensionRec
+module SuspFlip {i} {A : Type i} = SuspensionRec
   (south' A) north (! ∘ merid)
 
 Susp-flip : ∀ {i} {A : Type i} → Suspension A → Suspension A
-Susp-flip = FlipSusp.f
+Susp-flip = SuspFlip.f
 
 ⊙Susp-flip : ∀ {i} (X : Ptd i) → ⊙Susp X ⊙→ ⊙Susp X
 ⊙Susp-flip X = (Susp-flip , ! (merid (snd X)))
+
+Susp-flip-equiv : ∀ {i} {A : Type i} → Suspension A ≃ Suspension A
+Susp-flip-equiv {A = A} = Pushout-flip-equiv (suspension-span A)
 
 module _ {i j} where
 
@@ -122,6 +125,17 @@ module _ {i j} where
     → ⊙Susp-fmap (⊙cst {X = X} {Y = Y}) == ⊙cst
   ⊙Susp-fmap-cst = ⊙λ= (Susp-fmap-cst _) idp
 
+  Susp-flip-fmap : {A : Type i} {B : Type j} (f : A → B)
+    → ∀ σ → Susp-flip (Susp-fmap f σ) == Susp-fmap f (Susp-flip σ)
+  Susp-flip-fmap f = Suspension-elim idp idp $ λ y → ↓-='-in $
+    ap-∘ (Susp-fmap f) Susp-flip (merid y)
+    ∙ ap (ap (Susp-fmap f)) (SuspFlip.merid-β y)
+    ∙ ap-! (Susp-fmap f) (merid y)
+    ∙ ap ! (SuspFmap.merid-β f y)
+    ∙ ! (SuspFlip.merid-β (f y))
+    ∙ ! (ap (ap Susp-flip) (SuspFmap.merid-β f y))
+    ∙ ∘-ap Susp-flip (Susp-fmap f) (merid y)
+
 module _ {i j k} where
 
   Susp-fmap-∘ : {A : Type i} {B : Type j} {C : Type k} (g : B → C) (f : A → B)
@@ -144,15 +158,15 @@ module _ {i j k} where
 {- Extract the 'glue component' of a pushout -}
 module _ {i j k} {s : Span {i} {j} {k}} where
 
-  module ExtGlue = PushoutRec {d = s} {D = Suspension (Span.C s)}
+  module ExtractGlue = PushoutRec {d = s} {D = Suspension (Span.C s)}
     (λ _ → north) (λ _ → south) merid
 
-  ext-glue = ExtGlue.f
+  extract-glue = ExtractGlue.f
 
   module _ {x₀ : Span.A s} where
 
-    ⊙ext-glue : (Pushout s , left x₀) ⊙→ (Suspension (Span.C s) , north)
-    ⊙ext-glue = (ext-glue , idp)
+    ⊙extract-glue : (Pushout s , left x₀) ⊙→ (Suspension (Span.C s) , north)
+    ⊙extract-glue = (extract-glue , idp)
 
 module _ {i j} {A : Type i} {B : Type j} where
 

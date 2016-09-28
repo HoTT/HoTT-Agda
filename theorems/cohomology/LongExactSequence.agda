@@ -14,7 +14,7 @@ open import cohomology.Functor CT
 open import cohomology.BaseIndependence CT
 
 co∂ : C n X →ᴳ C (succ n) (⊙Cof f)
-co∂ = CF-hom (succ n) ⊙ext-glue ∘ᴳ fst ((C-Susp n X)⁻¹ᴳ)
+co∂ = CF-hom (succ n) ⊙extract-glue ∘ᴳ fst ((C-Susp n X)⁻¹ᴳ)
 
 long-cofiber-seq : HomSequence _ _
 long-cofiber-seq =
@@ -35,7 +35,7 @@ long-cofiber-exact =
       uaᴳ (C-Susp n X)
         ∥⟨ ↓-over-×-in _→ᴳ_
              (domain-over-iso
-               (λ= (! ∘ ap (GroupHom.f (CF-hom _ ⊙ext-glue))
+               (λ= (! ∘ ap (GroupHom.f (CF-hom _ ⊙extract-glue))
                       ∘ is-equiv.g-f (snd (C-Susp n X)))
                 ◃ domain-over-equiv _ _))
              idp ⟩∥

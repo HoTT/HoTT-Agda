@@ -35,7 +35,7 @@ private
 
   into = Into.f
 
-  module Out = PushoutRec {d = ⊙span-out (*-⊙span X Y)}
+  module Out = PushoutRec {d = ⊙Span-to-Span (*-⊙span X Y)}
     {D = Suspension (Smash X Y)}
     (λ _ → north)
     (λ _ → south)
