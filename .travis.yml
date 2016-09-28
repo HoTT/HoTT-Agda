@@ -22,6 +22,7 @@ install:
 - stack --no-terminal --install-ghc install Agda
 
 script:
+- stack exec agda -- --version
 # 2-stage type-checking to reduce peak memory usage, hopefully
 - stack exec agda -- --library-file=libraries-travis core/HoTT.agda
 - stack exec agda -- --library-file=libraries-travis theorems/index.agda
