@@ -115,7 +115,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
 
   infix 120 _⊙⁻¹
   _⊙⁻¹ : Y ⊙≃ X
-  _⊙⁻¹ = ⊙<– , is-equiv-inv (snd ⊙e)
+  _⊙⁻¹ = ⊙<– , is-equiv-inverse (snd ⊙e)
 
   ⊙<–-inv-l : ⊙<– ⊙∘ ⊙–> == ⊙idf _
   ⊙<–-inv-l = ⊙λ= (<–-inv-l e) $

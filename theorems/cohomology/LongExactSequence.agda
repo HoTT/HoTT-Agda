@@ -1,64 +1,63 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
+open import groups.HomSequence
 open import groups.ExactSequence
-open import homotopy.FunctionOver
+open import homotopy.PtdMapSequence
+open import homotopy.CofiberSequence
 open import cohomology.Theory
-open import cohomology.CofiberSequence
 
 module cohomology.LongExactSequence {i} (CT : CohomologyTheory i)
   {X Y : Ptd i} (n : ℤ) (f : X ⊙→ Y) where
 
 open CohomologyTheory CT
-open import cohomology.Functor CT
-open import cohomology.BaseIndependence CT
+open import cohomology.PtdMapSequence CT
 
 co∂ : C n X →ᴳ C (succ n) (⊙Cof f)
-co∂ = CF-hom (succ n) ⊙extract-glue ∘ᴳ fst ((C-Susp n X)⁻¹ᴳ)
+co∂ = C-fmap (succ n) ⊙extract-glue ∘ᴳ GroupIso.g-hom (C-Susp n X)
 
-long-cofiber-seq : HomSequence _ _
-long-cofiber-seq =
-  C n Y                ⟨ CF-hom n f                  ⟩→
-  C n X                ⟨ co∂                         ⟩→
-  C (succ n) (⊙Cof f)  ⟨ CF-hom (succ n) (⊙cfcod' f) ⟩→
-  C (succ n) Y         ⟨ CF-hom (succ n) f           ⟩→
-  C (succ n) X         ⊣|
+C-cofiber-seq : HomSequence (C n Y) (C (succ n) X)
+C-cofiber-seq =
+  C n Y                →⟨ C-fmap n f                  ⟩ᴳ
+  C n X                →⟨ co∂                         ⟩ᴳ
+  C (succ n) (⊙Cof f)  →⟨ C-fmap (succ n) (⊙cfcod' f) ⟩ᴳ
+  C (succ n) Y         →⟨ C-fmap (succ n) f           ⟩ᴳ
+  C (succ n) X         ⊣|ᴳ
 
-long-cofiber-exact : is-exact-seq long-cofiber-seq
-long-cofiber-exact =
-  {- apply the suspension isomorphism -}
-  transport
-    (λ {(r , s) → is-exact-seq s})
-    (pair= _ $ sequence= _ _ $
-      uaᴳ (C-Susp n Y)
-        ∥⟨ C-Susp-↓ n f ⟩∥
-      uaᴳ (C-Susp n X)
-        ∥⟨ ↓-over-×-in _→ᴳ_
-             (domain-over-iso
-               (λ= (! ∘ ap (GroupHom.f (CF-hom _ ⊙extract-glue))
-                      ∘ is-equiv.g-f (snd (C-Susp n X)))
-                ◃ domain-over-equiv _ _))
-             idp ⟩∥
-      idp    ∥⟨ idp ⟩∥
-      idp    ∥⟨ idp ⟩∥
-      idp    ∥⊣|)
-    {- fix the function basepoints -}
-    (transport
-      (λ {(φ , ψ) → is-exact-seq $
-        _ ⟨ φ ⟩→ _ ⟨ ψ ⟩→
-        _ ⟨ CF-hom (succ n) (⊙cfcod' f) ⟩→ _ ⟨ CF-hom (succ n) f ⟩→ _ ⊣|})
-      (pair×= (CF-base-indep (succ n) _ _ _)
-              (CF-base-indep (succ n) _ _ _))
-      {- do the CofiberSequence transport -}
-      (transport {A = Σ _ (λ {((U , V) , g , h) →
-                        (g cfbase == snd U) × (h (snd U) == snd V)})}
-        (λ {((_ , g , h) , (p , q)) → is-exact-seq $
-          _ ⟨ CF-hom (succ n) (h , q)     ⟩→ _ ⟨ CF-hom (succ n) (g , p) ⟩→
-          _ ⟨ CF-hom (succ n) (⊙cfcod' f) ⟩→ _ ⟨ CF-hom (succ n) f ⟩→ _ ⊣|})
-        (pair= (cofiber-sequence f)
-               (↓-×-in (from-transp _ _ idp) (from-transp _ _ idp)))
-        (exact-build
-          (_ ⟨ CF-hom (succ n) (⊙cfcod³ f) ⟩→ _ ⟨ CF-hom (succ n) (⊙cfcod² f) ⟩→
-           _ ⟨ CF-hom (succ n) (⊙cfcod' f) ⟩→ _ ⟨ CF-hom (succ n) f ⟩→ _ ⊣|)
-          (C-exact (succ n) (⊙cfcod² f))
-          (C-exact (succ n) (⊙cfcod' f)) (C-exact (succ n) f))))
+private
+  C-iterated-cofiber-seq = C-seq (succ n) (iterated-cofiber-seq f)
+
+  C-iterated-cofiber-seq-is-exact : is-exact-seq C-iterated-cofiber-seq
+  C-iterated-cofiber-seq-is-exact =
+    C-exact (succ n) (⊙cfcod²' f) , C-exact (succ n) (⊙cfcod' f) , C-exact (succ n) f , lift tt
+
+  -- An intermediate sequence for proving exactness of [C-cofiber-seq].
+  C-cofiber-seq' = C-seq (succ n) (cofiber-seq f)
+
+  C-cofiber-seq'-is-exact : is-exact-seq C-cofiber-seq'
+  C-cofiber-seq'-is-exact =
+    hom-seq-equiv-preserves-exact
+      (HomSeqEquiv-inverse (C-seq-emap (succ n) (cofiber-seq-equiv f)))
+      C-iterated-cofiber-seq-is-exact
+
+  -- Now the final sequence
+  C-cofiber-seq'-to-C-cofiber-seq :
+    HomSeqMap C-cofiber-seq' C-cofiber-seq
+      (GroupIso.f-hom (C-Susp n Y)) (idhom _)
+  C-cofiber-seq'-to-C-cofiber-seq =
+    GroupIso.f-hom (C-Susp n Y) ↓⟨ C-Susp-fmap n f ⟩ᴳ
+    GroupIso.f-hom (C-Susp n X) ↓⟨ comm-sqrᴳ (λ x → ap (CEl-fmap (succ n) ⊙extract-glue) (! $ GroupIso.g-f (C-Susp n X) x)) ⟩ᴳ
+    idhom _                     ↓⟨ comm-sqrᴳ (λ _ → idp) ⟩ᴳ
+    idhom _                     ↓⟨ comm-sqrᴳ (λ _ → idp) ⟩ᴳ
+    idhom _                     ↓|ᴳ
+
+  C-cofiber-seq'-equiv-C-cofiber-seq :
+    HomSeqEquiv C-cofiber-seq' C-cofiber-seq
+      (GroupIso.f-hom (C-Susp n Y)) (idhom _)
+  C-cofiber-seq'-equiv-C-cofiber-seq =
+    C-cofiber-seq'-to-C-cofiber-seq ,
+    (GroupIso.f-is-equiv (C-Susp n Y) , GroupIso.f-is-equiv (C-Susp n X) , idf-is-equiv _ , idf-is-equiv _ , idf-is-equiv _)
+
+C-cofiber-seq-is-exact : is-exact-seq C-cofiber-seq
+C-cofiber-seq-is-exact = hom-seq-equiv-preserves-exact
+  C-cofiber-seq'-equiv-C-cofiber-seq C-cofiber-seq'-is-exact

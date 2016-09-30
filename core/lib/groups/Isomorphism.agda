@@ -106,7 +106,7 @@ _≃ᴳ∎ = idiso
 infixl 120 _⁻¹ᴳ
 
 _⁻¹ᴳ : ∀ {i j} {G : Group i} {H : Group j} → G ≃ᴳ H → H ≃ᴳ G
-_⁻¹ᴳ {G = G} {H = H} (φ , ie) = GroupIso.g-hom (φ , ie) , is-equiv-inv ie
+_⁻¹ᴳ {G = G} {H = H} (φ , ie) = GroupIso.g-hom (φ , ie) , is-equiv-inverse ie
 
 {- mimicking notations for equivalences -}
 

@@ -1,12 +1,9 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import homotopy.FunctionOver
 open import homotopy.PtdMapSequence
--- open import groups.HomSequence
--- open import groups.ExactSequence
 
-module cohomology.CofiberSequence {i} where
+module homotopy.CofiberSequence {i} where
 
 {- Useful abbreviations -}
 module _ {X Y : Ptd i} (f : X ⊙→ Y) where
@@ -92,11 +89,11 @@ private
 module _ {X Y : Ptd i} (f : X ⊙→ Y) where
 
   private
-    square₁ : PtdMapCommSquare (⊙cfcod²' f) ⊙extract-glue (⊙idf _) (Equiv.⊙into f)
+    square₁ : CommSquare (cfcod²' (fst f)) extract-glue (idf _) (Equiv.into f)
     square₁ = record {commutes = λ _ → idp}
 
-    square₂ : PtdMapCommSquare (⊙cfcod³' f) (⊙Susp-fmap f)
-      (Equiv.⊙into f) (⊙Susp-flip Y ⊙∘ Equiv.⊙into (⊙cfcod' f))
+    square₂ : CommSquare (cfcod³' (fst f)) (Susp-fmap (fst f))
+      (Equiv.into f) (Susp-flip ∘ Equiv.into (⊙cfcod' f))
     square₂ = record {
       commutes = Cofiber-elim {f = cfcod' (fst f)}
         idp
@@ -130,12 +127,31 @@ module _ {X Y : Ptd i} (f : X ⊙→ Y) where
   ⊙Cof²-equiv-⊙Susp-dom : ⊙Cof² f ⊙≃ ⊙Susp X
   ⊙Cof²-equiv-⊙Susp-dom = Equiv.⊙eqv f
 
-  cofiber-seq-map : PtdMapSeqMap
-    (⊙Cof f ⊙→⟨ ⊙cfcod²' f ⟩ ⊙Cof² f ⊙→⟨ ⊙cfcod³' f ⟩ ⊙Cof³ f ⊙⊣|)
-    (⊙Cof f ⊙→⟨ ⊙extract-glue ⟩ ⊙Susp X ⊙→⟨ ⊙Susp-fmap f ⟩ ⊙Susp Y ⊙⊣|)
-    (⊙idf (⊙Cof f)) (⊙Susp-flip Y ⊙∘ Equiv.⊙into (⊙cfcod' f))
-  cofiber-seq-map = ⊙idf (⊙Cof f) ⊙↓⟨ square₁ ⟩ _ ⊙↓⟨ square₂ ⟩ _ ⊙↓|
+  iterated-cofiber-seq : PtdMapSequence X (⊙Cof³ f)
+  iterated-cofiber-seq =
+    X ⊙→⟨ f ⟩ Y ⊙→⟨ ⊙cfcod' f ⟩ ⊙Cof f ⊙→⟨ ⊙cfcod²' f ⟩ ⊙Cof² f ⊙→⟨ ⊙cfcod³' f ⟩ ⊙Cof³ f ⊙⊣|
+
+  cofiber-seq : PtdMapSequence X (⊙Susp Y)
+  cofiber-seq =
+    X ⊙→⟨ f ⟩ Y ⊙→⟨ ⊙cfcod' f ⟩ ⊙Cof f ⊙→⟨ ⊙extract-glue ⟩ ⊙Susp X ⊙→⟨ ⊙Susp-fmap f ⟩ ⊙Susp Y ⊙⊣|
+
+  cofiber-seq-map : PtdMapSeqMap iterated-cofiber-seq cofiber-seq
+    (⊙idf X) (⊙Susp-flip Y ⊙∘ Equiv.⊙into (⊙cfcod' f))
+  cofiber-seq-map =
+    ⊙idf X                                  ⊙↓⟨ comm-sqr (λ _ → idp) ⟩
+    ⊙idf Y                                  ⊙↓⟨ comm-sqr (λ _ → idp) ⟩
+    ⊙idf (⊙Cof f)                           ⊙↓⟨ square₁ ⟩
+    Equiv.⊙into f                           ⊙↓⟨ square₂ ⟩
+    ⊙Susp-flip Y ⊙∘ Equiv.⊙into (⊙cfcod' f) ⊙↓|
 
   cofiber-seq-map-is-equiv : is-⊙seq-equiv cofiber-seq-map
-  cofiber-seq-map-is-equiv = idf-is-equiv _ , snd (Equiv.eqv f)
-                           , snd (Susp-flip-equiv ∘e (Equiv.eqv (⊙cfcod' f)))
+  cofiber-seq-map-is-equiv =
+      idf-is-equiv _
+    , idf-is-equiv _
+    , idf-is-equiv _
+    , snd (Equiv.eqv f)
+    , snd (Susp-flip-equiv ∘e (Equiv.eqv (⊙cfcod' f)))
+
+  cofiber-seq-equiv : PtdMapSeqEquiv iterated-cofiber-seq cofiber-seq
+    (⊙idf X) (⊙Susp-flip Y ⊙∘ Equiv.⊙into (⊙cfcod' f))
+  cofiber-seq-equiv = cofiber-seq-map , cofiber-seq-map-is-equiv

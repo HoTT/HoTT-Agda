@@ -21,52 +21,40 @@ data PtdMapSequence {i} : (X : Ptd i) (Y : Ptd i) → Type (lsucc i) where
     → (X ⊙→ Y) → PtdMapSequence Y Z
     → PtdMapSequence X Z
 
-{- maps between two pointed maps -}
-
-record PtdMapCommSquare {i₀ i₁ j₀ j₁}
-  {X₀ : Ptd i₀} {X₁ : Ptd i₁} {Y₀ : Ptd j₀} {Y₁ : Ptd j₁}
-  (⊙f₀ : X₀ ⊙→ Y₀) (⊙f₁ : X₁ ⊙→ Y₁) (⊙hX : X₀ ⊙→ X₁) (⊙hY : Y₀ ⊙→ Y₁)
-  : Type (lmax (lmax i₀ i₁) (lmax j₀ j₁)) where
-
-  field
-    commutes : ∀ x → fst ⊙hY (fst ⊙f₀ x) == fst ⊙f₁ (fst ⊙hX x)
-
-⊙commutes = PtdMapCommSquare.commutes
-
 {- maps between two pointed map sequences -}
 
 infix 15 _⊙↓|
 infixr 10 _⊙↓⟨_⟩_
 
-data PtdMapSeqMap {i} : {X₀ X₁ Y₀ Y₁ : Ptd i}
+data PtdMapSeqMap {i₀ i₁} : {X₀ Y₀ : Ptd i₀} {X₁ Y₁ : Ptd i₁}
   (⊙seq₀ : PtdMapSequence X₀ Y₀) (⊙seq₁ : PtdMapSequence X₁ Y₁)
-  (⊙hX : X₀ ⊙→ X₁) (⊙fY : Y₀ ⊙→ Y₁) → Type (lsucc i) where
-  _⊙↓| : {X₀ X₁ : Ptd i} (f : X₀ ⊙→ X₁) → PtdMapSeqMap (X₀ ⊙⊣|) (X₁ ⊙⊣|) f f
-  _⊙↓⟨_⟩_ : ∀ {X₀ X₁ Y₀ Y₁ Z₀ Z₁ : Ptd i}
+  (⊙hX : X₀ ⊙→ X₁) (⊙fY : Y₀ ⊙→ Y₁) → Type (lsucc (lmax i₀ i₁)) where
+  _⊙↓| : {X₀ : Ptd i₀} {X₁ : Ptd i₁} (f : X₀ ⊙→ X₁) → PtdMapSeqMap (X₀ ⊙⊣|) (X₁ ⊙⊣|) f f
+  _⊙↓⟨_⟩_ : ∀ {X₀ Y₀ Z₀ : Ptd i₀} {X₁ Y₁ Z₁ : Ptd i₁}
     → {⊙f₀ : X₀ ⊙→ Y₀} {⊙seq₀ : PtdMapSequence Y₀ Z₀}
     → {⊙f₁ : X₁ ⊙→ Y₁} {⊙seq₁ : PtdMapSequence Y₁ Z₁}
     → (⊙hX : X₀ ⊙→ X₁) {⊙hY : Y₀ ⊙→ Y₁} {⊙hZ : Z₀ ⊙→ Z₁}
-    → PtdMapCommSquare ⊙f₀ ⊙f₁ ⊙hX ⊙hY
+    → CommSquare (fst ⊙f₀) (fst ⊙f₁) (fst ⊙hX) (fst ⊙hY)
     → PtdMapSeqMap ⊙seq₀ ⊙seq₁ ⊙hY ⊙hZ
     → PtdMapSeqMap (X₀ ⊙→⟨ ⊙f₀ ⟩ ⊙seq₀) (X₁ ⊙→⟨ ⊙f₁ ⟩ ⊙seq₁) ⊙hX ⊙hZ
 
 {- equivalences between two pointed map sequences -}
 
-is-⊙seq-equiv : ∀ {i} {X₀ X₁ Y₀ Y₁ : Ptd i}
+is-⊙seq-equiv : ∀ {i₀ i₁} {X₀ Y₀ : Ptd i₀} {X₁ Y₁ : Ptd i₁}
   {⊙seq₀ : PtdMapSequence X₀ Y₀} {⊙seq₁ : PtdMapSequence X₁ Y₁}
   {⊙hX : X₀ ⊙→ X₁} {⊙hY : Y₀ ⊙→ Y₁}
   → PtdMapSeqMap ⊙seq₀ ⊙seq₁ ⊙hX ⊙hY
-  → Type i
+  → Type (lmax i₀ i₁)
 is-⊙seq-equiv (⊙h ⊙↓|) = is-equiv (fst ⊙h)
 is-⊙seq-equiv (⊙h ⊙↓⟨ _ ⟩ ⊙seq) = is-equiv (fst ⊙h) × is-⊙seq-equiv ⊙seq
 
-{- Doesn't seem useful.
-
-PtdMapSeqEquiv : ∀ {i} {X₀ X₁ Y₀ Y₁ : Ptd i}
+PtdMapSeqEquiv : ∀ {i₀ i₁} {X₀ Y₀ : Ptd i₀} {X₁ Y₁ : Ptd i₁}
   (⊙seq₀ : PtdMapSequence X₀ Y₀) (⊙seq₁ : PtdMapSequence X₁ Y₁)
-  (⊙hX : X₀ ⊙→ X₁) (⊙hY : Y₀ ⊙→ Y₁) → Type (lsucc i)
+  (⊙hX : X₀ ⊙→ X₁) (⊙hY : Y₀ ⊙→ Y₁) → Type (lsucc (lmax i₀ i₁))
 PtdMapSeqEquiv ⊙seq₀ ⊙seq₁ ⊙hX ⊙hY
-  = Σ (PtdMapSequenceMap ⊙seq₀ ⊙seq₁ ⊙hX ⊙hY) is-⊙seq-equiv
+  = Σ (PtdMapSeqMap ⊙seq₀ ⊙seq₁ ⊙hX ⊙hY) is-⊙seq-equiv
+
+{- Doesn't seem useful.
 
 infix 15 _⊙↕⊣|
 infixr 10 _⊙↕⟨_⟩↕_

@@ -5,8 +5,10 @@ module lib.types.Types where
 open import lib.Basics
 open import lib.types.BigWedge public
 open import lib.types.Bool public
+open import lib.types.Choice public
 open import lib.types.Circle public
 open import lib.types.Cofiber public
+open import lib.types.CommutingSquare public
 open import lib.types.Coproduct public
 open import lib.types.Cospan public
 open import lib.types.Cover public

@@ -13,28 +13,21 @@ open CohomologyTheory CT
 open import cohomology.Unit CT
 open import cohomology.BaseIndependence CT
 
-CF-cst : (n : ℤ) {X Y : Ptd i} → CF-hom n (⊙cst {X = X} {Y = Y}) == cst-hom
-CF-cst n {X} {Y} =
-  CF-hom n (⊙cst {X = ⊙LU} ⊙∘ ⊙cst {X = X})
-    =⟨ CF-comp n ⊙cst ⊙cst ⟩
-  (CF-hom n (⊙cst {X = X})) ∘ᴳ (CF-hom n (⊙cst {X = ⊙LU}))
-    =⟨ group-hom= {φ = CF-hom n (⊙cst {X = ⊙LU})} {ψ = cst-hom}
-            (contr-has-all-paths (→-level (C-Unit-is-contr n)) _ _)
-       |in-ctx (λ w → CF-hom n (⊙cst {X = X} {Y = ⊙LU}) ∘ᴳ w) ⟩
-  (CF-hom n (⊙cst {X = X} {Y = ⊙LU})) ∘ᴳ cst-hom
-    =⟨ pre∘-cst-hom (CF-hom n (⊙cst {X = X} {Y = ⊙LU})) ⟩
-  cst-hom ∎
+C-fmap-cst : (n : ℤ) {X Y : Ptd i} → ∀ y → CEl-fmap n (⊙cst {X = X} {Y = Y}) y == Cident n X
+C-fmap-cst n {X} {Y} y =
+  CEl-fmap n (⊙cst {X = ⊙LU} ⊙∘ ⊙cst {X = X}) y
+    =⟨ CEl-fmap-∘ n ⊙cst ⊙cst y ⟩
+  CEl-fmap n (⊙cst {X = X}) (CEl-fmap n (⊙cst {X = ⊙LU}) y)
+    =⟨ contr-has-all-paths (C-Unit-is-contr n) _ _
+       |in-ctx CEl-fmap n (⊙cst {X = X} {Y = ⊙LU}) ⟩
+  CEl-fmap n (⊙cst {X = X}) (Cident n ⊙LU)
+    =⟨ GroupHom.pres-ident (C-fmap n (⊙cst {X = X} {Y = ⊙LU})) ⟩
+  Cident n X ∎
   where
   ⊙LU = ⊙Lift {j = i} ⊙Unit
 
-CF-inverse : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y) (g : Y ⊙→ X)
+-- FIXME Is this lemma useful now? Is there a better name?
+CEl-fmap-inverse : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y) (g : Y ⊙→ X)
   → (∀ x → fst g (fst f x) == x)
-  → (CF-hom n f) ∘ᴳ (CF-hom n g) == idhom _
-CF-inverse n f g p = ! (CF-comp n g f) ∙ CF-λ= n p ∙ CF-ident n
-
-CF-iso : (n : ℤ) {X Y : Ptd i} → X ⊙≃ Y → C n Y ≃ᴳ C n X
-CF-iso n (f , ie) =
-  (CF-hom n f ,
-   is-eq _ (GroupHom.f (CF-hom n (⊙<– (f , ie))))
-     (app= $ ap GroupHom.f $ CF-inverse n f _ $ <–-inv-l (fst f , ie))
-     (app= $ ap GroupHom.f $ CF-inverse n _ f $ <–-inv-r (fst f , ie)))
+  → (∀ x → CEl-fmap n f (CEl-fmap n g x) == x)
+CEl-fmap-inverse n f g p x = ! (CEl-fmap-∘ n g f x) ∙ CEl-fmap-base-indep' n p x ∙ C-fmap-idf n x

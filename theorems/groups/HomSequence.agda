@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import groups.HomMap
 
 module groups.HomSequence where
 
@@ -23,74 +22,124 @@ HomSeq-snoc : ∀ {i} {G H K : Group i}
   → HomSequence G H → (H →ᴳ K) → HomSequence G K
 HomSeq-snoc seq φ = HomSeq-++ seq (_ →⟨ φ ⟩ᴳ _ ⊣|ᴳ)
 
-{- maps between two homs -}
+{- maps between two hom sequences -}
 
-record HomCommSquare {i₀ i₁ j₀ j₁}
+-- A new type to keep the parameters.
+record CommSquareᴳ {i₀ i₁ j₀ j₁}
   {G₀ : Group i₀} {G₁ : Group i₁} {H₀ : Group j₀} {H₁ : Group j₁}
   (φ₀ : G₀ →ᴳ H₀) (φ₁ : G₁ →ᴳ H₁) (ξG : G₀ →ᴳ G₁) (ξH : H₀ →ᴳ H₁)
   : Type (lmax (lmax i₀ i₁) (lmax j₀ j₁)) where
-
+  constructor comm-sqrᴳ
   field
-    commutes : ∀ g₀ → GroupHom.f (ξH ∘ᴳ φ₀) g₀ == GroupHom.f (φ₁ ∘ᴳ ξG) g₀
+    commutesᴳ : ∀ g₀ → GroupHom.f (ξH ∘ᴳ φ₀) g₀ == GroupHom.f (φ₁ ∘ᴳ ξG) g₀
 
-commutesᴳ = HomCommSquare.commutes
+open CommSquareᴳ public
 
-abstract
-  HomComm-∘h : ∀ {i₀ i₁ i₂ j₀ j₁ j₂}
-    {G₀ : Group i₀} {G₁ : Group i₁} {G₂ : Group i₂}
-    {H₀ : Group j₀} {H₁ : Group j₁} {H₂ : Group j₂}
-    {φ₀ : G₀ →ᴳ H₀} {φ₁ : G₁ →ᴳ H₁} {φ₂ : G₂ →ᴳ H₂}
-    {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁}
-    {ζG : G₁ →ᴳ G₂} {ζH : H₁ →ᴳ H₂}
-    → HomCommSquare φ₀ φ₁ ξG ξH
-    → HomCommSquare φ₁ φ₂ ζG ζH
-    → HomCommSquare φ₀ φ₂ (ζG ∘ᴳ ξG) (ζH ∘ᴳ ξH)
-  HomComm-∘h {ξG = ξG} {ζH = ζH} s₀₁ s₁₂ = record {
-    commutes = λ g₀ → ap (GroupHom.f ζH) (commutesᴳ s₀₁ g₀)
-                    ∙ commutesᴳ s₁₂ (GroupHom.f ξG g₀)}
-
-{- maps between two hom sequences -}
+CommSquareᴳ-inverse : ∀ {i₀ i₁ j₀ j₁}
+  {G₀ : Group i₀} {G₁ : Group i₁} {H₀ : Group j₀} {H₁ : Group j₁}
+  {φ₀ : G₀ →ᴳ H₀} {φ₁ : G₁ →ᴳ H₁} {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁}
+  → CommSquareᴳ φ₀ φ₁ ξG ξH
+  → (ξG-ise : is-equiv (GroupHom.f ξG)) (ξH-ise : is-equiv (GroupHom.f ξH))
+  → CommSquareᴳ φ₁ φ₀ (GroupIso.g-hom (ξG , ξG-ise)) (GroupIso.g-hom (ξH , ξH-ise))
+CommSquareᴳ-inverse (comm-sqrᴳ □) ξG-ise ξH-ise =
+  comm-sqrᴳ (commutes (CommSquare-inverse (comm-sqr □) ξG-ise ξH-ise))
 
 infix 15 _↓|ᴳ
 infixr 10 _↓⟨_⟩ᴳ_
 
-data HomSeqMap {i} : {G₀ G₁ H₀ H₁ : Group i}
+data HomSeqMap {i₀ i₁} : {G₀ H₀ : Group i₀} {G₁ H₁ : Group i₁}
   → HomSequence G₀ H₀ → HomSequence G₁ H₁
-  → (G₀ →ᴳ G₁) → (H₀ →ᴳ H₁) → Type (lsucc i) where
-  _↓|ᴳ : {G₀ G₁ : Group i} (ξ : G₀ →ᴳ G₁) → HomSeqMap (G₀ ⊣|ᴳ) (G₁ ⊣|ᴳ) ξ ξ
-  _↓⟨_⟩ᴳ_ : {G₀ G₁ H₀ H₁ K₀ K₁ : Group i}
+  → (G₀ →ᴳ G₁) → (H₀ →ᴳ H₁) → Type (lsucc (lmax i₀ i₁)) where
+  _↓|ᴳ : {G₀ : Group i₀} {G₁ : Group i₁} (ξ : G₀ →ᴳ G₁) → HomSeqMap (G₀ ⊣|ᴳ) (G₁ ⊣|ᴳ) ξ ξ
+  _↓⟨_⟩ᴳ_ : {G₀ H₀ K₀ : Group i₀} {G₁ H₁ K₁ : Group i₁}
     → {φ : G₀ →ᴳ H₀} {seq₀ : HomSequence H₀ K₀}
     → {ψ : G₁ →ᴳ H₁} {seq₁ : HomSequence H₁ K₁}
     → (ξG : G₀ →ᴳ G₁) {ξH : H₀ →ᴳ H₁} {ξK : K₀ →ᴳ K₁}
-    → HomCommSquare φ ψ ξG ξH
+    → CommSquareᴳ φ ψ ξG ξH
     → HomSeqMap seq₀ seq₁ ξH ξK
     → HomSeqMap (G₀ →⟨ φ ⟩ᴳ seq₀) (G₁ →⟨ ψ ⟩ᴳ seq₁) ξG ξK
 
+HomSeqMap-snoc : ∀ {i₀ i₁} {G₀ H₀ K₀ : Group i₀} {G₁ H₁ K₁ : Group i₁}
+  {seq₀ : HomSequence G₀ H₀} {seq₁ : HomSequence G₁ H₁}
+  {φ₀ : H₀ →ᴳ K₀} {φ₁ : H₁ →ᴳ K₁}
+  {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁} {ξK : K₀ →ᴳ K₁}
+  → HomSeqMap seq₀ seq₁ ξG ξH
+  → CommSquareᴳ φ₀ φ₁ ξH ξK
+  → HomSeqMap (HomSeq-snoc seq₀ φ₀) (HomSeq-snoc seq₁ φ₁) ξG ξK
+HomSeqMap-snoc (ξG ↓|ᴳ) □ = ξG ↓⟨ □ ⟩ᴳ _ ↓|ᴳ
+HomSeqMap-snoc (ξG ↓⟨ □₁ ⟩ᴳ seq) □₂ = ξG ↓⟨ □₁ ⟩ᴳ HomSeqMap-snoc seq □₂
+
 {- equivalences between two hom sequences -}
 
-is-equiv-seqᴳ : ∀ {i} {G₀ G₁ H₀ H₁ : Group i}
+is-seqᴳ-equiv : ∀ {i₀ i₁} {G₀ H₀ : Group i₀} {G₁ H₁ : Group i₁}
   {seq₀ : HomSequence G₀ H₀} {seq₁ : HomSequence G₁ H₁}
   {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁}
   → HomSeqMap seq₀ seq₁ ξG ξH
-  → Type i
-is-equiv-seqᴳ (ξ ↓|ᴳ) = is-equiv (GroupHom.f ξ)
-is-equiv-seqᴳ (ξ ↓⟨ _ ⟩ᴳ seq) = is-equiv (GroupHom.f ξ) × is-equiv-seqᴳ seq
+  → Type (lmax i₀ i₁)
+is-seqᴳ-equiv (ξ ↓|ᴳ) = is-equiv (GroupHom.f ξ)
+is-seqᴳ-equiv (ξ ↓⟨ _ ⟩ᴳ seq) = is-equiv (GroupHom.f ξ) × is-seqᴳ-equiv seq
 
-is-equiv-seqᴳ-head : ∀ {i} {G₀ G₁ H₀ H₁ : Group i}
+is-seqᴳ-equiv-snoc : ∀ {i₀ i₁} {G₀ H₀ K₀ : Group i₀} {G₁ H₁ K₁ : Group i₁}
+  {seq₀ : HomSequence G₀ H₀} {seq₁ : HomSequence G₁ H₁}
+  {φ₀ : H₀ →ᴳ K₀} {φ₁ : H₁ →ᴳ K₁}
+  {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁} {ξK : K₀ →ᴳ K₁}
+  {seq-map : HomSeqMap seq₀ seq₁ ξG ξH}
+  {cs : CommSquareᴳ φ₀ φ₁ ξH ξK}
+  → is-seqᴳ-equiv seq-map → is-equiv (GroupHom.f ξK)
+  → is-seqᴳ-equiv (HomSeqMap-snoc seq-map cs)
+is-seqᴳ-equiv-snoc {seq-map = ξG ↓|ᴳ} ξG-is-equiv ξH-is-equiv = ξG-is-equiv , ξH-is-equiv
+is-seqᴳ-equiv-snoc {seq-map = ξG ↓⟨ _ ⟩ᴳ seq} (ξG-is-equiv , seq-is-equiv) ξH-is-equiv =
+  ξG-is-equiv , is-seqᴳ-equiv-snoc seq-is-equiv ξH-is-equiv
+
+private
+  is-seqᴳ-equiv-head : ∀ {i₀ i₁} {G₀ H₀ : Group i₀} {G₁ H₁ : Group i₁}
+    {seq₀ : HomSequence G₀ H₀} {seq₁ : HomSequence G₁ H₁}
+    {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁}
+    {seq-map : HomSeqMap seq₀ seq₁ ξG ξH}
+    → is-seqᴳ-equiv seq-map → is-equiv (GroupHom.f ξG)
+  is-seqᴳ-equiv-head {seq-map = ξ ↓|ᴳ} ise = ise
+  is-seqᴳ-equiv-head {seq-map = ξ ↓⟨ _ ⟩ᴳ _} ise = fst ise
+
+  is-seqᴳ-equiv-last : ∀ {i₀ i₁} {G₀ H₀ : Group i₀} {G₁ H₁ : Group i₁}
+    {seq₀ : HomSequence G₀ H₀} {seq₁ : HomSequence G₁ H₁}
+    {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁}
+    {seq-map : HomSeqMap seq₀ seq₁ ξG ξH}
+    → is-seqᴳ-equiv seq-map → is-equiv (GroupHom.f ξH)
+  is-seqᴳ-equiv-last {seq-map = ξ ↓|ᴳ} ise = ise
+  is-seqᴳ-equiv-last {seq-map = _ ↓⟨ _ ⟩ᴳ rest} (_ , rest-ise) = is-seqᴳ-equiv-last rest-ise
+
+module is-seqᴳ-equiv {i₀ i₁} {G₀ H₀ : Group i₀} {G₁ H₁ : Group i₁}
   {seq₀ : HomSequence G₀ H₀} {seq₁ : HomSequence G₁ H₁}
   {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁}
-  {seq : HomSeqMap seq₀ seq₁ ξG ξH}
-  → is-equiv-seqᴳ seq → is-equiv (GroupHom.f ξG)
-is-equiv-seqᴳ-head {seq = ξ ↓|ᴳ} ise = ise
-is-equiv-seqᴳ-head {seq = ξ ↓⟨ _ ⟩ᴳ seq} ise = fst ise
+  {seq-map : HomSeqMap seq₀ seq₁ ξG ξH}
+  (seq-map-is-equiv : is-seqᴳ-equiv seq-map) where
+
+  head = is-seqᴳ-equiv-head seq-map-is-equiv
+  last = is-seqᴳ-equiv-last seq-map-is-equiv
+
+HomSeqEquiv : ∀ {i₀ i₁} {G₀ H₀ : Group i₀} {G₁ H₁ : Group i₁}
+  (seq₀ : HomSequence G₀ H₀) (seq₁ : HomSequence G₁ H₁)
+  (ξG : G₀ →ᴳ G₁) (ξH : H₀ →ᴳ H₁) → Type (lsucc (lmax i₀ i₁))
+HomSeqEquiv seq₀ seq₁ ξG ξH = Σ (HomSeqMap seq₀ seq₁ ξG ξH) is-seqᴳ-equiv
+
+HomSeqEquiv-inverse : ∀ {i₀ i₁} {G₀ H₀ : Group i₀} {G₁ H₁ : Group i₁}
+  {seq₀ : HomSequence G₀ H₀} {seq₁ : HomSequence G₁ H₁}
+  {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁}
+  (equiv : HomSeqEquiv seq₀ seq₁ ξG ξH)
+  → HomSeqEquiv seq₁ seq₀
+      (GroupIso.g-hom (ξG , is-seqᴳ-equiv-head (snd equiv)))
+      (GroupIso.g-hom (ξH , is-seqᴳ-equiv-last (snd equiv)))
+HomSeqEquiv-inverse ((ξ ↓|ᴳ) , ξ-ise) =
+  (GroupIso.g-hom (ξ , ξ-ise) ↓|ᴳ) , is-equiv-inverse ξ-ise
+HomSeqEquiv-inverse ((ξ ↓⟨ □ ⟩ᴳ rest) , (ξ-ise , rest-ise)) =
+  (GroupIso.g-hom (ξ , ξ-ise)
+    ↓⟨ CommSquareᴳ-inverse □ ξ-ise (is-seqᴳ-equiv-head rest-ise) ⟩ᴳ
+  fst rest-inverse-equiv) ,
+  is-equiv-inverse ξ-ise , snd rest-inverse-equiv
+  where
+    rest-inverse-equiv = HomSeqEquiv-inverse (rest , rest-ise)
 
 {- Doesn't seem useful.
-
-HomSeqEquiv : ∀ {i} {G₀ G₁ H₀ H₁ : Group i}
-  (seq₀ : HomSequence G₀ H₀) (seq₁ : HomSequence G₁ H₁)
-  (ξG : G₀ →ᴳ G₁) (ξH : H₀ →ᴳ H₁) → Type (lsucc i)
-HomSeqEquiv seq₀ seq₁ ξG ξH
-  = Σ (HomSeqMap seq₀ seq₁ ξG ξH) is-equiv-seqᴳ
 
 infix 15 _↕|ᴳ
 infixr 10 _↕⟨_⟩ᴳ_

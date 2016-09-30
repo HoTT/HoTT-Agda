@@ -1,73 +1,83 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import cohomology.Choice
-open import homotopy.FunctionOver
+open import groups.HomSequence
 
 module cohomology.Theory where
 
 -- [i] for the universe level of the group
 record CohomologyTheory i : Type (lsucc i) where
+  {- functorial parts -}
   field
     C : ℤ → Ptd i → Group i
+
+    C-abelian : (n : ℤ) (X : Ptd i) → is-abelian (C n X)
 
   CEl : ℤ → Ptd i → Type i
   CEl n X = Group.El (C n X)
 
-  Cid : (n : ℤ) (X : Ptd i) → CEl n X
-  Cid n X = GroupStructure.ident (Group.group-struct (C n X))
+  Cident : (n : ℤ) (X : Ptd i) → CEl n X
+  Cident n X = Group.ident (C n X)
 
   ⊙CEl : ℤ → Ptd i → Ptd i
-  ⊙CEl n X = ⊙[ CEl n X , Cid n X ]
+  ⊙CEl n X = ⊙[ CEl n X , Cident n X ]
+
+  {- functorial parts -}
+  field
+    C-fmap : (n : ℤ) {X Y : Ptd i} → X ⊙→ Y → (C n Y →ᴳ C n X)
+
+  CEl-fmap : (n : ℤ) {X Y : Ptd i} → X ⊙→ Y → (CEl n Y → CEl n X)
+  CEl-fmap n f = GroupHom.f (C-fmap n f)
 
   field
-    -- XXX Should be [C-fmap]
-    CF-hom : (n : ℤ) {X Y : Ptd i} → X ⊙→ Y → (C n Y →ᴳ C n X)
+    C-fmap-idf : (n : ℤ) {X : Ptd i}
+      → ∀ x → CEl-fmap n {X} {X} (⊙idf X) x == x
 
-    -- XXX Should be [C-fmap-id]
-    CF-ident : (n : ℤ) {X : Ptd i}
-      → CF-hom n {X} {X} (⊙idf X) == idhom (C n X)
+    C-fmap-∘ : (n : ℤ) {X Y Z : Ptd i} (g : Y ⊙→ Z) (f : X ⊙→ Y)
+      → ∀ x → CEl-fmap n (g ⊙∘ f) x == CEl-fmap n f (CEl-fmap n g x)
 
-    -- XXX Should be [C-fmap-∘]
-    CF-comp : (n : ℤ) {X Y Z : Ptd i} (g : Y ⊙→ Z) (f : X ⊙→ Y)
-      → CF-hom n (g ⊙∘ f) == CF-hom n f ∘ᴳ CF-hom n g
+  CEl-fmap-idf = C-fmap-idf
+  CEl-fmap-∘ = C-fmap-∘
 
-  -- XXX Do we need this?
-  -- XXX Should be [C-fmap'] or something like that
-  CF : (n : ℤ) {X Y : Ptd i} → X ⊙→ Y → CEl n Y → CEl n X
-  CF n f = GroupHom.f (CF-hom n f)
+  -- FIXME The proofs of roundtrips should be made abstract once
+  -- Agda 2.5.2 is officially out.
+  CEl-emap : (n : ℤ) {X Y : Ptd i} → X ⊙≃ Y → Group.El (C n Y) ≃ Group.El (C n X)
+  CEl-emap n ⊙eq = equiv (CEl-fmap n (⊙–> ⊙eq)) (CEl-fmap n (⊙<– ⊙eq))
+    (λ x → ! (CEl-fmap-∘ n (⊙<– ⊙eq) (⊙–> ⊙eq) x) ∙ ap (λ f → CEl-fmap n f x) (⊙<–-inv-l ⊙eq) ∙ CEl-fmap-idf n x)
+    (λ x → ! (CEl-fmap-∘ n (⊙–> ⊙eq) (⊙<– ⊙eq) x) ∙ ap (λ f → CEl-fmap n f x) (⊙<–-inv-r ⊙eq) ∙ CEl-fmap-idf n x)
 
-  C-emap' : (n : ℤ) {X Y : Ptd i} → X ⊙≃ Y → Group.El (C n Y) ≃ Group.El (C n X)
-  C-emap' n ⊙eq = equiv (CF n (⊙–> ⊙eq)) (CF n (⊙<– ⊙eq))
-    (app= $ ap GroupHom.f $ ! (CF-comp n (⊙<– ⊙eq) (⊙–> ⊙eq)) ∙ ap (CF-hom n) (⊙<–-inv-l ⊙eq) ∙ CF-ident n)
-    (app= $ ap GroupHom.f $ ! (CF-comp n (⊙–> ⊙eq) (⊙<– ⊙eq)) ∙ ap (CF-hom n) (⊙<–-inv-r ⊙eq) ∙ CF-ident n)
+  CEl-isemap : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y) → is-equiv (fst f) → is-equiv (CEl-fmap n f)
+  CEl-isemap n f f-ise = snd (CEl-emap n (f , f-ise))
 
   C-emap : (n : ℤ) {X Y : Ptd i} → X ⊙≃ Y → C n Y ≃ᴳ C n X
-  C-emap n ⊙eq = ≃-to-≃ᴳ (C-emap' n ⊙eq) (GroupHom.pres-comp (CF-hom n (⊙–> ⊙eq))) 
+  C-emap n ⊙eq = ≃-to-≃ᴳ (CEl-emap n ⊙eq) (GroupHom.pres-comp (C-fmap n (⊙–> ⊙eq)))
+
+  C-isemap = CEl-isemap
 
   field
-    C-abelian : (n : ℤ) (X : Ptd i) → is-abelian (C n X)
-
     C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp X) ≃ᴳ C n X
 
-    -- XXX Should be [C-Susp-nat]
-    C-SuspF : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
-      → fst (C-Susp n X) ∘ᴳ CF-hom (succ n) (⊙Susp-fmap f)
-        == CF-hom n f ∘ᴳ fst (C-Susp n Y)
+  CEl-Susp : (n : ℤ) (X : Ptd i) → CEl (succ n) (⊙Susp X) ≃ CEl n X
+  CEl-Susp n X = GroupIso.f-equiv (C-Susp n X)
 
+  field
+    -- This naming is stretching the convention
+    C-Susp-fmap : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
+      → CommSquareᴳ (C-fmap (succ n) (⊙Susp-fmap f)) (C-fmap n f)
+          (GroupIso.f-hom (C-Susp n Y)) (GroupIso.f-hom (C-Susp n X))
+
+  CEl-Susp-fmap : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
+    → CommSquare (CEl-fmap (succ n) (⊙Susp-fmap f)) (CEl-fmap n f)
+        (GroupIso.f (C-Susp n Y)) (GroupIso.f (C-Susp n X))
+  CEl-Susp-fmap n f = comm-sqr (commutesᴳ (C-Susp-fmap n f))
+
+  field
     C-exact : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
-      → is-exact (CF-hom n (⊙cfcod' f)) (CF-hom n f)
+      → is-exact (C-fmap n (⊙cfcod' f)) (C-fmap n f)
 
     C-additive : (n : ℤ) {I : Type i} (Z : I → Ptd i)
       → ((W : I → Type i) → has-choice 0 I W)
-      → is-equiv (GroupHom.f (Πᴳ-fanout (CF-hom n ∘ ⊙bwin {X = Z})))
-
-  {- Alternate form of suspension axiom naturality -}
-  C-Susp-↓ : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
-    → CF-hom (succ n) (⊙Susp-fmap f) == CF-hom n f
-      [ uncurry _→ᴳ_ ↓ pair×= (uaᴳ (C-Susp n Y)) (uaᴳ (C-Susp n X)) ]
-  C-Susp-↓ n f =
-    hom-over-isos $ function-over-equivs _ _ $ ap GroupHom.f (C-SuspF n f)
+      → is-equiv (GroupHom.f (Πᴳ-fanout (C-fmap n ∘ ⊙bwin {X = Z})))
 
 record OrdinaryTheory i : Type (lsucc i) where
   constructor ordinary-theory

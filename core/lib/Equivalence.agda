@@ -190,13 +190,13 @@ _∘ise_ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
   → is-equiv g → is-equiv f → is-equiv (g ∘ f)
 i1 ∘ise i2 = snd ((_ , i1) ∘e (_ , i2))
 
-is-equiv-inv : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
+is-equiv-inverse : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
   → (f-is-equiv : is-equiv f) → is-equiv (is-equiv.g f-is-equiv)
-is-equiv-inv ise = record { g = _ ; f-g = is-equiv.g-f ise ; g-f = is-equiv.f-g ise ; adj = is-equiv.adj' ise }
+is-equiv-inverse ise = record { g = _ ; f-g = is-equiv.g-f ise ; g-f = is-equiv.f-g ise ; adj = is-equiv.adj' ise }
 
 infix 120 _⁻¹
 _⁻¹ : ∀ {i j} {A : Type i} {B : Type j} → (A ≃ B) → (B ≃ A)
-(_ , ise) ⁻¹ = (is-equiv.g ise , is-equiv-inv ise)
+(_ , ise) ⁻¹ = (is-equiv.g ise , is-equiv-inverse ise)
 
 {- Equational reasoning for equivalences -}
 infix 15 _≃∎

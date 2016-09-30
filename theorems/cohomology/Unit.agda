@@ -27,18 +27,17 @@ module _ (n : ℤ) where
 
   C-Unit-is-contr : is-contr (CEl n ⊙LU)
   C-Unit-is-contr =
-    (Cid n ⊙LU , λ x → lemma₂ x ∙ app= (ap GroupHom.f (CF-ident n)) x)
+    (Cident n ⊙LU , λ x → lemma₂ x ∙ CEl-fmap-idf n x)
     where
     lemma₁ : (x : CEl n (⊙Cof (⊙idf _)))
-      → Cid n ⊙LU == CF n (⊙cfcod' (⊙idf _)) x
+      → Cident n ⊙LU == CEl-fmap n (⊙cfcod' (⊙idf _)) x
     lemma₁ x = ! (im-sub-ker (C-exact n (⊙idf _)) _ [ x , idp ])
-               ∙ app= (ap GroupHom.f (CF-ident n))
-                      (CF n (⊙cfcod' (⊙idf _)) x)
+               ∙ CEl-fmap-idf n (CEl-fmap n (⊙cfcod' (⊙idf _)) x)
 
-    lemma₂ : (x : CEl n ⊙LU) → Cid n ⊙LU == CF n (⊙idf _) x
+    lemma₂ : (x : CEl n ⊙LU) → Cident n ⊙LU == CEl-fmap n (⊙idf _) x
     lemma₂ = transport
       {A = Σ (Ptd i) (λ X → ⊙LU ⊙→ X)}
-      (λ {(X , H) → (c : CEl n X) → Cid n ⊙LU == CF n H c})
+      (λ {(X , H) → (c : CEl n X) → Cident n ⊙LU == CEl-fmap n H c})
       (pair= (⊙ua ⊙Cof-Lift-Unit-equiv-Lift-Unit)
              (prop-has-all-paths-↓ (⊙→-level (Lift-level Unit-is-prop))))
       lemma₁

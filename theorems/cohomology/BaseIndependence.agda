@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import homotopy.FunctionOver
 open import cohomology.Theory
 
 {- Cohomology groups are independent of basepoint, and the action of
@@ -16,19 +15,33 @@ C-base-indep : (n : ℤ) {A : Type i} (a₀ a₁ : A)
 C-base-indep n a₀ a₁ =
   C-Susp n (_ , a₁) ∘eᴳ (C-Susp n (_ , a₀))⁻¹ᴳ
 
-CF-base-indep : (n : ℤ) {X Y : Ptd i}
+CEl-fmap-base-indep : (n : ℤ) {X Y : Ptd i}
   (f : fst X → fst Y) (p₁ p₂ : f (snd X) == snd Y)
-  → CF-hom n (f , p₁) == CF-hom n (f , p₂)
-CF-base-indep n {X} {Y} f p₁ p₂ = transport
-  (λ q → CF-hom n (f , p₁) == CF-hom n (f , p₂) [ uncurry _→ᴳ_ ↓ q ])
-  (!-inv-l (pair×= (uaᴳ (C-Susp n Y)) (uaᴳ (C-Susp n X))))
-  (!ᵈ (C-Susp-↓ n (f , p₁)) ∙ᵈ C-Susp-↓ n (f , p₂))
+  → ∀ y → CEl-fmap n (f , p₁) y == CEl-fmap n (f , p₂) y
+CEl-fmap-base-indep n {X} {Y} f p₁ p₂ y =
+  CEl-fmap n (f , p₁) y
+    =⟨ ! $ <–-inv-r (CEl-Susp n Y) y |in-ctx CEl-fmap n (f , p₁) ⟩
+  CEl-fmap n (f , p₁) (–> (CEl-Susp n Y) (<– (CEl-Susp n Y) y))
+    =⟨ ! $ commutes (CEl-Susp-fmap n (f , p₁)) (<– (CEl-Susp n Y) y) ⟩
+  –> (CEl-Susp n X) (CEl-fmap (succ n) (Susp-fmap f , idp) (<– (CEl-Susp n Y) y))
+    =⟨ commutes (CEl-Susp-fmap n (f , p₂)) (<– (CEl-Susp n Y) y) ⟩
+  CEl-fmap n (f , p₂) (–> (CEl-Susp n Y) (<– (CEl-Susp n Y) y))
+    =⟨ <–-inv-r (CEl-Susp n Y) y |in-ctx CEl-fmap n (f , p₂) ⟩
+  CEl-fmap n (f , p₂) y
+    =∎
 
-CF-λ= : (n : ℤ) {X Y : Ptd i} {f g : X ⊙→ Y}
+C-fmap-base-indep = CEl-fmap-base-indep
+
+-- FIXME is there a better name?
+CEl-fmap-base-indep' : (n : ℤ) {X Y : Ptd i} {f g : X ⊙→ Y}
   → (∀ x → fst f x == fst g x)
-  → CF-hom n f == CF-hom n g
-CF-λ= n h = CF-base-indep n _ _ _ ∙ ap (CF-hom n) (⊙λ= h idp)
+  → (∀ y → CEl-fmap n f y == CEl-fmap n g y)
+CEl-fmap-base-indep' n h y = CEl-fmap-base-indep n _ _ _ _
+                           ∙ ap (λ f → CEl-fmap n f y) (⊙λ= h idp)
 
+C-fmap-base-indep' = CEl-fmap-base-indep'
+
+{-
 CF-↓dom= : (n : ℤ) {X Y Z : Ptd i}
   {f : X ⊙→ Y} {g : X ⊙→ Z} {p : Y == Z}
   → fst f == fst g [ (λ V → fst X → fst V) ↓ p ]
@@ -42,3 +55,4 @@ CF-↓cod= : (n : ℤ) {X Y Z : Ptd i}
   → CF-hom n f == CF-hom n g [ (λ G → C n Z →ᴳ G) ↓ ap (C n) p ]
 CF-↓cod= n {p = idp} r =
   CF-base-indep n _ _ _ ∙ ap (CF-hom n) (pair= r (from-transp! _ _ idp))
+-}
