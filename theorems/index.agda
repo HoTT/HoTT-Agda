@@ -23,7 +23,7 @@ import homotopy.Hopf
 
 {- cohomology -}
 -- import cohomology.EMModel -- FIXME
-import cohomology.Torus
+-- import cohomology.Torus -- FIXME
 -- import cohomology.MayerVietorisExact -- FIXME
 
 import homotopy.SpaceFromGroups
