@@ -22,10 +22,9 @@ import homotopy.HopfJunior
 import homotopy.Hopf
 
 {- cohomology -}
-import cohomology.EMModel
+-- import cohomology.EMModel -- FIXME
 import cohomology.Torus
--- this will be commented out till the long exact sequences are (re)done.
--- import cohomology.MayerVietorisExact
+-- import cohomology.MayerVietorisExact -- FIXME
 
 import homotopy.SpaceFromGroups
 
