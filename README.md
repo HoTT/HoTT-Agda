@@ -126,6 +126,9 @@ We have
     A-to-B-path : A == B
     A-is-B : A == B
 
+However, `A-is-B` can be easily confused with `is-X` above,
+so it should be used with great caution.
+
 Another way of naming of equivalences only specifies one side.
 Suffixes `-econv` may be added for clarity.
 The suffix `-conv` refers to the derived path.
