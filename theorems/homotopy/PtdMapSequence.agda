@@ -72,17 +72,3 @@ _⊙↕⟨_⟩↕_ : ∀ {i} {X₀ X₁ : Ptd i} → (⊙eqX : X₀ ⊙≃ X₁)
 (⊙hX , hX-is-equiv) ⊙↕⟨ sqr ⟩↕ (⊙seq-map , ⊙seq-map-is-equiv) =
   (⊙hX ⊙↓⟨ sqr ⟩↓ ⊙seq-map) , hX-is-equiv , ⊙seq-map-is-equiv
 -}
-
-{-
-  commutes' : ⊙<– ⊙codomain-is-related ⊙∘ g
-           == f ⊙∘ ⊙<– ⊙domain-is-related
-  commutes' = ap (⊙<– ⊙codomain-is-related ⊙∘_)
-                ( ! (⊙∘-unit-r g)
-                ∙ ap (g ⊙∘_) (! $ ⊙<–-inv-r ⊙domain-is-related)
-                ∙ ! (⊙∘-assoc g (⊙–> ⊙domain-is-related) (⊙<– ⊙domain-is-related))
-                ∙ ap (_⊙∘ ⊙<– ⊙domain-is-related) (! commutes)
-                ∙ ⊙∘-assoc (⊙–> ⊙codomain-is-related) f (⊙<– ⊙domain-is-related))
-            ∙ ! (⊙∘-assoc (⊙<– ⊙codomain-is-related) (⊙–> ⊙codomain-is-related) (f ⊙∘ ⊙<– ⊙domain-is-related))
-            ∙ ap (_⊙∘ (f ⊙∘ ⊙<– ⊙domain-is-related)) (⊙<–-inv-l ⊙codomain-is-related)
-            ∙ ⊙∘-unit-l (f ⊙∘ ⊙<– ⊙domain-is-related)
--}
