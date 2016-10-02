@@ -5,45 +5,44 @@ open import HoTT
 module homotopy.TwoPushouts where
 
 --        g     h
---     B --> C --> D    K = A ⊔^B C / (f,g)        d₁ = A <- B -> C
---    f|     |     |    L = K ⊔^C D / (left,h)     d₂ = K <- C -> D
---     v     v     v                               d  = A <- B -> D
+--     D --> B --> C    K = A ⊔^D B / (f,g)       d₁ = A <- D -> B
+--    f|     |     |    L = K ⊔^B C / (right,h)   d₂ = K <- B -> C
+--     v     v     v                              d  = A <- D -> D
 --     A --> K --> L
 --
-module TwoPushoutsEquiv {i j k l} {A : Type i} {B : Type j} {C : Type k}
-  {D : Type l} (f : B → A) (g : B → C) (h : C → D) where
+module TwoPushoutsRSplit {i j k l} {A : Type i} {B : Type j} {C : Type k}
+  {D : Type l} (f : D → A) (g : D → B) (h : B → C) where
 
   private
     d₁ : Span
-    d₁ = span A C B f g
-
+    d₁ = span A B D f g
 
     d₂ : Span
-    d₂ = span (Pushout d₁) D C right h
+    d₂ = span (Pushout d₁) C B right h
 
     d : Span
-    d = span A D B f (h ∘ g)
+    d = span A C D f (h ∘ g)
 
   module Inner = PushoutRec {d = d₁} {D = Pushout d}
     left
     (right ∘ h)
     glue
 
-  module Into = PushoutRec {d = d} {D = Pushout d₂}
+  module Split = PushoutRec {d = d} {D = Pushout d₂}
     (left ∘ left)
     right
     (λ b → ap left (glue b) ∙ glue (g b))
 
-  into : Pushout d -> Pushout d₂
-  into = Into.f
+  split : Pushout d -> Pushout d₂
+  split = Split.f
 
-  module Out = PushoutRec {d = d₂} {D = Pushout d}
+  module Merge = PushoutRec {d = d₂} {D = Pushout d}
     Inner.f
     right
     (λ _ → idp)
 
-  out : Pushout d₂ → Pushout d
-  out = Out.f
+  merge : Pushout d₂ → Pushout d
+  merge = Merge.f
 
   private
     square-extend-tr : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ b : A}
@@ -57,37 +56,37 @@ module TwoPushoutsEquiv {i j k l} {A : Type i} {B : Type j} {C : Type k}
       → Square (! q) idp q idp
     square-corner-bl idp = ids
 
-  into-inner : (k : Pushout d₁) → into (Inner.f k) == left k
-  into-inner = Pushout-elim
+  split-inner : (k : Pushout d₁) → split (Inner.f k) == left k
+  split-inner = Pushout-elim
     (λ a → idp)
     (λ c → ! (glue c))
     (λ b → ↓-='-from-square $
-      (ap-∘ into Inner.f (glue b)
-       ∙ ap (ap into) (Inner.glue-β b) ∙ Into.glue-β b)
+      (ap-∘ split Inner.f (glue b)
+       ∙ ap (ap split) (Inner.glue-β b) ∙ Split.glue-β b)
       ∙v⊡ square-extend-tr (glue (g b)) vid-square)
 
   abstract
-    into-out : (l : Pushout d₂) → into (out l) == l
-    into-out = Pushout-elim
-      into-inner
+    split-merge : (l : Pushout d₂) → split (merge l) == l
+    split-merge = Pushout-elim
+      split-inner
       (λ d → idp)
-      (λ c → ↓-∘=idf-from-square into out $
-        ap (ap into) (Out.glue-β c) ∙v⊡ square-corner-bl (glue c))
+      (λ c → ↓-∘=idf-from-square split merge $
+        ap (ap split) (Merge.glue-β c) ∙v⊡ square-corner-bl (glue c))
 
 
-    out-into : (l : Pushout d) → out (into l) == l
-    out-into = Pushout-elim
+    merge-split : (l : Pushout d) → merge (split l) == l
+    merge-split = Pushout-elim
       (λ a → idp)
       (λ d → idp)
-      (λ b → ↓-∘=idf-from-square out into $ vert-degen-square $
-        ap out (ap into (glue b))
-          =⟨ ap (ap out) (Into.glue-β b) ⟩
-        ap out (ap left (glue b) ∙ glue (g b))
-          =⟨ ap-∙ out (ap left (glue b)) (glue (g b)) ⟩
-        ap out (ap left (glue b)) ∙ ap out (glue (g b))
-          =⟨ ∘-ap out left (glue b) |in-ctx (λ w → w ∙ ap out (glue (g b))) ⟩
-        ap Inner.f (glue b) ∙ ap out (glue (g b))
-          =⟨ Out.glue-β (g b) |in-ctx (λ w → ap Inner.f (glue b) ∙ w) ⟩
+      (λ b → ↓-∘=idf-from-square merge split $ vert-degen-square $
+        ap merge (ap split (glue b))
+          =⟨ ap (ap merge) (Split.glue-β b) ⟩
+        ap merge (ap left (glue b) ∙ glue (g b))
+          =⟨ ap-∙ merge (ap left (glue b)) (glue (g b)) ⟩
+        ap merge (ap left (glue b)) ∙ ap merge (glue (g b))
+          =⟨ ∘-ap merge left (glue b) |in-ctx (λ w → w ∙ ap merge (glue (g b))) ⟩
+        ap Inner.f (glue b) ∙ ap merge (glue (g b))
+          =⟨ Merge.glue-β (g b) |in-ctx (λ w → ap Inner.f (glue b) ∙ w) ⟩
         ap Inner.f (glue b) ∙ idp
           =⟨ ∙-unit-r _ ⟩
         ap Inner.f (glue b)
@@ -95,8 +94,8 @@ module TwoPushoutsEquiv {i j k l} {A : Type i} {B : Type j} {C : Type k}
         glue b ∎)
 
 
-  two-pushouts-econv : Pushout d ≃ Pushout d₂
-  two-pushouts-econv = equiv into out into-out out-into
+  split-equiv : Pushout d ≃ Pushout d₂
+  split-equiv = equiv split merge split-merge merge-split
 
 {-
   two-pushouts : Lift {j = lmax l (lmax k (lmax j i))} (Pushout d) == Pushout d₂
@@ -111,8 +110,49 @@ module TwoPushoutsEquiv {i j k l} {A : Type i} {B : Type j} {C : Type k}
 
   two-pushouts-inner : lift ∘ Inner.f == left
                        [ (λ E → (Pushout d₁ → E)) ↓ two-pushouts ]
-  two-pushouts-inner = codomain-over-equiv _ _ ▹ λ= into-inner
+  two-pushouts-inner = codomain-over-equiv _ _ ▹ λ= split-inner
 -}
+
+rsplit-pushouts-equiv = TwoPushoutsRSplit.split-equiv
+
+--        h
+--     D --> C    K = A ⊔^D C / (f,h)       d₁ = A <- D -> C
+--    f|     |    L = B ⊔^A K / (g,left)    d₂ = B <- A -> K
+--     v     v                              d  = B <- D -> C
+--     A --> K
+--    g|     |
+--     v     v
+--     B --> L
+
+module TwoPushoutsLSplit {i j k l} {A : Type i} {B : Type j} {C : Type k}
+  {D : Type l} (f : D → A) (g : A → B) (h : D → C) where
+  private
+    d₁ : Span
+    d₁ = span A C D f h
+
+    d₂ : Span
+    d₂ = span B (Pushout d₁) A g left
+
+    d : Span
+    d = span B C D (g ∘ f) h
+
+  split-equiv : Pushout d ≃ Pushout d₂
+  split-equiv =
+    Pushout d
+      ≃⟨ Pushout-flip-equiv d ⟩
+    Pushout (Span-flip d)
+      ≃⟨ rsplit-pushouts-equiv h f g ⟩
+    Pushout (span (Pushout (Span-flip d₁)) B A right g)
+      ≃⟨ Pushout-flip-equiv (span (Pushout (Span-flip d₁)) B A right g) ⟩
+    Pushout (span B (Pushout (Span-flip d₁)) A g right)
+      ≃⟨ Pushout-emap
+          ( span-map (idf B) Pushout-flip (idf A) (comm-sqr λ _ → idp) (comm-sqr λ _ → idp)
+          , idf-is-equiv _ , snd (Pushout-flip-equiv (Span-flip d₁)) , idf-is-equiv _) ⟩
+    Pushout d₂
+      ≃∎
+
+lsplit-pushouts-equiv = TwoPushoutsLSplit.split-equiv
+
 
 {- TODO Update this part
 
@@ -150,23 +190,23 @@ module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
     where
     lemma : {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
       (f : Y ⊙→ X) (g : Y ⊙→ Z) (h : Z ⊙→ W)
-      → ap (TwoPushoutsEquiv.into (fst f) (fst g) (fst h)
+      → ap (TwoPushoutsEquiv.split (fst f) (fst g) (fst h)
                ∘ lower {j = lmax l (lmax k (lmax j i))})
               (snd (⊙lift ⊙∘ ⊙right (⊙span X W Y f (h ⊙∘ g))))
         ∙ idp
         ==  ap right (! (snd h)) ∙ ! (glue (snd Z))
             ∙' ap left (snd (⊙right (⊙span X Z Y f g)))
     lemma {Y = Y} (f , idp) (g , idp) (h , idp) =
-      ap (2P.into ∘ lower) (ap lift (! (glue (snd Y))) ∙ idp) ∙ idp
+      ap (2P.split ∘ lower) (ap lift (! (glue (snd Y))) ∙ idp) ∙ idp
         =⟨ ∙-unit-r _ ⟩
-      ap (2P.into ∘ lower) (ap lift (! (glue (snd Y))) ∙ idp)
-        =⟨ ∙-unit-r _ |in-ctx (ap (2P.into ∘ lower)) ⟩
-      ap (2P.into ∘ lower) (ap lift (! (glue (snd Y))))
-        =⟨ ∘-ap (2P.into ∘ lower) lift _ ⟩
-      ap 2P.into (! (glue (snd Y)))
-        =⟨ ap-! 2P.into (glue (snd Y)) ⟩
-      ! (ap 2P.into (glue (snd Y)))
-        =⟨ 2P.Into.glue-β (snd Y) |in-ctx ! ⟩
+      ap (2P.split ∘ lower) (ap lift (! (glue (snd Y))) ∙ idp)
+        =⟨ ∙-unit-r _ |in-ctx (ap (2P.split ∘ lower)) ⟩
+      ap (2P.split ∘ lower) (ap lift (! (glue (snd Y))))
+        =⟨ ∘-ap (2P.split ∘ lower) lift _ ⟩
+      ap 2P.split (! (glue (snd Y)))
+        =⟨ ap-! 2P.split (glue (snd Y)) ⟩
+      ! (ap 2P.split (glue (snd Y)))
+        =⟨ 2P.Split.glue-β (snd Y) |in-ctx ! ⟩
       ! (ap left (glue (snd Y)) ∙ glue (g (snd Y)))
         =⟨ !-∙ (ap left (glue (snd Y))) (glue (g (snd Y))) ⟩
       ! (glue (g (snd Y))) ∙ ! (ap left (glue (snd Y)))
@@ -180,13 +220,13 @@ module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
   two-pushouts-⊙inner : ⊙lift ⊙∘ (Inner.f , idp) == ⊙left ps₂
     [ (λ V → ⊙Pushout ps₁ ⊙→ V) ↓ two-pushouts-ptd ]
   two-pushouts-⊙inner =
-    codomain-over-⊙equiv _ _ _ ▹ ⊙λ= into-inner idp
+    codomain-over-⊙equiv _ _ _ ▹ ⊙λ= split-inner idp
 -}
 
-open TwoPushoutsEquiv using (two-pushouts-econv)
+{-
+open TwoPushoutsEquiv using () renaming (split-equiv to vsplit-pushouts-equiv)
   -- two-pushouts; two-pushouts-left; two-pushouts-right; two-pushouts-inner
 
-{-
 open TwoPushoutsPtd
   using (two-pushouts-ptd; two-pushouts-⊙left; two-pushouts-⊙right;
          two-pushouts-⊙inner)
