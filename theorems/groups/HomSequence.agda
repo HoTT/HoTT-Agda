@@ -24,26 +24,6 @@ HomSeq-snoc seq φ = HomSeq-++ seq (_ →⟨ φ ⟩ᴳ _ ⊣|ᴳ)
 
 {- maps between two hom sequences -}
 
--- A new type to keep the parameters.
-record CommSquareᴳ {i₀ i₁ j₀ j₁}
-  {G₀ : Group i₀} {G₁ : Group i₁} {H₀ : Group j₀} {H₁ : Group j₁}
-  (φ₀ : G₀ →ᴳ H₀) (φ₁ : G₁ →ᴳ H₁) (ξG : G₀ →ᴳ G₁) (ξH : H₀ →ᴳ H₁)
-  : Type (lmax (lmax i₀ i₁) (lmax j₀ j₁)) where
-  constructor comm-sqrᴳ
-  field
-    commutesᴳ : ∀ g₀ → GroupHom.f (ξH ∘ᴳ φ₀) g₀ == GroupHom.f (φ₁ ∘ᴳ ξG) g₀
-
-open CommSquareᴳ public
-
-CommSquareᴳ-inverse : ∀ {i₀ i₁ j₀ j₁}
-  {G₀ : Group i₀} {G₁ : Group i₁} {H₀ : Group j₀} {H₁ : Group j₁}
-  {φ₀ : G₀ →ᴳ H₀} {φ₁ : G₁ →ᴳ H₁} {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁}
-  → CommSquareᴳ φ₀ φ₁ ξG ξH
-  → (ξG-ise : is-equiv (GroupHom.f ξG)) (ξH-ise : is-equiv (GroupHom.f ξH))
-  → CommSquareᴳ φ₁ φ₀ (GroupIso.g-hom (ξG , ξG-ise)) (GroupIso.g-hom (ξH , ξH-ise))
-CommSquareᴳ-inverse (comm-sqrᴳ □) ξG-ise ξH-ise =
-  comm-sqrᴳ (commutes (CommSquare-inverse (comm-sqr □) ξG-ise ξH-ise))
-
 infix 15 _↓|ᴳ
 infixr 10 _↓⟨_⟩ᴳ_
 
@@ -133,7 +113,7 @@ HomSeqEquiv-inverse ((ξ ↓|ᴳ) , ξ-ise) =
   (GroupIso.g-hom (ξ , ξ-ise) ↓|ᴳ) , is-equiv-inverse ξ-ise
 HomSeqEquiv-inverse ((ξ ↓⟨ □ ⟩ᴳ rest) , (ξ-ise , rest-ise)) =
   (GroupIso.g-hom (ξ , ξ-ise)
-    ↓⟨ CommSquareᴳ-inverse □ ξ-ise (is-seqᴳ-equiv-head rest-ise) ⟩ᴳ
+    ↓⟨ CommSquareᴳ-inverse-v □ ξ-ise (is-seqᴳ-equiv-head rest-ise) ⟩ᴳ
   fst rest-inverse-equiv) ,
   is-equiv-inverse ξ-ise , snd rest-inverse-equiv
   where
