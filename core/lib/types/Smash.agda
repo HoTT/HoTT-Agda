@@ -17,7 +17,7 @@ module ∨In× = WedgeRec {X = X} {Y = Y}
 ∨-⊙in-× = (∨In×.f , idp)
 
 ⊙Smash : Ptd (lmax i j)
-⊙Smash = ⊙Cof ∨-⊙in-×
+⊙Smash = ⊙Cofiber ∨-⊙in-×
 
 Smash = fst ⊙Smash
 

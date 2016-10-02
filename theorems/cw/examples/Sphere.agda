@@ -29,7 +29,7 @@ cw-sphere-skel (S n) = skel-attach
 
 
 private
-  module PosToCW n = SuspensionRec
+  module PosToCW n = SuspRec
     {C = CWSphere (S n)}
     (hub true) (hub false)
     (λ x → (! (spoke true x)) ∙' spoke false x)
@@ -68,7 +68,7 @@ CWSphere-to-Sphere (S n) = PosFromCW.f n
 private
   from-to : ∀ n x → CWSphere-to-Sphere n (Sphere-to-CWSphere n x) == x
 from-to O _ = idp
-from-to (S n) = SuspensionElim.f idp idp path
+from-to (S n) = SuspElim.f idp idp path
   where
     to = Sphere-to-CWSphere (S n)
     from = CWSphere-to-Sphere (S n)

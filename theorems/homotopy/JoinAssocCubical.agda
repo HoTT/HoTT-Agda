@@ -308,7 +308,7 @@ private
         (↓-∘=idf-from-square switch switch ∘ λ {(k , c) →
           ap (ap switch) (Switch.glue-β (k , c)) ∙v⊡ SwitchInvCoh.f c k})
 
-module _ {i j k} {A : Type i} {B : Type j} {C : Type k} where
+module _ {i j k} (A : Type i) (B : Type j) (C : Type k) where
 
   *-rearrange-equiv : (A * B) * C ≃ (C * B) * A
   *-rearrange-equiv = equiv switch switch switch-inv switch-inv
@@ -320,4 +320,4 @@ module _ {i j k} (X : Ptd i) (Y : Ptd j) (Z : Ptd k) where
 
   ⊙*-rearrange-equiv : (X ⊙* Y) ⊙* Z ⊙≃ (Z ⊙* Y) ⊙* X
   ⊙*-rearrange-equiv =
-    ≃-to-⊙≃ *-rearrange-equiv (! (glue (left (snd Z), snd X)))
+    ≃-to-⊙≃ (*-rearrange-equiv (fst X) (fst Y) (fst Z)) (! (glue (left (snd Z), snd X)))

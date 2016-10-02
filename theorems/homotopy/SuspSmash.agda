@@ -20,7 +20,7 @@ private
       → p ∙ ! p ∙ q ∙ ! q ∙ p == p
     reduce-y idp idp = idp
 
-  module Into = SuspensionRec {A = Smash X Y}
+  module Into = SuspRec {A = Smash X Y}
     {C = fst (X ⊙* Y)}
     (left (snd X))
     (right (snd Y))
@@ -36,7 +36,7 @@ private
   into = Into.f
 
   module Out = PushoutRec {d = ⊙Span-to-Span (*-⊙span X Y)}
-    {D = Suspension (Smash X Y)}
+    {D = Susp (Smash X Y)}
     (λ _ → north)
     (λ _ → south)
     (λ {(x , y) → merid (cfcod (x , y))})
@@ -59,7 +59,7 @@ private
     lemma idp idp idp s =
       vert-degen-square (∙-unit-r s)
 
-  out-into : (σ : Suspension (Smash X Y)) → out (into σ) == σ
+  out-into : (σ : Susp (Smash X Y)) → out (into σ) == σ
   out-into = susp-smash-elim
     idp
     idp
@@ -99,7 +99,7 @@ private
 
 module SuspSmash where
 
-  eq : Suspension (Smash X Y) ≃ fst (X ⊙* Y)
+  eq : Susp (Smash X Y) ≃ fst (X ⊙* Y)
   eq = equiv into out into-out out-into
 
   ⊙eq : ⊙Susp (⊙Smash X Y) ⊙≃ (X ⊙* Y)

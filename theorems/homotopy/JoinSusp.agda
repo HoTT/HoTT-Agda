@@ -6,12 +6,12 @@ open import homotopy.JoinAssocCubical
 
 module homotopy.JoinSusp where
 
-module _ {i} {A : Type i} where
+module _ {i} (A : Type i) where
 
   private
 
       module Into = JoinRec {A = Bool} {B = A}
-        {D = Suspension A}
+        {D = Susp A}
         (if_then north else south)
         (λ _ → south)
         (λ {(true , a) → merid a;
@@ -19,7 +19,7 @@ module _ {i} {A : Type i} where
 
       into = Into.f
 
-      module Out = SuspensionRec {C = Bool * A}
+      module Out = SuspRec {C = Bool * A}
         (left true)
         (left false)
         (λ a → glue (true , a) ∙ ! (glue (false , a)))
@@ -27,7 +27,7 @@ module _ {i} {A : Type i} where
       out = Out.f
 
       into-out : ∀ σ → into (out σ) == σ
-      into-out = Suspension-elim
+      into-out = Susp-elim
         idp
         idp
         (↓-∘=idf-from-square into out ∘ λ a → vert-degen-square $
@@ -51,23 +51,23 @@ module _ {i} {A : Type i} where
              (false , a) →
                ap (ap out) (Into.glue-β (false , a)) ∙v⊡ connection})
 
-  *-Bool-l : Bool * A ≃ Suspension A
+  *-Bool-l : Bool * A ≃ Susp A
   *-Bool-l = equiv into out into-out out-into
 
 module _ {i} (X : Ptd i) where
 
   ⊙*-Bool-l : ⊙Bool ⊙* X ⊙≃ ⊙Susp X
-  ⊙*-Bool-l = ≃-to-⊙≃ *-Bool-l idp
+  ⊙*-Bool-l = ≃-to-⊙≃ (*-Bool-l (fst X)) idp
 
-module _ {i j} {A : Type i} {B : Type j} where
+module _ {i j} (A : Type i) (B : Type j) where
 
-  *-Susp-l : Suspension A * B ≃ Suspension (A * B)
-  *-Susp-l = *-Bool-l ∘e *-assoc ∘e *-emap *-Bool-l (ide B) ⁻¹
+  *-Susp-l : Susp A * B ≃ Susp (A * B)
+  *-Susp-l = *-Bool-l (A * B) ∘e *-assoc Bool A B ∘e *-emap (*-Bool-l A) (ide B) ⁻¹
 
 module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
   ⊙*-Susp-l : ⊙Susp X ⊙* Y ⊙≃ ⊙Susp (X ⊙* Y)
-  ⊙*-Susp-l = ≃-to-⊙≃ *-Susp-l idp
+  ⊙*-Susp-l = ≃-to-⊙≃ (*-Susp-l (fst X) (fst Y)) idp
 
 module _ {i} where
 

@@ -3,6 +3,8 @@
 open import lib.Basics
 open import lib.types.Pi
 open import lib.types.Pointed
+open import lib.types.Sigma
+open import lib.types.CommutingSquare
 
 module lib.types.Span where
 
@@ -68,4 +70,34 @@ Span-flip (span A B C f g) = span B A C g f
 ⊙Span-flip : ∀ {i j k} → ⊙Span {i} {j} {k} → ⊙Span {j} {i} {k}
 ⊙Span-flip (⊙span X Y Z f g) = ⊙span Y X Z g f
 
+record SpanMap {i₀ j₀ k₀ i₁ j₁ k₁} (span₀ : Span {i₀} {j₀} {k₀}) (span₁ : Span {i₁} {j₁} {k₁})
+  : Type (lmax (lmax (lmax i₀ j₀) k₀) (lmax (lmax i₁ j₁) k₁)) where
+  constructor span-map
+  module span₀ = Span span₀
+  module span₁ = Span span₁
+  field
+    hA : span₀.A → span₁.A
+    hB : span₀.B → span₁.B
+    hC : span₀.C → span₁.C
+    f-commutes : CommSquare span₀.f span₁.f hC hA
+    g-commutes : CommSquare span₀.g span₁.g hC hB
 
+SpanEquiv : ∀ {i₀ j₀ k₀ i₁ j₁ k₁} (span₀ : Span {i₀} {j₀} {k₀}) (span₁ : Span {i₁} {j₁} {k₁})
+  → Type (lmax (lmax (lmax i₀ j₀) k₀) (lmax (lmax i₁ j₁) k₁))
+SpanEquiv span₀ span₁ = Σ (SpanMap span₀ span₁)
+  (λ span-map → is-equiv (SpanMap.hA span-map)
+              × is-equiv (SpanMap.hB span-map)
+              × is-equiv (SpanMap.hC span-map))
+
+SpanEquiv-inverse : ∀ {i₀ j₀ k₀ i₁ j₁ k₁} {span₀ : Span {i₀} {j₀} {k₀}} {span₁ : Span {i₁} {j₁} {k₁}}
+  → SpanEquiv span₀ span₁ → SpanEquiv span₁ span₀
+SpanEquiv-inverse (span-map hA hB hC f-commutes g-commutes , hA-ise , hB-ise , hC-ise)
+  = ( span-map hA.g hB.g hC.g
+      (CommSquare-inverse-v f-commutes hC-ise hA-ise)
+      (CommSquare-inverse-v g-commutes hC-ise hB-ise)
+    , ( is-equiv-inverse hA-ise
+      , is-equiv-inverse hB-ise
+      , is-equiv-inverse hC-ise))
+  where module hA = is-equiv hA-ise
+        module hB = is-equiv hB-ise
+        module hC = is-equiv hC-ise

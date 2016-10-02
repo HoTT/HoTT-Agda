@@ -13,14 +13,14 @@ module cohomology.LongExactSequence {i} (CT : CohomologyTheory i)
 open CohomologyTheory CT
 open import cohomology.PtdMapSequence CT
 
-co∂ : C n X →ᴳ C (succ n) (⊙Cof f)
+co∂ : C n X →ᴳ C (succ n) (⊙Cofiber f)
 co∂ = C-fmap (succ n) ⊙extract-glue ∘ᴳ GroupIso.g-hom (C-Susp n X)
 
 C-cofiber-seq : HomSequence (C n Y) (C (succ n) X)
 C-cofiber-seq =
   C n Y                →⟨ C-fmap n f                  ⟩ᴳ
   C n X                →⟨ co∂                         ⟩ᴳ
-  C (succ n) (⊙Cof f)  →⟨ C-fmap (succ n) (⊙cfcod' f) ⟩ᴳ
+  C (succ n) (⊙Cofiber f)  →⟨ C-fmap (succ n) (⊙cfcod' f) ⟩ᴳ
   C (succ n) Y         →⟨ C-fmap (succ n) f           ⟩ᴳ
   C (succ n) X         ⊣|ᴳ
 

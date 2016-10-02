@@ -21,7 +21,7 @@ open import cohomology.Wedge CT
 private
   module CW = CWedge n (⊙Susp X) (⊙Susp X)
 
-  module Subtract = SuspensionRec {C = fst (⊙Susp X ⊙∨ ⊙Susp X)}
+  module Subtract = SuspRec {C = fst (⊙Susp X ⊙∨ ⊙Susp X)}
     (winl south)
     (winr south)
     (λ x → ap winl (! (merid x)) ∙ wglue ∙ ap winr (merid x))
@@ -32,7 +32,7 @@ private
   ⊙subtract = (subtract , ! (ap winl (merid (snd X))))
 
   projl-subtract : ∀ σ → projl _ _ (subtract σ) == Susp-flip σ
-  projl-subtract = Suspension-elim idp idp $
+  projl-subtract = Susp-elim idp idp $
     ↓-='-from-square ∘ vert-degen-square ∘ λ x →
       ap-∘ (projl _ _) subtract (merid x)
       ∙ ap (ap (projl _ _)) (Subtract.merid-β x)
@@ -46,7 +46,7 @@ private
       ∙ ! (FlipSusp.merid-β x)
 
   projr-subtract : ∀ σ → projr _ _ (subtract σ) == σ
-  projr-subtract = Suspension-elim idp idp $
+  projr-subtract = Susp-elim idp idp $
     ↓-∘=idf-in (projr _ _) subtract ∘ λ x →
       ap (ap (projr _ _)) (Subtract.merid-β x)
       ∙ ap-∙ (projr _ _) (ap winl (! (merid x))) (wglue ∙ ap winr (merid x))
@@ -56,7 +56,7 @@ private
                 ∙2 (∘-ap (projr _ _) winr (merid x) ∙ ap-idf _))))
 
   fold-subtract : ∀ σ → fold (subtract σ) == south
-  fold-subtract = Suspension-elim idp idp $
+  fold-subtract = Susp-elim idp idp $
     ↓-app=cst-in ∘ ! ∘ λ x →
       ∙-unit-r _
       ∙ ap-∘ fold subtract (merid x)

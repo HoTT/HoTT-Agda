@@ -15,7 +15,7 @@ module FreudenthalEquiv
   {i} (n k : ℕ₋₂) (kle : k ≤T S (n +2+ S n))
   (X : Type i) (x₀ : X) (cX : is-connected (S (S n)) X) where
 
-  Q : Suspension X → Type i
+  Q : Susp X → Type i
   Q x = Trunc k (north == x)
 
   up : X → north' X == north
@@ -68,11 +68,11 @@ module FreudenthalEquiv
             → is-equiv.g (transport is-equiv α e) == is-equiv.g e
           lemma idp e = idp
 
-  Codes : Suspension X → Type i
-  Codes = SuspensionRec.f (Trunc k X) (Trunc k X) (ua ∘ Codes-mer-equiv)
+  Codes : Susp X → Type i
+  Codes = SuspRec.f (Trunc k X) (Trunc k X) (ua ∘ Codes-mer-equiv)
 
-  Codes-has-level : (x : Suspension X) → has-level k (Codes x)
-  Codes-has-level = Suspension-elim Trunc-level Trunc-level
+  Codes-has-level : (x : Susp X) → has-level k (Codes x)
+  Codes-has-level = Susp-elim Trunc-level Trunc-level
                       (λ _ → prop-has-all-paths-↓ has-level-is-prop)
 
   decodeN : Codes north → Trunc k (north' X == north)
@@ -84,10 +84,10 @@ module FreudenthalEquiv
   decodeS : Codes south → Q south
   decodeS = Trunc-fmap merid
 
-  encode₀ : {x : Suspension X} → north == x → Codes x
+  encode₀ : {x : Susp X} → north == x → Codes x
   encode₀ α = transport Codes α [ x₀ ]
 
-  encode : {x : Suspension X} → Trunc k (north == x) → Codes x
+  encode : {x : Susp X} → Trunc k (north == x) → Codes x
   encode {x} tα = Trunc-rec (Codes-has-level x) encode₀ tα
 
   abstract
@@ -102,7 +102,7 @@ module FreudenthalEquiv
         coe (ap Codes (merid x) ∙ ap Codes (! (merid x₀))) [ x₀ ]
           =⟨ coe-∙ (ap Codes (merid x)) (ap Codes (! (merid x₀))) [ x₀ ] ⟩
         coe (ap Codes (! (merid x₀))) (coe (ap Codes (merid x)) [ x₀ ])
-          =⟨ SuspensionRec.merid-β _ _ (ua ∘ Codes-mer-equiv) x
+          =⟨ SuspRec.merid-β _ _ (ua ∘ Codes-mer-equiv) x
             |in-ctx (λ w → coe (ap Codes (! (merid x₀))) (coe w [ x₀ ])) ⟩
         coe (ap Codes (! (merid x₀))) (coe (ua (Codes-mer-equiv x)) [ x₀ ])
           =⟨ coe-β (Codes-mer-equiv x) [ x₀ ]
@@ -113,7 +113,7 @@ module FreudenthalEquiv
         coe (ap Codes (! (merid x₀))) [ x ]
           =⟨ coe-ap-! Codes (merid x₀) [ x ] ⟩
         coe! (ap Codes (merid x₀)) [ x ]
-          =⟨ SuspensionRec.merid-β _ _ (ua ∘ Codes-mer-equiv) x₀
+          =⟨ SuspRec.merid-β _ _ (ua ∘ Codes-mer-equiv) x₀
             |in-ctx (λ w → coe! w [ x ]) ⟩
         coe! (ua (Codes-mer-equiv x₀)) [ x ]
           =⟨ coe!-β (Codes-mer-equiv x₀) [ x ] ⟩
@@ -121,15 +121,15 @@ module FreudenthalEquiv
           =⟨ app= Codes-mer-inv-x₀ [ x ] ⟩
         [ x ] ∎)
 
-  decode : {x : Suspension X} → Codes x → Q x
-  decode {x} = Suspension-elim
+  decode : {x : Susp X} → Codes x → Q x
+  decode {x} = Susp-elim
     {P = λ y → Codes y → Q y}
     decodeN decodeS
     (λ x' → ↓-→-from-transp (λ= (STS x')))
     x
     where
     abstract
-      coh : {s₁ s₂ : Suspension X} (p : s₁ == s₂)
+      coh : {s₁ s₂ : Susp X} (p : s₁ == s₂)
         → (ap (λ s → s ∙ p) (!-inv-r p))
           == ∙-assoc p (! p) p ∙ ap (λ s → p ∙ s) (!-inv-l p) ∙ ∙-unit-r p
       coh idp = idp
@@ -145,7 +145,7 @@ module FreudenthalEquiv
         transport Q (merid a) [ up x₀ ]
           =⟨ transport-Trunc (north ==_) (merid a) (up x₀) ⟩
         [ transport (north ==_) (merid a) (up x₀) ]
-          =⟨ ap [_] $ trans-pathfrom {A = Suspension X} (merid a) (up x₀)  ⟩
+          =⟨ ap [_] $ trans-pathfrom {A = Susp X} (merid a) (up x₀)  ⟩
         [ (merid x₀ ∙ ! (merid x₀)) ∙ merid a ]
           =⟨ ap [_] $ ap (λ s → s ∙ merid a) (!-inv-r (merid x₀)) ⟩
         [ merid a ]
@@ -155,7 +155,7 @@ module FreudenthalEquiv
         Trunc-fmap (merid) (Codes-mer a [ x₀ ])
           =⟨ ap (Trunc-fmap (merid)) (! (coe-β (Codes-mer-equiv a) [ x₀ ])) ⟩
         Trunc-fmap (merid) (coe (ua (Codes-mer-equiv a)) [ x₀ ])
-          =⟨ ! (SuspensionRec.merid-β _ _ (ua ∘ Codes-mer-equiv) a)
+          =⟨ ! (SuspRec.merid-β _ _ (ua ∘ Codes-mer-equiv) a)
             |in-ctx (λ w → Trunc-fmap (merid) (coe w [ x₀ ])) ⟩
         Trunc-fmap (merid) (transport Codes (merid a) [ x₀ ]) ∎
 
@@ -164,7 +164,7 @@ module FreudenthalEquiv
         transport Q (merid x₀) [ up b ]
           =⟨ transport-Trunc (north ==_) (merid x₀) (up b) ⟩
         [ transport (north ==_) (merid x₀) (up b) ]
-          =⟨ ap [_] $ trans-pathfrom {A = Suspension X} (merid x₀) (up b)  ⟩
+          =⟨ ap [_] $ trans-pathfrom {A = Susp X} (merid x₀) (up b)  ⟩
         [ (merid b ∙ ! (merid x₀)) ∙ merid x₀ ]
           =⟨ ap [_] $ ∙-assoc (merid b) (! (merid x₀)) (merid x₀)
                       ∙ ap (λ s → merid b ∙ s) (!-inv-l (merid x₀))
@@ -176,7 +176,7 @@ module FreudenthalEquiv
         Trunc-fmap (merid) (Codes-mer x₀ [ b ])
           =⟨ ap (Trunc-fmap (merid)) (! (coe-β (Codes-mer-equiv x₀) [ b ])) ⟩
         Trunc-fmap (merid) (coe (ua (Codes-mer-equiv x₀)) [ b ])
-          =⟨ ! (SuspensionRec.merid-β _ _ (ua ∘ Codes-mer-equiv) x₀)
+          =⟨ ! (SuspRec.merid-β _ _ (ua ∘ Codes-mer-equiv) x₀)
             |in-ctx (λ w → Trunc-fmap (merid) (coe w [ b ])) ⟩
         Trunc-fmap (merid) (transport Codes (merid x₀) [ b ]) ∎
 
@@ -186,7 +186,7 @@ module FreudenthalEquiv
           transport Q (merid x₀) [ up x₀ ]
             =⟨ transport-Trunc (north ==_) (merid x₀) (up x₀) ⟩
           [ transport (north ==_) (merid x₀) (up x₀) ]
-            =⟨ ap [_] $ trans-pathfrom {A = Suspension X} (merid x₀) (up x₀) ⟩
+            =⟨ ap [_] $ trans-pathfrom {A = Susp X} (merid x₀) (up x₀) ⟩
           [ (merid x₀ ∙ ! (merid x₀)) ∙ merid x₀ ]
             =⟨ ap [_] p₁ ⟩
           [ merid x₀ ]
@@ -196,7 +196,7 @@ module FreudenthalEquiv
           Trunc-fmap (merid) (Codes-mer x₀ [ x₀ ])
             =⟨ ap (Trunc-fmap (merid)) (! (coe-β (Codes-mer-equiv x₀) [ x₀ ])) ⟩
           Trunc-fmap (merid) (coe (ua (Codes-mer-equiv x₀)) [ x₀ ])
-            =⟨ ! (SuspensionRec.merid-β _ _ (ua ∘ Codes-mer-equiv) x₀)
+            =⟨ ! (SuspRec.merid-β _ _ (ua ∘ Codes-mer-equiv) x₀)
               |in-ctx (λ w → Trunc-fmap (merid) (coe w [ x₀ ])) ⟩
           Trunc-fmap (merid) (transport Codes (merid x₀) [ x₀ ]) ∎)
         (coh (merid x₀)) Codes-mer-coh
@@ -212,7 +212,7 @@ module FreudenthalEquiv
                           (WedgeExt.ext STS-args x')
 
 
-  decode-encode : {x : Suspension X} (tα : Q x)
+  decode-encode : {x : Susp X} (tα : Q x)
     → decode {x} (encode {x} tα) == tα
   decode-encode {x} = Trunc-elim
     {P = λ tα → decode {x} (encode {x} tα) == tα}

@@ -15,7 +15,7 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
     i₂ : Y ⊙→ X ⊙× Y
     i₂ = ((λ y → (snd X , y)) , idp)
 
-    j₂ : fst (⊙Cof i₁) → fst Y
+    j₂ : fst (⊙Cofiber i₁) → fst Y
     j₂ = CofiberRec.f (snd Y) snd (λ x → idp)
 
   ⊙eq : ⊙Susp (X ⊙× Y) ⊙≃ ⊙Susp X ⊙∨ (⊙Susp Y ⊙∨ ⊙Susp (X ⊙∧ Y))

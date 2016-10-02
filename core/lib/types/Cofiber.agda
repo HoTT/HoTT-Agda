@@ -57,13 +57,13 @@ module _ {i j} {A : Type i} {B : Type j} {f : A → B} where
 
 module _ {i j} {X : Ptd i} {Y : Ptd j} (F : X ⊙→ Y) where
 
-  ⊙cof-span : ⊙Span
-  ⊙cof-span = ⊙span ⊙Unit Y X ((λ _ → tt) , idp) F
+  ⊙cofiber-span : ⊙Span
+  ⊙cofiber-span = ⊙span ⊙Unit Y X ((λ _ → tt) , idp) F
 
-  ⊙Cof : Ptd (lmax i j)
-  ⊙Cof = ⊙Pushout ⊙cof-span
+  ⊙Cofiber : Ptd (lmax i j)
+  ⊙Cofiber = ⊙Pushout ⊙cofiber-span
 
-  ⊙cfcod' : Y ⊙→ ⊙Cof
+  ⊙cfcod' : Y ⊙→ ⊙Cofiber
   ⊙cfcod' = cfcod , ap cfcod (! (snd F)) ∙ ! (cfglue (snd X))
 
   ⊙cfglue' : ⊙cst == ⊙cfcod' ⊙∘ F
@@ -76,7 +76,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (F : X ⊙→ Y) where
 
 module _ {i j} {X : Ptd i} {Y : Ptd j} {F : X ⊙→ Y} where
 
-  ⊙cfcod : Y ⊙→ ⊙Cof F
+  ⊙cfcod : Y ⊙→ ⊙Cofiber F
   ⊙cfcod = ⊙cfcod' F
 
   ⊙cfglue : ⊙cst == ⊙cfcod ⊙∘ F

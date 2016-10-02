@@ -119,7 +119,7 @@ mayer-vietoris-exact =
     projl-mv-diff : (σz : fst (⊙Susp Z))
       → Susp-fmap (projl X Y) (MV.mv-diff σz)
         == Susp-fmap (fst f) σz
-    projl-mv-diff = Suspension-elim idp (merid (snd X)) $
+    projl-mv-diff = Susp-elim idp (merid (snd X)) $
       ↓-='-from-square ∘ λ z →
         (ap-∘ (Susp-fmap (projl X Y)) MV.mv-diff (merid z)
          ∙ ap (ap (Susp-fmap (projl X Y))) (MV.MVDiff.merid-β z)
@@ -169,7 +169,7 @@ mayer-vietoris-exact =
     projr-mv-diff : (σz : fst (⊙Susp Z))
       → Susp-fmap (projr X Y) (MV.mv-diff σz)
         == Susp-fmap (fst g) (Susp-flip σz)
-    projr-mv-diff = Suspension-elim (merid (snd Y)) idp $
+    projr-mv-diff = Susp-elim (merid (snd Y)) idp $
       ↓-='-from-square ∘ λ z →
         (ap-∘ (Susp-fmap (projr X Y)) MV.mv-diff (merid z)
          ∙ ap (ap (Susp-fmap (projr X Y))) (MV.MVDiff.merid-β z)

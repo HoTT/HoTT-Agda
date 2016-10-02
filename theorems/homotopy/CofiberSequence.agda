@@ -8,10 +8,10 @@ module homotopy.CofiberSequence {i} where
 {- Useful abbreviations -}
 module _ {X Y : Ptd i} (f : X ⊙→ Y) where
 
-  ⊙Cof² = ⊙Cof (⊙cfcod' f)
+  ⊙Cofiber² = ⊙Cof (⊙cfcod' f)
   ⊙cfcod²' = ⊙cfcod' (⊙cfcod' f)
 
-  ⊙Cof³ = ⊙Cof ⊙cfcod²'
+  ⊙Cofiber³ = ⊙Cof ⊙cfcod²'
   ⊙cfcod³' = ⊙cfcod' ⊙cfcod²'
 
 module _ {A B : Type i} (f : A → B) where
@@ -23,7 +23,7 @@ module _ {A B : Type i} (f : A → B) where
   cfcod³' = cfcod' cfcod²'
 
 {- For [f : X → Y], the cofiber space [Cof(cfcod f)] is equivalent to
- - [Suspension X]. This is essentially an application of the two pushouts
+ - [Susp X]. This is essentially an application of the two pushouts
  - lemma:
  -
  -       f
@@ -47,10 +47,10 @@ private
     into : Cof² (fst f) → Susp (fst X)
     into = Into.f
 
-    ⊙into : ⊙Cof² f ⊙→ ⊙Susp X
+    ⊙into : ⊙Cofiber² f ⊙→ ⊙Susp X
     ⊙into = into , ! (merid (snd X))
 
-    module Out = SuspensionRec {C = fst (⊙Cof² f)}
+    module Out = SuspRec {C = fst (⊙Cofiber² f)}
       (cfcod cfbase) cfbase
       (λ x → ap cfcod (cfglue x) ∙ ! (cfglue (fst f x)))
 
@@ -58,7 +58,7 @@ private
     out = Out.f
 
     into-out : ∀ σ → into (out σ) == σ
-    into-out = Suspension-elim idp idp
+    into-out = Susp-elim idp idp
       (λ x → ↓-∘=idf-in into out $
         ap (ap into) (Out.merid-β x)
         ∙ ap-∙ into (ap cfcod (cfglue x)) (! (cfglue (fst f x)))
@@ -83,7 +83,7 @@ private
     eqv : Cof² (fst f) ≃ Susp (fst X)
     eqv = equiv into out into-out out-into
 
-    ⊙eqv : ⊙Cof² f ⊙≃ ⊙Susp X
+    ⊙eqv : ⊙Cofiber² f ⊙≃ ⊙Susp X
     ⊙eqv = ≃-to-⊙≃ eqv (! (merid (snd X)))
 
 module _ {X Y : Ptd i} (f : X ⊙→ Y) where
@@ -124,23 +124,23 @@ module _ {X Y : Ptd i} (f : X ⊙→ Y) where
   Cof²-equiv-Susp-dom : Cof² (fst f) ≃ Susp (fst X)
   Cof²-equiv-Susp-dom = Equiv.eqv f
 
-  ⊙Cof²-equiv-⊙Susp-dom : ⊙Cof² f ⊙≃ ⊙Susp X
-  ⊙Cof²-equiv-⊙Susp-dom = Equiv.⊙eqv f
+  ⊙Cofiber²-equiv-⊙Susp-dom : ⊙Cof² f ⊙≃ ⊙Susp X
+  ⊙Cofiber²-equiv-⊙Susp-dom = Equiv.⊙eqv f
 
-  iterated-cofiber-seq : PtdMapSequence X (⊙Cof³ f)
+  iterated-cofiber-seq : PtdMapSequence X (⊙Cofiber³ f)
   iterated-cofiber-seq =
-    X ⊙→⟨ f ⟩ Y ⊙→⟨ ⊙cfcod' f ⟩ ⊙Cof f ⊙→⟨ ⊙cfcod²' f ⟩ ⊙Cof² f ⊙→⟨ ⊙cfcod³' f ⟩ ⊙Cof³ f ⊙⊣|
+    X ⊙→⟨ f ⟩ Y ⊙→⟨ ⊙cfcod' f ⟩ ⊙Cofiber f ⊙→⟨ ⊙cfcod²' f ⟩ ⊙Cof² f ⊙→⟨ ⊙cfcod³' f ⟩ ⊙Cof³ f ⊙⊣|
 
   cofiber-seq : PtdMapSequence X (⊙Susp Y)
   cofiber-seq =
-    X ⊙→⟨ f ⟩ Y ⊙→⟨ ⊙cfcod' f ⟩ ⊙Cof f ⊙→⟨ ⊙extract-glue ⟩ ⊙Susp X ⊙→⟨ ⊙Susp-fmap f ⟩ ⊙Susp Y ⊙⊣|
+    X ⊙→⟨ f ⟩ Y ⊙→⟨ ⊙cfcod' f ⟩ ⊙Cofiber f ⊙→⟨ ⊙extract-glue ⟩ ⊙Susp X ⊙→⟨ ⊙Susp-fmap f ⟩ ⊙Susp Y ⊙⊣|
 
   cofiber-seq-map : PtdMapSeqMap iterated-cofiber-seq cofiber-seq
     (⊙idf X) (⊙Susp-flip Y ⊙∘ Equiv.⊙into (⊙cfcod' f))
   cofiber-seq-map =
     ⊙idf X                                  ⊙↓⟨ comm-sqr (λ _ → idp) ⟩
     ⊙idf Y                                  ⊙↓⟨ comm-sqr (λ _ → idp) ⟩
-    ⊙idf (⊙Cof f)                           ⊙↓⟨ square₁ ⟩
+    ⊙idf (⊙Cofiber f)                           ⊙↓⟨ square₁ ⟩
     Equiv.⊙into f                           ⊙↓⟨ square₂ ⟩
     ⊙Susp-flip Y ⊙∘ Equiv.⊙into (⊙cfcod' f) ⊙↓|
 

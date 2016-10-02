@@ -12,8 +12,8 @@ module _ (n : ℤ) where
   private
     ⊙LU = ⊙Lift {j = i} ⊙Unit
 
-  ⊙Cof-Lift-Unit-equiv-Lift-Unit : ⊙Cof (⊙idf ⊙LU) ⊙≃ ⊙LU
-  ⊙Cof-Lift-Unit-equiv-Lift-Unit = ≃-to-⊙≃ {X = _ , cfbase} e idp
+  ⊙Cofiber-Lift-Unit-equiv-Lift-Unit : ⊙Cof (⊙idf ⊙LU) ⊙≃ ⊙LU
+  ⊙Cofiber-Lift-Unit-equiv-Lift-Unit = ≃-to-⊙≃ {X = _ , cfbase} e idp
     where
     e : Cofiber (idf (Lift {j = i} Unit)) ≃ Lift Unit
     e = equiv (λ _ → lift unit)
@@ -29,7 +29,7 @@ module _ (n : ℤ) where
   C-Unit-is-contr =
     (Cident n ⊙LU , λ x → lemma₂ x ∙ CEl-fmap-idf n x)
     where
-    lemma₁ : (x : CEl n (⊙Cof (⊙idf _)))
+    lemma₁ : (x : CEl n (⊙Cofiber (⊙idf _)))
       → Cident n ⊙LU == CEl-fmap n (⊙cfcod' (⊙idf _)) x
     lemma₁ x = ! (im-sub-ker (C-exact n (⊙idf _)) _ [ x , idp ])
                ∙ CEl-fmap-idf n (CEl-fmap n (⊙cfcod' (⊙idf _)) x)
@@ -38,7 +38,7 @@ module _ (n : ℤ) where
     lemma₂ = transport
       {A = Σ (Ptd i) (λ X → ⊙LU ⊙→ X)}
       (λ {(X , H) → (c : CEl n X) → Cident n ⊙LU == CEl-fmap n H c})
-      (pair= (⊙ua ⊙Cof-Lift-Unit-equiv-Lift-Unit)
+      (pair= (⊙ua ⊙Cofiber-Lift-Unit-equiv-Lift-Unit)
              (prop-has-all-paths-↓ (⊙→-level (Lift-level Unit-is-prop))))
       lemma₁
 

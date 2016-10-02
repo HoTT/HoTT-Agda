@@ -15,17 +15,17 @@ module SuspSectionDecomp where
   private
     f = fst ⊙f
 
-  module Into = SuspensionRec {C = fst (⊙Susp X ⊙∨ ⊙Susp (⊙Cof ⊙f))}
+  module Into = SuspRec {C = fst (⊙Susp X ⊙∨ ⊙Susp (⊙Cofiber ⊙f))}
     (winl south)
     (winr south)
     (λ y → ! (ap winl (merid (g y))) ∙ wglue ∙ ap winr (merid (cfcod y)))
 
   into = Into.f
 
-  module OutWinl = SuspensionRec south south
+  module OutWinl = SuspRec south south
     (λ x → ! (merid (f x)) ∙ merid (snd Y))
 
-  out-winr-glue : fst (⊙Cof ⊙f) → south' (fst Y) == south
+  out-winr-glue : fst (⊙Cofiber ⊙f) → south' (fst Y) == south
   out-winr-glue = CofiberRec.f
     idp
     (λ y → ! (merid (f (g y))) ∙ merid y)
@@ -34,18 +34,18 @@ module SuspSectionDecomp where
          (inv x)
       ∙ !-inv-l (merid (f x)))
 
-  module OutWinr = SuspensionRec south south out-winr-glue
+  module OutWinr = SuspRec south south out-winr-glue
 
   out-winl = OutWinl.f
   out-winr = OutWinr.f
 
-  module Out = WedgeRec {X = ⊙Susp X} {Y = ⊙Susp (⊙Cof ⊙f)}
+  module Out = WedgeRec {X = ⊙Susp X} {Y = ⊙Susp (⊙Cofiber ⊙f)}
     out-winl out-winr idp
 
   out = Out.f
 
   out-into : ∀ σy → out (into σy) == σy
-  out-into = Suspension-elim
+  out-into = Susp-elim
     (! (merid (snd Y)))
     idp
     (↓-∘=idf-from-square out into ∘ λ y →
@@ -107,7 +107,7 @@ module SuspSectionDecomp where
     glue-square-lemma idp idp = ids
 
     into-out-winl : ∀ σx → into (out (winl σx)) == winl σx
-    into-out-winl = Suspension-elim
+    into-out-winl = Susp-elim
       (! (ap winr (merid cfbase)) ∙ ! wglue)
       (! (ap winr (merid cfbase)) ∙ ! wglue
        ∙ ap winl (merid (g (snd Y))))
@@ -162,5 +162,5 @@ module SuspSectionDecomp where
               (ap (ap winr ∘ merid) (cfglue (g y)))
               (ap (ap winl ∘ merid) (inv (g y)))
 
-  eq : fst (⊙Susp Y) ≃ fst (⊙Susp X ⊙∨ ⊙Susp (⊙Cof ⊙f))
+  eq : fst (⊙Susp Y) ≃ fst (⊙Susp X ⊙∨ ⊙Susp (⊙Cofiber ⊙f))
   eq = equiv into out into-out out-into

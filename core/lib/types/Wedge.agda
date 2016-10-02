@@ -6,6 +6,7 @@ open import lib.types.Paths
 open import lib.types.Pointed
 open import lib.types.Pushout
 open import lib.types.PushoutFlattening
+open import lib.types.PushoutFmap
 open import lib.types.Span
 open import lib.types.Unit
 
@@ -146,142 +147,17 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
   ⊙projl = Projl.⊙f
   ⊙projr = Projr.⊙f
 
-module _ where
+module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
+  (eqX : X ⊙≃ X') (eqY : Y ⊙≃ Y') where
 
-  private
-    module WedgeFMap {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
-      (F : X ⊙→ X') (G : Y ⊙→ Y')
-      = WedgeRec {C = X' ∨ Y'} (winl ∘ fst F) (winr ∘ fst G)
-        (ap winl (snd F) ∙ (wglue ∙' ! (ap winr (snd G))))
+  wedge-span-emap : SpanEquiv (wedge-span X Y) (wedge-span X' Y')
+  wedge-span-emap = ( span-map (fst (fst eqX)) (fst (fst eqY)) (idf _)
+                        (comm-sqr λ _ → snd (fst eqX))
+                        (comm-sqr λ _ → snd (fst eqY))
+                    , snd eqX , snd eqY , idf-is-equiv _)
 
-  ∨-fmap : ∀ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
-    → X ⊙→ X' → Y ⊙→ Y' → (X ∨ Y → X' ∨ Y')
-  ∨-fmap = WedgeFMap.f
+  ∨-emap : X ∨ Y ≃ X' ∨ Y'
+  ∨-emap = Pushout-emap wedge-span-emap
 
-  -- XXX Needs some clean-ups.
-  ∨-emap : ∀ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
-    → X ⊙≃ X' → Y ⊙≃ Y' → X ∨ Y ≃ X' ∨ Y'
-  ∨-emap {i} {i'} {j} {j'} {X} {X'} {Y} {Y'} ⊙eqX ⊙eqY =
-    equiv (to ⊙eqX ⊙eqY) (from ⊙eqX ⊙eqY) (to-from ⊙eqX ⊙eqY) (from-to ⊙eqX ⊙eqY) where
-      to = λ {X' : Ptd i'} {Y' : Ptd j'} (⊙eqX : X ⊙≃ X') (⊙eqY : Y ⊙≃ Y')
-        → ∨-fmap (⊙–> ⊙eqX) (⊙–> ⊙eqY)
-      from = λ {X' : Ptd i'} {Y' : Ptd j'} (⊙eqX : X ⊙≃ X') (⊙eqY : Y ⊙≃ Y')
-        → ∨-fmap (⊙<– ⊙eqX) (⊙<– ⊙eqY)
-
-      path-lemma₀ : ∀ {i j} {A : Type i} {B : Type j}
-        (f : A → B) {a₁ a₂ a₃ a₄ : A} {b₅ : B}
-        (p₁ : a₁ == a₂) (p₂ : a₂ == a₃) (p₃ : a₄ == a₃) (p₄ : f a₄ == b₅)
-        → ap f (p₁ ∙ p₂ ∙' ! p₃) ∙ p₄ == ap f p₁ ∙' ap f p₂ ∙' ! (ap f p₃) ∙ p₄
-      path-lemma₀ f idp idp idp idp = idp
-
-      path-lemma₀' : ∀ {i} {A : Type i} {a₁ a₂ a₃ a₄ : A}
-        (p₁ : a₁ == a₂) (p₂ : a₂ == a₃) (p₃ : a₄ == a₃)
-        → (p₁ ∙ p₂ ∙' ! p₃) ∙ p₃ == p₁ ∙' p₂
-      path-lemma₀' idp idp idp = idp
-
-      to-from : ∀ {X'} {Y'} (⊙eqX : X ⊙≃ X') (⊙eqY : Y ⊙≃ Y')
-        → ∀ b → to ⊙eqX ⊙eqY (from ⊙eqX ⊙eqY b) == b
-      to-from ((Xf , idp) , Xf-ise) ((Yf , idp) , Yf-ise) = Wedge-elim
-        (ap winl ∘ Xf.f-g) (ap winr ∘ Yf.f-g)
-        (↓-app=idf-in $
-            ap winl (Xf.f-g (Xf (snd X))) ∙' wglue
-              =⟨ ap2 _∙'_ (! path-lemma₁) (! To.glue-β) ⟩
-            ap to' (ap winl (Xf.g-f (snd X))) ∙' ap to' wglue
-              =⟨ ! $ !-inv-l (ap to' (ap winr (Yf.g-f (snd Y))))
-                |in-ctx (λ p →
-                  ap to' (ap winl (Xf.g-f (snd X)))
-                  ∙' ap to' wglue
-                  ∙' p) ⟩
-            ap to' (ap winl (Xf.g-f (snd X)))
-            ∙' ap to' wglue
-            ∙' ! ( ap to' (ap winr (Yf.g-f (snd Y))))
-            ∙ ap to' (ap winr (Yf.g-f (snd Y)))
-              =⟨ path-lemma₂
-                |in-ctx (λ p →
-                  ap to' (ap winl (Xf.g-f (snd X)))
-                  ∙' ap to' wglue
-                  ∙' ! (ap to' (ap winr (Yf.g-f (snd Y))))
-                  ∙ p) ⟩
-            ap to' (ap winl (Xf.g-f (snd X)))
-            ∙' ap to' wglue
-            ∙' ! ( ap to' (ap winr (Yf.g-f (snd Y))))
-            ∙ ap winr (Yf.f-g (Yf (snd Y)))
-              =⟨ ! $ path-lemma₀ to'
-                    (ap winl (Xf.g-f (snd X)))
-                    wglue
-                    (ap winr (Yf.g-f (snd Y)))
-                    (ap winr (Yf.f-g (Yf (snd Y)))) ⟩
-            ap to' ( ap winl (Xf.g-f (snd X))
-                   ∙ wglue
-                   ∙' ! (ap winr (Yf.g-f (snd Y))))
-            ∙ ap winr (Yf.f-g (Yf (snd Y)))
-              =⟨ ! From.glue-β |in-ctx ap to' |in-ctx _∙ ap winr (Yf.f-g (Yf (snd Y))) ⟩
-            ap to' (ap from' wglue) ∙ ap winr (Yf.f-g (Yf (snd Y)))
-              =⟨ ∘-ap to' from' wglue |in-ctx _∙ ap winr (Yf.f-g (Yf (snd Y))) ⟩
-            ap (to' ∘ from') wglue ∙ ap winr (Yf.f-g (Yf (snd Y)))
-              =∎)
-        where
-          module Xf = is-equiv Xf-ise
-          module Yf = is-equiv Yf-ise
-          module To = WedgeFMap (Xf , idp) (Yf , idp)
-          module From = WedgeFMap (Xf.g , Xf.g-f (snd X)) (Yf.g , Yf.g-f (snd Y))
-          to' = To.f
-          from' = From.f
-
-          path-lemma₁ : ap to' (ap winl (Xf.g-f (snd X)))
-                     == ap winl (Xf.f-g (Xf (snd X)))
-          path-lemma₁ = ∘-ap to' winl (Xf.g-f (snd X))
-                      ∙ ap-∘ winl Xf (Xf.g-f (snd X))
-                      ∙ ap (ap winl) (Xf.adj (snd X))
-
-          path-lemma₂ : ap to' (ap winr (Yf.g-f (snd Y)))
-                     == ap winr (Yf.f-g (Yf (snd Y)))
-          path-lemma₂ = ∘-ap to' winr (Yf.g-f (snd Y))
-                      ∙ ap-∘ winr Yf (Yf.g-f (snd Y))
-                      ∙ ap (ap winr) (Yf.adj (snd Y))
-
-      from-to : ∀ {X'} {Y'} (⊙eqX : X ⊙≃ X') (⊙eqY : Y ⊙≃ Y')
-        → ∀ a → from ⊙eqX ⊙eqY (to ⊙eqX ⊙eqY a) == a
-      from-to ((Xf , idp) , Xf-ise) ((Yf , idp) , Yf-ise) = Wedge-elim
-        (ap winl ∘ Xf.g-f) (ap winr ∘ Yf.g-f)
-        (↓-app=idf-in $
-            ap winl (Xf.g-f (snd X)) ∙' wglue
-              =⟨ ! $ path-lemma₀'
-                  (ap winl (Xf.g-f (snd X)))
-                  wglue
-                  (ap winr (Yf.g-f (snd Y))) ⟩
-            ( ap winl (Xf.g-f (snd X))
-              ∙ wglue
-              ∙' ! (ap winr (Yf.g-f (snd Y))))
-            ∙ ap winr (Yf.g-f (snd Y))
-              =⟨ ! From.glue-β |in-ctx _∙ ap winr (Yf.g-f (snd Y)) ⟩
-            ap from' wglue ∙ ap winr (Yf.g-f (snd Y))
-              =⟨ ! To.glue-β |in-ctx ap from' |in-ctx _∙ ap winr (Yf.g-f (snd Y)) ⟩
-            ap from' (ap to' wglue) ∙ ap winr (Yf.g-f (snd Y))
-              =⟨ ∘-ap from' to' wglue |in-ctx _∙ ap winr (Yf.g-f (snd Y)) ⟩
-            ap (from' ∘ to') wglue ∙ ap winr (Yf.g-f (snd Y))
-              =∎)
-        where
-          module Xf = is-equiv Xf-ise
-          module Yf = is-equiv Yf-ise
-          module To = WedgeFMap (Xf , idp) (Yf , idp)
-          module From = WedgeFMap (Xf.g , Xf.g-f (snd X)) (Yf.g , Yf.g-f (snd Y))
-          to' = To.f
-          from' = From.f
-
-module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'} where
-
-  private
-    module ⊙WedgeFMap (F : X ⊙→ X') (G : Y ⊙→ Y')
-      = ⊙WedgeRec {Z = X' ⊙∨ Y'} (winl ∘ fst F , ap winl (snd F)) (winr ∘ fst G , ! (wglue ∙' ! (ap winr (snd G))))
-
-  ⊙∨-fmap : X ⊙→ X' → Y ⊙→ Y' → X ⊙∨ Y ⊙→ X' ⊙∨ Y'
-  ⊙∨-fmap = ⊙WedgeFMap.⊙f
-
-  ⊙∨-emap : X ⊙≃ X' → Y ⊙≃ Y' → X ⊙∨ Y ⊙≃ X' ⊙∨ Y'
-  ⊙∨-emap ⊙eqX ⊙eqY = ⊙∨-fmap (⊙–> ⊙eqX) (⊙–> ⊙eqY) ,
-    transport
-      (λ p → is-equiv (Wedge-rec {C = X' ∨ Y'}
-        (winl ∘ fst (⊙–> ⊙eqX)) (winr ∘ fst (⊙–> ⊙eqY)) (ap winl (snd (⊙–> ⊙eqX)) ∙ p)))
-      (! $ !-! (wglue ∙' ! (ap winr (snd (⊙–> ⊙eqY)))))
-      (snd (∨-emap ⊙eqX ⊙eqY))
+  ⊙∨-emap : X ⊙∨ Y ⊙≃ X' ⊙∨ Y'
+  ⊙∨-emap = ≃-to-⊙≃ ∨-emap (ap winl (snd (fst eqX)))

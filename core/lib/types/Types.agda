@@ -36,6 +36,8 @@ open import lib.types.PointedSigma public
 open import lib.types.Pullback public
 open import lib.types.Pushout public
 open import lib.types.PushoutFlattening public
+open import lib.types.PushoutFlip public
+open import lib.types.PushoutFmap public
 open import lib.types.SetQuotient public
 open import lib.types.Sigma public
 open import lib.types.Smash public

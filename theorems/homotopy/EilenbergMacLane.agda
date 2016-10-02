@@ -109,7 +109,7 @@ module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (fst X))
       module Π₂ = Pi2HSusp gA cA H-X
 
     π₂ : πS 1 (⊙EM 2) ≃ᴳ πS 0 X
-    π₂ = Π₂.π₂-Suspension
+    π₂ = Π₂.π₂-Susp
      ∘eᴳ πS-Trunc-fuse-≤-iso 1 2 (⊙Susp X) ≤T-refl
 
     πS-diag : (n : ℕ) → πS n (⊙EM (S n)) ≃ᴳ πS 0 X

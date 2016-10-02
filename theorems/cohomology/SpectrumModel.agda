@@ -62,7 +62,7 @@ module SpectrumModel where
 
   -- Eilenberg-Steenrod Axioms
 
-  {- Suspension Axiom -}
+  {- Susp Axiom -}
   private
     C-Susp' : {E₁ E₀ : Ptd i} (iso : ⊙Ω E₁ ⊙≃ E₀) (X : Ptd i)
       → Trunc-⊙→Ω-group (⊙Susp X) E₁ ≃ᴳ Trunc-⊙→Ω-group X E₀
@@ -104,7 +104,7 @@ module SpectrumModel where
   module _ (n : ℤ) {X Y : Ptd i} where
 
     {- precomposing [⊙cfcod' f] and then [f] gives [0] -}
-    exact-itok-lemma : (f : X ⊙→ Y) (g : uCEl n (⊙Cof f))
+    exact-itok-lemma : (f : X ⊙→ Y) (g : uCEl n (⊙Cofiber f))
       → (g ⊙∘ ⊙cfcod' f) ⊙∘ f == ⊙cst
     exact-itok-lemma (f , fpt) (g , gpt) = ⊙λ=
       (λ x → ap g (! (cfglue' f x)) ∙ gpt)
@@ -124,7 +124,7 @@ module SpectrumModel where
     {- if g ⊙∘ f is constant then g factors as h ⊙∘ ⊙cfcod' f -}
     exact-ktoi-lemma : (f : X ⊙→ Y) (g : uCEl n Y)
       → g ⊙∘ f == ⊙cst
-      → Σ (uCEl n (⊙Cof f)) (λ h → h ⊙∘ ⊙cfcod' f == g)
+      → Σ (uCEl n (⊙Cofiber f)) (λ h → h ⊙∘ ⊙cfcod' f == g)
     exact-ktoi-lemma (f , fpt) (h , hpt) p =
       ((g , ! q ∙ hpt) ,
        pair= idp (! (∙-assoc q (! q) hpt) ∙ ap (_∙ hpt) (!-inv-r q)))
@@ -155,11 +155,11 @@ module SpectrumModel where
           (λ h tp → Trunc-rec Trunc-level (lemma h) (–> (Trunc=-equiv _ _) tp))
         where
         lemma : (h : uCEl n Y) → h ⊙∘ f == ⊙cst
-          → Trunc -1 (Σ (CEl n (⊙Cof f))
+          → Trunc -1 (Σ (CEl n (⊙Cofiber f))
                           (λ tk → fst (CF n (⊙cfcod' f)) tk == [ h ]))
         lemma h p = [ [ fst wit ] , ap [_] (snd wit) ]
           where
-          wit : Σ (uCEl n (⊙Cof f)) (λ k → k ⊙∘ ⊙cfcod' f == h)
+          wit : Σ (uCEl n (⊙Cofiber f)) (λ k → k ⊙∘ ⊙cfcod' f == h)
           wit = exact-ktoi-lemma n f h p
 
     C-exact : (f : X ⊙→ Y) → is-exact (CF-hom n (⊙cfcod' f)) (CF-hom n f)

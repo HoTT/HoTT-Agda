@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import homotopy.FunctionOver
 
 module homotopy.TwoPushouts where
 
@@ -96,13 +95,12 @@ module TwoPushoutsEquiv {i j k l} {A : Type i} {B : Type j} {C : Type k}
         glue b ∎)
 
 
-  two-pushouts-equiv : Pushout d ≃ Pushout d₂
-  two-pushouts-equiv = equiv into out into-out out-into
+  two-pushouts-econv : Pushout d ≃ Pushout d₂
+  two-pushouts-econv = equiv into out into-out out-into
 
 {-
   two-pushouts : Lift {j = lmax l (lmax k (lmax j i))} (Pushout d) == Pushout d₂
   two-pushouts = ua (two-pushouts-equiv ∘e lift-equiv)
--}
 
   two-pushouts-left : lift ∘ left == left ∘ left
                       [ (λ E → (A → E)) ↓ two-pushouts ]
@@ -114,7 +112,9 @@ module TwoPushoutsEquiv {i j k l} {A : Type i} {B : Type j} {C : Type k}
   two-pushouts-inner : lift ∘ Inner.f == left
                        [ (λ E → (Pushout d₁ → E)) ↓ two-pushouts ]
   two-pushouts-inner = codomain-over-equiv _ _ ▹ λ= into-inner
+-}
 
+{- TODO Update this part
 
 --        g     h
 --     Y --> Z --> W    K = X ⊔^Y Y / (f,g)        ps₁ = X <- Y -> Z
@@ -130,7 +130,7 @@ module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
     ps₂ = ⊙span (⊙Pushout ps₁) W Z (⊙right ps₁) h
     ps = ⊙span X W Y f (h ⊙∘ g)
 
-  open TwoPushoutsEquiv (fst f) (fst g) (fst h) public
+  open TwoPushoutsEquiv (fst f) (fst g) (fst h)
 
   two-pushouts-ptd :
     ⊙Lift {j = lmax l (lmax k (lmax j i))} (⊙Pushout ps)
@@ -181,11 +181,13 @@ module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
     [ (λ V → ⊙Pushout ps₁ ⊙→ V) ↓ two-pushouts-ptd ]
   two-pushouts-⊙inner =
     codomain-over-⊙equiv _ _ _ ▹ ⊙λ= into-inner idp
+-}
 
-open TwoPushoutsEquiv
-  using (two-pushouts-equiv; two-pushouts; two-pushouts-left;
-         two-pushouts-right; two-pushouts-inner)
+open TwoPushoutsEquiv using (two-pushouts-econv)
+  -- two-pushouts; two-pushouts-left; two-pushouts-right; two-pushouts-inner
 
+{-
 open TwoPushoutsPtd
   using (two-pushouts-ptd; two-pushouts-⊙left; two-pushouts-⊙right;
          two-pushouts-⊙inner)
+-}

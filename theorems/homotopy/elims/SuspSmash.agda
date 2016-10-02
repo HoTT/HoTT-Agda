@@ -5,7 +5,7 @@ open import homotopy.elims.Lemmas
 open import homotopy.elims.CofPushoutSection
 
 module homotopy.elims.SuspSmash {i j k} {X : Ptd i} {Y : Ptd j}
-  {P : Suspension (X ∧ Y) → Type k}
+  {P : Susp (X ∧ Y) → Type k}
   (north* : P north) (south* : P south)
   (cod* : (s : fst X × fst Y) → north* == south* [ P ↓ merid (cfcod s) ])
   where
@@ -53,5 +53,5 @@ private
       ∙ ap (λ w → fst (fill-lemma w (fst fill0 ◃ cod* (∨-in-× X Y w))))
            wglue
 
-susp-smash-elim : Π (Suspension (X ∧ Y)) P
-susp-smash-elim = Suspension-elim north* south* coh*
+susp-smash-elim : Π (Susp (X ∧ Y)) P
+susp-smash-elim = Susp-elim north* south* coh*

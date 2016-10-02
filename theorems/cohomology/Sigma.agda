@@ -52,7 +52,7 @@ module CofSelect (X : Ptd i) (Y : fst X → Ptd i) where
       (↓-∘=idf-in Out.f Into.f ∘ λ x →
         ap (ap Out.f) (Into.glue-β x) ∙ Out.glue-β x)
 
-  ⊙path : ⊙Cof ⊙select == ⊙BigWedge Y
+  ⊙path : ⊙Cofiber ⊙select == ⊙BigWedge Y
   ⊙path = ⊙ua eq idp
 
   cfcod-over : cfcod _ == uncurry bwin [ (λ U → fst (⊙Σ X Y) → fst U) ↓ ⊙path ]

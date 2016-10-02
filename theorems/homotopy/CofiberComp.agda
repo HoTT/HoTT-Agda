@@ -11,12 +11,12 @@ module CofiberComp where
   module H = ⊙WedgeRec f g
   ⊙h = H.⊙f; h = H.f
 
-  module IntoCod = CofiberRec {f = fst f} {C = fst (⊙Cof ⊙h)}
+  module IntoCod = CofiberRec {f = fst f} {C = fst (⊙Cofiber ⊙h)}
     cfbase
     cfcod
     (λ x → cfglue (winl x))
 
-  module Into = CofiberRec {f = fst (⊙cfcod' f ⊙∘ g)} {C = fst (⊙Cof ⊙h)}
+  module Into = CofiberRec {f = fst (⊙cfcod' f ⊙∘ g)} {C = fst (⊙Cofiber ⊙h)}
     cfbase
     IntoCod.f
     (λ y → cfglue (winr y))
@@ -44,7 +44,7 @@ module CofiberComp where
       → Square ((p ∙ ! q ∙ ! r) ∙ r) idp q p
     out-square-lemma idp idp idp = ids
 
-  module Out = CofiberRec {C = fst (⊙Cof (⊙cfcod' f ⊙∘ g))}
+  module Out = CofiberRec {C = fst (⊙Cofiber (⊙cfcod' f ⊙∘ g))}
     cfbase
     (λ z → cfcod (cfcod z))
     out-glue
@@ -109,8 +109,8 @@ module CofiberComp where
          ∙ Out.glue-β (winl x))
         ∙v⊡ lemma _ _)
 
-  eq : fst (⊙Cof (⊙cfcod' f ⊙∘ g)) ≃ fst (⊙Cof ⊙h)
+  eq : fst (⊙Cofiber (⊙cfcod' f ⊙∘ g)) ≃ fst (⊙Cofiber ⊙h)
   eq = equiv into out into-out out-into
 
-  ⊙eq : ⊙Cof (⊙cfcod' f ⊙∘ g) ⊙≃ ⊙Cof ⊙h
+  ⊙eq : ⊙Cofiber (⊙cfcod' f ⊙∘ g) ⊙≃ ⊙Cofiber ⊙h
   ⊙eq = ≃-to-⊙≃ eq idp

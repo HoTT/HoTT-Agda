@@ -24,12 +24,12 @@ module MayerVietorisFunctions (ps : ⊙Span {i} {i} {i}) where
   ⊙reglue : X ⊙∨ Y ⊙→ ⊙Pushout ps
   ⊙reglue = Reglue.⊙f
 
-  module MVDiff = SuspensionRec {C = Suspension (X ∨ Y)}
+  module MVDiff = SuspRec {C = Suspension (X ∨ Y)}
     north
     north
     (λ z → merid (winl (fst f z)) ∙ ! (merid (winr (fst g z))))
 
-  mv-diff : Suspension (fst Z) → Suspension (X ∨ Y)
+  mv-diff : Susp (fst Z) → Suspension (X ∨ Y)
   mv-diff = MVDiff.f
 
   ⊙mv-diff : ⊙Susp Z ⊙→ ⊙Susp (X ⊙∨ Y)
@@ -84,7 +84,7 @@ module MayerVietorisBase
     out-glue = fst ∘ out-glue-and-square
     out-square = snd ∘ out-glue-and-square
 
-  module Out = SuspensionRec {C = Cofiber reglue}
+  module Out = SuspRec {C = Cofiber reglue}
     cfbase
     cfbase
     out-glue
@@ -106,7 +106,7 @@ module MayerVietorisBase
       ⊡v∙ (∘-ap into cfcod (glue z) ∙ ExtGlue.glue-β z)
 
   into-out : ∀ σ → into (out σ) == σ
-  into-out = Suspension-elim
+  into-out = Susp-elim
     idp
     (merid (snd Z))
     (λ z → ↓-∘=idf-from-square into out (into-out-sq z))
@@ -159,10 +159,10 @@ module MayerVietorisBase
 
   {- equivalence and path -}
 
-  eq : Cofiber reglue ≃ Suspension (fst Z)
+  eq : Cofiber reglue ≃ Susp (fst Z)
   eq = equiv into out into-out out-into
 
-  ⊙eq : ⊙Cof ⊙reglue ⊙≃ ⊙Susp Z
+  ⊙eq : ⊙Cofiber ⊙reglue ⊙≃ ⊙Susp Z
   ⊙eq = ≃-to-⊙≃ eq idp
 
   path = ua eq
@@ -216,10 +216,10 @@ module MayerVietoris (ps : ⊙Span {i} {i} {i}) where
       open ⊙Span ps
       open MayerVietorisFunctions ps public
       field
-        eq : Cofiber reglue ≃ Suspension (fst Z)
-        ⊙eq : ⊙Cof ⊙reglue ⊙≃ ⊙Susp Z
-        path : Cofiber reglue == Suspension (fst Z)
-        ⊙path : ⊙Cof ⊙reglue == ⊙Susp Z
+        eq : Cofiber reglue ≃ Susp (fst Z)
+        ⊙eq : ⊙Cofiber ⊙reglue ⊙≃ ⊙Susp Z
+        path : Cofiber reglue == Susp (fst Z)
+        ⊙path : ⊙Cofiber ⊙reglue == ⊙Susp Z
         cfcod-over : cfcod' reglue == extract-glue
                      [ (λ W → fst (⊙Pushout ps) → fst W) ↓ ⊙path ]
         ext-over : extract-glue == mv-diff

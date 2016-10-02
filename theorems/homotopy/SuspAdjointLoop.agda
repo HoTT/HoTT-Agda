@@ -26,7 +26,7 @@ module Σ⊣Ω {i} where
     η : fst X → Ω (⊙Susp X)
     η x = merid x ∙ ! (merid (snd X))
 
-    module E = SuspensionRec (snd X) (snd X) (idf _)
+    module E = SuspRec (snd X) (snd X) (idf _)
 
     ε : fst (⊙Susp (⊙Ω X)) → fst X
     ε = E.f
@@ -56,7 +56,7 @@ module Σ⊣Ω {i} where
   ε-natural : {X Y : Ptd i} (f : X ⊙→ Y)
     → ⊙ε Y ⊙∘ ⊙Susp-fmap (⊙Ω-fmap f) == f ⊙∘ ⊙ε X
   ε-natural (f , idp) = ⊙λ=
-    (SuspensionElim.f idp idp
+    (SuspElim.f idp idp
       (λ p → ↓-='-from-square $ vert-degen-square $
         ap-∘ (ε _) (Susp-fmap (ap f)) (merid p)
         ∙ ap (ap (ε _)) (SuspFmap.merid-β (ap f) p)
@@ -67,7 +67,7 @@ module Σ⊣Ω {i} where
 
   εΣ-Ση : (X : Ptd i) → ⊙ε (⊙Susp X) ⊙∘ ⊙Susp-fmap (⊙η X) == ⊙idf _
   εΣ-Ση X = ⊙λ=
-    (SuspensionElim.f
+    (SuspElim.f
       idp
       (merid (snd X))
       (λ x → ↓-='-from-square $

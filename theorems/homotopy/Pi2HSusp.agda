@@ -25,22 +25,22 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (fst X))
     A = fst X
     e = snd X
 
-  P : Suspension A → Type i
+  P : Susp A → Type i
   P x = Trunc 1 (north == x)
 
-  module Codes = SuspensionRec A A (λ a → ua (μ-e-r-equiv a))
+  module Codes = SuspRec A A (λ a → ua (μ-e-r-equiv a))
 
-  Codes : Suspension A → Type i
+  Codes : Susp A → Type i
   Codes = Codes.f
 
-  Codes-level : (x : Suspension A) → has-level 1 (Codes x)
-  Codes-level = Suspension-elim gA gA
+  Codes-level : (x : Susp A) → has-level 1 (Codes x)
+  Codes-level = Susp-elim gA gA
     (λ _ → prop-has-all-paths-↓ has-level-is-prop)
 
-  encode₀ : {x : Suspension A} → (north == x) → Codes x
+  encode₀ : {x : Susp A} → (north == x) → Codes x
   encode₀ α = transport Codes α e
 
-  encode : {x : Suspension A} → P x → Codes x
+  encode : {x : Susp A} → P x → Codes x
   encode {x} = Trunc-rec (Codes-level x) encode₀
 
   decode' : A → P north
@@ -113,8 +113,8 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (fst X))
                   == ! (∙-unit-r p) ∙ ap (λ w → p ∙ w) (! (!-inv-l p))
               coh idp = idp
 
-  decode : {x : Suspension A} → Codes x → P x
-  decode {x} = Suspension-elim {P = λ x → Codes x → P x}
+  decode : {x : Susp A} → Codes x → P x
+  decode {x} = Susp-elim {P = λ x → Codes x → P x}
                  decode'
                  (λ a → [ merid a ])
                  (λ a → ↓-→-from-transp (λ= $ STS a))
@@ -127,7 +127,7 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (fst X))
         transport P (merid a) [ merid a' ∙ ! (merid e) ]
           =⟨ transport-Trunc (north ==_) (merid a) _ ⟩
         [ transport (north ==_) (merid a) (merid a' ∙ ! (merid e)) ]
-          =⟨ ap [_] (trans-pathfrom {A = Suspension A} (merid a) _) ⟩
+          =⟨ ap [_] (trans-pathfrom {A = Susp A} (merid a) _) ⟩
         [ (merid a' ∙ ! (merid e)) ∙ merid a ]
           =⟨ ap [_] (∙-assoc (merid a') (! (merid e)) (merid a)) ⟩
         [ merid a' ∙ ! (merid e) ∙ merid a ]
@@ -137,7 +137,7 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (fst X))
         [ merid (transport Codes (merid a) a') ] ∎
 
   abstract
-    decode-encode : {x : Suspension A} (tα : P x)
+    decode-encode : {x : Susp A} (tα : P x)
       → decode {x} (encode {x} tα) == tα
     decode-encode {x} = Trunc-elim
       {P = λ tα → decode {x} (encode {x} tα) == tα}
@@ -170,8 +170,8 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (fst X))
       ie = Ω^-isemap 1 h (snd $ ((unTrunc-equiv A gA)⁻¹ ∘e main-lemma-eq))
 
   abstract
-    π₂-Suspension : πS 1 (⊙Susp X) ≃ᴳ πS 0 X
-    π₂-Suspension =
+    π₂-Susp : πS 1 (⊙Susp X) ≃ᴳ πS 0 X
+    π₂-Susp =
       πS 1 (⊙Susp X)
         ≃ᴳ⟨ πS-Ω-split-iso 0 (⊙Susp X) ⟩
       πS 0 (⊙Ω (⊙Susp X))

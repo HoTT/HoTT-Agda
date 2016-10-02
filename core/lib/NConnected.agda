@@ -250,11 +250,11 @@ abstract
    what is the best place for this?                    -}
 abstract
   Susp-conn : ∀ {i} {A : Type i} {n : ℕ₋₂} 
-    → is-connected n A → is-connected (S n) (Suspension A)
+    → is-connected n A → is-connected (S n) (Susp A)
   Susp-conn {A = A} {n = n} cA = 
     ([ north ] ,
      Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
-       (Suspension-elim 
+       (Susp-elim
          idp 
          (Trunc-rec (Trunc-level {n = S n} _ _)
                     (λ a → ap [_] (merid a)) 

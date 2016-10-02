@@ -55,7 +55,7 @@ module _ where
       merid* true = merid*-general (merid true) (merid false) loop* true
       merid* false = merid*-general (merid true) (merid false) loop* false
 
-      module SE = SuspensionElim north* south* merid*
+      module SE = SuspElim north* south* merid*
 
     f : Π S¹ P
     f = SE.f

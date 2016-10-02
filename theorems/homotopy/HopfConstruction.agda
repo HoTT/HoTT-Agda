@@ -17,7 +17,7 @@ suspension of [A] with fiber [A] and applying [μ a] when you move along
 [merid a].
 -}
 
-module H = SuspensionRecType A A μ-e-r-equiv
+module H = SuspRecType A A μ-e-r-equiv
 
 {-
 The total space of the previous fibration is the pushout of the following span
@@ -28,7 +28,7 @@ s : Span
 s = span (⊤ × A) (⊤ × A) (A × A)
          (λ cc' → (tt , snd cc')) (λ cc' → (tt , uncurry μ cc'))
 
-lemma : Σ (Suspension A) H.f == Pushout s
+lemma : Σ (Susp A) H.f == Pushout s
 lemma = H.flattening
 
 {-
@@ -59,7 +59,7 @@ x = span= (equiv snd (_,_ tt) (λ b → idp) (λ a → idp))
 lemma2 : (A * A) ≃ (Pushout (Span-flip (*-span A A)))
 lemma2 = Pushout-flip-equiv (*-span A A)
 
-theorem : Σ (Suspension A) H.f == (A * A)
+theorem : Σ (Susp A) H.f == (A * A)
 theorem = lemma ∙ ap Pushout x ∙ ! (ua lemma2)
 
 -- record FibSeq {i j k ℓ} (A : Type i) (B : Type j) (C : Type k) (c : C)
