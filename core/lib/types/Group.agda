@@ -95,13 +95,13 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
   conj : El → El → El
   conj g₁ g₂ = (g₁ ⊙ g₂) ⊙ inv g₁
 
+  abstract
+    conj-ident-r : ∀ g → conj g ident == ident
+    conj-ident-r g = ap (_⊙ inv g) (unit-r _) ∙ inv-r g
   {- NOT USED
   abstract
     conj-unit-l : ∀ g → conj ident g == g
     conj-unit-l g = ap2 _⊙_ (unit-l _) inv-ident ∙ unit-r _
-
-    conj-ident-r : ∀ g → conj g ident == ident
-    conj-ident-r g = ap (_⊙ inv g) (unit-r _) ∙ inv-r g 
 
     conj-comp-l : ∀ g₁ g₂ g₃ → conj (g₁ ⊙ g₂) g₃ == conj g₁ (conj g₂ g₃)
     conj-comp-l g₁ g₂ g₃ =
@@ -126,6 +126,14 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
   exp a (pos (S n)) = comp a (exp a (pos n))
   exp a (negsucc 0) = inv a
   exp a (negsucc (S n)) = comp (inv a) (exp a (negsucc n))
+
+  diff : El → El → El
+  diff g h = g ⊙ inv h
+
+  abstract
+    zero-diff-same : (g h : El) → diff g h == ident → g == h
+    zero-diff-same g h p = inv-is-inj g h $ inv-unique-r g (inv h) p
+
 
 record Group i : Type (lsucc i) where
   constructor group

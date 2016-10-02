@@ -3,6 +3,7 @@
 open import lib.Basics
 open import lib.types.Group
 open import lib.types.Unit
+open import lib.groups.SubgroupProp
 open import lib.groups.Homomorphism
 open import lib.groups.Isomorphism
 open import lib.groups.Lift
@@ -29,11 +30,6 @@ Unit-group = group _ Unit-is-set Unit-group-structure
 contr-iso-0ᴳ : ∀ {i} (G : Group i) → is-contr (Group.El G) → G ≃ᴳ 0ᴳ
 contr-iso-0ᴳ G pA = ≃-to-≃ᴳ (contr-equiv-Unit pA) (λ _ _ → idp)
 
-{-
-contr-is-0ᴳ : ∀ {i} (G : Group i) → is-contr (Group.El G) → G == 0ᴳ
-contr-is-0ᴳ G pA = uaᴳ $ contr-iso-0ᴳ G pA
--}
-
 0ᴳ-hom-out-level : ∀ {i} {G : Group i}
   → is-contr (0ᴳ →ᴳ G)
 0ᴳ-hom-out-level {G = G} =
@@ -42,3 +38,6 @@ contr-is-0ᴳ G pA = uaᴳ $ contr-iso-0ᴳ G pA
 0ᴳ-hom-in-level : ∀ {i} {G : Group i}
   → is-contr (G →ᴳ 0ᴳ)
 0ᴳ-hom-in-level {G = G} = cst-hom , λ φ → group-hom= $ λ= λ _ → idp
+
+0ᴳ-is-trivial : is-trivialᴳ 0ᴳ
+0ᴳ-is-trivial = λ _ → idp

@@ -22,7 +22,7 @@ module _ {i j} {G : Group i} (P : NormalSubgroupProp G j) where
     _⊙_ = G.comp
 
   quotient-group-rel : Rel G.El j
-  quotient-group-rel g₁ g₂ = P.prop (G.comp g₁ (G.inv g₂))
+  quotient-group-rel g₁ g₂ = P.prop (G.diff g₁ g₂)
 
   quotient-group-struct : GroupStructure (SetQuotient quotient-group-rel)
   quotient-group-struct = record {M} where
@@ -154,7 +154,7 @@ module _ {i j k} {G : Group i}
     module P = SubgroupProp P
 
   prop-over-quot : SubgroupProp (QuotientGroup Q) k
-  prop-over-quot = record {M; comp-inv-r = λ {g₁} {g₂} → M.comp-inv-r' g₁ g₂} where
+  prop-over-quot = record {M; diff = λ {g₁} {g₂} → M.diff' g₁ g₂} where
     module M where
       module QG = Group (QuotientGroup Q)
       private
@@ -175,8 +175,8 @@ module _ {i j k} {G : Group i}
                     (P.comp pg₁g₂⁻¹ pg₂))
                   (λ _ → prop-has-all-paths (P.level g₂) _ _)
                   (λ _ → prop-has-all-paths (P.level g₁) _ _)
-            where pg₁g₂⁻¹ : P.prop (G.comp g₁ (G.inv g₂))
-                  pg₁g₂⁻¹ = prop-respects-quot (G.comp g₁ (G.inv g₂)) qg₁g₂⁻¹
+            where pg₁g₂⁻¹ : P.prop (G.diff g₁ g₂)
+                  pg₁g₂⁻¹ = prop-respects-quot (G.diff g₁ g₂) qg₁g₂⁻¹
 
         prop' : Group.El (QuotientGroup Q) → hProp k
         prop' = SetQuot-rec
@@ -195,13 +195,13 @@ module _ {i j k} {G : Group i}
       ident = P.ident
 
       abstract
-        comp-inv-r' : ∀ g₁' g₂' → prop g₁' → prop g₂' → prop (QG.comp g₁' (QG.inv g₂'))
-        comp-inv-r' = SetQuot-elim
-          {P = λ g₁' → ∀ g₂' → prop g₁' → prop g₂' → prop (QG.comp g₁' (QG.inv g₂'))}
-          (λ g₁' → Π-is-set λ g₂' → →-is-set $ →-is-set $ raise-level -1 (level (QG.comp g₁' (QG.inv g₂'))))
-          (λ g₁ → SetQuot-elim (λ g₂' → →-is-set $ →-is-set $ raise-level -1 (level (QG.comp q[ g₁ ] (QG.inv g₂'))))
-            (λ g₂ pg₁ pg₂ → P.comp-inv-r pg₁ pg₂)
-            (λ {_} {g₂} _ → prop-has-all-paths-↓ (→-is-prop $ →-is-prop $ level q[ G.comp g₁ (G.inv g₂) ])))
-          (λ {_} {g₁} _ → prop-has-all-paths-↓ (Π-is-prop λ g₂' → →-is-prop $ →-is-prop $ level (QG.comp q[ g₁ ] (QG.inv g₂'))))
+        diff' : ∀ g₁' g₂' → prop g₁' → prop g₂' → prop (QG.diff g₁' g₂')
+        diff' = SetQuot-elim
+          {P = λ g₁' → ∀ g₂' → prop g₁' → prop g₂' → prop (QG.diff g₁' g₂')}
+          (λ g₁' → Π-is-set λ g₂' → →-is-set $ →-is-set $ raise-level -1 (level (QG.diff g₁' g₂')))
+          (λ g₁ → SetQuot-elim (λ g₂' → →-is-set $ →-is-set $ raise-level -1 (level (QG.diff q[ g₁ ] g₂')))
+            (λ g₂ pg₁ pg₂ → P.diff pg₁ pg₂)
+            (λ {_} {g₂} _ → prop-has-all-paths-↓ (→-is-prop $ →-is-prop $ level q[ G.diff g₁ g₂ ])))
+          (λ {_} {g₁} _ → prop-has-all-paths-↓ (Π-is-prop λ g₂' → →-is-prop $ →-is-prop $ level (QG.diff q[ g₁ ] g₂')))
 
 -}

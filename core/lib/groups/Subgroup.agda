@@ -50,9 +50,11 @@ module _ {i j} {G : Group i} (P : SubgroupProp G j) where
 module Subgroup {i j} {G : Group i} (P : SubgroupProp G j) where
   private
     module G = Group G
-    module P = SubgroupProp P
 
+  module P = SubgroupProp P
   open Group (Subgroup P) public
+
+  prop = P.prop
 
   inject : Subgroup P →ᴳ G
   inject = record {f = fst; pres-comp = λ _ _ → idp}

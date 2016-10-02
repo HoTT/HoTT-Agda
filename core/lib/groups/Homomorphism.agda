@@ -54,21 +54,24 @@ record GroupStructureHom {i j} {GEl : Type i} {HEl : Type j}
         =⟨ ! (H.unit-r (f G.ident)) ⟩
       H.comp (f G.ident) H.ident =∎
 
-    pres-inv : ∀ a → f (G.inv a) == H.inv (f a)
-    pres-inv a =
-      f (G.inv a)
-        =⟨ ! (H.unit-r (f (G.inv a))) ⟩
-      H.comp (f (G.inv a)) H.ident
-        =⟨ ! (H.inv-r (f a))
-           |in-ctx (λ w → H.comp (f (G.inv a)) w) ⟩
-      H.comp (f (G.inv a)) (H.comp (f a) (H.inv (f a)))
-        =⟨ ! (H.assoc (f (G.inv a)) (f a) (H.inv (f a))) ⟩
-      H.comp (H.comp (f (G.inv a)) (f a)) (H.inv (f a))
-        =⟨ ! (pres-comp (G.inv a) a) ∙ ap f (G.inv-l a) ∙ pres-ident
-           |in-ctx (λ w → H.comp w (H.inv (f a))) ⟩
-      H.comp H.ident (H.inv (f a))
-        =⟨ H.unit-l (H.inv (f a)) ⟩
-      H.inv (f a) =∎
+    pres-inv : ∀ g → f (G.inv g) == H.inv (f g)
+    pres-inv g = ! $ H.inv-unique-l _ _ $
+      H.comp (f (G.inv g)) (f g)
+        =⟨ ! (pres-comp (G.inv g) g) ⟩
+      f (G.comp (G.inv g) g)
+        =⟨ ap f (G.inv-l g) ⟩
+      f G.ident
+        =⟨ pres-ident ⟩
+      H.ident
+        =∎
+
+    -- pres-exp TODO
+
+    pres-conj : ∀ g h → f (G.conj g h) == H.conj (f g) (f h)
+    pres-conj g h = pres-comp (G.comp g h) (G.inv g) ∙ ap2 H.comp (pres-comp g h) (pres-inv g)
+
+    pres-diff : ∀ g h → f (G.diff g h) == H.diff (f g) (f h)
+    pres-diff g h = pres-comp g (G.inv h) ∙ ap (H.comp (f g)) (pres-inv h)
 
   ⊙f : (GEl , G.ident) ⊙→ (HEl , H.ident)
   ⊙f = f , pres-ident
@@ -184,9 +187,9 @@ _∘subᴳ_ {G = G} {H} P φ = record {
   prop = P.prop ∘ φ.f;
   level = P.level ∘ φ.f;
   ident = transport! P.prop φ.pres-ident P.ident;
-  comp-inv-r = λ {g₁} {g₂} pφg₁ pφg₂ → transport! P.prop
-    (φ.pres-comp g₁ (G.inv g₂) ∙ ap (H.comp (φ.f g₁)) (φ.pres-inv g₂))
-    (P.comp-inv-r pφg₁ pφg₂)}
+  diff = λ {g₁} {g₂} pφg₁ pφg₂ → transport! P.prop
+    (φ.pres-diff g₁ g₂)
+    (P.diff pφg₁ pφg₂)}
   where module G = Group G
         module H = Group H
         module P = SubgroupProp P
@@ -203,8 +206,7 @@ _∘nsubᴳ_ {G = G} {H} P φ = P.subgrp-prop ∘subᴳ φ , P-φ-is-normal
         abstract
           P-φ-is-normal : is-normal (P.subgrp-prop ∘subᴳ φ)
           P-φ-is-normal g₁ {g₂} pφg₂ = transport! P.prop
-            ( φ.pres-comp (G.comp g₁ g₂) (G.inv g₁)
-            ∙ ap2 H.comp (φ.pres-comp g₁ g₂) (φ.pres-inv g₁))
+            (φ.pres-conj g₁ g₂)
             (P.conj (φ.f g₁) pφg₂)
 
 {- kernels and images -}
@@ -220,45 +222,29 @@ module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
     prop = λ g → φ.f g == H.ident;
     level = λ g → H.El-level _ _;
     ident = φ.pres-ident;
-    comp-inv-r = λ {g₁} {g₂} p₁ p₂
-      → φ.pres-comp g₁ (G.inv g₂)
-      ∙ ap2 H.comp p₁ ( φ.pres-inv g₂
-                      ∙ ap H.inv p₂ ∙ H.inv-ident)
-      ∙ H.unit-l H.ident }
+    diff = λ {g₁} {g₂} p₁ p₂
+      → φ.pres-diff g₁ g₂ ∙ ap2 H.diff p₁ p₂ ∙ H.inv-r H.ident}
 
   ker-is-normal : is-normal ker-propᴳ
   ker-is-normal g₁ {g₂} pg₂ =
-      φ.pres-comp (G.comp g₁ g₂) (G.inv g₁)
-    ∙ ap2 H.comp (φ.pres-comp g₁ g₂ ∙ ap (H.comp (φ.f g₁)) pg₂ ∙ H.unit-r (φ.f g₁))
-                 (φ.pres-inv g₁)
-    ∙ H.inv-r (φ.f g₁)
+    φ.pres-conj g₁ g₂ ∙ ap (H.conj (φ.f g₁)) pg₂ ∙ H.conj-ident-r (φ.f g₁)
 
   im-propᴳ : SubgroupProp H (lmax i j)
   im-propᴳ = record {
     prop = λ h → Trunc -1 (hfiber φ.f h);
     level = λ h → Trunc-level;
     ident = [ G.ident , φ.pres-ident ];
-    comp-inv-r = Trunc-fmap2 (λ {(g₁ , p₁) (g₂ , p₂)
-      → G.comp g₁ (G.inv g₂)
-      , φ.pres-comp g₁ (G.inv g₂)
-      ∙ ap2 H.comp p₁ (φ.pres-inv g₂ ∙ ap H.inv p₂)})}
+    diff = Trunc-fmap2 (λ {(g₁ , p₁) (g₂ , p₂)
+      → G.diff g₁ g₂ , φ.pres-diff g₁ g₂ ∙ ap2 H.diff p₁ p₂})}
 
   has-trivial-kerᴳ : Type (lmax i j)
-  has-trivial-kerᴳ = ker-propᴳ ⊆ᴳ trivial-propᴳ G
+  has-trivial-kerᴳ = is-trivial-propᴳ ker-propᴳ
 
   -- any homomorphism with trivial kernel is injective
   has-trivial-ker-is-injᴳ : has-trivial-kerᴳ → is-injᴳ φ
   has-trivial-ker-is-injᴳ tk g₁ g₂ p =
-    ! (G.inv-inv g₁) ∙ G.inv-unique-r (G.inv g₁) g₂ (tk _ $
-      φ.f (G.comp (G.inv g₁) g₂)
-        =⟨ φ.pres-comp (G.inv g₁) g₂ ⟩
-      H.comp (φ.f (G.inv g₁)) (φ.f g₂)
-        =⟨ φ.pres-inv g₁ |in-ctx (λ w → H.comp w (φ.f g₂)) ⟩
-      H.comp (H.inv (φ.f g₁)) (φ.f g₂)
-        =⟨ p |in-ctx (λ w → H.comp (H.inv w) (φ.f g₂)) ⟩
-      H.comp (H.inv (φ.f g₂)) (φ.f g₂)
-        =⟨ H.inv-l (φ.f g₂) ⟩
-      H.ident =∎)
+    G.zero-diff-same g₁ g₂ $ tk (G.diff g₁ g₂) $
+      φ.pres-diff g₁ g₂ ∙ ap (λ h → H.diff h (φ.f g₂)) p ∙ H.inv-r (φ.f g₂)
 
 
 {- exactness -}

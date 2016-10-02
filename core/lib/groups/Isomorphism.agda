@@ -212,6 +212,13 @@ coeᴳ-β iso = group-hom= $
   ∙ ap coe (El=-β iso)
   ∙ λ= (coe-β (GroupIso.f-equiv iso))
 
+-- triviality
+
+iso-preserves-trivial : ∀ {i j} {G : Group i} {H : Group j}
+  → G ≃ᴳ H → is-trivialᴳ G → is-trivialᴳ H
+iso-preserves-trivial iso G-is-trivial h =
+  ! (GroupIso.f-g iso h) ∙ ap (GroupIso.f iso) (G-is-trivial _) ∙ GroupIso.pres-ident iso
+
 -- a surjective and injective homomorphism is an isomorphism
 module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H)
   (inj : is-injᴳ φ) (surj : is-surjᴳ φ) where

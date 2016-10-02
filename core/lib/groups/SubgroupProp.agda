@@ -17,7 +17,7 @@ record SubgroupProp {i} (G : Group i) j : Type (lmax i (lsucc j)) where
     -- In theory being inhabited implies that the identity is included,
     -- but in practice let's just prove the identity case.
     ident : prop G.ident
-    comp-inv-r : ∀ {g₁ g₂} → prop g₁ → prop g₂ → prop (G.comp g₁ (G.inv g₂))
+    diff : ∀ {g₁ g₂} → prop g₁ → prop g₂ → prop (G.diff g₁ g₂)
 
   sub-El-prop : SubtypeProp G.El j
   sub-El-prop = prop , level
@@ -26,25 +26,15 @@ record SubgroupProp {i} (G : Group i) j : Type (lmax i (lsucc j)) where
   abstract
     {-
       ident : prop G.ident
-      ident = transport prop (G.inv-r (fst inhab)) (comp-inv-r (snd inhab) (snd inhab))
+      ident = transport prop (G.inv-r (fst inhab)) (diff (snd inhab) (snd inhab))
     -}
 
     inv : ∀ {g} → prop g → prop (G.inv g)
-    inv pg = transport prop (G.unit-l _) (comp-inv-r ident pg)
+    inv pg = transport prop (G.unit-l _) (diff ident pg)
 
     comp : ∀ {g₁ g₂} → prop g₁ → prop g₂ → prop (G.comp g₁ g₂)
     comp {g₁} {g₂} pg₁ pg₂ =
-      transport prop (ap (G.comp g₁) (G.inv-inv g₂)) (comp-inv-r pg₁ (inv pg₂))
-
-trivial-propᴳ : ∀ {i} (G : Group i) → SubgroupProp G i
-trivial-propᴳ G = record {
-  prop = λ g → g == G.ident;
-  level = λ g → G.El-level g G.ident;
-  ident = idp;
-  comp-inv-r = λ g₁=id g₂=id
-    → ap2 G.comp g₁=id (ap G.inv g₂=id ∙ G.inv-ident)
-    ∙ G.unit-r G.ident}
-  where module G = Group G
+      transport prop (ap (G.comp g₁) (G.inv-inv g₂)) (diff pg₁ (inv pg₂))
 
 is-fullᴳ : ∀ {i j} {G : Group i} → SubgroupProp G j → Type (lmax i j)
 is-fullᴳ P = ∀ g → SubgroupProp.prop P g
@@ -91,7 +81,7 @@ abstract
     → is-normal P
   abelian-subgroup-is-normal {G = G} P P-comm g₁ {g₂} Pg₂ =
     transport! P.prop (G.assoc g₁ g₂ (G.inv g₁)) $
-      P-comm (G.comp g₂ (G.inv g₁)) g₁ $
+      P-comm (G.diff g₂ g₁) g₁ $
         transport! P.prop
           ( G.assoc g₂ (G.inv g₁) g₁
           ∙ ap (G.comp g₂) (G.inv-l g₁)
@@ -123,3 +113,21 @@ _⊆ᴳ_ : ∀ {i j k} {G : Group i}
 P ⊆ᴳ Q = ∀ g → P.prop g → Q.prop g
   where module P = SubgroupProp P
         module Q = SubgroupProp Q
+
+{- triviality -}
+
+trivial-propᴳ : ∀ {i} (G : Group i) → SubgroupProp G i
+trivial-propᴳ G = record {
+  prop = λ g → g == G.ident;
+  level = λ g → G.El-level g G.ident;
+  ident = idp;
+  diff = λ g₁=id g₂=id
+    → ap2 G.comp g₁=id (ap G.inv g₂=id ∙ G.inv-ident)
+    ∙ G.unit-r G.ident}
+  where module G = Group G
+
+is-trivialᴳ : ∀ {i} (G : Group i) → Type i
+is-trivialᴳ G = is-fullᴳ (trivial-propᴳ G)
+
+is-trivial-propᴳ : ∀ {i j} {G : Group i} → SubgroupProp G j → Type (lmax i j)
+is-trivial-propᴳ {G = G} P = P ⊆ᴳ trivial-propᴳ G
