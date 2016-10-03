@@ -26,12 +26,23 @@ import cohomology.EMModel
 -- import cohomology.Torus -- FIXME
 -- import cohomology.MayerVietorisExact -- FIXME
 
+{- prop * prop is still a prop -}
+import homotopy.PropJoinProp
+
+{- a space with preassigned homotopy groups -}
 import homotopy.SpaceFromGroups
+
+{- pushout 3x3 lemma -}
+{- This takes lots of time and memory to check. You have been warned! -}
+import homotopy.3x3.Commutes
 
 {- covering spaces -}
 import homotopy.CoverClassification
 import homotopy.AnyUniversalCoverIsPathSet
 import homotopy.PathSetIsInital
+
+{- homotopy groups -}
+import homotopy.TorusIsProductCircles
 
 {- cw complexes -}
 import cw.CW

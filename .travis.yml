@@ -25,4 +25,7 @@ script:
 - stack exec agda -- --version
 # 2-stage type-checking to reduce peak memory usage, hopefully
 - stack exec agda -- --library-file=libraries-travis core/HoTT.agda
+# this file is very demanding, so it is checked first
+- stack exec agda -- --library-file=libraries-travis theorems/homotopy/3x3/Commutes.agda
+# checking the rest
 - stack exec agda -- --library-file=libraries-travis theorems/index.agda
