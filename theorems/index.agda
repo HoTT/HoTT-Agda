@@ -34,7 +34,7 @@ import homotopy.SpaceFromGroups
 
 {- pushout 3x3 lemma -}
 {- This takes lots of time and memory to check. You have been warned! -}
-import homotopy.3x3.Commutes
+-- import homotopy.3x3.Commutes -- commented out because this does not run on travis.
 
 {- covering spaces -}
 import homotopy.CoverClassification
