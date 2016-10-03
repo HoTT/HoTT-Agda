@@ -8,21 +8,21 @@ module homotopy.CofiberSequence {i} where
 {- Useful abbreviations -}
 module _ {X Y : Ptd i} (f : X ⊙→ Y) where
 
-  ⊙Cofiber² = ⊙Cof (⊙cfcod' f)
+  ⊙Cofiber² = ⊙Cofiber (⊙cfcod' f)
   ⊙cfcod²' = ⊙cfcod' (⊙cfcod' f)
 
-  ⊙Cofiber³ = ⊙Cof ⊙cfcod²'
+  ⊙Cofiber³ = ⊙Cofiber ⊙cfcod²'
   ⊙cfcod³' = ⊙cfcod' ⊙cfcod²'
 
 module _ {A B : Type i} (f : A → B) where
 
-  Cof² = Cofiber (cfcod' f)
+  Cofiber² = Cofiber (cfcod' f)
   cfcod²' = cfcod' (cfcod' f)
 
-  Cof³ = Cofiber cfcod²'
+  Cofiber³ = Cofiber cfcod²'
   cfcod³' = cfcod' cfcod²'
 
-{- For [f : X → Y], the cofiber space [Cof(cfcod f)] is equivalent to
+{- For [f : X → Y], the cofiber space [Cofiber(cfcod f)] is equivalent to
  - [Susp X]. This is essentially an application of the two pushouts
  - lemma:
  -
@@ -31,20 +31,20 @@ module _ {A B : Type i} (f : A → B) where
  -   |       |                 |
  -   |       |cfcod f          |
  -   v       v                 v
- -   ∙ ––> Cof f ––––––––––> Cof² f
+ -   ∙ ––> Cofiber f ––––––––––> Cofiber² f
  -                cfcod² f
  -
- - The map [cfcod² f : Cof f → Cof² f] becomes [extract-glue : Cof f → ΣX],
- - and the map [cfcod³ f : Cof² f → Cof³ f] becomes [Susp-fmap f : ΣX → ΣY].
+ - The map [cfcod² f : Cofiber f → Cofiber² f] becomes [extract-glue : Cofiber f → ΣX],
+ - and the map [cfcod³ f : Cofiber² f → Cofiber³ f] becomes [Susp-fmap f : ΣX → ΣY].
  -}
 private
-  {- the equivalences between [Cof² f] and [ΣX] (and so [Cof³ f] and [ΣY]) -}
+  {- the equivalences between [Cofiber² f] and [ΣX] (and so [Cofiber³ f] and [ΣY]) -}
   module Equiv {X Y : Ptd i} (f : X ⊙→ Y) where
 
     module Into = CofiberRec {f = cfcod' (fst f)} {C = Susp (fst X)}
       south extract-glue (λ _ → idp)
 
-    into : Cof² (fst f) → Susp (fst X)
+    into : Cofiber² (fst f) → Susp (fst X)
     into = Into.f
 
     ⊙into : ⊙Cofiber² f ⊙→ ⊙Susp X
@@ -54,7 +54,7 @@ private
       (cfcod cfbase) cfbase
       (λ x → ap cfcod (cfglue x) ∙ ! (cfglue (fst f x)))
 
-    out : Susp (fst X) → Cof² (fst f)
+    out : Susp (fst X) → Cofiber² (fst f)
     out = Out.f
 
     into-out : ∀ σ → into (out σ) == σ
@@ -80,7 +80,7 @@ private
       (λ y → ↓-∘=idf-from-square out into $
          ap (ap out) (Into.glue-β y) ∙v⊡ connection)
 
-    eqv : Cof² (fst f) ≃ Susp (fst X)
+    eqv : Cofiber² (fst f) ≃ Susp (fst X)
     eqv = equiv into out into-out out-into
 
     ⊙eqv : ⊙Cofiber² f ⊙≃ ⊙Susp X
@@ -121,15 +121,15 @@ module _ {X Y : Ptd i} (f : X ⊙→ Y) where
             ap (Susp-flip ∘ extract-glue) (cfglue y) ∙' merid y
               =∎))}
 
-  Cof²-equiv-Susp-dom : Cof² (fst f) ≃ Susp (fst X)
-  Cof²-equiv-Susp-dom = Equiv.eqv f
+  Cofiber²-equiv-Susp-dom : Cofiber² (fst f) ≃ Susp (fst X)
+  Cofiber²-equiv-Susp-dom = Equiv.eqv f
 
-  ⊙Cofiber²-equiv-⊙Susp-dom : ⊙Cof² f ⊙≃ ⊙Susp X
+  ⊙Cofiber²-equiv-⊙Susp-dom : ⊙Cofiber² f ⊙≃ ⊙Susp X
   ⊙Cofiber²-equiv-⊙Susp-dom = Equiv.⊙eqv f
 
   iterated-cofiber-seq : PtdMapSequence X (⊙Cofiber³ f)
   iterated-cofiber-seq =
-    X ⊙→⟨ f ⟩ Y ⊙→⟨ ⊙cfcod' f ⟩ ⊙Cofiber f ⊙→⟨ ⊙cfcod²' f ⟩ ⊙Cof² f ⊙→⟨ ⊙cfcod³' f ⟩ ⊙Cof³ f ⊙⊣|
+    X ⊙→⟨ f ⟩ Y ⊙→⟨ ⊙cfcod' f ⟩ ⊙Cofiber f ⊙→⟨ ⊙cfcod²' f ⟩ ⊙Cofiber² f ⊙→⟨ ⊙cfcod³' f ⟩ ⊙Cofiber³ f ⊙⊣|
 
   cofiber-seq : PtdMapSequence X (⊙Susp Y)
   cofiber-seq =
@@ -140,7 +140,7 @@ module _ {X Y : Ptd i} (f : X ⊙→ Y) where
   cofiber-seq-map =
     ⊙idf X                                  ⊙↓⟨ comm-sqr (λ _ → idp) ⟩
     ⊙idf Y                                  ⊙↓⟨ comm-sqr (λ _ → idp) ⟩
-    ⊙idf (⊙Cofiber f)                           ⊙↓⟨ square₁ ⟩
+    ⊙idf (⊙Cofiber f)                       ⊙↓⟨ square₁ ⟩
     Equiv.⊙into f                           ⊙↓⟨ square₂ ⟩
     ⊙Susp-flip Y ⊙∘ Equiv.⊙into (⊙cfcod' f) ⊙↓|
 

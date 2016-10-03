@@ -7,7 +7,7 @@ module homotopy.ConstantToSetExtendsToProp
   (f : A → B) (f-is-const : ∀ a₁ a₂ → f a₁ == f a₂) where
 
   private
-    Skel = SetQuotient {A = A} (λ _ _ → Unit)
+    Skel = SetQuot {A = A} (λ _ _ → Unit)
 
     abstract
       Skel-has-all-paths : has-all-paths Skel

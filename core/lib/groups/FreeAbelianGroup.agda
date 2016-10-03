@@ -28,7 +28,7 @@ data FormalSumRel {A : Type i} : Word A → Word A → Type i where
 
 -- The quotient
 FormalSum : Type i → Type i
-FormalSum A = SetQuotient (FormalSumRel {A})
+FormalSum A = SetQuot (FormalSumRel {A})
 
 module _ {A : Type i} where
 

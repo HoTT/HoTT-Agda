@@ -9,38 +9,38 @@ module lib.types.SetQuotient {i} {A : Type i} {j} where
 
 module _ where
   private
-    data #SetQuotient-aux (R : Rel A j) : Type (lmax i j) where
-      #q[_] : A → #SetQuotient-aux R 
+    data #SetQuot-aux (R : Rel A j) : Type (lmax i j) where
+      #q[_] : A → #SetQuot-aux R 
 
-    data #SetQuotient (R : Rel A j) : Type (lmax i j) where
-      #setquot : #SetQuotient-aux R → (Unit → Unit) → #SetQuotient R
+    data #SetQuot (R : Rel A j) : Type (lmax i j) where
+      #setquot : #SetQuot-aux R → (Unit → Unit) → #SetQuot R
 
-  SetQuotient : (R : Rel A j) → Type (lmax i j)
-  SetQuotient = #SetQuotient
+  SetQuot : (R : Rel A j) → Type (lmax i j)
+  SetQuot = #SetQuot
 
   module _ {R : Rel A j} where
 
-    q[_] : (a : A) → SetQuotient R
+    q[_] : (a : A) → SetQuot R
     q[ a ] = #setquot #q[ a ] _
 
     postulate  -- HIT
       quot-rel : {a₁ a₂ : A} → R a₁ a₂ → q[ a₁ ] == q[ a₂ ]
 
     postulate  -- HIT
-      SetQuot-level : is-set (SetQuotient R)
+      SetQuot-level : is-set (SetQuot R)
 
     SetQuot-is-set = SetQuot-level
 
-    module SetQuotElim {k} {P : SetQuotient R → Type k}
-      (p : (x : SetQuotient R) → is-set (P x)) (q[_]* : (a : A) → P q[ a ])
+    module SetQuotElim {k} {P : SetQuot R → Type k}
+      (p : (x : SetQuot R) → is-set (P x)) (q[_]* : (a : A) → P q[ a ])
       (rel* : ∀ {a₁ a₂} (r : R a₁ a₂) → q[ a₁ ]* == q[ a₂ ]* [ P ↓ quot-rel r ]) where
 
-      f : Π (SetQuotient R) P
+      f : Π (SetQuot R) P
       f = f-aux phantom phantom where
 
         f-aux : Phantom p
           → Phantom {A = ∀ {a₁ a₂} (r : R a₁ a₂) → _} rel*
-          → Π (SetQuotient R) P
+          → Π (SetQuot R) P
         f-aux phantom phantom (#setquot #q[ a ] _) = q[ a ]*
 
       postulate  -- HIT
@@ -54,7 +54,7 @@ module SetQuotRec {R : Rel A j} {k} {B : Type k} (p : is-set B)
   private
     module M = SetQuotElim (λ x → p) q[_]* (λ {a₁ a₂} r → ↓-cst-in (rel* r))
 
-  f : SetQuotient R → B
+  f : SetQuot R → B
   f = M.f
 
 open SetQuotRec public renaming (f to SetQuot-rec)
@@ -68,7 +68,7 @@ module _ {R : Rel A j}
 
   private
     Q : Type (lmax i j)
-    Q = SetQuotient R
+    Q = SetQuot R
 
     R'-over-quot : Q → Q → hProp j
     R'-over-quot = SetQuot-rec (→-is-set $ hProp-is-set j)

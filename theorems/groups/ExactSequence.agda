@@ -1,5 +1,6 @@
 open import HoTT
 -- open import homotopy.FunctionOver
+open import groups.Exactness
 open import groups.HomSequence
 
 module groups.ExactSequence where
@@ -14,80 +15,21 @@ is-exact-seq (_ →⟨ φ ⟩ᴳ _ →⟨ ψ ⟩ᴳ seq) =
 {- equivalences preserve exactness -}
 
 abstract
-  hom-pair-equiv-preserves-exact : ∀ {i₀ i₁ j₀ j₁ l₀ l₁}
-    {G₀ : Group i₀} {G₁ : Group i₁} {H₀ : Group j₀} {H₁ : Group j₁} {K₀ : Group l₀} {K₁ : Group l₁}
-    {φ₀ : G₀ →ᴳ H₀} {ψ₀ : H₀ →ᴳ K₀} {φ₁ : G₁ →ᴳ H₁} {ψ₁ : H₁ →ᴳ K₁}
-    {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁} {ξK : K₀ →ᴳ K₁}
-    → CommSquareᴳ φ₀ φ₁ ξG ξH
-    → CommSquareᴳ ψ₀ ψ₁ ξH ξK
-    → is-equiv (GroupHom.f ξG) → is-equiv (GroupHom.f ξH) → is-equiv (GroupHom.f ξK)
-    → is-exact φ₀ ψ₀
-    → is-exact φ₁ ψ₁
-  hom-pair-equiv-preserves-exact {K₀ = K₀} {K₁} {φ₀ = φ₀} {ψ₀} {φ₁} {ψ₁} {ξG} {ξH} {ξK}
-    (comm-sqrᴳ φ□) (comm-sqrᴳ ψ□) ξG-is-equiv ξH-is-equiv ξK-is-equiv exact₀
-    = record {
-      im-sub-ker = λ h₁ → Trunc-rec (SubgroupProp.level (ker-propᴳ ψ₁) h₁)
-        (λ{(g₁ , φ₁g₁=h₁) →
-          ψ₁.f h₁
-            =⟨ ap ψ₁.f $ ! $ ξH.f-g h₁ ⟩
-          ψ₁.f (ξH.f (ξH.g h₁))
-            =⟨ ! $ ψ□ (ξH.g h₁) ⟩
-          ξK.f (ψ₀.f (ξH.g h₁))
-            =⟨ ap ξK.f $ im-sub-ker exact₀ (ξH.g h₁) [ _,_ (ξG.g g₁) $
-                φ₀.f (ξG.g g₁)
-                  =⟨ ! (ξH.g-f (φ₀.f (ξG.g g₁))) ⟩
-                ξH.g (ξH.f (φ₀.f (ξG.g g₁)))
-                  =⟨ ap ξH.g $ φ□ (ξG.g g₁) ∙ ap φ₁.f (ξG.f-g g₁) ∙ φ₁g₁=h₁ ⟩
-                ξH.g h₁
-                  =∎ ] ⟩
-          ξK.f (Group.ident K₀)
-            =⟨ ξK.pres-ident ⟩
-          Group.ident K₁
-            =∎});
-      ker-sub-im = λ h₁ ψ₁h₁=0 →
-        Trunc-rec (SubgroupProp.level (im-propᴳ φ₁) h₁)
-          (λ{(g₀ , φ₀g₀=ξH⁻¹h₁) → [ _,_ (ξG.f g₀) $
-            φ₁.f (ξG.f g₀)
-              =⟨ ! $ φ□ g₀ ⟩
-            ξH.f (φ₀.f g₀)
-              =⟨ ap ξH.f φ₀g₀=ξH⁻¹h₁ ⟩
-            ξH.f (ξH.g h₁)
-              =⟨ ξH.f-g h₁ ⟩
-            h₁
-              =∎ ]})
-          (ker-sub-im exact₀ (ξH.g h₁) $
-            ψ₀.f (ξH.g h₁)
-              =⟨ ! $ ξK.g-f (ψ₀.f (ξH.g h₁)) ⟩
-            ξK.g (ξK.f (ψ₀.f (ξH.g h₁)))
-              =⟨ ap ξK.g $ ψ□ (ξH.g h₁) ∙ ap ψ₁.f (ξH.f-g h₁) ∙ ψ₁h₁=0 ⟩
-            ξK.g (Group.ident K₁)
-              =⟨ GroupHom.pres-ident ξK.g-hom ⟩
-            Group.ident K₀
-              =∎)}
-    where
-      module φ₀ = GroupHom φ₀
-      module φ₁ = GroupHom φ₁
-      module ψ₀ = GroupHom ψ₀
-      module ψ₁ = GroupHom ψ₁
-      module ξG = GroupIso (ξG , ξG-is-equiv)
-      module ξH = GroupIso (ξH , ξH-is-equiv)
-      module ξK = GroupIso (ξK , ξK-is-equiv)
-
-  hom-seq-equiv-preserves-exact : ∀ {i₀ i₁} {G₀ H₀ : Group i₀} {G₁ H₁ : Group i₁}
+  seq-equiv-preserves-exact : ∀ {i₀ i₁} {G₀ H₀ : Group i₀} {G₁ H₁ : Group i₁}
     {seq₀ : HomSequence G₀ H₀} {seq₁ : HomSequence G₁ H₁}
     {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁}
     → HomSeqEquiv seq₀ seq₁ ξG ξH
     → is-exact-seq seq₀ → is-exact-seq seq₁
-  hom-seq-equiv-preserves-exact ((_ ↓|ᴳ) , _) _ = lift tt
-  hom-seq-equiv-preserves-exact ((_ ↓⟨ _ ⟩ᴳ _ ↓|ᴳ) , _) _ = lift tt
-  hom-seq-equiv-preserves-exact
+  seq-equiv-preserves-exact ((_ ↓|ᴳ) , _) _ = lift tt
+  seq-equiv-preserves-exact ((_ ↓⟨ _ ⟩ᴳ _ ↓|ᴳ) , _) _ = lift tt
+  seq-equiv-preserves-exact
     ( (ξG ↓⟨ φ□ ⟩ᴳ _↓⟨_⟩ᴳ_ ξH {ξK} ψ□ seq-map)
     , (ξG-ise , ξH-ise , seq-map-ise))
     (φ₀-ψ₀-is-exact , ψ₀-seq₀-is-exact-seq) =
-      hom-pair-equiv-preserves-exact
+      equiv-preserves-exact
         φ□ ψ□ ξG-ise ξH-ise (is-seqᴳ-equiv.head seq-map-ise)
         φ₀-ψ₀-is-exact ,
-      hom-seq-equiv-preserves-exact
+      seq-equiv-preserves-exact
         ((ξH ↓⟨ ψ□ ⟩ᴳ seq-map) , (ξH-ise , seq-map-ise))
         ψ₀-seq₀-is-exact-seq
 

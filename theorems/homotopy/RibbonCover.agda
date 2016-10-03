@@ -35,7 +35,7 @@ module homotopy.RibbonCover {i : ULevel} where
         → RibbonRel (el ⊙ loop , p) (el , loop ∙₀ p)
 
     Ribbon : Type (lmax i j)
-    Ribbon = SetQuotient RibbonRel
+    Ribbon = SetQuot RibbonRel
 
   module _ {A∙ : Ptd i} {j} {gs : Gset (fundamental-group A∙) j} {a₂ : fst A∙} where
     private

@@ -198,13 +198,13 @@ _∘subᴳ_ {G = G} {H} P φ = record {
 infix 80 _∘nsubᴳ_
 _∘nsubᴳ_ : ∀ {i j k} {G : Group i} {H : Group j}
   → NormalSubgroupProp H k → (G →ᴳ H) → NormalSubgroupProp G k
-_∘nsubᴳ_ {G = G} {H} P φ = P.subgrp-prop ∘subᴳ φ , P-φ-is-normal
+_∘nsubᴳ_ {G = G} {H} P φ = P.propᴳ ∘subᴳ φ , P-φ-is-normal
   where module G = Group G
         module H = Group H
         module P = NormalSubgroupProp P
         module φ = GroupHom φ
         abstract
-          P-φ-is-normal : is-normal (P.subgrp-prop ∘subᴳ φ)
+          P-φ-is-normal : is-normal (P.propᴳ ∘subᴳ φ)
           P-φ-is-normal g₁ {g₂} pφg₂ = transport! P.prop
             (φ.pres-conj g₁ g₂)
             (P.conj (φ.f g₁) pφg₂)
@@ -225,9 +225,12 @@ module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
     diff = λ {g₁} {g₂} p₁ p₂
       → φ.pres-diff g₁ g₂ ∙ ap2 H.diff p₁ p₂ ∙ H.inv-r H.ident}
 
-  ker-is-normal : is-normal ker-propᴳ
-  ker-is-normal g₁ {g₂} pg₂ =
-    φ.pres-conj g₁ g₂ ∙ ap (H.conj (φ.f g₁)) pg₂ ∙ H.conj-ident-r (φ.f g₁)
+  -- 'n' for 'normal'
+  ker-npropᴳ : NormalSubgroupProp G j
+  ker-npropᴳ = ker-propᴳ ,
+    λ g₁ {g₂} pg₂ → φ.pres-conj g₁ g₂
+                  ∙ ap (H.conj (φ.f g₁)) pg₂
+                  ∙ H.conj-ident-r (φ.f g₁)
 
   im-propᴳ : SubgroupProp H (lmax i j)
   im-propᴳ = record {

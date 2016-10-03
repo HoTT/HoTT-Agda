@@ -20,7 +20,7 @@ module groups.PropQuotUniqueFactorization {i j₁ j₂ k l₁ l₂}
   (P : SubgroupProp G l₁)
   (Q : NormalSubgroupProp G l₂)
   (φ₁ : Subgroup P →ᴳ K) (φ₁-is-surj : is-surjᴳ φ₁)
-  (φ₂ : K →ᴳ QuotientGroup Q) (φ₂-is-inj : is-injᴳ φ₂)
+  (φ₂ : K →ᴳ QuotGroup Q) (φ₂-is-inj : is-injᴳ φ₂)
   (φ-comm : ∀ p → GroupHom.f (φ₂ ∘ᴳ φ₁) p == q[ fst p ])
   where
 
@@ -35,7 +35,7 @@ module groups.PropQuotUniqueFactorization {i j₁ j₂ k l₁ l₂}
   P/Q-prop = quot-of-sub P Q
 
   P/Q : Group (lmax i (lmax l₁ l₂))
-  P/Q = QuotientGroup P/Q-prop
+  P/Q = QuotGroup P/Q-prop
 
   private
     module P/Q = Group P/Q

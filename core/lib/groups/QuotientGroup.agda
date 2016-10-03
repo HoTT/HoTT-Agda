@@ -21,22 +21,22 @@ module _ {i j} {G : Group i} (P : NormalSubgroupProp G j) where
     infix 80 _⊙_
     _⊙_ = G.comp
 
-  quotient-group-rel : Rel G.El j
-  quotient-group-rel g₁ g₂ = P.prop (G.diff g₁ g₂)
+  quot-group-rel : Rel G.El j
+  quot-group-rel g₁ g₂ = P.prop (G.diff g₁ g₂)
 
-  quotient-group-struct : GroupStructure (SetQuotient quotient-group-rel)
-  quotient-group-struct = record {M} where
+  quot-group-struct : GroupStructure (SetQuot quot-group-rel)
+  quot-group-struct = record {M} where
     module M where
-      ident : SetQuotient quotient-group-rel
+      ident : SetQuot quot-group-rel
       ident = q[ G.ident ]
 
-      inv : SetQuotient quotient-group-rel → SetQuotient quotient-group-rel
+      inv : SetQuot quot-group-rel → SetQuot quot-group-rel
       inv = SetQuot-rec SetQuot-level (λ g → q[ G.inv g ])
         (λ {g₁} {g₂} pg₁g₂⁻¹
           → ! $ quot-rel $ transport! (λ g → P.prop (G.inv g₂ ⊙ g))
               (G.inv-inv g₁) $ P.comm g₁ (G.inv g₂) pg₁g₂⁻¹ )
 
-      comp : SetQuotient quotient-group-rel → SetQuotient quotient-group-rel → SetQuotient quotient-group-rel
+      comp : SetQuot quot-group-rel → SetQuot quot-group-rel → SetQuot quot-group-rel
       comp = SetQuot-rec (→-is-set SetQuot-level)
         (λ g₁ → SetQuot-rec SetQuot-level
           (λ g₂ → q[ g₁ ⊙ g₂ ])
@@ -93,8 +93,8 @@ module _ {i j} {G : Group i} (P : NormalSubgroupProp G j) where
         (ap q[_] ∘ G.inv-r)
         (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
 
-  QuotientGroup : Group (lmax i j)
-  QuotientGroup = group _ SetQuot-level quotient-group-struct
+  QuotGroup : Group (lmax i j)
+  QuotGroup = group _ SetQuot-level quot-group-struct
 
 {- helper functions -}
 module _ {i j} {G : Group i} {P : NormalSubgroupProp G j} where
@@ -104,22 +104,22 @@ module _ {i j} {G : Group i} {P : NormalSubgroupProp G j} where
     infix 80 _⊙_
     _⊙_ = G.comp
 
-  q[_]ᴳ : G →ᴳ QuotientGroup P
+  q[_]ᴳ : G →ᴳ QuotGroup P
   q[_]ᴳ = group-hom q[_] λ _ _ → idp
 
-  quot-relᴳ = quot-rel {R = quotient-group-rel P}
+  quot-relᴳ = λ {g₁} {g₂} → quot-rel {R = quot-group-rel P} {a₁ = g₁} {a₂ = g₂}
 
   private
     abstract
-      quotient-group-rel-is-refl : is-refl (quotient-group-rel P)
-      quotient-group-rel-is-refl g = transport! P.prop (G.inv-r g) P.ident
+      quot-group-rel-is-refl : is-refl (quot-group-rel P)
+      quot-group-rel-is-refl g = transport! P.prop (G.inv-r g) P.ident
 
-      quotient-group-rel-is-sym : is-sym (quotient-group-rel P)
-      quotient-group-rel-is-sym {g₁} {g₂} pg₁g₂⁻¹ =
+      quot-group-rel-is-sym : is-sym (quot-group-rel P)
+      quot-group-rel-is-sym {g₁} {g₂} pg₁g₂⁻¹ =
         transport P.prop (G.inv-comp g₁ (G.inv g₂) ∙ ap (_⊙ G.inv g₁) (G.inv-inv g₂)) (P.inv pg₁g₂⁻¹)
 
-      quotient-group-rel-is-trans : is-trans (quotient-group-rel P)
-      quotient-group-rel-is-trans {g₁} {g₂} {g₃} pg₁g₂⁻¹ pg₂g₃⁻¹ =
+      quot-group-rel-is-trans : is-trans (quot-group-rel P)
+      quot-group-rel-is-trans {g₁} {g₂} {g₃} pg₁g₂⁻¹ pg₂g₃⁻¹ =
         transport P.prop
           ( G.assoc g₁ (G.inv g₂) (g₂ ⊙ G.inv g₃)
           ∙ ap (g₁ ⊙_) ( ! (G.assoc (G.inv g₂) g₂ (G.inv g₃))
@@ -128,10 +128,23 @@ module _ {i j} {G : Group i} {P : NormalSubgroupProp G j} where
           (P.comp pg₁g₂⁻¹ pg₂g₃⁻¹)
 
   quot-relᴳ-equiv : {g₁ g₂ : G.El} → P.prop (g₁ ⊙ G.inv g₂) ≃ (q[ g₁ ] == q[ g₂ ])
-  quot-relᴳ-equiv = quot-rel-equiv {R = quotient-group-rel P} (P.level _)
-    quotient-group-rel-is-refl
-    quotient-group-rel-is-sym
-    quotient-group-rel-is-trans
+  quot-relᴳ-equiv = quot-rel-equiv {R = quot-group-rel P} (P.level _)
+    quot-group-rel-is-refl
+    quot-group-rel-is-sym
+    quot-group-rel-is-trans
+
+module QuotGroup {i j} {G : Group i} (P : NormalSubgroupProp G j) where
+  npropᴳ = P
+  module P = NormalSubgroupProp npropᴳ
+  propᴳ = P.propᴳ
+  prop = P.prop
+
+  grp = QuotGroup P
+  open Group grp public
+
+module Coker {i j} {G : Group i} {H : Group j}
+  (H-is-abelian : is-abelian H) (φ : G →ᴳ H)
+  = QuotGroup (sub-abelian-normal H-is-abelian (im-propᴳ φ))
 
 module _ {i j k} {G : Group i}
   (P : SubgroupProp G j) (Q : NormalSubgroupProp G k) where
@@ -142,7 +155,7 @@ module _ {i j k} {G : Group i}
 {- interactions between quotients and subgroups (work in progress) -}
 {- So far not used.
 
--- QuotientGroup rel-over-sub ≃ᴳ Subgroup prop-over-quot
+-- QuotGroup rel-over-sub ≃ᴳ Subgroup prop-over-quot
 
 module _ {i j k} {G : Group i}
   (Q : NormalSubgroupProp G j) (P : SubgroupProp G k)
@@ -153,13 +166,13 @@ module _ {i j k} {G : Group i}
     module Q = NormalSubgroupProp Q
     module P = SubgroupProp P
 
-  prop-over-quot : SubgroupProp (QuotientGroup Q) k
+  prop-over-quot : SubgroupProp (QuotGroup Q) k
   prop-over-quot = record {M; diff = λ {g₁} {g₂} → M.diff' g₁ g₂} where
     module M where
-      module QG = Group (QuotientGroup Q)
+      module QG = Group (QuotGroup Q)
       private
         abstract
-          prop'-rel : ∀ {g₁ g₂} (qg₁g₂⁻¹ : quotient-group-rel Q g₁ g₂)
+          prop'-rel : ∀ {g₁ g₂} (qg₁g₂⁻¹ : quot-group-rel Q g₁ g₂)
             → P.prop g₁ == P.prop g₂
           prop'-rel {g₁} {g₂} qg₁g₂⁻¹ = ua $
             equiv (λ pg₁ → transport P.prop
@@ -178,7 +191,7 @@ module _ {i j k} {G : Group i}
             where pg₁g₂⁻¹ : P.prop (G.diff g₁ g₂)
                   pg₁g₂⁻¹ = prop-respects-quot (G.diff g₁ g₂) qg₁g₂⁻¹
 
-        prop' : Group.El (QuotientGroup Q) → hProp k
+        prop' : Group.El (QuotGroup Q) → hProp k
         prop' = SetQuot-rec
           (hProp-is-set k)
           (λ g → P.prop g , P.level g)

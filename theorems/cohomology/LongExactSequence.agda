@@ -1,8 +1,9 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import groups.HomSequence
 open import groups.ExactSequence
+open import groups.Exactness
+open import groups.HomSequence
 open import homotopy.PtdMapSequence
 open import homotopy.CofiberSequence
 open import cohomology.Theory
@@ -18,11 +19,11 @@ co∂ = C-fmap (succ n) ⊙extract-glue ∘ᴳ GroupIso.g-hom (C-Susp n X)
 
 C-cofiber-seq : HomSequence (C n Y) (C (succ n) X)
 C-cofiber-seq =
-  C n Y                →⟨ C-fmap n f                  ⟩ᴳ
-  C n X                →⟨ co∂                         ⟩ᴳ
-  C (succ n) (⊙Cofiber f)  →⟨ C-fmap (succ n) (⊙cfcod' f) ⟩ᴳ
-  C (succ n) Y         →⟨ C-fmap (succ n) f           ⟩ᴳ
-  C (succ n) X         ⊣|ᴳ
+  C n Y                   →⟨ C-fmap n f                  ⟩ᴳ
+  C n X                   →⟨ co∂                         ⟩ᴳ
+  C (succ n) (⊙Cofiber f) →⟨ C-fmap (succ n) (⊙cfcod' f) ⟩ᴳ
+  C (succ n) Y            →⟨ C-fmap (succ n) f           ⟩ᴳ
+  C (succ n) X            ⊣|ᴳ
 
 private
   C-iterated-cofiber-seq = C-seq (succ n) (iterated-cofiber-seq f)
@@ -36,7 +37,7 @@ private
 
   C-cofiber-seq'-is-exact : is-exact-seq C-cofiber-seq'
   C-cofiber-seq'-is-exact =
-    hom-seq-equiv-preserves-exact
+    seq-equiv-preserves-exact
       (HomSeqEquiv-inverse (C-seq-emap (succ n) (cofiber-seq-equiv f)))
       C-iterated-cofiber-seq-is-exact
 
@@ -59,5 +60,5 @@ private
     (GroupIso.f-is-equiv (C-Susp n Y) , GroupIso.f-is-equiv (C-Susp n X) , idf-is-equiv _ , idf-is-equiv _ , idf-is-equiv _)
 
 C-cofiber-seq-is-exact : is-exact-seq C-cofiber-seq
-C-cofiber-seq-is-exact = hom-seq-equiv-preserves-exact
+C-cofiber-seq-is-exact = seq-equiv-preserves-exact
   C-cofiber-seq'-equiv-C-cofiber-seq C-cofiber-seq'-is-exact

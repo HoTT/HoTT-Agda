@@ -25,7 +25,7 @@ data QuotWordRel {A : Type i} : Word A → Word A → Type i where
 
 -- The quotient
 QuotWord : Type i → Type i
-QuotWord A = SetQuotient (QuotWordRel {A})
+QuotWord A = SetQuot (QuotWordRel {A})
 
 module _ {A : Type i} where
 

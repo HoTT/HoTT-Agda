@@ -41,3 +41,7 @@ contr-iso-0ᴳ G pA = ≃-to-≃ᴳ (contr-equiv-Unit pA) (λ _ _ → idp)
 
 0ᴳ-is-trivial : is-trivialᴳ 0ᴳ
 0ᴳ-is-trivial = λ _ → idp
+
+iso-zero-is-trivial : ∀ {i} {G : Group i}
+  → G ≃ᴳ 0ᴳ → is-trivialᴳ G
+iso-zero-is-trivial G-iso-0 = iso-preserves-trivial (G-iso-0 ⁻¹ᴳ) 0ᴳ-is-trivial

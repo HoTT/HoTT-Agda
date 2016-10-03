@@ -30,31 +30,33 @@ module _ {i j} {G : Group i} (P : SubgroupProp G j) where
 
       abstract
         unit-l : ∀ g → comp ident g == g
-        unit-l (g , _) = Subtype=-out P.sub-El-prop (G.unit-l g)
+        unit-l (g , _) = Subtype=-out P.subEl-prop (G.unit-l g)
 
         unit-r : ∀ g → comp g ident == g
-        unit-r (g , _) = Subtype=-out P.sub-El-prop (G.unit-r g)
+        unit-r (g , _) = Subtype=-out P.subEl-prop (G.unit-r g)
 
         assoc : ∀ g₁ g₂ g₃ → comp (comp g₁ g₂) g₃ == comp g₁ (comp g₂ g₃)
-        assoc (g₁ , _) (g₂ , _) (g₃ , _) = Subtype=-out P.sub-El-prop (G.assoc g₁ g₂ g₃)
+        assoc (g₁ , _) (g₂ , _) (g₃ , _) = Subtype=-out P.subEl-prop (G.assoc g₁ g₂ g₃)
 
         inv-l : ∀ g → comp (inv g) g == ident
-        inv-l (g , _) = Subtype=-out P.sub-El-prop (G.inv-l g)
+        inv-l (g , _) = Subtype=-out P.subEl-prop (G.inv-l g)
 
         inv-r : ∀ g → comp g (inv g) == ident
-        inv-r (g , _) = Subtype=-out P.sub-El-prop (G.inv-r g)
+        inv-r (g , _) = Subtype=-out P.subEl-prop (G.inv-r g)
 
   Subgroup : Group (lmax i j)
-  Subgroup = group _ (Subtype-level P.sub-El-prop G.El-level) subgroup-struct
+  Subgroup = group _ (Subtype-level P.subEl-prop G.El-level) subgroup-struct
 
 module Subgroup {i j} {G : Group i} (P : SubgroupProp G j) where
   private
     module G = Group G
 
-  module P = SubgroupProp P
-  open Group (Subgroup P) public
-
+  propᴳ = P
+  module P = SubgroupProp propᴳ
   prop = P.prop
+  
+  grp = Subgroup P
+  open Group grp public
 
   inject : Subgroup P →ᴳ G
   inject = record {f = fst; pres-comp = λ _ _ → idp}
@@ -64,7 +66,7 @@ module Subgroup {i j} {G : Group i} (P : SubgroupProp G j) where
     → (H →ᴳ Subgroup P)
   inject-lift {H = H} φ P-all = record {
     f = λ g → (φ.f g , P-all g);
-    pres-comp = λ g₁ g₂ → Subtype=-out P.sub-El-prop (φ.pres-comp g₁ g₂)}
+    pres-comp = λ g₁ g₂ → Subtype=-out P.subEl-prop (φ.pres-comp g₁ g₂)}
     where
       module H = Group H
       module φ = GroupHom φ

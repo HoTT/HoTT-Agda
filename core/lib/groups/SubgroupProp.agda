@@ -19,9 +19,9 @@ record SubgroupProp {i} (G : Group i) j : Type (lmax i (lsucc j)) where
     ident : prop G.ident
     diff : ∀ {g₁ g₂} → prop g₁ → prop g₂ → prop (G.diff g₁ g₂)
 
-  sub-El-prop : SubtypeProp G.El j
-  sub-El-prop = prop , level
-  SubEl = Subtype sub-El-prop
+  subEl-prop : SubtypeProp G.El j
+  subEl-prop = prop , level
+  SubEl = Subtype subEl-prop
 
   abstract
     {-
@@ -52,11 +52,11 @@ module NormalSubgroupProp {i j} {G : Group i} (normal-prop : NormalSubgroupProp 
   private
     module G = Group G
 
-  subgrp-prop : SubgroupProp G j
-  subgrp-prop = fst normal-prop
-  open SubgroupProp subgrp-prop public
+  propᴳ : SubgroupProp G j
+  propᴳ = fst normal-prop
+  open SubgroupProp propᴳ public
 
-  conj : is-normal subgrp-prop
+  conj : is-normal propᴳ
   conj = snd normal-prop
 
   abstract
@@ -75,11 +75,11 @@ module NormalSubgroupProp {i j} {G : Group i} (normal-prop : NormalSubgroupProp 
     -}
 
 abstract
-  abelian-subgroup-is-normal : ∀ {i j} {G : Group i} (P : SubgroupProp G j)
+  comm-is-normal : ∀ {i j} {G : Group i} (P : SubgroupProp G j)
     → (∀ g₁ g₂ → SubgroupProp.prop P (Group.comp G g₁ g₂)
                → SubgroupProp.prop P (Group.comp G g₂ g₁))
     → is-normal P
-  abelian-subgroup-is-normal {G = G} P P-comm g₁ {g₂} Pg₂ =
+  comm-is-normal {G = G} P P-comm g₁ {g₂} Pg₂ =
     transport! P.prop (G.assoc g₁ g₂ (G.inv g₁)) $
       P-comm (G.diff g₂ g₁) g₁ $
         transport! P.prop
@@ -90,20 +90,20 @@ abstract
     where module G = Group G
           module P = SubgroupProp P
 
-abelian-subgroup-normal : ∀ {i j} {G : Group i} (P : SubgroupProp G j)
-  → (∀ g₁ g₂ → SubgroupProp.prop P (Group.comp G g₁ g₂) → SubgroupProp.prop P (Group.comp G g₂ g₁))
-  → NormalSubgroupProp G j
-abelian-subgroup-normal P P-comm = P , abelian-subgroup-is-normal P P-comm
-
-abstract
-  sub-abelian-group-is-normal : ∀ {i j} {G : Group i}
+  sub-abelian-is-normal : ∀ {i j} {G : Group i}
     → (G-is-abelian : is-abelian G)
     → (P : SubgroupProp G j)
     → is-normal P
-  sub-abelian-group-is-normal {G = G} G-is-abelian P =
-    abelian-subgroup-is-normal P λ g₁ g₂ Pg₁g₂ → transport P.prop (G.comm g₁ g₂) Pg₁g₂
+  sub-abelian-is-normal {G = G} G-is-abelian P =
+    comm-is-normal P λ g₁ g₂ Pg₁g₂ → transport P.prop (G.comm g₁ g₂) Pg₁g₂
     where module G = AbelianGroup (G , G-is-abelian)
           module P = SubgroupProp P
+
+sub-abelian-normal : ∀ {i j} {G : Group i}
+  → (G-is-abelian : is-abelian G)
+  → SubgroupProp G j
+  → NormalSubgroupProp G j
+sub-abelian-normal G-is-abelian P = P , sub-abelian-is-normal G-is-abelian P 
 
 {- Subgroups of subgroups -}
 
