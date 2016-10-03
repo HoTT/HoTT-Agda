@@ -40,25 +40,28 @@ module SpectrumModel where
         == Ω^2-∙-comm p q ∙ ap (uncurry _∙_) (pair×= β α) ∙ idp
     pt-lemma idp idp = idp
 
-  {- CF, the functorial action of C:
+  {- C-fmap, the functorial action of C:
    - contravariant functor from pointed spaces to abelian groups -}
   module _ (n : ℤ) {X Y : Ptd i} where
 
-    CF-hom : X ⊙→ Y → (C n Y →ᴳ C n X)
-    CF-hom f = Trunc-⊙→Ω-group-fmap-dom f (E (succ n))
+    C-fmap : X ⊙→ Y → (C n Y →ᴳ C n X)
+    C-fmap f = Trunc-⊙→Ω-group-fmap-dom f (E (succ n))
 
-    CF : X ⊙→ Y → ⊙CEl n Y ⊙→ ⊙CEl n X
-    CF F = GroupHom.⊙f (CF-hom F)
+    CEl-fmap : X ⊙→ Y → CEl n Y → CEl n X
+    CEl-fmap F = GroupHom.f (C-fmap F)
 
-  {- CF-hom is a functor from pointed spaces to abelian groups -}
+    ⊙CEl-fmap : X ⊙→ Y → ⊙CEl n Y ⊙→ ⊙CEl n X
+    ⊙CEl-fmap F = GroupHom.⊙f (C-fmap F)
+
+  {- C-fmap is a functor from pointed spaces to abelian groups -}
   module _ (n : ℤ) {X : Ptd i} where
 
-    CF-ident : CF-hom n {X} {X} (⊙idf X) == idhom (C n X)
-    CF-ident = Trunc-⊙→Ω-group-fmap-dom-idf (E (succ n))
+    C-fmap-idf : ∀ x → CEl-fmap n {X} {X} (⊙idf X) x == x
+    C-fmap-idf x = ap (λ h → GroupHom.f h x) (Trunc-⊙→Ω-group-fmap-dom-idf (E (succ n)))
 
-    CF-comp : {Y Z : Ptd i} (g : Y ⊙→ Z) (f : X ⊙→ Y)
-      → CF-hom n (g ⊙∘ f) == CF-hom n f ∘ᴳ CF-hom n g
-    CF-comp g f = Trunc-⊙→Ω-group-fmap-dom-∘ g f (E (succ n))
+    C-fmap-∘ : {Y Z : Ptd i} (g : Y ⊙→ Z) (f : X ⊙→ Y)
+      → ∀ x → CEl-fmap n (g ⊙∘ f) x == CEl-fmap n f (CEl-fmap n g x)
+    C-fmap-∘ g f x = ap (λ h → GroupHom.f h x) (Trunc-⊙→Ω-group-fmap-dom-∘ g f (E (succ n)))
 
   -- Eilenberg-Steenrod Axioms
 
@@ -70,43 +73,45 @@ module SpectrumModel where
                           ∘eᴳ SuspAdjointLoopIso.iso X E₁
 
     -- This can be further simplified
-    C-SuspF' : {E₁ E₀ : Ptd i} (iso : ⊙Ω E₁ ⊙≃ E₀)
-      {X Y : Ptd i} (f : X ⊙→ Y)
-      → fst (C-Susp' iso X) ∘ᴳ Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap f) E₁
-        == Trunc-⊙→Ω-group-fmap-dom f E₀ ∘ᴳ fst (C-Susp' iso Y)
-    C-SuspF' {E₁} {E₀} iso {X} {Y} f = group-hom= $
-        ( GroupHom.f (Trunc-⊙→Ω-group-fmap-codom X (fst iso))
-        ∘ GroupIso.f (SuspAdjointLoopIso.iso X E₁)
-        ∘ GroupHom.f (Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap f) E₁)
-        ) =⟨ SuspAdjointLoopIso.nat-dom f E₁
+    C-Susp-fmap' : {E₁ E₀ : Ptd i} (iso : ⊙Ω E₁ ⊙≃ E₀) {X Y : Ptd i} (f : X ⊙→ Y)
+      → CommSquareᴳ
+          (Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap f) E₁)
+          (Trunc-⊙→Ω-group-fmap-dom f E₀)
+          (fst (C-Susp' iso Y)) (fst (C-Susp' iso X))
+    C-Susp-fmap' {E₁} {E₀} iso {X} {Y} f = comm-sqrᴳ λ x →
+        GroupHom.f (Trunc-⊙→Ω-group-fmap-codom X (fst iso))
+          (GroupIso.f (SuspAdjointLoopIso.iso X E₁)
+            (GroupHom.f (Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap f) E₁) x))
+          =⟨ SuspAdjointLoopIso.nat-dom f E₁
+            |in-ctx (λ h → GroupHom.f h x)
+            |in-ctx GroupHom.f (Trunc-⊙→Ω-group-fmap-codom X (fst iso)) ⟩
+        GroupHom.f (Trunc-⊙→Ω-group-fmap-codom X (fst iso))
+          (GroupHom.f (Trunc-⊙→Ω-group-fmap-dom f (⊙Ω E₁))
+            (GroupIso.f (SuspAdjointLoopIso.iso Y E₁) x))
+          =⟨ ! $ Trunc-⊙→Ω-group-fmap-nat f (fst iso)
             |in-ctx GroupHom.f
-            |in-ctx GroupHom.f (Trunc-⊙→Ω-group-fmap-codom X (fst iso)) ∘_ ⟩
-        ( GroupHom.f (Trunc-⊙→Ω-group-fmap-codom X (fst iso))
-        ∘ GroupHom.f (Trunc-⊙→Ω-group-fmap-dom f (⊙Ω E₁))
-        ∘ GroupIso.f (SuspAdjointLoopIso.iso Y E₁)
-        ) =⟨ ! $ Trunc-⊙→Ω-group-fmap-nat f (fst iso)
-            |in-ctx GroupHom.f
-            |in-ctx _∘ GroupIso.f (SuspAdjointLoopIso.iso Y E₁) ⟩
-        ( GroupHom.f (Trunc-⊙→Ω-group-fmap-dom f E₀)
-        ∘ GroupHom.f (Trunc-⊙→Ω-group-fmap-codom Y (fst iso))
-        ∘ GroupIso.f (SuspAdjointLoopIso.iso Y E₁)
-        ) =∎
+            |in-ctx (λ h → h (GroupIso.f (SuspAdjointLoopIso.iso Y E₁) x)) ⟩
+        GroupHom.f (Trunc-⊙→Ω-group-fmap-dom f E₀)
+          (GroupHom.f (Trunc-⊙→Ω-group-fmap-codom Y (fst iso))
+            (GroupIso.f (SuspAdjointLoopIso.iso Y E₁) x))
+          =∎
 
   C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp X) ≃ᴳ C n X
   C-Susp n X = C-Susp' (spectrum (succ n)) X
 
-  C-SuspF : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
-    → fst (C-Susp n X) ∘ᴳ CF-hom (succ n) (⊙Susp-fmap f)
-      == CF-hom n f ∘ᴳ fst (C-Susp n Y)
-  C-SuspF n f = C-SuspF' (spectrum (succ n)) f
+  C-Susp-fmap : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
+    → CommSquareᴳ
+        (C-fmap (succ n) (⊙Susp-fmap f)) (C-fmap n f)
+        (fst (C-Susp n Y)) (fst (C-Susp n X))
+  C-Susp-fmap n f = C-Susp-fmap' (spectrum (succ n)) f
 
   {- Non-truncated Exactness Axiom -}
   module _ (n : ℤ) {X Y : Ptd i} where
 
     {- precomposing [⊙cfcod' f] and then [f] gives [0] -}
-    exact-itok-lemma : (f : X ⊙→ Y) (g : uCEl n (⊙Cofiber f))
+    im-sub-ker-lemma : (f : X ⊙→ Y) (g : uCEl n (⊙Cofiber f))
       → (g ⊙∘ ⊙cfcod' f) ⊙∘ f == ⊙cst
-    exact-itok-lemma (f , fpt) (g , gpt) = ⊙λ=
+    im-sub-ker-lemma (f , fpt) (g , gpt) = ⊙λ=
       (λ x → ap g (! (cfglue' f x)) ∙ gpt)
       (ap (g ∘ cfcod) fpt
        ∙ ap g (ap cfcod (! fpt) ∙ ! (cfglue (snd X))) ∙ gpt
@@ -122,10 +127,10 @@ module SpectrumModel where
       lemma f g idp idp idp = idp
 
     {- if g ⊙∘ f is constant then g factors as h ⊙∘ ⊙cfcod' f -}
-    exact-ktoi-lemma : (f : X ⊙→ Y) (g : uCEl n Y)
+    ker-sub-im-lemma : (f : X ⊙→ Y) (g : uCEl n Y)
       → g ⊙∘ f == ⊙cst
       → Σ (uCEl n (⊙Cofiber f)) (λ h → h ⊙∘ ⊙cfcod' f == g)
-    exact-ktoi-lemma (f , fpt) (h , hpt) p =
+    ker-sub-im-lemma (f , fpt) (h , hpt) p =
       ((g , ! q ∙ hpt) ,
        pair= idp (! (∙-assoc q (! q) hpt) ∙ ap (_∙ hpt) (!-inv-r q)))
       where
@@ -140,15 +145,15 @@ module SpectrumModel where
 
     abstract
       C-im-sub-ker : (f : X ⊙→ Y)
-        → im-propᴳ (CF-hom n (⊙cfcod' f)) ⊆ᴳ ker-propᴳ (CF-hom n f)
+        → im-propᴳ (C-fmap n (⊙cfcod' f)) ⊆ᴳ ker-propᴳ (C-fmap n f)
       C-im-sub-ker f =
-        im-sub-ker-in (CF-hom n (⊙cfcod' f)) (CF-hom n f) $
+        im-sub-ker-in (C-fmap n (⊙cfcod' f)) (C-fmap n f) $
           Trunc-elim (λ _ → =-preserves-level _ (Trunc-level {n = 0}))
-            (ap [_] ∘ exact-itok-lemma n f)
+            (ap [_] ∘ im-sub-ker-lemma n f)
 
     abstract
       C-ker-sub-im : (f : X ⊙→ Y)
-        → ker-propᴳ (CF-hom n f) ⊆ᴳ im-propᴳ (CF-hom n (⊙cfcod' f))
+        → ker-propᴳ (C-fmap n f) ⊆ᴳ im-propᴳ (C-fmap n (⊙cfcod' f))
       C-ker-sub-im f =
         Trunc-elim
           (λ _ → Π-level (λ _ → raise-level _ Trunc-level))
@@ -156,13 +161,13 @@ module SpectrumModel where
         where
         lemma : (h : uCEl n Y) → h ⊙∘ f == ⊙cst
           → Trunc -1 (Σ (CEl n (⊙Cofiber f))
-                          (λ tk → fst (CF n (⊙cfcod' f)) tk == [ h ]))
+                          (λ tk → fst (⊙CEl-fmap n (⊙cfcod' f)) tk == [ h ]))
         lemma h p = [ [ fst wit ] , ap [_] (snd wit) ]
           where
           wit : Σ (uCEl n (⊙Cofiber f)) (λ k → k ⊙∘ ⊙cfcod' f == h)
-          wit = exact-ktoi-lemma n f h p
+          wit = ker-sub-im-lemma n f h p
 
-    C-exact : (f : X ⊙→ Y) → is-exact (CF-hom n (⊙cfcod' f)) (CF-hom n f)
+    C-exact : (f : X ⊙→ Y) → is-exact (C-fmap n (⊙cfcod' f)) (C-fmap n f)
     C-exact f = record {im-sub-ker = C-im-sub-ker f; ker-sub-im = C-ker-sub-im f}
 
   {- Additivity Axiom -}
@@ -223,7 +228,7 @@ module SpectrumModel where
            ap (Out'.f (λ a → (h , hpt) ⊙∘ ⊙bwin a)) (bwglue a) ∎)
 
     abstract
-      C-additive : is-equiv (GroupHom.f (Πᴳ-fanout (CF-hom n ∘ ⊙bwin {X = X})))
+      C-additive : is-equiv (GroupHom.f (Πᴳ-fanout (C-fmap n ∘ ⊙bwin {X = X})))
       C-additive = transport is-equiv
         (λ= $ Trunc-elim
           (λ _ → =-preserves-level _ $ Π-level $ λ _ → Trunc-level)
@@ -236,12 +241,12 @@ open SpectrumModel
 spectrum-cohomology : CohomologyTheory i
 spectrum-cohomology = record {
   C = C;
-  CF-hom = CF-hom;
-  CF-ident = CF-ident;
-  CF-comp = CF-comp;
+  C-fmap = C-fmap;
+  C-fmap-idf = C-fmap-idf;
+  C-fmap-∘ = C-fmap-∘;
   C-abelian = C-abelian;
   C-Susp = C-Susp;
-  C-SuspF = C-SuspF;
+  C-Susp-fmap = C-Susp-fmap;
   C-exact = C-exact;
   C-additive = C-additive}
 
