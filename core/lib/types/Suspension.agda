@@ -103,7 +103,7 @@ module _ {i} where
 
   Susp-fmap-idf : (A : Type i) → ∀ a → Susp-fmap (idf A) a == a
   Susp-fmap-idf A = Susp-elim idp idp $ λ a →
-    ↓-='-in (ap-idf (merid a) ∙ ! (SuspFmap.merid-β (idf A) a))
+    ↓-='-in' (ap-idf (merid a) ∙ ! (SuspFmap.merid-β (idf A) a))
 
   ⊙Susp-fmap-idf : (X : Ptd i)
     → ⊙Susp-fmap (⊙idf X) == ⊙idf (⊙Susp X)
@@ -122,7 +122,7 @@ module _ {i j} where
 
   Susp-flip-fmap : {A : Type i} {B : Type j} (f : A → B)
     → ∀ σ → Susp-flip (Susp-fmap f σ) == Susp-fmap f (Susp-flip σ)
-  Susp-flip-fmap f = Susp-elim idp idp $ λ y → ↓-='-in $
+  Susp-flip-fmap f = Susp-elim idp idp $ λ y → ↓-='-in' $
     ap-∘ (Susp-fmap f) Susp-flip (merid y)
     ∙ ap (ap (Susp-fmap f)) (SuspFlip.merid-β y)
     ∙ ap-! (Susp-fmap f) (merid y)
@@ -138,7 +138,7 @@ module _ {i j k} where
   Susp-fmap-∘ g f = Susp-elim
     idp
     idp
-    (λ a → ↓-='-in $
+    (λ a → ↓-='-in' $
       ap-∘ (Susp-fmap g) (Susp-fmap f) (merid a)
       ∙ ap (ap (Susp-fmap g)) (SuspFmap.merid-β f a)
       ∙ SuspFmap.merid-β g (f a)

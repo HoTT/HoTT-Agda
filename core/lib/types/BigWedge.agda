@@ -95,7 +95,7 @@ module _ {i} (Pick : Lift {j = i} Bool → Ptd i) where
     f-g = Wedge-elim
       (λ _ → idp)
       (λ _ → idp)
-      (↓-∘=idf-in f g $
+      (↓-∘=idf-in' f g $
         ap f (ap g wglue)
           =⟨ ap (ap f) G.glue-β ⟩
         ap f (! (bwglue (lift true)) ∙ bwglue (lift false))

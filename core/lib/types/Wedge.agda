@@ -104,7 +104,7 @@ module ⊙WedgeRec {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   → k ⊙∘ ⊙Wedge-rec g h == ⊙Wedge-rec (k ⊙∘ g) (k ⊙∘ h)
 ⊙Wedge-rec-post∘ k g h = ⊙λ=
   (Wedge-elim (λ _ → idp) (λ _ → idp)
-    (↓-='-in $ ⊙WedgeRec.glue-β (k ⊙∘ g) (k ⊙∘ h)
+    (↓-='-in' $ ⊙WedgeRec.glue-β (k ⊙∘ g) (k ⊙∘ h)
                ∙ lemma (fst k) (snd g) (snd h) (snd k)
                ∙ ! (ap (ap (fst k)) (⊙WedgeRec.glue-β g h))
                ∙ ∘-ap (fst k) (fst (⊙Wedge-rec g h)) wglue))
@@ -119,7 +119,7 @@ module ⊙WedgeRec {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   → ⊙Wedge-rec ⊙winl ⊙winr == ⊙idf (X ⊙∨ Y)
 ⊙Wedge-rec-η = ⊙λ=
   (Wedge-elim (λ _ → idp) (λ _ → idp)
-    (↓-='-in $ ap-idf wglue
+    (↓-='-in' $ ap-idf wglue
                ∙ ! (!-! wglue)
                ∙ ! (⊙WedgeRec.glue-β ⊙winl ⊙winr)))
   idp

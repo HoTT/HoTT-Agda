@@ -43,13 +43,13 @@ module CofSelect (X : Ptd i) (Y : fst X → Ptd i) where
     into-out : ∀ w → Into.f (Out.f w) == w
     into-out = BigWedge-elim
       idp (λ _ _ → idp)
-      (↓-∘=idf-in Into.f Out.f ∘ λ x →
+      (↓-∘=idf-in' Into.f Out.f ∘ λ x →
         ap (ap Into.f) (Out.glue-β x) ∙ Into.glue-β x)
 
     out-into : ∀ c → Out.f (Into.f c) == c
     out-into = Cofiber-elim select
       idp (λ _ → idp)
-      (↓-∘=idf-in Out.f Into.f ∘ λ x →
+      (↓-∘=idf-in' Out.f Into.f ∘ λ x →
         ap (ap Out.f) (Into.glue-β x) ∙ Out.glue-β x)
 
   ⊙path : ⊙Cofiber ⊙select == ⊙BigWedge Y

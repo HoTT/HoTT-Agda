@@ -41,7 +41,7 @@ to-from-g : (c : A∙₂) → (to-from-l (f∙₁ c) , glue c =□ ap to (ap fro
 to-from-g = ToFromG.f
 
 to-from-g' : (c : A∙₂) → to-from-l (f∙₁ c) == to-from-r (f∙₃ c) [ (λ z → to (from z) == z) ↓ glue c ]
-to-from-g' c = ↓-∘=idf-in to from (to-from-g c)
+to-from-g' c = ↓-∘=idf-in' to from (to-from-g c)
 
 to-from : (x : Pushout^2 (transpose d)) → to (from x) == x
 to-from = Pushout-elim to-from-l to-from-r to-from-g'

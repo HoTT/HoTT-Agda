@@ -150,7 +150,7 @@ open E∙₂Red
 
 module E∙₂ = PushoutElim {d = span _ _ _ f₁₂ f₃₂} {P = λ c → i∙₀ (f∙₁ c) == i∙₄ (f∙₃ c)}
   (ap left ∘ glue) (ap right ∘ glue)
-  (λ c → ↓-='-in (coh! c (↓-='-out (apd (glue {d = v-h-span}) (glue c))
+  (λ c → ↓-='-in' (coh! c (↓-='-out (apd (glue {d = v-h-span}) (glue c))
                           ∙□-i/ lhs-i c / rhs-i c /)
                   ∙□-i/ lhs-o c / rhs-o c /))
 
@@ -164,7 +164,7 @@ from : Pushout^2 (transpose d) → Pushout^2 d
 from = From.f
 
 from-glue-glue-β : (c : A₂₂) → ap↓ (ap from) (apd glue (glue c))
-                          == (↓-='-in (coh! c (↓-='-out (apd (glue {d = v-h-span}) (glue c))
+                          == (↓-='-in' (coh! c (↓-='-out (apd (glue {d = v-h-span}) (glue c))
                                               ∙□-i/ lhs-i c / rhs-i c /)
                                        ∙□-i/ lhs-o c / rhs-o c /))
                               ◃/ From.glue-β (left (f₁₂ c)) / ! (From.glue-β (right (f₃₂ c))) /

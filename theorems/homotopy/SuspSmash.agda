@@ -63,7 +63,7 @@ private
   out-into = susp-smash-elim
     idp
     idp
-    (↓-∘=idf-in out into ∘ λ {(x , y) →
+    (↓-∘=idf-in' out into ∘ λ {(x , y) →
       ap (ap out) (Into.merid-β (cfcod (x , y)))
       ∙ lemma₁ out (Out.glue-β (snd X , snd Y))
                    (Out.glue-β (x , snd Y))

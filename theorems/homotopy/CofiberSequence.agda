@@ -59,7 +59,7 @@ private
 
     into-out : ∀ σ → into (out σ) == σ
     into-out = Susp-elim idp idp
-      (λ x → ↓-∘=idf-in into out $
+      (λ x → ↓-∘=idf-in' into out $
         ap (ap into) (Out.merid-β x)
         ∙ ap-∙ into (ap cfcod (cfglue x)) (! (cfglue (fst f x)))
         ∙ ap (λ w → ap into (ap cfcod (cfglue x)) ∙ w)
@@ -105,7 +105,7 @@ module _ {X Y : Ptd i} (f : X ⊙→ Y) where
                 ∙ ap (ap (Susp-fmap (fst f))) (ExtractGlue.glue-β x)
                 ∙ SuspFmap.merid-β (fst f) x)
             ∙ ∙'-unit-l (merid (fst f x))))
-        (λ y → ↓-='-in (
+        (λ y → ↓-='-in' (
             ap (Susp-fmap (fst f) ∘ Equiv.into f) (cfglue y)
               =⟨ ap-∘ (Susp-fmap (fst f)) (Equiv.into f) (cfglue y) ⟩
             ap (Susp-fmap (fst f)) (ap (Equiv.into f) (cfglue y))

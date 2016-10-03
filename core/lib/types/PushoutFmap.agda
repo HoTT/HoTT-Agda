@@ -51,7 +51,7 @@ module _ {i₀ j₀ k₀ i₁ j₁ k₁} {span₀ : Span {i₀} {j₀} {k₀}}
     to-from = Pushout-elim
       (λ a → ap left (hA.g-f a))
       (λ b → ap left (hB.g-f b))
-      (λ c → ↓-app=idf-in $ ! $
+      (λ c → ↓-∘=idf-in' $ ! $
           ap (to ∘ from) (glue c) ∙ ap right (hB.g-f (S₁.g b))
           
           ap to (ap from (glue c)) ∙ ap right (hB.g-f (S₁.g b))

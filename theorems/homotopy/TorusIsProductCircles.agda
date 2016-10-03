@@ -41,7 +41,7 @@ from-c = FromC.f module M2 where
     ap from-c-base loop ∙' loopT1 ∎∎
 
   from-c-loop-loop : loopT1 == loopT1 [ (λ x → from-c-base x == from-c-base x) ↓ loop ]
-  from-c-loop-loop = ↓-='-in (↯ from-c-loop-loop')
+  from-c-loop-loop = ↓-='-in' (↯ from-c-loop-loop')
 
   module FromCLoop = S¹Elim loopT1 from-c-loop-loop
   
@@ -77,12 +77,12 @@ to-from-c = {!!} --S¹-elim to-from-c-base (↓-Π-cst-app-in to-from-c-loop)
     ap (λ y → (base , y)) loop ∎∎
 
   to-from-c-base-loop : idp == idp [ (λ z → to (from-c-base z) == (base , z)) ↓ loop ]
-  to-from-c-base-loop = ↓-='-in (! (↯ to-from-c-base-loop'))
+  to-from-c-base-loop = ↓-='-in' (! (↯ to-from-c-base-loop'))
 
   module ToFromCBase = S¹Elim idp to-from-c-base-loop
 
   -- 1!to-from-c-base-loop : idp == idp [ (λ z → to (from-c-base (fst z)) == z) ↓ (pair×= loop idp) ]
-  -- 1!to-from-c-base-loop = ↓-='-in (! (↯ 1! to-from-c-base-loop'))
+  -- 1!to-from-c-base-loop = ↓-='-in' (! (↯ 1! to-from-c-base-loop'))
 
 --   module 1!ToFromCBase!1 = S¹Elim idp 1!to-from-c-base-loop
 
@@ -104,7 +104,7 @@ to-from-c = {!!} --S¹-elim to-from-c-base (↓-Π-cst-app-in to-from-c-loop)
       ap (λ z → to (from-c z base)) loop ∎∎
 
     to-from-c-loop-base : idp == idp [ (λ x → to (from-c x base) == (x , base)) ↓ loop ]
-    to-from-c-loop-base = ↓-='-in (↯ to-from-c-loop-base2)
+    to-from-c-loop-base = ↓-='-in' (↯ to-from-c-loop-base2)
   
     lemma : ↯ to-from-c-loop-base2 == ↯ to-from-c-loop-base2 [ (λ y → to-from-c-base y ∙ ap (λ x → x , y) loop == ap (λ x → to (from-c x y)) loop ∙' to-from-c-base y) ↓ loop ]
     lemma = ↓-=-in (
@@ -144,7 +144,7 @@ from-to = {!Torus-elim idp from-to-loopT1 from-to-loopT2 {!!}!}
   where
 
   from-to-loopT1 : idp == idp [ (λ z → from (to z) == z) ↓ loopT1 ]
-  from-to-loopT1 = ↓-∘=idf-in from to
+  from-to-loopT1 = ↓-∘=idf-in' from to
     (ap from (ap to loopT1)                =⟨ To.loopT1-β |in-ctx ap from ⟩
     ap from (pair×= loop idp)             =⟨ lemma from loop (idp {a = base}) ⟩
     ap (λ u → u base) (ap from-c loop)    =⟨ FromC.loop-β |in-ctx ap (λ u → u base) ⟩
@@ -158,7 +158,7 @@ from-to = {!Torus-elim idp from-to-loopT1 from-to-loopT2 {!!}!}
 
 
   from-to-loopT2 : idp == idp [ (λ z → from (to z) == z) ↓ loopT2 ]
-  from-to-loopT2 = ↓-∘=idf-in from to
+  from-to-loopT2 = ↓-∘=idf-in' from to
     (ap from (ap to loopT2)                =⟨ To.loopT2-β |in-ctx ap from ⟩
     ap from (pair×= idp loop)             =⟨ lemma' from (idp {a = base}) loop ⟩
     ap from-c-base loop    =⟨ FromCBase.loop-β ⟩

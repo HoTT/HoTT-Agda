@@ -47,7 +47,7 @@ private
 
   projr-subtract : ∀ σ → projr _ _ (subtract σ) == σ
   projr-subtract = Susp-elim idp idp $
-    ↓-∘=idf-in (projr _ _) subtract ∘ λ x →
+    ↓-∘=idf-in' (projr _ _) subtract ∘ λ x →
       ap (ap (projr _ _)) (Subtract.merid-β x)
       ∙ ap-∙ (projr _ _) (ap winl (! (merid x))) (wglue ∙ ap winr (merid x))
       ∙ ((∘-ap (projr _ _) winl (! (merid x)) ∙ ap-cst _ _)

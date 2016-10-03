@@ -31,7 +31,7 @@ to-from-l-g c =
   ap left (glue c) ∎
 
 module ToFromL = PushoutElim {d = span _ _ _ f₁₀ f₃₀} {P = λ a → to (from (left a)) == left a}
-                 (λ a → idp) (λ b → idp) (λ c → ↓-='-in (! (to-from-l-g c)))
+                 (λ a → idp) (λ b → idp) (λ c → ↓-='-in' (! (to-from-l-g c)))
 
 to-from-l : (a : A∙₀) → to (from (left a)) == left a
 to-from-l = ToFromL.f
@@ -47,7 +47,7 @@ to-from-r-g c =
   ap right (glue c) ∎
 
 module ToFromR = PushoutElim {d = span _ _ _ f₁₄ f₃₄} {P = λ b → to (from (right b)) == right b}
-                 (λ a → idp) (λ b → idp) (λ c → ↓-='-in (! (to-from-r-g c)))
+                 (λ a → idp) (λ b → idp) (λ c → ↓-='-in' (! (to-from-r-g c)))
 
 to-from-r : (b : A∙₄) → to (from (right b)) == right b
 to-from-r = ToFromR.f

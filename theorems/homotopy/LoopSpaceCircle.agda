@@ -110,7 +110,7 @@ encode-loop^ (negsucc (S n)) =
 decode : (x : S¹) → (S¹Cover x → base == x)
 decode =
   S¹-elim loop^ (↓-→-in (λ {n} q →
-                 ↓-cst=idf-in
+                 ↓-cst=idf-in'
                    (loop^succ n ∙ ap loop^ (S¹Cover.↓-loop-out q))))
 
 decode-encode : (x : S¹) (p : base == x) → decode x (encode p) == p
@@ -133,7 +133,7 @@ paths-mike (x , t) = paths-mike-c x t where
   paths-mike-c = S¹-elim
     (λ n → pair= (loop^ n) (↓-loop^ n))
     (↓-Π-in (λ {n} {n'} q →
-     ↓-cst=idf-in
+     ↓-cst=idf-in'
        (pair= (loop^ n) (↓-loop^ n) ∙ pair= loop q
                   =⟨ Σ-∙ (↓-loop^ n) q ⟩
         pair= (loop^ n ∙ loop) (↓-loop^ n ∙ᵈ q)
@@ -167,7 +167,7 @@ Wt-is-contr = (cct tt 0 , Wt.elim (base* ∘ snd) (loop* ∘ snd)) where
 
   loop* : (n : ℤ)
     → base* n == base* (succ n) [ (λ x → cct tt 0 == x) ↓ ppt tt n ]
-  loop* n = ↓-cst=idf-in (aux n) where
+  loop* n = ↓-cst=idf-in' (aux n) where
 
     -- This is basically [loop^succ]
     aux : (n : ℤ) → base* n ∙ ppt tt n == base* (succ n)

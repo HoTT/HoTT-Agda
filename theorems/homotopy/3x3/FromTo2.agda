@@ -68,11 +68,11 @@ module M2 (c : A₂₂) where
                                                                       (↓-ap-in _ _ (apd (λ _ → idp) (H₃₁ c)) ∙ᵈ u ∙ᵈ ↓-ap-in _ _  (apd (λ _ → idp) (H₃₃ c))))) ⟩
 
     ↓-='-out (↓-ap-out= (λ b → from (to (right b)) == right b) f₃∙ (glue c) (F₃∙.glue-β c)
-                        (↓-ap-in _ _ (apd (λ _ → idp) (H₃₁ c)) ∙ᵈ ↓-='-in (! (from-to-r-g (f₃₂ c))) ∙ᵈ ↓-ap-in _ _  (apd (λ _ → idp) (H₃₃ c))))
+                        (↓-ap-in _ _ (apd (λ _ → idp) (H₃₁ c)) ∙ᵈ ↓-='-in' (! (from-to-r-g (f₃₂ c))) ∙ᵈ ↓-ap-in _ _  (apd (λ _ → idp) (H₃₃ c))))
 
          =⟨ lemma-a _ f₃∙ (glue c) (F₃∙.glue-β c) _ ⟩
 
-    ↓-='-out (↓-ap-in _ _ (apd (λ x → idp {a = right (left x)}) (H₃₁ c)) ∙ᵈ ↓-='-in (! (from-to-r-g (f₃₂ c))) ∙ᵈ ↓-ap-in _ _  (apd (λ _ → idp) (H₃₃ c)))
+    ↓-='-out (↓-ap-in _ _ (apd (λ x → idp {a = right (left x)}) (H₃₁ c)) ∙ᵈ ↓-='-in' (! (from-to-r-g (f₃₂ c))) ∙ᵈ ↓-ap-in _ _  (apd (λ _ → idp) (H₃₃ c)))
     ∙□-i/ ap-∘ right f₃∙ (glue c) ∙ ap (ap right) (F₃∙.glue-β c)
         / ! (ap (ap (from ∘ i₄∙)) (F₃∙.glue-β c)) ∙ ∘-ap (from ∘ i₄∙) f₃∙ (glue c) /
 
@@ -176,7 +176,7 @@ module M2 (c : A₂₂) where
       =⟨ FromToL.glue-β (f₁₂ c) |in-ctx (λ u → ↓-='-out (↓-ap-in _ _ (apd (λ _ → idp) (H₁₁ c)) ∙ᵈ u ∙ᵈ ↓-ap-in _ _ (apd (λ _ → idp) (H₁₃ c)))
          ∙□-i/ ap-∘ left f₁∙ (glue c) ∙ ap (ap left) (F₁∙.glue-β c) / ! (ap (ap (from ∘ to ∘ left)) (F₁∙.glue-β c)) ∙ ∘-ap (from ∘ to ∘ left) f₁∙ (glue c) /) ⟩
 
-    ↓-='-out (↓-ap-in _ _ (apd (λ _ → idp) (H₁₁ c)) ∙ᵈ ↓-='-in (! (from-to-l-g (f₁₂ c))) ∙ᵈ ↓-ap-in _ _ (apd (λ _ → idp) (H₁₃ c)))
+    ↓-='-out (↓-ap-in _ _ (apd (λ _ → idp) (H₁₁ c)) ∙ᵈ ↓-='-in' (! (from-to-l-g (f₁₂ c))) ∙ᵈ ↓-ap-in _ _ (apd (λ _ → idp) (H₁₃ c)))
     ∙□-i/ ap-∘ left f₁∙ (glue c) ∙ ap (ap left) (F₁∙.glue-β c) / ! (ap (ap (from ∘ to ∘ left)) (F₁∙.glue-β c)) ∙ ∘-ap (from ∘ to ∘ left) f₁∙ (glue c) /
 
       =⟨ lemma-b (glue (f₁₂ c)) (apd (λ _ → idp) (H₁₁ c)) (! (from-to-l-g (f₁₂ c))) (apd (λ _ → idp) (H₁₃ c))
@@ -216,7 +216,7 @@ module M2 (c : A₂₂) where
 
          =⟨ from-glue-glue-β c |in-ctx ↓-='-out ⟩
 
-    ↓-='-out (↓-='-in (E∙₂Red.coh! c (↓-='-out (apd (glue {d = v-h-span}) (glue c))
+    ↓-='-out (↓-='-in' (E∙₂Red.coh! c (↓-='-out (apd (glue {d = v-h-span}) (glue c))
                                       ∙□-i/ E∙₂Red.lhs-i c / E∙₂Red.rhs-i c /)
                        ∙□-i/ E∙₂Red.lhs-o c / E∙₂Red.rhs-o c /)
               ◃/ From.glue-β (left (f₁₂ c)) / ! (From.glue-β (right (f₃₂ c))) /)

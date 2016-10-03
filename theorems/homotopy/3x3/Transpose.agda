@@ -132,7 +132,7 @@ module _ {i} (d : Span^2 {i}) where
 
   result' : {H₁₁' : type-of H₁₁} (eq₁ : H₁₁ == H₁₁') {H₃₃' : type-of H₃₃} (eq₃ : H₃₃ == H₃₃') (x : Pushout^2 (d' H₁₁' H₃₃'))
     → transport Pushout^2 (span^2=-raw idp idp idp idp idp idp idp idp idp idp idp idp idp idp idp idp idp idp idp idp idp (! eq₁) idp idp (! eq₃) :> (d' H₁₁' H₃₃' == d)) x == F.f eq₁ eq₃ x
-  result' idp idp = Pushout-elim (λ a → idp) (λ b → idp) (λ c → ↓-='-in (F.glue-β idp idp c ∙ lemma12 c ∙ ! (ap-idf (glue c))))
+  result' idp idp = Pushout-elim (λ a → idp) (λ b → idp) (λ c → ↓-='-in' (F.glue-β idp idp c ∙ lemma12 c ∙ ! (ap-idf (glue c))))
 
   result : {H₁₁' : type-of H₁₁} (eq₁ : H₁₁' == H₁₁) {H₃₃' : type-of H₃₃} (eq₃ : H₃₃' == H₃₃) (x : Pushout^2 (d' H₁₁' H₃₃'))
     → transport Pushout^2 (span^2=-raw idp idp idp idp idp idp idp idp idp idp idp idp idp idp idp idp idp idp idp idp idp eq₁ idp idp eq₃ :> (d' H₁₁' H₃₃' == d)) x == F.f (! eq₁) (! eq₃) x

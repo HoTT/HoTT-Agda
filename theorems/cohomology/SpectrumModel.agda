@@ -220,7 +220,7 @@ module SpectrumModel where
       out-into-fst (h , hpt) = BigWedge-elim
         (! hpt)
         (λ _ _ → idp)
-        (λ a → ↓-='-in $
+        (λ a → ↓-='-in' $
            ! hpt ∙ ap h (bwglue a)
              =⟨ lemma h (bwglue a) hpt ⟩
            ! (ap h (! (bwglue a)) ∙ hpt)

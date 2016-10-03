@@ -20,7 +20,7 @@ module EM₁HSpace {i} (G : AbelianGroup i) where
     where
     abstract
       loop' : (g' : G.El) → emloop' G.grp g == emloop g [ (λ x → x == x) ↓ emloop g' ]
-      loop' g' = ↓-idf=idf-in $
+      loop' g' = ↓-idf=idf-in' $
         emloop g ∙ emloop g'     =⟨ ! (emloop-comp' G.grp g g') ⟩
         emloop (G.comp g g')     =⟨ ap (emloop' G.grp) (G.comm g g') ⟩
         emloop (G.comp g' g)     =⟨ emloop-comp' G.grp g' g ⟩

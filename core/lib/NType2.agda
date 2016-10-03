@@ -49,7 +49,7 @@ abstract
   is-contr-is-prop : ∀ {i} {A : Type i} → is-prop (is-contr A)
   is-contr-is-prop {A = A} = all-paths-is-prop (λ x y →
     pair= (snd x (fst y))
-          (↓-Π-cst-app-in (λ a → ↓-idf=cst-in (lemma x (fst y) a (snd y a))))) where
+          (↓-Π-cst-app-in (λ a → ↓-idf=cst-in' (lemma x (fst y) a (snd y a))))) where
 
     lemma : (x : is-contr A) (b a : A) (p : b == a)
       → snd x a == snd x b ∙' p

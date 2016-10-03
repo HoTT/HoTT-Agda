@@ -70,11 +70,11 @@ module M2 (c : A₂₂) where
                                                                       (↓-ap-in _ _ (apd (λ _ → idp) (H₁₃ c)) ∙ᵈ u ∙ᵈ ↓-ap-in _ _  (apd (λ _ → idp) (! (H₃₃ c)))))) ⟩
 
     ↓-='-out (↓-ap-out= (λ b → to (from (right b)) == right b) f∙₃ (glue c) (F∙₃.glue-β c)
-                        (↓-ap-in _ _ (apd (λ _ → idp) (H₁₃ c)) ∙ᵈ ↓-='-in (! (to-from-r-g (f₂₃ c))) ∙ᵈ ↓-ap-in _ _  (apd (λ _ → idp) (! (H₃₃ c)))))
+                        (↓-ap-in _ _ (apd (λ _ → idp) (H₁₃ c)) ∙ᵈ ↓-='-in' (! (to-from-r-g (f₂₃ c))) ∙ᵈ ↓-ap-in _ _  (apd (λ _ → idp) (! (H₃₃ c)))))
 
          =⟨ lemma-a _ f∙₃ (glue c) (F∙₃.glue-β c) _ ⟩
 
-    ↓-='-out (↓-ap-in _ _ (apd (λ x → idp {a = right (left x)}) (H₁₃ c)) ∙ᵈ ↓-='-in (! (to-from-r-g (f₂₃ c))) ∙ᵈ ↓-ap-in _ _  (apd (λ _ → idp) (! (H₃₃ c))))
+    ↓-='-out (↓-ap-in _ _ (apd (λ x → idp {a = right (left x)}) (H₁₃ c)) ∙ᵈ ↓-='-in' (! (to-from-r-g (f₂₃ c))) ∙ᵈ ↓-ap-in _ _  (apd (λ _ → idp) (! (H₃₃ c))))
     ∙□-i/ ap-∘ right f∙₃ (glue c) ∙ ap (ap right) (F∙₃.glue-β c)
         / ! (ap (ap (to ∘ i∙₄)) (F∙₃.glue-β c)) ∙ ∘-ap (to ∘ i∙₄) f∙₃ (glue c) /
 
@@ -178,7 +178,7 @@ module M2 (c : A₂₂) where
       =⟨ ToFromL.glue-β (f₂₁ c) |in-ctx (λ u → ↓-='-out (↓-ap-in _ _ (apd (λ _ → idp) (! (H₁₁ c))) ∙ᵈ u ∙ᵈ ↓-ap-in _ _ (apd (λ _ → idp) (H₃₁ c)))
          ∙□-i/ ap-∘ left f∙₁ (glue c) ∙ ap (ap left) (F∙₁.glue-β c) / ! (ap (ap (to ∘ from ∘ left)) (F∙₁.glue-β c)) ∙ ∘-ap (to ∘ from ∘ left) f∙₁ (glue c) /) ⟩
 
-    ↓-='-out (↓-ap-in _ _ (apd (λ _ → idp) (! (H₁₁ c))) ∙ᵈ ↓-='-in (! (to-from-l-g (f₂₁ c))) ∙ᵈ ↓-ap-in _ _ (apd (λ _ → idp) (H₃₁ c)))
+    ↓-='-out (↓-ap-in _ _ (apd (λ _ → idp) (! (H₁₁ c))) ∙ᵈ ↓-='-in' (! (to-from-l-g (f₂₁ c))) ∙ᵈ ↓-ap-in _ _ (apd (λ _ → idp) (H₃₁ c)))
     ∙□-i/ ap-∘ left f∙₁ (glue c) ∙ ap (ap left) (F∙₁.glue-β c) / ! (ap (ap (to ∘ from ∘ left)) (F∙₁.glue-β c)) ∙ ∘-ap (to ∘ from ∘ left) f∙₁ (glue c) /
 
       =⟨ lemma-b (glue (f₂₁ c)) (apd (λ _ → idp) (! (H₁₁ c))) (! (to-from-l-g (f₂₁ c))) (apd (λ _ → idp) (H₃₁ c))
@@ -218,7 +218,7 @@ module M2 (c : A₂₂) where
 
          =⟨ to-glue-glue-β c |in-ctx ↓-='-out ⟩
 
-    ↓-='-out (↓-='-in (E₂∙Red.coh c (↓-='-out (apd (glue {d = h-v-span}) (glue c))
+    ↓-='-out (↓-='-in' (E₂∙Red.coh c (↓-='-out (apd (glue {d = h-v-span}) (glue c))
                                       ∙□-i/ E₂∙Red.lhs-i c / E₂∙Red.rhs-i c /)
                        ∙□-i/ E₂∙Red.lhs-o c / E₂∙Red.rhs-o c /)
               ◃/ To.glue-β (left (f₂₁ c)) / ! (To.glue-β (right (f₂₃ c))) /)

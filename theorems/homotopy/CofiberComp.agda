@@ -55,7 +55,7 @@ module CofiberComp where
   into-out = CofPushoutSection.elim {h = h} (λ _ → unit) (λ _ → idp)
     idp
     (λ _ → idp)
-    (↓-∘=idf-in into out ∘ λ x →
+    (↓-∘=idf-in' into out ∘ λ x →
       ap (ap into) (Out.glue-β (winl x))
       ∙ lemma₁ into
           (Into.glue-β (snd Y))
@@ -68,7 +68,7 @@ module CofiberComp where
                    ∙ IntoCod.glue-β (snd X)))
           (∘-ap into cfcod (cfglue x) ∙ IntoCod.glue-β x)
       ∙ ap (λ w → w ∙ cfglue (winl x)) (lemma₂ cfglue wglue))
-    (↓-∘=idf-in into out ∘ λ y →
+    (↓-∘=idf-in' into out ∘ λ y →
       ap (ap into) (Out.glue-β (winr y))
       ∙ Into.glue-β y)
     where

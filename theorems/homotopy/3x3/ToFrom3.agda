@@ -456,7 +456,7 @@ module M3 (c : A₂₂) where
       assoc α idp idp idp idp idp idp idp idp idp idp idp idp = idp
 
   lemma2-2 =
-    ap↓ (ap to) (↓-='-in (E∙₂Red.coh! c (↓-='-out (apd (glue {d = v-h-span}) (glue c))
+    ap↓ (ap to) (↓-='-in' (E∙₂Red.coh! c (↓-='-out (apd (glue {d = v-h-span}) (glue c))
                                           ∙□-i/ E∙₂Red.lhs-i c / E∙₂Red.rhs-i c /)
                             ∙□-i/ E∙₂Red.lhs-o c / E∙₂Red.rhs-o c /))
 
@@ -464,14 +464,14 @@ module M3 (c : A₂₂) where
                                                   ∙□-i/ E∙₂Red.lhs-i c / E∙₂Red.rhs-i c /)
                                     ∙□-i/ E∙₂Red.lhs-o c / E∙₂Red.rhs-o c /) ⟩
 
-    ↓-='-in ((ap□ to (E∙₂Red.coh! c (↓-='-out (apd (glue {d = v-h-span}) (glue c))
+    ↓-='-in' ((ap□ to (E∙₂Red.coh! c (↓-='-out (apd (glue {d = v-h-span}) (glue c))
                                       ∙□-i/ E∙₂Red.lhs-i c / E∙₂Red.rhs-i c /)
                         ∙□-i/ E∙₂Red.lhs-o c / E∙₂Red.rhs-o c /))
              ∙□-i/ ap-∘ to (i∙₄ ∘ f∙₃) (glue c) / ∘-ap to (i∙₀ ∘ f∙₁) (glue c) /)
 
-         =⟨ lemma2-2' |in-ctx ↓-='-in ⟩
+         =⟨ lemma2-2' |in-ctx ↓-='-in' ⟩
 
-    ↓-='-in (↓-='-out (apd (glue {d = h-v-span}) (glue c))
+    ↓-='-in' (↓-='-out (apd (glue {d = h-v-span}) (glue c))
              ∙□-o/ ∘-ap to left (glue (f₁₂ c)) ∙ I₀∙.glue-β (f₁₂ c) / ! (∘-ap to right (glue (f₃₂ c)) ∙ I₄∙.glue-β (f₃₂ c)) /
              ∙□-i/ ! end-lemma1 / end-lemma3 /) ∎
 
@@ -488,21 +488,21 @@ module M3 (c : A₂₂) where
 
          =⟨ from-glue-glue-β c |in-ctx (ap↓ (ap to)) ⟩
 
-    ap↓ (ap to) ((↓-='-in (E∙₂Red.coh! c (↓-='-out (apd (glue {d = v-h-span}) (glue c))
+    ap↓ (ap to) ((↓-='-in' (E∙₂Red.coh! c (↓-='-out (apd (glue {d = v-h-span}) (glue c))
                                            ∙□-i/ E∙₂Red.lhs-i c / E∙₂Red.rhs-i c /)
                              ∙□-i/ E∙₂Red.lhs-o c / E∙₂Red.rhs-o c /))
                    ◃/ From.glue-β (left (f₁₂ c)) / ! (From.glue-β (right (f₃₂ c))) /)
 
          =⟨ ap↓-◃/ (ap to) _ (From.glue-β (left (f₁₂ c))) _ ⟩
 
-    ap↓ (ap to) (↓-='-in (E∙₂Red.coh! c (↓-='-out (apd (glue {d = v-h-span}) (glue c))
+    ap↓ (ap to) (↓-='-in' (E∙₂Red.coh! c (↓-='-out (apd (glue {d = v-h-span}) (glue c))
                                           ∙□-i/ E∙₂Red.lhs-i c / E∙₂Red.rhs-i c /)
                             ∙□-i/ E∙₂Red.lhs-o c / E∙₂Red.rhs-o c /))
     ◃/ ap (ap to) (From.glue-β (left (f₁₂ c))) / ap (ap to) (! (From.glue-β (right (f₃₂ c)))) /
 
          =⟨ lemma2-2 |in-ctx (λ u → u ◃/ ap (ap to) (From.glue-β (left (f₁₂ c))) / ap (ap to) (! (From.glue-β (right (f₃₂ c)))) /) ⟩
 
-    ↓-='-in (↓-='-out (apd (glue {d = h-v-span}) (glue c))
+    ↓-='-in' (↓-='-out (apd (glue {d = h-v-span}) (glue c))
              ∙□-o/ ∘-ap to left (glue (f₁₂ c)) ∙ I₀∙.glue-β (f₁₂ c) / ! (∘-ap to right (glue (f₃₂ c)) ∙ I₄∙.glue-β (f₃₂ c)) /
              ∙□-i/ ! end-lemma1 / end-lemma3 /)
     ◃/ ap (ap to) (From.glue-β (left (f₁₂ c))) / ap (ap to) (! (From.glue-β (right (f₃₂ c)))) / ∎
@@ -512,7 +512,7 @@ module M3 (c : A₂₂) where
 
          =⟨ lemma2-1 |in-ctx ↓-='-out ⟩
 
-    ↓-='-out (↓-='-in (↓-='-out (apd (glue {d = h-v-span}) (glue c))
+    ↓-='-out (↓-='-in' (↓-='-out (apd (glue {d = h-v-span}) (glue c))
                        ∙□-o/ ∘-ap to left (glue (f₁₂ c)) ∙ I₀∙.glue-β (f₁₂ c)
                            / ! (∘-ap to right (glue (f₃₂ c)) ∙ I₄∙.glue-β (f₃₂ c)) /
                        ∙□-i/ ! end-lemma1

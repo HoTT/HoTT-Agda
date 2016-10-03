@@ -9,7 +9,7 @@ module homotopy.CircleHSpace where
 ⊙S¹-hSpace = hSpaceStructure μ μ-e-l μ-e-r μ-coh where
 
   turn-around : (x : S¹) → x == x
-  turn-around = S¹-elim loop (↓-idf=idf-in (∙=∙' loop loop))
+  turn-around = S¹-elim loop (↓-idf=idf-in' (∙=∙' loop loop))
 
   module Mu = S¹Rec (idf S¹) (λ= turn-around)
 

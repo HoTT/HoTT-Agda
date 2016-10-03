@@ -2,7 +2,7 @@
 
 module homotopy.3x3.Common where
 
-open import HoTT public hiding (↓-='-in; ↓-='-out; ↓-=-in; ↓-=-out; ↓-∘=idf-in)
+open import HoTT public hiding (↓-='-in'; ↓-='-out'; ↓-=-in; ↓-=-out; ↓-∘=idf-in')
 
 !-∘-ap-inv : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : B → C) (g : A → B) {a b : A}
   (p : a == b)
@@ -164,10 +164,10 @@ module _ {i} {A : Type i} where
 
 module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
 
-  ↓-='-in : {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+  ↓-='-in' : {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
     → (u , ap g p =□ ap f p , v)
     → (u == v [ (λ x → f x == g x) ↓ p ])
-  ↓-='-in {p = idp} α = ,idp=□idp,-out α
+  ↓-='-in' {p = idp} α = ,idp=□idp,-out α
 
   ↓-='-out : {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
     → (u == v [ (λ x → f x == g x) ↓ p ])
@@ -177,7 +177,7 @@ module _ {i j} {A : Type i} {B : Type j} {f g : A → B} where
 ↓-='-β : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
   {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
   (α : (u , ap g p =□ ap f p , v))
-  → ↓-='-out (↓-='-in α) == α
+  → ↓-='-out (↓-='-in' α) == α
 ↓-='-β {p = idp} α = ,idp=□idp,-η α
 
 module _ {i j k} {A : Type i} {B : Type j} (C : Type k) {g h : B → C} (f : A → B) where
@@ -229,10 +229,10 @@ module _ {i j} {A : Type i} {B : Type j} (g : B → A) (f : A → B) where
     → (u == v [ (λ x → x == g (f x)) ↓ p ])
   ↓-idf=∘-in {p = idp} q = ,idp=□idp,-out q
 
-  ↓-∘=idf-in : {x y : A} {p : x == y} {u : g (f x) == x} {v : g (f y) == y}
+  ↓-∘=idf-in' : {x y : A} {p : x == y} {u : g (f x) == x} {v : g (f y) == y}
     → (u , p =□ ap g (ap f p) , v)
     → (u == v [ (λ x → g (f x) == x) ↓ p ])
-  ↓-∘=idf-in {p = idp} q = ,idp=□idp,-out q
+  ↓-∘=idf-in' {p = idp} q = ,idp=□idp,-out q
 
 module _ {i i' j k} {A : Type i} {A' : Type i'} {B : Type j} {C : Type k}
   (f : B → C) (g : A → B) (h : A' → B) where
@@ -275,11 +275,11 @@ module _ {i i' j k} {A : Type i} {A' : Type i'} {B : Type j} {C : Type k} {f : A
     {c : g (f' z) == h (f' z)} {d : g (f' t) == h (f' t)}
     (u : a == b [ (λ x → g (f x) == h (f x)) ↓ p ]) (v : (b , ap h r =□ ap g r , c))
     (w : c == d [ (λ x → g (f' x) == h (f' x)) ↓ q ])
-    → ↓-='-out (↓-ap-in _ f u ∙ᵈ ↓-='-in v ∙ᵈ ↓-ap-in _ f' w) == (↓-='-out u ∙□h (v ∙□h ↓-='-out w))  ∙□-i/ ap-∙∙`∘`∘ h f f' p r q / ! (ap-∙∙`∘`∘ g f f' p r q) /
+    → ↓-='-out (↓-ap-in _ f u ∙ᵈ ↓-='-in' v ∙ᵈ ↓-ap-in _ f' w) == (↓-='-out u ∙□h (v ∙□h ↓-='-out w))  ∙□-i/ ap-∙∙`∘`∘ h f f' p r q / ! (ap-∙∙`∘`∘ g f f' p r q) /
   lemma-b {p = idp} {q = idp} r idp v idp = ch r v  where
 
     ch : ∀ {a b : B} (r : a == b) {p : g a == h a} {q : g b == h b} (v : (p , ap h r =□ ap g r , q))
-         → ↓-='-out (idp ∙ᵈ ↓-='-in v ∙ᵈ idp)
+         → ↓-='-out (idp ∙ᵈ ↓-='-in' v ∙ᵈ idp)
            == (,idp=□idp,-in idp ∙□h (v ∙□h ,idp=□idp,-in idp))
               ∙□-i/ ap-∙ h r idp / ! (ap-∙ g r idp) /
     ch idp v = ch2 (,idp=□idp,-out v) ∙ (,idp=□idp,-η v |in-ctx (λ u → ,idp=□idp,-in idp ∙□h (u ∙□h ,idp=□idp,-in idp)))  where
@@ -423,8 +423,8 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f g : A → B) (h : B �
 
   ap↓-↓-='-in-β : {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
     (α : (u , ap g p =□ ap f p , v))
-    → ap↓ (ap h) {p = p} {u = u} {v = v} (↓-='-in {p = p} α)
-    == ↓-='-in ((ap□ h α) ∙□-i/ (ap-∘ h g p) / (∘-ap h f p) /)
+    → ap↓ (ap h) {p = p} {u = u} {v = v} (↓-='-in' {p = p} α)
+    == ↓-='-in' ((ap□ h α) ∙□-i/ (ap-∘ h g p) / (∘-ap h f p) /)
   ap↓-↓-='-in-β {p = idp} = t  where
 
     t : {x y : B} {u v : x == y} (α : (u , idp =□ idp , v))
@@ -443,7 +443,7 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f g : A → B) (h : B �
 thing : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
         {x y : A} {p : x == y} {u u' : f x == g x} {v v' : f y == g y}
         (α : (u , ap g p =□ ap f p , v)) (r : u' == u) (s : v == v')
-        → ↓-='-out (↓-='-in α ◃/ r / s /) == α ∙□-o/ r / s /
+        → ↓-='-out (↓-='-in' α ◃/ r / s /) == α ∙□-o/ r / s /
 thing α idp idp = ↓-='-β α
 
 ap↓-∘ : ∀ {i j k l} {A : Type i} {B : A → Type j} {C : A → Type k} {D : A → Type l}

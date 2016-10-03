@@ -24,7 +24,7 @@ module _ (A B : Type i) (f : B → A) where
     module Lemma3Fun = PushoutRec (idf _) f (λ _ → idp)
 
   lemma3-eq : (x : Pushout (span A B B f (idf _))) → left (lemma3-fun x) == x
-  lemma3-eq = Pushout-elim (λ _ → idp) glue (λ b → ↓-∘=idf-in left lemma3-fun (idp,=□idp,-in idp ∙□-i/ idp / ! (ap (ap left) (Lemma3Fun.glue-β b)) /))
+  lemma3-eq = Pushout-elim (λ _ → idp) glue (λ b → ↓-∘=idf-in' left lemma3-fun (idp,=□idp,-in idp ∙□-i/ idp / ! (ap (ap left) (Lemma3Fun.glue-β b)) /))
 
   lemma3 : Pushout (span A B B f (idf _)) ≃ A
   lemma3 = equiv lemma3-fun left (λ _ → idp) lemma3-eq
@@ -76,10 +76,10 @@ module _ (X Y Z T : Type i) (f : Z → X) (g : Z → Y) where
       ap-idf,×cst idp = idp
 
       to-from-curr : (t : T) (x : P1) → to (from-curr t x) == (x , t)
-      to-from-curr t = Pushout-elim (λ _ → idp) (λ _ → idp) (λ z → ↓-='-in (ap-idf,×cst (glue z) ∙ ! (To.glue-β (z , t)) ∙ ! (ap (ap to) (FromCurr.glue-β t z)) ∙ ∘-ap to (from-curr t) (glue z)))
+      to-from-curr t = Pushout-elim (λ _ → idp) (λ _ → idp) (λ z → ↓-='-in' (ap-idf,×cst (glue z) ∙ ! (To.glue-β (z , t)) ∙ ! (ap (ap to) (FromCurr.glue-β t z)) ∙ ∘-ap to (from-curr t) (glue z)))
 
     from-to : (u : P2) → from (to u) == u
-    from-to = Pushout-elim (λ _ → idp) (λ _ → idp) (λ c → ↓-∘=idf-in from to (! (ap (ap from) (To.glue-β c) ∙ ap-pair×= from (glue (fst c)) ∙ FromCurr.glue-β (snd c) (fst c))))  where
+    from-to = Pushout-elim (λ _ → idp) (λ _ → idp) (λ c → ↓-∘=idf-in' from to (! (ap (ap from) (To.glue-β c) ∙ ap-pair×= from (glue (fst c)) ∙ FromCurr.glue-β (snd c) (fst c))))  where
 
       ap-pair×= : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A × B → C)
         {a a' : A} (p : a == a') {b : B}
@@ -115,7 +115,7 @@ module _ (X Y T : Type i) where
     to-from (t , x) = to-from-curr t x  where
 
       to-from-curr : (t : T) (x : P1) → to (from-curr t x) == (t , x)
-      to-from-curr t = Pushout-elim (λ _ → idp) (λ _ → idp) (λ c → ↓-='-in (ap-cst,id (λ _ → _) (glue c) ∙ ! (lemma5 c)))  where
+      to-from-curr t = Pushout-elim (λ _ → idp) (λ _ → idp) (λ c → ↓-='-in' (ap-cst,id (λ _ → _) (glue c) ∙ ! (lemma5 c)))  where
 
         lemma5 : (c : X × Y) → ap (to ∘ from-curr t) (glue c) == pair×= idp (glue c)
         lemma5 (x , y) =
@@ -128,7 +128,7 @@ module _ (X Y T : Type i) where
           pair×= idp (glue (x , y)) ∎
 
     from-to : (x : P2) → from (to x) == x
-    from-to = Pushout-elim (λ _ → idp) (λ _ → idp) (λ c → ↓-∘=idf-in from to (! (lemma42 c)))  where
+    from-to = Pushout-elim (λ _ → idp) (λ _ → idp) (λ c → ↓-∘=idf-in' from to (! (lemma42 c)))  where
 
       ap-pair×= : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A × B → C)
         {a : A} {b b' : B} (p : b == b')
@@ -147,8 +147,8 @@ module _ (X Y T : Type i) where
 
 lemma2 : M.v-h-span join-assoc-span^2 == *-span A (B * C)
 lemma2 = span= (lemma3 A (A × C) fst) (ide _) (lemma4' B C A)
-               (Pushout-elim (λ _ → idp) (λ _ → idp) (λ x → ↓-='-in (lemma2-1 x ∙ ! (lemma2-2 x))))
-               (Pushout-elim (λ _ → idp) (λ _ → idp) (λ x → ↓-='-in (lemma2-3 x ∙ ! (M.F₃∙.glue-β join-assoc-span^2 _ ∙ ∙-unit-r (glue _))))) where
+               (Pushout-elim (λ _ → idp) (λ _ → idp) (λ x → ↓-='-in' (lemma2-1 x ∙ ! (lemma2-2 x))))
+               (Pushout-elim (λ _ → idp) (λ _ → idp) (λ x → ↓-='-in' (lemma2-3 x ∙ ! (M.F₃∙.glue-β join-assoc-span^2 _ ∙ ∙-unit-r (glue _))))) where
 
   lemma2-1 : (x : (A × B) × C) → _
   lemma2-1 ((a , b) , c) =
@@ -184,8 +184,8 @@ lemma2 = span= (lemma3 A (A × C) fst) (ide _) (lemma4' B C A)
 
 lemma2' : M.v-h-span (transpose join-assoc-span^2) == *-span (A * B) C
 lemma2' = span= (ide _) (lemma3' C (A × C) snd) (lemma4 A B (A × B) C fst snd)
-          (Pushout-elim (λ _ → idp) (λ _ → idp) (λ c → ↓-='-in (ap-∘ fst (Lemma4.to A B (A × B) C fst snd) (glue c) ∙ ap (ap fst) (Lemma4.To.glue-β A B (A × B) C fst snd c) ∙ fst×=-β (glue (fst c)) idp ∙ ! (∙-unit-r (glue (fst c))) ∙ ! (M.F₁∙.glue-β (transpose join-assoc-span^2) c))))
-          (Pushout-elim (λ _ → idp) (λ _ → idp) (λ u → ↓-='-in (lemma2'-1 u ∙ ! (lemma2'-2 u))))  where
+          (Pushout-elim (λ _ → idp) (λ _ → idp) (λ c → ↓-='-in' (ap-∘ fst (Lemma4.to A B (A × B) C fst snd) (glue c) ∙ ap (ap fst) (Lemma4.To.glue-β A B (A × B) C fst snd c) ∙ fst×=-β (glue (fst c)) idp ∙ ! (∙-unit-r (glue (fst c))) ∙ ! (M.F₁∙.glue-β (transpose join-assoc-span^2) c))))
+          (Pushout-elim (λ _ → idp) (λ _ → idp) (λ u → ↓-='-in' (lemma2'-1 u ∙ ! (lemma2'-2 u))))  where
 
   lemma2'-1 : (u : (A × B) × C) → ap (snd ∘ Lemma4.to A B (A × B) C fst snd) (glue u) == idp
   lemma2'-1 u =

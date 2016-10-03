@@ -79,7 +79,7 @@ private
   flatten-unflatten = Wt.elim
     (λ _ → idp)
     (λ bd → let (b , d) = bd in
-      ↓-∘=idf-in flatten unflatten
+      ↓-∘=idf-in' flatten unflatten
       (ap flatten (ap unflatten (ppt b d))
                  =⟨ Unflatten.pp-β bd |in-ctx ap flatten ⟩
        ap flatten (pair= (pp b) (↓-pp-in idp))
@@ -104,7 +104,7 @@ private
   unflatten-flatten-curried = W.elim
     (λ a x → idp)
     (λ b → ↓-Π-in
-    (λ q → ↓-∘=idf-in unflatten flatten
+    (λ q → ↓-∘=idf-in' unflatten flatten
       (ap unflatten (ap flatten (pair= (pp b) q))
                  =⟨ split-ap2 flatten (pp b) q |in-ctx ap unflatten ⟩
        ap unflatten (↓-app→cst-out (apd flatten-curried (pp b)) q)
