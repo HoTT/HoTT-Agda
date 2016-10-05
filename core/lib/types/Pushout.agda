@@ -47,7 +47,7 @@ module _ {i j k} where
     postulate  -- HIT
       glue-β : (c : Span.C d) → apd f (glue c) == glue* c
 
-open PushoutElim public using () renaming (f to Pushout-elim)
+Pushout-elim = PushoutElim.f
 
 module PushoutRec {i j k} {d : Span {i} {j} {k}} {l} {D : Type l}
   (left* : Span.A d → D) (right* : Span.B d → D)
@@ -61,6 +61,8 @@ module PushoutRec {i j k} {d : Span {i} {j} {k}} {l} {D : Type l}
 
   glue-β : (c : Span.C d) → ap f (glue c) == glue* c
   glue-β c = apd=cst-in {f = f} (M.glue-β c)
+
+Pushout-rec = PushoutRec.f
 
 module PushoutGeneric {i j k} {d : Span {i} {j} {k}} where
 
