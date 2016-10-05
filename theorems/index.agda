@@ -41,9 +41,6 @@ import homotopy.CoverClassification
 import homotopy.AnyUniversalCoverIsPathSet
 import homotopy.PathSetIsInital
 
-{- homotopy groups -}
-import homotopy.TorusIsProductCircles
-
 {- cw complexes -}
 import cw.CW
 import cw.examples.Sphere
