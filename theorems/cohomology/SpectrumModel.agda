@@ -36,8 +36,9 @@ module SpectrumModel where
     where
     pt-lemma : ∀ {i} {A : Type i} {x : A} {p q : idp {a = x} == idp {a = x}}
       (α : p == idp) (β : q == idp)
-      → ap (uncurry _∙_) (pair×= α β) ∙ idp
-        == Ω^2-∙-comm p q ∙ ap (uncurry _∙_) (pair×= β α) ∙ idp
+      →  ⊙∘-pt (fst ⊙Ω-∙) (pair×= α β) idp
+      == ⊙∘-pt (fst ⊙Ω-∙) (pair×= β α) idp
+       [ _== idp ↓ Ω^2-∙-comm p q ]
     pt-lemma idp idp = idp
 
   {- C-fmap, the functorial action of C:
@@ -113,12 +114,13 @@ module SpectrumModel where
       → (g ⊙∘ ⊙cfcod' f) ⊙∘ f == ⊙cst
     im-sub-ker-lemma (f , fpt) (g , gpt) = ⊙λ=
       (λ x → ap g (! (cfglue' f x)) ∙ gpt)
-      (ap (g ∘ cfcod) fpt
-       ∙ ap g (ap cfcod (! fpt) ∙ ! (cfglue (snd X))) ∙ gpt
-         =⟨ lemma cfcod g fpt (! (cfglue (snd X))) gpt ⟩
-       ap g (! (cfglue (snd X))) ∙ gpt
-         =⟨ ! (∙-unit-r _) ⟩
-       (ap g (! (cfglue (snd X))) ∙ gpt) ∙ idp ∎)
+      (↓-idf=cst-in
+        (ap (g ∘ cfcod) fpt
+         ∙ ap g (ap cfcod (! fpt) ∙ ! (cfglue (snd X))) ∙ gpt
+           =⟨ lemma cfcod g fpt (! (cfglue (snd X))) gpt ⟩
+         ap g (! (cfglue (snd X))) ∙ gpt
+           =⟨ ! (∙-unit-r _) ⟩
+         (ap g (! (cfglue (snd X))) ∙ gpt) ∙ idp ∎))
       where
       lemma : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
         {a₁ a₂ : A} {b : B} {c : C} (f : A → B) (g : B → C)

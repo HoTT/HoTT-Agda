@@ -71,7 +71,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (F : X ⊙→ Y) where
     where
     lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
       {x y : A} {z : B} (p : z == f x) (q : x == y)
-      → idp == p ∙ ap f q ∙ ap f (! q) ∙ ! p
+      → idp == ap f q ∙ ap f (! q) ∙ ! p [ _== z ↓ p ]
     lemma f idp idp = idp
 
 module _ {i j} {X : Ptd i} {Y : Ptd j} {F : X ⊙→ Y} where

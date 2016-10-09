@@ -129,9 +129,6 @@ module _ {i} {A : Type i} where
     → u ∙' p == ap f p ∙ v
   ↓-app=idf-out {p = idp} q = q
 
-  {- I'm not sure about the naming, but I think this is actually
-   - more compatible with [↓-app=idf-in].
-   -}
   ↓-cst=idf-in : {a : A} {x y : A} {p : x == y} {u : a == x} {v : a == y}
     → (u ∙' p) == v
     → (u == v [ (λ x → a == x) ↓ p ])
@@ -141,6 +138,16 @@ module _ {i} {A : Type i} where
     → (u ∙ p) == v
     → (u == v [ (λ x → a == x) ↓ p ])
   ↓-cst=idf-in' {p = idp} q = ! (∙-unit-r _) ∙ q
+
+  ↓-idf=cst-in : {a : A} {x y : A} {p : x == y} {u : x == a} {v : y == a}
+    → u == p ∙ v
+    → (u == v [ (λ x → x == a) ↓ p ])
+  ↓-idf=cst-in {p = idp} q = q
+
+  ↓-idf=cst-out : {a : A} {x y : A} {p : x == y} {u : x == a} {v : y == a}
+    → (u == v [ (λ x → x == a) ↓ p ])
+    → u == p ∙ v
+  ↓-idf=cst-out {p = idp} q = q
 
   ↓-idf=cst-in' : {a : A} {x y : A} {p : x == y} {u : x == a} {v : y == a}
     → u == p ∙' v

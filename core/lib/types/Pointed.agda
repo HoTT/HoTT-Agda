@@ -31,10 +31,28 @@ _⊙→_ : ∀ {i j} → Ptd i → Ptd j → Type (lmax i j)
 ⊙cst : ∀ {i j} {X : Ptd i} {Y : Ptd j} → X ⊙→ Y
 ⊙cst {Y = Y} = ((λ x → snd Y) , idp)
 
+-- function extensionality for pointed functions
+⊙λ= : ∀ {i j} {X : Ptd i} {Y : Ptd j} {f g : X ⊙→ Y}
+  (p : ∀ x → fst f x == fst g x) (α : snd f == snd g [ (λ y → y == snd Y) ↓ p (snd X) ])
+  → f == g
+⊙λ= {g = g} p α =
+  pair= (λ= p) (↓-app=cst-in (↓-idf=cst-out α ∙ ap (_∙ snd g) (! (app=-β p _))))
+
+⊙λ=' : ∀ {i j} {X : Ptd i} {Y : Ptd j} {f g : X ⊙→ Y}
+  (p : ∀ x → fst f x == fst g x) (α : snd f == p (snd X) ∙ snd g)
+  → f == g
+⊙λ=' p α = ⊙λ= p (↓-idf=cst-in α)
+
+-- concatenation
+⊙∘-pt : ∀ {i j} {A : Type i} {B : Type j}
+  {a₁ a₂ : A} (f : A → B) {b : B}
+  → a₁ == a₂ → f a₂ == b → f a₁ == b
+⊙∘-pt f p q = ap f p ∙ q
+
 infixr 80 _⊙∘_
 _⊙∘_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   (g : Y ⊙→ Z) (f : X ⊙→ Y) → X ⊙→ Z
-(g , gpt) ⊙∘ (f , fpt) = (g ∘ f) , (ap g fpt ∙ gpt)
+(g , gpt) ⊙∘ (f , fpt) = (g ∘ f) , ⊙∘-pt g fpt gpt
 
 ⊙∘-unit-l : ∀ {i j} {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y)
   → ⊙idf Y ⊙∘ f == f
@@ -44,26 +62,21 @@ _⊙∘_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   → f ⊙∘ ⊙idf X == f
 ⊙∘-unit-r f = idp
 
+⊙∘-assoc-pt : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
+  {a₁ a₂ : A} (f : A → B) {b : B} (g : B → C) {c : C}
+  (p : a₁ == a₂) (q : f a₂ == b) (r : g b == c)
+  → ⊙∘-pt (g ∘ f) p (⊙∘-pt g q r) == ⊙∘-pt g (⊙∘-pt f p q) r
+⊙∘-assoc-pt _ _ idp _ _ = idp
+
 ⊙∘-assoc : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
   (h : Z ⊙→ W) (g : Y ⊙→ Z) (f : X ⊙→ Y)
   → ((h ⊙∘ g) ⊙∘ f) == (h ⊙∘ (g ⊙∘ f))
-⊙∘-assoc (h , hpt) (g , gpt) (f , fpt) = pair= idp (lemma fpt gpt hpt)
-  where
-  lemma : ∀ {x₁ x₂} (fpt : x₁ == x₂) → ∀ gpt → ∀ hpt →
-          ap (h ∘ g) fpt ∙ ap h gpt ∙ hpt == ap h (ap g fpt ∙ gpt) ∙ hpt
-  lemma idp gpt hpt = idp
+⊙∘-assoc (h , hpt) (g , gpt) (f , fpt) = ⊙λ= (λ _ → idp) (⊙∘-assoc-pt g h fpt gpt hpt)
 
 -- [⊙→] preserves hlevel
 ⊙→-level : ∀ {i j} {X : Ptd i} {Y : Ptd j} {n : ℕ₋₂}
   → has-level n (fst Y) → has-level n (X ⊙→ Y)
 ⊙→-level pY = Σ-level (Π-level (λ _ → pY)) (λ _ → =-preserves-level _ pY)
-
--- function extensionality for pointed functions
-⊙λ= : ∀ {i j} {X : Ptd i} {Y : Ptd j} {f g : X ⊙→ Y}
-  (p : ∀ x → fst f x == fst g x) (α : snd f == p (snd X) ∙ snd g)
-  → f == g
-⊙λ= {g = g} p α =
-  pair= (λ= p) (↓-app=cst-in (α ∙ ap (λ w → w ∙ snd g) (! (app=-β p _))))
 
 {-
 Pointed equivalences
@@ -118,7 +131,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
   _⊙⁻¹ = ⊙<– , is-equiv-inverse (snd ⊙e)
 
   ⊙<–-inv-l : ⊙<– ⊙∘ ⊙–> == ⊙idf _
-  ⊙<–-inv-l = ⊙λ= (<–-inv-l e) $
+  ⊙<–-inv-l = ⊙λ= (<–-inv-l e) $ ↓-idf=cst-in $
     ap (<– e) p ∙ ap (<– e) (! p) ∙ <–-inv-l e (snd X)
       =⟨ ! (∙-assoc (ap (<– e) p) (ap (<– e) (! p)) (<–-inv-l e (snd X))) ⟩
     (ap (<– e) p ∙ ap (<– e) (! p)) ∙ <–-inv-l e (snd X)
@@ -129,7 +142,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
     <–-inv-l e (snd X) ∙ idp =∎
 
   ⊙<–-inv-r : ⊙–> ⊙∘ ⊙<– == ⊙idf _
-  ⊙<–-inv-r = ⊙λ= (<–-inv-r e) $
+  ⊙<–-inv-r = ⊙λ= (<–-inv-r e) $ ↓-idf=cst-in $
     ap (–> e) (ap (<– e) (! p) ∙ <–-inv-l e (snd X)) ∙ p
       =⟨ ap-∙ (–> e) (ap (<– e) (! p)) (<–-inv-l e (snd X))
          |in-ctx (λ w → w ∙ p) ⟩

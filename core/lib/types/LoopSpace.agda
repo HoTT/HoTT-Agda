@@ -14,6 +14,8 @@ open import lib.types.Truncation
 
 module lib.types.LoopSpace where
 
+{- loop space -}
+
 module _ {i} where
 
   ⊙Ω : Ptd i → Ptd i
@@ -22,28 +24,18 @@ module _ {i} where
   Ω : Ptd i → Type i
   Ω = fst ∘ ⊙Ω
 
-  ⊙Ω^ : (n : ℕ) → Ptd i → Ptd i
-  ⊙Ω^ O X = X
-  ⊙Ω^ (S n) X = ⊙Ω (⊙Ω^ n X)
+module _ {i} {X : Ptd i} where
 
-  Ω^ : (n : ℕ) → Ptd i → Type i
-  Ω^ n X = fst (⊙Ω^ n X)
+  Ω-! : Ω X → Ω X
+  Ω-! = !
 
-idp^ : ∀ {i} (n : ℕ) {X : Ptd i} → Ω^ n X
-idp^ n {X} = snd (⊙Ω^ n X)
-
-{- for n ≥ 1, we have a group structure on the loop space -}
-module _ {i} (n : ℕ) {X : Ptd i} where
-  Ω^S-! : Ω^ (S n) X → Ω^ (S n) X
-  Ω^S-! = !
-
-  Ω^S-∙ : Ω^ (S n) X → Ω^ (S n) X → Ω^ (S n) X
-  Ω^S-∙ = _∙_
+  Ω-∙ : Ω X → Ω X → Ω X
+  Ω-∙ = _∙_
 
 {- pointed versions of functions on paths -}
 
 ⊙Ω-∙ : ∀ {i} {X : Ptd i} → ⊙Ω X ⊙× ⊙Ω X ⊙→ ⊙Ω X
-⊙Ω-∙ = (uncurry _∙_ , idp)
+⊙Ω-∙ = (uncurry Ω-∙ , idp)
 
 ⊙Ω-fmap : ∀ {i j} {X : Ptd i} {Y : Ptd j}
   → X ⊙→ Y → ⊙Ω X ⊙→ ⊙Ω Y
@@ -103,6 +95,29 @@ module _ {i} (n : ℕ) {X : Ptd i} where
 ⊙Ω-fmap2-diag : ∀ {i j} {X : Ptd i} {Y : Ptd j} (F : X ⊙× X ⊙→ Y)
   → ⊙Ω-fmap2 F ⊙∘ ⊙diag == ⊙Ω-fmap (F ⊙∘ ⊙diag)
 ⊙Ω-fmap2-diag (f , idp) = ⊙λ= (ap2-diag (curry f)) idp
+
+{- iterated loop spaces -}
+
+module _ {i} where
+
+  ⊙Ω^ : (n : ℕ) → Ptd i → Ptd i
+  ⊙Ω^ O X = X
+  ⊙Ω^ (S n) X = ⊙Ω (⊙Ω^ n X)
+
+  Ω^ : (n : ℕ) → Ptd i → Type i
+  Ω^ n X = fst (⊙Ω^ n X)
+
+{- for n ≥ 1, we have a group structure on the loop space -}
+module _ {i} (n : ℕ) {X : Ptd i} where
+
+  Ω^S-! : Ω^ (S n) X → Ω^ (S n) X
+  Ω^S-! = Ω-!
+
+  Ω^S-∙ : Ω^ (S n) X → Ω^ (S n) X → Ω^ (S n) X
+  Ω^S-∙ = Ω-∙
+
+idp^ : ∀ {i} (n : ℕ) {X : Ptd i} → Ω^ n X
+idp^ n {X} = snd (⊙Ω^ n X)
 
 {- [⊙Ω^-fmap] and [⊙Ω^-fmap2] for higher loop spaces -}
 

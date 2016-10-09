@@ -49,8 +49,8 @@ module Σ⊣Ω {i} where
     where
     pt-lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
       {x y : A} (p : x == y) {q : f x == f y} (α : ap f p == q)
-      → !-inv-r q == (! $ ap-∙ f p (! p) ∙ α ∙2 (ap-! f p ∙ ap ! α))
-                     ∙ ap (ap f) (!-inv-r p) ∙ idp
+      → !-inv-r q == ap (ap f) (!-inv-r p) ∙ idp
+        [ _== idp ↓ ! (ap-∙ f p (! p) ∙ α ∙2 (ap-! f p ∙ ap ! α)) ]
     pt-lemma f idp idp = idp
 
   ε-natural : {X Y : Ptd i} (f : X ⊙→ Y)
@@ -92,8 +92,8 @@ module Σ⊣Ω {i} where
     where
     pt-lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
       {x y : A} (p : x == y) {q : f x == f y} (α : ap f p == q)
-      → ap (ap f) (!-inv-r p) ∙ idp
-        == (ap-∙ f p (! p) ∙ (α ∙2 (ap-! f p ∙ ap ! α)) ∙ !-inv-r q) ∙ idp
+      → ap (ap f) (!-inv-r p) ∙ idp == idp
+        [ _== idp ↓ ap-∙ f p (! p) ∙ (α ∙2 (ap-! f p ∙ ap ! α)) ∙ !-inv-r q ]
     pt-lemma f idp idp = idp
 
   adj : CounitUnitAdjoint SuspFunctor LoopFunctor

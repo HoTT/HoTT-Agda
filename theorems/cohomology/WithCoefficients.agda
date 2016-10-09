@@ -12,7 +12,7 @@ module cohomology.WithCoefficients where
   ident = ⊙cst;
   inv = λ F → ((! ∘ fst F) , ap ! (snd F));
   comp = λ F G → ⊙Ω-∙ ⊙∘ ⊙fanout F G;
-  unit-l = λ G → pair= idp (unit-l-lemma (snd G));
+  unit-l = λ G → ⊙λ= (λ _ → idp) (unit-l-lemma (snd G));
   unit-r = λ F → ⊙λ= (∙-unit-r ∘ fst F) (unit-r-lemma (snd F));
   assoc = λ F G H → ⊙λ=
     (λ x → ∙-assoc (fst F x) (fst G x) (fst H x))
@@ -20,29 +20,28 @@ module cohomology.WithCoefficients where
   inv-l = λ F → ⊙λ= (!-inv-l ∘ fst F) (inv-l-lemma (snd F));
   inv-r = λ F → ⊙λ= (!-inv-r ∘ fst F) (inv-r-lemma (snd F))}
   where
-  -- XXX the following lemmas highly depend on the exact implementation of [⊙fanout].
 
   unit-l-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
-    → ap (uncurry _∙_) (pair×= idp α) ∙ idp == α
+    → ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt idp α) idp == α
   unit-l-lemma idp = idp
 
   unit-r-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
-    → ap (uncurry _∙_) (pair×= α idp) ∙ idp == ∙-unit-r p ∙ α
+    → ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt α idp) idp == α [ _== idp ↓ ∙-unit-r p ]
   unit-r-lemma idp = idp
 
   assoc-lemma : ∀ {i} {A : Type i} {x : A} {p q r : x == x}
     (α : p == idp) (β : q == idp) (γ : r == idp)
-    → ap (uncurry _∙_) (pair×= (ap (uncurry _∙_) (pair×= α β) ∙ idp) γ) ∙ idp
-      == ∙-assoc p q r
-         ∙ ap (uncurry _∙_) (pair×= α (ap (uncurry _∙_) (pair×= β γ) ∙ idp)) ∙ idp
+    →  ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt (⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt α β) idp) γ) idp
+    == ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt α (⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt β γ) idp)) idp
+     [ _== idp ↓ ∙-assoc p q r ]
   assoc-lemma idp idp idp = idp
 
   inv-l-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
-    → ap (uncurry _∙_) (pair×= (ap ! α) α) ∙ idp == !-inv-l p ∙ idp
+    → ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt (ap ! α) α) idp == idp [ _== idp ↓ !-inv-l p ]
   inv-l-lemma idp = idp
 
   inv-r-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
-    → ap (uncurry _∙_) (pair×= α (ap ! α)) ∙ idp == !-inv-r p ∙ idp
+    → ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt α (ap ! α)) idp == idp [ _== idp ↓ !-inv-r p ]
   inv-r-lemma idp = idp
 
 Trunc-⊙→Ω-group : ∀ {i j} (X : Ptd i) (Y : Ptd j) → Group (lmax i j)
@@ -95,16 +94,17 @@ Trunc-⊙→Ω-group-fmap-dom-∘ g f W = group-hom= $ λ= $
     (λ G H → ⊙λ= (λ x → Ω-fmap-∙ F ((fst G) x) ((fst H) x))
                  (lemma (snd F) (snd G) (snd H)))
     where
-      lemma : ∀ {ptZ : fst Z} (α : (fst F) (snd Y) == ptZ)
-        {gpt hpt : Ω Y} (β : gpt == idp) (γ : hpt == idp)
-        →  ap (Ω-fmap (fst F , α)) (ap (uncurry _∙_) (pair×= β γ) ∙ idp) ∙ snd (⊙Ω-fmap (fst F , α))
-        == Ω-fmap-∙ (fst F , α) gpt hpt
-         ∙ (ap (uncurry _∙_)
-               (pair×=
-                 (ap (Ω-fmap (fst F , α)) β ∙ snd (⊙Ω-fmap (fst F , α)))
-                 (ap (Ω-fmap (fst F , α)) γ ∙ snd (⊙Ω-fmap (fst F , α)))
-               ) ∙ idp)
-      lemma idp idp idp = idp
+      abstract
+        lemma : ∀ {ptZ : fst Z} (α : (fst F) (snd Y) == ptZ)
+          {gpt hpt : Ω Y} (β : gpt == idp) (γ : hpt == idp)
+          →  ⊙∘-pt (Ω-fmap (fst F , α)) (⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt β γ) idp) (snd (⊙Ω-fmap (fst F , α)))
+          == ⊙∘-pt (fst ⊙Ω-∙)
+               (⊙fanout-pt
+                 (⊙∘-pt (Ω-fmap (fst F , α)) β (snd (⊙Ω-fmap (fst F , α))))
+                 (⊙∘-pt (Ω-fmap (fst F , α)) γ (snd (⊙Ω-fmap (fst F , α))))
+               ) idp
+           [ _== idp ↓ Ω-fmap-∙ (fst F , α) gpt hpt ]
+        lemma idp idp idp = idp
 
 Trunc-⊙→Ω-group-fmap-codom : ∀ {i j k} (X : Ptd i) {Y : Ptd j} {Z : Ptd k}
   → Y ⊙→ Z → Trunc-⊙→Ω-group X Y →ᴳ Trunc-⊙→Ω-group X Z
@@ -120,6 +120,7 @@ Trunc-⊙→Ω-group-emap-codom : ∀ {i j k} (X : Ptd i) {Y : Ptd j} {Z : Ptd k
 Trunc-⊙→Ω-group-emap-codom X = Trunc-group-emap ∘ ⊙→Ω-group-structure-emap-codom X
 
 -- TODO Check naming convensions.
+-- TODO Use [CommSquareᴳ].
 Trunc-⊙→Ω-group-fmap-nat : ∀ {i₀ i₁ j₀ j₁}
   {X₀ : Ptd i₀} {X₁ : Ptd i₁} {Y₀ : Ptd j₀} {Y₁ : Ptd j₁}
   (F : X₀ ⊙→ X₁) (G : Y₀ ⊙→ Y₁) 

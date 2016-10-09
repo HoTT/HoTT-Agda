@@ -27,9 +27,14 @@ X ⊙× Y = ⊙Σ X (λ _ → Y)
 ⊙diag : ∀ {i} {X : Ptd i} → X ⊙→ X ⊙× X
 ⊙diag = ((λ x → (x , x)) , idp)
 
+⊙fanout-pt : ∀ {i j} {A : Type i} {B : Type j}
+  {a₀ a₁ : A} (p : a₀ == a₁) {b₀ b₁ : B} (q : b₀ == b₁)
+  → (a₀ , b₀) == (a₁ , b₁) :> A × B
+⊙fanout-pt = pair×=
+
 ⊙fanout : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   → X ⊙→ Y → X ⊙→ Z → X ⊙→ Y ⊙× Z
-⊙fanout (f , fpt) (g , gpt) = fanout f g , pair×= fpt gpt
+⊙fanout (f , fpt) (g , gpt) = fanout f g , ⊙fanout-pt fpt gpt
 
 ⊙fst-fanout : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   (f : X ⊙→ Y) (g : X ⊙→ Z)

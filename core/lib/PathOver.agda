@@ -21,6 +21,12 @@ The possible somethings are:
 [fst×] : the fibration is [fst] (nondependent product)
 [snd×] : the fibration is [snd] (nondependent product)
 
+The rule of prime: The above lemmas should choose
+between [_∙_] and [_∙'_] in a way that, if the underlying path is [idp],
+then the entire lemma reduces to an identity function.
+Otherwise, the lemma would have the suffix [in'] or [out'], meaning that
+all the choices of [_∙_] or [_∙'_] are exactly the opposite ones.
+
 You can also go back and forth between dependent paths and homogeneous paths
 with a transport on one side with the functions
 [to-transp],  [from-transp],  [to-transp-β]
