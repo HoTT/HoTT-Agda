@@ -28,16 +28,3 @@ abstract
   ⊤-level = Unit-is-contr
   ⊤-is-prop = Unit-is-prop
   ⊤-is-set = Unit-is-set
-
-LiftUnit-⊙in-level : ∀ {i j} {X : Ptd i}
-  → is-contr (X ⊙→ ⊙Lift {j = j} ⊙Unit)
-LiftUnit-⊙in-level {X = X} =
-  (⊙cst {X = X} ,
-   λ f → pair= idp
-           (prop-has-all-paths ((Lift-level Unit-is-set) _ _) idp (snd f)))
-
-LiftUnit-⊙out-level : ∀ {i j} {X : Ptd i}
-  → is-contr (⊙Lift {j = j} ⊙Unit ⊙→ X)
-LiftUnit-⊙out-level {X = X} =
-  (⊙cst {Y = X} ,
-   λ f → ⊙λ= (λ _ → ! (snd f)) (! (!-inv-l (snd f))))
