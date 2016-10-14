@@ -6,6 +6,14 @@ open import lib.PathOver
 
 module lib.cubical.Square where
 
+{-
+  *--1--*
+  |     |
+  0     3
+  |     |
+  *--2--*
+-}
+
 data Square {i} {A : Type i} {a₀₀ : A} : {a₀₁ a₁₀ a₁₁ : A}
   → a₀₀ == a₀₁ → a₀₀ == a₁₀ → a₀₁ == a₁₁ → a₁₀ == a₁₁ → Type i
   where
@@ -468,10 +476,12 @@ module _ {i} {A : Type i} where
 
 module _ {i} {A : Type i} where
 
+  {- XXX naminig -}
   connection : {a₀ a₁ : A} {q : a₀ == a₁}
     → Square idp idp q q
   connection {q = idp} = ids
 
+  {- XXX naminig -}
   connection2 : {a₀ a₁ a₂ : A} {p : a₀ == a₁} {q : a₁ == a₂}
     → Square p p q q
   connection2 {p = idp} {q = idp} = ids
@@ -483,6 +493,12 @@ module _ {i} {A : Type i} where
   bl-square : {a₀ a₁ : A} (p : a₀ == a₁)
     → Square (! p) idp p idp
   bl-square idp = ids
+
+  br-square : {a₀ a₁ : A} (p : a₀ == a₁)
+    → Square idp idp p p
+  br-square idp = ids
+
+  rb-square = br-square
 
   rt-square : {a₀ a₁ : A} (p : a₀ == a₁)
     → Square idp (! p) idp p

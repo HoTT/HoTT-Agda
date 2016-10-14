@@ -161,6 +161,18 @@ module _ {i} {A : Type i} where
 
 {- Nondependent identity type -}
 
+↓-='-in : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
+  {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+  → (u ∙' ap g p) == (ap f p ∙ v)
+  → (u == v [ (λ x → f x == g x) ↓ p ])
+↓-='-in {p = idp} q = q
+
+↓-='-out : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
+  {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+  → (u == v [ (λ x → f x == g x) ↓ p ])
+  → (u ∙' ap g p) == (ap f p ∙ v)
+↓-='-out {p = idp} q = q
+
 ↓-='-in' : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
   {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
   → (u ∙ ap g p) == (ap f p ∙' v)
