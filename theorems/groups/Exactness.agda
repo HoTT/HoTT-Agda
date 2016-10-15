@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-import homotopy.ConstantToSetExtendsToProp
+open import homotopy.ConstantToSetExtendsToProp
 
 -- A collection of useful lemmas about exactness
 
@@ -36,7 +36,7 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
         to = GroupHom.f G-to-ker
 
         module From (k : Ker.El ψ)
-          = homotopy.ConstantToSetExtendsToProp
+          = ConstToSetExtendsToProp
               {A = hfiber φ.f (fst k)} {B = G.El}
               G.El-is-set (λ hf → fst hf)
               (λ hf₁ hf₂ → φ-is-inj _ _ (snd hf₁ ∙ ! (snd hf₂)))
@@ -84,7 +84,7 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
         to = GroupHom.f (coker-to-K H-is-abelian)
 
         module From (k : K.El)
-          = homotopy.ConstantToSetExtendsToProp
+          = ConstToSetExtendsToProp
               {A = hfiber ψ.f k} {B = Cok.El}
               Cok.El-is-set (λ hf → q[ fst hf ])
               (λ{(h₁ , p₁) (h₂ , p₂) →

@@ -18,10 +18,10 @@ module homotopy.RibbonCover {i : ULevel} where
   private
     π1 = fundamental-group
 
-  module _ (A∙ : Ptd i) {j} (gs : Gset (fundamental-group A∙) j) (a₂ : fst A∙) where
+  module _ (X : Ptd i) {j} (gs : Gset (fundamental-group X) j) (a₂ : fst X) where
     private
-      A = fst A∙
-      a₁ = snd A∙
+      A = fst X
+      a₁ = snd X
       El = Gset.El gs
       El-level = Gset.El-level gs
       infix 80 _⊙_
@@ -37,10 +37,10 @@ module homotopy.RibbonCover {i : ULevel} where
     Ribbon : Type (lmax i j)
     Ribbon = SetQuot RibbonRel
 
-  module _ {A∙ : Ptd i} {j} {gs : Gset (fundamental-group A∙) j} {a₂ : fst A∙} where
+  module _ {X : Ptd i} {j} {gs : Gset (fundamental-group X) j} {a₂ : fst X} where
     private
-      A = fst A∙
-      a = snd A∙
+      A = fst X
+      a = snd X
       El = Gset.El gs
       El-level = Gset.El-level gs
       infix 80 _⊙_
@@ -51,7 +51,7 @@ module homotopy.RibbonCover {i : ULevel} where
       [e] is a point in the [fiber a], and
       [p] is a path to transport [y] to fiber [a₂].
     -}
-    trace : El → a =₀ a₂ → Ribbon A∙ gs a₂
+    trace : El → a =₀ a₂ → Ribbon X gs a₂
     trace el p = q[ el , p ]
 
     {-
@@ -65,13 +65,13 @@ module homotopy.RibbonCover {i : ULevel} where
       Make each fiber a set and cancel all higher structures
       due to [paste].
     -}
-    Ribbon-level : is-set (Ribbon A∙ gs a₂)
+    Ribbon-level : is-set (Ribbon X gs a₂)
     Ribbon-level = SetQuot-level
 
     Ribbon-is-set = Ribbon-level
 
     -- Elimination rules.
-    module RibbonElim {j} {P : Ribbon A∙ gs a₂ → Type j}
+    module RibbonElim {j} {P : Ribbon X gs a₂ → Type j}
       (P-level : ∀ r → is-set (P r))
       (trace* : ∀ el p → P (trace el p))
       (paste* : ∀ el loop p
@@ -79,15 +79,15 @@ module homotopy.RibbonCover {i : ULevel} where
                   [ P ↓ paste el loop p ]) where
 
       private
-        q[_]* : (α : RibbonSet A∙ gs a₂) → P q[ α ]
+        q[_]* : (α : RibbonSet X gs a₂) → P q[ α ]
         q[ el , p ]* = trace* el p
 
-        rel* : ∀ {α₁ α₂} (r : RibbonRel A∙ gs a₂ α₁ α₂) → q[ α₁ ]* == q[ α₂ ]* [ P ↓ quot-rel r ]
+        rel* : ∀ {α₁ α₂} (r : RibbonRel X gs a₂ α₁ α₂) → q[ α₁ ]* == q[ α₂ ]* [ P ↓ quot-rel r ]
         rel* (ribbon-rel el loop p) = paste* el loop p
 
         module M = SetQuotElim P-level q[_]* rel*
 
-      f : Π (Ribbon A∙ gs a₂) P
+      f : Π (Ribbon X gs a₂) P
       f = M.f
 
     open RibbonElim public using () renaming (f to Ribbon-elim)
@@ -102,16 +102,16 @@ module homotopy.RibbonCover {i : ULevel} where
         module M = RibbonElim (λ _ → P-level) trace*
           (λ el loop p → ↓-cst-in (paste* el loop p))
 
-      f : Ribbon A∙ gs a₂ → P
+      f : Ribbon X gs a₂ → P
       f = M.f
 
     open RibbonRec public using () renaming (f to Ribbon-rec)
 
   -- This data structure gives a cover.
-  Ribbon-cover : ∀ (A∙ : Ptd i) {j} (gs : Gset (π1 A∙) j)
-    → Cover (fst A∙) (lmax i j)
-  Ribbon-cover A∙ gs = record
-    { Fiber = Ribbon A∙ gs
+  Ribbon-cover : ∀ (X : Ptd i) {j} (gs : Gset (π1 X) j)
+    → Cover (fst X) (lmax i j)
+  Ribbon-cover X gs = record
+    { Fiber = Ribbon X gs
     ; Fiber-level = λ a → Ribbon-level
     }
 

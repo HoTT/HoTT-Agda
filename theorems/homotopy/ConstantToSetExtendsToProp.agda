@@ -2,7 +2,9 @@
 
 open import HoTT
 
-module homotopy.ConstantToSetExtendsToProp
+module homotopy.ConstantToSetExtendsToProp where
+
+module ConstToSetExtendsToProp
   {i j} {A : Type i} {B : Type j} (B-is-set : is-set B)
   (f : A → B) (f-is-const : ∀ a₁ a₂ → f a₁ == f a₂) where
 

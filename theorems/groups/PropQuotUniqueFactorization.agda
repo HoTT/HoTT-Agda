@@ -50,11 +50,14 @@ module groups.PropQuotUniqueFactorization {i j₁ j₂ k l₁ l₂}
           quot-relᴳ {P = P/Q-prop} $ <– (quot-relᴳ-equiv {P = Q}) $
             ! (φ-comm h₁) ∙ ap φ₂.f (r₁ ∙ ! r₂) ∙ φ-comm h₂
 
+      module KToP/Q = ConstToSetExtendsToProp
+        P/Q.El-is-set K-to-P/Q-f' K-to-P/Q-f'-const
+
       K-to-P/Q-f : Trunc -1 (hfiber φ₁.f k) → P/Q.El
-      K-to-P/Q-f = cst-extend P/Q.El-is-set K-to-P/Q-f' K-to-P/Q-f'-const
+      K-to-P/Q-f = KToP/Q.cst-extend
 
       K-to-P/Q-f-is-const : ∀ hf₁ hf₂ → K-to-P/Q-f hf₁ == K-to-P/Q-f hf₂
-      K-to-P/Q-f-is-const = cst-extend-is-const P/Q.El-is-set K-to-P/Q-f' K-to-P/Q-f'-const
+      K-to-P/Q-f-is-const = KToP/Q.cst-extend-is-const
 
     abstract
       K-to-P/Q-f-comp : (k₁ k₂ : K.El)
