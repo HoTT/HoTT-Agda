@@ -39,7 +39,7 @@ import homotopy.SpaceFromGroups
 {- covering spaces -}
 import homotopy.CoverClassification
 import homotopy.AnyUniversalCoverIsPathSet
-import homotopy.PathSetIsInital
+import homotopy.PathSetIsInitalCover
 
 {- cw complexes -}
 import cw.CW
