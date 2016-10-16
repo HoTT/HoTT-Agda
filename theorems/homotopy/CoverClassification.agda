@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import homotopy.ConstantToSetExtendsToProp
+import homotopy.ConstantToSetExtendsToProp as ConstExt
 open import homotopy.RibbonCover
 
 module homotopy.CoverClassification {i} (X : Ptd i)
@@ -62,13 +62,12 @@ module homotopy.CoverClassification {i} (X : Ptd i)
           trace (cover-trace cov a↑ [ ! p ]) [ p ]
             =⟨ paste a↑ [ ! p ] [ p ] ⟩
           trace a↑ [ ! p ∙ p ]
-            =⟨ ap (trace a↑) $ !₀-inv-l [ p ] ⟩
+            =⟨ !₀-inv-l [ p ] |in-ctx trace a↑ ⟩
           trace a↑ idp₀
             ∎
 
       module FiberAndPathToRibbon {a₂} (a↑ : Fiber cov a₂)
-        = ConstToSetExtendsToProp
-          Ribbon-is-set
+        = ConstExt Ribbon-is-set
           (fiber+path-to-ribbon a↑)
           (fiber+path-to-ribbon-is-path-irrelevant a↑)
 

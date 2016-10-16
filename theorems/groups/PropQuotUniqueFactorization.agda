@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import homotopy.ConstantToSetExtendsToProp
+import homotopy.ConstantToSetExtendsToProp as ConstExt
 
 {-
           q[_]ᴳ
@@ -50,8 +50,8 @@ module groups.PropQuotUniqueFactorization {i j₁ j₂ k l₁ l₂}
           quot-relᴳ {P = P/Q-prop} $ <– (quot-relᴳ-equiv {P = Q}) $
             ! (φ-comm h₁) ∙ ap φ₂.f (r₁ ∙ ! r₂) ∙ φ-comm h₂
 
-      module KToP/Q = ConstToSetExtendsToProp
-        P/Q.El-is-set K-to-P/Q-f' K-to-P/Q-f'-const
+      module KToP/Q = ConstExt P/Q.El-is-set
+        K-to-P/Q-f' K-to-P/Q-f'-const
 
       K-to-P/Q-f : Trunc -1 (hfiber φ₁.f k) → P/Q.El
       K-to-P/Q-f = KToP/Q.cst-extend
