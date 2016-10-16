@@ -33,8 +33,9 @@ import homotopy.PropJoinProp
 import homotopy.SpaceFromGroups
 
 {- pushout 3x3 lemma -}
-{- This takes lots of time and memory to check. You have been warned! -}
+{- These takes lots of time and memory to check. -}
 -- import homotopy.3x3.Commutes -- commented out because this does not run on travis.
+-- import homotopy.JoinAssoc3x3 -- commented out because this does not run on travis.
 
 {- covering spaces -}
 import homotopy.CoverClassification

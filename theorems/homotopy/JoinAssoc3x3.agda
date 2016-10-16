@@ -21,7 +21,7 @@ module _ (A B : Type i) (f : B → A) where
   lemma3-fun : Pushout (span A B B f (idf _)) → A
   lemma3-fun = Lemma3Fun.f  module _ where
 
-    module Lemma3Fun = PushoutRec (idf _) f (λ _ → idp)
+    module Lemma3Fun = PushoutRec {d = span A B B f (idf _)} (idf _) f (λ _ → idp)
 
   lemma3-eq : (x : Pushout (span A B B f (idf _))) → left (lemma3-fun x) == x
   lemma3-eq = Pushout-elim (λ _ → idp) glue (λ b → ↓-∘=idf-in' left lemma3-fun (idp,=□idp,-in idp ∙□-i/ idp / ! (ap (ap left) (Lemma3Fun.glue-β b)) /))
@@ -34,7 +34,7 @@ module _ (A B : Type i) (f : B → A) where
   lemma3'-fun : Pushout (span B A B (idf _) f) → A
   lemma3'-fun = Lemma3'Fun.f  module _ where
 
-    module Lemma3'Fun = PushoutRec f (idf _) (λ _ → idp)
+    module Lemma3'Fun = PushoutRec {d = span B A B (idf _) f} f (idf _) (λ _ → idp)
 
   lemma3'-eq : (x : Pushout (span B A B (idf _) f)) → right (lemma3'-fun x) == x
   lemma3'-eq = ! ∘ (Pushout-elim glue (λ _ → idp) (λ b → ↓-idf=∘-in right lemma3'-fun (,idp=□,idp-in idp ∙□-i/ ap (ap right) (Lemma3'Fun.glue-β b) / idp /)))

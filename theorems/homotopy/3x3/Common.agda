@@ -2,7 +2,7 @@
 
 module homotopy.3x3.Common where
 
-open import HoTT public hiding (↓-='-in'; ↓-='-out'; ↓-=-in; ↓-=-out; ↓-∘=idf-in')
+open import HoTT public hiding (↓-='-in'; ↓-='-out'; ↓-='-in; ↓-='-out; ↓-=-in; ↓-=-out; ↓-∘=idf-in')
 
 !-∘-ap-inv : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : B → C) (g : A → B) {a b : A}
   (p : a == b)
