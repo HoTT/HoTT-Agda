@@ -58,6 +58,6 @@ module _ {k} where
         (λ _ → =-preserves-level _ Trunc-level)
         (λ g → ap [_] (pick-Bool-η g))
 
-    Bool-has-choice : has-choice n (Lift Bool) A
+    Bool-has-choice : ∀ j → has-choice n (Lift Bool) A
     Bool-has-choice = is-eq unchoose choose-Bool unc-c c-unc
 

@@ -4,7 +4,6 @@ open import HoTT
 open import cohomology.SuspAdjointLoopIso
 open import cohomology.WithCoefficients
 open import cohomology.Theory
-open import cohomology.Choice
 
 {- A spectrum (family (Eₙ | n : ℤ) such that ΩEₙ₊₁ = Eₙ)
  - gives rise to a cohomology theory C with Cⁿ(S⁰) = π₁(Eₙ₊₁). -}
@@ -174,7 +173,7 @@ module SpectrumModel where
 
   {- Additivity Axiom -}
   module _ (n : ℤ) {A : Type i} (X : A → Ptd i)
-    (ac : (W : A → Type i) → has-choice 0 A W)
+    (ac : has-choice 0 A i)
     where
 
     into : CEl n (⊙BigWedge X) → Trunc 0 (Π A (uCEl n ∘ X))
