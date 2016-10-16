@@ -3,12 +3,9 @@
 open import HoTT
 open import homotopy.PushoutSplit
 
-module homotopy.CofiberGrid where
-
-module CofiberGrid {i j k}
+module cw.cohomology.CofiberGrid {i j k}
   {A : Type i} {B : Type j} {C : Type k}
-  (f : A → B) (g : B → C)
-  where
+  (f : A → B) (g : B → C) where
 
   {-
     A -------> B -----------> C

@@ -1,12 +1,10 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import groups.ExactSequence
-open import groups.Exactness
-open import groups.HomSequence
-open import homotopy.PtdMapSequence
-open import homotopy.CofiberSequence
 open import cohomology.Theory
+open import groups.ExactSequence
+open import groups.HomSequence
+open import homotopy.CofiberSequence
 
 module cohomology.LongExactSequence {i} (CT : CohomologyTheory i)
   {X Y : Ptd i} (n : ℤ) (f : X ⊙→ Y) where

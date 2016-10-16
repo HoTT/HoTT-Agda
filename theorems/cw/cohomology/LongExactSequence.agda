@@ -3,18 +3,14 @@
 open import HoTT
 open import cohomology.Theory
 open import groups.ExactSequence
-open import groups.Exactness
 open import groups.HomSequence
-open import homotopy.CofiberGrid
-open import homotopy.CofiberSequence
-open import homotopy.PtdMapSequence
 
 module cw.cohomology.LongExactSequence {i} (CT : CohomologyTheory i)
   {X Y Z : Ptd i} (n : ℤ) (f : X ⊙→ Y) (g : Y ⊙→ Z) where
 
 open CohomologyTheory CT
 open import cohomology.PtdMapSequence CT
-open CofiberGrid (fst f) (fst g)
+open import cw.cohomology.CofiberGrid (fst f) (fst g)
 
 Y/X : Ptd i
 Y/X = ⊙Cofiber f
