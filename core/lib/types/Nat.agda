@@ -80,76 +80,75 @@ m ≤ n = Coprod (m == n) (m < n)
 
 -- properties of [<]
 
-abstract
-  O<S : (m : ℕ) → O < S m
-  O<S O = ltS
-  O<S (S m) = ltSR (O<S m)
+O<S : (m : ℕ) → O < S m
+O<S O = ltS
+O<S (S m) = ltSR (O<S m)
 
-  O≤ : (m : ℕ) → O ≤ m
-  O≤ O = inl idp
-  O≤ (S m) = inr (O<S m)
+O≤ : (m : ℕ) → O ≤ m
+O≤ O = inl idp
+O≤ (S m) = inr (O<S m)
 
-  ≮O : ∀ n → ¬ (n < O)
-  ≮O _ ()
+≮O : ∀ n → ¬ (n < O)
+≮O _ ()
 
-  <-trans : {m n k : ℕ} → m < n → n < k → m < k
-  <-trans lt₁ ltS = ltSR lt₁
-  <-trans lt₁ (ltSR lt₂) = ltSR (<-trans lt₁ lt₂)
+<-trans : {m n k : ℕ} → m < n → n < k → m < k
+<-trans lt₁ ltS = ltSR lt₁
+<-trans lt₁ (ltSR lt₂) = ltSR (<-trans lt₁ lt₂)
 
-  ≤-refl : {m : ℕ} → m ≤ m
-  ≤-refl = inl idp
+≤-refl : {m : ℕ} → m ≤ m
+≤-refl = inl idp
 
-  ≤-trans : {m n k : ℕ} → m ≤ n → n ≤ k → m ≤ k
-  ≤-trans {k = k} (inl p₁) lte₂ = transport (λ t → t ≤ k) (! p₁) lte₂
-  ≤-trans {m = m} lte₁ (inl p₂) = transport (λ t → m ≤ t) p₂ lte₁
-  ≤-trans (inr lt₁) (inr lt₂) = inr (<-trans lt₁ lt₂)
+≤-trans : {m n k : ℕ} → m ≤ n → n ≤ k → m ≤ k
+≤-trans {k = k} (inl p₁) lte₂ = transport (λ t → t ≤ k) (! p₁) lte₂
+≤-trans {m = m} lte₁ (inl p₂) = transport (λ t → m ≤ t) p₂ lte₁
+≤-trans (inr lt₁) (inr lt₂) = inr (<-trans lt₁ lt₂)
 
-  <-ap-S : {m n : ℕ} → m < n → S m < S n
-  <-ap-S ltS = ltS
-  <-ap-S (ltSR lt) = ltSR (<-ap-S lt)
+<-ap-S : {m n : ℕ} → m < n → S m < S n
+<-ap-S ltS = ltS
+<-ap-S (ltSR lt) = ltSR (<-ap-S lt)
 
-  ≤-ap-S : {m n : ℕ} → m ≤ n → S m ≤ S n
-  ≤-ap-S (inl p) = inl (ap S p)
-  ≤-ap-S (inr lt) = inr (<-ap-S lt)
+≤-ap-S : {m n : ℕ} → m ≤ n → S m ≤ S n
+≤-ap-S (inl p) = inl (ap S p)
+≤-ap-S (inr lt) = inr (<-ap-S lt)
 
-  <-cancel-S : {m n : ℕ} → S m < S n → m < n
-  <-cancel-S ltS = ltS
-  <-cancel-S (ltSR lt) = <-trans ltS lt
+<-cancel-S : {m n : ℕ} → S m < S n → m < n
+<-cancel-S ltS = ltS
+<-cancel-S (ltSR lt) = <-trans ltS lt
 
-  ≤-cancel-S : {m n : ℕ} → S m ≤ S n → m ≤ n
-  ≤-cancel-S (inl p) = inl (ap ℕ-pred p)
-  ≤-cancel-S (inr lt) = inr (<-cancel-S lt)
+≤-cancel-S : {m n : ℕ} → S m ≤ S n → m ≤ n
+≤-cancel-S (inl p) = inl (ap ℕ-pred p)
+≤-cancel-S (inr lt) = inr (<-cancel-S lt)
 
-  <-dec : Decidable _<_
-  <-dec _     O     = inr (≮O _)
-  <-dec O     (S m) = inl (O<S m)
-  <-dec (S n) (S m) with <-dec n m
-  <-dec (S n) (S m) | inl p  = inl (<-ap-S p)
-  <-dec (S n) (S m) | inr p⊥ = inr (p⊥ ∘ <-cancel-S)
+<-dec : Decidable _<_
+<-dec _ O = inr (≮O _)
+<-dec O (S m) = inl (O<S m)
+<-dec (S n) (S m) with <-dec n m
+<-dec (S n) (S m) | inl p = inl (<-ap-S p)
+<-dec (S n) (S m) | inr p⊥ = inr (p⊥ ∘ <-cancel-S)
 
-  <-+-l : {m n : ℕ} (k : ℕ) → m < n → (k + m) < (k + n)
-  <-+-l O lt = lt
-  <-+-l (S k) lt = <-ap-S (<-+-l k lt)
+<-+-l : {m n : ℕ} (k : ℕ) → m < n → (k + m) < (k + n)
+<-+-l O lt = lt
+<-+-l (S k) lt = <-ap-S (<-+-l k lt)
 
-  ≤-+-l : {m n : ℕ} (k : ℕ) → m ≤ n → (k + m) ≤ (k + n)
-  ≤-+-l k (inl p) = inl (ap (λ t → k + t) p)
-  ≤-+-l k (inr lt) = inr (<-+-l k lt)
+≤-+-l : {m n : ℕ} (k : ℕ) → m ≤ n → (k + m) ≤ (k + n)
+≤-+-l k (inl p) = inl (ap (λ t → k + t) p)
+≤-+-l k (inr lt) = inr (<-+-l k lt)
 
-  <-+-r : {m n : ℕ} (k : ℕ) → m < n → (m + k) < (n + k)
-  <-+-r k ltS = ltS
-  <-+-r k (ltSR lt) = ltSR (<-+-r k lt)
+<-+-r : {m n : ℕ} (k : ℕ) → m < n → (m + k) < (n + k)
+<-+-r k ltS = ltS
+<-+-r k (ltSR lt) = ltSR (<-+-r k lt)
 
-  ≤-+-r : {m n : ℕ} (k : ℕ) → m ≤ n → (m + k) ≤ (n + k)
-  ≤-+-r k (inl p) = inl (ap (λ t → t + k) p)
-  ≤-+-r k (inr lt) = inr (<-+-r k lt)
+≤-+-r : {m n : ℕ} (k : ℕ) → m ≤ n → (m + k) ≤ (n + k)
+≤-+-r k (inl p) = inl (ap (λ t → t + k) p)
+≤-+-r k (inr lt) = inr (<-+-r k lt)
 
-  <-witness : {m n : ℕ} → (m < n) → Σ ℕ (λ k → S k + m == n)
-  <-witness ltS = (O , idp)
-  <-witness (ltSR lt) = let w' = <-witness lt in (S (fst w') , ap S (snd w'))
+<-witness : {m n : ℕ} → (m < n) → Σ ℕ (λ k → S k + m == n)
+<-witness ltS = (O , idp)
+<-witness (ltSR lt) = let w' = <-witness lt in (S (fst w') , ap S (snd w'))
 
-  ≤-witness : {m n : ℕ} → (m ≤ n) → Σ ℕ (λ k → k + m == n)
-  ≤-witness (inl p) = (O , p)
-  ≤-witness (inr lt) = let w' = <-witness lt in (S (fst w') , snd w')
+≤-witness : {m n : ℕ} → (m ≤ n) → Σ ℕ (λ k → k + m == n)
+≤-witness (inl p) = (O , p)
+≤-witness (inr lt) = let w' = <-witness lt in (S (fst w') , snd w')
 
 -- Double
 
