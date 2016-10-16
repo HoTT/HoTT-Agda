@@ -272,29 +272,28 @@ apd-∘'' g f idp idp = idp
 
 {- 2-dimensional coherence conditions -}
 
--- postulate
---  lhs :
+-- lhs :
 --   ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} {f g : Π A B}
 --   {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
 --   (k : (u ◃ apd g p) == (apd f p ▹ v))
 --   (h : {a : A} → B a → C a)
 --   → ap h u ◃ apd (h ∘ g) p == ap↓ h (u ◃ apd g p)
 
---  rhs :
+-- rhs :
 --   ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} {f g : Π A B}
 --   {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
 --   (k : (u ◃ apd g p) == (apd f p ▹ v))
 --   (h : {a : A} → B a → C a)
 --   → ap↓ h (apd f p ▹ v) == apd (h ∘ f) p ▹ ap h v
 
- -- ap↓-↓-=-in :
- --  ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} {f g : Π A B}
- --  {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
- --  (k : (u ◃ apd g p) == (apd f p ▹ v))
- --  (h : {a : A} → B a → C a)
- --  → ap↓ (λ {a} → ap (h {a = a})) (↓-=-in {p = p} {u = u} {v = v} k)
- --  == ↓-=-in (lhs {f = f} {g = g} k h ∙ ap (ap↓ (λ {a} → h {a = a})) k 
- --                                     ∙ rhs {f = f} {g = g} k h)
+-- ap↓-↓-=-in :
+--   ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} {f g : Π A B}
+--   {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+--   (k : (u ◃ apd g p) == (apd f p ▹ v))
+--   (h : {a : A} → B a → C a)
+--   → ap↓ (λ {a} → ap (h {a = a})) (↓-=-in {p = p} {u = u} {v = v} k)
+--   == ↓-=-in (lhs {f = f} {g = g} k h ∙ ap (ap↓ (λ {a} → h {a = a})) k
+--                                      ∙ rhs {f = f} {g = g} k h)
 
 {-
 Commutation of [ap↓ (ap h)] and [↓-swap!]. This is "just" J, but it’s not as

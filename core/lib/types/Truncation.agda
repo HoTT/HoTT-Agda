@@ -24,7 +24,7 @@ module _ {i} where
   [_] : {n : ℕ₋₂} {A : Type i} → A → Trunc n A
   [ a ] = #trunc #[ a ] _
 
-  postulate
+  postulate -- HIT
     Trunc-level : {n : ℕ₋₂} {A : Type i} → has-level n (Trunc n A)
 
   module TruncElim {n : ℕ₋₂} {A : Type i} {j} {P : Trunc n A → Type j}
