@@ -17,7 +17,8 @@ record CommSquareᴳ {i₀ i₁ j₀ j₁}
   field
     commutesᴳ : ∀ g₀ → GroupHom.f (ξH ∘ᴳ φ₀) g₀ == GroupHom.f (φ₁ ∘ᴳ ξG) g₀
 
-open CommSquareᴳ public
+infix 0 _□$ᴳ_
+_□$ᴳ_ = CommSquareᴳ.commutesᴳ
 
 CommSquareᴳ-inverse-v : ∀ {i₀ i₁ j₀ j₁}
   {G₀ : Group i₀} {G₁ : Group i₁} {H₀ : Group j₀} {H₁ : Group j₁}

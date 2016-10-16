@@ -69,7 +69,7 @@ record CohomologyTheory i : Type (lsucc i) where
   CEl-Susp-fmap : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
     → CommSquare (CEl-fmap (succ n) (⊙Susp-fmap f)) (CEl-fmap n f)
         (GroupIso.f (C-Susp n Y)) (GroupIso.f (C-Susp n X))
-  CEl-Susp-fmap n f = comm-sqr (commutesᴳ (C-Susp-fmap n f))
+  CEl-Susp-fmap n f = comm-sqr λ y' → C-Susp-fmap n f □$ᴳ y'
 
   field
     C-exact : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)

@@ -37,7 +37,7 @@ CEl-fmap-base-indep' : (n : ℤ) {X Y : Ptd i} {f g : X ⊙→ Y}
   → (∀ x → fst f x == fst g x)
   → (∀ y → CEl-fmap n f y == CEl-fmap n g y)
 CEl-fmap-base-indep' n h y = CEl-fmap-base-indep n _ _ _ _
-                           ∙ ap (λ f → CEl-fmap n f y) (⊙λ= h idp)
+                           ∙ ap (λ f → CEl-fmap n f y) (⊙λ= h (↓-idf=cst-in' idp))
 
 C-fmap-base-indep' = CEl-fmap-base-indep'
 

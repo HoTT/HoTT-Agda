@@ -30,16 +30,18 @@ module CofiberGrid {i j k}
 
   private
     module VSplit = PushoutRSplit (λ _ → tt) f g
-    B/A-to-C/A : B/A → C/A
-    B/A-to-C/A = VSplit.inner
+  B/A-to-C/A : B/A → C/A
+  B/A-to-C/A = VSplit.inner
 
+  private
     C/A-to-C/B-span-map : SpanMap (cofiber-span (g ∘ f)) (cofiber-span g)
     C/A-to-C/B-span-map = span-map (idf _) (idf _) f
       (comm-sqr λ _ → idp) (comm-sqr λ _ → idp)
     module C/AToC/B = PushoutFmap C/A-to-C/B-span-map
-    C/A-to-C/B : C/A → C/B
-    C/A-to-C/B = C/AToC/B.f
+  C/A-to-C/B : C/A → C/B
+  C/A-to-C/B = C/AToC/B.f
 
+  private
     B-to-B/A : B → B/A
     B-to-B/A = cfcod' f
 
@@ -48,20 +50,25 @@ module CofiberGrid {i j k}
     D : Type (lmax i (lmax j k))
     D = Pushout D-span
 
+  private
     module C/AToD = VSplit.Split
-    C/A-to-D : C/A → D
-    C/A-to-D = C/AToD.f
+  C/A-to-D : C/A → D
+  C/A-to-D = C/AToD.f
 
-    B/A-to-D : B/A → D
-    B/A-to-D = left
+  B/A-to-D : B/A → D
+  B/A-to-D = left
 
+  private
     E : Type (lmax i (lmax j k))
     E = Cofiber B/A-to-D
 
+  private
     module HSplit = PushoutLSplit B-to-B/A (λ _ → tt) g
     module C/BToE = HSplit.Split
-    C/B-to-E : C/B → E
-    C/B-to-E = C/BToE.f
+  C/B-to-E : C/B → E
+  C/B-to-E = C/BToE.f
+
+  private
     module DToC/B = HSplit.Inner
     D-to-C/B : D → C/B
     D-to-C/B = DToC/B.f
