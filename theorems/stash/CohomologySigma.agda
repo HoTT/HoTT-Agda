@@ -1,9 +1,8 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import homotopy.FunctionOver
-open import cohomology.CofiberSequence
-open import cohomology.SplitExactRight
+open import homotopy.CofiberSequence
+open import groups.SplitExactRight
 open import cohomology.Theory
 
 module cohomology.Sigma {i} (CT : CohomologyTheory i) where

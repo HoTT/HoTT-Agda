@@ -2,7 +2,6 @@
 
 open import HoTT
 open import groups.Exactness
-open import homotopy.FunctionOver
 
 {- Splitting Lemma - Right Split
    Assume an exact sequence:
@@ -16,7 +15,7 @@ open import homotopy.FunctionOver
    The only non-private terms are [iso], [φ-over-iso], and [ψ-over-iso].
 -}
 
-module cohomology.SplitExactRight {i} {L G H K : Group i}
+module groups.SplitExactRight {i} {L G H K : Group i}
   (H-abelian : is-abelian H) (φ : G →ᴳ H) (ψ : H →ᴳ K) where
 
 private
