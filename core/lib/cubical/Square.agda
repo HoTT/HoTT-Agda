@@ -511,3 +511,5 @@ module _ {i} {A : Type i} where
   lt-square : {a₀ a₁ : A} (p : a₀ == a₁)
     → Square p p idp idp
   lt-square idp = ids
+
+  tl-square = lt-square

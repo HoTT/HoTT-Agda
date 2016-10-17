@@ -64,6 +64,9 @@ module _ {i j₀ j₁} {A : Type i} {X₀ : A → Ptd j₀} {X₁ : A → Ptd j�
   BigWedge-emap-r : BigWedge X₀ ≃ BigWedge X₁
   BigWedge-emap-r = Pushout-emap bigwedge-span-emap-r
 
+  ⊙BigWedge-emap-r : ⊙BigWedge X₀ ⊙≃ ⊙BigWedge X₁
+  ⊙BigWedge-emap-r = ≃-to-⊙≃ BigWedge-emap-r idp
+
 {- A BigWedge indexed by Bool is just a binary Wedge -}
 module _ {i} (Pick : Lift {j = i} Bool → Ptd i) where
 

@@ -75,9 +75,19 @@ record CohomologyTheory i : Type (lsucc i) where
     C-exact : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
       → is-exact (C-fmap n (⊙cfcod' f)) (C-fmap n f)
 
+  C-additive-hom : (n : ℤ) {I : Type i} (Z : I → Ptd i)
+    → C n (⊙BigWedge Z) →ᴳ Πᴳ I (λ i → C n (Z i))
+  C-additive-hom n Z = Πᴳ-fanout (C-fmap n ∘ ⊙bwin {X = Z})
+
+  field
     C-additive : (n : ℤ) {I : Type i} (Z : I → Ptd i)
       → has-choice 0 I i
-      → is-equiv (GroupHom.f (Πᴳ-fanout (C-fmap n ∘ ⊙bwin {X = Z})))
+      → is-equiv (GroupHom.f (C-additive-hom n Z))
+
+  C-additive-iso : (n : ℤ) {I : Type i} (Z : I → Ptd i)
+    → has-choice 0 I i
+    → C n (⊙BigWedge Z) ≃ᴳ Πᴳ I (λ i → C n (Z i))
+  C-additive-iso n Z ac = C-additive-hom n Z , C-additive n Z ac
 
 record OrdinaryTheory i : Type (lsucc i) where
   constructor ordinary-theory

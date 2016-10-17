@@ -89,6 +89,7 @@ attaching-nth m≤n = attaching-last ∘ cw-take m≤n
 
 -- Extra conditions on CW complexes
 
+-- 1. decidable equalities
 has-cells-with-dec-eq : ∀ {n} → Skeleton n → Type i
 has-cells-with-dec-eq (skel-base cells) = has-dec-eq (fst cells)
 has-cells-with-dec-eq (skel-attach skel cells _) =
@@ -100,6 +101,13 @@ has-cells-with-dec-eq-is-prop {skel = skel-base _} =
   has-dec-eq-is-prop
 has-cells-with-dec-eq-is-prop {skel = skel-attach _ _ _} =
   ×-level has-cells-with-dec-eq-is-prop has-dec-eq-is-prop
+
+-- 2. choice
+has-cells-with-choice : (t : TLevel) {n : ℕ} (skel : Skeleton n)
+  (j : ULevel) → Type (lmax i (lsucc j))
+has-cells-with-choice t (skel-base cells) j = has-choice t (fst cells) j
+has-cells-with-choice t (skel-attach skel cells _) j =
+  has-cells-with-choice t skel j × has-choice t (fst cells) j
 
 -- Dimensional lifting
 
