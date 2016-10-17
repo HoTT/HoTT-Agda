@@ -116,15 +116,22 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
     e : fst X ≃ fst Y
     e = (fst (fst ⊙e) , snd ⊙e)
 
-    p = snd (fst ⊙e)
-
   ⊙≃-to-≃ = e
+
+  ⊙–>-pt : –> e (snd X) == snd Y
+  ⊙–>-pt = snd (fst ⊙e)
+
+  private
+    p = ⊙–>-pt
 
   ⊙–> : X ⊙→ Y
   ⊙–> = fst ⊙e
 
+  ⊙<–-pt : <– e (snd Y) == snd X
+  ⊙<–-pt = ap (<– e) (! ⊙–>-pt) ∙ <–-inv-l e (snd X)
+
   ⊙<– : Y ⊙→ X
-  ⊙<– = (<– e , ap (<– e) (! p) ∙ <–-inv-l e (snd X))
+  ⊙<– = <– e , ⊙<–-pt
 
   infix 120 _⊙⁻¹
   _⊙⁻¹ : Y ⊙≃ X

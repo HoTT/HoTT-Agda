@@ -1,73 +1,68 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
+open import lib.cubical.Square
 open import lib.types.Bool
+open import lib.types.Cofiber
 open import lib.types.Lift
 open import lib.types.Paths
 open import lib.types.Pointed
+open import lib.types.PushoutFmap
+open import lib.types.Sigma
+open import lib.types.Span
 open import lib.types.Wedge
-open import lib.cubical.Square
 
 module lib.types.BigWedge where
 
 module _ {i j} {A : Type i} where
 
-  private
-    data #BigWedge-aux (X : A → Ptd j) : Type (lmax i j) where
-      #bwbase : #BigWedge-aux X
-      #bwin : (a : A) → fst (X a) → #BigWedge-aux X
+  {- the function for cofiber -}
+  bigwedge-f : (X : A → Ptd j) → A → Σ A (fst ∘ X)
+  bigwedge-f X a = a , snd (X a)
 
-    data #BigWedge (X : A → Ptd j) : Type (lmax i j) where
-      #bigwedge : #BigWedge-aux X → (Unit → Unit) → #BigWedge X
+  bigwedge-span : (A → Ptd j) → Span
+  bigwedge-span X = cofiber-span (bigwedge-f X)
 
   BigWedge : (A → Ptd j) → Type (lmax i j)
-  BigWedge X = #BigWedge X
+  BigWedge X = Cofiber (bigwedge-f X)
 
   bwbase : {X : A → Ptd j} → BigWedge X
-  bwbase = #bigwedge #bwbase _
+  bwbase = cfbase
 
   bwin : {X : A → Ptd j} → (a : A) → fst (X a) → BigWedge X
-  bwin a x = #bigwedge (#bwin a x) _
+  bwin = curry cfcod
 
   ⊙BigWedge : (A → Ptd j) → Ptd (lmax i j)
   ⊙BigWedge X = ⊙[ BigWedge X , bwbase ]
 
-  postulate  -- HIT
-    bwglue : {X : A → Ptd j} → (a : A) → bwbase {X} == bwin a (snd (X a))
+  bwglue : {X : A → Ptd j} → (a : A) → bwbase {X} == bwin a (snd (X a))
+  bwglue = cfglue
 
   ⊙bwin : {X : A → Ptd j} → (a : A) → X a ⊙→ ⊙BigWedge X
   ⊙bwin a = (bwin a , ! (bwglue a))
 
   module BigWedgeElim {X : A → Ptd j} {k} {P : BigWedge X → Type k}
-    (base* : P bwbase)
-    (in* : (a : A) (x : fst (X a)) → P (bwin a x))
-    (glue* : (a : A) → base* == in* a (snd (X a)) [ P ↓ bwglue a ]) where
+    (base* : P bwbase) (in* : (a : A) (x : fst (X a)) → P (bwin a x))
+    (glue* : (a : A) → base* == in* a (snd (X a)) [ P ↓ bwglue a ])
+    = CofiberElim {f = bigwedge-f X} {P = P} base* (uncurry in*) glue*
 
-    f : Π (BigWedge X) P
-    f = f-aux phantom where
-
-      f-aux : Phantom glue* → Π (BigWedge X) P
-      f-aux phantom (#bigwedge #bwbase _) = base*
-      f-aux phantom (#bigwedge (#bwin a x) _) = in* a x
-
-    postulate  -- HIT
-      glue-β : (a : A) → apd f (bwglue a) == glue* a
-
-  open BigWedgeElim public using () renaming (f to BigWedge-elim)
+  BigWedge-elim = BigWedgeElim.f
 
   module BigWedgeRec {X : A → Ptd j} {k} {C : Type k}
-    (base* : C)
-    (in* : (a : A) → fst (X a) → C)
-    (glue* : (a : A) → base* == in* a (snd (X a))) where
+    (base* : C) (in* : (a : A) → fst (X a) → C)
+    (glue* : (a : A) → base* == in* a (snd (X a)))
+    = CofiberRec {f = bigwedge-f X} {C = C} base* (uncurry in*) glue*
 
-    private
-      module M = BigWedgeElim base* in* (λ c → ↓-cst-in (glue* c))
+module _ {i j₀ j₁} {A : Type i} {X₀ : A → Ptd j₀} {X₁ : A → Ptd j₁}
+  (Xeq : ∀ a → X₀ a ⊙≃ X₁ a) where
 
-    f : BigWedge X → C
-    f = M.f
+  bigwedge-span-emap-r : SpanEquiv (cofiber-span (bigwedge-f X₀)) (cofiber-span (bigwedge-f X₁))
+  bigwedge-span-emap-r = span-map (idf _) (Σ-fmap-r λ a → fst (⊙–> (Xeq a))) (idf _)
+    (comm-sqr λ _ → idp) (comm-sqr λ a → pair= idp (⊙–>-pt (Xeq a))) ,
+    idf-is-equiv _ , Σ-isemap-r (λ a → snd (Xeq a)) , idf-is-equiv _
 
-    glue-β : (a : A) → ap f (bwglue a) == glue* a
-    glue-β a = apd=cst-in {f = f} (M.glue-β a)
+  BigWedge-emap-r : BigWedge X₀ ≃ BigWedge X₁
+  BigWedge-emap-r = Pushout-emap bigwedge-span-emap-r
 
 {- A BigWedge indexed by Bool is just a binary Wedge -}
 module _ {i} (Pick : Lift {j = i} Bool → Ptd i) where
