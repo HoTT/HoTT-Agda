@@ -166,8 +166,8 @@ pre∘-cst-hom : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
 pre∘-cst-hom φ = group-hom= $ λ= λ g → GroupHom.pres-ident φ
 
 inv-hom-natural : ∀ {i j} {G : Group i} {H : Group j}
-  (G-abelian : is-abelian G) (H-abelian : is-abelian H) (φ : G →ᴳ H)
-  → φ ∘ᴳ inv-hom G G-abelian == inv-hom H H-abelian ∘ᴳ φ
+  (G-is-abelian : is-abelian G) (H-is-abelian : is-abelian H) (φ : G →ᴳ H)
+  → φ ∘ᴳ inv-hom G G-is-abelian == inv-hom H H-is-abelian ∘ᴳ φ
 inv-hom-natural _ _ φ = group-hom= $ λ= $ GroupHom.pres-inv φ
 
 is-injᴳ : ∀ {i j} {G : Group i} {H : Group j}
@@ -278,17 +278,15 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
 
 {- two homomorphisms into an abelian group can be composed with
  - the group operation -}
-module _ {i} {G H : Group i} (H-abelian : is-abelian H)
-  (φ ψ : G →ᴳ H) where
+module _ {i j} {G : Group i} {H : Group j} (H-is-abelian : is-abelian H)
+  where
 
   private
     module G = Group G
-    module H = Group H
-    module φ = GroupHom φ
-    module ψ = GroupHom ψ
+    module H = AbelianGroup (H , H-is-abelian)
 
-  hom-comp : G →ᴳ H
-  hom-comp = group-hom
+  hom-comp : (G →ᴳ H) → (G →ᴳ H) → (G →ᴳ H)
+  hom-comp φ ψ = group-hom
     (λ g → H.comp (φ.f g) (ψ.f g))
     (λ g₁ g₂ →
       H.comp (φ.f (G.comp g₁ g₂)) (ψ.f (G.comp g₁ g₂))
@@ -296,8 +294,9 @@ module _ {i} {G H : Group i} (H-abelian : is-abelian H)
       H.comp (H.comp (φ.f g₁) (φ.f g₂)) (H.comp (ψ.f g₁) (ψ.f g₂))
         =⟨ lemma (φ.f g₁) (φ.f g₂) (ψ.f g₁) (ψ.f g₂) ⟩
       H.comp (H.comp (φ.f g₁) (ψ.f g₁)) (H.comp (φ.f g₂) (ψ.f g₂)) =∎)
-
     where
+    module φ = GroupHom φ
+    module ψ = GroupHom ψ
     lemma : (h₁ h₂ h₃ h₄ : H.El) →
       H.comp (H.comp h₁ h₂) (H.comp h₃ h₄)
       == H.comp (H.comp h₁ h₃) (H.comp h₂ h₄)
@@ -305,14 +304,28 @@ module _ {i} {G H : Group i} (H-abelian : is-abelian H)
       (h₁ □ h₂) □ (h₃ □ h₄)
          =⟨ H.assoc h₁ h₂ (h₃ □ h₄) ⟩
        h₁ □ (h₂ □ (h₃ □ h₄))
-         =⟨ H-abelian h₃ h₄ |in-ctx (λ w → h₁ □ (h₂ □ w)) ⟩
+         =⟨ H-is-abelian h₃ h₄ |in-ctx (λ w → h₁ □ (h₂ □ w)) ⟩
        h₁ □ (h₂ □ (h₄ □ h₃))
          =⟨ ! (H.assoc h₂ h₄ h₃) |in-ctx (λ w → h₁ □ w) ⟩
        h₁ □ ((h₂ □ h₄) □ h₃)
-         =⟨ H-abelian (h₂ □ h₄) h₃ |in-ctx (λ w → h₁ □ w) ⟩
+         =⟨ H-is-abelian (h₂ □ h₄) h₃ |in-ctx (λ w → h₁ □ w) ⟩
        h₁ □ (h₃ □ (h₂ □ h₄))
          =⟨ ! (H.assoc h₁ h₃ (h₂ □ h₄)) ⟩
        (h₁ □ h₃) □ (h₂ □ h₄) =∎
        where
         infix 80 _□_
         _□_ = H.comp
+
+  hom-group-structure : GroupStructure (G →ᴳ H)
+  hom-group-structure = record {
+    ident = cst-hom;
+    comp = hom-comp;
+    inv = inv-hom H H-is-abelian ∘ᴳ_;
+    unit-l = λ _ → group-hom= $ λ= λ _ → H.unit-l _;
+    unit-r = λ _ → group-hom= $ λ= λ _ → H.unit-r _;
+    assoc = λ _ _ _ → group-hom= $ λ= λ _ → H.assoc _ _ _;
+    inv-l = λ φ → group-hom= $ λ= λ _ → H.inv-l _;
+    inv-r = λ φ → group-hom= $ λ= λ _ → H.inv-r _}
+
+  hom-group : Group (lmax i j)
+  hom-group = group (G →ᴳ H) GroupHom-level hom-group-structure
