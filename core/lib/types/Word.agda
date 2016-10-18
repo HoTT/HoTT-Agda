@@ -54,3 +54,23 @@ module _ {A : Type i} {j} (G : Group j) where
     Word-extendᴳ-++ f (x :: l₁) l₂ =
         ap (G.comp (PlusMinus-extendᴳ f x)) (Word-extendᴳ-++ f l₁ l₂)
       ∙ ! (G.assoc (PlusMinus-extendᴳ f x) (Word-extendᴳ f l₁)  (Word-extendᴳ f l₂))
+
+module _ {A : Type i} {j} (G : AbGroup j) where
+  private
+    module G = AbGroup G
+
+  abstract
+    PlusMinus-extendᴳ-comp : ∀ (f g : A → G.El) x
+      → PlusMinus-extendᴳ G.grp (λ a → G.comp (f a) (g a)) x
+      == G.comp (PlusMinus-extendᴳ G.grp f x) (PlusMinus-extendᴳ G.grp g x)
+    PlusMinus-extendᴳ-comp f g (inl a) = idp
+    PlusMinus-extendᴳ-comp f g (inr a) = G.inv-comp (f a) (g a) ∙ G.comm (G.inv (g a)) (G.inv (f a))
+
+    Word-extendᴳ-comp : ∀ (f g : A → G.El) l
+      → Word-extendᴳ G.grp (λ a → G.comp (f a) (g a)) l
+      == G.comp (Word-extendᴳ G.grp f l) (Word-extendᴳ G.grp g l)
+    Word-extendᴳ-comp f g nil = ! (G.unit-l G.ident)
+    Word-extendᴳ-comp f g (x :: l) =
+        ap2 G.comp (PlusMinus-extendᴳ-comp f g x) (Word-extendᴳ-comp f g l)
+      ∙ G.interchange (PlusMinus-extendᴳ G.grp f x) (PlusMinus-extendᴳ G.grp g x)
+          (Word-extendᴳ G.grp f l) (Word-extendᴳ G.grp g l)

@@ -158,6 +158,24 @@ module AbGroup {i} (G : AbGroup i) where
   comm = snd G
   open Group grp public
 
+  abstract
+    interchange : (g₁ g₂ g₃ g₄ : El) →
+        comp (comp g₁ g₂) (comp g₃ g₄)
+        == comp (comp g₁ g₃) (comp g₂ g₄)
+    interchange g₁ g₂ g₃ g₄ =
+      comp (comp g₁ g₂) (comp g₃ g₄)
+        =⟨ assoc g₁ g₂ (comp g₃ g₄) ⟩
+      comp g₁ (comp g₂ (comp g₃ g₄))
+        =⟨ comm g₃ g₄ |in-ctx (λ g → (comp g₁ (comp g₂ g))) ⟩
+      comp g₁ (comp g₂ (comp g₄ g₃))
+        =⟨ ! (assoc g₂ g₄ g₃) |in-ctx comp g₁ ⟩
+      comp g₁ (comp (comp g₂ g₄) g₃)
+        =⟨ comm (comp g₂ g₄) g₃ |in-ctx comp g₁ ⟩
+      comp g₁ (comp g₃ (comp g₂ g₄))
+        =⟨ ! (assoc g₁ g₃ (comp g₂ g₄)) ⟩
+      comp (comp g₁ g₃) (comp g₂ g₄)
+        =∎
+
 module _ where
   open GroupStructure
 

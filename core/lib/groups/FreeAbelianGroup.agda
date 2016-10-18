@@ -10,7 +10,9 @@ open import lib.types.Nat
 open import lib.types.List
 open import lib.types.Word
 open import lib.types.SetQuotient
+open import lib.groups.GroupProduct
 open import lib.groups.Homomorphism
+open import lib.groups.Isomorphism
 
 module lib.groups.FreeAbelianGroup {i} where
 
@@ -185,7 +187,8 @@ module _ (A : Type i) where
 
   module FreeAbGroup = AbGroup FreeAbGroup
 
--- freeness
+{- Freeness (universal properties) -}
+
 module _ {A : Type i} {j} (G : AbGroup j) where
 
   private
@@ -251,3 +254,14 @@ module _ {A : Type i} {j} (G : AbGroup j) where
 
     from-to : ∀ f → from (to f) == f
     from-to f = λ= λ a → G.unit-r (f a)
+
+  FreeAbGroup-extend-hom : Πᴳ A (λ _ → G.grp) →ᴳ hom-group (FreeAbGroup.grp A) G
+  FreeAbGroup-extend-hom = record {
+    f = FreeAbGroup-extend;
+    pres-comp = λ f₁ f₂ → group-hom= $ λ= $
+      FormalSum-elim (λ _ → =-preserves-set G.El-is-set)
+        (Word-extendᴳ-comp G f₁ f₂)
+        (λ _ → prop-has-all-paths-↓ (G.El-is-set _ _))}
+
+  FreeAbGroup-extend-iso : Πᴳ A (λ _ → G.grp) ≃ᴳ hom-group (FreeAbGroup.grp A) G
+  FreeAbGroup-extend-iso = FreeAbGroup-extend-hom , FreeAbGroup-extend-is-equiv

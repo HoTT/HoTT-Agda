@@ -292,29 +292,11 @@ module _ {i j} (G : Group i) (H : AbGroup j)
         H.comp (φ.f (G.comp g₁ g₂)) (ψ.f (G.comp g₁ g₂))
           =⟨ ap2 H.comp (φ.pres-comp g₁ g₂) (ψ.pres-comp g₁ g₂) ⟩
         H.comp (H.comp (φ.f g₁) (φ.f g₂)) (H.comp (ψ.f g₁) (ψ.f g₂))
-          =⟨ lemma (φ.f g₁) (φ.f g₂) (ψ.f g₁) (ψ.f g₂) ⟩
+          =⟨ H.interchange (φ.f g₁) (φ.f g₂) (ψ.f g₁) (ψ.f g₂) ⟩
         H.comp (H.comp (φ.f g₁) (ψ.f g₁)) (H.comp (φ.f g₂) (ψ.f g₂)) =∎)
       where
       module φ = GroupHom φ
       module ψ = GroupHom ψ
-      lemma : (h₁ h₂ h₃ h₄ : H.El) →
-        H.comp (H.comp h₁ h₂) (H.comp h₃ h₄)
-        == H.comp (H.comp h₁ h₃) (H.comp h₂ h₄)
-      lemma h₁ h₂ h₃ h₄ =
-        (h₁ □ h₂) □ (h₃ □ h₄)
-           =⟨ H.assoc h₁ h₂ (h₃ □ h₄) ⟩
-         h₁ □ (h₂ □ (h₃ □ h₄))
-           =⟨ H.comm h₃ h₄ |in-ctx (λ w → h₁ □ (h₂ □ w)) ⟩
-         h₁ □ (h₂ □ (h₄ □ h₃))
-           =⟨ ! (H.assoc h₂ h₄ h₃) |in-ctx (λ w → h₁ □ w) ⟩
-         h₁ □ ((h₂ □ h₄) □ h₃)
-           =⟨ H.comm (h₂ □ h₄) h₃ |in-ctx (λ w → h₁ □ w) ⟩
-         h₁ □ (h₃ □ (h₂ □ h₄))
-           =⟨ ! (H.assoc h₁ h₃ (h₂ □ h₄)) ⟩
-         (h₁ □ h₃) □ (h₂ □ h₄) =∎
-         where
-          infix 80 _□_
-          _□_ = H.comp
 
   hom-group-structure : GroupStructure (G →ᴳ H.grp)
   hom-group-structure = record {
