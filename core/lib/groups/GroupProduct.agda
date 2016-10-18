@@ -1,13 +1,14 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
-open import lib.types.Group
 open import lib.types.Bool
+open import lib.types.Group
 open import lib.types.Nat
 open import lib.types.Pi
 open import lib.types.Sigma
 open import lib.groups.Homomorphism
 open import lib.groups.Isomorphism
+open import lib.groups.SubgroupProp
 open import lib.groups.Lift
 open import lib.groups.Unit
 
@@ -55,6 +56,11 @@ _×ᴳ_ (group A A-level A-struct) (group B B-level B-struct) =
                (Π-group-struct (group-struct ∘ F))
   where open Group
 
+{- functorial behavior of [Πᴳ] -}
+Πᴳ-emap-r : ∀ {i j k} (I : Type i) {F : I → Group j} {G : I → Group k}
+  → (∀ i → F i ≃ᴳ G i) → Πᴳ I F ≃ᴳ Πᴳ I G
+Πᴳ-emap-r I {F} {G} iso = ≃-to-≃ᴳ (Π-emap-r (GroupIso.f-equiv ∘ iso))
+  (λ f g → λ= λ i → GroupIso.pres-comp (iso i) (f i) (g i))
 
 {- the product of abelian groups is abelian -}
 ×ᴳ-abelian : ∀ {i j} {G : Group i} {H : Group j}
@@ -233,3 +239,8 @@ module _ {i} where
   ^ᴳ-+ : (H : Group i) (m n : ℕ) → H ^ᴳ (m + n) ≃ᴳ (H ^ᴳ m) ×ᴳ (H ^ᴳ n)
   ^ᴳ-+ H O n = ×ᴳ-emap (lift-iso {G = 0ᴳ}) (idiso (H ^ᴳ n)) ∘eᴳ ×ᴳ-unit-l (H ^ᴳ n) ⁻¹ᴳ
   ^ᴳ-+ H (S m) n = ×ᴳ-assoc H (H ^ᴳ m) (H ^ᴳ n) ⁻¹ᴳ ∘eᴳ ×ᴳ-emap (idiso H) (^ᴳ-+ H m n)
+
+module _ where
+  Πᴳ-is-trivial : ∀ {i j} (I : Type i) {F : I → Group j}
+    → (∀ (i : I) → is-trivialᴳ (F i)) → is-trivialᴳ (Πᴳ I F)
+  Πᴳ-is-trivial I {F} F-is-trivial = λ f → λ= λ i → F-is-trivial i (f i)

@@ -176,6 +176,16 @@ module AbGroup {i} (G : AbGroup i) where
       comp (comp g₁ g₃) (comp g₂ g₄)
         =∎
 
+is-trivialᴳ : ∀ {i} (G : Group i) → Type i
+is-trivialᴳ G = ∀ g → g == Group.ident G
+
+contr-is-trivialᴳ : ∀ {i} (G : Group i)
+  → is-contr (Group.El G) → is-trivialᴳ G
+contr-is-trivialᴳ G El-is-contr g =
+  contr-has-all-paths El-is-contr _ _
+
+{- group-structure= -}
+
 module _ where
   open GroupStructure
 

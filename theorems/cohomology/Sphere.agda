@@ -7,20 +7,19 @@ module cohomology.Sphere {i} (OT : OrdinaryTheory i) where
 
 open OrdinaryTheory OT
 
-C-Sphere-≠ : (n : ℤ) (m : ℕ) → (n ≠ ℕ-to-ℤ m)
-  → C n (⊙Lift (⊙Sphere m)) ≃ᴳ 0ᴳ
-C-Sphere-≠ n O neq = C-dimension n neq
-C-Sphere-≠ n (S m) neq =
-  C n (⊙Lift (⊙Sphere (S m)))
+C-Sphere-≠-is-trivial : (n : ℤ) (m : ℕ) → (n ≠ ℕ-to-ℤ m)
+  → is-trivialᴳ (C n (⊙Lift (⊙Sphere m)))
+C-Sphere-≠-is-trivial n O neq = C-dimension n neq
+C-Sphere-≠-is-trivial n (S m) neq = iso-preserves'-trivial
+  (C n (⊙Lift (⊙Sphere (S m)))
     ≃ᴳ⟨ C-emap n $ ⊙Susp-Lift-econv (⊙Sphere m) ⟩
   C n (⊙Susp (⊙Lift (⊙Sphere m)))
     ≃ᴳ⟨ transportᴳ-equiv (λ n → C n (⊙Susp (⊙Lift (⊙Sphere m)))) (succ-pred n) ⁻¹ᴳ ⟩
   C (succ (pred n)) (⊙Susp (⊙Lift (⊙Sphere m)))
     ≃ᴳ⟨ C-Susp (pred n) (⊙Lift (⊙Sphere m)) ⟩
   C (pred n) (⊙Lift (⊙Sphere m))
-    ≃ᴳ⟨ C-Sphere-≠ (pred n) m (λ p → neq (pred-is-inj n (ℕ-to-ℤ (S m)) p)) ⟩
-  0ᴳ
-    ≃ᴳ∎
+    ≃ᴳ∎)
+  (C-Sphere-≠-is-trivial (pred n) m (λ p → neq (pred-is-inj n (ℕ-to-ℤ (S m)) p)))
 
 C-Sphere-diag : (m : ℕ) → C (ℕ-to-ℤ m) (⊙Lift (⊙Sphere m)) ≃ᴳ C 0 (⊙Lift ⊙S⁰)
 C-Sphere-diag O = idiso _

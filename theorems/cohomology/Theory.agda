@@ -95,4 +95,4 @@ record OrdinaryTheory i : Type (lsucc i) where
     cohomology-theory : CohomologyTheory i
   open CohomologyTheory cohomology-theory public
   field
-    C-dimension : (n : ℤ) → n ≠ 0 → C n (⊙Lift ⊙S⁰) ≃ᴳ 0ᴳ
+    C-dimension : (n : ℤ) → n ≠ 0 → is-trivialᴳ (C n (⊙Lift ⊙S⁰))

@@ -126,8 +126,5 @@ trivial-propᴳ G = record {
     ∙ G.unit-r G.ident}
   where module G = Group G
 
-is-trivialᴳ : ∀ {i} (G : Group i) → Type i
-is-trivialᴳ G = is-fullᴳ (trivial-propᴳ G)
-
 is-trivial-propᴳ : ∀ {i j} {G : Group i} → SubgroupProp G j → Type (lmax i j)
 is-trivial-propᴳ {G = G} P = P ⊆ᴳ trivial-propᴳ G

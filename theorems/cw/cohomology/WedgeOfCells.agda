@@ -5,11 +5,12 @@ open import cohomology.Theory
 open import homotopy.PushoutSplit
 open import cw.CW
 
-module cw.cohomology.WedgeOfCells {i} (CT : OrdinaryTheory i) where
+module cw.cohomology.WedgeOfCells {i} (OT : OrdinaryTheory i) where
 
-open OrdinaryTheory CT
+open OrdinaryTheory OT
 private
   G = C 0 (⊙Lift ⊙Bool)
+open import cohomology.Sphere OT
 
 incl-last : ∀ {n} (skel : Skeleton {i} (S n))
   → (⟦ skel ⟧₋₁ → ⟦ skel ⟧)
@@ -74,3 +75,20 @@ C-incl-last n {m} (skel-attach skel cells attaching) (_ , cells-ac)
   =   C-additive-iso n (λ _ → ⊙Lift (⊙Sphere (S m))) cells-ac
   ∘eᴳ C-emap n (   ⊙Cofiber-incl-last (skel-attach skel cells attaching)
                ⊙∘e ⊙BigWedge-emap-r (λ a → ⊙lower-equiv))
+
+C-incl-last-diag : ∀ n (skel : Skeleton {i} (S n))
+  → (ac : has-cells-with-choice 0 skel i)
+  →  C (ℕ-to-ℤ (S n)) (Cofiber (incl-last skel) , cfbase)
+  ≃ᴳ Πᴳ (fst (cells-last skel)) (λ _ → G)
+C-incl-last-diag n skel ac =
+      Πᴳ-emap-r (fst (cells-last skel)) (λ _ → C-Sphere-diag (S n))
+  ∘eᴳ C-incl-last (ℕ-to-ℤ (S n)) skel ac
+
+C-incl-last-≠-is-trivial : ∀ (n : ℤ) {m} (n≠Sm : n ≠ ℕ-to-ℤ (S m))
+  → (skel : Skeleton {i} (S m))
+  → (ac : has-cells-with-choice 0 skel i)
+  → is-trivialᴳ (C n (Cofiber (incl-last skel) , cfbase))
+C-incl-last-≠-is-trivial n {m} n≠Sm skel ac =
+  iso-preserves'-trivial (C-incl-last n skel ac) $
+    Πᴳ-is-trivial (fst (cells-last skel)) {λ _ → C n (⊙Lift (⊙Sphere (S m)))}
+      λ _ → C-Sphere-≠-is-trivial n (S m) n≠Sm
