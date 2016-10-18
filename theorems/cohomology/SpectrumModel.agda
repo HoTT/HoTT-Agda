@@ -35,8 +35,8 @@ module SpectrumModel where
     where
     pt-lemma : ∀ {i} {A : Type i} {x : A} {p q : idp {a = x} == idp {a = x}}
       (α : p == idp) (β : q == idp)
-      →  ⊙∘-pt (fst ⊙Ω-∙) (pair×= α β) idp
-      == ⊙∘-pt (fst ⊙Ω-∙) (pair×= β α) idp
+      →  ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt α β) idp
+      == ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt β α) idp
        [ _== idp ↓ Ω^2-∙-comm p q ]
     pt-lemma idp idp = idp
 
