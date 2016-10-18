@@ -8,7 +8,7 @@ open import cohomology.WithCoefficients
 
 module cohomology.EMModel where
 
-module _ {i} (G : AbelianGroup i) where
+module _ {i} (G : AbGroup i) where
 
   open EMExplicit G using (⊙EM; EM-level; EM-conn; spectrum)
 

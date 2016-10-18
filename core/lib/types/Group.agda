@@ -150,10 +150,10 @@ Group₀ = Group lzero
 is-abelian : ∀ {i} → Group i → Type i
 is-abelian G = (a b : Group.El G) → Group.comp G a b == Group.comp G b a
 
-AbelianGroup : ∀ i → Type (lsucc i)
-AbelianGroup i = Σ (Group i) is-abelian
+AbGroup : ∀ i → Type (lsucc i)
+AbGroup i = Σ (Group i) is-abelian
 
-module AbelianGroup {i} (G : AbelianGroup i) where
+module AbGroup {i} (G : AbGroup i) where
   grp = fst G
   comm = snd G
   open Group grp public

@@ -227,7 +227,7 @@ module _ (dec : has-dec-eq A) where
       (λ a → Word-coef-++ (Word-flip w₂) w₁ a
            ∙ ap2 _ℤ+_ (Word-coef-flip w₂ a) (same-coef a)
            ∙ ℤ~-inv-l (Word-coef w₂ a))
-    where module G = Group (FreeAbelianGroup A)
+    where module G = FreeAbGroup A
 
   FormalSum-coef-ext : ∀ fs₁ fs₂
     → (∀ a → FormalSum-coef fs₁ a == FormalSum-coef fs₂ a)

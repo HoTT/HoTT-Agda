@@ -180,17 +180,16 @@ module _ (A : Type i) where
     ; inv-l = ⊟-inv-l
     }
 
-  FreeAbelianGroup : Group i
-  FreeAbelianGroup = group _ FormalSum-is-set FormalSum-group-structure
+  FreeAbGroup : AbGroup i
+  FreeAbGroup = group _ FormalSum-is-set FormalSum-group-structure , ⊞-comm
 
-  FreeAbelianGroup-is-abelian : is-abelian FreeAbelianGroup
-  FreeAbelianGroup-is-abelian = ⊞-comm
+  module FreeAbGroup = AbGroup FreeAbGroup
 
 -- freeness
-module _ {A : Type i} {j} (G : AbelianGroup j) where
+module _ {A : Type i} {j} (G : AbGroup j) where
 
   private
-    module G = AbelianGroup G
+    module G = AbGroup G
 
     abstract
       Word-extendᴳ-emap : ∀ f {l₁ l₂}
@@ -211,8 +210,8 @@ module _ {A : Type i} {j} (G : AbelianGroup j) where
           ! (G.assoc (G.inv (f x)) (f x) (Word-extendᴳ G.grp f l))
         ∙ ap (λ g → G.comp g (Word-extendᴳ G.grp f l)) (G.inv-l (f x)) ∙ G.unit-l _
 
-  FreeAbelianGroup-extend : (A → G.El) → (FreeAbelianGroup A →ᴳ G.grp)
-  FreeAbelianGroup-extend f = record {
+  FreeAbGroup-extend : (A → G.El) → (FreeAbGroup.grp A →ᴳ G.grp)
+  FreeAbGroup-extend f = record {
     f = FormalSum-rec G.El-level (Word-extendᴳ G.grp f)
           (λ r → Word-extendᴳ-emap f r);
     pres-comp =
@@ -224,7 +223,7 @@ module _ {A : Type i} {j} (G : AbelianGroup j) where
         (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → G.El-level _ _))}
 
   private
-    module Lemma (hom : FreeAbelianGroup A →ᴳ G.grp) where
+    module Lemma (hom : FreeAbGroup.grp A →ᴳ G.grp) where
       open GroupHom hom
       f* : A → G.El
       f* a = f fs[ inl a :: nil ]
@@ -239,9 +238,9 @@ module _ {A : Type i} {j} (G : AbelianGroup j) where
         Word-extend-hom (x :: l) = ap2 G.comp (PlusMinus-extend-hom x) (Word-extend-hom l) ∙ ! (pres-comp _ _)
     open Lemma
 
-  FreeAbelianGroup-extend-is-equiv : is-equiv FreeAbelianGroup-extend
-  FreeAbelianGroup-extend-is-equiv = is-eq _ from to-from from-to where
-    to = FreeAbelianGroup-extend
+  FreeAbGroup-extend-is-equiv : is-equiv FreeAbGroup-extend
+  FreeAbGroup-extend-is-equiv = is-eq _ from to-from from-to where
+    to = FreeAbGroup-extend
     from = f*
 
     to-from : ∀ h → to (from h) == h

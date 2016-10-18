@@ -185,14 +185,14 @@ module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (fst X))
       spectrum 1 = spectrum1
       spectrum (S (S n)) = spectrumSS n
 
-module EMExplicit {i} (G : AbelianGroup i) where
+module EMExplicit {i} (G : AbGroup i) where
   module HSpace = EM₁HSpace G
   open EMImplicit EM₁-conn EM₁-level HSpace.H-⊙EM₁ public
 
   open BelowDiagonal public using (πS-below)
 
-  πS-diag : (n : ℕ) → πS n (⊙EM (S n)) ≃ᴳ AbelianGroup.grp G
-  πS-diag n = π₁-EM₁ (AbelianGroup.grp G) ∘eᴳ OnDiagonal.πS-diag n
+  πS-diag : (n : ℕ) → πS n (⊙EM (S n)) ≃ᴳ AbGroup.grp G
+  πS-diag n = π₁-EM₁ (AbGroup.grp G) ∘eᴳ OnDiagonal.πS-diag n
 
   open AboveDiagonal public using (πS-above)
   open Spectrum public using (spectrum)

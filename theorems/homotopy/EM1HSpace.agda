@@ -5,10 +5,10 @@ open import homotopy.HSpace
 
 module homotopy.EM1HSpace where
 
-module EM₁HSpace {i} (G : AbelianGroup i) where
+module EM₁HSpace {i} (G : AbGroup i) where
 
   private
-    module G = AbelianGroup G
+    module G = AbGroup G
 
   mult-loop : (g : G.El) (x : EM₁ G.grp) → x == x
   mult-loop g = EM₁-elim

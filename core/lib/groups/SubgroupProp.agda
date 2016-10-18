@@ -96,7 +96,7 @@ abstract
     → is-normal P
   sub-abelian-is-normal {G = G} G-is-abelian P =
     comm-is-normal P λ g₁ g₂ Pg₁g₂ → transport P.prop (G.comm g₁ g₂) Pg₁g₂
-    where module G = AbelianGroup (G , G-is-abelian)
+    where module G = AbGroup (G , G-is-abelian)
           module P = SubgroupProp P
 
 sub-abelian-normal : ∀ {i j} {G : Group i}
