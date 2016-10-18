@@ -276,8 +276,8 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
   im-sub-ker-out : im-propᴳ φ ⊆ᴳ ker-propᴳ ψ → is-fullᴳ (ker-propᴳ (ψ ∘ᴳ φ))
   im-sub-ker-out s g = s (φ.f g) [ g , idp ]
 
-{- two homomorphisms into an abelian group can be composed with
- - the group operation -}
+{- homomorphisms into an abelian group can be composed with
+ - the group operation and form a group -}
 module _ {i j} (G : Group i) (H : AbGroup j)
   where
 
