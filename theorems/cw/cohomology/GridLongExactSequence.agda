@@ -5,7 +5,7 @@ open import cohomology.Theory
 open import groups.ExactSequence
 open import groups.HomSequence
 
-module cw.cohomology.LongExactSequence {i} (CT : CohomologyTheory i)
+module cw.cohomology.GridLongExactSequence {i} (CT : CohomologyTheory i)
   {X Y Z : Ptd i} (n : ℤ) (f : X ⊙→ Y) (g : Y ⊙→ Z) where
 
 open CohomologyTheory CT
