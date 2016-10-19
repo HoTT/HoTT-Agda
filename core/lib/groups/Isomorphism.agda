@@ -230,7 +230,7 @@ iso-preserves'-trivial iso H-is-trivial g =
 
 -- a surjective and injective homomorphism is an isomorphism
 module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H)
-  (inj : is-injᴳ φ) (surj : is-surjᴳ φ) where
+  (surj : is-surjᴳ φ) (inj : is-injᴳ φ) where
   private
     module G = Group G
     module H = Group H
