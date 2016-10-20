@@ -366,10 +366,11 @@ type (positively)
 data Phantom {i} {A : Type i} (a : A) : Type₀ where
   phantom : Phantom a
 
-{- Numeric literal overloading
- -
- - This enables writing numeric literals
- -}
+{-
+Numeric literal overloading
+
+This enables writing numeric literals
+-}
 
 record FromNat {i} (A : Type i) : Type (lsucc i) where
   field
