@@ -49,14 +49,17 @@ module _ {i} where
 
   {- Having decidable equality is stronger that being a set -}
 
+  has-dec-onesided-eq : {A : Type i} → A → Type i
+  has-dec-onesided-eq x = ∀ y → Dec (x == y)
+
   has-dec-eq : Type i → Type i
-  has-dec-eq A = Decidable (_==_ :> Rel A i)
+  has-dec-eq A = (x : A) → has-dec-onesided-eq x
 
   abstract
     -- XXX naming
-    onesided-dec-eq-is-prop : {A : Type i} (x : A)
-      → (∀ y → Dec (x == y)) → (∀ y → is-prop (x == y))
-    onesided-dec-eq-is-prop {A} x d y = all-paths-is-prop UIP where
+    dec-onesided-eq-is-prop : {A : Type i} (x : A)
+      → has-dec-onesided-eq x → (∀ y → is-prop (x == y))
+    dec-onesided-eq-is-prop {A} x d y = all-paths-is-prop UIP where
 
       T : {y : A} → x == y → Type i
       T {y} p with d x | d y
@@ -75,7 +78,7 @@ module _ {i} where
       UIP idp q | inr r⊥ | _ = Empty-elim (r⊥ idp)
 
     dec-eq-is-set : {A : Type i} → has-dec-eq A → is-set A
-    dec-eq-is-set d x y = onesided-dec-eq-is-prop x (d x) y
+    dec-eq-is-set d x y = dec-onesided-eq-is-prop x (d x) y
 
   {- Relationships between levels -}
 
@@ -93,6 +96,9 @@ module _ {i} where
       inhab-to-contr-is-prop : (A → is-contr A) → is-prop A
       inhab-to-contr-is-prop c = all-paths-is-prop $
         λ x y → ! (snd (c x) x) ∙ snd (c x) y
+
+      inhab-to-prop-is-prop : (A → is-prop A) → is-prop A
+      inhab-to-prop-is-prop c x y = c x x y
 
       contr-has-level : {n : ℕ₋₂} → (is-contr A → has-level n A)
       contr-has-level {n = ⟨-2⟩} p = p

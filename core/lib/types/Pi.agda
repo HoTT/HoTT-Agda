@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
+open import lib.types.Empty
 open import lib.types.Sigma
 open import lib.types.Paths
 
@@ -33,6 +34,11 @@ module _ {i j} {A : Type i} {B : Type j} where
 
     →-is-prop : is-prop B → is-prop (A → B)
     →-is-prop = →-level
+
+module _ {i} {A : Type i} where
+  abstract
+    ¬-is-prop : is-prop (¬ A)
+    ¬-is-prop = →-is-prop ⊥-is-prop
 
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
   abstract

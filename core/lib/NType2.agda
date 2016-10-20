@@ -10,10 +10,15 @@ open import lib.types.TLevel
 
 module lib.NType2 where
 
-abstract
-  has-dec-eq-is-prop : ∀ {i} {A : Type i} → is-prop (has-dec-eq A)
-  has-dec-eq-is-prop dec =
-    (Π-is-prop λ a₁ → Π-is-prop λ a₂ → Dec-level (dec-eq-is-set dec a₁ a₂)) dec
+module _ {i} {A : Type i} where
+  abstract
+    has-dec-onesided-eq-is-prop : {x : A} → is-prop (has-dec-onesided-eq x)
+    has-dec-onesided-eq-is-prop {x = x} = inhab-to-prop-is-prop λ dec →
+      Π-is-prop λ y → Dec-level (dec-onesided-eq-is-prop x dec y)
+
+    has-dec-eq-is-prop : is-prop (has-dec-eq A)
+    has-dec-eq-is-prop = Π-is-prop λ _ → has-dec-onesided-eq-is-prop
+
 
 module _ {i j} {A : Type i} {B : A → Type j} where
   abstract

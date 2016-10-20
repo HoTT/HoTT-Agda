@@ -16,4 +16,4 @@ module _ {i} {P : Type i} where
   Dec-level pP (inr p⊥) (inl p) = ⊥-rec $ p⊥ p
   Dec-level {n} pP (inr p⊥₁) (inr p⊥₂) =
     equiv-preserves-level (inr=inr-equiv p⊥₁ p⊥₂ ⁻¹)
-      (→-level (prop-has-level-S ⊥-is-prop) p⊥₁ p⊥₂)
+      (prop-has-level-S ¬-is-prop p⊥₁ p⊥₂)
