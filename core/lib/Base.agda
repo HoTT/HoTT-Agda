@@ -375,14 +375,6 @@ type (positively)
 data Phantom {i} {A : Type i} (a : A) : Type₀ where
   phantom : Phantom a
 
-{-
--- When you want to cheat
-
-module ADMIT where
-  postulate
-    ADMIT : ∀ {i} {A : Type i} → A
--}
-
 {- Numeric literal overloading
  -
  - This enables writing numeric literals
