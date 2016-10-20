@@ -5,7 +5,7 @@ open import lib.types.Paths
 
 module lib.types.Unit where
 
-tt = unit
+pattern tt = unit
 
 ⊙Unit : Ptd₀
 ⊙Unit = ⊙[ Unit , unit ]
