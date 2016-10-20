@@ -324,15 +324,6 @@ uncurry : ∀ {i j k} {A : Type i} {B : A → Type j} {C : ∀ x → B x → Typ
   → (∀ x y → C x y) → (∀ s → C (fst s) (snd s))
 uncurry f (x , y) = f x y
 
--- (Un)curryfication with the first argument made implicit
-curryi : ∀ {i j k} {A : Type i} {B : A → Type j} {C : Σ A B → Type k}
-  → (∀ s → C s) → (∀ {x} y → C (x , y))
-curryi f y = f (_ , y)
-
-uncurryi : ∀ {i j k} {A : Type i} {B : A → Type j} {C : ∀ x → B x → Type k}
-  → (∀ {x} y → C x y) → (∀ s → C (fst s) (snd s))
-uncurryi f (x , y) = f y
-
 {- Truncation levels
 
 The type of truncation levels is isomorphic to the type of natural numbers but
