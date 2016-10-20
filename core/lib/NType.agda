@@ -53,25 +53,29 @@ module _ {i} where
   has-dec-eq A = Decidable (_==_ :> Rel A i)
 
   abstract
-    dec-eq-is-set : {A : Type i} → (has-dec-eq A → is-set A)
-    dec-eq-is-set {A} d x y = all-paths-is-prop UIP where
+    -- XXX naming
+    onesided-dec-eq-is-prop : {A : Type i} (x : A)
+      → (∀ y → Dec (x == y)) → (∀ y → is-prop (x == y))
+    onesided-dec-eq-is-prop {A} x d y = all-paths-is-prop UIP where
 
-     UIP : {x y : A} (p q : x == y) -> p == q
-     UIP {x} idp q with d x x | lemma q  where
+      T : {y : A} → x == y → Type i
+      T {y} p with d x | d y
+      T {y} p | inr _  | _      = Lift ⊥
+      T {y} p | inl _  | inr _  = Lift ⊥
+      T {y} p | inl dx | inl dy = ! dx ∙ dy == p
 
-       T : {x y : A} → x == y → Type i
-       T {x} {y} p =
-         match (d x y) withl (λ b → match (d x x) withl (λ b' → p == ! b' ∙ b)
-                                                  withr (λ _ → Lift Empty))
-                       withr (λ _ → Lift Empty)
+      lemma : {y : A} → (p : x == y) → T p
+      lemma idp with d x
+      lemma idp | inl r  = !-inv-l r
+      lemma idp | inr r⊥ = lift (r⊥ idp)
 
-       lemma : {x y : A} → (p : x == y) -> T p
-       lemma {x} idp with (d x x)
-       lemma idp | inl a = ! (!-inv-l a)
-       lemma idp | inr r = lift (r idp)
+      UIP : {y : A} (p q : x == y) → p == q
+      UIP idp q with d x | lemma q where
+      UIP idp q | inl r  | s = ! (!-inv-l r) ∙' s
+      UIP idp q | inr r⊥ | _ = Empty-elim (r⊥ idp)
 
-     UIP idp q | inl a | p' = ! (!-inv-l a) ∙ (! p')
-     UIP idp q | inr r | _ = Empty-elim (r idp)
+    dec-eq-is-set : {A : Type i} → has-dec-eq A → is-set A
+    dec-eq-is-set d x y = onesided-dec-eq-is-prop x (d x) y
 
   {- Relationships between levels -}
 
