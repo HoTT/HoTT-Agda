@@ -6,7 +6,6 @@ open import lib.types.TLevel
 open import lib.NType2
 open import lib.types.Pi
 open import lib.types.Sigma
-open import lib.types.Pointed
 open import lib.types.LoopSpace
 open import lib.types.Truncation
 open import lib.types.PathSet

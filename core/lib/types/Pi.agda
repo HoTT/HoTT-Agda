@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
+open import lib.types.Sigma
 open import lib.types.Paths
 
 module lib.types.Pi where
@@ -32,6 +33,12 @@ module _ {i j} {A : Type i} {B : Type j} where
 
     →-is-prop : is-prop B → is-prop (A → B)
     →-is-prop = →-level
+
+module _ {i j} {X : Ptd i} {Y : Ptd j} where
+  abstract
+    ⊙→-level : {n : ℕ₋₂} → has-level n (fst Y) → has-level n (X ⊙→ Y)
+    ⊙→-level pY = Σ-level (→-level pY) (λ _ → =-preserves-level _ pY)
+
 
 {- Equivalences in a Π-type -}
 Π-emap-l : ∀ {i j k} {A : Type i} {B : Type j} (P : B → Type k)

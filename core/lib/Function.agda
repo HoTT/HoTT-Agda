@@ -1,10 +1,38 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Base
+open import lib.PathGroupoid
+
+{-
+This file contains various basic definitions and lemmas about functions
+(non-dependent [Pi] types) that do not belong anywhere else.
+-}
 
 module lib.Function where
 
+{- Basic lemmas about pointed maps -}
+
+-- concatenation
+⊙∘-pt : ∀ {i j} {A : Type i} {B : Type j}
+  {a₁ a₂ : A} (f : A → B) {b : B}
+  → a₁ == a₂ → f a₂ == b → f a₁ == b
+⊙∘-pt f p q = ap f p ∙ q
+
+infixr 80 _⊙∘_
+_⊙∘_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  (g : Y ⊙→ Z) (f : X ⊙→ Y) → X ⊙→ Z
+(g , gpt) ⊙∘ (f , fpt) = (g ∘ f) , ⊙∘-pt g fpt gpt
+
+⊙∘-unit-l : ∀ {i j} {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y)
+  → ⊙idf Y ⊙∘ f == f
+⊙∘-unit-l (f , idp) = idp
+
+⊙∘-unit-r : ∀ {i j} {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y)
+  → f ⊙∘ ⊙idf X == f
+⊙∘-unit-r f = idp
+
 {- Homotopy fibers -}
+
 hfiber : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) (y : B) → Type (lmax i j)
 hfiber {A = A} f y = Σ A (λ x → f x == y)
 

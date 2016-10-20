@@ -304,3 +304,34 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k
   choice = equiv f g (λ _ → idp) (λ _ → idp)
     where f = λ c → ((λ a → fst (c a)) , (λ a → snd (c a)))
           g = λ d → (λ a → (fst d a , snd d a))
+
+{-
+Pointed equivalences
+-}
+
+infix 30 _⊙≃_
+_⊙≃_ : ∀ {i j} → Ptd i → Ptd j → Type (lmax i j)
+X ⊙≃ Y = Σ (X ⊙→ Y) (λ {(f , _) → is-equiv f})
+
+≃-to-⊙≃ : ∀ {i j} {X : Ptd i} {Y : Ptd j}
+  (e : fst X ≃ fst Y) (p : –> e (snd X) == snd Y)
+  → X ⊙≃ Y
+≃-to-⊙≃ (f , ie) p = ((f , p) , ie)
+
+⊙ide : ∀ {i} (X : Ptd i) → (X ⊙≃ X)
+⊙ide X = ⊙idf X , idf-is-equiv (fst X)
+
+infixr 80 _⊙∘e_
+_⊙∘e_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  (g : Y ⊙≃ Z) (f : X ⊙≃ Y) → X ⊙≃ Z
+(g , g-eq) ⊙∘e (f , f-eq) = (g ⊙∘ f , g-eq ∘ise f-eq)
+
+infix 15 _⊙≃∎
+infixr 10 _⊙≃⟨_⟩_
+
+_⊙≃⟨_⟩_ : ∀ {i j k} (X : Ptd i) {Y : Ptd j} {Z : Ptd k}
+  → X ⊙≃ Y → Y ⊙≃ Z → X ⊙≃ Z
+X ⊙≃⟨ u ⟩ v = v ⊙∘e u
+
+_⊙≃∎ : ∀ {i} (X : Ptd i) → X ⊙≃ X
+_⊙≃∎ = ⊙ide

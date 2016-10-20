@@ -2,7 +2,6 @@
 
 open import lib.Basics
 open import lib.types.TLevel
-open import lib.types.Pointed
 open import lib.types.Pi
 open import lib.types.Sigma
 open import lib.NType2

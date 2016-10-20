@@ -7,7 +7,6 @@ open import lib.NConnected
 open import lib.types.TLevel
 open import lib.types.Truncation
 open import lib.types.Group
-open import lib.types.Pointed
 open import lib.groups.LoopSpace
 open import lib.groups.Homomorphism
 

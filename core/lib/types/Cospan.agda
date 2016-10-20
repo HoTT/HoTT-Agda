@@ -2,7 +2,6 @@
 
 open import lib.Basics
 open import lib.types.Pi
-open import lib.types.Pointed
 
 module lib.types.Cospan where
 

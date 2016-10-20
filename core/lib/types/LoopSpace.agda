@@ -2,14 +2,13 @@
 
 open import lib.Basics
 open import lib.NConnected
-open import lib.types.Nat
-open import lib.types.TLevel
 open import lib.types.Empty
+open import lib.types.Nat
+open import lib.types.Paths
 open import lib.types.Pi
 open import lib.types.Pointed
-open import lib.types.PointedSigma
-open import lib.types.Paths
 open import lib.types.Sigma
+open import lib.types.TLevel
 open import lib.types.Truncation
 
 module lib.types.LoopSpace where

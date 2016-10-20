@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
-open import lib.types.Pointed
 
 module lib.types.Lift where
 

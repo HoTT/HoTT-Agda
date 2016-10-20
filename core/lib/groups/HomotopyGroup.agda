@@ -2,22 +2,21 @@
 
 open import lib.Basics
 open import lib.NType2
-open import lib.types.Nat
-open import lib.types.TLevel
 open import lib.types.Empty
-open import lib.types.Pi
-open import lib.types.Sigma
-open import lib.types.Truncation
-open import lib.types.Pointed
-open import lib.types.PointedSigma
 open import lib.types.Group
 open import lib.types.LoopSpace
-open import lib.groups.TruncationGroup
+open import lib.types.Nat
+open import lib.types.Pi
+open import lib.types.Pointed
+open import lib.types.Sigma
+open import lib.types.TLevel
+open import lib.types.Truncation
 open import lib.groups.GroupProduct
 open import lib.groups.Homomorphism
 open import lib.groups.Isomorphism
-open import lib.groups.Unit
 open import lib.groups.LoopSpace
+open import lib.groups.TruncationGroup
+open import lib.groups.Unit
 
 module lib.groups.HomotopyGroup where
 

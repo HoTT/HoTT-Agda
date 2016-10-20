@@ -3,7 +3,6 @@
 open import lib.Basics
 open import lib.types.Int
 open import lib.types.Pi
-open import lib.types.Pointed
 
 module lib.types.Group where
 

@@ -5,7 +5,6 @@ open import lib.types.Bool
 open import lib.types.Empty
 open import lib.types.Lift
 open import lib.types.Pi
-open import lib.types.Pointed
 
 module lib.types.Coproduct where
 

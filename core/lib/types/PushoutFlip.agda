@@ -1,10 +1,10 @@
 {-# OPTIONS --without-K #-}
 
 open import lib.Basics
-open import lib.types.Pointed
-open import lib.types.Span
 open import lib.types.Paths
+open import lib.types.Pointed
 open import lib.types.Pushout
+open import lib.types.Span
 
 module lib.types.PushoutFlip where
 

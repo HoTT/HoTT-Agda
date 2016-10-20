@@ -5,63 +5,30 @@ open import lib.types.Paths
 open import lib.types.Pi
 open import lib.types.Sigma
 
-module lib.types.Pointed where
-
-Ptd : ∀ i → Type (lsucc i)
-Ptd i = Σ (Type i) (λ A → A)
-
-Ptd₀ = Ptd lzero
-
-⊙[_,_] : ∀ {i} (A : Type i) (a : A) → Ptd i
-⊙[_,_] = _,_
-
 {-
-Pointed maps.
-
-[A ⊙→ B] was pointed, but it was never used as a pointed type.
+This file contains various lemmas that rely on lib.types.Paths or
+functional extensionality for pointed maps.
 -}
 
-infixr 0 _⊙→_
-_⊙→_ : ∀ {i j} → Ptd i → Ptd j → Type (lmax i j)
-(A , a₀) ⊙→ (B , b₀) = Σ (A → B) (λ f → f a₀ == b₀)
+module lib.types.Pointed where
 
-⊙idf : ∀ {i} (X : Ptd i) → X ⊙→ X
-⊙idf X = ((λ x → x) , idp)
+{- Pointed maps -}
 
-⊙cst : ∀ {i j} {X : Ptd i} {Y : Ptd j} → X ⊙→ Y
-⊙cst {Y = Y} = ((λ x → snd Y) , idp)
-
--- function extensionality for pointed functions
+-- function extensionality for pointed maps
 ⊙λ= : ∀ {i j} {X : Ptd i} {Y : Ptd j} {f g : X ⊙→ Y}
   (p : ∀ x → fst f x == fst g x) (α : snd f == snd g [ (λ y → y == snd Y) ↓ p (snd X) ])
   → f == g
 ⊙λ= {g = g} p α =
   pair= (λ= p) (↓-app=cst-in (↓-idf=cst-out α ∙ ap (_∙ snd g) (! (app=-β p _))))
 
+{-
 ⊙λ=' : ∀ {i j} {X : Ptd i} {Y : Ptd j} {f g : X ⊙→ Y}
   (p : ∀ x → fst f x == fst g x) (α : snd f == p (snd X) ∙ snd g)
   → f == g
 ⊙λ=' p α = ⊙λ= p (↓-idf=cst-in α)
+-}
 
--- concatenation
-⊙∘-pt : ∀ {i j} {A : Type i} {B : Type j}
-  {a₁ a₂ : A} (f : A → B) {b : B}
-  → a₁ == a₂ → f a₂ == b → f a₁ == b
-⊙∘-pt f p q = ap f p ∙ q
-
-infixr 80 _⊙∘_
-_⊙∘_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-  (g : Y ⊙→ Z) (f : X ⊙→ Y) → X ⊙→ Z
-(g , gpt) ⊙∘ (f , fpt) = (g ∘ f) , ⊙∘-pt g fpt gpt
-
-⊙∘-unit-l : ∀ {i j} {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y)
-  → ⊙idf Y ⊙∘ f == f
-⊙∘-unit-l (f , idp) = idp
-
-⊙∘-unit-r : ∀ {i j} {X : Ptd i} {Y : Ptd j} (f : X ⊙→ Y)
-  → f ⊙∘ ⊙idf X == f
-⊙∘-unit-r f = idp
-
+-- associativity of pointed maps
 ⊙∘-assoc-pt : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
   {a₁ a₂ : A} (f : A → B) {b : B} (g : B → C) {c : C}
   (p : a₁ == a₂) (q : f a₂ == b) (r : g b == c)
@@ -73,41 +40,7 @@ _⊙∘_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   → ((h ⊙∘ g) ⊙∘ f) == (h ⊙∘ (g ⊙∘ f))
 ⊙∘-assoc (h , hpt) (g , gpt) (f , fpt) = ⊙λ= (λ _ → idp) (⊙∘-assoc-pt g h fpt gpt hpt)
 
--- [⊙→] preserves hlevel
-⊙→-level : ∀ {i j} {X : Ptd i} {Y : Ptd j} {n : ℕ₋₂}
-  → has-level n (fst Y) → has-level n (X ⊙→ Y)
-⊙→-level pY = Σ-level (Π-level (λ _ → pY)) (λ _ → =-preserves-level _ pY)
-
-{-
-Pointed equivalences
--}
-
-infix 30 _⊙≃_
-_⊙≃_ : ∀ {i j} → Ptd i → Ptd j → Type (lmax i j)
-X ⊙≃ Y = Σ (X ⊙→ Y) (λ {(f , _) → is-equiv f})
-
-≃-to-⊙≃ : ∀ {i j} {X : Ptd i} {Y : Ptd j}
-  (e : fst X ≃ fst Y) (p : –> e (snd X) == snd Y)
-  → X ⊙≃ Y
-≃-to-⊙≃ (f , ie) p = ((f , p) , ie)
-
-⊙ide : ∀ {i} (X : Ptd i) → (X ⊙≃ X)
-⊙ide X = ⊙idf X , idf-is-equiv (fst X)
-
-infixr 80 _⊙∘e_
-_⊙∘e_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
-  (g : Y ⊙≃ Z) (f : X ⊙≃ Y) → X ⊙≃ Z
-(g , g-eq) ⊙∘e (f , f-eq) = (g ⊙∘ f , g-eq ∘ise f-eq)
-
-infix 15 _⊙≃∎
-infixr 10 _⊙≃⟨_⟩_
-
-_⊙≃⟨_⟩_ : ∀ {i j k} (X : Ptd i) {Y : Ptd j} {Z : Ptd k}
-  → X ⊙≃ Y → Y ⊙≃ Z → X ⊙≃ Z
-X ⊙≃⟨ u ⟩ v = v ⊙∘e u
-
-_⊙≃∎ : ∀ {i} (X : Ptd i) → X ⊙≃ X
-_⊙≃∎ = ⊙ide
+{- Pointed equivalences -}
 
 -- Extracting data from an pointed equivalence
 module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
@@ -188,6 +121,14 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} (⊙e : X ⊙≃ Y) where
   pre⊙∘-equiv : (Y ⊙→ Z) ≃ (X ⊙→ Z)
   pre⊙∘-equiv = _ , pre⊙∘-is-equiv
 
--- [ua] for pointed types
-⊙ua : ∀ {i} {X Y : Ptd i} → X ⊙≃ Y → X == Y
-⊙ua ((f , p) , ie) = pair= (ua (f , ie)) (↓-idf-ua-in (f , ie) p)
+{- Is the point distinguishable? -}
+
+has-distinguishable-pt : ∀ {i} (X : Ptd i) → Type i
+has-distinguishable-pt (_ , x) = ∀ y → Dec (x == y)
+
+merge-pt : ∀ {i} (X : Ptd i) → (⊤ ⊔ (Σ (fst X) (snd X ≠_)) → fst X)
+merge-pt X (inl _) = snd X
+merge-pt X (inr (x , _)) = x
+
+is-separatable : ∀ {i} (X : Ptd i) → Type i
+is-separatable X = is-equiv (merge-pt X)

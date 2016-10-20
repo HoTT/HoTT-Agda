@@ -66,3 +66,8 @@ equiv-induction {i} {j} P d f =
     (d : (A : Type i) → P (ide A)) {A B : Type i} (p : A == B)
     → P (coe-equiv p)
   aux P d idp = d _
+
+{- Univalence for pointed types -}
+⊙ua : ∀ {i} {X Y : Ptd i} → X ⊙≃ Y → X == Y
+⊙ua ((f , p) , ie) = pair= (ua (f , ie)) (↓-idf-ua-in (f , ie) p)
+

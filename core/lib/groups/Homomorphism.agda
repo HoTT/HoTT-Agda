@@ -6,7 +6,6 @@ open import lib.Function2
 open import lib.NType2
 open import lib.types.Group
 open import lib.types.Pi
-open import lib.types.Pointed
 open import lib.types.Subtype
 open import lib.types.Truncation
 open import lib.groups.SubgroupProp

@@ -359,6 +359,31 @@ Dec : ∀ {i} (P : Type i) → Type i
 Dec P = P ⊔ ¬ P
 
 {-
+Pointed types and pointed maps.
+
+[A ⊙→ B] was pointed, but it was never used as a pointed type.
+-}
+
+Ptd : ∀ i → Type (lsucc i)
+Ptd i = Σ (Type i) (λ A → A)
+
+Ptd₀ = Ptd lzero
+
+⊙[_,_] : ∀ {i} (A : Type i) (a : A) → Ptd i
+⊙[_,_] = _,_
+
+infixr 0 _⊙→_
+_⊙→_ : ∀ {i j} → Ptd i → Ptd j → Type (lmax i j)
+(A , a₀) ⊙→ (B , b₀) = Σ (A → B) (λ f → f a₀ == b₀)
+
+⊙idf : ∀ {i} (X : Ptd i) → X ⊙→ X
+⊙idf X = ((λ x → x) , idp)
+
+⊙cst : ∀ {i j} {X : Ptd i} {Y : Ptd j} → X ⊙→ Y
+⊙cst {Y = Y} = ((λ x → snd Y) , idp)
+
+
+{-
 Used in a hack to make HITs maybe consistent. This is just a parametrized unit
 type (positively)
 -}

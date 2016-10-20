@@ -2,12 +2,11 @@
 
 open import lib.Basics
 open import lib.types.Paths
-open import lib.types.Sigma
-open import lib.types.Span
 open import lib.types.Pointed
-open import lib.types.PointedSigma
 open import lib.types.Pushout
 open import lib.types.PushoutFmap
+open import lib.types.Sigma
+open import lib.types.Span
 
 module lib.types.Join  where
 
