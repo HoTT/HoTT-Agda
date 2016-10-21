@@ -3,7 +3,10 @@
 .*.agda.vim
 # Ignore Emacs backup files
 *~
+# Ignore Agda-generated files
 html/
+MAlonzo/
+# Other files to ignore
 Unclassified/
 Test.agda
-MAlonzo/
+# Ignore new files in old/
