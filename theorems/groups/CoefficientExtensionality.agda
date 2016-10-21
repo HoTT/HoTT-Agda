@@ -93,25 +93,25 @@ module _ (dec : has-dec-eq A) where
       → Word-coef (inl b :: w) a == succ (Word-coef w a)
     Word-coef-inl-eq {a} {b} p w with dec b a
     Word-coef-inl-eq {a} {b} p w | inl _ = idp
-    Word-coef-inl-eq {a} {b} p w | inr p⊥ = ⊥-rec (p⊥ p)
+    Word-coef-inl-eq {a} {b} p w | inr ¬p = ⊥-rec (¬p p)
 
     Word-coef-inr-eq : ∀ {a b} (p : b == a) w
       → Word-coef (inr b :: w) a == pred (Word-coef w a)
     Word-coef-inr-eq {a} {b} p w with dec b a
     Word-coef-inr-eq {a} {b} p w | inl _ = idp
-    Word-coef-inr-eq {a} {b} p w | inr p⊥ = ⊥-rec (p⊥ p)
+    Word-coef-inr-eq {a} {b} p w | inr ¬p = ⊥-rec (¬p p)
 
     Word-coef-inl-neq : ∀ {a b} (p : b ≠ a) w
       → Word-coef (inl b :: w) a == Word-coef w a
-    Word-coef-inl-neq {a} {b} p⊥ w with dec b a
-    Word-coef-inl-neq {a} {b} p⊥ w | inl p = ⊥-rec (p⊥ p)
-    Word-coef-inl-neq {a} {b} p⊥ w | inr _ = idp
+    Word-coef-inl-neq {a} {b} ¬p w with dec b a
+    Word-coef-inl-neq {a} {b} ¬p w | inl p = ⊥-rec (¬p p)
+    Word-coef-inl-neq {a} {b} ¬p w | inr _ = idp
 
     Word-coef-inr-neq : ∀ {a b} (p : b ≠ a) w
       → Word-coef (inr b :: w) a == Word-coef w a
-    Word-coef-inr-neq {a} {b} p⊥ w with dec b a
-    Word-coef-inr-neq {a} {b} p⊥ w | inl p = ⊥-rec (p⊥ p)
-    Word-coef-inr-neq {a} {b} p⊥ w | inr _ = idp
+    Word-coef-inr-neq {a} {b} ¬p w with dec b a
+    Word-coef-inr-neq {a} {b} ¬p w | inl p = ⊥-rec (¬p p)
+    Word-coef-inr-neq {a} {b} ¬p w | inr _ = idp
 
     -- TODO maybe there is a better way to prove the final theorem?
     -- Here we are collecting all elements [inl a] and [inr a], and recurse on the rest.

@@ -61,7 +61,7 @@ abstract
   ℕ-has-dec-eq (S n) O = inr (ℕ-S≠O n)
   ℕ-has-dec-eq (S n) (S m) with ℕ-has-dec-eq n m
   ℕ-has-dec-eq (S n) (S m) | inl p = inl (ap S p)
-  ℕ-has-dec-eq (S n) (S m) | inr p⊥ = inr (λ p → p⊥ (ℕ-S-is-inj n m p))
+  ℕ-has-dec-eq (S n) (S m) | inr ¬p = inr (λ p → ¬p (ℕ-S-is-inj n m p))
 
   ℕ-is-set : is-set ℕ
   ℕ-is-set = dec-eq-is-set ℕ-has-dec-eq
@@ -124,7 +124,7 @@ O≤ (S m) = inr (O<S m)
 <-dec O (S m) = inl (O<S m)
 <-dec (S n) (S m) with <-dec n m
 <-dec (S n) (S m) | inl p = inl (<-ap-S p)
-<-dec (S n) (S m) | inr p⊥ = inr (p⊥ ∘ <-cancel-S)
+<-dec (S n) (S m) | inr ¬p = inr (¬p ∘ <-cancel-S)
 
 <-+-l : {m n : ℕ} (k : ℕ) → m < n → (k + m) < (k + n)
 <-+-l O lt = lt

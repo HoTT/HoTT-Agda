@@ -44,9 +44,9 @@ module _ {i} {A : Type i} where
     Any-dec _   nil       = inr λ{()}
     Any-dec dec (a :: l) with dec a
     ... | inl p = inl $ here p
-    ... | inr p⊥ with Any-dec dec l
+    ... | inr ¬p with Any-dec dec l
     ...   | inl ∃p = inl $ there ∃p
-    ...   | inr ∃p⊥ = inr λ{(here p) → p⊥ p; (there ∃p) → ∃p⊥ ∃p}
+    ...   | inr ¬∃p = inr λ{(here p) → ¬p p; (there ∃p) → ¬∃p ∃p}
 
     Any-++-l : ∀ l₁ l₂ → Any l₁ → Any (l₁ ++ l₂)
     Any-++-l _ _ (here p)   = here p

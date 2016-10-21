@@ -19,7 +19,7 @@ module cohomology.DistinctlyPointedSet {i} (CT : CohomologyTheory i) where
         from : fst X → BigWedge {A = WithoutPoint X} (λ _ → ⊙Bool)
         from x with dec x
         from x | inl p  = bwbase
-        from x | inr p⊥ = bwin (x , p⊥) false
+        from x | inr ¬p = bwin (x , ¬p) false
 
         module From = BigWedgeRec {A = WithoutPoint X} {X = λ _ → ⊙Bool}
           (snd X) (λ{_ true → snd X; (x , _) false → x}) (λ _ → idp)
@@ -30,7 +30,7 @@ module cohomology.DistinctlyPointedSet {i} (CT : CohomologyTheory i) where
           base* : from (snd X) == bwbase
           base* with dec (snd X)
           base* | inl _  = idp
-          base* | inr p⊥ = ⊥-rec (p⊥ idp)
+          base* | inr ¬p = ⊥-rec (¬p idp)
 
           in* : (wp : WithoutPoint X) (b : Bool)
             → from (to (bwin wp b)) == bwin wp b

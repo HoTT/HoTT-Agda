@@ -38,20 +38,20 @@ module _ {i} where
         sep : fst X → ⊤ ⊔ (Σ (fst X) (snd X ≠_))
         sep x with dec x
         sep x | inl _  = inl unit
-        sep x | inr p⊥ = inr (x , p⊥)
+        sep x | inr ¬p = inr (x , ¬p)
 
         sep-unite : ∀ x → sep (unite-pt X x) == x
         sep-unite (inl _) with dec (snd X)
         sep-unite (inl _) | inl _  = idp
-        sep-unite (inl _) | inr p⊥ = ⊥-rec (p⊥ idp)
-        sep-unite (inr (x , p⊥)) with dec x
-        sep-unite (inr (x , p⊥)) | inl p   = ⊥-rec (p⊥ p)
-        sep-unite (inr (x , p⊥)) | inr p⊥' = ap inr $ pair= idp (prop-has-all-paths ¬-is-prop p⊥' p⊥) 
+        sep-unite (inl _) | inr ¬p = ⊥-rec (¬p idp)
+        sep-unite (inr (x , ¬p)) with dec x
+        sep-unite (inr (x , ¬p)) | inl p   = ⊥-rec (¬p p)
+        sep-unite (inr (x , ¬p)) | inr ¬p' = ap inr $ pair= idp (prop-has-all-paths ¬-is-prop ¬p' ¬p)
 
         unite-sep : ∀ x → unite-pt X (sep x) == x
         unite-sep x with dec x
         unite-sep x | inl p = p
-        unite-sep x | inr p⊥ = idp
+        unite-sep x | inr ¬p = idp
 
     separable-has-distinct-pt : {X : Ptd i}
       → is-separable X → has-distinct-pt X

@@ -104,12 +104,12 @@ abstract
   ℤ-has-dec-eq : has-dec-eq ℤ
   ℤ-has-dec-eq (pos n) (pos m) with ℕ-has-dec-eq n m
   ℤ-has-dec-eq (pos n) (pos m) | inl p = inl (ap pos p)
-  ℤ-has-dec-eq (pos n) (pos m) | inr p⊥ = inr (pos-≠ p⊥)
+  ℤ-has-dec-eq (pos n) (pos m) | inr ¬p = inr (pos-≠ ¬p)
   ℤ-has-dec-eq (pos n) (negsucc m) = inr (ℤ-pos≠negsucc n m)
   ℤ-has-dec-eq (negsucc n) (pos m) = inr (ℤ-negsucc≠pos n m)
   ℤ-has-dec-eq (negsucc n) (negsucc m) with ℕ-has-dec-eq n m
   ℤ-has-dec-eq (negsucc n) (negsucc m) | inl p = inl (ap negsucc p)
-  ℤ-has-dec-eq (negsucc n) (negsucc m) | inr p⊥ = inr (λ p → p⊥ (negsucc-is-inj n m p))
+  ℤ-has-dec-eq (negsucc n) (negsucc m) | inr ¬p = inr (λ p → ¬p (negsucc-is-inj n m p))
 
   ℤ-is-set : is-set ℤ
   ℤ-is-set = dec-eq-is-set ℤ-has-dec-eq

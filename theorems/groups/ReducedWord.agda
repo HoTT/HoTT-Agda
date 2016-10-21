@@ -20,12 +20,12 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
   PlusMinus-has-dec-eq : has-dec-eq (PlusMinus A)
   PlusMinus-has-dec-eq (inl x) (inl y) with dec x y
   PlusMinus-has-dec-eq (inl x) (inl y) | inl p  = inl $ ap inl p
-  PlusMinus-has-dec-eq (inl x) (inl y) | inr p⊥ = inr $ p⊥ ∘ lower ∘ Coprod=-in
+  PlusMinus-has-dec-eq (inl x) (inl y) | inr ¬p = inr $ ¬p ∘ lower ∘ Coprod=-in
   PlusMinus-has-dec-eq (inl x) (inr y) = inr $ lower ∘ Coprod=-in
   PlusMinus-has-dec-eq (inr x) (inl y) = inr $ lower ∘ Coprod=-in
   PlusMinus-has-dec-eq (inr x) (inr y) with dec x y
   PlusMinus-has-dec-eq (inr x) (inr y) | inl p  = inl $ ap inr p
-  PlusMinus-has-dec-eq (inr x) (inr y) | inr p⊥ = inr $ p⊥ ∘ lower ∘ Coprod=-in
+  PlusMinus-has-dec-eq (inr x) (inr y) | inr ¬p = inr $ ¬p ∘ lower ∘ Coprod=-in
 
   Word-has-dec-eq : has-dec-eq (Word A)
   Word-has-dec-eq nil nil = inl idp
@@ -86,10 +86,10 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
     rw-cons (inl x) ((inl y :: l) , red) = (inl x :: inl y :: l) , red
     rw-cons (inl x) ((inr y :: l) , red) with dec x y
     rw-cons (inl x) ((inr y :: l) , red) | inl p = l , tail-is-reduced (inr y) l red
-    rw-cons (inl x) ((inr y :: l) , red) | inr p⊥ = (inl x :: inr y :: l) , (p⊥ , red)
+    rw-cons (inl x) ((inr y :: l) , red) | inr ¬p = (inl x :: inr y :: l) , (¬p , red)
     rw-cons (inr x) ((inl y :: l) , red) with dec x y
     rw-cons (inr x) ((inl y :: l) , red) | inl p = l , tail-is-reduced (inl y) l red
-    rw-cons (inr x) ((inl y :: l) , red) | inr p⊥ = (inr x :: inl y :: l) , (p⊥ , red)
+    rw-cons (inr x) ((inl y :: l) , red) | inr ¬p = (inr x :: inl y :: l) , (¬p , red)
     rw-cons (inr x) ((inr y :: l) , red) = (inr x :: inr y :: l) , red
 
     rw-++' : Word A → ReducedWord → ReducedWord
@@ -116,10 +116,10 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
       rw-cons-reduced (inl x) (inl y :: w) _ red' = ReducedWord=-out idp
       rw-cons-reduced (inl x) (inr y :: w) _ red' with dec x y
       rw-cons-reduced (inl x) (inr y :: w) _ red' | inl p = ⊥-rec $ fst red' $ p
-      rw-cons-reduced (inl x) (inr y :: w) _ red' | inr p⊥ = ReducedWord=-out idp
+      rw-cons-reduced (inl x) (inr y :: w) _ red' | inr ¬p = ReducedWord=-out idp
       rw-cons-reduced (inr x) (inl y :: w) _ red' with dec x y
       rw-cons-reduced (inr x) (inl y :: w) _ red' | inl p = ⊥-rec $ fst red' $ p
-      rw-cons-reduced (inr x) (inl y :: w) _ red' | inr p⊥ = ReducedWord=-out idp
+      rw-cons-reduced (inr x) (inl y :: w) _ red' | inr ¬p = ReducedWord=-out idp
       rw-cons-reduced (inr x) (inr y :: w) _ red' = ReducedWord=-out idp
 
       rw-++-unit-r' : ∀ w (red : is-reduced w) → rw-++ (w , red) rw-unit == (w , red)
@@ -166,11 +166,11 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
       rw-++-cons (inl x) ((inr y :: w₁) , _) rw₂ with dec x y
       rw-++-cons (inl x) ((inr y :: w₁) , _) rw₂ | inl p rewrite p =
         ! (rw-cons-cons-flip (inl y) (rw-++' w₁ rw₂))
-      rw-++-cons (inl x) ((inr y :: w₁) , _) rw₂ | inr p⊥ = idp
+      rw-++-cons (inl x) ((inr y :: w₁) , _) rw₂ | inr ¬p = idp
       rw-++-cons (inr x) ((inl y :: w₁) , _) rw₂ with dec x y
       rw-++-cons (inr x) ((inl y :: w₁) , _) rw₂ | inl p rewrite p =
         ! (rw-cons-cons-flip (inr y) (rw-++' w₁ rw₂))
-      rw-++-cons (inr x) ((inl y :: w₁) , _) rw₂ | inr p⊥ = idp
+      rw-++-cons (inr x) ((inl y :: w₁) , _) rw₂ | inr ¬p = idp
       rw-++-cons (inr x) ((inr y :: w₁) , _) rw₂ = idp
 
       rw-++-assoc' : ∀ w₁ rw₂ rw₃
@@ -237,10 +237,10 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
         == rw-++' w₁ (w₂ , red₂')
       rw-inv-l-lemma nil (inl x) w₂ _ _ with dec x x
       rw-inv-l-lemma nil (inl x) w₂ _ _ | inl p = ReducedWord=-out idp
-      rw-inv-l-lemma nil (inl x) w₂ _ _ | inr p⊥ = ⊥-rec (p⊥ idp)
+      rw-inv-l-lemma nil (inl x) w₂ _ _ | inr ¬p = ⊥-rec (¬p idp)
       rw-inv-l-lemma nil (inr x) w₂ _ _ with dec x x
       rw-inv-l-lemma nil (inr x) w₂ _ _ | inl p = ReducedWord=-out idp
-      rw-inv-l-lemma nil (inr x) w₂ _ _ | inr p⊥ = ⊥-rec (p⊥ idp)
+      rw-inv-l-lemma nil (inr x) w₂ _ _ | inr ¬p = ⊥-rec (¬p idp)
       rw-inv-l-lemma (x :: w₁) y w₂ red₂ red₂' =
         ap (rw-cons x) (rw-inv-l-lemma w₁ y w₂ red₂ red₂')
 
@@ -260,10 +260,10 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
         == w₂ , red₂'
       rw-inv-r-lemma-step (inl x) w₂ red₂ red₂' with dec x x
       rw-inv-r-lemma-step (inl x) w₂ red₂ red₂' | inl p = ReducedWord=-out idp
-      rw-inv-r-lemma-step (inl x) w₂ red₂ red₂' | inr p⊥ = ⊥-rec (p⊥ idp)
+      rw-inv-r-lemma-step (inl x) w₂ red₂ red₂' | inr ¬p = ⊥-rec (¬p idp)
       rw-inv-r-lemma-step (inr x) w₂ red₂ red₂' with dec x x
       rw-inv-r-lemma-step (inr x) w₂ red₂ red₂' | inl p = ReducedWord=-out idp
-      rw-inv-r-lemma-step (inr x) w₂ red₂ red₂' | inr p⊥ = ⊥-rec (p⊥ idp)
+      rw-inv-r-lemma-step (inr x) w₂ red₂ red₂' | inr ¬p = ⊥-rec (¬p idp)
 
       rw-inv-r-lemma : ∀ w₁ w₂ (red₁₂ : is-reduced (reverse (Word-flip w₁) ++ w₂)) (red₂ : is-reduced w₂)
         →  rw-++' w₁ ((reverse (Word-flip w₁) ++ w₂) , red₁₂)
