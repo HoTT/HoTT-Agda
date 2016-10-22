@@ -5,6 +5,7 @@ open import lib.Function
 open import lib.NType
 open import lib.PathGroupoid
 open import lib.Relation
+open import lib.types.Coproduct
 open import lib.types.Empty
 
 module lib.types.Nat where
@@ -126,6 +127,28 @@ O≤ (S m) = inr (O<S m)
 <-dec (S n) (S m) | inl p = inl (<-ap-S p)
 <-dec (S n) (S m) | inr ¬p = inr (¬p ∘ <-cancel-S)
 
+abstract
+  <-to-≠ : {m n : ℕ} → m < n → m ≠ n
+  <-to-≠ {m = O} ltS = ℕ-O≠S _
+  <-to-≠ {m = O} (ltSR lt) = ℕ-O≠S _
+  <-to-≠ {m = S m} {n = O} ()
+  <-to-≠ {m = S m} {n = S n} lt = ℕ-S-≠ (<-to-≠ (<-cancel-S lt))
+
+  <-is-prop : {m n : ℕ} → is-prop (m < n)
+  <-is-prop = all-paths-is-prop <-is-prop' where
+    <-is-prop' : {m n : ℕ} (m<₁n m<₂n : m < n) → m<₁n == m<₂n
+    <-is-prop' ltS ltS = idp
+    <-is-prop' ltS (ltSR lt) = ⊥-rec (<-to-≠ lt idp)
+    <-is-prop' (ltSR lt) ltS = ⊥-rec (<-to-≠ lt idp)
+    <-is-prop' (ltSR lt₁) (ltSR lt₂) = ap ltSR (<-is-prop' lt₁ lt₂)
+
+  ≤-is-prop : {m n : ℕ} → is-prop (m ≤ n)
+  ≤-is-prop = all-paths-is-prop λ{
+    (inl eq₁) (inl eq₂) → ap inl (prop-has-all-paths (ℕ-is-set _ _) eq₁ eq₂);
+    (inl eq)  (inr lt)  → ⊥-rec (<-to-≠ lt eq);
+    (inr lt)  (inl eq)  → ⊥-rec (<-to-≠ lt eq);
+    (inr lt₁) (inr lt₂) → ap inr (prop-has-all-paths <-is-prop lt₁ lt₂)}
+
 <-+-l : {m n : ℕ} (k : ℕ) → m < n → (k + m) < (k + n)
 <-+-l O lt = lt
 <-+-l (S k) lt = <-ap-S (<-+-l k lt)
@@ -157,18 +180,17 @@ _*2 : ℕ → ℕ
 O *2 = O
 (S n) *2 = S (S (n *2))
 
-abstract
-  *2-increasing : (m : ℕ) → (m ≤ m *2)
-  *2-increasing O = inl idp
-  *2-increasing (S m) = ≤-trans (≤-ap-S (*2-increasing m)) (inr ltS)
+*2-increasing : (m : ℕ) → (m ≤ m *2)
+*2-increasing O = inl idp
+*2-increasing (S m) = ≤-trans (≤-ap-S (*2-increasing m)) (inr ltS)
 
-  *2-monotone-< : {m n : ℕ} → m < n → m *2 < n *2
-  *2-monotone-< ltS = ltSR ltS
-  *2-monotone-< (ltSR lt) = ltSR (ltSR (*2-monotone-< lt))
+*2-monotone-< : {m n : ℕ} → m < n → m *2 < n *2
+*2-monotone-< ltS = ltSR ltS
+*2-monotone-< (ltSR lt) = ltSR (ltSR (*2-monotone-< lt))
 
-  *2-monotone-≤ : {m n : ℕ} → m ≤ n → m *2 ≤ n *2
-  *2-monotone-≤ (inl p) = inl (ap _*2 p)
-  *2-monotone-≤ (inr lt) = inr (*2-monotone-< lt)
+*2-monotone-≤ : {m n : ℕ} → m ≤ n → m *2 ≤ n *2
+*2-monotone-≤ (inl p) = inl (ap _*2 p)
+*2-monotone-≤ (inr lt) = inr (*2-monotone-< lt)
 
 -- Finite types
 
@@ -179,4 +201,3 @@ instance
   Fin-reader : ∀ {n} → FromNat (Fin n)
   FromNat.in-range (Fin-reader {n}) m = m < n
   FromNat.read (Fin-reader {n}) m ⦃ m<n ⦄ = m , m<n
-
