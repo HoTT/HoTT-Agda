@@ -31,7 +31,7 @@ Unit-group = group _ Unit-is-set Unit-group-structure
 0ᴳ-is-trivial = λ _ → idp
 
 iso-0ᴳ-is-trivial : ∀ {i} {G : Group i} → G ≃ᴳ 0ᴳ → is-trivialᴳ G
-iso-0ᴳ-is-trivial G-iso-0 = iso-preserves-trivial (G-iso-0 ⁻¹ᴳ) 0ᴳ-is-trivial
+iso-0ᴳ-is-trivial G-iso-0 = iso-preserves'-trivial G-iso-0 0ᴳ-is-trivial
 
 trivial-iso-0ᴳ : ∀ {i} {G : Group i} → is-trivialᴳ G → G ≃ᴳ 0ᴳ
 trivial-iso-0ᴳ {G = G} G-triv = group-hom (λ _ → tt) (λ _ _ → idp) ,
