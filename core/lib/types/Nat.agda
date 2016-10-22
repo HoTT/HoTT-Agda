@@ -201,3 +201,14 @@ instance
   Fin-reader : ∀ {n} → FromNat (Fin n)
   FromNat.in-range (Fin-reader {n}) m = m < n
   FromNat.read (Fin-reader {n}) m ⦃ m<n ⦄ = m , m<n
+
+-- Trichotomy
+
+ℕ-trichotomy : (m n : ℕ) → (m == n) ⊔ ((m < n) ⊔ (n < m))
+ℕ-trichotomy O O = inl idp
+ℕ-trichotomy O (S n) = inr (inl (O<S n))
+ℕ-trichotomy (S m) O = inr (inr (O<S m))
+ℕ-trichotomy (S m) (S n) with ℕ-trichotomy m n
+ℕ-trichotomy (S m) (S n) | inl m=n = inl (ap S m=n)
+ℕ-trichotomy (S m) (S n) | inr (inl m<n) = inr (inl (<-ap-S m<n))
+ℕ-trichotomy (S m) (S n) | inr (inr m>n) = inr (inr (<-ap-S m>n))
