@@ -176,16 +176,16 @@ has-cells-with-choice t {n = S n} skel j =
   has-cells-with-choice t (cw-init skel) j × has-choice t (cells-last skel) j
 
 {-
-The following are unneeded.
+The following are not needed.
 
 -- Dimensional lifting
 
 cw-lift₁ : ∀ {n : ℕ} → Skeleton n → Skeleton (S n)
-cw-lift₁ skel = skel-attach skel
+cw-lift₁ skel = attached-skeleton skel
   (Lift Empty , Lift-level Empty-is-set)
   λ{(lift ()) _}
 
--- This slightly extends the naming convension
+-- This slightly stretches the naming convension
 -- to two skeletons being extensionally equal.
 cw-lift₁-equiv : ∀ {n} (skel : Skeleton n)
   → ⟦ cw-lift₁ skel ⟧ ≃ ⟦ skel ⟧
