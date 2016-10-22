@@ -6,7 +6,7 @@ open import cw.CW
 module cw.examples.Empty where
 
 cw-empty-skel : Skeleton {lzero} 0
-cw-empty-skel = skel-base (Empty , Empty-is-set)
+cw-empty-skel = Empty , Empty-is-set
 CWEmpty = ⟦ cw-empty-skel ⟧
 
 CWEmpty-equiv-Empty : CWEmpty ≃ Empty

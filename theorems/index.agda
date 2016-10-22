@@ -44,7 +44,7 @@ import homotopy.PathSetIsInitalCover
 
 {- cw complexes -}
 import cw.CW
-import cw.examples.Sphere
+import cw.examples.Examples
 
 -- There are some unported theorems
 

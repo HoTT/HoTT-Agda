@@ -12,8 +12,8 @@ CWSphere n = ⟦ cw-sphere-skel n ⟧
 
 Sphere-to-CWSphere : (n : ℕ) → Sphere n → CWSphere n
 
-cw-sphere-skel O = skel-base (Bool , Bool-is-set)
-cw-sphere-skel (S n) = skel-attach
+cw-sphere-skel O = (Bool , Bool-is-set)
+cw-sphere-skel (S n) = attached-skeleton
   (cw-sphere-skel n) (Bool , Bool-is-set) (cst (Sphere-to-CWSphere n))
 
 {-
