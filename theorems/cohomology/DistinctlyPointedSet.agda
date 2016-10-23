@@ -4,9 +4,9 @@ open import HoTT
 open import cohomology.Theory
 open import homotopy.DistinctlyPointedSet
 
-module cohomology.DistinctlyPointedSet {i} (CT : CohomologyTheory i) where
+module cohomology.DistinctlyPointedSet {i} (OT : OrdinaryTheory i) where
 
-  open CohomologyTheory CT
+  open OrdinaryTheory OT
 
   module _ (n : ℤ) (X : Ptd i)
     (X-is-set : is-set (fst X)) (dec : has-distinct-pt X)
@@ -66,3 +66,14 @@ module cohomology.DistinctlyPointedSet {i} (CT : CohomologyTheory i) where
               (WithoutPoint-has-choice 0 (distinct-pt-is-separable dec) ac) ⟩
       Πᴳ (WithoutPoint X) (λ _ → C n (⊙Lift ⊙Bool))
         ≃ᴳ∎
+
+  module _ {n : ℤ} (n≠0 : n ≠ 0) (X : Ptd i)
+    (X-is-set : is-set (fst X)) (dec : has-distinct-pt X)
+    (ac : has-choice 0 (fst X) i) where
+
+    C-set-≠-is-trivial : is-trivialᴳ (C n X)
+    C-set-≠-is-trivial = iso-preserves'-trivial
+      (C-set n X X-is-set dec ac)
+      (Πᴳ-is-trivial (WithoutPoint X)
+        (λ _ → C n (⊙Lift ⊙Bool))
+        (λ _ → C-dimension n≠0))

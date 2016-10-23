@@ -9,7 +9,7 @@ open OrdinaryTheory OT
 
 C-Sphere-≠-is-trivial : (n : ℤ) (m : ℕ) → (n ≠ ℕ-to-ℤ m)
   → is-trivialᴳ (C n (⊙Lift (⊙Sphere m)))
-C-Sphere-≠-is-trivial n O neq = C-dimension n neq
+C-Sphere-≠-is-trivial n O neq = C-dimension neq
 C-Sphere-≠-is-trivial n (S m) neq = iso-preserves'-trivial
   (C n (⊙Lift (⊙Sphere (S m)))
     ≃ᴳ⟨ C-emap n $ ⊙Susp-Lift-econv (⊙Sphere m) ⟩

@@ -241,6 +241,6 @@ module _ {i} where
   ^ᴳ-+ H (S m) n = ×ᴳ-assoc H (H ^ᴳ m) (H ^ᴳ n) ⁻¹ᴳ ∘eᴳ ×ᴳ-emap (idiso H) (^ᴳ-+ H m n)
 
 module _ where
-  Πᴳ-is-trivial : ∀ {i j} (I : Type i) {F : I → Group j}
+  Πᴳ-is-trivial : ∀ {i j} (I : Type i) (F : I → Group j)
     → (∀ (i : I) → is-trivialᴳ (F i)) → is-trivialᴳ (Πᴳ I F)
-  Πᴳ-is-trivial I {F} F-is-trivial = λ f → λ= λ i → F-is-trivial i (f i)
+  Πᴳ-is-trivial I F F-is-trivial = λ f → λ= λ i → F-is-trivial i (f i)

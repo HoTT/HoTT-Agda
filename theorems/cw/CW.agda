@@ -162,6 +162,9 @@ has-cells-with-dec-eq {n = O} skel = has-dec-eq (cells-last skel)
 has-cells-with-dec-eq {n = S n} skel =
   has-cells-with-dec-eq (cw-init skel) × has-dec-eq (cells-last skel)
 
+⊙has-cells-with-dec-eq : ∀ {n} → ⊙Skeleton n → Type i
+⊙has-cells-with-dec-eq = has-cells-with-dec-eq ∘ ⊙Skeleton.skel
+
 has-cells-with-dec-eq-is-prop : ∀ {n} {skel : Skeleton n}
   → is-prop (has-cells-with-dec-eq skel)
 has-cells-with-dec-eq-is-prop {n = O} = has-dec-eq-is-prop
@@ -169,11 +172,13 @@ has-cells-with-dec-eq-is-prop {n = S n} =
   ×-level has-cells-with-dec-eq-is-prop has-dec-eq-is-prop
 
 -- 2. choice
-has-cells-with-choice : (t : TLevel) {n : ℕ} (skel : Skeleton n)
-  (j : ULevel) → Type (lmax i (lsucc j))
+has-cells-with-choice : TLevel → {n : ℕ} → Skeleton n → (j : ULevel) → Type (lmax i (lsucc j))
 has-cells-with-choice t {n = O} skel j = has-choice t (cells-last skel) j
 has-cells-with-choice t {n = S n} skel j =
   has-cells-with-choice t (cw-init skel) j × has-choice t (cells-last skel) j
+
+⊙has-cells-with-choice : TLevel → {n : ℕ} → ⊙Skeleton n → (j : ULevel) → Type (lmax i (lsucc j))
+⊙has-cells-with-choice t ⊙skel j = has-cells-with-choice t (⊙Skeleton.skel ⊙skel) j
 
 {-
 The following are not needed.
