@@ -54,11 +54,18 @@ abstract
 succ-equiv : ℤ ≃ ℤ
 succ-equiv = equiv succ pred succ-pred pred-succ
 
-pred-is-inj : is-inj pred
-pred-is-inj z₁ z₂ p = ! (succ-pred z₁) ∙ ap succ p ∙ succ-pred z₂
+abstract
+  pred-is-inj : is-inj pred
+  pred-is-inj z₁ z₂ p = ! (succ-pred z₁) ∙ ap succ p ∙ succ-pred z₂
 
-succ-is-inj : is-inj succ
-succ-is-inj z₁ z₂ p = ! (pred-succ z₁) ∙ ap pred p ∙ pred-succ z₂
+  pred-≠ : preserves-≠ pred
+  pred-≠ = inj-preserves-≠ pred-is-inj
+
+  succ-is-inj : is-inj succ
+  succ-is-inj z₁ z₂ p = ! (pred-succ z₁) ∙ ap pred p ∙ pred-succ z₂
+
+  succ-≠ : preserves-≠ succ
+  succ-≠ = inj-preserves-≠ succ-is-inj
 
 {- Converting between ℤ, ℕ, and ℕ₋₂ -}
 
@@ -89,11 +96,20 @@ abstract
   pos-is-inj : is-inj pos
   pos-is-inj n m p = ap ℤ-get-pos p
 
-  pos-≠ : {n m : ℕ} (p : n ≠ m) → pos n ≠ pos m
-  pos-≠ p = p ∘ pos-is-inj _ _
+  ℕ-to-ℤ-is-inj : is-inj ℕ-to-ℤ
+  ℕ-to-ℤ-is-inj = pos-is-inj
+
+  pos-≠ : preserves-≠ pos
+  pos-≠ = inj-preserves-≠ pos-is-inj
+
+  ℕ-to-ℤ-≠ : preserves-≠ ℕ-to-ℤ
+  ℕ-to-ℤ-≠ = pos-≠
 
   negsucc-is-inj : is-inj negsucc
   negsucc-is-inj n m p = ap ℤ-get-negsucc p
+
+  negsucc-≠ : preserves-≠ negsucc
+  negsucc-≠ = inj-preserves-≠ negsucc-is-inj
 
   ℤ-negsucc≠pos : (n m : ℕ) → negsucc n ≠ pos m
   ℤ-negsucc≠pos n m p = transport ℤ-negsucc≠pos-type p unit
@@ -109,7 +125,7 @@ abstract
   ℤ-has-dec-eq (negsucc n) (pos m) = inr (ℤ-negsucc≠pos n m)
   ℤ-has-dec-eq (negsucc n) (negsucc m) with ℕ-has-dec-eq n m
   ℤ-has-dec-eq (negsucc n) (negsucc m) | inl p = inl (ap negsucc p)
-  ℤ-has-dec-eq (negsucc n) (negsucc m) | inr ¬p = inr (λ p → ¬p (negsucc-is-inj n m p))
+  ℤ-has-dec-eq (negsucc n) (negsucc m) | inr ¬p = inr (negsucc-≠ ¬p)
 
   ℤ-is-set : is-set ℤ
   ℤ-is-set = dec-eq-is-set ℤ-has-dec-eq

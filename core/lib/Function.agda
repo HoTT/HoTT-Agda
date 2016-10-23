@@ -33,13 +33,23 @@ _⊙∘_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
 
 {- Homotopy fibers -}
 
-hfiber : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) (y : B) → Type (lmax i j)
-hfiber {A = A} f y = Σ A (λ x → f x == y)
+module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
 
-is-inj : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) → Type (lmax i j)
-is-inj {A = A} f = ∀ (a₁ a₂ : A) → f a₁ == f a₂ → a₁ == a₂
+  hfiber : (y : B) → Type (lmax i j)
+  hfiber y = Σ A (λ x → f x == y)
 
-{- maps between two functions -}
+  is-inj : Type (lmax i j)
+  is-inj = (a₁ a₂ : A) → f a₁ == f a₂ → a₁ == a₂
+
+  preserves-≠ : Type (lmax i j)
+  preserves-≠ = {a₁ a₂ : A} → a₁ ≠ a₂ → f a₁ ≠ f a₂
+
+module _ {i j} {A : Type i} {B : Type j} {f : A → B} where
+  abstract
+    inj-preserves-≠ : is-inj f → preserves-≠ f
+    inj-preserves-≠ inj ¬p q = ¬p (inj _ _ q)
+
+{- Maps between two functions -}
 
 record CommSquare {i₀ i₁ j₀ j₁}
   {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}

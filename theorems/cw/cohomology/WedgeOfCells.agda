@@ -14,7 +14,7 @@ private
 open import cohomology.Sphere OT
 open import cohomology.DistinctlyPointedSet OT
 
-{- This is for the first dimensions. -}
+{- This is for the zeroth dimension. -}
 
 C-points : ∀ n (⊙skel : ⊙Skeleton {i} 0)
   → ⊙has-cells-with-choice 0 ⊙skel i

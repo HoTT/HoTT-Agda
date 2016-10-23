@@ -9,8 +9,8 @@ open OrdinaryTheory OT
 
 C-Sphere-≠-is-trivial : (n : ℤ) (m : ℕ) → (n ≠ ℕ-to-ℤ m)
   → is-trivialᴳ (C n (⊙Lift (⊙Sphere m)))
-C-Sphere-≠-is-trivial n O neq = C-dimension neq
-C-Sphere-≠-is-trivial n (S m) neq = iso-preserves'-trivial
+C-Sphere-≠-is-trivial n O n≠0 = C-dimension n≠0
+C-Sphere-≠-is-trivial n (S m) n≠Sm = iso-preserves'-trivial
   (C n (⊙Lift (⊙Sphere (S m)))
     ≃ᴳ⟨ C-emap n $ ⊙Susp-Lift-econv (⊙Sphere m) ⟩
   C n (⊙Susp (⊙Lift (⊙Sphere m)))
@@ -19,7 +19,7 @@ C-Sphere-≠-is-trivial n (S m) neq = iso-preserves'-trivial
     ≃ᴳ⟨ C-Susp (pred n) (⊙Lift (⊙Sphere m)) ⟩
   C (pred n) (⊙Lift (⊙Sphere m))
     ≃ᴳ∎)
-  (C-Sphere-≠-is-trivial (pred n) m (λ p → neq (pred-is-inj n (ℕ-to-ℤ (S m)) p)))
+  (C-Sphere-≠-is-trivial (pred n) m (pred-≠ n≠Sm))
 
 C-Sphere-diag : (m : ℕ) → C (ℕ-to-ℤ m) (⊙Lift (⊙Sphere m)) ≃ᴳ C 0 (⊙Lift ⊙S⁰)
 C-Sphere-diag O = idiso _

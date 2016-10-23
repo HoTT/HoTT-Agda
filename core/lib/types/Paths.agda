@@ -4,11 +4,14 @@ open import lib.Basics
 
 module lib.types.Paths where
 
-{- ! is an equivalence -}
+{- ! is an equivalence and works on ≠ -}
 module _ {i} {A : Type i} {x y : A} where
 
   !-equiv : (x == y) ≃ (y == x)
   !-equiv = equiv ! ! !-! !-!
+
+  ≠-inv : (x ≠ y) → (y ≠ x)
+  ≠-inv x≠y y=x = x≠y (! y=x)
 
 {- Pre- and post- concatenation are equivalences -}
 module _ {i} {A : Type i} {x y z : A} where
