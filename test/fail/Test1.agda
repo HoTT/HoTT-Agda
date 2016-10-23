@@ -2,29 +2,40 @@
 
 open import lib.Base
 
-module test.fail.Test1 where
+module fail.Test1 where
+
+data Bool : Type₀ where
+  true false : Bool
 
 module _ where
 
   private
-    data #I-aux : Type₀ where
-      #zero : #I-aux
-      #one : #I-aux
-
     data #I : Type₀ where
-      #i : #I-aux → (Unit → Unit) → #I
+      #zero : #I
+      #one : #I
 
   I : Type₀
   I = #I
 
   zero : I
-  zero = #i #zero _
+  zero = #zero
 
   one : I
-  one = #i #one _
+  one = #one
 
   postulate
     seg : zero == one
 
-absurd : zero ≠ one
-absurd ()  -- fails
+  I-elim : ∀ {i} {P : I → Type i} (zero* : P zero) (one* : P one)
+           (seg* : zero* == one* [ P ↓ seg ]) → Π I P
+  I-elim zero* one* seg* #zero = zero*
+  I-elim zero* one* seg* #one = one*
+
+  postulate
+    I-seg-β : ∀ {i} {P : I → Type i} (zero* : P zero) (one* : P one)
+              (seg* : zero* == one* [ P ↓ seg ])
+              → apd (I-elim zero* one* seg*) seg == seg*
+
+test : I → Bool
+test #zero = true
+test #one = false

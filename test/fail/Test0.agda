@@ -2,7 +2,7 @@
 
 open import lib.Base
 
-module test.fail.Test0 where
+module fail.Test0 where
 
 data Bool : Type₀ where
   true false : Bool

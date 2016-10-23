@@ -2,7 +2,7 @@
 
 open import lib.Base
 
-module test.succeed.Test1 where
+module succeed.Test1 where
 
 module _ where
 

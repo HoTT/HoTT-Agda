@@ -2,7 +2,7 @@
 
 open import lib.Base
 
-module succeed.Test2 where
+module fail.Test3 where
 
 module _ where
 
@@ -25,8 +25,11 @@ module _ where
 
   I-elim : ∀ {i} {P : I → Type i} (zero* : P zero) (one* : P one)
            (seg* : zero* == one* [ P ↓ seg ]) → Π I P
-  I-elim zero* one* seg* #zero = zero*
-  I-elim zero* one* seg* #one = one*
+  I-elim {i} {P} zero* one* seg* = I-elim-aux phantom  where
+
+    I-elim-aux : Phantom seg* → Π I P
+    I-elim-aux phantom #zero = zero*
+    I-elim-aux phantom #one = one*
 
 postulate
   P : I → Type₀
