@@ -36,8 +36,13 @@ record CohomologyTheory i : Type (lsucc i) where
     C-fmap-∘ : (n : ℤ) {X Y Z : Ptd i} (g : Y ⊙→ Z) (f : X ⊙→ Y)
       → ∀ x → CEl-fmap n (g ⊙∘ f) x == CEl-fmap n f (CEl-fmap n g x)
 
+  ∘-C-fmap : (n : ℤ) {X Y Z : Ptd i} (f : X ⊙→ Y) (g : Y ⊙→ Z)
+    → ∀ x → CEl-fmap n f (CEl-fmap n g x) == CEl-fmap n (g ⊙∘ f) x
+  ∘-C-fmap n f g x = ! (C-fmap-∘ n g f x) 
+
   CEl-fmap-idf = C-fmap-idf
   CEl-fmap-∘ = C-fmap-∘
+  ∘-CEl-fmap = ∘-C-fmap
 
   -- FIXME The proofs of roundtrips should be made abstract once
   -- Agda 2.5.2 is officially out.
