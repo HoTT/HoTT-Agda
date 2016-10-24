@@ -60,3 +60,6 @@ private
 C-cofiber-seq-is-exact : is-exact-seq C-cofiber-seq
 C-cofiber-seq-is-exact = seq-equiv-preserves-exact
   C-cofiber-seq'-equiv-C-cofiber-seq C-cofiber-seq'-is-exact
+
+C-cofiber-exact-seq : ExactSequence (C n Y) (C (succ n) X)
+C-cofiber-exact-seq = C-cofiber-seq , C-cofiber-seq-is-exact

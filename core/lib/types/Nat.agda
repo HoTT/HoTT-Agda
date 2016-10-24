@@ -149,6 +149,10 @@ abstract
     (inr lt)  (inl eq)  → ⊥-rec (<-to-≠ lt eq);
     (inr lt₁) (inr lt₂) → ap inr (prop-has-all-paths <-is-prop lt₁ lt₂)}
 
+<-to-≤ : {m n : ℕ} → m < S n → m ≤ n
+<-to-≤ ltS = inl idp
+<-to-≤ (ltSR lt) = inr lt
+
 <-+-l : {m n : ℕ} (k : ℕ) → m < n → (k + m) < (k + n)
 <-+-l O lt = lt
 <-+-l (S k) lt = <-ap-S (<-+-l k lt)

@@ -4,6 +4,7 @@ open import HoTT
 open import cohomology.Theory
 open import groups.Exactness
 open import groups.HomSequence
+open import groups.ExactSequence
 
 open import cw.CW
 
@@ -20,8 +21,8 @@ private
     → C (succ n) ⊙⟦ ⊙skel ⟧ ≃ᴳ C (succ n) ⊙⟦ ⊙cw-init ⊙skel ⟧
   C-cw-descend-at-succ n {m} n≠m Sn≠m ⊙skel ac =
     Exact2.G-trivial-and-L-trivial-implies-H-iso-K
-      (fst $ snd $ snd $ C-cofiber-seq-is-exact n (⊙incl-last ⊙skel))
-      (fst $ C-cofiber-seq-is-exact (succ n) (⊙incl-last ⊙skel))
+      (exact-seq-index 2 $ C-cofiber-exact-seq n (⊙incl-last ⊙skel))
+      (exact-seq-index 0 $ C-cofiber-exact-seq (succ n) (⊙incl-last ⊙skel))
       (C-incl-last-≠-is-trivial (succ n) (succ-≠ n≠m) ⊙skel ac)
       (C-incl-last-≠-is-trivial (succ (succ n)) (succ-≠ Sn≠m) ⊙skel ac)
 
@@ -68,6 +69,12 @@ C-cw-to-diag-at-lower : ∀ n {m} (Sn≤m : S n ≤ m) (⊙skel : ⊙Skeleton m)
 C-cw-to-diag-at-lower _ (inl idp) _ _ = idiso _
 C-cw-to-diag-at-lower n (inr ltS) ⊙skel ac =
   C-cw-descend (ℕ-to-ℤ n) (ℕ-to-ℤ-≠ (<-to-≠ (ltSR ltS))) (ℕ-to-ℤ-≠ (<-to-≠ ltS)) ⊙skel ac
-C-cw-to-diag-at-lower n (inr (ltSR lt)) ⊙skel ac =
+C-cw-to-diag-at-lower n {S m} (inr (ltSR lt)) ⊙skel ac =
       C-cw-to-diag-at-lower n (inr lt) (⊙cw-init ⊙skel) (fst ac)
-  ∘eᴳ C-cw-descend (ℕ-to-ℤ n) (ℕ-to-ℤ-≠ (<-to-≠ (<-trans ltS (ltSR lt)))) (ℕ-to-ℤ-≠ (<-to-≠ (<-trans ltS lt))) ⊙skel ac
+  ∘eᴳ C-cw-descend (ℕ-to-ℤ n) (ℕ-to-ℤ-≠ n≠Sm) (ℕ-to-ℤ-≠ n≠m) ⊙skel ac
+  where
+    n≠Sm : n ≠ S m
+    n≠Sm = <-to-≠ (<-trans ltS (ltSR lt))
+
+    n≠m : n ≠ m
+    n≠m = <-to-≠ (<-trans ltS lt)

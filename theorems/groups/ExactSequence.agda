@@ -12,6 +12,9 @@ is-exact-seq (_ →⟨ φ ⟩ᴳ _ ⊣|ᴳ) = Lift ⊤
 is-exact-seq (_ →⟨ φ ⟩ᴳ _ →⟨ ψ ⟩ᴳ seq) =
   is-exact φ ψ × is-exact-seq (_ →⟨ ψ ⟩ᴳ seq)
 
+ExactSequence : ∀ {i} (G H : Group i) → Type (lsucc i)
+ExactSequence G H = Σ (HomSequence G H) is-exact-seq
+
 {- equivalences preserve exactness -}
 
 abstract
@@ -40,28 +43,24 @@ abstract
     → is-seqᴳ-equiv seq-map → is-exact-seq seq₁ → is-exact-seq seq₀
   hom-seq-equiv-preserves'-exact :
 -}
-{-
-data is-exact-seq {i} : {G H : Group i} → HomSequence G H → Type (lsucc i) where
-  exact-seq-zero : {G : Group i} → is-exact-seq (G ⊣|)
-  exact-seq-one : {G H : Group i} {φ : G →ᴳ H} → is-exact-seq (G ⟨ φ ⟩→ H ⊣|)
-  exact-seq-more : {G H K J : Group i} {φ : G →ᴳ H} {ψ : H →ᴳ K}
-    {diag : HomSequence K J} → is-exact φ ψ
-    → is-exact-seq (H ⟨ ψ ⟩→ diag) → is-exact-seq (G ⟨ φ ⟩→ H ⟨ ψ ⟩→ diag)
 
 private
-  exact-get-type : ∀ {i} {G H : Group i} → HomSequence G H → ℕ → Type i
-  exact-get-type (G ⊣|) _ = Lift Unit
-  exact-get-type (G ⟨ φ ⟩→ H ⊣|) _ = Lift Unit
-  exact-get-type (G ⟨ φ ⟩→ (H ⟨ ψ ⟩→ s)) O = is-exact φ ψ
-  exact-get-type (_ ⟨ _ ⟩→ s) (S n) = exact-get-type s n
+  exact-seq-index-type : ∀ {i} {G H : Group i} → ℕ → HomSequence G H → Type i
+  exact-seq-index-type _ (G ⊣|ᴳ) = Lift ⊤
+  exact-seq-index-type _ (G →⟨ φ ⟩ᴳ H ⊣|ᴳ) = Lift ⊤
+  exact-seq-index-type O (G →⟨ φ ⟩ᴳ H →⟨ ψ ⟩ᴳ s) = is-exact φ ψ
+  exact-seq-index-type (S n) (_ →⟨ _ ⟩ᴳ s) = exact-seq-index-type n s
 
-exact-get : ∀ {i} {G H : Group i} {diag : HomSequence G H}
-  → is-exact-seq diag → (n : ℕ) → exact-get-type diag n
-exact-get exact-seq-zero _ = lift unit
-exact-get exact-seq-one _ = lift unit
-exact-get (exact-seq-more ex s) O = ex
-exact-get (exact-seq-more ex s) (S n) = exact-get s n
+exact-seq-index : ∀ {i} {G H : Group i}
+  → (n : ℕ) (seq : ExactSequence G H)
+  → exact-seq-index-type n (fst seq)
+exact-seq-index _     ((G ⊣|ᴳ) , _) = lift tt
+exact-seq-index _     ((G →⟨ φ ⟩ᴳ H ⊣|ᴳ) , _) = lift tt
+exact-seq-index O     ((G →⟨ φ ⟩ᴳ H →⟨ ψ ⟩ᴳ seq) , ise-seq) = fst ise-seq
+exact-seq-index (S n) ((G →⟨ φ ⟩ᴳ H →⟨ ψ ⟩ᴳ seq) , ise-seq) =
+  exact-seq-index n ((H →⟨ ψ ⟩ᴳ seq) , snd ise-seq)
 
+{-
 private
   exact-build-arg-type : ∀ {i} {G H : Group i} → HomSequence G H → List (Type i)
   exact-build-arg-type (G ⊣|) = nil
@@ -79,12 +78,6 @@ private
 exact-build : ∀ {i} {G H : Group i} (seq : HomSequence G H)
   → hlist-curry-type (exact-build-arg-type seq) (λ _ → is-exact-seq seq)
 exact-build seq = hlist-curry (exact-build-helper seq)
-
-private
-  hom-seq-snoc : ∀ {i} {G H K : Group i}
-    → HomSequence G H → (H →ᴳ K) → HomSequence G K
-  hom-seq-snoc (G ⊣|) ψ = G ⟨ ψ ⟩→ _ ⊣|
-  hom-seq-snoc (G ⟨ φ ⟩→ s) ψ = G ⟨ φ ⟩→ hom-seq-snoc s ψ
 
 hom-seq-concat : ∀ {i} {G H K : Group i}
   → HomSequence G H → HomSequence H K → HomSequence G K
