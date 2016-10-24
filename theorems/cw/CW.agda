@@ -154,6 +154,20 @@ incl-nth Sm≤n = incl-last ∘ cw-take Sm≤n
   → (⊙⟦ ⊙cw-take Sm≤n ⊙skel ⟧₋₁ ⊙→ ⊙⟦ ⊙cw-take Sm≤n ⊙skel ⟧)
 ⊙incl-nth Sm≤n = ⊙incl-last ∘ ⊙cw-take Sm≤n
 
+incl-tail : ∀ {m n : ℕ} (m≤n : m ≤ n) (skel : Skeleton n)
+  → (⟦ cw-take m≤n skel ⟧ → ⟦ skel ⟧)
+incl-tail (inl idp) skel = idf ⟦ skel ⟧
+incl-tail (inr ltS) skel = incl-last skel
+incl-tail (inr (ltSR lt)) skel =
+  incl-last skel ∘ incl-tail (inr lt) (cw-init skel)
+
+⊙incl-tail : ∀ {m n : ℕ} (m≤n : m ≤ n) (⊙skel : ⊙Skeleton n)
+  → (⊙⟦ ⊙cw-take m≤n ⊙skel ⟧ ⊙→ ⊙⟦ ⊙skel ⟧)
+⊙incl-tail (inl idp) ⊙skel = ⊙idf ⊙⟦ ⊙skel ⟧
+⊙incl-tail (inr ltS) ⊙skel = ⊙incl-last ⊙skel
+⊙incl-tail (inr (ltSR lt)) ⊙skel =
+  ⊙incl-last ⊙skel ⊙∘ ⊙incl-tail (inr lt) (⊙cw-init ⊙skel)
+
 -- Extra conditions on CW complexes
 
 -- 1. decidable equalities
