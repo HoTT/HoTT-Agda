@@ -17,8 +17,8 @@ open import cohomology.LongExactSequence cohomology-theory
 C-cw-ascending : ∀ {n}
   → (⊙skel : ⊙Skeleton (S (S (S n))))
   → ⊙has-cells-with-choice 0 ⊙skel i
-  →  C (ℕ-to-ℤ (S (S n))) ⊙⟦ ⊙skel ⟧
-  ≃ᴳ C (ℕ-to-ℤ (S (S n))) (⊙Cofiber (⊙incl-tail (inr (ltSR (ltSR ltS))) ⊙skel))
+  →  C (ℕ-to-ℤ (S (S n))) (⊙Cofiber (⊙incl-tail (inr (ltSR (ltSR ltS))) ⊙skel))
+  ≃ᴳ C (ℕ-to-ℤ (S (S n))) ⊙⟦ ⊙skel ⟧
 C-cw-ascending {n} ⊙skel ac =
   Exact2.G-trivial-and-L-trivial-implies-H-iso-K
     (exact-seq-index 1 $ C-cofiber-exact-seq (ℕ-to-ℤ (S n)) (⊙incl-tail n≤SSSn ⊙skel))
