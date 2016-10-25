@@ -25,10 +25,10 @@ module _ {n} (⊙skel : ⊙Skeleton {i} (S (S (S n))))
     ac₋₃ = fst (fst (fst ac))
 
   C-cw-ascending :
-       C (ℕ-to-ℤ (S (S n))) (⊙Cofiber (⊙incl-tail n≤SSSn ⊙skel))
+       C (ℕ-to-ℤ (S (S n))) (⊙Cofiber (⊙cw-incl-tail n≤SSSn ⊙skel))
     ≃ᴳ C (ℕ-to-ℤ (S (S n))) ⊙⟦ ⊙skel ⟧
   C-cw-ascending = Exact2.G-trivial-and-L-trivial-implies-H-iso-K
-    (exact-seq-index 1 $ C-cofiber-exact-seq (ℕ-to-ℤ (S n)) (⊙incl-tail n≤SSSn ⊙skel))
-    (exact-seq-index 2 $ C-cofiber-exact-seq (ℕ-to-ℤ (S n)) (⊙incl-tail n≤SSSn ⊙skel))
+    (exact-seq-index 1 $ C-cofiber-exact-seq (ℕ-to-ℤ (S n)) (⊙cw-incl-tail n≤SSSn ⊙skel))
+    (exact-seq-index 2 $ C-cofiber-exact-seq (ℕ-to-ℤ (S n)) (⊙cw-incl-tail n≤SSSn ⊙skel))
     (C-cw-at-higher (S n) ltS ⊙skel₋₃ ac₋₃)
     (C-cw-at-higher (S (S n)) (ltSR ltS) ⊙skel₋₃ ac₋₃)

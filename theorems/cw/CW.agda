@@ -138,35 +138,35 @@ attaching-nth Sm≤n = attaching-last ∘ cw-take Sm≤n
 
 -- Access the [m]th dimensional inclusion map
 
-incl-last : ∀ {n} (skel : Skeleton (S n))
+cw-incl-last : ∀ {n} (skel : Skeleton (S n))
   → (⟦ skel ⟧₋₁ → ⟦ skel ⟧)
-incl-last _ = incl
+cw-incl-last _ = incl
 
-⊙incl-last : ∀ {n} (⊙skel : ⊙Skeleton (S n))
+⊙cw-incl-last : ∀ {n} (⊙skel : ⊙Skeleton (S n))
   → (⊙⟦ ⊙skel ⟧₋₁ ⊙→ ⊙⟦ ⊙skel ⟧)
-⊙incl-last _ = incl , idp
+⊙cw-incl-last _ = incl , idp
 
-incl-nth : ∀ {m n : ℕ} (Sm≤n : S m ≤ n) (skel : Skeleton n)
+cw-incl-nth : ∀ {m n : ℕ} (Sm≤n : S m ≤ n) (skel : Skeleton n)
   → ⟦ cw-take Sm≤n skel ⟧₋₁ → ⟦ cw-take Sm≤n skel ⟧
-incl-nth Sm≤n = incl-last ∘ cw-take Sm≤n
+cw-incl-nth Sm≤n = cw-incl-last ∘ cw-take Sm≤n
 
-⊙incl-nth : ∀ {m n : ℕ} (Sm≤n : S m ≤ n) (⊙skel : ⊙Skeleton n)
+⊙cw-incl-nth : ∀ {m n : ℕ} (Sm≤n : S m ≤ n) (⊙skel : ⊙Skeleton n)
   → (⊙⟦ ⊙cw-take Sm≤n ⊙skel ⟧₋₁ ⊙→ ⊙⟦ ⊙cw-take Sm≤n ⊙skel ⟧)
-⊙incl-nth Sm≤n = ⊙incl-last ∘ ⊙cw-take Sm≤n
+⊙cw-incl-nth Sm≤n = ⊙cw-incl-last ∘ ⊙cw-take Sm≤n
 
-incl-tail : ∀ {m n : ℕ} (m≤n : m ≤ n) (skel : Skeleton n)
+cw-incl-tail : ∀ {m n : ℕ} (m≤n : m ≤ n) (skel : Skeleton n)
   → (⟦ cw-take m≤n skel ⟧ → ⟦ skel ⟧)
-incl-tail (inl idp) skel = idf ⟦ skel ⟧
-incl-tail (inr ltS) skel = incl-last skel
-incl-tail (inr (ltSR lt)) skel =
-  incl-last skel ∘ incl-tail (inr lt) (cw-init skel)
+cw-incl-tail (inl idp) skel = idf ⟦ skel ⟧
+cw-incl-tail (inr ltS) skel = cw-incl-last skel
+cw-incl-tail (inr (ltSR lt)) skel =
+  cw-incl-last skel ∘ cw-incl-tail (inr lt) (cw-init skel)
 
-⊙incl-tail : ∀ {m n : ℕ} (m≤n : m ≤ n) (⊙skel : ⊙Skeleton n)
+⊙cw-incl-tail : ∀ {m n : ℕ} (m≤n : m ≤ n) (⊙skel : ⊙Skeleton n)
   → (⊙⟦ ⊙cw-take m≤n ⊙skel ⟧ ⊙→ ⊙⟦ ⊙skel ⟧)
-⊙incl-tail (inl idp) ⊙skel = ⊙idf ⊙⟦ ⊙skel ⟧
-⊙incl-tail (inr ltS) ⊙skel = ⊙incl-last ⊙skel
-⊙incl-tail (inr (ltSR lt)) ⊙skel =
-  ⊙incl-last ⊙skel ⊙∘ ⊙incl-tail (inr lt) (⊙cw-init ⊙skel)
+⊙cw-incl-tail (inl idp) ⊙skel = ⊙idf ⊙⟦ ⊙skel ⟧
+⊙cw-incl-tail (inr ltS) ⊙skel = ⊙cw-incl-last ⊙skel
+⊙cw-incl-tail (inr (ltSR lt)) ⊙skel =
+  ⊙cw-incl-last ⊙skel ⊙∘ ⊙cw-incl-tail (inr lt) (⊙cw-init ⊙skel)
 
 -- Extra conditions on CW complexes
 

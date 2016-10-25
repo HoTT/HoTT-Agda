@@ -35,10 +35,10 @@ C-points-≠-is-trivial {n} n≠0 ⊙skel ac =
 
 {- the equivalence is in the opposite direction because
    cohomology functors are contravariant. -}
-⊙Cofiber-incl-last : ∀ {n} (⊙skel : ⊙Skeleton {i} (S n))
+⊙Cofiber-cw-incl-last : ∀ {n} (⊙skel : ⊙Skeleton {i} (S n))
   →  ⊙BigWedge {A = ⊙cells-last ⊙skel} (λ _ → ⊙Sphere (S n))
-  ⊙≃ ⊙Cofiber (⊙incl-last ⊙skel)
-⊙Cofiber-incl-last {n} ⊙skel = ≃-to-⊙≃
+  ⊙≃ ⊙Cofiber (⊙cw-incl-last ⊙skel)
+⊙Cofiber-cw-incl-last {n} ⊙skel = ≃-to-⊙≃
   (PS.split-equiv ∘e equiv to from to-from from-to) idp
   where
     open AttachedSkeleton (⊙Skeleton.skel ⊙skel)
@@ -80,29 +80,29 @@ C-points-≠-is-trivial {n} n≠0 ⊙skel ac =
                   ( ∘-ap to (bwin a) (merid s)
                   ∙ SphereToCofiber.merid-β a s)})
 
-C-incl-last : ∀ n {m} (⊙skel : ⊙Skeleton {i} (S m))
+C-cw-incl-last : ∀ n {m} (⊙skel : ⊙Skeleton {i} (S m))
   → ⊙has-cells-with-choice 0 ⊙skel i
-  →  C n (⊙Cofiber (⊙incl-last ⊙skel))
+  →  C n (⊙Cofiber (⊙cw-incl-last ⊙skel))
   ≃ᴳ Πᴳ (⊙cells-last ⊙skel) (λ _ → C n (⊙Lift (⊙Sphere (S m))))
-C-incl-last n {m} skel (_ , cells-ac)
+C-cw-incl-last n {m} skel (_ , cells-ac)
   =   C-additive-iso n (λ _ → ⊙Lift (⊙Sphere (S m))) cells-ac
-  ∘eᴳ C-emap n (   ⊙Cofiber-incl-last skel
+  ∘eᴳ C-emap n (   ⊙Cofiber-cw-incl-last skel
                ⊙∘e ⊙BigWedge-emap-r (λ _ → ⊙lower-equiv))
 
-C-incl-last-diag : ∀ n (⊙skel : ⊙Skeleton {i} (S n))
+C-cw-incl-last-diag : ∀ n (⊙skel : ⊙Skeleton {i} (S n))
   → ⊙has-cells-with-choice 0 ⊙skel i
-  →  C (ℕ-to-ℤ (S n)) (⊙Cofiber (⊙incl-last ⊙skel))
+  →  C (ℕ-to-ℤ (S n)) (⊙Cofiber (⊙cw-incl-last ⊙skel))
   ≃ᴳ Πᴳ (⊙cells-last ⊙skel) (λ _ → G)
-C-incl-last-diag n ⊙skel ac =
+C-cw-incl-last-diag n ⊙skel ac =
       Πᴳ-emap-r (⊙cells-last ⊙skel) (λ _ → C-Sphere-diag (S n))
-  ∘eᴳ C-incl-last (ℕ-to-ℤ (S n)) ⊙skel ac
+  ∘eᴳ C-cw-incl-last (ℕ-to-ℤ (S n)) ⊙skel ac
 
-C-incl-last-≠-is-trivial : ∀ (n : ℤ) {m} (n≠Sm : n ≠ ℕ-to-ℤ (S m))
+C-cw-incl-last-≠-is-trivial : ∀ (n : ℤ) {m} (n≠Sm : n ≠ ℕ-to-ℤ (S m))
   → (⊙skel : ⊙Skeleton {i} (S m))
   → ⊙has-cells-with-choice 0 ⊙skel i
-  → is-trivialᴳ (C n (⊙Cofiber (⊙incl-last ⊙skel)))
-C-incl-last-≠-is-trivial n {m} n≠Sm ⊙skel ac =
-  iso-preserves'-trivial (C-incl-last n ⊙skel ac) $
+  → is-trivialᴳ (C n (⊙Cofiber (⊙cw-incl-last ⊙skel)))
+C-cw-incl-last-≠-is-trivial n {m} n≠Sm ⊙skel ac =
+  iso-preserves'-trivial (C-cw-incl-last n ⊙skel ac) $
     Πᴳ-is-trivial (⊙cells-last ⊙skel)
       (λ _ → C n (⊙Lift (⊙Sphere (S m))))
       (λ _ → C-Sphere-≠-is-trivial n (S m) n≠Sm)

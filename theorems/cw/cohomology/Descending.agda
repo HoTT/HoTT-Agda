@@ -21,10 +21,10 @@ private
     → C (succ n) ⊙⟦ ⊙skel ⟧ ≃ᴳ C (succ n) ⊙⟦ ⊙cw-init ⊙skel ⟧
   C-cw-descend-at-succ n {m} n≠m Sn≠m ⊙skel ac =
     Exact2.G-trivial-and-L-trivial-implies-H-iso-K
-      (exact-seq-index 2 $ C-cofiber-exact-seq n (⊙incl-last ⊙skel))
-      (exact-seq-index 0 $ C-cofiber-exact-seq (succ n) (⊙incl-last ⊙skel))
-      (C-incl-last-≠-is-trivial (succ n) (succ-≠ n≠m) ⊙skel ac)
-      (C-incl-last-≠-is-trivial (succ (succ n)) (succ-≠ Sn≠m) ⊙skel ac)
+      (exact-seq-index 2 $ C-cofiber-exact-seq n (⊙cw-incl-last ⊙skel))
+      (exact-seq-index 0 $ C-cofiber-exact-seq (succ n) (⊙cw-incl-last ⊙skel))
+      (C-cw-incl-last-≠-is-trivial (succ n) (succ-≠ n≠m) ⊙skel ac)
+      (C-cw-incl-last-≠-is-trivial (succ (succ n)) (succ-≠ Sn≠m) ⊙skel ac)
 
 C-cw-descend : ∀ n {m} (n≠Sm : n ≠ ℕ-to-ℤ (S m)) (n≠m : n ≠ ℕ-to-ℤ m)
   → (⊙skel : ⊙Skeleton (S m))
