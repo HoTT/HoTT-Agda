@@ -3,7 +3,7 @@
 open import HoTT
 open import homotopy.PushoutSplit
 
-module cw.cohomology.CofiberGridComm {i j k l}
+module cw.cohomology.InnerGridComm {i j k l}
   {A : Type i} {B : Type j} {C : Type k} {D : Type l}
   (f : A → B) (g : B → C) (h : C → D) where
 
@@ -47,4 +47,4 @@ module cw.cohomology.CofiberGridComm {i j k l}
                     ∙ PushoutFmap.glue-β C/B-to-D/B-span-map (f a)
                     ∙ ! (PushoutFmap.glue-β D/A-to-D/B-span-map a)
                     ∙ ap (ap D/A-to-D/B) (! (PushoutFmap.glue-β C/A-to-D/A-span-map a))
-                    ∙ ∘-ap D/A-to-D/B C/A-to-D/A (glue a)))
+                    ∙ ∘-ap D/A-to-D/B C/A-to-D/A (glue a))
