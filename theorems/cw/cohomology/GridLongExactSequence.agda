@@ -83,6 +83,10 @@ private
       CEl-isemap (succ n) Z/X-to-D C/A-to-D-is-equiv ,
       idf-is-equiv _
 
-C-cofiber-grid-seq-is-exact : is-exact-seq C-cofiber-grid-seq
-C-cofiber-grid-seq-is-exact = seq-equiv-preserves-exact
-  C-cofiber-seq-equiv-C-cofiber-grid-seq C-cofiber-seq-is-exact
+abstract
+  C-cofiber-grid-seq-is-exact : is-exact-seq C-cofiber-grid-seq
+  C-cofiber-grid-seq-is-exact = seq-equiv-preserves-exact
+    C-cofiber-seq-equiv-C-cofiber-grid-seq C-cofiber-seq-is-exact
+
+C-cofiber-grid-exact-seq : ExactSequence (C n Z/X) (C (succ n) Y/X)
+C-cofiber-grid-exact-seq = C-cofiber-grid-seq , C-cofiber-grid-seq-is-exact

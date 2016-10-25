@@ -55,6 +55,10 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
         from-to : ∀ g → from (to g) == g
         from-to g = From.cst-extend-is-const (to g) (uncurry E.ker-sub-im (to g)) [ g , idp ]
 
+  φ-inj-implies-G-iso-ker : is-injᴳ φ → G ≃ᴳ Ker.grp ψ
+  φ-inj-implies-G-iso-ker φ-is-inj = G-to-ker , φ-inj-implies-G-to-ker-is-equiv φ-is-inj
+
+  abstract
     K-trivial-implies-φ-is-surj : is-trivialᴳ K → is-surjᴳ φ
     K-trivial-implies-φ-is-surj K-is-triv h = E.ker-sub-im h (K-is-triv (ψ.f h))
 
@@ -107,6 +111,11 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
           (λ h → From.cst-extend-is-const (ψ.f h) (ψ-is-surj (ψ.f h)) [ h , idp ])
           (λ _ → prop-has-all-paths-↓ (Cok.El-is-set _ _))
 
+  ψ-surj-implies-coker-iso-K : (H-is-abelian : is-abelian H)
+    → is-surjᴳ ψ → Coker.grp H-is-abelian φ ≃ᴳ K
+  ψ-surj-implies-coker-iso-K H-is-abelian ψ-is-surj =
+    coker-to-K H-is-abelian , ψ-surj-implies-coker-to-K-is-equiv H-is-abelian ψ-is-surj
+
 module Exact2 {i j k l} {G : Group i} {H : Group j} {K : Group k} {L : Group l}
   {φ : G →ᴳ H} {ψ : H →ᴳ K} {ξ : K →ᴳ L}
   (φ-ψ-is-exact : is-exact φ ψ) (ψ-ξ-is-exact : is-exact ψ ξ) where
@@ -132,6 +141,18 @@ module Exact2 {i j k l} {G : Group i} {H : Group j} {K : Group k} {L : Group l}
       = surjᴳ-and-injᴳ-iso ψ
           (EL2.K-trivial-implies-φ-is-surj L-is-triv)
           (EL1.G-trivial-implies-ψ-is-inj G-is-triv)
+
+    G-trivial-implies-H-iso-ker :
+      is-trivialᴳ G → H ≃ᴳ Ker.grp ξ
+    G-trivial-implies-H-iso-ker G-is-triv
+      = EL2.φ-inj-implies-G-iso-ker $
+          EL1.G-trivial-implies-ψ-is-inj G-is-triv
+
+    L-trivial-implies-coker-iso-K : (H-is-abelian : is-abelian H)
+      → is-trivialᴳ L → Coker.grp H-is-abelian φ ≃ᴳ K
+    L-trivial-implies-coker-iso-K H-is-abelian L-is-triv
+      = EL1.ψ-surj-implies-coker-iso-K H-is-abelian $
+          EL2.K-trivial-implies-φ-is-surj L-is-triv
 
 abstract
   equiv-preserves-exact : ∀ {i₀ i₁ j₀ j₁ l₀ l₁}

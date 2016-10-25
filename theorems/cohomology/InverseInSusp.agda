@@ -69,10 +69,10 @@ private
       ∙ !-inv-l (merid x)
 
   cancel :
-    ×ᴳ-fanin (C-abelian n _) (CF-hom n (⊙Susp-flip X)) (idhom _) ∘ᴳ ×ᴳ-diag
+    ×ᴳ-fanin (C-is-abelian n _) (CF-hom n (⊙Susp-flip X)) (idhom _) ∘ᴳ ×ᴳ-diag
     == cst-hom
   cancel =
-    ap2 (λ φ ψ → ×ᴳ-fanin (C-abelian n _) φ ψ ∘ᴳ ×ᴳ-diag)
+    ap2 (λ φ ψ → ×ᴳ-fanin (C-is-abelian n _) φ ψ ∘ᴳ ×ᴳ-diag)
         (! (CF-λ= n projl-subtract))
         (! (CF-ident n) ∙ ! (CF-λ= n projr-subtract))
     ∙ transport (λ {(G , φ , ψ) → φ ∘ᴳ ψ == cst-hom})
@@ -85,6 +85,6 @@ private
          ∙ CF-cst n)
 
 C-Susp-flip-is-inv :
-  CF-hom n (⊙Susp-flip X) == inv-hom (C n (⊙Susp X)) (C-abelian _ _)
+  CF-hom n (⊙Susp-flip X) == inv-hom (C n (⊙Susp X)) (C-is-abelian _ _)
 C-Susp-flip-is-inv = group-hom= $ λ= λ g →
   ! (Group.inv-unique-l (C n (⊙Susp X)) _ g (app= (ap GroupHom.f cancel) g))

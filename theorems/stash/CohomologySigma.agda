@@ -106,7 +106,7 @@ module CΣ (n : ℤ) (X : Ptd i) (Y : fst X → Ptd i) where
           (pair= (pair= ⊙path cfcod-over) (from-transp _ _ idp))
           (C-exact n ⊙select)))
 
-    module SER = SplitExactRight (C-abelian n _)
+    module SER = SplitExactRight (C-is-abelian n _)
       (CF-hom n ⊙Σbwin) (CF-hom n ⊙select)
       eseq
       (CF-hom n (⊙dfst Y))

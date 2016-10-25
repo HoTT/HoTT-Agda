@@ -32,8 +32,8 @@ mayer-vietoris-seq =
   C n (⊙Pushout ps)
     ⟨ ×ᴳ-fanout (CF-hom n (⊙left ps)) (CF-hom n (⊙right ps)) ⟩→
   C n X ×ᴳ C n Y
-    ⟨ ×ᴳ-fanin (C-abelian _ _) (CF-hom n f)
-               (inv-hom _ (C-abelian _ _) ∘ᴳ (CF-hom n g)) ⟩→
+    ⟨ ×ᴳ-fanin (C-is-abelian _ _) (CF-hom n f)
+               (inv-hom _ (C-is-abelian _ _) ∘ᴳ (CF-hom n g)) ⟩→
   C n Z
     ⟨ CF-hom (succ n) ⊙extract-glue ∘ᴳ fst ((C-Susp n Z)⁻¹ᴳ) ⟩→
   C (succ n) (⊙Pushout ps)
@@ -52,7 +52,7 @@ mayer-vietoris-exact =
                   (CF-↓cod= (succ n) MV.ext-over)
               ∙ᵈ codomain-over-iso {χ = diff'} (codomain-over-equiv _ _))
              (CWedge.Wedge-hom-η n X Y _
-              ▹ ap2 (×ᴳ-fanin (C-abelian n Z)) inl-lemma inr-lemma) ⟩∥
+              ▹ ap2 (×ᴳ-fanin (C-is-abelian n Z)) inl-lemma inr-lemma) ⟩∥
       ap (C (succ n)) MV.⊙path ∙ uaᴳ (C-Susp n Z)
         ∥⟨ ↓-over-×-in _→ᴳ_
             (CF-↓dom= (succ n) MV.cfcod-over
@@ -133,7 +133,7 @@ mayer-vietoris-exact =
         ⊡v∙ (∙-unit-r _ ∙ ! (SuspFmap.merid-β (fst f) z))
 
   inr-lemma : diff' ∘ᴳ CF-hom n (⊙projr X Y)
-                           == inv-hom _ (C-abelian n Z) ∘ᴳ CF-hom n g
+                           == inv-hom _ (C-is-abelian n Z) ∘ᴳ CF-hom n g
   inr-lemma =
     assoc-lemma₂
       (fst (C-Susp n Z)) (CF-hom (succ n) MV.⊙mv-diff)
@@ -159,11 +159,11 @@ mayer-vietoris-exact =
                 ∘ᴳ CF-hom _ (⊙Susp-fmap g) ∘ᴳ fst (C-Susp n Y ⁻¹ᴳ))
          (C-Susp-flip-is-inv (succ n))
     ∙ ap (λ φ → φ ∘ᴳ CF-hom _ (⊙Susp-fmap g) ∘ᴳ fst (C-Susp n Y ⁻¹ᴳ))
-         (inv-hom-natural (C-abelian _ _) (C-abelian _ _)
+         (inv-hom-natural (C-is-abelian _ _) (C-is-abelian _ _)
            (fst (C-Susp n Z)))
-    ∙ assoc-lemma (inv-hom _ (C-abelian n Z)) (fst (C-Susp n Z))
+    ∙ assoc-lemma (inv-hom _ (C-is-abelian n Z)) (fst (C-Susp n Z))
                   (CF-hom _ (⊙Susp-fmap g)) (fst (C-Susp n Y ⁻¹ᴳ))
-    ∙ ap (λ φ → inv-hom _ (C-abelian n Z) ∘ᴳ φ) (natural-lemma₁ n g)
+    ∙ ap (λ φ → inv-hom _ (C-is-abelian n Z) ∘ᴳ φ) (natural-lemma₁ n g)
     where
     {- Compute the right projection of mv-diff -}
     projr-mv-diff : (σz : fst (⊙Susp Z))

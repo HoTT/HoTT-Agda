@@ -22,14 +22,15 @@ C-points : ∀ n (⊙skel : ⊙Skeleton {i} 0)
   ≃ᴳ Πᴳ (WithoutPoint (⊙cw-head ⊙skel)) (λ _ → C n (⊙Lift ⊙Bool))
 C-points n (⊙skeleton pts pt dec) ac = C-set n ⊙[ fst pts , pt ] (snd pts) dec ac
 
-C-points-≠-is-trivial : ∀ {n} (n≠0 : n ≠ 0) (⊙skel : ⊙Skeleton {i} 0)
-  → ⊙has-cells-with-choice 0 ⊙skel i
-  → is-trivialᴳ (C n (⊙cw-head ⊙skel))
-C-points-≠-is-trivial {n} n≠0 ⊙skel ac =
-  iso-preserves'-trivial (C-points n ⊙skel ac) $
-    Πᴳ-is-trivial (WithoutPoint (⊙cw-head ⊙skel))
-      (λ _ → C n (⊙Lift ⊙Bool))
-      (λ _ → C-dimension n≠0)
+abstract
+  C-points-≠-is-trivial : ∀ {n} (n≠0 : n ≠ 0) (⊙skel : ⊙Skeleton {i} 0)
+    → ⊙has-cells-with-choice 0 ⊙skel i
+    → is-trivialᴳ (C n (⊙cw-head ⊙skel))
+  C-points-≠-is-trivial {n} n≠0 ⊙skel ac =
+    iso-preserves'-trivial (C-points n ⊙skel ac) $
+      Πᴳ-is-trivial (WithoutPoint (⊙cw-head ⊙skel))
+        (λ _ → C n (⊙Lift ⊙Bool))
+        (λ _ → C-dimension n≠0)
 
 {- This is for higher dimensions. -}
 
@@ -80,29 +81,30 @@ C-points-≠-is-trivial {n} n≠0 ⊙skel ac =
                   ( ∘-ap to (bwin a) (merid s)
                   ∙ SphereToCofiber.merid-β a s)})
 
-C-cw-incl-last : ∀ n {m} (⊙skel : ⊙Skeleton {i} (S m))
+C-Cofiber-cw-incl-last : ∀ n {m} (⊙skel : ⊙Skeleton {i} (S m))
   → ⊙has-cells-with-choice 0 ⊙skel i
   →  C n (⊙Cofiber (⊙cw-incl-last ⊙skel))
   ≃ᴳ Πᴳ (⊙cells-last ⊙skel) (λ _ → C n (⊙Lift (⊙Sphere (S m))))
-C-cw-incl-last n {m} skel (_ , cells-ac)
+C-Cofiber-cw-incl-last n {m} skel (_ , cells-ac)
   =   C-additive-iso n (λ _ → ⊙Lift (⊙Sphere (S m))) cells-ac
   ∘eᴳ C-emap n (   ⊙Cofiber-cw-incl-last skel
                ⊙∘e ⊙BigWedge-emap-r (λ _ → ⊙lower-equiv))
 
-C-cw-incl-last-diag : ∀ n (⊙skel : ⊙Skeleton {i} (S n))
+C-Cofiber-cw-incl-last-diag : ∀ n (⊙skel : ⊙Skeleton {i} (S n))
   → ⊙has-cells-with-choice 0 ⊙skel i
   →  C (ℕ-to-ℤ (S n)) (⊙Cofiber (⊙cw-incl-last ⊙skel))
   ≃ᴳ Πᴳ (⊙cells-last ⊙skel) (λ _ → G)
-C-cw-incl-last-diag n ⊙skel ac =
+C-Cofiber-cw-incl-last-diag n ⊙skel ac =
       Πᴳ-emap-r (⊙cells-last ⊙skel) (λ _ → C-Sphere-diag (S n))
-  ∘eᴳ C-cw-incl-last (ℕ-to-ℤ (S n)) ⊙skel ac
+  ∘eᴳ C-Cofiber-cw-incl-last (ℕ-to-ℤ (S n)) ⊙skel ac
 
-C-cw-incl-last-≠-is-trivial : ∀ (n : ℤ) {m} (n≠Sm : n ≠ ℕ-to-ℤ (S m))
-  → (⊙skel : ⊙Skeleton {i} (S m))
-  → ⊙has-cells-with-choice 0 ⊙skel i
-  → is-trivialᴳ (C n (⊙Cofiber (⊙cw-incl-last ⊙skel)))
-C-cw-incl-last-≠-is-trivial n {m} n≠Sm ⊙skel ac =
-  iso-preserves'-trivial (C-cw-incl-last n ⊙skel ac) $
-    Πᴳ-is-trivial (⊙cells-last ⊙skel)
-      (λ _ → C n (⊙Lift (⊙Sphere (S m))))
-      (λ _ → C-Sphere-≠-is-trivial n (S m) n≠Sm)
+abstract
+  C-Cofiber-cw-incl-last-≠-is-trivial : ∀ (n : ℤ) {m} (n≠Sm : n ≠ ℕ-to-ℤ (S m))
+    → (⊙skel : ⊙Skeleton {i} (S m))
+    → ⊙has-cells-with-choice 0 ⊙skel i
+    → is-trivialᴳ (C n (⊙Cofiber (⊙cw-incl-last ⊙skel)))
+  C-Cofiber-cw-incl-last-≠-is-trivial n {m} n≠Sm ⊙skel ac =
+    iso-preserves'-trivial (C-Cofiber-cw-incl-last n ⊙skel ac) $
+      Πᴳ-is-trivial (⊙cells-last ⊙skel)
+        (λ _ → C n (⊙Lift (⊙Sphere (S m))))
+        (λ _ → C-Sphere-≠-is-trivial n (S m) n≠Sm)

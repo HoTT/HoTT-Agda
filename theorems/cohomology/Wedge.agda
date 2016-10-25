@@ -70,11 +70,11 @@ module CWedge (n : ℤ) (X Y : Ptd i) where
     module R = ⊙WedgeRec winl* winr*
 
   Wedge-hom-η : {Z : Ptd i} (φ : C n (⊙Wedge X Y) →ᴳ C n Z)
-    → φ == ×ᴳ-fanin (C-abelian n _) (φ ∘ᴳ CF-hom n (⊙projl X Y))
+    → φ == ×ᴳ-fanin (C-is-abelian n _) (φ ∘ᴳ CF-hom n (⊙projl X Y))
                                     (φ ∘ᴳ CF-hom n (⊙projr X Y))
       [ (λ G → G →ᴳ C n Z) ↓ path ]
   Wedge-hom-η φ =
-    lemma (C-abelian n _) (C-abelian n _) inl-over inr-over
+    lemma (C-is-abelian n _) (C-is-abelian n _) inl-over inr-over
     where
     lemma : {G H K L : Group i}
       (aG : is-abelian G) (aL : is-abelian L) {p : G == H ×ᴳ K}
@@ -88,11 +88,11 @@ module CWedge (n : ℤ) (X Y : Ptd i) where
 
   Wedge-in-over : {Z : Ptd i} (f : Z ⊙→ ⊙Wedge X Y)
     → CF-hom n f
-      == ×ᴳ-fanin (C-abelian n _) (CF-hom n (⊙projl X Y ⊙∘ f))
+      == ×ᴳ-fanin (C-is-abelian n _) (CF-hom n (⊙projl X Y ⊙∘ f))
                                     (CF-hom n (⊙projr X Y ⊙∘ f))
       [ (λ G → G →ᴳ C n Z) ↓ path ]
   Wedge-in-over f =
     Wedge-hom-η (CF-hom n f)
-    ▹ ap2 (×ᴳ-fanin (C-abelian n _))
+    ▹ ap2 (×ᴳ-fanin (C-is-abelian n _))
         (! (CF-comp n (⊙projl X Y) f))
         (! (CF-comp n (⊙projr X Y) f))

@@ -11,7 +11,7 @@ record CohomologyTheory i : Type (lsucc i) where
   field
     C : ℤ → Ptd i → Group i
 
-    C-abelian : (n : ℤ) (X : Ptd i) → is-abelian (C n X)
+    C-is-abelian : (n : ℤ) (X : Ptd i) → is-abelian (C n X)
 
   CEl : ℤ → Ptd i → Type i
   CEl n X = Group.El (C n X)
@@ -97,6 +97,7 @@ record CohomologyTheory i : Type (lsucc i) where
 record OrdinaryTheory i : Type (lsucc i) where
   constructor ordinary-theory
   field
+    -- XXX This should be cohomology-thy
     cohomology-theory : CohomologyTheory i
   open CohomologyTheory cohomology-theory public
   field

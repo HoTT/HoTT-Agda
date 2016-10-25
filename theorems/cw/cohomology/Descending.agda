@@ -23,8 +23,8 @@ private
     Exact2.G-trivial-and-L-trivial-implies-H-iso-K
       (exact-seq-index 2 $ C-cofiber-exact-seq n (⊙cw-incl-last ⊙skel))
       (exact-seq-index 0 $ C-cofiber-exact-seq (succ n) (⊙cw-incl-last ⊙skel))
-      (C-cw-incl-last-≠-is-trivial (succ n) (succ-≠ n≠m) ⊙skel ac)
-      (C-cw-incl-last-≠-is-trivial (succ (succ n)) (succ-≠ Sn≠m) ⊙skel ac)
+      (C-Cofiber-cw-incl-last-≠-is-trivial (succ n) (succ-≠ n≠m) ⊙skel ac)
+      (C-Cofiber-cw-incl-last-≠-is-trivial (succ (succ n)) (succ-≠ Sn≠m) ⊙skel ac)
 
 C-cw-descend : ∀ n {m} (n≠Sm : n ≠ ℕ-to-ℤ (S m)) (n≠m : n ≠ ℕ-to-ℤ m)
   → (⊙skel : ⊙Skeleton (S m))
@@ -37,31 +37,32 @@ C-cw-descend (pos O) -O≠Sm -O≠m
 C-cw-descend (pos (S n)) Sn≠Sm Sn≠m
   = C-cw-descend-at-succ (pos n) (pred-≠ Sn≠Sm) Sn≠m
 
-C-cw-at-higher : ∀ n {m} (m<n : m < n) (⊙skel : ⊙Skeleton m)
-  → ⊙has-cells-with-choice 0 ⊙skel i
-  → is-trivialᴳ (C (ℕ-to-ℤ n) ⊙⟦ ⊙skel ⟧)
-C-cw-at-higher n {m = O} 0<n ⊙skel ac =
-  C-points-≠-is-trivial (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ 0<n))) ⊙skel ac
-C-cw-at-higher n {m = S m} Sm<n ⊙skel ac =
-  iso-preserves'-trivial
-    (C-cw-descend (ℕ-to-ℤ n)
-      (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ Sm<n)))
-      (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ (<-trans ltS Sm<n))))
-      ⊙skel ac)
-    (C-cw-at-higher n (<-trans ltS Sm<n) (⊙cw-init ⊙skel) (fst ac))
+abstract
+  C-cw-at-higher : ∀ n {m} (m<n : m < n) (⊙skel : ⊙Skeleton m)
+    → ⊙has-cells-with-choice 0 ⊙skel i
+    → is-trivialᴳ (C (ℕ-to-ℤ n) ⊙⟦ ⊙skel ⟧)
+  C-cw-at-higher n {m = O} 0<n ⊙skel ac =
+    C-points-≠-is-trivial (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ 0<n))) ⊙skel ac
+  C-cw-at-higher n {m = S m} Sm<n ⊙skel ac =
+    iso-preserves'-trivial
+      (C-cw-descend (ℕ-to-ℤ n)
+        (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ Sm<n)))
+        (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ (<-trans ltS Sm<n))))
+        ⊙skel ac)
+      (C-cw-at-higher n (<-trans ltS Sm<n) (⊙cw-init ⊙skel) (fst ac))
 
-C-cw-at-negsucc : ∀ n {m} (⊙skel : ⊙Skeleton m)
-  → ⊙has-cells-with-choice 0 ⊙skel i
-  → is-trivialᴳ (C (negsucc n) ⊙⟦ ⊙skel ⟧)
-C-cw-at-negsucc n {m = O} ⊙skel ac =
-  C-points-≠-is-trivial (ℤ-negsucc≠pos n O) ⊙skel ac
-C-cw-at-negsucc n {m = S m} ⊙skel ac =
-  iso-preserves'-trivial
-    (C-cw-descend (negsucc n)
-      (ℤ-negsucc≠pos _ (S m))
-      (ℤ-negsucc≠pos _ m)
-      ⊙skel ac)
-    (C-cw-at-negsucc n (⊙cw-init ⊙skel) (fst ac))
+  C-cw-at-negsucc : ∀ n {m} (⊙skel : ⊙Skeleton m)
+    → ⊙has-cells-with-choice 0 ⊙skel i
+    → is-trivialᴳ (C (negsucc n) ⊙⟦ ⊙skel ⟧)
+  C-cw-at-negsucc n {m = O} ⊙skel ac =
+    C-points-≠-is-trivial (ℤ-negsucc≠pos n O) ⊙skel ac
+  C-cw-at-negsucc n {m = S m} ⊙skel ac =
+    iso-preserves'-trivial
+      (C-cw-descend (negsucc n)
+        (ℤ-negsucc≠pos _ (S m))
+        (ℤ-negsucc≠pos _ m)
+        ⊙skel ac)
+      (C-cw-at-negsucc n (⊙cw-init ⊙skel) (fst ac))
 
 C-cw-to-diag-at-lower : ∀ n {m} (Sn≤m : S n ≤ m) (⊙skel : ⊙Skeleton m)
   → ⊙has-cells-with-choice 0 ⊙skel i

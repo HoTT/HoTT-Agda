@@ -27,8 +27,8 @@ module SpectrumModel where
     uCEl = X ⊙→ ⊙Ω (E (succ n))
 
   {- Cⁿ(X) is an abelian group -}
-  C-abelian : (n : ℤ) (X : Ptd i) → is-abelian (C n X)
-  C-abelian n X =
+  C-is-abelian : (n : ℤ) (X : Ptd i) → is-abelian (C n X)
+  C-is-abelian n X =
     iso-preserves-abelian (Trunc-⊙→Ω-group-emap-codom X (spectrum (succ n))) $
       Trunc-group-abelian (⊙→Ω-group-structure _ _) $ λ {(f , fpt) (g , gpt) →
         ⊙λ= (λ x → Ω^2-∙-comm (f x) (g x)) (pt-lemma fpt gpt)}
@@ -245,7 +245,7 @@ spectrum-cohomology = record {
   C-fmap = C-fmap;
   C-fmap-idf = C-fmap-idf;
   C-fmap-∘ = C-fmap-∘;
-  C-abelian = C-abelian;
+  C-is-abelian = C-is-abelian;
   C-Susp = C-Susp;
   C-Susp-fmap = C-Susp-fmap;
   C-exact = C-exact;

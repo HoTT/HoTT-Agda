@@ -57,9 +57,10 @@ private
     C-cofiber-seq'-to-C-cofiber-seq ,
     (GroupIso.f-is-equiv (C-Susp n Y) , GroupIso.f-is-equiv (C-Susp n X) , idf-is-equiv _ , idf-is-equiv _ , idf-is-equiv _)
 
-C-cofiber-seq-is-exact : is-exact-seq C-cofiber-seq
-C-cofiber-seq-is-exact = seq-equiv-preserves-exact
-  C-cofiber-seq'-equiv-C-cofiber-seq C-cofiber-seq'-is-exact
+abstract
+  C-cofiber-seq-is-exact : is-exact-seq C-cofiber-seq
+  C-cofiber-seq-is-exact = seq-equiv-preserves-exact
+    C-cofiber-seq'-equiv-C-cofiber-seq C-cofiber-seq'-is-exact
 
 C-cofiber-exact-seq : ExactSequence (C n Y) (C (succ n) X)
 C-cofiber-exact-seq = C-cofiber-seq , C-cofiber-seq-is-exact
