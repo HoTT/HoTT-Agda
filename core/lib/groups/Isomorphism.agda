@@ -68,6 +68,12 @@ module GroupIso {i j} {G : Group i} {H : Group j} (iso : GroupIso G H) where
   g-hom : H →ᴳ G
   g-hom = group-hom g (inverse-preserves-comp (Group.comp G) (Group.comp H) f-is-equiv pres-comp)
 
+  g-is-equiv : is-equiv g
+  g-is-equiv = is-equiv-inverse f-is-equiv
+
+  g-equiv : Group.El H ≃ Group.El G
+  g-equiv = g , g-is-equiv
+
 idiso : ∀ {i} (G : Group i) → (G ≃ᴳ G)
 idiso G = idhom G , idf-is-equiv _
 

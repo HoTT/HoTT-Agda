@@ -142,17 +142,17 @@ module Exact2 {i j k l} {G : Group i} {H : Group j} {K : Group k} {L : Group l}
           (EL2.K-trivial-implies-φ-is-surj L-is-triv)
           (EL1.G-trivial-implies-ψ-is-inj G-is-triv)
 
-    G-trivial-implies-H-iso-ker :
-      is-trivialᴳ G → H ≃ᴳ Ker.grp ξ
-    G-trivial-implies-H-iso-ker G-is-triv
-      = EL2.φ-inj-implies-G-iso-ker $
-          EL1.G-trivial-implies-ψ-is-inj G-is-triv
+  G-trivial-implies-H-iso-ker :
+    is-trivialᴳ G → H ≃ᴳ Ker.grp ξ
+  G-trivial-implies-H-iso-ker G-is-triv
+    = EL2.φ-inj-implies-G-iso-ker $
+        EL1.G-trivial-implies-ψ-is-inj G-is-triv
 
-    L-trivial-implies-coker-iso-K : (H-is-abelian : is-abelian H)
-      → is-trivialᴳ L → Coker.grp H-is-abelian φ ≃ᴳ K
-    L-trivial-implies-coker-iso-K H-is-abelian L-is-triv
-      = EL1.ψ-surj-implies-coker-iso-K H-is-abelian $
-          EL2.K-trivial-implies-φ-is-surj L-is-triv
+  L-trivial-implies-coker-iso-K : (H-is-abelian : is-abelian H)
+    → is-trivialᴳ L → Coker.grp H-is-abelian φ ≃ᴳ K
+  L-trivial-implies-coker-iso-K H-is-abelian L-is-triv
+    = EL1.ψ-surj-implies-coker-iso-K H-is-abelian $
+        EL2.K-trivial-implies-φ-is-surj L-is-triv
 
 abstract
   equiv-preserves-exact : ∀ {i₀ i₁ j₀ j₁ l₀ l₁}

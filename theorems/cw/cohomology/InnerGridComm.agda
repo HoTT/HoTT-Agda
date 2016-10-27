@@ -1,50 +1,56 @@
 {-# OPTIONS --without-K #-}
 
 open import HoTT
-open import homotopy.PushoutSplit
+open import cohomology.Theory
 
-module cw.cohomology.InnerGridComm {i j k l}
-  {A : Type i} {B : Type j} {C : Type k} {D : Type l}
-  (f : A → B) (g : B → C) (h : C → D) where
+module cw.cohomology.InnerGridComm {i} (OT : OrdinaryTheory i)
+  (n : ℤ) {X Y Z W : Ptd i} (f : X ⊙→ Y) (g : Y ⊙→ Z) (h : Z ⊙→ W) where
 
-  C/A = Cofiber (g ∘ f)
-  C/B = Cofiber g
-  D/A = Cofiber (h ∘ g ∘ f)
-  D/B = Cofiber (h ∘ g)
+  open OrdinaryTheory OT
+  open import cohomology.PtdMapSequence cohomology-theory
 
-  private
-    C/A-to-D/A-span-map : SpanMap (cofiber-span (g ∘ f)) (cofiber-span (h ∘ g ∘ f))
-    C/A-to-D/A-span-map = span-map (idf _) h (idf _)
-      (comm-sqr λ _ → idp) (comm-sqr λ _ → idp)
-  C/A-to-D/A : C/A → D/A
-  C/A-to-D/A = Pushout-fmap C/A-to-D/A-span-map
+  Z/X = ⊙Cofiber (g ⊙∘ f)
+  Z/Y = ⊙Cofiber g
+  W/X = ⊙Cofiber (h ⊙∘ g ⊙∘ f)
+  W/Y = ⊙Cofiber (h ⊙∘ g)
 
   private
-    D/A-to-D/B-span-map : SpanMap (cofiber-span (h ∘ g ∘ f)) (cofiber-span (h ∘ g))
-    D/A-to-D/B-span-map = span-map (idf _) (idf _) f
+    Z/X-to-W/X-span-map : SpanMap (cofiber-span (fst g ∘ fst f)) (cofiber-span (fst h ∘ fst g ∘ fst f))
+    Z/X-to-W/X-span-map = span-map (idf _) (fst h) (idf _)
       (comm-sqr λ _ → idp) (comm-sqr λ _ → idp)
-  D/A-to-D/B : D/A → D/B
-  D/A-to-D/B = Pushout-fmap D/A-to-D/B-span-map
+  Z/X-to-W/X : Z/X ⊙→ W/X
+  Z/X-to-W/X = Pushout-fmap Z/X-to-W/X-span-map , idp
 
   private
-    C/A-to-C/B-span-map : SpanMap (cofiber-span (g ∘ f)) (cofiber-span g)
-    C/A-to-C/B-span-map = span-map (idf _) (idf _) f
+    W/X-to-W/Y-span-map : SpanMap (cofiber-span (fst h ∘ fst g ∘ fst f)) (cofiber-span (fst h ∘ fst g))
+    W/X-to-W/Y-span-map = span-map (idf _) (idf _) (fst f)
       (comm-sqr λ _ → idp) (comm-sqr λ _ → idp)
-  C/A-to-C/B : C/A → C/B
-  C/A-to-C/B = Pushout-fmap C/A-to-C/B-span-map
+  W/X-to-W/Y : W/X ⊙→ W/Y
+  W/X-to-W/Y = Pushout-fmap W/X-to-W/Y-span-map , idp
 
   private
-    C/B-to-D/B-span-map : SpanMap (cofiber-span g) (cofiber-span (h ∘ g))
-    C/B-to-D/B-span-map = span-map (idf _) h (idf _)
+    Z/X-to-Z/Y-span-map : SpanMap (cofiber-span (fst g ∘ fst f)) (cofiber-span (fst g))
+    Z/X-to-Z/Y-span-map = span-map (idf _) (idf _) (fst f)
       (comm-sqr λ _ → idp) (comm-sqr λ _ → idp)
-  C/B-to-D/B : C/B → D/B
-  C/B-to-D/B = Pushout-fmap C/B-to-D/B-span-map
+  Z/X-to-Z/Y : Z/X ⊙→ Z/Y
+  Z/X-to-Z/Y = Pushout-fmap Z/X-to-Z/Y-span-map , idp
 
-  grid-commutes : ∀ c/a → D/A-to-D/B (C/A-to-D/A c/a) == C/B-to-D/B (C/A-to-C/B c/a)
-  grid-commutes = Cofiber-elim idp (λ _ → idp)
-    (λ a → ↓-='-in' $ ap-∘ C/B-to-D/B C/A-to-C/B (glue a)
-                    ∙ ap (ap C/B-to-D/B) (PushoutFmap.glue-β C/A-to-C/B-span-map a)
-                    ∙ PushoutFmap.glue-β C/B-to-D/B-span-map (f a)
-                    ∙ ! (PushoutFmap.glue-β D/A-to-D/B-span-map a)
-                    ∙ ap (ap D/A-to-D/B) (! (PushoutFmap.glue-β C/A-to-D/A-span-map a))
-                    ∙ ∘-ap D/A-to-D/B C/A-to-D/A (glue a))
+  private
+    Z/Y-to-W/Y-span-map : SpanMap (cofiber-span (fst g)) (cofiber-span (fst h ∘ fst g))
+    Z/Y-to-W/Y-span-map = span-map (idf _) (fst h) (idf _)
+      (comm-sqr λ _ → idp) (comm-sqr λ _ → idp)
+  Z/Y-to-W/Y : Z/Y ⊙→ W/Y
+  Z/Y-to-W/Y = Pushout-fmap Z/Y-to-W/Y-span-map , idp
+
+  grid-comm-sqr : CommSquare (fst Z/X-to-W/X) (fst Z/Y-to-W/Y) (fst Z/X-to-Z/Y) (fst W/X-to-W/Y)
+  grid-comm-sqr = comm-sqr $ Cofiber-elim idp (λ _ → idp)
+    (λ a → ↓-='-in' $ ap-∘ (fst Z/Y-to-W/Y) (fst Z/X-to-Z/Y) (glue a)
+                    ∙ ap (ap (fst Z/Y-to-W/Y)) (PushoutFmap.glue-β Z/X-to-Z/Y-span-map a)
+                    ∙ PushoutFmap.glue-β Z/Y-to-W/Y-span-map ((fst f) a)
+                    ∙ ! (PushoutFmap.glue-β W/X-to-W/Y-span-map a)
+                    ∙ ap (ap (fst W/X-to-W/Y)) (! (PushoutFmap.glue-β Z/X-to-W/X-span-map a))
+                    ∙ ∘-ap (fst W/X-to-W/Y) (fst Z/X-to-W/X) (glue a))
+
+  C-grid-commutes : CommSquareᴳ
+    (C-fmap n Z/Y-to-W/Y) (C-fmap n Z/X-to-W/X) (C-fmap n W/X-to-W/Y) (C-fmap n Z/X-to-Z/Y)
+  C-grid-commutes = C-comm-square n grid-comm-sqr

@@ -12,6 +12,8 @@ open CohomologyTheory CT
 open import cohomology.PtdMapSequence CT
 open import cw.cohomology.CofiberGrid (fst f) (fst g)
 
+-- FIXME TODO these functions do not depend on [n] at all.
+
 Y/X : Ptd i
 Y/X = ⊙Cofiber f
 
@@ -51,8 +53,8 @@ private
 grid-co∂ : C n Y/X →ᴳ C (succ n) Z/Y
 grid-co∂ = C-fmap (succ n) Z/Y-to-E ∘ᴳ co∂
 
-C-cofiber-grid-seq : HomSequence (C n Z/X) (C (succ n) Y/X)
-C-cofiber-grid-seq =
+C-grid-cofiber-seq : HomSequence (C n Z/X) (C (succ n) Y/X)
+C-grid-cofiber-seq =
   C n Z/X         →⟨ C-fmap n Y/X-to-Z/X        ⟩ᴳ
   C n Y/X         →⟨ grid-co∂                   ⟩ᴳ
   C (succ n) Z/Y  →⟨ C-fmap (succ n) Z/X-to-Z/Y ⟩ᴳ
@@ -60,10 +62,10 @@ C-cofiber-grid-seq =
   C (succ n) Y/X  ⊣|ᴳ
 
 private
-  C-cofiber-seq-to-C-cofiber-grid-seq :
-    HomSeqMap C-cofiber-seq C-cofiber-grid-seq
+  C-cofiber-seq-to-C-grid-cofiber-seq :
+    HomSeqMap C-cofiber-seq C-grid-cofiber-seq
       (C-fmap n Z/X-to-D) (idhom _)
-  C-cofiber-seq-to-C-cofiber-grid-seq =
+  C-cofiber-seq-to-C-grid-cofiber-seq =
     C-fmap n Z/X-to-D         ↓⟨ comm-sqrᴳ (λ d → ! (C-fmap-idf n _)
                                                 ∙ (C-comm-square n B/A-to-C/A-comm-square □$ᴳ d)) ⟩ᴳ
     idhom _                   ↓⟨ comm-sqrᴳ (λ _ → idp) ⟩ᴳ
@@ -72,11 +74,11 @@ private
                                                 ∙ (C-comm-square (succ n) B/A-to-C/A-comm-square □$ᴳ d)) ⟩ᴳ
     idhom _                   ↓|ᴳ
 
-  C-cofiber-seq-equiv-C-cofiber-grid-seq :
-    HomSeqEquiv C-cofiber-seq C-cofiber-grid-seq
+  C-cofiber-seq-equiv-C-grid-cofiber-seq :
+    HomSeqEquiv C-cofiber-seq C-grid-cofiber-seq
       (C-fmap n Z/X-to-D) (idhom _)
-  C-cofiber-seq-equiv-C-cofiber-grid-seq =
-    C-cofiber-seq-to-C-cofiber-grid-seq ,
+  C-cofiber-seq-equiv-C-grid-cofiber-seq =
+    C-cofiber-seq-to-C-grid-cofiber-seq ,
       CEl-isemap n Z/X-to-D C/A-to-D-is-equiv ,
       idf-is-equiv _ ,
       CEl-isemap (succ n) Z/Y-to-E C/B-to-E-is-equiv ,
@@ -84,9 +86,9 @@ private
       idf-is-equiv _
 
 abstract
-  C-cofiber-grid-seq-is-exact : is-exact-seq C-cofiber-grid-seq
-  C-cofiber-grid-seq-is-exact = seq-equiv-preserves-exact
-    C-cofiber-seq-equiv-C-cofiber-grid-seq C-cofiber-seq-is-exact
+  C-grid-cofiber-seq-is-exact : is-exact-seq C-grid-cofiber-seq
+  C-grid-cofiber-seq-is-exact = seq-equiv-preserves-exact
+    C-cofiber-seq-equiv-C-grid-cofiber-seq C-cofiber-seq-is-exact
 
-C-cofiber-grid-exact-seq : ExactSequence (C n Z/X) (C (succ n) Y/X)
-C-cofiber-grid-exact-seq = C-cofiber-grid-seq , C-cofiber-grid-seq-is-exact
+C-grid-cofiber-exact-seq : ExactSequence (C n Z/X) (C (succ n) Y/X)
+C-grid-cofiber-exact-seq = C-grid-cofiber-seq , C-grid-cofiber-seq-is-exact

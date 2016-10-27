@@ -38,6 +38,7 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
   hfiber : (y : B) → Type (lmax i j)
   hfiber y = Σ A (λ x → f x == y)
 
+  {- Note that [is-inj] is not a mere proposition. -}
   is-inj : Type (lmax i j)
   is-inj = (a₁ a₂ : A) → f a₁ == f a₂ → a₁ == a₂
 
@@ -48,6 +49,12 @@ module _ {i j} {A : Type i} {B : Type j} {f : A → B} where
   abstract
     inj-preserves-≠ : is-inj f → preserves-≠ f
     inj-preserves-≠ inj ¬p q = ¬p (inj _ _ q)
+
+module _ {i j k} {A : Type i} {B : Type j} {C : Type k}
+  {f : A → B} {g : B → C} where
+
+  ∘-is-inj : is-inj g → is-inj f → is-inj (g ∘ f)
+  ∘-is-inj g-is-inj f-is-inj a₁ a₂ = f-is-inj a₁ a₂ ∘ g-is-inj (f a₁) (f a₂)
 
 {- Maps between two functions -}
 

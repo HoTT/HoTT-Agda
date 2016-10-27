@@ -108,3 +108,17 @@ abstract
       Πᴳ-is-trivial (⊙cells-last ⊙skel)
         (λ _ → C n (⊙Lift (⊙Sphere (S m))))
         (λ _ → C-Sphere-≠-is-trivial n (S m) n≠Sm)
+
+  C-Cofiber-cw-incl-last-<-is-trivial : ∀ (n : ℕ) {m} (n<Sm : n < S m)
+    → (⊙skel : ⊙Skeleton {i} (S m))
+    → ⊙has-cells-with-choice 0 ⊙skel i
+    → is-trivialᴳ (C (ℕ-to-ℤ n) (⊙Cofiber (⊙cw-incl-last ⊙skel)))
+  C-Cofiber-cw-incl-last-<-is-trivial n n<Sm ⊙skel ac =
+    C-Cofiber-cw-incl-last-≠-is-trivial (ℕ-to-ℤ n) (ℕ-to-ℤ-≠ (<-to-≠ n<Sm)) ⊙skel ac
+
+  C-Cofiber-cw-incl-last->-is-trivial : ∀ (n : ℕ) {m} (n>Sm : S m < n)
+    → (⊙skel : ⊙Skeleton {i} (S m))
+    → ⊙has-cells-with-choice 0 ⊙skel i
+    → is-trivialᴳ (C (ℕ-to-ℤ n) (⊙Cofiber (⊙cw-incl-last ⊙skel)))
+  C-Cofiber-cw-incl-last->-is-trivial n n>Sm ⊙skel ac =
+    C-Cofiber-cw-incl-last-≠-is-trivial (ℕ-to-ℤ n) (≠-inv (ℕ-to-ℤ-≠ (<-to-≠ n>Sm))) ⊙skel ac
