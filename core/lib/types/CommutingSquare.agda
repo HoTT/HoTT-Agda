@@ -16,10 +16,10 @@ CommSquare-∘v : ∀ {i₀ i₁ i₂ j₀ j₁ j₂}
   {f₀ : A₀ → B₀} {f₁ : A₁ → B₁} {f₂ : A₂ → B₂}
   {hA : A₀ → A₁} {hB : B₀ → B₁}
   {kA : A₁ → A₂} {kB : B₁ → B₂}
-  → CommSquare f₀ f₁ hA hB
   → CommSquare f₁ f₂ kA kB
+  → CommSquare f₀ f₁ hA hB
   → CommSquare f₀ f₂ (kA ∘ hA) (kB ∘ hB)
-CommSquare-∘v {hA = hA} {kB = kB} (comm-sqr □₀₁) (comm-sqr □₁₂) =
+CommSquare-∘v {hA = hA} {kB = kB} (comm-sqr □₁₂) (comm-sqr □₀₁) =
   comm-sqr λ a₀ → ap kB (□₀₁ a₀) ∙ □₁₂ (hA a₀)
 
 CommSquare-inverse-v : ∀ {i₀ i₁ j₀ j₁}
@@ -38,7 +38,7 @@ postulate -- TODO
     {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
     {f₀ : A₀ → B₀} {f₁ : A₁ → B₁} {hA : A₀ → A₁} {hB : B₀ → B₁}
     (cs : CommSquare f₀ f₁ hA hB) (hA-ise : is-equiv hA) (hB-ise : is-equiv hB)
-    → ∀ a₁ → (CommSquare-∘v (CommSquare-inverse-v cs hA-ise hB-ise) cs □$ a₁)
+    → ∀ a₁ → (CommSquare-∘v cs (CommSquare-inverse-v cs hA-ise hB-ise) □$ a₁)
           == is-equiv.f-g hB-ise (f₁ a₁) ∙ ! (ap f₁ (is-equiv.f-g hA-ise a₁))
 
   -- 'b' for 'bottom'
@@ -46,5 +46,5 @@ postulate -- TODO
     {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
     {f₀ : A₀ → B₀} {f₁ : A₁ → B₁} {hA : A₀ → A₁} {hB : B₀ → B₁}
     (cs : CommSquare f₀ f₁ hA hB) (hA-ise : is-equiv hA) (hB-ise : is-equiv hB)
-    → ∀ a₀ → (CommSquare-∘v cs (CommSquare-inverse-v cs hA-ise hB-ise) □$ a₀)
+    → ∀ a₀ → (CommSquare-∘v (CommSquare-inverse-v cs hA-ise hB-ise) cs □$ a₀)
           == is-equiv.g-f hB-ise (f₀ a₀) ∙ ! (ap f₀ (is-equiv.g-f hA-ise a₀))

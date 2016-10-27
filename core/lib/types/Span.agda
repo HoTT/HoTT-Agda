@@ -81,6 +81,18 @@ record SpanMap {i₀ j₀ k₀ i₁ j₁ k₁} (span₀ : Span {i₀} {j₀} {k�
     f-commutes : CommSquare span₀.f span₁.f hC hA
     g-commutes : CommSquare span₀.g span₁.g hC hB
 
+SpanMap-∘ : ∀ {i₀ j₀ k₀ i₁ j₁ k₁ i₂ j₂ k₂} {span₀ : Span {i₀} {j₀} {k₀}}
+  {span₁ : Span {i₁} {j₁} {k₁}} {span₂ : Span {i₂} {j₂} {k₂}}
+  → SpanMap span₁ span₂ → SpanMap span₀ span₁ → SpanMap span₀ span₂
+SpanMap-∘ span-map₁₂ span-map₀₁ = record {
+  hA = span-map₁₂.hA ∘ span-map₀₁.hA;
+  hB = span-map₁₂.hB ∘ span-map₀₁.hB;
+  hC = span-map₁₂.hC ∘ span-map₀₁.hC;
+  f-commutes = CommSquare-∘v span-map₁₂.f-commutes span-map₀₁.f-commutes;
+  g-commutes = CommSquare-∘v span-map₁₂.g-commutes span-map₀₁.g-commutes}
+  where module span-map₀₁ = SpanMap span-map₀₁
+        module span-map₁₂ = SpanMap span-map₁₂
+
 SpanEquiv : ∀ {i₀ j₀ k₀ i₁ j₁ k₁} (span₀ : Span {i₀} {j₀} {k₀}) (span₁ : Span {i₁} {j₁} {k₁})
   → Type (lmax (lmax (lmax i₀ j₀) k₀) (lmax (lmax i₁ j₁) k₁))
 SpanEquiv span₀ span₁ = Σ (SpanMap span₀ span₁)

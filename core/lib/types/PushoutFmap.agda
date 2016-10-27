@@ -20,15 +20,118 @@ module PushoutFmap {i₀ j₀ k₀ i₁ j₁ k₁} {span₀ : Span {i₀} {j₀}
 
 Pushout-fmap = PushoutFmap.f
 
+Pushout-fmap-∘ : ∀ {i₀ j₀ k₀ i₁ j₁ k₁ i₂ j₂ k₂} {span₀ : Span {i₀} {j₀} {k₀}}
+  {span₁ : Span {i₁} {j₁} {k₁}} {span₂ : Span {i₂} {j₂} {k₂}}
+  (span-map₁₂ : SpanMap span₁ span₂) (span-map₀₁ : SpanMap span₀ span₁)
+  → ∀ p → Pushout-fmap (SpanMap-∘ span-map₁₂ span-map₀₁) p
+       == Pushout-fmap span-map₁₂ (Pushout-fmap span-map₀₁ p)
+Pushout-fmap-∘ span-map₁₂ span-map₀₁
+  = Pushout-elim (λ _ → idp) (λ _ → idp)
+      (λ c → ↓-='-in' $
+        ap (Pushout-fmap span-map₁₂ ∘ Pushout-fmap span-map₀₁) (glue c)
+          =⟨ ap-∘ (Pushout-fmap span-map₁₂) (Pushout-fmap span-map₀₁) (glue c) ⟩
+        ap (Pushout-fmap span-map₁₂) (ap (Pushout-fmap span-map₀₁) (glue c))
+          =⟨ PushoutFmap.glue-β span-map₀₁ c |in-ctx ap (Pushout-fmap span-map₁₂) ⟩
+        ap (Pushout-fmap span-map₁₂)
+          ( ( ap left (span-map₀₁.f-commutes □$ c)
+              ∙ glue (span-map₀₁.hC c))
+            ∙' ap right (! (span-map₀₁.g-commutes □$ c)))
+          =⟨ ap-∙' (Pushout-fmap span-map₁₂)
+              (ap left (span-map₀₁.f-commutes □$ c) ∙ glue (span-map₀₁.hC c))
+              (ap right (! (span-map₀₁.g-commutes □$ c))) ⟩
+        ap (Pushout-fmap span-map₁₂) ( ap left (span-map₀₁.f-commutes □$ c)
+                                       ∙ glue (span-map₀₁.hC c))
+        ∙' ap (Pushout-fmap span-map₁₂) (ap right (! (span-map₀₁.g-commutes □$ c)))
+          =⟨ ap2 _∙'_ (ap-∙ (Pushout-fmap span-map₁₂)
+                        (ap left (span-map₀₁.f-commutes □$ c))
+                        (glue (span-map₀₁.hC c)))
+                      (∘-ap (Pushout-fmap span-map₁₂) right (! (span-map₀₁.g-commutes □$ c))) ⟩
+        ( ap (Pushout-fmap span-map₁₂) (ap left (span-map₀₁.f-commutes □$ c))
+          ∙ ap (Pushout-fmap span-map₁₂) (glue (span-map₀₁.hC c)))
+        ∙' ap (right ∘ span-map₁₂.hB) (! (span-map₀₁.g-commutes □$ c))
+          =⟨ ap2 _∙'_
+              -- favonia: for some reasons Agda seems to need this.
+              {x = ap (Pushout-fmap span-map₁₂) (ap left (span-map₀₁.f-commutes □$ c))
+                 ∙ ap (Pushout-fmap span-map₁₂) (glue (span-map₀₁.hC c))}
+              (ap2 _∙_
+                (∘-ap (Pushout-fmap span-map₁₂) left (span-map₀₁.f-commutes □$ c))
+                (PushoutFmap.glue-β span-map₁₂ (span-map₀₁.hC c)))
+              (ap-∘ right span-map₁₂.hB (! (span-map₀₁.g-commutes □$ c))) ⟩
+        ( ap (left ∘ span-map₁₂.hA) (span-map₀₁.f-commutes □$ c)
+          ∙ ( ( ap left (span-map₁₂.f-commutes □$ span-map₀₁.hC c)
+              ∙ glue (span-map₁₂.hC (span-map₀₁.hC c)))
+            ∙' ap right (! (span-map₁₂.g-commutes □$ span-map₀₁.hC c))))
+        ∙' ap right (ap span-map₁₂.hB (! (span-map₀₁.g-commutes □$ c)))
+          =⟨ ap-mega-assoc
+              (ap (left ∘ span-map₁₂.hA) (span-map₀₁.f-commutes □$ c))
+              (ap left (span-map₁₂.f-commutes □$ span-map₀₁.hC c))
+              (glue (span-map₁₂.hC (span-map₀₁.hC c)))
+              (ap right (! (span-map₁₂.g-commutes □$ span-map₀₁.hC c)))
+              (ap right (ap span-map₁₂.hB (! (span-map₀₁.g-commutes □$ c)))) ⟩
+        ( ( ap (left ∘ span-map₁₂.hA) (span-map₀₁.f-commutes □$ c)
+            ∙ ap left (span-map₁₂.f-commutes □$ span-map₀₁.hC c))
+          ∙ glue (span-map₁₂.hC (span-map₀₁.hC c)))
+        ∙'( ap right (! (span-map₁₂.g-commutes □$ span-map₀₁.hC c))
+            ∙ ap right (ap span-map₁₂.hB (! (span-map₀₁.g-commutes □$ c))))
+          =⟨ ap2 _∙'_
+              ( ap-∘ left span-map₁₂.hA (span-map₀₁.f-commutes □$ c)
+                |in-ctx _∙ ap left (span-map₁₂.f-commutes □$ span-map₀₁.hC c)
+                |in-ctx _∙ glue (span-map₁₂.hC (span-map₀₁.hC c)))
+              ( ∙-ap right
+                  (! (span-map₁₂.g-commutes □$ span-map₀₁.hC c))
+                  (ap span-map₁₂.hB (! (span-map₀₁.g-commutes □$ c)))) ⟩
+        ( ( ap left (ap span-map₁₂.hA (span-map₀₁.f-commutes □$ c))
+            ∙ ap left (span-map₁₂.f-commutes □$ span-map₀₁.hC c))
+          ∙ glue (span-map₁₂.hC (span-map₀₁.hC c)))
+        ∙' ap right
+             ( ! (span-map₁₂.g-commutes □$ span-map₀₁.hC c)
+               ∙ ap span-map₁₂.hB (! (span-map₀₁.g-commutes □$ c)))
+          =⟨ ap2 _∙'_
+              ( ∙-ap left
+                  (ap span-map₁₂.hA (span-map₀₁.f-commutes □$ c))
+                  (span-map₁₂.f-commutes □$ span-map₀₁.hC c)
+                |in-ctx _∙ glue (span-map₁₂.hC (span-map₀₁.hC c)))
+              ( ap-! span-map₁₂.hB (span-map₀₁.g-commutes □$ c)
+                |in-ctx ! (span-map₁₂.g-commutes □$ span-map₀₁.hC c) ∙_
+                |in-ctx ap right) ⟩
+        ( ap left (CommSquare-∘v span-map₁₂.f-commutes span-map₀₁.f-commutes □$ c)
+          ∙ glue (span-map₁₂.hC (span-map₀₁.hC c)))
+        ∙' ap right
+             ( ! (span-map₁₂.g-commutes □$ span-map₀₁.hC c)
+               ∙ ! (ap span-map₁₂.hB (span-map₀₁.g-commutes □$ c)))
+          =⟨ ∙-!
+               (span-map₁₂.g-commutes □$ span-map₀₁.hC c)
+               (ap span-map₁₂.hB (span-map₀₁.g-commutes □$ c))
+            |in-ctx ap right
+            |in-ctx
+              ( ap left (CommSquare-∘v span-map₁₂.f-commutes span-map₀₁.f-commutes □$ c)
+                ∙ glue (span-map₁₂.hC (span-map₀₁.hC c)))
+              ∙'_ ⟩
+        ( ap left (CommSquare-∘v span-map₁₂.f-commutes span-map₀₁.f-commutes □$ c)
+          ∙ glue (span-map₁₂.hC (span-map₀₁.hC c)))
+        ∙' ap right (! (CommSquare-∘v span-map₁₂.g-commutes span-map₀₁.g-commutes □$ c))
+          =⟨ ! (PushoutFmap.glue-β (SpanMap-∘ span-map₁₂ span-map₀₁) c) ⟩
+        ap (Pushout-fmap (SpanMap-∘ span-map₁₂ span-map₀₁)) (glue c)
+          =∎)
+  where
+    module span-map₀₁ = SpanMap span-map₀₁
+    module span-map₁₂ = SpanMap span-map₁₂
+
+    ap-mega-assoc : ∀ {i} {A : Type i} {a₀ a₁ a₂ a₃ a₄ a₅ : A}
+      (p₀ : a₀ == a₁) (p₁ : a₁ == a₂) (p₂ : a₂ == a₃) (p₃ : a₃ == a₄) (p₄ : a₄ == a₅)
+      → (p₀ ∙ ((p₁ ∙ p₂) ∙' p₃)) ∙' p₄ == ((p₀ ∙ p₁) ∙ p₂) ∙' (p₃ ∙ p₄)
+    ap-mega-assoc idp p₁ p₂ idp p₄ = idp
+
 module _ {i₀ j₀ k₀ i₁ j₁ k₁} {span₀ : Span {i₀} {j₀} {k₀}}
   {span₁ : Span {i₁} {j₁} {k₁}} (span-equiv : SpanEquiv span₀ span₁) where
 
   private
-    module S₀ = Span span₀
-    module S₁ = Span span₁
+    module span₀ = Span span₀
+    module span₁ = Span span₁
     span-to = fst span-equiv
     span-from = fst (SpanEquiv-inverse span-equiv)
-    open SpanMap span-to
+    module span-to = SpanMap span-to
+    module span-from = SpanMap span-from
     module To = PushoutFmap span-to
     module From = PushoutFmap span-from
     span-ise = snd span-equiv
