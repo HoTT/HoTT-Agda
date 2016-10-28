@@ -201,9 +201,8 @@ total-is-equiv : is-equiv tot-encode
 total-is-equiv = contr-to-contr-is-equiv _ (pathfrom-is-contr base) contr-flattening
 
 -- Hence it’s an equivalence fiberwise
-postulate  -- TODO, will be only one line using the fact that an equivalence on
-           -- total spaces induces an equivalence fiberwise
-  encode-is-equiv : (x : S¹) → is-equiv (encode {x})
+encode-is-equiv : (x : S¹) → is-equiv (encode {x})
+encode-is-equiv = total-equiv-is-fiber-equiv (λ _ → encode) total-is-equiv
 
 -- We can then conclude that the loop space of the circle is equivalent to [ℤ]
 ΩS¹≃ℤ' : (base == base) ≃ ℤ
