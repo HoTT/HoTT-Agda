@@ -265,6 +265,32 @@ module _  {i j} {A : Type i} {B : Type j} {f : A → B} {b : B} where
     → Square u (ap f p) idp v
   ↓-app=cst-to-square {p = idp} α = horiz-degen-square α
 
+module _  {i} {A : Type i} {f : A → A} where
+
+  ↓-idf=app-from-square : {x y : A} {p : x == y}
+    {u : x == f x} {v : y == f y}
+    → Square u p (ap f p) v
+    → u == v [ (λ z → z == f z) ↓ p ]
+  ↓-idf=app-from-square {p = idp} sq = horiz-degen-path sq
+
+  ↓-idf=app-to-square : {x y : A} {p : x == y}
+    {u : x == f x} {v : y == f y}
+    → u == v [ (λ z → z == f z) ↓ p ]
+    → Square u p (ap f p) v
+  ↓-idf=app-to-square {p = idp} α = horiz-degen-square α
+
+  ↓-app=idf-from-square : {x y : A} {p : x == y}
+    {u : f x == x} {v : f y == y}
+    → Square u (ap f p) p v
+    → u == v [ (λ z → f z == z) ↓ p ]
+  ↓-app=idf-from-square {p = idp} sq = horiz-degen-path sq
+
+  ↓-app=idf-to-square : {x y : A} {p : x == y}
+    {u : f x == x} {v : f y == y}
+    → u == v [ (λ z → f z == z) ↓ p ]
+    → Square u (ap f p) p v
+  ↓-app=idf-to-square {p = idp} α = horiz-degen-square α
+
 module _  {i j} {A : Type i} {B : Type j} (g : B → A) (f : A → B) where
 
   ↓-∘=idf-from-square : {x y : A} {p : x == y}
@@ -361,11 +387,10 @@ _⊡h∙_ : ∀ {i} {A : Type i} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
   → Square p₀₋ p₋₀ p₋₁ p₁₋'
 sq ⊡h∙ idp = sq
 
-infixr 80 _⊡v_ _∙v⊡_
-          _⊡h_ _∙h⊡_
-          _⊡h'_
+infixr 80 _⊡v_ _⊡v'_ _⊡h_ _⊡h'_
 
-infixr 80 _⊡v∙_ _⊡h∙_
+infixl 80 _⊡v∙_ _⊡h∙_
+infixr 80 _∙v⊡_ _∙h⊡_
 
 module _ {i} {A : Type i} where
   !□h : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
@@ -395,13 +420,13 @@ module _ {i} {A : Type i} where
   ⊡h-unit-r : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
     {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
     (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
-    → sq ⊡h hid-square == ∙-unit-r _ ∙v⊡ sq ⊡v∙ ! (∙-unit-r _)
+    → sq ⊡h hid-square == ∙-unit-r _ ∙v⊡ (sq ⊡v∙ ! (∙-unit-r _))
   ⊡h-unit-r ids = idp
 
   ⊡h'-unit-l : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
     {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
     (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
-    → hid-square ⊡h' sq == ∙'-unit-l _ ∙v⊡ sq ⊡v∙ ! (∙'-unit-l _)
+    → hid-square ⊡h' sq == ∙'-unit-l _ ∙v⊡ (sq ⊡v∙ ! (∙'-unit-l _))
   ⊡h'-unit-l ids = idp
 
   ⊡h-unit-l-unique : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
@@ -417,28 +442,28 @@ module _ {i} {A : Type i} where
     {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
     {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
     (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
-    → (!□h sq) ⊡h sq == !-inv-l p₋₀ ∙v⊡ hid-square ⊡v∙ ! (!-inv-l p₋₁)
+    → (!□h sq) ⊡h sq == !-inv-l p₋₀ ∙v⊡ (hid-square ⊡v∙ ! (!-inv-l p₋₁))
   !□h-inv-l ids = idp
 
   !□h-inv-r : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
     {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
     {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
     (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
-    → sq ⊡h (!□h sq) == !-inv-r p₋₀ ∙v⊡ hid-square ⊡v∙ ! (!-inv-r p₋₁)
+    → sq ⊡h (!□h sq) == !-inv-r p₋₀ ∙v⊡ (hid-square ⊡v∙ ! (!-inv-r p₋₁))
   !□h-inv-r ids = idp
 
   !□v-inv-l : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
     {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
     {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
     (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
-    → (!□v sq) ⊡v sq == !-inv-l p₀₋ ∙h⊡ vid-square ⊡h∙ ! (!-inv-l p₁₋)
+    → (!□v sq) ⊡v sq == !-inv-l p₀₋ ∙h⊡ (vid-square ⊡h∙ ! (!-inv-l p₁₋))
   !□v-inv-l ids = idp
 
   !□v-inv-r : {a₀₀ a₀₁ a₁₀ a₁₁ : A}
     {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀}
     {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
     (sq : Square p₀₋ p₋₀ p₋₁ p₁₋)
-    → sq ⊡v (!□v sq) == !-inv-r p₀₋ ∙h⊡ vid-square ⊡h∙ ! (!-inv-r p₁₋)
+    → sq ⊡v (!□v sq) == !-inv-r p₀₋ ∙h⊡ (vid-square ⊡h∙ ! (!-inv-r p₁₋))
   !□v-inv-r ids = idp
 
 module _ {i} {A : Type i} where
