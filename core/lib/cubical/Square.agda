@@ -389,8 +389,8 @@ sq ⊡h∙ idp = sq
 
 infixr 80 _⊡v_ _⊡v'_ _⊡h_ _⊡h'_
 
-infixl 80 _⊡v∙_ _⊡h∙_
 infixr 80 _∙v⊡_ _∙h⊡_
+infixl 85 _⊡v∙_ _⊡h∙_
 
 module _ {i} {A : Type i} where
   !□h : {a₀₀ a₀₁ a₁₀ a₁₁ : A}

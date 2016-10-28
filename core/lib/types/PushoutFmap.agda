@@ -194,11 +194,11 @@ module _ {i₀ j₀ k₀ i₁ j₁ k₁} {span₀ : Span {i₀} {j₀} {k₀}}
                     |in-ctx _∙ glue (span-to.hC (span-from.hC c)))
                   ( ∘-ap right span₁.g (hC-ise.f-g c)
                     |in-ctx _∙ ! (ap right (hB-ise.f-g (span₁.g c))))
-            ∙v⊡ ( ( ( lt-square (ap left (hA-ise.f-g (span₁.f c)))
-                      ⊡h rt-square (ap (left ∘ span₁.f) (hC-ise.f-g c)))
-                    ⊡h square-symmetry (natural-square glue (hC-ise.f-g c)))
-                  ⊡h' ( lt-square (ap (right ∘ span₁.g) (hC-ise.f-g c))
-                        ⊡h rt-square (ap right (hB-ise.f-g (span₁.g c))))))
+            ∙v⊡ ( ( lt-square (ap left (hA-ise.f-g (span₁.f c)))
+                    ⊡h rt-square (ap (left ∘ span₁.f) (hC-ise.f-g c)))
+                  ⊡h square-symmetry (natural-square glue (hC-ise.f-g c)))
+            ⊡h' lt-square (ap (right ∘ span₁.g) (hC-ise.f-g c))
+            ⊡h rt-square (ap right (hB-ise.f-g (span₁.g c))))
 
     to-from : ∀ y → to (from y) == y
     to-from y = ∘-Pushout-fmap span-to span-from y ∙ to-from' y
@@ -240,11 +240,11 @@ module _ {i₀ j₀ k₀ i₁ j₁ k₁} {span₀ : Span {i₀} {j₀} {k₀}}
                     |in-ctx _∙ glue (span-from.hC (span-to.hC c)))
                   ( ∘-ap right span₀.g (hC-ise.g-f c)
                     |in-ctx _∙ ! (ap right (hB-ise.g-f (span₀.g c))))
-            ∙v⊡ ( ( ( lt-square (ap left (hA-ise.g-f (span₀.f c)))
-                      ⊡h rt-square (ap (left ∘ span₀.f) (hC-ise.g-f c)))
-                    ⊡h square-symmetry (natural-square glue (hC-ise.g-f c)))
-                  ⊡h' ( lt-square (ap (right ∘ span₀.g) (hC-ise.g-f c))
-                        ⊡h rt-square (ap right (hB-ise.g-f (span₀.g c))))))
+            ∙v⊡ ( ( lt-square (ap left (hA-ise.g-f (span₀.f c)))
+                    ⊡h rt-square (ap (left ∘ span₀.f) (hC-ise.g-f c)))
+                  ⊡h square-symmetry (natural-square glue (hC-ise.g-f c)))
+            ⊡h' lt-square (ap (right ∘ span₀.g) (hC-ise.g-f c))
+            ⊡h rt-square (ap right (hB-ise.g-f (span₀.g c))))
 
     from-to : ∀ x → from (to x) == x
     from-to x = ∘-Pushout-fmap span-from span-to x ∙ from-to' x
