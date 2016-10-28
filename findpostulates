@@ -27,7 +27,11 @@ fi
 
 for i in $(git ls-files) $(git ls-files -o --exclude-standard)
 do
-    if [[ $i =~ tutorial/* ]] || [[ $i =~ findpostulates ]] || [[ $i =~ old/* ]] || [[ $i =~ test/* ]] || [[ $i =~ theorems/stash/* ]]
+    if [[ $i =~ tutorial/* ]] ||
+       [[ $i =~ "core/lib/types/HIT_README.txt" ]] || [[ $i =~ findpostulates ]] ||
+       [[ $i =~ old/* ]] ||
+       [[ $i =~ test/* ]] ||
+       [[ $i =~ theorems/stash/* ]]
     then
         continue
     fi
