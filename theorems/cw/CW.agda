@@ -6,7 +6,7 @@
 -}
 
 open import HoTT
-open import homotopy.DistinctlyPointedSet
+open import homotopy.DisjointlyPointedSet
 
 module cw.CW {i} where
 
@@ -65,7 +65,7 @@ record ⊙Skeleton (n : ℕ) : Type (lsucc i) where
   field
     skel : Skeleton n
     pt : cw-head skel
-    pt-dec : has-distinct-pt ⊙[ cw-head skel , pt ]
+    pt-dec : is-detachable ⊙[ cw-head skel , pt ]
 
 ⊙Realizer : {n : ℕ} → ⊙Skeleton n → Ptd i
 ⊙Realizer (⊙skeleton skel pt _) = ⟦ skel ⟧ , incl^ skel pt

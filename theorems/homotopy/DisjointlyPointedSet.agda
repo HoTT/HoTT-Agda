@@ -3,37 +3,37 @@
 open import HoTT
 
 {-
-Various lemmas that will be used in cohomology.DistinctlyPointedSet.
+Various lemmas that will be used in cohomology.DisjointlyPointedSet.
 Many of them, for example the choice lemma about coproducts, should be
 put into core/.
 -}
 
-module homotopy.DistinctlyPointedSet where
+module homotopy.DisjointlyPointedSet where
 
 module _ {i} where
 
-  has-distinct-pt : (X : Ptd i) → Type i
-  has-distinct-pt (_ , x) = has-dec-onesided-eq x
+  is-detachable : (X : Ptd i) → Type i
+  is-detachable (_ , x) = has-dec-onesided-eq x
 
   abstract
-    has-distinct-pt-is-prop : {X : Ptd i}
-      → is-prop (has-distinct-pt X)
-    has-distinct-pt-is-prop = has-dec-onesided-eq-is-prop
+    is-detachable-is-prop : {X : Ptd i}
+      → is-prop (is-detachable X)
+    is-detachable-is-prop = has-dec-onesided-eq-is-prop
 
-  WithoutPoint : (X : Ptd i) → Type i
-  WithoutPoint (X , x) = Σ X (x ≠_)
+  MinusPoint : (X : Ptd i) → Type i
+  MinusPoint (X , x) = Σ X (x ≠_)
 
-  unite-pt : (X : Ptd i) → (⊤ ⊔ WithoutPoint X → fst X)
+  unite-pt : (X : Ptd i) → (⊤ ⊔ MinusPoint X → fst X)
   unite-pt X (inl _) = snd X
   unite-pt X (inr (x , _)) = x
 
-  is-separable : (X : Ptd i) → Type i
-  is-separable X = is-equiv (unite-pt X)
+  has-disjoint-pt : (X : Ptd i) → Type i
+  has-disjoint-pt X = is-equiv (unite-pt X)
 
   abstract
-    distinct-pt-is-separable : {X : Ptd i}
-      → has-distinct-pt X → is-separable X
-    distinct-pt-is-separable {X} dec =
+    detachable-has-disjoint-pt : {X : Ptd i}
+      → is-detachable X → has-disjoint-pt X
+    detachable-has-disjoint-pt {X} dec =
       is-eq _ sep unite-sep sep-unite where
         sep : fst X → ⊤ ⊔ (Σ (fst X) (snd X ≠_))
         sep x with dec x
@@ -53,12 +53,12 @@ module _ {i} where
         unite-sep x | inl p = p
         unite-sep x | inr ¬p = idp
 
-    separable-has-distinct-pt : {X : Ptd i}
-      → is-separable X → has-distinct-pt X
-    separable-has-distinct-pt unite-ise x with unite.g x | unite.f-g x
+    disjoint-pt-is-detachable : {X : Ptd i}
+      → has-disjoint-pt X → is-detachable X
+    disjoint-pt-is-detachable unite-ise x with unite.g x | unite.f-g x
       where module unite = is-equiv unite-ise
-    separable-has-distinct-pt unite-ise x | inl unit       | p   = inl p
-    separable-has-distinct-pt unite-ise x | inr (y , pt≠y) | y=x = inr λ pt=x → pt≠y (pt=x ∙ ! y=x)
+    disjoint-pt-is-detachable unite-ise x | inl unit       | p   = inl p
+    disjoint-pt-is-detachable unite-ise x | inr (y , pt≠y) | y=x = inr λ pt=x → pt≠y (pt=x ∙ ! y=x)
 
 module _ {i j k} n (A : Type i) (B : Type j) where
   abstract
@@ -111,9 +111,9 @@ module _ {i j k} n (A : Type i) (B : Type j) where
             (λ _ → =-preserves-level n (Π-level λ _ → Trunc-level))
             (λ f → λ= λ b → idp)
 
-module _ {i j} n {X : Ptd i} (X-sep : is-separable X) where
+module _ {i j} n {X : Ptd i} (X-sep : has-disjoint-pt X) where
   abstract
-    WithoutPoint-has-choice : has-choice n (fst X) j → has-choice n (WithoutPoint X) j
-    WithoutPoint-has-choice X-ac =
-      ⊔-has-choice-implies-inr-has-choice n ⊤ (WithoutPoint X) $
+    MinusPoint-has-choice : has-choice n (fst X) j → has-choice n (MinusPoint X) j
+    MinusPoint-has-choice X-ac =
+      ⊔-has-choice-implies-inr-has-choice n ⊤ (MinusPoint X) $
         transport! (λ A → has-choice n A j) (ua (_ , X-sep)) X-ac
