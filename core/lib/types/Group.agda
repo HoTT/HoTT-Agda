@@ -120,11 +120,45 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
   -}
 
   exp : El → ℤ → El
-  exp a (pos 0) = ident
-  exp a (pos 1) = a
-  exp a (pos (S n)) = comp a (exp a (pos n))
-  exp a (negsucc 0) = inv a
-  exp a (negsucc (S n)) = comp (inv a) (exp a (negsucc n))
+  exp g (pos 0) = ident
+  exp g (pos 1) = g
+  exp g (pos (S (S n))) = comp g (exp g (pos (S n)))
+  exp g (negsucc 0) = inv g
+  exp g (negsucc (S n)) = comp (inv g) (exp g (negsucc n))
+
+  abstract
+    exp-succ : ∀ g z → exp g (succ z) == comp g (exp g z)
+    exp-succ g (pos 0) = ! (unit-r g)
+    exp-succ g (pos 1) = idp
+    exp-succ g (pos (S (S n))) = idp
+    exp-succ g (negsucc 0) = ! (inv-r g)
+    exp-succ g (negsucc (S n)) =
+      ! (unit-l (exp g (negsucc n)))
+      ∙ ap (λ h → comp h (exp g (negsucc n))) (! (inv-r g))
+      ∙ assoc g (inv g) (exp g (negsucc n))
+
+    exp-pred : ∀ g z → exp g (pred z) == comp (inv g) (exp g z)
+    exp-pred g (pos 0) = ! (unit-r (inv g))
+    exp-pred g (pos 1) = ! (inv-l g)
+    exp-pred g (pos (S (S n))) =
+      ! (unit-l (exp g (pos (S n))))
+      ∙ ap (λ h → comp h (exp g (pos (S n)))) (! (inv-l g))
+      ∙ assoc (inv g) g (exp g (pos (S n)))
+    exp-pred g (negsucc 0) = idp
+    exp-pred g (negsucc (S n)) = idp
+
+    exp-+ : ∀ g z₁ z₂ → exp g (z₁ ℤ+ z₂) == comp (exp g z₁) (exp g z₂)
+    exp-+ g (pos 0) z₂ = ! (unit-l _)
+    exp-+ g (pos 1) z₂ = exp-succ g z₂
+    exp-+ g (pos (S (S n))) z₂ =
+      exp-succ g (pos (S n) ℤ+ z₂)
+      ∙ ap (comp g) (exp-+ g (pos (S n)) z₂)
+      ∙ ! (assoc g (exp g (pos (S n))) (exp g z₂))
+    exp-+ g (negsucc 0) z₂ = exp-pred g z₂
+    exp-+ g (negsucc (S n)) z₂ =
+      exp-pred g (negsucc n ℤ+ z₂)
+      ∙ ap (comp (inv g)) (exp-+ g (negsucc n) z₂)
+      ∙ ! (assoc (inv g) (exp g (negsucc n)) (exp g z₂))
 
   diff : El → El → El
   diff g h = g ⊙ inv h
