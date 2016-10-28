@@ -163,3 +163,51 @@ module _ {j} {B : Empty → Type j} where
 
 Σ₂-Empty : ∀ {i} {A : Type i} → Σ A (λ _ → Empty) ≃ Empty
 Σ₂-Empty = equiv (⊥-rec ∘ snd) ⊥-rec ⊥-elim (⊥-rec ∘ snd)
+
+{- Fiberwise equivalence -}
+module _ {i j k} {A : Type i} {P : A → Type j} {Q : A → Type k}
+  (f : ∀ x → P x → Q x) where
+
+  private
+    f-tot : Σ A P → Σ A Q
+    f-tot (x , y) = x , f x y
+
+  fiber-equiv-is-total-equiv : (∀ x → is-equiv (f x)) → is-equiv f-tot
+  fiber-equiv-is-total-equiv f-ise = is-eq _ from to-from from-to
+    where
+      from : Σ A Q → Σ A P
+      from (x , y) = x , is-equiv.g (f-ise x) y
+
+      abstract
+        to-from : ∀ q → f-tot (from q) == q
+        to-from (x , q) = pair= idp (is-equiv.f-g (f-ise x) q)
+
+        from-to : ∀ p → from (f-tot p) == p
+        from-to (x , p) = pair= idp (is-equiv.g-f (f-ise x) p)
+
+  total-equiv-is-fiber-equiv : is-equiv f-tot → (∀ x → is-equiv (f x))
+  total-equiv-is-fiber-equiv f-tot-ise x = is-eq _ from to-from from-to
+    where
+      module f-tot = is-equiv f-tot-ise
+
+      from : Q x → P x
+      from q = transport P (fst= (f-tot.f-g (x , q))) (snd (f-tot.g (x , q)))
+
+      abstract
+        from-lemma : ∀ q → snd (f-tot.g (x , q)) == from q
+          [ P ↓ fst= (f-tot.f-g (x , q)) ]
+        from-lemma q = from-transp P (fst= (f-tot.f-g (x , q))) idp
+
+        to-from : ∀ q → f x (from q) == q
+        to-from q =
+          transport (λ path → f x (from q) == q [ Q ↓ path ])
+            (!-inv-l (fst= (f-tot.f-g (x , q))))
+            (!ᵈ (ap↓ (λ {x} → f x) (from-lemma q)) ∙ᵈ snd= (f-tot.f-g (x , q)))
+
+        from-to : ∀ p → from (f x p) == p
+        from-to p =
+          transport (λ path → from (f x p) == p [ P ↓ path ])
+            ( ap (λ path → ! path ∙ fst= (f-tot.g-f (x , p)))
+                (ap fst= (! (f-tot.adj (x , p))) ∙ ∘-ap fst f-tot (f-tot.g-f (x , p)))
+            ∙ !-inv-l (fst= (f-tot.g-f (x , p))))
+            (!ᵈ (from-lemma (f x p)) ∙ᵈ snd= (f-tot.g-f (x , p)))
