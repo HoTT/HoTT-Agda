@@ -15,6 +15,16 @@ open import cw.cohomology.Descending OT
 open import cw.cohomology.WedgeOfCells OT
 import cw.cohomology.GridLongExactSequence
 
+{-
+  Xn --> X(n+1) -----> X(n+2)
+   |       |             |
+   v       v             v
+   1 -> X(n+1)/n -> X(n+2)/(n+1)
+           |    this     |
+           v      one    v
+           1 -------> X(n+2)/n
+-}
+
 module _ {n} (⊙skel : ⊙Skeleton {i} (S (S n)))
   (ac : ⊙has-cells-with-choice 0 ⊙skel i) where
 

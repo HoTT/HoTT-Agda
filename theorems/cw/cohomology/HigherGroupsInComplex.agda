@@ -8,7 +8,7 @@ open import groups.ExactSequence
 
 open import cw.CW
 
-module cw.cohomology.GroupsInComplex {i} (OT : OrdinaryTheory i) where
+module cw.cohomology.HigherGroupsInComplex {i} (OT : OrdinaryTheory i) where
 
 open OrdinaryTheory OT
 open import cohomology.LongExactSequence cohomology-theory
@@ -48,7 +48,7 @@ module _ {n} (⊙skel : ⊙Skeleton {i} (S (S (S n))))
                 |           |
              C(X₂/X₁)<---C(X₃/X₁) ≃ Ker
                WoC          G
-  
+
       WoC := Wedges of Cells
   -}
 
@@ -83,10 +83,10 @@ module _ {n} (⊙skel : ⊙Skeleton {i} (S (S (S n))))
 
     abstract
       G-to-C-apex-is-surj : is-surjᴳ G-to-C-apex
-      G-to-C-apex-is-surj = Exact.K-trivial-implies-φ-is-surj 
+      G-to-C-apex-is-surj = Exact.K-trivial-implies-φ-is-surj
         (exact-seq-index 2 GLES-vertical.C-grid-cofiber-exact-seq)
-        (C-Cofiber-cw-incl-last->-is-trivial (S (S n)) ltS (⊙cw-take Sn≤SSSn ⊙skel) (fst (fst ac))) 
-    
+        (C-Cofiber-cw-incl-last->-is-trivial (S (S n)) ltS (⊙cw-take Sn≤SSSn ⊙skel) (fst (fst ac)))
+
     module GLES-horizontal = GLES (ℕ-to-ℤ (S n))
       (⊙cw-incl-tail n≤SSn (⊙cw-init ⊙skel)) (⊙cw-incl-last ⊙skel)
 
@@ -109,7 +109,7 @@ module _ {n} (⊙skel : ⊙Skeleton {i} (S (S (S n))))
     C-WoC-to-H = C-fmap (ℕ-to-ℤ (S (S n))) Z/X-to-Z/Y
 
     open import groups.PropQuotUniqueFactorization
-      
+
   C-cw-iso-ker/im :
        C (ℕ-to-ℤ (S (S n))) ⊙⟦ ⊙skel ⟧
     ≃ᴳ QuotGroup (quot-of-sub

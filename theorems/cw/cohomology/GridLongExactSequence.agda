@@ -12,7 +12,17 @@ open CohomologyTheory CT
 open import cohomology.PtdMapSequence CT
 open import cw.cohomology.CofiberGrid (fst f) (fst g)
 
--- FIXME TODO these functions do not depend on [n] at all.
+{-
+  X --> Y ----> Z
+        |       |
+        v       v
+       Y/X --> Z/X
+        | this  |
+        v   one v
+        1 ---> Z/Y
+-}
+
+-- XXX these functions do not depend on [n] at all.
 
 Y/X : Ptd i
 Y/X = ⊙Cofiber f

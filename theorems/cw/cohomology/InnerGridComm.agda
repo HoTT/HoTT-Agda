@@ -9,6 +9,18 @@ module cw.cohomology.InnerGridComm {i} (OT : OrdinaryTheory i)
   open OrdinaryTheory OT
   open import cohomology.PtdMapSequence cohomology-theory
 
+{-
+
+  X --> Y ---> Z ---> W
+  |     |      |      |
+  v     |      v      v
+  1 ----+---> Z/X -> W/X
+        |      | this |
+        v      v  one v
+        1 --> Z/Y -> W/Y
+
+-}
+
   Z/X = ⊙Cofiber (g ⊙∘ f)
   Z/Y = ⊙Cofiber g
   W/X = ⊙Cofiber (h ⊙∘ g ⊙∘ f)
