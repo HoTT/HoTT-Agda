@@ -7,6 +7,7 @@ open import lib.types.Group
 open import lib.types.Sigma
 open import lib.types.Truncation
 open import lib.groups.Homomorphism
+open import lib.groups.Isomorphism
 open import lib.groups.SubgroupProp
 
 module lib.groups.Subgroup where
@@ -78,15 +79,11 @@ module _ {i} {j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
     module H = Group H
     module φ = GroupHom φ
 
-  Ker : Group (lmax i j)
-  Ker = Subgroup (ker-propᴳ φ)
-
   module Ker = Subgroup (ker-propᴳ φ)
-
-  Im : Group (lmax i j)
-  Im = Subgroup (im-propᴳ φ)
+  Ker = Ker.grp
 
   module Im = Subgroup (im-propᴳ φ)
+  Im = Im.grp
 
   im-lift : G →ᴳ Im
   im-lift = Im.inject-lift φ (λ g → [ g , idp ])
@@ -94,3 +91,17 @@ module _ {i} {j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
   im-lift-is-surj : is-surjᴳ im-lift
   im-lift-is-surj (_ , s) = Trunc-fmap
     (λ {(g , p) → (g , Subtype=-out (_ , λ _ → Trunc-level) p)}) s
+
+module _ {i j k} {G : Group i} (P : SubgroupProp G j)
+  (Q : SubgroupProp G k) where
+
+  -- FIXME looks like a bad name
+  Subgroup-fmap-r : P ⊆ᴳ Q → Subgroup P →ᴳ Subgroup Q
+  Subgroup-fmap-r P⊆Q = group-hom (Σ-fmap-r P⊆Q)
+    (λ _ _ → Subtype=-out (SubgroupProp.subEl-prop Q) idp)
+
+  Subgroup-emap-r : P ⊆ᴳ Q → Q ⊆ᴳ P → Subgroup P ≃ᴳ Subgroup Q
+  Subgroup-emap-r P⊆Q Q⊆P = Subgroup-fmap-r P⊆Q ,
+    is-eq _ (Σ-fmap-r Q⊆P)
+      (λ _ → Subtype=-out (SubgroupProp.subEl-prop Q) idp)
+      (λ _ → Subtype=-out (SubgroupProp.subEl-prop P) idp) 
