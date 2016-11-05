@@ -23,10 +23,10 @@ C-points : ∀ n (⊙skel : ⊙Skeleton {i} 0)
 C-points n (⊙skeleton pts pt dec) ac = C-set n ⊙[ fst pts , pt ] (snd pts) dec ac
 
 abstract
-  C-points-≠-is-trivial : ∀ {n} (n≠0 : n ≠ 0) (⊙skel : ⊙Skeleton {i} 0)
+  C-points-≠-is-trivial : ∀ (n : ℤ) (n≠0 : n ≠ 0) (⊙skel : ⊙Skeleton {i} 0)
     → ⊙has-cells-with-choice 0 ⊙skel i
     → is-trivialᴳ (C n (⊙cw-head ⊙skel))
-  C-points-≠-is-trivial {n} n≠0 ⊙skel ac =
+  C-points-≠-is-trivial n n≠0 ⊙skel ac =
     iso-preserves'-trivial (C-points n ⊙skel ac) $
       Πᴳ-is-trivial (MinusPoint (⊙cw-head ⊙skel))
         (λ _ → C n (⊙Lift ⊙Bool))

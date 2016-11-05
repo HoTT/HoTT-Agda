@@ -11,6 +11,7 @@ module cw.cohomology.GridLongExactSequence {i} (CT : CohomologyTheory i)
 open CohomologyTheory CT
 open import cohomology.PtdMapSequence CT
 open import cw.cohomology.CofiberGrid (fst f) (fst g)
+open import cw.cohomology.GridPtdMap f g
 
 {-
   X --> Y ----> Z
@@ -21,23 +22,6 @@ open import cw.cohomology.CofiberGrid (fst f) (fst g)
         v   one v
         1 ---> Z/Y
 -}
-
--- XXX these functions do not depend on [n] at all.
-
-Y/X : Ptd i
-Y/X = ⊙Cofiber f
-
-Z/Y : Ptd i
-Z/Y = ⊙Cofiber g
-
-Z/X : Ptd i
-Z/X = ⊙Cofiber (g ⊙∘ f)
-
-Y/X-to-Z/X : Y/X ⊙→ Z/X
-Y/X-to-Z/X = B/A-to-C/A , idp
-
-Z/X-to-Z/Y : Z/X ⊙→ Z/Y
-Z/X-to-Z/Y = C/A-to-C/B , idp
 
 private
   ⊙D-span : ⊙Span

@@ -6,6 +6,7 @@ open import lib.types.Group
 open import lib.types.Nat
 open import lib.types.Pi
 open import lib.types.Sigma
+open import lib.types.Truncation
 open import lib.groups.Homomorphism
 open import lib.groups.Isomorphism
 open import lib.groups.SubgroupProp
@@ -97,6 +98,10 @@ _×ᴳ_ (group A A-level A-struct) (group B B-level B-struct) =
 
 ×ᴳ-snd : ∀ {i j} {G : Group i} {H : Group j} → (G ×ᴳ H →ᴳ H)
 ×ᴳ-snd = group-hom snd (λ _ _ → idp)
+
+×ᴳ-snd-is-surj : ∀ {i j} {G : Group i} {H : Group j}
+  → is-surjᴳ (×ᴳ-snd {G = G} {H = H})
+×ᴳ-snd-is-surj {G = G} h = [ (Group.ident G , h) , idp ]
 
 Πᴳ-proj : ∀ {i j} {I : Type i} {F : I → Group j} (i : I)
   → (Πᴳ I F →ᴳ F i)

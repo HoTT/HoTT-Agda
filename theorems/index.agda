@@ -45,7 +45,8 @@ import homotopy.PathSetIsInitalCover
 {- cw complexes -}
 import cw.CW
 import cw.examples.Examples
-import cw.cohomology.HigherGroupsInComplex
+import cw.cohomology.FirstCohomologyGroup
+import cw.cohomology.HigherCohomologyGroups
 
 -- There are some unported theorems
 

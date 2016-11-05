@@ -42,7 +42,7 @@ abstract
     → ⊙has-cells-with-choice 0 ⊙skel i
     → is-trivialᴳ (C (ℕ-to-ℤ n) ⊙⟦ ⊙skel ⟧)
   C-cw-at-higher n {m = O} 0<n ⊙skel ac =
-    C-points-≠-is-trivial (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ 0<n))) ⊙skel ac
+    C-points-≠-is-trivial (ℕ-to-ℤ n) (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ 0<n))) ⊙skel ac
   C-cw-at-higher n {m = S m} Sm<n ⊙skel ac =
     iso-preserves'-trivial
       (C-cw-descend (ℕ-to-ℤ n)
@@ -55,7 +55,7 @@ abstract
     → ⊙has-cells-with-choice 0 ⊙skel i
     → is-trivialᴳ (C (negsucc n) ⊙⟦ ⊙skel ⟧)
   C-cw-at-negsucc n {m = O} ⊙skel ac =
-    C-points-≠-is-trivial (ℤ-negsucc≠pos n O) ⊙skel ac
+    C-points-≠-is-trivial (negsucc n) (ℤ-negsucc≠pos n O) ⊙skel ac
   C-cw-at-negsucc n {m = S m} ⊙skel ac =
     iso-preserves'-trivial
       (C-cw-descend (negsucc n)
