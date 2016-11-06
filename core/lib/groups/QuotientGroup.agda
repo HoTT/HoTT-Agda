@@ -30,11 +30,15 @@ module _ {i j} {G : Group i} (P : NormalSubgroupProp G j) where
       ident : SetQuot quot-group-rel
       ident = q[ G.ident ]
 
+      abstract
+        inv-rel : ∀ {g₁ g₂ : G.El} (pg₁g₂⁻¹ : P.prop (G.diff g₁ g₂))
+          → q[ G.inv g₁ ] == q[ G.inv g₂ ] :> SetQuot quot-group-rel
+        inv-rel {g₁} {g₂} pg₁g₂⁻¹ = ! $ quot-rel $
+          transport! (λ g → P.prop (G.inv g₂ ⊙ g))
+            (G.inv-inv g₁) $ P.comm g₁ (G.inv g₂) pg₁g₂⁻¹
+
       inv : SetQuot quot-group-rel → SetQuot quot-group-rel
-      inv = SetQuot-rec SetQuot-level (λ g → q[ G.inv g ])
-        (λ {g₁} {g₂} pg₁g₂⁻¹
-          → ! $ quot-rel $ transport! (λ g → P.prop (G.inv g₂ ⊙ g))
-              (G.inv-inv g₁) $ P.comm g₁ (G.inv g₂) pg₁g₂⁻¹ )
+      inv = SetQuot-rec SetQuot-level (λ g → q[ G.inv g ]) inv-rel
 
       abstract
         comp-rel-r : ∀ g₁ {g₂ g₂' : G.El} (pg₂g₂'⁻¹ : P.prop (G.diff g₂ g₂'))
@@ -45,6 +49,10 @@ module _ {i j} {G : Group i} (P : NormalSubgroupProp G j) where
           ∙ ap ((g₁ ⊙ g₂) ⊙_) (! $ G.inv-comp g₁ g₂'))
           (P.conj g₁ pg₂g₂'⁻¹)
 
+      comp' : G.El → SetQuot quot-group-rel → SetQuot quot-group-rel
+      comp' g₁ = SetQuot-rec SetQuot-level (λ g₂ → q[ g₁ ⊙ g₂ ]) (comp-rel-r g₁)
+
+      abstract
         comp-rel-l : ∀ {g₁ g₁' : G.El} (pg₁g₁'⁻¹ : P.prop (G.diff g₁ g₁')) g₂
           → q[ g₁ ⊙ g₂ ] == q[ g₁' ⊙ g₂ ] :> SetQuot quot-group-rel
         comp-rel-l {g₁} {g₁'} pg₁g₁'⁻¹ g₂ = quot-rel $ transport! P.prop
@@ -56,14 +64,16 @@ module _ {i j} {G : Group i} (P : NormalSubgroupProp G j) where
               ∙ G.unit-r g₁))
             pg₁g₁'⁻¹
 
-      comp : SetQuot quot-group-rel → SetQuot quot-group-rel → SetQuot quot-group-rel
-      comp = SetQuot-rec (→-is-set SetQuot-level)
-        (λ g₁ → SetQuot-rec SetQuot-level
-          (λ g₂ → q[ g₁ ⊙ g₂ ]) (comp-rel-r g₁))
-        (λ {g₁} {g₁'} pg₁g₁'⁻¹ → λ= $ SetQuot-elim
+        comp'-rel : ∀ {g₁ g₁' : G.El} (pg₁g₁'⁻¹ : P.prop (G.diff g₁ g₁'))
+          → comp' g₁ == comp' g₁'
+        comp'-rel pg₁g₁'⁻¹ = λ= $ SetQuot-elim
           (λ _ → =-preserves-set SetQuot-level)
           (comp-rel-l pg₁g₁'⁻¹)
-          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _)))
+          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
+
+      comp : SetQuot quot-group-rel → SetQuot quot-group-rel → SetQuot quot-group-rel
+      comp = SetQuot-rec (→-is-set SetQuot-level) comp' comp'-rel
+
       abstract
         unit-l : ∀ g → comp ident g == g
         unit-l = SetQuot-elim

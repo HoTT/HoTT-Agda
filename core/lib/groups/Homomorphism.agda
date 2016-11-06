@@ -106,8 +106,11 @@ module _ where
 
 {- negation is a homomorphism in an abelian gruop -}
 inv-hom : ∀ {i} (G : AbGroup i) → GroupHom (AbGroup.grp G) (AbGroup.grp G)
-inv-hom G = group-hom G.inv (λ g₁ g₂ → G.inv-comp g₁ g₂ ∙ G.comm (G.inv g₂) (G.inv g₁))
-  where module G = AbGroup G
+inv-hom G = group-hom G.inv inv-pres-comp where
+  module G = AbGroup G
+  abstract
+    inv-pres-comp : (g₁ g₂ : G.El) → G.inv (G.comp g₁ g₂) == G.comp (G.inv g₁) (G.inv g₂)
+    inv-pres-comp g₁ g₂ = G.inv-comp g₁ g₂ ∙ G.comm (G.inv g₂) (G.inv g₁)
 
 {- equality of homomorphisms -}
 abstract
@@ -217,36 +220,56 @@ module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
     module φ = GroupHom φ
 
   ker-propᴳ : SubgroupProp G j
-  ker-propᴳ = record {
-    prop = λ g → φ.f g == H.ident;
-    level = λ g → H.El-level _ _;
-    ident = φ.pres-ident;
-    diff = λ {g₁} {g₂} p₁ p₂
-      → φ.pres-diff g₁ g₂ ∙ ap2 H.diff p₁ p₂ ∙ H.inv-r H.ident}
+  ker-propᴳ = record {M} where
+    module M where
+      prop : G.El → Type j
+      prop g = φ.f g == H.ident
+      abstract
+        level : (g : G.El) → is-prop (prop g)
+        level g = H.El-level _ _
+
+        ident : prop G.ident
+        ident = φ.pres-ident
+
+        diff : {g₁ g₂ : G.El} → prop g₁ → prop g₂ → prop (G.diff g₁ g₂)
+        diff {g₁} {g₂} p₁ p₂ = φ.pres-diff g₁ g₂ ∙ ap2 H.diff p₁ p₂ ∙ H.inv-r H.ident
 
   -- 'n' for 'normal'
   ker-npropᴳ : NormalSubgroupProp G j
-  ker-npropᴳ = ker-propᴳ ,
-    λ g₁ {g₂} pg₂ → φ.pres-conj g₁ g₂
-                  ∙ ap (H.conj (φ.f g₁)) pg₂
-                  ∙ H.conj-ident-r (φ.f g₁)
+  ker-npropᴳ = ker-propᴳ , ker-is-normal where
+    abstract
+      ker-is-normal : is-normal ker-propᴳ
+      ker-is-normal g₁ {g₂} pg₂ =
+          φ.pres-conj g₁ g₂
+        ∙ ap (H.conj (φ.f g₁)) pg₂
+        ∙ H.conj-ident-r (φ.f g₁)
 
   im-propᴳ : SubgroupProp H (lmax i j)
-  im-propᴳ = record {
-    prop = λ h → Trunc -1 (hfiber φ.f h);
-    level = λ h → Trunc-level;
-    ident = [ G.ident , φ.pres-ident ];
-    diff = Trunc-fmap2 (λ {(g₁ , p₁) (g₂ , p₂)
-      → G.diff g₁ g₂ , φ.pres-diff g₁ g₂ ∙ ap2 H.diff p₁ p₂})}
+  im-propᴳ = record {M} where
+    module M where
+      prop : H.El → Type (lmax i j)
+      prop h = Trunc -1 (hfiber φ.f h)
+
+      abstract
+        level : (h : H.El) → is-prop (prop h)
+        level = λ h → Trunc-level
+
+        ident : prop H.ident
+        ident = [ G.ident , φ.pres-ident ]
+
+        diff : {h₁ h₂ : H.El} → prop h₁ → prop h₂ → prop (H.diff h₁ h₂)
+        diff = Trunc-fmap2 λ {(g₁ , p₁) (g₂ , p₂)
+          → G.diff g₁ g₂ , φ.pres-diff g₁ g₂ ∙ ap2 H.diff p₁ p₂}
 
   has-trivial-kerᴳ : Type (lmax i j)
   has-trivial-kerᴳ = is-trivial-propᴳ ker-propᴳ
 
-  -- any homomorphism with trivial kernel is injective
-  has-trivial-ker-is-injᴳ : has-trivial-kerᴳ → is-injᴳ φ
-  has-trivial-ker-is-injᴳ tk g₁ g₂ p =
-    G.zero-diff-same g₁ g₂ $ tk (G.diff g₁ g₂) $
-      φ.pres-diff g₁ g₂ ∙ ap (λ h → H.diff h (φ.f g₂)) p ∙ H.inv-r (φ.f g₂)
+  abstract
+    -- any homomorphism with trivial kernel is injective
+    has-trivial-ker-is-injᴳ : has-trivial-kerᴳ → is-injᴳ φ
+    has-trivial-ker-is-injᴳ tk g₁ g₂ p =
+      G.zero-diff-same g₁ g₂ $ tk (G.diff g₁ g₂) $
+        φ.pres-diff g₁ g₂ ∙ ap (λ h → H.diff h (φ.f g₂)) p ∙ H.inv-r (φ.f g₂)
 
 
 {- exactness -}
@@ -268,12 +291,13 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
 
   open is-exact public
 
-  {- an equivalent version of is-exact-ktoi  -}
-  im-sub-ker-in : is-fullᴳ (ker-propᴳ (ψ ∘ᴳ φ)) → im-propᴳ φ ⊆ᴳ ker-propᴳ ψ
-  im-sub-ker-in r h = Trunc-rec (K.El-level _ _) (λ {(g , p) → ap ψ.f (! p) ∙ r g})
+  abstract
+    {- an equivalent version of is-exact-ktoi  -}
+    im-sub-ker-in : is-fullᴳ (ker-propᴳ (ψ ∘ᴳ φ)) → im-propᴳ φ ⊆ᴳ ker-propᴳ ψ
+    im-sub-ker-in r h = Trunc-rec (K.El-level _ _) (λ {(g , p) → ap ψ.f (! p) ∙ r g})
 
-  im-sub-ker-out : im-propᴳ φ ⊆ᴳ ker-propᴳ ψ → is-fullᴳ (ker-propᴳ (ψ ∘ᴳ φ))
-  im-sub-ker-out s g = s (φ.f g) [ g , idp ]
+    im-sub-ker-out : im-propᴳ φ ⊆ᴳ ker-propᴳ ψ → is-fullᴳ (ker-propᴳ (ψ ∘ᴳ φ))
+    im-sub-ker-out s g = s (φ.f g) [ g , idp ]
 
 {- homomorphisms into an abelian group can be composed with
  - the group operation and form a group -}
@@ -285,28 +309,47 @@ module _ {i j} (G : Group i) (H : AbGroup j)
     module H = AbGroup H
 
     hom-comp : (G →ᴳ H.grp) → (G →ᴳ H.grp) → (G →ᴳ H.grp)
-    hom-comp φ ψ = group-hom
-      (λ g → H.comp (φ.f g) (ψ.f g))
-      (λ g₁ g₂ →
-        H.comp (φ.f (G.comp g₁ g₂)) (ψ.f (G.comp g₁ g₂))
-          =⟨ ap2 H.comp (φ.pres-comp g₁ g₂) (ψ.pres-comp g₁ g₂) ⟩
-        H.comp (H.comp (φ.f g₁) (φ.f g₂)) (H.comp (ψ.f g₁) (ψ.f g₂))
-          =⟨ H.interchange (φ.f g₁) (φ.f g₂) (ψ.f g₁) (ψ.f g₂) ⟩
-        H.comp (H.comp (φ.f g₁) (ψ.f g₁)) (H.comp (φ.f g₂) (ψ.f g₂)) =∎)
-      where
+    hom-comp φ ψ = group-hom (λ g → H.comp (φ.f g) (ψ.f g)) hom-comp-pres-comp where
       module φ = GroupHom φ
       module ψ = GroupHom ψ
+      abstract
+        hom-comp-pres-comp : ∀ g₁ g₂
+          →  H.comp (φ.f (G.comp g₁ g₂)) (ψ.f (G.comp g₁ g₂))
+          == H.comp (H.comp (φ.f g₁) (ψ.f g₁)) (H.comp (φ.f g₂) (ψ.f g₂))
+        hom-comp-pres-comp g₁ g₂ =
+          H.comp (φ.f (G.comp g₁ g₂)) (ψ.f (G.comp g₁ g₂))
+            =⟨ ap2 H.comp (φ.pres-comp g₁ g₂) (ψ.pres-comp g₁ g₂) ⟩
+          H.comp (H.comp (φ.f g₁) (φ.f g₂)) (H.comp (ψ.f g₁) (ψ.f g₂))
+            =⟨ H.interchange (φ.f g₁) (φ.f g₂) (ψ.f g₁) (ψ.f g₂) ⟩
+          H.comp (H.comp (φ.f g₁) (ψ.f g₁)) (H.comp (φ.f g₂) (ψ.f g₂)) =∎
 
   hom-group-structure : GroupStructure (G →ᴳ H.grp)
-  hom-group-structure = record {
-    ident = cst-hom;
-    comp = hom-comp;
-    inv = inv-hom H ∘ᴳ_;
-    unit-l = λ _ → group-hom= $ λ= λ _ → H.unit-l _;
-    unit-r = λ _ → group-hom= $ λ= λ _ → H.unit-r _;
-    assoc = λ _ _ _ → group-hom= $ λ= λ _ → H.assoc _ _ _;
-    inv-l = λ φ → group-hom= $ λ= λ _ → H.inv-l _;
-    inv-r = λ φ → group-hom= $ λ= λ _ → H.inv-r _}
+  hom-group-structure = record {M} where
+    module M where
+      ident : G →ᴳ H.grp
+      ident = cst-hom
+
+      comp : (G →ᴳ H.grp) → (G →ᴳ H.grp) → (G →ᴳ H.grp)
+      comp = hom-comp
+
+      inv : (G →ᴳ H.grp) → (G →ᴳ H.grp)
+      inv φ = inv-hom H ∘ᴳ φ
+
+      abstract
+        unit-l : ∀ φ → comp ident φ == φ
+        unit-l φ = group-hom= $ λ= λ _ → H.unit-l _
+
+        unit-r : ∀ φ → comp φ ident == φ
+        unit-r φ = group-hom= $ λ= λ _ → H.unit-r _
+
+        assoc : ∀ φ ψ ξ → comp (comp φ ψ) ξ == comp φ (comp ψ ξ)
+        assoc φ ψ ξ = group-hom= $ λ= λ _ → H.assoc _ _ _
+
+        inv-l : ∀ φ → comp (inv φ) φ == ident
+        inv-l φ = group-hom= $ λ= λ _ → H.inv-l _
+
+        inv-r : ∀ φ → comp φ (inv φ) == ident
+        inv-r φ = group-hom= $ λ= λ _ → H.inv-r _
 
   hom-group : Group (lmax i j)
   hom-group = group (G →ᴳ H.grp) GroupHom-level hom-group-structure
