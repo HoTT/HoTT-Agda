@@ -2,12 +2,7 @@
 
 open import HoTT
 open import cohomology.Theory
-open import cohomology.PtdMapSequence
-open import groups.ExactSequence
-open import groups.Exactness
-open import groups.HomSequence
 open import groups.PropQuotOfInl
-import homotopy.ConstantToSetExtendsToProp as ConstExt
 
 open import cw.CW
 
@@ -15,10 +10,7 @@ module cw.cohomology.ZerothCohomologyGroup {i} (OT : OrdinaryTheory i)
   (⊙skel : ⊙Skeleton {i} 1) (ac : ⊙has-cells-with-choice 0 ⊙skel i) where
 
 open OrdinaryTheory OT
-open import cohomology.LongExactSequence
-  cohomology-theory 0 (⊙cw-incl-last ⊙skel)
 open import cw.cohomology.TipGrid OT ⊙skel ac
-open import cw.cohomology.WedgeOfCells OT
 
 {-
 
