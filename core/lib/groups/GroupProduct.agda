@@ -19,17 +19,35 @@ module lib.groups.GroupProduct where
 ×-group-struct : ∀ {i j} {A : Type i} {B : Type j}
   (GS : GroupStructure A) (HS : GroupStructure B)
   → GroupStructure (A × B)
-×-group-struct GS HS = record {
-  ident = (ident GS , ident HS);
-  inv = λ {(g , h) → (inv GS g , inv HS h)};
-  comp = λ {(g₁ , h₁) (g₂ , h₂) → (comp GS g₁ g₂ , comp HS h₁ h₂)};
-  unit-l = λ {(g , h) → pair×= (unit-l GS g) (unit-l HS h)};
-  unit-r = λ {(g , h) → pair×= (unit-r GS g) (unit-r HS h)};
-  assoc = λ {(g₁ , h₁) (g₂ , h₂) (g₃ , h₃) →
-    pair×= (assoc GS g₁ g₂ g₃) (assoc HS h₁ h₂ h₃)};
-  inv-l = λ {(g , h) → pair×= (inv-l GS g) (inv-l HS h)};
-  inv-r = λ {(g , h) → pair×= (inv-r GS g) (inv-r HS h)}}
-  where open GroupStructure
+×-group-struct {A = A} {B = B} GS HS = record {M} where
+  module G = GroupStructure GS
+  module H = GroupStructure HS
+  module M where
+    ident : A × B
+    ident = G.ident , H.ident
+
+    inv : A × B → A × B
+    inv (g , h) = G.inv g , H.inv h
+
+    comp : A × B → A × B → A × B
+    comp (g₁ , h₁) (g₂ , h₂) = G.comp g₁ g₂ , H.comp h₁ h₂
+
+    abstract
+      unit-l : ∀ ab → comp ident ab == ab
+      unit-l (g , h) = pair×= (G.unit-l g) (H.unit-l h)
+
+      unit-r : ∀ ab → comp ab ident == ab
+      unit-r (g , h) = pair×= (G.unit-r g) (H.unit-r h)
+
+      assoc : ∀ ab₁ ab₂ ab₃ → comp (comp ab₁ ab₂) ab₃ == comp ab₁ (comp ab₂ ab₃)
+      assoc (g₁ , h₁) (g₂ , h₂) (g₃ , h₃) =
+        pair×= (G.assoc g₁ g₂ g₃) (H.assoc h₁ h₂ h₃)
+
+      inv-l : ∀ ab → comp (inv ab) ab == ident
+      inv-l (g , h) = pair×= (G.inv-l g) (H.inv-l h)
+
+      inv-r : ∀ ab → comp ab (inv ab) == ident
+      inv-r (g , h) = pair×= (G.inv-r g) (H.inv-r h)
 
 infix 80 _×ᴳ_
 _×ᴳ_ : ∀ {i j} → Group i → Group j → Group (lmax i j)
