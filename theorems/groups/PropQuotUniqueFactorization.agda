@@ -31,13 +31,12 @@ module groups.PropQuotUniqueFactorization
     module φ₁ = GroupHom φ₁
     module φ₂ = GroupHom φ₂
 
-  P/Q-prop : NormalSubgroupProp (Subgroup P) l₂
-  P/Q-prop = quot-of-sub P Q
+    P/Q-prop : NormalSubgroupProp (Subgroup P) l₂
+    P/Q-prop = quot-of-sub P Q
 
-  P/Q : Group (lmax i (lmax l₁ l₂))
-  P/Q = QuotGroup P/Q-prop
+    P/Q : Group (lmax i (lmax l₁ l₂))
+    P/Q = QuotGroup P/Q-prop
 
-  private
     module P/Q = Group P/Q
     module _ (k : Group.El H) where
       H-to-P/Q-f' : hfiber φ₁.f k → P/Q.El
