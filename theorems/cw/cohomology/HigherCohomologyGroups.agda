@@ -15,7 +15,7 @@ module cw.cohomology.HigherCohomologyGroups {i} (OT : OrdinaryTheory i)
 
 open OrdinaryTheory OT
 open import cohomology.LongExactSequence cohomology-theory
-  (ℕ-to-ℤ (S n)) (⊙cw-incl-tail n≤SSSn ⊙skel)
+  (ℕ-to-ℤ (S n)) (⊙cw-incl-tail (inr (ltSR (ltSR ltS))) ⊙skel)
 open import cw.cohomology.CoboundaryGrid OT
 open import cw.cohomology.Descending OT
 open import cw.cohomology.InnerGrid OT (ℕ-to-ℤ (S (S n)))
