@@ -64,13 +64,13 @@ _×ᴳ_ (group A A-level A-struct) (group B B-level B-struct) =
   (λ f g → λ= λ i → GroupIso.pres-comp (iso i) (f i) (g i))
 
 {- the product of abelian groups is abelian -}
-×ᴳ-abelian : ∀ {i j} {G : Group i} {H : Group j}
+×ᴳ-is-abelian : ∀ {i j} (G : Group i) (H : Group j)
   → is-abelian G → is-abelian H → is-abelian (G ×ᴳ H)
-×ᴳ-abelian aG aH (g₁ , h₁) (g₂ , h₂) = pair×= (aG g₁ g₂) (aH h₁ h₂)
+×ᴳ-is-abelian G H aG aH (g₁ , h₁) (g₂ , h₂) = pair×= (aG g₁ g₂) (aH h₁ h₂)
 
-Πᴳ-abelian : ∀ {i j} {I : Type i} {F : I → Group j}
+Πᴳ-is-abelian : ∀ {i j} {I : Type i} {F : I → Group j}
   → (∀ i → is-abelian (F i)) → is-abelian (Πᴳ I F)
-Πᴳ-abelian aF f₁ f₂ = λ= (λ i → aF i (f₁ i) (f₂ i))
+Πᴳ-is-abelian aF f₁ f₂ = λ= (λ i → aF i (f₁ i) (f₂ i))
 
 {- defining a homomorphism into a product -}
 ×ᴳ-fanout : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}

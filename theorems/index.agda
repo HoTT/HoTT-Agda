@@ -45,6 +45,7 @@ import homotopy.PathSetIsInitalCover
 {- cw complexes -}
 import cw.CW
 import cw.examples.Examples
+import cw.cohomology.ZerothCohomologyGroup
 import cw.cohomology.FirstCohomologyGroup
 import cw.cohomology.HigherCohomologyGroups
 

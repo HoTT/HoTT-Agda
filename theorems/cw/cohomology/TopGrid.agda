@@ -17,9 +17,9 @@ module cw.cohomology.TopGrid {i} (OT : OrdinaryTheory i)
   open import cohomology.PtdMapSequence cohomology-theory
   open import cw.cohomology.GridPtdMap f g using (Y/X-to-Z/X)
 
-  grid-comm-sqr : CommSquare (fst g) (fst Y/X-to-Z/X) cfcod cfcod
-  grid-comm-sqr = comm-sqr λ _ → idp
+  top-grid-comm-sqr : CommSquare (fst g) (fst Y/X-to-Z/X) cfcod cfcod
+  top-grid-comm-sqr = comm-sqr λ _ → idp
 
-  C-grid-commutes : CommSquareᴳ
+  C-top-grid-commutes : CommSquareᴳ
     (C-fmap n Y/X-to-Z/X) (C-fmap n g) (C-fmap n (⊙cfcod' (g ⊙∘ f))) (C-fmap n (⊙cfcod' f))
-  C-grid-commutes = C-comm-square n grid-comm-sqr
+  C-top-grid-commutes = C-comm-square n top-grid-comm-sqr

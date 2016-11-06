@@ -46,7 +46,7 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
         from = λ k → From.cst-extend k (uncurry E.ker-sub-im k)
 
         to-from : ∀ k → to (from k) == k
-        to-from k = Subtype=-out (Ker.P.subEl-prop ψ) $
+        to-from k = Subtype=-out (Ker.subEl-prop ψ) $
           Trunc-elim
             {P = λ hf → φ.f (From.cst-extend k hf) == fst k}
             (λ _ → H.El-is-set _ _)

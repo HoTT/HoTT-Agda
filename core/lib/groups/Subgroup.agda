@@ -54,8 +54,8 @@ module Subgroup {i j} {G : Group i} (P : SubgroupProp G j) where
 
   propᴳ = P
   module P = SubgroupProp propᴳ
-  prop = P.prop
-  
+  open P public using (prop; subEl-prop)
+
   grp = Subgroup P
   open Group grp public
 

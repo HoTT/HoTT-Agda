@@ -15,6 +15,7 @@ module cw.cohomology.HigherCohomologyGroups {i} (OT : OrdinaryTheory i)
 
 open OrdinaryTheory OT
 open import cohomology.LongExactSequence cohomology-theory
+  (ℕ-to-ℤ (S n)) (⊙cw-incl-tail n≤SSSn ⊙skel)
 open import cw.cohomology.CoboundaryGrid OT
 open import cw.cohomology.Descending OT
 open import cw.cohomology.InnerGrid OT (ℕ-to-ℤ (S (S n)))
@@ -55,8 +56,8 @@ private
 
   C-apex-iso-C-cw : C-apex ≃ᴳ C (ℕ-to-ℤ (S (S n))) ⊙⟦ ⊙skel ⟧
   C-apex-iso-C-cw = Exact2.G-trivial-and-L-trivial-implies-H-iso-K
-    (exact-seq-index 1 $ C-cofiber-exact-seq (ℕ-to-ℤ (S n)) (⊙cw-incl-tail n≤SSSn ⊙skel))
-    (exact-seq-index 2 $ C-cofiber-exact-seq (ℕ-to-ℤ (S n)) (⊙cw-incl-tail n≤SSSn ⊙skel))
+    (exact-seq-index 1 C-cofiber-exact-seq)
+    (exact-seq-index 2 C-cofiber-exact-seq)
     (C-cw-at-higher (S n) ltS ⊙skel₋₃ ac₋₃)
     (C-cw-at-higher (S (S n)) (ltSR ltS) ⊙skel₋₃ ac₋₃)
 
@@ -123,7 +124,7 @@ C-cw-iso-ker/im = lemma ∘eᴳ C-apex-iso-C-cw ⁻¹ᴳ where
       == q[ fst g ]
     lemma-comm g =
       GroupIso.g Coker-iso-H (GroupHom.f C-apex-to-H (GroupHom.f G-to-C-apex (GroupIso.g G-iso-Ker g)))
-        =⟨ ap (GroupIso.g Coker-iso-H) (! (C-grid-commutes □$ᴳ GroupIso.g G-iso-Ker g)) ⟩
+        =⟨ ap (GroupIso.g Coker-iso-H) (! (C-inner-grid-commutes □$ᴳ GroupIso.g G-iso-Ker g)) ⟩
       GroupIso.g Coker-iso-H (GroupHom.f C-WoC-to-H (GroupHom.f G-to-C-WoC (GroupIso.g G-iso-Ker g)))
         =⟨ ap (GroupIso.g Coker-iso-H ∘ GroupHom.f C-WoC-to-H ∘ fst) (GroupIso.f-g G-iso-Ker g) ⟩
       GroupIso.g Coker-iso-H (GroupHom.f C-WoC-to-H (fst g))

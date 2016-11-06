@@ -14,7 +14,7 @@ module cw.cohomology.FirstCohomologyGroup {i} (OT : OrdinaryTheory i)
   (⊙skel : ⊙Skeleton {i} 2) (ac : ⊙has-cells-with-choice 0 ⊙skel i) where
 
 open OrdinaryTheory OT
-open import cohomology.LongExactSequence cohomology-theory
+open import cohomology.LongExactSequence cohomology-theory 0 (⊙cw-incl-tail 0≤2 ⊙skel)
 open import cw.cohomology.CoboundaryGrid OT ⊙skel ac
 open import cw.cohomology.GridPtdMap (⊙cw-incl-last (⊙cw-init ⊙skel)) (⊙cw-incl-last ⊙skel)
 open import cw.cohomology.TipGrid OT (⊙cw-init ⊙skel) (fst ac)
@@ -59,7 +59,7 @@ private
   abstract
     G-to-C-cw-is-surj : is-surjᴳ G-to-C-cw
     G-to-C-cw-is-surj = Exact.K-trivial-implies-φ-is-surj
-      (exact-seq-index 2 $ C-cofiber-exact-seq 0 (⊙cw-incl-tail 0≤2 ⊙skel))
+      (exact-seq-index 2 C-cofiber-exact-seq)
       (C-points-≠-is-trivial 1 (pos-≠ (ℕ-S≠O 0)) ⊙skel₀ ac₀)
 
   C-cw-to-H : C 1 ⊙⟦ ⊙skel ⟧ →ᴳ H
@@ -68,7 +68,7 @@ private
   abstract
     C-cw-to-H-is-inj : is-injᴳ C-cw-to-H
     C-cw-to-H-is-inj = Exact.G-trivial-implies-ψ-is-inj
-      (exact-seq-index 2 $ C-cofiber-exact-seq 0 (⊙cw-incl-last ⊙skel))
+      (exact-seq-index 2 C-cofiber-exact-seq)
       (C-Cofiber-cw-incl-last-<-is-trivial 1 ltS ⊙skel ac)
 
   C-WoC : Group i
@@ -89,7 +89,7 @@ C-cw-iso-ker/im = lemma where
       == q[ fst g ]
     lemma-comm g =
       GroupIso.g Coker-iso-H (GroupHom.f C-cw-to-H (GroupHom.f G-to-C-cw (GroupIso.g G-iso-Ker g)))
-        =⟨ ap (GroupIso.g Coker-iso-H) (! (C-grid-commutes □$ᴳ GroupIso.g G-iso-Ker g)) ⟩
+        =⟨ ap (GroupIso.g Coker-iso-H) (! (C-top-grid-commutes □$ᴳ GroupIso.g G-iso-Ker g)) ⟩
       GroupIso.g Coker-iso-H (GroupHom.f C-WoC-to-H (GroupHom.f G-to-C-WoC (GroupIso.g G-iso-Ker g)))
         =⟨ ap (GroupIso.g Coker-iso-H ∘ GroupHom.f C-WoC-to-H ∘ fst) (GroupIso.f-g G-iso-Ker g) ⟩
       GroupIso.g Coker-iso-H (GroupHom.f C-WoC-to-H (fst g))
@@ -97,7 +97,7 @@ C-cw-iso-ker/im = lemma where
       q[ fst g ]
         =∎
 
-  lemma : C 1 ⊙⟦ ⊙skel ⟧ 
+  lemma : C 1 ⊙⟦ ⊙skel ⟧
     ≃ᴳ QuotGroup (quot-of-sub (ker-propᴳ cw-co∂-last) CokerCo∂Head.npropᴳ)
   lemma = H-iso-P/Q
     (ker-propᴳ cw-co∂-last)

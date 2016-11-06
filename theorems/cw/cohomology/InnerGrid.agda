@@ -38,8 +38,8 @@ module cw.cohomology.InnerGrid {i} (OT : OrdinaryTheory i)
     renaming (Y/X-to-Z/X to Z/Y-to-W/Y; B/A-to-C/A to C/B-to-D/B;
       module B/AToC/A to C/BToD/B)
 
-  grid-comm-sqr : CommSquare C/A-to-D/A C/B-to-D/B C/A-to-C/B D/A-to-D/B
-  grid-comm-sqr = comm-sqr $ Cofiber-elim idp (λ _ → idp)
+  inner-grid-comm-sqr : CommSquare C/A-to-D/A C/B-to-D/B C/A-to-C/B D/A-to-D/B
+  inner-grid-comm-sqr = comm-sqr $ Cofiber-elim idp (λ _ → idp)
     (λ a → ↓-='-in' $ ap-∘ C/B-to-D/B C/A-to-C/B (glue a)
                     ∙ ap (ap C/B-to-D/B) (C/AToC/B.glue-β a)
                     ∙ C/BToD/B.glue-β ((fst f) a)
@@ -47,6 +47,6 @@ module cw.cohomology.InnerGrid {i} (OT : OrdinaryTheory i)
                     ∙ ap (ap D/A-to-D/B) (! (C/AToD/A.glue-β a))
                     ∙ ∘-ap D/A-to-D/B C/A-to-D/A (glue a))
 
-  C-grid-commutes : CommSquareᴳ
+  C-inner-grid-commutes : CommSquareᴳ
     (C-fmap n Z/Y-to-W/Y) (C-fmap n Z/X-to-W/X) (C-fmap n W/X-to-W/Y) (C-fmap n Z/X-to-Z/Y)
-  C-grid-commutes = C-comm-square n grid-comm-sqr
+  C-inner-grid-commutes = C-comm-square n inner-grid-comm-sqr

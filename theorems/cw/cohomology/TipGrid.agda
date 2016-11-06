@@ -42,6 +42,13 @@ Ker-cw-co∂-head' = Exact2.G-trivial-implies-H-iso-ker
   (exact-seq-index 0 $ LES.C-cofiber-exact-seq 0)
   (C-Cofiber-cw-incl-last-<-is-trivial 0 ltS ⊙skel ac)
 
+Ker-cw-co∂-head : G ×ᴳ C 0 ⊙⟦ ⊙skel ⟧ ≃ᴳ Ker.grp cw-co∂-head
+Ker-cw-co∂-head = lemma ∘eᴳ ×ᴳ-emap (idiso G) Ker-cw-co∂-head' where
+  lemma : G ×ᴳ Ker.grp cw-co∂-head' ≃ᴳ Ker.grp cw-co∂-head
+  lemma = group-hom (λ{(g , (h , is-ker)) → ((g , h) , is-ker)})
+    (λ _ _ → Subtype=-out (Ker.subEl-prop cw-co∂-head) idp) ,
+    is-eq _ (λ{((g , h) , is-ker) → (g , (h , is-ker))}) (λ _ → idp) (λ _ → idp)
+
 private
   -- separate lemmas to speed up the type checking
   abstract
