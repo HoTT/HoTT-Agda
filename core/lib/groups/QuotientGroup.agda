@@ -142,11 +142,12 @@ module _ {i j} {G : Group i} {P : NormalSubgroupProp G j} where
     quot-group-rel-is-trans
 
 module QuotGroup {i j} {G : Group i} (P : NormalSubgroupProp G j) where
+  npropᴳ : NormalSubgroupProp G j
   npropᴳ = P
   module P = NormalSubgroupProp npropᴳ
-  propᴳ = P.propᴳ
-  prop = P.prop
+    using (propᴳ; prop)
 
+  grp : Group (lmax i j)
   grp = QuotGroup P
   open Group grp public
 
