@@ -267,6 +267,9 @@ module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
         diff = Trunc-fmap2 λ {(g₁ , p₁) (g₂ , p₂)
           → G.diff g₁ g₂ , φ.pres-diff g₁ g₂ ∙ ap2 H.diff p₁ p₂}
 
+  im-npropᴳ : is-abelian H → NormalSubgroupProp H (lmax i j)
+  im-npropᴳ H-is-abelian = sub-abelian-normal H-is-abelian im-propᴳ
+
   has-trivial-kerᴳ : Type (lmax i j)
   has-trivial-kerᴳ = is-trivial-propᴳ ker-propᴳ
 

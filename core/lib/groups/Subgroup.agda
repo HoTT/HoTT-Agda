@@ -63,14 +63,18 @@ module Subgroup {i j} {G : Group i} (P : SubgroupProp G j) where
   inject = record {f = fst; pres-comp = λ _ _ → idp}
 
   inject-lift : ∀ {j} {H : Group j} (φ : H →ᴳ G)
-    → Π (Group.El H) (P.prop ∘ GroupHom.f φ)
+    → Π (Group.El H) (prop ∘ GroupHom.f φ)
     → (H →ᴳ Subgroup P)
-  inject-lift {H = H} φ P-all = record {
-    f = λ g → (φ.f g , P-all g);
-    pres-comp = λ g₁ g₂ → Subtype=-out P.subEl-prop (φ.pres-comp g₁ g₂)}
-    where
-      module H = Group H
-      module φ = GroupHom φ
+  inject-lift {H = H} φ P-all = record {M} where
+    module H = Group H
+    module φ = GroupHom φ
+    module M where
+      f : H.El → Σ G.El prop
+      f h = φ.f h , P-all h
+
+      abstract
+        pres-comp : ∀ h₁ h₂ → f (H.comp h₁ h₂) == Group.comp (Subgroup P) (f h₁) (f h₂)
+        pres-comp h₁ h₂ = Subtype=-out subEl-prop (φ.pres-comp h₁ h₂)
 
 module _ {i} {j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
 

@@ -58,7 +58,7 @@ private
     lemma₁-abelian : is-abelian (C 1 (⊙Cofiber (⊙cw-incl-last ⊙skel)))
     lemma₁-abelian = C-is-abelian 1 (⊙Cofiber (⊙cw-incl-last ⊙skel))
 
-module CokerCo∂Head = Coker lemma₁-abelian cw-co∂-head
+module CokerCo∂Head = Coker cw-co∂-head lemma₁-abelian
 
 private
   -- separate lemmas to speed up the type checking

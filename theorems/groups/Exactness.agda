@@ -63,19 +63,27 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
     K-trivial-implies-φ-is-surj : is-trivialᴳ K → is-surjᴳ φ
     K-trivial-implies-φ-is-surj K-is-triv h = E.ker-sub-im h (K-is-triv (ψ.f h))
 
-  coker-to-K : (H-is-abelian : is-abelian H) → Coker.grp H-is-abelian φ →ᴳ K
-  coker-to-K H-is-abelian = record {
-    f = SetQuot-rec K.El-is-set
-      (λ h → ψ.f h)
-      (λ {h₁} {h₂} h₁h₂⁻¹-in-im →
-        K.zero-diff-same _ _ $ ! (ψ.pres-diff h₁ h₂) ∙ E.im-sub-ker (H.diff h₁ h₂) h₁h₂⁻¹-in-im);
-    pres-comp = SetQuot-elim
-      (λ _ → Π-is-set λ _ → =-preserves-set K.El-is-set)
-      (λ h₁ → SetQuot-elim
-        (λ _ → =-preserves-set K.El-is-set)
-        (λ h₂ → ψ.pres-comp h₁ h₂)
-        (λ _ → prop-has-all-paths-↓ (K.El-is-set _ _)))
-      (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → K.El-is-set _ _))}
+  coker-to-K : (H-is-abelian : is-abelian H) → Coker.grp φ H-is-abelian →ᴳ K
+  coker-to-K H-is-abelian = record {M} where
+    module M where
+      module Cok = Coker φ H-is-abelian
+      abstract
+        f-rel : ∀ {h₁ h₂ : H.El} (h₁h₂⁻¹-in-im : SubgroupProp.prop (im-propᴳ φ) (H.diff h₁ h₂))
+          → ψ.f h₁ == ψ.f h₂
+        f-rel {h₁} {h₂} h₁h₂⁻¹-in-im = K.zero-diff-same _ _ $
+          ! (ψ.pres-diff h₁ h₂) ∙ E.im-sub-ker (H.diff h₁ h₂) h₁h₂⁻¹-in-im
+
+      f : Cok.El → K.El
+      f = SetQuot-rec K.El-is-set ψ.f f-rel
+      abstract
+        pres-comp : ∀ h₁ h₂ → f (Cok.comp h₁ h₂) == K.comp (f h₁) (f h₂)
+        pres-comp = SetQuot-elim
+          (λ _ → Π-is-set λ _ → =-preserves-set K.El-is-set)
+          (λ h₁ → SetQuot-elim
+            (λ _ → =-preserves-set K.El-is-set)
+            (λ h₂ → ψ.pres-comp h₁ h₂)
+            (λ _ → prop-has-all-paths-↓ (K.El-is-set _ _)))
+          (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → K.El-is-set _ _))
 
   abstract
     ψ-surj-implies-coker-to-K-is-equiv : (H-is-abelian : is-abelian H)
@@ -83,7 +91,7 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
     ψ-surj-implies-coker-to-K-is-equiv H-is-abelian ψ-is-surj =
       is-eq to from to-from from-to
       where
-        module Cok = Coker H-is-abelian φ
+        module Cok = Coker φ H-is-abelian
 
         to : Cok.El → K.El
         to = GroupHom.f (coker-to-K H-is-abelian)
@@ -113,7 +121,7 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
           (λ _ → prop-has-all-paths-↓ (Cok.El-is-set _ _))
 
   ψ-surj-implies-coker-iso-K : (H-is-abelian : is-abelian H)
-    → is-surjᴳ ψ → Coker.grp H-is-abelian φ ≃ᴳ K
+    → is-surjᴳ ψ → Coker.grp φ H-is-abelian ≃ᴳ K
   ψ-surj-implies-coker-iso-K H-is-abelian ψ-is-surj =
     coker-to-K H-is-abelian , ψ-surj-implies-coker-to-K-is-equiv H-is-abelian ψ-is-surj
 
@@ -156,7 +164,7 @@ module Exact2 {i j k l} {G : Group i} {H : Group j} {K : Group k} {L : Group l}
         EL1.G-trivial-implies-ψ-is-inj G-is-triv
 
   L-trivial-implies-coker-iso-K : (H-is-abelian : is-abelian H)
-    → is-trivialᴳ L → Coker.grp H-is-abelian φ ≃ᴳ K
+    → is-trivialᴳ L → Coker.grp φ H-is-abelian ≃ᴳ K
   L-trivial-implies-coker-iso-K H-is-abelian L-is-triv
     = EL1.ψ-surj-implies-coker-iso-K H-is-abelian $
         EL2.K-trivial-implies-φ-is-surj L-is-triv

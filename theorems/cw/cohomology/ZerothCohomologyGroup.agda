@@ -40,12 +40,13 @@ private
 cw-coε : G →ᴳ G ×ᴳ C-X₀
 cw-coε = ×ᴳ-inl {G = G} {H = C-X₀}
 
-module CokerCoε = Coker G-×-C-X₀-is-abelian cw-coε
+module CokerCoε = Coker cw-coε G-×-C-X₀-is-abelian
 
 private
   lemma₁ : Ker.grp cw-co∂-head'
-        ≃ᴳ QuotGroup (quot-of-sub (ker-propᴳ cw-co∂-head) CokerCoε.npropᴳ)
+    ≃ᴳ QuotGroup (quot-of-sub (ker-propᴳ (cw-co∂-head' ∘ᴳ ×ᴳ-snd {G = G} {H = C-X₀})) (im-npropᴳ cw-coε G-×-C-X₀-is-abelian))
   lemma₁ = Ker-inl-quot-Im-φ-snd G {H = C-X₀} {K = C 1 (⊙Cofiber (⊙cw-incl-last ⊙skel))} G-×-C-X₀-is-abelian cw-co∂-head'
 
-C-cw-iso-ker/im : C 0 ⊙⟦ ⊙skel ⟧ ≃ᴳ QuotGroup (quot-of-sub (ker-propᴳ cw-co∂-head) CokerCoε.npropᴳ)
+C-cw-iso-ker/im : C 0 ⊙⟦ ⊙skel ⟧
+  ≃ᴳ QuotGroup (quot-of-sub (ker-propᴳ cw-co∂-head) (im-npropᴳ cw-coε G-×-C-X₀-is-abelian))
 C-cw-iso-ker/im = lemma₁ ∘eᴳ Ker-cw-co∂-head'

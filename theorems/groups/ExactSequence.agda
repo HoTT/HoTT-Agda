@@ -51,14 +51,15 @@ private
   exact-seq-index-type O (G →⟨ φ ⟩ᴳ H →⟨ ψ ⟩ᴳ s) = is-exact φ ψ
   exact-seq-index-type (S n) (_ →⟨ _ ⟩ᴳ s) = exact-seq-index-type n s
 
-exact-seq-index : ∀ {i} {G H : Group i}
-  → (n : ℕ) (seq : ExactSequence G H)
-  → exact-seq-index-type n (fst seq)
-exact-seq-index _     ((G ⊣|ᴳ) , _) = lift tt
-exact-seq-index _     ((G →⟨ φ ⟩ᴳ H ⊣|ᴳ) , _) = lift tt
-exact-seq-index O     ((G →⟨ φ ⟩ᴳ H →⟨ ψ ⟩ᴳ seq) , ise-seq) = fst ise-seq
-exact-seq-index (S n) ((G →⟨ φ ⟩ᴳ H →⟨ ψ ⟩ᴳ seq) , ise-seq) =
-  exact-seq-index n ((H →⟨ ψ ⟩ᴳ seq) , snd ise-seq)
+abstract
+  exact-seq-index : ∀ {i} {G H : Group i}
+    → (n : ℕ) (seq : ExactSequence G H)
+    → exact-seq-index-type n (fst seq)
+  exact-seq-index _     ((G ⊣|ᴳ) , _) = lift tt
+  exact-seq-index _     ((G →⟨ φ ⟩ᴳ H ⊣|ᴳ) , _) = lift tt
+  exact-seq-index O     ((G →⟨ φ ⟩ᴳ H →⟨ ψ ⟩ᴳ seq) , ise-seq) = fst ise-seq
+  exact-seq-index (S n) ((G →⟨ φ ⟩ᴳ H →⟨ ψ ⟩ᴳ seq) , ise-seq) =
+    exact-seq-index n ((H →⟨ ψ ⟩ᴳ seq) , snd ise-seq)
 
 {-
 private
