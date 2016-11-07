@@ -126,10 +126,10 @@ trivial-propᴳ {i} G = record {M} where
     ident : prop G.ident
     ident = idp
 
-    abstract
-      level : ∀ g → is-prop (prop g)
-      level g = G.El-level g G.ident
+    level : ∀ g → is-prop (prop g)
+    level g = G.El-level g G.ident
 
+    abstract
       diff : {g₁ g₂ : G.El} → prop g₁ → prop g₂ → prop (G.diff g₁ g₂)
       diff g₁=id g₂=id = ap2 G.comp g₁=id (ap G.inv g₂=id ∙ G.inv-ident)
                        ∙ G.unit-r G.ident
