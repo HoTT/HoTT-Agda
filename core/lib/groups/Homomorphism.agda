@@ -185,25 +185,31 @@ is-surjᴳ hom = is-surj (GroupHom.f hom)
 infix 80 _∘subᴳ_
 _∘subᴳ_ : ∀ {i j k} {G : Group i} {H : Group j}
   → SubgroupProp H k → (G →ᴳ H) → SubgroupProp G k
-_∘subᴳ_ {G = G} {H} P φ = record {
-  prop = P.prop ∘ φ.f;
-  level = P.level ∘ φ.f;
-  ident = transport! P.prop φ.pres-ident P.ident;
-  diff = λ {g₁} {g₂} pφg₁ pφg₂ → transport! P.prop
-    (φ.pres-diff g₁ g₂)
-    (P.diff pφg₁ pφg₂)}
-  where module G = Group G
-        module H = Group H
-        module P = SubgroupProp P
-        module φ = GroupHom φ
+_∘subᴳ_ {k = k} {G = G} P φ = record {M} where
+  module G = Group G
+  module P = SubgroupProp P
+  module φ = GroupHom φ
+  module M where
+    prop : G.El → Type k
+    prop = P.prop ∘ φ.f
+
+    level : ∀ g → is-prop (prop g)
+    level = P.level ∘ φ.f
+
+    abstract
+      ident : prop G.ident
+      ident = transport! P.prop φ.pres-ident P.ident
+
+      diff : {g₁ g₂ : G.El} → prop g₁ → prop g₂ → prop (G.diff g₁ g₂)
+      diff {g₁} {g₂} pφg₁ pφg₂ = transport! P.prop
+        (φ.pres-diff g₁ g₂)
+        (P.diff pφg₁ pφg₂)
 
 infix 80 _∘nsubᴳ_
 _∘nsubᴳ_ : ∀ {i j k} {G : Group i} {H : Group j}
   → NormalSubgroupProp H k → (G →ᴳ H) → NormalSubgroupProp G k
 _∘nsubᴳ_ {G = G} {H} P φ = P.propᴳ ∘subᴳ φ , P-φ-is-normal
-  where module G = Group G
-        module H = Group H
-        module P = NormalSubgroupProp P
+  where module P = NormalSubgroupProp P
         module φ = GroupHom φ
         abstract
           P-φ-is-normal : is-normal (P.propᴳ ∘subᴳ φ)
@@ -250,10 +256,10 @@ module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
       prop : H.El → Type (lmax i j)
       prop h = Trunc -1 (hfiber φ.f h)
 
-      abstract
-        level : (h : H.El) → is-prop (prop h)
-        level = λ h → Trunc-level
+      level : (h : H.El) → is-prop (prop h)
+      level h = Trunc-level
 
+      abstract
         ident : prop H.ident
         ident = [ G.ident , φ.pres-ident ]
 
