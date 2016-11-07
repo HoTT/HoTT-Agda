@@ -10,14 +10,16 @@ module groups.PropQuotOfInl {i j k}
     module G = Group G
     module H = Group H
 
+    φ-snd : G ×ᴳ H →ᴳ K
+    φ-snd = φ ∘ᴳ ×ᴳ-snd {G = G} {H = H}
+
   module Ker/Im = QuotGroup
     (quot-of-sub
-      (ker-propᴳ (φ ∘ᴳ ×ᴳ-snd {G = G} {H = H}))
+      (ker-propᴳ φ-snd)
       (im-npropᴳ (×ᴳ-inl {G = G} {H = H}) G-×-H-is-abelian))
 
   Ker-inl-quot-Im-φ-snd : Ker.grp φ ≃ᴳ Ker/Im.grp
   Ker-inl-quot-Im-φ-snd = to-hom , is-eq _ from to-from from-to where
-
     to : Ker.El φ → Ker/Im.El
     to (h , h-in-ker) = q[ (G.ident , h) , h-in-ker ]
 
@@ -34,7 +36,7 @@ module groups.PropQuotOfInl {i j k}
       from' ((g , h) , h-in-ker) = h , h-in-ker
 
       from-rel : {gh₁ gh₂ : Ker.El φ-snd}
-        (inl-g=gh₁gh₂⁻¹ : SubgroupProp.prop (im-propᴳ injection) (fst (Ker.diff φ-snd gh₁ gh₂)))
+        (inl-g=gh₁gh₂⁻¹ : SubgroupProp.prop (im-propᴳ (×ᴳ-inl {G = G} {H = H})) (fst (Ker.diff φ-snd gh₁ gh₂)))
         → from' gh₁ == from' gh₂
       from-rel {gh₁} {gh₂} = Trunc-rec (Ker.El-is-set φ _ _)
         (λ{(g , inl-g=h₁h₂⁻¹) → Subtype=-out (Ker.subEl-prop φ)
