@@ -2,7 +2,6 @@
 
 open import HoTT
 open import cohomology.Theory
-open import groups.PropQuotOfInl
 
 open import cw.CW
 
@@ -37,16 +36,33 @@ private
       (C-is-abelian 0 (⊙Lift ⊙Bool))
       (C-is-abelian 0 ⊙⟦ ⊙cw-init ⊙skel ⟧)
 
+open import groups.PropQuotOfInl G {H = C-X₀}
+  {K = C 1 (⊙Cofiber (⊙cw-incl-last ⊙skel))}
+  G-×-C-X₀-is-abelian cw-co∂-head'
+
 cw-coε : G →ᴳ G ×ᴳ C-X₀
 cw-coε = ×ᴳ-inl {G = G} {H = C-X₀}
 
 module CokerCoε = Coker cw-coε G-×-C-X₀-is-abelian
 
 private
-  lemma₁ : Ker.grp cw-co∂-head'
-    ≃ᴳ QuotGroup (quot-of-sub (ker-propᴳ (cw-co∂-head' ∘ᴳ ×ᴳ-snd {G = G} {H = C-X₀})) (im-npropᴳ cw-coε G-×-C-X₀-is-abelian))
-  lemma₁ = Ker-inl-quot-Im-φ-snd G {H = C-X₀} {K = C 1 (⊙Cofiber (⊙cw-incl-last ⊙skel))} G-×-C-X₀-is-abelian cw-co∂-head'
+  -- lemmas trying to direct (and speed up) Agda's type checking
+  abstract
+    lemma₀ : Ker/Im.npropᴳ
+      == quot-of-sub (ker-propᴳ cw-co∂-head) (im-npropᴳ cw-coε G-×-C-X₀-is-abelian)
+    lemma₀ = idp
+
+    lemma₁ : QuotGroup Ker/Im.npropᴳ
+      == QuotGroup (quot-of-sub (ker-propᴳ cw-co∂-head) (im-npropᴳ cw-coε G-×-C-X₀-is-abelian))
+    lemma₁ = ap QuotGroup lemma₀
+
+    lemma₂ : Ker/Im.grp == QuotGroup Ker/Im.npropᴳ
+    lemma₂ = idp
+
+    lemma₃ : Ker.grp cw-co∂-head'
+      ≃ᴳ QuotGroup (quot-of-sub (ker-propᴳ cw-co∂-head) (im-npropᴳ cw-coε G-×-C-X₀-is-abelian))
+    lemma₃ = coeᴳ-equiv (lemma₂ ∙ lemma₁) ∘eᴳ Ker-inl-quot-Im-φ-snd
 
 C-cw-iso-ker/im : C 0 ⊙⟦ ⊙skel ⟧
   ≃ᴳ QuotGroup (quot-of-sub (ker-propᴳ cw-co∂-head) (im-npropᴳ cw-coε G-×-C-X₀-is-abelian))
-C-cw-iso-ker/im = lemma₁ ∘eᴳ Ker-cw-co∂-head'
+C-cw-iso-ker/im = lemma₃ ∘eᴳ Ker-cw-co∂-head'
