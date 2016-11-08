@@ -20,3 +20,9 @@ module lib.groups.Int where
 
 ℤ-group : Group₀
 ℤ-group = group _ ℤ-is-set ℤ-group-structure
+
+ℤ-group-is-abelian : is-abelian ℤ-group
+ℤ-group-is-abelian = ℤ+-comm
+
+ℤ-abgroup : AbGroup₀
+ℤ-abgroup = ℤ-group , ℤ-group-is-abelian

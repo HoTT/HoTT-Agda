@@ -186,6 +186,9 @@ is-abelian G = (a b : Group.El G) → Group.comp G a b == Group.comp G b a
 AbGroup : ∀ i → Type (lsucc i)
 AbGroup i = Σ (Group i) is-abelian
 
+AbGroup₀ : Type (lsucc lzero)
+AbGroup₀ = AbGroup lzero
+
 module AbGroup {i} (G : AbGroup i) where
   grp = fst G
   comm = snd G
