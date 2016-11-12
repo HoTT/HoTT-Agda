@@ -28,4 +28,4 @@ script:
 # checking this file is very demanding, so it is checked first (actually, I gave up on this)
 # - stack exec agda -- --library-file=libraries-travis theorems/homotopy/3x3/Commutes.agda
 # checking the rest
-- travis_wait 60 stack exec agda -- --library-file=libraries-travis theorems/index.agda
+- stack exec agda -- --library-file=libraries-travis theorems/index.agda
