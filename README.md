@@ -18,8 +18,9 @@ See `CHANGELOG` of Agda 2.5 for more information.
 Agda Options
 ------------
 
-Each Agda file should have `--without-K` in the header.
-It is to restrict pattern matching so that the uniqueness of identity proofs is not admissible.
+Each Agda file should have `--without-K --rewriting` in the header.
+`--without-K` is to restrict pattern matching so that the uniqueness of identity proofs is not admissible,
+and `--rewriting` is for the computational rules of the points in higher inductive types.
 
 Style and naming conventions
 ----------------------------
