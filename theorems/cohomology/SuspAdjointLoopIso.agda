@@ -41,12 +41,12 @@ module SuspAdjointLoopIso {i} where
 
         arr2-lemma : B.arr2 ⊙Ω-∙ == ⊙Ω-∙
         arr2-lemma =
-          ⊙Ω-fmap ⊙Ω-∙ ⊙∘ A×.⊙out _ _
-            =⟨ ⊙ap2-lemma ⊙Ω-∙ |in-ctx _⊙∘ A×.⊙out _ _ ⟩
-          (⊙Ω-fmap2 ⊙Ω-∙ ⊙∘ A×.⊙into _ _) ⊙∘ A×.⊙out _ _
-            =⟨ ⊙∘-assoc (⊙Ω-fmap2 ⊙Ω-∙) (A×.⊙into _ _) (A×.⊙out _ _) ⟩
-          ⊙Ω-fmap2 ⊙Ω-∙ ⊙∘ (A×.⊙into _ _ ⊙∘ A×.⊙out _ _)
-            =⟨ A×.⊙into-out _ _ |in-ctx ⊙Ω-fmap2 ⊙Ω-∙ ⊙∘_ ⟩
+          ⊙Ω-fmap ⊙Ω-∙ ⊙∘ A×.⊙out (⊙Ω Y) (⊙Ω Y)
+            =⟨ ⊙ap2-lemma ⊙Ω-∙ |in-ctx _⊙∘ A×.⊙out (⊙Ω Y) (⊙Ω Y) ⟩
+          (⊙Ω-fmap2 ⊙Ω-∙ ⊙∘ A×.⊙into (⊙Ω Y) (⊙Ω Y)) ⊙∘ A×.⊙out (⊙Ω Y) (⊙Ω Y)
+            =⟨ ⊙∘-assoc (⊙Ω-fmap2 ⊙Ω-∙) (A×.⊙into (⊙Ω Y) (⊙Ω Y)) (A×.⊙out (⊙Ω Y) (⊙Ω Y)) ⟩
+          ⊙Ω-fmap2 ⊙Ω-∙ ⊙∘ (A×.⊙into (⊙Ω Y) (⊙Ω Y) ⊙∘ A×.⊙out (⊙Ω Y) (⊙Ω Y))
+            =⟨ A×.⊙into-out (⊙Ω Y) (⊙Ω Y) |in-ctx ⊙Ω-fmap2 ⊙Ω-∙ ⊙∘_ ⟩
           ⊙Ω-fmap2 ⊙Ω-∙
             =⟨ ⊙Ω-fmap2-∙ ⟩
           ⊙Ω-∙ ∎

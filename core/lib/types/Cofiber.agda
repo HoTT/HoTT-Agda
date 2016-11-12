@@ -43,7 +43,7 @@ module _ {i j} {A : Type i} {B : Type j} {f : A → B} where
   module CofiberElim {k} {P : Cofiber f → Type k}
     (b : P cfbase) (c : (y : B) → P (cfcod y)) 
     (p : (x : A) → b == c (f x) [ P ↓ cfglue x ])
-    = PushoutElim (λ _ → b) c p
+    = PushoutElim {P = P} (λ _ → b) c p
 
   open CofiberElim public using () renaming (f to Cofiber-elim)
 

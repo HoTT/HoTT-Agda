@@ -45,7 +45,7 @@ module _ {i} {A : Type i} where
 
   module SuspElim {j} {P : Susp A → Type j} (n : P north)
     (s : P south) (p : (x : A) → n == s [ P ↓ merid x ]) where
-    open module P = PushoutElim (λ _ → n) (λ _ → s) p
+    open module P = PushoutElim {P = P} (λ _ → n) (λ _ → s) p
       public using (f) renaming (glue-β to merid-β)
 
   open SuspElim public using () renaming (f to Susp-elim)
@@ -122,7 +122,8 @@ module _ {i j} where
 
   Susp-flip-fmap : {A : Type i} {B : Type j} (f : A → B)
     → ∀ σ → Susp-flip (Susp-fmap f σ) == Susp-fmap f (Susp-flip σ)
-  Susp-flip-fmap f = Susp-elim idp idp $ λ y → ↓-='-in' $
+  Susp-flip-fmap f = Susp-elim idp idp λ y → ↓-='-in'
+    {f = Susp-flip ∘ Susp-fmap f} {g = Susp-fmap f ∘ Susp-flip} {p = merid y} $
     ap-∘ (Susp-fmap f) Susp-flip (merid y)
     ∙ ap (ap (Susp-fmap f)) (SuspFlip.merid-β y)
     ∙ ap-! (Susp-fmap f) (merid y)
@@ -135,14 +136,12 @@ module _ {i j k} where
 
   Susp-fmap-∘ : {A : Type i} {B : Type j} {C : Type k} (g : B → C) (f : A → B)
     (σ : Susp A) → Susp-fmap (g ∘ f) σ == Susp-fmap g (Susp-fmap f σ)
-  Susp-fmap-∘ g f = Susp-elim
-    idp
-    idp
-    (λ a → ↓-='-in' $
-      ap-∘ (Susp-fmap g) (Susp-fmap f) (merid a)
-      ∙ ap (ap (Susp-fmap g)) (SuspFmap.merid-β f a)
-      ∙ SuspFmap.merid-β g (f a)
-      ∙ ! (SuspFmap.merid-β (g ∘ f) a))
+  Susp-fmap-∘ g f = Susp-elim idp idp λ a → ↓-='-in'
+    {f = Susp-fmap (g ∘ f)} {g = Susp-fmap g ∘ Susp-fmap f} {p = merid a} $
+    ap-∘ (Susp-fmap g) (Susp-fmap f) (merid a)
+    ∙ ap (ap (Susp-fmap g)) (SuspFmap.merid-β f a)
+    ∙ SuspFmap.merid-β g (f a)
+    ∙ ! (SuspFmap.merid-β (g ∘ f) a)
 
   ⊙Susp-fmap-∘ : {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
     (g : Y ⊙→ Z) (f : X ⊙→ Y)

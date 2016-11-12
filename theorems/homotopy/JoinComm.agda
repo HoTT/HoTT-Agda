@@ -25,8 +25,8 @@ module _ {i j} {A : Type i} {B : Type j} where
 module _ {i j} {A : Type i} {B : Type j} where
 
   swap-swap : (x : A * B) → swap (swap x) == x
-  swap-swap = Pushout-elim (λ a → idp) (λ b → idp) (λ c → ↓-∘=idf-in' swap swap
-    (swap-swap-glue c)) where
+  swap-swap = Pushout-elim (λ a → idp) (λ b → idp)
+    (λ c → ↓-∘=idf-in' swap swap {p = glue c} (swap-swap-glue c)) where
 
     swap-swap-glue : (c : A × B) → ap swap (ap swap (glue c)) == glue c
     swap-swap-glue (a , b) =

@@ -56,6 +56,7 @@ module Σ⊣Ω {i} where
   ε-natural : {X Y : Ptd i} (f : X ⊙→ Y)
     → ⊙ε Y ⊙∘ ⊙Susp-fmap (⊙Ω-fmap f) == f ⊙∘ ⊙ε X
   ε-natural (f , idp) = ⊙λ=
+    {f = ⊙ε _ ⊙∘ ⊙Susp-fmap (⊙Ω-fmap (f , idp))}
     (SuspElim.f idp idp
       (λ p → ↓-='-from-square $ vert-degen-square $
         ap-∘ (ε _) (Susp-fmap (ap f)) (merid p)

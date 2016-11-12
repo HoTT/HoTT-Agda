@@ -78,8 +78,10 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
       abstract
         pres-comp : ∀ h₁ h₂ → f (Cok.comp h₁ h₂) == K.comp (f h₁) (f h₂)
         pres-comp = SetQuot-elim
+          {P = λ h₁ → ∀ h₂ → f (Cok.comp h₁ h₂) == K.comp (f h₁) (f h₂)}
           (λ _ → Π-is-set λ _ → =-preserves-set K.El-is-set)
           (λ h₁ → SetQuot-elim
+            {P = λ h₂ → f (Cok.comp q[ h₁ ] h₂) == K.comp (f q[ h₁ ]) (f h₂)}
             (λ _ → =-preserves-set K.El-is-set)
             (λ h₂ → ψ.pres-comp h₁ h₂)
             (λ _ → prop-has-all-paths-↓ (K.El-is-set _ _)))

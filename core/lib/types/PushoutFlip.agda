@@ -23,7 +23,7 @@ Pushout-flip-involutive : ∀ {i j k} (d : Span {i} {j} {k})
 Pushout-flip-involutive d = Pushout-elim
   (λ a → idp)
   (λ b → idp)
-  (λ c → ↓-∘=idf-in' Pushout-flip Pushout-flip $
+  (λ c → ↓-∘=idf-in' Pushout-flip Pushout-flip {p = glue c} $
      ap Pushout-flip (ap Pushout-flip (glue c))
        =⟨ ap (ap Pushout-flip) (PushoutFlip.glue-β c) ⟩
      ap Pushout-flip (! (glue c))

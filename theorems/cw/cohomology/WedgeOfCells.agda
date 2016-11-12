@@ -63,18 +63,19 @@ abstract
     from-to = BigWedge-elim
       idp
       (λ a → Susp-elim (bwglue a) idp
-        (λ s → ↓-='-from-square $
+        (λ s → ↓-='-from-square
+          {f = from ∘ SphereToCofiber.f a} {p = merid s} $
           ( ap-∘ from (SphereToCofiber.f a) (merid s)
           ∙ ap (ap from) (SphereToCofiber.merid-β a s)
           ∙ From.glue-β (a , s))
           ∙v⊡ (tl-square (bwglue a) ⊡h vid-square)))
-      (λ a → ↓-∘=idf-from-square from to $
+      (λ a → ↓-∘=idf-from-square from to {p = bwglue a} $
         ap (ap from) (To.glue-β a) ∙v⊡ br-square (bwglue a))
 
     to-from : ∀ c → to (from c) == c
     to-from = Cofiber-elim
       idp (λ a → idp)
-      (λ{(a , s) → ↓-∘=idf-in' to from $
+      (λ{(a , s) → ↓-∘=idf-in' to from {p = glue (a , s)} $
           ap (ap to) (From.glue-β (a , s))
         ∙ ap-∙ to (bwglue a) (ap (bwin a) (merid s))
         ∙ ap2 _∙_ (To.glue-β a)

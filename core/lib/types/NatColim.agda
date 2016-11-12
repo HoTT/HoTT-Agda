@@ -15,51 +15,48 @@ open import lib.types.Unit
 
 module lib.types.NatColim where
 
-module _ {i} {D : ℕ → Type i} where
-
-  private
-    data #ℕColim-aux (d : (n : ℕ) → D n → D (S n)) : Type i where
-      #ncin : (n : ℕ) → D n → #ℕColim-aux d
-
-    data #ℕColim (d : (n : ℕ) → D n → D (S n)) : Type i where
-      #ncolim : #ℕColim-aux d → (Unit → Unit) → #ℕColim d
-
-  ℕColim : (d : (n : ℕ) → D n → D (S n)) → Type i
-  ℕColim d = #ℕColim d
-
-  ncin : {d : (n : ℕ) → D n → D (S n)} → (n : ℕ) → D n → ℕColim d
-  ncin n x = #ncolim (#ncin n x) _
+module _ {i} {D : ℕ → Type i} (d : (n : ℕ) → D n → D (S n)) where
 
   postulate  -- HIT
-    ncglue : {d : (n : ℕ) → D n → D (S n)}
-      (n : ℕ) → (x : D n) → ncin {d = d} n x == ncin (S n) (d n x)
+    ℕColim : Type i
+    ncin' : (n : ℕ) → D n → ℕColim
+    ncglue' : (n : ℕ) → (x : D n) → ncin' n x == ncin' (S n) (d n x)
 
-  module ℕColimElim (d : (n : ℕ) → D n → D (S n))
-    {j} {P : ℕColim d → Type j}
+module _ {i} {D : ℕ → Type i} {d : (n : ℕ) → D n → D (S n)} where
+
+  ncin = ncin' d
+  ncglue = ncglue' d
+
+module _ {i} {D : ℕ → Ptd i} where
+
+  ⊙ℕColim : (d : (n : ℕ) → (D n ⊙→ D (S n))) → Ptd i
+  ⊙ℕColim d = ⊙[ ℕColim (fst ∘ d) , ncin 0 (snd (D 0)) ]
+
+module _ {i} {D : ℕ → Type i} (d : (n : ℕ) → D n → D (S n)) where
+
+  module ℕColimElim {j} {P : ℕColim d → Type j}
     (ncin* : (n : ℕ) (x : D n) → P (ncin n x))
     (ncglue* : (n : ℕ) (x : D n)
       → ncin* n x == ncin* (S n) (d n x) [ P ↓ ncglue n x ])
     where
 
-    f : Π (ℕColim d) P
-    f = f-aux phantom where
-
-      f-aux : Phantom ncglue* → Π (ℕColim d) P
-      f-aux phantom (#ncolim (#ncin n x) _) = ncin* n x
+    postulate  -- HIT
+      f : Π (ℕColim d) P
+      ncin-β : ∀ n x → f (ncin n x) ↦ ncin* n x
+    {-# REWRITE ncin-β #-}
 
     postulate  -- HIT
       ncglue-β : (n : ℕ) (x : D n) → apd f (ncglue n x) == ncglue* n x
 
   open ℕColimElim public using () renaming (f to ℕColim-elim)
 
-  module ℕColimRec (d : (n : ℕ) → D n → D (S n))
-    {j} {A : Type j}
+  module ℕColimRec {j} {A : Type j}
     (ncin* : (n : ℕ) → D n → A)
     (ncglue* : (n : ℕ) → (x : D n) → ncin* n x == ncin* (S n) (d n x))
     where
 
     private
-      module M = ℕColimElim d ncin* (λ n x → ↓-cst-in (ncglue* n x))
+      module M = ℕColimElim ncin* (λ n x → ↓-cst-in (ncglue* n x))
 
     f : ℕColim d → A
     f = M.f
@@ -67,57 +64,50 @@ module _ {i} {D : ℕ → Type i} where
     ncglue-β : (n : ℕ) (x : D n) → ap f (ncglue n x) == ncglue* n x
     ncglue-β n x = apd=cst-in {f = f} (M.ncglue-β n x)
 
-⊙ℕColim : ∀ {i} {D : ℕ → Ptd i} (d : (n : ℕ) → (D n ⊙→ D (S n))) → Ptd i
-⊙ℕColim {D = D} d = ⊙[ ℕColim (fst ∘ d) , ncin 0 (snd (D 0)) ]
+{- Raising and lifting -}
+module _ {i} {D : ℕ → Type i} (d : (n : ℕ) → D n → D (S n)) where
 
-{- Can define a function [nc-raise d : ℕColim d → ℕColim d]
-   so that [inn (S n) ∘ d = nc-raise d ∘ inn n] -}
+  {- Can define a function [nc-raise d : ℕColim d → ℕColim d]
+     so that [inn (S n) ∘ d = nc-raise d ∘ inn n] -}
 
-module ℕCRaise {i} {D : ℕ → Type i} (d : (n : ℕ) → D n → D (S n)) =
-  ℕColimRec d {A = ℕColim d}
+  module ℕCRaise = ℕColimRec d {A = ℕColim d}
     (λ n x → ncin (S n) (d n x))
     (λ n x → ncglue (S n) (d n x))
 
-nc-raise : ∀ {i} {D : ℕ → Type i} (d : (n : ℕ) → D n → D (S n))
-  → ℕColim d → ℕColim d
-nc-raise d = ℕCRaise.f d
+  nc-raise : ℕColim d → ℕColim d
+  nc-raise = ℕCRaise.f
 
-nc-raise-= : ∀ {i} {D : ℕ → Type i} (d : (n : ℕ) → D n → D (S n)) (c : ℕColim d)
-  → c == nc-raise d c
-nc-raise-= d = ℕColimElim.f d
-  (λ n x → ncglue n x)
-  (λ n x → ↓-='-from-square $
-    ap-idf (ncglue n x) ∙v⊡ (connection2 ⊡v∙ (! (ℕCRaise.ncglue-β d n x))))
+  nc-raise-= : (c : ℕColim d) → c == nc-raise c
+  nc-raise-= = ℕColimElim.f d
+    (λ n x → ncglue n x)
+    (λ n x → ↓-='-from-square $
+      ap-idf (ncglue n x) ∙v⊡ (connection2 ⊡v∙ (! (ℕCRaise.ncglue-β n x))))
 
-{- Lift an element of D₀ to any level -}
+  {- Lift an element of D₀ to any level -}
 
-nc-lift : ∀ {i} {D : ℕ → Type i} (d : (n : ℕ) → D n → D (S n))
-  (n : ℕ) → D O → D n
-nc-lift d O x = x
-nc-lift d (S n) x = d n (nc-lift d n x)
+  nc-lift : (n : ℕ) → D O → D n
+  nc-lift O x = x
+  nc-lift (S n) x = d n (nc-lift n x)
 
-nc-lift-= : ∀ {i} {D : ℕ → Type i} (d : (n : ℕ) → D n → D (S n))
-  (n : ℕ) (x : D O)
-  → ncin {d = d} O x == ncin n (nc-lift d n x)
-nc-lift-= d O x = idp
-nc-lift-= d (S n) x = nc-lift-= d n x ∙ ncglue n (nc-lift d n x)
+  nc-lift-= : (n : ℕ) (x : D O)
+    → ncin' d O x == ncin n (nc-lift n x)
+  nc-lift-= O x = idp
+  nc-lift-= (S n) x = nc-lift-= n x ∙ ncglue n (nc-lift n x)
 
-{- Lift an element of D₀ to the 'same level' as some element of ℕColim d -}
+  {- Lift an element of D₀ to the 'same level' as some element of ℕColim d -}
 
-module ℕCMatch {i} {D : ℕ → Type i} (d : (n : ℕ) → D n → D (S n)) (x : D O) =
-  ℕColimRec d {A = ℕColim d}
-    (λ n _ → ncin n (nc-lift d n x))
-    (λ n _ → ncglue n (nc-lift d n x))
+  module ℕCMatch (x : D O) = ℕColimRec d {A = ℕColim d}
+    (λ n _ → ncin n (nc-lift n x))
+    (λ n _ → ncglue n (nc-lift n x))
 
-nc-match = ℕCMatch.f
+  nc-match = ℕCMatch.f
 
-nc-match-=-base : ∀ {i} {D : ℕ → Type i} (d : (n : ℕ) → D n → D (S n))
-  (x : D O) (c : ℕColim d)
-  → ncin O x == nc-match d x c
-nc-match-=-base d x = ℕColimElim.f d
-  (λ n _ → nc-lift-= d n x)
-  (λ n y → ↓-cst=app-from-square $
-    disc-to-square idp ⊡v∙ ! (ℕCMatch.ncglue-β d x n y))
+  nc-match-=-base : (x : D O) (c : ℕColim d) → ncin O x == nc-match x c
+  nc-match-=-base x = ℕColimElim.f d
+    {P = λ c → ncin O x == nc-match x c}
+    (λ n _ → nc-lift-= n x)
+    (λ n y → ↓-cst=app-from-square $
+      disc-to-square idp ⊡v∙ ! (ℕCMatch.ncglue-β x n y))
 
 {- If all Dₙ are m-connected, then the colim is m-connected -}
 
@@ -215,11 +205,11 @@ module FinTuplesCons {i} (F : ℕ → Ptd i) where
     → into-out-ncin n r == into-out-ncin (S n) (fst (fin-tuples-map F n) r)
       [ (λ s → into (out s) == s) ↓ ncglue n r ]
   into-out-ncglue O x =
-    ↓-∘=idf-from-square into out $
+    ↓-∘=idf-from-square into out {p = ncglue O x} $
       ap (ap into) (Out.ncglue-β O x)
       ∙v⊡ bl-square (ncglue O x)
   into-out-ncglue (S n) (x , r) =
-    ↓-∘=idf-from-square into out $
+    ↓-∘=idf-from-square into out {p = ncglue (S n) (x , r)} $
       (ap (ap into) (Out.ncglue-β (S n) (x , r))
        ∙ ∘-ap into (_,_ x) (ncglue n r)
        ∙ Into.ncglue-β x n r)

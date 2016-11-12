@@ -93,7 +93,7 @@ module _ {i} (Pick : Lift {j = i} Bool → Ptd i) where
     f-g = Wedge-elim
       (λ _ → idp)
       (λ _ → idp)
-      (↓-∘=idf-in' f g $
+      (↓-∘=idf-in' f g {p = wglue} $
         ap f (ap g wglue)
           =⟨ ap (ap f) G.glue-β ⟩
         ap f (! (bwglue (lift true)) ∙ bwglue (lift false))
@@ -112,10 +112,10 @@ module _ {i} (Pick : Lift {j = i} Bool → Ptd i) where
     g-f = BigWedge-elim
       (! (bwglue (lift true)))
       (λ {(lift true) → λ _ → idp; (lift false) → λ _ → idp})
-      (λ {(lift true) → ↓-∘=idf-from-square g f $
+      (λ {(lift true) → ↓-∘=idf-from-square g f {p = bwglue (lift true)} $
             ap (ap g) (F.glue-β (lift true)) ∙v⊡
             bl-square (bwglue (lift true));
-          (lift false) → ↓-∘=idf-from-square g f $
+          (lift false) → ↓-∘=idf-from-square g f {p = bwglue (lift false)} $
             (ap (ap g) (F.glue-β (lift false)) ∙ G.glue-β) ∙v⊡
             lt-square (! (bwglue (lift true))) ⊡h vid-square})
 

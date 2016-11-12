@@ -64,20 +64,18 @@ module _ {i} {El : Type i} (GS : GroupStructure El) where
 Trunc-group-× : ∀ {i j} {A : Type i} {B : Type j}
   (GS : GroupStructure A) (HS : GroupStructure B)
   → Trunc-group (×-group-struct GS HS) ≃ᴳ Trunc-group GS ×ᴳ Trunc-group HS
-Trunc-group-× GS HS =
-  group-hom
-    (Trunc-rec (×-level Trunc-level Trunc-level)
-      (λ {(a , b) → ([ a ] , [ b ])}))
+Trunc-group-× {A = A} {B = B} GS HS =
+  group-hom to
     (Trunc-elim
       (λ _ → (Π-level (λ _ → =-preserves-level _
                                (×-level Trunc-level Trunc-level))))
       (λ a → Trunc-elim
         (λ _ → =-preserves-level _ (×-level Trunc-level Trunc-level))
         (λ b → idp))) ,
-  is-eq _
-    (uncurry (Trunc-rec (→-level Trunc-level)
-               (λ a → Trunc-rec Trunc-level (λ b → [ a , b ]))))
+  is-eq to
+    (uncurry (Trunc-fmap2 _,_))
     (uncurry (Trunc-elim
+               {P = λ p → ∀ q → to (Trunc-fmap2 _,_ p q) == (p , q)}
                (λ _ → Π-level (λ _ → =-preserves-level _
                                        (×-level Trunc-level Trunc-level)))
                (λ a → Trunc-elim
@@ -85,6 +83,9 @@ Trunc-group-× GS HS =
                                  (×-level Trunc-level Trunc-level))
                         (λ b → idp))))
     (Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp))
+  where
+    to : Trunc 0 (A × B) → Trunc 0 A × Trunc 0 B
+    to = fanout (Trunc-fmap fst) (Trunc-fmap snd)
 
 Trunc-group-fmap : ∀ {i j} {A : Type i} {B : Type j}
   {GS : GroupStructure A} {HS : GroupStructure B}

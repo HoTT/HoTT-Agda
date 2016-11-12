@@ -47,7 +47,9 @@ module groups.PropQuotOfInl {i j k}
 
     abstract
       to-from : ∀ g → to (from g) == g
-      to-from = SetQuot-elim (λ _ → =-preserves-set Ker/Im.El-is-set)
+      to-from = SetQuot-elim
+        {P = λ g → to (from g) == g}
+        (λ _ → =-preserves-set Ker/Im.El-is-set)
         (λ{((g , h) , h-in-ker) → quot-relᴳ {P = Ker/Im.npropᴳ}
           {g₁ = (G.ident , h) , h-in-ker} {g₂ = (g , h) , h-in-ker}
           [ G.inv g , ap2 _,_ (! (G.unit-l (G.inv g))) (! (H.inv-r h)) ]})

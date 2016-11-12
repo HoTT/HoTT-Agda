@@ -30,7 +30,7 @@ module _ {i} (A : Type i) where
       into-out = Susp-elim
         idp
         idp
-        (↓-∘=idf-from-square into out ∘ λ a → vert-degen-square $
+        (λ a → ↓-∘=idf-in' into out {p = merid a} $
            ap (ap into) (Out.merid-β a)
            ∙ ap-∙ into (glue (true , a)) (! (glue (false , a)))
            ∙ (Into.glue-β (true , a)
@@ -38,18 +38,25 @@ module _ {i} (A : Type i) where
                   ∙ ap ! (Into.glue-β (false , a))))
            ∙ ∙-unit-r _)
 
+      out-into-left : (b : Bool) → out (into (left b)) == left b
+      out-into-left true = idp
+      out-into-left false = idp
+
+      out-into-glue : (b : Bool) (a : A)
+        → Square (out-into-left b) (ap out (ap into (glue (b , a)))) (glue (b , a)) (glue (false , a))
+      out-into-glue true a =
+        (ap (ap out) (Into.glue-β (true , a)) ∙ Out.merid-β a)
+        ∙v⊡ (vid-square {p = glue (true , a)}
+             ⊡h rt-square (glue (false , a)))
+        ⊡v∙ ∙-unit-r _
+      out-into-glue false a =
+        ap (ap out) (Into.glue-β (false , a)) ∙v⊡ connection
+
       out-into : ∀ j → out (into j) == j
       out-into = Join-elim
-        (λ{true → idp ; false → idp})
+        out-into-left
         (λ a → glue (false , a))
-        (↓-∘=idf-from-square out into ∘
-          λ {(true , a) →
-                (ap (ap out) (Into.glue-β (true , a)) ∙ Out.merid-β a)
-                ∙v⊡ (vid-square {p = glue (true , a)}
-                      ⊡h rt-square (glue (false , a)))
-                ⊡v∙ ∙-unit-r _;
-             (false , a) →
-               ap (ap out) (Into.glue-β (false , a)) ∙v⊡ connection})
+        (λ ba → ↓-∘=idf-from-square out into {p = glue ba} (uncurry out-into-glue ba))
 
   *-Bool-l : Bool * A ≃ Susp A
   *-Bool-l = equiv into out into-out out-into
