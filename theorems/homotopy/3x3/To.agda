@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K --rewriting #-}
 
 --open import HoTT
 open import homotopy.3x3.PushoutPushout

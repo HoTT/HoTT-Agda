@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K --rewriting #-}
 
 {-
 This file contains a bunch of basic stuff which is needed early.
@@ -83,6 +83,17 @@ J B d idp = d
 J' : ∀ {i j} {A : Type i} {a : A} (B : (a' : A) (p : a' == a) → Type j) (d : B a idp)
   {a' : A} (p : a' == a) → B a' p
 J' B d idp = d
+
+{- Rewriting
+
+This is a new pragma added to Agda to help create higher inductive types.
+-}
+
+infix 30 _↦_
+postulate  -- HIT
+  _↦_ : ∀ {i} {A : Type i} → A → A → Type i
+
+{-# BUILTIN REWRITE _↦_ #-}
 
 {- Unit type
 

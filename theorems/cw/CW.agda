@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K --rewriting #-}
 
 {-
   Adapted from Ulrik's work in Lean (released under Apache License 2.0)

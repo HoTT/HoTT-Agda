@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K --rewriting #-}
 
 open import homotopy.3x3.PushoutPushout
 open import homotopy.3x3.Transpose

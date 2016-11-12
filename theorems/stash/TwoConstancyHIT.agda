@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K --rewriting #-}
 
 {-
   Favonia:  I was trying to generalize OneSkeleton but failed
