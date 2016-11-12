@@ -3,6 +3,7 @@ language: c # disable cabal
 branches:
   only:
   - master
+  - rewrite
 
 git:
   depth: 3
