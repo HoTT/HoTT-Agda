@@ -288,6 +288,9 @@ module _ {i} {X : Ptd i} where
       ⋆'2=Ω^S-∙ : (α β : Ω^ 2  X) → α ⋆'2 β == Ω^S-∙ 1 β α
       ⋆'2=Ω^S-∙ α β = ap (λ π → β ∙ π) (∙-unit-r α)
 
+{- NOT USED and DUPLICATE of [Ω^S-Trunc-preiso] in lib.groups.HomotopyGroup.
+   XXX Should be an equivalence.
+
 {- Pushing truncation through loop space -}
 module _ {i} where
 
@@ -306,6 +309,7 @@ module _ {i} where
   Ω-Trunc-econv : (m : ℕ₋₂) (X : Ptd i)
     → Ω (⊙Trunc (S m) X) ≃ Trunc m (Ω X)
   Ω-Trunc-econv m X = Trunc=-equiv [ snd X ] [ snd X ]
+-}
 
 {- Our definition of Ω^ builds up loops on the outside,
  - but this is equivalent to building up on the inside -}
