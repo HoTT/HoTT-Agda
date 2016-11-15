@@ -64,5 +64,5 @@ module Homotopy.Wedge
   nB (B-is-conn : is-connected n B)
   (P : A → B → Set k)
   ⦃ P-is-trunc : ∀ a b → is-connected (n +2+ m) (P a b) ⦄
-    extension : 
+    extension :
 -}

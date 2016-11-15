@@ -339,7 +339,7 @@ module _ {i j k} {A : Type i} {B : Type j} {C₁ C₂ C₃ C₄ : Type k} {g₁ 
                {p : a == b}  {q : b == c}   {r : c == d}   {s : e == d}
                {t : b' == a} {u : b' == c'} {v : c' == d'} {w : d' == e}
                (α : (p , (q ∙ r ∙ (! s)) =□ (! t ∙ u ∙ v) , w))
-               → ap□ f (pp-coh {p = p} {q} {r} {s} {t} {u} {v} {w} α) == 
+               → ap□ f (pp-coh {p = p} {q} {r} {s} {t} {u} {v} {w} α) ==
                  pp-coh {p = ap f p} {ap f q} {ap f r} {ap f s} {ap f t} {ap f u} {ap f v} {ap f w}
                    (ap□ f α ∙□-i/ ! (ap-∙∙! f q r s) / ap-!∙∙ f t u v /)
                  ∙□-i/ ap-∙∙ f v w s / ! (ap-∙∙ f t p q) /
@@ -360,7 +360,7 @@ module _ {i j k} {A : Type i} {B : Type j} {C₁ C₂ C₃ C₄ : Type k} {g₁ 
                {p : g₃ b₃ == g₁ a₁} {q : a₁ == b₁}       {r : g₁ b₁ == g₂ b₂} {s : a₂ == b₂}
                {t : a₃ == b₃}       {u : g₃ a₃ == g₄ a₄} {v : a₄ == b₄}       {w : g₄ b₄ == g₂ a₂}
                (α : (p , (ap g₁ q ∙ r ∙ (! (ap g₂ s))) =□ (! (ap g₃ t) ∙ u ∙ ap g₄ v) , w))
-               → ap□ f (pp-coh {p = p} {ap g₁ q} {r} {ap g₂ s} {ap g₃ t} {u} {ap g₄ v} {w} α) == 
+               → ap□ f (pp-coh {p = p} {ap g₁ q} {r} {ap g₂ s} {ap g₃ t} {u} {ap g₄ v} {w} α) ==
                  pp-coh {p = ap f p} {ap (f ∘ g₁) q} {ap f r} {ap (f ∘ g₂) s} {ap (f ∘ g₃) t} {ap f u} {ap (f ∘ g₄) v} {ap f w}
                    (ap□ f α ∙□-i/ ! (ap-∙∙!'`∘`∘ f g₁ g₂ q r s) / ap-!'∙∙`∘`∘ f g₃ g₄ t u v /)
                  ∙□-i/ ap-∙∙`∘`∘ f g₄ g₂ v w s / ! (ap-∙∙`∘`∘ f g₃ g₁ t p q) /
@@ -372,7 +372,7 @@ module _ {i j k} {A : Type i} {B : Type j} {C₁ C₂ C₃ C₄ : Type k} {g₁ 
                {u : b' == c'} {v : c' == d'} {w : d' == e} {s : e == d}
                {t : b' == a}  {p : a == b}   {q : b == c}  {r : c == d}
                (α : (u , (v ∙ w ∙ s) =□ (t ∙ p ∙ q) , r))
-               → ap□ f (pp-coh! {u = u} {v} {w} {s} {t} {p} {q} {r} α) == 
+               → ap□ f (pp-coh! {u = u} {v} {w} {s} {t} {p} {q} {r} α) ==
                  pp-coh! {u = ap f u} {ap f v} {ap f w} {ap f s} {ap f t} {ap f p} {ap f q} {ap f r}
                    (ap□ f α ∙□-i/ ! (ap-∙∙ f v w s) / ap-∙∙ f t p q /)
                  ∙□-i/ ap-∙∙! f q r s / ! (ap-!∙∙ f t u v) /
@@ -382,7 +382,7 @@ module _ {i j k} {A : Type i} {B : Type j} {C₁ C₂ C₃ C₄ : Type k} {g₁ 
                {u : g₃ a₃ == g₄ a₄} {v : a₄ == b₄}       {w : g₄ b₄ == g₂ a₂} {s : a₂ == b₂}
                {t : a₃ == b₃}       {p : g₃ b₃ == g₁ a₁} {q : a₁ == b₁}       {r : g₁ b₁ == g₂ b₂}
                (α : (u , (ap g₄ v ∙ w ∙ ap g₂ s) =□ (ap g₃ t ∙ p ∙ ap g₁ q) , r))
-               → ap□ f (pp-coh! {u = u} {ap g₄ v} {w} {ap g₂ s} {ap g₃ t} {p} {ap g₁ q} {r} α) == 
+               → ap□ f (pp-coh! {u = u} {ap g₄ v} {w} {ap g₂ s} {ap g₃ t} {p} {ap g₁ q} {r} α) ==
                  pp-coh! {u = ap f u} {ap (f ∘ g₄) v} {ap f w} {ap (f ∘ g₂) s} {ap (f ∘ g₃) t} {ap f p} {ap (f ∘ g₁) q} {ap f r}
                    (ap□ f α ∙□-i/ ! (ap-∙∙`∘`∘ f g₄ g₂ v w s) / ap-∙∙`∘`∘ f g₃ g₁ t p q /)
                  ∙□-i/ ap-∙∙!'`∘`∘ f g₁ g₂ q r s / ! (ap-!'∙∙`∘`∘ f g₃ g₄ t u v) /

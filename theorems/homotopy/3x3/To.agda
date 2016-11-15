@@ -79,7 +79,7 @@ module E₂∙Red (c : A₂₂) where
   T-rhs = left (left (f₀₁ (f₁₂ c))) == left (right (f₄₁ (f₃₂ c))) :> Pushout^2 (transpose d)
 
   rhs-i : _ == _ :> T-rhs
-  rhs-i = 
+  rhs-i =
       ap (left ∘ f∙₁) (glue c)
         =⟨ ap-∘ left f∙₁ (glue c) ⟩
       ap left (ap f∙₁ (glue c))

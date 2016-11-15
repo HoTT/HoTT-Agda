@@ -27,7 +27,7 @@ module ConnectedHSpace {i} {X : Ptd i} (c : is-connected 0 (fst X))
 
   {-
   Given that [A] is 0-connected, to prove that each [μ a] is an equivalence we
-  only need to prove that one of them is. But for [a] = [e], [μ a] is the 
+  only need to prove that one of them is. But for [a] = [e], [μ a] is the
   identity so we’re done.
   -}
 

@@ -358,18 +358,18 @@ easy as it seems.
 --     (r : f a == g (g' c')) (s : f a' == g (g' c))
 --     (t : q == ap g' q')
 --     (α : r == s ∙ ap g q [ (λ x → f x == g (g' c')) ↓ p ])
---     → {!(↓-swap! f g r s α ▹ ?) ∙'2ᵈ ?!} == ↓-swap! f (g ∘ g') {p = p} {q = q'} r s (α ▹ ap (λ u → s ∙ u) (ap (ap g) t ∙ ∘-ap g g' q')) 
+--     → {!(↓-swap! f g r s α ▹ ?) ∙'2ᵈ ?!} == ↓-swap! f (g ∘ g') {p = p} {q = q'} r s (α ▹ ap (λ u → s ∙ u) (ap (ap g) t ∙ ∘-ap g g' q'))
 --   abc = {!!}
 
 {- Functoriality of application and function extensionality -}
 
 ∙-app= : ∀ {i j} {A : Type i} {B : A → Type j} {f g h : Π A B}
-  (α : f == g) (β : g == h) 
+  (α : f == g) (β : g == h)
   → α ∙ β == λ= (λ x → app= α x ∙ app= β x)
 ∙-app= idp β = λ=-η β
 
 ∙-λ= : ∀ {i j} {A : Type i} {B : A → Type j} {f g h : Π A B}
-  (α : (x : A) → f x == g x) (β : (x : A) → g x == h x) 
+  (α : (x : A) → f x == g x) (β : (x : A) → g x == h x)
   → λ= α ∙ λ= β == λ= (λ x → α x ∙ β x)
 ∙-λ= α β = ∙-app= (λ= α) (λ= β)
   ∙ ap λ= (λ= (λ x → ap (λ w → w ∙ app= (λ= β) x) (app=-β α x)

@@ -63,7 +63,7 @@ module PushoutRecType {l} (left* : A → Type l) (right* : B → Type l)
       fh (c , c') = (h c , –> (glue* c) c')
 
     f-d : Span
-    f-d = span fA fB fC fg fh  
+    f-d = span fA fB fC fg fh
 
   flattening : Σ (Pushout d) f == Pushout f-d
   flattening = Σ= p p' ∙ q ∙ r ∙ s  where

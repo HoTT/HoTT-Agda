@@ -122,7 +122,7 @@ An Agda source file *must* contain a module (the global module) named after the 
 with the following :
 
     {-# OPTIONS --without-K #-}
-    
+
     module Test where
     -- Interesting stuff, that does not need to be indented
 
@@ -343,7 +343,7 @@ with Agda. The following is extracted from `Types.agda` :
       zero : Level
       suc : Level → Level
       max : Level → Level → Level
-    
+
     {-# BUILTIN LEVEL Level #-}
     {-# BUILTIN LEVELZERO zero #-}
     {-# BUILTIN LEVELSUC suc #-}
@@ -366,7 +366,7 @@ The dependent product can be defined as
 
 I’m seeing universe polymorphism only as a convenience to have definitions automatically copy-pasted
 to every universe level. Agda seems to take it a little more seriously, for example you can write
-something like 
+something like
 
     s : ℕ → Level
     s O = zero-u
@@ -520,7 +520,7 @@ The main keybindings of the emacs mode are the following
 
 - `C-c C-l` (load) loads (recompiles) the whole file. You can have holes in it, represented by
   question marks.
-  
+
 For example if you load a file called `Test.agda` containing the following
 
     module Test where

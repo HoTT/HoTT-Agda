@@ -75,7 +75,7 @@ C-nTorus (pos O) (S n) =
 
 C-nTorus (pos (S O)) O = lift-iso ∘eᴳ C-Unit 1
 
-C-nTorus (pos (S O)) (S n) = 
+C-nTorus (pos (S O)) (S n) =
   C 1 (⊙Lift (S n -⊙Torus))
     ≃ᴳ⟨ C-emap 1 (⊙lift-equiv ⊙∘e ⊙×-emap (⊙ide _) ⊙lower-equiv) ⟩
   C 1 (⊙S¹ ⊙× ⊙Lift (n -⊙Torus))

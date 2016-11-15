@@ -53,7 +53,7 @@ module lib.types.GroupSet {i} where
         → gss₁ == gss₂
       gset-structure=' {gset-structure _ _ _} {gset-structure ._ ._ ._}
         idp idp idp = idp
-  
+
     gset-structure= : ∀ {gss₁ gss₂ : GsetStructure grp El El-level}
       → (∀ x g → act gss₁ x g == act gss₂ x g)
       → gss₁ == gss₂

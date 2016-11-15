@@ -164,7 +164,7 @@ rule `n` and elimination rules `e1`, …, `en`, then
 
 If a positive type `N` behaves like a negative one through
 some access function `f : N → M`,
-the property is called `f-ext : (n₁ n₂ : N) → f n₁ = f n₂ → n₁ = n₂` 
+the property is called `f-ext : (n₁ n₂ : N) → f n₁ = f n₂ → n₁ = n₂`
 
 ### Functoriality
 

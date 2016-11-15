@@ -380,4 +380,4 @@ apd= : ∀ {i j} {A : Set i} {B : A → Set j} {f g : Π A B} (q : (x : A) → f
 --    → (q x == q y [ (λ z → f z == g z) ↓ p ])
   → (apd f p ▹ q y) == (q x ◃ apd g p)
 apd= q p = ! (↓-=-out (apd q p))
---apd= q refl = 
+--apd= q refl =

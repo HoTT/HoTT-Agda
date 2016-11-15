@@ -123,7 +123,7 @@ Trunc-⊙→Ω-group-emap-codom X = Trunc-group-emap ∘ ⊙→Ω-group-structur
 -- TODO Use [CommSquareᴳ].
 Trunc-⊙→Ω-group-fmap-nat : ∀ {i₀ i₁ j₀ j₁}
   {X₀ : Ptd i₀} {X₁ : Ptd i₁} {Y₀ : Ptd j₀} {Y₁ : Ptd j₁}
-  (F : X₀ ⊙→ X₁) (G : Y₀ ⊙→ Y₁) 
+  (F : X₀ ⊙→ X₁) (G : Y₀ ⊙→ Y₁)
   →  Trunc-⊙→Ω-group-fmap-dom   F  Y₁ ∘ᴳ Trunc-⊙→Ω-group-fmap-codom X₁ G
   == Trunc-⊙→Ω-group-fmap-codom X₀ G  ∘ᴳ Trunc-⊙→Ω-group-fmap-dom   F  Y₀
 Trunc-⊙→Ω-group-fmap-nat F G = group-hom= $ λ= $ Trunc-elim
@@ -133,7 +133,7 @@ Trunc-⊙→Ω-group-fmap-nat F G = group-hom= $ λ= $ Trunc-elim
 {- Not used.
 Trunc-⊙→Ω-group-emap-nat : ∀ {i₀ i₁ j₀ j₁}
   {X₀ : Ptd i₀} {X₁ : Ptd i₁} {Y₀ : Ptd j₀} {Y₁ : Ptd j₁}
-  (F : X₀ ⊙≃ X₁) (G : Y₀ ⊙≃ Y₁) 
+  (F : X₀ ⊙≃ X₁) (G : Y₀ ⊙≃ Y₁)
   →  Trunc-⊙→Ω-group-emap-dom   F  Y₁ ∘ᴳ Trunc-⊙→Ω-group-emap-codom X₁ G
   == Trunc-⊙→Ω-group-emap-codom X₀ G  ∘ᴳ Trunc-⊙→Ω-group-emap-dom   F  Y₀
 Trunc-⊙→Ω-group-emap-nat F G = group-hom=-to-iso= $ Trunc-⊙→Ω-group-fmap-nat F G

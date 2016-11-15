@@ -38,7 +38,7 @@ record CohomologyTheory i : Type (lsucc i) where
 
   ∘-C-fmap : (n : ℤ) {X Y Z : Ptd i} (f : X ⊙→ Y) (g : Y ⊙→ Z)
     → ∀ x → CEl-fmap n f (CEl-fmap n g x) == CEl-fmap n (g ⊙∘ f) x
-  ∘-C-fmap n f g x = ! (C-fmap-∘ n g f x) 
+  ∘-C-fmap n f g x = ! (C-fmap-∘ n g f x)
 
   CEl-fmap-idf = C-fmap-idf
   CEl-fmap-∘ = C-fmap-∘

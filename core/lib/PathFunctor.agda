@@ -125,7 +125,7 @@ trans-∙' _ idp _ = idp
 {- for functions with two arguments -}
 module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → B → C) where
 
-  ap2 : {x y : A} {w z : B} 
+  ap2 : {x y : A} {w z : B}
     → (x == y) → (w == z) → f x w == f y z
   ap2 idp idp = idp
 

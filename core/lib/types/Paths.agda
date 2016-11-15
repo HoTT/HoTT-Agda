@@ -219,7 +219,7 @@ module _ {i j} {A : Type i} {B : Type j} (g : B → A) (f : A → B) where
 
 -- module _ {i j} {A : Type i} {B : Type j} {x y z : A → B} where
 
---   lhs : 
+--   lhs :
 --     {a a' : A} {p : a == a'} {q : x a == y a} {q' : x a' == y a'}
 --     {r : y a == z a} {r' : y a' == z a'}
 --     (α : q == q'            [ (λ a → x a == y a) ↓ p ])
@@ -233,7 +233,7 @@ module _ {i j} {A : Type i} {B : Type j} (g : B → A) (f : A → B) where
 --     (q ∙ ap y p) ∙' r'    =⟨ ? ⟩  -- α
 --     (ap x p ∙' q') ∙' r'  =⟨ ? ⟩  -- assoc
 --     ap x p ∙' q' ∙' r' ∎
-    
+
 
 --   thing :
 --     {a a' : A} {p : a == a'} {q : x a == y a} {q' : x a' == y a'}

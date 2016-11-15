@@ -100,11 +100,11 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
     emloop-equiv = equiv emloop encode decode-encode encode-emloop
 
   Ω¹-EM₁ : Ω^S-group 0 (⊙EM₁ G) EM₁-level ≃ᴳ G
-  Ω¹-EM₁ = ≃-to-≃ᴳ (emloop-equiv ⁻¹) 
+  Ω¹-EM₁ = ≃-to-≃ᴳ (emloop-equiv ⁻¹)
     (λ l₁ l₂ → <– (ap-equiv emloop-equiv _ _) $
       emloop (encode (l₁ ∙ l₂))
         =⟨ decode-encode (l₁ ∙ l₂) ⟩
-      l₁ ∙ l₂ 
+      l₁ ∙ l₂
         =⟨ ! $ ap2 _∙_ (decode-encode l₁) (decode-encode l₂) ⟩
       emloop (encode l₁) ∙ emloop (encode l₂)
         =⟨ ! $ emloop-comp (encode l₁) (encode l₂) ⟩

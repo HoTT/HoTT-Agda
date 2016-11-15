@@ -34,6 +34,6 @@ module _ where
               → apd (I-elim zero* one* seg*) seg == seg*
 
 test : ∀ {i} {P : I → Type i} (zero* : P zero) (one* : P one)
-           (seg* : zero* == one* [ P ↓ seg ]) → 
+           (seg* : zero* == one* [ P ↓ seg ]) →
        (I-elim zero* one* seg*) zero == zero*
 test zero* one* seg* = idp

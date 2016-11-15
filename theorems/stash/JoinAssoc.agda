@@ -69,7 +69,7 @@ module experimental.JoinAssoc {i j k} (A : Type i) (B : Type j) (C : Type k) whe
   open MM public
 
   {- First composite -}
-  
+
   to-from-right-glue' : (b : B) (c : C) → ap (to ∘ from-right) (glue (b , c)) =-= ap right (glue (b , c))
   to-from-right-glue' b c =
     ap (λ z → to (from-right z)) (glue (b , c))     =⟪ ap-∘ to from-right (glue (b , c)) ⟫
