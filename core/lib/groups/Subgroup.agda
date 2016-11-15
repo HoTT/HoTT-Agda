@@ -108,4 +108,4 @@ module _ {i j k} {G : Group i} (P : SubgroupProp G j)
   Subgroup-emap-r P⊆Q Q⊆P = Subgroup-fmap-r P⊆Q ,
     is-eq _ (Σ-fmap-r Q⊆P)
       (λ _ → Subtype=-out (SubgroupProp.subEl-prop Q) idp)
-      (λ _ → Subtype=-out (SubgroupProp.subEl-prop P) idp) 
+      (λ _ → Subtype=-out (SubgroupProp.subEl-prop P) idp)

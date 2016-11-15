@@ -82,7 +82,7 @@ module _ {i} {j} {A : Type i} {B : Type j} where
     f-g' b = ! (ap (f ∘ g) (f-g b)) ∙ ap f (g-f (g b)) ∙ f-g b
 
     adj : (a : A) → ap f (g-f a) == f-g' (f a)
-    adj a = 
+    adj a =
       ap f (g-f a)
         =⟨ ! (!-inv-l (ap (f ∘ g) (f-g (f a)))) |in-ctx (λ q → q ∙ ap f (g-f a)) ⟩
       (! (ap (f ∘ g) (f-g (f a))) ∙ ap (f ∘ g) (f-g (f a))) ∙ ap f (g-f a)
@@ -90,10 +90,10 @@ module _ {i} {j} {A : Type i} {B : Type j} where
       ! (ap (f ∘ g) (f-g (f a))) ∙ ap (f ∘ g) (f-g (f a)) ∙ ap f (g-f a)
         =⟨ lemma |in-ctx (λ q → ! (ap (f ∘ g) (f-g (f a))) ∙ q) ⟩
       ! (ap (f ∘ g) (f-g (f a))) ∙ ap f (g-f (g (f a))) ∙ f-g (f a) =∎
-      where 
-      lemma : ap (f ∘ g) (f-g (f a)) ∙ ap f (g-f a) 
+      where
+      lemma : ap (f ∘ g) (f-g (f a)) ∙ ap f (g-f a)
            == ap f (g-f (g (f a))) ∙ f-g (f a)
-      lemma = 
+      lemma =
         ap (f ∘ g) (f-g (f a)) ∙ ap f (g-f a)
           =⟨ htpy-natural-app=idf f-g (f a) |in-ctx (λ q → q ∙ ap f (g-f a)) ⟩
         f-g (f (g (f a))) ∙ ap f (g-f a)
@@ -103,7 +103,7 @@ module _ {i} {j} {A : Type i} {B : Type j} where
         ap (f ∘ g) (ap f (g-f a)) ∙ f-g (f a)
           =⟨ ap-∘ f g (ap f (g-f a)) |in-ctx (λ q → q ∙ f-g (f a)) ⟩
         ap f (ap g (ap f (g-f a))) ∙ f-g (f a)
-          =⟨ ∘-ap g f (g-f a) ∙ htpy-natural-app=idf g-f a 
+          =⟨ ∘-ap g f (g-f a) ∙ htpy-natural-app=idf g-f a
              |in-ctx (λ q → ap f q ∙ f-g (f a)) ⟩
         ap f (g-f (g (f a))) ∙ f-g (f a) =∎
 
@@ -167,7 +167,7 @@ _∘e_ : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
 e1 ∘e e2 = ((–> e1 ∘ –> e2) , record {g = (<– e2 ∘ <– e1);
   f-g = (λ c → ap (–> e1) (<–-inv-r e2 (<– e1 c)) ∙ <–-inv-r e1 c);
   g-f = (λ a → ap (<– e2) (<–-inv-l e1 (–> e2 a)) ∙ <–-inv-l e2 a);
-  adj = λ a → 
+  adj = λ a →
       ap (–> e1 ∘ –> e2) (ap (<– e2) (<–-inv-l e1 (–> e2 a)) ∙ <–-inv-l e2 a)
           =⟨ ap-∘ (–> e1) (–> e2) (ap (<– e2) (<–-inv-l e1 (–> e2 a)) ∙ <–-inv-l e2 a) ⟩
       ap (–> e1) (ap (–> e2) (ap (<– e2) (<–-inv-l e1 (–> e2 a)) ∙ <–-inv-l e2 a))
@@ -231,9 +231,9 @@ module _ {i j} {A : Type i} {B : Type j} where
         → –>-is-inj e _ _ (ap (–> e) p) == p
       left-inverse e idp = !-inv-l (<–-inv-l e _)
 
-      right-inverse : (e : A ≃ B) {x y : A} (p : –> e x == –> e y) 
+      right-inverse : (e : A ≃ B) {x y : A} (p : –> e x == –> e y)
         → ap (–> e) (–>-is-inj e _ _ p) == p
-      right-inverse e {x} {y} p = 
+      right-inverse e {x} {y} p =
         ap f (! (g-f x) ∙ ap g p ∙ (g-f y))
           =⟨ ap-∙ f (! (g-f x)) (ap g p ∙ (g-f y)) ⟩
         ap f (! (g-f x)) ∙ ap f (ap g p ∙ (g-f y))

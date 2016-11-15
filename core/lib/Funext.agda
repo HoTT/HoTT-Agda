@@ -118,7 +118,7 @@ module StrongFunextDep {j} {P : A → Type j} where
 
   app=-β : {f g : Π A P} (h : (x : A) → f x == g x) (x : A)
     → app= (λ= h) x == h x
-  app=-β h = app=-path (Q-f==Q-g h)  where 
+  app=-β h = app=-path (Q-f==Q-g h)  where
 
     app=-path : {f : Π A P} {u v : (x : A) → Q (λ x → idp {a = f x}) x}
       (p : u == v) (x : A)
@@ -159,4 +159,4 @@ module _ {j} {P : A → Type j} {f g : Π A P} where
   app=-equiv = (app= , app=-is-equiv) where
     abstract
       app=-is-equiv : is-equiv app=
-      app=-is-equiv = StrongFunextDep.app=-is-equiv 
+      app=-is-equiv = StrongFunextDep.app=-is-equiv

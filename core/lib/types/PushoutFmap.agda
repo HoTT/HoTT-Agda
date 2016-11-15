@@ -11,7 +11,7 @@ open import lib.types.Span
 module lib.types.PushoutFmap where
 
 module PushoutFmap {i₀ j₀ k₀ i₁ j₁ k₁} {span₀ : Span {i₀} {j₀} {k₀}}
-  {span₁ : Span {i₁} {j₁} {k₁}} (span-map : SpanMap span₀ span₁) 
+  {span₁ : Span {i₁} {j₁} {k₁}} (span-map : SpanMap span₀ span₁)
   = PushoutRec {d = span₀} {D = Pushout span₁}
     (left ∘ SpanMap.hA span-map) (right ∘ SpanMap.hB span-map)
     -- the following concatenation arrangement works well with [Susp-fmap].

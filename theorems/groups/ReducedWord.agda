@@ -325,7 +325,7 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
       QuotWordRel-cons (inr x) (inr y :: w) _ = qwr-refl idp
 
       QuotWordRel-++ : ∀ w₁ rw₂
-        → QuotWordRel (w₁ ++ fst rw₂) (fst (rw-++' w₁ rw₂))      
+        → QuotWordRel (w₁ ++ fst rw₂) (fst (rw-++' w₁ rw₂))
       QuotWordRel-++ nil _ = qwr-refl idp
       QuotWordRel-++ (x :: w₁) rw₂ =
         qwr-trans (qwr-cons x (QuotWordRel-++ w₁ rw₂)) $

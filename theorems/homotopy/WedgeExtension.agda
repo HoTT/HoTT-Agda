@@ -20,14 +20,14 @@ module WedgeExt {i j} {A : Type i} {a₀ : A} {B : Type j} {b₀ : B} where
   private
     module _ (r : args) where
       open args r
-    
+
       Q : A → (S n) -Type (lmax i j)
       Q a = ((Σ (∀ b → fst (P a b)) (λ k → (k ∘ cst b₀) == cst (f a)) ,
-                conn-elim-general (pointed-conn-out B b₀ cB) 
+                conn-elim-general (pointed-conn-out B b₀ cB)
                                   (P a) (cst (f a))))
-  
+
       l : Π A (fst ∘ Q)
-      l = conn-elim (pointed-conn-out A a₀ cA) 
+      l = conn-elim (pointed-conn-out A a₀ cA)
                     Q (λ (_ : Unit) → (g , ap cst (! p)))
 
 
@@ -46,7 +46,7 @@ module WedgeExt {i j} {A : Type i} {a₀ : A} {B : Type j} {b₀ : B} where
 
     abstract
       β-r-aux : fst (l r a₀) == g
-      β-r-aux = fst= (conn-elim-β 
+      β-r-aux = fst= (conn-elim-β
         (pointed-conn-out A a₀ cA)
         (Q r) (λ (_ : Unit) → (g , ap cst (! p))) unit)
 
@@ -56,27 +56,27 @@ module WedgeExt {i j} {A : Type i} {a₀ : A} {B : Type j} {b₀ : B} where
 
     abstract
       coh : ! (β-l a₀) ∙ β-r b₀ == p
-      coh = 
+      coh =
         ! (β-l a₀) ∙ β-r b₀
           =⟨ ! lemma₂ |in-ctx (λ w → ! w ∙ β-r b₀) ⟩
         ! (β-r b₀ ∙ ! p) ∙ β-r b₀
           =⟨ !-∙ (β-r b₀) (! p) |in-ctx (λ w → w ∙ β-r b₀) ⟩
-        (! (! p) ∙ ! (β-r b₀)) ∙ β-r b₀            
+        (! (! p) ∙ ! (β-r b₀)) ∙ β-r b₀
           =⟨ !-! p |in-ctx (λ w → (w ∙ ! (β-r b₀)) ∙ β-r b₀)  ⟩
-        (p ∙ ! (β-r b₀)) ∙ β-r b₀            
+        (p ∙ ! (β-r b₀)) ∙ β-r b₀
           =⟨ ∙-assoc p (! (β-r b₀)) (β-r b₀) ⟩
-        p ∙ ! (β-r b₀) ∙ β-r b₀            
+        p ∙ ! (β-r b₀) ∙ β-r b₀
           =⟨ ap (λ w → p ∙ w) (!-inv-l (β-r b₀)) ∙ ∙-unit-r p ⟩
         p ∎
         where
-        lemma₁ : β-l a₀ == ap (λ s → s unit) (ap cst (! p)) 
+        lemma₁ : β-l a₀ == ap (λ s → s unit) (ap cst (! p))
                  [ (λ k → k b₀ == f a₀) ↓ β-r-aux ]
         lemma₁ = ap↓ (ap (λ s → s unit)) $
                       snd= (conn-elim-β (pointed-conn-out A a₀ cA)
                            (Q r) (λ (_ : Unit) → (g , ap cst (! p))) unit)
 
         lemma₂ : β-r b₀ ∙ ! p == β-l a₀
-        lemma₂ = ap (λ w → β-r b₀ ∙ w) 
-                    (! (ap-idf (! p)) ∙ ap-∘ (λ s → s unit) cst (! p)) 
+        lemma₂ = ap (λ w → β-r b₀ ∙ w)
+                    (! (ap-idf (! p)) ∙ ap-∘ (λ s → s unit) cst (! p))
                  ∙ (! (↓-app=cst-out lemma₁))
 

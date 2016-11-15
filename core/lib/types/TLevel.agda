@@ -42,7 +42,7 @@ data _<T_ : ℕ₋₂ → ℕ₋₂ → Type₀ where
   ltSR : {m n : ℕ₋₂} → m <T n → m <T (S n)
 
 _≤T_ : ℕ₋₂ → ℕ₋₂ → Type₀
-m ≤T n = Coprod (m == n) (m <T n) 
+m ≤T n = Coprod (m == n) (m <T n)
 
 -2<T : (m : ℕ₋₂) → ⟨-2⟩ <T S m
 -2<T ⟨-2⟩ = ltS
@@ -182,5 +182,5 @@ minT-out-l : {m n : ℕ₋₂} → (m ≤T n) → minT m n == m
 minT-out-l {m} {n} lte with minT-out m n
 minT-out-l lte | inl eqm = eqm
 minT-out-l (inl p) | inr eqn = eqn ∙ ! p
-minT-out-l {m} {n} (inr lt) | inr eq = 
+minT-out-l {m} {n} (inr lt) | inr eq =
   ⊥-rec (<T-to-≱T (transport (λ k → m <T k) (! eq) lt) (minT≤l m n))

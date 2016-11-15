@@ -22,9 +22,9 @@ is-iso {A = A} {B = B} f = Σ (B → A) (λ g → ((f ◯ g) ~ id B) × ((g ◯ 
 is-hae : ∀ {i j} {A : Set i} {B : Set j} (f : A → B) → Set (max i j)
 is-hae {A = A} {B = B} f =
   Σ (B → A)          (λ g →
-  Σ ((g ◯ f) ~ id A) (λ η → 
+  Σ ((g ◯ f) ~ id A) (λ η →
   Σ ((f ◯ g) ~ id B) (λ ε →
-  (x : A) → ap f (η x) ≡ ε (f x)))) 
+  (x : A) → ap f (η x) ≡ ε (f x))))
 
 iso-is-hae : ∀ {i j} {A : Set i} {B : Set j} → (f : A → B) → is-iso f → is-hae f
 iso-is-hae {A = A} {B = B} f (g , (ε , η)) = g , (η , (ε' , τ)) where
@@ -40,7 +40,7 @@ iso-is-hae {A = A} {B = B} f (g , (ε , η)) = g , (η , (ε' , τ)) where
       η (g (f a)) ∘ (η a ∘ (! (η a)))
     ≡⟨ ! (concat-assoc (η (g (f a))) (η a) (! (η a))) ⟩
       (η (g (f a)) ∘ η a) ∘ (! (η a))
-    ≡⟨ ap (λ p → p ∘ (! (η a)) ) (! (homotopy-naturality-toid (g ◯ f) η (η a))) ⟩ 
+    ≡⟨ ap (λ p → p ∘ (! (η a)) ) (! (homotopy-naturality-toid (g ◯ f) η (η a))) ⟩
       (ap (g ◯ f) (η a) ∘ η a) ∘ (! (η a))
     ≡⟨ concat-assoc (ap (g ◯ f) (η a)) (η a) (! (η a)) ⟩
       ap (g ◯ f) (η a) ∘ (η a ∘ (! (η a)))
@@ -62,7 +62,7 @@ iso-is-hae {A = A} {B = B} f (g , (ε , η)) = g , (η , (ε' , τ)) where
     ∎)
 
   τ : (a : A) → ap f (η a) ≡ ε' (f a)
-  τ a = 
+  τ a =
       ap f (η a)
     ≡⟨ refl ⟩
       refl ∘ ap f (η a)
@@ -99,11 +99,11 @@ hae-is-eq f (g , (η , (ε , τ))) y = (g y , ε y) , contr where
         (! (ap (f ◯ g) p) ∘ ε (f x)) ∘ p
       ≡⟨ ap (λ q → (q ∘ ε (f x)) ∘ p) (opposite-ap (f ◯ g) p) ⟩
         (ap (f ◯ g) (! p) ∘ ε (f x)) ∘ p
-      ≡⟨ ap (λ q → q ∘ p) (homotopy-naturality-toid (f ◯ g) ε (! p)) ⟩ 
+      ≡⟨ ap (λ q → q ∘ p) (homotopy-naturality-toid (f ◯ g) ε (! p)) ⟩
         (ε y ∘ ! p) ∘ p
-      ≡⟨ concat-assoc (ε y) (! p) p ⟩ 
+      ≡⟨ concat-assoc (ε y) (! p) p ⟩
         ε y ∘ ((! p) ∘ p)
-      ≡⟨ ap (λ q → ε y ∘ q) (opposite-left-inverse p) ⟩ 
+      ≡⟨ ap (λ q → ε y ∘ q) (opposite-left-inverse p) ⟩
         ε y ∘ refl
       ≡⟨ refl-right-unit (ε y) ⟩
         ε y
@@ -181,7 +181,7 @@ contr-equiv-unit e = ((λ _ → tt) , iso-is-eq _ (λ _ → π₁ e) (λ _ → r
 compose-is-equiv : ∀ {i j k} {A : Set i} {B : Set j} {C : Set k}
   (f : A ≃ B) (g : B ≃ C) → is-equiv (π₁ g ◯ π₁ f)
 compose-is-equiv f g =
-  iso-is-eq _ 
+  iso-is-eq _
     (inverse f ◯ inverse g)
     (λ y → ap (π₁ g) (inverse-right-inverse f (inverse g y)) ∘ inverse-right-inverse g y)
     (λ x → ap (inverse f) (inverse-left-inverse g (π₁ f x)) ∘ inverse-left-inverse f x)
@@ -236,7 +236,7 @@ abstract
   total-Σ-eq-is-equiv {P = P} =
     iso-is-eq _
       (λ totp → base-path totp , fiber-path totp)
-      Σ-eq-base-path-fiber-path 
+      Σ-eq-base-path-fiber-path
       (λ p → Σ-eq (base-path-Σ-eq (π₁ p) (π₂ p)) (fiber-path-Σ-eq {P = P} (π₁ p) (π₂ p)))
 
 total-Σ-eq-equiv : ∀ {i j} {A : Set i} {P : A → Set j} {x y : Σ A P}

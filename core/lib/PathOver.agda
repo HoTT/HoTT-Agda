@@ -291,7 +291,7 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → C) (g : B →
     (t : ap f p ∙' s == r [ (λ x → f a == g x) ↓ q ])
     → ↓-swap! r s (↓-swap r s t) == t
   ↓-swap-β {p = idp} {q = idp} r s t = coh (∙'-unit-l s) (∙-unit-r s) t  where
-  
+
     coh : ∀ {i} {X : Type i} {x y z t : X} (p : x == y) (q : z == y) (r : x == t)
       → p ∙ ! q ∙ ! (! r ∙ p ∙ ! q) == r
     coh idp idp idp = idp
@@ -302,7 +302,7 @@ trans-↓ : ∀ {i j} {A : Type i} (P : A → Type j) {a₁ a₂ : A}
 trans-↓ _ idp _ = idp
 
 trans-ap-↓ : ∀ {i j k} {A : Type i} {B : Type j} (P : B → Type k) (h : A → B)
-  {a₁ a₂ : A} (p : a₁ == a₂) (y : P (h a₂)) 
+  {a₁ a₂ : A} (p : a₁ == a₂) (y : P (h a₂))
   → transport P (! (ap h p)) y == y [ P ∘ h ↓ p ]
 trans-ap-↓ _ _ idp _ = idp
 

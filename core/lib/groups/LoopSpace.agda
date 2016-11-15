@@ -33,7 +33,7 @@ module _ {i} (n : ℕ) (X : Ptd i) where
 
 module _ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j} where
   Ω^S-group-structure-fmap : X ⊙→ Y
-    → GroupStructureHom (Ω^S-group-structure n X) (Ω^S-group-structure n Y)  
+    → GroupStructureHom (Ω^S-group-structure n X) (Ω^S-group-structure n Y)
   Ω^S-group-structure-fmap F = group-structure-hom (Ω^-fmap (S n) F) (Ω^S-fmap-∙ n F)
 
   Ω^S-group-structure-isemap : {F : X ⊙→ Y}

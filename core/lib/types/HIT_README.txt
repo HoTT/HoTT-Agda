@@ -44,9 +44,9 @@ inductive types "1pt-HITs" ("1" for the restriction to constructors of dimension
 A 1pt-HIT specification consists of:
 
 - A telescope [Γ] of parameters split in two:
-  
+
     Γ = (Γf , Γv)
-  
+
   where the parameters in [Γf] are called the *fixed* (or uniform) parameters,
   and the parameters in [Γv] are called the *variable* (or nonuniform)
   parameters.
@@ -326,7 +326,7 @@ module _ where
 
 -- Works (see [test.succeed.Test0])
 test1 : ∀ {i} {P : I → Type i} (zero* : P zero) (one* : P one)
-           (seg* : zero* == one* [ P ↓ seg ]) → 
+           (seg* : zero* == one* [ P ↓ seg ]) →
        (I-elim zero* one* seg*) zero == zero*
 test1 zero* one* seg* = idp
 
@@ -598,7 +598,7 @@ module _ where
   ⋮
 
   c_n : {γf : Γf} {γv : Γv} → Γ_n → I
-  c_n γ_n = #i (#c_n γ_n) _  
+  c_n γ_n = #i (#c_n γ_n) _
 
   postulate  -- HIT
     p_1 : {γf : Γf} {γv : Γv} → Δ_1 → u_1 == v_1
@@ -658,7 +658,7 @@ module IRec {γf : Γf} {j} {A : (γv : Γv) → Type j}
                      (λ δ_1P → ↓-cst-in (p_1* (δ_1P -')))
                      ⋮
                      (λ δ_mP → ↓-cst-in (p_m* (δ_mP -')))
-                     
+
                      -- Only if the [I-level] constructor is present:
                      (λ _ → A-level)
 

@@ -103,7 +103,7 @@ sub-abelian-normal : ∀ {i j} {G : Group i}
   → (G-is-abelian : is-abelian G)
   → SubgroupProp G j
   → NormalSubgroupProp G j
-sub-abelian-normal G-is-abelian P = P , sub-abelian-is-normal G-is-abelian P 
+sub-abelian-normal G-is-abelian P = P , sub-abelian-is-normal G-is-abelian P
 
 {- Subgroups of subgroups -}
 

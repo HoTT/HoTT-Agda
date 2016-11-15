@@ -21,20 +21,20 @@ module To = TorusRec (base , base) (pair×= loop idp) (pair×= idp loop) to-surf
 
 {- First map -}
 to : Torus → S¹ × S¹
-to = To.f 
+to = To.f
 
 {- Second map -}
 
 from-c : S¹ → (S¹ → Torus)
 from-c = FromC.f module M2 where
-  
+
   module FromCBase = S¹Rec baseT loopT2
 
   from-c-base : S¹ → Torus
   from-c-base = FromCBase.f
 
   from-c-loop-loop' : loopT1 ∙ ap from-c-base loop =-= ap from-c-base loop ∙' loopT1
-  from-c-loop-loop' = 
+  from-c-loop-loop' =
     loopT1 ∙ ap from-c-base loop   =⟪ FromCBase.loop-β |in-ctx (λ u → loopT1 ∙ u) ⟫
     loopT1 ∙ loopT2                =⟪ surfT' ⟫
     loopT2 ∙' loopT1               =⟪ ! FromCBase.loop-β |in-ctx (λ u → u ∙' loopT1) ⟫
@@ -44,7 +44,7 @@ from-c = FromC.f module M2 where
   from-c-loop-loop = ↓-='-in' (↯ from-c-loop-loop')
 
   module FromCLoop = S¹Elim loopT1 from-c-loop-loop
-  
+
   from-c-loop' = FromCLoop.f
   from-c-loop = λ= from-c-loop'
 
@@ -69,7 +69,7 @@ to-from-c = {!!} --S¹-elim to-from-c-base (↓-Π-cst-app-in to-from-c-loop)
   where
 
   to-from-c-base-loop' : ap (to ∘ from-c-base) loop =-= ap (λ y → (base , y)) loop
-  to-from-c-base-loop' = 
+  to-from-c-base-loop' =
     ap (to ∘ from-c-base) loop    =⟪ ap-∘ to from-c-base loop ⟫
     ap to (ap from-c-base loop)   =⟪ FromCBase.loop-β |in-ctx ap to ⟫
     ap to loopT2                  =⟪ To.loopT2-β ⟫
@@ -96,7 +96,7 @@ to-from-c = {!!} --S¹-elim to-from-c-base (↓-Π-cst-app-in to-from-c-loop)
   to-from-c-loop = {!S¹-elim to-from-c-loop-base ?!}  where
 
     to-from-c-loop-base2 : ap (λ x → (x , base)) loop =-= ap (λ x → to (from-c x base)) loop
-    to-from-c-loop-base2 = 
+    to-from-c-loop-base2 =
       ap (λ z → z , base) loop               =⟪ {!ap-id,cst _ loop!} ⟫
       pair×= loop idp                        =⟪ ! To.loopT1-β ⟫
       ap to loopT1                           =⟪ ! (thing base) |in-ctx ap to ⟫
@@ -105,7 +105,7 @@ to-from-c = {!!} --S¹-elim to-from-c-base (↓-Π-cst-app-in to-from-c-loop)
 
     to-from-c-loop-base : idp == idp [ (λ x → to (from-c x base) == (x , base)) ↓ loop ]
     to-from-c-loop-base = ↓-='-in' (↯ to-from-c-loop-base2)
-  
+
     lemma : ↯ to-from-c-loop-base2 == ↯ to-from-c-loop-base2 [ (λ y → to-from-c-base y ∙ ap (λ x → x , y) loop == ap (λ x → to (from-c x y)) loop ∙' to-from-c-base y) ↓ loop ]
     lemma = ↓-=-in (
       (↯ to-from-c-loop-base2) ◃ apd (λ y → ap (λ x → to (from-c x y)) loop ∙' to-from-c-base y) loop  =⟨ {!!} ⟩

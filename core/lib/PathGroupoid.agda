@@ -185,7 +185,7 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     {u : B x} {v : B y} (r : u == v [ B ↓ p ])
     → idp ◃ r == r
   idp◃ {p = idp} r = idp
-    
+
 
   _∙'ᵈ_ : {x y z : A} {p : x == y} {p' : y == z}
     {u : B x} {v : B y} {w : B z}

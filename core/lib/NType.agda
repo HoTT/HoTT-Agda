@@ -162,7 +162,7 @@ module _ {i} (A : Type i) where
   SubtypeProp : ∀ j → Type (lmax i (lsucc j))
   SubtypeProp j = Σ (A → Type j) (λ P → ∀ a → is-prop (P a))
 
-module SubtypeProp {i j} {A : Type i} (P : SubtypeProp A j) where 
+module SubtypeProp {i j} {A : Type i} (P : SubtypeProp A j) where
   prop = fst P
   level = snd P
 

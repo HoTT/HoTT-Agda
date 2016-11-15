@@ -53,7 +53,7 @@ module M2 (c : A₂₂) where
     ap (from ∘ i₄∙ ∘ f₃∙) (glue c) ∎
 
   lemma1 : ↓-='-out (apd (from-to-r ∘ f₃∙) (glue c)) == end-lemma1
-  lemma1 = 
+  lemma1 =
     ↓-='-out (apd (from-to-r ∘ f₃∙) (glue c))
 
          =⟨ apd-∘'' from-to-r f₃∙ (glue c) (F₃∙.glue-β c) |in-ctx ↓-='-out ⟩
@@ -114,7 +114,7 @@ module M2 (c : A₂₂) where
       coh3 : (↓-='-out (apd (λ x → idp {a = right (left x)}) (H₃₁ c))
               ∙□h ((! (from-to-r-g (f₃₂ c)))
               ∙□h (↓-='-out (apd (λ _ → idp) (H₃₃ c))))) == ((! (from-to-r-g (f₃₂ c))) |in-ctx (λ u → ap (right ∘ left) (H₃₁ c) ∙ u ∙ ap (right ∘ right) (H₃₃ c)))
-      coh3 = 
+      coh3 =
         ↓-='-out (apd (λ x → idp {a = right (left x)}) (H₃₁ c))
         ∙□h ((! (from-to-r-g (f₃₂ c)))
         ∙□h (↓-='-out (apd (λ _ → idp) (H₃₃ c))))

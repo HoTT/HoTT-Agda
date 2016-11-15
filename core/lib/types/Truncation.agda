@@ -131,25 +131,25 @@ abstract
 
 Trunc-preserves-level : ∀ {i} {A : Type i} {n : ℕ₋₂} (m : ℕ₋₂)
  → has-level n A → has-level n (Trunc m A)
-Trunc-preserves-level {n = ⟨-2⟩} _ (a₀ , p) = 
+Trunc-preserves-level {n = ⟨-2⟩} _ (a₀ , p) =
   ([ a₀ ] , Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
               (λ a → ap [_] (p a)))
 Trunc-preserves-level ⟨-2⟩ _ = contr-has-level Trunc-level
-Trunc-preserves-level {n = (S n)} (S m) c = λ t₁ t₂ → 
-  Trunc-elim 
-    (λ s₁ → prop-has-level-S {A = has-level n (s₁ == t₂)} has-level-is-prop) 
-    (λ a₁ → Trunc-elim 
+Trunc-preserves-level {n = (S n)} (S m) c = λ t₁ t₂ →
+  Trunc-elim
+    (λ s₁ → prop-has-level-S {A = has-level n (s₁ == t₂)} has-level-is-prop)
+    (λ a₁ → Trunc-elim
       (λ s₂ → prop-has-level-S {A = has-level n ([ a₁ ] == s₂)} has-level-is-prop)
-      (λ a₂ → equiv-preserves-level 
+      (λ a₂ → equiv-preserves-level
       ((Trunc=-equiv [ a₁ ] [ a₂ ])⁻¹)
-               (Trunc-preserves-level {n = n} m (c a₁ a₂))) 
-              t₂) 
+               (Trunc-preserves-level {n = n} m (c a₁ a₂)))
+              t₂)
     t₁
 
 {- an n-type is equivalent to its n-truncation -}
 unTrunc-equiv : ∀ {i} {n : ℕ₋₂} (A : Type i)
   → has-level n A → Trunc n A ≃ A
-unTrunc-equiv A nA = equiv f [_] (λ _ → idp) g-f where 
+unTrunc-equiv A nA = equiv f [_] (λ _ → idp) g-f where
   f = Trunc-rec nA (idf _)
   g-f = Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp)
 
@@ -190,32 +190,32 @@ Trunc-fmap-∘ g f =
 module _ {i} {n : ℕ₋₂} {A : Type i} where
 
   {- concatenation in Trunc= -}
-  Trunc=-∙ : {ta tb tc : Trunc (S n) A} 
+  Trunc=-∙ : {ta tb tc : Trunc (S n) A}
     → fst (Trunc= ta tb) → fst (Trunc= tb tc) → fst (Trunc= ta tc)
   Trunc=-∙ {ta = ta} {tb = tb} {tc = tc} =
-    Trunc-elim {P = λ ta → C ta tb tc} 
+    Trunc-elim {P = λ ta → C ta tb tc}
       (λ ta → level ta tb tc)
-      (λ a → Trunc-elim {P = λ tb → C [ a ] tb tc} 
+      (λ a → Trunc-elim {P = λ tb → C [ a ] tb tc}
          (λ tb → level [ a ] tb tc)
-         (λ b → Trunc-elim {P = λ tc → C [ a ] [ b ] tc} 
+         (λ b → Trunc-elim {P = λ tc → C [ a ] [ b ] tc}
                   (λ tc → level [ a ] [ b ] tc)
                   (λ c → Trunc-fmap2 _∙_)
                   tc)
-         tb) 
+         tb)
       ta
     where
     C : (ta tb tc : Trunc (S n) A) → Type i
     C ta tb tc = fst (Trunc= ta tb) → fst (Trunc= tb tc) → fst (Trunc= ta tc)
 
     level : (ta tb tc : Trunc (S n) A) → has-level (S n) (C ta tb tc)
-    level ta tb tc = raise-level _ $ 
+    level ta tb tc = raise-level _ $
               Π-level (λ _ → Π-level (λ _ → snd (Trunc= ta tc)))
 
   Trunc=-∙-comm : {x y z : Trunc (S n) A }
     (p : x == y) (q : y == z)
     →  –> (Trunc=-equiv x z) (p ∙ q)
     == Trunc=-∙ {ta = x} (–> (Trunc=-equiv x y) p) (–> (Trunc=-equiv y z) q)
-  Trunc=-∙-comm {x = x} idp idp = 
+  Trunc=-∙-comm {x = x} idp idp =
     Trunc-elim
        {P = λ x → –> (Trunc=-equiv x x) idp
                == Trunc=-∙ {ta = x} (–> (Trunc=-equiv x x) idp)
@@ -244,7 +244,7 @@ module _ {i j} (n : ℕ₋₂) {A : Type i} {B : Type j} where
   Trunc-emap : A ≃ B → Trunc n A ≃ Trunc n B
   Trunc-emap (f , f-ie) = Trunc-fmap f , Trunc-isemap f-ie
 
-transport-Trunc : ∀ {i j} {A : Type i} {n : ℕ₋₂} (P : A → Type j) 
+transport-Trunc : ∀ {i j} {A : Type i} {n : ℕ₋₂} (P : A → Type j)
   {x y : A} (p : x == y) (b : P x)
   → transport (Trunc n ∘ P) p [ b ] == [ transport P p b ]
 transport-Trunc _ idp _ = idp
@@ -252,14 +252,14 @@ transport-Trunc _ idp _ = idp
 Trunc-fuse : ∀ {i} (A : Type i) (m n : ℕ₋₂)
   → Trunc m (Trunc n A) ≃ Trunc (minT m n) A
 Trunc-fuse A m n = equiv
-  (Trunc-rec (raise-level-≤T (minT≤l m n) Trunc-level) 
-    (Trunc-rec (raise-level-≤T (minT≤r m n) Trunc-level) 
+  (Trunc-rec (raise-level-≤T (minT≤l m n) Trunc-level)
+    (Trunc-rec (raise-level-≤T (minT≤r m n) Trunc-level)
       [_]))
   (Trunc-rec l ([_] ∘ [_]))
   (Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp))
   (Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
-     (Trunc-elim 
-       (λ _ → =-preserves-level _ (Trunc-preserves-level _ Trunc-level)) 
+     (Trunc-elim
+       (λ _ → =-preserves-level _ (Trunc-preserves-level _ Trunc-level))
        (λ _ → idp)))
   where l : has-level (minT m n) (Trunc m (Trunc n A))
         l with (minT-out m n)
@@ -278,8 +278,8 @@ Trunc-fuse-≤ A m≤n = equiv
   (Trunc-rec Trunc-level ([_] ∘ [_]))
   (Trunc-elim (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp))
   (Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
-     (Trunc-elim 
-       (λ _ → =-preserves-level _ (Trunc-preserves-level _ Trunc-level)) 
+     (Trunc-elim
+       (λ _ → =-preserves-level _ (Trunc-preserves-level _ Trunc-level))
        (λ _ → idp)))
 
 {- Truncating a binary product is equivalent to truncating its components -}
@@ -288,7 +288,7 @@ Trunc-×-econv : ∀ {i} {j} (n : ℕ₋₂) (A : Type i) (B : Type j)
 Trunc-×-econv n A B = equiv f g f-g g-f
   where
   f : Trunc n (A × B) → Trunc n A × Trunc n B
-  f = Trunc-rec (×-level Trunc-level Trunc-level) 
+  f = Trunc-rec (×-level Trunc-level Trunc-level)
         (λ {(a , b) → [ a ] , [ b ]})
 
   g : Trunc n A × Trunc n B → Trunc n (A × B)
@@ -299,7 +299,7 @@ Trunc-×-econv n A B = equiv f g f-g g-f
                 ta
 
   f-g : ∀ p → f (g p) == p
-  f-g (ta , tb) = Trunc-elim 
+  f-g (ta , tb) = Trunc-elim
     {P = λ ta → f (g (ta , tb)) == (ta , tb)}
     (λ _ → =-preserves-level _ (×-level Trunc-level Trunc-level))
     (λ a → Trunc-elim

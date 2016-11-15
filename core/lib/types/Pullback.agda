@@ -28,7 +28,7 @@ module _ {i j k} (D : Cospan {i} {j} {k}) where
   pullback-aβ : {a a' : A} (p : a == a') {b b' : B} (q : b == b')
     {h : f a == g b} {h' : f a' == g b'} (r : h ∙ ap g q == ap f p ∙ h')
     → ap Pullback.a (pullback= p q {h = h} {h' = h'} r) == p
-  pullback-aβ idp idp r = 
+  pullback-aβ idp idp r =
     ap Pullback.a (ap (pullback _ _) (! (∙-unit-r _) ∙ r))
       =⟨ ∘-ap Pullback.a (pullback _ _) _ ⟩
     ap (λ _ → _) (! (∙-unit-r _) ∙ r)
@@ -38,7 +38,7 @@ module _ {i j k} (D : Cospan {i} {j} {k}) where
   pullback-bβ : {a a' : A} (p : a == a') {b b' : B} (q : b == b')
     {h : f a == g b} {h' : f a' == g b'} (r : h ∙ ap g q == ap f p ∙ h')
     → ap Pullback.b (pullback= p q {h = h} {h' = h'} r) == q
-  pullback-bβ idp idp r = 
+  pullback-bβ idp idp r =
     ap Pullback.b (ap (pullback _ _) (! (∙-unit-r _) ∙ r))
       =⟨ ∘-ap Pullback.b (pullback _ _) _ ⟩
     ap (λ _ → _) (! (∙-unit-r _) ∙ r)
@@ -48,8 +48,8 @@ module _ {i j k} (D : Cospan {i} {j} {k}) where
 module _ {i j k} (D : ⊙Cospan {i} {j} {k}) where
 
   ⊙Pullback : Ptd (lmax i (lmax j k))
-  ⊙Pullback = 
-    ⊙[ Pullback (⊙cospan-out D) , 
+  ⊙Pullback =
+    ⊙[ Pullback (⊙cospan-out D) ,
        pullback (snd X) (snd Y) (snd f ∙ ! (snd g)) ]
     where open ⊙Cospan D
 
@@ -68,6 +68,6 @@ module _ {i j k} (n : ℕ₋₂) {D : Cospan {i} {j} {k}} where
 
   pullback-level : has-level n A → has-level n B → has-level n C
     → has-level n (Pullback D)
-  pullback-level pA pB pC = 
+  pullback-level pA pB pC =
     equiv-preserves-level ((pullback-decomp-equiv D)⁻¹) $
       Σ-level (×-level pA pB) (λ _ → =-preserves-level _ pC)

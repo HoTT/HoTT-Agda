@@ -62,17 +62,17 @@ module _ {i} {A : Type i} where
           {P = λ r → [ p ∙ q ] ∙₀ r == [ p ] ∙₀ ([ q ] ∙₀ r)}
           (λ _ → =-preserves-level 0 Trunc-level)
           (λ r → ap [_] $ ∙-assoc p q r)))
-  
+
     !₀-inv-l : {x y : A} (p : x =₀ y) → (!₀ p) ∙₀ p == idp₀
     !₀-inv-l = Trunc-elim
       (λ _ →  =-preserves-level 0 Trunc-level)
       (λ p → ap [_] $ !-inv-l p)
-  
+
     !₀-inv-r : {x y : A} (p : x =₀ y) → p ∙₀ (!₀ p) == idp₀
     !₀-inv-r = Trunc-elim
       (λ _ →  =-preserves-level 0 Trunc-level)
       (λ p → ap [_] $ !-inv-r p)
-  
+
     ∙₀-ap₀ : ∀ {j} {B : Type j} (f : A → B) {x y z : A} (p : x =₀ y) (q : y =₀ z)
       → ap₀ f p ∙₀ ap₀ f q == ap₀ f (p ∙₀ q)
     ∙₀-ap₀ f = Trunc-elim
@@ -81,7 +81,7 @@ module _ {i} {A : Type i} where
         {P = λ q → [ ap f p ] ∙₀ ap₀ f q == ap₀ f ([ p ] ∙₀ q)}
         (λ _ → =-preserves-level 0 Trunc-level)
         (λ q → ap [_] $ ∙-ap f p q))
-  
+
     ap₀-∘ : ∀ {j k} {B : Type j} {C : Type k} (g : B → C) (f : A → B)
       {x y : A} (p : x =₀ y) → ap₀ (g ∘ f) p == ap₀ g (ap₀ f p)
     ap₀-∘ f g = Trunc-elim
