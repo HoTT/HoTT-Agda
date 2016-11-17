@@ -65,9 +65,7 @@ Trunc-group-× : ∀ {i j} {A : Type i} {B : Type j}
   (GS : GroupStructure A) (HS : GroupStructure B)
   → Trunc-group (×-group-struct GS HS) ≃ᴳ Trunc-group GS ×ᴳ Trunc-group HS
 Trunc-group-× GS HS =
-  group-hom
-    (Trunc-rec (×-level Trunc-level Trunc-level)
-      (λ {(a , b) → ([ a ] , [ b ])}))
+  group-hom (fanout (Trunc-fmap fst) (Trunc-fmap snd))
     (Trunc-elim
       (λ _ → (Π-level (λ _ → =-preserves-level _
                                (×-level Trunc-level Trunc-level))))
@@ -75,8 +73,7 @@ Trunc-group-× GS HS =
         (λ _ → =-preserves-level _ (×-level Trunc-level Trunc-level))
         (λ b → idp))) ,
   is-eq _
-    (uncurry (Trunc-rec (→-level Trunc-level)
-               (λ a → Trunc-rec Trunc-level (λ b → [ a , b ]))))
+    (uncurry (Trunc-fmap2 _,_))
     (uncurry (Trunc-elim
                (λ _ → Π-level (λ _ → =-preserves-level _
                                        (×-level Trunc-level Trunc-level)))

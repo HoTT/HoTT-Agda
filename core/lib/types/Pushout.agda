@@ -12,37 +12,27 @@ module lib.types.Pushout where
 
 module _ {i j k} where
 
-  private
-    data #Pushout-aux (d : Span {i} {j} {k}) : Type (lmax (lmax i j) k) where
-      #left : Span.A d → #Pushout-aux d
-      #right : Span.B d → #Pushout-aux d
-
-    data #Pushout (d : Span) : Type (lmax (lmax i j) k) where
-      #pushout : #Pushout-aux d → (Unit → Unit) → #Pushout d
-
-  Pushout : (d : Span) → Type _
-  Pushout d = #Pushout d
-
-  left : {d : Span} → Span.A d → Pushout d
-  left a = #pushout (#left a) _
-
-  right : {d : Span} → Span.B d → Pushout d
-  right b = #pushout (#right b) _
-
   postulate  -- HIT
-    glue : {d : Span} → (c : Span.C d) → left (Span.f d c) == right (Span.g d c) :> Pushout d
+    Pushout : (d : Span {i} {j} {k}) → Type (lmax (lmax i j) k)
+
+  module _ {d : Span} where
+
+    postulate  -- HIT
+      left : Span.A d → Pushout d
+      right : Span.B d → Pushout d
+      glue : (c : Span.C d) → left (Span.f d c) == right (Span.g d c)
 
   module PushoutElim {d : Span} {l} {P : Pushout d → Type l}
     (left* : (a : Span.A d) → P (left a))
     (right* : (b : Span.B d) → P (right b))
     (glue* : (c : Span.C d) → left* (Span.f d c) == right* (Span.g d c) [ P ↓ glue c ]) where
 
-    f : Π (Pushout d) P
-    f = f-aux phantom  where
-
-      f-aux : Phantom glue* → Π (Pushout d) P
-      f-aux phantom (#pushout (#left y) _) = left* y
-      f-aux phantom (#pushout (#right y) _) = right* y
+    postulate  -- HIT
+      f : Π (Pushout d) P
+      left-β : ∀ a → f (left a) ↦ left* a
+      right-β : ∀ b → f (right b) ↦ right* b
+    {-# REWRITE left-β #-}
+    {-# REWRITE right-β #-}
 
     postulate  -- HIT
       glue-β : (c : Span.C d) → apd f (glue c) == glue* c

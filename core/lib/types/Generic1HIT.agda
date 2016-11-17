@@ -17,30 +17,19 @@ data T : Type where
   pp : (b : B) → cc (f' b) ≡ cc (g b)
 -}
 module _ where
-  private
-    data #T-aux : Type (lmax i j) where
-      #cc : A → #T-aux
-
-    data #T : Type (lmax i j) where
-      #t : #T-aux → (Unit → Unit) → #T
-
-  T : Type _
-  T = #T
-
-  cc : A → T
-  cc a = #t (#cc a) _
 
   postulate  -- HIT
+    T : Type (lmax i j)
+    cc : A → T
     pp : (b : B) → cc (g b) == cc (h b)
 
   module Elim {k} {P : T → Type k} (cc* : (a : A) → P (cc a))
     (pp* : (b : B) → cc* (g b) == cc* (h b) [ P ↓ pp b ]) where
 
-    f : Π T P
-    f = f-aux phantom  where
-
-      f-aux : Phantom pp* → Π T P
-      f-aux phantom (#t (#cc a) _) = cc* a
+    postulate  -- HIT
+      f : Π T P
+      cc-β : ∀ a → f (cc a) ↦ cc* a
+    {-# REWRITE cc-β #-}
 
     postulate  -- HIT
       pp-β : (b : B) → apd f (pp b) == pp* b

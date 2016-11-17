@@ -13,59 +13,46 @@ data Torus : Type₀ where
   surfT : loopT1 ∙ loopT2 == loopT2 ∙ loopT1
 -}
 
-module _ where
-  private
-    data #Torus-aux : Type₀ where
-      #baseT : #Torus-aux
-
-    data #Torus : Type₀ where
-      #torus : #Torus-aux → (Unit → Unit) → #Torus
-
+postulate  -- HIT
   Torus : Type₀
-  Torus = #Torus
-
   baseT : Torus
-  baseT = #torus #baseT _
+  loopT1 : baseT == baseT
+  loopT2 : baseT == baseT
+  surfT : loopT1 ∙ loopT2 == loopT2 ∙ loopT1
+
+{- Dependent elimination and computation rules -}
+module TorusElim {i} {P : Torus → Type i} (baseT* : P baseT)
+  (loopT1* : baseT* == baseT* [ P ↓ loopT1 ])
+  (loopT2* : baseT* == baseT* [ P ↓ loopT2 ])
+  (surfT* : loopT1* ∙ᵈ loopT2* == loopT2* ∙ᵈ loopT1*
+            [ (λ p → baseT* == baseT* [ P ↓ p ]) ↓ surfT ]) where
 
   postulate  -- HIT
-    loopT1 : baseT == baseT
-    loopT2 : baseT == baseT
-    surfT : loopT1 ∙ loopT2 == loopT2 ∙ loopT1
-
-  {- Dependent elimination and computation rules -}
-  module TorusElim {i} {P : Torus → Type i} (baseT* : P baseT)
-    (loopT1* : baseT* == baseT* [ P ↓ loopT1 ])
-    (loopT2* : baseT* == baseT* [ P ↓ loopT2 ])
-    (surfT* : loopT1* ∙ᵈ loopT2* == loopT2* ∙ᵈ loopT1*
-              [ (λ p → baseT* == baseT* [ P ↓ p ]) ↓ surfT ]) where
-
     f : Π Torus P
-    f = f-aux phantom  where
+    base-β : f baseT ↦ baseT*
+  {-# REWRITE base-β #-}
 
-      f-aux : Phantom surfT* → Π Torus P
-      f-aux phantom (#torus #baseT _) = baseT*
+  postulate  -- HIT
+    loopT1-β : apd f loopT1 == loopT1*
+    loopT2-β : apd f loopT2 == loopT2*
 
-    postulate  -- HIT
-      loopT1-β : apd f loopT1 == loopT1*
-      loopT2-β : apd f loopT2 == loopT2*
+  private
+    lhs : apd f (loopT1 ∙ loopT2) == loopT1* ∙ᵈ loopT2*
+    lhs =
+      apd f (loopT1 ∙ loopT2)                 =⟨ apd-∙ f loopT1 loopT2 ⟩
+      apd f loopT1 ∙ᵈ apd f loopT2            =⟨ loopT1-β |in-ctx (λ u → u ∙ᵈ apd f loopT2) ⟩
+      loopT1* ∙ᵈ apd f loopT2                 =⟨ loopT2-β |in-ctx (λ u → loopT1* ∙ᵈ u) ⟩
+      loopT1* ∙ᵈ loopT2* =∎
 
-    private
-      lhs : apd f (loopT1 ∙ loopT2) == loopT1* ∙ᵈ loopT2*
-      lhs =
-        apd f (loopT1 ∙ loopT2)                 =⟨ apd-∙ f loopT1 loopT2 ⟩
-        apd f loopT1 ∙ᵈ apd f loopT2            =⟨ loopT1-β |in-ctx (λ u → u ∙ᵈ apd f loopT2) ⟩
-        loopT1* ∙ᵈ apd f loopT2                 =⟨ loopT2-β |in-ctx (λ u → loopT1* ∙ᵈ u) ⟩
-        loopT1* ∙ᵈ loopT2* =∎
+    rhs : apd f (loopT2 ∙ loopT1) == loopT2* ∙ᵈ loopT1*
+    rhs =
+      apd f (loopT2 ∙ loopT1)                 =⟨ apd-∙ f loopT2 loopT1 ⟩
+      apd f loopT2 ∙ᵈ apd f loopT1            =⟨ loopT2-β |in-ctx (λ u → u ∙ᵈ apd f loopT1) ⟩
+      loopT2* ∙ᵈ apd f loopT1                 =⟨ loopT1-β |in-ctx (λ u → loopT2* ∙ᵈ u) ⟩
+      loopT2* ∙ᵈ loopT1* =∎
 
-      rhs : apd f (loopT2 ∙ loopT1) == loopT2* ∙ᵈ loopT1*
-      rhs =
-        apd f (loopT2 ∙ loopT1)                 =⟨ apd-∙ f loopT2 loopT1 ⟩
-        apd f loopT2 ∙ᵈ apd f loopT1            =⟨ loopT2-β |in-ctx (λ u → u ∙ᵈ apd f loopT1) ⟩
-        loopT2* ∙ᵈ apd f loopT1                 =⟨ loopT1-β |in-ctx (λ u → loopT2* ∙ᵈ u) ⟩
-        loopT2* ∙ᵈ loopT1* =∎
-
-    postulate  -- HIT
-      surfT-β : apd (apd f) surfT == lhs ◃ (surfT* ▹! rhs)
+  postulate  -- HIT
+    surfT-β : apd (apd f) surfT == lhs ◃ (surfT* ▹! rhs)
 
 module TorusRec {i} {A : Type i} (baseT* : A) (loopT1* loopT2* : baseT* == baseT*)
   (surfT* : loopT1* ∙ loopT2* == loopT2* ∙ loopT1*) where
