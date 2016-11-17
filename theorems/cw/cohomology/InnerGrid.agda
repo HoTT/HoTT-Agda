@@ -39,8 +39,7 @@ module cw.cohomology.InnerGrid {i} (OT : OrdinaryTheory i)
       module B/AToC/A to C/BToD/B)
 
   inner-grid-comm-sqr : CommSquare C/A-to-D/A C/B-to-D/B C/A-to-C/B D/A-to-D/B
-  inner-grid-comm-sqr = comm-sqr $ Cofiber-elim {f = fst g ∘ fst f}
-    {P = λ x → D/A-to-D/B (C/A-to-D/A x) == C/B-to-D/B (C/A-to-C/B x)}
+  inner-grid-comm-sqr = comm-sqr $ Cofiber-elim
     idp (λ _ → idp)
     (λ a → ↓-='-in' $ ap-∘ C/B-to-D/B C/A-to-C/B (glue a)
                     ∙ ap (ap C/B-to-D/B) (C/AToC/B.glue-β a)

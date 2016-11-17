@@ -89,7 +89,6 @@ module _ {i j} {G : Group i} (P : NormalSubgroupProp G j) where
 
         assoc : ∀ g₁ g₂ g₃ → comp (comp g₁ g₂) g₃ == comp g₁ (comp g₂ g₃)
         assoc = SetQuot-elim
-          {P = λ g₁ → ∀ g₂ g₃ → comp (comp g₁ g₂) g₃ == comp g₁ (comp g₂ g₃)}
           (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set SetQuot-level)
           (λ g₁ → SetQuot-elim
             (λ _ → Π-is-set λ _ → =-preserves-set SetQuot-level)

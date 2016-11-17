@@ -122,11 +122,8 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
 abstract
   Trunc-rec-is-equiv : ∀ {i j} (n : ℕ₋₂) (A : Type i) (B : Type j)
     (p : has-level n B) → is-equiv (Trunc-rec p :> ((A → B) → (Trunc n A → B)))
-  Trunc-rec-is-equiv n A B p = is-eq (Trunc-rec p) (λ f → f ∘ [_])
-    (λ f → λ= λ a → Trunc-elim
-      {P = λ a → Trunc-rec p (f ∘ [_]) a == f a}
-      (λ _ → =-preserves-level n p) (λ a → idp) a)
-    (λ f → idp)
+  Trunc-rec-is-equiv n A B p = is-eq _ (λ f → f ∘ [_])
+    (λ f → λ= (Trunc-elim (λ _ → =-preserves-level _ p) (λ a → idp))) (λ f → idp)
 
 
 Trunc-preserves-level : ∀ {i} {A : Type i} {n : ℕ₋₂} (m : ℕ₋₂)

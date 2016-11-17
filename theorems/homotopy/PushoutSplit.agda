@@ -67,7 +67,7 @@ module PushoutRSplit {i j k l} {A : Type i} {B : Type j} {C : Type k}
     split-merge = Pushout-elim
       split-inner
       (λ c → idp)
-      (λ b → ↓-∘=idf-from-square split merge {p = glue b} $
+      (λ b → ↓-∘=idf-from-square split merge $
         ap (ap split) (Merge.glue-β b) ∙v⊡ bl-square (glue b))
 
 
@@ -75,7 +75,7 @@ module PushoutRSplit {i j k l} {A : Type i} {B : Type j} {C : Type k}
     merge-split = Pushout-elim
       (λ a → idp)
       (λ c → idp)
-      (λ d → ↓-∘=idf-in' merge split {p = glue d} $
+      (λ d → ↓-∘=idf-in' merge split $
         ap merge (ap split (glue d))
           =⟨ ap (ap merge) (Split.glue-β d) ⟩
         ap merge (ap left (glue d) ∙ glue (g d))
@@ -174,7 +174,7 @@ module PushoutLSplit {i j k l} {A : Type i} {B : Type j} {C : Type k}
     split-merge = Pushout-elim
       (λ b → idp)
       split-inner
-      (λ a → ↓-∘=idf-from-square split merge {p = glue a} $
+      (λ a → ↓-∘=idf-from-square split merge $
         ap (ap split) (Merge.glue-β a) ∙v⊡ br-square (glue a))
 
 
@@ -182,7 +182,7 @@ module PushoutLSplit {i j k l} {A : Type i} {B : Type j} {C : Type k}
     merge-split = Pushout-elim
       (λ b → idp)
       (λ c → idp)
-      (λ d → ↓-∘=idf-in' merge split {p = glue d} $
+      (λ d → ↓-∘=idf-in' merge split $
         ap merge (ap split (glue d))
           =⟨ ap (ap merge) (Split.glue-β d) ⟩
         ap merge (glue (f d) ∙' ap right (! (! (glue d))))

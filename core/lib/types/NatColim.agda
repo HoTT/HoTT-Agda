@@ -104,7 +104,6 @@ module _ {i} {D : ℕ → Type i} (d : (n : ℕ) → D n → D (S n)) where
 
   nc-match-=-base : (x : D O) (c : ℕColim d) → ncin O x == nc-match x c
   nc-match-=-base x = ℕColimElim.f d
-    {P = λ c → ncin O x == nc-match x c}
     (λ n _ → nc-lift-= n x)
     (λ n y → ↓-cst=app-from-square $
       disc-to-square idp ⊡v∙ ! (ℕCMatch.ncglue-β x n y))
@@ -205,11 +204,11 @@ module FinTuplesCons {i} (F : ℕ → Ptd i) where
     → into-out-ncin n r == into-out-ncin (S n) (fst (fin-tuples-map F n) r)
       [ (λ s → into (out s) == s) ↓ ncglue n r ]
   into-out-ncglue O x =
-    ↓-∘=idf-from-square into out {p = ncglue O x} $
+    ↓-∘=idf-from-square into out $
       ap (ap into) (Out.ncglue-β O x)
       ∙v⊡ bl-square (ncglue O x)
   into-out-ncglue (S n) (x , r) =
-    ↓-∘=idf-from-square into out {p = ncglue (S n) (x , r)} $
+    ↓-∘=idf-from-square into out $
       (ap (ap into) (Out.ncglue-β (S n) (x , r))
        ∙ ∘-ap into (_,_ x) (ncglue n r)
        ∙ Into.ncglue-β x n r)

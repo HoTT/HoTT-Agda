@@ -59,7 +59,7 @@ private
 
     into-out : ∀ σ → into (out σ) == σ
     into-out = Susp-elim idp idp
-      (λ x → ↓-∘=idf-in' into out {p = merid x} $
+      (λ x → ↓-∘=idf-in' into out $
         ap (ap into) (Out.merid-β x)
         ∙ ap-∙ into (ap cfcod (cfglue x)) (! (cfglue (fst f x)))
         ∙ ap (λ w → ap into (ap cfcod (cfglue x)) ∙ w)
@@ -77,7 +77,7 @@ private
           ∙v⊡ (vid-square {p = ap cfcod (cfglue x)}
                ⊡h rt-square (cfglue (fst f x)))
           ⊡v∙ ∙-unit-r _))
-      (λ y → ↓-∘=idf-from-square out into {p = cfglue y} $
+      (λ y → ↓-∘=idf-from-square out into $
          ap (ap out) (Into.glue-β y) ∙v⊡ connection)
 
     eqv : Cofiber² (fst f) ≃ Susp (fst X)
@@ -95,14 +95,9 @@ module _ {X Y : Ptd i} (f : X ⊙→ Y) where
     square₂ : CommSquare (cfcod³' (fst f)) (Susp-fmap (fst f))
       (Equiv.into f) (Susp-flip ∘ Equiv.into (⊙cfcod' f))
     square₂ = record {
-      commutes = Cofiber-elim
-        {f = cfcod' (fst f)}
-        {P = λ x → (Susp-flip ∘ Equiv.into (⊙cfcod' f)) (cfcod³' (fst f) x)
-                == Susp-fmap (fst f) (Equiv.into f x)}
+      commutes = Cofiber-elim {f = cfcod' (fst f)}
         idp
         (Cofiber-elim {f = fst f}
-          {P = λ x → (Susp-flip ∘ Equiv.into (⊙cfcod' f)) (cfcod³' (fst f) (cfcod x))
-                  == Susp-fmap (fst f) (Equiv.into f (cfcod x))}
           idp (λ y → merid y)
           (λ x → ↓-cst=app-in $
               ap (idp ∙'_)
@@ -110,7 +105,7 @@ module _ {X Y : Ptd i} (f : X ⊙→ Y) where
                 ∙ ap (ap (Susp-fmap (fst f))) (ExtractGlue.glue-β x)
                 ∙ SuspFmap.merid-β (fst f) x)
             ∙ ∙'-unit-l (merid (fst f x))))
-        (λ y → ↓-='-in' {p = cfglue y} (
+        (λ y → ↓-='-in' (
             ap (Susp-fmap (fst f) ∘ Equiv.into f) (cfglue y)
               =⟨ ap-∘ (Susp-fmap (fst f)) (Equiv.into f) (cfglue y) ⟩
             ap (Susp-fmap (fst f)) (ap (Equiv.into f) (cfglue y))

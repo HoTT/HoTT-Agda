@@ -305,7 +305,7 @@ private
       switch-inv = Pushout-elim
         SwitchInvLeft.f
         (λ c → idp)
-        (λ{(k , c) → ↓-∘=idf-from-square switch switch {p = glue (k , c)} $
+        (λ{(k , c) → ↓-∘=idf-from-square switch switch $
           ap (ap switch) (Switch.glue-β (k , c)) ∙v⊡ SwitchInvCoh.f c k})
 
 module _ {i j k} (A : Type i) (B : Type j) (C : Type k) where

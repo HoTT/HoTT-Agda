@@ -59,7 +59,6 @@ module _ {i} {A : Type i} where
       (λ p → Trunc-elim
         (λ _ → Π-is-set λ _ → =-preserves-level 0 Trunc-level)
         (λ q → Trunc-elim
-          {P = λ r → [ p ∙ q ] ∙₀ r == [ p ] ∙₀ ([ q ] ∙₀ r)}
           (λ _ → =-preserves-level 0 Trunc-level)
           (λ r → ap [_] $ ∙-assoc p q r)))
 
@@ -78,7 +77,6 @@ module _ {i} {A : Type i} where
     ∙₀-ap₀ f = Trunc-elim
       (λ _ → Π-is-set λ _ → =-preserves-level 0 Trunc-level)
       (λ p → Trunc-elim
-        {P = λ q → [ ap f p ] ∙₀ ap₀ f q == ap₀ f ([ p ] ∙₀ q)}
         (λ _ → =-preserves-level 0 Trunc-level)
         (λ q → ap [_] $ ∙-ap f p q))
 
@@ -102,11 +100,9 @@ module _ {i} {A : Type i} where
       → {x y z : A} (p : x =₀ y) (q : y =₀ z) (b : B x)
       → transport₀ B (B-level _) (p ∙₀ q) b
       == transport₀ B (B-level _) q (transport₀ B (B-level _) p b)
-    trans₀-∙₀ {B = B} B-level = Trunc-elim
+    trans₀-∙₀ B-level = Trunc-elim
       (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-level 0 $ B-level _)
       (λ p → Trunc-elim
-        {P = λ q → ∀ b → transport₀ B (B-level _) ([ p ] ∙₀ q) b
-                      == transport₀ B (B-level _) q (transport B p b)}
         (λ _ → Π-is-set λ _ → =-preserves-level 0 $ B-level _)
         (λ q b → trans-∙ p q b))
 
@@ -115,11 +111,9 @@ module _ {i} {A : Type i} where
       → {x y z : A} (p : x =₀ y) (q : y =₀ z) (b : B x)
       → transport₀ B (B-level _) (p ∙₀' q) b
       == transport₀ B (B-level _) q (transport₀ B (B-level _) p b)
-    trans₀-∙₀' {B = B} B-level = Trunc-elim
+    trans₀-∙₀' B-level = Trunc-elim
       (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-level 0 $ B-level _)
       (λ p → Trunc-elim
-        {P = λ q → ∀ b → transport₀ B (B-level _) ([ p ] ∙₀' q) b
-                      == transport₀ B (B-level _) q (transport B p b)}
         (λ _ → Π-is-set λ _ → =-preserves-level 0 $ B-level _)
         (λ q b → trans-∙' p q b))
 

@@ -30,7 +30,7 @@ module _ {i} (A : Type i) where
       into-out = Susp-elim
         idp
         idp
-        (λ a → ↓-∘=idf-in' into out {p = merid a} $
+        (λ a → ↓-∘=idf-in' into out $
            ap (ap into) (Out.merid-β a)
            ∙ ap-∙ into (glue (true , a)) (! (glue (false , a)))
            ∙ (Into.glue-β (true , a)
