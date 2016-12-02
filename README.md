@@ -262,8 +262,37 @@ TODO: describe more precisely each file
 
 This directory contains experimental or unfinished work.
 
-ACKNOWLEDGMENT
---------------
+Citation
+--------
+
+```
+@online{hott-in:agda,
+  author={Guillaume Brunerie
+    and Kuen-Bang {Hou (Favonia)}
+    and Evan Cavallo
+    and Jesper Cockx
+    and Christian Sattler
+    and Chris Jeris
+    and Michael Shulman},
+  title={Homotopy Type Theory in {A}gda},
+  url={https://github.com/HoTT/HoTT-Agda}
+}
+```
+
+Names are roughly sorted by the amount of contributed code,
+with the founder Guillaume always staying on the top.
+List of contribution (possibly outdated or incorrect):
+
+- Guillaume Brunerie: the foundation, pi1s1, 3x3 lemma, many more
+- Favonia: covering space, Blakers-Massey, van Kampen, cohomology
+- Evan Cavallo: cubical reasoning, cohomology, Mayer-Vietoris
+- Jesper Cockx: rewrite rules
+- Christian Sattler: updates to equivalence and univalence
+- Chris Jeris: Eckmann-Hilton argument
+- Michael Shulman: updates to equivalence and univalence
+
+Funding
+-------
 
 This material is partially based upon work supported by the National Science
 Foundation under Grant Number 1116703. Any opinions, findings, and conclusions
