@@ -4,7 +4,7 @@ open import HoTT
 import homotopy.ConstantToSetExtendsToProp as ConstExt
 open import homotopy.RibbonCover
 
-module homotopy.CoverClassification {i} (X : Ptd i)
+module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
   (A-conn : is-connected 0 (fst X)) where
 
   open Cover
@@ -16,23 +16,23 @@ module homotopy.CoverClassification {i} (X : Ptd i)
     a₁ = snd X
 
   -- A covering space constructed from a G-set.
-  gset-to-cover : ∀ {j} → Gset (πS 0 X) j → Cover A (lmax i j)
-  gset-to-cover gs = Ribbon-cover X gs
+  grpset-to-cover : ∀ {j} → GroupSet (πS 0 X) j → Cover A (lmax i j)
+  grpset-to-cover gs = Ribbon-cover X gs
 
   -- Covering spaces to G-sets.
-  cover-to-gset-struct : ∀ {j} (cov : Cover A j)
-    → GsetStructure (πS 0 X) (Fiber cov a₁) (Fiber-is-set cov a₁)
-  cover-to-gset-struct cov = record
+  cover-to-grpset-struct : ∀ {j} (cov : Cover A j)
+    → GroupSetStructure (πS 0 X) (Fiber cov a₁) (Fiber-is-set cov a₁)
+  cover-to-grpset-struct cov = record
     { act = cover-trace cov
     ; unit-r = cover-trace-idp₀ cov
     ; assoc = cover-paste cov
     }
 
-  cover-to-gset : ∀ {j} → Cover A j → Gset (πS 0 X) j
-  cover-to-gset cov = record
+  cover-to-grpset : ∀ {j} → Cover A j → GroupSet (πS 0 X) j
+  cover-to-grpset cov = record
     { El = Fiber cov a₁
     ; El-level = Fiber-level cov a₁
-    ; gset-struct = cover-to-gset-struct cov
+    ; grpset-struct = cover-to-grpset-struct cov
     }
 
   -- This is derivable from connectedness condition.
@@ -49,7 +49,7 @@ module homotopy.CoverClassification {i} (X : Ptd i)
 
       -- Suppose that we get the path, we can compute the ribbon easily.
       fiber+path-to-ribbon : ∀ {a₂} (a↑ : Fiber cov a₂) (p : a₁ == a₂)
-        → Ribbon X (cover-to-gset cov) a₂
+        → Ribbon X (cover-to-grpset cov) a₂
       fiber+path-to-ribbon {a₂} a↑ p =
         trace (cover-trace cov a↑ [ ! p ]) [ p ]
 
@@ -72,18 +72,18 @@ module homotopy.CoverClassification {i} (X : Ptd i)
           (fiber+path-to-ribbon-is-path-irrelevant a↑)
 
       fiber+path₋₁-to-ribbon : ∀ {a₂} (a↑ : Cover.Fiber cov a₂)
-        → Trunc -1 (a₁ == a₂) → Ribbon X (cover-to-gset cov) a₂
+        → Trunc -1 (a₁ == a₂) → Ribbon X (cover-to-grpset cov) a₂
       fiber+path₋₁-to-ribbon a↑ = FiberAndPathToRibbon.cst-extend a↑
 
   -- So the conversion from fiber to ribbon is done.
   fiber-to-ribbon : ∀ {j} (cov : Cover A j)
     → {a₂ : A} (a↑ : Cover.Fiber cov a₂)
-    → Ribbon X (cover-to-gset cov) a₂
+    → Ribbon X (cover-to-grpset cov) a₂
   fiber-to-ribbon cov a↑ = fiber+path₋₁-to-ribbon cov a↑ [base-path]
 
   -- The other direction is easy.
   ribbon-to-fiber : ∀ {j} (cov : Cover A j) {a₂}
-    → Ribbon X (cover-to-gset cov) a₂ → Cover.Fiber cov a₂
+    → Ribbon X (cover-to-grpset cov) a₂ → Cover.Fiber cov a₂
   ribbon-to-fiber cov {a₂} r =
     Ribbon-rec (Fiber-is-set cov a₂) (cover-trace cov) (cover-paste cov) r
 
@@ -91,7 +91,7 @@ module homotopy.CoverClassification {i} (X : Ptd i)
     -- Some routine computations.
     abstract
       ribbon-to-fiber-to-ribbon : ∀ {j} (cov : Cover A j) {a₂}
-        → (r : Ribbon X (cover-to-gset cov) a₂)
+        → (r : Ribbon X (cover-to-grpset cov) a₂)
         → fiber-to-ribbon cov (ribbon-to-fiber cov r) == r
       ribbon-to-fiber-to-ribbon cov {a₂} = Ribbon-elim
         {P = λ r → fiber-to-ribbon cov (ribbon-to-fiber cov r) == r}
@@ -107,9 +107,9 @@ module homotopy.CoverClassification {i} (X : Ptd i)
         where
           abstract
             lemma : ∀ {a₂} (a↑ : Cover.Fiber cov a₁) (p : a₁ =₀ a₂) (bp : a₁ == a₂)
-              → trace {X = X} {gs = cover-to-gset cov}
+              → trace {X = X} {gs = cover-to-grpset cov}
                   (cover-trace cov (cover-trace cov a↑ p) [ ! bp ]) [ bp ]
-              == trace {X = X} {gs = cover-to-gset cov} a↑ p
+              == trace {X = X} {gs = cover-to-grpset cov} a↑ p
             lemma a↑ p idp =
               trace (cover-trace cov a↑ p) idp₀
                 =⟨ paste a↑ p idp₀ ⟩
@@ -136,26 +136,26 @@ module homotopy.CoverClassification {i} (X : Ptd i)
               == a↑
             lemma a↑ idp = idp
 
-  cover-to-gset-to-cover : ∀ {j} (cov : Cover A (lmax i j))
-    → gset-to-cover (cover-to-gset cov) == cov
-  cover-to-gset-to-cover cov = cover= λ _ →
+  cover-to-grpset-to-cover : ∀ {j} (cov : Cover A (lmax i j))
+    → grpset-to-cover (cover-to-grpset cov) == cov
+  cover-to-grpset-to-cover cov = cover= λ _ →
     ribbon-to-fiber cov , is-eq
       (ribbon-to-fiber cov)
       (fiber-to-ribbon cov)
       (fiber-to-ribbon-to-fiber cov)
       (ribbon-to-fiber-to-ribbon cov)
 
-  -- The second direction : gset -> covering -> gset
+  -- The second direction : grpset -> covering -> grpset
 
   -- Part 2.1: The fiber over the point a is the carrier.
-  ribbon-a₁-to-El : ∀ {j} {gs : Gset (πS 0 X) j}
-    → Ribbon X gs a₁ → Gset.El gs
-  ribbon-a₁-to-El {j} {gs} = let open Gset gs in
+  ribbon-a₁-to-El : ∀ {j} {gs : GroupSet (πS 0 X) j}
+    → Ribbon X gs a₁ → GroupSet.El gs
+  ribbon-a₁-to-El {j} {gs} = let open GroupSet gs in
     Ribbon-rec El-level act assoc
 
-  ribbon-a₁-to-El-equiv : ∀ {j} {gs : Gset (πS 0 X) j}
-    → Ribbon X gs a₁ ≃ Gset.El gs
-  ribbon-a₁-to-El-equiv {j} {gs} = let open Gset gs in
+  ribbon-a₁-to-El-equiv : ∀ {j} {gs : GroupSet (πS 0 X) j}
+    → Ribbon X gs a₁ ≃ GroupSet.El gs
+  ribbon-a₁-to-El-equiv {j} {gs} = let open GroupSet gs in
     ribbon-a₁-to-El , is-eq _
       (λ r → trace r idp₀)
       (λ a↑ → unit-r a↑)
@@ -171,12 +171,12 @@ module homotopy.CoverClassification {i} (X : Ptd i)
             ∎)
         (λ _ _ _ → prop-has-all-paths-↓ (Ribbon-is-set _ _)))
 
-  gset-to-cover-to-gset : ∀ {j} (gs : Gset (πS 0 X) (lmax i j))
-    → cover-to-gset (gset-to-cover gs) == gs
-  gset-to-cover-to-gset gs =
-    gset=
+  grpset-to-cover-to-grpset : ∀ {j} (gs : GroupSet (πS 0 X) (lmax i j))
+    → cover-to-grpset (grpset-to-cover gs) == gs
+  grpset-to-cover-to-grpset gs =
+    groupset=
       ribbon-a₁-to-El-equiv
-      (λ {x₁}{x₂} x= → Trunc-elim (λ _ → =-preserves-set $ Gset.El-is-set gs) λ g →
+      (λ {x₁}{x₂} x= → Trunc-elim (λ _ → =-preserves-set $ GroupSet.El-is-set gs) λ g →
         ribbon-a₁-to-El (transport (Ribbon X gs) g x₁)
           =⟨ ap (λ x → ribbon-a₁-to-El (transport (Ribbon X gs) g x))
                 $ ! $ <–-inv-l ribbon-a₁-to-El-equiv x₁ ⟩
@@ -184,15 +184,21 @@ module homotopy.CoverClassification {i} (X : Ptd i)
           =⟨ ap (λ x → ribbon-a₁-to-El (transport (Ribbon X gs) g (trace x idp₀))) x= ⟩
         ribbon-a₁-to-El (transport (Ribbon X gs) g (trace x₂ idp₀))
           =⟨ ap ribbon-a₁-to-El $ trans-trace g x₂ idp₀ ⟩
-        Gset.act gs x₂ [ g ]
+        GroupSet.act gs x₂ [ g ]
           ∎)
 
   -- Finally...
-  gset-to-cover-equiv : ∀ {j}
-    → Gset (πS 0 X) (lmax i j) ≃ Cover A (lmax i j)
-  gset-to-cover-equiv {j} =
-    gset-to-cover , is-eq
+  grpset-to-cover-equiv : ∀ {j}
+    → GroupSet (πS 0 X) (lmax i j) ≃ Cover A (lmax i j)
+  grpset-to-cover-equiv {j} =
+    grpset-to-cover , is-eq
       _
-      (λ c → cover-to-gset c)
-      (λ c → cover-to-gset-to-cover {lmax i j} c)
-      (gset-to-cover-to-gset {lmax i j})
+      (λ c → cover-to-grpset c)
+      (λ c → cover-to-grpset-to-cover {lmax i j} c)
+      (grpset-to-cover-to-grpset {lmax i j})
+
+  -- The path-set cover is represented by the fundamental group itself
+  path-set-is-repr-by-π1 : cover-to-grpset (path-set-cover X)
+    == group-to-group-set (πS 0 X)
+  path-set-is-repr-by-π1 = groupset= (ide _)
+    (λ {x₁} p g → transp₀-cst=₀idf g x₁ ∙' ap (_∙₀ g) p)

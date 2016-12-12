@@ -18,14 +18,14 @@ module homotopy.RibbonCover {i : ULevel} where
   private
     π1 = fundamental-group
 
-  module _ (X : Ptd i) {j} (gs : Gset (fundamental-group X) j) (a₂ : fst X) where
+  module _ (X : Ptd i) {j} (gs : GroupSet (fundamental-group X) j) (a₂ : fst X) where
     private
       A = fst X
       a₁ = snd X
-      El = Gset.El gs
-      El-level = Gset.El-level gs
+      El = GroupSet.El gs
+      El-level = GroupSet.El-level gs
       infix 80 _⊙_
-      _⊙_ = Gset.act gs
+      _⊙_ = GroupSet.act gs
 
     RibbonSet : Type (lmax i j)
     RibbonSet = El × (a₁ =₀ a₂)
@@ -37,14 +37,14 @@ module homotopy.RibbonCover {i : ULevel} where
     Ribbon : Type (lmax i j)
     Ribbon = SetQuot RibbonRel
 
-  module _ {X : Ptd i} {j} {gs : Gset (fundamental-group X) j} {a₂ : fst X} where
+  module _ {X : Ptd i} {j} {gs : GroupSet (fundamental-group X) j} {a₂ : fst X} where
     private
       A = fst X
       a = snd X
-      El = Gset.El gs
-      El-level = Gset.El-level gs
+      El = GroupSet.El gs
+      El-level = GroupSet.El-level gs
       infix 80 _⊙_
-      _⊙_ = Gset.act gs
+      _⊙_ = GroupSet.act gs
 
     -- A point in the fiber [a₂].
     {-
@@ -108,7 +108,7 @@ module homotopy.RibbonCover {i : ULevel} where
     open RibbonRec public using () renaming (f to Ribbon-rec)
 
   -- This data structure gives a cover.
-  Ribbon-cover : ∀ (X : Ptd i) {j} (gs : Gset (π1 X) j)
+  Ribbon-cover : ∀ (X : Ptd i) {j} (gs : GroupSet (π1 X) j)
     → Cover (fst X) (lmax i j)
   Ribbon-cover X gs = record
     { Fiber = Ribbon X gs
@@ -116,7 +116,7 @@ module homotopy.RibbonCover {i : ULevel} where
     }
 
   trans-trace : ∀ {A : Type i} {a₁} {j}
-    {gs : Gset (π1 (A , a₁)) j}
+    {gs : GroupSet (π1 (A , a₁)) j}
     {a₂} (q : a₁ == a₂) y p
     → transport (Ribbon (A , a₁) gs) q (trace y p) == trace y (p ∙₀ [ q ])
   trans-trace idp y p = ap (trace y) $ ! $ ∙₀-unit-r p

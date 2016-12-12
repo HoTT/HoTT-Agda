@@ -12,9 +12,9 @@ open import lib.types.Group
 module lib.types.GroupSet {i} where
 
   -- The right group action with respect to the group [grp].
-  record GsetStructure (grp : Group i) {j} (El : Type j)
+  record GroupSetStructure (grp : Group i) {j} (El : Type j)
     (_ : is-set El) : Type (lmax i j) where
-    constructor gset-structure
+    constructor groupset-structure
     private
       module G = Group grp
       module GS = GroupStructure G.group-struct
@@ -25,13 +25,13 @@ module lib.types.GroupSet {i} where
 
   -- The definition of a G-set.  A set [El] equipped with
   -- a right group action with respect to [grp].
-  record Gset (grp : Group i) j : Type (lsucc (lmax i j)) where
-    constructor gset
+  record GroupSet (grp : Group i) j : Type (lsucc (lmax i j)) where
+    constructor groupset
     field
       El : Type j
       El-level : is-set El
-      gset-struct : GsetStructure grp El El-level
-    open GsetStructure gset-struct public
+      grpset-struct : GroupSetStructure grp El El-level
+    open GroupSetStructure grpset-struct public
     El-is-set = El-level
 
   -- A helper function to establish equivalence between two G-sets.
@@ -41,9 +41,9 @@ module lib.types.GroupSet {i} where
     private
       module G = Group grp
       module GS = GroupStructure G.group-struct
-    open GsetStructure
+    open GroupSetStructure
     private
-      gset-structure=' : ∀ {gss₁ gss₂ : GsetStructure grp El El-level}
+      groupset-structure=' : ∀ {gss₁ gss₂ : GroupSetStructure grp El El-level}
         → (act= : act gss₁ == act gss₂)
         → unit-r gss₁ == unit-r gss₂
           [ (λ act → ∀ x → act x GS.ident == x) ↓ act= ]
@@ -51,13 +51,13 @@ module lib.types.GroupSet {i} where
           [ (λ act → ∀ x g₁ g₂ →
               act (act x g₁) g₂ == act x (GS.comp g₁ g₂)) ↓ act= ]
         → gss₁ == gss₂
-      gset-structure=' {gset-structure _ _ _} {gset-structure ._ ._ ._}
+      groupset-structure=' {groupset-structure _ _ _} {groupset-structure ._ ._ ._}
         idp idp idp = idp
 
-    gset-structure= : ∀ {gss₁ gss₂ : GsetStructure grp El El-level}
+    groupset-structure= : ∀ {gss₁ gss₂ : GroupSetStructure grp El El-level}
       → (∀ x g → act gss₁ x g == act gss₂ x g)
       → gss₁ == gss₂
-    gset-structure= act= = gset-structure='
+    groupset-structure= act= = groupset-structure='
       (λ= λ x → λ= λ g → act= x g)
       (prop-has-all-paths-↓ (Π-level λ _ → El-level _ _))
       (prop-has-all-paths-↓
@@ -67,61 +67,71 @@ module lib.types.GroupSet {i} where
     private
       module G = Group grp
       module GS = GroupStructure G.group-struct
-    open Gset {grp} {j}
+    open GroupSet {grp} {j}
     private
-      gset='' : ∀ {gs₁ gs₂ : Gset grp j}
+      groupset='' : ∀ {gs₁ gs₂ : GroupSet grp j}
         → (El= : El gs₁ == El gs₂)
         → (El-level : El-level gs₁ == El-level gs₂ [ is-set ↓ El= ])
-        → gset-struct gs₁ == gset-struct gs₂
-          [ uncurry (GsetStructure grp) ↓ pair= El= El-level ]
+        → grpset-struct gs₁ == grpset-struct gs₂
+          [ uncurry (GroupSetStructure grp) ↓ pair= El= El-level ]
         → gs₁ == gs₂
-      gset='' {gset _ _ _} {gset ._ ._ ._} idp idp idp = idp
+      groupset='' {groupset _ _ _} {groupset ._ ._ ._} idp idp idp = idp
 
-      gset=' : ∀ {gs₁ gs₂ : Gset grp j}
+      groupset=' : ∀ {gs₁ gs₂ : GroupSet grp j}
         → (El= : El gs₁ == El gs₂)
         → (El-level : El-level gs₁ == El-level gs₂ [ is-set ↓ El= ])
         → (∀ {x₁} {x₂} (p : x₁ == x₂ [ idf _ ↓ El= ]) g
             → act gs₁ x₁ g == act gs₂ x₂ g [ idf _ ↓ El= ])
         → gs₁ == gs₂
-      gset=' {gset _ _ _} {gset ._ ._ _} idp idp act= =
-        gset='' idp idp (gset-structure= λ x g → act= idp g)
+      groupset=' {groupset _ _ _} {groupset ._ ._ _} idp idp act= =
+        groupset='' idp idp (groupset-structure= λ x g → act= idp g)
 
-    gset= : ∀ {gs₁ gs₂ : Gset grp j}
+    groupset= : ∀ {gs₁ gs₂ : GroupSet grp j}
       → (El≃ : El gs₁ ≃ El gs₂)
       → (∀ {x₁} {x₂}
           → –> El≃ x₁ == x₂
           → ∀ g → –> El≃ (act gs₁ x₁ g) == act gs₂ x₂ g)
       → gs₁ == gs₂
-    gset= El≃ act= =
-      gset='
+    groupset= El≃ act= =
+      groupset='
         (ua El≃)
         (prop-has-all-paths-↓ is-set-is-prop)
         (λ x= g → ↓-idf-ua-in El≃ $ act= (↓-idf-ua-out El≃ x=) g)
 
-  -- The Gset homomorphism.
-  record GsetHom {grp : Group i} {j}
-    (gset₁ gset₂ : Gset grp j) : Type (lmax i j) where
-    constructor gset-hom
-    open Gset
+  -- The GroupSet homomorphism.
+  record GroupSetHom {grp : Group i} {j}
+    (gset₁ gset₂ : GroupSet grp j) : Type (lmax i j) where
+    constructor groupset-hom
+    open GroupSet
     field
       f : El gset₁ → El gset₂
       pres-act : ∀ g x → f (act gset₁ x g) == act gset₂ (f x) g
 
   private
-    gset-hom=' : ∀ {grp : Group i} {j} {gset₁ gset₂ : Gset grp j}
-      {gsh₁ gsh₂ : GsetHom gset₁ gset₂}
-      → (f= : GsetHom.f gsh₁ == GsetHom.f gsh₂)
-      → (GsetHom.pres-act gsh₁ == GsetHom.pres-act gsh₂
-        [ (λ f → ∀ g x → f (Gset.act gset₁ x g) == Gset.act gset₂ (f x) g) ↓ f= ] )
+    groupset-hom=' : ∀ {grp : Group i} {j} {gset₁ gset₂ : GroupSet grp j}
+      {gsh₁ gsh₂ : GroupSetHom gset₁ gset₂}
+      → (f= : GroupSetHom.f gsh₁ == GroupSetHom.f gsh₂)
+      → (GroupSetHom.pres-act gsh₁ == GroupSetHom.pres-act gsh₂
+        [ (λ f → ∀ g x → f (GroupSet.act gset₁ x g) == GroupSet.act gset₂ (f x) g) ↓ f= ] )
       → gsh₁ == gsh₂
-    gset-hom=' idp idp = idp
+    groupset-hom=' idp idp = idp
 
-  gset-hom= : ∀ {grp : Group i} {j} {gset₁ gset₂ : Gset grp j}
-    {gsh₁ gsh₂ : GsetHom gset₁ gset₂}
-    → (∀ x → GsetHom.f gsh₁ x == GsetHom.f gsh₂ x)
+  groupset-hom= : ∀ {grp : Group i} {j} {gset₁ gset₂ : GroupSet grp j}
+    {gsh₁ gsh₂ : GroupSetHom gset₁ gset₂}
+    → (∀ x → GroupSetHom.f gsh₁ x == GroupSetHom.f gsh₂ x)
     → gsh₁ == gsh₂
-  gset-hom= {gset₂ = gset₂} f= =
-    gset-hom='
+  groupset-hom= {gset₂ = gset₂} f= =
+    groupset-hom='
       (λ= f=)
       (prop-has-all-paths-↓ $
-        Π-level λ _ → Π-level λ _ → Gset.El-level gset₂ _ _)
+        Π-level λ _ → Π-level λ _ → GroupSet.El-level gset₂ _ _)
+
+  group-to-group-set : ∀ (grp : Group i) → GroupSet grp i
+  group-to-group-set grp = record {
+    El = G.El;
+    El-level = G.El-level;
+    grpset-struct = record {
+      act = G.comp;
+      unit-r = G.unit-r;
+      assoc = G.assoc}}
+    where module G = Group grp

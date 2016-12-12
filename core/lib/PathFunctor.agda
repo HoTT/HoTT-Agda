@@ -107,15 +107,15 @@ coe-ap-! : ∀ {i j} {A : Type i} (P : A → Type j) {a b : A} (p : a == b)
 coe-ap-! P idp x = idp
 
 {- Functoriality of transport -}
-trans-∙ : ∀ {i j} {A : Type i} {B : A → Type j} {x y z : A}
+transp-∙ : ∀ {i j} {A : Type i} {B : A → Type j} {x y z : A}
   (p : x == y) (q : y == z) (b : B x)
   → transport B (p ∙ q) b == transport B q (transport B p b)
-trans-∙ idp _ _ = idp
+transp-∙ idp _ _ = idp
 
-trans-∙' : ∀ {i j} {A : Type i} {B : A → Type j} {x y z : A}
+transp-∙' : ∀ {i j} {A : Type i} {B : A → Type j} {x y z : A}
   (p : x == y) (q : y == z) (b : B x)
   → transport B (p ∙' q) b == transport B q (transport B p b)
-trans-∙' _ idp _ = idp
+transp-∙' _ idp _ = idp
 
 {- Naturality of homotopies -}
 
@@ -176,6 +176,6 @@ module _ {i j} {A : Type i} {B : Type j} where
   ap2-diag f idp = idp
 
 -- unsure where this belongs
-trans-pathfrom : ∀ {i} {A : Type i} {a x y : A} (p : x == y) (q : a == x)
+transp-pathfrom : ∀ {i} {A : Type i} {a x y : A} (p : x == y) (q : a == x)
   → transport (λ x → a == x) p q == q ∙ p
-trans-pathfrom idp q = ! (∙-unit-r q)
+transp-pathfrom idp q = ! (∙-unit-r q)

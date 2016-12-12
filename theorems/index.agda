@@ -38,7 +38,7 @@ import homotopy.SpaceFromGroups
 -- import homotopy.JoinAssoc3x3 -- commented out because this does not run on travis.
 
 {- covering spaces -}
-import homotopy.CoverClassification
+import homotopy.GroupSetsRepresentCovers
 import homotopy.AnyUniversalCoverIsPathSet
 import homotopy.PathSetIsInitalCover
 
