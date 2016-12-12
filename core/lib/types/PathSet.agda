@@ -131,13 +131,13 @@ module _ {i} {A : Type i} where
 
 {-
 module _ {i} {A : Type i} where
-  trans-id≡₀cst : {a b c : A} (p : b ≡ c) (q : b ≡₀ a)
+  transp-id≡₀cst : {a b c : A} (p : b ≡ c) (q : b ≡₀ a)
     → transport (λ x → x ≡₀ a) p q ≡ proj (! p) ∘₀ q
-  trans-id≡₀cst refl q = ! $ refl₀-left-unit q
+  transp-id≡₀cst refl q = ! $ refl₀-left-unit q
 
-  trans-cst≡₀id : {a b c : A} (p : b ≡ c) (q : a ≡₀ b)
+  transp-cst≡₀id : {a b c : A} (p : b ≡ c) (q : a ≡₀ b)
     → transport (λ x → a ≡₀ x) p q ≡ q ∘₀ proj p
-  trans-cst≡₀id refl q = ! $ refl₀-right-unit q
+  transp-cst≡₀id refl q = ! $ refl₀-right-unit q
 
 module _ {i} {A : Set i} where
   homotopy₀-naturality : ∀ {j} {B : Set j} (f g : A → B)

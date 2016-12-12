@@ -297,12 +297,12 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k} (f : A → C) (g : B →
     coh idp idp idp = idp
 
 
-trans-↓ : ∀ {i j} {A : Type i} (P : A → Type j) {a₁ a₂ : A}
+transp-↓ : ∀ {i j} {A : Type i} (P : A → Type j) {a₁ a₂ : A}
   (p : a₁ == a₂) (y : P a₂) → transport P (! p) y == y [ P ↓ p ]
-trans-↓ _ idp _ = idp
+transp-↓ _ idp _ = idp
 
-trans-ap-↓ : ∀ {i j k} {A : Type i} {B : Type j} (P : B → Type k) (h : A → B)
+transp-ap-↓ : ∀ {i j k} {A : Type i} {B : Type j} (P : B → Type k) (h : A → B)
   {a₁ a₂ : A} (p : a₁ == a₂) (y : P (h a₂))
   → transport P (! (ap h p)) y == y [ P ∘ h ↓ p ]
-trans-ap-↓ _ _ idp _ = idp
+transp-ap-↓ _ _ idp _ = idp
 

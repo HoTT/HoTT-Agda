@@ -171,14 +171,14 @@ abstract
         g (b , s) = (is-equiv.g e b , transport P (! (is-equiv.f-g e b)) s)
 
         f-g : ∀ y → f (g y) == y
-        f-g (b , s) = pair= (is-equiv.f-g e b) (trans-↓ P (is-equiv.f-g e b) s)
+        f-g (b , s) = pair= (is-equiv.f-g e b) (transp-↓ P (is-equiv.f-g e b) s)
 
         g-f : ∀ x → g (f x) == x
         g-f (a , r) =
           pair= (is-equiv.g-f e a)
                 (transport (λ q → transport P (! q) r == r [ P ∘ h ↓ is-equiv.g-f e a ])
                            (is-equiv.adj e a)
-                           (trans-ap-↓ P h (is-equiv.g-f e a) r))
+                           (transp-ap-↓ P h (is-equiv.g-f e a) r))
 
 ×-isemap-l : ∀ {i₀ i₁ j} {A₀ : Type i₀} {A₁ : Type i₁} (B : Type j) {h : A₀ → A₁}
   → is-equiv h → is-equiv (×-fmap-l B h)

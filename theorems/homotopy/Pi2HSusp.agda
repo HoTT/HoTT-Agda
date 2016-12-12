@@ -72,7 +72,7 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (fst X))
     encode-decode' : (a : A) → encode (decode' a) == a
     encode-decode' a =
       transport Codes (merid a ∙ ! (merid e)) e
-        =⟨ trans-∙ {B = Codes} (merid a) (! (merid e)) e ⟩
+        =⟨ transp-∙ {B = Codes} (merid a) (! (merid e)) e ⟩
       transport Codes (! (merid e)) (transport Codes (merid a) e)
         =⟨ transport-Codes-mer a e ∙ μ-e-r a
           |in-ctx (λ w → transport Codes (! (merid e)) w) ⟩
@@ -127,7 +127,7 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (fst X))
         transport P (merid a) [ merid a' ∙ ! (merid e) ]
           =⟨ transport-Trunc (north ==_) (merid a) _ ⟩
         [ transport (north ==_) (merid a) (merid a' ∙ ! (merid e)) ]
-          =⟨ ap [_] (trans-pathfrom {A = Susp A} (merid a) _) ⟩
+          =⟨ ap [_] (transp-pathfrom {A = Susp A} (merid a) _) ⟩
         [ (merid a' ∙ ! (merid e)) ∙ merid a ]
           =⟨ ap [_] (∙-assoc (merid a') (! (merid e)) (merid a)) ⟩
         [ merid a' ∙ ! (merid e) ∙ merid a ]

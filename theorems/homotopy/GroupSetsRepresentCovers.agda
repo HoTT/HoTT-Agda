@@ -183,7 +183,7 @@ module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
         ribbon-a₁-to-El (transport (Ribbon X gs) g (trace (ribbon-a₁-to-El x₁) idp₀))
           =⟨ ap (λ x → ribbon-a₁-to-El (transport (Ribbon X gs) g (trace x idp₀))) x= ⟩
         ribbon-a₁-to-El (transport (Ribbon X gs) g (trace x₂ idp₀))
-          =⟨ ap ribbon-a₁-to-El $ trans-trace g x₂ idp₀ ⟩
+          =⟨ ap ribbon-a₁-to-El $ transp-trace g x₂ idp₀ ⟩
         GroupSet.act gs x₂ [ g ]
           ∎)
 

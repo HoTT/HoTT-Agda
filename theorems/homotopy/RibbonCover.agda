@@ -115,8 +115,8 @@ module homotopy.RibbonCover {i : ULevel} where
     ; Fiber-level = λ a → Ribbon-level
     }
 
-  trans-trace : ∀ {A : Type i} {a₁} {j}
+  transp-trace : ∀ {A : Type i} {a₁} {j}
     {gs : GroupSet (π1 (A , a₁)) j}
     {a₂} (q : a₁ == a₂) y p
     → transport (Ribbon (A , a₁) gs) q (trace y p) == trace y (p ∙₀ [ q ])
-  trans-trace idp y p = ap (trace y) $ ! $ ∙₀-unit-r p
+  transp-trace idp y p = ap (trace y) $ ! $ ∙₀-unit-r p
