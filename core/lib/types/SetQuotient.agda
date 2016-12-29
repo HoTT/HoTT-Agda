@@ -20,6 +20,7 @@ module _ where
 
   module _ {R : Rel A j} where
 
+    infix 60 q[_]
     q[_] : (a : A) → SetQuot R
     q[ a ] = #setquot #q[ a ] _
 
