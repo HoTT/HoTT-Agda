@@ -12,7 +12,7 @@ private
   move1-left-on-left p idp h = h
 
 module FreudenthalEquiv
-  {i} (n k : ℕ₋₂) (kle : k ≤T S (n +2+ S n))
+  {i} (n k : ℕ₋₂) (kle : k ≤T S n +2+ S n)
   (X : Type i) (x₀ : X) (cX : is-connected (S (S n)) X) where
 
   Q : Susp X → Type i
@@ -22,7 +22,7 @@ module FreudenthalEquiv
   up x = merid x ∙ ! (merid x₀)
 
   Codes-mer-args : WedgeExt.args {a₀ = x₀} {b₀ = [_] {n = k} x₀}
-  Codes-mer-args = record {n = n; m = n;
+  Codes-mer-args = record {n = S n; m = S n;
     cA = cX;
     cB = Trunc-preserves-conn k cX;
     P = λ _ _ → (Trunc k X , raise-level-≤T kle Trunc-level);
@@ -203,7 +203,7 @@ module FreudenthalEquiv
 
       STS-args : WedgeExt.args {a₀ = x₀} {b₀ = x₀}
       STS-args =
-        record {n = n; m = n; cA = cX; cB = cX; P = P; f = f; g = g; p = p}
+        record {n = S n; m = S n; cA = cX; cB = cX; P = P; f = f; g = g; p = p}
 
       STS : (x' : X) (c : Codes north) →
         transport Q (merid x') (Trunc-fmap up c)

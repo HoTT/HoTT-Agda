@@ -87,7 +87,7 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (fst X))
     homomorphism = WedgeExt.ext args
       where
       args : WedgeExt.args {a₀ = e} {b₀ = e}
-      args = record {m = -2; n = -2; cA = cA; cB = cA;
+      args = record {m = -1; n = -1; cA = cA; cB = cA;
         P = λ a a' → (_ , Trunc-level {n = 1} _ _);
         f = λ a →  ap [_] $
               merid (μ a e)

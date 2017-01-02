@@ -10,9 +10,9 @@ module WedgeExt {i j} {A : Type i} {a₀ : A} {B : Type j} {b₀ : B} where
   record args : Type (lmax (lsucc i) (lsucc j)) where
     field
       n m : ℕ₋₂
-      cA : is-connected (S (S n)) A
-      cB : is-connected (S (S m)) B
-      P : A → B → (S (n +2+ (S m))) -Type (lmax i j)
+      cA : is-connected (S n) A
+      cB : is-connected (S m) B
+      P : A → B → (n +2+ m) -Type (lmax i j)
       f : (a : A) → fst (P a b₀)
       g : (b : B) → fst (P a₀ b)
       p : f a₀ == g b₀
@@ -21,7 +21,7 @@ module WedgeExt {i j} {A : Type i} {a₀ : A} {B : Type j} {b₀ : B} where
     module _ (r : args) where
       open args r
 
-      Q : A → (S n) -Type (lmax i j)
+      Q : A → n -Type (lmax i j)
       Q a = ((Σ (∀ b → fst (P a b)) (λ k → (k ∘ cst b₀) == cst (f a)) ,
                 conn-elim-general (pointed-conn-out B b₀ cB)
                                   (P a) (cst (f a))))
