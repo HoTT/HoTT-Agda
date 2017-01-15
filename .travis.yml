@@ -19,8 +19,7 @@ addons:
     - stack
 
 install:
-- stack config set resolver nightly
-- stack --no-terminal --install-ghc install Agda
+- stack --no-terminal --install-ghc --resolver nightly install Agda
 
 script:
 - stack exec agda -- --version
