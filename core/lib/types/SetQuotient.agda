@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
 open import lib.Relation
@@ -7,60 +7,45 @@ open import lib.types.Pi
 
 module lib.types.SetQuotient {i} {A : Type i} {j} where
 
-module _ where
-  private
-    data #SetQuot-aux (R : Rel A j) : Type (lmax i j) where
-      #q[_] : A → #SetQuot-aux R 
-
-    data #SetQuot (R : Rel A j) : Type (lmax i j) where
-      #setquot : #SetQuot-aux R → (Unit → Unit) → #SetQuot R
-
+postulate  -- HIT
   SetQuot : (R : Rel A j) → Type (lmax i j)
-  SetQuot = #SetQuot
 
-  module _ {R : Rel A j} where
+module _ {R : Rel A j} where
 
-    infix 60 q[_]
+  infix 60 q[_]
+  postulate  -- HIT
     q[_] : (a : A) → SetQuot R
-    q[ a ] = #setquot #q[ a ] _
+    quot-rel : {a₁ a₂ : A} → R a₁ a₂ → q[ a₁ ] == q[ a₂ ]
+    SetQuot-level : is-set (SetQuot R)
+
+  SetQuot-is-set = SetQuot-level
+
+  module SetQuotElim {k} {P : SetQuot R → Type k}
+    (p : (x : SetQuot R) → is-set (P x)) (q[_]* : (a : A) → P q[ a ])
+    (rel* : ∀ {a₁ a₂} (r : R a₁ a₂) → q[ a₁ ]* == q[ a₂ ]* [ P ↓ quot-rel r ]) where
 
     postulate  -- HIT
-      quot-rel : {a₁ a₂ : A} → R a₁ a₂ → q[ a₁ ] == q[ a₂ ]
-
-    postulate  -- HIT
-      SetQuot-level : is-set (SetQuot R)
-
-    SetQuot-is-set = SetQuot-level
-
-    module SetQuotElim {k} {P : SetQuot R → Type k}
-      (p : (x : SetQuot R) → is-set (P x)) (q[_]* : (a : A) → P q[ a ])
-      (rel* : ∀ {a₁ a₂} (r : R a₁ a₂) → q[ a₁ ]* == q[ a₂ ]* [ P ↓ quot-rel r ]) where
-
       f : Π (SetQuot R) P
-      f = f-aux phantom phantom where
+      q[_]-β : (a : A) → f q[ a ] ↦ q[ a ]*
+    {-# REWRITE q[_]-β #-}
 
-        f-aux : Phantom p
-          → Phantom {A = ∀ {a₁ a₂} (r : R a₁ a₂) → _} rel*
-          → Π (SetQuot R) P
-        f-aux phantom phantom (#setquot #q[ a ] _) = q[ a ]*
+    postulate  -- HIT
+      quot-rel-β : ∀ {a₁ a₂} (r : R a₁ a₂) → apd f (quot-rel r) == rel* r
 
-      postulate  -- HIT
-        quot-rel-β : ∀ {a₁ a₂} (r : R a₁ a₂) → apd f (quot-rel r) == rel* r
+  open SetQuotElim public using () renaming (f to SetQuot-elim)
 
-open SetQuotElim public renaming (f to SetQuot-elim)
+  module SetQuotRec {k} {B : Type k} (p : is-set B)
+    (q[_]* : A → B) (rel* : ∀ {a₁ a₂} (r : R a₁ a₂) → q[ a₁ ]* == q[ a₂ ]*) where
 
-module SetQuotRec {R : Rel A j} {k} {B : Type k} (p : is-set B)
-  (q[_]* : A → B) (rel* : ∀ {a₁ a₂} (r : R a₁ a₂) → q[ a₁ ]* == q[ a₂ ]*) where
+    private
+      module M = SetQuotElim (λ x → p) q[_]* (λ {a₁ a₂} r → ↓-cst-in (rel* r))
 
-  private
-    module M = SetQuotElim (λ x → p) q[_]* (λ {a₁ a₂} r → ↓-cst-in (rel* r))
+    f : SetQuot R → B
+    f = M.f
 
-  f : SetQuot R → B
-  f = M.f
+  open SetQuotRec public using () renaming (f to SetQuot-rec)
 
-open SetQuotRec public renaming (f to SetQuot-rec)
-
--- If [R] is an equivalence relation, then [quot-rel] is an equivalence.
+  -- If [R] is an equivalence relation, then [quot-rel] is an equivalence.
 
 module _ {R : Rel A j}
   (R-is-prop : ∀ {a b} → is-prop (R a b))

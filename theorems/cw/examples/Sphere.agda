@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K --termination-depth=2 #-}
+{-# OPTIONS --without-K --rewriting --termination-depth=2 #-}
 
 open import HoTT
 open import cw.CW

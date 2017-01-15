@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
 open import lib.types.TLevel
@@ -10,30 +10,18 @@ module lib.types.Truncation where
 
 module _ {i} where
 
-  private
-    data #Trunc-aux (n : ℕ₋₂) (A : Type i) : Type i where
-      #[_] : A → #Trunc-aux n A
-
-    data #Trunc (n : ℕ₋₂) (A : Type i) : Type i where
-      #trunc : #Trunc-aux n A → (Unit → Unit) → #Trunc n A
-
-  Trunc : (n : ℕ₋₂) (A : Type i) → Type i
-  Trunc = #Trunc
-
-  [_] : {n : ℕ₋₂} {A : Type i} → A → Trunc n A
-  [ a ] = #trunc #[ a ] _
-
-  postulate -- HIT
+  postulate  -- HIT
+    Trunc : (n : ℕ₋₂) (A : Type i) → Type i
+    [_] : {n : ℕ₋₂} {A : Type i} → A → Trunc n A
     Trunc-level : {n : ℕ₋₂} {A : Type i} → has-level n (Trunc n A)
 
   module TruncElim {n : ℕ₋₂} {A : Type i} {j} {P : Trunc n A → Type j}
     (p : (x : Trunc n A) → has-level n (P x)) (d : (a : A) → P [ a ]) where
 
-    f : Π (Trunc n A) P
-    f = f-aux phantom  where
-
-      f-aux : Phantom p → Π (Trunc n A) P
-      f-aux phantom (#trunc #[ a ] _) = d a
+    postulate  -- HIT
+      f : Π (Trunc n A) P
+      [_]-β : ∀ a → f [ a ] ↦ d a
+    {-# REWRITE [_]-β #-}
 
 open TruncElim public renaming (f to Trunc-elim)
 

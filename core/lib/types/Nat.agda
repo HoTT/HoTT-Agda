@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Base
 open import lib.Function
@@ -135,12 +135,15 @@ abstract
   <-to-≠ {m = S m} {n = S n} lt = ℕ-S-≠ (<-to-≠ (<-cancel-S lt))
 
   <-is-prop : {m n : ℕ} → is-prop (m < n)
-  <-is-prop = all-paths-is-prop <-is-prop' where
-    <-is-prop' : {m n : ℕ} (m<₁n m<₂n : m < n) → m<₁n == m<₂n
-    <-is-prop' ltS ltS = idp
-    <-is-prop' ltS (ltSR lt) = ⊥-rec (<-to-≠ lt idp)
-    <-is-prop' (ltSR lt) ltS = ⊥-rec (<-to-≠ lt idp)
-    <-is-prop' (ltSR lt₁) (ltSR lt₂) = ap ltSR (<-is-prop' lt₁ lt₂)
+  <-is-prop = all-paths-is-prop (<-is-prop' idp) where
+    <-is-prop' : {m n₁ n₂ : ℕ} (eqn : n₁ == n₂) (lt₁ : m < n₁) (lt₂ : m < n₂)
+               → PathOver (λ n → m < n) eqn lt₁ lt₂
+    <-is-prop' eqn ltS ltS = transport (λ eqn₁ → PathOver (_<_ _) eqn₁ ltS ltS)
+                                       (prop-has-all-paths (ℕ-is-set _ _) idp eqn)
+                                       idp
+    <-is-prop' idp ltS (ltSR lt₂) = ⊥-rec (<-to-≠ lt₂ idp)
+    <-is-prop' idp (ltSR lt₁) ltS = ⊥-rec (<-to-≠ lt₁ idp)
+    <-is-prop' idp (ltSR lt₁) (ltSR lt₂) = ap ltSR (<-is-prop' idp lt₁ lt₂)
 
   ≤-is-prop : {m n : ℕ} → is-prop (m ≤ n)
   ≤-is-prop = all-paths-is-prop λ{

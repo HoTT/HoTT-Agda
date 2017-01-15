@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
 open import lib.NType2
@@ -46,12 +46,12 @@ module _ {A : Type i} where
     (p : (x : FormalSum A) → is-set (P x)) (incl* : (a : Word A) → P fs[ a ])
     (rel* : ∀ {a₁ a₂} (r : FormalSumRel a₁ a₂) → incl* a₁ == incl* a₂ [ P ↓ quot-rel r ])
     = SetQuotElim p incl* rel*
-  open FormalSumElim public renaming (f to FormalSum-elim) hiding (quot-rel-β)
+  open FormalSumElim public using () renaming (f to FormalSum-elim)
 
   module FormalSumRec {k} {B : Type k} (p : is-set B) (incl* : Word A → B)
     (rel* : ∀ {a₁ a₂} (r : FormalSumRel a₁ a₂) → incl* a₁ == incl* a₂)
     = SetQuotRec p incl* rel*
-  open FormalSumRec public renaming (f to FormalSum-rec)
+  open FormalSumRec public using () renaming (f to FormalSum-rec)
 
 module _ {A : Type i} where
   -- useful properties that remain public

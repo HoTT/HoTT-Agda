@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
 open import cohomology.SuspAdjointLoopIso
@@ -205,11 +205,7 @@ module SpectrumModel where
     out-into = Trunc-elim
       {P = λ tH → out (into tH) == tH}
       (λ _ → =-preserves-level _ Trunc-level)
-      (λ {(h , hpt) → ap [_] $ pair=
-         (λ= (out-into-fst (h , hpt)))
-         (↓-app=cst-in $ ! $
-            ap (λ w → w ∙ hpt) (app=-β (out-into-fst (h , hpt)) bwbase)
-            ∙ !-inv-l hpt)})
+      (λ {(h , hpt) → ap [_] $ ⊙λ= (out-into-fst (h , hpt)) (↓-idf=cst-in (! (!-inv-l hpt)))})
       where
       lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
         {a₁ a₂ : A} {b : B} (p : a₁ == a₂) (q : f a₁ == b)
