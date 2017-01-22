@@ -13,33 +13,33 @@ module homotopy.vankampen.CodeBP {i j k l}
   data precodeBA (b₀ : B) (a₁ : A) : Type (lmax (lmax (lmax i j) k) l)
 
   data precodeBB b₀ where
-    pc-b : ∀ {b₁} → b₀ =₀ b₁ → precodeBB b₀ b₁
-    pc-aba : ∀ d {b₁} → precodeBA b₀ (f (h d)) → g (h d) =₀ b₁ → precodeBB b₀ b₁
+    pc-b : ∀ {b₁} (pB : b₀ =₀ b₁) → precodeBB b₀ b₁
+    pc-bab : ∀ d {b₁} (pc : precodeBA b₀ (f (h d))) (pB : g (h d) =₀ b₁) → precodeBB b₀ b₁
 
-  infix 65 pc-b
-  syntax pc-b p = p⟧b p
-  infixl 65 pc-aba
-  syntax pc-aba d pcBA pB = pcBA ba⟦ d ⟧b pB
+  infix 66 pc-b
+  syntax pc-b p = ⟧b p
+  infixl 65 pc-bab
+  syntax pc-bab d pcBA pB = pcBA ba⟦ d ⟧b pB
 
   data precodeBA b₀ a₁ where
-    pc-aab : ∀ d → precodeBB b₀ (g (h d)) → f (h d) =₀ a₁ → precodeBA b₀ a₁
+    pc-bba : ∀ d (pc : precodeBB b₀ (g (h d))) (pA : f (h d) =₀ a₁) → precodeBA b₀ a₁
 
-  infixl 65 pc-aab
-  syntax pc-aab d pcBB pA = pcBB bb⟦ d ⟧a pA
+  infixl 65 pc-bba
+  syntax pc-bba d pcBB pA = pcBB bb⟦ d ⟧a pA
 
   data precodeBB-rel {b₀ : B} : {b₁ : B}
     → precodeBB b₀ b₁ → precodeBB b₀ b₁ → Type (lmax (lmax (lmax i j) k) l)
   data precodeBA-rel {b₀ : B} : {a₁ : A}
     → precodeBA b₀ a₁ → precodeBA b₀ a₁ → Type (lmax (lmax (lmax i j) k) l)
   data precodeBB-rel {b₀} where
-    pcBBr-idp₀-idp₀ : ∀ c pcBB → precodeBB-rel (pcBB bb⟦ c ⟧a idp₀ ba⟦ c ⟧b idp₀) pcBB
+    pcBBr-idp₀-idp₀ : ∀ d pcBB → precodeBB-rel (pcBB bb⟦ d ⟧a idp₀ ba⟦ d ⟧b idp₀) pcBB
     pcBBr-switch : ∀ {d₀ d₁ : D} pcBB (pC : h d₀ =₀ h d₁)
       → precodeBB-rel (pcBB bb⟦ d₀ ⟧a ap₀ f pC ba⟦ d₁ ⟧b idp₀) (pcBB bb⟦ d₀ ⟧a idp₀ ba⟦ d₀ ⟧b ap₀ g pC)
-    pcBBr-cong : ∀ d {b₁ pcBA₁ pcBA₂} → precodeBA-rel pcBA₁ pcBA₂ → (pB : g (h d) =₀ b₁)
+    pcBBr-cong : ∀ d {b₁ pcBA₁ pcBA₂} (r : precodeBA-rel pcBA₁ pcBA₂) (pB : g (h d) =₀ b₁)
       → precodeBB-rel (pcBA₁ ba⟦ d ⟧b pB) (pcBA₂ ba⟦ d ⟧b pB)
   data precodeBA-rel {b₀} where
     pcBAr-idp₀-idp₀ : ∀ d pcBA → precodeBA-rel (pcBA ba⟦ d ⟧b idp₀ bb⟦ d ⟧a idp₀) pcBA
-    pcBAr-cong : ∀ d {a₁ pcBB₁ pcBB₂} → precodeBB-rel pcBB₁ pcBB₂ → (pA : f (h d) =₀ a₁)
+    pcBAr-cong : ∀ d {a₁ pcBB₁ pcBB₂} (r : precodeBB-rel pcBB₁ pcBB₂) (pA : f (h d) =₀ a₁)
       → precodeBA-rel (pcBB₁ bb⟦ d ⟧a pA) (pcBB₂ bb⟦ d ⟧a pA)
 
   codeBB : B → B → Type (lmax (lmax (lmax i j) k) l)

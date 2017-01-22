@@ -13,16 +13,16 @@ module homotopy.vankampen.CodeAP {i j k l}
   data precodeAB (a₀ : A) (b₁ : B) : Type (lmax (lmax (lmax i j) k) l)
 
   data precodeAA a₀ where
-    pc-a : ∀ {a₁} → a₀ =₀ a₁ → precodeAA a₀ a₁
-    pc-aba : ∀ d {a₁} → precodeAB a₀ (g (h d)) → f (h d) =₀ a₁ → precodeAA a₀ a₁
+    pc-a : ∀ {a₁} (pA : a₀ =₀ a₁) → precodeAA a₀ a₁
+    pc-aba : ∀ d {a₁} (pc : precodeAB a₀ (g (h d))) (pA : f (h d) =₀ a₁) → precodeAA a₀ a₁
 
-  infix 65 pc-a
-  syntax pc-a p = p⟧a p
+  infix 66 pc-a
+  syntax pc-a p = ⟧a p
   infixl 65 pc-aba
   syntax pc-aba d pcAB pA = pcAB ab⟦ d ⟧a pA
 
   data precodeAB a₀ b₁ where
-    pc-aab : ∀ d → precodeAA a₀ (f (h d)) → g (h d) =₀ b₁ → precodeAB a₀ b₁
+    pc-aab : ∀ d (pc : precodeAA a₀ (f (h d))) (pB : g (h d) =₀ b₁) → precodeAB a₀ b₁
 
   infixl 65 pc-aab
   syntax pc-aab d pcAA pB = pcAA aa⟦ d ⟧b pB
@@ -32,14 +32,14 @@ module homotopy.vankampen.CodeAP {i j k l}
   data precodeAB-rel {a₀ : A} : {b₁ : B}
     → precodeAB a₀ b₁ → precodeAB a₀ b₁ → Type (lmax (lmax (lmax i j) k) l)
   data precodeAA-rel {a₀} where
-    pcAAr-idp₀-idp₀ : ∀ c pcAA → precodeAA-rel (pcAA aa⟦ c ⟧b idp₀ ab⟦ c ⟧a idp₀) pcAA
-    pcAAr-cong : ∀ d {a₁ pcAB₁ pcAB₂} → precodeAB-rel pcAB₁ pcAB₂ → (pA : f (h d) =₀ a₁)
+    pcAAr-idp₀-idp₀ : ∀ d pcAA → precodeAA-rel (pcAA aa⟦ d ⟧b idp₀ ab⟦ d ⟧a idp₀) pcAA
+    pcAAr-cong : ∀ d {a₁ pcAB₁ pcAB₂} (r : precodeAB-rel pcAB₁ pcAB₂) (pA : f (h d) =₀ a₁)
       → precodeAA-rel (pcAB₁ ab⟦ d ⟧a pA) (pcAB₂ ab⟦ d ⟧a pA)
   data precodeAB-rel {a₀} where
     pcABr-idp₀-idp₀ : ∀ d pcAB → precodeAB-rel (pcAB ab⟦ d ⟧a idp₀ aa⟦ d ⟧b idp₀) pcAB
     pcABr-switch : ∀ {d₀ d₁ : D} pcAB (pC : h d₀ =₀ h d₁)
       → precodeAB-rel (pcAB ab⟦ d₀ ⟧a ap₀ f pC aa⟦ d₁ ⟧b idp₀) (pcAB ab⟦ d₀ ⟧a idp₀ aa⟦ d₀ ⟧b ap₀ g pC)
-    pcABr-cong : ∀ d {b₁ pcAA₁ pcAA₂} → precodeAA-rel pcAA₁ pcAA₂ → (pB : g (h d) =₀ b₁)
+    pcABr-cong : ∀ d {b₁ pcAA₁ pcAA₂} (r : precodeAA-rel pcAA₁ pcAA₂) (pB : g (h d) =₀ b₁)
       → precodeAB-rel (pcAA₁ aa⟦ d ⟧b pB) (pcAA₂ aa⟦ d ⟧b pB)
 
   codeAA : A → A → Type (lmax (lmax (lmax i j) k) l)
