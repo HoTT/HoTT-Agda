@@ -1,3 +1,5 @@
+{-# OPTIONS --without-K --rewriting #-}
+
 open import HoTT
 import homotopy.ConstantToSetExtendsToProp as ConstExt
 
