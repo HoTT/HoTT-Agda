@@ -44,8 +44,8 @@ abstract
   πS-Ω-split-iso n X =
     group-hom
       (Trunc-fmap (Ω^-Ω-split (S n) X))
-      (Trunc-elim (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))
-        (λ p → Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+      (Trunc-elim (λ _ → Π-level (λ _ → =-preserves-level Trunc-level))
+        (λ p → Trunc-elim (λ _ → =-preserves-level Trunc-level)
           (λ q → ap [_] (Ω^S-Ω-split-∙ n X p q)))) ,
     Trunc-isemap 0 (Ω^-Ω-split-is-equiv (S n) X)
 

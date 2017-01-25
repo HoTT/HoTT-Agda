@@ -42,12 +42,12 @@ module _ {k} where
            {P = λ tft →
              unchoose (choose-Bool (pick-Bool tft (f (lift false))))
              == pick-Bool tft (f (lift false))}
-           (λ _ → =-preserves-level _ (Π-level (λ _ → Trunc-level)))
+           (λ _ → =-preserves-level (Π-level (λ _ → Trunc-level)))
            (λ ft → Trunc-elim
              {P = λ tff →
                unchoose (choose-Bool (pick-Bool [ ft ] tff ))
                == pick-Bool [ ft ] tff}
-             (λ _ → =-preserves-level _ (Π-level (λ _ → Trunc-level)))
+             (λ _ → =-preserves-level (Π-level (λ _ → Trunc-level)))
              (λ ff → ! (pick-Bool-η _))
              (f (lift false)))
            (f (lift true)))
@@ -55,7 +55,7 @@ module _ {k} where
       c-unc : ∀ tg → choose-Bool (unchoose tg) == tg
       c-unc = Trunc-elim
         {P = λ tg → choose-Bool (unchoose tg) == tg}
-        (λ _ → =-preserves-level _ Trunc-level)
+        (λ _ → =-preserves-level Trunc-level)
         (λ g → ap [_] (pick-Bool-η g))
 
     Bool-has-choice : ∀ j → has-choice n (Lift Bool) A

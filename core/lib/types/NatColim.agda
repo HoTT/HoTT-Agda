@@ -117,7 +117,7 @@ ncolim-conn {D = D} d ⟨-2⟩ cD = -2-conn (ℕColim d)
 ncolim-conn {D = D} d (S m) cD =
   Trunc-rec (prop-has-level-S is-contr-is-prop)
     (λ x → ([ ncin O x ] ,
-            (Trunc-elim (λ _ → =-preserves-level _ Trunc-level) $
+            (Trunc-elim (λ _ → =-preserves-level Trunc-level) $
               λ c → ap [_] (nc-match-=-base d x c) ∙ nc-match-=-point x c)))
     (fst (cD O))
   where
@@ -134,7 +134,7 @@ ncolim-conn {D = D} d (S m) cD =
         ∙h⊡
         square-symmetry
           (natural-square
-            (Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+            (Trunc-elim (λ _ → =-preserves-level Trunc-level)
                (λ c → ap [_] (nc-raise-= d c)))
             (ap (Trunc-fmap (ncin n))
                 (contr-has-all-paths (cD n) [ nc-lift d n x ] [ y ])))
@@ -152,7 +152,7 @@ ncolim-conn {D = D} d (S m) cD =
              (contr-has-all-paths (cD n) [ nc-lift d n x ] [ y ])
         ⊡h∙
         ap (ap (Trunc-fmap (ncin (S n))))
-           (contr-has-all-paths (=-preserves-level _ (cD (S n))) _ _))
+           (contr-has-all-paths (=-preserves-level (cD (S n))) _ _))
 
 {- Type of finite tuples -}
 

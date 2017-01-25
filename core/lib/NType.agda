@@ -122,19 +122,19 @@ module _ {i} where
       prop-is-set = prop-has-level-S
 
       {- If [A] has level [n], then so does [x == y] for [x y : A] -}
-      =-preserves-level : (n : ℕ₋₂) {x y : A}
+      =-preserves-level : {n : ℕ₋₂} {x y : A}
         → (has-level n A → has-level n (x == y))
-      =-preserves-level ⟨-2⟩ p = (contr-has-all-paths p _ _ , unique-path) where
+      =-preserves-level {⟨-2⟩} p = (contr-has-all-paths p _ _ , unique-path) where
         unique-path : {u v : A} (q : u == v)
           → contr-has-all-paths p u v == q
         unique-path idp = !-inv-l (snd p _)
-      =-preserves-level (S n) {x} {y} p = raise-level n (p x y)
+      =-preserves-level {S n} {x} {y} p = raise-level n (p x y)
 
       =-preserves-set : {x y : A} → (is-set A → is-set (x == y))
-      =-preserves-set = =-preserves-level 0
+      =-preserves-set = =-preserves-level
 
       =-preserves-prop : {x y : A} → (is-prop A → is-prop (x == y))
-      =-preserves-prop = =-preserves-level -1
+      =-preserves-prop = =-preserves-level
 
     {- The type of paths from a fixed point is contractible -}
     pathfrom-is-contr : (x : A) → is-contr (Σ A (λ t → x == t))

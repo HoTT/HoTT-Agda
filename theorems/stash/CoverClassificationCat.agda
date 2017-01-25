@@ -37,7 +37,7 @@ module experimental.CoverClassificationCat {i} (A∙ : Ptd i)
         → f a₂ (transport₀ (Fiber cov₁) (Fiber-level cov₁ a₂) p x)
         == transport₀ (Fiber cov₂) (Fiber-level cov₂ a₂) p (f a₁ x)
       lemma₂ x {a₂} = Trunc-elim
-        (λ p → =-preserves-level 0 (Fiber-level cov₂ a₂))
+        (λ p → =-preserves-set (Fiber-level cov₂ a₂))
         (lemma₁ x {a₂})
 
   gset-hom-to-cover-hom : ∀ {j}

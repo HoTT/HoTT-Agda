@@ -141,7 +141,7 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (fst X))
       → decode {x} (encode {x} tα) == tα
     decode-encode {x} = Trunc-elim
       {P = λ tα → decode {x} (encode {x} tα) == tα}
-      (λ _ → =-preserves-level 1 Trunc-level)
+      (λ _ → =-preserves-level Trunc-level)
       (J (λ y p → decode {y} (encode {y} [ p ]) == [ p ])
          (ap [_] (!-inv-r (merid e))))
 

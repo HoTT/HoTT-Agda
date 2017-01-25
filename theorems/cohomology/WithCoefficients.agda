@@ -77,14 +77,14 @@ Trunc-⊙→Ω-group-emap-dom F Z =
 Trunc-⊙→Ω-group-fmap-dom-idf : ∀ {i j} {X : Ptd i} (Y : Ptd j)
   → Trunc-⊙→Ω-group-fmap-dom (⊙idf X) Y == idhom (Trunc-⊙→Ω-group X Y)
 Trunc-⊙→Ω-group-fmap-dom-idf Y = group-hom= $ λ= $ Trunc-elim
-  (λ _ → =-preserves-level _ Trunc-level) (λ _ → idp)
+  (λ _ → =-preserves-level Trunc-level) (λ _ → idp)
 
 Trunc-⊙→Ω-group-fmap-dom-∘ : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   (g : Y ⊙→ Z) (f : X ⊙→ Y) (W : Ptd l)
   → Trunc-⊙→Ω-group-fmap-dom (g ⊙∘ f) W
     == Trunc-⊙→Ω-group-fmap-dom f W ∘ᴳ Trunc-⊙→Ω-group-fmap-dom g W
 Trunc-⊙→Ω-group-fmap-dom-∘ g f W = group-hom= $ λ= $
-  Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+  Trunc-elim (λ _ → =-preserves-level Trunc-level)
     (λ h → ap [_] (! (⊙∘-assoc h g f)))
 
 ⊙→Ω-group-structure-fmap-codom : ∀ {i j k} (X : Ptd i) {Y : Ptd j} {Z : Ptd k}
@@ -127,7 +127,7 @@ Trunc-⊙→Ω-group-fmap-nat : ∀ {i₀ i₁ j₀ j₁}
   →  Trunc-⊙→Ω-group-fmap-dom   F  Y₁ ∘ᴳ Trunc-⊙→Ω-group-fmap-codom X₁ G
   == Trunc-⊙→Ω-group-fmap-codom X₀ G  ∘ᴳ Trunc-⊙→Ω-group-fmap-dom   F  Y₀
 Trunc-⊙→Ω-group-fmap-nat F G = group-hom= $ λ= $ Trunc-elim
-  (λ _ → =-preserves-level _ Trunc-level)
+  (λ _ → =-preserves-level Trunc-level)
   (λ k → ap [_] $ ⊙∘-assoc (⊙Ω-fmap G) k F)
 
 {- Not used.

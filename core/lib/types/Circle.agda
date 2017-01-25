@@ -171,5 +171,5 @@ module S¹RecType {i} (A : Type i) (e : A ≃ A) where
 
 S¹-conn : is-connected 0 S¹
 S¹-conn =
-  ([ base ] , Trunc-elim (λ x → =-preserves-level 0 Trunc-level)
+  ([ base ] , Trunc-elim (λ x → =-preserves-set Trunc-level)
               (S¹-elim idp (prop-has-all-paths-↓ ((Trunc-level :> is-set (Trunc 0 S¹)) _ _))))

@@ -76,7 +76,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
     decode : {x : EM₁ G} → fst (Codes x) → embase == x
     decode {x} =
       EM₁-elim {P = λ x' → fst (Codes x') → embase == x'}
-        (λ _ → Π-level (λ _ → =-preserves-level _ EM₁-level))
+        (λ _ → Π-level (λ _ → =-preserves-level EM₁-level))
         emloop
         loop'
         (λ _ _ → prop-has-all-paths-↓ (↓-level (Π-level (λ _ → EM₁-level _ _))))

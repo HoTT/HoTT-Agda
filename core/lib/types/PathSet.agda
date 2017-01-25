@@ -44,55 +44,55 @@ module _ {i} {A : Type i} where
   abstract
     ∙₀-unit-r : ∀ {x y : A} (q : x =₀ y) → (q ∙₀ idp₀) == q
     ∙₀-unit-r = Trunc-elim
-      (λ _ →  =-preserves-level 0 Trunc-level)
+      (λ _ →  =-preserves-set Trunc-level)
       (λ p → ap [_] $ ∙-unit-r p)
 
     ∙₀-unit-l : ∀ {x y : A} (q : x =₀ y) → (idp₀ ∙₀ q) == q
     ∙₀-unit-l = Trunc-elim
-      (λ _ →  =-preserves-level 0 Trunc-level)
+      (λ _ →  =-preserves-set Trunc-level)
       (λ _ → idp)
 
     ∙₀-assoc : {x y z t : A} (p : x =₀ y) (q : y =₀ z) (r : z =₀ t)
       → (p ∙₀ q) ∙₀ r == p ∙₀ (q ∙₀ r)
     ∙₀-assoc = Trunc-elim
-      (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-level 0 Trunc-level)
+      (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set Trunc-level)
       (λ p → Trunc-elim
-        (λ _ → Π-is-set λ _ → =-preserves-level 0 Trunc-level)
+        (λ _ → Π-is-set λ _ → =-preserves-set Trunc-level)
         (λ q → Trunc-elim
-          (λ _ → =-preserves-level 0 Trunc-level)
+          (λ _ → =-preserves-set Trunc-level)
           (λ r → ap [_] $ ∙-assoc p q r)))
 
     !₀-inv-l : {x y : A} (p : x =₀ y) → (!₀ p) ∙₀ p == idp₀
     !₀-inv-l = Trunc-elim
-      (λ _ →  =-preserves-level 0 Trunc-level)
+      (λ _ →  =-preserves-set Trunc-level)
       (λ p → ap [_] $ !-inv-l p)
 
     !₀-inv-r : {x y : A} (p : x =₀ y) → p ∙₀ (!₀ p) == idp₀
     !₀-inv-r = Trunc-elim
-      (λ _ →  =-preserves-level 0 Trunc-level)
+      (λ _ →  =-preserves-set Trunc-level)
       (λ p → ap [_] $ !-inv-r p)
 
     ∙₀-ap₀ : ∀ {j} {B : Type j} (f : A → B) {x y z : A} (p : x =₀ y) (q : y =₀ z)
       → ap₀ f p ∙₀ ap₀ f q == ap₀ f (p ∙₀ q)
     ∙₀-ap₀ f = Trunc-elim
-      (λ _ → Π-is-set λ _ → =-preserves-level 0 Trunc-level)
+      (λ _ → Π-is-set λ _ → =-preserves-set Trunc-level)
       (λ p → Trunc-elim
-        (λ _ → =-preserves-level 0 Trunc-level)
+        (λ _ → =-preserves-set Trunc-level)
         (λ q → ap [_] $ ∙-ap f p q))
 
     ap₀-∘ : ∀ {j k} {B : Type j} {C : Type k} (g : B → C) (f : A → B)
       {x y : A} (p : x =₀ y) → ap₀ (g ∘ f) p == ap₀ g (ap₀ f p)
     ap₀-∘ f g = Trunc-elim
-      (λ _ → =-preserves-level 0 Trunc-level)
+      (λ _ → =-preserves-set Trunc-level)
       (λ p → ap [_] $ ap-∘ f g p)
 
     coe₀-∙₀ : {B C : Type i} (B-level : is-set B) (C-level : is-set C)
       → (p : A =₀ B) (q : B =₀ C) (a : A)
       → coe₀ C-level (p ∙₀ q) a == coe₀ C-level q (coe₀ B-level p a)
     coe₀-∙₀ B-level C-level = Trunc-elim
-      (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-level 0 C-level)
+      (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set C-level)
       (λ p → Trunc-elim
-        (λ _ → Π-is-set λ _ → =-preserves-level 0 C-level)
+        (λ _ → Π-is-set λ _ → =-preserves-set C-level)
         (λ q a → coe-∙ p q a))
 
     transp₀-∙₀ : ∀ {j} {B : A → Type j}
@@ -101,9 +101,9 @@ module _ {i} {A : Type i} where
       → transport₀ B (B-level _) (p ∙₀ q) b
       == transport₀ B (B-level _) q (transport₀ B (B-level _) p b)
     transp₀-∙₀ B-level = Trunc-elim
-      (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-level 0 $ B-level _)
+      (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set $ B-level _)
       (λ p → Trunc-elim
-        (λ _ → Π-is-set λ _ → =-preserves-level 0 $ B-level _)
+        (λ _ → Π-is-set λ _ → =-preserves-set $ B-level _)
         (λ q b → transp-∙ p q b))
 
     transp₀-∙₀' : ∀ {j} {B : A → Type j}
@@ -112,9 +112,9 @@ module _ {i} {A : Type i} where
       → transport₀ B (B-level _) (p ∙₀' q) b
       == transport₀ B (B-level _) q (transport₀ B (B-level _) p b)
     transp₀-∙₀' B-level = Trunc-elim
-      (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-level 0 $ B-level _)
+      (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set $ B-level _)
       (λ p → Trunc-elim
-        (λ _ → Π-is-set λ _ → =-preserves-level 0 $ B-level _)
+        (λ _ → Π-is-set λ _ → =-preserves-set $ B-level _)
         (λ q b → transp-∙' p q b))
 
 module _ {i} {A : Type i} where

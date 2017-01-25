@@ -11,7 +11,7 @@ path-set-is-universal : is-universal (path-set-cover X)
 path-set-is-universal = [ snd X , idp₀ ] ,
   Trunc-elim
     {P = λ xp₀ → [ snd X , idp₀ ] == xp₀}
-    (λ xp₀ → =-preserves-level 1 Trunc-level)
+    (λ xp₀ → =-preserves-level Trunc-level)
     (λ{(x , p₀) → Trunc-elim
       {P = λ p₀ → [ snd X , idp₀ ] == [ x , p₀ ]}
       (λ p₀ → Trunc-level {n = 1} [ snd X , idp₀ ] [ x , p₀ ])

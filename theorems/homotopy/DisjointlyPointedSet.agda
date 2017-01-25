@@ -101,14 +101,14 @@ module _ {i j k} n (A : Type i) (B : Type j) where
             from-to f = λ= λ{
               (inl a) → Trunc-elim
                 {P = λ t → [ lift tt ] == t}
-                (λ _ → =-preserves-level n Trunc-level)
+                (λ _ → =-preserves-level Trunc-level)
                 (λ _ → idp) (f (inl a));
               (inr b) → idp}
 
           lemma₃ : ∀ f → –> lemma₂ (unchoose (<– (Trunc-emap n lemma₁) f)) == unchoose f
           lemma₃ = Trunc-elim
             {P = λ f → –> lemma₂ (unchoose (<– (Trunc-emap n lemma₁) f)) == unchoose f}
-            (λ _ → =-preserves-level n (Π-level λ _ → Trunc-level))
+            (λ _ → =-preserves-level (Π-level λ _ → Trunc-level))
             (λ f → λ= λ b → idp)
 
 module _ {i j} n {X : Ptd i} (X-sep : has-disjoint-pt X) where

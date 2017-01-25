@@ -108,7 +108,7 @@ module StrongFunextDep {j} {P : A → Type j} where
   λ=-idp : (f : Π A P)
     → idp == λ= (λ x → idp {a = f x})
   λ=-idp f = ap (ap (λ u x → fst (u x)))
-    (contr-has-all-paths (=-preserves-level _
+    (contr-has-all-paths (=-preserves-level
                          (ΠAQ-is-contr (λ x → idp)))
                          idp (Q-f==Q-g (λ x → idp)))
 

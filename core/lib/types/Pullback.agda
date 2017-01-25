@@ -70,4 +70,4 @@ module _ {i j k} (n : ℕ₋₂) {D : Cospan {i} {j} {k}} where
     → has-level n (Pullback D)
   pullback-level pA pB pC =
     equiv-preserves-level ((pullback-decomp-equiv D)⁻¹) $
-      Σ-level (×-level pA pB) (λ _ → =-preserves-level _ pC)
+      Σ-level (×-level pA pB) (λ _ → =-preserves-level pC)

@@ -62,7 +62,7 @@ abstract
 
           g-f : ∀ k → g (f k) == k
           g-f k = λ= $ λ (b : B) →
-            Trunc-elim (λ r → =-preserves-level _ {helper (k ∘ h) b r} (snd (P b)))
+            Trunc-elim (λ r → =-preserves-level {x = helper (k ∘ h) b r} (snd (P b)))
                        (λ x → lemma (fst x) b (snd x)) (fst (c b))
             where
             lemma : ∀ xl → ∀ b → (p : h xl == b) →
@@ -135,7 +135,7 @@ conn-intro : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} {h : A → B}
 conn-intro {A = A} {B = B} {h = h} sec b =
   let s = sec (λ b → (Trunc _ (hfiber h b) , Trunc-level))
   in (fst s (λ a → [ a , idp ]) b ,
-      λ kt → Trunc-elim (λ kt → =-preserves-level _ {_} {kt} Trunc-level)
+      λ kt → Trunc-elim (λ kt → =-preserves-level {y = kt} Trunc-level)
         (λ k → transport
                  (λ v → fst s (λ a → [ a , idp ]) (fst v) == [ fst k , snd v ])
                  (snd (pathfrom-is-contr (h (fst k))) (b , snd k))
@@ -147,7 +147,7 @@ abstract
     → has-conn-fibers {A = ⊤} n (cst a₀) → is-connected (S n) A
   pointed-conn-in {n = n} A a₀ c =
     ([ a₀ ] ,
-     Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+     Trunc-elim (λ _ → =-preserves-level Trunc-level)
        (λ a → Trunc-rec (Trunc-level {n = S n} _ _)
              (λ x → ap [_] (snd x)) (fst $ c a)))
 
@@ -157,7 +157,7 @@ abstract
   pointed-conn-out {n = n} A a₀ c a =
     (point ,
      λ y → ! (cancel point)
-           ∙ (ap out $ contr-has-all-paths (=-preserves-level -2 c)
+           ∙ (ap out $ contr-has-all-paths (=-preserves-level c)
                                            (into point) (into y))
            ∙ cancel y)
     where
@@ -182,7 +182,7 @@ abstract
           =⟨ Trunc-fmap-∘ _ _ x ⟩
         Trunc-fmap (λ q → (tt , (snd q))) x
           =⟨ Trunc-elim {P = λ x → Trunc-fmap (λ q → (tt , snd q)) x == x}
-               (λ _ → =-preserves-level n Trunc-level) (λ _ → idp) x ⟩
+               (λ _ → =-preserves-level Trunc-level) (λ _ → idp) x ⟩
         x =∎
 
       point : Trunc n (Σ ⊤ (λ _ → a₀ == a))
@@ -202,11 +202,11 @@ Trunc-preserves-conn {A = A} {n = S n} m c = lemma (fst c) (snd c)
   lemma : (x₀ : Trunc (S n) A) → (∀ x → x₀ == x) → is-connected (S n) (Trunc m A)
   lemma = Trunc-elim
     (λ _ → Π-level (λ _ → Σ-level Trunc-level
-                     (λ _ → Π-level (λ _ → =-preserves-level _ Trunc-level))))
+                     (λ _ → Π-level (λ _ → =-preserves-level Trunc-level))))
     (λ a → λ p → ([ [ a ] ] ,
-       Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+       Trunc-elim (λ _ → =-preserves-level Trunc-level)
          (Trunc-elim
-           (λ _ → =-preserves-level _
+           (λ _ → =-preserves-level
                     (Trunc-preserves-level (S n) Trunc-level))
            (λ x → <– (Trunc=-equiv [ [ a ] ] [ [ x ] ])
               (Trunc-fmap (ap [_])
@@ -230,7 +230,7 @@ abstract
             ([ a₀ , b₀ ] ,
               Trunc-elim
                 {P = λ tp → [ a₀ , b₀ ] == tp}
-                (λ _ → =-preserves-level _ Trunc-level)
+                (λ _ → =-preserves-level Trunc-level)
                 (λ {(r , s) →
                   Trunc-rec (Trunc-level {n = S m} _ _)
                     (λ pa → Trunc-rec (Trunc-level {n = S m} _ _)
@@ -253,7 +253,7 @@ abstract
     → is-connected n A → is-connected (S n) (Susp A)
   Susp-conn {A = A} {n = n} cA =
     ([ north ] ,
-     Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+     Trunc-elim (λ _ → =-preserves-level Trunc-level)
        (Susp-elim
          idp
          (Trunc-rec (Trunc-level {n = S n} _ _)
@@ -263,7 +263,7 @@ abstract
             {P = λ y → idp ==
               Trunc-rec (Trunc-level {n = S n} _ _) (λ a → ap [_] (merid a)) y
               [ (λ z → [ north ] == [ z ]) ↓ (merid x) ]}
-            (λ _ → ↓-preserves-level _ (Trunc-level {n = S n} _ _))
+            (λ _ → ↓-preserves-level (Trunc-level {n = S n} _ _))
             (λ x' → ↓-cst=app-in (∙'-unit-l _ ∙ mers-eq n cA x x'))
             (fst cA))))
     where

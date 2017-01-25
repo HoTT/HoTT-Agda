@@ -95,10 +95,10 @@ module _ {G : Group i} where
 
     {- EM₁ is 0-connected -}
     EM₁-conn : is-connected 0 (EM₁ G)
-    EM₁-conn = ([ embase ] , Trunc-elim (λ _ → =-preserves-level _ Trunc-level)
+    EM₁-conn = ([ embase ] , Trunc-elim (λ _ → =-preserves-level Trunc-level)
       (EM₁-elim
         {P = λ x → [ embase ] == [ x ]}
-        (λ _ → raise-level _ (=-preserves-level _ Trunc-level))
+        (λ _ → raise-level _ (=-preserves-level Trunc-level))
         idp
         (λ _ → prop-has-all-paths-↓ (Trunc-level {n = 0} _ _))
-        (λ _ _ → set-↓-has-all-paths-↓ (=-preserves-level _ Trunc-level))))
+        (λ _ _ → set-↓-has-all-paths-↓ (=-preserves-level Trunc-level))))

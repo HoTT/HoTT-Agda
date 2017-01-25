@@ -149,7 +149,7 @@ module SpectrumModel where
         → im-propᴳ (C-fmap n (⊙cfcod' f)) ⊆ᴳ ker-propᴳ (C-fmap n f)
       C-im-sub-ker f =
         im-sub-ker-in (C-fmap n (⊙cfcod' f)) (C-fmap n f) $
-          Trunc-elim (λ _ → =-preserves-level _ (Trunc-level {n = 0}))
+          Trunc-elim (λ _ → =-preserves-level (Trunc-level {n = 0}))
             (ap [_] ∘ im-sub-ker-lemma n f)
 
     abstract
@@ -189,7 +189,7 @@ module SpectrumModel where
 
     into-out : ∀ y → into (out y) == y
     into-out = Trunc-elim
-      (λ _ → =-preserves-level _ Trunc-level)
+      (λ _ → =-preserves-level Trunc-level)
       (λ K → ap [_] (λ= (λ a → pair= idp $
         ap (Out'.f K) (! (bwglue a)) ∙ idp
           =⟨ ∙-unit-r _ ⟩
@@ -204,7 +204,7 @@ module SpectrumModel where
     out-into : ∀ x → out (into x) == x
     out-into = Trunc-elim
       {P = λ tH → out (into tH) == tH}
-      (λ _ → =-preserves-level _ Trunc-level)
+      (λ _ → =-preserves-level Trunc-level)
       (λ {(h , hpt) → ap [_] $ ⊙λ= (out-into-fst (h , hpt)) (↓-idf=cst-in (! (!-inv-l hpt)))})
       where
       lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
@@ -228,7 +228,7 @@ module SpectrumModel where
       C-additive : is-equiv (GroupHom.f (Πᴳ-fanout (C-fmap n ∘ ⊙bwin {X = X})))
       C-additive = transport is-equiv
         (λ= $ Trunc-elim
-          (λ _ → =-preserves-level _ $ Π-level $ λ _ → Trunc-level)
+          (λ _ → =-preserves-level $ Π-level $ λ _ → Trunc-level)
           (λ _ → idp))
         ((ac (uCEl n ∘ X)) ∘ise (is-eq into out into-out out-into))
 

@@ -43,7 +43,7 @@ module _ {i} {A : Type i} where
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
   abstract
     ⊙→-level : {n : ℕ₋₂} → has-level n (fst Y) → has-level n (X ⊙→ Y)
-    ⊙→-level pY = Σ-level (→-level pY) (λ _ → =-preserves-level _ pY)
+    ⊙→-level pY = Σ-level (→-level pY) (λ _ → =-preserves-level pY)
 
 
 {- Equivalences in a Π-type -}

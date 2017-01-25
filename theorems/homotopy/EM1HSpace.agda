@@ -13,7 +13,7 @@ module EM₁HSpace {i} (G : AbGroup i) where
   mult-loop : (g : G.El) (x : EM₁ G.grp) → x == x
   mult-loop g = EM₁-elim
     {P = λ x → x == x}
-    (λ _ → =-preserves-level _ EM₁-level)
+    (λ _ → =-preserves-level EM₁-level)
     (emloop g)
     loop'
     (λ _ _ → set-↓-has-all-paths-↓ (EM₁-level embase embase))
@@ -37,10 +37,10 @@ module EM₁HSpace {i} (G : AbGroup i) where
       ap λ= (λ= (EM₁-elim
         {P = λ x → mult-loop (G.comp g₁ g₂) x
                 == mult-loop g₁ x ∙ mult-loop g₂ x}
-        (λ _ →  =-preserves-level _ (=-preserves-level _ EM₁-level))
+        (λ _ →  =-preserves-level (=-preserves-level EM₁-level))
         (emloop-comp g₁ g₂)
         (λ _ → prop-has-all-paths-↓ (EM₁-level _ _ _ _))
-        (λ _ _ → set-↓-has-all-paths-↓ (=-preserves-level _ (EM₁-level _ _)))))
+        (λ _ _ → set-↓-has-all-paths-↓ (=-preserves-level (EM₁-level _ _)))))
       ∙ ! (∙-λ= _ _)
 
   mult : EM₁ G.grp → EM₁ G.grp → EM₁ G.grp
@@ -52,7 +52,7 @@ module EM₁HSpace {i} (G : AbGroup i) where
     μ-e-l : (x : EM₁ G.grp) → mult embase x == x
     μ-e-l = EM₁-elim
       {P = λ x → mult embase x == x}
-      (λ _ → =-preserves-level 1 EM₁-level)
+      (λ _ → =-preserves-level EM₁-level)
       idp
       (λ g → ↓-app=idf-in $ ∙'-unit-l (emloop g) ∙ (! (ap-idf (emloop g)))
                             ∙ ! (∙-unit-r (ap (mult embase) (emloop g))))
@@ -61,7 +61,7 @@ module EM₁HSpace {i} (G : AbGroup i) where
     μ-e-r : (x : EM₁ G.grp) → mult x embase == x
     μ-e-r = EM₁-elim
       {P = λ x → mult x embase == x}
-      (λ _ → =-preserves-level 1 EM₁-level)
+      (λ _ → =-preserves-level EM₁-level)
       idp
       (λ g → ↓-app=idf-in $
          idp ∙' emloop g
