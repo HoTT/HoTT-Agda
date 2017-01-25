@@ -12,7 +12,6 @@ postulate  -- HIT
 
 module _ {R : Rel A j} where
 
-  infix 60 q[_]
   postulate  -- HIT
     q[_] : (a : A) → SetQuot R
     quot-rel : {a₁ a₂ : A} → R a₁ a₂ → q[ a₁ ] == q[ a₂ ]
