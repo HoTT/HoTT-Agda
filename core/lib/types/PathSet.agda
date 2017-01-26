@@ -15,7 +15,7 @@ _=₀_ x y = Trunc 0 (x == y)
 _=0_ : ∀ {i} {A : Type i} → A → A → Type i
 _=0_ = _=₀_
 
-infix 80 _∙₀_ _∙₀'_ -- \.\0
+infixr 80 _∙₀_ _∙₀'_ -- \.\0
 _∙₀_ : ∀ {i} {A : Type i} {x y z : A} → x =₀ y → y =₀ z → x =₀ z
 _∙₀_ = Trunc-fmap2 _∙_
 
@@ -42,6 +42,22 @@ transport₀ B B-level p = coe₀ B-level (ap₀ B p)
 module _ {i} {A : Type i} where
 
   abstract
+    ∙₀=∙₀' : ∀ {x y z : A} (p : x =₀ y) (q : y =₀ z)
+      → p ∙₀ q == p ∙₀' q
+    ∙₀=∙₀' = Trunc-elim
+      (λ _ → Π-is-set λ _ → =-preserves-set Trunc-level)
+      (λ p → Trunc-elim
+        (λ _ → =-preserves-set Trunc-level)
+        (λ q → ap [_] $ ∙=∙' p q))
+
+    ∙₀'=∙₀ : ∀ {x y z : A} (p : x =₀ y) (q : y =₀ z)
+      → p ∙₀' q == p ∙₀ q
+    ∙₀'=∙₀ = Trunc-elim
+      (λ _ → Π-is-set λ _ → =-preserves-set Trunc-level)
+      (λ p → Trunc-elim
+        (λ _ → =-preserves-set Trunc-level)
+        (λ q → ap [_] $ ∙'=∙ p q))
+
     ∙₀-unit-r : ∀ {x y : A} (q : x =₀ y) → (q ∙₀ idp₀) == q
     ∙₀-unit-r = Trunc-elim
       (λ _ →  =-preserves-set Trunc-level)
@@ -52,6 +68,16 @@ module _ {i} {A : Type i} where
       (λ _ →  =-preserves-set Trunc-level)
       (λ _ → idp)
 
+    ∙₀'-unit-r : ∀ {x y : A} (q : x =₀ y) → (q ∙₀' idp₀) == q
+    ∙₀'-unit-r = Trunc-elim
+      (λ _ →  =-preserves-set Trunc-level)
+      (λ _ → idp)
+
+    ∙₀'-unit-l : ∀ {x y : A} (q : x =₀ y) → (idp₀ ∙₀' q) == q
+    ∙₀'-unit-l = Trunc-elim
+      (λ _ →  =-preserves-set Trunc-level)
+      (λ p → ap [_] $ ∙'-unit-l p)
+
     ∙₀-assoc : {x y z t : A} (p : x =₀ y) (q : y =₀ z) (r : z =₀ t)
       → (p ∙₀ q) ∙₀ r == p ∙₀ (q ∙₀ r)
     ∙₀-assoc = Trunc-elim
@@ -61,6 +87,16 @@ module _ {i} {A : Type i} where
         (λ q → Trunc-elim
           (λ _ → =-preserves-set Trunc-level)
           (λ r → ap [_] $ ∙-assoc p q r)))
+
+    ∙₀'-assoc : {x y z t : A} (p : x =₀ y) (q : y =₀ z) (r : z =₀ t)
+      → (p ∙₀' q) ∙₀' r == p ∙₀' (q ∙₀' r)
+    ∙₀'-assoc = Trunc-elim
+      (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set Trunc-level)
+      (λ p → Trunc-elim
+        (λ _ → Π-is-set λ _ → =-preserves-set Trunc-level)
+        (λ q → Trunc-elim
+          (λ _ → =-preserves-set Trunc-level)
+          (λ r → ap [_] $ ∙'-assoc p q r)))
 
     !₀-inv-l : {x y : A} (p : x =₀ y) → (!₀ p) ∙₀ p == idp₀
     !₀-inv-l = Trunc-elim
@@ -119,15 +155,26 @@ module _ {i} {A : Type i} where
 
 module _ {i} {A : Type i} where
   transp₀-cst=₀idf : {a b c : A} (p : b =₀ c) (q : a =₀ b)
-    → transport₀ (λ x → a =₀ x) Trunc-level p q == q ∙₀ p
-  transp₀-cst=₀idf {a = a} = Trunc-elim
-    {P = λ p → ∀ q → transport₀ (λ x → a =₀ x) Trunc-level p q == q ∙₀ p}
+    → transport₀ (a =₀_) Trunc-level p q == q ∙₀' p
+  transp₀-cst=₀idf {a = a} {b} = Trunc-elim
+    {P = λ p → ∀ q → transport₀ (a =₀_) Trunc-level p q == q ∙₀' p}
     (λ p → Π-level λ q → =-preserves-set Trunc-level)
-    (λ p → lemma p)
+    (λ p q → lemma p q)
     where
-      lemma : ∀ {a b c : A} (p : b == c) (q : a =₀ b)
-        → transport (λ x → a =₀ x) p q == q ∙₀ [ p ]
-      lemma idp q = ! (∙₀-unit-r q)
+      lemma : ∀ {c : A} (p : b == c) (q : a =₀ b)
+        → transport (a =₀_) p q == q ∙₀' [ p ]
+      lemma idp q = ! (∙₀'-unit-r q)
+
+  transp₀-idf=₀cst : {a b c : A} (p : a =₀ b) (q : a =₀ c)
+    → transport₀ (_=₀ c) Trunc-level p q == !₀ p ∙₀ q
+  transp₀-idf=₀cst {a = a} {c = c} = Trunc-elim
+    {P = λ p → ∀ q → transport₀ (_=₀ c) Trunc-level p q == !₀ p ∙₀ q}
+    (λ p → Π-level λ q → =-preserves-set Trunc-level)
+    (λ p q → lemma p q)
+    where
+      lemma : ∀ {b} (p : a == b) (q : a =₀ c)
+        → transport (_=₀ c) p q == [ ! p ] ∙₀ q
+      lemma idp q = ! (∙₀-unit-l q)
 
 {-
 module _ {i} {A : Type i} where
