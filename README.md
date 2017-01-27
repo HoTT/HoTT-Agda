@@ -274,7 +274,8 @@ Citation
     and Jesper Cockx
     and Christian Sattler
     and Chris Jeris
-    and Michael Shulman},
+    and Michael Shulman
+    and others},
   title={Homotopy Type Theory in {A}gda},
   url={https://github.com/HoTT/HoTT-Agda}
 }
