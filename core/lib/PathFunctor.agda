@@ -82,8 +82,8 @@ coe-∙ : ∀ {i} {A B C : Type i} (p : A == B) (q : B == C) (a : A)
   → coe (p ∙ q) a == coe q (coe p a)
 coe-∙ idp q a = idp
 
-coe-! : ∀ {i} {A B : Type i} (p : A == B) → coe (! p) == coe! p
-coe-! idp = idp
+coe-! : ∀ {i} {A B : Type i} (p : A == B) (b : B) → coe (! p) b == coe! p b
+coe-! idp b = idp
 
 coe!-inv-r : ∀ {i} {A B : Type i} (p : A == B) (b : B)
   → coe p (coe! p b) == b

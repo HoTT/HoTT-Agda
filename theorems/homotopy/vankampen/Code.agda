@@ -87,7 +87,7 @@ module homotopy.vankampen.Code {i j k l}
       == q[ pcAB-to-pcBB d₂ (pcAB-prepend d₁ [ ap f p ] pcAB) ]
     pcAA-lemma d₁ d₂ p (pc-a pA) = ap (λ c → c-bba d₁ c pA) $ ! $
       q[ ⟧b idp₀ bb⟦ _ ⟧a [ ap f p ] ba⟦ _ ⟧b idp₀ ]
-        =⟨ quot-rel (pcBBr-switch (⟧b idp₀) [ p ]) ⟩ 
+        =⟨ quot-rel (pcBBr-switch (⟧b idp₀) [ p ]) ⟩
       q[ ⟧b idp₀ bb⟦ _ ⟧a idp₀ ba⟦ _ ⟧b [ ap g p ] ]
         =⟨ pcBB-idp₀-idp₀-head [ ap g p ] ⟩
       q[ ⟧b [ ap g p ] ]
@@ -99,8 +99,8 @@ module homotopy.vankampen.Code {i j k l}
 
   module CodeAAEquivCodeBA (a₁ : A) where
 
-    eqv-in-image : (d₀ : D) → codeAA (f (h d₀)) a₁ ≃ codeBA (g (h d₀)) a₁
-    eqv-in-image d₀ = equiv to from to-from from-to where
+    eqv-on-image : (d₀ : D) → codeAA (f (h d₀)) a₁ ≃ codeBA (g (h d₀)) a₁
+    eqv-on-image d₀ = equiv to from to-from from-to where
       to : codeAA (f (h d₀)) a₁ → codeBA (g (h d₀)) a₁
       to = cAA-to-cBA d₀
 
@@ -122,7 +122,7 @@ module homotopy.vankampen.Code {i j k l}
 
     abstract
       eqv-is-const : ∀ d₁ d₂ (p : h d₁ == h d₂)
-        → eqv-in-image d₁ == eqv-in-image d₂
+        → eqv-on-image d₁ == eqv-on-image d₂
         [ (λ c → codeAA (f c) a₁ ≃ codeBA (g c) a₁) ↓ p ]
       eqv-is-const d₁ d₂ p = ↓-Subtype-in (λ d → is-equiv-prop) $
         ↓-→-from-transp $ λ= $
@@ -131,7 +131,7 @@ module homotopy.vankampen.Code {i j k l}
               transport (λ c → codeBA (g c) a₁) p q[ pcAA-to-pcBA d₁ pcAA ]
                 =⟨ ap-∘ (λ b → codeBA b a₁) g p |in-ctx (λ p → coe p q[ pcAA-to-pcBA d₁ pcAA ]) ⟩
               transport (λ b → codeBA b a₁) (ap g p) q[ pcAA-to-pcBA d₁ pcAA ]
-                =⟨ transp-cBA-l d₁ (pcAA-to-pcBA d₁ pcAA) (ap g p) ⟩
+                =⟨ transp-cBA-l d₁ (ap g p) (pcAA-to-pcBA d₁ pcAA) ⟩
               q[ pcBA-prepend d₁ [ ! $ ap g p ] (pcAA-to-pcBA d₁ pcAA) ]
                 =⟨ !-ap g p |in-ctx (λ p → q[ pcBA-prepend d₁ [ p ] (pcAA-to-pcBA d₁ pcAA) ]) ⟩
               q[ pcBA-prepend d₁ [ ap g (! p) ] (pcAA-to-pcBA d₁ pcAA) ]
@@ -139,7 +139,7 @@ module homotopy.vankampen.Code {i j k l}
               q[ pcAA-to-pcBA d₂ (pcAA-prepend d₁ [ ap f (! p) ] pcAA) ]
                 =⟨ ap-! f p |in-ctx (λ p → q[ pcAA-to-pcBA d₂ (pcAA-prepend d₁ [ p ] pcAA) ]) ⟩
               q[ pcAA-to-pcBA d₂ (pcAA-prepend d₁ [ ! $ ap f p ] pcAA) ]
-                =⟨ ! $ transp-cAA-l d₁ pcAA (ap f p) |in-ctx cAA-to-cBA d₂ ⟩
+                =⟨ ! $ transp-cAA-l d₁ (ap f p) pcAA |in-ctx cAA-to-cBA d₂ ⟩
               cAA-to-cBA d₂ (transport (λ a → codeAA a a₁) (ap f p) q[ pcAA ])
                 =⟨ ∘-ap (λ c → codeAA c a₁) f p |in-ctx (λ p → coe p q[ pcAA ]) |in-ctx cAA-to-cBA d₂ ⟩
               cAA-to-cBA d₂ (transport (λ c → codeAA (f c) a₁) p q[ pcAA ])
@@ -149,20 +149,20 @@ module homotopy.vankampen.Code {i j k l}
     module SE = SurjExt
       (λ c → ≃-is-set SetQuot-is-set SetQuot-is-set)
       h h-is-surj
-      eqv-in-image
+      eqv-on-image
       eqv-is-const
 
     abstract
       eqv : ∀ c → codeAA (f c) a₁ ≃ codeBA (g c) a₁
       eqv = SE.surj-ext
 
-      eqv-β : ∀ d → eqv (h d) == eqv-in-image d
+      eqv-β : ∀ d → eqv (h d) == eqv-on-image d
       eqv-β = SE.surj-ext-β
 
   module CodeABEquivCodeBB (b₁ : B) where
 
-    eqv-in-image : (d₀ : D) → codeAB (f (h d₀)) b₁ ≃ codeBB (g (h d₀)) b₁
-    eqv-in-image d₀ = equiv to from to-from from-to where
+    eqv-on-image : (d₀ : D) → codeAB (f (h d₀)) b₁ ≃ codeBB (g (h d₀)) b₁
+    eqv-on-image d₀ = equiv to from to-from from-to where
       to : codeAB (f (h d₀)) b₁ → codeBB (g (h d₀)) b₁
       to = cAB-to-cBB d₀
 
@@ -184,7 +184,7 @@ module homotopy.vankampen.Code {i j k l}
 
     abstract
       eqv-is-const : ∀ d₁ d₂ (p : h d₁ == h d₂)
-        → eqv-in-image d₁ == eqv-in-image d₂
+        → eqv-on-image d₁ == eqv-on-image d₂
         [ (λ c → codeAB (f c) b₁ ≃ codeBB (g c) b₁) ↓ p ]
       eqv-is-const d₁ d₂ p = ↓-Subtype-in (λ d → is-equiv-prop) $
         ↓-→-from-transp $ λ= $
@@ -193,7 +193,7 @@ module homotopy.vankampen.Code {i j k l}
               transport (λ c → codeBB (g c) b₁) p q[ pcAB-to-pcBB d₁ pcAB ]
                 =⟨ ap-∘ (λ b → codeBB b b₁) g p |in-ctx (λ p → coe p q[ pcAB-to-pcBB d₁ pcAB ]) ⟩
               transport (λ b → codeBB b b₁) (ap g p) q[ pcAB-to-pcBB d₁ pcAB ]
-                =⟨ transp-cBB-l d₁ (pcAB-to-pcBB d₁ pcAB) (ap g p) ⟩
+                =⟨ transp-cBB-l d₁ (ap g p) (pcAB-to-pcBB d₁ pcAB) ⟩
               q[ pcBB-prepend d₁ [ ! $ ap g p ] (pcAB-to-pcBB d₁ pcAB) ]
                 =⟨ !-ap g p |in-ctx (λ p → q[ pcBB-prepend d₁ [ p ] (pcAB-to-pcBB d₁ pcAB) ]) ⟩
               q[ pcBB-prepend d₁ [ ap g (! p) ] (pcAB-to-pcBB d₁ pcAB) ]
@@ -201,7 +201,7 @@ module homotopy.vankampen.Code {i j k l}
               q[ pcAB-to-pcBB d₂ (pcAB-prepend d₁ [ ap f (! p) ] pcAB) ]
                 =⟨ ap-! f p |in-ctx (λ p → q[ pcAB-to-pcBB d₂ (pcAB-prepend d₁ [ p ] pcAB) ]) ⟩
               q[ pcAB-to-pcBB d₂ (pcAB-prepend d₁ [ ! $ ap f p ] pcAB) ]
-                =⟨ ! $ transp-cAB-l d₁ pcAB (ap f p) |in-ctx cAB-to-cBB d₂ ⟩
+                =⟨ ! $ transp-cAB-l d₁ (ap f p) pcAB |in-ctx cAB-to-cBB d₂ ⟩
               cAB-to-cBB d₂ (transport (λ a → codeAB a b₁) (ap f p) q[ pcAB ])
                 =⟨ ∘-ap (λ c → codeAB c b₁) f p |in-ctx (λ p → coe p q[ pcAB ]) |in-ctx cAB-to-cBB d₂ ⟩
               cAB-to-cBB d₂ (transport (λ c → codeAB (f c) b₁) p q[ pcAB ])
@@ -211,47 +211,37 @@ module homotopy.vankampen.Code {i j k l}
     module SE = SurjExt
       (λ c → ≃-is-set SetQuot-is-set SetQuot-is-set)
       h h-is-surj
-      eqv-in-image
+      eqv-on-image
       eqv-is-const
 
     abstract
       eqv : ∀ c → codeAB (f c) b₁ ≃ codeBB (g c) b₁
       eqv = SE.surj-ext
 
-      eqv-β : ∀ d → eqv (h d) == eqv-in-image d
+      eqv-β : ∀ d → eqv (h d) == eqv-on-image d
       eqv-β = SE.surj-ext-β
 
   module EqvPAIdEqvPB where
     abstract
-      path-in-image : ∀ d₀ d₁
+      path-on-image : ∀ d₀ d₁
         →  CodeAAEquivCodeBA.eqv (f (h d₁)) (h d₀)
         == CodeABEquivCodeBB.eqv (g (h d₁)) (h d₀)
         [ (λ p → codeAP (f (h d₀)) p ≃ codeBP (g (h d₀)) p) ↓ glue (h d₁) ]
-      path-in-image d₀ d₁ =
+      path-on-image d₀ d₁ =
         CodeAAEquivCodeBA.eqv-β (f (h d₁)) d₀
         ∙ᵈ lemma
         ∙'ᵈ ! (CodeABEquivCodeBB.eqv-β (g (h d₁)) d₀) where
-        lemma : CodeAAEquivCodeBA.eqv-in-image (f (h d₁)) d₀
-             == CodeABEquivCodeBB.eqv-in-image (g (h d₁)) d₀
+        lemma : CodeAAEquivCodeBA.eqv-on-image (f (h d₁)) d₀
+             == CodeABEquivCodeBB.eqv-on-image (g (h d₁)) d₀
              [ (λ p → codeAP (f (h d₀)) p ≃ codeBP (g (h d₀)) p) ↓ glue (h d₁) ]
         lemma = ↓-Subtype-in (λ d → is-equiv-prop) $
           ↓-→-from-transp $ λ= $ SetQuot-elim
             (λ _ → =-preserves-set SetQuot-is-set)
             (λ pcAA →
               transport (λ p → codeBP (g (h d₀)) p) (glue (h d₁)) q[ pcAA-to-pcBA d₀ pcAA ]
-                =⟨ CodeBP.glue-β (g (h d₀)) (h d₁) |in-ctx (λ p → coe p q[ pcAA-to-pcBA d₀ pcAA ]) ⟩
-              coe (ua (CodeBAEquivCodeBB.eqv (g (h d₀)) (h d₁))) q[ pcAA-to-pcBA d₀ pcAA ]
-                =⟨ CodeBAEquivCodeBB.eqv-β (g (h d₀)) d₁ |in-ctx (λ e → coe (ua e) q[ pcAA-to-pcBA d₀ pcAA ]) ⟩
-              coe (ua (CodeBAEquivCodeBB.eqv-in-image (g (h d₀)) d₁)) q[ pcAA-to-pcBA d₀ pcAA ]
-                =⟨ coe-β (CodeBAEquivCodeBB.eqv-in-image (g (h d₀)) d₁) q[ pcAA-to-pcBA d₀ pcAA ] ⟩
+                =⟨ transp-cBP-glue d₁ (pcAA-to-pcBA d₀ pcAA) ⟩
               q[ pcAA-to-pcBA d₀ pcAA ba⟦ d₁ ⟧b idp₀ ]
-                =⟨ idp ⟩
-              q[ pcAB-to-pcBB d₀ (pcAA aa⟦ d₁ ⟧b idp₀) ]
-                =⟨ ! $ coe-β (CodeAAEquivCodeAB.eqv-in-image (f (h d₀)) d₁) q[ pcAA ] |in-ctx cAB-to-cBB d₀ ⟩
-              cAB-to-cBB d₀ (coe (ua (CodeAAEquivCodeAB.eqv-in-image (f (h d₀)) d₁)) q[ pcAA ])
-                =⟨ ! $ CodeAAEquivCodeAB.eqv-β (f (h d₀)) d₁ |in-ctx (λ e → cAB-to-cBB d₀ (coe (ua e) q[ pcAA ])) ⟩
-              cAB-to-cBB d₀ (coe (ua (CodeAAEquivCodeAB.eqv (f (h d₀)) (h d₁))) q[ pcAA ])
-                =⟨ ! $ CodeAP.glue-β (f (h d₀)) (h d₁) |in-ctx (λ p → cAB-to-cBB d₀ (coe p q[ pcAA ])) ⟩
+                =⟨ ! $ transp-cAP-glue d₁ pcAA |in-ctx cAB-to-cBB d₀ ⟩
               cAB-to-cBB d₀ (transport (λ p → codeAP (f (h d₀)) p) (glue (h d₁)) q[ pcAA ])
                 =∎)
             (λ _ → prop-has-all-paths-↓ $ SetQuot-is-set _ _)
@@ -267,7 +257,7 @@ module homotopy.vankampen.Code {i j k l}
         (λ d₀ → SurjExt.surj-ext
           (λ c₁ → ↓-preserves-level $ ≃-is-set SetQuot-is-set SetQuot-is-set)
           h h-is-surj
-          (λ d₁ → path-in-image d₀ d₁)
+          (λ d₁ → path-on-image d₀ d₁)
           (λ _ _ _ → prop-has-all-paths-↓ $ ↓-level $ ≃-is-set SetQuot-is-set SetQuot-is-set))
         (λ _ _ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → ↓-level $ ≃-is-set SetQuot-is-set SetQuot-is-set)
 
@@ -281,10 +271,49 @@ module homotopy.vankampen.Code {i j k l}
 
   module Code = PushoutRec
     {D = Pushout span → Type (lmax (lmax (lmax i j) k) l)}
-    codeAP codeBP (λ c₀ → λ= λ p₁ → ua (cAP-equiv-cBP c₀ p₁))
+    codeAP codeBP (λ c₀ → λ= $ ua ∘ cAP-equiv-cBP c₀)
 
   code : Pushout span → Pushout span → Type (lmax (lmax (lmax i j) k) l)
   code = Code.f
+
+  abstract
+    code-level : ∀ {p₀ p₁} → is-set (code p₀ p₁)
+    code-level {p₀} {p₁} = Pushout-elim
+      {P = λ p₀ → ∀ p₁ → is-set (code p₀ p₁)}
+      (λ a₀ p₁ → codeAP-level {a₀} {p₁})
+      (λ b₀ p₁ → codeBP-level {b₀} {p₁})
+      (λ c₀ → prop-has-all-paths-↓ $ Π-is-prop λ p₁ → is-set-is-prop)
+      p₀ p₁
+  code-is-set = code-level
+
+  abstract
+    transp-cPA-glue : ∀ d₀ {a₁} (pcAA : precodeAA (f (h d₀)) a₁)
+      → transport (λ p₀ → code p₀ (left a₁)) (glue (h d₀)) q[ pcAA  ] == q[ pcAA-to-pcBA d₀ pcAA ]
+    transp-cPA-glue d₀ {a₁} pcAA =
+      transport (λ p₀ → code p₀ (left a₁)) (glue (h d₀)) q[ pcAA  ]
+        =⟨ ap (λ e → coe e q[ pcAA ])
+            ( ap-∘ (_$ left a₁) code (glue (h d₀))
+            ∙ ap (ap (_$ left a₁)) (Code.glue-β (h d₀))
+            ∙ app=-β (ua ∘ cAP-equiv-cBP (h d₀)) (left a₁)
+            ∙ ap ua (CodeAAEquivCodeBA.eqv-β a₁ d₀)) ⟩
+      coe (ua (CodeAAEquivCodeBA.eqv-on-image a₁ d₀)) q[ pcAA  ]
+        =⟨ coe-β (CodeAAEquivCodeBA.eqv-on-image a₁ d₀) q[ pcAA ] ⟩
+      q[ pcAA-to-pcBA d₀ pcAA ]
+        =∎
+
+    transp-cPB-glue : ∀ d₀ {b₁} (pcAB : precodeAB (f (h d₀)) b₁)
+      → transport (λ p₀ → code p₀ (right b₁)) (glue (h d₀)) q[ pcAB  ] == q[ pcAB-to-pcBB d₀ pcAB ]
+    transp-cPB-glue d₀ {b₁} pcAB =
+      transport (λ p₀ → code p₀ (right b₁)) (glue (h d₀)) q[ pcAB  ]
+        =⟨ ap (λ e → coe e q[ pcAB ])
+            ( ap-∘ (_$ right b₁) code (glue (h d₀))
+            ∙ ap (ap (_$ right b₁)) (Code.glue-β (h d₀))
+            ∙ app=-β (ua ∘ cAP-equiv-cBP (h d₀)) (right b₁)
+            ∙ ap ua (CodeABEquivCodeBB.eqv-β b₁ d₀)) ⟩
+      coe (ua (CodeABEquivCodeBB.eqv-on-image b₁ d₀)) q[ pcAB  ]
+        =⟨ coe-β (CodeABEquivCodeBB.eqv-on-image b₁ d₀) q[ pcAB ] ⟩
+      q[ pcAB-to-pcBB d₀ pcAB ]
+        =∎
 
   -- code to path
   abstract
@@ -303,14 +332,14 @@ module homotopy.vankampen.Code {i j k l}
       ∙ ∙₀'-assoc (!₀ [ glue (h d₀) ]) (pcAA-to-path pc) ([ glue (h d) ] ∙₀' ap₀ right pB)
 
   abstract
-    cAA-to-path-is-cBA-to-path : ∀ {a₁} c₀ →
-      cAA-to-path {f c₀} {a₁} == cBA-to-path {g c₀} {a₁}
+    decodeAA-is-decodeBA : ∀ {a₁} c₀ →
+      decodeAA {f c₀} {a₁} == decodeBA {g c₀} {a₁}
       [ (λ p₀ → code p₀ (left a₁) → p₀ =₀ left a₁) ↓ glue c₀ ]
-    cAA-to-path-is-cBA-to-path {a₁ = a₁} = SurjExt.surj-ext
+    decodeAA-is-decodeBA {a₁ = a₁} = SurjExt.surj-ext
       (λ _ → ↓-preserves-level $ Π-is-set λ _ → Trunc-level) h h-is-surj
       (λ d₀ → ↓-→-from-transp $ λ= $ SetQuot-elim
-        {P = λ cAA → transport (_=₀ left a₁) (glue (h d₀)) (cAA-to-path cAA)
-                  == cBA-to-path (transport (λ p₀ → code p₀ (left a₁)) (glue (h d₀)) cAA)}
+        {P = λ cAA → transport (_=₀ left a₁) (glue (h d₀)) (decodeAA cAA)
+                  == decodeBA (transport (λ p₀ → code p₀ (left a₁)) (glue (h d₀)) cAA)}
         (λ _ → =-preserves-set Trunc-level)
         (λ pcAA →
           transport (_=₀ left a₁) (glue (h d₀)) (pcAA-to-path pcAA)
@@ -320,29 +349,29 @@ module homotopy.vankampen.Code {i j k l}
           !₀ [ glue (h d₀) ] ∙₀' pcAA-to-path pcAA
             =⟨ ! $ pcAA-to-pcBA-to-path d₀ pcAA ⟩
           pcBA-to-path (pcAA-to-pcBA d₀ pcAA)
-            =⟨ ! $ ap (λ e → cBA-to-path (–> e q[ pcAA ])) (CodeAAEquivCodeBA.eqv-β a₁ d₀) ⟩
-          cBA-to-path (–> (CodeAAEquivCodeBA.eqv a₁ (h d₀)) q[ pcAA ])
-            =⟨ ! $ ap cBA-to-path (coe-β (CodeAAEquivCodeBA.eqv a₁ (h d₀)) q[ pcAA ]) ⟩
-          cBA-to-path (coe (ua (CodeAAEquivCodeBA.eqv a₁ (h d₀))) q[ pcAA ])
-            =⟨ ! $ ap (λ p → cBA-to-path (coe p q[ pcAA ])) (app=-β (ua ∘ cAP-equiv-cBP (h d₀)) (left a₁)) ⟩
-          cBA-to-path (coe (app= (λ= λ p₁ → ua (cAP-equiv-cBP (h d₀) p₁)) (left a₁)) q[ pcAA ])
-            =⟨ ! $ ap (λ p → cBA-to-path (coe (app= p (left a₁)) q[ pcAA ])) (Code.glue-β (h d₀)) ⟩
-          cBA-to-path (coe (app= (ap code (glue (h d₀))) (left a₁)) q[ pcAA ])
-            =⟨ ap (λ p → cBA-to-path (coe p q[ pcAA ])) (∘-ap (λ f₁ → f₁ (left a₁)) code (glue (h d₀))) ⟩
-          cBA-to-path (transport (λ p₀ → code p₀ (left a₁)) (glue (h d₀)) q[ pcAA ])
+            =⟨ ! $ ap (λ e → decodeBA (–> e q[ pcAA ])) (CodeAAEquivCodeBA.eqv-β a₁ d₀) ⟩
+          decodeBA (–> (CodeAAEquivCodeBA.eqv a₁ (h d₀)) q[ pcAA ])
+            =⟨ ! $ ap decodeBA (coe-β (CodeAAEquivCodeBA.eqv a₁ (h d₀)) q[ pcAA ]) ⟩
+          decodeBA (coe (ua (CodeAAEquivCodeBA.eqv a₁ (h d₀))) q[ pcAA ])
+            =⟨ ! $ ap (λ p → decodeBA (coe p q[ pcAA ])) (app=-β (ua ∘ cAP-equiv-cBP (h d₀)) (left a₁)) ⟩
+          decodeBA (coe (app= (λ= λ p₁ → ua (cAP-equiv-cBP (h d₀) p₁)) (left a₁)) q[ pcAA ])
+            =⟨ ! $ ap (λ p → decodeBA (coe (app= p (left a₁)) q[ pcAA ])) (Code.glue-β (h d₀)) ⟩
+          decodeBA (coe (app= (ap code (glue (h d₀))) (left a₁)) q[ pcAA ])
+            =⟨ ap (λ p → decodeBA (coe p q[ pcAA ])) (∘-ap (λ f₁ → f₁ (left a₁)) code (glue (h d₀))) ⟩
+          decodeBA (transport (λ p₀ → code p₀ (left a₁)) (glue (h d₀)) q[ pcAA ])
             =∎)
         (λ _ → prop-has-all-paths-↓ $ Trunc-level {n = 0} _ _))
       (λ _ _ _ → prop-has-all-paths-↓ $ ↓-level $ Π-is-set λ _ → Trunc-level)
 
   abstract
-    cAB-to-path-is-cBB-to-path : ∀ {b₁} c₀ →
-      cAB-to-path {f c₀} {b₁} == cBB-to-path {g c₀} {b₁}
+    decodeAB-is-decodeBB : ∀ {b₁} c₀ →
+      decodeAB {f c₀} {b₁} == decodeBB {g c₀} {b₁}
       [ (λ p₀ → code p₀ (right b₁) → p₀ =₀ right b₁) ↓ glue c₀ ]
-    cAB-to-path-is-cBB-to-path {b₁ = b₁} = SurjExt.surj-ext
+    decodeAB-is-decodeBB {b₁ = b₁} = SurjExt.surj-ext
       (λ _ → ↓-preserves-level $ Π-is-set λ _ → Trunc-level) h h-is-surj
       (λ d₀ → ↓-→-from-transp $ λ= $ SetQuot-elim
-        {P = λ cAB → transport (_=₀ right b₁) (glue (h d₀)) (cAB-to-path cAB)
-                  == cBB-to-path (transport (λ p₀ → code p₀ (right b₁)) (glue (h d₀)) cAB)}
+        {P = λ cAB → transport (_=₀ right b₁) (glue (h d₀)) (decodeAB cAB)
+                  == decodeBB (transport (λ p₀ → code p₀ (right b₁)) (glue (h d₀)) cAB)}
         (λ _ → =-preserves-set Trunc-level)
         (λ pcAB →
           transport (_=₀ right b₁) (glue (h d₀)) (pcAB-to-path pcAB)
@@ -352,30 +381,35 @@ module homotopy.vankampen.Code {i j k l}
           !₀ [ glue (h d₀) ] ∙₀' pcAB-to-path pcAB
             =⟨ ! $ pcAB-to-pcBB-to-path d₀ pcAB ⟩
           pcBB-to-path (pcAB-to-pcBB d₀ pcAB)
-            =⟨ ! $ ap (λ e → cBB-to-path (–> e q[ pcAB ])) (CodeABEquivCodeBB.eqv-β b₁ d₀) ⟩
-          cBB-to-path (–> (CodeABEquivCodeBB.eqv b₁ (h d₀)) q[ pcAB ])
-            =⟨ ! $ ap cBB-to-path (coe-β (CodeABEquivCodeBB.eqv b₁ (h d₀)) q[ pcAB ]) ⟩
-          cBB-to-path (coe (ua (CodeABEquivCodeBB.eqv b₁ (h d₀))) q[ pcAB ])
-            =⟨ ! $ ap (λ p → cBB-to-path (coe p q[ pcAB ])) (app=-β (ua ∘ cAP-equiv-cBP (h d₀)) (right b₁)) ⟩
-          cBB-to-path (coe (app= (λ= λ p₁ → ua (cAP-equiv-cBP (h d₀) p₁)) (right b₁)) q[ pcAB ])
-            =⟨ ! $ ap (λ p → cBB-to-path (coe (app= p (right b₁)) q[ pcAB ])) (Code.glue-β (h d₀)) ⟩
-          cBB-to-path (coe (app= (ap code (glue (h d₀))) (right b₁)) q[ pcAB ])
-            =⟨ ap (λ p → cBB-to-path (coe p q[ pcAB ])) (∘-ap (λ f₁ → f₁ (right b₁)) code (glue (h d₀))) ⟩
-          cBB-to-path (transport (λ p₀ → code p₀ (right b₁)) (glue (h d₀)) q[ pcAB ])
+            =⟨ ! $ ap (λ e → decodeBB (–> e q[ pcAB ])) (CodeABEquivCodeBB.eqv-β b₁ d₀) ⟩
+          decodeBB (–> (CodeABEquivCodeBB.eqv b₁ (h d₀)) q[ pcAB ])
+            =⟨ ! $ ap decodeBB (coe-β (CodeABEquivCodeBB.eqv b₁ (h d₀)) q[ pcAB ]) ⟩
+          decodeBB (coe (ua (CodeABEquivCodeBB.eqv b₁ (h d₀))) q[ pcAB ])
+            =⟨ ! $ ap (λ p → decodeBB (coe p q[ pcAB ])) (app=-β (ua ∘ cAP-equiv-cBP (h d₀)) (right b₁)) ⟩
+          decodeBB (coe (app= (λ= λ p₁ → ua (cAP-equiv-cBP (h d₀) p₁)) (right b₁)) q[ pcAB ])
+            =⟨ ! $ ap (λ p → decodeBB (coe (app= p (right b₁)) q[ pcAB ])) (Code.glue-β (h d₀)) ⟩
+          decodeBB (coe (app= (ap code (glue (h d₀))) (right b₁)) q[ pcAB ])
+            =⟨ ap (λ p → decodeBB (coe p q[ pcAB ])) (∘-ap (λ f₁ → f₁ (right b₁)) code (glue (h d₀))) ⟩
+          decodeBB (transport (λ p₀ → code p₀ (right b₁)) (glue (h d₀)) q[ pcAB ])
             =∎)
         (λ _ → prop-has-all-paths-↓ $ Trunc-level {n = 0} _ _))
       (λ _ _ _ → prop-has-all-paths-↓ $ ↓-level $ Π-is-set λ _ → Trunc-level)
 
-  code-to-path : ∀ {p₀ p₁} → code p₀ p₁ → p₀ =₀ p₁
-  code-to-path {p₀} {p₁} = Pushout-elim
-    {P = λ p₀ → code p₀ p₁ → p₀ =₀ p₁}
-    (λ a₀ → cAP-to-path {a₀} {p₁})
-    (λ b₀ → cBP-to-path {b₀} {p₁})
-    (λ c₀ → Pushout-elim
-      {P = λ p₁ → cAP-to-path {f c₀} {p₁} == cBP-to-path {g c₀} {p₁}
+  abstract
+    decodeAP-is-decodeBP : ∀ c₀ p₁
+      → decodeAP {f c₀} {p₁} == decodeBP {g c₀} {p₁}
+        [ (λ p₀ → code p₀ p₁ → p₀ =₀ p₁) ↓ glue c₀ ]
+    decodeAP-is-decodeBP c₀ = Pushout-elim
+      {P = λ p₁ → decodeAP {f c₀} {p₁} == decodeBP {g c₀} {p₁}
         [ (λ p₀ → code p₀ p₁ → p₀ =₀ p₁) ↓ glue c₀ ]}
-      (λ a₁ → cAA-to-path-is-cBA-to-path {a₁ = a₁} c₀)
-      (λ b₁ → cAB-to-path-is-cBB-to-path {b₁ = b₁} c₀)
+      (λ a₁ → decodeAA-is-decodeBA {a₁ = a₁} c₀)
+      (λ b₁ → decodeAB-is-decodeBB {b₁ = b₁} c₀)
       (λ _ → prop-has-all-paths-↓ $ ↓-level $ Π-is-set λ _ → Trunc-level)
-      p₁)
+
+  decode : ∀ {p₀ p₁} → code p₀ p₁ → p₀ =₀ p₁
+  decode {p₀} {p₁} = Pushout-elim
+    {P = λ p₀ → code p₀ p₁ → p₀ =₀ p₁}
+    (λ a₀ → decodeAP {a₀} {p₁})
+    (λ b₀ → decodeBP {b₀} {p₁})
+    (λ c₀ → decodeAP-is-decodeBP c₀ p₁)
     p₀

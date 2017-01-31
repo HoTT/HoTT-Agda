@@ -153,6 +153,8 @@ module _ {i} {A : Type i} where
         (λ _ → Π-is-set λ _ → =-preserves-set $ B-level _)
         (λ q b → transp-∙' p q b))
 
+-- favonia: one should rethink about this part
+-- it is using transp, not following the overall trend to favor PathOver
 module _ {i} {A : Type i} where
   transp₀-cst=₀idf : {a b c : A} (p : b =₀ c) (q : a =₀ b)
     → transport₀ (a =₀_) Trunc-level p q == q ∙₀' p

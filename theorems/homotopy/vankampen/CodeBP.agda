@@ -70,16 +70,6 @@ module homotopy.vankampen.CodeBP {i j k l}
         → q[ ⟧b idp₀ bb⟦ d₀ ⟧a idp₀ ba⟦ d₀ ⟧b [ pB ] ] == q[ ⟧b [ pB ] ] :> codeBB _ b
       lemma idp = quot-rel $ pcBBr-idp₀-idp₀ (⟧b idp₀)
 
-  -- it seems the counterpart of [pcAB-switch-head] is not needed.
-  --
-  --
-  --
-  --  These are intentional blank lines for the alignment with CodeAP.agda.
-  --
-  --
-  --
-  --
-
   pcBA-prepend : ∀ {b₀} d₁ {b₂} → b₀ =₀ g (h d₁) → precodeBA (g (h d₁)) b₂ → precodeBA b₀ b₂
   pcBB-prepend : ∀ {b₀} d₁ {a₂} → b₀ =₀ g (h d₁) → precodeBB (g (h d₁)) a₂ → precodeBB b₀ a₂
   pcBA-prepend d₁ pB (pc-bba d pc pA) = pc-bba d (pcBB-prepend d₁ pB pc) pA
@@ -91,30 +81,30 @@ module homotopy.vankampen.CodeBP {i j k l}
       → q[ pcBA-prepend d₀ idp₀ pcBA ] == q[ pcBA ] :> codeBA (g (h d₀)) b₁
     pcBB-prepend-idp₀ : ∀ {d₀ a₁} (pcBB : precodeBB (g (h d₀)) a₁)
       → q[ pcBB-prepend d₀ idp₀ pcBB ] == q[ pcBB ] :> codeBB (g (h d₀)) a₁
-    pcBA-prepend-idp₀ (pc-bba d pc pB) = pcBB-prepend-idp₀ pc |in-ctx λ c → c-bba d c pB 
+    pcBA-prepend-idp₀ (pc-bba d pc pB) = pcBB-prepend-idp₀ pc |in-ctx λ c → c-bba d c pB
     pcBB-prepend-idp₀ (pc-b pB) = pcBB-idp₀-idp₀-head pB
     pcBB-prepend-idp₀ (pc-bab d pc pB) = pcBA-prepend-idp₀ pc |in-ctx λ c → c-bab d c pB
 
-    transp-cBA-l : (d : D) {a₁ : A} (pcBA : precodeBA (g (h d)) a₁) {b₀ : B} (p : g (h d) == b₀)
+    transp-cBA-l : ∀ d {b₀ a₁} (p : g (h d) == b₀) (pcBA : precodeBA (g (h d)) a₁)
       → transport (λ x → codeBA x a₁) p q[ pcBA ] == q[ pcBA-prepend d [ ! p ] pcBA ]
-    transp-cBA-l d pcBA idp = ! $ pcBA-prepend-idp₀ pcBA
+    transp-cBA-l d idp pcBA = ! $ pcBA-prepend-idp₀ pcBA
 
-    transp-cBB-l : (d : D) {b₁ : B} (pcBB : precodeBB (g (h d)) b₁) {b₀ : B} (p : g (h d) == b₀)
+    transp-cBB-l : ∀ d {b₀ b₁} (p : g (h d) == b₀) (pcBB : precodeBB (g (h d)) b₁)
       → transport (λ x → codeBB x b₁) p q[ pcBB ] == q[ pcBB-prepend d [ ! p ] pcBB ]
-    transp-cBB-l d pcBB idp = ! $ pcBB-prepend-idp₀ pcBB
+    transp-cBB-l d idp pcBB = ! $ pcBB-prepend-idp₀ pcBB
 
-    transp-cBA-r : {b₀ : B} (d : D) (pcBA : precodeBA b₀ (f (h d))) {a₁ : A} (p : f (h d) == a₁)
+    transp-cBA-r : ∀ d {b₀ a₁} (p : f (h d) == a₁) (pcBA : precodeBA b₀ (f (h d)))
       → transport (λ x → codeBA b₀ x) p q[ pcBA ] == q[ pcBA ba⟦ d ⟧b idp₀ bb⟦ d ⟧a [ p ] ]
-    transp-cBA-r d pcBA idp = ! $ quot-rel $ pcBAr-idp₀-idp₀ pcBA
+    transp-cBA-r d idp pcBA = ! $ quot-rel $ pcBAr-idp₀-idp₀ pcBA
 
-    transp-cBB-r : {b₀ : B} (d : D) (pcBB : precodeBB b₀ (g (h d))) {b₁ : B} (p : g (h d) == b₁)
+    transp-cBB-r : ∀ d {b₀ b₁} (p : g (h d) == b₁) (pcBB : precodeBB b₀ (g (h d)))
       → transport (λ x → codeBB b₀ x) p q[ pcBB ] == q[ pcBB bb⟦ d ⟧a idp₀ ba⟦ d ⟧b [ p ] ]
-    transp-cBB-r d pcBB idp = ! $ quot-rel $ pcBBr-idp₀-idp₀ pcBB
+    transp-cBB-r d idp pcBB = ! $ quot-rel $ pcBBr-idp₀-idp₀ pcBB
 
   module CodeBAEquivCodeBB (b₀ : B) where
 
-    eqv-in-image : (d : D) → codeBA b₀ (f (h d)) ≃ codeBB b₀ (g (h d))
-    eqv-in-image d = equiv to from to-from from-to where
+    eqv-on-image : (d : D) → codeBA b₀ (f (h d)) ≃ codeBB b₀ (g (h d))
+    eqv-on-image d = equiv to from to-from from-to where
       to = λ c → c-bab d c idp₀
       from = λ c → c-bba d c idp₀
 
@@ -133,7 +123,7 @@ module homotopy.vankampen.CodeBP {i j k l}
 
     abstract
       eqv-is-const : ∀ d₁ d₂ (p : h d₁ == h d₂)
-        → eqv-in-image d₁ == eqv-in-image d₂
+        → eqv-on-image d₁ == eqv-on-image d₂
         [ (λ c → codeBA b₀ (f c) ≃ codeBB b₀ (g c)) ↓ p ]
       eqv-is-const d₁ d₂ p = ↓-Subtype-in (λ d → is-equiv-prop) $
         ↓-→-from-transp $ λ= $
@@ -142,11 +132,11 @@ module homotopy.vankampen.CodeBP {i j k l}
               transport (λ c → codeBB b₀ (g c)) p q[ pcBA ba⟦ d₁ ⟧b idp₀ ]
                 =⟨ ap-∘ (codeBB b₀) g p |in-ctx (λ p → coe p q[ pcBA ba⟦ d₁ ⟧b idp₀ ]) ⟩
               transport (codeBB b₀) (ap g p) q[ pcBA ba⟦ d₁ ⟧b idp₀ ]
-                =⟨ transp-cBB-r d₁ (pcBA ba⟦ d₁ ⟧b idp₀) (ap g p) ⟩
+                =⟨ transp-cBB-r d₁ (ap g p) (pcBA ba⟦ d₁ ⟧b idp₀) ⟩
               q[ pcBA ba⟦ d₁ ⟧b idp₀ bb⟦ d₁ ⟧a idp₀ ba⟦ d₁ ⟧b [ ap g p ] ]
                 =⟨ ! $ quot-rel $ pcBBr-switch (pcBA ba⟦ d₁ ⟧b idp₀) [ p ] ⟩
               q[ pcBA ba⟦ d₁ ⟧b idp₀ bb⟦ d₁ ⟧a [ ap f p ] ba⟦ d₂ ⟧b idp₀ ]
-                =⟨ ! $ transp-cBA-r d₁ pcBA (ap f p) |in-ctx (λ c → c-bab d₂ c idp₀) ⟩
+                =⟨ ! $ transp-cBA-r d₁ (ap f p) pcBA |in-ctx (λ c → c-bab d₂ c idp₀) ⟩
               c-bab d₂ (transport (codeBA b₀) (ap f p) q[ pcBA ]) idp₀
                 =⟨ ∘-ap (codeBA b₀) f p |in-ctx (λ p → coe p q[ pcBA ]) |in-ctx (λ c → c-bab d₂ c idp₀) ⟩
               c-bab d₂ (transport (λ c → codeBA b₀ (f c)) p q[ pcBA ]) idp₀
@@ -156,14 +146,14 @@ module homotopy.vankampen.CodeBP {i j k l}
     module SE = SurjExt
       (λ c → ≃-is-set SetQuot-is-set SetQuot-is-set)
       h h-is-surj
-      eqv-in-image
+      eqv-on-image
       eqv-is-const
 
     abstract
       eqv : ∀ c → codeBA b₀ (f c) ≃ codeBB b₀ (g c)
       eqv = SE.surj-ext
 
-      eqv-β : ∀ d → eqv (h d) == eqv-in-image d
+      eqv-β : ∀ d → eqv (h d) == eqv-on-image d
       eqv-β = SE.surj-ext-β
 
   module CodeBP (b₀ : B) = PushoutRec (codeBA b₀) (codeBB b₀)
@@ -171,6 +161,40 @@ module homotopy.vankampen.CodeBP {i j k l}
 
   codeBP : B → Pushout span → Type (lmax (lmax (lmax i j) k) l)
   codeBP = CodeBP.f
+
+  abstract
+    codeBP-level : ∀ {a₀ p₁} → is-set (codeBP a₀ p₁)
+    codeBP-level {a₀} {p₁} = Pushout-elim
+      {P = λ p₁ → is-set (codeBP a₀ p₁)}
+      (λ a₁ → SetQuot-is-set)
+      (λ b₁ → SetQuot-is-set)
+      (λ c₁ → prop-has-all-paths-↓ is-set-is-prop)
+      p₁
+  codeBP-is-set = codeBP-level
+
+  abstract
+    transp-cBP-glue : ∀ {b₀} d₁ (pcBA : precodeBA b₀ (f (h d₁)))
+      → transport (codeBP b₀) (glue (h d₁)) q[ pcBA ] == q[ pcBA ba⟦ d₁ ⟧b idp₀ ]
+    transp-cBP-glue {b₀} d₁ pcBA =
+      transport (codeBP b₀) (glue (h d₁)) q[ pcBA ]
+        =⟨ ap (λ e → coe e q[ pcBA ]) (CodeBP.glue-β b₀ (h d₁) ∙ ap ua (CodeBAEquivCodeBB.eqv-β b₀ d₁)) ⟩
+      coe (ua (CodeBAEquivCodeBB.eqv-on-image b₀ d₁)) q[ pcBA ]
+        =⟨ coe-β (CodeBAEquivCodeBB.eqv-on-image b₀ d₁) q[ pcBA ] ⟩
+      q[ pcBA ba⟦ d₁ ⟧b idp₀ ]
+        =∎
+
+    transp-cBP-!glue : ∀ {b₀} d₁ (pcBB : precodeBB b₀ (g (h d₁)))
+      → transport (codeBP b₀) (! (glue (h d₁))) q[ pcBB ] == q[ pcBB bb⟦ d₁ ⟧a idp₀ ]
+    transp-cBP-!glue {b₀} d₁ pcBB =
+      transport (codeBP b₀) (! (glue (h d₁))) q[ pcBB ]
+        =⟨ ap (λ e → coe e q[ pcBB ]) (ap-! (codeBP b₀) (glue (h d₁)))
+         ∙ coe-! (ap (codeBP b₀) (glue (h d₁))) q[ pcBB ] ⟩
+      transport! (codeBP b₀) (glue (h d₁)) q[ pcBB ]
+        =⟨ ap (λ e → coe! e q[ pcBB ]) (CodeBP.glue-β b₀ (h d₁) ∙ ap ua (CodeBAEquivCodeBB.eqv-β b₀ d₁)) ⟩
+      coe! (ua (CodeBAEquivCodeBB.eqv-on-image b₀ d₁)) q[ pcBB ]
+        =⟨ coe!-β (CodeBAEquivCodeBB.eqv-on-image b₀ d₁) q[ pcBB ] ⟩
+      q[ pcBB bb⟦ d₁ ⟧a idp₀ ]
+        =∎
 
   -- code to path
   pcBA-to-path : ∀ {b₀ a₁} → precodeBA b₀ a₁ → right b₀ =₀ left a₁ :> Pushout span
@@ -209,37 +233,37 @@ module homotopy.vankampen.CodeBP {i j k l}
         natural₀ = Trunc-elim (λ _ → =-preserves-set Trunc-level) (ap [_] ∘ natural)
     pcBB-to-path-rel (pcBBr-cong pcBA pB) = pcBA-to-path-rel pcBA |in-ctx _∙₀' [ glue (h _) ] ∙₀' ap₀ right pB
 
-  cBA-to-path : ∀ {b₀ a₁} → codeBA b₀ a₁ → right b₀ =₀ left a₁ :> Pushout span
-  cBB-to-path : ∀ {b₀ b₁} → codeBB b₀ b₁ → right b₀ =₀ right b₁ :> Pushout span
-  cBA-to-path = SetQuot-rec Trunc-level pcBA-to-path pcBA-to-path-rel
-  cBB-to-path = SetQuot-rec Trunc-level pcBB-to-path pcBB-to-path-rel
+  decodeBA : ∀ {b₀ a₁} → codeBA b₀ a₁ → right b₀ =₀ left a₁ :> Pushout span
+  decodeBB : ∀ {b₀ b₁} → codeBB b₀ b₁ → right b₀ =₀ right b₁ :> Pushout span
+  decodeBA = SetQuot-rec Trunc-level pcBA-to-path pcBA-to-path-rel
+  decodeBB = SetQuot-rec Trunc-level pcBB-to-path pcBB-to-path-rel
 
   abstract
-    cBA-to-path-is-cBB-to-path : ∀ {b₀} c₁ →
-      cBA-to-path {b₀} {f c₁} == cBB-to-path {b₀} {g c₁}
+    decodeBA-is-decodeBB : ∀ {b₀} c₁ →
+      decodeBA {b₀} {f c₁} == decodeBB {b₀} {g c₁}
       [ (λ p₁ → codeBP b₀ p₁ → right b₀ =₀ p₁) ↓ glue c₁ ]
-    cBA-to-path-is-cBB-to-path {b₀ = b₀} = SurjExt.surj-ext
+    decodeBA-is-decodeBB {b₀ = b₀} = SurjExt.surj-ext
       (λ _ → ↓-preserves-level $ Π-is-set λ _ → Trunc-level) h h-is-surj
       (λ d₁ → ↓-→-from-transp $ λ= $ SetQuot-elim
-        {P = λ cBA → transport (right b₀ =₀_) (glue (h d₁)) (cBA-to-path cBA)
-                  == cBB-to-path (transport (codeBP b₀) (glue (h d₁)) cBA)}
+        {P = λ cBA → transport (right b₀ =₀_) (glue (h d₁)) (decodeBA cBA)
+                  == decodeBB (transport (codeBP b₀) (glue (h d₁)) cBA)}
         (λ _ → =-preserves-set Trunc-level)
         (λ pcBA →
           transport (right b₀ =₀_) (glue (h d₁)) (pcBA-to-path pcBA)
             =⟨ transp₀-cst=₀idf [ glue (h d₁) ] (pcBA-to-path pcBA) ⟩
           pcBA-to-path pcBA ∙₀' [ glue (h d₁) ]
-            =⟨ ! $ ap (λ e → cBB-to-path (–> e q[ pcBA ])) (CodeBAEquivCodeBB.eqv-β b₀ d₁) ⟩
-          cBB-to-path (–> (CodeBAEquivCodeBB.eqv b₀ (h d₁)) q[ pcBA ])
-            =⟨ ! $ ap cBB-to-path (coe-β (CodeBAEquivCodeBB.eqv b₀ (h d₁)) q[ pcBA ]) ⟩
-          cBB-to-path (coe (ua (CodeBAEquivCodeBB.eqv b₀ (h d₁))) q[ pcBA ])
-            =⟨ ! $ ap (λ p → cBB-to-path (coe p q[ pcBA ])) (CodeBP.glue-β b₀ (h d₁)) ⟩
-          cBB-to-path (transport (codeBP b₀) (glue (h d₁)) q[ pcBA ])
+            =⟨ ! $ ap (λ e → decodeBB (–> e q[ pcBA ])) (CodeBAEquivCodeBB.eqv-β b₀ d₁) ⟩
+          decodeBB (–> (CodeBAEquivCodeBB.eqv b₀ (h d₁)) q[ pcBA ])
+            =⟨ ! $ ap decodeBB (coe-β (CodeBAEquivCodeBB.eqv b₀ (h d₁)) q[ pcBA ]) ⟩
+          decodeBB (coe (ua (CodeBAEquivCodeBB.eqv b₀ (h d₁))) q[ pcBA ])
+            =⟨ ! $ ap (λ p → decodeBB (coe p q[ pcBA ])) (CodeBP.glue-β b₀ (h d₁)) ⟩
+          decodeBB (transport (codeBP b₀) (glue (h d₁)) q[ pcBA ])
             =∎)
         (λ _ → prop-has-all-paths-↓ $ Trunc-level {n = 0} _ _))
       (λ _ _ _ → prop-has-all-paths-↓ $ ↓-level $ Π-is-set λ _ → Trunc-level)
 
-  cBP-to-path : ∀ {b₀ p₁} → codeBP b₀ p₁ → right b₀ =₀ p₁
-  cBP-to-path {p₁ = p₁} = Pushout-elim
-    (λ a₁ → cBA-to-path) (λ b₁ → cBB-to-path)
-    cBA-to-path-is-cBB-to-path
+  decodeBP : ∀ {b₀ p₁} → codeBP b₀ p₁ → right b₀ =₀ p₁
+  decodeBP {p₁ = p₁} = Pushout-elim
+    (λ a₁ → decodeBA) (λ b₁ → decodeBB)
+    decodeBA-is-decodeBB
     p₁

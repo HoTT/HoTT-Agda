@@ -28,9 +28,9 @@ module homotopy.RelativelyConstantToSetExtendsViaSurjection
 
     module CE (b : B) =
       ConstExt {A = hfiber f b} {B = C b}
-        (C-is-set b) (lemma b) (lemma-const b) 
+        (C-is-set b) (lemma b) (lemma-const b)
 
-  surj-ext : Π B C 
+  surj-ext : Π B C
   surj-ext b = CE.cst-extend b (f-is-surj b)
 
   surj-ext-β : (a : A) → surj-ext (f a) == g a
