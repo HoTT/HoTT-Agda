@@ -53,10 +53,10 @@ module groups.PropQuotUniqueFactorization
         H-to-P/Q-f' H-to-P/Q-f'-const
 
       H-to-P/Q-f : Trunc -1 (hfiber φ₁.f k) → P/Q.El
-      H-to-P/Q-f = HToP/Q.cst-extend
+      H-to-P/Q-f = HToP/Q.ext
 
       H-to-P/Q-f-is-const : ∀ hf₁ hf₂ → H-to-P/Q-f hf₁ == H-to-P/Q-f hf₂
-      H-to-P/Q-f-is-const = HToP/Q.cst-extend-is-const
+      H-to-P/Q-f-is-const = HToP/Q.ext-is-const
 
     abstract
       H-to-P/Q-f-comp : (k₁ k₂ : H.El)

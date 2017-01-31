@@ -18,7 +18,7 @@ module homotopy.VanKampen {i j k l}
     (λ a → q[ ⟧a idp₀ ]) (λ b → q[ ⟧b idp₀ ]) lemma where
     abstract
       lemma : ∀ c → q[ ⟧a idp₀ ] == q[ ⟧b idp₀ ] [ (λ p → code p p) ↓ glue c ]
-      lemma = SurjExt.surj-ext
+      lemma = SurjExt.ext
         (λ c → ↓-preserves-set SetQuot-is-set)
         h h-is-surj
         (λ d → from-transp (λ p → code p p) (glue (h d)) $

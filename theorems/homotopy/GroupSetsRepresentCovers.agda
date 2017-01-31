@@ -73,7 +73,7 @@ module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
 
       fiber+path₋₁-to-ribbon : ∀ {a₂} (a↑ : Cover.Fiber cov a₂)
         → Trunc -1 (a₁ == a₂) → Ribbon X (cover-to-grpset cov) a₂
-      fiber+path₋₁-to-ribbon a↑ = FiberAndPathToRibbon.cst-extend a↑
+      fiber+path₋₁-to-ribbon a↑ = FiberAndPathToRibbon.ext a↑
 
   -- So the conversion from fiber to ribbon is done.
   fiber-to-ribbon : ∀ {j} (cov : Cover A j)

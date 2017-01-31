@@ -27,12 +27,12 @@ module homotopy.ConstantToSetExtendsToProp {i j}
     Skel-lift : Skel → B
     Skel-lift = SetQuot-rec B-is-set f (λ {a₁ a₂} _ → f-is-const a₁ a₂)
 
-  cst-extend : Trunc -1 A → B
-  cst-extend = Skel-lift ∘ Trunc-rec Skel-is-prop q[_]
+  ext : Trunc -1 A → B
+  ext = Skel-lift ∘ Trunc-rec Skel-is-prop q[_]
 
   abstract
-    cst-extend-is-const : ∀ a₁ a₂ → cst-extend a₁ == cst-extend a₂
-    cst-extend-is-const = Trunc-elim
+    ext-is-const : ∀ a₁ a₂ → ext a₁ == ext a₂
+    ext-is-const = Trunc-elim
       (λ a₁ → Π-is-prop λ a₂ → B-is-set _ _)
       (λ a₁ → Trunc-elim (λ a₂ → B-is-set _ _)
         (λ a₂ → f-is-const a₁ a₂))
@@ -41,5 +41,5 @@ module homotopy.ConstantToSetExtendsToProp {i j}
     abstract
       -- The beta rule.
       -- This is definitionally true, so you don't need it.
-      cst-extend-β : cst-extend ∘ [_] == f
-      cst-extend-β = idp
+      ext-β : ext ∘ [_] == f
+      ext-β = idp

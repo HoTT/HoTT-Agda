@@ -2,9 +2,8 @@
 
 open import HoTT
 
-module homotopy.WedgeExtension where
-
-module WedgeExt {i j} {A : Type i} {a₀ : A} {B : Type j} {b₀ : B} where
+module homotopy.WedgeExtension
+  {i j} {A : Type i} {a₀ : A} {B : Type j} {b₀ : B} where
 
   -- easier to keep track of than a long list of arguments
   record args : Type (lmax (lsucc i) (lsucc j)) where

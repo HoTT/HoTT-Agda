@@ -151,10 +151,10 @@ module homotopy.vankampen.CodeAP {i j k l}
 
     abstract
       eqv : ∀ c → codeAA a₀ (f c) ≃ codeAB a₀ (g c)
-      eqv = SE.surj-ext
+      eqv = SE.ext
 
       eqv-β : ∀ d → eqv (h d) == eqv-on-image d
-      eqv-β = SE.surj-ext-β
+      eqv-β = SE.ext-β
 
   module CodeAP (a₀ : A) = PushoutRec (codeAA a₀) (codeAB a₀)
     (ua ∘ CodeAAEquivCodeAB.eqv a₀)
@@ -242,7 +242,7 @@ module homotopy.vankampen.CodeAP {i j k l}
     decodeAA-is-decodeAB : ∀ {a₀} c₁ →
       decodeAA {a₀} {f c₁} == decodeAB {a₀} {g c₁}
       [ (λ p₁ → codeAP a₀ p₁ → left a₀ =₀ p₁) ↓ glue c₁ ]
-    decodeAA-is-decodeAB {a₀ = a₀} = SurjExt.surj-ext
+    decodeAA-is-decodeAB {a₀ = a₀} = SurjExt.ext
       (λ _ → ↓-preserves-level $ Π-is-set λ _ → Trunc-level) h h-is-surj
       (λ d₁ → ↓-→-from-transp $ λ= $ SetQuot-elim
         {P = λ cAA → transport (left a₀ =₀_) (glue (h d₁)) (decodeAA cAA)

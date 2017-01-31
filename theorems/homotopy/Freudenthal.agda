@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
-open import homotopy.WedgeExtension
+import homotopy.WedgeExtension as WedgeExt
 
 module homotopy.Freudenthal where
 

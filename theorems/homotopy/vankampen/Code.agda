@@ -154,10 +154,10 @@ module homotopy.vankampen.Code {i j k l}
 
     abstract
       eqv : ∀ c → codeAA (f c) a₁ ≃ codeBA (g c) a₁
-      eqv = SE.surj-ext
+      eqv = SE.ext
 
       eqv-β : ∀ d → eqv (h d) == eqv-on-image d
-      eqv-β = SE.surj-ext-β
+      eqv-β = SE.ext-β
 
   module CodeABEquivCodeBB (b₁ : B) where
 
@@ -216,10 +216,10 @@ module homotopy.vankampen.Code {i j k l}
 
     abstract
       eqv : ∀ c → codeAB (f c) b₁ ≃ codeBB (g c) b₁
-      eqv = SE.surj-ext
+      eqv = SE.ext
 
       eqv-β : ∀ d → eqv (h d) == eqv-on-image d
-      eqv-β = SE.surj-ext-β
+      eqv-β = SE.ext-β
 
   module EqvPAIdEqvPB where
     abstract
@@ -251,10 +251,10 @@ module homotopy.vankampen.Code {i j k l}
         →  CodeAAEquivCodeBA.eqv (f c₁) c₀
         == CodeABEquivCodeBB.eqv (g c₁) c₀
         [ (λ p → codeAP (f c₀) p ≃ codeBP (g c₀) p) ↓ glue c₁ ]
-      path = SurjExt.surj-ext
+      path = SurjExt.ext
         (λ c₀ → Π-is-set λ c₁ → ↓-preserves-level $ ≃-is-set SetQuot-is-set SetQuot-is-set)
         h h-is-surj
-        (λ d₀ → SurjExt.surj-ext
+        (λ d₀ → SurjExt.ext
           (λ c₁ → ↓-preserves-level $ ≃-is-set SetQuot-is-set SetQuot-is-set)
           h h-is-surj
           (λ d₁ → path-on-image d₀ d₁)
@@ -335,7 +335,7 @@ module homotopy.vankampen.Code {i j k l}
     decodeAA-is-decodeBA : ∀ {a₁} c₀ →
       decodeAA {f c₀} {a₁} == decodeBA {g c₀} {a₁}
       [ (λ p₀ → code p₀ (left a₁) → p₀ =₀ left a₁) ↓ glue c₀ ]
-    decodeAA-is-decodeBA {a₁ = a₁} = SurjExt.surj-ext
+    decodeAA-is-decodeBA {a₁ = a₁} = SurjExt.ext
       (λ _ → ↓-preserves-level $ Π-is-set λ _ → Trunc-level) h h-is-surj
       (λ d₀ → ↓-→-from-transp $ λ= $ SetQuot-elim
         {P = λ cAA → transport (_=₀ left a₁) (glue (h d₀)) (decodeAA cAA)
@@ -367,7 +367,7 @@ module homotopy.vankampen.Code {i j k l}
     decodeAB-is-decodeBB : ∀ {b₁} c₀ →
       decodeAB {f c₀} {b₁} == decodeBB {g c₀} {b₁}
       [ (λ p₀ → code p₀ (right b₁) → p₀ =₀ right b₁) ↓ glue c₀ ]
-    decodeAB-is-decodeBB {b₁ = b₁} = SurjExt.surj-ext
+    decodeAB-is-decodeBB {b₁ = b₁} = SurjExt.ext
       (λ _ → ↓-preserves-level $ Π-is-set λ _ → Trunc-level) h h-is-surj
       (λ d₀ → ↓-→-from-transp $ λ= $ SetQuot-elim
         {P = λ cAB → transport (_=₀ right b₁) (glue (h d₀)) (decodeAB cAB)

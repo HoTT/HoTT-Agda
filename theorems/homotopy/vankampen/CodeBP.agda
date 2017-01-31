@@ -151,10 +151,10 @@ module homotopy.vankampen.CodeBP {i j k l}
 
     abstract
       eqv : ∀ c → codeBA b₀ (f c) ≃ codeBB b₀ (g c)
-      eqv = SE.surj-ext
+      eqv = SE.ext
 
       eqv-β : ∀ d → eqv (h d) == eqv-on-image d
-      eqv-β = SE.surj-ext-β
+      eqv-β = SE.ext-β
 
   module CodeBP (b₀ : B) = PushoutRec (codeBA b₀) (codeBB b₀)
     (ua ∘ CodeBAEquivCodeBB.eqv b₀)
@@ -242,7 +242,7 @@ module homotopy.vankampen.CodeBP {i j k l}
     decodeBA-is-decodeBB : ∀ {b₀} c₁ →
       decodeBA {b₀} {f c₁} == decodeBB {b₀} {g c₁}
       [ (λ p₁ → codeBP b₀ p₁ → right b₀ =₀ p₁) ↓ glue c₁ ]
-    decodeBA-is-decodeBB {b₀ = b₀} = SurjExt.surj-ext
+    decodeBA-is-decodeBB {b₀ = b₀} = SurjExt.ext
       (λ _ → ↓-preserves-level $ Π-is-set λ _ → Trunc-level) h h-is-surj
       (λ d₁ → ↓-→-from-transp $ λ= $ SetQuot-elim
         {P = λ cBA → transport (right b₀ =₀_) (glue (h d₁)) (decodeBA cBA)

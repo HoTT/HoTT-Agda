@@ -2,7 +2,7 @@
 
 open import HoTT
 open import homotopy.HSpace renaming (HSpaceStructure to HSS)
-open import homotopy.WedgeExtension
+import homotopy.WedgeExtension as WedgeExt
 
 module homotopy.Pi2HSusp where
 

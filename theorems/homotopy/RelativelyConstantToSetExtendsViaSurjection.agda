@@ -30,9 +30,9 @@ module homotopy.RelativelyConstantToSetExtendsViaSurjection
       ConstExt {A = hfiber f b} {B = C b}
         (C-is-set b) (lemma b) (lemma-const b)
 
-  surj-ext : Π B C
-  surj-ext b = CE.cst-extend b (f-is-surj b)
+  ext : Π B C
+  ext b = CE.ext b (f-is-surj b)
 
-  surj-ext-β : (a : A) → surj-ext (f a) == g a
-  surj-ext-β a = ap (CE.cst-extend (f a))
+  ext-β : (a : A) → ext (f a) == g a
+  ext-β a = ap (CE.ext (f a))
     (prop-has-all-paths Trunc-level (f-is-surj (f a)) [ a , idp ])

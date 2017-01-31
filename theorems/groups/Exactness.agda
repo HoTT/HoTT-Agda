@@ -43,18 +43,18 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
               (λ hf₁ hf₂ → φ-is-inj _ _ (snd hf₁ ∙ ! (snd hf₂)))
 
         from : Ker.El ψ → G.El
-        from = λ k → From.cst-extend k (uncurry E.ker-sub-im k)
+        from = λ k → From.ext k (uncurry E.ker-sub-im k)
 
         to-from : ∀ k → to (from k) == k
         to-from k = Subtype=-out (Ker.subEl-prop ψ) $
           Trunc-elim
-            {P = λ hf → φ.f (From.cst-extend k hf) == fst k}
+            {P = λ hf → φ.f (From.ext k hf) == fst k}
             (λ _ → H.El-is-set _ _)
             (λ{(g , p) → p})
             (uncurry E.ker-sub-im k)
 
         from-to : ∀ g → from (to g) == g
-        from-to g = From.cst-extend-is-const (to g) (uncurry E.ker-sub-im (to g)) [ g , idp ]
+        from-to g = From.ext-is-const (to g) (uncurry E.ker-sub-im (to g)) [ g , idp ]
 
   φ-inj-implies-G-iso-ker : is-injᴳ φ → G ≃ᴳ Ker.grp ψ
   φ-inj-implies-G-iso-ker φ-is-inj = G-to-ker , φ-inj-implies-G-to-ker-is-equiv φ-is-inj
@@ -105,11 +105,11 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
                     ψ.pres-diff h₁ h₂ ∙ ap2 K.diff p₁ p₂ ∙ K.inv-r k})
 
         from : K.El → Cok.El
-        from k = From.cst-extend k (ψ-is-surj k)
+        from k = From.ext k (ψ-is-surj k)
 
         to-from : ∀ k → to (from k) == k
         to-from k = Trunc-elim
-          {P = λ hf → to (From.cst-extend k hf) == k}
+          {P = λ hf → to (From.ext k hf) == k}
           (λ _ → K.El-is-set _ _)
           (λ{(h , p) → p})
           (ψ-is-surj k)
@@ -117,7 +117,7 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
         from-to : ∀ c → from (to c) == c
         from-to = SetQuot-elim
           (λ _ → =-preserves-set Cok.El-is-set)
-          (λ h → From.cst-extend-is-const (ψ.f h) (ψ-is-surj (ψ.f h)) [ h , idp ])
+          (λ h → From.ext-is-const (ψ.f h) (ψ-is-surj (ψ.f h)) [ h , idp ])
           (λ _ → prop-has-all-paths-↓ (Cok.El-is-set _ _))
 
   ψ-surj-implies-coker-iso-K : (H-is-abelian : is-abelian H)
