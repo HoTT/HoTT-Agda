@@ -42,6 +42,9 @@ import homotopy.GroupSetsRepresentCovers
 import homotopy.AnyUniversalCoverIsPathSet
 import homotopy.PathSetIsInitalCover
 
+{- van kampen -}
+import homotopy.VanKampen
+
 {- cw complexes -}
 import cw.CW
 import cw.examples.Examples
