@@ -86,7 +86,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
         → emloop == emloop [ (λ x' → fst (Codes x') → embase == x') ↓ emloop g ]
       loop' g = ↓-→-from-transp $ λ= $ λ y →
         transport (λ z → embase == z) (emloop g) (emloop y)
-          =⟨ transp-pathfrom (emloop g) (emloop y) ⟩
+          =⟨ transp-cst=idf (emloop g) (emloop y) ⟩
         emloop y ∙ emloop g
           =⟨ ! (emloop-comp y g) ⟩
         emloop (G.comp y g)

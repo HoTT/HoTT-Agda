@@ -145,7 +145,7 @@ module FreudenthalEquiv
         transport Q (merid a) [ up x₀ ]
           =⟨ transport-Trunc (north ==_) (merid a) (up x₀) ⟩
         [ transport (north ==_) (merid a) (up x₀) ]
-          =⟨ ap [_] $ transp-pathfrom {A = Susp X} (merid a) (up x₀)  ⟩
+          =⟨ ap [_] $ transp-cst=idf {A = Susp X} (merid a) (up x₀)  ⟩
         [ (merid x₀ ∙ ! (merid x₀)) ∙ merid a ]
           =⟨ ap [_] $ ap (λ s → s ∙ merid a) (!-inv-r (merid x₀)) ⟩
         [ merid a ]
@@ -164,7 +164,7 @@ module FreudenthalEquiv
         transport Q (merid x₀) [ up b ]
           =⟨ transport-Trunc (north ==_) (merid x₀) (up b) ⟩
         [ transport (north ==_) (merid x₀) (up b) ]
-          =⟨ ap [_] $ transp-pathfrom {A = Susp X} (merid x₀) (up b)  ⟩
+          =⟨ ap [_] $ transp-cst=idf {A = Susp X} (merid x₀) (up b)  ⟩
         [ (merid b ∙ ! (merid x₀)) ∙ merid x₀ ]
           =⟨ ap [_] $ ∙-assoc (merid b) (! (merid x₀)) (merid x₀)
                       ∙ ap (λ s → merid b ∙ s) (!-inv-l (merid x₀))
@@ -186,7 +186,7 @@ module FreudenthalEquiv
           transport Q (merid x₀) [ up x₀ ]
             =⟨ transport-Trunc (north ==_) (merid x₀) (up x₀) ⟩
           [ transport (north ==_) (merid x₀) (up x₀) ]
-            =⟨ ap [_] $ transp-pathfrom {A = Susp X} (merid x₀) (up x₀) ⟩
+            =⟨ ap [_] $ transp-cst=idf {A = Susp X} (merid x₀) (up x₀) ⟩
           [ (merid x₀ ∙ ! (merid x₀)) ∙ merid x₀ ]
             =⟨ ap [_] p₁ ⟩
           [ merid x₀ ]

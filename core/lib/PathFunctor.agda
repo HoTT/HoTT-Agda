@@ -176,6 +176,6 @@ module _ {i j} {A : Type i} {B : Type j} where
   ap2-diag f idp = idp
 
 -- unsure where this belongs
-transp-pathfrom : ∀ {i} {A : Type i} {a x y : A} (p : x == y) (q : a == x)
+transp-cst=idf : ∀ {i} {A : Type i} {a x y : A} (p : x == y) (q : a == x)
   → transport (λ x → a == x) p q == q ∙ p
-transp-pathfrom idp q = ! (∙-unit-r q)
+transp-cst=idf idp q = ! (∙-unit-r q)

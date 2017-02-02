@@ -127,7 +127,7 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (fst X))
         transport P (merid a) [ merid a' ∙ ! (merid e) ]
           =⟨ transport-Trunc (north ==_) (merid a) _ ⟩
         [ transport (north ==_) (merid a) (merid a' ∙ ! (merid e)) ]
-          =⟨ ap [_] (transp-pathfrom {A = Susp A} (merid a) _) ⟩
+          =⟨ ap [_] (transp-cst=idf {A = Susp A} (merid a) _) ⟩
         [ (merid a' ∙ ! (merid e)) ∙ merid a ]
           =⟨ ap [_] (∙-assoc (merid a') (! (merid e)) (merid a)) ⟩
         [ merid a' ∙ ! (merid e) ∙ merid a ]
