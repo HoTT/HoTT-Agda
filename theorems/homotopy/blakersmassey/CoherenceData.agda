@@ -9,7 +9,7 @@ module homotopy.blakersmassey.CoherenceData {i j k}
   n (B-conn : ∀ b → is-connected (S n) (Σ A (λ a → Q a b)))
   where
 
-  open import homotopy.blakersmassey.Pushout Q public
+  open import homotopy.blakersmassey.Pushout Q
 
   {- goal :
       Trunc (m +2+ n) (hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁) r)
@@ -17,10 +17,11 @@ module homotopy.blakersmassey.CoherenceData {i j k}
   -}
 
   private
-    abstract
-      swap-level : ∀ {l} (X : Type l)
-        → has-level (m +2+ n) X → has-level (n +2+ m) X
-      swap-level X level = transport (λ o → has-level o X) (+2+-comm m n) level
+    swap-level :
+        (m +2+ n) -Type (lmax i (lmax j k))
+      → (n +2+ m) -Type (lmax i (lmax j k))
+    swap-level (X , level) = X , new-level where
+      abstract new-level = transport (λ o → has-level o X) (+2+-comm m n) level
 
     p₁=p₁p₂⁻¹p₂ : ∀ {l} {D : Type l} {d₁ d₂ d₃ : D} (p₁ : d₁ == d₂) (p₂ : d₃ == d₂)
       → p₁ == p₁ ∙' ! p₂ ∙' p₂
@@ -76,7 +77,7 @@ module homotopy.blakersmassey.CoherenceData {i j k}
       n = n; m = m;
       cA = B-conn b₀;
       cB = A-conn a₁;
-      P = λ u v → P u v , swap-level (P u v) (Π-level λ _ → Π-level λ _ → Trunc-level);
+      P = λ u v → swap-level $ P u v , Π-level λ _ → Π-level λ _ → Trunc-level;
       f = f; g = g; p = p}
 
     ext : ∀ u v → P u v
@@ -152,7 +153,7 @@ module homotopy.blakersmassey.CoherenceData {i j k}
       n = n; m = m;
       cA = B-conn b₁;
       cB = A-conn a₀;
-      P = λ u v → P u v , swap-level (P u v) (Π-level λ _ → Π-level λ _ → Trunc-level);
+      P = λ u v → swap-level $ P u v , Π-level λ _ → Π-level λ _ → Trunc-level;
       f = f; g = g; p = p}
 
     ext : ∀ u v → P u v
@@ -333,7 +334,7 @@ module homotopy.blakersmassey.CoherenceData {i j k}
       n = n; m = m;
       cA = B-conn b₀;
       cB = A-conn a₁;
-      P = λ u v → P u v , swap-level (P u v) (Π-level λ _ → Π-level λ _ → =-preserves-level Trunc-level);
+      P = λ u v → swap-level $ P u v , Π-level λ _ → Π-level λ _ → =-preserves-level Trunc-level;
       f = f; g = g; p = p}
 
     abstract
@@ -386,7 +387,7 @@ module homotopy.blakersmassey.CoherenceData {i j k}
       n = n; m = m;
       cA = B-conn b₁;
       cB = A-conn a₀;
-      P = λ u v → P u v , swap-level (P u v) (Π-level λ _ → Π-level λ _ → =-preserves-level Trunc-level);
+      P = λ u v → swap-level $ P u v , Π-level λ _ → Π-level λ _ → =-preserves-level Trunc-level;
       f = f; g = g; p = p}
 
     abstract
