@@ -45,6 +45,9 @@ import homotopy.PathSetIsInitalCover
 {- van kampen -}
 import homotopy.VanKampen
 
+{- blakers massey -}
+import homotopy.BlakersMassey
+
 {- cw complexes -}
 import cw.CW
 import cw.examples.Examples
