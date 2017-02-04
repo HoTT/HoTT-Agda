@@ -1,12 +1,12 @@
 {-# OPTIONS --without-K --rewriting #-}
 
-open import HoTT
+open import HoTT hiding (left; right)
 import homotopy.WedgeExtension as WedgeExt
 
 module homotopy.blakersmassey.CoherenceData {i j k}
   {A : Type i} {B : Type j} (Q : A → B → Type k)
-  m (A-conn : ∀ a → is-connected (S m) (Σ B (λ b → Q a b)))
-  n (B-conn : ∀ b → is-connected (S n) (Σ A (λ a → Q a b)))
+  m (f-conn : ∀ a → is-connected (S m) (Σ B (λ b → Q a b)))
+  n (g-conn : ∀ b → is-connected (S n) (Σ A (λ a → Q a b)))
   where
 
   open import homotopy.blakersmassey.Pushout Q
@@ -23,28 +23,28 @@ module homotopy.blakersmassey.CoherenceData {i j k}
     swap-level (X , level) = X , new-level where
       abstract new-level = transport (λ o → has-level o X) (+2+-comm m n) level
 
-    p₁=p₁p₂⁻¹p₂ : ∀ {l} {D : Type l} {d₁ d₂ d₃ : D} (p₁ : d₁ == d₂) (p₂ : d₃ == d₂)
-      → p₁ == p₁ ∙' ! p₂ ∙' p₂
-    p₁=p₁p₂⁻¹p₂ idp idp = idp
+  p₁=p₁p₂⁻¹p₂ : ∀ {l} {D : Type l} {d₁ d₂ d₃ : D} (p₁ : d₁ == d₂) (p₂ : d₃ == d₂)
+    → p₁ == p₁ ∙' ! p₂ ∙' p₂
+  p₁=p₁p₂⁻¹p₂ idp idp = idp
 
-    p₁=p₂p₂⁻¹p₁ : ∀ {l} {D : Type l} {d₁ d₂ d₃ : D} (p₁ : d₁ == d₂) (p₂ : d₁ == d₃)
-      → p₁ == p₂ ∙' ! p₂ ∙' p₁
-    p₁=p₂p₂⁻¹p₁ idp idp = idp
+  p₁=p₂p₂⁻¹p₁ : ∀ {l} {D : Type l} {d₁ d₂ d₃ : D} (p₁ : d₁ == d₂) (p₂ : d₁ == d₃)
+    → p₁ == p₂ ∙' ! p₂ ∙' p₁
+  p₁=p₂p₂⁻¹p₁ idp idp = idp
 
-    path-lemma₁ : ∀ {a₀ a₁ b} (q₀ : Q a₀ b) (q₁ : Q a₁ b)
-      → bmglue q₀ == bmglue q₀ ∙' ! (bmglue q₁) ∙' bmglue q₁
-    path-lemma₁ q₀ q₁ = p₁=p₁p₂⁻¹p₂ (bmglue q₀) (bmglue q₁)
+  path-lemma₁ : ∀ {a₀ a₁ b} (q₀ : Q a₀ b) (q₁ : Q a₁ b)
+    → bmglue q₀ == bmglue q₀ ∙' ! (bmglue q₁) ∙' bmglue q₁
+  path-lemma₁ q₀ q₁ = p₁=p₁p₂⁻¹p₂ (bmglue q₀) (bmglue q₁)
 
-    path-lemma₂ : ∀ {a b₀ b₁} (q₀ : Q a b₀) (q₁ : Q a b₁)
-      → bmglue q₀ == bmglue q₁ ∙' ! (bmglue q₁) ∙' bmglue q₀
-    path-lemma₂ q₀ q₁ = p₁=p₂p₂⁻¹p₁ (bmglue q₀) (bmglue q₁)
+  path-lemma₂ : ∀ {a b₀ b₁} (q₀ : Q a b₀) (q₁ : Q a b₁)
+    → bmglue q₀ == bmglue q₁ ∙' ! (bmglue q₁) ∙' bmglue q₀
+  path-lemma₂ q₀ q₁ = p₁=p₂p₂⁻¹p₁ (bmglue q₀) (bmglue q₁)
 
-    path-coherence : ∀ {a b} (q : Q a b)
-      → path-lemma₁ q q == path-lemma₂ q q
-    path-coherence q = lemma (bmglue q) where
-      lemma : ∀ {p₀ p₁ : BMPushout} (path : p₀ == p₁)
-        → p₁=p₁p₂⁻¹p₂ path path == p₁=p₂p₂⁻¹p₁ path path
-      lemma idp = idp
+  path-coherence : ∀ {a b} (q : Q a b)
+    → path-lemma₁ q q == path-lemma₂ q q
+  path-coherence q = lemma (bmglue q) where
+    lemma : ∀ {p₀ p₁ : BMPushout} (path : p₀ == p₁)
+      → p₁=p₁p₂⁻¹p₂ path path == p₁=p₂p₂⁻¹p₁ path path
+    lemma idp = idp
 
   module To {a₁ b₀} (q₁₀ : Q a₁ b₀) where
     U = Σ A λ a → Q a b₀
@@ -75,8 +75,8 @@ module homotopy.blakersmassey.CoherenceData {i j k}
     args : WedgeExt.args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
     args = record {
       n = n; m = m;
-      cA = B-conn b₀;
-      cB = A-conn a₁;
+      cA = g-conn b₀;
+      cB = f-conn a₁;
       P = λ u v → swap-level $ P u v , Π-level λ _ → Π-level λ _ → Trunc-level;
       f = f; g = g; p = p}
 
@@ -151,8 +151,8 @@ module homotopy.blakersmassey.CoherenceData {i j k}
     args : WedgeExt.args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
     args = record {
       n = n; m = m;
-      cA = B-conn b₁;
-      cB = A-conn a₀;
+      cA = g-conn b₁;
+      cB = f-conn a₀;
       P = λ u v → swap-level $ P u v , Π-level λ _ → Π-level λ _ → Trunc-level;
       f = f; g = g; p = p}
 
@@ -230,7 +230,7 @@ module homotopy.blakersmassey.CoherenceData {i j k}
       }
 
     betaPair=-raw : ∀ {a₀ a₁} {b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
-      (q₀₁ : Q a₀ b₁) (q₁₀ : Q a₁ b₀) (r : left a₀ == right b₁)
+      (q₀₁ : Q a₀ b₁) (q₁₀ : Q a₁ b₀) (r : bmleft a₀ == bmright b₁)
       {p₁ p₂ : bmglue q₀₁ == bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁} (p= : p₁ == p₂)
       {toβ₁} {toβ₂}
       (toβ= : toβ₁ == toβ₂
@@ -244,7 +244,7 @@ module homotopy.blakersmassey.CoherenceData {i j k}
     betaPair=-raw _ _ _ _ _ idp idp idp = idp
 
     betaPair= : ∀ {a₀ a₁} {b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
-      (q₀₁ : Q a₀ b₁) (q₁₀ : Q a₁ b₀) (r : left a₀ == right b₁)
+      (q₀₁ : Q a₀ b₁) (q₁₀ : Q a₁ b₀) (r : bmleft a₀ == bmright b₁)
       {p₁ p₂ : bmglue q₀₁ == bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁} (p= : p₁ == p₂)
       {toβ₁} {toβ₂}
       (toβ= : ∀ shift → toβ₁ shift ∙ ap (To.template q₁₀ (_ , q₀₀) (_ , q₁₁) r shift q₀₁) p=
@@ -332,8 +332,8 @@ module homotopy.blakersmassey.CoherenceData {i j k}
     args : WedgeExt.args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
     args = record {
       n = n; m = m;
-      cA = B-conn b₀;
-      cB = A-conn a₁;
+      cA = g-conn b₀;
+      cB = f-conn a₁;
       P = λ u v → swap-level $ P u v , Π-level λ _ → Π-level λ _ → =-preserves-level Trunc-level;
       f = f; g = g; p = p}
 
@@ -385,8 +385,8 @@ module homotopy.blakersmassey.CoherenceData {i j k}
     args : WedgeExt.args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
     args = record {
       n = n; m = m;
-      cA = B-conn b₁;
-      cB = A-conn a₀;
+      cA = g-conn b₁;
+      cB = f-conn a₀;
       P = λ u v → swap-level $ P u v , Π-level λ _ → Π-level λ _ → =-preserves-level Trunc-level;
       f = f; g = g; p = p}
 

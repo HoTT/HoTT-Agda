@@ -33,11 +33,11 @@ module _ {i} {A : Type i} where
 
   ∙-assoc : {x y z t : A} (p : x == y) (q : y == z) (r : z == t)
     → (p ∙ q) ∙ r == p ∙ (q ∙ r)
-  ∙-assoc idp idp idp = idp
+  ∙-assoc idp _ _ = idp
 
   ∙'-assoc : {x y z t : A} (p : x == y) (q : y == z) (r : z == t)
     → (p ∙' q) ∙' r == p ∙' (q ∙' r)
-  ∙'-assoc idp idp idp = idp
+  ∙'-assoc _ _ idp = idp
 
   -- [∙-unit-l] and [∙'-unit-r] are definitional
 
