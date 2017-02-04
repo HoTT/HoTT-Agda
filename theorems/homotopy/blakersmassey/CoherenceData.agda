@@ -23,28 +23,30 @@ module homotopy.blakersmassey.CoherenceData {i j k}
     swap-level (X , level) = X , new-level where
       abstract new-level = transport (λ o → has-level o X) (+2+-comm m n) level
 
-  p₁=p₁p₂⁻¹p₂ : ∀ {l} {D : Type l} {d₁ d₂ d₃ : D} (p₁ : d₁ == d₂) (p₂ : d₃ == d₂)
-    → p₁ == p₁ ∙' ! p₂ ∙' p₂
-  p₁=p₁p₂⁻¹p₂ idp idp = idp
+  α₁=α₁α₂⁻¹α₂ : ∀ {p₁ p₂ p₃ : BMPushout} (α₁ : p₁ == p₂) (α₂ : p₃ == p₂)
+    → α₁ == α₁ ∙' ! α₂ ∙' α₂
+  α₁=α₁α₂⁻¹α₂ _ idp = idp
 
-  p₁=p₂p₂⁻¹p₁ : ∀ {l} {D : Type l} {d₁ d₂ d₃ : D} (p₁ : d₁ == d₂) (p₂ : d₁ == d₃)
-    → p₁ == p₂ ∙' ! p₂ ∙' p₁
-  p₁=p₂p₂⁻¹p₁ idp idp = idp
+  α₁=α₂α₂⁻¹α₁ : ∀ {p₁ p₂ p₃ : BMPushout} (α₁ : p₁ == p₂) (α₂ : p₁ == p₃)
+    → α₁ == α₂ ∙' ! α₂ ∙' α₁
+  α₁=α₂α₂⁻¹α₁ idp α₂ = ! (!-inv'-r α₂)
 
-  path-lemma₁ : ∀ {a₀ a₁ b} (q₀ : Q a₀ b) (q₁ : Q a₁ b)
-    → bmglue q₀ == bmglue q₀ ∙' ! (bmglue q₁) ∙' bmglue q₁
-  path-lemma₁ q₀ q₁ = p₁=p₁p₂⁻¹p₂ (bmglue q₀) (bmglue q₁)
+  private
+    path-lemma₁ : ∀ {a₀ a₁ b} (q₀ : Q a₀ b) (q₁ : Q a₁ b)
+      → bmglue q₀ == bmglue q₀ ∙' ! (bmglue q₁) ∙' bmglue q₁
+    path-lemma₁ q₀ q₁ = α₁=α₁α₂⁻¹α₂ (bmglue q₀) (bmglue q₁)
 
-  path-lemma₂ : ∀ {a b₀ b₁} (q₀ : Q a b₀) (q₁ : Q a b₁)
-    → bmglue q₀ == bmglue q₁ ∙' ! (bmglue q₁) ∙' bmglue q₀
-  path-lemma₂ q₀ q₁ = p₁=p₂p₂⁻¹p₁ (bmglue q₀) (bmglue q₁)
+    path-lemma₂ : ∀ {a b₀ b₁} (q₀ : Q a b₀) (q₁ : Q a b₁)
+      → bmglue q₀ == bmglue q₁ ∙' ! (bmglue q₁) ∙' bmglue q₀
+    path-lemma₂ q₀ q₁ = α₁=α₂α₂⁻¹α₁ (bmglue q₀) (bmglue q₁)
 
-  path-coherence : ∀ {a b} (q : Q a b)
-    → path-lemma₁ q q == path-lemma₂ q q
-  path-coherence q = lemma (bmglue q) where
-    lemma : ∀ {p₀ p₁ : BMPushout} (path : p₀ == p₁)
-      → p₁=p₁p₂⁻¹p₂ path path == p₁=p₂p₂⁻¹p₁ path path
-    lemma idp = idp
+    abstract
+      path-coherence : ∀ {a b} (q : Q a b)
+        → path-lemma₁ q q == path-lemma₂ q q
+      path-coherence q = lemma (bmglue q) where
+        lemma : ∀ {p₀ p₁ : BMPushout} (path : p₀ == p₁)
+          → α₁=α₁α₂⁻¹α₂ path path == α₁=α₂α₂⁻¹α₁ path path
+        lemma idp = idp
 
   module To {a₁ b₀} (q₁₀ : Q a₁ b₀) where
     U = Σ A λ a → Q a b₀
@@ -89,26 +91,27 @@ module homotopy.blakersmassey.CoherenceData {i j k}
     β-r : ∀ v r shift → ext u₀ v r shift == g v r shift
     β-r v r shift = app= (app= (WedgeExt.β-r v) r) shift
 
-    coh : ∀ r shift → ! (β-l u₀ r shift) ∙ β-r v₀ r shift == p' r shift
-    coh r shift =
-      ! (β-l u₀ r shift) ∙ β-r v₀ r shift
-        =⟨ ap (_∙ β-r v₀ r shift) (!-ap (_$ shift) (app= (WedgeExt.β-l u₀) r))
-         ∙ ∙-ap (_$ shift)
-             (! (app= (WedgeExt.β-l {r = args} u₀) r))
-             (app= (WedgeExt.β-r {r = args} v₀) r)
-         ∙ ap (λ p → app= p shift)
-             ( ap (_∙ app= (WedgeExt.β-r {r = args} v₀) r)
-                (!-ap (_$ r) (WedgeExt.β-l {r = args} u₀))
-             ∙ ∙-ap (_$ r)
-                (! (WedgeExt.β-l {r = args} u₀))
-                (WedgeExt.β-r {r = args} v₀)) ⟩
-      app= (app= (! (WedgeExt.β-l {r = args} u₀) ∙ WedgeExt.β-r {r = args} v₀) r) shift
-        =⟨ ap (λ p → app= (app= p r) shift) (WedgeExt.coh {r = args}) ⟩
-      app= (app= (λ= λ r → λ= λ shift → p' r shift) r) shift
-        =⟨ ap (λ p → app= p shift) (app=-β (λ r → λ= λ shift → p' r shift) r)
-         ∙ app=-β (λ shift → p' r shift) shift ⟩
-      p' r shift
-        =∎
+    abstract
+      coh : ∀ r shift → ! (β-l u₀ r shift) ∙ β-r v₀ r shift == p' r shift
+      coh r shift =
+        ! (β-l u₀ r shift) ∙ β-r v₀ r shift
+          =⟨ ap (_∙ β-r v₀ r shift) (!-ap (_$ shift) (app= (WedgeExt.β-l u₀) r))
+           ∙ ∙-ap (_$ shift)
+               (! (app= (WedgeExt.β-l {r = args} u₀) r))
+               (app= (WedgeExt.β-r {r = args} v₀) r)
+           ∙ ap (λ p → app= p shift)
+               ( ap (_∙ app= (WedgeExt.β-r {r = args} v₀) r)
+                  (!-ap (_$ r) (WedgeExt.β-l {r = args} u₀))
+               ∙ ∙-ap (_$ r)
+                  (! (WedgeExt.β-l {r = args} u₀))
+                  (WedgeExt.β-r {r = args} v₀)) ⟩
+        app= (app= (! (WedgeExt.β-l {r = args} u₀) ∙ WedgeExt.β-r {r = args} v₀) r) shift
+          =⟨ ap (λ p → app= (app= p r) shift) (WedgeExt.coh {r = args}) ⟩
+        app= (app= (λ= λ r → λ= λ shift → p' r shift) r) shift
+          =⟨ ap (λ p → app= p shift) (app=-β (λ r → λ= λ shift → p' r shift) r)
+           ∙ app=-β (λ shift → p' r shift) shift ⟩
+        p' r shift
+          =∎
 
   to' : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
     → (r : bmleft a₀ == bmright b₁)
@@ -165,23 +168,24 @@ module homotopy.blakersmassey.CoherenceData {i j k}
     β-r : ∀ v r shift → ext u₀ v r shift == g v r shift
     β-r v r shift = app= (app= (WedgeExt.β-r v) r) shift
 
-    coh : ∀ r shift → ! (β-l u₀ r shift) ∙ β-r v₀ r shift == p' r shift
-    coh r shift =
-      ! (β-l u₀ r shift) ∙ β-r v₀ r shift
-        =⟨ ap (_∙ β-r v₀ r shift) (!-ap (_$ shift) (app= β-l' r))
-         ∙ ∙-ap (_$ shift) (! (app= β-l' r)) (app= β-r' r)
-         ∙ ap (λ p → app= p shift)
-             ( ap (_∙ app= β-r' r) (!-ap (_$ r) β-l')
-             ∙ ∙-ap (_$ r) (! β-l') β-r') ⟩
-      app= (app= (! β-l' ∙ β-r') r) shift
-        =⟨ ap (λ p → app= (app= p r) shift) (WedgeExt.coh {r = args}) ⟩
-      app= (app= (λ= λ r → λ= λ shift → p' r shift) r) shift
-        =⟨ ap (λ p → app= p shift) (app=-β (λ r → λ= λ shift → p' r shift) r)
-         ∙ app=-β (λ shift → p' r shift) shift ⟩
-      p' r shift
-        =∎
-      where β-l' = WedgeExt.β-l {r = args} u₀
-            β-r' = WedgeExt.β-r {r = args} v₀
+    abstract
+      coh : ∀ r shift → ! (β-l u₀ r shift) ∙ β-r v₀ r shift == p' r shift
+      coh r shift =
+        ! (β-l u₀ r shift) ∙ β-r v₀ r shift
+          =⟨ ap (_∙ β-r v₀ r shift) (!-ap (_$ shift) (app= β-l' r))
+           ∙ ∙-ap (_$ shift) (! (app= β-l' r)) (app= β-r' r)
+           ∙ ap (λ p → app= p shift)
+               ( ap (_∙ app= β-r' r) (!-ap (_$ r) β-l')
+               ∙ ∙-ap (_$ r) (! β-l') β-r') ⟩
+        app= (app= (! β-l' ∙ β-r') r) shift
+          =⟨ ap (λ p → app= (app= p r) shift) (WedgeExt.coh {r = args}) ⟩
+        app= (app= (λ= λ r → λ= λ shift → p' r shift) r) shift
+          =⟨ ap (λ p → app= p shift) (app=-β (λ r → λ= λ shift → p' r shift) r)
+           ∙ app=-β (λ shift → p' r shift) shift ⟩
+        p' r shift
+          =∎
+        where β-l' = WedgeExt.β-l {r = args} u₀
+              β-r' = WedgeExt.β-r {r = args} v₀
 
   from' : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
     → (r : bmleft a₀ == bmright b₁)
@@ -201,49 +205,35 @@ module homotopy.blakersmassey.CoherenceData {i j k}
       First step:  Pack relevant rules into records.
   -}
 
-  private
-    record BetaPair {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀)
-      (q₁₁ : Q a₁ b₁) (q₀₁ : Q a₀ b₁) (q₁₀ : Q a₁ b₀)
-      (r : bmleft a₀ == bmright b₁) : Type (lmax i (lmax j k)) where
-      constructor betaPair
-      field
-        path : bmglue q₀₁ == bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁
-        to-β : ∀ shift → To.ext q₁₀ (_ , q₀₀) (_ , q₁₁) r shift
-                      == To.template q₁₀ (_ , q₀₀) (_ , q₁₁) r shift q₀₁ path
-        from-β : ∀ shift → From.ext q₀₁ (_ , q₁₁) (_ , q₀₀) r shift
-                        == From.template q₀₁ (_ , q₁₁) (_ , q₀₀) r shift q₁₀ path
+  record βPair {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀)
+    (q₁₁ : Q a₁ b₁) (q₀₁ : Q a₀ b₁) (q₁₀ : Q a₁ b₀)
+    (r : bmleft a₀ == bmright b₁) : Type (lmax i (lmax j k)) where
+    constructor βpair
+    field
+      path : bmglue q₀₁ == bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁
+      to-β : ∀ shift → To.ext q₁₀ (_ , q₀₀) (_ , q₁₁) r shift
+                    == To.template q₁₀ (_ , q₀₀) (_ , q₁₁) r shift q₀₁ path
+      from-β : ∀ shift → From.ext q₀₁ (_ , q₁₁) (_ , q₀₀) r shift
+                      == From.template q₀₁ (_ , q₁₁) (_ , q₀₀) r shift q₁₀ path
 
-    β-pair-bmleft : ∀ {a₀ a₁ b} (q₀ : Q a₀ b) (q₁ : Q a₁ b) r
-      → BetaPair q₀ q₁ q₀ q₁ r
-    β-pair-bmleft q₀ q₁ r = record
-      { path = path-lemma₁ q₀ q₁
-      ; to-β = To.β-l q₁ (_ , q₀) r
-      ; from-β = From.β-l q₀ (_ , q₁) r
-      }
+  βpair-bmleft : ∀ {a₀ a₁ b} (q₀ : Q a₀ b) (q₁ : Q a₁ b) r
+    → βPair q₀ q₁ q₀ q₁ r
+  βpair-bmleft q₀ q₁ r = record
+    { path = path-lemma₁ q₀ q₁
+    ; to-β = To.β-l q₁ (_ , q₀) r
+    ; from-β = From.β-l q₀ (_ , q₁) r
+    }
 
-    β-pair-bmright : ∀ {a b₀ b₁} (q₀ : Q a b₀) (q₁ : Q a b₁) r
-      → BetaPair q₀ q₁ q₁ q₀ r
-    β-pair-bmright q₀ q₁ r = record
-      { path = path-lemma₂ q₁ q₀
-      ; to-β = To.β-r q₀ (_ , q₁) r
-      ; from-β = From.β-r q₁ (_ , q₀) r
-      }
+  βpair-bmright : ∀ {a b₀ b₁} (q₀ : Q a b₀) (q₁ : Q a b₁) r
+    → βPair q₀ q₁ q₁ q₀ r
+  βpair-bmright q₀ q₁ r = record
+    { path = path-lemma₂ q₁ q₀
+    ; to-β = To.β-r q₀ (_ , q₁) r
+    ; from-β = From.β-r q₁ (_ , q₀) r
+    }
 
-    betaPair=-raw : ∀ {a₀ a₁} {b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
-      (q₀₁ : Q a₀ b₁) (q₁₀ : Q a₁ b₀) (r : bmleft a₀ == bmright b₁)
-      {p₁ p₂ : bmglue q₀₁ == bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁} (p= : p₁ == p₂)
-      {toβ₁} {toβ₂}
-      (toβ= : toβ₁ == toβ₂
-        [ (λ p → ∀ shift → To.ext q₁₀ (_ , q₀₀) (_ , q₁₁) r shift
-                        == To.template q₁₀ (_ , q₀₀) (_ , q₁₁) r shift q₀₁ p) ↓ p= ])
-      {fromβ₁} {fromβ₂}
-      (fromβ= : fromβ₁ == fromβ₂
-        [ (λ p → ∀ shift → From.ext q₀₁ (_ , q₁₁) (_ , q₀₀) r shift
-                        == From.template q₀₁ (_ , q₁₁) (_ , q₀₀) r shift q₁₀ p) ↓ p= ])
-      → betaPair p₁ toβ₁ fromβ₁ == betaPair p₂ toβ₂ fromβ₂
-    betaPair=-raw _ _ _ _ _ idp idp idp = idp
-
-    betaPair= : ∀ {a₀ a₁} {b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
+  abstract
+    βpair= : ∀ {a₀ a₁} {b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
       (q₀₁ : Q a₀ b₁) (q₁₀ : Q a₁ b₀) (r : bmleft a₀ == bmright b₁)
       {p₁ p₂ : bmglue q₀₁ == bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁} (p= : p₁ == p₂)
       {toβ₁} {toβ₂}
@@ -252,31 +242,36 @@ module homotopy.blakersmassey.CoherenceData {i j k}
       {fromβ₁} {fromβ₂}
       (fromβ= : ∀ shift → fromβ₁ shift ∙ ap (From.template q₀₁ (_ , q₁₁) (_ , q₀₀) r shift q₁₀) p=
                        == fromβ₂ shift)
-      → betaPair p₁ toβ₁ fromβ₁ == betaPair p₂ toβ₂ fromβ₂
-    betaPair= q₀₀ q₁₁ q₀₁ q₁₀ r idp toβ= fromβ= =
-      betaPair=-raw q₀₀ q₁₁ q₀₁ q₁₀ r idp (λ= λ shift → ! (∙-unit-r _) ∙ toβ= shift) (λ= λ shift → ! (∙-unit-r _) ∙ fromβ= shift)
+      → βpair p₁ toβ₁ fromβ₁ == βpair p₂ toβ₂ fromβ₂
+    βpair= q₀₀ q₁₁ q₀₁ q₁₀ r {p} idp toβ= fromβ= = lemma
+      (λ= λ shift → ! (∙-unit-r _) ∙ toβ= shift)
+      (λ= λ shift → ! (∙-unit-r _) ∙ fromβ= shift)
+      where
+        lemma : ∀ {toβ₁} {toβ₂} (toβ= : toβ₁ == toβ₂) {fromβ₁} {fromβ₂} (fromβ= : fromβ₁ == fromβ₂)
+          → βpair p toβ₁ fromβ₁ == βpair p toβ₂ fromβ₂
+        lemma idp idp = idp
 
   abstract
-    β-pair-glue : ∀ {a} {b} (q : Q a b) r
-      → β-pair-bmleft q q r == β-pair-bmright q q r
-    β-pair-glue q r = betaPair= q q q q r
-        (path-coherence q)
-        (λ shift →
-          To.β-l q (_ , q) r shift ∙ To.p' q r shift 
-              =⟨ ! $ ap (To.β-l q (_ , q) r shift ∙_) (To.coh q r shift) ⟩
-          To.β-l q (_ , q) r shift ∙ ! (To.β-l q (_ , q) r shift) ∙ To.β-r q (_ , q) r shift
-              =⟨ ! (∙-assoc (To.β-l q (_ , q) r shift) (! (To.β-l q (_ , q) r shift)) (To.β-r q (_ , q) r shift))
-               ∙ ap (_∙ To.β-r q (_ , q) r shift) (!-inv-r (To.β-l q (_ , q) r shift)) ⟩
-          To.β-r q (_ , q) r shift
-              ∎)
-        (λ shift →
-          From.β-l q (_ , q) r shift ∙ From.p' q r shift 
-              =⟨ ! $ ap (From.β-l q (_ , q) r shift ∙_) (From.coh q r shift) ⟩
-          From.β-l q (_ , q) r shift ∙ ! (From.β-l q (_ , q) r shift) ∙ From.β-r q (_ , q) r shift
-              =⟨ ! (∙-assoc (From.β-l q (_ , q) r shift) (! (From.β-l q (_ , q) r shift)) (From.β-r q (_ , q) r shift))
-               ∙ ap (_∙ From.β-r q (_ , q) r shift) (!-inv-r (From.β-l q (_ , q) r shift)) ⟩
-          From.β-r q (_ , q) r shift
-              ∎)
+    βpair-glue : ∀ {a} {b} (q : Q a b) r
+      → βpair-bmleft q q r == βpair-bmright q q r
+    βpair-glue q r = βpair= q q q q r
+      (path-coherence q)
+      (λ shift →
+        To.β-l q (_ , q) r shift ∙ To.p' q r shift
+            =⟨ ! $ ap (To.β-l q (_ , q) r shift ∙_) (To.coh q r shift) ⟩
+        To.β-l q (_ , q) r shift ∙ ! (To.β-l q (_ , q) r shift) ∙ To.β-r q (_ , q) r shift
+            =⟨ ! (∙-assoc (To.β-l q (_ , q) r shift) (! (To.β-l q (_ , q) r shift)) (To.β-r q (_ , q) r shift))
+             ∙ ap (_∙ To.β-r q (_ , q) r shift) (!-inv-r (To.β-l q (_ , q) r shift)) ⟩
+        To.β-r q (_ , q) r shift
+            ∎)
+      (λ shift →
+        From.β-l q (_ , q) r shift ∙ From.p' q r shift
+            =⟨ ! $ ap (From.β-l q (_ , q) r shift ∙_) (From.coh q r shift) ⟩
+        From.β-l q (_ , q) r shift ∙ ! (From.β-l q (_ , q) r shift) ∙ From.β-r q (_ , q) r shift
+            =⟨ ! (∙-assoc (From.β-l q (_ , q) r shift) (! (From.β-l q (_ , q) r shift)) (From.β-r q (_ , q) r shift))
+             ∙ ap (_∙ From.β-r q (_ , q) r shift) (!-inv-r (From.β-l q (_ , q) r shift)) ⟩
+        From.β-r q (_ , q) r shift
+            ∎)
 
   -- Lemmas
 
@@ -284,7 +279,7 @@ module homotopy.blakersmassey.CoherenceData {i j k}
     abstract
       to-from-template : ∀ {a₀ a₁ b₀ b₁} {q₀₀ : Q a₀ b₀}
         {q₁₁ : Q a₁ b₁} {q₀₁ : Q a₀ b₁} {q₁₀ : Q a₁ b₀} {r}
-        (params : BetaPair q₀₀ q₁₁ q₀₁ q₁₀ r) shift
+        (params : βPair q₀₀ q₁₁ q₀₁ q₁₀ r) shift
         → to q₀₀ q₁₁ r (from q₀₀ q₁₁ r [ q₀₁ , shift ]) == [ q₀₁ , shift ]
       to-from-template {q₀₀ = q₀₀} {q₁₁} {q₀₁} {q₁₀} {r} params shift =
         to q₀₀ q₁₁ r (from q₀₀ q₁₁ r [ q₀₁ , shift ])
@@ -295,7 +290,7 @@ module homotopy.blakersmassey.CoherenceData {i j k}
           =⟨ ap (λ p → [ q₀₁ , p ]) $ ! (∙'-assoc path (! path) shift) ∙ ap (_∙' shift) (!-inv'-r path) ∙ ∙'-unit-l shift ⟩
         [ q₀₁ , shift ]
           =∎
-        where open BetaPair params
+        where open βPair params
 
   module FromTo {a₁ b₀} (q₁₀ : Q a₁ b₀) where
     -- upper
@@ -312,7 +307,7 @@ module homotopy.blakersmassey.CoherenceData {i j k}
 
     abstract
       template : ∀ (u : U) (v : V) r shift q₀₁
-        → BetaPair (snd u) (snd v) q₀₁ q₁₀ r
+        → βPair (snd u) (snd v) q₀₁ q₁₀ r
         → from (snd u) (snd v) r (to (snd u) (snd v) r [ q₁₀ , shift ]) == [ q₁₀ , shift ]
       template (_ , q₀₀) (_ , q₁₁) r shift q₀₁ params =
         from q₀₀ q₁₁ r (to q₀₀ q₁₁ r [ q₁₀ , shift ])
@@ -323,11 +318,14 @@ module homotopy.blakersmassey.CoherenceData {i j k}
           =⟨ ap (λ p → [ q₁₀ , p ]) $ ! (∙'-assoc (! path) path shift) ∙ ap (_∙' shift) (!-inv'-l path) ∙ ∙'-unit-l shift ⟩
         [ q₁₀ , shift ]
           =∎
-        where open BetaPair params
+        where open βPair params
 
-    f = λ u r shift → template u v₀ r shift (snd u) (β-pair-bmleft (snd u) q₁₀ r)
-    g = λ v r shift → template u₀ v r shift (snd v) (β-pair-bmright q₁₀ (snd v) r)
-    p = λ= λ r → λ= λ shift → ap (template u₀ v₀ r shift q₁₀) (β-pair-glue q₁₀ r)
+    f = λ u r shift → template u v₀ r shift (snd u) (βpair-bmleft (snd u) q₁₀ r)
+    g = λ v r shift → template u₀ v r shift (snd v) (βpair-bmright q₁₀ (snd v) r)
+
+    abstract
+      p : f u₀ == g v₀
+      p = λ= λ r → λ= λ shift → ap (template u₀ v₀ r shift q₁₀) (βpair-glue q₁₀ r)
 
     args : WedgeExt.args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
     args = record {
@@ -365,7 +363,7 @@ module homotopy.blakersmassey.CoherenceData {i j k}
 
     abstract
       template : ∀ (u : U) (v : V) r shift q₁₀
-        → BetaPair (snd v) (snd u) q₀₁ q₁₀ r
+        → βPair (snd v) (snd u) q₀₁ q₁₀ r
         → to (snd v) (snd u) r (from (snd v) (snd u) r [ q₀₁ , shift ]) == [ q₀₁ , shift ]
       template (_ , q₁₁) (_ , q₀₀) r shift q₁₀ params =
         to q₀₀ q₁₁ r (from q₀₀ q₁₁ r [ q₀₁ , shift ])
@@ -376,11 +374,14 @@ module homotopy.blakersmassey.CoherenceData {i j k}
           =⟨ ap (λ p → [ q₀₁ , p ]) $ ! (∙'-assoc path (! path) shift) ∙ ap (_∙' shift) (!-inv'-r path) ∙ ∙'-unit-l shift ⟩
         [ q₀₁ , shift ]
           =∎
-        where open BetaPair params
+        where open βPair params
 
-    f = λ u r shift → template u v₀ r shift (snd u) (β-pair-bmleft q₀₁ (snd u) r)
-    g = λ v r shift → template u₀ v r shift (snd v) (β-pair-bmright (snd v) q₀₁ r)
-    p = λ= λ r → λ= λ shift → ap (template u₀ v₀ r shift q₀₁) (β-pair-glue q₀₁ r)
+    f = λ u r shift → template u v₀ r shift (snd u) (βpair-bmleft q₀₁ (snd u) r)
+    g = λ v r shift → template u₀ v r shift (snd v) (βpair-bmright (snd v) q₀₁ r)
+
+    abstract
+      p : f u₀ == g v₀
+      p = λ= λ r → λ= λ shift → ap (template u₀ v₀ r shift q₀₁) (βpair-glue q₀₁ r)
 
     args : WedgeExt.args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
     args = record {
