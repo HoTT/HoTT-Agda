@@ -7,6 +7,7 @@ open import lib.types.Lift
 open import lib.types.Nat
 open import lib.types.TLevel
 open import lib.types.Suspension
+open import lib.types.Truncation
 
 module lib.types.IteratedSuspension where
 
@@ -14,10 +15,11 @@ module lib.types.IteratedSuspension where
 ⊙Susp^ O X = X
 ⊙Susp^ (S n) X = ⊙Susp (⊙Susp^ n X)
 
-⊙Susp^-conn : ∀ {i} (n : ℕ) {X : Ptd i} {m : ℕ₋₂}
-  → is-connected m (fst X) → is-connected (⟨ n ⟩₋₂ +2+ m) (fst (⊙Susp^ n X))
-⊙Susp^-conn O cX = cX
-⊙Susp^-conn (S n) cX = Susp-conn (⊙Susp^-conn n cX)
+abstract
+  ⊙Susp^-conn : ∀ {i} (n : ℕ) {X : Ptd i} {m : ℕ₋₂}
+    → is-connected m (fst X) → is-connected (⟨ n ⟩₋₂ +2+ m) (fst (⊙Susp^ n X))
+  ⊙Susp^-conn O cX = cX
+  ⊙Susp^-conn (S n) cX = Susp-conn (⊙Susp^-conn n cX)
 
 ⊙Susp^-+ : ∀ {i} (m n : ℕ) {X : Ptd i}
   → ⊙Susp^ m (⊙Susp^ n X) == ⊙Susp^ (m + n) X
@@ -60,6 +62,11 @@ module lib.types.IteratedSuspension where
 
 Sphere : (n : ℕ) → Type₀
 Sphere n = fst (⊙Sphere n)
+
+abstract
+  Sphere-conn : ∀ (n : ℕ) → is-connected ⟨ n ⟩₋₁ (Sphere n)
+  Sphere-conn 0 = inhab-conn true
+  Sphere-conn (S n) = Susp-conn (Sphere-conn n)
 
 -- favonia: [S¹] has its own elim rules in Circle.agda.
 ⊙S⁰ = ⊙Sphere 0

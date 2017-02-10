@@ -11,7 +11,7 @@ module lib.types.TLevel where
 ⟨ n ⟩₋₁ = S ⟨ n ⟩₋₂
 
 ⟨_⟩ : ℕ → ℕ₋₂
-⟨ n ⟩ = from-nat n
+⟨ n ⟩ = S (S ⟨ n ⟩₋₂)
 
 infixl 80 _+2+_
 _+2+_ : ℕ₋₂ → ℕ₋₂ → ℕ₋₂

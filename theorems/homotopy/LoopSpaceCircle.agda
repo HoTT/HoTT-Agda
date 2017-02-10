@@ -29,6 +29,17 @@ Keep
 - 1, 5, 6    for the flattening lemma proof (+ 8)
 -}
 
+{- 2017/02/09 favonia:
+
+  1. [loop^] is defined in terms of [Group.exp], and the lemma
+     [encode'-decode] is changed accordingly.  Although the original
+     [encode-decode] can be proved without the generalized [encode'],
+     [encode'] seems useful in proving the isomorphism (not just
+     type equivalence) without flipping the two sides [Ω S¹] and [ℤ].
+
+  2. Part 9 is added for further results.
+-}
+
 module homotopy.LoopSpaceCircle where
 
 {- 1. Universal cover and encoding map (common to all three proofs) -}
@@ -38,83 +49,86 @@ module S¹Cover = S¹RecType ℤ succ-equiv
 S¹Cover : S¹ → Type₀
 S¹Cover = S¹Cover.f
 
+encode' : {x₁ x₂ : S¹} (p : x₁ == x₂) → S¹Cover x₁ → S¹Cover x₂
+encode' p n = transport S¹Cover p n
+
 encode : {x : S¹} (p : base == x) → S¹Cover x
-encode p = transport S¹Cover p 0
+encode p = encode' p 0
 
 {- 2. Encoding [loop^ n] (common to Mike’s proof and the encode-decode proof) -}
 
+ΩS¹-group-structure : GroupStructure (base == base)
+ΩS¹-group-structure = Ω^S-group-structure 0 ⊙S¹
+
+module ΩS¹GroupStruct = GroupStructure ΩS¹-group-structure
+
 -- We define the element of [Ω S¹] which is supposed to correspond to an
 -- integer [n], this is the loop winding around the circle [n] times.
--- This is easy by induction on [n]
 loop^ : (n : ℤ) → base == base
-loop^ (pos O) = idp
-loop^ (pos (S n)) = loop^ (pos n) ∙ loop
-loop^ (negsucc O) = ! loop
-loop^ (negsucc (S n)) = loop^ (negsucc n) ∙ (! loop)
+loop^ = ΩS¹GroupStruct.exp loop
 
--- Compatibility of [loop^] with the successor function
--- This is again not difficult by induction on [n]
-loop^succ : (n : ℤ) → loop^ n ∙ loop == loop^ (succ n)
-loop^succ (pos n) = idp
-loop^succ (negsucc O) = !-inv-l loop
-loop^succ (negsucc (S n)) =
-  (loop^ (negsucc n) ∙ ! loop) ∙ loop
-        =⟨ ∙-assoc (loop^ (negsucc n)) (! loop) loop ⟩
-   loop^ (negsucc n) ∙ (! loop ∙ loop)
-        =⟨ !-inv-l loop |in-ctx (λ u → loop^ (negsucc n) ∙ u) ⟩
-   loop^ (negsucc n) ∙ idp
-        =⟨ ∙-unit-r _ ⟩
-   loop^ (negsucc n) ∎
+-- Compatibility of [loop^] with the addition function
+abstract
+  loop^+ : (n₁ n₂ : ℤ) → loop^ (n₁ ℤ+ n₂) == loop^ n₁ ∙ loop^ n₂
+  loop^+ = ΩS¹GroupStruct.exp-+ loop
 
 -- Now we check that encoding [loop^ n] gives indeed [n], again by induction
 -- on [n]
-encode-loop^ : (n : ℤ) → encode (loop^ n) == n
-encode-loop^ (pos O) = idp
-encode-loop^ (pos (S n)) =
-  encode (loop^ (pos n) ∙ loop) =⟨ idp ⟩
-  coe (ap S¹Cover (loop^ (pos n) ∙ loop)) 0
-       =⟨ ap-∙ S¹Cover (loop^ (pos n)) loop |in-ctx (λ u → coe u 0) ⟩
-  coe (ap S¹Cover (loop^ (pos n)) ∙ ap S¹Cover loop) 0
-       =⟨ coe-∙ (ap S¹Cover (loop^ (pos n)))
-                (ap S¹Cover loop) 0 ⟩
-  coe (ap S¹Cover loop) (coe (ap S¹Cover (loop^ (pos n))) 0)
-       =⟨ encode-loop^ (pos n) |in-ctx coe (ap S¹Cover loop) ⟩
-  coe (ap S¹Cover loop) (pos n)
-       =⟨ S¹Cover.coe-loop-β (pos n) ⟩
-  pos (S n) ∎
-encode-loop^ (negsucc O) =
-  coe (ap S¹Cover (! loop)) 0 =⟨ coe-ap-! S¹Cover loop 0 ⟩
-  coe! (ap S¹Cover loop) 0 =⟨ S¹Cover.coe!-loop-β 0 ⟩
-  negsucc O ∎
-encode-loop^ (negsucc (S n)) =
-  encode (loop^ (negsucc n) ∙ ! loop) =⟨ idp ⟩
-  coe (ap S¹Cover (loop^ (negsucc n) ∙ ! loop)) 0
-       =⟨ ap-∙ S¹Cover (loop^ (negsucc n)) (! loop)
-          |in-ctx (λ u → coe u 0) ⟩
-  coe (ap S¹Cover (loop^ (negsucc n)) ∙ ap S¹Cover (! loop)) 0
-       =⟨ coe-∙ (ap S¹Cover (loop^ (negsucc n)))
-                (ap S¹Cover (! loop)) 0 ⟩
-  coe (ap S¹Cover (! loop)) (coe (ap S¹Cover (loop^ (negsucc n))) 0)
-       =⟨ encode-loop^ (negsucc n) |in-ctx coe (ap S¹Cover (! loop)) ⟩
-  coe (ap S¹Cover (! loop)) (negsucc n)
-       =⟨ coe-ap-! S¹Cover loop (negsucc n) ⟩
-  coe! (ap S¹Cover loop) (negsucc n)
-       =⟨ S¹Cover.coe!-loop-β (negsucc n) ⟩
-  negsucc (S n) ∎
+abstract
+  encode'-∙ : ∀ {x₀ x₁ x₂} (p₀ : x₀ == x₁) (p₁ : x₁ == x₂) n
+    → encode' (p₀ ∙ p₁) n == encode' p₁ (encode' p₀ n)
+  encode'-∙ idp _ _ = idp
+
+  encode'-loop : ∀ n → encode' loop n == succ n
+  encode'-loop = S¹Cover.coe-loop-β
+
+  encode'-!loop : ∀ n → encode' (! loop) n == pred n
+  encode'-!loop n = coe-ap-! S¹Cover loop n ∙ S¹Cover.coe!-loop-β n
+
+abstract
+  encode'-loop^ : (n₁ n₂ : ℤ) → encode' (loop^ n₁) n₂ == n₁ ℤ+ n₂
+  encode'-loop^ (pos 0) n₂ = idp
+  encode'-loop^ (pos 1) n₂ = encode'-loop n₂
+  encode'-loop^ (pos (S (S n₁))) n₂ =
+    encode' (loop ∙ loop^ (pos (S n₁))) n₂
+         =⟨ encode'-∙ loop (loop^ (pos (S n₁))) n₂ ⟩
+    encode' (loop^ (pos (S n₁))) (encode' loop n₂)
+         =⟨ encode'-loop n₂ |in-ctx encode' (loop^ (pos (S n₁))) ⟩
+    encode' (loop^ (pos (S n₁))) (succ n₂)
+         =⟨ encode'-loop^ (pos (S n₁)) (succ n₂) ⟩
+    pos (S n₁) ℤ+ succ n₂
+         =⟨ ℤ+-succ (pos (S n₁)) n₂ ⟩
+    pos (S (S n₁)) ℤ+ n₂ =∎
+  encode'-loop^ (negsucc 0) n₂ = encode'-!loop n₂
+  encode'-loop^ (negsucc (S n₁)) n₂ =
+    encode' (! loop ∙ loop^ (negsucc n₁)) n₂
+         =⟨ encode'-∙ (! loop) (loop^ (negsucc n₁)) n₂ ⟩
+    encode' (loop^ (negsucc n₁)) (encode' (! loop) n₂)
+         =⟨ encode'-!loop n₂ |in-ctx encode' (loop^ (negsucc n₁)) ⟩
+    encode' (loop^ (negsucc n₁)) (pred n₂)
+         =⟨ encode'-loop^ (negsucc n₁) (pred n₂) ⟩
+    negsucc n₁ ℤ+ pred n₂
+         =⟨ ℤ+-pred (negsucc n₁) n₂ ⟩
+    negsucc (S n₁) ℤ+ n₂
+         =∎
+
+  encode-loop^ : (n : ℤ) → encode (loop^ n) == n
+  encode-loop^ n = encode'-loop^ n 0 ∙ ℤ+-unit-r n
 
 {- 3. Dan’s encode-decode proof -}
 
 -- The decoding function at [base] is [loop^], but we extend it to the whole
--- of [S¹] so that [decode-encode] becomes easier (and we need [loop^succ] to
+-- of [S¹] so that [decode-encode] becomes easier (and we need [loop^+] to
 -- be able to extend it)
 decode : (x : S¹) → (S¹Cover x → base == x)
 decode =
-  S¹-elim loop^ (↓-→-in (λ {n} q →
-                 ↓-cst=idf-in'
-                   (loop^succ n ∙ ap loop^ (S¹Cover.↓-loop-out q))))
+  S¹-elim loop^ (↓-→-in λ {n} q →
+                 ↓-cst=idf-in' $
+                   ! (loop^+ n 1) ∙ ap loop^ (ℤ+-comm n 1 ∙ S¹Cover.↓-loop-out q))
 
-decode-encode : (x : S¹) (p : base == x) → decode x (encode p) == p
-decode-encode _ p = J (λ x p → decode x (encode p) == p) idp p  -- Magic!
+abstract
+  decode-encode : (x : S¹) (p : base == x) → decode x (encode p) == p
+  decode-encode _ idp = idp  -- Magic!
 
 -- And we get the theorem
 ΩS¹≃ℤ : (base == base) ≃ ℤ
@@ -126,26 +140,28 @@ decode-encode _ p = J (λ x p → decode x (encode p) == p) idp p  -- Magic!
 paths-mike : (xt : Σ S¹ S¹Cover) → (base , 0) == xt
 paths-mike (x , t) = paths-mike-c x t where
 
-  -- We do it by circle-induction on the first component. When it’s [base],
-  -- we use the [↓-loop^] below (which is essentially [encode-loop^]) and
-  -- for [loop] we use [loop^succ] and the fact that [ℤ] is a set.
-  paths-mike-c : (x : S¹) (t : S¹Cover x) → (base , 0) == (x , t) :> Σ S¹ S¹Cover
-  paths-mike-c = S¹-elim
-    (λ n → pair= (loop^ n) (↓-loop^ n))
-    (↓-Π-in (λ {n} {n'} q →
-     ↓-cst=idf-in'
-       (pair= (loop^ n) (↓-loop^ n) ∙ pair= loop q
-                  =⟨ Σ-∙ (↓-loop^ n) q ⟩
-        pair= (loop^ n ∙ loop) (↓-loop^ n ∙ᵈ q)
-                  =⟨ pair== (loop^succ n ∙ ap loop^ (S¹Cover.↓-loop-out q))
-                            (set-↓-has-all-paths-↓ ℤ-is-set) ⟩
-        pair= (loop^ n') (↓-loop^ n') ∎))) where
+  abstract
+    -- We do it by circle-induction on the first component. When it’s [base],
+    -- we use the [↓-loop^] below (which is essentially [encode-loop^]) and
+    -- for [loop] we use [loop^+] and the fact that [ℤ] is a set.
+    paths-mike-c : (x : S¹) (t : S¹Cover x) → (base , 0) == (x , t) :> Σ S¹ S¹Cover
+    paths-mike-c = S¹-elim
+      (λ n → pair= (loop^ n) (↓-loop^ n))
+      (↓-Π-in (λ {n} {n'} q →
+       ↓-cst=idf-in'
+         (pair= (loop^ n) (↓-loop^ n) ∙ pair= loop q
+                    =⟨ Σ-∙ (↓-loop^ n) q ⟩
+          pair= (loop^ n ∙ loop) (↓-loop^ n ∙ᵈ q)
+                    =⟨ pair== (! (loop^+ n 1) ∙ ap loop^ (ℤ+-comm n 1 ∙ S¹Cover.↓-loop-out q))
+                              (set-↓-has-all-paths-↓ ℤ-is-set) ⟩
+          pair= (loop^ n') (↓-loop^ n') ∎))) where
 
-    ↓-loop^ : (n : ℤ) → 0 == n [ S¹Cover ↓ loop^ n ]
-    ↓-loop^ n = from-transp _ _ (encode-loop^ n)
+      ↓-loop^ : (n : ℤ) → 0 == n [ S¹Cover ↓ loop^ n ]
+      ↓-loop^ n = from-transp _ _ (encode-loop^ n)
 
-contr-mike : is-contr (Σ S¹ S¹Cover)
-contr-mike = ((base , 0) , paths-mike)
+abstract
+  contr-mike : is-contr (Σ S¹ S¹Cover)
+  contr-mike = ((base , 0) , paths-mike)
 
 {- 5. Flattening lemma proof that [Σ S¹ Cover] is contractible -}
 
@@ -158,37 +174,41 @@ open S¹Cover using (module Wt; Wt; cct; ppt; flattening-S¹)
 Wt-is-contr : is-contr Wt
 Wt-is-contr = (cct tt 0 , Wt.elim (base* ∘ snd) (loop* ∘ snd)) where
 
-  -- This is basically [loop^]
+  -- This is basically [loop^] using a different composition order
   base* : (n : ℤ) → cct tt 0 == cct tt n
-  base* (pos O) = idp
-  base* (pos (S n)) = base* (pos n) ∙ ppt tt (pos n)
-  base* (negsucc O) = ! (ppt tt (negsucc O))
+  base* (pos 0) = idp
+  base* (pos 1) = ppt tt 0
+  base* (pos (S (S n))) = base* (pos (S n)) ∙ ppt tt (pos (S n))
+  base* (negsucc 0) = ! (ppt tt (negsucc O))
   base* (negsucc (S n)) = base* (negsucc n) ∙ ! (ppt tt (negsucc (S n)))
 
-  loop* : (n : ℤ)
-    → base* n == base* (succ n) [ (λ x → cct tt 0 == x) ↓ ppt tt n ]
-  loop* n = ↓-cst=idf-in' (aux n) where
+  abstract
+    loop* : (n : ℤ)
+      → base* n == base* (succ n) [ (λ x → cct tt 0 == x) ↓ ppt tt n ]
+    loop* n = ↓-cst=idf-in' (aux n) where
 
-    -- This is basically [loop^succ]
-    aux : (n : ℤ) → base* n ∙ ppt tt n == base* (succ n)
-    aux (pos n) = idp
-    aux (negsucc O) = !-inv-l (ppt tt (negsucc O))
-    aux (negsucc (S n)) =
-      base* (negsucc (S n)) ∙ ppt tt (negsucc (S n))
-                =⟨ idp ⟩
-      (base* (negsucc n) ∙ ! (ppt tt (negsucc (S n)))) ∙ ppt tt (negsucc (S n))
-                =⟨ ∙-assoc (base* (negsucc n)) _ _ ⟩
-      base* (negsucc n) ∙ (! (ppt tt (negsucc (S n))) ∙ ppt tt (negsucc (S n)))
-                =⟨ !-inv-l (ppt tt (negsucc (S n)))
-                       |in-ctx (λ u → base* (negsucc n) ∙ u) ⟩
-      base* (negsucc n) ∙ idp
-                =⟨ ∙-unit-r _ ⟩
-      base* (negsucc n) ∎
+      -- This is basically [loop^+ 1 n]
+      aux : (n : ℤ) → base* n ∙ ppt tt n == base* (succ n)
+      aux (pos 0) = idp
+      aux (pos (S n)) = idp
+      aux (negsucc 0) = !-inv-l (ppt tt (negsucc O))
+      aux (negsucc (S n)) =
+        base* (negsucc (S n)) ∙ ppt tt (negsucc (S n))
+                  =⟨ idp ⟩
+        (base* (negsucc n) ∙ ! (ppt tt (negsucc (S n)))) ∙ ppt tt (negsucc (S n))
+                  =⟨ ∙-assoc (base* (negsucc n)) _ _ ⟩
+        base* (negsucc n) ∙ (! (ppt tt (negsucc (S n))) ∙ ppt tt (negsucc (S n)))
+                  =⟨ !-inv-l (ppt tt (negsucc (S n)))
+                         |in-ctx (λ u → base* (negsucc n) ∙ u) ⟩
+        base* (negsucc n) ∙ idp
+                  =⟨ ∙-unit-r _ ⟩
+        base* (negsucc n) ∎
 
 -- Then, using the flattening lemma we get that the total space of [Cover] is
 -- contractible
-contr-flattening : is-contr (Σ S¹ S¹Cover)
-contr-flattening = transport! is-contr flattening-S¹ Wt-is-contr
+abstract
+  contr-flattening : is-contr (Σ S¹ S¹Cover)
+  contr-flattening = transport! is-contr flattening-S¹ Wt-is-contr
 
 {- 6. Proof that [Ω S¹ ≃ ℤ] using the fact that [Σ S¹ Cover] is contractible -}
 
@@ -197,12 +217,14 @@ tot-encode (x , y) = (x , encode y)
 
 -- The previous map induces an equivalence on the total spaces, because both
 -- total spaces are contractible
-total-is-equiv : is-equiv tot-encode
-total-is-equiv = contr-to-contr-is-equiv _ (pathfrom-is-contr base) contr-flattening
+abstract
+  total-is-equiv : is-equiv tot-encode
+  total-is-equiv = contr-to-contr-is-equiv _ (pathfrom-is-contr base) contr-flattening
 
 -- Hence it’s an equivalence fiberwise
-encode-is-equiv : (x : S¹) → is-equiv (encode {x})
-encode-is-equiv = total-equiv-is-fiber-equiv (λ _ → encode) total-is-equiv
+abstract
+  encode-is-equiv : (x : S¹) → is-equiv (encode {x})
+  encode-is-equiv = total-equiv-is-fiber-equiv (λ _ → encode) total-is-equiv
 
 -- We can then conclude that the loop space of the circle is equivalent to [ℤ]
 ΩS¹≃ℤ' : (base == base) ≃ ℤ
@@ -212,7 +234,7 @@ encode-is-equiv = total-equiv-is-fiber-equiv (λ _ → encode) total-is-equiv
 
 -- This is quite similar to [paths-mike], we’re doing it by circle-induction,
 -- the base case is [encode-loop^] and the loop case is using the fact that [ℤ]
--- is a set (and [loop^succ] is already used in [decode])
+-- is a set (and [loop^+] is already used in [decode])
 encode-decode : (x : S¹) (t : S¹Cover x) → encode (decode x t) == t
 encode-decode =
   S¹-elim {P = λ x → (t : S¹Cover x) → encode (decode x t) == t}
@@ -223,13 +245,42 @@ encode-is-equiv' x = is-eq encode (decode x) (encode-decode x) (decode-encode x)
 
 {- 8. Proof that the circle is a 1-type -}
 
-S¹Cover-is-set : (y : S¹) → is-set (S¹Cover y)
-S¹Cover-is-set = S¹-elim ℤ-is-set (prop-has-all-paths-↓ is-set-is-prop)
+abstract
+  S¹Cover-is-set : {y : S¹} → is-set (S¹Cover y)
+  S¹Cover-is-set {y} = S¹-elim {P = λ y → is-set (S¹Cover y)}
+    ℤ-is-set (prop-has-all-paths-↓ is-set-is-prop) y
 
-ΩS¹-is-set : (y : S¹) → is-set (base == y)
-ΩS¹-is-set y = equiv-preserves-level ((encode {y} , encode-is-equiv y) ⁻¹)
-                                     (S¹Cover-is-set y)
+  ΩS¹-is-set : {y : S¹} → is-set (base == y)
+  ΩS¹-is-set {y} = equiv-preserves-level ((encode {y} , encode-is-equiv y) ⁻¹)
+                                         (S¹Cover-is-set {y})
 
 S¹-level : has-level 1 S¹
 S¹-level =
-  S¹-elim ΩS¹-is-set (prop-has-all-paths-↓ (Π-level (λ x → is-set-is-prop)))
+  S¹-elim (λ _ → ΩS¹-is-set) (prop-has-all-paths-↓ (Π-level (λ x → is-set-is-prop)))
+
+{- 9. More stuff -}
+
+ΩS¹-iso-ℤ : Ω^S-group 0 ⊙S¹ S¹-level ≃ᴳ ℤ-group
+ΩS¹-iso-ℤ = ≃-to-≃ᴳ ΩS¹≃ℤ encode-pres-∙ where
+  abstract
+    encode-∙ : ∀ {x₁ x₂} (loop₁ : base == x₁) (loop₂ : x₁ == x₂)
+      → encode (loop₁ ∙ loop₂) == encode' loop₂ (encode loop₁)
+    encode-∙ idp _ = idp
+
+    encode-pres-∙ : ∀ (loop₁ loop₂ : base == base)
+      → encode (loop₁ ∙ loop₂) == encode loop₁ ℤ+ encode loop₂
+    encode-pres-∙ loop₁ loop₂ =
+        encode (loop₁ ∙ loop₂)
+          =⟨ encode'-∙ loop₁ loop₂ 0 ⟩
+        encode' loop₂ (encode loop₁)
+          =⟨ ! $ decode-encode _ loop₂ |in-ctx (λ loop₂ → encode' loop₂ (encode loop₁)) ⟩
+        encode' (loop^ (encode loop₂)) (encode loop₁)
+          =⟨ encode'-loop^ (encode loop₂) (encode loop₁) ⟩
+        encode loop₂ ℤ+ encode loop₁
+          =⟨ ℤ+-comm (encode loop₂) (encode loop₁) ⟩
+        encode loop₁ ℤ+ encode loop₂
+          =∎
+
+abstract
+  ΩS¹-is-abelian : is-abelian (Ω^S-group 0 ⊙S¹ S¹-level)
+  ΩS¹-is-abelian = iso-preserves-abelian (ΩS¹-iso-ℤ ⁻¹ᴳ) ℤ-group-is-abelian

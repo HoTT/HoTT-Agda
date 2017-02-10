@@ -1,6 +1,8 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
+open import lib.NConnected
+open import lib.NType2
 open import lib.types.Span
 open import lib.types.Pointed
 open import lib.types.Pushout
@@ -9,6 +11,7 @@ open import lib.types.PushoutFmap
 open import lib.types.PushoutFlattening
 open import lib.types.Unit
 open import lib.types.Paths
+open import lib.types.Truncation
 open import lib.types.Lift
 open import lib.cubical.Square
 
@@ -198,3 +201,35 @@ module _ {i j} (X : Ptd i) where
 
   ⊙Susp-Lift-conv : ⊙Susp (⊙Lift {j = j} X) == ⊙Lift {j = j} (⊙Susp X)
   ⊙Susp-Lift-conv = ⊙ua ⊙Susp-Lift-econv
+
+{- Suspension of an n-connected space is n+1-connected -}
+abstract
+  Susp-conn : ∀ {i} {A : Type i} {n : ℕ₋₂}
+    → is-connected n A → is-connected (S n) (Susp A)
+  Susp-conn {A = A} {n = n} cA =
+    ([ north ] ,
+     Trunc-elim (λ _ → =-preserves-level Trunc-level)
+       (Susp-elim
+         idp
+         (Trunc-rec (Trunc-level {n = S n} _ _)
+                    (λ a → ap [_] (merid a))
+                    (fst cA))
+         (λ x → Trunc-elim
+            {P = λ y → idp ==
+              Trunc-rec (Trunc-level {n = S n} _ _) (λ a → ap [_] (merid a)) y
+              [ (λ z → [ north ] == [ z ]) ↓ (merid x) ]}
+            (λ _ → ↓-preserves-level (Trunc-level {n = S n} _ _))
+            (λ x' → ↓-cst=app-in (∙'-unit-l _ ∙ mers-eq n cA x x'))
+            (fst cA))))
+    where
+    mers-eq : ∀ {i} {A : Type i} (n : ℕ₋₂)
+      → is-connected n A → (x x' : A)
+      → ap ([_] {n = S n}) (merid x)
+        == Trunc-rec (Trunc-level {n = S n} _ _)
+                     (λ a → ap [_] (merid a)) [ x' ]
+    mers-eq ⟨-2⟩ cA x x' = contr-has-all-paths (Trunc-level {n = -1} _ _) _ _
+    mers-eq {A = A} (S n) cA x x' =
+      conn-elim (pointed-conn-out A x cA)
+        (λ y → ((ap [_] (merid x) == ap [_] (merid y)) ,
+                Trunc-level {n = S (S n)} _ _ _ _))
+        (λ _ → idp) x'

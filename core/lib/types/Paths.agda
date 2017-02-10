@@ -162,6 +162,11 @@ module _ {i} {A : Type i} where
     → (u == v [ (λ x → x == x) ↓ p ])
   ↓-idf=idf-in' {p = idp} q = ! (∙-unit-r _) ∙ q ∙ ∙'-unit-l _
 
+  ↓-idf=idf-out' : {x y : A} {p : x == y} {u : x == x} {v : y == y}
+    → (u == v [ (λ x → x == x) ↓ p ])
+    → u ∙ p == p ∙' v
+  ↓-idf=idf-out' {p = idp} q = ∙-unit-r _ ∙ q ∙ ! (∙'-unit-l _)
+
 {- Nondependent identity type -}
 
 ↓-='-in : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}

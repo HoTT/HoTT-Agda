@@ -10,7 +10,6 @@ open import lib.types.Sigma
 open import lib.types.Paths
 open import lib.types.TLevel
 open import lib.types.Truncation
-open import lib.types.Suspension
 
 module lib.NConnected where
 
@@ -26,8 +25,8 @@ has-conn-fibers {A = A} {B = B} n f =
 -2-conn A = Trunc-level
 
 {- all inhabited types are -1-connected -}
-inhab-conn : ∀ {i} (A : Type i) (a : A) → is-connected -1 A
-inhab-conn A a = ([ a ] , prop-has-all-paths Trunc-level [ a ])
+inhab-conn : ∀ {i} {A : Type i} (a : A) → is-connected -1 A
+inhab-conn a = [ a ] , prop-has-all-paths Trunc-level [ a ]
 
 {- connectedness is a prop -}
 is-connected-is-prop : ∀ {i} {n : ℕ₋₂} {A : Type i}
@@ -245,39 +244,6 @@ abstract
     → is-connected n A → is-connected n B
     → is-connected n (A × B)
   ×-conn cA cB = Σ-conn cA (λ _ → cB)
-
-{- Suspension of an n-connected space is n+1-connected
-   what is the best place for this?                    -}
-abstract
-  Susp-conn : ∀ {i} {A : Type i} {n : ℕ₋₂}
-    → is-connected n A → is-connected (S n) (Susp A)
-  Susp-conn {A = A} {n = n} cA =
-    ([ north ] ,
-     Trunc-elim (λ _ → =-preserves-level Trunc-level)
-       (Susp-elim
-         idp
-         (Trunc-rec (Trunc-level {n = S n} _ _)
-                    (λ a → ap [_] (merid a))
-                    (fst cA))
-         (λ x → Trunc-elim
-            {P = λ y → idp ==
-              Trunc-rec (Trunc-level {n = S n} _ _) (λ a → ap [_] (merid a)) y
-              [ (λ z → [ north ] == [ z ]) ↓ (merid x) ]}
-            (λ _ → ↓-preserves-level (Trunc-level {n = S n} _ _))
-            (λ x' → ↓-cst=app-in (∙'-unit-l _ ∙ mers-eq n cA x x'))
-            (fst cA))))
-    where
-    mers-eq : ∀ {i} {A : Type i} (n : ℕ₋₂)
-      → is-connected n A → (x x' : A)
-      → ap ([_] {n = S n}) (merid x)
-        == Trunc-rec (Trunc-level {n = S n} _ _)
-                     (λ a → ap [_] (merid a)) [ x' ]
-    mers-eq ⟨-2⟩ cA x x' = contr-has-all-paths (Trunc-level {n = -1} _ _) _ _
-    mers-eq {A = A} (S n) cA x x' =
-      conn-elim (pointed-conn-out A x cA)
-        (λ y → ((ap [_] (merid x) == ap [_] (merid y)) ,
-                Trunc-level {n = S (S n)} _ _ _ _))
-        (λ _ → idp) x'
 
 {- connectedness of a path space -}
 abstract

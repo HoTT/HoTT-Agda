@@ -94,6 +94,12 @@ module S¹Rec {i} {A : Type i} (base* : A) (loop* : base* == base*) where
   loop-β : ap f loop == loop*
   loop-β = apd=cst-in {f = f} M.loop-β
 
+open S¹Rec public using () renaming (f to S¹-rec)
+
+S¹-rec-η : ∀ {i} {A : Type i} (f : S¹ → A)
+  → ∀ x → S¹-rec (f base) (ap f loop) x == f x
+S¹-rec-η f = S¹-elim idp (↓-='-in' $ ! $ S¹Rec.loop-β (f base) (ap f loop))
+
 module S¹RecType {i} (A : Type i) (e : A ≃ A) where
 
   open S¹Rec A (ua e) public
@@ -170,6 +176,4 @@ module S¹RecType {i} (A : Type i) (e : A ≃ A) where
   flattening-S¹ = generic-S¹ ∙ ua FlatteningS¹.flattening-equiv
 
 S¹-conn : is-connected 0 S¹
-S¹-conn =
-  ([ base ] , Trunc-elim (λ x → =-preserves-set Trunc-level)
-              (S¹-elim idp (prop-has-all-paths-↓ ((Trunc-level :> is-set (Trunc 0 S¹)) _ _))))
+S¹-conn = Sphere-conn 1
