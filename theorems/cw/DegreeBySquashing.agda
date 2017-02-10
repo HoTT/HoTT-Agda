@@ -11,11 +11,11 @@ module cw.DegreeBySquashing where
     (skel-has-dec-cells : has-cells-with-dec-eq skel)
     -- the cells at the upper and lower dimensions
     (upper : cells-last skel)
-    (lower : cells-nth (inr ltS) skel)
+    (lower : cells-last (cw-init skel))
     where
 
     private
-      lower-skel = cw-take (inr ltS) skel
+      lower-skel = cw-init skel
       lower-cells = cells-last lower-skel
       lower-cells-has-dec-eq = snd (fst skel-has-dec-cells)
 
@@ -40,7 +40,7 @@ module cw.DegreeBySquashing where
     degree-map' : ℤ-group →ᴳ ℤ-group
     degree-map' = –>ᴳ (πS-SphereS-iso-ℤ n)
                ∘ᴳ Trunc-rec →ᴳ-level (πS-fmap n)
-                    (⊙Sphere-endo-in n [ degree-map ])
+                    (⊙SphereS-endo-in n [ degree-map ])
                ∘ᴳ <–ᴳ (πS-SphereS-iso-ℤ n)
 
     degree' : ℤ → ℤ
@@ -49,23 +49,28 @@ module cw.DegreeBySquashing where
     degree : ℤ
     degree = degree' 1
 
-  module DegreeAtOne {i} {n : ℕ} (skel : Skeleton {i} 1)
+  module DegreeAtOne {i} (skel : Skeleton {i} 1)
     (skel-has-dec-cells : has-cells-with-dec-eq skel)
     -- the cells at the upper and lower dimensions
     (line : cells-last skel)
-    (point : cells-nth (inr ltS) skel) where
+    (point : cells-last (cw-init skel)) where
 
     private
-      points = cw-take (inr ltS) skel
       points-dec-eq = fst skel-has-dec-cells
-      lines = cells-last skel
-      line-attaching = attaching-last skel
+      endpoint = attaching-last skel
 
     -- Maybe [true] can or should be mapped to [-1]. Not sure.
     degree : ℤ
-    degree with points-dec-eq (line-attaching line true) point
+    degree with points-dec-eq (endpoint line true) point
     degree | inl _ = 1
-    degree | inr _ with points-dec-eq (line-attaching line false) point
+    degree | inr _ with points-dec-eq (endpoint line false) point
     degree | inr _ | inl _ = -1
     degree | inr _ | inr _ = 0
 
+  degree : ∀ {i} {n} (skel : Skeleton {i} (S n))
+    (skel-has-dec-cells : has-cells-with-dec-eq skel)
+    (upper : cells-last skel)
+    (lower : cells-last (cw-init skel))
+    → ℤ
+  degree {n = O} = DegreeAtOne.degree
+  degree {n = S _} = DegreeAboveOne.degree
