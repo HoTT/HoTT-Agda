@@ -32,8 +32,8 @@ C-cw-descend : ∀ n {m} (n≠Sm : n ≠ ℕ-to-ℤ (S m)) (n≠m : n ≠ ℕ-to
   → C n ⊙⟦ ⊙skel ⟧ ≃ᴳ C n ⊙⟦ ⊙cw-init ⊙skel ⟧
 C-cw-descend (negsucc n) -Sn≠Sm -Sn≠m
   = C-cw-descend-at-succ (negsucc (S n)) (pred-≠ -Sn≠Sm) -Sn≠m
-C-cw-descend (pos O) -O≠Sm -O≠m
-  = C-cw-descend-at-succ -1 (pred-≠ -O≠Sm) -O≠m
+C-cw-descend (pos O) O≠Sm O≠m
+  = C-cw-descend-at-succ -1 (pred-≠ O≠Sm) O≠m
 C-cw-descend (pos (S n)) Sn≠Sm Sn≠m
   = C-cw-descend-at-succ (pos n) (pred-≠ Sn≠Sm) Sn≠m
 
