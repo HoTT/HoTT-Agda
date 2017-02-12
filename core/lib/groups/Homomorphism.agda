@@ -362,3 +362,14 @@ module _ {i j} (G : Group i) (H : AbGroup j)
 
   hom-group : Group (lmax i j)
   hom-group = group (G →ᴳ H.grp) GroupHom-level hom-group-structure
+
+  abstract
+    hom-group-is-abelian : is-abelian hom-group
+    hom-group-is-abelian φ ψ = group-hom= $ λ= λ g → H.comm _ _
+
+  hom-abgroup : AbGroup (lmax i j)
+  hom-abgroup = hom-group , hom-group-is-abelian
+
+pre∘ᴳ-hom : ∀ {i j k} {G : Group i} {H : Group j} (K : AbGroup k)
+  → (G →ᴳ H) → (hom-group H K →ᴳ hom-group G K)
+pre∘ᴳ-hom K φ = record { f = _∘ᴳ φ ; pres-comp = λ _ _ → group-hom= $ λ= λ _ → idp }

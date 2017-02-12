@@ -50,3 +50,9 @@ contr-iso-0ᴳ G pA = ≃-to-≃ᴳ (contr-equiv-Unit pA) (λ _ _ → idp)
 0ᴳ-hom-in-level : ∀ {i} {G : Group i}
   → is-contr (G →ᴳ 0ᴳ)
 0ᴳ-hom-in-level {G = G} = cst-hom , λ φ → group-hom= $ λ= λ _ → idp
+
+0ᴳ-is-abelian : is-abelian 0ᴳ
+0ᴳ-is-abelian _ _ = idp
+
+Unit-abgroup : AbGroup₀
+Unit-abgroup = Unit-group , 0ᴳ-is-abelian

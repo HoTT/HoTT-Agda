@@ -38,3 +38,10 @@ lift-iso = lift-hom , snd lift-equiv
 
 lower-iso : ∀ {i j} {G : Group i} → (Lift-group {j = j} G ≃ᴳ G)
 lower-iso = lower-hom , snd lower-equiv
+
+Lift-group-is-abelian : ∀ {i j} (G : Group i) → is-abelian G → is-abelian (Lift-group {j = j} G)
+Lift-group-is-abelian G comm (lift g₁) (lift g₂) = ap lift (comm g₁ g₂)
+
+Lift-abgroup : ∀ {i j} (G : AbGroup i) → AbGroup (lmax i j)
+Lift-abgroup {j = j} G = Lift-group {j = j} (AbGroup.grp G)
+  , Lift-group-is-abelian (AbGroup.grp G) (AbGroup.comm G)
