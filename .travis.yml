@@ -19,7 +19,7 @@ addons:
     - stack
 
 install:
-- travis_wait stack --no-terminal --install-ghc --resolver lts-8 install Agda
+- travis_wait 30 stack --no-terminal --install-ghc --resolver lts-8 install Agda
 
 script:
 - stack exec agda -- --version
