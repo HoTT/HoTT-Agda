@@ -60,7 +60,6 @@ import cw.cohomology.HigherCohomologyGroups
 
 -- import Spaces.IntervalProps
 -- import Algebra.F2NotCommutative
--- import Homotopy.VanKampen
 -- import Spaces.LoopSpaceDecidableWedgeCircles
 -- import Homotopy.PullbackIsPullback
 -- import Homotopy.PushoutIsPushout
