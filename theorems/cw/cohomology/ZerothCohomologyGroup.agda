@@ -61,7 +61,7 @@ private
 
     lemma₃ : Ker.grp cw-co∂-head'
       ≃ᴳ QuotGroup (quot-of-sub (ker-propᴳ cw-co∂-head) (im-npropᴳ cw-coε G-×-C-X₀-is-abelian))
-    lemma₃ = coeᴳ-equiv (lemma₂ ∙ lemma₁) ∘eᴳ Ker-inl-quot-Im-φ-snd
+    lemma₃ = coeᴳ-iso (lemma₂ ∙ lemma₁) ∘eᴳ Ker-inl-quot-Im-φ-snd
 
 C-cw-iso-ker/im : C 0 ⊙⟦ ⊙skel ⟧
   ≃ᴳ QuotGroup (quot-of-sub (ker-propᴳ cw-co∂-head) (im-npropᴳ cw-coε G-×-C-X₀-is-abelian))

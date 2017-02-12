@@ -14,7 +14,7 @@ C-Sphere-≠-is-trivial n (S m) n≠Sm = iso-preserves'-trivial
   (C n (⊙Lift (⊙Sphere (S m)))
     ≃ᴳ⟨ C-emap n $ ⊙Susp-Lift-econv (⊙Sphere m) ⟩
   C n (⊙Susp (⊙Lift (⊙Sphere m)))
-    ≃ᴳ⟨ transportᴳ-equiv (λ n → C n (⊙Susp (⊙Lift (⊙Sphere m)))) (succ-pred n) ⁻¹ᴳ ⟩
+    ≃ᴳ⟨ transportᴳ-iso (λ n → C n (⊙Susp (⊙Lift (⊙Sphere m)))) (succ-pred n) ⁻¹ᴳ ⟩
   C (succ (pred n)) (⊙Susp (⊙Lift (⊙Sphere m)))
     ≃ᴳ⟨ C-Susp (pred n) (⊙Lift (⊙Sphere m)) ⟩
   C (pred n) (⊙Lift (⊙Sphere m))

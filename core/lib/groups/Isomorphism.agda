@@ -77,12 +77,12 @@ module GroupIso {i j} {G : Group i} {H : Group j} (iso : GroupIso G H) where
 idiso : ∀ {i} (G : Group i) → (G ≃ᴳ G)
 idiso G = idhom G , idf-is-equiv _
 
-coeᴳ-equiv : ∀ {i} {G H : Group i} → G == H → G ≃ᴳ H
-coeᴳ-equiv idp = idiso _
+coeᴳ-iso : ∀ {i} {G H : Group i} → G == H → G ≃ᴳ H
+coeᴳ-iso idp = idiso _
 
-transportᴳ-equiv : ∀ {i j} {A : Type i} (B : A → Group j) {a₁ a₂ : A} (p : a₁ == a₂)
+transportᴳ-iso : ∀ {i j} {A : Type i} (B : A → Group j) {a₁ a₂ : A} (p : a₁ == a₂)
   → B a₁ ≃ᴳ B a₂
-transportᴳ-equiv B p = coeᴳ-equiv (ap B p)
+transportᴳ-iso B p = coeᴳ-iso (ap B p)
 
 {- equality of isomomorphisms -}
 abstract
