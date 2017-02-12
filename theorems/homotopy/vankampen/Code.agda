@@ -157,7 +157,7 @@ module homotopy.vankampen.Code {i j k l}
       eqv = SE.ext
 
       eqv-β : ∀ d → eqv (h d) == eqv-on-image d
-      eqv-β = SE.ext-β
+      eqv-β = SE.β
 
   module CodeABEquivCodeBB (b₁ : B) where
 
@@ -219,7 +219,7 @@ module homotopy.vankampen.Code {i j k l}
       eqv = SE.ext
 
       eqv-β : ∀ d → eqv (h d) == eqv-on-image d
-      eqv-β = SE.ext-β
+      eqv-β = SE.β
 
   module EqvPAIdEqvPB where
     abstract

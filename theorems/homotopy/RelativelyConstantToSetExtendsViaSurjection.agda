@@ -33,6 +33,6 @@ module homotopy.RelativelyConstantToSetExtendsViaSurjection
   ext : Π B C
   ext b = CE.ext b (f-is-surj b)
 
-  ext-β : (a : A) → ext (f a) == g a
-  ext-β a = ap (CE.ext (f a))
+  β : (a : A) → ext (f a) == g a
+  β a = ap (CE.ext (f a))
     (prop-has-all-paths Trunc-level (f-is-surj (f a)) [ a , idp ])

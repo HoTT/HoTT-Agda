@@ -154,7 +154,7 @@ module homotopy.vankampen.CodeAP {i j k l}
       eqv = SE.ext
 
       eqv-β : ∀ d → eqv (h d) == eqv-on-image d
-      eqv-β = SE.ext-β
+      eqv-β = SE.β
 
   module CodeAP (a₀ : A) = PushoutRec (codeAA a₀) (codeAB a₀)
     (ua ∘ CodeAAEquivCodeAB.eqv a₀)

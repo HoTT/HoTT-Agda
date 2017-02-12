@@ -41,5 +41,5 @@ module homotopy.ConstantToSetExtendsToProp {i j}
     abstract
       -- The beta rule.
       -- This is definitionally true, so you don't need it.
-      ext-β : ext ∘ [_] == f
-      ext-β = idp
+      β : ext ∘ [_] == f
+      β = idp
