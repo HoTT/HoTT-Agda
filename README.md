@@ -113,10 +113,10 @@ given an element of that type. Records have this functionality built-in.
 
 - A natural function between two types `A` and `B` is often called `A-to-B`
 - If `f : A → B`, the lemma asserting that `f` is an equivalence is called
-  `f-is-equiv`
-- If `f : A → B`, the equivalence `(f , f-is-equiv)` is called `f-equiv`
+  `f-is-equiv`.
+- If `f : A → B`, the equivalence `(f , f-is-equiv)` is called `f-equiv`.
 - As a special case of the previous point, `A-to-B-equiv` is usually called
-  `A-equiv-B` instead
+  `A-equiv-B` instead.
 
 We have
 
@@ -126,6 +126,13 @@ We have
     A-equiv-B : A ≃ B
     A-to-B-path : A == B
     A-is-B : A == B
+
+Also for group morphisms, we have
+
+    G-to-H : G →ᴳ H
+    G-to-H-is-iso : is-equiv (fst G-to-H)
+    G-to-H-iso : G ≃ᴳ H
+    G-iso-H : G ≃ᴳ H
 
 However, `A-is-B` can be easily confused with `is-X` above,
 so it should be used with great caution.
