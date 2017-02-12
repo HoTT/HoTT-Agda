@@ -83,12 +83,27 @@ cw-init (attached-skeleton skel _ _) = skel
 cw-take : ∀ {m n : ℕ} (m≤n : m ≤ n) → Skeleton n → Skeleton m
 cw-take (inl idp)        skel = skel
 cw-take (inr ltS)        skel = cw-init skel
-cw-take (inr (ltSR m≤n)) skel = cw-take (inr m≤n) (cw-init skel)
+cw-take (inr (ltSR m<n)) skel = cw-take (inr m<n) (cw-init skel)
+
+cw-take-trans : ∀ {m n o : ℕ} (m≤n : m ≤ n) (n≤o : n ≤ o) skel
+  → cw-take (≤-trans m≤n n≤o) skel == cw-take m≤n (cw-take n≤o skel)
+cw-take-trans (inl idp) _ _ = idp
+cw-take-trans (inr _) (inl idp) _ = idp
+cw-take-trans (inr _) (inr ltS) _ = idp
+cw-take-trans (inr m<n) (inr (ltSR n<o)) skel =
+  cw-take-trans (inr m<n) (inr n<o) (cw-init skel)
+
+abstract
+  cw-take-take : ∀ {m n o : ℕ} (m≤n : m ≤ n) (n≤o : n ≤ o) (m≤o : m ≤ o) skel
+    → cw-take m≤n (cw-take n≤o skel) == cw-take m≤o skel
+  cw-take-take m≤n n≤o m≤o skel =
+      ! (cw-take-trans m≤n n≤o skel)
+    ∙ ap (λ lte → cw-take lte skel) (prop-has-all-paths ≤-is-prop (≤-trans m≤n n≤o) m≤o)
 
 ⊙cw-take : ∀ {m n : ℕ} (m≤n : m ≤ n) → ⊙Skeleton n → ⊙Skeleton m
 ⊙cw-take (inl idp)        ⊙skel = ⊙skel
 ⊙cw-take (inr ltS)        ⊙skel = ⊙cw-init ⊙skel
-⊙cw-take (inr (ltSR m≤n)) ⊙skel = ⊙cw-take (inr m≤n) (⊙cw-init ⊙skel)
+⊙cw-take (inr (ltSR m<n)) ⊙skel = ⊙cw-take (inr m<n) (⊙cw-init ⊙skel)
 
 ⊙cw-head : ∀ {n : ℕ} → ⊙Skeleton n → Ptd i
 ⊙cw-head (⊙skeleton skel pt _) = ⊙[ cw-head skel , pt ]
@@ -178,6 +193,30 @@ has-cells-with-dec-eq {n = S n} skel =
 
 ⊙has-cells-with-dec-eq : ∀ {n} → ⊙Skeleton n → Type i
 ⊙has-cells-with-dec-eq = has-cells-with-dec-eq ∘ ⊙Skeleton.skel
+
+cells-last-has-dec-eq : ∀ {n} (skel : Skeleton n)
+  → has-cells-with-dec-eq skel → has-dec-eq (cells-last skel)
+cells-last-has-dec-eq {n = O} skel dec = dec
+cells-last-has-dec-eq {n = S n} skel dec = snd dec
+
+init-has-cells-with-dec-eq : ∀ {n} (skel : Skeleton (S n))
+  → has-cells-with-dec-eq skel
+  → has-cells-with-dec-eq (cw-init skel)
+init-has-cells-with-dec-eq skel dec = fst dec
+
+take-has-cells-with-dec-eq : ∀ {m n} (m≤n : m ≤ n) (skel : Skeleton n)
+  → has-cells-with-dec-eq skel
+  → has-cells-with-dec-eq (cw-take m≤n skel)
+take-has-cells-with-dec-eq (inl idp) skel dec = dec
+take-has-cells-with-dec-eq (inr ltS) skel dec = init-has-cells-with-dec-eq skel dec
+take-has-cells-with-dec-eq (inr (ltSR lt)) skel dec
+  = take-has-cells-with-dec-eq (inr lt) (cw-init skel) (init-has-cells-with-dec-eq skel dec)
+
+cells-nth-has-dec-eq : ∀ {m n} (m≤n : m ≤ n) (skel : Skeleton n)
+  → has-cells-with-dec-eq skel → has-dec-eq (cells-nth m≤n skel)
+cells-nth-has-dec-eq m≤n skel dec =
+  cells-last-has-dec-eq (cw-take m≤n skel)
+    (take-has-cells-with-dec-eq m≤n skel dec)
 
 has-cells-with-dec-eq-is-prop : ∀ {n} {skel : Skeleton n}
   → is-prop (has-cells-with-dec-eq skel)

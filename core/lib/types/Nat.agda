@@ -92,6 +92,10 @@ O≤ (S m) = inr (O<S m)
 ≮O : ∀ n → ¬ (n < O)
 ≮O _ ()
 
+S≰O : ∀ n → ¬ (S n ≤ O)
+S≰O _ (inl ())
+S≰O _ (inr ())
+
 <-trans : {m n k : ℕ} → m < n → n < k → m < k
 <-trans lt₁ ltS = ltSR lt₁
 <-trans lt₁ (ltSR lt₂) = ltSR (<-trans lt₁ lt₂)
@@ -100,8 +104,8 @@ O≤ (S m) = inr (O<S m)
 ≤-refl = inl idp
 
 ≤-trans : {m n k : ℕ} → m ≤ n → n ≤ k → m ≤ k
-≤-trans {k = k} (inl p₁) lte₂ = transport (λ t → t ≤ k) (! p₁) lte₂
-≤-trans {m = m} lte₁ (inl p₂) = transport (λ t → m ≤ t) p₂ lte₁
+≤-trans (inl idp) lte₂ = lte₂
+≤-trans lte₁ (inl idp) = lte₁
 ≤-trans (inr lt₁) (inr lt₂) = inr (<-trans lt₁ lt₂)
 
 <-ap-S : {m n : ℕ} → m < n → S m < S n
@@ -126,6 +130,13 @@ O≤ (S m) = inr (O<S m)
 <-dec (S n) (S m) with <-dec n m
 <-dec (S n) (S m) | inl p = inl (<-ap-S p)
 <-dec (S n) (S m) | inr ¬p = inr (¬p ∘ <-cancel-S)
+
+≤-dec : Decidable _≤_
+≤-dec O m = inl (O≤ m)
+≤-dec (S n) O = inr (S≰O n)
+≤-dec (S n) (S m) with ≤-dec n m
+≤-dec (S n) (S m) | inl p = inl (≤-ap-S p)
+≤-dec (S n) (S m) | inr ¬p = inr (¬p ∘ ≤-cancel-S)
 
 abstract
   <-to-≠ : {m n : ℕ} → m < n → m ≠ n
@@ -155,6 +166,10 @@ abstract
 <-to-≤ : {m n : ℕ} → m < S n → m ≤ n
 <-to-≤ ltS = inl idp
 <-to-≤ (ltSR lt) = inr lt
+
+≤-to-< : {m n : ℕ} → S m ≤ n → m < n
+≤-to-< (inl idp) = ltS
+≤-to-< (inr lt) = <-trans ltS lt
 
 <-+-l : {m n : ℕ} (k : ℕ) → m < n → (k + m) < (k + n)
 <-+-l O lt = lt

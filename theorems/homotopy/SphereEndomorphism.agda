@@ -6,7 +6,7 @@ open import homotopy.LoopSpaceCircle
 -- This file is temporarily put in the cw/ directory for
 -- development, but it actually belongs to somewhere else.
 
-module cw.SphereEndomorphism where
+module homotopy.SphereEndomorphism where
 
   ⊙SphereS-endo-out : ∀ n
     → Trunc 0 (⊙Sphere (S n) ⊙→ ⊙Sphere (S n))
