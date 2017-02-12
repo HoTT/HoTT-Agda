@@ -51,7 +51,7 @@ module homotopy.BlakersMassey {i j k}
     -- Step 2:
     -- [code] is contractible!
 
-    -- The center for refl.  We will use transport to find the center
+    -- The center for [idp].  We will use transport to find the center
     -- in other fibers.
     code-center-idp : code _ idp
     code-center-idp = [ q₀₀ , !-inv'-r (bmglue q₀₀) ]
@@ -85,7 +85,7 @@ module homotopy.BlakersMassey {i j k}
           (λ {(q₁₀ , shift) → ap (λ p → [ q₁₀ , p ]) $ ap-idf shift})
 
     -- Here shows the use of two templates.  It will be super painful
-    -- if we cannot throw in [refl].  Now we only have to deal with
+    -- if we cannot throw in [idp].  Now we only have to deal with
     -- simple computations.
     abstract
       coe-coerce-path-code-bmglue-template : ∀ {p} (r : _ == p)
