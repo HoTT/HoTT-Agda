@@ -56,16 +56,20 @@ abstract
   ℕ-O≠S : (n : ℕ) → (O ≠ S n)
   ℕ-O≠S n p = ℕ-S≠O n (! p)
 
-  ℕ-has-dec-eq : has-dec-eq ℕ
-  ℕ-has-dec-eq O O = inl idp
-  ℕ-has-dec-eq O (S n) = inr (ℕ-O≠S n)
-  ℕ-has-dec-eq (S n) O = inr (ℕ-S≠O n)
-  ℕ-has-dec-eq (S n) (S m) with ℕ-has-dec-eq n m
-  ℕ-has-dec-eq (S n) (S m) | inl p = inl (ap S p)
-  ℕ-has-dec-eq (S n) (S m) | inr ¬p = inr (λ p → ¬p (ℕ-S-is-inj n m p))
+ℕ-has-dec-eq : has-dec-eq ℕ
+ℕ-has-dec-eq O O = inl idp
+ℕ-has-dec-eq O (S n) = inr (ℕ-O≠S n)
+ℕ-has-dec-eq (S n) O = inr (ℕ-S≠O n)
+ℕ-has-dec-eq (S n) (S m) with ℕ-has-dec-eq n m
+ℕ-has-dec-eq (S n) (S m) | inl p = inl (ap S p)
+ℕ-has-dec-eq (S n) (S m) | inr ¬p = inr (λ p → ¬p (ℕ-S-is-inj n m p))
 
+ℕ-is-set✭ : is-set ℕ
+ℕ-is-set✭ = dec-eq-is-set✭ ℕ-has-dec-eq
+
+abstract
   ℕ-is-set : is-set ℕ
-  ℕ-is-set = dec-eq-is-set ℕ-has-dec-eq
+  ℕ-is-set = ℕ-is-set✭
 
 ℕ-level = ℕ-is-set
 
@@ -145,16 +149,27 @@ abstract
   <-to-≠ {m = S m} {n = O} ()
   <-to-≠ {m = S m} {n = S n} lt = ℕ-S-≠ (<-to-≠ (<-cancel-S lt))
 
+<-has-all-paths✭ : {m n : ℕ} → has-all-paths (m < n)
+<-has-all-paths✭ = lemma idp where
+  lemma : {m n₁ n₂ : ℕ} (eqn : n₁ == n₂) (lt₁ : m < n₁) (lt₂ : m < n₂)
+    → PathOver (λ n → m < n) eqn lt₁ lt₂
+  lemma eqn ltS ltS = transport (λ eqn₁ → PathOver (_<_ _) eqn₁ ltS ltS)
+                        (prop-has-all-paths✭ (ℕ-is-set✭ _ _) idp eqn)
+                        idp
+  lemma idp ltS (ltSR lt₂) = ⊥-rec (<-to-≠ lt₂ idp)
+  lemma idp (ltSR lt₁) ltS = ⊥-rec (<-to-≠ lt₁ idp)
+  lemma idp (ltSR lt₁) (ltSR lt₂) = ap ltSR (lemma idp lt₁ lt₂)
+
+private
+  test₀ : <-has-all-paths✭ (ltS :> (1 < 2)) ltS == idp
+  test₀ = idp
+
+abstract
+  <-has-all-paths : {m n : ℕ} → has-all-paths (m < n)
+  <-has-all-paths = <-has-all-paths✭
+
   <-is-prop : {m n : ℕ} → is-prop (m < n)
-  <-is-prop = all-paths-is-prop (<-is-prop' idp) where
-    <-is-prop' : {m n₁ n₂ : ℕ} (eqn : n₁ == n₂) (lt₁ : m < n₁) (lt₂ : m < n₂)
-               → PathOver (λ n → m < n) eqn lt₁ lt₂
-    <-is-prop' eqn ltS ltS = transport (λ eqn₁ → PathOver (_<_ _) eqn₁ ltS ltS)
-                                       (prop-has-all-paths (ℕ-is-set _ _) idp eqn)
-                                       idp
-    <-is-prop' idp ltS (ltSR lt₂) = ⊥-rec (<-to-≠ lt₂ idp)
-    <-is-prop' idp (ltSR lt₁) ltS = ⊥-rec (<-to-≠ lt₁ idp)
-    <-is-prop' idp (ltSR lt₁) (ltSR lt₂) = ap ltSR (<-is-prop' idp lt₁ lt₂)
+  <-is-prop = all-paths-is-prop <-has-all-paths where
 
   ≤-is-prop : {m n : ℕ} → is-prop (m ≤ n)
   ≤-is-prop = all-paths-is-prop λ{
