@@ -25,22 +25,18 @@ module _ {i} where
   has-all-paths : Type i → Type i
   has-all-paths A = (x y : A) → x == y
 
-  -- experimental version for more computational rules
-  all-paths-is-prop✭ : {A : Type i} → (has-all-paths A → is-prop A)
-  all-paths-is-prop✭ {A} c x y = (c x y , canon-path) where
-
-    canon-path : {x y : A} (p : x == y) → c x y == p
-    canon-path {.y} {y} idp =
-      c y y               =⟨ lemma (! (c y y)) ⟩
-      (! (c y y)) ∙ c y y =⟨ !-inv-l (c y y) ⟩
-      idp =∎  where
-
-      lemma : {x y : A} (p : x == y) → c x y == p ∙ c y y
-      lemma idp = idp
-
   abstract
     all-paths-is-prop : {A : Type i} → (has-all-paths A → is-prop A)
-    all-paths-is-prop = all-paths-is-prop✭
+    all-paths-is-prop {A} c x y = (c x y , canon-path) where
+
+      canon-path : {x y : A} (p : x == y) → c x y == p
+      canon-path {.y} {y} idp =
+        c y y               =⟨ lemma (! (c y y)) ⟩
+        (! (c y y)) ∙ c y y =⟨ !-inv-l (c y y) ⟩
+        idp =∎  where
+
+        lemma : {x y : A} (p : x == y) → c x y == p ∙ c y y
+        lemma idp = idp
 
   {- Truncation levels are cumulative -}
   abstract
@@ -59,51 +55,40 @@ module _ {i} where
   has-dec-eq : Type i → Type i
   has-dec-eq A = (x : A) → has-dec-onesided-eq x
 
-  -- experimental version for more computational rules
-  dec-onesided-eq-is-prop✭ : {A : Type i} (x : A)
-    → has-dec-onesided-eq x → (∀ y → is-prop (x == y))
-  dec-onesided-eq-is-prop✭ {A} x d y = all-paths-is-prop✭ UIP where
-
-    T : {y : A} → x == y → Type i
-    T {y} p with d x | d y
-    T {y} p | inr _  | _      = Lift ⊥
-    T {y} p | inl _  | inr _  = Lift ⊥
-    T {y} p | inl dx | inl dy = ! dx ∙ dy == p
-
-    lemma : {y : A} → (p : x == y) → T p
-    lemma idp with d x
-    lemma idp | inl r  = !-inv-l r
-    lemma idp | inr r⊥ = lift (r⊥ idp)
-
-    UIP : {y : A} (p q : x == y) → p == q
-    UIP idp q with d x | lemma q where
-    UIP idp q | inl r  | s = ! (!-inv-l r) ∙' s
-    UIP idp q | inr r⊥ | _ = Empty-elim (r⊥ idp)
-
-  -- experimental version for more computational rules
-  dec-eq-is-set✭ : {A : Type i} → has-dec-eq A → is-set A
-  dec-eq-is-set✭ d x y = dec-onesided-eq-is-prop✭ x (d x) y
-
   abstract
+    -- XXX naming
     dec-onesided-eq-is-prop : {A : Type i} (x : A)
       → has-dec-onesided-eq x → (∀ y → is-prop (x == y))
-    dec-onesided-eq-is-prop = dec-onesided-eq-is-prop✭
+    dec-onesided-eq-is-prop {A} x d y = all-paths-is-prop UIP where
+
+      T : {y : A} → x == y → Type i
+      T {y} p with d x | d y
+      T {y} p | inr _  | _      = Lift ⊥
+      T {y} p | inl _  | inr _  = Lift ⊥
+      T {y} p | inl dx | inl dy = ! dx ∙ dy == p
+
+      lemma : {y : A} → (p : x == y) → T p
+      lemma idp with d x
+      lemma idp | inl r  = !-inv-l r
+      lemma idp | inr r⊥ = lift (r⊥ idp)
+
+      UIP : {y : A} (p q : x == y) → p == q
+      UIP idp q with d x | lemma q where
+      UIP idp q | inl r  | s = ! (!-inv-l r) ∙' s
+      UIP idp q | inr r⊥ | _ = Empty-elim (r⊥ idp)
 
     dec-eq-is-set : {A : Type i} → has-dec-eq A → is-set A
-    dec-eq-is-set = dec-eq-is-set✭
+    dec-eq-is-set d x y = dec-onesided-eq-is-prop x (d x) y
 
   {- Relationships between levels -}
 
   module _ {A : Type i} where
-    prop-has-all-paths✭ : is-prop A → has-all-paths A
-    prop-has-all-paths✭ c x y = fst (c x y)
-
     abstract
       contr-has-all-paths : is-contr A → has-all-paths A
       contr-has-all-paths c x y = ! (snd c x) ∙ snd c y
 
       prop-has-all-paths : is-prop A → has-all-paths A
-      prop-has-all-paths = prop-has-all-paths✭
+      prop-has-all-paths c x y = fst (c x y)
 
       inhab-prop-is-contr : A → is-prop A → is-contr A
       inhab-prop-is-contr x₀ p = (x₀ , λ y → fst (p x₀ y))
