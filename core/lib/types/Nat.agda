@@ -164,24 +164,19 @@ private
   test₀ : <-has-all-paths✭ (ltS :> (1 < 2)) ltS == idp
   test₀ = idp
 
-≤-has-all-paths✭ : {m n : ℕ} → has-all-paths (m ≤ n)
-≤-has-all-paths✭ (inl eq₁) (inl eq₂) = ap inl (prop-has-all-paths✭ (ℕ-is-set✭ _ _) eq₁ eq₂)
-≤-has-all-paths✭ (inl eq)  (inr lt)  = ⊥-rec (<-to-≠ lt eq)
-≤-has-all-paths✭ (inr lt)  (inl eq)  = ⊥-rec (<-to-≠ lt eq)
-≤-has-all-paths✭ (inr lt₁) (inr lt₂) = ap inr (<-has-all-paths✭ lt₁ lt₂)
-
 abstract
   <-has-all-paths : {m n : ℕ} → has-all-paths (m < n)
   <-has-all-paths = <-has-all-paths✭
-  
-  ≤-has-all-paths : {m n : ℕ} → has-all-paths (m ≤ n)
-  ≤-has-all-paths = ≤-has-all-paths✭
 
   <-is-prop : {m n : ℕ} → is-prop (m < n)
-  <-is-prop = all-paths-is-prop <-has-all-paths
+  <-is-prop = all-paths-is-prop <-has-all-paths where
 
   ≤-is-prop : {m n : ℕ} → is-prop (m ≤ n)
-  ≤-is-prop = all-paths-is-prop ≤-has-all-paths
+  ≤-is-prop = all-paths-is-prop λ{
+    (inl eq₁) (inl eq₂) → ap inl (prop-has-all-paths (ℕ-is-set _ _) eq₁ eq₂);
+    (inl eq)  (inr lt)  → ⊥-rec (<-to-≠ lt eq);
+    (inr lt)  (inl eq)  → ⊥-rec (<-to-≠ lt eq);
+    (inr lt₁) (inr lt₂) → ap inr (prop-has-all-paths <-is-prop lt₁ lt₂)}
 
 <-to-≤ : {m n : ℕ} → m < S n → m ≤ n
 <-to-≤ ltS = inl idp
