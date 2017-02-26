@@ -85,20 +85,11 @@ cw-take (inl idp)        skel = skel
 cw-take (inr ltS)        skel = cw-init skel
 cw-take (inr (ltSR m<n)) skel = cw-take (inr m<n) (cw-init skel)
 
-cw-take-trans : ∀ {m n o : ℕ} (m≤n : m ≤ n) (n≤o : n ≤ o) skel
-  → cw-take (≤-trans m≤n n≤o) skel == cw-take m≤n (cw-take n≤o skel)
-cw-take-trans (inl idp) _ _ = idp
-cw-take-trans (inr _) (inl idp) _ = idp
-cw-take-trans (inr _) (inr ltS) _ = idp
-cw-take-trans (inr m<n) (inr (ltSR n<o)) skel =
-  cw-take-trans (inr m<n) (inr n<o) (cw-init skel)
-
-abstract
-  cw-take-take : ∀ {m n o : ℕ} (m≤n : m ≤ n) (n≤o : n ≤ o) (m≤o : m ≤ o) skel
-    → cw-take m≤n (cw-take n≤o skel) == cw-take m≤o skel
-  cw-take-take m≤n n≤o m≤o skel =
-      ! (cw-take-trans m≤n n≤o skel)
-    ∙ ap (λ lte → cw-take lte skel) (prop-has-all-paths ≤-is-prop (≤-trans m≤n n≤o) m≤o)
+cw-init-take : ∀ {m n : ℕ} (Sm≤n : S m ≤ n) skel
+  → cw-init (cw-take Sm≤n skel) == cw-take (≤-trans (inr ltS) Sm≤n) skel
+cw-init-take (inl idp) skel = idp
+cw-init-take (inr ltS) skel = idp
+cw-init-take (inr (ltSR lt)) skel = cw-init-take (inr lt) (cw-init skel)
 
 ⊙cw-take : ∀ {m n : ℕ} (m≤n : m ≤ n) → ⊙Skeleton n → ⊙Skeleton m
 ⊙cw-take (inl idp)        ⊙skel = ⊙skel

@@ -122,7 +122,7 @@ module cw.DegreeBySquashing {i} where
       (take-has-cells-with-dec-eq Sm≤n skel dec)
       (take-has-degrees-with-finite-supports Sm≤n skel dec fin-supp)
 
-  -- [boundary'] because it is not extended
+  -- the following are named [boundary'] because it is not extended to the free groups
 
   boundary'-last : ∀ {n} (skel : Skeleton {i} (S n)) dec
     → has-degrees-with-finite-supports skel dec
