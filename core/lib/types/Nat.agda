@@ -79,6 +79,17 @@ data _<_ : ℕ → ℕ → Type₀ where
 _≤_ : ℕ → ℕ → Type₀
 m ≤ n = Coprod (m == n) (m < n)
 
+-- experimental: [lteE] [lteS] [lteSR]
+lteE : {m : ℕ} → m ≤ m
+lteE = inl idp
+
+lteS : {m : ℕ} → m ≤ S m
+lteS = inr ltS
+
+lteSR : {m n : ℕ} → m ≤ n → m ≤ (S n)
+lteSR (inl idp) = lteS
+lteSR (inr lt) = inr (ltSR lt)
+
 -- properties of [<]
 
 O<S : (m : ℕ) → O < S m
@@ -101,12 +112,17 @@ S≰O _ (inr ())
 <-trans lt₁ (ltSR lt₂) = ltSR (<-trans lt₁ lt₂)
 
 ≤-refl : {m : ℕ} → m ≤ m
-≤-refl = inl idp
+≤-refl = lteE
 
 ≤-trans : {m n k : ℕ} → m ≤ n → n ≤ k → m ≤ k
 ≤-trans (inl idp) lte₂ = lte₂
 ≤-trans lte₁ (inl idp) = lte₁
 ≤-trans (inr lt₁) (inr lt₂) = inr (<-trans lt₁ lt₂)
+
+private
+  test₀ : {m n : ℕ} (m≤n : m ≤ n) → lteSR m≤n == ≤-trans m≤n lteS
+  test₀ (inl idp) = idp
+  test₀ (inr lt) = idp
 
 <-ap-S : {m n : ℕ} → m < n → S m < S n
 <-ap-S ltS = ltS
@@ -145,23 +161,28 @@ abstract
   <-to-≠ {m = S m} {n = O} ()
   <-to-≠ {m = S m} {n = S n} lt = ℕ-S-≠ (<-to-≠ (<-cancel-S lt))
 
-  <-is-prop : {m n : ℕ} → is-prop (m < n)
-  <-is-prop = all-paths-is-prop (<-is-prop' idp) where
-    <-is-prop' : {m n₁ n₂ : ℕ} (eqn : n₁ == n₂) (lt₁ : m < n₁) (lt₂ : m < n₂)
-               → PathOver (λ n → m < n) eqn lt₁ lt₂
-    <-is-prop' eqn ltS ltS = transport (λ eqn₁ → PathOver (_<_ _) eqn₁ ltS ltS)
-                                       (prop-has-all-paths (ℕ-is-set _ _) idp eqn)
-                                       idp
-    <-is-prop' idp ltS (ltSR lt₂) = ⊥-rec (<-to-≠ lt₂ idp)
-    <-is-prop' idp (ltSR lt₁) ltS = ⊥-rec (<-to-≠ lt₁ idp)
-    <-is-prop' idp (ltSR lt₁) (ltSR lt₂) = ap ltSR (<-is-prop' idp lt₁ lt₂)
+  <-has-all-paths : {m n : ℕ} → has-all-paths (m < n)
+  <-has-all-paths = <-has-all-paths' idp where
+    <-has-all-paths' : {m n₁ n₂ : ℕ} (eqn : n₁ == n₂) (lt₁ : m < n₁) (lt₂ : m < n₂)
+      → PathOver (λ n → m < n) eqn lt₁ lt₂
+    <-has-all-paths' eqn ltS ltS = transport (λ eqn₁ → PathOver (_<_ _) eqn₁ ltS ltS)
+      (prop-has-all-paths (ℕ-is-set _ _) idp eqn) idp
+    <-has-all-paths' idp ltS (ltSR lt₂) = ⊥-rec (<-to-≠ lt₂ idp)
+    <-has-all-paths' idp (ltSR lt₁) ltS = ⊥-rec (<-to-≠ lt₁ idp)
+    <-has-all-paths' idp (ltSR lt₁) (ltSR lt₂) = ap ltSR (<-has-all-paths' idp lt₁ lt₂)
 
-  ≤-is-prop : {m n : ℕ} → is-prop (m ≤ n)
-  ≤-is-prop = all-paths-is-prop λ{
+  <-is-prop : {m n : ℕ} → is-prop (m < n)
+  <-is-prop = all-paths-is-prop <-has-all-paths
+
+  ≤-has-all-paths : {m n : ℕ} → has-all-paths (m ≤ n)
+  ≤-has-all-paths = λ{
     (inl eq₁) (inl eq₂) → ap inl (prop-has-all-paths (ℕ-is-set _ _) eq₁ eq₂);
     (inl eq)  (inr lt)  → ⊥-rec (<-to-≠ lt eq);
     (inr lt)  (inl eq)  → ⊥-rec (<-to-≠ lt eq);
-    (inr lt₁) (inr lt₂) → ap inr (prop-has-all-paths <-is-prop lt₁ lt₂)}
+    (inr lt₁) (inr lt₂) → ap inr (<-has-all-paths lt₁ lt₂)}
+
+  ≤-is-prop : {m n : ℕ} → is-prop (m ≤ n)
+  ≤-is-prop = all-paths-is-prop ≤-has-all-paths
 
 <-to-≤ : {m n : ℕ} → m < S n → m ≤ n
 <-to-≤ ltS = inl idp

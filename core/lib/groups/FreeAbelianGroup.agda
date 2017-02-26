@@ -109,28 +109,28 @@ module _ (A : Type i) where
     ⊞-unit : FormalSum A
     ⊞-unit = fs[ nil ]
 
-    ⊞-unit-l : ∀ g → ⊞-unit ⊞ g == g
-    ⊞-unit-l = FormalSum-elim
-      (λ _ → =-preserves-set FormalSum-is-set)
-      (λ _ → idp)
-      (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _))
-
-    ⊞-unit-r : ∀ g → g ⊞ ⊞-unit == g
-    ⊞-unit-r = FormalSum-elim
-      (λ _ → =-preserves-set FormalSum-is-set)
-      (λ _ → ap fs[_] $ ++-unit-r _)
-      (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _))
-
-    ⊞-assoc : ∀ g₁ g₂ g₃ → (g₁ ⊞ g₂) ⊞ g₃ == g₁ ⊞ (g₂ ⊞ g₃)
-    ⊞-assoc = FormalSum-elim (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set FormalSum-is-set)
-      (λ l₁ → FormalSum-elim (λ _ → Π-is-set λ _ → =-preserves-set FormalSum-is-set)
-        (λ l₂ → FormalSum-elim (λ _ → =-preserves-set FormalSum-is-set)
-          (λ l₃ → ap fs[_] $ ++-assoc l₁ l₂ l₃)
-          (λ _ → prop-has-all-paths-↓ $ FormalSum-is-set _ _))
-        (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → FormalSum-is-set _ _))
-      (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → Π-is-prop λ _ → FormalSum-is-set _ _)
-
     abstract
+      ⊞-unit-l : ∀ g → ⊞-unit ⊞ g == g
+      ⊞-unit-l = FormalSum-elim
+        (λ _ → =-preserves-set FormalSum-is-set)
+        (λ _ → idp)
+        (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _))
+
+      ⊞-unit-r : ∀ g → g ⊞ ⊞-unit == g
+      ⊞-unit-r = FormalSum-elim
+        (λ _ → =-preserves-set FormalSum-is-set)
+        (λ _ → ap fs[_] $ ++-unit-r _)
+        (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _))
+
+      ⊞-assoc : ∀ g₁ g₂ g₃ → (g₁ ⊞ g₂) ⊞ g₃ == g₁ ⊞ (g₂ ⊞ g₃)
+      ⊞-assoc = FormalSum-elim (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set FormalSum-is-set)
+        (λ l₁ → FormalSum-elim (λ _ → Π-is-set λ _ → =-preserves-set FormalSum-is-set)
+          (λ l₂ → FormalSum-elim (λ _ → =-preserves-set FormalSum-is-set)
+            (λ l₃ → ap fs[_] $ ++-assoc l₁ l₂ l₃)
+            (λ _ → prop-has-all-paths-↓ $ FormalSum-is-set _ _))
+          (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → FormalSum-is-set _ _))
+        (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → Π-is-prop λ _ → FormalSum-is-set _ _)
+
       Word-inv-r : ∀ l → FormalSumRel {A} (l ++ Word-flip l) nil
       Word-inv-r nil = fsr-refl idp
       Word-inv-r (x :: l) =
@@ -138,37 +138,35 @@ module _ (A : Type i) where
         fsr-trans (fsr-swap (flip x) x (l ++ Word-flip l)) $
         fsr-trans (fsr-flip x (l ++ Word-flip l)) (Word-inv-r l)
 
-    ⊟-inv-r : ∀ g → g ⊞ (⊟ g) == ⊞-unit
-    ⊟-inv-r = FormalSum-elim
-      (λ _ → =-preserves-set FormalSum-is-set)
-      (λ l → quot-rel (Word-inv-r l))
-      (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _))
+      ⊟-inv-r : ∀ g → g ⊞ (⊟ g) == ⊞-unit
+      ⊟-inv-r = FormalSum-elim
+        (λ _ → =-preserves-set FormalSum-is-set)
+        (λ l → quot-rel (Word-inv-r l))
+        (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _))
 
-    abstract
       Word-inv-l : ∀ l → FormalSumRel {A} (Word-flip l ++ l) nil
       Word-inv-l nil = fsr-refl idp
       Word-inv-l (x :: l) =
         fsr-trans (FormalSumRel-swap1 x (flip x :: Word-flip l) l) $
         fsr-trans (fsr-flip x (Word-flip l ++ l)) (Word-inv-l l)
 
-    ⊟-inv-l : ∀ g → (⊟ g) ⊞ g == ⊞-unit
-    ⊟-inv-l = FormalSum-elim
-      (λ _ → =-preserves-set FormalSum-is-set)
-      (λ l → quot-rel (Word-inv-l l))
-      (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _))
+      ⊟-inv-l : ∀ g → (⊟ g) ⊞ g == ⊞-unit
+      ⊟-inv-l = FormalSum-elim
+        (λ _ → =-preserves-set FormalSum-is-set)
+        (λ l → quot-rel (Word-inv-l l))
+        (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _))
 
-    abstract
       FormalSumRel-swap : ∀ l₁ l₂ → FormalSumRel {A} (l₁ ++ l₂) (l₂ ++ l₁)
       FormalSumRel-swap l₁ nil = fsr-refl (++-unit-r l₁)
       FormalSumRel-swap l₁ (x :: l₂) = fsr-trans (FormalSumRel-swap1 x l₁ l₂) (fsr-cons x (FormalSumRel-swap l₁ l₂))
 
-    ⊞-comm : ∀ g₁ g₂ → g₁ ⊞ g₂ == g₂ ⊞ g₁
-    ⊞-comm = FormalSum-elim
-      (λ _ → Π-is-set λ _ → =-preserves-set FormalSum-is-set)
-      (λ l₁ → FormalSum-elim (λ _ → =-preserves-set FormalSum-is-set)
-        (λ l₂ → quot-rel $ FormalSumRel-swap l₁ l₂)
-        (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _)))
-      (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → FormalSum-is-set _ _))
+      ⊞-comm : ∀ g₁ g₂ → g₁ ⊞ g₂ == g₂ ⊞ g₁
+      ⊞-comm = FormalSum-elim
+        (λ _ → Π-is-set λ _ → =-preserves-set FormalSum-is-set)
+        (λ l₁ → FormalSum-elim (λ _ → =-preserves-set FormalSum-is-set)
+          (λ l₂ → quot-rel $ FormalSumRel-swap l₁ l₂)
+          (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _)))
+        (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → FormalSum-is-set _ _))
 
   FormalSum-group-structure : GroupStructure (FormalSum A)
   FormalSum-group-structure = record
@@ -213,17 +211,24 @@ module _ {A : Type i} {j} (G : AbGroup j) where
           ! (G.assoc (G.inv (f x)) (f x) (Word-extendᴳ G.grp f l))
         ∙ ap (λ g → G.comp g (Word-extendᴳ G.grp f l)) (G.inv-l (f x)) ∙ G.unit-l _
 
+  FormalSum-extend : (A → G.El) → FormalSum A → G.El
+  FormalSum-extend f = FormalSum-rec G.El-level (Word-extendᴳ G.grp f)
+    (λ r → Word-extendᴳ-emap f r)
+
   FreeAbGroup-extend : (A → G.El) → (FreeAbGroup.grp A →ᴳ G.grp)
-  FreeAbGroup-extend f = record {
-    f = FormalSum-rec G.El-level (Word-extendᴳ G.grp f)
-          (λ r → Word-extendᴳ-emap f r);
-    pres-comp =
-      FormalSum-elim (λ _ → Π-is-set λ _ → =-preserves-set G.El-level)
-        (λ l₁ → FormalSum-elim
-          (λ _ → =-preserves-set G.El-level)
-          (λ l₂ → Word-extendᴳ-++ G.grp f l₁ l₂)
-          (λ _ → prop-has-all-paths-↓ (G.El-level _ _)))
-        (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → G.El-level _ _))}
+  FreeAbGroup-extend f' = record {M} where
+    module M where
+      f : FreeAbGroup.El A → G.El
+      f = FormalSum-extend f'
+      abstract
+        pres-comp : preserves-comp (FreeAbGroup.comp A) G.comp f
+        pres-comp =
+          FormalSum-elim (λ _ → Π-is-set λ _ → =-preserves-set G.El-level)
+            (λ l₁ → FormalSum-elim
+              (λ _ → =-preserves-set G.El-level)
+              (λ l₂ → Word-extendᴳ-++ G.grp f' l₁ l₂)
+              (λ _ → prop-has-all-paths-↓ (G.El-level _ _)))
+            (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → G.El-level _ _))
 
   private
     module Lemma (hom : FreeAbGroup.grp A →ᴳ G.grp) where
@@ -246,22 +251,27 @@ module _ {A : Type i} {j} (G : AbGroup j) where
     to = FreeAbGroup-extend
     from = f*
 
-    to-from : ∀ h → to (from h) == h
-    to-from h = group-hom= $ λ= $ FormalSum-elim
-      (λ _ → =-preserves-set G.El-level)
-      (λ l → Word-extend-hom h l)
-      (λ _ → prop-has-all-paths-↓ (G.El-level _ _))
+    abstract
+      to-from : ∀ h → to (from h) == h
+      to-from h = group-hom= $ λ= $ FormalSum-elim
+        (λ _ → =-preserves-set G.El-level)
+        (λ l → Word-extend-hom h l)
+        (λ _ → prop-has-all-paths-↓ (G.El-level _ _))
 
-    from-to : ∀ f → from (to f) == f
-    from-to f = λ= λ a → G.unit-r (f a)
+      from-to : ∀ f → from (to f) == f
+      from-to f = λ= λ a → G.unit-r (f a)
 
   FreeAbGroup-extend-hom : Πᴳ A (λ _ → G.grp) →ᴳ hom-group (FreeAbGroup.grp A) G
-  FreeAbGroup-extend-hom = record {
-    f = FreeAbGroup-extend;
-    pres-comp = λ f₁ f₂ → group-hom= $ λ= $
-      FormalSum-elim (λ _ → =-preserves-set G.El-is-set)
-        (Word-extendᴳ-comp G f₁ f₂)
-        (λ _ → prop-has-all-paths-↓ (G.El-is-set _ _))}
+  FreeAbGroup-extend-hom = record {M} where
+    module M where
+      f : (A → G.El) → (FreeAbGroup.grp A →ᴳ G.grp)
+      f = FreeAbGroup-extend
+      abstract
+        pres-comp : preserves-comp (Group.comp (Πᴳ A (λ _ → G.grp))) (Group.comp (hom-group (FreeAbGroup.grp A) G)) f
+        pres-comp = λ f₁ f₂ → group-hom= $ λ= $
+          FormalSum-elim (λ _ → =-preserves-set G.El-is-set)
+            (Word-extendᴳ-comp G f₁ f₂)
+            (λ _ → prop-has-all-paths-↓ (G.El-is-set _ _))
 
   FreeAbGroup-extend-iso : Πᴳ A (λ _ → G.grp) ≃ᴳ hom-group (FreeAbGroup.grp A) G
   FreeAbGroup-extend-iso = FreeAbGroup-extend-hom , FreeAbGroup-extend-is-equiv

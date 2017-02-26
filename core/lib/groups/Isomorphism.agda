@@ -77,13 +77,6 @@ module GroupIso {i j} {G : Group i} {H : Group j} (iso : GroupIso G H) where
 idiso : ∀ {i} (G : Group i) → (G ≃ᴳ G)
 idiso G = idhom G , idf-is-equiv _
 
-coeᴳ-iso : ∀ {i} {G H : Group i} → G == H → G ≃ᴳ H
-coeᴳ-iso idp = idiso _
-
-transportᴳ-iso : ∀ {i j} {A : Type i} (B : A → Group j) {a₁ a₂ : A} (p : a₁ == a₂)
-  → B a₁ ≃ᴳ B a₂
-transportᴳ-iso B p = coeᴳ-iso (ap B p)
-
 {- equality of isomomorphisms -}
 abstract
   group-hom=-to-iso= : ∀ {i j} {G : Group i} {H : Group j} {φ ψ : G ≃ᴳ H}
@@ -200,26 +193,55 @@ module _ {i} {G H : Group i} (iso : GroupIso G H) where
 
 {- homomorphism from equality of groups -}
 
+abstract
+  transp-El-pres-comp : ∀ {i j} {A : Type i} (B : A → Group j) {a₁ a₂ : A} (p : a₁ == a₂)
+    → preserves-comp (Group.comp (B a₁)) (Group.comp (B a₂)) (transport (Group.El ∘ B) p)
+  transp-El-pres-comp B idp g₁ g₂ = idp
+
+  transp!-El-pres-comp : ∀ {i j} {A : Type i} (B : A → Group j) {a₁ a₂ : A} (p : a₁ == a₂)
+    → preserves-comp (Group.comp (B a₂)) (Group.comp (B a₁)) (transport! (Group.El ∘ B) p)
+  transp!-El-pres-comp B idp h₁ h₂ = idp
+
+transportᴳ : ∀ {i j} {A : Type i} (B : A → Group j) {a₁ a₂ : A} (p : a₁ == a₂)
+  → (B a₁ →ᴳ B a₂)
+transportᴳ B p = record {f = transport (Group.El ∘ B) p; pres-comp = transp-El-pres-comp B p}
+
+transport!ᴳ : ∀ {i j} {A : Type i} (B : A → Group j) {a₁ a₂ : A} (p : a₁ == a₂)
+  → (B a₂ →ᴳ B a₁)
+transport!ᴳ B p = record {f = transport! (Group.El ∘ B) p; pres-comp = transp!-El-pres-comp B p}
+
+abstract
+  transpᴳ-is-iso : ∀ {i j} {A : Type i} (B : A → Group j) {a₁ a₂ : A} (p : a₁ == a₂)
+    → is-equiv (GroupHom.f (transportᴳ B p))
+  transpᴳ-is-iso B idp = idf-is-equiv _
+
+  transp!ᴳ-is-iso : ∀ {i j} {A : Type i} (B : A → Group j) {a₁ a₂ : A} (p : a₁ == a₂)
+    → is-equiv (GroupHom.f (transport!ᴳ B p))
+  transp!ᴳ-is-iso B idp = idf-is-equiv _
+
+transportᴳ-iso : ∀ {i j} {A : Type i} (B : A → Group j) {a₁ a₂ : A} (p : a₁ == a₂)
+  → B a₁ ≃ᴳ B a₂
+transportᴳ-iso B p = transportᴳ B p , transpᴳ-is-iso B p
+
+transport!ᴳ-iso : ∀ {i j} {A : Type i} (B : A → Group j) {a₁ a₂ : A} (p : a₁ == a₂)
+  → B a₂ ≃ᴳ B a₁
+transport!ᴳ-iso B p = transport!ᴳ B p , transp!ᴳ-is-iso B p
+
 coeᴳ : ∀ {i} {G H : Group i} → G == H → (G →ᴳ H)
-coeᴳ idp = idhom _
+coeᴳ = transportᴳ (idf _)
 
 coe!ᴳ : ∀ {i} {G H : Group i} → G == H → (H →ᴳ G)
-coe!ᴳ idp = idhom _
+coe!ᴳ = transport!ᴳ (idf _)
 
-coeᴳ-fun : ∀ {i} {G H : Group i} (p : G == H)
-  → GroupHom.f (coeᴳ p) == coe (ap Group.El p)
-coeᴳ-fun idp = idp
+coeᴳ-iso : ∀ {i} {G H : Group i} → G == H → G ≃ᴳ H
+coeᴳ-iso = transportᴳ-iso (idf _)
 
-coe!ᴳ-fun : ∀ {i} {G H : Group i} (p : G == H)
-  → GroupHom.f (coe!ᴳ p) == coe! (ap Group.El p)
-coe!ᴳ-fun idp = idp
-
-coeᴳ-β : ∀ {i} {G H : Group i} (iso : G ≃ᴳ H)
-  → coeᴳ (uaᴳ iso) == GroupIso.f-hom iso
-coeᴳ-β iso = group-hom= $
-  coeᴳ-fun (uaᴳ iso)
-  ∙ ap coe (El=-β iso)
-  ∙ λ= (coe-β (GroupIso.f-equiv iso))
+abstract
+  coeᴳ-β : ∀ {i} {G H : Group i} (iso : G ≃ᴳ H)
+    → coeᴳ (uaᴳ iso) == GroupIso.f-hom iso
+  coeᴳ-β iso = group-hom= $
+      ap coe (El=-β iso)
+    ∙ λ= (coe-β (GroupIso.f-equiv iso))
 
 -- triviality
 

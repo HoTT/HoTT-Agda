@@ -139,18 +139,21 @@ abstract
 
 infixr 80 _∘ᴳ_
 
+abstract
+  ∘-pres-comp : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k} (ψ : H →ᴳ K) (φ : G →ᴳ H)
+    → preserves-comp (Group.comp G) (Group.comp K) (GroupHom.f ψ ∘ GroupHom.f φ)
+  ∘-pres-comp ψ φ g₁ g₂ = ap (GroupHom.f ψ) (GroupHom.pres-comp φ g₁ g₂)
+    ∙ GroupHom.pres-comp ψ (GroupHom.f φ g₁) (GroupHom.f φ g₂)
+
 _∘ᴳ_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
   → (H →ᴳ K) → (G →ᴳ H) → (G →ᴳ K)
-ψ ∘ᴳ φ = group-hom
-  (GroupHom.f ψ ∘ GroupHom.f φ)
-  (λ x₁ x₂ → ap (GroupHom.f ψ) (GroupHom.pres-comp φ x₁ x₂)
-           ∙ GroupHom.pres-comp ψ (GroupHom.f φ x₁) (GroupHom.f φ x₂))
+ψ ∘ᴳ φ = group-hom (GroupHom.f ψ ∘ GroupHom.f φ) (∘-pres-comp ψ φ)
 
 {- algebraic properties -}
 
 ∘ᴳ-unit-r : ∀ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H)
   → φ ∘ᴳ idhom G == φ
-∘ᴳ-unit-r φ = idp
+∘ᴳ-unit-r φ = group-hom= idp
 
 ∘ᴳ-unit-l : ∀ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H)
   → idhom H ∘ᴳ φ == φ

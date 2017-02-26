@@ -79,39 +79,40 @@ module _ (dec : has-dec-eq A) where
     exp a (negsucc 0) = inr a :: nil
     exp a (negsucc (S n)) = inr a :: exp a (negsucc n)
 
-    exp-succ : ∀ a z → FormalSumRel (inl a :: exp a z) (exp a (succ z))
-    exp-succ a (pos _) = fsr-refl idp
-    exp-succ a (negsucc 0) = fsr-flip (inl a) nil
-    exp-succ a (negsucc (S n)) = fsr-flip (inl a) (exp a (negsucc n))
+    abstract
+      exp-succ : ∀ a z → FormalSumRel (inl a :: exp a z) (exp a (succ z))
+      exp-succ a (pos _) = fsr-refl idp
+      exp-succ a (negsucc 0) = fsr-flip (inl a) nil
+      exp-succ a (negsucc (S n)) = fsr-flip (inl a) (exp a (negsucc n))
 
-    exp-pred : ∀ a z → FormalSumRel (inr a :: exp a z) (exp a (pred z))
-    exp-pred a (pos 0) = fsr-refl idp
-    exp-pred a (pos (S n)) = fsr-flip (inr a) (exp a (pos n))
-    exp-pred a (negsucc _) = fsr-refl idp
+      exp-pred : ∀ a z → FormalSumRel (inr a :: exp a z) (exp a (pred z))
+      exp-pred a (pos 0) = fsr-refl idp
+      exp-pred a (pos (S n)) = fsr-flip (inr a) (exp a (pos n))
+      exp-pred a (negsucc _) = fsr-refl idp
 
-    Word-coef-inl-eq : ∀ {a b} (p : b == a) w
-      → Word-coef (inl b :: w) a == succ (Word-coef w a)
-    Word-coef-inl-eq {a} {b} p w with dec b a
-    Word-coef-inl-eq {a} {b} p w | inl _ = idp
-    Word-coef-inl-eq {a} {b} p w | inr ¬p = ⊥-rec (¬p p)
+      Word-coef-inl-eq : ∀ {a b} (p : b == a) w
+        → Word-coef (inl b :: w) a == succ (Word-coef w a)
+      Word-coef-inl-eq {a} {b} p w with dec b a
+      Word-coef-inl-eq {a} {b} p w | inl _ = idp
+      Word-coef-inl-eq {a} {b} p w | inr ¬p = ⊥-rec (¬p p)
 
-    Word-coef-inr-eq : ∀ {a b} (p : b == a) w
-      → Word-coef (inr b :: w) a == pred (Word-coef w a)
-    Word-coef-inr-eq {a} {b} p w with dec b a
-    Word-coef-inr-eq {a} {b} p w | inl _ = idp
-    Word-coef-inr-eq {a} {b} p w | inr ¬p = ⊥-rec (¬p p)
+      Word-coef-inr-eq : ∀ {a b} (p : b == a) w
+        → Word-coef (inr b :: w) a == pred (Word-coef w a)
+      Word-coef-inr-eq {a} {b} p w with dec b a
+      Word-coef-inr-eq {a} {b} p w | inl _ = idp
+      Word-coef-inr-eq {a} {b} p w | inr ¬p = ⊥-rec (¬p p)
 
-    Word-coef-inl-neq : ∀ {a b} (p : b ≠ a) w
-      → Word-coef (inl b :: w) a == Word-coef w a
-    Word-coef-inl-neq {a} {b} ¬p w with dec b a
-    Word-coef-inl-neq {a} {b} ¬p w | inl p = ⊥-rec (¬p p)
-    Word-coef-inl-neq {a} {b} ¬p w | inr _ = idp
+      Word-coef-inl-neq : ∀ {a b} (p : b ≠ a) w
+        → Word-coef (inl b :: w) a == Word-coef w a
+      Word-coef-inl-neq {a} {b} ¬p w with dec b a
+      Word-coef-inl-neq {a} {b} ¬p w | inl p = ⊥-rec (¬p p)
+      Word-coef-inl-neq {a} {b} ¬p w | inr _ = idp
 
-    Word-coef-inr-neq : ∀ {a b} (p : b ≠ a) w
-      → Word-coef (inr b :: w) a == Word-coef w a
-    Word-coef-inr-neq {a} {b} ¬p w with dec b a
-    Word-coef-inr-neq {a} {b} ¬p w | inl p = ⊥-rec (¬p p)
-    Word-coef-inr-neq {a} {b} ¬p w | inr _ = idp
+      Word-coef-inr-neq : ∀ {a b} (p : b ≠ a) w
+        → Word-coef (inr b :: w) a == Word-coef w a
+      Word-coef-inr-neq {a} {b} ¬p w with dec b a
+      Word-coef-inr-neq {a} {b} ¬p w | inl p = ⊥-rec (¬p p)
+      Word-coef-inr-neq {a} {b} ¬p w | inr _ = idp
 
     -- TODO maybe there is a better way to prove the final theorem?
     -- Here we are collecting all elements [inl a] and [inr a], and recurse on the rest.
@@ -218,35 +219,37 @@ module _ (dec : has-dec-eq A) where
         → FormalSumRel w nil
       zero-coef-is-ident w = zero-coef-is-ident' (inl idp) w idp
 
-  FormalSum-coef-ext' : ∀ w₁ w₂
-    → (∀ a → Word-coef w₁ a == Word-coef w₂ a)
-    → fs[ w₁ ] == fs[ w₂ ]
-  FormalSum-coef-ext' w₁ w₂ same-coef = G.inv-is-inj fs[ w₁ ] fs[ w₂ ] $
-    G.inv-unique-l (G.inv fs[ w₂ ]) fs[ w₁ ] $ quot-rel $
-    zero-coef-is-ident (Word-flip w₂ ++ w₁)
-      (λ a → Word-coef-++ (Word-flip w₂) w₁ a
-           ∙ ap2 _ℤ+_ (Word-coef-flip w₂ a) (same-coef a)
-           ∙ ℤ~-inv-l (Word-coef w₂ a))
-    where module G = FreeAbGroup A
+  abstract
+    FormalSum-coef-ext' : ∀ w₁ w₂
+      → (∀ a → Word-coef w₁ a == Word-coef w₂ a)
+      → fs[ w₁ ] == fs[ w₂ ]
+    FormalSum-coef-ext' w₁ w₂ same-coef = G.inv-is-inj fs[ w₁ ] fs[ w₂ ] $
+      G.inv-unique-l (G.inv fs[ w₂ ]) fs[ w₁ ] $ quot-rel $
+      zero-coef-is-ident (Word-flip w₂ ++ w₁)
+        (λ a → Word-coef-++ (Word-flip w₂) w₁ a
+             ∙ ap2 _ℤ+_ (Word-coef-flip w₂ a) (same-coef a)
+             ∙ ℤ~-inv-l (Word-coef w₂ a))
+      where module G = FreeAbGroup A
 
-  FormalSum-coef-ext : ∀ fs₁ fs₂
-    → (∀ a → FormalSum-coef fs₁ a == FormalSum-coef fs₂ a)
-    → fs₁ == fs₂
-  FormalSum-coef-ext = FormalSum-elim
-    (λ fs₁ → Π-is-set λ fs₂ → →-is-set $ =-preserves-set FormalSum-is-set)
-    (λ w₁ → FormalSum-elim
-      (λ fs₂ → →-is-set $ =-preserves-set FormalSum-is-set)
-      (λ w₂ → FormalSum-coef-ext' w₁ w₂)
-      (λ _ → prop-has-all-paths-↓ (→-is-prop $ FormalSum-is-set _ _)))
-    (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → →-is-prop $ FormalSum-is-set _ _))
+    FormalSum-coef-ext : ∀ fs₁ fs₂
+      → (∀ a → FormalSum-coef fs₁ a == FormalSum-coef fs₂ a)
+      → fs₁ == fs₂
+    FormalSum-coef-ext = FormalSum-elim
+      (λ fs₁ → Π-is-set λ fs₂ → →-is-set $ =-preserves-set FormalSum-is-set)
+      (λ w₁ → FormalSum-elim
+        (λ fs₂ → →-is-set $ =-preserves-set FormalSum-is-set)
+        (λ w₂ → FormalSum-coef-ext' w₁ w₂)
+        (λ _ → prop-has-all-paths-↓ (→-is-prop $ FormalSum-is-set _ _)))
+      (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → →-is-prop $ FormalSum-is-set _ _))
 
   has-finite-supports : (A → ℤ) → Type i
   has-finite-supports f = Σ (FormalSum A) λ fs → ∀ a → f a == FormalSum-coef fs a
 
 module _ {dec : has-dec-eq A} where
 
-  has-finite-supports-is-prop : ∀ f → is-prop (has-finite-supports dec f)
-  has-finite-supports-is-prop f = all-paths-is-prop
-    λ{(fs₁ , match₁) (fs₂ , match₂) → pair=
-      (FormalSum-coef-ext dec fs₁ fs₂ λ a → ! (match₁ a) ∙ match₂ a)
-      (prop-has-all-paths-↓ $ Π-is-prop λ _ → ℤ-is-set _ _)}
+  abstract
+    has-finite-supports-is-prop : ∀ f → is-prop (has-finite-supports dec f)
+    has-finite-supports-is-prop f = all-paths-is-prop
+      λ{(fs₁ , match₁) (fs₂ , match₂) → pair=
+        (FormalSum-coef-ext dec fs₁ fs₂ λ a → ! (match₁ a) ∙ match₂ a)
+        (prop-has-all-paths-↓ $ Π-is-prop λ _ → ℤ-is-set _ _)}
