@@ -99,17 +99,17 @@ module _ {i j} {G : Group i} (P : NormalSubgroupProp G j) where
             (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → SetQuot-level _ _)))
           (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → Π-is-prop λ _ → SetQuot-level _ _))
 
-      inv-l : ∀ g → comp (inv g) g == ident
-      inv-l = SetQuot-elim
-        (λ _ → =-preserves-set SetQuot-level)
-        (ap q[_] ∘ G.inv-l)
-        (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
+        inv-l : ∀ g → comp (inv g) g == ident
+        inv-l = SetQuot-elim
+          (λ _ → =-preserves-set SetQuot-level)
+          (ap q[_] ∘ G.inv-l)
+          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
 
-      inv-r : ∀ g → comp g (inv g) == ident
-      inv-r = SetQuot-elim
-        (λ _ → =-preserves-set SetQuot-level)
-        (ap q[_] ∘ G.inv-r)
-        (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
+        inv-r : ∀ g → comp g (inv g) == ident
+        inv-r = SetQuot-elim
+          (λ _ → =-preserves-set SetQuot-level)
+          (ap q[_] ∘ G.inv-r)
+          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
 
   QuotGroup : Group (lmax i j)
   QuotGroup = group _ SetQuot-level quot-group-struct
