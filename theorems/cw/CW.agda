@@ -60,6 +60,7 @@ incl^ : ∀ {n : ℕ} (skel : Skeleton n)
 incl^ {n = O} cells a = a
 incl^ {n = S n} (attached-skeleton skel _ _) a = incl (incl^ skel a)
 
+-- disjointly pointed skeletons
 record ⊙Skeleton (n : ℕ) : Type (lsucc i) where
   constructor ⊙skeleton
   field
@@ -86,7 +87,7 @@ cw-take (inr ltS)        skel = cw-init skel
 cw-take (inr (ltSR m<n)) skel = cw-take (inr m<n) (cw-init skel)
 
 cw-init-take : ∀ {m n : ℕ} (Sm≤n : S m ≤ n) skel
-  → cw-init (cw-take Sm≤n skel) == cw-take (≤-trans (inr ltS) Sm≤n) skel
+  → cw-init (cw-take Sm≤n skel) == cw-take (≤-trans lteS Sm≤n) skel
 cw-init-take (inl idp) skel = idp
 cw-init-take (inr ltS) skel = idp
 cw-init-take (inr (ltSR lt)) skel = cw-init-take (inr lt) (cw-init skel)
@@ -98,6 +99,12 @@ cw-init-take (inr (ltSR lt)) skel = cw-init-take (inr lt) (cw-init skel)
 
 ⊙cw-head : ∀ {n : ℕ} → ⊙Skeleton n → Ptd i
 ⊙cw-head (⊙skeleton skel pt _) = ⊙[ cw-head skel , pt ]
+
+⊙cw-init-take : ∀ {m n : ℕ} (Sm≤n : S m ≤ n) ⊙skel
+  → ⊙cw-init (⊙cw-take Sm≤n ⊙skel) == ⊙cw-take (≤-trans lteS Sm≤n) ⊙skel
+⊙cw-init-take (inl idp) ⊙skel = idp
+⊙cw-init-take (inr ltS) ⊙skel = idp
+⊙cw-init-take (inr (ltSR lt)) ⊙skel = ⊙cw-init-take (inr lt) (⊙cw-init ⊙skel)
 
 -- Access the [m]th cells
 
@@ -223,6 +230,31 @@ has-cells-with-choice t {n = S n} skel j =
 
 ⊙has-cells-with-choice : TLevel → {n : ℕ} → ⊙Skeleton n → (j : ULevel) → Type (lmax i (lsucc j))
 ⊙has-cells-with-choice t ⊙skel j = has-cells-with-choice t (⊙Skeleton.skel ⊙skel) j
+
+⊙cells-last-has-choice : {t : TLevel} {n : ℕ} (⊙skel : ⊙Skeleton n) {j : ULevel}
+  → ⊙has-cells-with-choice t ⊙skel j
+  → has-choice t (⊙cells-last ⊙skel) j
+⊙cells-last-has-choice {n = O} ⊙skel ac = ac
+⊙cells-last-has-choice {n = S n} ⊙skel ac = snd ac
+
+⊙init-has-cells-with-choice : {t : TLevel} {n : ℕ} (⊙skel : ⊙Skeleton (S n)) {j : ULevel}
+  → ⊙has-cells-with-choice t ⊙skel j
+  → ⊙has-cells-with-choice t (⊙cw-init ⊙skel) j
+⊙init-has-cells-with-choice ⊙skel ac = fst ac
+
+⊙take-has-cells-with-choice : {t : TLevel} {m n : ℕ} (m≤n : m ≤ n) (⊙skel : ⊙Skeleton n) {j : ULevel}
+  → ⊙has-cells-with-choice t ⊙skel j
+  → ⊙has-cells-with-choice t (⊙cw-take m≤n ⊙skel) j
+⊙take-has-cells-with-choice (inl idp) ⊙skel ac = ac
+⊙take-has-cells-with-choice (inr ltS) ⊙skel ac = ⊙init-has-cells-with-choice ⊙skel ac
+⊙take-has-cells-with-choice (inr (ltSR lt)) ⊙skel ac
+  = ⊙take-has-cells-with-choice (inr lt) (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac)
+
+⊙cells-nth-has-choice : {t : TLevel} {m n : ℕ} (m≤n : m ≤ n) (⊙skel : ⊙Skeleton n) {j : ULevel}
+  → ⊙has-cells-with-choice t ⊙skel j
+  → has-choice t (⊙cells-nth m≤n ⊙skel) j
+⊙cells-nth-has-choice m≤n ⊙skel ac = ⊙cells-last-has-choice (⊙cw-take m≤n ⊙skel)
+  (⊙take-has-cells-with-choice m≤n ⊙skel ac)
 
 {-
 The following are not needed.

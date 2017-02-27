@@ -18,6 +18,24 @@ module cohomology.ChainComplex where
       augment : AbGroup.grp head →ᴳ AbGroup.grp (cochain 0)
       coboundary : ∀ n → (AbGroup.grp (cochain n) →ᴳ AbGroup.grp (cochain (S n)))
 
+  homology-group : ∀ {i} → ChainComplex i
+    → (n : ℕ) → Group i
+  homology-group cc 0 =
+    QuotGroup (quot-of-sub (ker-propᴳ cc.augment) (im-npropᴳ (cc.boundary 0) (snd (cc.chain 0))))
+    where module cc = ChainComplex cc
+  homology-group cc (S n) =
+    QuotGroup (quot-of-sub (ker-propᴳ (cc.boundary n)) (im-npropᴳ (cc.boundary (S n)) (snd (cc.chain (S n)))))
+    where module cc = ChainComplex cc
+
+  cohomology-group : ∀ {i} → CochainComplex i
+    → (n : ℕ) → Group i
+  cohomology-group cc 0 =
+    QuotGroup (quot-of-sub (ker-propᴳ (cc.coboundary 0)) (im-npropᴳ cc.augment (snd (cc.cochain 0))))
+    where module cc = CochainComplex cc
+  cohomology-group cc (S n) =
+    QuotGroup (quot-of-sub (ker-propᴳ (cc.coboundary (S n))) (im-npropᴳ (cc.coboundary n) (snd (cc.cochain (S n)))))
+    where module cc = CochainComplex cc
+
   complex-dualize : ∀ {i j} → ChainComplex i → AbGroup j
     →  CochainComplex (lmax i j)
   complex-dualize {i} {j} cc G = record {M} where

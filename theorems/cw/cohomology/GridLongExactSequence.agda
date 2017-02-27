@@ -45,7 +45,8 @@ private
   Z/X-to-D = C/A-to-D , idp
 
 grid-co∂ : C n Y/X →ᴳ C (succ n) Z/Y
-grid-co∂ = C-fmap (succ n) Z/Y-to-E ∘ᴳ co∂
+grid-co∂ = record {f = CEl-fmap (succ n) Z/Y-to-E ∘ GroupHom.f co∂ ; pres-comp = lemma} where
+  abstract lemma = ∘-pres-comp (C-fmap (succ n) Z/Y-to-E) co∂
 
 C-grid-cofiber-seq : HomSequence (C n Z/X) (C (succ n) Y/X)
 C-grid-cofiber-seq =

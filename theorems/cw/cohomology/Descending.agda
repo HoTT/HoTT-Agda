@@ -49,7 +49,7 @@ abstract
         (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ Sm<n)))
         (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ (<-trans ltS Sm<n))))
         ⊙skel ac)
-      (C-cw-at-higher n (<-trans ltS Sm<n) (⊙cw-init ⊙skel) (fst ac))
+      (C-cw-at-higher n (<-trans ltS Sm<n) (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac))
 
   C-cw-at-negsucc : ∀ n {m} (⊙skel : ⊙Skeleton m)
     → ⊙has-cells-with-choice 0 ⊙skel i
@@ -62,7 +62,7 @@ abstract
         (ℤ-negsucc≠pos _ (S m))
         (ℤ-negsucc≠pos _ m)
         ⊙skel ac)
-      (C-cw-at-negsucc n (⊙cw-init ⊙skel) (fst ac))
+      (C-cw-at-negsucc n (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac))
 
 C-cw-to-diag-at-lower : ∀ n {m} (Sn≤m : S n ≤ m) (⊙skel : ⊙Skeleton m)
   → ⊙has-cells-with-choice 0 ⊙skel i
@@ -71,7 +71,7 @@ C-cw-to-diag-at-lower _ (inl idp) _ _ = idiso _
 C-cw-to-diag-at-lower n (inr ltS) ⊙skel ac =
   C-cw-descend (ℕ-to-ℤ n) (ℕ-to-ℤ-≠ (<-to-≠ (ltSR ltS))) (ℕ-to-ℤ-≠ (<-to-≠ ltS)) ⊙skel ac
 C-cw-to-diag-at-lower n {S m} (inr (ltSR lt)) ⊙skel ac =
-      C-cw-to-diag-at-lower n (inr lt) (⊙cw-init ⊙skel) (fst ac)
+      C-cw-to-diag-at-lower n (inr lt) (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac)
   ∘eᴳ C-cw-descend (ℕ-to-ℤ n) (ℕ-to-ℤ-≠ n≠Sm) (ℕ-to-ℤ-≠ n≠m) ⊙skel ac
   where
     n≠Sm : n ≠ S m

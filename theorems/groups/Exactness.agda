@@ -125,11 +125,12 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
   ψ-surj-implies-coker-iso-K H-is-abelian ψ-is-surj =
     coker-to-K H-is-abelian , ψ-surj-implies-coker-to-K-is-equiv H-is-abelian ψ-is-surj
 
-pre∘-is-exact : ∀ {i j k l} {G : Group i} {H : Group j} {K : Group k} {L : Group l}
-  (φ : G →ᴳ H) {ψ : H →ᴳ K} {ξ : K →ᴳ L} → is-surjᴳ φ → is-exact ψ ξ → is-exact (ψ ∘ᴳ φ) ξ
-pre∘-is-exact φ {ψ = ψ} φ-is-surj ψ-ξ-is-exact = record {
-  ker-sub-im = λ k → im-sub-im-∘ ψ φ φ-is-surj k ∘ ker-sub-im ψ-ξ-is-exact k;
-  im-sub-ker = λ k → im-sub-ker ψ-ξ-is-exact k ∘ im-∘-sub-im ψ φ k}
+abstract
+  pre∘-is-exact : ∀ {i j k l} {G : Group i} {H : Group j} {K : Group k} {L : Group l}
+    (φ : G →ᴳ H) {ψ : H →ᴳ K} {ξ : K →ᴳ L} → is-surjᴳ φ → is-exact ψ ξ → is-exact (ψ ∘ᴳ φ) ξ
+  pre∘-is-exact φ {ψ = ψ} φ-is-surj ψ-ξ-is-exact = record {
+    ker-sub-im = λ k → im-sub-im-∘ ψ φ φ-is-surj k ∘ ker-sub-im ψ-ξ-is-exact k;
+    im-sub-ker = λ k → im-sub-ker ψ-ξ-is-exact k ∘ im-∘-sub-im ψ φ k}
 
 module Exact2 {i j k l} {G : Group i} {H : Group j} {K : Group k} {L : Group l}
   {φ : G →ᴳ H} {ψ : H →ᴳ K} {ξ : K →ᴳ L}

@@ -36,7 +36,7 @@ private
   n≤SSSn = inr (ltSR (ltSR ltS))
 
   ⊙skel₋₃ = ⊙cw-take n≤SSSn ⊙skel
-  ac₋₃ = fst (fst (fst ac))
+  ac₋₃ = ⊙take-has-cells-with-choice n≤SSSn ⊙skel ac
 
 {-
               H          apex
@@ -70,8 +70,8 @@ private
   H : Group i
   H = C (ℕ-to-ℤ (S (S n))) (⊙Cofiber (⊙cw-incl-tail n≤SSn (⊙cw-init ⊙skel)))
 
-  Coker-iso-H : CokerCo∂.grp (⊙cw-init ⊙skel) (fst ac) ≃ᴳ H
-  Coker-iso-H = Coker-cw-co∂-last (⊙cw-init ⊙skel) (fst ac)
+  Coker-iso-H : CokerCo∂.grp (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac) ≃ᴳ H
+  Coker-iso-H = Coker-cw-co∂-last (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac)
 
   module GLES-top = GLES (ℕ-to-ℤ (S n))
     (⊙cw-incl-nth Sn≤SSSn ⊙skel) (⊙cw-incl-tail Sn≤SSSn ⊙skel)
@@ -85,7 +85,8 @@ private
     G-to-C-apex-is-surj : is-surjᴳ G-to-C-apex
     G-to-C-apex-is-surj = Exact.K-trivial-implies-φ-is-surj
       (exact-seq-index 2 GLES-top.C-grid-cofiber-exact-seq)
-      (C-Cofiber-cw-incl-last->-is-trivial (S (S n)) ltS (⊙cw-take Sn≤SSSn ⊙skel) (fst (fst ac)))
+      (C-Cofiber-cw-incl-last->-is-trivial (S (S n)) ltS (⊙cw-take Sn≤SSSn ⊙skel)
+        (⊙take-has-cells-with-choice Sn≤SSSn ⊙skel ac))
 
   module GLES-right = GLES (ℕ-to-ℤ (S n))
     (⊙cw-incl-tail n≤SSn (⊙cw-init ⊙skel)) (⊙cw-incl-last ⊙skel)
@@ -116,7 +117,7 @@ C-cw-iso-ker/im :
      C (ℕ-to-ℤ (S (S n))) ⊙⟦ ⊙skel ⟧
   ≃ᴳ QuotGroup (quot-of-sub
       (ker-propᴳ (cw-co∂-last ⊙skel ac))
-      (CokerCo∂.npropᴳ (⊙cw-init ⊙skel) (fst ac)))
+      (CokerCo∂.npropᴳ (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac)))
 C-cw-iso-ker/im = lemma ∘eᴳ C-apex-iso-C-cw ⁻¹ᴳ where
   abstract
     lemma-comm : ∀ g →
@@ -135,10 +136,10 @@ C-cw-iso-ker/im = lemma ∘eᴳ C-apex-iso-C-cw ⁻¹ᴳ where
   lemma : C-apex
        ≃ᴳ QuotGroup (quot-of-sub
             (ker-propᴳ (cw-co∂-last ⊙skel ac))
-            (CokerCo∂.npropᴳ (⊙cw-init ⊙skel) (fst ac)))
+            (CokerCo∂.npropᴳ (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac)))
   lemma = H-iso-P/Q
     (ker-propᴳ (cw-co∂-last ⊙skel ac))
-    (CokerCo∂.npropᴳ (⊙cw-init ⊙skel) (fst ac))
+    (CokerCo∂.npropᴳ (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac))
     (G-to-C-apex ∘ᴳ GroupIso.g-hom G-iso-Ker)
     (∘-is-surj G-to-C-apex-is-surj (equiv-is-surj (GroupIso.g-is-equiv G-iso-Ker)))
     (GroupIso.g-hom Coker-iso-H  ∘ᴳ C-apex-to-H)

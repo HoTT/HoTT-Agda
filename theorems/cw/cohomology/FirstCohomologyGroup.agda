@@ -17,16 +17,16 @@ open OrdinaryTheory OT
 open import cohomology.LongExactSequence cohomology-theory
 open import cw.cohomology.CoboundaryGrid OT ⊙skel ac
 open import cw.cohomology.GridPtdMap (⊙cw-incl-last (⊙cw-init ⊙skel)) (⊙cw-incl-last ⊙skel)
-open import cw.cohomology.TipGrid OT (⊙cw-init ⊙skel) (fst ac)
+open import cw.cohomology.TipGrid OT (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac)
 open import cw.cohomology.TopGrid OT 1 (⊙cw-incl-last (⊙cw-init ⊙skel)) (⊙cw-incl-last ⊙skel)
 open import cw.cohomology.WedgeOfCells OT
 
 private
   0≤2 : 0 ≤ 2
-  0≤2 = inr (ltSR ltS)
+  0≤2 = lteSR lteS
 
   ⊙skel₀ = ⊙cw-take 0≤2 ⊙skel
-  ac₀ = fst (fst ac)
+  ac₀ = ⊙take-has-cells-with-choice 0≤2 ⊙skel ac
 
 {-
               H

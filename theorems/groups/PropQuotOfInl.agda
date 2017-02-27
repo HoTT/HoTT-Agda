@@ -4,14 +4,17 @@ open import HoTT
 
 module groups.PropQuotOfInl {i j k}
   (G : Group i) {H : Group j} {K : Group k}
-  (G-×-H-is-abelian : is-abelian (G ×ᴳ H)) (φ : H →ᴳ K) where
+  (G-×-H-is-abelian : is-abelian (G ×ᴳ H))
+  -- the argument [φ-snd], which is intended to be [φ ∘ᴳ ×-snd],
+  -- gives the possibility of making the second part
+  -- (the proof of being a group homomorphism) abstract.
+  (φ : H →ᴳ K) (φ-snd : G ×ᴳ H →ᴳ K)
+  (φ-snd-β : ∀ x → GroupHom.f φ-snd x == GroupHom.f φ (snd x))
+  where
 
   private
     module G = Group G
     module H = Group H
-
-    φ-snd : G ×ᴳ H →ᴳ K
-    φ-snd = φ ∘ᴳ ×ᴳ-snd {G = G} {H = H}
 
   module Ker/Im = QuotGroup
     (quot-of-sub
@@ -21,7 +24,7 @@ module groups.PropQuotOfInl {i j k}
   Ker-inl-quot-Im-φ-snd : Ker.grp φ ≃ᴳ Ker/Im.grp
   Ker-inl-quot-Im-φ-snd = to-hom , is-eq _ from to-from from-to where
     to : Ker.El φ → Ker/Im.El
-    to (h , h-in-ker) = q[ (G.ident , h) , h-in-ker ]
+    to (h , h-in-ker) = q[ (G.ident , h) , φ-snd-β (G.ident , h) ∙ h-in-ker ]
 
     abstract
       to-pres-comp : ∀ k₁ k₂ → to (Ker.comp φ k₁ k₂) == Ker/Im.comp (to k₁) (to k₂)
@@ -33,7 +36,7 @@ module groups.PropQuotOfInl {i j k}
 
     abstract
       from' : Ker.El φ-snd → Ker.El φ
-      from' ((g , h) , h-in-ker) = h , h-in-ker
+      from' ((g , h) , h-in-ker) = h , ! (φ-snd-β (g , h)) ∙ h-in-ker
 
       from-rel : {gh₁ gh₂ : Ker.El φ-snd}
         (inl-g=gh₁gh₂⁻¹ : SubgroupProp.prop (im-propᴳ (×ᴳ-inl {G = G} {H = H})) (fst (Ker.diff φ-snd gh₁ gh₂)))
@@ -49,9 +52,10 @@ module groups.PropQuotOfInl {i j k}
       to-from : ∀ g → to (from g) == g
       to-from = SetQuot-elim (λ _ → =-preserves-set Ker/Im.El-is-set)
         (λ{((g , h) , h-in-ker) → quot-relᴳ {P = Ker/Im.npropᴳ}
-          {g₁ = (G.ident , h) , h-in-ker} {g₂ = (g , h) , h-in-ker}
+          {g₁ = (G.ident , h) , φ-snd-β (G.ident , h) ∙ ! (φ-snd-β (g , h)) ∙ h-in-ker}
+          {g₂ = (g , h) , h-in-ker}
           [ G.inv g , ap2 _,_ (! (G.unit-l (G.inv g))) (! (H.inv-r h)) ]})
         (λ _ → prop-has-all-paths-↓ (Ker/Im.El-is-set _ _))
 
       from-to : ∀ g → from (to g) == g
-      from-to _ = idp
+      from-to _ = Subtype=-out (Ker.subEl-prop φ) idp

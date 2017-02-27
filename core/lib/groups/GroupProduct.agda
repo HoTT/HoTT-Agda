@@ -86,6 +86,9 @@ _×ᴳ_ (group A A-level A-struct) (group B B-level B-struct) =
   → is-abelian G → is-abelian H → is-abelian (G ×ᴳ H)
 ×ᴳ-is-abelian G H aG aH (g₁ , h₁) (g₂ , h₂) = pair×= (aG g₁ g₂) (aH h₁ h₂)
 
+×ᴳ-abgroup : ∀ {i j} → AbGroup i → AbGroup j → AbGroup (lmax i j)
+×ᴳ-abgroup (G , aG) (H , aH) = G ×ᴳ H , ×ᴳ-is-abelian G H aG aH
+
 Πᴳ-is-abelian : ∀ {i j} {I : Type i} {F : I → Group j}
   → (∀ i → is-abelian (F i)) → is-abelian (Πᴳ I F)
 Πᴳ-is-abelian aF f₁ f₂ = λ= (λ i → aF i (f₁ i) (f₂ i))

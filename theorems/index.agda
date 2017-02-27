@@ -58,6 +58,7 @@ import cw.cohomology.ChainComplex2 -- expected properties
 import cw.cohomology.ZerothCohomologyGroup
 import cw.cohomology.FirstCohomologyGroup
 import cw.cohomology.HigherCohomologyGroups
+import cw.cohomology.ReconstructedCochainComplex
 
 -- There are some unported theorems
 

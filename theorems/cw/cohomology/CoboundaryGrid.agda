@@ -24,10 +24,10 @@ private
   Xn --> X(n+1) -----> X(n+2)
    |       |             |
    v       v             v
-   1 -> X(n+1)/n -> X(n+2)/(n+1)
+   1 -> X(n+1)/n ---> X(n+2)/n
            |    this     |
            v      one    v
-           1 -------> X(n+2)/n
+           1 -----> X(n+2)/(n+1)
 -}
 
 private
@@ -65,7 +65,8 @@ private
     lemma₁-exact₁ = exact-seq-index 2 $ GLES.C-grid-cofiber-exact-seq (ℕ-to-ℤ (S n))
 
     lemma₁-trivial : is-trivialᴳ (C (ℕ-to-ℤ (S (S n))) Y/X)
-    lemma₁-trivial = C-Cofiber-cw-incl-last->-is-trivial (S (S n)) ltS (⊙cw-init ⊙skel) (fst ac)
+    lemma₁-trivial = C-Cofiber-cw-incl-last->-is-trivial (S (S n)) ltS (⊙cw-init ⊙skel)
+      (⊙init-has-cells-with-choice ⊙skel ac)
 
 -- FIXME favonia: This still takes a long time to check. I wonder why?
 Coker-cw-co∂-last : CokerCo∂.grp ≃ᴳ C (ℕ-to-ℤ (S (S n))) (⊙Cofiber (⊙cw-incl-tail n≤SSn ⊙skel))

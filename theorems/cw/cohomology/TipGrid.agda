@@ -14,6 +14,7 @@ module cw.cohomology.TipGrid {i} (OT : OrdinaryTheory i)
 open OrdinaryTheory OT
 open import cw.cohomology.Descending OT
 open import cw.cohomology.WedgeOfCells OT
+open import cw.cohomology.TipAndAugment OT (⊙cw-init ⊙skel)
 import cohomology.LongExactSequence
 
 {-
@@ -23,18 +24,15 @@ import cohomology.LongExactSequence
    1 -> X₁/X₀
 -}
 
-
 private
-  G : Group i
-  G = C 0 (⊙Lift ⊙Bool)
-
   module LES n = cohomology.LongExactSequence cohomology-theory n (⊙cw-incl-last ⊙skel)
 
-cw-co∂-head' : C 0 (⊙cw-head ⊙skel) →ᴳ C 1 (⊙Cofiber (⊙cw-incl-last ⊙skel))
+cw-co∂-head' : CX₀ →ᴳ C 1 (⊙Cofiber (⊙cw-incl-last ⊙skel))
 cw-co∂-head' = LES.co∂ 0
 
-cw-co∂-head : G ×ᴳ C 0 (⊙cw-head ⊙skel) →ᴳ C 1 (⊙Cofiber (⊙cw-incl-last ⊙skel))
-cw-co∂-head = cw-co∂-head' ∘ᴳ ×ᴳ-snd {G = G} {H = C 0 (⊙cw-head ⊙skel)}
+cw-co∂-head : G×CX₀ →ᴳ C 1 (⊙Cofiber (⊙cw-incl-last ⊙skel))
+cw-co∂-head = record {f = GroupHom.f cw-co∂-head' ∘ snd; pres-comp = lemma} where
+  abstract lemma = ∘-pres-comp cw-co∂-head' (×ᴳ-snd {G = G} {H = CX₀})
 
 Ker-cw-co∂-head' : C 0 ⊙⟦ ⊙skel ⟧ ≃ᴳ Ker.grp cw-co∂-head'
 Ker-cw-co∂-head' = Exact2.G-trivial-implies-H-iso-ker
@@ -65,7 +63,7 @@ private
   abstract
     lemma₁-exact₀ : is-exact cw-co∂-head (C-fmap 1 (⊙cfcod' (⊙cw-incl-last ⊙skel)))
     lemma₁-exact₀ = pre∘-is-exact
-      (×ᴳ-snd {G = G} {H = C 0 (⊙cw-head ⊙skel)})
+      (×ᴳ-snd {G = G} {H = CX₀})
       (×ᴳ-snd-is-surj {G = G} {H = C 0 (⊙cw-head ⊙skel)})
       (exact-seq-index 1 $ LES.C-cofiber-exact-seq 0)
 
@@ -74,7 +72,8 @@ private
     lemma₁-exact₁ = exact-seq-index 2 $ LES.C-cofiber-exact-seq 0
 
     lemma₁-trivial : is-trivialᴳ (C 1 (⊙cw-head ⊙skel))
-    lemma₁-trivial = C-points-≠-is-trivial 1 (pos-≠ (ℕ-S≠O 0)) (⊙cw-init ⊙skel) (fst ac)
+    lemma₁-trivial = C-points-≠-is-trivial 1 (pos-≠ (ℕ-S≠O 0)) (⊙cw-init ⊙skel)
+      (⊙init-has-cells-with-choice ⊙skel ac)
 
 Coker-cw-co∂-head : CokerCo∂Head.grp ≃ᴳ C 1 ⊙⟦ ⊙skel ⟧
 Coker-cw-co∂-head = Exact2.L-trivial-implies-coker-iso-K

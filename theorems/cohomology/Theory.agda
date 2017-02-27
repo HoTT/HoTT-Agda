@@ -13,6 +13,9 @@ record CohomologyTheory i : Type (lsucc i) where
 
     C-is-abelian : (n : ℤ) (X : Ptd i) → is-abelian (C n X)
 
+  C-abgroup : ℤ → Ptd i → AbGroup i
+  C-abgroup n X = C n X , C-is-abelian n X
+
   CEl : ℤ → Ptd i → Type i
   CEl n X = Group.El (C n X)
 
