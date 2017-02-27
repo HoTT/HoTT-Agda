@@ -170,12 +170,12 @@ e1 ∘e e2 = (–> e1 ∘ –> e2) , record {g = (<– e2 ∘ <– e1); M} where
     f = –> e1 ∘ –> e2
     g = <– e2 ∘ <– e1
     abstract
-      f-g : ∀ b → f (g b) == b
-      f-g = (λ c → ap (–> e1) (<–-inv-r e2 (<– e1 c)) ∙ <–-inv-r e1 c)
+      f-g : ∀ c → f (g c) == c
+      f-g c = ap (–> e1) (<–-inv-r e2 (<– e1 c)) ∙ <–-inv-r e1 c
       g-f : ∀ a → g (f a) == a
-      g-f = (λ a → ap (<– e2) (<–-inv-l e1 (–> e2 a)) ∙ <–-inv-l e2 a)
+      g-f a = ap (<– e2) (<–-inv-l e1 (–> e2 a)) ∙ <–-inv-l e2 a
       adj : ∀ a → ap f (g-f a) == f-g (f a)
-      adj = λ a →
+      adj a =
         ap (–> e1 ∘ –> e2) (ap (<– e2) (<–-inv-l e1 (–> e2 a)) ∙ <–-inv-l e2 a)
             =⟨ ap-∘ (–> e1) (–> e2) (ap (<– e2) (<–-inv-l e1 (–> e2 a)) ∙ <–-inv-l e2 a) ⟩
         ap (–> e1) (ap (–> e2) (ap (<– e2) (<–-inv-l e1 (–> e2 a)) ∙ <–-inv-l e2 a))
