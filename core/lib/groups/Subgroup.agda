@@ -46,7 +46,8 @@ module _ {i j} {G : Group i} (P : SubgroupProp G j) where
         inv-r (g , _) = Subtype=-out P.subEl-prop (G.inv-r g)
 
   Subgroup : Group (lmax i j)
-  Subgroup = group _ (Subtype-level P.subEl-prop G.El-level) subgroup-struct
+  Subgroup = group _ SubEl-level subgroup-struct
+    where abstract SubEl-level = Subtype-level P.subEl-prop G.El-level
 
 module Subgroup {i j} {G : Group i} (P : SubgroupProp G j) where
   private
@@ -75,6 +76,19 @@ module Subgroup {i j} {G : Group i} (P : SubgroupProp G j) where
       abstract
         pres-comp : ∀ h₁ h₂ → f (H.comp h₁ h₂) == Group.comp (Subgroup P) (f h₁) (f h₂)
         pres-comp h₁ h₂ = Subtype=-out subEl-prop (φ.pres-comp h₁ h₂)
+
+full-subgroup : ∀ {i j} {G : Group i} {P : SubgroupProp G j}
+  → is-fullᴳ P → Subgroup P ≃ᴳ G
+full-subgroup {G = G} {P} full = Subgroup.inject P , is-eq _ from to-from from-to where
+  from : Group.El G → Subgroup.El P
+  from g = g , full g
+
+  abstract
+    from-to : ∀ p → from (fst p) == p
+    from-to p = Subtype=-out (SubgroupProp.subEl-prop P) idp
+
+    to-from : ∀ g → fst (from g) == g
+    to-from g = idp
 
 module _ {i} {j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
 

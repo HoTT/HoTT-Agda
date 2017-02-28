@@ -125,7 +125,8 @@ module _ {i j} {G : Group i} {P : NormalSubgroupProp G j} where
   q[_]ᴳ : G →ᴳ QuotGroup P
   q[_]ᴳ = group-hom q[_] λ _ _ → idp
 
-  quot-relᴳ = λ {g₁} {g₂} → quot-rel {R = quot-group-rel P} {a₁ = g₁} {a₂ = g₂}
+  quot-relᴳ : ∀ {g₁ g₂} → P.prop (G.diff g₁ g₂) → q[ g₁ ] == q[ g₂ ]
+  quot-relᴳ {g₁} {g₂} = quot-rel {R = quot-group-rel P} {a₁ = g₁} {a₂ = g₂}
 
   private
     abstract

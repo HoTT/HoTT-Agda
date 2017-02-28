@@ -283,6 +283,9 @@ module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
       G.zero-diff-same g₁ g₂ $ tk (G.diff g₁ g₂) $
         φ.pres-diff g₁ g₂ ∙ ap (λ h → H.diff h (φ.f g₂)) p ∙ H.inv-r (φ.f g₂)
 
+ker-cst-is-full : ∀ {i j} (G : Group i) (H : Group j)
+  → is-fullᴳ (ker-propᴳ (cst-hom {G = G} {H}))
+ker-cst-is-full G H g = idp
 
 {- exactness -}
 

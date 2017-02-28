@@ -26,15 +26,15 @@ private
       (C-Cofiber-cw-incl-last-≠-is-trivial (succ n) (succ-≠ n≠m) ⊙skel ac)
       (C-Cofiber-cw-incl-last-≠-is-trivial (succ (succ n)) (succ-≠ Sn≠m) ⊙skel ac)
 
-C-cw-descend : ∀ n {m} (n≠Sm : n ≠ ℕ-to-ℤ (S m)) (n≠m : n ≠ ℕ-to-ℤ m)
+C-cw-descend : ∀ n {m} (n≠m : n ≠ ℕ-to-ℤ m) (n≠Sm : n ≠ ℕ-to-ℤ (S m))
   → (⊙skel : ⊙Skeleton (S m))
   → ⊙has-cells-with-choice 0 ⊙skel i
   → C n ⊙⟦ ⊙skel ⟧ ≃ᴳ C n ⊙⟦ ⊙cw-init ⊙skel ⟧
-C-cw-descend (negsucc n) -Sn≠Sm -Sn≠m
+C-cw-descend (negsucc n) -Sn≠m -Sn≠Sm
   = C-cw-descend-at-succ (negsucc (S n)) (pred-≠ -Sn≠Sm) -Sn≠m
-C-cw-descend (pos O) O≠Sm O≠m
+C-cw-descend (pos O) O≠m O≠Sm
   = C-cw-descend-at-succ -1 (pred-≠ O≠Sm) O≠m
-C-cw-descend (pos (S n)) Sn≠Sm Sn≠m
+C-cw-descend (pos (S n)) Sn≠m Sn≠Sm
   = C-cw-descend-at-succ (pos n) (pred-≠ Sn≠Sm) Sn≠m
 
 abstract
@@ -46,8 +46,8 @@ abstract
   C-cw-at-higher n {m = S m} Sm<n ⊙skel ac =
     iso-preserves'-trivial
       (C-cw-descend (ℕ-to-ℤ n)
-        (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ Sm<n)))
         (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ (<-trans ltS Sm<n))))
+        (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ Sm<n)))
         ⊙skel ac)
       (C-cw-at-higher n (<-trans ltS Sm<n) (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac))
 
@@ -59,8 +59,8 @@ abstract
   C-cw-at-negsucc n {m = S m} ⊙skel ac =
     iso-preserves'-trivial
       (C-cw-descend (negsucc n)
-        (ℤ-negsucc≠pos _ (S m))
         (ℤ-negsucc≠pos _ m)
+        (ℤ-negsucc≠pos _ (S m))
         ⊙skel ac)
       (C-cw-at-negsucc n (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac))
 
@@ -69,10 +69,10 @@ C-cw-to-diag-at-lower : ∀ n {m} (Sn≤m : S n ≤ m) (⊙skel : ⊙Skeleton m)
   → C (ℕ-to-ℤ n) ⊙⟦ ⊙skel ⟧ ≃ᴳ C (ℕ-to-ℤ n) ⊙⟦ ⊙cw-take Sn≤m ⊙skel ⟧
 C-cw-to-diag-at-lower _ (inl idp) _ _ = idiso _
 C-cw-to-diag-at-lower n (inr ltS) ⊙skel ac =
-  C-cw-descend (ℕ-to-ℤ n) (ℕ-to-ℤ-≠ (<-to-≠ (ltSR ltS))) (ℕ-to-ℤ-≠ (<-to-≠ ltS)) ⊙skel ac
+  C-cw-descend (ℕ-to-ℤ n) (ℕ-to-ℤ-≠ (<-to-≠ ltS)) (ℕ-to-ℤ-≠ (<-to-≠ (ltSR ltS))) ⊙skel ac
 C-cw-to-diag-at-lower n {S m} (inr (ltSR lt)) ⊙skel ac =
       C-cw-to-diag-at-lower n (inr lt) (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac)
-  ∘eᴳ C-cw-descend (ℕ-to-ℤ n) (ℕ-to-ℤ-≠ n≠Sm) (ℕ-to-ℤ-≠ n≠m) ⊙skel ac
+  ∘eᴳ C-cw-descend (ℕ-to-ℤ n) (ℕ-to-ℤ-≠ n≠m) (ℕ-to-ℤ-≠ n≠Sm) ⊙skel ac
   where
     n≠Sm : n ≠ S m
     n≠Sm = <-to-≠ (<-trans ltS (ltSR lt))

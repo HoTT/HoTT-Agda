@@ -15,7 +15,8 @@ P₁ ⊆ P₂ = ∀ a → SubtypeProp.prop P₁ a → SubtypeProp.prop P₂ a
 infix 80 _∘sub_
 _∘sub_ : ∀ {i j k} {A : Type i} {B : Type j}
   → SubtypeProp B k → (A → B) → SubtypeProp A k
-P ∘sub f = SubtypeProp.prop P ∘ f , SubtypeProp.level P ∘ f
+P ∘sub f = SubtypeProp.prop P ∘ f , level where
+  abstract level = SubtypeProp.level P ∘ f
 
 {- Dependent paths in a Σ-type -}
 module _ {i j k} {A : Type i} {B : A → Type j} (subB : (a : A) → SubtypeProp (B a) k)
