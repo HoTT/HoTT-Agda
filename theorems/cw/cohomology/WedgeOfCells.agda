@@ -14,7 +14,7 @@ private
 open import cohomology.Sphere OT
 open import cohomology.DisjointlyPointedSet OT
 
-{- This is for the zeroth dimension. -}
+{- These are for the zeroth dimension. -}
 
 C-points : ∀ n (⊙skel : ⊙Skeleton {i} 0)
   → ⊙has-cells-with-choice 0 ⊙skel i
@@ -32,13 +32,31 @@ abstract
         (λ _ → C n (⊙Lift ⊙Bool))
         (λ _ → C-dimension n≠0)
 
-{- This is for higher dimensions. -}
+{- These are for higher dimensions. -}
+
+-- The [Cofiber]s actually only needs [CohomologyTheory].
+
+Xₙ/Xₙ₋₁ : ∀ {n} → ⊙Skeleton {i} (S n) → Ptd i
+Xₙ/Xₙ₋₁ ⊙skel = ⊙Cofiber (⊙cw-incl-last ⊙skel)
+
+CXₙ/Xₙ₋₁ : ∀ {n} → ⊙Skeleton {i} (S n) → Group i
+CXₙ/Xₙ₋₁ {n} ⊙skel = C (ℕ-to-ℤ (S n)) (Xₙ/Xₙ₋₁ ⊙skel)
+
+CEl-Xₙ/Xₙ₋₁ : ∀ {n} → ⊙Skeleton {i} (S n) → Type i
+CEl-Xₙ/Xₙ₋₁ {n} ⊙skel = CEl (ℕ-to-ℤ (S n)) (Xₙ/Xₙ₋₁ ⊙skel)
+
+abstract
+  CXₙ/Xₙ₋₁-is-abelian : ∀ {n} (⊙skel : ⊙Skeleton {i} (S n))
+    → is-abelian (CXₙ/Xₙ₋₁ ⊙skel)
+  CXₙ/Xₙ₋₁-is-abelian {n} ⊙skel = C-is-abelian (ℕ-to-ℤ (S n)) (Xₙ/Xₙ₋₁ ⊙skel)
+
+CXₙ/Xₙ₋₁-abgroup : ∀ {n} → ⊙Skeleton {i} (S n) → AbGroup i
+CXₙ/Xₙ₋₁-abgroup ⊙skel = CXₙ/Xₙ₋₁ ⊙skel , CXₙ/Xₙ₋₁-is-abelian ⊙skel
 
 {- the equivalence is in the opposite direction because
    cohomology functors are contravariant. -}
 ⊙Cofiber-cw-incl-last : ∀ {n} (⊙skel : ⊙Skeleton {i} (S n))
-  →  ⊙BigWedge {A = ⊙cells-last ⊙skel} (λ _ → ⊙Sphere (S n))
-  ⊙≃ ⊙Cofiber (⊙cw-incl-last ⊙skel)
+  → ⊙BigWedge {A = ⊙cells-last ⊙skel} (λ _ → ⊙Sphere (S n)) ⊙≃ Xₙ/Xₙ₋₁ ⊙skel
 ⊙Cofiber-cw-incl-last {n} ⊙skel = ≃-to-⊙≃
   (PS.split-equiv ∘e equiv to from to-from from-to) idp
   where
@@ -59,31 +77,32 @@ abstract
       (λ a → bwin a south) (λ{(a , s) → bwglue a ∙ ap (bwin a) (merid s)})
     from = From.f
 
-    from-to : ∀ b → from (to b) == b
-    from-to = BigWedge-elim
-      idp
-      (λ a → Susp-elim (bwglue a) idp
-        (λ s → ↓-='-from-square $
-          ( ap-∘ from (SphereToCofiber.f a) (merid s)
-          ∙ ap (ap from) (SphereToCofiber.merid-β a s)
-          ∙ From.glue-β (a , s))
-          ∙v⊡ (tl-square (bwglue a) ⊡h vid-square)))
-      (λ a → ↓-∘=idf-from-square from to $
-        ap (ap from) (To.glue-β a) ∙v⊡ br-square (bwglue a))
+    abstract
+      from-to : ∀ b → from (to b) == b
+      from-to = BigWedge-elim
+        idp
+        (λ a → Susp-elim (bwglue a) idp
+          (λ s → ↓-='-from-square $
+            ( ap-∘ from (SphereToCofiber.f a) (merid s)
+            ∙ ap (ap from) (SphereToCofiber.merid-β a s)
+            ∙ From.glue-β (a , s))
+            ∙v⊡ (tl-square (bwglue a) ⊡h vid-square)))
+        (λ a → ↓-∘=idf-from-square from to $
+          ap (ap from) (To.glue-β a) ∙v⊡ br-square (bwglue a))
 
-    to-from : ∀ c → to (from c) == c
-    to-from = Cofiber-elim
-      idp (λ a → idp)
-      (λ{(a , s) → ↓-∘=idf-in' to from $
-          ap (ap to) (From.glue-β (a , s))
-        ∙ ap-∙ to (bwglue a) (ap (bwin a) (merid s))
-        ∙ ap2 _∙_ (To.glue-β a)
-                  ( ∘-ap to (bwin a) (merid s)
-                  ∙ SphereToCofiber.merid-β a s)})
+      to-from : ∀ c → to (from c) == c
+      to-from = Cofiber-elim
+        idp (λ a → idp)
+        (λ{(a , s) → ↓-∘=idf-in' to from $
+            ap (ap to) (From.glue-β (a , s))
+          ∙ ap-∙ to (bwglue a) (ap (bwin a) (merid s))
+          ∙ ap2 _∙_ (To.glue-β a)
+                    ( ∘-ap to (bwin a) (merid s)
+                    ∙ SphereToCofiber.merid-β a s)})
 
 C-Cofiber-cw-incl-last : ∀ n {m} (⊙skel : ⊙Skeleton {i} (S m))
   → ⊙has-cells-with-choice 0 ⊙skel i
-  →  C n (⊙Cofiber (⊙cw-incl-last ⊙skel))
+  →  C n (Xₙ/Xₙ₋₁ ⊙skel)
   ≃ᴳ Πᴳ (⊙cells-last ⊙skel) (λ _ → C n (⊙Lift (⊙Sphere (S m))))
 C-Cofiber-cw-incl-last n {m} skel (_ , cells-ac)
   =   C-additive-iso n (λ _ → ⊙Lift (⊙Sphere (S m))) cells-ac
@@ -92,8 +111,7 @@ C-Cofiber-cw-incl-last n {m} skel (_ , cells-ac)
 
 C-Cofiber-cw-incl-last-diag : ∀ n (⊙skel : ⊙Skeleton {i} (S n))
   → ⊙has-cells-with-choice 0 ⊙skel i
-  →  C (ℕ-to-ℤ (S n)) (⊙Cofiber (⊙cw-incl-last ⊙skel))
-  ≃ᴳ Πᴳ (⊙cells-last ⊙skel) (λ _ → G)
+  → CXₙ/Xₙ₋₁ ⊙skel ≃ᴳ Πᴳ (⊙cells-last ⊙skel) (λ _ → G)
 C-Cofiber-cw-incl-last-diag n ⊙skel ac =
       Πᴳ-emap-r (⊙cells-last ⊙skel) (λ _ → C-Sphere-diag (S n))
   ∘eᴳ C-Cofiber-cw-incl-last (ℕ-to-ℤ (S n)) ⊙skel ac
@@ -102,7 +120,7 @@ abstract
   C-Cofiber-cw-incl-last-≠-is-trivial : ∀ (n : ℤ) {m} (n≠Sm : n ≠ ℕ-to-ℤ (S m))
     → (⊙skel : ⊙Skeleton {i} (S m))
     → ⊙has-cells-with-choice 0 ⊙skel i
-    → is-trivialᴳ (C n (⊙Cofiber (⊙cw-incl-last ⊙skel)))
+    → is-trivialᴳ (C n (Xₙ/Xₙ₋₁ ⊙skel))
   C-Cofiber-cw-incl-last-≠-is-trivial n {m} n≠Sm ⊙skel ac =
     iso-preserves'-trivial (C-Cofiber-cw-incl-last n ⊙skel ac) $
       Πᴳ-is-trivial (⊙cells-last ⊙skel)
@@ -112,13 +130,13 @@ abstract
   C-Cofiber-cw-incl-last-<-is-trivial : ∀ (n : ℕ) {m} (n<Sm : n < S m)
     → (⊙skel : ⊙Skeleton {i} (S m))
     → ⊙has-cells-with-choice 0 ⊙skel i
-    → is-trivialᴳ (C (ℕ-to-ℤ n) (⊙Cofiber (⊙cw-incl-last ⊙skel)))
+    → is-trivialᴳ (C (ℕ-to-ℤ n) (Xₙ/Xₙ₋₁ ⊙skel))
   C-Cofiber-cw-incl-last-<-is-trivial n n<Sm ⊙skel ac =
     C-Cofiber-cw-incl-last-≠-is-trivial (ℕ-to-ℤ n) (ℕ-to-ℤ-≠ (<-to-≠ n<Sm)) ⊙skel ac
 
   C-Cofiber-cw-incl-last->-is-trivial : ∀ (n : ℕ) {m} (n>Sm : S m < n)
     → (⊙skel : ⊙Skeleton {i} (S m))
     → ⊙has-cells-with-choice 0 ⊙skel i
-    → is-trivialᴳ (C (ℕ-to-ℤ n) (⊙Cofiber (⊙cw-incl-last ⊙skel)))
+    → is-trivialᴳ (C (ℕ-to-ℤ n) (Xₙ/Xₙ₋₁ ⊙skel))
   C-Cofiber-cw-incl-last->-is-trivial n n>Sm ⊙skel ac =
     C-Cofiber-cw-incl-last-≠-is-trivial (ℕ-to-ℤ n) (≠-inv (ℕ-to-ℤ-≠ (<-to-≠ n>Sm))) ⊙skel ac

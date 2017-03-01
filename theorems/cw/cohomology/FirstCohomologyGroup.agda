@@ -15,6 +15,8 @@ module cw.cohomology.FirstCohomologyGroup {i} (OT : OrdinaryTheory i)
 
 open OrdinaryTheory OT
 open import cohomology.LongExactSequence cohomology-theory
+open import cw.cohomology.TipCoboundary OT (⊙cw-init ⊙skel)
+open import cw.cohomology.HigherCoboundary OT ⊙skel
 open import cw.cohomology.CoboundaryGrid OT ⊙skel ac
 open import cw.cohomology.GridPtdMap (⊙cw-incl-last (⊙cw-init ⊙skel)) (⊙cw-incl-last ⊙skel)
 open import cw.cohomology.TipGrid OT (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac)
@@ -80,11 +82,11 @@ private
   C-WoC-to-H : C-WoC →ᴳ H
   C-WoC-to-H = C-fmap 1 (⊙cfcod' (⊙cw-incl-last (⊙cw-init ⊙skel)))
 
-open import groups.KernelImage cw-co∂-last cw-co∂-head CX₁/X₀-abelian
+open import groups.KernelImage cw-co∂-last cw-co∂-head CX₁/X₀-is-abelian
 
 C-cw-iso-ker/im : C 1 ⊙⟦ ⊙skel ⟧ ≃ᴳ Ker/Im
 C-cw-iso-ker/im = H-iso-Ker/Im
-  cw-co∂-last cw-co∂-head CX₁/X₀-abelian
+  cw-co∂-last cw-co∂-head CX₁/X₀-is-abelian
   φ₁ φ₁-is-surj φ₂ φ₂-is-inj lemma-comm
   where
     φ₁ = G-to-C-cw ∘ᴳ GroupIso.g-hom G-iso-Ker

@@ -5,11 +5,11 @@ open import cohomology.Theory
 
 open import cw.CW
 
-module cw.cohomology.ZerothCohomologyGroupOnDiag {i} (OT : OrdinaryTheory i)
+module cw.cohomology.ZerothCohomologyGroupOnDiag {i} (CT : CohomologyTheory i)
   (⊙skel : ⊙Skeleton {i} 0) (ac : ⊙has-cells-with-choice 0 ⊙skel i) where
 
-open OrdinaryTheory OT
-open import cw.cohomology.TipAndAugment OT ⊙skel
+open CohomologyTheory CT
+open import cw.cohomology.TipAndAugment CT ⊙skel
 
 open import groups.KernelSndImageInl G {H = CX₀}
   {K = Lift-group {j = i} Unit-group}

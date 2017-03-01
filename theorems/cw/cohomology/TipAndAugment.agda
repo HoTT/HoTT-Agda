@@ -5,10 +5,10 @@ open import cohomology.Theory
 
 open import cw.CW
 
-module cw.cohomology.TipAndAugment {i} (OT : OrdinaryTheory i)
+module cw.cohomology.TipAndAugment {i} (CT : CohomologyTheory i)
   (⊙skel : ⊙Skeleton {i} 0) where
 
-open OrdinaryTheory OT
+open CohomologyTheory CT
 
 G : Group i
 G = C 0 (⊙Lift ⊙Bool)

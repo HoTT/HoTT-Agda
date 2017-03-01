@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
+open import groups.Cokernel
 open import cohomology.Theory
 
 open import cw.CW
@@ -9,7 +10,8 @@ module cw.cohomology.ZerothCohomologyGroup {i} (OT : OrdinaryTheory i)
   (⊙skel : ⊙Skeleton {i} 1) (ac : ⊙has-cells-with-choice 0 ⊙skel i) where
 
 open OrdinaryTheory OT
-open import cw.cohomology.TipAndAugment OT (⊙cw-init ⊙skel)
+open import cw.cohomology.TipCoboundary OT ⊙skel
+open import cw.cohomology.TipAndAugment cohomology-theory (⊙cw-init ⊙skel)
 open import cw.cohomology.TipGrid OT ⊙skel ac
 
 {-

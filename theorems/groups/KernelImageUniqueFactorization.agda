@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
+open import groups.Cokernel
 
 {-
                  K
@@ -35,8 +36,15 @@ module groups.KernelImageUniqueFactorization {i j k l}
     module φ₁ = GroupHom φ₁
     module φ₂ = GroupHom φ₂
 
+    φ₂' : H →ᴳ QuotGroup (im-npropᴳ ψ₂ G-ab)
+    φ₂' = GroupIso.f-hom (Coker-β ψ₂ G-ab) ∘ᴳ φ₂
+
+    abstract
+      φ₂'-is-inj : is-injᴳ φ₂'
+      φ₂'-is-inj = ∘-is-inj (–>-is-inj (GroupIso.f-equiv (Coker-β ψ₂ G-ab))) φ₂-is-inj
+
   open import groups.PropQuotUniqueFactorization
-    (ker-propᴳ ψ₁) (im-npropᴳ ψ₂ G-ab) φ₁ φ₁-is-surj φ₂ φ₂-is-inj φ-comm
+    (ker-propᴳ ψ₁) (im-npropᴳ ψ₂ G-ab) φ₁ φ₁-is-surj φ₂' φ₂'-is-inj φ-comm
   open import groups.KernelImage ψ₁ ψ₂ G-ab
 
   H-iso-Ker/Im : H ≃ᴳ Ker/Im

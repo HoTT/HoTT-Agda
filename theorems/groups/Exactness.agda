@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
+open import groups.Cokernel
 open import groups.Image
 import homotopy.ConstantToSetExtendsToProp as ConstExt
 
