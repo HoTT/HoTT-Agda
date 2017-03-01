@@ -33,17 +33,11 @@ module _ {i j} {G : Group i} (P : SubgroupProp G j) where
         unit-l : ∀ g → comp ident g == g
         unit-l (g , _) = Subtype=-out P.subEl-prop (G.unit-l g)
 
-        unit-r : ∀ g → comp g ident == g
-        unit-r (g , _) = Subtype=-out P.subEl-prop (G.unit-r g)
-
         assoc : ∀ g₁ g₂ g₃ → comp (comp g₁ g₂) g₃ == comp g₁ (comp g₂ g₃)
         assoc (g₁ , _) (g₂ , _) (g₃ , _) = Subtype=-out P.subEl-prop (G.assoc g₁ g₂ g₃)
 
         inv-l : ∀ g → comp (inv g) g == ident
         inv-l (g , _) = Subtype=-out P.subEl-prop (G.inv-l g)
-
-        inv-r : ∀ g → comp g (inv g) == ident
-        inv-r (g , _) = Subtype=-out P.subEl-prop (G.inv-r g)
 
   Subgroup : Group (lmax i j)
   Subgroup = group _ SubEl-level subgroup-struct

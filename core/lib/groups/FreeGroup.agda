@@ -118,12 +118,6 @@ module _ (A : Type i) where
         (λ _ → idp)
         (λ _ → prop-has-all-paths-↓ (QuotWord-is-set _ _))
 
-      ⊞-unit-r : ∀ g → g ⊞ ⊞-unit == g
-      ⊞-unit-r = QuotWord-elim
-        (λ _ → =-preserves-set QuotWord-is-set)
-        (λ _ → ap qw[_] $ ++-unit-r _)
-        (λ _ → prop-has-all-paths-↓ (QuotWord-is-set _ _))
-
       ⊞-assoc : ∀ g₁ g₂ g₃ → (g₁ ⊞ g₂) ⊞ g₃ == g₁ ⊞ (g₂ ⊞ g₃)
       ⊞-assoc = QuotWord-elim (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set QuotWord-is-set)
         (λ l₁ → QuotWord-elim (λ _ → Π-is-set λ _ → =-preserves-set QuotWord-is-set)
@@ -132,19 +126,6 @@ module _ (A : Type i) where
             (λ _ → prop-has-all-paths-↓ $ QuotWord-is-set _ _))
           (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → QuotWord-is-set _ _))
         (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → Π-is-prop λ _ → QuotWord-is-set _ _)
-
-      Word-inv-r : ∀ l → QuotWordRel {A} (l ++ reverse (Word-flip l)) nil
-      Word-inv-r nil = qwr-refl idp
-      Word-inv-r (x :: l) =
-        qwr-trans (qwr-refl (ap (x ::_) (! (++-assoc l (reverse (Word-flip l)) (flip x :: nil))))) $
-        qwr-trans (qwr-cons x (QuotWordRel-cong-++-l (Word-inv-r l) (flip x :: nil))) $
-        qwr-flip x nil
-
-      ⊟-inv-r : ∀ g → g ⊞ (⊟ g) == ⊞-unit
-      ⊟-inv-r = QuotWord-elim
-        (λ _ → =-preserves-set QuotWord-is-set)
-        (λ l → quot-rel (Word-inv-r l))
-        (λ _ → prop-has-all-paths-↓ (QuotWord-is-set _ _))
 
       Word-inv-l : ∀ l → QuotWordRel {A} (reverse (Word-flip l) ++ l) nil
       Word-inv-l nil = qwr-refl idp
@@ -169,9 +150,7 @@ module _ (A : Type i) where
     ; inv = ⊟
     ; comp = _⊞_
     ; unit-l = ⊞-unit-l
-    ; unit-r = ⊞-unit-r
     ; assoc = ⊞-assoc
-    ; inv-r = ⊟-inv-r
     ; inv-l = ⊟-inv-l
     }
 

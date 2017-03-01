@@ -116,12 +116,6 @@ module _ (A : Type i) where
         (λ _ → idp)
         (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _))
 
-      ⊞-unit-r : ∀ g → g ⊞ ⊞-unit == g
-      ⊞-unit-r = FormalSum-elim
-        (λ _ → =-preserves-set FormalSum-is-set)
-        (λ _ → ap fs[_] $ ++-unit-r _)
-        (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _))
-
       ⊞-assoc : ∀ g₁ g₂ g₃ → (g₁ ⊞ g₂) ⊞ g₃ == g₁ ⊞ (g₂ ⊞ g₃)
       ⊞-assoc = FormalSum-elim (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set FormalSum-is-set)
         (λ l₁ → FormalSum-elim (λ _ → Π-is-set λ _ → =-preserves-set FormalSum-is-set)
@@ -130,19 +124,6 @@ module _ (A : Type i) where
             (λ _ → prop-has-all-paths-↓ $ FormalSum-is-set _ _))
           (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → FormalSum-is-set _ _))
         (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → Π-is-prop λ _ → FormalSum-is-set _ _)
-
-      Word-inv-r : ∀ l → FormalSumRel {A} (l ++ Word-flip l) nil
-      Word-inv-r nil = fsr-refl idp
-      Word-inv-r (x :: l) =
-        fsr-trans (FormalSumRel-swap1 (flip x) (x :: l) (Word-flip l)) $
-        fsr-trans (fsr-swap (flip x) x (l ++ Word-flip l)) $
-        fsr-trans (fsr-flip x (l ++ Word-flip l)) (Word-inv-r l)
-
-      ⊟-inv-r : ∀ g → g ⊞ (⊟ g) == ⊞-unit
-      ⊟-inv-r = FormalSum-elim
-        (λ _ → =-preserves-set FormalSum-is-set)
-        (λ l → quot-rel (Word-inv-r l))
-        (λ _ → prop-has-all-paths-↓ (FormalSum-is-set _ _))
 
       Word-inv-l : ∀ l → FormalSumRel {A} (Word-flip l ++ l) nil
       Word-inv-l nil = fsr-refl idp
@@ -174,9 +155,7 @@ module _ (A : Type i) where
     ; inv = ⊟
     ; comp = _⊞_
     ; unit-l = ⊞-unit-l
-    ; unit-r = ⊞-unit-r
     ; assoc = ⊞-assoc
-    ; inv-r = ⊟-inv-r
     ; inv-l = ⊟-inv-l
     }
 

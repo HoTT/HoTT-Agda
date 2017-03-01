@@ -50,17 +50,11 @@ module _ {i j k} (D : Group-Cospan {i} {j} {k}) where
     unit-l = λ {(pullback h k p) →
       pullback= d (H.unit-l h) (K.unit-l k)
         (prop-has-all-paths (G.El-level _ _) _ _)};
-    unit-r = λ {(pullback h k p) →
-      pullback= d (H.unit-r h) (K.unit-r k)
-        (prop-has-all-paths (G.El-level _ _) _ _)};
     assoc = λ {(pullback h₁ k₁ p₁) (pullback h₂ k₂ p₂) (pullback h₃ k₃ p₃) →
       pullback= d (H.assoc h₁ h₂ h₃) (K.assoc k₁ k₂ k₃)
         (prop-has-all-paths (G.El-level _ _) _ _)};
     inv-l = λ {(pullback h k p) →
       pullback= d (H.inv-l h) (K.inv-l k)
-        (prop-has-all-paths (G.El-level _ _) _ _)};
-    inv-r = λ {(pullback h k p) →
-      pullback= d (H.inv-r h) (K.inv-r k)
         (prop-has-all-paths (G.El-level _ _) _ _)}}
 
   Pullback-group : Group (lmax i (lmax j k))

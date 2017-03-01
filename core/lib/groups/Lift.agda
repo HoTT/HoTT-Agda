@@ -15,9 +15,7 @@ Lift-group-structure GS = record
   ; inv = λ {(lift x) → lift (inv x)}
   ; comp = λ {(lift x) (lift y) → lift (comp x y)}
   ; unit-l = λ {(lift y) → ap lift (unit-l y)}
-  ; unit-r = λ {(lift x) → ap lift (unit-r x)}
   ; assoc = λ {(lift x) (lift y) (lift z) → ap lift (assoc x y z)}
-  ; inv-r = λ {(lift x) → ap lift (inv-r x)}
   ; inv-l = λ {(lift x) → ap lift (inv-l x)}
   }
   where open GroupStructure GS

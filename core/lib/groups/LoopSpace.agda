@@ -18,9 +18,7 @@ module _ {i} (n : ℕ) (X : Ptd i) where
     inv = Ω^S-! n;
     comp = Ω^S-∙ n;
     unit-l = Ω^S-∙-unit-l n;
-    unit-r = Ω^S-∙-unit-r n;
     assoc = Ω^S-∙-assoc n;
-    inv-r = Ω^S-!-inv-r n;
     inv-l = Ω^S-!-inv-l n
     }
 

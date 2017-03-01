@@ -102,12 +102,7 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
     rw-++ rw₁ rw₂ = rw-++' (fst rw₁) rw₂
 
     abstract
-      head2-is-reduced : ∀ x y w → is-reduced (x :: y :: w) → is-reduced (x :: y :: nil)
-      head2-is-reduced (inl x) (inl y) w red = lift tt
-      head2-is-reduced (inl x) (inr y) w red = fst red , lift tt
-      head2-is-reduced (inr x) (inl y) w red = fst red , lift tt
-      head2-is-reduced (inr x) (inr y) w red = lift tt
-
+      -- assoc
       rw-cons-reduced : ∀ x w
         → (red : is-reduced w)
         → (red' : is-reduced (x :: w))
@@ -122,15 +117,6 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
       rw-cons-reduced (inr x) (inl y :: w) _ red' | inr ¬p = ReducedWord=-out idp
       rw-cons-reduced (inr x) (inr y :: w) _ red' = ReducedWord=-out idp
 
-      rw-++-unit-r' : ∀ w (red : is-reduced w) → rw-++ (w , red) rw-unit == (w , red)
-      rw-++-unit-r' nil _ = ReducedWord=-out idp
-      rw-++-unit-r' (x :: w) red =
-          ap (rw-cons x) ( ReducedWord=-out idp
-                         ∙ rw-++-unit-r' w (tail-is-reduced x w red))
-        ∙ rw-cons-reduced x w (tail-is-reduced x w red) red
-
-    -- assoc
-    abstract
       rw-cons-flip : ∀ x w red red'
         → rw-cons x ((flip x :: w) , red) == w , red'
       rw-cons-flip (inl x) w _ _ with dec x x
@@ -183,6 +169,12 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
 
     -- inv
     abstract
+      head2-is-reduced : ∀ x y w → is-reduced (x :: y :: w) → is-reduced (x :: y :: nil)
+      head2-is-reduced (inl x) (inl y) w red = lift tt
+      head2-is-reduced (inl x) (inr y) w red = fst red , lift tt
+      head2-is-reduced (inr x) (inl y) w red = fst red , lift tt
+      head2-is-reduced (inr x) (inr y) w red = lift tt
+
       cons-is-reduced : ∀ x y w → is-reduced (x :: y :: nil) → is-reduced (y :: w)
         → is-reduced (x :: y :: w)
       cons-is-reduced (inl x) (inl y) _ _    red₂ = red₂
@@ -255,55 +247,13 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
       suffix-is-reduced nil w₂ red = red
       suffix-is-reduced (x :: w₁) w₂ red = suffix-is-reduced w₁ w₂ $ tail-is-reduced x (w₁ ++ w₂) red
 
-      rw-inv-r-lemma-step : ∀ x w₂ (red₂ : is-reduced (flip x :: w₂)) (red₂' : is-reduced w₂)
-        →  rw-cons x ((flip x :: w₂) , red₂)
-        == w₂ , red₂'
-      rw-inv-r-lemma-step (inl x) w₂ red₂ red₂' with dec x x
-      rw-inv-r-lemma-step (inl x) w₂ red₂ red₂' | inl p = ReducedWord=-out idp
-      rw-inv-r-lemma-step (inl x) w₂ red₂ red₂' | inr ¬p = ⊥-rec (¬p idp)
-      rw-inv-r-lemma-step (inr x) w₂ red₂ red₂' with dec x x
-      rw-inv-r-lemma-step (inr x) w₂ red₂ red₂' | inl p = ReducedWord=-out idp
-      rw-inv-r-lemma-step (inr x) w₂ red₂ red₂' | inr ¬p = ⊥-rec (¬p idp)
-
-      rw-inv-r-lemma : ∀ w₁ w₂ (red₁₂ : is-reduced (reverse (Word-flip w₁) ++ w₂)) (red₂ : is-reduced w₂)
-        →  rw-++' w₁ ((reverse (Word-flip w₁) ++ w₂) , red₁₂)
-        == w₂ , red₂
-      rw-inv-r-lemma nil _ _ _ = ReducedWord=-out idp
-      rw-inv-r-lemma (x :: w₁) w₂ red₁₂ red₂ =
-          ap (rw-cons x)
-            ( ap (rw-++' w₁) (ReducedWord=-out mediating-path)
-            ∙ rw-inv-r-lemma w₁ (flip x :: w₂) red₁₂' red₂')
-        ∙ rw-inv-r-lemma-step x w₂ red₂' red₂
-        where
-          mediating-path : reverse (Word-flip (x :: w₁)) ++ w₂
-                        == reverse (Word-flip w₁) ++ (flip x :: w₂)
-          mediating-path = ++-assoc (reverse (Word-flip w₁)) (flip x :: nil) w₂
-
-          red₁₂' : is-reduced (reverse (Word-flip w₁) ++ (flip x :: w₂))
-          red₁₂' = transport is-reduced mediating-path red₁₂
-
-          red₂' : is-reduced (flip x :: w₂)
-          red₂' = suffix-is-reduced (reverse (Word-flip w₁)) (flip x :: w₂) red₁₂'
-
-      rw-inv-r : ∀ rw → rw-++ rw (rw-inv rw) == nil , lift tt
-      rw-inv-r (w , red) =
-          ap (rw-++' w) (ReducedWord=-out mediating-path)
-        ∙ rw-inv-r-lemma w nil
-            (transport is-reduced mediating-path (reverse-is-reduced (Word-flip w) (Word-flip-is-reduced w red)))
-            (lift tt)
-        where
-          mediating-path : reverse (Word-flip w) == reverse (Word-flip w) ++ nil
-          mediating-path = ! $ ++-unit-r _
-
   ReducedWord-group-struct : GroupStructure ReducedWord
   ReducedWord-group-struct = record
     { ident = nil , lift tt
     ; inv = rw-inv
     ; comp = rw-++
     ; unit-l = λ _ → idp
-    ; unit-r = uncurry rw-++-unit-r'
     ; assoc = λ rw → rw-++-assoc' (fst rw)
-    ; inv-r = rw-inv-r
     ; inv-l = uncurry rw-inv-l'
     }
 
@@ -364,7 +314,7 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
         (λ _ → prop-has-all-paths-↓ (QuotWord-is-set _ _))
 
       from-to : ∀ rw → from (to rw) == rw
-      from-to = uncurry rw-++-unit-r'
+      from-to = Group.unit-r ReducedWord-group
 
   ReducedWord-iso-FreeGroup : ReducedWord-group ≃ᴳ FreeGroup A
   ReducedWord-iso-FreeGroup = ReducedWord-to-FreeGroup , is-eq to from to-from from-to

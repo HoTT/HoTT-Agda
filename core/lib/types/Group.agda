@@ -14,10 +14,8 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
     inv    : El → El
     comp   : El → El → El
     unit-l : ∀ a → comp ident a == a
-    unit-r : ∀ a → comp a ident == a
     assoc  : ∀ a b c → comp (comp a b) c == comp a (comp b c)
     inv-l  : ∀ a → (comp (inv a) a) == ident
-    inv-r  : ∀ a → (comp a (inv a)) == ident
 
   ⊙El : Ptd i
   ⊙El = (El , ident)
@@ -27,6 +25,25 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
     _⊙_ = comp
 
   abstract
+    inv-r  : ∀ g → g ⊙ inv g == ident
+    inv-r g =
+      g ⊙ inv g                           =⟨ ! $ unit-l (g ⊙ inv g) ⟩
+      ident ⊙ (g ⊙ inv g)                 =⟨ ! $ inv-l (inv g) |in-ctx _⊙ (g ⊙ inv g) ⟩
+      (inv (inv g) ⊙ inv g) ⊙ (g ⊙ inv g) =⟨ assoc (inv (inv g)) (inv g) (g ⊙ inv g) ⟩
+      inv (inv g) ⊙ (inv g ⊙ (g ⊙ inv g)) =⟨ ! $ assoc (inv g) g (inv g) |in-ctx inv (inv g) ⊙_ ⟩
+      inv (inv g) ⊙ ((inv g ⊙ g) ⊙ inv g) =⟨ inv-l g |in-ctx (λ h → inv (inv g) ⊙ (h ⊙ inv g)) ⟩
+      inv (inv g) ⊙ (ident ⊙ inv g)       =⟨ unit-l (inv g) |in-ctx inv (inv g) ⊙_ ⟩
+      inv (inv g) ⊙ inv g                 =⟨ inv-l (inv g) ⟩
+      ident                               =∎
+
+    unit-r : ∀ g → g ⊙ ident == g
+    unit-r g =
+      g ⊙ ident          =⟨ ! (inv-l g) |in-ctx g ⊙_ ⟩
+      g ⊙ (inv g ⊙ g)    =⟨ ! $ assoc g (inv g) g ⟩
+      (g ⊙ inv g) ⊙ g    =⟨ inv-r g |in-ctx _⊙ g ⟩
+      ident ⊙ g          =⟨ unit-l g ⟩
+      g                  =∎
+
     inv-unique-l : (g h : El) → (g ⊙ h == ident) → inv h == g
     inv-unique-l g h p =
       inv h              =⟨ ! (unit-l (inv h)) ⟩
@@ -230,27 +247,24 @@ module _ where
   abstract
     group-structure= : ∀ {i} {A : Type i} (pA : has-level 0 A)
       {id₁ id₂ : A} {inv₁ inv₂ : A → A} {comp₁ comp₂ : A → A → A}
-      → ∀ {unit-l₁ unit-l₂} → ∀ {unit-r₁ unit-r₂} → ∀ {assoc₁ assoc₂}
-      → ∀ {inv-r₁ inv-r₂} → ∀ {inv-l₁ inv-l₂}
+      → ∀ {unit-l₁ unit-l₂ assoc₁ assoc₂ inv-l₁ inv-l₂}
       → (id₁ == id₂) → (inv₁ == inv₂) → (comp₁ == comp₂)
       → Path {A = GroupStructure A}
-          (group-structure id₁ inv₁ comp₁ unit-l₁ unit-r₁ assoc₁ inv-l₁ inv-r₁)
-          (group-structure id₂ inv₂ comp₂ unit-l₂ unit-r₂ assoc₂ inv-l₂ inv-r₂)
+          (group-structure id₁ inv₁ comp₁ unit-l₁ assoc₁ inv-l₁)
+          (group-structure id₂ inv₂ comp₂ unit-l₂ assoc₂ inv-l₂)
     group-structure= pA {id₁ = id₁} {inv₁ = inv₁} {comp₁ = comp₁} idp idp idp =
-      ap5 (group-structure id₁ inv₁ comp₁)
-        (prop-has-all-paths (Π-level (λ _ → pA _ _)) _ _)
+      ap3 (group-structure id₁ inv₁ comp₁)
         (prop-has-all-paths (Π-level (λ _ → pA _ _)) _ _)
         (prop-has-all-paths
           (Π-level (λ _ → Π-level (λ _ → Π-level (λ _ → pA _ _)))) _ _)
         (prop-has-all-paths (Π-level (λ _ → pA _ _)) _ _)
-        (prop-has-all-paths (Π-level (λ _ → pA _ _)) _ _)
       where
-      ap5 : ∀ {j} {C D E F G H : Type j}
-        {c₁ c₂ : C} {d₁ d₂ : D} {e₁ e₂ : E} {f₁ f₂ : F} {g₁ g₂ : G}
-        (f : C → D → E → F → G → H)
-        → (c₁ == c₂) → (d₁ == d₂) → (e₁ == e₂) → (f₁ == f₂) → (g₁ == g₂)
-        → f c₁ d₁ e₁ f₁ g₁ == f c₂ d₂ e₂ f₂ g₂
-      ap5 f idp idp idp idp idp = idp
+      ap3 : ∀ {j} {C D E F : Type j}
+        {c₁ c₂ : C} {d₁ d₂ : D} {e₁ e₂ : E}
+        (f : C → D → E → F)
+        → (c₁ == c₂) → (d₁ == d₂) → (e₁ == e₂)
+        → f c₁ d₁ e₁ == f c₂ d₂ e₂
+      ap3 f idp idp idp = idp
 
     ↓-group-structure= : ∀ {i} {A B : Type i}
       (A-level : has-level 0 A)

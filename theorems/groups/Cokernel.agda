@@ -87,12 +87,6 @@ module groups.Cokernel {i j}
           (λ h → ap q[_] $ H.unit-l h)
           (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
 
-        unit-r : ∀ h → comp h ident == h
-        unit-r = SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-level)
-          (λ h → ap q[_] $ H.unit-r h)
-          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
-
         assoc : ∀ h₁ h₂ h₃ → comp (comp h₁ h₂) h₃ == comp h₁ (comp h₂ h₃)
         assoc = SetQuot-elim
           (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set SetQuot-level)
@@ -109,12 +103,6 @@ module groups.Cokernel {i j}
         inv-l = SetQuot-elim
           (λ _ → =-preserves-set SetQuot-level)
           (λ h → ap q[_] $ H.inv-l h)
-          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
-
-        inv-r : ∀ h → comp h (inv h) == ident
-        inv-r = SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-level)
-          (λ h → ap q[_] $ H.inv-r h)
           (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
 
   Coker : Group (lmax i j)

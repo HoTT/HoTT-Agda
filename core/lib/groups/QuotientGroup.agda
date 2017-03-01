@@ -81,12 +81,6 @@ module _ {i j} {G : Group i} (P : NormalSubgroupProp G j) where
           (ap q[_] ∘ G.unit-l)
           (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
 
-        unit-r : ∀ g → comp g ident == g
-        unit-r = SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-level)
-          (ap q[_] ∘ G.unit-r)
-          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
-
         assoc : ∀ g₁ g₂ g₃ → comp (comp g₁ g₂) g₃ == comp g₁ (comp g₂ g₃)
         assoc = SetQuot-elim
           (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set SetQuot-level)
@@ -103,12 +97,6 @@ module _ {i j} {G : Group i} (P : NormalSubgroupProp G j) where
         inv-l = SetQuot-elim
           (λ _ → =-preserves-set SetQuot-level)
           (ap q[_] ∘ G.inv-l)
-          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
-
-        inv-r : ∀ g → comp g (inv g) == ident
-        inv-r = SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-level)
-          (ap q[_] ∘ G.inv-r)
           (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
 
   QuotGroup : Group (lmax i j)

@@ -354,17 +354,11 @@ module _ {i j} (G : Group i) (H : AbGroup j)
         unit-l : ∀ φ → comp ident φ == φ
         unit-l φ = group-hom= $ λ= λ _ → H.unit-l _
 
-        unit-r : ∀ φ → comp φ ident == φ
-        unit-r φ = group-hom= $ λ= λ _ → H.unit-r _
-
         assoc : ∀ φ ψ ξ → comp (comp φ ψ) ξ == comp φ (comp ψ ξ)
         assoc φ ψ ξ = group-hom= $ λ= λ _ → H.assoc _ _ _
 
         inv-l : ∀ φ → comp (inv φ) φ == ident
         inv-l φ = group-hom= $ λ= λ _ → H.inv-l _
-
-        inv-r : ∀ φ → comp φ (inv φ) == ident
-        inv-r φ = group-hom= $ λ= λ _ → H.inv-r _
 
   hom-group : Group (lmax i j)
   hom-group = group (G →ᴳ H.grp) GroupHom-level hom-group-structure

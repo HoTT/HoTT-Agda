@@ -16,9 +16,7 @@ Unit-group-structure = record
   ; inv = λ _ → unit
   ; comp = λ _ _ → unit
   ; unit-l = λ _ → idp
-  ; unit-r = λ _ → idp
   ; assoc = λ _ _ _ → idp
-  ; inv-r = λ _ → idp
   ; inv-l = λ _ → idp
   }
 

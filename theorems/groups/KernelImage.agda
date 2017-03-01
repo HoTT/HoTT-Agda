@@ -106,12 +106,6 @@ module groups.KernelImage {i j k}
           (λ{(h , _) → ap q[_] $ ker-El=-out (H.unit-l h)})
           (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
 
-        unit-r : ∀ ker → comp ker ident == ker
-        unit-r = SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-level)
-          (λ{(h , _) → ap q[_] $ ker-El=-out (H.unit-r h)})
-          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
-
         assoc : ∀ ker₁ ker₂ ker₃ → comp (comp ker₁ ker₂) ker₃ == comp ker₁ (comp ker₂ ker₃)
         assoc = SetQuot-elim
           (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set SetQuot-level)
@@ -128,12 +122,6 @@ module groups.KernelImage {i j k}
         inv-l = SetQuot-elim
           (λ _ → =-preserves-set SetQuot-level)
           (λ{(h , _) → ap q[_] $ ker-El=-out (H.inv-l h)})
-          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
-
-        inv-r : ∀ ker → comp ker (inv ker) == ident
-        inv-r = SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-level)
-          (λ{(h , _) → ap q[_] $ ker-El=-out (H.inv-r h)})
           (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
 
   Ker/Im : Group (lmax i (lmax j k))

@@ -8,41 +8,42 @@ module cohomology.WithCoefficients where
 
 ⊙→Ω-group-structure : ∀ {i j} (X : Ptd i) (Y : Ptd j)
   → GroupStructure (X ⊙→ ⊙Ω Y)
-⊙→Ω-group-structure X Y = record {
-  ident = ⊙cst;
-  inv = λ F → ((! ∘ fst F) , ap ! (snd F));
-  comp = λ F G → ⊙Ω-∙ ⊙∘ ⊙fanout F G;
-  unit-l = λ G → ⊙λ= (λ _ → idp) (unit-l-lemma (snd G));
-  unit-r = λ F → ⊙λ= (∙-unit-r ∘ fst F) (unit-r-lemma (snd F));
-  assoc = λ F G H → ⊙λ=
-    (λ x → ∙-assoc (fst F x) (fst G x) (fst H x))
-    (assoc-lemma (snd F) (snd G) (snd H));
-  inv-l = λ F → ⊙λ= (!-inv-l ∘ fst F) (inv-l-lemma (snd F));
-  inv-r = λ F → ⊙λ= (!-inv-r ∘ fst F) (inv-r-lemma (snd F))}
-  where
+⊙→Ω-group-structure X Y = record {M} where
+  module M where
+    ident : (X ⊙→ ⊙Ω Y)
+    ident = ⊙cst
 
-  unit-l-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
-    → ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt {a₀ = idp} idp α) idp == α
-  unit-l-lemma idp = idp
+    comp : (X ⊙→ ⊙Ω Y) → (X ⊙→ ⊙Ω Y) → (X ⊙→ ⊙Ω Y)
+    comp F G = ⊙Ω-∙ ⊙∘ ⊙fanout F G
 
-  unit-r-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
-    → ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt α idp) idp == α [ _== idp ↓ ∙-unit-r p ]
-  unit-r-lemma idp = idp
+    inv : (X ⊙→ ⊙Ω Y) → (X ⊙→ ⊙Ω Y)
+    inv F = (! ∘ fst F) , ap ! (snd F)
+    abstract
+      unit-l-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
+        → ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt {a₀ = idp} idp α) idp == α
+      unit-l-lemma idp = idp
+  
+      unit-l : ∀ G → comp ident G == G
+      unit-l G = ⊙λ= (λ _ → idp) (unit-l-lemma (snd G))
 
-  assoc-lemma : ∀ {i} {A : Type i} {x : A} {p q r : x == x}
-    (α : p == idp) (β : q == idp) (γ : r == idp)
-    →  ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt (⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt α β) idp) γ) idp
-    == ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt α (⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt β γ) idp)) idp
-     [ _== idp ↓ ∙-assoc p q r ]
-  assoc-lemma idp idp idp = idp
+      assoc-lemma : ∀ {i} {A : Type i} {x : A} {p q r : x == x}
+        (α : p == idp) (β : q == idp) (γ : r == idp)
+        →  ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt (⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt α β) idp) γ) idp
+        == ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt α (⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt β γ) idp)) idp
+         [ _== idp ↓ ∙-assoc p q r ]
+      assoc-lemma idp idp idp = idp
 
-  inv-l-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
-    → ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt (ap ! α) α) idp == idp [ _== idp ↓ !-inv-l p ]
-  inv-l-lemma idp = idp
+      assoc : ∀ F G H → comp (comp F G) H == comp F (comp G H)
+      assoc F G H = ⊙λ=
+        (λ x → ∙-assoc (fst F x) (fst G x) (fst H x))
+        (assoc-lemma (snd F) (snd G) (snd H))
 
-  inv-r-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
-    → ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt α (ap ! α)) idp == idp [ _== idp ↓ !-inv-r p ]
-  inv-r-lemma idp = idp
+      inv-l-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
+        → ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt (ap ! α) α) idp == idp [ _== idp ↓ !-inv-l p ]
+      inv-l-lemma idp = idp
+
+      inv-l : ∀ F → comp (inv F) F == ident
+      inv-l F = ⊙λ= (!-inv-l ∘ fst F) (inv-l-lemma (snd F))
 
 Trunc-⊙→Ω-group : ∀ {i j} (X : Ptd i) (Y : Ptd j) → Group (lmax i j)
 Trunc-⊙→Ω-group X Y = Trunc-group (⊙→Ω-group-structure X Y)

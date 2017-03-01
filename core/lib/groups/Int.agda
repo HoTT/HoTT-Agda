@@ -12,9 +12,7 @@ module lib.groups.Int where
   ; inv = ℤ~
   ; comp = _ℤ+_
   ; unit-l = ℤ+-unit-l
-  ; unit-r = ℤ+-unit-r
   ; assoc = ℤ+-assoc
-  ; inv-r = ℤ~-inv-r
   ; inv-l = ℤ~-inv-l
   }
 

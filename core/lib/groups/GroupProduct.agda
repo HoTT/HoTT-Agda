@@ -36,18 +36,12 @@ module lib.groups.GroupProduct where
       unit-l : ∀ ab → comp ident ab == ab
       unit-l (g , h) = pair×= (G.unit-l g) (H.unit-l h)
 
-      unit-r : ∀ ab → comp ab ident == ab
-      unit-r (g , h) = pair×= (G.unit-r g) (H.unit-r h)
-
       assoc : ∀ ab₁ ab₂ ab₃ → comp (comp ab₁ ab₂) ab₃ == comp ab₁ (comp ab₂ ab₃)
       assoc (g₁ , h₁) (g₂ , h₂) (g₃ , h₃) =
         pair×= (G.assoc g₁ g₂ g₃) (H.assoc h₁ h₂ h₃)
 
       inv-l : ∀ ab → comp (inv ab) ab == ident
       inv-l (g , h) = pair×= (G.inv-l g) (H.inv-l h)
-
-      inv-r : ∀ ab → comp ab (inv ab) == ident
-      inv-r (g , h) = pair×= (G.inv-r g) (H.inv-r h)
 
 infix 80 _×ᴳ_
 _×ᴳ_ : ∀ {i j} → Group i → Group j → Group (lmax i j)
@@ -64,10 +58,8 @@ _×ᴳ_ (group A A-level A-struct) (group B B-level B-struct) =
   inv = λ f i → inv (FS i) (f i);
   comp = λ f g i → comp (FS i) (f i) (g i);
   unit-l = λ f → (λ= (λ i → unit-l (FS i) (f i)));
-  unit-r = λ f → (λ= (λ i → unit-r (FS i) (f i)));
   assoc = λ f g h → (λ= (λ i → assoc (FS i) (f i) (g i) (h i)));
-  inv-l = λ f → (λ= (λ i → inv-l (FS i) (f i)));
-  inv-r = λ f → (λ= (λ i → inv-r (FS i) (f i)))}
+  inv-l = λ f → (λ= (λ i → inv-l (FS i) (f i)))}
   where open GroupStructure
 
 Πᴳ : ∀ {i j} (I : Type i) (F : I → Group j) → Group (lmax i j)

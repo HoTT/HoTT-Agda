@@ -19,10 +19,8 @@ module _ {i} {El : Type i} (GS : GroupStructure El) where
     inv = Trunc-fmap (inv GS);
     comp = _⊗_;
     unit-l = t-unit-l;
-    unit-r = t-unit-r;
     assoc = t-assoc;
-    inv-l = t-inv-l;
-    inv-r = t-inv-r}
+    inv-l = t-inv-l}
     where
     open GroupStructure
     infix 80 _⊗_
@@ -32,10 +30,6 @@ module _ {i} {El : Type i} (GS : GroupStructure El) where
       t-unit-l : (t : Trunc 0 El) → [ ident GS ] ⊗ t == t
       t-unit-l = Trunc-elim (λ _ → =-preserves-level Trunc-level)
         (ap [_] ∘ unit-l GS)
-
-      t-unit-r : (t : Trunc 0 El) → t ⊗ [ ident GS ] == t
-      t-unit-r = Trunc-elim (λ _ → =-preserves-level Trunc-level)
-        (ap [_] ∘ unit-r GS)
 
       t-assoc : (t₁ t₂ t₃ : Trunc 0 El) → (t₁ ⊗ t₂) ⊗ t₃ == t₁ ⊗ (t₂ ⊗ t₃)
       t-assoc = Trunc-elim
@@ -49,10 +43,6 @@ module _ {i} {El : Type i} (GS : GroupStructure El) where
       t-inv-l : (t : Trunc 0 El) → Trunc-fmap (inv GS) t ⊗ t == [ ident GS ]
       t-inv-l = Trunc-elim (λ _ → =-preserves-level Trunc-level)
         (ap [_] ∘ inv-l GS)
-
-      t-inv-r : (t : Trunc 0 El) → t ⊗ Trunc-fmap (inv GS) t == [ ident GS ]
-      t-inv-r = Trunc-elim (λ _ → =-preserves-level Trunc-level)
-        (ap [_] ∘ inv-r GS)
 
 
   Trunc-group : Group i
