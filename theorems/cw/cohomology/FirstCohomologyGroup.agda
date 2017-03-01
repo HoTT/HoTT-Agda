@@ -6,7 +6,7 @@ open import cohomology.PtdMapSequence
 open import groups.ExactSequence
 open import groups.Exactness
 open import groups.HomSequence
-open import groups.PropQuotUniqueFactorization
+open import groups.KernelImageUniqueFactorization
 
 open import cw.CW
 
@@ -80,30 +80,33 @@ private
   C-WoC-to-H : C-WoC →ᴳ H
   C-WoC-to-H = C-fmap 1 (⊙cfcod' (⊙cw-incl-last (⊙cw-init ⊙skel)))
 
-C-cw-iso-ker/im :
-  C 1 ⊙⟦ ⊙skel ⟧ ≃ᴳ QuotGroup (quot-of-sub (ker-propᴳ cw-co∂-last) CokerCo∂Head.npropᴳ)
-C-cw-iso-ker/im = lemma where
-  abstract
-    lemma-comm : ∀ g →
-         GroupIso.g Coker-iso-H (GroupHom.f (C-cw-to-H ∘ᴳ G-to-C-cw) (GroupIso.g G-iso-Ker g))
-      == q[ fst g ]
-    lemma-comm g =
-      GroupIso.g Coker-iso-H (GroupHom.f C-cw-to-H (GroupHom.f G-to-C-cw (GroupIso.g G-iso-Ker g)))
-        =⟨ ap (GroupIso.g Coker-iso-H) (! (C-top-grid-commutes □$ᴳ GroupIso.g G-iso-Ker g)) ⟩
-      GroupIso.g Coker-iso-H (GroupHom.f C-WoC-to-H (GroupHom.f G-to-C-WoC (GroupIso.g G-iso-Ker g)))
-        =⟨ ap (GroupIso.g Coker-iso-H ∘ GroupHom.f C-WoC-to-H ∘ fst) (GroupIso.f-g G-iso-Ker g) ⟩
-      GroupIso.g Coker-iso-H (GroupHom.f C-WoC-to-H (fst g))
-        =⟨ GroupIso.g-f Coker-iso-H q[ fst g ] ⟩
-      q[ fst g ]
-        =∎
+open import groups.KernelImage cw-co∂-last cw-co∂-head CX₁/X₀-abelian
 
-  lemma : C 1 ⊙⟦ ⊙skel ⟧
-    ≃ᴳ QuotGroup (quot-of-sub (ker-propᴳ cw-co∂-last) CokerCo∂Head.npropᴳ)
-  lemma = H-iso-P/Q
-    (ker-propᴳ cw-co∂-last)
-    CokerCo∂Head.npropᴳ
-    (G-to-C-cw ∘ᴳ GroupIso.g-hom G-iso-Ker)
-    (∘-is-surj G-to-C-cw-is-surj (equiv-is-surj (GroupIso.g-is-equiv G-iso-Ker)))
-    (GroupIso.g-hom Coker-iso-H  ∘ᴳ C-cw-to-H)
-    (∘-is-inj (equiv-is-inj (GroupIso.g-is-equiv Coker-iso-H)) C-cw-to-H-is-inj)
-    lemma-comm
+C-cw-iso-ker/im : C 1 ⊙⟦ ⊙skel ⟧ ≃ᴳ Ker/Im
+C-cw-iso-ker/im = H-iso-Ker/Im
+  cw-co∂-last cw-co∂-head CX₁/X₀-abelian
+  φ₁ φ₁-is-surj φ₂ φ₂-is-inj lemma-comm
+  where
+    φ₁ = G-to-C-cw ∘ᴳ GroupIso.g-hom G-iso-Ker
+    abstract
+      φ₁-is-surj : is-surjᴳ φ₁
+      φ₁-is-surj = ∘-is-surj G-to-C-cw-is-surj (equiv-is-surj (GroupIso.g-is-equiv G-iso-Ker))
+
+    φ₂ = GroupIso.g-hom Coker-iso-H ∘ᴳ C-cw-to-H
+    abstract
+      φ₂-is-inj : is-injᴳ φ₂
+      φ₂-is-inj = ∘-is-inj (equiv-is-inj (GroupIso.g-is-equiv Coker-iso-H)) C-cw-to-H-is-inj
+
+    abstract
+      lemma-comm : ∀ g →
+           GroupIso.g Coker-iso-H (GroupHom.f (C-cw-to-H ∘ᴳ G-to-C-cw) (GroupIso.g G-iso-Ker g))
+        == q[ fst g ]
+      lemma-comm g =
+        GroupIso.g Coker-iso-H (GroupHom.f C-cw-to-H (GroupHom.f G-to-C-cw (GroupIso.g G-iso-Ker g)))
+          =⟨ ap (GroupIso.g Coker-iso-H) (! (C-top-grid-commutes □$ᴳ GroupIso.g G-iso-Ker g)) ⟩
+        GroupIso.g Coker-iso-H (GroupHom.f C-WoC-to-H (GroupHom.f G-to-C-WoC (GroupIso.g G-iso-Ker g)))
+          =⟨ ap (GroupIso.g Coker-iso-H ∘ GroupHom.f C-WoC-to-H ∘ fst) (GroupIso.f-g G-iso-Ker g) ⟩
+        GroupIso.g Coker-iso-H (GroupHom.f C-WoC-to-H (fst g))
+          =⟨ GroupIso.g-f Coker-iso-H q[ fst g ] ⟩
+        q[ fst g ]
+          =∎

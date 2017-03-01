@@ -11,15 +11,16 @@ module cw.cohomology.ZerothCohomologyGroupOnDiag {i} (OT : OrdinaryTheory i)
 open OrdinaryTheory OT
 open import cw.cohomology.TipAndAugment OT ⊙skel
 
-open import groups.PropQuotOfInl G {H = CX₀}
+open import groups.KernelSndImageInl G {H = CX₀}
   {K = Lift-group {j = i} Unit-group}
-  G×CX₀-is-abelian
   cst-hom cst-hom (λ _ → idp)
+  G×CX₀-is-abelian
 
-C-cw-iso-ker/im : C 0 ⊙⟦ ⊙skel ⟧
-  ≃ᴳ QuotGroup (quot-of-sub
-      (ker-propᴳ (cst-hom {G = G×CX₀} {H = Lift-group {j = i} Unit-group}))
-      (im-npropᴳ cw-coε G×CX₀-is-abelian))
+open import groups.KernelImage
+  (cst-hom {G = G×CX₀} {H = Lift-group {j = i} Unit-group})
+  cw-coε G×CX₀-is-abelian
+
+C-cw-iso-ker/im : C 0 ⊙⟦ ⊙skel ⟧ ≃ᴳ Ker/Im
 C-cw-iso-ker/im =
-      Ker-inl-quot-Im-φ-snd
-  ∘eᴳ (full-subgroup (ker-cst-is-full CX₀ (Lift-group {j = i} Unit-group))) ⁻¹ᴳ
+      Ker-φ-snd-quot-Im-inl
+  ∘eᴳ full-subgroup (ker-cst-hom-is-full CX₀ (Lift-group {j = i} Unit-group)) ⁻¹ᴳ

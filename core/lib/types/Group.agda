@@ -167,6 +167,8 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
     zero-diff-same : (g h : El) → diff g h == ident → g == h
     zero-diff-same g h p = inv-is-inj g h $ inv-unique-r g (inv h) p
 
+    inv-diff : (g h : El) → inv (diff g h) == diff h g
+    inv-diff g h = inv-comp g (inv h) ∙ ap (_⊙ inv g) (inv-inv h)
 
 record Group i : Type (lsucc i) where
   constructor group

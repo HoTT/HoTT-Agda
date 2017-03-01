@@ -152,19 +152,15 @@ module _ {i j} {G : Group i} {P : NormalSubgroupProp G j} where
     quot-group-rel-is-sym
     quot-group-rel-is-trans
 
-module QuotGroup {i j} {G : Group i} (P : NormalSubgroupProp G j) where
-  npropᴳ : NormalSubgroupProp G j
-  npropᴳ = P
-  module P = NormalSubgroupProp npropᴳ
-    using (propᴳ; prop)
-
-  grp : Group (lmax i j)
+module QuotGroup {i j} {G : Group i} (P : NormalSubgroupProp G j)
+  where
   grp = QuotGroup P
   open Group grp public
 
 module Coker {i j} {G : Group i} {H : Group j}
   (φ : G →ᴳ H) (H-is-abelian : is-abelian H)
   = QuotGroup (im-npropᴳ φ H-is-abelian)
+Coker = Coker.grp
 
 module _ {i j k} {G : Group i}
   (P : SubgroupProp G j) (Q : NormalSubgroupProp G k) where

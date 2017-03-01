@@ -51,31 +51,31 @@ module _ {i j} {G : Group i} (P : SubgroupProp G j) where
 
 module Subgroup {i j} {G : Group i} (P : SubgroupProp G j) where
   private
+    module P = SubgroupProp P
     module G = Group G
-
-  propᴳ = P
-  module P = SubgroupProp propᴳ
-  open P public using (prop; subEl-prop)
 
   grp = Subgroup P
   open Group grp public
+
+  El=-out : ∀ {s₁ s₂ : El} → fst s₁ == fst s₂ → s₁ == s₂
+  El=-out = Subtype=-out P.subEl-prop
 
   inject : Subgroup P →ᴳ G
   inject = record {f = fst; pres-comp = λ _ _ → idp}
 
   inject-lift : ∀ {j} {H : Group j} (φ : H →ᴳ G)
-    → Π (Group.El H) (prop ∘ GroupHom.f φ)
+    → Π (Group.El H) (P.prop ∘ GroupHom.f φ)
     → (H →ᴳ Subgroup P)
   inject-lift {H = H} φ P-all = record {M} where
     module H = Group H
     module φ = GroupHom φ
     module M where
-      f : H.El → Σ G.El prop
+      f : H.El → P.SubEl
       f h = φ.f h , P-all h
 
       abstract
         pres-comp : ∀ h₁ h₂ → f (H.comp h₁ h₂) == Group.comp (Subgroup P) (f h₁) (f h₂)
-        pres-comp h₁ h₂ = Subtype=-out subEl-prop (φ.pres-comp h₁ h₂)
+        pres-comp h₁ h₂ = Subtype=-out P.subEl-prop (φ.pres-comp h₁ h₂)
 
 full-subgroup : ∀ {i j} {G : Group i} {P : SubgroupProp G j}
   → is-fullᴳ P → Subgroup P ≃ᴳ G

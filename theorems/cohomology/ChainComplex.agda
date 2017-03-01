@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
+open import groups.KernelImage
 
 module cohomology.ChainComplex where
 
@@ -20,20 +21,16 @@ module cohomology.ChainComplex where
 
   homology-group : ∀ {i} → ChainComplex i
     → (n : ℕ) → Group i
-  homology-group cc 0 =
-    QuotGroup (quot-of-sub (ker-propᴳ cc.augment) (im-npropᴳ (cc.boundary 0) (snd (cc.chain 0))))
+  homology-group cc 0 = Ker/Im cc.augment (cc.boundary 0) (snd (cc.chain 0))
     where module cc = ChainComplex cc
-  homology-group cc (S n) =
-    QuotGroup (quot-of-sub (ker-propᴳ (cc.boundary n)) (im-npropᴳ (cc.boundary (S n)) (snd (cc.chain (S n)))))
+  homology-group cc (S n) = Ker/Im (cc.boundary n) (cc.boundary (S n)) (snd (cc.chain (S n)))
     where module cc = ChainComplex cc
 
   cohomology-group : ∀ {i} → CochainComplex i
     → (n : ℕ) → Group i
-  cohomology-group cc 0 =
-    QuotGroup (quot-of-sub (ker-propᴳ (cc.coboundary 0)) (im-npropᴳ cc.augment (snd (cc.cochain 0))))
+  cohomology-group cc 0 = Ker/Im (cc.coboundary 0) cc.augment (snd (cc.cochain 0))
     where module cc = CochainComplex cc
-  cohomology-group cc (S n) =
-    QuotGroup (quot-of-sub (ker-propᴳ (cc.coboundary (S n))) (im-npropᴳ (cc.coboundary n) (snd (cc.cochain (S n)))))
+  cohomology-group cc (S n) = Ker/Im (cc.coboundary (S n)) (cc.coboundary n) (snd (cc.cochain (S n)))
     where module cc = CochainComplex cc
 
   complex-dualize : ∀ {i j} → ChainComplex i → AbGroup j

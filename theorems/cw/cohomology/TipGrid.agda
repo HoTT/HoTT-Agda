@@ -34,7 +34,7 @@ cw-co∂-head : G×CX₀ →ᴳ C 1 (⊙Cofiber (⊙cw-incl-last ⊙skel))
 cw-co∂-head = record {f = GroupHom.f cw-co∂-head' ∘ snd; pres-comp = lemma} where
   abstract lemma = ∘-pres-comp cw-co∂-head' (×ᴳ-snd {G = G} {H = CX₀})
 
-Ker-cw-co∂-head' : C 0 ⊙⟦ ⊙skel ⟧ ≃ᴳ Ker.grp cw-co∂-head'
+Ker-cw-co∂-head' : C 0 ⊙⟦ ⊙skel ⟧ ≃ᴳ Ker cw-co∂-head'
 Ker-cw-co∂-head' = Exact2.G-trivial-implies-H-iso-ker
   (exact-seq-index 2 $ LES.C-cofiber-exact-seq -1)
   (exact-seq-index 0 $ LES.C-cofiber-exact-seq 0)
@@ -42,7 +42,7 @@ Ker-cw-co∂-head' = Exact2.G-trivial-implies-H-iso-ker
 
 {- NOT USED
 
-Ker-cw-co∂-head : G ×ᴳ C 0 ⊙⟦ ⊙skel ⟧ ≃ᴳ Ker.grp cw-co∂-head
+Ker-cw-co∂-head : G ×ᴳ C 0 ⊙⟦ ⊙skel ⟧ ≃ᴳ Ker cw-co∂-head
 Ker-cw-co∂-head = lemma ∘eᴳ ×ᴳ-emap (idiso G) Ker-cw-co∂-head' where
   lemma : G ×ᴳ Ker.grp cw-co∂-head' ≃ᴳ Ker.grp cw-co∂-head
   lemma = group-hom (λ{(g , (h , is-ker)) → ((g , h) , is-ker)})
@@ -50,13 +50,12 @@ Ker-cw-co∂-head = lemma ∘eᴳ ×ᴳ-emap (idiso G) Ker-cw-co∂-head' where
     is-eq _ (λ{((g , h) , is-ker) → (g , (h , is-ker))}) (λ _ → idp) (λ _ → idp)
 -}
 
-private
-  -- separate lemmas to speed up the type checking
-  abstract
-    lemma₁-abelian : is-abelian (C 1 (⊙Cofiber (⊙cw-incl-last ⊙skel)))
-    lemma₁-abelian = C-is-abelian 1 (⊙Cofiber (⊙cw-incl-last ⊙skel))
+-- separate lemmas to speed up the type checking
+abstract
+  CX₁/X₀-abelian : is-abelian (C 1 (⊙Cofiber (⊙cw-incl-last ⊙skel)))
+  CX₁/X₀-abelian = C-is-abelian 1 (⊙Cofiber (⊙cw-incl-last ⊙skel))
 
-module CokerCo∂Head = Coker cw-co∂-head lemma₁-abelian
+module CokerCo∂Head = Coker cw-co∂-head CX₁/X₀-abelian
 
 private
   -- separate lemmas to speed up the type checking
@@ -77,4 +76,4 @@ private
 
 Coker-cw-co∂-head : CokerCo∂Head.grp ≃ᴳ C 1 ⊙⟦ ⊙skel ⟧
 Coker-cw-co∂-head = Exact2.L-trivial-implies-coker-iso-K
-  lemma₁-exact₀ lemma₁-exact₁ lemma₁-abelian lemma₁-trivial
+  lemma₁-exact₀ lemma₁-exact₁ CX₁/X₀-abelian lemma₁-trivial

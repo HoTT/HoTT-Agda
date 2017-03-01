@@ -46,7 +46,7 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
         from = λ k → From.ext k (uncurry E.ker-sub-im k)
 
         to-from : ∀ k → to (from k) == k
-        to-from k = Subtype=-out (Ker.subEl-prop ψ) $
+        to-from k = Ker.El=-out ψ $
           Trunc-elim
             {P = λ hf → φ.f (From.ext k hf) == fst k}
             (λ _ → H.El-is-set _ _)
@@ -63,7 +63,7 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
     K-trivial-implies-φ-is-surj : is-trivialᴳ K → is-surjᴳ φ
     K-trivial-implies-φ-is-surj K-is-triv h = E.ker-sub-im h (K-is-triv (ψ.f h))
 
-  coker-to-K : (H-is-abelian : is-abelian H) → Coker.grp φ H-is-abelian →ᴳ K
+  coker-to-K : (H-is-abelian : is-abelian H) → Coker φ H-is-abelian →ᴳ K
   coker-to-K H-is-abelian = record {M} where
     module M where
       module Cok = Coker φ H-is-abelian
@@ -99,10 +99,9 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
         module From (k : K.El)
           = ConstExt {A = hfiber ψ.f k} {B = Cok.El}
               Cok.El-is-set (λ hf → q[ fst hf ])
-              (λ{(h₁ , p₁) (h₂ , p₂) →
-                quot-relᴳ {P = Cok.npropᴳ} {g₁ = h₁} {g₂ = h₂} $
-                  E.ker-sub-im (H.diff h₁ h₂) $
-                    ψ.pres-diff h₁ h₂ ∙ ap2 K.diff p₁ p₂ ∙ K.inv-r k})
+              (λ{(h₁ , p₁) (h₂ , p₂) → quot-rel $
+                E.ker-sub-im (H.diff h₁ h₂) $
+                  ψ.pres-diff h₁ h₂ ∙ ap2 K.diff p₁ p₂ ∙ K.inv-r k})
 
         from : K.El → Cok.El
         from k = From.ext k (ψ-is-surj k)
@@ -121,7 +120,7 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
           (λ _ → prop-has-all-paths-↓ (Cok.El-is-set _ _))
 
   ψ-surj-implies-coker-iso-K : (H-is-abelian : is-abelian H)
-    → is-surjᴳ ψ → Coker.grp φ H-is-abelian ≃ᴳ K
+    → is-surjᴳ ψ → Coker φ H-is-abelian ≃ᴳ K
   ψ-surj-implies-coker-iso-K H-is-abelian ψ-is-surj =
     coker-to-K H-is-abelian , ψ-surj-implies-coker-to-K-is-equiv H-is-abelian ψ-is-surj
 
@@ -165,7 +164,7 @@ module Exact2 {i j k l} {G : Group i} {H : Group j} {K : Group k} {L : Group l}
         EL1.G-trivial-implies-ψ-is-inj G-is-triv
 
   L-trivial-implies-coker-iso-K : (H-is-abelian : is-abelian H)
-    → is-trivialᴳ L → Coker.grp φ H-is-abelian ≃ᴳ K
+    → is-trivialᴳ L → Coker φ H-is-abelian ≃ᴳ K
   L-trivial-implies-coker-iso-K H-is-abelian L-is-triv
     = EL1.ψ-surj-implies-coker-iso-K H-is-abelian $
         EL2.K-trivial-implies-φ-is-surj L-is-triv

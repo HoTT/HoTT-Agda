@@ -36,8 +36,8 @@ module groups.PropQuotUniqueFactorization
 
     P/Q : Group (lmax i (lmax l₁ l₂))
     P/Q = QuotGroup P/Q-prop
-
     module P/Q = Group P/Q
+
     module _ (k : Group.El H) where
       H-to-P/Q-f' : hfiber φ₁.f k → P/Q.El
       H-to-P/Q-f' (p , _) = q[ p ]
