@@ -16,16 +16,17 @@ addons:
     sources:
     - fpcomplete-precise
     packages:
+    - moreutils # this old version does not supports [ts -i] or [ts -s]
     - stack
 
 install:
-- travis_wait 30 stack --no-terminal --install-ghc --resolver lts-8 install Agda
+- travis_wait 30 stack --no-terminal --install-ghc --resolver lts-8 install Agda | ts
 
 script:
 - stack exec agda -- --version
 # 2-stage type-checking to reduce peak memory usage, hopefully
-- stack exec agda -- --library-file=libraries-travis --without-K --rewriting core/HoTT.agda
-# checking this file is very demanding, so it is checked first (actually, I gave up on this)
+- stack exec agda -- --library-file=libraries-travis --without-K --rewriting core/HoTT.agda | ts
+# checking this file is very resource demanding, so it is checked first (actually, I gave up on this)
 # - stack exec agda -- --library-file=libraries-travis --without-K --rewriting theorems/homotopy/3x3/Commutes.agda
 # checking the rest
-- stack exec agda -- --library-file=libraries-travis --without-K --rewriting theorems/index.agda
+- stack exec agda -- --library-file=libraries-travis --without-K --rewriting theorems/index.agda | ts
