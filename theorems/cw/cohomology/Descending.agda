@@ -64,6 +64,15 @@ abstract
         ⊙skel ac)
       (C-cw-at-negsucc n (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac))
 
+C-cw-descend-at-lower : ∀ n {m} (n<m : n < m) (⊙skel : ⊙Skeleton (S m))
+  → ⊙has-cells-with-choice 0 ⊙skel i
+  → C (ℕ-to-ℤ n) ⊙⟦ ⊙skel ⟧ ≃ᴳ C (ℕ-to-ℤ n) ⊙⟦ ⊙cw-init ⊙skel ⟧
+C-cw-descend-at-lower n n<m ⊙skel ac =
+  C-cw-descend (ℕ-to-ℤ n) (ℕ-to-ℤ-≠ (<-to-≠ n<m)) (ℕ-to-ℤ-≠ (<-to-≠ (ltSR n<m))) ⊙skel ac
+
+{-
+favonia: it turns out easier (?) to do the descending step by step
+
 C-cw-to-diag-at-lower : ∀ n {m} (Sn≤m : S n ≤ m) (⊙skel : ⊙Skeleton m)
   → ⊙has-cells-with-choice 0 ⊙skel i
   → C (ℕ-to-ℤ n) ⊙⟦ ⊙skel ⟧ ≃ᴳ C (ℕ-to-ℤ n) ⊙⟦ ⊙cw-take Sn≤m ⊙skel ⟧
@@ -79,3 +88,4 @@ C-cw-to-diag-at-lower n {S m} (inr (ltSR lt)) ⊙skel ac =
 
     n≠m : n ≠ m
     n≠m = <-to-≠ (<-trans ltS lt)
+-}

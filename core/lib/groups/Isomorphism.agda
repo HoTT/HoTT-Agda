@@ -236,6 +236,9 @@ coe!ᴳ = transport!ᴳ (idf _)
 coeᴳ-iso : ∀ {i} {G H : Group i} → G == H → G ≃ᴳ H
 coeᴳ-iso = transportᴳ-iso (idf _)
 
+coe!ᴳ-iso : ∀ {i} {G H : Group i} → G == H → H ≃ᴳ G
+coe!ᴳ-iso = transport!ᴳ-iso (idf _)
+
 abstract
   coeᴳ-β : ∀ {i} {G H : Group i} (iso : G ≃ᴳ H)
     → coeᴳ (uaᴳ iso) == GroupIso.f-hom iso

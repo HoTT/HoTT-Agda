@@ -161,6 +161,10 @@ abstract
   <-to-≠ {m = S m} {n = O} ()
   <-to-≠ {m = S m} {n = S n} lt = ℕ-S-≠ (<-to-≠ (<-cancel-S lt))
 
+  <-to-≱ : {m n : ℕ} → m < n → ¬ (n ≤ m)
+  <-to-≱ m<n (inl idp) = <-to-≠ m<n idp
+  <-to-≱ m<n (inr n<m) = <-to-≠ (<-trans m<n n<m) idp
+
   <-has-all-paths : {m n : ℕ} → has-all-paths (m < n)
   <-has-all-paths = <-has-all-paths' idp where
     <-has-all-paths' : {m n₁ n₂ : ℕ} (eqn : n₁ == n₂) (lt₁ : m < n₁) (lt₂ : m < n₂)
@@ -183,14 +187,6 @@ abstract
 
   ≤-is-prop : {m n : ℕ} → is-prop (m ≤ n)
   ≤-is-prop = all-paths-is-prop ≤-has-all-paths
-
-<-to-≤ : {m n : ℕ} → m < S n → m ≤ n
-<-to-≤ ltS = inl idp
-<-to-≤ (ltSR lt) = inr lt
-
-≤-to-< : {m n : ℕ} → S m ≤ n → m < n
-≤-to-< (inl idp) = ltS
-≤-to-< (inr lt) = <-trans ltS lt
 
 <-+-l : {m n : ℕ} (k : ℕ) → m < n → (k + m) < (k + n)
 <-+-l O lt = lt

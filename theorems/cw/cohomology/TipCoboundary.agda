@@ -22,11 +22,11 @@ cw-co∂-head' : CX₀ →ᴳ CXₙ/Xₙ₋₁ ⊙skel
 cw-co∂-head' = co∂
 
 cw-co∂-head : G×CX₀ →ᴳ CXₙ/Xₙ₋₁ ⊙skel
-cw-co∂-head = record {f = GroupHom.f cw-co∂-head' ∘ snd; pres-comp = lemma} where
-  abstract lemma = ∘-pres-comp cw-co∂-head' (×ᴳ-snd {G = G} {H = CX₀})
+cw-co∂-head = record {f = GroupHom.f cw-co∂-head' ∘ snd; pres-comp = lemma}
+  where abstract lemma = ∘-pres-comp cw-co∂-head' (×ᴳ-snd {G = G} {H = CX₀})
 
 abstract
-  -- Somehow the [lemma] above still reduces here.  Maybe it is a bug?
+  -- This relies on the [lemma] above being non-abstract within this scope.
   co∂-head-incl-exact : is-exact cw-co∂-head (C-fmap 1 (⊙cfcod' (⊙cw-incl-last ⊙skel)))
   co∂-head-incl-exact = pre∘-is-exact
     (×ᴳ-snd {G = G} {H = CX₀})

@@ -9,15 +9,10 @@ open import cw.CW
 module cw.cohomology.ReconstructedCochainComplex {i : ULevel} (OT : OrdinaryTheory i) where
 
   open OrdinaryTheory OT
+  import cw.cohomology.TipAndAugment cohomology-theory as TAA
   import cw.cohomology.TipCoboundary OT as TC
   import cw.cohomology.HigherCoboundary OT as HC
-  import cw.cohomology.CoboundaryGrid OT as CG
-  import cw.cohomology.TipAndAugment cohomology-theory as TAA
-  import cw.cohomology.TipGrid OT as TG
   open import cw.cohomology.WedgeOfCells OT
-  open import cw.cohomology.Descending OT
-  import cw.cohomology.ZerothCohomologyGroup OT as ZCG
-  import cw.cohomology.ZerothCohomologyGroupOnDiag cohomology-theory as ZCGD
 
   cochain-template : ∀ {n} (⊙skel : ⊙Skeleton {i} n) {m}
     → Dec (m ≤ n) → AbGroup i
@@ -25,92 +20,14 @@ module cw.cohomology.ReconstructedCochainComplex {i : ULevel} (OT : OrdinaryTheo
   cochain-template ⊙skel {m = 0} (inl 0≤n) = TAA.G×CX₀-abgroup (⊙cw-take 0≤n ⊙skel)
   cochain-template ⊙skel {m = S m} (inl Sm≤n) = CXₙ/Xₙ₋₁-abgroup (⊙cw-take Sm≤n ⊙skel)
 
-  coboundary-nth-template : ∀ {n} (⊙skel : ⊙Skeleton {i} n)
-    → {m : ℕ} (Sm≤n : S m ≤ n) (SSm≤n : S (S m) ≤ n)
-    → ⊙cw-init (⊙cw-take SSm≤n ⊙skel) == ⊙cw-take (≤-trans lteS SSm≤n) ⊙skel
-    → ⊙cw-take (≤-trans lteS SSm≤n) ⊙skel == ⊙cw-take Sm≤n ⊙skel
-    → CEl (ℕ-to-ℤ (S m)) (⊙Cofiber (⊙cw-incl-nth Sm≤n ⊙skel))
-    → CEl (ℕ-to-ℤ (S (S m))) (⊙Cofiber (⊙cw-incl-nth SSm≤n ⊙skel))
-  coboundary-nth-template ⊙skel {m} Sm≤n SSm≤n path₀ path₁ =
-      GroupHom.f (HC.cw-co∂-last (⊙cw-take SSm≤n ⊙skel))
-    ∘ transport! (λ ⊙skel → CEl (ℕ-to-ℤ (S m)) (⊙Cofiber (⊙cw-incl-last ⊙skel))) (path₀ ∙ path₁)
+  cochain-is-abelian-template : ∀ {n} (⊙skel : ⊙Skeleton {i} n) {m} m≤n?
+    → is-abelian (AbGroup.grp (cochain-template ⊙skel {m} m≤n?))
+  cochain-is-abelian-template ⊙skel m≤n? = AbGroup.comm (cochain-template ⊙skel m≤n?)
 
-  abstract
-    coboundary-pres-comp-nth-template : ∀ {n} (⊙skel : ⊙Skeleton {i} n) {m} Sm≤n SSm≤n path₀ path₁
-      → preserves-comp
-          (Group.comp (C (ℕ-to-ℤ (S m)) (⊙Cofiber (⊙cw-incl-nth Sm≤n ⊙skel))))
-          (Group.comp (C (ℕ-to-ℤ (S (S m))) (⊙Cofiber (⊙cw-incl-nth SSm≤n ⊙skel))))
-          (coboundary-nth-template ⊙skel Sm≤n SSm≤n path₀ path₁)
-    coboundary-pres-comp-nth-template ⊙skel {m} Sm≤n SSm≤n path₀ path₁ =
-      ∘-pres-comp
-        (HC.cw-co∂-last (⊙cw-take SSm≤n ⊙skel))
-        (transport!ᴳ (λ ⊙skel → C (ℕ-to-ℤ (S m)) (⊙Cofiber (⊙cw-incl-last ⊙skel))) (path₀ ∙ path₁))
-
-  coboundary-hom-nth-template : ∀ {n} (⊙skel : ⊙Skeleton {i} n)
-    → {m : ℕ} (Sm≤n : S m ≤ n) (SSm≤n : S (S m) ≤ n)
-    → ⊙cw-init (⊙cw-take SSm≤n ⊙skel) == ⊙cw-take (≤-trans lteS SSm≤n) ⊙skel
-    → ⊙cw-take (≤-trans lteS SSm≤n) ⊙skel == ⊙cw-take Sm≤n ⊙skel
-    →  C (ℕ-to-ℤ (S m)) (⊙Cofiber (⊙cw-incl-nth Sm≤n ⊙skel))
-    →ᴳ C (ℕ-to-ℤ (S (S m))) (⊙Cofiber (⊙cw-incl-nth SSm≤n ⊙skel))
-  coboundary-hom-nth-template ⊙skel Sm≤n SSm≤n path₀ path₁ = record {
-    f = coboundary-nth-template ⊙skel Sm≤n SSm≤n path₀ path₁;
-    pres-comp = coboundary-pres-comp-nth-template ⊙skel Sm≤n SSm≤n path₀ path₁}
-
-  coboundary-first-template : ∀ {n} (⊙skel : ⊙Skeleton {i} n)
-    → (0≤n : 0 ≤ n) (1≤n : 1 ≤ n)
-    → ⊙cw-init (⊙cw-take 1≤n ⊙skel) == ⊙cw-take (≤-trans lteS 1≤n) ⊙skel
-    → ⊙cw-take (≤-trans lteS 1≤n) ⊙skel == ⊙cw-take 0≤n ⊙skel
-    → Group.El (TAA.G×CX₀ (⊙cw-take 0≤n ⊙skel))
-    → CEl-Xₙ/Xₙ₋₁ (⊙cw-take 1≤n ⊙skel)
-  coboundary-first-template ⊙skel 0≤n 1≤n path₀ path₁ =
-      GroupHom.f (TC.cw-co∂-head (⊙cw-take 1≤n ⊙skel))
-    ∘ transport! (Group.El ∘ TAA.G×CX₀) (path₀ ∙ path₁)
-
-  abstract
-    coboundary-pres-comp-first-template : ∀ {n} (⊙skel : ⊙Skeleton {i} n) 0≤n 1≤n path₀ path₁
-      → preserves-comp
-          (Group.comp (TAA.G×CX₀ (⊙cw-take 0≤n ⊙skel)))
-          (Group.comp (CXₙ/Xₙ₋₁ (⊙cw-take 1≤n ⊙skel)))
-          (coboundary-first-template ⊙skel 0≤n 1≤n path₀ path₁)
-    coboundary-pres-comp-first-template ⊙skel 0≤n 1≤n path₀ path₁ = ∘-pres-comp
-      (TC.cw-co∂-head (⊙cw-take 1≤n ⊙skel))
-      (transport!ᴳ TAA.G×CX₀ (path₀ ∙ path₁))
-
-  coboundary-hom-first-template : ∀ {n} (⊙skel : ⊙Skeleton {i} n)
-    → (0≤n : 0 ≤ n) (1≤n : 1 ≤ n)
-    → ⊙cw-init (⊙cw-take 1≤n ⊙skel) == ⊙cw-take (≤-trans lteS 1≤n) ⊙skel
-    → ⊙cw-take (≤-trans lteS 1≤n) ⊙skel == ⊙cw-take 0≤n ⊙skel
-    →  TAA.G×CX₀ (⊙cw-take 0≤n ⊙skel) →ᴳ CXₙ/Xₙ₋₁ (⊙cw-take 1≤n ⊙skel)
-  coboundary-hom-first-template ⊙skel 0≤n 1≤n path₀ path₁ = record {
-    f = coboundary-first-template ⊙skel 0≤n 1≤n path₀ path₁;
-    pres-comp = coboundary-pres-comp-first-template ⊙skel 0≤n 1≤n path₀ path₁}
-
-  coboundary-hom-template : ∀ {n} (⊙skel : ⊙Skeleton {i} n)
-    → {m : ℕ} (m≤n? : Dec (m ≤ n)) (Sm≤n? : Dec (S m ≤ n))
-    → (AbGroup.grp (cochain-template ⊙skel m≤n?) →ᴳ AbGroup.grp (cochain-template ⊙skel Sm≤n?))
-  coboundary-hom-template ⊙skel _ (inr _) = cst-hom
-  coboundary-hom-template ⊙skel (inr m≰n) (inl Sm≤n) = ⊥-rec $ m≰n (≤-trans lteS Sm≤n)
-  coboundary-hom-template ⊙skel {m = 0} (inl 0≤n) (inl 1≤n) =
-    coboundary-hom-first-template ⊙skel 0≤n 1≤n (⊙cw-init-take 1≤n ⊙skel)
-      (ap (λ 0≤n → ⊙cw-take 0≤n ⊙skel) (≤-has-all-paths (≤-trans lteS 1≤n) 0≤n))
-  coboundary-hom-template ⊙skel {m = S m} (inl Sm≤n) (inl SSm≤n) =
-    coboundary-hom-nth-template ⊙skel Sm≤n SSm≤n (⊙cw-init-take SSm≤n ⊙skel)
-      (ap (λ Sm≤n → ⊙cw-take Sm≤n ⊙skel) (≤-has-all-paths (≤-trans lteS SSm≤n) Sm≤n))
-
-  cochain-complex : ∀ {n} → ⊙Skeleton {i} n → CochainComplex i
-  cochain-complex {n} ⊙skel = record {M} where
-    module M where
-      head : AbGroup i
-      head = C-abgroup 0 (⊙Lift ⊙Bool)
-
-      cochain : ℕ → AbGroup i
-      cochain m = cochain-template ⊙skel (≤-dec m n)
-
-      augment : C 0 (⊙Lift ⊙Bool) →ᴳ AbGroup.grp (cochain 0)
-      augment = TAA.cw-coε (⊙cw-take (O≤ n) ⊙skel)
-
-      coboundary : ∀ m → (AbGroup.grp (cochain m) →ᴳ AbGroup.grp (cochain (S m)))
-      coboundary m = coboundary-hom-template ⊙skel (≤-dec m n) (≤-dec (S m) n)
+  augment-template : ∀ {n} (⊙skel : ⊙Skeleton {i} n) 0≤n?
+    → C 0 (⊙Lift ⊙Bool) →ᴳ AbGroup.grp (cochain-template ⊙skel 0≤n?)
+  augment-template {n} ⊙skel (inr 0≰n) = ⊥-rec $ 0≰n (O≤ n)
+  augment-template {n} ⊙skel (inl 0≤n) = TAA.cw-coε (⊙cw-take 0≤n ⊙skel)
 
   {- lemmas of paths -}
   private
@@ -151,62 +68,92 @@ module cw.cohomology.ReconstructedCochainComplex {i : ULevel} (OT : OrdinaryTheo
         idp
           =∎
 
-  {- lemmas of the first coboundary -}
-  private
-    abstract
-      coboundary-first-template-descend-from-far : ∀ {n} (⊙skel : ⊙Skeleton {i} (S n)) 0<n 1<n
-        → coboundary-hom-template {n = S n} ⊙skel (inl (lteSR (inr 0<n))) (inl (lteSR (inr 1<n)))
-          == coboundary-hom-template {n = n} (⊙cw-init ⊙skel) (inl (inr 0<n)) (inl (inr 1<n))
-      coboundary-first-template-descend-from-far ⊙skel 0<n 1<n = group-hom= $
-        ap (coboundary-first-template ⊙skel (lteSR (inr 0<n)) (lteSR (inr 1<n)) (⊙cw-init-take (lteSR (inr 1<n)) ⊙skel))
-          (path-lemma₀ ⊙skel 0<n 1<n)
-
-      coboundary-first-template-descend-from-two : ∀ (⊙skel : ⊙Skeleton {i} 2)
-        → coboundary-hom-template {n = 2} ⊙skel (inl (lteSR lteS)) (inl lteS)
-          == coboundary-hom-template {n = 1} (⊙cw-init ⊙skel) (inl lteS) (inl lteE)
-      coboundary-first-template-descend-from-two ⊙skel = group-hom= $
-        ap (coboundary-first-template ⊙skel (lteSR lteS) lteS idp) (path-lemma₁ ⊙skel)
-
-      coboundary-first-template-β : ∀ (⊙skel : ⊙Skeleton {i} 1)
-        →  coboundary-hom-template {n = 1} ⊙skel (inl lteS) (inl lteE)
-        == TC.cw-co∂-head ⊙skel
-      coboundary-first-template-β ⊙skel = group-hom= $
-        ap (coboundary-first-template ⊙skel lteS lteE idp) (path-lemma₂ ⊙skel)
-
-  {- lemmas of the zeroth cohomology group -}
-  private
-    abstract
-      zeroth-cohomology-group-descend : ∀ {n} (⊙skel : ⊙Skeleton {i} (S (S n)))
-        →  cohomology-group (cochain-complex ⊙skel) 0
-        == cohomology-group (cochain-complex (⊙cw-init ⊙skel)) 0
-      zeroth-cohomology-group-descend {n = O} ⊙skel
-        = ap (λ coboundary → Ker/Im coboundary cc.augment (snd (cc.cochain 0)))
-            (coboundary-first-template-descend-from-two ⊙skel)
-        where module cc = CochainComplex (cochain-complex ⊙skel)
-      zeroth-cohomology-group-descend {n = S n} ⊙skel
-        = ap (λ coboundary → Ker/Im coboundary cc.augment (snd (cc.cochain 0)))
-            (coboundary-first-template-descend-from-far ⊙skel (ltSR (O<S n)) (<-ap-S (O<S n)))
-        where module cc = CochainComplex (cochain-complex ⊙skel)
-
-      zeroth-cohomology-group-β : ∀ (⊙skel : ⊙Skeleton {i} 1)
-        →  cohomology-group (cochain-complex ⊙skel) 0
-        == Ker/Im
-            (TC.cw-co∂-head ⊙skel)
-            (TAA.cw-coε (⊙cw-init ⊙skel)) (snd (CochainComplex.cochain (cochain-complex ⊙skel) 0))
-      zeroth-cohomology-group-β ⊙skel
-        = ap (λ coboundary → Ker/Im coboundary cc.augment (snd (cc.cochain 0)))
-            (coboundary-first-template-β ⊙skel)
-        where module cc = CochainComplex (cochain-complex ⊙skel)
-
   abstract
-    zeroth-cohomology-group : ∀ {n} (⊙skel : ⊙Skeleton {i} n)
-      → ⊙has-cells-with-choice 0 ⊙skel i
-      → C 0 ⊙⟦ ⊙skel ⟧ ≃ᴳ cohomology-group (cochain-complex ⊙skel) 0
-    zeroth-cohomology-group {n = 0} ⊙skel ac = ZCGD.C-cw-iso-ker/im ⊙skel ac
-    zeroth-cohomology-group {n = 1} ⊙skel ac =
-          coeᴳ-iso (zeroth-cohomology-group-β ⊙skel) ⁻¹ᴳ
-      ∘eᴳ ZCG.C-cw-iso-ker/im ⊙skel ac
-    zeroth-cohomology-group {n = S (S n)} ⊙skel ac =
-          coeᴳ-iso (zeroth-cohomology-group-descend ⊙skel) ⁻¹ᴳ
-      ∘eᴳ zeroth-cohomology-group (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac)
-      ∘eᴳ C-cw-descend 0 (pos-≠ (ℕ-O≠S n)) (pos-≠ (ℕ-O≠S (S n))) ⊙skel ac
+    private
+      coboundary-first-template : ∀ {n} (⊙skel : ⊙Skeleton {i} n)
+        → (0≤n : 0 ≤ n) (1≤n : 1 ≤ n)
+        → ⊙cw-init (⊙cw-take 1≤n ⊙skel) == ⊙cw-take (≤-trans lteS 1≤n) ⊙skel
+        → ⊙cw-take (≤-trans lteS 1≤n) ⊙skel == ⊙cw-take 0≤n ⊙skel
+        → TAA.G×CX₀ (⊙cw-take 0≤n ⊙skel) →ᴳ CXₙ/Xₙ₋₁ (⊙cw-take 1≤n ⊙skel)
+      coboundary-first-template ⊙skel 0≤n 1≤n path₀ path₁ =
+           TC.cw-co∂-head (⊙cw-take 1≤n ⊙skel)
+        ∘ᴳ transport!ᴳ TAA.G×CX₀ (path₀ ∙ path₁)
+
+      coboundary-higher-template : ∀ {n} (⊙skel : ⊙Skeleton {i} n)
+        → {m : ℕ} (Sm≤n : S m ≤ n) (SSm≤n : S (S m) ≤ n)
+        → ⊙cw-init (⊙cw-take SSm≤n ⊙skel) == ⊙cw-take (≤-trans lteS SSm≤n) ⊙skel
+        → ⊙cw-take (≤-trans lteS SSm≤n) ⊙skel == ⊙cw-take Sm≤n ⊙skel
+        →  C (ℕ-to-ℤ (S m)) (⊙Cofiber (⊙cw-incl-nth Sm≤n ⊙skel))
+        →ᴳ C (ℕ-to-ℤ (S (S m))) (⊙Cofiber (⊙cw-incl-nth SSm≤n ⊙skel))
+      coboundary-higher-template ⊙skel {m} Sm≤n SSm≤n path₀ path₁ =
+           HC.cw-co∂-last (⊙cw-take SSm≤n ⊙skel)
+        ∘ᴳ transport!ᴳ (λ ⊙skel → C (ℕ-to-ℤ (S m)) (⊙Cofiber (⊙cw-incl-last ⊙skel))) (path₀ ∙ path₁)
+
+  coboundary-template : ∀ {n} (⊙skel : ⊙Skeleton {i} n)
+    → {m : ℕ} (m≤n? : Dec (m ≤ n)) (Sm≤n? : Dec (S m ≤ n))
+    → (AbGroup.grp (cochain-template ⊙skel m≤n?) →ᴳ AbGroup.grp (cochain-template ⊙skel Sm≤n?))
+  coboundary-template ⊙skel _ (inr _) = cst-hom
+  coboundary-template ⊙skel (inr m≰n) (inl Sm≤n) = ⊥-rec $ m≰n (≤-trans lteS Sm≤n)
+  coboundary-template ⊙skel {m = 0} (inl 0≤n) (inl 1≤n) =
+    coboundary-first-template ⊙skel 0≤n 1≤n (⊙cw-init-take 1≤n ⊙skel)
+      (ap (λ 0≤n → ⊙cw-take 0≤n ⊙skel) (≤-has-all-paths (≤-trans lteS 1≤n) 0≤n))
+  coboundary-template ⊙skel {m = S m} (inl Sm≤n) (inl SSm≤n) =
+    coboundary-higher-template ⊙skel Sm≤n SSm≤n (⊙cw-init-take SSm≤n ⊙skel)
+      (ap (λ Sm≤n → ⊙cw-take Sm≤n ⊙skel) (≤-has-all-paths (≤-trans lteS SSm≤n) Sm≤n))
+
+  {- properties of coboundary-template -}
+  abstract
+    {- lemmas of the first coboundary -}
+    coboundary-first-template-descend-from-far : ∀ {n} (⊙skel : ⊙Skeleton {i} (S n)) 0<n 1<n
+      → coboundary-template {n = S n} ⊙skel {0} (inl (lteSR (inr 0<n))) (inl (lteSR (inr 1<n)))
+        == coboundary-template {n = n} (⊙cw-init ⊙skel) (inl (inr 0<n)) (inl (inr 1<n))
+    coboundary-first-template-descend-from-far ⊙skel 0<n 1<n =
+      ap (coboundary-first-template ⊙skel (lteSR (inr 0<n)) (lteSR (inr 1<n)) (⊙cw-init-take (lteSR (inr 1<n)) ⊙skel))
+        (path-lemma₀ ⊙skel 0<n 1<n)
+
+    coboundary-first-template-descend-from-two : ∀ (⊙skel : ⊙Skeleton {i} 2)
+      → coboundary-template {n = 2} ⊙skel (inl (lteSR lteS)) (inl lteS)
+        == coboundary-template {n = 1} (⊙cw-init ⊙skel) (inl lteS) (inl lteE)
+    coboundary-first-template-descend-from-two ⊙skel =
+      ap (coboundary-first-template ⊙skel (lteSR lteS) lteS idp) (path-lemma₁ ⊙skel)
+
+    coboundary-first-template-β : ∀ (⊙skel : ⊙Skeleton {i} 1)
+      →  coboundary-template {n = 1} ⊙skel (inl lteS) (inl lteE)
+      == TC.cw-co∂-head ⊙skel
+    coboundary-first-template-β ⊙skel = group-hom= $
+        ap (GroupHom.f ∘ coboundary-first-template ⊙skel lteS lteE idp) (path-lemma₂ ⊙skel)
+
+    {- lemmas of higher coboundaries -}
+    coboundary-higher-template-descend-from-far : ∀ {n} (⊙skel : ⊙Skeleton {i} (S n)) {m} Sm<n SSm<n
+      → coboundary-template {n = S n} ⊙skel {m = S m} (inl (lteSR (inr Sm<n))) (inl (lteSR (inr SSm<n)))
+        == coboundary-template {n = n} (⊙cw-init ⊙skel) {m = S m} (inl (inr Sm<n)) (inl (inr SSm<n))
+    coboundary-higher-template-descend-from-far ⊙skel {m} Sm<n SSm<n =
+      ap (coboundary-higher-template ⊙skel (lteSR (inr Sm<n)) (lteSR (inr SSm<n)) (⊙cw-init-take (lteSR (inr SSm<n)) ⊙skel))
+        (path-lemma₀ ⊙skel Sm<n SSm<n)
+
+    coboundary-higher-template-descend-from-one-above : ∀ {n} (⊙skel : ⊙Skeleton {i} (S (S (S n))))
+      → coboundary-template {n = S (S (S n))} ⊙skel {m = S n} (inl (lteSR lteS)) (inl lteS)
+        == coboundary-template {n = S (S n)} (⊙cw-init ⊙skel) {m = S n} (inl lteS) (inl lteE)
+    coboundary-higher-template-descend-from-one-above ⊙skel =
+      ap (coboundary-higher-template ⊙skel (lteSR lteS) lteS idp) (path-lemma₁ ⊙skel)
+
+    coboundary-higher-template-β : ∀ {n} (⊙skel : ⊙Skeleton {i} (S (S n)))
+      →  coboundary-template {n = S (S n)} ⊙skel {m = S n} (inl lteS) (inl lteE)
+      == HC.cw-co∂-last ⊙skel
+    coboundary-higher-template-β ⊙skel = group-hom= $
+      ap (GroupHom.f ∘ coboundary-higher-template ⊙skel lteS lteE idp) (path-lemma₂ ⊙skel)
+
+  cochain-complex : ∀ {n} → ⊙Skeleton {i} n → CochainComplex i
+  cochain-complex {n} ⊙skel = record {M} where
+    module M where
+      head : AbGroup i
+      head = C-abgroup 0 (⊙Lift ⊙Bool)
+
+      cochain : ℕ → AbGroup i
+      cochain m = cochain-template ⊙skel (≤-dec m n)
+
+      augment : C 0 (⊙Lift ⊙Bool) →ᴳ AbGroup.grp (cochain 0)
+      augment = augment-template ⊙skel (≤-dec 0 n)
+
+      coboundary : ∀ m → (AbGroup.grp (cochain m) →ᴳ AbGroup.grp (cochain (S m)))
+      coboundary m = coboundary-template ⊙skel (≤-dec m n) (≤-dec (S m) n)

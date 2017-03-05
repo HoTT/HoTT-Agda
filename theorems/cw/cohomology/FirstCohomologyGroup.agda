@@ -14,14 +14,14 @@ module cw.cohomology.FirstCohomologyGroup {i} (OT : OrdinaryTheory i)
   (⊙skel : ⊙Skeleton {i} 2) (ac : ⊙has-cells-with-choice 0 ⊙skel i) where
 
 open OrdinaryTheory OT
-open import cohomology.LongExactSequence cohomology-theory
+open import cw.cohomology.WedgeOfCells OT
 open import cw.cohomology.TipCoboundary OT (⊙cw-init ⊙skel)
 open import cw.cohomology.HigherCoboundary OT ⊙skel
-open import cw.cohomology.CoboundaryGrid OT ⊙skel ac
+open import cw.cohomology.HigherCoboundaryGrid OT ⊙skel ac
 open import cw.cohomology.GridPtdMap (⊙cw-incl-last (⊙cw-init ⊙skel)) (⊙cw-incl-last ⊙skel)
 open import cw.cohomology.TipGrid OT (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac)
 open import cw.cohomology.TopGrid OT 1 (⊙cw-incl-last (⊙cw-init ⊙skel)) (⊙cw-incl-last ⊙skel)
-open import cw.cohomology.WedgeOfCells OT
+open import cohomology.LongExactSequence cohomology-theory
 
 private
   0≤2 : 0 ≤ 2

@@ -20,18 +20,20 @@ module cohomology.ChainComplex where
       coboundary : ∀ n → (AbGroup.grp (cochain n) →ᴳ AbGroup.grp (cochain (S n)))
 
   homology-group : ∀ {i} → ChainComplex i
-    → (n : ℕ) → Group i
-  homology-group cc 0 = Ker/Im cc.augment (cc.boundary 0) (snd (cc.chain 0))
+    → (n : ℤ) → Group i
+  homology-group cc (pos 0) = Ker/Im cc.augment (cc.boundary 0) (snd (cc.chain 0))
     where module cc = ChainComplex cc
-  homology-group cc (S n) = Ker/Im (cc.boundary n) (cc.boundary (S n)) (snd (cc.chain (S n)))
+  homology-group cc (pos (S n)) = Ker/Im (cc.boundary n) (cc.boundary (S n)) (snd (cc.chain (S n)))
     where module cc = ChainComplex cc
+  homology-group {i} cc (negsucc _) = Lift-group {j = i} Unit-group
 
   cohomology-group : ∀ {i} → CochainComplex i
-    → (n : ℕ) → Group i
-  cohomology-group cc 0 = Ker/Im (cc.coboundary 0) cc.augment (snd (cc.cochain 0))
+    → (n : ℤ) → Group i
+  cohomology-group cc (pos 0) = Ker/Im (cc.coboundary 0) cc.augment (snd (cc.cochain 0))
     where module cc = CochainComplex cc
-  cohomology-group cc (S n) = Ker/Im (cc.coboundary (S n)) (cc.coboundary n) (snd (cc.cochain (S n)))
+  cohomology-group cc (pos (S n)) = Ker/Im (cc.coboundary (S n)) (cc.coboundary n) (snd (cc.cochain (S n)))
     where module cc = CochainComplex cc
+  cohomology-group {i} cc (negsucc _) = Lift-group {j = i} Unit-group
 
   complex-dualize : ∀ {i j} → ChainComplex i → AbGroup j
     →  CochainComplex (lmax i j)

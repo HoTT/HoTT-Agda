@@ -258,13 +258,6 @@ module _ where
         (prop-has-all-paths
           (Π-level (λ _ → Π-level (λ _ → Π-level (λ _ → pA _ _)))) _ _)
         (prop-has-all-paths (Π-level (λ _ → pA _ _)) _ _)
-      where
-      ap3 : ∀ {j} {C D E F : Type j}
-        {c₁ c₂ : C} {d₁ d₂ : D} {e₁ e₂ : E}
-        (f : C → D → E → F)
-        → (c₁ == c₂) → (d₁ == d₂) → (e₁ == e₂)
-        → f c₁ d₁ e₁ == f c₂ d₂ e₂
-      ap3 f idp idp idp = idp
 
     ↓-group-structure= : ∀ {i} {A B : Type i}
       (A-level : has-level 0 A)

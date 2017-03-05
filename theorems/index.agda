@@ -55,10 +55,7 @@ import cw.examples.Examples
 import cw.cohomology.ChainComplex
 import cw.cohomology.ChainComplex2 -- expected properties
 -- Eilenberg-Steenred cohomology groups rephrased
-import cw.cohomology.ZerothCohomologyGroup
-import cw.cohomology.FirstCohomologyGroup
-import cw.cohomology.HigherCohomologyGroups
-import cw.cohomology.ReconstructedCochainComplex
+import cw.cohomology.ReconstructedCohomologyGroups
 
 -- There are some unported theorems
 

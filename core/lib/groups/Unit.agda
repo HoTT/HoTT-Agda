@@ -25,32 +25,47 @@ Unit-group = group _ Unit-is-set Unit-group-structure
 
 0ᴳ = Unit-group
 
-0ᴳ-is-trivial : is-trivialᴳ 0ᴳ
-0ᴳ-is-trivial = λ _ → idp
+abstract
+  Unit-group-is-trivial : is-trivialᴳ Unit-group
+  Unit-group-is-trivial = λ _ → idp
 
-iso-0ᴳ-is-trivial : ∀ {i} {G : Group i} → G ≃ᴳ 0ᴳ → is-trivialᴳ G
-iso-0ᴳ-is-trivial G-iso-0 = iso-preserves'-trivial G-iso-0 0ᴳ-is-trivial
+  iso-Unit-is-trivial : ∀ {i} {G : Group i} → G ≃ᴳ Unit-group → is-trivialᴳ G
+  iso-Unit-is-trivial G-iso-0 = iso-preserves'-trivial G-iso-0 Unit-group-is-trivial
 
-trivial-iso-0ᴳ : ∀ {i} {G : Group i} → is-trivialᴳ G → G ≃ᴳ 0ᴳ
-trivial-iso-0ᴳ {G = G} G-triv = group-hom (λ _ → tt) (λ _ _ → idp) ,
+0ᴳ-is-trivial = Unit-group-is-trivial
+iso-0ᴳ-is-trivial = iso-Unit-is-trivial
+
+trivial-iso-Unit : ∀ {i} {G : Group i} → is-trivialᴳ G → G ≃ᴳ Unit-group
+trivial-iso-Unit {G = G} G-triv = group-hom (λ _ → tt) (λ _ _ → idp) ,
   is-eq _ (λ _ → Group.ident G) (λ _ → idp) (λ _ → ! (G-triv _))
+
+trivial-iso-0ᴳ = trivial-iso-Unit
 
 {- the following should be replaced by [is-trivial] completely -}
 
-contr-iso-0ᴳ : ∀ {i} (G : Group i) → is-contr (Group.El G) → G ≃ᴳ 0ᴳ
-contr-iso-0ᴳ G pA = ≃-to-≃ᴳ (contr-equiv-Unit pA) (λ _ _ → idp)
+abstract
+  contr-iso-Unit : ∀ {i} (G : Group i) → is-contr (Group.El G) → G ≃ᴳ 0ᴳ
+  contr-iso-Unit G pA = ≃-to-≃ᴳ (contr-equiv-Unit pA) (λ _ _ → idp)
 
-0ᴳ-hom-out-level : ∀ {i} {G : Group i}
-  → is-contr (0ᴳ →ᴳ G)
-0ᴳ-hom-out-level {G = G} =
-  cst-hom , λ φ → group-hom= $ λ= λ _ → ! (GroupHom.pres-ident φ)
+  Unit-hom-out-level : ∀ {i} {G : Group i}
+    → is-contr (0ᴳ →ᴳ G)
+  Unit-hom-out-level {G = G} =
+    cst-hom , λ φ → group-hom= $ λ= λ _ → ! (GroupHom.pres-ident φ)
 
-0ᴳ-hom-in-level : ∀ {i} {G : Group i}
-  → is-contr (G →ᴳ 0ᴳ)
-0ᴳ-hom-in-level {G = G} = cst-hom , λ φ → group-hom= $ λ= λ _ → idp
+  Unit-hom-in-level : ∀ {i} {G : Group i}
+    → is-contr (G →ᴳ 0ᴳ)
+  Unit-hom-in-level {G = G} = cst-hom , λ φ → group-hom= $ λ= λ _ → idp
 
-0ᴳ-is-abelian : is-abelian 0ᴳ
-0ᴳ-is-abelian _ _ = idp
+contr-iso-0ᴳ = contr-iso-Unit
+0ᴳ-hom-out-level = Unit-hom-out-level
+0ᴳ-hom-in-level = Unit-hom-in-level
+
+Unit-group-is-abelian : is-abelian 0ᴳ
+Unit-group-is-abelian _ _ = idp
+
+0ᴳ-is-abelian = Unit-group-is-abelian
 
 Unit-abgroup : AbGroup₀
-Unit-abgroup = Unit-group , 0ᴳ-is-abelian
+Unit-abgroup = Unit-group , Unit-group-is-abelian
+
+0ᴳ-abgroup = Unit-abgroup

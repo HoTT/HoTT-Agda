@@ -179,3 +179,18 @@ module _ {i j} {A : Type i} {B : Type j} where
 transp-cst=idf : ∀ {i} {A : Type i} {a x y : A} (p : x == y) (q : a == x)
   → transport (λ x → a == x) p q == q ∙ p
 transp-cst=idf idp q = ! (∙-unit-r q)
+
+{- for functions with more arguments -}
+module _ {i₀ i₁ i₂ j} {A₀ : Type i₀} {A₁ : Type i₁} {A₂ : Type i₂}
+  {B : Type j} (f : A₀ → A₁ → A₂ → B) where
+
+  ap3 : {x₀ y₀ : A₀} {x₁ y₁ : A₁} {x₂ y₂ : A₂}
+    → (x₀ == y₀) → (x₁ == y₁) → (x₂ == y₂) → f x₀ x₁ x₂ == f y₀ y₁ y₂
+  ap3 idp idp idp = idp
+
+module _ {i₀ i₁ i₂ i₃ j} {A₀ : Type i₀} {A₁ : Type i₁} {A₂ : Type i₂} {A₃ : Type i₃}
+  {B : Type j} (f : A₀ → A₁ → A₂ → A₃ → B) where
+
+  ap4 : {x₀ y₀ : A₀} {x₁ y₁ : A₁} {x₂ y₂ : A₂} {x₃ y₃ : A₃}
+    → (x₀ == y₀) → (x₁ == y₁) → (x₂ == y₂) → (x₃ == y₃) → f x₀ x₁ x₂ x₃ == f y₀ y₁ y₂ y₃
+  ap4 idp idp idp idp = idp

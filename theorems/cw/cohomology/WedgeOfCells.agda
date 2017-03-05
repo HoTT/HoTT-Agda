@@ -43,7 +43,7 @@ CXₙ/Xₙ₋₁ : ∀ {n} → ⊙Skeleton {i} (S n) → Group i
 CXₙ/Xₙ₋₁ {n} ⊙skel = C (ℕ-to-ℤ (S n)) (Xₙ/Xₙ₋₁ ⊙skel)
 
 CEl-Xₙ/Xₙ₋₁ : ∀ {n} → ⊙Skeleton {i} (S n) → Type i
-CEl-Xₙ/Xₙ₋₁ {n} ⊙skel = CEl (ℕ-to-ℤ (S n)) (Xₙ/Xₙ₋₁ ⊙skel)
+CEl-Xₙ/Xₙ₋₁ = Group.El ∘ CXₙ/Xₙ₋₁
 
 abstract
   CXₙ/Xₙ₋₁-is-abelian : ∀ {n} (⊙skel : ⊙Skeleton {i} (S n))
@@ -104,9 +104,9 @@ C-Cofiber-cw-incl-last : ∀ n {m} (⊙skel : ⊙Skeleton {i} (S m))
   → ⊙has-cells-with-choice 0 ⊙skel i
   →  C n (Xₙ/Xₙ₋₁ ⊙skel)
   ≃ᴳ Πᴳ (⊙cells-last ⊙skel) (λ _ → C n (⊙Lift (⊙Sphere (S m))))
-C-Cofiber-cw-incl-last n {m} skel (_ , cells-ac)
-  =   C-additive-iso n (λ _ → ⊙Lift (⊙Sphere (S m))) cells-ac
-  ∘eᴳ C-emap n (   ⊙Cofiber-cw-incl-last skel
+C-Cofiber-cw-incl-last n {m} ⊙skel ac
+  =   C-additive-iso n (λ _ → ⊙Lift (⊙Sphere (S m))) (⊙cells-last-has-choice ⊙skel ac)
+  ∘eᴳ C-emap n (   ⊙Cofiber-cw-incl-last ⊙skel
                ⊙∘e ⊙BigWedge-emap-r (λ _ → ⊙lower-equiv))
 
 C-Cofiber-cw-incl-last-diag : ∀ n (⊙skel : ⊙Skeleton {i} (S n))

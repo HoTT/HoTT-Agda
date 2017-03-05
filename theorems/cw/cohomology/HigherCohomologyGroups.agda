@@ -32,9 +32,7 @@ private
   ac₋₃ = ⊙take-has-cells-with-choice n≤SSSn ⊙skel ac
 
 open OrdinaryTheory OT
-open import cohomology.LongExactSequence cohomology-theory
-  (ℕ-to-ℤ (S n)) (⊙cw-incl-tail n≤SSSn ⊙skel)
-open import cw.cohomology.CoboundaryGrid OT
+open import cw.cohomology.HigherCoboundaryGrid OT
 open import cw.cohomology.Descending OT
 open import cw.cohomology.InnerGrid OT (ℕ-to-ℤ (S (S n)))
   (⊙cw-incl-last ⊙skel₋₂)
@@ -42,7 +40,7 @@ open import cw.cohomology.InnerGrid OT (ℕ-to-ℤ (S (S n)))
   (⊙cw-incl-last ⊙skel)
 open import cw.cohomology.WedgeOfCells OT
 open import cw.cohomology.HigherCoboundary OT ⊙skel
-import cw.cohomology.HigherCoboundary OT ⊙skel₋₁ as LC 
+import cw.cohomology.HigherCoboundary OT ⊙skel₋₁ as LC
 import cw.cohomology.GridLongExactSequence cohomology-theory as GLES
 
 {-
@@ -60,6 +58,9 @@ import cw.cohomology.GridLongExactSequence cohomology-theory as GLES
 private
   C-apex : Group i
   C-apex = C (ℕ-to-ℤ (S (S n))) (⊙Cofiber (⊙cw-incl-tail n≤SSSn ⊙skel))
+
+  open import cohomology.LongExactSequence cohomology-theory
+    (ℕ-to-ℤ (S n)) (⊙cw-incl-tail n≤SSSn ⊙skel)
 
   C-apex-iso-C-cw : C-apex ≃ᴳ C (ℕ-to-ℤ (S (S n))) ⊙⟦ ⊙skel ⟧
   C-apex-iso-C-cw = Exact2.G-trivial-and-L-trivial-implies-H-iso-K
