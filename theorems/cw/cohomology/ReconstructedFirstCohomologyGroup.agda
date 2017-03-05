@@ -6,7 +6,7 @@ open import cohomology.Theory
 open import groups.KernelImage
 open import cw.CW
 
-module cw.cohomology.FirstReconstructedCohomologyGroup {i : ULevel} (OT : OrdinaryTheory i) where
+module cw.cohomology.ReconstructedFirstCohomologyGroup {i : ULevel} (OT : OrdinaryTheory i) where
 
   open OrdinaryTheory OT
   import cw.cohomology.TipCoboundary OT as TC

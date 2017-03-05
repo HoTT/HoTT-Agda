@@ -11,9 +11,9 @@ module cw.cohomology.ReconstructedCohomologyGroups {i : ULevel} (OT : OrdinaryTh
   open OrdinaryTheory OT
   open import cw.cohomology.Descending OT
   open import cw.cohomology.ReconstructedCochainComplex OT
-  open import cw.cohomology.ZerothReconstructedCohomologyGroup OT
-  open import cw.cohomology.FirstReconstructedCohomologyGroup OT
-  open import cw.cohomology.HigherReconstructedCohomologyGroups OT
+  open import cw.cohomology.ReconstructedZerothCohomologyGroup OT
+  open import cw.cohomology.ReconstructedFirstCohomologyGroup OT
+  open import cw.cohomology.ReconstructedHigherCohomologyGroups OT
 
   abstract
     reconstructed-cohomology-group : ∀ m {n} (⊙skel : ⊙Skeleton {i} n)
