@@ -53,7 +53,6 @@ import cw.CW
 import cw.examples.Examples
 -- cellular cohomology groups
 import cw.cohomology.ChainComplex
-import cw.cohomology.ChainComplex2 -- expected properties
 -- Eilenberg-Steenred cohomology groups rephrased
 import cw.cohomology.ReconstructedCohomologyGroups
 
