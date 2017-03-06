@@ -55,6 +55,8 @@ import cw.examples.Examples
 import cw.cohomology.CellularChainComplex
 -- Eilenberg-Steenred cohomology groups rephrased
 import cw.cohomology.ReconstructedCohomologyGroups
+-- isomorphisms between the cochains the heads
+import cw.cohomology.ReconstructedCochainsIsoCellularCochains
 
 -- There are some unported theorems
 

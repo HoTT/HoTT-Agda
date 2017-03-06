@@ -103,6 +103,9 @@ record CohomologyTheory i : Type (lsucc i) where
   C2-is-abelian : (n : ℤ) → is-abelian (C2 n)
   C2-is-abelian n = C-is-abelian n (⊙Lift ⊙Bool)
 
+  C2-abgroup : ℤ → AbGroup i
+  C2-abgroup n = C-abgroup n (⊙Lift ⊙Bool)
+
 record OrdinaryTheory i : Type (lsucc i) where
   constructor ordinary-theory
   field

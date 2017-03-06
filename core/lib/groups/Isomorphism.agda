@@ -307,3 +307,16 @@ module _ {i} {G H : Group i} (iso : G ≃ᴳ H) (G-abelian : is-abelian G) where
         =⟨ ap2 H.comp (f-g h₂) (f-g h₁) ⟩
       H.comp h₂ h₁
         =∎
+
+pre∘ᴳ-iso : ∀ {i j k} {G : Group i} {H : Group j} (K : AbGroup k)
+  → (G ≃ᴳ H) → (hom-group H K ≃ᴳ hom-group G K)
+pre∘ᴳ-iso K iso = ≃-to-≃ᴳ (equiv to from to-from from-to) to-pres-comp where
+  to = GroupHom.f (pre∘ᴳ-hom K (–>ᴳ iso))
+  to-pres-comp = GroupHom.pres-comp (pre∘ᴳ-hom K (–>ᴳ iso))
+  from = GroupHom.f (pre∘ᴳ-hom K (<–ᴳ iso))
+  abstract
+    to-from : ∀ φ → to (from φ) == φ
+    to-from φ = group-hom= $ λ= λ g → ap (GroupHom.f φ) (GroupIso.g-f iso g)
+
+    from-to : ∀ φ → from (to φ) == φ
+    from-to φ = group-hom= $ λ= λ h → ap (GroupHom.f φ) (GroupIso.f-g iso h)

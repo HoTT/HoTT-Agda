@@ -57,3 +57,9 @@ Unit-abgroup : AbGroup₀
 Unit-abgroup = Unit-group , Unit-group-is-abelian
 
 0ᴳ-abgroup = Unit-abgroup
+
+abstract
+  hom₁-Unit-is-trivial : ∀ {i} (G : AbGroup i) → is-trivialᴳ (hom-group Unit-group G)
+  hom₁-Unit-is-trivial G φ = group-hom= $ λ= λ _ → GroupHom.pres-ident φ
+
+hom₁-0ᴳ-is-trivial = hom₁-Unit-is-trivial

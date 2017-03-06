@@ -61,6 +61,11 @@ module _ {i} where
     disjoint-pt-is-detachable unite-ise x | inl unit       | p   = inl p
     disjoint-pt-is-detachable unite-ise x | inr (y , pt≠y) | y=x = inr λ pt=x → pt≠y (pt=x ∙ ! y=x)
 
+  detachable-unite-equiv : ∀ {X}
+    → is-detachable X
+    → (⊤ ⊔ MinusPoint X ≃ fst X)
+  detachable-unite-equiv dX = _ , detachable-has-disjoint-pt dX
+
 module _ {i j k} n (A : Type i) (B : Type j) where
   abstract
     ⊔-has-choice-implies-inr-has-choice : has-choice n (A ⊔ B) k → has-choice n B k
