@@ -14,6 +14,7 @@ module cw.cohomology.FirstCohomologyGroup {i} (OT : OrdinaryTheory i)
   (⊙skel : ⊙Skeleton {i} 2) (ac : ⊙has-cells-with-choice 0 ⊙skel i) where
 
 open OrdinaryTheory OT
+open import cw.cohomology.TipAndAugment OT (⊙cw-take (lteSR lteS) ⊙skel)
 open import cw.cohomology.WedgeOfCells OT
 open import cw.cohomology.TipCoboundary OT (⊙cw-init ⊙skel)
 open import cw.cohomology.HigherCoboundary OT ⊙skel
@@ -27,7 +28,6 @@ private
   0≤2 : 0 ≤ 2
   0≤2 = lteSR lteS
 
-  ⊙skel₀ = ⊙cw-take 0≤2 ⊙skel
   ac₀ = ⊙take-has-cells-with-choice 0≤2 ⊙skel ac
 
 {-
@@ -62,7 +62,7 @@ private
     G-to-C-cw-is-surj : is-surjᴳ G-to-C-cw
     G-to-C-cw-is-surj = Exact.K-trivial-implies-φ-is-surj
       (exact-seq-index 2 $ C-cofiber-exact-seq 0 (⊙cw-incl-tail 0≤2 ⊙skel))
-      (C-points-≠-is-trivial 1 (pos-≠ (ℕ-S≠O 0)) ⊙skel₀ ac₀)
+      (CX₀-≠-is-trivial (pos-≠ (ℕ-S≠O 0)) ac₀)
 
   C-cw-to-H : C 1 ⊙⟦ ⊙skel ⟧ →ᴳ H
   C-cw-to-H = C-fmap 1 (⊙cw-incl-last ⊙skel)
@@ -71,7 +71,7 @@ private
     C-cw-to-H-is-inj : is-injᴳ C-cw-to-H
     C-cw-to-H-is-inj = Exact.G-trivial-implies-ψ-is-inj
       (exact-seq-index 2 $ C-cofiber-exact-seq 0 (⊙cw-incl-last ⊙skel))
-      (C-Cofiber-cw-incl-last-<-is-trivial 1 ltS ⊙skel ac)
+      (CXₙ/Xₙ₋₁-<-is-trivial ⊙skel ltS ac)
 
   C-WoC : Group i
   C-WoC = C 1 (⊙Cofiber (⊙cw-incl-last (⊙cw-init ⊙skel)))

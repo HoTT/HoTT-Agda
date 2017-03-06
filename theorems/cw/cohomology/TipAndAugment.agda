@@ -5,32 +5,42 @@ open import cohomology.Theory
 
 open import cw.CW
 
-module cw.cohomology.TipAndAugment {i} (CT : CohomologyTheory i)
+module cw.cohomology.TipAndAugment {i} (OT : OrdinaryTheory i)
   (⊙skel : ⊙Skeleton {i} 0) where
 
-open CohomologyTheory CT
+open OrdinaryTheory OT
+open import homotopy.DisjointlyPointedSet
+open import cohomology.DisjointlyPointedSet OT
 
-G : Group i
-G = C 0 (⊙Lift ⊙Bool)
+module _ (m : ℤ) where
+  CX₀ : Group i
+  CX₀ = C m (⊙cw-head ⊙skel)
 
-G-is-abelian : is-abelian G
-G-is-abelian = C-is-abelian 0 (⊙Lift ⊙Bool)
+  CX₀-is-abelian : is-abelian CX₀
+  CX₀-is-abelian = C-is-abelian m (⊙cw-head ⊙skel)
 
-CX₀ : Group i
-CX₀ = C 0 (⊙cw-head ⊙skel)
+  C2×CX₀ : Group i
+  C2×CX₀ = C2 m ×ᴳ CX₀
 
-CX₀-is-abelian : is-abelian CX₀
-CX₀-is-abelian = C-is-abelian 0 (⊙cw-head ⊙skel)
+  abstract
+    C2×CX₀-is-abelian : is-abelian C2×CX₀
+    C2×CX₀-is-abelian = ×ᴳ-is-abelian (C2 m) CX₀ (C2-is-abelian m) CX₀-is-abelian
 
-G×CX₀ : Group i
-G×CX₀ = G ×ᴳ CX₀
+  C2×CX₀-abgroup : AbGroup i
+  C2×CX₀-abgroup = C2×CX₀ , C2×CX₀-is-abelian
+
+  CX₀-β : ⊙has-cells-with-choice 0 ⊙skel i
+    → CX₀ ≃ᴳ Πᴳ (MinusPoint (⊙cw-head ⊙skel)) (λ _ → C2 m)
+  CX₀-β ac = C-set m (⊙cw-head ⊙skel) (snd (⊙Skeleton.skel ⊙skel)) (⊙Skeleton.pt-dec ⊙skel) ac
 
 abstract
-  G×CX₀-is-abelian : is-abelian G×CX₀
-  G×CX₀-is-abelian = ×ᴳ-is-abelian G CX₀ G-is-abelian CX₀-is-abelian
+  CX₀-≠-is-trivial : ∀ {m} (m≠0 : m ≠ 0)
+    → ⊙has-cells-with-choice 0 ⊙skel i
+    → is-trivialᴳ (CX₀ m)
+  CX₀-≠-is-trivial {m} m≠0 ac =
+    iso-preserves'-trivial (CX₀-β m ac) $
+      Πᴳ-is-trivial (MinusPoint (⊙cw-head ⊙skel))
+        (λ _ → C2 m) (λ _ → C-dimension m≠0)
 
-G×CX₀-abgroup : AbGroup i
-G×CX₀-abgroup = G×CX₀ , G×CX₀-is-abelian
-
-cw-coε : G →ᴳ G×CX₀
-cw-coε = ×ᴳ-inl {G = G} {H = CX₀}
+cw-coε : C2 0 →ᴳ C2×CX₀ 0
+cw-coε = ×ᴳ-inl {G = C2 0} {H = CX₀ 0}

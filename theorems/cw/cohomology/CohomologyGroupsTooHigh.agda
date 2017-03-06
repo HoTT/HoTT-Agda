@@ -24,4 +24,4 @@ open import groups.KernelCstImageCst G
 
 C-cw-iso-ker/im : C (ℕ-to-ℤ m) ⊙⟦ ⊙skel ⟧ ≃ᴳ Ker/Im
 C-cw-iso-ker/im = Ker-cst-quot-Im-cst ⁻¹ᴳ ∘eᴳ lift-iso
-  ∘eᴳ trivial-iso-0ᴳ (C-cw-at-higher m n<m ⊙skel ac)
+  ∘eᴳ trivial-iso-0ᴳ (C-cw-at-higher ⊙skel n<m ac)

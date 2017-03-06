@@ -11,7 +11,7 @@ module cw.cohomology.ReconstructedFirstCohomologyGroup {i : ULevel} (OT : Ordina
   open OrdinaryTheory OT
   import cw.cohomology.TipCoboundary OT as TC
   import cw.cohomology.HigherCoboundary OT as HC
-  import cw.cohomology.TipAndAugment cohomology-theory as TAA
+  import cw.cohomology.TipAndAugment OT as TAA
   open import cw.cohomology.WedgeOfCells OT
   open import cw.cohomology.Descending OT
   open import cw.cohomology.ReconstructedCochainComplex OT
@@ -29,11 +29,11 @@ module cw.cohomology.ReconstructedFirstCohomologyGroup {i : ULevel} (OT : Ordina
         →  cohomology-group (cochain-complex ⊙skel) 1
         == cohomology-group (cochain-complex (⊙cw-init ⊙skel)) 1
       first-cohomology-group-descend {n = O} ⊙skel
-        = ap2 (λ δ₁ δ₂ → Ker/Im δ₂ δ₁ (CXₙ/Xₙ₋₁-is-abelian (⊙cw-take (lteSR lteS) ⊙skel)))
+        = ap2 (λ δ₁ δ₂ → Ker/Im δ₂ δ₁ (CXₙ/Xₙ₋₁-is-abelian (⊙cw-take (lteSR lteS) ⊙skel) 1))
             (coboundary-first-template-descend-from-far {n = 2} ⊙skel (ltSR ltS) ltS)
             (coboundary-higher-template-descend-from-one-above ⊙skel)
       first-cohomology-group-descend {n = S n} ⊙skel -- n = S n
-        = ap2 (λ δ₁ δ₂ → Ker/Im δ₂ δ₁ (CXₙ/Xₙ₋₁-is-abelian (⊙cw-take (≤-+-l 1 (lteSR $ lteSR $ inr (O<S n))) ⊙skel)))
+        = ap2 (λ δ₁ δ₂ → Ker/Im δ₂ δ₁ (CXₙ/Xₙ₋₁-is-abelian (⊙cw-take (≤-+-l 1 (lteSR $ lteSR $ inr (O<S n))) ⊙skel) 1))
             (coboundary-first-template-descend-from-far  {n = 3 + n} ⊙skel (ltSR (ltSR (O<S n))) (<-+-l 1 (ltSR (O<S n))))
             (coboundary-higher-template-descend-from-far {n = 3 + n} ⊙skel (<-+-l 1 (ltSR (O<S n))) (<-+-l 2 (O<S n)))
 
@@ -42,9 +42,9 @@ module cw.cohomology.ReconstructedFirstCohomologyGroup {i : ULevel} (OT : Ordina
         == Ker/Im
             (HC.cw-co∂-last ⊙skel)
             (TC.cw-co∂-head (⊙cw-init ⊙skel))
-            (CXₙ/Xₙ₋₁-is-abelian (⊙cw-init ⊙skel))
+            (CXₙ/Xₙ₋₁-is-abelian (⊙cw-init ⊙skel) 1)
       first-cohomology-group-β ⊙skel
-        = ap2 (λ δ₁ δ₂ → Ker/Im δ₂ δ₁ (CXₙ/Xₙ₋₁-is-abelian (⊙cw-init ⊙skel)))
+        = ap2 (λ δ₁ δ₂ → Ker/Im δ₂ δ₁ (CXₙ/Xₙ₋₁-is-abelian (⊙cw-init ⊙skel) 1))
             ( coboundary-first-template-descend-from-two ⊙skel
             ∙ coboundary-first-template-β (⊙cw-init ⊙skel))
             (coboundary-higher-template-β ⊙skel)
@@ -54,12 +54,12 @@ module cw.cohomology.ReconstructedFirstCohomologyGroup {i : ULevel} (OT : Ordina
         == Ker/Im
             (cst-hom {H = Lift-group {j = i} Unit-group})
             (TC.cw-co∂-head ⊙skel)
-            (CXₙ/Xₙ₋₁-is-abelian ⊙skel)
+            (CXₙ/Xₙ₋₁-is-abelian ⊙skel 1)
       first-cohomology-group-β-one-below ⊙skel
         = ap
             (λ δ₁ → Ker/Im
               (cst-hom {H = Lift-group {j = i} Unit-group})
-              δ₁ (CXₙ/Xₙ₋₁-is-abelian ⊙skel))
+              δ₁ (CXₙ/Xₙ₋₁-is-abelian ⊙skel 1))
             (coboundary-first-template-β ⊙skel)
 
   abstract
@@ -67,7 +67,7 @@ module cw.cohomology.ReconstructedFirstCohomologyGroup {i : ULevel} (OT : Ordina
       → ⊙has-cells-with-choice 0 ⊙skel i
       → C 1 ⊙⟦ ⊙skel ⟧ ≃ᴳ cohomology-group (cochain-complex ⊙skel) 1
     first-cohomology-group {n = 0} ⊙skel ac =
-      CGTH.C-cw-iso-ker/im 1 ltS (TAA.G×CX₀ ⊙skel) ⊙skel ac
+      CGTH.C-cw-iso-ker/im 1 ltS (TAA.C2×CX₀ ⊙skel 0) ⊙skel ac
     first-cohomology-group {n = 1} ⊙skel ac =
           coe!ᴳ-iso (first-cohomology-group-β-one-below ⊙skel)
       ∘eᴳ FCGD.C-cw-iso-ker/im ⊙skel ac
@@ -77,4 +77,4 @@ module cw.cohomology.ReconstructedFirstCohomologyGroup {i : ULevel} (OT : Ordina
     first-cohomology-group {n = S (S (S n))} ⊙skel ac =
           coe!ᴳ-iso (first-cohomology-group-descend ⊙skel)
       ∘eᴳ first-cohomology-group (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac)
-      ∘eᴳ C-cw-descend-at-lower 1 (<-+-l 1 (O<S n)) ⊙skel ac
+      ∘eᴳ C-cw-descend-at-lower ⊙skel (<-+-l 1 (O<S n)) ac

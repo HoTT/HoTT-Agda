@@ -40,18 +40,19 @@ module _ {i} where
         sep x | inl _  = inl unit
         sep x | inr ¬p = inr (x , ¬p)
 
-        sep-unite : ∀ x → sep (unite-pt X x) == x
-        sep-unite (inl _) with dec (snd X)
-        sep-unite (inl _) | inl _  = idp
-        sep-unite (inl _) | inr ¬p = ⊥-rec (¬p idp)
-        sep-unite (inr (x , ¬p)) with dec x
-        sep-unite (inr (x , ¬p)) | inl p   = ⊥-rec (¬p p)
-        sep-unite (inr (x , ¬p)) | inr ¬p' = ap inr $ pair= idp (prop-has-all-paths ¬-is-prop ¬p' ¬p)
+        abstract
+          sep-unite : ∀ x → sep (unite-pt X x) == x
+          sep-unite (inl _) with dec (snd X)
+          sep-unite (inl _) | inl _  = idp
+          sep-unite (inl _) | inr ¬p = ⊥-rec (¬p idp)
+          sep-unite (inr (x , ¬p)) with dec x
+          sep-unite (inr (x , ¬p)) | inl p   = ⊥-rec (¬p p)
+          sep-unite (inr (x , ¬p)) | inr ¬p' = ap inr $ pair= idp (prop-has-all-paths ¬-is-prop ¬p' ¬p)
 
-        unite-sep : ∀ x → unite-pt X (sep x) == x
-        unite-sep x with dec x
-        unite-sep x | inl p = p
-        unite-sep x | inr ¬p = idp
+          unite-sep : ∀ x → unite-pt X (sep x) == x
+          unite-sep x with dec x
+          unite-sep x | inl p = p
+          unite-sep x | inr ¬p = idp
 
     disjoint-pt-is-detachable : {X : Ptd i}
       → has-disjoint-pt X → is-detachable X
@@ -79,11 +80,12 @@ module _ {i j k} n (A : Type i) (B : Type j) where
             from f (inl a) = lift tt
             from f (inr b) = f b
 
-            to-from : ∀ f → to (from f) == f
-            to-from f = λ= λ b → idp
+            abstract
+              to-from : ∀ f → to (from f) == f
+              to-from f = λ= λ b → idp
 
-            from-to : ∀ f → from (to f) == f
-            from-to f = λ= λ{(inl a) → idp; (inr b) → idp}
+              from-to : ∀ f → from (to f) == f
+              from-to f = λ= λ{(inl a) → idp; (inr b) → idp}
 
           lemma₂ : Π (A ⊔ B) (Trunc n ∘ W') ≃ Π B (Trunc n ∘ W)
           lemma₂ = equiv to from to-from from-to where
@@ -94,16 +96,17 @@ module _ {i j k} n (A : Type i) (B : Type j) where
             from f (inl a) = [ lift tt ]
             from f (inr b) = f b
 
-            to-from : ∀ f → to (from f) == f
-            to-from f = λ= λ b → idp
+            abstract
+              to-from : ∀ f → to (from f) == f
+              to-from f = λ= λ b → idp
 
-            from-to : ∀ f → from (to f) == f
-            from-to f = λ= λ{
-              (inl a) → Trunc-elim
-                {P = λ t → [ lift tt ] == t}
-                (λ _ → =-preserves-level Trunc-level)
-                (λ _ → idp) (f (inl a));
-              (inr b) → idp}
+              from-to : ∀ f → from (to f) == f
+              from-to f = λ= λ{
+                (inl a) → Trunc-elim
+                  {P = λ t → [ lift tt ] == t}
+                  (λ _ → =-preserves-level Trunc-level)
+                  (λ _ → idp) (f (inl a));
+                (inr b) → idp}
 
           lemma₃ : ∀ f → –> lemma₂ (unchoose (<– (Trunc-emap n lemma₁) f)) == unchoose f
           lemma₃ = Trunc-elim

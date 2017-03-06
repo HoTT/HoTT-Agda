@@ -14,8 +14,8 @@ module cw.cohomology.TipGrid {i} (OT : OrdinaryTheory i)
 
 open OrdinaryTheory OT
 open import cw.cohomology.Descending OT
-open import cw.cohomology.WedgeOfCells OT
-open import cw.cohomology.TipAndAugment cohomology-theory (⊙cw-init ⊙skel)
+open import cw.cohomology.WedgeOfCells OT ⊙skel
+open import cw.cohomology.TipAndAugment OT (⊙cw-init ⊙skel)
 open import cw.cohomology.TipCoboundary OT ⊙skel
 import cohomology.LongExactSequence
 
@@ -33,7 +33,7 @@ Ker-cw-co∂-head' : C 0 ⊙⟦ ⊙skel ⟧ ≃ᴳ Ker cw-co∂-head'
 Ker-cw-co∂-head' = Exact2.G-trivial-implies-H-iso-ker
   (exact-seq-index 2 $ LES.C-cofiber-exact-seq -1)
   (exact-seq-index 0 $ LES.C-cofiber-exact-seq 0)
-  (C-Cofiber-cw-incl-last-<-is-trivial 0 ltS ⊙skel ac)
+  (CXₙ/Xₙ₋₁-<-is-trivial ltS ac)
 
 {- NOT USED
 
@@ -53,7 +53,7 @@ private
     lemma-exact₀ = exact-seq-index 2 $ LES.C-cofiber-exact-seq 0
 
     lemma-trivial : is-trivialᴳ (C 1 (⊙cw-head ⊙skel))
-    lemma-trivial = C-points-≠-is-trivial 1 (pos-≠ (ℕ-S≠O 0)) (⊙cw-init ⊙skel)
+    lemma-trivial = CX₀-≠-is-trivial (pos-≠ (ℕ-S≠O 0))
       (⊙init-has-cells-with-choice ⊙skel ac)
 
 Coker-cw-co∂-head : CokerCo∂Head.grp ≃ᴳ C 1 ⊙⟦ ⊙skel ⟧

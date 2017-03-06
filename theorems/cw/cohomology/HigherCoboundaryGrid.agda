@@ -45,7 +45,7 @@ private
     lemma₀-exact₁ = exact-seq-index 0 $ GLES.C-grid-cofiber-exact-seq (ℕ-to-ℤ (S n))
 
     lemma₀-trivial : is-trivialᴳ (C (ℕ-to-ℤ (S n)) Z/Y)
-    lemma₀-trivial = C-Cofiber-cw-incl-last-<-is-trivial (S n) ltS ⊙skel ac
+    lemma₀-trivial = CXₙ/Xₙ₋₁-<-is-trivial ⊙skel ltS ac
 
 Ker-cw-co∂-last : C (ℕ-to-ℤ (S n)) (⊙Cofiber (⊙cw-incl-tail n≤SSn ⊙skel))
                ≃ᴳ Ker.grp cw-co∂-last
@@ -64,9 +64,9 @@ private
     lemma₁-exact₁ = exact-seq-index 2 $ GLES.C-grid-cofiber-exact-seq (ℕ-to-ℤ (S n))
 
     lemma₁-trivial : is-trivialᴳ (C (ℕ-to-ℤ (S (S n))) Y/X)
-    lemma₁-trivial = C-Cofiber-cw-incl-last->-is-trivial (S (S n)) ltS (⊙cw-init ⊙skel)
+    lemma₁-trivial = CXₙ/Xₙ₋₁->-is-trivial (⊙cw-init ⊙skel) ltS
       (⊙init-has-cells-with-choice ⊙skel ac)
 
 Coker-cw-co∂-last : CokerCo∂ ≃ᴳ C (ℕ-to-ℤ (S (S n))) (⊙Cofiber (⊙cw-incl-tail n≤SSn ⊙skel))
 Coker-cw-co∂-last = Exact2.L-trivial-implies-coker-iso-K
-  lemma₁-exact₀ lemma₁-exact₁ (CXₙ/Xₙ₋₁-is-abelian ⊙skel) lemma₁-trivial
+  lemma₁-exact₀ lemma₁-exact₁ (CXₙ/Xₙ₋₁-is-abelian ⊙skel (ℕ-to-ℤ (S (S n)))) lemma₁-trivial

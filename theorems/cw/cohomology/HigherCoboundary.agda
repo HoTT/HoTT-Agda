@@ -14,11 +14,11 @@ open import cw.cohomology.WedgeOfCells OT
 open import cw.cohomology.GridLongExactSequence cohomology-theory
   (ℕ-to-ℤ (S n)) (⊙cw-incl-last (⊙cw-init ⊙skel)) (⊙cw-incl-last ⊙skel)
 
-cw-co∂-last : CXₙ/Xₙ₋₁ (⊙cw-init ⊙skel) →ᴳ CXₙ/Xₙ₋₁ ⊙skel
+cw-co∂-last : CXₙ/Xₙ₋₁ (⊙cw-init ⊙skel) (ℕ-to-ℤ (S n)) →ᴳ CXₙ/Xₙ₋₁ ⊙skel (ℕ-to-ℤ (S (S n)))
 cw-co∂-last = grid-co∂
 
 module CokerCo∂ where
-  grp = Coker cw-co∂-last (CXₙ/Xₙ₋₁-is-abelian ⊙skel)
+  grp = Coker cw-co∂-last (CXₙ/Xₙ₋₁-is-abelian ⊙skel (ℕ-to-ℤ (S (S n))))
   open Group grp public
 
 CokerCo∂ = CokerCo∂.grp

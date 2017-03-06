@@ -97,6 +97,12 @@ record CohomologyTheory i : Type (lsucc i) where
     → C n (⊙BigWedge Z) ≃ᴳ Πᴳ I (λ i → C n (Z i))
   C-additive-iso n Z ac = C-additive-hom n Z , C-additive n Z ac
 
+  C2 : ℤ → Group i
+  C2 n = C n (⊙Lift ⊙Bool)
+
+  C2-is-abelian : (n : ℤ) → is-abelian (C2 n)
+  C2-is-abelian n = C-is-abelian n (⊙Lift ⊙Bool)
+
 record OrdinaryTheory i : Type (lsucc i) where
   constructor ordinary-theory
   field
@@ -104,4 +110,4 @@ record OrdinaryTheory i : Type (lsucc i) where
     cohomology-theory : CohomologyTheory i
   open CohomologyTheory cohomology-theory public
   field
-    C-dimension : {n : ℤ} → n ≠ 0 → is-trivialᴳ (C n (⊙Lift ⊙S⁰))
+    C-dimension : {n : ℤ} → n ≠ 0 → is-trivialᴳ (C2 n)

@@ -9,7 +9,7 @@ open import cw.CW
 module cw.cohomology.ReconstructedCochainComplex {i : ULevel} (OT : OrdinaryTheory i) where
 
   open OrdinaryTheory OT
-  import cw.cohomology.TipAndAugment cohomology-theory as TAA
+  import cw.cohomology.TipAndAugment OT as TAA
   import cw.cohomology.TipCoboundary OT as TC
   import cw.cohomology.HigherCoboundary OT as HC
   open import cw.cohomology.WedgeOfCells OT
@@ -17,8 +17,8 @@ module cw.cohomology.ReconstructedCochainComplex {i : ULevel} (OT : OrdinaryTheo
   cochain-template : ∀ {n} (⊙skel : ⊙Skeleton {i} n) {m}
     → Dec (m ≤ n) → AbGroup i
   cochain-template ⊙skel (inr _) = Lift-abgroup {j = i} Unit-abgroup
-  cochain-template ⊙skel {m = 0} (inl 0≤n) = TAA.G×CX₀-abgroup (⊙cw-take 0≤n ⊙skel)
-  cochain-template ⊙skel {m = S m} (inl Sm≤n) = CXₙ/Xₙ₋₁-abgroup (⊙cw-take Sm≤n ⊙skel)
+  cochain-template ⊙skel {m = 0} (inl 0≤n) = TAA.C2×CX₀-abgroup (⊙cw-take 0≤n ⊙skel) 0
+  cochain-template ⊙skel {m = S m} (inl Sm≤n) = CXₙ/Xₙ₋₁-abgroup (⊙cw-take Sm≤n ⊙skel) (ℕ-to-ℤ (S m))
 
   cochain-is-abelian-template : ∀ {n} (⊙skel : ⊙Skeleton {i} n) {m} m≤n?
     → is-abelian (AbGroup.grp (cochain-template ⊙skel {m} m≤n?))
@@ -30,24 +30,25 @@ module cw.cohomology.ReconstructedCochainComplex {i : ULevel} (OT : OrdinaryTheo
         → (0≤n : 0 ≤ n) (1≤n : 1 ≤ n)
         → ⊙cw-init (⊙cw-take 1≤n ⊙skel) == ⊙cw-take (≤-trans lteS 1≤n) ⊙skel
         → ⊙cw-take (≤-trans lteS 1≤n) ⊙skel == ⊙cw-take 0≤n ⊙skel
-        → TAA.G×CX₀ (⊙cw-take 0≤n ⊙skel) →ᴳ CXₙ/Xₙ₋₁ (⊙cw-take 1≤n ⊙skel)
+        → TAA.C2×CX₀ (⊙cw-take 0≤n ⊙skel) 0 →ᴳ CXₙ/Xₙ₋₁ (⊙cw-take 1≤n ⊙skel) 1
       coboundary-first-template ⊙skel 0≤n 1≤n path₀ path₁ =
            TC.cw-co∂-head (⊙cw-take 1≤n ⊙skel)
-        ∘ᴳ transport!ᴳ TAA.G×CX₀ (path₀ ∙ path₁)
+        ∘ᴳ transport!ᴳ (λ ⊙skel → TAA.C2×CX₀ ⊙skel 0) (path₀ ∙ path₁)
 
       coboundary-higher-template : ∀ {n} (⊙skel : ⊙Skeleton {i} n)
         → {m : ℕ} (Sm≤n : S m ≤ n) (SSm≤n : S (S m) ≤ n)
         → ⊙cw-init (⊙cw-take SSm≤n ⊙skel) == ⊙cw-take (≤-trans lteS SSm≤n) ⊙skel
         → ⊙cw-take (≤-trans lteS SSm≤n) ⊙skel == ⊙cw-take Sm≤n ⊙skel
-        →  C (ℕ-to-ℤ (S m)) (⊙Cofiber (⊙cw-incl-nth Sm≤n ⊙skel))
-        →ᴳ C (ℕ-to-ℤ (S (S m))) (⊙Cofiber (⊙cw-incl-nth SSm≤n ⊙skel))
+        →  CXₙ/Xₙ₋₁ (⊙cw-take Sm≤n ⊙skel)  (ℕ-to-ℤ (S m))
+        →ᴳ CXₙ/Xₙ₋₁ (⊙cw-take SSm≤n ⊙skel) (ℕ-to-ℤ (S (S m)))
       coboundary-higher-template ⊙skel {m} Sm≤n SSm≤n path₀ path₁ =
            HC.cw-co∂-last (⊙cw-take SSm≤n ⊙skel)
-        ∘ᴳ transport!ᴳ (λ ⊙skel → C (ℕ-to-ℤ (S m)) (⊙Cofiber (⊙cw-incl-last ⊙skel))) (path₀ ∙ path₁)
+        ∘ᴳ transport!ᴳ (λ ⊙skel → CXₙ/Xₙ₋₁ ⊙skel (ℕ-to-ℤ (S m))) (path₀ ∙ path₁)
 
   coboundary-template : ∀ {n} (⊙skel : ⊙Skeleton {i} n)
     → {m : ℕ} (m≤n? : Dec (m ≤ n)) (Sm≤n? : Dec (S m ≤ n))
-    → (AbGroup.grp (cochain-template ⊙skel m≤n?) →ᴳ AbGroup.grp (cochain-template ⊙skel Sm≤n?))
+    →  AbGroup.grp (cochain-template ⊙skel m≤n?)
+    →ᴳ AbGroup.grp (cochain-template ⊙skel Sm≤n?)
   coboundary-template ⊙skel _ (inr _) = cst-hom
   coboundary-template ⊙skel (inr m≰n) (inl Sm≤n) = ⊥-rec $ m≰n (≤-trans lteS Sm≤n)
   coboundary-template ⊙skel {m = 0} (inl 0≤n) (inl 1≤n) =

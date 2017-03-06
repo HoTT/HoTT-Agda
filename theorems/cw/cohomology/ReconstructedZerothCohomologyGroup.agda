@@ -10,11 +10,11 @@ module cw.cohomology.ReconstructedZerothCohomologyGroup {i : ULevel} (OT : Ordin
 
   open OrdinaryTheory OT
   import cw.cohomology.TipCoboundary OT as TC
-  import cw.cohomology.TipAndAugment cohomology-theory as TAA
+  import cw.cohomology.TipAndAugment OT as TAA
   open import cw.cohomology.Descending OT
   open import cw.cohomology.ReconstructedCochainComplex OT
   import cw.cohomology.ZerothCohomologyGroup OT as ZCG
-  import cw.cohomology.ZerothCohomologyGroupOnDiag cohomology-theory as ZCGD
+  import cw.cohomology.ZerothCohomologyGroupOnDiag OT as ZCGD
 
   private
     ≤-dec-has-all-paths : {m n : ℕ} → has-all-paths (Dec (m ≤ n))
@@ -29,12 +29,12 @@ module cw.cohomology.ReconstructedZerothCohomologyGroup {i : ULevel} (OT : Ordin
         = ap
             (λ δ → Ker/Im δ
               (TAA.cw-coε (⊙cw-take (lteSR lteS) ⊙skel))
-              (TAA.G×CX₀-is-abelian (⊙cw-take (lteSR lteS) ⊙skel)))
+              (TAA.C2×CX₀-is-abelian (⊙cw-take (lteSR lteS) ⊙skel) 0))
             (coboundary-first-template-descend-from-two ⊙skel)
       zeroth-cohomology-group-descend {n = S n} ⊙skel
         = ap (λ δ → Ker/Im δ
                 (TAA.cw-coε (⊙cw-take (inr (O<S (2 + n))) ⊙skel))
-                (TAA.G×CX₀-is-abelian (⊙cw-take (inr (O<S (2 + n))) ⊙skel)))
+                (TAA.C2×CX₀-is-abelian (⊙cw-take (inr (O<S (2 + n))) ⊙skel) 0))
             (coboundary-first-template-descend-from-far ⊙skel (O<S (1 + n)) (<-+-l 1 (O<S n)))
 
       zeroth-cohomology-group-β : ∀ (⊙skel : ⊙Skeleton {i} 1)
@@ -42,12 +42,12 @@ module cw.cohomology.ReconstructedZerothCohomologyGroup {i : ULevel} (OT : Ordin
         == Ker/Im
             (TC.cw-co∂-head ⊙skel)
             (TAA.cw-coε (⊙cw-init ⊙skel))
-            (TAA.G×CX₀-is-abelian (⊙cw-init ⊙skel))
+            (TAA.C2×CX₀-is-abelian (⊙cw-init ⊙skel) 0)
       zeroth-cohomology-group-β ⊙skel
         = ap
             (λ δ → Ker/Im δ
               (TAA.cw-coε (⊙cw-init ⊙skel))
-              (TAA.G×CX₀-is-abelian (⊙cw-init ⊙skel)))
+              (TAA.C2×CX₀-is-abelian (⊙cw-init ⊙skel) 0))
             (coboundary-first-template-β ⊙skel)
 
   abstract
@@ -61,4 +61,4 @@ module cw.cohomology.ReconstructedZerothCohomologyGroup {i : ULevel} (OT : Ordin
     zeroth-cohomology-group {n = S (S n)} ⊙skel ac =
           coe!ᴳ-iso (zeroth-cohomology-group-descend ⊙skel)
       ∘eᴳ zeroth-cohomology-group (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac)
-      ∘eᴳ C-cw-descend-at-lower 0 (O<S n) ⊙skel ac
+      ∘eᴳ C-cw-descend-at-lower ⊙skel (O<S n) ac

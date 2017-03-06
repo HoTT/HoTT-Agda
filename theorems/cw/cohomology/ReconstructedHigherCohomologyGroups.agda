@@ -35,7 +35,7 @@ module cw.cohomology.ReconstructedHigherCohomologyGroups {i : ULevel} (OT : Ordi
             (≤-dec-has-all-paths (≤-dec (1 + m) (4 + m)) (inl (lteSR $ lteSR lteS)))
             (≤-dec-has-all-paths (≤-dec (2 + m) (4 + m)) (inl (lteSR lteS)))
             (≤-dec-has-all-paths (≤-dec (3 + m) (4 + m)) (inl lteS))
-        ∙ ap2 (λ δ₁ δ₂ → Ker/Im δ₂ δ₁ (CXₙ/Xₙ₋₁-is-abelian (⊙cw-take (lteSR lteS) ⊙skel)))
+        ∙ ap2 (λ δ₁ δ₂ → Ker/Im δ₂ δ₁ (CXₙ/Xₙ₋₁-is-abelian (⊙cw-take (lteSR lteS) ⊙skel) (ℕ-to-ℤ (2 + m))))
             (coboundary-higher-template-descend-from-far {n = 3 + m} ⊙skel {m = m} (ltSR ltS) ltS)
             (coboundary-higher-template-descend-from-one-above ⊙skel)
         ∙ ap3
@@ -57,7 +57,7 @@ module cw.cohomology.ReconstructedHigherCohomologyGroups {i : ULevel} (OT : Ordi
             (≤-dec-has-all-paths (≤-dec (3 + m) (3 + n)) (inl (≤-+-l 2 (lteSR (inr Sm<n)))))
         ∙ ap2
             (λ δ₁ δ₂ → Ker/Im δ₂ δ₁
-              (CXₙ/Xₙ₋₁-is-abelian (⊙cw-take (≤-+-l 1 (lteSR $ lteSR $ inr Sm<n)) ⊙skel)))
+              (CXₙ/Xₙ₋₁-is-abelian (⊙cw-take (≤-+-l 1 (lteSR $ lteSR $ inr Sm<n)) ⊙skel) (ℕ-to-ℤ (2 + m))))
             (coboundary-higher-template-descend-from-far {n = 2 + n} ⊙skel {m = m}   (ltSR (ltSR Sm<n))    (<-+-l 1 (ltSR Sm<n)))
             (coboundary-higher-template-descend-from-far {n = 2 + n} ⊙skel {m = S m} (<-+-l 1 (ltSR Sm<n)) (<-+-l 2 Sm<n))
         ∙ ap3
@@ -74,7 +74,7 @@ module cw.cohomology.ReconstructedHigherCohomologyGroups {i : ULevel} (OT : Ordi
         == Ker/Im
             (HC.cw-co∂-last ⊙skel)
             (HC.cw-co∂-last (⊙cw-init ⊙skel))
-            (CXₙ/Xₙ₋₁-is-abelian (⊙cw-init ⊙skel))
+            (CXₙ/Xₙ₋₁-is-abelian (⊙cw-init ⊙skel) (ℕ-to-ℤ (2 + n)))
       higher-cohomology-group-β {n} ⊙skel
         = ap3
             (λ 1+n≤3+n? 2+n≤3+n? 3+n≤3+n? → Ker/Im
@@ -84,7 +84,7 @@ module cw.cohomology.ReconstructedHigherCohomologyGroups {i : ULevel} (OT : Ordi
             (≤-dec-has-all-paths (≤-dec (1 + n) (3 + n)) (inl (lteSR lteS)))
             (≤-dec-has-all-paths (≤-dec (2 + n) (3 + n)) (inl lteS))
             (≤-dec-has-all-paths (≤-dec (3 + n) (3 + n)) (inl lteE))
-        ∙ ap2 (λ δ₁ δ₂ → Ker/Im δ₂ δ₁ (CXₙ/Xₙ₋₁-is-abelian (⊙cw-init ⊙skel)))
+        ∙ ap2 (λ δ₁ δ₂ → Ker/Im δ₂ δ₁ (CXₙ/Xₙ₋₁-is-abelian (⊙cw-init ⊙skel) (ℕ-to-ℤ (2 + n))))
             ( coboundary-higher-template-descend-from-one-above ⊙skel
             ∙ coboundary-higher-template-β (⊙cw-init ⊙skel))
             (coboundary-higher-template-β ⊙skel)
@@ -94,7 +94,7 @@ module cw.cohomology.ReconstructedHigherCohomologyGroups {i : ULevel} (OT : Ordi
         == Ker/Im
             (cst-hom {H = Lift-group {j = i} Unit-group})
             (HC.cw-co∂-last ⊙skel)
-            (CXₙ/Xₙ₋₁-is-abelian ⊙skel)
+            (CXₙ/Xₙ₋₁-is-abelian ⊙skel (ℕ-to-ℤ (2 + n)))
       higher-cohomology-group-β-one-below {n} ⊙skel
         = ap3
             (λ 1+n≤2+n? 2+n≤2+n? 3+n≤2+n? → Ker/Im
@@ -107,7 +107,7 @@ module cw.cohomology.ReconstructedHigherCohomologyGroups {i : ULevel} (OT : Ordi
         ∙ ap
             (λ δ₁ → Ker/Im
               (cst-hom {H = Lift-group {j = i} Unit-group})
-              δ₁ (CXₙ/Xₙ₋₁-is-abelian ⊙skel))
+              δ₁ (CXₙ/Xₙ₋₁-is-abelian ⊙skel (ℕ-to-ℤ (2 + n))))
             (coboundary-higher-template-β ⊙skel)
 
       higher-cohomology-group-β-far-below : ∀ {n} (⊙skel : ⊙Skeleton {i} n) {m} (SSm≰n : ¬ (2 + m ≤ n))
@@ -145,7 +145,7 @@ module cw.cohomology.ReconstructedHigherCohomologyGroups {i : ULevel} (OT : Ordi
     ... | inr (inl (ltSR Sm<n)) =
                 coe!ᴳ-iso (higher-cohomology-group-descend ⊙skel Sm<n)
             ∘eᴳ higher-cohomology-group m {n = S n} (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac)
-            ∘eᴳ C-cw-descend-at-lower (2 + m) (<-+-l 1 Sm<n) ⊙skel ac
+            ∘eᴳ C-cw-descend-at-lower ⊙skel (<-+-l 1 Sm<n) ac
     ... | inr (inr Sn<Sm) =
                 coe!ᴳ-iso (higher-cohomology-group-β-far-below ⊙skel (<-to-≱ (<-+-l 1 Sn<Sm)))
             ∘eᴳ CGTH.C-cw-iso-ker/im (2 + m) (<-+-l 1 Sn<Sm)

@@ -6,58 +6,33 @@ open import homotopy.PushoutSplit
 open import homotopy.DisjointlyPointedSet
 open import cw.CW
 
-module cw.cohomology.WedgeOfCells {i} (OT : OrdinaryTheory i) where
+module cw.cohomology.WedgeOfCells {i} (OT : OrdinaryTheory i)
+  {n} (⊙skel : ⊙Skeleton {i} (S n)) where
 
 open OrdinaryTheory OT
-private
-  G = C 0 (⊙Lift ⊙Bool)
 open import cohomology.Sphere OT
-open import cohomology.DisjointlyPointedSet OT
 
-{- These are for the zeroth dimension. -}
+Xₙ/Xₙ₋₁ : Ptd i
+Xₙ/Xₙ₋₁ = ⊙Cofiber (⊙cw-incl-last ⊙skel)
 
-C-points : ∀ n (⊙skel : ⊙Skeleton {i} 0)
-  → ⊙has-cells-with-choice 0 ⊙skel i
-  →  C n (⊙cw-head ⊙skel)
-  ≃ᴳ Πᴳ (MinusPoint (⊙cw-head ⊙skel)) (λ _ → C n (⊙Lift ⊙Bool))
-C-points n (⊙skeleton pts pt dec) ac = C-set n ⊙[ fst pts , pt ] (snd pts) dec ac
+module _ (m : ℤ) where
+  CXₙ/Xₙ₋₁ : Group i
+  CXₙ/Xₙ₋₁ = C m Xₙ/Xₙ₋₁
 
-abstract
-  C-points-≠-is-trivial : ∀ (n : ℤ) (n≠0 : n ≠ 0) (⊙skel : ⊙Skeleton {i} 0)
-    → ⊙has-cells-with-choice 0 ⊙skel i
-    → is-trivialᴳ (C n (⊙cw-head ⊙skel))
-  C-points-≠-is-trivial n n≠0 ⊙skel ac =
-    iso-preserves'-trivial (C-points n ⊙skel ac) $
-      Πᴳ-is-trivial (MinusPoint (⊙cw-head ⊙skel))
-        (λ _ → C n (⊙Lift ⊙Bool))
-        (λ _ → C-dimension n≠0)
+  CEl-Xₙ/Xₙ₋₁ : Type i
+  CEl-Xₙ/Xₙ₋₁ = Group.El CXₙ/Xₙ₋₁
 
-{- These are for higher dimensions. -}
+  abstract
+    CXₙ/Xₙ₋₁-is-abelian : is-abelian CXₙ/Xₙ₋₁
+    CXₙ/Xₙ₋₁-is-abelian = C-is-abelian m Xₙ/Xₙ₋₁
 
--- The [Cofiber]s actually only needs [CohomologyTheory].
-
-Xₙ/Xₙ₋₁ : ∀ {n} → ⊙Skeleton {i} (S n) → Ptd i
-Xₙ/Xₙ₋₁ ⊙skel = ⊙Cofiber (⊙cw-incl-last ⊙skel)
-
-CXₙ/Xₙ₋₁ : ∀ {n} → ⊙Skeleton {i} (S n) → Group i
-CXₙ/Xₙ₋₁ {n} ⊙skel = C (ℕ-to-ℤ (S n)) (Xₙ/Xₙ₋₁ ⊙skel)
-
-CEl-Xₙ/Xₙ₋₁ : ∀ {n} → ⊙Skeleton {i} (S n) → Type i
-CEl-Xₙ/Xₙ₋₁ = Group.El ∘ CXₙ/Xₙ₋₁
-
-abstract
-  CXₙ/Xₙ₋₁-is-abelian : ∀ {n} (⊙skel : ⊙Skeleton {i} (S n))
-    → is-abelian (CXₙ/Xₙ₋₁ ⊙skel)
-  CXₙ/Xₙ₋₁-is-abelian {n} ⊙skel = C-is-abelian (ℕ-to-ℤ (S n)) (Xₙ/Xₙ₋₁ ⊙skel)
-
-CXₙ/Xₙ₋₁-abgroup : ∀ {n} → ⊙Skeleton {i} (S n) → AbGroup i
-CXₙ/Xₙ₋₁-abgroup ⊙skel = CXₙ/Xₙ₋₁ ⊙skel , CXₙ/Xₙ₋₁-is-abelian ⊙skel
+  CXₙ/Xₙ₋₁-abgroup : AbGroup i
+  CXₙ/Xₙ₋₁-abgroup = CXₙ/Xₙ₋₁ , CXₙ/Xₙ₋₁-is-abelian
 
 {- the equivalence is in the opposite direction because
    cohomology functors are contravariant. -}
-⊙Cofiber-cw-incl-last : ∀ {n} (⊙skel : ⊙Skeleton {i} (S n))
-  → ⊙BigWedge {A = ⊙cells-last ⊙skel} (λ _ → ⊙Sphere (S n)) ⊙≃ Xₙ/Xₙ₋₁ ⊙skel
-⊙Cofiber-cw-incl-last {n} ⊙skel = ≃-to-⊙≃
+BigWedge-⊙equiv-Xₙ/Xₙ₋₁ : ⊙BigWedge {A = ⊙cells-last ⊙skel} (λ _ → ⊙Sphere (S n)) ⊙≃ Xₙ/Xₙ₋₁
+BigWedge-⊙equiv-Xₙ/Xₙ₋₁ = ≃-to-⊙≃
   (PS.split-equiv ∘e equiv to from to-from from-to) idp
   where
     open AttachedSkeleton (⊙Skeleton.skel ⊙skel)
@@ -100,43 +75,33 @@ CXₙ/Xₙ₋₁-abgroup ⊙skel = CXₙ/Xₙ₋₁ ⊙skel , CXₙ/Xₙ₋₁-i
                     ( ∘-ap to (bwin a) (merid s)
                     ∙ SphereToCofiber.merid-β a s)})
 
-C-Cofiber-cw-incl-last : ∀ n {m} (⊙skel : ⊙Skeleton {i} (S m))
-  → ⊙has-cells-with-choice 0 ⊙skel i
-  →  C n (Xₙ/Xₙ₋₁ ⊙skel)
-  ≃ᴳ Πᴳ (⊙cells-last ⊙skel) (λ _ → C n (⊙Lift (⊙Sphere (S m))))
-C-Cofiber-cw-incl-last n {m} ⊙skel ac
-  =   C-additive-iso n (λ _ → ⊙Lift (⊙Sphere (S m))) (⊙cells-last-has-choice ⊙skel ac)
-  ∘eᴳ C-emap n (   ⊙Cofiber-cw-incl-last ⊙skel
-               ⊙∘e ⊙BigWedge-emap-r (λ _ → ⊙lower-equiv))
+CXₙ/Xₙ₋₁-β : ∀ m → ⊙has-cells-with-choice 0 ⊙skel i
+  → C m Xₙ/Xₙ₋₁ ≃ᴳ Πᴳ (⊙cells-last ⊙skel) (λ _ → C m (⊙Lift (⊙Sphere (S n))))
+CXₙ/Xₙ₋₁-β m ac = C-additive-iso m (λ _ → ⊙Lift (⊙Sphere (S n))) (⊙cells-last-has-choice ⊙skel ac)
+              ∘eᴳ C-emap m ( BigWedge-⊙equiv-Xₙ/Xₙ₋₁
+                         ⊙∘e ⊙BigWedge-emap-r (λ _ → ⊙lower-equiv))
 
-C-Cofiber-cw-incl-last-diag : ∀ n (⊙skel : ⊙Skeleton {i} (S n))
-  → ⊙has-cells-with-choice 0 ⊙skel i
-  → CXₙ/Xₙ₋₁ ⊙skel ≃ᴳ Πᴳ (⊙cells-last ⊙skel) (λ _ → G)
-C-Cofiber-cw-incl-last-diag n ⊙skel ac =
-      Πᴳ-emap-r (⊙cells-last ⊙skel) (λ _ → C-Sphere-diag (S n))
-  ∘eᴳ C-Cofiber-cw-incl-last (ℕ-to-ℤ (S n)) ⊙skel ac
+CXₙ/Xₙ₋₁-β-diag : ⊙has-cells-with-choice 0 ⊙skel i
+  → CXₙ/Xₙ₋₁ (ℕ-to-ℤ (S n)) ≃ᴳ Πᴳ (⊙cells-last ⊙skel) (λ _ → C2 0)
+CXₙ/Xₙ₋₁-β-diag ac = Πᴳ-emap-r (⊙cells-last ⊙skel) (λ _ → C-Sphere-diag (S n))
+                 ∘eᴳ CXₙ/Xₙ₋₁-β (ℕ-to-ℤ (S n)) ac
 
 abstract
-  C-Cofiber-cw-incl-last-≠-is-trivial : ∀ (n : ℤ) {m} (n≠Sm : n ≠ ℕ-to-ℤ (S m))
-    → (⊙skel : ⊙Skeleton {i} (S m))
+  CXₙ/Xₙ₋₁-≠-is-trivial : ∀ {m} (m≠Sn : m ≠ ℕ-to-ℤ (S n))
     → ⊙has-cells-with-choice 0 ⊙skel i
-    → is-trivialᴳ (C n (Xₙ/Xₙ₋₁ ⊙skel))
-  C-Cofiber-cw-incl-last-≠-is-trivial n {m} n≠Sm ⊙skel ac =
-    iso-preserves'-trivial (C-Cofiber-cw-incl-last n ⊙skel ac) $
+    → is-trivialᴳ (CXₙ/Xₙ₋₁ m)
+  CXₙ/Xₙ₋₁-≠-is-trivial {m} m≠Sn ac =
+    iso-preserves'-trivial (CXₙ/Xₙ₋₁-β m ac) $
       Πᴳ-is-trivial (⊙cells-last ⊙skel)
-        (λ _ → C n (⊙Lift (⊙Sphere (S m))))
-        (λ _ → C-Sphere-≠-is-trivial n (S m) n≠Sm)
+        (λ _ → C m (⊙Lift (⊙Sphere (S n))))
+        (λ _ → C-Sphere-≠-is-trivial m (S n) m≠Sn)
 
-  C-Cofiber-cw-incl-last-<-is-trivial : ∀ (n : ℕ) {m} (n<Sm : n < S m)
-    → (⊙skel : ⊙Skeleton {i} (S m))
+  CXₙ/Xₙ₋₁-<-is-trivial : ∀ {m} (m<Sn : m < S n)
     → ⊙has-cells-with-choice 0 ⊙skel i
-    → is-trivialᴳ (C (ℕ-to-ℤ n) (Xₙ/Xₙ₋₁ ⊙skel))
-  C-Cofiber-cw-incl-last-<-is-trivial n n<Sm ⊙skel ac =
-    C-Cofiber-cw-incl-last-≠-is-trivial (ℕ-to-ℤ n) (ℕ-to-ℤ-≠ (<-to-≠ n<Sm)) ⊙skel ac
+    → is-trivialᴳ (CXₙ/Xₙ₋₁ (ℕ-to-ℤ m))
+  CXₙ/Xₙ₋₁-<-is-trivial m<Sn = CXₙ/Xₙ₋₁-≠-is-trivial (ℕ-to-ℤ-≠ (<-to-≠ m<Sn))
 
-  C-Cofiber-cw-incl-last->-is-trivial : ∀ (n : ℕ) {m} (n>Sm : S m < n)
-    → (⊙skel : ⊙Skeleton {i} (S m))
+  CXₙ/Xₙ₋₁->-is-trivial : ∀ {m} (m>Sn : S n < m)
     → ⊙has-cells-with-choice 0 ⊙skel i
-    → is-trivialᴳ (C (ℕ-to-ℤ n) (Xₙ/Xₙ₋₁ ⊙skel))
-  C-Cofiber-cw-incl-last->-is-trivial n n>Sm ⊙skel ac =
-    C-Cofiber-cw-incl-last-≠-is-trivial (ℕ-to-ℤ n) (≠-inv (ℕ-to-ℤ-≠ (<-to-≠ n>Sm))) ⊙skel ac
+    → is-trivialᴳ (CXₙ/Xₙ₋₁ (ℕ-to-ℤ m))
+  CXₙ/Xₙ₋₁->-is-trivial m>Sn = CXₙ/Xₙ₋₁-≠-is-trivial (≠-inv (ℕ-to-ℤ-≠ (<-to-≠ m>Sn)))

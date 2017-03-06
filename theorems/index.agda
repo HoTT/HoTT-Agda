@@ -52,7 +52,7 @@ import homotopy.BlakersMassey
 import cw.CW
 import cw.examples.Examples
 -- cellular cohomology groups
-import cw.cohomology.ChainComplex
+import cw.cohomology.CellularChainComplex
 -- Eilenberg-Steenred cohomology groups rephrased
 import cw.cohomology.ReconstructedCohomologyGroups
 

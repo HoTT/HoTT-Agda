@@ -11,64 +11,65 @@ open import cw.CW
 module cw.cohomology.Descending {i} (OT : OrdinaryTheory i) where
 
 open OrdinaryTheory OT
+open import cw.cohomology.TipAndAugment OT
 open import cw.cohomology.WedgeOfCells OT
 open import cohomology.LongExactSequence cohomology-theory
 
 private
-  C-cw-descend-at-succ : ∀ n {m} (n≠m : n ≠ ℕ-to-ℤ m) (Sn≠m : succ n ≠ ℕ-to-ℤ m)
-    → (⊙skel : ⊙Skeleton (S m))
+  C-cw-descend-at-succ : ∀ {n} (⊙skel : ⊙Skeleton (S n))
+      {m} (m≠n : m ≠ ℕ-to-ℤ n) (Sm≠n : succ m ≠ ℕ-to-ℤ n)
     → ⊙has-cells-with-choice 0 ⊙skel i
-    → C (succ n) ⊙⟦ ⊙skel ⟧ ≃ᴳ C (succ n) ⊙⟦ ⊙cw-init ⊙skel ⟧
-  C-cw-descend-at-succ n {m} n≠m Sn≠m ⊙skel ac =
+    → C (succ m) ⊙⟦ ⊙skel ⟧ ≃ᴳ C (succ m) ⊙⟦ ⊙cw-init ⊙skel ⟧
+  C-cw-descend-at-succ ⊙skel {m} m≠n Sm≠n ac =
     Exact2.G-trivial-and-L-trivial-implies-H-iso-K
-      (exact-seq-index 2 $ C-cofiber-exact-seq n (⊙cw-incl-last ⊙skel))
-      (exact-seq-index 0 $ C-cofiber-exact-seq (succ n) (⊙cw-incl-last ⊙skel))
-      (C-Cofiber-cw-incl-last-≠-is-trivial (succ n) (succ-≠ n≠m) ⊙skel ac)
-      (C-Cofiber-cw-incl-last-≠-is-trivial (succ (succ n)) (succ-≠ Sn≠m) ⊙skel ac)
+      (exact-seq-index 2 $ C-cofiber-exact-seq m (⊙cw-incl-last ⊙skel))
+      (exact-seq-index 0 $ C-cofiber-exact-seq (succ m) (⊙cw-incl-last ⊙skel))
+      (CXₙ/Xₙ₋₁-≠-is-trivial ⊙skel (succ-≠ m≠n) ac)
+      (CXₙ/Xₙ₋₁-≠-is-trivial ⊙skel (succ-≠ Sm≠n) ac)
 
-C-cw-descend : ∀ n {m} (n≠m : n ≠ ℕ-to-ℤ m) (n≠Sm : n ≠ ℕ-to-ℤ (S m))
-  → (⊙skel : ⊙Skeleton (S m))
+C-cw-descend : ∀ {n} (⊙skel : ⊙Skeleton (S n))
+    {m} (m≠n : m ≠ ℕ-to-ℤ n) (m≠Sn : m ≠ ℕ-to-ℤ (S n))
   → ⊙has-cells-with-choice 0 ⊙skel i
-  → C n ⊙⟦ ⊙skel ⟧ ≃ᴳ C n ⊙⟦ ⊙cw-init ⊙skel ⟧
-C-cw-descend (negsucc n) -Sn≠m -Sn≠Sm
-  = C-cw-descend-at-succ (negsucc (S n)) (pred-≠ -Sn≠Sm) -Sn≠m
-C-cw-descend (pos O) O≠m O≠Sm
-  = C-cw-descend-at-succ -1 (pred-≠ O≠Sm) O≠m
-C-cw-descend (pos (S n)) Sn≠m Sn≠Sm
-  = C-cw-descend-at-succ (pos n) (pred-≠ Sn≠Sm) Sn≠m
+  → C m ⊙⟦ ⊙skel ⟧ ≃ᴳ C m ⊙⟦ ⊙cw-init ⊙skel ⟧
+C-cw-descend ⊙skel {m = negsucc m} -Sm≠n -Sm≠Sn
+  = C-cw-descend-at-succ ⊙skel (pred-≠ -Sm≠Sn) -Sm≠n
+C-cw-descend ⊙skel {m = pos O} O≠n O≠Sn
+  = C-cw-descend-at-succ ⊙skel (pred-≠ O≠Sn) O≠n
+C-cw-descend ⊙skel {m = pos (S n)} Sm≠n Sm≠Sn
+  = C-cw-descend-at-succ ⊙skel (pred-≠ Sm≠Sn) Sm≠n
 
 abstract
-  C-cw-at-higher : ∀ n {m} (m<n : m < n) (⊙skel : ⊙Skeleton m)
+  C-cw-at-higher : ∀ {n} (⊙skel : ⊙Skeleton n) {m} (n<m : n < m) 
     → ⊙has-cells-with-choice 0 ⊙skel i
-    → is-trivialᴳ (C (ℕ-to-ℤ n) ⊙⟦ ⊙skel ⟧)
-  C-cw-at-higher n {m = O} 0<n ⊙skel ac =
-    C-points-≠-is-trivial (ℕ-to-ℤ n) (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ 0<n))) ⊙skel ac
-  C-cw-at-higher n {m = S m} Sm<n ⊙skel ac =
+    → is-trivialᴳ (C (ℕ-to-ℤ m) ⊙⟦ ⊙skel ⟧)
+  C-cw-at-higher {n = O} ⊙skel 0<n ac =
+    CX₀-≠-is-trivial ⊙skel (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ 0<n))) ac
+  C-cw-at-higher {n = S n} ⊙skel Sn<m ac =
     iso-preserves'-trivial
-      (C-cw-descend (ℕ-to-ℤ n)
-        (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ (<-trans ltS Sm<n))))
-        (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ Sm<n)))
-        ⊙skel ac)
-      (C-cw-at-higher n (<-trans ltS Sm<n) (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac))
+      (C-cw-descend ⊙skel
+        (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ (<-trans ltS Sn<m))))
+        (ℕ-to-ℤ-≠ (≠-inv (<-to-≠ Sn<m)))
+        ac)
+      (C-cw-at-higher (⊙cw-init ⊙skel) (<-trans ltS Sn<m) (⊙init-has-cells-with-choice ⊙skel ac))
 
-  C-cw-at-negsucc : ∀ n {m} (⊙skel : ⊙Skeleton m)
+  C-cw-at-negsucc : ∀ {n} (⊙skel : ⊙Skeleton n) m
     → ⊙has-cells-with-choice 0 ⊙skel i
-    → is-trivialᴳ (C (negsucc n) ⊙⟦ ⊙skel ⟧)
-  C-cw-at-negsucc n {m = O} ⊙skel ac =
-    C-points-≠-is-trivial (negsucc n) (ℤ-negsucc≠pos n O) ⊙skel ac
-  C-cw-at-negsucc n {m = S m} ⊙skel ac =
+    → is-trivialᴳ (C (negsucc m) ⊙⟦ ⊙skel ⟧)
+  C-cw-at-negsucc {n = O} ⊙skel m ac =
+    CX₀-≠-is-trivial ⊙skel (ℤ-negsucc≠pos m O) ac
+  C-cw-at-negsucc {n = S n} ⊙skel m ac =
     iso-preserves'-trivial
-      (C-cw-descend (negsucc n)
-        (ℤ-negsucc≠pos _ m)
-        (ℤ-negsucc≠pos _ (S m))
-        ⊙skel ac)
-      (C-cw-at-negsucc n (⊙cw-init ⊙skel) (⊙init-has-cells-with-choice ⊙skel ac))
+      (C-cw-descend ⊙skel
+        (ℤ-negsucc≠pos _ n)
+        (ℤ-negsucc≠pos _ (S n))
+        ac)
+      (C-cw-at-negsucc (⊙cw-init ⊙skel) m (⊙init-has-cells-with-choice ⊙skel ac))
 
-C-cw-descend-at-lower : ∀ n {m} (n<m : n < m) (⊙skel : ⊙Skeleton (S m))
+C-cw-descend-at-lower : ∀ {n} (⊙skel : ⊙Skeleton (S n)) {m} (m<n : m < n)
   → ⊙has-cells-with-choice 0 ⊙skel i
-  → C (ℕ-to-ℤ n) ⊙⟦ ⊙skel ⟧ ≃ᴳ C (ℕ-to-ℤ n) ⊙⟦ ⊙cw-init ⊙skel ⟧
-C-cw-descend-at-lower n n<m ⊙skel ac =
-  C-cw-descend (ℕ-to-ℤ n) (ℕ-to-ℤ-≠ (<-to-≠ n<m)) (ℕ-to-ℤ-≠ (<-to-≠ (ltSR n<m))) ⊙skel ac
+  → C (ℕ-to-ℤ m) ⊙⟦ ⊙skel ⟧ ≃ᴳ C (ℕ-to-ℤ m) ⊙⟦ ⊙cw-init ⊙skel ⟧
+C-cw-descend-at-lower ⊙skel m<n ac =
+  C-cw-descend ⊙skel (ℕ-to-ℤ-≠ (<-to-≠ m<n)) (ℕ-to-ℤ-≠ (<-to-≠ (ltSR m<n))) ac
 
 {-
 favonia: it turns out easier (?) to do the descending step by step

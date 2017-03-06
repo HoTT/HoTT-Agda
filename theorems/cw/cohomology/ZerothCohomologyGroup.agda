@@ -11,7 +11,7 @@ module cw.cohomology.ZerothCohomologyGroup {i} (OT : OrdinaryTheory i)
 
 open OrdinaryTheory OT
 open import cw.cohomology.TipCoboundary OT ⊙skel
-open import cw.cohomology.TipAndAugment cohomology-theory (⊙cw-init ⊙skel)
+open import cw.cohomology.TipAndAugment OT (⊙cw-init ⊙skel)
 open import cw.cohomology.TipGrid OT ⊙skel ac
 
 {-
@@ -26,14 +26,14 @@ open import cw.cohomology.TipGrid OT ⊙skel ac
     WoC := Wedges of Cells
 -}
 
-open import groups.KernelSndImageInl G {H = CX₀}
+open import groups.KernelSndImageInl (C2 0) {H = CX₀ 0}
   {K = C 1 (⊙Cofiber (⊙cw-incl-last ⊙skel))}
   cw-co∂-head' cw-co∂-head (λ _ → idp)
-  G×CX₀-is-abelian
+  (C2×CX₀-is-abelian 0)
 
-module CokerCoε = Coker cw-coε G×CX₀-is-abelian
+module CokerCoε = Coker cw-coε (C2×CX₀-is-abelian 0)
 
-open import groups.KernelImage cw-co∂-head cw-coε G×CX₀-is-abelian
+open import groups.KernelImage cw-co∂-head cw-coε (C2×CX₀-is-abelian 0)
 
 C-cw-iso-ker/im : C 0 ⊙⟦ ⊙skel ⟧ ≃ᴳ Ker/Im
 C-cw-iso-ker/im = Ker-φ-snd-quot-Im-inl ∘eᴳ Ker-cw-co∂-head'

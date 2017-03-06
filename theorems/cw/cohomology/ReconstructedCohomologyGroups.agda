@@ -26,4 +26,4 @@ module cw.cohomology.ReconstructedCohomologyGroups {i : ULevel} (OT : OrdinaryTh
     reconstructed-cohomology-group (pos (S (S m))) ⊙skel ac =
       higher-cohomology-group m ⊙skel ac
     reconstructed-cohomology-group (negsucc m) ⊙skel ac =
-      lift-iso {j = i} ∘eᴳ trivial-iso-0ᴳ (C-cw-at-negsucc m ⊙skel ac)
+      lift-iso {j = i} ∘eᴳ trivial-iso-0ᴳ (C-cw-at-negsucc ⊙skel m ac)

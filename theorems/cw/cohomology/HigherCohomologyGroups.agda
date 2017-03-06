@@ -66,8 +66,8 @@ private
   C-apex-iso-C-cw = Exact2.G-trivial-and-L-trivial-implies-H-iso-K
     (exact-seq-index 1 C-cofiber-exact-seq)
     (exact-seq-index 2 C-cofiber-exact-seq)
-    (C-cw-at-higher (S n) ltS ⊙skel₋₃ ac₋₃)
-    (C-cw-at-higher (S (S n)) (ltSR ltS) ⊙skel₋₃ ac₋₃)
+    (C-cw-at-higher ⊙skel₋₃ ltS ac₋₃)
+    (C-cw-at-higher ⊙skel₋₃ (ltSR ltS) ac₋₃)
 
   G : Group i
   G = C (ℕ-to-ℤ (S (S n))) (⊙Cofiber (⊙cw-incl-tail Sn≤SSSn ⊙skel))
@@ -93,8 +93,7 @@ private
     G-to-C-apex-is-surj : is-surjᴳ G-to-C-apex
     G-to-C-apex-is-surj = Exact.K-trivial-implies-φ-is-surj
       (exact-seq-index 2 GLES-top.C-grid-cofiber-exact-seq)
-      (C-Cofiber-cw-incl-last->-is-trivial (S (S n)) ltS ⊙skel₋₂
-        (⊙take-has-cells-with-choice Sn≤SSSn ⊙skel ac))
+      (CXₙ/Xₙ₋₁->-is-trivial ⊙skel₋₂ ltS (⊙take-has-cells-with-choice Sn≤SSSn ⊙skel ac))
 
   module GLES-right = GLES (ℕ-to-ℤ (S n))
     (⊙cw-incl-tail n≤SSn ⊙skel₋₁) (⊙cw-incl-last ⊙skel)
@@ -108,7 +107,7 @@ private
     C-apex-to-H-is-inj : is-injᴳ C-apex-to-H
     C-apex-to-H-is-inj = Exact.G-trivial-implies-ψ-is-inj
       (exact-seq-index 2 GLES-right.C-grid-cofiber-exact-seq)
-      (C-Cofiber-cw-incl-last-<-is-trivial (S (S n)) ltS ⊙skel ac)
+      (CXₙ/Xₙ₋₁-<-is-trivial ⊙skel ltS ac)
 
   C-WoC : Group i
   C-WoC = C (ℕ-to-ℤ (S (S n))) (⊙Cofiber (⊙cw-incl-last ⊙skel₋₁))
@@ -122,14 +121,14 @@ private
     (GPM.Z/X-to-Z/Y (⊙cw-incl-nth Sn≤SSSn ⊙skel) (⊙cw-incl-last ⊙skel₋₁))
 
 open import groups.KernelImage cw-co∂-last LC.cw-co∂-last
-  (CXₙ/Xₙ₋₁-is-abelian ⊙skel₋₁)
+  (CXₙ/Xₙ₋₁-is-abelian ⊙skel₋₁ (ℕ-to-ℤ (S (S n))))
 
 C-cw-iso-ker/im : C (ℕ-to-ℤ (S (S n))) ⊙⟦ ⊙skel ⟧ ≃ᴳ Ker/Im
 C-cw-iso-ker/im = lemma ∘eᴳ C-apex-iso-C-cw ⁻¹ᴳ where
   lemma : C-apex ≃ᴳ Ker/Im
   lemma = H-iso-Ker/Im
     cw-co∂-last LC.cw-co∂-last
-    (CXₙ/Xₙ₋₁-is-abelian ⊙skel₋₁)
+    (CXₙ/Xₙ₋₁-is-abelian ⊙skel₋₁ (ℕ-to-ℤ (S (S n))))
     φ₁ φ₁-is-surj φ₂ φ₂-is-inj lemma-comm
     where
       φ₁ = G-to-C-apex ∘ᴳ GroupIso.g-hom G-iso-Ker

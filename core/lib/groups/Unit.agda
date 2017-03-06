@@ -44,21 +44,9 @@ trivial-iso-0ᴳ = trivial-iso-Unit
 {- the following should be replaced by [is-trivial] completely -}
 
 abstract
-  contr-iso-Unit : ∀ {i} (G : Group i) → is-contr (Group.El G) → G ≃ᴳ 0ᴳ
+  contr-iso-Unit : ∀ {i} (G : Group i) → is-contr (Group.El G) → G ≃ᴳ Unit-group
   contr-iso-Unit G pA = ≃-to-≃ᴳ (contr-equiv-Unit pA) (λ _ _ → idp)
-
-  Unit-hom-out-level : ∀ {i} {G : Group i}
-    → is-contr (0ᴳ →ᴳ G)
-  Unit-hom-out-level {G = G} =
-    cst-hom , λ φ → group-hom= $ λ= λ _ → ! (GroupHom.pres-ident φ)
-
-  Unit-hom-in-level : ∀ {i} {G : Group i}
-    → is-contr (G →ᴳ 0ᴳ)
-  Unit-hom-in-level {G = G} = cst-hom , λ φ → group-hom= $ λ= λ _ → idp
-
 contr-iso-0ᴳ = contr-iso-Unit
-0ᴳ-hom-out-level = Unit-hom-out-level
-0ᴳ-hom-in-level = Unit-hom-in-level
 
 Unit-group-is-abelian : is-abelian 0ᴳ
 Unit-group-is-abelian _ _ = idp

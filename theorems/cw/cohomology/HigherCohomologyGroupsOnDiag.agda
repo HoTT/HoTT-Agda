@@ -53,13 +53,13 @@ private
   C-apex-iso-C-cw = Exact2.G-trivial-and-L-trivial-implies-H-iso-K
     (exact-seq-index 1 C-cofiber-exact-seq)
     (exact-seq-index 2 C-cofiber-exact-seq)
-    (C-cw-at-higher (S n) ltS ⊙skel₋₂ ac₋₂)
-    (C-cw-at-higher (S (S n)) (ltSR ltS) ⊙skel₋₂ ac₋₂)
+    (C-cw-at-higher ⊙skel₋₂ ltS ac₋₂)
+    (C-cw-at-higher ⊙skel₋₂ (ltSR ltS) ac₋₂)
 
 open import groups.KernelImage (cst-hom {H = Lift-group {j = i} Unit-group}) cw-co∂-last
-  (CXₙ/Xₙ₋₁-is-abelian ⊙skel)
+  (CXₙ/Xₙ₋₁-is-abelian ⊙skel (ℕ-to-ℤ (S (S n))))
 open import groups.KernelCstImage (Lift-group {j = i} Unit-group) cw-co∂-last
-  (CXₙ/Xₙ₋₁-is-abelian ⊙skel)
+  (CXₙ/Xₙ₋₁-is-abelian ⊙skel (ℕ-to-ℤ (S (S n))))
 
 C-cw-iso-ker/im : C (ℕ-to-ℤ (S (S n))) ⊙⟦ ⊙skel ⟧ ≃ᴳ Ker/Im
 C-cw-iso-ker/im = (C-apex-iso-C-cw ∘eᴳ Coker-cw-co∂-last ∘eᴳ Ker-cst-quot-Im) ⁻¹ᴳ
