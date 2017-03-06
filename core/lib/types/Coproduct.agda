@@ -4,6 +4,7 @@ open import lib.Basics
 open import lib.types.Bool
 open import lib.types.Empty
 open import lib.types.Lift
+open import lib.types.Sigma
 open import lib.types.Pi
 
 module lib.types.Coproduct where
@@ -88,10 +89,30 @@ codiag (inr a) = a
   out (inl a) = (true , a)
   out (inr b) = (false , b)
 
-  into-out : ∀ c → into (out c) == c
-  into-out (inl a) = idp
-  into-out (inr b) = idp
+  abstract
+    into-out : ∀ c → into (out c) == c
+    into-out (inl a) = idp
+    into-out (inr b) = idp
 
-  out-into : ∀ s → out (into s) == s
-  out-into (true , a) = idp
-  out-into (false , b) = idp
+    out-into : ∀ s → out (into s) == s
+    out-into (true , a) = idp
+    out-into (false , b) = idp
+
+module _ {i j k} {A : Type i} {B : Type j} (P : A ⊔ B → Type k) where
+  Π₁-⊔-equiv-× : Π (A ⊔ B) P ≃ Π A (P ∘ inl) × Π B (P ∘ inr)
+  Π₁-⊔-equiv-× = equiv to from to-from from-to
+    where
+    to : Π (A ⊔ B) P → Π A (P ∘ inl) × Π B (P ∘ inr)
+    to f = (λ a → f (inl a)) , (λ b → f (inr b))
+
+    from : Π A (P ∘ inl) × Π B (P ∘ inr) → Π (A ⊔ B) P
+    from (f , g) (inl a) = f a
+    from (f , g) (inr b) = g b
+
+    abstract
+      to-from : ∀ fg → to (from fg) == fg
+      to-from _ = idp
+
+      from-to : ∀ fg → from (to fg) == fg
+      from-to fg = λ= λ where (inl _) → idp
+                              (inr _) → idp

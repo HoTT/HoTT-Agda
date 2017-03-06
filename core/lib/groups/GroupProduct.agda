@@ -6,6 +6,7 @@ open import lib.types.Group
 open import lib.types.Nat
 open import lib.types.Pi
 open import lib.types.Sigma
+open import lib.types.Coproduct
 open import lib.types.Truncation
 open import lib.groups.Homomorphism
 open import lib.groups.Isomorphism
@@ -142,40 +143,43 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
     module H = Group H
     module K = Group K
 
-    lemma : (g₁ g₂ g₃ g₄ : G.El) →
-      G.comp (G.comp g₁ g₂) (G.comp g₃ g₄)
-      == G.comp (G.comp g₁ g₃) (G.comp g₂ g₄)
-    lemma g₁ g₂ g₃ g₄ =
-      (g₁ □ g₂) □ (g₃ □ g₄)
-         =⟨ G.assoc g₁ g₂ (g₃ □ g₄) ⟩
-       g₁ □ (g₂ □ (g₃ □ g₄))
-         =⟨ G-abelian g₃ g₄ |in-ctx (λ w → g₁ □ (g₂ □ w)) ⟩
-       g₁ □ (g₂ □ (g₄ □ g₃))
-         =⟨ ! (G.assoc g₂ g₄ g₃) |in-ctx (λ w → g₁ □ w) ⟩
-       g₁ □ ((g₂ □ g₄) □ g₃)
-         =⟨ G-abelian (g₂ □ g₄) g₃ |in-ctx (λ w → g₁ □ w) ⟩
-       g₁ □ (g₃ □ (g₂ □ g₄))
-         =⟨ ! (G.assoc g₁ g₃ (g₂ □ g₄)) ⟩
-       (g₁ □ g₃) □ (g₂ □ g₄) =∎
-       where
-        infix 80 _□_
-        _□_ = G.comp
+    abstract
+      interchange : (g₁ g₂ g₃ g₄ : G.El) →
+        G.comp (G.comp g₁ g₂) (G.comp g₃ g₄)
+        == G.comp (G.comp g₁ g₃) (G.comp g₂ g₄)
+      interchange g₁ g₂ g₃ g₄ =
+        (g₁ □ g₂) □ (g₃ □ g₄)
+           =⟨ G.assoc g₁ g₂ (g₃ □ g₄) ⟩
+         g₁ □ (g₂ □ (g₃ □ g₄))
+           =⟨ G-abelian g₃ g₄ |in-ctx (λ w → g₁ □ (g₂ □ w)) ⟩
+         g₁ □ (g₂ □ (g₄ □ g₃))
+           =⟨ ! (G.assoc g₂ g₄ g₃) |in-ctx (λ w → g₁ □ w) ⟩
+         g₁ □ ((g₂ □ g₄) □ g₃)
+           =⟨ G-abelian (g₂ □ g₄) g₃ |in-ctx (λ w → g₁ □ w) ⟩
+         g₁ □ (g₃ □ (g₂ □ g₄))
+           =⟨ ! (G.assoc g₁ g₃ (g₂ □ g₄)) ⟩
+         (g₁ □ g₃) □ (g₂ □ g₄) =∎
+         where
+          infix 80 _□_
+          _□_ = G.comp
 
   ×ᴳ-fanin : (H →ᴳ G) → (K →ᴳ G) → (H ×ᴳ K →ᴳ G)
-  ×ᴳ-fanin φ ψ = group-hom
-    (λ {(h , k) → G.comp (φ.f h) (ψ.f k)})
-    (λ {(h₁ , k₁) (h₂ , k₂) →
-      G.comp (φ.f (H.comp h₁ h₂)) (ψ.f (K.comp k₁ k₂))
-        =⟨ φ.pres-comp h₁ h₂ |in-ctx (λ w → G.comp w (ψ.f (K.comp k₁ k₂))) ⟩
-      G.comp (G.comp (φ.f h₁) (φ.f h₂)) (ψ.f (K.comp k₁ k₂))
-        =⟨ ψ.pres-comp k₁ k₂
-           |in-ctx (λ w → G.comp (G.comp (φ.f h₁) (φ.f h₂)) w)  ⟩
-      G.comp (G.comp (φ.f h₁) (φ.f h₂)) (G.comp (ψ.f k₁) (ψ.f k₂))
-        =⟨ lemma (φ.f h₁) (φ.f h₂) (ψ.f k₁) (ψ.f k₂) ⟩
-      G.comp (G.comp (φ.f h₁) (ψ.f k₁)) (G.comp (φ.f h₂) (ψ.f k₂)) =∎})
+  ×ᴳ-fanin φ ψ = group-hom (λ {(h , k) → G.comp (φ.f h) (ψ.f k)}) lemma
     where
       module φ = GroupHom φ
       module ψ = GroupHom ψ
+      abstract
+        lemma : preserves-comp (Group.comp (H ×ᴳ K)) G.comp
+                  (λ {(h , k) → G.comp (φ.f h) (ψ.f k)})
+        lemma (h₁ , k₁) (h₂ , k₂) =
+          G.comp (φ.f (H.comp h₁ h₂)) (ψ.f (K.comp k₁ k₂))
+            =⟨ φ.pres-comp h₁ h₂ |in-ctx (λ w → G.comp w (ψ.f (K.comp k₁ k₂))) ⟩
+          G.comp (G.comp (φ.f h₁) (φ.f h₂)) (ψ.f (K.comp k₁ k₂))
+            =⟨ ψ.pres-comp k₁ k₂
+               |in-ctx (λ w → G.comp (G.comp (φ.f h₁) (φ.f h₂)) w)  ⟩
+          G.comp (G.comp (φ.f h₁) (φ.f h₂)) (G.comp (ψ.f k₁) (ψ.f k₂))
+            =⟨ interchange (φ.f h₁) (φ.f h₂) (ψ.f k₁) (ψ.f k₂) ⟩
+          G.comp (G.comp (φ.f h₁) (ψ.f k₁)) (G.comp (φ.f h₂) (ψ.f k₂)) =∎
 
 abstract
   ×ᴳ-fanin-η : ∀ {i j} (G : Group i) (H : Group j)
@@ -197,19 +201,27 @@ abstract
 ×ᴳ-fmap : ∀ {i j k l} {G₁ : Group i} {G₂ : Group j}
   {H₁ : Group k} {H₂ : Group l}
   → (G₁ →ᴳ H₁) → (G₂ →ᴳ H₂) → (G₁ ×ᴳ G₂ →ᴳ H₁ ×ᴳ H₂)
-×ᴳ-fmap φ ψ = group-hom
-  (λ {(h₁ , h₂) → (φ.f h₁ , ψ.f h₂)})
-  (λ {(h₁ , h₂) (h₁' , h₂') →
-    pair×= (φ.pres-comp h₁ h₁') (ψ.pres-comp h₂ h₂')})
+×ᴳ-fmap {G₁ = G₁} {G₂} {H₁} {H₂} φ ψ = group-hom (×-fmap φ.f ψ.f) lemma
   where
     module φ = GroupHom φ
     module ψ = GroupHom ψ
+    abstract
+      lemma : preserves-comp (Group.comp (G₁ ×ᴳ G₂)) (Group.comp (H₁ ×ᴳ H₂))
+                (λ {(h₁ , h₂) → (φ.f h₁ , ψ.f h₂)})
+      lemma (h₁ , h₂) (h₁' , h₂') = pair×= (φ.pres-comp h₁ h₁') (ψ.pres-comp h₂ h₂')
 
 ×ᴳ-emap : ∀ {i j k l} {G₁ : Group i} {G₂ : Group j}
   {H₁ : Group k} {H₂ : Group l}
   → (G₁ ≃ᴳ H₁) → (G₂ ≃ᴳ H₂) → (G₁ ×ᴳ G₂ ≃ᴳ H₁ ×ᴳ H₂)
 ×ᴳ-emap (φ , φ-is-equiv) (ψ , ψ-is-equiv) =
   ×ᴳ-fmap φ ψ , ×-isemap φ-is-equiv ψ-is-equiv
+
+{- equivalences in Πᴳ -}
+
+Πᴳ-emap-l : ∀ {i j k} {A : Type i} {B : Type j} (F : B → Group k)
+            → (e : A ≃ B) → Πᴳ A (F ∘ –> e) ≃ᴳ Πᴳ B F
+Πᴳ-emap-l {A = A} {B = B} F e = ≃-to-≃ᴳ (Π-emap-l (Group.El ∘ F) e) lemma
+  where abstract lemma = λ f g → λ= λ b → transp-El-pres-comp F (<–-inv-r e b) (f (<– e b)) (g (<– e b))
 
 {- 0ᴳ is a unit for product -}
 ×ᴳ-unit-l : ∀ {i} (G : Group i) → 0ᴳ ×ᴳ G ≃ᴳ G
@@ -219,20 +231,10 @@ abstract
 ×ᴳ-unit-r _ = ×ᴳ-fst , is-eq fst (λ g → (g , unit)) (λ _ → idp) (λ _ → idp)
 
 {- A product Πᴳ indexed by Bool is the same as a binary product -}
--- XXX Get rid of [Lift] here.
-module _ {i} (Pick : Lift {j = i} Bool → Group i) where
+module _ {i j k} {A : Type i} {B : Type j} (F : A ⊔ B → Group k) where
 
-  Πᴳ-Bool-iso-×ᴳ :
-    Πᴳ (Lift Bool) Pick ≃ᴳ (Pick (lift true)) ×ᴳ (Pick (lift false))
-  Πᴳ-Bool-iso-×ᴳ = φ , e
-    where
-    φ = ×ᴳ-fanout (Πᴳ-proj {F = Pick} (lift true))
-                  (Πᴳ-proj {F = Pick} (lift false))
-
-    e : is-equiv (GroupHom.f φ)
-    e = is-eq _ (λ {(g , h) → λ {(lift true) → g; (lift false) → h}})
-          (λ _ → idp)
-          (λ _ → λ= (λ {(lift true) → idp; (lift false) → idp}))
+  Πᴳ₁-⊔-iso-×ᴳ : Πᴳ (A ⊔ B) F ≃ᴳ Πᴳ A (F ∘ inl) ×ᴳ Πᴳ B (F ∘ inr)
+  Πᴳ₁-⊔-iso-×ᴳ = ≃-to-≃ᴳ (Π₁-⊔-equiv-× (Group.El ∘ F)) (λ _ _ → idp)
 
 {- Commutativity of ×ᴳ -}
 ×ᴳ-comm : ∀ {i j} (H : Group i) (K : Group j) → H ×ᴳ K ≃ᴳ K ×ᴳ H
@@ -262,3 +264,7 @@ module _ where
   Πᴳ-is-trivial : ∀ {i j} (I : Type i) (F : I → Group j)
     → (∀ (i : I) → is-trivialᴳ (F i)) → is-trivialᴳ (Πᴳ I F)
   Πᴳ-is-trivial I F F-is-trivial = λ f → λ= λ i → F-is-trivial i (f i)
+
+module _ {j} {F : Unit → Group j} where
+  Πᴳ₁-Unit : Πᴳ Unit F ≃ᴳ F unit
+  Πᴳ₁-Unit = ≃-to-≃ᴳ Π₁-Unit (λ _ _ → idp)

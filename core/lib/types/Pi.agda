@@ -56,14 +56,15 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
   g : Π B P → Π A (P ∘ –> e)
   g v a = v (–> e a)
 
-  f-g : ∀ v → f (g v) == v
-  f-g v = λ= λ b → to-transp (apd v (<–-inv-r e b))
+  abstract
+    f-g : ∀ v → f (g v) == v
+    f-g v = λ= λ b → to-transp (apd v (<–-inv-r e b))
 
-  g-f : ∀ u → g (f u) == u
-  g-f u = λ= λ a → to-transp $ transport (λ p → u _ == _ [ P ↓ p ])
-                                         (<–-inv-adj e a)
-                                         (↓-ap-in P (–> e)
-                                                    (apd u $ <–-inv-l e a))
+    g-f : ∀ u → g (f u) == u
+    g-f u = λ= λ a → to-transp $ transport (λ p → u _ == _ [ P ↓ p ])
+                                           (<–-inv-adj e a)
+                                           (↓-ap-in P (–> e)
+                                                      (apd u $ <–-inv-l e a))
 
 Π-emap-r : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
   → (∀ x → B x ≃ C x) → Π A B ≃ Π A C
@@ -74,11 +75,12 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
         g : Π A C → Π A B
         g d x = <– (k x) (d x)
 
-        f-g : ∀ d → f (g d) == d
-        f-g d = λ= (λ x →  <–-inv-r (k x) (d x))
+        abstract
+          f-g : ∀ d → f (g d) == d
+          f-g d = λ= (λ x →  <–-inv-r (k x) (d x))
 
-        g-f : ∀ c → g (f c) == c
-        g-f c = λ= (λ x → <–-inv-l (k x) (c x))
+          g-f : ∀ c → g (f c) == c
+          g-f c = λ= (λ x → <–-inv-l (k x) (c x))
 
 {-
 favonia: This part is not used.
