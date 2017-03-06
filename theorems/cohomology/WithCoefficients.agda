@@ -140,38 +140,7 @@ Trunc-⊙→Ω-group-emap-nat : ∀ {i₀ i₁ j₀ j₁}
 Trunc-⊙→Ω-group-emap-nat F G = group-hom=-to-iso= $ Trunc-⊙→Ω-group-fmap-nat F G
 -}
 
--- XXX The following lemma about [⊙Bool→] does not really belong here.
-
 {- Pointed maps out of bool -}
-
--- intuition : [f true] is fixed and the only changable part is [f false].
-
-⊙Bool→-to-idf : ∀ {i} {X : Ptd i}
-  → ⊙Bool ⊙→ X → fst X
-⊙Bool→-to-idf (h , _) = h false
-
-⊙Bool→-equiv-idf : ∀ {i} (X : Ptd i)
-  → (⊙Bool ⊙→ X) ≃ fst X
-⊙Bool→-equiv-idf {i} X = equiv ⊙Bool→-to-idf g f-g g-f
-  where
-  g : fst X → ⊙Bool ⊙→ X
-  g x = (if_then snd X else x) , idp
-
-  f-g : ∀ x → ⊙Bool→-to-idf (g x) == x
-  f-g x = idp
-
-  g-f : ∀ H → g (⊙Bool→-to-idf H) == H
-  g-f (h , hpt) = pair=
-    (λ= lemma)
-    (↓-app=cst-in $
-      idp
-        =⟨ ! (!-inv-l hpt) ⟩
-      ! hpt ∙ hpt
-        =⟨ ! (app=-β lemma true) |in-ctx (λ w → w ∙ hpt) ⟩
-      app= (λ= lemma) true ∙ hpt ∎)
-    where lemma : ∀ b → fst (g (h false)) b == h b
-          lemma true = ! hpt
-          lemma false = idp
 
 abstract
   Trunc-⊙Bool→Ω-iso-π₁ : ∀ {i} (X : Ptd i)

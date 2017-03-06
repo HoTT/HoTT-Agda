@@ -2,6 +2,7 @@
 
 open import lib.Basics
 open import lib.NType2
+open import lib.types.Bool
 open import lib.types.Empty
 open import lib.types.Paths
 open import lib.types.Pi
@@ -110,15 +111,51 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} (⊙e : X ⊙≃ Y) where
   post⊙∘-is-equiv = is-eq f g f-g g-f
     where f = ⊙–> ⊙e ⊙∘_
           g = ⊙<– ⊙e ⊙∘_
-          f-g = λ k → ! (⊙∘-assoc (⊙–> ⊙e) (⊙<– ⊙e) k) ∙ ap (_⊙∘ k) (⊙<–-inv-r ⊙e) ∙ ⊙∘-unit-l k
-          g-f = λ k → ! (⊙∘-assoc (⊙<– ⊙e) (⊙–> ⊙e) k) ∙ ap (_⊙∘ k) (⊙<–-inv-l ⊙e) ∙ ⊙∘-unit-l k
+          abstract
+            f-g = λ k → ! (⊙∘-assoc (⊙–> ⊙e) (⊙<– ⊙e) k) ∙ ap (_⊙∘ k) (⊙<–-inv-r ⊙e) ∙ ⊙∘-unit-l k
+            g-f = λ k → ! (⊙∘-assoc (⊙<– ⊙e) (⊙–> ⊙e) k) ∙ ap (_⊙∘ k) (⊙<–-inv-l ⊙e) ∙ ⊙∘-unit-l k
 
   pre⊙∘-is-equiv : is-equiv (λ (k : Y ⊙→ Z) → k ⊙∘ ⊙–> ⊙e)
   pre⊙∘-is-equiv = is-eq f g f-g g-f
     where f = _⊙∘ ⊙–> ⊙e
           g = _⊙∘ ⊙<– ⊙e
-          f-g = λ k → ⊙∘-assoc k (⊙<– ⊙e) (⊙–> ⊙e) ∙ ap (k ⊙∘_) (⊙<–-inv-l ⊙e) ∙ ⊙∘-unit-r k
-          g-f = λ k → ⊙∘-assoc k (⊙–> ⊙e) (⊙<– ⊙e) ∙ ap (k ⊙∘_) (⊙<–-inv-r ⊙e) ∙ ⊙∘-unit-r k
+          abstract
+            f-g = λ k → ⊙∘-assoc k (⊙<– ⊙e) (⊙–> ⊙e) ∙ ap (k ⊙∘_) (⊙<–-inv-l ⊙e) ∙ ⊙∘-unit-r k
+            g-f = λ k → ⊙∘-assoc k (⊙–> ⊙e) (⊙<– ⊙e) ∙ ap (k ⊙∘_) (⊙<–-inv-r ⊙e) ∙ ⊙∘-unit-r k
 
   pre⊙∘-equiv : (Y ⊙→ Z) ≃ (X ⊙→ Z)
   pre⊙∘-equiv = _ , pre⊙∘-is-equiv
+
+{- Pointed maps out of bool -}
+
+-- intuition : [f true] is fixed and the only changable part is [f false].
+
+⊙Bool→-to-idf : ∀ {i} {X : Ptd i}
+  → ⊙Bool ⊙→ X → fst X
+⊙Bool→-to-idf (h , _) = h false
+
+⊙Bool→-equiv-idf : ∀ {i} (X : Ptd i)
+  → (⊙Bool ⊙→ X) ≃ fst X
+⊙Bool→-equiv-idf {i} X = equiv ⊙Bool→-to-idf g f-g g-f
+  where
+  g : fst X → ⊙Bool ⊙→ X
+  g x = (if_then snd X else x) , idp
+
+  abstract
+    f-g : ∀ x → ⊙Bool→-to-idf (g x) == x
+    f-g x = idp
+
+    g-f : ∀ H → g (⊙Bool→-to-idf H) == H
+    g-f (h , hpt) = pair=
+      (λ= lemma)
+      (↓-app=cst-in $
+        idp
+          =⟨ ! (!-inv-l hpt) ⟩
+        ! hpt ∙ hpt
+          =⟨ ! (app=-β lemma true) |in-ctx (λ w → w ∙ hpt) ⟩
+        app= (λ= lemma) true ∙ hpt
+          =∎)
+      where lemma : ∀ b → fst (g (h false)) b == h b
+            lemma true = ! hpt
+            lemma false = idp
+
