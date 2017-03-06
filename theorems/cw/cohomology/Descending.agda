@@ -39,7 +39,7 @@ C-cw-descend ⊙skel {m = pos (S n)} Sm≠n Sm≠Sn
   = C-cw-descend-at-succ ⊙skel (pred-≠ Sm≠Sn) Sm≠n
 
 abstract
-  C-cw-at-higher : ∀ {n} (⊙skel : ⊙Skeleton n) {m} (n<m : n < m) 
+  C-cw-at-higher : ∀ {n} (⊙skel : ⊙Skeleton n) {m} (n<m : n < m)
     → ⊙has-cells-with-choice 0 ⊙skel i
     → is-trivialᴳ (C (ℕ-to-ℤ m) ⊙⟦ ⊙skel ⟧)
   C-cw-at-higher {n = O} ⊙skel 0<n ac =

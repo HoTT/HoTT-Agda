@@ -42,7 +42,7 @@ module cohomology.ChainComplex where
     module M where
       head : AbGroup (lmax i j)
       head = hom-abgroup (AbGroup.grp cc.head) G
-      
+
       cochain : ℕ → AbGroup (lmax i j)
       cochain n = hom-abgroup (AbGroup.grp (cc.chain n)) G
 

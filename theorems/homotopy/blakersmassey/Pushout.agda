@@ -2,7 +2,7 @@
 
 open import HoTT
 
--- custom pushout for Blakers-Massey 
+-- custom pushout for Blakers-Massey
 
 module homotopy.blakersmassey.Pushout {i j k}
   {A : Type i} {B : Type j} (Q : A → B → Type k) where

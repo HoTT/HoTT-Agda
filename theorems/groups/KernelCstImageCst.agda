@@ -42,4 +42,4 @@ module groups.KernelCstImageCst {i j k}
           (λ _ → =-preserves-set H.El-level)
           (λ _ → idp)
           (λ _ → prop-has-all-paths-↓ (H.El-level _ _)))
-        (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → H.El-level _ _)) 
+        (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → H.El-level _ _))

@@ -22,7 +22,7 @@ module cohomology.WithCoefficients where
       unit-l-lemma : ∀ {i} {A : Type i} {x : A} {p : x == x} (α : p == idp)
         → ⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt {a₀ = idp} idp α) idp == α
       unit-l-lemma idp = idp
-  
+
       unit-l : ∀ G → comp ident G == G
       unit-l G = ⊙λ= (λ _ → idp) (unit-l-lemma (snd G))
 
