@@ -72,7 +72,7 @@ record GroupStructureHom {i j} {GEl : Type i} {HEl : Type j}
     pres-diff : ∀ g h → f (G.diff g h) == H.diff (f g) (f h)
     pres-diff g h = pres-comp g (G.inv h) ∙ ap (H.comp (f g)) (pres-inv h)
 
-  ⊙f : (GEl , G.ident) ⊙→ (HEl , H.ident)
+  ⊙f : ⊙[ GEl , G.ident ] ⊙→ ⊙[ HEl , H.ident ]
   ⊙f = f , pres-ident
 
 infix 0 _→ᴳˢ_ -- [ˢ] for structures

@@ -28,7 +28,7 @@ module EM₁HSpace {i} (G : AbGroup i) where
         emloop g' ∙' emloop g    ∎
 
   mult-hom : GroupHom G.grp
-    (Ω^S-group 0 ((EM₁ G.grp → EM₁ G.grp) , (λ x → x)) (Π-level (λ _ → EM₁-level)))
+    (Ω^S-group 0 ⊙[ (EM₁ G.grp → EM₁ G.grp) , (λ x → x) ] (Π-level (λ _ → EM₁-level)))
   mult-hom = record {f = f; pres-comp = pres-comp}
     where
     f = λ g → λ= (mult-loop g)

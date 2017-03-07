@@ -57,7 +57,7 @@ module _ {i} (A : Type i) where
 module _ {i} (X : Ptd i) where
 
   ⊙*-Bool-l : ⊙Bool ⊙* X ⊙≃ ⊙Susp X
-  ⊙*-Bool-l = ≃-to-⊙≃ (*-Bool-l (fst X)) idp
+  ⊙*-Bool-l = ≃-to-⊙≃ (*-Bool-l (de⊙ X)) idp
 
 module _ {i j} (A : Type i) (B : Type j) where
 
@@ -67,7 +67,7 @@ module _ {i j} (A : Type i) (B : Type j) where
 module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
   ⊙*-Susp-l : ⊙Susp X ⊙* Y ⊙≃ ⊙Susp (X ⊙* Y)
-  ⊙*-Susp-l = ≃-to-⊙≃ (*-Susp-l (fst X) (fst Y)) idp
+  ⊙*-Susp-l = ≃-to-⊙≃ (*-Susp-l (de⊙ X) (de⊙ Y)) idp
 
 module _ {i} where
 

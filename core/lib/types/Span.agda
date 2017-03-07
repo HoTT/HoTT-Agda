@@ -53,14 +53,14 @@ record ⊙Span {i j k : ULevel} : Type (lsucc (lmax (lmax i j) k)) where
     g : Z ⊙→ Y
 
 ⊙Span-to-Span : ∀ {i j k} → ⊙Span {i} {j} {k} → Span {i} {j} {k}
-⊙Span-to-Span (⊙span X Y Z f g) = span (fst X) (fst Y) (fst Z) (fst f) (fst g)
+⊙Span-to-Span (⊙span X Y Z f g) = span (de⊙ X) (de⊙ Y) (de⊙ Z) (fst f) (fst g)
 
 {- Helper for path induction on pointed spans -}
 ⊙span-J : ∀ {i j k l} (P : ⊙Span {i} {j} {k} → Type l)
-  → ({A : Type i} {B : Type j} {Z : Ptd k} (f : fst Z → A) (g : fst Z → B)
-     → P (⊙span (A , f (snd Z)) (B , g (snd Z)) Z (f , idp) (g , idp)))
+  → ({A : Type i} {B : Type j} {Z : Ptd k} (f : de⊙ Z → A) (g : de⊙ Z → B)
+     → P (⊙span ⊙[ A , f (pt Z) ] ⊙[ B , g (pt Z) ] Z (f , idp) (g , idp)))
   → Π ⊙Span P
-⊙span-J P t (⊙span (A , ._) (B , ._) Z (f , idp) (g , idp)) = t f g
+⊙span-J P t (⊙span ⊙[ A , ._ ] ⊙[ B , ._ ] Z (f , idp) (g , idp)) = t f g
 
 {- Span-flipping functions -}
 Span-flip : ∀ {i j k} → Span {i} {j} {k} → Span {j} {i} {k}

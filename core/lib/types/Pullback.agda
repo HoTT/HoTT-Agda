@@ -50,7 +50,7 @@ module _ {i j k} (D : ⊙Cospan {i} {j} {k}) where
   ⊙Pullback : Ptd (lmax i (lmax j k))
   ⊙Pullback =
     ⊙[ Pullback (⊙cospan-out D) ,
-       pullback (snd X) (snd Y) (snd f ∙ ! (snd g)) ]
+       pullback (pt X) (pt Y) (snd f ∙ ! (snd g)) ]
     where open ⊙Cospan D
 
 module _ {i j k} (D : Cospan {i} {j} {k}) where

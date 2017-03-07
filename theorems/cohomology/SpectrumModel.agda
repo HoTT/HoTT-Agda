@@ -115,11 +115,11 @@ module SpectrumModel where
       (λ x → ap g (! (cfglue' f x)) ∙ gpt)
       (↓-idf=cst-in
         (ap (g ∘ cfcod) fpt
-         ∙ ap g (ap cfcod (! fpt) ∙ ! (cfglue (snd X))) ∙ gpt
-           =⟨ lemma cfcod g fpt (! (cfglue (snd X))) gpt ⟩
-         ap g (! (cfglue (snd X))) ∙ gpt
+         ∙ ap g (ap cfcod (! fpt) ∙ ! (cfglue (pt X))) ∙ gpt
+           =⟨ lemma cfcod g fpt (! (cfglue (pt X))) gpt ⟩
+         ap g (! (cfglue (pt X))) ∙ gpt
            =⟨ ! (∙-unit-r _) ⟩
-         (ap g (! (cfglue (snd X))) ∙ gpt) ∙ idp ∎))
+         (ap g (! (cfglue (pt X))) ∙ gpt) ∙ idp ∎))
       where
       lemma : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
         {a₁ a₂ : A} {b : B} {c : C} (f : A → B) (g : B → C)
@@ -138,7 +138,7 @@ module SpectrumModel where
       g : Cofiber f → Ω (E (succ n))
       g = CofiberRec.f idp h (! ∘ app= (ap fst p))
 
-      q : h (snd Y) == g (cfbase' f)
+      q : h (pt Y) == g (cfbase' f)
       q = ap g (snd (⊙cfcod' (f , fpt)))
 
   {- Truncated Exactness Axiom -}

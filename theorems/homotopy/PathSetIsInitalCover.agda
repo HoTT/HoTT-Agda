@@ -19,7 +19,7 @@ module homotopy.PathSetIsInitalCover {i} (X : Ptd i)
   -- Strong initiality by path induction.
   module Uniqueness
     (cover-hom : CoverHom univ-cover ⊙cov.cov)
-    (pres-pt : cover-hom (snd X) idp₀ == ⊙cov.pt)
+    (pres-pt : cover-hom (pt X) idp₀ == ⊙cov.pt)
     where
 
     private

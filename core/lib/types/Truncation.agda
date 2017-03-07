@@ -70,7 +70,7 @@ module TruncRecType {i j} {n : ℕ₋₂} {A : Type i} (d : A → n -Type j) whe
 
 
 ⊙Trunc : ∀ {i} → ℕ₋₂ → Ptd i → Ptd i
-⊙Trunc n (A , a) = ⊙[ Trunc n A , [ a ] ]
+⊙Trunc n ⊙[ A , a ] = ⊙[ Trunc n A , [ a ] ]
 
 
 module _ {i} {n : ℕ₋₂} {A : Type i} where
@@ -151,8 +151,8 @@ unTrunc-equiv A nA = equiv f [_] (λ _ → idp) g-f where
   g-f = Trunc-elim (λ _ → =-preserves-level Trunc-level) (λ _ → idp)
 
 ⊙unTrunc-equiv : ∀ {i} {n : ℕ₋₂} (X : Ptd i)
-  → has-level n (fst X) → ⊙Trunc n X ⊙≃ X
-⊙unTrunc-equiv {n = n} X nX = ≃-to-⊙≃ (unTrunc-equiv (fst X) nX) idp
+  → has-level n (de⊙ X) → ⊙Trunc n X ⊙≃ X
+⊙unTrunc-equiv {n = n} X nX = ≃-to-⊙≃ (unTrunc-equiv (de⊙ X) nX) idp
 
 -- Equivalence associated to the universal property
 Trunc-extend-equiv : ∀ {i j} (n : ℕ₋₂) (A : Type i) (B : Type j)

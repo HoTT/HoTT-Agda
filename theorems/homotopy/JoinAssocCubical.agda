@@ -320,4 +320,4 @@ module _ {i j k} (X : Ptd i) (Y : Ptd j) (Z : Ptd k) where
 
   ⊙*-rearrange-equiv : (X ⊙* Y) ⊙* Z ⊙≃ (Z ⊙* Y) ⊙* X
   ⊙*-rearrange-equiv =
-    ≃-to-⊙≃ (*-rearrange-equiv (fst X) (fst Y) (fst Z)) (! (glue (left (snd Z), snd X)))
+    ≃-to-⊙≃ (*-rearrange-equiv (de⊙ X) (de⊙ Y) (de⊙ Z)) (! (glue (left (pt Z), pt X)))

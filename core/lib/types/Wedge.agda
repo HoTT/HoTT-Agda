@@ -17,7 +17,7 @@ module lib.types.Wedge where
 module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
   wedge-span : Span
-  wedge-span = span (fst X) (fst Y) Unit (λ _ → snd X) (λ _ → snd Y)
+  wedge-span = span (de⊙ X) (de⊙ Y) Unit (λ _ → pt X) (λ _ → pt Y)
 
   Wedge : Type (lmax i j)
   Wedge = Pushout wedge-span
@@ -27,19 +27,19 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
-  winl : fst X → X ∨ Y
+  winl : de⊙ X → X ∨ Y
   winl x = left x
 
-  winr : fst Y → X ∨ Y
+  winr : de⊙ Y → X ∨ Y
   winr y = right y
 
-  wglue : winl (snd X) == winr (snd Y)
+  wglue : winl (pt X) == winr (pt Y)
   wglue = glue tt
 
 module _ {i j} (X : Ptd i) (Y : Ptd j) where
 
   ⊙Wedge : Ptd (lmax i j)
-  ⊙Wedge = ⊙[ Wedge X Y , winl (snd X) ]
+  ⊙Wedge = ⊙[ Wedge X Y , winl (pt X) ]
 
   infix 80 _⊙∨_
   _⊙∨_ = ⊙Wedge
@@ -55,8 +55,8 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
   module WedgeElim {k} {P : X ∨ Y → Type k}
-    (inl* : (x : fst X) → P (winl x)) (inr* : (y : fst Y) → P (winr y))
-    (glue* : inl* (snd X) == inr* (snd Y) [ P ↓ wglue ]) where
+    (inl* : (x : de⊙ X) → P (winl x)) (inr* : (y : de⊙ Y) → P (winr y))
+    (glue* : inl* (pt X) == inr* (pt Y) [ P ↓ wglue ]) where
 
     private
       module M = PushoutElim inl* inr* (λ _ → glue*)
@@ -66,8 +66,8 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
   open WedgeElim public using () renaming (f to Wedge-elim)
 
-  module WedgeRec {k} {C : Type k} (inl* : fst X → C) (inr* : fst Y → C)
-    (glue* : inl* (snd X) == inr* (snd Y)) where
+  module WedgeRec {k} {C : Type k} (inl* : de⊙ X → C) (inr* : de⊙ Y → C)
+    (glue* : inl* (pt X) == inr* (pt Y)) where
 
     private
       module M = PushoutRec {d = wedge-span X Y} inl* inr* (λ _ → glue*)
@@ -126,7 +126,7 @@ module ⊙WedgeRec {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
 
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
-  add-wglue : fst (X ⊙⊔ Y) → X ∨ Y
+  add-wglue : de⊙ (X ⊙⊔ Y) → X ∨ Y
   add-wglue (inl x) = winl x
   add-wglue (inr y) = winr y
 

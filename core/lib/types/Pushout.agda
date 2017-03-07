@@ -111,7 +111,7 @@ _⊔^[_]_/_ : ∀ {i j k} (A : Type i) (C : Type k) (B : Type j)
 A ⊔^[ C ] B  / (f , g) = Pushout (span A B C f g)
 
 ⊙Pushout : ∀ {i j k} (d : ⊙Span {i} {j} {k}) → Ptd _
-⊙Pushout d = ⊙[ Pushout (⊙Span-to-Span d) , left (snd (⊙Span.X d)) ]
+⊙Pushout d = ⊙[ Pushout (⊙Span-to-Span d) , left (pt (⊙Span.X d)) ]
 
 module _ {i j k} (d : ⊙Span {i} {j} {k}) where
 
@@ -122,7 +122,7 @@ module _ {i j k} (d : ⊙Span {i} {j} {k}) where
 
   ⊙right : Y ⊙→ ⊙Pushout d
   ⊙right =
-    (right , ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙' ap left (snd f))
+    (right , ap right (! (snd g)) ∙ ! (glue (pt Z)) ∙' ap left (snd f))
 
   ⊙glue : (⊙left ⊙∘ f) == (⊙right ⊙∘ g)
   ⊙glue = pair=
@@ -131,19 +131,19 @@ module _ {i j k} (d : ⊙Span {i} {j} {k}) where
       ap left (snd f) ∙ idp
         =⟨ ∙-unit-r _ ⟩
       ap left (snd f)
-        =⟨ lemma (glue (snd Z)) (ap right (snd g)) (ap left (snd f)) ⟩
-      glue (snd Z) ∙ ap right (snd g)
-      ∙ ! (ap right (snd g)) ∙ ! (glue (snd Z)) ∙' ap left (snd f)
+        =⟨ lemma (glue (pt Z)) (ap right (snd g)) (ap left (snd f)) ⟩
+      glue (pt Z) ∙ ap right (snd g)
+      ∙ ! (ap right (snd g)) ∙ ! (glue (pt Z)) ∙' ap left (snd f)
         =⟨ !-ap right (snd g)
-           |in-ctx (λ w → glue (snd Z) ∙ ap right (snd g) ∙ w
-                          ∙ ! (glue (snd Z)) ∙' ap left (snd f)) ⟩
-      glue (snd Z) ∙ ap right (snd g)
-      ∙ ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙' ap left (snd f)
-        =⟨ ! (app=-β glue (snd Z))
+           |in-ctx (λ w → glue (pt Z) ∙ ap right (snd g) ∙ w
+                          ∙ ! (glue (pt Z)) ∙' ap left (snd f)) ⟩
+      glue (pt Z) ∙ ap right (snd g)
+      ∙ ap right (! (snd g)) ∙ ! (glue (pt Z)) ∙' ap left (snd f)
+        =⟨ ! (app=-β glue (pt Z))
            |in-ctx (λ w → w ∙ ap right (snd g) ∙ ap right (! (snd g))
-                            ∙ ! (glue (snd Z)) ∙' ap left (snd f)) ⟩
-      app= (λ= glue) (snd Z) ∙ ap right (snd g)
-      ∙ ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙' ap left (snd f) =∎)
+                            ∙ ! (glue (pt Z)) ∙' ap left (snd f)) ⟩
+      app= (λ= glue) (pt Z) ∙ ap right (snd g)
+      ∙ ap right (! (snd g)) ∙ ! (glue (pt Z)) ∙' ap left (snd f) =∎)
     where
     lemma : ∀ {i} {A : Type i} {x y z w : A}
       (p : x == y) (q : y == z) (r : x == w)
@@ -151,7 +151,7 @@ module _ {i j k} (d : ⊙Span {i} {j} {k}) where
     lemma idp idp idp = idp
 
 ⊙pushout-J : ∀ {i j k l} (P : ⊙Span → Type l)
-  → ({A : Type i} {B : Type j} (Z : Ptd k) (f : fst Z → A) (g : fst Z → B)
-     → P (⊙span (A , f (snd Z)) (B , g (snd Z)) Z (f , idp) (g , idp)))
+  → ({A : Type i} {B : Type j} (Z : Ptd k) (f : de⊙ Z → A) (g : de⊙ Z → B)
+     → P (⊙span ⊙[ A , f (pt Z) ] ⊙[ B , g (pt Z) ] Z (f , idp) (g , idp)))
   → ((ps : ⊙Span) → P ps)
-⊙pushout-J P t (⊙span (_ , ._) (_ , ._) Z (f , idp) (g , idp)) = t Z f g
+⊙pushout-J P t (⊙span ⊙[ _ , ._ ] ⊙[ _ , ._ ] Z (f , idp) (g , idp)) = t Z f g

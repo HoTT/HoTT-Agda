@@ -5,8 +5,8 @@ open import lib.Basics
 module lib.types.Sigma where
 
 -- pointed [Σ]
-⊙Σ : ∀ {i j} (X : Ptd i) → (fst X → Ptd j) → Ptd (lmax i j)
-⊙Σ (A , a₀) Y = ⊙[ Σ A (fst ∘ Y) , (a₀ , snd (Y a₀)) ]
+⊙Σ : ∀ {i j} (X : Ptd i) → (de⊙ X → Ptd j) → Ptd (lmax i j)
+⊙Σ ⊙[ A , a₀ ] Y = ⊙[ Σ A (de⊙ ∘ Y) , (a₀ , pt (Y a₀)) ]
 
 -- Cartesian product
 _×_ : ∀ {i j} (A : Type i) (B : Type j) → Type (lmax i j)
@@ -18,8 +18,8 @@ X ⊙× Y = ⊙Σ X (λ _ → Y)
 infixr 80 _×_ _⊙×_
 
 -- XXX Do we really need two versions of [⊙fst]?
-⊙fstᵈ : ∀ {i j} {X : Ptd i} (Y : fst X → Ptd j) → ⊙Σ X Y ⊙→ X
-⊙fstᵈ Y = (fst , idp)
+⊙fstᵈ : ∀ {i j} {X : Ptd i} (Y : de⊙ X → Ptd j) → ⊙Σ X Y ⊙→ X
+⊙fstᵈ Y = fst , idp
 
 ⊙fst : ∀ {i j} {X : Ptd i} {Y : Ptd j} → X ⊙× Y ⊙→ X
 ⊙fst = ⊙fstᵈ _

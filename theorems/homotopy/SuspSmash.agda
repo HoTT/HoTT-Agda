@@ -21,21 +21,21 @@ private
     reduce-y idp idp = idp
 
   module Into = SuspRec {A = Smash X Y}
-    {C = fst (X ⊙* Y)}
-    (left (snd X))
-    (right (snd Y))
+    {C = de⊙ X * de⊙ Y}
+    (left (pt X))
+    (right (pt Y))
     (CofPushoutSection.rec (λ _ → tt) (λ _ → idp)
-      (glue (snd X , snd Y))
+      (glue (pt X , pt Y))
       (λ {(x , y) →
-        glue (snd X , snd Y) ∙ ! (glue (x , snd Y))
+        glue (pt X , pt Y) ∙ ! (glue (x , pt Y))
         ∙ glue (x , y)
-        ∙ ! (glue (snd X , y)) ∙ glue (snd X , snd Y)})
-      (λ x → ! (reduce-x (glue (snd X , snd Y)) (glue (x , snd Y))))
-      (λ y → ! (reduce-y (glue (snd X , snd Y)) (glue (snd X , y)))))
+        ∙ ! (glue (pt X , y)) ∙ glue (pt X , pt Y)})
+      (λ x → ! (reduce-x (glue (pt X , pt Y)) (glue (x , pt Y))))
+      (λ y → ! (reduce-y (glue (pt X , pt Y)) (glue (pt X , y)))))
 
   into = Into.f
 
-  module Out = PushoutRec {d = ⊙Span-to-Span (*-⊙span X Y)}
+  module Out = PushoutRec {d = ⊙Span-to-Span (⊙*-span X Y)}
     {D = Susp (Smash X Y)}
     (λ _ → north)
     (λ _ → south)
@@ -43,15 +43,15 @@ private
 
   out = Out.f
 
-  into-out : (j : fst (X ⊙* Y)) → into (out j) == j
+  into-out : (j : de⊙ X * de⊙ Y) → into (out j) == j
   into-out = Pushout-elim
-    (λ x → glue (snd X , snd Y) ∙ ! (glue (x , snd Y)))
-    (λ y → ! (glue (snd X , snd Y)) ∙ glue (snd X , y))
+    (λ x → glue (pt X , pt Y) ∙ ! (glue (x , pt Y)))
+    (λ y → ! (glue (pt X , pt Y)) ∙ glue (pt X , y))
     (↓-∘=idf-from-square into out ∘ λ {(x , y) →
       (ap (ap into) (Out.glue-β (x , y))
        ∙ Into.merid-β (cfcod (x ,  y)))
-      ∙v⊡ lemma (glue (snd X , snd Y)) (glue (x , snd Y))
-                (glue (snd X , y)) (glue (x , y))})
+      ∙v⊡ lemma (glue (pt X , pt Y)) (glue (x , pt Y))
+                (glue (pt X , y)) (glue (x , y))})
     where
     lemma : ∀ {i} {A : Type i} {x y z w : A}
       (p : x == y) (q : z == y) (r : x == w) (s : z == w)
@@ -65,18 +65,18 @@ private
     idp
     (↓-∘=idf-in' out into ∘ λ {(x , y) →
       ap (ap out) (Into.merid-β (cfcod (x , y)))
-      ∙ lemma₁ out (Out.glue-β (snd X , snd Y))
-                   (Out.glue-β (x , snd Y))
+      ∙ lemma₁ out (Out.glue-β (pt X , pt Y))
+                   (Out.glue-β (x , pt Y))
                    (Out.glue-β (x , y))
-                   (Out.glue-β (snd X , y))
-                   (Out.glue-β (snd X , snd Y))
-      ∙ lemma₂ {p = merid (cfcod (snd X , snd Y))}
-               {q = merid (cfcod (x , snd Y))}
+                   (Out.glue-β (pt X , y))
+                   (Out.glue-β (pt X , pt Y))
+      ∙ lemma₂ {p = merid (cfcod (pt X , pt Y))}
+               {q = merid (cfcod (x , pt Y))}
                {r = merid (cfcod (x , y))}
-               {s = merid (cfcod (snd X , y))}
-               {t = merid (cfcod (snd X , snd Y))}
-          (ap merid (! (cfglue (winl (snd X))) ∙ cfglue (winl x)))
-          (ap merid (! (cfglue (winr y)) ∙ cfglue (winr (snd Y))))})
+               {s = merid (cfcod (pt X , y))}
+               {t = merid (cfcod (pt X , pt Y))}
+          (ap merid (! (cfglue (winl (pt X))) ∙ cfglue (winl x)))
+          (ap merid (! (cfglue (winr y)) ∙ cfglue (winr (pt Y))))})
     where
     lemma₁ : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
       {x y z u v w : A}
@@ -99,7 +99,7 @@ private
 
 module SuspSmash where
 
-  eq : Susp (Smash X Y) ≃ fst (X ⊙* Y)
+  eq : Susp (Smash X Y) ≃ (de⊙ X * de⊙ Y)
   eq = equiv into out into-out out-into
 
   ⊙eq : ⊙Susp (⊙Smash X Y) ⊙≃ (X ⊙* Y)

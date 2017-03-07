@@ -12,8 +12,8 @@ module _ (n : ℤ) where
   private
     ⊙LU = ⊙Lift {j = i} ⊙Unit
 
-  ⊙Cofiber-Lift-Unit-equiv-Lift-Unit : ⊙Cof (⊙idf ⊙LU) ⊙≃ ⊙LU
-  ⊙Cofiber-Lift-Unit-equiv-Lift-Unit = ≃-to-⊙≃ {X = _ , cfbase} e idp
+  ⊙Cofiber-Lift-Unit-equiv-Lift-Unit : ⊙Cofiber (⊙idf ⊙LU) ⊙≃ ⊙LU
+  ⊙Cofiber-Lift-Unit-equiv-Lift-Unit = ≃-to-⊙≃ {X = ⊙[ _ , cfbase ]} e idp
     where
     e : Cofiber (idf (Lift {j = i} Unit)) ≃ Lift Unit
     e = equiv (λ _ → lift unit)
@@ -23,7 +23,7 @@ module _ (n : ℤ) where
                  {P = λ c → cfbase == c}
                  idp
                  (λ _ → cfglue (lift unit))
-                 (λ _ → ↓-cst=idf-in idp))
+                 (λ _ → ↓-cst=idf-in' idp))
 
   C-Unit-is-contr : is-contr (CEl n ⊙LU)
   C-Unit-is-contr =

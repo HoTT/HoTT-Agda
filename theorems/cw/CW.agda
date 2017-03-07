@@ -5,7 +5,7 @@
   https://github.com/leanprover/lean/blob/master/hott/homotopy/cellcomplex.hlean
 -}
 
-open import HoTT
+open import HoTT renaming (pt to pt⊙)
 open import homotopy.DisjointlyPointedSet
 
 module cw.CW {i} where
@@ -66,10 +66,10 @@ record ⊙Skeleton (n : ℕ) : Type (lsucc i) where
   field
     skel : Skeleton n
     pt : cw-head skel
-    pt-dec : is-detachable ⊙[ cw-head skel , pt ]
+    pt-dec : is-separable ⊙[ cw-head skel , pt ]
 
 ⊙Realizer : {n : ℕ} → ⊙Skeleton n → Ptd i
-⊙Realizer (⊙skeleton skel pt _) = ⟦ skel ⟧ , incl^ skel pt
+⊙Realizer (⊙skeleton skel pt _) = ⊙[ ⟦ skel ⟧ , incl^ skel pt ]
 
 ⊙⟦_⟧ = ⊙Realizer
 
@@ -138,7 +138,7 @@ attaching-last : ∀ {n : ℕ} (skel : Skeleton (S n))
 attaching-last (attached-skeleton _ _ attaching) = attaching
 
 ⊙attaching-last : ∀ {n : ℕ} (⊙skel : ⊙Skeleton (S n))
-  → ⊙cells-last ⊙skel → (Sphere n → fst ⊙⟦ ⊙skel ⟧₋₁)
+  → ⊙cells-last ⊙skel → (Sphere n → de⊙ ⊙⟦ ⊙skel ⟧₋₁)
 ⊙attaching-last = attaching-last ∘ ⊙Skeleton.skel
 
 attaching-nth : ∀ {m n : ℕ} (Sm≤n : S m ≤ n) (skel : Skeleton n)
@@ -146,7 +146,7 @@ attaching-nth : ∀ {m n : ℕ} (Sm≤n : S m ≤ n) (skel : Skeleton n)
 attaching-nth Sm≤n = attaching-last ∘ cw-take Sm≤n
 
 ⊙attaching-nth : ∀ {m n : ℕ} (Sm≤n : S m ≤ n) (⊙skel : ⊙Skeleton n)
-  → ⊙cells-nth Sm≤n ⊙skel → Sphere m → fst ⊙⟦ ⊙cw-take Sm≤n ⊙skel ⟧₋₁
+  → ⊙cells-nth Sm≤n ⊙skel → Sphere m → de⊙ ⊙⟦ ⊙cw-take Sm≤n ⊙skel ⟧₋₁
 ⊙attaching-nth Sm≤n = ⊙attaching-last ∘ ⊙cw-take Sm≤n
 
 -- Access the [m]th dimensional inclusion map

@@ -41,20 +41,20 @@ private
   {- the equivalences between [Cofiber² f] and [ΣX] (and so [Cofiber³ f] and [ΣY]) -}
   module Equiv {X Y : Ptd i} (f : X ⊙→ Y) where
 
-    module Into = CofiberRec {f = cfcod' (fst f)} {C = Susp (fst X)}
+    module Into = CofiberRec {f = cfcod' (fst f)} {C = Susp (de⊙ X)}
       south extract-glue (λ _ → idp)
 
-    into : Cofiber² (fst f) → Susp (fst X)
+    into : Cofiber² (fst f) → Susp (de⊙ X)
     into = Into.f
 
     ⊙into : ⊙Cofiber² f ⊙→ ⊙Susp X
-    ⊙into = into , ! (merid (snd X))
+    ⊙into = into , ! (merid (pt X))
 
-    module Out = SuspRec {C = fst (⊙Cofiber² f)}
+    module Out = SuspRec {C = de⊙ (⊙Cofiber² f)}
       (cfcod cfbase) cfbase
       (λ x → ap cfcod (cfglue x) ∙ ! (cfglue (fst f x)))
 
-    out : Susp (fst X) → Cofiber² (fst f)
+    out : Susp (de⊙ X) → Cofiber² (fst f)
     out = Out.f
 
     into-out : ∀ σ → into (out σ) == σ
@@ -80,11 +80,11 @@ private
       (λ y → ↓-∘=idf-from-square out into $
          ap (ap out) (Into.glue-β y) ∙v⊡ connection)
 
-    eqv : Cofiber² (fst f) ≃ Susp (fst X)
+    eqv : Cofiber² (fst f) ≃ Susp (de⊙ X)
     eqv = equiv into out into-out out-into
 
     ⊙eqv : ⊙Cofiber² f ⊙≃ ⊙Susp X
-    ⊙eqv = ≃-to-⊙≃ eqv (! (merid (snd X)))
+    ⊙eqv = ≃-to-⊙≃ eqv (! (merid (pt X)))
 
 module _ {X Y : Ptd i} (f : X ⊙→ Y) where
 
@@ -121,7 +121,7 @@ module _ {X Y : Ptd i} (f : X ⊙→ Y) where
             ap (Susp-flip ∘ extract-glue) (cfglue y) ∙' merid y
               =∎))}
 
-  Cofiber²-equiv-Susp-dom : Cofiber² (fst f) ≃ Susp (fst X)
+  Cofiber²-equiv-Susp-dom : Cofiber² (fst f) ≃ Susp (de⊙ X)
   Cofiber²-equiv-Susp-dom = Equiv.eqv f
 
   ⊙Cofiber²-equiv-⊙Susp-dom : ⊙Cofiber² f ⊙≃ ⊙Susp X

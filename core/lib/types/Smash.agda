@@ -8,7 +8,7 @@ open import lib.types.Wedge
 module lib.types.Smash {i j} (X : Ptd i) (Y : Ptd j) where
 
 module ∨In× = WedgeRec {X = X} {Y = Y}
-  (λ x → (x , snd Y)) (λ y → (snd X , y)) idp
+  (λ x → (x , pt Y)) (λ y → (pt X , y)) idp
 
 ∨-in-× = ∨In×.f
 
@@ -18,7 +18,7 @@ module ∨In× = WedgeRec {X = X} {Y = Y}
 ⊙Smash : Ptd (lmax i j)
 ⊙Smash = ⊙Cofiber ∨-⊙in-×
 
-Smash = fst ⊙Smash
+Smash = de⊙ ⊙Smash
 
 _∧_ = Smash
 _⊙∧_ = ⊙Smash

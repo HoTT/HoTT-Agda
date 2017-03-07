@@ -26,7 +26,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
 
     Ω-group : Group (lsucc i)
     Ω-group = Ω^S-group 0
-      ((0 -Type i) , (G.El , G.El-level)) (0 -Type-level i)
+      ⊙[ (0 -Type i) , (G.El , G.El-level) ] (0 -Type-level i)
 
     Codes-hom : G →ᴳ Ω-group
     Codes-hom = group-hom (nType=-out ∘ ua ∘ comp-equiv) pres-comp where

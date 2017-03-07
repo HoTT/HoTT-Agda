@@ -331,12 +331,12 @@ _⊙≃_ : ∀ {i j} → Ptd i → Ptd j → Type (lmax i j)
 X ⊙≃ Y = Σ (X ⊙→ Y) (λ {(f , _) → is-equiv f})
 
 ≃-to-⊙≃ : ∀ {i j} {X : Ptd i} {Y : Ptd j}
-  (e : fst X ≃ fst Y) (p : –> e (snd X) == snd Y)
+  (e : de⊙ X ≃ de⊙ Y) (p : –> e (pt X) == pt Y)
   → X ⊙≃ Y
 ≃-to-⊙≃ (f , ie) p = ((f , p) , ie)
 
 ⊙ide : ∀ {i} (X : Ptd i) → (X ⊙≃ X)
-⊙ide X = ⊙idf X , idf-is-equiv (fst X)
+⊙ide X = ⊙idf X , idf-is-equiv (de⊙ X)
 
 infixr 80 _⊙∘e_
 _⊙∘e_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}

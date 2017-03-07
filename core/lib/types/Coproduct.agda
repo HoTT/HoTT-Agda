@@ -64,10 +64,10 @@ module _ {i j} {A : Type i} {B : Type j} where
 
 infix 80 _⊙⊔_
 _⊙⊔_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
-X ⊙⊔ Y = ⊙[ Coprod (fst X) (fst Y) , inl (snd X) ]
+X ⊙⊔ Y = ⊙[ Coprod (de⊙ X) (de⊙ Y) , inl (pt X) ]
 
 _⊔⊙_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
-X ⊔⊙ Y = ⊙[ Coprod (fst X) (fst Y) , inr (snd Y) ]
+X ⊔⊙ Y = ⊙[ Coprod (de⊙ X) (de⊙ Y) , inr (pt Y) ]
 
 codiag : ∀ {i} {A : Type i} → A ⊔ A → A
 codiag (inl a) = a

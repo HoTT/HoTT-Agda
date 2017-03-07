@@ -4,11 +4,11 @@ open import HoTT
 open import homotopy.RibbonCover
 
 module experimental.CoverClassification2 {i} (X : Ptd i)
-  (A-conn : is-connected 0 (fst X)) where
+  (A-conn : is-connected 0 (de⊙ X)) where
 
   private
-    A = fst X
-    a = snd X
+    A = de⊙ X
+    a = pt X
 
   open Cover
   open import homotopy.CoverClassification X A-conn

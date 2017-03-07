@@ -22,6 +22,7 @@ import homotopy.HopfJunior
 import homotopy.Hopf
 
 {- cohomology -}
+import cohomology.Unit
 import cohomology.EMModel
 -- import cohomology.Torus -- FIXME
 -- import cohomology.MayerVietorisExact -- FIXME

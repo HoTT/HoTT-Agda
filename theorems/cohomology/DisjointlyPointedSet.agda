@@ -9,33 +9,33 @@ module cohomology.DisjointlyPointedSet {i} (OT : OrdinaryTheory i) where
   open OrdinaryTheory OT
 
   module _ (n : ℤ) (X : Ptd i)
-    (X-is-set : is-set (fst X)) (dec : is-detachable X)
-    (ac : has-choice 0 (fst X) i) where
+    (X-is-set : is-set (de⊙ X)) (dec : is-separable X)
+    (ac : has-choice 0 (de⊙ X) i) where
 
     private
 
-      lemma : BigWedge {A = MinusPoint X} (λ _ → ⊙Bool) ≃ fst X
+      lemma : BigWedge {A = MinusPoint X} (λ _ → ⊙Bool) ≃ de⊙ X
       lemma = equiv to from to-from from-to where
-        from : fst X → BigWedge {A = MinusPoint X} (λ _ → ⊙Bool)
+        from : de⊙ X → BigWedge {A = MinusPoint X} (λ _ → ⊙Bool)
         from x with dec x
         from x | inl p  = bwbase
         from x | inr ¬p = bwin (x , ¬p) false
 
         module From = BigWedgeRec {A = MinusPoint X} {X = λ _ → ⊙Bool}
-          (snd X) (λ{_ true → snd X; (x , _) false → x}) (λ _ → idp)
+          (pt X) (λ{_ true → pt X; (x , _) false → x}) (λ _ → idp)
         to = From.f
 
         abstract
           from-to : ∀ x → from (to x) == x
           from-to = BigWedge-elim base* in* glue* where
-            base* : from (snd X) == bwbase
-            base* with dec (snd X)
+            base* : from (pt X) == bwbase
+            base* with dec (pt X)
             base* | inl _  = idp
             base* | inr ¬p = ⊥-rec (¬p idp)
 
             in* : (wp : MinusPoint X) (b : Bool)
               → from (to (bwin wp b)) == bwin wp b
-            in* wp true with dec (snd X)
+            in* wp true with dec (pt X)
             in* wp true | inl _ = bwglue wp
             in* wp true | inr pt≠pt = ⊥-rec (pt≠pt idp)
             in* (x , pt≠x) false with dec x
@@ -47,7 +47,7 @@ module cohomology.DisjointlyPointedSet {i} (OT : OrdinaryTheory i) where
               → base* == in* wp true [ (λ x → from (to x) == x) ↓ bwglue wp ]
             glue* wp = ↓-∘=idf-from-square from to $ ap (ap from) (From.glue-β wp) ∙v⊡ square where
               square : Square base* idp (bwglue wp) (in* wp true)
-              square with dec (snd X)
+              square with dec (pt X)
               square | inl _ = br-square (bwglue wp)
               square | inr ¬p = ⊥-rec (¬p idp)
 
@@ -64,13 +64,13 @@ module cohomology.DisjointlyPointedSet {i} (OT : OrdinaryTheory i) where
         ≃ᴳ⟨ C-emap n (⊙BigWedge-emap-r λ _ → ⊙lower-equiv) ⟩
       C n (⊙BigWedge {A = MinusPoint X} (λ _ → ⊙Lift ⊙Bool))
         ≃ᴳ⟨ C-additive-iso n (λ _ → ⊙Lift ⊙Bool)
-              (MinusPoint-has-choice 0 (detachable-has-disjoint-pt dec) ac) ⟩
+              (MinusPoint-has-choice 0 (separable-has-disjoint-pt dec) ac) ⟩
       Πᴳ (MinusPoint X) (λ _ → C n (⊙Lift ⊙Bool))
         ≃ᴳ∎
 
   module _ {n : ℤ} (n≠0 : n ≠ 0) (X : Ptd i)
-    (X-is-set : is-set (fst X)) (dec : is-detachable X)
-    (ac : has-choice 0 (fst X) i) where
+    (X-is-set : is-set (de⊙ X)) (dec : is-separable X)
+    (ac : has-choice 0 (de⊙ X) i) where
 
     C-set-≠-is-trivial : is-trivialᴳ (C n X)
     C-set-≠-is-trivial = iso-preserves'-trivial

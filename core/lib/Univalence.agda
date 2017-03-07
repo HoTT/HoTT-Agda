@@ -68,6 +68,6 @@ equiv-induction {i} {j} P d f =
   aux P d idp = d _
 
 {- Univalence for pointed types -}
-⊙ua : ∀ {i} {X Y : Ptd i} → X ⊙≃ Y → X == Y
-⊙ua ((f , p) , ie) = pair= (ua (f , ie)) (↓-idf-ua-in (f , ie) p)
-
+abstract
+  ⊙ua : ∀ {i} {X Y : Ptd i} → X ⊙≃ Y → X == Y
+  ⊙ua ((f , p) , ie) = ptd= (ua (f , ie)) (↓-idf-ua-in (f , ie) p)

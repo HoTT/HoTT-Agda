@@ -15,7 +15,7 @@ module lib.types.IteratedSuspension where
 
 abstract
   ⊙Susp^-conn : ∀ {i} (n : ℕ) {X : Ptd i} {m : ℕ₋₂}
-    → is-connected m (fst X) → is-connected (⟨ n ⟩₋₂ +2+ m) (fst (⊙Susp^ n X))
+    → is-connected m (de⊙ X) → is-connected (⟨ n ⟩₋₂ +2+ m) (de⊙ (⊙Susp^ n X))
   ⊙Susp^-conn O cX = cX
   ⊙Susp^-conn (S n) cX = Susp-conn (⊙Susp^-conn n cX)
 
@@ -59,7 +59,7 @@ abstract
 ⊙Sphere n = ⊙Susp^ n ⊙Bool
 
 Sphere : (n : ℕ) → Type₀
-Sphere n = fst (⊙Sphere n)
+Sphere n = de⊙ (⊙Sphere n)
 
 abstract
   Sphere-conn : ∀ (n : ℕ) → is-connected ⟨ n ⟩₋₁ (Sphere n)

@@ -244,26 +244,26 @@ module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
                ∘ lower {j = lmax l (lmax k (lmax j i))})
               (snd (⊙lift ⊙∘ ⊙right (⊙span X W Y f (h ⊙∘ g))))
         ∙ idp
-        ==  ap right (! (snd h)) ∙ ! (glue (snd Z))
+        ==  ap right (! (snd h)) ∙ ! (glue (pt Z))
             ∙' ap left (snd (⊙right (⊙span X Z Y f g)))
     lemma {Y = Y} (f , idp) (g , idp) (h , idp) =
-      ap (2P.split ∘ lower) (ap lift (! (glue (snd Y))) ∙ idp) ∙ idp
+      ap (2P.split ∘ lower) (ap lift (! (glue (pt Y))) ∙ idp) ∙ idp
         =⟨ ∙-unit-r _ ⟩
-      ap (2P.split ∘ lower) (ap lift (! (glue (snd Y))) ∙ idp)
+      ap (2P.split ∘ lower) (ap lift (! (glue (pt Y))) ∙ idp)
         =⟨ ∙-unit-r _ |in-ctx (ap (2P.split ∘ lower)) ⟩
-      ap (2P.split ∘ lower) (ap lift (! (glue (snd Y))))
+      ap (2P.split ∘ lower) (ap lift (! (glue (pt Y))))
         =⟨ ∘-ap (2P.split ∘ lower) lift _ ⟩
-      ap 2P.split (! (glue (snd Y)))
-        =⟨ ap-! 2P.split (glue (snd Y)) ⟩
-      ! (ap 2P.split (glue (snd Y)))
-        =⟨ 2P.Split.glue-β (snd Y) |in-ctx ! ⟩
-      ! (ap left (glue (snd Y)) ∙ glue (g (snd Y)))
-        =⟨ !-∙ (ap left (glue (snd Y))) (glue (g (snd Y))) ⟩
-      ! (glue (g (snd Y))) ∙ ! (ap left (glue (snd Y)))
-        =⟨ !-ap left (glue (snd Y)) |in-ctx (λ w → ! (glue (g (snd Y))) ∙ w) ⟩
-      ! (glue (g (snd Y))) ∙ ap left (! (glue (snd Y)))
-        =⟨ ∙=∙' (! (glue (g (snd Y)))) (ap left (! (glue (snd Y)))) ⟩
-      ! (glue (g (snd Y))) ∙' ap left (! (glue (snd Y))) ∎
+      ap 2P.split (! (glue (pt Y)))
+        =⟨ ap-! 2P.split (glue (pt Y)) ⟩
+      ! (ap 2P.split (glue (pt Y)))
+        =⟨ 2P.Split.glue-β (pt Y) |in-ctx ! ⟩
+      ! (ap left (glue (pt Y)) ∙ glue (g (pt Y)))
+        =⟨ !-∙ (ap left (glue (pt Y))) (glue (g (pt Y))) ⟩
+      ! (glue (g (pt Y))) ∙ ! (ap left (glue (pt Y)))
+        =⟨ !-ap left (glue (pt Y)) |in-ctx (λ w → ! (glue (g (pt Y))) ∙ w) ⟩
+      ! (glue (g (pt Y))) ∙ ap left (! (glue (pt Y)))
+        =⟨ ∙=∙' (! (glue (g (pt Y)))) (ap left (! (glue (pt Y)))) ⟩
+      ! (glue (g (pt Y))) ∙' ap left (! (glue (pt Y))) ∎
       where
       module 2P = TwoPushoutsEquiv f g h
 

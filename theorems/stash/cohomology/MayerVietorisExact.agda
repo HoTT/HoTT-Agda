@@ -119,7 +119,7 @@ mayer-vietoris-exact =
     projl-mv-diff : (σz : fst (⊙Susp Z))
       → Susp-fmap (projl X Y) (MV.mv-diff σz)
         == Susp-fmap (fst f) σz
-    projl-mv-diff = Susp-elim idp (merid (snd X)) $
+    projl-mv-diff = Susp-elim idp (merid (pt X)) $
       ↓-='-from-square ∘ λ z →
         (ap-∘ (Susp-fmap (projl X Y)) MV.mv-diff (merid z)
          ∙ ap (ap (Susp-fmap (projl X Y))) (MV.MVDiff.merid-β z)
@@ -129,7 +129,7 @@ mayer-vietoris-exact =
             ∙2 (ap-! (Susp-fmap _) (merid (winr (fst g z)))
                 ∙ ap ! (SuspFmap.merid-β (projl X Y) (winr (fst g z))))))
         ∙v⊡ (vid-square {p = merid (fst f z)}
-             ⊡h rt-square (merid (snd X)))
+             ⊡h rt-square (merid (pt X)))
         ⊡v∙ (∙-unit-r _ ∙ ! (SuspFmap.merid-β (fst f) z))
 
   inr-lemma : diff' ∘ᴳ CF-hom n (⊙projr X Y)
@@ -169,7 +169,7 @@ mayer-vietoris-exact =
     projr-mv-diff : (σz : fst (⊙Susp Z))
       → Susp-fmap (projr X Y) (MV.mv-diff σz)
         == Susp-fmap (fst g) (Susp-flip σz)
-    projr-mv-diff = Susp-elim (merid (snd Y)) idp $
+    projr-mv-diff = Susp-elim (merid (pt Y)) idp $
       ↓-='-from-square ∘ λ z →
         (ap-∘ (Susp-fmap (projr X Y)) MV.mv-diff (merid z)
          ∙ ap (ap (Susp-fmap (projr X Y))) (MV.MVDiff.merid-β z)
@@ -179,7 +179,7 @@ mayer-vietoris-exact =
             ∙2 (ap-! (Susp-fmap (projr X Y))
                   (merid (winr (fst g z)))
                 ∙ ap ! (SuspFmap.merid-β (projr X Y) (winr (fst g z))))))
-        ∙v⊡ ((lt-square (merid (snd Y))
+        ∙v⊡ ((lt-square (merid (pt Y))
              ⊡h vid-square {p = ! (merid (fst g z))}))
         ⊡v∙ ! (ap-∘ (Susp-fmap (fst g)) Susp-flip (merid z)
                ∙ ap (ap (Susp-fmap (fst g))) (FlipSusp.merid-β z)

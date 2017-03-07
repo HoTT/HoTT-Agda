@@ -60,7 +60,7 @@ module _ {G : Group i} where
 
   module EM₁Rec {j} {C : Type j}
     (C-level : has-level ⟨ 1 ⟩ C) (embase* : C)
-    (hom* : G →ᴳ (Ω^S-group 0 (C , embase*) C-level)) where
+    (hom* : G →ᴳ (Ω^S-group 0 ⊙[ C , embase* ] C-level)) where
 
     private
       module M = EM₁Elim {P = λ _ → C} (λ _ → C-level)

@@ -23,16 +23,16 @@ module Σ⊣Ω {i} where
 
   module _ (X : Ptd i) where
 
-    η : fst X → Ω (⊙Susp X)
-    η x = merid x ∙ ! (merid (snd X))
+    η : de⊙ X → Ω (⊙Susp X)
+    η x = merid x ∙ ! (merid (pt X))
 
-    module E = SuspRec (snd X) (snd X) (idf _)
+    module E = SuspRec (pt X) (pt X) (idf _)
 
-    ε : fst (⊙Susp (⊙Ω X)) → fst X
+    ε : de⊙ (⊙Susp (⊙Ω X)) → de⊙ X
     ε = E.f
 
     ⊙η : X ⊙→ ⊙Ω (⊙Susp X)
-    ⊙η = (η , !-inv-r (merid (snd X)))
+    ⊙η = (η , !-inv-r (merid (pt X)))
 
     ⊙ε : ⊙Susp (⊙Ω X) ⊙→ X
     ⊙ε = (ε , idp)
@@ -41,11 +41,11 @@ module Σ⊣Ω {i} where
     → ⊙η Y ⊙∘ f == ⊙Ω-fmap (⊙Susp-fmap f) ⊙∘ ⊙η X
   η-natural {X = X} (f , idp) = ⊙λ=
     (λ x → ! $
-      ap-∙ (Susp-fmap f) (merid x) (! (merid (snd X)))
+      ap-∙ (Susp-fmap f) (merid x) (! (merid (pt X)))
       ∙ SuspFmap.merid-β f x
-        ∙2 (ap-! (Susp-fmap f) (merid (snd X))
-            ∙ ap ! (SuspFmap.merid-β f (snd X))))
-    (pt-lemma (Susp-fmap f) (merid (snd X)) (SuspFmap.merid-β f (snd X)))
+        ∙2 (ap-! (Susp-fmap f) (merid (pt X))
+            ∙ ap ! (SuspFmap.merid-β f (pt X))))
+    (pt-lemma (Susp-fmap f) (merid (pt X)) (SuspFmap.merid-β f (pt X)))
     where
     pt-lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
       {x y : A} (p : x == y) {q : f x == f y} (α : ap f p == q)
@@ -69,12 +69,12 @@ module Σ⊣Ω {i} where
   εΣ-Ση X = ⊙λ=
     (SuspElim.f
       idp
-      (merid (snd X))
+      (merid (pt X))
       (λ x → ↓-='-from-square $
         (ap-∘ (ε (⊙Susp X)) (Susp-fmap (η X)) (merid x)
          ∙ ap (ap (ε (⊙Susp X))) (SuspFmap.merid-β (η X) x)
-         ∙ E.merid-β _ (merid x ∙ ! (merid (snd X))))
-        ∙v⊡ square-lemma (merid x) (merid (snd X))
+         ∙ E.merid-β _ (merid x ∙ ! (merid (pt X))))
+        ∙v⊡ square-lemma (merid x) (merid (pt X))
         ⊡v∙ ! (ap-idf (merid x))))
     idp
     where

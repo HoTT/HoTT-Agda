@@ -15,13 +15,10 @@ module homotopy.RibbonCover {i : ULevel} where
 
   -- The HIT ribbon---reconstructed covering space
 
-  private
-    π1 = fundamental-group
-
-  module _ (X : Ptd i) {j} (gs : GroupSet (fundamental-group X) j) (a₂ : fst X) where
+  module _ (X : Ptd i) {j} (gs : GroupSet (πS 0 X) j) (a₂ : de⊙ X) where
     private
-      A = fst X
-      a₁ = snd X
+      A = de⊙ X
+      a₁ = pt X
       El = GroupSet.El gs
       El-level = GroupSet.El-level gs
       infix 80 _⊙_
@@ -37,10 +34,10 @@ module homotopy.RibbonCover {i : ULevel} where
     Ribbon : Type (lmax i j)
     Ribbon = SetQuot RibbonRel
 
-  module _ {X : Ptd i} {j} {gs : GroupSet (fundamental-group X) j} {a₂ : fst X} where
+  module _ {X : Ptd i} {j} {gs : GroupSet (πS 0 X) j} {a₂ : de⊙ X} where
     private
-      A = fst X
-      a = snd X
+      A = de⊙ X
+      a = pt X
       El = GroupSet.El gs
       El-level = GroupSet.El-level gs
       infix 80 _⊙_
@@ -108,15 +105,15 @@ module homotopy.RibbonCover {i : ULevel} where
     open RibbonRec public using () renaming (f to Ribbon-rec)
 
   -- This data structure gives a cover.
-  Ribbon-cover : ∀ (X : Ptd i) {j} (gs : GroupSet (π1 X) j)
-    → Cover (fst X) (lmax i j)
+  Ribbon-cover : ∀ (X : Ptd i) {j} (gs : GroupSet (πS 0 X) j)
+    → Cover (de⊙ X) (lmax i j)
   Ribbon-cover X gs = record
     { Fiber = Ribbon X gs
     ; Fiber-level = λ a → Ribbon-level
     }
 
   transp-trace : ∀ {A : Type i} {a₁} {j}
-    {gs : GroupSet (π1 (A , a₁)) j}
+    {gs : GroupSet (πS 0 ⊙[ A , a₁ ]) j}
     {a₂} (q : a₁ == a₂) y p
-    → transport (Ribbon (A , a₁) gs) q (trace y p) == trace y (p ∙₀ [ q ])
+    → transport (Ribbon ⊙[ A , a₁ ] gs) q (trace y p) == trace y (p ∙₀ [ q ])
   transp-trace idp y p = ap (trace y) $ ! $ ∙₀-unit-r p

@@ -5,7 +5,7 @@ open import lib.Basics
 module lib.types.Lift where
 
 ⊙Lift : ∀ {i j} → Ptd i → Ptd (lmax i j)
-⊙Lift {j = j} (A , a) =  ⊙[ Lift {j = j} A , lift a ]
+⊙Lift {j = j} ⊙[ A , a ] =  ⊙[ Lift {j = j} A , lift a ]
 
 ⊙lift : ∀ {i j} {X : Ptd i} → X ⊙→ ⊙Lift {j = j} X
 ⊙lift = (lift , idp)

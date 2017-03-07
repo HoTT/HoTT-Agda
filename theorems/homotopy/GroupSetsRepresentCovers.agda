@@ -5,15 +5,15 @@ import homotopy.ConstantToSetExtendsToProp as ConstExt
 open import homotopy.RibbonCover
 
 module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
-  (A-conn : is-connected 0 (fst X)) where
+  (A-conn : is-connected 0 (de⊙ X)) where
 
   open Cover
 
   private
     A : Type i
-    A = fst X
+    A = de⊙ X
     a₁ : A
-    a₁ = snd X
+    a₁ = pt X
 
   -- A covering space constructed from a G-set.
   grpset-to-cover : ∀ {j} → GroupSet (πS 0 X) j → Cover A (lmax i j)

@@ -64,9 +64,9 @@ module _ {i} where
     Ω^S-Trunc-preiso : (n : ℕ) (m : ℕ₋₂) (X : Ptd i)
       → Ω^STruncPreIso n m (⟨ S n ⟩₋₂ +2+ m) X
     Ω^S-Trunc-preiso O m X =
-      record { F = (–> (Trunc=-equiv [ snd X ] [ snd X ]) , idp);
+      record { F = (–> (Trunc=-equiv [ pt X ] [ pt X ]) , idp);
                pres-comp = Trunc=-∙-comm;
-               e = snd (Trunc=-equiv [ snd X ] [ snd X ]) }
+               e = snd (Trunc=-equiv [ pt X ] [ pt X ]) }
     Ω^S-Trunc-preiso (S n) m X =
       let
         r : Ω^STruncPreIso n (S m) (⟨ S n ⟩₋₂ +2+ S m) X
@@ -100,7 +100,7 @@ abstract
     πS n (⊙Trunc m X)
       ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso n (⊙Trunc m X) ⁻¹ᴳ ⟩
     Ω^S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X)) Trunc-level
-      ≃ᴳ⟨ Ω^S-group-emap n Trunc-level Trunc-level (≃-to-⊙≃ (Trunc-fuse-≤ (fst X) Sn≤m) idp) ⟩
+      ≃ᴳ⟨ Ω^S-group-emap n Trunc-level Trunc-level (≃-to-⊙≃ (Trunc-fuse-≤ (de⊙ X) Sn≤m) idp) ⟩
     Ω^S-group n (⊙Trunc ⟨ S n ⟩ X) Trunc-level
       ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso n X ⟩
     πS n X
@@ -122,7 +122,7 @@ abstract
 
   -- XXX Naming conventions?
   πS->level-econv : ∀ {i} (n : ℕ) (m : ℕ₋₂) (X : Ptd i)
-    → (m <T ⟨ S n ⟩) → has-level m (fst X)
+    → (m <T ⟨ S n ⟩) → has-level m (de⊙ X)
     → πS n X ≃ᴳ 0ᴳ
   πS->level-econv n m X lt pX =
     πS n X

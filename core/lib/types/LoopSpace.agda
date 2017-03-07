@@ -18,10 +18,10 @@ module lib.types.LoopSpace where
 module _ {i} where
 
   ⊙Ω : Ptd i → Ptd i
-  ⊙Ω (A , a) = ⊙[ (a == a) , idp ]
+  ⊙Ω ⊙[ A , a ] = ⊙[ (a == a) , idp ]
 
   Ω : Ptd i → Type i
-  Ω = fst ∘ ⊙Ω
+  Ω = de⊙ ∘ ⊙Ω
 
 module _ {i} {X : Ptd i} where
 
@@ -104,7 +104,7 @@ module _ {i} where
   ⊙Ω^ (S n) X = ⊙Ω (⊙Ω^ n X)
 
   Ω^ : (n : ℕ) → Ptd i → Type i
-  Ω^ n X = fst (⊙Ω^ n X)
+  Ω^ n X = de⊙ (⊙Ω^ n X)
 
 {- for n ≥ 1, we have a group structure on the loop space -}
 module _ {i} (n : ℕ) {X : Ptd i} where
@@ -116,7 +116,7 @@ module _ {i} (n : ℕ) {X : Ptd i} where
   Ω^S-∙ = Ω-∙
 
 idp^ : ∀ {i} (n : ℕ) {X : Ptd i} → Ω^ n X
-idp^ n {X} = snd (⊙Ω^ n X)
+idp^ n {X} = pt (⊙Ω^ n X)
 
 {- [⊙Ω^-fmap] and [⊙Ω^-fmap2] for higher loop spaces -}
 
@@ -126,7 +126,7 @@ idp^ n {X} = snd (⊙Ω^ n X)
 ⊙Ω^-fmap (S n) F = ⊙Ω-fmap (⊙Ω^-fmap n F)
 
 Ω^-fmap : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
-  → X ⊙→ Y → (fst (⊙Ω^ n X) → fst (⊙Ω^ n Y))
+  → X ⊙→ Y → (de⊙ (⊙Ω^ n X) → de⊙ (⊙Ω^ n Y))
 Ω^-fmap n F = fst (⊙Ω^-fmap n F)
 
 ⊙Ω^-fmap2 : ∀ {i j k} (n : ℕ) {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
@@ -252,19 +252,19 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
   ⊙Ω^-emap n (F , e) = ⊙Ω^-fmap n F , ⊙Ω^-isemap n F e
 
 Ω^-level : ∀ {i} (m : ℕ₋₂) (n : ℕ) (X : Ptd i)
-  → (has-level (⟨ n ⟩₋₂ +2+ m) (fst X) → has-level m (Ω^ n X))
+  → (has-level (⟨ n ⟩₋₂ +2+ m) (de⊙ X) → has-level m (Ω^ n X))
 Ω^-level m O X pX = pX
 Ω^-level m (S n) X pX =
   Ω^-level (S m) n X
-    (transport (λ k → has-level k (fst X)) (! (+2+-βr ⟨ n ⟩₋₂ m)) pX)
+    (transport (λ k → has-level k (de⊙ X)) (! (+2+-βr ⟨ n ⟩₋₂ m)) pX)
     (idp^ n) (idp^ n)
 
 Ω^-conn : ∀ {i} (m : ℕ₋₂) (n : ℕ) (X : Ptd i)
-  → (is-connected (⟨ n ⟩₋₂ +2+ m) (fst X)) → is-connected m (Ω^ n X)
+  → (is-connected (⟨ n ⟩₋₂ +2+ m) (de⊙ X)) → is-connected m (Ω^ n X)
 Ω^-conn m O X pX = pX
 Ω^-conn m (S n) X pX =
   path-conn $ Ω^-conn (S m) n X $
-    transport (λ k → is-connected k (fst X)) (! (+2+-βr ⟨ n ⟩₋₂ m)) pX
+    transport (λ k → is-connected k (de⊙ X)) (! (+2+-βr ⟨ n ⟩₋₂ m)) pX
 
 {- Eckmann-Hilton argument -}
 module _ {i} {X : Ptd i} where
@@ -308,7 +308,7 @@ module _ {i} where
 
   Ω-Trunc-econv : (m : ℕ₋₂) (X : Ptd i)
     → Ω (⊙Trunc (S m) X) ≃ Trunc m (Ω X)
-  Ω-Trunc-econv m X = Trunc=-equiv [ snd X ] [ snd X ]
+  Ω-Trunc-econv m X = Trunc=-equiv [ pt X ] [ pt X ]
 -}
 
 {- Our definition of Ω^ builds up loops on the outside,

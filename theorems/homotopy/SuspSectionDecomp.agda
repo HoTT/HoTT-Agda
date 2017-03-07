@@ -7,7 +7,7 @@ open import homotopy.elims.CofPushoutSection
 
 module homotopy.SuspSectionDecomp
   {i j} {X : Ptd i} {Y : Ptd j} (⊙f : X ⊙→ Y)
-  (g : fst Y → fst X) (inv : ∀ x → g (fst ⊙f x) == x)
+  (g : de⊙ Y → de⊙ X) (inv : ∀ x → g (fst ⊙f x) == x)
   where
 
 module SuspSectionDecomp where
@@ -15,7 +15,7 @@ module SuspSectionDecomp where
   private
     f = fst ⊙f
 
-  module Into = SuspRec {C = fst (⊙Susp X ⊙∨ ⊙Susp (⊙Cofiber ⊙f))}
+  module Into = SuspRec {C = de⊙ (⊙Susp X ⊙∨ ⊙Susp (⊙Cofiber ⊙f))}
     (winl south)
     (winr south)
     (λ y → ! (ap winl (merid (g y))) ∙ wglue ∙ ap winr (merid (cfcod y)))
@@ -23,9 +23,9 @@ module SuspSectionDecomp where
   into = Into.f
 
   module OutWinl = SuspRec south south
-    (λ x → ! (merid (f x)) ∙ merid (snd Y))
+    (λ x → ! (merid (f x)) ∙ merid (pt Y))
 
-  out-winr-glue : fst (⊙Cofiber ⊙f) → south' (fst Y) == south
+  out-winr-glue : de⊙ (⊙Cofiber ⊙f) → south' (de⊙ Y) == south
   out-winr-glue = CofiberRec.f
     idp
     (λ y → ! (merid (f (g y))) ∙ merid y)
@@ -46,7 +46,7 @@ module SuspSectionDecomp where
 
   out-into : ∀ σy → out (into σy) == σy
   out-into = Susp-elim
-    (! (merid (snd Y)))
+    (! (merid (pt Y)))
     idp
     (↓-∘=idf-from-square out into ∘ λ y →
       (ap (ap out) (Into.merid-β y)
@@ -55,19 +55,19 @@ module SuspSectionDecomp where
        ∙ part₁ y
          ∙2 (ap-∙ out wglue (ap winr (merid (cfcod y)))
              ∙ Out.glue-β ∙2 part₂ y))
-      ∙v⊡ square-lemma (merid (snd Y)) (merid (f (g y))) (merid y))
+      ∙v⊡ square-lemma (merid (pt Y)) (merid (f (g y))) (merid y))
     where
-    part₁ : (y : fst Y) → ap out (! (ap winl (merid (g y))))
-                       == ! (merid (snd Y)) ∙ merid (f (g y))
+    part₁ : (y : de⊙ Y) → ap out (! (ap winl (merid (g y))))
+                       == ! (merid (pt Y)) ∙ merid (f (g y))
     part₁ y =
       ap-! out (ap winl (merid (g y)))
       ∙ ap ! (∘-ap out winl (merid (g y)))
       ∙ ap ! (OutWinl.merid-β (g y))
-      ∙ !-∙ (! (merid (f (g y)))) (merid (snd Y))
-      ∙ ap (λ w → ! (merid (snd Y)) ∙ w)
+      ∙ !-∙ (! (merid (f (g y)))) (merid (pt Y))
+      ∙ ap (λ w → ! (merid (pt Y)) ∙ w)
            (!-! (merid (f (g y))))
 
-    part₂ : (y : fst Y) → ap out (ap winr (merid (cfcod y)))
+    part₂ : (y : de⊙ Y) → ap out (ap winr (merid (cfcod y)))
                        == ! (merid (f (g y))) ∙ merid y
     part₂ y =
       ∘-ap out winr (merid (cfcod y))
@@ -110,26 +110,26 @@ module SuspSectionDecomp where
     into-out-winl = Susp-elim
       (! (ap winr (merid cfbase)) ∙ ! wglue)
       (! (ap winr (merid cfbase)) ∙ ! wglue
-       ∙ ap winl (merid (g (snd Y))))
+       ∙ ap winl (merid (g (pt Y))))
       (↓-='-from-square ∘ λ x →
         (ap-∘ into out-winl (merid x)
          ∙ ap (ap into) (OutWinl.merid-β x)
-         ∙ ap-∙ into (! (merid (f x))) (merid (snd Y))
+         ∙ ap-∙ into (! (merid (f x))) (merid (pt Y))
          ∙ (ap-! into (merid (f x))
             ∙ ap ! (Into.merid-β (f x)))
-           ∙2 Into.merid-β (snd Y))
+           ∙2 Into.merid-β (pt Y))
         ∙v⊡ winl-square-lemma
               (ap winl (merid (g (f x))))
               (ap winl (merid x))
               wglue
               (ap winr (merid cfbase))
               (ap winr (merid (cfcod (f x))))
-              (ap winr (merid (cfcod (snd Y))))
-              (ap winl (merid (g (snd Y))))
+              (ap winr (merid (cfcod (pt Y))))
+              (ap winl (merid (g (pt Y))))
               (ap (ap winl ∘ merid) (inv x))
               (ap (ap winr ∘ merid) (cfglue x))
               (ap (ap winr ∘ merid)
-                  (cfglue (snd X) ∙ ap cfcod (snd ⊙f))))
+                  (cfglue (pt X) ∙ ap cfcod (snd ⊙f))))
 
     into-out-winr : ∀ σκ → into (out (winr σκ)) == winr σκ
     into-out-winr = CofPushoutSection.elim {h = λ _ → unit} g inv
@@ -138,11 +138,11 @@ module SuspSectionDecomp where
       (λ tt → transport
         (λ κ → ! (ap winr (merid cfbase)) == idp
                [ (λ σκ → into (out (winr σκ)) == winr σκ) ↓ merid κ ])
-        (! (cfglue (snd X)))
-        (into-out-winr-coh (f (snd X))))
+        (! (cfglue (pt X)))
+        (into-out-winr-coh (f (pt X))))
       into-out-winr-coh
       where
-      into-out-winr-coh : (y : fst Y)
+      into-out-winr-coh : (y : de⊙ Y)
         → ! (ap winr (merid cfbase)) == idp
           [ (λ σκ → into (out (winr σκ)) == winr σκ) ↓ merid (cfcod y) ]
       into-out-winr-coh y = ↓-='-from-square $
@@ -162,5 +162,5 @@ module SuspSectionDecomp where
               (ap (ap winr ∘ merid) (cfglue (g y)))
               (ap (ap winl ∘ merid) (inv (g y)))
 
-  eq : fst (⊙Susp Y) ≃ fst (⊙Susp X ⊙∨ ⊙Susp (⊙Cofiber ⊙f))
+  eq : Susp (de⊙ Y) ≃ ⊙Susp X ∨ ⊙Susp (⊙Cofiber ⊙f)
   eq = equiv into out into-out out-into

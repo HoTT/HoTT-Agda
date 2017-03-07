@@ -52,7 +52,7 @@ module _ {i j k} (ps : ⊙Span {i} {j} {k}) where
   private
     s = ⊙Span-to-Span ps
 
-    preserves : –> (Pushout-flip-equiv s) (left (snd X)) == left (snd Y)
+    preserves : –> (Pushout-flip-equiv s) (left (pt X)) == left (pt Y)
     preserves = snd (⊙right (⊙Span-flip ps))
 
   ⊙Pushout-flip : ⊙Pushout ps ⊙→ ⊙Pushout (⊙Span-flip ps)
@@ -66,14 +66,14 @@ module _ {i j k} (ps : ⊙Span {i} {j} {k}) where
     lemma : {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
             (f : Z ⊙→ X) (g : Z ⊙→ Y)
           → ap (Pushout-flip {d = ⊙Span-to-Span (⊙span X Y Z f g)})
-              (ap right (! (snd g)) ∙ ! (glue (snd Z)) ∙' ap left (snd f))
-         == ! (ap right (! (snd f)) ∙ ! (glue (snd Z)) ∙' ap left (snd g))
+              (ap right (! (snd g)) ∙ ! (glue (pt Z)) ∙' ap left (snd f))
+         == ! (ap right (! (snd f)) ∙ ! (glue (pt Z)) ∙' ap left (snd g))
     lemma {Z = Z} (f , idp) (g , idp) =
-      ap Pushout-flip (! (glue (snd Z)))
-        =⟨ ap-! Pushout-flip (glue (snd Z)) ⟩
-      ! (ap Pushout-flip (glue (snd Z)))
-        =⟨ PushoutFlip.glue-β (snd Z) |in-ctx ! ⟩
-      ! (! (glue (snd Z)))
+      ap Pushout-flip (! (glue (pt Z)))
+        =⟨ ap-! Pushout-flip (glue (pt Z)) ⟩
+      ! (ap Pushout-flip (glue (pt Z)))
+        =⟨ PushoutFlip.glue-β (pt Z) |in-ctx ! ⟩
+      ! (! (glue (pt Z)))
         =∎
 
 module _ {i j k} (ps : ⊙Span {i} {j} {k}) where

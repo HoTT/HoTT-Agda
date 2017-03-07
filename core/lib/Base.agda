@@ -204,7 +204,7 @@ pair= : ∀ {i j} {A : Type i} {B : A → Type j}
   {a a' : A} (p : a == a') {b : B a} {b' : B a'}
   (q : b == b' [ B ↓ p ])
   → (a , b) == (a' , b')
-pair= idp q = ap (_,_ _) q
+pair= idp q = ap (_ ,_) q
 
 pair×= : ∀ {i j} {A : Type i} {B : Type j}
   {a a' : A} (p : a == a') {b b' : B} (q : b == b')
@@ -375,23 +375,34 @@ Pointed types and pointed maps.
 [A ⊙→ B] was pointed, but it was never used as a pointed type.
 -}
 
-Ptd : ∀ i → Type (lsucc i)
-Ptd i = Σ (Type i) (λ A → A)
+infix 60 ⊙[_,_]
+
+record Ptd (i : ULevel) : Type (lsucc i) where
+  constructor ⊙[_,_]
+  field
+    de⊙ : Type i
+    pt : de⊙
+open Ptd public
+
+ptd : ∀ {i} (A : Type i) → A → Ptd i
+ptd = ⊙[_,_]
+
+ptd= : ∀ {i} {A A' : Type i} (p : A == A')
+  {a : A} {a' : A'} (q : a == a' [ idf _ ↓ p ])
+  → ⊙[ A , a ] == ⊙[ A' , a' ]
+ptd= idp q = ap ⊙[ _ ,_] q
 
 Ptd₀ = Ptd lzero
 
-⊙[_,_] : ∀ {i} (A : Type i) (a : A) → Ptd i
-⊙[_,_] = _,_
-
 infixr 0 _⊙→_
 _⊙→_ : ∀ {i j} → Ptd i → Ptd j → Type (lmax i j)
-(A , a₀) ⊙→ (B , b₀) = Σ (A → B) (λ f → f a₀ == b₀)
+⊙[ A , a₀ ] ⊙→ ⊙[ B , b₀ ] = Σ (A → B) (λ f → f a₀ == b₀)
 
 ⊙idf : ∀ {i} (X : Ptd i) → X ⊙→ X
-⊙idf X = ((λ x → x) , idp)
+⊙idf X = (λ x → x) , idp
 
 ⊙cst : ∀ {i j} {X : Ptd i} {Y : Ptd j} → X ⊙→ Y
-⊙cst {Y = Y} = ((λ x → snd Y) , idp)
+⊙cst {Y = Y} = (λ x → pt Y) , idp
 
 
 {-

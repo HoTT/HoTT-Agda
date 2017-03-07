@@ -3,13 +3,13 @@
 open import HoTT
 open import homotopy.HSpace
 
-module homotopy.HopfConstruction {i} {X : Ptd i} (c : is-connected 0 (fst X))
+module homotopy.HopfConstruction {i} {X : Ptd i} (c : is-connected 0 (de⊙ X))
   (hX : HSpaceStructure X) where
 
 open HSpaceStructure hX
 open ConnectedHSpace c hX
 private
-  A = fst X
+  A = de⊙ X
 
 {-
 Using the fact that [μ a] is an equivalence, we define a fibration over the

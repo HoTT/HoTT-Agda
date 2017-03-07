@@ -13,8 +13,8 @@ module homotopy.SpaceFromGroups where
 {- From a sequence of spaces (Fₙ) such that Fₙ is n-connected and
  - n+1-truncated, construct a space X such that πₙ₊₁(X) == πₙ₊₁(Fₙ) -}
 module SpaceFromEMs {i} (F : ℕ → Ptd i)
-  (pF : (n : ℕ) → has-level ⟨ S n ⟩ (fst (F n)))
-  (cF : (n : ℕ) → is-connected ⟨ n ⟩ (fst (F n))) where
+  (pF : (n : ℕ) → has-level ⟨ S n ⟩ (de⊙ (F n)))
+  (cF : (n : ℕ) → is-connected ⟨ n ⟩ (de⊙ (F n))) where
 
   X : Ptd i
   X = ⊙FinTuples F
@@ -34,10 +34,10 @@ module SpaceFromEMs {i} (F : ℕ → Ptd i)
              Trunc-preserves-conn 0 $ Ω^-conn _ (S n) _ $
                transport
                  (λ k → is-connected k
-                          (fst (⊙FinTuples (λ k → F (n + S k)))))
+                          (FinTuples (λ k → F (n + S k))))
                  (+2+-comm 0 ⟨ n ⟩₋₁)
                  (ncolim-conn _ _ $ connected-lemma _ _ $ λ k →
-                   transport (λ s → is-connected ⟨ s ⟩ (fst (F (n + S k))))
+                   transport (λ s → is-connected ⟨ s ⟩ (de⊙ (F (n + S k))))
                      (+-βr n k ∙ +-comm (S n) k)
                      (cF (n + S k)))) ⟩
     πS n (F (n + O)) ×ᴳ 0ᴳ
@@ -50,7 +50,7 @@ module SpaceFromEMs {i} (F : ℕ → Ptd i)
     {- In computing πₙ₊₁, spaces before Fₙ are ignored because of their
      - truncation level -}
     prefix-lemma : (n : ℕ) (m : ℕ) (F : ℕ → Ptd i)
-      (pF : (k : ℕ) → has-level ⟨ S m + k ⟩ (fst (F k)))
+      (pF : (k : ℕ) → has-level ⟨ S m + k ⟩ (de⊙ (F k)))
       → πS (m + n) (⊙FinTuples F)
         ≃ᴳ πS (m + n) (⊙FinTuples (λ k → F (n + k)))
     prefix-lemma O m F pF = idiso _
@@ -80,7 +80,7 @@ module SpaceFromEMs {i} (F : ℕ → Ptd i)
           ≃ᴳ⟨ transportᴳ-iso (λ s → πS s (⊙FinTuples (F ∘ S))) (+-βr m n) ⟩
         πS (S m + n) (⊙FinTuples (F ∘ S))
           ≃ᴳ⟨ prefix-lemma n (S m) (F ∘ S)
-                (λ k → transport (λ s → has-level ⟨ s ⟩ (fst (F (S k))))
+                (λ k → transport (λ s → has-level ⟨ s ⟩ (de⊙ (F (S k))))
                      (+-βr (S m) k)
                      (pF (S k))) ⟩
         πS (S m + n) (⊙FinTuples (λ k → F (S (n + k))))
@@ -89,8 +89,8 @@ module SpaceFromEMs {i} (F : ℕ → Ptd i)
           ≃ᴳ∎
 
     connected-lemma : (m : ℕ) (F : ℕ → Ptd i)
-      (cA' : (n : ℕ) → is-connected ⟨ n + m ⟩ (fst (F n)))
-      (n : ℕ) → is-connected ⟨ m ⟩ (fst (FinTuplesType F n))
+      (cA' : (n : ℕ) → is-connected ⟨ n + m ⟩ (de⊙ (F n)))
+      (n : ℕ) → is-connected ⟨ m ⟩ (FinTuplesType F n)
     connected-lemma m F cA' O =
       Trunc-preserves-level ⟨ m ⟩ (Lift-level Unit-is-contr)
     connected-lemma m F cA' (S n) = ×-conn
@@ -108,11 +108,11 @@ module SpaceFromGroups {i} (G : ℕ → Group i)
     F O = ⊙EM₁ (G O)
     F (S n) = EMExplicit.⊙EM (G (S n) , abG-S n) (S (S n))
 
-    pF : (n : ℕ) → has-level ⟨ S n ⟩ (fst (F n))
+    pF : (n : ℕ) → has-level ⟨ S n ⟩ (de⊙ (F n))
     pF O = EM₁-level {G = G O}
     pF (S n) = EMExplicit.EM-level (G (S n) , abG-S n) (S (S n))
 
-    cF : (n : ℕ) → is-connected ⟨ n ⟩ (fst (F n))
+    cF : (n : ℕ) → is-connected ⟨ n ⟩ (de⊙ (F n))
     cF O = EM₁-conn {G = G O}
     cF (S n) = EMExplicit.EM-conn (G (S n) , abG-S n) (S n)
 

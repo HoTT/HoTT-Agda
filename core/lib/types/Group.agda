@@ -18,7 +18,7 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
     inv-l  : ∀ a → (comp (inv a) a) == ident
 
   ⊙El : Ptd i
-  ⊙El = (El , ident)
+  ⊙El = ⊙[ El , ident ]
 
   private
     infix 80 _⊙_

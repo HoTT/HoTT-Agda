@@ -96,7 +96,7 @@ Trunc-⊙→Ω-group-fmap-dom-∘ g f W = group-hom= $ λ= $
                  (lemma (snd F) (snd G) (snd H)))
     where
       abstract
-        lemma : ∀ {ptZ : fst Z} (α : (fst F) (snd Y) == ptZ)
+        lemma : ∀ {ptZ : de⊙ Z} (α : (fst F) (pt Y) == ptZ)
           {gpt hpt : Ω Y} (β : gpt == idp) (γ : hpt == idp)
           →  ⊙∘-pt (Ω-fmap (fst F , α)) (⊙∘-pt (fst ⊙Ω-∙) (⊙fanout-pt β γ) idp) (snd (⊙Ω-fmap (fst F , α)))
           == ⊙∘-pt (fst ⊙Ω-∙)

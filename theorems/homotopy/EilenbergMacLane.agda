@@ -11,27 +11,27 @@ open import homotopy.EilenbergMacLane1
 module homotopy.EilenbergMacLane where
 
 -- EM(G,n) when G is π₁(A,a₀)
-module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (fst X))
-  (gA : has-level 1 (fst X)) (H-X : HSS X) where
+module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (de⊙ X))
+  (gA : has-level 1 (de⊙ X)) (H-X : HSS X) where
 
   private
-    A = fst X
-    a₀ = snd X
+    A = de⊙ X
+    a₀ = pt X
 
   ⊙EM : (n : ℕ) → Ptd i
   ⊙EM O = ⊙Ω X
   ⊙EM (S n) = ⊙Trunc ⟨ S n ⟩ (⊙Susp^ n X)
 
   module _ (n : ℕ) where
-    EM = fst (⊙EM n)
+    EM = de⊙ (⊙EM n)
 
-  EM-level : (n : ℕ) → has-level ⟨ n ⟩ (fst (⊙EM n))
+  EM-level : (n : ℕ) → has-level ⟨ n ⟩ (EM n)
   EM-level O = gA a₀ a₀
   EM-level (S n) = Trunc-level
 
   EM-conn : (n : ℕ) → is-connected ⟨ n ⟩ (EM (S n))
   EM-conn n = Trunc-preserves-conn ⟨ S n ⟩
-                  (transport (λ t → is-connected t (fst (⊙Susp^ n X)))
+                  (transport (λ t → is-connected t (de⊙ (⊙Susp^ n X)))
                     (+2+0 ⟨ n ⟩₋₂) (⊙Susp^-conn n cA))
 
   {-
@@ -156,8 +156,8 @@ module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (fst X))
       ⊙EM 1 ⊙≃∎
 
     private
-      sconn : (n : ℕ) → is-connected ⟨ S n ⟩ (fst (⊙Susp^ (S n) X))
-      sconn n = transport (λ t → is-connected t (fst (⊙Susp^ (S n) X)))
+      sconn : (n : ℕ) → is-connected ⟨ S n ⟩ (de⊙ (⊙Susp^ (S n) X))
+      sconn n = transport (λ t → is-connected t (de⊙ (⊙Susp^ (S n) X)))
                           (+2+0 ⟨ n ⟩₋₁) (⊙Susp^-conn (S n) cA)
 
       kle : (n : ℕ) → ⟨ S (S n) ⟩ ≤T ⟨ n ⟩ +2+ ⟨ n ⟩
@@ -168,7 +168,7 @@ module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (fst X))
 
       module FS (n : ℕ) =
         FreudenthalEquiv ⟨ n ⟩₋₁ ⟨ S (S n) ⟩ (kle n)
-          (fst (⊙Susp^ (S n) X)) (snd (⊙Susp^ (S n) X)) (sconn n)
+          (⊙Susp^ (S n) X) (sconn n)
 
     spectrumSS : (n : ℕ)
       → ⊙Ω (⊙EM (S (S (S n)))) ⊙≃ ⊙EM (S (S n))

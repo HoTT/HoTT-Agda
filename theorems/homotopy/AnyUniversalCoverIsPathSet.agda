@@ -5,20 +5,20 @@ open import HoTT
 module homotopy.AnyUniversalCoverIsPathSet {i} (X : Ptd i) where
 
 private
-  a₁ = snd X
+  a₁ = pt X
 
 path-set-is-universal : is-universal (path-set-cover X)
-path-set-is-universal = [ snd X , idp₀ ] ,
+path-set-is-universal = [ pt X , idp₀ ] ,
   Trunc-elim
-    {P = λ xp₀ → [ snd X , idp₀ ] == xp₀}
+    {P = λ xp₀ → [ pt X , idp₀ ] == xp₀}
     (λ xp₀ → =-preserves-level Trunc-level)
     (λ{(x , p₀) → Trunc-elim
-      {P = λ p₀ → [ snd X , idp₀ ] == [ x , p₀ ]}
-      (λ p₀ → Trunc-level {n = 1} [ snd X , idp₀ ] [ x , p₀ ])
+      {P = λ p₀ → [ pt X , idp₀ ] == [ x , p₀ ]}
+      (λ p₀ → Trunc-level {n = 1} [ pt X , idp₀ ] [ x , p₀ ])
       (λ p → ap [_] $ pair= p (lemma p))
       p₀ })
   where
-    lemma : ∀ {x} (p : snd X == x) → idp₀ == [ p ] [ (snd X =₀_) ↓ p ]
+    lemma : ∀ {x} (p : pt X == x) → idp₀ == [ p ] [ (pt X =₀_) ↓ p ]
     lemma idp = idp
 
 module _ {j} (univ-cov : ⊙UniversalCover X j) where

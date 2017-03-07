@@ -19,14 +19,15 @@ module lib.types.Pointed where
 
 -- function extensionality for pointed maps
 ⊙λ= : ∀ {i j} {X : Ptd i} {Y : Ptd j} {f g : X ⊙→ Y}
-  (p : ∀ x → fst f x == fst g x) (α : snd f == snd g [ (λ y → y == snd Y) ↓ p (snd X) ])
+  (p : ∀ x → fst f x == fst g x)
+  (α : snd f == snd g [ (λ y → y == pt Y) ↓ p (pt X) ])
   → f == g
 ⊙λ= {g = g} p α =
   pair= (λ= p) (↓-app=cst-in (↓-idf=cst-out α ∙ ap (_∙ snd g) (! (app=-β p _))))
 
 {-
 ⊙λ=' : ∀ {i j} {X : Ptd i} {Y : Ptd j} {f g : X ⊙→ Y}
-  (p : ∀ x → fst f x == fst g x) (α : snd f == p (snd X) ∙ snd g)
+  (p : ∀ x → fst f x == fst g x) (α : snd f == p (pt X) ∙ snd g)
   → f == g
 ⊙λ=' p α = ⊙λ= p (↓-idf=cst-in α)
 -}
@@ -49,12 +50,12 @@ module lib.types.Pointed where
 module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
 
   private
-    e : fst X ≃ fst Y
+    e : de⊙ X ≃ de⊙ Y
     e = (fst (fst ⊙e) , snd ⊙e)
 
   ⊙≃-to-≃ = e
 
-  ⊙–>-pt : –> e (snd X) == snd Y
+  ⊙–>-pt : –> e (pt X) == pt Y
   ⊙–>-pt = snd (fst ⊙e)
 
   private
@@ -63,8 +64,8 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
   ⊙–> : X ⊙→ Y
   ⊙–> = fst ⊙e
 
-  ⊙<–-pt : <– e (snd Y) == snd X
-  ⊙<–-pt = ap (<– e) (! ⊙–>-pt) ∙ <–-inv-l e (snd X)
+  ⊙<–-pt : <– e (pt Y) == pt X
+  ⊙<–-pt = ap (<– e) (! ⊙–>-pt) ∙ <–-inv-l e (pt X)
 
   ⊙<– : Y ⊙→ X
   ⊙<– = <– e , ⊙<–-pt
@@ -75,35 +76,35 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (⊙e : X ⊙≃ Y) where
 
   ⊙<–-inv-l : ⊙<– ⊙∘ ⊙–> == ⊙idf _
   ⊙<–-inv-l = ⊙λ= (<–-inv-l e) $ ↓-idf=cst-in $
-    ap (<– e) p ∙ ap (<– e) (! p) ∙ <–-inv-l e (snd X)
-      =⟨ ! (∙-assoc (ap (<– e) p) (ap (<– e) (! p)) (<–-inv-l e (snd X))) ⟩
-    (ap (<– e) p ∙ ap (<– e) (! p)) ∙ <–-inv-l e (snd X)
+    ap (<– e) p ∙ ap (<– e) (! p) ∙ <–-inv-l e (pt X)
+      =⟨ ! (∙-assoc (ap (<– e) p) (ap (<– e) (! p)) (<–-inv-l e (pt X))) ⟩
+    (ap (<– e) p ∙ ap (<– e) (! p)) ∙ <–-inv-l e (pt X)
       =⟨ ∙-ap (<– e) p (! p) ∙ ap (ap (<– e)) (!-inv-r p)
-         |in-ctx (λ w → w ∙ <–-inv-l e (snd X)) ⟩
-    <–-inv-l e (snd X)
+         |in-ctx (λ w → w ∙ <–-inv-l e (pt X)) ⟩
+    <–-inv-l e (pt X)
       =⟨ ! (∙-unit-r _) ⟩
-    <–-inv-l e (snd X) ∙ idp =∎
+    <–-inv-l e (pt X) ∙ idp =∎
 
   ⊙<–-inv-r : ⊙–> ⊙∘ ⊙<– == ⊙idf _
   ⊙<–-inv-r = ⊙λ= (<–-inv-r e) $ ↓-idf=cst-in $
-    ap (–> e) (ap (<– e) (! p) ∙ <–-inv-l e (snd X)) ∙ p
-      =⟨ ap-∙ (–> e) (ap (<– e) (! p)) (<–-inv-l e (snd X))
+    ap (–> e) (ap (<– e) (! p) ∙ <–-inv-l e (pt X)) ∙ p
+      =⟨ ap-∙ (–> e) (ap (<– e) (! p)) (<–-inv-l e (pt X))
          |in-ctx (λ w → w ∙ p) ⟩
-    (ap (–> e) (ap (<– e) (! p)) ∙ ap (–> e) (<–-inv-l e (snd X))) ∙ p
-      =⟨ <–-inv-adj e (snd X)
+    (ap (–> e) (ap (<– e) (! p)) ∙ ap (–> e) (<–-inv-l e (pt X))) ∙ p
+      =⟨ <–-inv-adj e (pt X)
          |in-ctx (λ w → (ap (–> e) (ap (<– e) (! p)) ∙ w) ∙ p) ⟩
-    (ap (–> e) (ap (<– e) (! p)) ∙ <–-inv-r e (–> e (snd X))) ∙ p
+    (ap (–> e) (ap (<– e) (! p)) ∙ <–-inv-r e (–> e (pt X))) ∙ p
       =⟨ ∘-ap (–> e) (<– e) (! p)
-         |in-ctx (λ w → (w ∙ <–-inv-r e (–> e (snd X))) ∙ p) ⟩
-    (ap (–> e ∘ <– e) (! p) ∙ <–-inv-r e (–> e (snd X))) ∙ p
+         |in-ctx (λ w → (w ∙ <–-inv-r e (–> e (pt X))) ∙ p) ⟩
+    (ap (–> e ∘ <– e) (! p) ∙ <–-inv-r e (–> e (pt X))) ∙ p
       =⟨ ap (_∙ p) (! (↓-app=idf-out (apd (<–-inv-r e) (! p))))  ⟩
-    (<–-inv-r e (snd Y) ∙' (! p)) ∙ p
-      =⟨ ∙'=∙ (<–-inv-r e (snd Y)) (! p) |in-ctx _∙ p ⟩
-    (<–-inv-r e (snd Y) ∙ (! p)) ∙ p
-      =⟨ ∙-assoc (<–-inv-r e (snd Y)) (! p) p ⟩
-    <–-inv-r e (snd Y) ∙ (! p ∙ p)
-      =⟨ !-inv-l p |in-ctx (<–-inv-r e (snd Y)) ∙_ ⟩
-    <–-inv-r e (snd Y) ∙ idp =∎
+    (<–-inv-r e (pt Y) ∙' (! p)) ∙ p
+      =⟨ ∙'=∙ (<–-inv-r e (pt Y)) (! p) |in-ctx _∙ p ⟩
+    (<–-inv-r e (pt Y) ∙ (! p)) ∙ p
+      =⟨ ∙-assoc (<–-inv-r e (pt Y)) (! p) p ⟩
+    <–-inv-r e (pt Y) ∙ (! p ∙ p)
+      =⟨ !-inv-l p |in-ctx (<–-inv-r e (pt Y)) ∙_ ⟩
+    <–-inv-r e (pt Y) ∙ idp =∎
 
 module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} (⊙e : X ⊙≃ Y) where
 
@@ -131,15 +132,15 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} (⊙e : X ⊙≃ Y) where
 -- intuition : [f true] is fixed and the only changable part is [f false].
 
 ⊙Bool→-to-idf : ∀ {i} {X : Ptd i}
-  → ⊙Bool ⊙→ X → fst X
+  → ⊙Bool ⊙→ X → de⊙ X
 ⊙Bool→-to-idf (h , _) = h false
 
 ⊙Bool→-equiv-idf : ∀ {i} (X : Ptd i)
-  → (⊙Bool ⊙→ X) ≃ fst X
+  → (⊙Bool ⊙→ X) ≃ de⊙ X
 ⊙Bool→-equiv-idf {i} X = equiv ⊙Bool→-to-idf g f-g g-f
   where
-  g : fst X → ⊙Bool ⊙→ X
-  g x = (if_then snd X else x) , idp
+  g : de⊙ X → ⊙Bool ⊙→ X
+  g x = (if_then pt X else x) , idp
 
   abstract
     f-g : ∀ x → ⊙Bool→-to-idf (g x) == x

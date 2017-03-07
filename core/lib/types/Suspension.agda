@@ -67,14 +67,14 @@ susp-⊙span X =
   ⊙span ⊙Unit ⊙Unit X (⊙cst {X = X}) (⊙cst {X = X})
 
 ⊙Susp : ∀ {i} → Ptd i → Ptd i
-⊙Susp (A , _) = ⊙[ Susp A , north ]
+⊙Susp ⊙[ A , _ ] = ⊙[ Susp A , north ]
 
 
-σloop : ∀ {i} (X : Ptd i) → fst X → north' (fst X) == north' (fst X)
-σloop (_ , x₀) x = merid x ∙ ! (merid x₀)
+σloop : ∀ {i} (X : Ptd i) → de⊙ X → north' (de⊙ X) == north' (de⊙ X)
+σloop ⊙[ _ , x₀ ] x = merid x ∙ ! (merid x₀)
 
-σloop-pt : ∀ {i} {X : Ptd i} → σloop X (snd X) == idp
-σloop-pt {X = (_ , x₀)} = !-inv-r (merid x₀)
+σloop-pt : ∀ {i} {X : Ptd i} → σloop X (pt X) == idp
+σloop-pt {X = ⊙[ _ , x₀ ]} = !-inv-r (merid x₀)
 
 
 module SuspFlip {i} {A : Type i} = SuspRec
@@ -84,7 +84,7 @@ Susp-flip : ∀ {i} {A : Type i} → Susp A → Susp A
 Susp-flip = SuspFlip.f
 
 ⊙Susp-flip : ∀ {i} (X : Ptd i) → ⊙Susp X ⊙→ ⊙Susp X
-⊙Susp-flip X = (Susp-flip , ! (merid (snd X)))
+⊙Susp-flip X = (Susp-flip , ! (merid (pt X)))
 
 Susp-flip-equiv : ∀ {i} {A : Type i} → Susp A ≃ Susp A
 Susp-flip-equiv {A = A} = Pushout-flip-equiv (susp-span A)
@@ -110,7 +110,7 @@ module _ {i} where
 
   ⊙Susp-fmap-idf : (X : Ptd i)
     → ⊙Susp-fmap (⊙idf X) == ⊙idf (⊙Susp X)
-  ⊙Susp-fmap-idf X = ⊙λ= (Susp-fmap-idf (fst X)) idp
+  ⊙Susp-fmap-idf X = ⊙λ= (Susp-fmap-idf (de⊙ X)) idp
 
 module _ {i j} where
 
@@ -163,8 +163,8 @@ module _ {i j k} {s : Span {i} {j} {k}} where
 
   module _ {x₀ : Span.A s} where
 
-    ⊙extract-glue : (Pushout s , left x₀) ⊙→ (Susp (Span.C s) , north)
-    ⊙extract-glue = (extract-glue , idp)
+    ⊙extract-glue : ⊙[ Pushout s , left x₀ ] ⊙→ ⊙[ Susp (Span.C s) , north ]
+    ⊙extract-glue = extract-glue , idp
 
 module _ {i j} {A : Type i} {B : Type j} (eq : A ≃ B) where
 

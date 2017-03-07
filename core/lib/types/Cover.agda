@@ -1,6 +1,6 @@
 {-# OPTIONS --without-K --rewriting #-}
 
-open import lib.Basics
+open import lib.Basics renaming (pt to pt⊙)
 open import lib.NConnected
 open import lib.types.TLevel
 open import lib.NType2
@@ -24,7 +24,7 @@ record Cover (A : Type i) j : Type (lmax i (lsucc j)) where
   TotalSpace = Σ A Fiber
 
 ⊙Cover : ∀ (X : Ptd i) j → Type (lmax i (lsucc j))
-⊙Cover X j = Σ (Cover (fst X) j) λ C → Cover.Fiber C (snd X)
+⊙Cover X j = Σ (Cover (de⊙ X) j) λ C → Cover.Fiber C (pt⊙ X)
 
 module ⊙Cover {X : Ptd i} {j} (⊙cov : ⊙Cover X j) where
   cov = fst ⊙cov
@@ -67,15 +67,15 @@ module ⊙UniversalCover {X : Ptd i} {j} (⊙uc : ⊙UniversalCover X j) where
 
 -- Theorem: A covering space keeps higher homotopy groups.
 module _ (X : Ptd i)
-  {j} (c : Cover (fst X) j)
-  (a↑ : Cover.Fiber c (snd X)) where
+  {j} (c : Cover (de⊙ X) j)
+  (a↑ : Cover.Fiber c (pt⊙ X)) where
 
   open Cover c
   private
     F = Cover.Fiber c
     F-level = Cover.Fiber-level c
-    A = fst X
-    a = snd X
+    A = de⊙ X
+    a = pt⊙ X
 
   private
     -- The projection map with one end free (in order to apply J).
@@ -134,7 +134,7 @@ module _ (X : Ptd i)
     to-from p² = to′-from′ p² (idp=p↑ p²)
 
   -- The theorem.
-  Ω²ΣAFiber≃Ω²A : Ω^ 2 (Σ A F , (a , a↑)) ≃ Ω^ 2 X
+  Ω²ΣAFiber≃Ω²A : Ω^ 2 ⊙[ Σ A F , (a , a↑) ] ≃ Ω^ 2 X
   Ω²ΣAFiber≃Ω²A = to , is-eq to from to-from from-to
 
 -- A natural way to construct a π1-set from covering spaces.
@@ -163,9 +163,9 @@ module _ {A : Type i} where
 
 -- Path sets form a covering space
 module _ (X : Ptd i) where
-  path-set-cover : Cover (fst X) i
+  path-set-cover : Cover (de⊙ X) i
   path-set-cover = record
-    { Fiber = λ a → snd X =₀ a
+    { Fiber = λ a → pt⊙ X =₀ a
     ; Fiber-level = λ a → Trunc-level
     }
 

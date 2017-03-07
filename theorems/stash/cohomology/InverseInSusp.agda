@@ -29,7 +29,7 @@ private
   subtract = Subtract.f
 
   ⊙subtract : ⊙Susp X ⊙→ ⊙Susp X ⊙∨ ⊙Susp X
-  ⊙subtract = (subtract , ! (ap winl (merid (snd X))))
+  ⊙subtract = (subtract , ! (ap winl (merid (pt X))))
 
   projl-subtract : ∀ σ → projl _ _ (subtract σ) == Susp-flip σ
   projl-subtract = Susp-elim idp idp $
@@ -81,7 +81,7 @@ private
           (CW.⊙Wedge-rec-over (⊙idf _) (⊙idf _)
            ▹ ap2 ×ᴳ-fanout (CF-ident n) (CF-ident n)))
         (! (CF-comp n ⊙fold ⊙subtract)
-         ∙ CF-λ= n (λ σ → fold-subtract σ ∙ ! (merid (snd X)))
+         ∙ CF-λ= n (λ σ → fold-subtract σ ∙ ! (merid (pt X)))
          ∙ CF-cst n)
 
 C-Susp-flip-is-inv :

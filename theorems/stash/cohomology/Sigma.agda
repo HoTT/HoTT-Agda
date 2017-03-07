@@ -16,19 +16,19 @@ open import cohomology.BaseIndependence CT
 
        0 → Cⁿ(⋁x:X.Y) → Cⁿ(Σx:X.Y) → Cⁿ(X)
 
- - by observing that the map [select : x ↦ (x, snd Yₓ)] has a left inverse
+ - by observing that the map [select : x ↦ (x, pt Yₓ)] has a left inverse
  - and satisfies [Cofiber select == ⋁x:X.Y. -}
 
-module CofSelect (X : Ptd i) (Y : fst X → Ptd i) where
+module CofSelect (X : Ptd i) (Y : de⊙ X → Ptd i) where
 
-  select : fst X → fst (⊙Σ X Y)
+  select : de⊙ X → fst (⊙Σ X Y)
   select x = (x , snd (Y x))
 
   ⊙select : X ⊙→ ⊙Σ X Y
   ⊙select = (select , idp)
 
   ⊙Σbwin : ⊙Σ X Y ⊙→ ⊙BigWedge Y
-  ⊙Σbwin = (uncurry bwin , ! (bwglue (snd X)))
+  ⊙Σbwin = (uncurry bwin , ! (bwglue (pt X)))
 
   eq : Cofiber select ≃ BigWedge Y
   eq = equiv Into.f Out.f into-out out-into
@@ -71,7 +71,7 @@ module CofSelect (X : Ptd i) (Y : fst X → Ptd i) where
   ext-over = ↓-cst2-in _ _ $ extract-glue-cst ◃ domain-over-equiv _ _
 
 
-module CΣ (n : ℤ) (X : Ptd i) (Y : fst X → Ptd i) where
+module CΣ (n : ℤ) (X : Ptd i) (Y : de⊙ X → Ptd i) where
 
   open CofSelect X Y
 
@@ -109,8 +109,8 @@ module CΣ (n : ℤ) (X : Ptd i) (Y : fst X → Ptd i) where
     module SER = SplitExactRight (C-is-abelian n _)
       (CF-hom n ⊙Σbwin) (CF-hom n ⊙select)
       eseq
-      (CF-hom n (⊙dfst Y))
-      (app= $ ap GroupHom.f $ CF-inverse n ⊙select (⊙dfst Y) (λ _ → idp))
+      (CF-hom n (⊙dde⊙ Y))
+      (app= $ ap GroupHom.f $ CF-inverse n ⊙select (⊙dde⊙ Y) (λ _ → idp))
 
   path : C n (⊙Σ X Y) == C n (⊙BigWedge Y) ×ᴳ C n X
   path = SER.iso

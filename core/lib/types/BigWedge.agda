@@ -17,8 +17,8 @@ module lib.types.BigWedge where
 module _ {i j} {A : Type i} where
 
   {- the function for cofiber -}
-  bigwedge-f : (X : A → Ptd j) → A → Σ A (fst ∘ X)
-  bigwedge-f X a = a , snd (X a)
+  bigwedge-f : (X : A → Ptd j) → A → Σ A (de⊙ ∘ X)
+  bigwedge-f X a = a , pt (X a)
 
   bigwedge-span : (A → Ptd j) → Span
   bigwedge-span X = cofiber-span (bigwedge-f X)
@@ -29,28 +29,28 @@ module _ {i j} {A : Type i} where
   bwbase : {X : A → Ptd j} → BigWedge X
   bwbase = cfbase
 
-  bwin : {X : A → Ptd j} → (a : A) → fst (X a) → BigWedge X
+  bwin : {X : A → Ptd j} → (a : A) → de⊙ (X a) → BigWedge X
   bwin = curry cfcod
 
   ⊙BigWedge : (A → Ptd j) → Ptd (lmax i j)
   ⊙BigWedge X = ⊙[ BigWedge X , bwbase ]
 
-  bwglue : {X : A → Ptd j} → (a : A) → bwbase {X} == bwin a (snd (X a))
+  bwglue : {X : A → Ptd j} → (a : A) → bwbase {X} == bwin a (pt (X a))
   bwglue = cfglue
 
   ⊙bwin : {X : A → Ptd j} → (a : A) → X a ⊙→ ⊙BigWedge X
   ⊙bwin a = (bwin a , ! (bwglue a))
 
   module BigWedgeElim {X : A → Ptd j} {k} {P : BigWedge X → Type k}
-    (base* : P bwbase) (in* : (a : A) (x : fst (X a)) → P (bwin a x))
-    (glue* : (a : A) → base* == in* a (snd (X a)) [ P ↓ bwglue a ])
+    (base* : P bwbase) (in* : (a : A) (x : de⊙ (X a)) → P (bwin a x))
+    (glue* : (a : A) → base* == in* a (pt (X a)) [ P ↓ bwglue a ])
     = CofiberElim {f = bigwedge-f X} {P = P} base* (uncurry in*) glue*
 
   BigWedge-elim = BigWedgeElim.f
 
   module BigWedgeRec {X : A → Ptd j} {k} {C : Type k}
-    (base* : C) (in* : (a : A) → fst (X a) → C)
-    (glue* : (a : A) → base* == in* a (snd (X a)))
+    (base* : C) (in* : (a : A) → de⊙ (X a) → C)
+    (glue* : (a : A) → base* == in* a (pt (X a)))
     = CofiberRec {f = bigwedge-f X} {C = C} base* (uncurry in*) glue*
 
 module _ {i j₀ j₁} {A : Type i} {X₀ : A → Ptd j₀} {X₁ : A → Ptd j₁}
@@ -67,58 +67,71 @@ module _ {i j₀ j₁} {A : Type i} {X₀ : A → Ptd j₀} {X₁ : A → Ptd j�
   ⊙BigWedge-emap-r : ⊙BigWedge X₀ ⊙≃ ⊙BigWedge X₁
   ⊙BigWedge-emap-r = ≃-to-⊙≃ BigWedge-emap-r idp
 
-{- A BigWedge indexed by Bool is just a binary Wedge -}
-module _ {i} (Pick : Lift {j = i} Bool → Ptd i) where
+module _ {i₀ i₁ j} {A₀ : Type i₀} {A₁ : Type i₁}
+  (X : A₁ → Ptd j) (Aeq : A₀ ≃ A₁) where
 
-  BigWedge-Bool-equiv :
-    BigWedge Pick ≃ Wedge (Pick (lift true)) (Pick (lift false))
+  bigwedge-span-emap-l : SpanEquiv (cofiber-span (bigwedge-f (X ∘ –> Aeq))) (cofiber-span (bigwedge-f X))
+  bigwedge-span-emap-l = span-map (idf _) (Σ-fmap-l (de⊙ ∘ X) (–> Aeq)) (–> Aeq)
+    (comm-sqr λ _ → idp) (comm-sqr λ _ → idp) ,
+    idf-is-equiv _ , Σ-isemap-l (de⊙ ∘ X) (snd Aeq) , snd Aeq
+
+  BigWedge-emap-l : BigWedge (X ∘ –> Aeq) ≃ BigWedge X
+  BigWedge-emap-l = Pushout-emap bigwedge-span-emap-l
+
+  ⊙BigWedge-emap-l : ⊙BigWedge (X ∘ –> Aeq) ⊙≃ ⊙BigWedge X
+  ⊙BigWedge-emap-l = ≃-to-⊙≃ BigWedge-emap-l idp
+
+{- A BigWedge indexed by Bool is just a binary Wedge -}
+module _ {i} (Pick : Bool → Ptd i) where
+
+  BigWedge-Bool-equiv : BigWedge Pick ≃ Wedge (Pick true) (Pick false)
   BigWedge-Bool-equiv = equiv f g f-g g-f
     where
     module F = BigWedgeRec {X = Pick}
-      {C = Wedge (Pick (lift true)) (Pick (lift false))}
-      (winl (snd (Pick (lift true))))
-      (λ {(lift true) → winl; (lift false) → winr})
-      (λ {(lift true) → idp; (lift false) → wglue})
+      {C = Wedge (Pick true) (Pick false)}
+      (winl (pt (Pick true)))
+      (λ {true → winl; false → winr})
+      (λ {true → idp; false → wglue})
 
-    module G = WedgeRec {X = Pick (lift true)} {Y = Pick (lift false)}
+    module G = WedgeRec {X = Pick true} {Y = Pick false}
       {C = BigWedge Pick}
-      (bwin (lift true))
-      (bwin (lift false))
-      (! (bwglue (lift true)) ∙ bwglue (lift false))
+      (bwin true)
+      (bwin false)
+      (! (bwglue true) ∙ bwglue false)
 
     f = F.f
     g = G.f
 
-    f-g : ∀ w → f (g w) == w
-    f-g = Wedge-elim
-      (λ _ → idp)
-      (λ _ → idp)
-      (↓-∘=idf-in' f g $
-        ap f (ap g wglue)
-          =⟨ ap (ap f) G.glue-β ⟩
-        ap f (! (bwglue (lift true)) ∙ bwglue (lift false))
-          =⟨ ap-∙ f (! (bwglue (lift true))) (bwglue (lift false)) ⟩
-        ap f (! (bwglue (lift true))) ∙ ap f (bwglue (lift false))
-          =⟨ ap-! f (bwglue (lift true))
-             |in-ctx (λ w → w ∙ ap f (bwglue (lift false))) ⟩
-        ! (ap f (bwglue (lift true))) ∙ ap f (bwglue (lift false))
-          =⟨ F.glue-β (lift true)
-             |in-ctx (λ w → ! w ∙ ap f (bwglue (lift false))) ⟩
-        ap f (bwglue (lift false))
-          =⟨ F.glue-β (lift false) ⟩
-        wglue =∎)
+    abstract
+      f-g : ∀ w → f (g w) == w
+      f-g = Wedge-elim
+        (λ _ → idp)
+        (λ _ → idp)
+        (↓-∘=idf-in' f g $
+          ap f (ap g wglue)
+            =⟨ ap (ap f) G.glue-β ⟩
+          ap f (! (bwglue true) ∙ bwglue false)
+            =⟨ ap-∙ f (! (bwglue true)) (bwglue false) ⟩
+          ap f (! (bwglue true)) ∙ ap f (bwglue false)
+            =⟨ ap-! f (bwglue true)
+               |in-ctx (λ w → w ∙ ap f (bwglue false)) ⟩
+          ! (ap f (bwglue true)) ∙ ap f (bwglue false)
+            =⟨ F.glue-β true
+               |in-ctx (λ w → ! w ∙ ap f (bwglue false)) ⟩
+          ap f (bwglue false)
+            =⟨ F.glue-β false ⟩
+          wglue =∎)
 
-    g-f : ∀ bw → g (f bw) == bw
-    g-f = BigWedge-elim
-      (! (bwglue (lift true)))
-      (λ {(lift true) → λ _ → idp; (lift false) → λ _ → idp})
-      (λ {(lift true) → ↓-∘=idf-from-square g f $
-            ap (ap g) (F.glue-β (lift true)) ∙v⊡
-            bl-square (bwglue (lift true));
-          (lift false) → ↓-∘=idf-from-square g f $
-            (ap (ap g) (F.glue-β (lift false)) ∙ G.glue-β) ∙v⊡
-            lt-square (! (bwglue (lift true))) ⊡h vid-square})
+      g-f : ∀ bw → g (f bw) == bw
+      g-f = BigWedge-elim
+        (! (bwglue true))
+        (λ {true → λ _ → idp; false → λ _ → idp})
+        (λ {true → ↓-∘=idf-from-square g f $
+              ap (ap g) (F.glue-β true) ∙v⊡
+              bl-square (bwglue true);
+            false → ↓-∘=idf-from-square g f $
+              (ap (ap g) (F.glue-β false) ∙ G.glue-β) ∙v⊡
+              lt-square (! (bwglue true)) ⊡h vid-square})
 
-  BigWedge-Bool-⊙path :
-    ⊙BigWedge Pick == ⊙Wedge (Pick (lift true)) (Pick (lift false))
+  BigWedge-Bool-⊙path : ⊙BigWedge Pick == ⊙Wedge (Pick true) (Pick false)
   BigWedge-Bool-⊙path = ⊙ua (≃-to-⊙≃ BigWedge-Bool-equiv idp)
