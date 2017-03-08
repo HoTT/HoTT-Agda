@@ -13,6 +13,7 @@ module index where
 
 {- some group theory results -}
 import groups.ReducedWord
+import groups.ProductRepr
 import groups.CoefficientExtensionality
 
 {- homotopy groups of circles -}
@@ -24,6 +25,8 @@ import homotopy.Hopf
 {- cohomology -}
 import cohomology.Unit
 import cohomology.EMModel
+import cohomology.Sigma
+import cohomology.Coproduct
 -- import cohomology.Torus -- FIXME
 -- import cohomology.MayerVietorisExact -- FIXME
 

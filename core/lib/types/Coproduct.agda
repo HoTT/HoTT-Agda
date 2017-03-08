@@ -78,7 +78,7 @@ codiag (inr a) = a
 
 -- A binary sigma is a coproduct
 ΣBool-equiv-⊔ : ∀ {i} (Pick : Bool → Type i)
-  → Σ _ Pick ≃ (Pick true ⊔ Pick false)
+  → Σ Bool Pick ≃ Pick true ⊔ Pick false
 ΣBool-equiv-⊔ Pick = equiv into out into-out out-into
   where
   into : Σ _ Pick → Pick true ⊔ Pick false

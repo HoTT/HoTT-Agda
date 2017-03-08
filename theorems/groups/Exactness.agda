@@ -21,12 +21,16 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
     module E = is-exact φ-ψ-is-exact
 
   abstract
-    G-trivial-implies-ψ-is-inj : is-trivialᴳ G → is-injᴳ ψ
-    G-trivial-implies-ψ-is-inj G-is-triv =
+    φ-const-implies-ψ-is-inj : (∀ g →  φ.f g == H.ident) → is-injᴳ ψ
+    φ-const-implies-ψ-is-inj φ-is-const =
       has-trivial-ker-is-injᴳ ψ λ h ψh=0 →
         Trunc-rec (H.El-is-set _ _)
-          (λ{(g , φg=h) → ! φg=h ∙ ap φ.f (G-is-triv g) ∙ φ.pres-ident})
+          (λ{(g , φg=h) → ! φg=h ∙ φ-is-const g})
           (E.ker-sub-im h ψh=0)
+
+    G-trivial-implies-ψ-is-inj : is-trivialᴳ G → is-injᴳ ψ
+    G-trivial-implies-ψ-is-inj G-is-triv =
+      φ-const-implies-ψ-is-inj λ g → ap φ.f (G-is-triv g) ∙ φ.pres-ident
 
   G-to-ker : G →ᴳ Ker.grp ψ
   G-to-ker = Ker.inject-lift ψ φ (λ g → E.im-sub-ker (φ.f g) [ g , idp ])
@@ -255,8 +259,7 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
 
     φ-inj-and-ψ-has-rinv-split : H ≃ᴳ G ×ᴳ K
     φ-inj-and-ψ-has-rinv-split =
-          ×ᴳ-emap (φ-inj-implies-G-iso-ker φ-inj ⁻¹ᴳ) (K-iso-Imχ ⁻¹ᴳ)
-      ∘eᴳ decomp-iso where
+      ×ᴳ-emap (φ-inj-implies-G-iso-ker φ-inj ⁻¹ᴳ) (K-iso-Imχ ⁻¹ᴳ) ∘eᴳ decomp-iso
 
     abstract
       φ-inj-and-ψ-has-rinv-implies-φ-comm-inl : CommSquareᴳ φ ×ᴳ-inl

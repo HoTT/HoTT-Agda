@@ -183,24 +183,57 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : Type k} {x x' : A}
              =⟨ ↓-cst-β (pair= p q) (f q) ⟩
     f q =∎
 
+{- favonia: these lemmas are not used anywhere
+
 {- Similar to above, with domain being the identity function. -}
 {- These lemmas were in homotopy.FunctionOver and in different conventions. -}
 
 module _ {i j} {A B : Type i} {C : Type j}
-  {u : A → C} {v : B → C} (e : A ≃ B) where
+  {u : A → C} {v : B → C} where
 
-  ↓-idf→cst-in : u == v ∘ –> e
-               → u == v [ (λ x → x → C) ↓ ua e ]
-  ↓-idf→cst-in q = lemma (ua e) (q ∙ ap (v ∘_) (λ= (! ∘ coe-β e)))
-    where
-      lemma : {A B : Type i} {u : A → C} {v : B → C} (p : A == B)
-        → u == v ∘ coe p → u == v [ (λ x → x → C) ↓ p ]
-      lemma idp q = q
+  ↓-idf→cst-in : ∀ (p : A == B)
+    → u == v ∘ coe p
+    → u == v [ (λ x → x → C) ↓ p ]
+  ↓-idf→cst-in idp q = q
 
-  ↓-idf→cst-in' : u ∘ <– e == v
-                → u == v [ (λ x → x → C) ↓ ua e ]
-  ↓-idf→cst-in' q = ↓-idf→cst-in
-    (λ= λ a → ap u (! (<–-inv-l e a)) ∙ app= q (–> e a))
+  ↓-idf→cst-ua-in : ∀ (e : A ≃ B)
+    → u == v ∘ –> e
+    → u == v [ (λ x → x → C) ↓ ua e ]
+  ↓-idf→cst-ua-in e q = ↓-idf→cst-in (ua e) (q ∙ ap (v ∘_) (λ= λ a → ! (coe-β e a)))
+
+  ↓-idf→cst-in' : ∀ (p : A == B)
+    → u ∘ coe! p == v
+    → u == v [ (λ x → x → C) ↓ p ]
+  ↓-idf→cst-in' idp q = q
+
+  ↓-idf→cst-ua-in' : ∀ (e : A ≃ B)
+    → u ∘ <– e == v
+    → u == v [ (λ x → x → C) ↓ ua e ]
+  ↓-idf→cst-ua-in' e q = ↓-idf→cst-in' (ua e) (ap (u ∘_) (λ= λ a → coe!-β e a) ∙ q)
+
+module _ {i j} {A B : Type i} {C : Type j}
+  {u : C → A} {v : C → B} where
+
+  ↓-cst→idf-in : ∀ (p : A == B)
+    → coe p ∘ u == v
+    → u == v [ (λ x → C → x) ↓ p ]
+  ↓-cst→idf-in idp q = q
+
+  ↓-cst→idf-ua-in : ∀ (e : A ≃ B)
+    → –> e ∘ u == v
+    → u == v [ (λ x → C → x) ↓ ua e ]
+  ↓-cst→idf-ua-in e q = ↓-cst→idf-in (ua e) (ap (_∘ u) (λ= λ a → coe-β e a) ∙ q)
+
+  ↓-cst→idf-in' : ∀ (p : A == B)
+    → u == coe! p ∘ v
+    → u == v [ (λ x → C → x) ↓ p ]
+  ↓-cst→idf-in' idp q = q
+
+  ↓-cst→idf-ua-in' : ∀ (e : A ≃ B)
+    → u == <– e ∘ v
+    → u == v [ (λ x → C → x) ↓ ua e ]
+  ↓-cst→idf-ua-in' e q = ↓-cst→idf-in' (ua e) (q ∙ ap (_∘ v) (λ= λ a → ! (coe!-β e a)))
+-}
 
 {- Dependent paths in an arrow type -}
 module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}

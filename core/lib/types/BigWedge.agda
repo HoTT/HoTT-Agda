@@ -10,6 +10,7 @@ open import lib.types.Pointed
 open import lib.types.PushoutFmap
 open import lib.types.Sigma
 open import lib.types.Span
+open import lib.types.Suspension
 open import lib.types.Wedge
 
 module lib.types.BigWedge where
@@ -81,11 +82,23 @@ module _ {i₀ i₁ j} {A₀ : Type i₀} {A₁ : Type i₁}
   ⊙BigWedge-emap-l : ⊙BigWedge (X ∘ –> Aeq) ⊙≃ ⊙BigWedge X
   ⊙BigWedge-emap-l = ≃-to-⊙≃ BigWedge-emap-l idp
 
+module _ {i} {A : Type i} (X : A → Ptd i) where
+
+  extract-glue-from-BigWedge-is-const :
+    ∀ bw → extract-glue {s = bigwedge-span X} bw == north
+  extract-glue-from-BigWedge-is-const = BigWedge-elim
+    idp
+    (λ x y → ! (merid x))
+    (↓-='-from-square ∘ λ x →
+      ExtractGlue.glue-β x ∙v⊡
+        tr-square (merid x)
+      ⊡v∙ ! (ap-cst north (cfglue x)))
+
 {- A BigWedge indexed by Bool is just a binary Wedge -}
 module _ {i} (Pick : Bool → Ptd i) where
 
-  BigWedge-Bool-equiv : BigWedge Pick ≃ Wedge (Pick true) (Pick false)
-  BigWedge-Bool-equiv = equiv f g f-g g-f
+  BigWedge-Bool-equiv-Wedge : BigWedge Pick ≃ Wedge (Pick true) (Pick false)
+  BigWedge-Bool-equiv-Wedge = equiv f g f-g g-f
     where
     module F = BigWedgeRec {X = Pick}
       {C = Wedge (Pick true) (Pick false)}
@@ -132,6 +145,3 @@ module _ {i} (Pick : Bool → Ptd i) where
             false → ↓-∘=idf-from-square g f $
               (ap (ap g) (F.glue-β false) ∙ G.glue-β) ∙v⊡
               lt-square (! (bwglue true)) ⊡h vid-square})
-
-  BigWedge-Bool-⊙path : ⊙BigWedge Pick == ⊙Wedge (Pick true) (Pick false)
-  BigWedge-Bool-⊙path = ⊙ua (≃-to-⊙≃ BigWedge-Bool-equiv idp)
