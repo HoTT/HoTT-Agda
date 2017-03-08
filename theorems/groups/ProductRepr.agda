@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
-open import homotopy.FunctionOver
 
 module groups.ProductRepr where
 
@@ -65,25 +64,20 @@ module ProductRepr {i j}
                       pair×= (β₁ h₁ h₂) (β₂ h₁ h₂) ]})
     (has-trivial-ker-is-injᴳ (×ᴳ-fanout j₁ j₂) fanout-has-trivial-ker)
 
-  path : G == (H₁ ×ᴳ H₂)
-  path = uaᴳ iso
+  j₁-fst-comm-sqr : CommSquareᴳ j₁ ×ᴳ-fst (–>ᴳ iso) (idhom _)
+  j₁-fst-comm-sqr = comm-sqrᴳ λ _ → idp
 
-  fst-over : j₁ == ×ᴳ-fst [ (λ U → U →ᴳ H₁) ↓ path ]
-  fst-over = domain-over-iso $ domain-over-equiv fst _
+  j₂-snd-comm-sqr : CommSquareᴳ j₂ (×ᴳ-snd {G = H₁}) (–>ᴳ iso) (idhom _)
+  j₂-snd-comm-sqr = comm-sqrᴳ λ _ → idp
 
-  snd-over : j₂ == ×ᴳ-snd {G = H₁} [ (λ U → U →ᴳ H₂) ↓ path ]
-  snd-over = domain-over-iso $ domain-over-equiv snd _
+  abstract
+    i₁-inl-comm-sqr : CommSquareᴳ i₁ ×ᴳ-inl (idhom _) (–>ᴳ iso)
+    i₁-inl-comm-sqr = comm-sqrᴳ λ h₁ →
+      pair×= (p₁ h₁) (im-sub-ker ex₁ _ [ h₁ , idp ])
 
-  inl-over : i₁ == ×ᴳ-inl [ (λ V → H₁ →ᴳ V) ↓ path ]
-  inl-over = codomain-over-iso $
-    codomain-over-equiv i₁.f _
-    ▹ λ= (λ h₁ → pair×= (p₁ h₁) (im-sub-ker ex₁ _ [ h₁ , idp ]))
-
-  inr-over : i₂ == ×ᴳ-inr {G = H₁} [ (λ V → H₂ →ᴳ V) ↓ path ]
-  inr-over = codomain-over-iso $
-    codomain-over-equiv i₂.f _
-    ▹ λ= (λ h₂ → pair×= (im-sub-ker ex₂ _ [ h₂ , idp ]) (p₂ h₂))
-
+    i₂-inr-comm-sqr : CommSquareᴳ i₂ ×ᴳ-inr (idhom _) (–>ᴳ iso)
+    i₂-inr-comm-sqr = comm-sqrᴳ λ h₂ →
+      pair×= (im-sub-ker ex₂ _ [ h₂ , idp ]) (p₂ h₂)
 
   {- Given additionally maps
 
@@ -101,28 +95,34 @@ module ProductRepr {i j}
     (ex₀ : ∀ g → GroupHom.f j₀ (GroupHom.f i₀ g) == Group.ident L)
     where
 
-    decomp : ∀ g → G.comp (i₁.f (j₁.f g)) (i₂.f (j₂.f g)) == g
-    decomp = transport
-      (λ {(G' , i₁' , i₂' , j₁' , j₂') → ∀ g →
-         Group.comp G' (GroupHom.f i₁' (GroupHom.f j₁' g))
-                       (GroupHom.f i₂' (GroupHom.f j₂' g))
-         == g})
-      (! (pair= path (↓-×-in inl-over (↓-×-in inr-over
-                                             (↓-×-in fst-over snd-over)))))
-      (λ {(h₁ , h₂) → pair×= (H₁.unit-r h₁) (H₂.unit-l h₂)})
+    abstract
+      decomp : ∀ g → G.comp (i₁.f (j₁.f g)) (i₂.f (j₂.f g)) == g
+      decomp g = <– (ap-equiv (GroupIso.f-equiv iso) _ g) $
+        GroupIso.f iso (G.comp (i₁.f (j₁.f g)) (i₂.f (j₂.f g)))
+          =⟨ GroupIso.pres-comp iso (i₁.f (j₁.f g)) (i₂.f (j₂.f g)) ⟩
+        Group.comp (H₁ ×ᴳ H₂) (GroupIso.f iso (i₁.f (j₁.f g))) (GroupIso.f iso (i₂.f (j₂.f g)))
+          =⟨ ap2 (Group.comp (H₁ ×ᴳ H₂))
+              ((i₁-inl-comm-sqr □$ᴳ j₁.f g) ∙ ap (_, H₂.ident) (j₁-fst-comm-sqr □$ᴳ g))
+              ((i₂-inr-comm-sqr □$ᴳ j₂.f g) ∙ ap (H₁.ident ,_) (j₂-snd-comm-sqr □$ᴳ g)) ⟩
+        (H₁.comp (fst (GroupIso.f iso g)) H₁.ident , H₂.comp H₂.ident (snd (GroupIso.f iso g)))
+          =⟨ pair×= (H₁.unit-r (fst (GroupIso.f iso g))) (H₂.unit-l (snd (GroupIso.f iso g))) ⟩
+        (fst (GroupIso.f iso g) , snd (GroupIso.f iso g))
+          =⟨ idp ⟩
+        GroupIso.f iso g
+          =∎
 
-    cancel : ∀ k →
-      Group.comp L (GroupHom.f (j₀ ∘ᴳ i₁ ∘ᴳ j₁ ∘ᴳ i₀) k)
-                   (GroupHom.f (j₀ ∘ᴳ i₂ ∘ᴳ j₂ ∘ᴳ i₀) k)
-      == Group.ident L
-    cancel k = ! (GroupHom.pres-comp j₀ _ _)
-             ∙ ap (GroupHom.f j₀) (decomp (GroupHom.f i₀ k))
-             ∙ ex₀ k
+      cancel : ∀ k →
+        Group.comp L (GroupHom.f (j₀ ∘ᴳ i₁ ∘ᴳ j₁ ∘ᴳ i₀) k)
+                     (GroupHom.f (j₀ ∘ᴳ i₂ ∘ᴳ j₂ ∘ᴳ i₀) k)
+        == Group.ident L
+      cancel k = ! (GroupHom.pres-comp j₀ _ _)
+               ∙ ap (GroupHom.f j₀) (decomp (GroupHom.f i₀ k))
+               ∙ ex₀ k
 
-    inv₁ : ∀ k → Group.inv L (GroupHom.f (j₀ ∘ᴳ i₁ ∘ᴳ j₁ ∘ᴳ i₀) k)
-              == GroupHom.f (j₀ ∘ᴳ i₂ ∘ᴳ j₂ ∘ᴳ i₀) k
-    inv₁ k = Group.inv-unique-r L _ _ (cancel k)
+      inv₁ : ∀ k → Group.inv L (GroupHom.f (j₀ ∘ᴳ i₁ ∘ᴳ j₁ ∘ᴳ i₀) k)
+                == GroupHom.f (j₀ ∘ᴳ i₂ ∘ᴳ j₂ ∘ᴳ i₀) k
+      inv₁ k = Group.inv-unique-r L _ _ (cancel k)
 
-    inv₂ : ∀ k → Group.inv L (GroupHom.f (j₀ ∘ᴳ i₂ ∘ᴳ j₂ ∘ᴳ i₀) k)
-              == GroupHom.f (j₀ ∘ᴳ i₁ ∘ᴳ j₁ ∘ᴳ i₀) k
-    inv₂ k = Group.inv-unique-l L _ _ (cancel k)
+      inv₂ : ∀ k → Group.inv L (GroupHom.f (j₀ ∘ᴳ i₂ ∘ᴳ j₂ ∘ᴳ i₀) k)
+                == GroupHom.f (j₀ ∘ᴳ i₁ ∘ᴳ j₁ ∘ᴳ i₀) k
+      inv₂ k = Group.inv-unique-l L _ _ (cancel k)

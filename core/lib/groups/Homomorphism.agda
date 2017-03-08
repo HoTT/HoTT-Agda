@@ -323,20 +323,20 @@ module _ {i j} (G : Group i) (H : AbGroup j)
     module G = Group G
     module H = AbGroup H
 
-    hom-comp : (G →ᴳ H.grp) → (G →ᴳ H.grp) → (G →ᴳ H.grp)
-    hom-comp φ ψ = group-hom (λ g → H.comp (φ.f g) (ψ.f g)) hom-comp-pres-comp where
-      module φ = GroupHom φ
-      module ψ = GroupHom ψ
-      abstract
-        hom-comp-pres-comp : ∀ g₁ g₂
-          →  H.comp (φ.f (G.comp g₁ g₂)) (ψ.f (G.comp g₁ g₂))
-          == H.comp (H.comp (φ.f g₁) (ψ.f g₁)) (H.comp (φ.f g₂) (ψ.f g₂))
-        hom-comp-pres-comp g₁ g₂ =
-          H.comp (φ.f (G.comp g₁ g₂)) (ψ.f (G.comp g₁ g₂))
-            =⟨ ap2 H.comp (φ.pres-comp g₁ g₂) (ψ.pres-comp g₁ g₂) ⟩
-          H.comp (H.comp (φ.f g₁) (φ.f g₂)) (H.comp (ψ.f g₁) (ψ.f g₂))
-            =⟨ H.interchange (φ.f g₁) (φ.f g₂) (ψ.f g₁) (ψ.f g₂) ⟩
-          H.comp (H.comp (φ.f g₁) (ψ.f g₁)) (H.comp (φ.f g₂) (ψ.f g₂)) =∎
+  hom-comp : (G →ᴳ H.grp) → (G →ᴳ H.grp) → (G →ᴳ H.grp)
+  hom-comp φ ψ = group-hom (λ g → H.comp (φ.f g) (ψ.f g)) hom-comp-pres-comp where
+    module φ = GroupHom φ
+    module ψ = GroupHom ψ
+    abstract
+      hom-comp-pres-comp : ∀ g₁ g₂
+        →  H.comp (φ.f (G.comp g₁ g₂)) (ψ.f (G.comp g₁ g₂))
+        == H.comp (H.comp (φ.f g₁) (ψ.f g₁)) (H.comp (φ.f g₂) (ψ.f g₂))
+      hom-comp-pres-comp g₁ g₂ =
+        H.comp (φ.f (G.comp g₁ g₂)) (ψ.f (G.comp g₁ g₂))
+          =⟨ ap2 H.comp (φ.pres-comp g₁ g₂) (ψ.pres-comp g₁ g₂) ⟩
+        H.comp (H.comp (φ.f g₁) (φ.f g₂)) (H.comp (ψ.f g₁) (ψ.f g₂))
+          =⟨ H.interchange (φ.f g₁) (φ.f g₂) (ψ.f g₁) (ψ.f g₂) ⟩
+        H.comp (H.comp (φ.f g₁) (ψ.f g₁)) (H.comp (φ.f g₂) (ψ.f g₂)) =∎
 
   hom-group-structure : GroupStructure (G →ᴳ H.grp)
   hom-group-structure = record {M} where
