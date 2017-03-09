@@ -136,7 +136,7 @@ C-cw-iso-ker/im = lemma ∘eᴳ C-apex-iso-C-cw ⁻¹ᴳ where
         φ₁-is-surj : is-surjᴳ φ₁
         φ₁-is-surj = ∘-is-surj G-to-C-apex-is-surj (equiv-is-surj (GroupIso.g-is-equiv G-iso-Ker))
 
-      φ₂ = GroupIso.g-hom Coker-iso-H  ∘ᴳ C-apex-to-H
+      φ₂ = GroupIso.g-hom Coker-iso-H ∘ᴳ C-apex-to-H
       abstract
         φ₂-is-inj : is-injᴳ φ₂
         φ₂-is-inj = ∘-is-inj (equiv-is-inj (GroupIso.g-is-equiv Coker-iso-H)) C-apex-to-H-is-inj

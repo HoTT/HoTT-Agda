@@ -33,7 +33,11 @@ abstract
     CEl-fmap-base-indep' n f-is-const y ∙ C-fmap-cst n y
 
   -- FIXME Is there a better name?
-  CEl-fmap-inverse : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y) (g : Y ⊙→ X)
+  C-fmap-inverse : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y) (g : Y ⊙→ X)
     → (∀ x → fst g (fst f x) == x)
     → (∀ x → CEl-fmap n f (CEl-fmap n g x) == x)
-  CEl-fmap-inverse n f g p x = ! (CEl-fmap-∘ n g f x) ∙ CEl-fmap-base-indep' n p x ∙ C-fmap-idf n x
+  C-fmap-inverse n f g p x = ! (CEl-fmap-∘ n g f x) ∙ CEl-fmap-base-indep' n p x ∙ C-fmap-idf n x
+
+CEl-fmap-cst = C-fmap-cst
+CEl-fmap-const = C-fmap-const
+CEl-fmap-inverse = C-fmap-inverse

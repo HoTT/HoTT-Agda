@@ -27,6 +27,7 @@ import cohomology.Unit
 import cohomology.EMModel
 import cohomology.Sigma
 import cohomology.Coproduct
+import cohomology.Wedge
 -- import cohomology.Torus -- FIXME
 -- import cohomology.MayerVietorisExact -- FIXME
 

@@ -72,3 +72,55 @@ _⊙↕⟨_⟩↕_ : ∀ {i} {X₀ X₁ : Ptd i} → (⊙eqX : X₀ ⊙≃ X₁)
 (⊙hX , hX-is-equiv) ⊙↕⟨ sqr ⟩↕ (⊙seq-map , ⊙seq-map-is-equiv) =
   (⊙hX ⊙↓⟨ sqr ⟩↓ ⊙seq-map) , hX-is-equiv , ⊙seq-map-is-equiv
 -}
+
+private
+  is-⊙seq-equiv-head : ∀ {i₀ i₁} {X₀ Y₀ : Ptd i₀} {X₁ Y₁ : Ptd i₁}
+    {⊙seq₀ : PtdMapSequence X₀ Y₀} {⊙seq₁ : PtdMapSequence X₁ Y₁}
+    {⊙hX : X₀ ⊙→ X₁} {⊙hY : Y₀ ⊙→ Y₁}
+    {seq-map : PtdMapSeqMap ⊙seq₀ ⊙seq₁ ⊙hX ⊙hY}
+    → is-⊙seq-equiv seq-map → is-equiv (fst ⊙hX)
+  is-⊙seq-equiv-head {seq-map = ξ ⊙↓|} ise = ise
+  is-⊙seq-equiv-head {seq-map = ξ ⊙↓⟨ _ ⟩ _} ise = fst ise
+
+private
+  ptd-map-seq-map-index-type : ∀ {i₀ i₁} {X₀ Y₀ : Ptd i₀} {X₁ Y₁ : Ptd i₁}
+    {⊙seq₀ : PtdMapSequence X₀ Y₀} {⊙seq₁ : PtdMapSequence X₁ Y₁}
+    {⊙hX : X₀ ⊙→ X₁} {⊙hY : Y₀ ⊙→ Y₁}
+    → ℕ → PtdMapSeqMap ⊙seq₀ ⊙seq₁ ⊙hX ⊙hY → Type (lmax i₀ i₁)
+  ptd-map-seq-map-index-type _     (_ ⊙↓|) = Lift ⊤
+  ptd-map-seq-map-index-type O     (_⊙↓⟨_⟩_ {⊙f₀ = ⊙f₀} {⊙f₁ = ⊙f₁} ⊙hX {⊙hY} _ _)
+    = CommSquare (fst ⊙f₀) (fst ⊙f₁) (fst ⊙hX) (fst ⊙hY)
+  ptd-map-seq-map-index-type (S n) (_ ⊙↓⟨ _ ⟩ seq-map)
+    = ptd-map-seq-map-index-type n seq-map
+
+abstract
+  ptd-map-seq-map-index : ∀ {i₀ i₁} {X₀ Y₀ : Ptd i₀} {X₁ Y₁ : Ptd i₁}
+    {⊙seq₀ : PtdMapSequence X₀ Y₀} {⊙seq₁ : PtdMapSequence X₁ Y₁}
+    {⊙hX : X₀ ⊙→ X₁} {⊙hY : Y₀ ⊙→ Y₁}
+    (n : ℕ) (seq-map : PtdMapSeqMap ⊙seq₀ ⊙seq₁ ⊙hX ⊙hY)
+    → ptd-map-seq-map-index-type n seq-map
+  ptd-map-seq-map-index _     (_ ⊙↓|) = lift tt
+  ptd-map-seq-map-index O     (_ ⊙↓⟨ □ ⟩ _) = □
+  ptd-map-seq-map-index (S n) (_ ⊙↓⟨ _ ⟩ seq-map)
+    = ptd-map-seq-map-index n seq-map
+
+private
+  ptd-map-seq-equiv-index-type : ∀ {i₀ i₁} {X₀ Y₀ : Ptd i₀} {X₁ Y₁ : Ptd i₁}
+    {⊙seq₀ : PtdMapSequence X₀ Y₀} {⊙seq₁ : PtdMapSequence X₁ Y₁}
+    {⊙hX : X₀ ⊙→ X₁} {⊙hY : Y₀ ⊙→ Y₁}
+    → ℕ → PtdMapSeqMap ⊙seq₀ ⊙seq₁ ⊙hX ⊙hY → Type (lmax i₀ i₁)
+  ptd-map-seq-equiv-index-type {⊙hX = ⊙hX} O _ = is-equiv (fst ⊙hX)
+  ptd-map-seq-equiv-index-type (S _) (_ ⊙↓|) = Lift ⊤
+  ptd-map-seq-equiv-index-type (S n) (_ ⊙↓⟨ _ ⟩ seq-map)
+    = ptd-map-seq-equiv-index-type n seq-map
+
+abstract
+  ptd-map-seq-equiv-index : ∀ {i₀ i₁} {X₀ Y₀ : Ptd i₀} {X₁ Y₁ : Ptd i₁}
+    {⊙seq₀ : PtdMapSequence X₀ Y₀} {⊙seq₁ : PtdMapSequence X₁ Y₁}
+    {⊙hX : X₀ ⊙→ X₁} {⊙hY : Y₀ ⊙→ Y₁}
+    (n : ℕ) (seq-equiv : PtdMapSeqEquiv ⊙seq₀ ⊙seq₁ ⊙hX ⊙hY)
+    → ptd-map-seq-equiv-index-type n (fst seq-equiv)
+  ptd-map-seq-equiv-index O     (seq-map , ise) = is-⊙seq-equiv-head ise
+  ptd-map-seq-equiv-index (S _) ((_ ⊙↓|) , _) = lift tt
+  ptd-map-seq-equiv-index (S n) ((_ ⊙↓⟨ _ ⟩ seq-map) , ise)
+    = ptd-map-seq-equiv-index n (seq-map , snd ise)

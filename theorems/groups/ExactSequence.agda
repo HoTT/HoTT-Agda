@@ -1,5 +1,4 @@
 open import HoTT
--- open import homotopy.FunctionOver
 open import groups.Exactness
 open import groups.HomSequence
 
@@ -36,13 +35,13 @@ abstract
         ((ξH ↓⟨ ψ□ ⟩ᴳ seq-map) , (ξH-ise , seq-map-ise))
         ψ₀-seq₀-is-exact-seq
 
-{-
-  hom-seq-equiv-preserves'-exact : ∀ {i} {G₀ G₁ H₀ H₁ : Group i}
+  seq-equiv-preserves'-exact : ∀ {i} {G₀ G₁ H₀ H₁ : Group i}
     {seq₀ : HomSequence G₀ H₀} {seq₁ : HomSequence G₁ H₁}
-    {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁} (seq-map : HomSeqMap seq₀ seq₁ ξG ξH)
-    → is-seqᴳ-equiv seq-map → is-exact-seq seq₁ → is-exact-seq seq₀
-  hom-seq-equiv-preserves'-exact :
--}
+    {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁}
+    → HomSeqEquiv seq₀ seq₁ ξG ξH
+    → is-exact-seq seq₁ → is-exact-seq seq₀
+  seq-equiv-preserves'-exact seq-equiv =
+    seq-equiv-preserves-exact (HomSeqEquiv-inverse seq-equiv)
 
 private
   exact-seq-index-type : ∀ {i} {G H : Group i} → ℕ → HomSequence G H → Type i

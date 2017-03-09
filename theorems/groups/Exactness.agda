@@ -377,3 +377,19 @@ abstract
       module ξH = GroupIso (ξH , ξH-is-equiv)
       module ξK = GroupIso (ξK , ξK-is-equiv)
 
+abstract
+  equiv-preserves'-exact : ∀ {i₀ i₁ j₀ j₁ l₀ l₁}
+    {G₀ : Group i₀} {G₁ : Group i₁} {H₀ : Group j₀} {H₁ : Group j₁} {K₀ : Group l₀} {K₁ : Group l₁}
+    {φ₀ : G₀ →ᴳ H₀} {ψ₀ : H₀ →ᴳ K₀} {φ₁ : G₁ →ᴳ H₁} {ψ₁ : H₁ →ᴳ K₁}
+    {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁} {ξK : K₀ →ᴳ K₁}
+    → CommSquareᴳ φ₀ φ₁ ξG ξH → CommSquareᴳ ψ₀ ψ₁ ξH ξK
+    → is-equiv (GroupHom.f ξG) → is-equiv (GroupHom.f ξH) → is-equiv (GroupHom.f ξK)
+    → is-exact φ₁ ψ₁ → is-exact φ₀ ψ₀
+  equiv-preserves'-exact cs₀ cs₁ ξG-ise ξH-ise ξK-ise ex =
+    equiv-preserves-exact
+      (CommSquareᴳ-inverse-v cs₀ ξG-ise ξH-ise)
+      (CommSquareᴳ-inverse-v cs₁ ξH-ise ξK-ise)
+      (is-equiv-inverse ξG-ise)
+      (is-equiv-inverse ξH-ise)
+      (is-equiv-inverse ξK-ise)
+      ex

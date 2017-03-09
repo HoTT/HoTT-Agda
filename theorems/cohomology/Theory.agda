@@ -47,21 +47,6 @@ record CohomologyTheory i : Type (lsucc i) where
   CEl-fmap-∘ = C-fmap-∘
   ∘-CEl-fmap = ∘-C-fmap
 
-  -- FIXME The proofs of roundtrips should be made abstract once
-  -- Agda 2.5.2 is officially out.
-  CEl-emap : (n : ℤ) {X Y : Ptd i} → X ⊙≃ Y → Group.El (C n Y) ≃ Group.El (C n X)
-  CEl-emap n ⊙eq = equiv (CEl-fmap n (⊙–> ⊙eq)) (CEl-fmap n (⊙<– ⊙eq))
-    (λ x → ! (CEl-fmap-∘ n (⊙<– ⊙eq) (⊙–> ⊙eq) x) ∙ ap (λ f → CEl-fmap n f x) (⊙<–-inv-l ⊙eq) ∙ CEl-fmap-idf n x)
-    (λ x → ! (CEl-fmap-∘ n (⊙–> ⊙eq) (⊙<– ⊙eq) x) ∙ ap (λ f → CEl-fmap n f x) (⊙<–-inv-r ⊙eq) ∙ CEl-fmap-idf n x)
-
-  CEl-isemap : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y) → is-equiv (fst f) → is-equiv (CEl-fmap n f)
-  CEl-isemap n f f-ise = snd (CEl-emap n (f , f-ise))
-
-  C-emap : (n : ℤ) {X Y : Ptd i} → X ⊙≃ Y → C n Y ≃ᴳ C n X
-  C-emap n ⊙eq = ≃-to-≃ᴳ (CEl-emap n ⊙eq) (GroupHom.pres-comp (C-fmap n (⊙–> ⊙eq)))
-
-  C-isemap = CEl-isemap
-
   field
     C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp X) ≃ᴳ C n X
 
@@ -105,6 +90,25 @@ record CohomologyTheory i : Type (lsucc i) where
 
   C2-abgroup : ℤ → AbGroup i
   C2-abgroup n = C-abgroup n (⊙Lift ⊙Bool)
+
+  -- XXX This is put here due to the limitation of the current Agda.
+  CEl-emap : (n : ℤ) {X Y : Ptd i} → X ⊙≃ Y → Group.El (C n Y) ≃ Group.El (C n X)
+  CEl-emap n ⊙eq = equiv (CEl-fmap n (⊙–> ⊙eq)) (CEl-fmap n (⊙<– ⊙eq)) to-from from-to where
+    abstract
+      to-from = λ x → ! (CEl-fmap-∘ n (⊙<– ⊙eq) (⊙–> ⊙eq) x)
+                    ∙ ap (λ f → CEl-fmap n f x) (⊙<–-inv-l ⊙eq)
+                    ∙ CEl-fmap-idf n x
+      from-to = λ x → ! (CEl-fmap-∘ n (⊙–> ⊙eq) (⊙<– ⊙eq) x)
+                    ∙ ap (λ f → CEl-fmap n f x) (⊙<–-inv-r ⊙eq)
+                    ∙ CEl-fmap-idf n x
+
+  CEl-isemap : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y) → is-equiv (fst f) → is-equiv (CEl-fmap n f)
+  CEl-isemap n f f-ise = snd (CEl-emap n (f , f-ise))
+
+  C-emap : (n : ℤ) {X Y : Ptd i} → X ⊙≃ Y → C n Y ≃ᴳ C n X
+  C-emap n ⊙eq = ≃-to-≃ᴳ (CEl-emap n ⊙eq) (GroupHom.pres-comp (C-fmap n (⊙–> ⊙eq)))
+
+  C-isemap = CEl-isemap
 
 record OrdinaryTheory i : Type (lsucc i) where
   constructor ordinary-theory

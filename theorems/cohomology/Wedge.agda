@@ -2,10 +2,9 @@
 
 open import HoTT
 open import groups.ProductRepr
-open import homotopy.FunctionOver
-open import cohomology.CofiberSequence
+open import groups.Exactness
+open import homotopy.CofiberSequence
 open import cohomology.Theory
-open import cohomology.WedgeCofiber
 
 {- Finite additivity is provable (and in a stronger form) without using
  - the additivity axiom. We have
@@ -21,42 +20,49 @@ open import cohomology.WedgeCofiber
        corresponds to Cⁿ(projl ∘ f) + Cⁿ(projr ∘ f) : Cⁿ(X) × Cⁿ(Y) → Cⁿ(Z)
  -}
 
-module cohomology.Wedge {i} (CT : CohomologyTheory i) where
+module cohomology.Wedge {i} (CT : CohomologyTheory i)
+  (n : ℤ) (X Y : Ptd i) where
 
-module CWedge (n : ℤ) (X Y : Ptd i) where
-
-  open WedgeCofiber X Y
+  open import homotopy.WedgeCofiber X Y
 
   open CohomologyTheory CT
   open import cohomology.Functor CT
+  open import cohomology.PtdMapSequence CT
 
   private
-    βl : CF-hom n ⊙winl ∘ᴳ CF-hom n (⊙projl X Y) == idhom _
-    βl = ! (CF-comp n (⊙projl X Y) ⊙winl) ∙ CF-ident n
+    abstract
+      βl : ∀ x → CEl-fmap n ⊙winl (CEl-fmap n (⊙projl X Y) x) == x
+      βl = CEl-fmap-inverse n ⊙winl (⊙projl X Y) λ _ → idp
 
-    βr : CF-hom n ⊙winr ∘ᴳ CF-hom n (⊙projr X Y) == idhom _
-    βr = ! (CF-comp n (⊙projr X Y) ⊙winr)
-         ∙ ap (CF-hom n) ⊙projr-winr
-         ∙ CF-ident n
-      where
-      ⊙projr-winr : ⊙projr X Y ⊙∘ ⊙winr == ⊙idf _
-      ⊙projr-winr = ⊙λ= (λ _ → idp) $
-        ∙-unit-r _ ∙ ap-! (projr X Y) wglue ∙ ap ! (Projr.glue-β X Y)
+      βr : ∀ y → CEl-fmap n ⊙winr (CEl-fmap n (⊙projr X Y) y) == y
+      βr = CEl-fmap-inverse n ⊙winr (⊙projr X Y) λ _ → idp
+
+      C-projr-C-winl-is-exact : is-exact (C-fmap n (⊙projr X Y)) (C-fmap n ⊙winl)
+      C-projr-C-winl-is-exact = equiv-preserves'-exact
+        (C-comm-square n cfcod-winl-projr-comm-sqr)
+        (C-comm-square n $ comm-sqr λ _ → idp)
+        (snd (C-emap n CofWinl.⊙eq))
+        (C-isemap n (⊙idf _) (idf-is-equiv _))
+        (C-isemap n (⊙idf _) (idf-is-equiv _))
+        (C-exact n ⊙winl)
+
+      C-projl-C-winr-is-exact : is-exact (C-fmap n (⊙projl X Y)) (C-fmap n ⊙winr)
+      C-projl-C-winr-is-exact = equiv-preserves'-exact
+        (C-comm-square n cfcod-winr-projl-comm-sqr)
+        (C-comm-square n $ comm-sqr λ _ → idp)
+        (snd (C-emap n CofWinr.⊙eq))
+        (C-isemap n (⊙idf _) (idf-is-equiv _))
+        (C-isemap n (⊙idf _) (idf-is-equiv _))
+        (C-exact n ⊙winr)
 
   open ProductRepr
-    (CF-hom n (⊙projl X Y)) (CF-hom n (⊙projr X Y))
-    (CF-hom n ⊙winl) (CF-hom n ⊙winr)
-    (app= (ap GroupHom.f βl)) (app= (ap GroupHom.f βr))
-    (transport
-      (λ {(_ , g) → is-exact (CF-hom n g) (CF-hom n ⊙winr)})
-      (pair= CofWinr.⊙path CofWinr.cfcod-over)
-      (C-exact n ⊙winr))
-    (transport
-      (λ {(_ , g) → is-exact (CF-hom n g) (CF-hom n ⊙winl)})
-      (pair= CofWinl.⊙path CofWinl.cfcod-over)
-      (C-exact n ⊙winl))
+    (C-fmap n (⊙projl X Y)) (C-fmap n (⊙projr X Y))
+    (C-fmap n ⊙winl) (C-fmap n ⊙winr) βl βr
+    C-projl-C-winr-is-exact
+    C-projr-C-winl-is-exact
     public
 
+{-
   ⊙Wedge-rec-over : {Z : Ptd i} (winl* : X ⊙→ Z) (winr* : Y ⊙→ Z)
     → CF-hom n (⊙Wedge-rec winl* winr*)
       == ×ᴳ-fanout (CF-hom n winl*) (CF-hom n (winr*))
@@ -71,7 +77,7 @@ module CWedge (n : ℤ) (X Y : Ptd i) where
 
   Wedge-hom-η : {Z : Ptd i} (φ : C n (⊙Wedge X Y) →ᴳ C n Z)
     → φ == ×ᴳ-fanin (C-is-abelian n _) (φ ∘ᴳ CF-hom n (⊙projl X Y))
-                                    (φ ∘ᴳ CF-hom n (⊙projr X Y))
+                                       (φ ∘ᴳ CF-hom n (⊙projr X Y))
       [ (λ G → G →ᴳ C n Z) ↓ path ]
   Wedge-hom-η φ =
     lemma (C-is-abelian n _) (C-is-abelian n _) inl-over inr-over
@@ -89,10 +95,11 @@ module CWedge (n : ℤ) (X Y : Ptd i) where
   Wedge-in-over : {Z : Ptd i} (f : Z ⊙→ ⊙Wedge X Y)
     → CF-hom n f
       == ×ᴳ-fanin (C-is-abelian n _) (CF-hom n (⊙projl X Y ⊙∘ f))
-                                    (CF-hom n (⊙projr X Y ⊙∘ f))
+                                     (CF-hom n (⊙projr X Y ⊙∘ f))
       [ (λ G → G →ᴳ C n Z) ↓ path ]
   Wedge-in-over f =
     Wedge-hom-η (CF-hom n f)
     ▹ ap2 (×ᴳ-fanin (C-is-abelian n _))
         (! (CF-comp n (⊙projl X Y) f))
         (! (CF-comp n (⊙projr X Y) f))
+-}

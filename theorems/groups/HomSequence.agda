@@ -138,3 +138,46 @@ _↕⟨_⟩ᴳ_ : ∀ {i} {G₀ G₁ H₀ H₁ K₀ K₁ : Group i}
 (ξG , hG-is-equiv) ↕⟨ sqr ⟩ᴳ (seq-map , seq-map-is-equiv) =
   (ξG ↓⟨ sqr ⟩ᴳ seq-map) , hG-is-equiv , seq-map-is-equiv
 -}
+
+private
+  hom-seq-map-index-type : ∀ {i₀ i₁} {G₀ H₀ : Group i₀} {G₁ H₁ : Group i₁}
+    {seq₀ : HomSequence G₀ H₀} {seq₁ : HomSequence G₁ H₁}
+    {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁}
+    → ℕ → HomSeqMap seq₀ seq₁ ξG ξH → Type (lmax i₀ i₁)
+  hom-seq-map-index-type _     (_ ↓|ᴳ) = Lift ⊤
+  hom-seq-map-index-type O     (_↓⟨_⟩ᴳ_ {φ = φ} {ψ = ψ} ξG {ξH} _ _)
+    = CommSquareᴳ φ ψ ξG ξH
+  hom-seq-map-index-type (S n) (_ ↓⟨ _ ⟩ᴳ seq-map)
+    = hom-seq-map-index-type n seq-map
+
+abstract
+  hom-seq-map-index : ∀ {i₀ i₁} {G₀ H₀ : Group i₀} {G₁ H₁ : Group i₁}
+    {seq₀ : HomSequence G₀ H₀} {seq₁ : HomSequence G₁ H₁}
+    {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁}
+    (n : ℕ) (seq-map : HomSeqMap seq₀ seq₁ ξG ξH)
+    → hom-seq-map-index-type n seq-map
+  hom-seq-map-index _     (_ ↓|ᴳ) = lift tt
+  hom-seq-map-index O     (_ ↓⟨ □ ⟩ᴳ _) = □
+  hom-seq-map-index (S n) (_ ↓⟨ _ ⟩ᴳ seq-map)
+    = hom-seq-map-index n seq-map
+
+private
+  hom-seq-equiv-index-type : ∀ {i₀ i₁} {G₀ H₀ : Group i₀} {G₁ H₁ : Group i₁}
+    {seq₀ : HomSequence G₀ H₀} {seq₁ : HomSequence G₁ H₁}
+    {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁}
+    → ℕ → HomSeqMap seq₀ seq₁ ξG ξH → Type (lmax i₀ i₁)
+  hom-seq-equiv-index-type {ξG = ξG} O _ = is-equiv (GroupHom.f ξG)
+  hom-seq-equiv-index-type (S _) (_ ↓|ᴳ) = Lift ⊤
+  hom-seq-equiv-index-type (S n) (_ ↓⟨ _ ⟩ᴳ seq-map)
+    = hom-seq-equiv-index-type n seq-map
+
+abstract
+  hom-seq-equiv-index : ∀ {i₀ i₁} {G₀ H₀ : Group i₀} {G₁ H₁ : Group i₁}
+    {seq₀ : HomSequence G₀ H₀} {seq₁ : HomSequence G₁ H₁}
+    {ξG : G₀ →ᴳ G₁} {ξH : H₀ →ᴳ H₁}
+    (n : ℕ) (seq-equiv : HomSeqEquiv seq₀ seq₁ ξG ξH)
+    → hom-seq-equiv-index-type n (fst seq-equiv)
+  hom-seq-equiv-index O     (seq-map , ise) = is-seqᴳ-equiv-head ise
+  hom-seq-equiv-index (S _) ((_ ↓|ᴳ) , _) = lift tt
+  hom-seq-equiv-index (S n) ((_ ↓⟨ _ ⟩ᴳ seq-map) , ise)
+    = hom-seq-equiv-index n (seq-map , snd ise)

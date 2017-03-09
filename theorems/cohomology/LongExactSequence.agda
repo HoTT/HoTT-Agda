@@ -32,12 +32,12 @@ private
     C-exact (succ n) (⊙cfcod²' f) , C-exact (succ n) (⊙cfcod' f) , C-exact (succ n) f , lift tt
 
   -- An intermediate sequence for proving exactness of [C-cofiber-seq].
-  C-cofiber-seq' = C-seq (succ n) (cofiber-seq f)
+  C-cofiber-seq' = C-seq (succ n) (cyclic-cofiber-seq f)
 
   C-cofiber-seq'-is-exact : is-exact-seq C-cofiber-seq'
   C-cofiber-seq'-is-exact =
-    seq-equiv-preserves-exact
-      (HomSeqEquiv-inverse (C-seq-emap (succ n) (cofiber-seq-equiv f)))
+    seq-equiv-preserves'-exact
+      (C-seq-emap (succ n) (iterated-equiv-cyclic f))
       C-iterated-cofiber-seq-is-exact
 
   -- Now the final sequence
