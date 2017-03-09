@@ -14,7 +14,6 @@ open import lib.types.Cospan public
 open import lib.types.Cover public
 open import lib.types.EilenbergMacLane1 public
 open import lib.types.Empty public
-open import lib.types.FundamentalGroupoid public
 open import lib.types.Group public
 open import lib.types.GroupSet public
 open import lib.types.Groupoid public
