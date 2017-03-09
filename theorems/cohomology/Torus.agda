@@ -39,7 +39,7 @@ C-nTorus (negsucc k) (S n) =
   C (negsucc k) (⊙S¹ ⊙× ⊙Lift (n -⊙Torus))
     ≃ᴳ⟨ C-Sphere× (negsucc k) 1 (⊙Lift (n -⊙Torus)) ⟩
   C (negsucc k) (⊙Lift ⊙S¹) ×ᴳ (C (negsucc k) (⊙Lift (n -⊙Torus)) ×ᴳ C (negsucc k) (⊙Susp (⊙Lift (n -⊙Torus))))
-    ≃ᴳ⟨ ×ᴳ-emap (C-Sphere-≠ (negsucc k) 1 (ℤ-negsucc≠pos _ _)) (idiso _) ⟩
+    ≃ᴳ⟨ ×ᴳ-emap (trivial-iso-0ᴳ (C-Sphere-≠-is-trivial (negsucc k) 1 (ℤ-negsucc≠pos _ _))) (idiso _) ⟩
   0ᴳ ×ᴳ (C (negsucc k) (⊙Lift (n -⊙Torus)) ×ᴳ C (negsucc k) (⊙Susp (⊙Lift (n -⊙Torus))))
     ≃ᴳ⟨ ×ᴳ-unit-l _ ⟩
   C (negsucc k) (⊙Lift (n -⊙Torus)) ×ᴳ C (negsucc k) (⊙Susp (⊙Lift (n -⊙Torus)))
@@ -61,7 +61,7 @@ C-nTorus (pos O) (S n) =
   C 0 (⊙S¹ ⊙× ⊙Lift (n -⊙Torus))
     ≃ᴳ⟨ C-Sphere× 0 1 (⊙Lift (n -⊙Torus)) ⟩
   C 0 (⊙Lift ⊙S¹) ×ᴳ (C 0 (⊙Lift (n -⊙Torus)) ×ᴳ C 0 (⊙Susp (⊙Lift (n -⊙Torus))))
-    ≃ᴳ⟨ ×ᴳ-emap (C-Sphere-≠ 0 1 (pos-≠ (ℕ-O≠S _))) (idiso _) ⟩
+    ≃ᴳ⟨ ×ᴳ-emap (trivial-iso-0ᴳ (C-Sphere-≠-is-trivial 0 1 (pos-≠ (ℕ-O≠S _)))) (idiso _) ⟩
   0ᴳ ×ᴳ (C 0 (⊙Lift (n -⊙Torus)) ×ᴳ C 0 (⊙Susp (⊙Lift (n -⊙Torus))))
     ≃ᴳ⟨ ×ᴳ-unit-l _ ⟩
   C 0 (⊙Lift (n -⊙Torus)) ×ᴳ C 0 (⊙Susp (⊙Lift (n -⊙Torus)))
@@ -99,7 +99,7 @@ C-nTorus (pos (S (S k))) (S n) =
   C (pos (S (S k))) (⊙S¹ ⊙× ⊙Lift (n -⊙Torus))
     ≃ᴳ⟨ C-Sphere× (pos (S (S k))) 1 (⊙Lift (n -⊙Torus)) ⟩
   C (pos (S (S k))) (⊙Lift ⊙S¹) ×ᴳ (C (pos (S (S k))) (⊙Lift (n -⊙Torus)) ×ᴳ C (pos (S (S k))) (⊙Susp (⊙Lift (n -⊙Torus))))
-    ≃ᴳ⟨ ×ᴳ-emap (C-Sphere-≠ (pos (S (S k))) 1 (pos-≠ (ℕ-S-≠ (ℕ-S≠O k)))) (idiso _) ⟩
+    ≃ᴳ⟨ ×ᴳ-emap (trivial-iso-0ᴳ (C-Sphere-≠-is-trivial (pos (S (S k))) 1 (pos-≠ (ℕ-S-≠ (ℕ-S≠O k))))) (idiso _) ⟩
   0ᴳ ×ᴳ (C (pos (S (S k))) (⊙Lift (n -⊙Torus)) ×ᴳ C (pos (S (S k))) (⊙Susp (⊙Lift (n -⊙Torus))))
     ≃ᴳ⟨ ×ᴳ-unit-l _ ⟩
   C (pos (S (S k))) (⊙Lift (n -⊙Torus)) ×ᴳ C (pos (S (S k))) (⊙Susp (⊙Lift (n -⊙Torus)))

@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
-open import groups.ProductRepr
 open import groups.Exactness
 open import homotopy.CofiberSequence
 open import cohomology.Theory
@@ -55,12 +54,13 @@ module cohomology.Wedge {i} (CT : CohomologyTheory i)
         (C-isemap n (⊙idf _) (idf-is-equiv _))
         (C-exact n ⊙winr)
 
-  open ProductRepr
+  import groups.ProductRepr
     (C-fmap n (⊙projl X Y)) (C-fmap n (⊙projr X Y))
     (C-fmap n ⊙winl) (C-fmap n ⊙winr) βl βr
     C-projl-C-winr-is-exact
-    C-projr-C-winl-is-exact
-    public
+    C-projr-C-winl-is-exact as PR
+
+  C-Wedge = PR.iso
 
 {-
   ⊙Wedge-rec-over : {Z : Ptd i} (winl* : X ⊙→ Z) (winr* : Y ⊙→ Z)

@@ -6,15 +6,13 @@ open import homotopy.SuspSmash
 open import homotopy.JoinSusp
 open import cohomology.Theory
 
-module cohomology.SphereProduct {i} (CT : CohomologyTheory i) where
+module cohomology.SphereProduct {i} (CT : CohomologyTheory i)
+  (n : ℤ) (m : ℕ) (X : Ptd i) where
 
-open CohomologyTheory CT
-open import cohomology.Wedge CT
-
-module _ (n : ℤ) (m : ℕ) (X : Ptd i) where
+  open CohomologyTheory CT
+  open import cohomology.Wedge CT
 
   private
-
     space-eq : ⊙Susp (⊙Sphere m ⊙× X)
             ⊙≃ ⊙Sphere (S m) ⊙∨ (⊙Susp X ⊙∨ ⊙Susp^ (S m) X)
     space-eq =
@@ -33,10 +31,10 @@ module _ (n : ℤ) (m : ℕ) (X : Ptd i) where
     C (succ n) (⊙Sphere (S m) ⊙∨ (⊙Susp X ⊙∨ ⊙Susp^ (S m) X))
       ≃ᴳ⟨ C-emap (succ n) (⊙∨-emap (⊙Susp-emap (⊙lower-equiv {X = ⊙Sphere m})) (⊙ide _)) ⟩
     C (succ n) (⊙Susp (⊙Lift {j = i} (⊙Sphere m)) ⊙∨ (⊙Susp X ⊙∨ ⊙Susp^ (S m) X))
-      ≃ᴳ⟨ CWedge.iso (succ n) (⊙Susp (⊙Lift (⊙Sphere m))) (⊙Susp X ⊙∨ ⊙Susp^ (S m) X) ⟩
+      ≃ᴳ⟨ C-Wedge (succ n) (⊙Susp (⊙Lift (⊙Sphere m))) (⊙Susp X ⊙∨ ⊙Susp^ (S m) X) ⟩
     C (succ n) (⊙Susp (⊙Lift (⊙Sphere m))) ×ᴳ C (succ n) (⊙Susp X ⊙∨ ⊙Susp^ (S m) X)
       ≃ᴳ⟨ ×ᴳ-emap (C-Susp n (⊙Lift (⊙Sphere m)))
               ( ×ᴳ-emap (C-Susp n X) (C-Susp n (⊙Susp^ m X))
-            ∘eᴳ CWedge.iso (succ n) (⊙Susp X) (⊙Susp^ (S m) X)) ⟩
+            ∘eᴳ C-Wedge (succ n) (⊙Susp X) (⊙Susp^ (S m) X)) ⟩
     C n (⊙Lift (⊙Sphere m)) ×ᴳ (C n X ×ᴳ C n (⊙Susp^ m X))
       ≃ᴳ∎

@@ -58,8 +58,8 @@ private
     select-χ-is-idf : ∀ s → CEl-fmap n ⊙select (GroupHom.f χ s) == s
     select-χ-is-idf = CEl-fmap-inverse n ⊙select (⊙fstᵈ Y) λ _ → idp
 
-iso : C n (⊙Σ X Y) ≃ᴳ C n (⊙BigWedge Y) ×ᴳ C n X
-iso = Exact.φ-inj-and-ψ-has-rinv-split
+C-Σ : C n (⊙Σ X Y) ≃ᴳ C n (⊙BigWedge Y) ×ᴳ C n X
+C-Σ = Exact.φ-inj-and-ψ-has-rinv-split
   (C-exact n ⊙select) (C-is-abelian n _)
   (Exact.φ-const-implies-ψ-is-inj cst-C-Σbwin-is-exact (λ _ → idp))
   χ select-χ-is-idf

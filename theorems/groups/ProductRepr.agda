@@ -2,28 +2,25 @@
 
 open import HoTT
 
-module groups.ProductRepr where
-
-{- Given the following commutative diagram of homomorphisms,
-
-       H₁  i₁  i₂  H₂
-          ↘     ↙
-    id ↓     G     ↓ id
-           ↙   ↘
-       H₁ j₁   j₂  H₂
-
- - assuming i₁,j₂ and i₂,j₁ are exact sequences,
- - there exists an isomorphism G == H₁ × H₂ such that i₁,i₂ correspond
- - to the natural injections and j₁,j₂ correspond to the natural
- - projections. -}
-
-module ProductRepr {i j}
+module groups.ProductRepr {i j}
   {G : Group (lmax i j)} {H₁ : Group i} {H₂ : Group j}
   (i₁ : H₁ →ᴳ G) (i₂ : H₂ →ᴳ G) (j₁ : G →ᴳ H₁) (j₂ : G →ᴳ H₂)
   (p₁ : ∀ h₁ → GroupHom.f j₁ (GroupHom.f i₁ h₁) == h₁)
   (p₂ : ∀ h₂ → GroupHom.f j₂ (GroupHom.f i₂ h₂) == h₂)
-  (ex₁ : is-exact i₁ j₂) (ex₂ : is-exact i₂ j₁)
-  where
+  (ex₁ : is-exact i₁ j₂) (ex₂ : is-exact i₂ j₁) where
+
+  {- Given the following commutative diagram of homomorphisms,
+
+         H₁  i₁  i₂  H₂
+            ↘     ↙
+      id ↓     G     ↓ id
+             ↙   ↘
+         H₁ j₁   j₂  H₂
+
+   - assuming i₁,j₂ and i₂,j₁ are exact sequences,
+   - there exists an isomorphism G == H₁ × H₂ such that i₁,i₂ correspond
+   - to the natural injections and j₁,j₂ correspond to the natural
+   - projections. -}
 
   private
     module G = Group G

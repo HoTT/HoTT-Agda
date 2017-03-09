@@ -23,12 +23,10 @@ import homotopy.HopfJunior
 import homotopy.Hopf
 
 {- cohomology -}
-import cohomology.Unit
 import cohomology.EMModel
 import cohomology.Sigma
 import cohomology.Coproduct
-import cohomology.Wedge
--- import cohomology.Torus -- FIXME
+import cohomology.Torus
 -- import cohomology.MayerVietorisExact -- FIXME
 
 {- prop * prop is still a prop -}
