@@ -23,7 +23,9 @@ open import cw.Attached public
   [Skeleton] as a data type: No η. ([Skeleton (S n)] does not expand.)
   [Skeleton] as a recursive record type: No η.
   [Skeleton] as a recursive fuction giving recursive Σ types:
-    need to specify [n] in many places.
+    the current Agda sees that [Skeleton 0] and [Skeleton (S n)]
+    have the same head symbol [Σ] and will not invert [Skeleton]
+    during unification.
 
   The following is combines a recursive funcition and a non-recursive
   record type which should strike a good balance.
