@@ -22,7 +22,7 @@ open import cw.Attached public
 
   [Skeleton] as a data type: No η. ([Skeleton (S n)] does not expand.)
   [Skeleton] as a recursive record type: No η.
-  [Skeleton] as a recursive function: [n] is not inferable from terms.
+  [Skeleton] as a recursive Σ type: need to specify [n] in many places.
 
   The following is combines a recursive funcition and a non-recursive
   record type which should strike a good balance.
