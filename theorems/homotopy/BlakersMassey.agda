@@ -19,26 +19,28 @@ module homotopy.BlakersMassey {i j k}
     -- This requires a pushout-rec
 
     -- "extended" version
-    code-bmleft' : ∀ a₁ {p} (r' : bmleft a₁ == p) → bmleft a₀ == p → Type (lmax i (lmax j k))
-    code-bmleft' a₁ r' r = Trunc (m +2+ n) (hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' r') r)
+    code-bmleft-template : ∀ a₁ {p} (r' : bmleft a₁ == p) → bmleft a₀ == p → Type (lmax i (lmax j k))
+    code-bmleft-template a₁ r' r = Trunc (m +2+ n) (hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' r') r)
 
     code-bmleft : ∀ a₁ → bmleft a₀ == bmleft a₁ → Type (lmax i (lmax j k))
-    code-bmleft a₁ = code-bmleft' a₁ idp
+    code-bmleft a₁ = code-bmleft-template a₁ idp
 
     code-bmright : ∀ b₁ → bmleft a₀ == bmright b₁ → Type (lmax i (lmax j k))
     code-bmright b₁ r = Trunc (m +2+ n) (hfiber bmglue r)
 
     -- The template from [Coh.eqv] to the input for [apd code glue]
     -- for using the identification elimination.
-    code-bmglue-template : ∀ {a₁ p} (code : (r : _ == p) → Type _) (r : _ == p)
-      → (∀ r' → code-bmleft' a₁ r r' ≃ code r')
-      → code-bmleft' a₁ idp == code [ (λ p → _ == p → Type _) ↓ r ]
-    code-bmglue-template _ idp lemma = λ= $ ua ∘ lemma
+    code-bmglue-template : ∀ {a₁ p}
+      → (code : (r : bmleft a₀ == p) → Type (lmax i (lmax j k)))
+      → (r : bmleft a₁ == p)
+      → (∀ r' → code-bmleft-template a₁ r r' ≃ code r')
+      → code-bmleft-template a₁ idp == code [ (λ p → bmleft a₀ == p → Type (lmax i (lmax j k))) ↓ r ]
+    code-bmglue-template _ idp lemma = λ= (ua ∘ lemma)
 
     -- The real glue, that is, the template with actual equivalence.
     code-bmglue : ∀ {a₁ b₁} (q₁₁ : Q a₁ b₁)
       → code-bmleft a₁ == code-bmright b₁
-        [ (λ p → bmleft a₀ == p → Type _) ↓ bmglue q₁₁ ]
+        [ (λ p → bmleft a₀ == p → Type (lmax i (lmax j k))) ↓ bmglue q₁₁ ]
     code-bmglue {a₁} {b₁} q₁₁ =
       code-bmglue-template (code-bmright b₁) (bmglue q₁₁) (Coh.eqv q₀₀ q₁₁)
 
@@ -53,53 +55,59 @@ module homotopy.BlakersMassey {i j k}
 
     -- The center for [idp].  We will use transport to find the center
     -- in other fibers.
-    code-center-idp : code _ idp
+    code-center-idp : code (bmleft a₀) idp
     code-center-idp = [ q₀₀ , !-inv'-r (bmglue q₀₀) ]
 
     -- The following is the breakdown of the path for coercing:
-    --   (ap (λ pr → f (fst pr) (snd pr)) (pair= r (↓-cst=idf-in' r)))
+    --   [ap2 code r (↓-cst=idf-in' r)]
     -- We will need the broken-down version anyway,
     -- so why not breaking them down from the very beginning?
 
     -- The template here, again, is to keep the possibility
     -- of plugging in [idp] for [r].
     coerce-path-template : ∀ {p} r
-      → code-bmleft _ == code p [ (λ p → _ == p → Type _) ↓ r ]
-      → code-bmleft _ idp == code p r
+      → code-bmleft a₀ == code p [ (λ p → bmleft a₀ == p → Type (lmax i (lmax j k))) ↓ r ]
+      → code-bmleft a₀ idp == code p r
     coerce-path-template idp lemma = app= lemma idp
 
     -- The real path.
-    coerce-path : ∀ {p} r → code _ idp == code p r
+    coerce-path : ∀ {p} r → code (bmleft a₀) idp == code p r
     coerce-path r = coerce-path-template r (apd code r)
 
-    code-bmleft'-diag : ∀ {p} (r : _ == p)
-      → code-bmleft _ idp → code-bmleft' _ r r
-    code-bmleft'-diag r = Trunc-rec Trunc-level
-      (λ {(q₀₀' , shift) →
-        [ q₀₀' , ! (∙'-assoc (bmglue q₀₀) (! (bmglue q₀₀')) r) ∙ ap (_∙' r) shift ∙' ∙'-unit-l r ]})
+    -- Find the center in other fibers.
+    code-center : ∀ {p} r → code p r
+    code-center r = coe (coerce-path r) code-center-idp
+
+    -- Part of the decomposed [coe (coerce-path r)]
+    code-bmleft-template-diag : ∀ {p} (r : bmleft a₀ == p)
+      → code-bmleft a₀ idp → code-bmleft-template a₀ r r
+    code-bmleft-template-diag r = Trunc-rec Trunc-level
+      λ {(q₀₀' , shift) →
+        [ q₀₀' , ! (∙'-assoc (bmglue q₀₀) (! (bmglue q₀₀')) r) ∙ ap (_∙' r) shift ∙' ∙'-unit-l r ]}
 
     abstract
-      code-bmleft'-diag-idp : ∀ x → code-bmleft'-diag idp x == x
-      code-bmleft'-diag-idp =
+      code-bmleft-template-diag-idp : ∀ x → code-bmleft-template-diag idp x == x
+      code-bmleft-template-diag-idp =
         Trunc-elim (λ _ → =-preserves-level Trunc-level)
-          (λ {(q₁₀ , shift) → ap (λ p → [ q₁₀ , p ]) $ ap-idf shift})
+          λ{(q₁₀ , shift) → ap (λ p → [ q₁₀ , p ]) (ap-idf shift)}
 
     -- Here shows the use of two templates.  It will be super painful
     -- if we cannot throw in [idp].  Now we only have to deal with
     -- simple computations.
     abstract
-      coe-coerce-path-code-bmglue-template : ∀ {p} (r : _ == p)
-        (lemma : ∀ r' → code-bmleft' _ r r' ≃ code p r') x
+      coe-coerce-path-code-bmglue-template : ∀ {p} (r : bmleft a₀ == p)
+        (lemma : ∀ r' → code-bmleft-template a₀ r r' ≃ code p r')
+        (x : code-bmleft a₀ idp)
         → coe (coerce-path-template r (code-bmglue-template (code p) r lemma)) x
-        == –> (lemma r) (code-bmleft'-diag r x)
+        == –> (lemma r) (code-bmleft-template-diag r x)
       coe-coerce-path-code-bmglue-template idp lemma x =
-        coe (app= (λ= $ ua ∘ lemma) idp) x
-          =⟨ ap (λ p → coe p x) $ app=-β (ua ∘ lemma) idp ⟩
+        coe (app= (λ= (ua ∘ lemma)) idp) x
+          =⟨ ap (λ p → coe p x) (app=-β (ua ∘ lemma) idp) ⟩
         coe (ua (lemma idp)) x
           =⟨ coe-β (lemma idp) x ⟩
         –> (lemma idp) x
-          =⟨ ! $ ap (–> (lemma idp)) (code-bmleft'-diag-idp x) ⟩
-        –> (lemma idp) (code-bmleft'-diag idp x)
+          =⟨ ! (ap (–> (lemma idp)) (code-bmleft-template-diag-idp x)) ⟩
+        –> (lemma idp) (code-bmleft-template-diag idp x)
           =∎
 
     -- Here is the actually lemma we want!
@@ -107,18 +115,14 @@ module homotopy.BlakersMassey {i j k}
     abstract
       coe-coerce-path-code-bmglue : ∀ {b₁} (q₀₁ : Q a₀ b₁) x
         → coe (coerce-path (bmglue q₀₁)) x
-        == Coh.to q₀₀ q₀₁ (bmglue q₀₁) (code-bmleft'-diag (bmglue q₀₁) x)
+        == Coh.to q₀₀ q₀₁ (bmglue q₀₁) (code-bmleft-template-diag (bmglue q₀₁) x)
       coe-coerce-path-code-bmglue q₀₁ x =
         coe (coerce-path-template (bmglue q₀₁) (apd code (bmglue q₀₁))) x
-          =⟨ ap (λ p → coe (coerce-path-template (bmglue q₀₁) p) x) $ Code.glue-β q₀₁ ⟩
+          =⟨ ap (λ p → coe (coerce-path-template (bmglue q₀₁) p) x) (Code.glue-β q₀₁) ⟩
         coe (coerce-path-template (bmglue q₀₁) (code-bmglue q₀₁)) x
           =⟨ coe-coerce-path-code-bmglue-template (bmglue q₀₁) (Coh.eqv q₀₀ q₀₁) x ⟩
-        Coh.to q₀₀ q₀₁ (bmglue q₀₁) (code-bmleft'-diag (bmglue q₀₁) x)
+        Coh.to q₀₀ q₀₁ (bmglue q₀₁) (code-bmleft-template-diag (bmglue q₀₁) x)
           =∎
-
-    -- Find the center in other fibers.
-    code-center : ∀ {p} r → code p r
-    code-center r = coe (coerce-path r) code-center-idp
 
     -- This is the only case you care for contractibiltiy.
     abstract
@@ -137,28 +141,28 @@ module homotopy.BlakersMassey {i j k}
         where
           path = Coh.βPair.path (Coh.βpair-bmright q₀₀ q₀₁ (bmglue q₀₁))
 
-          -- this is defined to be the path generated by [code-bmleft'-diag]
+          -- this is defined to be the path generated by [code-bmleft-template-diag]
           α₁α₁⁻¹α₂=α₂ : ∀ {p₁ p₂ p₃ : BMPushout} (α₁ : p₁ == p₂) (α₂ : p₁ == p₃)
             → α₁ ∙' ! α₁ ∙' α₂ == α₂
           α₁α₁⁻¹α₂=α₂ α₁ α₂ = ! (∙'-assoc α₁ (! α₁) α₂) ∙ ap (_∙' α₂) (!-inv'-r α₁) ∙' ∙'-unit-l α₂
 
-          -- the relation of this path and the one in CoherenceData.
+          -- the relation of this path and the one from CoherenceData
           path-lemma : ∀ {p₁ p₂ p₃ : BMPushout} (α₁ : p₁ == p₂) (α₂ : p₁ == p₃)
             → α₁α₁⁻¹α₂=α₂ α₁ α₂ == ! (Coh.α₁=α₂α₂⁻¹α₁ α₂ α₁)
           path-lemma idp idp = idp
 
     -- Make [r] free to apply identification elimination.
-    code-coh : ∀ {b₁} (r : _ == bmright b₁) (s : hfiber bmglue r) → code-center r == [ s ]
+    code-coh : ∀ {b₁} (r : bmleft a₀ == bmright b₁) (s : hfiber bmglue r) → code-center r == [ s ]
     code-coh ._ (q₀₁ , idp) = code-coh-lemma q₀₁
 
     -- Finish the lemma.
-    code-contr : ∀ {b₁} (r : _ == bmright b₁) → is-contr (Trunc (m +2+ n) (hfiber bmglue r))
+    code-contr : ∀ {b₁} (r : bmleft a₀ == bmright b₁) → is-contr (Trunc (m +2+ n) (hfiber bmglue r))
     code-contr r = code-center r , Trunc-elim
       (λ _ → =-preserves-level Trunc-level) (code-coh r)
 
   -- The final theorem.
   -- It is sufficient to find some [q₀₀].
-  blakers-massey : ∀ {a₀ b₀} (r : bmleft a₀ == bmright b₀) → is-connected (m +2+ n) (hfiber bmglue r)
+  blakers-massey : ∀ {a₀ b₀} → has-conn-fibers (m +2+ n) (bmglue {a₀} {b₀})
   blakers-massey {a₀} r = Trunc-rec
     (prop-has-level-S is-connected-is-prop)
     (λ{(_ , q₀₀) → code-contr q₀₀ r})

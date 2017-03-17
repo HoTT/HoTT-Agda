@@ -101,7 +101,7 @@ module StrongFunextDep {j} {P : A → Type j} where
 
   open FunextDep
 
-  app= : ∀ {j} {P : A → Type j} {f g : Π A P} (p : f == g)
+  app= : ∀ {f g : Π A P} (p : f == g)
     → ((x : A) → f x == g x)
   app= p x = ap (λ u → u x) p
 
