@@ -188,9 +188,9 @@ module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
           ∎)
 
   -- Finally...
-  grpset-to-cover-equiv : ∀ {j}
+  grpset-equiv-cover : ∀ {j}
     → GroupSet (πS 0 X) (lmax i j) ≃ Cover A (lmax i j)
-  grpset-to-cover-equiv {j} =
+  grpset-equiv-cover {j} =
     grpset-to-cover , is-eq
       _
       (λ c → cover-to-grpset c)
@@ -198,7 +198,7 @@ module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
       (grpset-to-cover-to-grpset {lmax i j})
 
   -- The path-set cover is represented by the fundamental group itself
-  path-set-is-repr-by-π1 : cover-to-grpset (path-set-cover X)
+  path-set-repr-by-π1 : cover-to-grpset (path-set-cover X)
     == group-to-group-set (πS 0 X)
-  path-set-is-repr-by-π1 = groupset= (ide _)
+  path-set-repr-by-π1 = groupset= (ide _)
     (λ {x₁} p g → (transp₀-cst=₀idf g x₁ ∙ ∙₀'=∙₀ x₁ g) ∙' ap (_∙₀ g) p)
