@@ -242,14 +242,14 @@ module _ (dec : has-dec-eq A) where
         (λ _ → prop-has-all-paths-↓ (→-is-prop $ FormalSum-is-set _ _)))
       (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → →-is-prop $ FormalSum-is-set _ _))
 
-  has-finite-supports : (A → ℤ) → Type i
-  has-finite-supports f = Σ (FormalSum A) λ fs → ∀ a → f a == FormalSum-coef fs a
+  has-finite-support : (A → ℤ) → Type i
+  has-finite-support f = Σ (FormalSum A) λ fs → ∀ a → f a == FormalSum-coef fs a
 
 module _ {dec : has-dec-eq A} where
 
   abstract
-    has-finite-supports-is-prop : ∀ f → is-prop (has-finite-supports dec f)
-    has-finite-supports-is-prop f = all-paths-is-prop
+    has-finite-support-is-prop : ∀ f → is-prop (has-finite-support dec f)
+    has-finite-support-is-prop f = all-paths-is-prop
       λ{(fs₁ , match₁) (fs₂ , match₂) → pair=
         (FormalSum-coef-ext dec fs₁ fs₂ λ a → ! (match₁ a) ∙ match₂ a)
         (prop-has-all-paths-↓ $ Π-is-prop λ _ → ℤ-is-set _ _)}

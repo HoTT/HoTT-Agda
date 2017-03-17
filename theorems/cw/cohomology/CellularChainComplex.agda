@@ -14,7 +14,7 @@ module cw.cohomology.CellularChainComplex {i : ULevel} where
 
   abstract
     boundary-nth-template : ∀ {n} (skel : Skeleton {i} n) dec
-      → has-degrees-with-finite-supports skel dec
+      → has-degrees-with-finite-support skel dec
       → {m : ℕ} (m≤n : m ≤ n) (Sm≤n : S m ≤ n)
       → cw-init (cw-take Sm≤n skel) == cw-take (≤-trans lteS Sm≤n) skel
       → cw-take (≤-trans lteS Sm≤n) skel == cw-take m≤n skel
@@ -26,7 +26,7 @@ module cw.cohomology.CellularChainComplex {i : ULevel} where
            (boundary'-nth Sm≤n skel dec fin-sup)
 
   boundary-template : ∀ {n} (skel : Skeleton {i} n) dec
-    → has-degrees-with-finite-supports skel dec
+    → has-degrees-with-finite-support skel dec
     → {m : ℕ} (m≤n? : Dec (m ≤ n)) (Sm≤n? : Dec (S m ≤ n))
     →  AbGroup.grp (chain-template skel Sm≤n?)
     →ᴳ AbGroup.grp (chain-template skel m≤n?)
@@ -37,7 +37,7 @@ module cw.cohomology.CellularChainComplex {i : ULevel} where
       (ap (λ m≤n → cw-take m≤n skel) (≤-has-all-paths (≤-trans lteS Sm≤n) m≤n))
 
   chain-complex : ∀ {n} (skel : Skeleton {i} n) dec
-    → has-degrees-with-finite-supports skel dec
+    → has-degrees-with-finite-support skel dec
     → ChainComplex i
   chain-complex {n} skel dec fin-sup = record {M} where
     module M where
@@ -54,7 +54,7 @@ module cw.cohomology.CellularChainComplex {i : ULevel} where
       boundary m = boundary-template skel dec fin-sup (≤-dec m n) (≤-dec (S m) n)
 
   cochain-complex : ∀ {j} {n} (skel : Skeleton {i} n) dec
-    → has-degrees-with-finite-supports skel dec
+    → has-degrees-with-finite-support skel dec
     → AbGroup j → CochainComplex (lmax i j)
   cochain-complex skel dec fin-sup G = complex-dualize
     (chain-complex skel dec fin-sup) G
@@ -102,7 +102,7 @@ module cw.cohomology.CellularChainComplex {i : ULevel} where
       → boundary-template {n = S n} skel dec fin-sup {m} (inl (lteSR (inr m<n))) (inl (lteSR (inr Sm<n)))
         == boundary-template {n = n} (cw-init skel)
           (init-has-cells-with-dec-eq skel dec)
-          (init-has-degrees-with-finite-supports skel dec fin-sup)
+          (init-has-degrees-with-finite-support skel dec fin-sup)
           (inl (inr m<n)) (inl (inr Sm<n))
     boundary-template-descend-from-far skel dec fin-sup m<n Sm<n =
       ap (boundary-nth-template skel dec fin-sup (lteSR (inr m<n)) (lteSR (inr Sm<n)) (cw-init-take (lteSR (inr Sm<n)) skel))
@@ -112,7 +112,7 @@ module cw.cohomology.CellularChainComplex {i : ULevel} where
       → boundary-template {n = S (S n)} skel dec fin-sup (inl (lteSR lteS)) (inl lteS)
         == boundary-template {n = (S n)} (cw-init skel)
           (init-has-cells-with-dec-eq skel dec)
-          (init-has-degrees-with-finite-supports skel dec fin-sup)
+          (init-has-degrees-with-finite-support skel dec fin-sup)
           (inl lteS) (inl lteE)
     boundary-template-descend-from-two-above skel dec fin-sup =
       ap (boundary-nth-template skel dec fin-sup (lteSR lteS) lteS idp) (path-lemma₁ skel)

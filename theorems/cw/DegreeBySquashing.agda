@@ -80,59 +80,59 @@ module cw.DegreeBySquashing {i} where
     → cells-nth Sm≤n skel → cells-last (cw-init (cw-take Sm≤n skel)) → ℤ
   degree-nth Sm≤n skel dec = degree-last (cw-take Sm≤n skel) (take-has-cells-with-dec-eq Sm≤n skel dec)
 
-  has-degrees-with-finite-supports : ∀ {n} (skel : Skeleton {i} n)
+  has-degrees-with-finite-support : ∀ {n} (skel : Skeleton {i} n)
     → has-cells-with-dec-eq skel → Type i
-  has-degrees-with-finite-supports {n = O} _ _ = Lift ⊤
-  has-degrees-with-finite-supports {n = S n} skel dec =
-    has-degrees-with-finite-supports (cw-init skel) (init-has-cells-with-dec-eq skel dec) ×
-    ∀ upper → has-finite-supports (cells-nth-has-dec-eq (inr ltS) skel dec) (degree-last skel dec upper)
+  has-degrees-with-finite-support {n = O} _ _ = Lift ⊤
+  has-degrees-with-finite-support {n = S n} skel dec =
+    has-degrees-with-finite-support (cw-init skel) (init-has-cells-with-dec-eq skel dec) ×
+    ∀ upper → has-finite-support (cells-nth-has-dec-eq (inr ltS) skel dec) (degree-last skel dec upper)
 
-  init-has-degrees-with-finite-supports : ∀ {n} (skel : Skeleton {i} (S n)) dec
-    → has-degrees-with-finite-supports skel dec
-    → has-degrees-with-finite-supports (cw-init skel) (init-has-cells-with-dec-eq skel dec)
-  init-has-degrees-with-finite-supports skel dec fin-sup = fst fin-sup
+  init-has-degrees-with-finite-support : ∀ {n} (skel : Skeleton {i} (S n)) dec
+    → has-degrees-with-finite-support skel dec
+    → has-degrees-with-finite-support (cw-init skel) (init-has-cells-with-dec-eq skel dec)
+  init-has-degrees-with-finite-support skel dec fin-sup = fst fin-sup
 
-  take-has-degrees-with-finite-supports : ∀ {m n} (m≤n : m ≤ n) (skel : Skeleton {i} n) dec
-    → has-degrees-with-finite-supports skel dec
-    → has-degrees-with-finite-supports (cw-take m≤n skel) (take-has-cells-with-dec-eq m≤n skel dec)
-  take-has-degrees-with-finite-supports (inl idp) skel dec fin-sup = fin-sup
-  take-has-degrees-with-finite-supports (inr ltS) skel dec fin-sup =
-    init-has-degrees-with-finite-supports skel dec fin-sup
-  take-has-degrees-with-finite-supports (inr (ltSR lt)) skel dec fin-sup =
-    take-has-degrees-with-finite-supports (inr lt) (cw-init skel)
+  take-has-degrees-with-finite-support : ∀ {m n} (m≤n : m ≤ n) (skel : Skeleton {i} n) dec
+    → has-degrees-with-finite-support skel dec
+    → has-degrees-with-finite-support (cw-take m≤n skel) (take-has-cells-with-dec-eq m≤n skel dec)
+  take-has-degrees-with-finite-support (inl idp) skel dec fin-sup = fin-sup
+  take-has-degrees-with-finite-support (inr ltS) skel dec fin-sup =
+    init-has-degrees-with-finite-support skel dec fin-sup
+  take-has-degrees-with-finite-support (inr (ltSR lt)) skel dec fin-sup =
+    take-has-degrees-with-finite-support (inr lt) (cw-init skel)
       (init-has-cells-with-dec-eq skel dec)
-      (init-has-degrees-with-finite-supports skel dec fin-sup)
+      (init-has-degrees-with-finite-support skel dec fin-sup)
 
-  degree-last-has-finite-supports : ∀ {n} (skel : Skeleton {i} (S n)) dec
-    → has-degrees-with-finite-supports skel dec
-    → ∀ upper → has-finite-supports
+  degree-last-has-finite-support : ∀ {n} (skel : Skeleton {i} (S n)) dec
+    → has-degrees-with-finite-support skel dec
+    → ∀ upper → has-finite-support
         (cells-last-has-dec-eq (cw-init skel) (init-has-cells-with-dec-eq skel dec))
         (degree-last skel dec upper)
-  degree-last-has-finite-supports skel dec fin-supp = snd fin-supp
+  degree-last-has-finite-support skel dec fin-sup = snd fin-sup
 
-  degree-nth-has-finite-supports : ∀ {m n} (Sm≤n : S m ≤ n) (skel : Skeleton {i} n) dec
-    → has-degrees-with-finite-supports skel dec
-    → ∀ upper → has-finite-supports
+  degree-nth-has-finite-support : ∀ {m n} (Sm≤n : S m ≤ n) (skel : Skeleton {i} n) dec
+    → has-degrees-with-finite-support skel dec
+    → ∀ upper → has-finite-support
         (cells-last-has-dec-eq
           (cw-init (cw-take Sm≤n skel))
           (init-has-cells-with-dec-eq (cw-take Sm≤n skel) (take-has-cells-with-dec-eq Sm≤n skel dec)))
         (degree-nth Sm≤n skel dec upper)
-  degree-nth-has-finite-supports Sm≤n skel dec fin-supp =
-    degree-last-has-finite-supports (cw-take Sm≤n skel)
+  degree-nth-has-finite-support Sm≤n skel dec fin-sup =
+    degree-last-has-finite-support (cw-take Sm≤n skel)
       (take-has-cells-with-dec-eq Sm≤n skel dec)
-      (take-has-degrees-with-finite-supports Sm≤n skel dec fin-supp)
+      (take-has-degrees-with-finite-support Sm≤n skel dec fin-sup)
 
   -- the following are named [boundary'] because it is not extended to the free groups
 
   boundary'-last : ∀ {n} (skel : Skeleton {i} (S n)) dec
-    → has-degrees-with-finite-supports skel dec
+    → has-degrees-with-finite-support skel dec
     → cells-last skel → FreeAbGroup.El (cells-last (cw-init skel))
-  boundary'-last skel dec fin-supp upper = fst ((snd fin-supp) upper)
+  boundary'-last skel dec fin-sup upper = fst ((snd fin-sup) upper)
 
   boundary'-nth : ∀ {m n} (Sm≤n : S m ≤ n) (skel : Skeleton {i} n) dec
-    → has-degrees-with-finite-supports skel dec
+    → has-degrees-with-finite-support skel dec
     → cells-nth Sm≤n skel → FreeAbGroup.El (cells-last (cw-init (cw-take Sm≤n skel)))
-  boundary'-nth Sm≤n skel dec fin-supp =
+  boundary'-nth Sm≤n skel dec fin-sup =
     boundary'-last (cw-take Sm≤n skel)
       (take-has-cells-with-dec-eq Sm≤n skel dec)
-      (take-has-degrees-with-finite-supports Sm≤n skel dec fin-supp)
+      (take-has-degrees-with-finite-support Sm≤n skel dec fin-sup)
