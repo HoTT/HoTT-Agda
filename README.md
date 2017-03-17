@@ -12,15 +12,16 @@ Setup
 -----
 
 The code is loosely broken into `core` and `theorems` Agda libraries.
-You need to include at least the path to `core.agda-lib` in your library list.
+You need Agda 2.5.2 or newer
+and include at least the path to `core.agda-lib` in your Agda library list.
 See `CHANGELOG` of Agda 2.5 for more information.
 
 Agda Options
 ------------
 
-Each Agda file should have `--without-K --rewriting` in the header.
+Each Agda file should have `--without-K --rewriting` in its header.
 `--without-K` is to restrict pattern matching so that the uniqueness of identity proofs is not admissible,
-and `--rewriting` is for the computational rules of the points in higher inductive types.
+and `--rewriting` is for the computational rules of the higher inductive types.
 
 Style and naming conventions
 ----------------------------
