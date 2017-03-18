@@ -18,7 +18,7 @@ abstract
     CEl-fmap n (⊙cst {X = ⊙LU} ⊙∘ ⊙cst {X = X}) y
       =⟨ CEl-fmap-∘ n ⊙cst ⊙cst y ⟩
     CEl-fmap n (⊙cst {X = X}) (CEl-fmap n (⊙cst {X = ⊙LU}) y)
-      =⟨ contr-has-all-paths (C-Unit-is-contr n) _ _
+      =⟨ C-Unit n (CEl-fmap n (⊙cst {X = ⊙LU}) y)
          |in-ctx CEl-fmap n (⊙cst {X = X} {Y = ⊙LU}) ⟩
     CEl-fmap n (⊙cst {X = X}) (Cident n ⊙LU)
       =⟨ GroupHom.pres-ident (C-fmap n (⊙cst {X = X} {Y = ⊙LU})) ⟩

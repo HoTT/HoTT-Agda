@@ -31,7 +31,7 @@ O -⊙Torus = ⊙Unit
 C-nTorus : (k : ℤ) (n : ℕ)
   → C k (⊙Lift (n -⊙Torus)) ≃ᴳ C 0 (⊙Lift ⊙S⁰) ^ᴳ (n choose' k)
 
-C-nTorus (negsucc k) O = lift-iso ∘eᴳ C-Unit (negsucc k)
+C-nTorus (negsucc k) O = lift-iso ∘eᴳ trivial-iso-0ᴳ (C-Unit (negsucc k))
 
 C-nTorus (negsucc k) (S n) =
   C (negsucc k) (⊙Lift (S n -⊙Torus))
@@ -53,7 +53,7 @@ C-nTorus (negsucc k) (S n) =
 
 
 
-C-nTorus (pos O) O = lift-iso ∘eᴳ C-Unit 0
+C-nTorus (pos O) O = lift-iso ∘eᴳ trivial-iso-0ᴳ (C-Unit 0)
 
 C-nTorus (pos O) (S n) =
   C 0 (⊙Lift (S n -⊙Torus))
@@ -73,7 +73,7 @@ C-nTorus (pos O) (S n) =
   Lift-group 0ᴳ
     ≃ᴳ∎
 
-C-nTorus (pos (S O)) O = lift-iso ∘eᴳ C-Unit 1
+C-nTorus (pos (S O)) O = lift-iso ∘eᴳ trivial-iso-0ᴳ (C-Unit 1)
 
 C-nTorus (pos (S O)) (S n) =
   C 1 (⊙Lift (S n -⊙Torus))
@@ -91,7 +91,7 @@ C-nTorus (pos (S O)) (S n) =
   C 0 (⊙Lift ⊙S⁰) ×ᴳ (C 0 (⊙Lift ⊙S⁰) ^ᴳ n)
     ≃ᴳ∎
 
-C-nTorus (pos (S (S k))) O = lift-iso ∘eᴳ C-Unit (pos (S (S k)))
+C-nTorus (pos (S (S k))) O = lift-iso ∘eᴳ trivial-iso-0ᴳ (C-Unit (pos (S (S k))))
 
 C-nTorus (pos (S (S k))) (S n) =
   C (pos (S (S k))) (⊙Lift (S n -⊙Torus))
