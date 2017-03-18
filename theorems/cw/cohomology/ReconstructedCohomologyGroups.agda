@@ -16,14 +16,14 @@ module cw.cohomology.ReconstructedCohomologyGroups {i : ULevel} (OT : OrdinaryTh
   open import cw.cohomology.ReconstructedHigherCohomologyGroups OT
 
   abstract
-    reconstructed-group : ∀ m {n} (⊙skel : ⊙Skeleton {i} n)
+    reconstructed-cohomology-group : ∀ m {n} (⊙skel : ⊙Skeleton {i} n)
       → ⊙has-cells-with-choice 0 ⊙skel i
       → C m ⊙⟦ ⊙skel ⟧ ≃ᴳ cohomology-group (cochain-complex ⊙skel) m
-    reconstructed-group (pos 0) ⊙skel ac =
-      zeroth-group ⊙skel ac
-    reconstructed-group (pos 1) ⊙skel ac =
-      first-group ⊙skel ac
-    reconstructed-group (pos (S (S m))) ⊙skel ac =
-      higher-group m ⊙skel ac
-    reconstructed-group (negsucc m) ⊙skel ac =
+    reconstructed-cohomology-group (pos 0) ⊙skel ac =
+      zeroth-cohomology-group ⊙skel ac
+    reconstructed-cohomology-group (pos 1) ⊙skel ac =
+      first-cohomology-group ⊙skel ac
+    reconstructed-cohomology-group (pos (S (S m))) ⊙skel ac =
+      higher-cohomology-group m ⊙skel ac
+    reconstructed-cohomology-group (negsucc m) ⊙skel ac =
       lift-iso {j = i} ∘eᴳ trivial-iso-0ᴳ (C-cw-at-negsucc ⊙skel m ac)
