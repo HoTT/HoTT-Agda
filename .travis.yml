@@ -24,6 +24,7 @@ install:
 
 script:
 - stack exec agda -- --version
+- set -o pipefail # so that Bash will report the failure of type checking
 # 2-stage type-checking to reduce peak memory usage, hopefully
 - stack exec agda -- --library-file=libraries-travis --without-K --rewriting core/HoTT.agda | ts
 # checking this file is very resource demanding, so it is checked first (actually, I gave up on this)
