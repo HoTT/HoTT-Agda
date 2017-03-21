@@ -25,7 +25,6 @@ module cohomology.Wedge {i} (CT : CohomologyTheory i)
   open import homotopy.WedgeCofiber X Y
 
   open CohomologyTheory CT
-  open import cohomology.Functor CT
   open import cohomology.PtdMapSequence CT
 
   private
@@ -60,6 +59,7 @@ module cohomology.Wedge {i} (CT : CohomologyTheory i)
     C-projl-C-winr-is-exact
     C-projr-C-winl-is-exact as PR
 
+  C-Wedge : C n (X ⊙∨ Y) ≃ᴳ C n X ×ᴳ C n Y
   C-Wedge = PR.iso
 
 {-

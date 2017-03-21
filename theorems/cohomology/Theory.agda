@@ -39,14 +39,6 @@ record CohomologyTheory i : Type (lsucc i) where
     C-fmap-∘ : (n : ℤ) {X Y Z : Ptd i} (g : Y ⊙→ Z) (f : X ⊙→ Y)
       → ∀ x → CEl-fmap n (g ⊙∘ f) x == CEl-fmap n f (CEl-fmap n g x)
 
-  ∘-C-fmap : (n : ℤ) {X Y Z : Ptd i} (f : X ⊙→ Y) (g : Y ⊙→ Z)
-    → ∀ x → CEl-fmap n f (CEl-fmap n g x) == CEl-fmap n (g ⊙∘ f) x
-  ∘-C-fmap n f g x = ! (C-fmap-∘ n g f x)
-
-  CEl-fmap-idf = C-fmap-idf
-  CEl-fmap-∘ = C-fmap-∘
-  ∘-CEl-fmap = ∘-C-fmap
-
   field
     C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp X) ≃ᴳ C n X
 
@@ -92,6 +84,16 @@ record CohomologyTheory i : Type (lsucc i) where
   C2-abgroup n = C-abgroup n (⊙Lift ⊙Bool)
 
   -- XXX This is put here due to the limitation of the current Agda.
+  -- See issue #434.
+  abstract
+    ∘-C-fmap : (n : ℤ) {X Y Z : Ptd i} (f : X ⊙→ Y) (g : Y ⊙→ Z)
+      → ∀ x → CEl-fmap n f (CEl-fmap n g x) == CEl-fmap n (g ⊙∘ f) x
+    ∘-C-fmap n f g x = ! (C-fmap-∘ n g f x)
+
+  CEl-fmap-idf = C-fmap-idf
+  CEl-fmap-∘ = C-fmap-∘
+  ∘-CEl-fmap = ∘-C-fmap
+
   CEl-emap : (n : ℤ) {X Y : Ptd i} → X ⊙≃ Y → Group.El (C n Y) ≃ Group.El (C n X)
   CEl-emap n ⊙eq = equiv (CEl-fmap n (⊙–> ⊙eq)) (CEl-fmap n (⊙<– ⊙eq)) to-from from-to where
     abstract
@@ -102,13 +104,97 @@ record CohomologyTheory i : Type (lsucc i) where
                     ∙ ap (λ f → CEl-fmap n f x) (⊙<–-inv-r ⊙eq)
                     ∙ CEl-fmap-idf n x
 
-  CEl-isemap : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y) → is-equiv (fst f) → is-equiv (CEl-fmap n f)
-  CEl-isemap n f f-ise = snd (CEl-emap n (f , f-ise))
+  abstract
+    CEl-isemap : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y) → is-equiv (fst f) → is-equiv (CEl-fmap n f)
+    CEl-isemap n f f-ise = snd (CEl-emap n (f , f-ise))
 
   C-emap : (n : ℤ) {X Y : Ptd i} → X ⊙≃ Y → C n Y ≃ᴳ C n X
-  C-emap n ⊙eq = ≃-to-≃ᴳ (CEl-emap n ⊙eq) (GroupHom.pres-comp (C-fmap n (⊙–> ⊙eq)))
+  C-emap n ⊙eq = ≃-to-≃ᴳ (CEl-emap n ⊙eq) lemma
+    where abstract lemma = GroupHom.pres-comp (C-fmap n (⊙–> ⊙eq))
 
   C-isemap = CEl-isemap
+
+  {- Cohomology groups are independent of basepoint, and the action of
+   - the cohomology is independent of the basepoint-preservation path -}
+
+  C-base-indep : (n : ℤ) {A : Type i} (a₀ a₁ : A)
+    → C n ⊙[ A , a₀ ] ≃ᴳ C n ⊙[ A , a₁ ]
+  C-base-indep n a₀ a₁ =
+    C-Susp n ⊙[ _ , a₁ ] ∘eᴳ (C-Susp n ⊙[ _ , a₀ ])⁻¹ᴳ
+
+  abstract
+    CEl-fmap-base-indep : (n : ℤ) {X Y : Ptd i}
+      (f : de⊙ X → de⊙ Y) (p₁ p₂ : f (pt X) == pt Y)
+      → ∀ y → CEl-fmap n (f , p₁) y == CEl-fmap n (f , p₂) y
+    CEl-fmap-base-indep n {X} {Y} f p₁ p₂ y =
+      CEl-fmap n (f , p₁) y
+        =⟨ ! $ <–-inv-r (CEl-Susp n Y) y |in-ctx CEl-fmap n (f , p₁) ⟩
+      CEl-fmap n (f , p₁) (–> (CEl-Susp n Y) (<– (CEl-Susp n Y) y))
+        =⟨ ! $ commutes (CEl-Susp-fmap n (f , p₁)) (<– (CEl-Susp n Y) y) ⟩
+      –> (CEl-Susp n X) (CEl-fmap (succ n) (Susp-fmap f , idp) (<– (CEl-Susp n Y) y))
+        =⟨ commutes (CEl-Susp-fmap n (f , p₂)) (<– (CEl-Susp n Y) y) ⟩
+      CEl-fmap n (f , p₂) (–> (CEl-Susp n Y) (<– (CEl-Susp n Y) y))
+        =⟨ <–-inv-r (CEl-Susp n Y) y |in-ctx CEl-fmap n (f , p₂) ⟩
+      CEl-fmap n (f , p₂) y
+        =∎
+  C-fmap-base-indep = CEl-fmap-base-indep
+
+  abstract
+    -- FIXME is there a better name?
+    CEl-fmap-base-indep' : (n : ℤ) {X Y : Ptd i} {f g : X ⊙→ Y}
+      → (∀ x → fst f x == fst g x)
+      → (∀ y → CEl-fmap n f y == CEl-fmap n g y)
+    CEl-fmap-base-indep' n h y = CEl-fmap-base-indep n _ _ _ _
+                               ∙ ap (λ f → CEl-fmap n f y) (⊙λ= h (↓-idf=cst-in' idp))
+  C-fmap-base-indep' = CEl-fmap-base-indep'
+
+  {- cohomology of the unit -}
+  abstract
+    C-Unit : ∀ n → is-trivialᴳ (C n (⊙Lift {j = i} ⊙Unit))
+    C-Unit n x =
+      x
+        =⟨ ! (CEl-fmap-idf n x) ⟩
+      CEl-fmap n (⊙idf _) x
+        =⟨ CEl-fmap-base-indep' n (λ _ → idp) x ⟩
+      CEl-fmap n (⊙cst ⊙∘ ⊙cfcod' (⊙idf _)) x
+        =⟨ CEl-fmap-∘ n ⊙cst (⊙cfcod' (⊙idf _)) x ⟩
+      CEl-fmap n (⊙cfcod' (⊙idf _)) (CEl-fmap n ⊙cst x)
+        =⟨ ! (CEl-fmap-idf n (CEl-fmap n (⊙cfcod' (⊙idf _)) (CEl-fmap n ⊙cst x))) ⟩
+      CEl-fmap n (⊙idf _) (CEl-fmap n (⊙cfcod' (⊙idf _)) (CEl-fmap n ⊙cst x))
+        =⟨ im-sub-ker (C-exact n (⊙idf _)) _ [ CEl-fmap n ⊙cst x , idp ] ⟩
+      Cident n (⊙Lift {j = i} ⊙Unit)
+        =∎
+
+  {- more functoriality -}
+  abstract
+    C-fmap-cst : (n : ℤ) {X Y : Ptd i} → ∀ y → CEl-fmap n (⊙cst {X = X} {Y = Y}) y == Cident n X
+    C-fmap-cst n {X} {Y} y =
+      CEl-fmap n (⊙cst {X = ⊙LU} ⊙∘ ⊙cst {X = X}) y
+        =⟨ CEl-fmap-∘ n ⊙cst ⊙cst y ⟩
+      CEl-fmap n (⊙cst {X = X}) (CEl-fmap n (⊙cst {X = ⊙LU}) y)
+        =⟨ C-Unit n (CEl-fmap n (⊙cst {X = ⊙LU}) y)
+           |in-ctx CEl-fmap n (⊙cst {X = X} {Y = ⊙LU}) ⟩
+      CEl-fmap n (⊙cst {X = X}) (Cident n ⊙LU)
+        =⟨ GroupHom.pres-ident (C-fmap n (⊙cst {X = X} {Y = ⊙LU})) ⟩
+      Cident n X ∎
+      where
+      ⊙LU = ⊙Lift {j = i} ⊙Unit
+
+    C-fmap-const : (n : ℤ) {X Y : Ptd i} {f : X ⊙→ Y}
+      → (∀ x → fst f x == pt Y)
+      → ∀ y → CEl-fmap n f y == Cident n X
+    C-fmap-const n f-is-const y =
+      CEl-fmap-base-indep' n f-is-const y ∙ C-fmap-cst n y
+
+    -- FIXME Is there a better name?
+    C-fmap-inverse : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y) (g : Y ⊙→ X)
+      → (∀ x → fst g (fst f x) == x)
+      → (∀ x → CEl-fmap n f (CEl-fmap n g x) == x)
+    C-fmap-inverse n f g p x = ! (CEl-fmap-∘ n g f x) ∙ CEl-fmap-base-indep' n p x ∙ C-fmap-idf n x
+
+  CEl-fmap-cst = C-fmap-cst
+  CEl-fmap-const = C-fmap-const
+  CEl-fmap-inverse = C-fmap-inverse
 
 record OrdinaryTheory i : Type (lsucc i) where
   constructor ordinary-theory

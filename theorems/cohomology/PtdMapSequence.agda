@@ -8,7 +8,6 @@ open import cohomology.Theory
 module cohomology.PtdMapSequence {i} (CT : CohomologyTheory i) where
 
   open CohomologyTheory CT
-  open import cohomology.BaseIndependence CT
 
   -- FIXME maybe this should be named [ap-C-seq],
   -- but I do not know how to name [C-seq-isemap]. -favonia

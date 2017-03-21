@@ -12,8 +12,6 @@ module cohomology.Sigma {i} (CT : CohomologyTheory i)
   (n : ℤ) (X : Ptd i) (Y : de⊙ X → Ptd i) where
 
 open CohomologyTheory CT
-open import cohomology.Functor CT
-open import cohomology.BaseIndependence CT
 open import cohomology.PtdMapSequence CT
 
 {- Cⁿ(Σx:X.Y) = Cⁿ(⋁x:X.Y) × Cⁿ(X). The proof is by constructing a

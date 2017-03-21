@@ -12,7 +12,6 @@ module cohomology.Torus {i} (OT : OrdinaryTheory i) where
 open OrdinaryTheory OT
 open import cohomology.Sphere OT
 open import cohomology.SphereProduct cohomology-theory
-open import cohomology.Unit cohomology-theory
 
 
 {- Almost n choose k, but with n choose' O = 0 for any n. -}
