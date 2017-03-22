@@ -23,7 +23,7 @@ module cohomology.PtdMapSequence {i} (CT : CohomologyTheory i) where
     → CommSquare (fst f₀) (fst f₁) (fst hX) (fst hY)
     → CommSquareᴳ (C-fmap n f₁) (C-fmap n f₀) (C-fmap n hY) (C-fmap n hX)
   C-comm-square n {f₀ = f₀} {f₁} {hX} {hY} (comm-sqr □) = comm-sqrᴳ λ y₁ →
-    ∘-CEl-fmap n hX f₁ y₁ ∙ CEl-fmap-base-indep' n (λ x → ! (□ x)) y₁ ∙ CEl-fmap-∘ n hY f₀ y₁
+    ∘-CEl-fmap n hX f₁ y₁ ∙ CEl-fmap-base-indep n (λ x → ! (□ x)) y₁ ∙ CEl-fmap-∘ n hY f₀ y₁
 
   C-seq-fmap : ∀ {X₀ X₁ Y₀ Y₁ : Ptd i} (n : ℤ)
     {seq₀ : PtdMapSequence X₀ Y₀} {seq₁ : PtdMapSequence X₁ Y₁}
