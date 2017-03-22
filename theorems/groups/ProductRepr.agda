@@ -55,6 +55,7 @@ module groups.ProductRepr {i j}
     ∙ ap2 H₂.comp (im-sub-ker ex₁ _ [ h₁ , idp ]) (p₂ h₂)
     ∙ H₂.unit-l h₂
 
+  -- the inverse function is [λ {(h₁ , h₂) → G.comp (i₁.f h₁) (i₂.f h₂)}]
   iso : G ≃ᴳ (H₁ ×ᴳ H₂)
   iso = surjᴳ-and-injᴳ-iso (×ᴳ-fanout j₁ j₂)
     (λ {(h₁ , h₂) → [ G.comp (i₁.f h₁) (i₂.f h₂) ,
@@ -64,7 +65,7 @@ module groups.ProductRepr {i j}
   j₁-fst-comm-sqr : CommSquareᴳ j₁ ×ᴳ-fst (–>ᴳ iso) (idhom _)
   j₁-fst-comm-sqr = comm-sqrᴳ λ _ → idp
 
-  j₂-snd-comm-sqr : CommSquareᴳ j₂ (×ᴳ-snd {G = H₁}) (–>ᴳ iso) (idhom _)
+  j₂-snd-comm-sqr : CommSquareᴳ j₂ ×ᴳ-snd (–>ᴳ iso) (idhom _)
   j₂-snd-comm-sqr = comm-sqrᴳ λ _ → idp
 
   abstract

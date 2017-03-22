@@ -90,21 +90,13 @@ _×ᴳ_ (group A A-level A-struct) (group B B-level B-struct) =
 ×ᴳ-fanout : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
   → (G →ᴳ H) → (G →ᴳ K) → (G →ᴳ H ×ᴳ K)
 ×ᴳ-fanout (group-hom h h-comp) (group-hom k k-comp) =
-  group-hom
-    (λ x → (h x , k x))
-    (λ x y → pair×= (h-comp x y) (k-comp x y))
+  group-hom (fanout h k) (λ x y → pair×= (h-comp x y) (k-comp x y))
 
 Πᴳ-fanout : ∀ {i j k} {I : Type i} {G : Group j} {F : I → Group k}
   → ((i : I) → G →ᴳ F i) → (G →ᴳ Πᴳ I F)
 Πᴳ-fanout h = group-hom
   (λ x i → GroupHom.f (h i) x)
   (λ x y → λ= (λ i → GroupHom.pres-comp (h i) x y))
-
-×ᴳ-fanout-pre∘ : ∀ {i j k l}
-  {G : Group i} {H : Group j} {K : Group k} {J : Group l}
-  (φ : G →ᴳ H) (ψ : G →ᴳ K) (χ : J →ᴳ G)
-  → ×ᴳ-fanout φ ψ ∘ᴳ χ == ×ᴳ-fanout (φ ∘ᴳ χ) (ψ ∘ᴳ χ)
-×ᴳ-fanout-pre∘ φ ψ χ = group-hom= idp
 
 {- projection homomorphisms -}
 ×ᴳ-fst : ∀ {i j} {G : Group i} {H : Group j} → (G ×ᴳ H →ᴳ G)
@@ -184,17 +176,18 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
 abstract
   ×ᴳ-fanin-η : ∀ {i j} (G : Group i) (H : Group j)
     (aGH : is-abelian (G ×ᴳ H))
-    → idhom (G ×ᴳ H) == ×ᴳ-fanin aGH (×ᴳ-inl {G = G}) (×ᴳ-inr {G = G})
-  ×ᴳ-fanin-η G H aGH = group-hom= $ λ= λ {(g , h) →
-    ! (pair×= (Group.unit-r G g) (Group.unit-l H h))}
+    → ∀ gh → gh == GroupHom.f (×ᴳ-fanin {G = G ×ᴳ H} aGH ×ᴳ-inl ×ᴳ-inr) gh
+  ×ᴳ-fanin-η G H aGH (g , h) =
+    ! (pair×= (Group.unit-r G g) (Group.unit-l H h))
 
   ×ᴳ-fanin-pre∘ : ∀ {i j k l}
     {G : Group i} {H : Group j} {K : Group k} {L : Group l}
     (aK : is-abelian K) (aL : is-abelian L)
     (φ : K →ᴳ L) (ψ : G →ᴳ K) (χ : H →ᴳ K)
-    → ×ᴳ-fanin aL (φ ∘ᴳ ψ) (φ ∘ᴳ χ) == φ ∘ᴳ (×ᴳ-fanin aK ψ χ)
-  ×ᴳ-fanin-pre∘ aK aL φ ψ χ = group-hom= $ λ= λ {(g , h) →
-    ! (GroupHom.pres-comp φ (GroupHom.f ψ g) (GroupHom.f χ h))}
+    → ∀ kh → GroupHom.f (×ᴳ-fanin aL (φ ∘ᴳ ψ) (φ ∘ᴳ χ)) kh
+          == GroupHom.f (φ ∘ᴳ ×ᴳ-fanin aK ψ χ) kh
+  ×ᴳ-fanin-pre∘ aK aL φ ψ χ (g , h) =
+    ! (GroupHom.pres-comp φ (GroupHom.f ψ g) (GroupHom.f χ h))
 
 {- define a homomorphism [G₁ × G₂ → H₁ × H₂] from homomorphisms
  - [G₁ → H₁] and [G₂ → H₂] -}

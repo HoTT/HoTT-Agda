@@ -164,17 +164,6 @@ _∘ᴳ_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
   → (χ ∘ᴳ ψ) ∘ᴳ φ == χ ∘ᴳ ψ ∘ᴳ φ
 ∘ᴳ-assoc χ ψ φ = group-hom= idp
 
-pre∘-cst-hom : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
-  (φ : H →ᴳ K)
-  → φ ∘ᴳ cst-hom {G = G} {H = H} == cst-hom
-pre∘-cst-hom φ = group-hom= $ λ= λ g → GroupHom.pres-ident φ
-
-{- TODO Use [comm-sqrᴳ] -}
-inv-hom-natural : ∀ {i j} (G : AbGroup i) (H : AbGroup j)
-  (φ : AbGroup.grp G →ᴳ AbGroup.grp H)
-  → φ ∘ᴳ inv-hom G == inv-hom H ∘ᴳ φ
-inv-hom-natural _ _ φ = group-hom= $ λ= $ GroupHom.pres-inv φ
-
 is-injᴳ : ∀ {i j} {G : Group i} {H : Group j}
   → (G →ᴳ H) → Type (lmax i j)
 is-injᴳ hom = is-inj (GroupHom.f hom)

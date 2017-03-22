@@ -1,10 +1,9 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
-open import homotopy.FunctionOver
 open import groups.ProductRepr
 open import cohomology.Theory
-open import cohomology.WedgeCofiber
+open import homotopy.WedgeCofiber
 
 {- For the cohomology group of a suspension ΣX, the group inverse has the
  - explicit form Cⁿ(flip-susp) : Cⁿ(ΣX) → Cⁿ(ΣX).
@@ -14,14 +13,10 @@ module cohomology.InverseInSusp {i} (CT : CohomologyTheory i)
   (n : ℤ) {X : Ptd i} where
 
 open CohomologyTheory CT
-open import cohomology.Functor CT
-open import cohomology.BaseIndependence CT
-open import cohomology.Wedge CT
+open import cohomology.Wedge CT n (⊙Susp X) (⊙Susp X)
 
 private
-  module CW = CWedge n (⊙Susp X) (⊙Susp X)
-
-  module Subtract = SuspRec {C = fst (⊙Susp X ⊙∨ ⊙Susp X)}
+  module Subtract = SuspRec {C = de⊙ (⊙Susp X ⊙∨ ⊙Susp X)}
     (winl south)
     (winr south)
     (λ x → ap winl (! (merid x)) ∙ wglue ∙ ap winr (merid x))
@@ -43,7 +38,7 @@ private
              ∙ (Projl.glue-β _ _
                 ∙2 (∘-ap (projl _ _) winr (merid x) ∙ ap-cst _ _))))
       ∙ ∙-unit-r _
-      ∙ ! (FlipSusp.merid-β x)
+      ∙ ! (SuspFlip.merid-β x)
 
   projr-subtract : ∀ σ → projr _ _ (subtract σ) == σ
   projr-subtract = Susp-elim idp idp $
@@ -68,23 +63,22 @@ private
                 ∙2 (∘-ap fold winr (merid x) ∙ ap-idf _))))
       ∙ !-inv-l (merid x)
 
-  cancel :
-    ×ᴳ-fanin (C-is-abelian n _) (CF-hom n (⊙Susp-flip X)) (idhom _) ∘ᴳ ×ᴳ-diag
-    == cst-hom
-  cancel =
-    ap2 (λ φ ψ → ×ᴳ-fanin (C-is-abelian n _) φ ψ ∘ᴳ ×ᴳ-diag)
-        (! (CF-λ= n projl-subtract))
-        (! (CF-ident n) ∙ ! (CF-λ= n projr-subtract))
-    ∙ transport (λ {(G , φ , ψ) → φ ∘ᴳ ψ == cst-hom})
-        (pair= (CW.path) $ ↓-×-in
-          (CW.Wedge-in-over ⊙subtract)
-          (CW.⊙Wedge-rec-over (⊙idf _) (⊙idf _)
-           ▹ ap2 ×ᴳ-fanout (CF-ident n) (CF-ident n)))
-        (! (CF-comp n ⊙fold ⊙subtract)
-         ∙ CF-λ= n (λ σ → fold-subtract σ ∙ ! (merid (pt X)))
-         ∙ CF-cst n)
+  abstract
+    cancel : ∀ x
+      → GroupHom.f (×ᴳ-fanin (C-is-abelian n _) (C-fmap n (⊙Susp-flip X)) (idhom _)) (x , x)
+      == Cident n (⊙Susp X)
+    cancel x =
+        ap2 (Group.comp (C n (⊙Susp X)))
+          (! (CEl-fmap-base-indep n projl-subtract x))
+          (! (CEl-fmap-idf n x) ∙ ! (CEl-fmap-base-indep n projr-subtract x))
+      ∙ (Wedge-in-comm-sqr' ⊙subtract □$ᴳ (x , x))
+      ∙ ap (CEl-fmap n ⊙subtract)
+          ( ap (GroupIso.g C-Wedge ∘ diag) (! (CEl-fmap-idf n x))
+          ∙ (C-Wedge-rec-comm-sqr' (⊙idf _) (⊙idf _) □$ᴳ x))
+      ∙ ∘-CEl-fmap n ⊙subtract ⊙fold x
+      ∙ CEl-fmap-base-indep n (λ σ → fold-subtract σ ∙ ! (merid (pt X))) x
+      ∙ CEl-fmap-cst n x
 
-C-Susp-flip-is-inv :
-  CF-hom n (⊙Susp-flip X) == inv-hom (C n (⊙Susp X)) (C-is-abelian _ _)
-C-Susp-flip-is-inv = group-hom= $ λ= λ g →
-  ! (Group.inv-unique-l (C n (⊙Susp X)) _ g (app= (ap GroupHom.f cancel) g))
+abstract
+  C-Susp-flip-is-inv : ∀ x → CEl-fmap n (⊙Susp-flip X) x == Group.inv (C n (⊙Susp X)) x
+  C-Susp-flip-is-inv x = ! (Group.inv-unique-l (C n (⊙Susp X)) _ x (cancel x))

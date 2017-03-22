@@ -27,6 +27,7 @@ import cohomology.EMModel
 import cohomology.Sigma
 import cohomology.Coproduct
 import cohomology.Torus
+import cohomology.InverseInSusp
 -- import cohomology.MayerVietorisExact -- FIXME
 
 {- prop * prop is still a prop -}
