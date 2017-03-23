@@ -1,0 +1,3840 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.EilenbergMacLane1</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+
+</a
+      ><a name="60" class="Keyword"
+      >module</a
+      ><a name="66"
+      > </a
+      ><a name="67" href="homotopy.EilenbergMacLane1.html#1" class="Module"
+      >homotopy.EilenbergMacLane1</a
+      ><a name="93"
+      > </a
+      ><a name="94" class="Symbol"
+      >{</a
+      ><a name="95" href="homotopy.EilenbergMacLane1.html#95" class="Bound"
+      >i</a
+      ><a name="96" class="Symbol"
+      >}</a
+      ><a name="97"
+      > </a
+      ><a name="98" class="Symbol"
+      >(</a
+      ><a name="99" href="homotopy.EilenbergMacLane1.html#99" class="Bound"
+      >G</a
+      ><a name="100"
+      > </a
+      ><a name="101" class="Symbol"
+      >:</a
+      ><a name="102"
+      > </a
+      ><a name="103" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="108"
+      > </a
+      ><a name="109" href="homotopy.EilenbergMacLane1.html#95" class="Bound"
+      >i</a
+      ><a name="110" class="Symbol"
+      >)</a
+      ><a name="111"
+      > </a
+      ><a name="112" class="Keyword"
+      >where</a
+      ><a name="117"
+      >
+  </a
+      ><a name="120" class="Keyword"
+      >private</a
+      ><a name="127"
+      >
+    </a
+      ><a name="132" class="Keyword"
+      >module</a
+      ><a name="138"
+      > </a
+      ><a name="139" href="homotopy.EilenbergMacLane1.html#139" class="Module"
+      >G</a
+      ><a name="140"
+      > </a
+      ><a name="141" class="Symbol"
+      >=</a
+      ><a name="142"
+      > </a
+      ><a name="143" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="148"
+      > </a
+      ><a name="149" href="homotopy.EilenbergMacLane1.html#99" class="Bound"
+      >G</a
+      ><a name="150"
+      >
+
+    </a
+      ><a name="156" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="166"
+      > </a
+      ><a name="167" class="Symbol"
+      >:</a
+      ><a name="168"
+      > </a
+      ><a name="169" class="Symbol"
+      >&#8704;</a
+      ><a name="170"
+      > </a
+      ><a name="171" href="homotopy.EilenbergMacLane1.html#171" class="Bound"
+      >g</a
+      ><a name="172"
+      > </a
+      ><a name="173" class="Symbol"
+      >&#8594;</a
+      ><a name="174"
+      > </a
+      ><a name="175" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="179"
+      > </a
+      ><a name="180" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="181"
+      > </a
+      ><a name="182" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="186"
+      >
+    </a
+      ><a name="191" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="201"
+      > </a
+      ><a name="202" href="homotopy.EilenbergMacLane1.html#202" class="Bound"
+      >g</a
+      ><a name="203"
+      > </a
+      ><a name="204" class="Symbol"
+      >=</a
+      ><a name="205"
+      > </a
+      ><a name="206" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="211"
+      >
+      </a
+      ><a name="218" class="Symbol"
+      >(&#955;</a
+      ><a name="220"
+      > </a
+      ><a name="221" href="homotopy.EilenbergMacLane1.html#221" class="Bound"
+      >x</a
+      ><a name="222"
+      > </a
+      ><a name="223" class="Symbol"
+      >&#8594;</a
+      ><a name="224"
+      > </a
+      ><a name="225" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="231"
+      > </a
+      ><a name="232" href="homotopy.EilenbergMacLane1.html#221" class="Bound"
+      >x</a
+      ><a name="233"
+      > </a
+      ><a name="234" href="homotopy.EilenbergMacLane1.html#202" class="Bound"
+      >g</a
+      ><a name="235" class="Symbol"
+      >)</a
+      ><a name="236"
+      >
+      </a
+      ><a name="243" class="Symbol"
+      >(&#955;</a
+      ><a name="245"
+      > </a
+      ><a name="246" href="homotopy.EilenbergMacLane1.html#246" class="Bound"
+      >x</a
+      ><a name="247"
+      > </a
+      ><a name="248" class="Symbol"
+      >&#8594;</a
+      ><a name="249"
+      > </a
+      ><a name="250" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="256"
+      > </a
+      ><a name="257" href="homotopy.EilenbergMacLane1.html#246" class="Bound"
+      >x</a
+      ><a name="258"
+      > </a
+      ><a name="259" class="Symbol"
+      >(</a
+      ><a name="260" href="lib.types.Group.html#292" class="Function"
+      >G.inv</a
+      ><a name="265"
+      > </a
+      ><a name="266" href="homotopy.EilenbergMacLane1.html#202" class="Bound"
+      >g</a
+      ><a name="267" class="Symbol"
+      >))</a
+      ><a name="269"
+      >
+      </a
+      ><a name="276" class="Symbol"
+      >(&#955;</a
+      ><a name="278"
+      > </a
+      ><a name="279" href="homotopy.EilenbergMacLane1.html#279" class="Bound"
+      >x</a
+      ><a name="280"
+      > </a
+      ><a name="281" class="Symbol"
+      >&#8594;</a
+      ><a name="282"
+      > </a
+      ><a name="283" href="lib.types.Group.html#376" class="Function"
+      >G.assoc</a
+      ><a name="290"
+      > </a
+      ><a name="291" href="homotopy.EilenbergMacLane1.html#279" class="Bound"
+      >x</a
+      ><a name="292"
+      > </a
+      ><a name="293" class="Symbol"
+      >(</a
+      ><a name="294" href="lib.types.Group.html#292" class="Function"
+      >G.inv</a
+      ><a name="299"
+      > </a
+      ><a name="300" href="homotopy.EilenbergMacLane1.html#202" class="Bound"
+      >g</a
+      ><a name="301" class="Symbol"
+      >)</a
+      ><a name="302"
+      > </a
+      ><a name="303" href="homotopy.EilenbergMacLane1.html#202" class="Bound"
+      >g</a
+      ><a name="304"
+      > </a
+      ><a name="305" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="306"
+      > </a
+      ><a name="307" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="309"
+      > </a
+      ><a name="310" class="Symbol"
+      >(</a
+      ><a name="311" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="317"
+      > </a
+      ><a name="318" href="homotopy.EilenbergMacLane1.html#279" class="Bound"
+      >x</a
+      ><a name="319" class="Symbol"
+      >)</a
+      ><a name="320"
+      > </a
+      ><a name="321" class="Symbol"
+      >(</a
+      ><a name="322" href="lib.types.Group.html#438" class="Function"
+      >G.inv-l</a
+      ><a name="329"
+      > </a
+      ><a name="330" href="homotopy.EilenbergMacLane1.html#202" class="Bound"
+      >g</a
+      ><a name="331" class="Symbol"
+      >)</a
+      ><a name="332"
+      > </a
+      ><a name="333" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="334"
+      > </a
+      ><a name="335" href="lib.types.Group.html#1261" class="Function"
+      >G.unit-r</a
+      ><a name="343"
+      > </a
+      ><a name="344" href="homotopy.EilenbergMacLane1.html#279" class="Bound"
+      >x</a
+      ><a name="345" class="Symbol"
+      >)</a
+      ><a name="346"
+      >
+      </a
+      ><a name="353" class="Symbol"
+      >(&#955;</a
+      ><a name="355"
+      > </a
+      ><a name="356" href="homotopy.EilenbergMacLane1.html#356" class="Bound"
+      >x</a
+      ><a name="357"
+      > </a
+      ><a name="358" class="Symbol"
+      >&#8594;</a
+      ><a name="359"
+      > </a
+      ><a name="360" href="lib.types.Group.html#376" class="Function"
+      >G.assoc</a
+      ><a name="367"
+      > </a
+      ><a name="368" href="homotopy.EilenbergMacLane1.html#356" class="Bound"
+      >x</a
+      ><a name="369"
+      > </a
+      ><a name="370" href="homotopy.EilenbergMacLane1.html#202" class="Bound"
+      >g</a
+      ><a name="371"
+      > </a
+      ><a name="372" class="Symbol"
+      >(</a
+      ><a name="373" href="lib.types.Group.html#292" class="Function"
+      >G.inv</a
+      ><a name="378"
+      > </a
+      ><a name="379" href="homotopy.EilenbergMacLane1.html#202" class="Bound"
+      >g</a
+      ><a name="380" class="Symbol"
+      >)</a
+      ><a name="381"
+      > </a
+      ><a name="382" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="383"
+      > </a
+      ><a name="384" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="386"
+      > </a
+      ><a name="387" class="Symbol"
+      >(</a
+      ><a name="388" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="394"
+      > </a
+      ><a name="395" href="homotopy.EilenbergMacLane1.html#356" class="Bound"
+      >x</a
+      ><a name="396" class="Symbol"
+      >)</a
+      ><a name="397"
+      > </a
+      ><a name="398" class="Symbol"
+      >(</a
+      ><a name="399" href="lib.types.Group.html#577" class="Function"
+      >G.inv-r</a
+      ><a name="406"
+      > </a
+      ><a name="407" href="homotopy.EilenbergMacLane1.html#202" class="Bound"
+      >g</a
+      ><a name="408" class="Symbol"
+      >)</a
+      ><a name="409"
+      > </a
+      ><a name="410" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="411"
+      > </a
+      ><a name="412" href="lib.types.Group.html#1261" class="Function"
+      >G.unit-r</a
+      ><a name="420"
+      > </a
+      ><a name="421" href="homotopy.EilenbergMacLane1.html#356" class="Bound"
+      >x</a
+      ><a name="422" class="Symbol"
+      >)</a
+      ><a name="423"
+      >
+
+    </a
+      ><a name="429" href="homotopy.EilenbergMacLane1.html#429" class="Function"
+      >comp-equiv-id</a
+      ><a name="442"
+      > </a
+      ><a name="443" class="Symbol"
+      >:</a
+      ><a name="444"
+      > </a
+      ><a name="445" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="455"
+      > </a
+      ><a name="456" href="lib.types.Group.html#276" class="Function"
+      >G.ident</a
+      ><a name="463"
+      > </a
+      ><a name="464" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="466"
+      > </a
+      ><a name="467" href="lib.Equivalence.html#5761" class="Function"
+      >ide</a
+      ><a name="470"
+      > </a
+      ><a name="471" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="475"
+      >
+    </a
+      ><a name="480" href="homotopy.EilenbergMacLane1.html#429" class="Function"
+      >comp-equiv-id</a
+      ><a name="493"
+      > </a
+      ><a name="494" class="Symbol"
+      >=</a
+      ><a name="495"
+      >
+      </a
+      ><a name="502" href="lib.Base.html#5386" class="Function"
+      >pair=</a
+      ><a name="507"
+      > </a
+      ><a name="508" class="Symbol"
+      >(</a
+      ><a name="509" href="lib.Funext.html#3966" class="Function"
+      >&#955;=</a
+      ><a name="511"
+      > </a
+      ><a name="512" href="lib.types.Group.html#1261" class="Function"
+      >G.unit-r</a
+      ><a name="520" class="Symbol"
+      >)</a
+      ><a name="521"
+      >
+            </a
+      ><a name="534" class="Symbol"
+      >(</a
+      ><a name="535" href="lib.NType2.html#1216" class="Function"
+      >prop-has-all-paths-&#8595;</a
+      ><a name="555"
+      > </a
+      ><a name="556" class="Symbol"
+      >{</a
+      ><a name="557" class="Argument"
+      >B</a
+      ><a name="558"
+      > </a
+      ><a name="559" class="Symbol"
+      >=</a
+      ><a name="560"
+      > </a
+      ><a name="561" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="569" class="Symbol"
+      >}</a
+      ><a name="570"
+      > </a
+      ><a name="571" href="lib.Equivalence2.html#4674" class="Function"
+      >is-equiv-is-prop</a
+      ><a name="587" class="Symbol"
+      >)</a
+      ><a name="588"
+      >
+
+    </a
+      ><a name="594" href="homotopy.EilenbergMacLane1.html#594" class="Function"
+      >comp-equiv-comp</a
+      ><a name="609"
+      > </a
+      ><a name="610" class="Symbol"
+      >:</a
+      ><a name="611"
+      > </a
+      ><a name="612" class="Symbol"
+      >(</a
+      ><a name="613" href="homotopy.EilenbergMacLane1.html#613" class="Bound"
+      >g&#8321;</a
+      ><a name="615"
+      > </a
+      ><a name="616" href="homotopy.EilenbergMacLane1.html#616" class="Bound"
+      >g&#8322;</a
+      ><a name="618"
+      > </a
+      ><a name="619" class="Symbol"
+      >:</a
+      ><a name="620"
+      > </a
+      ><a name="621" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="625" class="Symbol"
+      >)</a
+      ><a name="626"
+      > </a
+      ><a name="627" class="Symbol"
+      >&#8594;</a
+      ><a name="628"
+      > </a
+      ><a name="629" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="639"
+      > </a
+      ><a name="640" class="Symbol"
+      >(</a
+      ><a name="641" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="647"
+      > </a
+      ><a name="648" href="homotopy.EilenbergMacLane1.html#613" class="Bound"
+      >g&#8321;</a
+      ><a name="650"
+      > </a
+      ><a name="651" href="homotopy.EilenbergMacLane1.html#616" class="Bound"
+      >g&#8322;</a
+      ><a name="653" class="Symbol"
+      >)</a
+      ><a name="654"
+      >
+                      </a
+      ><a name="677" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="679"
+      > </a
+      ><a name="680" class="Symbol"
+      >(</a
+      ><a name="681" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="691"
+      > </a
+      ><a name="692" href="homotopy.EilenbergMacLane1.html#616" class="Bound"
+      >g&#8322;</a
+      ><a name="694"
+      > </a
+      ><a name="695" href="lib.Equivalence.html#5985" class="Function Operator"
+      >&#8728;e</a
+      ><a name="697"
+      > </a
+      ><a name="698" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="708"
+      > </a
+      ><a name="709" href="homotopy.EilenbergMacLane1.html#613" class="Bound"
+      >g&#8321;</a
+      ><a name="711" class="Symbol"
+      >)</a
+      ><a name="712"
+      >
+    </a
+      ><a name="717" href="homotopy.EilenbergMacLane1.html#594" class="Function"
+      >comp-equiv-comp</a
+      ><a name="732"
+      > </a
+      ><a name="733" href="homotopy.EilenbergMacLane1.html#733" class="Bound"
+      >g&#8321;</a
+      ><a name="735"
+      > </a
+      ><a name="736" href="homotopy.EilenbergMacLane1.html#736" class="Bound"
+      >g&#8322;</a
+      ><a name="738"
+      > </a
+      ><a name="739" class="Symbol"
+      >=</a
+      ><a name="740"
+      >
+      </a
+      ><a name="747" href="lib.Base.html#5386" class="Function"
+      >pair=</a
+      ><a name="752"
+      > </a
+      ><a name="753" class="Symbol"
+      >(</a
+      ><a name="754" href="lib.Funext.html#3966" class="Function"
+      >&#955;=</a
+      ><a name="756"
+      > </a
+      ><a name="757" class="Symbol"
+      >(&#955;</a
+      ><a name="759"
+      > </a
+      ><a name="760" href="homotopy.EilenbergMacLane1.html#760" class="Bound"
+      >x</a
+      ><a name="761"
+      > </a
+      ><a name="762" class="Symbol"
+      >&#8594;</a
+      ><a name="763"
+      > </a
+      ><a name="764" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="765"
+      > </a
+      ><a name="766" class="Symbol"
+      >(</a
+      ><a name="767" href="lib.types.Group.html#376" class="Function"
+      >G.assoc</a
+      ><a name="774"
+      > </a
+      ><a name="775" href="homotopy.EilenbergMacLane1.html#760" class="Bound"
+      >x</a
+      ><a name="776"
+      > </a
+      ><a name="777" href="homotopy.EilenbergMacLane1.html#733" class="Bound"
+      >g&#8321;</a
+      ><a name="779"
+      > </a
+      ><a name="780" href="homotopy.EilenbergMacLane1.html#736" class="Bound"
+      >g&#8322;</a
+      ><a name="782" class="Symbol"
+      >)))</a
+      ><a name="785"
+      >
+            </a
+      ><a name="798" class="Symbol"
+      >(</a
+      ><a name="799" href="lib.NType2.html#1216" class="Function"
+      >prop-has-all-paths-&#8595;</a
+      ><a name="819"
+      > </a
+      ><a name="820" class="Symbol"
+      >{</a
+      ><a name="821" class="Argument"
+      >B</a
+      ><a name="822"
+      > </a
+      ><a name="823" class="Symbol"
+      >=</a
+      ><a name="824"
+      > </a
+      ><a name="825" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="833" class="Symbol"
+      >}</a
+      ><a name="834"
+      > </a
+      ><a name="835" href="lib.Equivalence2.html#4674" class="Function"
+      >is-equiv-is-prop</a
+      ><a name="851" class="Symbol"
+      >)</a
+      ><a name="852"
+      >
+
+    </a
+      ><a name="858" href="homotopy.EilenbergMacLane1.html#858" class="Function"
+      >&#937;-group</a
+      ><a name="865"
+      > </a
+      ><a name="866" class="Symbol"
+      >:</a
+      ><a name="867"
+      > </a
+      ><a name="868" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="873"
+      > </a
+      ><a name="874" class="Symbol"
+      >(</a
+      ><a name="875" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="880"
+      > </a
+      ><a name="881" href="homotopy.EilenbergMacLane1.html#95" class="Bound"
+      >i</a
+      ><a name="882" class="Symbol"
+      >)</a
+      ><a name="883"
+      >
+    </a
+      ><a name="888" href="homotopy.EilenbergMacLane1.html#858" class="Function"
+      >&#937;-group</a
+      ><a name="895"
+      > </a
+      ><a name="896" class="Symbol"
+      >=</a
+      ><a name="897"
+      > </a
+      ><a name="898" href="lib.groups.LoopSpace.html#612" class="Function"
+      >&#937;^S-group</a
+      ><a name="907"
+      > </a
+      ><a name="908" class="Number"
+      >0</a
+      ><a name="909"
+      >
+      </a
+      ><a name="916" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >&#8857;[</a
+      ><a name="918"
+      > </a
+      ><a name="919" class="Symbol"
+      >(</a
+      ><a name="920" class="Number"
+      >0</a
+      ><a name="921"
+      > </a
+      ><a name="922" href="lib.NType2.html#4739" class="Function Operator"
+      >-Type</a
+      ><a name="927"
+      > </a
+      ><a name="928" href="homotopy.EilenbergMacLane1.html#95" class="Bound"
+      >i</a
+      ><a name="929" class="Symbol"
+      >)</a
+      ><a name="930"
+      > </a
+      ><a name="931" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="932"
+      > </a
+      ><a name="933" class="Symbol"
+      >(</a
+      ><a name="934" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="938"
+      > </a
+      ><a name="939" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="940"
+      > </a
+      ><a name="941" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="951" class="Symbol"
+      >)</a
+      ><a name="952"
+      > </a
+      ><a name="953" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >]</a
+      ><a name="954"
+      > </a
+      ><a name="955" class="Symbol"
+      >(</a
+      ><a name="956" class="Number"
+      >0</a
+      ><a name="957"
+      > </a
+      ><a name="958" href="lib.NType2.html#6769" class="Function Operator"
+      >-Type-level</a
+      ><a name="969"
+      > </a
+      ><a name="970" href="homotopy.EilenbergMacLane1.html#95" class="Bound"
+      >i</a
+      ><a name="971" class="Symbol"
+      >)</a
+      ><a name="972"
+      >
+
+    </a
+      ><a name="978" href="homotopy.EilenbergMacLane1.html#978" class="Function"
+      >Codes-hom</a
+      ><a name="987"
+      > </a
+      ><a name="988" class="Symbol"
+      >:</a
+      ><a name="989"
+      > </a
+      ><a name="990" href="homotopy.EilenbergMacLane1.html#99" class="Bound"
+      >G</a
+      ><a name="991"
+      > </a
+      ><a name="992" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="994"
+      > </a
+      ><a name="995" href="homotopy.EilenbergMacLane1.html#858" class="Function"
+      >&#937;-group</a
+      ><a name="1002"
+      >
+    </a
+      ><a name="1007" href="homotopy.EilenbergMacLane1.html#978" class="Function"
+      >Codes-hom</a
+      ><a name="1016"
+      > </a
+      ><a name="1017" class="Symbol"
+      >=</a
+      ><a name="1018"
+      > </a
+      ><a name="1019" href="lib.groups.Homomorphism.html#2532" class="InductiveConstructor"
+      >group-hom</a
+      ><a name="1028"
+      > </a
+      ><a name="1029" class="Symbol"
+      >(</a
+      ><a name="1030" href="lib.NType2.html#6113" class="Function"
+      >nType=-out</a
+      ><a name="1040"
+      > </a
+      ><a name="1041" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1042"
+      > </a
+      ><a name="1043" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1045"
+      > </a
+      ><a name="1046" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1047"
+      > </a
+      ><a name="1048" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="1058" class="Symbol"
+      >)</a
+      ><a name="1059"
+      > </a
+      ><a name="1060" href="homotopy.EilenbergMacLane1.html#1099" class="Function"
+      >pres-comp</a
+      ><a name="1069"
+      > </a
+      ><a name="1070" class="Keyword"
+      >where</a
+      ><a name="1075"
+      >
+      </a
+      ><a name="1082" class="Keyword"
+      >abstract</a
+      ><a name="1090"
+      >
+        </a
+      ><a name="1099" href="homotopy.EilenbergMacLane1.html#1099" class="Function"
+      >pres-comp</a
+      ><a name="1108"
+      > </a
+      ><a name="1109" class="Symbol"
+      >:</a
+      ><a name="1110"
+      > </a
+      ><a name="1111" class="Symbol"
+      >&#8704;</a
+      ><a name="1112"
+      > </a
+      ><a name="1113" href="homotopy.EilenbergMacLane1.html#1113" class="Bound"
+      >g&#8321;</a
+      ><a name="1115"
+      > </a
+      ><a name="1116" href="homotopy.EilenbergMacLane1.html#1116" class="Bound"
+      >g&#8322;</a
+      ><a name="1118"
+      >
+          </a
+      ><a name="1129" class="Symbol"
+      >&#8594;</a
+      ><a name="1130"
+      > </a
+      ><a name="1131" href="lib.NType2.html#6113" class="Function"
+      >nType=-out</a
+      ><a name="1141"
+      > </a
+      ><a name="1142" class="Symbol"
+      >{</a
+      ><a name="1143" class="Argument"
+      >A</a
+      ><a name="1144"
+      > </a
+      ><a name="1145" class="Symbol"
+      >=</a
+      ><a name="1146"
+      > </a
+      ><a name="1147" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="1151"
+      > </a
+      ><a name="1152" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1153"
+      > </a
+      ><a name="1154" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="1164" class="Symbol"
+      >}</a
+      ><a name="1165"
+      > </a
+      ><a name="1166" class="Symbol"
+      >{</a
+      ><a name="1167" class="Argument"
+      >B</a
+      ><a name="1168"
+      > </a
+      ><a name="1169" class="Symbol"
+      >=</a
+      ><a name="1170"
+      > </a
+      ><a name="1171" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="1175"
+      > </a
+      ><a name="1176" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1177"
+      > </a
+      ><a name="1178" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="1188" class="Symbol"
+      >}</a
+      ><a name="1189"
+      > </a
+      ><a name="1190" class="Symbol"
+      >(</a
+      ><a name="1191" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" class="Symbol"
+      >(</a
+      ><a name="1195" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="1205"
+      > </a
+      ><a name="1206" class="Symbol"
+      >(</a
+      ><a name="1207" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="1213"
+      > </a
+      ><a name="1214" href="homotopy.EilenbergMacLane1.html#1113" class="Bound"
+      >g&#8321;</a
+      ><a name="1216"
+      > </a
+      ><a name="1217" href="homotopy.EilenbergMacLane1.html#1116" class="Bound"
+      >g&#8322;</a
+      ><a name="1219" class="Symbol"
+      >)))</a
+      ><a name="1222"
+      >
+          </a
+      ><a name="1233" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1235"
+      > </a
+      ><a name="1236" href="lib.NType2.html#6113" class="Function"
+      >nType=-out</a
+      ><a name="1246"
+      > </a
+      ><a name="1247" class="Symbol"
+      >{</a
+      ><a name="1248" class="Argument"
+      >A</a
+      ><a name="1249"
+      > </a
+      ><a name="1250" class="Symbol"
+      >=</a
+      ><a name="1251"
+      > </a
+      ><a name="1252" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="1256"
+      > </a
+      ><a name="1257" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1258"
+      > </a
+      ><a name="1259" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="1269" class="Symbol"
+      >}</a
+      ><a name="1270"
+      > </a
+      ><a name="1271" class="Symbol"
+      >{</a
+      ><a name="1272" class="Argument"
+      >B</a
+      ><a name="1273"
+      > </a
+      ><a name="1274" class="Symbol"
+      >=</a
+      ><a name="1275"
+      > </a
+      ><a name="1276" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="1280"
+      > </a
+      ><a name="1281" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1282"
+      > </a
+      ><a name="1283" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="1293" class="Symbol"
+      >}</a
+      ><a name="1294"
+      > </a
+      ><a name="1295" class="Symbol"
+      >(</a
+      ><a name="1296" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1298"
+      > </a
+      ><a name="1299" class="Symbol"
+      >(</a
+      ><a name="1300" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="1310"
+      > </a
+      ><a name="1311" href="homotopy.EilenbergMacLane1.html#1113" class="Bound"
+      >g&#8321;</a
+      ><a name="1313" class="Symbol"
+      >))</a
+      ><a name="1315"
+      >
+          </a
+      ><a name="1326" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1327"
+      > </a
+      ><a name="1328" href="lib.NType2.html#6113" class="Function"
+      >nType=-out</a
+      ><a name="1338"
+      > </a
+      ><a name="1339" class="Symbol"
+      >{</a
+      ><a name="1340" class="Argument"
+      >A</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" class="Symbol"
+      >=</a
+      ><a name="1343"
+      > </a
+      ><a name="1344" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="1348"
+      > </a
+      ><a name="1349" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1350"
+      > </a
+      ><a name="1351" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="1361" class="Symbol"
+      >}</a
+      ><a name="1362"
+      > </a
+      ><a name="1363" class="Symbol"
+      >{</a
+      ><a name="1364" class="Argument"
+      >B</a
+      ><a name="1365"
+      > </a
+      ><a name="1366" class="Symbol"
+      >=</a
+      ><a name="1367"
+      > </a
+      ><a name="1368" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="1372"
+      > </a
+      ><a name="1373" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1374"
+      > </a
+      ><a name="1375" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="1385" class="Symbol"
+      >}</a
+      ><a name="1386"
+      > </a
+      ><a name="1387" class="Symbol"
+      >(</a
+      ><a name="1388" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1390"
+      > </a
+      ><a name="1391" class="Symbol"
+      >(</a
+      ><a name="1392" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="1402"
+      > </a
+      ><a name="1403" href="homotopy.EilenbergMacLane1.html#1116" class="Bound"
+      >g&#8322;</a
+      ><a name="1405" class="Symbol"
+      >))</a
+      ><a name="1407"
+      >
+        </a
+      ><a name="1416" href="homotopy.EilenbergMacLane1.html#1099" class="Function"
+      >pres-comp</a
+      ><a name="1425"
+      > </a
+      ><a name="1426" href="homotopy.EilenbergMacLane1.html#1426" class="Bound"
+      >g&#8321;</a
+      ><a name="1428"
+      > </a
+      ><a name="1429" href="homotopy.EilenbergMacLane1.html#1429" class="Bound"
+      >g&#8322;</a
+      ><a name="1431"
+      > </a
+      ><a name="1432" class="Symbol"
+      >=</a
+      ><a name="1433"
+      >
+          </a
+      ><a name="1444" href="lib.NType2.html#6113" class="Function"
+      >nType=-out</a
+      ><a name="1454"
+      > </a
+      ><a name="1455" class="Symbol"
+      >{</a
+      ><a name="1456" class="Argument"
+      >A</a
+      ><a name="1457"
+      > </a
+      ><a name="1458" class="Symbol"
+      >=</a
+      ><a name="1459"
+      > </a
+      ><a name="1460" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="1464"
+      > </a
+      ><a name="1465" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1466"
+      > </a
+      ><a name="1467" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="1477" class="Symbol"
+      >}</a
+      ><a name="1478"
+      > </a
+      ><a name="1479" class="Symbol"
+      >{</a
+      ><a name="1480" class="Argument"
+      >B</a
+      ><a name="1481"
+      > </a
+      ><a name="1482" class="Symbol"
+      >=</a
+      ><a name="1483"
+      > </a
+      ><a name="1484" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="1488"
+      > </a
+      ><a name="1489" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1490"
+      > </a
+      ><a name="1491" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="1501" class="Symbol"
+      >}</a
+      ><a name="1502"
+      > </a
+      ><a name="1503" class="Symbol"
+      >(</a
+      ><a name="1504" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1506"
+      > </a
+      ><a name="1507" class="Symbol"
+      >(</a
+      ><a name="1508" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="1518"
+      > </a
+      ><a name="1519" class="Symbol"
+      >(</a
+      ><a name="1520" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="1526"
+      > </a
+      ><a name="1527" href="homotopy.EilenbergMacLane1.html#1426" class="Bound"
+      >g&#8321;</a
+      ><a name="1529"
+      > </a
+      ><a name="1530" href="homotopy.EilenbergMacLane1.html#1429" class="Bound"
+      >g&#8322;</a
+      ><a name="1532" class="Symbol"
+      >)))</a
+      ><a name="1535"
+      >
+            </a
+      ><a name="1548" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1550"
+      > </a
+      ><a name="1551" href="homotopy.EilenbergMacLane1.html#594" class="Function"
+      >comp-equiv-comp</a
+      ><a name="1566"
+      > </a
+      ><a name="1567" href="homotopy.EilenbergMacLane1.html#1426" class="Bound"
+      >g&#8321;</a
+      ><a name="1569"
+      > </a
+      ><a name="1570" href="homotopy.EilenbergMacLane1.html#1429" class="Bound"
+      >g&#8322;</a
+      ><a name="1572"
+      > </a
+      ><a name="1573" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1580"
+      > </a
+      ><a name="1581" href="lib.NType2.html#6113" class="Function"
+      >nType=-out</a
+      ><a name="1591"
+      > </a
+      ><a name="1592" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1596"
+      > </a
+      ><a name="1597" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1598"
+      >
+          </a
+      ><a name="1609" href="lib.NType2.html#6113" class="Function"
+      >nType=-out</a
+      ><a name="1619"
+      > </a
+      ><a name="1620" class="Symbol"
+      >{</a
+      ><a name="1621" class="Argument"
+      >A</a
+      ><a name="1622"
+      > </a
+      ><a name="1623" class="Symbol"
+      >=</a
+      ><a name="1624"
+      > </a
+      ><a name="1625" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="1629"
+      > </a
+      ><a name="1630" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1631"
+      > </a
+      ><a name="1632" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="1642" class="Symbol"
+      >}</a
+      ><a name="1643"
+      > </a
+      ><a name="1644" class="Symbol"
+      >{</a
+      ><a name="1645" class="Argument"
+      >B</a
+      ><a name="1646"
+      > </a
+      ><a name="1647" class="Symbol"
+      >=</a
+      ><a name="1648"
+      > </a
+      ><a name="1649" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="1653"
+      > </a
+      ><a name="1654" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1655"
+      > </a
+      ><a name="1656" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="1666" class="Symbol"
+      >}</a
+      ><a name="1667"
+      > </a
+      ><a name="1668" class="Symbol"
+      >(</a
+      ><a name="1669" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1671"
+      > </a
+      ><a name="1672" class="Symbol"
+      >(</a
+      ><a name="1673" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="1683"
+      > </a
+      ><a name="1684" href="homotopy.EilenbergMacLane1.html#1429" class="Bound"
+      >g&#8322;</a
+      ><a name="1686"
+      > </a
+      ><a name="1687" href="lib.Equivalence.html#5985" class="Function Operator"
+      >&#8728;e</a
+      ><a name="1689"
+      > </a
+      ><a name="1690" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="1700"
+      > </a
+      ><a name="1701" href="homotopy.EilenbergMacLane1.html#1426" class="Bound"
+      >g&#8321;</a
+      ><a name="1703" class="Symbol"
+      >))</a
+      ><a name="1705"
+      >
+            </a
+      ><a name="1718" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1720"
+      > </a
+      ><a name="1721" href="lib.Equivalence2.html#5190" class="Function"
+      >ua-&#8728;e</a
+      ><a name="1726"
+      > </a
+      ><a name="1727" class="Symbol"
+      >(</a
+      ><a name="1728" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="1738"
+      > </a
+      ><a name="1739" href="homotopy.EilenbergMacLane1.html#1426" class="Bound"
+      >g&#8321;</a
+      ><a name="1741" class="Symbol"
+      >)</a
+      ><a name="1742"
+      > </a
+      ><a name="1743" class="Symbol"
+      >(</a
+      ><a name="1744" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="1754"
+      > </a
+      ><a name="1755" href="homotopy.EilenbergMacLane1.html#1429" class="Bound"
+      >g&#8322;</a
+      ><a name="1757" class="Symbol"
+      >)</a
+      ><a name="1758"
+      > </a
+      ><a name="1759" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" href="lib.NType2.html#6113" class="Function"
+      >nType=-out</a
+      ><a name="1777"
+      > </a
+      ><a name="1778" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1779"
+      >
+          </a
+      ><a name="1790" href="lib.NType2.html#6113" class="Function"
+      >nType=-out</a
+      ><a name="1800"
+      > </a
+      ><a name="1801" class="Symbol"
+      >{</a
+      ><a name="1802" class="Argument"
+      >A</a
+      ><a name="1803"
+      > </a
+      ><a name="1804" class="Symbol"
+      >=</a
+      ><a name="1805"
+      > </a
+      ><a name="1806" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="1810"
+      > </a
+      ><a name="1811" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1812"
+      > </a
+      ><a name="1813" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="1823" class="Symbol"
+      >}</a
+      ><a name="1824"
+      > </a
+      ><a name="1825" class="Symbol"
+      >{</a
+      ><a name="1826" class="Argument"
+      >B</a
+      ><a name="1827"
+      > </a
+      ><a name="1828" class="Symbol"
+      >=</a
+      ><a name="1829"
+      > </a
+      ><a name="1830" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="1834"
+      > </a
+      ><a name="1835" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1836"
+      > </a
+      ><a name="1837" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="1847" class="Symbol"
+      >}</a
+      ><a name="1848"
+      > </a
+      ><a name="1849" class="Symbol"
+      >(</a
+      ><a name="1850" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1852"
+      > </a
+      ><a name="1853" class="Symbol"
+      >(</a
+      ><a name="1854" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="1864"
+      > </a
+      ><a name="1865" href="homotopy.EilenbergMacLane1.html#1426" class="Bound"
+      >g&#8321;</a
+      ><a name="1867" class="Symbol"
+      >)</a
+      ><a name="1868"
+      > </a
+      ><a name="1869" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1870"
+      > </a
+      ><a name="1871" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1873"
+      > </a
+      ><a name="1874" class="Symbol"
+      >(</a
+      ><a name="1875" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" href="homotopy.EilenbergMacLane1.html#1429" class="Bound"
+      >g&#8322;</a
+      ><a name="1888" class="Symbol"
+      >))</a
+      ><a name="1890"
+      >
+            </a
+      ><a name="1903" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1905"
+      > </a
+      ><a name="1906" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1907"
+      > </a
+      ><a name="1908" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1909"
+      > </a
+      ><a name="1910" href="lib.NType2.html#6560" class="Function"
+      >nType-&#8729;</a
+      ><a name="1917"
+      > </a
+      ><a name="1918" class="Symbol"
+      >{</a
+      ><a name="1919" class="Argument"
+      >A</a
+      ><a name="1920"
+      > </a
+      ><a name="1921" class="Symbol"
+      >=</a
+      ><a name="1922"
+      > </a
+      ><a name="1923" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="1927"
+      > </a
+      ><a name="1928" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1929"
+      > </a
+      ><a name="1930" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="1940" class="Symbol"
+      >}</a
+      ><a name="1941"
+      > </a
+      ><a name="1942" class="Symbol"
+      >{</a
+      ><a name="1943" class="Argument"
+      >B</a
+      ><a name="1944"
+      > </a
+      ><a name="1945" class="Symbol"
+      >=</a
+      ><a name="1946"
+      > </a
+      ><a name="1947" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="1951"
+      > </a
+      ><a name="1952" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1953"
+      > </a
+      ><a name="1954" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="1964" class="Symbol"
+      >}</a
+      ><a name="1965"
+      > </a
+      ><a name="1966" class="Symbol"
+      >{</a
+      ><a name="1967" class="Argument"
+      >C</a
+      ><a name="1968"
+      > </a
+      ><a name="1969" class="Symbol"
+      >=</a
+      ><a name="1970"
+      > </a
+      ><a name="1971" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="1975"
+      > </a
+      ><a name="1976" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1977"
+      > </a
+      ><a name="1978" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="1988" class="Symbol"
+      >}</a
+      ><a name="1989"
+      >
+                  </a
+      ><a name="2008" class="Symbol"
+      >(</a
+      ><a name="2009" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="2011"
+      > </a
+      ><a name="2012" class="Symbol"
+      >(</a
+      ><a name="2013" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="2023"
+      > </a
+      ><a name="2024" href="homotopy.EilenbergMacLane1.html#1426" class="Bound"
+      >g&#8321;</a
+      ><a name="2026" class="Symbol"
+      >))</a
+      ><a name="2028"
+      > </a
+      ><a name="2029" class="Symbol"
+      >(</a
+      ><a name="2030" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="2032"
+      > </a
+      ><a name="2033" class="Symbol"
+      >(</a
+      ><a name="2034" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="2044"
+      > </a
+      ><a name="2045" href="homotopy.EilenbergMacLane1.html#1429" class="Bound"
+      >g&#8322;</a
+      ><a name="2047" class="Symbol"
+      >))</a
+      ><a name="2049"
+      > </a
+      ><a name="2050" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2051"
+      >
+          </a
+      ><a name="2062" href="lib.NType2.html#6113" class="Function"
+      >nType=-out</a
+      ><a name="2072"
+      > </a
+      ><a name="2073" class="Symbol"
+      >{</a
+      ><a name="2074" class="Argument"
+      >A</a
+      ><a name="2075"
+      > </a
+      ><a name="2076" class="Symbol"
+      >=</a
+      ><a name="2077"
+      > </a
+      ><a name="2078" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="2082"
+      > </a
+      ><a name="2083" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2084"
+      > </a
+      ><a name="2085" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="2095" class="Symbol"
+      >}</a
+      ><a name="2096"
+      > </a
+      ><a name="2097" class="Symbol"
+      >{</a
+      ><a name="2098" class="Argument"
+      >B</a
+      ><a name="2099"
+      > </a
+      ><a name="2100" class="Symbol"
+      >=</a
+      ><a name="2101"
+      > </a
+      ><a name="2102" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="2106"
+      > </a
+      ><a name="2107" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2108"
+      > </a
+      ><a name="2109" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="2119" class="Symbol"
+      >}</a
+      ><a name="2120"
+      > </a
+      ><a name="2121" class="Symbol"
+      >(</a
+      ><a name="2122" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="2124"
+      > </a
+      ><a name="2125" class="Symbol"
+      >(</a
+      ><a name="2126" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="2136"
+      > </a
+      ><a name="2137" href="homotopy.EilenbergMacLane1.html#1426" class="Bound"
+      >g&#8321;</a
+      ><a name="2139" class="Symbol"
+      >))</a
+      ><a name="2141"
+      >
+          </a
+      ><a name="2152" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2153"
+      > </a
+      ><a name="2154" href="lib.NType2.html#6113" class="Function"
+      >nType=-out</a
+      ><a name="2164"
+      > </a
+      ><a name="2165" class="Symbol"
+      >{</a
+      ><a name="2166" class="Argument"
+      >A</a
+      ><a name="2167"
+      > </a
+      ><a name="2168" class="Symbol"
+      >=</a
+      ><a name="2169"
+      > </a
+      ><a name="2170" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="2174"
+      > </a
+      ><a name="2175" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2176"
+      > </a
+      ><a name="2177" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="2187" class="Symbol"
+      >}</a
+      ><a name="2188"
+      > </a
+      ><a name="2189" class="Symbol"
+      >{</a
+      ><a name="2190" class="Argument"
+      >B</a
+      ><a name="2191"
+      > </a
+      ><a name="2192" class="Symbol"
+      >=</a
+      ><a name="2193"
+      > </a
+      ><a name="2194" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="2198"
+      > </a
+      ><a name="2199" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2200"
+      > </a
+      ><a name="2201" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="2211" class="Symbol"
+      >}</a
+      ><a name="2212"
+      > </a
+      ><a name="2213" class="Symbol"
+      >(</a
+      ><a name="2214" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="2216"
+      > </a
+      ><a name="2217" class="Symbol"
+      >(</a
+      ><a name="2218" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="2228"
+      > </a
+      ><a name="2229" href="homotopy.EilenbergMacLane1.html#1429" class="Bound"
+      >g&#8322;</a
+      ><a name="2231" class="Symbol"
+      >))</a
+      ><a name="2233"
+      >
+            </a
+      ><a name="2246" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="2248"
+      >
+
+    </a
+      ><a name="2254" href="homotopy.EilenbergMacLane1.html#2254" class="Function"
+      >Codes</a
+      ><a name="2259"
+      > </a
+      ><a name="2260" class="Symbol"
+      >:</a
+      ><a name="2261"
+      > </a
+      ><a name="2262" href="lib.types.EilenbergMacLane1.html#404" class="Postulate"
+      >EM&#8321;</a
+      ><a name="2265"
+      > </a
+      ><a name="2266" href="homotopy.EilenbergMacLane1.html#99" class="Bound"
+      >G</a
+      ><a name="2267"
+      > </a
+      ><a name="2268" class="Symbol"
+      >&#8594;</a
+      ><a name="2269"
+      > </a
+      ><a name="2270" class="Number"
+      >0</a
+      ><a name="2271"
+      > </a
+      ><a name="2272" href="lib.NType2.html#4739" class="Function Operator"
+      >-Type</a
+      ><a name="2277"
+      > </a
+      ><a name="2278" href="homotopy.EilenbergMacLane1.html#95" class="Bound"
+      >i</a
+      ><a name="2279"
+      >
+    </a
+      ><a name="2284" href="homotopy.EilenbergMacLane1.html#2254" class="Function"
+      >Codes</a
+      ><a name="2289"
+      > </a
+      ><a name="2290" class="Symbol"
+      >=</a
+      ><a name="2291"
+      > </a
+      ><a name="2292" href="lib.types.EilenbergMacLane1.html#2122" class="Function"
+      >EM&#8321;-rec</a
+      ><a name="2299"
+      > </a
+      ><a name="2300" class="Symbol"
+      >{</a
+      ><a name="2301" class="Argument"
+      >G</a
+      ><a name="2302"
+      > </a
+      ><a name="2303" class="Symbol"
+      >=</a
+      ><a name="2304"
+      > </a
+      ><a name="2305" href="homotopy.EilenbergMacLane1.html#99" class="Bound"
+      >G</a
+      ><a name="2306" class="Symbol"
+      >}</a
+      ><a name="2307"
+      > </a
+      ><a name="2308" class="Symbol"
+      >{</a
+      ><a name="2309" class="Argument"
+      >C</a
+      ><a name="2310"
+      > </a
+      ><a name="2311" class="Symbol"
+      >=</a
+      ><a name="2312"
+      > </a
+      ><a name="2313" class="Number"
+      >0</a
+      ><a name="2314"
+      > </a
+      ><a name="2315" href="lib.NType2.html#4739" class="Function Operator"
+      >-Type</a
+      ><a name="2320"
+      > </a
+      ><a name="2321" href="homotopy.EilenbergMacLane1.html#95" class="Bound"
+      >i</a
+      ><a name="2322" class="Symbol"
+      >}</a
+      ><a name="2323"
+      > </a
+      ><a name="2324" class="Symbol"
+      >(</a
+      ><a name="2325" class="Number"
+      >0</a
+      ><a name="2326"
+      > </a
+      ><a name="2327" href="lib.NType2.html#6769" class="Function Operator"
+      >-Type-level</a
+      ><a name="2338"
+      > </a
+      ><a name="2339" href="homotopy.EilenbergMacLane1.html#95" class="Bound"
+      >i</a
+      ><a name="2340" class="Symbol"
+      >)</a
+      ><a name="2341"
+      >
+                    </a
+      ><a name="2362" class="Symbol"
+      >(</a
+      ><a name="2363" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="2367"
+      > </a
+      ><a name="2368" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2369"
+      > </a
+      ><a name="2370" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="2380" class="Symbol"
+      >)</a
+      ><a name="2381"
+      >
+                    </a
+      ><a name="2402" href="homotopy.EilenbergMacLane1.html#978" class="Function"
+      >Codes-hom</a
+      ><a name="2411"
+      >
+
+    </a
+      ><a name="2417" class="Keyword"
+      >abstract</a
+      ><a name="2425"
+      >
+      </a
+      ><a name="2432" href="homotopy.EilenbergMacLane1.html#2432" class="Function"
+      >&#8595;-Codes-loop</a
+      ><a name="2444"
+      > </a
+      ><a name="2445" class="Symbol"
+      >:</a
+      ><a name="2446"
+      > </a
+      ><a name="2447" class="Symbol"
+      >&#8704;</a
+      ><a name="2448"
+      > </a
+      ><a name="2449" href="homotopy.EilenbergMacLane1.html#2449" class="Bound"
+      >g</a
+      ><a name="2450"
+      > </a
+      ><a name="2451" href="homotopy.EilenbergMacLane1.html#2451" class="Bound"
+      >g'</a
+      ><a name="2453"
+      > </a
+      ><a name="2454" class="Symbol"
+      >&#8594;</a
+      ><a name="2455"
+      > </a
+      ><a name="2456" href="homotopy.EilenbergMacLane1.html#2451" class="Bound"
+      >g'</a
+      ><a name="2458"
+      > </a
+      ><a name="2459" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="2461"
+      > </a
+      ><a name="2462" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="2468"
+      > </a
+      ><a name="2469" href="homotopy.EilenbergMacLane1.html#2451" class="Bound"
+      >g'</a
+      ><a name="2471"
+      > </a
+      ><a name="2472" href="homotopy.EilenbergMacLane1.html#2449" class="Bound"
+      >g</a
+      ><a name="2473"
+      > </a
+      ><a name="2474" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="2475"
+      > </a
+      ><a name="2476" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="2479"
+      > </a
+      ><a name="2480" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="2481"
+      > </a
+      ><a name="2482" href="homotopy.EilenbergMacLane1.html#2254" class="Function"
+      >Codes</a
+      ><a name="2487"
+      > </a
+      ><a name="2488" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="2489"
+      > </a
+      ><a name="2490" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="2496"
+      > </a
+      ><a name="2497" href="homotopy.EilenbergMacLane1.html#2449" class="Bound"
+      >g</a
+      ><a name="2498"
+      > </a
+      ><a name="2499" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="2500"
+      >
+      </a
+      ><a name="2507" href="homotopy.EilenbergMacLane1.html#2432" class="Function"
+      >&#8595;-Codes-loop</a
+      ><a name="2519"
+      > </a
+      ><a name="2520" href="homotopy.EilenbergMacLane1.html#2520" class="Bound"
+      >g</a
+      ><a name="2521"
+      > </a
+      ><a name="2522" href="homotopy.EilenbergMacLane1.html#2522" class="Bound"
+      >g'</a
+      ><a name="2524"
+      > </a
+      ><a name="2525" class="Symbol"
+      >=</a
+      ><a name="2526"
+      >
+        </a
+      ><a name="2535" href="lib.PathOver.html#4537" class="Function"
+      >&#8595;-ap-out</a
+      ><a name="2543"
+      > </a
+      ><a name="2544" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="2547"
+      > </a
+      ><a name="2548" href="homotopy.EilenbergMacLane1.html#2254" class="Function"
+      >Codes</a
+      ><a name="2553"
+      > </a
+      ><a name="2554" class="Symbol"
+      >(</a
+      ><a name="2555" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="2561"
+      > </a
+      ><a name="2562" href="homotopy.EilenbergMacLane1.html#2520" class="Bound"
+      >g</a
+      ><a name="2563" class="Symbol"
+      >)</a
+      ><a name="2564"
+      > </a
+      ><a name="2565" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2566"
+      >
+        </a
+      ><a name="2575" href="lib.PathOver.html#4537" class="Function"
+      >&#8595;-ap-out</a
+      ><a name="2583"
+      > </a
+      ><a name="2584" class="Symbol"
+      >(</a
+      ><a name="2585" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="2588"
+      > </a
+      ><a name="2589" class="Symbol"
+      >_)</a
+      ><a name="2591"
+      > </a
+      ><a name="2592" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="2595"
+      > </a
+      ><a name="2596" class="Symbol"
+      >(</a
+      ><a name="2597" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2599"
+      > </a
+      ><a name="2600" href="homotopy.EilenbergMacLane1.html#2254" class="Function"
+      >Codes</a
+      ><a name="2605"
+      > </a
+      ><a name="2606" class="Symbol"
+      >(</a
+      ><a name="2607" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="2613"
+      > </a
+      ><a name="2614" href="homotopy.EilenbergMacLane1.html#2520" class="Bound"
+      >g</a
+      ><a name="2615" class="Symbol"
+      >))</a
+      ><a name="2617"
+      > </a
+      ><a name="2618" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2619"
+      >
+        </a
+      ><a name="2628" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="2637"
+      > </a
+      ><a name="2638" class="Symbol"
+      >(&#955;</a
+      ><a name="2640"
+      > </a
+      ><a name="2641" href="homotopy.EilenbergMacLane1.html#2641" class="Bound"
+      >w</a
+      ><a name="2642"
+      > </a
+      ><a name="2643" class="Symbol"
+      >&#8594;</a
+      ><a name="2644"
+      > </a
+      ><a name="2645" href="homotopy.EilenbergMacLane1.html#2522" class="Bound"
+      >g'</a
+      ><a name="2647"
+      > </a
+      ><a name="2648" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="2650"
+      > </a
+      ><a name="2651" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="2657"
+      > </a
+      ><a name="2658" href="homotopy.EilenbergMacLane1.html#2522" class="Bound"
+      >g'</a
+      ><a name="2660"
+      > </a
+      ><a name="2661" href="homotopy.EilenbergMacLane1.html#2520" class="Bound"
+      >g</a
+      ><a name="2662"
+      > </a
+      ><a name="2663" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="2664"
+      > </a
+      ><a name="2665" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="2668"
+      > </a
+      ><a name="2669" class="Symbol"
+      >_</a
+      ><a name="2670"
+      > </a
+      ><a name="2671" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="2672"
+      > </a
+      ><a name="2673" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2675"
+      > </a
+      ><a name="2676" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="2679"
+      > </a
+      ><a name="2680" href="homotopy.EilenbergMacLane1.html#2641" class="Bound"
+      >w</a
+      ><a name="2681"
+      > </a
+      ><a name="2682" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="2683" class="Symbol"
+      >)</a
+      ><a name="2684"
+      >
+                  </a
+      ><a name="2703" class="Symbol"
+      >(</a
+      ><a name="2704" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2705"
+      > </a
+      ><a name="2706" class="Symbol"
+      >(</a
+      ><a name="2707" href="lib.types.EilenbergMacLane1.html#2135" class="Function"
+      >EM&#8321;Rec.emloop-&#946;</a
+      ><a name="2722"
+      > </a
+      ><a name="2723" class="Symbol"
+      >(</a
+      ><a name="2724" class="Number"
+      >0</a
+      ><a name="2725"
+      > </a
+      ><a name="2726" href="lib.NType2.html#6769" class="Function Operator"
+      >-Type-level</a
+      ><a name="2737"
+      > </a
+      ><a name="2738" href="homotopy.EilenbergMacLane1.html#95" class="Bound"
+      >i</a
+      ><a name="2739" class="Symbol"
+      >)</a
+      ><a name="2740"
+      >
+                                     </a
+      ><a name="2778" class="Symbol"
+      >(</a
+      ><a name="2779" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="2783"
+      > </a
+      ><a name="2784" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2785"
+      > </a
+      ><a name="2786" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="2796" class="Symbol"
+      >)</a
+      ><a name="2797"
+      > </a
+      ><a name="2798" href="homotopy.EilenbergMacLane1.html#978" class="Function"
+      >Codes-hom</a
+      ><a name="2807"
+      > </a
+      ><a name="2808" href="homotopy.EilenbergMacLane1.html#2520" class="Bound"
+      >g</a
+      ><a name="2809" class="Symbol"
+      >))</a
+      ><a name="2811"
+      > </a
+      ><a name="2812" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2813"
+      >
+        </a
+      ><a name="2822" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="2831"
+      > </a
+      ><a name="2832" class="Symbol"
+      >(&#955;</a
+      ><a name="2834"
+      > </a
+      ><a name="2835" href="homotopy.EilenbergMacLane1.html#2835" class="Bound"
+      >w</a
+      ><a name="2836"
+      > </a
+      ><a name="2837" class="Symbol"
+      >&#8594;</a
+      ><a name="2838"
+      > </a
+      ><a name="2839" href="homotopy.EilenbergMacLane1.html#2522" class="Bound"
+      >g'</a
+      ><a name="2841"
+      > </a
+      ><a name="2842" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="2844"
+      > </a
+      ><a name="2845" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="2851"
+      > </a
+      ><a name="2852" href="homotopy.EilenbergMacLane1.html#2522" class="Bound"
+      >g'</a
+      ><a name="2854"
+      > </a
+      ><a name="2855" href="homotopy.EilenbergMacLane1.html#2520" class="Bound"
+      >g</a
+      ><a name="2856"
+      > </a
+      ><a name="2857" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="2858"
+      > </a
+      ><a name="2859" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="2862"
+      > </a
+      ><a name="2863" class="Symbol"
+      >_</a
+      ><a name="2864"
+      > </a
+      ><a name="2865" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="2866"
+      > </a
+      ><a name="2867" href="homotopy.EilenbergMacLane1.html#2835" class="Bound"
+      >w</a
+      ><a name="2868"
+      > </a
+      ><a name="2869" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="2870" class="Symbol"
+      >)</a
+      ><a name="2871"
+      >
+                  </a
+      ><a name="2890" class="Symbol"
+      >(</a
+      ><a name="2891" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2892"
+      > </a
+      ><a name="2893" class="Symbol"
+      >(</a
+      ><a name="2894" href="lib.types.Sigma.html#2133" class="Function"
+      >fst=-&#946;</a
+      ><a name="2900"
+      > </a
+      ><a name="2901" class="Symbol"
+      >(</a
+      ><a name="2902" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="2904"
+      > </a
+      ><a name="2905" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2906"
+      > </a
+      ><a name="2907" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="2917"
+      > </a
+      ><a name="2918" href="homotopy.EilenbergMacLane1.html#2520" class="Bound"
+      >g</a
+      ><a name="2919" class="Symbol"
+      >)</a
+      ><a name="2920"
+      > </a
+      ><a name="2921" class="Symbol"
+      >_))</a
+      ><a name="2924"
+      > </a
+      ><a name="2925" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2926"
+      >
+        </a
+      ><a name="2935" href="lib.Univalence.html#1636" class="Function"
+      >&#8595;-idf-ua-in</a
+      ><a name="2946"
+      > </a
+      ><a name="2947" class="Symbol"
+      >(</a
+      ><a name="2948" href="homotopy.EilenbergMacLane1.html#156" class="Function"
+      >comp-equiv</a
+      ><a name="2958"
+      > </a
+      ><a name="2959" href="homotopy.EilenbergMacLane1.html#2520" class="Bound"
+      >g</a
+      ><a name="2960" class="Symbol"
+      >)</a
+      ><a name="2961"
+      > </a
+      ><a name="2962" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2965"
+      >
+
+
+    </a
+      ><a name="2972" href="homotopy.EilenbergMacLane1.html#2972" class="Function"
+      >encode</a
+      ><a name="2978"
+      > </a
+      ><a name="2979" class="Symbol"
+      >:</a
+      ><a name="2980"
+      > </a
+      ><a name="2981" class="Symbol"
+      >{</a
+      ><a name="2982" href="homotopy.EilenbergMacLane1.html#2982" class="Bound"
+      >x</a
+      ><a name="2983"
+      > </a
+      ><a name="2984" class="Symbol"
+      >:</a
+      ><a name="2985"
+      > </a
+      ><a name="2986" href="lib.types.EilenbergMacLane1.html#404" class="Postulate"
+      >EM&#8321;</a
+      ><a name="2989"
+      > </a
+      ><a name="2990" href="homotopy.EilenbergMacLane1.html#99" class="Bound"
+      >G</a
+      ><a name="2991" class="Symbol"
+      >}</a
+      ><a name="2992"
+      > </a
+      ><a name="2993" class="Symbol"
+      >&#8594;</a
+      ><a name="2994"
+      > </a
+      ><a name="2995" href="lib.types.EilenbergMacLane1.html#713" class="Function"
+      >embase</a
+      ><a name="3001"
+      > </a
+      ><a name="3002" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3004"
+      > </a
+      ><a name="3005" href="homotopy.EilenbergMacLane1.html#2982" class="Bound"
+      >x</a
+      ><a name="3006"
+      > </a
+      ><a name="3007" class="Symbol"
+      >&#8594;</a
+      ><a name="3008"
+      > </a
+      ><a name="3009" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="3012"
+      > </a
+      ><a name="3013" class="Symbol"
+      >(</a
+      ><a name="3014" href="homotopy.EilenbergMacLane1.html#2254" class="Function"
+      >Codes</a
+      ><a name="3019"
+      > </a
+      ><a name="3020" href="homotopy.EilenbergMacLane1.html#2982" class="Bound"
+      >x</a
+      ><a name="3021" class="Symbol"
+      >)</a
+      ><a name="3022"
+      >
+    </a
+      ><a name="3027" href="homotopy.EilenbergMacLane1.html#2972" class="Function"
+      >encode</a
+      ><a name="3033"
+      > </a
+      ><a name="3034" href="homotopy.EilenbergMacLane1.html#3034" class="Bound"
+      >&#945;</a
+      ><a name="3035"
+      > </a
+      ><a name="3036" class="Symbol"
+      >=</a
+      ><a name="3037"
+      > </a
+      ><a name="3038" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="3047"
+      > </a
+      ><a name="3048" class="Symbol"
+      >(</a
+      ><a name="3049" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="3052"
+      > </a
+      ><a name="3053" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3054"
+      > </a
+      ><a name="3055" href="homotopy.EilenbergMacLane1.html#2254" class="Function"
+      >Codes</a
+      ><a name="3060" class="Symbol"
+      >)</a
+      ><a name="3061"
+      > </a
+      ><a name="3062" href="homotopy.EilenbergMacLane1.html#3034" class="Bound"
+      >&#945;</a
+      ><a name="3063"
+      > </a
+      ><a name="3064" href="lib.types.Group.html#276" class="Function"
+      >G.ident</a
+      ><a name="3071"
+      >
+
+    </a
+      ><a name="3077" href="homotopy.EilenbergMacLane1.html#3077" class="Function"
+      >encode-emloop</a
+      ><a name="3090"
+      > </a
+      ><a name="3091" class="Symbol"
+      >:</a
+      ><a name="3092"
+      > </a
+      ><a name="3093" class="Symbol"
+      >&#8704;</a
+      ><a name="3094"
+      > </a
+      ><a name="3095" href="homotopy.EilenbergMacLane1.html#3095" class="Bound"
+      >g</a
+      ><a name="3096"
+      > </a
+      ><a name="3097" class="Symbol"
+      >&#8594;</a
+      ><a name="3098"
+      > </a
+      ><a name="3099" href="homotopy.EilenbergMacLane1.html#2972" class="Function"
+      >encode</a
+      ><a name="3105"
+      > </a
+      ><a name="3106" class="Symbol"
+      >(</a
+      ><a name="3107" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="3113"
+      > </a
+      ><a name="3114" href="homotopy.EilenbergMacLane1.html#3095" class="Bound"
+      >g</a
+      ><a name="3115" class="Symbol"
+      >)</a
+      ><a name="3116"
+      > </a
+      ><a name="3117" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3119"
+      > </a
+      ><a name="3120" href="homotopy.EilenbergMacLane1.html#3095" class="Bound"
+      >g</a
+      ><a name="3121"
+      >
+    </a
+      ><a name="3126" href="homotopy.EilenbergMacLane1.html#3077" class="Function"
+      >encode-emloop</a
+      ><a name="3139"
+      > </a
+      ><a name="3140" href="homotopy.EilenbergMacLane1.html#3140" class="Bound"
+      >g</a
+      ><a name="3141"
+      > </a
+      ><a name="3142" class="Symbol"
+      >=</a
+      ><a name="3143"
+      > </a
+      ><a name="3144" href="lib.PathOver.html#6382" class="Function"
+      >to-transp</a
+      ><a name="3153"
+      > </a
+      ><a name="3154" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="3155"
+      >
+      </a
+      ><a name="3162" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="3171"
+      > </a
+      ><a name="3172" class="Symbol"
+      >(&#955;</a
+      ><a name="3174"
+      > </a
+      ><a name="3175" href="homotopy.EilenbergMacLane1.html#3175" class="Bound"
+      >x</a
+      ><a name="3176"
+      > </a
+      ><a name="3177" class="Symbol"
+      >&#8594;</a
+      ><a name="3178"
+      > </a
+      ><a name="3179" href="lib.types.Group.html#276" class="Function"
+      >G.ident</a
+      ><a name="3186"
+      > </a
+      ><a name="3187" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="3189"
+      > </a
+      ><a name="3190" href="homotopy.EilenbergMacLane1.html#3175" class="Bound"
+      >x</a
+      ><a name="3191"
+      > </a
+      ><a name="3192" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="3193"
+      > </a
+      ><a name="3194" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="3197"
+      > </a
+      ><a name="3198" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3199"
+      > </a
+      ><a name="3200" href="homotopy.EilenbergMacLane1.html#2254" class="Function"
+      >Codes</a
+      ><a name="3205"
+      > </a
+      ><a name="3206" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="3207"
+      > </a
+      ><a name="3208" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="3214"
+      > </a
+      ><a name="3215" href="homotopy.EilenbergMacLane1.html#3140" class="Bound"
+      >g</a
+      ><a name="3216"
+      > </a
+      ><a name="3217" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="3218" class="Symbol"
+      >)</a
+      ><a name="3219"
+      >
+                 </a
+      ><a name="3237" class="Symbol"
+      >(</a
+      ><a name="3238" href="lib.types.Group.html#339" class="Function"
+      >G.unit-l</a
+      ><a name="3246"
+      > </a
+      ><a name="3247" href="homotopy.EilenbergMacLane1.html#3140" class="Bound"
+      >g</a
+      ><a name="3248" class="Symbol"
+      >)</a
+      ><a name="3249"
+      > </a
+      ><a name="3250" class="Symbol"
+      >(</a
+      ><a name="3251" href="homotopy.EilenbergMacLane1.html#2432" class="Function"
+      >&#8595;-Codes-loop</a
+      ><a name="3263"
+      > </a
+      ><a name="3264" href="homotopy.EilenbergMacLane1.html#3140" class="Bound"
+      >g</a
+      ><a name="3265"
+      > </a
+      ><a name="3266" href="lib.types.Group.html#276" class="Function"
+      >G.ident</a
+      ><a name="3273" class="Symbol"
+      >)</a
+      ><a name="3274"
+      >
+
+    </a
+      ><a name="3280" href="homotopy.EilenbergMacLane1.html#3280" class="Function"
+      >decode</a
+      ><a name="3286"
+      > </a
+      ><a name="3287" class="Symbol"
+      >:</a
+      ><a name="3288"
+      > </a
+      ><a name="3289" class="Symbol"
+      >{</a
+      ><a name="3290" href="homotopy.EilenbergMacLane1.html#3290" class="Bound"
+      >x</a
+      ><a name="3291"
+      > </a
+      ><a name="3292" class="Symbol"
+      >:</a
+      ><a name="3293"
+      > </a
+      ><a name="3294" href="lib.types.EilenbergMacLane1.html#404" class="Postulate"
+      >EM&#8321;</a
+      ><a name="3297"
+      > </a
+      ><a name="3298" href="homotopy.EilenbergMacLane1.html#99" class="Bound"
+      >G</a
+      ><a name="3299" class="Symbol"
+      >}</a
+      ><a name="3300"
+      > </a
+      ><a name="3301" class="Symbol"
+      >&#8594;</a
+      ><a name="3302"
+      > </a
+      ><a name="3303" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="3306"
+      > </a
+      ><a name="3307" class="Symbol"
+      >(</a
+      ><a name="3308" href="homotopy.EilenbergMacLane1.html#2254" class="Function"
+      >Codes</a
+      ><a name="3313"
+      > </a
+      ><a name="3314" href="homotopy.EilenbergMacLane1.html#3290" class="Bound"
+      >x</a
+      ><a name="3315" class="Symbol"
+      >)</a
+      ><a name="3316"
+      > </a
+      ><a name="3317" class="Symbol"
+      >&#8594;</a
+      ><a name="3318"
+      > </a
+      ><a name="3319" href="lib.types.EilenbergMacLane1.html#713" class="Function"
+      >embase</a
+      ><a name="3325"
+      > </a
+      ><a name="3326" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3328"
+      > </a
+      ><a name="3329" href="homotopy.EilenbergMacLane1.html#3290" class="Bound"
+      >x</a
+      ><a name="3330"
+      >
+    </a
+      ><a name="3335" href="homotopy.EilenbergMacLane1.html#3280" class="Function"
+      >decode</a
+      ><a name="3341"
+      > </a
+      ><a name="3342" class="Symbol"
+      >{</a
+      ><a name="3343" href="homotopy.EilenbergMacLane1.html#3343" class="Bound"
+      >x</a
+      ><a name="3344" class="Symbol"
+      >}</a
+      ><a name="3345"
+      > </a
+      ><a name="3346" class="Symbol"
+      >=</a
+      ><a name="3347"
+      >
+      </a
+      ><a name="3354" href="lib.types.EilenbergMacLane1.html#1448" class="Postulate"
+      >EM&#8321;-elim</a
+      ><a name="3362"
+      > </a
+      ><a name="3363" class="Symbol"
+      >{</a
+      ><a name="3364" class="Argument"
+      >P</a
+      ><a name="3365"
+      > </a
+      ><a name="3366" class="Symbol"
+      >=</a
+      ><a name="3367"
+      > </a
+      ><a name="3368" class="Symbol"
+      >&#955;</a
+      ><a name="3369"
+      > </a
+      ><a name="3370" href="homotopy.EilenbergMacLane1.html#3370" class="Bound"
+      >x'</a
+      ><a name="3372"
+      > </a
+      ><a name="3373" class="Symbol"
+      >&#8594;</a
+      ><a name="3374"
+      > </a
+      ><a name="3375" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="3378"
+      > </a
+      ><a name="3379" class="Symbol"
+      >(</a
+      ><a name="3380" href="homotopy.EilenbergMacLane1.html#2254" class="Function"
+      >Codes</a
+      ><a name="3385"
+      > </a
+      ><a name="3386" href="homotopy.EilenbergMacLane1.html#3370" class="Bound"
+      >x'</a
+      ><a name="3388" class="Symbol"
+      >)</a
+      ><a name="3389"
+      > </a
+      ><a name="3390" class="Symbol"
+      >&#8594;</a
+      ><a name="3391"
+      > </a
+      ><a name="3392" href="lib.types.EilenbergMacLane1.html#713" class="Function"
+      >embase</a
+      ><a name="3398"
+      > </a
+      ><a name="3399" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3401"
+      > </a
+      ><a name="3402" href="homotopy.EilenbergMacLane1.html#3370" class="Bound"
+      >x'</a
+      ><a name="3404" class="Symbol"
+      >}</a
+      ><a name="3405"
+      >
+        </a
+      ><a name="3414" class="Symbol"
+      >(&#955;</a
+      ><a name="3416"
+      > </a
+      ><a name="3417" href="homotopy.EilenbergMacLane1.html#3417" class="Bound"
+      >_</a
+      ><a name="3418"
+      > </a
+      ><a name="3419" class="Symbol"
+      >&#8594;</a
+      ><a name="3420"
+      > </a
+      ><a name="3421" href="lib.types.Pi.html#188" class="Function"
+      >&#928;-level</a
+      ><a name="3428"
+      > </a
+      ><a name="3429" class="Symbol"
+      >(&#955;</a
+      ><a name="3431"
+      > </a
+      ><a name="3432" href="homotopy.EilenbergMacLane1.html#3432" class="Bound"
+      >_</a
+      ><a name="3433"
+      > </a
+      ><a name="3434" class="Symbol"
+      >&#8594;</a
+      ><a name="3435"
+      > </a
+      ><a name="3436" href="lib.NType.html#3994" class="Function"
+      >=-preserves-level</a
+      ><a name="3453"
+      > </a
+      ><a name="3454" href="lib.types.EilenbergMacLane1.html#786" class="Function"
+      >EM&#8321;-level</a
+      ><a name="3463" class="Symbol"
+      >))</a
+      ><a name="3465"
+      >
+        </a
+      ><a name="3474" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="3480"
+      >
+        </a
+      ><a name="3489" href="homotopy.EilenbergMacLane1.html#3604" class="Function"
+      >loop'</a
+      ><a name="3494"
+      >
+        </a
+      ><a name="3503" class="Symbol"
+      >(&#955;</a
+      ><a name="3505"
+      > </a
+      ><a name="3506" href="homotopy.EilenbergMacLane1.html#3506" class="Bound"
+      >_</a
+      ><a name="3507"
+      > </a
+      ><a name="3508" href="homotopy.EilenbergMacLane1.html#3508" class="Bound"
+      >_</a
+      ><a name="3509"
+      > </a
+      ><a name="3510" class="Symbol"
+      >&#8594;</a
+      ><a name="3511"
+      > </a
+      ><a name="3512" href="lib.NType2.html#1216" class="Function"
+      >prop-has-all-paths-&#8595;</a
+      ><a name="3532"
+      > </a
+      ><a name="3533" class="Symbol"
+      >(</a
+      ><a name="3534" href="lib.NType2.html#699" class="Function"
+      >&#8595;-level</a
+      ><a name="3541"
+      > </a
+      ><a name="3542" class="Symbol"
+      >(</a
+      ><a name="3543" href="lib.types.Pi.html#188" class="Function"
+      >&#928;-level</a
+      ><a name="3550"
+      > </a
+      ><a name="3551" class="Symbol"
+      >(&#955;</a
+      ><a name="3553"
+      > </a
+      ><a name="3554" href="homotopy.EilenbergMacLane1.html#3554" class="Bound"
+      >_</a
+      ><a name="3555"
+      > </a
+      ><a name="3556" class="Symbol"
+      >&#8594;</a
+      ><a name="3557"
+      > </a
+      ><a name="3558" href="lib.types.EilenbergMacLane1.html#786" class="Function"
+      >EM&#8321;-level</a
+      ><a name="3567"
+      > </a
+      ><a name="3568" class="Symbol"
+      >_</a
+      ><a name="3569"
+      > </a
+      ><a name="3570" class="Symbol"
+      >_))))</a
+      ><a name="3575"
+      >
+        </a
+      ><a name="3584" href="homotopy.EilenbergMacLane1.html#3343" class="Bound"
+      >x</a
+      ><a name="3585"
+      >
+      </a
+      ><a name="3592" class="Keyword"
+      >where</a
+      ><a name="3597"
+      >
+      </a
+      ><a name="3604" href="homotopy.EilenbergMacLane1.html#3604" class="Function"
+      >loop'</a
+      ><a name="3609"
+      > </a
+      ><a name="3610" class="Symbol"
+      >:</a
+      ><a name="3611"
+      > </a
+      ><a name="3612" class="Symbol"
+      >(</a
+      ><a name="3613" href="homotopy.EilenbergMacLane1.html#3613" class="Bound"
+      >g</a
+      ><a name="3614"
+      > </a
+      ><a name="3615" class="Symbol"
+      >:</a
+      ><a name="3616"
+      > </a
+      ><a name="3617" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="3621" class="Symbol"
+      >)</a
+      ><a name="3622"
+      >
+        </a
+      ><a name="3631" class="Symbol"
+      >&#8594;</a
+      ><a name="3632"
+      > </a
+      ><a name="3633" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="3639"
+      > </a
+      ><a name="3640" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="3642"
+      > </a
+      ><a name="3643" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="3649"
+      > </a
+      ><a name="3650" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="3651"
+      > </a
+      ><a name="3652" class="Symbol"
+      >(&#955;</a
+      ><a name="3654"
+      > </a
+      ><a name="3655" href="homotopy.EilenbergMacLane1.html#3655" class="Bound"
+      >x'</a
+      ><a name="3657"
+      > </a
+      ><a name="3658" class="Symbol"
+      >&#8594;</a
+      ><a name="3659"
+      > </a
+      ><a name="3660" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="3663"
+      > </a
+      ><a name="3664" class="Symbol"
+      >(</a
+      ><a name="3665" href="homotopy.EilenbergMacLane1.html#2254" class="Function"
+      >Codes</a
+      ><a name="3670"
+      > </a
+      ><a name="3671" href="homotopy.EilenbergMacLane1.html#3655" class="Bound"
+      >x'</a
+      ><a name="3673" class="Symbol"
+      >)</a
+      ><a name="3674"
+      > </a
+      ><a name="3675" class="Symbol"
+      >&#8594;</a
+      ><a name="3676"
+      > </a
+      ><a name="3677" href="lib.types.EilenbergMacLane1.html#713" class="Function"
+      >embase</a
+      ><a name="3683"
+      > </a
+      ><a name="3684" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3686"
+      > </a
+      ><a name="3687" href="homotopy.EilenbergMacLane1.html#3655" class="Bound"
+      >x'</a
+      ><a name="3689" class="Symbol"
+      >)</a
+      ><a name="3690"
+      > </a
+      ><a name="3691" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="3692"
+      > </a
+      ><a name="3693" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="3699"
+      > </a
+      ><a name="3700" href="homotopy.EilenbergMacLane1.html#3613" class="Bound"
+      >g</a
+      ><a name="3701"
+      > </a
+      ><a name="3702" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="3703"
+      >
+      </a
+      ><a name="3710" href="homotopy.EilenbergMacLane1.html#3604" class="Function"
+      >loop'</a
+      ><a name="3715"
+      > </a
+      ><a name="3716" href="homotopy.EilenbergMacLane1.html#3716" class="Bound"
+      >g</a
+      ><a name="3717"
+      > </a
+      ><a name="3718" class="Symbol"
+      >=</a
+      ><a name="3719"
+      > </a
+      ><a name="3720" href="lib.types.Pi.html#8346" class="Function"
+      >&#8595;-&#8594;-from-transp</a
+      ><a name="3735"
+      > </a
+      ><a name="3736" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="3737"
+      > </a
+      ><a name="3738" href="lib.Funext.html#3966" class="Function"
+      >&#955;=</a
+      ><a name="3740"
+      > </a
+      ><a name="3741" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="3742"
+      > </a
+      ><a name="3743" class="Symbol"
+      >&#955;</a
+      ><a name="3744"
+      > </a
+      ><a name="3745" href="homotopy.EilenbergMacLane1.html#3745" class="Bound"
+      >y</a
+      ><a name="3746"
+      > </a
+      ><a name="3747" class="Symbol"
+      >&#8594;</a
+      ><a name="3748"
+      >
+        </a
+      ><a name="3757" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="3766"
+      > </a
+      ><a name="3767" class="Symbol"
+      >(&#955;</a
+      ><a name="3769"
+      > </a
+      ><a name="3770" href="homotopy.EilenbergMacLane1.html#3770" class="Bound"
+      >z</a
+      ><a name="3771"
+      > </a
+      ><a name="3772" class="Symbol"
+      >&#8594;</a
+      ><a name="3773"
+      > </a
+      ><a name="3774" href="lib.types.EilenbergMacLane1.html#713" class="Function"
+      >embase</a
+      ><a name="3780"
+      > </a
+      ><a name="3781" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3783"
+      > </a
+      ><a name="3784" href="homotopy.EilenbergMacLane1.html#3770" class="Bound"
+      >z</a
+      ><a name="3785" class="Symbol"
+      >)</a
+      ><a name="3786"
+      > </a
+      ><a name="3787" class="Symbol"
+      >(</a
+      ><a name="3788" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="3794"
+      > </a
+      ><a name="3795" href="homotopy.EilenbergMacLane1.html#3716" class="Bound"
+      >g</a
+      ><a name="3796" class="Symbol"
+      >)</a
+      ><a name="3797"
+      > </a
+      ><a name="3798" class="Symbol"
+      >(</a
+      ><a name="3799" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="3805"
+      > </a
+      ><a name="3806" href="homotopy.EilenbergMacLane1.html#3745" class="Bound"
+      >y</a
+      ><a name="3807" class="Symbol"
+      >)</a
+      ><a name="3808"
+      >
+          </a
+      ><a name="3819" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="3821"
+      > </a
+      ><a name="3822" href="lib.PathFunctor.html#5366" class="Function"
+      >transp-cst=idf</a
+      ><a name="3836"
+      > </a
+      ><a name="3837" class="Symbol"
+      >(</a
+      ><a name="3838" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="3844"
+      > </a
+      ><a name="3845" href="homotopy.EilenbergMacLane1.html#3716" class="Bound"
+      >g</a
+      ><a name="3846" class="Symbol"
+      >)</a
+      ><a name="3847"
+      > </a
+      ><a name="3848" class="Symbol"
+      >(</a
+      ><a name="3849" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="3855"
+      > </a
+      ><a name="3856" href="homotopy.EilenbergMacLane1.html#3745" class="Bound"
+      >y</a
+      ><a name="3857" class="Symbol"
+      >)</a
+      ><a name="3858"
+      > </a
+      ><a name="3859" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="3860"
+      >
+        </a
+      ><a name="3869" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="3875"
+      > </a
+      ><a name="3876" href="homotopy.EilenbergMacLane1.html#3745" class="Bound"
+      >y</a
+      ><a name="3877"
+      > </a
+      ><a name="3878" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3879"
+      > </a
+      ><a name="3880" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="3886"
+      > </a
+      ><a name="3887" href="homotopy.EilenbergMacLane1.html#3716" class="Bound"
+      >g</a
+      ><a name="3888"
+      >
+          </a
+      ><a name="3899" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="3901"
+      > </a
+      ><a name="3902" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3903"
+      > </a
+      ><a name="3904" class="Symbol"
+      >(</a
+      ><a name="3905" href="lib.types.EilenbergMacLane1.html#755" class="Function"
+      >emloop-comp</a
+      ><a name="3916"
+      > </a
+      ><a name="3917" href="homotopy.EilenbergMacLane1.html#3745" class="Bound"
+      >y</a
+      ><a name="3918"
+      > </a
+      ><a name="3919" href="homotopy.EilenbergMacLane1.html#3716" class="Bound"
+      >g</a
+      ><a name="3920" class="Symbol"
+      >)</a
+      ><a name="3921"
+      > </a
+      ><a name="3922" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="3923"
+      >
+        </a
+      ><a name="3932" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="3938"
+      > </a
+      ><a name="3939" class="Symbol"
+      >(</a
+      ><a name="3940" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="3946"
+      > </a
+      ><a name="3947" href="homotopy.EilenbergMacLane1.html#3745" class="Bound"
+      >y</a
+      ><a name="3948"
+      > </a
+      ><a name="3949" href="homotopy.EilenbergMacLane1.html#3716" class="Bound"
+      >g</a
+      ><a name="3950" class="Symbol"
+      >)</a
+      ><a name="3951"
+      >
+          </a
+      ><a name="3962" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="3964"
+      > </a
+      ><a name="3965" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3967"
+      > </a
+      ><a name="3968" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="3974"
+      > </a
+      ><a name="3975" class="Symbol"
+      >(</a
+      ><a name="3976" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3977"
+      > </a
+      ><a name="3978" class="Symbol"
+      >(</a
+      ><a name="3979" href="lib.PathOver.html#6382" class="Function"
+      >to-transp</a
+      ><a name="3988"
+      > </a
+      ><a name="3989" class="Symbol"
+      >(</a
+      ><a name="3990" href="homotopy.EilenbergMacLane1.html#2432" class="Function"
+      >&#8595;-Codes-loop</a
+      ><a name="4002"
+      > </a
+      ><a name="4003" href="homotopy.EilenbergMacLane1.html#3716" class="Bound"
+      >g</a
+      ><a name="4004"
+      > </a
+      ><a name="4005" href="homotopy.EilenbergMacLane1.html#3745" class="Bound"
+      >y</a
+      ><a name="4006" class="Symbol"
+      >)))</a
+      ><a name="4009"
+      > </a
+      ><a name="4010" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4011"
+      >
+        </a
+      ><a name="4020" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="4026"
+      > </a
+      ><a name="4027" class="Symbol"
+      >(</a
+      ><a name="4028" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="4037"
+      > </a
+      ><a name="4038" class="Symbol"
+      >(&#955;</a
+      ><a name="4040"
+      > </a
+      ><a name="4041" href="homotopy.EilenbergMacLane1.html#4041" class="Bound"
+      >z</a
+      ><a name="4042"
+      > </a
+      ><a name="4043" class="Symbol"
+      >&#8594;</a
+      ><a name="4044"
+      > </a
+      ><a name="4045" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="4048"
+      > </a
+      ><a name="4049" class="Symbol"
+      >(</a
+      ><a name="4050" href="homotopy.EilenbergMacLane1.html#2254" class="Function"
+      >Codes</a
+      ><a name="4055"
+      > </a
+      ><a name="4056" href="homotopy.EilenbergMacLane1.html#4041" class="Bound"
+      >z</a
+      ><a name="4057" class="Symbol"
+      >))</a
+      ><a name="4059"
+      > </a
+      ><a name="4060" class="Symbol"
+      >(</a
+      ><a name="4061" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="4067"
+      > </a
+      ><a name="4068" href="homotopy.EilenbergMacLane1.html#3716" class="Bound"
+      >g</a
+      ><a name="4069" class="Symbol"
+      >)</a
+      ><a name="4070"
+      > </a
+      ><a name="4071" href="homotopy.EilenbergMacLane1.html#3745" class="Bound"
+      >y</a
+      ><a name="4072" class="Symbol"
+      >)</a
+      ><a name="4073"
+      > </a
+      ><a name="4074" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="4076"
+      >
+
+    </a
+      ><a name="4082" href="homotopy.EilenbergMacLane1.html#4082" class="Function"
+      >decode-encode</a
+      ><a name="4095"
+      > </a
+      ><a name="4096" class="Symbol"
+      >:</a
+      ><a name="4097"
+      > </a
+      ><a name="4098" class="Symbol"
+      >&#8704;</a
+      ><a name="4099"
+      > </a
+      ><a name="4100" class="Symbol"
+      >{</a
+      ><a name="4101" href="homotopy.EilenbergMacLane1.html#4101" class="Bound"
+      >x</a
+      ><a name="4102" class="Symbol"
+      >}</a
+      ><a name="4103"
+      > </a
+      ><a name="4104" class="Symbol"
+      >(</a
+      ><a name="4105" href="homotopy.EilenbergMacLane1.html#4105" class="Bound"
+      >&#945;</a
+      ><a name="4106"
+      > </a
+      ><a name="4107" class="Symbol"
+      >:</a
+      ><a name="4108"
+      > </a
+      ><a name="4109" href="lib.types.EilenbergMacLane1.html#421" class="Postulate"
+      >embase'</a
+      ><a name="4116"
+      > </a
+      ><a name="4117" href="homotopy.EilenbergMacLane1.html#99" class="Bound"
+      >G</a
+      ><a name="4118"
+      > </a
+      ><a name="4119" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4121"
+      > </a
+      ><a name="4122" href="homotopy.EilenbergMacLane1.html#4101" class="Bound"
+      >x</a
+      ><a name="4123" class="Symbol"
+      >)</a
+      ><a name="4124"
+      > </a
+      ><a name="4125" class="Symbol"
+      >&#8594;</a
+      ><a name="4126"
+      > </a
+      ><a name="4127" href="homotopy.EilenbergMacLane1.html#3280" class="Function"
+      >decode</a
+      ><a name="4133"
+      > </a
+      ><a name="4134" class="Symbol"
+      >(</a
+      ><a name="4135" href="homotopy.EilenbergMacLane1.html#2972" class="Function"
+      >encode</a
+      ><a name="4141"
+      > </a
+      ><a name="4142" href="homotopy.EilenbergMacLane1.html#4105" class="Bound"
+      >&#945;</a
+      ><a name="4143" class="Symbol"
+      >)</a
+      ><a name="4144"
+      > </a
+      ><a name="4145" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4147"
+      > </a
+      ><a name="4148" href="homotopy.EilenbergMacLane1.html#4105" class="Bound"
+      >&#945;</a
+      ><a name="4149"
+      >
+    </a
+      ><a name="4154" href="homotopy.EilenbergMacLane1.html#4082" class="Function"
+      >decode-encode</a
+      ><a name="4167"
+      > </a
+      ><a name="4168" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4171"
+      > </a
+      ><a name="4172" class="Symbol"
+      >=</a
+      ><a name="4173"
+      > </a
+      ><a name="4174" href="lib.types.EilenbergMacLane1.html#893" class="Function"
+      >emloop-ident</a
+      ><a name="4186"
+      > </a
+      ><a name="4187" class="Symbol"
+      >{</a
+      ><a name="4188" class="Argument"
+      >G</a
+      ><a name="4189"
+      > </a
+      ><a name="4190" class="Symbol"
+      >=</a
+      ><a name="4191"
+      > </a
+      ><a name="4192" href="homotopy.EilenbergMacLane1.html#99" class="Bound"
+      >G</a
+      ><a name="4193" class="Symbol"
+      >}</a
+      ><a name="4194"
+      >
+
+    </a
+      ><a name="4200" href="homotopy.EilenbergMacLane1.html#4200" class="Function"
+      >emloop-equiv</a
+      ><a name="4212"
+      > </a
+      ><a name="4213" class="Symbol"
+      >:</a
+      ><a name="4214"
+      > </a
+      ><a name="4215" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="4219"
+      > </a
+      ><a name="4220" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="4221"
+      > </a
+      ><a name="4222" class="Symbol"
+      >(</a
+      ><a name="4223" href="lib.types.EilenbergMacLane1.html#421" class="Postulate"
+      >embase'</a
+      ><a name="4230"
+      > </a
+      ><a name="4231" href="homotopy.EilenbergMacLane1.html#99" class="Bound"
+      >G</a
+      ><a name="4232"
+      > </a
+      ><a name="4233" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4235"
+      > </a
+      ><a name="4236" href="lib.types.EilenbergMacLane1.html#713" class="Function"
+      >embase</a
+      ><a name="4242" class="Symbol"
+      >)</a
+      ><a name="4243"
+      >
+    </a
+      ><a name="4248" href="homotopy.EilenbergMacLane1.html#4200" class="Function"
+      >emloop-equiv</a
+      ><a name="4260"
+      > </a
+      ><a name="4261" class="Symbol"
+      >=</a
+      ><a name="4262"
+      > </a
+      ><a name="4263" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="4268"
+      > </a
+      ><a name="4269" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="4275"
+      > </a
+      ><a name="4276" href="homotopy.EilenbergMacLane1.html#2972" class="Function"
+      >encode</a
+      ><a name="4282"
+      > </a
+      ><a name="4283" href="homotopy.EilenbergMacLane1.html#4082" class="Function"
+      >decode-encode</a
+      ><a name="4296"
+      > </a
+      ><a name="4297" href="homotopy.EilenbergMacLane1.html#3077" class="Function"
+      >encode-emloop</a
+      ><a name="4310"
+      >
+
+  </a
+      ><a name="4314" href="homotopy.EilenbergMacLane1.html#4314" class="Function"
+      >&#937;&#185;-EM&#8321;</a
+      ><a name="4320"
+      > </a
+      ><a name="4321" class="Symbol"
+      >:</a
+      ><a name="4322"
+      > </a
+      ><a name="4323" href="lib.groups.LoopSpace.html#612" class="Function"
+      >&#937;^S-group</a
+      ><a name="4332"
+      > </a
+      ><a name="4333" class="Number"
+      >0</a
+      ><a name="4334"
+      > </a
+      ><a name="4335" class="Symbol"
+      >(</a
+      ><a name="4336" href="lib.types.EilenbergMacLane1.html#606" class="Function"
+      >&#8857;EM&#8321;</a
+      ><a name="4340"
+      > </a
+      ><a name="4341" href="homotopy.EilenbergMacLane1.html#99" class="Bound"
+      >G</a
+      ><a name="4342" class="Symbol"
+      >)</a
+      ><a name="4343"
+      > </a
+      ><a name="4344" href="lib.types.EilenbergMacLane1.html#786" class="Function"
+      >EM&#8321;-level</a
+      ><a name="4353"
+      > </a
+      ><a name="4354" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="4356"
+      > </a
+      ><a name="4357" href="homotopy.EilenbergMacLane1.html#99" class="Bound"
+      >G</a
+      ><a name="4358"
+      >
+  </a
+      ><a name="4361" href="homotopy.EilenbergMacLane1.html#4314" class="Function"
+      >&#937;&#185;-EM&#8321;</a
+      ><a name="4367"
+      > </a
+      ><a name="4368" class="Symbol"
+      >=</a
+      ><a name="4369"
+      > </a
+      ><a name="4370" href="lib.groups.Isomorphism.html#980" class="Function"
+      >&#8771;-to-&#8771;&#7475;</a
+      ><a name="4377"
+      > </a
+      ><a name="4378" class="Symbol"
+      >(</a
+      ><a name="4379" href="homotopy.EilenbergMacLane1.html#4200" class="Function"
+      >emloop-equiv</a
+      ><a name="4391"
+      > </a
+      ><a name="4392" href="lib.Equivalence.html#8519" class="Function Operator"
+      >&#8315;&#185;</a
+      ><a name="4394" class="Symbol"
+      >)</a
+      ><a name="4395"
+      >
+    </a
+      ><a name="4400" class="Symbol"
+      >(&#955;</a
+      ><a name="4402"
+      > </a
+      ><a name="4403" href="homotopy.EilenbergMacLane1.html#4403" class="Bound"
+      >l&#8321;</a
+      ><a name="4405"
+      > </a
+      ><a name="4406" href="homotopy.EilenbergMacLane1.html#4406" class="Bound"
+      >l&#8322;</a
+      ><a name="4408"
+      > </a
+      ><a name="4409" class="Symbol"
+      >&#8594;</a
+      ><a name="4410"
+      > </a
+      ><a name="4411" href="lib.Equivalence.html#4849" class="Function"
+      >&lt;&#8211;</a
+      ><a name="4413"
+      > </a
+      ><a name="4414" class="Symbol"
+      >(</a
+      ><a name="4415" href="lib.Equivalence.html#11156" class="Function"
+      >ap-equiv</a
+      ><a name="4423"
+      > </a
+      ><a name="4424" href="homotopy.EilenbergMacLane1.html#4200" class="Function"
+      >emloop-equiv</a
+      ><a name="4436"
+      > </a
+      ><a name="4437" class="Symbol"
+      >_</a
+      ><a name="4438"
+      > </a
+      ><a name="4439" class="Symbol"
+      >_)</a
+      ><a name="4441"
+      > </a
+      ><a name="4442" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="4443"
+      >
+      </a
+      ><a name="4450" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="4456"
+      > </a
+      ><a name="4457" class="Symbol"
+      >(</a
+      ><a name="4458" href="homotopy.EilenbergMacLane1.html#2972" class="Function"
+      >encode</a
+      ><a name="4464"
+      > </a
+      ><a name="4465" class="Symbol"
+      >(</a
+      ><a name="4466" href="homotopy.EilenbergMacLane1.html#4403" class="Bound"
+      >l&#8321;</a
+      ><a name="4468"
+      > </a
+      ><a name="4469" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4470"
+      > </a
+      ><a name="4471" href="homotopy.EilenbergMacLane1.html#4406" class="Bound"
+      >l&#8322;</a
+      ><a name="4473" class="Symbol"
+      >))</a
+      ><a name="4475"
+      >
+        </a
+      ><a name="4484" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4486"
+      > </a
+      ><a name="4487" href="homotopy.EilenbergMacLane1.html#4082" class="Function"
+      >decode-encode</a
+      ><a name="4500"
+      > </a
+      ><a name="4501" class="Symbol"
+      >(</a
+      ><a name="4502" href="homotopy.EilenbergMacLane1.html#4403" class="Bound"
+      >l&#8321;</a
+      ><a name="4504"
+      > </a
+      ><a name="4505" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4506"
+      > </a
+      ><a name="4507" href="homotopy.EilenbergMacLane1.html#4406" class="Bound"
+      >l&#8322;</a
+      ><a name="4509" class="Symbol"
+      >)</a
+      ><a name="4510"
+      > </a
+      ><a name="4511" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4512"
+      >
+      </a
+      ><a name="4519" href="homotopy.EilenbergMacLane1.html#4403" class="Bound"
+      >l&#8321;</a
+      ><a name="4521"
+      > </a
+      ><a name="4522" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4523"
+      > </a
+      ><a name="4524" href="homotopy.EilenbergMacLane1.html#4406" class="Bound"
+      >l&#8322;</a
+      ><a name="4526"
+      >
+        </a
+      ><a name="4535" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4537"
+      > </a
+      ><a name="4538" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4539"
+      > </a
+      ><a name="4540" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="4541"
+      > </a
+      ><a name="4542" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="4545"
+      > </a
+      ><a name="4546" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >_&#8729;_</a
+      ><a name="4549"
+      > </a
+      ><a name="4550" class="Symbol"
+      >(</a
+      ><a name="4551" href="homotopy.EilenbergMacLane1.html#4082" class="Function"
+      >decode-encode</a
+      ><a name="4564"
+      > </a
+      ><a name="4565" href="homotopy.EilenbergMacLane1.html#4403" class="Bound"
+      >l&#8321;</a
+      ><a name="4567" class="Symbol"
+      >)</a
+      ><a name="4568"
+      > </a
+      ><a name="4569" class="Symbol"
+      >(</a
+      ><a name="4570" href="homotopy.EilenbergMacLane1.html#4082" class="Function"
+      >decode-encode</a
+      ><a name="4583"
+      > </a
+      ><a name="4584" href="homotopy.EilenbergMacLane1.html#4406" class="Bound"
+      >l&#8322;</a
+      ><a name="4586" class="Symbol"
+      >)</a
+      ><a name="4587"
+      > </a
+      ><a name="4588" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4589"
+      >
+      </a
+      ><a name="4596" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="4602"
+      > </a
+      ><a name="4603" class="Symbol"
+      >(</a
+      ><a name="4604" href="homotopy.EilenbergMacLane1.html#2972" class="Function"
+      >encode</a
+      ><a name="4610"
+      > </a
+      ><a name="4611" href="homotopy.EilenbergMacLane1.html#4403" class="Bound"
+      >l&#8321;</a
+      ><a name="4613" class="Symbol"
+      >)</a
+      ><a name="4614"
+      > </a
+      ><a name="4615" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4616"
+      > </a
+      ><a name="4617" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="4623"
+      > </a
+      ><a name="4624" class="Symbol"
+      >(</a
+      ><a name="4625" href="homotopy.EilenbergMacLane1.html#2972" class="Function"
+      >encode</a
+      ><a name="4631"
+      > </a
+      ><a name="4632" href="homotopy.EilenbergMacLane1.html#4406" class="Bound"
+      >l&#8322;</a
+      ><a name="4634" class="Symbol"
+      >)</a
+      ><a name="4635"
+      >
+        </a
+      ><a name="4644" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4646"
+      > </a
+      ><a name="4647" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4648"
+      > </a
+      ><a name="4649" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="4650"
+      > </a
+      ><a name="4651" href="lib.types.EilenbergMacLane1.html#755" class="Function"
+      >emloop-comp</a
+      ><a name="4662"
+      > </a
+      ><a name="4663" class="Symbol"
+      >(</a
+      ><a name="4664" href="homotopy.EilenbergMacLane1.html#2972" class="Function"
+      >encode</a
+      ><a name="4670"
+      > </a
+      ><a name="4671" href="homotopy.EilenbergMacLane1.html#4403" class="Bound"
+      >l&#8321;</a
+      ><a name="4673" class="Symbol"
+      >)</a
+      ><a name="4674"
+      > </a
+      ><a name="4675" class="Symbol"
+      >(</a
+      ><a name="4676" href="homotopy.EilenbergMacLane1.html#2972" class="Function"
+      >encode</a
+      ><a name="4682"
+      > </a
+      ><a name="4683" href="homotopy.EilenbergMacLane1.html#4406" class="Bound"
+      >l&#8322;</a
+      ><a name="4685" class="Symbol"
+      >)</a
+      ><a name="4686"
+      > </a
+      ><a name="4687" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4688"
+      >
+      </a
+      ><a name="4695" href="lib.types.EilenbergMacLane1.html#734" class="Function"
+      >emloop</a
+      ><a name="4701"
+      > </a
+      ><a name="4702" class="Symbol"
+      >(</a
+      ><a name="4703" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="4709"
+      > </a
+      ><a name="4710" class="Symbol"
+      >(</a
+      ><a name="4711" href="homotopy.EilenbergMacLane1.html#2972" class="Function"
+      >encode</a
+      ><a name="4717"
+      > </a
+      ><a name="4718" href="homotopy.EilenbergMacLane1.html#4403" class="Bound"
+      >l&#8321;</a
+      ><a name="4720" class="Symbol"
+      >)</a
+      ><a name="4721"
+      > </a
+      ><a name="4722" class="Symbol"
+      >(</a
+      ><a name="4723" href="homotopy.EilenbergMacLane1.html#2972" class="Function"
+      >encode</a
+      ><a name="4729"
+      > </a
+      ><a name="4730" href="homotopy.EilenbergMacLane1.html#4406" class="Bound"
+      >l&#8322;</a
+      ><a name="4732" class="Symbol"
+      >))</a
+      ><a name="4734"
+      >
+        </a
+      ><a name="4743" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="4745" class="Symbol"
+      >)</a
+      ><a name="4746"
+      >
+
+  </a
+      ><a name="4750" href="homotopy.EilenbergMacLane1.html#4750" class="Function"
+      >&#960;&#8321;-EM&#8321;</a
+      ><a name="4756"
+      > </a
+      ><a name="4757" class="Symbol"
+      >:</a
+      ><a name="4758"
+      > </a
+      ><a name="4759" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="4761"
+      > </a
+      ><a name="4762" class="Number"
+      >0</a
+      ><a name="4763"
+      > </a
+      ><a name="4764" class="Symbol"
+      >(</a
+      ><a name="4765" href="lib.types.EilenbergMacLane1.html#606" class="Function"
+      >&#8857;EM&#8321;</a
+      ><a name="4769"
+      > </a
+      ><a name="4770" href="homotopy.EilenbergMacLane1.html#99" class="Bound"
+      >G</a
+      ><a name="4771" class="Symbol"
+      >)</a
+      ><a name="4772"
+      > </a
+      ><a name="4773" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="4775"
+      > </a
+      ><a name="4776" href="homotopy.EilenbergMacLane1.html#99" class="Bound"
+      >G</a
+      ><a name="4777"
+      >
+  </a
+      ><a name="4780" href="homotopy.EilenbergMacLane1.html#4750" class="Function"
+      >&#960;&#8321;-EM&#8321;</a
+      ><a name="4786"
+      > </a
+      ><a name="4787" class="Symbol"
+      >=</a
+      ><a name="4788"
+      > </a
+      ><a name="4789" href="homotopy.EilenbergMacLane1.html#4314" class="Function"
+      >&#937;&#185;-EM&#8321;</a
+      ><a name="4795"
+      > </a
+      ><a name="4796" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="4799"
+      > </a
+      ><a name="4800" href="lib.groups.TruncationGroup.html#4001" class="Function"
+      >unTrunc-iso</a
+      ><a name="4811"
+      > </a
+      ><a name="4812" class="Symbol"
+      >(</a
+      ><a name="4813" href="lib.groups.LoopSpace.html#375" class="Function"
+      >&#937;^S-group-structure</a
+      ><a name="4832"
+      > </a
+      ><a name="4833" class="Number"
+      >0</a
+      ><a name="4834"
+      > </a
+      ><a name="4835" class="Symbol"
+      >(</a
+      ><a name="4836" href="lib.types.EilenbergMacLane1.html#606" class="Function"
+      >&#8857;EM&#8321;</a
+      ><a name="4840"
+      > </a
+      ><a name="4841" href="homotopy.EilenbergMacLane1.html#99" class="Bound"
+      >G</a
+      ><a name="4842" class="Symbol"
+      >))</a
+      ><a name="4844"
+      > </a
+      ><a name="4845" class="Symbol"
+      >(</a
+      ><a name="4846" href="lib.types.EilenbergMacLane1.html#786" class="Function"
+      >EM&#8321;-level</a
+      ><a name="4855"
+      > </a
+      ><a name="4856" class="Symbol"
+      >_</a
+      ><a name="4857"
+      > </a
+      ><a name="4858" class="Symbol"
+      >_)</a
+      ><a name="4860"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

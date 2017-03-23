@@ -1,0 +1,6579 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.cubical.SquareOver</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Base.html#1" class="Module"
+      >lib.Base</a
+      ><a name="62"
+      >
+</a
+      ><a name="63" class="Keyword"
+      >open</a
+      ><a name="67"
+      > </a
+      ><a name="68" class="Keyword"
+      >import</a
+      ><a name="74"
+      > </a
+      ><a name="75" href="lib.PathGroupoid.html#1" class="Module"
+      >lib.PathGroupoid</a
+      ><a name="91"
+      >
+</a
+      ><a name="92" class="Keyword"
+      >open</a
+      ><a name="96"
+      > </a
+      ><a name="97" class="Keyword"
+      >import</a
+      ><a name="103"
+      > </a
+      ><a name="104" href="lib.PathOver.html#1" class="Module"
+      >lib.PathOver</a
+      ><a name="116"
+      >
+</a
+      ><a name="117" class="Keyword"
+      >open</a
+      ><a name="121"
+      > </a
+      ><a name="122" class="Keyword"
+      >import</a
+      ><a name="128"
+      > </a
+      ><a name="129" href="lib.cubical.Square.html#1" class="Module"
+      >lib.cubical.Square</a
+      ><a name="147"
+      >
+
+</a
+      ><a name="149" class="Keyword"
+      >module</a
+      ><a name="155"
+      > </a
+      ><a name="156" href="lib.cubical.SquareOver.html#1" class="Module"
+      >lib.cubical.SquareOver</a
+      ><a name="178"
+      > </a
+      ><a name="179" class="Keyword"
+      >where</a
+      ><a name="184"
+      >
+
+</a
+      ><a name="186" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="196"
+      > </a
+      ><a name="197" class="Symbol"
+      >:</a
+      ><a name="198"
+      > </a
+      ><a name="199" class="Symbol"
+      >&#8704;</a
+      ><a name="200"
+      > </a
+      ><a name="201" class="Symbol"
+      >{</a
+      ><a name="202" href="lib.cubical.SquareOver.html#202" class="Bound"
+      >i</a
+      ><a name="203"
+      > </a
+      ><a name="204" href="lib.cubical.SquareOver.html#204" class="Bound"
+      >j</a
+      ><a name="205" class="Symbol"
+      >}</a
+      ><a name="206"
+      > </a
+      ><a name="207" class="Symbol"
+      >{</a
+      ><a name="208" href="lib.cubical.SquareOver.html#208" class="Bound"
+      >A</a
+      ><a name="209"
+      > </a
+      ><a name="210" class="Symbol"
+      >:</a
+      ><a name="211"
+      > </a
+      ><a name="212" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="216"
+      > </a
+      ><a name="217" href="lib.cubical.SquareOver.html#202" class="Bound"
+      >i</a
+      ><a name="218" class="Symbol"
+      >}</a
+      ><a name="219"
+      > </a
+      ><a name="220" class="Symbol"
+      >(</a
+      ><a name="221" href="lib.cubical.SquareOver.html#221" class="Bound"
+      >B</a
+      ><a name="222"
+      > </a
+      ><a name="223" class="Symbol"
+      >:</a
+      ><a name="224"
+      > </a
+      ><a name="225" href="lib.cubical.SquareOver.html#208" class="Bound"
+      >A</a
+      ><a name="226"
+      > </a
+      ><a name="227" class="Symbol"
+      >&#8594;</a
+      ><a name="228"
+      > </a
+      ><a name="229" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="233"
+      > </a
+      ><a name="234" href="lib.cubical.SquareOver.html#204" class="Bound"
+      >j</a
+      ><a name="235" class="Symbol"
+      >)</a
+      ><a name="236"
+      > </a
+      ><a name="237" class="Symbol"
+      >{</a
+      ><a name="238" href="lib.cubical.SquareOver.html#238" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="241"
+      > </a
+      ><a name="242" href="lib.cubical.SquareOver.html#242" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="245"
+      > </a
+      ><a name="246" href="lib.cubical.SquareOver.html#246" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="249"
+      > </a
+      ><a name="250" href="lib.cubical.SquareOver.html#250" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="253"
+      > </a
+      ><a name="254" class="Symbol"
+      >:</a
+      ><a name="255"
+      > </a
+      ><a name="256" href="lib.cubical.SquareOver.html#208" class="Bound"
+      >A</a
+      ><a name="257" class="Symbol"
+      >}</a
+      ><a name="258"
+      >
+  </a
+      ><a name="261" class="Symbol"
+      >{</a
+      ><a name="262" href="lib.cubical.SquareOver.html#262" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="265"
+      > </a
+      ><a name="266" class="Symbol"
+      >:</a
+      ><a name="267"
+      > </a
+      ><a name="268" href="lib.cubical.SquareOver.html#238" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="271"
+      > </a
+      ><a name="272" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="274"
+      > </a
+      ><a name="275" href="lib.cubical.SquareOver.html#242" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="278" class="Symbol"
+      >}</a
+      ><a name="279"
+      > </a
+      ><a name="280" class="Symbol"
+      >{</a
+      ><a name="281" href="lib.cubical.SquareOver.html#281" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="284"
+      > </a
+      ><a name="285" class="Symbol"
+      >:</a
+      ><a name="286"
+      > </a
+      ><a name="287" href="lib.cubical.SquareOver.html#238" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="290"
+      > </a
+      ><a name="291" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="293"
+      > </a
+      ><a name="294" href="lib.cubical.SquareOver.html#246" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="297" class="Symbol"
+      >}</a
+      ><a name="298"
+      > </a
+      ><a name="299" class="Symbol"
+      >{</a
+      ><a name="300" href="lib.cubical.SquareOver.html#300" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="303"
+      > </a
+      ><a name="304" class="Symbol"
+      >:</a
+      ><a name="305"
+      > </a
+      ><a name="306" href="lib.cubical.SquareOver.html#242" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="309"
+      > </a
+      ><a name="310" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="312"
+      > </a
+      ><a name="313" href="lib.cubical.SquareOver.html#250" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="316" class="Symbol"
+      >}</a
+      ><a name="317"
+      > </a
+      ><a name="318" class="Symbol"
+      >{</a
+      ><a name="319" href="lib.cubical.SquareOver.html#319" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="322"
+      > </a
+      ><a name="323" class="Symbol"
+      >:</a
+      ><a name="324"
+      > </a
+      ><a name="325" href="lib.cubical.SquareOver.html#246" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="328"
+      > </a
+      ><a name="329" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="331"
+      > </a
+      ><a name="332" href="lib.cubical.SquareOver.html#250" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="335" class="Symbol"
+      >}</a
+      ><a name="336"
+      >
+  </a
+      ><a name="339" class="Symbol"
+      >(</a
+      ><a name="340" href="lib.cubical.SquareOver.html#340" class="Bound"
+      >sq</a
+      ><a name="342"
+      > </a
+      ><a name="343" class="Symbol"
+      >:</a
+      ><a name="344"
+      > </a
+      ><a name="345" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="351"
+      > </a
+      ><a name="352" href="lib.cubical.SquareOver.html#262" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="355"
+      > </a
+      ><a name="356" href="lib.cubical.SquareOver.html#281" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="359"
+      > </a
+      ><a name="360" href="lib.cubical.SquareOver.html#300" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="363"
+      > </a
+      ><a name="364" href="lib.cubical.SquareOver.html#319" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="367" class="Symbol"
+      >)</a
+      ><a name="368"
+      >
+  </a
+      ><a name="371" class="Symbol"
+      >{</a
+      ><a name="372" href="lib.cubical.SquareOver.html#372" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="375"
+      > </a
+      ><a name="376" class="Symbol"
+      >:</a
+      ><a name="377"
+      > </a
+      ><a name="378" href="lib.cubical.SquareOver.html#221" class="Bound"
+      >B</a
+      ><a name="379"
+      > </a
+      ><a name="380" href="lib.cubical.SquareOver.html#238" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="383" class="Symbol"
+      >}</a
+      ><a name="384"
+      > </a
+      ><a name="385" class="Symbol"
+      >{</a
+      ><a name="386" href="lib.cubical.SquareOver.html#386" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="389"
+      > </a
+      ><a name="390" class="Symbol"
+      >:</a
+      ><a name="391"
+      > </a
+      ><a name="392" href="lib.cubical.SquareOver.html#221" class="Bound"
+      >B</a
+      ><a name="393"
+      > </a
+      ><a name="394" href="lib.cubical.SquareOver.html#242" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="397" class="Symbol"
+      >}</a
+      ><a name="398"
+      > </a
+      ><a name="399" class="Symbol"
+      >{</a
+      ><a name="400" href="lib.cubical.SquareOver.html#400" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="403"
+      > </a
+      ><a name="404" class="Symbol"
+      >:</a
+      ><a name="405"
+      > </a
+      ><a name="406" href="lib.cubical.SquareOver.html#221" class="Bound"
+      >B</a
+      ><a name="407"
+      > </a
+      ><a name="408" href="lib.cubical.SquareOver.html#246" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="411" class="Symbol"
+      >}</a
+      ><a name="412"
+      > </a
+      ><a name="413" class="Symbol"
+      >{</a
+      ><a name="414" href="lib.cubical.SquareOver.html#414" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="417"
+      > </a
+      ><a name="418" class="Symbol"
+      >:</a
+      ><a name="419"
+      > </a
+      ><a name="420" href="lib.cubical.SquareOver.html#221" class="Bound"
+      >B</a
+      ><a name="421"
+      > </a
+      ><a name="422" href="lib.cubical.SquareOver.html#250" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="425" class="Symbol"
+      >}</a
+      ><a name="426"
+      >
+  </a
+      ><a name="429" class="Symbol"
+      >(</a
+      ><a name="430" href="lib.cubical.SquareOver.html#430" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="433"
+      > </a
+      ><a name="434" class="Symbol"
+      >:</a
+      ><a name="435"
+      > </a
+      ><a name="436" href="lib.cubical.SquareOver.html#372" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="439"
+      > </a
+      ><a name="440" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="442"
+      > </a
+      ><a name="443" href="lib.cubical.SquareOver.html#386" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="446"
+      > </a
+      ><a name="447" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="448"
+      > </a
+      ><a name="449" href="lib.cubical.SquareOver.html#221" class="Bound"
+      >B</a
+      ><a name="450"
+      > </a
+      ><a name="451" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="452"
+      > </a
+      ><a name="453" href="lib.cubical.SquareOver.html#262" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="458" class="Symbol"
+      >)</a
+      ><a name="459"
+      > </a
+      ><a name="460" class="Symbol"
+      >(</a
+      ><a name="461" href="lib.cubical.SquareOver.html#461" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="464"
+      > </a
+      ><a name="465" class="Symbol"
+      >:</a
+      ><a name="466"
+      > </a
+      ><a name="467" href="lib.cubical.SquareOver.html#372" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="470"
+      > </a
+      ><a name="471" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="473"
+      > </a
+      ><a name="474" href="lib.cubical.SquareOver.html#400" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="477"
+      > </a
+      ><a name="478" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="479"
+      > </a
+      ><a name="480" href="lib.cubical.SquareOver.html#221" class="Bound"
+      >B</a
+      ><a name="481"
+      > </a
+      ><a name="482" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="483"
+      > </a
+      ><a name="484" href="lib.cubical.SquareOver.html#281" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="487"
+      > </a
+      ><a name="488" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="489" class="Symbol"
+      >)</a
+      ><a name="490"
+      >
+  </a
+      ><a name="493" class="Symbol"
+      >(</a
+      ><a name="494" href="lib.cubical.SquareOver.html#494" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="497"
+      > </a
+      ><a name="498" class="Symbol"
+      >:</a
+      ><a name="499"
+      > </a
+      ><a name="500" href="lib.cubical.SquareOver.html#386" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="503"
+      > </a
+      ><a name="504" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="506"
+      > </a
+      ><a name="507" href="lib.cubical.SquareOver.html#414" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="510"
+      > </a
+      ><a name="511" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="512"
+      > </a
+      ><a name="513" href="lib.cubical.SquareOver.html#221" class="Bound"
+      >B</a
+      ><a name="514"
+      > </a
+      ><a name="515" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="516"
+      > </a
+      ><a name="517" href="lib.cubical.SquareOver.html#300" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="520"
+      > </a
+      ><a name="521" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="522" class="Symbol"
+      >)</a
+      ><a name="523"
+      > </a
+      ><a name="524" class="Symbol"
+      >(</a
+      ><a name="525" href="lib.cubical.SquareOver.html#525" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="528"
+      > </a
+      ><a name="529" class="Symbol"
+      >:</a
+      ><a name="530"
+      > </a
+      ><a name="531" href="lib.cubical.SquareOver.html#400" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="534"
+      > </a
+      ><a name="535" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="537"
+      > </a
+      ><a name="538" href="lib.cubical.SquareOver.html#414" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="541"
+      > </a
+      ><a name="542" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="543"
+      > </a
+      ><a name="544" href="lib.cubical.SquareOver.html#221" class="Bound"
+      >B</a
+      ><a name="545"
+      > </a
+      ><a name="546" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="547"
+      > </a
+      ><a name="548" href="lib.cubical.SquareOver.html#319" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="551"
+      > </a
+      ><a name="552" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="553" class="Symbol"
+      >)</a
+      ><a name="554"
+      >
+  </a
+      ><a name="557" class="Symbol"
+      >&#8594;</a
+      ><a name="558"
+      > </a
+      ><a name="559" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="563"
+      > </a
+      ><a name="564" href="lib.cubical.SquareOver.html#204" class="Bound"
+      >j</a
+      ><a name="565"
+      >
+</a
+      ><a name="566" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="576"
+      > </a
+      ><a name="577" href="lib.cubical.SquareOver.html#577" class="Bound"
+      >B</a
+      ><a name="578"
+      > </a
+      ><a name="579" href="lib.cubical.Square.html#340" class="InductiveConstructor"
+      >ids</a
+      ><a name="582"
+      > </a
+      ><a name="583" class="Symbol"
+      >=</a
+      ><a name="584"
+      > </a
+      ><a name="585" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="591"
+      >
+
+</a
+      ><a name="593" href="lib.cubical.SquareOver.html#593" class="Function"
+      >apd-square</a
+      ><a name="603"
+      > </a
+      ><a name="604" class="Symbol"
+      >:</a
+      ><a name="605"
+      > </a
+      ><a name="606" class="Symbol"
+      >&#8704;</a
+      ><a name="607"
+      > </a
+      ><a name="608" class="Symbol"
+      >{</a
+      ><a name="609" href="lib.cubical.SquareOver.html#609" class="Bound"
+      >i</a
+      ><a name="610"
+      > </a
+      ><a name="611" href="lib.cubical.SquareOver.html#611" class="Bound"
+      >j</a
+      ><a name="612" class="Symbol"
+      >}</a
+      ><a name="613"
+      > </a
+      ><a name="614" class="Symbol"
+      >{</a
+      ><a name="615" href="lib.cubical.SquareOver.html#615" class="Bound"
+      >A</a
+      ><a name="616"
+      > </a
+      ><a name="617" class="Symbol"
+      >:</a
+      ><a name="618"
+      > </a
+      ><a name="619" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="623"
+      > </a
+      ><a name="624" href="lib.cubical.SquareOver.html#609" class="Bound"
+      >i</a
+      ><a name="625" class="Symbol"
+      >}</a
+      ><a name="626"
+      > </a
+      ><a name="627" class="Symbol"
+      >{</a
+      ><a name="628" href="lib.cubical.SquareOver.html#628" class="Bound"
+      >B</a
+      ><a name="629"
+      > </a
+      ><a name="630" class="Symbol"
+      >:</a
+      ><a name="631"
+      > </a
+      ><a name="632" href="lib.cubical.SquareOver.html#615" class="Bound"
+      >A</a
+      ><a name="633"
+      > </a
+      ><a name="634" class="Symbol"
+      >&#8594;</a
+      ><a name="635"
+      > </a
+      ><a name="636" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="640"
+      > </a
+      ><a name="641" href="lib.cubical.SquareOver.html#611" class="Bound"
+      >j</a
+      ><a name="642" class="Symbol"
+      >}</a
+      ><a name="643"
+      > </a
+      ><a name="644" class="Symbol"
+      >(</a
+      ><a name="645" href="lib.cubical.SquareOver.html#645" class="Bound"
+      >f</a
+      ><a name="646"
+      > </a
+      ><a name="647" class="Symbol"
+      >:</a
+      ><a name="648"
+      > </a
+      ><a name="649" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="650"
+      > </a
+      ><a name="651" href="lib.cubical.SquareOver.html#615" class="Bound"
+      >A</a
+      ><a name="652"
+      > </a
+      ><a name="653" href="lib.cubical.SquareOver.html#628" class="Bound"
+      >B</a
+      ><a name="654" class="Symbol"
+      >)</a
+      ><a name="655"
+      >
+  </a
+      ><a name="658" class="Symbol"
+      >{</a
+      ><a name="659" href="lib.cubical.SquareOver.html#659" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="662"
+      > </a
+      ><a name="663" href="lib.cubical.SquareOver.html#663" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="666"
+      > </a
+      ><a name="667" href="lib.cubical.SquareOver.html#667" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="670"
+      > </a
+      ><a name="671" href="lib.cubical.SquareOver.html#671" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="674"
+      > </a
+      ><a name="675" class="Symbol"
+      >:</a
+      ><a name="676"
+      > </a
+      ><a name="677" href="lib.cubical.SquareOver.html#615" class="Bound"
+      >A</a
+      ><a name="678" class="Symbol"
+      >}</a
+      ><a name="679"
+      >
+  </a
+      ><a name="682" class="Symbol"
+      >{</a
+      ><a name="683" href="lib.cubical.SquareOver.html#683" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="686"
+      > </a
+      ><a name="687" class="Symbol"
+      >:</a
+      ><a name="688"
+      > </a
+      ><a name="689" href="lib.cubical.SquareOver.html#659" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="692"
+      > </a
+      ><a name="693" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="695"
+      > </a
+      ><a name="696" href="lib.cubical.SquareOver.html#663" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="699" class="Symbol"
+      >}</a
+      ><a name="700"
+      > </a
+      ><a name="701" class="Symbol"
+      >{</a
+      ><a name="702" href="lib.cubical.SquareOver.html#702" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="705"
+      > </a
+      ><a name="706" class="Symbol"
+      >:</a
+      ><a name="707"
+      > </a
+      ><a name="708" href="lib.cubical.SquareOver.html#659" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="711"
+      > </a
+      ><a name="712" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="714"
+      > </a
+      ><a name="715" href="lib.cubical.SquareOver.html#667" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="718" class="Symbol"
+      >}</a
+      ><a name="719"
+      > </a
+      ><a name="720" class="Symbol"
+      >{</a
+      ><a name="721" href="lib.cubical.SquareOver.html#721" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="724"
+      > </a
+      ><a name="725" class="Symbol"
+      >:</a
+      ><a name="726"
+      > </a
+      ><a name="727" href="lib.cubical.SquareOver.html#663" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="730"
+      > </a
+      ><a name="731" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="733"
+      > </a
+      ><a name="734" href="lib.cubical.SquareOver.html#671" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="737" class="Symbol"
+      >}</a
+      ><a name="738"
+      > </a
+      ><a name="739" class="Symbol"
+      >{</a
+      ><a name="740" href="lib.cubical.SquareOver.html#740" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="743"
+      > </a
+      ><a name="744" class="Symbol"
+      >:</a
+      ><a name="745"
+      > </a
+      ><a name="746" href="lib.cubical.SquareOver.html#667" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="749"
+      > </a
+      ><a name="750" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="752"
+      > </a
+      ><a name="753" href="lib.cubical.SquareOver.html#671" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="756" class="Symbol"
+      >}</a
+      ><a name="757"
+      >
+  </a
+      ><a name="760" class="Symbol"
+      >(</a
+      ><a name="761" href="lib.cubical.SquareOver.html#761" class="Bound"
+      >sq</a
+      ><a name="763"
+      > </a
+      ><a name="764" class="Symbol"
+      >:</a
+      ><a name="765"
+      > </a
+      ><a name="766" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="772"
+      > </a
+      ><a name="773" href="lib.cubical.SquareOver.html#683" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="776"
+      > </a
+      ><a name="777" href="lib.cubical.SquareOver.html#702" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="780"
+      > </a
+      ><a name="781" href="lib.cubical.SquareOver.html#721" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="784"
+      > </a
+      ><a name="785" href="lib.cubical.SquareOver.html#740" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="788" class="Symbol"
+      >)</a
+      ><a name="789"
+      >
+  </a
+      ><a name="792" class="Symbol"
+      >&#8594;</a
+      ><a name="793"
+      > </a
+      ><a name="794" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="804"
+      > </a
+      ><a name="805" href="lib.cubical.SquareOver.html#628" class="Bound"
+      >B</a
+      ><a name="806"
+      > </a
+      ><a name="807" href="lib.cubical.SquareOver.html#761" class="Bound"
+      >sq</a
+      ><a name="809"
+      > </a
+      ><a name="810" class="Symbol"
+      >(</a
+      ><a name="811" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="814"
+      > </a
+      ><a name="815" href="lib.cubical.SquareOver.html#645" class="Bound"
+      >f</a
+      ><a name="816"
+      > </a
+      ><a name="817" href="lib.cubical.SquareOver.html#683" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="820" class="Symbol"
+      >)</a
+      ><a name="821"
+      > </a
+      ><a name="822" class="Symbol"
+      >(</a
+      ><a name="823" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="826"
+      > </a
+      ><a name="827" href="lib.cubical.SquareOver.html#645" class="Bound"
+      >f</a
+      ><a name="828"
+      > </a
+      ><a name="829" href="lib.cubical.SquareOver.html#702" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="832" class="Symbol"
+      >)</a
+      ><a name="833"
+      > </a
+      ><a name="834" class="Symbol"
+      >(</a
+      ><a name="835" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="838"
+      > </a
+      ><a name="839" href="lib.cubical.SquareOver.html#645" class="Bound"
+      >f</a
+      ><a name="840"
+      > </a
+      ><a name="841" href="lib.cubical.SquareOver.html#721" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="844" class="Symbol"
+      >)</a
+      ><a name="845"
+      > </a
+      ><a name="846" class="Symbol"
+      >(</a
+      ><a name="847" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="850"
+      > </a
+      ><a name="851" href="lib.cubical.SquareOver.html#645" class="Bound"
+      >f</a
+      ><a name="852"
+      > </a
+      ><a name="853" href="lib.cubical.SquareOver.html#740" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="856" class="Symbol"
+      >)</a
+      ><a name="857"
+      >
+</a
+      ><a name="858" href="lib.cubical.SquareOver.html#593" class="Function"
+      >apd-square</a
+      ><a name="868"
+      > </a
+      ><a name="869" href="lib.cubical.SquareOver.html#869" class="Bound"
+      >f</a
+      ><a name="870"
+      > </a
+      ><a name="871" href="lib.cubical.Square.html#340" class="InductiveConstructor"
+      >ids</a
+      ><a name="874"
+      > </a
+      ><a name="875" class="Symbol"
+      >=</a
+      ><a name="876"
+      > </a
+      ><a name="877" href="lib.cubical.Square.html#340" class="InductiveConstructor"
+      >ids</a
+      ><a name="880"
+      >
+
+</a
+      ><a name="882" href="lib.cubical.SquareOver.html#882" class="Function"
+      >&#8595;-=-to-squareover</a
+      ><a name="899"
+      > </a
+      ><a name="900" class="Symbol"
+      >:</a
+      ><a name="901"
+      > </a
+      ><a name="902" class="Symbol"
+      >&#8704;</a
+      ><a name="903"
+      > </a
+      ><a name="904" class="Symbol"
+      >{</a
+      ><a name="905" href="lib.cubical.SquareOver.html#905" class="Bound"
+      >i</a
+      ><a name="906"
+      > </a
+      ><a name="907" href="lib.cubical.SquareOver.html#907" class="Bound"
+      >j</a
+      ><a name="908" class="Symbol"
+      >}</a
+      ><a name="909"
+      > </a
+      ><a name="910" class="Symbol"
+      >{</a
+      ><a name="911" href="lib.cubical.SquareOver.html#911" class="Bound"
+      >A</a
+      ><a name="912"
+      > </a
+      ><a name="913" class="Symbol"
+      >:</a
+      ><a name="914"
+      > </a
+      ><a name="915" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="919"
+      > </a
+      ><a name="920" href="lib.cubical.SquareOver.html#905" class="Bound"
+      >i</a
+      ><a name="921" class="Symbol"
+      >}</a
+      ><a name="922"
+      > </a
+      ><a name="923" class="Symbol"
+      >{</a
+      ><a name="924" href="lib.cubical.SquareOver.html#924" class="Bound"
+      >B</a
+      ><a name="925"
+      > </a
+      ><a name="926" class="Symbol"
+      >:</a
+      ><a name="927"
+      > </a
+      ><a name="928" href="lib.cubical.SquareOver.html#911" class="Bound"
+      >A</a
+      ><a name="929"
+      > </a
+      ><a name="930" class="Symbol"
+      >&#8594;</a
+      ><a name="931"
+      > </a
+      ><a name="932" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="936"
+      > </a
+      ><a name="937" href="lib.cubical.SquareOver.html#907" class="Bound"
+      >j</a
+      ><a name="938" class="Symbol"
+      >}</a
+      ><a name="939"
+      >
+  </a
+      ><a name="942" class="Symbol"
+      >{</a
+      ><a name="943" href="lib.cubical.SquareOver.html#943" class="Bound"
+      >f</a
+      ><a name="944"
+      > </a
+      ><a name="945" href="lib.cubical.SquareOver.html#945" class="Bound"
+      >g</a
+      ><a name="946"
+      > </a
+      ><a name="947" class="Symbol"
+      >:</a
+      ><a name="948"
+      > </a
+      ><a name="949" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="950"
+      > </a
+      ><a name="951" href="lib.cubical.SquareOver.html#911" class="Bound"
+      >A</a
+      ><a name="952"
+      > </a
+      ><a name="953" href="lib.cubical.SquareOver.html#924" class="Bound"
+      >B</a
+      ><a name="954" class="Symbol"
+      >}</a
+      ><a name="955"
+      > </a
+      ><a name="956" class="Symbol"
+      >{</a
+      ><a name="957" href="lib.cubical.SquareOver.html#957" class="Bound"
+      >x</a
+      ><a name="958"
+      > </a
+      ><a name="959" href="lib.cubical.SquareOver.html#959" class="Bound"
+      >y</a
+      ><a name="960"
+      > </a
+      ><a name="961" class="Symbol"
+      >:</a
+      ><a name="962"
+      > </a
+      ><a name="963" href="lib.cubical.SquareOver.html#911" class="Bound"
+      >A</a
+      ><a name="964" class="Symbol"
+      >}</a
+      ><a name="965"
+      > </a
+      ><a name="966" class="Symbol"
+      >{</a
+      ><a name="967" href="lib.cubical.SquareOver.html#967" class="Bound"
+      >p</a
+      ><a name="968"
+      > </a
+      ><a name="969" class="Symbol"
+      >:</a
+      ><a name="970"
+      > </a
+      ><a name="971" href="lib.cubical.SquareOver.html#957" class="Bound"
+      >x</a
+      ><a name="972"
+      > </a
+      ><a name="973" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="975"
+      > </a
+      ><a name="976" href="lib.cubical.SquareOver.html#959" class="Bound"
+      >y</a
+      ><a name="977" class="Symbol"
+      >}</a
+      ><a name="978"
+      >
+  </a
+      ><a name="981" class="Symbol"
+      >{</a
+      ><a name="982" href="lib.cubical.SquareOver.html#982" class="Bound"
+      >u</a
+      ><a name="983"
+      > </a
+      ><a name="984" class="Symbol"
+      >:</a
+      ><a name="985"
+      > </a
+      ><a name="986" href="lib.cubical.SquareOver.html#943" class="Bound"
+      >f</a
+      ><a name="987"
+      > </a
+      ><a name="988" href="lib.cubical.SquareOver.html#957" class="Bound"
+      >x</a
+      ><a name="989"
+      > </a
+      ><a name="990" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="992"
+      > </a
+      ><a name="993" href="lib.cubical.SquareOver.html#945" class="Bound"
+      >g</a
+      ><a name="994"
+      > </a
+      ><a name="995" href="lib.cubical.SquareOver.html#957" class="Bound"
+      >x</a
+      ><a name="996" class="Symbol"
+      >}</a
+      ><a name="997"
+      > </a
+      ><a name="998" class="Symbol"
+      >{</a
+      ><a name="999" href="lib.cubical.SquareOver.html#999" class="Bound"
+      >v</a
+      ><a name="1000"
+      > </a
+      ><a name="1001" class="Symbol"
+      >:</a
+      ><a name="1002"
+      > </a
+      ><a name="1003" href="lib.cubical.SquareOver.html#943" class="Bound"
+      >f</a
+      ><a name="1004"
+      > </a
+      ><a name="1005" href="lib.cubical.SquareOver.html#959" class="Bound"
+      >y</a
+      ><a name="1006"
+      > </a
+      ><a name="1007" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1009"
+      > </a
+      ><a name="1010" href="lib.cubical.SquareOver.html#945" class="Bound"
+      >g</a
+      ><a name="1011"
+      > </a
+      ><a name="1012" href="lib.cubical.SquareOver.html#959" class="Bound"
+      >y</a
+      ><a name="1013" class="Symbol"
+      >}</a
+      ><a name="1014"
+      >
+  </a
+      ><a name="1017" class="Symbol"
+      >&#8594;</a
+      ><a name="1018"
+      > </a
+      ><a name="1019" href="lib.cubical.SquareOver.html#982" class="Bound"
+      >u</a
+      ><a name="1020"
+      > </a
+      ><a name="1021" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="1023"
+      > </a
+      ><a name="1024" href="lib.cubical.SquareOver.html#999" class="Bound"
+      >v</a
+      ><a name="1025"
+      > </a
+      ><a name="1026" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="1027"
+      > </a
+      ><a name="1028" class="Symbol"
+      >(&#955;</a
+      ><a name="1030"
+      > </a
+      ><a name="1031" href="lib.cubical.SquareOver.html#1031" class="Bound"
+      >z</a
+      ><a name="1032"
+      > </a
+      ><a name="1033" class="Symbol"
+      >&#8594;</a
+      ><a name="1034"
+      > </a
+      ><a name="1035" href="lib.cubical.SquareOver.html#943" class="Bound"
+      >f</a
+      ><a name="1036"
+      > </a
+      ><a name="1037" href="lib.cubical.SquareOver.html#1031" class="Bound"
+      >z</a
+      ><a name="1038"
+      > </a
+      ><a name="1039" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1041"
+      > </a
+      ><a name="1042" href="lib.cubical.SquareOver.html#945" class="Bound"
+      >g</a
+      ><a name="1043"
+      > </a
+      ><a name="1044" href="lib.cubical.SquareOver.html#1031" class="Bound"
+      >z</a
+      ><a name="1045" class="Symbol"
+      >)</a
+      ><a name="1046"
+      > </a
+      ><a name="1047" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="1048"
+      > </a
+      ><a name="1049" href="lib.cubical.SquareOver.html#967" class="Bound"
+      >p</a
+      ><a name="1050"
+      > </a
+      ><a name="1051" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="1052"
+      >
+  </a
+      ><a name="1055" class="Symbol"
+      >&#8594;</a
+      ><a name="1056"
+      > </a
+      ><a name="1057" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="1067"
+      > </a
+      ><a name="1068" href="lib.cubical.SquareOver.html#924" class="Bound"
+      >B</a
+      ><a name="1069"
+      > </a
+      ><a name="1070" href="lib.cubical.Square.html#484" class="Function"
+      >vid-square</a
+      ><a name="1080"
+      > </a
+      ><a name="1081" href="lib.cubical.SquareOver.html#982" class="Bound"
+      >u</a
+      ><a name="1082"
+      > </a
+      ><a name="1083" class="Symbol"
+      >(</a
+      ><a name="1084" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1087"
+      > </a
+      ><a name="1088" href="lib.cubical.SquareOver.html#943" class="Bound"
+      >f</a
+      ><a name="1089"
+      > </a
+      ><a name="1090" href="lib.cubical.SquareOver.html#967" class="Bound"
+      >p</a
+      ><a name="1091" class="Symbol"
+      >)</a
+      ><a name="1092"
+      > </a
+      ><a name="1093" class="Symbol"
+      >(</a
+      ><a name="1094" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1097"
+      > </a
+      ><a name="1098" href="lib.cubical.SquareOver.html#945" class="Bound"
+      >g</a
+      ><a name="1099"
+      > </a
+      ><a name="1100" href="lib.cubical.SquareOver.html#967" class="Bound"
+      >p</a
+      ><a name="1101" class="Symbol"
+      >)</a
+      ><a name="1102"
+      > </a
+      ><a name="1103" href="lib.cubical.SquareOver.html#999" class="Bound"
+      >v</a
+      ><a name="1104"
+      >
+</a
+      ><a name="1105" href="lib.cubical.SquareOver.html#882" class="Function"
+      >&#8595;-=-to-squareover</a
+      ><a name="1122"
+      > </a
+      ><a name="1123" class="Symbol"
+      >{</a
+      ><a name="1124" class="Argument"
+      >p</a
+      ><a name="1125"
+      > </a
+      ><a name="1126" class="Symbol"
+      >=</a
+      ><a name="1127"
+      > </a
+      ><a name="1128" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1131" class="Symbol"
+      >}</a
+      ><a name="1132"
+      > </a
+      ><a name="1133" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" class="Symbol"
+      >=</a
+      ><a name="1138"
+      > </a
+      ><a name="1139" href="lib.cubical.Square.html#370" class="Function"
+      >hid-square</a
+      ><a name="1149"
+      >
+
+</a
+      ><a name="1151" href="lib.cubical.SquareOver.html#1151" class="Function"
+      >&#8595;-=-from-squareover</a
+      ><a name="1170"
+      > </a
+      ><a name="1171" class="Symbol"
+      >:</a
+      ><a name="1172"
+      > </a
+      ><a name="1173" class="Symbol"
+      >&#8704;</a
+      ><a name="1174"
+      > </a
+      ><a name="1175" class="Symbol"
+      >{</a
+      ><a name="1176" href="lib.cubical.SquareOver.html#1176" class="Bound"
+      >i</a
+      ><a name="1177"
+      > </a
+      ><a name="1178" href="lib.cubical.SquareOver.html#1178" class="Bound"
+      >j</a
+      ><a name="1179" class="Symbol"
+      >}</a
+      ><a name="1180"
+      > </a
+      ><a name="1181" class="Symbol"
+      >{</a
+      ><a name="1182" href="lib.cubical.SquareOver.html#1182" class="Bound"
+      >A</a
+      ><a name="1183"
+      > </a
+      ><a name="1184" class="Symbol"
+      >:</a
+      ><a name="1185"
+      > </a
+      ><a name="1186" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" href="lib.cubical.SquareOver.html#1176" class="Bound"
+      >i</a
+      ><a name="1192" class="Symbol"
+      >}</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" class="Symbol"
+      >{</a
+      ><a name="1195" href="lib.cubical.SquareOver.html#1195" class="Bound"
+      >B</a
+      ><a name="1196"
+      > </a
+      ><a name="1197" class="Symbol"
+      >:</a
+      ><a name="1198"
+      > </a
+      ><a name="1199" href="lib.cubical.SquareOver.html#1182" class="Bound"
+      >A</a
+      ><a name="1200"
+      > </a
+      ><a name="1201" class="Symbol"
+      >&#8594;</a
+      ><a name="1202"
+      > </a
+      ><a name="1203" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1207"
+      > </a
+      ><a name="1208" href="lib.cubical.SquareOver.html#1178" class="Bound"
+      >j</a
+      ><a name="1209" class="Symbol"
+      >}</a
+      ><a name="1210"
+      >
+  </a
+      ><a name="1213" class="Symbol"
+      >{</a
+      ><a name="1214" href="lib.cubical.SquareOver.html#1214" class="Bound"
+      >f</a
+      ><a name="1215"
+      > </a
+      ><a name="1216" href="lib.cubical.SquareOver.html#1216" class="Bound"
+      >g</a
+      ><a name="1217"
+      > </a
+      ><a name="1218" class="Symbol"
+      >:</a
+      ><a name="1219"
+      > </a
+      ><a name="1220" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" href="lib.cubical.SquareOver.html#1182" class="Bound"
+      >A</a
+      ><a name="1223"
+      > </a
+      ><a name="1224" href="lib.cubical.SquareOver.html#1195" class="Bound"
+      >B</a
+      ><a name="1225" class="Symbol"
+      >}</a
+      ><a name="1226"
+      > </a
+      ><a name="1227" class="Symbol"
+      >{</a
+      ><a name="1228" href="lib.cubical.SquareOver.html#1228" class="Bound"
+      >x</a
+      ><a name="1229"
+      > </a
+      ><a name="1230" href="lib.cubical.SquareOver.html#1230" class="Bound"
+      >y</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" class="Symbol"
+      >:</a
+      ><a name="1233"
+      > </a
+      ><a name="1234" href="lib.cubical.SquareOver.html#1182" class="Bound"
+      >A</a
+      ><a name="1235" class="Symbol"
+      >}</a
+      ><a name="1236"
+      > </a
+      ><a name="1237" class="Symbol"
+      >{</a
+      ><a name="1238" href="lib.cubical.SquareOver.html#1238" class="Bound"
+      >p</a
+      ><a name="1239"
+      > </a
+      ><a name="1240" class="Symbol"
+      >:</a
+      ><a name="1241"
+      > </a
+      ><a name="1242" href="lib.cubical.SquareOver.html#1228" class="Bound"
+      >x</a
+      ><a name="1243"
+      > </a
+      ><a name="1244" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1246"
+      > </a
+      ><a name="1247" href="lib.cubical.SquareOver.html#1230" class="Bound"
+      >y</a
+      ><a name="1248" class="Symbol"
+      >}</a
+      ><a name="1249"
+      >
+  </a
+      ><a name="1252" class="Symbol"
+      >{</a
+      ><a name="1253" href="lib.cubical.SquareOver.html#1253" class="Bound"
+      >u</a
+      ><a name="1254"
+      > </a
+      ><a name="1255" class="Symbol"
+      >:</a
+      ><a name="1256"
+      > </a
+      ><a name="1257" href="lib.cubical.SquareOver.html#1214" class="Bound"
+      >f</a
+      ><a name="1258"
+      > </a
+      ><a name="1259" href="lib.cubical.SquareOver.html#1228" class="Bound"
+      >x</a
+      ><a name="1260"
+      > </a
+      ><a name="1261" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1263"
+      > </a
+      ><a name="1264" href="lib.cubical.SquareOver.html#1216" class="Bound"
+      >g</a
+      ><a name="1265"
+      > </a
+      ><a name="1266" href="lib.cubical.SquareOver.html#1228" class="Bound"
+      >x</a
+      ><a name="1267" class="Symbol"
+      >}</a
+      ><a name="1268"
+      > </a
+      ><a name="1269" class="Symbol"
+      >{</a
+      ><a name="1270" href="lib.cubical.SquareOver.html#1270" class="Bound"
+      >v</a
+      ><a name="1271"
+      > </a
+      ><a name="1272" class="Symbol"
+      >:</a
+      ><a name="1273"
+      > </a
+      ><a name="1274" href="lib.cubical.SquareOver.html#1214" class="Bound"
+      >f</a
+      ><a name="1275"
+      > </a
+      ><a name="1276" href="lib.cubical.SquareOver.html#1230" class="Bound"
+      >y</a
+      ><a name="1277"
+      > </a
+      ><a name="1278" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1280"
+      > </a
+      ><a name="1281" href="lib.cubical.SquareOver.html#1216" class="Bound"
+      >g</a
+      ><a name="1282"
+      > </a
+      ><a name="1283" href="lib.cubical.SquareOver.html#1230" class="Bound"
+      >y</a
+      ><a name="1284" class="Symbol"
+      >}</a
+      ><a name="1285"
+      >
+  </a
+      ><a name="1288" class="Symbol"
+      >&#8594;</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="1300"
+      > </a
+      ><a name="1301" href="lib.cubical.SquareOver.html#1195" class="Bound"
+      >B</a
+      ><a name="1302"
+      > </a
+      ><a name="1303" href="lib.cubical.Square.html#484" class="Function"
+      >vid-square</a
+      ><a name="1313"
+      > </a
+      ><a name="1314" href="lib.cubical.SquareOver.html#1253" class="Bound"
+      >u</a
+      ><a name="1315"
+      > </a
+      ><a name="1316" class="Symbol"
+      >(</a
+      ><a name="1317" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1320"
+      > </a
+      ><a name="1321" href="lib.cubical.SquareOver.html#1214" class="Bound"
+      >f</a
+      ><a name="1322"
+      > </a
+      ><a name="1323" href="lib.cubical.SquareOver.html#1238" class="Bound"
+      >p</a
+      ><a name="1324" class="Symbol"
+      >)</a
+      ><a name="1325"
+      > </a
+      ><a name="1326" class="Symbol"
+      >(</a
+      ><a name="1327" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1330"
+      > </a
+      ><a name="1331" href="lib.cubical.SquareOver.html#1216" class="Bound"
+      >g</a
+      ><a name="1332"
+      > </a
+      ><a name="1333" href="lib.cubical.SquareOver.html#1238" class="Bound"
+      >p</a
+      ><a name="1334" class="Symbol"
+      >)</a
+      ><a name="1335"
+      > </a
+      ><a name="1336" href="lib.cubical.SquareOver.html#1270" class="Bound"
+      >v</a
+      ><a name="1337"
+      >
+  </a
+      ><a name="1340" class="Symbol"
+      >&#8594;</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" href="lib.cubical.SquareOver.html#1253" class="Bound"
+      >u</a
+      ><a name="1343"
+      > </a
+      ><a name="1344" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="1346"
+      > </a
+      ><a name="1347" href="lib.cubical.SquareOver.html#1270" class="Bound"
+      >v</a
+      ><a name="1348"
+      > </a
+      ><a name="1349" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="1350"
+      > </a
+      ><a name="1351" class="Symbol"
+      >(&#955;</a
+      ><a name="1353"
+      > </a
+      ><a name="1354" href="lib.cubical.SquareOver.html#1354" class="Bound"
+      >z</a
+      ><a name="1355"
+      > </a
+      ><a name="1356" class="Symbol"
+      >&#8594;</a
+      ><a name="1357"
+      > </a
+      ><a name="1358" href="lib.cubical.SquareOver.html#1214" class="Bound"
+      >f</a
+      ><a name="1359"
+      > </a
+      ><a name="1360" href="lib.cubical.SquareOver.html#1354" class="Bound"
+      >z</a
+      ><a name="1361"
+      > </a
+      ><a name="1362" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1364"
+      > </a
+      ><a name="1365" href="lib.cubical.SquareOver.html#1216" class="Bound"
+      >g</a
+      ><a name="1366"
+      > </a
+      ><a name="1367" href="lib.cubical.SquareOver.html#1354" class="Bound"
+      >z</a
+      ><a name="1368" class="Symbol"
+      >)</a
+      ><a name="1369"
+      > </a
+      ><a name="1370" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="1371"
+      > </a
+      ><a name="1372" href="lib.cubical.SquareOver.html#1238" class="Bound"
+      >p</a
+      ><a name="1373"
+      > </a
+      ><a name="1374" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="1375"
+      >
+</a
+      ><a name="1376" href="lib.cubical.SquareOver.html#1151" class="Function"
+      >&#8595;-=-from-squareover</a
+      ><a name="1395"
+      > </a
+      ><a name="1396" class="Symbol"
+      >{</a
+      ><a name="1397" class="Argument"
+      >p</a
+      ><a name="1398"
+      > </a
+      ><a name="1399" class="Symbol"
+      >=</a
+      ><a name="1400"
+      > </a
+      ><a name="1401" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1404" class="Symbol"
+      >}</a
+      ><a name="1405"
+      > </a
+      ><a name="1406" href="lib.cubical.SquareOver.html#1406" class="Bound"
+      >sq</a
+      ><a name="1408"
+      > </a
+      ><a name="1409" class="Symbol"
+      >=</a
+      ><a name="1410"
+      > </a
+      ><a name="1411" href="lib.cubical.Square.html#2420" class="Function"
+      >horiz-degen-path</a
+      ><a name="1427"
+      > </a
+      ><a name="1428" href="lib.cubical.SquareOver.html#1406" class="Bound"
+      >sq</a
+      ><a name="1430"
+      >
+
+</a
+      ><a name="1432" href="lib.cubical.SquareOver.html#1432" class="Function"
+      >squareover-cst-in</a
+      ><a name="1449"
+      > </a
+      ><a name="1450" class="Symbol"
+      >:</a
+      ><a name="1451"
+      > </a
+      ><a name="1452" class="Symbol"
+      >&#8704;</a
+      ><a name="1453"
+      > </a
+      ><a name="1454" class="Symbol"
+      >{</a
+      ><a name="1455" href="lib.cubical.SquareOver.html#1455" class="Bound"
+      >i</a
+      ><a name="1456"
+      > </a
+      ><a name="1457" href="lib.cubical.SquareOver.html#1457" class="Bound"
+      >j</a
+      ><a name="1458" class="Symbol"
+      >}</a
+      ><a name="1459"
+      > </a
+      ><a name="1460" class="Symbol"
+      >{</a
+      ><a name="1461" href="lib.cubical.SquareOver.html#1461" class="Bound"
+      >A</a
+      ><a name="1462"
+      > </a
+      ><a name="1463" class="Symbol"
+      >:</a
+      ><a name="1464"
+      > </a
+      ><a name="1465" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1469"
+      > </a
+      ><a name="1470" href="lib.cubical.SquareOver.html#1455" class="Bound"
+      >i</a
+      ><a name="1471" class="Symbol"
+      >}</a
+      ><a name="1472"
+      > </a
+      ><a name="1473" class="Symbol"
+      >{</a
+      ><a name="1474" href="lib.cubical.SquareOver.html#1474" class="Bound"
+      >B</a
+      ><a name="1475"
+      > </a
+      ><a name="1476" class="Symbol"
+      >:</a
+      ><a name="1477"
+      > </a
+      ><a name="1478" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1482"
+      > </a
+      ><a name="1483" href="lib.cubical.SquareOver.html#1457" class="Bound"
+      >j</a
+      ><a name="1484" class="Symbol"
+      >}</a
+      ><a name="1485"
+      > </a
+      ><a name="1486" class="Symbol"
+      >{</a
+      ><a name="1487" href="lib.cubical.SquareOver.html#1487" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="1490"
+      > </a
+      ><a name="1491" href="lib.cubical.SquareOver.html#1491" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" href="lib.cubical.SquareOver.html#1495" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="1498"
+      > </a
+      ><a name="1499" href="lib.cubical.SquareOver.html#1499" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="1502"
+      > </a
+      ><a name="1503" class="Symbol"
+      >:</a
+      ><a name="1504"
+      > </a
+      ><a name="1505" href="lib.cubical.SquareOver.html#1461" class="Bound"
+      >A</a
+      ><a name="1506" class="Symbol"
+      >}</a
+      ><a name="1507"
+      >
+  </a
+      ><a name="1510" class="Symbol"
+      >{</a
+      ><a name="1511" href="lib.cubical.SquareOver.html#1511" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="1514"
+      > </a
+      ><a name="1515" class="Symbol"
+      >:</a
+      ><a name="1516"
+      > </a
+      ><a name="1517" href="lib.cubical.SquareOver.html#1487" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="1520"
+      > </a
+      ><a name="1521" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1523"
+      > </a
+      ><a name="1524" href="lib.cubical.SquareOver.html#1491" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="1527" class="Symbol"
+      >}</a
+      ><a name="1528"
+      > </a
+      ><a name="1529" class="Symbol"
+      >{</a
+      ><a name="1530" href="lib.cubical.SquareOver.html#1530" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="1533"
+      > </a
+      ><a name="1534" class="Symbol"
+      >:</a
+      ><a name="1535"
+      > </a
+      ><a name="1536" href="lib.cubical.SquareOver.html#1487" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="1539"
+      > </a
+      ><a name="1540" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1542"
+      > </a
+      ><a name="1543" href="lib.cubical.SquareOver.html#1495" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="1546" class="Symbol"
+      >}</a
+      ><a name="1547"
+      > </a
+      ><a name="1548" class="Symbol"
+      >{</a
+      ><a name="1549" href="lib.cubical.SquareOver.html#1549" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="1552"
+      > </a
+      ><a name="1553" class="Symbol"
+      >:</a
+      ><a name="1554"
+      > </a
+      ><a name="1555" href="lib.cubical.SquareOver.html#1491" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="1558"
+      > </a
+      ><a name="1559" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1561"
+      > </a
+      ><a name="1562" href="lib.cubical.SquareOver.html#1499" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="1565" class="Symbol"
+      >}</a
+      ><a name="1566"
+      > </a
+      ><a name="1567" class="Symbol"
+      >{</a
+      ><a name="1568" href="lib.cubical.SquareOver.html#1568" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="1571"
+      > </a
+      ><a name="1572" class="Symbol"
+      >:</a
+      ><a name="1573"
+      > </a
+      ><a name="1574" href="lib.cubical.SquareOver.html#1495" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="1577"
+      > </a
+      ><a name="1578" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1580"
+      > </a
+      ><a name="1581" href="lib.cubical.SquareOver.html#1499" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="1584" class="Symbol"
+      >}</a
+      ><a name="1585"
+      >
+  </a
+      ><a name="1588" class="Symbol"
+      >{</a
+      ><a name="1589" href="lib.cubical.SquareOver.html#1589" class="Bound"
+      >sq</a
+      ><a name="1591"
+      > </a
+      ><a name="1592" class="Symbol"
+      >:</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="1600"
+      > </a
+      ><a name="1601" href="lib.cubical.SquareOver.html#1511" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="1604"
+      > </a
+      ><a name="1605" href="lib.cubical.SquareOver.html#1530" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="1608"
+      > </a
+      ><a name="1609" href="lib.cubical.SquareOver.html#1549" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="1612"
+      > </a
+      ><a name="1613" href="lib.cubical.SquareOver.html#1568" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="1616" class="Symbol"
+      >}</a
+      ><a name="1617"
+      >
+  </a
+      ><a name="1620" class="Symbol"
+      >{</a
+      ><a name="1621" href="lib.cubical.SquareOver.html#1621" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="1624"
+      > </a
+      ><a name="1625" href="lib.cubical.SquareOver.html#1625" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="1628"
+      > </a
+      ><a name="1629" href="lib.cubical.SquareOver.html#1629" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="1632"
+      > </a
+      ><a name="1633" href="lib.cubical.SquareOver.html#1633" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="1636"
+      > </a
+      ><a name="1637" class="Symbol"
+      >:</a
+      ><a name="1638"
+      > </a
+      ><a name="1639" href="lib.cubical.SquareOver.html#1474" class="Bound"
+      >B</a
+      ><a name="1640" class="Symbol"
+      >}</a
+      ><a name="1641"
+      >
+  </a
+      ><a name="1644" class="Symbol"
+      >{</a
+      ><a name="1645" href="lib.cubical.SquareOver.html#1645" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="1648"
+      > </a
+      ><a name="1649" class="Symbol"
+      >:</a
+      ><a name="1650"
+      > </a
+      ><a name="1651" href="lib.cubical.SquareOver.html#1621" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="1654"
+      > </a
+      ><a name="1655" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1657"
+      > </a
+      ><a name="1658" href="lib.cubical.SquareOver.html#1625" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="1661" class="Symbol"
+      >}</a
+      ><a name="1662"
+      > </a
+      ><a name="1663" class="Symbol"
+      >{</a
+      ><a name="1664" href="lib.cubical.SquareOver.html#1664" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="1667"
+      > </a
+      ><a name="1668" class="Symbol"
+      >:</a
+      ><a name="1669"
+      > </a
+      ><a name="1670" href="lib.cubical.SquareOver.html#1621" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="1673"
+      > </a
+      ><a name="1674" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1676"
+      > </a
+      ><a name="1677" href="lib.cubical.SquareOver.html#1629" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="1680" class="Symbol"
+      >}</a
+      ><a name="1681"
+      > </a
+      ><a name="1682" class="Symbol"
+      >{</a
+      ><a name="1683" href="lib.cubical.SquareOver.html#1683" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="1686"
+      > </a
+      ><a name="1687" class="Symbol"
+      >:</a
+      ><a name="1688"
+      > </a
+      ><a name="1689" href="lib.cubical.SquareOver.html#1625" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1695"
+      > </a
+      ><a name="1696" href="lib.cubical.SquareOver.html#1633" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="1699" class="Symbol"
+      >}</a
+      ><a name="1700"
+      > </a
+      ><a name="1701" class="Symbol"
+      >{</a
+      ><a name="1702" href="lib.cubical.SquareOver.html#1702" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="1705"
+      > </a
+      ><a name="1706" class="Symbol"
+      >:</a
+      ><a name="1707"
+      > </a
+      ><a name="1708" href="lib.cubical.SquareOver.html#1629" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="1711"
+      > </a
+      ><a name="1712" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1714"
+      > </a
+      ><a name="1715" href="lib.cubical.SquareOver.html#1633" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="1718" class="Symbol"
+      >}</a
+      ><a name="1719"
+      >
+  </a
+      ><a name="1722" class="Symbol"
+      >(</a
+      ><a name="1723" href="lib.cubical.SquareOver.html#1723" class="Bound"
+      >sq'</a
+      ><a name="1726"
+      > </a
+      ><a name="1727" class="Symbol"
+      >:</a
+      ><a name="1728"
+      > </a
+      ><a name="1729" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="1735"
+      > </a
+      ><a name="1736" href="lib.cubical.SquareOver.html#1645" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="1739"
+      > </a
+      ><a name="1740" href="lib.cubical.SquareOver.html#1664" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="1743"
+      > </a
+      ><a name="1744" href="lib.cubical.SquareOver.html#1683" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="1747"
+      > </a
+      ><a name="1748" href="lib.cubical.SquareOver.html#1702" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="1751" class="Symbol"
+      >)</a
+      ><a name="1752"
+      >
+  </a
+      ><a name="1755" class="Symbol"
+      >&#8594;</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="1767"
+      > </a
+      ><a name="1768" class="Symbol"
+      >(&#955;</a
+      ><a name="1770"
+      > </a
+      ><a name="1771" href="lib.cubical.SquareOver.html#1771" class="Bound"
+      >_</a
+      ><a name="1772"
+      > </a
+      ><a name="1773" class="Symbol"
+      >&#8594;</a
+      ><a name="1774"
+      > </a
+      ><a name="1775" href="lib.cubical.SquareOver.html#1474" class="Bound"
+      >B</a
+      ><a name="1776" class="Symbol"
+      >)</a
+      ><a name="1777"
+      > </a
+      ><a name="1778" href="lib.cubical.SquareOver.html#1589" class="Bound"
+      >sq</a
+      ><a name="1780"
+      >
+      </a
+      ><a name="1787" class="Symbol"
+      >(</a
+      ><a name="1788" href="lib.PathOver.html#1569" class="Function"
+      >&#8595;-cst-in</a
+      ><a name="1796"
+      > </a
+      ><a name="1797" href="lib.cubical.SquareOver.html#1645" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="1800" class="Symbol"
+      >)</a
+      ><a name="1801"
+      > </a
+      ><a name="1802" class="Symbol"
+      >(</a
+      ><a name="1803" href="lib.PathOver.html#1569" class="Function"
+      >&#8595;-cst-in</a
+      ><a name="1811"
+      > </a
+      ><a name="1812" href="lib.cubical.SquareOver.html#1664" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="1815" class="Symbol"
+      >)</a
+      ><a name="1816"
+      > </a
+      ><a name="1817" class="Symbol"
+      >(</a
+      ><a name="1818" href="lib.PathOver.html#1569" class="Function"
+      >&#8595;-cst-in</a
+      ><a name="1826"
+      > </a
+      ><a name="1827" href="lib.cubical.SquareOver.html#1683" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="1830" class="Symbol"
+      >)</a
+      ><a name="1831"
+      > </a
+      ><a name="1832" class="Symbol"
+      >(</a
+      ><a name="1833" href="lib.PathOver.html#1569" class="Function"
+      >&#8595;-cst-in</a
+      ><a name="1841"
+      > </a
+      ><a name="1842" href="lib.cubical.SquareOver.html#1702" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="1845" class="Symbol"
+      >)</a
+      ><a name="1846"
+      >
+</a
+      ><a name="1847" href="lib.cubical.SquareOver.html#1432" class="Function"
+      >squareover-cst-in</a
+      ><a name="1864"
+      > </a
+      ><a name="1865" class="Symbol"
+      >{</a
+      ><a name="1866" class="Argument"
+      >sq</a
+      ><a name="1868"
+      > </a
+      ><a name="1869" class="Symbol"
+      >=</a
+      ><a name="1870"
+      > </a
+      ><a name="1871" href="lib.cubical.Square.html#340" class="InductiveConstructor"
+      >ids</a
+      ><a name="1874" class="Symbol"
+      >}</a
+      ><a name="1875"
+      > </a
+      ><a name="1876" href="lib.cubical.SquareOver.html#1876" class="Bound"
+      >sq'</a
+      ><a name="1879"
+      > </a
+      ><a name="1880" class="Symbol"
+      >=</a
+      ><a name="1881"
+      > </a
+      ><a name="1882" href="lib.cubical.SquareOver.html#1876" class="Bound"
+      >sq'</a
+      ><a name="1885"
+      >
+
+</a
+      ><a name="1887" href="lib.cubical.SquareOver.html#1887" class="Function"
+      >&#8595;&#8595;-from-squareover</a
+      ><a name="1905"
+      > </a
+      ><a name="1906" class="Symbol"
+      >:</a
+      ><a name="1907"
+      > </a
+      ><a name="1908" class="Symbol"
+      >&#8704;</a
+      ><a name="1909"
+      > </a
+      ><a name="1910" class="Symbol"
+      >{</a
+      ><a name="1911" href="lib.cubical.SquareOver.html#1911" class="Bound"
+      >i</a
+      ><a name="1912"
+      > </a
+      ><a name="1913" href="lib.cubical.SquareOver.html#1913" class="Bound"
+      >j</a
+      ><a name="1914"
+      > </a
+      ><a name="1915" href="lib.cubical.SquareOver.html#1915" class="Bound"
+      >k</a
+      ><a name="1916" class="Symbol"
+      >}</a
+      ><a name="1917"
+      > </a
+      ><a name="1918" class="Symbol"
+      >{</a
+      ><a name="1919" href="lib.cubical.SquareOver.html#1919" class="Bound"
+      >A</a
+      ><a name="1920"
+      > </a
+      ><a name="1921" class="Symbol"
+      >:</a
+      ><a name="1922"
+      > </a
+      ><a name="1923" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1927"
+      > </a
+      ><a name="1928" href="lib.cubical.SquareOver.html#1911" class="Bound"
+      >i</a
+      ><a name="1929" class="Symbol"
+      >}</a
+      ><a name="1930"
+      > </a
+      ><a name="1931" class="Symbol"
+      >{</a
+      ><a name="1932" href="lib.cubical.SquareOver.html#1932" class="Bound"
+      >B</a
+      ><a name="1933"
+      > </a
+      ><a name="1934" class="Symbol"
+      >:</a
+      ><a name="1935"
+      > </a
+      ><a name="1936" href="lib.cubical.SquareOver.html#1919" class="Bound"
+      >A</a
+      ><a name="1937"
+      > </a
+      ><a name="1938" class="Symbol"
+      >&#8594;</a
+      ><a name="1939"
+      > </a
+      ><a name="1940" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1944"
+      > </a
+      ><a name="1945" href="lib.cubical.SquareOver.html#1913" class="Bound"
+      >j</a
+      ><a name="1946" class="Symbol"
+      >}</a
+      ><a name="1947"
+      > </a
+      ><a name="1948" class="Symbol"
+      >{</a
+      ><a name="1949" href="lib.cubical.SquareOver.html#1949" class="Bound"
+      >C</a
+      ><a name="1950"
+      > </a
+      ><a name="1951" class="Symbol"
+      >:</a
+      ><a name="1952"
+      > </a
+      ><a name="1953" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1957"
+      > </a
+      ><a name="1958" href="lib.cubical.SquareOver.html#1915" class="Bound"
+      >k</a
+      ><a name="1959" class="Symbol"
+      >}</a
+      ><a name="1960"
+      >
+  </a
+      ><a name="1963" class="Symbol"
+      >{</a
+      ><a name="1964" href="lib.cubical.SquareOver.html#1964" class="Bound"
+      >x</a
+      ><a name="1965"
+      > </a
+      ><a name="1966" href="lib.cubical.SquareOver.html#1966" class="Bound"
+      >y</a
+      ><a name="1967"
+      > </a
+      ><a name="1968" class="Symbol"
+      >:</a
+      ><a name="1969"
+      > </a
+      ><a name="1970" href="lib.cubical.SquareOver.html#1949" class="Bound"
+      >C</a
+      ><a name="1971"
+      > </a
+      ><a name="1972" class="Symbol"
+      >&#8594;</a
+      ><a name="1973"
+      > </a
+      ><a name="1974" href="lib.cubical.SquareOver.html#1919" class="Bound"
+      >A</a
+      ><a name="1975" class="Symbol"
+      >}</a
+      ><a name="1976"
+      > </a
+      ><a name="1977" class="Symbol"
+      >{</a
+      ><a name="1978" href="lib.cubical.SquareOver.html#1978" class="Bound"
+      >u</a
+      ><a name="1979"
+      > </a
+      ><a name="1980" class="Symbol"
+      >:</a
+      ><a name="1981"
+      > </a
+      ><a name="1982" class="Symbol"
+      >(</a
+      ><a name="1983" href="lib.cubical.SquareOver.html#1983" class="Bound"
+      >c</a
+      ><a name="1984"
+      > </a
+      ><a name="1985" class="Symbol"
+      >:</a
+      ><a name="1986"
+      > </a
+      ><a name="1987" href="lib.cubical.SquareOver.html#1949" class="Bound"
+      >C</a
+      ><a name="1988" class="Symbol"
+      >)</a
+      ><a name="1989"
+      > </a
+      ><a name="1990" class="Symbol"
+      >&#8594;</a
+      ><a name="1991"
+      > </a
+      ><a name="1992" href="lib.cubical.SquareOver.html#1932" class="Bound"
+      >B</a
+      ><a name="1993"
+      > </a
+      ><a name="1994" class="Symbol"
+      >(</a
+      ><a name="1995" href="lib.cubical.SquareOver.html#1964" class="Bound"
+      >x</a
+      ><a name="1996"
+      > </a
+      ><a name="1997" href="lib.cubical.SquareOver.html#1983" class="Bound"
+      >c</a
+      ><a name="1998" class="Symbol"
+      >)}</a
+      ><a name="2000"
+      > </a
+      ><a name="2001" class="Symbol"
+      >{</a
+      ><a name="2002" href="lib.cubical.SquareOver.html#2002" class="Bound"
+      >v</a
+      ><a name="2003"
+      > </a
+      ><a name="2004" class="Symbol"
+      >:</a
+      ><a name="2005"
+      > </a
+      ><a name="2006" class="Symbol"
+      >(</a
+      ><a name="2007" href="lib.cubical.SquareOver.html#2007" class="Bound"
+      >c</a
+      ><a name="2008"
+      > </a
+      ><a name="2009" class="Symbol"
+      >:</a
+      ><a name="2010"
+      > </a
+      ><a name="2011" href="lib.cubical.SquareOver.html#1949" class="Bound"
+      >C</a
+      ><a name="2012" class="Symbol"
+      >)</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" class="Symbol"
+      >&#8594;</a
+      ><a name="2015"
+      > </a
+      ><a name="2016" href="lib.cubical.SquareOver.html#1932" class="Bound"
+      >B</a
+      ><a name="2017"
+      > </a
+      ><a name="2018" class="Symbol"
+      >(</a
+      ><a name="2019" href="lib.cubical.SquareOver.html#1966" class="Bound"
+      >y</a
+      ><a name="2020"
+      > </a
+      ><a name="2021" href="lib.cubical.SquareOver.html#2007" class="Bound"
+      >c</a
+      ><a name="2022" class="Symbol"
+      >)}</a
+      ><a name="2024"
+      >
+  </a
+      ><a name="2027" class="Symbol"
+      >{</a
+      ><a name="2028" href="lib.cubical.SquareOver.html#2028" class="Bound"
+      >p</a
+      ><a name="2029"
+      > </a
+      ><a name="2030" class="Symbol"
+      >:</a
+      ><a name="2031"
+      > </a
+      ><a name="2032" class="Symbol"
+      >(</a
+      ><a name="2033" href="lib.cubical.SquareOver.html#2033" class="Bound"
+      >c</a
+      ><a name="2034"
+      > </a
+      ><a name="2035" class="Symbol"
+      >:</a
+      ><a name="2036"
+      > </a
+      ><a name="2037" href="lib.cubical.SquareOver.html#1949" class="Bound"
+      >C</a
+      ><a name="2038" class="Symbol"
+      >)</a
+      ><a name="2039"
+      > </a
+      ><a name="2040" class="Symbol"
+      >&#8594;</a
+      ><a name="2041"
+      > </a
+      ><a name="2042" href="lib.cubical.SquareOver.html#1964" class="Bound"
+      >x</a
+      ><a name="2043"
+      > </a
+      ><a name="2044" href="lib.cubical.SquareOver.html#2033" class="Bound"
+      >c</a
+      ><a name="2045"
+      > </a
+      ><a name="2046" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2048"
+      > </a
+      ><a name="2049" href="lib.cubical.SquareOver.html#1966" class="Bound"
+      >y</a
+      ><a name="2050"
+      > </a
+      ><a name="2051" href="lib.cubical.SquareOver.html#2033" class="Bound"
+      >c</a
+      ><a name="2052" class="Symbol"
+      >}</a
+      ><a name="2053"
+      > </a
+      ><a name="2054" class="Symbol"
+      >{</a
+      ><a name="2055" href="lib.cubical.SquareOver.html#2055" class="Bound"
+      >c&#8321;</a
+      ><a name="2057"
+      > </a
+      ><a name="2058" href="lib.cubical.SquareOver.html#2058" class="Bound"
+      >c&#8322;</a
+      ><a name="2060"
+      > </a
+      ><a name="2061" class="Symbol"
+      >:</a
+      ><a name="2062"
+      > </a
+      ><a name="2063" href="lib.cubical.SquareOver.html#1949" class="Bound"
+      >C</a
+      ><a name="2064" class="Symbol"
+      >}</a
+      ><a name="2065"
+      > </a
+      ><a name="2066" class="Symbol"
+      >{</a
+      ><a name="2067" href="lib.cubical.SquareOver.html#2067" class="Bound"
+      >q</a
+      ><a name="2068"
+      > </a
+      ><a name="2069" class="Symbol"
+      >:</a
+      ><a name="2070"
+      > </a
+      ><a name="2071" href="lib.cubical.SquareOver.html#2055" class="Bound"
+      >c&#8321;</a
+      ><a name="2073"
+      > </a
+      ><a name="2074" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2076"
+      > </a
+      ><a name="2077" href="lib.cubical.SquareOver.html#2058" class="Bound"
+      >c&#8322;</a
+      ><a name="2079" class="Symbol"
+      >}</a
+      ><a name="2080"
+      >
+  </a
+      ><a name="2083" class="Symbol"
+      >{</a
+      ><a name="2084" href="lib.cubical.SquareOver.html#2084" class="Bound"
+      >&#945;</a
+      ><a name="2085"
+      > </a
+      ><a name="2086" class="Symbol"
+      >:</a
+      ><a name="2087"
+      > </a
+      ><a name="2088" href="lib.cubical.SquareOver.html#1978" class="Bound"
+      >u</a
+      ><a name="2089"
+      > </a
+      ><a name="2090" href="lib.cubical.SquareOver.html#2055" class="Bound"
+      >c&#8321;</a
+      ><a name="2092"
+      > </a
+      ><a name="2093" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="2095"
+      > </a
+      ><a name="2096" href="lib.cubical.SquareOver.html#2002" class="Bound"
+      >v</a
+      ><a name="2097"
+      > </a
+      ><a name="2098" href="lib.cubical.SquareOver.html#2055" class="Bound"
+      >c&#8321;</a
+      ><a name="2100"
+      > </a
+      ><a name="2101" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="2102"
+      > </a
+      ><a name="2103" href="lib.cubical.SquareOver.html#1932" class="Bound"
+      >B</a
+      ><a name="2104"
+      > </a
+      ><a name="2105" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="2106"
+      > </a
+      ><a name="2107" href="lib.cubical.SquareOver.html#2028" class="Bound"
+      >p</a
+      ><a name="2108"
+      > </a
+      ><a name="2109" href="lib.cubical.SquareOver.html#2055" class="Bound"
+      >c&#8321;</a
+      ><a name="2111"
+      > </a
+      ><a name="2112" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="2113" class="Symbol"
+      >}</a
+      ><a name="2114"
+      > </a
+      ><a name="2115" class="Symbol"
+      >{</a
+      ><a name="2116" href="lib.cubical.SquareOver.html#2116" class="Bound"
+      >&#946;</a
+      ><a name="2117"
+      > </a
+      ><a name="2118" class="Symbol"
+      >:</a
+      ><a name="2119"
+      > </a
+      ><a name="2120" href="lib.cubical.SquareOver.html#1978" class="Bound"
+      >u</a
+      ><a name="2121"
+      > </a
+      ><a name="2122" href="lib.cubical.SquareOver.html#2058" class="Bound"
+      >c&#8322;</a
+      ><a name="2124"
+      > </a
+      ><a name="2125" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="2127"
+      > </a
+      ><a name="2128" href="lib.cubical.SquareOver.html#2002" class="Bound"
+      >v</a
+      ><a name="2129"
+      > </a
+      ><a name="2130" href="lib.cubical.SquareOver.html#2058" class="Bound"
+      >c&#8322;</a
+      ><a name="2132"
+      > </a
+      ><a name="2133" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="2134"
+      > </a
+      ><a name="2135" href="lib.cubical.SquareOver.html#1932" class="Bound"
+      >B</a
+      ><a name="2136"
+      > </a
+      ><a name="2137" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="2138"
+      > </a
+      ><a name="2139" href="lib.cubical.SquareOver.html#2028" class="Bound"
+      >p</a
+      ><a name="2140"
+      > </a
+      ><a name="2141" href="lib.cubical.SquareOver.html#2058" class="Bound"
+      >c&#8322;</a
+      ><a name="2143"
+      > </a
+      ><a name="2144" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="2145" class="Symbol"
+      >}</a
+      ><a name="2146"
+      >
+  </a
+      ><a name="2149" class="Symbol"
+      >&#8594;</a
+      ><a name="2150"
+      > </a
+      ><a name="2151" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="2161"
+      > </a
+      ><a name="2162" href="lib.cubical.SquareOver.html#1932" class="Bound"
+      >B</a
+      ><a name="2163"
+      > </a
+      ><a name="2164" class="Symbol"
+      >(</a
+      ><a name="2165" href="lib.cubical.Square.html#10785" class="Function"
+      >natural-square</a
+      ><a name="2179"
+      > </a
+      ><a name="2180" href="lib.cubical.SquareOver.html#2028" class="Bound"
+      >p</a
+      ><a name="2181"
+      > </a
+      ><a name="2182" href="lib.cubical.SquareOver.html#2067" class="Bound"
+      >q</a
+      ><a name="2183" class="Symbol"
+      >)</a
+      ><a name="2184"
+      >
+               </a
+      ><a name="2200" href="lib.cubical.SquareOver.html#2084" class="Bound"
+      >&#945;</a
+      ><a name="2201"
+      > </a
+      ><a name="2202" class="Symbol"
+      >(</a
+      ><a name="2203" href="lib.PathOver.html#4388" class="Function"
+      >&#8595;-ap-in</a
+      ><a name="2210"
+      > </a
+      ><a name="2211" class="Symbol"
+      >_</a
+      ><a name="2212"
+      > </a
+      ><a name="2213" class="Symbol"
+      >_</a
+      ><a name="2214"
+      > </a
+      ><a name="2215" class="Symbol"
+      >(</a
+      ><a name="2216" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="2219"
+      > </a
+      ><a name="2220" href="lib.cubical.SquareOver.html#1978" class="Bound"
+      >u</a
+      ><a name="2221"
+      > </a
+      ><a name="2222" href="lib.cubical.SquareOver.html#2067" class="Bound"
+      >q</a
+      ><a name="2223" class="Symbol"
+      >))</a
+      ><a name="2225"
+      > </a
+      ><a name="2226" class="Symbol"
+      >(</a
+      ><a name="2227" href="lib.PathOver.html#4388" class="Function"
+      >&#8595;-ap-in</a
+      ><a name="2234"
+      > </a
+      ><a name="2235" class="Symbol"
+      >_</a
+      ><a name="2236"
+      > </a
+      ><a name="2237" class="Symbol"
+      >_</a
+      ><a name="2238"
+      > </a
+      ><a name="2239" class="Symbol"
+      >(</a
+      ><a name="2240" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="2243"
+      > </a
+      ><a name="2244" href="lib.cubical.SquareOver.html#2002" class="Bound"
+      >v</a
+      ><a name="2245"
+      > </a
+      ><a name="2246" href="lib.cubical.SquareOver.html#2067" class="Bound"
+      >q</a
+      ><a name="2247" class="Symbol"
+      >))</a
+      ><a name="2249"
+      > </a
+      ><a name="2250" href="lib.cubical.SquareOver.html#2116" class="Bound"
+      >&#946;</a
+      ><a name="2251"
+      >
+  </a
+      ><a name="2254" class="Symbol"
+      >&#8594;</a
+      ><a name="2255"
+      > </a
+      ><a name="2256" href="lib.cubical.SquareOver.html#2084" class="Bound"
+      >&#945;</a
+      ><a name="2257"
+      > </a
+      ><a name="2258" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="2260"
+      > </a
+      ><a name="2261" href="lib.cubical.SquareOver.html#2116" class="Bound"
+      >&#946;</a
+      ><a name="2262"
+      > </a
+      ><a name="2263" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="2264"
+      > </a
+      ><a name="2265" class="Symbol"
+      >(&#955;</a
+      ><a name="2267"
+      > </a
+      ><a name="2268" href="lib.cubical.SquareOver.html#2268" class="Bound"
+      >c</a
+      ><a name="2269"
+      > </a
+      ><a name="2270" class="Symbol"
+      >&#8594;</a
+      ><a name="2271"
+      > </a
+      ><a name="2272" href="lib.cubical.SquareOver.html#1978" class="Bound"
+      >u</a
+      ><a name="2273"
+      > </a
+      ><a name="2274" href="lib.cubical.SquareOver.html#2268" class="Bound"
+      >c</a
+      ><a name="2275"
+      > </a
+      ><a name="2276" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="2278"
+      > </a
+      ><a name="2279" href="lib.cubical.SquareOver.html#2002" class="Bound"
+      >v</a
+      ><a name="2280"
+      > </a
+      ><a name="2281" href="lib.cubical.SquareOver.html#2268" class="Bound"
+      >c</a
+      ><a name="2282"
+      > </a
+      ><a name="2283" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="2284"
+      > </a
+      ><a name="2285" href="lib.cubical.SquareOver.html#1932" class="Bound"
+      >B</a
+      ><a name="2286"
+      > </a
+      ><a name="2287" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="2288"
+      > </a
+      ><a name="2289" href="lib.cubical.SquareOver.html#2028" class="Bound"
+      >p</a
+      ><a name="2290"
+      > </a
+      ><a name="2291" href="lib.cubical.SquareOver.html#2268" class="Bound"
+      >c</a
+      ><a name="2292"
+      > </a
+      ><a name="2293" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="2294" class="Symbol"
+      >)</a
+      ><a name="2295"
+      > </a
+      ><a name="2296" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="2297"
+      > </a
+      ><a name="2298" href="lib.cubical.SquareOver.html#2067" class="Bound"
+      >q</a
+      ><a name="2299"
+      > </a
+      ><a name="2300" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="2301"
+      >
+</a
+      ><a name="2302" href="lib.cubical.SquareOver.html#1887" class="Function"
+      >&#8595;&#8595;-from-squareover</a
+      ><a name="2320"
+      > </a
+      ><a name="2321" class="Symbol"
+      >{</a
+      ><a name="2322" class="Argument"
+      >q</a
+      ><a name="2323"
+      > </a
+      ><a name="2324" class="Symbol"
+      >=</a
+      ><a name="2325"
+      > </a
+      ><a name="2326" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2329" class="Symbol"
+      >}</a
+      ><a name="2330"
+      > </a
+      ><a name="2331" href="lib.cubical.SquareOver.html#2331" class="Bound"
+      >sq</a
+      ><a name="2333"
+      > </a
+      ><a name="2334" class="Symbol"
+      >=</a
+      ><a name="2335"
+      > </a
+      ><a name="2336" href="lib.cubical.SquareOver.html#2355" class="Function"
+      >lemma</a
+      ><a name="2341"
+      > </a
+      ><a name="2342" href="lib.cubical.SquareOver.html#2331" class="Bound"
+      >sq</a
+      ><a name="2344"
+      >
+  </a
+      ><a name="2347" class="Keyword"
+      >where</a
+      ><a name="2352"
+      >
+  </a
+      ><a name="2355" href="lib.cubical.SquareOver.html#2355" class="Function"
+      >lemma</a
+      ><a name="2360"
+      > </a
+      ><a name="2361" class="Symbol"
+      >:</a
+      ><a name="2362"
+      > </a
+      ><a name="2363" class="Symbol"
+      >&#8704;</a
+      ><a name="2364"
+      > </a
+      ><a name="2365" class="Symbol"
+      >{</a
+      ><a name="2366" href="lib.cubical.SquareOver.html#2366" class="Bound"
+      >i</a
+      ><a name="2367"
+      > </a
+      ><a name="2368" href="lib.cubical.SquareOver.html#2368" class="Bound"
+      >j</a
+      ><a name="2369" class="Symbol"
+      >}</a
+      ><a name="2370"
+      > </a
+      ><a name="2371" class="Symbol"
+      >{</a
+      ><a name="2372" href="lib.cubical.SquareOver.html#2372" class="Bound"
+      >A</a
+      ><a name="2373"
+      > </a
+      ><a name="2374" class="Symbol"
+      >:</a
+      ><a name="2375"
+      > </a
+      ><a name="2376" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2380"
+      > </a
+      ><a name="2381" href="lib.cubical.SquareOver.html#2366" class="Bound"
+      >i</a
+      ><a name="2382" class="Symbol"
+      >}</a
+      ><a name="2383"
+      > </a
+      ><a name="2384" class="Symbol"
+      >{</a
+      ><a name="2385" href="lib.cubical.SquareOver.html#2385" class="Bound"
+      >B</a
+      ><a name="2386"
+      > </a
+      ><a name="2387" class="Symbol"
+      >:</a
+      ><a name="2388"
+      > </a
+      ><a name="2389" href="lib.cubical.SquareOver.html#2372" class="Bound"
+      >A</a
+      ><a name="2390"
+      > </a
+      ><a name="2391" class="Symbol"
+      >&#8594;</a
+      ><a name="2392"
+      > </a
+      ><a name="2393" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2397"
+      > </a
+      ><a name="2398" href="lib.cubical.SquareOver.html#2368" class="Bound"
+      >j</a
+      ><a name="2399" class="Symbol"
+      >}</a
+      ><a name="2400"
+      >
+    </a
+      ><a name="2405" class="Symbol"
+      >{</a
+      ><a name="2406" href="lib.cubical.SquareOver.html#2406" class="Bound"
+      >x</a
+      ><a name="2407"
+      > </a
+      ><a name="2408" href="lib.cubical.SquareOver.html#2408" class="Bound"
+      >y</a
+      ><a name="2409"
+      > </a
+      ><a name="2410" class="Symbol"
+      >:</a
+      ><a name="2411"
+      > </a
+      ><a name="2412" href="lib.cubical.SquareOver.html#2372" class="Bound"
+      >A</a
+      ><a name="2413" class="Symbol"
+      >}</a
+      ><a name="2414"
+      > </a
+      ><a name="2415" class="Symbol"
+      >{</a
+      ><a name="2416" href="lib.cubical.SquareOver.html#2416" class="Bound"
+      >u</a
+      ><a name="2417"
+      > </a
+      ><a name="2418" class="Symbol"
+      >:</a
+      ><a name="2419"
+      > </a
+      ><a name="2420" href="lib.cubical.SquareOver.html#2385" class="Bound"
+      >B</a
+      ><a name="2421"
+      > </a
+      ><a name="2422" href="lib.cubical.SquareOver.html#2406" class="Bound"
+      >x</a
+      ><a name="2423" class="Symbol"
+      >}</a
+      ><a name="2424"
+      > </a
+      ><a name="2425" class="Symbol"
+      >{</a
+      ><a name="2426" href="lib.cubical.SquareOver.html#2426" class="Bound"
+      >v</a
+      ><a name="2427"
+      > </a
+      ><a name="2428" class="Symbol"
+      >:</a
+      ><a name="2429"
+      > </a
+      ><a name="2430" href="lib.cubical.SquareOver.html#2385" class="Bound"
+      >B</a
+      ><a name="2431"
+      > </a
+      ><a name="2432" href="lib.cubical.SquareOver.html#2408" class="Bound"
+      >y</a
+      ><a name="2433" class="Symbol"
+      >}</a
+      ><a name="2434"
+      > </a
+      ><a name="2435" class="Symbol"
+      >{</a
+      ><a name="2436" href="lib.cubical.SquareOver.html#2436" class="Bound"
+      >p</a
+      ><a name="2437"
+      > </a
+      ><a name="2438" class="Symbol"
+      >:</a
+      ><a name="2439"
+      > </a
+      ><a name="2440" href="lib.cubical.SquareOver.html#2406" class="Bound"
+      >x</a
+      ><a name="2441"
+      > </a
+      ><a name="2442" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2444"
+      > </a
+      ><a name="2445" href="lib.cubical.SquareOver.html#2408" class="Bound"
+      >y</a
+      ><a name="2446" class="Symbol"
+      >}</a
+      ><a name="2447"
+      >
+    </a
+      ><a name="2452" class="Symbol"
+      >{</a
+      ><a name="2453" href="lib.cubical.SquareOver.html#2453" class="Bound"
+      >&#945;</a
+      ><a name="2454"
+      > </a
+      ><a name="2455" href="lib.cubical.SquareOver.html#2455" class="Bound"
+      >&#946;</a
+      ><a name="2456"
+      > </a
+      ><a name="2457" class="Symbol"
+      >:</a
+      ><a name="2458"
+      > </a
+      ><a name="2459" href="lib.cubical.SquareOver.html#2416" class="Bound"
+      >u</a
+      ><a name="2460"
+      > </a
+      ><a name="2461" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="2463"
+      > </a
+      ><a name="2464" href="lib.cubical.SquareOver.html#2426" class="Bound"
+      >v</a
+      ><a name="2465"
+      > </a
+      ><a name="2466" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="2467"
+      > </a
+      ><a name="2468" href="lib.cubical.SquareOver.html#2385" class="Bound"
+      >B</a
+      ><a name="2469"
+      > </a
+      ><a name="2470" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="2471"
+      > </a
+      ><a name="2472" href="lib.cubical.SquareOver.html#2436" class="Bound"
+      >p</a
+      ><a name="2473"
+      > </a
+      ><a name="2474" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="2475" class="Symbol"
+      >}</a
+      ><a name="2476"
+      >
+    </a
+      ><a name="2481" class="Symbol"
+      >&#8594;</a
+      ><a name="2482"
+      > </a
+      ><a name="2483" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="2493"
+      > </a
+      ><a name="2494" href="lib.cubical.SquareOver.html#2385" class="Bound"
+      >B</a
+      ><a name="2495"
+      > </a
+      ><a name="2496" href="lib.cubical.Square.html#370" class="Function"
+      >hid-square</a
+      ><a name="2506"
+      > </a
+      ><a name="2507" href="lib.cubical.SquareOver.html#2453" class="Bound"
+      >&#945;</a
+      ><a name="2508"
+      > </a
+      ><a name="2509" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2512"
+      > </a
+      ><a name="2513" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2516"
+      > </a
+      ><a name="2517" href="lib.cubical.SquareOver.html#2455" class="Bound"
+      >&#946;</a
+      ><a name="2518"
+      >
+    </a
+      ><a name="2523" class="Symbol"
+      >&#8594;</a
+      ><a name="2524"
+      > </a
+      ><a name="2525" href="lib.cubical.SquareOver.html#2453" class="Bound"
+      >&#945;</a
+      ><a name="2526"
+      > </a
+      ><a name="2527" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2529"
+      > </a
+      ><a name="2530" href="lib.cubical.SquareOver.html#2455" class="Bound"
+      >&#946;</a
+      ><a name="2531"
+      >
+  </a
+      ><a name="2534" href="lib.cubical.SquareOver.html#2355" class="Function"
+      >lemma</a
+      ><a name="2539"
+      > </a
+      ><a name="2540" class="Symbol"
+      >{</a
+      ><a name="2541" class="Argument"
+      >p</a
+      ><a name="2542"
+      > </a
+      ><a name="2543" class="Symbol"
+      >=</a
+      ><a name="2544"
+      > </a
+      ><a name="2545" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2548" class="Symbol"
+      >}</a
+      ><a name="2549"
+      > </a
+      ><a name="2550" href="lib.cubical.SquareOver.html#2550" class="Bound"
+      >sq</a
+      ><a name="2552"
+      > </a
+      ><a name="2553" class="Symbol"
+      >=</a
+      ><a name="2554"
+      > </a
+      ><a name="2555" href="lib.cubical.Square.html#2420" class="Function"
+      >horiz-degen-path</a
+      ><a name="2571"
+      > </a
+      ><a name="2572" href="lib.cubical.SquareOver.html#2550" class="Bound"
+      >sq</a
+      ><a name="2574"
+      >
+
+</a
+      ><a name="2576" href="lib.cubical.SquareOver.html#2576" class="Function"
+      >&#8595;&#8595;-to-squareover</a
+      ><a name="2592"
+      > </a
+      ><a name="2593" class="Symbol"
+      >:</a
+      ><a name="2594"
+      > </a
+      ><a name="2595" class="Symbol"
+      >&#8704;</a
+      ><a name="2596"
+      > </a
+      ><a name="2597" class="Symbol"
+      >{</a
+      ><a name="2598" href="lib.cubical.SquareOver.html#2598" class="Bound"
+      >i</a
+      ><a name="2599"
+      > </a
+      ><a name="2600" href="lib.cubical.SquareOver.html#2600" class="Bound"
+      >j</a
+      ><a name="2601"
+      > </a
+      ><a name="2602" href="lib.cubical.SquareOver.html#2602" class="Bound"
+      >k</a
+      ><a name="2603" class="Symbol"
+      >}</a
+      ><a name="2604"
+      > </a
+      ><a name="2605" class="Symbol"
+      >{</a
+      ><a name="2606" href="lib.cubical.SquareOver.html#2606" class="Bound"
+      >A</a
+      ><a name="2607"
+      > </a
+      ><a name="2608" class="Symbol"
+      >:</a
+      ><a name="2609"
+      > </a
+      ><a name="2610" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2614"
+      > </a
+      ><a name="2615" href="lib.cubical.SquareOver.html#2598" class="Bound"
+      >i</a
+      ><a name="2616" class="Symbol"
+      >}</a
+      ><a name="2617"
+      > </a
+      ><a name="2618" class="Symbol"
+      >{</a
+      ><a name="2619" href="lib.cubical.SquareOver.html#2619" class="Bound"
+      >B</a
+      ><a name="2620"
+      > </a
+      ><a name="2621" class="Symbol"
+      >:</a
+      ><a name="2622"
+      > </a
+      ><a name="2623" href="lib.cubical.SquareOver.html#2606" class="Bound"
+      >A</a
+      ><a name="2624"
+      > </a
+      ><a name="2625" class="Symbol"
+      >&#8594;</a
+      ><a name="2626"
+      > </a
+      ><a name="2627" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2631"
+      > </a
+      ><a name="2632" href="lib.cubical.SquareOver.html#2600" class="Bound"
+      >j</a
+      ><a name="2633" class="Symbol"
+      >}</a
+      ><a name="2634"
+      > </a
+      ><a name="2635" class="Symbol"
+      >{</a
+      ><a name="2636" href="lib.cubical.SquareOver.html#2636" class="Bound"
+      >C</a
+      ><a name="2637"
+      > </a
+      ><a name="2638" class="Symbol"
+      >:</a
+      ><a name="2639"
+      > </a
+      ><a name="2640" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2644"
+      > </a
+      ><a name="2645" href="lib.cubical.SquareOver.html#2602" class="Bound"
+      >k</a
+      ><a name="2646" class="Symbol"
+      >}</a
+      ><a name="2647"
+      >
+  </a
+      ><a name="2650" class="Symbol"
+      >{</a
+      ><a name="2651" href="lib.cubical.SquareOver.html#2651" class="Bound"
+      >x</a
+      ><a name="2652"
+      > </a
+      ><a name="2653" href="lib.cubical.SquareOver.html#2653" class="Bound"
+      >y</a
+      ><a name="2654"
+      > </a
+      ><a name="2655" class="Symbol"
+      >:</a
+      ><a name="2656"
+      > </a
+      ><a name="2657" href="lib.cubical.SquareOver.html#2636" class="Bound"
+      >C</a
+      ><a name="2658"
+      > </a
+      ><a name="2659" class="Symbol"
+      >&#8594;</a
+      ><a name="2660"
+      > </a
+      ><a name="2661" href="lib.cubical.SquareOver.html#2606" class="Bound"
+      >A</a
+      ><a name="2662" class="Symbol"
+      >}</a
+      ><a name="2663"
+      > </a
+      ><a name="2664" class="Symbol"
+      >{</a
+      ><a name="2665" href="lib.cubical.SquareOver.html#2665" class="Bound"
+      >u</a
+      ><a name="2666"
+      > </a
+      ><a name="2667" class="Symbol"
+      >:</a
+      ><a name="2668"
+      > </a
+      ><a name="2669" class="Symbol"
+      >(</a
+      ><a name="2670" href="lib.cubical.SquareOver.html#2670" class="Bound"
+      >c</a
+      ><a name="2671"
+      > </a
+      ><a name="2672" class="Symbol"
+      >:</a
+      ><a name="2673"
+      > </a
+      ><a name="2674" href="lib.cubical.SquareOver.html#2636" class="Bound"
+      >C</a
+      ><a name="2675" class="Symbol"
+      >)</a
+      ><a name="2676"
+      > </a
+      ><a name="2677" class="Symbol"
+      >&#8594;</a
+      ><a name="2678"
+      > </a
+      ><a name="2679" href="lib.cubical.SquareOver.html#2619" class="Bound"
+      >B</a
+      ><a name="2680"
+      > </a
+      ><a name="2681" class="Symbol"
+      >(</a
+      ><a name="2682" href="lib.cubical.SquareOver.html#2651" class="Bound"
+      >x</a
+      ><a name="2683"
+      > </a
+      ><a name="2684" href="lib.cubical.SquareOver.html#2670" class="Bound"
+      >c</a
+      ><a name="2685" class="Symbol"
+      >)}</a
+      ><a name="2687"
+      > </a
+      ><a name="2688" class="Symbol"
+      >{</a
+      ><a name="2689" href="lib.cubical.SquareOver.html#2689" class="Bound"
+      >v</a
+      ><a name="2690"
+      > </a
+      ><a name="2691" class="Symbol"
+      >:</a
+      ><a name="2692"
+      > </a
+      ><a name="2693" class="Symbol"
+      >(</a
+      ><a name="2694" href="lib.cubical.SquareOver.html#2694" class="Bound"
+      >c</a
+      ><a name="2695"
+      > </a
+      ><a name="2696" class="Symbol"
+      >:</a
+      ><a name="2697"
+      > </a
+      ><a name="2698" href="lib.cubical.SquareOver.html#2636" class="Bound"
+      >C</a
+      ><a name="2699" class="Symbol"
+      >)</a
+      ><a name="2700"
+      > </a
+      ><a name="2701" class="Symbol"
+      >&#8594;</a
+      ><a name="2702"
+      > </a
+      ><a name="2703" href="lib.cubical.SquareOver.html#2619" class="Bound"
+      >B</a
+      ><a name="2704"
+      > </a
+      ><a name="2705" class="Symbol"
+      >(</a
+      ><a name="2706" href="lib.cubical.SquareOver.html#2653" class="Bound"
+      >y</a
+      ><a name="2707"
+      > </a
+      ><a name="2708" href="lib.cubical.SquareOver.html#2694" class="Bound"
+      >c</a
+      ><a name="2709" class="Symbol"
+      >)}</a
+      ><a name="2711"
+      >
+  </a
+      ><a name="2714" class="Symbol"
+      >{</a
+      ><a name="2715" href="lib.cubical.SquareOver.html#2715" class="Bound"
+      >p</a
+      ><a name="2716"
+      > </a
+      ><a name="2717" class="Symbol"
+      >:</a
+      ><a name="2718"
+      > </a
+      ><a name="2719" class="Symbol"
+      >(</a
+      ><a name="2720" href="lib.cubical.SquareOver.html#2720" class="Bound"
+      >c</a
+      ><a name="2721"
+      > </a
+      ><a name="2722" class="Symbol"
+      >:</a
+      ><a name="2723"
+      > </a
+      ><a name="2724" href="lib.cubical.SquareOver.html#2636" class="Bound"
+      >C</a
+      ><a name="2725" class="Symbol"
+      >)</a
+      ><a name="2726"
+      > </a
+      ><a name="2727" class="Symbol"
+      >&#8594;</a
+      ><a name="2728"
+      > </a
+      ><a name="2729" href="lib.cubical.SquareOver.html#2651" class="Bound"
+      >x</a
+      ><a name="2730"
+      > </a
+      ><a name="2731" href="lib.cubical.SquareOver.html#2720" class="Bound"
+      >c</a
+      ><a name="2732"
+      > </a
+      ><a name="2733" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2735"
+      > </a
+      ><a name="2736" href="lib.cubical.SquareOver.html#2653" class="Bound"
+      >y</a
+      ><a name="2737"
+      > </a
+      ><a name="2738" href="lib.cubical.SquareOver.html#2720" class="Bound"
+      >c</a
+      ><a name="2739" class="Symbol"
+      >}</a
+      ><a name="2740"
+      > </a
+      ><a name="2741" class="Symbol"
+      >{</a
+      ><a name="2742" href="lib.cubical.SquareOver.html#2742" class="Bound"
+      >c&#8321;</a
+      ><a name="2744"
+      > </a
+      ><a name="2745" href="lib.cubical.SquareOver.html#2745" class="Bound"
+      >c&#8322;</a
+      ><a name="2747"
+      > </a
+      ><a name="2748" class="Symbol"
+      >:</a
+      ><a name="2749"
+      > </a
+      ><a name="2750" href="lib.cubical.SquareOver.html#2636" class="Bound"
+      >C</a
+      ><a name="2751" class="Symbol"
+      >}</a
+      ><a name="2752"
+      > </a
+      ><a name="2753" class="Symbol"
+      >{</a
+      ><a name="2754" href="lib.cubical.SquareOver.html#2754" class="Bound"
+      >q</a
+      ><a name="2755"
+      > </a
+      ><a name="2756" class="Symbol"
+      >:</a
+      ><a name="2757"
+      > </a
+      ><a name="2758" href="lib.cubical.SquareOver.html#2742" class="Bound"
+      >c&#8321;</a
+      ><a name="2760"
+      > </a
+      ><a name="2761" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2763"
+      > </a
+      ><a name="2764" href="lib.cubical.SquareOver.html#2745" class="Bound"
+      >c&#8322;</a
+      ><a name="2766" class="Symbol"
+      >}</a
+      ><a name="2767"
+      >
+  </a
+      ><a name="2770" class="Symbol"
+      >{</a
+      ><a name="2771" href="lib.cubical.SquareOver.html#2771" class="Bound"
+      >&#945;</a
+      ><a name="2772"
+      > </a
+      ><a name="2773" class="Symbol"
+      >:</a
+      ><a name="2774"
+      > </a
+      ><a name="2775" href="lib.cubical.SquareOver.html#2665" class="Bound"
+      >u</a
+      ><a name="2776"
+      > </a
+      ><a name="2777" href="lib.cubical.SquareOver.html#2742" class="Bound"
+      >c&#8321;</a
+      ><a name="2779"
+      > </a
+      ><a name="2780" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="2782"
+      > </a
+      ><a name="2783" href="lib.cubical.SquareOver.html#2689" class="Bound"
+      >v</a
+      ><a name="2784"
+      > </a
+      ><a name="2785" href="lib.cubical.SquareOver.html#2742" class="Bound"
+      >c&#8321;</a
+      ><a name="2787"
+      > </a
+      ><a name="2788" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="2789"
+      > </a
+      ><a name="2790" href="lib.cubical.SquareOver.html#2619" class="Bound"
+      >B</a
+      ><a name="2791"
+      > </a
+      ><a name="2792" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="2793"
+      > </a
+      ><a name="2794" href="lib.cubical.SquareOver.html#2715" class="Bound"
+      >p</a
+      ><a name="2795"
+      > </a
+      ><a name="2796" href="lib.cubical.SquareOver.html#2742" class="Bound"
+      >c&#8321;</a
+      ><a name="2798"
+      > </a
+      ><a name="2799" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="2800" class="Symbol"
+      >}</a
+      ><a name="2801"
+      > </a
+      ><a name="2802" class="Symbol"
+      >{</a
+      ><a name="2803" href="lib.cubical.SquareOver.html#2803" class="Bound"
+      >&#946;</a
+      ><a name="2804"
+      > </a
+      ><a name="2805" class="Symbol"
+      >:</a
+      ><a name="2806"
+      > </a
+      ><a name="2807" href="lib.cubical.SquareOver.html#2665" class="Bound"
+      >u</a
+      ><a name="2808"
+      > </a
+      ><a name="2809" href="lib.cubical.SquareOver.html#2745" class="Bound"
+      >c&#8322;</a
+      ><a name="2811"
+      > </a
+      ><a name="2812" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="2814"
+      > </a
+      ><a name="2815" href="lib.cubical.SquareOver.html#2689" class="Bound"
+      >v</a
+      ><a name="2816"
+      > </a
+      ><a name="2817" href="lib.cubical.SquareOver.html#2745" class="Bound"
+      >c&#8322;</a
+      ><a name="2819"
+      > </a
+      ><a name="2820" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="2821"
+      > </a
+      ><a name="2822" href="lib.cubical.SquareOver.html#2619" class="Bound"
+      >B</a
+      ><a name="2823"
+      > </a
+      ><a name="2824" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="2825"
+      > </a
+      ><a name="2826" href="lib.cubical.SquareOver.html#2715" class="Bound"
+      >p</a
+      ><a name="2827"
+      > </a
+      ><a name="2828" href="lib.cubical.SquareOver.html#2745" class="Bound"
+      >c&#8322;</a
+      ><a name="2830"
+      > </a
+      ><a name="2831" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="2832" class="Symbol"
+      >}</a
+      ><a name="2833"
+      >
+  </a
+      ><a name="2836" class="Symbol"
+      >&#8594;</a
+      ><a name="2837"
+      > </a
+      ><a name="2838" href="lib.cubical.SquareOver.html#2771" class="Bound"
+      >&#945;</a
+      ><a name="2839"
+      > </a
+      ><a name="2840" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="2842"
+      > </a
+      ><a name="2843" href="lib.cubical.SquareOver.html#2803" class="Bound"
+      >&#946;</a
+      ><a name="2844"
+      > </a
+      ><a name="2845" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="2846"
+      > </a
+      ><a name="2847" class="Symbol"
+      >(&#955;</a
+      ><a name="2849"
+      > </a
+      ><a name="2850" href="lib.cubical.SquareOver.html#2850" class="Bound"
+      >c</a
+      ><a name="2851"
+      > </a
+      ><a name="2852" class="Symbol"
+      >&#8594;</a
+      ><a name="2853"
+      > </a
+      ><a name="2854" href="lib.cubical.SquareOver.html#2665" class="Bound"
+      >u</a
+      ><a name="2855"
+      > </a
+      ><a name="2856" href="lib.cubical.SquareOver.html#2850" class="Bound"
+      >c</a
+      ><a name="2857"
+      > </a
+      ><a name="2858" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="2860"
+      > </a
+      ><a name="2861" href="lib.cubical.SquareOver.html#2689" class="Bound"
+      >v</a
+      ><a name="2862"
+      > </a
+      ><a name="2863" href="lib.cubical.SquareOver.html#2850" class="Bound"
+      >c</a
+      ><a name="2864"
+      > </a
+      ><a name="2865" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="2866"
+      > </a
+      ><a name="2867" href="lib.cubical.SquareOver.html#2619" class="Bound"
+      >B</a
+      ><a name="2868"
+      > </a
+      ><a name="2869" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="2870"
+      > </a
+      ><a name="2871" href="lib.cubical.SquareOver.html#2715" class="Bound"
+      >p</a
+      ><a name="2872"
+      > </a
+      ><a name="2873" href="lib.cubical.SquareOver.html#2850" class="Bound"
+      >c</a
+      ><a name="2874"
+      > </a
+      ><a name="2875" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="2876" class="Symbol"
+      >)</a
+      ><a name="2877"
+      > </a
+      ><a name="2878" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="2879"
+      > </a
+      ><a name="2880" href="lib.cubical.SquareOver.html#2754" class="Bound"
+      >q</a
+      ><a name="2881"
+      > </a
+      ><a name="2882" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="2883"
+      >
+  </a
+      ><a name="2886" class="Symbol"
+      >&#8594;</a
+      ><a name="2887"
+      > </a
+      ><a name="2888" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="2898"
+      > </a
+      ><a name="2899" href="lib.cubical.SquareOver.html#2619" class="Bound"
+      >B</a
+      ><a name="2900"
+      > </a
+      ><a name="2901" class="Symbol"
+      >(</a
+      ><a name="2902" href="lib.cubical.Square.html#10785" class="Function"
+      >natural-square</a
+      ><a name="2916"
+      > </a
+      ><a name="2917" href="lib.cubical.SquareOver.html#2715" class="Bound"
+      >p</a
+      ><a name="2918"
+      > </a
+      ><a name="2919" href="lib.cubical.SquareOver.html#2754" class="Bound"
+      >q</a
+      ><a name="2920" class="Symbol"
+      >)</a
+      ><a name="2921"
+      >
+               </a
+      ><a name="2937" href="lib.cubical.SquareOver.html#2771" class="Bound"
+      >&#945;</a
+      ><a name="2938"
+      > </a
+      ><a name="2939" class="Symbol"
+      >(</a
+      ><a name="2940" href="lib.PathOver.html#4388" class="Function"
+      >&#8595;-ap-in</a
+      ><a name="2947"
+      > </a
+      ><a name="2948" class="Symbol"
+      >_</a
+      ><a name="2949"
+      > </a
+      ><a name="2950" class="Symbol"
+      >_</a
+      ><a name="2951"
+      > </a
+      ><a name="2952" class="Symbol"
+      >(</a
+      ><a name="2953" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="2956"
+      > </a
+      ><a name="2957" href="lib.cubical.SquareOver.html#2665" class="Bound"
+      >u</a
+      ><a name="2958"
+      > </a
+      ><a name="2959" href="lib.cubical.SquareOver.html#2754" class="Bound"
+      >q</a
+      ><a name="2960" class="Symbol"
+      >))</a
+      ><a name="2962"
+      > </a
+      ><a name="2963" class="Symbol"
+      >(</a
+      ><a name="2964" href="lib.PathOver.html#4388" class="Function"
+      >&#8595;-ap-in</a
+      ><a name="2971"
+      > </a
+      ><a name="2972" class="Symbol"
+      >_</a
+      ><a name="2973"
+      > </a
+      ><a name="2974" class="Symbol"
+      >_</a
+      ><a name="2975"
+      > </a
+      ><a name="2976" class="Symbol"
+      >(</a
+      ><a name="2977" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="2980"
+      > </a
+      ><a name="2981" href="lib.cubical.SquareOver.html#2689" class="Bound"
+      >v</a
+      ><a name="2982"
+      > </a
+      ><a name="2983" href="lib.cubical.SquareOver.html#2754" class="Bound"
+      >q</a
+      ><a name="2984" class="Symbol"
+      >))</a
+      ><a name="2986"
+      > </a
+      ><a name="2987" href="lib.cubical.SquareOver.html#2803" class="Bound"
+      >&#946;</a
+      ><a name="2988"
+      >
+</a
+      ><a name="2989" href="lib.cubical.SquareOver.html#2576" class="Function"
+      >&#8595;&#8595;-to-squareover</a
+      ><a name="3005"
+      > </a
+      ><a name="3006" class="Symbol"
+      >{</a
+      ><a name="3007" class="Argument"
+      >q</a
+      ><a name="3008"
+      > </a
+      ><a name="3009" class="Symbol"
+      >=</a
+      ><a name="3010"
+      > </a
+      ><a name="3011" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3014" class="Symbol"
+      >}</a
+      ><a name="3015"
+      > </a
+      ><a name="3016" href="lib.cubical.SquareOver.html#3016" class="Bound"
+      >r</a
+      ><a name="3017"
+      > </a
+      ><a name="3018" class="Symbol"
+      >=</a
+      ><a name="3019"
+      > </a
+      ><a name="3020" href="lib.cubical.SquareOver.html#3038" class="Function"
+      >lemma</a
+      ><a name="3025"
+      > </a
+      ><a name="3026" href="lib.cubical.SquareOver.html#3016" class="Bound"
+      >r</a
+      ><a name="3027"
+      >
+  </a
+      ><a name="3030" class="Keyword"
+      >where</a
+      ><a name="3035"
+      >
+  </a
+      ><a name="3038" href="lib.cubical.SquareOver.html#3038" class="Function"
+      >lemma</a
+      ><a name="3043"
+      > </a
+      ><a name="3044" class="Symbol"
+      >:</a
+      ><a name="3045"
+      > </a
+      ><a name="3046" class="Symbol"
+      >&#8704;</a
+      ><a name="3047"
+      > </a
+      ><a name="3048" class="Symbol"
+      >{</a
+      ><a name="3049" href="lib.cubical.SquareOver.html#3049" class="Bound"
+      >i</a
+      ><a name="3050"
+      > </a
+      ><a name="3051" href="lib.cubical.SquareOver.html#3051" class="Bound"
+      >j</a
+      ><a name="3052" class="Symbol"
+      >}</a
+      ><a name="3053"
+      > </a
+      ><a name="3054" class="Symbol"
+      >{</a
+      ><a name="3055" href="lib.cubical.SquareOver.html#3055" class="Bound"
+      >A</a
+      ><a name="3056"
+      > </a
+      ><a name="3057" class="Symbol"
+      >:</a
+      ><a name="3058"
+      > </a
+      ><a name="3059" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3063"
+      > </a
+      ><a name="3064" href="lib.cubical.SquareOver.html#3049" class="Bound"
+      >i</a
+      ><a name="3065" class="Symbol"
+      >}</a
+      ><a name="3066"
+      > </a
+      ><a name="3067" class="Symbol"
+      >{</a
+      ><a name="3068" href="lib.cubical.SquareOver.html#3068" class="Bound"
+      >B</a
+      ><a name="3069"
+      > </a
+      ><a name="3070" class="Symbol"
+      >:</a
+      ><a name="3071"
+      > </a
+      ><a name="3072" href="lib.cubical.SquareOver.html#3055" class="Bound"
+      >A</a
+      ><a name="3073"
+      > </a
+      ><a name="3074" class="Symbol"
+      >&#8594;</a
+      ><a name="3075"
+      > </a
+      ><a name="3076" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3080"
+      > </a
+      ><a name="3081" href="lib.cubical.SquareOver.html#3051" class="Bound"
+      >j</a
+      ><a name="3082" class="Symbol"
+      >}</a
+      ><a name="3083"
+      >
+    </a
+      ><a name="3088" class="Symbol"
+      >{</a
+      ><a name="3089" href="lib.cubical.SquareOver.html#3089" class="Bound"
+      >x</a
+      ><a name="3090"
+      > </a
+      ><a name="3091" href="lib.cubical.SquareOver.html#3091" class="Bound"
+      >y</a
+      ><a name="3092"
+      > </a
+      ><a name="3093" class="Symbol"
+      >:</a
+      ><a name="3094"
+      > </a
+      ><a name="3095" href="lib.cubical.SquareOver.html#3055" class="Bound"
+      >A</a
+      ><a name="3096" class="Symbol"
+      >}</a
+      ><a name="3097"
+      > </a
+      ><a name="3098" class="Symbol"
+      >{</a
+      ><a name="3099" href="lib.cubical.SquareOver.html#3099" class="Bound"
+      >u</a
+      ><a name="3100"
+      > </a
+      ><a name="3101" class="Symbol"
+      >:</a
+      ><a name="3102"
+      > </a
+      ><a name="3103" href="lib.cubical.SquareOver.html#3068" class="Bound"
+      >B</a
+      ><a name="3104"
+      > </a
+      ><a name="3105" href="lib.cubical.SquareOver.html#3089" class="Bound"
+      >x</a
+      ><a name="3106" class="Symbol"
+      >}</a
+      ><a name="3107"
+      > </a
+      ><a name="3108" class="Symbol"
+      >{</a
+      ><a name="3109" href="lib.cubical.SquareOver.html#3109" class="Bound"
+      >v</a
+      ><a name="3110"
+      > </a
+      ><a name="3111" class="Symbol"
+      >:</a
+      ><a name="3112"
+      > </a
+      ><a name="3113" href="lib.cubical.SquareOver.html#3068" class="Bound"
+      >B</a
+      ><a name="3114"
+      > </a
+      ><a name="3115" href="lib.cubical.SquareOver.html#3091" class="Bound"
+      >y</a
+      ><a name="3116" class="Symbol"
+      >}</a
+      ><a name="3117"
+      > </a
+      ><a name="3118" class="Symbol"
+      >{</a
+      ><a name="3119" href="lib.cubical.SquareOver.html#3119" class="Bound"
+      >p</a
+      ><a name="3120"
+      > </a
+      ><a name="3121" class="Symbol"
+      >:</a
+      ><a name="3122"
+      > </a
+      ><a name="3123" href="lib.cubical.SquareOver.html#3089" class="Bound"
+      >x</a
+      ><a name="3124"
+      > </a
+      ><a name="3125" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3127"
+      > </a
+      ><a name="3128" href="lib.cubical.SquareOver.html#3091" class="Bound"
+      >y</a
+      ><a name="3129" class="Symbol"
+      >}</a
+      ><a name="3130"
+      >
+    </a
+      ><a name="3135" class="Symbol"
+      >{</a
+      ><a name="3136" href="lib.cubical.SquareOver.html#3136" class="Bound"
+      >&#945;</a
+      ><a name="3137"
+      > </a
+      ><a name="3138" href="lib.cubical.SquareOver.html#3138" class="Bound"
+      >&#946;</a
+      ><a name="3139"
+      > </a
+      ><a name="3140" class="Symbol"
+      >:</a
+      ><a name="3141"
+      > </a
+      ><a name="3142" href="lib.cubical.SquareOver.html#3099" class="Bound"
+      >u</a
+      ><a name="3143"
+      > </a
+      ><a name="3144" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="3146"
+      > </a
+      ><a name="3147" href="lib.cubical.SquareOver.html#3109" class="Bound"
+      >v</a
+      ><a name="3148"
+      > </a
+      ><a name="3149" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="3150"
+      > </a
+      ><a name="3151" href="lib.cubical.SquareOver.html#3068" class="Bound"
+      >B</a
+      ><a name="3152"
+      > </a
+      ><a name="3153" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="3154"
+      > </a
+      ><a name="3155" href="lib.cubical.SquareOver.html#3119" class="Bound"
+      >p</a
+      ><a name="3156"
+      > </a
+      ><a name="3157" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="3158" class="Symbol"
+      >}</a
+      ><a name="3159"
+      >
+    </a
+      ><a name="3164" class="Symbol"
+      >&#8594;</a
+      ><a name="3165"
+      > </a
+      ><a name="3166" href="lib.cubical.SquareOver.html#3136" class="Bound"
+      >&#945;</a
+      ><a name="3167"
+      > </a
+      ><a name="3168" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3170"
+      > </a
+      ><a name="3171" href="lib.cubical.SquareOver.html#3138" class="Bound"
+      >&#946;</a
+      ><a name="3172"
+      >
+    </a
+      ><a name="3177" class="Symbol"
+      >&#8594;</a
+      ><a name="3178"
+      > </a
+      ><a name="3179" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="3189"
+      > </a
+      ><a name="3190" href="lib.cubical.SquareOver.html#3068" class="Bound"
+      >B</a
+      ><a name="3191"
+      > </a
+      ><a name="3192" href="lib.cubical.Square.html#370" class="Function"
+      >hid-square</a
+      ><a name="3202"
+      > </a
+      ><a name="3203" href="lib.cubical.SquareOver.html#3136" class="Bound"
+      >&#945;</a
+      ><a name="3204"
+      > </a
+      ><a name="3205" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3208"
+      > </a
+      ><a name="3209" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3212"
+      > </a
+      ><a name="3213" href="lib.cubical.SquareOver.html#3138" class="Bound"
+      >&#946;</a
+      ><a name="3214"
+      >
+  </a
+      ><a name="3217" href="lib.cubical.SquareOver.html#3038" class="Function"
+      >lemma</a
+      ><a name="3222"
+      > </a
+      ><a name="3223" class="Symbol"
+      >{</a
+      ><a name="3224" class="Argument"
+      >p</a
+      ><a name="3225"
+      > </a
+      ><a name="3226" class="Symbol"
+      >=</a
+      ><a name="3227"
+      > </a
+      ><a name="3228" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3231" class="Symbol"
+      >}</a
+      ><a name="3232"
+      > </a
+      ><a name="3233" href="lib.cubical.SquareOver.html#3233" class="Bound"
+      >r</a
+      ><a name="3234"
+      > </a
+      ><a name="3235" class="Symbol"
+      >=</a
+      ><a name="3236"
+      > </a
+      ><a name="3237" href="lib.cubical.Square.html#2283" class="Function"
+      >horiz-degen-square</a
+      ><a name="3255"
+      > </a
+      ><a name="3256" href="lib.cubical.SquareOver.html#3233" class="Bound"
+      >r</a
+      ><a name="3257"
+      >
+
+</a
+      ><a name="3259" class="Keyword"
+      >infixr</a
+      ><a name="3265"
+      > </a
+      ><a name="3266" class="Number"
+      >80</a
+      ><a name="3268"
+      > </a
+      ><a name="3269" href="lib.cubical.SquareOver.html#3784" class="Function Operator"
+      >_&#8729;v&#8595;&#8865;_</a
+      ><a name="3275"
+      > </a
+      ><a name="3276" href="lib.cubical.SquareOver.html#3298" class="Function Operator"
+      >_&#8729;h&#8595;&#8865;_</a
+      ><a name="3282"
+      > </a
+      ><a name="3283" href="lib.cubical.SquareOver.html#4270" class="Function Operator"
+      >_&#8595;&#8865;v&#8729;_</a
+      ><a name="3289"
+      > </a
+      ><a name="3290" href="lib.cubical.SquareOver.html#4756" class="Function Operator"
+      >_&#8595;&#8865;h&#8729;_</a
+      ><a name="3296"
+      >
+
+</a
+      ><a name="3298" href="lib.cubical.SquareOver.html#3298" class="Function Operator"
+      >_&#8729;h&#8595;&#8865;_</a
+      ><a name="3304"
+      > </a
+      ><a name="3305" class="Symbol"
+      >:</a
+      ><a name="3306"
+      > </a
+      ><a name="3307" class="Symbol"
+      >&#8704;</a
+      ><a name="3308"
+      > </a
+      ><a name="3309" class="Symbol"
+      >{</a
+      ><a name="3310" href="lib.cubical.SquareOver.html#3310" class="Bound"
+      >i</a
+      ><a name="3311"
+      > </a
+      ><a name="3312" href="lib.cubical.SquareOver.html#3312" class="Bound"
+      >j</a
+      ><a name="3313" class="Symbol"
+      >}</a
+      ><a name="3314"
+      > </a
+      ><a name="3315" class="Symbol"
+      >{</a
+      ><a name="3316" href="lib.cubical.SquareOver.html#3316" class="Bound"
+      >A</a
+      ><a name="3317"
+      > </a
+      ><a name="3318" class="Symbol"
+      >:</a
+      ><a name="3319"
+      > </a
+      ><a name="3320" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3324"
+      > </a
+      ><a name="3325" href="lib.cubical.SquareOver.html#3310" class="Bound"
+      >i</a
+      ><a name="3326" class="Symbol"
+      >}</a
+      ><a name="3327"
+      > </a
+      ><a name="3328" class="Symbol"
+      >{</a
+      ><a name="3329" href="lib.cubical.SquareOver.html#3329" class="Bound"
+      >B</a
+      ><a name="3330"
+      > </a
+      ><a name="3331" class="Symbol"
+      >:</a
+      ><a name="3332"
+      > </a
+      ><a name="3333" href="lib.cubical.SquareOver.html#3316" class="Bound"
+      >A</a
+      ><a name="3334"
+      > </a
+      ><a name="3335" class="Symbol"
+      >&#8594;</a
+      ><a name="3336"
+      > </a
+      ><a name="3337" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3341"
+      > </a
+      ><a name="3342" href="lib.cubical.SquareOver.html#3312" class="Bound"
+      >j</a
+      ><a name="3343" class="Symbol"
+      >}</a
+      ><a name="3344"
+      > </a
+      ><a name="3345" class="Symbol"
+      >{</a
+      ><a name="3346" href="lib.cubical.SquareOver.html#3346" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="3349"
+      > </a
+      ><a name="3350" href="lib.cubical.SquareOver.html#3350" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="3353"
+      > </a
+      ><a name="3354" href="lib.cubical.SquareOver.html#3354" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="3357"
+      > </a
+      ><a name="3358" href="lib.cubical.SquareOver.html#3358" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="3361"
+      > </a
+      ><a name="3362" class="Symbol"
+      >:</a
+      ><a name="3363"
+      > </a
+      ><a name="3364" href="lib.cubical.SquareOver.html#3316" class="Bound"
+      >A</a
+      ><a name="3365" class="Symbol"
+      >}</a
+      ><a name="3366"
+      >
+  </a
+      ><a name="3369" class="Symbol"
+      >{</a
+      ><a name="3370" href="lib.cubical.SquareOver.html#3370" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="3373"
+      > </a
+      ><a name="3374" class="Symbol"
+      >:</a
+      ><a name="3375"
+      > </a
+      ><a name="3376" href="lib.cubical.SquareOver.html#3346" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="3379"
+      > </a
+      ><a name="3380" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3382"
+      > </a
+      ><a name="3383" href="lib.cubical.SquareOver.html#3350" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="3386" class="Symbol"
+      >}</a
+      ><a name="3387"
+      > </a
+      ><a name="3388" class="Symbol"
+      >{</a
+      ><a name="3389" href="lib.cubical.SquareOver.html#3389" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="3392"
+      > </a
+      ><a name="3393" class="Symbol"
+      >:</a
+      ><a name="3394"
+      > </a
+      ><a name="3395" href="lib.cubical.SquareOver.html#3346" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="3398"
+      > </a
+      ><a name="3399" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3401"
+      > </a
+      ><a name="3402" href="lib.cubical.SquareOver.html#3354" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="3405" class="Symbol"
+      >}</a
+      ><a name="3406"
+      > </a
+      ><a name="3407" class="Symbol"
+      >{</a
+      ><a name="3408" href="lib.cubical.SquareOver.html#3408" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="3411"
+      > </a
+      ><a name="3412" class="Symbol"
+      >:</a
+      ><a name="3413"
+      > </a
+      ><a name="3414" href="lib.cubical.SquareOver.html#3350" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="3417"
+      > </a
+      ><a name="3418" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3420"
+      > </a
+      ><a name="3421" href="lib.cubical.SquareOver.html#3358" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="3424" class="Symbol"
+      >}</a
+      ><a name="3425"
+      > </a
+      ><a name="3426" class="Symbol"
+      >{</a
+      ><a name="3427" href="lib.cubical.SquareOver.html#3427" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="3430"
+      > </a
+      ><a name="3431" class="Symbol"
+      >:</a
+      ><a name="3432"
+      > </a
+      ><a name="3433" href="lib.cubical.SquareOver.html#3354" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="3436"
+      > </a
+      ><a name="3437" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3439"
+      > </a
+      ><a name="3440" href="lib.cubical.SquareOver.html#3358" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="3443" class="Symbol"
+      >}</a
+      ><a name="3444"
+      >
+  </a
+      ><a name="3447" class="Symbol"
+      >{</a
+      ><a name="3448" href="lib.cubical.SquareOver.html#3448" class="Bound"
+      >sq</a
+      ><a name="3450"
+      > </a
+      ><a name="3451" class="Symbol"
+      >:</a
+      ><a name="3452"
+      > </a
+      ><a name="3453" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="3459"
+      > </a
+      ><a name="3460" href="lib.cubical.SquareOver.html#3370" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="3463"
+      > </a
+      ><a name="3464" href="lib.cubical.SquareOver.html#3389" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="3467"
+      > </a
+      ><a name="3468" href="lib.cubical.SquareOver.html#3408" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="3471"
+      > </a
+      ><a name="3472" href="lib.cubical.SquareOver.html#3427" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="3475" class="Symbol"
+      >}</a
+      ><a name="3476"
+      >
+  </a
+      ><a name="3479" class="Symbol"
+      >{</a
+      ><a name="3480" href="lib.cubical.SquareOver.html#3480" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="3483"
+      > </a
+      ><a name="3484" class="Symbol"
+      >:</a
+      ><a name="3485"
+      > </a
+      ><a name="3486" href="lib.cubical.SquareOver.html#3329" class="Bound"
+      >B</a
+      ><a name="3487"
+      > </a
+      ><a name="3488" href="lib.cubical.SquareOver.html#3346" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="3491" class="Symbol"
+      >}</a
+      ><a name="3492"
+      > </a
+      ><a name="3493" class="Symbol"
+      >{</a
+      ><a name="3494" href="lib.cubical.SquareOver.html#3494" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="3497"
+      > </a
+      ><a name="3498" class="Symbol"
+      >:</a
+      ><a name="3499"
+      > </a
+      ><a name="3500" href="lib.cubical.SquareOver.html#3329" class="Bound"
+      >B</a
+      ><a name="3501"
+      > </a
+      ><a name="3502" href="lib.cubical.SquareOver.html#3350" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="3505" class="Symbol"
+      >}</a
+      ><a name="3506"
+      > </a
+      ><a name="3507" class="Symbol"
+      >{</a
+      ><a name="3508" href="lib.cubical.SquareOver.html#3508" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="3511"
+      > </a
+      ><a name="3512" class="Symbol"
+      >:</a
+      ><a name="3513"
+      > </a
+      ><a name="3514" href="lib.cubical.SquareOver.html#3329" class="Bound"
+      >B</a
+      ><a name="3515"
+      > </a
+      ><a name="3516" href="lib.cubical.SquareOver.html#3354" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="3519" class="Symbol"
+      >}</a
+      ><a name="3520"
+      > </a
+      ><a name="3521" class="Symbol"
+      >{</a
+      ><a name="3522" href="lib.cubical.SquareOver.html#3522" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="3525"
+      > </a
+      ><a name="3526" class="Symbol"
+      >:</a
+      ><a name="3527"
+      > </a
+      ><a name="3528" href="lib.cubical.SquareOver.html#3329" class="Bound"
+      >B</a
+      ><a name="3529"
+      > </a
+      ><a name="3530" href="lib.cubical.SquareOver.html#3358" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="3533" class="Symbol"
+      >}</a
+      ><a name="3534"
+      >
+  </a
+      ><a name="3537" class="Symbol"
+      >{</a
+      ><a name="3538" href="lib.cubical.SquareOver.html#3538" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="3541"
+      > </a
+      ><a name="3542" href="lib.cubical.SquareOver.html#3542" class="Bound"
+      >q&#8320;&#8331;'</a
+      ><a name="3546"
+      > </a
+      ><a name="3547" class="Symbol"
+      >:</a
+      ><a name="3548"
+      > </a
+      ><a name="3549" href="lib.cubical.SquareOver.html#3480" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="3552"
+      > </a
+      ><a name="3553" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="3555"
+      > </a
+      ><a name="3556" href="lib.cubical.SquareOver.html#3494" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="3559"
+      > </a
+      ><a name="3560" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="3561"
+      > </a
+      ><a name="3562" href="lib.cubical.SquareOver.html#3329" class="Bound"
+      >B</a
+      ><a name="3563"
+      > </a
+      ><a name="3564" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="3565"
+      > </a
+      ><a name="3566" href="lib.cubical.SquareOver.html#3370" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="3569"
+      > </a
+      ><a name="3570" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="3571" class="Symbol"
+      >}</a
+      ><a name="3572"
+      > </a
+      ><a name="3573" class="Symbol"
+      >{</a
+      ><a name="3574" href="lib.cubical.SquareOver.html#3574" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="3577"
+      > </a
+      ><a name="3578" class="Symbol"
+      >:</a
+      ><a name="3579"
+      > </a
+      ><a name="3580" href="lib.cubical.SquareOver.html#3480" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="3583"
+      > </a
+      ><a name="3584" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="3586"
+      > </a
+      ><a name="3587" href="lib.cubical.SquareOver.html#3508" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="3590"
+      > </a
+      ><a name="3591" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="3592"
+      > </a
+      ><a name="3593" href="lib.cubical.SquareOver.html#3329" class="Bound"
+      >B</a
+      ><a name="3594"
+      > </a
+      ><a name="3595" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="3596"
+      > </a
+      ><a name="3597" href="lib.cubical.SquareOver.html#3389" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="3600"
+      > </a
+      ><a name="3601" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="3602" class="Symbol"
+      >}</a
+      ><a name="3603"
+      >
+  </a
+      ><a name="3606" class="Symbol"
+      >{</a
+      ><a name="3607" href="lib.cubical.SquareOver.html#3607" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="3610"
+      > </a
+      ><a name="3611" class="Symbol"
+      >:</a
+      ><a name="3612"
+      > </a
+      ><a name="3613" href="lib.cubical.SquareOver.html#3494" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="3616"
+      > </a
+      ><a name="3617" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="3619"
+      > </a
+      ><a name="3620" href="lib.cubical.SquareOver.html#3522" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="3623"
+      > </a
+      ><a name="3624" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="3625"
+      > </a
+      ><a name="3626" href="lib.cubical.SquareOver.html#3329" class="Bound"
+      >B</a
+      ><a name="3627"
+      > </a
+      ><a name="3628" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="3629"
+      > </a
+      ><a name="3630" href="lib.cubical.SquareOver.html#3408" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="3633"
+      > </a
+      ><a name="3634" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="3635" class="Symbol"
+      >}</a
+      ><a name="3636"
+      > </a
+      ><a name="3637" class="Symbol"
+      >{</a
+      ><a name="3638" href="lib.cubical.SquareOver.html#3638" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="3641"
+      > </a
+      ><a name="3642" class="Symbol"
+      >:</a
+      ><a name="3643"
+      > </a
+      ><a name="3644" href="lib.cubical.SquareOver.html#3508" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="3647"
+      > </a
+      ><a name="3648" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="3650"
+      > </a
+      ><a name="3651" href="lib.cubical.SquareOver.html#3522" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="3654"
+      > </a
+      ><a name="3655" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="3656"
+      > </a
+      ><a name="3657" href="lib.cubical.SquareOver.html#3329" class="Bound"
+      >B</a
+      ><a name="3658"
+      > </a
+      ><a name="3659" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="3660"
+      > </a
+      ><a name="3661" href="lib.cubical.SquareOver.html#3427" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="3664"
+      > </a
+      ><a name="3665" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="3666" class="Symbol"
+      >}</a
+      ><a name="3667"
+      >
+  </a
+      ><a name="3670" class="Symbol"
+      >&#8594;</a
+      ><a name="3671"
+      > </a
+      ><a name="3672" href="lib.cubical.SquareOver.html#3538" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="3675"
+      > </a
+      ><a name="3676" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3678"
+      > </a
+      ><a name="3679" href="lib.cubical.SquareOver.html#3542" class="Bound"
+      >q&#8320;&#8331;'</a
+      ><a name="3683"
+      >
+  </a
+      ><a name="3686" class="Symbol"
+      >&#8594;</a
+      ><a name="3687"
+      > </a
+      ><a name="3688" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="3698"
+      > </a
+      ><a name="3699" href="lib.cubical.SquareOver.html#3329" class="Bound"
+      >B</a
+      ><a name="3700"
+      > </a
+      ><a name="3701" href="lib.cubical.SquareOver.html#3448" class="Bound"
+      >sq</a
+      ><a name="3703"
+      > </a
+      ><a name="3704" href="lib.cubical.SquareOver.html#3542" class="Bound"
+      >q&#8320;&#8331;'</a
+      ><a name="3708"
+      > </a
+      ><a name="3709" href="lib.cubical.SquareOver.html#3574" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="3712"
+      > </a
+      ><a name="3713" href="lib.cubical.SquareOver.html#3607" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="3716"
+      > </a
+      ><a name="3717" href="lib.cubical.SquareOver.html#3638" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="3720"
+      >
+  </a
+      ><a name="3723" class="Symbol"
+      >&#8594;</a
+      ><a name="3724"
+      > </a
+      ><a name="3725" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="3735"
+      > </a
+      ><a name="3736" href="lib.cubical.SquareOver.html#3329" class="Bound"
+      >B</a
+      ><a name="3737"
+      > </a
+      ><a name="3738" href="lib.cubical.SquareOver.html#3448" class="Bound"
+      >sq</a
+      ><a name="3740"
+      > </a
+      ><a name="3741" href="lib.cubical.SquareOver.html#3538" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="3744"
+      > </a
+      ><a name="3745" href="lib.cubical.SquareOver.html#3574" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="3748"
+      > </a
+      ><a name="3749" href="lib.cubical.SquareOver.html#3607" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="3752"
+      > </a
+      ><a name="3753" href="lib.cubical.SquareOver.html#3638" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="3756"
+      >
+</a
+      ><a name="3757" href="lib.cubical.SquareOver.html#3298" class="Function Operator"
+      >_&#8729;h&#8595;&#8865;_</a
+      ><a name="3763"
+      > </a
+      ><a name="3764" class="Symbol"
+      >{</a
+      ><a name="3765" class="Argument"
+      >sq</a
+      ><a name="3767"
+      > </a
+      ><a name="3768" class="Symbol"
+      >=</a
+      ><a name="3769"
+      > </a
+      ><a name="3770" href="lib.cubical.Square.html#340" class="InductiveConstructor"
+      >ids</a
+      ><a name="3773" class="Symbol"
+      >}</a
+      ><a name="3774"
+      > </a
+      ><a name="3775" class="Symbol"
+      >=</a
+      ><a name="3776"
+      > </a
+      ><a name="3777" href="lib.cubical.Square.html#13165" class="Function Operator"
+      >_&#8729;h&#8865;_</a
+      ><a name="3782"
+      >
+
+</a
+      ><a name="3784" href="lib.cubical.SquareOver.html#3784" class="Function Operator"
+      >_&#8729;v&#8595;&#8865;_</a
+      ><a name="3790"
+      > </a
+      ><a name="3791" class="Symbol"
+      >:</a
+      ><a name="3792"
+      > </a
+      ><a name="3793" class="Symbol"
+      >&#8704;</a
+      ><a name="3794"
+      > </a
+      ><a name="3795" class="Symbol"
+      >{</a
+      ><a name="3796" href="lib.cubical.SquareOver.html#3796" class="Bound"
+      >i</a
+      ><a name="3797"
+      > </a
+      ><a name="3798" href="lib.cubical.SquareOver.html#3798" class="Bound"
+      >j</a
+      ><a name="3799" class="Symbol"
+      >}</a
+      ><a name="3800"
+      > </a
+      ><a name="3801" class="Symbol"
+      >{</a
+      ><a name="3802" href="lib.cubical.SquareOver.html#3802" class="Bound"
+      >A</a
+      ><a name="3803"
+      > </a
+      ><a name="3804" class="Symbol"
+      >:</a
+      ><a name="3805"
+      > </a
+      ><a name="3806" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3810"
+      > </a
+      ><a name="3811" href="lib.cubical.SquareOver.html#3796" class="Bound"
+      >i</a
+      ><a name="3812" class="Symbol"
+      >}</a
+      ><a name="3813"
+      > </a
+      ><a name="3814" class="Symbol"
+      >{</a
+      ><a name="3815" href="lib.cubical.SquareOver.html#3815" class="Bound"
+      >B</a
+      ><a name="3816"
+      > </a
+      ><a name="3817" class="Symbol"
+      >:</a
+      ><a name="3818"
+      > </a
+      ><a name="3819" href="lib.cubical.SquareOver.html#3802" class="Bound"
+      >A</a
+      ><a name="3820"
+      > </a
+      ><a name="3821" class="Symbol"
+      >&#8594;</a
+      ><a name="3822"
+      > </a
+      ><a name="3823" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3827"
+      > </a
+      ><a name="3828" href="lib.cubical.SquareOver.html#3798" class="Bound"
+      >j</a
+      ><a name="3829" class="Symbol"
+      >}</a
+      ><a name="3830"
+      > </a
+      ><a name="3831" class="Symbol"
+      >{</a
+      ><a name="3832" href="lib.cubical.SquareOver.html#3832" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="3835"
+      > </a
+      ><a name="3836" href="lib.cubical.SquareOver.html#3836" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="3839"
+      > </a
+      ><a name="3840" href="lib.cubical.SquareOver.html#3840" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="3843"
+      > </a
+      ><a name="3844" href="lib.cubical.SquareOver.html#3844" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="3847"
+      > </a
+      ><a name="3848" class="Symbol"
+      >:</a
+      ><a name="3849"
+      > </a
+      ><a name="3850" href="lib.cubical.SquareOver.html#3802" class="Bound"
+      >A</a
+      ><a name="3851" class="Symbol"
+      >}</a
+      ><a name="3852"
+      >
+  </a
+      ><a name="3855" class="Symbol"
+      >{</a
+      ><a name="3856" href="lib.cubical.SquareOver.html#3856" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="3859"
+      > </a
+      ><a name="3860" class="Symbol"
+      >:</a
+      ><a name="3861"
+      > </a
+      ><a name="3862" href="lib.cubical.SquareOver.html#3832" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="3865"
+      > </a
+      ><a name="3866" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3868"
+      > </a
+      ><a name="3869" href="lib.cubical.SquareOver.html#3836" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="3872" class="Symbol"
+      >}</a
+      ><a name="3873"
+      > </a
+      ><a name="3874" class="Symbol"
+      >{</a
+      ><a name="3875" href="lib.cubical.SquareOver.html#3875" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="3878"
+      > </a
+      ><a name="3879" class="Symbol"
+      >:</a
+      ><a name="3880"
+      > </a
+      ><a name="3881" href="lib.cubical.SquareOver.html#3832" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="3884"
+      > </a
+      ><a name="3885" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3887"
+      > </a
+      ><a name="3888" href="lib.cubical.SquareOver.html#3840" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="3891" class="Symbol"
+      >}</a
+      ><a name="3892"
+      > </a
+      ><a name="3893" class="Symbol"
+      >{</a
+      ><a name="3894" href="lib.cubical.SquareOver.html#3894" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="3897"
+      > </a
+      ><a name="3898" class="Symbol"
+      >:</a
+      ><a name="3899"
+      > </a
+      ><a name="3900" href="lib.cubical.SquareOver.html#3836" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="3903"
+      > </a
+      ><a name="3904" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3906"
+      > </a
+      ><a name="3907" href="lib.cubical.SquareOver.html#3844" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="3910" class="Symbol"
+      >}</a
+      ><a name="3911"
+      > </a
+      ><a name="3912" class="Symbol"
+      >{</a
+      ><a name="3913" href="lib.cubical.SquareOver.html#3913" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="3916"
+      > </a
+      ><a name="3917" class="Symbol"
+      >:</a
+      ><a name="3918"
+      > </a
+      ><a name="3919" href="lib.cubical.SquareOver.html#3840" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="3922"
+      > </a
+      ><a name="3923" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3925"
+      > </a
+      ><a name="3926" href="lib.cubical.SquareOver.html#3844" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="3929" class="Symbol"
+      >}</a
+      ><a name="3930"
+      >
+  </a
+      ><a name="3933" class="Symbol"
+      >{</a
+      ><a name="3934" href="lib.cubical.SquareOver.html#3934" class="Bound"
+      >sq</a
+      ><a name="3936"
+      > </a
+      ><a name="3937" class="Symbol"
+      >:</a
+      ><a name="3938"
+      > </a
+      ><a name="3939" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="3945"
+      > </a
+      ><a name="3946" href="lib.cubical.SquareOver.html#3856" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="3949"
+      > </a
+      ><a name="3950" href="lib.cubical.SquareOver.html#3875" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="3953"
+      > </a
+      ><a name="3954" href="lib.cubical.SquareOver.html#3894" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="3957"
+      > </a
+      ><a name="3958" href="lib.cubical.SquareOver.html#3913" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="3961" class="Symbol"
+      >}</a
+      ><a name="3962"
+      >
+  </a
+      ><a name="3965" class="Symbol"
+      >{</a
+      ><a name="3966" href="lib.cubical.SquareOver.html#3966" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="3969"
+      > </a
+      ><a name="3970" class="Symbol"
+      >:</a
+      ><a name="3971"
+      > </a
+      ><a name="3972" href="lib.cubical.SquareOver.html#3815" class="Bound"
+      >B</a
+      ><a name="3973"
+      > </a
+      ><a name="3974" href="lib.cubical.SquareOver.html#3832" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="3977" class="Symbol"
+      >}</a
+      ><a name="3978"
+      > </a
+      ><a name="3979" class="Symbol"
+      >{</a
+      ><a name="3980" href="lib.cubical.SquareOver.html#3980" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="3983"
+      > </a
+      ><a name="3984" class="Symbol"
+      >:</a
+      ><a name="3985"
+      > </a
+      ><a name="3986" href="lib.cubical.SquareOver.html#3815" class="Bound"
+      >B</a
+      ><a name="3987"
+      > </a
+      ><a name="3988" href="lib.cubical.SquareOver.html#3836" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="3991" class="Symbol"
+      >}</a
+      ><a name="3992"
+      > </a
+      ><a name="3993" class="Symbol"
+      >{</a
+      ><a name="3994" href="lib.cubical.SquareOver.html#3994" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="3997"
+      > </a
+      ><a name="3998" class="Symbol"
+      >:</a
+      ><a name="3999"
+      > </a
+      ><a name="4000" href="lib.cubical.SquareOver.html#3815" class="Bound"
+      >B</a
+      ><a name="4001"
+      > </a
+      ><a name="4002" href="lib.cubical.SquareOver.html#3840" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="4005" class="Symbol"
+      >}</a
+      ><a name="4006"
+      > </a
+      ><a name="4007" class="Symbol"
+      >{</a
+      ><a name="4008" href="lib.cubical.SquareOver.html#4008" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="4011"
+      > </a
+      ><a name="4012" class="Symbol"
+      >:</a
+      ><a name="4013"
+      > </a
+      ><a name="4014" href="lib.cubical.SquareOver.html#3815" class="Bound"
+      >B</a
+      ><a name="4015"
+      > </a
+      ><a name="4016" href="lib.cubical.SquareOver.html#3844" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="4019" class="Symbol"
+      >}</a
+      ><a name="4020"
+      >
+  </a
+      ><a name="4023" class="Symbol"
+      >{</a
+      ><a name="4024" href="lib.cubical.SquareOver.html#4024" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="4027"
+      > </a
+      ><a name="4028" class="Symbol"
+      >:</a
+      ><a name="4029"
+      > </a
+      ><a name="4030" href="lib.cubical.SquareOver.html#3966" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="4033"
+      > </a
+      ><a name="4034" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="4036"
+      > </a
+      ><a name="4037" href="lib.cubical.SquareOver.html#3980" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="4040"
+      > </a
+      ><a name="4041" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="4042"
+      > </a
+      ><a name="4043" href="lib.cubical.SquareOver.html#3815" class="Bound"
+      >B</a
+      ><a name="4044"
+      > </a
+      ><a name="4045" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="4046"
+      > </a
+      ><a name="4047" href="lib.cubical.SquareOver.html#3856" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="4050"
+      > </a
+      ><a name="4051" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="4052" class="Symbol"
+      >}</a
+      ><a name="4053"
+      > </a
+      ><a name="4054" class="Symbol"
+      >{</a
+      ><a name="4055" href="lib.cubical.SquareOver.html#4055" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="4058"
+      > </a
+      ><a name="4059" href="lib.cubical.SquareOver.html#4059" class="Bound"
+      >q&#8331;&#8320;'</a
+      ><a name="4063"
+      > </a
+      ><a name="4064" class="Symbol"
+      >:</a
+      ><a name="4065"
+      > </a
+      ><a name="4066" href="lib.cubical.SquareOver.html#3966" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="4069"
+      > </a
+      ><a name="4070" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="4072"
+      > </a
+      ><a name="4073" href="lib.cubical.SquareOver.html#3994" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="4076"
+      > </a
+      ><a name="4077" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="4078"
+      > </a
+      ><a name="4079" href="lib.cubical.SquareOver.html#3815" class="Bound"
+      >B</a
+      ><a name="4080"
+      > </a
+      ><a name="4081" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="4082"
+      > </a
+      ><a name="4083" href="lib.cubical.SquareOver.html#3875" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="4086"
+      > </a
+      ><a name="4087" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="4088" class="Symbol"
+      >}</a
+      ><a name="4089"
+      >
+  </a
+      ><a name="4092" class="Symbol"
+      >{</a
+      ><a name="4093" href="lib.cubical.SquareOver.html#4093" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="4096"
+      > </a
+      ><a name="4097" class="Symbol"
+      >:</a
+      ><a name="4098"
+      > </a
+      ><a name="4099" href="lib.cubical.SquareOver.html#3980" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="4102"
+      > </a
+      ><a name="4103" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="4105"
+      > </a
+      ><a name="4106" href="lib.cubical.SquareOver.html#4008" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="4109"
+      > </a
+      ><a name="4110" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="4111"
+      > </a
+      ><a name="4112" href="lib.cubical.SquareOver.html#3815" class="Bound"
+      >B</a
+      ><a name="4113"
+      > </a
+      ><a name="4114" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="4115"
+      > </a
+      ><a name="4116" href="lib.cubical.SquareOver.html#3894" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="4119"
+      > </a
+      ><a name="4120" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="4121" class="Symbol"
+      >}</a
+      ><a name="4122"
+      > </a
+      ><a name="4123" class="Symbol"
+      >{</a
+      ><a name="4124" href="lib.cubical.SquareOver.html#4124" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="4127"
+      > </a
+      ><a name="4128" class="Symbol"
+      >:</a
+      ><a name="4129"
+      > </a
+      ><a name="4130" href="lib.cubical.SquareOver.html#3994" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="4133"
+      > </a
+      ><a name="4134" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="4136"
+      > </a
+      ><a name="4137" href="lib.cubical.SquareOver.html#4008" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="4140"
+      > </a
+      ><a name="4141" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="4142"
+      > </a
+      ><a name="4143" href="lib.cubical.SquareOver.html#3815" class="Bound"
+      >B</a
+      ><a name="4144"
+      > </a
+      ><a name="4145" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="4146"
+      > </a
+      ><a name="4147" href="lib.cubical.SquareOver.html#3913" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="4150"
+      > </a
+      ><a name="4151" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="4152" class="Symbol"
+      >}</a
+      ><a name="4153"
+      >
+  </a
+      ><a name="4156" class="Symbol"
+      >&#8594;</a
+      ><a name="4157"
+      > </a
+      ><a name="4158" href="lib.cubical.SquareOver.html#4055" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="4161"
+      > </a
+      ><a name="4162" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4164"
+      > </a
+      ><a name="4165" href="lib.cubical.SquareOver.html#4059" class="Bound"
+      >q&#8331;&#8320;'</a
+      ><a name="4169"
+      >
+  </a
+      ><a name="4172" class="Symbol"
+      >&#8594;</a
+      ><a name="4173"
+      > </a
+      ><a name="4174" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="4184"
+      > </a
+      ><a name="4185" href="lib.cubical.SquareOver.html#3815" class="Bound"
+      >B</a
+      ><a name="4186"
+      > </a
+      ><a name="4187" href="lib.cubical.SquareOver.html#3934" class="Bound"
+      >sq</a
+      ><a name="4189"
+      > </a
+      ><a name="4190" href="lib.cubical.SquareOver.html#4024" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="4193"
+      > </a
+      ><a name="4194" href="lib.cubical.SquareOver.html#4059" class="Bound"
+      >q&#8331;&#8320;'</a
+      ><a name="4198"
+      > </a
+      ><a name="4199" href="lib.cubical.SquareOver.html#4093" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="4202"
+      > </a
+      ><a name="4203" href="lib.cubical.SquareOver.html#4124" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="4206"
+      >
+  </a
+      ><a name="4209" class="Symbol"
+      >&#8594;</a
+      ><a name="4210"
+      > </a
+      ><a name="4211" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="4221"
+      > </a
+      ><a name="4222" href="lib.cubical.SquareOver.html#3815" class="Bound"
+      >B</a
+      ><a name="4223"
+      > </a
+      ><a name="4224" href="lib.cubical.SquareOver.html#3934" class="Bound"
+      >sq</a
+      ><a name="4226"
+      > </a
+      ><a name="4227" href="lib.cubical.SquareOver.html#4024" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="4230"
+      > </a
+      ><a name="4231" href="lib.cubical.SquareOver.html#4055" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="4234"
+      > </a
+      ><a name="4235" href="lib.cubical.SquareOver.html#4093" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="4238"
+      > </a
+      ><a name="4239" href="lib.cubical.SquareOver.html#4124" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="4242"
+      >
+</a
+      ><a name="4243" href="lib.cubical.SquareOver.html#3784" class="Function Operator"
+      >_&#8729;v&#8595;&#8865;_</a
+      ><a name="4249"
+      > </a
+      ><a name="4250" class="Symbol"
+      >{</a
+      ><a name="4251" class="Argument"
+      >sq</a
+      ><a name="4253"
+      > </a
+      ><a name="4254" class="Symbol"
+      >=</a
+      ><a name="4255"
+      > </a
+      ><a name="4256" href="lib.cubical.Square.html#340" class="InductiveConstructor"
+      >ids</a
+      ><a name="4259" class="Symbol"
+      >}</a
+      ><a name="4260"
+      > </a
+      ><a name="4261" class="Symbol"
+      >=</a
+      ><a name="4262"
+      > </a
+      ><a name="4263" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >_&#8729;v&#8865;_</a
+      ><a name="4268"
+      >
+
+</a
+      ><a name="4270" href="lib.cubical.SquareOver.html#4270" class="Function Operator"
+      >_&#8595;&#8865;v&#8729;_</a
+      ><a name="4276"
+      > </a
+      ><a name="4277" class="Symbol"
+      >:</a
+      ><a name="4278"
+      > </a
+      ><a name="4279" class="Symbol"
+      >&#8704;</a
+      ><a name="4280"
+      > </a
+      ><a name="4281" class="Symbol"
+      >{</a
+      ><a name="4282" href="lib.cubical.SquareOver.html#4282" class="Bound"
+      >i</a
+      ><a name="4283"
+      > </a
+      ><a name="4284" href="lib.cubical.SquareOver.html#4284" class="Bound"
+      >j</a
+      ><a name="4285" class="Symbol"
+      >}</a
+      ><a name="4286"
+      > </a
+      ><a name="4287" class="Symbol"
+      >{</a
+      ><a name="4288" href="lib.cubical.SquareOver.html#4288" class="Bound"
+      >A</a
+      ><a name="4289"
+      > </a
+      ><a name="4290" class="Symbol"
+      >:</a
+      ><a name="4291"
+      > </a
+      ><a name="4292" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="4296"
+      > </a
+      ><a name="4297" href="lib.cubical.SquareOver.html#4282" class="Bound"
+      >i</a
+      ><a name="4298" class="Symbol"
+      >}</a
+      ><a name="4299"
+      > </a
+      ><a name="4300" class="Symbol"
+      >{</a
+      ><a name="4301" href="lib.cubical.SquareOver.html#4301" class="Bound"
+      >B</a
+      ><a name="4302"
+      > </a
+      ><a name="4303" class="Symbol"
+      >:</a
+      ><a name="4304"
+      > </a
+      ><a name="4305" href="lib.cubical.SquareOver.html#4288" class="Bound"
+      >A</a
+      ><a name="4306"
+      > </a
+      ><a name="4307" class="Symbol"
+      >&#8594;</a
+      ><a name="4308"
+      > </a
+      ><a name="4309" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="4313"
+      > </a
+      ><a name="4314" href="lib.cubical.SquareOver.html#4284" class="Bound"
+      >j</a
+      ><a name="4315" class="Symbol"
+      >}</a
+      ><a name="4316"
+      > </a
+      ><a name="4317" class="Symbol"
+      >{</a
+      ><a name="4318" href="lib.cubical.SquareOver.html#4318" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="4321"
+      > </a
+      ><a name="4322" href="lib.cubical.SquareOver.html#4322" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="4325"
+      > </a
+      ><a name="4326" href="lib.cubical.SquareOver.html#4326" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="4329"
+      > </a
+      ><a name="4330" href="lib.cubical.SquareOver.html#4330" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="4333"
+      > </a
+      ><a name="4334" class="Symbol"
+      >:</a
+      ><a name="4335"
+      > </a
+      ><a name="4336" href="lib.cubical.SquareOver.html#4288" class="Bound"
+      >A</a
+      ><a name="4337" class="Symbol"
+      >}</a
+      ><a name="4338"
+      >
+  </a
+      ><a name="4341" class="Symbol"
+      >{</a
+      ><a name="4342" href="lib.cubical.SquareOver.html#4342" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="4345"
+      > </a
+      ><a name="4346" class="Symbol"
+      >:</a
+      ><a name="4347"
+      > </a
+      ><a name="4348" href="lib.cubical.SquareOver.html#4318" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="4351"
+      > </a
+      ><a name="4352" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4354"
+      > </a
+      ><a name="4355" href="lib.cubical.SquareOver.html#4322" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="4358" class="Symbol"
+      >}</a
+      ><a name="4359"
+      > </a
+      ><a name="4360" class="Symbol"
+      >{</a
+      ><a name="4361" href="lib.cubical.SquareOver.html#4361" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="4364"
+      > </a
+      ><a name="4365" class="Symbol"
+      >:</a
+      ><a name="4366"
+      > </a
+      ><a name="4367" href="lib.cubical.SquareOver.html#4318" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="4370"
+      > </a
+      ><a name="4371" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4373"
+      > </a
+      ><a name="4374" href="lib.cubical.SquareOver.html#4326" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="4377" class="Symbol"
+      >}</a
+      ><a name="4378"
+      > </a
+      ><a name="4379" class="Symbol"
+      >{</a
+      ><a name="4380" href="lib.cubical.SquareOver.html#4380" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="4383"
+      > </a
+      ><a name="4384" class="Symbol"
+      >:</a
+      ><a name="4385"
+      > </a
+      ><a name="4386" href="lib.cubical.SquareOver.html#4322" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="4389"
+      > </a
+      ><a name="4390" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4392"
+      > </a
+      ><a name="4393" href="lib.cubical.SquareOver.html#4330" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="4396" class="Symbol"
+      >}</a
+      ><a name="4397"
+      > </a
+      ><a name="4398" class="Symbol"
+      >{</a
+      ><a name="4399" href="lib.cubical.SquareOver.html#4399" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="4402"
+      > </a
+      ><a name="4403" class="Symbol"
+      >:</a
+      ><a name="4404"
+      > </a
+      ><a name="4405" href="lib.cubical.SquareOver.html#4326" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="4408"
+      > </a
+      ><a name="4409" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4411"
+      > </a
+      ><a name="4412" href="lib.cubical.SquareOver.html#4330" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="4415" class="Symbol"
+      >}</a
+      ><a name="4416"
+      >
+  </a
+      ><a name="4419" class="Symbol"
+      >{</a
+      ><a name="4420" href="lib.cubical.SquareOver.html#4420" class="Bound"
+      >sq</a
+      ><a name="4422"
+      > </a
+      ><a name="4423" class="Symbol"
+      >:</a
+      ><a name="4424"
+      > </a
+      ><a name="4425" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="4431"
+      > </a
+      ><a name="4432" href="lib.cubical.SquareOver.html#4342" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="4435"
+      > </a
+      ><a name="4436" href="lib.cubical.SquareOver.html#4361" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="4439"
+      > </a
+      ><a name="4440" href="lib.cubical.SquareOver.html#4380" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="4443"
+      > </a
+      ><a name="4444" href="lib.cubical.SquareOver.html#4399" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="4447" class="Symbol"
+      >}</a
+      ><a name="4448"
+      >
+  </a
+      ><a name="4451" class="Symbol"
+      >{</a
+      ><a name="4452" href="lib.cubical.SquareOver.html#4452" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="4455"
+      > </a
+      ><a name="4456" class="Symbol"
+      >:</a
+      ><a name="4457"
+      > </a
+      ><a name="4458" href="lib.cubical.SquareOver.html#4301" class="Bound"
+      >B</a
+      ><a name="4459"
+      > </a
+      ><a name="4460" href="lib.cubical.SquareOver.html#4318" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="4463" class="Symbol"
+      >}</a
+      ><a name="4464"
+      > </a
+      ><a name="4465" class="Symbol"
+      >{</a
+      ><a name="4466" href="lib.cubical.SquareOver.html#4466" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="4469"
+      > </a
+      ><a name="4470" class="Symbol"
+      >:</a
+      ><a name="4471"
+      > </a
+      ><a name="4472" href="lib.cubical.SquareOver.html#4301" class="Bound"
+      >B</a
+      ><a name="4473"
+      > </a
+      ><a name="4474" href="lib.cubical.SquareOver.html#4322" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="4477" class="Symbol"
+      >}</a
+      ><a name="4478"
+      > </a
+      ><a name="4479" class="Symbol"
+      >{</a
+      ><a name="4480" href="lib.cubical.SquareOver.html#4480" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="4483"
+      > </a
+      ><a name="4484" class="Symbol"
+      >:</a
+      ><a name="4485"
+      > </a
+      ><a name="4486" href="lib.cubical.SquareOver.html#4301" class="Bound"
+      >B</a
+      ><a name="4487"
+      > </a
+      ><a name="4488" href="lib.cubical.SquareOver.html#4326" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="4491" class="Symbol"
+      >}</a
+      ><a name="4492"
+      > </a
+      ><a name="4493" class="Symbol"
+      >{</a
+      ><a name="4494" href="lib.cubical.SquareOver.html#4494" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="4497"
+      > </a
+      ><a name="4498" class="Symbol"
+      >:</a
+      ><a name="4499"
+      > </a
+      ><a name="4500" href="lib.cubical.SquareOver.html#4301" class="Bound"
+      >B</a
+      ><a name="4501"
+      > </a
+      ><a name="4502" href="lib.cubical.SquareOver.html#4330" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="4505" class="Symbol"
+      >}</a
+      ><a name="4506"
+      >
+  </a
+      ><a name="4509" class="Symbol"
+      >{</a
+      ><a name="4510" href="lib.cubical.SquareOver.html#4510" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="4513"
+      > </a
+      ><a name="4514" class="Symbol"
+      >:</a
+      ><a name="4515"
+      > </a
+      ><a name="4516" href="lib.cubical.SquareOver.html#4452" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="4519"
+      > </a
+      ><a name="4520" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="4522"
+      > </a
+      ><a name="4523" href="lib.cubical.SquareOver.html#4466" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="4526"
+      > </a
+      ><a name="4527" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="4528"
+      > </a
+      ><a name="4529" href="lib.cubical.SquareOver.html#4301" class="Bound"
+      >B</a
+      ><a name="4530"
+      > </a
+      ><a name="4531" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="4532"
+      > </a
+      ><a name="4533" href="lib.cubical.SquareOver.html#4342" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="4536"
+      > </a
+      ><a name="4537" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="4538" class="Symbol"
+      >}</a
+      ><a name="4539"
+      > </a
+      ><a name="4540" class="Symbol"
+      >{</a
+      ><a name="4541" href="lib.cubical.SquareOver.html#4541" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="4544"
+      > </a
+      ><a name="4545" class="Symbol"
+      >:</a
+      ><a name="4546"
+      > </a
+      ><a name="4547" href="lib.cubical.SquareOver.html#4452" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="4550"
+      > </a
+      ><a name="4551" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="4553"
+      > </a
+      ><a name="4554" href="lib.cubical.SquareOver.html#4480" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="4557"
+      > </a
+      ><a name="4558" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="4559"
+      > </a
+      ><a name="4560" href="lib.cubical.SquareOver.html#4301" class="Bound"
+      >B</a
+      ><a name="4561"
+      > </a
+      ><a name="4562" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="4563"
+      > </a
+      ><a name="4564" href="lib.cubical.SquareOver.html#4361" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="4567"
+      > </a
+      ><a name="4568" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="4569" class="Symbol"
+      >}</a
+      ><a name="4570"
+      >
+  </a
+      ><a name="4573" class="Symbol"
+      >{</a
+      ><a name="4574" href="lib.cubical.SquareOver.html#4574" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="4577"
+      > </a
+      ><a name="4578" href="lib.cubical.SquareOver.html#4578" class="Bound"
+      >q&#8331;&#8321;'</a
+      ><a name="4582"
+      > </a
+      ><a name="4583" class="Symbol"
+      >:</a
+      ><a name="4584"
+      > </a
+      ><a name="4585" href="lib.cubical.SquareOver.html#4466" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="4588"
+      > </a
+      ><a name="4589" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="4591"
+      > </a
+      ><a name="4592" href="lib.cubical.SquareOver.html#4494" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="4595"
+      > </a
+      ><a name="4596" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="4597"
+      > </a
+      ><a name="4598" href="lib.cubical.SquareOver.html#4301" class="Bound"
+      >B</a
+      ><a name="4599"
+      > </a
+      ><a name="4600" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="4601"
+      > </a
+      ><a name="4602" href="lib.cubical.SquareOver.html#4380" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="4605"
+      > </a
+      ><a name="4606" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="4607" class="Symbol"
+      >}</a
+      ><a name="4608"
+      > </a
+      ><a name="4609" class="Symbol"
+      >{</a
+      ><a name="4610" href="lib.cubical.SquareOver.html#4610" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="4613"
+      > </a
+      ><a name="4614" class="Symbol"
+      >:</a
+      ><a name="4615"
+      > </a
+      ><a name="4616" href="lib.cubical.SquareOver.html#4480" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="4619"
+      > </a
+      ><a name="4620" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="4622"
+      > </a
+      ><a name="4623" href="lib.cubical.SquareOver.html#4494" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="4626"
+      > </a
+      ><a name="4627" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="4628"
+      > </a
+      ><a name="4629" href="lib.cubical.SquareOver.html#4301" class="Bound"
+      >B</a
+      ><a name="4630"
+      > </a
+      ><a name="4631" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="4632"
+      > </a
+      ><a name="4633" href="lib.cubical.SquareOver.html#4399" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="4636"
+      > </a
+      ><a name="4637" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="4638" class="Symbol"
+      >}</a
+      ><a name="4639"
+      >
+  </a
+      ><a name="4642" class="Symbol"
+      >&#8594;</a
+      ><a name="4643"
+      > </a
+      ><a name="4644" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="4654"
+      > </a
+      ><a name="4655" href="lib.cubical.SquareOver.html#4301" class="Bound"
+      >B</a
+      ><a name="4656"
+      > </a
+      ><a name="4657" href="lib.cubical.SquareOver.html#4420" class="Bound"
+      >sq</a
+      ><a name="4659"
+      > </a
+      ><a name="4660" href="lib.cubical.SquareOver.html#4510" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="4663"
+      > </a
+      ><a name="4664" href="lib.cubical.SquareOver.html#4541" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="4667"
+      > </a
+      ><a name="4668" href="lib.cubical.SquareOver.html#4574" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="4671"
+      > </a
+      ><a name="4672" href="lib.cubical.SquareOver.html#4610" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="4675"
+      >
+  </a
+      ><a name="4678" class="Symbol"
+      >&#8594;</a
+      ><a name="4679"
+      > </a
+      ><a name="4680" href="lib.cubical.SquareOver.html#4574" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="4683"
+      > </a
+      ><a name="4684" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4686"
+      > </a
+      ><a name="4687" href="lib.cubical.SquareOver.html#4578" class="Bound"
+      >q&#8331;&#8321;'</a
+      ><a name="4691"
+      >
+  </a
+      ><a name="4694" class="Symbol"
+      >&#8594;</a
+      ><a name="4695"
+      > </a
+      ><a name="4696" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="4706"
+      > </a
+      ><a name="4707" href="lib.cubical.SquareOver.html#4301" class="Bound"
+      >B</a
+      ><a name="4708"
+      > </a
+      ><a name="4709" href="lib.cubical.SquareOver.html#4420" class="Bound"
+      >sq</a
+      ><a name="4711"
+      > </a
+      ><a name="4712" href="lib.cubical.SquareOver.html#4510" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="4715"
+      > </a
+      ><a name="4716" href="lib.cubical.SquareOver.html#4541" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="4719"
+      > </a
+      ><a name="4720" href="lib.cubical.SquareOver.html#4578" class="Bound"
+      >q&#8331;&#8321;'</a
+      ><a name="4724"
+      > </a
+      ><a name="4725" href="lib.cubical.SquareOver.html#4610" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="4728"
+      >
+</a
+      ><a name="4729" href="lib.cubical.SquareOver.html#4270" class="Function Operator"
+      >_&#8595;&#8865;v&#8729;_</a
+      ><a name="4735"
+      > </a
+      ><a name="4736" class="Symbol"
+      >{</a
+      ><a name="4737" class="Argument"
+      >sq</a
+      ><a name="4739"
+      > </a
+      ><a name="4740" class="Symbol"
+      >=</a
+      ><a name="4741"
+      > </a
+      ><a name="4742" href="lib.cubical.Square.html#340" class="InductiveConstructor"
+      >ids</a
+      ><a name="4745" class="Symbol"
+      >}</a
+      ><a name="4746"
+      > </a
+      ><a name="4747" class="Symbol"
+      >=</a
+      ><a name="4748"
+      > </a
+      ><a name="4749" href="lib.cubical.Square.html#12327" class="Function Operator"
+      >_&#8865;v&#8729;_</a
+      ><a name="4754"
+      >
+
+</a
+      ><a name="4756" href="lib.cubical.SquareOver.html#4756" class="Function Operator"
+      >_&#8595;&#8865;h&#8729;_</a
+      ><a name="4762"
+      > </a
+      ><a name="4763" class="Symbol"
+      >:</a
+      ><a name="4764"
+      > </a
+      ><a name="4765" class="Symbol"
+      >&#8704;</a
+      ><a name="4766"
+      > </a
+      ><a name="4767" class="Symbol"
+      >{</a
+      ><a name="4768" href="lib.cubical.SquareOver.html#4768" class="Bound"
+      >i</a
+      ><a name="4769"
+      > </a
+      ><a name="4770" href="lib.cubical.SquareOver.html#4770" class="Bound"
+      >j</a
+      ><a name="4771" class="Symbol"
+      >}</a
+      ><a name="4772"
+      > </a
+      ><a name="4773" class="Symbol"
+      >{</a
+      ><a name="4774" href="lib.cubical.SquareOver.html#4774" class="Bound"
+      >A</a
+      ><a name="4775"
+      > </a
+      ><a name="4776" class="Symbol"
+      >:</a
+      ><a name="4777"
+      > </a
+      ><a name="4778" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="4782"
+      > </a
+      ><a name="4783" href="lib.cubical.SquareOver.html#4768" class="Bound"
+      >i</a
+      ><a name="4784" class="Symbol"
+      >}</a
+      ><a name="4785"
+      > </a
+      ><a name="4786" class="Symbol"
+      >{</a
+      ><a name="4787" href="lib.cubical.SquareOver.html#4787" class="Bound"
+      >B</a
+      ><a name="4788"
+      > </a
+      ><a name="4789" class="Symbol"
+      >:</a
+      ><a name="4790"
+      > </a
+      ><a name="4791" href="lib.cubical.SquareOver.html#4774" class="Bound"
+      >A</a
+      ><a name="4792"
+      > </a
+      ><a name="4793" class="Symbol"
+      >&#8594;</a
+      ><a name="4794"
+      > </a
+      ><a name="4795" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="4799"
+      > </a
+      ><a name="4800" href="lib.cubical.SquareOver.html#4770" class="Bound"
+      >j</a
+      ><a name="4801" class="Symbol"
+      >}</a
+      ><a name="4802"
+      > </a
+      ><a name="4803" class="Symbol"
+      >{</a
+      ><a name="4804" href="lib.cubical.SquareOver.html#4804" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="4807"
+      > </a
+      ><a name="4808" href="lib.cubical.SquareOver.html#4808" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="4811"
+      > </a
+      ><a name="4812" href="lib.cubical.SquareOver.html#4812" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="4815"
+      > </a
+      ><a name="4816" href="lib.cubical.SquareOver.html#4816" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="4819"
+      > </a
+      ><a name="4820" class="Symbol"
+      >:</a
+      ><a name="4821"
+      > </a
+      ><a name="4822" href="lib.cubical.SquareOver.html#4774" class="Bound"
+      >A</a
+      ><a name="4823" class="Symbol"
+      >}</a
+      ><a name="4824"
+      >
+  </a
+      ><a name="4827" class="Symbol"
+      >{</a
+      ><a name="4828" href="lib.cubical.SquareOver.html#4828" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="4831"
+      > </a
+      ><a name="4832" class="Symbol"
+      >:</a
+      ><a name="4833"
+      > </a
+      ><a name="4834" href="lib.cubical.SquareOver.html#4804" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="4837"
+      > </a
+      ><a name="4838" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4840"
+      > </a
+      ><a name="4841" href="lib.cubical.SquareOver.html#4808" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="4844" class="Symbol"
+      >}</a
+      ><a name="4845"
+      > </a
+      ><a name="4846" class="Symbol"
+      >{</a
+      ><a name="4847" href="lib.cubical.SquareOver.html#4847" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="4850"
+      > </a
+      ><a name="4851" class="Symbol"
+      >:</a
+      ><a name="4852"
+      > </a
+      ><a name="4853" href="lib.cubical.SquareOver.html#4804" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="4856"
+      > </a
+      ><a name="4857" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4859"
+      > </a
+      ><a name="4860" href="lib.cubical.SquareOver.html#4812" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="4863" class="Symbol"
+      >}</a
+      ><a name="4864"
+      > </a
+      ><a name="4865" class="Symbol"
+      >{</a
+      ><a name="4866" href="lib.cubical.SquareOver.html#4866" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="4869"
+      > </a
+      ><a name="4870" class="Symbol"
+      >:</a
+      ><a name="4871"
+      > </a
+      ><a name="4872" href="lib.cubical.SquareOver.html#4808" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="4875"
+      > </a
+      ><a name="4876" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4878"
+      > </a
+      ><a name="4879" href="lib.cubical.SquareOver.html#4816" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="4882" class="Symbol"
+      >}</a
+      ><a name="4883"
+      > </a
+      ><a name="4884" class="Symbol"
+      >{</a
+      ><a name="4885" href="lib.cubical.SquareOver.html#4885" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="4888"
+      > </a
+      ><a name="4889" class="Symbol"
+      >:</a
+      ><a name="4890"
+      > </a
+      ><a name="4891" href="lib.cubical.SquareOver.html#4812" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="4894"
+      > </a
+      ><a name="4895" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4897"
+      > </a
+      ><a name="4898" href="lib.cubical.SquareOver.html#4816" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="4901" class="Symbol"
+      >}</a
+      ><a name="4902"
+      >
+  </a
+      ><a name="4905" class="Symbol"
+      >{</a
+      ><a name="4906" href="lib.cubical.SquareOver.html#4906" class="Bound"
+      >sq</a
+      ><a name="4908"
+      > </a
+      ><a name="4909" class="Symbol"
+      >:</a
+      ><a name="4910"
+      > </a
+      ><a name="4911" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="4917"
+      > </a
+      ><a name="4918" href="lib.cubical.SquareOver.html#4828" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="4921"
+      > </a
+      ><a name="4922" href="lib.cubical.SquareOver.html#4847" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="4925"
+      > </a
+      ><a name="4926" href="lib.cubical.SquareOver.html#4866" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="4929"
+      > </a
+      ><a name="4930" href="lib.cubical.SquareOver.html#4885" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="4933" class="Symbol"
+      >}</a
+      ><a name="4934"
+      >
+  </a
+      ><a name="4937" class="Symbol"
+      >{</a
+      ><a name="4938" href="lib.cubical.SquareOver.html#4938" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="4941"
+      > </a
+      ><a name="4942" class="Symbol"
+      >:</a
+      ><a name="4943"
+      > </a
+      ><a name="4944" href="lib.cubical.SquareOver.html#4787" class="Bound"
+      >B</a
+      ><a name="4945"
+      > </a
+      ><a name="4946" href="lib.cubical.SquareOver.html#4804" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="4949" class="Symbol"
+      >}</a
+      ><a name="4950"
+      > </a
+      ><a name="4951" class="Symbol"
+      >{</a
+      ><a name="4952" href="lib.cubical.SquareOver.html#4952" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="4955"
+      > </a
+      ><a name="4956" class="Symbol"
+      >:</a
+      ><a name="4957"
+      > </a
+      ><a name="4958" href="lib.cubical.SquareOver.html#4787" class="Bound"
+      >B</a
+      ><a name="4959"
+      > </a
+      ><a name="4960" href="lib.cubical.SquareOver.html#4808" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="4963" class="Symbol"
+      >}</a
+      ><a name="4964"
+      > </a
+      ><a name="4965" class="Symbol"
+      >{</a
+      ><a name="4966" href="lib.cubical.SquareOver.html#4966" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="4969"
+      > </a
+      ><a name="4970" class="Symbol"
+      >:</a
+      ><a name="4971"
+      > </a
+      ><a name="4972" href="lib.cubical.SquareOver.html#4787" class="Bound"
+      >B</a
+      ><a name="4973"
+      > </a
+      ><a name="4974" href="lib.cubical.SquareOver.html#4812" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="4977" class="Symbol"
+      >}</a
+      ><a name="4978"
+      > </a
+      ><a name="4979" class="Symbol"
+      >{</a
+      ><a name="4980" href="lib.cubical.SquareOver.html#4980" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="4983"
+      > </a
+      ><a name="4984" class="Symbol"
+      >:</a
+      ><a name="4985"
+      > </a
+      ><a name="4986" href="lib.cubical.SquareOver.html#4787" class="Bound"
+      >B</a
+      ><a name="4987"
+      > </a
+      ><a name="4988" href="lib.cubical.SquareOver.html#4816" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="4991" class="Symbol"
+      >}</a
+      ><a name="4992"
+      >
+  </a
+      ><a name="4995" class="Symbol"
+      >{</a
+      ><a name="4996" href="lib.cubical.SquareOver.html#4996" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="4999"
+      > </a
+      ><a name="5000" class="Symbol"
+      >:</a
+      ><a name="5001"
+      > </a
+      ><a name="5002" href="lib.cubical.SquareOver.html#4938" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="5005"
+      > </a
+      ><a name="5006" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="5008"
+      > </a
+      ><a name="5009" href="lib.cubical.SquareOver.html#4952" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="5012"
+      > </a
+      ><a name="5013" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="5014"
+      > </a
+      ><a name="5015" href="lib.cubical.SquareOver.html#4787" class="Bound"
+      >B</a
+      ><a name="5016"
+      > </a
+      ><a name="5017" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="5018"
+      > </a
+      ><a name="5019" href="lib.cubical.SquareOver.html#4828" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="5022"
+      > </a
+      ><a name="5023" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="5024" class="Symbol"
+      >}</a
+      ><a name="5025"
+      > </a
+      ><a name="5026" class="Symbol"
+      >{</a
+      ><a name="5027" href="lib.cubical.SquareOver.html#5027" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="5030"
+      > </a
+      ><a name="5031" class="Symbol"
+      >:</a
+      ><a name="5032"
+      > </a
+      ><a name="5033" href="lib.cubical.SquareOver.html#4938" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="5036"
+      > </a
+      ><a name="5037" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="5039"
+      > </a
+      ><a name="5040" href="lib.cubical.SquareOver.html#4966" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="5043"
+      > </a
+      ><a name="5044" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="5045"
+      > </a
+      ><a name="5046" href="lib.cubical.SquareOver.html#4787" class="Bound"
+      >B</a
+      ><a name="5047"
+      > </a
+      ><a name="5048" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="5049"
+      > </a
+      ><a name="5050" href="lib.cubical.SquareOver.html#4847" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="5053"
+      > </a
+      ><a name="5054" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="5055" class="Symbol"
+      >}</a
+      ><a name="5056"
+      >
+  </a
+      ><a name="5059" class="Symbol"
+      >{</a
+      ><a name="5060" href="lib.cubical.SquareOver.html#5060" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="5063"
+      > </a
+      ><a name="5064" class="Symbol"
+      >:</a
+      ><a name="5065"
+      > </a
+      ><a name="5066" href="lib.cubical.SquareOver.html#4952" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="5069"
+      > </a
+      ><a name="5070" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="5072"
+      > </a
+      ><a name="5073" href="lib.cubical.SquareOver.html#4980" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="5076"
+      > </a
+      ><a name="5077" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="5078"
+      > </a
+      ><a name="5079" href="lib.cubical.SquareOver.html#4787" class="Bound"
+      >B</a
+      ><a name="5080"
+      > </a
+      ><a name="5081" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="5082"
+      > </a
+      ><a name="5083" href="lib.cubical.SquareOver.html#4866" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="5086"
+      > </a
+      ><a name="5087" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="5088" class="Symbol"
+      >}</a
+      ><a name="5089"
+      > </a
+      ><a name="5090" class="Symbol"
+      >{</a
+      ><a name="5091" href="lib.cubical.SquareOver.html#5091" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="5094"
+      > </a
+      ><a name="5095" href="lib.cubical.SquareOver.html#5095" class="Bound"
+      >q&#8321;&#8331;'</a
+      ><a name="5099"
+      > </a
+      ><a name="5100" class="Symbol"
+      >:</a
+      ><a name="5101"
+      > </a
+      ><a name="5102" href="lib.cubical.SquareOver.html#4966" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="5105"
+      > </a
+      ><a name="5106" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="5108"
+      > </a
+      ><a name="5109" href="lib.cubical.SquareOver.html#4980" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="5112"
+      > </a
+      ><a name="5113" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="5114"
+      > </a
+      ><a name="5115" href="lib.cubical.SquareOver.html#4787" class="Bound"
+      >B</a
+      ><a name="5116"
+      > </a
+      ><a name="5117" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="5118"
+      > </a
+      ><a name="5119" href="lib.cubical.SquareOver.html#4885" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="5122"
+      > </a
+      ><a name="5123" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="5124" class="Symbol"
+      >}</a
+      ><a name="5125"
+      >
+  </a
+      ><a name="5128" class="Symbol"
+      >&#8594;</a
+      ><a name="5129"
+      > </a
+      ><a name="5130" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="5140"
+      > </a
+      ><a name="5141" href="lib.cubical.SquareOver.html#4787" class="Bound"
+      >B</a
+      ><a name="5142"
+      > </a
+      ><a name="5143" href="lib.cubical.SquareOver.html#4906" class="Bound"
+      >sq</a
+      ><a name="5145"
+      > </a
+      ><a name="5146" href="lib.cubical.SquareOver.html#4996" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="5149"
+      > </a
+      ><a name="5150" href="lib.cubical.SquareOver.html#5027" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="5153"
+      > </a
+      ><a name="5154" href="lib.cubical.SquareOver.html#5060" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="5157"
+      > </a
+      ><a name="5158" href="lib.cubical.SquareOver.html#5091" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="5161"
+      >
+  </a
+      ><a name="5164" class="Symbol"
+      >&#8594;</a
+      ><a name="5165"
+      > </a
+      ><a name="5166" href="lib.cubical.SquareOver.html#5091" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="5169"
+      > </a
+      ><a name="5170" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5172"
+      > </a
+      ><a name="5173" href="lib.cubical.SquareOver.html#5095" class="Bound"
+      >q&#8321;&#8331;'</a
+      ><a name="5177"
+      >
+  </a
+      ><a name="5180" class="Symbol"
+      >&#8594;</a
+      ><a name="5181"
+      > </a
+      ><a name="5182" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="5192"
+      > </a
+      ><a name="5193" href="lib.cubical.SquareOver.html#4787" class="Bound"
+      >B</a
+      ><a name="5194"
+      > </a
+      ><a name="5195" href="lib.cubical.SquareOver.html#4906" class="Bound"
+      >sq</a
+      ><a name="5197"
+      > </a
+      ><a name="5198" href="lib.cubical.SquareOver.html#4996" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="5201"
+      > </a
+      ><a name="5202" href="lib.cubical.SquareOver.html#5027" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="5205"
+      > </a
+      ><a name="5206" href="lib.cubical.SquareOver.html#5060" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="5209"
+      > </a
+      ><a name="5210" href="lib.cubical.SquareOver.html#5095" class="Bound"
+      >q&#8321;&#8331;'</a
+      ><a name="5214"
+      >
+</a
+      ><a name="5215" href="lib.cubical.SquareOver.html#4756" class="Function Operator"
+      >_&#8595;&#8865;h&#8729;_</a
+      ><a name="5221"
+      > </a
+      ><a name="5222" class="Symbol"
+      >{</a
+      ><a name="5223" class="Argument"
+      >sq</a
+      ><a name="5225"
+      > </a
+      ><a name="5226" class="Symbol"
+      >=</a
+      ><a name="5227"
+      > </a
+      ><a name="5228" href="lib.cubical.Square.html#340" class="InductiveConstructor"
+      >ids</a
+      ><a name="5231" class="Symbol"
+      >}</a
+      ><a name="5232"
+      > </a
+      ><a name="5233" class="Symbol"
+      >=</a
+      ><a name="5234"
+      > </a
+      ><a name="5235" href="lib.cubical.Square.html#13387" class="Function Operator"
+      >_&#8865;h&#8729;_</a
+      ><a name="5240"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

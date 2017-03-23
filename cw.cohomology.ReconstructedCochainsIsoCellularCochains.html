@@ -1,0 +1,1781 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cw.cohomology.ReconstructedCochainsIsoCellularCochains</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="cw.CW.html#1" class="Module"
+      >cw.CW</a
+      ><a name="76"
+      >
+</a
+      ><a name="77" class="Keyword"
+      >open</a
+      ><a name="81"
+      > </a
+      ><a name="82" class="Keyword"
+      >import</a
+      ><a name="88"
+      > </a
+      ><a name="89" href="homotopy.DisjointlyPointedSet.html#1" class="Module"
+      >homotopy.DisjointlyPointedSet</a
+      ><a name="118"
+      >
+</a
+      ><a name="119" class="Keyword"
+      >open</a
+      ><a name="123"
+      > </a
+      ><a name="124" class="Keyword"
+      >import</a
+      ><a name="130"
+      > </a
+      ><a name="131" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="148"
+      >
+</a
+      ><a name="149" class="Keyword"
+      >open</a
+      ><a name="153"
+      > </a
+      ><a name="154" class="Keyword"
+      >import</a
+      ><a name="160"
+      > </a
+      ><a name="161" href="cohomology.ChainComplex.html#1" class="Module"
+      >cohomology.ChainComplex</a
+      ><a name="184"
+      >
+
+</a
+      ><a name="186" class="Keyword"
+      >module</a
+      ><a name="192"
+      > </a
+      ><a name="193" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1" class="Module"
+      >cw.cohomology.ReconstructedCochainsIsoCellularCochains</a
+      ><a name="247"
+      > </a
+      ><a name="248" class="Symbol"
+      >{</a
+      ><a name="249" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#249" class="Bound"
+      >i</a
+      ><a name="250"
+      > </a
+      ><a name="251" class="Symbol"
+      >:</a
+      ><a name="252"
+      > </a
+      ><a name="253" href="Agda.Primitive.html#408" class="Postulate"
+      >ULevel</a
+      ><a name="259" class="Symbol"
+      >}</a
+      ><a name="260"
+      >
+  </a
+      ><a name="263" class="Symbol"
+      >(</a
+      ><a name="264" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#264" class="Bound"
+      >OT</a
+      ><a name="266"
+      > </a
+      ><a name="267" class="Symbol"
+      >:</a
+      ><a name="268"
+      > </a
+      ><a name="269" href="cohomology.Theory.html#7242" class="Record"
+      >OrdinaryTheory</a
+      ><a name="283"
+      > </a
+      ><a name="284" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#249" class="Bound"
+      >i</a
+      ><a name="285" class="Symbol"
+      >)</a
+      ><a name="286"
+      > </a
+      ><a name="287" class="Keyword"
+      >where</a
+      ><a name="292"
+      >
+
+  </a
+      ><a name="296" class="Keyword"
+      >open</a
+      ><a name="300"
+      > </a
+      ><a name="301" href="cohomology.Theory.html#7242" class="Module"
+      >OrdinaryTheory</a
+      ><a name="315"
+      > </a
+      ><a name="316" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#264" class="Bound"
+      >OT</a
+      ><a name="318"
+      >
+  </a
+      ><a name="321" class="Keyword"
+      >open</a
+      ><a name="325"
+      > </a
+      ><a name="326" class="Keyword"
+      >import</a
+      ><a name="332"
+      > </a
+      ><a name="333" href="cw.cohomology.CellularChainComplex.html#1" class="Module"
+      >cw.cohomology.CellularChainComplex</a
+      ><a name="367"
+      > </a
+      ><a name="368" class="Symbol"
+      >as</a
+      ><a name="370"
+      > </a
+      ><a name="371" class="Module"
+      >CCC</a
+      ><a name="374"
+      >
+  </a
+      ><a name="377" class="Keyword"
+      >open</a
+      ><a name="381"
+      > </a
+      ><a name="382" class="Keyword"
+      >import</a
+      ><a name="388"
+      > </a
+      ><a name="389" href="cw.cohomology.ReconstructedCochainComplex.html#1" class="Module"
+      >cw.cohomology.ReconstructedCochainComplex</a
+      ><a name="430"
+      > </a
+      ><a name="431" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#264" class="Bound"
+      >OT</a
+      ><a name="433"
+      > </a
+      ><a name="434" class="Symbol"
+      >as</a
+      ><a name="436"
+      > </a
+      ><a name="437" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#437" class="Module"
+      >RCC</a
+      ><a name="440"
+      >
+  </a
+      ><a name="443" class="Keyword"
+      >open</a
+      ><a name="447"
+      > </a
+      ><a name="448" class="Keyword"
+      >import</a
+      ><a name="454"
+      > </a
+      ><a name="455" href="cw.cohomology.TipAndAugment.html#1" class="Module"
+      >cw.cohomology.TipAndAugment</a
+      ><a name="482"
+      > </a
+      ><a name="483" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#264" class="Bound"
+      >OT</a
+      ><a name="485"
+      >
+  </a
+      ><a name="488" class="Keyword"
+      >open</a
+      ><a name="492"
+      > </a
+      ><a name="493" class="Keyword"
+      >import</a
+      ><a name="499"
+      > </a
+      ><a name="500" href="cw.cohomology.WedgeOfCells.html#1" class="Module"
+      >cw.cohomology.WedgeOfCells</a
+      ><a name="526"
+      > </a
+      ><a name="527" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#264" class="Bound"
+      >OT</a
+      ><a name="529"
+      >
+
+  </a
+      ><a name="533" class="Keyword"
+      >private</a
+      ><a name="540"
+      >
+    </a
+      ><a name="545" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#545" class="Function"
+      >rcc-iso-ccc-nth</a
+      ><a name="560"
+      > </a
+      ><a name="561" class="Symbol"
+      >:</a
+      ><a name="562"
+      > </a
+      ><a name="563" class="Symbol"
+      >&#8704;</a
+      ><a name="564"
+      > </a
+      ><a name="565" class="Symbol"
+      >{</a
+      ><a name="566" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#566" class="Bound"
+      >n</a
+      ><a name="567" class="Symbol"
+      >}</a
+      ><a name="568"
+      > </a
+      ><a name="569" class="Symbol"
+      >(</a
+      ><a name="570" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#570" class="Bound"
+      >&#8857;skel</a
+      ><a name="575"
+      > </a
+      ><a name="576" class="Symbol"
+      >:</a
+      ><a name="577"
+      > </a
+      ><a name="578" href="cw.CW.html#1851" class="Record"
+      >&#8857;Skeleton</a
+      ><a name="587"
+      > </a
+      ><a name="588" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#566" class="Bound"
+      >n</a
+      ><a name="589" class="Symbol"
+      >)</a
+      ><a name="590"
+      > </a
+      ><a name="591" class="Symbol"
+      >{</a
+      ><a name="592" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#592" class="Bound"
+      >m</a
+      ><a name="593" class="Symbol"
+      >}</a
+      ><a name="594"
+      > </a
+      ><a name="595" class="Symbol"
+      >(</a
+      ><a name="596" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#596" class="Bound"
+      >m&#8804;n</a
+      ><a name="599"
+      > </a
+      ><a name="600" class="Symbol"
+      >:</a
+      ><a name="601"
+      > </a
+      ><a name="602" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#592" class="Bound"
+      >m</a
+      ><a name="603"
+      > </a
+      ><a name="604" href="lib.types.Nat.html#1754" class="Function Operator"
+      >&#8804;</a
+      ><a name="605"
+      > </a
+      ><a name="606" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#566" class="Bound"
+      >n</a
+      ><a name="607" class="Symbol"
+      >)</a
+      ><a name="608"
+      >
+      </a
+      ><a name="615" class="Symbol"
+      >&#8594;</a
+      ><a name="616"
+      > </a
+      ><a name="617" href="cw.CW.html#8111" class="Function"
+      >&#8857;has-cells-with-choice</a
+      ><a name="639"
+      > </a
+      ><a name="640" class="Number"
+      >0</a
+      ><a name="641"
+      > </a
+      ><a name="642" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#570" class="Bound"
+      >&#8857;skel</a
+      ><a name="647"
+      > </a
+      ><a name="648" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#249" class="Bound"
+      >i</a
+      ><a name="649"
+      >
+      </a
+      ><a name="656" class="Symbol"
+      >&#8594;</a
+      ><a name="657"
+      >  </a
+      ><a name="659" href="lib.types.Group.html#7376" class="Function"
+      >AbGroup.grp</a
+      ><a name="670"
+      > </a
+      ><a name="671" class="Symbol"
+      >(</a
+      ><a name="672" href="cw.cohomology.ReconstructedCochainComplex.html#482" class="Function"
+      >RCC.cochain-template</a
+      ><a name="692"
+      > </a
+      ><a name="693" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#570" class="Bound"
+      >&#8857;skel</a
+      ><a name="698"
+      > </a
+      ><a name="699" class="Symbol"
+      >(</a
+      ><a name="700" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="703"
+      > </a
+      ><a name="704" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#596" class="Bound"
+      >m&#8804;n</a
+      ><a name="707" class="Symbol"
+      >))</a
+      ><a name="709"
+      >
+      </a
+      ><a name="716" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="718"
+      > </a
+      ><a name="719" href="lib.groups.Homomorphism.html#11441" class="Function"
+      >hom-group</a
+      ><a name="728"
+      > </a
+      ><a name="729" class="Symbol"
+      >(</a
+      ><a name="730" href="lib.types.Group.html#7376" class="Function"
+      >AbGroup.grp</a
+      ><a name="741"
+      > </a
+      ><a name="742" class="Symbol"
+      >(</a
+      ><a name="743" href="cw.cohomology.CellularChainComplex.html#211" class="Function"
+      >CCC.chain-template</a
+      ><a name="761"
+      > </a
+      ><a name="762" class="Symbol"
+      >(</a
+      ><a name="763" href="cw.CW.html#1928" class="Field"
+      >&#8857;Skeleton.skel</a
+      ><a name="777"
+      > </a
+      ><a name="778" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#570" class="Bound"
+      >&#8857;skel</a
+      ><a name="783" class="Symbol"
+      >)</a
+      ><a name="784"
+      > </a
+      ><a name="785" class="Symbol"
+      >(</a
+      ><a name="786" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="789"
+      > </a
+      ><a name="790" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#596" class="Bound"
+      >m&#8804;n</a
+      ><a name="793" class="Symbol"
+      >)))</a
+      ><a name="796"
+      > </a
+      ><a name="797" class="Symbol"
+      >(</a
+      ><a name="798" href="cohomology.Theory.html#2489" class="Function"
+      >C2-abgroup</a
+      ><a name="808"
+      > </a
+      ><a name="809" class="Number"
+      >0</a
+      ><a name="810" class="Symbol"
+      >)</a
+      ><a name="811"
+      >
+    </a
+      ><a name="816" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#545" class="Function"
+      >rcc-iso-ccc-nth</a
+      ><a name="831"
+      > </a
+      ><a name="832" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#832" class="Bound"
+      >&#8857;skel</a
+      ><a name="837"
+      > </a
+      ><a name="838" class="Symbol"
+      >{</a
+      ><a name="839" class="Argument"
+      >m</a
+      ><a name="840"
+      > </a
+      ><a name="841" class="Symbol"
+      >=</a
+      ><a name="842"
+      > </a
+      ><a name="843" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="844" class="Symbol"
+      >}</a
+      ><a name="845"
+      >   </a
+      ><a name="848" class="Symbol"
+      >(</a
+      ><a name="849" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="852"
+      > </a
+      ><a name="853" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="856" class="Symbol"
+      >)</a
+      ><a name="857"
+      > </a
+      ><a name="858" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#858" class="Bound"
+      >ac</a
+      ><a name="860"
+      >
+      </a
+      ><a name="867" class="Symbol"
+      >=</a
+      ><a name="868"
+      >   </a
+      ><a name="871" href="lib.groups.FreeAbelianGroup.html#10837" class="Function"
+      >FreeAbGroup-extend-iso</a
+      ><a name="893"
+      > </a
+      ><a name="894" class="Symbol"
+      >(</a
+      ><a name="895" href="cohomology.Theory.html#2489" class="Function"
+      >C2-abgroup</a
+      ><a name="905"
+      > </a
+      ><a name="906" class="Number"
+      >0</a
+      ><a name="907" class="Symbol"
+      >)</a
+      ><a name="908"
+      >
+      </a
+      ><a name="915" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="918"
+      > </a
+      ><a name="919" href="lib.groups.GroupProduct.html#7683" class="Function"
+      >&#928;&#7475;-emap-l</a
+      ><a name="928"
+      > </a
+      ><a name="929" class="Symbol"
+      >(&#955;</a
+      ><a name="931"
+      > </a
+      ><a name="932" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#932" class="Bound"
+      >_</a
+      ><a name="933"
+      > </a
+      ><a name="934" class="Symbol"
+      >&#8594;</a
+      ><a name="935"
+      > </a
+      ><a name="936" href="cohomology.Theory.html#2346" class="Function"
+      >C2</a
+      ><a name="938"
+      > </a
+      ><a name="939" class="Number"
+      >0</a
+      ><a name="940" class="Symbol"
+      >)</a
+      ><a name="941"
+      > </a
+      ><a name="942" class="Symbol"
+      >(</a
+      ><a name="943" href="homotopy.DisjointlyPointedSet.html#2067" class="Function"
+      >separable-unite-equiv</a
+      ><a name="964"
+      > </a
+      ><a name="965" class="Symbol"
+      >(</a
+      ><a name="966" href="cw.CW.html#1972" class="Field"
+      >&#8857;Skeleton.pt-dec</a
+      ><a name="982"
+      > </a
+      ><a name="983" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#832" class="Bound"
+      >&#8857;skel</a
+      ><a name="988" class="Symbol"
+      >))</a
+      ><a name="990"
+      >
+      </a
+      ><a name="997" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="1000"
+      > </a
+      ><a name="1001" href="lib.groups.GroupProduct.html#8412" class="Function"
+      >&#928;&#7475;&#8321;-&#8852;-iso-&#215;&#7475;</a
+      ><a name="1013"
+      > </a
+      ><a name="1014" class="Symbol"
+      >{</a
+      ><a name="1015" class="Argument"
+      >A</a
+      ><a name="1016"
+      > </a
+      ><a name="1017" class="Symbol"
+      >=</a
+      ><a name="1018"
+      > </a
+      ><a name="1019" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="1023" class="Symbol"
+      >}</a
+      ><a name="1024"
+      > </a
+      ><a name="1025" class="Symbol"
+      >{</a
+      ><a name="1026" class="Argument"
+      >B</a
+      ><a name="1027"
+      > </a
+      ><a name="1028" class="Symbol"
+      >=</a
+      ><a name="1029"
+      > </a
+      ><a name="1030" href="homotopy.DisjointlyPointedSet.html#513" class="Function"
+      >MinusPoint</a
+      ><a name="1040"
+      > </a
+      ><a name="1041" class="Symbol"
+      >(</a
+      ><a name="1042" href="cw.CW.html#3077" class="Function"
+      >&#8857;cw-head</a
+      ><a name="1050"
+      > </a
+      ><a name="1051" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#832" class="Bound"
+      >&#8857;skel</a
+      ><a name="1056" class="Symbol"
+      >)}</a
+      ><a name="1058"
+      > </a
+      ><a name="1059" class="Symbol"
+      >(&#955;</a
+      ><a name="1061"
+      > </a
+      ><a name="1062" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1062" class="Bound"
+      >_</a
+      ><a name="1063"
+      > </a
+      ><a name="1064" class="Symbol"
+      >&#8594;</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" href="cohomology.Theory.html#2346" class="Function"
+      >C2</a
+      ><a name="1068"
+      > </a
+      ><a name="1069" class="Number"
+      >0</a
+      ><a name="1070" class="Symbol"
+      >)</a
+      ><a name="1071"
+      > </a
+      ><a name="1072" href="lib.groups.Isomorphism.html#3359" class="Function Operator"
+      >&#8315;&#185;&#7475;</a
+      ><a name="1075"
+      >
+      </a
+      ><a name="1082" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" href="lib.groups.GroupProduct.html#7428" class="Function"
+      >&#215;&#7475;-emap</a
+      ><a name="1093"
+      > </a
+      ><a name="1094" class="Symbol"
+      >(</a
+      ><a name="1095" href="lib.groups.GroupProduct.html#9667" class="Function"
+      >&#928;&#7475;&#8321;-Unit</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" href="lib.groups.Isomorphism.html#3359" class="Function Operator"
+      >&#8315;&#185;&#7475;</a
+      ><a name="1107" class="Symbol"
+      >)</a
+      ><a name="1108"
+      > </a
+      ><a name="1109" class="Symbol"
+      >(</a
+      ><a name="1110" href="cw.cohomology.TipAndAugment.html#732" class="Function"
+      >CX&#8320;-&#946;</a
+      ><a name="1115"
+      > </a
+      ><a name="1116" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#832" class="Bound"
+      >&#8857;skel</a
+      ><a name="1121"
+      > </a
+      ><a name="1122" class="Number"
+      >0</a
+      ><a name="1123"
+      > </a
+      ><a name="1124" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#858" class="Bound"
+      >ac</a
+      ><a name="1126" class="Symbol"
+      >)</a
+      ><a name="1127"
+      >
+    </a
+      ><a name="1132" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#545" class="Function"
+      >rcc-iso-ccc-nth</a
+      ><a name="1147"
+      > </a
+      ><a name="1148" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1148" class="Bound"
+      >&#8857;skel</a
+      ><a name="1153"
+      > </a
+      ><a name="1154" class="Symbol"
+      >{</a
+      ><a name="1155" class="Argument"
+      >m</a
+      ><a name="1156"
+      > </a
+      ><a name="1157" class="Symbol"
+      >=</a
+      ><a name="1158"
+      > </a
+      ><a name="1159" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1160"
+      > </a
+      ><a name="1161" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1161" class="Bound"
+      >m</a
+      ><a name="1162" class="Symbol"
+      >}</a
+      ><a name="1163"
+      > </a
+      ><a name="1164" class="Symbol"
+      >(</a
+      ><a name="1165" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1168"
+      > </a
+      ><a name="1169" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1172" class="Symbol"
+      >)</a
+      ><a name="1173"
+      > </a
+      ><a name="1174" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1174" class="Bound"
+      >ac</a
+      ><a name="1176"
+      >
+      </a
+      ><a name="1183" class="Symbol"
+      >=</a
+      ><a name="1184"
+      >   </a
+      ><a name="1187" href="lib.groups.FreeAbelianGroup.html#10837" class="Function"
+      >FreeAbGroup-extend-iso</a
+      ><a name="1209"
+      > </a
+      ><a name="1210" class="Symbol"
+      >(</a
+      ><a name="1211" href="cohomology.Theory.html#2489" class="Function"
+      >C2-abgroup</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" class="Number"
+      >0</a
+      ><a name="1223" class="Symbol"
+      >)</a
+      ><a name="1224"
+      >
+      </a
+      ><a name="1231" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="1234"
+      > </a
+      ><a name="1235" href="cw.cohomology.WedgeOfCells.html#2860" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-&#946;-diag</a
+      ><a name="1250"
+      > </a
+      ><a name="1251" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1148" class="Bound"
+      >&#8857;skel</a
+      ><a name="1256"
+      > </a
+      ><a name="1257" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1174" class="Bound"
+      >ac</a
+      ><a name="1259"
+      >
+    </a
+      ><a name="1264" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#545" class="Function"
+      >rcc-iso-ccc-nth</a
+      ><a name="1279"
+      > </a
+      ><a name="1280" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1280" class="Bound"
+      >&#8857;skel</a
+      ><a name="1285"
+      > </a
+      ><a name="1286" class="Symbol"
+      >{</a
+      ><a name="1287" class="Argument"
+      >m</a
+      ><a name="1288"
+      > </a
+      ><a name="1289" class="Symbol"
+      >=</a
+      ><a name="1290"
+      > </a
+      ><a name="1291" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="1292" class="Symbol"
+      >}</a
+      ><a name="1293"
+      > </a
+      ><a name="1294" class="Symbol"
+      >(</a
+      ><a name="1295" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1298"
+      > </a
+      ><a name="1299" href="lib.types.Nat.html#1688" class="InductiveConstructor"
+      >ltS</a
+      ><a name="1302" class="Symbol"
+      >)</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1304" class="Bound"
+      >ac</a
+      ><a name="1306"
+      > </a
+      ><a name="1307" class="Symbol"
+      >=</a
+      ><a name="1308"
+      >
+      </a
+      ><a name="1315" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#545" class="Function"
+      >rcc-iso-ccc-nth</a
+      ><a name="1330"
+      > </a
+      ><a name="1331" class="Symbol"
+      >(</a
+      ><a name="1332" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="1340"
+      > </a
+      ><a name="1341" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1280" class="Bound"
+      >&#8857;skel</a
+      ><a name="1346" class="Symbol"
+      >)</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" class="Symbol"
+      >(</a
+      ><a name="1349" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1352"
+      > </a
+      ><a name="1353" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1356" class="Symbol"
+      >)</a
+      ><a name="1357"
+      > </a
+      ><a name="1358" class="Symbol"
+      >(</a
+      ><a name="1359" href="cw.CW.html#8547" class="Function"
+      >&#8857;init-has-cells-with-choice</a
+      ><a name="1386"
+      > </a
+      ><a name="1387" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1280" class="Bound"
+      >&#8857;skel</a
+      ><a name="1392"
+      > </a
+      ><a name="1393" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1304" class="Bound"
+      >ac</a
+      ><a name="1395" class="Symbol"
+      >)</a
+      ><a name="1396"
+      >
+    </a
+      ><a name="1401" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#545" class="Function"
+      >rcc-iso-ccc-nth</a
+      ><a name="1416"
+      > </a
+      ><a name="1417" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1417" class="Bound"
+      >&#8857;skel</a
+      ><a name="1422"
+      > </a
+      ><a name="1423" class="Symbol"
+      >{</a
+      ><a name="1424" class="Argument"
+      >m</a
+      ><a name="1425"
+      > </a
+      ><a name="1426" class="Symbol"
+      >=</a
+      ><a name="1427"
+      > </a
+      ><a name="1428" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1429"
+      > </a
+      ><a name="1430" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1430" class="Bound"
+      >m</a
+      ><a name="1431" class="Symbol"
+      >}</a
+      ><a name="1432"
+      > </a
+      ><a name="1433" class="Symbol"
+      >(</a
+      ><a name="1434" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1437"
+      > </a
+      ><a name="1438" href="lib.types.Nat.html#1688" class="InductiveConstructor"
+      >ltS</a
+      ><a name="1441" class="Symbol"
+      >)</a
+      ><a name="1442"
+      > </a
+      ><a name="1443" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1443" class="Bound"
+      >ac</a
+      ><a name="1445"
+      > </a
+      ><a name="1446" class="Symbol"
+      >=</a
+      ><a name="1447"
+      >
+      </a
+      ><a name="1454" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#545" class="Function"
+      >rcc-iso-ccc-nth</a
+      ><a name="1469"
+      > </a
+      ><a name="1470" class="Symbol"
+      >(</a
+      ><a name="1471" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="1479"
+      > </a
+      ><a name="1480" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1417" class="Bound"
+      >&#8857;skel</a
+      ><a name="1485" class="Symbol"
+      >)</a
+      ><a name="1486"
+      > </a
+      ><a name="1487" class="Symbol"
+      >(</a
+      ><a name="1488" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1491"
+      > </a
+      ><a name="1492" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1495" class="Symbol"
+      >)</a
+      ><a name="1496"
+      > </a
+      ><a name="1497" class="Symbol"
+      >(</a
+      ><a name="1498" href="cw.CW.html#8547" class="Function"
+      >&#8857;init-has-cells-with-choice</a
+      ><a name="1525"
+      > </a
+      ><a name="1526" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1417" class="Bound"
+      >&#8857;skel</a
+      ><a name="1531"
+      > </a
+      ><a name="1532" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1443" class="Bound"
+      >ac</a
+      ><a name="1534" class="Symbol"
+      >)</a
+      ><a name="1535"
+      >
+    </a
+      ><a name="1540" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#545" class="Function"
+      >rcc-iso-ccc-nth</a
+      ><a name="1555"
+      > </a
+      ><a name="1556" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1556" class="Bound"
+      >&#8857;skel</a
+      ><a name="1561"
+      > </a
+      ><a name="1562" class="Symbol"
+      >{</a
+      ><a name="1563" class="Argument"
+      >m</a
+      ><a name="1564"
+      > </a
+      ><a name="1565" class="Symbol"
+      >=</a
+      ><a name="1566"
+      > </a
+      ><a name="1567" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="1568" class="Symbol"
+      >}</a
+      ><a name="1569"
+      > </a
+      ><a name="1570" class="Symbol"
+      >(</a
+      ><a name="1571" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1574"
+      > </a
+      ><a name="1575" class="Symbol"
+      >(</a
+      ><a name="1576" href="lib.types.Nat.html#1716" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="1580"
+      > </a
+      ><a name="1581" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1581" class="Bound"
+      >lt</a
+      ><a name="1583" class="Symbol"
+      >))</a
+      ><a name="1585"
+      > </a
+      ><a name="1586" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1586" class="Bound"
+      >ac</a
+      ><a name="1588"
+      > </a
+      ><a name="1589" class="Symbol"
+      >=</a
+      ><a name="1590"
+      >
+      </a
+      ><a name="1597" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#545" class="Function"
+      >rcc-iso-ccc-nth</a
+      ><a name="1612"
+      > </a
+      ><a name="1613" class="Symbol"
+      >(</a
+      ><a name="1614" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="1622"
+      > </a
+      ><a name="1623" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1556" class="Bound"
+      >&#8857;skel</a
+      ><a name="1628" class="Symbol"
+      >)</a
+      ><a name="1629"
+      > </a
+      ><a name="1630" class="Symbol"
+      >(</a
+      ><a name="1631" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1634"
+      > </a
+      ><a name="1635" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1581" class="Bound"
+      >lt</a
+      ><a name="1637" class="Symbol"
+      >)</a
+      ><a name="1638"
+      > </a
+      ><a name="1639" class="Symbol"
+      >(</a
+      ><a name="1640" href="cw.CW.html#8547" class="Function"
+      >&#8857;init-has-cells-with-choice</a
+      ><a name="1667"
+      > </a
+      ><a name="1668" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1556" class="Bound"
+      >&#8857;skel</a
+      ><a name="1673"
+      > </a
+      ><a name="1674" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1586" class="Bound"
+      >ac</a
+      ><a name="1676" class="Symbol"
+      >)</a
+      ><a name="1677"
+      >
+    </a
+      ><a name="1682" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#545" class="Function"
+      >rcc-iso-ccc-nth</a
+      ><a name="1697"
+      > </a
+      ><a name="1698" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1698" class="Bound"
+      >&#8857;skel</a
+      ><a name="1703"
+      > </a
+      ><a name="1704" class="Symbol"
+      >{</a
+      ><a name="1705" class="Argument"
+      >m</a
+      ><a name="1706"
+      > </a
+      ><a name="1707" class="Symbol"
+      >=</a
+      ><a name="1708"
+      > </a
+      ><a name="1709" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1710"
+      > </a
+      ><a name="1711" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1711" class="Bound"
+      >m</a
+      ><a name="1712" class="Symbol"
+      >}</a
+      ><a name="1713"
+      > </a
+      ><a name="1714" class="Symbol"
+      >(</a
+      ><a name="1715" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1718"
+      > </a
+      ><a name="1719" class="Symbol"
+      >(</a
+      ><a name="1720" href="lib.types.Nat.html#1716" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="1724"
+      > </a
+      ><a name="1725" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1725" class="Bound"
+      >lt</a
+      ><a name="1727" class="Symbol"
+      >))</a
+      ><a name="1729"
+      > </a
+      ><a name="1730" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1730" class="Bound"
+      >ac</a
+      ><a name="1732"
+      > </a
+      ><a name="1733" class="Symbol"
+      >=</a
+      ><a name="1734"
+      >
+      </a
+      ><a name="1741" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#545" class="Function"
+      >rcc-iso-ccc-nth</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" class="Symbol"
+      >(</a
+      ><a name="1758" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1698" class="Bound"
+      >&#8857;skel</a
+      ><a name="1772" class="Symbol"
+      >)</a
+      ><a name="1773"
+      > </a
+      ><a name="1774" class="Symbol"
+      >(</a
+      ><a name="1775" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1778"
+      > </a
+      ><a name="1779" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1725" class="Bound"
+      >lt</a
+      ><a name="1781" class="Symbol"
+      >)</a
+      ><a name="1782"
+      > </a
+      ><a name="1783" class="Symbol"
+      >(</a
+      ><a name="1784" href="cw.CW.html#8547" class="Function"
+      >&#8857;init-has-cells-with-choice</a
+      ><a name="1811"
+      > </a
+      ><a name="1812" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1698" class="Bound"
+      >&#8857;skel</a
+      ><a name="1817"
+      > </a
+      ><a name="1818" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1730" class="Bound"
+      >ac</a
+      ><a name="1820" class="Symbol"
+      >)</a
+      ><a name="1821"
+      >
+
+    </a
+      ><a name="1827" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1827" class="Function"
+      >rcc-iso-ccc-above</a
+      ><a name="1844"
+      > </a
+      ><a name="1845" class="Symbol"
+      >:</a
+      ><a name="1846"
+      > </a
+      ><a name="1847" class="Symbol"
+      >&#8704;</a
+      ><a name="1848"
+      > </a
+      ><a name="1849" class="Symbol"
+      >{</a
+      ><a name="1850" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1850" class="Bound"
+      >n</a
+      ><a name="1851" class="Symbol"
+      >}</a
+      ><a name="1852"
+      > </a
+      ><a name="1853" class="Symbol"
+      >(</a
+      ><a name="1854" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1854" class="Bound"
+      >&#8857;skel</a
+      ><a name="1859"
+      > </a
+      ><a name="1860" class="Symbol"
+      >:</a
+      ><a name="1861"
+      > </a
+      ><a name="1862" href="cw.CW.html#1851" class="Record"
+      >&#8857;Skeleton</a
+      ><a name="1871"
+      > </a
+      ><a name="1872" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1850" class="Bound"
+      >n</a
+      ><a name="1873" class="Symbol"
+      >)</a
+      ><a name="1874"
+      > </a
+      ><a name="1875" class="Symbol"
+      >{</a
+      ><a name="1876" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1876" class="Bound"
+      >m</a
+      ><a name="1877" class="Symbol"
+      >}</a
+      ><a name="1878"
+      > </a
+      ><a name="1879" class="Symbol"
+      >(</a
+      ><a name="1880" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1880" class="Bound"
+      >m&#8816;n</a
+      ><a name="1883"
+      > </a
+      ><a name="1884" class="Symbol"
+      >:</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" href="lib.Base.html#6049" class="Function"
+      >&#172;</a
+      ><a name="1887"
+      > </a
+      ><a name="1888" class="Symbol"
+      >(</a
+      ><a name="1889" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1876" class="Bound"
+      >m</a
+      ><a name="1890"
+      > </a
+      ><a name="1891" href="lib.types.Nat.html#1754" class="Function Operator"
+      >&#8804;</a
+      ><a name="1892"
+      > </a
+      ><a name="1893" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1850" class="Bound"
+      >n</a
+      ><a name="1894" class="Symbol"
+      >))</a
+      ><a name="1896"
+      >
+      </a
+      ><a name="1903" class="Symbol"
+      >&#8594;</a
+      ><a name="1904"
+      >  </a
+      ><a name="1906" href="lib.types.Group.html#7376" class="Function"
+      >AbGroup.grp</a
+      ><a name="1917"
+      > </a
+      ><a name="1918" class="Symbol"
+      >(</a
+      ><a name="1919" href="cw.cohomology.ReconstructedCochainComplex.html#482" class="Function"
+      >RCC.cochain-template</a
+      ><a name="1939"
+      > </a
+      ><a name="1940" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1854" class="Bound"
+      >&#8857;skel</a
+      ><a name="1945"
+      > </a
+      ><a name="1946" class="Symbol"
+      >(</a
+      ><a name="1947" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1950"
+      > </a
+      ><a name="1951" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1880" class="Bound"
+      >m&#8816;n</a
+      ><a name="1954" class="Symbol"
+      >))</a
+      ><a name="1956"
+      >
+      </a
+      ><a name="1963" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="1965"
+      > </a
+      ><a name="1966" href="lib.groups.Homomorphism.html#11441" class="Function"
+      >hom-group</a
+      ><a name="1975"
+      > </a
+      ><a name="1976" class="Symbol"
+      >(</a
+      ><a name="1977" href="lib.types.Group.html#7376" class="Function"
+      >AbGroup.grp</a
+      ><a name="1988"
+      > </a
+      ><a name="1989" class="Symbol"
+      >(</a
+      ><a name="1990" href="cw.cohomology.CellularChainComplex.html#211" class="Function"
+      >CCC.chain-template</a
+      ><a name="2008"
+      > </a
+      ><a name="2009" class="Symbol"
+      >(</a
+      ><a name="2010" href="cw.CW.html#1928" class="Field"
+      >&#8857;Skeleton.skel</a
+      ><a name="2024"
+      > </a
+      ><a name="2025" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1854" class="Bound"
+      >&#8857;skel</a
+      ><a name="2030" class="Symbol"
+      >)</a
+      ><a name="2031"
+      > </a
+      ><a name="2032" class="Symbol"
+      >(</a
+      ><a name="2033" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2036"
+      > </a
+      ><a name="2037" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1880" class="Bound"
+      >m&#8816;n</a
+      ><a name="2040" class="Symbol"
+      >)))</a
+      ><a name="2043"
+      > </a
+      ><a name="2044" class="Symbol"
+      >(</a
+      ><a name="2045" href="cohomology.Theory.html#2489" class="Function"
+      >C2-abgroup</a
+      ><a name="2055"
+      > </a
+      ><a name="2056" class="Number"
+      >0</a
+      ><a name="2057" class="Symbol"
+      >)</a
+      ><a name="2058"
+      >
+    </a
+      ><a name="2063" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1827" class="Function"
+      >rcc-iso-ccc-above</a
+      ><a name="2080"
+      > </a
+      ><a name="2081" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2081" class="Bound"
+      >&#8857;skel</a
+      ><a name="2086"
+      > </a
+      ><a name="2087" class="Symbol"
+      >_</a
+      ><a name="2088"
+      >
+      </a
+      ><a name="2095" class="Symbol"
+      >=</a
+      ><a name="2096"
+      >   </a
+      ><a name="2099" href="lib.groups.Isomorphism.html#10341" class="Function"
+      >pre&#8728;&#7475;-iso</a
+      ><a name="2108"
+      > </a
+      ><a name="2109" class="Symbol"
+      >(</a
+      ><a name="2110" href="cohomology.Theory.html#2489" class="Function"
+      >C2-abgroup</a
+      ><a name="2120"
+      > </a
+      ><a name="2121" class="Number"
+      >0</a
+      ><a name="2122" class="Symbol"
+      >)</a
+      ><a name="2123"
+      > </a
+      ><a name="2124" href="lib.groups.Lift.html#1179" class="Function"
+      >lower-iso</a
+      ><a name="2133"
+      >
+      </a
+      ><a name="2140" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="2143"
+      > </a
+      ><a name="2144" href="lib.groups.Unit.html#932" class="Function"
+      >trivial-iso-Unit</a
+      ><a name="2160"
+      > </a
+      ><a name="2161" class="Symbol"
+      >(</a
+      ><a name="2162" href="lib.groups.Unit.html#1656" class="Function"
+      >hom&#8321;-Unit-is-trivial</a
+      ><a name="2182"
+      > </a
+      ><a name="2183" class="Symbol"
+      >(</a
+      ><a name="2184" href="cohomology.Theory.html#2489" class="Function"
+      >C2-abgroup</a
+      ><a name="2194"
+      > </a
+      ><a name="2195" class="Number"
+      >0</a
+      ><a name="2196" class="Symbol"
+      >))</a
+      ><a name="2198"
+      > </a
+      ><a name="2199" href="lib.groups.Isomorphism.html#3359" class="Function Operator"
+      >&#8315;&#185;&#7475;</a
+      ><a name="2202"
+      >
+      </a
+      ><a name="2209" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="2212"
+      > </a
+      ><a name="2213" href="lib.groups.Lift.html#1179" class="Function"
+      >lower-iso</a
+      ><a name="2222"
+      >
+
+  </a
+      ><a name="2226" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2226" class="Function"
+      >rcc-iso-ccc</a
+      ><a name="2237"
+      > </a
+      ><a name="2238" class="Symbol"
+      >:</a
+      ><a name="2239"
+      > </a
+      ><a name="2240" class="Symbol"
+      >&#8704;</a
+      ><a name="2241"
+      > </a
+      ><a name="2242" class="Symbol"
+      >{</a
+      ><a name="2243" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2243" class="Bound"
+      >n</a
+      ><a name="2244" class="Symbol"
+      >}</a
+      ><a name="2245"
+      > </a
+      ><a name="2246" class="Symbol"
+      >(</a
+      ><a name="2247" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2247" class="Bound"
+      >&#8857;skel</a
+      ><a name="2252"
+      > </a
+      ><a name="2253" class="Symbol"
+      >:</a
+      ><a name="2254"
+      > </a
+      ><a name="2255" href="cw.CW.html#1851" class="Record"
+      >&#8857;Skeleton</a
+      ><a name="2264"
+      > </a
+      ><a name="2265" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2243" class="Bound"
+      >n</a
+      ><a name="2266" class="Symbol"
+      >)</a
+      ><a name="2267"
+      > </a
+      ><a name="2268" class="Symbol"
+      >(</a
+      ><a name="2269" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2269" class="Bound"
+      >m</a
+      ><a name="2270"
+      > </a
+      ><a name="2271" class="Symbol"
+      >:</a
+      ><a name="2272"
+      > </a
+      ><a name="2273" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="2274" class="Symbol"
+      >)</a
+      ><a name="2275"
+      >
+    </a
+      ><a name="2280" class="Symbol"
+      >&#8594;</a
+      ><a name="2281"
+      > </a
+      ><a name="2282" href="cw.CW.html#8111" class="Function"
+      >&#8857;has-cells-with-choice</a
+      ><a name="2304"
+      > </a
+      ><a name="2305" class="Number"
+      >0</a
+      ><a name="2306"
+      > </a
+      ><a name="2307" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2247" class="Bound"
+      >&#8857;skel</a
+      ><a name="2312"
+      > </a
+      ><a name="2313" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#249" class="Bound"
+      >i</a
+      ><a name="2314"
+      >
+    </a
+      ><a name="2319" class="Symbol"
+      >&#8594;</a
+      ><a name="2320"
+      >  </a
+      ><a name="2322" href="lib.types.Group.html#7376" class="Function"
+      >AbGroup.grp</a
+      ><a name="2333"
+      > </a
+      ><a name="2334" class="Symbol"
+      >(</a
+      ><a name="2335" href="cw.cohomology.ReconstructedCochainComplex.html#482" class="Function"
+      >RCC.cochain-template</a
+      ><a name="2355"
+      > </a
+      ><a name="2356" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2247" class="Bound"
+      >&#8857;skel</a
+      ><a name="2361"
+      > </a
+      ><a name="2362" class="Symbol"
+      >(</a
+      ><a name="2363" href="lib.types.Nat.html#3317" class="Function"
+      >&#8804;-dec</a
+      ><a name="2368"
+      > </a
+      ><a name="2369" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2269" class="Bound"
+      >m</a
+      ><a name="2370"
+      > </a
+      ><a name="2371" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2243" class="Bound"
+      >n</a
+      ><a name="2372" class="Symbol"
+      >))</a
+      ><a name="2374"
+      >
+    </a
+      ><a name="2379" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="2381"
+      > </a
+      ><a name="2382" href="lib.groups.Homomorphism.html#11441" class="Function"
+      >hom-group</a
+      ><a name="2391"
+      > </a
+      ><a name="2392" class="Symbol"
+      >(</a
+      ><a name="2393" href="lib.types.Group.html#7376" class="Function"
+      >AbGroup.grp</a
+      ><a name="2404"
+      > </a
+      ><a name="2405" class="Symbol"
+      >(</a
+      ><a name="2406" href="cw.cohomology.CellularChainComplex.html#211" class="Function"
+      >CCC.chain-template</a
+      ><a name="2424"
+      > </a
+      ><a name="2425" class="Symbol"
+      >(</a
+      ><a name="2426" href="cw.CW.html#1928" class="Field"
+      >&#8857;Skeleton.skel</a
+      ><a name="2440"
+      > </a
+      ><a name="2441" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2247" class="Bound"
+      >&#8857;skel</a
+      ><a name="2446" class="Symbol"
+      >)</a
+      ><a name="2447"
+      > </a
+      ><a name="2448" class="Symbol"
+      >(</a
+      ><a name="2449" href="lib.types.Nat.html#3317" class="Function"
+      >&#8804;-dec</a
+      ><a name="2454"
+      > </a
+      ><a name="2455" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2269" class="Bound"
+      >m</a
+      ><a name="2456"
+      > </a
+      ><a name="2457" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2243" class="Bound"
+      >n</a
+      ><a name="2458" class="Symbol"
+      >)))</a
+      ><a name="2461"
+      > </a
+      ><a name="2462" class="Symbol"
+      >(</a
+      ><a name="2463" href="cohomology.Theory.html#2489" class="Function"
+      >C2-abgroup</a
+      ><a name="2473"
+      > </a
+      ><a name="2474" class="Number"
+      >0</a
+      ><a name="2475" class="Symbol"
+      >)</a
+      ><a name="2476"
+      >
+  </a
+      ><a name="2479" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2226" class="Function"
+      >rcc-iso-ccc</a
+      ><a name="2490"
+      > </a
+      ><a name="2491" class="Symbol"
+      >{</a
+      ><a name="2492" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2492" class="Bound"
+      >n</a
+      ><a name="2493" class="Symbol"
+      >}</a
+      ><a name="2494"
+      > </a
+      ><a name="2495" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2495" class="Bound"
+      >&#8857;skel</a
+      ><a name="2500"
+      > </a
+      ><a name="2501" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2501" class="Bound"
+      >m</a
+      ><a name="2502"
+      > </a
+      ><a name="2503" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2503" class="Bound"
+      >ac</a
+      ><a name="2505"
+      > </a
+      ><a name="2506" class="Keyword"
+      >with</a
+      ><a name="2510"
+      > </a
+      ><a name="2511" href="lib.types.Nat.html#3317" class="Function"
+      >&#8804;-dec</a
+      ><a name="2516"
+      > </a
+      ><a name="2517" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2501" class="Bound"
+      >m</a
+      ><a name="2518"
+      > </a
+      ><a name="2519" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2492" class="Bound"
+      >n</a
+      ><a name="2520"
+      >
+  </a
+      ><a name="2523" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2226" class="Function"
+      >rcc-iso-ccc</a
+      ><a name="2534"
+      > </a
+      ><a name="2535" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2535" class="Bound"
+      >&#8857;skel</a
+      ><a name="2540"
+      > </a
+      ><a name="2541" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2541" class="Bound"
+      >m</a
+      ><a name="2542"
+      > </a
+      ><a name="2543" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2543" class="Bound"
+      >ac</a
+      ><a name="2545"
+      > </a
+      ><a name="2546" class="Symbol"
+      >|</a
+      ><a name="2547"
+      > </a
+      ><a name="2548" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="2551"
+      > </a
+      ><a name="2552" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2552" class="Bound"
+      >m&#8804;n</a
+      ><a name="2555"
+      > </a
+      ><a name="2556" class="Symbol"
+      >=</a
+      ><a name="2557"
+      > </a
+      ><a name="2558" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#545" class="Function"
+      >rcc-iso-ccc-nth</a
+      ><a name="2573"
+      > </a
+      ><a name="2574" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2535" class="Bound"
+      >&#8857;skel</a
+      ><a name="2579"
+      > </a
+      ><a name="2580" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2552" class="Bound"
+      >m&#8804;n</a
+      ><a name="2583"
+      > </a
+      ><a name="2584" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2543" class="Bound"
+      >ac</a
+      ><a name="2586"
+      >
+  </a
+      ><a name="2589" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2226" class="Function"
+      >rcc-iso-ccc</a
+      ><a name="2600"
+      > </a
+      ><a name="2601" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2601" class="Bound"
+      >&#8857;skel</a
+      ><a name="2606"
+      > </a
+      ><a name="2607" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2607" class="Bound"
+      >m</a
+      ><a name="2608"
+      > </a
+      ><a name="2609" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2609" class="Bound"
+      >ac</a
+      ><a name="2611"
+      > </a
+      ><a name="2612" class="Symbol"
+      >|</a
+      ><a name="2613"
+      > </a
+      ><a name="2614" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2617"
+      > </a
+      ><a name="2618" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2618" class="Bound"
+      >m&#8816;n</a
+      ><a name="2621"
+      > </a
+      ><a name="2622" class="Symbol"
+      >=</a
+      ><a name="2623"
+      > </a
+      ><a name="2624" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#1827" class="Function"
+      >rcc-iso-ccc-above</a
+      ><a name="2641"
+      > </a
+      ><a name="2642" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2601" class="Bound"
+      >&#8857;skel</a
+      ><a name="2647"
+      > </a
+      ><a name="2648" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2618" class="Bound"
+      >m&#8816;n</a
+      ><a name="2651"
+      >
+
+  </a
+      ><a name="2655" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2655" class="Function"
+      >rhead-iso-chead</a
+      ><a name="2670"
+      > </a
+      ><a name="2671" class="Symbol"
+      >:</a
+      ><a name="2672"
+      > </a
+      ><a name="2673" href="cohomology.Theory.html#2346" class="Function"
+      >C2</a
+      ><a name="2675"
+      > </a
+      ><a name="2676" class="Number"
+      >0</a
+      ><a name="2677"
+      > </a
+      ><a name="2678" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="2680"
+      > </a
+      ><a name="2681" href="lib.groups.Homomorphism.html#11441" class="Function"
+      >hom-group</a
+      ><a name="2690"
+      > </a
+      ><a name="2691" href="lib.groups.Int.html#514" class="Function"
+      >&#8484;-group</a
+      ><a name="2698"
+      > </a
+      ><a name="2699" class="Symbol"
+      >(</a
+      ><a name="2700" href="cohomology.Theory.html#2489" class="Function"
+      >C2-abgroup</a
+      ><a name="2710"
+      > </a
+      ><a name="2711" class="Number"
+      >0</a
+      ><a name="2712" class="Symbol"
+      >)</a
+      ><a name="2713"
+      >
+  </a
+      ><a name="2716" href="cw.cohomology.ReconstructedCochainsIsoCellularCochains.html#2655" class="Function"
+      >rhead-iso-chead</a
+      ><a name="2731"
+      >
+    </a
+      ><a name="2736" class="Symbol"
+      >=</a
+      ><a name="2737"
+      >   </a
+      ><a name="2740" href="lib.groups.Isomorphism.html#10341" class="Function"
+      >pre&#8728;&#7475;-iso</a
+      ><a name="2749"
+      > </a
+      ><a name="2750" class="Symbol"
+      >(</a
+      ><a name="2751" href="cohomology.Theory.html#2489" class="Function"
+      >C2-abgroup</a
+      ><a name="2761"
+      > </a
+      ><a name="2762" class="Number"
+      >0</a
+      ><a name="2763" class="Symbol"
+      >)</a
+      ><a name="2764"
+      > </a
+      ><a name="2765" href="lib.groups.Int.html#710" class="Function"
+      >&#8484;-iso-FreeAbGroup-Unit</a
+      ><a name="2787"
+      >
+    </a
+      ><a name="2792" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="2795"
+      > </a
+      ><a name="2796" href="lib.groups.FreeAbelianGroup.html#10837" class="Function"
+      >FreeAbGroup-extend-iso</a
+      ><a name="2818"
+      > </a
+      ><a name="2819" class="Symbol"
+      >(</a
+      ><a name="2820" href="cohomology.Theory.html#2489" class="Function"
+      >C2-abgroup</a
+      ><a name="2830"
+      > </a
+      ><a name="2831" class="Number"
+      >0</a
+      ><a name="2832" class="Symbol"
+      >)</a
+      ><a name="2833"
+      >
+    </a
+      ><a name="2838" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="2841"
+      > </a
+      ><a name="2842" href="lib.groups.GroupProduct.html#9667" class="Function"
+      >&#928;&#7475;&#8321;-Unit</a
+      ><a name="2850"
+      > </a
+      ><a name="2851" href="lib.groups.Isomorphism.html#3359" class="Function Operator"
+      >&#8315;&#185;&#7475;</a
+      ><a name="2854"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

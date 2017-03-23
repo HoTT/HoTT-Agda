@@ -1,0 +1,1320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cohomology.EMModel</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="homotopy.EilenbergMacLane.html#1" class="Module"
+      >homotopy.EilenbergMacLane</a
+      ><a name="96"
+      >
+</a
+      ><a name="97" class="Keyword"
+      >open</a
+      ><a name="101"
+      > </a
+      ><a name="102" class="Keyword"
+      >import</a
+      ><a name="108"
+      > </a
+      ><a name="109" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="126"
+      >
+</a
+      ><a name="127" class="Keyword"
+      >open</a
+      ><a name="131"
+      > </a
+      ><a name="132" class="Keyword"
+      >import</a
+      ><a name="138"
+      > </a
+      ><a name="139" href="cohomology.SpectrumModel.html#1" class="Module"
+      >cohomology.SpectrumModel</a
+      ><a name="163"
+      >
+</a
+      ><a name="164" class="Keyword"
+      >open</a
+      ><a name="168"
+      > </a
+      ><a name="169" class="Keyword"
+      >import</a
+      ><a name="175"
+      > </a
+      ><a name="176" href="cohomology.WithCoefficients.html#1" class="Module"
+      >cohomology.WithCoefficients</a
+      ><a name="203"
+      >
+
+</a
+      ><a name="205" class="Keyword"
+      >module</a
+      ><a name="211"
+      > </a
+      ><a name="212" href="cohomology.EMModel.html#1" class="Module"
+      >cohomology.EMModel</a
+      ><a name="230"
+      > </a
+      ><a name="231" class="Keyword"
+      >where</a
+      ><a name="236"
+      >
+
+</a
+      ><a name="238" class="Keyword"
+      >module</a
+      ><a name="244"
+      > </a
+      ><a name="245" href="cohomology.EMModel.html#245" class="Module"
+      >_</a
+      ><a name="246"
+      > </a
+      ><a name="247" class="Symbol"
+      >{</a
+      ><a name="248" href="cohomology.EMModel.html#248" class="Bound"
+      >i</a
+      ><a name="249" class="Symbol"
+      >}</a
+      ><a name="250"
+      > </a
+      ><a name="251" class="Symbol"
+      >(</a
+      ><a name="252" href="cohomology.EMModel.html#252" class="Bound"
+      >G</a
+      ><a name="253"
+      > </a
+      ><a name="254" class="Symbol"
+      >:</a
+      ><a name="255"
+      > </a
+      ><a name="256" href="lib.types.Group.html#7210" class="Function"
+      >AbGroup</a
+      ><a name="263"
+      > </a
+      ><a name="264" href="cohomology.EMModel.html#248" class="Bound"
+      >i</a
+      ><a name="265" class="Symbol"
+      >)</a
+      ><a name="266"
+      > </a
+      ><a name="267" class="Keyword"
+      >where</a
+      ><a name="272"
+      >
+
+  </a
+      ><a name="276" class="Keyword"
+      >open</a
+      ><a name="280"
+      > </a
+      ><a name="281" href="homotopy.EilenbergMacLane.html#5490" class="Module"
+      >EMExplicit</a
+      ><a name="291"
+      > </a
+      ><a name="292" href="cohomology.EMModel.html#252" class="Bound"
+      >G</a
+      ><a name="293"
+      > </a
+      ><a name="294" class="Keyword"
+      >using</a
+      ><a name="299"
+      > </a
+      ><a name="300" class="Symbol"
+      >(</a
+      ><a name="301"
+      >&#8857;EM</a
+      ><a name="304" class="Symbol"
+      >;</a
+      ><a name="305"
+      > EM-level</a
+      ><a name="314" class="Symbol"
+      >;</a
+      ><a name="315"
+      > EM-conn</a
+      ><a name="323" class="Symbol"
+      >;</a
+      ><a name="324"
+      > spectrum</a
+      ><a name="333" class="Symbol"
+      >)</a
+      ><a name="334"
+      >
+
+  </a
+      ><a name="338" class="Keyword"
+      >private</a
+      ><a name="345"
+      >
+    </a
+      ><a name="350" href="cohomology.EMModel.html#350" class="Function"
+      >E</a
+      ><a name="351"
+      > </a
+      ><a name="352" class="Symbol"
+      >:</a
+      ><a name="353"
+      > </a
+      ><a name="354" class="Symbol"
+      >(</a
+      ><a name="355" href="cohomology.EMModel.html#355" class="Bound"
+      >n</a
+      ><a name="356"
+      > </a
+      ><a name="357" class="Symbol"
+      >:</a
+      ><a name="358"
+      > </a
+      ><a name="359" href="lib.types.Int.html#154" class="Datatype"
+      >&#8484;</a
+      ><a name="360" class="Symbol"
+      >)</a
+      ><a name="361"
+      > </a
+      ><a name="362" class="Symbol"
+      >&#8594;</a
+      ><a name="363"
+      > </a
+      ><a name="364" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="367"
+      > </a
+      ><a name="368" href="cohomology.EMModel.html#248" class="Bound"
+      >i</a
+      ><a name="369"
+      >
+    </a
+      ><a name="374" href="cohomology.EMModel.html#350" class="Function"
+      >E</a
+      ><a name="375"
+      > </a
+      ><a name="376" class="Symbol"
+      >(</a
+      ><a name="377" href="lib.types.Int.html#172" class="InductiveConstructor"
+      >pos</a
+      ><a name="380"
+      > </a
+      ><a name="381" href="cohomology.EMModel.html#381" class="Bound"
+      >m</a
+      ><a name="382" class="Symbol"
+      >)</a
+      ><a name="383"
+      > </a
+      ><a name="384" class="Symbol"
+      >=</a
+      ><a name="385"
+      > </a
+      ><a name="386" href="homotopy.EilenbergMacLane.html#522" class="Function"
+      >&#8857;EM</a
+      ><a name="389"
+      > </a
+      ><a name="390" href="cohomology.EMModel.html#381" class="Bound"
+      >m</a
+      ><a name="391"
+      >
+    </a
+      ><a name="396" href="cohomology.EMModel.html#350" class="Function"
+      >E</a
+      ><a name="397"
+      > </a
+      ><a name="398" class="Symbol"
+      >(</a
+      ><a name="399" href="lib.types.Int.html#192" class="InductiveConstructor"
+      >negsucc</a
+      ><a name="406"
+      > </a
+      ><a name="407" href="cohomology.EMModel.html#407" class="Bound"
+      >m</a
+      ><a name="408" class="Symbol"
+      >)</a
+      ><a name="409"
+      > </a
+      ><a name="410" class="Symbol"
+      >=</a
+      ><a name="411"
+      > </a
+      ><a name="412" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="417"
+      > </a
+      ><a name="418" href="lib.types.Unit.html#142" class="Function"
+      >&#8857;Unit</a
+      ><a name="423"
+      >
+
+    </a
+      ><a name="429" href="cohomology.EMModel.html#429" class="Function"
+      >E-spectrum</a
+      ><a name="439"
+      > </a
+      ><a name="440" class="Symbol"
+      >:</a
+      ><a name="441"
+      > </a
+      ><a name="442" class="Symbol"
+      >(</a
+      ><a name="443" href="cohomology.EMModel.html#443" class="Bound"
+      >n</a
+      ><a name="444"
+      > </a
+      ><a name="445" class="Symbol"
+      >:</a
+      ><a name="446"
+      > </a
+      ><a name="447" href="lib.types.Int.html#154" class="Datatype"
+      >&#8484;</a
+      ><a name="448" class="Symbol"
+      >)</a
+      ><a name="449"
+      > </a
+      ><a name="450" class="Symbol"
+      >&#8594;</a
+      ><a name="451"
+      > </a
+      ><a name="452" href="lib.types.LoopSpace.html#394" class="Function"
+      >&#8857;&#937;</a
+      ><a name="454"
+      > </a
+      ><a name="455" class="Symbol"
+      >(</a
+      ><a name="456" href="cohomology.EMModel.html#350" class="Function"
+      >E</a
+      ><a name="457"
+      > </a
+      ><a name="458" class="Symbol"
+      >(</a
+      ><a name="459" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="463"
+      > </a
+      ><a name="464" href="cohomology.EMModel.html#443" class="Bound"
+      >n</a
+      ><a name="465" class="Symbol"
+      >))</a
+      ><a name="467"
+      > </a
+      ><a name="468" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="470"
+      > </a
+      ><a name="471" href="cohomology.EMModel.html#350" class="Function"
+      >E</a
+      ><a name="472"
+      > </a
+      ><a name="473" href="cohomology.EMModel.html#443" class="Bound"
+      >n</a
+      ><a name="474"
+      >
+    </a
+      ><a name="479" href="cohomology.EMModel.html#429" class="Function"
+      >E-spectrum</a
+      ><a name="489"
+      > </a
+      ><a name="490" class="Symbol"
+      >(</a
+      ><a name="491" href="lib.types.Int.html#172" class="InductiveConstructor"
+      >pos</a
+      ><a name="494"
+      > </a
+      ><a name="495" href="cohomology.EMModel.html#495" class="Bound"
+      >n</a
+      ><a name="496" class="Symbol"
+      >)</a
+      ><a name="497"
+      > </a
+      ><a name="498" class="Symbol"
+      >=</a
+      ><a name="499"
+      > </a
+      ><a name="500" href="homotopy.EilenbergMacLane.html#5339" class="Function"
+      >spectrum</a
+      ><a name="508"
+      > </a
+      ><a name="509" href="cohomology.EMModel.html#495" class="Bound"
+      >n</a
+      ><a name="510"
+      >
+    </a
+      ><a name="515" href="cohomology.EMModel.html#429" class="Function"
+      >E-spectrum</a
+      ><a name="525"
+      > </a
+      ><a name="526" class="Symbol"
+      >(</a
+      ><a name="527" href="lib.types.Int.html#192" class="InductiveConstructor"
+      >negsucc</a
+      ><a name="534"
+      > </a
+      ><a name="535" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="536" class="Symbol"
+      >)</a
+      ><a name="537"
+      > </a
+      ><a name="538" class="Symbol"
+      >=</a
+      ><a name="539"
+      > </a
+      ><a name="540" href="lib.Equivalence.html#13119" class="Function"
+      >&#8771;-to-&#8857;&#8771;</a
+      ><a name="547"
+      > </a
+      ><a name="548" class="Symbol"
+      >{</a
+      ><a name="549" class="Argument"
+      >X</a
+      ><a name="550"
+      > </a
+      ><a name="551" class="Symbol"
+      >=</a
+      ><a name="552"
+      > </a
+      ><a name="553" href="lib.types.LoopSpace.html#394" class="Function"
+      >&#8857;&#937;</a
+      ><a name="555"
+      > </a
+      ><a name="556" class="Symbol"
+      >(</a
+      ><a name="557" href="cohomology.EMModel.html#350" class="Function"
+      >E</a
+      ><a name="558"
+      > </a
+      ><a name="559" class="Number"
+      >0</a
+      ><a name="560" class="Symbol"
+      >)}</a
+      ><a name="562"
+      >
+      </a
+      ><a name="569" class="Symbol"
+      >(</a
+      ><a name="570" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="575"
+      > </a
+      ><a name="576" class="Symbol"
+      >(&#955;</a
+      ><a name="578"
+      > </a
+      ><a name="579" href="cohomology.EMModel.html#579" class="Bound"
+      >_</a
+      ><a name="580"
+      > </a
+      ><a name="581" class="Symbol"
+      >&#8594;</a
+      ><a name="582"
+      > </a
+      ><a name="583" class="Symbol"
+      >_)</a
+      ><a name="585"
+      > </a
+      ><a name="586" class="Symbol"
+      >(&#955;</a
+      ><a name="588"
+      > </a
+      ><a name="589" href="cohomology.EMModel.html#589" class="Bound"
+      >_</a
+      ><a name="590"
+      > </a
+      ><a name="591" class="Symbol"
+      >&#8594;</a
+      ><a name="592"
+      > </a
+      ><a name="593" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="596" class="Symbol"
+      >)</a
+      ><a name="597"
+      >
+             </a
+      ><a name="611" class="Symbol"
+      >(&#955;</a
+      ><a name="613"
+      > </a
+      ><a name="614" href="cohomology.EMModel.html#614" class="Bound"
+      >_</a
+      ><a name="615"
+      > </a
+      ><a name="616" class="Symbol"
+      >&#8594;</a
+      ><a name="617"
+      > </a
+      ><a name="618" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="621" class="Symbol"
+      >)</a
+      ><a name="622"
+      > </a
+      ><a name="623" class="Symbol"
+      >(</a
+      ><a name="624" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="642"
+      > </a
+      ><a name="643" class="Symbol"
+      >(</a
+      ><a name="644" href="homotopy.EilenbergMacLane.html#651" class="Function"
+      >EM-level</a
+      ><a name="652"
+      > </a
+      ><a name="653" class="Symbol"
+      >_</a
+      ><a name="654"
+      > </a
+      ><a name="655" class="Symbol"
+      >_</a
+      ><a name="656"
+      > </a
+      ><a name="657" class="Symbol"
+      >_)</a
+      ><a name="659"
+      > </a
+      ><a name="660" class="Symbol"
+      >_))</a
+      ><a name="663"
+      >
+      </a
+      ><a name="670" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="673"
+      >
+    </a
+      ><a name="678" href="cohomology.EMModel.html#429" class="Function"
+      >E-spectrum</a
+      ><a name="688"
+      > </a
+      ><a name="689" class="Symbol"
+      >(</a
+      ><a name="690" href="lib.types.Int.html#192" class="InductiveConstructor"
+      >negsucc</a
+      ><a name="697"
+      > </a
+      ><a name="698" class="Symbol"
+      >(</a
+      ><a name="699" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="700"
+      > </a
+      ><a name="701" href="cohomology.EMModel.html#701" class="Bound"
+      >n</a
+      ><a name="702" class="Symbol"
+      >))</a
+      ><a name="704"
+      > </a
+      ><a name="705" class="Symbol"
+      >=</a
+      ><a name="706"
+      > </a
+      ><a name="707" href="lib.Equivalence.html#13119" class="Function"
+      >&#8771;-to-&#8857;&#8771;</a
+      ><a name="714"
+      > </a
+      ><a name="715" class="Symbol"
+      >{</a
+      ><a name="716" class="Argument"
+      >X</a
+      ><a name="717"
+      > </a
+      ><a name="718" class="Symbol"
+      >=</a
+      ><a name="719"
+      > </a
+      ><a name="720" href="lib.types.LoopSpace.html#394" class="Function"
+      >&#8857;&#937;</a
+      ><a name="722"
+      > </a
+      ><a name="723" class="Symbol"
+      >(</a
+      ><a name="724" href="cohomology.EMModel.html#350" class="Function"
+      >E</a
+      ><a name="725"
+      > </a
+      ><a name="726" class="Symbol"
+      >(</a
+      ><a name="727" href="lib.types.Int.html#192" class="InductiveConstructor"
+      >negsucc</a
+      ><a name="734"
+      > </a
+      ><a name="735" href="cohomology.EMModel.html#701" class="Bound"
+      >n</a
+      ><a name="736" class="Symbol"
+      >))}</a
+      ><a name="739"
+      >
+      </a
+      ><a name="746" class="Symbol"
+      >(</a
+      ><a name="747" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="752"
+      > </a
+      ><a name="753" class="Symbol"
+      >(&#955;</a
+      ><a name="755"
+      > </a
+      ><a name="756" href="cohomology.EMModel.html#756" class="Bound"
+      >_</a
+      ><a name="757"
+      > </a
+      ><a name="758" class="Symbol"
+      >&#8594;</a
+      ><a name="759"
+      > </a
+      ><a name="760" class="Symbol"
+      >_)</a
+      ><a name="762"
+      > </a
+      ><a name="763" class="Symbol"
+      >(&#955;</a
+      ><a name="765"
+      > </a
+      ><a name="766" href="cohomology.EMModel.html#766" class="Bound"
+      >_</a
+      ><a name="767"
+      > </a
+      ><a name="768" class="Symbol"
+      >&#8594;</a
+      ><a name="769"
+      > </a
+      ><a name="770" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="773" class="Symbol"
+      >)</a
+      ><a name="774"
+      >
+             </a
+      ><a name="788" class="Symbol"
+      >(&#955;</a
+      ><a name="790"
+      > </a
+      ><a name="791" href="cohomology.EMModel.html#791" class="Bound"
+      >_</a
+      ><a name="792"
+      > </a
+      ><a name="793" class="Symbol"
+      >&#8594;</a
+      ><a name="794"
+      > </a
+      ><a name="795" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="798" class="Symbol"
+      >)</a
+      ><a name="799"
+      > </a
+      ><a name="800" class="Symbol"
+      >(</a
+      ><a name="801" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="819"
+      > </a
+      ><a name="820" class="Symbol"
+      >(</a
+      ><a name="821" href="lib.types.Lift.html#495" class="Function"
+      >Lift-level</a
+      ><a name="831"
+      > </a
+      ><a name="832" href="lib.types.Unit.html#365" class="Function"
+      >Unit-is-set</a
+      ><a name="843"
+      > </a
+      ><a name="844" class="Symbol"
+      >_</a
+      ><a name="845"
+      > </a
+      ><a name="846" class="Symbol"
+      >_)</a
+      ><a name="848"
+      > </a
+      ><a name="849" class="Symbol"
+      >_))</a
+      ><a name="852"
+      >
+      </a
+      ><a name="859" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="862"
+      >
+
+  </a
+      ><a name="866" href="cohomology.EMModel.html#866" class="Function"
+      >EM-Cohomology</a
+      ><a name="879"
+      > </a
+      ><a name="880" class="Symbol"
+      >:</a
+      ><a name="881"
+      > </a
+      ><a name="882" href="cohomology.Theory.html#173" class="Record"
+      >CohomologyTheory</a
+      ><a name="898"
+      > </a
+      ><a name="899" href="cohomology.EMModel.html#248" class="Bound"
+      >i</a
+      ><a name="900"
+      >
+  </a
+      ><a name="903" href="cohomology.EMModel.html#866" class="Function"
+      >EM-Cohomology</a
+      ><a name="916"
+      > </a
+      ><a name="917" class="Symbol"
+      >=</a
+      ><a name="918"
+      > </a
+      ><a name="919" href="cohomology.SpectrumModel.html#8890" class="Function"
+      >spectrum-cohomology</a
+      ><a name="938"
+      > </a
+      ><a name="939" href="cohomology.EMModel.html#350" class="Function"
+      >E</a
+      ><a name="940"
+      > </a
+      ><a name="941" href="cohomology.EMModel.html#429" class="Function"
+      >E-spectrum</a
+      ><a name="951"
+      >
+
+  </a
+      ><a name="955" class="Keyword"
+      >open</a
+      ><a name="959"
+      > </a
+      ><a name="960" href="cohomology.Theory.html#173" class="Module"
+      >CohomologyTheory</a
+      ><a name="976"
+      > </a
+      ><a name="977" href="cohomology.EMModel.html#866" class="Function"
+      >EM-Cohomology</a
+      ><a name="990"
+      >
+
+  </a
+      ><a name="994" href="cohomology.EMModel.html#994" class="Function"
+      >EM-dimension</a
+      ><a name="1006"
+      > </a
+      ><a name="1007" class="Symbol"
+      >:</a
+      ><a name="1008"
+      > </a
+      ><a name="1009" class="Symbol"
+      >{</a
+      ><a name="1010" href="cohomology.EMModel.html#1010" class="Bound"
+      >n</a
+      ><a name="1011"
+      > </a
+      ><a name="1012" class="Symbol"
+      >:</a
+      ><a name="1013"
+      > </a
+      ><a name="1014" href="lib.types.Int.html#154" class="Datatype"
+      >&#8484;</a
+      ><a name="1015" class="Symbol"
+      >}</a
+      ><a name="1016"
+      > </a
+      ><a name="1017" class="Symbol"
+      >&#8594;</a
+      ><a name="1018"
+      > </a
+      ><a name="1019" href="cohomology.EMModel.html#1010" class="Bound"
+      >n</a
+      ><a name="1020"
+      > </a
+      ><a name="1021" href="lib.Base.html#6094" class="Function Operator"
+      >&#8800;</a
+      ><a name="1022"
+      > </a
+      ><a name="1023" class="Number"
+      >0</a
+      ><a name="1024"
+      > </a
+      ><a name="1025" class="Symbol"
+      >&#8594;</a
+      ><a name="1026"
+      > </a
+      ><a name="1027" href="lib.types.Group.html#8063" class="Function"
+      >is-trivial&#7475;</a
+      ><a name="1038"
+      > </a
+      ><a name="1039" class="Symbol"
+      >(</a
+      ><a name="1040" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1041"
+      > </a
+      ><a name="1042" href="cohomology.EMModel.html#1010" class="Bound"
+      >n</a
+      ><a name="1043"
+      > </a
+      ><a name="1044" class="Symbol"
+      >(</a
+      ><a name="1045" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="1050"
+      > </a
+      ><a name="1051" href="lib.types.IteratedSuspension.html#2163" class="Function"
+      >&#8857;S&#8304;</a
+      ><a name="1054" class="Symbol"
+      >))</a
+      ><a name="1056"
+      >
+  </a
+      ><a name="1059" href="cohomology.EMModel.html#994" class="Function"
+      >EM-dimension</a
+      ><a name="1071"
+      > </a
+      ><a name="1072" class="Symbol"
+      >{</a
+      ><a name="1073" href="lib.types.Int.html#172" class="InductiveConstructor"
+      >pos</a
+      ><a name="1076"
+      > </a
+      ><a name="1077" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="1078" class="Symbol"
+      >}</a
+      ><a name="1079"
+      > </a
+      ><a name="1080" href="cohomology.EMModel.html#1080" class="Bound"
+      >neq</a
+      ><a name="1083"
+      > </a
+      ><a name="1084" class="Symbol"
+      >=</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" href="lib.types.Empty.html#165" class="Function"
+      >&#8869;-rec</a
+      ><a name="1091"
+      > </a
+      ><a name="1092" class="Symbol"
+      >(</a
+      ><a name="1093" href="cohomology.EMModel.html#1080" class="Bound"
+      >neq</a
+      ><a name="1096"
+      > </a
+      ><a name="1097" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1100" class="Symbol"
+      >)</a
+      ><a name="1101"
+      >
+  </a
+      ><a name="1104" href="cohomology.EMModel.html#994" class="Function"
+      >EM-dimension</a
+      ><a name="1116"
+      > </a
+      ><a name="1117" class="Symbol"
+      >{</a
+      ><a name="1118" href="lib.types.Int.html#172" class="InductiveConstructor"
+      >pos</a
+      ><a name="1121"
+      > </a
+      ><a name="1122" class="Symbol"
+      >(</a
+      ><a name="1123" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1124"
+      > </a
+      ><a name="1125" href="cohomology.EMModel.html#1125" class="Bound"
+      >n</a
+      ><a name="1126" class="Symbol"
+      >)}</a
+      ><a name="1128"
+      > </a
+      ><a name="1129" class="Symbol"
+      >_</a
+      ><a name="1130"
+      > </a
+      ><a name="1131" class="Symbol"
+      >=</a
+      ><a name="1132"
+      >
+    </a
+      ><a name="1137" href="lib.types.Group.html#8148" class="Function"
+      >contr-is-trivial&#7475;</a
+      ><a name="1154"
+      > </a
+      ><a name="1155" class="Symbol"
+      >(</a
+      ><a name="1156" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1157"
+      > </a
+      ><a name="1158" class="Symbol"
+      >(</a
+      ><a name="1159" href="lib.types.Int.html#172" class="InductiveConstructor"
+      >pos</a
+      ><a name="1162"
+      > </a
+      ><a name="1163" class="Symbol"
+      >(</a
+      ><a name="1164" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1165"
+      > </a
+      ><a name="1166" href="cohomology.EMModel.html#1125" class="Bound"
+      >n</a
+      ><a name="1167" class="Symbol"
+      >))</a
+      ><a name="1169"
+      > </a
+      ><a name="1170" class="Symbol"
+      >(</a
+      ><a name="1171" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="1176"
+      > </a
+      ><a name="1177" href="lib.types.IteratedSuspension.html#2163" class="Function"
+      >&#8857;S&#8304;</a
+      ><a name="1180" class="Symbol"
+      >))</a
+      ><a name="1182"
+      > </a
+      ><a name="1183" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1184"
+      >
+      </a
+      ><a name="1191" href="lib.NConnected.html#9962" class="Function"
+      >connected-at-level-is-contr</a
+      ><a name="1218"
+      >
+        </a
+      ><a name="1227" class="Symbol"
+      >(</a
+      ><a name="1228" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="1239"
+      > </a
+      ><a name="1240" class="Symbol"
+      >{</a
+      ><a name="1241" class="Argument"
+      >n</a
+      ><a name="1242"
+      > </a
+      ><a name="1243" class="Symbol"
+      >=</a
+      ><a name="1244"
+      > </a
+      ><a name="1245" class="Number"
+      >0</a
+      ><a name="1246" class="Symbol"
+      >})</a
+      ><a name="1248"
+      >
+        </a
+      ><a name="1257" class="Symbol"
+      >(</a
+      ><a name="1258" href="lib.NConnected.html#7381" class="Function"
+      >Trunc-preserves-conn</a
+      ><a name="1278"
+      > </a
+      ><a name="1279" class="Number"
+      >0</a
+      ><a name="1280"
+      >
+          </a
+      ><a name="1291" class="Symbol"
+      >(</a
+      ><a name="1292" href="lib.NConnected.html#10556" class="Function"
+      >equiv-preserves-conn</a
+      ><a name="1312"
+      >
+            </a
+      ><a name="1325" class="Symbol"
+      >(</a
+      ><a name="1326" href="lib.types.Pointed.html#4145" class="Function"
+      >pre&#8857;&#8728;-equiv</a
+      ><a name="1337"
+      > </a
+      ><a name="1338" href="lib.types.Lift.html#732" class="Function"
+      >&#8857;lower-equiv</a
+      ><a name="1350"
+      > </a
+      ><a name="1351" href="lib.Equivalence.html#5985" class="Function Operator"
+      >&#8728;e</a
+      ><a name="1353"
+      > </a
+      ><a name="1354" href="lib.types.Pointed.html#4413" class="Function"
+      >&#8857;Bool&#8594;-equiv-idf</a
+      ><a name="1370"
+      > </a
+      ><a name="1371" class="Symbol"
+      >_</a
+      ><a name="1372"
+      > </a
+      ><a name="1373" href="lib.Equivalence.html#8519" class="Function Operator"
+      >&#8315;&#185;</a
+      ><a name="1375" class="Symbol"
+      >)</a
+      ><a name="1376"
+      >
+            </a
+      ><a name="1389" class="Symbol"
+      >(</a
+      ><a name="1390" href="lib.NConnected.html#9681" class="Function"
+      >path-conn</a
+      ><a name="1399"
+      > </a
+      ><a name="1400" class="Symbol"
+      >(</a
+      ><a name="1401" href="lib.NConnected.html#10215" class="Function"
+      >connected-&#8804;T</a
+      ><a name="1413"
+      > </a
+      ><a name="1414" class="Symbol"
+      >(</a
+      ><a name="1415" href="lib.types.TLevel.html#4187" class="Function"
+      >&#10216;&#10217;-monotone-&#8804;</a
+      ><a name="1428"
+      > </a
+      ><a name="1429" class="Symbol"
+      >(</a
+      ><a name="1430" href="lib.types.Nat.html#2784" class="Function"
+      >&#8804;-ap-S</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" class="Symbol"
+      >(</a
+      ><a name="1438" href="lib.types.Nat.html#2103" class="Function"
+      >O&#8804;</a
+      ><a name="1440"
+      > </a
+      ><a name="1441" href="cohomology.EMModel.html#1125" class="Bound"
+      >n</a
+      ><a name="1442" class="Symbol"
+      >)))</a
+      ><a name="1445"
+      >
+                                     </a
+      ><a name="1483" class="Symbol"
+      >(</a
+      ><a name="1484" href="homotopy.EilenbergMacLane.html#753" class="Function"
+      >EM-conn</a
+      ><a name="1491"
+      > </a
+      ><a name="1492" class="Symbol"
+      >(</a
+      ><a name="1493" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" href="cohomology.EMModel.html#1125" class="Bound"
+      >n</a
+      ><a name="1496" class="Symbol"
+      >))))))</a
+      ><a name="1502"
+      >
+  </a
+      ><a name="1505" href="cohomology.EMModel.html#994" class="Function"
+      >EM-dimension</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" class="Symbol"
+      >{</a
+      ><a name="1519" href="lib.types.Int.html#192" class="InductiveConstructor"
+      >negsucc</a
+      ><a name="1526"
+      > </a
+      ><a name="1527" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="1528" class="Symbol"
+      >}</a
+      ><a name="1529"
+      > </a
+      ><a name="1530" class="Symbol"
+      >_</a
+      ><a name="1531"
+      > </a
+      ><a name="1532" class="Symbol"
+      >=</a
+      ><a name="1533"
+      >
+    </a
+      ><a name="1538" href="lib.types.Group.html#8148" class="Function"
+      >contr-is-trivial&#7475;</a
+      ><a name="1555"
+      > </a
+      ><a name="1556" class="Symbol"
+      >(</a
+      ><a name="1557" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1558"
+      > </a
+      ><a name="1559" class="Symbol"
+      >(</a
+      ><a name="1560" href="lib.types.Int.html#192" class="InductiveConstructor"
+      >negsucc</a
+      ><a name="1567"
+      > </a
+      ><a name="1568" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="1569" class="Symbol"
+      >)</a
+      ><a name="1570"
+      > </a
+      ><a name="1571" class="Symbol"
+      >(</a
+      ><a name="1572" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="1577"
+      > </a
+      ><a name="1578" href="lib.types.IteratedSuspension.html#2163" class="Function"
+      >&#8857;S&#8304;</a
+      ><a name="1581" class="Symbol"
+      >))</a
+      ><a name="1583"
+      > </a
+      ><a name="1584" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1585"
+      >
+      </a
+      ><a name="1592" href="lib.types.Truncation.html#4649" class="Function"
+      >Trunc-preserves-level</a
+      ><a name="1613"
+      > </a
+      ><a name="1614" class="Number"
+      >0</a
+      ><a name="1615"
+      > </a
+      ><a name="1616" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1617"
+      > </a
+      ><a name="1618" href="lib.types.Pi.html#1189" class="Function"
+      >&#8857;&#8594;-level</a
+      ><a name="1626"
+      > </a
+      ><a name="1627" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1628"
+      >
+        </a
+      ><a name="1637" href="lib.NType.html#2748" class="Function"
+      >inhab-prop-is-contr</a
+      ><a name="1656"
+      > </a
+      ><a name="1657" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1660"
+      > </a
+      ><a name="1661" class="Symbol"
+      >(</a
+      ><a name="1662" href="homotopy.EilenbergMacLane.html#651" class="Function"
+      >EM-level</a
+      ><a name="1670"
+      > </a
+      ><a name="1671" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="1672"
+      > </a
+      ><a name="1673" class="Symbol"
+      >_</a
+      ><a name="1674"
+      > </a
+      ><a name="1675" class="Symbol"
+      >_)</a
+      ><a name="1677"
+      >
+  </a
+      ><a name="1680" href="cohomology.EMModel.html#994" class="Function"
+      >EM-dimension</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" class="Symbol"
+      >{</a
+      ><a name="1694" href="lib.types.Int.html#192" class="InductiveConstructor"
+      >negsucc</a
+      ><a name="1701"
+      > </a
+      ><a name="1702" class="Symbol"
+      >(</a
+      ><a name="1703" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1704"
+      > </a
+      ><a name="1705" href="cohomology.EMModel.html#1705" class="Bound"
+      >n</a
+      ><a name="1706" class="Symbol"
+      >)}</a
+      ><a name="1708"
+      > </a
+      ><a name="1709" class="Symbol"
+      >_</a
+      ><a name="1710"
+      > </a
+      ><a name="1711" class="Symbol"
+      >=</a
+      ><a name="1712"
+      >
+    </a
+      ><a name="1717" href="lib.types.Group.html#8148" class="Function"
+      >contr-is-trivial&#7475;</a
+      ><a name="1734"
+      > </a
+      ><a name="1735" class="Symbol"
+      >(</a
+      ><a name="1736" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1737"
+      > </a
+      ><a name="1738" class="Symbol"
+      >(</a
+      ><a name="1739" href="lib.types.Int.html#192" class="InductiveConstructor"
+      >negsucc</a
+      ><a name="1746"
+      > </a
+      ><a name="1747" class="Symbol"
+      >(</a
+      ><a name="1748" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1749"
+      > </a
+      ><a name="1750" href="cohomology.EMModel.html#1705" class="Bound"
+      >n</a
+      ><a name="1751" class="Symbol"
+      >))</a
+      ><a name="1753"
+      > </a
+      ><a name="1754" class="Symbol"
+      >(</a
+      ><a name="1755" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="1760"
+      > </a
+      ><a name="1761" href="lib.types.IteratedSuspension.html#2163" class="Function"
+      >&#8857;S&#8304;</a
+      ><a name="1764" class="Symbol"
+      >))</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1768"
+      >
+      </a
+      ><a name="1775" href="lib.types.Truncation.html#4649" class="Function"
+      >Trunc-preserves-level</a
+      ><a name="1796"
+      > </a
+      ><a name="1797" class="Number"
+      >0</a
+      ><a name="1798"
+      > </a
+      ><a name="1799" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1800"
+      > </a
+      ><a name="1801" href="lib.types.Pi.html#1189" class="Function"
+      >&#8857;&#8594;-level</a
+      ><a name="1809"
+      > </a
+      ><a name="1810" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1811"
+      >
+        </a
+      ><a name="1820" href="lib.types.Lift.html#495" class="Function"
+      >Lift-level</a
+      ><a name="1830"
+      > </a
+      ><a name="1831" href="lib.types.Unit.html#288" class="Function"
+      >Unit-is-prop</a
+      ><a name="1843"
+      > </a
+      ><a name="1844" class="Symbol"
+      >_</a
+      ><a name="1845"
+      > </a
+      ><a name="1846" class="Symbol"
+      >_</a
+      ><a name="1847"
+      >
+
+  </a
+      ><a name="1851" href="cohomology.EMModel.html#1851" class="Function"
+      >EM-Ordinary</a
+      ><a name="1862"
+      > </a
+      ><a name="1863" class="Symbol"
+      >:</a
+      ><a name="1864"
+      > </a
+      ><a name="1865" href="cohomology.Theory.html#7242" class="Record"
+      >OrdinaryTheory</a
+      ><a name="1879"
+      > </a
+      ><a name="1880" href="cohomology.EMModel.html#248" class="Bound"
+      >i</a
+      ><a name="1881"
+      >
+  </a
+      ><a name="1884" href="cohomology.EMModel.html#1851" class="Function"
+      >EM-Ordinary</a
+      ><a name="1895"
+      > </a
+      ><a name="1896" class="Symbol"
+      >=</a
+      ><a name="1897"
+      > </a
+      ><a name="1898" href="cohomology.Theory.html#7296" class="InductiveConstructor"
+      >ordinary-theory</a
+      ><a name="1913"
+      > </a
+      ><a name="1914" href="cohomology.EMModel.html#866" class="Function"
+      >EM-Cohomology</a
+      ><a name="1927"
+      > </a
+      ><a name="1928" href="cohomology.EMModel.html#994" class="Function"
+      >EM-dimension</a
+      ><a name="1940"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

@@ -1,0 +1,2402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.PushoutFlip</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.Paths.html#1" class="Module"
+      >lib.types.Paths</a
+      ><a name="92"
+      >
+</a
+      ><a name="93" class="Keyword"
+      >open</a
+      ><a name="97"
+      > </a
+      ><a name="98" class="Keyword"
+      >import</a
+      ><a name="104"
+      > </a
+      ><a name="105" href="lib.types.Pointed.html#1" class="Module"
+      >lib.types.Pointed</a
+      ><a name="122"
+      >
+</a
+      ><a name="123" class="Keyword"
+      >open</a
+      ><a name="127"
+      > </a
+      ><a name="128" class="Keyword"
+      >import</a
+      ><a name="134"
+      > </a
+      ><a name="135" href="lib.types.Pushout.html#1" class="Module"
+      >lib.types.Pushout</a
+      ><a name="152"
+      >
+</a
+      ><a name="153" class="Keyword"
+      >open</a
+      ><a name="157"
+      > </a
+      ><a name="158" class="Keyword"
+      >import</a
+      ><a name="164"
+      > </a
+      ><a name="165" href="lib.types.Span.html#1" class="Module"
+      >lib.types.Span</a
+      ><a name="179"
+      >
+
+</a
+      ><a name="181" class="Keyword"
+      >module</a
+      ><a name="187"
+      > </a
+      ><a name="188" href="lib.types.PushoutFlip.html#1" class="Module"
+      >lib.types.PushoutFlip</a
+      ><a name="209"
+      > </a
+      ><a name="210" class="Keyword"
+      >where</a
+      ><a name="215"
+      >
+
+</a
+      ><a name="217" class="Keyword"
+      >module</a
+      ><a name="223"
+      > </a
+      ><a name="224" href="lib.types.PushoutFlip.html#224" class="Module"
+      >_</a
+      ><a name="225"
+      > </a
+      ><a name="226" class="Symbol"
+      >{</a
+      ><a name="227" href="lib.types.PushoutFlip.html#227" class="Bound"
+      >i</a
+      ><a name="228"
+      > </a
+      ><a name="229" href="lib.types.PushoutFlip.html#229" class="Bound"
+      >j</a
+      ><a name="230"
+      > </a
+      ><a name="231" href="lib.types.PushoutFlip.html#231" class="Bound"
+      >k</a
+      ><a name="232" class="Symbol"
+      >}</a
+      ><a name="233"
+      > </a
+      ><a name="234" class="Symbol"
+      >{</a
+      ><a name="235" href="lib.types.PushoutFlip.html#235" class="Bound"
+      >d</a
+      ><a name="236"
+      > </a
+      ><a name="237" class="Symbol"
+      >:</a
+      ><a name="238"
+      > </a
+      ><a name="239" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="243"
+      > </a
+      ><a name="244" class="Symbol"
+      >{</a
+      ><a name="245" href="lib.types.PushoutFlip.html#227" class="Bound"
+      >i</a
+      ><a name="246" class="Symbol"
+      >}</a
+      ><a name="247"
+      > </a
+      ><a name="248" class="Symbol"
+      >{</a
+      ><a name="249" href="lib.types.PushoutFlip.html#229" class="Bound"
+      >j</a
+      ><a name="250" class="Symbol"
+      >}</a
+      ><a name="251"
+      > </a
+      ><a name="252" class="Symbol"
+      >{</a
+      ><a name="253" href="lib.types.PushoutFlip.html#231" class="Bound"
+      >k</a
+      ><a name="254" class="Symbol"
+      >}}</a
+      ><a name="256"
+      > </a
+      ><a name="257" class="Keyword"
+      >where</a
+      ><a name="262"
+      >
+
+  </a
+      ><a name="266" class="Keyword"
+      >module</a
+      ><a name="272"
+      > </a
+      ><a name="273" href="lib.types.PushoutFlip.html#273" class="Module"
+      >PushoutFlip</a
+      ><a name="284"
+      > </a
+      ><a name="285" class="Symbol"
+      >=</a
+      ><a name="286"
+      > </a
+      ><a name="287" href="lib.types.Pushout.html#1131" class="Module"
+      >PushoutRec</a
+      ><a name="297"
+      >
+    </a
+      ><a name="302" class="Symbol"
+      >(</a
+      ><a name="303" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="308"
+      > </a
+      ><a name="309" class="Symbol"
+      >{</a
+      ><a name="310" class="Argument"
+      >d</a
+      ><a name="311"
+      > </a
+      ><a name="312" class="Symbol"
+      >=</a
+      ><a name="313"
+      > </a
+      ><a name="314" href="lib.types.Span.html#2163" class="Function"
+      >Span-flip</a
+      ><a name="323"
+      > </a
+      ><a name="324" href="lib.types.PushoutFlip.html#235" class="Bound"
+      >d</a
+      ><a name="325" class="Symbol"
+      >})</a
+      ><a name="327"
+      >
+    </a
+      ><a name="332" class="Symbol"
+      >(</a
+      ><a name="333" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="337"
+      > </a
+      ><a name="338" class="Symbol"
+      >{</a
+      ><a name="339" class="Argument"
+      >d</a
+      ><a name="340"
+      > </a
+      ><a name="341" class="Symbol"
+      >=</a
+      ><a name="342"
+      > </a
+      ><a name="343" href="lib.types.Span.html#2163" class="Function"
+      >Span-flip</a
+      ><a name="352"
+      > </a
+      ><a name="353" href="lib.types.PushoutFlip.html#235" class="Bound"
+      >d</a
+      ><a name="354" class="Symbol"
+      >})</a
+      ><a name="356"
+      >
+    </a
+      ><a name="361" class="Symbol"
+      >(&#955;</a
+      ><a name="363"
+      > </a
+      ><a name="364" href="lib.types.PushoutFlip.html#364" class="Bound"
+      >z</a
+      ><a name="365"
+      > </a
+      ><a name="366" class="Symbol"
+      >&#8594;</a
+      ><a name="367"
+      > </a
+      ><a name="368" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="369"
+      > </a
+      ><a name="370" class="Symbol"
+      >(</a
+      ><a name="371" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="375"
+      > </a
+      ><a name="376" class="Symbol"
+      >{</a
+      ><a name="377" class="Argument"
+      >d</a
+      ><a name="378"
+      > </a
+      ><a name="379" class="Symbol"
+      >=</a
+      ><a name="380"
+      > </a
+      ><a name="381" href="lib.types.Span.html#2163" class="Function"
+      >Span-flip</a
+      ><a name="390"
+      > </a
+      ><a name="391" href="lib.types.PushoutFlip.html#235" class="Bound"
+      >d</a
+      ><a name="392" class="Symbol"
+      >}</a
+      ><a name="393"
+      > </a
+      ><a name="394" href="lib.types.PushoutFlip.html#364" class="Bound"
+      >z</a
+      ><a name="395" class="Symbol"
+      >))</a
+      ><a name="397"
+      >
+
+  </a
+      ><a name="401" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="413"
+      > </a
+      ><a name="414" class="Symbol"
+      >:</a
+      ><a name="415"
+      > </a
+      ><a name="416" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="423"
+      > </a
+      ><a name="424" href="lib.types.PushoutFlip.html#235" class="Bound"
+      >d</a
+      ><a name="425"
+      > </a
+      ><a name="426" class="Symbol"
+      >&#8594;</a
+      ><a name="427"
+      > </a
+      ><a name="428" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="435"
+      > </a
+      ><a name="436" class="Symbol"
+      >(</a
+      ><a name="437" href="lib.types.Span.html#2163" class="Function"
+      >Span-flip</a
+      ><a name="446"
+      > </a
+      ><a name="447" href="lib.types.PushoutFlip.html#235" class="Bound"
+      >d</a
+      ><a name="448" class="Symbol"
+      >)</a
+      ><a name="449"
+      >
+  </a
+      ><a name="452" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="464"
+      > </a
+      ><a name="465" class="Symbol"
+      >=</a
+      ><a name="466"
+      > </a
+      ><a name="467" href="lib.types.Pushout.html#1397" class="Function"
+      >PushoutFlip.f</a
+      ><a name="480"
+      >
+
+</a
+      ><a name="482" href="lib.types.PushoutFlip.html#482" class="Function"
+      >Pushout-flip-involutive</a
+      ><a name="505"
+      > </a
+      ><a name="506" class="Symbol"
+      >:</a
+      ><a name="507"
+      > </a
+      ><a name="508" class="Symbol"
+      >&#8704;</a
+      ><a name="509"
+      > </a
+      ><a name="510" class="Symbol"
+      >{</a
+      ><a name="511" href="lib.types.PushoutFlip.html#511" class="Bound"
+      >i</a
+      ><a name="512"
+      > </a
+      ><a name="513" href="lib.types.PushoutFlip.html#513" class="Bound"
+      >j</a
+      ><a name="514"
+      > </a
+      ><a name="515" href="lib.types.PushoutFlip.html#515" class="Bound"
+      >k</a
+      ><a name="516" class="Symbol"
+      >}</a
+      ><a name="517"
+      > </a
+      ><a name="518" class="Symbol"
+      >(</a
+      ><a name="519" href="lib.types.PushoutFlip.html#519" class="Bound"
+      >d</a
+      ><a name="520"
+      > </a
+      ><a name="521" class="Symbol"
+      >:</a
+      ><a name="522"
+      > </a
+      ><a name="523" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="527"
+      > </a
+      ><a name="528" class="Symbol"
+      >{</a
+      ><a name="529" href="lib.types.PushoutFlip.html#511" class="Bound"
+      >i</a
+      ><a name="530" class="Symbol"
+      >}</a
+      ><a name="531"
+      > </a
+      ><a name="532" class="Symbol"
+      >{</a
+      ><a name="533" href="lib.types.PushoutFlip.html#513" class="Bound"
+      >j</a
+      ><a name="534" class="Symbol"
+      >}</a
+      ><a name="535"
+      > </a
+      ><a name="536" class="Symbol"
+      >{</a
+      ><a name="537" href="lib.types.PushoutFlip.html#515" class="Bound"
+      >k</a
+      ><a name="538" class="Symbol"
+      >})</a
+      ><a name="540"
+      >
+  </a
+      ><a name="543" class="Symbol"
+      >(</a
+      ><a name="544" href="lib.types.PushoutFlip.html#544" class="Bound"
+      >s</a
+      ><a name="545"
+      > </a
+      ><a name="546" class="Symbol"
+      >:</a
+      ><a name="547"
+      > </a
+      ><a name="548" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="555"
+      > </a
+      ><a name="556" href="lib.types.PushoutFlip.html#519" class="Bound"
+      >d</a
+      ><a name="557" class="Symbol"
+      >)</a
+      ><a name="558"
+      > </a
+      ><a name="559" class="Symbol"
+      >&#8594;</a
+      ><a name="560"
+      > </a
+      ><a name="561" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="573"
+      > </a
+      ><a name="574" class="Symbol"
+      >(</a
+      ><a name="575" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="587"
+      > </a
+      ><a name="588" href="lib.types.PushoutFlip.html#544" class="Bound"
+      >s</a
+      ><a name="589" class="Symbol"
+      >)</a
+      ><a name="590"
+      > </a
+      ><a name="591" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="593"
+      > </a
+      ><a name="594" href="lib.types.PushoutFlip.html#544" class="Bound"
+      >s</a
+      ><a name="595"
+      >
+</a
+      ><a name="596" href="lib.types.PushoutFlip.html#482" class="Function"
+      >Pushout-flip-involutive</a
+      ><a name="619"
+      > </a
+      ><a name="620" href="lib.types.PushoutFlip.html#620" class="Bound"
+      >d</a
+      ><a name="621"
+      > </a
+      ><a name="622" class="Symbol"
+      >=</a
+      ><a name="623"
+      > </a
+      ><a name="624" href="lib.types.Pushout.html#1094" class="Function"
+      >Pushout-elim</a
+      ><a name="636"
+      >
+  </a
+      ><a name="639" class="Symbol"
+      >(&#955;</a
+      ><a name="641"
+      > </a
+      ><a name="642" href="lib.types.PushoutFlip.html#642" class="Bound"
+      >a</a
+      ><a name="643"
+      > </a
+      ><a name="644" class="Symbol"
+      >&#8594;</a
+      ><a name="645"
+      > </a
+      ><a name="646" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="649" class="Symbol"
+      >)</a
+      ><a name="650"
+      >
+  </a
+      ><a name="653" class="Symbol"
+      >(&#955;</a
+      ><a name="655"
+      > </a
+      ><a name="656" href="lib.types.PushoutFlip.html#656" class="Bound"
+      >b</a
+      ><a name="657"
+      > </a
+      ><a name="658" class="Symbol"
+      >&#8594;</a
+      ><a name="659"
+      > </a
+      ><a name="660" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="663" class="Symbol"
+      >)</a
+      ><a name="664"
+      >
+  </a
+      ><a name="667" class="Symbol"
+      >(&#955;</a
+      ><a name="669"
+      > </a
+      ><a name="670" href="lib.types.PushoutFlip.html#670" class="Bound"
+      >c</a
+      ><a name="671"
+      > </a
+      ><a name="672" class="Symbol"
+      >&#8594;</a
+      ><a name="673"
+      > </a
+      ><a name="674" href="lib.types.Paths.html#7720" class="Function"
+      >&#8595;-&#8728;=idf-in'</a
+      ><a name="685"
+      > </a
+      ><a name="686" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="698"
+      > </a
+      ><a name="699" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="711"
+      > </a
+      ><a name="712" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="713"
+      >
+     </a
+      ><a name="719" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="721"
+      > </a
+      ><a name="722" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="734"
+      > </a
+      ><a name="735" class="Symbol"
+      >(</a
+      ><a name="736" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="738"
+      > </a
+      ><a name="739" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="751"
+      > </a
+      ><a name="752" class="Symbol"
+      >(</a
+      ><a name="753" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="757"
+      > </a
+      ><a name="758" href="lib.types.PushoutFlip.html#670" class="Bound"
+      >c</a
+      ><a name="759" class="Symbol"
+      >))</a
+      ><a name="761"
+      >
+       </a
+      ><a name="769" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="771"
+      > </a
+      ><a name="772" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="774"
+      > </a
+      ><a name="775" class="Symbol"
+      >(</a
+      ><a name="776" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="778"
+      > </a
+      ><a name="779" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="791" class="Symbol"
+      >)</a
+      ><a name="792"
+      > </a
+      ><a name="793" class="Symbol"
+      >(</a
+      ><a name="794" href="lib.types.Pushout.html#1428" class="Function"
+      >PushoutFlip.glue-&#946;</a
+      ><a name="812"
+      > </a
+      ><a name="813" href="lib.types.PushoutFlip.html#670" class="Bound"
+      >c</a
+      ><a name="814" class="Symbol"
+      >)</a
+      ><a name="815"
+      > </a
+      ><a name="816" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="817"
+      >
+     </a
+      ><a name="823" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="825"
+      > </a
+      ><a name="826" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="838"
+      > </a
+      ><a name="839" class="Symbol"
+      >(</a
+      ><a name="840" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="841"
+      > </a
+      ><a name="842" class="Symbol"
+      >(</a
+      ><a name="843" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="847"
+      > </a
+      ><a name="848" href="lib.types.PushoutFlip.html#670" class="Bound"
+      >c</a
+      ><a name="849" class="Symbol"
+      >))</a
+      ><a name="851"
+      >
+       </a
+      ><a name="859" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="861"
+      > </a
+      ><a name="862" href="lib.PathFunctor.html#291" class="Function"
+      >ap-!</a
+      ><a name="866"
+      > </a
+      ><a name="867" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="879"
+      > </a
+      ><a name="880" class="Symbol"
+      >(</a
+      ><a name="881" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="885"
+      > </a
+      ><a name="886" href="lib.types.PushoutFlip.html#670" class="Bound"
+      >c</a
+      ><a name="887" class="Symbol"
+      >)</a
+      ><a name="888"
+      > </a
+      ><a name="889" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="890"
+      >
+     </a
+      ><a name="896" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="897"
+      > </a
+      ><a name="898" class="Symbol"
+      >(</a
+      ><a name="899" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="901"
+      > </a
+      ><a name="902" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="914"
+      > </a
+      ><a name="915" class="Symbol"
+      >(</a
+      ><a name="916" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="920"
+      > </a
+      ><a name="921" href="lib.types.PushoutFlip.html#670" class="Bound"
+      >c</a
+      ><a name="922" class="Symbol"
+      >))</a
+      ><a name="924"
+      >
+       </a
+      ><a name="932" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="934"
+      > </a
+      ><a name="935" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="937"
+      > </a
+      ><a name="938" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="939"
+      > </a
+      ><a name="940" class="Symbol"
+      >(</a
+      ><a name="941" href="lib.types.Pushout.html#1428" class="Function"
+      >PushoutFlip.glue-&#946;</a
+      ><a name="959"
+      > </a
+      ><a name="960" href="lib.types.PushoutFlip.html#670" class="Bound"
+      >c</a
+      ><a name="961" class="Symbol"
+      >)</a
+      ><a name="962"
+      > </a
+      ><a name="963" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="964"
+      >
+     </a
+      ><a name="970" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="971"
+      > </a
+      ><a name="972" class="Symbol"
+      >(</a
+      ><a name="973" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="974"
+      > </a
+      ><a name="975" class="Symbol"
+      >(</a
+      ><a name="976" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="980"
+      > </a
+      ><a name="981" href="lib.types.PushoutFlip.html#670" class="Bound"
+      >c</a
+      ><a name="982" class="Symbol"
+      >))</a
+      ><a name="984"
+      >
+       </a
+      ><a name="992" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="994"
+      > </a
+      ><a name="995" href="lib.PathGroupoid.html#2082" class="Function"
+      >!-!</a
+      ><a name="998"
+      > </a
+      ><a name="999" class="Symbol"
+      >(</a
+      ><a name="1000" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1004"
+      > </a
+      ><a name="1005" href="lib.types.PushoutFlip.html#670" class="Bound"
+      >c</a
+      ><a name="1006" class="Symbol"
+      >)</a
+      ><a name="1007"
+      > </a
+      ><a name="1008" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1009"
+      >
+     </a
+      ><a name="1015" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1019"
+      > </a
+      ><a name="1020" href="lib.types.PushoutFlip.html#670" class="Bound"
+      >c</a
+      ><a name="1021"
+      >
+       </a
+      ><a name="1029" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="1031" class="Symbol"
+      >)</a
+      ><a name="1032"
+      >
+
+</a
+      ><a name="1034" class="Comment"
+      >{- Equivalence for spans with proofs that the equivalence swaps the
+ - injections -}</a
+      ><a name="1118"
+      >
+</a
+      ><a name="1119" href="lib.types.PushoutFlip.html#1119" class="Function"
+      >Pushout-flip-equiv</a
+      ><a name="1137"
+      > </a
+      ><a name="1138" class="Symbol"
+      >:</a
+      ><a name="1139"
+      > </a
+      ><a name="1140" class="Symbol"
+      >&#8704;</a
+      ><a name="1141"
+      > </a
+      ><a name="1142" class="Symbol"
+      >{</a
+      ><a name="1143" href="lib.types.PushoutFlip.html#1143" class="Bound"
+      >i</a
+      ><a name="1144"
+      > </a
+      ><a name="1145" href="lib.types.PushoutFlip.html#1145" class="Bound"
+      >j</a
+      ><a name="1146"
+      > </a
+      ><a name="1147" href="lib.types.PushoutFlip.html#1147" class="Bound"
+      >k</a
+      ><a name="1148" class="Symbol"
+      >}</a
+      ><a name="1149"
+      > </a
+      ><a name="1150" class="Symbol"
+      >(</a
+      ><a name="1151" href="lib.types.PushoutFlip.html#1151" class="Bound"
+      >d</a
+      ><a name="1152"
+      > </a
+      ><a name="1153" class="Symbol"
+      >:</a
+      ><a name="1154"
+      > </a
+      ><a name="1155" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" class="Symbol"
+      >{</a
+      ><a name="1161" href="lib.types.PushoutFlip.html#1143" class="Bound"
+      >i</a
+      ><a name="1162" class="Symbol"
+      >}</a
+      ><a name="1163"
+      > </a
+      ><a name="1164" class="Symbol"
+      >{</a
+      ><a name="1165" href="lib.types.PushoutFlip.html#1145" class="Bound"
+      >j</a
+      ><a name="1166" class="Symbol"
+      >}</a
+      ><a name="1167"
+      > </a
+      ><a name="1168" class="Symbol"
+      >{</a
+      ><a name="1169" href="lib.types.PushoutFlip.html#1147" class="Bound"
+      >k</a
+      ><a name="1170" class="Symbol"
+      >})</a
+      ><a name="1172"
+      >
+  </a
+      ><a name="1175" class="Symbol"
+      >&#8594;</a
+      ><a name="1176"
+      > </a
+      ><a name="1177" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="1184"
+      > </a
+      ><a name="1185" href="lib.types.PushoutFlip.html#1151" class="Bound"
+      >d</a
+      ><a name="1186"
+      > </a
+      ><a name="1187" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="1196"
+      > </a
+      ><a name="1197" class="Symbol"
+      >(</a
+      ><a name="1198" href="lib.types.Span.html#2163" class="Function"
+      >Span-flip</a
+      ><a name="1207"
+      > </a
+      ><a name="1208" href="lib.types.PushoutFlip.html#1151" class="Bound"
+      >d</a
+      ><a name="1209" class="Symbol"
+      >)</a
+      ><a name="1210"
+      >
+</a
+      ><a name="1211" href="lib.types.PushoutFlip.html#1119" class="Function"
+      >Pushout-flip-equiv</a
+      ><a name="1229"
+      > </a
+      ><a name="1230" href="lib.types.PushoutFlip.html#1230" class="Bound"
+      >d</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" class="Symbol"
+      >=</a
+      ><a name="1233"
+      >
+  </a
+      ><a name="1236" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="1241"
+      > </a
+      ><a name="1242" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="1254"
+      > </a
+      ><a name="1255" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="1267"
+      >
+    </a
+      ><a name="1272" class="Symbol"
+      >(</a
+      ><a name="1273" href="lib.types.PushoutFlip.html#482" class="Function"
+      >Pushout-flip-involutive</a
+      ><a name="1296"
+      > </a
+      ><a name="1297" class="Symbol"
+      >(</a
+      ><a name="1298" href="lib.types.Span.html#2163" class="Function"
+      >Span-flip</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" href="lib.types.PushoutFlip.html#1230" class="Bound"
+      >d</a
+      ><a name="1309" class="Symbol"
+      >))</a
+      ><a name="1311"
+      >
+    </a
+      ><a name="1316" class="Symbol"
+      >(</a
+      ><a name="1317" href="lib.types.PushoutFlip.html#482" class="Function"
+      >Pushout-flip-involutive</a
+      ><a name="1340"
+      > </a
+      ><a name="1341" href="lib.types.PushoutFlip.html#1230" class="Bound"
+      >d</a
+      ><a name="1342" class="Symbol"
+      >)</a
+      ><a name="1343"
+      >
+  </a
+      ><a name="1346" class="Keyword"
+      >where</a
+      ><a name="1351"
+      > </a
+      ><a name="1352" class="Keyword"
+      >open</a
+      ><a name="1356"
+      > </a
+      ><a name="1357" href="lib.types.Span.html#193" class="Module"
+      >Span</a
+      ><a name="1361"
+      > </a
+      ><a name="1362" href="lib.types.PushoutFlip.html#1230" class="Bound"
+      >d</a
+      ><a name="1363"
+      >
+
+</a
+      ><a name="1365" class="Keyword"
+      >module</a
+      ><a name="1371"
+      > </a
+      ><a name="1372" href="lib.types.PushoutFlip.html#1372" class="Module"
+      >_</a
+      ><a name="1373"
+      > </a
+      ><a name="1374" class="Symbol"
+      >{</a
+      ><a name="1375" href="lib.types.PushoutFlip.html#1375" class="Bound"
+      >i</a
+      ><a name="1376"
+      > </a
+      ><a name="1377" href="lib.types.PushoutFlip.html#1377" class="Bound"
+      >j</a
+      ><a name="1378"
+      > </a
+      ><a name="1379" href="lib.types.PushoutFlip.html#1379" class="Bound"
+      >k</a
+      ><a name="1380" class="Symbol"
+      >}</a
+      ><a name="1381"
+      > </a
+      ><a name="1382" class="Symbol"
+      >(</a
+      ><a name="1383" href="lib.types.PushoutFlip.html#1383" class="Bound"
+      >ps</a
+      ><a name="1385"
+      > </a
+      ><a name="1386" class="Symbol"
+      >:</a
+      ><a name="1387"
+      > </a
+      ><a name="1388" href="lib.types.Span.html#1479" class="Record"
+      >&#8857;Span</a
+      ><a name="1393"
+      > </a
+      ><a name="1394" class="Symbol"
+      >{</a
+      ><a name="1395" href="lib.types.PushoutFlip.html#1375" class="Bound"
+      >i</a
+      ><a name="1396" class="Symbol"
+      >}</a
+      ><a name="1397"
+      > </a
+      ><a name="1398" class="Symbol"
+      >{</a
+      ><a name="1399" href="lib.types.PushoutFlip.html#1377" class="Bound"
+      >j</a
+      ><a name="1400" class="Symbol"
+      >}</a
+      ><a name="1401"
+      > </a
+      ><a name="1402" class="Symbol"
+      >{</a
+      ><a name="1403" href="lib.types.PushoutFlip.html#1379" class="Bound"
+      >k</a
+      ><a name="1404" class="Symbol"
+      >})</a
+      ><a name="1406"
+      > </a
+      ><a name="1407" class="Keyword"
+      >where</a
+      ><a name="1412"
+      >
+
+  </a
+      ><a name="1416" class="Keyword"
+      >open</a
+      ><a name="1420"
+      > </a
+      ><a name="1421" href="lib.types.Span.html#1479" class="Module"
+      >&#8857;Span</a
+      ><a name="1426"
+      > </a
+      ><a name="1427" href="lib.types.PushoutFlip.html#1383" class="Bound"
+      >ps</a
+      ><a name="1429"
+      >
+
+  </a
+      ><a name="1433" class="Keyword"
+      >private</a
+      ><a name="1440"
+      >
+    </a
+      ><a name="1445" href="lib.types.PushoutFlip.html#1445" class="Function"
+      >s</a
+      ><a name="1446"
+      > </a
+      ><a name="1447" class="Symbol"
+      >=</a
+      ><a name="1448"
+      > </a
+      ><a name="1449" href="lib.types.Span.html#1644" class="Function"
+      >&#8857;Span-to-Span</a
+      ><a name="1462"
+      > </a
+      ><a name="1463" href="lib.types.PushoutFlip.html#1383" class="Bound"
+      >ps</a
+      ><a name="1465"
+      >
+
+    </a
+      ><a name="1471" href="lib.types.PushoutFlip.html#1471" class="Function"
+      >preserves</a
+      ><a name="1480"
+      > </a
+      ><a name="1481" class="Symbol"
+      >:</a
+      ><a name="1482"
+      > </a
+      ><a name="1483" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="1485"
+      > </a
+      ><a name="1486" class="Symbol"
+      >(</a
+      ><a name="1487" href="lib.types.PushoutFlip.html#1119" class="Function"
+      >Pushout-flip-equiv</a
+      ><a name="1505"
+      > </a
+      ><a name="1506" href="lib.types.PushoutFlip.html#1445" class="Function"
+      >s</a
+      ><a name="1507" class="Symbol"
+      >)</a
+      ><a name="1508"
+      > </a
+      ><a name="1509" class="Symbol"
+      >(</a
+      ><a name="1510" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="1514"
+      > </a
+      ><a name="1515" class="Symbol"
+      >(</a
+      ><a name="1516" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1518"
+      > </a
+      ><a name="1519" href="lib.types.Span.html#1575" class="Field"
+      >X</a
+      ><a name="1520" class="Symbol"
+      >))</a
+      ><a name="1522"
+      > </a
+      ><a name="1523" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1525"
+      > </a
+      ><a name="1526" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="1530"
+      > </a
+      ><a name="1531" class="Symbol"
+      >(</a
+      ><a name="1532" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" href="lib.types.Span.html#1589" class="Field"
+      >Y</a
+      ><a name="1536" class="Symbol"
+      >)</a
+      ><a name="1537"
+      >
+    </a
+      ><a name="1542" href="lib.types.PushoutFlip.html#1471" class="Function"
+      >preserves</a
+      ><a name="1551"
+      > </a
+      ><a name="1552" class="Symbol"
+      >=</a
+      ><a name="1553"
+      > </a
+      ><a name="1554" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1557"
+      > </a
+      ><a name="1558" class="Symbol"
+      >(</a
+      ><a name="1559" href="lib.types.Pushout.html#3578" class="Function"
+      >&#8857;right</a
+      ><a name="1565"
+      > </a
+      ><a name="1566" class="Symbol"
+      >(</a
+      ><a name="1567" href="lib.types.Span.html#2268" class="Function"
+      >&#8857;Span-flip</a
+      ><a name="1577"
+      > </a
+      ><a name="1578" href="lib.types.PushoutFlip.html#1383" class="Bound"
+      >ps</a
+      ><a name="1580" class="Symbol"
+      >))</a
+      ><a name="1582"
+      >
+
+  </a
+      ><a name="1586" href="lib.types.PushoutFlip.html#1586" class="Function"
+      >&#8857;Pushout-flip</a
+      ><a name="1599"
+      > </a
+      ><a name="1600" class="Symbol"
+      >:</a
+      ><a name="1601"
+      > </a
+      ><a name="1602" href="lib.types.Pushout.html#3340" class="Function"
+      >&#8857;Pushout</a
+      ><a name="1610"
+      > </a
+      ><a name="1611" href="lib.types.PushoutFlip.html#1383" class="Bound"
+      >ps</a
+      ><a name="1613"
+      > </a
+      ><a name="1614" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1616"
+      > </a
+      ><a name="1617" href="lib.types.Pushout.html#3340" class="Function"
+      >&#8857;Pushout</a
+      ><a name="1625"
+      > </a
+      ><a name="1626" class="Symbol"
+      >(</a
+      ><a name="1627" href="lib.types.Span.html#2268" class="Function"
+      >&#8857;Span-flip</a
+      ><a name="1637"
+      > </a
+      ><a name="1638" href="lib.types.PushoutFlip.html#1383" class="Bound"
+      >ps</a
+      ><a name="1640" class="Symbol"
+      >)</a
+      ><a name="1641"
+      >
+  </a
+      ><a name="1644" href="lib.types.PushoutFlip.html#1586" class="Function"
+      >&#8857;Pushout-flip</a
+      ><a name="1657"
+      > </a
+      ><a name="1658" class="Symbol"
+      >=</a
+      ><a name="1659"
+      > </a
+      ><a name="1660" class="Symbol"
+      >(</a
+      ><a name="1661" href="lib.types.Pushout.html#1397" class="Function"
+      >PushoutFlip.f</a
+      ><a name="1674"
+      > </a
+      ><a name="1675" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1676"
+      > </a
+      ><a name="1677" href="lib.types.PushoutFlip.html#1471" class="Function"
+      >preserves</a
+      ><a name="1686" class="Symbol"
+      >)</a
+      ><a name="1687"
+      >
+
+  </a
+      ><a name="1691" class="Comment"
+      >{- action of [Pushout-flip] on [snd &#8857;right] -}</a
+      ><a name="1737"
+      >
+  </a
+      ><a name="1740" href="lib.types.PushoutFlip.html#1740" class="Function"
+      >ap-Pushout-flip-right-pt</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" class="Symbol"
+      >:</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1769"
+      > </a
+      ><a name="1770" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="1782"
+      > </a
+      ><a name="1783" class="Symbol"
+      >(</a
+      ><a name="1784" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1787"
+      > </a
+      ><a name="1788" class="Symbol"
+      >(</a
+      ><a name="1789" href="lib.types.Pushout.html#3578" class="Function"
+      >&#8857;right</a
+      ><a name="1795"
+      > </a
+      ><a name="1796" href="lib.types.PushoutFlip.html#1383" class="Bound"
+      >ps</a
+      ><a name="1798" class="Symbol"
+      >))</a
+      ><a name="1800"
+      >
+          </a
+      ><a name="1811" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1813"
+      > </a
+      ><a name="1814" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1815"
+      > </a
+      ><a name="1816" class="Symbol"
+      >(</a
+      ><a name="1817" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1820"
+      > </a
+      ><a name="1821" class="Symbol"
+      >(</a
+      ><a name="1822" href="lib.types.Pushout.html#3578" class="Function"
+      >&#8857;right</a
+      ><a name="1828"
+      > </a
+      ><a name="1829" class="Symbol"
+      >(</a
+      ><a name="1830" href="lib.types.Span.html#2268" class="Function"
+      >&#8857;Span-flip</a
+      ><a name="1840"
+      > </a
+      ><a name="1841" href="lib.types.PushoutFlip.html#1383" class="Bound"
+      >ps</a
+      ><a name="1843" class="Symbol"
+      >)))</a
+      ><a name="1846"
+      >
+  </a
+      ><a name="1849" href="lib.types.PushoutFlip.html#1740" class="Function"
+      >ap-Pushout-flip-right-pt</a
+      ><a name="1873"
+      > </a
+      ><a name="1874" class="Symbol"
+      >=</a
+      ><a name="1875"
+      > </a
+      ><a name="1876" href="lib.types.PushoutFlip.html#1900" class="Function"
+      >lemma</a
+      ><a name="1881"
+      > </a
+      ><a name="1882" href="lib.types.Span.html#1617" class="Field"
+      >f</a
+      ><a name="1883"
+      > </a
+      ><a name="1884" href="lib.types.Span.html#1632" class="Field"
+      >g</a
+      ><a name="1885"
+      >
+    </a
+      ><a name="1890" class="Keyword"
+      >where</a
+      ><a name="1895"
+      >
+    </a
+      ><a name="1900" href="lib.types.PushoutFlip.html#1900" class="Function"
+      >lemma</a
+      ><a name="1905"
+      > </a
+      ><a name="1906" class="Symbol"
+      >:</a
+      ><a name="1907"
+      > </a
+      ><a name="1908" class="Symbol"
+      >{</a
+      ><a name="1909" href="lib.types.PushoutFlip.html#1909" class="Bound"
+      >X</a
+      ><a name="1910"
+      > </a
+      ><a name="1911" class="Symbol"
+      >:</a
+      ><a name="1912"
+      > </a
+      ><a name="1913" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1916"
+      > </a
+      ><a name="1917" href="lib.types.PushoutFlip.html#1375" class="Bound"
+      >i</a
+      ><a name="1918" class="Symbol"
+      >}</a
+      ><a name="1919"
+      > </a
+      ><a name="1920" class="Symbol"
+      >{</a
+      ><a name="1921" href="lib.types.PushoutFlip.html#1921" class="Bound"
+      >Y</a
+      ><a name="1922"
+      > </a
+      ><a name="1923" class="Symbol"
+      >:</a
+      ><a name="1924"
+      > </a
+      ><a name="1925" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1928"
+      > </a
+      ><a name="1929" href="lib.types.PushoutFlip.html#1377" class="Bound"
+      >j</a
+      ><a name="1930" class="Symbol"
+      >}</a
+      ><a name="1931"
+      > </a
+      ><a name="1932" class="Symbol"
+      >{</a
+      ><a name="1933" href="lib.types.PushoutFlip.html#1933" class="Bound"
+      >Z</a
+      ><a name="1934"
+      > </a
+      ><a name="1935" class="Symbol"
+      >:</a
+      ><a name="1936"
+      > </a
+      ><a name="1937" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1940"
+      > </a
+      ><a name="1941" href="lib.types.PushoutFlip.html#1379" class="Bound"
+      >k</a
+      ><a name="1942" class="Symbol"
+      >}</a
+      ><a name="1943"
+      >
+            </a
+      ><a name="1956" class="Symbol"
+      >(</a
+      ><a name="1957" href="lib.types.PushoutFlip.html#1957" class="Bound"
+      >f</a
+      ><a name="1958"
+      > </a
+      ><a name="1959" class="Symbol"
+      >:</a
+      ><a name="1960"
+      > </a
+      ><a name="1961" href="lib.types.PushoutFlip.html#1933" class="Bound"
+      >Z</a
+      ><a name="1962"
+      > </a
+      ><a name="1963" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1965"
+      > </a
+      ><a name="1966" href="lib.types.PushoutFlip.html#1909" class="Bound"
+      >X</a
+      ><a name="1967" class="Symbol"
+      >)</a
+      ><a name="1968"
+      > </a
+      ><a name="1969" class="Symbol"
+      >(</a
+      ><a name="1970" href="lib.types.PushoutFlip.html#1970" class="Bound"
+      >g</a
+      ><a name="1971"
+      > </a
+      ><a name="1972" class="Symbol"
+      >:</a
+      ><a name="1973"
+      > </a
+      ><a name="1974" href="lib.types.PushoutFlip.html#1933" class="Bound"
+      >Z</a
+      ><a name="1975"
+      > </a
+      ><a name="1976" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1978"
+      > </a
+      ><a name="1979" href="lib.types.PushoutFlip.html#1921" class="Bound"
+      >Y</a
+      ><a name="1980" class="Symbol"
+      >)</a
+      ><a name="1981"
+      >
+          </a
+      ><a name="1992" class="Symbol"
+      >&#8594;</a
+      ><a name="1993"
+      > </a
+      ><a name="1994" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1996"
+      > </a
+      ><a name="1997" class="Symbol"
+      >(</a
+      ><a name="1998" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="2010"
+      > </a
+      ><a name="2011" class="Symbol"
+      >{</a
+      ><a name="2012" class="Argument"
+      >d</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" class="Symbol"
+      >=</a
+      ><a name="2015"
+      > </a
+      ><a name="2016" href="lib.types.Span.html#1644" class="Function"
+      >&#8857;Span-to-Span</a
+      ><a name="2029"
+      > </a
+      ><a name="2030" class="Symbol"
+      >(</a
+      ><a name="2031" href="lib.types.Span.html#1557" class="InductiveConstructor"
+      >&#8857;span</a
+      ><a name="2036"
+      > </a
+      ><a name="2037" href="lib.types.PushoutFlip.html#1909" class="Bound"
+      >X</a
+      ><a name="2038"
+      > </a
+      ><a name="2039" href="lib.types.PushoutFlip.html#1921" class="Bound"
+      >Y</a
+      ><a name="2040"
+      > </a
+      ><a name="2041" href="lib.types.PushoutFlip.html#1933" class="Bound"
+      >Z</a
+      ><a name="2042"
+      > </a
+      ><a name="2043" href="lib.types.PushoutFlip.html#1957" class="Bound"
+      >f</a
+      ><a name="2044"
+      > </a
+      ><a name="2045" href="lib.types.PushoutFlip.html#1970" class="Bound"
+      >g</a
+      ><a name="2046" class="Symbol"
+      >)})</a
+      ><a name="2049"
+      >
+              </a
+      ><a name="2064" class="Symbol"
+      >(</a
+      ><a name="2065" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2067"
+      > </a
+      ><a name="2068" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="2073"
+      > </a
+      ><a name="2074" class="Symbol"
+      >(</a
+      ><a name="2075" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2076"
+      > </a
+      ><a name="2077" class="Symbol"
+      >(</a
+      ><a name="2078" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2081"
+      > </a
+      ><a name="2082" href="lib.types.PushoutFlip.html#1970" class="Bound"
+      >g</a
+      ><a name="2083" class="Symbol"
+      >))</a
+      ><a name="2085"
+      > </a
+      ><a name="2086" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2087"
+      > </a
+      ><a name="2088" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2089"
+      > </a
+      ><a name="2090" class="Symbol"
+      >(</a
+      ><a name="2091" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2095"
+      > </a
+      ><a name="2096" class="Symbol"
+      >(</a
+      ><a name="2097" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2099"
+      > </a
+      ><a name="2100" href="lib.types.PushoutFlip.html#1933" class="Bound"
+      >Z</a
+      ><a name="2101" class="Symbol"
+      >))</a
+      ><a name="2103"
+      > </a
+      ><a name="2104" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2106"
+      > </a
+      ><a name="2107" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2109"
+      > </a
+      ><a name="2110" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="2114"
+      > </a
+      ><a name="2115" class="Symbol"
+      >(</a
+      ><a name="2116" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2119"
+      > </a
+      ><a name="2120" href="lib.types.PushoutFlip.html#1957" class="Bound"
+      >f</a
+      ><a name="2121" class="Symbol"
+      >))</a
+      ><a name="2123"
+      >
+         </a
+      ><a name="2133" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2135"
+      > </a
+      ><a name="2136" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2137"
+      > </a
+      ><a name="2138" class="Symbol"
+      >(</a
+      ><a name="2139" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2141"
+      > </a
+      ><a name="2142" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="2147"
+      > </a
+      ><a name="2148" class="Symbol"
+      >(</a
+      ><a name="2149" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2150"
+      > </a
+      ><a name="2151" class="Symbol"
+      >(</a
+      ><a name="2152" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2155"
+      > </a
+      ><a name="2156" href="lib.types.PushoutFlip.html#1957" class="Bound"
+      >f</a
+      ><a name="2157" class="Symbol"
+      >))</a
+      ><a name="2159"
+      > </a
+      ><a name="2160" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2161"
+      > </a
+      ><a name="2162" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2163"
+      > </a
+      ><a name="2164" class="Symbol"
+      >(</a
+      ><a name="2165" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2169"
+      > </a
+      ><a name="2170" class="Symbol"
+      >(</a
+      ><a name="2171" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2173"
+      > </a
+      ><a name="2174" href="lib.types.PushoutFlip.html#1933" class="Bound"
+      >Z</a
+      ><a name="2175" class="Symbol"
+      >))</a
+      ><a name="2177"
+      > </a
+      ><a name="2178" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2180"
+      > </a
+      ><a name="2181" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2183"
+      > </a
+      ><a name="2184" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="2188"
+      > </a
+      ><a name="2189" class="Symbol"
+      >(</a
+      ><a name="2190" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2193"
+      > </a
+      ><a name="2194" href="lib.types.PushoutFlip.html#1970" class="Bound"
+      >g</a
+      ><a name="2195" class="Symbol"
+      >))</a
+      ><a name="2197"
+      >
+    </a
+      ><a name="2202" href="lib.types.PushoutFlip.html#1900" class="Function"
+      >lemma</a
+      ><a name="2207"
+      > </a
+      ><a name="2208" class="Symbol"
+      >{</a
+      ><a name="2209" class="Argument"
+      >Z</a
+      ><a name="2210"
+      > </a
+      ><a name="2211" class="Symbol"
+      >=</a
+      ><a name="2212"
+      > </a
+      ><a name="2213" href="lib.types.PushoutFlip.html#2213" class="Bound"
+      >Z</a
+      ><a name="2214" class="Symbol"
+      >}</a
+      ><a name="2215"
+      > </a
+      ><a name="2216" class="Symbol"
+      >(</a
+      ><a name="2217" href="lib.types.PushoutFlip.html#2217" class="Bound"
+      >f</a
+      ><a name="2218"
+      > </a
+      ><a name="2219" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2220"
+      > </a
+      ><a name="2221" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2224" class="Symbol"
+      >)</a
+      ><a name="2225"
+      > </a
+      ><a name="2226" class="Symbol"
+      >(</a
+      ><a name="2227" href="lib.types.PushoutFlip.html#2227" class="Bound"
+      >g</a
+      ><a name="2228"
+      > </a
+      ><a name="2229" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2230"
+      > </a
+      ><a name="2231" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2234" class="Symbol"
+      >)</a
+      ><a name="2235"
+      > </a
+      ><a name="2236" class="Symbol"
+      >=</a
+      ><a name="2237"
+      >
+      </a
+      ><a name="2244" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2246"
+      > </a
+      ><a name="2247" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="2259"
+      > </a
+      ><a name="2260" class="Symbol"
+      >(</a
+      ><a name="2261" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2262"
+      > </a
+      ><a name="2263" class="Symbol"
+      >(</a
+      ><a name="2264" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2268"
+      > </a
+      ><a name="2269" class="Symbol"
+      >(</a
+      ><a name="2270" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2272"
+      > </a
+      ><a name="2273" href="lib.types.PushoutFlip.html#2213" class="Bound"
+      >Z</a
+      ><a name="2274" class="Symbol"
+      >)))</a
+      ><a name="2277"
+      >
+        </a
+      ><a name="2286" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2288"
+      > </a
+      ><a name="2289" href="lib.PathFunctor.html#291" class="Function"
+      >ap-!</a
+      ><a name="2293"
+      > </a
+      ><a name="2294" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="2306"
+      > </a
+      ><a name="2307" class="Symbol"
+      >(</a
+      ><a name="2308" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2312"
+      > </a
+      ><a name="2313" class="Symbol"
+      >(</a
+      ><a name="2314" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2316"
+      > </a
+      ><a name="2317" href="lib.types.PushoutFlip.html#2213" class="Bound"
+      >Z</a
+      ><a name="2318" class="Symbol"
+      >))</a
+      ><a name="2320"
+      > </a
+      ><a name="2321" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2322"
+      >
+      </a
+      ><a name="2329" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2330"
+      > </a
+      ><a name="2331" class="Symbol"
+      >(</a
+      ><a name="2332" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2334"
+      > </a
+      ><a name="2335" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="2347"
+      > </a
+      ><a name="2348" class="Symbol"
+      >(</a
+      ><a name="2349" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2353"
+      > </a
+      ><a name="2354" class="Symbol"
+      >(</a
+      ><a name="2355" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2357"
+      > </a
+      ><a name="2358" href="lib.types.PushoutFlip.html#2213" class="Bound"
+      >Z</a
+      ><a name="2359" class="Symbol"
+      >)))</a
+      ><a name="2362"
+      >
+        </a
+      ><a name="2371" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2373"
+      > </a
+      ><a name="2374" href="lib.types.Pushout.html#1428" class="Function"
+      >PushoutFlip.glue-&#946;</a
+      ><a name="2392"
+      > </a
+      ><a name="2393" class="Symbol"
+      >(</a
+      ><a name="2394" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2396"
+      > </a
+      ><a name="2397" href="lib.types.PushoutFlip.html#2213" class="Bound"
+      >Z</a
+      ><a name="2398" class="Symbol"
+      >)</a
+      ><a name="2399"
+      > </a
+      ><a name="2400" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="2407"
+      > </a
+      ><a name="2408" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2409"
+      > </a
+      ><a name="2410" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2411"
+      >
+      </a
+      ><a name="2418" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2419"
+      > </a
+      ><a name="2420" class="Symbol"
+      >(</a
+      ><a name="2421" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2422"
+      > </a
+      ><a name="2423" class="Symbol"
+      >(</a
+      ><a name="2424" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2428"
+      > </a
+      ><a name="2429" class="Symbol"
+      >(</a
+      ><a name="2430" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2432"
+      > </a
+      ><a name="2433" href="lib.types.PushoutFlip.html#2213" class="Bound"
+      >Z</a
+      ><a name="2434" class="Symbol"
+      >)))</a
+      ><a name="2437"
+      >
+        </a
+      ><a name="2446" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="2448"
+      >
+
+</a
+      ><a name="2450" class="Keyword"
+      >module</a
+      ><a name="2456"
+      > </a
+      ><a name="2457" href="lib.types.PushoutFlip.html#2457" class="Module"
+      >_</a
+      ><a name="2458"
+      > </a
+      ><a name="2459" class="Symbol"
+      >{</a
+      ><a name="2460" href="lib.types.PushoutFlip.html#2460" class="Bound"
+      >i</a
+      ><a name="2461"
+      > </a
+      ><a name="2462" href="lib.types.PushoutFlip.html#2462" class="Bound"
+      >j</a
+      ><a name="2463"
+      > </a
+      ><a name="2464" href="lib.types.PushoutFlip.html#2464" class="Bound"
+      >k</a
+      ><a name="2465" class="Symbol"
+      >}</a
+      ><a name="2466"
+      > </a
+      ><a name="2467" class="Symbol"
+      >(</a
+      ><a name="2468" href="lib.types.PushoutFlip.html#2468" class="Bound"
+      >ps</a
+      ><a name="2470"
+      > </a
+      ><a name="2471" class="Symbol"
+      >:</a
+      ><a name="2472"
+      > </a
+      ><a name="2473" href="lib.types.Span.html#1479" class="Record"
+      >&#8857;Span</a
+      ><a name="2478"
+      > </a
+      ><a name="2479" class="Symbol"
+      >{</a
+      ><a name="2480" href="lib.types.PushoutFlip.html#2460" class="Bound"
+      >i</a
+      ><a name="2481" class="Symbol"
+      >}</a
+      ><a name="2482"
+      > </a
+      ><a name="2483" class="Symbol"
+      >{</a
+      ><a name="2484" href="lib.types.PushoutFlip.html#2462" class="Bound"
+      >j</a
+      ><a name="2485" class="Symbol"
+      >}</a
+      ><a name="2486"
+      > </a
+      ><a name="2487" class="Symbol"
+      >{</a
+      ><a name="2488" href="lib.types.PushoutFlip.html#2464" class="Bound"
+      >k</a
+      ><a name="2489" class="Symbol"
+      >})</a
+      ><a name="2491"
+      > </a
+      ><a name="2492" class="Keyword"
+      >where</a
+      ><a name="2497"
+      >
+
+  </a
+      ><a name="2501" class="Keyword"
+      >open</a
+      ><a name="2505"
+      > </a
+      ><a name="2506" href="lib.types.Span.html#1479" class="Module"
+      >&#8857;Span</a
+      ><a name="2511"
+      > </a
+      ><a name="2512" href="lib.types.PushoutFlip.html#2468" class="Bound"
+      >ps</a
+      ><a name="2514"
+      >
+
+  </a
+      ><a name="2518" href="lib.types.PushoutFlip.html#2518" class="Function"
+      >&#8857;Pushout-flip-involutive</a
+      ><a name="2542"
+      > </a
+      ><a name="2543" class="Symbol"
+      >:</a
+      ><a name="2544"
+      > </a
+      ><a name="2545" class="Symbol"
+      >&#8704;</a
+      ><a name="2546"
+      > </a
+      ><a name="2547" class="Symbol"
+      >{</a
+      ><a name="2548" href="lib.types.PushoutFlip.html#2548" class="Bound"
+      >i</a
+      ><a name="2549"
+      > </a
+      ><a name="2550" href="lib.types.PushoutFlip.html#2550" class="Bound"
+      >j</a
+      ><a name="2551"
+      > </a
+      ><a name="2552" href="lib.types.PushoutFlip.html#2552" class="Bound"
+      >k</a
+      ><a name="2553" class="Symbol"
+      >}</a
+      ><a name="2554"
+      > </a
+      ><a name="2555" class="Symbol"
+      >(</a
+      ><a name="2556" href="lib.types.PushoutFlip.html#2556" class="Bound"
+      >ps</a
+      ><a name="2558"
+      > </a
+      ><a name="2559" class="Symbol"
+      >:</a
+      ><a name="2560"
+      > </a
+      ><a name="2561" href="lib.types.Span.html#1479" class="Record"
+      >&#8857;Span</a
+      ><a name="2566"
+      > </a
+      ><a name="2567" class="Symbol"
+      >{</a
+      ><a name="2568" href="lib.types.PushoutFlip.html#2548" class="Bound"
+      >i</a
+      ><a name="2569" class="Symbol"
+      >}</a
+      ><a name="2570"
+      > </a
+      ><a name="2571" class="Symbol"
+      >{</a
+      ><a name="2572" href="lib.types.PushoutFlip.html#2550" class="Bound"
+      >j</a
+      ><a name="2573" class="Symbol"
+      >}</a
+      ><a name="2574"
+      > </a
+      ><a name="2575" class="Symbol"
+      >{</a
+      ><a name="2576" href="lib.types.PushoutFlip.html#2552" class="Bound"
+      >k</a
+      ><a name="2577" class="Symbol"
+      >})</a
+      ><a name="2579"
+      >
+    </a
+      ><a name="2584" class="Symbol"
+      >&#8594;</a
+      ><a name="2585"
+      > </a
+      ><a name="2586" href="lib.types.PushoutFlip.html#1586" class="Function"
+      >&#8857;Pushout-flip</a
+      ><a name="2599"
+      > </a
+      ><a name="2600" class="Symbol"
+      >(</a
+      ><a name="2601" href="lib.types.Span.html#2268" class="Function"
+      >&#8857;Span-flip</a
+      ><a name="2611"
+      > </a
+      ><a name="2612" href="lib.types.PushoutFlip.html#2556" class="Bound"
+      >ps</a
+      ><a name="2614" class="Symbol"
+      >)</a
+      ><a name="2615"
+      > </a
+      ><a name="2616" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="2618"
+      > </a
+      ><a name="2619" href="lib.types.PushoutFlip.html#1586" class="Function"
+      >&#8857;Pushout-flip</a
+      ><a name="2632"
+      > </a
+      ><a name="2633" href="lib.types.PushoutFlip.html#2556" class="Bound"
+      >ps</a
+      ><a name="2635"
+      > </a
+      ><a name="2636" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2638"
+      > </a
+      ><a name="2639" href="lib.Base.html#10041" class="Function"
+      >&#8857;idf</a
+      ><a name="2643"
+      > </a
+      ><a name="2644" class="Symbol"
+      >_</a
+      ><a name="2645"
+      >
+  </a
+      ><a name="2648" href="lib.types.PushoutFlip.html#2518" class="Function"
+      >&#8857;Pushout-flip-involutive</a
+      ><a name="2672"
+      > </a
+      ><a name="2673" href="lib.types.PushoutFlip.html#2673" class="Bound"
+      >ps</a
+      ><a name="2675"
+      > </a
+      ><a name="2676" class="Symbol"
+      >=</a
+      ><a name="2677"
+      >
+    </a
+      ><a name="2682" href="lib.types.Pointed.html#438" class="Function"
+      >&#8857;&#955;=</a
+      ><a name="2685"
+      > </a
+      ><a name="2686" class="Symbol"
+      >(</a
+      ><a name="2687" href="lib.types.PushoutFlip.html#482" class="Function"
+      >Pushout-flip-involutive</a
+      ><a name="2710"
+      > </a
+      ><a name="2711" class="Symbol"
+      >_)</a
+      ><a name="2713"
+      > </a
+      ><a name="2714" href="lib.types.PushoutFlip.html#2734" class="Function"
+      >lemma</a
+      ><a name="2719"
+      >
+    </a
+      ><a name="2724" class="Keyword"
+      >where</a
+      ><a name="2729"
+      >
+    </a
+      ><a name="2734" href="lib.types.PushoutFlip.html#2734" class="Function"
+      >lemma</a
+      ><a name="2739"
+      > </a
+      ><a name="2740" class="Symbol"
+      >:</a
+      ><a name="2741"
+      >
+      </a
+      ><a name="2748" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2750"
+      > </a
+      ><a name="2751" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="2763"
+      > </a
+      ><a name="2764" class="Symbol"
+      >(</a
+      ><a name="2765" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2768"
+      > </a
+      ><a name="2769" class="Symbol"
+      >(</a
+      ><a name="2770" href="lib.types.Pushout.html#3578" class="Function"
+      >&#8857;right</a
+      ><a name="2776"
+      > </a
+      ><a name="2777" class="Symbol"
+      >(</a
+      ><a name="2778" href="lib.types.Span.html#2268" class="Function"
+      >&#8857;Span-flip</a
+      ><a name="2788"
+      > </a
+      ><a name="2789" href="lib.types.PushoutFlip.html#2673" class="Bound"
+      >ps</a
+      ><a name="2791" class="Symbol"
+      >)))</a
+      ><a name="2794"
+      > </a
+      ><a name="2795" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2796"
+      > </a
+      ><a name="2797" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2800"
+      > </a
+      ><a name="2801" class="Symbol"
+      >(</a
+      ><a name="2802" href="lib.types.Pushout.html#3578" class="Function"
+      >&#8857;right</a
+      ><a name="2808"
+      > </a
+      ><a name="2809" href="lib.types.PushoutFlip.html#2673" class="Bound"
+      >ps</a
+      ><a name="2811" class="Symbol"
+      >)</a
+      ><a name="2812"
+      >
+      </a
+      ><a name="2819" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2821"
+      > </a
+      ><a name="2822" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2825"
+      >
+    </a
+      ><a name="2830" href="lib.types.PushoutFlip.html#2734" class="Function"
+      >lemma</a
+      ><a name="2835"
+      > </a
+      ><a name="2836" class="Symbol"
+      >=</a
+      ><a name="2837"
+      >
+      </a
+      ><a name="2844" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2846"
+      > </a
+      ><a name="2847" href="lib.types.PushoutFlip.html#401" class="Function"
+      >Pushout-flip</a
+      ><a name="2859"
+      > </a
+      ><a name="2860" class="Symbol"
+      >(</a
+      ><a name="2861" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2864"
+      > </a
+      ><a name="2865" class="Symbol"
+      >(</a
+      ><a name="2866" href="lib.types.Pushout.html#3578" class="Function"
+      >&#8857;right</a
+      ><a name="2872"
+      > </a
+      ><a name="2873" class="Symbol"
+      >(</a
+      ><a name="2874" href="lib.types.Span.html#2268" class="Function"
+      >&#8857;Span-flip</a
+      ><a name="2884"
+      > </a
+      ><a name="2885" href="lib.types.PushoutFlip.html#2673" class="Bound"
+      >ps</a
+      ><a name="2887" class="Symbol"
+      >)))</a
+      ><a name="2890"
+      > </a
+      ><a name="2891" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2892"
+      > </a
+      ><a name="2893" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2896"
+      > </a
+      ><a name="2897" class="Symbol"
+      >(</a
+      ><a name="2898" href="lib.types.Pushout.html#3578" class="Function"
+      >&#8857;right</a
+      ><a name="2904"
+      > </a
+      ><a name="2905" href="lib.types.PushoutFlip.html#2673" class="Bound"
+      >ps</a
+      ><a name="2907" class="Symbol"
+      >)</a
+      ><a name="2908"
+      >
+        </a
+      ><a name="2917" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2919"
+      > </a
+      ><a name="2920" href="lib.types.PushoutFlip.html#1740" class="Function"
+      >ap-Pushout-flip-right-pt</a
+      ><a name="2944"
+      > </a
+      ><a name="2945" class="Symbol"
+      >(</a
+      ><a name="2946" href="lib.types.Span.html#2268" class="Function"
+      >&#8857;Span-flip</a
+      ><a name="2956"
+      > </a
+      ><a name="2957" href="lib.types.PushoutFlip.html#2673" class="Bound"
+      >ps</a
+      ><a name="2959" class="Symbol"
+      >)</a
+      ><a name="2960"
+      > </a
+      ><a name="2961" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="2968"
+      > </a
+      ><a name="2969" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >_&#8729;</a
+      ><a name="2971"
+      > </a
+      ><a name="2972" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2975"
+      > </a
+      ><a name="2976" class="Symbol"
+      >(</a
+      ><a name="2977" href="lib.types.Pushout.html#3578" class="Function"
+      >&#8857;right</a
+      ><a name="2983"
+      > </a
+      ><a name="2984" href="lib.types.PushoutFlip.html#2673" class="Bound"
+      >ps</a
+      ><a name="2986" class="Symbol"
+      >)</a
+      ><a name="2987"
+      > </a
+      ><a name="2988" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2989"
+      >
+      </a
+      ><a name="2996" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2997"
+      > </a
+      ><a name="2998" class="Symbol"
+      >(</a
+      ><a name="2999" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="3002"
+      > </a
+      ><a name="3003" class="Symbol"
+      >(</a
+      ><a name="3004" href="lib.types.Pushout.html#3578" class="Function"
+      >&#8857;right</a
+      ><a name="3010"
+      > </a
+      ><a name="3011" href="lib.types.PushoutFlip.html#2673" class="Bound"
+      >ps</a
+      ><a name="3013" class="Symbol"
+      >))</a
+      ><a name="3015"
+      > </a
+      ><a name="3016" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3017"
+      > </a
+      ><a name="3018" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="3021"
+      > </a
+      ><a name="3022" class="Symbol"
+      >(</a
+      ><a name="3023" href="lib.types.Pushout.html#3578" class="Function"
+      >&#8857;right</a
+      ><a name="3029"
+      > </a
+      ><a name="3030" href="lib.types.PushoutFlip.html#2673" class="Bound"
+      >ps</a
+      ><a name="3032" class="Symbol"
+      >)</a
+      ><a name="3033"
+      >
+        </a
+      ><a name="3042" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="3044"
+      > </a
+      ><a name="3045" href="lib.PathGroupoid.html#1268" class="Function"
+      >!-inv-l</a
+      ><a name="3052"
+      > </a
+      ><a name="3053" class="Symbol"
+      >(</a
+      ><a name="3054" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="3057"
+      > </a
+      ><a name="3058" class="Symbol"
+      >(</a
+      ><a name="3059" href="lib.types.Pushout.html#3578" class="Function"
+      >&#8857;right</a
+      ><a name="3065"
+      > </a
+      ><a name="3066" href="lib.types.PushoutFlip.html#2673" class="Bound"
+      >ps</a
+      ><a name="3068" class="Symbol"
+      >))</a
+      ><a name="3070"
+      > </a
+      ><a name="3071" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="3072"
+      >
+      </a
+      ><a name="3079" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3082"
+      >
+        </a
+      ><a name="3091" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="3093"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

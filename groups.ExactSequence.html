@@ -1,0 +1,1908 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >groups.ExactSequence</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Keyword"
+      >open</a
+      ><a name="5"
+      > </a
+      ><a name="6" class="Keyword"
+      >import</a
+      ><a name="12"
+      > </a
+      ><a name="13" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="17"
+      >
+</a
+      ><a name="18" class="Keyword"
+      >open</a
+      ><a name="22"
+      > </a
+      ><a name="23" class="Keyword"
+      >import</a
+      ><a name="29"
+      > </a
+      ><a name="30" href="groups.Exactness.html#1" class="Module"
+      >groups.Exactness</a
+      ><a name="46"
+      >
+</a
+      ><a name="47" class="Keyword"
+      >open</a
+      ><a name="51"
+      > </a
+      ><a name="52" class="Keyword"
+      >import</a
+      ><a name="58"
+      > </a
+      ><a name="59" href="groups.HomSequence.html#1" class="Module"
+      >groups.HomSequence</a
+      ><a name="77"
+      >
+
+</a
+      ><a name="79" class="Keyword"
+      >module</a
+      ><a name="85"
+      > </a
+      ><a name="86" href="groups.ExactSequence.html#1" class="Module"
+      >groups.ExactSequence</a
+      ><a name="106"
+      > </a
+      ><a name="107" class="Keyword"
+      >where</a
+      ><a name="112"
+      >
+
+</a
+      ><a name="114" href="groups.ExactSequence.html#114" class="Function"
+      >is-exact-seq</a
+      ><a name="126"
+      > </a
+      ><a name="127" class="Symbol"
+      >:</a
+      ><a name="128"
+      > </a
+      ><a name="129" class="Symbol"
+      >&#8704;</a
+      ><a name="130"
+      > </a
+      ><a name="131" class="Symbol"
+      >{</a
+      ><a name="132" href="groups.ExactSequence.html#132" class="Bound"
+      >i</a
+      ><a name="133" class="Symbol"
+      >}</a
+      ><a name="134"
+      > </a
+      ><a name="135" class="Symbol"
+      >{</a
+      ><a name="136" href="groups.ExactSequence.html#136" class="Bound"
+      >G</a
+      ><a name="137"
+      > </a
+      ><a name="138" href="groups.ExactSequence.html#138" class="Bound"
+      >H</a
+      ><a name="139"
+      > </a
+      ><a name="140" class="Symbol"
+      >:</a
+      ><a name="141"
+      > </a
+      ><a name="142" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="147"
+      > </a
+      ><a name="148" href="groups.ExactSequence.html#132" class="Bound"
+      >i</a
+      ><a name="149" class="Symbol"
+      >}</a
+      ><a name="150"
+      >
+  </a
+      ><a name="153" class="Symbol"
+      >&#8594;</a
+      ><a name="154"
+      > </a
+      ><a name="155" href="groups.HomSequence.html#131" class="Datatype"
+      >HomSequence</a
+      ><a name="166"
+      > </a
+      ><a name="167" href="groups.ExactSequence.html#136" class="Bound"
+      >G</a
+      ><a name="168"
+      > </a
+      ><a name="169" href="groups.ExactSequence.html#138" class="Bound"
+      >H</a
+      ><a name="170"
+      > </a
+      ><a name="171" class="Symbol"
+      >&#8594;</a
+      ><a name="172"
+      > </a
+      ><a name="173" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="177"
+      > </a
+      ><a name="178" href="groups.ExactSequence.html#132" class="Bound"
+      >i</a
+      ><a name="179"
+      >
+</a
+      ><a name="180" href="groups.ExactSequence.html#114" class="Function"
+      >is-exact-seq</a
+      ><a name="192"
+      > </a
+      ><a name="193" class="Symbol"
+      >(_</a
+      ><a name="195"
+      > </a
+      ><a name="196" href="groups.HomSequence.html#202" class="InductiveConstructor Operator"
+      >&#8867;|&#7475;</a
+      ><a name="199" class="Symbol"
+      >)</a
+      ><a name="200"
+      > </a
+      ><a name="201" class="Symbol"
+      >=</a
+      ><a name="202"
+      > </a
+      ><a name="203" href="lib.Base.html#6440" class="Record"
+      >Lift</a
+      ><a name="207"
+      > </a
+      ><a name="208" href="lib.Base.html#2859" class="Record"
+      >&#8868;</a
+      ><a name="209"
+      >
+</a
+      ><a name="210" href="groups.ExactSequence.html#114" class="Function"
+      >is-exact-seq</a
+      ><a name="222"
+      > </a
+      ><a name="223" class="Symbol"
+      >(_</a
+      ><a name="225"
+      > </a
+      ><a name="226" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="228"
+      > </a
+      ><a name="229" href="groups.ExactSequence.html#229" class="Bound"
+      >&#966;</a
+      ><a name="230"
+      > </a
+      ><a name="231" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="233"
+      > </a
+      ><a name="234" class="Symbol"
+      >_</a
+      ><a name="235"
+      > </a
+      ><a name="236" href="groups.HomSequence.html#202" class="InductiveConstructor Operator"
+      >&#8867;|&#7475;</a
+      ><a name="239" class="Symbol"
+      >)</a
+      ><a name="240"
+      > </a
+      ><a name="241" class="Symbol"
+      >=</a
+      ><a name="242"
+      > </a
+      ><a name="243" href="lib.Base.html#6440" class="Record"
+      >Lift</a
+      ><a name="247"
+      > </a
+      ><a name="248" href="lib.Base.html#2859" class="Record"
+      >&#8868;</a
+      ><a name="249"
+      >
+</a
+      ><a name="250" href="groups.ExactSequence.html#114" class="Function"
+      >is-exact-seq</a
+      ><a name="262"
+      > </a
+      ><a name="263" class="Symbol"
+      >(_</a
+      ><a name="265"
+      > </a
+      ><a name="266" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="268"
+      > </a
+      ><a name="269" href="groups.ExactSequence.html#269" class="Bound"
+      >&#966;</a
+      ><a name="270"
+      > </a
+      ><a name="271" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="273"
+      > </a
+      ><a name="274" class="Symbol"
+      >_</a
+      ><a name="275"
+      > </a
+      ><a name="276" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="278"
+      > </a
+      ><a name="279" href="groups.ExactSequence.html#279" class="Bound"
+      >&#968;</a
+      ><a name="280"
+      > </a
+      ><a name="281" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="283"
+      > </a
+      ><a name="284" href="groups.ExactSequence.html#284" class="Bound"
+      >seq</a
+      ><a name="287" class="Symbol"
+      >)</a
+      ><a name="288"
+      > </a
+      ><a name="289" class="Symbol"
+      >=</a
+      ><a name="290"
+      >
+  </a
+      ><a name="293" href="lib.groups.Homomorphism.html#9329" class="Record"
+      >is-exact</a
+      ><a name="301"
+      > </a
+      ><a name="302" href="groups.ExactSequence.html#269" class="Bound"
+      >&#966;</a
+      ><a name="303"
+      > </a
+      ><a name="304" href="groups.ExactSequence.html#279" class="Bound"
+      >&#968;</a
+      ><a name="305"
+      > </a
+      ><a name="306" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="307"
+      > </a
+      ><a name="308" href="groups.ExactSequence.html#114" class="Function"
+      >is-exact-seq</a
+      ><a name="320"
+      > </a
+      ><a name="321" class="Symbol"
+      >(_</a
+      ><a name="323"
+      > </a
+      ><a name="324" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="326"
+      > </a
+      ><a name="327" href="groups.ExactSequence.html#279" class="Bound"
+      >&#968;</a
+      ><a name="328"
+      > </a
+      ><a name="329" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="331"
+      > </a
+      ><a name="332" href="groups.ExactSequence.html#284" class="Bound"
+      >seq</a
+      ><a name="335" class="Symbol"
+      >)</a
+      ><a name="336"
+      >
+
+</a
+      ><a name="338" href="groups.ExactSequence.html#338" class="Function"
+      >ExactSequence</a
+      ><a name="351"
+      > </a
+      ><a name="352" class="Symbol"
+      >:</a
+      ><a name="353"
+      > </a
+      ><a name="354" class="Symbol"
+      >&#8704;</a
+      ><a name="355"
+      > </a
+      ><a name="356" class="Symbol"
+      >{</a
+      ><a name="357" href="groups.ExactSequence.html#357" class="Bound"
+      >i</a
+      ><a name="358" class="Symbol"
+      >}</a
+      ><a name="359"
+      > </a
+      ><a name="360" class="Symbol"
+      >(</a
+      ><a name="361" href="groups.ExactSequence.html#361" class="Bound"
+      >G</a
+      ><a name="362"
+      > </a
+      ><a name="363" href="groups.ExactSequence.html#363" class="Bound"
+      >H</a
+      ><a name="364"
+      > </a
+      ><a name="365" class="Symbol"
+      >:</a
+      ><a name="366"
+      > </a
+      ><a name="367" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="372"
+      > </a
+      ><a name="373" href="groups.ExactSequence.html#357" class="Bound"
+      >i</a
+      ><a name="374" class="Symbol"
+      >)</a
+      ><a name="375"
+      > </a
+      ><a name="376" class="Symbol"
+      >&#8594;</a
+      ><a name="377"
+      > </a
+      ><a name="378" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="382"
+      > </a
+      ><a name="383" class="Symbol"
+      >(</a
+      ><a name="384" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="389"
+      > </a
+      ><a name="390" href="groups.ExactSequence.html#357" class="Bound"
+      >i</a
+      ><a name="391" class="Symbol"
+      >)</a
+      ><a name="392"
+      >
+</a
+      ><a name="393" href="groups.ExactSequence.html#338" class="Function"
+      >ExactSequence</a
+      ><a name="406"
+      > </a
+      ><a name="407" href="groups.ExactSequence.html#407" class="Bound"
+      >G</a
+      ><a name="408"
+      > </a
+      ><a name="409" href="groups.ExactSequence.html#409" class="Bound"
+      >H</a
+      ><a name="410"
+      > </a
+      ><a name="411" class="Symbol"
+      >=</a
+      ><a name="412"
+      > </a
+      ><a name="413" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="414"
+      > </a
+      ><a name="415" class="Symbol"
+      >(</a
+      ><a name="416" href="groups.HomSequence.html#131" class="Datatype"
+      >HomSequence</a
+      ><a name="427"
+      > </a
+      ><a name="428" href="groups.ExactSequence.html#407" class="Bound"
+      >G</a
+      ><a name="429"
+      > </a
+      ><a name="430" href="groups.ExactSequence.html#409" class="Bound"
+      >H</a
+      ><a name="431" class="Symbol"
+      >)</a
+      ><a name="432"
+      > </a
+      ><a name="433" href="groups.ExactSequence.html#114" class="Function"
+      >is-exact-seq</a
+      ><a name="445"
+      >
+
+</a
+      ><a name="447" class="Comment"
+      >{- equivalences preserve exactness -}</a
+      ><a name="484"
+      >
+
+</a
+      ><a name="486" class="Keyword"
+      >abstract</a
+      ><a name="494"
+      >
+  </a
+      ><a name="497" href="groups.ExactSequence.html#497" class="Function"
+      >seq-equiv-preserves-exact</a
+      ><a name="522"
+      > </a
+      ><a name="523" class="Symbol"
+      >:</a
+      ><a name="524"
+      > </a
+      ><a name="525" class="Symbol"
+      >&#8704;</a
+      ><a name="526"
+      > </a
+      ><a name="527" class="Symbol"
+      >{</a
+      ><a name="528" href="groups.ExactSequence.html#528" class="Bound"
+      >i&#8320;</a
+      ><a name="530"
+      > </a
+      ><a name="531" href="groups.ExactSequence.html#531" class="Bound"
+      >i&#8321;</a
+      ><a name="533" class="Symbol"
+      >}</a
+      ><a name="534"
+      > </a
+      ><a name="535" class="Symbol"
+      >{</a
+      ><a name="536" href="groups.ExactSequence.html#536" class="Bound"
+      >G&#8320;</a
+      ><a name="538"
+      > </a
+      ><a name="539" href="groups.ExactSequence.html#539" class="Bound"
+      >H&#8320;</a
+      ><a name="541"
+      > </a
+      ><a name="542" class="Symbol"
+      >:</a
+      ><a name="543"
+      > </a
+      ><a name="544" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="549"
+      > </a
+      ><a name="550" href="groups.ExactSequence.html#528" class="Bound"
+      >i&#8320;</a
+      ><a name="552" class="Symbol"
+      >}</a
+      ><a name="553"
+      > </a
+      ><a name="554" class="Symbol"
+      >{</a
+      ><a name="555" href="groups.ExactSequence.html#555" class="Bound"
+      >G&#8321;</a
+      ><a name="557"
+      > </a
+      ><a name="558" href="groups.ExactSequence.html#558" class="Bound"
+      >H&#8321;</a
+      ><a name="560"
+      > </a
+      ><a name="561" class="Symbol"
+      >:</a
+      ><a name="562"
+      > </a
+      ><a name="563" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="568"
+      > </a
+      ><a name="569" href="groups.ExactSequence.html#531" class="Bound"
+      >i&#8321;</a
+      ><a name="571" class="Symbol"
+      >}</a
+      ><a name="572"
+      >
+    </a
+      ><a name="577" class="Symbol"
+      >{</a
+      ><a name="578" href="groups.ExactSequence.html#578" class="Bound"
+      >seq&#8320;</a
+      ><a name="582"
+      > </a
+      ><a name="583" class="Symbol"
+      >:</a
+      ><a name="584"
+      > </a
+      ><a name="585" href="groups.HomSequence.html#131" class="Datatype"
+      >HomSequence</a
+      ><a name="596"
+      > </a
+      ><a name="597" href="groups.ExactSequence.html#536" class="Bound"
+      >G&#8320;</a
+      ><a name="599"
+      > </a
+      ><a name="600" href="groups.ExactSequence.html#539" class="Bound"
+      >H&#8320;</a
+      ><a name="602" class="Symbol"
+      >}</a
+      ><a name="603"
+      > </a
+      ><a name="604" class="Symbol"
+      >{</a
+      ><a name="605" href="groups.ExactSequence.html#605" class="Bound"
+      >seq&#8321;</a
+      ><a name="609"
+      > </a
+      ><a name="610" class="Symbol"
+      >:</a
+      ><a name="611"
+      > </a
+      ><a name="612" href="groups.HomSequence.html#131" class="Datatype"
+      >HomSequence</a
+      ><a name="623"
+      > </a
+      ><a name="624" href="groups.ExactSequence.html#555" class="Bound"
+      >G&#8321;</a
+      ><a name="626"
+      > </a
+      ><a name="627" href="groups.ExactSequence.html#558" class="Bound"
+      >H&#8321;</a
+      ><a name="629" class="Symbol"
+      >}</a
+      ><a name="630"
+      >
+    </a
+      ><a name="635" class="Symbol"
+      >{</a
+      ><a name="636" href="groups.ExactSequence.html#636" class="Bound"
+      >&#958;G</a
+      ><a name="638"
+      > </a
+      ><a name="639" class="Symbol"
+      >:</a
+      ><a name="640"
+      > </a
+      ><a name="641" href="groups.ExactSequence.html#536" class="Bound"
+      >G&#8320;</a
+      ><a name="643"
+      > </a
+      ><a name="644" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="646"
+      > </a
+      ><a name="647" href="groups.ExactSequence.html#555" class="Bound"
+      >G&#8321;</a
+      ><a name="649" class="Symbol"
+      >}</a
+      ><a name="650"
+      > </a
+      ><a name="651" class="Symbol"
+      >{</a
+      ><a name="652" href="groups.ExactSequence.html#652" class="Bound"
+      >&#958;H</a
+      ><a name="654"
+      > </a
+      ><a name="655" class="Symbol"
+      >:</a
+      ><a name="656"
+      > </a
+      ><a name="657" href="groups.ExactSequence.html#539" class="Bound"
+      >H&#8320;</a
+      ><a name="659"
+      > </a
+      ><a name="660" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="662"
+      > </a
+      ><a name="663" href="groups.ExactSequence.html#558" class="Bound"
+      >H&#8321;</a
+      ><a name="665" class="Symbol"
+      >}</a
+      ><a name="666"
+      >
+    </a
+      ><a name="671" class="Symbol"
+      >&#8594;</a
+      ><a name="672"
+      > </a
+      ><a name="673" href="groups.HomSequence.html#3896" class="Function"
+      >HomSeqEquiv</a
+      ><a name="684"
+      > </a
+      ><a name="685" href="groups.ExactSequence.html#578" class="Bound"
+      >seq&#8320;</a
+      ><a name="689"
+      > </a
+      ><a name="690" href="groups.ExactSequence.html#605" class="Bound"
+      >seq&#8321;</a
+      ><a name="694"
+      > </a
+      ><a name="695" href="groups.ExactSequence.html#636" class="Bound"
+      >&#958;G</a
+      ><a name="697"
+      > </a
+      ><a name="698" href="groups.ExactSequence.html#652" class="Bound"
+      >&#958;H</a
+      ><a name="700"
+      >
+    </a
+      ><a name="705" class="Symbol"
+      >&#8594;</a
+      ><a name="706"
+      > </a
+      ><a name="707" href="groups.ExactSequence.html#114" class="Function"
+      >is-exact-seq</a
+      ><a name="719"
+      > </a
+      ><a name="720" href="groups.ExactSequence.html#578" class="Bound"
+      >seq&#8320;</a
+      ><a name="724"
+      > </a
+      ><a name="725" class="Symbol"
+      >&#8594;</a
+      ><a name="726"
+      > </a
+      ><a name="727" href="groups.ExactSequence.html#114" class="Function"
+      >is-exact-seq</a
+      ><a name="739"
+      > </a
+      ><a name="740" href="groups.ExactSequence.html#605" class="Bound"
+      >seq&#8321;</a
+      ><a name="744"
+      >
+  </a
+      ><a name="747" href="groups.ExactSequence.html#497" class="Function"
+      >seq-equiv-preserves-exact</a
+      ><a name="772"
+      > </a
+      ><a name="773" class="Symbol"
+      >((_</a
+      ><a name="776"
+      > </a
+      ><a name="777" href="groups.HomSequence.html#904" class="InductiveConstructor Operator"
+      >&#8595;|&#7475;</a
+      ><a name="780" class="Symbol"
+      >)</a
+      ><a name="781"
+      > </a
+      ><a name="782" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="783"
+      > </a
+      ><a name="784" class="Symbol"
+      >_)</a
+      ><a name="786"
+      > </a
+      ><a name="787" class="Symbol"
+      >_</a
+      ><a name="788"
+      > </a
+      ><a name="789" class="Symbol"
+      >=</a
+      ><a name="790"
+      > </a
+      ><a name="791" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="795"
+      > </a
+      ><a name="796" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="798"
+      >
+  </a
+      ><a name="801" href="groups.ExactSequence.html#497" class="Function"
+      >seq-equiv-preserves-exact</a
+      ><a name="826"
+      > </a
+      ><a name="827" class="Symbol"
+      >((_</a
+      ><a name="830"
+      > </a
+      ><a name="831" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#8595;&#10216;</a
+      ><a name="833"
+      > </a
+      ><a name="834" class="Symbol"
+      >_</a
+      ><a name="835"
+      > </a
+      ><a name="836" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="838"
+      > </a
+      ><a name="839" class="Symbol"
+      >_</a
+      ><a name="840"
+      > </a
+      ><a name="841" href="groups.HomSequence.html#904" class="InductiveConstructor Operator"
+      >&#8595;|&#7475;</a
+      ><a name="844" class="Symbol"
+      >)</a
+      ><a name="845"
+      > </a
+      ><a name="846" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="847"
+      > </a
+      ><a name="848" class="Symbol"
+      >_)</a
+      ><a name="850"
+      > </a
+      ><a name="851" class="Symbol"
+      >_</a
+      ><a name="852"
+      > </a
+      ><a name="853" class="Symbol"
+      >=</a
+      ><a name="854"
+      > </a
+      ><a name="855" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="859"
+      > </a
+      ><a name="860" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="862"
+      >
+  </a
+      ><a name="865" href="groups.ExactSequence.html#497" class="Function"
+      >seq-equiv-preserves-exact</a
+      ><a name="890"
+      >
+    </a
+      ><a name="895" class="Symbol"
+      >(</a
+      ><a name="896"
+      > </a
+      ><a name="897" class="Symbol"
+      >(</a
+      ><a name="898" href="groups.ExactSequence.html#898" class="Bound"
+      >&#958;G</a
+      ><a name="900"
+      > </a
+      ><a name="901" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#8595;&#10216;</a
+      ><a name="903"
+      > </a
+      ><a name="904" href="groups.ExactSequence.html#904" class="Bound"
+      >&#966;&#9633;</a
+      ><a name="906"
+      > </a
+      ><a name="907" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="909"
+      > </a
+      ><a name="910" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >_&#8595;&#10216;_&#10217;&#7475;_</a
+      ><a name="917"
+      > </a
+      ><a name="918" href="groups.ExactSequence.html#918" class="Bound"
+      >&#958;H</a
+      ><a name="920"
+      > </a
+      ><a name="921" class="Symbol"
+      >{</a
+      ><a name="922" href="groups.ExactSequence.html#922" class="Bound"
+      >&#958;K</a
+      ><a name="924" class="Symbol"
+      >}</a
+      ><a name="925"
+      > </a
+      ><a name="926" href="groups.ExactSequence.html#926" class="Bound"
+      >&#968;&#9633;</a
+      ><a name="928"
+      > </a
+      ><a name="929" href="groups.ExactSequence.html#929" class="Bound"
+      >seq-map</a
+      ><a name="936" class="Symbol"
+      >)</a
+      ><a name="937"
+      >
+    </a
+      ><a name="942" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="943"
+      > </a
+      ><a name="944" class="Symbol"
+      >(</a
+      ><a name="945" href="groups.ExactSequence.html#945" class="Bound"
+      >&#958;G-ise</a
+      ><a name="951"
+      > </a
+      ><a name="952" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="953"
+      > </a
+      ><a name="954" href="groups.ExactSequence.html#954" class="Bound"
+      >&#958;H-ise</a
+      ><a name="960"
+      > </a
+      ><a name="961" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="962"
+      > </a
+      ><a name="963" href="groups.ExactSequence.html#963" class="Bound"
+      >seq-map-ise</a
+      ><a name="974" class="Symbol"
+      >))</a
+      ><a name="976"
+      >
+    </a
+      ><a name="981" class="Symbol"
+      >(</a
+      ><a name="982" href="groups.ExactSequence.html#982" class="Bound"
+      >&#966;&#8320;-&#968;&#8320;-is-exact</a
+      ><a name="996"
+      > </a
+      ><a name="997" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="998"
+      > </a
+      ><a name="999" href="groups.ExactSequence.html#999" class="Bound"
+      >&#968;&#8320;-seq&#8320;-is-exact-seq</a
+      ><a name="1019" class="Symbol"
+      >)</a
+      ><a name="1020"
+      > </a
+      ><a name="1021" class="Symbol"
+      >=</a
+      ><a name="1022"
+      >
+      </a
+      ><a name="1029" href="groups.Exactness.html#12155" class="Function"
+      >equiv-preserves-exact</a
+      ><a name="1050"
+      >
+        </a
+      ><a name="1059" href="groups.ExactSequence.html#904" class="Bound"
+      >&#966;&#9633;</a
+      ><a name="1061"
+      > </a
+      ><a name="1062" href="groups.ExactSequence.html#926" class="Bound"
+      >&#968;&#9633;</a
+      ><a name="1064"
+      > </a
+      ><a name="1065" href="groups.ExactSequence.html#945" class="Bound"
+      >&#958;G-ise</a
+      ><a name="1071"
+      > </a
+      ><a name="1072" href="groups.ExactSequence.html#954" class="Bound"
+      >&#958;H-ise</a
+      ><a name="1078"
+      > </a
+      ><a name="1079" class="Symbol"
+      >(</a
+      ><a name="1080" href="groups.HomSequence.html#3807" class="Function"
+      >is-seq&#7475;-equiv.head</a
+      ><a name="1098"
+      > </a
+      ><a name="1099" href="groups.ExactSequence.html#963" class="Bound"
+      >seq-map-ise</a
+      ><a name="1110" class="Symbol"
+      >)</a
+      ><a name="1111"
+      >
+        </a
+      ><a name="1120" href="groups.ExactSequence.html#982" class="Bound"
+      >&#966;&#8320;-&#968;&#8320;-is-exact</a
+      ><a name="1134"
+      > </a
+      ><a name="1135" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1136"
+      >
+      </a
+      ><a name="1143" href="groups.ExactSequence.html#497" class="Function"
+      >seq-equiv-preserves-exact</a
+      ><a name="1168"
+      >
+        </a
+      ><a name="1177" class="Symbol"
+      >((</a
+      ><a name="1179" href="groups.ExactSequence.html#918" class="Bound"
+      >&#958;H</a
+      ><a name="1181"
+      > </a
+      ><a name="1182" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#8595;&#10216;</a
+      ><a name="1184"
+      > </a
+      ><a name="1185" href="groups.ExactSequence.html#926" class="Bound"
+      >&#968;&#9633;</a
+      ><a name="1187"
+      > </a
+      ><a name="1188" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" href="groups.ExactSequence.html#929" class="Bound"
+      >seq-map</a
+      ><a name="1198" class="Symbol"
+      >)</a
+      ><a name="1199"
+      > </a
+      ><a name="1200" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" class="Symbol"
+      >(</a
+      ><a name="1203" href="groups.ExactSequence.html#954" class="Bound"
+      >&#958;H-ise</a
+      ><a name="1209"
+      > </a
+      ><a name="1210" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1211"
+      > </a
+      ><a name="1212" href="groups.ExactSequence.html#963" class="Bound"
+      >seq-map-ise</a
+      ><a name="1223" class="Symbol"
+      >))</a
+      ><a name="1225"
+      >
+        </a
+      ><a name="1234" href="groups.ExactSequence.html#999" class="Bound"
+      >&#968;&#8320;-seq&#8320;-is-exact-seq</a
+      ><a name="1254"
+      >
+
+  </a
+      ><a name="1258" href="groups.ExactSequence.html#1258" class="Function"
+      >seq-equiv-preserves'-exact</a
+      ><a name="1284"
+      > </a
+      ><a name="1285" class="Symbol"
+      >:</a
+      ><a name="1286"
+      > </a
+      ><a name="1287" class="Symbol"
+      >&#8704;</a
+      ><a name="1288"
+      > </a
+      ><a name="1289" class="Symbol"
+      >{</a
+      ><a name="1290" href="groups.ExactSequence.html#1290" class="Bound"
+      >i</a
+      ><a name="1291" class="Symbol"
+      >}</a
+      ><a name="1292"
+      > </a
+      ><a name="1293" class="Symbol"
+      >{</a
+      ><a name="1294" href="groups.ExactSequence.html#1294" class="Bound"
+      >G&#8320;</a
+      ><a name="1296"
+      > </a
+      ><a name="1297" href="groups.ExactSequence.html#1297" class="Bound"
+      >G&#8321;</a
+      ><a name="1299"
+      > </a
+      ><a name="1300" href="groups.ExactSequence.html#1300" class="Bound"
+      >H&#8320;</a
+      ><a name="1302"
+      > </a
+      ><a name="1303" href="groups.ExactSequence.html#1303" class="Bound"
+      >H&#8321;</a
+      ><a name="1305"
+      > </a
+      ><a name="1306" class="Symbol"
+      >:</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1313"
+      > </a
+      ><a name="1314" href="groups.ExactSequence.html#1290" class="Bound"
+      >i</a
+      ><a name="1315" class="Symbol"
+      >}</a
+      ><a name="1316"
+      >
+    </a
+      ><a name="1321" class="Symbol"
+      >{</a
+      ><a name="1322" href="groups.ExactSequence.html#1322" class="Bound"
+      >seq&#8320;</a
+      ><a name="1326"
+      > </a
+      ><a name="1327" class="Symbol"
+      >:</a
+      ><a name="1328"
+      > </a
+      ><a name="1329" href="groups.HomSequence.html#131" class="Datatype"
+      >HomSequence</a
+      ><a name="1340"
+      > </a
+      ><a name="1341" href="groups.ExactSequence.html#1294" class="Bound"
+      >G&#8320;</a
+      ><a name="1343"
+      > </a
+      ><a name="1344" href="groups.ExactSequence.html#1300" class="Bound"
+      >H&#8320;</a
+      ><a name="1346" class="Symbol"
+      >}</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" class="Symbol"
+      >{</a
+      ><a name="1349" href="groups.ExactSequence.html#1349" class="Bound"
+      >seq&#8321;</a
+      ><a name="1353"
+      > </a
+      ><a name="1354" class="Symbol"
+      >:</a
+      ><a name="1355"
+      > </a
+      ><a name="1356" href="groups.HomSequence.html#131" class="Datatype"
+      >HomSequence</a
+      ><a name="1367"
+      > </a
+      ><a name="1368" href="groups.ExactSequence.html#1297" class="Bound"
+      >G&#8321;</a
+      ><a name="1370"
+      > </a
+      ><a name="1371" href="groups.ExactSequence.html#1303" class="Bound"
+      >H&#8321;</a
+      ><a name="1373" class="Symbol"
+      >}</a
+      ><a name="1374"
+      >
+    </a
+      ><a name="1379" class="Symbol"
+      >{</a
+      ><a name="1380" href="groups.ExactSequence.html#1380" class="Bound"
+      >&#958;G</a
+      ><a name="1382"
+      > </a
+      ><a name="1383" class="Symbol"
+      >:</a
+      ><a name="1384"
+      > </a
+      ><a name="1385" href="groups.ExactSequence.html#1294" class="Bound"
+      >G&#8320;</a
+      ><a name="1387"
+      > </a
+      ><a name="1388" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="1390"
+      > </a
+      ><a name="1391" href="groups.ExactSequence.html#1297" class="Bound"
+      >G&#8321;</a
+      ><a name="1393" class="Symbol"
+      >}</a
+      ><a name="1394"
+      > </a
+      ><a name="1395" class="Symbol"
+      >{</a
+      ><a name="1396" href="groups.ExactSequence.html#1396" class="Bound"
+      >&#958;H</a
+      ><a name="1398"
+      > </a
+      ><a name="1399" class="Symbol"
+      >:</a
+      ><a name="1400"
+      > </a
+      ><a name="1401" href="groups.ExactSequence.html#1300" class="Bound"
+      >H&#8320;</a
+      ><a name="1403"
+      > </a
+      ><a name="1404" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="1406"
+      > </a
+      ><a name="1407" href="groups.ExactSequence.html#1303" class="Bound"
+      >H&#8321;</a
+      ><a name="1409" class="Symbol"
+      >}</a
+      ><a name="1410"
+      >
+    </a
+      ><a name="1415" class="Symbol"
+      >&#8594;</a
+      ><a name="1416"
+      > </a
+      ><a name="1417" href="groups.HomSequence.html#3896" class="Function"
+      >HomSeqEquiv</a
+      ><a name="1428"
+      > </a
+      ><a name="1429" href="groups.ExactSequence.html#1322" class="Bound"
+      >seq&#8320;</a
+      ><a name="1433"
+      > </a
+      ><a name="1434" href="groups.ExactSequence.html#1349" class="Bound"
+      >seq&#8321;</a
+      ><a name="1438"
+      > </a
+      ><a name="1439" href="groups.ExactSequence.html#1380" class="Bound"
+      >&#958;G</a
+      ><a name="1441"
+      > </a
+      ><a name="1442" href="groups.ExactSequence.html#1396" class="Bound"
+      >&#958;H</a
+      ><a name="1444"
+      >
+    </a
+      ><a name="1449" class="Symbol"
+      >&#8594;</a
+      ><a name="1450"
+      > </a
+      ><a name="1451" href="groups.ExactSequence.html#114" class="Function"
+      >is-exact-seq</a
+      ><a name="1463"
+      > </a
+      ><a name="1464" href="groups.ExactSequence.html#1349" class="Bound"
+      >seq&#8321;</a
+      ><a name="1468"
+      > </a
+      ><a name="1469" class="Symbol"
+      >&#8594;</a
+      ><a name="1470"
+      > </a
+      ><a name="1471" href="groups.ExactSequence.html#114" class="Function"
+      >is-exact-seq</a
+      ><a name="1483"
+      > </a
+      ><a name="1484" href="groups.ExactSequence.html#1322" class="Bound"
+      >seq&#8320;</a
+      ><a name="1488"
+      >
+  </a
+      ><a name="1491" href="groups.ExactSequence.html#1258" class="Function"
+      >seq-equiv-preserves'-exact</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" href="groups.ExactSequence.html#1518" class="Bound"
+      >seq-equiv</a
+      ><a name="1527"
+      > </a
+      ><a name="1528" class="Symbol"
+      >=</a
+      ><a name="1529"
+      >
+    </a
+      ><a name="1534" href="groups.ExactSequence.html#497" class="Function"
+      >seq-equiv-preserves-exact</a
+      ><a name="1559"
+      > </a
+      ><a name="1560" class="Symbol"
+      >(</a
+      ><a name="1561" href="groups.HomSequence.html#4151" class="Function"
+      >HomSeqEquiv-inverse</a
+      ><a name="1580"
+      > </a
+      ><a name="1581" href="groups.ExactSequence.html#1518" class="Bound"
+      >seq-equiv</a
+      ><a name="1590" class="Symbol"
+      >)</a
+      ><a name="1591"
+      >
+
+</a
+      ><a name="1593" class="Keyword"
+      >private</a
+      ><a name="1600"
+      >
+  </a
+      ><a name="1603" href="groups.ExactSequence.html#1603" class="Function"
+      >exact-seq-index-type</a
+      ><a name="1623"
+      > </a
+      ><a name="1624" class="Symbol"
+      >:</a
+      ><a name="1625"
+      > </a
+      ><a name="1626" class="Symbol"
+      >&#8704;</a
+      ><a name="1627"
+      > </a
+      ><a name="1628" class="Symbol"
+      >{</a
+      ><a name="1629" href="groups.ExactSequence.html#1629" class="Bound"
+      >i</a
+      ><a name="1630" class="Symbol"
+      >}</a
+      ><a name="1631"
+      > </a
+      ><a name="1632" class="Symbol"
+      >{</a
+      ><a name="1633" href="groups.ExactSequence.html#1633" class="Bound"
+      >G</a
+      ><a name="1634"
+      > </a
+      ><a name="1635" href="groups.ExactSequence.html#1635" class="Bound"
+      >H</a
+      ><a name="1636"
+      > </a
+      ><a name="1637" class="Symbol"
+      >:</a
+      ><a name="1638"
+      > </a
+      ><a name="1639" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1644"
+      > </a
+      ><a name="1645" href="groups.ExactSequence.html#1629" class="Bound"
+      >i</a
+      ><a name="1646" class="Symbol"
+      >}</a
+      ><a name="1647"
+      > </a
+      ><a name="1648" class="Symbol"
+      >&#8594;</a
+      ><a name="1649"
+      > </a
+      ><a name="1650" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="1651"
+      > </a
+      ><a name="1652" class="Symbol"
+      >&#8594;</a
+      ><a name="1653"
+      > </a
+      ><a name="1654" href="groups.HomSequence.html#131" class="Datatype"
+      >HomSequence</a
+      ><a name="1665"
+      > </a
+      ><a name="1666" href="groups.ExactSequence.html#1633" class="Bound"
+      >G</a
+      ><a name="1667"
+      > </a
+      ><a name="1668" href="groups.ExactSequence.html#1635" class="Bound"
+      >H</a
+      ><a name="1669"
+      > </a
+      ><a name="1670" class="Symbol"
+      >&#8594;</a
+      ><a name="1671"
+      > </a
+      ><a name="1672" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1676"
+      > </a
+      ><a name="1677" href="groups.ExactSequence.html#1629" class="Bound"
+      >i</a
+      ><a name="1678"
+      >
+  </a
+      ><a name="1681" href="groups.ExactSequence.html#1603" class="Function"
+      >exact-seq-index-type</a
+      ><a name="1701"
+      > </a
+      ><a name="1702" class="Symbol"
+      >_</a
+      ><a name="1703"
+      > </a
+      ><a name="1704" class="Symbol"
+      >(</a
+      ><a name="1705" href="groups.ExactSequence.html#1705" class="Bound"
+      >G</a
+      ><a name="1706"
+      > </a
+      ><a name="1707" href="groups.HomSequence.html#202" class="InductiveConstructor Operator"
+      >&#8867;|&#7475;</a
+      ><a name="1710" class="Symbol"
+      >)</a
+      ><a name="1711"
+      > </a
+      ><a name="1712" class="Symbol"
+      >=</a
+      ><a name="1713"
+      > </a
+      ><a name="1714" href="lib.Base.html#6440" class="Record"
+      >Lift</a
+      ><a name="1718"
+      > </a
+      ><a name="1719" href="lib.Base.html#2859" class="Record"
+      >&#8868;</a
+      ><a name="1720"
+      >
+  </a
+      ><a name="1723" href="groups.ExactSequence.html#1603" class="Function"
+      >exact-seq-index-type</a
+      ><a name="1743"
+      > </a
+      ><a name="1744" class="Symbol"
+      >_</a
+      ><a name="1745"
+      > </a
+      ><a name="1746" class="Symbol"
+      >(</a
+      ><a name="1747" href="groups.ExactSequence.html#1747" class="Bound"
+      >G</a
+      ><a name="1748"
+      > </a
+      ><a name="1749" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="1751"
+      > </a
+      ><a name="1752" href="groups.ExactSequence.html#1752" class="Bound"
+      >&#966;</a
+      ><a name="1753"
+      > </a
+      ><a name="1754" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" href="groups.ExactSequence.html#1757" class="Bound"
+      >H</a
+      ><a name="1758"
+      > </a
+      ><a name="1759" href="groups.HomSequence.html#202" class="InductiveConstructor Operator"
+      >&#8867;|&#7475;</a
+      ><a name="1762" class="Symbol"
+      >)</a
+      ><a name="1763"
+      > </a
+      ><a name="1764" class="Symbol"
+      >=</a
+      ><a name="1765"
+      > </a
+      ><a name="1766" href="lib.Base.html#6440" class="Record"
+      >Lift</a
+      ><a name="1770"
+      > </a
+      ><a name="1771" href="lib.Base.html#2859" class="Record"
+      >&#8868;</a
+      ><a name="1772"
+      >
+  </a
+      ><a name="1775" href="groups.ExactSequence.html#1603" class="Function"
+      >exact-seq-index-type</a
+      ><a name="1795"
+      > </a
+      ><a name="1796" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="1797"
+      > </a
+      ><a name="1798" class="Symbol"
+      >(</a
+      ><a name="1799" href="groups.ExactSequence.html#1799" class="Bound"
+      >G</a
+      ><a name="1800"
+      > </a
+      ><a name="1801" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="1803"
+      > </a
+      ><a name="1804" href="groups.ExactSequence.html#1804" class="Bound"
+      >&#966;</a
+      ><a name="1805"
+      > </a
+      ><a name="1806" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="1808"
+      > </a
+      ><a name="1809" href="groups.ExactSequence.html#1809" class="Bound"
+      >H</a
+      ><a name="1810"
+      > </a
+      ><a name="1811" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="1813"
+      > </a
+      ><a name="1814" href="groups.ExactSequence.html#1814" class="Bound"
+      >&#968;</a
+      ><a name="1815"
+      > </a
+      ><a name="1816" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="1818"
+      > </a
+      ><a name="1819" href="groups.ExactSequence.html#1819" class="Bound"
+      >s</a
+      ><a name="1820" class="Symbol"
+      >)</a
+      ><a name="1821"
+      > </a
+      ><a name="1822" class="Symbol"
+      >=</a
+      ><a name="1823"
+      > </a
+      ><a name="1824" href="lib.groups.Homomorphism.html#9329" class="Record"
+      >is-exact</a
+      ><a name="1832"
+      > </a
+      ><a name="1833" href="groups.ExactSequence.html#1804" class="Bound"
+      >&#966;</a
+      ><a name="1834"
+      > </a
+      ><a name="1835" href="groups.ExactSequence.html#1814" class="Bound"
+      >&#968;</a
+      ><a name="1836"
+      >
+  </a
+      ><a name="1839" href="groups.ExactSequence.html#1603" class="Function"
+      >exact-seq-index-type</a
+      ><a name="1859"
+      > </a
+      ><a name="1860" class="Symbol"
+      >(</a
+      ><a name="1861" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1862"
+      > </a
+      ><a name="1863" href="groups.ExactSequence.html#1863" class="Bound"
+      >n</a
+      ><a name="1864" class="Symbol"
+      >)</a
+      ><a name="1865"
+      > </a
+      ><a name="1866" class="Symbol"
+      >(_</a
+      ><a name="1868"
+      > </a
+      ><a name="1869" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="1871"
+      > </a
+      ><a name="1872" class="Symbol"
+      >_</a
+      ><a name="1873"
+      > </a
+      ><a name="1874" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="1876"
+      > </a
+      ><a name="1877" href="groups.ExactSequence.html#1877" class="Bound"
+      >s</a
+      ><a name="1878" class="Symbol"
+      >)</a
+      ><a name="1879"
+      > </a
+      ><a name="1880" class="Symbol"
+      >=</a
+      ><a name="1881"
+      > </a
+      ><a name="1882" href="groups.ExactSequence.html#1603" class="Function"
+      >exact-seq-index-type</a
+      ><a name="1902"
+      > </a
+      ><a name="1903" href="groups.ExactSequence.html#1863" class="Bound"
+      >n</a
+      ><a name="1904"
+      > </a
+      ><a name="1905" href="groups.ExactSequence.html#1877" class="Bound"
+      >s</a
+      ><a name="1906"
+      >
+
+</a
+      ><a name="1908" class="Keyword"
+      >abstract</a
+      ><a name="1916"
+      >
+  </a
+      ><a name="1919" href="groups.ExactSequence.html#1919" class="Function"
+      >exact-seq-index</a
+      ><a name="1934"
+      > </a
+      ><a name="1935" class="Symbol"
+      >:</a
+      ><a name="1936"
+      > </a
+      ><a name="1937" class="Symbol"
+      >&#8704;</a
+      ><a name="1938"
+      > </a
+      ><a name="1939" class="Symbol"
+      >{</a
+      ><a name="1940" href="groups.ExactSequence.html#1940" class="Bound"
+      >i</a
+      ><a name="1941" class="Symbol"
+      >}</a
+      ><a name="1942"
+      > </a
+      ><a name="1943" class="Symbol"
+      >{</a
+      ><a name="1944" href="groups.ExactSequence.html#1944" class="Bound"
+      >G</a
+      ><a name="1945"
+      > </a
+      ><a name="1946" href="groups.ExactSequence.html#1946" class="Bound"
+      >H</a
+      ><a name="1947"
+      > </a
+      ><a name="1948" class="Symbol"
+      >:</a
+      ><a name="1949"
+      > </a
+      ><a name="1950" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1955"
+      > </a
+      ><a name="1956" href="groups.ExactSequence.html#1940" class="Bound"
+      >i</a
+      ><a name="1957" class="Symbol"
+      >}</a
+      ><a name="1958"
+      >
+    </a
+      ><a name="1963" class="Symbol"
+      >&#8594;</a
+      ><a name="1964"
+      > </a
+      ><a name="1965" class="Symbol"
+      >(</a
+      ><a name="1966" href="groups.ExactSequence.html#1966" class="Bound"
+      >n</a
+      ><a name="1967"
+      > </a
+      ><a name="1968" class="Symbol"
+      >:</a
+      ><a name="1969"
+      > </a
+      ><a name="1970" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="1971" class="Symbol"
+      >)</a
+      ><a name="1972"
+      > </a
+      ><a name="1973" class="Symbol"
+      >(</a
+      ><a name="1974" href="groups.ExactSequence.html#1974" class="Bound"
+      >seq</a
+      ><a name="1977"
+      > </a
+      ><a name="1978" class="Symbol"
+      >:</a
+      ><a name="1979"
+      > </a
+      ><a name="1980" href="groups.ExactSequence.html#338" class="Function"
+      >ExactSequence</a
+      ><a name="1993"
+      > </a
+      ><a name="1994" href="groups.ExactSequence.html#1944" class="Bound"
+      >G</a
+      ><a name="1995"
+      > </a
+      ><a name="1996" href="groups.ExactSequence.html#1946" class="Bound"
+      >H</a
+      ><a name="1997" class="Symbol"
+      >)</a
+      ><a name="1998"
+      >
+    </a
+      ><a name="2003" class="Symbol"
+      >&#8594;</a
+      ><a name="2004"
+      > </a
+      ><a name="2005" href="groups.ExactSequence.html#1603" class="Function"
+      >exact-seq-index-type</a
+      ><a name="2025"
+      > </a
+      ><a name="2026" href="groups.ExactSequence.html#1966" class="Bound"
+      >n</a
+      ><a name="2027"
+      > </a
+      ><a name="2028" class="Symbol"
+      >(</a
+      ><a name="2029" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="2032"
+      > </a
+      ><a name="2033" href="groups.ExactSequence.html#1974" class="Bound"
+      >seq</a
+      ><a name="2036" class="Symbol"
+      >)</a
+      ><a name="2037"
+      >
+  </a
+      ><a name="2040" href="groups.ExactSequence.html#1919" class="Function"
+      >exact-seq-index</a
+      ><a name="2055"
+      > </a
+      ><a name="2056" class="Symbol"
+      >_</a
+      ><a name="2057"
+      >     </a
+      ><a name="2062" class="Symbol"
+      >((</a
+      ><a name="2064" href="groups.ExactSequence.html#2064" class="Bound"
+      >G</a
+      ><a name="2065"
+      > </a
+      ><a name="2066" href="groups.HomSequence.html#202" class="InductiveConstructor Operator"
+      >&#8867;|&#7475;</a
+      ><a name="2069" class="Symbol"
+      >)</a
+      ><a name="2070"
+      > </a
+      ><a name="2071" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2072"
+      > </a
+      ><a name="2073" class="Symbol"
+      >_)</a
+      ><a name="2075"
+      > </a
+      ><a name="2076" class="Symbol"
+      >=</a
+      ><a name="2077"
+      > </a
+      ><a name="2078" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="2082"
+      > </a
+      ><a name="2083" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2085"
+      >
+  </a
+      ><a name="2088" href="groups.ExactSequence.html#1919" class="Function"
+      >exact-seq-index</a
+      ><a name="2103"
+      > </a
+      ><a name="2104" class="Symbol"
+      >_</a
+      ><a name="2105"
+      >     </a
+      ><a name="2110" class="Symbol"
+      >((</a
+      ><a name="2112" href="groups.ExactSequence.html#2112" class="Bound"
+      >G</a
+      ><a name="2113"
+      > </a
+      ><a name="2114" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="2116"
+      > </a
+      ><a name="2117" href="groups.ExactSequence.html#2117" class="Bound"
+      >&#966;</a
+      ><a name="2118"
+      > </a
+      ><a name="2119" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="2121"
+      > </a
+      ><a name="2122" href="groups.ExactSequence.html#2122" class="Bound"
+      >H</a
+      ><a name="2123"
+      > </a
+      ><a name="2124" href="groups.HomSequence.html#202" class="InductiveConstructor Operator"
+      >&#8867;|&#7475;</a
+      ><a name="2127" class="Symbol"
+      >)</a
+      ><a name="2128"
+      > </a
+      ><a name="2129" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2130"
+      > </a
+      ><a name="2131" class="Symbol"
+      >_)</a
+      ><a name="2133"
+      > </a
+      ><a name="2134" class="Symbol"
+      >=</a
+      ><a name="2135"
+      > </a
+      ><a name="2136" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="2140"
+      > </a
+      ><a name="2141" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2143"
+      >
+  </a
+      ><a name="2146" href="groups.ExactSequence.html#1919" class="Function"
+      >exact-seq-index</a
+      ><a name="2161"
+      > </a
+      ><a name="2162" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="2163"
+      >     </a
+      ><a name="2168" class="Symbol"
+      >((</a
+      ><a name="2170" href="groups.ExactSequence.html#2170" class="Bound"
+      >G</a
+      ><a name="2171"
+      > </a
+      ><a name="2172" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="2174"
+      > </a
+      ><a name="2175" href="groups.ExactSequence.html#2175" class="Bound"
+      >&#966;</a
+      ><a name="2176"
+      > </a
+      ><a name="2177" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="2179"
+      > </a
+      ><a name="2180" href="groups.ExactSequence.html#2180" class="Bound"
+      >H</a
+      ><a name="2181"
+      > </a
+      ><a name="2182" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="2184"
+      > </a
+      ><a name="2185" href="groups.ExactSequence.html#2185" class="Bound"
+      >&#968;</a
+      ><a name="2186"
+      > </a
+      ><a name="2187" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="2189"
+      > </a
+      ><a name="2190" href="groups.ExactSequence.html#2190" class="Bound"
+      >seq</a
+      ><a name="2193" class="Symbol"
+      >)</a
+      ><a name="2194"
+      > </a
+      ><a name="2195" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2196"
+      > </a
+      ><a name="2197" href="groups.ExactSequence.html#2197" class="Bound"
+      >ise-seq</a
+      ><a name="2204" class="Symbol"
+      >)</a
+      ><a name="2205"
+      > </a
+      ><a name="2206" class="Symbol"
+      >=</a
+      ><a name="2207"
+      > </a
+      ><a name="2208" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="2211"
+      > </a
+      ><a name="2212" href="groups.ExactSequence.html#2197" class="Bound"
+      >ise-seq</a
+      ><a name="2219"
+      >
+  </a
+      ><a name="2222" href="groups.ExactSequence.html#1919" class="Function"
+      >exact-seq-index</a
+      ><a name="2237"
+      > </a
+      ><a name="2238" class="Symbol"
+      >(</a
+      ><a name="2239" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2240"
+      > </a
+      ><a name="2241" href="groups.ExactSequence.html#2241" class="Bound"
+      >n</a
+      ><a name="2242" class="Symbol"
+      >)</a
+      ><a name="2243"
+      > </a
+      ><a name="2244" class="Symbol"
+      >((</a
+      ><a name="2246" href="groups.ExactSequence.html#2246" class="Bound"
+      >G</a
+      ><a name="2247"
+      > </a
+      ><a name="2248" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="2250"
+      > </a
+      ><a name="2251" href="groups.ExactSequence.html#2251" class="Bound"
+      >&#966;</a
+      ><a name="2252"
+      > </a
+      ><a name="2253" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="2255"
+      > </a
+      ><a name="2256" href="groups.ExactSequence.html#2256" class="Bound"
+      >H</a
+      ><a name="2257"
+      > </a
+      ><a name="2258" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="2260"
+      > </a
+      ><a name="2261" href="groups.ExactSequence.html#2261" class="Bound"
+      >&#968;</a
+      ><a name="2262"
+      > </a
+      ><a name="2263" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="2265"
+      > </a
+      ><a name="2266" href="groups.ExactSequence.html#2266" class="Bound"
+      >seq</a
+      ><a name="2269" class="Symbol"
+      >)</a
+      ><a name="2270"
+      > </a
+      ><a name="2271" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2272"
+      > </a
+      ><a name="2273" href="groups.ExactSequence.html#2273" class="Bound"
+      >ise-seq</a
+      ><a name="2280" class="Symbol"
+      >)</a
+      ><a name="2281"
+      > </a
+      ><a name="2282" class="Symbol"
+      >=</a
+      ><a name="2283"
+      >
+    </a
+      ><a name="2288" href="groups.ExactSequence.html#1919" class="Function"
+      >exact-seq-index</a
+      ><a name="2303"
+      > </a
+      ><a name="2304" href="groups.ExactSequence.html#2241" class="Bound"
+      >n</a
+      ><a name="2305"
+      > </a
+      ><a name="2306" class="Symbol"
+      >((</a
+      ><a name="2308" href="groups.ExactSequence.html#2256" class="Bound"
+      >H</a
+      ><a name="2309"
+      > </a
+      ><a name="2310" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="2312"
+      > </a
+      ><a name="2313" href="groups.ExactSequence.html#2261" class="Bound"
+      >&#968;</a
+      ><a name="2314"
+      > </a
+      ><a name="2315" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="2317"
+      > </a
+      ><a name="2318" href="groups.ExactSequence.html#2266" class="Bound"
+      >seq</a
+      ><a name="2321" class="Symbol"
+      >)</a
+      ><a name="2322"
+      > </a
+      ><a name="2323" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2324"
+      > </a
+      ><a name="2325" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2328"
+      > </a
+      ><a name="2329" href="groups.ExactSequence.html#2273" class="Bound"
+      >ise-seq</a
+      ><a name="2336" class="Symbol"
+      >)</a
+      ><a name="2337"
+      >
+
+</a
+      ><a name="2339" class="Comment"
+      >{-
+private
+  exact-build-arg-type : &#8704; {i} {G H : Group i} &#8594; HomSequence G H &#8594; List (Type i)
+  exact-build-arg-type (G &#8867;|) = nil
+  exact-build-arg-type (G &#10216; &#966; &#10217;&#8594; H &#8867;|) = nil
+  exact-build-arg-type (G &#10216; &#966; &#10217;&#8594; H &#10216; &#968; &#10217;&#8594; s) =
+    is-exact &#966; &#968; :: exact-build-arg-type (H &#10216; &#968; &#10217;&#8594; s)
+
+  exact-build-helper : &#8704; {i} {G H : Group i} (seq : HomSequence G H)
+    &#8594; HList (exact-build-arg-type seq) &#8594; is-exact-seq seq
+  exact-build-helper (G &#8867;|) nil = exact-seq-zero
+  exact-build-helper (G &#10216; &#966; &#10217;&#8594; H &#8867;|) nil = exact-seq-one
+  exact-build-helper (G &#10216; &#966; &#10217;&#8594; H &#10216; &#968; &#10217;&#8594; s) (ie :: ies) =
+    exact-seq-more ie (exact-build-helper (H &#10216; &#968; &#10217;&#8594; s) ies)
+
+exact-build : &#8704; {i} {G H : Group i} (seq : HomSequence G H)
+  &#8594; hlist-curry-type (exact-build-arg-type seq) (&#955; _ &#8594; is-exact-seq seq)
+exact-build seq = hlist-curry (exact-build-helper seq)
+
+hom-seq-concat : &#8704; {i} {G H K : Group i}
+  &#8594; HomSequence G H &#8594; HomSequence H K &#8594; HomSequence G K
+hom-seq-concat (G &#8867;|) s&#8322; = s&#8322;
+hom-seq-concat (G &#10216; &#966; &#10217;&#8594; s&#8321;) s&#8322; = G &#10216; &#966; &#10217;&#8594; (hom-seq-concat s&#8321; s&#8322;)
+
+abstract
+  exact-concat : &#8704; {i} {G H K L : Group i}
+    {seq&#8321; : HomSequence G H} {&#966; : H &#8594;&#7475; K} {seq&#8322; : HomSequence K L}
+    &#8594; is-exact-seq (hom-seq-snoc seq&#8321; &#966;) &#8594; is-exact-seq (H &#10216; &#966; &#10217;&#8594; seq&#8322;)
+    &#8594; is-exact-seq (hom-seq-concat seq&#8321; (H &#10216; &#966; &#10217;&#8594; seq&#8322;))
+  exact-concat {seq&#8321; = G &#8867;|} exact-seq-one es&#8322; = es&#8322;
+  exact-concat {seq&#8321; = G &#10216; &#968; &#10217;&#8594; H &#8867;|} (exact-seq-more ex _) es&#8322; =
+    exact-seq-more ex es&#8322;
+  exact-concat {seq&#8321; = G &#10216; &#968; &#10217;&#8594; H &#10216; &#967; &#10217;&#8594; s} (exact-seq-more ex es&#8321;) es&#8322; =
+    exact-seq-more ex (exact-concat {seq&#8321; = H &#10216; &#967; &#10217;&#8594; s} es&#8321; es&#8322;)
+-}</a
+      ><a name="3882"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

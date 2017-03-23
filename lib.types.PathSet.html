@@ -1,0 +1,6631 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.PathSet</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.TLevel.html#1" class="Module"
+      >lib.types.TLevel</a
+      ><a name="93"
+      >
+</a
+      ><a name="94" class="Keyword"
+      >open</a
+      ><a name="98"
+      > </a
+      ><a name="99" class="Keyword"
+      >import</a
+      ><a name="105"
+      > </a
+      ><a name="106" href="lib.types.Pi.html#1" class="Module"
+      >lib.types.Pi</a
+      ><a name="118"
+      >
+</a
+      ><a name="119" class="Keyword"
+      >open</a
+      ><a name="123"
+      > </a
+      ><a name="124" class="Keyword"
+      >import</a
+      ><a name="130"
+      > </a
+      ><a name="131" href="lib.types.Truncation.html#1" class="Module"
+      >lib.types.Truncation</a
+      ><a name="151"
+      >
+
+</a
+      ><a name="153" class="Comment"
+      >-- This module is dedicated to [Trunc 0 (x == y)]</a
+      ><a name="202"
+      >
+
+</a
+      ><a name="204" class="Keyword"
+      >module</a
+      ><a name="210"
+      > </a
+      ><a name="211" href="lib.types.PathSet.html#1" class="Module"
+      >lib.types.PathSet</a
+      ><a name="228"
+      > </a
+      ><a name="229" class="Keyword"
+      >where</a
+      ><a name="234"
+      >
+
+</a
+      ><a name="236" href="lib.types.PathSet.html#236" class="Function Operator"
+      >_=&#8320;_</a
+      ><a name="240"
+      > </a
+      ><a name="241" class="Symbol"
+      >:</a
+      ><a name="242"
+      > </a
+      ><a name="243" class="Symbol"
+      >&#8704;</a
+      ><a name="244"
+      > </a
+      ><a name="245" class="Symbol"
+      >{</a
+      ><a name="246" href="lib.types.PathSet.html#246" class="Bound"
+      >i</a
+      ><a name="247" class="Symbol"
+      >}</a
+      ><a name="248"
+      > </a
+      ><a name="249" class="Symbol"
+      >{</a
+      ><a name="250" href="lib.types.PathSet.html#250" class="Bound"
+      >A</a
+      ><a name="251"
+      > </a
+      ><a name="252" class="Symbol"
+      >:</a
+      ><a name="253"
+      > </a
+      ><a name="254" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="258"
+      > </a
+      ><a name="259" href="lib.types.PathSet.html#246" class="Bound"
+      >i</a
+      ><a name="260" class="Symbol"
+      >}</a
+      ><a name="261"
+      > </a
+      ><a name="262" class="Symbol"
+      >&#8594;</a
+      ><a name="263"
+      > </a
+      ><a name="264" href="lib.types.PathSet.html#250" class="Bound"
+      >A</a
+      ><a name="265"
+      > </a
+      ><a name="266" class="Symbol"
+      >&#8594;</a
+      ><a name="267"
+      > </a
+      ><a name="268" href="lib.types.PathSet.html#250" class="Bound"
+      >A</a
+      ><a name="269"
+      > </a
+      ><a name="270" class="Symbol"
+      >&#8594;</a
+      ><a name="271"
+      > </a
+      ><a name="272" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="276"
+      > </a
+      ><a name="277" href="lib.types.PathSet.html#246" class="Bound"
+      >i</a
+      ><a name="278"
+      >
+</a
+      ><a name="279" href="lib.types.PathSet.html#236" class="Function Operator"
+      >_=&#8320;_</a
+      ><a name="283"
+      > </a
+      ><a name="284" href="lib.types.PathSet.html#284" class="Bound"
+      >x</a
+      ><a name="285"
+      > </a
+      ><a name="286" href="lib.types.PathSet.html#286" class="Bound"
+      >y</a
+      ><a name="287"
+      > </a
+      ><a name="288" class="Symbol"
+      >=</a
+      ><a name="289"
+      > </a
+      ><a name="290" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="295"
+      > </a
+      ><a name="296" class="Number"
+      >0</a
+      ><a name="297"
+      > </a
+      ><a name="298" class="Symbol"
+      >(</a
+      ><a name="299" href="lib.types.PathSet.html#284" class="Bound"
+      >x</a
+      ><a name="300"
+      > </a
+      ><a name="301" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="303"
+      > </a
+      ><a name="304" href="lib.types.PathSet.html#286" class="Bound"
+      >y</a
+      ><a name="305" class="Symbol"
+      >)</a
+      ><a name="306"
+      >
+
+</a
+      ><a name="308" href="lib.types.PathSet.html#308" class="Function Operator"
+      >_=0_</a
+      ><a name="312"
+      > </a
+      ><a name="313" class="Symbol"
+      >:</a
+      ><a name="314"
+      > </a
+      ><a name="315" class="Symbol"
+      >&#8704;</a
+      ><a name="316"
+      > </a
+      ><a name="317" class="Symbol"
+      >{</a
+      ><a name="318" href="lib.types.PathSet.html#318" class="Bound"
+      >i</a
+      ><a name="319" class="Symbol"
+      >}</a
+      ><a name="320"
+      > </a
+      ><a name="321" class="Symbol"
+      >{</a
+      ><a name="322" href="lib.types.PathSet.html#322" class="Bound"
+      >A</a
+      ><a name="323"
+      > </a
+      ><a name="324" class="Symbol"
+      >:</a
+      ><a name="325"
+      > </a
+      ><a name="326" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="330"
+      > </a
+      ><a name="331" href="lib.types.PathSet.html#318" class="Bound"
+      >i</a
+      ><a name="332" class="Symbol"
+      >}</a
+      ><a name="333"
+      > </a
+      ><a name="334" class="Symbol"
+      >&#8594;</a
+      ><a name="335"
+      > </a
+      ><a name="336" href="lib.types.PathSet.html#322" class="Bound"
+      >A</a
+      ><a name="337"
+      > </a
+      ><a name="338" class="Symbol"
+      >&#8594;</a
+      ><a name="339"
+      > </a
+      ><a name="340" href="lib.types.PathSet.html#322" class="Bound"
+      >A</a
+      ><a name="341"
+      > </a
+      ><a name="342" class="Symbol"
+      >&#8594;</a
+      ><a name="343"
+      > </a
+      ><a name="344" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="348"
+      > </a
+      ><a name="349" href="lib.types.PathSet.html#318" class="Bound"
+      >i</a
+      ><a name="350"
+      >
+</a
+      ><a name="351" href="lib.types.PathSet.html#308" class="Function Operator"
+      >_=0_</a
+      ><a name="355"
+      > </a
+      ><a name="356" class="Symbol"
+      >=</a
+      ><a name="357"
+      > </a
+      ><a name="358" href="lib.types.PathSet.html#236" class="Function Operator"
+      >_=&#8320;_</a
+      ><a name="362"
+      >
+
+</a
+      ><a name="364" class="Keyword"
+      >infixr</a
+      ><a name="370"
+      > </a
+      ><a name="371" class="Number"
+      >80</a
+      ><a name="373"
+      > </a
+      ><a name="374" href="lib.types.PathSet.html#393" class="Function Operator"
+      >_&#8729;&#8320;_</a
+      ><a name="378"
+      > </a
+      ><a name="379" href="lib.types.PathSet.html#482" class="Function Operator"
+      >_&#8729;&#8320;'_</a
+      ><a name="384"
+      > </a
+      ><a name="385" class="Comment"
+      >-- \.\0</a
+      ><a name="392"
+      >
+</a
+      ><a name="393" href="lib.types.PathSet.html#393" class="Function Operator"
+      >_&#8729;&#8320;_</a
+      ><a name="397"
+      > </a
+      ><a name="398" class="Symbol"
+      >:</a
+      ><a name="399"
+      > </a
+      ><a name="400" class="Symbol"
+      >&#8704;</a
+      ><a name="401"
+      > </a
+      ><a name="402" class="Symbol"
+      >{</a
+      ><a name="403" href="lib.types.PathSet.html#403" class="Bound"
+      >i</a
+      ><a name="404" class="Symbol"
+      >}</a
+      ><a name="405"
+      > </a
+      ><a name="406" class="Symbol"
+      >{</a
+      ><a name="407" href="lib.types.PathSet.html#407" class="Bound"
+      >A</a
+      ><a name="408"
+      > </a
+      ><a name="409" class="Symbol"
+      >:</a
+      ><a name="410"
+      > </a
+      ><a name="411" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="415"
+      > </a
+      ><a name="416" href="lib.types.PathSet.html#403" class="Bound"
+      >i</a
+      ><a name="417" class="Symbol"
+      >}</a
+      ><a name="418"
+      > </a
+      ><a name="419" class="Symbol"
+      >{</a
+      ><a name="420" href="lib.types.PathSet.html#420" class="Bound"
+      >x</a
+      ><a name="421"
+      > </a
+      ><a name="422" href="lib.types.PathSet.html#422" class="Bound"
+      >y</a
+      ><a name="423"
+      > </a
+      ><a name="424" href="lib.types.PathSet.html#424" class="Bound"
+      >z</a
+      ><a name="425"
+      > </a
+      ><a name="426" class="Symbol"
+      >:</a
+      ><a name="427"
+      > </a
+      ><a name="428" href="lib.types.PathSet.html#407" class="Bound"
+      >A</a
+      ><a name="429" class="Symbol"
+      >}</a
+      ><a name="430"
+      > </a
+      ><a name="431" class="Symbol"
+      >&#8594;</a
+      ><a name="432"
+      > </a
+      ><a name="433" href="lib.types.PathSet.html#420" class="Bound"
+      >x</a
+      ><a name="434"
+      > </a
+      ><a name="435" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="437"
+      > </a
+      ><a name="438" href="lib.types.PathSet.html#422" class="Bound"
+      >y</a
+      ><a name="439"
+      > </a
+      ><a name="440" class="Symbol"
+      >&#8594;</a
+      ><a name="441"
+      > </a
+      ><a name="442" href="lib.types.PathSet.html#422" class="Bound"
+      >y</a
+      ><a name="443"
+      > </a
+      ><a name="444" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="446"
+      > </a
+      ><a name="447" href="lib.types.PathSet.html#424" class="Bound"
+      >z</a
+      ><a name="448"
+      > </a
+      ><a name="449" class="Symbol"
+      >&#8594;</a
+      ><a name="450"
+      > </a
+      ><a name="451" href="lib.types.PathSet.html#420" class="Bound"
+      >x</a
+      ><a name="452"
+      > </a
+      ><a name="453" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="455"
+      > </a
+      ><a name="456" href="lib.types.PathSet.html#424" class="Bound"
+      >z</a
+      ><a name="457"
+      >
+</a
+      ><a name="458" href="lib.types.PathSet.html#393" class="Function Operator"
+      >_&#8729;&#8320;_</a
+      ><a name="462"
+      > </a
+      ><a name="463" class="Symbol"
+      >=</a
+      ><a name="464"
+      > </a
+      ><a name="465" href="lib.types.Truncation.html#6189" class="Function"
+      >Trunc-fmap2</a
+      ><a name="476"
+      > </a
+      ><a name="477" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >_&#8729;_</a
+      ><a name="480"
+      >
+
+</a
+      ><a name="482" href="lib.types.PathSet.html#482" class="Function Operator"
+      >_&#8729;&#8320;'_</a
+      ><a name="487"
+      > </a
+      ><a name="488" class="Symbol"
+      >:</a
+      ><a name="489"
+      > </a
+      ><a name="490" class="Symbol"
+      >&#8704;</a
+      ><a name="491"
+      > </a
+      ><a name="492" class="Symbol"
+      >{</a
+      ><a name="493" href="lib.types.PathSet.html#493" class="Bound"
+      >i</a
+      ><a name="494" class="Symbol"
+      >}</a
+      ><a name="495"
+      > </a
+      ><a name="496" class="Symbol"
+      >{</a
+      ><a name="497" href="lib.types.PathSet.html#497" class="Bound"
+      >A</a
+      ><a name="498"
+      > </a
+      ><a name="499" class="Symbol"
+      >:</a
+      ><a name="500"
+      > </a
+      ><a name="501" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="505"
+      > </a
+      ><a name="506" href="lib.types.PathSet.html#493" class="Bound"
+      >i</a
+      ><a name="507" class="Symbol"
+      >}</a
+      ><a name="508"
+      > </a
+      ><a name="509" class="Symbol"
+      >{</a
+      ><a name="510" href="lib.types.PathSet.html#510" class="Bound"
+      >x</a
+      ><a name="511"
+      > </a
+      ><a name="512" href="lib.types.PathSet.html#512" class="Bound"
+      >y</a
+      ><a name="513"
+      > </a
+      ><a name="514" href="lib.types.PathSet.html#514" class="Bound"
+      >z</a
+      ><a name="515"
+      > </a
+      ><a name="516" class="Symbol"
+      >:</a
+      ><a name="517"
+      > </a
+      ><a name="518" href="lib.types.PathSet.html#497" class="Bound"
+      >A</a
+      ><a name="519" class="Symbol"
+      >}</a
+      ><a name="520"
+      > </a
+      ><a name="521" class="Symbol"
+      >&#8594;</a
+      ><a name="522"
+      > </a
+      ><a name="523" href="lib.types.PathSet.html#510" class="Bound"
+      >x</a
+      ><a name="524"
+      > </a
+      ><a name="525" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="527"
+      > </a
+      ><a name="528" href="lib.types.PathSet.html#512" class="Bound"
+      >y</a
+      ><a name="529"
+      > </a
+      ><a name="530" class="Symbol"
+      >&#8594;</a
+      ><a name="531"
+      > </a
+      ><a name="532" href="lib.types.PathSet.html#512" class="Bound"
+      >y</a
+      ><a name="533"
+      > </a
+      ><a name="534" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="536"
+      > </a
+      ><a name="537" href="lib.types.PathSet.html#514" class="Bound"
+      >z</a
+      ><a name="538"
+      > </a
+      ><a name="539" class="Symbol"
+      >&#8594;</a
+      ><a name="540"
+      > </a
+      ><a name="541" href="lib.types.PathSet.html#510" class="Bound"
+      >x</a
+      ><a name="542"
+      > </a
+      ><a name="543" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="545"
+      > </a
+      ><a name="546" href="lib.types.PathSet.html#514" class="Bound"
+      >z</a
+      ><a name="547"
+      >
+</a
+      ><a name="548" href="lib.types.PathSet.html#482" class="Function Operator"
+      >_&#8729;&#8320;'_</a
+      ><a name="553"
+      > </a
+      ><a name="554" class="Symbol"
+      >=</a
+      ><a name="555"
+      > </a
+      ><a name="556" href="lib.types.Truncation.html#6189" class="Function"
+      >Trunc-fmap2</a
+      ><a name="567"
+      > </a
+      ><a name="568" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >_&#8729;'_</a
+      ><a name="572"
+      >
+
+</a
+      ><a name="574" href="lib.types.PathSet.html#574" class="Function"
+      >!&#8320;</a
+      ><a name="576"
+      > </a
+      ><a name="577" class="Symbol"
+      >:</a
+      ><a name="578"
+      > </a
+      ><a name="579" class="Symbol"
+      >&#8704;</a
+      ><a name="580"
+      > </a
+      ><a name="581" class="Symbol"
+      >{</a
+      ><a name="582" href="lib.types.PathSet.html#582" class="Bound"
+      >i</a
+      ><a name="583" class="Symbol"
+      >}</a
+      ><a name="584"
+      > </a
+      ><a name="585" class="Symbol"
+      >{</a
+      ><a name="586" href="lib.types.PathSet.html#586" class="Bound"
+      >A</a
+      ><a name="587"
+      > </a
+      ><a name="588" class="Symbol"
+      >:</a
+      ><a name="589"
+      > </a
+      ><a name="590" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="594"
+      > </a
+      ><a name="595" href="lib.types.PathSet.html#582" class="Bound"
+      >i</a
+      ><a name="596" class="Symbol"
+      >}</a
+      ><a name="597"
+      > </a
+      ><a name="598" class="Symbol"
+      >{</a
+      ><a name="599" href="lib.types.PathSet.html#599" class="Bound"
+      >x</a
+      ><a name="600"
+      > </a
+      ><a name="601" href="lib.types.PathSet.html#601" class="Bound"
+      >y</a
+      ><a name="602"
+      > </a
+      ><a name="603" class="Symbol"
+      >:</a
+      ><a name="604"
+      > </a
+      ><a name="605" href="lib.types.PathSet.html#586" class="Bound"
+      >A</a
+      ><a name="606" class="Symbol"
+      >}</a
+      ><a name="607"
+      > </a
+      ><a name="608" class="Symbol"
+      >&#8594;</a
+      ><a name="609"
+      > </a
+      ><a name="610" href="lib.types.PathSet.html#599" class="Bound"
+      >x</a
+      ><a name="611"
+      > </a
+      ><a name="612" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="614"
+      > </a
+      ><a name="615" href="lib.types.PathSet.html#601" class="Bound"
+      >y</a
+      ><a name="616"
+      > </a
+      ><a name="617" class="Symbol"
+      >&#8594;</a
+      ><a name="618"
+      > </a
+      ><a name="619" href="lib.types.PathSet.html#601" class="Bound"
+      >y</a
+      ><a name="620"
+      > </a
+      ><a name="621" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="623"
+      > </a
+      ><a name="624" href="lib.types.PathSet.html#599" class="Bound"
+      >x</a
+      ><a name="625"
+      >
+</a
+      ><a name="626" href="lib.types.PathSet.html#574" class="Function"
+      >!&#8320;</a
+      ><a name="628"
+      > </a
+      ><a name="629" class="Symbol"
+      >=</a
+      ><a name="630"
+      > </a
+      ><a name="631" href="lib.types.Truncation.html#6046" class="Function"
+      >Trunc-fmap</a
+      ><a name="641"
+      > </a
+      ><a name="642" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="643"
+      >
+
+</a
+      ><a name="645" href="lib.types.PathSet.html#645" class="Function"
+      >idp&#8320;</a
+      ><a name="649"
+      > </a
+      ><a name="650" class="Symbol"
+      >:</a
+      ><a name="651"
+      > </a
+      ><a name="652" class="Symbol"
+      >&#8704;</a
+      ><a name="653"
+      > </a
+      ><a name="654" class="Symbol"
+      >{</a
+      ><a name="655" href="lib.types.PathSet.html#655" class="Bound"
+      >i</a
+      ><a name="656" class="Symbol"
+      >}</a
+      ><a name="657"
+      > </a
+      ><a name="658" class="Symbol"
+      >{</a
+      ><a name="659" href="lib.types.PathSet.html#659" class="Bound"
+      >A</a
+      ><a name="660"
+      > </a
+      ><a name="661" class="Symbol"
+      >:</a
+      ><a name="662"
+      > </a
+      ><a name="663" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="667"
+      > </a
+      ><a name="668" href="lib.types.PathSet.html#655" class="Bound"
+      >i</a
+      ><a name="669" class="Symbol"
+      >}</a
+      ><a name="670"
+      > </a
+      ><a name="671" class="Symbol"
+      >{</a
+      ><a name="672" href="lib.types.PathSet.html#672" class="Bound"
+      >a</a
+      ><a name="673"
+      > </a
+      ><a name="674" class="Symbol"
+      >:</a
+      ><a name="675"
+      > </a
+      ><a name="676" href="lib.types.PathSet.html#659" class="Bound"
+      >A</a
+      ><a name="677" class="Symbol"
+      >}</a
+      ><a name="678"
+      > </a
+      ><a name="679" class="Symbol"
+      >&#8594;</a
+      ><a name="680"
+      > </a
+      ><a name="681" href="lib.types.PathSet.html#672" class="Bound"
+      >a</a
+      ><a name="682"
+      > </a
+      ><a name="683" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="685"
+      > </a
+      ><a name="686" href="lib.types.PathSet.html#672" class="Bound"
+      >a</a
+      ><a name="687"
+      >
+</a
+      ><a name="688" href="lib.types.PathSet.html#645" class="Function"
+      >idp&#8320;</a
+      ><a name="692"
+      > </a
+      ><a name="693" class="Symbol"
+      >=</a
+      ><a name="694"
+      > </a
+      ><a name="695" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="696"
+      > </a
+      ><a name="697" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="700"
+      > </a
+      ><a name="701" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="702"
+      >
+
+</a
+      ><a name="704" href="lib.types.PathSet.html#704" class="Function"
+      >ap&#8320;</a
+      ><a name="707"
+      > </a
+      ><a name="708" class="Symbol"
+      >:</a
+      ><a name="709"
+      > </a
+      ><a name="710" class="Symbol"
+      >&#8704;</a
+      ><a name="711"
+      > </a
+      ><a name="712" class="Symbol"
+      >{</a
+      ><a name="713" href="lib.types.PathSet.html#713" class="Bound"
+      >i</a
+      ><a name="714"
+      > </a
+      ><a name="715" href="lib.types.PathSet.html#715" class="Bound"
+      >j</a
+      ><a name="716" class="Symbol"
+      >}</a
+      ><a name="717"
+      > </a
+      ><a name="718" class="Symbol"
+      >{</a
+      ><a name="719" href="lib.types.PathSet.html#719" class="Bound"
+      >A</a
+      ><a name="720"
+      > </a
+      ><a name="721" class="Symbol"
+      >:</a
+      ><a name="722"
+      > </a
+      ><a name="723" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="727"
+      > </a
+      ><a name="728" href="lib.types.PathSet.html#713" class="Bound"
+      >i</a
+      ><a name="729" class="Symbol"
+      >}</a
+      ><a name="730"
+      > </a
+      ><a name="731" class="Symbol"
+      >{</a
+      ><a name="732" href="lib.types.PathSet.html#732" class="Bound"
+      >B</a
+      ><a name="733"
+      > </a
+      ><a name="734" class="Symbol"
+      >:</a
+      ><a name="735"
+      > </a
+      ><a name="736" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="740"
+      > </a
+      ><a name="741" href="lib.types.PathSet.html#715" class="Bound"
+      >j</a
+      ><a name="742" class="Symbol"
+      >}</a
+      ><a name="743"
+      > </a
+      ><a name="744" class="Symbol"
+      >{</a
+      ><a name="745" href="lib.types.PathSet.html#745" class="Bound"
+      >x</a
+      ><a name="746"
+      > </a
+      ><a name="747" href="lib.types.PathSet.html#747" class="Bound"
+      >y</a
+      ><a name="748"
+      > </a
+      ><a name="749" class="Symbol"
+      >:</a
+      ><a name="750"
+      > </a
+      ><a name="751" href="lib.types.PathSet.html#719" class="Bound"
+      >A</a
+      ><a name="752" class="Symbol"
+      >}</a
+      ><a name="753"
+      > </a
+      ><a name="754" class="Symbol"
+      >(</a
+      ><a name="755" href="lib.types.PathSet.html#755" class="Bound"
+      >f</a
+      ><a name="756"
+      > </a
+      ><a name="757" class="Symbol"
+      >:</a
+      ><a name="758"
+      > </a
+      ><a name="759" href="lib.types.PathSet.html#719" class="Bound"
+      >A</a
+      ><a name="760"
+      > </a
+      ><a name="761" class="Symbol"
+      >&#8594;</a
+      ><a name="762"
+      > </a
+      ><a name="763" href="lib.types.PathSet.html#732" class="Bound"
+      >B</a
+      ><a name="764" class="Symbol"
+      >)</a
+      ><a name="765"
+      >
+  </a
+      ><a name="768" class="Symbol"
+      >&#8594;</a
+      ><a name="769"
+      > </a
+      ><a name="770" href="lib.types.PathSet.html#745" class="Bound"
+      >x</a
+      ><a name="771"
+      > </a
+      ><a name="772" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="774"
+      > </a
+      ><a name="775" href="lib.types.PathSet.html#747" class="Bound"
+      >y</a
+      ><a name="776"
+      > </a
+      ><a name="777" class="Symbol"
+      >&#8594;</a
+      ><a name="778"
+      > </a
+      ><a name="779" href="lib.types.PathSet.html#755" class="Bound"
+      >f</a
+      ><a name="780"
+      > </a
+      ><a name="781" href="lib.types.PathSet.html#745" class="Bound"
+      >x</a
+      ><a name="782"
+      > </a
+      ><a name="783" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="785"
+      > </a
+      ><a name="786" href="lib.types.PathSet.html#755" class="Bound"
+      >f</a
+      ><a name="787"
+      > </a
+      ><a name="788" href="lib.types.PathSet.html#747" class="Bound"
+      >y</a
+      ><a name="789"
+      >
+</a
+      ><a name="790" href="lib.types.PathSet.html#704" class="Function"
+      >ap&#8320;</a
+      ><a name="793"
+      > </a
+      ><a name="794" href="lib.types.PathSet.html#794" class="Bound"
+      >f</a
+      ><a name="795"
+      > </a
+      ><a name="796" class="Symbol"
+      >=</a
+      ><a name="797"
+      > </a
+      ><a name="798" href="lib.types.Truncation.html#863" class="Function"
+      >Trunc-rec</a
+      ><a name="807"
+      > </a
+      ><a name="808" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="819"
+      > </a
+      ><a name="820" class="Symbol"
+      >(</a
+      ><a name="821" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[_]</a
+      ><a name="824"
+      > </a
+      ><a name="825" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="826"
+      > </a
+      ><a name="827" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="829"
+      > </a
+      ><a name="830" href="lib.types.PathSet.html#794" class="Bound"
+      >f</a
+      ><a name="831" class="Symbol"
+      >)</a
+      ><a name="832"
+      >
+
+</a
+      ><a name="834" href="lib.types.PathSet.html#834" class="Function"
+      >coe&#8320;</a
+      ><a name="838"
+      > </a
+      ><a name="839" class="Symbol"
+      >:</a
+      ><a name="840"
+      > </a
+      ><a name="841" class="Symbol"
+      >&#8704;</a
+      ><a name="842"
+      > </a
+      ><a name="843" class="Symbol"
+      >{</a
+      ><a name="844" href="lib.types.PathSet.html#844" class="Bound"
+      >i</a
+      ><a name="845" class="Symbol"
+      >}</a
+      ><a name="846"
+      > </a
+      ><a name="847" class="Symbol"
+      >{</a
+      ><a name="848" href="lib.types.PathSet.html#848" class="Bound"
+      >A</a
+      ><a name="849"
+      > </a
+      ><a name="850" href="lib.types.PathSet.html#850" class="Bound"
+      >B</a
+      ><a name="851"
+      > </a
+      ><a name="852" class="Symbol"
+      >:</a
+      ><a name="853"
+      > </a
+      ><a name="854" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="858"
+      > </a
+      ><a name="859" href="lib.types.PathSet.html#844" class="Bound"
+      >i</a
+      ><a name="860" class="Symbol"
+      >}</a
+      ><a name="861"
+      > </a
+      ><a name="862" class="Symbol"
+      >(</a
+      ><a name="863" href="lib.types.PathSet.html#863" class="Bound"
+      >_</a
+      ><a name="864"
+      > </a
+      ><a name="865" class="Symbol"
+      >:</a
+      ><a name="866"
+      > </a
+      ><a name="867" href="lib.NType.html#455" class="Function"
+      >is-set</a
+      ><a name="873"
+      > </a
+      ><a name="874" href="lib.types.PathSet.html#850" class="Bound"
+      >B</a
+      ><a name="875" class="Symbol"
+      >)</a
+      ><a name="876"
+      > </a
+      ><a name="877" class="Symbol"
+      >(</a
+      ><a name="878" href="lib.types.PathSet.html#878" class="Bound"
+      >p</a
+      ><a name="879"
+      > </a
+      ><a name="880" class="Symbol"
+      >:</a
+      ><a name="881"
+      > </a
+      ><a name="882" href="lib.types.PathSet.html#848" class="Bound"
+      >A</a
+      ><a name="883"
+      > </a
+      ><a name="884" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="886"
+      > </a
+      ><a name="887" href="lib.types.PathSet.html#850" class="Bound"
+      >B</a
+      ><a name="888" class="Symbol"
+      >)</a
+      ><a name="889"
+      > </a
+      ><a name="890" class="Symbol"
+      >&#8594;</a
+      ><a name="891"
+      > </a
+      ><a name="892" href="lib.types.PathSet.html#848" class="Bound"
+      >A</a
+      ><a name="893"
+      > </a
+      ><a name="894" class="Symbol"
+      >&#8594;</a
+      ><a name="895"
+      > </a
+      ><a name="896" href="lib.types.PathSet.html#850" class="Bound"
+      >B</a
+      ><a name="897"
+      >
+</a
+      ><a name="898" href="lib.types.PathSet.html#834" class="Function"
+      >coe&#8320;</a
+      ><a name="902"
+      > </a
+      ><a name="903" href="lib.types.PathSet.html#903" class="Bound"
+      >B-level</a
+      ><a name="910"
+      > </a
+      ><a name="911" class="Symbol"
+      >=</a
+      ><a name="912"
+      > </a
+      ><a name="913" href="lib.types.Truncation.html#863" class="Function"
+      >Trunc-rec</a
+      ><a name="922"
+      > </a
+      ><a name="923" class="Symbol"
+      >(</a
+      ><a name="924" href="lib.types.Pi.html#889" class="Function"
+      >&#8594;-is-set</a
+      ><a name="932"
+      > </a
+      ><a name="933" href="lib.types.PathSet.html#903" class="Bound"
+      >B-level</a
+      ><a name="940" class="Symbol"
+      >)</a
+      ><a name="941"
+      > </a
+      ><a name="942" href="lib.Base.html#4513" class="Function"
+      >coe</a
+      ><a name="945"
+      >
+
+</a
+      ><a name="947" href="lib.types.PathSet.html#947" class="Function"
+      >transport&#8320;</a
+      ><a name="957"
+      > </a
+      ><a name="958" class="Symbol"
+      >:</a
+      ><a name="959"
+      > </a
+      ><a name="960" class="Symbol"
+      >&#8704;</a
+      ><a name="961"
+      > </a
+      ><a name="962" class="Symbol"
+      >{</a
+      ><a name="963" href="lib.types.PathSet.html#963" class="Bound"
+      >i</a
+      ><a name="964"
+      > </a
+      ><a name="965" href="lib.types.PathSet.html#965" class="Bound"
+      >j</a
+      ><a name="966" class="Symbol"
+      >}</a
+      ><a name="967"
+      > </a
+      ><a name="968" class="Symbol"
+      >{</a
+      ><a name="969" href="lib.types.PathSet.html#969" class="Bound"
+      >A</a
+      ><a name="970"
+      > </a
+      ><a name="971" class="Symbol"
+      >:</a
+      ><a name="972"
+      > </a
+      ><a name="973" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="977"
+      > </a
+      ><a name="978" href="lib.types.PathSet.html#963" class="Bound"
+      >i</a
+      ><a name="979" class="Symbol"
+      >}</a
+      ><a name="980"
+      > </a
+      ><a name="981" class="Symbol"
+      >(</a
+      ><a name="982" href="lib.types.PathSet.html#982" class="Bound"
+      >B</a
+      ><a name="983"
+      > </a
+      ><a name="984" class="Symbol"
+      >:</a
+      ><a name="985"
+      > </a
+      ><a name="986" href="lib.types.PathSet.html#969" class="Bound"
+      >A</a
+      ><a name="987"
+      > </a
+      ><a name="988" class="Symbol"
+      >&#8594;</a
+      ><a name="989"
+      > </a
+      ><a name="990" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="994"
+      > </a
+      ><a name="995" href="lib.types.PathSet.html#965" class="Bound"
+      >j</a
+      ><a name="996" class="Symbol"
+      >)</a
+      ><a name="997"
+      > </a
+      ><a name="998" class="Symbol"
+      >{</a
+      ><a name="999" href="lib.types.PathSet.html#999" class="Bound"
+      >x</a
+      ><a name="1000"
+      > </a
+      ><a name="1001" href="lib.types.PathSet.html#1001" class="Bound"
+      >y</a
+      ><a name="1002"
+      > </a
+      ><a name="1003" class="Symbol"
+      >:</a
+      ><a name="1004"
+      > </a
+      ><a name="1005" href="lib.types.PathSet.html#969" class="Bound"
+      >A</a
+      ><a name="1006" class="Symbol"
+      >}</a
+      ><a name="1007"
+      >
+  </a
+      ><a name="1010" class="Symbol"
+      >(</a
+      ><a name="1011" href="lib.types.PathSet.html#1011" class="Bound"
+      >B-level</a
+      ><a name="1018"
+      > </a
+      ><a name="1019" class="Symbol"
+      >:</a
+      ><a name="1020"
+      > </a
+      ><a name="1021" href="lib.NType.html#455" class="Function"
+      >is-set</a
+      ><a name="1027"
+      > </a
+      ><a name="1028" class="Symbol"
+      >(</a
+      ><a name="1029" href="lib.types.PathSet.html#982" class="Bound"
+      >B</a
+      ><a name="1030"
+      > </a
+      ><a name="1031" href="lib.types.PathSet.html#1001" class="Bound"
+      >y</a
+      ><a name="1032" class="Symbol"
+      >))</a
+      ><a name="1034"
+      > </a
+      ><a name="1035" class="Symbol"
+      >(</a
+      ><a name="1036" href="lib.types.PathSet.html#1036" class="Bound"
+      >p</a
+      ><a name="1037"
+      > </a
+      ><a name="1038" class="Symbol"
+      >:</a
+      ><a name="1039"
+      > </a
+      ><a name="1040" href="lib.types.PathSet.html#999" class="Bound"
+      >x</a
+      ><a name="1041"
+      > </a
+      ><a name="1042" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="1044"
+      > </a
+      ><a name="1045" href="lib.types.PathSet.html#1001" class="Bound"
+      >y</a
+      ><a name="1046" class="Symbol"
+      >)</a
+      ><a name="1047"
+      > </a
+      ><a name="1048" class="Symbol"
+      >&#8594;</a
+      ><a name="1049"
+      > </a
+      ><a name="1050" class="Symbol"
+      >(</a
+      ><a name="1051" href="lib.types.PathSet.html#982" class="Bound"
+      >B</a
+      ><a name="1052"
+      > </a
+      ><a name="1053" href="lib.types.PathSet.html#999" class="Bound"
+      >x</a
+      ><a name="1054"
+      > </a
+      ><a name="1055" class="Symbol"
+      >&#8594;</a
+      ><a name="1056"
+      > </a
+      ><a name="1057" href="lib.types.PathSet.html#982" class="Bound"
+      >B</a
+      ><a name="1058"
+      > </a
+      ><a name="1059" href="lib.types.PathSet.html#1001" class="Bound"
+      >y</a
+      ><a name="1060" class="Symbol"
+      >)</a
+      ><a name="1061"
+      >
+</a
+      ><a name="1062" href="lib.types.PathSet.html#947" class="Function"
+      >transport&#8320;</a
+      ><a name="1072"
+      > </a
+      ><a name="1073" href="lib.types.PathSet.html#1073" class="Bound"
+      >B</a
+      ><a name="1074"
+      > </a
+      ><a name="1075" href="lib.types.PathSet.html#1075" class="Bound"
+      >B-level</a
+      ><a name="1082"
+      > </a
+      ><a name="1083" href="lib.types.PathSet.html#1083" class="Bound"
+      >p</a
+      ><a name="1084"
+      > </a
+      ><a name="1085" class="Symbol"
+      >=</a
+      ><a name="1086"
+      > </a
+      ><a name="1087" href="lib.types.PathSet.html#834" class="Function"
+      >coe&#8320;</a
+      ><a name="1091"
+      > </a
+      ><a name="1092" href="lib.types.PathSet.html#1075" class="Bound"
+      >B-level</a
+      ><a name="1099"
+      > </a
+      ><a name="1100" class="Symbol"
+      >(</a
+      ><a name="1101" href="lib.types.PathSet.html#704" class="Function"
+      >ap&#8320;</a
+      ><a name="1104"
+      > </a
+      ><a name="1105" href="lib.types.PathSet.html#1073" class="Bound"
+      >B</a
+      ><a name="1106"
+      > </a
+      ><a name="1107" href="lib.types.PathSet.html#1083" class="Bound"
+      >p</a
+      ><a name="1108" class="Symbol"
+      >)</a
+      ><a name="1109"
+      >
+
+</a
+      ><a name="1111" class="Keyword"
+      >module</a
+      ><a name="1117"
+      > </a
+      ><a name="1118" href="lib.types.PathSet.html#1118" class="Module"
+      >_</a
+      ><a name="1119"
+      > </a
+      ><a name="1120" class="Symbol"
+      >{</a
+      ><a name="1121" href="lib.types.PathSet.html#1121" class="Bound"
+      >i</a
+      ><a name="1122" class="Symbol"
+      >}</a
+      ><a name="1123"
+      > </a
+      ><a name="1124" class="Symbol"
+      >{</a
+      ><a name="1125" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="1126"
+      > </a
+      ><a name="1127" class="Symbol"
+      >:</a
+      ><a name="1128"
+      > </a
+      ><a name="1129" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1133"
+      > </a
+      ><a name="1134" href="lib.types.PathSet.html#1121" class="Bound"
+      >i</a
+      ><a name="1135" class="Symbol"
+      >}</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" class="Keyword"
+      >where</a
+      ><a name="1142"
+      >
+
+  </a
+      ><a name="1146" class="Keyword"
+      >abstract</a
+      ><a name="1154"
+      >
+    </a
+      ><a name="1159" href="lib.types.PathSet.html#1159" class="Function"
+      >&#8729;&#8320;=&#8729;&#8320;'</a
+      ><a name="1165"
+      > </a
+      ><a name="1166" class="Symbol"
+      >:</a
+      ><a name="1167"
+      > </a
+      ><a name="1168" class="Symbol"
+      >&#8704;</a
+      ><a name="1169"
+      > </a
+      ><a name="1170" class="Symbol"
+      >{</a
+      ><a name="1171" href="lib.types.PathSet.html#1171" class="Bound"
+      >x</a
+      ><a name="1172"
+      > </a
+      ><a name="1173" href="lib.types.PathSet.html#1173" class="Bound"
+      >y</a
+      ><a name="1174"
+      > </a
+      ><a name="1175" href="lib.types.PathSet.html#1175" class="Bound"
+      >z</a
+      ><a name="1176"
+      > </a
+      ><a name="1177" class="Symbol"
+      >:</a
+      ><a name="1178"
+      > </a
+      ><a name="1179" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="1180" class="Symbol"
+      >}</a
+      ><a name="1181"
+      > </a
+      ><a name="1182" class="Symbol"
+      >(</a
+      ><a name="1183" href="lib.types.PathSet.html#1183" class="Bound"
+      >p</a
+      ><a name="1184"
+      > </a
+      ><a name="1185" class="Symbol"
+      >:</a
+      ><a name="1186"
+      > </a
+      ><a name="1187" href="lib.types.PathSet.html#1171" class="Bound"
+      >x</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="1191"
+      > </a
+      ><a name="1192" href="lib.types.PathSet.html#1173" class="Bound"
+      >y</a
+      ><a name="1193" class="Symbol"
+      >)</a
+      ><a name="1194"
+      > </a
+      ><a name="1195" class="Symbol"
+      >(</a
+      ><a name="1196" href="lib.types.PathSet.html#1196" class="Bound"
+      >q</a
+      ><a name="1197"
+      > </a
+      ><a name="1198" class="Symbol"
+      >:</a
+      ><a name="1199"
+      > </a
+      ><a name="1200" href="lib.types.PathSet.html#1173" class="Bound"
+      >y</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="1204"
+      > </a
+      ><a name="1205" href="lib.types.PathSet.html#1175" class="Bound"
+      >z</a
+      ><a name="1206" class="Symbol"
+      >)</a
+      ><a name="1207"
+      >
+      </a
+      ><a name="1214" class="Symbol"
+      >&#8594;</a
+      ><a name="1215"
+      > </a
+      ><a name="1216" href="lib.types.PathSet.html#1183" class="Bound"
+      >p</a
+      ><a name="1217"
+      > </a
+      ><a name="1218" href="lib.types.PathSet.html#393" class="Function Operator"
+      >&#8729;&#8320;</a
+      ><a name="1220"
+      > </a
+      ><a name="1221" href="lib.types.PathSet.html#1196" class="Bound"
+      >q</a
+      ><a name="1222"
+      > </a
+      ><a name="1223" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1225"
+      > </a
+      ><a name="1226" href="lib.types.PathSet.html#1183" class="Bound"
+      >p</a
+      ><a name="1227"
+      > </a
+      ><a name="1228" href="lib.types.PathSet.html#482" class="Function Operator"
+      >&#8729;&#8320;'</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" href="lib.types.PathSet.html#1196" class="Bound"
+      >q</a
+      ><a name="1233"
+      >
+    </a
+      ><a name="1238" href="lib.types.PathSet.html#1159" class="Function"
+      >&#8729;&#8320;=&#8729;&#8320;'</a
+      ><a name="1244"
+      > </a
+      ><a name="1245" class="Symbol"
+      >=</a
+      ><a name="1246"
+      > </a
+      ><a name="1247" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="1257"
+      >
+      </a
+      ><a name="1264" class="Symbol"
+      >(&#955;</a
+      ><a name="1266"
+      > </a
+      ><a name="1267" href="lib.types.PathSet.html#1267" class="Bound"
+      >_</a
+      ><a name="1268"
+      > </a
+      ><a name="1269" class="Symbol"
+      >&#8594;</a
+      ><a name="1270"
+      > </a
+      ><a name="1271" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="1279"
+      > </a
+      ><a name="1280" class="Symbol"
+      >&#955;</a
+      ><a name="1281"
+      > </a
+      ><a name="1282" href="lib.types.PathSet.html#1282" class="Bound"
+      >_</a
+      ><a name="1283"
+      > </a
+      ><a name="1284" class="Symbol"
+      >&#8594;</a
+      ><a name="1285"
+      > </a
+      ><a name="1286" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="1301"
+      > </a
+      ><a name="1302" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="1313" class="Symbol"
+      >)</a
+      ><a name="1314"
+      >
+      </a
+      ><a name="1321" class="Symbol"
+      >(&#955;</a
+      ><a name="1323"
+      > </a
+      ><a name="1324" href="lib.types.PathSet.html#1324" class="Bound"
+      >p</a
+      ><a name="1325"
+      > </a
+      ><a name="1326" class="Symbol"
+      >&#8594;</a
+      ><a name="1327"
+      > </a
+      ><a name="1328" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="1338"
+      >
+        </a
+      ><a name="1347" class="Symbol"
+      >(&#955;</a
+      ><a name="1349"
+      > </a
+      ><a name="1350" href="lib.types.PathSet.html#1350" class="Bound"
+      >_</a
+      ><a name="1351"
+      > </a
+      ><a name="1352" class="Symbol"
+      >&#8594;</a
+      ><a name="1353"
+      > </a
+      ><a name="1354" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="1369"
+      > </a
+      ><a name="1370" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="1381" class="Symbol"
+      >)</a
+      ><a name="1382"
+      >
+        </a
+      ><a name="1391" class="Symbol"
+      >(&#955;</a
+      ><a name="1393"
+      > </a
+      ><a name="1394" href="lib.types.PathSet.html#1394" class="Bound"
+      >q</a
+      ><a name="1395"
+      > </a
+      ><a name="1396" class="Symbol"
+      >&#8594;</a
+      ><a name="1397"
+      > </a
+      ><a name="1398" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1400"
+      > </a
+      ><a name="1401" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[_]</a
+      ><a name="1404"
+      > </a
+      ><a name="1405" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1406"
+      > </a
+      ><a name="1407" href="lib.PathGroupoid.html#557" class="Function"
+      >&#8729;=&#8729;'</a
+      ><a name="1411"
+      > </a
+      ><a name="1412" href="lib.types.PathSet.html#1324" class="Bound"
+      >p</a
+      ><a name="1413"
+      > </a
+      ><a name="1414" href="lib.types.PathSet.html#1394" class="Bound"
+      >q</a
+      ><a name="1415" class="Symbol"
+      >))</a
+      ><a name="1417"
+      >
+
+    </a
+      ><a name="1423" href="lib.types.PathSet.html#1423" class="Function"
+      >&#8729;&#8320;'=&#8729;&#8320;</a
+      ><a name="1429"
+      > </a
+      ><a name="1430" class="Symbol"
+      >:</a
+      ><a name="1431"
+      > </a
+      ><a name="1432" class="Symbol"
+      >&#8704;</a
+      ><a name="1433"
+      > </a
+      ><a name="1434" class="Symbol"
+      >{</a
+      ><a name="1435" href="lib.types.PathSet.html#1435" class="Bound"
+      >x</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" href="lib.types.PathSet.html#1437" class="Bound"
+      >y</a
+      ><a name="1438"
+      > </a
+      ><a name="1439" href="lib.types.PathSet.html#1439" class="Bound"
+      >z</a
+      ><a name="1440"
+      > </a
+      ><a name="1441" class="Symbol"
+      >:</a
+      ><a name="1442"
+      > </a
+      ><a name="1443" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="1444" class="Symbol"
+      >}</a
+      ><a name="1445"
+      > </a
+      ><a name="1446" class="Symbol"
+      >(</a
+      ><a name="1447" href="lib.types.PathSet.html#1447" class="Bound"
+      >p</a
+      ><a name="1448"
+      > </a
+      ><a name="1449" class="Symbol"
+      >:</a
+      ><a name="1450"
+      > </a
+      ><a name="1451" href="lib.types.PathSet.html#1435" class="Bound"
+      >x</a
+      ><a name="1452"
+      > </a
+      ><a name="1453" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="1455"
+      > </a
+      ><a name="1456" href="lib.types.PathSet.html#1437" class="Bound"
+      >y</a
+      ><a name="1457" class="Symbol"
+      >)</a
+      ><a name="1458"
+      > </a
+      ><a name="1459" class="Symbol"
+      >(</a
+      ><a name="1460" href="lib.types.PathSet.html#1460" class="Bound"
+      >q</a
+      ><a name="1461"
+      > </a
+      ><a name="1462" class="Symbol"
+      >:</a
+      ><a name="1463"
+      > </a
+      ><a name="1464" href="lib.types.PathSet.html#1437" class="Bound"
+      >y</a
+      ><a name="1465"
+      > </a
+      ><a name="1466" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="1468"
+      > </a
+      ><a name="1469" href="lib.types.PathSet.html#1439" class="Bound"
+      >z</a
+      ><a name="1470" class="Symbol"
+      >)</a
+      ><a name="1471"
+      >
+      </a
+      ><a name="1478" class="Symbol"
+      >&#8594;</a
+      ><a name="1479"
+      > </a
+      ><a name="1480" href="lib.types.PathSet.html#1447" class="Bound"
+      >p</a
+      ><a name="1481"
+      > </a
+      ><a name="1482" href="lib.types.PathSet.html#482" class="Function Operator"
+      >&#8729;&#8320;'</a
+      ><a name="1485"
+      > </a
+      ><a name="1486" href="lib.types.PathSet.html#1460" class="Bound"
+      >q</a
+      ><a name="1487"
+      > </a
+      ><a name="1488" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1490"
+      > </a
+      ><a name="1491" href="lib.types.PathSet.html#1447" class="Bound"
+      >p</a
+      ><a name="1492"
+      > </a
+      ><a name="1493" href="lib.types.PathSet.html#393" class="Function Operator"
+      >&#8729;&#8320;</a
+      ><a name="1495"
+      > </a
+      ><a name="1496" href="lib.types.PathSet.html#1460" class="Bound"
+      >q</a
+      ><a name="1497"
+      >
+    </a
+      ><a name="1502" href="lib.types.PathSet.html#1423" class="Function"
+      >&#8729;&#8320;'=&#8729;&#8320;</a
+      ><a name="1508"
+      > </a
+      ><a name="1509" class="Symbol"
+      >=</a
+      ><a name="1510"
+      > </a
+      ><a name="1511" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="1521"
+      >
+      </a
+      ><a name="1528" class="Symbol"
+      >(&#955;</a
+      ><a name="1530"
+      > </a
+      ><a name="1531" href="lib.types.PathSet.html#1531" class="Bound"
+      >_</a
+      ><a name="1532"
+      > </a
+      ><a name="1533" class="Symbol"
+      >&#8594;</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="1543"
+      > </a
+      ><a name="1544" class="Symbol"
+      >&#955;</a
+      ><a name="1545"
+      > </a
+      ><a name="1546" href="lib.types.PathSet.html#1546" class="Bound"
+      >_</a
+      ><a name="1547"
+      > </a
+      ><a name="1548" class="Symbol"
+      >&#8594;</a
+      ><a name="1549"
+      > </a
+      ><a name="1550" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="1565"
+      > </a
+      ><a name="1566" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="1577" class="Symbol"
+      >)</a
+      ><a name="1578"
+      >
+      </a
+      ><a name="1585" class="Symbol"
+      >(&#955;</a
+      ><a name="1587"
+      > </a
+      ><a name="1588" href="lib.types.PathSet.html#1588" class="Bound"
+      >p</a
+      ><a name="1589"
+      > </a
+      ><a name="1590" class="Symbol"
+      >&#8594;</a
+      ><a name="1591"
+      > </a
+      ><a name="1592" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="1602"
+      >
+        </a
+      ><a name="1611" class="Symbol"
+      >(&#955;</a
+      ><a name="1613"
+      > </a
+      ><a name="1614" href="lib.types.PathSet.html#1614" class="Bound"
+      >_</a
+      ><a name="1615"
+      > </a
+      ><a name="1616" class="Symbol"
+      >&#8594;</a
+      ><a name="1617"
+      > </a
+      ><a name="1618" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="1633"
+      > </a
+      ><a name="1634" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="1645" class="Symbol"
+      >)</a
+      ><a name="1646"
+      >
+        </a
+      ><a name="1655" class="Symbol"
+      >(&#955;</a
+      ><a name="1657"
+      > </a
+      ><a name="1658" href="lib.types.PathSet.html#1658" class="Bound"
+      >q</a
+      ><a name="1659"
+      > </a
+      ><a name="1660" class="Symbol"
+      >&#8594;</a
+      ><a name="1661"
+      > </a
+      ><a name="1662" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1664"
+      > </a
+      ><a name="1665" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[_]</a
+      ><a name="1668"
+      > </a
+      ><a name="1669" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1670"
+      > </a
+      ><a name="1671" href="lib.PathGroupoid.html#648" class="Function"
+      >&#8729;'=&#8729;</a
+      ><a name="1675"
+      > </a
+      ><a name="1676" href="lib.types.PathSet.html#1588" class="Bound"
+      >p</a
+      ><a name="1677"
+      > </a
+      ><a name="1678" href="lib.types.PathSet.html#1658" class="Bound"
+      >q</a
+      ><a name="1679" class="Symbol"
+      >))</a
+      ><a name="1681"
+      >
+
+    </a
+      ><a name="1687" href="lib.types.PathSet.html#1687" class="Function"
+      >&#8729;&#8320;-unit-r</a
+      ><a name="1696"
+      > </a
+      ><a name="1697" class="Symbol"
+      >:</a
+      ><a name="1698"
+      > </a
+      ><a name="1699" class="Symbol"
+      >&#8704;</a
+      ><a name="1700"
+      > </a
+      ><a name="1701" class="Symbol"
+      >{</a
+      ><a name="1702" href="lib.types.PathSet.html#1702" class="Bound"
+      >x</a
+      ><a name="1703"
+      > </a
+      ><a name="1704" href="lib.types.PathSet.html#1704" class="Bound"
+      >y</a
+      ><a name="1705"
+      > </a
+      ><a name="1706" class="Symbol"
+      >:</a
+      ><a name="1707"
+      > </a
+      ><a name="1708" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="1709" class="Symbol"
+      >}</a
+      ><a name="1710"
+      > </a
+      ><a name="1711" class="Symbol"
+      >(</a
+      ><a name="1712" href="lib.types.PathSet.html#1712" class="Bound"
+      >q</a
+      ><a name="1713"
+      > </a
+      ><a name="1714" class="Symbol"
+      >:</a
+      ><a name="1715"
+      > </a
+      ><a name="1716" href="lib.types.PathSet.html#1702" class="Bound"
+      >x</a
+      ><a name="1717"
+      > </a
+      ><a name="1718" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="1720"
+      > </a
+      ><a name="1721" href="lib.types.PathSet.html#1704" class="Bound"
+      >y</a
+      ><a name="1722" class="Symbol"
+      >)</a
+      ><a name="1723"
+      > </a
+      ><a name="1724" class="Symbol"
+      >&#8594;</a
+      ><a name="1725"
+      > </a
+      ><a name="1726" class="Symbol"
+      >(</a
+      ><a name="1727" href="lib.types.PathSet.html#1712" class="Bound"
+      >q</a
+      ><a name="1728"
+      > </a
+      ><a name="1729" href="lib.types.PathSet.html#393" class="Function Operator"
+      >&#8729;&#8320;</a
+      ><a name="1731"
+      > </a
+      ><a name="1732" href="lib.types.PathSet.html#645" class="Function"
+      >idp&#8320;</a
+      ><a name="1736" class="Symbol"
+      >)</a
+      ><a name="1737"
+      > </a
+      ><a name="1738" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1740"
+      > </a
+      ><a name="1741" href="lib.types.PathSet.html#1712" class="Bound"
+      >q</a
+      ><a name="1742"
+      >
+    </a
+      ><a name="1747" href="lib.types.PathSet.html#1687" class="Function"
+      >&#8729;&#8320;-unit-r</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" class="Symbol"
+      >=</a
+      ><a name="1758"
+      > </a
+      ><a name="1759" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="1769"
+      >
+      </a
+      ><a name="1776" class="Symbol"
+      >(&#955;</a
+      ><a name="1778"
+      > </a
+      ><a name="1779" href="lib.types.PathSet.html#1779" class="Bound"
+      >_</a
+      ><a name="1780"
+      > </a
+      ><a name="1781" class="Symbol"
+      >&#8594;</a
+      ><a name="1782"
+      >  </a
+      ><a name="1784" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="1799"
+      > </a
+      ><a name="1800" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="1811" class="Symbol"
+      >)</a
+      ><a name="1812"
+      >
+      </a
+      ><a name="1819" class="Symbol"
+      >(&#955;</a
+      ><a name="1821"
+      > </a
+      ><a name="1822" href="lib.types.PathSet.html#1822" class="Bound"
+      >p</a
+      ><a name="1823"
+      > </a
+      ><a name="1824" class="Symbol"
+      >&#8594;</a
+      ><a name="1825"
+      > </a
+      ><a name="1826" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1828"
+      > </a
+      ><a name="1829" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[_]</a
+      ><a name="1832"
+      > </a
+      ><a name="1833" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1834"
+      > </a
+      ><a name="1835" href="lib.PathGroupoid.html#1041" class="Function"
+      >&#8729;-unit-r</a
+      ><a name="1843"
+      > </a
+      ><a name="1844" href="lib.types.PathSet.html#1822" class="Bound"
+      >p</a
+      ><a name="1845" class="Symbol"
+      >)</a
+      ><a name="1846"
+      >
+
+    </a
+      ><a name="1852" href="lib.types.PathSet.html#1852" class="Function"
+      >&#8729;&#8320;-unit-l</a
+      ><a name="1861"
+      > </a
+      ><a name="1862" class="Symbol"
+      >:</a
+      ><a name="1863"
+      > </a
+      ><a name="1864" class="Symbol"
+      >&#8704;</a
+      ><a name="1865"
+      > </a
+      ><a name="1866" class="Symbol"
+      >{</a
+      ><a name="1867" href="lib.types.PathSet.html#1867" class="Bound"
+      >x</a
+      ><a name="1868"
+      > </a
+      ><a name="1869" href="lib.types.PathSet.html#1869" class="Bound"
+      >y</a
+      ><a name="1870"
+      > </a
+      ><a name="1871" class="Symbol"
+      >:</a
+      ><a name="1872"
+      > </a
+      ><a name="1873" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="1874" class="Symbol"
+      >}</a
+      ><a name="1875"
+      > </a
+      ><a name="1876" class="Symbol"
+      >(</a
+      ><a name="1877" href="lib.types.PathSet.html#1877" class="Bound"
+      >q</a
+      ><a name="1878"
+      > </a
+      ><a name="1879" class="Symbol"
+      >:</a
+      ><a name="1880"
+      > </a
+      ><a name="1881" href="lib.types.PathSet.html#1867" class="Bound"
+      >x</a
+      ><a name="1882"
+      > </a
+      ><a name="1883" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" href="lib.types.PathSet.html#1869" class="Bound"
+      >y</a
+      ><a name="1887" class="Symbol"
+      >)</a
+      ><a name="1888"
+      > </a
+      ><a name="1889" class="Symbol"
+      >&#8594;</a
+      ><a name="1890"
+      > </a
+      ><a name="1891" class="Symbol"
+      >(</a
+      ><a name="1892" href="lib.types.PathSet.html#645" class="Function"
+      >idp&#8320;</a
+      ><a name="1896"
+      > </a
+      ><a name="1897" href="lib.types.PathSet.html#393" class="Function Operator"
+      >&#8729;&#8320;</a
+      ><a name="1899"
+      > </a
+      ><a name="1900" href="lib.types.PathSet.html#1877" class="Bound"
+      >q</a
+      ><a name="1901" class="Symbol"
+      >)</a
+      ><a name="1902"
+      > </a
+      ><a name="1903" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1905"
+      > </a
+      ><a name="1906" href="lib.types.PathSet.html#1877" class="Bound"
+      >q</a
+      ><a name="1907"
+      >
+    </a
+      ><a name="1912" href="lib.types.PathSet.html#1852" class="Function"
+      >&#8729;&#8320;-unit-l</a
+      ><a name="1921"
+      > </a
+      ><a name="1922" class="Symbol"
+      >=</a
+      ><a name="1923"
+      > </a
+      ><a name="1924" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="1934"
+      >
+      </a
+      ><a name="1941" class="Symbol"
+      >(&#955;</a
+      ><a name="1943"
+      > </a
+      ><a name="1944" href="lib.types.PathSet.html#1944" class="Bound"
+      >_</a
+      ><a name="1945"
+      > </a
+      ><a name="1946" class="Symbol"
+      >&#8594;</a
+      ><a name="1947"
+      >  </a
+      ><a name="1949" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="1964"
+      > </a
+      ><a name="1965" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="1976" class="Symbol"
+      >)</a
+      ><a name="1977"
+      >
+      </a
+      ><a name="1984" class="Symbol"
+      >(&#955;</a
+      ><a name="1986"
+      > </a
+      ><a name="1987" href="lib.types.PathSet.html#1987" class="Bound"
+      >_</a
+      ><a name="1988"
+      > </a
+      ><a name="1989" class="Symbol"
+      >&#8594;</a
+      ><a name="1990"
+      > </a
+      ><a name="1991" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1994" class="Symbol"
+      >)</a
+      ><a name="1995"
+      >
+
+    </a
+      ><a name="2001" href="lib.types.PathSet.html#2001" class="Function"
+      >&#8729;&#8320;'-unit-r</a
+      ><a name="2011"
+      > </a
+      ><a name="2012" class="Symbol"
+      >:</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" class="Symbol"
+      >&#8704;</a
+      ><a name="2015"
+      > </a
+      ><a name="2016" class="Symbol"
+      >{</a
+      ><a name="2017" href="lib.types.PathSet.html#2017" class="Bound"
+      >x</a
+      ><a name="2018"
+      > </a
+      ><a name="2019" href="lib.types.PathSet.html#2019" class="Bound"
+      >y</a
+      ><a name="2020"
+      > </a
+      ><a name="2021" class="Symbol"
+      >:</a
+      ><a name="2022"
+      > </a
+      ><a name="2023" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="2024" class="Symbol"
+      >}</a
+      ><a name="2025"
+      > </a
+      ><a name="2026" class="Symbol"
+      >(</a
+      ><a name="2027" href="lib.types.PathSet.html#2027" class="Bound"
+      >q</a
+      ><a name="2028"
+      > </a
+      ><a name="2029" class="Symbol"
+      >:</a
+      ><a name="2030"
+      > </a
+      ><a name="2031" href="lib.types.PathSet.html#2017" class="Bound"
+      >x</a
+      ><a name="2032"
+      > </a
+      ><a name="2033" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="2035"
+      > </a
+      ><a name="2036" href="lib.types.PathSet.html#2019" class="Bound"
+      >y</a
+      ><a name="2037" class="Symbol"
+      >)</a
+      ><a name="2038"
+      > </a
+      ><a name="2039" class="Symbol"
+      >&#8594;</a
+      ><a name="2040"
+      > </a
+      ><a name="2041" class="Symbol"
+      >(</a
+      ><a name="2042" href="lib.types.PathSet.html#2027" class="Bound"
+      >q</a
+      ><a name="2043"
+      > </a
+      ><a name="2044" href="lib.types.PathSet.html#482" class="Function Operator"
+      >&#8729;&#8320;'</a
+      ><a name="2047"
+      > </a
+      ><a name="2048" href="lib.types.PathSet.html#645" class="Function"
+      >idp&#8320;</a
+      ><a name="2052" class="Symbol"
+      >)</a
+      ><a name="2053"
+      > </a
+      ><a name="2054" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2056"
+      > </a
+      ><a name="2057" href="lib.types.PathSet.html#2027" class="Bound"
+      >q</a
+      ><a name="2058"
+      >
+    </a
+      ><a name="2063" href="lib.types.PathSet.html#2001" class="Function"
+      >&#8729;&#8320;'-unit-r</a
+      ><a name="2073"
+      > </a
+      ><a name="2074" class="Symbol"
+      >=</a
+      ><a name="2075"
+      > </a
+      ><a name="2076" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="2086"
+      >
+      </a
+      ><a name="2093" class="Symbol"
+      >(&#955;</a
+      ><a name="2095"
+      > </a
+      ><a name="2096" href="lib.types.PathSet.html#2096" class="Bound"
+      >_</a
+      ><a name="2097"
+      > </a
+      ><a name="2098" class="Symbol"
+      >&#8594;</a
+      ><a name="2099"
+      >  </a
+      ><a name="2101" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="2116"
+      > </a
+      ><a name="2117" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="2128" class="Symbol"
+      >)</a
+      ><a name="2129"
+      >
+      </a
+      ><a name="2136" class="Symbol"
+      >(&#955;</a
+      ><a name="2138"
+      > </a
+      ><a name="2139" href="lib.types.PathSet.html#2139" class="Bound"
+      >_</a
+      ><a name="2140"
+      > </a
+      ><a name="2141" class="Symbol"
+      >&#8594;</a
+      ><a name="2142"
+      > </a
+      ><a name="2143" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2146" class="Symbol"
+      >)</a
+      ><a name="2147"
+      >
+
+    </a
+      ><a name="2153" href="lib.types.PathSet.html#2153" class="Function"
+      >&#8729;&#8320;'-unit-l</a
+      ><a name="2163"
+      > </a
+      ><a name="2164" class="Symbol"
+      >:</a
+      ><a name="2165"
+      > </a
+      ><a name="2166" class="Symbol"
+      >&#8704;</a
+      ><a name="2167"
+      > </a
+      ><a name="2168" class="Symbol"
+      >{</a
+      ><a name="2169" href="lib.types.PathSet.html#2169" class="Bound"
+      >x</a
+      ><a name="2170"
+      > </a
+      ><a name="2171" href="lib.types.PathSet.html#2171" class="Bound"
+      >y</a
+      ><a name="2172"
+      > </a
+      ><a name="2173" class="Symbol"
+      >:</a
+      ><a name="2174"
+      > </a
+      ><a name="2175" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="2176" class="Symbol"
+      >}</a
+      ><a name="2177"
+      > </a
+      ><a name="2178" class="Symbol"
+      >(</a
+      ><a name="2179" href="lib.types.PathSet.html#2179" class="Bound"
+      >q</a
+      ><a name="2180"
+      > </a
+      ><a name="2181" class="Symbol"
+      >:</a
+      ><a name="2182"
+      > </a
+      ><a name="2183" href="lib.types.PathSet.html#2169" class="Bound"
+      >x</a
+      ><a name="2184"
+      > </a
+      ><a name="2185" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="2187"
+      > </a
+      ><a name="2188" href="lib.types.PathSet.html#2171" class="Bound"
+      >y</a
+      ><a name="2189" class="Symbol"
+      >)</a
+      ><a name="2190"
+      > </a
+      ><a name="2191" class="Symbol"
+      >&#8594;</a
+      ><a name="2192"
+      > </a
+      ><a name="2193" class="Symbol"
+      >(</a
+      ><a name="2194" href="lib.types.PathSet.html#645" class="Function"
+      >idp&#8320;</a
+      ><a name="2198"
+      > </a
+      ><a name="2199" href="lib.types.PathSet.html#482" class="Function Operator"
+      >&#8729;&#8320;'</a
+      ><a name="2202"
+      > </a
+      ><a name="2203" href="lib.types.PathSet.html#2179" class="Bound"
+      >q</a
+      ><a name="2204" class="Symbol"
+      >)</a
+      ><a name="2205"
+      > </a
+      ><a name="2206" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2208"
+      > </a
+      ><a name="2209" href="lib.types.PathSet.html#2179" class="Bound"
+      >q</a
+      ><a name="2210"
+      >
+    </a
+      ><a name="2215" href="lib.types.PathSet.html#2153" class="Function"
+      >&#8729;&#8320;'-unit-l</a
+      ><a name="2225"
+      > </a
+      ><a name="2226" class="Symbol"
+      >=</a
+      ><a name="2227"
+      > </a
+      ><a name="2228" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="2238"
+      >
+      </a
+      ><a name="2245" class="Symbol"
+      >(&#955;</a
+      ><a name="2247"
+      > </a
+      ><a name="2248" href="lib.types.PathSet.html#2248" class="Bound"
+      >_</a
+      ><a name="2249"
+      > </a
+      ><a name="2250" class="Symbol"
+      >&#8594;</a
+      ><a name="2251"
+      >  </a
+      ><a name="2253" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="2268"
+      > </a
+      ><a name="2269" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="2280" class="Symbol"
+      >)</a
+      ><a name="2281"
+      >
+      </a
+      ><a name="2288" class="Symbol"
+      >(&#955;</a
+      ><a name="2290"
+      > </a
+      ><a name="2291" href="lib.types.PathSet.html#2291" class="Bound"
+      >p</a
+      ><a name="2292"
+      > </a
+      ><a name="2293" class="Symbol"
+      >&#8594;</a
+      ><a name="2294"
+      > </a
+      ><a name="2295" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2297"
+      > </a
+      ><a name="2298" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[_]</a
+      ><a name="2301"
+      > </a
+      ><a name="2302" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2303"
+      > </a
+      ><a name="2304" href="lib.PathGroupoid.html#1114" class="Function"
+      >&#8729;'-unit-l</a
+      ><a name="2313"
+      > </a
+      ><a name="2314" href="lib.types.PathSet.html#2291" class="Bound"
+      >p</a
+      ><a name="2315" class="Symbol"
+      >)</a
+      ><a name="2316"
+      >
+
+    </a
+      ><a name="2322" href="lib.types.PathSet.html#2322" class="Function"
+      >&#8729;&#8320;-assoc</a
+      ><a name="2330"
+      > </a
+      ><a name="2331" class="Symbol"
+      >:</a
+      ><a name="2332"
+      > </a
+      ><a name="2333" class="Symbol"
+      >{</a
+      ><a name="2334" href="lib.types.PathSet.html#2334" class="Bound"
+      >x</a
+      ><a name="2335"
+      > </a
+      ><a name="2336" href="lib.types.PathSet.html#2336" class="Bound"
+      >y</a
+      ><a name="2337"
+      > </a
+      ><a name="2338" href="lib.types.PathSet.html#2338" class="Bound"
+      >z</a
+      ><a name="2339"
+      > </a
+      ><a name="2340" href="lib.types.PathSet.html#2340" class="Bound"
+      >t</a
+      ><a name="2341"
+      > </a
+      ><a name="2342" class="Symbol"
+      >:</a
+      ><a name="2343"
+      > </a
+      ><a name="2344" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="2345" class="Symbol"
+      >}</a
+      ><a name="2346"
+      > </a
+      ><a name="2347" class="Symbol"
+      >(</a
+      ><a name="2348" href="lib.types.PathSet.html#2348" class="Bound"
+      >p</a
+      ><a name="2349"
+      > </a
+      ><a name="2350" class="Symbol"
+      >:</a
+      ><a name="2351"
+      > </a
+      ><a name="2352" href="lib.types.PathSet.html#2334" class="Bound"
+      >x</a
+      ><a name="2353"
+      > </a
+      ><a name="2354" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="2356"
+      > </a
+      ><a name="2357" href="lib.types.PathSet.html#2336" class="Bound"
+      >y</a
+      ><a name="2358" class="Symbol"
+      >)</a
+      ><a name="2359"
+      > </a
+      ><a name="2360" class="Symbol"
+      >(</a
+      ><a name="2361" href="lib.types.PathSet.html#2361" class="Bound"
+      >q</a
+      ><a name="2362"
+      > </a
+      ><a name="2363" class="Symbol"
+      >:</a
+      ><a name="2364"
+      > </a
+      ><a name="2365" href="lib.types.PathSet.html#2336" class="Bound"
+      >y</a
+      ><a name="2366"
+      > </a
+      ><a name="2367" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="2369"
+      > </a
+      ><a name="2370" href="lib.types.PathSet.html#2338" class="Bound"
+      >z</a
+      ><a name="2371" class="Symbol"
+      >)</a
+      ><a name="2372"
+      > </a
+      ><a name="2373" class="Symbol"
+      >(</a
+      ><a name="2374" href="lib.types.PathSet.html#2374" class="Bound"
+      >r</a
+      ><a name="2375"
+      > </a
+      ><a name="2376" class="Symbol"
+      >:</a
+      ><a name="2377"
+      > </a
+      ><a name="2378" href="lib.types.PathSet.html#2338" class="Bound"
+      >z</a
+      ><a name="2379"
+      > </a
+      ><a name="2380" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="2382"
+      > </a
+      ><a name="2383" href="lib.types.PathSet.html#2340" class="Bound"
+      >t</a
+      ><a name="2384" class="Symbol"
+      >)</a
+      ><a name="2385"
+      >
+      </a
+      ><a name="2392" class="Symbol"
+      >&#8594;</a
+      ><a name="2393"
+      > </a
+      ><a name="2394" class="Symbol"
+      >(</a
+      ><a name="2395" href="lib.types.PathSet.html#2348" class="Bound"
+      >p</a
+      ><a name="2396"
+      > </a
+      ><a name="2397" href="lib.types.PathSet.html#393" class="Function Operator"
+      >&#8729;&#8320;</a
+      ><a name="2399"
+      > </a
+      ><a name="2400" href="lib.types.PathSet.html#2361" class="Bound"
+      >q</a
+      ><a name="2401" class="Symbol"
+      >)</a
+      ><a name="2402"
+      > </a
+      ><a name="2403" href="lib.types.PathSet.html#393" class="Function Operator"
+      >&#8729;&#8320;</a
+      ><a name="2405"
+      > </a
+      ><a name="2406" href="lib.types.PathSet.html#2374" class="Bound"
+      >r</a
+      ><a name="2407"
+      > </a
+      ><a name="2408" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2410"
+      > </a
+      ><a name="2411" href="lib.types.PathSet.html#2348" class="Bound"
+      >p</a
+      ><a name="2412"
+      > </a
+      ><a name="2413" href="lib.types.PathSet.html#393" class="Function Operator"
+      >&#8729;&#8320;</a
+      ><a name="2415"
+      > </a
+      ><a name="2416" class="Symbol"
+      >(</a
+      ><a name="2417" href="lib.types.PathSet.html#2361" class="Bound"
+      >q</a
+      ><a name="2418"
+      > </a
+      ><a name="2419" href="lib.types.PathSet.html#393" class="Function Operator"
+      >&#8729;&#8320;</a
+      ><a name="2421"
+      > </a
+      ><a name="2422" href="lib.types.PathSet.html#2374" class="Bound"
+      >r</a
+      ><a name="2423" class="Symbol"
+      >)</a
+      ><a name="2424"
+      >
+    </a
+      ><a name="2429" href="lib.types.PathSet.html#2322" class="Function"
+      >&#8729;&#8320;-assoc</a
+      ><a name="2437"
+      > </a
+      ><a name="2438" class="Symbol"
+      >=</a
+      ><a name="2439"
+      > </a
+      ><a name="2440" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="2450"
+      >
+      </a
+      ><a name="2457" class="Symbol"
+      >(&#955;</a
+      ><a name="2459"
+      > </a
+      ><a name="2460" href="lib.types.PathSet.html#2460" class="Bound"
+      >_</a
+      ><a name="2461"
+      > </a
+      ><a name="2462" class="Symbol"
+      >&#8594;</a
+      ><a name="2463"
+      > </a
+      ><a name="2464" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="2472"
+      > </a
+      ><a name="2473" class="Symbol"
+      >&#955;</a
+      ><a name="2474"
+      > </a
+      ><a name="2475" href="lib.types.PathSet.html#2475" class="Bound"
+      >_</a
+      ><a name="2476"
+      > </a
+      ><a name="2477" class="Symbol"
+      >&#8594;</a
+      ><a name="2478"
+      > </a
+      ><a name="2479" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="2487"
+      > </a
+      ><a name="2488" class="Symbol"
+      >&#955;</a
+      ><a name="2489"
+      > </a
+      ><a name="2490" href="lib.types.PathSet.html#2490" class="Bound"
+      >_</a
+      ><a name="2491"
+      > </a
+      ><a name="2492" class="Symbol"
+      >&#8594;</a
+      ><a name="2493"
+      > </a
+      ><a name="2494" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="2509"
+      > </a
+      ><a name="2510" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="2521" class="Symbol"
+      >)</a
+      ><a name="2522"
+      >
+      </a
+      ><a name="2529" class="Symbol"
+      >(&#955;</a
+      ><a name="2531"
+      > </a
+      ><a name="2532" href="lib.types.PathSet.html#2532" class="Bound"
+      >p</a
+      ><a name="2533"
+      > </a
+      ><a name="2534" class="Symbol"
+      >&#8594;</a
+      ><a name="2535"
+      > </a
+      ><a name="2536" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="2546"
+      >
+        </a
+      ><a name="2555" class="Symbol"
+      >(&#955;</a
+      ><a name="2557"
+      > </a
+      ><a name="2558" href="lib.types.PathSet.html#2558" class="Bound"
+      >_</a
+      ><a name="2559"
+      > </a
+      ><a name="2560" class="Symbol"
+      >&#8594;</a
+      ><a name="2561"
+      > </a
+      ><a name="2562" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="2570"
+      > </a
+      ><a name="2571" class="Symbol"
+      >&#955;</a
+      ><a name="2572"
+      > </a
+      ><a name="2573" href="lib.types.PathSet.html#2573" class="Bound"
+      >_</a
+      ><a name="2574"
+      > </a
+      ><a name="2575" class="Symbol"
+      >&#8594;</a
+      ><a name="2576"
+      > </a
+      ><a name="2577" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="2592"
+      > </a
+      ><a name="2593" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="2604" class="Symbol"
+      >)</a
+      ><a name="2605"
+      >
+        </a
+      ><a name="2614" class="Symbol"
+      >(&#955;</a
+      ><a name="2616"
+      > </a
+      ><a name="2617" href="lib.types.PathSet.html#2617" class="Bound"
+      >q</a
+      ><a name="2618"
+      > </a
+      ><a name="2619" class="Symbol"
+      >&#8594;</a
+      ><a name="2620"
+      > </a
+      ><a name="2621" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="2631"
+      >
+          </a
+      ><a name="2642" class="Symbol"
+      >(&#955;</a
+      ><a name="2644"
+      > </a
+      ><a name="2645" href="lib.types.PathSet.html#2645" class="Bound"
+      >_</a
+      ><a name="2646"
+      > </a
+      ><a name="2647" class="Symbol"
+      >&#8594;</a
+      ><a name="2648"
+      > </a
+      ><a name="2649" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="2664"
+      > </a
+      ><a name="2665" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="2676" class="Symbol"
+      >)</a
+      ><a name="2677"
+      >
+          </a
+      ><a name="2688" class="Symbol"
+      >(&#955;</a
+      ><a name="2690"
+      > </a
+      ><a name="2691" href="lib.types.PathSet.html#2691" class="Bound"
+      >r</a
+      ><a name="2692"
+      > </a
+      ><a name="2693" class="Symbol"
+      >&#8594;</a
+      ><a name="2694"
+      > </a
+      ><a name="2695" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2697"
+      > </a
+      ><a name="2698" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[_]</a
+      ><a name="2701"
+      > </a
+      ><a name="2702" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2703"
+      > </a
+      ><a name="2704" href="lib.PathGroupoid.html#739" class="Function"
+      >&#8729;-assoc</a
+      ><a name="2711"
+      > </a
+      ><a name="2712" href="lib.types.PathSet.html#2532" class="Bound"
+      >p</a
+      ><a name="2713"
+      > </a
+      ><a name="2714" href="lib.types.PathSet.html#2617" class="Bound"
+      >q</a
+      ><a name="2715"
+      > </a
+      ><a name="2716" href="lib.types.PathSet.html#2691" class="Bound"
+      >r</a
+      ><a name="2717" class="Symbol"
+      >)))</a
+      ><a name="2720"
+      >
+
+    </a
+      ><a name="2726" href="lib.types.PathSet.html#2726" class="Function"
+      >&#8729;&#8320;'-assoc</a
+      ><a name="2735"
+      > </a
+      ><a name="2736" class="Symbol"
+      >:</a
+      ><a name="2737"
+      > </a
+      ><a name="2738" class="Symbol"
+      >{</a
+      ><a name="2739" href="lib.types.PathSet.html#2739" class="Bound"
+      >x</a
+      ><a name="2740"
+      > </a
+      ><a name="2741" href="lib.types.PathSet.html#2741" class="Bound"
+      >y</a
+      ><a name="2742"
+      > </a
+      ><a name="2743" href="lib.types.PathSet.html#2743" class="Bound"
+      >z</a
+      ><a name="2744"
+      > </a
+      ><a name="2745" href="lib.types.PathSet.html#2745" class="Bound"
+      >t</a
+      ><a name="2746"
+      > </a
+      ><a name="2747" class="Symbol"
+      >:</a
+      ><a name="2748"
+      > </a
+      ><a name="2749" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="2750" class="Symbol"
+      >}</a
+      ><a name="2751"
+      > </a
+      ><a name="2752" class="Symbol"
+      >(</a
+      ><a name="2753" href="lib.types.PathSet.html#2753" class="Bound"
+      >p</a
+      ><a name="2754"
+      > </a
+      ><a name="2755" class="Symbol"
+      >:</a
+      ><a name="2756"
+      > </a
+      ><a name="2757" href="lib.types.PathSet.html#2739" class="Bound"
+      >x</a
+      ><a name="2758"
+      > </a
+      ><a name="2759" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="2761"
+      > </a
+      ><a name="2762" href="lib.types.PathSet.html#2741" class="Bound"
+      >y</a
+      ><a name="2763" class="Symbol"
+      >)</a
+      ><a name="2764"
+      > </a
+      ><a name="2765" class="Symbol"
+      >(</a
+      ><a name="2766" href="lib.types.PathSet.html#2766" class="Bound"
+      >q</a
+      ><a name="2767"
+      > </a
+      ><a name="2768" class="Symbol"
+      >:</a
+      ><a name="2769"
+      > </a
+      ><a name="2770" href="lib.types.PathSet.html#2741" class="Bound"
+      >y</a
+      ><a name="2771"
+      > </a
+      ><a name="2772" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="2774"
+      > </a
+      ><a name="2775" href="lib.types.PathSet.html#2743" class="Bound"
+      >z</a
+      ><a name="2776" class="Symbol"
+      >)</a
+      ><a name="2777"
+      > </a
+      ><a name="2778" class="Symbol"
+      >(</a
+      ><a name="2779" href="lib.types.PathSet.html#2779" class="Bound"
+      >r</a
+      ><a name="2780"
+      > </a
+      ><a name="2781" class="Symbol"
+      >:</a
+      ><a name="2782"
+      > </a
+      ><a name="2783" href="lib.types.PathSet.html#2743" class="Bound"
+      >z</a
+      ><a name="2784"
+      > </a
+      ><a name="2785" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="2787"
+      > </a
+      ><a name="2788" href="lib.types.PathSet.html#2745" class="Bound"
+      >t</a
+      ><a name="2789" class="Symbol"
+      >)</a
+      ><a name="2790"
+      >
+      </a
+      ><a name="2797" class="Symbol"
+      >&#8594;</a
+      ><a name="2798"
+      > </a
+      ><a name="2799" class="Symbol"
+      >(</a
+      ><a name="2800" href="lib.types.PathSet.html#2753" class="Bound"
+      >p</a
+      ><a name="2801"
+      > </a
+      ><a name="2802" href="lib.types.PathSet.html#482" class="Function Operator"
+      >&#8729;&#8320;'</a
+      ><a name="2805"
+      > </a
+      ><a name="2806" href="lib.types.PathSet.html#2766" class="Bound"
+      >q</a
+      ><a name="2807" class="Symbol"
+      >)</a
+      ><a name="2808"
+      > </a
+      ><a name="2809" href="lib.types.PathSet.html#482" class="Function Operator"
+      >&#8729;&#8320;'</a
+      ><a name="2812"
+      > </a
+      ><a name="2813" href="lib.types.PathSet.html#2779" class="Bound"
+      >r</a
+      ><a name="2814"
+      > </a
+      ><a name="2815" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2817"
+      > </a
+      ><a name="2818" href="lib.types.PathSet.html#2753" class="Bound"
+      >p</a
+      ><a name="2819"
+      > </a
+      ><a name="2820" href="lib.types.PathSet.html#482" class="Function Operator"
+      >&#8729;&#8320;'</a
+      ><a name="2823"
+      > </a
+      ><a name="2824" class="Symbol"
+      >(</a
+      ><a name="2825" href="lib.types.PathSet.html#2766" class="Bound"
+      >q</a
+      ><a name="2826"
+      > </a
+      ><a name="2827" href="lib.types.PathSet.html#482" class="Function Operator"
+      >&#8729;&#8320;'</a
+      ><a name="2830"
+      > </a
+      ><a name="2831" href="lib.types.PathSet.html#2779" class="Bound"
+      >r</a
+      ><a name="2832" class="Symbol"
+      >)</a
+      ><a name="2833"
+      >
+    </a
+      ><a name="2838" href="lib.types.PathSet.html#2726" class="Function"
+      >&#8729;&#8320;'-assoc</a
+      ><a name="2847"
+      > </a
+      ><a name="2848" class="Symbol"
+      >=</a
+      ><a name="2849"
+      > </a
+      ><a name="2850" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="2860"
+      >
+      </a
+      ><a name="2867" class="Symbol"
+      >(&#955;</a
+      ><a name="2869"
+      > </a
+      ><a name="2870" href="lib.types.PathSet.html#2870" class="Bound"
+      >_</a
+      ><a name="2871"
+      > </a
+      ><a name="2872" class="Symbol"
+      >&#8594;</a
+      ><a name="2873"
+      > </a
+      ><a name="2874" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="2882"
+      > </a
+      ><a name="2883" class="Symbol"
+      >&#955;</a
+      ><a name="2884"
+      > </a
+      ><a name="2885" href="lib.types.PathSet.html#2885" class="Bound"
+      >_</a
+      ><a name="2886"
+      > </a
+      ><a name="2887" class="Symbol"
+      >&#8594;</a
+      ><a name="2888"
+      > </a
+      ><a name="2889" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="2897"
+      > </a
+      ><a name="2898" class="Symbol"
+      >&#955;</a
+      ><a name="2899"
+      > </a
+      ><a name="2900" href="lib.types.PathSet.html#2900" class="Bound"
+      >_</a
+      ><a name="2901"
+      > </a
+      ><a name="2902" class="Symbol"
+      >&#8594;</a
+      ><a name="2903"
+      > </a
+      ><a name="2904" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="2919"
+      > </a
+      ><a name="2920" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="2931" class="Symbol"
+      >)</a
+      ><a name="2932"
+      >
+      </a
+      ><a name="2939" class="Symbol"
+      >(&#955;</a
+      ><a name="2941"
+      > </a
+      ><a name="2942" href="lib.types.PathSet.html#2942" class="Bound"
+      >p</a
+      ><a name="2943"
+      > </a
+      ><a name="2944" class="Symbol"
+      >&#8594;</a
+      ><a name="2945"
+      > </a
+      ><a name="2946" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="2956"
+      >
+        </a
+      ><a name="2965" class="Symbol"
+      >(&#955;</a
+      ><a name="2967"
+      > </a
+      ><a name="2968" href="lib.types.PathSet.html#2968" class="Bound"
+      >_</a
+      ><a name="2969"
+      > </a
+      ><a name="2970" class="Symbol"
+      >&#8594;</a
+      ><a name="2971"
+      > </a
+      ><a name="2972" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="2980"
+      > </a
+      ><a name="2981" class="Symbol"
+      >&#955;</a
+      ><a name="2982"
+      > </a
+      ><a name="2983" href="lib.types.PathSet.html#2983" class="Bound"
+      >_</a
+      ><a name="2984"
+      > </a
+      ><a name="2985" class="Symbol"
+      >&#8594;</a
+      ><a name="2986"
+      > </a
+      ><a name="2987" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="3002"
+      > </a
+      ><a name="3003" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3014" class="Symbol"
+      >)</a
+      ><a name="3015"
+      >
+        </a
+      ><a name="3024" class="Symbol"
+      >(&#955;</a
+      ><a name="3026"
+      > </a
+      ><a name="3027" href="lib.types.PathSet.html#3027" class="Bound"
+      >q</a
+      ><a name="3028"
+      > </a
+      ><a name="3029" class="Symbol"
+      >&#8594;</a
+      ><a name="3030"
+      > </a
+      ><a name="3031" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="3041"
+      >
+          </a
+      ><a name="3052" class="Symbol"
+      >(&#955;</a
+      ><a name="3054"
+      > </a
+      ><a name="3055" href="lib.types.PathSet.html#3055" class="Bound"
+      >_</a
+      ><a name="3056"
+      > </a
+      ><a name="3057" class="Symbol"
+      >&#8594;</a
+      ><a name="3058"
+      > </a
+      ><a name="3059" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="3074"
+      > </a
+      ><a name="3075" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3086" class="Symbol"
+      >)</a
+      ><a name="3087"
+      >
+          </a
+      ><a name="3098" class="Symbol"
+      >(&#955;</a
+      ><a name="3100"
+      > </a
+      ><a name="3101" href="lib.types.PathSet.html#3101" class="Bound"
+      >r</a
+      ><a name="3102"
+      > </a
+      ><a name="3103" class="Symbol"
+      >&#8594;</a
+      ><a name="3104"
+      > </a
+      ><a name="3105" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3107"
+      > </a
+      ><a name="3108" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[_]</a
+      ><a name="3111"
+      > </a
+      ><a name="3112" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="3113"
+      > </a
+      ><a name="3114" href="lib.PathGroupoid.html#862" class="Function"
+      >&#8729;'-assoc</a
+      ><a name="3122"
+      > </a
+      ><a name="3123" href="lib.types.PathSet.html#2942" class="Bound"
+      >p</a
+      ><a name="3124"
+      > </a
+      ><a name="3125" href="lib.types.PathSet.html#3027" class="Bound"
+      >q</a
+      ><a name="3126"
+      > </a
+      ><a name="3127" href="lib.types.PathSet.html#3101" class="Bound"
+      >r</a
+      ><a name="3128" class="Symbol"
+      >)))</a
+      ><a name="3131"
+      >
+
+    </a
+      ><a name="3137" href="lib.types.PathSet.html#3137" class="Function"
+      >!&#8320;-inv-l</a
+      ><a name="3145"
+      > </a
+      ><a name="3146" class="Symbol"
+      >:</a
+      ><a name="3147"
+      > </a
+      ><a name="3148" class="Symbol"
+      >{</a
+      ><a name="3149" href="lib.types.PathSet.html#3149" class="Bound"
+      >x</a
+      ><a name="3150"
+      > </a
+      ><a name="3151" href="lib.types.PathSet.html#3151" class="Bound"
+      >y</a
+      ><a name="3152"
+      > </a
+      ><a name="3153" class="Symbol"
+      >:</a
+      ><a name="3154"
+      > </a
+      ><a name="3155" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="3156" class="Symbol"
+      >}</a
+      ><a name="3157"
+      > </a
+      ><a name="3158" class="Symbol"
+      >(</a
+      ><a name="3159" href="lib.types.PathSet.html#3159" class="Bound"
+      >p</a
+      ><a name="3160"
+      > </a
+      ><a name="3161" class="Symbol"
+      >:</a
+      ><a name="3162"
+      > </a
+      ><a name="3163" href="lib.types.PathSet.html#3149" class="Bound"
+      >x</a
+      ><a name="3164"
+      > </a
+      ><a name="3165" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="3167"
+      > </a
+      ><a name="3168" href="lib.types.PathSet.html#3151" class="Bound"
+      >y</a
+      ><a name="3169" class="Symbol"
+      >)</a
+      ><a name="3170"
+      > </a
+      ><a name="3171" class="Symbol"
+      >&#8594;</a
+      ><a name="3172"
+      > </a
+      ><a name="3173" class="Symbol"
+      >(</a
+      ><a name="3174" href="lib.types.PathSet.html#574" class="Function"
+      >!&#8320;</a
+      ><a name="3176"
+      > </a
+      ><a name="3177" href="lib.types.PathSet.html#3159" class="Bound"
+      >p</a
+      ><a name="3178" class="Symbol"
+      >)</a
+      ><a name="3179"
+      > </a
+      ><a name="3180" href="lib.types.PathSet.html#393" class="Function Operator"
+      >&#8729;&#8320;</a
+      ><a name="3182"
+      > </a
+      ><a name="3183" href="lib.types.PathSet.html#3159" class="Bound"
+      >p</a
+      ><a name="3184"
+      > </a
+      ><a name="3185" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3187"
+      > </a
+      ><a name="3188" href="lib.types.PathSet.html#645" class="Function"
+      >idp&#8320;</a
+      ><a name="3192"
+      >
+    </a
+      ><a name="3197" href="lib.types.PathSet.html#3137" class="Function"
+      >!&#8320;-inv-l</a
+      ><a name="3205"
+      > </a
+      ><a name="3206" class="Symbol"
+      >=</a
+      ><a name="3207"
+      > </a
+      ><a name="3208" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="3218"
+      >
+      </a
+      ><a name="3225" class="Symbol"
+      >(&#955;</a
+      ><a name="3227"
+      > </a
+      ><a name="3228" href="lib.types.PathSet.html#3228" class="Bound"
+      >_</a
+      ><a name="3229"
+      > </a
+      ><a name="3230" class="Symbol"
+      >&#8594;</a
+      ><a name="3231"
+      >  </a
+      ><a name="3233" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="3248"
+      > </a
+      ><a name="3249" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3260" class="Symbol"
+      >)</a
+      ><a name="3261"
+      >
+      </a
+      ><a name="3268" class="Symbol"
+      >(&#955;</a
+      ><a name="3270"
+      > </a
+      ><a name="3271" href="lib.types.PathSet.html#3271" class="Bound"
+      >p</a
+      ><a name="3272"
+      > </a
+      ><a name="3273" class="Symbol"
+      >&#8594;</a
+      ><a name="3274"
+      > </a
+      ><a name="3275" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3277"
+      > </a
+      ><a name="3278" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[_]</a
+      ><a name="3281"
+      > </a
+      ><a name="3282" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="3283"
+      > </a
+      ><a name="3284" href="lib.PathGroupoid.html#1268" class="Function"
+      >!-inv-l</a
+      ><a name="3291"
+      > </a
+      ><a name="3292" href="lib.types.PathSet.html#3271" class="Bound"
+      >p</a
+      ><a name="3293" class="Symbol"
+      >)</a
+      ><a name="3294"
+      >
+
+    </a
+      ><a name="3300" href="lib.types.PathSet.html#3300" class="Function"
+      >!&#8320;-inv-r</a
+      ><a name="3308"
+      > </a
+      ><a name="3309" class="Symbol"
+      >:</a
+      ><a name="3310"
+      > </a
+      ><a name="3311" class="Symbol"
+      >{</a
+      ><a name="3312" href="lib.types.PathSet.html#3312" class="Bound"
+      >x</a
+      ><a name="3313"
+      > </a
+      ><a name="3314" href="lib.types.PathSet.html#3314" class="Bound"
+      >y</a
+      ><a name="3315"
+      > </a
+      ><a name="3316" class="Symbol"
+      >:</a
+      ><a name="3317"
+      > </a
+      ><a name="3318" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="3319" class="Symbol"
+      >}</a
+      ><a name="3320"
+      > </a
+      ><a name="3321" class="Symbol"
+      >(</a
+      ><a name="3322" href="lib.types.PathSet.html#3322" class="Bound"
+      >p</a
+      ><a name="3323"
+      > </a
+      ><a name="3324" class="Symbol"
+      >:</a
+      ><a name="3325"
+      > </a
+      ><a name="3326" href="lib.types.PathSet.html#3312" class="Bound"
+      >x</a
+      ><a name="3327"
+      > </a
+      ><a name="3328" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="3330"
+      > </a
+      ><a name="3331" href="lib.types.PathSet.html#3314" class="Bound"
+      >y</a
+      ><a name="3332" class="Symbol"
+      >)</a
+      ><a name="3333"
+      > </a
+      ><a name="3334" class="Symbol"
+      >&#8594;</a
+      ><a name="3335"
+      > </a
+      ><a name="3336" href="lib.types.PathSet.html#3322" class="Bound"
+      >p</a
+      ><a name="3337"
+      > </a
+      ><a name="3338" href="lib.types.PathSet.html#393" class="Function Operator"
+      >&#8729;&#8320;</a
+      ><a name="3340"
+      > </a
+      ><a name="3341" class="Symbol"
+      >(</a
+      ><a name="3342" href="lib.types.PathSet.html#574" class="Function"
+      >!&#8320;</a
+      ><a name="3344"
+      > </a
+      ><a name="3345" href="lib.types.PathSet.html#3322" class="Bound"
+      >p</a
+      ><a name="3346" class="Symbol"
+      >)</a
+      ><a name="3347"
+      > </a
+      ><a name="3348" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3350"
+      > </a
+      ><a name="3351" href="lib.types.PathSet.html#645" class="Function"
+      >idp&#8320;</a
+      ><a name="3355"
+      >
+    </a
+      ><a name="3360" href="lib.types.PathSet.html#3300" class="Function"
+      >!&#8320;-inv-r</a
+      ><a name="3368"
+      > </a
+      ><a name="3369" class="Symbol"
+      >=</a
+      ><a name="3370"
+      > </a
+      ><a name="3371" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="3381"
+      >
+      </a
+      ><a name="3388" class="Symbol"
+      >(&#955;</a
+      ><a name="3390"
+      > </a
+      ><a name="3391" href="lib.types.PathSet.html#3391" class="Bound"
+      >_</a
+      ><a name="3392"
+      > </a
+      ><a name="3393" class="Symbol"
+      >&#8594;</a
+      ><a name="3394"
+      >  </a
+      ><a name="3396" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="3411"
+      > </a
+      ><a name="3412" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3423" class="Symbol"
+      >)</a
+      ><a name="3424"
+      >
+      </a
+      ><a name="3431" class="Symbol"
+      >(&#955;</a
+      ><a name="3433"
+      > </a
+      ><a name="3434" href="lib.types.PathSet.html#3434" class="Bound"
+      >p</a
+      ><a name="3435"
+      > </a
+      ><a name="3436" class="Symbol"
+      >&#8594;</a
+      ><a name="3437"
+      > </a
+      ><a name="3438" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3440"
+      > </a
+      ><a name="3441" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[_]</a
+      ><a name="3444"
+      > </a
+      ><a name="3445" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="3446"
+      > </a
+      ><a name="3447" href="lib.PathGroupoid.html#1421" class="Function"
+      >!-inv-r</a
+      ><a name="3454"
+      > </a
+      ><a name="3455" href="lib.types.PathSet.html#3434" class="Bound"
+      >p</a
+      ><a name="3456" class="Symbol"
+      >)</a
+      ><a name="3457"
+      >
+
+    </a
+      ><a name="3463" href="lib.types.PathSet.html#3463" class="Function"
+      >&#8729;&#8320;-ap&#8320;</a
+      ><a name="3469"
+      > </a
+      ><a name="3470" class="Symbol"
+      >:</a
+      ><a name="3471"
+      > </a
+      ><a name="3472" class="Symbol"
+      >&#8704;</a
+      ><a name="3473"
+      > </a
+      ><a name="3474" class="Symbol"
+      >{</a
+      ><a name="3475" href="lib.types.PathSet.html#3475" class="Bound"
+      >j</a
+      ><a name="3476" class="Symbol"
+      >}</a
+      ><a name="3477"
+      > </a
+      ><a name="3478" class="Symbol"
+      >{</a
+      ><a name="3479" href="lib.types.PathSet.html#3479" class="Bound"
+      >B</a
+      ><a name="3480"
+      > </a
+      ><a name="3481" class="Symbol"
+      >:</a
+      ><a name="3482"
+      > </a
+      ><a name="3483" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3487"
+      > </a
+      ><a name="3488" href="lib.types.PathSet.html#3475" class="Bound"
+      >j</a
+      ><a name="3489" class="Symbol"
+      >}</a
+      ><a name="3490"
+      > </a
+      ><a name="3491" class="Symbol"
+      >(</a
+      ><a name="3492" href="lib.types.PathSet.html#3492" class="Bound"
+      >f</a
+      ><a name="3493"
+      > </a
+      ><a name="3494" class="Symbol"
+      >:</a
+      ><a name="3495"
+      > </a
+      ><a name="3496" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="3497"
+      > </a
+      ><a name="3498" class="Symbol"
+      >&#8594;</a
+      ><a name="3499"
+      > </a
+      ><a name="3500" href="lib.types.PathSet.html#3479" class="Bound"
+      >B</a
+      ><a name="3501" class="Symbol"
+      >)</a
+      ><a name="3502"
+      > </a
+      ><a name="3503" class="Symbol"
+      >{</a
+      ><a name="3504" href="lib.types.PathSet.html#3504" class="Bound"
+      >x</a
+      ><a name="3505"
+      > </a
+      ><a name="3506" href="lib.types.PathSet.html#3506" class="Bound"
+      >y</a
+      ><a name="3507"
+      > </a
+      ><a name="3508" href="lib.types.PathSet.html#3508" class="Bound"
+      >z</a
+      ><a name="3509"
+      > </a
+      ><a name="3510" class="Symbol"
+      >:</a
+      ><a name="3511"
+      > </a
+      ><a name="3512" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="3513" class="Symbol"
+      >}</a
+      ><a name="3514"
+      > </a
+      ><a name="3515" class="Symbol"
+      >(</a
+      ><a name="3516" href="lib.types.PathSet.html#3516" class="Bound"
+      >p</a
+      ><a name="3517"
+      > </a
+      ><a name="3518" class="Symbol"
+      >:</a
+      ><a name="3519"
+      > </a
+      ><a name="3520" href="lib.types.PathSet.html#3504" class="Bound"
+      >x</a
+      ><a name="3521"
+      > </a
+      ><a name="3522" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="3524"
+      > </a
+      ><a name="3525" href="lib.types.PathSet.html#3506" class="Bound"
+      >y</a
+      ><a name="3526" class="Symbol"
+      >)</a
+      ><a name="3527"
+      > </a
+      ><a name="3528" class="Symbol"
+      >(</a
+      ><a name="3529" href="lib.types.PathSet.html#3529" class="Bound"
+      >q</a
+      ><a name="3530"
+      > </a
+      ><a name="3531" class="Symbol"
+      >:</a
+      ><a name="3532"
+      > </a
+      ><a name="3533" href="lib.types.PathSet.html#3506" class="Bound"
+      >y</a
+      ><a name="3534"
+      > </a
+      ><a name="3535" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="3537"
+      > </a
+      ><a name="3538" href="lib.types.PathSet.html#3508" class="Bound"
+      >z</a
+      ><a name="3539" class="Symbol"
+      >)</a
+      ><a name="3540"
+      >
+      </a
+      ><a name="3547" class="Symbol"
+      >&#8594;</a
+      ><a name="3548"
+      > </a
+      ><a name="3549" href="lib.types.PathSet.html#704" class="Function"
+      >ap&#8320;</a
+      ><a name="3552"
+      > </a
+      ><a name="3553" href="lib.types.PathSet.html#3492" class="Bound"
+      >f</a
+      ><a name="3554"
+      > </a
+      ><a name="3555" href="lib.types.PathSet.html#3516" class="Bound"
+      >p</a
+      ><a name="3556"
+      > </a
+      ><a name="3557" href="lib.types.PathSet.html#393" class="Function Operator"
+      >&#8729;&#8320;</a
+      ><a name="3559"
+      > </a
+      ><a name="3560" href="lib.types.PathSet.html#704" class="Function"
+      >ap&#8320;</a
+      ><a name="3563"
+      > </a
+      ><a name="3564" href="lib.types.PathSet.html#3492" class="Bound"
+      >f</a
+      ><a name="3565"
+      > </a
+      ><a name="3566" href="lib.types.PathSet.html#3529" class="Bound"
+      >q</a
+      ><a name="3567"
+      > </a
+      ><a name="3568" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3570"
+      > </a
+      ><a name="3571" href="lib.types.PathSet.html#704" class="Function"
+      >ap&#8320;</a
+      ><a name="3574"
+      > </a
+      ><a name="3575" href="lib.types.PathSet.html#3492" class="Bound"
+      >f</a
+      ><a name="3576"
+      > </a
+      ><a name="3577" class="Symbol"
+      >(</a
+      ><a name="3578" href="lib.types.PathSet.html#3516" class="Bound"
+      >p</a
+      ><a name="3579"
+      > </a
+      ><a name="3580" href="lib.types.PathSet.html#393" class="Function Operator"
+      >&#8729;&#8320;</a
+      ><a name="3582"
+      > </a
+      ><a name="3583" href="lib.types.PathSet.html#3529" class="Bound"
+      >q</a
+      ><a name="3584" class="Symbol"
+      >)</a
+      ><a name="3585"
+      >
+    </a
+      ><a name="3590" href="lib.types.PathSet.html#3463" class="Function"
+      >&#8729;&#8320;-ap&#8320;</a
+      ><a name="3596"
+      > </a
+      ><a name="3597" href="lib.types.PathSet.html#3597" class="Bound"
+      >f</a
+      ><a name="3598"
+      > </a
+      ><a name="3599" class="Symbol"
+      >=</a
+      ><a name="3600"
+      > </a
+      ><a name="3601" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="3611"
+      >
+      </a
+      ><a name="3618" class="Symbol"
+      >(&#955;</a
+      ><a name="3620"
+      > </a
+      ><a name="3621" href="lib.types.PathSet.html#3621" class="Bound"
+      >_</a
+      ><a name="3622"
+      > </a
+      ><a name="3623" class="Symbol"
+      >&#8594;</a
+      ><a name="3624"
+      > </a
+      ><a name="3625" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="3633"
+      > </a
+      ><a name="3634" class="Symbol"
+      >&#955;</a
+      ><a name="3635"
+      > </a
+      ><a name="3636" href="lib.types.PathSet.html#3636" class="Bound"
+      >_</a
+      ><a name="3637"
+      > </a
+      ><a name="3638" class="Symbol"
+      >&#8594;</a
+      ><a name="3639"
+      > </a
+      ><a name="3640" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="3655"
+      > </a
+      ><a name="3656" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3667" class="Symbol"
+      >)</a
+      ><a name="3668"
+      >
+      </a
+      ><a name="3675" class="Symbol"
+      >(&#955;</a
+      ><a name="3677"
+      > </a
+      ><a name="3678" href="lib.types.PathSet.html#3678" class="Bound"
+      >p</a
+      ><a name="3679"
+      > </a
+      ><a name="3680" class="Symbol"
+      >&#8594;</a
+      ><a name="3681"
+      > </a
+      ><a name="3682" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="3692"
+      >
+        </a
+      ><a name="3701" class="Symbol"
+      >(&#955;</a
+      ><a name="3703"
+      > </a
+      ><a name="3704" href="lib.types.PathSet.html#3704" class="Bound"
+      >_</a
+      ><a name="3705"
+      > </a
+      ><a name="3706" class="Symbol"
+      >&#8594;</a
+      ><a name="3707"
+      > </a
+      ><a name="3708" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="3723"
+      > </a
+      ><a name="3724" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3735" class="Symbol"
+      >)</a
+      ><a name="3736"
+      >
+        </a
+      ><a name="3745" class="Symbol"
+      >(&#955;</a
+      ><a name="3747"
+      > </a
+      ><a name="3748" href="lib.types.PathSet.html#3748" class="Bound"
+      >q</a
+      ><a name="3749"
+      > </a
+      ><a name="3750" class="Symbol"
+      >&#8594;</a
+      ><a name="3751"
+      > </a
+      ><a name="3752" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3754"
+      > </a
+      ><a name="3755" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[_]</a
+      ><a name="3758"
+      > </a
+      ><a name="3759" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="3760"
+      > </a
+      ><a name="3761" href="lib.PathFunctor.html#372" class="Function"
+      >&#8729;-ap</a
+      ><a name="3765"
+      > </a
+      ><a name="3766" href="lib.types.PathSet.html#3597" class="Bound"
+      >f</a
+      ><a name="3767"
+      > </a
+      ><a name="3768" href="lib.types.PathSet.html#3678" class="Bound"
+      >p</a
+      ><a name="3769"
+      > </a
+      ><a name="3770" href="lib.types.PathSet.html#3748" class="Bound"
+      >q</a
+      ><a name="3771" class="Symbol"
+      >))</a
+      ><a name="3773"
+      >
+
+    </a
+      ><a name="3779" href="lib.types.PathSet.html#3779" class="Function"
+      >ap&#8320;-&#8728;</a
+      ><a name="3784"
+      > </a
+      ><a name="3785" class="Symbol"
+      >:</a
+      ><a name="3786"
+      > </a
+      ><a name="3787" class="Symbol"
+      >&#8704;</a
+      ><a name="3788"
+      > </a
+      ><a name="3789" class="Symbol"
+      >{</a
+      ><a name="3790" href="lib.types.PathSet.html#3790" class="Bound"
+      >j</a
+      ><a name="3791"
+      > </a
+      ><a name="3792" href="lib.types.PathSet.html#3792" class="Bound"
+      >k</a
+      ><a name="3793" class="Symbol"
+      >}</a
+      ><a name="3794"
+      > </a
+      ><a name="3795" class="Symbol"
+      >{</a
+      ><a name="3796" href="lib.types.PathSet.html#3796" class="Bound"
+      >B</a
+      ><a name="3797"
+      > </a
+      ><a name="3798" class="Symbol"
+      >:</a
+      ><a name="3799"
+      > </a
+      ><a name="3800" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3804"
+      > </a
+      ><a name="3805" href="lib.types.PathSet.html#3790" class="Bound"
+      >j</a
+      ><a name="3806" class="Symbol"
+      >}</a
+      ><a name="3807"
+      > </a
+      ><a name="3808" class="Symbol"
+      >{</a
+      ><a name="3809" href="lib.types.PathSet.html#3809" class="Bound"
+      >C</a
+      ><a name="3810"
+      > </a
+      ><a name="3811" class="Symbol"
+      >:</a
+      ><a name="3812"
+      > </a
+      ><a name="3813" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3817"
+      > </a
+      ><a name="3818" href="lib.types.PathSet.html#3792" class="Bound"
+      >k</a
+      ><a name="3819" class="Symbol"
+      >}</a
+      ><a name="3820"
+      > </a
+      ><a name="3821" class="Symbol"
+      >(</a
+      ><a name="3822" href="lib.types.PathSet.html#3822" class="Bound"
+      >g</a
+      ><a name="3823"
+      > </a
+      ><a name="3824" class="Symbol"
+      >:</a
+      ><a name="3825"
+      > </a
+      ><a name="3826" href="lib.types.PathSet.html#3796" class="Bound"
+      >B</a
+      ><a name="3827"
+      > </a
+      ><a name="3828" class="Symbol"
+      >&#8594;</a
+      ><a name="3829"
+      > </a
+      ><a name="3830" href="lib.types.PathSet.html#3809" class="Bound"
+      >C</a
+      ><a name="3831" class="Symbol"
+      >)</a
+      ><a name="3832"
+      > </a
+      ><a name="3833" class="Symbol"
+      >(</a
+      ><a name="3834" href="lib.types.PathSet.html#3834" class="Bound"
+      >f</a
+      ><a name="3835"
+      > </a
+      ><a name="3836" class="Symbol"
+      >:</a
+      ><a name="3837"
+      > </a
+      ><a name="3838" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="3839"
+      > </a
+      ><a name="3840" class="Symbol"
+      >&#8594;</a
+      ><a name="3841"
+      > </a
+      ><a name="3842" href="lib.types.PathSet.html#3796" class="Bound"
+      >B</a
+      ><a name="3843" class="Symbol"
+      >)</a
+      ><a name="3844"
+      >
+      </a
+      ><a name="3851" class="Symbol"
+      >{</a
+      ><a name="3852" href="lib.types.PathSet.html#3852" class="Bound"
+      >x</a
+      ><a name="3853"
+      > </a
+      ><a name="3854" href="lib.types.PathSet.html#3854" class="Bound"
+      >y</a
+      ><a name="3855"
+      > </a
+      ><a name="3856" class="Symbol"
+      >:</a
+      ><a name="3857"
+      > </a
+      ><a name="3858" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="3859" class="Symbol"
+      >}</a
+      ><a name="3860"
+      > </a
+      ><a name="3861" class="Symbol"
+      >(</a
+      ><a name="3862" href="lib.types.PathSet.html#3862" class="Bound"
+      >p</a
+      ><a name="3863"
+      > </a
+      ><a name="3864" class="Symbol"
+      >:</a
+      ><a name="3865"
+      > </a
+      ><a name="3866" href="lib.types.PathSet.html#3852" class="Bound"
+      >x</a
+      ><a name="3867"
+      > </a
+      ><a name="3868" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="3870"
+      > </a
+      ><a name="3871" href="lib.types.PathSet.html#3854" class="Bound"
+      >y</a
+      ><a name="3872" class="Symbol"
+      >)</a
+      ><a name="3873"
+      > </a
+      ><a name="3874" class="Symbol"
+      >&#8594;</a
+      ><a name="3875"
+      > </a
+      ><a name="3876" href="lib.types.PathSet.html#704" class="Function"
+      >ap&#8320;</a
+      ><a name="3879"
+      > </a
+      ><a name="3880" class="Symbol"
+      >(</a
+      ><a name="3881" href="lib.types.PathSet.html#3822" class="Bound"
+      >g</a
+      ><a name="3882"
+      > </a
+      ><a name="3883" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3884"
+      > </a
+      ><a name="3885" href="lib.types.PathSet.html#3834" class="Bound"
+      >f</a
+      ><a name="3886" class="Symbol"
+      >)</a
+      ><a name="3887"
+      > </a
+      ><a name="3888" href="lib.types.PathSet.html#3862" class="Bound"
+      >p</a
+      ><a name="3889"
+      > </a
+      ><a name="3890" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3892"
+      > </a
+      ><a name="3893" href="lib.types.PathSet.html#704" class="Function"
+      >ap&#8320;</a
+      ><a name="3896"
+      > </a
+      ><a name="3897" href="lib.types.PathSet.html#3822" class="Bound"
+      >g</a
+      ><a name="3898"
+      > </a
+      ><a name="3899" class="Symbol"
+      >(</a
+      ><a name="3900" href="lib.types.PathSet.html#704" class="Function"
+      >ap&#8320;</a
+      ><a name="3903"
+      > </a
+      ><a name="3904" href="lib.types.PathSet.html#3834" class="Bound"
+      >f</a
+      ><a name="3905"
+      > </a
+      ><a name="3906" href="lib.types.PathSet.html#3862" class="Bound"
+      >p</a
+      ><a name="3907" class="Symbol"
+      >)</a
+      ><a name="3908"
+      >
+    </a
+      ><a name="3913" href="lib.types.PathSet.html#3779" class="Function"
+      >ap&#8320;-&#8728;</a
+      ><a name="3918"
+      > </a
+      ><a name="3919" href="lib.types.PathSet.html#3919" class="Bound"
+      >f</a
+      ><a name="3920"
+      > </a
+      ><a name="3921" href="lib.types.PathSet.html#3921" class="Bound"
+      >g</a
+      ><a name="3922"
+      > </a
+      ><a name="3923" class="Symbol"
+      >=</a
+      ><a name="3924"
+      > </a
+      ><a name="3925" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="3935"
+      >
+      </a
+      ><a name="3942" class="Symbol"
+      >(&#955;</a
+      ><a name="3944"
+      > </a
+      ><a name="3945" href="lib.types.PathSet.html#3945" class="Bound"
+      >_</a
+      ><a name="3946"
+      > </a
+      ><a name="3947" class="Symbol"
+      >&#8594;</a
+      ><a name="3948"
+      > </a
+      ><a name="3949" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="3964"
+      > </a
+      ><a name="3965" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3976" class="Symbol"
+      >)</a
+      ><a name="3977"
+      >
+      </a
+      ><a name="3984" class="Symbol"
+      >(&#955;</a
+      ><a name="3986"
+      > </a
+      ><a name="3987" href="lib.types.PathSet.html#3987" class="Bound"
+      >p</a
+      ><a name="3988"
+      > </a
+      ><a name="3989" class="Symbol"
+      >&#8594;</a
+      ><a name="3990"
+      > </a
+      ><a name="3991" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3993"
+      > </a
+      ><a name="3994" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[_]</a
+      ><a name="3997"
+      > </a
+      ><a name="3998" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="3999"
+      > </a
+      ><a name="4000" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="4004"
+      > </a
+      ><a name="4005" href="lib.types.PathSet.html#3919" class="Bound"
+      >f</a
+      ><a name="4006"
+      > </a
+      ><a name="4007" href="lib.types.PathSet.html#3921" class="Bound"
+      >g</a
+      ><a name="4008"
+      > </a
+      ><a name="4009" href="lib.types.PathSet.html#3987" class="Bound"
+      >p</a
+      ><a name="4010" class="Symbol"
+      >)</a
+      ><a name="4011"
+      >
+
+    </a
+      ><a name="4017" href="lib.types.PathSet.html#4017" class="Function"
+      >coe&#8320;-&#8729;&#8320;</a
+      ><a name="4024"
+      > </a
+      ><a name="4025" class="Symbol"
+      >:</a
+      ><a name="4026"
+      > </a
+      ><a name="4027" class="Symbol"
+      >{</a
+      ><a name="4028" href="lib.types.PathSet.html#4028" class="Bound"
+      >B</a
+      ><a name="4029"
+      > </a
+      ><a name="4030" href="lib.types.PathSet.html#4030" class="Bound"
+      >C</a
+      ><a name="4031"
+      > </a
+      ><a name="4032" class="Symbol"
+      >:</a
+      ><a name="4033"
+      > </a
+      ><a name="4034" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="4038"
+      > </a
+      ><a name="4039" href="lib.types.PathSet.html#1121" class="Bound"
+      >i</a
+      ><a name="4040" class="Symbol"
+      >}</a
+      ><a name="4041"
+      > </a
+      ><a name="4042" class="Symbol"
+      >(</a
+      ><a name="4043" href="lib.types.PathSet.html#4043" class="Bound"
+      >B-level</a
+      ><a name="4050"
+      > </a
+      ><a name="4051" class="Symbol"
+      >:</a
+      ><a name="4052"
+      > </a
+      ><a name="4053" href="lib.NType.html#455" class="Function"
+      >is-set</a
+      ><a name="4059"
+      > </a
+      ><a name="4060" href="lib.types.PathSet.html#4028" class="Bound"
+      >B</a
+      ><a name="4061" class="Symbol"
+      >)</a
+      ><a name="4062"
+      > </a
+      ><a name="4063" class="Symbol"
+      >(</a
+      ><a name="4064" href="lib.types.PathSet.html#4064" class="Bound"
+      >C-level</a
+      ><a name="4071"
+      > </a
+      ><a name="4072" class="Symbol"
+      >:</a
+      ><a name="4073"
+      > </a
+      ><a name="4074" href="lib.NType.html#455" class="Function"
+      >is-set</a
+      ><a name="4080"
+      > </a
+      ><a name="4081" href="lib.types.PathSet.html#4030" class="Bound"
+      >C</a
+      ><a name="4082" class="Symbol"
+      >)</a
+      ><a name="4083"
+      >
+      </a
+      ><a name="4090" class="Symbol"
+      >&#8594;</a
+      ><a name="4091"
+      > </a
+      ><a name="4092" class="Symbol"
+      >(</a
+      ><a name="4093" href="lib.types.PathSet.html#4093" class="Bound"
+      >p</a
+      ><a name="4094"
+      > </a
+      ><a name="4095" class="Symbol"
+      >:</a
+      ><a name="4096"
+      > </a
+      ><a name="4097" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="4098"
+      > </a
+      ><a name="4099" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="4101"
+      > </a
+      ><a name="4102" href="lib.types.PathSet.html#4028" class="Bound"
+      >B</a
+      ><a name="4103" class="Symbol"
+      >)</a
+      ><a name="4104"
+      > </a
+      ><a name="4105" class="Symbol"
+      >(</a
+      ><a name="4106" href="lib.types.PathSet.html#4106" class="Bound"
+      >q</a
+      ><a name="4107"
+      > </a
+      ><a name="4108" class="Symbol"
+      >:</a
+      ><a name="4109"
+      > </a
+      ><a name="4110" href="lib.types.PathSet.html#4028" class="Bound"
+      >B</a
+      ><a name="4111"
+      > </a
+      ><a name="4112" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="4114"
+      > </a
+      ><a name="4115" href="lib.types.PathSet.html#4030" class="Bound"
+      >C</a
+      ><a name="4116" class="Symbol"
+      >)</a
+      ><a name="4117"
+      > </a
+      ><a name="4118" class="Symbol"
+      >(</a
+      ><a name="4119" href="lib.types.PathSet.html#4119" class="Bound"
+      >a</a
+      ><a name="4120"
+      > </a
+      ><a name="4121" class="Symbol"
+      >:</a
+      ><a name="4122"
+      > </a
+      ><a name="4123" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="4124" class="Symbol"
+      >)</a
+      ><a name="4125"
+      >
+      </a
+      ><a name="4132" class="Symbol"
+      >&#8594;</a
+      ><a name="4133"
+      > </a
+      ><a name="4134" href="lib.types.PathSet.html#834" class="Function"
+      >coe&#8320;</a
+      ><a name="4138"
+      > </a
+      ><a name="4139" href="lib.types.PathSet.html#4064" class="Bound"
+      >C-level</a
+      ><a name="4146"
+      > </a
+      ><a name="4147" class="Symbol"
+      >(</a
+      ><a name="4148" href="lib.types.PathSet.html#4093" class="Bound"
+      >p</a
+      ><a name="4149"
+      > </a
+      ><a name="4150" href="lib.types.PathSet.html#393" class="Function Operator"
+      >&#8729;&#8320;</a
+      ><a name="4152"
+      > </a
+      ><a name="4153" href="lib.types.PathSet.html#4106" class="Bound"
+      >q</a
+      ><a name="4154" class="Symbol"
+      >)</a
+      ><a name="4155"
+      > </a
+      ><a name="4156" href="lib.types.PathSet.html#4119" class="Bound"
+      >a</a
+      ><a name="4157"
+      > </a
+      ><a name="4158" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4160"
+      > </a
+      ><a name="4161" href="lib.types.PathSet.html#834" class="Function"
+      >coe&#8320;</a
+      ><a name="4165"
+      > </a
+      ><a name="4166" href="lib.types.PathSet.html#4064" class="Bound"
+      >C-level</a
+      ><a name="4173"
+      > </a
+      ><a name="4174" href="lib.types.PathSet.html#4106" class="Bound"
+      >q</a
+      ><a name="4175"
+      > </a
+      ><a name="4176" class="Symbol"
+      >(</a
+      ><a name="4177" href="lib.types.PathSet.html#834" class="Function"
+      >coe&#8320;</a
+      ><a name="4181"
+      > </a
+      ><a name="4182" href="lib.types.PathSet.html#4043" class="Bound"
+      >B-level</a
+      ><a name="4189"
+      > </a
+      ><a name="4190" href="lib.types.PathSet.html#4093" class="Bound"
+      >p</a
+      ><a name="4191"
+      > </a
+      ><a name="4192" href="lib.types.PathSet.html#4119" class="Bound"
+      >a</a
+      ><a name="4193" class="Symbol"
+      >)</a
+      ><a name="4194"
+      >
+    </a
+      ><a name="4199" href="lib.types.PathSet.html#4017" class="Function"
+      >coe&#8320;-&#8729;&#8320;</a
+      ><a name="4206"
+      > </a
+      ><a name="4207" href="lib.types.PathSet.html#4207" class="Bound"
+      >B-level</a
+      ><a name="4214"
+      > </a
+      ><a name="4215" href="lib.types.PathSet.html#4215" class="Bound"
+      >C-level</a
+      ><a name="4222"
+      > </a
+      ><a name="4223" class="Symbol"
+      >=</a
+      ><a name="4224"
+      > </a
+      ><a name="4225" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="4235"
+      >
+      </a
+      ><a name="4242" class="Symbol"
+      >(&#955;</a
+      ><a name="4244"
+      > </a
+      ><a name="4245" href="lib.types.PathSet.html#4245" class="Bound"
+      >_</a
+      ><a name="4246"
+      > </a
+      ><a name="4247" class="Symbol"
+      >&#8594;</a
+      ><a name="4248"
+      > </a
+      ><a name="4249" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="4257"
+      > </a
+      ><a name="4258" class="Symbol"
+      >&#955;</a
+      ><a name="4259"
+      > </a
+      ><a name="4260" href="lib.types.PathSet.html#4260" class="Bound"
+      >_</a
+      ><a name="4261"
+      > </a
+      ><a name="4262" class="Symbol"
+      >&#8594;</a
+      ><a name="4263"
+      > </a
+      ><a name="4264" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="4272"
+      > </a
+      ><a name="4273" class="Symbol"
+      >&#955;</a
+      ><a name="4274"
+      > </a
+      ><a name="4275" href="lib.types.PathSet.html#4275" class="Bound"
+      >_</a
+      ><a name="4276"
+      > </a
+      ><a name="4277" class="Symbol"
+      >&#8594;</a
+      ><a name="4278"
+      > </a
+      ><a name="4279" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="4294"
+      > </a
+      ><a name="4295" href="lib.types.PathSet.html#4215" class="Bound"
+      >C-level</a
+      ><a name="4302" class="Symbol"
+      >)</a
+      ><a name="4303"
+      >
+      </a
+      ><a name="4310" class="Symbol"
+      >(&#955;</a
+      ><a name="4312"
+      > </a
+      ><a name="4313" href="lib.types.PathSet.html#4313" class="Bound"
+      >p</a
+      ><a name="4314"
+      > </a
+      ><a name="4315" class="Symbol"
+      >&#8594;</a
+      ><a name="4316"
+      > </a
+      ><a name="4317" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="4327"
+      >
+        </a
+      ><a name="4336" class="Symbol"
+      >(&#955;</a
+      ><a name="4338"
+      > </a
+      ><a name="4339" href="lib.types.PathSet.html#4339" class="Bound"
+      >_</a
+      ><a name="4340"
+      > </a
+      ><a name="4341" class="Symbol"
+      >&#8594;</a
+      ><a name="4342"
+      > </a
+      ><a name="4343" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="4351"
+      > </a
+      ><a name="4352" class="Symbol"
+      >&#955;</a
+      ><a name="4353"
+      > </a
+      ><a name="4354" href="lib.types.PathSet.html#4354" class="Bound"
+      >_</a
+      ><a name="4355"
+      > </a
+      ><a name="4356" class="Symbol"
+      >&#8594;</a
+      ><a name="4357"
+      > </a
+      ><a name="4358" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="4373"
+      > </a
+      ><a name="4374" href="lib.types.PathSet.html#4215" class="Bound"
+      >C-level</a
+      ><a name="4381" class="Symbol"
+      >)</a
+      ><a name="4382"
+      >
+        </a
+      ><a name="4391" class="Symbol"
+      >(&#955;</a
+      ><a name="4393"
+      > </a
+      ><a name="4394" href="lib.types.PathSet.html#4394" class="Bound"
+      >q</a
+      ><a name="4395"
+      > </a
+      ><a name="4396" href="lib.types.PathSet.html#4396" class="Bound"
+      >a</a
+      ><a name="4397"
+      > </a
+      ><a name="4398" class="Symbol"
+      >&#8594;</a
+      ><a name="4399"
+      > </a
+      ><a name="4400" href="lib.PathFunctor.html#2322" class="Function"
+      >coe-&#8729;</a
+      ><a name="4405"
+      > </a
+      ><a name="4406" href="lib.types.PathSet.html#4313" class="Bound"
+      >p</a
+      ><a name="4407"
+      > </a
+      ><a name="4408" href="lib.types.PathSet.html#4394" class="Bound"
+      >q</a
+      ><a name="4409"
+      > </a
+      ><a name="4410" href="lib.types.PathSet.html#4396" class="Bound"
+      >a</a
+      ><a name="4411" class="Symbol"
+      >))</a
+      ><a name="4413"
+      >
+
+    </a
+      ><a name="4419" href="lib.types.PathSet.html#4419" class="Function"
+      >transp&#8320;-&#8729;&#8320;</a
+      ><a name="4429"
+      > </a
+      ><a name="4430" class="Symbol"
+      >:</a
+      ><a name="4431"
+      > </a
+      ><a name="4432" class="Symbol"
+      >&#8704;</a
+      ><a name="4433"
+      > </a
+      ><a name="4434" class="Symbol"
+      >{</a
+      ><a name="4435" href="lib.types.PathSet.html#4435" class="Bound"
+      >j</a
+      ><a name="4436" class="Symbol"
+      >}</a
+      ><a name="4437"
+      > </a
+      ><a name="4438" class="Symbol"
+      >{</a
+      ><a name="4439" href="lib.types.PathSet.html#4439" class="Bound"
+      >B</a
+      ><a name="4440"
+      > </a
+      ><a name="4441" class="Symbol"
+      >:</a
+      ><a name="4442"
+      > </a
+      ><a name="4443" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="4444"
+      > </a
+      ><a name="4445" class="Symbol"
+      >&#8594;</a
+      ><a name="4446"
+      > </a
+      ><a name="4447" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="4451"
+      > </a
+      ><a name="4452" href="lib.types.PathSet.html#4435" class="Bound"
+      >j</a
+      ><a name="4453" class="Symbol"
+      >}</a
+      ><a name="4454"
+      >
+      </a
+      ><a name="4461" class="Symbol"
+      >&#8594;</a
+      ><a name="4462"
+      > </a
+      ><a name="4463" class="Symbol"
+      >(</a
+      ><a name="4464" href="lib.types.PathSet.html#4464" class="Bound"
+      >B-level</a
+      ><a name="4471"
+      > </a
+      ><a name="4472" class="Symbol"
+      >:</a
+      ><a name="4473"
+      > </a
+      ><a name="4474" class="Symbol"
+      >&#8704;</a
+      ><a name="4475"
+      > </a
+      ><a name="4476" href="lib.types.PathSet.html#4476" class="Bound"
+      >a</a
+      ><a name="4477"
+      > </a
+      ><a name="4478" class="Symbol"
+      >&#8594;</a
+      ><a name="4479"
+      > </a
+      ><a name="4480" href="lib.NType.html#455" class="Function"
+      >is-set</a
+      ><a name="4486"
+      > </a
+      ><a name="4487" class="Symbol"
+      >(</a
+      ><a name="4488" href="lib.types.PathSet.html#4439" class="Bound"
+      >B</a
+      ><a name="4489"
+      > </a
+      ><a name="4490" href="lib.types.PathSet.html#4476" class="Bound"
+      >a</a
+      ><a name="4491" class="Symbol"
+      >))</a
+      ><a name="4493"
+      >
+      </a
+      ><a name="4500" class="Symbol"
+      >&#8594;</a
+      ><a name="4501"
+      > </a
+      ><a name="4502" class="Symbol"
+      >{</a
+      ><a name="4503" href="lib.types.PathSet.html#4503" class="Bound"
+      >x</a
+      ><a name="4504"
+      > </a
+      ><a name="4505" href="lib.types.PathSet.html#4505" class="Bound"
+      >y</a
+      ><a name="4506"
+      > </a
+      ><a name="4507" href="lib.types.PathSet.html#4507" class="Bound"
+      >z</a
+      ><a name="4508"
+      > </a
+      ><a name="4509" class="Symbol"
+      >:</a
+      ><a name="4510"
+      > </a
+      ><a name="4511" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="4512" class="Symbol"
+      >}</a
+      ><a name="4513"
+      > </a
+      ><a name="4514" class="Symbol"
+      >(</a
+      ><a name="4515" href="lib.types.PathSet.html#4515" class="Bound"
+      >p</a
+      ><a name="4516"
+      > </a
+      ><a name="4517" class="Symbol"
+      >:</a
+      ><a name="4518"
+      > </a
+      ><a name="4519" href="lib.types.PathSet.html#4503" class="Bound"
+      >x</a
+      ><a name="4520"
+      > </a
+      ><a name="4521" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="4523"
+      > </a
+      ><a name="4524" href="lib.types.PathSet.html#4505" class="Bound"
+      >y</a
+      ><a name="4525" class="Symbol"
+      >)</a
+      ><a name="4526"
+      > </a
+      ><a name="4527" class="Symbol"
+      >(</a
+      ><a name="4528" href="lib.types.PathSet.html#4528" class="Bound"
+      >q</a
+      ><a name="4529"
+      > </a
+      ><a name="4530" class="Symbol"
+      >:</a
+      ><a name="4531"
+      > </a
+      ><a name="4532" href="lib.types.PathSet.html#4505" class="Bound"
+      >y</a
+      ><a name="4533"
+      > </a
+      ><a name="4534" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="4536"
+      > </a
+      ><a name="4537" href="lib.types.PathSet.html#4507" class="Bound"
+      >z</a
+      ><a name="4538" class="Symbol"
+      >)</a
+      ><a name="4539"
+      > </a
+      ><a name="4540" class="Symbol"
+      >(</a
+      ><a name="4541" href="lib.types.PathSet.html#4541" class="Bound"
+      >b</a
+      ><a name="4542"
+      > </a
+      ><a name="4543" class="Symbol"
+      >:</a
+      ><a name="4544"
+      > </a
+      ><a name="4545" href="lib.types.PathSet.html#4439" class="Bound"
+      >B</a
+      ><a name="4546"
+      > </a
+      ><a name="4547" href="lib.types.PathSet.html#4503" class="Bound"
+      >x</a
+      ><a name="4548" class="Symbol"
+      >)</a
+      ><a name="4549"
+      >
+      </a
+      ><a name="4556" class="Symbol"
+      >&#8594;</a
+      ><a name="4557"
+      > </a
+      ><a name="4558" href="lib.types.PathSet.html#947" class="Function"
+      >transport&#8320;</a
+      ><a name="4568"
+      > </a
+      ><a name="4569" href="lib.types.PathSet.html#4439" class="Bound"
+      >B</a
+      ><a name="4570"
+      > </a
+      ><a name="4571" class="Symbol"
+      >(</a
+      ><a name="4572" href="lib.types.PathSet.html#4464" class="Bound"
+      >B-level</a
+      ><a name="4579"
+      > </a
+      ><a name="4580" class="Symbol"
+      >_)</a
+      ><a name="4582"
+      > </a
+      ><a name="4583" class="Symbol"
+      >(</a
+      ><a name="4584" href="lib.types.PathSet.html#4515" class="Bound"
+      >p</a
+      ><a name="4585"
+      > </a
+      ><a name="4586" href="lib.types.PathSet.html#393" class="Function Operator"
+      >&#8729;&#8320;</a
+      ><a name="4588"
+      > </a
+      ><a name="4589" href="lib.types.PathSet.html#4528" class="Bound"
+      >q</a
+      ><a name="4590" class="Symbol"
+      >)</a
+      ><a name="4591"
+      > </a
+      ><a name="4592" href="lib.types.PathSet.html#4541" class="Bound"
+      >b</a
+      ><a name="4593"
+      >
+      </a
+      ><a name="4600" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4602"
+      > </a
+      ><a name="4603" href="lib.types.PathSet.html#947" class="Function"
+      >transport&#8320;</a
+      ><a name="4613"
+      > </a
+      ><a name="4614" href="lib.types.PathSet.html#4439" class="Bound"
+      >B</a
+      ><a name="4615"
+      > </a
+      ><a name="4616" class="Symbol"
+      >(</a
+      ><a name="4617" href="lib.types.PathSet.html#4464" class="Bound"
+      >B-level</a
+      ><a name="4624"
+      > </a
+      ><a name="4625" class="Symbol"
+      >_)</a
+      ><a name="4627"
+      > </a
+      ><a name="4628" href="lib.types.PathSet.html#4528" class="Bound"
+      >q</a
+      ><a name="4629"
+      > </a
+      ><a name="4630" class="Symbol"
+      >(</a
+      ><a name="4631" href="lib.types.PathSet.html#947" class="Function"
+      >transport&#8320;</a
+      ><a name="4641"
+      > </a
+      ><a name="4642" href="lib.types.PathSet.html#4439" class="Bound"
+      >B</a
+      ><a name="4643"
+      > </a
+      ><a name="4644" class="Symbol"
+      >(</a
+      ><a name="4645" href="lib.types.PathSet.html#4464" class="Bound"
+      >B-level</a
+      ><a name="4652"
+      > </a
+      ><a name="4653" class="Symbol"
+      >_)</a
+      ><a name="4655"
+      > </a
+      ><a name="4656" href="lib.types.PathSet.html#4515" class="Bound"
+      >p</a
+      ><a name="4657"
+      > </a
+      ><a name="4658" href="lib.types.PathSet.html#4541" class="Bound"
+      >b</a
+      ><a name="4659" class="Symbol"
+      >)</a
+      ><a name="4660"
+      >
+    </a
+      ><a name="4665" href="lib.types.PathSet.html#4419" class="Function"
+      >transp&#8320;-&#8729;&#8320;</a
+      ><a name="4675"
+      > </a
+      ><a name="4676" href="lib.types.PathSet.html#4676" class="Bound"
+      >B-level</a
+      ><a name="4683"
+      > </a
+      ><a name="4684" class="Symbol"
+      >=</a
+      ><a name="4685"
+      > </a
+      ><a name="4686" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="4696"
+      >
+      </a
+      ><a name="4703" class="Symbol"
+      >(&#955;</a
+      ><a name="4705"
+      > </a
+      ><a name="4706" href="lib.types.PathSet.html#4706" class="Bound"
+      >_</a
+      ><a name="4707"
+      > </a
+      ><a name="4708" class="Symbol"
+      >&#8594;</a
+      ><a name="4709"
+      > </a
+      ><a name="4710" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="4718"
+      > </a
+      ><a name="4719" class="Symbol"
+      >&#955;</a
+      ><a name="4720"
+      > </a
+      ><a name="4721" href="lib.types.PathSet.html#4721" class="Bound"
+      >_</a
+      ><a name="4722"
+      > </a
+      ><a name="4723" class="Symbol"
+      >&#8594;</a
+      ><a name="4724"
+      > </a
+      ><a name="4725" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="4733"
+      > </a
+      ><a name="4734" class="Symbol"
+      >&#955;</a
+      ><a name="4735"
+      > </a
+      ><a name="4736" href="lib.types.PathSet.html#4736" class="Bound"
+      >_</a
+      ><a name="4737"
+      > </a
+      ><a name="4738" class="Symbol"
+      >&#8594;</a
+      ><a name="4739"
+      > </a
+      ><a name="4740" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="4755"
+      > </a
+      ><a name="4756" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="4757"
+      > </a
+      ><a name="4758" href="lib.types.PathSet.html#4676" class="Bound"
+      >B-level</a
+      ><a name="4765"
+      > </a
+      ><a name="4766" class="Symbol"
+      >_)</a
+      ><a name="4768"
+      >
+      </a
+      ><a name="4775" class="Symbol"
+      >(&#955;</a
+      ><a name="4777"
+      > </a
+      ><a name="4778" href="lib.types.PathSet.html#4778" class="Bound"
+      >p</a
+      ><a name="4779"
+      > </a
+      ><a name="4780" class="Symbol"
+      >&#8594;</a
+      ><a name="4781"
+      > </a
+      ><a name="4782" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="4792"
+      >
+        </a
+      ><a name="4801" class="Symbol"
+      >(&#955;</a
+      ><a name="4803"
+      > </a
+      ><a name="4804" href="lib.types.PathSet.html#4804" class="Bound"
+      >_</a
+      ><a name="4805"
+      > </a
+      ><a name="4806" class="Symbol"
+      >&#8594;</a
+      ><a name="4807"
+      > </a
+      ><a name="4808" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="4816"
+      > </a
+      ><a name="4817" class="Symbol"
+      >&#955;</a
+      ><a name="4818"
+      > </a
+      ><a name="4819" href="lib.types.PathSet.html#4819" class="Bound"
+      >_</a
+      ><a name="4820"
+      > </a
+      ><a name="4821" class="Symbol"
+      >&#8594;</a
+      ><a name="4822"
+      > </a
+      ><a name="4823" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="4838"
+      > </a
+      ><a name="4839" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="4840"
+      > </a
+      ><a name="4841" href="lib.types.PathSet.html#4676" class="Bound"
+      >B-level</a
+      ><a name="4848"
+      > </a
+      ><a name="4849" class="Symbol"
+      >_)</a
+      ><a name="4851"
+      >
+        </a
+      ><a name="4860" class="Symbol"
+      >(&#955;</a
+      ><a name="4862"
+      > </a
+      ><a name="4863" href="lib.types.PathSet.html#4863" class="Bound"
+      >q</a
+      ><a name="4864"
+      > </a
+      ><a name="4865" href="lib.types.PathSet.html#4865" class="Bound"
+      >b</a
+      ><a name="4866"
+      > </a
+      ><a name="4867" class="Symbol"
+      >&#8594;</a
+      ><a name="4868"
+      > </a
+      ><a name="4869" href="lib.PathFunctor.html#3215" class="Function"
+      >transp-&#8729;</a
+      ><a name="4877"
+      > </a
+      ><a name="4878" href="lib.types.PathSet.html#4778" class="Bound"
+      >p</a
+      ><a name="4879"
+      > </a
+      ><a name="4880" href="lib.types.PathSet.html#4863" class="Bound"
+      >q</a
+      ><a name="4881"
+      > </a
+      ><a name="4882" href="lib.types.PathSet.html#4865" class="Bound"
+      >b</a
+      ><a name="4883" class="Symbol"
+      >))</a
+      ><a name="4885"
+      >
+
+    </a
+      ><a name="4891" href="lib.types.PathSet.html#4891" class="Function"
+      >transp&#8320;-&#8729;&#8320;'</a
+      ><a name="4902"
+      > </a
+      ><a name="4903" class="Symbol"
+      >:</a
+      ><a name="4904"
+      > </a
+      ><a name="4905" class="Symbol"
+      >&#8704;</a
+      ><a name="4906"
+      > </a
+      ><a name="4907" class="Symbol"
+      >{</a
+      ><a name="4908" href="lib.types.PathSet.html#4908" class="Bound"
+      >j</a
+      ><a name="4909" class="Symbol"
+      >}</a
+      ><a name="4910"
+      > </a
+      ><a name="4911" class="Symbol"
+      >{</a
+      ><a name="4912" href="lib.types.PathSet.html#4912" class="Bound"
+      >B</a
+      ><a name="4913"
+      > </a
+      ><a name="4914" class="Symbol"
+      >:</a
+      ><a name="4915"
+      > </a
+      ><a name="4916" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="4917"
+      > </a
+      ><a name="4918" class="Symbol"
+      >&#8594;</a
+      ><a name="4919"
+      > </a
+      ><a name="4920" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="4924"
+      > </a
+      ><a name="4925" href="lib.types.PathSet.html#4908" class="Bound"
+      >j</a
+      ><a name="4926" class="Symbol"
+      >}</a
+      ><a name="4927"
+      >
+      </a
+      ><a name="4934" class="Symbol"
+      >&#8594;</a
+      ><a name="4935"
+      > </a
+      ><a name="4936" class="Symbol"
+      >(</a
+      ><a name="4937" href="lib.types.PathSet.html#4937" class="Bound"
+      >B-level</a
+      ><a name="4944"
+      > </a
+      ><a name="4945" class="Symbol"
+      >:</a
+      ><a name="4946"
+      > </a
+      ><a name="4947" class="Symbol"
+      >&#8704;</a
+      ><a name="4948"
+      > </a
+      ><a name="4949" href="lib.types.PathSet.html#4949" class="Bound"
+      >a</a
+      ><a name="4950"
+      > </a
+      ><a name="4951" class="Symbol"
+      >&#8594;</a
+      ><a name="4952"
+      > </a
+      ><a name="4953" href="lib.NType.html#455" class="Function"
+      >is-set</a
+      ><a name="4959"
+      > </a
+      ><a name="4960" class="Symbol"
+      >(</a
+      ><a name="4961" href="lib.types.PathSet.html#4912" class="Bound"
+      >B</a
+      ><a name="4962"
+      > </a
+      ><a name="4963" href="lib.types.PathSet.html#4949" class="Bound"
+      >a</a
+      ><a name="4964" class="Symbol"
+      >))</a
+      ><a name="4966"
+      >
+      </a
+      ><a name="4973" class="Symbol"
+      >&#8594;</a
+      ><a name="4974"
+      > </a
+      ><a name="4975" class="Symbol"
+      >{</a
+      ><a name="4976" href="lib.types.PathSet.html#4976" class="Bound"
+      >x</a
+      ><a name="4977"
+      > </a
+      ><a name="4978" href="lib.types.PathSet.html#4978" class="Bound"
+      >y</a
+      ><a name="4979"
+      > </a
+      ><a name="4980" href="lib.types.PathSet.html#4980" class="Bound"
+      >z</a
+      ><a name="4981"
+      > </a
+      ><a name="4982" class="Symbol"
+      >:</a
+      ><a name="4983"
+      > </a
+      ><a name="4984" href="lib.types.PathSet.html#1125" class="Bound"
+      >A</a
+      ><a name="4985" class="Symbol"
+      >}</a
+      ><a name="4986"
+      > </a
+      ><a name="4987" class="Symbol"
+      >(</a
+      ><a name="4988" href="lib.types.PathSet.html#4988" class="Bound"
+      >p</a
+      ><a name="4989"
+      > </a
+      ><a name="4990" class="Symbol"
+      >:</a
+      ><a name="4991"
+      > </a
+      ><a name="4992" href="lib.types.PathSet.html#4976" class="Bound"
+      >x</a
+      ><a name="4993"
+      > </a
+      ><a name="4994" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="4996"
+      > </a
+      ><a name="4997" href="lib.types.PathSet.html#4978" class="Bound"
+      >y</a
+      ><a name="4998" class="Symbol"
+      >)</a
+      ><a name="4999"
+      > </a
+      ><a name="5000" class="Symbol"
+      >(</a
+      ><a name="5001" href="lib.types.PathSet.html#5001" class="Bound"
+      >q</a
+      ><a name="5002"
+      > </a
+      ><a name="5003" class="Symbol"
+      >:</a
+      ><a name="5004"
+      > </a
+      ><a name="5005" href="lib.types.PathSet.html#4978" class="Bound"
+      >y</a
+      ><a name="5006"
+      > </a
+      ><a name="5007" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="5009"
+      > </a
+      ><a name="5010" href="lib.types.PathSet.html#4980" class="Bound"
+      >z</a
+      ><a name="5011" class="Symbol"
+      >)</a
+      ><a name="5012"
+      > </a
+      ><a name="5013" class="Symbol"
+      >(</a
+      ><a name="5014" href="lib.types.PathSet.html#5014" class="Bound"
+      >b</a
+      ><a name="5015"
+      > </a
+      ><a name="5016" class="Symbol"
+      >:</a
+      ><a name="5017"
+      > </a
+      ><a name="5018" href="lib.types.PathSet.html#4912" class="Bound"
+      >B</a
+      ><a name="5019"
+      > </a
+      ><a name="5020" href="lib.types.PathSet.html#4976" class="Bound"
+      >x</a
+      ><a name="5021" class="Symbol"
+      >)</a
+      ><a name="5022"
+      >
+      </a
+      ><a name="5029" class="Symbol"
+      >&#8594;</a
+      ><a name="5030"
+      > </a
+      ><a name="5031" href="lib.types.PathSet.html#947" class="Function"
+      >transport&#8320;</a
+      ><a name="5041"
+      > </a
+      ><a name="5042" href="lib.types.PathSet.html#4912" class="Bound"
+      >B</a
+      ><a name="5043"
+      > </a
+      ><a name="5044" class="Symbol"
+      >(</a
+      ><a name="5045" href="lib.types.PathSet.html#4937" class="Bound"
+      >B-level</a
+      ><a name="5052"
+      > </a
+      ><a name="5053" class="Symbol"
+      >_)</a
+      ><a name="5055"
+      > </a
+      ><a name="5056" class="Symbol"
+      >(</a
+      ><a name="5057" href="lib.types.PathSet.html#4988" class="Bound"
+      >p</a
+      ><a name="5058"
+      > </a
+      ><a name="5059" href="lib.types.PathSet.html#482" class="Function Operator"
+      >&#8729;&#8320;'</a
+      ><a name="5062"
+      > </a
+      ><a name="5063" href="lib.types.PathSet.html#5001" class="Bound"
+      >q</a
+      ><a name="5064" class="Symbol"
+      >)</a
+      ><a name="5065"
+      > </a
+      ><a name="5066" href="lib.types.PathSet.html#5014" class="Bound"
+      >b</a
+      ><a name="5067"
+      >
+      </a
+      ><a name="5074" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5076"
+      > </a
+      ><a name="5077" href="lib.types.PathSet.html#947" class="Function"
+      >transport&#8320;</a
+      ><a name="5087"
+      > </a
+      ><a name="5088" href="lib.types.PathSet.html#4912" class="Bound"
+      >B</a
+      ><a name="5089"
+      > </a
+      ><a name="5090" class="Symbol"
+      >(</a
+      ><a name="5091" href="lib.types.PathSet.html#4937" class="Bound"
+      >B-level</a
+      ><a name="5098"
+      > </a
+      ><a name="5099" class="Symbol"
+      >_)</a
+      ><a name="5101"
+      > </a
+      ><a name="5102" href="lib.types.PathSet.html#5001" class="Bound"
+      >q</a
+      ><a name="5103"
+      > </a
+      ><a name="5104" class="Symbol"
+      >(</a
+      ><a name="5105" href="lib.types.PathSet.html#947" class="Function"
+      >transport&#8320;</a
+      ><a name="5115"
+      > </a
+      ><a name="5116" href="lib.types.PathSet.html#4912" class="Bound"
+      >B</a
+      ><a name="5117"
+      > </a
+      ><a name="5118" class="Symbol"
+      >(</a
+      ><a name="5119" href="lib.types.PathSet.html#4937" class="Bound"
+      >B-level</a
+      ><a name="5126"
+      > </a
+      ><a name="5127" class="Symbol"
+      >_)</a
+      ><a name="5129"
+      > </a
+      ><a name="5130" href="lib.types.PathSet.html#4988" class="Bound"
+      >p</a
+      ><a name="5131"
+      > </a
+      ><a name="5132" href="lib.types.PathSet.html#5014" class="Bound"
+      >b</a
+      ><a name="5133" class="Symbol"
+      >)</a
+      ><a name="5134"
+      >
+    </a
+      ><a name="5139" href="lib.types.PathSet.html#4891" class="Function"
+      >transp&#8320;-&#8729;&#8320;'</a
+      ><a name="5150"
+      > </a
+      ><a name="5151" href="lib.types.PathSet.html#5151" class="Bound"
+      >B-level</a
+      ><a name="5158"
+      > </a
+      ><a name="5159" class="Symbol"
+      >=</a
+      ><a name="5160"
+      > </a
+      ><a name="5161" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="5171"
+      >
+      </a
+      ><a name="5178" class="Symbol"
+      >(&#955;</a
+      ><a name="5180"
+      > </a
+      ><a name="5181" href="lib.types.PathSet.html#5181" class="Bound"
+      >_</a
+      ><a name="5182"
+      > </a
+      ><a name="5183" class="Symbol"
+      >&#8594;</a
+      ><a name="5184"
+      > </a
+      ><a name="5185" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="5193"
+      > </a
+      ><a name="5194" class="Symbol"
+      >&#955;</a
+      ><a name="5195"
+      > </a
+      ><a name="5196" href="lib.types.PathSet.html#5196" class="Bound"
+      >_</a
+      ><a name="5197"
+      > </a
+      ><a name="5198" class="Symbol"
+      >&#8594;</a
+      ><a name="5199"
+      > </a
+      ><a name="5200" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="5208"
+      > </a
+      ><a name="5209" class="Symbol"
+      >&#955;</a
+      ><a name="5210"
+      > </a
+      ><a name="5211" href="lib.types.PathSet.html#5211" class="Bound"
+      >_</a
+      ><a name="5212"
+      > </a
+      ><a name="5213" class="Symbol"
+      >&#8594;</a
+      ><a name="5214"
+      > </a
+      ><a name="5215" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="5230"
+      > </a
+      ><a name="5231" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="5232"
+      > </a
+      ><a name="5233" href="lib.types.PathSet.html#5151" class="Bound"
+      >B-level</a
+      ><a name="5240"
+      > </a
+      ><a name="5241" class="Symbol"
+      >_)</a
+      ><a name="5243"
+      >
+      </a
+      ><a name="5250" class="Symbol"
+      >(&#955;</a
+      ><a name="5252"
+      > </a
+      ><a name="5253" href="lib.types.PathSet.html#5253" class="Bound"
+      >p</a
+      ><a name="5254"
+      > </a
+      ><a name="5255" class="Symbol"
+      >&#8594;</a
+      ><a name="5256"
+      > </a
+      ><a name="5257" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="5267"
+      >
+        </a
+      ><a name="5276" class="Symbol"
+      >(&#955;</a
+      ><a name="5278"
+      > </a
+      ><a name="5279" href="lib.types.PathSet.html#5279" class="Bound"
+      >_</a
+      ><a name="5280"
+      > </a
+      ><a name="5281" class="Symbol"
+      >&#8594;</a
+      ><a name="5282"
+      > </a
+      ><a name="5283" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="5291"
+      > </a
+      ><a name="5292" class="Symbol"
+      >&#955;</a
+      ><a name="5293"
+      > </a
+      ><a name="5294" href="lib.types.PathSet.html#5294" class="Bound"
+      >_</a
+      ><a name="5295"
+      > </a
+      ><a name="5296" class="Symbol"
+      >&#8594;</a
+      ><a name="5297"
+      > </a
+      ><a name="5298" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="5313"
+      > </a
+      ><a name="5314" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="5315"
+      > </a
+      ><a name="5316" href="lib.types.PathSet.html#5151" class="Bound"
+      >B-level</a
+      ><a name="5323"
+      > </a
+      ><a name="5324" class="Symbol"
+      >_)</a
+      ><a name="5326"
+      >
+        </a
+      ><a name="5335" class="Symbol"
+      >(&#955;</a
+      ><a name="5337"
+      > </a
+      ><a name="5338" href="lib.types.PathSet.html#5338" class="Bound"
+      >q</a
+      ><a name="5339"
+      > </a
+      ><a name="5340" href="lib.types.PathSet.html#5340" class="Bound"
+      >b</a
+      ><a name="5341"
+      > </a
+      ><a name="5342" class="Symbol"
+      >&#8594;</a
+      ><a name="5343"
+      > </a
+      ><a name="5344" href="lib.PathFunctor.html#3399" class="Function"
+      >transp-&#8729;'</a
+      ><a name="5353"
+      > </a
+      ><a name="5354" href="lib.types.PathSet.html#5253" class="Bound"
+      >p</a
+      ><a name="5355"
+      > </a
+      ><a name="5356" href="lib.types.PathSet.html#5338" class="Bound"
+      >q</a
+      ><a name="5357"
+      > </a
+      ><a name="5358" href="lib.types.PathSet.html#5340" class="Bound"
+      >b</a
+      ><a name="5359" class="Symbol"
+      >))</a
+      ><a name="5361"
+      >
+
+</a
+      ><a name="5363" class="Comment"
+      >-- favonia: one should rethink about this part</a
+      ><a name="5409"
+      >
+</a
+      ><a name="5410" class="Comment"
+      >-- it is using transp, not following the overall trend to favor PathOver</a
+      ><a name="5482"
+      >
+</a
+      ><a name="5483" class="Keyword"
+      >module</a
+      ><a name="5489"
+      > </a
+      ><a name="5490" href="lib.types.PathSet.html#5490" class="Module"
+      >_</a
+      ><a name="5491"
+      > </a
+      ><a name="5492" class="Symbol"
+      >{</a
+      ><a name="5493" href="lib.types.PathSet.html#5493" class="Bound"
+      >i</a
+      ><a name="5494" class="Symbol"
+      >}</a
+      ><a name="5495"
+      > </a
+      ><a name="5496" class="Symbol"
+      >{</a
+      ><a name="5497" href="lib.types.PathSet.html#5497" class="Bound"
+      >A</a
+      ><a name="5498"
+      > </a
+      ><a name="5499" class="Symbol"
+      >:</a
+      ><a name="5500"
+      > </a
+      ><a name="5501" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="5505"
+      > </a
+      ><a name="5506" href="lib.types.PathSet.html#5493" class="Bound"
+      >i</a
+      ><a name="5507" class="Symbol"
+      >}</a
+      ><a name="5508"
+      > </a
+      ><a name="5509" class="Keyword"
+      >where</a
+      ><a name="5514"
+      >
+  </a
+      ><a name="5517" href="lib.types.PathSet.html#5517" class="Function"
+      >transp&#8320;-cst=&#8320;idf</a
+      ><a name="5533"
+      > </a
+      ><a name="5534" class="Symbol"
+      >:</a
+      ><a name="5535"
+      > </a
+      ><a name="5536" class="Symbol"
+      >{</a
+      ><a name="5537" href="lib.types.PathSet.html#5537" class="Bound"
+      >a</a
+      ><a name="5538"
+      > </a
+      ><a name="5539" href="lib.types.PathSet.html#5539" class="Bound"
+      >b</a
+      ><a name="5540"
+      > </a
+      ><a name="5541" href="lib.types.PathSet.html#5541" class="Bound"
+      >c</a
+      ><a name="5542"
+      > </a
+      ><a name="5543" class="Symbol"
+      >:</a
+      ><a name="5544"
+      > </a
+      ><a name="5545" href="lib.types.PathSet.html#5497" class="Bound"
+      >A</a
+      ><a name="5546" class="Symbol"
+      >}</a
+      ><a name="5547"
+      > </a
+      ><a name="5548" class="Symbol"
+      >(</a
+      ><a name="5549" href="lib.types.PathSet.html#5549" class="Bound"
+      >p</a
+      ><a name="5550"
+      > </a
+      ><a name="5551" class="Symbol"
+      >:</a
+      ><a name="5552"
+      > </a
+      ><a name="5553" href="lib.types.PathSet.html#5539" class="Bound"
+      >b</a
+      ><a name="5554"
+      > </a
+      ><a name="5555" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="5557"
+      > </a
+      ><a name="5558" href="lib.types.PathSet.html#5541" class="Bound"
+      >c</a
+      ><a name="5559" class="Symbol"
+      >)</a
+      ><a name="5560"
+      > </a
+      ><a name="5561" class="Symbol"
+      >(</a
+      ><a name="5562" href="lib.types.PathSet.html#5562" class="Bound"
+      >q</a
+      ><a name="5563"
+      > </a
+      ><a name="5564" class="Symbol"
+      >:</a
+      ><a name="5565"
+      > </a
+      ><a name="5566" href="lib.types.PathSet.html#5537" class="Bound"
+      >a</a
+      ><a name="5567"
+      > </a
+      ><a name="5568" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="5570"
+      > </a
+      ><a name="5571" href="lib.types.PathSet.html#5539" class="Bound"
+      >b</a
+      ><a name="5572" class="Symbol"
+      >)</a
+      ><a name="5573"
+      >
+    </a
+      ><a name="5578" class="Symbol"
+      >&#8594;</a
+      ><a name="5579"
+      > </a
+      ><a name="5580" href="lib.types.PathSet.html#947" class="Function"
+      >transport&#8320;</a
+      ><a name="5590"
+      > </a
+      ><a name="5591" class="Symbol"
+      >(</a
+      ><a name="5592" href="lib.types.PathSet.html#5537" class="Bound"
+      >a</a
+      ><a name="5593"
+      > </a
+      ><a name="5594" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;_</a
+      ><a name="5597" class="Symbol"
+      >)</a
+      ><a name="5598"
+      > </a
+      ><a name="5599" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="5610"
+      > </a
+      ><a name="5611" href="lib.types.PathSet.html#5549" class="Bound"
+      >p</a
+      ><a name="5612"
+      > </a
+      ><a name="5613" href="lib.types.PathSet.html#5562" class="Bound"
+      >q</a
+      ><a name="5614"
+      > </a
+      ><a name="5615" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5617"
+      > </a
+      ><a name="5618" href="lib.types.PathSet.html#5562" class="Bound"
+      >q</a
+      ><a name="5619"
+      > </a
+      ><a name="5620" href="lib.types.PathSet.html#482" class="Function Operator"
+      >&#8729;&#8320;'</a
+      ><a name="5623"
+      > </a
+      ><a name="5624" href="lib.types.PathSet.html#5549" class="Bound"
+      >p</a
+      ><a name="5625"
+      >
+  </a
+      ><a name="5628" href="lib.types.PathSet.html#5517" class="Function"
+      >transp&#8320;-cst=&#8320;idf</a
+      ><a name="5644"
+      > </a
+      ><a name="5645" class="Symbol"
+      >{</a
+      ><a name="5646" class="Argument"
+      >a</a
+      ><a name="5647"
+      > </a
+      ><a name="5648" class="Symbol"
+      >=</a
+      ><a name="5649"
+      > </a
+      ><a name="5650" href="lib.types.PathSet.html#5650" class="Bound"
+      >a</a
+      ><a name="5651" class="Symbol"
+      >}</a
+      ><a name="5652"
+      > </a
+      ><a name="5653" class="Symbol"
+      >{</a
+      ><a name="5654" href="lib.types.PathSet.html#5654" class="Bound"
+      >b</a
+      ><a name="5655" class="Symbol"
+      >}</a
+      ><a name="5656"
+      > </a
+      ><a name="5657" class="Symbol"
+      >=</a
+      ><a name="5658"
+      > </a
+      ><a name="5659" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="5669"
+      >
+    </a
+      ><a name="5674" class="Symbol"
+      >{</a
+      ><a name="5675" class="Argument"
+      >P</a
+      ><a name="5676"
+      > </a
+      ><a name="5677" class="Symbol"
+      >=</a
+      ><a name="5678"
+      > </a
+      ><a name="5679" class="Symbol"
+      >&#955;</a
+      ><a name="5680"
+      > </a
+      ><a name="5681" href="lib.types.PathSet.html#5681" class="Bound"
+      >p</a
+      ><a name="5682"
+      > </a
+      ><a name="5683" class="Symbol"
+      >&#8594;</a
+      ><a name="5684"
+      > </a
+      ><a name="5685" class="Symbol"
+      >&#8704;</a
+      ><a name="5686"
+      > </a
+      ><a name="5687" href="lib.types.PathSet.html#5687" class="Bound"
+      >q</a
+      ><a name="5688"
+      > </a
+      ><a name="5689" class="Symbol"
+      >&#8594;</a
+      ><a name="5690"
+      > </a
+      ><a name="5691" href="lib.types.PathSet.html#947" class="Function"
+      >transport&#8320;</a
+      ><a name="5701"
+      > </a
+      ><a name="5702" class="Symbol"
+      >(</a
+      ><a name="5703" href="lib.types.PathSet.html#5650" class="Bound"
+      >a</a
+      ><a name="5704"
+      > </a
+      ><a name="5705" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;_</a
+      ><a name="5708" class="Symbol"
+      >)</a
+      ><a name="5709"
+      > </a
+      ><a name="5710" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="5721"
+      > </a
+      ><a name="5722" href="lib.types.PathSet.html#5681" class="Bound"
+      >p</a
+      ><a name="5723"
+      > </a
+      ><a name="5724" href="lib.types.PathSet.html#5687" class="Bound"
+      >q</a
+      ><a name="5725"
+      > </a
+      ><a name="5726" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5728"
+      > </a
+      ><a name="5729" href="lib.types.PathSet.html#5687" class="Bound"
+      >q</a
+      ><a name="5730"
+      > </a
+      ><a name="5731" href="lib.types.PathSet.html#482" class="Function Operator"
+      >&#8729;&#8320;'</a
+      ><a name="5734"
+      > </a
+      ><a name="5735" href="lib.types.PathSet.html#5681" class="Bound"
+      >p</a
+      ><a name="5736" class="Symbol"
+      >}</a
+      ><a name="5737"
+      >
+    </a
+      ><a name="5742" class="Symbol"
+      >(&#955;</a
+      ><a name="5744"
+      > </a
+      ><a name="5745" href="lib.types.PathSet.html#5745" class="Bound"
+      >p</a
+      ><a name="5746"
+      > </a
+      ><a name="5747" class="Symbol"
+      >&#8594;</a
+      ><a name="5748"
+      > </a
+      ><a name="5749" href="lib.types.Pi.html#188" class="Function"
+      >&#928;-level</a
+      ><a name="5756"
+      > </a
+      ><a name="5757" class="Symbol"
+      >&#955;</a
+      ><a name="5758"
+      > </a
+      ><a name="5759" href="lib.types.PathSet.html#5759" class="Bound"
+      >q</a
+      ><a name="5760"
+      > </a
+      ><a name="5761" class="Symbol"
+      >&#8594;</a
+      ><a name="5762"
+      > </a
+      ><a name="5763" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="5778"
+      > </a
+      ><a name="5779" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="5790" class="Symbol"
+      >)</a
+      ><a name="5791"
+      >
+    </a
+      ><a name="5796" class="Symbol"
+      >(&#955;</a
+      ><a name="5798"
+      > </a
+      ><a name="5799" href="lib.types.PathSet.html#5799" class="Bound"
+      >p</a
+      ><a name="5800"
+      > </a
+      ><a name="5801" href="lib.types.PathSet.html#5801" class="Bound"
+      >q</a
+      ><a name="5802"
+      > </a
+      ><a name="5803" class="Symbol"
+      >&#8594;</a
+      ><a name="5804"
+      > </a
+      ><a name="5805" href="lib.types.PathSet.html#5832" class="Function"
+      >lemma</a
+      ><a name="5810"
+      > </a
+      ><a name="5811" href="lib.types.PathSet.html#5799" class="Bound"
+      >p</a
+      ><a name="5812"
+      > </a
+      ><a name="5813" href="lib.types.PathSet.html#5801" class="Bound"
+      >q</a
+      ><a name="5814" class="Symbol"
+      >)</a
+      ><a name="5815"
+      >
+    </a
+      ><a name="5820" class="Keyword"
+      >where</a
+      ><a name="5825"
+      >
+      </a
+      ><a name="5832" href="lib.types.PathSet.html#5832" class="Function"
+      >lemma</a
+      ><a name="5837"
+      > </a
+      ><a name="5838" class="Symbol"
+      >:</a
+      ><a name="5839"
+      > </a
+      ><a name="5840" class="Symbol"
+      >&#8704;</a
+      ><a name="5841"
+      > </a
+      ><a name="5842" class="Symbol"
+      >{</a
+      ><a name="5843" href="lib.types.PathSet.html#5843" class="Bound"
+      >c</a
+      ><a name="5844"
+      > </a
+      ><a name="5845" class="Symbol"
+      >:</a
+      ><a name="5846"
+      > </a
+      ><a name="5847" href="lib.types.PathSet.html#5497" class="Bound"
+      >A</a
+      ><a name="5848" class="Symbol"
+      >}</a
+      ><a name="5849"
+      > </a
+      ><a name="5850" class="Symbol"
+      >(</a
+      ><a name="5851" href="lib.types.PathSet.html#5851" class="Bound"
+      >p</a
+      ><a name="5852"
+      > </a
+      ><a name="5853" class="Symbol"
+      >:</a
+      ><a name="5854"
+      > </a
+      ><a name="5855" href="lib.types.PathSet.html#5654" class="Bound"
+      >b</a
+      ><a name="5856"
+      > </a
+      ><a name="5857" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5859"
+      > </a
+      ><a name="5860" href="lib.types.PathSet.html#5843" class="Bound"
+      >c</a
+      ><a name="5861" class="Symbol"
+      >)</a
+      ><a name="5862"
+      > </a
+      ><a name="5863" class="Symbol"
+      >(</a
+      ><a name="5864" href="lib.types.PathSet.html#5864" class="Bound"
+      >q</a
+      ><a name="5865"
+      > </a
+      ><a name="5866" class="Symbol"
+      >:</a
+      ><a name="5867"
+      > </a
+      ><a name="5868" href="lib.types.PathSet.html#5650" class="Bound"
+      >a</a
+      ><a name="5869"
+      > </a
+      ><a name="5870" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="5872"
+      > </a
+      ><a name="5873" href="lib.types.PathSet.html#5654" class="Bound"
+      >b</a
+      ><a name="5874" class="Symbol"
+      >)</a
+      ><a name="5875"
+      >
+        </a
+      ><a name="5884" class="Symbol"
+      >&#8594;</a
+      ><a name="5885"
+      > </a
+      ><a name="5886" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="5895"
+      > </a
+      ><a name="5896" class="Symbol"
+      >(</a
+      ><a name="5897" href="lib.types.PathSet.html#5650" class="Bound"
+      >a</a
+      ><a name="5898"
+      > </a
+      ><a name="5899" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;_</a
+      ><a name="5902" class="Symbol"
+      >)</a
+      ><a name="5903"
+      > </a
+      ><a name="5904" href="lib.types.PathSet.html#5851" class="Bound"
+      >p</a
+      ><a name="5905"
+      > </a
+      ><a name="5906" href="lib.types.PathSet.html#5864" class="Bound"
+      >q</a
+      ><a name="5907"
+      > </a
+      ><a name="5908" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5910"
+      > </a
+      ><a name="5911" href="lib.types.PathSet.html#5864" class="Bound"
+      >q</a
+      ><a name="5912"
+      > </a
+      ><a name="5913" href="lib.types.PathSet.html#482" class="Function Operator"
+      >&#8729;&#8320;'</a
+      ><a name="5916"
+      > </a
+      ><a name="5917" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="5918"
+      > </a
+      ><a name="5919" href="lib.types.PathSet.html#5851" class="Bound"
+      >p</a
+      ><a name="5920"
+      > </a
+      ><a name="5921" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="5922"
+      >
+      </a
+      ><a name="5929" href="lib.types.PathSet.html#5832" class="Function"
+      >lemma</a
+      ><a name="5934"
+      > </a
+      ><a name="5935" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5938"
+      > </a
+      ><a name="5939" href="lib.types.PathSet.html#5939" class="Bound"
+      >q</a
+      ><a name="5940"
+      > </a
+      ><a name="5941" class="Symbol"
+      >=</a
+      ><a name="5942"
+      > </a
+      ><a name="5943" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5944"
+      > </a
+      ><a name="5945" class="Symbol"
+      >(</a
+      ><a name="5946" href="lib.types.PathSet.html#2001" class="Function"
+      >&#8729;&#8320;'-unit-r</a
+      ><a name="5956"
+      > </a
+      ><a name="5957" href="lib.types.PathSet.html#5939" class="Bound"
+      >q</a
+      ><a name="5958" class="Symbol"
+      >)</a
+      ><a name="5959"
+      >
+
+  </a
+      ><a name="5963" href="lib.types.PathSet.html#5963" class="Function"
+      >transp&#8320;-idf=&#8320;cst</a
+      ><a name="5979"
+      > </a
+      ><a name="5980" class="Symbol"
+      >:</a
+      ><a name="5981"
+      > </a
+      ><a name="5982" class="Symbol"
+      >{</a
+      ><a name="5983" href="lib.types.PathSet.html#5983" class="Bound"
+      >a</a
+      ><a name="5984"
+      > </a
+      ><a name="5985" href="lib.types.PathSet.html#5985" class="Bound"
+      >b</a
+      ><a name="5986"
+      > </a
+      ><a name="5987" href="lib.types.PathSet.html#5987" class="Bound"
+      >c</a
+      ><a name="5988"
+      > </a
+      ><a name="5989" class="Symbol"
+      >:</a
+      ><a name="5990"
+      > </a
+      ><a name="5991" href="lib.types.PathSet.html#5497" class="Bound"
+      >A</a
+      ><a name="5992" class="Symbol"
+      >}</a
+      ><a name="5993"
+      > </a
+      ><a name="5994" class="Symbol"
+      >(</a
+      ><a name="5995" href="lib.types.PathSet.html#5995" class="Bound"
+      >p</a
+      ><a name="5996"
+      > </a
+      ><a name="5997" class="Symbol"
+      >:</a
+      ><a name="5998"
+      > </a
+      ><a name="5999" href="lib.types.PathSet.html#5983" class="Bound"
+      >a</a
+      ><a name="6000"
+      > </a
+      ><a name="6001" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="6003"
+      > </a
+      ><a name="6004" href="lib.types.PathSet.html#5985" class="Bound"
+      >b</a
+      ><a name="6005" class="Symbol"
+      >)</a
+      ><a name="6006"
+      > </a
+      ><a name="6007" class="Symbol"
+      >(</a
+      ><a name="6008" href="lib.types.PathSet.html#6008" class="Bound"
+      >q</a
+      ><a name="6009"
+      > </a
+      ><a name="6010" class="Symbol"
+      >:</a
+      ><a name="6011"
+      > </a
+      ><a name="6012" href="lib.types.PathSet.html#5983" class="Bound"
+      >a</a
+      ><a name="6013"
+      > </a
+      ><a name="6014" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="6016"
+      > </a
+      ><a name="6017" href="lib.types.PathSet.html#5987" class="Bound"
+      >c</a
+      ><a name="6018" class="Symbol"
+      >)</a
+      ><a name="6019"
+      >
+    </a
+      ><a name="6024" class="Symbol"
+      >&#8594;</a
+      ><a name="6025"
+      > </a
+      ><a name="6026" href="lib.types.PathSet.html#947" class="Function"
+      >transport&#8320;</a
+      ><a name="6036"
+      > </a
+      ><a name="6037" class="Symbol"
+      >(</a
+      ><a name="6038" href="lib.types.PathSet.html#236" class="Function Operator"
+      >_=&#8320;</a
+      ><a name="6041"
+      > </a
+      ><a name="6042" href="lib.types.PathSet.html#5987" class="Bound"
+      >c</a
+      ><a name="6043" class="Symbol"
+      >)</a
+      ><a name="6044"
+      > </a
+      ><a name="6045" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="6056"
+      > </a
+      ><a name="6057" href="lib.types.PathSet.html#5995" class="Bound"
+      >p</a
+      ><a name="6058"
+      > </a
+      ><a name="6059" href="lib.types.PathSet.html#6008" class="Bound"
+      >q</a
+      ><a name="6060"
+      > </a
+      ><a name="6061" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="6063"
+      > </a
+      ><a name="6064" href="lib.types.PathSet.html#574" class="Function"
+      >!&#8320;</a
+      ><a name="6066"
+      > </a
+      ><a name="6067" href="lib.types.PathSet.html#5995" class="Bound"
+      >p</a
+      ><a name="6068"
+      > </a
+      ><a name="6069" href="lib.types.PathSet.html#393" class="Function Operator"
+      >&#8729;&#8320;</a
+      ><a name="6071"
+      > </a
+      ><a name="6072" href="lib.types.PathSet.html#6008" class="Bound"
+      >q</a
+      ><a name="6073"
+      >
+  </a
+      ><a name="6076" href="lib.types.PathSet.html#5963" class="Function"
+      >transp&#8320;-idf=&#8320;cst</a
+      ><a name="6092"
+      > </a
+      ><a name="6093" class="Symbol"
+      >{</a
+      ><a name="6094" class="Argument"
+      >a</a
+      ><a name="6095"
+      > </a
+      ><a name="6096" class="Symbol"
+      >=</a
+      ><a name="6097"
+      > </a
+      ><a name="6098" href="lib.types.PathSet.html#6098" class="Bound"
+      >a</a
+      ><a name="6099" class="Symbol"
+      >}</a
+      ><a name="6100"
+      > </a
+      ><a name="6101" class="Symbol"
+      >{</a
+      ><a name="6102" class="Argument"
+      >c</a
+      ><a name="6103"
+      > </a
+      ><a name="6104" class="Symbol"
+      >=</a
+      ><a name="6105"
+      > </a
+      ><a name="6106" href="lib.types.PathSet.html#6106" class="Bound"
+      >c</a
+      ><a name="6107" class="Symbol"
+      >}</a
+      ><a name="6108"
+      > </a
+      ><a name="6109" class="Symbol"
+      >=</a
+      ><a name="6110"
+      > </a
+      ><a name="6111" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="6121"
+      >
+    </a
+      ><a name="6126" class="Symbol"
+      >{</a
+      ><a name="6127" class="Argument"
+      >P</a
+      ><a name="6128"
+      > </a
+      ><a name="6129" class="Symbol"
+      >=</a
+      ><a name="6130"
+      > </a
+      ><a name="6131" class="Symbol"
+      >&#955;</a
+      ><a name="6132"
+      > </a
+      ><a name="6133" href="lib.types.PathSet.html#6133" class="Bound"
+      >p</a
+      ><a name="6134"
+      > </a
+      ><a name="6135" class="Symbol"
+      >&#8594;</a
+      ><a name="6136"
+      > </a
+      ><a name="6137" class="Symbol"
+      >&#8704;</a
+      ><a name="6138"
+      > </a
+      ><a name="6139" href="lib.types.PathSet.html#6139" class="Bound"
+      >q</a
+      ><a name="6140"
+      > </a
+      ><a name="6141" class="Symbol"
+      >&#8594;</a
+      ><a name="6142"
+      > </a
+      ><a name="6143" href="lib.types.PathSet.html#947" class="Function"
+      >transport&#8320;</a
+      ><a name="6153"
+      > </a
+      ><a name="6154" class="Symbol"
+      >(</a
+      ><a name="6155" href="lib.types.PathSet.html#236" class="Function Operator"
+      >_=&#8320;</a
+      ><a name="6158"
+      > </a
+      ><a name="6159" href="lib.types.PathSet.html#6106" class="Bound"
+      >c</a
+      ><a name="6160" class="Symbol"
+      >)</a
+      ><a name="6161"
+      > </a
+      ><a name="6162" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="6173"
+      > </a
+      ><a name="6174" href="lib.types.PathSet.html#6133" class="Bound"
+      >p</a
+      ><a name="6175"
+      > </a
+      ><a name="6176" href="lib.types.PathSet.html#6139" class="Bound"
+      >q</a
+      ><a name="6177"
+      > </a
+      ><a name="6178" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="6180"
+      > </a
+      ><a name="6181" href="lib.types.PathSet.html#574" class="Function"
+      >!&#8320;</a
+      ><a name="6183"
+      > </a
+      ><a name="6184" href="lib.types.PathSet.html#6133" class="Bound"
+      >p</a
+      ><a name="6185"
+      > </a
+      ><a name="6186" href="lib.types.PathSet.html#393" class="Function Operator"
+      >&#8729;&#8320;</a
+      ><a name="6188"
+      > </a
+      ><a name="6189" href="lib.types.PathSet.html#6139" class="Bound"
+      >q</a
+      ><a name="6190" class="Symbol"
+      >}</a
+      ><a name="6191"
+      >
+    </a
+      ><a name="6196" class="Symbol"
+      >(&#955;</a
+      ><a name="6198"
+      > </a
+      ><a name="6199" href="lib.types.PathSet.html#6199" class="Bound"
+      >p</a
+      ><a name="6200"
+      > </a
+      ><a name="6201" class="Symbol"
+      >&#8594;</a
+      ><a name="6202"
+      > </a
+      ><a name="6203" href="lib.types.Pi.html#188" class="Function"
+      >&#928;-level</a
+      ><a name="6210"
+      > </a
+      ><a name="6211" class="Symbol"
+      >&#955;</a
+      ><a name="6212"
+      > </a
+      ><a name="6213" href="lib.types.PathSet.html#6213" class="Bound"
+      >q</a
+      ><a name="6214"
+      > </a
+      ><a name="6215" class="Symbol"
+      >&#8594;</a
+      ><a name="6216"
+      > </a
+      ><a name="6217" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="6232"
+      > </a
+      ><a name="6233" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="6244" class="Symbol"
+      >)</a
+      ><a name="6245"
+      >
+    </a
+      ><a name="6250" class="Symbol"
+      >(&#955;</a
+      ><a name="6252"
+      > </a
+      ><a name="6253" href="lib.types.PathSet.html#6253" class="Bound"
+      >p</a
+      ><a name="6254"
+      > </a
+      ><a name="6255" href="lib.types.PathSet.html#6255" class="Bound"
+      >q</a
+      ><a name="6256"
+      > </a
+      ><a name="6257" class="Symbol"
+      >&#8594;</a
+      ><a name="6258"
+      > </a
+      ><a name="6259" href="lib.types.PathSet.html#6286" class="Function"
+      >lemma</a
+      ><a name="6264"
+      > </a
+      ><a name="6265" href="lib.types.PathSet.html#6253" class="Bound"
+      >p</a
+      ><a name="6266"
+      > </a
+      ><a name="6267" href="lib.types.PathSet.html#6255" class="Bound"
+      >q</a
+      ><a name="6268" class="Symbol"
+      >)</a
+      ><a name="6269"
+      >
+    </a
+      ><a name="6274" class="Keyword"
+      >where</a
+      ><a name="6279"
+      >
+      </a
+      ><a name="6286" href="lib.types.PathSet.html#6286" class="Function"
+      >lemma</a
+      ><a name="6291"
+      > </a
+      ><a name="6292" class="Symbol"
+      >:</a
+      ><a name="6293"
+      > </a
+      ><a name="6294" class="Symbol"
+      >&#8704;</a
+      ><a name="6295"
+      > </a
+      ><a name="6296" class="Symbol"
+      >{</a
+      ><a name="6297" href="lib.types.PathSet.html#6297" class="Bound"
+      >b</a
+      ><a name="6298" class="Symbol"
+      >}</a
+      ><a name="6299"
+      > </a
+      ><a name="6300" class="Symbol"
+      >(</a
+      ><a name="6301" href="lib.types.PathSet.html#6301" class="Bound"
+      >p</a
+      ><a name="6302"
+      > </a
+      ><a name="6303" class="Symbol"
+      >:</a
+      ><a name="6304"
+      > </a
+      ><a name="6305" href="lib.types.PathSet.html#6098" class="Bound"
+      >a</a
+      ><a name="6306"
+      > </a
+      ><a name="6307" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="6309"
+      > </a
+      ><a name="6310" href="lib.types.PathSet.html#6297" class="Bound"
+      >b</a
+      ><a name="6311" class="Symbol"
+      >)</a
+      ><a name="6312"
+      > </a
+      ><a name="6313" class="Symbol"
+      >(</a
+      ><a name="6314" href="lib.types.PathSet.html#6314" class="Bound"
+      >q</a
+      ><a name="6315"
+      > </a
+      ><a name="6316" class="Symbol"
+      >:</a
+      ><a name="6317"
+      > </a
+      ><a name="6318" href="lib.types.PathSet.html#6098" class="Bound"
+      >a</a
+      ><a name="6319"
+      > </a
+      ><a name="6320" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="6322"
+      > </a
+      ><a name="6323" href="lib.types.PathSet.html#6106" class="Bound"
+      >c</a
+      ><a name="6324" class="Symbol"
+      >)</a
+      ><a name="6325"
+      >
+        </a
+      ><a name="6334" class="Symbol"
+      >&#8594;</a
+      ><a name="6335"
+      > </a
+      ><a name="6336" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="6345"
+      > </a
+      ><a name="6346" class="Symbol"
+      >(</a
+      ><a name="6347" href="lib.types.PathSet.html#236" class="Function Operator"
+      >_=&#8320;</a
+      ><a name="6350"
+      > </a
+      ><a name="6351" href="lib.types.PathSet.html#6106" class="Bound"
+      >c</a
+      ><a name="6352" class="Symbol"
+      >)</a
+      ><a name="6353"
+      > </a
+      ><a name="6354" href="lib.types.PathSet.html#6301" class="Bound"
+      >p</a
+      ><a name="6355"
+      > </a
+      ><a name="6356" href="lib.types.PathSet.html#6314" class="Bound"
+      >q</a
+      ><a name="6357"
+      > </a
+      ><a name="6358" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="6360"
+      > </a
+      ><a name="6361" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="6362"
+      > </a
+      ><a name="6363" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="6364"
+      > </a
+      ><a name="6365" href="lib.types.PathSet.html#6301" class="Bound"
+      >p</a
+      ><a name="6366"
+      > </a
+      ><a name="6367" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="6368"
+      > </a
+      ><a name="6369" href="lib.types.PathSet.html#393" class="Function Operator"
+      >&#8729;&#8320;</a
+      ><a name="6371"
+      > </a
+      ><a name="6372" href="lib.types.PathSet.html#6314" class="Bound"
+      >q</a
+      ><a name="6373"
+      >
+      </a
+      ><a name="6380" href="lib.types.PathSet.html#6286" class="Function"
+      >lemma</a
+      ><a name="6385"
+      > </a
+      ><a name="6386" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="6389"
+      > </a
+      ><a name="6390" href="lib.types.PathSet.html#6390" class="Bound"
+      >q</a
+      ><a name="6391"
+      > </a
+      ><a name="6392" class="Symbol"
+      >=</a
+      ><a name="6393"
+      > </a
+      ><a name="6394" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="6395"
+      > </a
+      ><a name="6396" class="Symbol"
+      >(</a
+      ><a name="6397" href="lib.types.PathSet.html#1852" class="Function"
+      >&#8729;&#8320;-unit-l</a
+      ><a name="6406"
+      > </a
+      ><a name="6407" href="lib.types.PathSet.html#6390" class="Bound"
+      >q</a
+      ><a name="6408" class="Symbol"
+      >)</a
+      ><a name="6409"
+      >
+
+</a
+      ><a name="6411" class="Comment"
+      >{-
+module _ {i} {A : Type i} where
+  transp-id&#8801;&#8320;cst : {a b c : A} (p : b &#8801; c) (q : b &#8801;&#8320; a)
+    &#8594; transport (&#955; x &#8594; x &#8801;&#8320; a) p q &#8801; proj (! p) &#8728;&#8320; q
+  transp-id&#8801;&#8320;cst refl q = ! $ refl&#8320;-left-unit q
+
+  transp-cst&#8801;&#8320;id : {a b c : A} (p : b &#8801; c) (q : a &#8801;&#8320; b)
+    &#8594; transport (&#955; x &#8594; a &#8801;&#8320; x) p q &#8801; q &#8728;&#8320; proj p
+  transp-cst&#8801;&#8320;id refl q = ! $ refl&#8320;-right-unit q
+
+module _ {i} {A : Set i} where
+  homotopy&#8320;-naturality : &#8704; {j} {B : Set j} (f g : A &#8594; B)
+    (p : (x : A) &#8594; f x &#8801;&#8320; g x) {x y : A} (q : x &#8801;&#8320; y)
+    &#8594; ap&#8320; f q &#8728;&#8320; p y &#8801; p x &#8728;&#8320; ap&#8320; g q
+  homotopy&#8320;-naturality f g p {x} {y} q = &#960;&#8320;-extend
+    &#10627; &#955; q &#8594; &#8801;-is-set {x = ap&#8320; f q &#8728;&#8320; p y} {y = p x &#8728;&#8320; ap&#8320; g q}
+            $ &#960;&#8320;-is-set (f x &#8801; g y) &#10628;
+    (lemma {x} {y}) q
+    where
+      lemma : &#8704; {x y : A} (q : x &#8801; y) &#8594; ap&#8320; f (proj q) &#8728;&#8320; p y &#8801; p x &#8728;&#8320; ap&#8320; g (proj q)
+      lemma refl =
+        refl&#8320; &#8728;&#8320; p _
+          &#8801;&#10216; refl&#8320;-left-unit (p _) &#10217;
+        p _
+          &#8801;&#10216; ! $ refl&#8320;-right-unit _ &#10217;&#8718;
+        p _ &#8728;&#8320; refl&#8320;
+          &#8718;
+
+-- Loop space commutes with truncation in the sense that
+-- &#964; n (&#937; X) = &#937; (&#964; (S n) X)
+-- (actually, this is true more generally for paths spaces and we need this
+-- level of generality to prove it)
+
+module _ {i} {n : &#8469;&#8331;&#8322;} {A : Set i} where
+
+  private
+    to : (x y : A) &#8594; (&#964; n (x &#8801; y)) &#8594; ((proj {n = S n} x) &#8801; (proj y))
+    to x y = &#964;-extend-nondep &#10627; &#964;-is-truncated (S n) A _ _ &#10628; (ap proj)
+
+    -- [truncated-path-space (proj x) (proj y)] is [&#964; n (x &#8801; y)]
+    truncated-path-space : (u v : &#964; (S n) A) &#8594; Type&#8804; n i
+    truncated-path-space = &#964;-extend-nondep
+                             &#10627; &#8594;-is-truncated (S n) (Type&#8804;-is-truncated n _) &#10628;
+                             (&#955; x &#8594; &#964;-extend-nondep &#10627; Type&#8804;-is-truncated n _ &#10628;
+                               (&#955; y &#8594; &#964; n (x &#8801; y) , &#964;-is-truncated n _))
+
+    -- We now extend [to] to the truncation of [A], and this is why we needed to
+    -- first extend the return type of [to]
+    to' : (u v : &#964; (S n) A) &#8594; (&#960;&#8321; (truncated-path-space u v) &#8594; u &#8801; v)
+    to' = &#964;-extend &#10627; &#955; x &#8594; &#928;-is-truncated (S n) (&#955; a &#8594;
+                             &#928;-is-truncated (S n) (&#955; b &#8594;
+                               &#8801;-is-truncated (S n)
+                                 (&#964;-is-truncated (S n) A)))&#10628;
+            (&#955; x &#8594; &#964;-extend &#10627; &#955; t &#8594; &#928;-is-truncated (S n) (&#955; a &#8594;
+                                      &#8801;-is-truncated (S n)
+                                        (&#964;-is-truncated (S n) A))&#10628;
+              (&#955; y &#8594; to x y))
+
+    from'-refl : (u : &#964; (S n) A) &#8594; (&#960;&#8321; (truncated-path-space u u))
+    from'-refl = &#964;-extend &#10627; &#955; x &#8594; truncated-is-truncated-S n
+                                    (&#960;&#8322; (truncated-path-space x x))&#10628;
+                   (&#955; x &#8594; proj refl)
+
+    from' : (u v : &#964; (S n) A) &#8594; (u &#8801; v &#8594; &#960;&#8321; (truncated-path-space u v))
+    from' u .u refl = from'-refl u
+
+    from : (x y : A) &#8594; (proj {n = S n} x &#8801; proj y &#8594; &#964; n (x &#8801; y))
+    from x y p = from' (proj x) (proj y) p
+
+    from-to : (x y : A) (p : &#964; n (x &#8801; y)) &#8594; from x y (to x y p) &#8801; p
+    from-to x y = &#964;-extend &#10627; &#955; _ &#8594; &#8801;-is-truncated n (&#964;-is-truncated n _)&#10628;
+                    (from-to' x y) where
+
+      from-to' : (x y : A) (p : x &#8801; y) &#8594; from x y (to x y (proj p)) &#8801; proj p
+      from-to' x .x refl = refl
+
+    to'-from' : (u v : &#964; (S n) A) (p : u &#8801; v) &#8594; to' u v (from' u v p) &#8801; p
+    to'-from' x .x refl = to'-from'-refl x where
+      to'-from'-refl : (u : &#964; (S n) A) &#8594; to' u u (from' u u refl) &#8801; refl
+      to'-from'-refl = &#964;-extend &#10627; &#955; _ &#8594; &#8801;-is-truncated (S n)
+                                          (&#8801;-is-truncated (S n)
+                                            (&#964;-is-truncated (S n) A))&#10628;
+                         (&#955; _ &#8594; refl)
+
+    to-from : (x y : A) (p : proj {n = S n} x &#8801; proj y) &#8594; to x y (from x y p) &#8801; p
+    to-from x y p = to'-from' (proj x) (proj y) p
+
+  &#964;-path-equiv-path-&#964;-S : {x y : A} &#8594; &#964; n (x &#8801; y) &#8771; (proj {n = S n} x &#8801; proj y)
+  &#964;-path-equiv-path-&#964;-S {x} {y} =
+    (to x y , iso-is-eq _ (from x y) (to-from x y) (from-to x y))
+
+  module _ where
+    open import Homotopy.Connected
+
+    abstract
+      connected-has-connected-paths : is-connected (S n) A &#8594; (p q : A) &#8594; is-connected n (p &#8801; q)
+      connected-has-connected-paths conn p q =
+        equiv-types-truncated &#10216;-2&#10217; (&#964;-path-equiv-path-&#964;-S &#8315;&#185;) (contr-is-prop conn (proj p) (proj q))
+
+    connected-has-all-&#964;-paths : is-connected (S n) A &#8594; (p q : A) &#8594; &#964; n (p &#8801; q)
+    connected-has-all-&#964;-paths conn p q = &#960;&#8321; $ connected-has-connected-paths conn p q
+-}</a
+      ><a name="10768"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

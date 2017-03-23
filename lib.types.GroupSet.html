@@ -1,0 +1,3570 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.GroupSet</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.NType2.html#1" class="Module"
+      >lib.NType2</a
+      ><a name="87"
+      >
+</a
+      ><a name="88" class="Keyword"
+      >open</a
+      ><a name="92"
+      > </a
+      ><a name="93" class="Keyword"
+      >import</a
+      ><a name="99"
+      > </a
+      ><a name="100" href="lib.types.Pi.html#1" class="Module"
+      >lib.types.Pi</a
+      ><a name="112"
+      >
+</a
+      ><a name="113" class="Keyword"
+      >open</a
+      ><a name="117"
+      > </a
+      ><a name="118" class="Keyword"
+      >import</a
+      ><a name="124"
+      > </a
+      ><a name="125" href="lib.types.Group.html#1" class="Module"
+      >lib.types.Group</a
+      ><a name="140"
+      >
+
+</a
+      ><a name="142" class="Comment"
+      >{-
+    The definition of G-sets.  Thanks to Daniel Grayson.
+-}</a
+      ><a name="204"
+      >
+
+</a
+      ><a name="206" class="Keyword"
+      >module</a
+      ><a name="212"
+      > </a
+      ><a name="213" href="lib.types.GroupSet.html#1" class="Module"
+      >lib.types.GroupSet</a
+      ><a name="231"
+      > </a
+      ><a name="232" class="Symbol"
+      >{</a
+      ><a name="233" href="lib.types.GroupSet.html#233" class="Bound"
+      >i</a
+      ><a name="234" class="Symbol"
+      >}</a
+      ><a name="235"
+      > </a
+      ><a name="236" class="Keyword"
+      >where</a
+      ><a name="241"
+      >
+
+  </a
+      ><a name="245" class="Comment"
+      >-- The right group action with respect to the group [grp].</a
+      ><a name="303"
+      >
+  </a
+      ><a name="306" class="Keyword"
+      >record</a
+      ><a name="312"
+      > </a
+      ><a name="313" href="lib.types.GroupSet.html#313" class="Record"
+      >GroupSetStructure</a
+      ><a name="330"
+      > </a
+      ><a name="331" class="Symbol"
+      >(</a
+      ><a name="332" href="lib.types.GroupSet.html#332" class="Bound"
+      >grp</a
+      ><a name="335"
+      > </a
+      ><a name="336" class="Symbol"
+      >:</a
+      ><a name="337"
+      > </a
+      ><a name="338" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="343"
+      > </a
+      ><a name="344" href="lib.types.GroupSet.html#233" class="Bound"
+      >i</a
+      ><a name="345" class="Symbol"
+      >)</a
+      ><a name="346"
+      > </a
+      ><a name="347" class="Symbol"
+      >{</a
+      ><a name="348" href="lib.types.GroupSet.html#348" class="Bound"
+      >j</a
+      ><a name="349" class="Symbol"
+      >}</a
+      ><a name="350"
+      > </a
+      ><a name="351" class="Symbol"
+      >(</a
+      ><a name="352" href="lib.types.GroupSet.html#352" class="Bound"
+      >El</a
+      ><a name="354"
+      > </a
+      ><a name="355" class="Symbol"
+      >:</a
+      ><a name="356"
+      > </a
+      ><a name="357" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="361"
+      > </a
+      ><a name="362" href="lib.types.GroupSet.html#348" class="Bound"
+      >j</a
+      ><a name="363" class="Symbol"
+      >)</a
+      ><a name="364"
+      >
+    </a
+      ><a name="369" class="Symbol"
+      >(</a
+      ><a name="370" href="lib.types.GroupSet.html#370" class="Bound"
+      >_</a
+      ><a name="371"
+      > </a
+      ><a name="372" class="Symbol"
+      >:</a
+      ><a name="373"
+      > </a
+      ><a name="374" href="lib.NType.html#455" class="Function"
+      >is-set</a
+      ><a name="380"
+      > </a
+      ><a name="381" href="lib.types.GroupSet.html#352" class="Bound"
+      >El</a
+      ><a name="383" class="Symbol"
+      >)</a
+      ><a name="384"
+      > </a
+      ><a name="385" class="Symbol"
+      >:</a
+      ><a name="386"
+      > </a
+      ><a name="387" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="391"
+      > </a
+      ><a name="392" class="Symbol"
+      >(</a
+      ><a name="393" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="397"
+      > </a
+      ><a name="398" href="lib.types.GroupSet.html#233" class="Bound"
+      >i</a
+      ><a name="399"
+      > </a
+      ><a name="400" href="lib.types.GroupSet.html#348" class="Bound"
+      >j</a
+      ><a name="401" class="Symbol"
+      >)</a
+      ><a name="402"
+      > </a
+      ><a name="403" class="Keyword"
+      >where</a
+      ><a name="408"
+      >
+    </a
+      ><a name="413" class="Keyword"
+      >constructor</a
+      ><a name="424"
+      > </a
+      ><a name="425" href="lib.types.GroupSet.html#425" class="InductiveConstructor"
+      >groupset-structure</a
+      ><a name="443"
+      >
+    </a
+      ><a name="448" class="Keyword"
+      >private</a
+      ><a name="455"
+      >
+      </a
+      ><a name="462" class="Keyword"
+      >module</a
+      ><a name="468"
+      > </a
+      ><a name="469" href="lib.types.GroupSet.html#469" class="Module"
+      >G</a
+      ><a name="470"
+      > </a
+      ><a name="471" class="Symbol"
+      >=</a
+      ><a name="472"
+      > </a
+      ><a name="473" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="478"
+      > </a
+      ><a name="479" href="lib.types.GroupSet.html#332" class="Bound"
+      >grp</a
+      ><a name="482"
+      >
+      </a
+      ><a name="489" class="Keyword"
+      >module</a
+      ><a name="495"
+      > </a
+      ><a name="496" href="lib.types.GroupSet.html#496" class="Module"
+      >GS</a
+      ><a name="498"
+      > </a
+      ><a name="499" class="Symbol"
+      >=</a
+      ><a name="500"
+      > </a
+      ><a name="501" href="lib.types.Group.html#154" class="Module"
+      >GroupStructure</a
+      ><a name="515"
+      > </a
+      ><a name="516" href="lib.types.Group.html#6949" class="Function"
+      >G.group-struct</a
+      ><a name="530"
+      >
+    </a
+      ><a name="535" class="Keyword"
+      >field</a
+      ><a name="540"
+      >
+      </a
+      ><a name="547" href="lib.types.GroupSet.html#547" class="Field"
+      >act</a
+      ><a name="550"
+      > </a
+      ><a name="551" class="Symbol"
+      >:</a
+      ><a name="552"
+      > </a
+      ><a name="553" href="lib.types.GroupSet.html#352" class="Bound"
+      >El</a
+      ><a name="555"
+      > </a
+      ><a name="556" class="Symbol"
+      >&#8594;</a
+      ><a name="557"
+      > </a
+      ><a name="558" href="lib.types.Group.html#6903" class="Function"
+      >G.El</a
+      ><a name="562"
+      > </a
+      ><a name="563" class="Symbol"
+      >&#8594;</a
+      ><a name="564"
+      > </a
+      ><a name="565" href="lib.types.GroupSet.html#352" class="Bound"
+      >El</a
+      ><a name="567"
+      >
+      </a
+      ><a name="574" href="lib.types.GroupSet.html#574" class="Field"
+      >unit-r</a
+      ><a name="580"
+      > </a
+      ><a name="581" class="Symbol"
+      >:</a
+      ><a name="582"
+      > </a
+      ><a name="583" class="Symbol"
+      >&#8704;</a
+      ><a name="584"
+      > </a
+      ><a name="585" href="lib.types.GroupSet.html#585" class="Bound"
+      >x</a
+      ><a name="586"
+      > </a
+      ><a name="587" class="Symbol"
+      >&#8594;</a
+      ><a name="588"
+      > </a
+      ><a name="589" href="lib.types.GroupSet.html#547" class="Field"
+      >act</a
+      ><a name="592"
+      > </a
+      ><a name="593" href="lib.types.GroupSet.html#585" class="Bound"
+      >x</a
+      ><a name="594"
+      > </a
+      ><a name="595" href="lib.types.Group.html#276" class="Function"
+      >GS.ident</a
+      ><a name="603"
+      > </a
+      ><a name="604" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="606"
+      > </a
+      ><a name="607" href="lib.types.GroupSet.html#585" class="Bound"
+      >x</a
+      ><a name="608"
+      >
+      </a
+      ><a name="615" href="lib.types.GroupSet.html#615" class="Field"
+      >assoc</a
+      ><a name="620"
+      > </a
+      ><a name="621" class="Symbol"
+      >:</a
+      ><a name="622"
+      > </a
+      ><a name="623" class="Symbol"
+      >&#8704;</a
+      ><a name="624"
+      > </a
+      ><a name="625" href="lib.types.GroupSet.html#625" class="Bound"
+      >x</a
+      ><a name="626"
+      > </a
+      ><a name="627" href="lib.types.GroupSet.html#627" class="Bound"
+      >g&#8321;</a
+      ><a name="629"
+      > </a
+      ><a name="630" href="lib.types.GroupSet.html#630" class="Bound"
+      >g&#8322;</a
+      ><a name="632"
+      > </a
+      ><a name="633" class="Symbol"
+      >&#8594;</a
+      ><a name="634"
+      > </a
+      ><a name="635" href="lib.types.GroupSet.html#547" class="Field"
+      >act</a
+      ><a name="638"
+      > </a
+      ><a name="639" class="Symbol"
+      >(</a
+      ><a name="640" href="lib.types.GroupSet.html#547" class="Field"
+      >act</a
+      ><a name="643"
+      > </a
+      ><a name="644" href="lib.types.GroupSet.html#625" class="Bound"
+      >x</a
+      ><a name="645"
+      > </a
+      ><a name="646" href="lib.types.GroupSet.html#627" class="Bound"
+      >g&#8321;</a
+      ><a name="648" class="Symbol"
+      >)</a
+      ><a name="649"
+      > </a
+      ><a name="650" href="lib.types.GroupSet.html#630" class="Bound"
+      >g&#8322;</a
+      ><a name="652"
+      > </a
+      ><a name="653" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="655"
+      > </a
+      ><a name="656" href="lib.types.GroupSet.html#547" class="Field"
+      >act</a
+      ><a name="659"
+      > </a
+      ><a name="660" href="lib.types.GroupSet.html#625" class="Bound"
+      >x</a
+      ><a name="661"
+      > </a
+      ><a name="662" class="Symbol"
+      >(</a
+      ><a name="663" href="lib.types.Group.html#313" class="Function"
+      >GS.comp</a
+      ><a name="670"
+      > </a
+      ><a name="671" href="lib.types.GroupSet.html#627" class="Bound"
+      >g&#8321;</a
+      ><a name="673"
+      > </a
+      ><a name="674" href="lib.types.GroupSet.html#630" class="Bound"
+      >g&#8322;</a
+      ><a name="676" class="Symbol"
+      >)</a
+      ><a name="677"
+      >
+
+  </a
+      ><a name="681" class="Comment"
+      >-- The definition of a G-set.  A set [El] equipped with</a
+      ><a name="736"
+      >
+  </a
+      ><a name="739" class="Comment"
+      >-- a right group action with respect to [grp].</a
+      ><a name="785"
+      >
+  </a
+      ><a name="788" class="Keyword"
+      >record</a
+      ><a name="794"
+      > </a
+      ><a name="795" href="lib.types.GroupSet.html#795" class="Record"
+      >GroupSet</a
+      ><a name="803"
+      > </a
+      ><a name="804" class="Symbol"
+      >(</a
+      ><a name="805" href="lib.types.GroupSet.html#805" class="Bound"
+      >grp</a
+      ><a name="808"
+      > </a
+      ><a name="809" class="Symbol"
+      >:</a
+      ><a name="810"
+      > </a
+      ><a name="811" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="816"
+      > </a
+      ><a name="817" href="lib.types.GroupSet.html#233" class="Bound"
+      >i</a
+      ><a name="818" class="Symbol"
+      >)</a
+      ><a name="819"
+      > </a
+      ><a name="820" href="lib.types.GroupSet.html#820" class="Bound"
+      >j</a
+      ><a name="821"
+      > </a
+      ><a name="822" class="Symbol"
+      >:</a
+      ><a name="823"
+      > </a
+      ><a name="824" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="828"
+      > </a
+      ><a name="829" class="Symbol"
+      >(</a
+      ><a name="830" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="835"
+      > </a
+      ><a name="836" class="Symbol"
+      >(</a
+      ><a name="837" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="841"
+      > </a
+      ><a name="842" href="lib.types.GroupSet.html#233" class="Bound"
+      >i</a
+      ><a name="843"
+      > </a
+      ><a name="844" href="lib.types.GroupSet.html#820" class="Bound"
+      >j</a
+      ><a name="845" class="Symbol"
+      >))</a
+      ><a name="847"
+      > </a
+      ><a name="848" class="Keyword"
+      >where</a
+      ><a name="853"
+      >
+    </a
+      ><a name="858" class="Keyword"
+      >constructor</a
+      ><a name="869"
+      > </a
+      ><a name="870" href="lib.types.GroupSet.html#870" class="InductiveConstructor"
+      >groupset</a
+      ><a name="878"
+      >
+    </a
+      ><a name="883" class="Keyword"
+      >field</a
+      ><a name="888"
+      >
+      </a
+      ><a name="895" href="lib.types.GroupSet.html#895" class="Field"
+      >El</a
+      ><a name="897"
+      > </a
+      ><a name="898" class="Symbol"
+      >:</a
+      ><a name="899"
+      > </a
+      ><a name="900" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="904"
+      > </a
+      ><a name="905" href="lib.types.GroupSet.html#820" class="Bound"
+      >j</a
+      ><a name="906"
+      >
+      </a
+      ><a name="913" href="lib.types.GroupSet.html#913" class="Field"
+      >El-level</a
+      ><a name="921"
+      > </a
+      ><a name="922" class="Symbol"
+      >:</a
+      ><a name="923"
+      > </a
+      ><a name="924" href="lib.NType.html#455" class="Function"
+      >is-set</a
+      ><a name="930"
+      > </a
+      ><a name="931" href="lib.types.GroupSet.html#895" class="Field"
+      >El</a
+      ><a name="933"
+      >
+      </a
+      ><a name="940" href="lib.types.GroupSet.html#940" class="Field"
+      >grpset-struct</a
+      ><a name="953"
+      > </a
+      ><a name="954" class="Symbol"
+      >:</a
+      ><a name="955"
+      > </a
+      ><a name="956" href="lib.types.GroupSet.html#313" class="Record"
+      >GroupSetStructure</a
+      ><a name="973"
+      > </a
+      ><a name="974" href="lib.types.GroupSet.html#805" class="Bound"
+      >grp</a
+      ><a name="977"
+      > </a
+      ><a name="978" href="lib.types.GroupSet.html#895" class="Field"
+      >El</a
+      ><a name="980"
+      > </a
+      ><a name="981" href="lib.types.GroupSet.html#913" class="Field"
+      >El-level</a
+      ><a name="989"
+      >
+    </a
+      ><a name="994" class="Keyword"
+      >open</a
+      ><a name="998"
+      > </a
+      ><a name="999" href="lib.types.GroupSet.html#313" class="Module"
+      >GroupSetStructure</a
+      ><a name="1016"
+      > </a
+      ><a name="1017" href="lib.types.GroupSet.html#940" class="Field"
+      >grpset-struct</a
+      ><a name="1030"
+      > </a
+      ><a name="1031" class="Keyword"
+      >public</a
+      ><a name="1037"
+      >
+    </a
+      ><a name="1042" href="lib.types.GroupSet.html#1042" class="Function"
+      >El-is-set</a
+      ><a name="1051"
+      > </a
+      ><a name="1052" class="Symbol"
+      >=</a
+      ><a name="1053"
+      > </a
+      ><a name="1054" href="lib.types.GroupSet.html#913" class="Field"
+      >El-level</a
+      ><a name="1062"
+      >
+
+  </a
+      ><a name="1066" class="Comment"
+      >-- A helper function to establish equivalence between two G-sets.</a
+      ><a name="1131"
+      >
+  </a
+      ><a name="1134" class="Comment"
+      >-- Many data are just props and this function do the coversion for them</a
+      ><a name="1205"
+      >
+  </a
+      ><a name="1208" class="Comment"
+      >-- for you.  You only need to show the non-trivial parts.</a
+      ><a name="1265"
+      >
+  </a
+      ><a name="1268" class="Keyword"
+      >module</a
+      ><a name="1274"
+      > </a
+      ><a name="1275" href="lib.types.GroupSet.html#1275" class="Module"
+      >_</a
+      ><a name="1276"
+      > </a
+      ><a name="1277" class="Symbol"
+      >{</a
+      ><a name="1278" href="lib.types.GroupSet.html#1278" class="Bound"
+      >grp</a
+      ><a name="1281"
+      > </a
+      ><a name="1282" class="Symbol"
+      >:</a
+      ><a name="1283"
+      > </a
+      ><a name="1284" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" href="lib.types.GroupSet.html#233" class="Bound"
+      >i</a
+      ><a name="1291" class="Symbol"
+      >}</a
+      ><a name="1292"
+      > </a
+      ><a name="1293" class="Symbol"
+      >{</a
+      ><a name="1294" href="lib.types.GroupSet.html#1294" class="Bound"
+      >j</a
+      ><a name="1295" class="Symbol"
+      >}</a
+      ><a name="1296"
+      > </a
+      ><a name="1297" class="Symbol"
+      >{</a
+      ><a name="1298" href="lib.types.GroupSet.html#1298" class="Bound"
+      >El</a
+      ><a name="1300"
+      > </a
+      ><a name="1301" class="Symbol"
+      >:</a
+      ><a name="1302"
+      > </a
+      ><a name="1303" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" href="lib.types.GroupSet.html#1294" class="Bound"
+      >j</a
+      ><a name="1309" class="Symbol"
+      >}</a
+      ><a name="1310"
+      > </a
+      ><a name="1311" class="Symbol"
+      >{</a
+      ><a name="1312" href="lib.types.GroupSet.html#1312" class="Bound"
+      >El-level</a
+      ><a name="1320"
+      > </a
+      ><a name="1321" class="Symbol"
+      >:</a
+      ><a name="1322"
+      > </a
+      ><a name="1323" href="lib.NType.html#455" class="Function"
+      >is-set</a
+      ><a name="1329"
+      > </a
+      ><a name="1330" href="lib.types.GroupSet.html#1298" class="Bound"
+      >El</a
+      ><a name="1332" class="Symbol"
+      >}</a
+      ><a name="1333"
+      > </a
+      ><a name="1334" class="Keyword"
+      >where</a
+      ><a name="1339"
+      >
+    </a
+      ><a name="1344" class="Keyword"
+      >private</a
+      ><a name="1351"
+      >
+      </a
+      ><a name="1358" class="Keyword"
+      >module</a
+      ><a name="1364"
+      > </a
+      ><a name="1365" href="lib.types.GroupSet.html#1365" class="Module"
+      >G</a
+      ><a name="1366"
+      > </a
+      ><a name="1367" class="Symbol"
+      >=</a
+      ><a name="1368"
+      > </a
+      ><a name="1369" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="1374"
+      > </a
+      ><a name="1375" href="lib.types.GroupSet.html#1278" class="Bound"
+      >grp</a
+      ><a name="1378"
+      >
+      </a
+      ><a name="1385" class="Keyword"
+      >module</a
+      ><a name="1391"
+      > </a
+      ><a name="1392" href="lib.types.GroupSet.html#1392" class="Module"
+      >GS</a
+      ><a name="1394"
+      > </a
+      ><a name="1395" class="Symbol"
+      >=</a
+      ><a name="1396"
+      > </a
+      ><a name="1397" href="lib.types.Group.html#154" class="Module"
+      >GroupStructure</a
+      ><a name="1411"
+      > </a
+      ><a name="1412" href="lib.types.Group.html#6949" class="Function"
+      >G.group-struct</a
+      ><a name="1426"
+      >
+    </a
+      ><a name="1431" class="Keyword"
+      >open</a
+      ><a name="1435"
+      > </a
+      ><a name="1436" href="lib.types.GroupSet.html#313" class="Module"
+      >GroupSetStructure</a
+      ><a name="1453"
+      >
+    </a
+      ><a name="1458" class="Keyword"
+      >private</a
+      ><a name="1465"
+      >
+      </a
+      ><a name="1472" href="lib.types.GroupSet.html#1472" class="Function"
+      >groupset-structure='</a
+      ><a name="1492"
+      > </a
+      ><a name="1493" class="Symbol"
+      >:</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" class="Symbol"
+      >&#8704;</a
+      ><a name="1496"
+      > </a
+      ><a name="1497" class="Symbol"
+      >{</a
+      ><a name="1498" href="lib.types.GroupSet.html#1498" class="Bound"
+      >gss&#8321;</a
+      ><a name="1502"
+      > </a
+      ><a name="1503" href="lib.types.GroupSet.html#1503" class="Bound"
+      >gss&#8322;</a
+      ><a name="1507"
+      > </a
+      ><a name="1508" class="Symbol"
+      >:</a
+      ><a name="1509"
+      > </a
+      ><a name="1510" href="lib.types.GroupSet.html#313" class="Record"
+      >GroupSetStructure</a
+      ><a name="1527"
+      > </a
+      ><a name="1528" href="lib.types.GroupSet.html#1278" class="Bound"
+      >grp</a
+      ><a name="1531"
+      > </a
+      ><a name="1532" href="lib.types.GroupSet.html#1298" class="Bound"
+      >El</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" href="lib.types.GroupSet.html#1312" class="Bound"
+      >El-level</a
+      ><a name="1543" class="Symbol"
+      >}</a
+      ><a name="1544"
+      >
+        </a
+      ><a name="1553" class="Symbol"
+      >&#8594;</a
+      ><a name="1554"
+      > </a
+      ><a name="1555" class="Symbol"
+      >(</a
+      ><a name="1556" href="lib.types.GroupSet.html#1556" class="Bound"
+      >act=</a
+      ><a name="1560"
+      > </a
+      ><a name="1561" class="Symbol"
+      >:</a
+      ><a name="1562"
+      > </a
+      ><a name="1563" href="lib.types.GroupSet.html#547" class="Field"
+      >act</a
+      ><a name="1566"
+      > </a
+      ><a name="1567" href="lib.types.GroupSet.html#1498" class="Bound"
+      >gss&#8321;</a
+      ><a name="1571"
+      > </a
+      ><a name="1572" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1574"
+      > </a
+      ><a name="1575" href="lib.types.GroupSet.html#547" class="Field"
+      >act</a
+      ><a name="1578"
+      > </a
+      ><a name="1579" href="lib.types.GroupSet.html#1503" class="Bound"
+      >gss&#8322;</a
+      ><a name="1583" class="Symbol"
+      >)</a
+      ><a name="1584"
+      >
+        </a
+      ><a name="1593" class="Symbol"
+      >&#8594;</a
+      ><a name="1594"
+      > </a
+      ><a name="1595" href="lib.types.GroupSet.html#574" class="Field"
+      >unit-r</a
+      ><a name="1601"
+      > </a
+      ><a name="1602" href="lib.types.GroupSet.html#1498" class="Bound"
+      >gss&#8321;</a
+      ><a name="1606"
+      > </a
+      ><a name="1607" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="1609"
+      > </a
+      ><a name="1610" href="lib.types.GroupSet.html#574" class="Field"
+      >unit-r</a
+      ><a name="1616"
+      > </a
+      ><a name="1617" href="lib.types.GroupSet.html#1503" class="Bound"
+      >gss&#8322;</a
+      ><a name="1621"
+      >
+          </a
+      ><a name="1632" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="1633"
+      > </a
+      ><a name="1634" class="Symbol"
+      >(&#955;</a
+      ><a name="1636"
+      > </a
+      ><a name="1637" href="lib.types.GroupSet.html#1637" class="Bound"
+      >act</a
+      ><a name="1640"
+      > </a
+      ><a name="1641" class="Symbol"
+      >&#8594;</a
+      ><a name="1642"
+      > </a
+      ><a name="1643" class="Symbol"
+      >&#8704;</a
+      ><a name="1644"
+      > </a
+      ><a name="1645" href="lib.types.GroupSet.html#1645" class="Bound"
+      >x</a
+      ><a name="1646"
+      > </a
+      ><a name="1647" class="Symbol"
+      >&#8594;</a
+      ><a name="1648"
+      > </a
+      ><a name="1649" href="lib.types.GroupSet.html#1637" class="Bound"
+      >act</a
+      ><a name="1652"
+      > </a
+      ><a name="1653" href="lib.types.GroupSet.html#1645" class="Bound"
+      >x</a
+      ><a name="1654"
+      > </a
+      ><a name="1655" href="lib.types.Group.html#276" class="Function"
+      >GS.ident</a
+      ><a name="1663"
+      > </a
+      ><a name="1664" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1666"
+      > </a
+      ><a name="1667" href="lib.types.GroupSet.html#1645" class="Bound"
+      >x</a
+      ><a name="1668" class="Symbol"
+      >)</a
+      ><a name="1669"
+      > </a
+      ><a name="1670" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="1671"
+      > </a
+      ><a name="1672" href="lib.types.GroupSet.html#1556" class="Bound"
+      >act=</a
+      ><a name="1676"
+      > </a
+      ><a name="1677" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="1678"
+      >
+        </a
+      ><a name="1687" class="Symbol"
+      >&#8594;</a
+      ><a name="1688"
+      > </a
+      ><a name="1689" href="lib.types.GroupSet.html#615" class="Field"
+      >assoc</a
+      ><a name="1694"
+      > </a
+      ><a name="1695" href="lib.types.GroupSet.html#1498" class="Bound"
+      >gss&#8321;</a
+      ><a name="1699"
+      > </a
+      ><a name="1700" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="1702"
+      > </a
+      ><a name="1703" href="lib.types.GroupSet.html#615" class="Field"
+      >assoc</a
+      ><a name="1708"
+      > </a
+      ><a name="1709" href="lib.types.GroupSet.html#1503" class="Bound"
+      >gss&#8322;</a
+      ><a name="1713"
+      >
+          </a
+      ><a name="1724" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="1725"
+      > </a
+      ><a name="1726" class="Symbol"
+      >(&#955;</a
+      ><a name="1728"
+      > </a
+      ><a name="1729" href="lib.types.GroupSet.html#1729" class="Bound"
+      >act</a
+      ><a name="1732"
+      > </a
+      ><a name="1733" class="Symbol"
+      >&#8594;</a
+      ><a name="1734"
+      > </a
+      ><a name="1735" class="Symbol"
+      >&#8704;</a
+      ><a name="1736"
+      > </a
+      ><a name="1737" href="lib.types.GroupSet.html#1737" class="Bound"
+      >x</a
+      ><a name="1738"
+      > </a
+      ><a name="1739" href="lib.types.GroupSet.html#1739" class="Bound"
+      >g&#8321;</a
+      ><a name="1741"
+      > </a
+      ><a name="1742" href="lib.types.GroupSet.html#1742" class="Bound"
+      >g&#8322;</a
+      ><a name="1744"
+      > </a
+      ><a name="1745" class="Symbol"
+      >&#8594;</a
+      ><a name="1746"
+      >
+              </a
+      ><a name="1761" href="lib.types.GroupSet.html#1729" class="Bound"
+      >act</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" class="Symbol"
+      >(</a
+      ><a name="1766" href="lib.types.GroupSet.html#1729" class="Bound"
+      >act</a
+      ><a name="1769"
+      > </a
+      ><a name="1770" href="lib.types.GroupSet.html#1737" class="Bound"
+      >x</a
+      ><a name="1771"
+      > </a
+      ><a name="1772" href="lib.types.GroupSet.html#1739" class="Bound"
+      >g&#8321;</a
+      ><a name="1774" class="Symbol"
+      >)</a
+      ><a name="1775"
+      > </a
+      ><a name="1776" href="lib.types.GroupSet.html#1742" class="Bound"
+      >g&#8322;</a
+      ><a name="1778"
+      > </a
+      ><a name="1779" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1781"
+      > </a
+      ><a name="1782" href="lib.types.GroupSet.html#1729" class="Bound"
+      >act</a
+      ><a name="1785"
+      > </a
+      ><a name="1786" href="lib.types.GroupSet.html#1737" class="Bound"
+      >x</a
+      ><a name="1787"
+      > </a
+      ><a name="1788" class="Symbol"
+      >(</a
+      ><a name="1789" href="lib.types.Group.html#313" class="Function"
+      >GS.comp</a
+      ><a name="1796"
+      > </a
+      ><a name="1797" href="lib.types.GroupSet.html#1739" class="Bound"
+      >g&#8321;</a
+      ><a name="1799"
+      > </a
+      ><a name="1800" href="lib.types.GroupSet.html#1742" class="Bound"
+      >g&#8322;</a
+      ><a name="1802" class="Symbol"
+      >))</a
+      ><a name="1804"
+      > </a
+      ><a name="1805" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="1806"
+      > </a
+      ><a name="1807" href="lib.types.GroupSet.html#1556" class="Bound"
+      >act=</a
+      ><a name="1811"
+      > </a
+      ><a name="1812" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="1813"
+      >
+        </a
+      ><a name="1822" class="Symbol"
+      >&#8594;</a
+      ><a name="1823"
+      > </a
+      ><a name="1824" href="lib.types.GroupSet.html#1498" class="Bound"
+      >gss&#8321;</a
+      ><a name="1828"
+      > </a
+      ><a name="1829" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1831"
+      > </a
+      ><a name="1832" href="lib.types.GroupSet.html#1503" class="Bound"
+      >gss&#8322;</a
+      ><a name="1836"
+      >
+      </a
+      ><a name="1843" href="lib.types.GroupSet.html#1472" class="Function"
+      >groupset-structure='</a
+      ><a name="1863"
+      > </a
+      ><a name="1864" class="Symbol"
+      >{</a
+      ><a name="1865" href="lib.types.GroupSet.html#425" class="InductiveConstructor"
+      >groupset-structure</a
+      ><a name="1883"
+      > </a
+      ><a name="1884" class="Symbol"
+      >_</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" class="Symbol"
+      >_</a
+      ><a name="1887"
+      > </a
+      ><a name="1888" class="Symbol"
+      >_}</a
+      ><a name="1890"
+      > </a
+      ><a name="1891" class="Symbol"
+      >{</a
+      ><a name="1892" href="lib.types.GroupSet.html#425" class="InductiveConstructor"
+      >groupset-structure</a
+      ><a name="1910"
+      > </a
+      ><a name="1911" class="DottedPattern Symbol"
+      >._</a
+      ><a name="1913"
+      > </a
+      ><a name="1914" class="DottedPattern Symbol"
+      >._</a
+      ><a name="1916"
+      > </a
+      ><a name="1917" class="DottedPattern Symbol"
+      >._</a
+      ><a name="1919" class="Symbol"
+      >}</a
+      ><a name="1920"
+      >
+        </a
+      ><a name="1929" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1932"
+      > </a
+      ><a name="1933" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1936"
+      > </a
+      ><a name="1937" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1940"
+      > </a
+      ><a name="1941" class="Symbol"
+      >=</a
+      ><a name="1942"
+      > </a
+      ><a name="1943" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1946"
+      >
+
+    </a
+      ><a name="1952" href="lib.types.GroupSet.html#1952" class="Function"
+      >groupset-structure=</a
+      ><a name="1971"
+      > </a
+      ><a name="1972" class="Symbol"
+      >:</a
+      ><a name="1973"
+      > </a
+      ><a name="1974" class="Symbol"
+      >&#8704;</a
+      ><a name="1975"
+      > </a
+      ><a name="1976" class="Symbol"
+      >{</a
+      ><a name="1977" href="lib.types.GroupSet.html#1977" class="Bound"
+      >gss&#8321;</a
+      ><a name="1981"
+      > </a
+      ><a name="1982" href="lib.types.GroupSet.html#1982" class="Bound"
+      >gss&#8322;</a
+      ><a name="1986"
+      > </a
+      ><a name="1987" class="Symbol"
+      >:</a
+      ><a name="1988"
+      > </a
+      ><a name="1989" href="lib.types.GroupSet.html#313" class="Record"
+      >GroupSetStructure</a
+      ><a name="2006"
+      > </a
+      ><a name="2007" href="lib.types.GroupSet.html#1278" class="Bound"
+      >grp</a
+      ><a name="2010"
+      > </a
+      ><a name="2011" href="lib.types.GroupSet.html#1298" class="Bound"
+      >El</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" href="lib.types.GroupSet.html#1312" class="Bound"
+      >El-level</a
+      ><a name="2022" class="Symbol"
+      >}</a
+      ><a name="2023"
+      >
+      </a
+      ><a name="2030" class="Symbol"
+      >&#8594;</a
+      ><a name="2031"
+      > </a
+      ><a name="2032" class="Symbol"
+      >(&#8704;</a
+      ><a name="2034"
+      > </a
+      ><a name="2035" href="lib.types.GroupSet.html#2035" class="Bound"
+      >x</a
+      ><a name="2036"
+      > </a
+      ><a name="2037" href="lib.types.GroupSet.html#2037" class="Bound"
+      >g</a
+      ><a name="2038"
+      > </a
+      ><a name="2039" class="Symbol"
+      >&#8594;</a
+      ><a name="2040"
+      > </a
+      ><a name="2041" href="lib.types.GroupSet.html#547" class="Field"
+      >act</a
+      ><a name="2044"
+      > </a
+      ><a name="2045" href="lib.types.GroupSet.html#1977" class="Bound"
+      >gss&#8321;</a
+      ><a name="2049"
+      > </a
+      ><a name="2050" href="lib.types.GroupSet.html#2035" class="Bound"
+      >x</a
+      ><a name="2051"
+      > </a
+      ><a name="2052" href="lib.types.GroupSet.html#2037" class="Bound"
+      >g</a
+      ><a name="2053"
+      > </a
+      ><a name="2054" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2056"
+      > </a
+      ><a name="2057" href="lib.types.GroupSet.html#547" class="Field"
+      >act</a
+      ><a name="2060"
+      > </a
+      ><a name="2061" href="lib.types.GroupSet.html#1982" class="Bound"
+      >gss&#8322;</a
+      ><a name="2065"
+      > </a
+      ><a name="2066" href="lib.types.GroupSet.html#2035" class="Bound"
+      >x</a
+      ><a name="2067"
+      > </a
+      ><a name="2068" href="lib.types.GroupSet.html#2037" class="Bound"
+      >g</a
+      ><a name="2069" class="Symbol"
+      >)</a
+      ><a name="2070"
+      >
+      </a
+      ><a name="2077" class="Symbol"
+      >&#8594;</a
+      ><a name="2078"
+      > </a
+      ><a name="2079" href="lib.types.GroupSet.html#1977" class="Bound"
+      >gss&#8321;</a
+      ><a name="2083"
+      > </a
+      ><a name="2084" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2086"
+      > </a
+      ><a name="2087" href="lib.types.GroupSet.html#1982" class="Bound"
+      >gss&#8322;</a
+      ><a name="2091"
+      >
+    </a
+      ><a name="2096" href="lib.types.GroupSet.html#1952" class="Function"
+      >groupset-structure=</a
+      ><a name="2115"
+      > </a
+      ><a name="2116" href="lib.types.GroupSet.html#2116" class="Bound"
+      >act=</a
+      ><a name="2120"
+      > </a
+      ><a name="2121" class="Symbol"
+      >=</a
+      ><a name="2122"
+      > </a
+      ><a name="2123" href="lib.types.GroupSet.html#1472" class="Function"
+      >groupset-structure='</a
+      ><a name="2143"
+      >
+      </a
+      ><a name="2150" class="Symbol"
+      >(</a
+      ><a name="2151" href="lib.Funext.html#3966" class="Function"
+      >&#955;=</a
+      ><a name="2153"
+      > </a
+      ><a name="2154" class="Symbol"
+      >&#955;</a
+      ><a name="2155"
+      > </a
+      ><a name="2156" href="lib.types.GroupSet.html#2156" class="Bound"
+      >x</a
+      ><a name="2157"
+      > </a
+      ><a name="2158" class="Symbol"
+      >&#8594;</a
+      ><a name="2159"
+      > </a
+      ><a name="2160" href="lib.Funext.html#3966" class="Function"
+      >&#955;=</a
+      ><a name="2162"
+      > </a
+      ><a name="2163" class="Symbol"
+      >&#955;</a
+      ><a name="2164"
+      > </a
+      ><a name="2165" href="lib.types.GroupSet.html#2165" class="Bound"
+      >g</a
+      ><a name="2166"
+      > </a
+      ><a name="2167" class="Symbol"
+      >&#8594;</a
+      ><a name="2168"
+      > </a
+      ><a name="2169" href="lib.types.GroupSet.html#2116" class="Bound"
+      >act=</a
+      ><a name="2173"
+      > </a
+      ><a name="2174" href="lib.types.GroupSet.html#2156" class="Bound"
+      >x</a
+      ><a name="2175"
+      > </a
+      ><a name="2176" href="lib.types.GroupSet.html#2165" class="Bound"
+      >g</a
+      ><a name="2177" class="Symbol"
+      >)</a
+      ><a name="2178"
+      >
+      </a
+      ><a name="2185" class="Symbol"
+      >(</a
+      ><a name="2186" href="lib.NType2.html#1216" class="Function"
+      >prop-has-all-paths-&#8595;</a
+      ><a name="2206"
+      > </a
+      ><a name="2207" class="Symbol"
+      >(</a
+      ><a name="2208" href="lib.types.Pi.html#188" class="Function"
+      >&#928;-level</a
+      ><a name="2215"
+      > </a
+      ><a name="2216" class="Symbol"
+      >&#955;</a
+      ><a name="2217"
+      > </a
+      ><a name="2218" href="lib.types.GroupSet.html#2218" class="Bound"
+      >_</a
+      ><a name="2219"
+      > </a
+      ><a name="2220" class="Symbol"
+      >&#8594;</a
+      ><a name="2221"
+      > </a
+      ><a name="2222" href="lib.types.GroupSet.html#1312" class="Bound"
+      >El-level</a
+      ><a name="2230"
+      > </a
+      ><a name="2231" class="Symbol"
+      >_</a
+      ><a name="2232"
+      > </a
+      ><a name="2233" class="Symbol"
+      >_))</a
+      ><a name="2236"
+      >
+      </a
+      ><a name="2243" class="Symbol"
+      >(</a
+      ><a name="2244" href="lib.NType2.html#1216" class="Function"
+      >prop-has-all-paths-&#8595;</a
+      ><a name="2264"
+      >
+        </a
+      ><a name="2273" class="Symbol"
+      >(</a
+      ><a name="2274" href="lib.types.Pi.html#188" class="Function"
+      >&#928;-level</a
+      ><a name="2281"
+      > </a
+      ><a name="2282" class="Symbol"
+      >&#955;</a
+      ><a name="2283"
+      > </a
+      ><a name="2284" href="lib.types.GroupSet.html#2284" class="Bound"
+      >_</a
+      ><a name="2285"
+      > </a
+      ><a name="2286" class="Symbol"
+      >&#8594;</a
+      ><a name="2287"
+      > </a
+      ><a name="2288" href="lib.types.Pi.html#188" class="Function"
+      >&#928;-level</a
+      ><a name="2295"
+      > </a
+      ><a name="2296" class="Symbol"
+      >&#955;</a
+      ><a name="2297"
+      > </a
+      ><a name="2298" href="lib.types.GroupSet.html#2298" class="Bound"
+      >_</a
+      ><a name="2299"
+      > </a
+      ><a name="2300" class="Symbol"
+      >&#8594;</a
+      ><a name="2301"
+      > </a
+      ><a name="2302" href="lib.types.Pi.html#188" class="Function"
+      >&#928;-level</a
+      ><a name="2309"
+      > </a
+      ><a name="2310" class="Symbol"
+      >&#955;</a
+      ><a name="2311"
+      > </a
+      ><a name="2312" href="lib.types.GroupSet.html#2312" class="Bound"
+      >_</a
+      ><a name="2313"
+      > </a
+      ><a name="2314" class="Symbol"
+      >&#8594;</a
+      ><a name="2315"
+      > </a
+      ><a name="2316" href="lib.types.GroupSet.html#1312" class="Bound"
+      >El-level</a
+      ><a name="2324"
+      > </a
+      ><a name="2325" class="Symbol"
+      >_</a
+      ><a name="2326"
+      > </a
+      ><a name="2327" class="Symbol"
+      >_))</a
+      ><a name="2330"
+      >
+
+  </a
+      ><a name="2334" class="Keyword"
+      >module</a
+      ><a name="2340"
+      > </a
+      ><a name="2341" href="lib.types.GroupSet.html#2341" class="Module"
+      >_</a
+      ><a name="2342"
+      > </a
+      ><a name="2343" class="Symbol"
+      >{</a
+      ><a name="2344" href="lib.types.GroupSet.html#2344" class="Bound"
+      >grp</a
+      ><a name="2347"
+      > </a
+      ><a name="2348" class="Symbol"
+      >:</a
+      ><a name="2349"
+      > </a
+      ><a name="2350" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="2355"
+      > </a
+      ><a name="2356" href="lib.types.GroupSet.html#233" class="Bound"
+      >i</a
+      ><a name="2357" class="Symbol"
+      >}</a
+      ><a name="2358"
+      > </a
+      ><a name="2359" class="Symbol"
+      >{</a
+      ><a name="2360" href="lib.types.GroupSet.html#2360" class="Bound"
+      >j</a
+      ><a name="2361"
+      > </a
+      ><a name="2362" class="Symbol"
+      >:</a
+      ><a name="2363"
+      > </a
+      ><a name="2364" href="Agda.Primitive.html#408" class="Postulate"
+      >ULevel</a
+      ><a name="2370" class="Symbol"
+      >}</a
+      ><a name="2371"
+      > </a
+      ><a name="2372" class="Keyword"
+      >where</a
+      ><a name="2377"
+      >
+    </a
+      ><a name="2382" class="Keyword"
+      >private</a
+      ><a name="2389"
+      >
+      </a
+      ><a name="2396" class="Keyword"
+      >module</a
+      ><a name="2402"
+      > </a
+      ><a name="2403" href="lib.types.GroupSet.html#2403" class="Module"
+      >G</a
+      ><a name="2404"
+      > </a
+      ><a name="2405" class="Symbol"
+      >=</a
+      ><a name="2406"
+      > </a
+      ><a name="2407" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="2412"
+      > </a
+      ><a name="2413" href="lib.types.GroupSet.html#2344" class="Bound"
+      >grp</a
+      ><a name="2416"
+      >
+      </a
+      ><a name="2423" class="Keyword"
+      >module</a
+      ><a name="2429"
+      > </a
+      ><a name="2430" href="lib.types.GroupSet.html#2430" class="Module"
+      >GS</a
+      ><a name="2432"
+      > </a
+      ><a name="2433" class="Symbol"
+      >=</a
+      ><a name="2434"
+      > </a
+      ><a name="2435" href="lib.types.Group.html#154" class="Module"
+      >GroupStructure</a
+      ><a name="2449"
+      > </a
+      ><a name="2450" href="lib.types.Group.html#6949" class="Function"
+      >G.group-struct</a
+      ><a name="2464"
+      >
+    </a
+      ><a name="2469" class="Keyword"
+      >open</a
+      ><a name="2473"
+      > </a
+      ><a name="2474" href="lib.types.GroupSet.html#795" class="Module"
+      >GroupSet</a
+      ><a name="2482"
+      > </a
+      ><a name="2483" class="Symbol"
+      >{</a
+      ><a name="2484" href="lib.types.GroupSet.html#2344" class="Bound"
+      >grp</a
+      ><a name="2487" class="Symbol"
+      >}</a
+      ><a name="2488"
+      > </a
+      ><a name="2489" class="Symbol"
+      >{</a
+      ><a name="2490" href="lib.types.GroupSet.html#2360" class="Bound"
+      >j</a
+      ><a name="2491" class="Symbol"
+      >}</a
+      ><a name="2492"
+      >
+    </a
+      ><a name="2497" class="Keyword"
+      >private</a
+      ><a name="2504"
+      >
+      </a
+      ><a name="2511" href="lib.types.GroupSet.html#2511" class="Function"
+      >groupset=''</a
+      ><a name="2522"
+      > </a
+      ><a name="2523" class="Symbol"
+      >:</a
+      ><a name="2524"
+      > </a
+      ><a name="2525" class="Symbol"
+      >&#8704;</a
+      ><a name="2526"
+      > </a
+      ><a name="2527" class="Symbol"
+      >{</a
+      ><a name="2528" href="lib.types.GroupSet.html#2528" class="Bound"
+      >gs&#8321;</a
+      ><a name="2531"
+      > </a
+      ><a name="2532" href="lib.types.GroupSet.html#2532" class="Bound"
+      >gs&#8322;</a
+      ><a name="2535"
+      > </a
+      ><a name="2536" class="Symbol"
+      >:</a
+      ><a name="2537"
+      > </a
+      ><a name="2538" href="lib.types.GroupSet.html#795" class="Record"
+      >GroupSet</a
+      ><a name="2546"
+      > </a
+      ><a name="2547" href="lib.types.GroupSet.html#2344" class="Bound"
+      >grp</a
+      ><a name="2550"
+      > </a
+      ><a name="2551" href="lib.types.GroupSet.html#2360" class="Bound"
+      >j</a
+      ><a name="2552" class="Symbol"
+      >}</a
+      ><a name="2553"
+      >
+        </a
+      ><a name="2562" class="Symbol"
+      >&#8594;</a
+      ><a name="2563"
+      > </a
+      ><a name="2564" class="Symbol"
+      >(</a
+      ><a name="2565" href="lib.types.GroupSet.html#2565" class="Bound"
+      >El=</a
+      ><a name="2568"
+      > </a
+      ><a name="2569" class="Symbol"
+      >:</a
+      ><a name="2570"
+      > </a
+      ><a name="2571" href="lib.types.GroupSet.html#895" class="Field"
+      >El</a
+      ><a name="2573"
+      > </a
+      ><a name="2574" href="lib.types.GroupSet.html#2528" class="Bound"
+      >gs&#8321;</a
+      ><a name="2577"
+      > </a
+      ><a name="2578" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2580"
+      > </a
+      ><a name="2581" href="lib.types.GroupSet.html#895" class="Field"
+      >El</a
+      ><a name="2583"
+      > </a
+      ><a name="2584" href="lib.types.GroupSet.html#2532" class="Bound"
+      >gs&#8322;</a
+      ><a name="2587" class="Symbol"
+      >)</a
+      ><a name="2588"
+      >
+        </a
+      ><a name="2597" class="Symbol"
+      >&#8594;</a
+      ><a name="2598"
+      > </a
+      ><a name="2599" class="Symbol"
+      >(</a
+      ><a name="2600" href="lib.types.GroupSet.html#2600" class="Bound"
+      >El-level</a
+      ><a name="2608"
+      > </a
+      ><a name="2609" class="Symbol"
+      >:</a
+      ><a name="2610"
+      > </a
+      ><a name="2611" href="lib.types.GroupSet.html#913" class="Field"
+      >El-level</a
+      ><a name="2619"
+      > </a
+      ><a name="2620" href="lib.types.GroupSet.html#2528" class="Bound"
+      >gs&#8321;</a
+      ><a name="2623"
+      > </a
+      ><a name="2624" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="2626"
+      > </a
+      ><a name="2627" href="lib.types.GroupSet.html#913" class="Field"
+      >El-level</a
+      ><a name="2635"
+      > </a
+      ><a name="2636" href="lib.types.GroupSet.html#2532" class="Bound"
+      >gs&#8322;</a
+      ><a name="2639"
+      > </a
+      ><a name="2640" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="2641"
+      > </a
+      ><a name="2642" href="lib.NType.html#455" class="Function"
+      >is-set</a
+      ><a name="2648"
+      > </a
+      ><a name="2649" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="2650"
+      > </a
+      ><a name="2651" href="lib.types.GroupSet.html#2565" class="Bound"
+      >El=</a
+      ><a name="2654"
+      > </a
+      ><a name="2655" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="2656" class="Symbol"
+      >)</a
+      ><a name="2657"
+      >
+        </a
+      ><a name="2666" class="Symbol"
+      >&#8594;</a
+      ><a name="2667"
+      > </a
+      ><a name="2668" href="lib.types.GroupSet.html#940" class="Field"
+      >grpset-struct</a
+      ><a name="2681"
+      > </a
+      ><a name="2682" href="lib.types.GroupSet.html#2528" class="Bound"
+      >gs&#8321;</a
+      ><a name="2685"
+      > </a
+      ><a name="2686" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="2688"
+      > </a
+      ><a name="2689" href="lib.types.GroupSet.html#940" class="Field"
+      >grpset-struct</a
+      ><a name="2702"
+      > </a
+      ><a name="2703" href="lib.types.GroupSet.html#2532" class="Bound"
+      >gs&#8322;</a
+      ><a name="2706"
+      >
+          </a
+      ><a name="2717" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="2718"
+      > </a
+      ><a name="2719" href="lib.Base.html#8582" class="Function"
+      >uncurry</a
+      ><a name="2726"
+      > </a
+      ><a name="2727" class="Symbol"
+      >(</a
+      ><a name="2728" href="lib.types.GroupSet.html#313" class="Record"
+      >GroupSetStructure</a
+      ><a name="2745"
+      > </a
+      ><a name="2746" href="lib.types.GroupSet.html#2344" class="Bound"
+      >grp</a
+      ><a name="2749" class="Symbol"
+      >)</a
+      ><a name="2750"
+      > </a
+      ><a name="2751" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="2752"
+      > </a
+      ><a name="2753" href="lib.Base.html#5386" class="Function"
+      >pair=</a
+      ><a name="2758"
+      > </a
+      ><a name="2759" href="lib.types.GroupSet.html#2565" class="Bound"
+      >El=</a
+      ><a name="2762"
+      > </a
+      ><a name="2763" href="lib.types.GroupSet.html#2600" class="Bound"
+      >El-level</a
+      ><a name="2771"
+      > </a
+      ><a name="2772" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="2773"
+      >
+        </a
+      ><a name="2782" class="Symbol"
+      >&#8594;</a
+      ><a name="2783"
+      > </a
+      ><a name="2784" href="lib.types.GroupSet.html#2528" class="Bound"
+      >gs&#8321;</a
+      ><a name="2787"
+      > </a
+      ><a name="2788" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2790"
+      > </a
+      ><a name="2791" href="lib.types.GroupSet.html#2532" class="Bound"
+      >gs&#8322;</a
+      ><a name="2794"
+      >
+      </a
+      ><a name="2801" href="lib.types.GroupSet.html#2511" class="Function"
+      >groupset=''</a
+      ><a name="2812"
+      > </a
+      ><a name="2813" class="Symbol"
+      >{</a
+      ><a name="2814" href="lib.types.GroupSet.html#870" class="InductiveConstructor"
+      >groupset</a
+      ><a name="2822"
+      > </a
+      ><a name="2823" class="Symbol"
+      >_</a
+      ><a name="2824"
+      > </a
+      ><a name="2825" class="Symbol"
+      >_</a
+      ><a name="2826"
+      > </a
+      ><a name="2827" class="Symbol"
+      >_}</a
+      ><a name="2829"
+      > </a
+      ><a name="2830" class="Symbol"
+      >{</a
+      ><a name="2831" href="lib.types.GroupSet.html#870" class="InductiveConstructor"
+      >groupset</a
+      ><a name="2839"
+      > </a
+      ><a name="2840" class="DottedPattern Symbol"
+      >._</a
+      ><a name="2842"
+      > </a
+      ><a name="2843" class="DottedPattern Symbol"
+      >._</a
+      ><a name="2845"
+      > </a
+      ><a name="2846" class="DottedPattern Symbol"
+      >._</a
+      ><a name="2848" class="Symbol"
+      >}</a
+      ><a name="2849"
+      > </a
+      ><a name="2850" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2853"
+      > </a
+      ><a name="2854" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2857"
+      > </a
+      ><a name="2858" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2861"
+      > </a
+      ><a name="2862" class="Symbol"
+      >=</a
+      ><a name="2863"
+      > </a
+      ><a name="2864" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2867"
+      >
+
+      </a
+      ><a name="2875" href="lib.types.GroupSet.html#2875" class="Function"
+      >groupset='</a
+      ><a name="2885"
+      > </a
+      ><a name="2886" class="Symbol"
+      >:</a
+      ><a name="2887"
+      > </a
+      ><a name="2888" class="Symbol"
+      >&#8704;</a
+      ><a name="2889"
+      > </a
+      ><a name="2890" class="Symbol"
+      >{</a
+      ><a name="2891" href="lib.types.GroupSet.html#2891" class="Bound"
+      >gs&#8321;</a
+      ><a name="2894"
+      > </a
+      ><a name="2895" href="lib.types.GroupSet.html#2895" class="Bound"
+      >gs&#8322;</a
+      ><a name="2898"
+      > </a
+      ><a name="2899" class="Symbol"
+      >:</a
+      ><a name="2900"
+      > </a
+      ><a name="2901" href="lib.types.GroupSet.html#795" class="Record"
+      >GroupSet</a
+      ><a name="2909"
+      > </a
+      ><a name="2910" href="lib.types.GroupSet.html#2344" class="Bound"
+      >grp</a
+      ><a name="2913"
+      > </a
+      ><a name="2914" href="lib.types.GroupSet.html#2360" class="Bound"
+      >j</a
+      ><a name="2915" class="Symbol"
+      >}</a
+      ><a name="2916"
+      >
+        </a
+      ><a name="2925" class="Symbol"
+      >&#8594;</a
+      ><a name="2926"
+      > </a
+      ><a name="2927" class="Symbol"
+      >(</a
+      ><a name="2928" href="lib.types.GroupSet.html#2928" class="Bound"
+      >El=</a
+      ><a name="2931"
+      > </a
+      ><a name="2932" class="Symbol"
+      >:</a
+      ><a name="2933"
+      > </a
+      ><a name="2934" href="lib.types.GroupSet.html#895" class="Field"
+      >El</a
+      ><a name="2936"
+      > </a
+      ><a name="2937" href="lib.types.GroupSet.html#2891" class="Bound"
+      >gs&#8321;</a
+      ><a name="2940"
+      > </a
+      ><a name="2941" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2943"
+      > </a
+      ><a name="2944" href="lib.types.GroupSet.html#895" class="Field"
+      >El</a
+      ><a name="2946"
+      > </a
+      ><a name="2947" href="lib.types.GroupSet.html#2895" class="Bound"
+      >gs&#8322;</a
+      ><a name="2950" class="Symbol"
+      >)</a
+      ><a name="2951"
+      >
+        </a
+      ><a name="2960" class="Symbol"
+      >&#8594;</a
+      ><a name="2961"
+      > </a
+      ><a name="2962" class="Symbol"
+      >(</a
+      ><a name="2963" href="lib.types.GroupSet.html#2963" class="Bound"
+      >El-level</a
+      ><a name="2971"
+      > </a
+      ><a name="2972" class="Symbol"
+      >:</a
+      ><a name="2973"
+      > </a
+      ><a name="2974" href="lib.types.GroupSet.html#913" class="Field"
+      >El-level</a
+      ><a name="2982"
+      > </a
+      ><a name="2983" href="lib.types.GroupSet.html#2891" class="Bound"
+      >gs&#8321;</a
+      ><a name="2986"
+      > </a
+      ><a name="2987" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="2989"
+      > </a
+      ><a name="2990" href="lib.types.GroupSet.html#913" class="Field"
+      >El-level</a
+      ><a name="2998"
+      > </a
+      ><a name="2999" href="lib.types.GroupSet.html#2895" class="Bound"
+      >gs&#8322;</a
+      ><a name="3002"
+      > </a
+      ><a name="3003" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="3004"
+      > </a
+      ><a name="3005" href="lib.NType.html#455" class="Function"
+      >is-set</a
+      ><a name="3011"
+      > </a
+      ><a name="3012" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="3013"
+      > </a
+      ><a name="3014" href="lib.types.GroupSet.html#2928" class="Bound"
+      >El=</a
+      ><a name="3017"
+      > </a
+      ><a name="3018" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="3019" class="Symbol"
+      >)</a
+      ><a name="3020"
+      >
+        </a
+      ><a name="3029" class="Symbol"
+      >&#8594;</a
+      ><a name="3030"
+      > </a
+      ><a name="3031" class="Symbol"
+      >(&#8704;</a
+      ><a name="3033"
+      > </a
+      ><a name="3034" class="Symbol"
+      >{</a
+      ><a name="3035" href="lib.types.GroupSet.html#3035" class="Bound"
+      >x&#8321;</a
+      ><a name="3037" class="Symbol"
+      >}</a
+      ><a name="3038"
+      > </a
+      ><a name="3039" class="Symbol"
+      >{</a
+      ><a name="3040" href="lib.types.GroupSet.html#3040" class="Bound"
+      >x&#8322;</a
+      ><a name="3042" class="Symbol"
+      >}</a
+      ><a name="3043"
+      > </a
+      ><a name="3044" class="Symbol"
+      >(</a
+      ><a name="3045" href="lib.types.GroupSet.html#3045" class="Bound"
+      >p</a
+      ><a name="3046"
+      > </a
+      ><a name="3047" class="Symbol"
+      >:</a
+      ><a name="3048"
+      > </a
+      ><a name="3049" href="lib.types.GroupSet.html#3035" class="Bound"
+      >x&#8321;</a
+      ><a name="3051"
+      > </a
+      ><a name="3052" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="3054"
+      > </a
+      ><a name="3055" href="lib.types.GroupSet.html#3040" class="Bound"
+      >x&#8322;</a
+      ><a name="3057"
+      > </a
+      ><a name="3058" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="3059"
+      > </a
+      ><a name="3060" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="3063"
+      > </a
+      ><a name="3064" class="Symbol"
+      >_</a
+      ><a name="3065"
+      > </a
+      ><a name="3066" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="3067"
+      > </a
+      ><a name="3068" href="lib.types.GroupSet.html#2928" class="Bound"
+      >El=</a
+      ><a name="3071"
+      > </a
+      ><a name="3072" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="3073" class="Symbol"
+      >)</a
+      ><a name="3074"
+      > </a
+      ><a name="3075" href="lib.types.GroupSet.html#3075" class="Bound"
+      >g</a
+      ><a name="3076"
+      >
+            </a
+      ><a name="3089" class="Symbol"
+      >&#8594;</a
+      ><a name="3090"
+      > </a
+      ><a name="3091" href="lib.types.GroupSet.html#547" class="Function"
+      >act</a
+      ><a name="3094"
+      > </a
+      ><a name="3095" href="lib.types.GroupSet.html#2891" class="Bound"
+      >gs&#8321;</a
+      ><a name="3098"
+      > </a
+      ><a name="3099" href="lib.types.GroupSet.html#3035" class="Bound"
+      >x&#8321;</a
+      ><a name="3101"
+      > </a
+      ><a name="3102" href="lib.types.GroupSet.html#3075" class="Bound"
+      >g</a
+      ><a name="3103"
+      > </a
+      ><a name="3104" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="3106"
+      > </a
+      ><a name="3107" href="lib.types.GroupSet.html#547" class="Function"
+      >act</a
+      ><a name="3110"
+      > </a
+      ><a name="3111" href="lib.types.GroupSet.html#2895" class="Bound"
+      >gs&#8322;</a
+      ><a name="3114"
+      > </a
+      ><a name="3115" href="lib.types.GroupSet.html#3040" class="Bound"
+      >x&#8322;</a
+      ><a name="3117"
+      > </a
+      ><a name="3118" href="lib.types.GroupSet.html#3075" class="Bound"
+      >g</a
+      ><a name="3119"
+      > </a
+      ><a name="3120" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="3121"
+      > </a
+      ><a name="3122" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="3125"
+      > </a
+      ><a name="3126" class="Symbol"
+      >_</a
+      ><a name="3127"
+      > </a
+      ><a name="3128" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="3129"
+      > </a
+      ><a name="3130" href="lib.types.GroupSet.html#2928" class="Bound"
+      >El=</a
+      ><a name="3133"
+      > </a
+      ><a name="3134" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="3135" class="Symbol"
+      >)</a
+      ><a name="3136"
+      >
+        </a
+      ><a name="3145" class="Symbol"
+      >&#8594;</a
+      ><a name="3146"
+      > </a
+      ><a name="3147" href="lib.types.GroupSet.html#2891" class="Bound"
+      >gs&#8321;</a
+      ><a name="3150"
+      > </a
+      ><a name="3151" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3153"
+      > </a
+      ><a name="3154" href="lib.types.GroupSet.html#2895" class="Bound"
+      >gs&#8322;</a
+      ><a name="3157"
+      >
+      </a
+      ><a name="3164" href="lib.types.GroupSet.html#2875" class="Function"
+      >groupset='</a
+      ><a name="3174"
+      > </a
+      ><a name="3175" class="Symbol"
+      >{</a
+      ><a name="3176" href="lib.types.GroupSet.html#870" class="InductiveConstructor"
+      >groupset</a
+      ><a name="3184"
+      > </a
+      ><a name="3185" class="Symbol"
+      >_</a
+      ><a name="3186"
+      > </a
+      ><a name="3187" class="Symbol"
+      >_</a
+      ><a name="3188"
+      > </a
+      ><a name="3189" class="Symbol"
+      >_}</a
+      ><a name="3191"
+      > </a
+      ><a name="3192" class="Symbol"
+      >{</a
+      ><a name="3193" href="lib.types.GroupSet.html#870" class="InductiveConstructor"
+      >groupset</a
+      ><a name="3201"
+      > </a
+      ><a name="3202" class="DottedPattern Symbol"
+      >._</a
+      ><a name="3204"
+      > </a
+      ><a name="3205" class="DottedPattern Symbol"
+      >._</a
+      ><a name="3207"
+      > </a
+      ><a name="3208" class="Symbol"
+      >_}</a
+      ><a name="3210"
+      > </a
+      ><a name="3211" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3214"
+      > </a
+      ><a name="3215" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3218"
+      > </a
+      ><a name="3219" href="lib.types.GroupSet.html#3219" class="Bound"
+      >act=</a
+      ><a name="3223"
+      > </a
+      ><a name="3224" class="Symbol"
+      >=</a
+      ><a name="3225"
+      >
+        </a
+      ><a name="3234" href="lib.types.GroupSet.html#2511" class="Function"
+      >groupset=''</a
+      ><a name="3245"
+      > </a
+      ><a name="3246" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3249"
+      > </a
+      ><a name="3250" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3253"
+      > </a
+      ><a name="3254" class="Symbol"
+      >(</a
+      ><a name="3255" href="lib.types.GroupSet.html#1952" class="Function"
+      >groupset-structure=</a
+      ><a name="3274"
+      > </a
+      ><a name="3275" class="Symbol"
+      >&#955;</a
+      ><a name="3276"
+      > </a
+      ><a name="3277" href="lib.types.GroupSet.html#3277" class="Bound"
+      >x</a
+      ><a name="3278"
+      > </a
+      ><a name="3279" href="lib.types.GroupSet.html#3279" class="Bound"
+      >g</a
+      ><a name="3280"
+      > </a
+      ><a name="3281" class="Symbol"
+      >&#8594;</a
+      ><a name="3282"
+      > </a
+      ><a name="3283" href="lib.types.GroupSet.html#3219" class="Bound"
+      >act=</a
+      ><a name="3287"
+      > </a
+      ><a name="3288" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3291"
+      > </a
+      ><a name="3292" href="lib.types.GroupSet.html#3279" class="Bound"
+      >g</a
+      ><a name="3293" class="Symbol"
+      >)</a
+      ><a name="3294"
+      >
+
+    </a
+      ><a name="3300" href="lib.types.GroupSet.html#3300" class="Function"
+      >groupset=</a
+      ><a name="3309"
+      > </a
+      ><a name="3310" class="Symbol"
+      >:</a
+      ><a name="3311"
+      > </a
+      ><a name="3312" class="Symbol"
+      >&#8704;</a
+      ><a name="3313"
+      > </a
+      ><a name="3314" class="Symbol"
+      >{</a
+      ><a name="3315" href="lib.types.GroupSet.html#3315" class="Bound"
+      >gs&#8321;</a
+      ><a name="3318"
+      > </a
+      ><a name="3319" href="lib.types.GroupSet.html#3319" class="Bound"
+      >gs&#8322;</a
+      ><a name="3322"
+      > </a
+      ><a name="3323" class="Symbol"
+      >:</a
+      ><a name="3324"
+      > </a
+      ><a name="3325" href="lib.types.GroupSet.html#795" class="Record"
+      >GroupSet</a
+      ><a name="3333"
+      > </a
+      ><a name="3334" href="lib.types.GroupSet.html#2344" class="Bound"
+      >grp</a
+      ><a name="3337"
+      > </a
+      ><a name="3338" href="lib.types.GroupSet.html#2360" class="Bound"
+      >j</a
+      ><a name="3339" class="Symbol"
+      >}</a
+      ><a name="3340"
+      >
+      </a
+      ><a name="3347" class="Symbol"
+      >&#8594;</a
+      ><a name="3348"
+      > </a
+      ><a name="3349" class="Symbol"
+      >(</a
+      ><a name="3350" href="lib.types.GroupSet.html#3350" class="Bound"
+      >El&#8771;</a
+      ><a name="3353"
+      > </a
+      ><a name="3354" class="Symbol"
+      >:</a
+      ><a name="3355"
+      > </a
+      ><a name="3356" href="lib.types.GroupSet.html#895" class="Field"
+      >El</a
+      ><a name="3358"
+      > </a
+      ><a name="3359" href="lib.types.GroupSet.html#3315" class="Bound"
+      >gs&#8321;</a
+      ><a name="3362"
+      > </a
+      ><a name="3363" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="3364"
+      > </a
+      ><a name="3365" href="lib.types.GroupSet.html#895" class="Field"
+      >El</a
+      ><a name="3367"
+      > </a
+      ><a name="3368" href="lib.types.GroupSet.html#3319" class="Bound"
+      >gs&#8322;</a
+      ><a name="3371" class="Symbol"
+      >)</a
+      ><a name="3372"
+      >
+      </a
+      ><a name="3379" class="Symbol"
+      >&#8594;</a
+      ><a name="3380"
+      > </a
+      ><a name="3381" class="Symbol"
+      >(&#8704;</a
+      ><a name="3383"
+      > </a
+      ><a name="3384" class="Symbol"
+      >{</a
+      ><a name="3385" href="lib.types.GroupSet.html#3385" class="Bound"
+      >x&#8321;</a
+      ><a name="3387" class="Symbol"
+      >}</a
+      ><a name="3388"
+      > </a
+      ><a name="3389" class="Symbol"
+      >{</a
+      ><a name="3390" href="lib.types.GroupSet.html#3390" class="Bound"
+      >x&#8322;</a
+      ><a name="3392" class="Symbol"
+      >}</a
+      ><a name="3393"
+      >
+          </a
+      ><a name="3404" class="Symbol"
+      >&#8594;</a
+      ><a name="3405"
+      > </a
+      ><a name="3406" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="3408"
+      > </a
+      ><a name="3409" href="lib.types.GroupSet.html#3350" class="Bound"
+      >El&#8771;</a
+      ><a name="3412"
+      > </a
+      ><a name="3413" href="lib.types.GroupSet.html#3385" class="Bound"
+      >x&#8321;</a
+      ><a name="3415"
+      > </a
+      ><a name="3416" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3418"
+      > </a
+      ><a name="3419" href="lib.types.GroupSet.html#3390" class="Bound"
+      >x&#8322;</a
+      ><a name="3421"
+      >
+          </a
+      ><a name="3432" class="Symbol"
+      >&#8594;</a
+      ><a name="3433"
+      > </a
+      ><a name="3434" class="Symbol"
+      >&#8704;</a
+      ><a name="3435"
+      > </a
+      ><a name="3436" href="lib.types.GroupSet.html#3436" class="Bound"
+      >g</a
+      ><a name="3437"
+      > </a
+      ><a name="3438" class="Symbol"
+      >&#8594;</a
+      ><a name="3439"
+      > </a
+      ><a name="3440" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="3442"
+      > </a
+      ><a name="3443" href="lib.types.GroupSet.html#3350" class="Bound"
+      >El&#8771;</a
+      ><a name="3446"
+      > </a
+      ><a name="3447" class="Symbol"
+      >(</a
+      ><a name="3448" href="lib.types.GroupSet.html#547" class="Function"
+      >act</a
+      ><a name="3451"
+      > </a
+      ><a name="3452" href="lib.types.GroupSet.html#3315" class="Bound"
+      >gs&#8321;</a
+      ><a name="3455"
+      > </a
+      ><a name="3456" href="lib.types.GroupSet.html#3385" class="Bound"
+      >x&#8321;</a
+      ><a name="3458"
+      > </a
+      ><a name="3459" href="lib.types.GroupSet.html#3436" class="Bound"
+      >g</a
+      ><a name="3460" class="Symbol"
+      >)</a
+      ><a name="3461"
+      > </a
+      ><a name="3462" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3464"
+      > </a
+      ><a name="3465" href="lib.types.GroupSet.html#547" class="Function"
+      >act</a
+      ><a name="3468"
+      > </a
+      ><a name="3469" href="lib.types.GroupSet.html#3319" class="Bound"
+      >gs&#8322;</a
+      ><a name="3472"
+      > </a
+      ><a name="3473" href="lib.types.GroupSet.html#3390" class="Bound"
+      >x&#8322;</a
+      ><a name="3475"
+      > </a
+      ><a name="3476" href="lib.types.GroupSet.html#3436" class="Bound"
+      >g</a
+      ><a name="3477" class="Symbol"
+      >)</a
+      ><a name="3478"
+      >
+      </a
+      ><a name="3485" class="Symbol"
+      >&#8594;</a
+      ><a name="3486"
+      > </a
+      ><a name="3487" href="lib.types.GroupSet.html#3315" class="Bound"
+      >gs&#8321;</a
+      ><a name="3490"
+      > </a
+      ><a name="3491" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3493"
+      > </a
+      ><a name="3494" href="lib.types.GroupSet.html#3319" class="Bound"
+      >gs&#8322;</a
+      ><a name="3497"
+      >
+    </a
+      ><a name="3502" href="lib.types.GroupSet.html#3300" class="Function"
+      >groupset=</a
+      ><a name="3511"
+      > </a
+      ><a name="3512" href="lib.types.GroupSet.html#3512" class="Bound"
+      >El&#8771;</a
+      ><a name="3515"
+      > </a
+      ><a name="3516" href="lib.types.GroupSet.html#3516" class="Bound"
+      >act=</a
+      ><a name="3520"
+      > </a
+      ><a name="3521" class="Symbol"
+      >=</a
+      ><a name="3522"
+      >
+      </a
+      ><a name="3529" href="lib.types.GroupSet.html#2875" class="Function"
+      >groupset='</a
+      ><a name="3539"
+      >
+        </a
+      ><a name="3548" class="Symbol"
+      >(</a
+      ><a name="3549" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="3551"
+      > </a
+      ><a name="3552" href="lib.types.GroupSet.html#3512" class="Bound"
+      >El&#8771;</a
+      ><a name="3555" class="Symbol"
+      >)</a
+      ><a name="3556"
+      >
+        </a
+      ><a name="3565" class="Symbol"
+      >(</a
+      ><a name="3566" href="lib.NType2.html#1216" class="Function"
+      >prop-has-all-paths-&#8595;</a
+      ><a name="3586"
+      > </a
+      ><a name="3587" href="lib.NType2.html#2866" class="Function"
+      >is-set-is-prop</a
+      ><a name="3601" class="Symbol"
+      >)</a
+      ><a name="3602"
+      >
+        </a
+      ><a name="3611" class="Symbol"
+      >(&#955;</a
+      ><a name="3613"
+      > </a
+      ><a name="3614" href="lib.types.GroupSet.html#3614" class="Bound"
+      >x=</a
+      ><a name="3616"
+      > </a
+      ><a name="3617" href="lib.types.GroupSet.html#3617" class="Bound"
+      >g</a
+      ><a name="3618"
+      > </a
+      ><a name="3619" class="Symbol"
+      >&#8594;</a
+      ><a name="3620"
+      > </a
+      ><a name="3621" href="lib.Univalence.html#1636" class="Function"
+      >&#8595;-idf-ua-in</a
+      ><a name="3632"
+      > </a
+      ><a name="3633" href="lib.types.GroupSet.html#3512" class="Bound"
+      >El&#8771;</a
+      ><a name="3636"
+      > </a
+      ><a name="3637" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="3638"
+      > </a
+      ><a name="3639" href="lib.types.GroupSet.html#3516" class="Bound"
+      >act=</a
+      ><a name="3643"
+      > </a
+      ><a name="3644" class="Symbol"
+      >(</a
+      ><a name="3645" href="lib.Univalence.html#1467" class="Function"
+      >&#8595;-idf-ua-out</a
+      ><a name="3657"
+      > </a
+      ><a name="3658" href="lib.types.GroupSet.html#3512" class="Bound"
+      >El&#8771;</a
+      ><a name="3661"
+      > </a
+      ><a name="3662" href="lib.types.GroupSet.html#3614" class="Bound"
+      >x=</a
+      ><a name="3664" class="Symbol"
+      >)</a
+      ><a name="3665"
+      > </a
+      ><a name="3666" href="lib.types.GroupSet.html#3617" class="Bound"
+      >g</a
+      ><a name="3667" class="Symbol"
+      >)</a
+      ><a name="3668"
+      >
+
+  </a
+      ><a name="3672" class="Comment"
+      >-- The GroupSet homomorphism.</a
+      ><a name="3701"
+      >
+  </a
+      ><a name="3704" class="Keyword"
+      >record</a
+      ><a name="3710"
+      > </a
+      ><a name="3711" href="lib.types.GroupSet.html#3711" class="Record"
+      >GroupSetHom</a
+      ><a name="3722"
+      > </a
+      ><a name="3723" class="Symbol"
+      >{</a
+      ><a name="3724" href="lib.types.GroupSet.html#3724" class="Bound"
+      >grp</a
+      ><a name="3727"
+      > </a
+      ><a name="3728" class="Symbol"
+      >:</a
+      ><a name="3729"
+      > </a
+      ><a name="3730" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="3735"
+      > </a
+      ><a name="3736" href="lib.types.GroupSet.html#233" class="Bound"
+      >i</a
+      ><a name="3737" class="Symbol"
+      >}</a
+      ><a name="3738"
+      > </a
+      ><a name="3739" class="Symbol"
+      >{</a
+      ><a name="3740" href="lib.types.GroupSet.html#3740" class="Bound"
+      >j</a
+      ><a name="3741" class="Symbol"
+      >}</a
+      ><a name="3742"
+      >
+    </a
+      ><a name="3747" class="Symbol"
+      >(</a
+      ><a name="3748" href="lib.types.GroupSet.html#3748" class="Bound"
+      >gset&#8321;</a
+      ><a name="3753"
+      > </a
+      ><a name="3754" href="lib.types.GroupSet.html#3754" class="Bound"
+      >gset&#8322;</a
+      ><a name="3759"
+      > </a
+      ><a name="3760" class="Symbol"
+      >:</a
+      ><a name="3761"
+      > </a
+      ><a name="3762" href="lib.types.GroupSet.html#795" class="Record"
+      >GroupSet</a
+      ><a name="3770"
+      > </a
+      ><a name="3771" href="lib.types.GroupSet.html#3724" class="Bound"
+      >grp</a
+      ><a name="3774"
+      > </a
+      ><a name="3775" href="lib.types.GroupSet.html#3740" class="Bound"
+      >j</a
+      ><a name="3776" class="Symbol"
+      >)</a
+      ><a name="3777"
+      > </a
+      ><a name="3778" class="Symbol"
+      >:</a
+      ><a name="3779"
+      > </a
+      ><a name="3780" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3784"
+      > </a
+      ><a name="3785" class="Symbol"
+      >(</a
+      ><a name="3786" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="3790"
+      > </a
+      ><a name="3791" href="lib.types.GroupSet.html#233" class="Bound"
+      >i</a
+      ><a name="3792"
+      > </a
+      ><a name="3793" href="lib.types.GroupSet.html#3740" class="Bound"
+      >j</a
+      ><a name="3794" class="Symbol"
+      >)</a
+      ><a name="3795"
+      > </a
+      ><a name="3796" class="Keyword"
+      >where</a
+      ><a name="3801"
+      >
+    </a
+      ><a name="3806" class="Keyword"
+      >constructor</a
+      ><a name="3817"
+      > </a
+      ><a name="3818" href="lib.types.GroupSet.html#3818" class="InductiveConstructor"
+      >groupset-hom</a
+      ><a name="3830"
+      >
+    </a
+      ><a name="3835" class="Keyword"
+      >open</a
+      ><a name="3839"
+      > </a
+      ><a name="3840" href="lib.types.GroupSet.html#795" class="Module"
+      >GroupSet</a
+      ><a name="3848"
+      >
+    </a
+      ><a name="3853" class="Keyword"
+      >field</a
+      ><a name="3858"
+      >
+      </a
+      ><a name="3865" href="lib.types.GroupSet.html#3865" class="Field"
+      >f</a
+      ><a name="3866"
+      > </a
+      ><a name="3867" class="Symbol"
+      >:</a
+      ><a name="3868"
+      > </a
+      ><a name="3869" href="lib.types.GroupSet.html#895" class="Field"
+      >El</a
+      ><a name="3871"
+      > </a
+      ><a name="3872" href="lib.types.GroupSet.html#3748" class="Bound"
+      >gset&#8321;</a
+      ><a name="3877"
+      > </a
+      ><a name="3878" class="Symbol"
+      >&#8594;</a
+      ><a name="3879"
+      > </a
+      ><a name="3880" href="lib.types.GroupSet.html#895" class="Field"
+      >El</a
+      ><a name="3882"
+      > </a
+      ><a name="3883" href="lib.types.GroupSet.html#3754" class="Bound"
+      >gset&#8322;</a
+      ><a name="3888"
+      >
+      </a
+      ><a name="3895" href="lib.types.GroupSet.html#3895" class="Field"
+      >pres-act</a
+      ><a name="3903"
+      > </a
+      ><a name="3904" class="Symbol"
+      >:</a
+      ><a name="3905"
+      > </a
+      ><a name="3906" class="Symbol"
+      >&#8704;</a
+      ><a name="3907"
+      > </a
+      ><a name="3908" href="lib.types.GroupSet.html#3908" class="Bound"
+      >g</a
+      ><a name="3909"
+      > </a
+      ><a name="3910" href="lib.types.GroupSet.html#3910" class="Bound"
+      >x</a
+      ><a name="3911"
+      > </a
+      ><a name="3912" class="Symbol"
+      >&#8594;</a
+      ><a name="3913"
+      > </a
+      ><a name="3914" href="lib.types.GroupSet.html#3865" class="Field"
+      >f</a
+      ><a name="3915"
+      > </a
+      ><a name="3916" class="Symbol"
+      >(</a
+      ><a name="3917" href="lib.types.GroupSet.html#547" class="Function"
+      >act</a
+      ><a name="3920"
+      > </a
+      ><a name="3921" href="lib.types.GroupSet.html#3748" class="Bound"
+      >gset&#8321;</a
+      ><a name="3926"
+      > </a
+      ><a name="3927" href="lib.types.GroupSet.html#3910" class="Bound"
+      >x</a
+      ><a name="3928"
+      > </a
+      ><a name="3929" href="lib.types.GroupSet.html#3908" class="Bound"
+      >g</a
+      ><a name="3930" class="Symbol"
+      >)</a
+      ><a name="3931"
+      > </a
+      ><a name="3932" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3934"
+      > </a
+      ><a name="3935" href="lib.types.GroupSet.html#547" class="Function"
+      >act</a
+      ><a name="3938"
+      > </a
+      ><a name="3939" href="lib.types.GroupSet.html#3754" class="Bound"
+      >gset&#8322;</a
+      ><a name="3944"
+      > </a
+      ><a name="3945" class="Symbol"
+      >(</a
+      ><a name="3946" href="lib.types.GroupSet.html#3865" class="Field"
+      >f</a
+      ><a name="3947"
+      > </a
+      ><a name="3948" href="lib.types.GroupSet.html#3910" class="Bound"
+      >x</a
+      ><a name="3949" class="Symbol"
+      >)</a
+      ><a name="3950"
+      > </a
+      ><a name="3951" href="lib.types.GroupSet.html#3908" class="Bound"
+      >g</a
+      ><a name="3952"
+      >
+
+  </a
+      ><a name="3956" class="Keyword"
+      >private</a
+      ><a name="3963"
+      >
+    </a
+      ><a name="3968" href="lib.types.GroupSet.html#3968" class="Function"
+      >groupset-hom='</a
+      ><a name="3982"
+      > </a
+      ><a name="3983" class="Symbol"
+      >:</a
+      ><a name="3984"
+      > </a
+      ><a name="3985" class="Symbol"
+      >&#8704;</a
+      ><a name="3986"
+      > </a
+      ><a name="3987" class="Symbol"
+      >{</a
+      ><a name="3988" href="lib.types.GroupSet.html#3988" class="Bound"
+      >grp</a
+      ><a name="3991"
+      > </a
+      ><a name="3992" class="Symbol"
+      >:</a
+      ><a name="3993"
+      > </a
+      ><a name="3994" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="3999"
+      > </a
+      ><a name="4000" href="lib.types.GroupSet.html#233" class="Bound"
+      >i</a
+      ><a name="4001" class="Symbol"
+      >}</a
+      ><a name="4002"
+      > </a
+      ><a name="4003" class="Symbol"
+      >{</a
+      ><a name="4004" href="lib.types.GroupSet.html#4004" class="Bound"
+      >j</a
+      ><a name="4005" class="Symbol"
+      >}</a
+      ><a name="4006"
+      > </a
+      ><a name="4007" class="Symbol"
+      >{</a
+      ><a name="4008" href="lib.types.GroupSet.html#4008" class="Bound"
+      >gset&#8321;</a
+      ><a name="4013"
+      > </a
+      ><a name="4014" href="lib.types.GroupSet.html#4014" class="Bound"
+      >gset&#8322;</a
+      ><a name="4019"
+      > </a
+      ><a name="4020" class="Symbol"
+      >:</a
+      ><a name="4021"
+      > </a
+      ><a name="4022" href="lib.types.GroupSet.html#795" class="Record"
+      >GroupSet</a
+      ><a name="4030"
+      > </a
+      ><a name="4031" href="lib.types.GroupSet.html#3988" class="Bound"
+      >grp</a
+      ><a name="4034"
+      > </a
+      ><a name="4035" href="lib.types.GroupSet.html#4004" class="Bound"
+      >j</a
+      ><a name="4036" class="Symbol"
+      >}</a
+      ><a name="4037"
+      >
+      </a
+      ><a name="4044" class="Symbol"
+      >{</a
+      ><a name="4045" href="lib.types.GroupSet.html#4045" class="Bound"
+      >gsh&#8321;</a
+      ><a name="4049"
+      > </a
+      ><a name="4050" href="lib.types.GroupSet.html#4050" class="Bound"
+      >gsh&#8322;</a
+      ><a name="4054"
+      > </a
+      ><a name="4055" class="Symbol"
+      >:</a
+      ><a name="4056"
+      > </a
+      ><a name="4057" href="lib.types.GroupSet.html#3711" class="Record"
+      >GroupSetHom</a
+      ><a name="4068"
+      > </a
+      ><a name="4069" href="lib.types.GroupSet.html#4008" class="Bound"
+      >gset&#8321;</a
+      ><a name="4074"
+      > </a
+      ><a name="4075" href="lib.types.GroupSet.html#4014" class="Bound"
+      >gset&#8322;</a
+      ><a name="4080" class="Symbol"
+      >}</a
+      ><a name="4081"
+      >
+      </a
+      ><a name="4088" class="Symbol"
+      >&#8594;</a
+      ><a name="4089"
+      > </a
+      ><a name="4090" class="Symbol"
+      >(</a
+      ><a name="4091" href="lib.types.GroupSet.html#4091" class="Bound"
+      >f=</a
+      ><a name="4093"
+      > </a
+      ><a name="4094" class="Symbol"
+      >:</a
+      ><a name="4095"
+      > </a
+      ><a name="4096" href="lib.types.GroupSet.html#3865" class="Field"
+      >GroupSetHom.f</a
+      ><a name="4109"
+      > </a
+      ><a name="4110" href="lib.types.GroupSet.html#4045" class="Bound"
+      >gsh&#8321;</a
+      ><a name="4114"
+      > </a
+      ><a name="4115" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4117"
+      > </a
+      ><a name="4118" href="lib.types.GroupSet.html#3865" class="Field"
+      >GroupSetHom.f</a
+      ><a name="4131"
+      > </a
+      ><a name="4132" href="lib.types.GroupSet.html#4050" class="Bound"
+      >gsh&#8322;</a
+      ><a name="4136" class="Symbol"
+      >)</a
+      ><a name="4137"
+      >
+      </a
+      ><a name="4144" class="Symbol"
+      >&#8594;</a
+      ><a name="4145"
+      > </a
+      ><a name="4146" class="Symbol"
+      >(</a
+      ><a name="4147" href="lib.types.GroupSet.html#3895" class="Field"
+      >GroupSetHom.pres-act</a
+      ><a name="4167"
+      > </a
+      ><a name="4168" href="lib.types.GroupSet.html#4045" class="Bound"
+      >gsh&#8321;</a
+      ><a name="4172"
+      > </a
+      ><a name="4173" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="4175"
+      > </a
+      ><a name="4176" href="lib.types.GroupSet.html#3895" class="Field"
+      >GroupSetHom.pres-act</a
+      ><a name="4196"
+      > </a
+      ><a name="4197" href="lib.types.GroupSet.html#4050" class="Bound"
+      >gsh&#8322;</a
+      ><a name="4201"
+      >
+        </a
+      ><a name="4210" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="4211"
+      > </a
+      ><a name="4212" class="Symbol"
+      >(&#955;</a
+      ><a name="4214"
+      > </a
+      ><a name="4215" href="lib.types.GroupSet.html#4215" class="Bound"
+      >f</a
+      ><a name="4216"
+      > </a
+      ><a name="4217" class="Symbol"
+      >&#8594;</a
+      ><a name="4218"
+      > </a
+      ><a name="4219" class="Symbol"
+      >&#8704;</a
+      ><a name="4220"
+      > </a
+      ><a name="4221" href="lib.types.GroupSet.html#4221" class="Bound"
+      >g</a
+      ><a name="4222"
+      > </a
+      ><a name="4223" href="lib.types.GroupSet.html#4223" class="Bound"
+      >x</a
+      ><a name="4224"
+      > </a
+      ><a name="4225" class="Symbol"
+      >&#8594;</a
+      ><a name="4226"
+      > </a
+      ><a name="4227" href="lib.types.GroupSet.html#4215" class="Bound"
+      >f</a
+      ><a name="4228"
+      > </a
+      ><a name="4229" class="Symbol"
+      >(</a
+      ><a name="4230" href="lib.types.GroupSet.html#547" class="Function"
+      >GroupSet.act</a
+      ><a name="4242"
+      > </a
+      ><a name="4243" href="lib.types.GroupSet.html#4008" class="Bound"
+      >gset&#8321;</a
+      ><a name="4248"
+      > </a
+      ><a name="4249" href="lib.types.GroupSet.html#4223" class="Bound"
+      >x</a
+      ><a name="4250"
+      > </a
+      ><a name="4251" href="lib.types.GroupSet.html#4221" class="Bound"
+      >g</a
+      ><a name="4252" class="Symbol"
+      >)</a
+      ><a name="4253"
+      > </a
+      ><a name="4254" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4256"
+      > </a
+      ><a name="4257" href="lib.types.GroupSet.html#547" class="Function"
+      >GroupSet.act</a
+      ><a name="4269"
+      > </a
+      ><a name="4270" href="lib.types.GroupSet.html#4014" class="Bound"
+      >gset&#8322;</a
+      ><a name="4275"
+      > </a
+      ><a name="4276" class="Symbol"
+      >(</a
+      ><a name="4277" href="lib.types.GroupSet.html#4215" class="Bound"
+      >f</a
+      ><a name="4278"
+      > </a
+      ><a name="4279" href="lib.types.GroupSet.html#4223" class="Bound"
+      >x</a
+      ><a name="4280" class="Symbol"
+      >)</a
+      ><a name="4281"
+      > </a
+      ><a name="4282" href="lib.types.GroupSet.html#4221" class="Bound"
+      >g</a
+      ><a name="4283" class="Symbol"
+      >)</a
+      ><a name="4284"
+      > </a
+      ><a name="4285" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="4286"
+      > </a
+      ><a name="4287" href="lib.types.GroupSet.html#4091" class="Bound"
+      >f=</a
+      ><a name="4289"
+      > </a
+      ><a name="4290" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="4291"
+      > </a
+      ><a name="4292" class="Symbol"
+      >)</a
+      ><a name="4293"
+      >
+      </a
+      ><a name="4300" class="Symbol"
+      >&#8594;</a
+      ><a name="4301"
+      > </a
+      ><a name="4302" href="lib.types.GroupSet.html#4045" class="Bound"
+      >gsh&#8321;</a
+      ><a name="4306"
+      > </a
+      ><a name="4307" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4309"
+      > </a
+      ><a name="4310" href="lib.types.GroupSet.html#4050" class="Bound"
+      >gsh&#8322;</a
+      ><a name="4314"
+      >
+    </a
+      ><a name="4319" href="lib.types.GroupSet.html#3968" class="Function"
+      >groupset-hom='</a
+      ><a name="4333"
+      > </a
+      ><a name="4334" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4337"
+      > </a
+      ><a name="4338" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4341"
+      > </a
+      ><a name="4342" class="Symbol"
+      >=</a
+      ><a name="4343"
+      > </a
+      ><a name="4344" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4347"
+      >
+
+  </a
+      ><a name="4351" href="lib.types.GroupSet.html#4351" class="Function"
+      >groupset-hom=</a
+      ><a name="4364"
+      > </a
+      ><a name="4365" class="Symbol"
+      >:</a
+      ><a name="4366"
+      > </a
+      ><a name="4367" class="Symbol"
+      >&#8704;</a
+      ><a name="4368"
+      > </a
+      ><a name="4369" class="Symbol"
+      >{</a
+      ><a name="4370" href="lib.types.GroupSet.html#4370" class="Bound"
+      >grp</a
+      ><a name="4373"
+      > </a
+      ><a name="4374" class="Symbol"
+      >:</a
+      ><a name="4375"
+      > </a
+      ><a name="4376" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="4381"
+      > </a
+      ><a name="4382" href="lib.types.GroupSet.html#233" class="Bound"
+      >i</a
+      ><a name="4383" class="Symbol"
+      >}</a
+      ><a name="4384"
+      > </a
+      ><a name="4385" class="Symbol"
+      >{</a
+      ><a name="4386" href="lib.types.GroupSet.html#4386" class="Bound"
+      >j</a
+      ><a name="4387" class="Symbol"
+      >}</a
+      ><a name="4388"
+      > </a
+      ><a name="4389" class="Symbol"
+      >{</a
+      ><a name="4390" href="lib.types.GroupSet.html#4390" class="Bound"
+      >gset&#8321;</a
+      ><a name="4395"
+      > </a
+      ><a name="4396" href="lib.types.GroupSet.html#4396" class="Bound"
+      >gset&#8322;</a
+      ><a name="4401"
+      > </a
+      ><a name="4402" class="Symbol"
+      >:</a
+      ><a name="4403"
+      > </a
+      ><a name="4404" href="lib.types.GroupSet.html#795" class="Record"
+      >GroupSet</a
+      ><a name="4412"
+      > </a
+      ><a name="4413" href="lib.types.GroupSet.html#4370" class="Bound"
+      >grp</a
+      ><a name="4416"
+      > </a
+      ><a name="4417" href="lib.types.GroupSet.html#4386" class="Bound"
+      >j</a
+      ><a name="4418" class="Symbol"
+      >}</a
+      ><a name="4419"
+      >
+    </a
+      ><a name="4424" class="Symbol"
+      >{</a
+      ><a name="4425" href="lib.types.GroupSet.html#4425" class="Bound"
+      >gsh&#8321;</a
+      ><a name="4429"
+      > </a
+      ><a name="4430" href="lib.types.GroupSet.html#4430" class="Bound"
+      >gsh&#8322;</a
+      ><a name="4434"
+      > </a
+      ><a name="4435" class="Symbol"
+      >:</a
+      ><a name="4436"
+      > </a
+      ><a name="4437" href="lib.types.GroupSet.html#3711" class="Record"
+      >GroupSetHom</a
+      ><a name="4448"
+      > </a
+      ><a name="4449" href="lib.types.GroupSet.html#4390" class="Bound"
+      >gset&#8321;</a
+      ><a name="4454"
+      > </a
+      ><a name="4455" href="lib.types.GroupSet.html#4396" class="Bound"
+      >gset&#8322;</a
+      ><a name="4460" class="Symbol"
+      >}</a
+      ><a name="4461"
+      >
+    </a
+      ><a name="4466" class="Symbol"
+      >&#8594;</a
+      ><a name="4467"
+      > </a
+      ><a name="4468" class="Symbol"
+      >(&#8704;</a
+      ><a name="4470"
+      > </a
+      ><a name="4471" href="lib.types.GroupSet.html#4471" class="Bound"
+      >x</a
+      ><a name="4472"
+      > </a
+      ><a name="4473" class="Symbol"
+      >&#8594;</a
+      ><a name="4474"
+      > </a
+      ><a name="4475" href="lib.types.GroupSet.html#3865" class="Field"
+      >GroupSetHom.f</a
+      ><a name="4488"
+      > </a
+      ><a name="4489" href="lib.types.GroupSet.html#4425" class="Bound"
+      >gsh&#8321;</a
+      ><a name="4493"
+      > </a
+      ><a name="4494" href="lib.types.GroupSet.html#4471" class="Bound"
+      >x</a
+      ><a name="4495"
+      > </a
+      ><a name="4496" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4498"
+      > </a
+      ><a name="4499" href="lib.types.GroupSet.html#3865" class="Field"
+      >GroupSetHom.f</a
+      ><a name="4512"
+      > </a
+      ><a name="4513" href="lib.types.GroupSet.html#4430" class="Bound"
+      >gsh&#8322;</a
+      ><a name="4517"
+      > </a
+      ><a name="4518" href="lib.types.GroupSet.html#4471" class="Bound"
+      >x</a
+      ><a name="4519" class="Symbol"
+      >)</a
+      ><a name="4520"
+      >
+    </a
+      ><a name="4525" class="Symbol"
+      >&#8594;</a
+      ><a name="4526"
+      > </a
+      ><a name="4527" href="lib.types.GroupSet.html#4425" class="Bound"
+      >gsh&#8321;</a
+      ><a name="4531"
+      > </a
+      ><a name="4532" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4534"
+      > </a
+      ><a name="4535" href="lib.types.GroupSet.html#4430" class="Bound"
+      >gsh&#8322;</a
+      ><a name="4539"
+      >
+  </a
+      ><a name="4542" href="lib.types.GroupSet.html#4351" class="Function"
+      >groupset-hom=</a
+      ><a name="4555"
+      > </a
+      ><a name="4556" class="Symbol"
+      >{</a
+      ><a name="4557" class="Argument"
+      >gset&#8322;</a
+      ><a name="4562"
+      > </a
+      ><a name="4563" class="Symbol"
+      >=</a
+      ><a name="4564"
+      > </a
+      ><a name="4565" href="lib.types.GroupSet.html#4565" class="Bound"
+      >gset&#8322;</a
+      ><a name="4570" class="Symbol"
+      >}</a
+      ><a name="4571"
+      > </a
+      ><a name="4572" href="lib.types.GroupSet.html#4572" class="Bound"
+      >f=</a
+      ><a name="4574"
+      > </a
+      ><a name="4575" class="Symbol"
+      >=</a
+      ><a name="4576"
+      >
+    </a
+      ><a name="4581" href="lib.types.GroupSet.html#3968" class="Function"
+      >groupset-hom='</a
+      ><a name="4595"
+      >
+      </a
+      ><a name="4602" class="Symbol"
+      >(</a
+      ><a name="4603" href="lib.Funext.html#3966" class="Function"
+      >&#955;=</a
+      ><a name="4605"
+      > </a
+      ><a name="4606" href="lib.types.GroupSet.html#4572" class="Bound"
+      >f=</a
+      ><a name="4608" class="Symbol"
+      >)</a
+      ><a name="4609"
+      >
+      </a
+      ><a name="4616" class="Symbol"
+      >(</a
+      ><a name="4617" href="lib.NType2.html#1216" class="Function"
+      >prop-has-all-paths-&#8595;</a
+      ><a name="4637"
+      > </a
+      ><a name="4638" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="4639"
+      >
+        </a
+      ><a name="4648" href="lib.types.Pi.html#188" class="Function"
+      >&#928;-level</a
+      ><a name="4655"
+      > </a
+      ><a name="4656" class="Symbol"
+      >&#955;</a
+      ><a name="4657"
+      > </a
+      ><a name="4658" href="lib.types.GroupSet.html#4658" class="Bound"
+      >_</a
+      ><a name="4659"
+      > </a
+      ><a name="4660" class="Symbol"
+      >&#8594;</a
+      ><a name="4661"
+      > </a
+      ><a name="4662" href="lib.types.Pi.html#188" class="Function"
+      >&#928;-level</a
+      ><a name="4669"
+      > </a
+      ><a name="4670" class="Symbol"
+      >&#955;</a
+      ><a name="4671"
+      > </a
+      ><a name="4672" href="lib.types.GroupSet.html#4672" class="Bound"
+      >_</a
+      ><a name="4673"
+      > </a
+      ><a name="4674" class="Symbol"
+      >&#8594;</a
+      ><a name="4675"
+      > </a
+      ><a name="4676" href="lib.types.GroupSet.html#913" class="Field"
+      >GroupSet.El-level</a
+      ><a name="4693"
+      > </a
+      ><a name="4694" href="lib.types.GroupSet.html#4565" class="Bound"
+      >gset&#8322;</a
+      ><a name="4699"
+      > </a
+      ><a name="4700" class="Symbol"
+      >_</a
+      ><a name="4701"
+      > </a
+      ><a name="4702" class="Symbol"
+      >_)</a
+      ><a name="4704"
+      >
+
+  </a
+      ><a name="4708" href="lib.types.GroupSet.html#4708" class="Function"
+      >group-to-group-set</a
+      ><a name="4726"
+      > </a
+      ><a name="4727" class="Symbol"
+      >:</a
+      ><a name="4728"
+      > </a
+      ><a name="4729" class="Symbol"
+      >&#8704;</a
+      ><a name="4730"
+      > </a
+      ><a name="4731" class="Symbol"
+      >(</a
+      ><a name="4732" href="lib.types.GroupSet.html#4732" class="Bound"
+      >grp</a
+      ><a name="4735"
+      > </a
+      ><a name="4736" class="Symbol"
+      >:</a
+      ><a name="4737"
+      > </a
+      ><a name="4738" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="4743"
+      > </a
+      ><a name="4744" href="lib.types.GroupSet.html#233" class="Bound"
+      >i</a
+      ><a name="4745" class="Symbol"
+      >)</a
+      ><a name="4746"
+      > </a
+      ><a name="4747" class="Symbol"
+      >&#8594;</a
+      ><a name="4748"
+      > </a
+      ><a name="4749" href="lib.types.GroupSet.html#795" class="Record"
+      >GroupSet</a
+      ><a name="4757"
+      > </a
+      ><a name="4758" href="lib.types.GroupSet.html#4732" class="Bound"
+      >grp</a
+      ><a name="4761"
+      > </a
+      ><a name="4762" href="lib.types.GroupSet.html#233" class="Bound"
+      >i</a
+      ><a name="4763"
+      >
+  </a
+      ><a name="4766" href="lib.types.GroupSet.html#4708" class="Function"
+      >group-to-group-set</a
+      ><a name="4784"
+      > </a
+      ><a name="4785" href="lib.types.GroupSet.html#4785" class="Bound"
+      >grp</a
+      ><a name="4788"
+      > </a
+      ><a name="4789" class="Symbol"
+      >=</a
+      ><a name="4790"
+      > </a
+      ><a name="4791" class="Keyword"
+      >record</a
+      ><a name="4797"
+      > </a
+      ><a name="4798" class="Symbol"
+      >{</a
+      ><a name="4799"
+      >
+    </a
+      ><a name="4804" class="Field"
+      >El</a
+      ><a name="4806"
+      > </a
+      ><a name="4807" class="Symbol"
+      >=</a
+      ><a name="4808"
+      > </a
+      ><a name="4809" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="4813" class="Symbol"
+      >;</a
+      ><a name="4814"
+      >
+    </a
+      ><a name="4819" class="Field"
+      >El-level</a
+      ><a name="4827"
+      > </a
+      ><a name="4828" class="Symbol"
+      >=</a
+      ><a name="4829"
+      > </a
+      ><a name="4830" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="4840" class="Symbol"
+      >;</a
+      ><a name="4841"
+      >
+    </a
+      ><a name="4846" class="Field"
+      >grpset-struct</a
+      ><a name="4859"
+      > </a
+      ><a name="4860" class="Symbol"
+      >=</a
+      ><a name="4861"
+      > </a
+      ><a name="4862" class="Keyword"
+      >record</a
+      ><a name="4868"
+      > </a
+      ><a name="4869" class="Symbol"
+      >{</a
+      ><a name="4870"
+      >
+      </a
+      ><a name="4877" class="Field"
+      >act</a
+      ><a name="4880"
+      > </a
+      ><a name="4881" class="Symbol"
+      >=</a
+      ><a name="4882"
+      > </a
+      ><a name="4883" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="4889" class="Symbol"
+      >;</a
+      ><a name="4890"
+      >
+      </a
+      ><a name="4897" class="Field"
+      >unit-r</a
+      ><a name="4903"
+      > </a
+      ><a name="4904" class="Symbol"
+      >=</a
+      ><a name="4905"
+      > </a
+      ><a name="4906" href="lib.types.Group.html#1261" class="Function"
+      >G.unit-r</a
+      ><a name="4914" class="Symbol"
+      >;</a
+      ><a name="4915"
+      >
+      </a
+      ><a name="4922" class="Field"
+      >assoc</a
+      ><a name="4927"
+      > </a
+      ><a name="4928" class="Symbol"
+      >=</a
+      ><a name="4929"
+      > </a
+      ><a name="4930" href="lib.types.Group.html#376" class="Function"
+      >G.assoc</a
+      ><a name="4937" class="Symbol"
+      >}}</a
+      ><a name="4939"
+      >
+    </a
+      ><a name="4944" class="Keyword"
+      >where</a
+      ><a name="4949"
+      > </a
+      ><a name="4950" class="Keyword"
+      >module</a
+      ><a name="4956"
+      > </a
+      ><a name="4957" href="lib.types.GroupSet.html#4957" class="Module"
+      >G</a
+      ><a name="4958"
+      > </a
+      ><a name="4959" class="Symbol"
+      >=</a
+      ><a name="4960"
+      > </a
+      ><a name="4961" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="4966"
+      > </a
+      ><a name="4967" href="lib.types.GroupSet.html#4785" class="Bound"
+      >grp</a
+      ><a name="4970"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

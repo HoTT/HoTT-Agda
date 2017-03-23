@@ -1,0 +1,2200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.IteratedSuspension</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.NConnected.html#1" class="Module"
+      >lib.NConnected</a
+      ><a name="91"
+      >
+</a
+      ><a name="92" class="Keyword"
+      >open</a
+      ><a name="96"
+      > </a
+      ><a name="97" class="Keyword"
+      >import</a
+      ><a name="103"
+      > </a
+      ><a name="104" href="lib.types.Bool.html#1" class="Module"
+      >lib.types.Bool</a
+      ><a name="118"
+      >
+</a
+      ><a name="119" class="Keyword"
+      >open</a
+      ><a name="123"
+      > </a
+      ><a name="124" class="Keyword"
+      >import</a
+      ><a name="130"
+      > </a
+      ><a name="131" href="lib.types.Nat.html#1" class="Module"
+      >lib.types.Nat</a
+      ><a name="144"
+      >
+</a
+      ><a name="145" class="Keyword"
+      >open</a
+      ><a name="149"
+      > </a
+      ><a name="150" class="Keyword"
+      >import</a
+      ><a name="156"
+      > </a
+      ><a name="157" href="lib.types.TLevel.html#1" class="Module"
+      >lib.types.TLevel</a
+      ><a name="173"
+      >
+</a
+      ><a name="174" class="Keyword"
+      >open</a
+      ><a name="178"
+      > </a
+      ><a name="179" class="Keyword"
+      >import</a
+      ><a name="185"
+      > </a
+      ><a name="186" href="lib.types.Suspension.html#1" class="Module"
+      >lib.types.Suspension</a
+      ><a name="206"
+      >
+
+</a
+      ><a name="208" class="Keyword"
+      >module</a
+      ><a name="214"
+      > </a
+      ><a name="215" href="lib.types.IteratedSuspension.html#1" class="Module"
+      >lib.types.IteratedSuspension</a
+      ><a name="243"
+      > </a
+      ><a name="244" class="Keyword"
+      >where</a
+      ><a name="249"
+      >
+
+</a
+      ><a name="251" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="257"
+      > </a
+      ><a name="258" class="Symbol"
+      >:</a
+      ><a name="259"
+      > </a
+      ><a name="260" class="Symbol"
+      >&#8704;</a
+      ><a name="261"
+      > </a
+      ><a name="262" class="Symbol"
+      >{</a
+      ><a name="263" href="lib.types.IteratedSuspension.html#263" class="Bound"
+      >i</a
+      ><a name="264" class="Symbol"
+      >}</a
+      ><a name="265"
+      > </a
+      ><a name="266" class="Symbol"
+      >(</a
+      ><a name="267" href="lib.types.IteratedSuspension.html#267" class="Bound"
+      >n</a
+      ><a name="268"
+      > </a
+      ><a name="269" class="Symbol"
+      >:</a
+      ><a name="270"
+      > </a
+      ><a name="271" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="272" class="Symbol"
+      >)</a
+      ><a name="273"
+      > </a
+      ><a name="274" class="Symbol"
+      >&#8594;</a
+      ><a name="275"
+      > </a
+      ><a name="276" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="279"
+      > </a
+      ><a name="280" href="lib.types.IteratedSuspension.html#263" class="Bound"
+      >i</a
+      ><a name="281"
+      > </a
+      ><a name="282" class="Symbol"
+      >&#8594;</a
+      ><a name="283"
+      > </a
+      ><a name="284" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="287"
+      > </a
+      ><a name="288" href="lib.types.IteratedSuspension.html#263" class="Bound"
+      >i</a
+      ><a name="289"
+      >
+</a
+      ><a name="290" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="296"
+      > </a
+      ><a name="297" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="298"
+      > </a
+      ><a name="299" href="lib.types.IteratedSuspension.html#299" class="Bound"
+      >X</a
+      ><a name="300"
+      > </a
+      ><a name="301" class="Symbol"
+      >=</a
+      ><a name="302"
+      > </a
+      ><a name="303" href="lib.types.IteratedSuspension.html#299" class="Bound"
+      >X</a
+      ><a name="304"
+      >
+</a
+      ><a name="305" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="311"
+      > </a
+      ><a name="312" class="Symbol"
+      >(</a
+      ><a name="313" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="314"
+      > </a
+      ><a name="315" href="lib.types.IteratedSuspension.html#315" class="Bound"
+      >n</a
+      ><a name="316" class="Symbol"
+      >)</a
+      ><a name="317"
+      > </a
+      ><a name="318" href="lib.types.IteratedSuspension.html#318" class="Bound"
+      >X</a
+      ><a name="319"
+      > </a
+      ><a name="320" class="Symbol"
+      >=</a
+      ><a name="321"
+      > </a
+      ><a name="322" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="327"
+      > </a
+      ><a name="328" class="Symbol"
+      >(</a
+      ><a name="329" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="335"
+      > </a
+      ><a name="336" href="lib.types.IteratedSuspension.html#315" class="Bound"
+      >n</a
+      ><a name="337"
+      > </a
+      ><a name="338" href="lib.types.IteratedSuspension.html#318" class="Bound"
+      >X</a
+      ><a name="339" class="Symbol"
+      >)</a
+      ><a name="340"
+      >
+
+</a
+      ><a name="342" class="Keyword"
+      >abstract</a
+      ><a name="350"
+      >
+  </a
+      ><a name="353" href="lib.types.IteratedSuspension.html#353" class="Function"
+      >&#8857;Susp^-conn</a
+      ><a name="364"
+      > </a
+      ><a name="365" class="Symbol"
+      >:</a
+      ><a name="366"
+      > </a
+      ><a name="367" class="Symbol"
+      >&#8704;</a
+      ><a name="368"
+      > </a
+      ><a name="369" class="Symbol"
+      >{</a
+      ><a name="370" href="lib.types.IteratedSuspension.html#370" class="Bound"
+      >i</a
+      ><a name="371" class="Symbol"
+      >}</a
+      ><a name="372"
+      > </a
+      ><a name="373" class="Symbol"
+      >(</a
+      ><a name="374" href="lib.types.IteratedSuspension.html#374" class="Bound"
+      >n</a
+      ><a name="375"
+      > </a
+      ><a name="376" class="Symbol"
+      >:</a
+      ><a name="377"
+      > </a
+      ><a name="378" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="379" class="Symbol"
+      >)</a
+      ><a name="380"
+      > </a
+      ><a name="381" class="Symbol"
+      >{</a
+      ><a name="382" href="lib.types.IteratedSuspension.html#382" class="Bound"
+      >X</a
+      ><a name="383"
+      > </a
+      ><a name="384" class="Symbol"
+      >:</a
+      ><a name="385"
+      > </a
+      ><a name="386" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="389"
+      > </a
+      ><a name="390" href="lib.types.IteratedSuspension.html#370" class="Bound"
+      >i</a
+      ><a name="391" class="Symbol"
+      >}</a
+      ><a name="392"
+      > </a
+      ><a name="393" class="Symbol"
+      >{</a
+      ><a name="394" href="lib.types.IteratedSuspension.html#394" class="Bound"
+      >m</a
+      ><a name="395"
+      > </a
+      ><a name="396" class="Symbol"
+      >:</a
+      ><a name="397"
+      > </a
+      ><a name="398" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="401" class="Symbol"
+      >}</a
+      ><a name="402"
+      >
+    </a
+      ><a name="407" class="Symbol"
+      >&#8594;</a
+      ><a name="408"
+      > </a
+      ><a name="409" href="lib.NConnected.html#343" class="Function"
+      >is-connected</a
+      ><a name="421"
+      > </a
+      ><a name="422" href="lib.types.IteratedSuspension.html#394" class="Bound"
+      >m</a
+      ><a name="423"
+      > </a
+      ><a name="424" class="Symbol"
+      >(</a
+      ><a name="425" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="428"
+      > </a
+      ><a name="429" href="lib.types.IteratedSuspension.html#382" class="Bound"
+      >X</a
+      ><a name="430" class="Symbol"
+      >)</a
+      ><a name="431"
+      > </a
+      ><a name="432" class="Symbol"
+      >&#8594;</a
+      ><a name="433"
+      > </a
+      ><a name="434" href="lib.NConnected.html#343" class="Function"
+      >is-connected</a
+      ><a name="446"
+      > </a
+      ><a name="447" class="Symbol"
+      >(</a
+      ><a name="448" href="lib.Base.html#8938" class="Function Operator"
+      >&#10216;</a
+      ><a name="449"
+      > </a
+      ><a name="450" href="lib.types.IteratedSuspension.html#374" class="Bound"
+      >n</a
+      ><a name="451"
+      > </a
+      ><a name="452" href="lib.Base.html#8938" class="Function Operator"
+      >&#10217;&#8331;&#8322;</a
+      ><a name="455"
+      > </a
+      ><a name="456" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="459"
+      > </a
+      ><a name="460" href="lib.types.IteratedSuspension.html#394" class="Bound"
+      >m</a
+      ><a name="461" class="Symbol"
+      >)</a
+      ><a name="462"
+      > </a
+      ><a name="463" class="Symbol"
+      >(</a
+      ><a name="464" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="467"
+      > </a
+      ><a name="468" class="Symbol"
+      >(</a
+      ><a name="469" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="475"
+      > </a
+      ><a name="476" href="lib.types.IteratedSuspension.html#374" class="Bound"
+      >n</a
+      ><a name="477"
+      > </a
+      ><a name="478" href="lib.types.IteratedSuspension.html#382" class="Bound"
+      >X</a
+      ><a name="479" class="Symbol"
+      >))</a
+      ><a name="481"
+      >
+  </a
+      ><a name="484" href="lib.types.IteratedSuspension.html#353" class="Function"
+      >&#8857;Susp^-conn</a
+      ><a name="495"
+      > </a
+      ><a name="496" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="497"
+      > </a
+      ><a name="498" href="lib.types.IteratedSuspension.html#498" class="Bound"
+      >cX</a
+      ><a name="500"
+      > </a
+      ><a name="501" class="Symbol"
+      >=</a
+      ><a name="502"
+      > </a
+      ><a name="503" href="lib.types.IteratedSuspension.html#498" class="Bound"
+      >cX</a
+      ><a name="505"
+      >
+  </a
+      ><a name="508" href="lib.types.IteratedSuspension.html#353" class="Function"
+      >&#8857;Susp^-conn</a
+      ><a name="519"
+      > </a
+      ><a name="520" class="Symbol"
+      >(</a
+      ><a name="521" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="522"
+      > </a
+      ><a name="523" href="lib.types.IteratedSuspension.html#523" class="Bound"
+      >n</a
+      ><a name="524" class="Symbol"
+      >)</a
+      ><a name="525"
+      > </a
+      ><a name="526" href="lib.types.IteratedSuspension.html#526" class="Bound"
+      >cX</a
+      ><a name="528"
+      > </a
+      ><a name="529" class="Symbol"
+      >=</a
+      ><a name="530"
+      > </a
+      ><a name="531" href="lib.types.Suspension.html#6235" class="Function"
+      >Susp-conn</a
+      ><a name="540"
+      > </a
+      ><a name="541" class="Symbol"
+      >(</a
+      ><a name="542" href="lib.types.IteratedSuspension.html#353" class="Function"
+      >&#8857;Susp^-conn</a
+      ><a name="553"
+      > </a
+      ><a name="554" href="lib.types.IteratedSuspension.html#523" class="Bound"
+      >n</a
+      ><a name="555"
+      > </a
+      ><a name="556" href="lib.types.IteratedSuspension.html#526" class="Bound"
+      >cX</a
+      ><a name="558" class="Symbol"
+      >)</a
+      ><a name="559"
+      >
+
+</a
+      ><a name="561" href="lib.types.IteratedSuspension.html#561" class="Function"
+      >&#8857;Susp^-+</a
+      ><a name="569"
+      > </a
+      ><a name="570" class="Symbol"
+      >:</a
+      ><a name="571"
+      > </a
+      ><a name="572" class="Symbol"
+      >&#8704;</a
+      ><a name="573"
+      > </a
+      ><a name="574" class="Symbol"
+      >{</a
+      ><a name="575" href="lib.types.IteratedSuspension.html#575" class="Bound"
+      >i</a
+      ><a name="576" class="Symbol"
+      >}</a
+      ><a name="577"
+      > </a
+      ><a name="578" class="Symbol"
+      >(</a
+      ><a name="579" href="lib.types.IteratedSuspension.html#579" class="Bound"
+      >m</a
+      ><a name="580"
+      > </a
+      ><a name="581" href="lib.types.IteratedSuspension.html#581" class="Bound"
+      >n</a
+      ><a name="582"
+      > </a
+      ><a name="583" class="Symbol"
+      >:</a
+      ><a name="584"
+      > </a
+      ><a name="585" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="586" class="Symbol"
+      >)</a
+      ><a name="587"
+      > </a
+      ><a name="588" class="Symbol"
+      >{</a
+      ><a name="589" href="lib.types.IteratedSuspension.html#589" class="Bound"
+      >X</a
+      ><a name="590"
+      > </a
+      ><a name="591" class="Symbol"
+      >:</a
+      ><a name="592"
+      > </a
+      ><a name="593" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="596"
+      > </a
+      ><a name="597" href="lib.types.IteratedSuspension.html#575" class="Bound"
+      >i</a
+      ><a name="598" class="Symbol"
+      >}</a
+      ><a name="599"
+      >
+  </a
+      ><a name="602" class="Symbol"
+      >&#8594;</a
+      ><a name="603"
+      > </a
+      ><a name="604" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="610"
+      > </a
+      ><a name="611" href="lib.types.IteratedSuspension.html#579" class="Bound"
+      >m</a
+      ><a name="612"
+      > </a
+      ><a name="613" class="Symbol"
+      >(</a
+      ><a name="614" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="620"
+      > </a
+      ><a name="621" href="lib.types.IteratedSuspension.html#581" class="Bound"
+      >n</a
+      ><a name="622"
+      > </a
+      ><a name="623" href="lib.types.IteratedSuspension.html#589" class="Bound"
+      >X</a
+      ><a name="624" class="Symbol"
+      >)</a
+      ><a name="625"
+      > </a
+      ><a name="626" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="628"
+      > </a
+      ><a name="629" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="635"
+      > </a
+      ><a name="636" class="Symbol"
+      >(</a
+      ><a name="637" href="lib.types.IteratedSuspension.html#579" class="Bound"
+      >m</a
+      ><a name="638"
+      > </a
+      ><a name="639" href="lib.types.Nat.html#267" class="Primitive Operator"
+      >+</a
+      ><a name="640"
+      > </a
+      ><a name="641" href="lib.types.IteratedSuspension.html#581" class="Bound"
+      >n</a
+      ><a name="642" class="Symbol"
+      >)</a
+      ><a name="643"
+      > </a
+      ><a name="644" href="lib.types.IteratedSuspension.html#589" class="Bound"
+      >X</a
+      ><a name="645"
+      >
+</a
+      ><a name="646" href="lib.types.IteratedSuspension.html#561" class="Function"
+      >&#8857;Susp^-+</a
+      ><a name="654"
+      > </a
+      ><a name="655" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="656"
+      > </a
+      ><a name="657" href="lib.types.IteratedSuspension.html#657" class="Bound"
+      >n</a
+      ><a name="658"
+      > </a
+      ><a name="659" class="Symbol"
+      >=</a
+      ><a name="660"
+      > </a
+      ><a name="661" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="664"
+      >
+</a
+      ><a name="665" href="lib.types.IteratedSuspension.html#561" class="Function"
+      >&#8857;Susp^-+</a
+      ><a name="673"
+      > </a
+      ><a name="674" class="Symbol"
+      >(</a
+      ><a name="675" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="676"
+      > </a
+      ><a name="677" href="lib.types.IteratedSuspension.html#677" class="Bound"
+      >m</a
+      ><a name="678" class="Symbol"
+      >)</a
+      ><a name="679"
+      > </a
+      ><a name="680" href="lib.types.IteratedSuspension.html#680" class="Bound"
+      >n</a
+      ><a name="681"
+      > </a
+      ><a name="682" class="Symbol"
+      >=</a
+      ><a name="683"
+      > </a
+      ><a name="684" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="686"
+      > </a
+      ><a name="687" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="692"
+      > </a
+      ><a name="693" class="Symbol"
+      >(</a
+      ><a name="694" href="lib.types.IteratedSuspension.html#561" class="Function"
+      >&#8857;Susp^-+</a
+      ><a name="702"
+      > </a
+      ><a name="703" href="lib.types.IteratedSuspension.html#677" class="Bound"
+      >m</a
+      ><a name="704"
+      > </a
+      ><a name="705" href="lib.types.IteratedSuspension.html#680" class="Bound"
+      >n</a
+      ><a name="706" class="Symbol"
+      >)</a
+      ><a name="707"
+      >
+
+</a
+      ><a name="709" href="lib.types.IteratedSuspension.html#709" class="Function"
+      >&#8857;Susp^-fmap</a
+      ><a name="720"
+      > </a
+      ><a name="721" class="Symbol"
+      >:</a
+      ><a name="722"
+      > </a
+      ><a name="723" class="Symbol"
+      >&#8704;</a
+      ><a name="724"
+      > </a
+      ><a name="725" class="Symbol"
+      >{</a
+      ><a name="726" href="lib.types.IteratedSuspension.html#726" class="Bound"
+      >i</a
+      ><a name="727"
+      > </a
+      ><a name="728" href="lib.types.IteratedSuspension.html#728" class="Bound"
+      >j</a
+      ><a name="729" class="Symbol"
+      >}</a
+      ><a name="730"
+      > </a
+      ><a name="731" class="Symbol"
+      >(</a
+      ><a name="732" href="lib.types.IteratedSuspension.html#732" class="Bound"
+      >n</a
+      ><a name="733"
+      > </a
+      ><a name="734" class="Symbol"
+      >:</a
+      ><a name="735"
+      > </a
+      ><a name="736" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="737" class="Symbol"
+      >)</a
+      ><a name="738"
+      > </a
+      ><a name="739" class="Symbol"
+      >{</a
+      ><a name="740" href="lib.types.IteratedSuspension.html#740" class="Bound"
+      >X</a
+      ><a name="741"
+      > </a
+      ><a name="742" class="Symbol"
+      >:</a
+      ><a name="743"
+      > </a
+      ><a name="744" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="747"
+      > </a
+      ><a name="748" href="lib.types.IteratedSuspension.html#726" class="Bound"
+      >i</a
+      ><a name="749" class="Symbol"
+      >}</a
+      ><a name="750"
+      > </a
+      ><a name="751" class="Symbol"
+      >{</a
+      ><a name="752" href="lib.types.IteratedSuspension.html#752" class="Bound"
+      >Y</a
+      ><a name="753"
+      > </a
+      ><a name="754" class="Symbol"
+      >:</a
+      ><a name="755"
+      > </a
+      ><a name="756" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="759"
+      > </a
+      ><a name="760" href="lib.types.IteratedSuspension.html#728" class="Bound"
+      >j</a
+      ><a name="761" class="Symbol"
+      >}</a
+      ><a name="762"
+      >
+  </a
+      ><a name="765" class="Symbol"
+      >&#8594;</a
+      ><a name="766"
+      > </a
+      ><a name="767" href="lib.types.IteratedSuspension.html#740" class="Bound"
+      >X</a
+      ><a name="768"
+      > </a
+      ><a name="769" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="771"
+      > </a
+      ><a name="772" href="lib.types.IteratedSuspension.html#752" class="Bound"
+      >Y</a
+      ><a name="773"
+      > </a
+      ><a name="774" class="Symbol"
+      >&#8594;</a
+      ><a name="775"
+      > </a
+      ><a name="776" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="782"
+      > </a
+      ><a name="783" href="lib.types.IteratedSuspension.html#732" class="Bound"
+      >n</a
+      ><a name="784"
+      > </a
+      ><a name="785" href="lib.types.IteratedSuspension.html#740" class="Bound"
+      >X</a
+      ><a name="786"
+      > </a
+      ><a name="787" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="789"
+      > </a
+      ><a name="790" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="796"
+      > </a
+      ><a name="797" href="lib.types.IteratedSuspension.html#732" class="Bound"
+      >n</a
+      ><a name="798"
+      > </a
+      ><a name="799" href="lib.types.IteratedSuspension.html#752" class="Bound"
+      >Y</a
+      ><a name="800"
+      >
+</a
+      ><a name="801" href="lib.types.IteratedSuspension.html#709" class="Function"
+      >&#8857;Susp^-fmap</a
+      ><a name="812"
+      > </a
+      ><a name="813" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="814"
+      > </a
+      ><a name="815" href="lib.types.IteratedSuspension.html#815" class="Bound"
+      >f</a
+      ><a name="816"
+      > </a
+      ><a name="817" class="Symbol"
+      >=</a
+      ><a name="818"
+      > </a
+      ><a name="819" href="lib.types.IteratedSuspension.html#815" class="Bound"
+      >f</a
+      ><a name="820"
+      >
+</a
+      ><a name="821" href="lib.types.IteratedSuspension.html#709" class="Function"
+      >&#8857;Susp^-fmap</a
+      ><a name="832"
+      > </a
+      ><a name="833" class="Symbol"
+      >(</a
+      ><a name="834" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="835"
+      > </a
+      ><a name="836" href="lib.types.IteratedSuspension.html#836" class="Bound"
+      >n</a
+      ><a name="837" class="Symbol"
+      >)</a
+      ><a name="838"
+      > </a
+      ><a name="839" href="lib.types.IteratedSuspension.html#839" class="Bound"
+      >f</a
+      ><a name="840"
+      > </a
+      ><a name="841" class="Symbol"
+      >=</a
+      ><a name="842"
+      > </a
+      ><a name="843" href="lib.types.Suspension.html#2607" class="Function"
+      >&#8857;Susp-fmap</a
+      ><a name="853"
+      > </a
+      ><a name="854" class="Symbol"
+      >(</a
+      ><a name="855" href="lib.types.IteratedSuspension.html#709" class="Function"
+      >&#8857;Susp^-fmap</a
+      ><a name="866"
+      > </a
+      ><a name="867" href="lib.types.IteratedSuspension.html#836" class="Bound"
+      >n</a
+      ><a name="868"
+      > </a
+      ><a name="869" href="lib.types.IteratedSuspension.html#839" class="Bound"
+      >f</a
+      ><a name="870" class="Symbol"
+      >)</a
+      ><a name="871"
+      >
+
+</a
+      ><a name="873" href="lib.types.IteratedSuspension.html#873" class="Function"
+      >&#8857;Susp^-fmap-idf</a
+      ><a name="888"
+      > </a
+      ><a name="889" class="Symbol"
+      >:</a
+      ><a name="890"
+      > </a
+      ><a name="891" class="Symbol"
+      >&#8704;</a
+      ><a name="892"
+      > </a
+      ><a name="893" class="Symbol"
+      >{</a
+      ><a name="894" href="lib.types.IteratedSuspension.html#894" class="Bound"
+      >i</a
+      ><a name="895" class="Symbol"
+      >}</a
+      ><a name="896"
+      > </a
+      ><a name="897" class="Symbol"
+      >(</a
+      ><a name="898" href="lib.types.IteratedSuspension.html#898" class="Bound"
+      >n</a
+      ><a name="899"
+      > </a
+      ><a name="900" class="Symbol"
+      >:</a
+      ><a name="901"
+      > </a
+      ><a name="902" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="903" class="Symbol"
+      >)</a
+      ><a name="904"
+      > </a
+      ><a name="905" class="Symbol"
+      >(</a
+      ><a name="906" href="lib.types.IteratedSuspension.html#906" class="Bound"
+      >X</a
+      ><a name="907"
+      > </a
+      ><a name="908" class="Symbol"
+      >:</a
+      ><a name="909"
+      > </a
+      ><a name="910" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="913"
+      > </a
+      ><a name="914" href="lib.types.IteratedSuspension.html#894" class="Bound"
+      >i</a
+      ><a name="915" class="Symbol"
+      >)</a
+      ><a name="916"
+      >
+  </a
+      ><a name="919" class="Symbol"
+      >&#8594;</a
+      ><a name="920"
+      > </a
+      ><a name="921" href="lib.types.IteratedSuspension.html#709" class="Function"
+      >&#8857;Susp^-fmap</a
+      ><a name="932"
+      > </a
+      ><a name="933" href="lib.types.IteratedSuspension.html#898" class="Bound"
+      >n</a
+      ><a name="934"
+      > </a
+      ><a name="935" class="Symbol"
+      >(</a
+      ><a name="936" href="lib.Base.html#10041" class="Function"
+      >&#8857;idf</a
+      ><a name="940"
+      > </a
+      ><a name="941" href="lib.types.IteratedSuspension.html#906" class="Bound"
+      >X</a
+      ><a name="942" class="Symbol"
+      >)</a
+      ><a name="943"
+      > </a
+      ><a name="944" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="946"
+      > </a
+      ><a name="947" href="lib.Base.html#10041" class="Function"
+      >&#8857;idf</a
+      ><a name="951"
+      > </a
+      ><a name="952" class="Symbol"
+      >(</a
+      ><a name="953" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="959"
+      > </a
+      ><a name="960" href="lib.types.IteratedSuspension.html#898" class="Bound"
+      >n</a
+      ><a name="961"
+      > </a
+      ><a name="962" href="lib.types.IteratedSuspension.html#906" class="Bound"
+      >X</a
+      ><a name="963" class="Symbol"
+      >)</a
+      ><a name="964"
+      >
+</a
+      ><a name="965" href="lib.types.IteratedSuspension.html#873" class="Function"
+      >&#8857;Susp^-fmap-idf</a
+      ><a name="980"
+      > </a
+      ><a name="981" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="982"
+      > </a
+      ><a name="983" href="lib.types.IteratedSuspension.html#983" class="Bound"
+      >X</a
+      ><a name="984"
+      > </a
+      ><a name="985" class="Symbol"
+      >=</a
+      ><a name="986"
+      > </a
+      ><a name="987" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="990"
+      >
+</a
+      ><a name="991" href="lib.types.IteratedSuspension.html#873" class="Function"
+      >&#8857;Susp^-fmap-idf</a
+      ><a name="1006"
+      > </a
+      ><a name="1007" class="Symbol"
+      >(</a
+      ><a name="1008" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1009"
+      > </a
+      ><a name="1010" href="lib.types.IteratedSuspension.html#1010" class="Bound"
+      >n</a
+      ><a name="1011" class="Symbol"
+      >)</a
+      ><a name="1012"
+      > </a
+      ><a name="1013" href="lib.types.IteratedSuspension.html#1013" class="Bound"
+      >X</a
+      ><a name="1014"
+      > </a
+      ><a name="1015" class="Symbol"
+      >=</a
+      ><a name="1016"
+      >
+  </a
+      ><a name="1019" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1021"
+      > </a
+      ><a name="1022" href="lib.types.Suspension.html#2607" class="Function"
+      >&#8857;Susp-fmap</a
+      ><a name="1032"
+      > </a
+      ><a name="1033" class="Symbol"
+      >(</a
+      ><a name="1034" href="lib.types.IteratedSuspension.html#873" class="Function"
+      >&#8857;Susp^-fmap-idf</a
+      ><a name="1049"
+      > </a
+      ><a name="1050" href="lib.types.IteratedSuspension.html#1010" class="Bound"
+      >n</a
+      ><a name="1051"
+      > </a
+      ><a name="1052" href="lib.types.IteratedSuspension.html#1013" class="Bound"
+      >X</a
+      ><a name="1053" class="Symbol"
+      >)</a
+      ><a name="1054"
+      > </a
+      ><a name="1055" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1056"
+      > </a
+      ><a name="1057" href="lib.types.Suspension.html#2926" class="Function"
+      >&#8857;Susp-fmap-idf</a
+      ><a name="1071"
+      > </a
+      ><a name="1072" class="Symbol"
+      >(</a
+      ><a name="1073" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1079"
+      > </a
+      ><a name="1080" href="lib.types.IteratedSuspension.html#1010" class="Bound"
+      >n</a
+      ><a name="1081"
+      > </a
+      ><a name="1082" href="lib.types.IteratedSuspension.html#1013" class="Bound"
+      >X</a
+      ><a name="1083" class="Symbol"
+      >)</a
+      ><a name="1084"
+      >
+
+</a
+      ><a name="1086" href="lib.types.IteratedSuspension.html#1086" class="Function"
+      >&#8857;Susp^-fmap-cst</a
+      ><a name="1101"
+      > </a
+      ><a name="1102" class="Symbol"
+      >:</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" class="Symbol"
+      >&#8704;</a
+      ><a name="1105"
+      > </a
+      ><a name="1106" class="Symbol"
+      >{</a
+      ><a name="1107" href="lib.types.IteratedSuspension.html#1107" class="Bound"
+      >i</a
+      ><a name="1108"
+      > </a
+      ><a name="1109" href="lib.types.IteratedSuspension.html#1109" class="Bound"
+      >j</a
+      ><a name="1110" class="Symbol"
+      >}</a
+      ><a name="1111"
+      > </a
+      ><a name="1112" class="Symbol"
+      >(</a
+      ><a name="1113" href="lib.types.IteratedSuspension.html#1113" class="Bound"
+      >n</a
+      ><a name="1114"
+      > </a
+      ><a name="1115" class="Symbol"
+      >:</a
+      ><a name="1116"
+      > </a
+      ><a name="1117" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="1118" class="Symbol"
+      >)</a
+      ><a name="1119"
+      > </a
+      ><a name="1120" class="Symbol"
+      >{</a
+      ><a name="1121" href="lib.types.IteratedSuspension.html#1121" class="Bound"
+      >X</a
+      ><a name="1122"
+      > </a
+      ><a name="1123" class="Symbol"
+      >:</a
+      ><a name="1124"
+      > </a
+      ><a name="1125" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1128"
+      > </a
+      ><a name="1129" href="lib.types.IteratedSuspension.html#1107" class="Bound"
+      >i</a
+      ><a name="1130" class="Symbol"
+      >}</a
+      ><a name="1131"
+      > </a
+      ><a name="1132" class="Symbol"
+      >{</a
+      ><a name="1133" href="lib.types.IteratedSuspension.html#1133" class="Bound"
+      >Y</a
+      ><a name="1134"
+      > </a
+      ><a name="1135" class="Symbol"
+      >:</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1140"
+      > </a
+      ><a name="1141" href="lib.types.IteratedSuspension.html#1109" class="Bound"
+      >j</a
+      ><a name="1142" class="Symbol"
+      >}</a
+      ><a name="1143"
+      >
+  </a
+      ><a name="1146" class="Symbol"
+      >&#8594;</a
+      ><a name="1147"
+      > </a
+      ><a name="1148" href="lib.types.IteratedSuspension.html#709" class="Function"
+      >&#8857;Susp^-fmap</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" href="lib.types.IteratedSuspension.html#1113" class="Bound"
+      >n</a
+      ><a name="1161"
+      > </a
+      ><a name="1162" class="Symbol"
+      >(</a
+      ><a name="1163" href="lib.Base.html#10101" class="Function"
+      >&#8857;cst</a
+      ><a name="1167"
+      > </a
+      ><a name="1168" class="Symbol"
+      >{</a
+      ><a name="1169" class="Argument"
+      >X</a
+      ><a name="1170"
+      > </a
+      ><a name="1171" class="Symbol"
+      >=</a
+      ><a name="1172"
+      > </a
+      ><a name="1173" href="lib.types.IteratedSuspension.html#1121" class="Bound"
+      >X</a
+      ><a name="1174" class="Symbol"
+      >}</a
+      ><a name="1175"
+      > </a
+      ><a name="1176" class="Symbol"
+      >{</a
+      ><a name="1177" class="Argument"
+      >Y</a
+      ><a name="1178"
+      > </a
+      ><a name="1179" class="Symbol"
+      >=</a
+      ><a name="1180"
+      > </a
+      ><a name="1181" href="lib.types.IteratedSuspension.html#1133" class="Bound"
+      >Y</a
+      ><a name="1182" class="Symbol"
+      >})</a
+      ><a name="1184"
+      > </a
+      ><a name="1185" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1187"
+      > </a
+      ><a name="1188" href="lib.Base.html#10101" class="Function"
+      >&#8857;cst</a
+      ><a name="1192"
+      >
+</a
+      ><a name="1193" href="lib.types.IteratedSuspension.html#1086" class="Function"
+      >&#8857;Susp^-fmap-cst</a
+      ><a name="1208"
+      > </a
+      ><a name="1209" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="1210"
+      > </a
+      ><a name="1211" class="Symbol"
+      >=</a
+      ><a name="1212"
+      > </a
+      ><a name="1213" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1216"
+      >
+</a
+      ><a name="1217" href="lib.types.IteratedSuspension.html#1086" class="Function"
+      >&#8857;Susp^-fmap-cst</a
+      ><a name="1232"
+      > </a
+      ><a name="1233" class="Symbol"
+      >(</a
+      ><a name="1234" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1235"
+      > </a
+      ><a name="1236" href="lib.types.IteratedSuspension.html#1236" class="Bound"
+      >n</a
+      ><a name="1237" class="Symbol"
+      >)</a
+      ><a name="1238"
+      > </a
+      ><a name="1239" class="Symbol"
+      >=</a
+      ><a name="1240"
+      > </a
+      ><a name="1241" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1243"
+      > </a
+      ><a name="1244" href="lib.types.Suspension.html#2607" class="Function"
+      >&#8857;Susp-fmap</a
+      ><a name="1254"
+      > </a
+      ><a name="1255" class="Symbol"
+      >(</a
+      ><a name="1256" href="lib.types.IteratedSuspension.html#1086" class="Function"
+      >&#8857;Susp^-fmap-cst</a
+      ><a name="1271"
+      > </a
+      ><a name="1272" href="lib.types.IteratedSuspension.html#1236" class="Bound"
+      >n</a
+      ><a name="1273" class="Symbol"
+      >)</a
+      ><a name="1274"
+      >
+                           </a
+      ><a name="1302" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" class="Symbol"
+      >(</a
+      ><a name="1305" href="lib.types.Suspension.html#3307" class="Function"
+      >&#8857;Susp-fmap-cst</a
+      ><a name="1319"
+      > </a
+      ><a name="1320" class="Symbol"
+      >{</a
+      ><a name="1321" class="Argument"
+      >X</a
+      ><a name="1322"
+      > </a
+      ><a name="1323" class="Symbol"
+      >=</a
+      ><a name="1324"
+      > </a
+      ><a name="1325" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1331"
+      > </a
+      ><a name="1332" href="lib.types.IteratedSuspension.html#1236" class="Bound"
+      >n</a
+      ><a name="1333"
+      > </a
+      ><a name="1334" class="Symbol"
+      >_})</a
+      ><a name="1337"
+      >
+
+</a
+      ><a name="1339" href="lib.types.IteratedSuspension.html#1339" class="Function"
+      >&#8857;Susp^-fmap-&#8728;</a
+      ><a name="1352"
+      > </a
+      ><a name="1353" class="Symbol"
+      >:</a
+      ><a name="1354"
+      > </a
+      ><a name="1355" class="Symbol"
+      >&#8704;</a
+      ><a name="1356"
+      > </a
+      ><a name="1357" class="Symbol"
+      >{</a
+      ><a name="1358" href="lib.types.IteratedSuspension.html#1358" class="Bound"
+      >i</a
+      ><a name="1359"
+      > </a
+      ><a name="1360" href="lib.types.IteratedSuspension.html#1360" class="Bound"
+      >j</a
+      ><a name="1361"
+      > </a
+      ><a name="1362" href="lib.types.IteratedSuspension.html#1362" class="Bound"
+      >k</a
+      ><a name="1363" class="Symbol"
+      >}</a
+      ><a name="1364"
+      > </a
+      ><a name="1365" class="Symbol"
+      >(</a
+      ><a name="1366" href="lib.types.IteratedSuspension.html#1366" class="Bound"
+      >n</a
+      ><a name="1367"
+      > </a
+      ><a name="1368" class="Symbol"
+      >:</a
+      ><a name="1369"
+      > </a
+      ><a name="1370" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="1371" class="Symbol"
+      >)</a
+      ><a name="1372"
+      > </a
+      ><a name="1373" class="Symbol"
+      >{</a
+      ><a name="1374" href="lib.types.IteratedSuspension.html#1374" class="Bound"
+      >X</a
+      ><a name="1375"
+      > </a
+      ><a name="1376" class="Symbol"
+      >:</a
+      ><a name="1377"
+      > </a
+      ><a name="1378" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1381"
+      > </a
+      ><a name="1382" href="lib.types.IteratedSuspension.html#1358" class="Bound"
+      >i</a
+      ><a name="1383" class="Symbol"
+      >}</a
+      ><a name="1384"
+      > </a
+      ><a name="1385" class="Symbol"
+      >{</a
+      ><a name="1386" href="lib.types.IteratedSuspension.html#1386" class="Bound"
+      >Y</a
+      ><a name="1387"
+      > </a
+      ><a name="1388" class="Symbol"
+      >:</a
+      ><a name="1389"
+      > </a
+      ><a name="1390" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1393"
+      > </a
+      ><a name="1394" href="lib.types.IteratedSuspension.html#1360" class="Bound"
+      >j</a
+      ><a name="1395" class="Symbol"
+      >}</a
+      ><a name="1396"
+      > </a
+      ><a name="1397" class="Symbol"
+      >{</a
+      ><a name="1398" href="lib.types.IteratedSuspension.html#1398" class="Bound"
+      >Z</a
+      ><a name="1399"
+      > </a
+      ><a name="1400" class="Symbol"
+      >:</a
+      ><a name="1401"
+      > </a
+      ><a name="1402" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1405"
+      > </a
+      ><a name="1406" href="lib.types.IteratedSuspension.html#1362" class="Bound"
+      >k</a
+      ><a name="1407" class="Symbol"
+      >}</a
+      ><a name="1408"
+      >
+  </a
+      ><a name="1411" class="Symbol"
+      >(</a
+      ><a name="1412" href="lib.types.IteratedSuspension.html#1412" class="Bound"
+      >g</a
+      ><a name="1413"
+      > </a
+      ><a name="1414" class="Symbol"
+      >:</a
+      ><a name="1415"
+      > </a
+      ><a name="1416" href="lib.types.IteratedSuspension.html#1386" class="Bound"
+      >Y</a
+      ><a name="1417"
+      > </a
+      ><a name="1418" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1420"
+      > </a
+      ><a name="1421" href="lib.types.IteratedSuspension.html#1398" class="Bound"
+      >Z</a
+      ><a name="1422" class="Symbol"
+      >)</a
+      ><a name="1423"
+      > </a
+      ><a name="1424" class="Symbol"
+      >(</a
+      ><a name="1425" href="lib.types.IteratedSuspension.html#1425" class="Bound"
+      >f</a
+      ><a name="1426"
+      > </a
+      ><a name="1427" class="Symbol"
+      >:</a
+      ><a name="1428"
+      > </a
+      ><a name="1429" href="lib.types.IteratedSuspension.html#1374" class="Bound"
+      >X</a
+      ><a name="1430"
+      > </a
+      ><a name="1431" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1433"
+      > </a
+      ><a name="1434" href="lib.types.IteratedSuspension.html#1386" class="Bound"
+      >Y</a
+      ><a name="1435" class="Symbol"
+      >)</a
+      ><a name="1436"
+      >
+  </a
+      ><a name="1439" class="Symbol"
+      >&#8594;</a
+      ><a name="1440"
+      > </a
+      ><a name="1441" href="lib.types.IteratedSuspension.html#709" class="Function"
+      >&#8857;Susp^-fmap</a
+      ><a name="1452"
+      > </a
+      ><a name="1453" href="lib.types.IteratedSuspension.html#1366" class="Bound"
+      >n</a
+      ><a name="1454"
+      > </a
+      ><a name="1455" class="Symbol"
+      >(</a
+      ><a name="1456" href="lib.types.IteratedSuspension.html#1412" class="Bound"
+      >g</a
+      ><a name="1457"
+      > </a
+      ><a name="1458" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="1460"
+      > </a
+      ><a name="1461" href="lib.types.IteratedSuspension.html#1425" class="Bound"
+      >f</a
+      ><a name="1462" class="Symbol"
+      >)</a
+      ><a name="1463"
+      > </a
+      ><a name="1464" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1466"
+      > </a
+      ><a name="1467" href="lib.types.IteratedSuspension.html#709" class="Function"
+      >&#8857;Susp^-fmap</a
+      ><a name="1478"
+      > </a
+      ><a name="1479" href="lib.types.IteratedSuspension.html#1366" class="Bound"
+      >n</a
+      ><a name="1480"
+      > </a
+      ><a name="1481" href="lib.types.IteratedSuspension.html#1412" class="Bound"
+      >g</a
+      ><a name="1482"
+      > </a
+      ><a name="1483" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="1485"
+      > </a
+      ><a name="1486" href="lib.types.IteratedSuspension.html#709" class="Function"
+      >&#8857;Susp^-fmap</a
+      ><a name="1497"
+      > </a
+      ><a name="1498" href="lib.types.IteratedSuspension.html#1366" class="Bound"
+      >n</a
+      ><a name="1499"
+      > </a
+      ><a name="1500" href="lib.types.IteratedSuspension.html#1425" class="Bound"
+      >f</a
+      ><a name="1501"
+      >
+</a
+      ><a name="1502" href="lib.types.IteratedSuspension.html#1339" class="Function"
+      >&#8857;Susp^-fmap-&#8728;</a
+      ><a name="1515"
+      > </a
+      ><a name="1516" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" href="lib.types.IteratedSuspension.html#1518" class="Bound"
+      >g</a
+      ><a name="1519"
+      > </a
+      ><a name="1520" href="lib.types.IteratedSuspension.html#1520" class="Bound"
+      >f</a
+      ><a name="1521"
+      > </a
+      ><a name="1522" class="Symbol"
+      >=</a
+      ><a name="1523"
+      > </a
+      ><a name="1524" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1527"
+      >
+</a
+      ><a name="1528" href="lib.types.IteratedSuspension.html#1339" class="Function"
+      >&#8857;Susp^-fmap-&#8728;</a
+      ><a name="1541"
+      > </a
+      ><a name="1542" class="Symbol"
+      >(</a
+      ><a name="1543" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1544"
+      > </a
+      ><a name="1545" href="lib.types.IteratedSuspension.html#1545" class="Bound"
+      >n</a
+      ><a name="1546" class="Symbol"
+      >)</a
+      ><a name="1547"
+      > </a
+      ><a name="1548" href="lib.types.IteratedSuspension.html#1548" class="Bound"
+      >g</a
+      ><a name="1549"
+      > </a
+      ><a name="1550" href="lib.types.IteratedSuspension.html#1550" class="Bound"
+      >f</a
+      ><a name="1551"
+      > </a
+      ><a name="1552" class="Symbol"
+      >=</a
+      ><a name="1553"
+      >
+  </a
+      ><a name="1556" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1558"
+      > </a
+      ><a name="1559" href="lib.types.Suspension.html#2607" class="Function"
+      >&#8857;Susp-fmap</a
+      ><a name="1569"
+      > </a
+      ><a name="1570" class="Symbol"
+      >(</a
+      ><a name="1571" href="lib.types.IteratedSuspension.html#1339" class="Function"
+      >&#8857;Susp^-fmap-&#8728;</a
+      ><a name="1584"
+      > </a
+      ><a name="1585" href="lib.types.IteratedSuspension.html#1545" class="Bound"
+      >n</a
+      ><a name="1586"
+      > </a
+      ><a name="1587" href="lib.types.IteratedSuspension.html#1548" class="Bound"
+      >g</a
+      ><a name="1588"
+      > </a
+      ><a name="1589" href="lib.types.IteratedSuspension.html#1550" class="Bound"
+      >f</a
+      ><a name="1590" class="Symbol"
+      >)</a
+      ><a name="1591"
+      >
+  </a
+      ><a name="1594" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1595"
+      > </a
+      ><a name="1596" href="lib.types.Suspension.html#4334" class="Function"
+      >&#8857;Susp-fmap-&#8728;</a
+      ><a name="1608"
+      > </a
+      ><a name="1609" class="Symbol"
+      >(</a
+      ><a name="1610" href="lib.types.IteratedSuspension.html#709" class="Function"
+      >&#8857;Susp^-fmap</a
+      ><a name="1621"
+      > </a
+      ><a name="1622" href="lib.types.IteratedSuspension.html#1545" class="Bound"
+      >n</a
+      ><a name="1623"
+      > </a
+      ><a name="1624" href="lib.types.IteratedSuspension.html#1548" class="Bound"
+      >g</a
+      ><a name="1625" class="Symbol"
+      >)</a
+      ><a name="1626"
+      > </a
+      ><a name="1627" class="Symbol"
+      >(</a
+      ><a name="1628" href="lib.types.IteratedSuspension.html#709" class="Function"
+      >&#8857;Susp^-fmap</a
+      ><a name="1639"
+      > </a
+      ><a name="1640" href="lib.types.IteratedSuspension.html#1545" class="Bound"
+      >n</a
+      ><a name="1641"
+      > </a
+      ><a name="1642" href="lib.types.IteratedSuspension.html#1550" class="Bound"
+      >f</a
+      ><a name="1643" class="Symbol"
+      >)</a
+      ><a name="1644"
+      >
+
+</a
+      ><a name="1646" href="lib.types.IteratedSuspension.html#1646" class="Function"
+      >&#8857;Susp^-Susp-split-iso</a
+      ><a name="1667"
+      > </a
+      ><a name="1668" class="Symbol"
+      >:</a
+      ><a name="1669"
+      > </a
+      ><a name="1670" class="Symbol"
+      >&#8704;</a
+      ><a name="1671"
+      > </a
+      ><a name="1672" class="Symbol"
+      >{</a
+      ><a name="1673" href="lib.types.IteratedSuspension.html#1673" class="Bound"
+      >i</a
+      ><a name="1674" class="Symbol"
+      >}</a
+      ><a name="1675"
+      > </a
+      ><a name="1676" class="Symbol"
+      >(</a
+      ><a name="1677" href="lib.types.IteratedSuspension.html#1677" class="Bound"
+      >n</a
+      ><a name="1678"
+      > </a
+      ><a name="1679" class="Symbol"
+      >:</a
+      ><a name="1680"
+      > </a
+      ><a name="1681" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="1682" class="Symbol"
+      >)</a
+      ><a name="1683"
+      > </a
+      ><a name="1684" class="Symbol"
+      >(</a
+      ><a name="1685" href="lib.types.IteratedSuspension.html#1685" class="Bound"
+      >X</a
+      ><a name="1686"
+      > </a
+      ><a name="1687" class="Symbol"
+      >:</a
+      ><a name="1688"
+      > </a
+      ><a name="1689" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" href="lib.types.IteratedSuspension.html#1673" class="Bound"
+      >i</a
+      ><a name="1694" class="Symbol"
+      >)</a
+      ><a name="1695"
+      >
+  </a
+      ><a name="1698" class="Symbol"
+      >&#8594;</a
+      ><a name="1699"
+      > </a
+      ><a name="1700" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1706"
+      > </a
+      ><a name="1707" class="Symbol"
+      >(</a
+      ><a name="1708" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1709"
+      > </a
+      ><a name="1710" href="lib.types.IteratedSuspension.html#1677" class="Bound"
+      >n</a
+      ><a name="1711" class="Symbol"
+      >)</a
+      ><a name="1712"
+      > </a
+      ><a name="1713" href="lib.types.IteratedSuspension.html#1685" class="Bound"
+      >X</a
+      ><a name="1714"
+      > </a
+      ><a name="1715" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="1717"
+      > </a
+      ><a name="1718" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1724"
+      > </a
+      ><a name="1725" href="lib.types.IteratedSuspension.html#1677" class="Bound"
+      >n</a
+      ><a name="1726"
+      > </a
+      ><a name="1727" class="Symbol"
+      >(</a
+      ><a name="1728" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="1733"
+      > </a
+      ><a name="1734" href="lib.types.IteratedSuspension.html#1685" class="Bound"
+      >X</a
+      ><a name="1735" class="Symbol"
+      >)</a
+      ><a name="1736"
+      >
+</a
+      ><a name="1737" href="lib.types.IteratedSuspension.html#1646" class="Function"
+      >&#8857;Susp^-Susp-split-iso</a
+      ><a name="1758"
+      > </a
+      ><a name="1759" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="1760"
+      >     </a
+      ><a name="1765" href="lib.types.IteratedSuspension.html#1765" class="Bound"
+      >X</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" class="Symbol"
+      >=</a
+      ><a name="1768"
+      > </a
+      ><a name="1769" href="lib.Equivalence.html#13257" class="Function"
+      >&#8857;ide</a
+      ><a name="1773"
+      > </a
+      ><a name="1774" class="Symbol"
+      >_</a
+      ><a name="1775"
+      >
+</a
+      ><a name="1776" href="lib.types.IteratedSuspension.html#1646" class="Function"
+      >&#8857;Susp^-Susp-split-iso</a
+      ><a name="1797"
+      > </a
+      ><a name="1798" class="Symbol"
+      >(</a
+      ><a name="1799" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1800"
+      > </a
+      ><a name="1801" href="lib.types.IteratedSuspension.html#1801" class="Bound"
+      >n</a
+      ><a name="1802" class="Symbol"
+      >)</a
+      ><a name="1803"
+      > </a
+      ><a name="1804" href="lib.types.IteratedSuspension.html#1804" class="Bound"
+      >X</a
+      ><a name="1805"
+      > </a
+      ><a name="1806" class="Symbol"
+      >=</a
+      ><a name="1807"
+      > </a
+      ><a name="1808" href="lib.types.Suspension.html#5455" class="Function"
+      >&#8857;Susp-emap</a
+      ><a name="1818"
+      > </a
+      ><a name="1819" class="Symbol"
+      >(</a
+      ><a name="1820" href="lib.types.IteratedSuspension.html#1646" class="Function"
+      >&#8857;Susp^-Susp-split-iso</a
+      ><a name="1841"
+      > </a
+      ><a name="1842" href="lib.types.IteratedSuspension.html#1801" class="Bound"
+      >n</a
+      ><a name="1843"
+      > </a
+      ><a name="1844" href="lib.types.IteratedSuspension.html#1804" class="Bound"
+      >X</a
+      ><a name="1845" class="Symbol"
+      >)</a
+      ><a name="1846"
+      >
+
+
+</a
+      ><a name="1849" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="1856"
+      > </a
+      ><a name="1857" class="Symbol"
+      >:</a
+      ><a name="1858"
+      > </a
+      ><a name="1859" class="Symbol"
+      >(</a
+      ><a name="1860" href="lib.types.IteratedSuspension.html#1860" class="Bound"
+      >n</a
+      ><a name="1861"
+      > </a
+      ><a name="1862" class="Symbol"
+      >:</a
+      ><a name="1863"
+      > </a
+      ><a name="1864" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="1865" class="Symbol"
+      >)</a
+      ><a name="1866"
+      > </a
+      ><a name="1867" class="Symbol"
+      >&#8594;</a
+      ><a name="1868"
+      > </a
+      ><a name="1869" href="lib.Base.html#9901" class="Function"
+      >Ptd&#8320;</a
+      ><a name="1873"
+      >
+</a
+      ><a name="1874" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="1881"
+      > </a
+      ><a name="1882" href="lib.types.IteratedSuspension.html#1882" class="Bound"
+      >n</a
+      ><a name="1883"
+      > </a
+      ><a name="1884" class="Symbol"
+      >=</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1892"
+      > </a
+      ><a name="1893" href="lib.types.IteratedSuspension.html#1882" class="Bound"
+      >n</a
+      ><a name="1894"
+      > </a
+      ><a name="1895" href="lib.types.Bool.html#300" class="Function"
+      >&#8857;Bool</a
+      ><a name="1900"
+      >
+
+</a
+      ><a name="1902" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="1908"
+      > </a
+      ><a name="1909" class="Symbol"
+      >:</a
+      ><a name="1910"
+      > </a
+      ><a name="1911" class="Symbol"
+      >(</a
+      ><a name="1912" href="lib.types.IteratedSuspension.html#1912" class="Bound"
+      >n</a
+      ><a name="1913"
+      > </a
+      ><a name="1914" class="Symbol"
+      >:</a
+      ><a name="1915"
+      > </a
+      ><a name="1916" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="1917" class="Symbol"
+      >)</a
+      ><a name="1918"
+      > </a
+      ><a name="1919" class="Symbol"
+      >&#8594;</a
+      ><a name="1920"
+      > </a
+      ><a name="1921" href="lib.Base.html#1196" class="Function"
+      >Type&#8320;</a
+      ><a name="1926"
+      >
+</a
+      ><a name="1927" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="1933"
+      > </a
+      ><a name="1934" href="lib.types.IteratedSuspension.html#1934" class="Bound"
+      >n</a
+      ><a name="1935"
+      > </a
+      ><a name="1936" class="Symbol"
+      >=</a
+      ><a name="1937"
+      > </a
+      ><a name="1938" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="1941"
+      > </a
+      ><a name="1942" class="Symbol"
+      >(</a
+      ><a name="1943" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="1950"
+      > </a
+      ><a name="1951" href="lib.types.IteratedSuspension.html#1934" class="Bound"
+      >n</a
+      ><a name="1952" class="Symbol"
+      >)</a
+      ><a name="1953"
+      >
+
+</a
+      ><a name="1955" class="Keyword"
+      >abstract</a
+      ><a name="1963"
+      >
+  </a
+      ><a name="1966" href="lib.types.IteratedSuspension.html#1966" class="Function"
+      >Sphere-conn</a
+      ><a name="1977"
+      > </a
+      ><a name="1978" class="Symbol"
+      >:</a
+      ><a name="1979"
+      > </a
+      ><a name="1980" class="Symbol"
+      >&#8704;</a
+      ><a name="1981"
+      > </a
+      ><a name="1982" class="Symbol"
+      >(</a
+      ><a name="1983" href="lib.types.IteratedSuspension.html#1983" class="Bound"
+      >n</a
+      ><a name="1984"
+      > </a
+      ><a name="1985" class="Symbol"
+      >:</a
+      ><a name="1986"
+      > </a
+      ><a name="1987" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="1988" class="Symbol"
+      >)</a
+      ><a name="1989"
+      > </a
+      ><a name="1990" class="Symbol"
+      >&#8594;</a
+      ><a name="1991"
+      > </a
+      ><a name="1992" href="lib.NConnected.html#343" class="Function"
+      >is-connected</a
+      ><a name="2004"
+      > </a
+      ><a name="2005" href="lib.types.TLevel.html#178" class="Function Operator"
+      >&#10216;</a
+      ><a name="2006"
+      > </a
+      ><a name="2007" href="lib.types.IteratedSuspension.html#1983" class="Bound"
+      >n</a
+      ><a name="2008"
+      > </a
+      ><a name="2009" href="lib.types.TLevel.html#178" class="Function Operator"
+      >&#10217;&#8331;&#8321;</a
+      ><a name="2012"
+      > </a
+      ><a name="2013" class="Symbol"
+      >(</a
+      ><a name="2014" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="2020"
+      > </a
+      ><a name="2021" href="lib.types.IteratedSuspension.html#1983" class="Bound"
+      >n</a
+      ><a name="2022" class="Symbol"
+      >)</a
+      ><a name="2023"
+      >
+  </a
+      ><a name="2026" href="lib.types.IteratedSuspension.html#1966" class="Function"
+      >Sphere-conn</a
+      ><a name="2037"
+      > </a
+      ><a name="2038" class="Number"
+      >0</a
+      ><a name="2039"
+      > </a
+      ><a name="2040" class="Symbol"
+      >=</a
+      ><a name="2041"
+      > </a
+      ><a name="2042" href="lib.NConnected.html#746" class="Function"
+      >inhab-conn</a
+      ><a name="2052"
+      > </a
+      ><a name="2053" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="2057"
+      >
+  </a
+      ><a name="2060" href="lib.types.IteratedSuspension.html#1966" class="Function"
+      >Sphere-conn</a
+      ><a name="2071"
+      > </a
+      ><a name="2072" class="Symbol"
+      >(</a
+      ><a name="2073" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2074"
+      > </a
+      ><a name="2075" href="lib.types.IteratedSuspension.html#2075" class="Bound"
+      >n</a
+      ><a name="2076" class="Symbol"
+      >)</a
+      ><a name="2077"
+      > </a
+      ><a name="2078" class="Symbol"
+      >=</a
+      ><a name="2079"
+      > </a
+      ><a name="2080" href="lib.types.Suspension.html#6235" class="Function"
+      >Susp-conn</a
+      ><a name="2089"
+      > </a
+      ><a name="2090" class="Symbol"
+      >(</a
+      ><a name="2091" href="lib.types.IteratedSuspension.html#1966" class="Function"
+      >Sphere-conn</a
+      ><a name="2102"
+      > </a
+      ><a name="2103" href="lib.types.IteratedSuspension.html#2075" class="Bound"
+      >n</a
+      ><a name="2104" class="Symbol"
+      >)</a
+      ><a name="2105"
+      >
+
+</a
+      ><a name="2107" class="Comment"
+      >-- favonia: [S&#185;] has its own elim rules in Circle.agda.</a
+      ><a name="2162"
+      >
+</a
+      ><a name="2163" href="lib.types.IteratedSuspension.html#2163" class="Function"
+      >&#8857;S&#8304;</a
+      ><a name="2166"
+      > </a
+      ><a name="2167" class="Symbol"
+      >=</a
+      ><a name="2168"
+      > </a
+      ><a name="2169" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="2176"
+      > </a
+      ><a name="2177" class="Number"
+      >0</a
+      ><a name="2178"
+      >
+</a
+      ><a name="2179" href="lib.types.IteratedSuspension.html#2179" class="Function"
+      >&#8857;S&#185;</a
+      ><a name="2182"
+      > </a
+      ><a name="2183" class="Symbol"
+      >=</a
+      ><a name="2184"
+      > </a
+      ><a name="2185" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="2192"
+      > </a
+      ><a name="2193" class="Number"
+      >1</a
+      ><a name="2194"
+      >
+</a
+      ><a name="2195" href="lib.types.IteratedSuspension.html#2195" class="Function"
+      >&#8857;S&#178;</a
+      ><a name="2198"
+      > </a
+      ><a name="2199" class="Symbol"
+      >=</a
+      ><a name="2200"
+      > </a
+      ><a name="2201" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="2208"
+      > </a
+      ><a name="2209" class="Number"
+      >2</a
+      ><a name="2210"
+      >
+</a
+      ><a name="2211" href="lib.types.IteratedSuspension.html#2211" class="Function"
+      >&#8857;S&#179;</a
+      ><a name="2214"
+      > </a
+      ><a name="2215" class="Symbol"
+      >=</a
+      ><a name="2216"
+      > </a
+      ><a name="2217" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="2224"
+      > </a
+      ><a name="2225" class="Number"
+      >3</a
+      ><a name="2226"
+      >
+</a
+      ><a name="2227" href="lib.types.IteratedSuspension.html#2227" class="Function"
+      >S&#8304;</a
+      ><a name="2229"
+      > </a
+      ><a name="2230" class="Symbol"
+      >=</a
+      ><a name="2231"
+      > </a
+      ><a name="2232" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="2238"
+      > </a
+      ><a name="2239" class="Number"
+      >0</a
+      ><a name="2240"
+      >
+</a
+      ><a name="2241" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="2243"
+      > </a
+      ><a name="2244" class="Symbol"
+      >=</a
+      ><a name="2245"
+      > </a
+      ><a name="2246" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="2252"
+      > </a
+      ><a name="2253" class="Number"
+      >1</a
+      ><a name="2254"
+      >
+</a
+      ><a name="2255" href="lib.types.IteratedSuspension.html#2255" class="Function"
+      >S&#178;</a
+      ><a name="2257"
+      > </a
+      ><a name="2258" class="Symbol"
+      >=</a
+      ><a name="2259"
+      > </a
+      ><a name="2260" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="2266"
+      > </a
+      ><a name="2267" class="Number"
+      >2</a
+      ><a name="2268"
+      >
+</a
+      ><a name="2269" href="lib.types.IteratedSuspension.html#2269" class="Function"
+      >S&#179;</a
+      ><a name="2271"
+      > </a
+      ><a name="2272" class="Symbol"
+      >=</a
+      ><a name="2273"
+      > </a
+      ><a name="2274" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="2280"
+      > </a
+      ><a name="2281" class="Number"
+      >3</a
+      ><a name="2282"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

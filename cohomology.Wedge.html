@@ -1,0 +1,3413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cohomology.Wedge</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="groups.Exactness.html#1" class="Module"
+      >groups.Exactness</a
+      ><a name="87"
+      >
+</a
+      ><a name="88" class="Keyword"
+      >open</a
+      ><a name="92"
+      > </a
+      ><a name="93" class="Keyword"
+      >import</a
+      ><a name="99"
+      > </a
+      ><a name="100" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="117"
+      >
+
+</a
+      ><a name="119" class="Comment"
+      >{- Finite additivity is provable (and in a stronger form) without using
+ - the additivity axiom. We have
+
+         C&#8319;(X &#8744; Y) == C&#8319;(X) &#215; C&#8319;(Y)
+
+ - and over this path
+ -   &#8729; C&#8319;(winl) corresponds to fst : C&#8319;(X) &#215; C&#8319;(Y) &#8594; C&#8319;(X),
+ -   &#8729; C&#8319;(winr) corresponds to snd : C&#8319;(X) &#215; C&#8319;(Y) &#8594; C&#8319;(Y),
+ -   &#8729; C&#8319;(Wedge-rec winl* winr* wglue*) : C&#8319;(Z) &#8594; C&#8319;(X &#8744; Y)
+       corresponds to C&#8319;(winl*) &#215; C&#8319;(winr*).
+ -   &#8729; C&#8319;(f) : C&#8319;(X &#8744; Y) &#8594; C&#8319;(Z)
+       corresponds to C&#8319;(projl &#8728; f) + C&#8319;(projr &#8728; f) : C&#8319;(X) &#215; C&#8319;(Y) &#8594; C&#8319;(Z)
+ -}</a
+      ><a name="621"
+      >
+
+</a
+      ><a name="623" class="Keyword"
+      >module</a
+      ><a name="629"
+      > </a
+      ><a name="630" href="cohomology.Wedge.html#1" class="Module"
+      >cohomology.Wedge</a
+      ><a name="646"
+      > </a
+      ><a name="647" class="Symbol"
+      >{</a
+      ><a name="648" href="cohomology.Wedge.html#648" class="Bound"
+      >i</a
+      ><a name="649" class="Symbol"
+      >}</a
+      ><a name="650"
+      > </a
+      ><a name="651" class="Symbol"
+      >(</a
+      ><a name="652" href="cohomology.Wedge.html#652" class="Bound"
+      >CT</a
+      ><a name="654"
+      > </a
+      ><a name="655" class="Symbol"
+      >:</a
+      ><a name="656"
+      > </a
+      ><a name="657" href="cohomology.Theory.html#173" class="Record"
+      >CohomologyTheory</a
+      ><a name="673"
+      > </a
+      ><a name="674" href="cohomology.Wedge.html#648" class="Bound"
+      >i</a
+      ><a name="675" class="Symbol"
+      >)</a
+      ><a name="676"
+      >
+  </a
+      ><a name="679" class="Symbol"
+      >(</a
+      ><a name="680" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="681"
+      > </a
+      ><a name="682" class="Symbol"
+      >:</a
+      ><a name="683"
+      > </a
+      ><a name="684" href="lib.types.Int.html#154" class="Datatype"
+      >&#8484;</a
+      ><a name="685" class="Symbol"
+      >)</a
+      ><a name="686"
+      > </a
+      ><a name="687" class="Symbol"
+      >(</a
+      ><a name="688" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="689"
+      > </a
+      ><a name="690" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="691"
+      > </a
+      ><a name="692" class="Symbol"
+      >:</a
+      ><a name="693"
+      > </a
+      ><a name="694" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="697"
+      > </a
+      ><a name="698" href="cohomology.Wedge.html#648" class="Bound"
+      >i</a
+      ><a name="699" class="Symbol"
+      >)</a
+      ><a name="700"
+      > </a
+      ><a name="701" class="Keyword"
+      >where</a
+      ><a name="706"
+      >
+
+  </a
+      ><a name="710" class="Keyword"
+      >open</a
+      ><a name="714"
+      > </a
+      ><a name="715" class="Keyword"
+      >import</a
+      ><a name="721"
+      > </a
+      ><a name="722" href="homotopy.WedgeCofiber.html#1" class="Module"
+      >homotopy.WedgeCofiber</a
+      ><a name="743"
+      > </a
+      ><a name="744" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="745"
+      > </a
+      ><a name="746" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="747"
+      >
+
+  </a
+      ><a name="751" class="Keyword"
+      >open</a
+      ><a name="755"
+      > </a
+      ><a name="756" href="cohomology.Theory.html#173" class="Module"
+      >CohomologyTheory</a
+      ><a name="772"
+      > </a
+      ><a name="773" href="cohomology.Wedge.html#652" class="Bound"
+      >CT</a
+      ><a name="775"
+      >
+  </a
+      ><a name="778" class="Keyword"
+      >open</a
+      ><a name="782"
+      > </a
+      ><a name="783" class="Keyword"
+      >import</a
+      ><a name="789"
+      > </a
+      ><a name="790" href="cohomology.PtdMapSequence.html#1" class="Module"
+      >cohomology.PtdMapSequence</a
+      ><a name="815"
+      > </a
+      ><a name="816" href="cohomology.Wedge.html#652" class="Bound"
+      >CT</a
+      ><a name="818"
+      >
+
+  </a
+      ><a name="822" class="Keyword"
+      >private</a
+      ><a name="829"
+      >
+    </a
+      ><a name="834" class="Keyword"
+      >abstract</a
+      ><a name="842"
+      >
+      </a
+      ><a name="849" href="cohomology.Wedge.html#849" class="Function"
+      >&#946;l</a
+      ><a name="851"
+      > </a
+      ><a name="852" class="Symbol"
+      >:</a
+      ><a name="853"
+      > </a
+      ><a name="854" class="Symbol"
+      >&#8704;</a
+      ><a name="855"
+      > </a
+      ><a name="856" href="cohomology.Wedge.html#856" class="Bound"
+      >x</a
+      ><a name="857"
+      > </a
+      ><a name="858" class="Symbol"
+      >&#8594;</a
+      ><a name="859"
+      > </a
+      ><a name="860" href="cohomology.Theory.html#718" class="Function"
+      >CEl-fmap</a
+      ><a name="868"
+      > </a
+      ><a name="869" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="870"
+      > </a
+      ><a name="871" href="lib.types.Wedge.html#1019" class="Function"
+      >&#8857;winl</a
+      ><a name="876"
+      > </a
+      ><a name="877" class="Symbol"
+      >(</a
+      ><a name="878" href="cohomology.Theory.html#718" class="Function"
+      >CEl-fmap</a
+      ><a name="886"
+      > </a
+      ><a name="887" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="888"
+      > </a
+      ><a name="889" class="Symbol"
+      >(</a
+      ><a name="890" href="lib.types.Wedge.html#3798" class="Function"
+      >&#8857;projl</a
+      ><a name="896"
+      > </a
+      ><a name="897" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="898"
+      > </a
+      ><a name="899" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="900" class="Symbol"
+      >)</a
+      ><a name="901"
+      > </a
+      ><a name="902" href="cohomology.Wedge.html#856" class="Bound"
+      >x</a
+      ><a name="903" class="Symbol"
+      >)</a
+      ><a name="904"
+      > </a
+      ><a name="905" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="907"
+      > </a
+      ><a name="908" href="cohomology.Wedge.html#856" class="Bound"
+      >x</a
+      ><a name="909"
+      >
+      </a
+      ><a name="916" href="cohomology.Wedge.html#849" class="Function"
+      >&#946;l</a
+      ><a name="918"
+      > </a
+      ><a name="919" class="Symbol"
+      >=</a
+      ><a name="920"
+      > </a
+      ><a name="921" href="cohomology.Theory.html#7200" class="Function"
+      >CEl-fmap-inverse</a
+      ><a name="937"
+      > </a
+      ><a name="938" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="939"
+      > </a
+      ><a name="940" href="lib.types.Wedge.html#1019" class="Function"
+      >&#8857;winl</a
+      ><a name="945"
+      > </a
+      ><a name="946" class="Symbol"
+      >(</a
+      ><a name="947" href="lib.types.Wedge.html#3798" class="Function"
+      >&#8857;projl</a
+      ><a name="953"
+      > </a
+      ><a name="954" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="955"
+      > </a
+      ><a name="956" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="957" class="Symbol"
+      >)</a
+      ><a name="958"
+      > </a
+      ><a name="959" class="Symbol"
+      >&#955;</a
+      ><a name="960"
+      > </a
+      ><a name="961" href="cohomology.Wedge.html#961" class="Bound"
+      >_</a
+      ><a name="962"
+      > </a
+      ><a name="963" class="Symbol"
+      >&#8594;</a
+      ><a name="964"
+      > </a
+      ><a name="965" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="968"
+      >
+
+      </a
+      ><a name="976" href="cohomology.Wedge.html#976" class="Function"
+      >&#946;r</a
+      ><a name="978"
+      > </a
+      ><a name="979" class="Symbol"
+      >:</a
+      ><a name="980"
+      > </a
+      ><a name="981" class="Symbol"
+      >&#8704;</a
+      ><a name="982"
+      > </a
+      ><a name="983" href="cohomology.Wedge.html#983" class="Bound"
+      >y</a
+      ><a name="984"
+      > </a
+      ><a name="985" class="Symbol"
+      >&#8594;</a
+      ><a name="986"
+      > </a
+      ><a name="987" href="cohomology.Theory.html#718" class="Function"
+      >CEl-fmap</a
+      ><a name="995"
+      > </a
+      ><a name="996" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="997"
+      > </a
+      ><a name="998" href="lib.types.Wedge.html#1065" class="Function"
+      >&#8857;winr</a
+      ><a name="1003"
+      > </a
+      ><a name="1004" class="Symbol"
+      >(</a
+      ><a name="1005" href="cohomology.Theory.html#718" class="Function"
+      >CEl-fmap</a
+      ><a name="1013"
+      > </a
+      ><a name="1014" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1015"
+      > </a
+      ><a name="1016" class="Symbol"
+      >(</a
+      ><a name="1017" href="lib.types.Wedge.html#3818" class="Function"
+      >&#8857;projr</a
+      ><a name="1023"
+      > </a
+      ><a name="1024" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="1025"
+      > </a
+      ><a name="1026" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="1027" class="Symbol"
+      >)</a
+      ><a name="1028"
+      > </a
+      ><a name="1029" href="cohomology.Wedge.html#983" class="Bound"
+      >y</a
+      ><a name="1030" class="Symbol"
+      >)</a
+      ><a name="1031"
+      > </a
+      ><a name="1032" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1034"
+      > </a
+      ><a name="1035" href="cohomology.Wedge.html#983" class="Bound"
+      >y</a
+      ><a name="1036"
+      >
+      </a
+      ><a name="1043" href="cohomology.Wedge.html#976" class="Function"
+      >&#946;r</a
+      ><a name="1045"
+      > </a
+      ><a name="1046" class="Symbol"
+      >=</a
+      ><a name="1047"
+      > </a
+      ><a name="1048" href="cohomology.Theory.html#7200" class="Function"
+      >CEl-fmap-inverse</a
+      ><a name="1064"
+      > </a
+      ><a name="1065" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1066"
+      > </a
+      ><a name="1067" href="lib.types.Wedge.html#1065" class="Function"
+      >&#8857;winr</a
+      ><a name="1072"
+      > </a
+      ><a name="1073" class="Symbol"
+      >(</a
+      ><a name="1074" href="lib.types.Wedge.html#3818" class="Function"
+      >&#8857;projr</a
+      ><a name="1080"
+      > </a
+      ><a name="1081" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="1082"
+      > </a
+      ><a name="1083" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="1084" class="Symbol"
+      >)</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" class="Symbol"
+      >&#955;</a
+      ><a name="1087"
+      > </a
+      ><a name="1088" href="cohomology.Wedge.html#1088" class="Bound"
+      >_</a
+      ><a name="1089"
+      > </a
+      ><a name="1090" class="Symbol"
+      >&#8594;</a
+      ><a name="1091"
+      > </a
+      ><a name="1092" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1095"
+      >
+
+      </a
+      ><a name="1103" href="cohomology.Wedge.html#1103" class="Function"
+      >C-projr-C-winl-is-exact</a
+      ><a name="1126"
+      > </a
+      ><a name="1127" class="Symbol"
+      >:</a
+      ><a name="1128"
+      > </a
+      ><a name="1129" href="lib.groups.Homomorphism.html#9329" class="Record"
+      >is-exact</a
+      ><a name="1137"
+      > </a
+      ><a name="1138" class="Symbol"
+      >(</a
+      ><a name="1139" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1145"
+      > </a
+      ><a name="1146" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1147"
+      > </a
+      ><a name="1148" class="Symbol"
+      >(</a
+      ><a name="1149" href="lib.types.Wedge.html#3818" class="Function"
+      >&#8857;projr</a
+      ><a name="1155"
+      > </a
+      ><a name="1156" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="1157"
+      > </a
+      ><a name="1158" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="1159" class="Symbol"
+      >))</a
+      ><a name="1161"
+      > </a
+      ><a name="1162" class="Symbol"
+      >(</a
+      ><a name="1163" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1169"
+      > </a
+      ><a name="1170" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1171"
+      > </a
+      ><a name="1172" href="lib.types.Wedge.html#1019" class="Function"
+      >&#8857;winl</a
+      ><a name="1177" class="Symbol"
+      >)</a
+      ><a name="1178"
+      >
+      </a
+      ><a name="1185" href="cohomology.Wedge.html#1103" class="Function"
+      >C-projr-C-winl-is-exact</a
+      ><a name="1208"
+      > </a
+      ><a name="1209" class="Symbol"
+      >=</a
+      ><a name="1210"
+      > </a
+      ><a name="1211" href="groups.Exactness.html#14448" class="Function"
+      >equiv-preserves'-exact</a
+      ><a name="1233"
+      >
+        </a
+      ><a name="1242" class="Symbol"
+      >(</a
+      ><a name="1243" href="cohomology.PtdMapSequence.html#559" class="Function"
+      >C-comm-square</a
+      ><a name="1256"
+      > </a
+      ><a name="1257" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1258"
+      > </a
+      ><a name="1259" href="homotopy.WedgeCofiber.html#1439" class="Function"
+      >cfcod-winl-projr-comm-sqr</a
+      ><a name="1284" class="Symbol"
+      >)</a
+      ><a name="1285"
+      >
+        </a
+      ><a name="1294" class="Symbol"
+      >(</a
+      ><a name="1295" href="cohomology.PtdMapSequence.html#559" class="Function"
+      >C-comm-square</a
+      ><a name="1308"
+      > </a
+      ><a name="1309" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1310"
+      > </a
+      ><a name="1311" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1312"
+      > </a
+      ><a name="1313" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="1321"
+      > </a
+      ><a name="1322" class="Symbol"
+      >&#955;</a
+      ><a name="1323"
+      > </a
+      ><a name="1324" href="cohomology.Wedge.html#1324" class="Bound"
+      >_</a
+      ><a name="1325"
+      > </a
+      ><a name="1326" class="Symbol"
+      >&#8594;</a
+      ><a name="1327"
+      > </a
+      ><a name="1328" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1331" class="Symbol"
+      >)</a
+      ><a name="1332"
+      >
+        </a
+      ><a name="1341" class="Symbol"
+      >(</a
+      ><a name="1342" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1345"
+      > </a
+      ><a name="1346" class="Symbol"
+      >(</a
+      ><a name="1347" href="cohomology.Theory.html#3601" class="Function"
+      >C-emap</a
+      ><a name="1353"
+      > </a
+      ><a name="1354" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1355"
+      > </a
+      ><a name="1356" href="homotopy.WedgeCofiber.html#1385" class="Function"
+      >CofWinl.&#8857;eq</a
+      ><a name="1367" class="Symbol"
+      >))</a
+      ><a name="1369"
+      >
+        </a
+      ><a name="1378" class="Symbol"
+      >(</a
+      ><a name="1379" href="cohomology.Theory.html#3776" class="Function"
+      >C-isemap</a
+      ><a name="1387"
+      > </a
+      ><a name="1388" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1389"
+      > </a
+      ><a name="1390" class="Symbol"
+      >(</a
+      ><a name="1391" href="lib.Base.html#10041" class="Function"
+      >&#8857;idf</a
+      ><a name="1395"
+      > </a
+      ><a name="1396" class="Symbol"
+      >_)</a
+      ><a name="1398"
+      > </a
+      ><a name="1399" class="Symbol"
+      >(</a
+      ><a name="1400" href="lib.Equivalence.html#5614" class="Function"
+      >idf-is-equiv</a
+      ><a name="1412"
+      > </a
+      ><a name="1413" class="Symbol"
+      >_))</a
+      ><a name="1416"
+      >
+        </a
+      ><a name="1425" class="Symbol"
+      >(</a
+      ><a name="1426" href="cohomology.Theory.html#3776" class="Function"
+      >C-isemap</a
+      ><a name="1434"
+      > </a
+      ><a name="1435" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" class="Symbol"
+      >(</a
+      ><a name="1438" href="lib.Base.html#10041" class="Function"
+      >&#8857;idf</a
+      ><a name="1442"
+      > </a
+      ><a name="1443" class="Symbol"
+      >_)</a
+      ><a name="1445"
+      > </a
+      ><a name="1446" class="Symbol"
+      >(</a
+      ><a name="1447" href="lib.Equivalence.html#5614" class="Function"
+      >idf-is-equiv</a
+      ><a name="1459"
+      > </a
+      ><a name="1460" class="Symbol"
+      >_))</a
+      ><a name="1463"
+      >
+        </a
+      ><a name="1472" class="Symbol"
+      >(</a
+      ><a name="1473" href="cohomology.Theory.html#1744" class="Function"
+      >C-exact</a
+      ><a name="1480"
+      > </a
+      ><a name="1481" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1482"
+      > </a
+      ><a name="1483" href="lib.types.Wedge.html#1019" class="Function"
+      >&#8857;winl</a
+      ><a name="1488" class="Symbol"
+      >)</a
+      ><a name="1489"
+      >
+
+      </a
+      ><a name="1497" href="cohomology.Wedge.html#1497" class="Function"
+      >C-projl-C-winr-is-exact</a
+      ><a name="1520"
+      > </a
+      ><a name="1521" class="Symbol"
+      >:</a
+      ><a name="1522"
+      > </a
+      ><a name="1523" href="lib.groups.Homomorphism.html#9329" class="Record"
+      >is-exact</a
+      ><a name="1531"
+      > </a
+      ><a name="1532" class="Symbol"
+      >(</a
+      ><a name="1533" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1539"
+      > </a
+      ><a name="1540" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1541"
+      > </a
+      ><a name="1542" class="Symbol"
+      >(</a
+      ><a name="1543" href="lib.types.Wedge.html#3798" class="Function"
+      >&#8857;projl</a
+      ><a name="1549"
+      > </a
+      ><a name="1550" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="1551"
+      > </a
+      ><a name="1552" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="1553" class="Symbol"
+      >))</a
+      ><a name="1555"
+      > </a
+      ><a name="1556" class="Symbol"
+      >(</a
+      ><a name="1557" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1563"
+      > </a
+      ><a name="1564" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1565"
+      > </a
+      ><a name="1566" href="lib.types.Wedge.html#1065" class="Function"
+      >&#8857;winr</a
+      ><a name="1571" class="Symbol"
+      >)</a
+      ><a name="1572"
+      >
+      </a
+      ><a name="1579" href="cohomology.Wedge.html#1497" class="Function"
+      >C-projl-C-winr-is-exact</a
+      ><a name="1602"
+      > </a
+      ><a name="1603" class="Symbol"
+      >=</a
+      ><a name="1604"
+      > </a
+      ><a name="1605" href="groups.Exactness.html#14448" class="Function"
+      >equiv-preserves'-exact</a
+      ><a name="1627"
+      >
+        </a
+      ><a name="1636" class="Symbol"
+      >(</a
+      ><a name="1637" href="cohomology.PtdMapSequence.html#559" class="Function"
+      >C-comm-square</a
+      ><a name="1650"
+      > </a
+      ><a name="1651" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1652"
+      > </a
+      ><a name="1653" href="homotopy.WedgeCofiber.html#2724" class="Function"
+      >cfcod-winr-projl-comm-sqr</a
+      ><a name="1678" class="Symbol"
+      >)</a
+      ><a name="1679"
+      >
+        </a
+      ><a name="1688" class="Symbol"
+      >(</a
+      ><a name="1689" href="cohomology.PtdMapSequence.html#559" class="Function"
+      >C-comm-square</a
+      ><a name="1702"
+      > </a
+      ><a name="1703" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1704"
+      > </a
+      ><a name="1705" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1706"
+      > </a
+      ><a name="1707" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="1715"
+      > </a
+      ><a name="1716" class="Symbol"
+      >&#955;</a
+      ><a name="1717"
+      > </a
+      ><a name="1718" href="cohomology.Wedge.html#1718" class="Bound"
+      >_</a
+      ><a name="1719"
+      > </a
+      ><a name="1720" class="Symbol"
+      >&#8594;</a
+      ><a name="1721"
+      > </a
+      ><a name="1722" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1725" class="Symbol"
+      >)</a
+      ><a name="1726"
+      >
+        </a
+      ><a name="1735" class="Symbol"
+      >(</a
+      ><a name="1736" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1739"
+      > </a
+      ><a name="1740" class="Symbol"
+      >(</a
+      ><a name="1741" href="cohomology.Theory.html#3601" class="Function"
+      >C-emap</a
+      ><a name="1747"
+      > </a
+      ><a name="1748" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1749"
+      > </a
+      ><a name="1750" href="homotopy.WedgeCofiber.html#2670" class="Function"
+      >CofWinr.&#8857;eq</a
+      ><a name="1761" class="Symbol"
+      >))</a
+      ><a name="1763"
+      >
+        </a
+      ><a name="1772" class="Symbol"
+      >(</a
+      ><a name="1773" href="cohomology.Theory.html#3776" class="Function"
+      >C-isemap</a
+      ><a name="1781"
+      > </a
+      ><a name="1782" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1783"
+      > </a
+      ><a name="1784" class="Symbol"
+      >(</a
+      ><a name="1785" href="lib.Base.html#10041" class="Function"
+      >&#8857;idf</a
+      ><a name="1789"
+      > </a
+      ><a name="1790" class="Symbol"
+      >_)</a
+      ><a name="1792"
+      > </a
+      ><a name="1793" class="Symbol"
+      >(</a
+      ><a name="1794" href="lib.Equivalence.html#5614" class="Function"
+      >idf-is-equiv</a
+      ><a name="1806"
+      > </a
+      ><a name="1807" class="Symbol"
+      >_))</a
+      ><a name="1810"
+      >
+        </a
+      ><a name="1819" class="Symbol"
+      >(</a
+      ><a name="1820" href="cohomology.Theory.html#3776" class="Function"
+      >C-isemap</a
+      ><a name="1828"
+      > </a
+      ><a name="1829" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1830"
+      > </a
+      ><a name="1831" class="Symbol"
+      >(</a
+      ><a name="1832" href="lib.Base.html#10041" class="Function"
+      >&#8857;idf</a
+      ><a name="1836"
+      > </a
+      ><a name="1837" class="Symbol"
+      >_)</a
+      ><a name="1839"
+      > </a
+      ><a name="1840" class="Symbol"
+      >(</a
+      ><a name="1841" href="lib.Equivalence.html#5614" class="Function"
+      >idf-is-equiv</a
+      ><a name="1853"
+      > </a
+      ><a name="1854" class="Symbol"
+      >_))</a
+      ><a name="1857"
+      >
+        </a
+      ><a name="1866" class="Symbol"
+      >(</a
+      ><a name="1867" href="cohomology.Theory.html#1744" class="Function"
+      >C-exact</a
+      ><a name="1874"
+      > </a
+      ><a name="1875" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1876"
+      > </a
+      ><a name="1877" href="lib.types.Wedge.html#1065" class="Function"
+      >&#8857;winr</a
+      ><a name="1882" class="Symbol"
+      >)</a
+      ><a name="1883"
+      >
+
+  </a
+      ><a name="1887" class="Keyword"
+      >import</a
+      ><a name="1893"
+      > </a
+      ><a name="1894" href="groups.ProductRepr.html#1" class="Module"
+      >groups.ProductRepr</a
+      ><a name="1912"
+      >
+    </a
+      ><a name="1917" class="Symbol"
+      >(</a
+      ><a name="1918" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1924"
+      > </a
+      ><a name="1925" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1926"
+      > </a
+      ><a name="1927" class="Symbol"
+      >(</a
+      ><a name="1928" href="lib.types.Wedge.html#3798" class="Function"
+      >&#8857;projl</a
+      ><a name="1934"
+      > </a
+      ><a name="1935" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="1936"
+      > </a
+      ><a name="1937" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="1938" class="Symbol"
+      >))</a
+      ><a name="1940"
+      > </a
+      ><a name="1941" class="Symbol"
+      >(</a
+      ><a name="1942" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1948"
+      > </a
+      ><a name="1949" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1950"
+      > </a
+      ><a name="1951" class="Symbol"
+      >(</a
+      ><a name="1952" href="lib.types.Wedge.html#3818" class="Function"
+      >&#8857;projr</a
+      ><a name="1958"
+      > </a
+      ><a name="1959" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="1960"
+      > </a
+      ><a name="1961" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="1962" class="Symbol"
+      >))</a
+      ><a name="1964"
+      >
+    </a
+      ><a name="1969" class="Symbol"
+      >(</a
+      ><a name="1970" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1976"
+      > </a
+      ><a name="1977" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1978"
+      > </a
+      ><a name="1979" href="lib.types.Wedge.html#1019" class="Function"
+      >&#8857;winl</a
+      ><a name="1984" class="Symbol"
+      >)</a
+      ><a name="1985"
+      > </a
+      ><a name="1986" class="Symbol"
+      >(</a
+      ><a name="1987" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1993"
+      > </a
+      ><a name="1994" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="1995"
+      > </a
+      ><a name="1996" href="lib.types.Wedge.html#1065" class="Function"
+      >&#8857;winr</a
+      ><a name="2001" class="Symbol"
+      >)</a
+      ><a name="2002"
+      > </a
+      ><a name="2003" href="cohomology.Wedge.html#849" class="Function"
+      >&#946;l</a
+      ><a name="2005"
+      > </a
+      ><a name="2006" href="cohomology.Wedge.html#976" class="Function"
+      >&#946;r</a
+      ><a name="2008"
+      >
+    </a
+      ><a name="2013" href="cohomology.Wedge.html#1497" class="Function"
+      >C-projl-C-winr-is-exact</a
+      ><a name="2036"
+      >
+    </a
+      ><a name="2041" href="cohomology.Wedge.html#1103" class="Function"
+      >C-projr-C-winl-is-exact</a
+      ><a name="2064"
+      > </a
+      ><a name="2065" class="Symbol"
+      >as</a
+      ><a name="2067"
+      > </a
+      ><a name="2068" href="cohomology.Wedge.html#2068" class="Module"
+      >PR</a
+      ><a name="2070"
+      >
+
+  </a
+      ><a name="2074" href="cohomology.Wedge.html#2074" class="Function"
+      >C-Wedge</a
+      ><a name="2081"
+      > </a
+      ><a name="2082" class="Symbol"
+      >:</a
+      ><a name="2083"
+      > </a
+      ><a name="2084" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2085"
+      > </a
+      ><a name="2086" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="2087"
+      > </a
+      ><a name="2088" class="Symbol"
+      >(</a
+      ><a name="2089" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="2090"
+      > </a
+      ><a name="2091" href="lib.types.Wedge.html#956" class="Function Operator"
+      >&#8857;&#8744;</a
+      ><a name="2093"
+      > </a
+      ><a name="2094" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="2095" class="Symbol"
+      >)</a
+      ><a name="2096"
+      > </a
+      ><a name="2097" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="2099"
+      > </a
+      ><a name="2100" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2101"
+      > </a
+      ><a name="2102" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="2103"
+      > </a
+      ><a name="2104" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="2105"
+      > </a
+      ><a name="2106" href="lib.groups.GroupProduct.html#1359" class="Function Operator"
+      >&#215;&#7475;</a
+      ><a name="2108"
+      > </a
+      ><a name="2109" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2110"
+      > </a
+      ><a name="2111" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="2112"
+      > </a
+      ><a name="2113" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="2114"
+      >
+  </a
+      ><a name="2117" href="cohomology.Wedge.html#2074" class="Function"
+      >C-Wedge</a
+      ><a name="2124"
+      > </a
+      ><a name="2125" class="Symbol"
+      >=</a
+      ><a name="2126"
+      > </a
+      ><a name="2127" href="groups.ProductRepr.html#1789" class="Function"
+      >PR.iso</a
+      ><a name="2133"
+      >
+
+  </a
+      ><a name="2137" href="cohomology.Wedge.html#2137" class="Function"
+      >C-projl-inl-comm-sqr</a
+      ><a name="2157"
+      > </a
+      ><a name="2158" class="Symbol"
+      >:</a
+      ><a name="2159"
+      > </a
+      ><a name="2160" href="lib.groups.CommutingSquare.html#289" class="Record"
+      >CommSquare&#7475;</a
+      ><a name="2171"
+      > </a
+      ><a name="2172" class="Symbol"
+      >(</a
+      ><a name="2173" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="2179"
+      > </a
+      ><a name="2180" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="2181"
+      > </a
+      ><a name="2182" class="Symbol"
+      >(</a
+      ><a name="2183" href="lib.types.Wedge.html#3798" class="Function"
+      >&#8857;projl</a
+      ><a name="2189"
+      > </a
+      ><a name="2190" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="2191"
+      > </a
+      ><a name="2192" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="2193" class="Symbol"
+      >))</a
+      ><a name="2195"
+      >
+    </a
+      ><a name="2200" href="lib.groups.GroupProduct.html#4091" class="Function"
+      >&#215;&#7475;-inl</a
+      ><a name="2206"
+      > </a
+      ><a name="2207" class="Symbol"
+      >(</a
+      ><a name="2208" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="2213"
+      > </a
+      ><a name="2214" class="Symbol"
+      >_)</a
+      ><a name="2216"
+      > </a
+      ><a name="2217" class="Symbol"
+      >(</a
+      ><a name="2218" href="lib.groups.Isomorphism.html#3543" class="Function"
+      >&#8211;&gt;&#7475;</a
+      ><a name="2221"
+      > </a
+      ><a name="2222" href="cohomology.Wedge.html#2074" class="Function"
+      >C-Wedge</a
+      ><a name="2229" class="Symbol"
+      >)</a
+      ><a name="2230"
+      >
+  </a
+      ><a name="2233" href="cohomology.Wedge.html#2137" class="Function"
+      >C-projl-inl-comm-sqr</a
+      ><a name="2253"
+      > </a
+      ><a name="2254" class="Symbol"
+      >=</a
+      ><a name="2255"
+      > </a
+      ><a name="2256" href="groups.ProductRepr.html#2255" class="Function"
+      >PR.i&#8321;-inl-comm-sqr</a
+      ><a name="2274"
+      >
+
+  </a
+      ><a name="2278" href="cohomology.Wedge.html#2278" class="Function"
+      >C-projr-inr-comm-sqr</a
+      ><a name="2298"
+      > </a
+      ><a name="2299" class="Symbol"
+      >:</a
+      ><a name="2300"
+      > </a
+      ><a name="2301" href="lib.groups.CommutingSquare.html#289" class="Record"
+      >CommSquare&#7475;</a
+      ><a name="2312"
+      > </a
+      ><a name="2313" class="Symbol"
+      >(</a
+      ><a name="2314" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="2320"
+      > </a
+      ><a name="2321" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="2322"
+      > </a
+      ><a name="2323" class="Symbol"
+      >(</a
+      ><a name="2324" href="lib.types.Wedge.html#3818" class="Function"
+      >&#8857;projr</a
+      ><a name="2330"
+      > </a
+      ><a name="2331" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="2332"
+      > </a
+      ><a name="2333" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="2334" class="Symbol"
+      >))</a
+      ><a name="2336"
+      >
+    </a
+      ><a name="2341" href="lib.groups.GroupProduct.html#4154" class="Function"
+      >&#215;&#7475;-inr</a
+      ><a name="2347"
+      > </a
+      ><a name="2348" class="Symbol"
+      >(</a
+      ><a name="2349" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="2354"
+      > </a
+      ><a name="2355" class="Symbol"
+      >_)</a
+      ><a name="2357"
+      > </a
+      ><a name="2358" class="Symbol"
+      >(</a
+      ><a name="2359" href="lib.groups.Isomorphism.html#3543" class="Function"
+      >&#8211;&gt;&#7475;</a
+      ><a name="2362"
+      > </a
+      ><a name="2363" href="cohomology.Wedge.html#2074" class="Function"
+      >C-Wedge</a
+      ><a name="2370" class="Symbol"
+      >)</a
+      ><a name="2371"
+      >
+  </a
+      ><a name="2374" href="cohomology.Wedge.html#2278" class="Function"
+      >C-projr-inr-comm-sqr</a
+      ><a name="2394"
+      > </a
+      ><a name="2395" class="Symbol"
+      >=</a
+      ><a name="2396"
+      > </a
+      ><a name="2397" href="groups.ProductRepr.html#2412" class="Function"
+      >PR.i&#8322;-inr-comm-sqr</a
+      ><a name="2415"
+      >
+
+  </a
+      ><a name="2419" class="Keyword"
+      >abstract</a
+      ><a name="2427"
+      >
+    </a
+      ><a name="2432" href="cohomology.Wedge.html#2432" class="Function"
+      >C-Wedge-rec-comm-sqr</a
+      ><a name="2452"
+      > </a
+      ><a name="2453" class="Symbol"
+      >:</a
+      ><a name="2454"
+      > </a
+      ><a name="2455" class="Symbol"
+      >&#8704;</a
+      ><a name="2456"
+      > </a
+      ><a name="2457" class="Symbol"
+      >{</a
+      ><a name="2458" href="cohomology.Wedge.html#2458" class="Bound"
+      >Z</a
+      ><a name="2459"
+      > </a
+      ><a name="2460" class="Symbol"
+      >:</a
+      ><a name="2461"
+      > </a
+      ><a name="2462" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2465"
+      > </a
+      ><a name="2466" href="cohomology.Wedge.html#648" class="Bound"
+      >i</a
+      ><a name="2467" class="Symbol"
+      >}</a
+      ><a name="2468"
+      > </a
+      ><a name="2469" class="Symbol"
+      >(</a
+      ><a name="2470" href="cohomology.Wedge.html#2470" class="Bound"
+      >winl*</a
+      ><a name="2475"
+      > </a
+      ><a name="2476" class="Symbol"
+      >:</a
+      ><a name="2477"
+      > </a
+      ><a name="2478" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="2479"
+      > </a
+      ><a name="2480" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="2482"
+      > </a
+      ><a name="2483" href="cohomology.Wedge.html#2458" class="Bound"
+      >Z</a
+      ><a name="2484" class="Symbol"
+      >)</a
+      ><a name="2485"
+      > </a
+      ><a name="2486" class="Symbol"
+      >(</a
+      ><a name="2487" href="cohomology.Wedge.html#2487" class="Bound"
+      >winr*</a
+      ><a name="2492"
+      > </a
+      ><a name="2493" class="Symbol"
+      >:</a
+      ><a name="2494"
+      > </a
+      ><a name="2495" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="2496"
+      > </a
+      ><a name="2497" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="2499"
+      > </a
+      ><a name="2500" href="cohomology.Wedge.html#2458" class="Bound"
+      >Z</a
+      ><a name="2501" class="Symbol"
+      >)</a
+      ><a name="2502"
+      >
+      </a
+      ><a name="2509" class="Symbol"
+      >&#8594;</a
+      ><a name="2510"
+      > </a
+      ><a name="2511" href="lib.groups.CommutingSquare.html#289" class="Record"
+      >CommSquare&#7475;</a
+      ><a name="2522"
+      >
+          </a
+      ><a name="2533" class="Symbol"
+      >(</a
+      ><a name="2534" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="2540"
+      > </a
+      ><a name="2541" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="2542"
+      > </a
+      ><a name="2543" class="Symbol"
+      >(</a
+      ><a name="2544" href="lib.types.Wedge.html#2336" class="Function"
+      >&#8857;Wedge-rec</a
+      ><a name="2554"
+      > </a
+      ><a name="2555" href="cohomology.Wedge.html#2470" class="Bound"
+      >winl*</a
+      ><a name="2560"
+      > </a
+      ><a name="2561" href="cohomology.Wedge.html#2487" class="Bound"
+      >winr*</a
+      ><a name="2566" class="Symbol"
+      >))</a
+      ><a name="2568"
+      >
+          </a
+      ><a name="2579" class="Symbol"
+      >(</a
+      ><a name="2580" href="lib.groups.GroupProduct.html#3062" class="Function"
+      >&#215;&#7475;-fanout</a
+      ><a name="2589"
+      > </a
+      ><a name="2590" class="Symbol"
+      >(</a
+      ><a name="2591" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="2597"
+      > </a
+      ><a name="2598" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="2599"
+      > </a
+      ><a name="2600" href="cohomology.Wedge.html#2470" class="Bound"
+      >winl*</a
+      ><a name="2605" class="Symbol"
+      >)</a
+      ><a name="2606"
+      > </a
+      ><a name="2607" class="Symbol"
+      >(</a
+      ><a name="2608" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="2614"
+      > </a
+      ><a name="2615" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="2616"
+      > </a
+      ><a name="2617" href="cohomology.Wedge.html#2487" class="Bound"
+      >winr*</a
+      ><a name="2622" class="Symbol"
+      >))</a
+      ><a name="2624"
+      >
+          </a
+      ><a name="2635" class="Symbol"
+      >(</a
+      ><a name="2636" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="2641"
+      > </a
+      ><a name="2642" class="Symbol"
+      >_)</a
+      ><a name="2644"
+      > </a
+      ><a name="2645" class="Symbol"
+      >(</a
+      ><a name="2646" href="lib.groups.Isomorphism.html#3543" class="Function"
+      >&#8211;&gt;&#7475;</a
+      ><a name="2649"
+      > </a
+      ><a name="2650" href="cohomology.Wedge.html#2074" class="Function"
+      >C-Wedge</a
+      ><a name="2657" class="Symbol"
+      >)</a
+      ><a name="2658"
+      >
+    </a
+      ><a name="2663" href="cohomology.Wedge.html#2432" class="Function"
+      >C-Wedge-rec-comm-sqr</a
+      ><a name="2683"
+      > </a
+      ><a name="2684" href="cohomology.Wedge.html#2684" class="Bound"
+      >winl*</a
+      ><a name="2689"
+      > </a
+      ><a name="2690" href="cohomology.Wedge.html#2690" class="Bound"
+      >winr*</a
+      ><a name="2695"
+      > </a
+      ><a name="2696" class="Symbol"
+      >=</a
+      ><a name="2697"
+      > </a
+      ><a name="2698" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="2707"
+      > </a
+      ><a name="2708" class="Symbol"
+      >&#955;</a
+      ><a name="2709"
+      > </a
+      ><a name="2710" href="cohomology.Wedge.html#2710" class="Bound"
+      >z</a
+      ><a name="2711"
+      > </a
+      ><a name="2712" class="Symbol"
+      >&#8594;</a
+      ><a name="2713"
+      > </a
+      ><a name="2714" href="lib.Base.html#5559" class="Function"
+      >pair&#215;=</a
+      ><a name="2720"
+      >
+      </a
+      ><a name="2727" class="Symbol"
+      >(</a
+      ><a name="2728"
+      > </a
+      ><a name="2729" href="cohomology.Theory.html#2894" class="Function"
+      >&#8728;-CEl-fmap</a
+      ><a name="2739"
+      > </a
+      ><a name="2740" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="2741"
+      > </a
+      ><a name="2742" href="lib.types.Wedge.html#1019" class="Function"
+      >&#8857;winl</a
+      ><a name="2747"
+      > </a
+      ><a name="2748" class="Symbol"
+      >(</a
+      ><a name="2749" href="lib.types.Wedge.html#2336" class="Function"
+      >&#8857;Wedge-rec</a
+      ><a name="2759"
+      > </a
+      ><a name="2760" href="cohomology.Wedge.html#2684" class="Bound"
+      >winl*</a
+      ><a name="2765"
+      > </a
+      ><a name="2766" href="cohomology.Wedge.html#2690" class="Bound"
+      >winr*</a
+      ><a name="2771" class="Symbol"
+      >)</a
+      ><a name="2772"
+      > </a
+      ><a name="2773" href="cohomology.Wedge.html#2710" class="Bound"
+      >z</a
+      ><a name="2774"
+      >
+      </a
+      ><a name="2781" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2782"
+      > </a
+      ><a name="2783" href="cohomology.Theory.html#5003" class="Function"
+      >CEl-fmap-base-indep</a
+      ><a name="2802"
+      > </a
+      ><a name="2803" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="2804"
+      > </a
+      ><a name="2805" class="Symbol"
+      >(&#955;</a
+      ><a name="2807"
+      > </a
+      ><a name="2808" href="cohomology.Wedge.html#2808" class="Bound"
+      >_</a
+      ><a name="2809"
+      > </a
+      ><a name="2810" class="Symbol"
+      >&#8594;</a
+      ><a name="2811"
+      > </a
+      ><a name="2812" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2815" class="Symbol"
+      >)</a
+      ><a name="2816"
+      > </a
+      ><a name="2817" href="cohomology.Wedge.html#2710" class="Bound"
+      >z</a
+      ><a name="2818" class="Symbol"
+      >)</a
+      ><a name="2819"
+      >
+      </a
+      ><a name="2826" class="Symbol"
+      >(</a
+      ><a name="2827"
+      > </a
+      ><a name="2828" href="cohomology.Theory.html#2894" class="Function"
+      >&#8728;-CEl-fmap</a
+      ><a name="2838"
+      > </a
+      ><a name="2839" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="2840"
+      > </a
+      ><a name="2841" href="lib.types.Wedge.html#1065" class="Function"
+      >&#8857;winr</a
+      ><a name="2846"
+      > </a
+      ><a name="2847" class="Symbol"
+      >(</a
+      ><a name="2848" href="lib.types.Wedge.html#2336" class="Function"
+      >&#8857;Wedge-rec</a
+      ><a name="2858"
+      > </a
+      ><a name="2859" href="cohomology.Wedge.html#2684" class="Bound"
+      >winl*</a
+      ><a name="2864"
+      > </a
+      ><a name="2865" href="cohomology.Wedge.html#2690" class="Bound"
+      >winr*</a
+      ><a name="2870" class="Symbol"
+      >)</a
+      ><a name="2871"
+      > </a
+      ><a name="2872" href="cohomology.Wedge.html#2710" class="Bound"
+      >z</a
+      ><a name="2873"
+      >
+      </a
+      ><a name="2880" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2881"
+      > </a
+      ><a name="2882" href="cohomology.Theory.html#5003" class="Function"
+      >CEl-fmap-base-indep</a
+      ><a name="2901"
+      > </a
+      ><a name="2902" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="2903"
+      > </a
+      ><a name="2904" class="Symbol"
+      >(&#955;</a
+      ><a name="2906"
+      > </a
+      ><a name="2907" href="cohomology.Wedge.html#2907" class="Bound"
+      >_</a
+      ><a name="2908"
+      > </a
+      ><a name="2909" class="Symbol"
+      >&#8594;</a
+      ><a name="2910"
+      > </a
+      ><a name="2911" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2914" class="Symbol"
+      >)</a
+      ><a name="2915"
+      > </a
+      ><a name="2916" href="cohomology.Wedge.html#2710" class="Bound"
+      >z</a
+      ><a name="2917" class="Symbol"
+      >)</a
+      ><a name="2918"
+      >
+
+    </a
+      ><a name="2924" href="cohomology.Wedge.html#2924" class="Function"
+      >C-Wedge-rec-comm-sqr'</a
+      ><a name="2945"
+      > </a
+      ><a name="2946" class="Symbol"
+      >:</a
+      ><a name="2947"
+      > </a
+      ><a name="2948" class="Symbol"
+      >&#8704;</a
+      ><a name="2949"
+      > </a
+      ><a name="2950" class="Symbol"
+      >{</a
+      ><a name="2951" href="cohomology.Wedge.html#2951" class="Bound"
+      >Z</a
+      ><a name="2952"
+      > </a
+      ><a name="2953" class="Symbol"
+      >:</a
+      ><a name="2954"
+      > </a
+      ><a name="2955" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2958"
+      > </a
+      ><a name="2959" href="cohomology.Wedge.html#648" class="Bound"
+      >i</a
+      ><a name="2960" class="Symbol"
+      >}</a
+      ><a name="2961"
+      > </a
+      ><a name="2962" class="Symbol"
+      >(</a
+      ><a name="2963" href="cohomology.Wedge.html#2963" class="Bound"
+      >winl*</a
+      ><a name="2968"
+      > </a
+      ><a name="2969" class="Symbol"
+      >:</a
+      ><a name="2970"
+      > </a
+      ><a name="2971" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="2972"
+      > </a
+      ><a name="2973" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="2975"
+      > </a
+      ><a name="2976" href="cohomology.Wedge.html#2951" class="Bound"
+      >Z</a
+      ><a name="2977" class="Symbol"
+      >)</a
+      ><a name="2978"
+      > </a
+      ><a name="2979" class="Symbol"
+      >(</a
+      ><a name="2980" href="cohomology.Wedge.html#2980" class="Bound"
+      >winr*</a
+      ><a name="2985"
+      > </a
+      ><a name="2986" class="Symbol"
+      >:</a
+      ><a name="2987"
+      > </a
+      ><a name="2988" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="2989"
+      > </a
+      ><a name="2990" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="2992"
+      > </a
+      ><a name="2993" href="cohomology.Wedge.html#2951" class="Bound"
+      >Z</a
+      ><a name="2994" class="Symbol"
+      >)</a
+      ><a name="2995"
+      >
+      </a
+      ><a name="3002" class="Symbol"
+      >&#8594;</a
+      ><a name="3003"
+      > </a
+      ><a name="3004" href="lib.groups.CommutingSquare.html#289" class="Record"
+      >CommSquare&#7475;</a
+      ><a name="3015"
+      >
+          </a
+      ><a name="3026" class="Symbol"
+      >(</a
+      ><a name="3027" href="lib.groups.GroupProduct.html#3062" class="Function"
+      >&#215;&#7475;-fanout</a
+      ><a name="3036"
+      > </a
+      ><a name="3037" class="Symbol"
+      >(</a
+      ><a name="3038" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="3044"
+      > </a
+      ><a name="3045" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="3046"
+      > </a
+      ><a name="3047" href="cohomology.Wedge.html#2963" class="Bound"
+      >winl*</a
+      ><a name="3052" class="Symbol"
+      >)</a
+      ><a name="3053"
+      > </a
+      ><a name="3054" class="Symbol"
+      >(</a
+      ><a name="3055" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="3061"
+      > </a
+      ><a name="3062" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="3063"
+      > </a
+      ><a name="3064" href="cohomology.Wedge.html#2980" class="Bound"
+      >winr*</a
+      ><a name="3069" class="Symbol"
+      >))</a
+      ><a name="3071"
+      >
+          </a
+      ><a name="3082" class="Symbol"
+      >(</a
+      ><a name="3083" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="3089"
+      > </a
+      ><a name="3090" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="3091"
+      > </a
+      ><a name="3092" class="Symbol"
+      >(</a
+      ><a name="3093" href="lib.types.Wedge.html#2336" class="Function"
+      >&#8857;Wedge-rec</a
+      ><a name="3103"
+      > </a
+      ><a name="3104" href="cohomology.Wedge.html#2963" class="Bound"
+      >winl*</a
+      ><a name="3109"
+      > </a
+      ><a name="3110" href="cohomology.Wedge.html#2980" class="Bound"
+      >winr*</a
+      ><a name="3115" class="Symbol"
+      >))</a
+      ><a name="3117"
+      >
+          </a
+      ><a name="3128" class="Symbol"
+      >(</a
+      ><a name="3129" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="3134"
+      > </a
+      ><a name="3135" class="Symbol"
+      >_)</a
+      ><a name="3137"
+      > </a
+      ><a name="3138" class="Symbol"
+      >(</a
+      ><a name="3139" href="lib.groups.Isomorphism.html#3629" class="Function"
+      >&lt;&#8211;&#7475;</a
+      ><a name="3142"
+      > </a
+      ><a name="3143" href="cohomology.Wedge.html#2074" class="Function"
+      >C-Wedge</a
+      ><a name="3150" class="Symbol"
+      >)</a
+      ><a name="3151"
+      >
+    </a
+      ><a name="3156" href="cohomology.Wedge.html#2924" class="Function"
+      >C-Wedge-rec-comm-sqr'</a
+      ><a name="3177"
+      > </a
+      ><a name="3178" href="cohomology.Wedge.html#3178" class="Bound"
+      >winl*</a
+      ><a name="3183"
+      > </a
+      ><a name="3184" href="cohomology.Wedge.html#3184" class="Bound"
+      >winr*</a
+      ><a name="3189"
+      > </a
+      ><a name="3190" class="Symbol"
+      >=</a
+      ><a name="3191"
+      > </a
+      ><a name="3192" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="3201"
+      > </a
+      ><a name="3202" class="Symbol"
+      >&#955;</a
+      ><a name="3203"
+      > </a
+      ><a name="3204" href="cohomology.Wedge.html#3204" class="Bound"
+      >z</a
+      ><a name="3205"
+      > </a
+      ><a name="3206" class="Symbol"
+      >&#8594;</a
+      ><a name="3207"
+      >
+      </a
+      ><a name="3214" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3215"
+      > </a
+      ><a name="3216" class="Symbol"
+      >(</a
+      ><a name="3217" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3219"
+      > </a
+      ><a name="3220" class="Symbol"
+      >(</a
+      ><a name="3221" href="lib.Equivalence.html#1668" class="Function"
+      >GroupIso.g</a
+      ><a name="3231"
+      > </a
+      ><a name="3232" href="cohomology.Wedge.html#2074" class="Function"
+      >C-Wedge</a
+      ><a name="3239" class="Symbol"
+      >)</a
+      ><a name="3240"
+      > </a
+      ><a name="3241" class="Symbol"
+      >(</a
+      ><a name="3242" href="cohomology.Wedge.html#2432" class="Function"
+      >C-Wedge-rec-comm-sqr</a
+      ><a name="3262"
+      > </a
+      ><a name="3263" href="cohomology.Wedge.html#3178" class="Bound"
+      >winl*</a
+      ><a name="3268"
+      > </a
+      ><a name="3269" href="cohomology.Wedge.html#3184" class="Bound"
+      >winr*</a
+      ><a name="3274"
+      > </a
+      ><a name="3275" href="lib.groups.CommutingSquare.html#618" class="Function Operator"
+      >&#9633;$&#7475;</a
+      ><a name="3278"
+      > </a
+      ><a name="3279" href="cohomology.Wedge.html#3204" class="Bound"
+      >z</a
+      ><a name="3280" class="Symbol"
+      >))</a
+      ><a name="3282"
+      >
+      </a
+      ><a name="3289" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3290"
+      > </a
+      ><a name="3291" href="lib.Equivalence.html#1719" class="Function"
+      >GroupIso.g-f</a
+      ><a name="3303"
+      > </a
+      ><a name="3304" href="cohomology.Wedge.html#2074" class="Function"
+      >C-Wedge</a
+      ><a name="3311"
+      > </a
+      ><a name="3312" class="Symbol"
+      >(</a
+      ><a name="3313" href="cohomology.Theory.html#718" class="Function"
+      >CEl-fmap</a
+      ><a name="3321"
+      > </a
+      ><a name="3322" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="3323"
+      > </a
+      ><a name="3324" class="Symbol"
+      >(</a
+      ><a name="3325" href="lib.types.Wedge.html#2336" class="Function"
+      >&#8857;Wedge-rec</a
+      ><a name="3335"
+      > </a
+      ><a name="3336" href="cohomology.Wedge.html#3178" class="Bound"
+      >winl*</a
+      ><a name="3341"
+      > </a
+      ><a name="3342" href="cohomology.Wedge.html#3184" class="Bound"
+      >winr*</a
+      ><a name="3347" class="Symbol"
+      >)</a
+      ><a name="3348"
+      > </a
+      ><a name="3349" href="cohomology.Wedge.html#3204" class="Bound"
+      >z</a
+      ><a name="3350" class="Symbol"
+      >)</a
+      ><a name="3351"
+      >
+
+    </a
+      ><a name="3357" href="cohomology.Wedge.html#3357" class="Function"
+      >Wedge-hom-&#951;-comm-sqr</a
+      ><a name="3377"
+      > </a
+      ><a name="3378" class="Symbol"
+      >:</a
+      ><a name="3379"
+      > </a
+      ><a name="3380" class="Symbol"
+      >{</a
+      ><a name="3381" href="cohomology.Wedge.html#3381" class="Bound"
+      >Z</a
+      ><a name="3382"
+      > </a
+      ><a name="3383" class="Symbol"
+      >:</a
+      ><a name="3384"
+      > </a
+      ><a name="3385" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="3388"
+      > </a
+      ><a name="3389" href="cohomology.Wedge.html#648" class="Bound"
+      >i</a
+      ><a name="3390" class="Symbol"
+      >}</a
+      ><a name="3391"
+      > </a
+      ><a name="3392" class="Symbol"
+      >(</a
+      ><a name="3393" href="cohomology.Wedge.html#3393" class="Bound"
+      >&#966;</a
+      ><a name="3394"
+      > </a
+      ><a name="3395" class="Symbol"
+      >:</a
+      ><a name="3396"
+      > </a
+      ><a name="3397" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="3398"
+      > </a
+      ><a name="3399" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="3400"
+      > </a
+      ><a name="3401" class="Symbol"
+      >(</a
+      ><a name="3402" href="lib.types.Wedge.html#873" class="Function"
+      >&#8857;Wedge</a
+      ><a name="3408"
+      > </a
+      ><a name="3409" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="3410"
+      > </a
+      ><a name="3411" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="3412" class="Symbol"
+      >)</a
+      ><a name="3413"
+      > </a
+      ><a name="3414" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="3416"
+      > </a
+      ><a name="3417" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="3418"
+      > </a
+      ><a name="3419" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="3420"
+      > </a
+      ><a name="3421" href="cohomology.Wedge.html#3381" class="Bound"
+      >Z</a
+      ><a name="3422" class="Symbol"
+      >)</a
+      ><a name="3423"
+      >
+      </a
+      ><a name="3430" class="Symbol"
+      >&#8594;</a
+      ><a name="3431"
+      > </a
+      ><a name="3432" href="lib.groups.CommutingSquare.html#289" class="Record"
+      >CommSquare&#7475;</a
+      ><a name="3443"
+      > </a
+      ><a name="3444" href="cohomology.Wedge.html#3393" class="Bound"
+      >&#966;</a
+      ><a name="3445"
+      >
+          </a
+      ><a name="3456" class="Symbol"
+      >(</a
+      ><a name="3457" href="lib.groups.GroupProduct.html#5325" class="Function"
+      >&#215;&#7475;-fanin</a
+      ><a name="3465"
+      > </a
+      ><a name="3466" class="Symbol"
+      >(</a
+      ><a name="3467" href="cohomology.Theory.html#281" class="Function"
+      >C-is-abelian</a
+      ><a name="3479"
+      > </a
+      ><a name="3480" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="3481"
+      > </a
+      ><a name="3482" class="Symbol"
+      >_)</a
+      ><a name="3484"
+      > </a
+      ><a name="3485" class="Symbol"
+      >(</a
+      ><a name="3486" href="cohomology.Wedge.html#3393" class="Bound"
+      >&#966;</a
+      ><a name="3487"
+      > </a
+      ><a name="3488" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="3490"
+      > </a
+      ><a name="3491" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="3497"
+      > </a
+      ><a name="3498" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="3499"
+      > </a
+      ><a name="3500" class="Symbol"
+      >(</a
+      ><a name="3501" href="lib.types.Wedge.html#3798" class="Function"
+      >&#8857;projl</a
+      ><a name="3507"
+      > </a
+      ><a name="3508" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="3509"
+      > </a
+      ><a name="3510" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="3511" class="Symbol"
+      >))</a
+      ><a name="3513"
+      >
+                                       </a
+      ><a name="3553" class="Symbol"
+      >(</a
+      ><a name="3554" href="cohomology.Wedge.html#3393" class="Bound"
+      >&#966;</a
+      ><a name="3555"
+      > </a
+      ><a name="3556" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="3558"
+      > </a
+      ><a name="3559" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="3565"
+      > </a
+      ><a name="3566" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="3567"
+      > </a
+      ><a name="3568" class="Symbol"
+      >(</a
+      ><a name="3569" href="lib.types.Wedge.html#3818" class="Function"
+      >&#8857;projr</a
+      ><a name="3575"
+      > </a
+      ><a name="3576" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="3577"
+      > </a
+      ><a name="3578" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="3579" class="Symbol"
+      >)))</a
+      ><a name="3582"
+      >
+          </a
+      ><a name="3593" class="Symbol"
+      >(</a
+      ><a name="3594" href="lib.groups.Isomorphism.html#3543" class="Function"
+      >&#8211;&gt;&#7475;</a
+      ><a name="3597"
+      > </a
+      ><a name="3598" href="cohomology.Wedge.html#2074" class="Function"
+      >C-Wedge</a
+      ><a name="3605" class="Symbol"
+      >)</a
+      ><a name="3606"
+      > </a
+      ><a name="3607" class="Symbol"
+      >(</a
+      ><a name="3608" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="3613"
+      > </a
+      ><a name="3614" class="Symbol"
+      >_)</a
+      ><a name="3616"
+      >
+    </a
+      ><a name="3621" href="cohomology.Wedge.html#3357" class="Function"
+      >Wedge-hom-&#951;-comm-sqr</a
+      ><a name="3641"
+      > </a
+      ><a name="3642" href="cohomology.Wedge.html#3642" class="Bound"
+      >&#966;</a
+      ><a name="3643"
+      > </a
+      ><a name="3644" class="Symbol"
+      >=</a
+      ><a name="3645"
+      > </a
+      ><a name="3646" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="3655"
+      > </a
+      ><a name="3656" class="Symbol"
+      >&#955;</a
+      ><a name="3657"
+      > </a
+      ><a name="3658" href="cohomology.Wedge.html#3658" class="Bound"
+      >x&#8744;y</a
+      ><a name="3661"
+      > </a
+      ><a name="3662" class="Symbol"
+      >&#8594;</a
+      ><a name="3663"
+      >
+        </a
+      ><a name="3672" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3674"
+      > </a
+      ><a name="3675" class="Symbol"
+      >(</a
+      ><a name="3676" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="3686"
+      > </a
+      ><a name="3687" href="cohomology.Wedge.html#3642" class="Bound"
+      >&#966;</a
+      ><a name="3688" class="Symbol"
+      >)</a
+      ><a name="3689"
+      > </a
+      ><a name="3690" class="Symbol"
+      >(</a
+      ><a name="3691" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3692"
+      > </a
+      ><a name="3693" class="Symbol"
+      >(</a
+      ><a name="3694" href="lib.Equivalence.html#1719" class="Function"
+      >GroupIso.g-f</a
+      ><a name="3706"
+      > </a
+      ><a name="3707" href="cohomology.Wedge.html#2074" class="Function"
+      >C-Wedge</a
+      ><a name="3714"
+      > </a
+      ><a name="3715" href="cohomology.Wedge.html#3658" class="Bound"
+      >x&#8744;y</a
+      ><a name="3718" class="Symbol"
+      >))</a
+      ><a name="3720"
+      >
+      </a
+      ><a name="3727" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3728"
+      > </a
+      ><a name="3729" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3730"
+      > </a
+      ><a name="3731" class="Symbol"
+      >(</a
+      ><a name="3732" href="lib.groups.GroupProduct.html#6451" class="Function"
+      >&#215;&#7475;-fanin-pre&#8728;</a
+      ><a name="3745"
+      > </a
+      ><a name="3746" class="Symbol"
+      >(</a
+      ><a name="3747" href="cohomology.Theory.html#281" class="Function"
+      >C-is-abelian</a
+      ><a name="3759"
+      > </a
+      ><a name="3760" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="3761"
+      > </a
+      ><a name="3762" class="Symbol"
+      >_)</a
+      ><a name="3764"
+      > </a
+      ><a name="3765" class="Symbol"
+      >(</a
+      ><a name="3766" href="cohomology.Theory.html#281" class="Function"
+      >C-is-abelian</a
+      ><a name="3778"
+      > </a
+      ><a name="3779" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="3780"
+      > </a
+      ><a name="3781" class="Symbol"
+      >_)</a
+      ><a name="3783"
+      >
+             </a
+      ><a name="3797" href="cohomology.Wedge.html#3642" class="Bound"
+      >&#966;</a
+      ><a name="3798"
+      > </a
+      ><a name="3799" class="Symbol"
+      >(</a
+      ><a name="3800" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="3806"
+      > </a
+      ><a name="3807" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="3808"
+      > </a
+      ><a name="3809" class="Symbol"
+      >(</a
+      ><a name="3810" href="lib.types.Wedge.html#3798" class="Function"
+      >&#8857;projl</a
+      ><a name="3816"
+      > </a
+      ><a name="3817" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="3818"
+      > </a
+      ><a name="3819" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="3820" class="Symbol"
+      >))</a
+      ><a name="3822"
+      > </a
+      ><a name="3823" class="Symbol"
+      >(</a
+      ><a name="3824" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="3830"
+      > </a
+      ><a name="3831" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="3832"
+      > </a
+      ><a name="3833" class="Symbol"
+      >(</a
+      ><a name="3834" href="lib.types.Wedge.html#3818" class="Function"
+      >&#8857;projr</a
+      ><a name="3840"
+      > </a
+      ><a name="3841" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="3842"
+      > </a
+      ><a name="3843" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="3844" class="Symbol"
+      >))</a
+      ><a name="3846"
+      > </a
+      ><a name="3847" class="Symbol"
+      >_)</a
+      ><a name="3849"
+      >
+
+    </a
+      ><a name="3855" href="cohomology.Wedge.html#3855" class="Function"
+      >Wedge-hom-&#951;-comm-sqr'</a
+      ><a name="3876"
+      > </a
+      ><a name="3877" class="Symbol"
+      >:</a
+      ><a name="3878"
+      > </a
+      ><a name="3879" class="Symbol"
+      >{</a
+      ><a name="3880" href="cohomology.Wedge.html#3880" class="Bound"
+      >Z</a
+      ><a name="3881"
+      > </a
+      ><a name="3882" class="Symbol"
+      >:</a
+      ><a name="3883"
+      > </a
+      ><a name="3884" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="3887"
+      > </a
+      ><a name="3888" href="cohomology.Wedge.html#648" class="Bound"
+      >i</a
+      ><a name="3889" class="Symbol"
+      >}</a
+      ><a name="3890"
+      > </a
+      ><a name="3891" class="Symbol"
+      >(</a
+      ><a name="3892" href="cohomology.Wedge.html#3892" class="Bound"
+      >&#966;</a
+      ><a name="3893"
+      > </a
+      ><a name="3894" class="Symbol"
+      >:</a
+      ><a name="3895"
+      > </a
+      ><a name="3896" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="3897"
+      > </a
+      ><a name="3898" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="3899"
+      > </a
+      ><a name="3900" class="Symbol"
+      >(</a
+      ><a name="3901" href="lib.types.Wedge.html#873" class="Function"
+      >&#8857;Wedge</a
+      ><a name="3907"
+      > </a
+      ><a name="3908" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="3909"
+      > </a
+      ><a name="3910" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="3911" class="Symbol"
+      >)</a
+      ><a name="3912"
+      > </a
+      ><a name="3913" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="3915"
+      > </a
+      ><a name="3916" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="3917"
+      > </a
+      ><a name="3918" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="3919"
+      > </a
+      ><a name="3920" href="cohomology.Wedge.html#3880" class="Bound"
+      >Z</a
+      ><a name="3921" class="Symbol"
+      >)</a
+      ><a name="3922"
+      >
+      </a
+      ><a name="3929" class="Symbol"
+      >&#8594;</a
+      ><a name="3930"
+      > </a
+      ><a name="3931" href="lib.groups.CommutingSquare.html#289" class="Record"
+      >CommSquare&#7475;</a
+      ><a name="3942"
+      >
+          </a
+      ><a name="3953" class="Symbol"
+      >(</a
+      ><a name="3954" href="lib.groups.GroupProduct.html#5325" class="Function"
+      >&#215;&#7475;-fanin</a
+      ><a name="3962"
+      > </a
+      ><a name="3963" class="Symbol"
+      >(</a
+      ><a name="3964" href="cohomology.Theory.html#281" class="Function"
+      >C-is-abelian</a
+      ><a name="3976"
+      > </a
+      ><a name="3977" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="3978"
+      > </a
+      ><a name="3979" class="Symbol"
+      >_)</a
+      ><a name="3981"
+      > </a
+      ><a name="3982" class="Symbol"
+      >(</a
+      ><a name="3983" href="cohomology.Wedge.html#3892" class="Bound"
+      >&#966;</a
+      ><a name="3984"
+      > </a
+      ><a name="3985" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="3987"
+      > </a
+      ><a name="3988" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="3994"
+      > </a
+      ><a name="3995" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="3996"
+      > </a
+      ><a name="3997" class="Symbol"
+      >(</a
+      ><a name="3998" href="lib.types.Wedge.html#3798" class="Function"
+      >&#8857;projl</a
+      ><a name="4004"
+      > </a
+      ><a name="4005" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="4006"
+      > </a
+      ><a name="4007" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="4008" class="Symbol"
+      >))</a
+      ><a name="4010"
+      >
+                                       </a
+      ><a name="4050" class="Symbol"
+      >(</a
+      ><a name="4051" href="cohomology.Wedge.html#3892" class="Bound"
+      >&#966;</a
+      ><a name="4052"
+      > </a
+      ><a name="4053" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="4055"
+      > </a
+      ><a name="4056" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="4062"
+      > </a
+      ><a name="4063" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="4064"
+      > </a
+      ><a name="4065" class="Symbol"
+      >(</a
+      ><a name="4066" href="lib.types.Wedge.html#3818" class="Function"
+      >&#8857;projr</a
+      ><a name="4072"
+      > </a
+      ><a name="4073" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="4074"
+      > </a
+      ><a name="4075" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="4076" class="Symbol"
+      >)))</a
+      ><a name="4079"
+      >
+          </a
+      ><a name="4090" href="cohomology.Wedge.html#3892" class="Bound"
+      >&#966;</a
+      ><a name="4091"
+      > </a
+      ><a name="4092" class="Symbol"
+      >(</a
+      ><a name="4093" href="lib.groups.Isomorphism.html#3629" class="Function"
+      >&lt;&#8211;&#7475;</a
+      ><a name="4096"
+      > </a
+      ><a name="4097" href="cohomology.Wedge.html#2074" class="Function"
+      >C-Wedge</a
+      ><a name="4104" class="Symbol"
+      >)</a
+      ><a name="4105"
+      > </a
+      ><a name="4106" class="Symbol"
+      >(</a
+      ><a name="4107" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="4112"
+      > </a
+      ><a name="4113" class="Symbol"
+      >_)</a
+      ><a name="4115"
+      >
+    </a
+      ><a name="4120" href="cohomology.Wedge.html#3855" class="Function"
+      >Wedge-hom-&#951;-comm-sqr'</a
+      ><a name="4141"
+      > </a
+      ><a name="4142" class="Symbol"
+      >{</a
+      ><a name="4143" href="cohomology.Wedge.html#4143" class="Bound"
+      >Z</a
+      ><a name="4144" class="Symbol"
+      >}</a
+      ><a name="4145"
+      > </a
+      ><a name="4146" href="cohomology.Wedge.html#4146" class="Bound"
+      >&#966;</a
+      ><a name="4147"
+      > </a
+      ><a name="4148" class="Symbol"
+      >=</a
+      ><a name="4149"
+      > </a
+      ><a name="4150" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="4159"
+      > </a
+      ><a name="4160" class="Symbol"
+      >&#955;</a
+      ><a name="4161"
+      > </a
+      ><a name="4162" href="cohomology.Wedge.html#4162" class="Bound"
+      >z</a
+      ><a name="4163"
+      > </a
+      ><a name="4164" class="Symbol"
+      >&#8594;</a
+      ><a name="4165"
+      >
+      </a
+      ><a name="4172" href="lib.groups.GroupProduct.html#6451" class="Function"
+      >&#215;&#7475;-fanin-pre&#8728;</a
+      ><a name="4185"
+      > </a
+      ><a name="4186" class="Symbol"
+      >(</a
+      ><a name="4187" href="cohomology.Theory.html#281" class="Function"
+      >C-is-abelian</a
+      ><a name="4199"
+      > </a
+      ><a name="4200" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="4201"
+      > </a
+      ><a name="4202" class="Symbol"
+      >_)</a
+      ><a name="4204"
+      > </a
+      ><a name="4205" class="Symbol"
+      >(</a
+      ><a name="4206" href="cohomology.Theory.html#281" class="Function"
+      >C-is-abelian</a
+      ><a name="4218"
+      > </a
+      ><a name="4219" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="4220"
+      > </a
+      ><a name="4221" class="Symbol"
+      >_)</a
+      ><a name="4223"
+      >
+        </a
+      ><a name="4232" href="cohomology.Wedge.html#4146" class="Bound"
+      >&#966;</a
+      ><a name="4233"
+      > </a
+      ><a name="4234" class="Symbol"
+      >(</a
+      ><a name="4235" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="4241"
+      > </a
+      ><a name="4242" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="4243"
+      > </a
+      ><a name="4244" class="Symbol"
+      >(</a
+      ><a name="4245" href="lib.types.Wedge.html#3798" class="Function"
+      >&#8857;projl</a
+      ><a name="4251"
+      > </a
+      ><a name="4252" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="4253"
+      > </a
+      ><a name="4254" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="4255" class="Symbol"
+      >))</a
+      ><a name="4257"
+      > </a
+      ><a name="4258" class="Symbol"
+      >(</a
+      ><a name="4259" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="4265"
+      > </a
+      ><a name="4266" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="4267"
+      > </a
+      ><a name="4268" class="Symbol"
+      >(</a
+      ><a name="4269" href="lib.types.Wedge.html#3818" class="Function"
+      >&#8857;projr</a
+      ><a name="4275"
+      > </a
+      ><a name="4276" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="4277"
+      > </a
+      ><a name="4278" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="4279" class="Symbol"
+      >))</a
+      ><a name="4281"
+      > </a
+      ><a name="4282" class="Symbol"
+      >_</a
+      ><a name="4283"
+      >
+
+    </a
+      ><a name="4289" href="cohomology.Wedge.html#4289" class="Function"
+      >Wedge-in-comm-sqr</a
+      ><a name="4306"
+      > </a
+      ><a name="4307" class="Symbol"
+      >:</a
+      ><a name="4308"
+      > </a
+      ><a name="4309" class="Symbol"
+      >{</a
+      ><a name="4310" href="cohomology.Wedge.html#4310" class="Bound"
+      >Z</a
+      ><a name="4311"
+      > </a
+      ><a name="4312" class="Symbol"
+      >:</a
+      ><a name="4313"
+      > </a
+      ><a name="4314" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="4317"
+      > </a
+      ><a name="4318" href="cohomology.Wedge.html#648" class="Bound"
+      >i</a
+      ><a name="4319" class="Symbol"
+      >}</a
+      ><a name="4320"
+      > </a
+      ><a name="4321" class="Symbol"
+      >(</a
+      ><a name="4322" href="cohomology.Wedge.html#4322" class="Bound"
+      >f</a
+      ><a name="4323"
+      > </a
+      ><a name="4324" class="Symbol"
+      >:</a
+      ><a name="4325"
+      > </a
+      ><a name="4326" href="cohomology.Wedge.html#4310" class="Bound"
+      >Z</a
+      ><a name="4327"
+      > </a
+      ><a name="4328" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="4330"
+      > </a
+      ><a name="4331" href="lib.types.Wedge.html#873" class="Function"
+      >&#8857;Wedge</a
+      ><a name="4337"
+      > </a
+      ><a name="4338" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="4339"
+      > </a
+      ><a name="4340" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="4341" class="Symbol"
+      >)</a
+      ><a name="4342"
+      >
+      </a
+      ><a name="4349" class="Symbol"
+      >&#8594;</a
+      ><a name="4350"
+      > </a
+      ><a name="4351" href="lib.groups.CommutingSquare.html#289" class="Record"
+      >CommSquare&#7475;</a
+      ><a name="4362"
+      > </a
+      ><a name="4363" class="Symbol"
+      >(</a
+      ><a name="4364" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="4370"
+      > </a
+      ><a name="4371" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="4372"
+      > </a
+      ><a name="4373" href="cohomology.Wedge.html#4322" class="Bound"
+      >f</a
+      ><a name="4374" class="Symbol"
+      >)</a
+      ><a name="4375"
+      >
+          </a
+      ><a name="4386" class="Symbol"
+      >(</a
+      ><a name="4387" href="lib.groups.GroupProduct.html#5325" class="Function"
+      >&#215;&#7475;-fanin</a
+      ><a name="4395"
+      > </a
+      ><a name="4396" class="Symbol"
+      >(</a
+      ><a name="4397" href="cohomology.Theory.html#281" class="Function"
+      >C-is-abelian</a
+      ><a name="4409"
+      > </a
+      ><a name="4410" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="4411"
+      > </a
+      ><a name="4412" class="Symbol"
+      >_)</a
+      ><a name="4414"
+      > </a
+      ><a name="4415" class="Symbol"
+      >(</a
+      ><a name="4416" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="4422"
+      > </a
+      ><a name="4423" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="4424"
+      > </a
+      ><a name="4425" class="Symbol"
+      >(</a
+      ><a name="4426" href="lib.types.Wedge.html#3798" class="Function"
+      >&#8857;projl</a
+      ><a name="4432"
+      > </a
+      ><a name="4433" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="4434"
+      > </a
+      ><a name="4435" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="4436"
+      > </a
+      ><a name="4437" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="4439"
+      > </a
+      ><a name="4440" href="cohomology.Wedge.html#4322" class="Bound"
+      >f</a
+      ><a name="4441" class="Symbol"
+      >))</a
+      ><a name="4443"
+      >
+                                       </a
+      ><a name="4483" class="Symbol"
+      >(</a
+      ><a name="4484" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="4490"
+      > </a
+      ><a name="4491" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="4492"
+      > </a
+      ><a name="4493" class="Symbol"
+      >(</a
+      ><a name="4494" href="lib.types.Wedge.html#3818" class="Function"
+      >&#8857;projr</a
+      ><a name="4500"
+      > </a
+      ><a name="4501" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="4502"
+      > </a
+      ><a name="4503" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="4504"
+      > </a
+      ><a name="4505" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="4507"
+      > </a
+      ><a name="4508" href="cohomology.Wedge.html#4322" class="Bound"
+      >f</a
+      ><a name="4509" class="Symbol"
+      >)))</a
+      ><a name="4512"
+      >
+          </a
+      ><a name="4523" class="Symbol"
+      >(</a
+      ><a name="4524" href="lib.groups.Isomorphism.html#3543" class="Function"
+      >&#8211;&gt;&#7475;</a
+      ><a name="4527"
+      > </a
+      ><a name="4528" href="cohomology.Wedge.html#2074" class="Function"
+      >C-Wedge</a
+      ><a name="4535" class="Symbol"
+      >)</a
+      ><a name="4536"
+      > </a
+      ><a name="4537" class="Symbol"
+      >(</a
+      ><a name="4538" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="4543"
+      > </a
+      ><a name="4544" class="Symbol"
+      >_)</a
+      ><a name="4546"
+      >
+    </a
+      ><a name="4551" href="cohomology.Wedge.html#4289" class="Function"
+      >Wedge-in-comm-sqr</a
+      ><a name="4568"
+      > </a
+      ><a name="4569" href="cohomology.Wedge.html#4569" class="Bound"
+      >f</a
+      ><a name="4570"
+      > </a
+      ><a name="4571" class="Symbol"
+      >=</a
+      ><a name="4572"
+      > </a
+      ><a name="4573" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="4582"
+      > </a
+      ><a name="4583" class="Symbol"
+      >&#955;</a
+      ><a name="4584"
+      > </a
+      ><a name="4585" href="cohomology.Wedge.html#4585" class="Bound"
+      >x&#8744;y</a
+      ><a name="4588"
+      > </a
+      ><a name="4589" class="Symbol"
+      >&#8594;</a
+      ><a name="4590"
+      >
+        </a
+      ><a name="4599" class="Symbol"
+      >(</a
+      ><a name="4600" href="cohomology.Wedge.html#3357" class="Function"
+      >Wedge-hom-&#951;-comm-sqr</a
+      ><a name="4620"
+      > </a
+      ><a name="4621" class="Symbol"
+      >(</a
+      ><a name="4622" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="4628"
+      > </a
+      ><a name="4629" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="4630"
+      > </a
+      ><a name="4631" href="cohomology.Wedge.html#4569" class="Bound"
+      >f</a
+      ><a name="4632" class="Symbol"
+      >)</a
+      ><a name="4633"
+      > </a
+      ><a name="4634" href="lib.groups.CommutingSquare.html#618" class="Function Operator"
+      >&#9633;$&#7475;</a
+      ><a name="4637"
+      > </a
+      ><a name="4638" href="cohomology.Wedge.html#4585" class="Bound"
+      >x&#8744;y</a
+      ><a name="4641" class="Symbol"
+      >)</a
+      ><a name="4642"
+      >
+      </a
+      ><a name="4649" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4650"
+      > </a
+      ><a name="4651" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="4654"
+      > </a
+      ><a name="4655" class="Symbol"
+      >(</a
+      ><a name="4656" href="lib.types.Group.html#313" class="Function"
+      >Group.comp</a
+      ><a name="4666"
+      > </a
+      ><a name="4667" class="Symbol"
+      >(</a
+      ><a name="4668" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="4669"
+      > </a
+      ><a name="4670" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="4671"
+      > </a
+      ><a name="4672" class="Symbol"
+      >_))</a
+      ><a name="4675"
+      >
+          </a
+      ><a name="4686" class="Symbol"
+      >(</a
+      ><a name="4687" href="cohomology.Theory.html#2665" class="Function"
+      >&#8728;-C-fmap</a
+      ><a name="4695"
+      > </a
+      ><a name="4696" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="4697"
+      > </a
+      ><a name="4698" href="cohomology.Wedge.html#4569" class="Bound"
+      >f</a
+      ><a name="4699"
+      > </a
+      ><a name="4700" class="Symbol"
+      >(</a
+      ><a name="4701" href="lib.types.Wedge.html#3798" class="Function"
+      >&#8857;projl</a
+      ><a name="4707"
+      > </a
+      ><a name="4708" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="4709"
+      > </a
+      ><a name="4710" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="4711" class="Symbol"
+      >)</a
+      ><a name="4712"
+      > </a
+      ><a name="4713" class="Symbol"
+      >_)</a
+      ><a name="4715"
+      >
+          </a
+      ><a name="4726" class="Symbol"
+      >(</a
+      ><a name="4727" href="cohomology.Theory.html#2665" class="Function"
+      >&#8728;-C-fmap</a
+      ><a name="4735"
+      > </a
+      ><a name="4736" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="4737"
+      > </a
+      ><a name="4738" href="cohomology.Wedge.html#4569" class="Bound"
+      >f</a
+      ><a name="4739"
+      > </a
+      ><a name="4740" class="Symbol"
+      >(</a
+      ><a name="4741" href="lib.types.Wedge.html#3818" class="Function"
+      >&#8857;projr</a
+      ><a name="4747"
+      > </a
+      ><a name="4748" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="4749"
+      > </a
+      ><a name="4750" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="4751" class="Symbol"
+      >)</a
+      ><a name="4752"
+      > </a
+      ><a name="4753" class="Symbol"
+      >_)</a
+      ><a name="4755"
+      >
+
+    </a
+      ><a name="4761" href="cohomology.Wedge.html#4761" class="Function"
+      >Wedge-in-comm-sqr'</a
+      ><a name="4779"
+      > </a
+      ><a name="4780" class="Symbol"
+      >:</a
+      ><a name="4781"
+      > </a
+      ><a name="4782" class="Symbol"
+      >{</a
+      ><a name="4783" href="cohomology.Wedge.html#4783" class="Bound"
+      >Z</a
+      ><a name="4784"
+      > </a
+      ><a name="4785" class="Symbol"
+      >:</a
+      ><a name="4786"
+      > </a
+      ><a name="4787" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="4790"
+      > </a
+      ><a name="4791" href="cohomology.Wedge.html#648" class="Bound"
+      >i</a
+      ><a name="4792" class="Symbol"
+      >}</a
+      ><a name="4793"
+      > </a
+      ><a name="4794" class="Symbol"
+      >(</a
+      ><a name="4795" href="cohomology.Wedge.html#4795" class="Bound"
+      >f</a
+      ><a name="4796"
+      > </a
+      ><a name="4797" class="Symbol"
+      >:</a
+      ><a name="4798"
+      > </a
+      ><a name="4799" href="cohomology.Wedge.html#4783" class="Bound"
+      >Z</a
+      ><a name="4800"
+      > </a
+      ><a name="4801" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="4803"
+      > </a
+      ><a name="4804" href="lib.types.Wedge.html#873" class="Function"
+      >&#8857;Wedge</a
+      ><a name="4810"
+      > </a
+      ><a name="4811" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="4812"
+      > </a
+      ><a name="4813" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="4814" class="Symbol"
+      >)</a
+      ><a name="4815"
+      >
+      </a
+      ><a name="4822" class="Symbol"
+      >&#8594;</a
+      ><a name="4823"
+      > </a
+      ><a name="4824" href="lib.groups.CommutingSquare.html#289" class="Record"
+      >CommSquare&#7475;</a
+      ><a name="4835"
+      >
+          </a
+      ><a name="4846" class="Symbol"
+      >(</a
+      ><a name="4847" href="lib.groups.GroupProduct.html#5325" class="Function"
+      >&#215;&#7475;-fanin</a
+      ><a name="4855"
+      > </a
+      ><a name="4856" class="Symbol"
+      >(</a
+      ><a name="4857" href="cohomology.Theory.html#281" class="Function"
+      >C-is-abelian</a
+      ><a name="4869"
+      > </a
+      ><a name="4870" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="4871"
+      > </a
+      ><a name="4872" class="Symbol"
+      >_)</a
+      ><a name="4874"
+      > </a
+      ><a name="4875" class="Symbol"
+      >(</a
+      ><a name="4876" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="4882"
+      > </a
+      ><a name="4883" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="4884"
+      > </a
+      ><a name="4885" class="Symbol"
+      >(</a
+      ><a name="4886" href="lib.types.Wedge.html#3798" class="Function"
+      >&#8857;projl</a
+      ><a name="4892"
+      > </a
+      ><a name="4893" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="4894"
+      > </a
+      ><a name="4895" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="4896"
+      > </a
+      ><a name="4897" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="4899"
+      > </a
+      ><a name="4900" href="cohomology.Wedge.html#4795" class="Bound"
+      >f</a
+      ><a name="4901" class="Symbol"
+      >))</a
+      ><a name="4903"
+      >
+                                       </a
+      ><a name="4943" class="Symbol"
+      >(</a
+      ><a name="4944" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="4950"
+      > </a
+      ><a name="4951" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="4952"
+      > </a
+      ><a name="4953" class="Symbol"
+      >(</a
+      ><a name="4954" href="lib.types.Wedge.html#3818" class="Function"
+      >&#8857;projr</a
+      ><a name="4960"
+      > </a
+      ><a name="4961" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="4962"
+      > </a
+      ><a name="4963" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="4964"
+      > </a
+      ><a name="4965" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="4967"
+      > </a
+      ><a name="4968" href="cohomology.Wedge.html#4795" class="Bound"
+      >f</a
+      ><a name="4969" class="Symbol"
+      >)))</a
+      ><a name="4972"
+      >
+          </a
+      ><a name="4983" class="Symbol"
+      >(</a
+      ><a name="4984" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="4990"
+      > </a
+      ><a name="4991" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="4992"
+      > </a
+      ><a name="4993" href="cohomology.Wedge.html#4795" class="Bound"
+      >f</a
+      ><a name="4994" class="Symbol"
+      >)</a
+      ><a name="4995"
+      > </a
+      ><a name="4996" class="Symbol"
+      >(</a
+      ><a name="4997" href="lib.groups.Isomorphism.html#3629" class="Function"
+      >&lt;&#8211;&#7475;</a
+      ><a name="5000"
+      > </a
+      ><a name="5001" href="cohomology.Wedge.html#2074" class="Function"
+      >C-Wedge</a
+      ><a name="5008" class="Symbol"
+      >)</a
+      ><a name="5009"
+      > </a
+      ><a name="5010" class="Symbol"
+      >(</a
+      ><a name="5011" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="5016"
+      > </a
+      ><a name="5017" class="Symbol"
+      >_)</a
+      ><a name="5019"
+      >
+    </a
+      ><a name="5024" href="cohomology.Wedge.html#4761" class="Function"
+      >Wedge-in-comm-sqr'</a
+      ><a name="5042"
+      > </a
+      ><a name="5043" href="cohomology.Wedge.html#5043" class="Bound"
+      >f</a
+      ><a name="5044"
+      > </a
+      ><a name="5045" class="Symbol"
+      >=</a
+      ><a name="5046"
+      > </a
+      ><a name="5047" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="5056"
+      > </a
+      ><a name="5057" class="Symbol"
+      >&#955;</a
+      ><a name="5058"
+      > </a
+      ><a name="5059" href="cohomology.Wedge.html#5059" class="Bound"
+      >z</a
+      ><a name="5060"
+      > </a
+      ><a name="5061" class="Symbol"
+      >&#8594;</a
+      ><a name="5062"
+      >
+        </a
+      ><a name="5071" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="5074"
+      > </a
+      ><a name="5075" class="Symbol"
+      >(</a
+      ><a name="5076" href="lib.types.Group.html#313" class="Function"
+      >Group.comp</a
+      ><a name="5086"
+      > </a
+      ><a name="5087" class="Symbol"
+      >(</a
+      ><a name="5088" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="5089"
+      > </a
+      ><a name="5090" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="5091"
+      > </a
+      ><a name="5092" class="Symbol"
+      >_))</a
+      ><a name="5095"
+      >
+          </a
+      ><a name="5106" class="Symbol"
+      >(</a
+      ><a name="5107" href="cohomology.Theory.html#923" class="Function"
+      >C-fmap-&#8728;</a
+      ><a name="5115"
+      > </a
+      ><a name="5116" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="5117"
+      > </a
+      ><a name="5118" class="Symbol"
+      >(</a
+      ><a name="5119" href="lib.types.Wedge.html#3798" class="Function"
+      >&#8857;projl</a
+      ><a name="5125"
+      > </a
+      ><a name="5126" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="5127"
+      > </a
+      ><a name="5128" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="5129" class="Symbol"
+      >)</a
+      ><a name="5130"
+      > </a
+      ><a name="5131" href="cohomology.Wedge.html#5043" class="Bound"
+      >f</a
+      ><a name="5132"
+      > </a
+      ><a name="5133" class="Symbol"
+      >_)</a
+      ><a name="5135"
+      >
+          </a
+      ><a name="5146" class="Symbol"
+      >(</a
+      ><a name="5147" href="cohomology.Theory.html#923" class="Function"
+      >C-fmap-&#8728;</a
+      ><a name="5155"
+      > </a
+      ><a name="5156" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="5157"
+      > </a
+      ><a name="5158" class="Symbol"
+      >(</a
+      ><a name="5159" href="lib.types.Wedge.html#3818" class="Function"
+      >&#8857;projr</a
+      ><a name="5165"
+      > </a
+      ><a name="5166" href="cohomology.Wedge.html#688" class="Bound"
+      >X</a
+      ><a name="5167"
+      > </a
+      ><a name="5168" href="cohomology.Wedge.html#690" class="Bound"
+      >Y</a
+      ><a name="5169" class="Symbol"
+      >)</a
+      ><a name="5170"
+      > </a
+      ><a name="5171" href="cohomology.Wedge.html#5043" class="Bound"
+      >f</a
+      ><a name="5172"
+      > </a
+      ><a name="5173" class="Symbol"
+      >_)</a
+      ><a name="5175"
+      >
+      </a
+      ><a name="5182" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5183"
+      > </a
+      ><a name="5184" class="Symbol"
+      >(</a
+      ><a name="5185" href="cohomology.Wedge.html#3855" class="Function"
+      >Wedge-hom-&#951;-comm-sqr'</a
+      ><a name="5206"
+      > </a
+      ><a name="5207" class="Symbol"
+      >(</a
+      ><a name="5208" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="5214"
+      > </a
+      ><a name="5215" href="cohomology.Wedge.html#680" class="Bound"
+      >n</a
+      ><a name="5216"
+      > </a
+      ><a name="5217" href="cohomology.Wedge.html#5043" class="Bound"
+      >f</a
+      ><a name="5218" class="Symbol"
+      >)</a
+      ><a name="5219"
+      > </a
+      ><a name="5220" href="lib.groups.CommutingSquare.html#618" class="Function Operator"
+      >&#9633;$&#7475;</a
+      ><a name="5223"
+      > </a
+      ><a name="5224" href="cohomology.Wedge.html#5059" class="Bound"
+      >z</a
+      ><a name="5225" class="Symbol"
+      >)</a
+      ><a name="5226"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

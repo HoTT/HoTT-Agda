@@ -1,0 +1,2451 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cohomology.DisjointlyPointedSet</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="88"
+      >
+</a
+      ><a name="89" class="Keyword"
+      >open</a
+      ><a name="93"
+      > </a
+      ><a name="94" class="Keyword"
+      >import</a
+      ><a name="100"
+      > </a
+      ><a name="101" href="homotopy.DisjointlyPointedSet.html#1" class="Module"
+      >homotopy.DisjointlyPointedSet</a
+      ><a name="130"
+      >
+
+</a
+      ><a name="132" class="Keyword"
+      >module</a
+      ><a name="138"
+      > </a
+      ><a name="139" href="cohomology.DisjointlyPointedSet.html#1" class="Module"
+      >cohomology.DisjointlyPointedSet</a
+      ><a name="170"
+      > </a
+      ><a name="171" class="Symbol"
+      >{</a
+      ><a name="172" href="cohomology.DisjointlyPointedSet.html#172" class="Bound"
+      >i</a
+      ><a name="173" class="Symbol"
+      >}</a
+      ><a name="174"
+      > </a
+      ><a name="175" class="Symbol"
+      >(</a
+      ><a name="176" href="cohomology.DisjointlyPointedSet.html#176" class="Bound"
+      >OT</a
+      ><a name="178"
+      > </a
+      ><a name="179" class="Symbol"
+      >:</a
+      ><a name="180"
+      > </a
+      ><a name="181" href="cohomology.Theory.html#7242" class="Record"
+      >OrdinaryTheory</a
+      ><a name="195"
+      > </a
+      ><a name="196" href="cohomology.DisjointlyPointedSet.html#172" class="Bound"
+      >i</a
+      ><a name="197" class="Symbol"
+      >)</a
+      ><a name="198"
+      > </a
+      ><a name="199" class="Keyword"
+      >where</a
+      ><a name="204"
+      >
+
+  </a
+      ><a name="208" class="Keyword"
+      >open</a
+      ><a name="212"
+      > </a
+      ><a name="213" href="cohomology.Theory.html#7242" class="Module"
+      >OrdinaryTheory</a
+      ><a name="227"
+      > </a
+      ><a name="228" href="cohomology.DisjointlyPointedSet.html#176" class="Bound"
+      >OT</a
+      ><a name="230"
+      >
+
+  </a
+      ><a name="234" class="Keyword"
+      >module</a
+      ><a name="240"
+      > </a
+      ><a name="241" href="cohomology.DisjointlyPointedSet.html#241" class="Module"
+      >_</a
+      ><a name="242"
+      > </a
+      ><a name="243" class="Symbol"
+      >(</a
+      ><a name="244" href="cohomology.DisjointlyPointedSet.html#244" class="Bound"
+      >n</a
+      ><a name="245"
+      > </a
+      ><a name="246" class="Symbol"
+      >:</a
+      ><a name="247"
+      > </a
+      ><a name="248" href="lib.types.Int.html#154" class="Datatype"
+      >&#8484;</a
+      ><a name="249" class="Symbol"
+      >)</a
+      ><a name="250"
+      > </a
+      ><a name="251" class="Symbol"
+      >(</a
+      ><a name="252" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="253"
+      > </a
+      ><a name="254" class="Symbol"
+      >:</a
+      ><a name="255"
+      > </a
+      ><a name="256" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="259"
+      > </a
+      ><a name="260" href="cohomology.DisjointlyPointedSet.html#172" class="Bound"
+      >i</a
+      ><a name="261" class="Symbol"
+      >)</a
+      ><a name="262"
+      >
+    </a
+      ><a name="267" class="Symbol"
+      >(</a
+      ><a name="268" href="cohomology.DisjointlyPointedSet.html#268" class="Bound"
+      >X-is-set</a
+      ><a name="276"
+      > </a
+      ><a name="277" class="Symbol"
+      >:</a
+      ><a name="278"
+      > </a
+      ><a name="279" href="lib.NType.html#455" class="Function"
+      >is-set</a
+      ><a name="285"
+      > </a
+      ><a name="286" class="Symbol"
+      >(</a
+      ><a name="287" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="290"
+      > </a
+      ><a name="291" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="292" class="Symbol"
+      >))</a
+      ><a name="294"
+      > </a
+      ><a name="295" class="Symbol"
+      >(</a
+      ><a name="296" href="cohomology.DisjointlyPointedSet.html#296" class="Bound"
+      >dec</a
+      ><a name="299"
+      > </a
+      ><a name="300" class="Symbol"
+      >:</a
+      ><a name="301"
+      > </a
+      ><a name="302" href="homotopy.DisjointlyPointedSet.html#289" class="Function"
+      >is-separable</a
+      ><a name="314"
+      > </a
+      ><a name="315" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="316" class="Symbol"
+      >)</a
+      ><a name="317"
+      >
+    </a
+      ><a name="322" class="Symbol"
+      >(</a
+      ><a name="323" href="cohomology.DisjointlyPointedSet.html#323" class="Bound"
+      >ac</a
+      ><a name="325"
+      > </a
+      ><a name="326" class="Symbol"
+      >:</a
+      ><a name="327"
+      > </a
+      ><a name="328" href="lib.types.Choice.html#320" class="Function"
+      >has-choice</a
+      ><a name="338"
+      > </a
+      ><a name="339" class="Number"
+      >0</a
+      ><a name="340"
+      > </a
+      ><a name="341" class="Symbol"
+      >(</a
+      ><a name="342" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="345"
+      > </a
+      ><a name="346" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="347" class="Symbol"
+      >)</a
+      ><a name="348"
+      > </a
+      ><a name="349" href="cohomology.DisjointlyPointedSet.html#172" class="Bound"
+      >i</a
+      ><a name="350" class="Symbol"
+      >)</a
+      ><a name="351"
+      > </a
+      ><a name="352" class="Keyword"
+      >where</a
+      ><a name="357"
+      >
+
+    </a
+      ><a name="363" class="Keyword"
+      >private</a
+      ><a name="370"
+      >
+
+      </a
+      ><a name="378" href="cohomology.DisjointlyPointedSet.html#378" class="Function"
+      >lemma</a
+      ><a name="383"
+      > </a
+      ><a name="384" class="Symbol"
+      >:</a
+      ><a name="385"
+      > </a
+      ><a name="386" href="lib.types.BigWedge.html#662" class="Function"
+      >BigWedge</a
+      ><a name="394"
+      > </a
+      ><a name="395" class="Symbol"
+      >{</a
+      ><a name="396" class="Argument"
+      >A</a
+      ><a name="397"
+      > </a
+      ><a name="398" class="Symbol"
+      >=</a
+      ><a name="399"
+      > </a
+      ><a name="400" href="homotopy.DisjointlyPointedSet.html#513" class="Function"
+      >MinusPoint</a
+      ><a name="410"
+      > </a
+      ><a name="411" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="412" class="Symbol"
+      >}</a
+      ><a name="413"
+      > </a
+      ><a name="414" class="Symbol"
+      >(&#955;</a
+      ><a name="416"
+      > </a
+      ><a name="417" href="cohomology.DisjointlyPointedSet.html#417" class="Bound"
+      >_</a
+      ><a name="418"
+      > </a
+      ><a name="419" class="Symbol"
+      >&#8594;</a
+      ><a name="420"
+      > </a
+      ><a name="421" href="lib.types.Bool.html#300" class="Function"
+      >&#8857;Bool</a
+      ><a name="426" class="Symbol"
+      >)</a
+      ><a name="427"
+      > </a
+      ><a name="428" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="429"
+      > </a
+      ><a name="430" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="433"
+      > </a
+      ><a name="434" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="435"
+      >
+      </a
+      ><a name="442" href="cohomology.DisjointlyPointedSet.html#378" class="Function"
+      >lemma</a
+      ><a name="447"
+      > </a
+      ><a name="448" class="Symbol"
+      >=</a
+      ><a name="449"
+      > </a
+      ><a name="450" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="455"
+      > </a
+      ><a name="456" href="cohomology.DisjointlyPointedSet.html#803" class="Function"
+      >to</a
+      ><a name="458"
+      > </a
+      ><a name="459" href="cohomology.DisjointlyPointedSet.html#494" class="Function"
+      >from</a
+      ><a name="463"
+      > </a
+      ><a name="464" href="cohomology.DisjointlyPointedSet.html#2002" class="Function"
+      >to-from</a
+      ><a name="471"
+      > </a
+      ><a name="472" href="cohomology.DisjointlyPointedSet.html#843" class="Function"
+      >from-to</a
+      ><a name="479"
+      > </a
+      ><a name="480" class="Keyword"
+      >where</a
+      ><a name="485"
+      >
+        </a
+      ><a name="494" href="cohomology.DisjointlyPointedSet.html#494" class="Function"
+      >from</a
+      ><a name="498"
+      > </a
+      ><a name="499" class="Symbol"
+      >:</a
+      ><a name="500"
+      > </a
+      ><a name="501" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="504"
+      > </a
+      ><a name="505" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="506"
+      > </a
+      ><a name="507" class="Symbol"
+      >&#8594;</a
+      ><a name="508"
+      > </a
+      ><a name="509" href="lib.types.BigWedge.html#662" class="Function"
+      >BigWedge</a
+      ><a name="517"
+      > </a
+      ><a name="518" class="Symbol"
+      >{</a
+      ><a name="519" class="Argument"
+      >A</a
+      ><a name="520"
+      > </a
+      ><a name="521" class="Symbol"
+      >=</a
+      ><a name="522"
+      > </a
+      ><a name="523" href="homotopy.DisjointlyPointedSet.html#513" class="Function"
+      >MinusPoint</a
+      ><a name="533"
+      > </a
+      ><a name="534" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="535" class="Symbol"
+      >}</a
+      ><a name="536"
+      > </a
+      ><a name="537" class="Symbol"
+      >(&#955;</a
+      ><a name="539"
+      > </a
+      ><a name="540" href="cohomology.DisjointlyPointedSet.html#540" class="Bound"
+      >_</a
+      ><a name="541"
+      > </a
+      ><a name="542" class="Symbol"
+      >&#8594;</a
+      ><a name="543"
+      > </a
+      ><a name="544" href="lib.types.Bool.html#300" class="Function"
+      >&#8857;Bool</a
+      ><a name="549" class="Symbol"
+      >)</a
+      ><a name="550"
+      >
+        </a
+      ><a name="559" href="cohomology.DisjointlyPointedSet.html#494" class="Function"
+      >from</a
+      ><a name="563"
+      > </a
+      ><a name="564" href="cohomology.DisjointlyPointedSet.html#564" class="Bound"
+      >x</a
+      ><a name="565"
+      > </a
+      ><a name="566" class="Keyword"
+      >with</a
+      ><a name="570"
+      > </a
+      ><a name="571" href="cohomology.DisjointlyPointedSet.html#296" class="Bound"
+      >dec</a
+      ><a name="574"
+      > </a
+      ><a name="575" href="cohomology.DisjointlyPointedSet.html#564" class="Bound"
+      >x</a
+      ><a name="576"
+      >
+        </a
+      ><a name="585" href="cohomology.DisjointlyPointedSet.html#494" class="Function"
+      >from</a
+      ><a name="589"
+      > </a
+      ><a name="590" href="cohomology.DisjointlyPointedSet.html#590" class="Bound"
+      >x</a
+      ><a name="591"
+      > </a
+      ><a name="592" class="Symbol"
+      >|</a
+      ><a name="593"
+      > </a
+      ><a name="594" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="597"
+      > </a
+      ><a name="598" href="cohomology.DisjointlyPointedSet.html#598" class="Bound"
+      >p</a
+      ><a name="599"
+      >  </a
+      ><a name="601" class="Symbol"
+      >=</a
+      ><a name="602"
+      > </a
+      ><a name="603" href="lib.types.BigWedge.html#744" class="Function"
+      >bwbase</a
+      ><a name="609"
+      >
+        </a
+      ><a name="618" href="cohomology.DisjointlyPointedSet.html#494" class="Function"
+      >from</a
+      ><a name="622"
+      > </a
+      ><a name="623" href="cohomology.DisjointlyPointedSet.html#623" class="Bound"
+      >x</a
+      ><a name="624"
+      > </a
+      ><a name="625" class="Symbol"
+      >|</a
+      ><a name="626"
+      > </a
+      ><a name="627" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="630"
+      > </a
+      ><a name="631" href="cohomology.DisjointlyPointedSet.html#631" class="Bound"
+      >&#172;p</a
+      ><a name="633"
+      > </a
+      ><a name="634" class="Symbol"
+      >=</a
+      ><a name="635"
+      > </a
+      ><a name="636" href="lib.types.BigWedge.html#803" class="Function"
+      >bwin</a
+      ><a name="640"
+      > </a
+      ><a name="641" class="Symbol"
+      >(</a
+      ><a name="642" href="cohomology.DisjointlyPointedSet.html#623" class="Bound"
+      >x</a
+      ><a name="643"
+      > </a
+      ><a name="644" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="645"
+      > </a
+      ><a name="646" href="cohomology.DisjointlyPointedSet.html#631" class="Bound"
+      >&#172;p</a
+      ><a name="648" class="Symbol"
+      >)</a
+      ><a name="649"
+      > </a
+      ><a name="650" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="655"
+      >
+
+        </a
+      ><a name="665" class="Keyword"
+      >module</a
+      ><a name="671"
+      > </a
+      ><a name="672" href="cohomology.DisjointlyPointedSet.html#672" class="Module"
+      >From</a
+      ><a name="676"
+      > </a
+      ><a name="677" class="Symbol"
+      >=</a
+      ><a name="678"
+      > </a
+      ><a name="679" href="lib.types.BigWedge.html#1472" class="Module"
+      >BigWedgeRec</a
+      ><a name="690"
+      > </a
+      ><a name="691" class="Symbol"
+      >{</a
+      ><a name="692" class="Argument"
+      >A</a
+      ><a name="693"
+      > </a
+      ><a name="694" class="Symbol"
+      >=</a
+      ><a name="695"
+      > </a
+      ><a name="696" href="homotopy.DisjointlyPointedSet.html#513" class="Function"
+      >MinusPoint</a
+      ><a name="706"
+      > </a
+      ><a name="707" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="708" class="Symbol"
+      >}</a
+      ><a name="709"
+      > </a
+      ><a name="710" class="Symbol"
+      >{</a
+      ><a name="711" class="Argument"
+      >X</a
+      ><a name="712"
+      > </a
+      ><a name="713" class="Symbol"
+      >=</a
+      ><a name="714"
+      > </a
+      ><a name="715" class="Symbol"
+      >&#955;</a
+      ><a name="716"
+      > </a
+      ><a name="717" href="cohomology.DisjointlyPointedSet.html#717" class="Bound"
+      >_</a
+      ><a name="718"
+      > </a
+      ><a name="719" class="Symbol"
+      >&#8594;</a
+      ><a name="720"
+      > </a
+      ><a name="721" href="lib.types.Bool.html#300" class="Function"
+      >&#8857;Bool</a
+      ><a name="726" class="Symbol"
+      >}</a
+      ><a name="727"
+      >
+          </a
+      ><a name="738" class="Symbol"
+      >(</a
+      ><a name="739" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="741"
+      > </a
+      ><a name="742" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="743" class="Symbol"
+      >)</a
+      ><a name="744"
+      > </a
+      ><a name="745" class="Symbol"
+      >(&#955;{_</a
+      ><a name="749"
+      > </a
+      ><a name="750" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="754"
+      > </a
+      ><a name="755" class="Symbol"
+      >&#8594;</a
+      ><a name="756"
+      > </a
+      ><a name="757" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="759"
+      > </a
+      ><a name="760" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="761" class="Symbol"
+      >;</a
+      ><a name="762"
+      > </a
+      ><a name="763" class="Symbol"
+      >(</a
+      ><a name="764" href="cohomology.DisjointlyPointedSet.html#764" class="Bound"
+      >x</a
+      ><a name="765"
+      > </a
+      ><a name="766" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="767"
+      > </a
+      ><a name="768" class="Symbol"
+      >_)</a
+      ><a name="770"
+      > </a
+      ><a name="771" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="776"
+      > </a
+      ><a name="777" class="Symbol"
+      >&#8594;</a
+      ><a name="778"
+      > </a
+      ><a name="779" href="cohomology.DisjointlyPointedSet.html#764" class="Bound"
+      >x</a
+      ><a name="780" class="Symbol"
+      >})</a
+      ><a name="782"
+      > </a
+      ><a name="783" class="Symbol"
+      >(&#955;</a
+      ><a name="785"
+      > </a
+      ><a name="786" href="cohomology.DisjointlyPointedSet.html#786" class="Bound"
+      >_</a
+      ><a name="787"
+      > </a
+      ><a name="788" class="Symbol"
+      >&#8594;</a
+      ><a name="789"
+      > </a
+      ><a name="790" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="793" class="Symbol"
+      >)</a
+      ><a name="794"
+      >
+        </a
+      ><a name="803" href="cohomology.DisjointlyPointedSet.html#803" class="Function"
+      >to</a
+      ><a name="805"
+      > </a
+      ><a name="806" class="Symbol"
+      >=</a
+      ><a name="807"
+      > </a
+      ><a name="808" href="lib.types.Pushout.html#1397" class="Function"
+      >From.f</a
+      ><a name="814"
+      >
+
+        </a
+      ><a name="824" class="Keyword"
+      >abstract</a
+      ><a name="832"
+      >
+          </a
+      ><a name="843" href="cohomology.DisjointlyPointedSet.html#843" class="Function"
+      >from-to</a
+      ><a name="850"
+      > </a
+      ><a name="851" class="Symbol"
+      >:</a
+      ><a name="852"
+      > </a
+      ><a name="853" class="Symbol"
+      >&#8704;</a
+      ><a name="854"
+      > </a
+      ><a name="855" href="cohomology.DisjointlyPointedSet.html#855" class="Bound"
+      >x</a
+      ><a name="856"
+      > </a
+      ><a name="857" class="Symbol"
+      >&#8594;</a
+      ><a name="858"
+      > </a
+      ><a name="859" href="cohomology.DisjointlyPointedSet.html#494" class="Function"
+      >from</a
+      ><a name="863"
+      > </a
+      ><a name="864" class="Symbol"
+      >(</a
+      ><a name="865" href="cohomology.DisjointlyPointedSet.html#803" class="Function"
+      >to</a
+      ><a name="867"
+      > </a
+      ><a name="868" href="cohomology.DisjointlyPointedSet.html#855" class="Bound"
+      >x</a
+      ><a name="869" class="Symbol"
+      >)</a
+      ><a name="870"
+      > </a
+      ><a name="871" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="873"
+      > </a
+      ><a name="874" href="cohomology.DisjointlyPointedSet.html#855" class="Bound"
+      >x</a
+      ><a name="875"
+      >
+          </a
+      ><a name="886" href="cohomology.DisjointlyPointedSet.html#843" class="Function"
+      >from-to</a
+      ><a name="893"
+      > </a
+      ><a name="894" class="Symbol"
+      >=</a
+      ><a name="895"
+      > </a
+      ><a name="896" href="lib.types.BigWedge.html#1431" class="Function"
+      >BigWedge-elim</a
+      ><a name="909"
+      > </a
+      ><a name="910" href="cohomology.DisjointlyPointedSet.html#944" class="Function"
+      >base*</a
+      ><a name="915"
+      > </a
+      ><a name="916" href="cohomology.DisjointlyPointedSet.html#1098" class="Function"
+      >in*</a
+      ><a name="919"
+      > </a
+      ><a name="920" href="cohomology.DisjointlyPointedSet.html#1582" class="Function"
+      >glue*</a
+      ><a name="925"
+      > </a
+      ><a name="926" class="Keyword"
+      >where</a
+      ><a name="931"
+      >
+            </a
+      ><a name="944" href="cohomology.DisjointlyPointedSet.html#944" class="Function"
+      >base*</a
+      ><a name="949"
+      > </a
+      ><a name="950" class="Symbol"
+      >:</a
+      ><a name="951"
+      > </a
+      ><a name="952" href="cohomology.DisjointlyPointedSet.html#494" class="Function"
+      >from</a
+      ><a name="956"
+      > </a
+      ><a name="957" class="Symbol"
+      >(</a
+      ><a name="958" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="960"
+      > </a
+      ><a name="961" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="962" class="Symbol"
+      >)</a
+      ><a name="963"
+      > </a
+      ><a name="964" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="966"
+      > </a
+      ><a name="967" href="lib.types.BigWedge.html#744" class="Function"
+      >bwbase</a
+      ><a name="973"
+      >
+            </a
+      ><a name="986" href="cohomology.DisjointlyPointedSet.html#944" class="Function"
+      >base*</a
+      ><a name="991"
+      > </a
+      ><a name="992" class="Keyword"
+      >with</a
+      ><a name="996"
+      > </a
+      ><a name="997" href="cohomology.DisjointlyPointedSet.html#296" class="Bound"
+      >dec</a
+      ><a name="1000"
+      > </a
+      ><a name="1001" class="Symbol"
+      >(</a
+      ><a name="1002" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1004"
+      > </a
+      ><a name="1005" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="1006" class="Symbol"
+      >)</a
+      ><a name="1007"
+      >
+            </a
+      ><a name="1020" href="cohomology.DisjointlyPointedSet.html#944" class="Function"
+      >base*</a
+      ><a name="1025"
+      > </a
+      ><a name="1026" class="Symbol"
+      >|</a
+      ><a name="1027"
+      > </a
+      ><a name="1028" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1031"
+      > </a
+      ><a name="1032" class="Symbol"
+      >_</a
+      ><a name="1033"
+      >  </a
+      ><a name="1035" class="Symbol"
+      >=</a
+      ><a name="1036"
+      > </a
+      ><a name="1037" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1040"
+      >
+            </a
+      ><a name="1053" href="cohomology.DisjointlyPointedSet.html#944" class="Function"
+      >base*</a
+      ><a name="1058"
+      > </a
+      ><a name="1059" class="Symbol"
+      >|</a
+      ><a name="1060"
+      > </a
+      ><a name="1061" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1064"
+      > </a
+      ><a name="1065" href="cohomology.DisjointlyPointedSet.html#1065" class="Bound"
+      >&#172;p</a
+      ><a name="1067"
+      > </a
+      ><a name="1068" class="Symbol"
+      >=</a
+      ><a name="1069"
+      > </a
+      ><a name="1070" href="lib.types.Empty.html#165" class="Function"
+      >&#8869;-rec</a
+      ><a name="1075"
+      > </a
+      ><a name="1076" class="Symbol"
+      >(</a
+      ><a name="1077" href="cohomology.DisjointlyPointedSet.html#1065" class="Bound"
+      >&#172;p</a
+      ><a name="1079"
+      > </a
+      ><a name="1080" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1083" class="Symbol"
+      >)</a
+      ><a name="1084"
+      >
+
+            </a
+      ><a name="1098" href="cohomology.DisjointlyPointedSet.html#1098" class="Function"
+      >in*</a
+      ><a name="1101"
+      > </a
+      ><a name="1102" class="Symbol"
+      >:</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" class="Symbol"
+      >(</a
+      ><a name="1105" href="cohomology.DisjointlyPointedSet.html#1105" class="Bound"
+      >wp</a
+      ><a name="1107"
+      > </a
+      ><a name="1108" class="Symbol"
+      >:</a
+      ><a name="1109"
+      > </a
+      ><a name="1110" href="homotopy.DisjointlyPointedSet.html#513" class="Function"
+      >MinusPoint</a
+      ><a name="1120"
+      > </a
+      ><a name="1121" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="1122" class="Symbol"
+      >)</a
+      ><a name="1123"
+      > </a
+      ><a name="1124" class="Symbol"
+      >(</a
+      ><a name="1125" href="cohomology.DisjointlyPointedSet.html#1125" class="Bound"
+      >b</a
+      ><a name="1126"
+      > </a
+      ><a name="1127" class="Symbol"
+      >:</a
+      ><a name="1128"
+      > </a
+      ><a name="1129" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="1133" class="Symbol"
+      >)</a
+      ><a name="1134"
+      >
+              </a
+      ><a name="1149" class="Symbol"
+      >&#8594;</a
+      ><a name="1150"
+      > </a
+      ><a name="1151" href="cohomology.DisjointlyPointedSet.html#494" class="Function"
+      >from</a
+      ><a name="1155"
+      > </a
+      ><a name="1156" class="Symbol"
+      >(</a
+      ><a name="1157" href="cohomology.DisjointlyPointedSet.html#803" class="Function"
+      >to</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" class="Symbol"
+      >(</a
+      ><a name="1161" href="lib.types.BigWedge.html#803" class="Function"
+      >bwin</a
+      ><a name="1165"
+      > </a
+      ><a name="1166" href="cohomology.DisjointlyPointedSet.html#1105" class="Bound"
+      >wp</a
+      ><a name="1168"
+      > </a
+      ><a name="1169" href="cohomology.DisjointlyPointedSet.html#1125" class="Bound"
+      >b</a
+      ><a name="1170" class="Symbol"
+      >))</a
+      ><a name="1172"
+      > </a
+      ><a name="1173" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1175"
+      > </a
+      ><a name="1176" href="lib.types.BigWedge.html#803" class="Function"
+      >bwin</a
+      ><a name="1180"
+      > </a
+      ><a name="1181" href="cohomology.DisjointlyPointedSet.html#1105" class="Bound"
+      >wp</a
+      ><a name="1183"
+      > </a
+      ><a name="1184" href="cohomology.DisjointlyPointedSet.html#1125" class="Bound"
+      >b</a
+      ><a name="1185"
+      >
+            </a
+      ><a name="1198" href="cohomology.DisjointlyPointedSet.html#1098" class="Function"
+      >in*</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" href="cohomology.DisjointlyPointedSet.html#1202" class="Bound"
+      >wp</a
+      ><a name="1204"
+      > </a
+      ><a name="1205" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1209"
+      > </a
+      ><a name="1210" class="Keyword"
+      >with</a
+      ><a name="1214"
+      > </a
+      ><a name="1215" href="cohomology.DisjointlyPointedSet.html#296" class="Bound"
+      >dec</a
+      ><a name="1218"
+      > </a
+      ><a name="1219" class="Symbol"
+      >(</a
+      ><a name="1220" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1222"
+      > </a
+      ><a name="1223" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="1224" class="Symbol"
+      >)</a
+      ><a name="1225"
+      >
+            </a
+      ><a name="1238" href="cohomology.DisjointlyPointedSet.html#1098" class="Function"
+      >in*</a
+      ><a name="1241"
+      > </a
+      ><a name="1242" href="cohomology.DisjointlyPointedSet.html#1242" class="Bound"
+      >wp</a
+      ><a name="1244"
+      > </a
+      ><a name="1245" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1249"
+      > </a
+      ><a name="1250" class="Symbol"
+      >|</a
+      ><a name="1251"
+      > </a
+      ><a name="1252" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1255"
+      > </a
+      ><a name="1256" class="Symbol"
+      >_</a
+      ><a name="1257"
+      > </a
+      ><a name="1258" class="Symbol"
+      >=</a
+      ><a name="1259"
+      > </a
+      ><a name="1260" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="1266"
+      > </a
+      ><a name="1267" href="cohomology.DisjointlyPointedSet.html#1242" class="Bound"
+      >wp</a
+      ><a name="1269"
+      >
+            </a
+      ><a name="1282" href="cohomology.DisjointlyPointedSet.html#1098" class="Function"
+      >in*</a
+      ><a name="1285"
+      > </a
+      ><a name="1286" href="cohomology.DisjointlyPointedSet.html#1286" class="Bound"
+      >wp</a
+      ><a name="1288"
+      > </a
+      ><a name="1289" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1293"
+      > </a
+      ><a name="1294" class="Symbol"
+      >|</a
+      ><a name="1295"
+      > </a
+      ><a name="1296" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1299"
+      > </a
+      ><a name="1300" href="cohomology.DisjointlyPointedSet.html#1300" class="Bound"
+      >pt&#8800;pt</a
+      ><a name="1305"
+      > </a
+      ><a name="1306" class="Symbol"
+      >=</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" href="lib.types.Empty.html#165" class="Function"
+      >&#8869;-rec</a
+      ><a name="1313"
+      > </a
+      ><a name="1314" class="Symbol"
+      >(</a
+      ><a name="1315" href="cohomology.DisjointlyPointedSet.html#1300" class="Bound"
+      >pt&#8800;pt</a
+      ><a name="1320"
+      > </a
+      ><a name="1321" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1324" class="Symbol"
+      >)</a
+      ><a name="1325"
+      >
+            </a
+      ><a name="1338" href="cohomology.DisjointlyPointedSet.html#1098" class="Function"
+      >in*</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" class="Symbol"
+      >(</a
+      ><a name="1343" href="cohomology.DisjointlyPointedSet.html#1343" class="Bound"
+      >x</a
+      ><a name="1344"
+      > </a
+      ><a name="1345" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1346"
+      > </a
+      ><a name="1347" href="cohomology.DisjointlyPointedSet.html#1347" class="Bound"
+      >pt&#8800;x</a
+      ><a name="1351" class="Symbol"
+      >)</a
+      ><a name="1352"
+      > </a
+      ><a name="1353" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1358"
+      > </a
+      ><a name="1359" class="Keyword"
+      >with</a
+      ><a name="1363"
+      > </a
+      ><a name="1364" href="cohomology.DisjointlyPointedSet.html#296" class="Bound"
+      >dec</a
+      ><a name="1367"
+      > </a
+      ><a name="1368" href="cohomology.DisjointlyPointedSet.html#1343" class="Bound"
+      >x</a
+      ><a name="1369"
+      >
+            </a
+      ><a name="1382" href="cohomology.DisjointlyPointedSet.html#1098" class="Function"
+      >in*</a
+      ><a name="1385"
+      > </a
+      ><a name="1386" class="Symbol"
+      >(</a
+      ><a name="1387" href="cohomology.DisjointlyPointedSet.html#1387" class="Bound"
+      >x</a
+      ><a name="1388"
+      > </a
+      ><a name="1389" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1390"
+      > </a
+      ><a name="1391" href="cohomology.DisjointlyPointedSet.html#1391" class="Bound"
+      >pt&#8800;x</a
+      ><a name="1395" class="Symbol"
+      >)</a
+      ><a name="1396"
+      > </a
+      ><a name="1397" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1402"
+      > </a
+      ><a name="1403" class="Symbol"
+      >|</a
+      ><a name="1404"
+      > </a
+      ><a name="1405" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1408"
+      > </a
+      ><a name="1409" href="cohomology.DisjointlyPointedSet.html#1409" class="Bound"
+      >pt=x</a
+      ><a name="1413"
+      > </a
+      ><a name="1414" class="Symbol"
+      >=</a
+      ><a name="1415"
+      > </a
+      ><a name="1416" href="lib.types.Empty.html#165" class="Function"
+      >&#8869;-rec</a
+      ><a name="1421"
+      > </a
+      ><a name="1422" class="Symbol"
+      >(</a
+      ><a name="1423" href="cohomology.DisjointlyPointedSet.html#1391" class="Bound"
+      >pt&#8800;x</a
+      ><a name="1427"
+      > </a
+      ><a name="1428" href="cohomology.DisjointlyPointedSet.html#1409" class="Bound"
+      >pt=x</a
+      ><a name="1432" class="Symbol"
+      >)</a
+      ><a name="1433"
+      >
+            </a
+      ><a name="1446" href="cohomology.DisjointlyPointedSet.html#1098" class="Function"
+      >in*</a
+      ><a name="1449"
+      > </a
+      ><a name="1450" class="Symbol"
+      >(</a
+      ><a name="1451" href="cohomology.DisjointlyPointedSet.html#1451" class="Bound"
+      >x</a
+      ><a name="1452"
+      > </a
+      ><a name="1453" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1454"
+      > </a
+      ><a name="1455" href="cohomology.DisjointlyPointedSet.html#1455" class="Bound"
+      >pt&#8800;x</a
+      ><a name="1459" class="Symbol"
+      >)</a
+      ><a name="1460"
+      > </a
+      ><a name="1461" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1466"
+      > </a
+      ><a name="1467" class="Symbol"
+      >|</a
+      ><a name="1468"
+      > </a
+      ><a name="1469" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1472"
+      > </a
+      ><a name="1473" href="cohomology.DisjointlyPointedSet.html#1473" class="Bound"
+      >pt&#8800;'x</a
+      ><a name="1478"
+      > </a
+      ><a name="1479" class="Symbol"
+      >=</a
+      ><a name="1480"
+      >
+              </a
+      ><a name="1495" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1497"
+      > </a
+      ><a name="1498" class="Symbol"
+      >(&#955;</a
+      ><a name="1500"
+      > </a
+      ><a name="1501" href="cohomology.DisjointlyPointedSet.html#1501" class="Bound"
+      >&#172;p</a
+      ><a name="1503"
+      > </a
+      ><a name="1504" class="Symbol"
+      >&#8594;</a
+      ><a name="1505"
+      > </a
+      ><a name="1506" href="lib.types.BigWedge.html#803" class="Function"
+      >bwin</a
+      ><a name="1510"
+      > </a
+      ><a name="1511" class="Symbol"
+      >(</a
+      ><a name="1512" href="cohomology.DisjointlyPointedSet.html#1451" class="Bound"
+      >x</a
+      ><a name="1513"
+      > </a
+      ><a name="1514" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1515"
+      > </a
+      ><a name="1516" href="cohomology.DisjointlyPointedSet.html#1501" class="Bound"
+      >&#172;p</a
+      ><a name="1518" class="Symbol"
+      >)</a
+      ><a name="1519"
+      > </a
+      ><a name="1520" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1525" class="Symbol"
+      >)</a
+      ><a name="1526"
+      > </a
+      ><a name="1527" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1528"
+      > </a
+      ><a name="1529" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="1547"
+      > </a
+      ><a name="1548" href="lib.types.Pi.html#1066" class="Function"
+      >&#172;-is-prop</a
+      ><a name="1557"
+      > </a
+      ><a name="1558" href="cohomology.DisjointlyPointedSet.html#1473" class="Bound"
+      >pt&#8800;'x</a
+      ><a name="1563"
+      > </a
+      ><a name="1564" href="cohomology.DisjointlyPointedSet.html#1455" class="Bound"
+      >pt&#8800;x</a
+      ><a name="1568"
+      >
+
+            </a
+      ><a name="1582" href="cohomology.DisjointlyPointedSet.html#1582" class="Function"
+      >glue*</a
+      ><a name="1587"
+      > </a
+      ><a name="1588" class="Symbol"
+      >:</a
+      ><a name="1589"
+      > </a
+      ><a name="1590" class="Symbol"
+      >(</a
+      ><a name="1591" href="cohomology.DisjointlyPointedSet.html#1591" class="Bound"
+      >wp</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" class="Symbol"
+      >:</a
+      ><a name="1595"
+      > </a
+      ><a name="1596" href="homotopy.DisjointlyPointedSet.html#513" class="Function"
+      >MinusPoint</a
+      ><a name="1606"
+      > </a
+      ><a name="1607" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="1608" class="Symbol"
+      >)</a
+      ><a name="1609"
+      >
+              </a
+      ><a name="1624" class="Symbol"
+      >&#8594;</a
+      ><a name="1625"
+      > </a
+      ><a name="1626" href="cohomology.DisjointlyPointedSet.html#944" class="Function"
+      >base*</a
+      ><a name="1631"
+      > </a
+      ><a name="1632" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="1634"
+      > </a
+      ><a name="1635" href="cohomology.DisjointlyPointedSet.html#1098" class="Function"
+      >in*</a
+      ><a name="1638"
+      > </a
+      ><a name="1639" href="cohomology.DisjointlyPointedSet.html#1591" class="Bound"
+      >wp</a
+      ><a name="1641"
+      > </a
+      ><a name="1642" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1646"
+      > </a
+      ><a name="1647" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="1648"
+      > </a
+      ><a name="1649" class="Symbol"
+      >(&#955;</a
+      ><a name="1651"
+      > </a
+      ><a name="1652" href="cohomology.DisjointlyPointedSet.html#1652" class="Bound"
+      >x</a
+      ><a name="1653"
+      > </a
+      ><a name="1654" class="Symbol"
+      >&#8594;</a
+      ><a name="1655"
+      > </a
+      ><a name="1656" href="cohomology.DisjointlyPointedSet.html#494" class="Function"
+      >from</a
+      ><a name="1660"
+      > </a
+      ><a name="1661" class="Symbol"
+      >(</a
+      ><a name="1662" href="cohomology.DisjointlyPointedSet.html#803" class="Function"
+      >to</a
+      ><a name="1664"
+      > </a
+      ><a name="1665" href="cohomology.DisjointlyPointedSet.html#1652" class="Bound"
+      >x</a
+      ><a name="1666" class="Symbol"
+      >)</a
+      ><a name="1667"
+      > </a
+      ><a name="1668" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1670"
+      > </a
+      ><a name="1671" href="cohomology.DisjointlyPointedSet.html#1652" class="Bound"
+      >x</a
+      ><a name="1672" class="Symbol"
+      >)</a
+      ><a name="1673"
+      > </a
+      ><a name="1674" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="1675"
+      > </a
+      ><a name="1676" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="1682"
+      > </a
+      ><a name="1683" href="cohomology.DisjointlyPointedSet.html#1591" class="Bound"
+      >wp</a
+      ><a name="1685"
+      > </a
+      ><a name="1686" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="1687"
+      >
+            </a
+      ><a name="1700" href="cohomology.DisjointlyPointedSet.html#1582" class="Function"
+      >glue*</a
+      ><a name="1705"
+      > </a
+      ><a name="1706" href="cohomology.DisjointlyPointedSet.html#1706" class="Bound"
+      >wp</a
+      ><a name="1708"
+      > </a
+      ><a name="1709" class="Symbol"
+      >=</a
+      ><a name="1710"
+      > </a
+      ><a name="1711" href="lib.cubical.Square.html#10289" class="Function"
+      >&#8595;-&#8728;=idf-from-square</a
+      ><a name="1730"
+      > </a
+      ><a name="1731" href="cohomology.DisjointlyPointedSet.html#494" class="Function"
+      >from</a
+      ><a name="1735"
+      > </a
+      ><a name="1736" href="cohomology.DisjointlyPointedSet.html#803" class="Function"
+      >to</a
+      ><a name="1738"
+      > </a
+      ><a name="1739" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1740"
+      > </a
+      ><a name="1741" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1743"
+      > </a
+      ><a name="1744" class="Symbol"
+      >(</a
+      ><a name="1745" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1747"
+      > </a
+      ><a name="1748" href="cohomology.DisjointlyPointedSet.html#494" class="Function"
+      >from</a
+      ><a name="1752" class="Symbol"
+      >)</a
+      ><a name="1753"
+      > </a
+      ><a name="1754" class="Symbol"
+      >(</a
+      ><a name="1755" href="lib.types.Pushout.html#1428" class="Function"
+      >From.glue-&#946;</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" href="cohomology.DisjointlyPointedSet.html#1706" class="Bound"
+      >wp</a
+      ><a name="1769" class="Symbol"
+      >)</a
+      ><a name="1770"
+      > </a
+      ><a name="1771" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="1774"
+      > </a
+      ><a name="1775" href="cohomology.DisjointlyPointedSet.html#1802" class="Function"
+      >square</a
+      ><a name="1781"
+      > </a
+      ><a name="1782" class="Keyword"
+      >where</a
+      ><a name="1787"
+      >
+              </a
+      ><a name="1802" href="cohomology.DisjointlyPointedSet.html#1802" class="Function"
+      >square</a
+      ><a name="1808"
+      > </a
+      ><a name="1809" class="Symbol"
+      >:</a
+      ><a name="1810"
+      > </a
+      ><a name="1811" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="1817"
+      > </a
+      ><a name="1818" href="cohomology.DisjointlyPointedSet.html#944" class="Function"
+      >base*</a
+      ><a name="1823"
+      > </a
+      ><a name="1824" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1827"
+      > </a
+      ><a name="1828" class="Symbol"
+      >(</a
+      ><a name="1829" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="1835"
+      > </a
+      ><a name="1836" href="cohomology.DisjointlyPointedSet.html#1706" class="Bound"
+      >wp</a
+      ><a name="1838" class="Symbol"
+      >)</a
+      ><a name="1839"
+      > </a
+      ><a name="1840" class="Symbol"
+      >(</a
+      ><a name="1841" href="cohomology.DisjointlyPointedSet.html#1098" class="Function"
+      >in*</a
+      ><a name="1844"
+      > </a
+      ><a name="1845" href="cohomology.DisjointlyPointedSet.html#1706" class="Bound"
+      >wp</a
+      ><a name="1847"
+      > </a
+      ><a name="1848" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1852" class="Symbol"
+      >)</a
+      ><a name="1853"
+      >
+              </a
+      ><a name="1868" href="cohomology.DisjointlyPointedSet.html#1802" class="Function"
+      >square</a
+      ><a name="1874"
+      > </a
+      ><a name="1875" class="Keyword"
+      >with</a
+      ><a name="1879"
+      > </a
+      ><a name="1880" href="cohomology.DisjointlyPointedSet.html#296" class="Bound"
+      >dec</a
+      ><a name="1883"
+      > </a
+      ><a name="1884" class="Symbol"
+      >(</a
+      ><a name="1885" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1887"
+      > </a
+      ><a name="1888" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="1889" class="Symbol"
+      >)</a
+      ><a name="1890"
+      >
+              </a
+      ><a name="1905" href="cohomology.DisjointlyPointedSet.html#1802" class="Function"
+      >square</a
+      ><a name="1911"
+      > </a
+      ><a name="1912" class="Symbol"
+      >|</a
+      ><a name="1913"
+      > </a
+      ><a name="1914" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1917"
+      > </a
+      ><a name="1918" class="Symbol"
+      >_</a
+      ><a name="1919"
+      > </a
+      ><a name="1920" class="Symbol"
+      >=</a
+      ><a name="1921"
+      > </a
+      ><a name="1922" href="lib.cubical.Square.html#17899" class="Function"
+      >br-square</a
+      ><a name="1931"
+      > </a
+      ><a name="1932" class="Symbol"
+      >(</a
+      ><a name="1933" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="1939"
+      > </a
+      ><a name="1940" href="cohomology.DisjointlyPointedSet.html#1706" class="Bound"
+      >wp</a
+      ><a name="1942" class="Symbol"
+      >)</a
+      ><a name="1943"
+      >
+              </a
+      ><a name="1958" href="cohomology.DisjointlyPointedSet.html#1802" class="Function"
+      >square</a
+      ><a name="1964"
+      > </a
+      ><a name="1965" class="Symbol"
+      >|</a
+      ><a name="1966"
+      > </a
+      ><a name="1967" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1970"
+      > </a
+      ><a name="1971" href="cohomology.DisjointlyPointedSet.html#1971" class="Bound"
+      >&#172;p</a
+      ><a name="1973"
+      > </a
+      ><a name="1974" class="Symbol"
+      >=</a
+      ><a name="1975"
+      > </a
+      ><a name="1976" href="lib.types.Empty.html#165" class="Function"
+      >&#8869;-rec</a
+      ><a name="1981"
+      > </a
+      ><a name="1982" class="Symbol"
+      >(</a
+      ><a name="1983" href="cohomology.DisjointlyPointedSet.html#1971" class="Bound"
+      >&#172;p</a
+      ><a name="1985"
+      > </a
+      ><a name="1986" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1989" class="Symbol"
+      >)</a
+      ><a name="1990"
+      >
+
+          </a
+      ><a name="2002" href="cohomology.DisjointlyPointedSet.html#2002" class="Function"
+      >to-from</a
+      ><a name="2009"
+      > </a
+      ><a name="2010" class="Symbol"
+      >:</a
+      ><a name="2011"
+      > </a
+      ><a name="2012" class="Symbol"
+      >&#8704;</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" href="cohomology.DisjointlyPointedSet.html#2014" class="Bound"
+      >x</a
+      ><a name="2015"
+      > </a
+      ><a name="2016" class="Symbol"
+      >&#8594;</a
+      ><a name="2017"
+      > </a
+      ><a name="2018" href="cohomology.DisjointlyPointedSet.html#803" class="Function"
+      >to</a
+      ><a name="2020"
+      > </a
+      ><a name="2021" class="Symbol"
+      >(</a
+      ><a name="2022" href="cohomology.DisjointlyPointedSet.html#494" class="Function"
+      >from</a
+      ><a name="2026"
+      > </a
+      ><a name="2027" href="cohomology.DisjointlyPointedSet.html#2014" class="Bound"
+      >x</a
+      ><a name="2028" class="Symbol"
+      >)</a
+      ><a name="2029"
+      > </a
+      ><a name="2030" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2032"
+      > </a
+      ><a name="2033" href="cohomology.DisjointlyPointedSet.html#2014" class="Bound"
+      >x</a
+      ><a name="2034"
+      >
+          </a
+      ><a name="2045" href="cohomology.DisjointlyPointedSet.html#2002" class="Function"
+      >to-from</a
+      ><a name="2052"
+      > </a
+      ><a name="2053" href="cohomology.DisjointlyPointedSet.html#2053" class="Bound"
+      >x</a
+      ><a name="2054"
+      > </a
+      ><a name="2055" class="Keyword"
+      >with</a
+      ><a name="2059"
+      > </a
+      ><a name="2060" href="cohomology.DisjointlyPointedSet.html#296" class="Bound"
+      >dec</a
+      ><a name="2063"
+      > </a
+      ><a name="2064" href="cohomology.DisjointlyPointedSet.html#2053" class="Bound"
+      >x</a
+      ><a name="2065"
+      >
+          </a
+      ><a name="2076" href="cohomology.DisjointlyPointedSet.html#2002" class="Function"
+      >to-from</a
+      ><a name="2083"
+      > </a
+      ><a name="2084" href="cohomology.DisjointlyPointedSet.html#2084" class="Bound"
+      >x</a
+      ><a name="2085"
+      > </a
+      ><a name="2086" class="Symbol"
+      >|</a
+      ><a name="2087"
+      > </a
+      ><a name="2088" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="2091"
+      > </a
+      ><a name="2092" href="cohomology.DisjointlyPointedSet.html#2092" class="Bound"
+      >pt=x</a
+      ><a name="2096"
+      > </a
+      ><a name="2097" class="Symbol"
+      >=</a
+      ><a name="2098"
+      > </a
+      ><a name="2099" href="cohomology.DisjointlyPointedSet.html#2092" class="Bound"
+      >pt=x</a
+      ><a name="2103"
+      >
+          </a
+      ><a name="2114" href="cohomology.DisjointlyPointedSet.html#2002" class="Function"
+      >to-from</a
+      ><a name="2121"
+      > </a
+      ><a name="2122" href="cohomology.DisjointlyPointedSet.html#2122" class="Bound"
+      >x</a
+      ><a name="2123"
+      > </a
+      ><a name="2124" class="Symbol"
+      >|</a
+      ><a name="2125"
+      > </a
+      ><a name="2126" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2129"
+      > </a
+      ><a name="2130" href="cohomology.DisjointlyPointedSet.html#2130" class="Bound"
+      >pt&#8800;x</a
+      ><a name="2134"
+      > </a
+      ><a name="2135" class="Symbol"
+      >=</a
+      ><a name="2136"
+      > </a
+      ><a name="2137" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2140"
+      >
+
+    </a
+      ><a name="2146" href="cohomology.DisjointlyPointedSet.html#2146" class="Function"
+      >C-set</a
+      ><a name="2151"
+      > </a
+      ><a name="2152" class="Symbol"
+      >:</a
+      ><a name="2153"
+      > </a
+      ><a name="2154" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2155"
+      > </a
+      ><a name="2156" href="cohomology.DisjointlyPointedSet.html#244" class="Bound"
+      >n</a
+      ><a name="2157"
+      > </a
+      ><a name="2158" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="2159"
+      > </a
+      ><a name="2160" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="2162"
+      > </a
+      ><a name="2163" href="lib.groups.GroupProduct.html#2020" class="Function"
+      >&#928;&#7475;</a
+      ><a name="2165"
+      > </a
+      ><a name="2166" class="Symbol"
+      >(</a
+      ><a name="2167" href="homotopy.DisjointlyPointedSet.html#513" class="Function"
+      >MinusPoint</a
+      ><a name="2177"
+      > </a
+      ><a name="2178" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="2179" class="Symbol"
+      >)</a
+      ><a name="2180"
+      > </a
+      ><a name="2181" class="Symbol"
+      >(&#955;</a
+      ><a name="2183"
+      > </a
+      ><a name="2184" href="cohomology.DisjointlyPointedSet.html#2184" class="Bound"
+      >_</a
+      ><a name="2185"
+      > </a
+      ><a name="2186" class="Symbol"
+      >&#8594;</a
+      ><a name="2187"
+      > </a
+      ><a name="2188" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2189"
+      > </a
+      ><a name="2190" href="cohomology.DisjointlyPointedSet.html#244" class="Bound"
+      >n</a
+      ><a name="2191"
+      > </a
+      ><a name="2192" class="Symbol"
+      >(</a
+      ><a name="2193" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="2198"
+      > </a
+      ><a name="2199" href="lib.types.Bool.html#300" class="Function"
+      >&#8857;Bool</a
+      ><a name="2204" class="Symbol"
+      >))</a
+      ><a name="2206"
+      >
+    </a
+      ><a name="2211" href="cohomology.DisjointlyPointedSet.html#2146" class="Function"
+      >C-set</a
+      ><a name="2216"
+      > </a
+      ><a name="2217" class="Symbol"
+      >=</a
+      ><a name="2218"
+      >
+      </a
+      ><a name="2225" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2226"
+      > </a
+      ><a name="2227" href="cohomology.DisjointlyPointedSet.html#244" class="Bound"
+      >n</a
+      ><a name="2228"
+      > </a
+      ><a name="2229" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="2230"
+      >
+        </a
+      ><a name="2239" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="2242"
+      > </a
+      ><a name="2243" href="cohomology.Theory.html#3601" class="Function"
+      >C-emap</a
+      ><a name="2249"
+      > </a
+      ><a name="2250" href="cohomology.DisjointlyPointedSet.html#244" class="Bound"
+      >n</a
+      ><a name="2251"
+      > </a
+      ><a name="2252" class="Symbol"
+      >(</a
+      ><a name="2253" href="lib.Equivalence.html#13119" class="Function"
+      >&#8771;-to-&#8857;&#8771;</a
+      ><a name="2260"
+      > </a
+      ><a name="2261" href="cohomology.DisjointlyPointedSet.html#378" class="Function"
+      >lemma</a
+      ><a name="2266"
+      > </a
+      ><a name="2267" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2270" class="Symbol"
+      >)</a
+      ><a name="2271"
+      > </a
+      ><a name="2272" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="2273"
+      >
+      </a
+      ><a name="2280" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2281"
+      > </a
+      ><a name="2282" href="cohomology.DisjointlyPointedSet.html#244" class="Bound"
+      >n</a
+      ><a name="2283"
+      > </a
+      ><a name="2284" class="Symbol"
+      >(</a
+      ><a name="2285" href="lib.types.BigWedge.html#885" class="Function"
+      >&#8857;BigWedge</a
+      ><a name="2294"
+      > </a
+      ><a name="2295" class="Symbol"
+      >{</a
+      ><a name="2296" class="Argument"
+      >A</a
+      ><a name="2297"
+      > </a
+      ><a name="2298" class="Symbol"
+      >=</a
+      ><a name="2299"
+      > </a
+      ><a name="2300" href="homotopy.DisjointlyPointedSet.html#513" class="Function"
+      >MinusPoint</a
+      ><a name="2310"
+      > </a
+      ><a name="2311" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="2312" class="Symbol"
+      >}</a
+      ><a name="2313"
+      > </a
+      ><a name="2314" class="Symbol"
+      >(&#955;</a
+      ><a name="2316"
+      > </a
+      ><a name="2317" href="cohomology.DisjointlyPointedSet.html#2317" class="Bound"
+      >_</a
+      ><a name="2318"
+      > </a
+      ><a name="2319" class="Symbol"
+      >&#8594;</a
+      ><a name="2320"
+      > </a
+      ><a name="2321" href="lib.types.Bool.html#300" class="Function"
+      >&#8857;Bool</a
+      ><a name="2326" class="Symbol"
+      >))</a
+      ><a name="2328"
+      >
+        </a
+      ><a name="2337" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="2340"
+      > </a
+      ><a name="2341" href="cohomology.Theory.html#3601" class="Function"
+      >C-emap</a
+      ><a name="2347"
+      > </a
+      ><a name="2348" href="cohomology.DisjointlyPointedSet.html#244" class="Bound"
+      >n</a
+      ><a name="2349"
+      > </a
+      ><a name="2350" class="Symbol"
+      >(</a
+      ><a name="2351" href="lib.types.BigWedge.html#2216" class="Function"
+      >&#8857;BigWedge-emap-r</a
+      ><a name="2367"
+      > </a
+      ><a name="2368" class="Symbol"
+      >&#955;</a
+      ><a name="2369"
+      > </a
+      ><a name="2370" href="cohomology.DisjointlyPointedSet.html#2370" class="Bound"
+      >_</a
+      ><a name="2371"
+      > </a
+      ><a name="2372" class="Symbol"
+      >&#8594;</a
+      ><a name="2373"
+      > </a
+      ><a name="2374" href="lib.types.Lift.html#732" class="Function"
+      >&#8857;lower-equiv</a
+      ><a name="2386" class="Symbol"
+      >)</a
+      ><a name="2387"
+      > </a
+      ><a name="2388" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="2389"
+      >
+      </a
+      ><a name="2396" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2397"
+      > </a
+      ><a name="2398" href="cohomology.DisjointlyPointedSet.html#244" class="Bound"
+      >n</a
+      ><a name="2399"
+      > </a
+      ><a name="2400" class="Symbol"
+      >(</a
+      ><a name="2401" href="lib.types.BigWedge.html#885" class="Function"
+      >&#8857;BigWedge</a
+      ><a name="2410"
+      > </a
+      ><a name="2411" class="Symbol"
+      >{</a
+      ><a name="2412" class="Argument"
+      >A</a
+      ><a name="2413"
+      > </a
+      ><a name="2414" class="Symbol"
+      >=</a
+      ><a name="2415"
+      > </a
+      ><a name="2416" href="homotopy.DisjointlyPointedSet.html#513" class="Function"
+      >MinusPoint</a
+      ><a name="2426"
+      > </a
+      ><a name="2427" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="2428" class="Symbol"
+      >}</a
+      ><a name="2429"
+      > </a
+      ><a name="2430" class="Symbol"
+      >(&#955;</a
+      ><a name="2432"
+      > </a
+      ><a name="2433" href="cohomology.DisjointlyPointedSet.html#2433" class="Bound"
+      >_</a
+      ><a name="2434"
+      > </a
+      ><a name="2435" class="Symbol"
+      >&#8594;</a
+      ><a name="2436"
+      > </a
+      ><a name="2437" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="2442"
+      > </a
+      ><a name="2443" href="lib.types.Bool.html#300" class="Function"
+      >&#8857;Bool</a
+      ><a name="2448" class="Symbol"
+      >))</a
+      ><a name="2450"
+      >
+        </a
+      ><a name="2459" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="2462"
+      > </a
+      ><a name="2463" href="cohomology.Theory.html#2151" class="Function"
+      >C-additive-iso</a
+      ><a name="2477"
+      > </a
+      ><a name="2478" href="cohomology.DisjointlyPointedSet.html#244" class="Bound"
+      >n</a
+      ><a name="2479"
+      > </a
+      ><a name="2480" class="Symbol"
+      >(&#955;</a
+      ><a name="2482"
+      > </a
+      ><a name="2483" href="cohomology.DisjointlyPointedSet.html#2483" class="Bound"
+      >_</a
+      ><a name="2484"
+      > </a
+      ><a name="2485" class="Symbol"
+      >&#8594;</a
+      ><a name="2486"
+      > </a
+      ><a name="2487" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="2492"
+      > </a
+      ><a name="2493" href="lib.types.Bool.html#300" class="Function"
+      >&#8857;Bool</a
+      ><a name="2498" class="Symbol"
+      >)</a
+      ><a name="2499"
+      >
+              </a
+      ><a name="2514" class="Symbol"
+      >(</a
+      ><a name="2515" href="homotopy.DisjointlyPointedSet.html#4264" class="Function"
+      >MinusPoint-has-choice</a
+      ><a name="2536"
+      > </a
+      ><a name="2537" class="Number"
+      >0</a
+      ><a name="2538"
+      > </a
+      ><a name="2539" class="Symbol"
+      >(</a
+      ><a name="2540" href="homotopy.DisjointlyPointedSet.html#800" class="Function"
+      >separable-has-disjoint-pt</a
+      ><a name="2565"
+      > </a
+      ><a name="2566" href="cohomology.DisjointlyPointedSet.html#296" class="Bound"
+      >dec</a
+      ><a name="2569" class="Symbol"
+      >)</a
+      ><a name="2570"
+      > </a
+      ><a name="2571" href="cohomology.DisjointlyPointedSet.html#323" class="Bound"
+      >ac</a
+      ><a name="2573" class="Symbol"
+      >)</a
+      ><a name="2574"
+      > </a
+      ><a name="2575" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="2576"
+      >
+      </a
+      ><a name="2583" href="lib.groups.GroupProduct.html#2020" class="Function"
+      >&#928;&#7475;</a
+      ><a name="2585"
+      > </a
+      ><a name="2586" class="Symbol"
+      >(</a
+      ><a name="2587" href="homotopy.DisjointlyPointedSet.html#513" class="Function"
+      >MinusPoint</a
+      ><a name="2597"
+      > </a
+      ><a name="2598" href="cohomology.DisjointlyPointedSet.html#252" class="Bound"
+      >X</a
+      ><a name="2599" class="Symbol"
+      >)</a
+      ><a name="2600"
+      > </a
+      ><a name="2601" class="Symbol"
+      >(&#955;</a
+      ><a name="2603"
+      > </a
+      ><a name="2604" href="cohomology.DisjointlyPointedSet.html#2604" class="Bound"
+      >_</a
+      ><a name="2605"
+      > </a
+      ><a name="2606" class="Symbol"
+      >&#8594;</a
+      ><a name="2607"
+      > </a
+      ><a name="2608" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2609"
+      > </a
+      ><a name="2610" href="cohomology.DisjointlyPointedSet.html#244" class="Bound"
+      >n</a
+      ><a name="2611"
+      > </a
+      ><a name="2612" class="Symbol"
+      >(</a
+      ><a name="2613" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="2618"
+      > </a
+      ><a name="2619" href="lib.types.Bool.html#300" class="Function"
+      >&#8857;Bool</a
+      ><a name="2624" class="Symbol"
+      >))</a
+      ><a name="2626"
+      >
+        </a
+      ><a name="2635" href="lib.groups.Isomorphism.html#3290" class="Function Operator"
+      >&#8771;&#7475;&#8718;</a
+      ><a name="2638"
+      >
+
+  </a
+      ><a name="2642" class="Keyword"
+      >module</a
+      ><a name="2648"
+      > </a
+      ><a name="2649" href="cohomology.DisjointlyPointedSet.html#2649" class="Module"
+      >_</a
+      ><a name="2650"
+      > </a
+      ><a name="2651" class="Symbol"
+      >{</a
+      ><a name="2652" href="cohomology.DisjointlyPointedSet.html#2652" class="Bound"
+      >n</a
+      ><a name="2653"
+      > </a
+      ><a name="2654" class="Symbol"
+      >:</a
+      ><a name="2655"
+      > </a
+      ><a name="2656" href="lib.types.Int.html#154" class="Datatype"
+      >&#8484;</a
+      ><a name="2657" class="Symbol"
+      >}</a
+      ><a name="2658"
+      > </a
+      ><a name="2659" class="Symbol"
+      >(</a
+      ><a name="2660" href="cohomology.DisjointlyPointedSet.html#2660" class="Bound"
+      >n&#8800;0</a
+      ><a name="2663"
+      > </a
+      ><a name="2664" class="Symbol"
+      >:</a
+      ><a name="2665"
+      > </a
+      ><a name="2666" href="cohomology.DisjointlyPointedSet.html#2652" class="Bound"
+      >n</a
+      ><a name="2667"
+      > </a
+      ><a name="2668" href="lib.Base.html#6094" class="Function Operator"
+      >&#8800;</a
+      ><a name="2669"
+      > </a
+      ><a name="2670" class="Number"
+      >0</a
+      ><a name="2671" class="Symbol"
+      >)</a
+      ><a name="2672"
+      > </a
+      ><a name="2673" class="Symbol"
+      >(</a
+      ><a name="2674" href="cohomology.DisjointlyPointedSet.html#2674" class="Bound"
+      >X</a
+      ><a name="2675"
+      > </a
+      ><a name="2676" class="Symbol"
+      >:</a
+      ><a name="2677"
+      > </a
+      ><a name="2678" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2681"
+      > </a
+      ><a name="2682" href="cohomology.DisjointlyPointedSet.html#172" class="Bound"
+      >i</a
+      ><a name="2683" class="Symbol"
+      >)</a
+      ><a name="2684"
+      >
+    </a
+      ><a name="2689" class="Symbol"
+      >(</a
+      ><a name="2690" href="cohomology.DisjointlyPointedSet.html#2690" class="Bound"
+      >X-is-set</a
+      ><a name="2698"
+      > </a
+      ><a name="2699" class="Symbol"
+      >:</a
+      ><a name="2700"
+      > </a
+      ><a name="2701" href="lib.NType.html#455" class="Function"
+      >is-set</a
+      ><a name="2707"
+      > </a
+      ><a name="2708" class="Symbol"
+      >(</a
+      ><a name="2709" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="2712"
+      > </a
+      ><a name="2713" href="cohomology.DisjointlyPointedSet.html#2674" class="Bound"
+      >X</a
+      ><a name="2714" class="Symbol"
+      >))</a
+      ><a name="2716"
+      > </a
+      ><a name="2717" class="Symbol"
+      >(</a
+      ><a name="2718" href="cohomology.DisjointlyPointedSet.html#2718" class="Bound"
+      >dec</a
+      ><a name="2721"
+      > </a
+      ><a name="2722" class="Symbol"
+      >:</a
+      ><a name="2723"
+      > </a
+      ><a name="2724" href="homotopy.DisjointlyPointedSet.html#289" class="Function"
+      >is-separable</a
+      ><a name="2736"
+      > </a
+      ><a name="2737" href="cohomology.DisjointlyPointedSet.html#2674" class="Bound"
+      >X</a
+      ><a name="2738" class="Symbol"
+      >)</a
+      ><a name="2739"
+      >
+    </a
+      ><a name="2744" class="Symbol"
+      >(</a
+      ><a name="2745" href="cohomology.DisjointlyPointedSet.html#2745" class="Bound"
+      >ac</a
+      ><a name="2747"
+      > </a
+      ><a name="2748" class="Symbol"
+      >:</a
+      ><a name="2749"
+      > </a
+      ><a name="2750" href="lib.types.Choice.html#320" class="Function"
+      >has-choice</a
+      ><a name="2760"
+      > </a
+      ><a name="2761" class="Number"
+      >0</a
+      ><a name="2762"
+      > </a
+      ><a name="2763" class="Symbol"
+      >(</a
+      ><a name="2764" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="2767"
+      > </a
+      ><a name="2768" href="cohomology.DisjointlyPointedSet.html#2674" class="Bound"
+      >X</a
+      ><a name="2769" class="Symbol"
+      >)</a
+      ><a name="2770"
+      > </a
+      ><a name="2771" href="cohomology.DisjointlyPointedSet.html#172" class="Bound"
+      >i</a
+      ><a name="2772" class="Symbol"
+      >)</a
+      ><a name="2773"
+      > </a
+      ><a name="2774" class="Keyword"
+      >where</a
+      ><a name="2779"
+      >
+
+    </a
+      ><a name="2785" href="cohomology.DisjointlyPointedSet.html#2785" class="Function"
+      >C-set-&#8800;-is-trivial</a
+      ><a name="2803"
+      > </a
+      ><a name="2804" class="Symbol"
+      >:</a
+      ><a name="2805"
+      > </a
+      ><a name="2806" href="lib.types.Group.html#8063" class="Function"
+      >is-trivial&#7475;</a
+      ><a name="2817"
+      > </a
+      ><a name="2818" class="Symbol"
+      >(</a
+      ><a name="2819" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2820"
+      > </a
+      ><a name="2821" href="cohomology.DisjointlyPointedSet.html#2652" class="Bound"
+      >n</a
+      ><a name="2822"
+      > </a
+      ><a name="2823" href="cohomology.DisjointlyPointedSet.html#2674" class="Bound"
+      >X</a
+      ><a name="2824" class="Symbol"
+      >)</a
+      ><a name="2825"
+      >
+    </a
+      ><a name="2830" href="cohomology.DisjointlyPointedSet.html#2785" class="Function"
+      >C-set-&#8800;-is-trivial</a
+      ><a name="2848"
+      > </a
+      ><a name="2849" class="Symbol"
+      >=</a
+      ><a name="2850"
+      > </a
+      ><a name="2851" href="lib.groups.Isomorphism.html#8566" class="Function"
+      >iso-preserves'-trivial</a
+      ><a name="2873"
+      >
+      </a
+      ><a name="2880" class="Symbol"
+      >(</a
+      ><a name="2881" href="cohomology.DisjointlyPointedSet.html#2146" class="Function"
+      >C-set</a
+      ><a name="2886"
+      > </a
+      ><a name="2887" href="cohomology.DisjointlyPointedSet.html#2652" class="Bound"
+      >n</a
+      ><a name="2888"
+      > </a
+      ><a name="2889" href="cohomology.DisjointlyPointedSet.html#2674" class="Bound"
+      >X</a
+      ><a name="2890"
+      > </a
+      ><a name="2891" href="cohomology.DisjointlyPointedSet.html#2690" class="Bound"
+      >X-is-set</a
+      ><a name="2899"
+      > </a
+      ><a name="2900" href="cohomology.DisjointlyPointedSet.html#2718" class="Bound"
+      >dec</a
+      ><a name="2903"
+      > </a
+      ><a name="2904" href="cohomology.DisjointlyPointedSet.html#2745" class="Bound"
+      >ac</a
+      ><a name="2906" class="Symbol"
+      >)</a
+      ><a name="2907"
+      >
+      </a
+      ><a name="2914" class="Symbol"
+      >(</a
+      ><a name="2915" href="lib.groups.GroupProduct.html#9437" class="Function"
+      >&#928;&#7475;-is-trivial</a
+      ><a name="2928"
+      > </a
+      ><a name="2929" class="Symbol"
+      >(</a
+      ><a name="2930" href="homotopy.DisjointlyPointedSet.html#513" class="Function"
+      >MinusPoint</a
+      ><a name="2940"
+      > </a
+      ><a name="2941" href="cohomology.DisjointlyPointedSet.html#2674" class="Bound"
+      >X</a
+      ><a name="2942" class="Symbol"
+      >)</a
+      ><a name="2943"
+      >
+        </a
+      ><a name="2952" class="Symbol"
+      >(&#955;</a
+      ><a name="2954"
+      > </a
+      ><a name="2955" href="cohomology.DisjointlyPointedSet.html#2955" class="Bound"
+      >_</a
+      ><a name="2956"
+      > </a
+      ><a name="2957" class="Symbol"
+      >&#8594;</a
+      ><a name="2958"
+      > </a
+      ><a name="2959" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2960"
+      > </a
+      ><a name="2961" href="cohomology.DisjointlyPointedSet.html#2652" class="Bound"
+      >n</a
+      ><a name="2962"
+      > </a
+      ><a name="2963" class="Symbol"
+      >(</a
+      ><a name="2964" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="2969"
+      > </a
+      ><a name="2970" href="lib.types.Bool.html#300" class="Function"
+      >&#8857;Bool</a
+      ><a name="2975" class="Symbol"
+      >))</a
+      ><a name="2977"
+      >
+        </a
+      ><a name="2986" class="Symbol"
+      >(&#955;</a
+      ><a name="2988"
+      > </a
+      ><a name="2989" href="cohomology.DisjointlyPointedSet.html#2989" class="Bound"
+      >_</a
+      ><a name="2990"
+      > </a
+      ><a name="2991" class="Symbol"
+      >&#8594;</a
+      ><a name="2992"
+      > </a
+      ><a name="2993" href="cohomology.Theory.html#7465" class="Field"
+      >C-dimension</a
+      ><a name="3004"
+      > </a
+      ><a name="3005" href="cohomology.DisjointlyPointedSet.html#2660" class="Bound"
+      >n&#8800;0</a
+      ><a name="3008" class="Symbol"
+      >))</a
+      ><a name="3010"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

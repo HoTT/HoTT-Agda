@@ -1,0 +1,364 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.Hopf</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="homotopy.CircleHSpace.html#1" class="Module"
+      >homotopy.CircleHSpace</a
+      ><a name="92"
+      >
+</a
+      ><a name="93" class="Keyword"
+      >open</a
+      ><a name="97"
+      > </a
+      ><a name="98" class="Keyword"
+      >import</a
+      ><a name="104"
+      > </a
+      ><a name="105" href="homotopy.JoinAssocCubical.html#1" class="Module"
+      >homotopy.JoinAssocCubical</a
+      ><a name="130"
+      >
+</a
+      ><a name="131" class="Keyword"
+      >open</a
+      ><a name="135"
+      > </a
+      ><a name="136" class="Keyword"
+      >import</a
+      ><a name="142"
+      > </a
+      ><a name="143" href="homotopy.JoinSusp.html#1" class="Module"
+      >homotopy.JoinSusp</a
+      ><a name="160"
+      >
+
+</a
+      ><a name="162" class="Keyword"
+      >module</a
+      ><a name="168"
+      > </a
+      ><a name="169" href="homotopy.Hopf.html#1" class="Module"
+      >homotopy.Hopf</a
+      ><a name="182"
+      > </a
+      ><a name="183" class="Keyword"
+      >where</a
+      ><a name="188"
+      >
+
+</a
+      ><a name="190" class="Keyword"
+      >import</a
+      ><a name="196"
+      > </a
+      ><a name="197" href="homotopy.HopfConstruction.html#1" class="Module"
+      >homotopy.HopfConstruction</a
+      ><a name="222"
+      >
+</a
+      ><a name="223" class="Keyword"
+      >module</a
+      ><a name="229"
+      > </a
+      ><a name="230" href="homotopy.Hopf.html#230" class="Module"
+      >Hopf</a
+      ><a name="234"
+      > </a
+      ><a name="235" class="Symbol"
+      >=</a
+      ><a name="236"
+      > </a
+      ><a name="237" href="homotopy.HopfConstruction.html#1" class="Module"
+      >homotopy.HopfConstruction</a
+      ><a name="262"
+      > </a
+      ><a name="263" href="lib.types.Circle.html#5358" class="Function"
+      >S&#185;-conn</a
+      ><a name="270"
+      > </a
+      ><a name="271" href="homotopy.CircleHSpace.html#124" class="Function"
+      >&#8857;S&#185;-hSpace</a
+      ><a name="281"
+      >
+
+</a
+      ><a name="283" href="homotopy.Hopf.html#283" class="Function"
+      >Hopf</a
+      ><a name="287"
+      > </a
+      ><a name="288" class="Symbol"
+      >:</a
+      ><a name="289"
+      > </a
+      ><a name="290" href="lib.types.IteratedSuspension.html#2255" class="Function"
+      >S&#178;</a
+      ><a name="292"
+      > </a
+      ><a name="293" class="Symbol"
+      >&#8594;</a
+      ><a name="294"
+      > </a
+      ><a name="295" href="lib.Base.html#1196" class="Function"
+      >Type&#8320;</a
+      ><a name="300"
+      >
+</a
+      ><a name="301" href="homotopy.Hopf.html#283" class="Function"
+      >Hopf</a
+      ><a name="305"
+      > </a
+      ><a name="306" class="Symbol"
+      >=</a
+      ><a name="307"
+      > </a
+      ><a name="308" href="lib.types.Pushout.html#1397" class="Function"
+      >Hopf.H.f</a
+      ><a name="316"
+      >
+
+</a
+      ><a name="318" href="homotopy.Hopf.html#318" class="Function"
+      >Hopf-fiber</a
+      ><a name="328"
+      > </a
+      ><a name="329" class="Symbol"
+      >:</a
+      ><a name="330"
+      > </a
+      ><a name="331" href="homotopy.Hopf.html#283" class="Function"
+      >Hopf</a
+      ><a name="335"
+      > </a
+      ><a name="336" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="341"
+      > </a
+      ><a name="342" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="344"
+      > </a
+      ><a name="345" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="347"
+      >
+</a
+      ><a name="348" href="homotopy.Hopf.html#318" class="Function"
+      >Hopf-fiber</a
+      ><a name="358"
+      > </a
+      ><a name="359" class="Symbol"
+      >=</a
+      ><a name="360"
+      > </a
+      ><a name="361" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="364"
+      >
+
+</a
+      ><a name="366" class="Comment"
+      >-- TODO Turn [Hopf.theorem] into an equivalence</a
+      ><a name="413"
+      >
+</a
+      ><a name="414" href="homotopy.Hopf.html#414" class="Function"
+      >Hopf-total</a
+      ><a name="424"
+      > </a
+      ><a name="425" class="Symbol"
+      >:</a
+      ><a name="426"
+      > </a
+      ><a name="427" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="428"
+      > </a
+      ><a name="429" class="Symbol"
+      >_</a
+      ><a name="430"
+      > </a
+      ><a name="431" href="homotopy.Hopf.html#283" class="Function"
+      >Hopf</a
+      ><a name="435"
+      > </a
+      ><a name="436" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="437"
+      > </a
+      ><a name="438" href="lib.types.IteratedSuspension.html#2269" class="Function"
+      >S&#179;</a
+      ><a name="440"
+      >
+</a
+      ><a name="441" href="homotopy.Hopf.html#414" class="Function"
+      >Hopf-total</a
+      ><a name="451"
+      > </a
+      ><a name="452" class="Symbol"
+      >=</a
+      ><a name="453"
+      >
+  </a
+      ><a name="456" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="457"
+      > </a
+      ><a name="458" class="Symbol"
+      >_</a
+      ><a name="459"
+      > </a
+      ><a name="460" href="homotopy.Hopf.html#283" class="Function"
+      >Hopf</a
+      ><a name="464"
+      >       </a
+      ><a name="471" href="lib.Equivalence.html#8710" class="Function Operator"
+      >&#8771;&#10216;</a
+      ><a name="473"
+      > </a
+      ><a name="474" href="lib.Univalence.html#435" class="Function"
+      >coe-equiv</a
+      ><a name="483"
+      > </a
+      ><a name="484" href="homotopy.HopfConstruction.html#1571" class="Function"
+      >Hopf.theorem</a
+      ><a name="496"
+      > </a
+      ><a name="497" href="lib.Equivalence.html#8710" class="Function Operator"
+      >&#10217;</a
+      ><a name="498"
+      >
+  </a
+      ><a name="501" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="503"
+      > </a
+      ><a name="504" href="lib.types.Join.html#392" class="Function Operator"
+      >*</a
+      ><a name="505"
+      > </a
+      ><a name="506" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="508"
+      >        </a
+      ><a name="516" href="lib.Equivalence.html#8710" class="Function Operator"
+      >&#8771;&#10216;</a
+      ><a name="518"
+      > </a
+      ><a name="519" href="homotopy.JoinSusp.html#1757" class="Function"
+      >*-Susp-l</a
+      ><a name="527"
+      > </a
+      ><a name="528" href="lib.types.IteratedSuspension.html#2227" class="Function"
+      >S&#8304;</a
+      ><a name="530"
+      > </a
+      ><a name="531" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="533"
+      > </a
+      ><a name="534" href="lib.Equivalence.html#8710" class="Function Operator"
+      >&#10217;</a
+      ><a name="535"
+      >
+  </a
+      ><a name="538" href="lib.types.Suspension.html#658" class="Function"
+      >Susp</a
+      ><a name="542"
+      > </a
+      ><a name="543" class="Symbol"
+      >(</a
+      ><a name="544" href="lib.types.IteratedSuspension.html#2227" class="Function"
+      >S&#8304;</a
+      ><a name="546"
+      > </a
+      ><a name="547" href="lib.types.Join.html#392" class="Function Operator"
+      >*</a
+      ><a name="548"
+      > </a
+      ><a name="549" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="551" class="Symbol"
+      >)</a
+      ><a name="552"
+      > </a
+      ><a name="553" href="lib.Equivalence.html#8710" class="Function Operator"
+      >&#8771;&#10216;</a
+      ><a name="555"
+      > </a
+      ><a name="556" href="lib.types.Suspension.html#5195" class="Function"
+      >Susp-emap</a
+      ><a name="565"
+      > </a
+      ><a name="566" class="Symbol"
+      >(</a
+      ><a name="567" href="homotopy.JoinSusp.html#1517" class="Function"
+      >*-Bool-l</a
+      ><a name="575"
+      > </a
+      ><a name="576" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="578" class="Symbol"
+      >)</a
+      ><a name="579"
+      > </a
+      ><a name="580" href="lib.Equivalence.html#8710" class="Function Operator"
+      >&#10217;</a
+      ><a name="581"
+      >
+  </a
+      ><a name="584" href="lib.types.IteratedSuspension.html#2269" class="Function"
+      >S&#179;</a
+      ><a name="586"
+      > </a
+      ><a name="587" href="lib.Equivalence.html#8813" class="Function Operator"
+      >&#8771;&#8718;</a
+      ><a name="589"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

@@ -1,0 +1,1685 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.groups.CommutingSquare</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.Group.html#1" class="Module"
+      >lib.types.Group</a
+      ><a name="92"
+      >
+</a
+      ><a name="93" class="Keyword"
+      >open</a
+      ><a name="97"
+      > </a
+      ><a name="98" class="Keyword"
+      >import</a
+      ><a name="104"
+      > </a
+      ><a name="105" href="lib.types.CommutingSquare.html#1" class="Module"
+      >lib.types.CommutingSquare</a
+      ><a name="130"
+      >
+</a
+      ><a name="131" class="Keyword"
+      >open</a
+      ><a name="135"
+      > </a
+      ><a name="136" class="Keyword"
+      >import</a
+      ><a name="142"
+      > </a
+      ><a name="143" href="lib.groups.Homomorphism.html#1" class="Module"
+      >lib.groups.Homomorphism</a
+      ><a name="166"
+      >
+</a
+      ><a name="167" class="Keyword"
+      >open</a
+      ><a name="171"
+      > </a
+      ><a name="172" class="Keyword"
+      >import</a
+      ><a name="178"
+      > </a
+      ><a name="179" href="lib.groups.Isomorphism.html#1" class="Module"
+      >lib.groups.Isomorphism</a
+      ><a name="201"
+      >
+
+</a
+      ><a name="203" class="Keyword"
+      >module</a
+      ><a name="209"
+      > </a
+      ><a name="210" href="lib.groups.CommutingSquare.html#1" class="Module"
+      >lib.groups.CommutingSquare</a
+      ><a name="236"
+      > </a
+      ><a name="237" class="Keyword"
+      >where</a
+      ><a name="242"
+      >
+
+</a
+      ><a name="244" class="Comment"
+      >-- A new type to keep the parameters.</a
+      ><a name="281"
+      >
+</a
+      ><a name="282" class="Keyword"
+      >record</a
+      ><a name="288"
+      > </a
+      ><a name="289" href="lib.groups.CommutingSquare.html#289" class="Record"
+      >CommSquare&#7475;</a
+      ><a name="300"
+      > </a
+      ><a name="301" class="Symbol"
+      >{</a
+      ><a name="302" href="lib.groups.CommutingSquare.html#302" class="Bound"
+      >i&#8320;</a
+      ><a name="304"
+      > </a
+      ><a name="305" href="lib.groups.CommutingSquare.html#305" class="Bound"
+      >i&#8321;</a
+      ><a name="307"
+      > </a
+      ><a name="308" href="lib.groups.CommutingSquare.html#308" class="Bound"
+      >j&#8320;</a
+      ><a name="310"
+      > </a
+      ><a name="311" href="lib.groups.CommutingSquare.html#311" class="Bound"
+      >j&#8321;</a
+      ><a name="313" class="Symbol"
+      >}</a
+      ><a name="314"
+      >
+  </a
+      ><a name="317" class="Symbol"
+      >{</a
+      ><a name="318" href="lib.groups.CommutingSquare.html#318" class="Bound"
+      >G&#8320;</a
+      ><a name="320"
+      > </a
+      ><a name="321" class="Symbol"
+      >:</a
+      ><a name="322"
+      > </a
+      ><a name="323" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="328"
+      > </a
+      ><a name="329" href="lib.groups.CommutingSquare.html#302" class="Bound"
+      >i&#8320;</a
+      ><a name="331" class="Symbol"
+      >}</a
+      ><a name="332"
+      > </a
+      ><a name="333" class="Symbol"
+      >{</a
+      ><a name="334" href="lib.groups.CommutingSquare.html#334" class="Bound"
+      >G&#8321;</a
+      ><a name="336"
+      > </a
+      ><a name="337" class="Symbol"
+      >:</a
+      ><a name="338"
+      > </a
+      ><a name="339" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="344"
+      > </a
+      ><a name="345" href="lib.groups.CommutingSquare.html#305" class="Bound"
+      >i&#8321;</a
+      ><a name="347" class="Symbol"
+      >}</a
+      ><a name="348"
+      > </a
+      ><a name="349" class="Symbol"
+      >{</a
+      ><a name="350" href="lib.groups.CommutingSquare.html#350" class="Bound"
+      >H&#8320;</a
+      ><a name="352"
+      > </a
+      ><a name="353" class="Symbol"
+      >:</a
+      ><a name="354"
+      > </a
+      ><a name="355" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="360"
+      > </a
+      ><a name="361" href="lib.groups.CommutingSquare.html#308" class="Bound"
+      >j&#8320;</a
+      ><a name="363" class="Symbol"
+      >}</a
+      ><a name="364"
+      > </a
+      ><a name="365" class="Symbol"
+      >{</a
+      ><a name="366" href="lib.groups.CommutingSquare.html#366" class="Bound"
+      >H&#8321;</a
+      ><a name="368"
+      > </a
+      ><a name="369" class="Symbol"
+      >:</a
+      ><a name="370"
+      > </a
+      ><a name="371" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="376"
+      > </a
+      ><a name="377" href="lib.groups.CommutingSquare.html#311" class="Bound"
+      >j&#8321;</a
+      ><a name="379" class="Symbol"
+      >}</a
+      ><a name="380"
+      >
+  </a
+      ><a name="383" class="Symbol"
+      >(</a
+      ><a name="384" href="lib.groups.CommutingSquare.html#384" class="Bound"
+      >&#966;&#8320;</a
+      ><a name="386"
+      > </a
+      ><a name="387" class="Symbol"
+      >:</a
+      ><a name="388"
+      > </a
+      ><a name="389" href="lib.groups.CommutingSquare.html#318" class="Bound"
+      >G&#8320;</a
+      ><a name="391"
+      > </a
+      ><a name="392" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="394"
+      > </a
+      ><a name="395" href="lib.groups.CommutingSquare.html#350" class="Bound"
+      >H&#8320;</a
+      ><a name="397" class="Symbol"
+      >)</a
+      ><a name="398"
+      > </a
+      ><a name="399" class="Symbol"
+      >(</a
+      ><a name="400" href="lib.groups.CommutingSquare.html#400" class="Bound"
+      >&#966;&#8321;</a
+      ><a name="402"
+      > </a
+      ><a name="403" class="Symbol"
+      >:</a
+      ><a name="404"
+      > </a
+      ><a name="405" href="lib.groups.CommutingSquare.html#334" class="Bound"
+      >G&#8321;</a
+      ><a name="407"
+      > </a
+      ><a name="408" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="410"
+      > </a
+      ><a name="411" href="lib.groups.CommutingSquare.html#366" class="Bound"
+      >H&#8321;</a
+      ><a name="413" class="Symbol"
+      >)</a
+      ><a name="414"
+      > </a
+      ><a name="415" class="Symbol"
+      >(</a
+      ><a name="416" href="lib.groups.CommutingSquare.html#416" class="Bound"
+      >&#958;G</a
+      ><a name="418"
+      > </a
+      ><a name="419" class="Symbol"
+      >:</a
+      ><a name="420"
+      > </a
+      ><a name="421" href="lib.groups.CommutingSquare.html#318" class="Bound"
+      >G&#8320;</a
+      ><a name="423"
+      > </a
+      ><a name="424" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="426"
+      > </a
+      ><a name="427" href="lib.groups.CommutingSquare.html#334" class="Bound"
+      >G&#8321;</a
+      ><a name="429" class="Symbol"
+      >)</a
+      ><a name="430"
+      > </a
+      ><a name="431" class="Symbol"
+      >(</a
+      ><a name="432" href="lib.groups.CommutingSquare.html#432" class="Bound"
+      >&#958;H</a
+      ><a name="434"
+      > </a
+      ><a name="435" class="Symbol"
+      >:</a
+      ><a name="436"
+      > </a
+      ><a name="437" href="lib.groups.CommutingSquare.html#350" class="Bound"
+      >H&#8320;</a
+      ><a name="439"
+      > </a
+      ><a name="440" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="442"
+      > </a
+      ><a name="443" href="lib.groups.CommutingSquare.html#366" class="Bound"
+      >H&#8321;</a
+      ><a name="445" class="Symbol"
+      >)</a
+      ><a name="446"
+      >
+  </a
+      ><a name="449" class="Symbol"
+      >:</a
+      ><a name="450"
+      > </a
+      ><a name="451" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="455"
+      > </a
+      ><a name="456" class="Symbol"
+      >(</a
+      ><a name="457" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="461"
+      > </a
+      ><a name="462" class="Symbol"
+      >(</a
+      ><a name="463" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="467"
+      > </a
+      ><a name="468" href="lib.groups.CommutingSquare.html#302" class="Bound"
+      >i&#8320;</a
+      ><a name="470"
+      > </a
+      ><a name="471" href="lib.groups.CommutingSquare.html#305" class="Bound"
+      >i&#8321;</a
+      ><a name="473" class="Symbol"
+      >)</a
+      ><a name="474"
+      > </a
+      ><a name="475" class="Symbol"
+      >(</a
+      ><a name="476" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="480"
+      > </a
+      ><a name="481" href="lib.groups.CommutingSquare.html#308" class="Bound"
+      >j&#8320;</a
+      ><a name="483"
+      > </a
+      ><a name="484" href="lib.groups.CommutingSquare.html#311" class="Bound"
+      >j&#8321;</a
+      ><a name="486" class="Symbol"
+      >))</a
+      ><a name="488"
+      > </a
+      ><a name="489" class="Keyword"
+      >where</a
+      ><a name="494"
+      >
+  </a
+      ><a name="497" class="Keyword"
+      >constructor</a
+      ><a name="508"
+      > </a
+      ><a name="509" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="518"
+      >
+  </a
+      ><a name="521" class="Keyword"
+      >field</a
+      ><a name="526"
+      >
+    </a
+      ><a name="531" href="lib.groups.CommutingSquare.html#531" class="Field"
+      >commutes&#7475;</a
+      ><a name="540"
+      > </a
+      ><a name="541" class="Symbol"
+      >:</a
+      ><a name="542"
+      > </a
+      ><a name="543" class="Symbol"
+      >&#8704;</a
+      ><a name="544"
+      > </a
+      ><a name="545" href="lib.groups.CommutingSquare.html#545" class="Bound"
+      >g&#8320;</a
+      ><a name="547"
+      > </a
+      ><a name="548" class="Symbol"
+      >&#8594;</a
+      ><a name="549"
+      > </a
+      ><a name="550" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="560"
+      > </a
+      ><a name="561" class="Symbol"
+      >(</a
+      ><a name="562" href="lib.groups.CommutingSquare.html#432" class="Bound"
+      >&#958;H</a
+      ><a name="564"
+      > </a
+      ><a name="565" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="567"
+      > </a
+      ><a name="568" href="lib.groups.CommutingSquare.html#384" class="Bound"
+      >&#966;&#8320;</a
+      ><a name="570" class="Symbol"
+      >)</a
+      ><a name="571"
+      > </a
+      ><a name="572" href="lib.groups.CommutingSquare.html#545" class="Bound"
+      >g&#8320;</a
+      ><a name="574"
+      > </a
+      ><a name="575" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="577"
+      > </a
+      ><a name="578" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="588"
+      > </a
+      ><a name="589" class="Symbol"
+      >(</a
+      ><a name="590" href="lib.groups.CommutingSquare.html#400" class="Bound"
+      >&#966;&#8321;</a
+      ><a name="592"
+      > </a
+      ><a name="593" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="595"
+      > </a
+      ><a name="596" href="lib.groups.CommutingSquare.html#416" class="Bound"
+      >&#958;G</a
+      ><a name="598" class="Symbol"
+      >)</a
+      ><a name="599"
+      > </a
+      ><a name="600" href="lib.groups.CommutingSquare.html#545" class="Bound"
+      >g&#8320;</a
+      ><a name="602"
+      >
+
+</a
+      ><a name="604" class="Keyword"
+      >infix</a
+      ><a name="609"
+      > </a
+      ><a name="610" class="Number"
+      >0</a
+      ><a name="611"
+      > </a
+      ><a name="612" href="lib.groups.CommutingSquare.html#618" class="Function Operator"
+      >_&#9633;$&#7475;_</a
+      ><a name="617"
+      >
+</a
+      ><a name="618" href="lib.groups.CommutingSquare.html#618" class="Function Operator"
+      >_&#9633;$&#7475;_</a
+      ><a name="623"
+      > </a
+      ><a name="624" class="Symbol"
+      >=</a
+      ><a name="625"
+      > </a
+      ><a name="626" href="lib.groups.CommutingSquare.html#531" class="Field"
+      >CommSquare&#7475;.commutes&#7475;</a
+      ><a name="647"
+      >
+
+</a
+      ><a name="649" class="Keyword"
+      >abstract</a
+      ><a name="657"
+      >
+  </a
+      ><a name="660" href="lib.groups.CommutingSquare.html#660" class="Function"
+      >CommSquare&#7475;-&#8728;v</a
+      ><a name="674"
+      > </a
+      ><a name="675" class="Symbol"
+      >:</a
+      ><a name="676"
+      > </a
+      ><a name="677" class="Symbol"
+      >&#8704;</a
+      ><a name="678"
+      > </a
+      ><a name="679" class="Symbol"
+      >{</a
+      ><a name="680" href="lib.groups.CommutingSquare.html#680" class="Bound"
+      >i&#8320;</a
+      ><a name="682"
+      > </a
+      ><a name="683" href="lib.groups.CommutingSquare.html#683" class="Bound"
+      >i&#8321;</a
+      ><a name="685"
+      > </a
+      ><a name="686" href="lib.groups.CommutingSquare.html#686" class="Bound"
+      >i&#8322;</a
+      ><a name="688"
+      > </a
+      ><a name="689" href="lib.groups.CommutingSquare.html#689" class="Bound"
+      >j&#8320;</a
+      ><a name="691"
+      > </a
+      ><a name="692" href="lib.groups.CommutingSquare.html#692" class="Bound"
+      >j&#8321;</a
+      ><a name="694"
+      > </a
+      ><a name="695" href="lib.groups.CommutingSquare.html#695" class="Bound"
+      >j&#8322;</a
+      ><a name="697" class="Symbol"
+      >}</a
+      ><a name="698"
+      >
+    </a
+      ><a name="703" class="Symbol"
+      >{</a
+      ><a name="704" href="lib.groups.CommutingSquare.html#704" class="Bound"
+      >G&#8320;</a
+      ><a name="706"
+      > </a
+      ><a name="707" class="Symbol"
+      >:</a
+      ><a name="708"
+      > </a
+      ><a name="709" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="714"
+      > </a
+      ><a name="715" href="lib.groups.CommutingSquare.html#680" class="Bound"
+      >i&#8320;</a
+      ><a name="717" class="Symbol"
+      >}</a
+      ><a name="718"
+      > </a
+      ><a name="719" class="Symbol"
+      >{</a
+      ><a name="720" href="lib.groups.CommutingSquare.html#720" class="Bound"
+      >G&#8321;</a
+      ><a name="722"
+      > </a
+      ><a name="723" class="Symbol"
+      >:</a
+      ><a name="724"
+      > </a
+      ><a name="725" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="730"
+      > </a
+      ><a name="731" href="lib.groups.CommutingSquare.html#683" class="Bound"
+      >i&#8321;</a
+      ><a name="733" class="Symbol"
+      >}</a
+      ><a name="734"
+      > </a
+      ><a name="735" class="Symbol"
+      >{</a
+      ><a name="736" href="lib.groups.CommutingSquare.html#736" class="Bound"
+      >G&#8322;</a
+      ><a name="738"
+      > </a
+      ><a name="739" class="Symbol"
+      >:</a
+      ><a name="740"
+      > </a
+      ><a name="741" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="746"
+      > </a
+      ><a name="747" href="lib.groups.CommutingSquare.html#686" class="Bound"
+      >i&#8322;</a
+      ><a name="749" class="Symbol"
+      >}</a
+      ><a name="750"
+      >
+    </a
+      ><a name="755" class="Symbol"
+      >{</a
+      ><a name="756" href="lib.groups.CommutingSquare.html#756" class="Bound"
+      >H&#8320;</a
+      ><a name="758"
+      > </a
+      ><a name="759" class="Symbol"
+      >:</a
+      ><a name="760"
+      > </a
+      ><a name="761" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="766"
+      > </a
+      ><a name="767" href="lib.groups.CommutingSquare.html#689" class="Bound"
+      >j&#8320;</a
+      ><a name="769" class="Symbol"
+      >}</a
+      ><a name="770"
+      > </a
+      ><a name="771" class="Symbol"
+      >{</a
+      ><a name="772" href="lib.groups.CommutingSquare.html#772" class="Bound"
+      >H&#8321;</a
+      ><a name="774"
+      > </a
+      ><a name="775" class="Symbol"
+      >:</a
+      ><a name="776"
+      > </a
+      ><a name="777" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="782"
+      > </a
+      ><a name="783" href="lib.groups.CommutingSquare.html#692" class="Bound"
+      >j&#8321;</a
+      ><a name="785" class="Symbol"
+      >}</a
+      ><a name="786"
+      > </a
+      ><a name="787" class="Symbol"
+      >{</a
+      ><a name="788" href="lib.groups.CommutingSquare.html#788" class="Bound"
+      >H&#8322;</a
+      ><a name="790"
+      > </a
+      ><a name="791" class="Symbol"
+      >:</a
+      ><a name="792"
+      > </a
+      ><a name="793" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="798"
+      > </a
+      ><a name="799" href="lib.groups.CommutingSquare.html#695" class="Bound"
+      >j&#8322;</a
+      ><a name="801" class="Symbol"
+      >}</a
+      ><a name="802"
+      >
+    </a
+      ><a name="807" class="Symbol"
+      >{</a
+      ><a name="808" href="lib.groups.CommutingSquare.html#808" class="Bound"
+      >&#966;</a
+      ><a name="809"
+      > </a
+      ><a name="810" class="Symbol"
+      >:</a
+      ><a name="811"
+      > </a
+      ><a name="812" href="lib.groups.CommutingSquare.html#704" class="Bound"
+      >G&#8320;</a
+      ><a name="814"
+      > </a
+      ><a name="815" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="817"
+      > </a
+      ><a name="818" href="lib.groups.CommutingSquare.html#756" class="Bound"
+      >H&#8320;</a
+      ><a name="820" class="Symbol"
+      >}</a
+      ><a name="821"
+      > </a
+      ><a name="822" class="Symbol"
+      >{</a
+      ><a name="823" href="lib.groups.CommutingSquare.html#823" class="Bound"
+      >&#968;</a
+      ><a name="824"
+      > </a
+      ><a name="825" class="Symbol"
+      >:</a
+      ><a name="826"
+      > </a
+      ><a name="827" href="lib.groups.CommutingSquare.html#720" class="Bound"
+      >G&#8321;</a
+      ><a name="829"
+      > </a
+      ><a name="830" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="832"
+      > </a
+      ><a name="833" href="lib.groups.CommutingSquare.html#772" class="Bound"
+      >H&#8321;</a
+      ><a name="835" class="Symbol"
+      >}</a
+      ><a name="836"
+      > </a
+      ><a name="837" class="Symbol"
+      >{</a
+      ><a name="838" href="lib.groups.CommutingSquare.html#838" class="Bound"
+      >&#967;</a
+      ><a name="839"
+      > </a
+      ><a name="840" class="Symbol"
+      >:</a
+      ><a name="841"
+      > </a
+      ><a name="842" href="lib.groups.CommutingSquare.html#736" class="Bound"
+      >G&#8322;</a
+      ><a name="844"
+      > </a
+      ><a name="845" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="847"
+      > </a
+      ><a name="848" href="lib.groups.CommutingSquare.html#788" class="Bound"
+      >H&#8322;</a
+      ><a name="850" class="Symbol"
+      >}</a
+      ><a name="851"
+      >
+    </a
+      ><a name="856" class="Symbol"
+      >{</a
+      ><a name="857" href="lib.groups.CommutingSquare.html#857" class="Bound"
+      >&#958;G</a
+      ><a name="859"
+      > </a
+      ><a name="860" class="Symbol"
+      >:</a
+      ><a name="861"
+      > </a
+      ><a name="862" href="lib.groups.CommutingSquare.html#704" class="Bound"
+      >G&#8320;</a
+      ><a name="864"
+      > </a
+      ><a name="865" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="867"
+      > </a
+      ><a name="868" href="lib.groups.CommutingSquare.html#720" class="Bound"
+      >G&#8321;</a
+      ><a name="870" class="Symbol"
+      >}</a
+      ><a name="871"
+      > </a
+      ><a name="872" class="Symbol"
+      >{</a
+      ><a name="873" href="lib.groups.CommutingSquare.html#873" class="Bound"
+      >&#958;H</a
+      ><a name="875"
+      > </a
+      ><a name="876" class="Symbol"
+      >:</a
+      ><a name="877"
+      > </a
+      ><a name="878" href="lib.groups.CommutingSquare.html#756" class="Bound"
+      >H&#8320;</a
+      ><a name="880"
+      > </a
+      ><a name="881" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="883"
+      > </a
+      ><a name="884" href="lib.groups.CommutingSquare.html#772" class="Bound"
+      >H&#8321;</a
+      ><a name="886" class="Symbol"
+      >}</a
+      ><a name="887"
+      >
+    </a
+      ><a name="892" class="Symbol"
+      >{</a
+      ><a name="893" href="lib.groups.CommutingSquare.html#893" class="Bound"
+      >&#956;A</a
+      ><a name="895"
+      > </a
+      ><a name="896" class="Symbol"
+      >:</a
+      ><a name="897"
+      > </a
+      ><a name="898" href="lib.groups.CommutingSquare.html#720" class="Bound"
+      >G&#8321;</a
+      ><a name="900"
+      > </a
+      ><a name="901" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="903"
+      > </a
+      ><a name="904" href="lib.groups.CommutingSquare.html#736" class="Bound"
+      >G&#8322;</a
+      ><a name="906" class="Symbol"
+      >}</a
+      ><a name="907"
+      > </a
+      ><a name="908" class="Symbol"
+      >{</a
+      ><a name="909" href="lib.groups.CommutingSquare.html#909" class="Bound"
+      >&#956;B</a
+      ><a name="911"
+      > </a
+      ><a name="912" class="Symbol"
+      >:</a
+      ><a name="913"
+      > </a
+      ><a name="914" href="lib.groups.CommutingSquare.html#772" class="Bound"
+      >H&#8321;</a
+      ><a name="916"
+      > </a
+      ><a name="917" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="919"
+      > </a
+      ><a name="920" href="lib.groups.CommutingSquare.html#788" class="Bound"
+      >H&#8322;</a
+      ><a name="922" class="Symbol"
+      >}</a
+      ><a name="923"
+      >
+    </a
+      ><a name="928" class="Symbol"
+      >&#8594;</a
+      ><a name="929"
+      > </a
+      ><a name="930" href="lib.groups.CommutingSquare.html#289" class="Record"
+      >CommSquare&#7475;</a
+      ><a name="941"
+      > </a
+      ><a name="942" href="lib.groups.CommutingSquare.html#823" class="Bound"
+      >&#968;</a
+      ><a name="943"
+      > </a
+      ><a name="944" href="lib.groups.CommutingSquare.html#838" class="Bound"
+      >&#967;</a
+      ><a name="945"
+      > </a
+      ><a name="946" href="lib.groups.CommutingSquare.html#893" class="Bound"
+      >&#956;A</a
+      ><a name="948"
+      > </a
+      ><a name="949" href="lib.groups.CommutingSquare.html#909" class="Bound"
+      >&#956;B</a
+      ><a name="951"
+      >
+    </a
+      ><a name="956" class="Symbol"
+      >&#8594;</a
+      ><a name="957"
+      > </a
+      ><a name="958" href="lib.groups.CommutingSquare.html#289" class="Record"
+      >CommSquare&#7475;</a
+      ><a name="969"
+      > </a
+      ><a name="970" href="lib.groups.CommutingSquare.html#808" class="Bound"
+      >&#966;</a
+      ><a name="971"
+      > </a
+      ><a name="972" href="lib.groups.CommutingSquare.html#823" class="Bound"
+      >&#968;</a
+      ><a name="973"
+      > </a
+      ><a name="974" href="lib.groups.CommutingSquare.html#857" class="Bound"
+      >&#958;G</a
+      ><a name="976"
+      > </a
+      ><a name="977" href="lib.groups.CommutingSquare.html#873" class="Bound"
+      >&#958;H</a
+      ><a name="979"
+      >
+    </a
+      ><a name="984" class="Symbol"
+      >&#8594;</a
+      ><a name="985"
+      > </a
+      ><a name="986" href="lib.groups.CommutingSquare.html#289" class="Record"
+      >CommSquare&#7475;</a
+      ><a name="997"
+      > </a
+      ><a name="998" href="lib.groups.CommutingSquare.html#808" class="Bound"
+      >&#966;</a
+      ><a name="999"
+      > </a
+      ><a name="1000" href="lib.groups.CommutingSquare.html#838" class="Bound"
+      >&#967;</a
+      ><a name="1001"
+      > </a
+      ><a name="1002" class="Symbol"
+      >(</a
+      ><a name="1003" href="lib.groups.CommutingSquare.html#893" class="Bound"
+      >&#956;A</a
+      ><a name="1005"
+      > </a
+      ><a name="1006" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="1008"
+      > </a
+      ><a name="1009" href="lib.groups.CommutingSquare.html#857" class="Bound"
+      >&#958;G</a
+      ><a name="1011" class="Symbol"
+      >)</a
+      ><a name="1012"
+      > </a
+      ><a name="1013" class="Symbol"
+      >(</a
+      ><a name="1014" href="lib.groups.CommutingSquare.html#909" class="Bound"
+      >&#956;B</a
+      ><a name="1016"
+      > </a
+      ><a name="1017" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="1019"
+      > </a
+      ><a name="1020" href="lib.groups.CommutingSquare.html#873" class="Bound"
+      >&#958;H</a
+      ><a name="1022" class="Symbol"
+      >)</a
+      ><a name="1023"
+      >
+  </a
+      ><a name="1026" href="lib.groups.CommutingSquare.html#660" class="Function"
+      >CommSquare&#7475;-&#8728;v</a
+      ><a name="1040"
+      > </a
+      ><a name="1041" class="Symbol"
+      >{</a
+      ><a name="1042" class="Argument"
+      >&#958;G</a
+      ><a name="1044"
+      > </a
+      ><a name="1045" class="Symbol"
+      >=</a
+      ><a name="1046"
+      > </a
+      ><a name="1047" href="lib.groups.CommutingSquare.html#1047" class="Bound"
+      >&#958;G</a
+      ><a name="1049" class="Symbol"
+      >}</a
+      ><a name="1050"
+      > </a
+      ><a name="1051" class="Symbol"
+      >{</a
+      ><a name="1052" class="Argument"
+      >&#956;B</a
+      ><a name="1054"
+      > </a
+      ><a name="1055" class="Symbol"
+      >=</a
+      ><a name="1056"
+      > </a
+      ><a name="1057" href="lib.groups.CommutingSquare.html#1057" class="Bound"
+      >&#956;B</a
+      ><a name="1059" class="Symbol"
+      >}</a
+      ><a name="1060"
+      > </a
+      ><a name="1061" class="Symbol"
+      >(</a
+      ><a name="1062" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="1071"
+      > </a
+      ><a name="1072" href="lib.groups.CommutingSquare.html#1072" class="Bound"
+      >&#9633;&#8321;&#8322;</a
+      ><a name="1075" class="Symbol"
+      >)</a
+      ><a name="1076"
+      > </a
+      ><a name="1077" class="Symbol"
+      >(</a
+      ><a name="1078" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="1087"
+      > </a
+      ><a name="1088" href="lib.groups.CommutingSquare.html#1088" class="Bound"
+      >&#9633;&#8320;&#8321;</a
+      ><a name="1091" class="Symbol"
+      >)</a
+      ><a name="1092"
+      > </a
+      ><a name="1093" class="Symbol"
+      >=</a
+      ><a name="1094"
+      >
+    </a
+      ><a name="1099" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="1108"
+      > </a
+      ><a name="1109" class="Symbol"
+      >&#955;</a
+      ><a name="1110"
+      > </a
+      ><a name="1111" href="lib.groups.CommutingSquare.html#1111" class="Bound"
+      >g&#8320;</a
+      ><a name="1113"
+      > </a
+      ><a name="1114" class="Symbol"
+      >&#8594;</a
+      ><a name="1115"
+      > </a
+      ><a name="1116" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1118"
+      > </a
+      ><a name="1119" class="Symbol"
+      >(</a
+      ><a name="1120" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="1130"
+      > </a
+      ><a name="1131" href="lib.groups.CommutingSquare.html#1057" class="Bound"
+      >&#956;B</a
+      ><a name="1133" class="Symbol"
+      >)</a
+      ><a name="1134"
+      > </a
+      ><a name="1135" class="Symbol"
+      >(</a
+      ><a name="1136" href="lib.groups.CommutingSquare.html#1088" class="Bound"
+      >&#9633;&#8320;&#8321;</a
+      ><a name="1139"
+      > </a
+      ><a name="1140" href="lib.groups.CommutingSquare.html#1111" class="Bound"
+      >g&#8320;</a
+      ><a name="1142" class="Symbol"
+      >)</a
+      ><a name="1143"
+      > </a
+      ><a name="1144" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1145"
+      > </a
+      ><a name="1146" href="lib.groups.CommutingSquare.html#1072" class="Bound"
+      >&#9633;&#8321;&#8322;</a
+      ><a name="1149"
+      > </a
+      ><a name="1150" class="Symbol"
+      >(</a
+      ><a name="1151" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="1161"
+      > </a
+      ><a name="1162" href="lib.groups.CommutingSquare.html#1047" class="Bound"
+      >&#958;G</a
+      ><a name="1164"
+      > </a
+      ><a name="1165" href="lib.groups.CommutingSquare.html#1111" class="Bound"
+      >g&#8320;</a
+      ><a name="1167" class="Symbol"
+      >)</a
+      ><a name="1168"
+      >
+
+  </a
+      ><a name="1172" href="lib.groups.CommutingSquare.html#1172" class="Function"
+      >CommSquare&#7475;-inverse-v</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" class="Symbol"
+      >:</a
+      ><a name="1195"
+      > </a
+      ><a name="1196" class="Symbol"
+      >&#8704;</a
+      ><a name="1197"
+      > </a
+      ><a name="1198" class="Symbol"
+      >{</a
+      ><a name="1199" href="lib.groups.CommutingSquare.html#1199" class="Bound"
+      >i&#8320;</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" href="lib.groups.CommutingSquare.html#1202" class="Bound"
+      >i&#8321;</a
+      ><a name="1204"
+      > </a
+      ><a name="1205" href="lib.groups.CommutingSquare.html#1205" class="Bound"
+      >j&#8320;</a
+      ><a name="1207"
+      > </a
+      ><a name="1208" href="lib.groups.CommutingSquare.html#1208" class="Bound"
+      >j&#8321;</a
+      ><a name="1210" class="Symbol"
+      >}</a
+      ><a name="1211"
+      >
+    </a
+      ><a name="1216" class="Symbol"
+      >{</a
+      ><a name="1217" href="lib.groups.CommutingSquare.html#1217" class="Bound"
+      >G&#8320;</a
+      ><a name="1219"
+      > </a
+      ><a name="1220" class="Symbol"
+      >:</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1227"
+      > </a
+      ><a name="1228" href="lib.groups.CommutingSquare.html#1199" class="Bound"
+      >i&#8320;</a
+      ><a name="1230" class="Symbol"
+      >}</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" class="Symbol"
+      >{</a
+      ><a name="1233" href="lib.groups.CommutingSquare.html#1233" class="Bound"
+      >G&#8321;</a
+      ><a name="1235"
+      > </a
+      ><a name="1236" class="Symbol"
+      >:</a
+      ><a name="1237"
+      > </a
+      ><a name="1238" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1243"
+      > </a
+      ><a name="1244" href="lib.groups.CommutingSquare.html#1202" class="Bound"
+      >i&#8321;</a
+      ><a name="1246" class="Symbol"
+      >}</a
+      ><a name="1247"
+      > </a
+      ><a name="1248" class="Symbol"
+      >{</a
+      ><a name="1249" href="lib.groups.CommutingSquare.html#1249" class="Bound"
+      >H&#8320;</a
+      ><a name="1251"
+      > </a
+      ><a name="1252" class="Symbol"
+      >:</a
+      ><a name="1253"
+      > </a
+      ><a name="1254" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1259"
+      > </a
+      ><a name="1260" href="lib.groups.CommutingSquare.html#1205" class="Bound"
+      >j&#8320;</a
+      ><a name="1262" class="Symbol"
+      >}</a
+      ><a name="1263"
+      > </a
+      ><a name="1264" class="Symbol"
+      >{</a
+      ><a name="1265" href="lib.groups.CommutingSquare.html#1265" class="Bound"
+      >H&#8321;</a
+      ><a name="1267"
+      > </a
+      ><a name="1268" class="Symbol"
+      >:</a
+      ><a name="1269"
+      > </a
+      ><a name="1270" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1275"
+      > </a
+      ><a name="1276" href="lib.groups.CommutingSquare.html#1208" class="Bound"
+      >j&#8321;</a
+      ><a name="1278" class="Symbol"
+      >}</a
+      ><a name="1279"
+      >
+    </a
+      ><a name="1284" class="Symbol"
+      >{</a
+      ><a name="1285" href="lib.groups.CommutingSquare.html#1285" class="Bound"
+      >&#966;&#8320;</a
+      ><a name="1287"
+      > </a
+      ><a name="1288" class="Symbol"
+      >:</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" href="lib.groups.CommutingSquare.html#1217" class="Bound"
+      >G&#8320;</a
+      ><a name="1292"
+      > </a
+      ><a name="1293" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="1295"
+      > </a
+      ><a name="1296" href="lib.groups.CommutingSquare.html#1249" class="Bound"
+      >H&#8320;</a
+      ><a name="1298" class="Symbol"
+      >}</a
+      ><a name="1299"
+      > </a
+      ><a name="1300" class="Symbol"
+      >{</a
+      ><a name="1301" href="lib.groups.CommutingSquare.html#1301" class="Bound"
+      >&#966;&#8321;</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" class="Symbol"
+      >:</a
+      ><a name="1305"
+      > </a
+      ><a name="1306" href="lib.groups.CommutingSquare.html#1233" class="Bound"
+      >G&#8321;</a
+      ><a name="1308"
+      > </a
+      ><a name="1309" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="1311"
+      > </a
+      ><a name="1312" href="lib.groups.CommutingSquare.html#1265" class="Bound"
+      >H&#8321;</a
+      ><a name="1314" class="Symbol"
+      >}</a
+      ><a name="1315"
+      > </a
+      ><a name="1316" class="Symbol"
+      >{</a
+      ><a name="1317" href="lib.groups.CommutingSquare.html#1317" class="Bound"
+      >&#958;G</a
+      ><a name="1319"
+      > </a
+      ><a name="1320" class="Symbol"
+      >:</a
+      ><a name="1321"
+      > </a
+      ><a name="1322" href="lib.groups.CommutingSquare.html#1217" class="Bound"
+      >G&#8320;</a
+      ><a name="1324"
+      > </a
+      ><a name="1325" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="1327"
+      > </a
+      ><a name="1328" href="lib.groups.CommutingSquare.html#1233" class="Bound"
+      >G&#8321;</a
+      ><a name="1330" class="Symbol"
+      >}</a
+      ><a name="1331"
+      > </a
+      ><a name="1332" class="Symbol"
+      >{</a
+      ><a name="1333" href="lib.groups.CommutingSquare.html#1333" class="Bound"
+      >&#958;H</a
+      ><a name="1335"
+      > </a
+      ><a name="1336" class="Symbol"
+      >:</a
+      ><a name="1337"
+      > </a
+      ><a name="1338" href="lib.groups.CommutingSquare.html#1249" class="Bound"
+      >H&#8320;</a
+      ><a name="1340"
+      > </a
+      ><a name="1341" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="1343"
+      > </a
+      ><a name="1344" href="lib.groups.CommutingSquare.html#1265" class="Bound"
+      >H&#8321;</a
+      ><a name="1346" class="Symbol"
+      >}</a
+      ><a name="1347"
+      >
+    </a
+      ><a name="1352" class="Symbol"
+      >&#8594;</a
+      ><a name="1353"
+      > </a
+      ><a name="1354" href="lib.groups.CommutingSquare.html#289" class="Record"
+      >CommSquare&#7475;</a
+      ><a name="1365"
+      > </a
+      ><a name="1366" href="lib.groups.CommutingSquare.html#1285" class="Bound"
+      >&#966;&#8320;</a
+      ><a name="1368"
+      > </a
+      ><a name="1369" href="lib.groups.CommutingSquare.html#1301" class="Bound"
+      >&#966;&#8321;</a
+      ><a name="1371"
+      > </a
+      ><a name="1372" href="lib.groups.CommutingSquare.html#1317" class="Bound"
+      >&#958;G</a
+      ><a name="1374"
+      > </a
+      ><a name="1375" href="lib.groups.CommutingSquare.html#1333" class="Bound"
+      >&#958;H</a
+      ><a name="1377"
+      >
+    </a
+      ><a name="1382" class="Symbol"
+      >&#8594;</a
+      ><a name="1383"
+      > </a
+      ><a name="1384" class="Symbol"
+      >(</a
+      ><a name="1385" href="lib.groups.CommutingSquare.html#1385" class="Bound"
+      >&#958;G-ise</a
+      ><a name="1391"
+      > </a
+      ><a name="1392" class="Symbol"
+      >:</a
+      ><a name="1393"
+      > </a
+      ><a name="1394" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="1402"
+      > </a
+      ><a name="1403" class="Symbol"
+      >(</a
+      ><a name="1404" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="1414"
+      > </a
+      ><a name="1415" href="lib.groups.CommutingSquare.html#1317" class="Bound"
+      >&#958;G</a
+      ><a name="1417" class="Symbol"
+      >))</a
+      ><a name="1419"
+      > </a
+      ><a name="1420" class="Symbol"
+      >(</a
+      ><a name="1421" href="lib.groups.CommutingSquare.html#1421" class="Bound"
+      >&#958;H-ise</a
+      ><a name="1427"
+      > </a
+      ><a name="1428" class="Symbol"
+      >:</a
+      ><a name="1429"
+      > </a
+      ><a name="1430" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="1438"
+      > </a
+      ><a name="1439" class="Symbol"
+      >(</a
+      ><a name="1440" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="1450"
+      > </a
+      ><a name="1451" href="lib.groups.CommutingSquare.html#1333" class="Bound"
+      >&#958;H</a
+      ><a name="1453" class="Symbol"
+      >))</a
+      ><a name="1455"
+      >
+    </a
+      ><a name="1460" class="Symbol"
+      >&#8594;</a
+      ><a name="1461"
+      > </a
+      ><a name="1462" href="lib.groups.CommutingSquare.html#289" class="Record"
+      >CommSquare&#7475;</a
+      ><a name="1473"
+      > </a
+      ><a name="1474" href="lib.groups.CommutingSquare.html#1301" class="Bound"
+      >&#966;&#8321;</a
+      ><a name="1476"
+      > </a
+      ><a name="1477" href="lib.groups.CommutingSquare.html#1285" class="Bound"
+      >&#966;&#8320;</a
+      ><a name="1479"
+      > </a
+      ><a name="1480" class="Symbol"
+      >(</a
+      ><a name="1481" href="lib.groups.Isomorphism.html#2227" class="Function"
+      >GroupIso.g-hom</a
+      ><a name="1495"
+      > </a
+      ><a name="1496" class="Symbol"
+      >(</a
+      ><a name="1497" href="lib.groups.CommutingSquare.html#1317" class="Bound"
+      >&#958;G</a
+      ><a name="1499"
+      > </a
+      ><a name="1500" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1501"
+      > </a
+      ><a name="1502" href="lib.groups.CommutingSquare.html#1385" class="Bound"
+      >&#958;G-ise</a
+      ><a name="1508" class="Symbol"
+      >))</a
+      ><a name="1510"
+      > </a
+      ><a name="1511" class="Symbol"
+      >(</a
+      ><a name="1512" href="lib.groups.Isomorphism.html#2227" class="Function"
+      >GroupIso.g-hom</a
+      ><a name="1526"
+      > </a
+      ><a name="1527" class="Symbol"
+      >(</a
+      ><a name="1528" href="lib.groups.CommutingSquare.html#1333" class="Bound"
+      >&#958;H</a
+      ><a name="1530"
+      > </a
+      ><a name="1531" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1532"
+      > </a
+      ><a name="1533" href="lib.groups.CommutingSquare.html#1421" class="Bound"
+      >&#958;H-ise</a
+      ><a name="1539" class="Symbol"
+      >))</a
+      ><a name="1541"
+      >
+  </a
+      ><a name="1544" href="lib.groups.CommutingSquare.html#1172" class="Function"
+      >CommSquare&#7475;-inverse-v</a
+      ><a name="1565"
+      > </a
+      ><a name="1566" class="Symbol"
+      >(</a
+      ><a name="1567" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="1576"
+      > </a
+      ><a name="1577" href="lib.groups.CommutingSquare.html#1577" class="Bound"
+      >&#9633;</a
+      ><a name="1578" class="Symbol"
+      >)</a
+      ><a name="1579"
+      > </a
+      ><a name="1580" href="lib.groups.CommutingSquare.html#1580" class="Bound"
+      >&#958;G-ise</a
+      ><a name="1586"
+      > </a
+      ><a name="1587" href="lib.groups.CommutingSquare.html#1587" class="Bound"
+      >&#958;H-ise</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" class="Symbol"
+      >=</a
+      ><a name="1595"
+      >
+    </a
+      ><a name="1600" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="1609"
+      > </a
+      ><a name="1610" class="Symbol"
+      >(</a
+      ><a name="1611" href="lib.Function.html#1839" class="Field"
+      >commutes</a
+      ><a name="1619"
+      > </a
+      ><a name="1620" class="Symbol"
+      >(</a
+      ><a name="1621" href="lib.types.CommutingSquare.html#689" class="Function"
+      >CommSquare-inverse-v</a
+      ><a name="1641"
+      > </a
+      ><a name="1642" class="Symbol"
+      >(</a
+      ><a name="1643" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="1651"
+      > </a
+      ><a name="1652" href="lib.groups.CommutingSquare.html#1577" class="Bound"
+      >&#9633;</a
+      ><a name="1653" class="Symbol"
+      >)</a
+      ><a name="1654"
+      > </a
+      ><a name="1655" href="lib.groups.CommutingSquare.html#1580" class="Bound"
+      >&#958;G-ise</a
+      ><a name="1661"
+      > </a
+      ><a name="1662" href="lib.groups.CommutingSquare.html#1587" class="Bound"
+      >&#958;H-ise</a
+      ><a name="1668" class="Symbol"
+      >))</a
+      ><a name="1670"
+      >
+
+</a
+      ><a name="1672" class="Comment"
+      >-- basic facts nicely represented in commuting squares</a
+      ><a name="1726"
+      >
+
+</a
+      ><a name="1728" href="lib.groups.CommutingSquare.html#1728" class="Function"
+      >inv-hom-natural-comm-sqr</a
+      ><a name="1752"
+      > </a
+      ><a name="1753" class="Symbol"
+      >:</a
+      ><a name="1754"
+      > </a
+      ><a name="1755" class="Symbol"
+      >&#8704;</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" class="Symbol"
+      >{</a
+      ><a name="1758" href="lib.groups.CommutingSquare.html#1758" class="Bound"
+      >i</a
+      ><a name="1759"
+      > </a
+      ><a name="1760" href="lib.groups.CommutingSquare.html#1760" class="Bound"
+      >j</a
+      ><a name="1761" class="Symbol"
+      >}</a
+      ><a name="1762"
+      > </a
+      ><a name="1763" class="Symbol"
+      >(</a
+      ><a name="1764" href="lib.groups.CommutingSquare.html#1764" class="Bound"
+      >G</a
+      ><a name="1765"
+      > </a
+      ><a name="1766" class="Symbol"
+      >:</a
+      ><a name="1767"
+      > </a
+      ><a name="1768" href="lib.types.Group.html#7210" class="Function"
+      >AbGroup</a
+      ><a name="1775"
+      > </a
+      ><a name="1776" href="lib.groups.CommutingSquare.html#1758" class="Bound"
+      >i</a
+      ><a name="1777" class="Symbol"
+      >)</a
+      ><a name="1778"
+      > </a
+      ><a name="1779" class="Symbol"
+      >(</a
+      ><a name="1780" href="lib.groups.CommutingSquare.html#1780" class="Bound"
+      >H</a
+      ><a name="1781"
+      > </a
+      ><a name="1782" class="Symbol"
+      >:</a
+      ><a name="1783"
+      > </a
+      ><a name="1784" href="lib.types.Group.html#7210" class="Function"
+      >AbGroup</a
+      ><a name="1791"
+      > </a
+      ><a name="1792" href="lib.groups.CommutingSquare.html#1760" class="Bound"
+      >j</a
+      ><a name="1793" class="Symbol"
+      >)</a
+      ><a name="1794"
+      >
+  </a
+      ><a name="1797" class="Symbol"
+      >(</a
+      ><a name="1798" href="lib.groups.CommutingSquare.html#1798" class="Bound"
+      >&#966;</a
+      ><a name="1799"
+      > </a
+      ><a name="1800" class="Symbol"
+      >:</a
+      ><a name="1801"
+      > </a
+      ><a name="1802" href="lib.types.Group.html#7376" class="Function"
+      >AbGroup.grp</a
+      ><a name="1813"
+      > </a
+      ><a name="1814" href="lib.groups.CommutingSquare.html#1764" class="Bound"
+      >G</a
+      ><a name="1815"
+      > </a
+      ><a name="1816" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="1818"
+      > </a
+      ><a name="1819" href="lib.types.Group.html#7376" class="Function"
+      >AbGroup.grp</a
+      ><a name="1830"
+      > </a
+      ><a name="1831" href="lib.groups.CommutingSquare.html#1780" class="Bound"
+      >H</a
+      ><a name="1832" class="Symbol"
+      >)</a
+      ><a name="1833"
+      >
+  </a
+      ><a name="1836" class="Symbol"
+      >&#8594;</a
+      ><a name="1837"
+      > </a
+      ><a name="1838" href="lib.groups.CommutingSquare.html#289" class="Record"
+      >CommSquare&#7475;</a
+      ><a name="1849"
+      > </a
+      ><a name="1850" href="lib.groups.CommutingSquare.html#1798" class="Bound"
+      >&#966;</a
+      ><a name="1851"
+      > </a
+      ><a name="1852" href="lib.groups.CommutingSquare.html#1798" class="Bound"
+      >&#966;</a
+      ><a name="1853"
+      > </a
+      ><a name="1854" class="Symbol"
+      >(</a
+      ><a name="1855" href="lib.groups.Homomorphism.html#3374" class="Function"
+      >inv-hom</a
+      ><a name="1862"
+      > </a
+      ><a name="1863" href="lib.groups.CommutingSquare.html#1764" class="Bound"
+      >G</a
+      ><a name="1864" class="Symbol"
+      >)</a
+      ><a name="1865"
+      > </a
+      ><a name="1866" class="Symbol"
+      >(</a
+      ><a name="1867" href="lib.groups.Homomorphism.html#3374" class="Function"
+      >inv-hom</a
+      ><a name="1874"
+      > </a
+      ><a name="1875" href="lib.groups.CommutingSquare.html#1780" class="Bound"
+      >H</a
+      ><a name="1876" class="Symbol"
+      >)</a
+      ><a name="1877"
+      >
+</a
+      ><a name="1878" href="lib.groups.CommutingSquare.html#1728" class="Function"
+      >inv-hom-natural-comm-sqr</a
+      ><a name="1902"
+      > </a
+      ><a name="1903" class="Symbol"
+      >_</a
+      ><a name="1904"
+      > </a
+      ><a name="1905" class="Symbol"
+      >_</a
+      ><a name="1906"
+      > </a
+      ><a name="1907" href="lib.groups.CommutingSquare.html#1907" class="Bound"
+      >&#966;</a
+      ><a name="1908"
+      > </a
+      ><a name="1909" class="Symbol"
+      >=</a
+      ><a name="1910"
+      > </a
+      ><a name="1911" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="1920"
+      > </a
+      ><a name="1921" class="Symbol"
+      >&#955;</a
+      ><a name="1922"
+      > </a
+      ><a name="1923" href="lib.groups.CommutingSquare.html#1923" class="Bound"
+      >g</a
+      ><a name="1924"
+      > </a
+      ><a name="1925" class="Symbol"
+      >&#8594;</a
+      ><a name="1926"
+      >  </a
+      ><a name="1928" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1929"
+      > </a
+      ><a name="1930" class="Symbol"
+      >(</a
+      ><a name="1931" href="lib.groups.Homomorphism.html#1711" class="Function"
+      >GroupHom.pres-inv</a
+      ><a name="1948"
+      > </a
+      ><a name="1949" href="lib.groups.CommutingSquare.html#1907" class="Bound"
+      >&#966;</a
+      ><a name="1950"
+      > </a
+      ><a name="1951" href="lib.groups.CommutingSquare.html#1923" class="Bound"
+      >g</a
+      ><a name="1952" class="Symbol"
+      >)</a
+      ><a name="1953"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

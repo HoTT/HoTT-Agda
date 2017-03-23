@@ -1,0 +1,1053 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >groups.KernelCstImage</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+
+</a
+      ><a name="60" class="Keyword"
+      >module</a
+      ><a name="66"
+      > </a
+      ><a name="67" href="groups.KernelCstImage.html#1" class="Module"
+      >groups.KernelCstImage</a
+      ><a name="88"
+      > </a
+      ><a name="89" class="Symbol"
+      >{</a
+      ><a name="90" href="groups.KernelCstImage.html#90" class="Bound"
+      >i</a
+      ><a name="91"
+      > </a
+      ><a name="92" href="groups.KernelCstImage.html#92" class="Bound"
+      >j</a
+      ><a name="93"
+      > </a
+      ><a name="94" href="groups.KernelCstImage.html#94" class="Bound"
+      >k</a
+      ><a name="95" class="Symbol"
+      >}</a
+      ><a name="96"
+      >
+  </a
+      ><a name="99" class="Symbol"
+      >{</a
+      ><a name="100" href="groups.KernelCstImage.html#100" class="Bound"
+      >G</a
+      ><a name="101"
+      > </a
+      ><a name="102" class="Symbol"
+      >:</a
+      ><a name="103"
+      > </a
+      ><a name="104" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="109"
+      > </a
+      ><a name="110" href="groups.KernelCstImage.html#90" class="Bound"
+      >i</a
+      ><a name="111" class="Symbol"
+      >}</a
+      ><a name="112"
+      > </a
+      ><a name="113" class="Symbol"
+      >{</a
+      ><a name="114" href="groups.KernelCstImage.html#114" class="Bound"
+      >H</a
+      ><a name="115"
+      > </a
+      ><a name="116" class="Symbol"
+      >:</a
+      ><a name="117"
+      > </a
+      ><a name="118" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="123"
+      > </a
+      ><a name="124" href="groups.KernelCstImage.html#92" class="Bound"
+      >j</a
+      ><a name="125" class="Symbol"
+      >}</a
+      ><a name="126"
+      > </a
+      ><a name="127" class="Symbol"
+      >(</a
+      ><a name="128" href="groups.KernelCstImage.html#128" class="Bound"
+      >K</a
+      ><a name="129"
+      > </a
+      ><a name="130" class="Symbol"
+      >:</a
+      ><a name="131"
+      > </a
+      ><a name="132" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="137"
+      > </a
+      ><a name="138" href="groups.KernelCstImage.html#94" class="Bound"
+      >k</a
+      ><a name="139" class="Symbol"
+      >)</a
+      ><a name="140"
+      >
+  </a
+      ><a name="143" class="Symbol"
+      >(</a
+      ><a name="144" href="groups.KernelCstImage.html#144" class="Bound"
+      >&#966;</a
+      ><a name="145"
+      > </a
+      ><a name="146" class="Symbol"
+      >:</a
+      ><a name="147"
+      > </a
+      ><a name="148" href="groups.KernelCstImage.html#100" class="Bound"
+      >G</a
+      ><a name="149"
+      > </a
+      ><a name="150" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="152"
+      > </a
+      ><a name="153" href="groups.KernelCstImage.html#114" class="Bound"
+      >H</a
+      ><a name="154" class="Symbol"
+      >)</a
+      ><a name="155"
+      > </a
+      ><a name="156" class="Symbol"
+      >(</a
+      ><a name="157" href="groups.KernelCstImage.html#157" class="Bound"
+      >H-ab</a
+      ><a name="161"
+      > </a
+      ><a name="162" class="Symbol"
+      >:</a
+      ><a name="163"
+      > </a
+      ><a name="164" href="lib.types.Group.html#7098" class="Function"
+      >is-abelian</a
+      ><a name="174"
+      > </a
+      ><a name="175" href="groups.KernelCstImage.html#114" class="Bound"
+      >H</a
+      ><a name="176" class="Symbol"
+      >)</a
+      ><a name="177"
+      > </a
+      ><a name="178" class="Keyword"
+      >where</a
+      ><a name="183"
+      >
+
+  </a
+      ><a name="187" class="Keyword"
+      >open</a
+      ><a name="191"
+      > </a
+      ><a name="192" class="Keyword"
+      >import</a
+      ><a name="198"
+      > </a
+      ><a name="199" href="groups.KernelImage.html#1" class="Module"
+      >groups.KernelImage</a
+      ><a name="217"
+      > </a
+      ><a name="218" class="Symbol"
+      >{</a
+      ><a name="219" class="Argument"
+      >K</a
+      ><a name="220"
+      > </a
+      ><a name="221" class="Symbol"
+      >=</a
+      ><a name="222"
+      > </a
+      ><a name="223" href="groups.KernelCstImage.html#128" class="Bound"
+      >K</a
+      ><a name="224" class="Symbol"
+      >}</a
+      ><a name="225"
+      > </a
+      ><a name="226" href="lib.groups.Homomorphism.html#3180" class="Function"
+      >cst-hom</a
+      ><a name="233"
+      > </a
+      ><a name="234" href="groups.KernelCstImage.html#144" class="Bound"
+      >&#966;</a
+      ><a name="235"
+      > </a
+      ><a name="236" href="groups.KernelCstImage.html#157" class="Bound"
+      >H-ab</a
+      ><a name="240"
+      >
+  </a
+      ><a name="243" class="Keyword"
+      >open</a
+      ><a name="247"
+      > </a
+      ><a name="248" class="Keyword"
+      >import</a
+      ><a name="254"
+      > </a
+      ><a name="255" href="groups.Cokernel.html#1" class="Module"
+      >groups.Cokernel</a
+      ><a name="270"
+      > </a
+      ><a name="271" href="groups.KernelCstImage.html#144" class="Bound"
+      >&#966;</a
+      ><a name="272"
+      > </a
+      ><a name="273" href="groups.KernelCstImage.html#157" class="Bound"
+      >H-ab</a
+      ><a name="277"
+      >
+
+  </a
+      ><a name="281" href="groups.KernelCstImage.html#281" class="Function"
+      >Ker-cst-quot-Im</a
+      ><a name="296"
+      > </a
+      ><a name="297" class="Symbol"
+      >:</a
+      ><a name="298"
+      > </a
+      ><a name="299" href="groups.KernelImage.html#5271" class="Function"
+      >Ker/Im</a
+      ><a name="305"
+      > </a
+      ><a name="306" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="308"
+      > </a
+      ><a name="309" href="groups.Cokernel.html#4238" class="Function"
+      >Coker</a
+      ><a name="314"
+      >
+  </a
+      ><a name="317" href="groups.KernelCstImage.html#281" class="Function"
+      >Ker-cst-quot-Im</a
+      ><a name="332"
+      > </a
+      ><a name="333" class="Symbol"
+      >=</a
+      ><a name="334"
+      > </a
+      ><a name="335" href="lib.groups.Isomorphism.html#980" class="Function"
+      >&#8771;-to-&#8771;&#7475;</a
+      ><a name="342"
+      > </a
+      ><a name="343" class="Symbol"
+      >(</a
+      ><a name="344" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="349"
+      > </a
+      ><a name="350" href="groups.KernelCstImage.html#398" class="Function"
+      >to</a
+      ><a name="352"
+      > </a
+      ><a name="353" href="groups.KernelCstImage.html#568" class="Function"
+      >from</a
+      ><a name="357"
+      > </a
+      ><a name="358" href="groups.KernelCstImage.html#740" class="Function"
+      >to-from</a
+      ><a name="365"
+      > </a
+      ><a name="366" href="groups.KernelCstImage.html#930" class="Function"
+      >from-to</a
+      ><a name="373" class="Symbol"
+      >)</a
+      ><a name="374"
+      > </a
+      ><a name="375" href="groups.KernelCstImage.html#1142" class="Function"
+      >to-pres-comp</a
+      ><a name="387"
+      > </a
+      ><a name="388" class="Keyword"
+      >where</a
+      ><a name="393"
+      >
+    </a
+      ><a name="398" href="groups.KernelCstImage.html#398" class="Function"
+      >to</a
+      ><a name="400"
+      > </a
+      ><a name="401" class="Symbol"
+      >:</a
+      ><a name="402"
+      > </a
+      ><a name="403" href="lib.types.Group.html#6903" class="Function"
+      >Ker/Im.El</a
+      ><a name="412"
+      > </a
+      ><a name="413" class="Symbol"
+      >&#8594;</a
+      ><a name="414"
+      > </a
+      ><a name="415" href="lib.types.Group.html#6903" class="Function"
+      >Coker.El</a
+      ><a name="423"
+      >
+    </a
+      ><a name="428" href="groups.KernelCstImage.html#398" class="Function"
+      >to</a
+      ><a name="430"
+      > </a
+      ><a name="431" class="Symbol"
+      >=</a
+      ><a name="432"
+      > </a
+      ><a name="433" href="lib.types.SetQuotient.html#1191" class="Function"
+      >SetQuot-rec</a
+      ><a name="444"
+      > </a
+      ><a name="445" href="lib.types.SetQuotient.html#402" class="Postulate"
+      >SetQuot-level</a
+      ><a name="458"
+      > </a
+      ><a name="459" href="groups.KernelCstImage.html#484" class="Function"
+      >to'</a
+      ><a name="462"
+      > </a
+      ><a name="463" href="lib.types.SetQuotient.html#344" class="Postulate"
+      >quot-rel</a
+      ><a name="471"
+      > </a
+      ><a name="472" class="Keyword"
+      >where</a
+      ><a name="477"
+      >
+      </a
+      ><a name="484" href="groups.KernelCstImage.html#484" class="Function"
+      >to'</a
+      ><a name="487"
+      > </a
+      ><a name="488" class="Symbol"
+      >:</a
+      ><a name="489"
+      > </a
+      ><a name="490" href="lib.types.Group.html#6903" class="Function"
+      >Ker.El</a
+      ><a name="496"
+      > </a
+      ><a name="497" class="Symbol"
+      >(</a
+      ><a name="498" href="lib.groups.Homomorphism.html#3180" class="Function"
+      >cst-hom</a
+      ><a name="505"
+      > </a
+      ><a name="506" class="Symbol"
+      >{</a
+      ><a name="507" class="Argument"
+      >G</a
+      ><a name="508"
+      > </a
+      ><a name="509" class="Symbol"
+      >=</a
+      ><a name="510"
+      > </a
+      ><a name="511" href="groups.KernelCstImage.html#114" class="Bound"
+      >H</a
+      ><a name="512" class="Symbol"
+      >}</a
+      ><a name="513"
+      > </a
+      ><a name="514" class="Symbol"
+      >{</a
+      ><a name="515" class="Argument"
+      >H</a
+      ><a name="516"
+      > </a
+      ><a name="517" class="Symbol"
+      >=</a
+      ><a name="518"
+      > </a
+      ><a name="519" href="groups.KernelCstImage.html#128" class="Bound"
+      >K</a
+      ><a name="520" class="Symbol"
+      >})</a
+      ><a name="522"
+      > </a
+      ><a name="523" class="Symbol"
+      >&#8594;</a
+      ><a name="524"
+      > </a
+      ><a name="525" href="lib.types.Group.html#6903" class="Function"
+      >Coker.El</a
+      ><a name="533"
+      >
+      </a
+      ><a name="540" href="groups.KernelCstImage.html#484" class="Function"
+      >to'</a
+      ><a name="543"
+      > </a
+      ><a name="544" href="groups.KernelCstImage.html#544" class="Bound"
+      >ker</a
+      ><a name="547"
+      > </a
+      ><a name="548" class="Symbol"
+      >=</a
+      ><a name="549"
+      > </a
+      ><a name="550" href="lib.types.SetQuotient.html#313" class="Postulate Operator"
+      >q[</a
+      ><a name="552"
+      > </a
+      ><a name="553" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="556"
+      > </a
+      ><a name="557" href="groups.KernelCstImage.html#544" class="Bound"
+      >ker</a
+      ><a name="560"
+      > </a
+      ><a name="561" href="lib.types.SetQuotient.html#313" class="Postulate Operator"
+      >]</a
+      ><a name="562"
+      >
+
+    </a
+      ><a name="568" href="groups.KernelCstImage.html#568" class="Function"
+      >from</a
+      ><a name="572"
+      > </a
+      ><a name="573" class="Symbol"
+      >:</a
+      ><a name="574"
+      > </a
+      ><a name="575" href="lib.types.Group.html#6903" class="Function"
+      >Coker.El</a
+      ><a name="583"
+      > </a
+      ><a name="584" class="Symbol"
+      >&#8594;</a
+      ><a name="585"
+      > </a
+      ><a name="586" href="lib.types.Group.html#6903" class="Function"
+      >Ker/Im.El</a
+      ><a name="595"
+      >
+    </a
+      ><a name="600" href="groups.KernelCstImage.html#568" class="Function"
+      >from</a
+      ><a name="604"
+      > </a
+      ><a name="605" class="Symbol"
+      >=</a
+      ><a name="606"
+      > </a
+      ><a name="607" href="lib.types.SetQuotient.html#1191" class="Function"
+      >SetQuot-rec</a
+      ><a name="618"
+      > </a
+      ><a name="619" href="lib.types.SetQuotient.html#402" class="Postulate"
+      >SetQuot-level</a
+      ><a name="632"
+      > </a
+      ><a name="633" href="groups.KernelCstImage.html#660" class="Function"
+      >from'</a
+      ><a name="638"
+      > </a
+      ><a name="639" href="lib.types.SetQuotient.html#344" class="Postulate"
+      >quot-rel</a
+      ><a name="647"
+      > </a
+      ><a name="648" class="Keyword"
+      >where</a
+      ><a name="653"
+      >
+      </a
+      ><a name="660" href="groups.KernelCstImage.html#660" class="Function"
+      >from'</a
+      ><a name="665"
+      > </a
+      ><a name="666" class="Symbol"
+      >:</a
+      ><a name="667"
+      > </a
+      ><a name="668" href="lib.types.Group.html#6903" class="Field"
+      >Group.El</a
+      ><a name="676"
+      > </a
+      ><a name="677" href="groups.KernelCstImage.html#114" class="Bound"
+      >H</a
+      ><a name="678"
+      > </a
+      ><a name="679" class="Symbol"
+      >&#8594;</a
+      ><a name="680"
+      > </a
+      ><a name="681" href="lib.types.Group.html#6903" class="Function"
+      >Ker/Im.El</a
+      ><a name="690"
+      >
+      </a
+      ><a name="697" href="groups.KernelCstImage.html#660" class="Function"
+      >from'</a
+      ><a name="702"
+      > </a
+      ><a name="703" href="groups.KernelCstImage.html#703" class="Bound"
+      >h</a
+      ><a name="704"
+      > </a
+      ><a name="705" class="Symbol"
+      >=</a
+      ><a name="706"
+      > </a
+      ><a name="707" href="lib.types.SetQuotient.html#313" class="Postulate Operator"
+      >q[</a
+      ><a name="709"
+      > </a
+      ><a name="710" href="groups.KernelCstImage.html#703" class="Bound"
+      >h</a
+      ><a name="711"
+      > </a
+      ><a name="712" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="713"
+      > </a
+      ><a name="714" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="717"
+      > </a
+      ><a name="718" href="lib.types.SetQuotient.html#313" class="Postulate Operator"
+      >]</a
+      ><a name="719"
+      >
+
+    </a
+      ><a name="725" class="Keyword"
+      >abstract</a
+      ><a name="733"
+      >
+      </a
+      ><a name="740" href="groups.KernelCstImage.html#740" class="Function"
+      >to-from</a
+      ><a name="747"
+      > </a
+      ><a name="748" class="Symbol"
+      >:</a
+      ><a name="749"
+      > </a
+      ><a name="750" class="Symbol"
+      >&#8704;</a
+      ><a name="751"
+      > </a
+      ><a name="752" href="groups.KernelCstImage.html#752" class="Bound"
+      >cok</a
+      ><a name="755"
+      > </a
+      ><a name="756" class="Symbol"
+      >&#8594;</a
+      ><a name="757"
+      > </a
+      ><a name="758" href="groups.KernelCstImage.html#398" class="Function"
+      >to</a
+      ><a name="760"
+      > </a
+      ><a name="761" class="Symbol"
+      >(</a
+      ><a name="762" href="groups.KernelCstImage.html#568" class="Function"
+      >from</a
+      ><a name="766"
+      > </a
+      ><a name="767" href="groups.KernelCstImage.html#752" class="Bound"
+      >cok</a
+      ><a name="770" class="Symbol"
+      >)</a
+      ><a name="771"
+      > </a
+      ><a name="772" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="774"
+      > </a
+      ><a name="775" href="groups.KernelCstImage.html#752" class="Bound"
+      >cok</a
+      ><a name="778"
+      >
+      </a
+      ><a name="785" href="groups.KernelCstImage.html#740" class="Function"
+      >to-from</a
+      ><a name="792"
+      > </a
+      ><a name="793" class="Symbol"
+      >=</a
+      ><a name="794"
+      > </a
+      ><a name="795" href="lib.types.SetQuotient.html#706" class="Postulate"
+      >SetQuot-elim</a
+      ><a name="807"
+      > </a
+      ><a name="808" class="Symbol"
+      >(&#955;</a
+      ><a name="810"
+      > </a
+      ><a name="811" href="groups.KernelCstImage.html#811" class="Bound"
+      >_</a
+      ><a name="812"
+      > </a
+      ><a name="813" class="Symbol"
+      >&#8594;</a
+      ><a name="814"
+      > </a
+      ><a name="815" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="830"
+      > </a
+      ><a name="831" href="lib.types.SetQuotient.html#402" class="Postulate"
+      >SetQuot-level</a
+      ><a name="844" class="Symbol"
+      >)</a
+      ><a name="845"
+      >
+        </a
+      ><a name="854" class="Symbol"
+      >(&#955;</a
+      ><a name="856"
+      > </a
+      ><a name="857" href="groups.KernelCstImage.html#857" class="Bound"
+      >_</a
+      ><a name="858"
+      > </a
+      ><a name="859" class="Symbol"
+      >&#8594;</a
+      ><a name="860"
+      > </a
+      ><a name="861" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="864" class="Symbol"
+      >)</a
+      ><a name="865"
+      >
+        </a
+      ><a name="874" class="Symbol"
+      >(&#955;</a
+      ><a name="876"
+      > </a
+      ><a name="877" href="groups.KernelCstImage.html#877" class="Bound"
+      >_</a
+      ><a name="878"
+      > </a
+      ><a name="879" class="Symbol"
+      >&#8594;</a
+      ><a name="880"
+      > </a
+      ><a name="881" href="lib.NType2.html#1216" class="Function"
+      >prop-has-all-paths-&#8595;</a
+      ><a name="901"
+      > </a
+      ><a name="902" class="Symbol"
+      >(</a
+      ><a name="903" href="lib.types.SetQuotient.html#402" class="Postulate"
+      >SetQuot-level</a
+      ><a name="916"
+      > </a
+      ><a name="917" class="Symbol"
+      >_</a
+      ><a name="918"
+      > </a
+      ><a name="919" class="Symbol"
+      >_))</a
+      ><a name="922"
+      >
+
+      </a
+      ><a name="930" href="groups.KernelCstImage.html#930" class="Function"
+      >from-to</a
+      ><a name="937"
+      > </a
+      ><a name="938" class="Symbol"
+      >:</a
+      ><a name="939"
+      > </a
+      ><a name="940" class="Symbol"
+      >&#8704;</a
+      ><a name="941"
+      > </a
+      ><a name="942" href="groups.KernelCstImage.html#942" class="Bound"
+      >ker</a
+      ><a name="945"
+      > </a
+      ><a name="946" class="Symbol"
+      >&#8594;</a
+      ><a name="947"
+      > </a
+      ><a name="948" href="groups.KernelCstImage.html#568" class="Function"
+      >from</a
+      ><a name="952"
+      > </a
+      ><a name="953" class="Symbol"
+      >(</a
+      ><a name="954" href="groups.KernelCstImage.html#398" class="Function"
+      >to</a
+      ><a name="956"
+      > </a
+      ><a name="957" href="groups.KernelCstImage.html#942" class="Bound"
+      >ker</a
+      ><a name="960" class="Symbol"
+      >)</a
+      ><a name="961"
+      > </a
+      ><a name="962" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="964"
+      > </a
+      ><a name="965" href="groups.KernelCstImage.html#942" class="Bound"
+      >ker</a
+      ><a name="968"
+      >
+      </a
+      ><a name="975" href="groups.KernelCstImage.html#930" class="Function"
+      >from-to</a
+      ><a name="982"
+      > </a
+      ><a name="983" class="Symbol"
+      >=</a
+      ><a name="984"
+      > </a
+      ><a name="985" href="lib.types.SetQuotient.html#706" class="Postulate"
+      >SetQuot-elim</a
+      ><a name="997"
+      > </a
+      ><a name="998" class="Symbol"
+      >(&#955;</a
+      ><a name="1000"
+      > </a
+      ><a name="1001" href="groups.KernelCstImage.html#1001" class="Bound"
+      >_</a
+      ><a name="1002"
+      > </a
+      ><a name="1003" class="Symbol"
+      >&#8594;</a
+      ><a name="1004"
+      > </a
+      ><a name="1005" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="1020"
+      > </a
+      ><a name="1021" href="lib.types.SetQuotient.html#402" class="Postulate"
+      >SetQuot-level</a
+      ><a name="1034" class="Symbol"
+      >)</a
+      ><a name="1035"
+      >
+        </a
+      ><a name="1044" class="Symbol"
+      >(&#955;</a
+      ><a name="1046"
+      > </a
+      ><a name="1047" href="groups.KernelCstImage.html#1047" class="Bound"
+      >_</a
+      ><a name="1048"
+      > </a
+      ><a name="1049" class="Symbol"
+      >&#8594;</a
+      ><a name="1050"
+      > </a
+      ><a name="1051" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1053"
+      > </a
+      ><a name="1054" href="lib.types.SetQuotient.html#313" class="Postulate Operator"
+      >q[_]</a
+      ><a name="1058"
+      > </a
+      ><a name="1059" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1060"
+      > </a
+      ><a name="1061" href="groups.KernelImage.html#776" class="Function"
+      >ker-El=-out</a
+      ><a name="1072"
+      > </a
+      ><a name="1073" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1076" class="Symbol"
+      >)</a
+      ><a name="1077"
+      >
+        </a
+      ><a name="1086" class="Symbol"
+      >(&#955;</a
+      ><a name="1088"
+      > </a
+      ><a name="1089" href="groups.KernelCstImage.html#1089" class="Bound"
+      >_</a
+      ><a name="1090"
+      > </a
+      ><a name="1091" class="Symbol"
+      >&#8594;</a
+      ><a name="1092"
+      > </a
+      ><a name="1093" href="lib.NType2.html#1216" class="Function"
+      >prop-has-all-paths-&#8595;</a
+      ><a name="1113"
+      > </a
+      ><a name="1114" class="Symbol"
+      >(</a
+      ><a name="1115" href="lib.types.SetQuotient.html#402" class="Postulate"
+      >SetQuot-level</a
+      ><a name="1128"
+      > </a
+      ><a name="1129" class="Symbol"
+      >_</a
+      ><a name="1130"
+      > </a
+      ><a name="1131" class="Symbol"
+      >_))</a
+      ><a name="1134"
+      >
+
+      </a
+      ><a name="1142" href="groups.KernelCstImage.html#1142" class="Function"
+      >to-pres-comp</a
+      ><a name="1154"
+      > </a
+      ><a name="1155" class="Symbol"
+      >:</a
+      ><a name="1156"
+      > </a
+      ><a name="1157" href="lib.groups.Homomorphism.html#362" class="Function"
+      >preserves-comp</a
+      ><a name="1171"
+      > </a
+      ><a name="1172" href="lib.types.Group.html#313" class="Function"
+      >Ker/Im.comp</a
+      ><a name="1183"
+      > </a
+      ><a name="1184" href="lib.types.Group.html#313" class="Function"
+      >Coker.comp</a
+      ><a name="1194"
+      > </a
+      ><a name="1195" href="groups.KernelCstImage.html#398" class="Function"
+      >to</a
+      ><a name="1197"
+      >
+      </a
+      ><a name="1204" href="groups.KernelCstImage.html#1142" class="Function"
+      >to-pres-comp</a
+      ><a name="1216"
+      > </a
+      ><a name="1217" class="Symbol"
+      >=</a
+      ><a name="1218"
+      > </a
+      ><a name="1219" href="lib.types.SetQuotient.html#706" class="Postulate"
+      >SetQuot-elim</a
+      ><a name="1231"
+      >
+        </a
+      ><a name="1240" class="Symbol"
+      >(&#955;</a
+      ><a name="1242"
+      > </a
+      ><a name="1243" href="groups.KernelCstImage.html#1243" class="Bound"
+      >_</a
+      ><a name="1244"
+      > </a
+      ><a name="1245" class="Symbol"
+      >&#8594;</a
+      ><a name="1246"
+      > </a
+      ><a name="1247" href="lib.types.Pi.html#651" class="Function"
+      >&#928;-is-set</a
+      ><a name="1255"
+      > </a
+      ><a name="1256" class="Symbol"
+      >&#955;</a
+      ><a name="1257"
+      > </a
+      ><a name="1258" href="groups.KernelCstImage.html#1258" class="Bound"
+      >_</a
+      ><a name="1259"
+      > </a
+      ><a name="1260" class="Symbol"
+      >&#8594;</a
+      ><a name="1261"
+      > </a
+      ><a name="1262" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="1277"
+      > </a
+      ><a name="1278" href="lib.types.SetQuotient.html#402" class="Postulate"
+      >SetQuot-level</a
+      ><a name="1291" class="Symbol"
+      >)</a
+      ><a name="1292"
+      >
+        </a
+      ><a name="1301" class="Symbol"
+      >(&#955;</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" href="groups.KernelCstImage.html#1304" class="Bound"
+      >_</a
+      ><a name="1305"
+      > </a
+      ><a name="1306" class="Symbol"
+      >&#8594;</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" href="lib.types.SetQuotient.html#706" class="Postulate"
+      >SetQuot-elim</a
+      ><a name="1320"
+      >
+          </a
+      ><a name="1331" class="Symbol"
+      >(&#955;</a
+      ><a name="1333"
+      > </a
+      ><a name="1334" href="groups.KernelCstImage.html#1334" class="Bound"
+      >_</a
+      ><a name="1335"
+      > </a
+      ><a name="1336" class="Symbol"
+      >&#8594;</a
+      ><a name="1337"
+      > </a
+      ><a name="1338" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="1353"
+      > </a
+      ><a name="1354" href="lib.types.SetQuotient.html#402" class="Postulate"
+      >SetQuot-level</a
+      ><a name="1367" class="Symbol"
+      >)</a
+      ><a name="1368"
+      >
+          </a
+      ><a name="1379" class="Symbol"
+      >(&#955;</a
+      ><a name="1381"
+      > </a
+      ><a name="1382" href="groups.KernelCstImage.html#1382" class="Bound"
+      >_</a
+      ><a name="1383"
+      > </a
+      ><a name="1384" class="Symbol"
+      >&#8594;</a
+      ><a name="1385"
+      > </a
+      ><a name="1386" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1389" class="Symbol"
+      >)</a
+      ><a name="1390"
+      >
+          </a
+      ><a name="1401" class="Symbol"
+      >(&#955;</a
+      ><a name="1403"
+      > </a
+      ><a name="1404" href="groups.KernelCstImage.html#1404" class="Bound"
+      >_</a
+      ><a name="1405"
+      > </a
+      ><a name="1406" class="Symbol"
+      >&#8594;</a
+      ><a name="1407"
+      > </a
+      ><a name="1408" href="lib.NType2.html#1216" class="Function"
+      >prop-has-all-paths-&#8595;</a
+      ><a name="1428"
+      > </a
+      ><a name="1429" class="Symbol"
+      >(</a
+      ><a name="1430" href="lib.types.SetQuotient.html#402" class="Postulate"
+      >SetQuot-level</a
+      ><a name="1443"
+      > </a
+      ><a name="1444" class="Symbol"
+      >_</a
+      ><a name="1445"
+      > </a
+      ><a name="1446" class="Symbol"
+      >_)))</a
+      ><a name="1450"
+      >
+        </a
+      ><a name="1459" class="Symbol"
+      >(&#955;</a
+      ><a name="1461"
+      > </a
+      ><a name="1462" href="groups.KernelCstImage.html#1462" class="Bound"
+      >_</a
+      ><a name="1463"
+      > </a
+      ><a name="1464" class="Symbol"
+      >&#8594;</a
+      ><a name="1465"
+      > </a
+      ><a name="1466" href="lib.NType2.html#1216" class="Function"
+      >prop-has-all-paths-&#8595;</a
+      ><a name="1486"
+      > </a
+      ><a name="1487" class="Symbol"
+      >(</a
+      ><a name="1488" href="lib.types.Pi.html#566" class="Function"
+      >&#928;-is-prop</a
+      ><a name="1497"
+      > </a
+      ><a name="1498" class="Symbol"
+      >&#955;</a
+      ><a name="1499"
+      > </a
+      ><a name="1500" href="groups.KernelCstImage.html#1500" class="Bound"
+      >_</a
+      ><a name="1501"
+      > </a
+      ><a name="1502" class="Symbol"
+      >&#8594;</a
+      ><a name="1503"
+      > </a
+      ><a name="1504" href="lib.types.SetQuotient.html#402" class="Postulate"
+      >SetQuot-level</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" class="Symbol"
+      >_</a
+      ><a name="1519"
+      > </a
+      ><a name="1520" class="Symbol"
+      >_))</a
+      ><a name="1523"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

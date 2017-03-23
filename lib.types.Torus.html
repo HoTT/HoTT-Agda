@@ -1,0 +1,2286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.Torus</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.Paths.html#1" class="Module"
+      >lib.types.Paths</a
+      ><a name="92"
+      >
+
+</a
+      ><a name="94" class="Keyword"
+      >module</a
+      ><a name="100"
+      > </a
+      ><a name="101" href="lib.types.Torus.html#1" class="Module"
+      >lib.types.Torus</a
+      ><a name="116"
+      > </a
+      ><a name="117" class="Keyword"
+      >where</a
+      ><a name="122"
+      >
+
+</a
+      ><a name="124" class="Comment"
+      >{-
+data Torus : Type&#8320; where
+  baseT : Torus
+  loopT1 : baseT == baseT
+  loopT2 : baseT == baseT
+  surfT : loopT1 &#8729; loopT2 == loopT2 &#8729; loopT1
+-}</a
+      ><a name="267"
+      >
+
+</a
+      ><a name="269" class="Keyword"
+      >postulate</a
+      ><a name="278"
+      >  </a
+      ><a name="280" class="Comment"
+      >-- HIT</a
+      ><a name="286"
+      >
+  </a
+      ><a name="289" href="lib.types.Torus.html#289" class="Postulate"
+      >Torus</a
+      ><a name="294"
+      > </a
+      ><a name="295" class="Symbol"
+      >:</a
+      ><a name="296"
+      > </a
+      ><a name="297" href="lib.Base.html#1196" class="Function"
+      >Type&#8320;</a
+      ><a name="302"
+      >
+  </a
+      ><a name="305" href="lib.types.Torus.html#305" class="Postulate"
+      >baseT</a
+      ><a name="310"
+      > </a
+      ><a name="311" class="Symbol"
+      >:</a
+      ><a name="312"
+      > </a
+      ><a name="313" href="lib.types.Torus.html#289" class="Postulate"
+      >Torus</a
+      ><a name="318"
+      >
+  </a
+      ><a name="321" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="327"
+      > </a
+      ><a name="328" class="Symbol"
+      >:</a
+      ><a name="329"
+      > </a
+      ><a name="330" href="lib.types.Torus.html#305" class="Postulate"
+      >baseT</a
+      ><a name="335"
+      > </a
+      ><a name="336" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="338"
+      > </a
+      ><a name="339" href="lib.types.Torus.html#305" class="Postulate"
+      >baseT</a
+      ><a name="344"
+      >
+  </a
+      ><a name="347" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="353"
+      > </a
+      ><a name="354" class="Symbol"
+      >:</a
+      ><a name="355"
+      > </a
+      ><a name="356" href="lib.types.Torus.html#305" class="Postulate"
+      >baseT</a
+      ><a name="361"
+      > </a
+      ><a name="362" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="364"
+      > </a
+      ><a name="365" href="lib.types.Torus.html#305" class="Postulate"
+      >baseT</a
+      ><a name="370"
+      >
+  </a
+      ><a name="373" href="lib.types.Torus.html#373" class="Postulate"
+      >surfT</a
+      ><a name="378"
+      > </a
+      ><a name="379" class="Symbol"
+      >:</a
+      ><a name="380"
+      > </a
+      ><a name="381" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="387"
+      > </a
+      ><a name="388" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="389"
+      > </a
+      ><a name="390" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="396"
+      > </a
+      ><a name="397" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="399"
+      > </a
+      ><a name="400" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="406"
+      > </a
+      ><a name="407" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="408"
+      > </a
+      ><a name="409" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="415"
+      >
+
+</a
+      ><a name="417" class="Comment"
+      >{- Dependent elimination and computation rules -}</a
+      ><a name="466"
+      >
+</a
+      ><a name="467" class="Keyword"
+      >module</a
+      ><a name="473"
+      > </a
+      ><a name="474" href="lib.types.Torus.html#474" class="Module"
+      >TorusElim</a
+      ><a name="483"
+      > </a
+      ><a name="484" class="Symbol"
+      >{</a
+      ><a name="485" href="lib.types.Torus.html#485" class="Bound"
+      >i</a
+      ><a name="486" class="Symbol"
+      >}</a
+      ><a name="487"
+      > </a
+      ><a name="488" class="Symbol"
+      >{</a
+      ><a name="489" href="lib.types.Torus.html#489" class="Bound"
+      >P</a
+      ><a name="490"
+      > </a
+      ><a name="491" class="Symbol"
+      >:</a
+      ><a name="492"
+      > </a
+      ><a name="493" href="lib.types.Torus.html#289" class="Postulate"
+      >Torus</a
+      ><a name="498"
+      > </a
+      ><a name="499" class="Symbol"
+      >&#8594;</a
+      ><a name="500"
+      > </a
+      ><a name="501" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="505"
+      > </a
+      ><a name="506" href="lib.types.Torus.html#485" class="Bound"
+      >i</a
+      ><a name="507" class="Symbol"
+      >}</a
+      ><a name="508"
+      > </a
+      ><a name="509" class="Symbol"
+      >(</a
+      ><a name="510" href="lib.types.Torus.html#510" class="Bound"
+      >baseT*</a
+      ><a name="516"
+      > </a
+      ><a name="517" class="Symbol"
+      >:</a
+      ><a name="518"
+      > </a
+      ><a name="519" href="lib.types.Torus.html#489" class="Bound"
+      >P</a
+      ><a name="520"
+      > </a
+      ><a name="521" href="lib.types.Torus.html#305" class="Postulate"
+      >baseT</a
+      ><a name="526" class="Symbol"
+      >)</a
+      ><a name="527"
+      >
+  </a
+      ><a name="530" class="Symbol"
+      >(</a
+      ><a name="531" href="lib.types.Torus.html#531" class="Bound"
+      >loopT1*</a
+      ><a name="538"
+      > </a
+      ><a name="539" class="Symbol"
+      >:</a
+      ><a name="540"
+      > </a
+      ><a name="541" href="lib.types.Torus.html#510" class="Bound"
+      >baseT*</a
+      ><a name="547"
+      > </a
+      ><a name="548" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="550"
+      > </a
+      ><a name="551" href="lib.types.Torus.html#510" class="Bound"
+      >baseT*</a
+      ><a name="557"
+      > </a
+      ><a name="558" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="559"
+      > </a
+      ><a name="560" href="lib.types.Torus.html#489" class="Bound"
+      >P</a
+      ><a name="561"
+      > </a
+      ><a name="562" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="563"
+      > </a
+      ><a name="564" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="570"
+      > </a
+      ><a name="571" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="572" class="Symbol"
+      >)</a
+      ><a name="573"
+      >
+  </a
+      ><a name="576" class="Symbol"
+      >(</a
+      ><a name="577" href="lib.types.Torus.html#577" class="Bound"
+      >loopT2*</a
+      ><a name="584"
+      > </a
+      ><a name="585" class="Symbol"
+      >:</a
+      ><a name="586"
+      > </a
+      ><a name="587" href="lib.types.Torus.html#510" class="Bound"
+      >baseT*</a
+      ><a name="593"
+      > </a
+      ><a name="594" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="596"
+      > </a
+      ><a name="597" href="lib.types.Torus.html#510" class="Bound"
+      >baseT*</a
+      ><a name="603"
+      > </a
+      ><a name="604" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="605"
+      > </a
+      ><a name="606" href="lib.types.Torus.html#489" class="Bound"
+      >P</a
+      ><a name="607"
+      > </a
+      ><a name="608" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="609"
+      > </a
+      ><a name="610" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="616"
+      > </a
+      ><a name="617" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="618" class="Symbol"
+      >)</a
+      ><a name="619"
+      >
+  </a
+      ><a name="622" class="Symbol"
+      >(</a
+      ><a name="623" href="lib.types.Torus.html#623" class="Bound"
+      >surfT*</a
+      ><a name="629"
+      > </a
+      ><a name="630" class="Symbol"
+      >:</a
+      ><a name="631"
+      > </a
+      ><a name="632" href="lib.types.Torus.html#531" class="Bound"
+      >loopT1*</a
+      ><a name="639"
+      > </a
+      ><a name="640" href="lib.PathGroupoid.html#4471" class="Function Operator"
+      >&#8729;&#7496;</a
+      ><a name="642"
+      > </a
+      ><a name="643" href="lib.types.Torus.html#577" class="Bound"
+      >loopT2*</a
+      ><a name="650"
+      > </a
+      ><a name="651" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="653"
+      > </a
+      ><a name="654" href="lib.types.Torus.html#577" class="Bound"
+      >loopT2*</a
+      ><a name="661"
+      > </a
+      ><a name="662" href="lib.PathGroupoid.html#4471" class="Function Operator"
+      >&#8729;&#7496;</a
+      ><a name="664"
+      > </a
+      ><a name="665" href="lib.types.Torus.html#531" class="Bound"
+      >loopT1*</a
+      ><a name="672"
+      >
+            </a
+      ><a name="685" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="686"
+      > </a
+      ><a name="687" class="Symbol"
+      >(&#955;</a
+      ><a name="689"
+      > </a
+      ><a name="690" href="lib.types.Torus.html#690" class="Bound"
+      >p</a
+      ><a name="691"
+      > </a
+      ><a name="692" class="Symbol"
+      >&#8594;</a
+      ><a name="693"
+      > </a
+      ><a name="694" href="lib.types.Torus.html#510" class="Bound"
+      >baseT*</a
+      ><a name="700"
+      > </a
+      ><a name="701" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="703"
+      > </a
+      ><a name="704" href="lib.types.Torus.html#510" class="Bound"
+      >baseT*</a
+      ><a name="710"
+      > </a
+      ><a name="711" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="712"
+      > </a
+      ><a name="713" href="lib.types.Torus.html#489" class="Bound"
+      >P</a
+      ><a name="714"
+      > </a
+      ><a name="715" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="716"
+      > </a
+      ><a name="717" href="lib.types.Torus.html#690" class="Bound"
+      >p</a
+      ><a name="718"
+      > </a
+      ><a name="719" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="720" class="Symbol"
+      >)</a
+      ><a name="721"
+      > </a
+      ><a name="722" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="723"
+      > </a
+      ><a name="724" href="lib.types.Torus.html#373" class="Postulate"
+      >surfT</a
+      ><a name="729"
+      > </a
+      ><a name="730" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="731" class="Symbol"
+      >)</a
+      ><a name="732"
+      > </a
+      ><a name="733" class="Keyword"
+      >where</a
+      ><a name="738"
+      >
+
+  </a
+      ><a name="742" class="Keyword"
+      >postulate</a
+      ><a name="751"
+      >  </a
+      ><a name="753" class="Comment"
+      >-- HIT</a
+      ><a name="759"
+      >
+    </a
+      ><a name="764" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="765"
+      > </a
+      ><a name="766" class="Symbol"
+      >:</a
+      ><a name="767"
+      > </a
+      ><a name="768" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="769"
+      > </a
+      ><a name="770" href="lib.types.Torus.html#289" class="Postulate"
+      >Torus</a
+      ><a name="775"
+      > </a
+      ><a name="776" href="lib.types.Torus.html#489" class="Bound"
+      >P</a
+      ><a name="777"
+      >
+    </a
+      ><a name="782" href="lib.types.Torus.html#782" class="Postulate"
+      >base-&#946;</a
+      ><a name="788"
+      > </a
+      ><a name="789" class="Symbol"
+      >:</a
+      ><a name="790"
+      > </a
+      ><a name="791" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="792"
+      > </a
+      ><a name="793" href="lib.types.Torus.html#305" class="Postulate"
+      >baseT</a
+      ><a name="798"
+      > </a
+      ><a name="799" href="lib.Base.html#2680" class="Postulate Operator"
+      >&#8614;</a
+      ><a name="800"
+      > </a
+      ><a name="801" href="lib.types.Torus.html#510" class="Bound"
+      >baseT*</a
+      ><a name="807"
+      >
+  </a
+      ><a name="810" class="Symbol"
+      >{-#</a
+      ><a name="813"
+      > </a
+      ><a name="814" class="Keyword"
+      >REWRITE</a
+      ><a name="821"
+      > </a
+      ><a name="822" href="lib.types.Torus.html#782" class="Postulate"
+      >base-&#946;</a
+      ><a name="828"
+      > </a
+      ><a name="829" class="Symbol"
+      >#-}</a
+      ><a name="832"
+      >
+
+  </a
+      ><a name="836" class="Keyword"
+      >postulate</a
+      ><a name="845"
+      >  </a
+      ><a name="847" class="Comment"
+      >-- HIT</a
+      ><a name="853"
+      >
+    </a
+      ><a name="858" href="lib.types.Torus.html#858" class="Postulate"
+      >loopT1-&#946;</a
+      ><a name="866"
+      > </a
+      ><a name="867" class="Symbol"
+      >:</a
+      ><a name="868"
+      > </a
+      ><a name="869" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="872"
+      > </a
+      ><a name="873" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="874"
+      > </a
+      ><a name="875" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="881"
+      > </a
+      ><a name="882" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="884"
+      > </a
+      ><a name="885" href="lib.types.Torus.html#531" class="Bound"
+      >loopT1*</a
+      ><a name="892"
+      >
+    </a
+      ><a name="897" href="lib.types.Torus.html#897" class="Postulate"
+      >loopT2-&#946;</a
+      ><a name="905"
+      > </a
+      ><a name="906" class="Symbol"
+      >:</a
+      ><a name="907"
+      > </a
+      ><a name="908" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="911"
+      > </a
+      ><a name="912" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="913"
+      > </a
+      ><a name="914" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="920"
+      > </a
+      ><a name="921" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="923"
+      > </a
+      ><a name="924" href="lib.types.Torus.html#577" class="Bound"
+      >loopT2*</a
+      ><a name="931"
+      >
+
+  </a
+      ><a name="935" class="Keyword"
+      >private</a
+      ><a name="942"
+      >
+    </a
+      ><a name="947" href="lib.types.Torus.html#947" class="Function"
+      >lhs</a
+      ><a name="950"
+      > </a
+      ><a name="951" class="Symbol"
+      >:</a
+      ><a name="952"
+      > </a
+      ><a name="953" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="956"
+      > </a
+      ><a name="957" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="958"
+      > </a
+      ><a name="959" class="Symbol"
+      >(</a
+      ><a name="960" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="966"
+      > </a
+      ><a name="967" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="968"
+      > </a
+      ><a name="969" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="975" class="Symbol"
+      >)</a
+      ><a name="976"
+      > </a
+      ><a name="977" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="979"
+      > </a
+      ><a name="980" href="lib.types.Torus.html#531" class="Bound"
+      >loopT1*</a
+      ><a name="987"
+      > </a
+      ><a name="988" href="lib.PathGroupoid.html#4471" class="Function Operator"
+      >&#8729;&#7496;</a
+      ><a name="990"
+      > </a
+      ><a name="991" href="lib.types.Torus.html#577" class="Bound"
+      >loopT2*</a
+      ><a name="998"
+      >
+    </a
+      ><a name="1003" href="lib.types.Torus.html#947" class="Function"
+      >lhs</a
+      ><a name="1006"
+      > </a
+      ><a name="1007" class="Symbol"
+      >=</a
+      ><a name="1008"
+      >
+      </a
+      ><a name="1015" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1018"
+      > </a
+      ><a name="1019" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="1020"
+      > </a
+      ><a name="1021" class="Symbol"
+      >(</a
+      ><a name="1022" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="1028"
+      > </a
+      ><a name="1029" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1030"
+      > </a
+      ><a name="1031" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="1037" class="Symbol"
+      >)</a
+      ><a name="1038"
+      >                 </a
+      ><a name="1055" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1057"
+      > </a
+      ><a name="1058" href="lib.PathFunctor.html#886" class="Function"
+      >apd-&#8729;</a
+      ><a name="1063"
+      > </a
+      ><a name="1064" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="1072"
+      > </a
+      ><a name="1073" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="1079"
+      > </a
+      ><a name="1080" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1081"
+      >
+      </a
+      ><a name="1088" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1091"
+      > </a
+      ><a name="1092" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="1093"
+      > </a
+      ><a name="1094" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="1100"
+      > </a
+      ><a name="1101" href="lib.PathGroupoid.html#4471" class="Function Operator"
+      >&#8729;&#7496;</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1107"
+      > </a
+      ><a name="1108" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="1109"
+      > </a
+      ><a name="1110" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="1116"
+      >            </a
+      ><a name="1128" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1130"
+      > </a
+      ><a name="1131" href="lib.types.Torus.html#858" class="Postulate"
+      >loopT1-&#946;</a
+      ><a name="1139"
+      > </a
+      ><a name="1140" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1147"
+      > </a
+      ><a name="1148" class="Symbol"
+      >(&#955;</a
+      ><a name="1150"
+      > </a
+      ><a name="1151" href="lib.types.Torus.html#1151" class="Bound"
+      >u</a
+      ><a name="1152"
+      > </a
+      ><a name="1153" class="Symbol"
+      >&#8594;</a
+      ><a name="1154"
+      > </a
+      ><a name="1155" href="lib.types.Torus.html#1151" class="Bound"
+      >u</a
+      ><a name="1156"
+      > </a
+      ><a name="1157" href="lib.PathGroupoid.html#4471" class="Function Operator"
+      >&#8729;&#7496;</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1163"
+      > </a
+      ><a name="1164" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="1165"
+      > </a
+      ><a name="1166" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="1172" class="Symbol"
+      >)</a
+      ><a name="1173"
+      > </a
+      ><a name="1174" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1175"
+      >
+      </a
+      ><a name="1182" href="lib.types.Torus.html#531" class="Bound"
+      >loopT1*</a
+      ><a name="1189"
+      > </a
+      ><a name="1190" href="lib.PathGroupoid.html#4471" class="Function Operator"
+      >&#8729;&#7496;</a
+      ><a name="1192"
+      > </a
+      ><a name="1193" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1196"
+      > </a
+      ><a name="1197" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="1198"
+      > </a
+      ><a name="1199" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="1205"
+      >                 </a
+      ><a name="1222" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1224"
+      > </a
+      ><a name="1225" href="lib.types.Torus.html#897" class="Postulate"
+      >loopT2-&#946;</a
+      ><a name="1233"
+      > </a
+      ><a name="1234" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1241"
+      > </a
+      ><a name="1242" class="Symbol"
+      >(&#955;</a
+      ><a name="1244"
+      > </a
+      ><a name="1245" href="lib.types.Torus.html#1245" class="Bound"
+      >u</a
+      ><a name="1246"
+      > </a
+      ><a name="1247" class="Symbol"
+      >&#8594;</a
+      ><a name="1248"
+      > </a
+      ><a name="1249" href="lib.types.Torus.html#531" class="Bound"
+      >loopT1*</a
+      ><a name="1256"
+      > </a
+      ><a name="1257" href="lib.PathGroupoid.html#4471" class="Function Operator"
+      >&#8729;&#7496;</a
+      ><a name="1259"
+      > </a
+      ><a name="1260" href="lib.types.Torus.html#1245" class="Bound"
+      >u</a
+      ><a name="1261" class="Symbol"
+      >)</a
+      ><a name="1262"
+      > </a
+      ><a name="1263" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1264"
+      >
+      </a
+      ><a name="1271" href="lib.types.Torus.html#531" class="Bound"
+      >loopT1*</a
+      ><a name="1278"
+      > </a
+      ><a name="1279" href="lib.PathGroupoid.html#4471" class="Function Operator"
+      >&#8729;&#7496;</a
+      ><a name="1281"
+      > </a
+      ><a name="1282" href="lib.types.Torus.html#577" class="Bound"
+      >loopT2*</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="1292"
+      >
+
+    </a
+      ><a name="1298" href="lib.types.Torus.html#1298" class="Function"
+      >rhs</a
+      ><a name="1301"
+      > </a
+      ><a name="1302" class="Symbol"
+      >:</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="1309"
+      > </a
+      ><a name="1310" class="Symbol"
+      >(</a
+      ><a name="1311" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="1317"
+      > </a
+      ><a name="1318" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1319"
+      > </a
+      ><a name="1320" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="1326" class="Symbol"
+      >)</a
+      ><a name="1327"
+      > </a
+      ><a name="1328" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1330"
+      > </a
+      ><a name="1331" href="lib.types.Torus.html#577" class="Bound"
+      >loopT2*</a
+      ><a name="1338"
+      > </a
+      ><a name="1339" href="lib.PathGroupoid.html#4471" class="Function Operator"
+      >&#8729;&#7496;</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" href="lib.types.Torus.html#531" class="Bound"
+      >loopT1*</a
+      ><a name="1349"
+      >
+    </a
+      ><a name="1354" href="lib.types.Torus.html#1298" class="Function"
+      >rhs</a
+      ><a name="1357"
+      > </a
+      ><a name="1358" class="Symbol"
+      >=</a
+      ><a name="1359"
+      >
+      </a
+      ><a name="1366" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1369"
+      > </a
+      ><a name="1370" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="1371"
+      > </a
+      ><a name="1372" class="Symbol"
+      >(</a
+      ><a name="1373" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="1379"
+      > </a
+      ><a name="1380" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1381"
+      > </a
+      ><a name="1382" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="1388" class="Symbol"
+      >)</a
+      ><a name="1389"
+      >                 </a
+      ><a name="1406" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1408"
+      > </a
+      ><a name="1409" href="lib.PathFunctor.html#886" class="Function"
+      >apd-&#8729;</a
+      ><a name="1414"
+      > </a
+      ><a name="1415" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="1416"
+      > </a
+      ><a name="1417" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="1423"
+      > </a
+      ><a name="1424" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="1430"
+      > </a
+      ><a name="1431" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1432"
+      >
+      </a
+      ><a name="1439" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1442"
+      > </a
+      ><a name="1443" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="1444"
+      > </a
+      ><a name="1445" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="1451"
+      > </a
+      ><a name="1452" href="lib.PathGroupoid.html#4471" class="Function Operator"
+      >&#8729;&#7496;</a
+      ><a name="1454"
+      > </a
+      ><a name="1455" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1458"
+      > </a
+      ><a name="1459" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="1460"
+      > </a
+      ><a name="1461" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="1467"
+      >            </a
+      ><a name="1479" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1481"
+      > </a
+      ><a name="1482" href="lib.types.Torus.html#897" class="Postulate"
+      >loopT2-&#946;</a
+      ><a name="1490"
+      > </a
+      ><a name="1491" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1498"
+      > </a
+      ><a name="1499" class="Symbol"
+      >(&#955;</a
+      ><a name="1501"
+      > </a
+      ><a name="1502" href="lib.types.Torus.html#1502" class="Bound"
+      >u</a
+      ><a name="1503"
+      > </a
+      ><a name="1504" class="Symbol"
+      >&#8594;</a
+      ><a name="1505"
+      > </a
+      ><a name="1506" href="lib.types.Torus.html#1502" class="Bound"
+      >u</a
+      ><a name="1507"
+      > </a
+      ><a name="1508" href="lib.PathGroupoid.html#4471" class="Function Operator"
+      >&#8729;&#7496;</a
+      ><a name="1510"
+      > </a
+      ><a name="1511" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1514"
+      > </a
+      ><a name="1515" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="1516"
+      > </a
+      ><a name="1517" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="1523" class="Symbol"
+      >)</a
+      ><a name="1524"
+      > </a
+      ><a name="1525" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1526"
+      >
+      </a
+      ><a name="1533" href="lib.types.Torus.html#577" class="Bound"
+      >loopT2*</a
+      ><a name="1540"
+      > </a
+      ><a name="1541" href="lib.PathGroupoid.html#4471" class="Function Operator"
+      >&#8729;&#7496;</a
+      ><a name="1543"
+      > </a
+      ><a name="1544" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1547"
+      > </a
+      ><a name="1548" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="1549"
+      > </a
+      ><a name="1550" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="1556"
+      >                 </a
+      ><a name="1573" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1575"
+      > </a
+      ><a name="1576" href="lib.types.Torus.html#858" class="Postulate"
+      >loopT1-&#946;</a
+      ><a name="1584"
+      > </a
+      ><a name="1585" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1592"
+      > </a
+      ><a name="1593" class="Symbol"
+      >(&#955;</a
+      ><a name="1595"
+      > </a
+      ><a name="1596" href="lib.types.Torus.html#1596" class="Bound"
+      >u</a
+      ><a name="1597"
+      > </a
+      ><a name="1598" class="Symbol"
+      >&#8594;</a
+      ><a name="1599"
+      > </a
+      ><a name="1600" href="lib.types.Torus.html#577" class="Bound"
+      >loopT2*</a
+      ><a name="1607"
+      > </a
+      ><a name="1608" href="lib.PathGroupoid.html#4471" class="Function Operator"
+      >&#8729;&#7496;</a
+      ><a name="1610"
+      > </a
+      ><a name="1611" href="lib.types.Torus.html#1596" class="Bound"
+      >u</a
+      ><a name="1612" class="Symbol"
+      >)</a
+      ><a name="1613"
+      > </a
+      ><a name="1614" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1615"
+      >
+      </a
+      ><a name="1622" href="lib.types.Torus.html#577" class="Bound"
+      >loopT2*</a
+      ><a name="1629"
+      > </a
+      ><a name="1630" href="lib.PathGroupoid.html#4471" class="Function Operator"
+      >&#8729;&#7496;</a
+      ><a name="1632"
+      > </a
+      ><a name="1633" href="lib.types.Torus.html#531" class="Bound"
+      >loopT1*</a
+      ><a name="1640"
+      > </a
+      ><a name="1641" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="1643"
+      >
+
+  </a
+      ><a name="1647" class="Keyword"
+      >postulate</a
+      ><a name="1656"
+      >  </a
+      ><a name="1658" class="Comment"
+      >-- HIT</a
+      ><a name="1664"
+      >
+    </a
+      ><a name="1669" href="lib.types.Torus.html#1669" class="Postulate"
+      >surfT-&#946;</a
+      ><a name="1676"
+      > </a
+      ><a name="1677" class="Symbol"
+      >:</a
+      ><a name="1678"
+      > </a
+      ><a name="1679" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1682"
+      > </a
+      ><a name="1683" class="Symbol"
+      >(</a
+      ><a name="1684" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1687"
+      > </a
+      ><a name="1688" href="lib.types.Torus.html#764" class="Postulate"
+      >f</a
+      ><a name="1689" class="Symbol"
+      >)</a
+      ><a name="1690"
+      > </a
+      ><a name="1691" href="lib.types.Torus.html#373" class="Postulate"
+      >surfT</a
+      ><a name="1696"
+      > </a
+      ><a name="1697" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1699"
+      > </a
+      ><a name="1700" href="lib.types.Torus.html#947" class="Function"
+      >lhs</a
+      ><a name="1703"
+      > </a
+      ><a name="1704" href="lib.PathGroupoid.html#4673" class="Function Operator"
+      >&#9667;</a
+      ><a name="1705"
+      > </a
+      ><a name="1706" class="Symbol"
+      >(</a
+      ><a name="1707" href="lib.types.Torus.html#623" class="Bound"
+      >surfT*</a
+      ><a name="1713"
+      > </a
+      ><a name="1714" href="lib.PathGroupoid.html#5430" class="Function Operator"
+      >&#9657;!</a
+      ><a name="1716"
+      > </a
+      ><a name="1717" href="lib.types.Torus.html#1298" class="Function"
+      >rhs</a
+      ><a name="1720" class="Symbol"
+      >)</a
+      ><a name="1721"
+      >
+
+</a
+      ><a name="1723" class="Keyword"
+      >module</a
+      ><a name="1729"
+      > </a
+      ><a name="1730" href="lib.types.Torus.html#1730" class="Module"
+      >TorusRec</a
+      ><a name="1738"
+      > </a
+      ><a name="1739" class="Symbol"
+      >{</a
+      ><a name="1740" href="lib.types.Torus.html#1740" class="Bound"
+      >i</a
+      ><a name="1741" class="Symbol"
+      >}</a
+      ><a name="1742"
+      > </a
+      ><a name="1743" class="Symbol"
+      >{</a
+      ><a name="1744" href="lib.types.Torus.html#1744" class="Bound"
+      >A</a
+      ><a name="1745"
+      > </a
+      ><a name="1746" class="Symbol"
+      >:</a
+      ><a name="1747"
+      > </a
+      ><a name="1748" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1752"
+      > </a
+      ><a name="1753" href="lib.types.Torus.html#1740" class="Bound"
+      >i</a
+      ><a name="1754" class="Symbol"
+      >}</a
+      ><a name="1755"
+      > </a
+      ><a name="1756" class="Symbol"
+      >(</a
+      ><a name="1757" href="lib.types.Torus.html#1757" class="Bound"
+      >baseT*</a
+      ><a name="1763"
+      > </a
+      ><a name="1764" class="Symbol"
+      >:</a
+      ><a name="1765"
+      > </a
+      ><a name="1766" href="lib.types.Torus.html#1744" class="Bound"
+      >A</a
+      ><a name="1767" class="Symbol"
+      >)</a
+      ><a name="1768"
+      > </a
+      ><a name="1769" class="Symbol"
+      >(</a
+      ><a name="1770" href="lib.types.Torus.html#1770" class="Bound"
+      >loopT1*</a
+      ><a name="1777"
+      > </a
+      ><a name="1778" href="lib.types.Torus.html#1778" class="Bound"
+      >loopT2*</a
+      ><a name="1785"
+      > </a
+      ><a name="1786" class="Symbol"
+      >:</a
+      ><a name="1787"
+      > </a
+      ><a name="1788" href="lib.types.Torus.html#1757" class="Bound"
+      >baseT*</a
+      ><a name="1794"
+      > </a
+      ><a name="1795" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1797"
+      > </a
+      ><a name="1798" href="lib.types.Torus.html#1757" class="Bound"
+      >baseT*</a
+      ><a name="1804" class="Symbol"
+      >)</a
+      ><a name="1805"
+      >
+  </a
+      ><a name="1808" class="Symbol"
+      >(</a
+      ><a name="1809" href="lib.types.Torus.html#1809" class="Bound"
+      >surfT*</a
+      ><a name="1815"
+      > </a
+      ><a name="1816" class="Symbol"
+      >:</a
+      ><a name="1817"
+      > </a
+      ><a name="1818" href="lib.types.Torus.html#1770" class="Bound"
+      >loopT1*</a
+      ><a name="1825"
+      > </a
+      ><a name="1826" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1827"
+      > </a
+      ><a name="1828" href="lib.types.Torus.html#1778" class="Bound"
+      >loopT2*</a
+      ><a name="1835"
+      > </a
+      ><a name="1836" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1838"
+      > </a
+      ><a name="1839" href="lib.types.Torus.html#1778" class="Bound"
+      >loopT2*</a
+      ><a name="1846"
+      > </a
+      ><a name="1847" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1848"
+      > </a
+      ><a name="1849" href="lib.types.Torus.html#1770" class="Bound"
+      >loopT1*</a
+      ><a name="1856" class="Symbol"
+      >)</a
+      ><a name="1857"
+      > </a
+      ><a name="1858" class="Keyword"
+      >where</a
+      ><a name="1863"
+      >
+
+  </a
+      ><a name="1867" class="Keyword"
+      >private</a
+      ><a name="1874"
+      >
+    </a
+      ><a name="1879" class="Keyword"
+      >module</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" href="lib.types.Torus.html#1886" class="Module"
+      >M</a
+      ><a name="1887"
+      > </a
+      ><a name="1888" class="Symbol"
+      >=</a
+      ><a name="1889"
+      > </a
+      ><a name="1890" href="lib.types.Torus.html#474" class="Module"
+      >TorusElim</a
+      ><a name="1899"
+      > </a
+      ><a name="1900" class="Symbol"
+      >{</a
+      ><a name="1901" class="Argument"
+      >P</a
+      ><a name="1902"
+      > </a
+      ><a name="1903" class="Symbol"
+      >=</a
+      ><a name="1904"
+      > </a
+      ><a name="1905" class="Symbol"
+      >&#955;</a
+      ><a name="1906"
+      > </a
+      ><a name="1907" href="lib.types.Torus.html#1907" class="Bound"
+      >_</a
+      ><a name="1908"
+      > </a
+      ><a name="1909" class="Symbol"
+      >&#8594;</a
+      ><a name="1910"
+      > </a
+      ><a name="1911" href="lib.types.Torus.html#1744" class="Bound"
+      >A</a
+      ><a name="1912" class="Symbol"
+      >}</a
+      ><a name="1913"
+      > </a
+      ><a name="1914" href="lib.types.Torus.html#1757" class="Bound"
+      >baseT*</a
+      ><a name="1920"
+      > </a
+      ><a name="1921" class="Symbol"
+      >(</a
+      ><a name="1922" href="lib.PathOver.html#1569" class="Function"
+      >&#8595;-cst-in</a
+      ><a name="1930"
+      > </a
+      ><a name="1931" href="lib.types.Torus.html#1770" class="Bound"
+      >loopT1*</a
+      ><a name="1938" class="Symbol"
+      >)</a
+      ><a name="1939"
+      > </a
+      ><a name="1940" class="Symbol"
+      >(</a
+      ><a name="1941" href="lib.PathOver.html#1569" class="Function"
+      >&#8595;-cst-in</a
+      ><a name="1949"
+      > </a
+      ><a name="1950" href="lib.types.Torus.html#1778" class="Bound"
+      >loopT2*</a
+      ><a name="1957" class="Symbol"
+      >)</a
+      ><a name="1958"
+      >
+                         </a
+      ><a name="1984" class="Symbol"
+      >(</a
+      ><a name="1985" href="lib.PathOver.html#1977" class="Function"
+      >&#8595;-cst-in-&#8729;</a
+      ><a name="1995"
+      > </a
+      ><a name="1996" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="2002"
+      > </a
+      ><a name="2003" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="2009"
+      > </a
+      ><a name="2010" href="lib.types.Torus.html#1770" class="Bound"
+      >loopT1*</a
+      ><a name="2017"
+      > </a
+      ><a name="2018" href="lib.types.Torus.html#1778" class="Bound"
+      >loopT2*</a
+      ><a name="2025"
+      >
+                         </a
+      ><a name="2051" href="lib.PathGroupoid.html#5705" class="Function Operator"
+      >!&#9667;</a
+      ><a name="2053"
+      > </a
+      ><a name="2054" class="Symbol"
+      >(</a
+      ><a name="2055" href="lib.PathOver.html#2603" class="Function"
+      >&#8595;-cst-in2</a
+      ><a name="2064"
+      > </a
+      ><a name="2065" href="lib.types.Torus.html#1809" class="Bound"
+      >surfT*</a
+      ><a name="2071"
+      > </a
+      ><a name="2072" href="lib.PathGroupoid.html#5097" class="Function Operator"
+      >&#9657;</a
+      ><a name="2073"
+      > </a
+      ><a name="2074" class="Symbol"
+      >(</a
+      ><a name="2075" href="lib.PathOver.html#1977" class="Function"
+      >&#8595;-cst-in-&#8729;</a
+      ><a name="2085"
+      > </a
+      ><a name="2086" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="2092"
+      > </a
+      ><a name="2093" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="2099"
+      > </a
+      ><a name="2100" href="lib.types.Torus.html#1778" class="Bound"
+      >loopT2*</a
+      ><a name="2107"
+      > </a
+      ><a name="2108" href="lib.types.Torus.html#1770" class="Bound"
+      >loopT1*</a
+      ><a name="2115" class="Symbol"
+      >)))</a
+      ><a name="2118"
+      >
+
+  </a
+      ><a name="2122" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2123"
+      > </a
+      ><a name="2124" class="Symbol"
+      >:</a
+      ><a name="2125"
+      > </a
+      ><a name="2126" href="lib.types.Torus.html#289" class="Postulate"
+      >Torus</a
+      ><a name="2131"
+      > </a
+      ><a name="2132" class="Symbol"
+      >&#8594;</a
+      ><a name="2133"
+      > </a
+      ><a name="2134" href="lib.types.Torus.html#1744" class="Bound"
+      >A</a
+      ><a name="2135"
+      >
+  </a
+      ><a name="2138" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2139"
+      > </a
+      ><a name="2140" class="Symbol"
+      >=</a
+      ><a name="2141"
+      > </a
+      ><a name="2142" href="lib.types.Torus.html#764" class="Function"
+      >M.f</a
+      ><a name="2145"
+      >
+
+  </a
+      ><a name="2149" href="lib.types.Torus.html#2149" class="Function"
+      >loopT1-&#946;</a
+      ><a name="2157"
+      > </a
+      ><a name="2158" class="Symbol"
+      >:</a
+      ><a name="2159"
+      > </a
+      ><a name="2160" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2162"
+      > </a
+      ><a name="2163" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2164"
+      > </a
+      ><a name="2165" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="2171"
+      > </a
+      ><a name="2172" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2174"
+      > </a
+      ><a name="2175" href="lib.types.Torus.html#1770" class="Bound"
+      >loopT1*</a
+      ><a name="2182"
+      >
+  </a
+      ><a name="2185" href="lib.types.Torus.html#2149" class="Function"
+      >loopT1-&#946;</a
+      ><a name="2193"
+      > </a
+      ><a name="2194" class="Symbol"
+      >=</a
+      ><a name="2195"
+      > </a
+      ><a name="2196" href="lib.PathOver.html#8214" class="Function"
+      >apd=cst-in</a
+      ><a name="2206"
+      > </a
+      ><a name="2207" class="Symbol"
+      >{</a
+      ><a name="2208" class="Argument"
+      >f</a
+      ><a name="2209"
+      > </a
+      ><a name="2210" class="Symbol"
+      >=</a
+      ><a name="2211"
+      > </a
+      ><a name="2212" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2213" class="Symbol"
+      >}</a
+      ><a name="2214"
+      > </a
+      ><a name="2215" href="lib.types.Torus.html#858" class="Function"
+      >M.loopT1-&#946;</a
+      ><a name="2225"
+      >
+
+  </a
+      ><a name="2229" href="lib.types.Torus.html#2229" class="Function"
+      >loopT2-&#946;</a
+      ><a name="2237"
+      > </a
+      ><a name="2238" class="Symbol"
+      >:</a
+      ><a name="2239"
+      > </a
+      ><a name="2240" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2242"
+      > </a
+      ><a name="2243" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2244"
+      > </a
+      ><a name="2245" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="2251"
+      > </a
+      ><a name="2252" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2254"
+      > </a
+      ><a name="2255" href="lib.types.Torus.html#1778" class="Bound"
+      >loopT2*</a
+      ><a name="2262"
+      >
+  </a
+      ><a name="2265" href="lib.types.Torus.html#2229" class="Function"
+      >loopT2-&#946;</a
+      ><a name="2273"
+      > </a
+      ><a name="2274" class="Symbol"
+      >=</a
+      ><a name="2275"
+      > </a
+      ><a name="2276" href="lib.PathOver.html#8214" class="Function"
+      >apd=cst-in</a
+      ><a name="2286"
+      > </a
+      ><a name="2287" class="Symbol"
+      >{</a
+      ><a name="2288" class="Argument"
+      >f</a
+      ><a name="2289"
+      > </a
+      ><a name="2290" class="Symbol"
+      >=</a
+      ><a name="2291"
+      > </a
+      ><a name="2292" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2293" class="Symbol"
+      >}</a
+      ><a name="2294"
+      > </a
+      ><a name="2295" href="lib.types.Torus.html#897" class="Function"
+      >M.loopT2-&#946;</a
+      ><a name="2305"
+      >
+
+  </a
+      ><a name="2309" class="Keyword"
+      >private</a
+      ><a name="2316"
+      >
+    </a
+      ><a name="2321" href="lib.types.Torus.html#2321" class="Function"
+      >lhs</a
+      ><a name="2324"
+      > </a
+      ><a name="2325" class="Symbol"
+      >:</a
+      ><a name="2326"
+      > </a
+      ><a name="2327" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2329"
+      > </a
+      ><a name="2330" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2331"
+      > </a
+      ><a name="2332" class="Symbol"
+      >(</a
+      ><a name="2333" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="2339"
+      > </a
+      ><a name="2340" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2341"
+      > </a
+      ><a name="2342" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="2348" class="Symbol"
+      >)</a
+      ><a name="2349"
+      > </a
+      ><a name="2350" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2352"
+      > </a
+      ><a name="2353" href="lib.types.Torus.html#1770" class="Bound"
+      >loopT1*</a
+      ><a name="2360"
+      > </a
+      ><a name="2361" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2362"
+      > </a
+      ><a name="2363" href="lib.types.Torus.html#1778" class="Bound"
+      >loopT2*</a
+      ><a name="2370"
+      >
+    </a
+      ><a name="2375" href="lib.types.Torus.html#2321" class="Function"
+      >lhs</a
+      ><a name="2378"
+      > </a
+      ><a name="2379" class="Symbol"
+      >=</a
+      ><a name="2380"
+      >
+      </a
+      ><a name="2387" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2389"
+      > </a
+      ><a name="2390" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2391"
+      > </a
+      ><a name="2392" class="Symbol"
+      >(</a
+      ><a name="2393" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="2399"
+      > </a
+      ><a name="2400" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2401"
+      > </a
+      ><a name="2402" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="2408" class="Symbol"
+      >)</a
+      ><a name="2409"
+      >      </a
+      ><a name="2415" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2417"
+      > </a
+      ><a name="2418" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="2422"
+      > </a
+      ><a name="2423" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2424"
+      > </a
+      ><a name="2425" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="2431"
+      > </a
+      ><a name="2432" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="2438"
+      > </a
+      ><a name="2439" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2440"
+      >
+      </a
+      ><a name="2447" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2449"
+      > </a
+      ><a name="2450" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2451"
+      > </a
+      ><a name="2452" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="2458"
+      > </a
+      ><a name="2459" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2460"
+      > </a
+      ><a name="2461" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2463"
+      > </a
+      ><a name="2464" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2465"
+      > </a
+      ><a name="2466" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="2472"
+      >   </a
+      ><a name="2475" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2477"
+      > </a
+      ><a name="2478" href="lib.types.Torus.html#2149" class="Function"
+      >loopT1-&#946;</a
+      ><a name="2486"
+      > </a
+      ><a name="2487" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="2494"
+      > </a
+      ><a name="2495" class="Symbol"
+      >(&#955;</a
+      ><a name="2497"
+      > </a
+      ><a name="2498" href="lib.types.Torus.html#2498" class="Bound"
+      >u</a
+      ><a name="2499"
+      > </a
+      ><a name="2500" class="Symbol"
+      >&#8594;</a
+      ><a name="2501"
+      > </a
+      ><a name="2502" href="lib.types.Torus.html#2498" class="Bound"
+      >u</a
+      ><a name="2503"
+      > </a
+      ><a name="2504" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2505"
+      > </a
+      ><a name="2506" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2508"
+      > </a
+      ><a name="2509" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2510"
+      > </a
+      ><a name="2511" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="2517" class="Symbol"
+      >)</a
+      ><a name="2518"
+      > </a
+      ><a name="2519" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2520"
+      >
+      </a
+      ><a name="2527" href="lib.types.Torus.html#1770" class="Bound"
+      >loopT1*</a
+      ><a name="2534"
+      > </a
+      ><a name="2535" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2536"
+      > </a
+      ><a name="2537" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2539"
+      > </a
+      ><a name="2540" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2541"
+      > </a
+      ><a name="2542" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="2548"
+      >       </a
+      ><a name="2555" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2557"
+      > </a
+      ><a name="2558" href="lib.types.Torus.html#2229" class="Function"
+      >loopT2-&#946;</a
+      ><a name="2566"
+      > </a
+      ><a name="2567" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="2574"
+      > </a
+      ><a name="2575" class="Symbol"
+      >(&#955;</a
+      ><a name="2577"
+      > </a
+      ><a name="2578" href="lib.types.Torus.html#2578" class="Bound"
+      >u</a
+      ><a name="2579"
+      > </a
+      ><a name="2580" class="Symbol"
+      >&#8594;</a
+      ><a name="2581"
+      > </a
+      ><a name="2582" href="lib.types.Torus.html#1770" class="Bound"
+      >loopT1*</a
+      ><a name="2589"
+      > </a
+      ><a name="2590" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2591"
+      > </a
+      ><a name="2592" href="lib.types.Torus.html#2578" class="Bound"
+      >u</a
+      ><a name="2593" class="Symbol"
+      >)</a
+      ><a name="2594"
+      > </a
+      ><a name="2595" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2596"
+      >
+      </a
+      ><a name="2603" href="lib.types.Torus.html#1770" class="Bound"
+      >loopT1*</a
+      ><a name="2610"
+      > </a
+      ><a name="2611" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2612"
+      > </a
+      ><a name="2613" href="lib.types.Torus.html#1778" class="Bound"
+      >loopT2*</a
+      ><a name="2620"
+      > </a
+      ><a name="2621" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="2623"
+      >
+
+    </a
+      ><a name="2629" href="lib.types.Torus.html#2629" class="Function"
+      >rhs</a
+      ><a name="2632"
+      > </a
+      ><a name="2633" class="Symbol"
+      >:</a
+      ><a name="2634"
+      > </a
+      ><a name="2635" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2637"
+      > </a
+      ><a name="2638" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2639"
+      > </a
+      ><a name="2640" class="Symbol"
+      >(</a
+      ><a name="2641" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="2647"
+      > </a
+      ><a name="2648" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2649"
+      > </a
+      ><a name="2650" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="2656" class="Symbol"
+      >)</a
+      ><a name="2657"
+      > </a
+      ><a name="2658" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2660"
+      > </a
+      ><a name="2661" href="lib.types.Torus.html#1778" class="Bound"
+      >loopT2*</a
+      ><a name="2668"
+      > </a
+      ><a name="2669" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2670"
+      > </a
+      ><a name="2671" href="lib.types.Torus.html#1770" class="Bound"
+      >loopT1*</a
+      ><a name="2678"
+      >
+    </a
+      ><a name="2683" href="lib.types.Torus.html#2629" class="Function"
+      >rhs</a
+      ><a name="2686"
+      > </a
+      ><a name="2687" class="Symbol"
+      >=</a
+      ><a name="2688"
+      >
+      </a
+      ><a name="2695" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2697"
+      > </a
+      ><a name="2698" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2699"
+      > </a
+      ><a name="2700" class="Symbol"
+      >(</a
+      ><a name="2701" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="2707"
+      > </a
+      ><a name="2708" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2709"
+      > </a
+      ><a name="2710" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="2716" class="Symbol"
+      >)</a
+      ><a name="2717"
+      >      </a
+      ><a name="2723" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2725"
+      > </a
+      ><a name="2726" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="2730"
+      > </a
+      ><a name="2731" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2732"
+      > </a
+      ><a name="2733" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="2739"
+      > </a
+      ><a name="2740" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="2746"
+      > </a
+      ><a name="2747" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2748"
+      >
+      </a
+      ><a name="2755" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2757"
+      > </a
+      ><a name="2758" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2759"
+      > </a
+      ><a name="2760" href="lib.types.Torus.html#347" class="Postulate"
+      >loopT2</a
+      ><a name="2766"
+      > </a
+      ><a name="2767" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2768"
+      > </a
+      ><a name="2769" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2771"
+      > </a
+      ><a name="2772" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2773"
+      > </a
+      ><a name="2774" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="2780"
+      >   </a
+      ><a name="2783" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2785"
+      > </a
+      ><a name="2786" href="lib.types.Torus.html#2229" class="Function"
+      >loopT2-&#946;</a
+      ><a name="2794"
+      > </a
+      ><a name="2795" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="2802"
+      > </a
+      ><a name="2803" class="Symbol"
+      >(&#955;</a
+      ><a name="2805"
+      > </a
+      ><a name="2806" href="lib.types.Torus.html#2806" class="Bound"
+      >u</a
+      ><a name="2807"
+      > </a
+      ><a name="2808" class="Symbol"
+      >&#8594;</a
+      ><a name="2809"
+      > </a
+      ><a name="2810" href="lib.types.Torus.html#2806" class="Bound"
+      >u</a
+      ><a name="2811"
+      > </a
+      ><a name="2812" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2813"
+      > </a
+      ><a name="2814" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2816"
+      > </a
+      ><a name="2817" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2818"
+      > </a
+      ><a name="2819" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="2825" class="Symbol"
+      >)</a
+      ><a name="2826"
+      > </a
+      ><a name="2827" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2828"
+      >
+      </a
+      ><a name="2835" href="lib.types.Torus.html#1778" class="Bound"
+      >loopT2*</a
+      ><a name="2842"
+      > </a
+      ><a name="2843" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2844"
+      > </a
+      ><a name="2845" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2847"
+      > </a
+      ><a name="2848" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2849"
+      > </a
+      ><a name="2850" href="lib.types.Torus.html#321" class="Postulate"
+      >loopT1</a
+      ><a name="2856"
+      >       </a
+      ><a name="2863" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2865"
+      > </a
+      ><a name="2866" href="lib.types.Torus.html#2149" class="Function"
+      >loopT1-&#946;</a
+      ><a name="2874"
+      > </a
+      ><a name="2875" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="2882"
+      > </a
+      ><a name="2883" class="Symbol"
+      >(&#955;</a
+      ><a name="2885"
+      > </a
+      ><a name="2886" href="lib.types.Torus.html#2886" class="Bound"
+      >u</a
+      ><a name="2887"
+      > </a
+      ><a name="2888" class="Symbol"
+      >&#8594;</a
+      ><a name="2889"
+      > </a
+      ><a name="2890" href="lib.types.Torus.html#1778" class="Bound"
+      >loopT2*</a
+      ><a name="2897"
+      > </a
+      ><a name="2898" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2899"
+      > </a
+      ><a name="2900" href="lib.types.Torus.html#2886" class="Bound"
+      >u</a
+      ><a name="2901" class="Symbol"
+      >)</a
+      ><a name="2902"
+      > </a
+      ><a name="2903" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2904"
+      >
+      </a
+      ><a name="2911" href="lib.types.Torus.html#1778" class="Bound"
+      >loopT2*</a
+      ><a name="2918"
+      > </a
+      ><a name="2919" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2920"
+      > </a
+      ><a name="2921" href="lib.types.Torus.html#1770" class="Bound"
+      >loopT1*</a
+      ><a name="2928"
+      > </a
+      ><a name="2929" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="2931"
+      >
+
+  </a
+      ><a name="2935" class="Keyword"
+      >postulate</a
+      ><a name="2944"
+      >  </a
+      ><a name="2946" class="Comment"
+      >-- Does not look easy</a
+      ><a name="2967"
+      >
+    </a
+      ><a name="2972" href="lib.types.Torus.html#2972" class="Postulate"
+      >surfT-&#946;</a
+      ><a name="2979"
+      > </a
+      ><a name="2980" class="Symbol"
+      >:</a
+      ><a name="2981"
+      > </a
+      ><a name="2982" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2984"
+      > </a
+      ><a name="2985" class="Symbol"
+      >(</a
+      ><a name="2986" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2988"
+      > </a
+      ><a name="2989" href="lib.types.Torus.html#2122" class="Function"
+      >f</a
+      ><a name="2990" class="Symbol"
+      >)</a
+      ><a name="2991"
+      > </a
+      ><a name="2992" href="lib.types.Torus.html#373" class="Postulate"
+      >surfT</a
+      ><a name="2997"
+      > </a
+      ><a name="2998" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3000"
+      > </a
+      ><a name="3001" class="Symbol"
+      >(</a
+      ><a name="3002" href="lib.types.Torus.html#2321" class="Function"
+      >lhs</a
+      ><a name="3005"
+      > </a
+      ><a name="3006" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3007"
+      > </a
+      ><a name="3008" href="lib.types.Torus.html#1809" class="Bound"
+      >surfT*</a
+      ><a name="3014" class="Symbol"
+      >)</a
+      ><a name="3015"
+      > </a
+      ><a name="3016" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3017"
+      > </a
+      ><a name="3018" class="Symbol"
+      >(</a
+      ><a name="3019" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3020"
+      > </a
+      ><a name="3021" href="lib.types.Torus.html#2629" class="Function"
+      >rhs</a
+      ><a name="3024" class="Symbol"
+      >)</a
+      ><a name="3025"
+      >
+</a
+      ><a name="3026" class="Comment"
+      >--  surfT-&#946; = {!M.surfT-&#946;!}</a
+      ><a name="3053"
+      >
+
+</a
+      ><a name="3055" class="Comment"
+      >-- module TorusRecType {i} (baseT* : Type i) (loopT1* loopT2* : baseT* &#8771; baseT*)</a
+      ><a name="3135"
+      >
+</a
+      ><a name="3136" class="Comment"
+      >--   (surfT* : (x : baseT*) &#8594; &#8211;&gt; loopT2* (&#8211;&gt; loopT2* x) == &#8211;&gt; loopT1* (&#8211;&gt; loopT2* x)) where</a
+      ><a name="3227"
+      >
+
+</a
+      ><a name="3229" class="Comment"
+      >--   open TorusRec baseT* (ua loopT1*) (ua loopT2*) {!!} public</a
+      ><a name="3292"
+      >
+</a
+      ><a name="3293" class="Comment"
+      >--   -- TODO</a
+      ><a name="3305"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

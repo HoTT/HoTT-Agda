@@ -1,0 +1,924 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.Lift</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+
+</a
+      ><a name="66" class="Keyword"
+      >module</a
+      ><a name="72"
+      > </a
+      ><a name="73" href="lib.types.Lift.html#1" class="Module"
+      >lib.types.Lift</a
+      ><a name="87"
+      > </a
+      ><a name="88" class="Keyword"
+      >where</a
+      ><a name="93"
+      >
+
+</a
+      ><a name="95" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="100"
+      > </a
+      ><a name="101" class="Symbol"
+      >:</a
+      ><a name="102"
+      > </a
+      ><a name="103" class="Symbol"
+      >&#8704;</a
+      ><a name="104"
+      > </a
+      ><a name="105" class="Symbol"
+      >{</a
+      ><a name="106" href="lib.types.Lift.html#106" class="Bound"
+      >i</a
+      ><a name="107"
+      > </a
+      ><a name="108" href="lib.types.Lift.html#108" class="Bound"
+      >j</a
+      ><a name="109" class="Symbol"
+      >}</a
+      ><a name="110"
+      > </a
+      ><a name="111" class="Symbol"
+      >&#8594;</a
+      ><a name="112"
+      > </a
+      ><a name="113" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="116"
+      > </a
+      ><a name="117" href="lib.types.Lift.html#106" class="Bound"
+      >i</a
+      ><a name="118"
+      > </a
+      ><a name="119" class="Symbol"
+      >&#8594;</a
+      ><a name="120"
+      > </a
+      ><a name="121" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="124"
+      > </a
+      ><a name="125" class="Symbol"
+      >(</a
+      ><a name="126" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="130"
+      > </a
+      ><a name="131" href="lib.types.Lift.html#106" class="Bound"
+      >i</a
+      ><a name="132"
+      > </a
+      ><a name="133" href="lib.types.Lift.html#108" class="Bound"
+      >j</a
+      ><a name="134" class="Symbol"
+      >)</a
+      ><a name="135"
+      >
+</a
+      ><a name="136" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="141"
+      > </a
+      ><a name="142" class="Symbol"
+      >{</a
+      ><a name="143" class="Argument"
+      >j</a
+      ><a name="144"
+      > </a
+      ><a name="145" class="Symbol"
+      >=</a
+      ><a name="146"
+      > </a
+      ><a name="147" href="lib.types.Lift.html#147" class="Bound"
+      >j</a
+      ><a name="148" class="Symbol"
+      >}</a
+      ><a name="149"
+      > </a
+      ><a name="150" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >&#8857;[</a
+      ><a name="152"
+      > </a
+      ><a name="153" href="lib.types.Lift.html#153" class="Bound"
+      >A</a
+      ><a name="154"
+      > </a
+      ><a name="155" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="156"
+      > </a
+      ><a name="157" href="lib.types.Lift.html#157" class="Bound"
+      >a</a
+      ><a name="158"
+      > </a
+      ><a name="159" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >]</a
+      ><a name="160"
+      > </a
+      ><a name="161" class="Symbol"
+      >=</a
+      ><a name="162"
+      >  </a
+      ><a name="164" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >&#8857;[</a
+      ><a name="166"
+      > </a
+      ><a name="167" href="lib.Base.html#6440" class="Record"
+      >Lift</a
+      ><a name="171"
+      > </a
+      ><a name="172" class="Symbol"
+      >{</a
+      ><a name="173" class="Argument"
+      >j</a
+      ><a name="174"
+      > </a
+      ><a name="175" class="Symbol"
+      >=</a
+      ><a name="176"
+      > </a
+      ><a name="177" href="lib.types.Lift.html#147" class="Bound"
+      >j</a
+      ><a name="178" class="Symbol"
+      >}</a
+      ><a name="179"
+      > </a
+      ><a name="180" href="lib.types.Lift.html#153" class="Bound"
+      >A</a
+      ><a name="181"
+      > </a
+      ><a name="182" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="183"
+      > </a
+      ><a name="184" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="188"
+      > </a
+      ><a name="189" href="lib.types.Lift.html#157" class="Bound"
+      >a</a
+      ><a name="190"
+      > </a
+      ><a name="191" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >]</a
+      ><a name="192"
+      >
+
+</a
+      ><a name="194" href="lib.types.Lift.html#194" class="Function"
+      >&#8857;lift</a
+      ><a name="199"
+      > </a
+      ><a name="200" class="Symbol"
+      >:</a
+      ><a name="201"
+      > </a
+      ><a name="202" class="Symbol"
+      >&#8704;</a
+      ><a name="203"
+      > </a
+      ><a name="204" class="Symbol"
+      >{</a
+      ><a name="205" href="lib.types.Lift.html#205" class="Bound"
+      >i</a
+      ><a name="206"
+      > </a
+      ><a name="207" href="lib.types.Lift.html#207" class="Bound"
+      >j</a
+      ><a name="208" class="Symbol"
+      >}</a
+      ><a name="209"
+      > </a
+      ><a name="210" class="Symbol"
+      >{</a
+      ><a name="211" href="lib.types.Lift.html#211" class="Bound"
+      >X</a
+      ><a name="212"
+      > </a
+      ><a name="213" class="Symbol"
+      >:</a
+      ><a name="214"
+      > </a
+      ><a name="215" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="218"
+      > </a
+      ><a name="219" href="lib.types.Lift.html#205" class="Bound"
+      >i</a
+      ><a name="220" class="Symbol"
+      >}</a
+      ><a name="221"
+      > </a
+      ><a name="222" class="Symbol"
+      >&#8594;</a
+      ><a name="223"
+      > </a
+      ><a name="224" href="lib.types.Lift.html#211" class="Bound"
+      >X</a
+      ><a name="225"
+      > </a
+      ><a name="226" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="228"
+      > </a
+      ><a name="229" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="234"
+      > </a
+      ><a name="235" class="Symbol"
+      >{</a
+      ><a name="236" class="Argument"
+      >j</a
+      ><a name="237"
+      > </a
+      ><a name="238" class="Symbol"
+      >=</a
+      ><a name="239"
+      > </a
+      ><a name="240" href="lib.types.Lift.html#207" class="Bound"
+      >j</a
+      ><a name="241" class="Symbol"
+      >}</a
+      ><a name="242"
+      > </a
+      ><a name="243" href="lib.types.Lift.html#211" class="Bound"
+      >X</a
+      ><a name="244"
+      >
+</a
+      ><a name="245" href="lib.types.Lift.html#194" class="Function"
+      >&#8857;lift</a
+      ><a name="250"
+      > </a
+      ><a name="251" class="Symbol"
+      >=</a
+      ><a name="252"
+      > </a
+      ><a name="253" class="Symbol"
+      >(</a
+      ><a name="254" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="258"
+      > </a
+      ><a name="259" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="260"
+      > </a
+      ><a name="261" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="264" class="Symbol"
+      >)</a
+      ><a name="265"
+      >
+
+</a
+      ><a name="267" href="lib.types.Lift.html#267" class="Function"
+      >&#8857;lower</a
+      ><a name="273"
+      > </a
+      ><a name="274" class="Symbol"
+      >:</a
+      ><a name="275"
+      > </a
+      ><a name="276" class="Symbol"
+      >&#8704;</a
+      ><a name="277"
+      > </a
+      ><a name="278" class="Symbol"
+      >{</a
+      ><a name="279" href="lib.types.Lift.html#279" class="Bound"
+      >i</a
+      ><a name="280"
+      > </a
+      ><a name="281" href="lib.types.Lift.html#281" class="Bound"
+      >j</a
+      ><a name="282" class="Symbol"
+      >}</a
+      ><a name="283"
+      > </a
+      ><a name="284" class="Symbol"
+      >{</a
+      ><a name="285" href="lib.types.Lift.html#285" class="Bound"
+      >X</a
+      ><a name="286"
+      > </a
+      ><a name="287" class="Symbol"
+      >:</a
+      ><a name="288"
+      > </a
+      ><a name="289" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="292"
+      > </a
+      ><a name="293" href="lib.types.Lift.html#279" class="Bound"
+      >i</a
+      ><a name="294" class="Symbol"
+      >}</a
+      ><a name="295"
+      > </a
+      ><a name="296" class="Symbol"
+      >&#8594;</a
+      ><a name="297"
+      > </a
+      ><a name="298" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="303"
+      > </a
+      ><a name="304" class="Symbol"
+      >{</a
+      ><a name="305" class="Argument"
+      >j</a
+      ><a name="306"
+      > </a
+      ><a name="307" class="Symbol"
+      >=</a
+      ><a name="308"
+      > </a
+      ><a name="309" href="lib.types.Lift.html#281" class="Bound"
+      >j</a
+      ><a name="310" class="Symbol"
+      >}</a
+      ><a name="311"
+      > </a
+      ><a name="312" href="lib.types.Lift.html#285" class="Bound"
+      >X</a
+      ><a name="313"
+      > </a
+      ><a name="314" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="316"
+      > </a
+      ><a name="317" href="lib.types.Lift.html#285" class="Bound"
+      >X</a
+      ><a name="318"
+      >
+</a
+      ><a name="319" href="lib.types.Lift.html#267" class="Function"
+      >&#8857;lower</a
+      ><a name="325"
+      > </a
+      ><a name="326" class="Symbol"
+      >=</a
+      ><a name="327"
+      > </a
+      ><a name="328" class="Symbol"
+      >(</a
+      ><a name="329" href="lib.Base.html#6528" class="Field"
+      >lower</a
+      ><a name="334"
+      > </a
+      ><a name="335" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="336"
+      > </a
+      ><a name="337" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="340" class="Symbol"
+      >)</a
+      ><a name="341"
+      >
+
+</a
+      ><a name="343" href="lib.types.Lift.html#343" class="Function"
+      >lift-equiv</a
+      ><a name="353"
+      > </a
+      ><a name="354" class="Symbol"
+      >:</a
+      ><a name="355"
+      > </a
+      ><a name="356" class="Symbol"
+      >&#8704;</a
+      ><a name="357"
+      > </a
+      ><a name="358" class="Symbol"
+      >{</a
+      ><a name="359" href="lib.types.Lift.html#359" class="Bound"
+      >i</a
+      ><a name="360"
+      > </a
+      ><a name="361" href="lib.types.Lift.html#361" class="Bound"
+      >j</a
+      ><a name="362" class="Symbol"
+      >}</a
+      ><a name="363"
+      > </a
+      ><a name="364" class="Symbol"
+      >{</a
+      ><a name="365" href="lib.types.Lift.html#365" class="Bound"
+      >A</a
+      ><a name="366"
+      > </a
+      ><a name="367" class="Symbol"
+      >:</a
+      ><a name="368"
+      > </a
+      ><a name="369" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="373"
+      > </a
+      ><a name="374" href="lib.types.Lift.html#359" class="Bound"
+      >i</a
+      ><a name="375" class="Symbol"
+      >}</a
+      ><a name="376"
+      > </a
+      ><a name="377" class="Symbol"
+      >&#8594;</a
+      ><a name="378"
+      > </a
+      ><a name="379" href="lib.types.Lift.html#365" class="Bound"
+      >A</a
+      ><a name="380"
+      > </a
+      ><a name="381" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="382"
+      > </a
+      ><a name="383" href="lib.Base.html#6440" class="Record"
+      >Lift</a
+      ><a name="387"
+      > </a
+      ><a name="388" class="Symbol"
+      >{</a
+      ><a name="389" class="Argument"
+      >j</a
+      ><a name="390"
+      > </a
+      ><a name="391" class="Symbol"
+      >=</a
+      ><a name="392"
+      > </a
+      ><a name="393" href="lib.types.Lift.html#361" class="Bound"
+      >j</a
+      ><a name="394" class="Symbol"
+      >}</a
+      ><a name="395"
+      > </a
+      ><a name="396" href="lib.types.Lift.html#365" class="Bound"
+      >A</a
+      ><a name="397"
+      >
+</a
+      ><a name="398" href="lib.types.Lift.html#343" class="Function"
+      >lift-equiv</a
+      ><a name="408"
+      > </a
+      ><a name="409" class="Symbol"
+      >=</a
+      ><a name="410"
+      > </a
+      ><a name="411" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="416"
+      > </a
+      ><a name="417" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="421"
+      > </a
+      ><a name="422" href="lib.Base.html#6528" class="Field"
+      >lower</a
+      ><a name="427"
+      > </a
+      ><a name="428" class="Symbol"
+      >(&#955;</a
+      ><a name="430"
+      > </a
+      ><a name="431" href="lib.types.Lift.html#431" class="Bound"
+      >_</a
+      ><a name="432"
+      > </a
+      ><a name="433" class="Symbol"
+      >&#8594;</a
+      ><a name="434"
+      > </a
+      ><a name="435" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="438" class="Symbol"
+      >)</a
+      ><a name="439"
+      > </a
+      ><a name="440" class="Symbol"
+      >(&#955;</a
+      ><a name="442"
+      > </a
+      ><a name="443" href="lib.types.Lift.html#443" class="Bound"
+      >_</a
+      ><a name="444"
+      > </a
+      ><a name="445" class="Symbol"
+      >&#8594;</a
+      ><a name="446"
+      > </a
+      ><a name="447" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="450" class="Symbol"
+      >)</a
+      ><a name="451"
+      >
+
+</a
+      ><a name="453" class="Comment"
+      >-- [lower-equiv] is in Equivalences.agda</a
+      ><a name="493"
+      >
+
+</a
+      ><a name="495" href="lib.types.Lift.html#495" class="Function"
+      >Lift-level</a
+      ><a name="505"
+      > </a
+      ><a name="506" class="Symbol"
+      >:</a
+      ><a name="507"
+      > </a
+      ><a name="508" class="Symbol"
+      >&#8704;</a
+      ><a name="509"
+      > </a
+      ><a name="510" class="Symbol"
+      >{</a
+      ><a name="511" href="lib.types.Lift.html#511" class="Bound"
+      >i</a
+      ><a name="512"
+      > </a
+      ><a name="513" href="lib.types.Lift.html#513" class="Bound"
+      >j</a
+      ><a name="514" class="Symbol"
+      >}</a
+      ><a name="515"
+      > </a
+      ><a name="516" class="Symbol"
+      >{</a
+      ><a name="517" href="lib.types.Lift.html#517" class="Bound"
+      >A</a
+      ><a name="518"
+      > </a
+      ><a name="519" class="Symbol"
+      >:</a
+      ><a name="520"
+      > </a
+      ><a name="521" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="525"
+      > </a
+      ><a name="526" href="lib.types.Lift.html#511" class="Bound"
+      >i</a
+      ><a name="527" class="Symbol"
+      >}</a
+      ><a name="528"
+      > </a
+      ><a name="529" class="Symbol"
+      >{</a
+      ><a name="530" href="lib.types.Lift.html#530" class="Bound"
+      >n</a
+      ><a name="531"
+      > </a
+      ><a name="532" class="Symbol"
+      >:</a
+      ><a name="533"
+      > </a
+      ><a name="534" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="537" class="Symbol"
+      >}</a
+      ><a name="538"
+      > </a
+      ><a name="539" class="Symbol"
+      >&#8594;</a
+      ><a name="540"
+      >
+  </a
+      ><a name="543" href="lib.NType.html#304" class="Function"
+      >has-level</a
+      ><a name="552"
+      > </a
+      ><a name="553" href="lib.types.Lift.html#530" class="Bound"
+      >n</a
+      ><a name="554"
+      > </a
+      ><a name="555" href="lib.types.Lift.html#517" class="Bound"
+      >A</a
+      ><a name="556"
+      > </a
+      ><a name="557" class="Symbol"
+      >&#8594;</a
+      ><a name="558"
+      > </a
+      ><a name="559" href="lib.NType.html#304" class="Function"
+      >has-level</a
+      ><a name="568"
+      > </a
+      ><a name="569" href="lib.types.Lift.html#530" class="Bound"
+      >n</a
+      ><a name="570"
+      > </a
+      ><a name="571" class="Symbol"
+      >(</a
+      ><a name="572" href="lib.Base.html#6440" class="Record"
+      >Lift</a
+      ><a name="576"
+      > </a
+      ><a name="577" class="Symbol"
+      >{</a
+      ><a name="578" class="Argument"
+      >j</a
+      ><a name="579"
+      > </a
+      ><a name="580" class="Symbol"
+      >=</a
+      ><a name="581"
+      > </a
+      ><a name="582" href="lib.types.Lift.html#513" class="Bound"
+      >j</a
+      ><a name="583" class="Symbol"
+      >}</a
+      ><a name="584"
+      > </a
+      ><a name="585" href="lib.types.Lift.html#517" class="Bound"
+      >A</a
+      ><a name="586" class="Symbol"
+      >)</a
+      ><a name="587"
+      >
+</a
+      ><a name="588" href="lib.types.Lift.html#495" class="Function"
+      >Lift-level</a
+      ><a name="598"
+      > </a
+      ><a name="599" class="Symbol"
+      >=</a
+      ><a name="600"
+      > </a
+      ><a name="601" href="lib.Equivalence.html#11334" class="Function"
+      >equiv-preserves-level</a
+      ><a name="622"
+      > </a
+      ><a name="623" href="lib.types.Lift.html#343" class="Function"
+      >lift-equiv</a
+      ><a name="633"
+      >
+
+</a
+      ><a name="635" href="lib.types.Lift.html#635" class="Function"
+      >&#8857;lift-equiv</a
+      ><a name="646"
+      > </a
+      ><a name="647" class="Symbol"
+      >:</a
+      ><a name="648"
+      > </a
+      ><a name="649" class="Symbol"
+      >&#8704;</a
+      ><a name="650"
+      > </a
+      ><a name="651" class="Symbol"
+      >{</a
+      ><a name="652" href="lib.types.Lift.html#652" class="Bound"
+      >i</a
+      ><a name="653"
+      > </a
+      ><a name="654" href="lib.types.Lift.html#654" class="Bound"
+      >j</a
+      ><a name="655" class="Symbol"
+      >}</a
+      ><a name="656"
+      > </a
+      ><a name="657" class="Symbol"
+      >{</a
+      ><a name="658" href="lib.types.Lift.html#658" class="Bound"
+      >X</a
+      ><a name="659"
+      > </a
+      ><a name="660" class="Symbol"
+      >:</a
+      ><a name="661"
+      > </a
+      ><a name="662" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="665"
+      > </a
+      ><a name="666" href="lib.types.Lift.html#652" class="Bound"
+      >i</a
+      ><a name="667" class="Symbol"
+      >}</a
+      ><a name="668"
+      > </a
+      ><a name="669" class="Symbol"
+      >&#8594;</a
+      ><a name="670"
+      > </a
+      ><a name="671" href="lib.types.Lift.html#658" class="Bound"
+      >X</a
+      ><a name="672"
+      > </a
+      ><a name="673" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="675"
+      > </a
+      ><a name="676" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="681"
+      > </a
+      ><a name="682" class="Symbol"
+      >{</a
+      ><a name="683" class="Argument"
+      >j</a
+      ><a name="684"
+      > </a
+      ><a name="685" class="Symbol"
+      >=</a
+      ><a name="686"
+      > </a
+      ><a name="687" href="lib.types.Lift.html#654" class="Bound"
+      >j</a
+      ><a name="688" class="Symbol"
+      >}</a
+      ><a name="689"
+      > </a
+      ><a name="690" href="lib.types.Lift.html#658" class="Bound"
+      >X</a
+      ><a name="691"
+      >
+</a
+      ><a name="692" href="lib.types.Lift.html#635" class="Function"
+      >&#8857;lift-equiv</a
+      ><a name="703"
+      > </a
+      ><a name="704" class="Symbol"
+      >=</a
+      ><a name="705"
+      > </a
+      ><a name="706" class="Symbol"
+      >(</a
+      ><a name="707" href="lib.types.Lift.html#194" class="Function"
+      >&#8857;lift</a
+      ><a name="712"
+      > </a
+      ><a name="713" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="714"
+      > </a
+      ><a name="715" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="718"
+      > </a
+      ><a name="719" href="lib.types.Lift.html#343" class="Function"
+      >lift-equiv</a
+      ><a name="729" class="Symbol"
+      >)</a
+      ><a name="730"
+      >
+
+</a
+      ><a name="732" href="lib.types.Lift.html#732" class="Function"
+      >&#8857;lower-equiv</a
+      ><a name="744"
+      > </a
+      ><a name="745" class="Symbol"
+      >:</a
+      ><a name="746"
+      > </a
+      ><a name="747" class="Symbol"
+      >&#8704;</a
+      ><a name="748"
+      > </a
+      ><a name="749" class="Symbol"
+      >{</a
+      ><a name="750" href="lib.types.Lift.html#750" class="Bound"
+      >i</a
+      ><a name="751"
+      > </a
+      ><a name="752" href="lib.types.Lift.html#752" class="Bound"
+      >j</a
+      ><a name="753" class="Symbol"
+      >}</a
+      ><a name="754"
+      > </a
+      ><a name="755" class="Symbol"
+      >{</a
+      ><a name="756" href="lib.types.Lift.html#756" class="Bound"
+      >X</a
+      ><a name="757"
+      > </a
+      ><a name="758" class="Symbol"
+      >:</a
+      ><a name="759"
+      > </a
+      ><a name="760" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="763"
+      > </a
+      ><a name="764" href="lib.types.Lift.html#750" class="Bound"
+      >i</a
+      ><a name="765" class="Symbol"
+      >}</a
+      ><a name="766"
+      > </a
+      ><a name="767" class="Symbol"
+      >&#8594;</a
+      ><a name="768"
+      > </a
+      ><a name="769" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="774"
+      > </a
+      ><a name="775" class="Symbol"
+      >{</a
+      ><a name="776" class="Argument"
+      >j</a
+      ><a name="777"
+      > </a
+      ><a name="778" class="Symbol"
+      >=</a
+      ><a name="779"
+      > </a
+      ><a name="780" href="lib.types.Lift.html#752" class="Bound"
+      >j</a
+      ><a name="781" class="Symbol"
+      >}</a
+      ><a name="782"
+      > </a
+      ><a name="783" href="lib.types.Lift.html#756" class="Bound"
+      >X</a
+      ><a name="784"
+      > </a
+      ><a name="785" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="787"
+      > </a
+      ><a name="788" href="lib.types.Lift.html#756" class="Bound"
+      >X</a
+      ><a name="789"
+      >
+</a
+      ><a name="790" href="lib.types.Lift.html#732" class="Function"
+      >&#8857;lower-equiv</a
+      ><a name="802"
+      > </a
+      ><a name="803" class="Symbol"
+      >=</a
+      ><a name="804"
+      > </a
+      ><a name="805" class="Symbol"
+      >(</a
+      ><a name="806" href="lib.types.Lift.html#267" class="Function"
+      >&#8857;lower</a
+      ><a name="812"
+      > </a
+      ><a name="813" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="814"
+      > </a
+      ><a name="815" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="818"
+      > </a
+      ><a name="819" href="lib.Equivalence.html#8890" class="Function"
+      >lower-equiv</a
+      ><a name="830" class="Symbol"
+      >)</a
+      ><a name="831"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

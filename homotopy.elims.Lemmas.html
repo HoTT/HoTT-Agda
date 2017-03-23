@@ -1,0 +1,1392 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.elims.Lemmas</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+
+</a
+      ><a name="60" class="Keyword"
+      >module</a
+      ><a name="66"
+      > </a
+      ><a name="67" href="homotopy.elims.Lemmas.html#1" class="Module"
+      >homotopy.elims.Lemmas</a
+      ><a name="88"
+      > </a
+      ><a name="89" class="Keyword"
+      >where</a
+      ><a name="94"
+      >
+
+</a
+      ><a name="96" href="homotopy.elims.Lemmas.html#96" class="Function"
+      >fill-upper-right</a
+      ><a name="112"
+      > </a
+      ><a name="113" class="Symbol"
+      >:</a
+      ><a name="114"
+      > </a
+      ><a name="115" class="Symbol"
+      >&#8704;</a
+      ><a name="116"
+      > </a
+      ><a name="117" class="Symbol"
+      >{</a
+      ><a name="118" href="homotopy.elims.Lemmas.html#118" class="Bound"
+      >i</a
+      ><a name="119"
+      > </a
+      ><a name="120" href="homotopy.elims.Lemmas.html#120" class="Bound"
+      >j</a
+      ><a name="121" class="Symbol"
+      >}</a
+      ><a name="122"
+      > </a
+      ><a name="123" class="Symbol"
+      >{</a
+      ><a name="124" href="homotopy.elims.Lemmas.html#124" class="Bound"
+      >A</a
+      ><a name="125"
+      > </a
+      ><a name="126" class="Symbol"
+      >:</a
+      ><a name="127"
+      > </a
+      ><a name="128" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="132"
+      > </a
+      ><a name="133" href="homotopy.elims.Lemmas.html#118" class="Bound"
+      >i</a
+      ><a name="134" class="Symbol"
+      >}</a
+      ><a name="135"
+      > </a
+      ><a name="136" class="Symbol"
+      >{</a
+      ><a name="137" href="homotopy.elims.Lemmas.html#137" class="Bound"
+      >B</a
+      ><a name="138"
+      > </a
+      ><a name="139" class="Symbol"
+      >:</a
+      ><a name="140"
+      > </a
+      ><a name="141" href="homotopy.elims.Lemmas.html#124" class="Bound"
+      >A</a
+      ><a name="142"
+      > </a
+      ><a name="143" class="Symbol"
+      >&#8594;</a
+      ><a name="144"
+      > </a
+      ><a name="145" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="149"
+      > </a
+      ><a name="150" href="homotopy.elims.Lemmas.html#120" class="Bound"
+      >j</a
+      ><a name="151" class="Symbol"
+      >}</a
+      ><a name="152"
+      >
+  </a
+      ><a name="155" class="Symbol"
+      >{</a
+      ><a name="156" href="homotopy.elims.Lemmas.html#156" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="159"
+      > </a
+      ><a name="160" href="homotopy.elims.Lemmas.html#160" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="163"
+      > </a
+      ><a name="164" href="homotopy.elims.Lemmas.html#164" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="167"
+      > </a
+      ><a name="168" href="homotopy.elims.Lemmas.html#168" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="171"
+      > </a
+      ><a name="172" class="Symbol"
+      >:</a
+      ><a name="173"
+      > </a
+      ><a name="174" href="homotopy.elims.Lemmas.html#124" class="Bound"
+      >A</a
+      ><a name="175" class="Symbol"
+      >}</a
+      ><a name="176"
+      >
+  </a
+      ><a name="179" class="Symbol"
+      >{</a
+      ><a name="180" href="homotopy.elims.Lemmas.html#180" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="183"
+      > </a
+      ><a name="184" class="Symbol"
+      >:</a
+      ><a name="185"
+      > </a
+      ><a name="186" href="homotopy.elims.Lemmas.html#156" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="189"
+      > </a
+      ><a name="190" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="192"
+      > </a
+      ><a name="193" href="homotopy.elims.Lemmas.html#160" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="196" class="Symbol"
+      >}</a
+      ><a name="197"
+      > </a
+      ><a name="198" class="Symbol"
+      >{</a
+      ><a name="199" href="homotopy.elims.Lemmas.html#199" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="202"
+      > </a
+      ><a name="203" class="Symbol"
+      >:</a
+      ><a name="204"
+      > </a
+      ><a name="205" href="homotopy.elims.Lemmas.html#156" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="208"
+      > </a
+      ><a name="209" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="211"
+      > </a
+      ><a name="212" href="homotopy.elims.Lemmas.html#164" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="215" class="Symbol"
+      >}</a
+      ><a name="216"
+      > </a
+      ><a name="217" class="Symbol"
+      >{</a
+      ><a name="218" href="homotopy.elims.Lemmas.html#218" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="221"
+      > </a
+      ><a name="222" class="Symbol"
+      >:</a
+      ><a name="223"
+      > </a
+      ><a name="224" href="homotopy.elims.Lemmas.html#160" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="227"
+      > </a
+      ><a name="228" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="230"
+      > </a
+      ><a name="231" href="homotopy.elims.Lemmas.html#168" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="234" class="Symbol"
+      >}</a
+      ><a name="235"
+      > </a
+      ><a name="236" class="Symbol"
+      >{</a
+      ><a name="237" href="homotopy.elims.Lemmas.html#237" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="240"
+      > </a
+      ><a name="241" class="Symbol"
+      >:</a
+      ><a name="242"
+      > </a
+      ><a name="243" href="homotopy.elims.Lemmas.html#164" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="246"
+      > </a
+      ><a name="247" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="249"
+      > </a
+      ><a name="250" href="homotopy.elims.Lemmas.html#168" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="253" class="Symbol"
+      >}</a
+      ><a name="254"
+      >
+  </a
+      ><a name="257" class="Symbol"
+      >(</a
+      ><a name="258" href="homotopy.elims.Lemmas.html#258" class="Bound"
+      >sq</a
+      ><a name="260"
+      > </a
+      ><a name="261" class="Symbol"
+      >:</a
+      ><a name="262"
+      > </a
+      ><a name="263" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="269"
+      > </a
+      ><a name="270" href="homotopy.elims.Lemmas.html#180" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="273"
+      > </a
+      ><a name="274" href="homotopy.elims.Lemmas.html#199" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="277"
+      > </a
+      ><a name="278" href="homotopy.elims.Lemmas.html#218" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="281"
+      > </a
+      ><a name="282" href="homotopy.elims.Lemmas.html#237" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="285" class="Symbol"
+      >)</a
+      ><a name="286"
+      >
+  </a
+      ><a name="289" class="Symbol"
+      >{</a
+      ><a name="290" href="homotopy.elims.Lemmas.html#290" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="293"
+      > </a
+      ><a name="294" class="Symbol"
+      >:</a
+      ><a name="295"
+      > </a
+      ><a name="296" href="homotopy.elims.Lemmas.html#137" class="Bound"
+      >B</a
+      ><a name="297"
+      > </a
+      ><a name="298" href="homotopy.elims.Lemmas.html#156" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="301" class="Symbol"
+      >}</a
+      ><a name="302"
+      > </a
+      ><a name="303" class="Symbol"
+      >{</a
+      ><a name="304" href="homotopy.elims.Lemmas.html#304" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="307"
+      > </a
+      ><a name="308" class="Symbol"
+      >:</a
+      ><a name="309"
+      > </a
+      ><a name="310" href="homotopy.elims.Lemmas.html#137" class="Bound"
+      >B</a
+      ><a name="311"
+      > </a
+      ><a name="312" href="homotopy.elims.Lemmas.html#160" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="315" class="Symbol"
+      >}</a
+      ><a name="316"
+      > </a
+      ><a name="317" class="Symbol"
+      >{</a
+      ><a name="318" href="homotopy.elims.Lemmas.html#318" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="321"
+      > </a
+      ><a name="322" href="homotopy.elims.Lemmas.html#322" class="Bound"
+      >b&#8321;&#8320;'</a
+      ><a name="326"
+      > </a
+      ><a name="327" class="Symbol"
+      >:</a
+      ><a name="328"
+      > </a
+      ><a name="329" href="homotopy.elims.Lemmas.html#137" class="Bound"
+      >B</a
+      ><a name="330"
+      > </a
+      ><a name="331" href="homotopy.elims.Lemmas.html#164" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="334" class="Symbol"
+      >}</a
+      ><a name="335"
+      > </a
+      ><a name="336" class="Symbol"
+      >{</a
+      ><a name="337" href="homotopy.elims.Lemmas.html#337" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="340"
+      > </a
+      ><a name="341" class="Symbol"
+      >:</a
+      ><a name="342"
+      > </a
+      ><a name="343" href="homotopy.elims.Lemmas.html#137" class="Bound"
+      >B</a
+      ><a name="344"
+      > </a
+      ><a name="345" href="homotopy.elims.Lemmas.html#168" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="348" class="Symbol"
+      >}</a
+      ><a name="349"
+      >
+  </a
+      ><a name="352" class="Symbol"
+      >(</a
+      ><a name="353" href="homotopy.elims.Lemmas.html#353" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="356"
+      > </a
+      ><a name="357" class="Symbol"
+      >:</a
+      ><a name="358"
+      > </a
+      ><a name="359" href="homotopy.elims.Lemmas.html#290" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="362"
+      > </a
+      ><a name="363" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="365"
+      > </a
+      ><a name="366" href="homotopy.elims.Lemmas.html#304" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="369"
+      > </a
+      ><a name="370" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="371"
+      > </a
+      ><a name="372" href="homotopy.elims.Lemmas.html#137" class="Bound"
+      >B</a
+      ><a name="373"
+      > </a
+      ><a name="374" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="375"
+      > </a
+      ><a name="376" href="homotopy.elims.Lemmas.html#180" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="379"
+      > </a
+      ><a name="380" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="381" class="Symbol"
+      >)</a
+      ><a name="382"
+      > </a
+      ><a name="383" class="Symbol"
+      >(</a
+      ><a name="384" href="homotopy.elims.Lemmas.html#384" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="387"
+      > </a
+      ><a name="388" class="Symbol"
+      >:</a
+      ><a name="389"
+      > </a
+      ><a name="390" href="homotopy.elims.Lemmas.html#290" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="393"
+      > </a
+      ><a name="394" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="396"
+      > </a
+      ><a name="397" href="homotopy.elims.Lemmas.html#318" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="400"
+      > </a
+      ><a name="401" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="402"
+      > </a
+      ><a name="403" href="homotopy.elims.Lemmas.html#137" class="Bound"
+      >B</a
+      ><a name="404"
+      > </a
+      ><a name="405" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="406"
+      > </a
+      ><a name="407" href="homotopy.elims.Lemmas.html#199" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="410"
+      > </a
+      ><a name="411" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="412" class="Symbol"
+      >)</a
+      ><a name="413"
+      >
+  </a
+      ><a name="416" class="Symbol"
+      >(</a
+      ><a name="417" href="homotopy.elims.Lemmas.html#417" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="420"
+      > </a
+      ><a name="421" class="Symbol"
+      >:</a
+      ><a name="422"
+      > </a
+      ><a name="423" href="homotopy.elims.Lemmas.html#304" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="426"
+      > </a
+      ><a name="427" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="429"
+      > </a
+      ><a name="430" href="homotopy.elims.Lemmas.html#337" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="433"
+      > </a
+      ><a name="434" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="435"
+      > </a
+      ><a name="436" href="homotopy.elims.Lemmas.html#137" class="Bound"
+      >B</a
+      ><a name="437"
+      > </a
+      ><a name="438" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="439"
+      > </a
+      ><a name="440" href="homotopy.elims.Lemmas.html#218" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="443"
+      > </a
+      ><a name="444" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="445" class="Symbol"
+      >)</a
+      ><a name="446"
+      > </a
+      ><a name="447" class="Symbol"
+      >(</a
+      ><a name="448" href="homotopy.elims.Lemmas.html#448" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="451"
+      > </a
+      ><a name="452" class="Symbol"
+      >:</a
+      ><a name="453"
+      > </a
+      ><a name="454" href="homotopy.elims.Lemmas.html#322" class="Bound"
+      >b&#8321;&#8320;'</a
+      ><a name="458"
+      > </a
+      ><a name="459" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="461"
+      > </a
+      ><a name="462" href="homotopy.elims.Lemmas.html#337" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="465"
+      > </a
+      ><a name="466" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="467"
+      > </a
+      ><a name="468" href="homotopy.elims.Lemmas.html#137" class="Bound"
+      >B</a
+      ><a name="469"
+      > </a
+      ><a name="470" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="471"
+      > </a
+      ><a name="472" href="homotopy.elims.Lemmas.html#237" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="475"
+      > </a
+      ><a name="476" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="477" class="Symbol"
+      >)</a
+      ><a name="478"
+      >
+  </a
+      ><a name="481" class="Symbol"
+      >&#8594;</a
+      ><a name="482"
+      > </a
+      ><a name="483" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="484"
+      > </a
+      ><a name="485" class="Symbol"
+      >(</a
+      ><a name="486" href="homotopy.elims.Lemmas.html#318" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="489"
+      > </a
+      ><a name="490" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="492"
+      > </a
+      ><a name="493" href="homotopy.elims.Lemmas.html#322" class="Bound"
+      >b&#8321;&#8320;'</a
+      ><a name="497" class="Symbol"
+      >)</a
+      ><a name="498"
+      >
+      </a
+      ><a name="505" class="Symbol"
+      >(&#955;</a
+      ><a name="507"
+      > </a
+      ><a name="508" href="homotopy.elims.Lemmas.html#508" class="Bound"
+      >r</a
+      ><a name="509"
+      > </a
+      ><a name="510" class="Symbol"
+      >&#8594;</a
+      ><a name="511"
+      > </a
+      ><a name="512" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="522"
+      > </a
+      ><a name="523" href="homotopy.elims.Lemmas.html#137" class="Bound"
+      >B</a
+      ><a name="524"
+      > </a
+      ><a name="525" href="homotopy.elims.Lemmas.html#258" class="Bound"
+      >sq</a
+      ><a name="527"
+      > </a
+      ><a name="528" href="homotopy.elims.Lemmas.html#353" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="531"
+      > </a
+      ><a name="532" href="homotopy.elims.Lemmas.html#384" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="535"
+      > </a
+      ><a name="536" href="homotopy.elims.Lemmas.html#417" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="539"
+      > </a
+      ><a name="540" class="Symbol"
+      >(</a
+      ><a name="541" href="homotopy.elims.Lemmas.html#508" class="Bound"
+      >r</a
+      ><a name="542"
+      > </a
+      ><a name="543" href="lib.PathGroupoid.html#4673" class="Function Operator"
+      >&#9667;</a
+      ><a name="544"
+      > </a
+      ><a name="545" href="homotopy.elims.Lemmas.html#448" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="548" class="Symbol"
+      >))</a
+      ><a name="550"
+      >
+</a
+      ><a name="551" href="homotopy.elims.Lemmas.html#96" class="Function"
+      >fill-upper-right</a
+      ><a name="567"
+      > </a
+      ><a name="568" href="lib.cubical.Square.html#340" class="InductiveConstructor"
+      >ids</a
+      ><a name="571"
+      > </a
+      ><a name="572" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="575"
+      > </a
+      ><a name="576" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="579"
+      > </a
+      ><a name="580" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="583"
+      > </a
+      ><a name="584" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="587"
+      > </a
+      ><a name="588" class="Symbol"
+      >=</a
+      ><a name="589"
+      > </a
+      ><a name="590" class="Symbol"
+      >(</a
+      ><a name="591" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="594"
+      > </a
+      ><a name="595" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="596"
+      > </a
+      ><a name="597" href="lib.cubical.Square.html#340" class="InductiveConstructor"
+      >ids</a
+      ><a name="600" class="Symbol"
+      >)</a
+      ><a name="601"
+      >
+
+</a
+      ><a name="603" href="homotopy.elims.Lemmas.html#603" class="Function"
+      >fill-upper-right-unique</a
+      ><a name="626"
+      > </a
+      ><a name="627" class="Symbol"
+      >:</a
+      ><a name="628"
+      > </a
+      ><a name="629" class="Symbol"
+      >&#8704;</a
+      ><a name="630"
+      > </a
+      ><a name="631" class="Symbol"
+      >{</a
+      ><a name="632" href="homotopy.elims.Lemmas.html#632" class="Bound"
+      >i</a
+      ><a name="633"
+      > </a
+      ><a name="634" href="homotopy.elims.Lemmas.html#634" class="Bound"
+      >j</a
+      ><a name="635" class="Symbol"
+      >}</a
+      ><a name="636"
+      > </a
+      ><a name="637" class="Symbol"
+      >{</a
+      ><a name="638" href="homotopy.elims.Lemmas.html#638" class="Bound"
+      >A</a
+      ><a name="639"
+      > </a
+      ><a name="640" class="Symbol"
+      >:</a
+      ><a name="641"
+      > </a
+      ><a name="642" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="646"
+      > </a
+      ><a name="647" href="homotopy.elims.Lemmas.html#632" class="Bound"
+      >i</a
+      ><a name="648" class="Symbol"
+      >}</a
+      ><a name="649"
+      > </a
+      ><a name="650" class="Symbol"
+      >{</a
+      ><a name="651" href="homotopy.elims.Lemmas.html#651" class="Bound"
+      >B</a
+      ><a name="652"
+      > </a
+      ><a name="653" class="Symbol"
+      >:</a
+      ><a name="654"
+      > </a
+      ><a name="655" href="homotopy.elims.Lemmas.html#638" class="Bound"
+      >A</a
+      ><a name="656"
+      > </a
+      ><a name="657" class="Symbol"
+      >&#8594;</a
+      ><a name="658"
+      > </a
+      ><a name="659" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="663"
+      > </a
+      ><a name="664" href="homotopy.elims.Lemmas.html#634" class="Bound"
+      >j</a
+      ><a name="665" class="Symbol"
+      >}</a
+      ><a name="666"
+      >
+  </a
+      ><a name="669" class="Symbol"
+      >{</a
+      ><a name="670" href="homotopy.elims.Lemmas.html#670" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="673"
+      > </a
+      ><a name="674" href="homotopy.elims.Lemmas.html#674" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="677"
+      > </a
+      ><a name="678" href="homotopy.elims.Lemmas.html#678" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="681"
+      > </a
+      ><a name="682" href="homotopy.elims.Lemmas.html#682" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="685"
+      > </a
+      ><a name="686" class="Symbol"
+      >:</a
+      ><a name="687"
+      > </a
+      ><a name="688" href="homotopy.elims.Lemmas.html#638" class="Bound"
+      >A</a
+      ><a name="689" class="Symbol"
+      >}</a
+      ><a name="690"
+      >
+  </a
+      ><a name="693" class="Symbol"
+      >{</a
+      ><a name="694" href="homotopy.elims.Lemmas.html#694" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="697"
+      > </a
+      ><a name="698" class="Symbol"
+      >:</a
+      ><a name="699"
+      > </a
+      ><a name="700" href="homotopy.elims.Lemmas.html#670" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="703"
+      > </a
+      ><a name="704" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="706"
+      > </a
+      ><a name="707" href="homotopy.elims.Lemmas.html#674" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="710" class="Symbol"
+      >}</a
+      ><a name="711"
+      > </a
+      ><a name="712" class="Symbol"
+      >{</a
+      ><a name="713" href="homotopy.elims.Lemmas.html#713" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="716"
+      > </a
+      ><a name="717" class="Symbol"
+      >:</a
+      ><a name="718"
+      > </a
+      ><a name="719" href="homotopy.elims.Lemmas.html#670" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="722"
+      > </a
+      ><a name="723" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="725"
+      > </a
+      ><a name="726" href="homotopy.elims.Lemmas.html#678" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="729" class="Symbol"
+      >}</a
+      ><a name="730"
+      > </a
+      ><a name="731" class="Symbol"
+      >{</a
+      ><a name="732" href="homotopy.elims.Lemmas.html#732" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="735"
+      > </a
+      ><a name="736" class="Symbol"
+      >:</a
+      ><a name="737"
+      > </a
+      ><a name="738" href="homotopy.elims.Lemmas.html#674" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="741"
+      > </a
+      ><a name="742" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="744"
+      > </a
+      ><a name="745" href="homotopy.elims.Lemmas.html#682" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="748" class="Symbol"
+      >}</a
+      ><a name="749"
+      > </a
+      ><a name="750" class="Symbol"
+      >{</a
+      ><a name="751" href="homotopy.elims.Lemmas.html#751" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="754"
+      > </a
+      ><a name="755" class="Symbol"
+      >:</a
+      ><a name="756"
+      > </a
+      ><a name="757" href="homotopy.elims.Lemmas.html#678" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="760"
+      > </a
+      ><a name="761" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="763"
+      > </a
+      ><a name="764" href="homotopy.elims.Lemmas.html#682" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="767" class="Symbol"
+      >}</a
+      ><a name="768"
+      >
+  </a
+      ><a name="771" class="Symbol"
+      >(</a
+      ><a name="772" href="homotopy.elims.Lemmas.html#772" class="Bound"
+      >sq</a
+      ><a name="774"
+      > </a
+      ><a name="775" class="Symbol"
+      >:</a
+      ><a name="776"
+      > </a
+      ><a name="777" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="783"
+      > </a
+      ><a name="784" href="homotopy.elims.Lemmas.html#694" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="787"
+      > </a
+      ><a name="788" href="homotopy.elims.Lemmas.html#713" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="791"
+      > </a
+      ><a name="792" href="homotopy.elims.Lemmas.html#732" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="795"
+      > </a
+      ><a name="796" href="homotopy.elims.Lemmas.html#751" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="799" class="Symbol"
+      >)</a
+      ><a name="800"
+      >
+  </a
+      ><a name="803" class="Symbol"
+      >{</a
+      ><a name="804" href="homotopy.elims.Lemmas.html#804" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="807"
+      > </a
+      ><a name="808" class="Symbol"
+      >:</a
+      ><a name="809"
+      > </a
+      ><a name="810" href="homotopy.elims.Lemmas.html#651" class="Bound"
+      >B</a
+      ><a name="811"
+      > </a
+      ><a name="812" href="homotopy.elims.Lemmas.html#670" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="815" class="Symbol"
+      >}</a
+      ><a name="816"
+      > </a
+      ><a name="817" class="Symbol"
+      >{</a
+      ><a name="818" href="homotopy.elims.Lemmas.html#818" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="821"
+      > </a
+      ><a name="822" class="Symbol"
+      >:</a
+      ><a name="823"
+      > </a
+      ><a name="824" href="homotopy.elims.Lemmas.html#651" class="Bound"
+      >B</a
+      ><a name="825"
+      > </a
+      ><a name="826" href="homotopy.elims.Lemmas.html#674" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="829" class="Symbol"
+      >}</a
+      ><a name="830"
+      > </a
+      ><a name="831" class="Symbol"
+      >{</a
+      ><a name="832" href="homotopy.elims.Lemmas.html#832" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="835"
+      > </a
+      ><a name="836" href="homotopy.elims.Lemmas.html#836" class="Bound"
+      >b&#8321;&#8320;'</a
+      ><a name="840"
+      > </a
+      ><a name="841" class="Symbol"
+      >:</a
+      ><a name="842"
+      > </a
+      ><a name="843" href="homotopy.elims.Lemmas.html#651" class="Bound"
+      >B</a
+      ><a name="844"
+      > </a
+      ><a name="845" href="homotopy.elims.Lemmas.html#678" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="848" class="Symbol"
+      >}</a
+      ><a name="849"
+      > </a
+      ><a name="850" class="Symbol"
+      >{</a
+      ><a name="851" href="homotopy.elims.Lemmas.html#851" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="854"
+      > </a
+      ><a name="855" class="Symbol"
+      >:</a
+      ><a name="856"
+      > </a
+      ><a name="857" href="homotopy.elims.Lemmas.html#651" class="Bound"
+      >B</a
+      ><a name="858"
+      > </a
+      ><a name="859" href="homotopy.elims.Lemmas.html#682" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="862" class="Symbol"
+      >}</a
+      ><a name="863"
+      >
+  </a
+      ><a name="866" class="Symbol"
+      >(</a
+      ><a name="867" href="homotopy.elims.Lemmas.html#867" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="870"
+      > </a
+      ><a name="871" class="Symbol"
+      >:</a
+      ><a name="872"
+      > </a
+      ><a name="873" href="homotopy.elims.Lemmas.html#804" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="876"
+      > </a
+      ><a name="877" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="879"
+      > </a
+      ><a name="880" href="homotopy.elims.Lemmas.html#818" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="883"
+      > </a
+      ><a name="884" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="885"
+      > </a
+      ><a name="886" href="homotopy.elims.Lemmas.html#651" class="Bound"
+      >B</a
+      ><a name="887"
+      > </a
+      ><a name="888" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="889"
+      > </a
+      ><a name="890" href="homotopy.elims.Lemmas.html#694" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="893"
+      > </a
+      ><a name="894" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="895" class="Symbol"
+      >)</a
+      ><a name="896"
+      > </a
+      ><a name="897" class="Symbol"
+      >(</a
+      ><a name="898" href="homotopy.elims.Lemmas.html#898" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="901"
+      > </a
+      ><a name="902" class="Symbol"
+      >:</a
+      ><a name="903"
+      > </a
+      ><a name="904" href="homotopy.elims.Lemmas.html#804" class="Bound"
+      >b&#8320;&#8320;</a
+      ><a name="907"
+      > </a
+      ><a name="908" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="910"
+      > </a
+      ><a name="911" href="homotopy.elims.Lemmas.html#832" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="914"
+      > </a
+      ><a name="915" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="916"
+      > </a
+      ><a name="917" href="homotopy.elims.Lemmas.html#651" class="Bound"
+      >B</a
+      ><a name="918"
+      > </a
+      ><a name="919" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="920"
+      > </a
+      ><a name="921" href="homotopy.elims.Lemmas.html#713" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="924"
+      > </a
+      ><a name="925" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="926" class="Symbol"
+      >)</a
+      ><a name="927"
+      >
+  </a
+      ><a name="930" class="Symbol"
+      >(</a
+      ><a name="931" href="homotopy.elims.Lemmas.html#931" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="934"
+      > </a
+      ><a name="935" class="Symbol"
+      >:</a
+      ><a name="936"
+      > </a
+      ><a name="937" href="homotopy.elims.Lemmas.html#818" class="Bound"
+      >b&#8320;&#8321;</a
+      ><a name="940"
+      > </a
+      ><a name="941" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="943"
+      > </a
+      ><a name="944" href="homotopy.elims.Lemmas.html#851" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="947"
+      > </a
+      ><a name="948" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="949"
+      > </a
+      ><a name="950" href="homotopy.elims.Lemmas.html#651" class="Bound"
+      >B</a
+      ><a name="951"
+      > </a
+      ><a name="952" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="953"
+      > </a
+      ><a name="954" href="homotopy.elims.Lemmas.html#732" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="957"
+      > </a
+      ><a name="958" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="959" class="Symbol"
+      >)</a
+      ><a name="960"
+      > </a
+      ><a name="961" class="Symbol"
+      >(</a
+      ><a name="962" href="homotopy.elims.Lemmas.html#962" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="965"
+      > </a
+      ><a name="966" class="Symbol"
+      >:</a
+      ><a name="967"
+      > </a
+      ><a name="968" href="homotopy.elims.Lemmas.html#836" class="Bound"
+      >b&#8321;&#8320;'</a
+      ><a name="972"
+      > </a
+      ><a name="973" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="975"
+      > </a
+      ><a name="976" href="homotopy.elims.Lemmas.html#851" class="Bound"
+      >b&#8321;&#8321;</a
+      ><a name="979"
+      > </a
+      ><a name="980" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="981"
+      > </a
+      ><a name="982" href="homotopy.elims.Lemmas.html#651" class="Bound"
+      >B</a
+      ><a name="983"
+      > </a
+      ><a name="984" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="985"
+      > </a
+      ><a name="986" href="homotopy.elims.Lemmas.html#751" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="989"
+      > </a
+      ><a name="990" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="991" class="Symbol"
+      >)</a
+      ><a name="992"
+      >
+  </a
+      ><a name="995" class="Symbol"
+      >(</a
+      ><a name="996" href="homotopy.elims.Lemmas.html#996" class="Bound"
+      >r</a
+      ><a name="997"
+      > </a
+      ><a name="998" class="Symbol"
+      >:</a
+      ><a name="999"
+      > </a
+      ><a name="1000" href="homotopy.elims.Lemmas.html#832" class="Bound"
+      >b&#8321;&#8320;</a
+      ><a name="1003"
+      > </a
+      ><a name="1004" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1006"
+      > </a
+      ><a name="1007" href="homotopy.elims.Lemmas.html#836" class="Bound"
+      >b&#8321;&#8320;'</a
+      ><a name="1011" class="Symbol"
+      >)</a
+      ><a name="1012"
+      >
+  </a
+      ><a name="1015" class="Symbol"
+      >&#8594;</a
+      ><a name="1016"
+      > </a
+      ><a name="1017" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="1027"
+      > </a
+      ><a name="1028" href="homotopy.elims.Lemmas.html#651" class="Bound"
+      >B</a
+      ><a name="1029"
+      > </a
+      ><a name="1030" href="homotopy.elims.Lemmas.html#772" class="Bound"
+      >sq</a
+      ><a name="1032"
+      > </a
+      ><a name="1033" href="homotopy.elims.Lemmas.html#867" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="1036"
+      > </a
+      ><a name="1037" href="homotopy.elims.Lemmas.html#898" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="1040"
+      > </a
+      ><a name="1041" href="homotopy.elims.Lemmas.html#931" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="1044"
+      > </a
+      ><a name="1045" class="Symbol"
+      >(</a
+      ><a name="1046" href="homotopy.elims.Lemmas.html#996" class="Bound"
+      >r</a
+      ><a name="1047"
+      > </a
+      ><a name="1048" href="lib.PathGroupoid.html#4673" class="Function Operator"
+      >&#9667;</a
+      ><a name="1049"
+      > </a
+      ><a name="1050" href="homotopy.elims.Lemmas.html#962" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="1053" class="Symbol"
+      >)</a
+      ><a name="1054"
+      >
+  </a
+      ><a name="1057" class="Symbol"
+      >&#8594;</a
+      ><a name="1058"
+      > </a
+      ><a name="1059" href="homotopy.elims.Lemmas.html#996" class="Bound"
+      >r</a
+      ><a name="1060"
+      > </a
+      ><a name="1061" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1063"
+      > </a
+      ><a name="1064" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1067"
+      > </a
+      ><a name="1068" class="Symbol"
+      >(</a
+      ><a name="1069" href="homotopy.elims.Lemmas.html#96" class="Function"
+      >fill-upper-right</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" href="homotopy.elims.Lemmas.html#772" class="Bound"
+      >sq</a
+      ><a name="1088"
+      > </a
+      ><a name="1089" href="homotopy.elims.Lemmas.html#867" class="Bound"
+      >q&#8320;&#8331;</a
+      ><a name="1092"
+      > </a
+      ><a name="1093" href="homotopy.elims.Lemmas.html#898" class="Bound"
+      >q&#8331;&#8320;</a
+      ><a name="1096"
+      > </a
+      ><a name="1097" href="homotopy.elims.Lemmas.html#931" class="Bound"
+      >q&#8331;&#8321;</a
+      ><a name="1100"
+      > </a
+      ><a name="1101" href="homotopy.elims.Lemmas.html#962" class="Bound"
+      >q&#8321;&#8331;</a
+      ><a name="1104" class="Symbol"
+      >)</a
+      ><a name="1105"
+      >
+</a
+      ><a name="1106" href="homotopy.elims.Lemmas.html#603" class="Function"
+      >fill-upper-right-unique</a
+      ><a name="1129"
+      > </a
+      ><a name="1130" class="Symbol"
+      >{</a
+      ><a name="1131" class="Argument"
+      >B</a
+      ><a name="1132"
+      > </a
+      ><a name="1133" class="Symbol"
+      >=</a
+      ><a name="1134"
+      > </a
+      ><a name="1135" href="homotopy.elims.Lemmas.html#1135" class="Bound"
+      >B</a
+      ><a name="1136" class="Symbol"
+      >}</a
+      ><a name="1137"
+      > </a
+      ><a name="1138" href="lib.cubical.Square.html#340" class="InductiveConstructor"
+      >ids</a
+      ><a name="1141"
+      > </a
+      ><a name="1142" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1145"
+      > </a
+      ><a name="1146" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1149"
+      > </a
+      ><a name="1150" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1153"
+      > </a
+      ><a name="1154" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1157"
+      > </a
+      ><a name="1158" href="homotopy.elims.Lemmas.html#1158" class="Bound"
+      >r</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" href="homotopy.elims.Lemmas.html#1160" class="Bound"
+      >sq'</a
+      ><a name="1163"
+      > </a
+      ><a name="1164" class="Symbol"
+      >=</a
+      ><a name="1165"
+      >
+  </a
+      ><a name="1168" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1169"
+      > </a
+      ><a name="1170" class="Symbol"
+      >(</a
+      ><a name="1171" href="lib.PathGroupoid.html#4687" class="Function"
+      >&#9667;idp</a
+      ><a name="1175"
+      > </a
+      ><a name="1176" class="Symbol"
+      >{</a
+      ><a name="1177" class="Argument"
+      >B</a
+      ><a name="1178"
+      > </a
+      ><a name="1179" class="Symbol"
+      >=</a
+      ><a name="1180"
+      > </a
+      ><a name="1181" href="homotopy.elims.Lemmas.html#1135" class="Bound"
+      >B</a
+      ><a name="1182" class="Symbol"
+      >}</a
+      ><a name="1183"
+      > </a
+      ><a name="1184" href="homotopy.elims.Lemmas.html#1158" class="Bound"
+      >r</a
+      ><a name="1185" class="Symbol"
+      >)</a
+      ><a name="1186"
+      > </a
+      ><a name="1187" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" class="Symbol"
+      >(</a
+      ><a name="1192" href="lib.cubical.Square.html#2420" class="Function"
+      >horiz-degen-path</a
+      ><a name="1208"
+      > </a
+      ><a name="1209" href="homotopy.elims.Lemmas.html#1160" class="Bound"
+      >sq'</a
+      ><a name="1212" class="Symbol"
+      >)</a
+      ><a name="1213"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

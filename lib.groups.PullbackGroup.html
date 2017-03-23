@@ -1,0 +1,2154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.groups.PullbackGroup</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.Cospan.html#1" class="Module"
+      >lib.types.Cospan</a
+      ><a name="93"
+      >
+</a
+      ><a name="94" class="Keyword"
+      >open</a
+      ><a name="98"
+      > </a
+      ><a name="99" class="Keyword"
+      >import</a
+      ><a name="105"
+      > </a
+      ><a name="106" href="lib.types.Pullback.html#1" class="Module"
+      >lib.types.Pullback</a
+      ><a name="124"
+      >
+</a
+      ><a name="125" class="Keyword"
+      >open</a
+      ><a name="129"
+      > </a
+      ><a name="130" class="Keyword"
+      >import</a
+      ><a name="136"
+      > </a
+      ><a name="137" href="lib.types.Group.html#1" class="Module"
+      >lib.types.Group</a
+      ><a name="152"
+      >
+</a
+      ><a name="153" class="Keyword"
+      >open</a
+      ><a name="157"
+      > </a
+      ><a name="158" class="Keyword"
+      >import</a
+      ><a name="164"
+      > </a
+      ><a name="165" href="lib.groups.Homomorphism.html#1" class="Module"
+      >lib.groups.Homomorphism</a
+      ><a name="188"
+      >
+
+</a
+      ><a name="190" class="Keyword"
+      >module</a
+      ><a name="196"
+      > </a
+      ><a name="197" href="lib.groups.PullbackGroup.html#1" class="Module"
+      >lib.groups.PullbackGroup</a
+      ><a name="221"
+      > </a
+      ><a name="222" class="Keyword"
+      >where</a
+      ><a name="227"
+      >
+
+</a
+      ><a name="229" class="Comment"
+      >--   &#966;   &#968;</a
+      ><a name="239"
+      >
+</a
+      ><a name="240" class="Comment"
+      >-- H &#8594; G &#8592; K</a
+      ><a name="252"
+      >
+
+</a
+      ><a name="254" class="Keyword"
+      >record</a
+      ><a name="260"
+      > </a
+      ><a name="261" href="lib.groups.PullbackGroup.html#261" class="Record"
+      >Group-Cospan</a
+      ><a name="273"
+      > </a
+      ><a name="274" class="Symbol"
+      >{</a
+      ><a name="275" href="lib.groups.PullbackGroup.html#275" class="Bound"
+      >i</a
+      ><a name="276"
+      > </a
+      ><a name="277" href="lib.groups.PullbackGroup.html#277" class="Bound"
+      >j</a
+      ><a name="278"
+      > </a
+      ><a name="279" href="lib.groups.PullbackGroup.html#279" class="Bound"
+      >k</a
+      ><a name="280"
+      > </a
+      ><a name="281" class="Symbol"
+      >:</a
+      ><a name="282"
+      > </a
+      ><a name="283" href="Agda.Primitive.html#408" class="Postulate"
+      >ULevel</a
+      ><a name="289" class="Symbol"
+      >}</a
+      ><a name="290"
+      > </a
+      ><a name="291" class="Symbol"
+      >:</a
+      ><a name="292"
+      > </a
+      ><a name="293" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="297"
+      > </a
+      ><a name="298" class="Symbol"
+      >(</a
+      ><a name="299" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="304"
+      > </a
+      ><a name="305" class="Symbol"
+      >(</a
+      ><a name="306" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="310"
+      > </a
+      ><a name="311" class="Symbol"
+      >(</a
+      ><a name="312" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="316"
+      > </a
+      ><a name="317" href="lib.groups.PullbackGroup.html#275" class="Bound"
+      >i</a
+      ><a name="318"
+      > </a
+      ><a name="319" href="lib.groups.PullbackGroup.html#277" class="Bound"
+      >j</a
+      ><a name="320" class="Symbol"
+      >)</a
+      ><a name="321"
+      > </a
+      ><a name="322" href="lib.groups.PullbackGroup.html#279" class="Bound"
+      >k</a
+      ><a name="323" class="Symbol"
+      >))</a
+      ><a name="325"
+      > </a
+      ><a name="326" class="Keyword"
+      >where</a
+      ><a name="331"
+      >
+  </a
+      ><a name="334" class="Keyword"
+      >constructor</a
+      ><a name="345"
+      > </a
+      ><a name="346" href="lib.groups.PullbackGroup.html#346" class="InductiveConstructor"
+      >group-cospan</a
+      ><a name="358"
+      >
+  </a
+      ><a name="361" class="Keyword"
+      >field</a
+      ><a name="366"
+      >
+    </a
+      ><a name="371" href="lib.groups.PullbackGroup.html#371" class="Field"
+      >H</a
+      ><a name="372"
+      > </a
+      ><a name="373" class="Symbol"
+      >:</a
+      ><a name="374"
+      > </a
+      ><a name="375" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="380"
+      > </a
+      ><a name="381" href="lib.groups.PullbackGroup.html#275" class="Bound"
+      >i</a
+      ><a name="382"
+      >
+    </a
+      ><a name="387" href="lib.groups.PullbackGroup.html#387" class="Field"
+      >K</a
+      ><a name="388"
+      > </a
+      ><a name="389" class="Symbol"
+      >:</a
+      ><a name="390"
+      > </a
+      ><a name="391" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="396"
+      > </a
+      ><a name="397" href="lib.groups.PullbackGroup.html#277" class="Bound"
+      >j</a
+      ><a name="398"
+      >
+    </a
+      ><a name="403" href="lib.groups.PullbackGroup.html#403" class="Field"
+      >G</a
+      ><a name="404"
+      > </a
+      ><a name="405" class="Symbol"
+      >:</a
+      ><a name="406"
+      > </a
+      ><a name="407" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="412"
+      > </a
+      ><a name="413" href="lib.groups.PullbackGroup.html#279" class="Bound"
+      >k</a
+      ><a name="414"
+      >
+    </a
+      ><a name="419" href="lib.groups.PullbackGroup.html#419" class="Field"
+      >&#966;</a
+      ><a name="420"
+      > </a
+      ><a name="421" class="Symbol"
+      >:</a
+      ><a name="422"
+      > </a
+      ><a name="423" href="lib.groups.PullbackGroup.html#371" class="Field"
+      >H</a
+      ><a name="424"
+      > </a
+      ><a name="425" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="427"
+      > </a
+      ><a name="428" href="lib.groups.PullbackGroup.html#403" class="Field"
+      >G</a
+      ><a name="429"
+      >
+    </a
+      ><a name="434" href="lib.groups.PullbackGroup.html#434" class="Field"
+      >&#968;</a
+      ><a name="435"
+      > </a
+      ><a name="436" class="Symbol"
+      >:</a
+      ><a name="437"
+      > </a
+      ><a name="438" href="lib.groups.PullbackGroup.html#387" class="Field"
+      >K</a
+      ><a name="439"
+      > </a
+      ><a name="440" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="442"
+      > </a
+      ><a name="443" href="lib.groups.PullbackGroup.html#403" class="Field"
+      >G</a
+      ><a name="444"
+      >
+
+</a
+      ><a name="446" href="lib.groups.PullbackGroup.html#446" class="Function"
+      >group-cospan-out</a
+      ><a name="462"
+      > </a
+      ><a name="463" class="Symbol"
+      >:</a
+      ><a name="464"
+      > </a
+      ><a name="465" class="Symbol"
+      >&#8704;</a
+      ><a name="466"
+      > </a
+      ><a name="467" class="Symbol"
+      >{</a
+      ><a name="468" href="lib.groups.PullbackGroup.html#468" class="Bound"
+      >i</a
+      ><a name="469"
+      > </a
+      ><a name="470" href="lib.groups.PullbackGroup.html#470" class="Bound"
+      >j</a
+      ><a name="471"
+      > </a
+      ><a name="472" href="lib.groups.PullbackGroup.html#472" class="Bound"
+      >k</a
+      ><a name="473" class="Symbol"
+      >}</a
+      ><a name="474"
+      > </a
+      ><a name="475" class="Symbol"
+      >&#8594;</a
+      ><a name="476"
+      > </a
+      ><a name="477" href="lib.groups.PullbackGroup.html#261" class="Record"
+      >Group-Cospan</a
+      ><a name="489"
+      > </a
+      ><a name="490" class="Symbol"
+      >{</a
+      ><a name="491" href="lib.groups.PullbackGroup.html#468" class="Bound"
+      >i</a
+      ><a name="492" class="Symbol"
+      >}</a
+      ><a name="493"
+      > </a
+      ><a name="494" class="Symbol"
+      >{</a
+      ><a name="495" href="lib.groups.PullbackGroup.html#470" class="Bound"
+      >j</a
+      ><a name="496" class="Symbol"
+      >}</a
+      ><a name="497"
+      > </a
+      ><a name="498" class="Symbol"
+      >{</a
+      ><a name="499" href="lib.groups.PullbackGroup.html#472" class="Bound"
+      >k</a
+      ><a name="500" class="Symbol"
+      >}</a
+      ><a name="501"
+      > </a
+      ><a name="502" class="Symbol"
+      >&#8594;</a
+      ><a name="503"
+      > </a
+      ><a name="504" href="lib.types.Cospan.html#129" class="Record"
+      >Cospan</a
+      ><a name="510"
+      > </a
+      ><a name="511" class="Symbol"
+      >{</a
+      ><a name="512" href="lib.groups.PullbackGroup.html#468" class="Bound"
+      >i</a
+      ><a name="513" class="Symbol"
+      >}</a
+      ><a name="514"
+      > </a
+      ><a name="515" class="Symbol"
+      >{</a
+      ><a name="516" href="lib.groups.PullbackGroup.html#470" class="Bound"
+      >j</a
+      ><a name="517" class="Symbol"
+      >}</a
+      ><a name="518"
+      > </a
+      ><a name="519" class="Symbol"
+      >{</a
+      ><a name="520" href="lib.groups.PullbackGroup.html#472" class="Bound"
+      >k</a
+      ><a name="521" class="Symbol"
+      >}</a
+      ><a name="522"
+      >
+</a
+      ><a name="523" href="lib.groups.PullbackGroup.html#446" class="Function"
+      >group-cospan-out</a
+      ><a name="539"
+      > </a
+      ><a name="540" class="Symbol"
+      >(</a
+      ><a name="541" href="lib.groups.PullbackGroup.html#346" class="InductiveConstructor"
+      >group-cospan</a
+      ><a name="553"
+      > </a
+      ><a name="554" href="lib.groups.PullbackGroup.html#554" class="Bound"
+      >H</a
+      ><a name="555"
+      > </a
+      ><a name="556" href="lib.groups.PullbackGroup.html#556" class="Bound"
+      >K</a
+      ><a name="557"
+      > </a
+      ><a name="558" href="lib.groups.PullbackGroup.html#558" class="Bound"
+      >G</a
+      ><a name="559"
+      > </a
+      ><a name="560" href="lib.groups.PullbackGroup.html#560" class="Bound"
+      >&#966;</a
+      ><a name="561"
+      > </a
+      ><a name="562" href="lib.groups.PullbackGroup.html#562" class="Bound"
+      >&#968;</a
+      ><a name="563" class="Symbol"
+      >)</a
+      ><a name="564"
+      > </a
+      ><a name="565" class="Symbol"
+      >=</a
+      ><a name="566"
+      >
+  </a
+      ><a name="569" href="lib.types.Cospan.html#208" class="InductiveConstructor"
+      >cospan</a
+      ><a name="575"
+      > </a
+      ><a name="576" class="Symbol"
+      >(</a
+      ><a name="577" href="lib.types.Group.html#6903" class="Field"
+      >Group.El</a
+      ><a name="585"
+      > </a
+      ><a name="586" href="lib.groups.PullbackGroup.html#554" class="Bound"
+      >H</a
+      ><a name="587" class="Symbol"
+      >)</a
+      ><a name="588"
+      > </a
+      ><a name="589" class="Symbol"
+      >(</a
+      ><a name="590" href="lib.types.Group.html#6903" class="Field"
+      >Group.El</a
+      ><a name="598"
+      > </a
+      ><a name="599" href="lib.groups.PullbackGroup.html#556" class="Bound"
+      >K</a
+      ><a name="600" class="Symbol"
+      >)</a
+      ><a name="601"
+      > </a
+      ><a name="602" class="Symbol"
+      >(</a
+      ><a name="603" href="lib.types.Group.html#6903" class="Field"
+      >Group.El</a
+      ><a name="611"
+      > </a
+      ><a name="612" href="lib.groups.PullbackGroup.html#558" class="Bound"
+      >G</a
+      ><a name="613" class="Symbol"
+      >)</a
+      ><a name="614"
+      > </a
+      ><a name="615" class="Symbol"
+      >(</a
+      ><a name="616" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="626"
+      > </a
+      ><a name="627" href="lib.groups.PullbackGroup.html#560" class="Bound"
+      >&#966;</a
+      ><a name="628" class="Symbol"
+      >)</a
+      ><a name="629"
+      > </a
+      ><a name="630" class="Symbol"
+      >(</a
+      ><a name="631" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="641"
+      > </a
+      ><a name="642" href="lib.groups.PullbackGroup.html#562" class="Bound"
+      >&#968;</a
+      ><a name="643" class="Symbol"
+      >)</a
+      ><a name="644"
+      >
+
+
+</a
+      ><a name="647" class="Keyword"
+      >module</a
+      ><a name="653"
+      > </a
+      ><a name="654" href="lib.groups.PullbackGroup.html#654" class="Module"
+      >_</a
+      ><a name="655"
+      > </a
+      ><a name="656" class="Symbol"
+      >{</a
+      ><a name="657" href="lib.groups.PullbackGroup.html#657" class="Bound"
+      >i</a
+      ><a name="658"
+      > </a
+      ><a name="659" href="lib.groups.PullbackGroup.html#659" class="Bound"
+      >j</a
+      ><a name="660"
+      > </a
+      ><a name="661" href="lib.groups.PullbackGroup.html#661" class="Bound"
+      >k</a
+      ><a name="662" class="Symbol"
+      >}</a
+      ><a name="663"
+      > </a
+      ><a name="664" class="Symbol"
+      >(</a
+      ><a name="665" href="lib.groups.PullbackGroup.html#665" class="Bound"
+      >D</a
+      ><a name="666"
+      > </a
+      ><a name="667" class="Symbol"
+      >:</a
+      ><a name="668"
+      > </a
+      ><a name="669" href="lib.groups.PullbackGroup.html#261" class="Record"
+      >Group-Cospan</a
+      ><a name="681"
+      > </a
+      ><a name="682" class="Symbol"
+      >{</a
+      ><a name="683" href="lib.groups.PullbackGroup.html#657" class="Bound"
+      >i</a
+      ><a name="684" class="Symbol"
+      >}</a
+      ><a name="685"
+      > </a
+      ><a name="686" class="Symbol"
+      >{</a
+      ><a name="687" href="lib.groups.PullbackGroup.html#659" class="Bound"
+      >j</a
+      ><a name="688" class="Symbol"
+      >}</a
+      ><a name="689"
+      > </a
+      ><a name="690" class="Symbol"
+      >{</a
+      ><a name="691" href="lib.groups.PullbackGroup.html#661" class="Bound"
+      >k</a
+      ><a name="692" class="Symbol"
+      >})</a
+      ><a name="694"
+      > </a
+      ><a name="695" class="Keyword"
+      >where</a
+      ><a name="700"
+      >
+
+  </a
+      ><a name="704" class="Keyword"
+      >private</a
+      ><a name="711"
+      >
+    </a
+      ><a name="716" class="Keyword"
+      >open</a
+      ><a name="720"
+      > </a
+      ><a name="721" href="lib.groups.PullbackGroup.html#261" class="Module"
+      >Group-Cospan</a
+      ><a name="733"
+      > </a
+      ><a name="734" href="lib.groups.PullbackGroup.html#665" class="Bound"
+      >D</a
+      ><a name="735"
+      >
+    </a
+      ><a name="740" class="Keyword"
+      >module</a
+      ><a name="746"
+      > </a
+      ><a name="747" href="lib.groups.PullbackGroup.html#747" class="Module"
+      >H</a
+      ><a name="748"
+      > </a
+      ><a name="749" class="Symbol"
+      >=</a
+      ><a name="750"
+      > </a
+      ><a name="751" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="756"
+      > </a
+      ><a name="757" href="lib.groups.PullbackGroup.html#371" class="Field"
+      >H</a
+      ><a name="758"
+      >
+    </a
+      ><a name="763" class="Keyword"
+      >module</a
+      ><a name="769"
+      > </a
+      ><a name="770" href="lib.groups.PullbackGroup.html#770" class="Module"
+      >K</a
+      ><a name="771"
+      > </a
+      ><a name="772" class="Symbol"
+      >=</a
+      ><a name="773"
+      > </a
+      ><a name="774" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="779"
+      > </a
+      ><a name="780" href="lib.groups.PullbackGroup.html#387" class="Field"
+      >K</a
+      ><a name="781"
+      >
+    </a
+      ><a name="786" class="Keyword"
+      >module</a
+      ><a name="792"
+      > </a
+      ><a name="793" href="lib.groups.PullbackGroup.html#793" class="Module"
+      >G</a
+      ><a name="794"
+      > </a
+      ><a name="795" class="Symbol"
+      >=</a
+      ><a name="796"
+      > </a
+      ><a name="797" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="802"
+      > </a
+      ><a name="803" href="lib.groups.PullbackGroup.html#403" class="Field"
+      >G</a
+      ><a name="804"
+      >
+    </a
+      ><a name="809" class="Keyword"
+      >module</a
+      ><a name="815"
+      > </a
+      ><a name="816" href="lib.groups.PullbackGroup.html#816" class="Module"
+      >&#966;</a
+      ><a name="817"
+      > </a
+      ><a name="818" class="Symbol"
+      >=</a
+      ><a name="819"
+      > </a
+      ><a name="820" href="lib.groups.Homomorphism.html#2451" class="Module"
+      >GroupHom</a
+      ><a name="828"
+      > </a
+      ><a name="829" href="lib.groups.PullbackGroup.html#419" class="Field"
+      >&#966;</a
+      ><a name="830"
+      >
+    </a
+      ><a name="835" class="Keyword"
+      >module</a
+      ><a name="841"
+      > </a
+      ><a name="842" href="lib.groups.PullbackGroup.html#842" class="Module"
+      >&#968;</a
+      ><a name="843"
+      > </a
+      ><a name="844" class="Symbol"
+      >=</a
+      ><a name="845"
+      > </a
+      ><a name="846" href="lib.groups.Homomorphism.html#2451" class="Module"
+      >GroupHom</a
+      ><a name="854"
+      > </a
+      ><a name="855" href="lib.groups.PullbackGroup.html#434" class="Field"
+      >&#968;</a
+      ><a name="856"
+      >
+
+    </a
+      ><a name="862" href="lib.groups.PullbackGroup.html#862" class="Function"
+      >d</a
+      ><a name="863"
+      > </a
+      ><a name="864" class="Symbol"
+      >:</a
+      ><a name="865"
+      > </a
+      ><a name="866" href="lib.types.Cospan.html#129" class="Record"
+      >Cospan</a
+      ><a name="872"
+      >
+    </a
+      ><a name="877" href="lib.groups.PullbackGroup.html#862" class="Function"
+      >d</a
+      ><a name="878"
+      > </a
+      ><a name="879" class="Symbol"
+      >=</a
+      ><a name="880"
+      > </a
+      ><a name="881" href="lib.types.Cospan.html#208" class="InductiveConstructor"
+      >cospan</a
+      ><a name="887"
+      > </a
+      ><a name="888" href="lib.types.Group.html#6903" class="Function"
+      >H.El</a
+      ><a name="892"
+      > </a
+      ><a name="893" href="lib.types.Group.html#6903" class="Function"
+      >K.El</a
+      ><a name="897"
+      > </a
+      ><a name="898" href="lib.types.Group.html#6903" class="Function"
+      >G.El</a
+      ><a name="902"
+      > </a
+      ><a name="903" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#966;.f</a
+      ><a name="906"
+      > </a
+      ><a name="907" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#968;.f</a
+      ><a name="910"
+      >
+
+  </a
+      ><a name="914" href="lib.groups.PullbackGroup.html#914" class="Function"
+      >Pullback-group-struct</a
+      ><a name="935"
+      > </a
+      ><a name="936" class="Symbol"
+      >:</a
+      ><a name="937"
+      > </a
+      ><a name="938" href="lib.types.Group.html#154" class="Record"
+      >GroupStructure</a
+      ><a name="952"
+      > </a
+      ><a name="953" class="Symbol"
+      >(</a
+      ><a name="954" href="lib.types.Pullback.html#283" class="Record"
+      >Pullback</a
+      ><a name="962"
+      > </a
+      ><a name="963" href="lib.groups.PullbackGroup.html#862" class="Function"
+      >d</a
+      ><a name="964" class="Symbol"
+      >)</a
+      ><a name="965"
+      >
+  </a
+      ><a name="968" href="lib.groups.PullbackGroup.html#914" class="Function"
+      >Pullback-group-struct</a
+      ><a name="989"
+      > </a
+      ><a name="990" class="Symbol"
+      >=</a
+      ><a name="991"
+      > </a
+      ><a name="992" class="Keyword"
+      >record</a
+      ><a name="998"
+      > </a
+      ><a name="999" class="Symbol"
+      >{</a
+      ><a name="1000"
+      >
+    </a
+      ><a name="1005" class="Field"
+      >ident</a
+      ><a name="1010"
+      > </a
+      ><a name="1011" class="Symbol"
+      >=</a
+      ><a name="1012"
+      > </a
+      ><a name="1013" href="lib.types.Pullback.html#341" class="InductiveConstructor"
+      >pullback</a
+      ><a name="1021"
+      > </a
+      ><a name="1022" href="lib.types.Group.html#276" class="Function"
+      >H.ident</a
+      ><a name="1029"
+      > </a
+      ><a name="1030" href="lib.types.Group.html#276" class="Function"
+      >K.ident</a
+      ><a name="1037"
+      > </a
+      ><a name="1038" class="Symbol"
+      >(</a
+      ><a name="1039" href="lib.groups.Homomorphism.html#1390" class="Function"
+      >&#966;.pres-ident</a
+      ><a name="1051"
+      > </a
+      ><a name="1052" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1053"
+      > </a
+      ><a name="1054" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1055"
+      > </a
+      ><a name="1056" class="Symbol"
+      >(</a
+      ><a name="1057" href="lib.groups.Homomorphism.html#1390" class="Function"
+      >&#968;.pres-ident</a
+      ><a name="1069" class="Symbol"
+      >));</a
+      ><a name="1072"
+      >
+    </a
+      ><a name="1077" class="Field"
+      >inv</a
+      ><a name="1080"
+      > </a
+      ><a name="1081" class="Symbol"
+      >=</a
+      ><a name="1082"
+      > </a
+      ><a name="1083" class="Symbol"
+      >&#955;</a
+      ><a name="1084"
+      > </a
+      ><a name="1085" class="Symbol"
+      >{(</a
+      ><a name="1087" href="lib.types.Pullback.html#341" class="InductiveConstructor"
+      >pullback</a
+      ><a name="1095"
+      > </a
+      ><a name="1096" href="lib.groups.PullbackGroup.html#1096" class="Bound"
+      >h</a
+      ><a name="1097"
+      > </a
+      ><a name="1098" href="lib.groups.PullbackGroup.html#1098" class="Bound"
+      >k</a
+      ><a name="1099"
+      > </a
+      ><a name="1100" href="lib.groups.PullbackGroup.html#1100" class="Bound"
+      >p</a
+      ><a name="1101" class="Symbol"
+      >)</a
+      ><a name="1102"
+      > </a
+      ><a name="1103" class="Symbol"
+      >&#8594;</a
+      ><a name="1104"
+      >
+      </a
+      ><a name="1111" href="lib.types.Pullback.html#341" class="InductiveConstructor"
+      >pullback</a
+      ><a name="1119"
+      > </a
+      ><a name="1120" class="Symbol"
+      >(</a
+      ><a name="1121" href="lib.types.Group.html#292" class="Function"
+      >H.inv</a
+      ><a name="1126"
+      > </a
+      ><a name="1127" href="lib.groups.PullbackGroup.html#1096" class="Bound"
+      >h</a
+      ><a name="1128" class="Symbol"
+      >)</a
+      ><a name="1129"
+      > </a
+      ><a name="1130" class="Symbol"
+      >(</a
+      ><a name="1131" href="lib.types.Group.html#292" class="Function"
+      >K.inv</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" href="lib.groups.PullbackGroup.html#1098" class="Bound"
+      >k</a
+      ><a name="1138" class="Symbol"
+      >)</a
+      ><a name="1139"
+      >
+        </a
+      ><a name="1148" class="Symbol"
+      >(</a
+      ><a name="1149" href="lib.groups.Homomorphism.html#1711" class="Function"
+      >&#966;.pres-inv</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" href="lib.groups.PullbackGroup.html#1096" class="Bound"
+      >h</a
+      ><a name="1161"
+      > </a
+      ><a name="1162" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1163"
+      > </a
+      ><a name="1164" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1166"
+      > </a
+      ><a name="1167" href="lib.types.Group.html#292" class="Function"
+      >G.inv</a
+      ><a name="1172"
+      > </a
+      ><a name="1173" href="lib.groups.PullbackGroup.html#1100" class="Bound"
+      >p</a
+      ><a name="1174"
+      > </a
+      ><a name="1175" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1176"
+      > </a
+      ><a name="1177" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1178"
+      > </a
+      ><a name="1179" class="Symbol"
+      >(</a
+      ><a name="1180" href="lib.groups.Homomorphism.html#1711" class="Function"
+      >&#968;.pres-inv</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" href="lib.groups.PullbackGroup.html#1098" class="Bound"
+      >k</a
+      ><a name="1192" class="Symbol"
+      >))};</a
+      ><a name="1196"
+      >
+    </a
+      ><a name="1201" class="Field"
+      >comp</a
+      ><a name="1205"
+      > </a
+      ><a name="1206" class="Symbol"
+      >=</a
+      ><a name="1207"
+      > </a
+      ><a name="1208" class="Symbol"
+      >&#955;</a
+      ><a name="1209"
+      > </a
+      ><a name="1210" class="Symbol"
+      >{(</a
+      ><a name="1212" href="lib.types.Pullback.html#341" class="InductiveConstructor"
+      >pullback</a
+      ><a name="1220"
+      > </a
+      ><a name="1221" href="lib.groups.PullbackGroup.html#1221" class="Bound"
+      >h&#8321;</a
+      ><a name="1223"
+      > </a
+      ><a name="1224" href="lib.groups.PullbackGroup.html#1224" class="Bound"
+      >k&#8321;</a
+      ><a name="1226"
+      > </a
+      ><a name="1227" href="lib.groups.PullbackGroup.html#1227" class="Bound"
+      >p&#8321;</a
+      ><a name="1229" class="Symbol"
+      >)</a
+      ><a name="1230"
+      > </a
+      ><a name="1231" class="Symbol"
+      >(</a
+      ><a name="1232" href="lib.types.Pullback.html#341" class="InductiveConstructor"
+      >pullback</a
+      ><a name="1240"
+      > </a
+      ><a name="1241" href="lib.groups.PullbackGroup.html#1241" class="Bound"
+      >h&#8322;</a
+      ><a name="1243"
+      > </a
+      ><a name="1244" href="lib.groups.PullbackGroup.html#1244" class="Bound"
+      >k&#8322;</a
+      ><a name="1246"
+      > </a
+      ><a name="1247" href="lib.groups.PullbackGroup.html#1247" class="Bound"
+      >p&#8322;</a
+      ><a name="1249" class="Symbol"
+      >)</a
+      ><a name="1250"
+      > </a
+      ><a name="1251" class="Symbol"
+      >&#8594;</a
+      ><a name="1252"
+      >
+      </a
+      ><a name="1259" href="lib.types.Pullback.html#341" class="InductiveConstructor"
+      >pullback</a
+      ><a name="1267"
+      > </a
+      ><a name="1268" class="Symbol"
+      >(</a
+      ><a name="1269" href="lib.types.Group.html#313" class="Function"
+      >H.comp</a
+      ><a name="1275"
+      > </a
+      ><a name="1276" href="lib.groups.PullbackGroup.html#1221" class="Bound"
+      >h&#8321;</a
+      ><a name="1278"
+      > </a
+      ><a name="1279" href="lib.groups.PullbackGroup.html#1241" class="Bound"
+      >h&#8322;</a
+      ><a name="1281" class="Symbol"
+      >)</a
+      ><a name="1282"
+      > </a
+      ><a name="1283" class="Symbol"
+      >(</a
+      ><a name="1284" href="lib.types.Group.html#313" class="Function"
+      >K.comp</a
+      ><a name="1290"
+      > </a
+      ><a name="1291" href="lib.groups.PullbackGroup.html#1224" class="Bound"
+      >k&#8321;</a
+      ><a name="1293"
+      > </a
+      ><a name="1294" href="lib.groups.PullbackGroup.html#1244" class="Bound"
+      >k&#8322;</a
+      ><a name="1296" class="Symbol"
+      >)</a
+      ><a name="1297"
+      >
+        </a
+      ><a name="1306" class="Symbol"
+      >(</a
+      ><a name="1307" href="lib.groups.Homomorphism.html#2630" class="Function"
+      >&#966;.pres-comp</a
+      ><a name="1318"
+      > </a
+      ><a name="1319" href="lib.groups.PullbackGroup.html#1221" class="Bound"
+      >h&#8321;</a
+      ><a name="1321"
+      > </a
+      ><a name="1322" href="lib.groups.PullbackGroup.html#1241" class="Bound"
+      >h&#8322;</a
+      ><a name="1324"
+      > </a
+      ><a name="1325" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1326"
+      > </a
+      ><a name="1327" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="1330"
+      > </a
+      ><a name="1331" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="1337"
+      > </a
+      ><a name="1338" href="lib.groups.PullbackGroup.html#1227" class="Bound"
+      >p&#8321;</a
+      ><a name="1340"
+      > </a
+      ><a name="1341" href="lib.groups.PullbackGroup.html#1247" class="Bound"
+      >p&#8322;</a
+      ><a name="1343"
+      > </a
+      ><a name="1344" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1345"
+      > </a
+      ><a name="1346" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" class="Symbol"
+      >(</a
+      ><a name="1349" href="lib.groups.Homomorphism.html#2630" class="Function"
+      >&#968;.pres-comp</a
+      ><a name="1360"
+      > </a
+      ><a name="1361" href="lib.groups.PullbackGroup.html#1224" class="Bound"
+      >k&#8321;</a
+      ><a name="1363"
+      > </a
+      ><a name="1364" href="lib.groups.PullbackGroup.html#1244" class="Bound"
+      >k&#8322;</a
+      ><a name="1366" class="Symbol"
+      >))};</a
+      ><a name="1370"
+      >
+    </a
+      ><a name="1375" class="Field"
+      >unit-l</a
+      ><a name="1381"
+      > </a
+      ><a name="1382" class="Symbol"
+      >=</a
+      ><a name="1383"
+      > </a
+      ><a name="1384" class="Symbol"
+      >&#955;</a
+      ><a name="1385"
+      > </a
+      ><a name="1386" class="Symbol"
+      >{(</a
+      ><a name="1388" href="lib.types.Pullback.html#341" class="InductiveConstructor"
+      >pullback</a
+      ><a name="1396"
+      > </a
+      ><a name="1397" href="lib.groups.PullbackGroup.html#1397" class="Bound"
+      >h</a
+      ><a name="1398"
+      > </a
+      ><a name="1399" href="lib.groups.PullbackGroup.html#1399" class="Bound"
+      >k</a
+      ><a name="1400"
+      > </a
+      ><a name="1401" href="lib.groups.PullbackGroup.html#1401" class="Bound"
+      >p</a
+      ><a name="1402" class="Symbol"
+      >)</a
+      ><a name="1403"
+      > </a
+      ><a name="1404" class="Symbol"
+      >&#8594;</a
+      ><a name="1405"
+      >
+      </a
+      ><a name="1412" href="lib.types.Pullback.html#408" class="Function"
+      >pullback=</a
+      ><a name="1421"
+      > </a
+      ><a name="1422" href="lib.groups.PullbackGroup.html#862" class="Function"
+      >d</a
+      ><a name="1423"
+      > </a
+      ><a name="1424" class="Symbol"
+      >(</a
+      ><a name="1425" href="lib.types.Group.html#339" class="Function"
+      >H.unit-l</a
+      ><a name="1433"
+      > </a
+      ><a name="1434" href="lib.groups.PullbackGroup.html#1397" class="Bound"
+      >h</a
+      ><a name="1435" class="Symbol"
+      >)</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" class="Symbol"
+      >(</a
+      ><a name="1438" href="lib.types.Group.html#339" class="Function"
+      >K.unit-l</a
+      ><a name="1446"
+      > </a
+      ><a name="1447" href="lib.groups.PullbackGroup.html#1399" class="Bound"
+      >k</a
+      ><a name="1448" class="Symbol"
+      >)</a
+      ><a name="1449"
+      >
+        </a
+      ><a name="1458" class="Symbol"
+      >(</a
+      ><a name="1459" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="1477"
+      > </a
+      ><a name="1478" class="Symbol"
+      >(</a
+      ><a name="1479" href="lib.types.Group.html#6919" class="Function"
+      >G.El-level</a
+      ><a name="1489"
+      > </a
+      ><a name="1490" class="Symbol"
+      >_</a
+      ><a name="1491"
+      > </a
+      ><a name="1492" class="Symbol"
+      >_)</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" class="Symbol"
+      >_</a
+      ><a name="1496"
+      > </a
+      ><a name="1497" class="Symbol"
+      >_)};</a
+      ><a name="1501"
+      >
+    </a
+      ><a name="1506" class="Field"
+      >assoc</a
+      ><a name="1511"
+      > </a
+      ><a name="1512" class="Symbol"
+      >=</a
+      ><a name="1513"
+      > </a
+      ><a name="1514" class="Symbol"
+      >&#955;</a
+      ><a name="1515"
+      > </a
+      ><a name="1516" class="Symbol"
+      >{(</a
+      ><a name="1518" href="lib.types.Pullback.html#341" class="InductiveConstructor"
+      >pullback</a
+      ><a name="1526"
+      > </a
+      ><a name="1527" href="lib.groups.PullbackGroup.html#1527" class="Bound"
+      >h&#8321;</a
+      ><a name="1529"
+      > </a
+      ><a name="1530" href="lib.groups.PullbackGroup.html#1530" class="Bound"
+      >k&#8321;</a
+      ><a name="1532"
+      > </a
+      ><a name="1533" href="lib.groups.PullbackGroup.html#1533" class="Bound"
+      >p&#8321;</a
+      ><a name="1535" class="Symbol"
+      >)</a
+      ><a name="1536"
+      > </a
+      ><a name="1537" class="Symbol"
+      >(</a
+      ><a name="1538" href="lib.types.Pullback.html#341" class="InductiveConstructor"
+      >pullback</a
+      ><a name="1546"
+      > </a
+      ><a name="1547" href="lib.groups.PullbackGroup.html#1547" class="Bound"
+      >h&#8322;</a
+      ><a name="1549"
+      > </a
+      ><a name="1550" href="lib.groups.PullbackGroup.html#1550" class="Bound"
+      >k&#8322;</a
+      ><a name="1552"
+      > </a
+      ><a name="1553" href="lib.groups.PullbackGroup.html#1553" class="Bound"
+      >p&#8322;</a
+      ><a name="1555" class="Symbol"
+      >)</a
+      ><a name="1556"
+      > </a
+      ><a name="1557" class="Symbol"
+      >(</a
+      ><a name="1558" href="lib.types.Pullback.html#341" class="InductiveConstructor"
+      >pullback</a
+      ><a name="1566"
+      > </a
+      ><a name="1567" href="lib.groups.PullbackGroup.html#1567" class="Bound"
+      >h&#8323;</a
+      ><a name="1569"
+      > </a
+      ><a name="1570" href="lib.groups.PullbackGroup.html#1570" class="Bound"
+      >k&#8323;</a
+      ><a name="1572"
+      > </a
+      ><a name="1573" href="lib.groups.PullbackGroup.html#1573" class="Bound"
+      >p&#8323;</a
+      ><a name="1575" class="Symbol"
+      >)</a
+      ><a name="1576"
+      > </a
+      ><a name="1577" class="Symbol"
+      >&#8594;</a
+      ><a name="1578"
+      >
+      </a
+      ><a name="1585" href="lib.types.Pullback.html#408" class="Function"
+      >pullback=</a
+      ><a name="1594"
+      > </a
+      ><a name="1595" href="lib.groups.PullbackGroup.html#862" class="Function"
+      >d</a
+      ><a name="1596"
+      > </a
+      ><a name="1597" class="Symbol"
+      >(</a
+      ><a name="1598" href="lib.types.Group.html#376" class="Function"
+      >H.assoc</a
+      ><a name="1605"
+      > </a
+      ><a name="1606" href="lib.groups.PullbackGroup.html#1527" class="Bound"
+      >h&#8321;</a
+      ><a name="1608"
+      > </a
+      ><a name="1609" href="lib.groups.PullbackGroup.html#1547" class="Bound"
+      >h&#8322;</a
+      ><a name="1611"
+      > </a
+      ><a name="1612" href="lib.groups.PullbackGroup.html#1567" class="Bound"
+      >h&#8323;</a
+      ><a name="1614" class="Symbol"
+      >)</a
+      ><a name="1615"
+      > </a
+      ><a name="1616" class="Symbol"
+      >(</a
+      ><a name="1617" href="lib.types.Group.html#376" class="Function"
+      >K.assoc</a
+      ><a name="1624"
+      > </a
+      ><a name="1625" href="lib.groups.PullbackGroup.html#1530" class="Bound"
+      >k&#8321;</a
+      ><a name="1627"
+      > </a
+      ><a name="1628" href="lib.groups.PullbackGroup.html#1550" class="Bound"
+      >k&#8322;</a
+      ><a name="1630"
+      > </a
+      ><a name="1631" href="lib.groups.PullbackGroup.html#1570" class="Bound"
+      >k&#8323;</a
+      ><a name="1633" class="Symbol"
+      >)</a
+      ><a name="1634"
+      >
+        </a
+      ><a name="1643" class="Symbol"
+      >(</a
+      ><a name="1644" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="1662"
+      > </a
+      ><a name="1663" class="Symbol"
+      >(</a
+      ><a name="1664" href="lib.types.Group.html#6919" class="Function"
+      >G.El-level</a
+      ><a name="1674"
+      > </a
+      ><a name="1675" class="Symbol"
+      >_</a
+      ><a name="1676"
+      > </a
+      ><a name="1677" class="Symbol"
+      >_)</a
+      ><a name="1679"
+      > </a
+      ><a name="1680" class="Symbol"
+      >_</a
+      ><a name="1681"
+      > </a
+      ><a name="1682" class="Symbol"
+      >_)};</a
+      ><a name="1686"
+      >
+    </a
+      ><a name="1691" class="Field"
+      >inv-l</a
+      ><a name="1696"
+      > </a
+      ><a name="1697" class="Symbol"
+      >=</a
+      ><a name="1698"
+      > </a
+      ><a name="1699" class="Symbol"
+      >&#955;</a
+      ><a name="1700"
+      > </a
+      ><a name="1701" class="Symbol"
+      >{(</a
+      ><a name="1703" href="lib.types.Pullback.html#341" class="InductiveConstructor"
+      >pullback</a
+      ><a name="1711"
+      > </a
+      ><a name="1712" href="lib.groups.PullbackGroup.html#1712" class="Bound"
+      >h</a
+      ><a name="1713"
+      > </a
+      ><a name="1714" href="lib.groups.PullbackGroup.html#1714" class="Bound"
+      >k</a
+      ><a name="1715"
+      > </a
+      ><a name="1716" href="lib.groups.PullbackGroup.html#1716" class="Bound"
+      >p</a
+      ><a name="1717" class="Symbol"
+      >)</a
+      ><a name="1718"
+      > </a
+      ><a name="1719" class="Symbol"
+      >&#8594;</a
+      ><a name="1720"
+      >
+      </a
+      ><a name="1727" href="lib.types.Pullback.html#408" class="Function"
+      >pullback=</a
+      ><a name="1736"
+      > </a
+      ><a name="1737" href="lib.groups.PullbackGroup.html#862" class="Function"
+      >d</a
+      ><a name="1738"
+      > </a
+      ><a name="1739" class="Symbol"
+      >(</a
+      ><a name="1740" href="lib.types.Group.html#438" class="Function"
+      >H.inv-l</a
+      ><a name="1747"
+      > </a
+      ><a name="1748" href="lib.groups.PullbackGroup.html#1712" class="Bound"
+      >h</a
+      ><a name="1749" class="Symbol"
+      >)</a
+      ><a name="1750"
+      > </a
+      ><a name="1751" class="Symbol"
+      >(</a
+      ><a name="1752" href="lib.types.Group.html#438" class="Function"
+      >K.inv-l</a
+      ><a name="1759"
+      > </a
+      ><a name="1760" href="lib.groups.PullbackGroup.html#1714" class="Bound"
+      >k</a
+      ><a name="1761" class="Symbol"
+      >)</a
+      ><a name="1762"
+      >
+        </a
+      ><a name="1771" class="Symbol"
+      >(</a
+      ><a name="1772" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="1790"
+      > </a
+      ><a name="1791" class="Symbol"
+      >(</a
+      ><a name="1792" href="lib.types.Group.html#6919" class="Function"
+      >G.El-level</a
+      ><a name="1802"
+      > </a
+      ><a name="1803" class="Symbol"
+      >_</a
+      ><a name="1804"
+      > </a
+      ><a name="1805" class="Symbol"
+      >_)</a
+      ><a name="1807"
+      > </a
+      ><a name="1808" class="Symbol"
+      >_</a
+      ><a name="1809"
+      > </a
+      ><a name="1810" class="Symbol"
+      >_)}}</a
+      ><a name="1814"
+      >
+
+  </a
+      ><a name="1818" href="lib.groups.PullbackGroup.html#1818" class="Function"
+      >Pullback-group</a
+      ><a name="1832"
+      > </a
+      ><a name="1833" class="Symbol"
+      >:</a
+      ><a name="1834"
+      > </a
+      ><a name="1835" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1840"
+      > </a
+      ><a name="1841" class="Symbol"
+      >(</a
+      ><a name="1842" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1846"
+      > </a
+      ><a name="1847" href="lib.groups.PullbackGroup.html#657" class="Bound"
+      >i</a
+      ><a name="1848"
+      > </a
+      ><a name="1849" class="Symbol"
+      >(</a
+      ><a name="1850" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1854"
+      > </a
+      ><a name="1855" href="lib.groups.PullbackGroup.html#659" class="Bound"
+      >j</a
+      ><a name="1856"
+      > </a
+      ><a name="1857" href="lib.groups.PullbackGroup.html#661" class="Bound"
+      >k</a
+      ><a name="1858" class="Symbol"
+      >))</a
+      ><a name="1860"
+      >
+  </a
+      ><a name="1863" href="lib.groups.PullbackGroup.html#1818" class="Function"
+      >Pullback-group</a
+      ><a name="1877"
+      > </a
+      ><a name="1878" class="Symbol"
+      >=</a
+      ><a name="1879"
+      > </a
+      ><a name="1880" class="Keyword"
+      >record</a
+      ><a name="1886"
+      > </a
+      ><a name="1887" class="Symbol"
+      >{</a
+      ><a name="1888"
+      >
+    </a
+      ><a name="1893" class="Field"
+      >El</a
+      ><a name="1895"
+      > </a
+      ><a name="1896" class="Symbol"
+      >=</a
+      ><a name="1897"
+      > </a
+      ><a name="1898" href="lib.types.Pullback.html#283" class="Record"
+      >Pullback</a
+      ><a name="1906"
+      > </a
+      ><a name="1907" href="lib.groups.PullbackGroup.html#862" class="Function"
+      >d</a
+      ><a name="1908" class="Symbol"
+      >;</a
+      ><a name="1909"
+      >
+    </a
+      ><a name="1914" class="Field"
+      >El-level</a
+      ><a name="1922"
+      > </a
+      ><a name="1923" class="Symbol"
+      >=</a
+      ><a name="1924"
+      > </a
+      ><a name="1925" href="lib.types.Pullback.html#2036" class="Function"
+      >pullback-level</a
+      ><a name="1939"
+      > </a
+      ><a name="1940" class="Number"
+      >0</a
+      ><a name="1941"
+      > </a
+      ><a name="1942" href="lib.types.Group.html#6919" class="Function"
+      >H.El-level</a
+      ><a name="1952"
+      > </a
+      ><a name="1953" href="lib.types.Group.html#6919" class="Function"
+      >K.El-level</a
+      ><a name="1963"
+      > </a
+      ><a name="1964" href="lib.types.Group.html#6919" class="Function"
+      >G.El-level</a
+      ><a name="1974" class="Symbol"
+      >;</a
+      ><a name="1975"
+      >
+    </a
+      ><a name="1980" class="Field"
+      >group-struct</a
+      ><a name="1992"
+      > </a
+      ><a name="1993" class="Symbol"
+      >=</a
+      ><a name="1994"
+      > </a
+      ><a name="1995" href="lib.groups.PullbackGroup.html#914" class="Function"
+      >Pullback-group-struct</a
+      ><a name="2016" class="Symbol"
+      >}</a
+      ><a name="2017"
+      >
+
+  </a
+      ><a name="2021" href="lib.groups.PullbackGroup.html#2021" class="Function"
+      >pfst-hom</a
+      ><a name="2029"
+      > </a
+      ><a name="2030" class="Symbol"
+      >:</a
+      ><a name="2031"
+      > </a
+      ><a name="2032" href="lib.groups.PullbackGroup.html#1818" class="Function"
+      >Pullback-group</a
+      ><a name="2046"
+      > </a
+      ><a name="2047" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="2049"
+      > </a
+      ><a name="2050" href="lib.groups.PullbackGroup.html#371" class="Field"
+      >H</a
+      ><a name="2051"
+      >
+  </a
+      ><a name="2054" href="lib.groups.PullbackGroup.html#2021" class="Function"
+      >pfst-hom</a
+      ><a name="2062"
+      > </a
+      ><a name="2063" class="Symbol"
+      >=</a
+      ><a name="2064"
+      > </a
+      ><a name="2065" class="Keyword"
+      >record</a
+      ><a name="2071"
+      > </a
+      ><a name="2072" class="Symbol"
+      >{</a
+      ><a name="2073"
+      >
+    </a
+      ><a name="2078" class="Field"
+      >f</a
+      ><a name="2079"
+      > </a
+      ><a name="2080" class="Symbol"
+      >=</a
+      ><a name="2081"
+      > </a
+      ><a name="2082" href="lib.types.Pullback.html#366" class="Field"
+      >Pullback.a</a
+      ><a name="2092" class="Symbol"
+      >;</a
+      ><a name="2093"
+      >
+    </a
+      ><a name="2098" class="Field"
+      >pres-comp</a
+      ><a name="2107"
+      > </a
+      ><a name="2108" class="Symbol"
+      >=</a
+      ><a name="2109"
+      > </a
+      ><a name="2110" class="Symbol"
+      >&#955;</a
+      ><a name="2111"
+      > </a
+      ><a name="2112" href="lib.groups.PullbackGroup.html#2112" class="Bound"
+      >_</a
+      ><a name="2113"
+      > </a
+      ><a name="2114" href="lib.groups.PullbackGroup.html#2114" class="Bound"
+      >_</a
+      ><a name="2115"
+      > </a
+      ><a name="2116" class="Symbol"
+      >&#8594;</a
+      ><a name="2117"
+      > </a
+      ><a name="2118" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2121" class="Symbol"
+      >}</a
+      ><a name="2122"
+      >
+
+  </a
+      ><a name="2126" href="lib.groups.PullbackGroup.html#2126" class="Function"
+      >psnd-hom</a
+      ><a name="2134"
+      > </a
+      ><a name="2135" class="Symbol"
+      >:</a
+      ><a name="2136"
+      > </a
+      ><a name="2137" href="lib.groups.PullbackGroup.html#1818" class="Function"
+      >Pullback-group</a
+      ><a name="2151"
+      > </a
+      ><a name="2152" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="2154"
+      > </a
+      ><a name="2155" href="lib.groups.PullbackGroup.html#387" class="Field"
+      >K</a
+      ><a name="2156"
+      >
+  </a
+      ><a name="2159" href="lib.groups.PullbackGroup.html#2126" class="Function"
+      >psnd-hom</a
+      ><a name="2167"
+      > </a
+      ><a name="2168" class="Symbol"
+      >=</a
+      ><a name="2169"
+      > </a
+      ><a name="2170" class="Keyword"
+      >record</a
+      ><a name="2176"
+      > </a
+      ><a name="2177" class="Symbol"
+      >{</a
+      ><a name="2178"
+      >
+    </a
+      ><a name="2183" class="Field"
+      >f</a
+      ><a name="2184"
+      > </a
+      ><a name="2185" class="Symbol"
+      >=</a
+      ><a name="2186"
+      > </a
+      ><a name="2187" href="lib.types.Pullback.html#378" class="Field"
+      >Pullback.b</a
+      ><a name="2197" class="Symbol"
+      >;</a
+      ><a name="2198"
+      >
+    </a
+      ><a name="2203" class="Field"
+      >pres-comp</a
+      ><a name="2212"
+      > </a
+      ><a name="2213" class="Symbol"
+      >=</a
+      ><a name="2214"
+      > </a
+      ><a name="2215" class="Symbol"
+      >&#955;</a
+      ><a name="2216"
+      > </a
+      ><a name="2217" href="lib.groups.PullbackGroup.html#2217" class="Bound"
+      >_</a
+      ><a name="2218"
+      > </a
+      ><a name="2219" href="lib.groups.PullbackGroup.html#2219" class="Bound"
+      >_</a
+      ><a name="2220"
+      > </a
+      ><a name="2221" class="Symbol"
+      >&#8594;</a
+      ><a name="2222"
+      > </a
+      ><a name="2223" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2226" class="Symbol"
+      >}</a
+      ><a name="2227"
+      >
+
+  </a
+      ><a name="2231" class="Keyword"
+      >module</a
+      ><a name="2237"
+      > </a
+      ><a name="2238" href="lib.groups.PullbackGroup.html#2238" class="Module"
+      >_</a
+      ><a name="2239"
+      > </a
+      ><a name="2240" class="Symbol"
+      >{</a
+      ><a name="2241" href="lib.groups.PullbackGroup.html#2241" class="Bound"
+      >l</a
+      ><a name="2242" class="Symbol"
+      >}</a
+      ><a name="2243"
+      > </a
+      ><a name="2244" class="Symbol"
+      >{</a
+      ><a name="2245" href="lib.groups.PullbackGroup.html#2245" class="Bound"
+      >J</a
+      ><a name="2246"
+      > </a
+      ><a name="2247" class="Symbol"
+      >:</a
+      ><a name="2248"
+      > </a
+      ><a name="2249" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="2254"
+      > </a
+      ><a name="2255" href="lib.groups.PullbackGroup.html#2241" class="Bound"
+      >l</a
+      ><a name="2256" class="Symbol"
+      >}</a
+      ><a name="2257"
+      > </a
+      ><a name="2258" class="Symbol"
+      >(</a
+      ><a name="2259" href="lib.groups.PullbackGroup.html#2259" class="Bound"
+      >&#967;</a
+      ><a name="2260"
+      > </a
+      ><a name="2261" class="Symbol"
+      >:</a
+      ><a name="2262"
+      > </a
+      ><a name="2263" href="lib.groups.PullbackGroup.html#2245" class="Bound"
+      >J</a
+      ><a name="2264"
+      > </a
+      ><a name="2265" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="2267"
+      > </a
+      ><a name="2268" href="lib.groups.PullbackGroup.html#371" class="Field"
+      >H</a
+      ><a name="2269" class="Symbol"
+      >)</a
+      ><a name="2270"
+      > </a
+      ><a name="2271" class="Symbol"
+      >(</a
+      ><a name="2272" href="lib.groups.PullbackGroup.html#2272" class="Bound"
+      >&#952;</a
+      ><a name="2273"
+      > </a
+      ><a name="2274" class="Symbol"
+      >:</a
+      ><a name="2275"
+      > </a
+      ><a name="2276" href="lib.groups.PullbackGroup.html#2245" class="Bound"
+      >J</a
+      ><a name="2277"
+      > </a
+      ><a name="2278" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="2280"
+      > </a
+      ><a name="2281" href="lib.groups.PullbackGroup.html#387" class="Field"
+      >K</a
+      ><a name="2282" class="Symbol"
+      >)</a
+      ><a name="2283"
+      > </a
+      ><a name="2284" class="Keyword"
+      >where</a
+      ><a name="2289"
+      >
+
+    </a
+      ><a name="2295" class="Keyword"
+      >private</a
+      ><a name="2302"
+      >
+      </a
+      ><a name="2309" class="Keyword"
+      >module</a
+      ><a name="2315"
+      > </a
+      ><a name="2316" href="lib.groups.PullbackGroup.html#2316" class="Module"
+      >&#967;</a
+      ><a name="2317"
+      > </a
+      ><a name="2318" class="Symbol"
+      >=</a
+      ><a name="2319"
+      > </a
+      ><a name="2320" href="lib.groups.Homomorphism.html#2451" class="Module"
+      >GroupHom</a
+      ><a name="2328"
+      > </a
+      ><a name="2329" href="lib.groups.PullbackGroup.html#2259" class="Bound"
+      >&#967;</a
+      ><a name="2330"
+      >
+      </a
+      ><a name="2337" class="Keyword"
+      >module</a
+      ><a name="2343"
+      > </a
+      ><a name="2344" href="lib.groups.PullbackGroup.html#2344" class="Module"
+      >&#952;</a
+      ><a name="2345"
+      > </a
+      ><a name="2346" class="Symbol"
+      >=</a
+      ><a name="2347"
+      > </a
+      ><a name="2348" href="lib.groups.Homomorphism.html#2451" class="Module"
+      >GroupHom</a
+      ><a name="2356"
+      > </a
+      ><a name="2357" href="lib.groups.PullbackGroup.html#2272" class="Bound"
+      >&#952;</a
+      ><a name="2358"
+      >
+
+    </a
+      ><a name="2364" href="lib.groups.PullbackGroup.html#2364" class="Function"
+      >pullback-hom</a
+      ><a name="2376"
+      > </a
+      ><a name="2377" class="Symbol"
+      >:</a
+      ><a name="2378"
+      > </a
+      ><a name="2379" class="Symbol"
+      >((</a
+      ><a name="2381" href="lib.groups.PullbackGroup.html#2381" class="Bound"
+      >j</a
+      ><a name="2382"
+      > </a
+      ><a name="2383" class="Symbol"
+      >:</a
+      ><a name="2384"
+      > </a
+      ><a name="2385" href="lib.types.Group.html#6903" class="Field"
+      >Group.El</a
+      ><a name="2393"
+      > </a
+      ><a name="2394" href="lib.groups.PullbackGroup.html#2245" class="Bound"
+      >J</a
+      ><a name="2395" class="Symbol"
+      >)</a
+      ><a name="2396"
+      > </a
+      ><a name="2397" class="Symbol"
+      >&#8594;</a
+      ><a name="2398"
+      > </a
+      ><a name="2399" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#966;.f</a
+      ><a name="2402"
+      > </a
+      ><a name="2403" class="Symbol"
+      >(</a
+      ><a name="2404" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#967;.f</a
+      ><a name="2407"
+      > </a
+      ><a name="2408" href="lib.groups.PullbackGroup.html#2381" class="Bound"
+      >j</a
+      ><a name="2409" class="Symbol"
+      >)</a
+      ><a name="2410"
+      > </a
+      ><a name="2411" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2413"
+      > </a
+      ><a name="2414" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#968;.f</a
+      ><a name="2417"
+      > </a
+      ><a name="2418" class="Symbol"
+      >(</a
+      ><a name="2419" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >&#952;.f</a
+      ><a name="2422"
+      > </a
+      ><a name="2423" href="lib.groups.PullbackGroup.html#2381" class="Bound"
+      >j</a
+      ><a name="2424" class="Symbol"
+      >))</a
+      ><a name="2426"
+      >
+      </a
+      ><a name="2433" class="Symbol"
+      >&#8594;</a
+      ><a name="2434"
+      > </a
+      ><a name="2435" href="lib.groups.PullbackGroup.html#2245" class="Bound"
+      >J</a
+      ><a name="2436"
+      > </a
+      ><a name="2437" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="2439"
+      > </a
+      ><a name="2440" href="lib.groups.PullbackGroup.html#1818" class="Function"
+      >Pullback-group</a
+      ><a name="2454"
+      >
+    </a
+      ><a name="2459" href="lib.groups.PullbackGroup.html#2364" class="Function"
+      >pullback-hom</a
+      ><a name="2471"
+      > </a
+      ><a name="2472" href="lib.groups.PullbackGroup.html#2472" class="Bound"
+      >p</a
+      ><a name="2473"
+      > </a
+      ><a name="2474" class="Symbol"
+      >=</a
+      ><a name="2475"
+      > </a
+      ><a name="2476" class="Keyword"
+      >record</a
+      ><a name="2482"
+      > </a
+      ><a name="2483" class="Symbol"
+      >{</a
+      ><a name="2484"
+      >
+      </a
+      ><a name="2491" class="Field"
+      >f</a
+      ><a name="2492"
+      > </a
+      ><a name="2493" class="Symbol"
+      >=</a
+      ><a name="2494"
+      > </a
+      ><a name="2495" class="Symbol"
+      >&#955;</a
+      ><a name="2496"
+      > </a
+      ><a name="2497" href="lib.groups.PullbackGroup.html#2497" class="Bound"
+      >j</a
+      ><a name="2498"
+      > </a
+      ><a name="2499" class="Symbol"
+      >&#8594;</a
+      ><a name="2500"
+      > </a
+      ><a name="2501" href="lib.types.Pullback.html#341" class="InductiveConstructor"
+      >pullback</a
+      ><a name="2509"
+      > </a
+      ><a name="2510" class="Symbol"
+      >(</a
+      ><a name="2511" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#967;.f</a
+      ><a name="2514"
+      > </a
+      ><a name="2515" href="lib.groups.PullbackGroup.html#2497" class="Bound"
+      >j</a
+      ><a name="2516" class="Symbol"
+      >)</a
+      ><a name="2517"
+      > </a
+      ><a name="2518" class="Symbol"
+      >(</a
+      ><a name="2519" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >&#952;.f</a
+      ><a name="2522"
+      > </a
+      ><a name="2523" href="lib.groups.PullbackGroup.html#2497" class="Bound"
+      >j</a
+      ><a name="2524" class="Symbol"
+      >)</a
+      ><a name="2525"
+      > </a
+      ><a name="2526" class="Symbol"
+      >(</a
+      ><a name="2527" href="lib.groups.PullbackGroup.html#2472" class="Bound"
+      >p</a
+      ><a name="2528"
+      > </a
+      ><a name="2529" href="lib.groups.PullbackGroup.html#2497" class="Bound"
+      >j</a
+      ><a name="2530" class="Symbol"
+      >);</a
+      ><a name="2532"
+      >
+      </a
+      ><a name="2539" class="Field"
+      >pres-comp</a
+      ><a name="2548"
+      > </a
+      ><a name="2549" class="Symbol"
+      >=</a
+      ><a name="2550"
+      > </a
+      ><a name="2551" class="Symbol"
+      >&#955;</a
+      ><a name="2552"
+      > </a
+      ><a name="2553" href="lib.groups.PullbackGroup.html#2553" class="Bound"
+      >j&#8321;</a
+      ><a name="2555"
+      > </a
+      ><a name="2556" href="lib.groups.PullbackGroup.html#2556" class="Bound"
+      >j&#8322;</a
+      ><a name="2558"
+      > </a
+      ><a name="2559" class="Symbol"
+      >&#8594;</a
+      ><a name="2560"
+      > </a
+      ><a name="2561" href="lib.types.Pullback.html#408" class="Function"
+      >pullback=</a
+      ><a name="2570"
+      > </a
+      ><a name="2571" class="Symbol"
+      >(</a
+      ><a name="2572" href="lib.groups.PullbackGroup.html#446" class="Function"
+      >group-cospan-out</a
+      ><a name="2588"
+      > </a
+      ><a name="2589" href="lib.groups.PullbackGroup.html#665" class="Bound"
+      >D</a
+      ><a name="2590" class="Symbol"
+      >)</a
+      ><a name="2591"
+      >
+        </a
+      ><a name="2600" class="Symbol"
+      >(</a
+      ><a name="2601" href="lib.groups.Homomorphism.html#2630" class="Function"
+      >&#967;.pres-comp</a
+      ><a name="2612"
+      > </a
+      ><a name="2613" href="lib.groups.PullbackGroup.html#2553" class="Bound"
+      >j&#8321;</a
+      ><a name="2615"
+      > </a
+      ><a name="2616" href="lib.groups.PullbackGroup.html#2556" class="Bound"
+      >j&#8322;</a
+      ><a name="2618" class="Symbol"
+      >)</a
+      ><a name="2619"
+      >
+        </a
+      ><a name="2628" class="Symbol"
+      >(</a
+      ><a name="2629" href="lib.groups.Homomorphism.html#2630" class="Field"
+      >&#952;.pres-comp</a
+      ><a name="2640"
+      > </a
+      ><a name="2641" href="lib.groups.PullbackGroup.html#2553" class="Bound"
+      >j&#8321;</a
+      ><a name="2643"
+      > </a
+      ><a name="2644" href="lib.groups.PullbackGroup.html#2556" class="Bound"
+      >j&#8322;</a
+      ><a name="2646" class="Symbol"
+      >)</a
+      ><a name="2647"
+      >
+        </a
+      ><a name="2656" class="Symbol"
+      >(</a
+      ><a name="2657" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="2675"
+      > </a
+      ><a name="2676" class="Symbol"
+      >(</a
+      ><a name="2677" href="lib.types.Group.html#6919" class="Field"
+      >Group.El-level</a
+      ><a name="2691"
+      > </a
+      ><a name="2692" href="lib.groups.PullbackGroup.html#403" class="Field"
+      >G</a
+      ><a name="2693"
+      > </a
+      ><a name="2694" class="Symbol"
+      >_</a
+      ><a name="2695"
+      > </a
+      ><a name="2696" class="Symbol"
+      >_)</a
+      ><a name="2698"
+      > </a
+      ><a name="2699" class="Symbol"
+      >_</a
+      ><a name="2700"
+      > </a
+      ><a name="2701" class="Symbol"
+      >_)}</a
+      ><a name="2704"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

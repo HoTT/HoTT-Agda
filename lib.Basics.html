@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.Basics</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >module</a
+      ><a name="48"
+      > </a
+      ><a name="49" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="59"
+      > </a
+      ><a name="60" class="Keyword"
+      >where</a
+      ><a name="65"
+      >
+
+</a
+      ><a name="67" class="Keyword"
+      >open</a
+      ><a name="71"
+      > </a
+      ><a name="72" class="Keyword"
+      >import</a
+      ><a name="78"
+      > </a
+      ><a name="79" href="lib.Base.html#1" class="Module"
+      >lib.Base</a
+      ><a name="87"
+      > </a
+      ><a name="88" class="Keyword"
+      >public</a
+      ><a name="94"
+      >
+
+</a
+      ><a name="96" class="Keyword"
+      >open</a
+      ><a name="100"
+      > </a
+      ><a name="101" class="Keyword"
+      >import</a
+      ><a name="107"
+      > </a
+      ><a name="108" href="lib.Equivalence.html#1" class="Module"
+      >lib.Equivalence</a
+      ><a name="123"
+      > </a
+      ><a name="124" class="Keyword"
+      >public</a
+      ><a name="130"
+      >
+</a
+      ><a name="131" class="Keyword"
+      >open</a
+      ><a name="135"
+      > </a
+      ><a name="136" class="Keyword"
+      >import</a
+      ><a name="142"
+      > </a
+      ><a name="143" href="lib.Function.html#1" class="Module"
+      >lib.Function</a
+      ><a name="155"
+      > </a
+      ><a name="156" class="Keyword"
+      >public</a
+      ><a name="162"
+      >
+</a
+      ><a name="163" class="Keyword"
+      >open</a
+      ><a name="167"
+      > </a
+      ><a name="168" class="Keyword"
+      >import</a
+      ><a name="174"
+      > </a
+      ><a name="175" href="lib.Funext.html#1" class="Module"
+      >lib.Funext</a
+      ><a name="185"
+      > </a
+      ><a name="186" class="Keyword"
+      >public</a
+      ><a name="192"
+      >
+</a
+      ><a name="193" class="Keyword"
+      >open</a
+      ><a name="197"
+      > </a
+      ><a name="198" class="Keyword"
+      >import</a
+      ><a name="204"
+      > </a
+      ><a name="205" href="lib.NType.html#1" class="Module"
+      >lib.NType</a
+      ><a name="214"
+      > </a
+      ><a name="215" class="Keyword"
+      >public</a
+      ><a name="221"
+      >
+</a
+      ><a name="222" class="Keyword"
+      >open</a
+      ><a name="226"
+      > </a
+      ><a name="227" class="Keyword"
+      >import</a
+      ><a name="233"
+      > </a
+      ><a name="234" href="lib.PathFunctor.html#1" class="Module"
+      >lib.PathFunctor</a
+      ><a name="249"
+      > </a
+      ><a name="250" class="Keyword"
+      >public</a
+      ><a name="256"
+      >
+</a
+      ><a name="257" class="Keyword"
+      >open</a
+      ><a name="261"
+      > </a
+      ><a name="262" class="Keyword"
+      >import</a
+      ><a name="268"
+      > </a
+      ><a name="269" href="lib.PathGroupoid.html#1" class="Module"
+      >lib.PathGroupoid</a
+      ><a name="285"
+      > </a
+      ><a name="286" class="Keyword"
+      >public</a
+      ><a name="292"
+      >
+</a
+      ><a name="293" class="Keyword"
+      >open</a
+      ><a name="297"
+      > </a
+      ><a name="298" class="Keyword"
+      >import</a
+      ><a name="304"
+      > </a
+      ><a name="305" href="lib.PathOver.html#1" class="Module"
+      >lib.PathOver</a
+      ><a name="317"
+      > </a
+      ><a name="318" class="Keyword"
+      >public</a
+      ><a name="324"
+      >
+</a
+      ><a name="325" class="Keyword"
+      >open</a
+      ><a name="329"
+      > </a
+      ><a name="330" class="Keyword"
+      >import</a
+      ><a name="336"
+      > </a
+      ><a name="337" href="lib.Relation.html#1" class="Module"
+      >lib.Relation</a
+      ><a name="349"
+      > </a
+      ><a name="350" class="Keyword"
+      >public</a
+      ><a name="356"
+      >
+</a
+      ><a name="357" class="Keyword"
+      >open</a
+      ><a name="361"
+      > </a
+      ><a name="362" class="Keyword"
+      >import</a
+      ><a name="368"
+      > </a
+      ><a name="369" href="lib.Univalence.html#1" class="Module"
+      >lib.Univalence</a
+      ><a name="383"
+      > </a
+      ><a name="384" class="Keyword"
+      >public</a
+      ><a name="390"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

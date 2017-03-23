@@ -1,0 +1,786 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cw.cohomology.TipGrid</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="88"
+      >
+</a
+      ><a name="89" class="Keyword"
+      >open</a
+      ><a name="93"
+      > </a
+      ><a name="94" class="Keyword"
+      >import</a
+      ><a name="100"
+      > </a
+      ><a name="101" href="groups.Cokernel.html#1" class="Module"
+      >groups.Cokernel</a
+      ><a name="116"
+      >
+</a
+      ><a name="117" class="Keyword"
+      >open</a
+      ><a name="121"
+      > </a
+      ><a name="122" class="Keyword"
+      >import</a
+      ><a name="128"
+      > </a
+      ><a name="129" href="groups.Exactness.html#1" class="Module"
+      >groups.Exactness</a
+      ><a name="145"
+      >
+</a
+      ><a name="146" class="Keyword"
+      >open</a
+      ><a name="150"
+      > </a
+      ><a name="151" class="Keyword"
+      >import</a
+      ><a name="157"
+      > </a
+      ><a name="158" href="groups.HomSequence.html#1" class="Module"
+      >groups.HomSequence</a
+      ><a name="176"
+      >
+</a
+      ><a name="177" class="Keyword"
+      >open</a
+      ><a name="181"
+      > </a
+      ><a name="182" class="Keyword"
+      >import</a
+      ><a name="188"
+      > </a
+      ><a name="189" href="groups.ExactSequence.html#1" class="Module"
+      >groups.ExactSequence</a
+      ><a name="209"
+      >
+
+</a
+      ><a name="211" class="Keyword"
+      >open</a
+      ><a name="215"
+      > </a
+      ><a name="216" class="Keyword"
+      >import</a
+      ><a name="222"
+      > </a
+      ><a name="223" href="cw.CW.html#1" class="Module"
+      >cw.CW</a
+      ><a name="228"
+      >
+
+</a
+      ><a name="230" class="Keyword"
+      >module</a
+      ><a name="236"
+      > </a
+      ><a name="237" href="cw.cohomology.TipGrid.html#1" class="Module"
+      >cw.cohomology.TipGrid</a
+      ><a name="258"
+      > </a
+      ><a name="259" class="Symbol"
+      >{</a
+      ><a name="260" href="cw.cohomology.TipGrid.html#260" class="Bound"
+      >i</a
+      ><a name="261" class="Symbol"
+      >}</a
+      ><a name="262"
+      > </a
+      ><a name="263" class="Symbol"
+      >(</a
+      ><a name="264" href="cw.cohomology.TipGrid.html#264" class="Bound"
+      >OT</a
+      ><a name="266"
+      > </a
+      ><a name="267" class="Symbol"
+      >:</a
+      ><a name="268"
+      > </a
+      ><a name="269" href="cohomology.Theory.html#7242" class="Record"
+      >OrdinaryTheory</a
+      ><a name="283"
+      > </a
+      ><a name="284" href="cw.cohomology.TipGrid.html#260" class="Bound"
+      >i</a
+      ><a name="285" class="Symbol"
+      >)</a
+      ><a name="286"
+      >
+  </a
+      ><a name="289" class="Symbol"
+      >(</a
+      ><a name="290" href="cw.cohomology.TipGrid.html#290" class="Bound"
+      >&#8857;skel</a
+      ><a name="295"
+      > </a
+      ><a name="296" class="Symbol"
+      >:</a
+      ><a name="297"
+      > </a
+      ><a name="298" href="cw.CW.html#1851" class="Record"
+      >&#8857;Skeleton</a
+      ><a name="307"
+      > </a
+      ><a name="308" class="Symbol"
+      >{</a
+      ><a name="309" href="cw.cohomology.TipGrid.html#260" class="Bound"
+      >i</a
+      ><a name="310" class="Symbol"
+      >}</a
+      ><a name="311"
+      > </a
+      ><a name="312" class="Number"
+      >1</a
+      ><a name="313" class="Symbol"
+      >)</a
+      ><a name="314"
+      > </a
+      ><a name="315" class="Symbol"
+      >(</a
+      ><a name="316" href="cw.cohomology.TipGrid.html#316" class="Bound"
+      >ac</a
+      ><a name="318"
+      > </a
+      ><a name="319" class="Symbol"
+      >:</a
+      ><a name="320"
+      > </a
+      ><a name="321" href="cw.CW.html#8111" class="Function"
+      >&#8857;has-cells-with-choice</a
+      ><a name="343"
+      > </a
+      ><a name="344" class="Number"
+      >0</a
+      ><a name="345"
+      > </a
+      ><a name="346" href="cw.cohomology.TipGrid.html#290" class="Bound"
+      >&#8857;skel</a
+      ><a name="351"
+      > </a
+      ><a name="352" href="cw.cohomology.TipGrid.html#260" class="Bound"
+      >i</a
+      ><a name="353" class="Symbol"
+      >)</a
+      ><a name="354"
+      > </a
+      ><a name="355" class="Keyword"
+      >where</a
+      ><a name="360"
+      >
+
+</a
+      ><a name="362" class="Keyword"
+      >open</a
+      ><a name="366"
+      > </a
+      ><a name="367" href="cohomology.Theory.html#7242" class="Module"
+      >OrdinaryTheory</a
+      ><a name="381"
+      > </a
+      ><a name="382" href="cw.cohomology.TipGrid.html#264" class="Bound"
+      >OT</a
+      ><a name="384"
+      >
+</a
+      ><a name="385" class="Keyword"
+      >open</a
+      ><a name="389"
+      > </a
+      ><a name="390" class="Keyword"
+      >import</a
+      ><a name="396"
+      > </a
+      ><a name="397" href="cw.cohomology.Descending.html#1" class="Module"
+      >cw.cohomology.Descending</a
+      ><a name="421"
+      > </a
+      ><a name="422" href="cw.cohomology.TipGrid.html#264" class="Bound"
+      >OT</a
+      ><a name="424"
+      >
+</a
+      ><a name="425" class="Keyword"
+      >open</a
+      ><a name="429"
+      > </a
+      ><a name="430" class="Keyword"
+      >import</a
+      ><a name="436"
+      > </a
+      ><a name="437" href="cw.cohomology.WedgeOfCells.html#1" class="Module"
+      >cw.cohomology.WedgeOfCells</a
+      ><a name="463"
+      > </a
+      ><a name="464" href="cw.cohomology.TipGrid.html#264" class="Bound"
+      >OT</a
+      ><a name="466"
+      > </a
+      ><a name="467" href="cw.cohomology.TipGrid.html#290" class="Bound"
+      >&#8857;skel</a
+      ><a name="472"
+      >
+</a
+      ><a name="473" class="Keyword"
+      >open</a
+      ><a name="477"
+      > </a
+      ><a name="478" class="Keyword"
+      >import</a
+      ><a name="484"
+      > </a
+      ><a name="485" href="cw.cohomology.TipAndAugment.html#1" class="Module"
+      >cw.cohomology.TipAndAugment</a
+      ><a name="512"
+      > </a
+      ><a name="513" href="cw.cohomology.TipGrid.html#264" class="Bound"
+      >OT</a
+      ><a name="515"
+      > </a
+      ><a name="516" class="Symbol"
+      >(</a
+      ><a name="517" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="525"
+      > </a
+      ><a name="526" href="cw.cohomology.TipGrid.html#290" class="Bound"
+      >&#8857;skel</a
+      ><a name="531" class="Symbol"
+      >)</a
+      ><a name="532"
+      >
+</a
+      ><a name="533" class="Keyword"
+      >open</a
+      ><a name="537"
+      > </a
+      ><a name="538" class="Keyword"
+      >import</a
+      ><a name="544"
+      > </a
+      ><a name="545" href="cw.cohomology.TipCoboundary.html#1" class="Module"
+      >cw.cohomology.TipCoboundary</a
+      ><a name="572"
+      > </a
+      ><a name="573" href="cw.cohomology.TipGrid.html#264" class="Bound"
+      >OT</a
+      ><a name="575"
+      > </a
+      ><a name="576" href="cw.cohomology.TipGrid.html#290" class="Bound"
+      >&#8857;skel</a
+      ><a name="581"
+      >
+</a
+      ><a name="582" class="Keyword"
+      >import</a
+      ><a name="588"
+      > </a
+      ><a name="589" href="cohomology.LongExactSequence.html#1" class="Module"
+      >cohomology.LongExactSequence</a
+      ><a name="617"
+      >
+
+</a
+      ><a name="619" class="Comment"
+      >{-
+   X&#8320; --&gt; X&#8321;
+   |      |
+   v      v
+   1 -&gt; X&#8321;/X&#8320;
+-}</a
+      ><a name="675"
+      >
+
+</a
+      ><a name="677" class="Keyword"
+      >private</a
+      ><a name="684"
+      >
+  </a
+      ><a name="687" class="Keyword"
+      >module</a
+      ><a name="693"
+      > </a
+      ><a name="694" href="cw.cohomology.TipGrid.html#694" class="Module"
+      >LES</a
+      ><a name="697"
+      > </a
+      ><a name="698" href="cw.cohomology.TipGrid.html#698" class="Bound"
+      >n</a
+      ><a name="699"
+      > </a
+      ><a name="700" class="Symbol"
+      >=</a
+      ><a name="701"
+      > </a
+      ><a name="702" href="cohomology.LongExactSequence.html#1" class="Module"
+      >cohomology.LongExactSequence</a
+      ><a name="730"
+      > </a
+      ><a name="731" href="cohomology.Theory.html#7365" class="Function"
+      >cohomology-theory</a
+      ><a name="748"
+      > </a
+      ><a name="749" href="cw.cohomology.TipGrid.html#698" class="Bound"
+      >n</a
+      ><a name="750"
+      > </a
+      ><a name="751" class="Symbol"
+      >(</a
+      ><a name="752" href="cw.CW.html#5014" class="Function"
+      >&#8857;cw-incl-last</a
+      ><a name="765"
+      > </a
+      ><a name="766" href="cw.cohomology.TipGrid.html#290" class="Bound"
+      >&#8857;skel</a
+      ><a name="771" class="Symbol"
+      >)</a
+      ><a name="772"
+      >
+
+</a
+      ><a name="774" href="cw.cohomology.TipGrid.html#774" class="Function"
+      >Ker-cw-co&#8706;-head'</a
+      ><a name="790"
+      > </a
+      ><a name="791" class="Symbol"
+      >:</a
+      ><a name="792"
+      > </a
+      ><a name="793" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="794"
+      > </a
+      ><a name="795" class="Number"
+      >0</a
+      ><a name="796"
+      > </a
+      ><a name="797" href="cw.CW.html#2125" class="Function Operator"
+      >&#8857;&#10214;</a
+      ><a name="799"
+      > </a
+      ><a name="800" href="cw.cohomology.TipGrid.html#290" class="Bound"
+      >&#8857;skel</a
+      ><a name="805"
+      > </a
+      ><a name="806" href="cw.CW.html#2125" class="Function Operator"
+      >&#10215;</a
+      ><a name="807"
+      > </a
+      ><a name="808" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="810"
+      > </a
+      ><a name="811" href="lib.groups.Subgroup.html#2751" class="Function"
+      >Ker</a
+      ><a name="814"
+      > </a
+      ><a name="815" href="cw.cohomology.TipCoboundary.html#555" class="Function"
+      >cw-co&#8706;-head'</a
+      ><a name="827"
+      >
+</a
+      ><a name="828" href="cw.cohomology.TipGrid.html#774" class="Function"
+      >Ker-cw-co&#8706;-head'</a
+      ><a name="844"
+      > </a
+      ><a name="845" class="Symbol"
+      >=</a
+      ><a name="846"
+      > </a
+      ><a name="847" href="groups.Exactness.html#11683" class="Function"
+      >Exact2.G-trivial-implies-H-iso-ker</a
+      ><a name="881"
+      >
+  </a
+      ><a name="884" class="Symbol"
+      >(</a
+      ><a name="885" href="groups.ExactSequence.html#1919" class="Function"
+      >exact-seq-index</a
+      ><a name="900"
+      > </a
+      ><a name="901" class="Number"
+      >2</a
+      ><a name="902"
+      > </a
+      ><a name="903" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="904"
+      > </a
+      ><a name="905" href="cohomology.LongExactSequence.html#2600" class="Function"
+      >LES.C-cofiber-exact-seq</a
+      ><a name="928"
+      > </a
+      ><a name="929" class="Number"
+      >-1</a
+      ><a name="931" class="Symbol"
+      >)</a
+      ><a name="932"
+      >
+  </a
+      ><a name="935" class="Symbol"
+      >(</a
+      ><a name="936" href="groups.ExactSequence.html#1919" class="Function"
+      >exact-seq-index</a
+      ><a name="951"
+      > </a
+      ><a name="952" class="Number"
+      >0</a
+      ><a name="953"
+      > </a
+      ><a name="954" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="955"
+      > </a
+      ><a name="956" href="cohomology.LongExactSequence.html#2600" class="Function"
+      >LES.C-cofiber-exact-seq</a
+      ><a name="979"
+      > </a
+      ><a name="980" class="Number"
+      >0</a
+      ><a name="981" class="Symbol"
+      >)</a
+      ><a name="982"
+      >
+  </a
+      ><a name="985" class="Symbol"
+      >(</a
+      ><a name="986" href="cw.cohomology.WedgeOfCells.html#3468" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-&lt;-is-trivial</a
+      ><a name="1007"
+      > </a
+      ><a name="1008" href="lib.types.Nat.html#1688" class="InductiveConstructor"
+      >ltS</a
+      ><a name="1011"
+      > </a
+      ><a name="1012" href="cw.cohomology.TipGrid.html#316" class="Bound"
+      >ac</a
+      ><a name="1014" class="Symbol"
+      >)</a
+      ><a name="1015"
+      >
+
+</a
+      ><a name="1017" class="Comment"
+      >{- NOT USED
+
+Ker-cw-co&#8706;-head : G &#215;&#7475; C 0 &#8857;&#10214; &#8857;skel &#10215; &#8771;&#7475; Ker cw-co&#8706;-head
+Ker-cw-co&#8706;-head = lemma &#8728;e&#7475; &#215;&#7475;-emap (idiso G) Ker-cw-co&#8706;-head' where
+  lemma : G &#215;&#7475; Ker.grp cw-co&#8706;-head' &#8771;&#7475; Ker.grp cw-co&#8706;-head
+  lemma = group-hom (&#955;{(g , (h , is-ker)) &#8594; ((g , h) , is-ker)})
+    (&#955; _ _ &#8594; Subtype=-out (Ker.subEl-prop cw-co&#8706;-head) idp) ,
+    is-eq _ (&#955;{((g , h) , is-ker) &#8594; (g , (h , is-ker))}) (&#955; _ &#8594; idp) (&#955; _ &#8594; idp)
+-}</a
+      ><a name="1425"
+      >
+
+</a
+      ><a name="1427" class="Keyword"
+      >private</a
+      ><a name="1434"
+      >
+  </a
+      ><a name="1437" class="Comment"
+      >-- separate lemmas to speed up the type checking</a
+      ><a name="1485"
+      >
+  </a
+      ><a name="1488" class="Keyword"
+      >abstract</a
+      ><a name="1496"
+      >
+    </a
+      ><a name="1501" href="cw.cohomology.TipGrid.html#1501" class="Function"
+      >lemma-exact&#8320;</a
+      ><a name="1513"
+      > </a
+      ><a name="1514" class="Symbol"
+      >:</a
+      ><a name="1515"
+      > </a
+      ><a name="1516" href="lib.groups.Homomorphism.html#9329" class="Record"
+      >is-exact</a
+      ><a name="1524"
+      > </a
+      ><a name="1525" class="Symbol"
+      >(</a
+      ><a name="1526" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1532"
+      > </a
+      ><a name="1533" class="Number"
+      >1</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" class="Symbol"
+      >(</a
+      ><a name="1536" href="lib.types.Cofiber.html#1617" class="Function"
+      >&#8857;cfcod'</a
+      ><a name="1543"
+      > </a
+      ><a name="1544" class="Symbol"
+      >(</a
+      ><a name="1545" href="cw.CW.html#5014" class="Function"
+      >&#8857;cw-incl-last</a
+      ><a name="1558"
+      > </a
+      ><a name="1559" href="cw.cohomology.TipGrid.html#290" class="Bound"
+      >&#8857;skel</a
+      ><a name="1564" class="Symbol"
+      >)))</a
+      ><a name="1567"
+      >
+      </a
+      ><a name="1574" class="Symbol"
+      >(</a
+      ><a name="1575" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1581"
+      > </a
+      ><a name="1582" class="Number"
+      >1</a
+      ><a name="1583"
+      > </a
+      ><a name="1584" class="Symbol"
+      >(</a
+      ><a name="1585" href="cw.CW.html#5014" class="Function"
+      >&#8857;cw-incl-last</a
+      ><a name="1598"
+      > </a
+      ><a name="1599" href="cw.cohomology.TipGrid.html#290" class="Bound"
+      >&#8857;skel</a
+      ><a name="1604" class="Symbol"
+      >))</a
+      ><a name="1606"
+      >
+    </a
+      ><a name="1611" href="cw.cohomology.TipGrid.html#1501" class="Function"
+      >lemma-exact&#8320;</a
+      ><a name="1623"
+      > </a
+      ><a name="1624" class="Symbol"
+      >=</a
+      ><a name="1625"
+      > </a
+      ><a name="1626" href="groups.ExactSequence.html#1919" class="Function"
+      >exact-seq-index</a
+      ><a name="1641"
+      > </a
+      ><a name="1642" class="Number"
+      >2</a
+      ><a name="1643"
+      > </a
+      ><a name="1644" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1645"
+      > </a
+      ><a name="1646" href="cohomology.LongExactSequence.html#2600" class="Function"
+      >LES.C-cofiber-exact-seq</a
+      ><a name="1669"
+      > </a
+      ><a name="1670" class="Number"
+      >0</a
+      ><a name="1671"
+      >
+
+    </a
+      ><a name="1677" href="cw.cohomology.TipGrid.html#1677" class="Function"
+      >lemma-trivial</a
+      ><a name="1690"
+      > </a
+      ><a name="1691" class="Symbol"
+      >:</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" href="lib.types.Group.html#8063" class="Function"
+      >is-trivial&#7475;</a
+      ><a name="1704"
+      > </a
+      ><a name="1705" class="Symbol"
+      >(</a
+      ><a name="1706" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1707"
+      > </a
+      ><a name="1708" class="Number"
+      >1</a
+      ><a name="1709"
+      > </a
+      ><a name="1710" class="Symbol"
+      >(</a
+      ><a name="1711" href="cw.CW.html#3077" class="Function"
+      >&#8857;cw-head</a
+      ><a name="1719"
+      > </a
+      ><a name="1720" href="cw.cohomology.TipGrid.html#290" class="Bound"
+      >&#8857;skel</a
+      ><a name="1725" class="Symbol"
+      >))</a
+      ><a name="1727"
+      >
+    </a
+      ><a name="1732" href="cw.cohomology.TipGrid.html#1677" class="Function"
+      >lemma-trivial</a
+      ><a name="1745"
+      > </a
+      ><a name="1746" class="Symbol"
+      >=</a
+      ><a name="1747"
+      > </a
+      ><a name="1748" href="cw.cohomology.TipAndAugment.html#939" class="Function"
+      >CX&#8320;-&#8800;-is-trivial</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" class="Symbol"
+      >(</a
+      ><a name="1766" href="lib.types.Int.html#2163" class="Function"
+      >pos-&#8800;</a
+      ><a name="1771"
+      > </a
+      ><a name="1772" class="Symbol"
+      >(</a
+      ><a name="1773" href="lib.types.Nat.html#1098" class="Function"
+      >&#8469;-S&#8800;O</a
+      ><a name="1778"
+      > </a
+      ><a name="1779" class="Number"
+      >0</a
+      ><a name="1780" class="Symbol"
+      >))</a
+      ><a name="1782"
+      >
+      </a
+      ><a name="1789" class="Symbol"
+      >(</a
+      ><a name="1790" href="cw.CW.html#8547" class="Function"
+      >&#8857;init-has-cells-with-choice</a
+      ><a name="1817"
+      > </a
+      ><a name="1818" href="cw.cohomology.TipGrid.html#290" class="Bound"
+      >&#8857;skel</a
+      ><a name="1823"
+      > </a
+      ><a name="1824" href="cw.cohomology.TipGrid.html#316" class="Bound"
+      >ac</a
+      ><a name="1826" class="Symbol"
+      >)</a
+      ><a name="1827"
+      >
+
+</a
+      ><a name="1829" href="cw.cohomology.TipGrid.html#1829" class="Function"
+      >Coker-cw-co&#8706;-head</a
+      ><a name="1846"
+      > </a
+      ><a name="1847" class="Symbol"
+      >:</a
+      ><a name="1848"
+      > </a
+      ><a name="1849" href="cw.cohomology.TipCoboundary.html#1170" class="Function"
+      >CokerCo&#8706;Head.grp</a
+      ><a name="1865"
+      > </a
+      ><a name="1866" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="1868"
+      > </a
+      ><a name="1869" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1870"
+      > </a
+      ><a name="1871" class="Number"
+      >1</a
+      ><a name="1872"
+      > </a
+      ><a name="1873" href="cw.CW.html#2125" class="Function Operator"
+      >&#8857;&#10214;</a
+      ><a name="1875"
+      > </a
+      ><a name="1876" href="cw.cohomology.TipGrid.html#290" class="Bound"
+      >&#8857;skel</a
+      ><a name="1881"
+      > </a
+      ><a name="1882" href="cw.CW.html#2125" class="Function Operator"
+      >&#10215;</a
+      ><a name="1883"
+      >
+</a
+      ><a name="1884" href="cw.cohomology.TipGrid.html#1829" class="Function"
+      >Coker-cw-co&#8706;-head</a
+      ><a name="1901"
+      > </a
+      ><a name="1902" class="Symbol"
+      >=</a
+      ><a name="1903"
+      > </a
+      ><a name="1904" href="groups.Exactness.html#11876" class="Function"
+      >Exact2.L-trivial-implies-coker-iso-K</a
+      ><a name="1940"
+      >
+  </a
+      ><a name="1943" href="cw.cohomology.TipCoboundary.html#893" class="Function"
+      >co&#8706;-head-incl-exact</a
+      ><a name="1962"
+      > </a
+      ><a name="1963" href="cw.cohomology.TipGrid.html#1501" class="Function"
+      >lemma-exact&#8320;</a
+      ><a name="1975"
+      > </a
+      ><a name="1976" href="cw.cohomology.TipCoboundary.html#512" class="Function"
+      >CX&#8321;/X&#8320;-is-abelian</a
+      ><a name="1993"
+      > </a
+      ><a name="1994" href="cw.cohomology.TipGrid.html#1677" class="Function"
+      >lemma-trivial</a
+      ><a name="2007"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

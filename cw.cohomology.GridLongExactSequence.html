@@ -1,0 +1,1670 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cw.cohomology.GridLongExactSequence</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="88"
+      >
+</a
+      ><a name="89" class="Keyword"
+      >open</a
+      ><a name="93"
+      > </a
+      ><a name="94" class="Keyword"
+      >import</a
+      ><a name="100"
+      > </a
+      ><a name="101" href="groups.ExactSequence.html#1" class="Module"
+      >groups.ExactSequence</a
+      ><a name="121"
+      >
+</a
+      ><a name="122" class="Keyword"
+      >open</a
+      ><a name="126"
+      > </a
+      ><a name="127" class="Keyword"
+      >import</a
+      ><a name="133"
+      > </a
+      ><a name="134" href="groups.HomSequence.html#1" class="Module"
+      >groups.HomSequence</a
+      ><a name="152"
+      >
+
+</a
+      ><a name="154" class="Keyword"
+      >module</a
+      ><a name="160"
+      > </a
+      ><a name="161" href="cw.cohomology.GridLongExactSequence.html#1" class="Module"
+      >cw.cohomology.GridLongExactSequence</a
+      ><a name="196"
+      > </a
+      ><a name="197" class="Symbol"
+      >{</a
+      ><a name="198" href="cw.cohomology.GridLongExactSequence.html#198" class="Bound"
+      >i</a
+      ><a name="199" class="Symbol"
+      >}</a
+      ><a name="200"
+      > </a
+      ><a name="201" class="Symbol"
+      >(</a
+      ><a name="202" href="cw.cohomology.GridLongExactSequence.html#202" class="Bound"
+      >CT</a
+      ><a name="204"
+      > </a
+      ><a name="205" class="Symbol"
+      >:</a
+      ><a name="206"
+      > </a
+      ><a name="207" href="cohomology.Theory.html#173" class="Record"
+      >CohomologyTheory</a
+      ><a name="223"
+      > </a
+      ><a name="224" href="cw.cohomology.GridLongExactSequence.html#198" class="Bound"
+      >i</a
+      ><a name="225" class="Symbol"
+      >)</a
+      ><a name="226"
+      >
+  </a
+      ><a name="229" class="Symbol"
+      >{</a
+      ><a name="230" href="cw.cohomology.GridLongExactSequence.html#230" class="Bound"
+      >X</a
+      ><a name="231"
+      > </a
+      ><a name="232" href="cw.cohomology.GridLongExactSequence.html#232" class="Bound"
+      >Y</a
+      ><a name="233"
+      > </a
+      ><a name="234" href="cw.cohomology.GridLongExactSequence.html#234" class="Bound"
+      >Z</a
+      ><a name="235"
+      > </a
+      ><a name="236" class="Symbol"
+      >:</a
+      ><a name="237"
+      > </a
+      ><a name="238" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="241"
+      > </a
+      ><a name="242" href="cw.cohomology.GridLongExactSequence.html#198" class="Bound"
+      >i</a
+      ><a name="243" class="Symbol"
+      >}</a
+      ><a name="244"
+      > </a
+      ><a name="245" class="Symbol"
+      >(</a
+      ><a name="246" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="247"
+      > </a
+      ><a name="248" class="Symbol"
+      >:</a
+      ><a name="249"
+      > </a
+      ><a name="250" href="lib.types.Int.html#154" class="Datatype"
+      >&#8484;</a
+      ><a name="251" class="Symbol"
+      >)</a
+      ><a name="252"
+      > </a
+      ><a name="253" class="Symbol"
+      >(</a
+      ><a name="254" href="cw.cohomology.GridLongExactSequence.html#254" class="Bound"
+      >f</a
+      ><a name="255"
+      > </a
+      ><a name="256" class="Symbol"
+      >:</a
+      ><a name="257"
+      > </a
+      ><a name="258" href="cw.cohomology.GridLongExactSequence.html#230" class="Bound"
+      >X</a
+      ><a name="259"
+      > </a
+      ><a name="260" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="262"
+      > </a
+      ><a name="263" href="cw.cohomology.GridLongExactSequence.html#232" class="Bound"
+      >Y</a
+      ><a name="264" class="Symbol"
+      >)</a
+      ><a name="265"
+      > </a
+      ><a name="266" class="Symbol"
+      >(</a
+      ><a name="267" href="cw.cohomology.GridLongExactSequence.html#267" class="Bound"
+      >g</a
+      ><a name="268"
+      > </a
+      ><a name="269" class="Symbol"
+      >:</a
+      ><a name="270"
+      > </a
+      ><a name="271" href="cw.cohomology.GridLongExactSequence.html#232" class="Bound"
+      >Y</a
+      ><a name="272"
+      > </a
+      ><a name="273" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="275"
+      > </a
+      ><a name="276" href="cw.cohomology.GridLongExactSequence.html#234" class="Bound"
+      >Z</a
+      ><a name="277" class="Symbol"
+      >)</a
+      ><a name="278"
+      > </a
+      ><a name="279" class="Keyword"
+      >where</a
+      ><a name="284"
+      >
+
+</a
+      ><a name="286" class="Keyword"
+      >open</a
+      ><a name="290"
+      > </a
+      ><a name="291" href="cohomology.Theory.html#173" class="Module"
+      >CohomologyTheory</a
+      ><a name="307"
+      > </a
+      ><a name="308" href="cw.cohomology.GridLongExactSequence.html#202" class="Bound"
+      >CT</a
+      ><a name="310"
+      >
+</a
+      ><a name="311" class="Keyword"
+      >open</a
+      ><a name="315"
+      > </a
+      ><a name="316" class="Keyword"
+      >import</a
+      ><a name="322"
+      > </a
+      ><a name="323" href="cohomology.PtdMapSequence.html#1" class="Module"
+      >cohomology.PtdMapSequence</a
+      ><a name="348"
+      > </a
+      ><a name="349" href="cw.cohomology.GridLongExactSequence.html#202" class="Bound"
+      >CT</a
+      ><a name="351"
+      >
+</a
+      ><a name="352" class="Keyword"
+      >open</a
+      ><a name="356"
+      > </a
+      ><a name="357" class="Keyword"
+      >import</a
+      ><a name="363"
+      > </a
+      ><a name="364" href="cw.cohomology.CofiberGrid.html#1" class="Module"
+      >cw.cohomology.CofiberGrid</a
+      ><a name="389"
+      > </a
+      ><a name="390" class="Symbol"
+      >(</a
+      ><a name="391" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="394"
+      > </a
+      ><a name="395" href="cw.cohomology.GridLongExactSequence.html#254" class="Bound"
+      >f</a
+      ><a name="396" class="Symbol"
+      >)</a
+      ><a name="397"
+      > </a
+      ><a name="398" class="Symbol"
+      >(</a
+      ><a name="399" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="402"
+      > </a
+      ><a name="403" href="cw.cohomology.GridLongExactSequence.html#267" class="Bound"
+      >g</a
+      ><a name="404" class="Symbol"
+      >)</a
+      ><a name="405"
+      >
+</a
+      ><a name="406" class="Keyword"
+      >open</a
+      ><a name="410"
+      > </a
+      ><a name="411" class="Keyword"
+      >import</a
+      ><a name="417"
+      > </a
+      ><a name="418" href="cw.cohomology.GridPtdMap.html#1" class="Module"
+      >cw.cohomology.GridPtdMap</a
+      ><a name="442"
+      > </a
+      ><a name="443" href="cw.cohomology.GridLongExactSequence.html#254" class="Bound"
+      >f</a
+      ><a name="444"
+      > </a
+      ><a name="445" href="cw.cohomology.GridLongExactSequence.html#267" class="Bound"
+      >g</a
+      ><a name="446"
+      >
+
+</a
+      ><a name="448" class="Comment"
+      >{-
+  X --&gt; Y ----&gt; Z
+        |       |
+        v       v
+       Y/X --&gt; Z/X
+        | this  |
+        v   one v
+        1 ---&gt; Z/Y
+-}</a
+      ><a name="581"
+      >
+
+</a
+      ><a name="583" class="Keyword"
+      >private</a
+      ><a name="590"
+      >
+  </a
+      ><a name="593" href="cw.cohomology.GridLongExactSequence.html#593" class="Function"
+      >&#8857;D-span</a
+      ><a name="600"
+      > </a
+      ><a name="601" class="Symbol"
+      >:</a
+      ><a name="602"
+      > </a
+      ><a name="603" href="lib.types.Span.html#1479" class="Record"
+      >&#8857;Span</a
+      ><a name="608"
+      >
+  </a
+      ><a name="611" href="cw.cohomology.GridLongExactSequence.html#593" class="Function"
+      >&#8857;D-span</a
+      ><a name="618"
+      > </a
+      ><a name="619" class="Symbol"
+      >=</a
+      ><a name="620"
+      > </a
+      ><a name="621" href="lib.types.Span.html#1557" class="InductiveConstructor"
+      >&#8857;span</a
+      ><a name="626"
+      > </a
+      ><a name="627" href="cw.cohomology.GridPtdMap.html#235" class="Function"
+      >Y/X</a
+      ><a name="630"
+      > </a
+      ><a name="631" href="cw.cohomology.GridLongExactSequence.html#234" class="Bound"
+      >Z</a
+      ><a name="632"
+      > </a
+      ><a name="633" href="cw.cohomology.GridLongExactSequence.html#232" class="Bound"
+      >Y</a
+      ><a name="634"
+      > </a
+      ><a name="635" class="Symbol"
+      >(</a
+      ><a name="636" href="lib.types.Cofiber.html#1617" class="Function"
+      >&#8857;cfcod'</a
+      ><a name="643"
+      > </a
+      ><a name="644" href="cw.cohomology.GridLongExactSequence.html#254" class="Bound"
+      >f</a
+      ><a name="645" class="Symbol"
+      >)</a
+      ><a name="646"
+      > </a
+      ><a name="647" href="cw.cohomology.GridLongExactSequence.html#267" class="Bound"
+      >g</a
+      ><a name="648"
+      >
+
+  </a
+      ><a name="652" href="cw.cohomology.GridLongExactSequence.html#652" class="Function"
+      >&#8857;D</a
+      ><a name="654"
+      > </a
+      ><a name="655" class="Symbol"
+      >:</a
+      ><a name="656"
+      > </a
+      ><a name="657" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="660"
+      > </a
+      ><a name="661" href="cw.cohomology.GridLongExactSequence.html#198" class="Bound"
+      >i</a
+      ><a name="662"
+      >
+  </a
+      ><a name="665" href="cw.cohomology.GridLongExactSequence.html#652" class="Function"
+      >&#8857;D</a
+      ><a name="667"
+      > </a
+      ><a name="668" class="Symbol"
+      >=</a
+      ><a name="669"
+      > </a
+      ><a name="670" href="lib.types.Pushout.html#3340" class="Function"
+      >&#8857;Pushout</a
+      ><a name="678"
+      > </a
+      ><a name="679" href="cw.cohomology.GridLongExactSequence.html#593" class="Function"
+      >&#8857;D-span</a
+      ><a name="686"
+      >
+
+  </a
+      ><a name="690" href="cw.cohomology.GridLongExactSequence.html#690" class="Function"
+      >Y/X-to-D</a
+      ><a name="698"
+      > </a
+      ><a name="699" class="Symbol"
+      >:</a
+      ><a name="700"
+      > </a
+      ><a name="701" href="cw.cohomology.GridPtdMap.html#235" class="Function"
+      >Y/X</a
+      ><a name="704"
+      > </a
+      ><a name="705" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="707"
+      > </a
+      ><a name="708" href="cw.cohomology.GridLongExactSequence.html#652" class="Function"
+      >&#8857;D</a
+      ><a name="710"
+      >
+  </a
+      ><a name="713" href="cw.cohomology.GridLongExactSequence.html#690" class="Function"
+      >Y/X-to-D</a
+      ><a name="721"
+      > </a
+      ><a name="722" class="Symbol"
+      >=</a
+      ><a name="723"
+      > </a
+      ><a name="724" href="cw.cohomology.CofiberGrid.html#913" class="Function"
+      >B/A-to-D</a
+      ><a name="732"
+      > </a
+      ><a name="733" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="734"
+      > </a
+      ><a name="735" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="738"
+      >
+
+  </a
+      ><a name="742" class="Keyword"
+      >open</a
+      ><a name="746"
+      > </a
+      ><a name="747" class="Keyword"
+      >import</a
+      ><a name="753"
+      > </a
+      ><a name="754" href="cohomology.LongExactSequence.html#1" class="Module"
+      >cohomology.LongExactSequence</a
+      ><a name="782"
+      > </a
+      ><a name="783" href="cw.cohomology.GridLongExactSequence.html#202" class="Bound"
+      >CT</a
+      ><a name="785"
+      > </a
+      ><a name="786" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="787"
+      > </a
+      ><a name="788" href="cw.cohomology.GridLongExactSequence.html#690" class="Function"
+      >Y/X-to-D</a
+      ><a name="796"
+      >
+
+  </a
+      ><a name="800" href="cw.cohomology.GridLongExactSequence.html#800" class="Function"
+      >&#8857;E</a
+      ><a name="802"
+      > </a
+      ><a name="803" class="Symbol"
+      >:</a
+      ><a name="804"
+      > </a
+      ><a name="805" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="808"
+      > </a
+      ><a name="809" href="cw.cohomology.GridLongExactSequence.html#198" class="Bound"
+      >i</a
+      ><a name="810"
+      >
+  </a
+      ><a name="813" href="cw.cohomology.GridLongExactSequence.html#800" class="Function"
+      >&#8857;E</a
+      ><a name="815"
+      > </a
+      ><a name="816" class="Symbol"
+      >=</a
+      ><a name="817"
+      > </a
+      ><a name="818" href="lib.types.Cofiber.html#1552" class="Function"
+      >&#8857;Cofiber</a
+      ><a name="826"
+      > </a
+      ><a name="827" class="Symbol"
+      >(</a
+      ><a name="828" href="lib.types.Pushout.html#3528" class="Function"
+      >&#8857;left</a
+      ><a name="833"
+      > </a
+      ><a name="834" href="cw.cohomology.GridLongExactSequence.html#593" class="Function"
+      >&#8857;D-span</a
+      ><a name="841" class="Symbol"
+      >)</a
+      ><a name="842"
+      >
+
+  </a
+      ><a name="846" href="cw.cohomology.GridLongExactSequence.html#846" class="Function"
+      >Z/Y-to-E</a
+      ><a name="854"
+      > </a
+      ><a name="855" class="Symbol"
+      >:</a
+      ><a name="856"
+      > </a
+      ><a name="857" href="cw.cohomology.GridPtdMap.html#280" class="Function"
+      >Z/Y</a
+      ><a name="860"
+      > </a
+      ><a name="861" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="863"
+      > </a
+      ><a name="864" href="cw.cohomology.GridLongExactSequence.html#800" class="Function"
+      >&#8857;E</a
+      ><a name="866"
+      >
+  </a
+      ><a name="869" href="cw.cohomology.GridLongExactSequence.html#846" class="Function"
+      >Z/Y-to-E</a
+      ><a name="877"
+      > </a
+      ><a name="878" class="Symbol"
+      >=</a
+      ><a name="879"
+      > </a
+      ><a name="880" href="cw.cohomology.CofiberGrid.html#1121" class="Function"
+      >C/B-to-E</a
+      ><a name="888"
+      > </a
+      ><a name="889" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="890"
+      > </a
+      ><a name="891" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="894"
+      >
+
+  </a
+      ><a name="898" href="cw.cohomology.GridLongExactSequence.html#898" class="Function"
+      >Z/X-to-D</a
+      ><a name="906"
+      > </a
+      ><a name="907" class="Symbol"
+      >:</a
+      ><a name="908"
+      > </a
+      ><a name="909" href="cw.cohomology.GridPtdMap.html#254" class="Function"
+      >Z/X</a
+      ><a name="912"
+      > </a
+      ><a name="913" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="915"
+      > </a
+      ><a name="916" href="cw.cohomology.GridLongExactSequence.html#652" class="Function"
+      >&#8857;D</a
+      ><a name="918"
+      >
+  </a
+      ><a name="921" href="cw.cohomology.GridLongExactSequence.html#898" class="Function"
+      >Z/X-to-D</a
+      ><a name="929"
+      > </a
+      ><a name="930" class="Symbol"
+      >=</a
+      ><a name="931"
+      > </a
+      ><a name="932" href="cw.cohomology.CofiberGrid.html#869" class="Function"
+      >C/A-to-D</a
+      ><a name="940"
+      > </a
+      ><a name="941" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="942"
+      > </a
+      ><a name="943" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="946"
+      >
+
+</a
+      ><a name="948" href="cw.cohomology.GridLongExactSequence.html#948" class="Function"
+      >grid-co&#8706;</a
+      ><a name="956"
+      > </a
+      ><a name="957" class="Symbol"
+      >:</a
+      ><a name="958"
+      > </a
+      ><a name="959" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="960"
+      > </a
+      ><a name="961" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="962"
+      > </a
+      ><a name="963" href="cw.cohomology.GridPtdMap.html#235" class="Function"
+      >Y/X</a
+      ><a name="966"
+      > </a
+      ><a name="967" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="969"
+      > </a
+      ><a name="970" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="971"
+      > </a
+      ><a name="972" class="Symbol"
+      >(</a
+      ><a name="973" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="977"
+      > </a
+      ><a name="978" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="979" class="Symbol"
+      >)</a
+      ><a name="980"
+      > </a
+      ><a name="981" href="cw.cohomology.GridPtdMap.html#280" class="Function"
+      >Z/Y</a
+      ><a name="984"
+      >
+</a
+      ><a name="985" href="cw.cohomology.GridLongExactSequence.html#948" class="Function"
+      >grid-co&#8706;</a
+      ><a name="993"
+      > </a
+      ><a name="994" class="Symbol"
+      >=</a
+      ><a name="995"
+      > </a
+      ><a name="996" class="Keyword"
+      >record</a
+      ><a name="1002"
+      > </a
+      ><a name="1003" class="Symbol"
+      >{</a
+      ><a name="1004" class="Field"
+      >f</a
+      ><a name="1005"
+      > </a
+      ><a name="1006" class="Symbol"
+      >=</a
+      ><a name="1007"
+      > </a
+      ><a name="1008" href="cohomology.Theory.html#718" class="Function"
+      >CEl-fmap</a
+      ><a name="1016"
+      > </a
+      ><a name="1017" class="Symbol"
+      >(</a
+      ><a name="1018" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1022"
+      > </a
+      ><a name="1023" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1024" class="Symbol"
+      >)</a
+      ><a name="1025"
+      > </a
+      ><a name="1026" href="cw.cohomology.GridLongExactSequence.html#846" class="Function"
+      >Z/Y-to-E</a
+      ><a name="1034"
+      > </a
+      ><a name="1035" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1036"
+      > </a
+      ><a name="1037" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="1047"
+      > </a
+      ><a name="1048" href="cohomology.LongExactSequence.html#368" class="Function"
+      >co&#8706;</a
+      ><a name="1051"
+      > </a
+      ><a name="1052" class="Symbol"
+      >;</a
+      ><a name="1053"
+      > </a
+      ><a name="1054" class="Field"
+      >pres-comp</a
+      ><a name="1063"
+      > </a
+      ><a name="1064" class="Symbol"
+      >=</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" href="cw.cohomology.GridLongExactSequence.html#1090" class="Function"
+      >lemma</a
+      ><a name="1071" class="Symbol"
+      >}</a
+      ><a name="1072"
+      > </a
+      ><a name="1073" class="Keyword"
+      >where</a
+      ><a name="1078"
+      >
+  </a
+      ><a name="1081" class="Keyword"
+      >abstract</a
+      ><a name="1089"
+      > </a
+      ><a name="1090" href="cw.cohomology.GridLongExactSequence.html#1090" class="Function"
+      >lemma</a
+      ><a name="1095"
+      > </a
+      ><a name="1096" class="Symbol"
+      >=</a
+      ><a name="1097"
+      > </a
+      ><a name="1098" href="lib.groups.Homomorphism.html#4739" class="Function"
+      >&#8728;-pres-comp</a
+      ><a name="1109"
+      > </a
+      ><a name="1110" class="Symbol"
+      >(</a
+      ><a name="1111" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1117"
+      > </a
+      ><a name="1118" class="Symbol"
+      >(</a
+      ><a name="1119" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1123"
+      > </a
+      ><a name="1124" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1125" class="Symbol"
+      >)</a
+      ><a name="1126"
+      > </a
+      ><a name="1127" href="cw.cohomology.GridLongExactSequence.html#846" class="Function"
+      >Z/Y-to-E</a
+      ><a name="1135" class="Symbol"
+      >)</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" href="cohomology.LongExactSequence.html#368" class="Function"
+      >co&#8706;</a
+      ><a name="1140"
+      >
+
+</a
+      ><a name="1142" href="cw.cohomology.GridLongExactSequence.html#1142" class="Function"
+      >C-grid-cofiber-seq</a
+      ><a name="1160"
+      > </a
+      ><a name="1161" class="Symbol"
+      >:</a
+      ><a name="1162"
+      > </a
+      ><a name="1163" href="groups.HomSequence.html#131" class="Datatype"
+      >HomSequence</a
+      ><a name="1174"
+      > </a
+      ><a name="1175" class="Symbol"
+      >(</a
+      ><a name="1176" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1177"
+      > </a
+      ><a name="1178" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1179"
+      > </a
+      ><a name="1180" href="cw.cohomology.GridPtdMap.html#254" class="Function"
+      >Z/X</a
+      ><a name="1183" class="Symbol"
+      >)</a
+      ><a name="1184"
+      > </a
+      ><a name="1185" class="Symbol"
+      >(</a
+      ><a name="1186" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1187"
+      > </a
+      ><a name="1188" class="Symbol"
+      >(</a
+      ><a name="1189" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1195" class="Symbol"
+      >)</a
+      ><a name="1196"
+      > </a
+      ><a name="1197" href="cw.cohomology.GridPtdMap.html#235" class="Function"
+      >Y/X</a
+      ><a name="1200" class="Symbol"
+      >)</a
+      ><a name="1201"
+      >
+</a
+      ><a name="1202" href="cw.cohomology.GridLongExactSequence.html#1142" class="Function"
+      >C-grid-cofiber-seq</a
+      ><a name="1220"
+      > </a
+      ><a name="1221" class="Symbol"
+      >=</a
+      ><a name="1222"
+      >
+  </a
+      ><a name="1225" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1226"
+      > </a
+      ><a name="1227" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1228"
+      > </a
+      ><a name="1229" href="cw.cohomology.GridPtdMap.html#254" class="Function"
+      >Z/X</a
+      ><a name="1232"
+      >         </a
+      ><a name="1241" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="1243"
+      > </a
+      ><a name="1244" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1250"
+      > </a
+      ><a name="1251" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" href="cw.cohomology.GridPtdMap.html#300" class="Function"
+      >Y/X-to-Z/X</a
+      ><a name="1263"
+      >        </a
+      ><a name="1271" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="1273"
+      >
+  </a
+      ><a name="1276" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1277"
+      > </a
+      ><a name="1278" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1279"
+      > </a
+      ><a name="1280" href="cw.cohomology.GridPtdMap.html#235" class="Function"
+      >Y/X</a
+      ><a name="1283"
+      >         </a
+      ><a name="1292" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="1294"
+      > </a
+      ><a name="1295" href="cw.cohomology.GridLongExactSequence.html#948" class="Function"
+      >grid-co&#8706;</a
+      ><a name="1303"
+      >                   </a
+      ><a name="1322" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="1324"
+      >
+  </a
+      ><a name="1327" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1328"
+      > </a
+      ><a name="1329" class="Symbol"
+      >(</a
+      ><a name="1330" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1334"
+      > </a
+      ><a name="1335" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1336" class="Symbol"
+      >)</a
+      ><a name="1337"
+      > </a
+      ><a name="1338" href="cw.cohomology.GridPtdMap.html#280" class="Function"
+      >Z/Y</a
+      ><a name="1341"
+      >  </a
+      ><a name="1343" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="1345"
+      > </a
+      ><a name="1346" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1352"
+      > </a
+      ><a name="1353" class="Symbol"
+      >(</a
+      ><a name="1354" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1358"
+      > </a
+      ><a name="1359" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1360" class="Symbol"
+      >)</a
+      ><a name="1361"
+      > </a
+      ><a name="1362" href="cw.cohomology.GridPtdMap.html#359" class="Function"
+      >Z/X-to-Z/Y</a
+      ><a name="1372"
+      > </a
+      ><a name="1373" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="1375"
+      >
+  </a
+      ><a name="1378" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1379"
+      > </a
+      ><a name="1380" class="Symbol"
+      >(</a
+      ><a name="1381" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1385"
+      > </a
+      ><a name="1386" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1387" class="Symbol"
+      >)</a
+      ><a name="1388"
+      > </a
+      ><a name="1389" href="cw.cohomology.GridPtdMap.html#254" class="Function"
+      >Z/X</a
+      ><a name="1392"
+      >  </a
+      ><a name="1394" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="1396"
+      > </a
+      ><a name="1397" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1403"
+      > </a
+      ><a name="1404" class="Symbol"
+      >(</a
+      ><a name="1405" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1409"
+      > </a
+      ><a name="1410" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1411" class="Symbol"
+      >)</a
+      ><a name="1412"
+      > </a
+      ><a name="1413" href="cw.cohomology.GridPtdMap.html#300" class="Function"
+      >Y/X-to-Z/X</a
+      ><a name="1423"
+      > </a
+      ><a name="1424" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="1426"
+      >
+  </a
+      ><a name="1429" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1430"
+      > </a
+      ><a name="1431" class="Symbol"
+      >(</a
+      ><a name="1432" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1438" class="Symbol"
+      >)</a
+      ><a name="1439"
+      > </a
+      ><a name="1440" href="cw.cohomology.GridPtdMap.html#235" class="Function"
+      >Y/X</a
+      ><a name="1443"
+      >  </a
+      ><a name="1445" href="groups.HomSequence.html#202" class="InductiveConstructor Operator"
+      >&#8867;|&#7475;</a
+      ><a name="1448"
+      >
+
+</a
+      ><a name="1450" class="Keyword"
+      >private</a
+      ><a name="1457"
+      >
+  </a
+      ><a name="1460" href="cw.cohomology.GridLongExactSequence.html#1460" class="Function"
+      >C-cofiber-seq-to-C-grid-cofiber-seq</a
+      ><a name="1495"
+      > </a
+      ><a name="1496" class="Symbol"
+      >:</a
+      ><a name="1497"
+      >
+    </a
+      ><a name="1502" href="groups.HomSequence.html#740" class="Datatype"
+      >HomSeqMap</a
+      ><a name="1511"
+      > </a
+      ><a name="1512" href="cohomology.LongExactSequence.html#603" class="Function"
+      >C-cofiber-seq</a
+      ><a name="1525"
+      > </a
+      ><a name="1526" href="cw.cohomology.GridLongExactSequence.html#1142" class="Function"
+      >C-grid-cofiber-seq</a
+      ><a name="1544"
+      >
+      </a
+      ><a name="1551" class="Symbol"
+      >(</a
+      ><a name="1552" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1558"
+      > </a
+      ><a name="1559" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1560"
+      > </a
+      ><a name="1561" href="cw.cohomology.GridLongExactSequence.html#898" class="Function"
+      >Z/X-to-D</a
+      ><a name="1569" class="Symbol"
+      >)</a
+      ><a name="1570"
+      > </a
+      ><a name="1571" class="Symbol"
+      >(</a
+      ><a name="1572" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="1577"
+      > </a
+      ><a name="1578" class="Symbol"
+      >_)</a
+      ><a name="1580"
+      >
+  </a
+      ><a name="1583" href="cw.cohomology.GridLongExactSequence.html#1460" class="Function"
+      >C-cofiber-seq-to-C-grid-cofiber-seq</a
+      ><a name="1618"
+      > </a
+      ><a name="1619" class="Symbol"
+      >=</a
+      ><a name="1620"
+      >
+    </a
+      ><a name="1625" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1631"
+      > </a
+      ><a name="1632" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1633"
+      > </a
+      ><a name="1634" href="cw.cohomology.GridLongExactSequence.html#898" class="Function"
+      >Z/X-to-D</a
+      ><a name="1642"
+      >         </a
+      ><a name="1651" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#8595;&#10216;</a
+      ><a name="1653"
+      > </a
+      ><a name="1654" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="1663"
+      > </a
+      ><a name="1664" class="Symbol"
+      >(&#955;</a
+      ><a name="1666"
+      > </a
+      ><a name="1667" href="cw.cohomology.GridLongExactSequence.html#1667" class="Bound"
+      >d</a
+      ><a name="1668"
+      > </a
+      ><a name="1669" class="Symbol"
+      >&#8594;</a
+      ><a name="1670"
+      > </a
+      ><a name="1671" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1672"
+      > </a
+      ><a name="1673" class="Symbol"
+      >(</a
+      ><a name="1674" href="cohomology.Theory.html#836" class="Function"
+      >C-fmap-idf</a
+      ><a name="1684"
+      > </a
+      ><a name="1685" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1686"
+      > </a
+      ><a name="1687" class="Symbol"
+      >_)</a
+      ><a name="1689"
+      >
+                                                </a
+      ><a name="1738" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1739"
+      > </a
+      ><a name="1740" class="Symbol"
+      >(</a
+      ><a name="1741" href="cohomology.PtdMapSequence.html#559" class="Function"
+      >C-comm-square</a
+      ><a name="1754"
+      > </a
+      ><a name="1755" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" href="cw.cohomology.CofiberGrid.html#2460" class="Function"
+      >B/A-to-C/A-comm-square</a
+      ><a name="1779"
+      > </a
+      ><a name="1780" href="lib.groups.CommutingSquare.html#618" class="Function Operator"
+      >&#9633;$&#7475;</a
+      ><a name="1783"
+      > </a
+      ><a name="1784" href="cw.cohomology.GridLongExactSequence.html#1667" class="Bound"
+      >d</a
+      ><a name="1785" class="Symbol"
+      >))</a
+      ><a name="1787"
+      > </a
+      ><a name="1788" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="1790"
+      >
+    </a
+      ><a name="1795" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="1800"
+      > </a
+      ><a name="1801" class="Symbol"
+      >_</a
+      ><a name="1802"
+      >                   </a
+      ><a name="1821" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#8595;&#10216;</a
+      ><a name="1823"
+      > </a
+      ><a name="1824" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="1833"
+      > </a
+      ><a name="1834" class="Symbol"
+      >(&#955;</a
+      ><a name="1836"
+      > </a
+      ><a name="1837" href="cw.cohomology.GridLongExactSequence.html#1837" class="Bound"
+      >_</a
+      ><a name="1838"
+      > </a
+      ><a name="1839" class="Symbol"
+      >&#8594;</a
+      ><a name="1840"
+      > </a
+      ><a name="1841" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1844" class="Symbol"
+      >)</a
+      ><a name="1845"
+      > </a
+      ><a name="1846" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="1848"
+      >
+    </a
+      ><a name="1853" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1859"
+      > </a
+      ><a name="1860" class="Symbol"
+      >(</a
+      ><a name="1861" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1865"
+      > </a
+      ><a name="1866" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1867" class="Symbol"
+      >)</a
+      ><a name="1868"
+      > </a
+      ><a name="1869" href="cw.cohomology.GridLongExactSequence.html#846" class="Function"
+      >Z/Y-to-E</a
+      ><a name="1877"
+      >  </a
+      ><a name="1879" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#8595;&#10216;</a
+      ><a name="1881"
+      > </a
+      ><a name="1882" href="cohomology.PtdMapSequence.html#559" class="Function"
+      >C-comm-square</a
+      ><a name="1895"
+      > </a
+      ><a name="1896" class="Symbol"
+      >(</a
+      ><a name="1897" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1901"
+      > </a
+      ><a name="1902" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1903" class="Symbol"
+      >)</a
+      ><a name="1904"
+      > </a
+      ><a name="1905" href="cw.cohomology.CofiberGrid.html#2235" class="Function"
+      >C/A-to-C/B-comm-square</a
+      ><a name="1927"
+      > </a
+      ><a name="1928" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="1930"
+      >
+    </a
+      ><a name="1935" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1941"
+      > </a
+      ><a name="1942" class="Symbol"
+      >(</a
+      ><a name="1943" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1947"
+      > </a
+      ><a name="1948" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="1949" class="Symbol"
+      >)</a
+      ><a name="1950"
+      > </a
+      ><a name="1951" href="cw.cohomology.GridLongExactSequence.html#898" class="Function"
+      >Z/X-to-D</a
+      ><a name="1959"
+      >  </a
+      ><a name="1961" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#8595;&#10216;</a
+      ><a name="1963"
+      > </a
+      ><a name="1964" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="1973"
+      > </a
+      ><a name="1974" class="Symbol"
+      >(&#955;</a
+      ><a name="1976"
+      > </a
+      ><a name="1977" href="cw.cohomology.GridLongExactSequence.html#1977" class="Bound"
+      >d</a
+      ><a name="1978"
+      > </a
+      ><a name="1979" class="Symbol"
+      >&#8594;</a
+      ><a name="1980"
+      > </a
+      ><a name="1981" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1982"
+      > </a
+      ><a name="1983" class="Symbol"
+      >(</a
+      ><a name="1984" href="cohomology.Theory.html#836" class="Function"
+      >C-fmap-idf</a
+      ><a name="1994"
+      > </a
+      ><a name="1995" class="Symbol"
+      >(</a
+      ><a name="1996" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="2000"
+      > </a
+      ><a name="2001" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="2002" class="Symbol"
+      >)</a
+      ><a name="2003"
+      > </a
+      ><a name="2004" class="Symbol"
+      >_)</a
+      ><a name="2006"
+      >
+                                                </a
+      ><a name="2055" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2056"
+      > </a
+      ><a name="2057" class="Symbol"
+      >(</a
+      ><a name="2058" href="cohomology.PtdMapSequence.html#559" class="Function"
+      >C-comm-square</a
+      ><a name="2071"
+      > </a
+      ><a name="2072" class="Symbol"
+      >(</a
+      ><a name="2073" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="2077"
+      > </a
+      ><a name="2078" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="2079" class="Symbol"
+      >)</a
+      ><a name="2080"
+      > </a
+      ><a name="2081" href="cw.cohomology.CofiberGrid.html#2460" class="Function"
+      >B/A-to-C/A-comm-square</a
+      ><a name="2103"
+      > </a
+      ><a name="2104" href="lib.groups.CommutingSquare.html#618" class="Function Operator"
+      >&#9633;$&#7475;</a
+      ><a name="2107"
+      > </a
+      ><a name="2108" href="cw.cohomology.GridLongExactSequence.html#1977" class="Bound"
+      >d</a
+      ><a name="2109" class="Symbol"
+      >))</a
+      ><a name="2111"
+      > </a
+      ><a name="2112" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="2114"
+      >
+    </a
+      ><a name="2119" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="2124"
+      > </a
+      ><a name="2125" class="Symbol"
+      >_</a
+      ><a name="2126"
+      >                   </a
+      ><a name="2145" href="groups.HomSequence.html#904" class="InductiveConstructor Operator"
+      >&#8595;|&#7475;</a
+      ><a name="2148"
+      >
+
+  </a
+      ><a name="2152" href="cw.cohomology.GridLongExactSequence.html#2152" class="Function"
+      >C-cofiber-seq-equiv-C-grid-cofiber-seq</a
+      ><a name="2190"
+      > </a
+      ><a name="2191" class="Symbol"
+      >:</a
+      ><a name="2192"
+      >
+    </a
+      ><a name="2197" href="groups.HomSequence.html#3896" class="Function"
+      >HomSeqEquiv</a
+      ><a name="2208"
+      > </a
+      ><a name="2209" href="cohomology.LongExactSequence.html#603" class="Function"
+      >C-cofiber-seq</a
+      ><a name="2222"
+      > </a
+      ><a name="2223" href="cw.cohomology.GridLongExactSequence.html#1142" class="Function"
+      >C-grid-cofiber-seq</a
+      ><a name="2241"
+      >
+      </a
+      ><a name="2248" class="Symbol"
+      >(</a
+      ><a name="2249" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="2255"
+      > </a
+      ><a name="2256" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="2257"
+      > </a
+      ><a name="2258" href="cw.cohomology.GridLongExactSequence.html#898" class="Function"
+      >Z/X-to-D</a
+      ><a name="2266" class="Symbol"
+      >)</a
+      ><a name="2267"
+      > </a
+      ><a name="2268" class="Symbol"
+      >(</a
+      ><a name="2269" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="2274"
+      > </a
+      ><a name="2275" class="Symbol"
+      >_)</a
+      ><a name="2277"
+      >
+  </a
+      ><a name="2280" href="cw.cohomology.GridLongExactSequence.html#2152" class="Function"
+      >C-cofiber-seq-equiv-C-grid-cofiber-seq</a
+      ><a name="2318"
+      > </a
+      ><a name="2319" class="Symbol"
+      >=</a
+      ><a name="2320"
+      >
+    </a
+      ><a name="2325" href="cw.cohomology.GridLongExactSequence.html#1460" class="Function"
+      >C-cofiber-seq-to-C-grid-cofiber-seq</a
+      ><a name="2360"
+      > </a
+      ><a name="2361" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2362"
+      >
+      </a
+      ><a name="2369" href="cohomology.Theory.html#3449" class="Function"
+      >CEl-isemap</a
+      ><a name="2379"
+      > </a
+      ><a name="2380" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="2381"
+      > </a
+      ><a name="2382" href="cw.cohomology.GridLongExactSequence.html#898" class="Function"
+      >Z/X-to-D</a
+      ><a name="2390"
+      > </a
+      ><a name="2391" href="cw.cohomology.CofiberGrid.html#2593" class="Function"
+      >C/A-to-D-is-equiv</a
+      ><a name="2408"
+      > </a
+      ><a name="2409" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2410"
+      >
+      </a
+      ><a name="2417" href="lib.Equivalence.html#5614" class="Function"
+      >idf-is-equiv</a
+      ><a name="2429"
+      > </a
+      ><a name="2430" class="Symbol"
+      >_</a
+      ><a name="2431"
+      > </a
+      ><a name="2432" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2433"
+      >
+      </a
+      ><a name="2440" href="cohomology.Theory.html#3449" class="Function"
+      >CEl-isemap</a
+      ><a name="2450"
+      > </a
+      ><a name="2451" class="Symbol"
+      >(</a
+      ><a name="2452" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="2456"
+      > </a
+      ><a name="2457" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="2458" class="Symbol"
+      >)</a
+      ><a name="2459"
+      > </a
+      ><a name="2460" href="cw.cohomology.GridLongExactSequence.html#846" class="Function"
+      >Z/Y-to-E</a
+      ><a name="2468"
+      > </a
+      ><a name="2469" href="cw.cohomology.CofiberGrid.html#2679" class="Function"
+      >C/B-to-E-is-equiv</a
+      ><a name="2486"
+      > </a
+      ><a name="2487" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2488"
+      >
+      </a
+      ><a name="2495" href="cohomology.Theory.html#3449" class="Function"
+      >CEl-isemap</a
+      ><a name="2505"
+      > </a
+      ><a name="2506" class="Symbol"
+      >(</a
+      ><a name="2507" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="2511"
+      > </a
+      ><a name="2512" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="2513" class="Symbol"
+      >)</a
+      ><a name="2514"
+      > </a
+      ><a name="2515" href="cw.cohomology.GridLongExactSequence.html#898" class="Function"
+      >Z/X-to-D</a
+      ><a name="2523"
+      > </a
+      ><a name="2524" href="cw.cohomology.CofiberGrid.html#2593" class="Function"
+      >C/A-to-D-is-equiv</a
+      ><a name="2541"
+      > </a
+      ><a name="2542" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2543"
+      >
+      </a
+      ><a name="2550" href="lib.Equivalence.html#5614" class="Function"
+      >idf-is-equiv</a
+      ><a name="2562"
+      > </a
+      ><a name="2563" class="Symbol"
+      >_</a
+      ><a name="2564"
+      >
+
+</a
+      ><a name="2566" class="Keyword"
+      >abstract</a
+      ><a name="2574"
+      >
+  </a
+      ><a name="2577" href="cw.cohomology.GridLongExactSequence.html#2577" class="Function"
+      >C-grid-cofiber-seq-is-exact</a
+      ><a name="2604"
+      > </a
+      ><a name="2605" class="Symbol"
+      >:</a
+      ><a name="2606"
+      > </a
+      ><a name="2607" href="groups.ExactSequence.html#114" class="Function"
+      >is-exact-seq</a
+      ><a name="2619"
+      > </a
+      ><a name="2620" href="cw.cohomology.GridLongExactSequence.html#1142" class="Function"
+      >C-grid-cofiber-seq</a
+      ><a name="2638"
+      >
+  </a
+      ><a name="2641" href="cw.cohomology.GridLongExactSequence.html#2577" class="Function"
+      >C-grid-cofiber-seq-is-exact</a
+      ><a name="2668"
+      > </a
+      ><a name="2669" class="Symbol"
+      >=</a
+      ><a name="2670"
+      > </a
+      ><a name="2671" href="groups.ExactSequence.html#497" class="Function"
+      >seq-equiv-preserves-exact</a
+      ><a name="2696"
+      >
+    </a
+      ><a name="2701" href="cw.cohomology.GridLongExactSequence.html#2152" class="Function"
+      >C-cofiber-seq-equiv-C-grid-cofiber-seq</a
+      ><a name="2739"
+      > </a
+      ><a name="2740" href="cohomology.LongExactSequence.html#2431" class="Function"
+      >C-cofiber-seq-is-exact</a
+      ><a name="2762"
+      >
+
+</a
+      ><a name="2764" href="cw.cohomology.GridLongExactSequence.html#2764" class="Function"
+      >C-grid-cofiber-exact-seq</a
+      ><a name="2788"
+      > </a
+      ><a name="2789" class="Symbol"
+      >:</a
+      ><a name="2790"
+      > </a
+      ><a name="2791" href="groups.ExactSequence.html#338" class="Function"
+      >ExactSequence</a
+      ><a name="2804"
+      > </a
+      ><a name="2805" class="Symbol"
+      >(</a
+      ><a name="2806" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2807"
+      > </a
+      ><a name="2808" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="2809"
+      > </a
+      ><a name="2810" href="cw.cohomology.GridPtdMap.html#254" class="Function"
+      >Z/X</a
+      ><a name="2813" class="Symbol"
+      >)</a
+      ><a name="2814"
+      > </a
+      ><a name="2815" class="Symbol"
+      >(</a
+      ><a name="2816" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2817"
+      > </a
+      ><a name="2818" class="Symbol"
+      >(</a
+      ><a name="2819" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="2823"
+      > </a
+      ><a name="2824" href="cw.cohomology.GridLongExactSequence.html#246" class="Bound"
+      >n</a
+      ><a name="2825" class="Symbol"
+      >)</a
+      ><a name="2826"
+      > </a
+      ><a name="2827" href="cw.cohomology.GridPtdMap.html#235" class="Function"
+      >Y/X</a
+      ><a name="2830" class="Symbol"
+      >)</a
+      ><a name="2831"
+      >
+</a
+      ><a name="2832" href="cw.cohomology.GridLongExactSequence.html#2764" class="Function"
+      >C-grid-cofiber-exact-seq</a
+      ><a name="2856"
+      > </a
+      ><a name="2857" class="Symbol"
+      >=</a
+      ><a name="2858"
+      > </a
+      ><a name="2859" href="cw.cohomology.GridLongExactSequence.html#1142" class="Function"
+      >C-grid-cofiber-seq</a
+      ><a name="2877"
+      > </a
+      ><a name="2878" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2879"
+      > </a
+      ><a name="2880" href="cw.cohomology.GridLongExactSequence.html#2577" class="Function"
+      >C-grid-cofiber-seq-is-exact</a
+      ><a name="2907"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

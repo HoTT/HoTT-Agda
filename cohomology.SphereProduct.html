@@ -1,0 +1,1377 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cohomology.SphereProduct</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="homotopy.SuspProduct.html#1" class="Module"
+      >homotopy.SuspProduct</a
+      ><a name="91"
+      >
+</a
+      ><a name="92" class="Keyword"
+      >open</a
+      ><a name="96"
+      > </a
+      ><a name="97" class="Keyword"
+      >import</a
+      ><a name="103"
+      > </a
+      ><a name="104" href="homotopy.SuspSmash.html#1" class="Module"
+      >homotopy.SuspSmash</a
+      ><a name="122"
+      >
+</a
+      ><a name="123" class="Keyword"
+      >open</a
+      ><a name="127"
+      > </a
+      ><a name="128" class="Keyword"
+      >import</a
+      ><a name="134"
+      > </a
+      ><a name="135" href="homotopy.JoinSusp.html#1" class="Module"
+      >homotopy.JoinSusp</a
+      ><a name="152"
+      >
+</a
+      ><a name="153" class="Keyword"
+      >open</a
+      ><a name="157"
+      > </a
+      ><a name="158" class="Keyword"
+      >import</a
+      ><a name="164"
+      > </a
+      ><a name="165" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="182"
+      >
+
+</a
+      ><a name="184" class="Keyword"
+      >module</a
+      ><a name="190"
+      > </a
+      ><a name="191" href="cohomology.SphereProduct.html#1" class="Module"
+      >cohomology.SphereProduct</a
+      ><a name="215"
+      > </a
+      ><a name="216" class="Symbol"
+      >{</a
+      ><a name="217" href="cohomology.SphereProduct.html#217" class="Bound"
+      >i</a
+      ><a name="218" class="Symbol"
+      >}</a
+      ><a name="219"
+      > </a
+      ><a name="220" class="Symbol"
+      >(</a
+      ><a name="221" href="cohomology.SphereProduct.html#221" class="Bound"
+      >CT</a
+      ><a name="223"
+      > </a
+      ><a name="224" class="Symbol"
+      >:</a
+      ><a name="225"
+      > </a
+      ><a name="226" href="cohomology.Theory.html#173" class="Record"
+      >CohomologyTheory</a
+      ><a name="242"
+      > </a
+      ><a name="243" href="cohomology.SphereProduct.html#217" class="Bound"
+      >i</a
+      ><a name="244" class="Symbol"
+      >)</a
+      ><a name="245"
+      >
+  </a
+      ><a name="248" class="Symbol"
+      >(</a
+      ><a name="249" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="250"
+      > </a
+      ><a name="251" class="Symbol"
+      >:</a
+      ><a name="252"
+      > </a
+      ><a name="253" href="lib.types.Int.html#154" class="Datatype"
+      >&#8484;</a
+      ><a name="254" class="Symbol"
+      >)</a
+      ><a name="255"
+      > </a
+      ><a name="256" class="Symbol"
+      >(</a
+      ><a name="257" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="258"
+      > </a
+      ><a name="259" class="Symbol"
+      >:</a
+      ><a name="260"
+      > </a
+      ><a name="261" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="262" class="Symbol"
+      >)</a
+      ><a name="263"
+      > </a
+      ><a name="264" class="Symbol"
+      >(</a
+      ><a name="265" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="266"
+      > </a
+      ><a name="267" class="Symbol"
+      >:</a
+      ><a name="268"
+      > </a
+      ><a name="269" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="272"
+      > </a
+      ><a name="273" href="cohomology.SphereProduct.html#217" class="Bound"
+      >i</a
+      ><a name="274" class="Symbol"
+      >)</a
+      ><a name="275"
+      > </a
+      ><a name="276" class="Keyword"
+      >where</a
+      ><a name="281"
+      >
+
+  </a
+      ><a name="285" class="Keyword"
+      >open</a
+      ><a name="289"
+      > </a
+      ><a name="290" href="cohomology.Theory.html#173" class="Module"
+      >CohomologyTheory</a
+      ><a name="306"
+      > </a
+      ><a name="307" href="cohomology.SphereProduct.html#221" class="Bound"
+      >CT</a
+      ><a name="309"
+      >
+  </a
+      ><a name="312" class="Keyword"
+      >open</a
+      ><a name="316"
+      > </a
+      ><a name="317" class="Keyword"
+      >import</a
+      ><a name="323"
+      > </a
+      ><a name="324" href="cohomology.Wedge.html#1" class="Module"
+      >cohomology.Wedge</a
+      ><a name="340"
+      > </a
+      ><a name="341" href="cohomology.SphereProduct.html#221" class="Bound"
+      >CT</a
+      ><a name="343"
+      >
+
+  </a
+      ><a name="347" class="Keyword"
+      >private</a
+      ><a name="354"
+      >
+    </a
+      ><a name="359" href="cohomology.SphereProduct.html#359" class="Function"
+      >space-eq</a
+      ><a name="367"
+      > </a
+      ><a name="368" class="Symbol"
+      >:</a
+      ><a name="369"
+      > </a
+      ><a name="370" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="375"
+      > </a
+      ><a name="376" class="Symbol"
+      >(</a
+      ><a name="377" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="384"
+      > </a
+      ><a name="385" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="386"
+      > </a
+      ><a name="387" href="lib.types.Sigma.html#331" class="Function Operator"
+      >&#8857;&#215;</a
+      ><a name="389"
+      > </a
+      ><a name="390" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="391" class="Symbol"
+      >)</a
+      ><a name="392"
+      >
+            </a
+      ><a name="405" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="407"
+      > </a
+      ><a name="408" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="415"
+      > </a
+      ><a name="416" class="Symbol"
+      >(</a
+      ><a name="417" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="418"
+      > </a
+      ><a name="419" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="420" class="Symbol"
+      >)</a
+      ><a name="421"
+      > </a
+      ><a name="422" href="lib.types.Wedge.html#956" class="Function Operator"
+      >&#8857;&#8744;</a
+      ><a name="424"
+      > </a
+      ><a name="425" class="Symbol"
+      >(</a
+      ><a name="426" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="431"
+      > </a
+      ><a name="432" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="433"
+      > </a
+      ><a name="434" href="lib.types.Wedge.html#956" class="Function Operator"
+      >&#8857;&#8744;</a
+      ><a name="436"
+      > </a
+      ><a name="437" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="443"
+      > </a
+      ><a name="444" class="Symbol"
+      >(</a
+      ><a name="445" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="446"
+      > </a
+      ><a name="447" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="448" class="Symbol"
+      >)</a
+      ><a name="449"
+      > </a
+      ><a name="450" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="451" class="Symbol"
+      >)</a
+      ><a name="452"
+      >
+    </a
+      ><a name="457" href="cohomology.SphereProduct.html#359" class="Function"
+      >space-eq</a
+      ><a name="465"
+      > </a
+      ><a name="466" class="Symbol"
+      >=</a
+      ><a name="467"
+      >
+      </a
+      ><a name="474" href="lib.types.Wedge.html#4327" class="Function"
+      >&#8857;&#8744;-emap</a
+      ><a name="481"
+      > </a
+      ><a name="482" class="Symbol"
+      >(</a
+      ><a name="483" href="lib.Equivalence.html#13257" class="Function"
+      >&#8857;ide</a
+      ><a name="487"
+      > </a
+      ><a name="488" class="Symbol"
+      >(</a
+      ><a name="489" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="496"
+      > </a
+      ><a name="497" class="Symbol"
+      >(</a
+      ><a name="498" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="499"
+      > </a
+      ><a name="500" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="501" class="Symbol"
+      >)))</a
+      ><a name="504"
+      >
+        </a
+      ><a name="513" class="Symbol"
+      >(</a
+      ><a name="514" href="lib.types.Wedge.html#4327" class="Function"
+      >&#8857;&#8744;-emap</a
+      ><a name="521"
+      > </a
+      ><a name="522" class="Symbol"
+      >(</a
+      ><a name="523" href="lib.Equivalence.html#13257" class="Function"
+      >&#8857;ide</a
+      ><a name="527"
+      > </a
+      ><a name="528" class="Symbol"
+      >(</a
+      ><a name="529" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="534"
+      > </a
+      ><a name="535" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="536" class="Symbol"
+      >))</a
+      ><a name="538"
+      >
+          </a
+      ><a name="549" class="Symbol"
+      >(</a
+      ><a name="550" href="homotopy.JoinSusp.html#2046" class="Function"
+      >&#8857;*-Sphere-l</a
+      ><a name="561"
+      > </a
+      ><a name="562" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="563"
+      > </a
+      ><a name="564" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="565"
+      > </a
+      ><a name="566" href="lib.Equivalence.html#13349" class="Function Operator"
+      >&#8857;&#8728;e</a
+      ><a name="569"
+      > </a
+      ><a name="570" href="homotopy.SuspSmash.html#3498" class="Function"
+      >SuspSmash.&#8857;eq</a
+      ><a name="583"
+      > </a
+      ><a name="584" class="Symbol"
+      >(</a
+      ><a name="585" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="592"
+      > </a
+      ><a name="593" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="594" class="Symbol"
+      >)</a
+      ><a name="595"
+      > </a
+      ><a name="596" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="597" class="Symbol"
+      >))</a
+      ><a name="599"
+      >
+      </a
+      ><a name="606" href="lib.Equivalence.html#13349" class="Function Operator"
+      >&#8857;&#8728;e</a
+      ><a name="609"
+      > </a
+      ><a name="610" href="homotopy.SuspProduct.html#434" class="Function"
+      >SuspProduct.&#8857;eq</a
+      ><a name="625"
+      > </a
+      ><a name="626" class="Symbol"
+      >(</a
+      ><a name="627" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="634"
+      > </a
+      ><a name="635" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="636" class="Symbol"
+      >)</a
+      ><a name="637"
+      > </a
+      ><a name="638" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="639"
+      >
+
+  </a
+      ><a name="643" href="cohomology.SphereProduct.html#643" class="Function"
+      >C-Sphere&#215;</a
+      ><a name="652"
+      > </a
+      ><a name="653" class="Symbol"
+      >:</a
+      ><a name="654"
+      > </a
+      ><a name="655" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="656"
+      > </a
+      ><a name="657" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="658"
+      > </a
+      ><a name="659" class="Symbol"
+      >(</a
+      ><a name="660" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="667"
+      > </a
+      ><a name="668" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="669"
+      > </a
+      ><a name="670" href="lib.types.Sigma.html#331" class="Function Operator"
+      >&#8857;&#215;</a
+      ><a name="672"
+      > </a
+      ><a name="673" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="674" class="Symbol"
+      >)</a
+      ><a name="675"
+      >
+           </a
+      ><a name="687" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="689"
+      > </a
+      ><a name="690" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="691"
+      > </a
+      ><a name="692" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="693"
+      > </a
+      ><a name="694" class="Symbol"
+      >(</a
+      ><a name="695" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="700"
+      > </a
+      ><a name="701" class="Symbol"
+      >(</a
+      ><a name="702" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="709"
+      > </a
+      ><a name="710" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="711" class="Symbol"
+      >))</a
+      ><a name="713"
+      > </a
+      ><a name="714" href="lib.groups.GroupProduct.html#1359" class="Function Operator"
+      >&#215;&#7475;</a
+      ><a name="716"
+      > </a
+      ><a name="717" class="Symbol"
+      >(</a
+      ><a name="718" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="719"
+      > </a
+      ><a name="720" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="721"
+      > </a
+      ><a name="722" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="723"
+      > </a
+      ><a name="724" href="lib.groups.GroupProduct.html#1359" class="Function Operator"
+      >&#215;&#7475;</a
+      ><a name="726"
+      > </a
+      ><a name="727" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="728"
+      > </a
+      ><a name="729" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="730"
+      > </a
+      ><a name="731" class="Symbol"
+      >(</a
+      ><a name="732" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="738"
+      > </a
+      ><a name="739" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="740"
+      > </a
+      ><a name="741" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="742" class="Symbol"
+      >))</a
+      ><a name="744"
+      >
+  </a
+      ><a name="747" href="cohomology.SphereProduct.html#643" class="Function"
+      >C-Sphere&#215;</a
+      ><a name="756"
+      > </a
+      ><a name="757" class="Symbol"
+      >=</a
+      ><a name="758"
+      >
+    </a
+      ><a name="763" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="764"
+      > </a
+      ><a name="765" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="766"
+      > </a
+      ><a name="767" class="Symbol"
+      >(</a
+      ><a name="768" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="775"
+      > </a
+      ><a name="776" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="777"
+      > </a
+      ><a name="778" href="lib.types.Sigma.html#331" class="Function Operator"
+      >&#8857;&#215;</a
+      ><a name="780"
+      > </a
+      ><a name="781" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="782" class="Symbol"
+      >)</a
+      ><a name="783"
+      >
+      </a
+      ><a name="790" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="793"
+      > </a
+      ><a name="794" href="cohomology.Theory.html#1066" class="Function"
+      >C-Susp</a
+      ><a name="800"
+      > </a
+      ><a name="801" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="802"
+      > </a
+      ><a name="803" class="Symbol"
+      >(</a
+      ><a name="804" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="811"
+      > </a
+      ><a name="812" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="813"
+      > </a
+      ><a name="814" href="lib.types.Sigma.html#331" class="Function Operator"
+      >&#8857;&#215;</a
+      ><a name="816"
+      > </a
+      ><a name="817" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="818" class="Symbol"
+      >)</a
+      ><a name="819"
+      > </a
+      ><a name="820" href="lib.groups.Isomorphism.html#3359" class="Function Operator"
+      >&#8315;&#185;&#7475;</a
+      ><a name="823"
+      > </a
+      ><a name="824" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="825"
+      >
+    </a
+      ><a name="830" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="831"
+      > </a
+      ><a name="832" class="Symbol"
+      >(</a
+      ><a name="833" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="837"
+      > </a
+      ><a name="838" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="839" class="Symbol"
+      >)</a
+      ><a name="840"
+      > </a
+      ><a name="841" class="Symbol"
+      >(</a
+      ><a name="842" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="847"
+      > </a
+      ><a name="848" class="Symbol"
+      >(</a
+      ><a name="849" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="856"
+      > </a
+      ><a name="857" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="858"
+      > </a
+      ><a name="859" href="lib.types.Sigma.html#331" class="Function Operator"
+      >&#8857;&#215;</a
+      ><a name="861"
+      > </a
+      ><a name="862" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="863" class="Symbol"
+      >))</a
+      ><a name="865"
+      >
+      </a
+      ><a name="872" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="875"
+      > </a
+      ><a name="876" href="cohomology.Theory.html#3601" class="Function"
+      >C-emap</a
+      ><a name="882"
+      > </a
+      ><a name="883" class="Symbol"
+      >(</a
+      ><a name="884" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="888"
+      > </a
+      ><a name="889" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="890" class="Symbol"
+      >)</a
+      ><a name="891"
+      > </a
+      ><a name="892" class="Symbol"
+      >(</a
+      ><a name="893" href="cohomology.SphereProduct.html#359" class="Function"
+      >space-eq</a
+      ><a name="901"
+      > </a
+      ><a name="902" href="lib.types.Pointed.html#1860" class="Function Operator"
+      >&#8857;&#8315;&#185;</a
+      ><a name="905" class="Symbol"
+      >)</a
+      ><a name="906"
+      > </a
+      ><a name="907" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="908"
+      >
+    </a
+      ><a name="913" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="914"
+      > </a
+      ><a name="915" class="Symbol"
+      >(</a
+      ><a name="916" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="920"
+      > </a
+      ><a name="921" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="922" class="Symbol"
+      >)</a
+      ><a name="923"
+      > </a
+      ><a name="924" class="Symbol"
+      >(</a
+      ><a name="925" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="932"
+      > </a
+      ><a name="933" class="Symbol"
+      >(</a
+      ><a name="934" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="935"
+      > </a
+      ><a name="936" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="937" class="Symbol"
+      >)</a
+      ><a name="938"
+      > </a
+      ><a name="939" href="lib.types.Wedge.html#956" class="Function Operator"
+      >&#8857;&#8744;</a
+      ><a name="941"
+      > </a
+      ><a name="942" class="Symbol"
+      >(</a
+      ><a name="943" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="948"
+      > </a
+      ><a name="949" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="950"
+      > </a
+      ><a name="951" href="lib.types.Wedge.html#956" class="Function Operator"
+      >&#8857;&#8744;</a
+      ><a name="953"
+      > </a
+      ><a name="954" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="960"
+      > </a
+      ><a name="961" class="Symbol"
+      >(</a
+      ><a name="962" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="963"
+      > </a
+      ><a name="964" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="965" class="Symbol"
+      >)</a
+      ><a name="966"
+      > </a
+      ><a name="967" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="968" class="Symbol"
+      >))</a
+      ><a name="970"
+      >
+      </a
+      ><a name="977" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="980"
+      > </a
+      ><a name="981" href="cohomology.Theory.html#3601" class="Function"
+      >C-emap</a
+      ><a name="987"
+      > </a
+      ><a name="988" class="Symbol"
+      >(</a
+      ><a name="989" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="993"
+      > </a
+      ><a name="994" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="995" class="Symbol"
+      >)</a
+      ><a name="996"
+      > </a
+      ><a name="997" class="Symbol"
+      >(</a
+      ><a name="998" href="lib.types.Wedge.html#4327" class="Function"
+      >&#8857;&#8744;-emap</a
+      ><a name="1005"
+      > </a
+      ><a name="1006" class="Symbol"
+      >(</a
+      ><a name="1007" href="lib.types.Suspension.html#5455" class="Function"
+      >&#8857;Susp-emap</a
+      ><a name="1017"
+      > </a
+      ><a name="1018" class="Symbol"
+      >(</a
+      ><a name="1019" href="lib.types.Lift.html#732" class="Function"
+      >&#8857;lower-equiv</a
+      ><a name="1031"
+      > </a
+      ><a name="1032" class="Symbol"
+      >{</a
+      ><a name="1033" class="Argument"
+      >X</a
+      ><a name="1034"
+      > </a
+      ><a name="1035" class="Symbol"
+      >=</a
+      ><a name="1036"
+      > </a
+      ><a name="1037" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="1044"
+      > </a
+      ><a name="1045" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="1046" class="Symbol"
+      >}))</a
+      ><a name="1049"
+      > </a
+      ><a name="1050" class="Symbol"
+      >(</a
+      ><a name="1051" href="lib.Equivalence.html#13257" class="Function"
+      >&#8857;ide</a
+      ><a name="1055"
+      > </a
+      ><a name="1056" class="Symbol"
+      >_))</a
+      ><a name="1059"
+      > </a
+      ><a name="1060" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="1061"
+      >
+    </a
+      ><a name="1066" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1067"
+      > </a
+      ><a name="1068" class="Symbol"
+      >(</a
+      ><a name="1069" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1073"
+      > </a
+      ><a name="1074" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="1075" class="Symbol"
+      >)</a
+      ><a name="1076"
+      > </a
+      ><a name="1077" class="Symbol"
+      >(</a
+      ><a name="1078" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="1083"
+      > </a
+      ><a name="1084" class="Symbol"
+      >(</a
+      ><a name="1085" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="1090"
+      > </a
+      ><a name="1091" class="Symbol"
+      >{</a
+      ><a name="1092" class="Argument"
+      >j</a
+      ><a name="1093"
+      > </a
+      ><a name="1094" class="Symbol"
+      >=</a
+      ><a name="1095"
+      > </a
+      ><a name="1096" href="cohomology.SphereProduct.html#217" class="Bound"
+      >i</a
+      ><a name="1097" class="Symbol"
+      >}</a
+      ><a name="1098"
+      > </a
+      ><a name="1099" class="Symbol"
+      >(</a
+      ><a name="1100" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="1107"
+      > </a
+      ><a name="1108" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="1109" class="Symbol"
+      >))</a
+      ><a name="1111"
+      > </a
+      ><a name="1112" href="lib.types.Wedge.html#956" class="Function Operator"
+      >&#8857;&#8744;</a
+      ><a name="1114"
+      > </a
+      ><a name="1115" class="Symbol"
+      >(</a
+      ><a name="1116" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="1121"
+      > </a
+      ><a name="1122" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="1123"
+      > </a
+      ><a name="1124" href="lib.types.Wedge.html#956" class="Function Operator"
+      >&#8857;&#8744;</a
+      ><a name="1126"
+      > </a
+      ><a name="1127" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1133"
+      > </a
+      ><a name="1134" class="Symbol"
+      >(</a
+      ><a name="1135" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="1138" class="Symbol"
+      >)</a
+      ><a name="1139"
+      > </a
+      ><a name="1140" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="1141" class="Symbol"
+      >))</a
+      ><a name="1143"
+      >
+      </a
+      ><a name="1150" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="1153"
+      > </a
+      ><a name="1154" href="cohomology.Wedge.html#2074" class="Function"
+      >C-Wedge</a
+      ><a name="1161"
+      > </a
+      ><a name="1162" class="Symbol"
+      >(</a
+      ><a name="1163" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1167"
+      > </a
+      ><a name="1168" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="1169" class="Symbol"
+      >)</a
+      ><a name="1170"
+      > </a
+      ><a name="1171" class="Symbol"
+      >(</a
+      ><a name="1172" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="1177"
+      > </a
+      ><a name="1178" class="Symbol"
+      >(</a
+      ><a name="1179" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="1184"
+      > </a
+      ><a name="1185" class="Symbol"
+      >(</a
+      ><a name="1186" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="1195" class="Symbol"
+      >)))</a
+      ><a name="1198"
+      > </a
+      ><a name="1199" class="Symbol"
+      >(</a
+      ><a name="1200" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="1205"
+      > </a
+      ><a name="1206" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="1207"
+      > </a
+      ><a name="1208" href="lib.types.Wedge.html#956" class="Function Operator"
+      >&#8857;&#8744;</a
+      ><a name="1210"
+      > </a
+      ><a name="1211" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1217"
+      > </a
+      ><a name="1218" class="Symbol"
+      >(</a
+      ><a name="1219" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1220"
+      > </a
+      ><a name="1221" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="1222" class="Symbol"
+      >)</a
+      ><a name="1223"
+      > </a
+      ><a name="1224" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="1225" class="Symbol"
+      >)</a
+      ><a name="1226"
+      > </a
+      ><a name="1227" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="1228"
+      >
+    </a
+      ><a name="1233" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1234"
+      > </a
+      ><a name="1235" class="Symbol"
+      >(</a
+      ><a name="1236" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1240"
+      > </a
+      ><a name="1241" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="1242" class="Symbol"
+      >)</a
+      ><a name="1243"
+      > </a
+      ><a name="1244" class="Symbol"
+      >(</a
+      ><a name="1245" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="1250"
+      > </a
+      ><a name="1251" class="Symbol"
+      >(</a
+      ><a name="1252" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="1257"
+      > </a
+      ><a name="1258" class="Symbol"
+      >(</a
+      ><a name="1259" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="1266"
+      > </a
+      ><a name="1267" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="1268" class="Symbol"
+      >)))</a
+      ><a name="1271"
+      > </a
+      ><a name="1272" href="lib.groups.GroupProduct.html#1359" class="Function Operator"
+      >&#215;&#7475;</a
+      ><a name="1274"
+      > </a
+      ><a name="1275" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1276"
+      > </a
+      ><a name="1277" class="Symbol"
+      >(</a
+      ><a name="1278" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1282"
+      > </a
+      ><a name="1283" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="1284" class="Symbol"
+      >)</a
+      ><a name="1285"
+      > </a
+      ><a name="1286" class="Symbol"
+      >(</a
+      ><a name="1287" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="1292"
+      > </a
+      ><a name="1293" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="1294"
+      > </a
+      ><a name="1295" href="lib.types.Wedge.html#956" class="Function Operator"
+      >&#8857;&#8744;</a
+      ><a name="1297"
+      > </a
+      ><a name="1298" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1304"
+      > </a
+      ><a name="1305" class="Symbol"
+      >(</a
+      ><a name="1306" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="1309" class="Symbol"
+      >)</a
+      ><a name="1310"
+      > </a
+      ><a name="1311" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="1312" class="Symbol"
+      >)</a
+      ><a name="1313"
+      >
+      </a
+      ><a name="1320" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="1323"
+      > </a
+      ><a name="1324" href="lib.groups.GroupProduct.html#7428" class="Function"
+      >&#215;&#7475;-emap</a
+      ><a name="1331"
+      > </a
+      ><a name="1332" class="Symbol"
+      >(</a
+      ><a name="1333" href="cohomology.Theory.html#1066" class="Function"
+      >C-Susp</a
+      ><a name="1339"
+      > </a
+      ><a name="1340" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" class="Symbol"
+      >(</a
+      ><a name="1343" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="1348"
+      > </a
+      ><a name="1349" class="Symbol"
+      >(</a
+      ><a name="1350" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="1357"
+      > </a
+      ><a name="1358" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="1359" class="Symbol"
+      >)))</a
+      ><a name="1362"
+      >
+              </a
+      ><a name="1377" class="Symbol"
+      >(</a
+      ><a name="1378"
+      > </a
+      ><a name="1379" href="lib.groups.GroupProduct.html#7428" class="Function"
+      >&#215;&#7475;-emap</a
+      ><a name="1386"
+      > </a
+      ><a name="1387" class="Symbol"
+      >(</a
+      ><a name="1388" href="cohomology.Theory.html#1066" class="Function"
+      >C-Susp</a
+      ><a name="1394"
+      > </a
+      ><a name="1395" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="1396"
+      > </a
+      ><a name="1397" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="1398" class="Symbol"
+      >)</a
+      ><a name="1399"
+      > </a
+      ><a name="1400" class="Symbol"
+      >(</a
+      ><a name="1401" href="cohomology.Theory.html#1066" class="Function"
+      >C-Susp</a
+      ><a name="1407"
+      > </a
+      ><a name="1408" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="1409"
+      > </a
+      ><a name="1410" class="Symbol"
+      >(</a
+      ><a name="1411" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1417"
+      > </a
+      ><a name="1418" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="1419"
+      > </a
+      ><a name="1420" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="1421" class="Symbol"
+      >))</a
+      ><a name="1423"
+      >
+            </a
+      ><a name="1436" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="1439"
+      > </a
+      ><a name="1440" href="cohomology.Wedge.html#2074" class="Function"
+      >C-Wedge</a
+      ><a name="1447"
+      > </a
+      ><a name="1448" class="Symbol"
+      >(</a
+      ><a name="1449" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1453"
+      > </a
+      ><a name="1454" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="1455" class="Symbol"
+      >)</a
+      ><a name="1456"
+      > </a
+      ><a name="1457" class="Symbol"
+      >(</a
+      ><a name="1458" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="1463"
+      > </a
+      ><a name="1464" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="1465" class="Symbol"
+      >)</a
+      ><a name="1466"
+      > </a
+      ><a name="1467" class="Symbol"
+      >(</a
+      ><a name="1468" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1474"
+      > </a
+      ><a name="1475" class="Symbol"
+      >(</a
+      ><a name="1476" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1477"
+      > </a
+      ><a name="1478" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="1479" class="Symbol"
+      >)</a
+      ><a name="1480"
+      > </a
+      ><a name="1481" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="1482" class="Symbol"
+      >))</a
+      ><a name="1484"
+      > </a
+      ><a name="1485" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="1486"
+      >
+    </a
+      ><a name="1491" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1492"
+      > </a
+      ><a name="1493" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" class="Symbol"
+      >(</a
+      ><a name="1496" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="1501"
+      > </a
+      ><a name="1502" class="Symbol"
+      >(</a
+      ><a name="1503" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="1510"
+      > </a
+      ><a name="1511" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="1512" class="Symbol"
+      >))</a
+      ><a name="1514"
+      > </a
+      ><a name="1515" href="lib.groups.GroupProduct.html#1359" class="Function Operator"
+      >&#215;&#7475;</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" class="Symbol"
+      >(</a
+      ><a name="1519" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1520"
+      > </a
+      ><a name="1521" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="1522"
+      > </a
+      ><a name="1523" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="1524"
+      > </a
+      ><a name="1525" href="lib.groups.GroupProduct.html#1359" class="Function Operator"
+      >&#215;&#7475;</a
+      ><a name="1527"
+      > </a
+      ><a name="1528" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1529"
+      > </a
+      ><a name="1530" href="cohomology.SphereProduct.html#249" class="Bound"
+      >n</a
+      ><a name="1531"
+      > </a
+      ><a name="1532" class="Symbol"
+      >(</a
+      ><a name="1533" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1539"
+      > </a
+      ><a name="1540" href="cohomology.SphereProduct.html#257" class="Bound"
+      >m</a
+      ><a name="1541"
+      > </a
+      ><a name="1542" href="cohomology.SphereProduct.html#265" class="Bound"
+      >X</a
+      ><a name="1543" class="Symbol"
+      >))</a
+      ><a name="1545"
+      >
+      </a
+      ><a name="1552" href="lib.groups.Isomorphism.html#3290" class="Function Operator"
+      >&#8771;&#7475;&#8718;</a
+      ><a name="1555"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

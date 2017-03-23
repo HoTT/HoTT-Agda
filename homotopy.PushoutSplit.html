@@ -1,0 +1,4762 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.PushoutSplit</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+
+</a
+      ><a name="60" class="Keyword"
+      >module</a
+      ><a name="66"
+      > </a
+      ><a name="67" href="homotopy.PushoutSplit.html#1" class="Module"
+      >homotopy.PushoutSplit</a
+      ><a name="88"
+      > </a
+      ><a name="89" class="Keyword"
+      >where</a
+      ><a name="94"
+      >
+
+</a
+      ><a name="96" class="Comment"
+      >--        g     h</a
+      ><a name="113"
+      >
+</a
+      ><a name="114" class="Comment"
+      >--     D --&gt; B --&gt; C    K = A &#8852;^D B / (f,g)       d&#8321; = A &lt;- D -&gt; B</a
+      ><a name="180"
+      >
+</a
+      ><a name="181" class="Comment"
+      >--    f|     |     |    L = K &#8852;^B C / (right,h)   d&#8322; = K &lt;- B -&gt; C</a
+      ><a name="247"
+      >
+</a
+      ><a name="248" class="Comment"
+      >--     v     v     v                              d  = A &lt;- D -&gt; C</a
+      ><a name="314"
+      >
+</a
+      ><a name="315" class="Comment"
+      >--     A --&gt; K --&gt; L</a
+      ><a name="335"
+      >
+</a
+      ><a name="336" class="Comment"
+      >--</a
+      ><a name="338"
+      >
+</a
+      ><a name="339" class="Keyword"
+      >module</a
+      ><a name="345"
+      > </a
+      ><a name="346" href="homotopy.PushoutSplit.html#346" class="Module"
+      >PushoutRSplit</a
+      ><a name="359"
+      > </a
+      ><a name="360" class="Symbol"
+      >{</a
+      ><a name="361" href="homotopy.PushoutSplit.html#361" class="Bound"
+      >i</a
+      ><a name="362"
+      > </a
+      ><a name="363" href="homotopy.PushoutSplit.html#363" class="Bound"
+      >j</a
+      ><a name="364"
+      > </a
+      ><a name="365" href="homotopy.PushoutSplit.html#365" class="Bound"
+      >k</a
+      ><a name="366"
+      > </a
+      ><a name="367" href="homotopy.PushoutSplit.html#367" class="Bound"
+      >l</a
+      ><a name="368" class="Symbol"
+      >}</a
+      ><a name="369"
+      > </a
+      ><a name="370" class="Symbol"
+      >{</a
+      ><a name="371" href="homotopy.PushoutSplit.html#371" class="Bound"
+      >A</a
+      ><a name="372"
+      > </a
+      ><a name="373" class="Symbol"
+      >:</a
+      ><a name="374"
+      > </a
+      ><a name="375" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="379"
+      > </a
+      ><a name="380" href="homotopy.PushoutSplit.html#361" class="Bound"
+      >i</a
+      ><a name="381" class="Symbol"
+      >}</a
+      ><a name="382"
+      > </a
+      ><a name="383" class="Symbol"
+      >{</a
+      ><a name="384" href="homotopy.PushoutSplit.html#384" class="Bound"
+      >B</a
+      ><a name="385"
+      > </a
+      ><a name="386" class="Symbol"
+      >:</a
+      ><a name="387"
+      > </a
+      ><a name="388" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="392"
+      > </a
+      ><a name="393" href="homotopy.PushoutSplit.html#363" class="Bound"
+      >j</a
+      ><a name="394" class="Symbol"
+      >}</a
+      ><a name="395"
+      > </a
+      ><a name="396" class="Symbol"
+      >{</a
+      ><a name="397" href="homotopy.PushoutSplit.html#397" class="Bound"
+      >C</a
+      ><a name="398"
+      > </a
+      ><a name="399" class="Symbol"
+      >:</a
+      ><a name="400"
+      > </a
+      ><a name="401" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="405"
+      > </a
+      ><a name="406" href="homotopy.PushoutSplit.html#365" class="Bound"
+      >k</a
+      ><a name="407" class="Symbol"
+      >}</a
+      ><a name="408"
+      >
+  </a
+      ><a name="411" class="Symbol"
+      >{</a
+      ><a name="412" href="homotopy.PushoutSplit.html#412" class="Bound"
+      >D</a
+      ><a name="413"
+      > </a
+      ><a name="414" class="Symbol"
+      >:</a
+      ><a name="415"
+      > </a
+      ><a name="416" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="420"
+      > </a
+      ><a name="421" href="homotopy.PushoutSplit.html#367" class="Bound"
+      >l</a
+      ><a name="422" class="Symbol"
+      >}</a
+      ><a name="423"
+      > </a
+      ><a name="424" class="Symbol"
+      >(</a
+      ><a name="425" href="homotopy.PushoutSplit.html#425" class="Bound"
+      >f</a
+      ><a name="426"
+      > </a
+      ><a name="427" class="Symbol"
+      >:</a
+      ><a name="428"
+      > </a
+      ><a name="429" href="homotopy.PushoutSplit.html#412" class="Bound"
+      >D</a
+      ><a name="430"
+      > </a
+      ><a name="431" class="Symbol"
+      >&#8594;</a
+      ><a name="432"
+      > </a
+      ><a name="433" href="homotopy.PushoutSplit.html#371" class="Bound"
+      >A</a
+      ><a name="434" class="Symbol"
+      >)</a
+      ><a name="435"
+      > </a
+      ><a name="436" class="Symbol"
+      >(</a
+      ><a name="437" href="homotopy.PushoutSplit.html#437" class="Bound"
+      >g</a
+      ><a name="438"
+      > </a
+      ><a name="439" class="Symbol"
+      >:</a
+      ><a name="440"
+      > </a
+      ><a name="441" href="homotopy.PushoutSplit.html#412" class="Bound"
+      >D</a
+      ><a name="442"
+      > </a
+      ><a name="443" class="Symbol"
+      >&#8594;</a
+      ><a name="444"
+      > </a
+      ><a name="445" href="homotopy.PushoutSplit.html#384" class="Bound"
+      >B</a
+      ><a name="446" class="Symbol"
+      >)</a
+      ><a name="447"
+      > </a
+      ><a name="448" class="Symbol"
+      >(</a
+      ><a name="449" href="homotopy.PushoutSplit.html#449" class="Bound"
+      >h</a
+      ><a name="450"
+      > </a
+      ><a name="451" class="Symbol"
+      >:</a
+      ><a name="452"
+      > </a
+      ><a name="453" href="homotopy.PushoutSplit.html#384" class="Bound"
+      >B</a
+      ><a name="454"
+      > </a
+      ><a name="455" class="Symbol"
+      >&#8594;</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="homotopy.PushoutSplit.html#397" class="Bound"
+      >C</a
+      ><a name="458" class="Symbol"
+      >)</a
+      ><a name="459"
+      > </a
+      ><a name="460" class="Keyword"
+      >where</a
+      ><a name="465"
+      >
+
+  </a
+      ><a name="469" class="Keyword"
+      >private</a
+      ><a name="476"
+      >
+    </a
+      ><a name="481" href="homotopy.PushoutSplit.html#481" class="Function"
+      >d&#8321;</a
+      ><a name="483"
+      > </a
+      ><a name="484" class="Symbol"
+      >:</a
+      ><a name="485"
+      > </a
+      ><a name="486" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="490"
+      >
+    </a
+      ><a name="495" href="homotopy.PushoutSplit.html#481" class="Function"
+      >d&#8321;</a
+      ><a name="497"
+      > </a
+      ><a name="498" class="Symbol"
+      >=</a
+      ><a name="499"
+      > </a
+      ><a name="500" href="lib.types.Span.html#270" class="InductiveConstructor"
+      >span</a
+      ><a name="504"
+      > </a
+      ><a name="505" href="homotopy.PushoutSplit.html#371" class="Bound"
+      >A</a
+      ><a name="506"
+      > </a
+      ><a name="507" href="homotopy.PushoutSplit.html#384" class="Bound"
+      >B</a
+      ><a name="508"
+      > </a
+      ><a name="509" href="homotopy.PushoutSplit.html#412" class="Bound"
+      >D</a
+      ><a name="510"
+      > </a
+      ><a name="511" href="homotopy.PushoutSplit.html#425" class="Bound"
+      >f</a
+      ><a name="512"
+      > </a
+      ><a name="513" href="homotopy.PushoutSplit.html#437" class="Bound"
+      >g</a
+      ><a name="514"
+      >
+
+    </a
+      ><a name="520" href="homotopy.PushoutSplit.html#520" class="Function"
+      >d&#8322;</a
+      ><a name="522"
+      > </a
+      ><a name="523" class="Symbol"
+      >:</a
+      ><a name="524"
+      > </a
+      ><a name="525" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="529"
+      >
+    </a
+      ><a name="534" href="homotopy.PushoutSplit.html#520" class="Function"
+      >d&#8322;</a
+      ><a name="536"
+      > </a
+      ><a name="537" class="Symbol"
+      >=</a
+      ><a name="538"
+      > </a
+      ><a name="539" href="lib.types.Span.html#270" class="InductiveConstructor"
+      >span</a
+      ><a name="543"
+      > </a
+      ><a name="544" class="Symbol"
+      >(</a
+      ><a name="545" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="552"
+      > </a
+      ><a name="553" href="homotopy.PushoutSplit.html#481" class="Function"
+      >d&#8321;</a
+      ><a name="555" class="Symbol"
+      >)</a
+      ><a name="556"
+      > </a
+      ><a name="557" href="homotopy.PushoutSplit.html#397" class="Bound"
+      >C</a
+      ><a name="558"
+      > </a
+      ><a name="559" href="homotopy.PushoutSplit.html#384" class="Bound"
+      >B</a
+      ><a name="560"
+      > </a
+      ><a name="561" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="566"
+      > </a
+      ><a name="567" href="homotopy.PushoutSplit.html#449" class="Bound"
+      >h</a
+      ><a name="568"
+      >
+
+    </a
+      ><a name="574" href="homotopy.PushoutSplit.html#574" class="Function"
+      >d</a
+      ><a name="575"
+      > </a
+      ><a name="576" class="Symbol"
+      >:</a
+      ><a name="577"
+      > </a
+      ><a name="578" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="582"
+      >
+    </a
+      ><a name="587" href="homotopy.PushoutSplit.html#574" class="Function"
+      >d</a
+      ><a name="588"
+      > </a
+      ><a name="589" class="Symbol"
+      >=</a
+      ><a name="590"
+      > </a
+      ><a name="591" href="lib.types.Span.html#270" class="InductiveConstructor"
+      >span</a
+      ><a name="595"
+      > </a
+      ><a name="596" href="homotopy.PushoutSplit.html#371" class="Bound"
+      >A</a
+      ><a name="597"
+      > </a
+      ><a name="598" href="homotopy.PushoutSplit.html#397" class="Bound"
+      >C</a
+      ><a name="599"
+      > </a
+      ><a name="600" href="homotopy.PushoutSplit.html#412" class="Bound"
+      >D</a
+      ><a name="601"
+      > </a
+      ><a name="602" href="homotopy.PushoutSplit.html#425" class="Bound"
+      >f</a
+      ><a name="603"
+      > </a
+      ><a name="604" class="Symbol"
+      >(</a
+      ><a name="605" href="homotopy.PushoutSplit.html#449" class="Bound"
+      >h</a
+      ><a name="606"
+      > </a
+      ><a name="607" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="608"
+      > </a
+      ><a name="609" href="homotopy.PushoutSplit.html#437" class="Bound"
+      >g</a
+      ><a name="610" class="Symbol"
+      >)</a
+      ><a name="611"
+      >
+
+  </a
+      ><a name="615" href="homotopy.PushoutSplit.html#615" class="Function"
+      >split-span-map</a
+      ><a name="629"
+      > </a
+      ><a name="630" class="Symbol"
+      >:</a
+      ><a name="631"
+      > </a
+      ><a name="632" href="lib.types.Span.html#2386" class="Record"
+      >SpanMap</a
+      ><a name="639"
+      > </a
+      ><a name="640" href="homotopy.PushoutSplit.html#574" class="Function"
+      >d</a
+      ><a name="641"
+      > </a
+      ><a name="642" href="homotopy.PushoutSplit.html#520" class="Function"
+      >d&#8322;</a
+      ><a name="644"
+      >
+  </a
+      ><a name="647" href="homotopy.PushoutSplit.html#615" class="Function"
+      >split-span-map</a
+      ><a name="661"
+      > </a
+      ><a name="662" class="Symbol"
+      >=</a
+      ><a name="663"
+      > </a
+      ><a name="664" href="lib.types.Span.html#2556" class="InductiveConstructor"
+      >span-map</a
+      ><a name="672"
+      > </a
+      ><a name="673" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="677"
+      > </a
+      ><a name="678" class="Symbol"
+      >(</a
+      ><a name="679" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="682"
+      > </a
+      ><a name="683" href="homotopy.PushoutSplit.html#397" class="Bound"
+      >C</a
+      ><a name="684" class="Symbol"
+      >)</a
+      ><a name="685"
+      > </a
+      ><a name="686" href="homotopy.PushoutSplit.html#437" class="Bound"
+      >g</a
+      ><a name="687"
+      > </a
+      ><a name="688" class="Symbol"
+      >(</a
+      ><a name="689" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="697"
+      > </a
+      ><a name="698" class="Symbol"
+      >&#955;</a
+      ><a name="699"
+      > </a
+      ><a name="700" href="homotopy.PushoutSplit.html#700" class="Bound"
+      >a</a
+      ><a name="701"
+      > </a
+      ><a name="702" class="Symbol"
+      >&#8594;</a
+      ><a name="703"
+      > </a
+      ><a name="704" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="708"
+      > </a
+      ><a name="709" href="homotopy.PushoutSplit.html#700" class="Bound"
+      >a</a
+      ><a name="710" class="Symbol"
+      >)</a
+      ><a name="711"
+      > </a
+      ><a name="712" class="Symbol"
+      >(</a
+      ><a name="713" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="721"
+      > </a
+      ><a name="722" class="Symbol"
+      >&#955;</a
+      ><a name="723"
+      > </a
+      ><a name="724" href="homotopy.PushoutSplit.html#724" class="Bound"
+      >_</a
+      ><a name="725"
+      > </a
+      ><a name="726" class="Symbol"
+      >&#8594;</a
+      ><a name="727"
+      > </a
+      ><a name="728" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="731" class="Symbol"
+      >)</a
+      ><a name="732"
+      >
+
+  </a
+      ><a name="736" class="Keyword"
+      >module</a
+      ><a name="742"
+      > </a
+      ><a name="743" href="homotopy.PushoutSplit.html#743" class="Module"
+      >Split</a
+      ><a name="748"
+      > </a
+      ><a name="749" class="Symbol"
+      >=</a
+      ><a name="750"
+      > </a
+      ><a name="751" href="lib.types.PushoutFmap.html#291" class="Module"
+      >PushoutFmap</a
+      ><a name="762"
+      > </a
+      ><a name="763" href="homotopy.PushoutSplit.html#615" class="Function"
+      >split-span-map</a
+      ><a name="777"
+      >
+
+  </a
+      ><a name="781" href="homotopy.PushoutSplit.html#781" class="Function"
+      >split</a
+      ><a name="786"
+      > </a
+      ><a name="787" class="Symbol"
+      >:</a
+      ><a name="788"
+      > </a
+      ><a name="789" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="796"
+      > </a
+      ><a name="797" href="homotopy.PushoutSplit.html#574" class="Function"
+      >d</a
+      ><a name="798"
+      > </a
+      ><a name="799" class="Symbol"
+      >&#8594;</a
+      ><a name="800"
+      > </a
+      ><a name="801" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="808"
+      > </a
+      ><a name="809" href="homotopy.PushoutSplit.html#520" class="Function"
+      >d&#8322;</a
+      ><a name="811"
+      >
+  </a
+      ><a name="814" href="homotopy.PushoutSplit.html#781" class="Function"
+      >split</a
+      ><a name="819"
+      > </a
+      ><a name="820" class="Symbol"
+      >=</a
+      ><a name="821"
+      > </a
+      ><a name="822" href="lib.types.Pushout.html#1397" class="Function"
+      >Split.f</a
+      ><a name="829"
+      >
+
+  </a
+      ><a name="833" href="homotopy.PushoutSplit.html#833" class="Function"
+      >inner-span-map</a
+      ><a name="847"
+      > </a
+      ><a name="848" class="Symbol"
+      >:</a
+      ><a name="849"
+      > </a
+      ><a name="850" href="lib.types.Span.html#2386" class="Record"
+      >SpanMap</a
+      ><a name="857"
+      > </a
+      ><a name="858" href="homotopy.PushoutSplit.html#481" class="Function"
+      >d&#8321;</a
+      ><a name="860"
+      > </a
+      ><a name="861" href="homotopy.PushoutSplit.html#574" class="Function"
+      >d</a
+      ><a name="862"
+      >
+  </a
+      ><a name="865" href="homotopy.PushoutSplit.html#833" class="Function"
+      >inner-span-map</a
+      ><a name="879"
+      > </a
+      ><a name="880" class="Symbol"
+      >=</a
+      ><a name="881"
+      > </a
+      ><a name="882" href="lib.types.Span.html#2556" class="InductiveConstructor"
+      >span-map</a
+      ><a name="890"
+      > </a
+      ><a name="891" class="Symbol"
+      >(</a
+      ><a name="892" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="895"
+      > </a
+      ><a name="896" href="homotopy.PushoutSplit.html#371" class="Bound"
+      >A</a
+      ><a name="897" class="Symbol"
+      >)</a
+      ><a name="898"
+      > </a
+      ><a name="899" href="homotopy.PushoutSplit.html#449" class="Bound"
+      >h</a
+      ><a name="900"
+      > </a
+      ><a name="901" class="Symbol"
+      >(</a
+      ><a name="902" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="905"
+      > </a
+      ><a name="906" href="homotopy.PushoutSplit.html#412" class="Bound"
+      >D</a
+      ><a name="907" class="Symbol"
+      >)</a
+      ><a name="908"
+      > </a
+      ><a name="909" class="Symbol"
+      >(</a
+      ><a name="910" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="918"
+      > </a
+      ><a name="919" class="Symbol"
+      >&#955;</a
+      ><a name="920"
+      > </a
+      ><a name="921" href="homotopy.PushoutSplit.html#921" class="Bound"
+      >_</a
+      ><a name="922"
+      > </a
+      ><a name="923" class="Symbol"
+      >&#8594;</a
+      ><a name="924"
+      > </a
+      ><a name="925" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="928" class="Symbol"
+      >)</a
+      ><a name="929"
+      > </a
+      ><a name="930" class="Symbol"
+      >(</a
+      ><a name="931" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="939"
+      > </a
+      ><a name="940" class="Symbol"
+      >&#955;</a
+      ><a name="941"
+      > </a
+      ><a name="942" href="homotopy.PushoutSplit.html#942" class="Bound"
+      >_</a
+      ><a name="943"
+      > </a
+      ><a name="944" class="Symbol"
+      >&#8594;</a
+      ><a name="945"
+      > </a
+      ><a name="946" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="949" class="Symbol"
+      >)</a
+      ><a name="950"
+      >
+
+  </a
+      ><a name="954" class="Keyword"
+      >module</a
+      ><a name="960"
+      > </a
+      ><a name="961" href="homotopy.PushoutSplit.html#961" class="Module"
+      >Inner</a
+      ><a name="966"
+      > </a
+      ><a name="967" class="Symbol"
+      >=</a
+      ><a name="968"
+      > </a
+      ><a name="969" href="lib.types.PushoutFmap.html#291" class="Module"
+      >PushoutFmap</a
+      ><a name="980"
+      > </a
+      ><a name="981" href="homotopy.PushoutSplit.html#833" class="Function"
+      >inner-span-map</a
+      ><a name="995"
+      >
+
+  </a
+      ><a name="999" href="homotopy.PushoutSplit.html#999" class="Function"
+      >inner</a
+      ><a name="1004"
+      > </a
+      ><a name="1005" class="Symbol"
+      >:</a
+      ><a name="1006"
+      > </a
+      ><a name="1007" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="1014"
+      > </a
+      ><a name="1015" href="homotopy.PushoutSplit.html#481" class="Function"
+      >d&#8321;</a
+      ><a name="1017"
+      > </a
+      ><a name="1018" class="Symbol"
+      >&#8594;</a
+      ><a name="1019"
+      > </a
+      ><a name="1020" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="1027"
+      > </a
+      ><a name="1028" href="homotopy.PushoutSplit.html#574" class="Function"
+      >d</a
+      ><a name="1029"
+      >
+  </a
+      ><a name="1032" href="homotopy.PushoutSplit.html#999" class="Function"
+      >inner</a
+      ><a name="1037"
+      > </a
+      ><a name="1038" class="Symbol"
+      >=</a
+      ><a name="1039"
+      > </a
+      ><a name="1040" href="lib.types.Pushout.html#1397" class="Function"
+      >Inner.f</a
+      ><a name="1047"
+      >
+
+  </a
+      ><a name="1051" class="Keyword"
+      >module</a
+      ><a name="1057"
+      > </a
+      ><a name="1058" href="homotopy.PushoutSplit.html#1058" class="Module"
+      >Merge</a
+      ><a name="1063"
+      > </a
+      ><a name="1064" class="Symbol"
+      >=</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" href="lib.types.Pushout.html#1131" class="Module"
+      >PushoutRec</a
+      ><a name="1076"
+      > </a
+      ><a name="1077" class="Symbol"
+      >{</a
+      ><a name="1078" class="Argument"
+      >d</a
+      ><a name="1079"
+      > </a
+      ><a name="1080" class="Symbol"
+      >=</a
+      ><a name="1081"
+      > </a
+      ><a name="1082" href="homotopy.PushoutSplit.html#520" class="Function"
+      >d&#8322;</a
+      ><a name="1084" class="Symbol"
+      >}</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" class="Symbol"
+      >{</a
+      ><a name="1087" class="Argument"
+      >D</a
+      ><a name="1088"
+      > </a
+      ><a name="1089" class="Symbol"
+      >=</a
+      ><a name="1090"
+      > </a
+      ><a name="1091" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="1098"
+      > </a
+      ><a name="1099" href="homotopy.PushoutSplit.html#574" class="Function"
+      >d</a
+      ><a name="1100" class="Symbol"
+      >}</a
+      ><a name="1101"
+      >
+    </a
+      ><a name="1106" href="homotopy.PushoutSplit.html#999" class="Function"
+      >inner</a
+      ><a name="1111"
+      > </a
+      ><a name="1112" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="1117"
+      > </a
+      ><a name="1118" class="Symbol"
+      >(&#955;</a
+      ><a name="1120"
+      > </a
+      ><a name="1121" href="homotopy.PushoutSplit.html#1121" class="Bound"
+      >_</a
+      ><a name="1122"
+      > </a
+      ><a name="1123" class="Symbol"
+      >&#8594;</a
+      ><a name="1124"
+      > </a
+      ><a name="1125" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1128" class="Symbol"
+      >)</a
+      ><a name="1129"
+      >
+
+  </a
+      ><a name="1133" href="homotopy.PushoutSplit.html#1133" class="Function"
+      >merge</a
+      ><a name="1138"
+      > </a
+      ><a name="1139" class="Symbol"
+      >:</a
+      ><a name="1140"
+      > </a
+      ><a name="1141" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="1148"
+      > </a
+      ><a name="1149" href="homotopy.PushoutSplit.html#520" class="Function"
+      >d&#8322;</a
+      ><a name="1151"
+      > </a
+      ><a name="1152" class="Symbol"
+      >&#8594;</a
+      ><a name="1153"
+      > </a
+      ><a name="1154" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="1161"
+      > </a
+      ><a name="1162" href="homotopy.PushoutSplit.html#574" class="Function"
+      >d</a
+      ><a name="1163"
+      >
+  </a
+      ><a name="1166" href="homotopy.PushoutSplit.html#1133" class="Function"
+      >merge</a
+      ><a name="1171"
+      > </a
+      ><a name="1172" class="Symbol"
+      >=</a
+      ><a name="1173"
+      > </a
+      ><a name="1174" href="lib.types.Pushout.html#1397" class="Function"
+      >Merge.f</a
+      ><a name="1181"
+      >
+
+  </a
+      ><a name="1185" class="Keyword"
+      >private</a
+      ><a name="1192"
+      >
+    </a
+      ><a name="1197" href="homotopy.PushoutSplit.html#1197" class="Function"
+      >square-extend-tr</a
+      ><a name="1213"
+      > </a
+      ><a name="1214" class="Symbol"
+      >:</a
+      ><a name="1215"
+      > </a
+      ><a name="1216" class="Symbol"
+      >&#8704;</a
+      ><a name="1217"
+      > </a
+      ><a name="1218" class="Symbol"
+      >{</a
+      ><a name="1219" href="homotopy.PushoutSplit.html#1219" class="Bound"
+      >i</a
+      ><a name="1220" class="Symbol"
+      >}</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" class="Symbol"
+      >{</a
+      ><a name="1223" href="homotopy.PushoutSplit.html#1223" class="Bound"
+      >A</a
+      ><a name="1224"
+      > </a
+      ><a name="1225" class="Symbol"
+      >:</a
+      ><a name="1226"
+      > </a
+      ><a name="1227" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" href="homotopy.PushoutSplit.html#1219" class="Bound"
+      >i</a
+      ><a name="1233" class="Symbol"
+      >}</a
+      ><a name="1234"
+      > </a
+      ><a name="1235" class="Symbol"
+      >{</a
+      ><a name="1236" href="homotopy.PushoutSplit.html#1236" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="1239"
+      > </a
+      ><a name="1240" href="homotopy.PushoutSplit.html#1240" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="1243"
+      > </a
+      ><a name="1244" href="homotopy.PushoutSplit.html#1244" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="1247"
+      > </a
+      ><a name="1248" href="homotopy.PushoutSplit.html#1248" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="1251"
+      > </a
+      ><a name="1252" href="homotopy.PushoutSplit.html#1252" class="Bound"
+      >b</a
+      ><a name="1253"
+      > </a
+      ><a name="1254" class="Symbol"
+      >:</a
+      ><a name="1255"
+      > </a
+      ><a name="1256" href="homotopy.PushoutSplit.html#1223" class="Bound"
+      >A</a
+      ><a name="1257" class="Symbol"
+      >}</a
+      ><a name="1258"
+      >
+      </a
+      ><a name="1265" class="Symbol"
+      >{</a
+      ><a name="1266" href="homotopy.PushoutSplit.html#1266" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="1269"
+      > </a
+      ><a name="1270" class="Symbol"
+      >:</a
+      ><a name="1271"
+      > </a
+      ><a name="1272" href="homotopy.PushoutSplit.html#1236" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="1275"
+      > </a
+      ><a name="1276" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1278"
+      > </a
+      ><a name="1279" href="homotopy.PushoutSplit.html#1240" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="1282" class="Symbol"
+      >}</a
+      ><a name="1283"
+      > </a
+      ><a name="1284" class="Symbol"
+      >{</a
+      ><a name="1285" href="homotopy.PushoutSplit.html#1285" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="1288"
+      > </a
+      ><a name="1289" class="Symbol"
+      >:</a
+      ><a name="1290"
+      > </a
+      ><a name="1291" href="homotopy.PushoutSplit.html#1236" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="1294"
+      > </a
+      ><a name="1295" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1297"
+      > </a
+      ><a name="1298" href="homotopy.PushoutSplit.html#1244" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="1301" class="Symbol"
+      >}</a
+      ><a name="1302"
+      >
+      </a
+      ><a name="1309" class="Symbol"
+      >{</a
+      ><a name="1310" href="homotopy.PushoutSplit.html#1310" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="1313"
+      > </a
+      ><a name="1314" class="Symbol"
+      >:</a
+      ><a name="1315"
+      > </a
+      ><a name="1316" href="homotopy.PushoutSplit.html#1240" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="1319"
+      > </a
+      ><a name="1320" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1322"
+      > </a
+      ><a name="1323" href="homotopy.PushoutSplit.html#1248" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="1326" class="Symbol"
+      >}</a
+      ><a name="1327"
+      > </a
+      ><a name="1328" class="Symbol"
+      >{</a
+      ><a name="1329" href="homotopy.PushoutSplit.html#1329" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="1332"
+      > </a
+      ><a name="1333" class="Symbol"
+      >:</a
+      ><a name="1334"
+      > </a
+      ><a name="1335" href="homotopy.PushoutSplit.html#1244" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="1338"
+      > </a
+      ><a name="1339" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" href="homotopy.PushoutSplit.html#1248" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="1345" class="Symbol"
+      >}</a
+      ><a name="1346"
+      > </a
+      ><a name="1347" class="Symbol"
+      >(</a
+      ><a name="1348" href="homotopy.PushoutSplit.html#1348" class="Bound"
+      >q</a
+      ><a name="1349"
+      > </a
+      ><a name="1350" class="Symbol"
+      >:</a
+      ><a name="1351"
+      > </a
+      ><a name="1352" href="homotopy.PushoutSplit.html#1244" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="1355"
+      > </a
+      ><a name="1356" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1358"
+      > </a
+      ><a name="1359" href="homotopy.PushoutSplit.html#1252" class="Bound"
+      >b</a
+      ><a name="1360" class="Symbol"
+      >)</a
+      ><a name="1361"
+      >
+      </a
+      ><a name="1368" class="Symbol"
+      >&#8594;</a
+      ><a name="1369"
+      > </a
+      ><a name="1370" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="1376"
+      > </a
+      ><a name="1377" href="homotopy.PushoutSplit.html#1266" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="1380"
+      > </a
+      ><a name="1381" href="homotopy.PushoutSplit.html#1285" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="1384"
+      > </a
+      ><a name="1385" href="homotopy.PushoutSplit.html#1310" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="1388"
+      > </a
+      ><a name="1389" href="homotopy.PushoutSplit.html#1329" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="1392"
+      >
+      </a
+      ><a name="1399" class="Symbol"
+      >&#8594;</a
+      ><a name="1400"
+      > </a
+      ><a name="1401" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="1407"
+      > </a
+      ><a name="1408" href="homotopy.PushoutSplit.html#1266" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="1411"
+      > </a
+      ><a name="1412" class="Symbol"
+      >(</a
+      ><a name="1413" href="homotopy.PushoutSplit.html#1285" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="1416"
+      > </a
+      ><a name="1417" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1418"
+      > </a
+      ><a name="1419" href="homotopy.PushoutSplit.html#1348" class="Bound"
+      >q</a
+      ><a name="1420" class="Symbol"
+      >)</a
+      ><a name="1421"
+      > </a
+      ><a name="1422" href="homotopy.PushoutSplit.html#1310" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="1425"
+      > </a
+      ><a name="1426" class="Symbol"
+      >(</a
+      ><a name="1427" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1428"
+      > </a
+      ><a name="1429" href="homotopy.PushoutSplit.html#1348" class="Bound"
+      >q</a
+      ><a name="1430"
+      > </a
+      ><a name="1431" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="1433"
+      > </a
+      ><a name="1434" href="homotopy.PushoutSplit.html#1329" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="1437" class="Symbol"
+      >)</a
+      ><a name="1438"
+      >
+    </a
+      ><a name="1443" href="homotopy.PushoutSplit.html#1197" class="Function"
+      >square-extend-tr</a
+      ><a name="1459"
+      > </a
+      ><a name="1460" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1463"
+      > </a
+      ><a name="1464" href="lib.cubical.Square.html#340" class="InductiveConstructor"
+      >ids</a
+      ><a name="1467"
+      > </a
+      ><a name="1468" class="Symbol"
+      >=</a
+      ><a name="1469"
+      > </a
+      ><a name="1470" href="lib.cubical.Square.html#340" class="InductiveConstructor"
+      >ids</a
+      ><a name="1473"
+      >
+
+  </a
+      ><a name="1477" href="homotopy.PushoutSplit.html#1477" class="Function"
+      >split-inner</a
+      ><a name="1488"
+      > </a
+      ><a name="1489" class="Symbol"
+      >:</a
+      ><a name="1490"
+      > </a
+      ><a name="1491" class="Symbol"
+      >(</a
+      ><a name="1492" href="homotopy.PushoutSplit.html#1492" class="Bound"
+      >k</a
+      ><a name="1493"
+      > </a
+      ><a name="1494" class="Symbol"
+      >:</a
+      ><a name="1495"
+      > </a
+      ><a name="1496" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="1503"
+      > </a
+      ><a name="1504" href="homotopy.PushoutSplit.html#481" class="Function"
+      >d&#8321;</a
+      ><a name="1506" class="Symbol"
+      >)</a
+      ><a name="1507"
+      > </a
+      ><a name="1508" class="Symbol"
+      >&#8594;</a
+      ><a name="1509"
+      > </a
+      ><a name="1510" href="homotopy.PushoutSplit.html#781" class="Function"
+      >split</a
+      ><a name="1515"
+      > </a
+      ><a name="1516" class="Symbol"
+      >(</a
+      ><a name="1517" href="homotopy.PushoutSplit.html#999" class="Function"
+      >inner</a
+      ><a name="1522"
+      > </a
+      ><a name="1523" href="homotopy.PushoutSplit.html#1492" class="Bound"
+      >k</a
+      ><a name="1524" class="Symbol"
+      >)</a
+      ><a name="1525"
+      > </a
+      ><a name="1526" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1528"
+      > </a
+      ><a name="1529" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="1533"
+      > </a
+      ><a name="1534" href="homotopy.PushoutSplit.html#1492" class="Bound"
+      >k</a
+      ><a name="1535"
+      >
+  </a
+      ><a name="1538" href="homotopy.PushoutSplit.html#1477" class="Function"
+      >split-inner</a
+      ><a name="1549"
+      > </a
+      ><a name="1550" class="Symbol"
+      >=</a
+      ><a name="1551"
+      > </a
+      ><a name="1552" href="lib.types.Pushout.html#1094" class="Function"
+      >Pushout-elim</a
+      ><a name="1564"
+      >
+    </a
+      ><a name="1569" class="Symbol"
+      >(&#955;</a
+      ><a name="1571"
+      > </a
+      ><a name="1572" href="homotopy.PushoutSplit.html#1572" class="Bound"
+      >a</a
+      ><a name="1573"
+      > </a
+      ><a name="1574" class="Symbol"
+      >&#8594;</a
+      ><a name="1575"
+      > </a
+      ><a name="1576" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1579" class="Symbol"
+      >)</a
+      ><a name="1580"
+      >
+    </a
+      ><a name="1585" class="Symbol"
+      >(&#955;</a
+      ><a name="1587"
+      > </a
+      ><a name="1588" href="homotopy.PushoutSplit.html#1588" class="Bound"
+      >b</a
+      ><a name="1589"
+      > </a
+      ><a name="1590" class="Symbol"
+      >&#8594;</a
+      ><a name="1591"
+      > </a
+      ><a name="1592" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" class="Symbol"
+      >(</a
+      ><a name="1595" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1599"
+      > </a
+      ><a name="1600" href="homotopy.PushoutSplit.html#1588" class="Bound"
+      >b</a
+      ><a name="1601" class="Symbol"
+      >))</a
+      ><a name="1603"
+      >
+    </a
+      ><a name="1608" class="Symbol"
+      >(&#955;</a
+      ><a name="1610"
+      > </a
+      ><a name="1611" href="homotopy.PushoutSplit.html#1611" class="Bound"
+      >d</a
+      ><a name="1612"
+      > </a
+      ><a name="1613" class="Symbol"
+      >&#8594;</a
+      ><a name="1614"
+      > </a
+      ><a name="1615" href="lib.cubical.Square.html#8229" class="Function"
+      >&#8595;-='-from-square</a
+      ><a name="1631"
+      > </a
+      ><a name="1632" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1633"
+      >
+      </a
+      ><a name="1640" class="Symbol"
+      >(</a
+      ><a name="1641" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="1645"
+      > </a
+      ><a name="1646" href="homotopy.PushoutSplit.html#781" class="Function"
+      >split</a
+      ><a name="1651"
+      > </a
+      ><a name="1652" href="homotopy.PushoutSplit.html#999" class="Function"
+      >inner</a
+      ><a name="1657"
+      > </a
+      ><a name="1658" class="Symbol"
+      >(</a
+      ><a name="1659" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1663"
+      > </a
+      ><a name="1664" href="homotopy.PushoutSplit.html#1611" class="Bound"
+      >d</a
+      ><a name="1665" class="Symbol"
+      >)</a
+      ><a name="1666"
+      >
+       </a
+      ><a name="1674" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1675"
+      > </a
+      ><a name="1676" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1678"
+      > </a
+      ><a name="1679" class="Symbol"
+      >(</a
+      ><a name="1680" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1682"
+      > </a
+      ><a name="1683" href="homotopy.PushoutSplit.html#781" class="Function"
+      >split</a
+      ><a name="1688" class="Symbol"
+      >)</a
+      ><a name="1689"
+      > </a
+      ><a name="1690" class="Symbol"
+      >(</a
+      ><a name="1691" href="lib.types.Pushout.html#1428" class="Function"
+      >Inner.glue-&#946;</a
+      ><a name="1703"
+      > </a
+      ><a name="1704" href="homotopy.PushoutSplit.html#1611" class="Bound"
+      >d</a
+      ><a name="1705" class="Symbol"
+      >)</a
+      ><a name="1706"
+      > </a
+      ><a name="1707" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1708"
+      > </a
+      ><a name="1709" href="lib.types.Pushout.html#1428" class="Function"
+      >Split.glue-&#946;</a
+      ><a name="1721"
+      > </a
+      ><a name="1722" href="homotopy.PushoutSplit.html#1611" class="Bound"
+      >d</a
+      ><a name="1723" class="Symbol"
+      >)</a
+      ><a name="1724"
+      >
+      </a
+      ><a name="1731" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="1734"
+      > </a
+      ><a name="1735" href="homotopy.PushoutSplit.html#1197" class="Function"
+      >square-extend-tr</a
+      ><a name="1751"
+      > </a
+      ><a name="1752" class="Symbol"
+      >(</a
+      ><a name="1753" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1757"
+      > </a
+      ><a name="1758" class="Symbol"
+      >(</a
+      ><a name="1759" href="homotopy.PushoutSplit.html#437" class="Bound"
+      >g</a
+      ><a name="1760"
+      > </a
+      ><a name="1761" href="homotopy.PushoutSplit.html#1611" class="Bound"
+      >d</a
+      ><a name="1762" class="Symbol"
+      >))</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" href="lib.cubical.Square.html#484" class="Function"
+      >vid-square</a
+      ><a name="1775" class="Symbol"
+      >)</a
+      ><a name="1776"
+      >
+
+  </a
+      ><a name="1780" class="Keyword"
+      >abstract</a
+      ><a name="1788"
+      >
+    </a
+      ><a name="1793" href="homotopy.PushoutSplit.html#1793" class="Function"
+      >split-merge</a
+      ><a name="1804"
+      > </a
+      ><a name="1805" class="Symbol"
+      >:</a
+      ><a name="1806"
+      > </a
+      ><a name="1807" class="Symbol"
+      >(</a
+      ><a name="1808" href="homotopy.PushoutSplit.html#1808" class="Bound"
+      >l</a
+      ><a name="1809"
+      > </a
+      ><a name="1810" class="Symbol"
+      >:</a
+      ><a name="1811"
+      > </a
+      ><a name="1812" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="1819"
+      > </a
+      ><a name="1820" href="homotopy.PushoutSplit.html#520" class="Function"
+      >d&#8322;</a
+      ><a name="1822" class="Symbol"
+      >)</a
+      ><a name="1823"
+      > </a
+      ><a name="1824" class="Symbol"
+      >&#8594;</a
+      ><a name="1825"
+      > </a
+      ><a name="1826" href="homotopy.PushoutSplit.html#781" class="Function"
+      >split</a
+      ><a name="1831"
+      > </a
+      ><a name="1832" class="Symbol"
+      >(</a
+      ><a name="1833" href="homotopy.PushoutSplit.html#1133" class="Function"
+      >merge</a
+      ><a name="1838"
+      > </a
+      ><a name="1839" href="homotopy.PushoutSplit.html#1808" class="Bound"
+      >l</a
+      ><a name="1840" class="Symbol"
+      >)</a
+      ><a name="1841"
+      > </a
+      ><a name="1842" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1844"
+      > </a
+      ><a name="1845" href="homotopy.PushoutSplit.html#1808" class="Bound"
+      >l</a
+      ><a name="1846"
+      >
+    </a
+      ><a name="1851" href="homotopy.PushoutSplit.html#1793" class="Function"
+      >split-merge</a
+      ><a name="1862"
+      > </a
+      ><a name="1863" class="Symbol"
+      >=</a
+      ><a name="1864"
+      > </a
+      ><a name="1865" href="lib.types.Pushout.html#1094" class="Function"
+      >Pushout-elim</a
+      ><a name="1877"
+      >
+      </a
+      ><a name="1884" href="homotopy.PushoutSplit.html#1477" class="Function"
+      >split-inner</a
+      ><a name="1895"
+      >
+      </a
+      ><a name="1902" class="Symbol"
+      >(&#955;</a
+      ><a name="1904"
+      > </a
+      ><a name="1905" href="homotopy.PushoutSplit.html#1905" class="Bound"
+      >c</a
+      ><a name="1906"
+      > </a
+      ><a name="1907" class="Symbol"
+      >&#8594;</a
+      ><a name="1908"
+      > </a
+      ><a name="1909" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1912" class="Symbol"
+      >)</a
+      ><a name="1913"
+      >
+      </a
+      ><a name="1920" class="Symbol"
+      >(&#955;</a
+      ><a name="1922"
+      > </a
+      ><a name="1923" href="homotopy.PushoutSplit.html#1923" class="Bound"
+      >b</a
+      ><a name="1924"
+      > </a
+      ><a name="1925" class="Symbol"
+      >&#8594;</a
+      ><a name="1926"
+      > </a
+      ><a name="1927" href="lib.cubical.Square.html#10289" class="Function"
+      >&#8595;-&#8728;=idf-from-square</a
+      ><a name="1946"
+      > </a
+      ><a name="1947" href="homotopy.PushoutSplit.html#781" class="Function"
+      >split</a
+      ><a name="1952"
+      > </a
+      ><a name="1953" href="homotopy.PushoutSplit.html#1133" class="Function"
+      >merge</a
+      ><a name="1958"
+      > </a
+      ><a name="1959" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1960"
+      >
+        </a
+      ><a name="1969" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1971"
+      > </a
+      ><a name="1972" class="Symbol"
+      >(</a
+      ><a name="1973" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1975"
+      > </a
+      ><a name="1976" href="homotopy.PushoutSplit.html#781" class="Function"
+      >split</a
+      ><a name="1981" class="Symbol"
+      >)</a
+      ><a name="1982"
+      > </a
+      ><a name="1983" class="Symbol"
+      >(</a
+      ><a name="1984" href="lib.types.Pushout.html#1428" class="Function"
+      >Merge.glue-&#946;</a
+      ><a name="1996"
+      > </a
+      ><a name="1997" href="homotopy.PushoutSplit.html#1923" class="Bound"
+      >b</a
+      ><a name="1998" class="Symbol"
+      >)</a
+      ><a name="1999"
+      > </a
+      ><a name="2000" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="2003"
+      > </a
+      ><a name="2004" href="lib.cubical.Square.html#17806" class="Function"
+      >bl-square</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" class="Symbol"
+      >(</a
+      ><a name="2015" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2019"
+      > </a
+      ><a name="2020" href="homotopy.PushoutSplit.html#1923" class="Bound"
+      >b</a
+      ><a name="2021" class="Symbol"
+      >))</a
+      ><a name="2023"
+      >
+
+
+    </a
+      ><a name="2030" href="homotopy.PushoutSplit.html#2030" class="Function"
+      >merge-split</a
+      ><a name="2041"
+      > </a
+      ><a name="2042" class="Symbol"
+      >:</a
+      ><a name="2043"
+      > </a
+      ><a name="2044" class="Symbol"
+      >(</a
+      ><a name="2045" href="homotopy.PushoutSplit.html#2045" class="Bound"
+      >l</a
+      ><a name="2046"
+      > </a
+      ><a name="2047" class="Symbol"
+      >:</a
+      ><a name="2048"
+      > </a
+      ><a name="2049" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="2056"
+      > </a
+      ><a name="2057" href="homotopy.PushoutSplit.html#574" class="Function"
+      >d</a
+      ><a name="2058" class="Symbol"
+      >)</a
+      ><a name="2059"
+      > </a
+      ><a name="2060" class="Symbol"
+      >&#8594;</a
+      ><a name="2061"
+      > </a
+      ><a name="2062" href="homotopy.PushoutSplit.html#1133" class="Function"
+      >merge</a
+      ><a name="2067"
+      > </a
+      ><a name="2068" class="Symbol"
+      >(</a
+      ><a name="2069" href="homotopy.PushoutSplit.html#781" class="Function"
+      >split</a
+      ><a name="2074"
+      > </a
+      ><a name="2075" href="homotopy.PushoutSplit.html#2045" class="Bound"
+      >l</a
+      ><a name="2076" class="Symbol"
+      >)</a
+      ><a name="2077"
+      > </a
+      ><a name="2078" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2080"
+      > </a
+      ><a name="2081" href="homotopy.PushoutSplit.html#2045" class="Bound"
+      >l</a
+      ><a name="2082"
+      >
+    </a
+      ><a name="2087" href="homotopy.PushoutSplit.html#2030" class="Function"
+      >merge-split</a
+      ><a name="2098"
+      > </a
+      ><a name="2099" class="Symbol"
+      >=</a
+      ><a name="2100"
+      > </a
+      ><a name="2101" href="lib.types.Pushout.html#1094" class="Function"
+      >Pushout-elim</a
+      ><a name="2113"
+      >
+      </a
+      ><a name="2120" class="Symbol"
+      >(&#955;</a
+      ><a name="2122"
+      > </a
+      ><a name="2123" href="homotopy.PushoutSplit.html#2123" class="Bound"
+      >a</a
+      ><a name="2124"
+      > </a
+      ><a name="2125" class="Symbol"
+      >&#8594;</a
+      ><a name="2126"
+      > </a
+      ><a name="2127" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2130" class="Symbol"
+      >)</a
+      ><a name="2131"
+      >
+      </a
+      ><a name="2138" class="Symbol"
+      >(&#955;</a
+      ><a name="2140"
+      > </a
+      ><a name="2141" href="homotopy.PushoutSplit.html#2141" class="Bound"
+      >c</a
+      ><a name="2142"
+      > </a
+      ><a name="2143" class="Symbol"
+      >&#8594;</a
+      ><a name="2144"
+      > </a
+      ><a name="2145" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2148" class="Symbol"
+      >)</a
+      ><a name="2149"
+      >
+      </a
+      ><a name="2156" class="Symbol"
+      >(&#955;</a
+      ><a name="2158"
+      > </a
+      ><a name="2159" href="homotopy.PushoutSplit.html#2159" class="Bound"
+      >d</a
+      ><a name="2160"
+      > </a
+      ><a name="2161" class="Symbol"
+      >&#8594;</a
+      ><a name="2162"
+      > </a
+      ><a name="2163" href="lib.types.Paths.html#7720" class="Function"
+      >&#8595;-&#8728;=idf-in'</a
+      ><a name="2174"
+      > </a
+      ><a name="2175" href="homotopy.PushoutSplit.html#1133" class="Function"
+      >merge</a
+      ><a name="2180"
+      > </a
+      ><a name="2181" href="homotopy.PushoutSplit.html#781" class="Function"
+      >split</a
+      ><a name="2186"
+      > </a
+      ><a name="2187" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2188"
+      >
+        </a
+      ><a name="2197" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2199"
+      > </a
+      ><a name="2200" href="homotopy.PushoutSplit.html#1133" class="Function"
+      >merge</a
+      ><a name="2205"
+      > </a
+      ><a name="2206" class="Symbol"
+      >(</a
+      ><a name="2207" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2209"
+      > </a
+      ><a name="2210" href="homotopy.PushoutSplit.html#781" class="Function"
+      >split</a
+      ><a name="2215"
+      > </a
+      ><a name="2216" class="Symbol"
+      >(</a
+      ><a name="2217" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2221"
+      > </a
+      ><a name="2222" href="homotopy.PushoutSplit.html#2159" class="Bound"
+      >d</a
+      ><a name="2223" class="Symbol"
+      >))</a
+      ><a name="2225"
+      >
+          </a
+      ><a name="2236" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2238"
+      > </a
+      ><a name="2239" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2241"
+      > </a
+      ><a name="2242" class="Symbol"
+      >(</a
+      ><a name="2243" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2245"
+      > </a
+      ><a name="2246" href="homotopy.PushoutSplit.html#1133" class="Function"
+      >merge</a
+      ><a name="2251" class="Symbol"
+      >)</a
+      ><a name="2252"
+      > </a
+      ><a name="2253" class="Symbol"
+      >(</a
+      ><a name="2254" href="lib.types.Pushout.html#1428" class="Function"
+      >Split.glue-&#946;</a
+      ><a name="2266"
+      > </a
+      ><a name="2267" href="homotopy.PushoutSplit.html#2159" class="Bound"
+      >d</a
+      ><a name="2268" class="Symbol"
+      >)</a
+      ><a name="2269"
+      > </a
+      ><a name="2270" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2271"
+      >
+        </a
+      ><a name="2280" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2282"
+      > </a
+      ><a name="2283" href="homotopy.PushoutSplit.html#1133" class="Function"
+      >merge</a
+      ><a name="2288"
+      > </a
+      ><a name="2289" class="Symbol"
+      >(</a
+      ><a name="2290" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2292"
+      > </a
+      ><a name="2293" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="2297"
+      > </a
+      ><a name="2298" class="Symbol"
+      >(</a
+      ><a name="2299" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2303"
+      > </a
+      ><a name="2304" href="homotopy.PushoutSplit.html#2159" class="Bound"
+      >d</a
+      ><a name="2305" class="Symbol"
+      >)</a
+      ><a name="2306"
+      > </a
+      ><a name="2307" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2308"
+      > </a
+      ><a name="2309" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2313"
+      > </a
+      ><a name="2314" class="Symbol"
+      >(</a
+      ><a name="2315" href="homotopy.PushoutSplit.html#437" class="Bound"
+      >g</a
+      ><a name="2316"
+      > </a
+      ><a name="2317" href="homotopy.PushoutSplit.html#2159" class="Bound"
+      >d</a
+      ><a name="2318" class="Symbol"
+      >))</a
+      ><a name="2320"
+      >
+          </a
+      ><a name="2331" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2333"
+      > </a
+      ><a name="2334" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="2338"
+      > </a
+      ><a name="2339" href="homotopy.PushoutSplit.html#1133" class="Function"
+      >merge</a
+      ><a name="2344"
+      > </a
+      ><a name="2345" class="Symbol"
+      >(</a
+      ><a name="2346" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2348"
+      > </a
+      ><a name="2349" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="2353"
+      > </a
+      ><a name="2354" class="Symbol"
+      >(</a
+      ><a name="2355" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2359"
+      > </a
+      ><a name="2360" href="homotopy.PushoutSplit.html#2159" class="Bound"
+      >d</a
+      ><a name="2361" class="Symbol"
+      >))</a
+      ><a name="2363"
+      > </a
+      ><a name="2364" class="Symbol"
+      >(</a
+      ><a name="2365" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2369"
+      > </a
+      ><a name="2370" class="Symbol"
+      >(</a
+      ><a name="2371" href="homotopy.PushoutSplit.html#437" class="Bound"
+      >g</a
+      ><a name="2372"
+      > </a
+      ><a name="2373" href="homotopy.PushoutSplit.html#2159" class="Bound"
+      >d</a
+      ><a name="2374" class="Symbol"
+      >))</a
+      ><a name="2376"
+      > </a
+      ><a name="2377" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2378"
+      >
+        </a
+      ><a name="2387" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2389"
+      > </a
+      ><a name="2390" href="homotopy.PushoutSplit.html#1133" class="Function"
+      >merge</a
+      ><a name="2395"
+      > </a
+      ><a name="2396" class="Symbol"
+      >(</a
+      ><a name="2397" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2399"
+      > </a
+      ><a name="2400" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="2404"
+      > </a
+      ><a name="2405" class="Symbol"
+      >(</a
+      ><a name="2406" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2410"
+      > </a
+      ><a name="2411" href="homotopy.PushoutSplit.html#2159" class="Bound"
+      >d</a
+      ><a name="2412" class="Symbol"
+      >))</a
+      ><a name="2414"
+      > </a
+      ><a name="2415" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2416"
+      > </a
+      ><a name="2417" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2419"
+      > </a
+      ><a name="2420" href="homotopy.PushoutSplit.html#1133" class="Function"
+      >merge</a
+      ><a name="2425"
+      > </a
+      ><a name="2426" class="Symbol"
+      >(</a
+      ><a name="2427" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2431"
+      > </a
+      ><a name="2432" class="Symbol"
+      >(</a
+      ><a name="2433" href="homotopy.PushoutSplit.html#437" class="Bound"
+      >g</a
+      ><a name="2434"
+      > </a
+      ><a name="2435" href="homotopy.PushoutSplit.html#2159" class="Bound"
+      >d</a
+      ><a name="2436" class="Symbol"
+      >))</a
+      ><a name="2438"
+      >
+          </a
+      ><a name="2449" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2451"
+      > </a
+      ><a name="2452" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="2455"
+      > </a
+      ><a name="2456" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >_&#8729;_</a
+      ><a name="2459"
+      > </a
+      ><a name="2460" class="Symbol"
+      >(</a
+      ><a name="2461" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="2465"
+      > </a
+      ><a name="2466" href="homotopy.PushoutSplit.html#1133" class="Function"
+      >merge</a
+      ><a name="2471"
+      > </a
+      ><a name="2472" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="2476"
+      > </a
+      ><a name="2477" class="Symbol"
+      >(</a
+      ><a name="2478" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2482"
+      > </a
+      ><a name="2483" href="homotopy.PushoutSplit.html#2159" class="Bound"
+      >d</a
+      ><a name="2484" class="Symbol"
+      >))</a
+      ><a name="2486"
+      > </a
+      ><a name="2487" class="Symbol"
+      >(</a
+      ><a name="2488" href="lib.types.Pushout.html#1428" class="Function"
+      >Merge.glue-&#946;</a
+      ><a name="2500"
+      > </a
+      ><a name="2501" class="Symbol"
+      >(</a
+      ><a name="2502" href="homotopy.PushoutSplit.html#437" class="Bound"
+      >g</a
+      ><a name="2503"
+      > </a
+      ><a name="2504" href="homotopy.PushoutSplit.html#2159" class="Bound"
+      >d</a
+      ><a name="2505" class="Symbol"
+      >))</a
+      ><a name="2507"
+      > </a
+      ><a name="2508" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2509"
+      >
+        </a
+      ><a name="2518" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2520"
+      > </a
+      ><a name="2521" href="homotopy.PushoutSplit.html#999" class="Function"
+      >inner</a
+      ><a name="2526"
+      > </a
+      ><a name="2527" class="Symbol"
+      >(</a
+      ><a name="2528" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2532"
+      > </a
+      ><a name="2533" href="homotopy.PushoutSplit.html#2159" class="Bound"
+      >d</a
+      ><a name="2534" class="Symbol"
+      >)</a
+      ><a name="2535"
+      > </a
+      ><a name="2536" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2537"
+      > </a
+      ><a name="2538" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2541"
+      >
+          </a
+      ><a name="2552" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2554"
+      > </a
+      ><a name="2555" href="lib.PathGroupoid.html#1041" class="Function"
+      >&#8729;-unit-r</a
+      ><a name="2563"
+      > </a
+      ><a name="2564" class="Symbol"
+      >_</a
+      ><a name="2565"
+      > </a
+      ><a name="2566" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2567"
+      >
+        </a
+      ><a name="2576" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2578"
+      > </a
+      ><a name="2579" href="homotopy.PushoutSplit.html#999" class="Function"
+      >inner</a
+      ><a name="2584"
+      > </a
+      ><a name="2585" class="Symbol"
+      >(</a
+      ><a name="2586" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2590"
+      > </a
+      ><a name="2591" href="homotopy.PushoutSplit.html#2159" class="Bound"
+      >d</a
+      ><a name="2592" class="Symbol"
+      >)</a
+      ><a name="2593"
+      >
+          </a
+      ><a name="2604" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2606"
+      > </a
+      ><a name="2607" href="lib.types.Pushout.html#1428" class="Function"
+      >Inner.glue-&#946;</a
+      ><a name="2619"
+      > </a
+      ><a name="2620" href="homotopy.PushoutSplit.html#2159" class="Bound"
+      >d</a
+      ><a name="2621"
+      > </a
+      ><a name="2622" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2623"
+      >
+        </a
+      ><a name="2632" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2636"
+      > </a
+      ><a name="2637" href="homotopy.PushoutSplit.html#2159" class="Bound"
+      >d</a
+      ><a name="2638"
+      > </a
+      ><a name="2639" href="HoTT.html#767" class="Function Operator"
+      >&#8718;</a
+      ><a name="2640" class="Symbol"
+      >)</a
+      ><a name="2641"
+      >
+
+
+  </a
+      ><a name="2646" href="homotopy.PushoutSplit.html#2646" class="Function"
+      >split-equiv</a
+      ><a name="2657"
+      > </a
+      ><a name="2658" class="Symbol"
+      >:</a
+      ><a name="2659"
+      > </a
+      ><a name="2660" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="2667"
+      > </a
+      ><a name="2668" href="homotopy.PushoutSplit.html#574" class="Function"
+      >d</a
+      ><a name="2669"
+      > </a
+      ><a name="2670" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="2671"
+      > </a
+      ><a name="2672" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="2679"
+      > </a
+      ><a name="2680" href="homotopy.PushoutSplit.html#520" class="Function"
+      >d&#8322;</a
+      ><a name="2682"
+      >
+  </a
+      ><a name="2685" href="homotopy.PushoutSplit.html#2646" class="Function"
+      >split-equiv</a
+      ><a name="2696"
+      > </a
+      ><a name="2697" class="Symbol"
+      >=</a
+      ><a name="2698"
+      > </a
+      ><a name="2699" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="2704"
+      > </a
+      ><a name="2705" href="homotopy.PushoutSplit.html#781" class="Function"
+      >split</a
+      ><a name="2710"
+      > </a
+      ><a name="2711" href="homotopy.PushoutSplit.html#1133" class="Function"
+      >merge</a
+      ><a name="2716"
+      > </a
+      ><a name="2717" href="homotopy.PushoutSplit.html#1793" class="Function"
+      >split-merge</a
+      ><a name="2728"
+      > </a
+      ><a name="2729" href="homotopy.PushoutSplit.html#2030" class="Function"
+      >merge-split</a
+      ><a name="2740"
+      >
+
+</a
+      ><a name="2742" class="Comment"
+      >{-
+  two-pushouts-left : lift &#8728; left == left &#8728; left
+                      [ (&#955; E &#8594; (A &#8594; E)) &#8595; two-pushouts ]
+  two-pushouts-left = codomain-over-equiv _ _
+
+  two-pushouts-right : lift &#8728; right == right [ (&#955; E &#8594; (D &#8594; E)) &#8595; two-pushouts ]
+  two-pushouts-right = codomain-over-equiv _ _
+
+  two-pushouts-inner : lift &#8728; inner == left
+                       [ (&#955; E &#8594; (Pushout d&#8321; &#8594; E)) &#8595; two-pushouts ]
+  two-pushouts-inner = codomain-over-equiv _ _ &#9657; &#955;= split-inner
+-}</a
+      ><a name="3203"
+      >
+
+</a
+      ><a name="3205" href="homotopy.PushoutSplit.html#3205" class="Function"
+      >rsplit-equiv</a
+      ><a name="3217"
+      > </a
+      ><a name="3218" class="Symbol"
+      >=</a
+      ><a name="3219"
+      > </a
+      ><a name="3220" href="homotopy.PushoutSplit.html#2646" class="Function"
+      >PushoutRSplit.split-equiv</a
+      ><a name="3245"
+      >
+
+</a
+      ><a name="3247" class="Comment"
+      >--        h</a
+      ><a name="3258"
+      >
+</a
+      ><a name="3259" class="Comment"
+      >--     D --&gt; C    K = A &#8852;^D C / (f,h)       d&#8321; = A &lt;- D -&gt; C</a
+      ><a name="3319"
+      >
+</a
+      ><a name="3320" class="Comment"
+      >--    f|     |    L = B &#8852;^A K / (g,left)    d&#8322; = B &lt;- A -&gt; K</a
+      ><a name="3380"
+      >
+</a
+      ><a name="3381" class="Comment"
+      >--     v     v                              d  = B &lt;- D -&gt; C</a
+      ><a name="3441"
+      >
+</a
+      ><a name="3442" class="Comment"
+      >--     A --&gt; K</a
+      ><a name="3456"
+      >
+</a
+      ><a name="3457" class="Comment"
+      >--    g|     |</a
+      ><a name="3471"
+      >
+</a
+      ><a name="3472" class="Comment"
+      >--     v     v</a
+      ><a name="3486"
+      >
+</a
+      ><a name="3487" class="Comment"
+      >--     B --&gt; L</a
+      ><a name="3501"
+      >
+
+</a
+      ><a name="3503" class="Keyword"
+      >module</a
+      ><a name="3509"
+      > </a
+      ><a name="3510" href="homotopy.PushoutSplit.html#3510" class="Module"
+      >PushoutLSplit</a
+      ><a name="3523"
+      > </a
+      ><a name="3524" class="Symbol"
+      >{</a
+      ><a name="3525" href="homotopy.PushoutSplit.html#3525" class="Bound"
+      >i</a
+      ><a name="3526"
+      > </a
+      ><a name="3527" href="homotopy.PushoutSplit.html#3527" class="Bound"
+      >j</a
+      ><a name="3528"
+      > </a
+      ><a name="3529" href="homotopy.PushoutSplit.html#3529" class="Bound"
+      >k</a
+      ><a name="3530"
+      > </a
+      ><a name="3531" href="homotopy.PushoutSplit.html#3531" class="Bound"
+      >l</a
+      ><a name="3532" class="Symbol"
+      >}</a
+      ><a name="3533"
+      > </a
+      ><a name="3534" class="Symbol"
+      >{</a
+      ><a name="3535" href="homotopy.PushoutSplit.html#3535" class="Bound"
+      >A</a
+      ><a name="3536"
+      > </a
+      ><a name="3537" class="Symbol"
+      >:</a
+      ><a name="3538"
+      > </a
+      ><a name="3539" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3543"
+      > </a
+      ><a name="3544" href="homotopy.PushoutSplit.html#3525" class="Bound"
+      >i</a
+      ><a name="3545" class="Symbol"
+      >}</a
+      ><a name="3546"
+      > </a
+      ><a name="3547" class="Symbol"
+      >{</a
+      ><a name="3548" href="homotopy.PushoutSplit.html#3548" class="Bound"
+      >B</a
+      ><a name="3549"
+      > </a
+      ><a name="3550" class="Symbol"
+      >:</a
+      ><a name="3551"
+      > </a
+      ><a name="3552" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3556"
+      > </a
+      ><a name="3557" href="homotopy.PushoutSplit.html#3527" class="Bound"
+      >j</a
+      ><a name="3558" class="Symbol"
+      >}</a
+      ><a name="3559"
+      > </a
+      ><a name="3560" class="Symbol"
+      >{</a
+      ><a name="3561" href="homotopy.PushoutSplit.html#3561" class="Bound"
+      >C</a
+      ><a name="3562"
+      > </a
+      ><a name="3563" class="Symbol"
+      >:</a
+      ><a name="3564"
+      > </a
+      ><a name="3565" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3569"
+      > </a
+      ><a name="3570" href="homotopy.PushoutSplit.html#3529" class="Bound"
+      >k</a
+      ><a name="3571" class="Symbol"
+      >}</a
+      ><a name="3572"
+      >
+  </a
+      ><a name="3575" class="Symbol"
+      >{</a
+      ><a name="3576" href="homotopy.PushoutSplit.html#3576" class="Bound"
+      >D</a
+      ><a name="3577"
+      > </a
+      ><a name="3578" class="Symbol"
+      >:</a
+      ><a name="3579"
+      > </a
+      ><a name="3580" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3584"
+      > </a
+      ><a name="3585" href="homotopy.PushoutSplit.html#3531" class="Bound"
+      >l</a
+      ><a name="3586" class="Symbol"
+      >}</a
+      ><a name="3587"
+      > </a
+      ><a name="3588" class="Symbol"
+      >(</a
+      ><a name="3589" href="homotopy.PushoutSplit.html#3589" class="Bound"
+      >f</a
+      ><a name="3590"
+      > </a
+      ><a name="3591" class="Symbol"
+      >:</a
+      ><a name="3592"
+      > </a
+      ><a name="3593" href="homotopy.PushoutSplit.html#3576" class="Bound"
+      >D</a
+      ><a name="3594"
+      > </a
+      ><a name="3595" class="Symbol"
+      >&#8594;</a
+      ><a name="3596"
+      > </a
+      ><a name="3597" href="homotopy.PushoutSplit.html#3535" class="Bound"
+      >A</a
+      ><a name="3598" class="Symbol"
+      >)</a
+      ><a name="3599"
+      > </a
+      ><a name="3600" class="Symbol"
+      >(</a
+      ><a name="3601" href="homotopy.PushoutSplit.html#3601" class="Bound"
+      >g</a
+      ><a name="3602"
+      > </a
+      ><a name="3603" class="Symbol"
+      >:</a
+      ><a name="3604"
+      > </a
+      ><a name="3605" href="homotopy.PushoutSplit.html#3535" class="Bound"
+      >A</a
+      ><a name="3606"
+      > </a
+      ><a name="3607" class="Symbol"
+      >&#8594;</a
+      ><a name="3608"
+      > </a
+      ><a name="3609" href="homotopy.PushoutSplit.html#3548" class="Bound"
+      >B</a
+      ><a name="3610" class="Symbol"
+      >)</a
+      ><a name="3611"
+      > </a
+      ><a name="3612" class="Symbol"
+      >(</a
+      ><a name="3613" href="homotopy.PushoutSplit.html#3613" class="Bound"
+      >h</a
+      ><a name="3614"
+      > </a
+      ><a name="3615" class="Symbol"
+      >:</a
+      ><a name="3616"
+      > </a
+      ><a name="3617" href="homotopy.PushoutSplit.html#3576" class="Bound"
+      >D</a
+      ><a name="3618"
+      > </a
+      ><a name="3619" class="Symbol"
+      >&#8594;</a
+      ><a name="3620"
+      > </a
+      ><a name="3621" href="homotopy.PushoutSplit.html#3561" class="Bound"
+      >C</a
+      ><a name="3622" class="Symbol"
+      >)</a
+      ><a name="3623"
+      > </a
+      ><a name="3624" class="Keyword"
+      >where</a
+      ><a name="3629"
+      >
+
+  </a
+      ><a name="3633" class="Keyword"
+      >private</a
+      ><a name="3640"
+      >
+    </a
+      ><a name="3645" href="homotopy.PushoutSplit.html#3645" class="Function"
+      >d&#8321;</a
+      ><a name="3647"
+      > </a
+      ><a name="3648" class="Symbol"
+      >:</a
+      ><a name="3649"
+      > </a
+      ><a name="3650" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="3654"
+      >
+    </a
+      ><a name="3659" href="homotopy.PushoutSplit.html#3645" class="Function"
+      >d&#8321;</a
+      ><a name="3661"
+      > </a
+      ><a name="3662" class="Symbol"
+      >=</a
+      ><a name="3663"
+      > </a
+      ><a name="3664" href="lib.types.Span.html#270" class="InductiveConstructor"
+      >span</a
+      ><a name="3668"
+      > </a
+      ><a name="3669" href="homotopy.PushoutSplit.html#3535" class="Bound"
+      >A</a
+      ><a name="3670"
+      > </a
+      ><a name="3671" href="homotopy.PushoutSplit.html#3561" class="Bound"
+      >C</a
+      ><a name="3672"
+      > </a
+      ><a name="3673" href="homotopy.PushoutSplit.html#3576" class="Bound"
+      >D</a
+      ><a name="3674"
+      > </a
+      ><a name="3675" href="homotopy.PushoutSplit.html#3589" class="Bound"
+      >f</a
+      ><a name="3676"
+      > </a
+      ><a name="3677" href="homotopy.PushoutSplit.html#3613" class="Bound"
+      >h</a
+      ><a name="3678"
+      >
+
+    </a
+      ><a name="3684" href="homotopy.PushoutSplit.html#3684" class="Function"
+      >d&#8322;</a
+      ><a name="3686"
+      > </a
+      ><a name="3687" class="Symbol"
+      >:</a
+      ><a name="3688"
+      > </a
+      ><a name="3689" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="3693"
+      >
+    </a
+      ><a name="3698" href="homotopy.PushoutSplit.html#3684" class="Function"
+      >d&#8322;</a
+      ><a name="3700"
+      > </a
+      ><a name="3701" class="Symbol"
+      >=</a
+      ><a name="3702"
+      > </a
+      ><a name="3703" href="lib.types.Span.html#270" class="InductiveConstructor"
+      >span</a
+      ><a name="3707"
+      > </a
+      ><a name="3708" href="homotopy.PushoutSplit.html#3548" class="Bound"
+      >B</a
+      ><a name="3709"
+      > </a
+      ><a name="3710" class="Symbol"
+      >(</a
+      ><a name="3711" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="3718"
+      > </a
+      ><a name="3719" href="homotopy.PushoutSplit.html#3645" class="Function"
+      >d&#8321;</a
+      ><a name="3721" class="Symbol"
+      >)</a
+      ><a name="3722"
+      > </a
+      ><a name="3723" href="homotopy.PushoutSplit.html#3535" class="Bound"
+      >A</a
+      ><a name="3724"
+      > </a
+      ><a name="3725" href="homotopy.PushoutSplit.html#3601" class="Bound"
+      >g</a
+      ><a name="3726"
+      > </a
+      ><a name="3727" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="3731"
+      >
+
+    </a
+      ><a name="3737" href="homotopy.PushoutSplit.html#3737" class="Function"
+      >d</a
+      ><a name="3738"
+      > </a
+      ><a name="3739" class="Symbol"
+      >:</a
+      ><a name="3740"
+      > </a
+      ><a name="3741" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="3745"
+      >
+    </a
+      ><a name="3750" href="homotopy.PushoutSplit.html#3737" class="Function"
+      >d</a
+      ><a name="3751"
+      > </a
+      ><a name="3752" class="Symbol"
+      >=</a
+      ><a name="3753"
+      > </a
+      ><a name="3754" href="lib.types.Span.html#270" class="InductiveConstructor"
+      >span</a
+      ><a name="3758"
+      > </a
+      ><a name="3759" href="homotopy.PushoutSplit.html#3548" class="Bound"
+      >B</a
+      ><a name="3760"
+      > </a
+      ><a name="3761" href="homotopy.PushoutSplit.html#3561" class="Bound"
+      >C</a
+      ><a name="3762"
+      > </a
+      ><a name="3763" href="homotopy.PushoutSplit.html#3576" class="Bound"
+      >D</a
+      ><a name="3764"
+      > </a
+      ><a name="3765" class="Symbol"
+      >(</a
+      ><a name="3766" href="homotopy.PushoutSplit.html#3601" class="Bound"
+      >g</a
+      ><a name="3767"
+      > </a
+      ><a name="3768" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3769"
+      > </a
+      ><a name="3770" href="homotopy.PushoutSplit.html#3589" class="Bound"
+      >f</a
+      ><a name="3771" class="Symbol"
+      >)</a
+      ><a name="3772"
+      > </a
+      ><a name="3773" href="homotopy.PushoutSplit.html#3613" class="Bound"
+      >h</a
+      ><a name="3774"
+      >
+
+  </a
+      ><a name="3778" href="homotopy.PushoutSplit.html#3778" class="Function"
+      >split-span-map</a
+      ><a name="3792"
+      > </a
+      ><a name="3793" class="Symbol"
+      >:</a
+      ><a name="3794"
+      > </a
+      ><a name="3795" href="lib.types.Span.html#2386" class="Record"
+      >SpanMap</a
+      ><a name="3802"
+      > </a
+      ><a name="3803" href="homotopy.PushoutSplit.html#3737" class="Function"
+      >d</a
+      ><a name="3804"
+      > </a
+      ><a name="3805" href="homotopy.PushoutSplit.html#3684" class="Function"
+      >d&#8322;</a
+      ><a name="3807"
+      >
+  </a
+      ><a name="3810" href="homotopy.PushoutSplit.html#3778" class="Function"
+      >split-span-map</a
+      ><a name="3824"
+      > </a
+      ><a name="3825" class="Symbol"
+      >=</a
+      ><a name="3826"
+      > </a
+      ><a name="3827" href="lib.types.Span.html#2556" class="InductiveConstructor"
+      >span-map</a
+      ><a name="3835"
+      > </a
+      ><a name="3836" class="Symbol"
+      >(</a
+      ><a name="3837" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="3840"
+      > </a
+      ><a name="3841" href="homotopy.PushoutSplit.html#3548" class="Bound"
+      >B</a
+      ><a name="3842" class="Symbol"
+      >)</a
+      ><a name="3843"
+      > </a
+      ><a name="3844" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="3849"
+      > </a
+      ><a name="3850" href="homotopy.PushoutSplit.html#3589" class="Bound"
+      >f</a
+      ><a name="3851"
+      > </a
+      ><a name="3852" class="Symbol"
+      >(</a
+      ><a name="3853" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="3861"
+      > </a
+      ><a name="3862" class="Symbol"
+      >&#955;</a
+      ><a name="3863"
+      > </a
+      ><a name="3864" href="homotopy.PushoutSplit.html#3864" class="Bound"
+      >_</a
+      ><a name="3865"
+      > </a
+      ><a name="3866" class="Symbol"
+      >&#8594;</a
+      ><a name="3867"
+      > </a
+      ><a name="3868" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3871" class="Symbol"
+      >)</a
+      ><a name="3872"
+      > </a
+      ><a name="3873" class="Symbol"
+      >(</a
+      ><a name="3874" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="3882"
+      > </a
+      ><a name="3883" class="Symbol"
+      >&#955;</a
+      ><a name="3884"
+      > </a
+      ><a name="3885" href="homotopy.PushoutSplit.html#3885" class="Bound"
+      >d</a
+      ><a name="3886"
+      > </a
+      ><a name="3887" class="Symbol"
+      >&#8594;</a
+      ><a name="3888"
+      > </a
+      ><a name="3889" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3890"
+      > </a
+      ><a name="3891" class="Symbol"
+      >(</a
+      ><a name="3892" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="3896"
+      > </a
+      ><a name="3897" href="homotopy.PushoutSplit.html#3885" class="Bound"
+      >d</a
+      ><a name="3898" class="Symbol"
+      >))</a
+      ><a name="3900"
+      >
+
+  </a
+      ><a name="3904" class="Keyword"
+      >module</a
+      ><a name="3910"
+      > </a
+      ><a name="3911" href="homotopy.PushoutSplit.html#3911" class="Module"
+      >Split</a
+      ><a name="3916"
+      > </a
+      ><a name="3917" class="Symbol"
+      >=</a
+      ><a name="3918"
+      > </a
+      ><a name="3919" href="lib.types.PushoutFmap.html#291" class="Module"
+      >PushoutFmap</a
+      ><a name="3930"
+      > </a
+      ><a name="3931" href="homotopy.PushoutSplit.html#3778" class="Function"
+      >split-span-map</a
+      ><a name="3945"
+      >
+
+  </a
+      ><a name="3949" href="homotopy.PushoutSplit.html#3949" class="Function"
+      >split</a
+      ><a name="3954"
+      > </a
+      ><a name="3955" class="Symbol"
+      >:</a
+      ><a name="3956"
+      > </a
+      ><a name="3957" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="3964"
+      > </a
+      ><a name="3965" href="homotopy.PushoutSplit.html#3737" class="Function"
+      >d</a
+      ><a name="3966"
+      > </a
+      ><a name="3967" class="Symbol"
+      >&#8594;</a
+      ><a name="3968"
+      > </a
+      ><a name="3969" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="3976"
+      > </a
+      ><a name="3977" href="homotopy.PushoutSplit.html#3684" class="Function"
+      >d&#8322;</a
+      ><a name="3979"
+      >
+  </a
+      ><a name="3982" href="homotopy.PushoutSplit.html#3949" class="Function"
+      >split</a
+      ><a name="3987"
+      > </a
+      ><a name="3988" class="Symbol"
+      >=</a
+      ><a name="3989"
+      > </a
+      ><a name="3990" href="lib.types.Pushout.html#1397" class="Function"
+      >Split.f</a
+      ><a name="3997"
+      >
+
+  </a
+      ><a name="4001" href="homotopy.PushoutSplit.html#4001" class="Function"
+      >inner-span-map</a
+      ><a name="4015"
+      > </a
+      ><a name="4016" class="Symbol"
+      >:</a
+      ><a name="4017"
+      > </a
+      ><a name="4018" href="lib.types.Span.html#2386" class="Record"
+      >SpanMap</a
+      ><a name="4025"
+      > </a
+      ><a name="4026" href="homotopy.PushoutSplit.html#3645" class="Function"
+      >d&#8321;</a
+      ><a name="4028"
+      > </a
+      ><a name="4029" href="homotopy.PushoutSplit.html#3737" class="Function"
+      >d</a
+      ><a name="4030"
+      >
+  </a
+      ><a name="4033" href="homotopy.PushoutSplit.html#4001" class="Function"
+      >inner-span-map</a
+      ><a name="4047"
+      > </a
+      ><a name="4048" class="Symbol"
+      >=</a
+      ><a name="4049"
+      > </a
+      ><a name="4050" href="lib.types.Span.html#2556" class="InductiveConstructor"
+      >span-map</a
+      ><a name="4058"
+      > </a
+      ><a name="4059" href="homotopy.PushoutSplit.html#3601" class="Bound"
+      >g</a
+      ><a name="4060"
+      > </a
+      ><a name="4061" class="Symbol"
+      >(</a
+      ><a name="4062" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="4065"
+      > </a
+      ><a name="4066" href="homotopy.PushoutSplit.html#3561" class="Bound"
+      >C</a
+      ><a name="4067" class="Symbol"
+      >)</a
+      ><a name="4068"
+      > </a
+      ><a name="4069" class="Symbol"
+      >(</a
+      ><a name="4070" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="4073"
+      > </a
+      ><a name="4074" href="homotopy.PushoutSplit.html#3576" class="Bound"
+      >D</a
+      ><a name="4075" class="Symbol"
+      >)</a
+      ><a name="4076"
+      > </a
+      ><a name="4077" class="Symbol"
+      >(</a
+      ><a name="4078" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="4086"
+      > </a
+      ><a name="4087" class="Symbol"
+      >&#955;</a
+      ><a name="4088"
+      > </a
+      ><a name="4089" href="homotopy.PushoutSplit.html#4089" class="Bound"
+      >_</a
+      ><a name="4090"
+      > </a
+      ><a name="4091" class="Symbol"
+      >&#8594;</a
+      ><a name="4092"
+      > </a
+      ><a name="4093" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4096" class="Symbol"
+      >)</a
+      ><a name="4097"
+      > </a
+      ><a name="4098" class="Symbol"
+      >(</a
+      ><a name="4099" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="4107"
+      > </a
+      ><a name="4108" class="Symbol"
+      >&#955;</a
+      ><a name="4109"
+      > </a
+      ><a name="4110" href="homotopy.PushoutSplit.html#4110" class="Bound"
+      >_</a
+      ><a name="4111"
+      > </a
+      ><a name="4112" class="Symbol"
+      >&#8594;</a
+      ><a name="4113"
+      > </a
+      ><a name="4114" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4117" class="Symbol"
+      >)</a
+      ><a name="4118"
+      >
+
+  </a
+      ><a name="4122" class="Keyword"
+      >module</a
+      ><a name="4128"
+      > </a
+      ><a name="4129" href="homotopy.PushoutSplit.html#4129" class="Module"
+      >Inner</a
+      ><a name="4134"
+      > </a
+      ><a name="4135" class="Symbol"
+      >=</a
+      ><a name="4136"
+      > </a
+      ><a name="4137" href="lib.types.PushoutFmap.html#291" class="Module"
+      >PushoutFmap</a
+      ><a name="4148"
+      > </a
+      ><a name="4149" href="homotopy.PushoutSplit.html#4001" class="Function"
+      >inner-span-map</a
+      ><a name="4163"
+      >
+
+  </a
+      ><a name="4167" href="homotopy.PushoutSplit.html#4167" class="Function"
+      >inner</a
+      ><a name="4172"
+      > </a
+      ><a name="4173" class="Symbol"
+      >:</a
+      ><a name="4174"
+      > </a
+      ><a name="4175" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="4182"
+      > </a
+      ><a name="4183" href="homotopy.PushoutSplit.html#3645" class="Function"
+      >d&#8321;</a
+      ><a name="4185"
+      > </a
+      ><a name="4186" class="Symbol"
+      >&#8594;</a
+      ><a name="4187"
+      > </a
+      ><a name="4188" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="4195"
+      > </a
+      ><a name="4196" href="homotopy.PushoutSplit.html#3737" class="Function"
+      >d</a
+      ><a name="4197"
+      >
+  </a
+      ><a name="4200" href="homotopy.PushoutSplit.html#4167" class="Function"
+      >inner</a
+      ><a name="4205"
+      > </a
+      ><a name="4206" class="Symbol"
+      >=</a
+      ><a name="4207"
+      > </a
+      ><a name="4208" href="lib.types.Pushout.html#1397" class="Function"
+      >Inner.f</a
+      ><a name="4215"
+      >
+
+  </a
+      ><a name="4219" class="Keyword"
+      >module</a
+      ><a name="4225"
+      > </a
+      ><a name="4226" href="homotopy.PushoutSplit.html#4226" class="Module"
+      >Merge</a
+      ><a name="4231"
+      > </a
+      ><a name="4232" class="Symbol"
+      >=</a
+      ><a name="4233"
+      > </a
+      ><a name="4234" href="lib.types.Pushout.html#1131" class="Module"
+      >PushoutRec</a
+      ><a name="4244"
+      > </a
+      ><a name="4245" class="Symbol"
+      >{</a
+      ><a name="4246" class="Argument"
+      >d</a
+      ><a name="4247"
+      > </a
+      ><a name="4248" class="Symbol"
+      >=</a
+      ><a name="4249"
+      > </a
+      ><a name="4250" href="homotopy.PushoutSplit.html#3684" class="Function"
+      >d&#8322;</a
+      ><a name="4252" class="Symbol"
+      >}</a
+      ><a name="4253"
+      > </a
+      ><a name="4254" class="Symbol"
+      >{</a
+      ><a name="4255" class="Argument"
+      >D</a
+      ><a name="4256"
+      > </a
+      ><a name="4257" class="Symbol"
+      >=</a
+      ><a name="4258"
+      > </a
+      ><a name="4259" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="4266"
+      > </a
+      ><a name="4267" href="homotopy.PushoutSplit.html#3737" class="Function"
+      >d</a
+      ><a name="4268" class="Symbol"
+      >}</a
+      ><a name="4269"
+      >
+    </a
+      ><a name="4274" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="4278"
+      > </a
+      ><a name="4279" href="homotopy.PushoutSplit.html#4167" class="Function"
+      >inner</a
+      ><a name="4284"
+      > </a
+      ><a name="4285" class="Symbol"
+      >(&#955;</a
+      ><a name="4287"
+      > </a
+      ><a name="4288" href="homotopy.PushoutSplit.html#4288" class="Bound"
+      >_</a
+      ><a name="4289"
+      > </a
+      ><a name="4290" class="Symbol"
+      >&#8594;</a
+      ><a name="4291"
+      > </a
+      ><a name="4292" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4295" class="Symbol"
+      >)</a
+      ><a name="4296"
+      >
+
+  </a
+      ><a name="4300" href="homotopy.PushoutSplit.html#4300" class="Function"
+      >merge</a
+      ><a name="4305"
+      > </a
+      ><a name="4306" class="Symbol"
+      >:</a
+      ><a name="4307"
+      > </a
+      ><a name="4308" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="4315"
+      > </a
+      ><a name="4316" href="homotopy.PushoutSplit.html#3684" class="Function"
+      >d&#8322;</a
+      ><a name="4318"
+      > </a
+      ><a name="4319" class="Symbol"
+      >&#8594;</a
+      ><a name="4320"
+      > </a
+      ><a name="4321" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="4328"
+      > </a
+      ><a name="4329" href="homotopy.PushoutSplit.html#3737" class="Function"
+      >d</a
+      ><a name="4330"
+      >
+  </a
+      ><a name="4333" href="homotopy.PushoutSplit.html#4300" class="Function"
+      >merge</a
+      ><a name="4338"
+      > </a
+      ><a name="4339" class="Symbol"
+      >=</a
+      ><a name="4340"
+      > </a
+      ><a name="4341" href="lib.types.Pushout.html#1397" class="Function"
+      >Merge.f</a
+      ><a name="4348"
+      >
+
+  </a
+      ><a name="4352" class="Keyword"
+      >private</a
+      ><a name="4359"
+      >
+    </a
+      ><a name="4364" href="homotopy.PushoutSplit.html#4364" class="Function"
+      >square-extend-tl</a
+      ><a name="4380"
+      > </a
+      ><a name="4381" class="Symbol"
+      >:</a
+      ><a name="4382"
+      > </a
+      ><a name="4383" class="Symbol"
+      >&#8704;</a
+      ><a name="4384"
+      > </a
+      ><a name="4385" class="Symbol"
+      >{</a
+      ><a name="4386" href="homotopy.PushoutSplit.html#4386" class="Bound"
+      >i</a
+      ><a name="4387" class="Symbol"
+      >}</a
+      ><a name="4388"
+      > </a
+      ><a name="4389" class="Symbol"
+      >{</a
+      ><a name="4390" href="homotopy.PushoutSplit.html#4390" class="Bound"
+      >A</a
+      ><a name="4391"
+      > </a
+      ><a name="4392" class="Symbol"
+      >:</a
+      ><a name="4393"
+      > </a
+      ><a name="4394" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="4398"
+      > </a
+      ><a name="4399" href="homotopy.PushoutSplit.html#4386" class="Bound"
+      >i</a
+      ><a name="4400" class="Symbol"
+      >}</a
+      ><a name="4401"
+      > </a
+      ><a name="4402" class="Symbol"
+      >{</a
+      ><a name="4403" href="homotopy.PushoutSplit.html#4403" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="4406"
+      > </a
+      ><a name="4407" href="homotopy.PushoutSplit.html#4407" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="4410"
+      > </a
+      ><a name="4411" href="homotopy.PushoutSplit.html#4411" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="4414"
+      > </a
+      ><a name="4415" href="homotopy.PushoutSplit.html#4415" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="4418"
+      > </a
+      ><a name="4419" href="homotopy.PushoutSplit.html#4419" class="Bound"
+      >b</a
+      ><a name="4420"
+      > </a
+      ><a name="4421" class="Symbol"
+      >:</a
+      ><a name="4422"
+      > </a
+      ><a name="4423" href="homotopy.PushoutSplit.html#4390" class="Bound"
+      >A</a
+      ><a name="4424" class="Symbol"
+      >}</a
+      ><a name="4425"
+      >
+      </a
+      ><a name="4432" class="Symbol"
+      >{</a
+      ><a name="4433" href="homotopy.PushoutSplit.html#4433" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="4436"
+      > </a
+      ><a name="4437" class="Symbol"
+      >:</a
+      ><a name="4438"
+      > </a
+      ><a name="4439" href="homotopy.PushoutSplit.html#4403" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="4442"
+      > </a
+      ><a name="4443" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4445"
+      > </a
+      ><a name="4446" href="homotopy.PushoutSplit.html#4407" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="4449" class="Symbol"
+      >}</a
+      ><a name="4450"
+      > </a
+      ><a name="4451" class="Symbol"
+      >{</a
+      ><a name="4452" href="homotopy.PushoutSplit.html#4452" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="4455"
+      > </a
+      ><a name="4456" class="Symbol"
+      >:</a
+      ><a name="4457"
+      > </a
+      ><a name="4458" href="homotopy.PushoutSplit.html#4403" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="4461"
+      > </a
+      ><a name="4462" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4464"
+      > </a
+      ><a name="4465" href="homotopy.PushoutSplit.html#4411" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="4468" class="Symbol"
+      >}</a
+      ><a name="4469"
+      >
+      </a
+      ><a name="4476" class="Symbol"
+      >{</a
+      ><a name="4477" href="homotopy.PushoutSplit.html#4477" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="4480"
+      > </a
+      ><a name="4481" class="Symbol"
+      >:</a
+      ><a name="4482"
+      > </a
+      ><a name="4483" href="homotopy.PushoutSplit.html#4407" class="Bound"
+      >a&#8320;&#8321;</a
+      ><a name="4486"
+      > </a
+      ><a name="4487" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4489"
+      > </a
+      ><a name="4490" href="homotopy.PushoutSplit.html#4415" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="4493" class="Symbol"
+      >}</a
+      ><a name="4494"
+      > </a
+      ><a name="4495" class="Symbol"
+      >{</a
+      ><a name="4496" href="homotopy.PushoutSplit.html#4496" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="4499"
+      > </a
+      ><a name="4500" class="Symbol"
+      >:</a
+      ><a name="4501"
+      > </a
+      ><a name="4502" href="homotopy.PushoutSplit.html#4411" class="Bound"
+      >a&#8321;&#8320;</a
+      ><a name="4505"
+      > </a
+      ><a name="4506" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4508"
+      > </a
+      ><a name="4509" href="homotopy.PushoutSplit.html#4415" class="Bound"
+      >a&#8321;&#8321;</a
+      ><a name="4512" class="Symbol"
+      >}</a
+      ><a name="4513"
+      > </a
+      ><a name="4514" class="Symbol"
+      >(</a
+      ><a name="4515" href="homotopy.PushoutSplit.html#4515" class="Bound"
+      >q</a
+      ><a name="4516"
+      > </a
+      ><a name="4517" class="Symbol"
+      >:</a
+      ><a name="4518"
+      > </a
+      ><a name="4519" href="homotopy.PushoutSplit.html#4419" class="Bound"
+      >b</a
+      ><a name="4520"
+      > </a
+      ><a name="4521" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4523"
+      > </a
+      ><a name="4524" href="homotopy.PushoutSplit.html#4403" class="Bound"
+      >a&#8320;&#8320;</a
+      ><a name="4527" class="Symbol"
+      >)</a
+      ><a name="4528"
+      >
+      </a
+      ><a name="4535" class="Symbol"
+      >&#8594;</a
+      ><a name="4536"
+      > </a
+      ><a name="4537" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="4543"
+      > </a
+      ><a name="4544" href="homotopy.PushoutSplit.html#4433" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="4547"
+      > </a
+      ><a name="4548" href="homotopy.PushoutSplit.html#4452" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="4551"
+      > </a
+      ><a name="4552" href="homotopy.PushoutSplit.html#4477" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="4555"
+      > </a
+      ><a name="4556" href="homotopy.PushoutSplit.html#4496" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="4559"
+      >
+      </a
+      ><a name="4566" class="Symbol"
+      >&#8594;</a
+      ><a name="4567"
+      > </a
+      ><a name="4568" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="4574"
+      > </a
+      ><a name="4575" class="Symbol"
+      >(</a
+      ><a name="4576" href="homotopy.PushoutSplit.html#4515" class="Bound"
+      >q</a
+      ><a name="4577"
+      > </a
+      ><a name="4578" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="4580"
+      > </a
+      ><a name="4581" href="homotopy.PushoutSplit.html#4433" class="Bound"
+      >p&#8320;&#8331;</a
+      ><a name="4584" class="Symbol"
+      >)</a
+      ><a name="4585"
+      > </a
+      ><a name="4586" class="Symbol"
+      >(</a
+      ><a name="4587" href="homotopy.PushoutSplit.html#4515" class="Bound"
+      >q</a
+      ><a name="4588"
+      > </a
+      ><a name="4589" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="4591"
+      > </a
+      ><a name="4592" href="homotopy.PushoutSplit.html#4452" class="Bound"
+      >p&#8331;&#8320;</a
+      ><a name="4595" class="Symbol"
+      >)</a
+      ><a name="4596"
+      > </a
+      ><a name="4597" href="homotopy.PushoutSplit.html#4477" class="Bound"
+      >p&#8331;&#8321;</a
+      ><a name="4600"
+      > </a
+      ><a name="4601" href="homotopy.PushoutSplit.html#4496" class="Bound"
+      >p&#8321;&#8331;</a
+      ><a name="4604"
+      >
+    </a
+      ><a name="4609" href="homotopy.PushoutSplit.html#4364" class="Function"
+      >square-extend-tl</a
+      ><a name="4625"
+      > </a
+      ><a name="4626" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4629"
+      > </a
+      ><a name="4630" href="lib.cubical.Square.html#340" class="InductiveConstructor"
+      >ids</a
+      ><a name="4633"
+      > </a
+      ><a name="4634" class="Symbol"
+      >=</a
+      ><a name="4635"
+      > </a
+      ><a name="4636" href="lib.cubical.Square.html#340" class="InductiveConstructor"
+      >ids</a
+      ><a name="4639"
+      >
+
+  </a
+      ><a name="4643" href="homotopy.PushoutSplit.html#4643" class="Function"
+      >split-inner</a
+      ><a name="4654"
+      > </a
+      ><a name="4655" class="Symbol"
+      >:</a
+      ><a name="4656"
+      > </a
+      ><a name="4657" class="Symbol"
+      >(</a
+      ><a name="4658" href="homotopy.PushoutSplit.html#4658" class="Bound"
+      >k</a
+      ><a name="4659"
+      > </a
+      ><a name="4660" class="Symbol"
+      >:</a
+      ><a name="4661"
+      > </a
+      ><a name="4662" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="4669"
+      > </a
+      ><a name="4670" href="homotopy.PushoutSplit.html#3645" class="Function"
+      >d&#8321;</a
+      ><a name="4672" class="Symbol"
+      >)</a
+      ><a name="4673"
+      > </a
+      ><a name="4674" class="Symbol"
+      >&#8594;</a
+      ><a name="4675"
+      > </a
+      ><a name="4676" href="homotopy.PushoutSplit.html#3949" class="Function"
+      >split</a
+      ><a name="4681"
+      > </a
+      ><a name="4682" class="Symbol"
+      >(</a
+      ><a name="4683" href="homotopy.PushoutSplit.html#4167" class="Function"
+      >inner</a
+      ><a name="4688"
+      > </a
+      ><a name="4689" href="homotopy.PushoutSplit.html#4658" class="Bound"
+      >k</a
+      ><a name="4690" class="Symbol"
+      >)</a
+      ><a name="4691"
+      > </a
+      ><a name="4692" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4694"
+      > </a
+      ><a name="4695" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="4700"
+      > </a
+      ><a name="4701" href="homotopy.PushoutSplit.html#4658" class="Bound"
+      >k</a
+      ><a name="4702"
+      >
+  </a
+      ><a name="4705" href="homotopy.PushoutSplit.html#4643" class="Function"
+      >split-inner</a
+      ><a name="4716"
+      > </a
+      ><a name="4717" class="Symbol"
+      >=</a
+      ><a name="4718"
+      > </a
+      ><a name="4719" href="lib.types.Pushout.html#1094" class="Function"
+      >Pushout-elim</a
+      ><a name="4731"
+      >
+    </a
+      ><a name="4736" class="Symbol"
+      >(&#955;</a
+      ><a name="4738"
+      > </a
+      ><a name="4739" href="homotopy.PushoutSplit.html#4739" class="Bound"
+      >a</a
+      ><a name="4740"
+      > </a
+      ><a name="4741" class="Symbol"
+      >&#8594;</a
+      ><a name="4742"
+      > </a
+      ><a name="4743" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="4747"
+      > </a
+      ><a name="4748" href="homotopy.PushoutSplit.html#4739" class="Bound"
+      >a</a
+      ><a name="4749" class="Symbol"
+      >)</a
+      ><a name="4750"
+      >
+    </a
+      ><a name="4755" class="Symbol"
+      >(&#955;</a
+      ><a name="4757"
+      > </a
+      ><a name="4758" href="homotopy.PushoutSplit.html#4758" class="Bound"
+      >c</a
+      ><a name="4759"
+      > </a
+      ><a name="4760" class="Symbol"
+      >&#8594;</a
+      ><a name="4761"
+      > </a
+      ><a name="4762" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4765" class="Symbol"
+      >)</a
+      ><a name="4766"
+      >
+    </a
+      ><a name="4771" class="Symbol"
+      >(&#955;</a
+      ><a name="4773"
+      > </a
+      ><a name="4774" href="homotopy.PushoutSplit.html#4774" class="Bound"
+      >d</a
+      ><a name="4775"
+      > </a
+      ><a name="4776" class="Symbol"
+      >&#8594;</a
+      ><a name="4777"
+      > </a
+      ><a name="4778" href="lib.cubical.Square.html#8229" class="Function"
+      >&#8595;-='-from-square</a
+      ><a name="4794"
+      > </a
+      ><a name="4795" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="4796"
+      >
+      </a
+      ><a name="4803" class="Symbol"
+      >(</a
+      ><a name="4804" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="4808"
+      > </a
+      ><a name="4809" href="homotopy.PushoutSplit.html#3949" class="Function"
+      >split</a
+      ><a name="4814"
+      > </a
+      ><a name="4815" href="homotopy.PushoutSplit.html#4167" class="Function"
+      >inner</a
+      ><a name="4820"
+      > </a
+      ><a name="4821" class="Symbol"
+      >(</a
+      ><a name="4822" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="4826"
+      > </a
+      ><a name="4827" href="homotopy.PushoutSplit.html#4774" class="Bound"
+      >d</a
+      ><a name="4828" class="Symbol"
+      >)</a
+      ><a name="4829"
+      >
+       </a
+      ><a name="4837" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4838"
+      > </a
+      ><a name="4839" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4841"
+      > </a
+      ><a name="4842" class="Symbol"
+      >(</a
+      ><a name="4843" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4845"
+      > </a
+      ><a name="4846" href="homotopy.PushoutSplit.html#3949" class="Function"
+      >split</a
+      ><a name="4851" class="Symbol"
+      >)</a
+      ><a name="4852"
+      > </a
+      ><a name="4853" class="Symbol"
+      >(</a
+      ><a name="4854" href="lib.types.Pushout.html#1428" class="Function"
+      >Inner.glue-&#946;</a
+      ><a name="4866"
+      > </a
+      ><a name="4867" href="homotopy.PushoutSplit.html#4774" class="Bound"
+      >d</a
+      ><a name="4868" class="Symbol"
+      >)</a
+      ><a name="4869"
+      > </a
+      ><a name="4870" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4871"
+      > </a
+      ><a name="4872" href="lib.types.Pushout.html#1428" class="Function"
+      >Split.glue-&#946;</a
+      ><a name="4884"
+      > </a
+      ><a name="4885" href="homotopy.PushoutSplit.html#4774" class="Bound"
+      >d</a
+      ><a name="4886"
+      >
+       </a
+      ><a name="4894" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4895"
+      > </a
+      ><a name="4896" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4898"
+      > </a
+      ><a name="4899" class="Symbol"
+      >(&#955;</a
+      ><a name="4901"
+      > </a
+      ><a name="4902" href="homotopy.PushoutSplit.html#4902" class="Bound"
+      >p</a
+      ><a name="4903"
+      > </a
+      ><a name="4904" class="Symbol"
+      >&#8594;</a
+      ><a name="4905"
+      > </a
+      ><a name="4906" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="4910"
+      > </a
+      ><a name="4911" class="Symbol"
+      >(</a
+      ><a name="4912" href="homotopy.PushoutSplit.html#3589" class="Bound"
+      >f</a
+      ><a name="4913"
+      > </a
+      ><a name="4914" href="homotopy.PushoutSplit.html#4774" class="Bound"
+      >d</a
+      ><a name="4915" class="Symbol"
+      >)</a
+      ><a name="4916"
+      > </a
+      ><a name="4917" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="4919"
+      > </a
+      ><a name="4920" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4922"
+      > </a
+      ><a name="4923" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="4928"
+      > </a
+      ><a name="4929" href="homotopy.PushoutSplit.html#4902" class="Bound"
+      >p</a
+      ><a name="4930" class="Symbol"
+      >)</a
+      ><a name="4931"
+      > </a
+      ><a name="4932" class="Symbol"
+      >(</a
+      ><a name="4933" href="lib.PathGroupoid.html#2082" class="Function"
+      >!-!</a
+      ><a name="4936"
+      > </a
+      ><a name="4937" class="Symbol"
+      >(</a
+      ><a name="4938" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="4942"
+      > </a
+      ><a name="4943" href="homotopy.PushoutSplit.html#4774" class="Bound"
+      >d</a
+      ><a name="4944" class="Symbol"
+      >)))</a
+      ><a name="4947"
+      >
+      </a
+      ><a name="4954" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="4957"
+      > </a
+      ><a name="4958" href="homotopy.PushoutSplit.html#4364" class="Function"
+      >square-extend-tl</a
+      ><a name="4974"
+      > </a
+      ><a name="4975" class="Symbol"
+      >(</a
+      ><a name="4976" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="4980"
+      > </a
+      ><a name="4981" class="Symbol"
+      >(</a
+      ><a name="4982" href="homotopy.PushoutSplit.html#3589" class="Bound"
+      >f</a
+      ><a name="4983"
+      > </a
+      ><a name="4984" href="homotopy.PushoutSplit.html#4774" class="Bound"
+      >d</a
+      ><a name="4985" class="Symbol"
+      >))</a
+      ><a name="4987"
+      > </a
+      ><a name="4988" href="lib.cubical.Square.html#484" class="Function"
+      >vid-square</a
+      ><a name="4998" class="Symbol"
+      >)</a
+      ><a name="4999"
+      >
+
+  </a
+      ><a name="5003" class="Keyword"
+      >abstract</a
+      ><a name="5011"
+      >
+    </a
+      ><a name="5016" href="homotopy.PushoutSplit.html#5016" class="Function"
+      >split-merge</a
+      ><a name="5027"
+      > </a
+      ><a name="5028" class="Symbol"
+      >:</a
+      ><a name="5029"
+      > </a
+      ><a name="5030" class="Symbol"
+      >(</a
+      ><a name="5031" href="homotopy.PushoutSplit.html#5031" class="Bound"
+      >l</a
+      ><a name="5032"
+      > </a
+      ><a name="5033" class="Symbol"
+      >:</a
+      ><a name="5034"
+      > </a
+      ><a name="5035" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="5042"
+      > </a
+      ><a name="5043" href="homotopy.PushoutSplit.html#3684" class="Function"
+      >d&#8322;</a
+      ><a name="5045" class="Symbol"
+      >)</a
+      ><a name="5046"
+      > </a
+      ><a name="5047" class="Symbol"
+      >&#8594;</a
+      ><a name="5048"
+      > </a
+      ><a name="5049" href="homotopy.PushoutSplit.html#3949" class="Function"
+      >split</a
+      ><a name="5054"
+      > </a
+      ><a name="5055" class="Symbol"
+      >(</a
+      ><a name="5056" href="homotopy.PushoutSplit.html#4300" class="Function"
+      >merge</a
+      ><a name="5061"
+      > </a
+      ><a name="5062" href="homotopy.PushoutSplit.html#5031" class="Bound"
+      >l</a
+      ><a name="5063" class="Symbol"
+      >)</a
+      ><a name="5064"
+      > </a
+      ><a name="5065" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5067"
+      > </a
+      ><a name="5068" href="homotopy.PushoutSplit.html#5031" class="Bound"
+      >l</a
+      ><a name="5069"
+      >
+    </a
+      ><a name="5074" href="homotopy.PushoutSplit.html#5016" class="Function"
+      >split-merge</a
+      ><a name="5085"
+      > </a
+      ><a name="5086" class="Symbol"
+      >=</a
+      ><a name="5087"
+      > </a
+      ><a name="5088" href="lib.types.Pushout.html#1094" class="Function"
+      >Pushout-elim</a
+      ><a name="5100"
+      >
+      </a
+      ><a name="5107" class="Symbol"
+      >(&#955;</a
+      ><a name="5109"
+      > </a
+      ><a name="5110" href="homotopy.PushoutSplit.html#5110" class="Bound"
+      >b</a
+      ><a name="5111"
+      > </a
+      ><a name="5112" class="Symbol"
+      >&#8594;</a
+      ><a name="5113"
+      > </a
+      ><a name="5114" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5117" class="Symbol"
+      >)</a
+      ><a name="5118"
+      >
+      </a
+      ><a name="5125" href="homotopy.PushoutSplit.html#4643" class="Function"
+      >split-inner</a
+      ><a name="5136"
+      >
+      </a
+      ><a name="5143" class="Symbol"
+      >(&#955;</a
+      ><a name="5145"
+      > </a
+      ><a name="5146" href="homotopy.PushoutSplit.html#5146" class="Bound"
+      >a</a
+      ><a name="5147"
+      > </a
+      ><a name="5148" class="Symbol"
+      >&#8594;</a
+      ><a name="5149"
+      > </a
+      ><a name="5150" href="lib.cubical.Square.html#10289" class="Function"
+      >&#8595;-&#8728;=idf-from-square</a
+      ><a name="5169"
+      > </a
+      ><a name="5170" href="homotopy.PushoutSplit.html#3949" class="Function"
+      >split</a
+      ><a name="5175"
+      > </a
+      ><a name="5176" href="homotopy.PushoutSplit.html#4300" class="Function"
+      >merge</a
+      ><a name="5181"
+      > </a
+      ><a name="5182" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="5183"
+      >
+        </a
+      ><a name="5192" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5194"
+      > </a
+      ><a name="5195" class="Symbol"
+      >(</a
+      ><a name="5196" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5198"
+      > </a
+      ><a name="5199" href="homotopy.PushoutSplit.html#3949" class="Function"
+      >split</a
+      ><a name="5204" class="Symbol"
+      >)</a
+      ><a name="5205"
+      > </a
+      ><a name="5206" class="Symbol"
+      >(</a
+      ><a name="5207" href="lib.types.Pushout.html#1428" class="Function"
+      >Merge.glue-&#946;</a
+      ><a name="5219"
+      > </a
+      ><a name="5220" href="homotopy.PushoutSplit.html#5146" class="Bound"
+      >a</a
+      ><a name="5221" class="Symbol"
+      >)</a
+      ><a name="5222"
+      > </a
+      ><a name="5223" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="5226"
+      > </a
+      ><a name="5227" href="lib.cubical.Square.html#17899" class="Function"
+      >br-square</a
+      ><a name="5236"
+      > </a
+      ><a name="5237" class="Symbol"
+      >(</a
+      ><a name="5238" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="5242"
+      > </a
+      ><a name="5243" href="homotopy.PushoutSplit.html#5146" class="Bound"
+      >a</a
+      ><a name="5244" class="Symbol"
+      >))</a
+      ><a name="5246"
+      >
+
+
+    </a
+      ><a name="5253" href="homotopy.PushoutSplit.html#5253" class="Function"
+      >merge-split</a
+      ><a name="5264"
+      > </a
+      ><a name="5265" class="Symbol"
+      >:</a
+      ><a name="5266"
+      > </a
+      ><a name="5267" class="Symbol"
+      >(</a
+      ><a name="5268" href="homotopy.PushoutSplit.html#5268" class="Bound"
+      >l</a
+      ><a name="5269"
+      > </a
+      ><a name="5270" class="Symbol"
+      >:</a
+      ><a name="5271"
+      > </a
+      ><a name="5272" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="5279"
+      > </a
+      ><a name="5280" href="homotopy.PushoutSplit.html#3737" class="Function"
+      >d</a
+      ><a name="5281" class="Symbol"
+      >)</a
+      ><a name="5282"
+      > </a
+      ><a name="5283" class="Symbol"
+      >&#8594;</a
+      ><a name="5284"
+      > </a
+      ><a name="5285" href="homotopy.PushoutSplit.html#4300" class="Function"
+      >merge</a
+      ><a name="5290"
+      > </a
+      ><a name="5291" class="Symbol"
+      >(</a
+      ><a name="5292" href="homotopy.PushoutSplit.html#3949" class="Function"
+      >split</a
+      ><a name="5297"
+      > </a
+      ><a name="5298" href="homotopy.PushoutSplit.html#5268" class="Bound"
+      >l</a
+      ><a name="5299" class="Symbol"
+      >)</a
+      ><a name="5300"
+      > </a
+      ><a name="5301" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5303"
+      > </a
+      ><a name="5304" href="homotopy.PushoutSplit.html#5268" class="Bound"
+      >l</a
+      ><a name="5305"
+      >
+    </a
+      ><a name="5310" href="homotopy.PushoutSplit.html#5253" class="Function"
+      >merge-split</a
+      ><a name="5321"
+      > </a
+      ><a name="5322" class="Symbol"
+      >=</a
+      ><a name="5323"
+      > </a
+      ><a name="5324" href="lib.types.Pushout.html#1094" class="Function"
+      >Pushout-elim</a
+      ><a name="5336"
+      >
+      </a
+      ><a name="5343" class="Symbol"
+      >(&#955;</a
+      ><a name="5345"
+      > </a
+      ><a name="5346" href="homotopy.PushoutSplit.html#5346" class="Bound"
+      >b</a
+      ><a name="5347"
+      > </a
+      ><a name="5348" class="Symbol"
+      >&#8594;</a
+      ><a name="5349"
+      > </a
+      ><a name="5350" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5353" class="Symbol"
+      >)</a
+      ><a name="5354"
+      >
+      </a
+      ><a name="5361" class="Symbol"
+      >(&#955;</a
+      ><a name="5363"
+      > </a
+      ><a name="5364" href="homotopy.PushoutSplit.html#5364" class="Bound"
+      >c</a
+      ><a name="5365"
+      > </a
+      ><a name="5366" class="Symbol"
+      >&#8594;</a
+      ><a name="5367"
+      > </a
+      ><a name="5368" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5371" class="Symbol"
+      >)</a
+      ><a name="5372"
+      >
+      </a
+      ><a name="5379" class="Symbol"
+      >(&#955;</a
+      ><a name="5381"
+      > </a
+      ><a name="5382" href="homotopy.PushoutSplit.html#5382" class="Bound"
+      >d</a
+      ><a name="5383"
+      > </a
+      ><a name="5384" class="Symbol"
+      >&#8594;</a
+      ><a name="5385"
+      > </a
+      ><a name="5386" href="lib.types.Paths.html#7720" class="Function"
+      >&#8595;-&#8728;=idf-in'</a
+      ><a name="5397"
+      > </a
+      ><a name="5398" href="homotopy.PushoutSplit.html#4300" class="Function"
+      >merge</a
+      ><a name="5403"
+      > </a
+      ><a name="5404" href="homotopy.PushoutSplit.html#3949" class="Function"
+      >split</a
+      ><a name="5409"
+      > </a
+      ><a name="5410" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="5411"
+      >
+        </a
+      ><a name="5420" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5422"
+      > </a
+      ><a name="5423" href="homotopy.PushoutSplit.html#4300" class="Function"
+      >merge</a
+      ><a name="5428"
+      > </a
+      ><a name="5429" class="Symbol"
+      >(</a
+      ><a name="5430" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5432"
+      > </a
+      ><a name="5433" href="homotopy.PushoutSplit.html#3949" class="Function"
+      >split</a
+      ><a name="5438"
+      > </a
+      ><a name="5439" class="Symbol"
+      >(</a
+      ><a name="5440" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="5444"
+      > </a
+      ><a name="5445" href="homotopy.PushoutSplit.html#5382" class="Bound"
+      >d</a
+      ><a name="5446" class="Symbol"
+      >))</a
+      ><a name="5448"
+      >
+          </a
+      ><a name="5459" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5461"
+      > </a
+      ><a name="5462" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5464"
+      > </a
+      ><a name="5465" class="Symbol"
+      >(</a
+      ><a name="5466" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5468"
+      > </a
+      ><a name="5469" href="homotopy.PushoutSplit.html#4300" class="Function"
+      >merge</a
+      ><a name="5474" class="Symbol"
+      >)</a
+      ><a name="5475"
+      > </a
+      ><a name="5476" class="Symbol"
+      >(</a
+      ><a name="5477" href="lib.types.Pushout.html#1428" class="Function"
+      >Split.glue-&#946;</a
+      ><a name="5489"
+      > </a
+      ><a name="5490" href="homotopy.PushoutSplit.html#5382" class="Bound"
+      >d</a
+      ><a name="5491" class="Symbol"
+      >)</a
+      ><a name="5492"
+      > </a
+      ><a name="5493" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5494"
+      >
+        </a
+      ><a name="5503" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5505"
+      > </a
+      ><a name="5506" href="homotopy.PushoutSplit.html#4300" class="Function"
+      >merge</a
+      ><a name="5511"
+      > </a
+      ><a name="5512" class="Symbol"
+      >(</a
+      ><a name="5513" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="5517"
+      > </a
+      ><a name="5518" class="Symbol"
+      >(</a
+      ><a name="5519" href="homotopy.PushoutSplit.html#3589" class="Bound"
+      >f</a
+      ><a name="5520"
+      > </a
+      ><a name="5521" href="homotopy.PushoutSplit.html#5382" class="Bound"
+      >d</a
+      ><a name="5522" class="Symbol"
+      >)</a
+      ><a name="5523"
+      > </a
+      ><a name="5524" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="5526"
+      > </a
+      ><a name="5527" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5529"
+      > </a
+      ><a name="5530" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="5535"
+      > </a
+      ><a name="5536" class="Symbol"
+      >(</a
+      ><a name="5537" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5538"
+      > </a
+      ><a name="5539" class="Symbol"
+      >(</a
+      ><a name="5540" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5541"
+      > </a
+      ><a name="5542" class="Symbol"
+      >(</a
+      ><a name="5543" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="5547"
+      > </a
+      ><a name="5548" href="homotopy.PushoutSplit.html#5382" class="Bound"
+      >d</a
+      ><a name="5549" class="Symbol"
+      >))))</a
+      ><a name="5553"
+      >
+          </a
+      ><a name="5564" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5566"
+      > </a
+      ><a name="5567" href="lib.PathFunctor.html#691" class="Function"
+      >ap-&#8729;'</a
+      ><a name="5572"
+      > </a
+      ><a name="5573" href="homotopy.PushoutSplit.html#4300" class="Function"
+      >merge</a
+      ><a name="5578"
+      > </a
+      ><a name="5579" class="Symbol"
+      >(</a
+      ><a name="5580" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="5584"
+      > </a
+      ><a name="5585" class="Symbol"
+      >(</a
+      ><a name="5586" href="homotopy.PushoutSplit.html#3589" class="Bound"
+      >f</a
+      ><a name="5587"
+      > </a
+      ><a name="5588" href="homotopy.PushoutSplit.html#5382" class="Bound"
+      >d</a
+      ><a name="5589" class="Symbol"
+      >))</a
+      ><a name="5591"
+      > </a
+      ><a name="5592" class="Symbol"
+      >(</a
+      ><a name="5593" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5595"
+      > </a
+      ><a name="5596" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="5601"
+      > </a
+      ><a name="5602" class="Symbol"
+      >(</a
+      ><a name="5603" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5604"
+      > </a
+      ><a name="5605" class="Symbol"
+      >(</a
+      ><a name="5606" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5607"
+      > </a
+      ><a name="5608" class="Symbol"
+      >(</a
+      ><a name="5609" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="5613"
+      > </a
+      ><a name="5614" href="homotopy.PushoutSplit.html#5382" class="Bound"
+      >d</a
+      ><a name="5615" class="Symbol"
+      >))))</a
+      ><a name="5619"
+      > </a
+      ><a name="5620" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5621"
+      >
+        </a
+      ><a name="5630" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5632"
+      > </a
+      ><a name="5633" href="homotopy.PushoutSplit.html#4300" class="Function"
+      >merge</a
+      ><a name="5638"
+      > </a
+      ><a name="5639" class="Symbol"
+      >(</a
+      ><a name="5640" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="5644"
+      > </a
+      ><a name="5645" class="Symbol"
+      >(</a
+      ><a name="5646" href="homotopy.PushoutSplit.html#3589" class="Bound"
+      >f</a
+      ><a name="5647"
+      > </a
+      ><a name="5648" href="homotopy.PushoutSplit.html#5382" class="Bound"
+      >d</a
+      ><a name="5649" class="Symbol"
+      >))</a
+      ><a name="5651"
+      > </a
+      ><a name="5652" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="5654"
+      > </a
+      ><a name="5655" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5657"
+      > </a
+      ><a name="5658" href="homotopy.PushoutSplit.html#4300" class="Function"
+      >merge</a
+      ><a name="5663"
+      > </a
+      ><a name="5664" class="Symbol"
+      >(</a
+      ><a name="5665" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5667"
+      > </a
+      ><a name="5668" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="5673"
+      > </a
+      ><a name="5674" class="Symbol"
+      >(</a
+      ><a name="5675" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5676"
+      > </a
+      ><a name="5677" class="Symbol"
+      >(</a
+      ><a name="5678" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5679"
+      > </a
+      ><a name="5680" class="Symbol"
+      >(</a
+      ><a name="5681" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="5685"
+      > </a
+      ><a name="5686" href="homotopy.PushoutSplit.html#5382" class="Bound"
+      >d</a
+      ><a name="5687" class="Symbol"
+      >))))</a
+      ><a name="5691"
+      >
+          </a
+      ><a name="5702" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5704"
+      > </a
+      ><a name="5705" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="5708"
+      > </a
+      ><a name="5709" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >_&#8729;'_</a
+      ><a name="5713"
+      > </a
+      ><a name="5714" class="Symbol"
+      >(</a
+      ><a name="5715" href="lib.types.Pushout.html#1428" class="Function"
+      >Merge.glue-&#946;</a
+      ><a name="5727"
+      > </a
+      ><a name="5728" class="Symbol"
+      >(</a
+      ><a name="5729" href="homotopy.PushoutSplit.html#3589" class="Bound"
+      >f</a
+      ><a name="5730"
+      > </a
+      ><a name="5731" href="homotopy.PushoutSplit.html#5382" class="Bound"
+      >d</a
+      ><a name="5732" class="Symbol"
+      >))</a
+      ><a name="5734"
+      > </a
+      ><a name="5735" class="Symbol"
+      >(</a
+      ><a name="5736" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="5740"
+      > </a
+      ><a name="5741" href="homotopy.PushoutSplit.html#4300" class="Function"
+      >merge</a
+      ><a name="5746"
+      > </a
+      ><a name="5747" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="5752"
+      > </a
+      ><a name="5753" class="Symbol"
+      >(</a
+      ><a name="5754" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5755"
+      > </a
+      ><a name="5756" class="Symbol"
+      >(</a
+      ><a name="5757" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5758"
+      > </a
+      ><a name="5759" class="Symbol"
+      >(</a
+      ><a name="5760" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="5764"
+      > </a
+      ><a name="5765" href="homotopy.PushoutSplit.html#5382" class="Bound"
+      >d</a
+      ><a name="5766" class="Symbol"
+      >))))</a
+      ><a name="5770"
+      > </a
+      ><a name="5771" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5772"
+      >
+        </a
+      ><a name="5781" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5784"
+      > </a
+      ><a name="5785" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="5787"
+      > </a
+      ><a name="5788" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5790"
+      > </a
+      ><a name="5791" href="homotopy.PushoutSplit.html#4167" class="Function"
+      >inner</a
+      ><a name="5796"
+      > </a
+      ><a name="5797" class="Symbol"
+      >(</a
+      ><a name="5798" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5799"
+      > </a
+      ><a name="5800" class="Symbol"
+      >(</a
+      ><a name="5801" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5802"
+      > </a
+      ><a name="5803" class="Symbol"
+      >(</a
+      ><a name="5804" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="5808"
+      > </a
+      ><a name="5809" href="homotopy.PushoutSplit.html#5382" class="Bound"
+      >d</a
+      ><a name="5810" class="Symbol"
+      >)))</a
+      ><a name="5813"
+      >
+          </a
+      ><a name="5824" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5826"
+      > </a
+      ><a name="5827" href="lib.PathGroupoid.html#1114" class="Function"
+      >&#8729;'-unit-l</a
+      ><a name="5836"
+      > </a
+      ><a name="5837" class="Symbol"
+      >_</a
+      ><a name="5838"
+      > </a
+      ><a name="5839" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5840"
+      >
+        </a
+      ><a name="5849" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5851"
+      > </a
+      ><a name="5852" href="homotopy.PushoutSplit.html#4167" class="Function"
+      >inner</a
+      ><a name="5857"
+      > </a
+      ><a name="5858" class="Symbol"
+      >(</a
+      ><a name="5859" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5860"
+      > </a
+      ><a name="5861" class="Symbol"
+      >(</a
+      ><a name="5862" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5863"
+      > </a
+      ><a name="5864" class="Symbol"
+      >(</a
+      ><a name="5865" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="5869"
+      > </a
+      ><a name="5870" href="homotopy.PushoutSplit.html#5382" class="Bound"
+      >d</a
+      ><a name="5871" class="Symbol"
+      >)))</a
+      ><a name="5874"
+      >
+          </a
+      ><a name="5885" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5887"
+      > </a
+      ><a name="5888" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5890"
+      > </a
+      ><a name="5891" class="Symbol"
+      >(</a
+      ><a name="5892" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5894"
+      > </a
+      ><a name="5895" href="homotopy.PushoutSplit.html#4167" class="Function"
+      >inner</a
+      ><a name="5900" class="Symbol"
+      >)</a
+      ><a name="5901"
+      > </a
+      ><a name="5902" class="Symbol"
+      >(</a
+      ><a name="5903" href="lib.PathGroupoid.html#2082" class="Function"
+      >!-!</a
+      ><a name="5906"
+      > </a
+      ><a name="5907" class="Symbol"
+      >(</a
+      ><a name="5908" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="5912"
+      > </a
+      ><a name="5913" href="homotopy.PushoutSplit.html#5382" class="Bound"
+      >d</a
+      ><a name="5914" class="Symbol"
+      >))</a
+      ><a name="5916"
+      > </a
+      ><a name="5917" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5918"
+      >
+        </a
+      ><a name="5927" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5929"
+      > </a
+      ><a name="5930" href="homotopy.PushoutSplit.html#4167" class="Function"
+      >inner</a
+      ><a name="5935"
+      > </a
+      ><a name="5936" class="Symbol"
+      >(</a
+      ><a name="5937" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="5941"
+      > </a
+      ><a name="5942" href="homotopy.PushoutSplit.html#5382" class="Bound"
+      >d</a
+      ><a name="5943" class="Symbol"
+      >)</a
+      ><a name="5944"
+      >
+          </a
+      ><a name="5955" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5957"
+      > </a
+      ><a name="5958" href="lib.types.Pushout.html#1428" class="Function"
+      >Inner.glue-&#946;</a
+      ><a name="5970"
+      > </a
+      ><a name="5971" href="homotopy.PushoutSplit.html#5382" class="Bound"
+      >d</a
+      ><a name="5972"
+      > </a
+      ><a name="5973" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5974"
+      >
+        </a
+      ><a name="5983" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="5987"
+      > </a
+      ><a name="5988" href="homotopy.PushoutSplit.html#5382" class="Bound"
+      >d</a
+      ><a name="5989"
+      > </a
+      ><a name="5990" href="HoTT.html#767" class="Function Operator"
+      >&#8718;</a
+      ><a name="5991" class="Symbol"
+      >)</a
+      ><a name="5992"
+      >
+
+
+  </a
+      ><a name="5997" href="homotopy.PushoutSplit.html#5997" class="Function"
+      >split-equiv</a
+      ><a name="6008"
+      > </a
+      ><a name="6009" class="Symbol"
+      >:</a
+      ><a name="6010"
+      > </a
+      ><a name="6011" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="6018"
+      > </a
+      ><a name="6019" href="homotopy.PushoutSplit.html#3737" class="Function"
+      >d</a
+      ><a name="6020"
+      > </a
+      ><a name="6021" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="6022"
+      > </a
+      ><a name="6023" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="6030"
+      > </a
+      ><a name="6031" href="homotopy.PushoutSplit.html#3684" class="Function"
+      >d&#8322;</a
+      ><a name="6033"
+      >
+  </a
+      ><a name="6036" href="homotopy.PushoutSplit.html#5997" class="Function"
+      >split-equiv</a
+      ><a name="6047"
+      > </a
+      ><a name="6048" class="Symbol"
+      >=</a
+      ><a name="6049"
+      > </a
+      ><a name="6050" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="6055"
+      > </a
+      ><a name="6056" href="homotopy.PushoutSplit.html#3949" class="Function"
+      >split</a
+      ><a name="6061"
+      > </a
+      ><a name="6062" href="homotopy.PushoutSplit.html#4300" class="Function"
+      >merge</a
+      ><a name="6067"
+      > </a
+      ><a name="6068" href="homotopy.PushoutSplit.html#5016" class="Function"
+      >split-merge</a
+      ><a name="6079"
+      > </a
+      ><a name="6080" href="homotopy.PushoutSplit.html#5253" class="Function"
+      >merge-split</a
+      ><a name="6091"
+      >
+
+</a
+      ><a name="6093" href="homotopy.PushoutSplit.html#6093" class="Function"
+      >lsplit-equiv</a
+      ><a name="6105"
+      > </a
+      ><a name="6106" class="Symbol"
+      >=</a
+      ><a name="6107"
+      > </a
+      ><a name="6108" href="homotopy.PushoutSplit.html#5997" class="Function"
+      >PushoutLSplit.split-equiv</a
+      ><a name="6133"
+      >
+
+
+</a
+      ><a name="6136" class="Comment"
+      >{- TODO Update this part
+
+--        g     h
+--     Y --&gt; Z --&gt; W    K = X &#8852;^Y Y / (f,g)        ps&#8321; = X &lt;- Y -&gt; Z
+--    f|     |     |    L = Z &#8852;^Z W / (left,h)     ps&#8322; = K &lt;- Z -&gt; W
+--     v     v     v                               ps = X &lt;- Y -&gt; W
+--     X --&gt; K --&gt; L
+--
+module TwoPushoutsPtd {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
+  (f : Y &#8857;&#8594; X) (g : Y &#8857;&#8594; Z) (h : Z &#8857;&#8594; W) where
+
+  private
+    ps&#8321; = &#8857;span X Z Y f g
+    ps&#8322; = &#8857;span (&#8857;Pushout ps&#8321;) W Z (&#8857;right ps&#8321;) h
+    ps = &#8857;span X W Y f (h &#8857;&#8728; g)
+
+  open TwoPushoutsEquiv (fst f) (fst g) (fst h)
+
+  two-pushouts-ptd :
+    &#8857;Lift {j = lmax l (lmax k (lmax j i))} (&#8857;Pushout ps)
+    == &#8857;Pushout ps&#8322;
+  two-pushouts-ptd = &#8857;ua (two-pushouts-equiv &#8728;e lift-equiv) idp
+
+  two-pushouts-&#8857;left :
+    &#8857;lift &#8857;&#8728; &#8857;left ps == &#8857;left ps&#8322; &#8857;&#8728; &#8857;left ps&#8321;
+    [ (&#955; V &#8594; X &#8857;&#8594; V) &#8595; two-pushouts-ptd ]
+  two-pushouts-&#8857;left = codomain-over-&#8857;equiv _ _ _
+
+  two-pushouts-&#8857;right :
+    &#8857;lift &#8857;&#8728; &#8857;right ps == &#8857;right ps&#8322;
+    [ (&#955; V &#8594; W &#8857;&#8594; V) &#8595; two-pushouts-ptd ]
+  two-pushouts-&#8857;right =
+    codomain-over-&#8857;equiv _ _ _ &#9657; pair= idp (lemma f g h)
+    where
+    lemma : {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
+      (f : Y &#8857;&#8594; X) (g : Y &#8857;&#8594; Z) (h : Z &#8857;&#8594; W)
+      &#8594; ap (TwoPushoutsEquiv.split (fst f) (fst g) (fst h)
+               &#8728; lower {j = lmax l (lmax k (lmax j i))})
+              (snd (&#8857;lift &#8857;&#8728; &#8857;right (&#8857;span X W Y f (h &#8857;&#8728; g))))
+        &#8729; idp
+        ==  ap right (! (snd h)) &#8729; ! (glue (pt Z))
+            &#8729;' ap left (snd (&#8857;right (&#8857;span X Z Y f g)))
+    lemma {Y = Y} (f , idp) (g , idp) (h , idp) =
+      ap (2P.split &#8728; lower) (ap lift (! (glue (pt Y))) &#8729; idp) &#8729; idp
+        =&#10216; &#8729;-unit-r _ &#10217;
+      ap (2P.split &#8728; lower) (ap lift (! (glue (pt Y))) &#8729; idp)
+        =&#10216; &#8729;-unit-r _ |in-ctx (ap (2P.split &#8728; lower)) &#10217;
+      ap (2P.split &#8728; lower) (ap lift (! (glue (pt Y))))
+        =&#10216; &#8728;-ap (2P.split &#8728; lower) lift _ &#10217;
+      ap 2P.split (! (glue (pt Y)))
+        =&#10216; ap-! 2P.split (glue (pt Y)) &#10217;
+      ! (ap 2P.split (glue (pt Y)))
+        =&#10216; 2P.Split.glue-&#946; (pt Y) |in-ctx ! &#10217;
+      ! (ap left (glue (pt Y)) &#8729; glue (g (pt Y)))
+        =&#10216; !-&#8729; (ap left (glue (pt Y))) (glue (g (pt Y))) &#10217;
+      ! (glue (g (pt Y))) &#8729; ! (ap left (glue (pt Y)))
+        =&#10216; !-ap left (glue (pt Y)) |in-ctx (&#955; w &#8594; ! (glue (g (pt Y))) &#8729; w) &#10217;
+      ! (glue (g (pt Y))) &#8729; ap left (! (glue (pt Y)))
+        =&#10216; &#8729;=&#8729;' (! (glue (g (pt Y)))) (ap left (! (glue (pt Y)))) &#10217;
+      ! (glue (g (pt Y))) &#8729;' ap left (! (glue (pt Y))) &#8718;
+      where
+      module 2P = TwoPushoutsEquiv f g h
+
+  two-pushouts-&#8857;inner : &#8857;lift &#8857;&#8728; (inner , idp) == &#8857;left ps&#8322;
+    [ (&#955; V &#8594; &#8857;Pushout ps&#8321; &#8857;&#8594; V) &#8595; two-pushouts-ptd ]
+  two-pushouts-&#8857;inner =
+    codomain-over-&#8857;equiv _ _ _ &#9657; &#8857;&#955;= split-inner idp
+-}</a
+      ><a name="8816"
+      >
+
+</a
+      ><a name="8818" class="Comment"
+      >{-
+open TwoPushoutsEquiv using () renaming (split-equiv to vsplit-pushouts-equiv)
+  -- two-pushouts; two-pushouts-left; two-pushouts-right; two-pushouts-inner
+
+open TwoPushoutsPtd
+  using (two-pushouts-ptd; two-pushouts-&#8857;left; two-pushouts-&#8857;right;
+         two-pushouts-&#8857;inner)
+-}</a
+      ><a name="9098"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

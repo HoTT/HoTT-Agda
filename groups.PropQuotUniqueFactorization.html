@@ -1,0 +1,2515 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >groups.PropQuotUniqueFactorization</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >import</a
+      ><a name="65"
+      > </a
+      ><a name="66" href="homotopy.ConstantToSetExtendsToProp.html#1" class="Module"
+      >homotopy.ConstantToSetExtendsToProp</a
+      ><a name="101"
+      > </a
+      ><a name="102" class="Symbol"
+      >as</a
+      ><a name="104"
+      > </a
+      ><a name="105" class="Module"
+      >ConstExt</a
+      ><a name="113"
+      >
+
+</a
+      ><a name="115" class="Comment"
+      >{-
+          q[_]&#7475;
+     G/Q &#8606;------ G
+      &#8593;          &#8593;
+   &#966;&#8322; &#9550;          &#9550; inject
+      &#8593;          &#8593;
+      H &#8606;------- P
+           &#966;&#8321;
+
+     Then, H &#8771;&#7475; P/Q.
+-}</a
+      ><a name="274"
+      >
+
+</a
+      ><a name="276" class="Keyword"
+      >module</a
+      ><a name="282"
+      > </a
+      ><a name="283" href="groups.PropQuotUniqueFactorization.html#1" class="Module"
+      >groups.PropQuotUniqueFactorization</a
+      ><a name="317"
+      >
+  </a
+      ><a name="320" class="Symbol"
+      >{</a
+      ><a name="321" href="groups.PropQuotUniqueFactorization.html#321" class="Bound"
+      >i</a
+      ><a name="322"
+      > </a
+      ><a name="323" href="groups.PropQuotUniqueFactorization.html#323" class="Bound"
+      >j</a
+      ><a name="324"
+      > </a
+      ><a name="325" href="groups.PropQuotUniqueFactorization.html#325" class="Bound"
+      >l&#8321;</a
+      ><a name="327"
+      > </a
+      ><a name="328" href="groups.PropQuotUniqueFactorization.html#328" class="Bound"
+      >l&#8322;</a
+      ><a name="330" class="Symbol"
+      >}</a
+      ><a name="331"
+      > </a
+      ><a name="332" class="Symbol"
+      >{</a
+      ><a name="333" href="groups.PropQuotUniqueFactorization.html#333" class="Bound"
+      >G</a
+      ><a name="334"
+      > </a
+      ><a name="335" class="Symbol"
+      >:</a
+      ><a name="336"
+      > </a
+      ><a name="337" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="342"
+      > </a
+      ><a name="343" href="groups.PropQuotUniqueFactorization.html#321" class="Bound"
+      >i</a
+      ><a name="344" class="Symbol"
+      >}</a
+      ><a name="345"
+      > </a
+      ><a name="346" class="Symbol"
+      >{</a
+      ><a name="347" href="groups.PropQuotUniqueFactorization.html#347" class="Bound"
+      >H</a
+      ><a name="348"
+      > </a
+      ><a name="349" class="Symbol"
+      >:</a
+      ><a name="350"
+      > </a
+      ><a name="351" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="356"
+      > </a
+      ><a name="357" href="groups.PropQuotUniqueFactorization.html#323" class="Bound"
+      >j</a
+      ><a name="358" class="Symbol"
+      >}</a
+      ><a name="359"
+      >
+  </a
+      ><a name="362" class="Symbol"
+      >(</a
+      ><a name="363" href="groups.PropQuotUniqueFactorization.html#363" class="Bound"
+      >P</a
+      ><a name="364"
+      > </a
+      ><a name="365" class="Symbol"
+      >:</a
+      ><a name="366"
+      > </a
+      ><a name="367" href="lib.groups.SubgroupProp.html#223" class="Record"
+      >SubgroupProp</a
+      ><a name="379"
+      > </a
+      ><a name="380" href="groups.PropQuotUniqueFactorization.html#333" class="Bound"
+      >G</a
+      ><a name="381"
+      > </a
+      ><a name="382" href="groups.PropQuotUniqueFactorization.html#325" class="Bound"
+      >l&#8321;</a
+      ><a name="384" class="Symbol"
+      >)</a
+      ><a name="385"
+      >
+  </a
+      ><a name="388" class="Symbol"
+      >(</a
+      ><a name="389" href="groups.PropQuotUniqueFactorization.html#389" class="Bound"
+      >Q</a
+      ><a name="390"
+      > </a
+      ><a name="391" class="Symbol"
+      >:</a
+      ><a name="392"
+      > </a
+      ><a name="393" href="lib.groups.SubgroupProp.html#1416" class="Function"
+      >NormalSubgroupProp</a
+      ><a name="411"
+      > </a
+      ><a name="412" href="groups.PropQuotUniqueFactorization.html#333" class="Bound"
+      >G</a
+      ><a name="413"
+      > </a
+      ><a name="414" href="groups.PropQuotUniqueFactorization.html#328" class="Bound"
+      >l&#8322;</a
+      ><a name="416" class="Symbol"
+      >)</a
+      ><a name="417"
+      >
+  </a
+      ><a name="420" class="Symbol"
+      >(</a
+      ><a name="421" href="groups.PropQuotUniqueFactorization.html#421" class="Bound"
+      >&#966;&#8321;</a
+      ><a name="423"
+      > </a
+      ><a name="424" class="Symbol"
+      >:</a
+      ><a name="425"
+      > </a
+      ><a name="426" href="lib.groups.Subgroup.html#1188" class="Function"
+      >Subgroup</a
+      ><a name="434"
+      > </a
+      ><a name="435" href="groups.PropQuotUniqueFactorization.html#363" class="Bound"
+      >P</a
+      ><a name="436"
+      > </a
+      ><a name="437" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="439"
+      > </a
+      ><a name="440" href="groups.PropQuotUniqueFactorization.html#347" class="Bound"
+      >H</a
+      ><a name="441" class="Symbol"
+      >)</a
+      ><a name="442"
+      > </a
+      ><a name="443" class="Symbol"
+      >(</a
+      ><a name="444" href="groups.PropQuotUniqueFactorization.html#444" class="Bound"
+      >&#966;&#8321;-is-surj</a
+      ><a name="454"
+      > </a
+      ><a name="455" class="Symbol"
+      >:</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="lib.groups.Homomorphism.html#5767" class="Function"
+      >is-surj&#7475;</a
+      ><a name="465"
+      > </a
+      ><a name="466" href="groups.PropQuotUniqueFactorization.html#421" class="Bound"
+      >&#966;&#8321;</a
+      ><a name="468" class="Symbol"
+      >)</a
+      ><a name="469"
+      >
+  </a
+      ><a name="472" class="Symbol"
+      >(</a
+      ><a name="473" href="groups.PropQuotUniqueFactorization.html#473" class="Bound"
+      >&#966;&#8322;</a
+      ><a name="475"
+      > </a
+      ><a name="476" class="Symbol"
+      >:</a
+      ><a name="477"
+      > </a
+      ><a name="478" href="groups.PropQuotUniqueFactorization.html#347" class="Bound"
+      >H</a
+      ><a name="479"
+      > </a
+      ><a name="480" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="482"
+      > </a
+      ><a name="483" href="lib.groups.QuotientGroup.html#3884" class="Function"
+      >QuotGroup</a
+      ><a name="492"
+      > </a
+      ><a name="493" href="groups.PropQuotUniqueFactorization.html#389" class="Bound"
+      >Q</a
+      ><a name="494" class="Symbol"
+      >)</a
+      ><a name="495"
+      > </a
+      ><a name="496" class="Symbol"
+      >(</a
+      ><a name="497" href="groups.PropQuotUniqueFactorization.html#497" class="Bound"
+      >&#966;&#8322;-is-inj</a
+      ><a name="506"
+      > </a
+      ><a name="507" class="Symbol"
+      >:</a
+      ><a name="508"
+      > </a
+      ><a name="509" href="lib.groups.Homomorphism.html#5651" class="Function"
+      >is-inj&#7475;</a
+      ><a name="516"
+      > </a
+      ><a name="517" href="groups.PropQuotUniqueFactorization.html#473" class="Bound"
+      >&#966;&#8322;</a
+      ><a name="519" class="Symbol"
+      >)</a
+      ><a name="520"
+      >
+  </a
+      ><a name="523" class="Symbol"
+      >(</a
+      ><a name="524" href="groups.PropQuotUniqueFactorization.html#524" class="Bound"
+      >&#966;-comm</a
+      ><a name="530"
+      > </a
+      ><a name="531" class="Symbol"
+      >:</a
+      ><a name="532"
+      > </a
+      ><a name="533" class="Symbol"
+      >&#8704;</a
+      ><a name="534"
+      > </a
+      ><a name="535" href="groups.PropQuotUniqueFactorization.html#535" class="Bound"
+      >p</a
+      ><a name="536"
+      > </a
+      ><a name="537" class="Symbol"
+      >&#8594;</a
+      ><a name="538"
+      > </a
+      ><a name="539" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="549"
+      > </a
+      ><a name="550" class="Symbol"
+      >(</a
+      ><a name="551" href="groups.PropQuotUniqueFactorization.html#473" class="Bound"
+      >&#966;&#8322;</a
+      ><a name="553"
+      > </a
+      ><a name="554" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="556"
+      > </a
+      ><a name="557" href="groups.PropQuotUniqueFactorization.html#421" class="Bound"
+      >&#966;&#8321;</a
+      ><a name="559" class="Symbol"
+      >)</a
+      ><a name="560"
+      > </a
+      ><a name="561" href="groups.PropQuotUniqueFactorization.html#535" class="Bound"
+      >p</a
+      ><a name="562"
+      > </a
+      ><a name="563" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="565"
+      > </a
+      ><a name="566" href="lib.types.SetQuotient.html#313" class="Postulate Operator"
+      >q[</a
+      ><a name="568"
+      > </a
+      ><a name="569" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="572"
+      > </a
+      ><a name="573" href="groups.PropQuotUniqueFactorization.html#535" class="Bound"
+      >p</a
+      ><a name="574"
+      > </a
+      ><a name="575" href="lib.types.SetQuotient.html#313" class="Postulate Operator"
+      >]</a
+      ><a name="576" class="Symbol"
+      >)</a
+      ><a name="577"
+      >
+  </a
+      ><a name="580" class="Keyword"
+      >where</a
+      ><a name="585"
+      >
+
+  </a
+      ><a name="589" class="Keyword"
+      >private</a
+      ><a name="596"
+      >
+    </a
+      ><a name="601" class="Keyword"
+      >module</a
+      ><a name="607"
+      > </a
+      ><a name="608" href="groups.PropQuotUniqueFactorization.html#608" class="Module"
+      >G</a
+      ><a name="609"
+      > </a
+      ><a name="610" class="Symbol"
+      >=</a
+      ><a name="611"
+      > </a
+      ><a name="612" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="617"
+      > </a
+      ><a name="618" href="groups.PropQuotUniqueFactorization.html#333" class="Bound"
+      >G</a
+      ><a name="619"
+      >
+    </a
+      ><a name="624" class="Keyword"
+      >module</a
+      ><a name="630"
+      > </a
+      ><a name="631" href="groups.PropQuotUniqueFactorization.html#631" class="Module"
+      >H</a
+      ><a name="632"
+      > </a
+      ><a name="633" class="Symbol"
+      >=</a
+      ><a name="634"
+      > </a
+      ><a name="635" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="640"
+      > </a
+      ><a name="641" href="groups.PropQuotUniqueFactorization.html#347" class="Bound"
+      >H</a
+      ><a name="642"
+      >
+    </a
+      ><a name="647" class="Keyword"
+      >module</a
+      ><a name="653"
+      > </a
+      ><a name="654" href="groups.PropQuotUniqueFactorization.html#654" class="Module"
+      >P</a
+      ><a name="655"
+      > </a
+      ><a name="656" class="Symbol"
+      >=</a
+      ><a name="657"
+      > </a
+      ><a name="658" href="lib.groups.Subgroup.html#1344" class="Module"
+      >Subgroup</a
+      ><a name="666"
+      > </a
+      ><a name="667" href="groups.PropQuotUniqueFactorization.html#363" class="Bound"
+      >P</a
+      ><a name="668"
+      >
+    </a
+      ><a name="673" class="Keyword"
+      >module</a
+      ><a name="679"
+      > </a
+      ><a name="680" href="groups.PropQuotUniqueFactorization.html#680" class="Module"
+      >&#966;&#8321;</a
+      ><a name="682"
+      > </a
+      ><a name="683" class="Symbol"
+      >=</a
+      ><a name="684"
+      > </a
+      ><a name="685" href="lib.groups.Homomorphism.html#2451" class="Module"
+      >GroupHom</a
+      ><a name="693"
+      > </a
+      ><a name="694" href="groups.PropQuotUniqueFactorization.html#421" class="Bound"
+      >&#966;&#8321;</a
+      ><a name="696"
+      >
+    </a
+      ><a name="701" class="Keyword"
+      >module</a
+      ><a name="707"
+      > </a
+      ><a name="708" href="groups.PropQuotUniqueFactorization.html#708" class="Module"
+      >&#966;&#8322;</a
+      ><a name="710"
+      > </a
+      ><a name="711" class="Symbol"
+      >=</a
+      ><a name="712"
+      > </a
+      ><a name="713" href="lib.groups.Homomorphism.html#2451" class="Module"
+      >GroupHom</a
+      ><a name="721"
+      > </a
+      ><a name="722" href="groups.PropQuotUniqueFactorization.html#473" class="Bound"
+      >&#966;&#8322;</a
+      ><a name="724"
+      >
+
+    </a
+      ><a name="730" href="groups.PropQuotUniqueFactorization.html#730" class="Function"
+      >P/Q-prop</a
+      ><a name="738"
+      > </a
+      ><a name="739" class="Symbol"
+      >:</a
+      ><a name="740"
+      > </a
+      ><a name="741" href="lib.groups.SubgroupProp.html#1416" class="Function"
+      >NormalSubgroupProp</a
+      ><a name="759"
+      > </a
+      ><a name="760" class="Symbol"
+      >(</a
+      ><a name="761" href="lib.groups.Subgroup.html#1188" class="Function"
+      >Subgroup</a
+      ><a name="769"
+      > </a
+      ><a name="770" href="groups.PropQuotUniqueFactorization.html#363" class="Bound"
+      >P</a
+      ><a name="771" class="Symbol"
+      >)</a
+      ><a name="772"
+      > </a
+      ><a name="773" href="groups.PropQuotUniqueFactorization.html#328" class="Bound"
+      >l&#8322;</a
+      ><a name="775"
+      >
+    </a
+      ><a name="780" href="groups.PropQuotUniqueFactorization.html#730" class="Function"
+      >P/Q-prop</a
+      ><a name="788"
+      > </a
+      ><a name="789" class="Symbol"
+      >=</a
+      ><a name="790"
+      > </a
+      ><a name="791" href="lib.groups.QuotientGroup.html#5576" class="Function"
+      >quot-of-sub</a
+      ><a name="802"
+      > </a
+      ><a name="803" href="groups.PropQuotUniqueFactorization.html#363" class="Bound"
+      >P</a
+      ><a name="804"
+      > </a
+      ><a name="805" href="groups.PropQuotUniqueFactorization.html#389" class="Bound"
+      >Q</a
+      ><a name="806"
+      >
+
+    </a
+      ><a name="812" href="groups.PropQuotUniqueFactorization.html#812" class="Function"
+      >P/Q</a
+      ><a name="815"
+      > </a
+      ><a name="816" class="Symbol"
+      >:</a
+      ><a name="817"
+      > </a
+      ><a name="818" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="823"
+      > </a
+      ><a name="824" class="Symbol"
+      >(</a
+      ><a name="825" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="829"
+      > </a
+      ><a name="830" href="groups.PropQuotUniqueFactorization.html#321" class="Bound"
+      >i</a
+      ><a name="831"
+      > </a
+      ><a name="832" class="Symbol"
+      >(</a
+      ><a name="833" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="837"
+      > </a
+      ><a name="838" href="groups.PropQuotUniqueFactorization.html#325" class="Bound"
+      >l&#8321;</a
+      ><a name="840"
+      > </a
+      ><a name="841" href="groups.PropQuotUniqueFactorization.html#328" class="Bound"
+      >l&#8322;</a
+      ><a name="843" class="Symbol"
+      >))</a
+      ><a name="845"
+      >
+    </a
+      ><a name="850" href="groups.PropQuotUniqueFactorization.html#812" class="Function"
+      >P/Q</a
+      ><a name="853"
+      > </a
+      ><a name="854" class="Symbol"
+      >=</a
+      ><a name="855"
+      > </a
+      ><a name="856" href="lib.groups.QuotientGroup.html#3884" class="Function"
+      >QuotGroup</a
+      ><a name="865"
+      > </a
+      ><a name="866" href="groups.PropQuotUniqueFactorization.html#730" class="Function"
+      >P/Q-prop</a
+      ><a name="874"
+      >
+    </a
+      ><a name="879" class="Keyword"
+      >module</a
+      ><a name="885"
+      > </a
+      ><a name="886" href="groups.PropQuotUniqueFactorization.html#886" class="Module"
+      >P/Q</a
+      ><a name="889"
+      > </a
+      ><a name="890" class="Symbol"
+      >=</a
+      ><a name="891"
+      > </a
+      ><a name="892" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="897"
+      > </a
+      ><a name="898" href="groups.PropQuotUniqueFactorization.html#812" class="Function"
+      >P/Q</a
+      ><a name="901"
+      >
+
+    </a
+      ><a name="907" class="Keyword"
+      >module</a
+      ><a name="913"
+      > </a
+      ><a name="914" href="groups.PropQuotUniqueFactorization.html#914" class="Module"
+      >_</a
+      ><a name="915"
+      > </a
+      ><a name="916" class="Symbol"
+      >(</a
+      ><a name="917" href="groups.PropQuotUniqueFactorization.html#917" class="Bound"
+      >k</a
+      ><a name="918"
+      > </a
+      ><a name="919" class="Symbol"
+      >:</a
+      ><a name="920"
+      > </a
+      ><a name="921" href="lib.types.Group.html#6903" class="Field"
+      >Group.El</a
+      ><a name="929"
+      > </a
+      ><a name="930" href="groups.PropQuotUniqueFactorization.html#347" class="Bound"
+      >H</a
+      ><a name="931" class="Symbol"
+      >)</a
+      ><a name="932"
+      > </a
+      ><a name="933" class="Keyword"
+      >where</a
+      ><a name="938"
+      >
+      </a
+      ><a name="945" href="groups.PropQuotUniqueFactorization.html#945" class="Function"
+      >H-to-P/Q-f'</a
+      ><a name="956"
+      > </a
+      ><a name="957" class="Symbol"
+      >:</a
+      ><a name="958"
+      > </a
+      ><a name="959" href="lib.Function.html#899" class="Function"
+      >hfiber</a
+      ><a name="965"
+      > </a
+      ><a name="966" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#966;&#8321;.f</a
+      ><a name="970"
+      > </a
+      ><a name="971" href="groups.PropQuotUniqueFactorization.html#917" class="Bound"
+      >k</a
+      ><a name="972"
+      > </a
+      ><a name="973" class="Symbol"
+      >&#8594;</a
+      ><a name="974"
+      > </a
+      ><a name="975" href="lib.types.Group.html#6903" class="Function"
+      >P/Q.El</a
+      ><a name="981"
+      >
+      </a
+      ><a name="988" href="groups.PropQuotUniqueFactorization.html#945" class="Function"
+      >H-to-P/Q-f'</a
+      ><a name="999"
+      > </a
+      ><a name="1000" class="Symbol"
+      >(</a
+      ><a name="1001" href="groups.PropQuotUniqueFactorization.html#1001" class="Bound"
+      >p</a
+      ><a name="1002"
+      > </a
+      ><a name="1003" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1004"
+      > </a
+      ><a name="1005" class="Symbol"
+      >_)</a
+      ><a name="1007"
+      > </a
+      ><a name="1008" class="Symbol"
+      >=</a
+      ><a name="1009"
+      > </a
+      ><a name="1010" href="lib.types.SetQuotient.html#313" class="Postulate Operator"
+      >q[</a
+      ><a name="1012"
+      > </a
+      ><a name="1013" href="groups.PropQuotUniqueFactorization.html#1001" class="Bound"
+      >p</a
+      ><a name="1014"
+      > </a
+      ><a name="1015" href="lib.types.SetQuotient.html#313" class="Postulate Operator"
+      >]</a
+      ><a name="1016"
+      >
+
+      </a
+      ><a name="1024" class="Keyword"
+      >abstract</a
+      ><a name="1032"
+      >
+        </a
+      ><a name="1041" href="groups.PropQuotUniqueFactorization.html#1041" class="Function"
+      >H-to-P/Q-f'-const</a
+      ><a name="1058"
+      > </a
+      ><a name="1059" class="Symbol"
+      >:</a
+      ><a name="1060"
+      > </a
+      ><a name="1061" class="Symbol"
+      >(</a
+      ><a name="1062" href="groups.PropQuotUniqueFactorization.html#1062" class="Bound"
+      >hf&#8321;</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" href="groups.PropQuotUniqueFactorization.html#1066" class="Bound"
+      >hf&#8322;</a
+      ><a name="1069"
+      > </a
+      ><a name="1070" class="Symbol"
+      >:</a
+      ><a name="1071"
+      > </a
+      ><a name="1072" href="lib.Function.html#899" class="Function"
+      >hfiber</a
+      ><a name="1078"
+      > </a
+      ><a name="1079" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#966;&#8321;.f</a
+      ><a name="1083"
+      > </a
+      ><a name="1084" href="groups.PropQuotUniqueFactorization.html#917" class="Bound"
+      >k</a
+      ><a name="1085" class="Symbol"
+      >)</a
+      ><a name="1086"
+      >
+          </a
+      ><a name="1097" class="Symbol"
+      >&#8594;</a
+      ><a name="1098"
+      > </a
+      ><a name="1099" href="groups.PropQuotUniqueFactorization.html#945" class="Function"
+      >H-to-P/Q-f'</a
+      ><a name="1110"
+      > </a
+      ><a name="1111" href="groups.PropQuotUniqueFactorization.html#1062" class="Bound"
+      >hf&#8321;</a
+      ><a name="1114"
+      > </a
+      ><a name="1115" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1117"
+      > </a
+      ><a name="1118" href="groups.PropQuotUniqueFactorization.html#945" class="Function"
+      >H-to-P/Q-f'</a
+      ><a name="1129"
+      > </a
+      ><a name="1130" href="groups.PropQuotUniqueFactorization.html#1066" class="Bound"
+      >hf&#8322;</a
+      ><a name="1133"
+      >
+        </a
+      ><a name="1142" href="groups.PropQuotUniqueFactorization.html#1041" class="Function"
+      >H-to-P/Q-f'-const</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" class="Symbol"
+      >(</a
+      ><a name="1161" href="groups.PropQuotUniqueFactorization.html#1161" class="Bound"
+      >h&#8321;</a
+      ><a name="1163"
+      > </a
+      ><a name="1164" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1165"
+      > </a
+      ><a name="1166" href="groups.PropQuotUniqueFactorization.html#1166" class="Bound"
+      >r&#8321;</a
+      ><a name="1168" class="Symbol"
+      >)</a
+      ><a name="1169"
+      > </a
+      ><a name="1170" class="Symbol"
+      >(</a
+      ><a name="1171" href="groups.PropQuotUniqueFactorization.html#1171" class="Bound"
+      >h&#8322;</a
+      ><a name="1173"
+      > </a
+      ><a name="1174" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1175"
+      > </a
+      ><a name="1176" href="groups.PropQuotUniqueFactorization.html#1176" class="Bound"
+      >r&#8322;</a
+      ><a name="1178" class="Symbol"
+      >)</a
+      ><a name="1179"
+      > </a
+      ><a name="1180" class="Symbol"
+      >=</a
+      ><a name="1181"
+      >
+          </a
+      ><a name="1192" href="lib.groups.QuotientGroup.html#4226" class="Function"
+      >quot-rel&#7475;</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" class="Symbol"
+      >{</a
+      ><a name="1203" class="Argument"
+      >P</a
+      ><a name="1204"
+      > </a
+      ><a name="1205" class="Symbol"
+      >=</a
+      ><a name="1206"
+      > </a
+      ><a name="1207" href="groups.PropQuotUniqueFactorization.html#730" class="Function"
+      >P/Q-prop</a
+      ><a name="1215" class="Symbol"
+      >}</a
+      ><a name="1216"
+      > </a
+      ><a name="1217" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1218"
+      > </a
+      ><a name="1219" href="lib.Equivalence.html#4849" class="Function"
+      >&lt;&#8211;</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" class="Symbol"
+      >(</a
+      ><a name="1223" href="lib.groups.QuotientGroup.html#5130" class="Function"
+      >quot-rel&#7475;-equiv</a
+      ><a name="1238"
+      > </a
+      ><a name="1239" class="Symbol"
+      >{</a
+      ><a name="1240" class="Argument"
+      >P</a
+      ><a name="1241"
+      > </a
+      ><a name="1242" class="Symbol"
+      >=</a
+      ><a name="1243"
+      > </a
+      ><a name="1244" href="groups.PropQuotUniqueFactorization.html#389" class="Bound"
+      >Q</a
+      ><a name="1245" class="Symbol"
+      >})</a
+      ><a name="1247"
+      > </a
+      ><a name="1248" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1249"
+      >
+            </a
+      ><a name="1262" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1263"
+      > </a
+      ><a name="1264" class="Symbol"
+      >(</a
+      ><a name="1265" href="groups.PropQuotUniqueFactorization.html#524" class="Bound"
+      >&#966;-comm</a
+      ><a name="1271"
+      > </a
+      ><a name="1272" href="groups.PropQuotUniqueFactorization.html#1161" class="Bound"
+      >h&#8321;</a
+      ><a name="1274" class="Symbol"
+      >)</a
+      ><a name="1275"
+      > </a
+      ><a name="1276" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1277"
+      > </a
+      ><a name="1278" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1280"
+      > </a
+      ><a name="1281" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#966;&#8322;.f</a
+      ><a name="1285"
+      > </a
+      ><a name="1286" class="Symbol"
+      >(</a
+      ><a name="1287" href="groups.PropQuotUniqueFactorization.html#1166" class="Bound"
+      >r&#8321;</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1291"
+      > </a
+      ><a name="1292" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1293"
+      > </a
+      ><a name="1294" href="groups.PropQuotUniqueFactorization.html#1176" class="Bound"
+      >r&#8322;</a
+      ><a name="1296" class="Symbol"
+      >)</a
+      ><a name="1297"
+      > </a
+      ><a name="1298" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1299"
+      > </a
+      ><a name="1300" href="groups.PropQuotUniqueFactorization.html#524" class="Bound"
+      >&#966;-comm</a
+      ><a name="1306"
+      > </a
+      ><a name="1307" href="groups.PropQuotUniqueFactorization.html#1171" class="Bound"
+      >h&#8322;</a
+      ><a name="1309"
+      >
+
+      </a
+      ><a name="1317" class="Keyword"
+      >module</a
+      ><a name="1323"
+      > </a
+      ><a name="1324" href="groups.PropQuotUniqueFactorization.html#1324" class="Module"
+      >HToP/Q</a
+      ><a name="1330"
+      > </a
+      ><a name="1331" class="Symbol"
+      >=</a
+      ><a name="1332"
+      > </a
+      ><a name="1333" href="homotopy.ConstantToSetExtendsToProp.html#1" class="Module"
+      >ConstExt</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" href="lib.types.Group.html#7026" class="Function"
+      >P/Q.El-is-set</a
+      ><a name="1355"
+      >
+        </a
+      ><a name="1364" href="groups.PropQuotUniqueFactorization.html#945" class="Function"
+      >H-to-P/Q-f'</a
+      ><a name="1375"
+      > </a
+      ><a name="1376" href="groups.PropQuotUniqueFactorization.html#1041" class="Function"
+      >H-to-P/Q-f'-const</a
+      ><a name="1393"
+      >
+
+      </a
+      ><a name="1401" href="groups.PropQuotUniqueFactorization.html#1401" class="Function"
+      >H-to-P/Q-f</a
+      ><a name="1411"
+      > </a
+      ><a name="1412" class="Symbol"
+      >:</a
+      ><a name="1413"
+      > </a
+      ><a name="1414" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="1419"
+      > </a
+      ><a name="1420" class="Number"
+      >-1</a
+      ><a name="1422"
+      > </a
+      ><a name="1423" class="Symbol"
+      >(</a
+      ><a name="1424" href="lib.Function.html#899" class="Function"
+      >hfiber</a
+      ><a name="1430"
+      > </a
+      ><a name="1431" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#966;&#8321;.f</a
+      ><a name="1435"
+      > </a
+      ><a name="1436" href="groups.PropQuotUniqueFactorization.html#917" class="Bound"
+      >k</a
+      ><a name="1437" class="Symbol"
+      >)</a
+      ><a name="1438"
+      > </a
+      ><a name="1439" class="Symbol"
+      >&#8594;</a
+      ><a name="1440"
+      > </a
+      ><a name="1441" href="lib.types.Group.html#6903" class="Function"
+      >P/Q.El</a
+      ><a name="1447"
+      >
+      </a
+      ><a name="1454" href="groups.PropQuotUniqueFactorization.html#1401" class="Function"
+      >H-to-P/Q-f</a
+      ><a name="1464"
+      > </a
+      ><a name="1465" class="Symbol"
+      >=</a
+      ><a name="1466"
+      > </a
+      ><a name="1467" href="homotopy.ConstantToSetExtendsToProp.html#947" class="Function"
+      >HToP/Q.ext</a
+      ><a name="1477"
+      >
+
+      </a
+      ><a name="1485" href="groups.PropQuotUniqueFactorization.html#1485" class="Function"
+      >H-to-P/Q-f-is-const</a
+      ><a name="1504"
+      > </a
+      ><a name="1505" class="Symbol"
+      >:</a
+      ><a name="1506"
+      > </a
+      ><a name="1507" class="Symbol"
+      >&#8704;</a
+      ><a name="1508"
+      > </a
+      ><a name="1509" href="groups.PropQuotUniqueFactorization.html#1509" class="Bound"
+      >hf&#8321;</a
+      ><a name="1512"
+      > </a
+      ><a name="1513" href="groups.PropQuotUniqueFactorization.html#1513" class="Bound"
+      >hf&#8322;</a
+      ><a name="1516"
+      > </a
+      ><a name="1517" class="Symbol"
+      >&#8594;</a
+      ><a name="1518"
+      > </a
+      ><a name="1519" href="groups.PropQuotUniqueFactorization.html#1401" class="Function"
+      >H-to-P/Q-f</a
+      ><a name="1529"
+      > </a
+      ><a name="1530" href="groups.PropQuotUniqueFactorization.html#1509" class="Bound"
+      >hf&#8321;</a
+      ><a name="1533"
+      > </a
+      ><a name="1534" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1536"
+      > </a
+      ><a name="1537" href="groups.PropQuotUniqueFactorization.html#1401" class="Function"
+      >H-to-P/Q-f</a
+      ><a name="1547"
+      > </a
+      ><a name="1548" href="groups.PropQuotUniqueFactorization.html#1513" class="Bound"
+      >hf&#8322;</a
+      ><a name="1551"
+      >
+      </a
+      ><a name="1558" href="groups.PropQuotUniqueFactorization.html#1485" class="Function"
+      >H-to-P/Q-f-is-const</a
+      ><a name="1577"
+      > </a
+      ><a name="1578" class="Symbol"
+      >=</a
+      ><a name="1579"
+      > </a
+      ><a name="1580" href="homotopy.ConstantToSetExtendsToProp.html#1032" class="Function"
+      >HToP/Q.ext-is-const</a
+      ><a name="1599"
+      >
+
+    </a
+      ><a name="1605" class="Keyword"
+      >abstract</a
+      ><a name="1613"
+      >
+      </a
+      ><a name="1620" href="groups.PropQuotUniqueFactorization.html#1620" class="Function"
+      >H-to-P/Q-f-comp</a
+      ><a name="1635"
+      > </a
+      ><a name="1636" class="Symbol"
+      >:</a
+      ><a name="1637"
+      > </a
+      ><a name="1638" class="Symbol"
+      >(</a
+      ><a name="1639" href="groups.PropQuotUniqueFactorization.html#1639" class="Bound"
+      >k&#8321;</a
+      ><a name="1641"
+      > </a
+      ><a name="1642" href="groups.PropQuotUniqueFactorization.html#1642" class="Bound"
+      >k&#8322;</a
+      ><a name="1644"
+      > </a
+      ><a name="1645" class="Symbol"
+      >:</a
+      ><a name="1646"
+      > </a
+      ><a name="1647" href="lib.types.Group.html#6903" class="Function"
+      >H.El</a
+      ><a name="1651" class="Symbol"
+      >)</a
+      ><a name="1652"
+      >
+        </a
+      ><a name="1661" class="Symbol"
+      >&#8594;</a
+      ><a name="1662"
+      > </a
+      ><a name="1663" class="Symbol"
+      >(</a
+      ><a name="1664" href="groups.PropQuotUniqueFactorization.html#1664" class="Bound"
+      >hf&#8321;&#8322;</a
+      ><a name="1668"
+      > </a
+      ><a name="1669" class="Symbol"
+      >:</a
+      ><a name="1670"
+      > </a
+      ><a name="1671" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="1676"
+      > </a
+      ><a name="1677" class="Number"
+      >-1</a
+      ><a name="1679"
+      > </a
+      ><a name="1680" class="Symbol"
+      >(</a
+      ><a name="1681" href="lib.Function.html#899" class="Function"
+      >hfiber</a
+      ><a name="1687"
+      > </a
+      ><a name="1688" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#966;&#8321;.f</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" class="Symbol"
+      >(</a
+      ><a name="1694" href="lib.types.Group.html#313" class="Function"
+      >H.comp</a
+      ><a name="1700"
+      > </a
+      ><a name="1701" href="groups.PropQuotUniqueFactorization.html#1639" class="Bound"
+      >k&#8321;</a
+      ><a name="1703"
+      > </a
+      ><a name="1704" href="groups.PropQuotUniqueFactorization.html#1642" class="Bound"
+      >k&#8322;</a
+      ><a name="1706" class="Symbol"
+      >)))</a
+      ><a name="1709"
+      >
+        </a
+      ><a name="1718" class="Symbol"
+      >&#8594;</a
+      ><a name="1719"
+      > </a
+      ><a name="1720" class="Symbol"
+      >(</a
+      ><a name="1721" href="groups.PropQuotUniqueFactorization.html#1721" class="Bound"
+      >hf&#8321;</a
+      ><a name="1724"
+      > </a
+      ><a name="1725" class="Symbol"
+      >:</a
+      ><a name="1726"
+      > </a
+      ><a name="1727" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="1732"
+      > </a
+      ><a name="1733" class="Number"
+      >-1</a
+      ><a name="1735"
+      > </a
+      ><a name="1736" class="Symbol"
+      >(</a
+      ><a name="1737" href="lib.Function.html#899" class="Function"
+      >hfiber</a
+      ><a name="1743"
+      > </a
+      ><a name="1744" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#966;&#8321;.f</a
+      ><a name="1748"
+      > </a
+      ><a name="1749" href="groups.PropQuotUniqueFactorization.html#1639" class="Bound"
+      >k&#8321;</a
+      ><a name="1751" class="Symbol"
+      >))</a
+      ><a name="1753"
+      >
+        </a
+      ><a name="1762" class="Symbol"
+      >&#8594;</a
+      ><a name="1763"
+      > </a
+      ><a name="1764" class="Symbol"
+      >(</a
+      ><a name="1765" href="groups.PropQuotUniqueFactorization.html#1765" class="Bound"
+      >hf&#8322;</a
+      ><a name="1768"
+      > </a
+      ><a name="1769" class="Symbol"
+      >:</a
+      ><a name="1770"
+      > </a
+      ><a name="1771" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="1776"
+      > </a
+      ><a name="1777" class="Number"
+      >-1</a
+      ><a name="1779"
+      > </a
+      ><a name="1780" class="Symbol"
+      >(</a
+      ><a name="1781" href="lib.Function.html#899" class="Function"
+      >hfiber</a
+      ><a name="1787"
+      > </a
+      ><a name="1788" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#966;&#8321;.f</a
+      ><a name="1792"
+      > </a
+      ><a name="1793" href="groups.PropQuotUniqueFactorization.html#1642" class="Bound"
+      >k&#8322;</a
+      ><a name="1795" class="Symbol"
+      >))</a
+      ><a name="1797"
+      >
+        </a
+      ><a name="1806" class="Symbol"
+      >&#8594;</a
+      ><a name="1807"
+      > </a
+      ><a name="1808" href="groups.PropQuotUniqueFactorization.html#1401" class="Function"
+      >H-to-P/Q-f</a
+      ><a name="1818"
+      > </a
+      ><a name="1819" class="Symbol"
+      >(</a
+      ><a name="1820" href="lib.types.Group.html#313" class="Function"
+      >H.comp</a
+      ><a name="1826"
+      > </a
+      ><a name="1827" href="groups.PropQuotUniqueFactorization.html#1639" class="Bound"
+      >k&#8321;</a
+      ><a name="1829"
+      > </a
+      ><a name="1830" href="groups.PropQuotUniqueFactorization.html#1642" class="Bound"
+      >k&#8322;</a
+      ><a name="1832" class="Symbol"
+      >)</a
+      ><a name="1833"
+      > </a
+      ><a name="1834" href="groups.PropQuotUniqueFactorization.html#1664" class="Bound"
+      >hf&#8321;&#8322;</a
+      ><a name="1838"
+      > </a
+      ><a name="1839" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1841"
+      > </a
+      ><a name="1842" href="lib.types.Group.html#313" class="Function"
+      >P/Q.comp</a
+      ><a name="1850"
+      > </a
+      ><a name="1851" class="Symbol"
+      >(</a
+      ><a name="1852" href="groups.PropQuotUniqueFactorization.html#1401" class="Function"
+      >H-to-P/Q-f</a
+      ><a name="1862"
+      > </a
+      ><a name="1863" href="groups.PropQuotUniqueFactorization.html#1639" class="Bound"
+      >k&#8321;</a
+      ><a name="1865"
+      > </a
+      ><a name="1866" href="groups.PropQuotUniqueFactorization.html#1721" class="Bound"
+      >hf&#8321;</a
+      ><a name="1869" class="Symbol"
+      >)</a
+      ><a name="1870"
+      > </a
+      ><a name="1871" class="Symbol"
+      >(</a
+      ><a name="1872" href="groups.PropQuotUniqueFactorization.html#1401" class="Function"
+      >H-to-P/Q-f</a
+      ><a name="1882"
+      > </a
+      ><a name="1883" href="groups.PropQuotUniqueFactorization.html#1642" class="Bound"
+      >k&#8322;</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" href="groups.PropQuotUniqueFactorization.html#1765" class="Bound"
+      >hf&#8322;</a
+      ><a name="1889" class="Symbol"
+      >)</a
+      ><a name="1890"
+      >
+      </a
+      ><a name="1897" href="groups.PropQuotUniqueFactorization.html#1620" class="Function"
+      >H-to-P/Q-f-comp</a
+      ><a name="1912"
+      > </a
+      ><a name="1913" href="groups.PropQuotUniqueFactorization.html#1913" class="Bound"
+      >k&#8321;</a
+      ><a name="1915"
+      > </a
+      ><a name="1916" href="groups.PropQuotUniqueFactorization.html#1916" class="Bound"
+      >k&#8322;</a
+      ><a name="1918"
+      > </a
+      ><a name="1919" href="groups.PropQuotUniqueFactorization.html#1919" class="Bound"
+      >hf&#8321;&#8322;</a
+      ><a name="1923"
+      > </a
+      ><a name="1924" class="Symbol"
+      >=</a
+      ><a name="1925"
+      > </a
+      ><a name="1926" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="1936"
+      >
+        </a
+      ><a name="1945" class="Symbol"
+      >(&#955;</a
+      ><a name="1947"
+      > </a
+      ><a name="1948" href="groups.PropQuotUniqueFactorization.html#1948" class="Bound"
+      >hf&#8321;</a
+      ><a name="1951"
+      > </a
+      ><a name="1952" class="Symbol"
+      >&#8594;</a
+      ><a name="1953"
+      > </a
+      ><a name="1954" href="lib.types.Pi.html#566" class="Function"
+      >&#928;-is-prop</a
+      ><a name="1963"
+      > </a
+      ><a name="1964" class="Symbol"
+      >&#955;</a
+      ><a name="1965"
+      > </a
+      ><a name="1966" href="groups.PropQuotUniqueFactorization.html#1966" class="Bound"
+      >hf&#8322;</a
+      ><a name="1969"
+      > </a
+      ><a name="1970" class="Symbol"
+      >&#8594;</a
+      ><a name="1971"
+      >
+          </a
+      ><a name="1982" href="lib.types.Group.html#7026" class="Function"
+      >P/Q.El-is-set</a
+      ><a name="1995"
+      > </a
+      ><a name="1996" class="Symbol"
+      >_</a
+      ><a name="1997"
+      > </a
+      ><a name="1998" class="Symbol"
+      >(</a
+      ><a name="1999" href="lib.types.Group.html#313" class="Function"
+      >P/Q.comp</a
+      ><a name="2007"
+      > </a
+      ><a name="2008" class="Symbol"
+      >(</a
+      ><a name="2009" href="groups.PropQuotUniqueFactorization.html#1401" class="Function"
+      >H-to-P/Q-f</a
+      ><a name="2019"
+      > </a
+      ><a name="2020" href="groups.PropQuotUniqueFactorization.html#1913" class="Bound"
+      >k&#8321;</a
+      ><a name="2022"
+      > </a
+      ><a name="2023" href="groups.PropQuotUniqueFactorization.html#1948" class="Bound"
+      >hf&#8321;</a
+      ><a name="2026" class="Symbol"
+      >)</a
+      ><a name="2027"
+      > </a
+      ><a name="2028" class="Symbol"
+      >(</a
+      ><a name="2029" href="groups.PropQuotUniqueFactorization.html#1401" class="Function"
+      >H-to-P/Q-f</a
+      ><a name="2039"
+      > </a
+      ><a name="2040" href="groups.PropQuotUniqueFactorization.html#1916" class="Bound"
+      >k&#8322;</a
+      ><a name="2042"
+      > </a
+      ><a name="2043" href="groups.PropQuotUniqueFactorization.html#1966" class="Bound"
+      >hf&#8322;</a
+      ><a name="2046" class="Symbol"
+      >)))</a
+      ><a name="2049"
+      >
+        </a
+      ><a name="2058" class="Symbol"
+      >(&#955;{(</a
+      ><a name="2062" href="groups.PropQuotUniqueFactorization.html#2062" class="Bound"
+      >p&#8321;</a
+      ><a name="2064"
+      > </a
+      ><a name="2065" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2066"
+      > </a
+      ><a name="2067" href="groups.PropQuotUniqueFactorization.html#2067" class="Bound"
+      >r&#8321;</a
+      ><a name="2069" class="Symbol"
+      >)</a
+      ><a name="2070"
+      > </a
+      ><a name="2071" class="Symbol"
+      >&#8594;</a
+      ><a name="2072"
+      > </a
+      ><a name="2073" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="2083"
+      >
+          </a
+      ><a name="2094" class="Symbol"
+      >(&#955;</a
+      ><a name="2096"
+      > </a
+      ><a name="2097" href="groups.PropQuotUniqueFactorization.html#2097" class="Bound"
+      >hf&#8322;</a
+      ><a name="2100"
+      > </a
+      ><a name="2101" class="Symbol"
+      >&#8594;</a
+      ><a name="2102"
+      > </a
+      ><a name="2103" href="lib.types.Group.html#7026" class="Function"
+      >P/Q.El-is-set</a
+      ><a name="2116"
+      > </a
+      ><a name="2117" class="Symbol"
+      >_</a
+      ><a name="2118"
+      > </a
+      ><a name="2119" class="Symbol"
+      >(</a
+      ><a name="2120" href="lib.types.Group.html#313" class="Function"
+      >P/Q.comp</a
+      ><a name="2128"
+      > </a
+      ><a name="2129" href="lib.types.SetQuotient.html#313" class="Postulate Operator"
+      >q[</a
+      ><a name="2131"
+      > </a
+      ><a name="2132" href="groups.PropQuotUniqueFactorization.html#2062" class="Bound"
+      >p&#8321;</a
+      ><a name="2134"
+      > </a
+      ><a name="2135" href="lib.types.SetQuotient.html#313" class="Postulate Operator"
+      >]</a
+      ><a name="2136"
+      > </a
+      ><a name="2137" class="Symbol"
+      >(</a
+      ><a name="2138" href="groups.PropQuotUniqueFactorization.html#1401" class="Function"
+      >H-to-P/Q-f</a
+      ><a name="2148"
+      > </a
+      ><a name="2149" href="groups.PropQuotUniqueFactorization.html#1916" class="Bound"
+      >k&#8322;</a
+      ><a name="2151"
+      > </a
+      ><a name="2152" href="groups.PropQuotUniqueFactorization.html#2097" class="Bound"
+      >hf&#8322;</a
+      ><a name="2155" class="Symbol"
+      >)))</a
+      ><a name="2158"
+      >
+          </a
+      ><a name="2169" class="Symbol"
+      >(&#955;{(</a
+      ><a name="2173" href="groups.PropQuotUniqueFactorization.html#2173" class="Bound"
+      >p&#8322;</a
+      ><a name="2175"
+      > </a
+      ><a name="2176" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2177"
+      > </a
+      ><a name="2178" href="groups.PropQuotUniqueFactorization.html#2178" class="Bound"
+      >r&#8322;</a
+      ><a name="2180" class="Symbol"
+      >)</a
+      ><a name="2181"
+      > </a
+      ><a name="2182" class="Symbol"
+      >&#8594;</a
+      ><a name="2183"
+      > </a
+      ><a name="2184" href="groups.PropQuotUniqueFactorization.html#1485" class="Function"
+      >H-to-P/Q-f-is-const</a
+      ><a name="2203"
+      > </a
+      ><a name="2204" class="Symbol"
+      >(</a
+      ><a name="2205" href="lib.types.Group.html#313" class="Function"
+      >H.comp</a
+      ><a name="2211"
+      > </a
+      ><a name="2212" href="groups.PropQuotUniqueFactorization.html#1913" class="Bound"
+      >k&#8321;</a
+      ><a name="2214"
+      > </a
+      ><a name="2215" href="groups.PropQuotUniqueFactorization.html#1916" class="Bound"
+      >k&#8322;</a
+      ><a name="2217" class="Symbol"
+      >)</a
+      ><a name="2218"
+      >
+              </a
+      ><a name="2233" href="groups.PropQuotUniqueFactorization.html#1919" class="Bound"
+      >hf&#8321;&#8322;</a
+      ><a name="2237"
+      > </a
+      ><a name="2238" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="2239"
+      > </a
+      ><a name="2240" href="lib.types.Group.html#313" class="Function"
+      >P.comp</a
+      ><a name="2246"
+      > </a
+      ><a name="2247" href="groups.PropQuotUniqueFactorization.html#2062" class="Bound"
+      >p&#8321;</a
+      ><a name="2249"
+      > </a
+      ><a name="2250" href="groups.PropQuotUniqueFactorization.html#2173" class="Bound"
+      >p&#8322;</a
+      ><a name="2252"
+      > </a
+      ><a name="2253" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2254"
+      > </a
+      ><a name="2255" href="lib.groups.Homomorphism.html#2630" class="Function"
+      >&#966;&#8321;.pres-comp</a
+      ><a name="2267"
+      > </a
+      ><a name="2268" href="groups.PropQuotUniqueFactorization.html#2062" class="Bound"
+      >p&#8321;</a
+      ><a name="2270"
+      > </a
+      ><a name="2271" href="groups.PropQuotUniqueFactorization.html#2173" class="Bound"
+      >p&#8322;</a
+      ><a name="2273"
+      > </a
+      ><a name="2274" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2275"
+      > </a
+      ><a name="2276" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="2279"
+      > </a
+      ><a name="2280" href="lib.types.Group.html#313" class="Function"
+      >H.comp</a
+      ><a name="2286"
+      > </a
+      ><a name="2287" href="groups.PropQuotUniqueFactorization.html#2067" class="Bound"
+      >r&#8321;</a
+      ><a name="2289"
+      > </a
+      ><a name="2290" href="groups.PropQuotUniqueFactorization.html#2178" class="Bound"
+      >r&#8322;</a
+      ><a name="2292"
+      > </a
+      ><a name="2293" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="2294" class="Symbol"
+      >})})</a
+      ><a name="2298"
+      >
+
+  </a
+      ><a name="2302" href="groups.PropQuotUniqueFactorization.html#2302" class="Function"
+      >H-to-P/Q</a
+      ><a name="2310"
+      > </a
+      ><a name="2311" class="Symbol"
+      >:</a
+      ><a name="2312"
+      > </a
+      ><a name="2313" href="groups.PropQuotUniqueFactorization.html#347" class="Bound"
+      >H</a
+      ><a name="2314"
+      > </a
+      ><a name="2315" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="2317"
+      > </a
+      ><a name="2318" href="groups.PropQuotUniqueFactorization.html#812" class="Function"
+      >P/Q</a
+      ><a name="2321"
+      >
+  </a
+      ><a name="2324" href="groups.PropQuotUniqueFactorization.html#2302" class="Function"
+      >H-to-P/Q</a
+      ><a name="2332"
+      > </a
+      ><a name="2333" class="Symbol"
+      >=</a
+      ><a name="2334"
+      > </a
+      ><a name="2335" class="Keyword"
+      >record</a
+      ><a name="2341"
+      > </a
+      ><a name="2342" class="Symbol"
+      >{</a
+      ><a name="2343"
+      >
+    </a
+      ><a name="2348" class="Field"
+      >f</a
+      ><a name="2349"
+      > </a
+      ><a name="2350" class="Symbol"
+      >=</a
+      ><a name="2351"
+      > </a
+      ><a name="2352" class="Symbol"
+      >&#955;</a
+      ><a name="2353"
+      > </a
+      ><a name="2354" href="groups.PropQuotUniqueFactorization.html#2354" class="Bound"
+      >k</a
+      ><a name="2355"
+      > </a
+      ><a name="2356" class="Symbol"
+      >&#8594;</a
+      ><a name="2357"
+      > </a
+      ><a name="2358" href="groups.PropQuotUniqueFactorization.html#1401" class="Function"
+      >H-to-P/Q-f</a
+      ><a name="2368"
+      > </a
+      ><a name="2369" href="groups.PropQuotUniqueFactorization.html#2354" class="Bound"
+      >k</a
+      ><a name="2370"
+      > </a
+      ><a name="2371" class="Symbol"
+      >(</a
+      ><a name="2372" href="groups.PropQuotUniqueFactorization.html#444" class="Bound"
+      >&#966;&#8321;-is-surj</a
+      ><a name="2382"
+      > </a
+      ><a name="2383" href="groups.PropQuotUniqueFactorization.html#2354" class="Bound"
+      >k</a
+      ><a name="2384" class="Symbol"
+      >);</a
+      ><a name="2386"
+      >
+    </a
+      ><a name="2391" class="Field"
+      >pres-comp</a
+      ><a name="2400"
+      > </a
+      ><a name="2401" class="Symbol"
+      >=</a
+      ><a name="2402"
+      > </a
+      ><a name="2403" class="Symbol"
+      >&#955;</a
+      ><a name="2404"
+      > </a
+      ><a name="2405" href="groups.PropQuotUniqueFactorization.html#2405" class="Bound"
+      >k&#8321;</a
+      ><a name="2407"
+      > </a
+      ><a name="2408" href="groups.PropQuotUniqueFactorization.html#2408" class="Bound"
+      >k&#8322;</a
+      ><a name="2410"
+      > </a
+      ><a name="2411" class="Symbol"
+      >&#8594;</a
+      ><a name="2412"
+      > </a
+      ><a name="2413" href="groups.PropQuotUniqueFactorization.html#1620" class="Function"
+      >H-to-P/Q-f-comp</a
+      ><a name="2428"
+      > </a
+      ><a name="2429" href="groups.PropQuotUniqueFactorization.html#2405" class="Bound"
+      >k&#8321;</a
+      ><a name="2431"
+      > </a
+      ><a name="2432" href="groups.PropQuotUniqueFactorization.html#2408" class="Bound"
+      >k&#8322;</a
+      ><a name="2434"
+      >
+      </a
+      ><a name="2441" class="Symbol"
+      >(</a
+      ><a name="2442" href="groups.PropQuotUniqueFactorization.html#444" class="Bound"
+      >&#966;&#8321;-is-surj</a
+      ><a name="2452"
+      > </a
+      ><a name="2453" class="Symbol"
+      >(</a
+      ><a name="2454" href="lib.types.Group.html#313" class="Function"
+      >H.comp</a
+      ><a name="2460"
+      > </a
+      ><a name="2461" href="groups.PropQuotUniqueFactorization.html#2405" class="Bound"
+      >k&#8321;</a
+      ><a name="2463"
+      > </a
+      ><a name="2464" href="groups.PropQuotUniqueFactorization.html#2408" class="Bound"
+      >k&#8322;</a
+      ><a name="2466" class="Symbol"
+      >))</a
+      ><a name="2468"
+      > </a
+      ><a name="2469" class="Symbol"
+      >(</a
+      ><a name="2470" href="groups.PropQuotUniqueFactorization.html#444" class="Bound"
+      >&#966;&#8321;-is-surj</a
+      ><a name="2480"
+      > </a
+      ><a name="2481" href="groups.PropQuotUniqueFactorization.html#2405" class="Bound"
+      >k&#8321;</a
+      ><a name="2483" class="Symbol"
+      >)</a
+      ><a name="2484"
+      > </a
+      ><a name="2485" class="Symbol"
+      >(</a
+      ><a name="2486" href="groups.PropQuotUniqueFactorization.html#444" class="Bound"
+      >&#966;&#8321;-is-surj</a
+      ><a name="2496"
+      > </a
+      ><a name="2497" href="groups.PropQuotUniqueFactorization.html#2408" class="Bound"
+      >k&#8322;</a
+      ><a name="2499" class="Symbol"
+      >)}</a
+      ><a name="2501"
+      >
+
+  </a
+      ><a name="2505" href="groups.PropQuotUniqueFactorization.html#2505" class="Function"
+      >H-iso-P/Q</a
+      ><a name="2514"
+      > </a
+      ><a name="2515" class="Symbol"
+      >:</a
+      ><a name="2516"
+      > </a
+      ><a name="2517" href="groups.PropQuotUniqueFactorization.html#347" class="Bound"
+      >H</a
+      ><a name="2518"
+      > </a
+      ><a name="2519" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="2521"
+      > </a
+      ><a name="2522" href="groups.PropQuotUniqueFactorization.html#812" class="Function"
+      >P/Q</a
+      ><a name="2525"
+      >
+  </a
+      ><a name="2528" href="groups.PropQuotUniqueFactorization.html#2505" class="Function"
+      >H-iso-P/Q</a
+      ><a name="2537"
+      > </a
+      ><a name="2538" class="Symbol"
+      >=</a
+      ><a name="2539"
+      > </a
+      ><a name="2540" href="groups.PropQuotUniqueFactorization.html#2302" class="Function"
+      >H-to-P/Q</a
+      ><a name="2548"
+      > </a
+      ><a name="2549" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2550"
+      > </a
+      ><a name="2551" href="lib.Equivalence.html#2854" class="Function"
+      >is-eq</a
+      ><a name="2556"
+      > </a
+      ><a name="2557" href="groups.PropQuotUniqueFactorization.html#2591" class="Function"
+      >to</a
+      ><a name="2559"
+      > </a
+      ><a name="2560" href="groups.PropQuotUniqueFactorization.html#2658" class="Function"
+      >from</a
+      ><a name="2564"
+      > </a
+      ><a name="2565" href="groups.PropQuotUniqueFactorization.html#2881" class="Function"
+      >to-from</a
+      ><a name="2572"
+      > </a
+      ><a name="2573" href="groups.PropQuotUniqueFactorization.html#3318" class="Function"
+      >from-to</a
+      ><a name="2580"
+      > </a
+      ><a name="2581" class="Keyword"
+      >where</a
+      ><a name="2586"
+      >
+    </a
+      ><a name="2591" href="groups.PropQuotUniqueFactorization.html#2591" class="Function"
+      >to</a
+      ><a name="2593"
+      > </a
+      ><a name="2594" class="Symbol"
+      >:</a
+      ><a name="2595"
+      > </a
+      ><a name="2596" href="lib.types.Group.html#6903" class="Function"
+      >H.El</a
+      ><a name="2600"
+      > </a
+      ><a name="2601" class="Symbol"
+      >&#8594;</a
+      ><a name="2602"
+      > </a
+      ><a name="2603" href="lib.types.Group.html#6903" class="Function"
+      >P/Q.El</a
+      ><a name="2609"
+      >
+    </a
+      ><a name="2614" href="groups.PropQuotUniqueFactorization.html#2591" class="Function"
+      >to</a
+      ><a name="2616"
+      > </a
+      ><a name="2617" class="Symbol"
+      >=</a
+      ><a name="2618"
+      > </a
+      ><a name="2619" class="Symbol"
+      >&#955;</a
+      ><a name="2620"
+      > </a
+      ><a name="2621" href="groups.PropQuotUniqueFactorization.html#2621" class="Bound"
+      >k</a
+      ><a name="2622"
+      > </a
+      ><a name="2623" class="Symbol"
+      >&#8594;</a
+      ><a name="2624"
+      > </a
+      ><a name="2625" href="groups.PropQuotUniqueFactorization.html#1401" class="Function"
+      >H-to-P/Q-f</a
+      ><a name="2635"
+      > </a
+      ><a name="2636" href="groups.PropQuotUniqueFactorization.html#2621" class="Bound"
+      >k</a
+      ><a name="2637"
+      > </a
+      ><a name="2638" class="Symbol"
+      >(</a
+      ><a name="2639" href="groups.PropQuotUniqueFactorization.html#444" class="Bound"
+      >&#966;&#8321;-is-surj</a
+      ><a name="2649"
+      > </a
+      ><a name="2650" href="groups.PropQuotUniqueFactorization.html#2621" class="Bound"
+      >k</a
+      ><a name="2651" class="Symbol"
+      >)</a
+      ><a name="2652"
+      >
+
+    </a
+      ><a name="2658" href="groups.PropQuotUniqueFactorization.html#2658" class="Function"
+      >from</a
+      ><a name="2662"
+      > </a
+      ><a name="2663" class="Symbol"
+      >:</a
+      ><a name="2664"
+      > </a
+      ><a name="2665" href="lib.types.Group.html#6903" class="Function"
+      >P/Q.El</a
+      ><a name="2671"
+      > </a
+      ><a name="2672" class="Symbol"
+      >&#8594;</a
+      ><a name="2673"
+      > </a
+      ><a name="2674" href="lib.types.Group.html#6903" class="Function"
+      >H.El</a
+      ><a name="2678"
+      >
+    </a
+      ><a name="2683" href="groups.PropQuotUniqueFactorization.html#2658" class="Function"
+      >from</a
+      ><a name="2687"
+      > </a
+      ><a name="2688" class="Symbol"
+      >=</a
+      ><a name="2689"
+      > </a
+      ><a name="2690" href="lib.types.SetQuotient.html#1191" class="Function"
+      >SetQuot-rec</a
+      ><a name="2701"
+      > </a
+      ><a name="2702" href="lib.types.Group.html#7026" class="Function"
+      >H.El-is-set</a
+      ><a name="2713"
+      >
+      </a
+      ><a name="2720" class="Symbol"
+      >(&#955;</a
+      ><a name="2722"
+      > </a
+      ><a name="2723" href="groups.PropQuotUniqueFactorization.html#2723" class="Bound"
+      >p</a
+      ><a name="2724"
+      > </a
+      ><a name="2725" class="Symbol"
+      >&#8594;</a
+      ><a name="2726"
+      > </a
+      ><a name="2727" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#966;&#8321;.f</a
+      ><a name="2731"
+      > </a
+      ><a name="2732" href="groups.PropQuotUniqueFactorization.html#2723" class="Bound"
+      >p</a
+      ><a name="2733" class="Symbol"
+      >)</a
+      ><a name="2734"
+      >
+      </a
+      ><a name="2741" class="Symbol"
+      >(&#955;</a
+      ><a name="2743"
+      > </a
+      ><a name="2744" class="Symbol"
+      >{</a
+      ><a name="2745" href="groups.PropQuotUniqueFactorization.html#2745" class="Bound"
+      >p&#8321;</a
+      ><a name="2747" class="Symbol"
+      >}</a
+      ><a name="2748"
+      > </a
+      ><a name="2749" class="Symbol"
+      >{</a
+      ><a name="2750" href="groups.PropQuotUniqueFactorization.html#2750" class="Bound"
+      >p&#8322;</a
+      ><a name="2752" class="Symbol"
+      >}</a
+      ><a name="2753"
+      > </a
+      ><a name="2754" href="groups.PropQuotUniqueFactorization.html#2754" class="Bound"
+      >q'p&#8321;p&#8322;&#8315;&#185;</a
+      ><a name="2762"
+      > </a
+      ><a name="2763" class="Symbol"
+      >&#8594;</a
+      ><a name="2764"
+      > </a
+      ><a name="2765" href="groups.PropQuotUniqueFactorization.html#497" class="Bound"
+      >&#966;&#8322;-is-inj</a
+      ><a name="2774"
+      > </a
+      ><a name="2775" class="Symbol"
+      >(</a
+      ><a name="2776" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#966;&#8321;.f</a
+      ><a name="2780"
+      > </a
+      ><a name="2781" href="groups.PropQuotUniqueFactorization.html#2745" class="Bound"
+      >p&#8321;</a
+      ><a name="2783" class="Symbol"
+      >)</a
+      ><a name="2784"
+      > </a
+      ><a name="2785" class="Symbol"
+      >(</a
+      ><a name="2786" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#966;&#8321;.f</a
+      ><a name="2790"
+      > </a
+      ><a name="2791" href="groups.PropQuotUniqueFactorization.html#2750" class="Bound"
+      >p&#8322;</a
+      ><a name="2793" class="Symbol"
+      >)</a
+      ><a name="2794"
+      > </a
+      ><a name="2795" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2796"
+      >
+        </a
+      ><a name="2805" href="groups.PropQuotUniqueFactorization.html#524" class="Bound"
+      >&#966;-comm</a
+      ><a name="2811"
+      > </a
+      ><a name="2812" href="groups.PropQuotUniqueFactorization.html#2745" class="Bound"
+      >p&#8321;</a
+      ><a name="2814"
+      > </a
+      ><a name="2815" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2816"
+      > </a
+      ><a name="2817" href="lib.groups.QuotientGroup.html#4226" class="Function"
+      >quot-rel&#7475;</a
+      ><a name="2826"
+      > </a
+      ><a name="2827" class="Symbol"
+      >{</a
+      ><a name="2828" class="Argument"
+      >P</a
+      ><a name="2829"
+      > </a
+      ><a name="2830" class="Symbol"
+      >=</a
+      ><a name="2831"
+      > </a
+      ><a name="2832" href="groups.PropQuotUniqueFactorization.html#389" class="Bound"
+      >Q</a
+      ><a name="2833" class="Symbol"
+      >}</a
+      ><a name="2834"
+      > </a
+      ><a name="2835" href="groups.PropQuotUniqueFactorization.html#2754" class="Bound"
+      >q'p&#8321;p&#8322;&#8315;&#185;</a
+      ><a name="2843"
+      > </a
+      ><a name="2844" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2845"
+      > </a
+      ><a name="2846" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2847"
+      > </a
+      ><a name="2848" class="Symbol"
+      >(</a
+      ><a name="2849" href="groups.PropQuotUniqueFactorization.html#524" class="Bound"
+      >&#966;-comm</a
+      ><a name="2855"
+      > </a
+      ><a name="2856" href="groups.PropQuotUniqueFactorization.html#2750" class="Bound"
+      >p&#8322;</a
+      ><a name="2858" class="Symbol"
+      >))</a
+      ><a name="2860"
+      >
+
+    </a
+      ><a name="2866" class="Keyword"
+      >abstract</a
+      ><a name="2874"
+      >
+      </a
+      ><a name="2881" href="groups.PropQuotUniqueFactorization.html#2881" class="Function"
+      >to-from</a
+      ><a name="2888"
+      > </a
+      ><a name="2889" class="Symbol"
+      >:</a
+      ><a name="2890"
+      > </a
+      ><a name="2891" class="Symbol"
+      >&#8704;</a
+      ><a name="2892"
+      > </a
+      ><a name="2893" href="groups.PropQuotUniqueFactorization.html#2893" class="Bound"
+      >p/q</a
+      ><a name="2896"
+      > </a
+      ><a name="2897" class="Symbol"
+      >&#8594;</a
+      ><a name="2898"
+      > </a
+      ><a name="2899" href="groups.PropQuotUniqueFactorization.html#2591" class="Function"
+      >to</a
+      ><a name="2901"
+      > </a
+      ><a name="2902" class="Symbol"
+      >(</a
+      ><a name="2903" href="groups.PropQuotUniqueFactorization.html#2658" class="Function"
+      >from</a
+      ><a name="2907"
+      > </a
+      ><a name="2908" href="groups.PropQuotUniqueFactorization.html#2893" class="Bound"
+      >p/q</a
+      ><a name="2911" class="Symbol"
+      >)</a
+      ><a name="2912"
+      > </a
+      ><a name="2913" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2915"
+      > </a
+      ><a name="2916" href="groups.PropQuotUniqueFactorization.html#2893" class="Bound"
+      >p/q</a
+      ><a name="2919"
+      >
+      </a
+      ><a name="2926" href="groups.PropQuotUniqueFactorization.html#2881" class="Function"
+      >to-from</a
+      ><a name="2933"
+      > </a
+      ><a name="2934" class="Symbol"
+      >=</a
+      ><a name="2935"
+      > </a
+      ><a name="2936" href="lib.types.SetQuotient.html#706" class="Postulate"
+      >SetQuot-elim</a
+      ><a name="2948"
+      > </a
+      ><a name="2949" class="Symbol"
+      >(&#955;</a
+      ><a name="2951"
+      > </a
+      ><a name="2952" href="groups.PropQuotUniqueFactorization.html#2952" class="Bound"
+      >p/q</a
+      ><a name="2955"
+      > </a
+      ><a name="2956" class="Symbol"
+      >&#8594;</a
+      ><a name="2957"
+      > </a
+      ><a name="2958" href="lib.NType.html#1123" class="Function"
+      >raise-level</a
+      ><a name="2969"
+      > </a
+      ><a name="2970" class="Number"
+      >-1</a
+      ><a name="2972"
+      > </a
+      ><a name="2973" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2974"
+      > </a
+      ><a name="2975" href="lib.types.Group.html#7026" class="Function"
+      >P/Q.El-is-set</a
+      ><a name="2988"
+      > </a
+      ><a name="2989" class="Symbol"
+      >_</a
+      ><a name="2990"
+      > </a
+      ><a name="2991" href="groups.PropQuotUniqueFactorization.html#2952" class="Bound"
+      >p/q</a
+      ><a name="2994" class="Symbol"
+      >)</a
+      ><a name="2995"
+      >
+        </a
+      ><a name="3004" class="Symbol"
+      >(&#955;</a
+      ><a name="3006"
+      > </a
+      ><a name="3007" href="groups.PropQuotUniqueFactorization.html#3007" class="Bound"
+      >p</a
+      ><a name="3008"
+      > </a
+      ><a name="3009" class="Symbol"
+      >&#8594;</a
+      ><a name="3010"
+      > </a
+      ><a name="3011" href="groups.PropQuotUniqueFactorization.html#1485" class="Function"
+      >H-to-P/Q-f-is-const</a
+      ><a name="3030"
+      > </a
+      ><a name="3031" class="Symbol"
+      >(</a
+      ><a name="3032" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#966;&#8321;.f</a
+      ><a name="3036"
+      > </a
+      ><a name="3037" href="groups.PropQuotUniqueFactorization.html#3007" class="Bound"
+      >p</a
+      ><a name="3038" class="Symbol"
+      >)</a
+      ><a name="3039"
+      > </a
+      ><a name="3040" class="Symbol"
+      >(</a
+      ><a name="3041" href="groups.PropQuotUniqueFactorization.html#444" class="Bound"
+      >&#966;&#8321;-is-surj</a
+      ><a name="3051"
+      > </a
+      ><a name="3052" class="Symbol"
+      >(</a
+      ><a name="3053" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#966;&#8321;.f</a
+      ><a name="3057"
+      > </a
+      ><a name="3058" href="groups.PropQuotUniqueFactorization.html#3007" class="Bound"
+      >p</a
+      ><a name="3059" class="Symbol"
+      >))</a
+      ><a name="3061"
+      > </a
+      ><a name="3062" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="3063"
+      > </a
+      ><a name="3064" href="groups.PropQuotUniqueFactorization.html#3007" class="Bound"
+      >p</a
+      ><a name="3065"
+      > </a
+      ><a name="3066" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3067"
+      > </a
+      ><a name="3068" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3071"
+      > </a
+      ><a name="3072" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="3073" class="Symbol"
+      >)</a
+      ><a name="3074"
+      >
+        </a
+      ><a name="3083" class="Symbol"
+      >(&#955;</a
+      ><a name="3085"
+      > </a
+      ><a name="3086" href="groups.PropQuotUniqueFactorization.html#3086" class="Bound"
+      >_</a
+      ><a name="3087"
+      > </a
+      ><a name="3088" class="Symbol"
+      >&#8594;</a
+      ><a name="3089"
+      > </a
+      ><a name="3090" href="lib.NType2.html#1216" class="Function"
+      >prop-has-all-paths-&#8595;</a
+      ><a name="3110"
+      > </a
+      ><a name="3111" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="3112"
+      > </a
+      ><a name="3113" href="lib.types.Group.html#7026" class="Function"
+      >P/Q.El-is-set</a
+      ><a name="3126"
+      > </a
+      ><a name="3127" class="Symbol"
+      >_</a
+      ><a name="3128"
+      > </a
+      ><a name="3129" class="Symbol"
+      >_)</a
+      ><a name="3131"
+      >
+
+      </a
+      ><a name="3139" href="groups.PropQuotUniqueFactorization.html#3139" class="Function"
+      >from-to'</a
+      ><a name="3147"
+      > </a
+      ><a name="3148" class="Symbol"
+      >:</a
+      ><a name="3149"
+      > </a
+      ><a name="3150" class="Symbol"
+      >&#8704;</a
+      ><a name="3151"
+      > </a
+      ><a name="3152" href="groups.PropQuotUniqueFactorization.html#3152" class="Bound"
+      >k</a
+      ><a name="3153"
+      > </a
+      ><a name="3154" class="Symbol"
+      >(</a
+      ><a name="3155" href="groups.PropQuotUniqueFactorization.html#3155" class="Bound"
+      >hf</a
+      ><a name="3157"
+      > </a
+      ><a name="3158" class="Symbol"
+      >:</a
+      ><a name="3159"
+      > </a
+      ><a name="3160" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="3165"
+      > </a
+      ><a name="3166" class="Number"
+      >-1</a
+      ><a name="3168"
+      > </a
+      ><a name="3169" class="Symbol"
+      >(</a
+      ><a name="3170" href="lib.Function.html#899" class="Function"
+      >hfiber</a
+      ><a name="3176"
+      > </a
+      ><a name="3177" href="lib.groups.Homomorphism.html#2610" class="Function"
+      >&#966;&#8321;.f</a
+      ><a name="3181"
+      > </a
+      ><a name="3182" href="groups.PropQuotUniqueFactorization.html#3152" class="Bound"
+      >k</a
+      ><a name="3183" class="Symbol"
+      >))</a
+      ><a name="3185"
+      > </a
+      ><a name="3186" class="Symbol"
+      >&#8594;</a
+      ><a name="3187"
+      > </a
+      ><a name="3188" href="groups.PropQuotUniqueFactorization.html#2658" class="Function"
+      >from</a
+      ><a name="3192"
+      > </a
+      ><a name="3193" class="Symbol"
+      >(</a
+      ><a name="3194" href="groups.PropQuotUniqueFactorization.html#1401" class="Function"
+      >H-to-P/Q-f</a
+      ><a name="3204"
+      > </a
+      ><a name="3205" href="groups.PropQuotUniqueFactorization.html#3152" class="Bound"
+      >k</a
+      ><a name="3206"
+      > </a
+      ><a name="3207" href="groups.PropQuotUniqueFactorization.html#3155" class="Bound"
+      >hf</a
+      ><a name="3209" class="Symbol"
+      >)</a
+      ><a name="3210"
+      > </a
+      ><a name="3211" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3213"
+      > </a
+      ><a name="3214" href="groups.PropQuotUniqueFactorization.html#3152" class="Bound"
+      >k</a
+      ><a name="3215"
+      >
+      </a
+      ><a name="3222" href="groups.PropQuotUniqueFactorization.html#3139" class="Function"
+      >from-to'</a
+      ><a name="3230"
+      > </a
+      ><a name="3231" href="groups.PropQuotUniqueFactorization.html#3231" class="Bound"
+      >k</a
+      ><a name="3232"
+      > </a
+      ><a name="3233" class="Symbol"
+      >=</a
+      ><a name="3234"
+      > </a
+      ><a name="3235" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="3245"
+      > </a
+      ><a name="3246" class="Symbol"
+      >(&#955;</a
+      ><a name="3248"
+      > </a
+      ><a name="3249" href="groups.PropQuotUniqueFactorization.html#3249" class="Bound"
+      >hf</a
+      ><a name="3251"
+      > </a
+      ><a name="3252" class="Symbol"
+      >&#8594;</a
+      ><a name="3253"
+      > </a
+      ><a name="3254" href="lib.types.Group.html#7026" class="Function"
+      >H.El-is-set</a
+      ><a name="3265"
+      > </a
+      ><a name="3266" class="Symbol"
+      >(</a
+      ><a name="3267" href="groups.PropQuotUniqueFactorization.html#2658" class="Function"
+      >from</a
+      ><a name="3271"
+      > </a
+      ><a name="3272" class="Symbol"
+      >(</a
+      ><a name="3273" href="groups.PropQuotUniqueFactorization.html#1401" class="Function"
+      >H-to-P/Q-f</a
+      ><a name="3283"
+      > </a
+      ><a name="3284" href="groups.PropQuotUniqueFactorization.html#3231" class="Bound"
+      >k</a
+      ><a name="3285"
+      > </a
+      ><a name="3286" href="groups.PropQuotUniqueFactorization.html#3249" class="Bound"
+      >hf</a
+      ><a name="3288" class="Symbol"
+      >))</a
+      ><a name="3290"
+      > </a
+      ><a name="3291" href="groups.PropQuotUniqueFactorization.html#3231" class="Bound"
+      >k</a
+      ><a name="3292" class="Symbol"
+      >)</a
+      ><a name="3293"
+      > </a
+      ><a name="3294" class="Symbol"
+      >(&#955;{(</a
+      ><a name="3298" href="groups.PropQuotUniqueFactorization.html#3298" class="Bound"
+      >p</a
+      ><a name="3299"
+      > </a
+      ><a name="3300" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3301"
+      > </a
+      ><a name="3302" href="groups.PropQuotUniqueFactorization.html#3302" class="Bound"
+      >r</a
+      ><a name="3303" class="Symbol"
+      >)</a
+      ><a name="3304"
+      > </a
+      ><a name="3305" class="Symbol"
+      >&#8594;</a
+      ><a name="3306"
+      > </a
+      ><a name="3307" href="groups.PropQuotUniqueFactorization.html#3302" class="Bound"
+      >r</a
+      ><a name="3308" class="Symbol"
+      >})</a
+      ><a name="3310"
+      >
+
+      </a
+      ><a name="3318" href="groups.PropQuotUniqueFactorization.html#3318" class="Function"
+      >from-to</a
+      ><a name="3325"
+      > </a
+      ><a name="3326" class="Symbol"
+      >:</a
+      ><a name="3327"
+      > </a
+      ><a name="3328" class="Symbol"
+      >&#8704;</a
+      ><a name="3329"
+      > </a
+      ><a name="3330" href="groups.PropQuotUniqueFactorization.html#3330" class="Bound"
+      >k</a
+      ><a name="3331"
+      > </a
+      ><a name="3332" class="Symbol"
+      >&#8594;</a
+      ><a name="3333"
+      > </a
+      ><a name="3334" href="groups.PropQuotUniqueFactorization.html#2658" class="Function"
+      >from</a
+      ><a name="3338"
+      > </a
+      ><a name="3339" class="Symbol"
+      >(</a
+      ><a name="3340" href="groups.PropQuotUniqueFactorization.html#2591" class="Function"
+      >to</a
+      ><a name="3342"
+      > </a
+      ><a name="3343" href="groups.PropQuotUniqueFactorization.html#3330" class="Bound"
+      >k</a
+      ><a name="3344" class="Symbol"
+      >)</a
+      ><a name="3345"
+      > </a
+      ><a name="3346" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3348"
+      > </a
+      ><a name="3349" href="groups.PropQuotUniqueFactorization.html#3330" class="Bound"
+      >k</a
+      ><a name="3350"
+      >
+      </a
+      ><a name="3357" href="groups.PropQuotUniqueFactorization.html#3318" class="Function"
+      >from-to</a
+      ><a name="3364"
+      > </a
+      ><a name="3365" href="groups.PropQuotUniqueFactorization.html#3365" class="Bound"
+      >k</a
+      ><a name="3366"
+      > </a
+      ><a name="3367" class="Symbol"
+      >=</a
+      ><a name="3368"
+      > </a
+      ><a name="3369" href="groups.PropQuotUniqueFactorization.html#3139" class="Function"
+      >from-to'</a
+      ><a name="3377"
+      > </a
+      ><a name="3378" href="groups.PropQuotUniqueFactorization.html#3365" class="Bound"
+      >k</a
+      ><a name="3379"
+      > </a
+      ><a name="3380" class="Symbol"
+      >(</a
+      ><a name="3381" href="groups.PropQuotUniqueFactorization.html#444" class="Bound"
+      >&#966;&#8321;-is-surj</a
+      ><a name="3391"
+      > </a
+      ><a name="3392" href="groups.PropQuotUniqueFactorization.html#3365" class="Bound"
+      >k</a
+      ><a name="3393" class="Symbol"
+      >)</a
+      ><a name="3394"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

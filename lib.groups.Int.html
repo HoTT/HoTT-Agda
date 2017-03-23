@@ -1,0 +1,1574 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.groups.Int</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.NType2.html#1" class="Module"
+      >lib.NType2</a
+      ><a name="87"
+      >
+</a
+      ><a name="88" class="Keyword"
+      >open</a
+      ><a name="92"
+      > </a
+      ><a name="93" class="Keyword"
+      >import</a
+      ><a name="99"
+      > </a
+      ><a name="100" href="lib.types.Int.html#1" class="Module"
+      >lib.types.Int</a
+      ><a name="113"
+      >
+</a
+      ><a name="114" class="Keyword"
+      >open</a
+      ><a name="118"
+      > </a
+      ><a name="119" class="Keyword"
+      >import</a
+      ><a name="125"
+      > </a
+      ><a name="126" href="lib.types.Group.html#1" class="Module"
+      >lib.types.Group</a
+      ><a name="141"
+      >
+</a
+      ><a name="142" class="Keyword"
+      >open</a
+      ><a name="146"
+      > </a
+      ><a name="147" class="Keyword"
+      >import</a
+      ><a name="153"
+      > </a
+      ><a name="154" href="lib.types.List.html#1" class="Module"
+      >lib.types.List</a
+      ><a name="168"
+      >
+</a
+      ><a name="169" class="Keyword"
+      >open</a
+      ><a name="173"
+      > </a
+      ><a name="174" class="Keyword"
+      >import</a
+      ><a name="180"
+      > </a
+      ><a name="181" href="lib.types.Word.html#1" class="Module"
+      >lib.types.Word</a
+      ><a name="195"
+      >
+</a
+      ><a name="196" class="Keyword"
+      >open</a
+      ><a name="200"
+      > </a
+      ><a name="201" class="Keyword"
+      >import</a
+      ><a name="207"
+      > </a
+      ><a name="208" href="lib.groups.Homomorphism.html#1" class="Module"
+      >lib.groups.Homomorphism</a
+      ><a name="231"
+      >
+</a
+      ><a name="232" class="Keyword"
+      >open</a
+      ><a name="236"
+      > </a
+      ><a name="237" class="Keyword"
+      >import</a
+      ><a name="243"
+      > </a
+      ><a name="244" href="lib.groups.Isomorphism.html#1" class="Module"
+      >lib.groups.Isomorphism</a
+      ><a name="266"
+      >
+</a
+      ><a name="267" class="Keyword"
+      >open</a
+      ><a name="271"
+      > </a
+      ><a name="272" class="Keyword"
+      >import</a
+      ><a name="278"
+      > </a
+      ><a name="279" href="lib.groups.FreeAbelianGroup.html#1" class="Module"
+      >lib.groups.FreeAbelianGroup</a
+      ><a name="306"
+      >
+
+</a
+      ><a name="308" class="Keyword"
+      >module</a
+      ><a name="314"
+      > </a
+      ><a name="315" href="lib.groups.Int.html#1" class="Module"
+      >lib.groups.Int</a
+      ><a name="329"
+      > </a
+      ><a name="330" class="Keyword"
+      >where</a
+      ><a name="335"
+      >
+
+</a
+      ><a name="337" href="lib.groups.Int.html#337" class="Function"
+      >&#8484;-group-structure</a
+      ><a name="354"
+      > </a
+      ><a name="355" class="Symbol"
+      >:</a
+      ><a name="356"
+      > </a
+      ><a name="357" href="lib.types.Group.html#154" class="Record"
+      >GroupStructure</a
+      ><a name="371"
+      > </a
+      ><a name="372" href="lib.types.Int.html#154" class="Datatype"
+      >&#8484;</a
+      ><a name="373"
+      >
+</a
+      ><a name="374" href="lib.groups.Int.html#337" class="Function"
+      >&#8484;-group-structure</a
+      ><a name="391"
+      > </a
+      ><a name="392" class="Symbol"
+      >=</a
+      ><a name="393"
+      > </a
+      ><a name="394" class="Keyword"
+      >record</a
+      ><a name="400"
+      >
+  </a
+      ><a name="403" class="Symbol"
+      >{</a
+      ><a name="404"
+      > </a
+      ><a name="405" class="Field"
+      >ident</a
+      ><a name="410"
+      > </a
+      ><a name="411" class="Symbol"
+      >=</a
+      ><a name="412"
+      > </a
+      ><a name="413" class="Number"
+      >0</a
+      ><a name="414"
+      >
+  </a
+      ><a name="417" class="Symbol"
+      >;</a
+      ><a name="418"
+      > </a
+      ><a name="419" class="Field"
+      >inv</a
+      ><a name="422"
+      > </a
+      ><a name="423" class="Symbol"
+      >=</a
+      ><a name="424"
+      > </a
+      ><a name="425" href="lib.types.Int.html#3293" class="Function"
+      >&#8484;~</a
+      ><a name="427"
+      >
+  </a
+      ><a name="430" class="Symbol"
+      >;</a
+      ><a name="431"
+      > </a
+      ><a name="432" class="Field"
+      >comp</a
+      ><a name="436"
+      > </a
+      ><a name="437" class="Symbol"
+      >=</a
+      ><a name="438"
+      > </a
+      ><a name="439" href="lib.types.Int.html#3401" class="Function Operator"
+      >_&#8484;+_</a
+      ><a name="443"
+      >
+  </a
+      ><a name="446" class="Symbol"
+      >;</a
+      ><a name="447"
+      > </a
+      ><a name="448" class="Field"
+      >unit-l</a
+      ><a name="454"
+      > </a
+      ><a name="455" class="Symbol"
+      >=</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="lib.types.Int.html#3575" class="Function"
+      >&#8484;+-unit-l</a
+      ><a name="466"
+      >
+  </a
+      ><a name="469" class="Symbol"
+      >;</a
+      ><a name="470"
+      > </a
+      ><a name="471" class="Field"
+      >assoc</a
+      ><a name="476"
+      > </a
+      ><a name="477" class="Symbol"
+      >=</a
+      ><a name="478"
+      > </a
+      ><a name="479" href="lib.types.Int.html#4392" class="Function"
+      >&#8484;+-assoc</a
+      ><a name="487"
+      >
+  </a
+      ><a name="490" class="Symbol"
+      >;</a
+      ><a name="491"
+      > </a
+      ><a name="492" class="Field"
+      >inv-l</a
+      ><a name="497"
+      > </a
+      ><a name="498" class="Symbol"
+      >=</a
+      ><a name="499"
+      > </a
+      ><a name="500" href="lib.types.Int.html#7464" class="Function"
+      >&#8484;~-inv-l</a
+      ><a name="508"
+      >
+  </a
+      ><a name="511" class="Symbol"
+      >}</a
+      ><a name="512"
+      >
+
+</a
+      ><a name="514" href="lib.groups.Int.html#514" class="Function"
+      >&#8484;-group</a
+      ><a name="521"
+      > </a
+      ><a name="522" class="Symbol"
+      >:</a
+      ><a name="523"
+      > </a
+      ><a name="524" href="lib.types.Group.html#7048" class="Function"
+      >Group&#8320;</a
+      ><a name="530"
+      >
+</a
+      ><a name="531" href="lib.groups.Int.html#514" class="Function"
+      >&#8484;-group</a
+      ><a name="538"
+      > </a
+      ><a name="539" class="Symbol"
+      >=</a
+      ><a name="540"
+      > </a
+      ><a name="541" href="lib.types.Group.html#6885" class="InductiveConstructor"
+      >group</a
+      ><a name="546"
+      > </a
+      ><a name="547" class="Symbol"
+      >_</a
+      ><a name="548"
+      > </a
+      ><a name="549" href="lib.types.Int.html#3177" class="Function"
+      >&#8484;-is-set</a
+      ><a name="557"
+      > </a
+      ><a name="558" href="lib.groups.Int.html#337" class="Function"
+      >&#8484;-group-structure</a
+      ><a name="575"
+      >
+
+</a
+      ><a name="577" href="lib.groups.Int.html#577" class="Function"
+      >&#8484;-group-is-abelian</a
+      ><a name="595"
+      > </a
+      ><a name="596" class="Symbol"
+      >:</a
+      ><a name="597"
+      > </a
+      ><a name="598" href="lib.types.Group.html#7098" class="Function"
+      >is-abelian</a
+      ><a name="608"
+      > </a
+      ><a name="609" href="lib.groups.Int.html#514" class="Function"
+      >&#8484;-group</a
+      ><a name="616"
+      >
+</a
+      ><a name="617" href="lib.groups.Int.html#577" class="Function"
+      >&#8484;-group-is-abelian</a
+      ><a name="635"
+      > </a
+      ><a name="636" class="Symbol"
+      >=</a
+      ><a name="637"
+      > </a
+      ><a name="638" href="lib.types.Int.html#5902" class="Function"
+      >&#8484;+-comm</a
+      ><a name="645"
+      >
+
+</a
+      ><a name="647" href="lib.groups.Int.html#647" class="Function"
+      >&#8484;-abgroup</a
+      ><a name="656"
+      > </a
+      ><a name="657" class="Symbol"
+      >:</a
+      ><a name="658"
+      > </a
+      ><a name="659" href="lib.types.Group.html#7277" class="Function"
+      >AbGroup&#8320;</a
+      ><a name="667"
+      >
+</a
+      ><a name="668" href="lib.groups.Int.html#647" class="Function"
+      >&#8484;-abgroup</a
+      ><a name="677"
+      > </a
+      ><a name="678" class="Symbol"
+      >=</a
+      ><a name="679"
+      > </a
+      ><a name="680" href="lib.groups.Int.html#514" class="Function"
+      >&#8484;-group</a
+      ><a name="687"
+      > </a
+      ><a name="688" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="689"
+      > </a
+      ><a name="690" href="lib.groups.Int.html#577" class="Function"
+      >&#8484;-group-is-abelian</a
+      ><a name="708"
+      >
+
+</a
+      ><a name="710" href="lib.groups.Int.html#710" class="Function"
+      >&#8484;-iso-FreeAbGroup-Unit</a
+      ><a name="732"
+      > </a
+      ><a name="733" class="Symbol"
+      >:</a
+      ><a name="734"
+      > </a
+      ><a name="735" href="lib.groups.Int.html#514" class="Function"
+      >&#8484;-group</a
+      ><a name="742"
+      > </a
+      ><a name="743" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="745"
+      > </a
+      ><a name="746" href="lib.types.Group.html#7376" class="Function"
+      >FreeAbGroup.grp</a
+      ><a name="761"
+      > </a
+      ><a name="762" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="766"
+      >
+</a
+      ><a name="767" href="lib.groups.Int.html#710" class="Function"
+      >&#8484;-iso-FreeAbGroup-Unit</a
+      ><a name="789"
+      > </a
+      ><a name="790" class="Symbol"
+      >=</a
+      ><a name="791"
+      > </a
+      ><a name="792" href="lib.groups.Isomorphism.html#980" class="Function"
+      >&#8771;-to-&#8771;&#7475;</a
+      ><a name="799"
+      > </a
+      ><a name="800" class="Symbol"
+      >(</a
+      ><a name="801" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="806"
+      > </a
+      ><a name="807" href="lib.groups.Int.html#853" class="Function"
+      >to</a
+      ><a name="809"
+      > </a
+      ><a name="810" href="lib.groups.Int.html#903" class="Function"
+      >from</a
+      ><a name="814"
+      > </a
+      ><a name="815" href="lib.groups.Int.html#1505" class="Function"
+      >to-from</a
+      ><a name="822"
+      > </a
+      ><a name="823" href="lib.groups.Int.html#1681" class="Function"
+      >from-to</a
+      ><a name="830" class="Symbol"
+      >)</a
+      ><a name="831"
+      > </a
+      ><a name="832" href="lib.groups.Int.html#962" class="Function"
+      >to-pres-comp</a
+      ><a name="844"
+      > </a
+      ><a name="845" class="Keyword"
+      >where</a
+      ><a name="850"
+      >
+  </a
+      ><a name="853" href="lib.groups.Int.html#853" class="Function"
+      >to</a
+      ><a name="855"
+      > </a
+      ><a name="856" class="Symbol"
+      >=</a
+      ><a name="857"
+      > </a
+      ><a name="858" href="lib.types.Group.html#5009" class="Function"
+      >FreeAbGroup.exp</a
+      ><a name="873"
+      > </a
+      ><a name="874" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="878"
+      > </a
+      ><a name="879" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >fs[</a
+      ><a name="882"
+      > </a
+      ><a name="883" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="886"
+      > </a
+      ><a name="887" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="891"
+      > </a
+      ><a name="892" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="894"
+      > </a
+      ><a name="895" href="lib.types.List.html#236" class="InductiveConstructor"
+      >nil</a
+      ><a name="898"
+      > </a
+      ><a name="899" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >]</a
+      ><a name="900"
+      >
+  </a
+      ><a name="903" href="lib.groups.Int.html#903" class="Function"
+      >from</a
+      ><a name="907"
+      > </a
+      ><a name="908" class="Symbol"
+      >=</a
+      ><a name="909"
+      > </a
+      ><a name="910" href="lib.groups.FreeAbelianGroup.html#8380" class="Function"
+      >FormalSum-extend</a
+      ><a name="926"
+      > </a
+      ><a name="927" href="lib.groups.Int.html#647" class="Function"
+      >&#8484;-abgroup</a
+      ><a name="936"
+      > </a
+      ><a name="937" class="Symbol"
+      >(&#955;</a
+      ><a name="939"
+      > </a
+      ><a name="940" href="lib.groups.Int.html#940" class="Bound"
+      >_</a
+      ><a name="941"
+      > </a
+      ><a name="942" class="Symbol"
+      >&#8594;</a
+      ><a name="943"
+      > </a
+      ><a name="944" class="Number"
+      >1</a
+      ><a name="945" class="Symbol"
+      >)</a
+      ><a name="946"
+      >
+  </a
+      ><a name="949" class="Keyword"
+      >abstract</a
+      ><a name="957"
+      >
+    </a
+      ><a name="962" href="lib.groups.Int.html#962" class="Function"
+      >to-pres-comp</a
+      ><a name="974"
+      > </a
+      ><a name="975" class="Symbol"
+      >=</a
+      ><a name="976"
+      > </a
+      ><a name="977" href="lib.types.Group.html#5995" class="Function"
+      >FreeAbGroup.exp-+</a
+      ><a name="994"
+      > </a
+      ><a name="995" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="999"
+      > </a
+      ><a name="1000" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >fs[</a
+      ><a name="1003"
+      > </a
+      ><a name="1004" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1007"
+      > </a
+      ><a name="1008" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="1012"
+      > </a
+      ><a name="1013" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="1015"
+      > </a
+      ><a name="1016" href="lib.types.List.html#236" class="InductiveConstructor"
+      >nil</a
+      ><a name="1019"
+      > </a
+      ><a name="1020" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >]</a
+      ><a name="1021"
+      >
+
+    </a
+      ><a name="1027" href="lib.groups.Int.html#1027" class="Function"
+      >to-from'</a
+      ><a name="1035"
+      > </a
+      ><a name="1036" class="Symbol"
+      >:</a
+      ><a name="1037"
+      > </a
+      ><a name="1038" class="Symbol"
+      >&#8704;</a
+      ><a name="1039"
+      > </a
+      ><a name="1040" href="lib.groups.Int.html#1040" class="Bound"
+      >l</a
+      ><a name="1041"
+      > </a
+      ><a name="1042" class="Symbol"
+      >&#8594;</a
+      ><a name="1043"
+      > </a
+      ><a name="1044" href="lib.groups.Int.html#853" class="Function"
+      >to</a
+      ><a name="1046"
+      > </a
+      ><a name="1047" class="Symbol"
+      >(</a
+      ><a name="1048" href="lib.types.Word.html#1029" class="Function"
+      >Word-extend&#7475;</a
+      ><a name="1060"
+      > </a
+      ><a name="1061" href="lib.groups.Int.html#514" class="Function"
+      >&#8484;-group</a
+      ><a name="1068"
+      > </a
+      ><a name="1069" class="Symbol"
+      >(&#955;</a
+      ><a name="1071"
+      > </a
+      ><a name="1072" href="lib.groups.Int.html#1072" class="Bound"
+      >_</a
+      ><a name="1073"
+      > </a
+      ><a name="1074" class="Symbol"
+      >&#8594;</a
+      ><a name="1075"
+      > </a
+      ><a name="1076" class="Number"
+      >1</a
+      ><a name="1077" class="Symbol"
+      >)</a
+      ><a name="1078"
+      > </a
+      ><a name="1079" href="lib.groups.Int.html#1040" class="Bound"
+      >l</a
+      ><a name="1080" class="Symbol"
+      >)</a
+      ><a name="1081"
+      > </a
+      ><a name="1082" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1084"
+      > </a
+      ><a name="1085" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >fs[</a
+      ><a name="1088"
+      > </a
+      ><a name="1089" href="lib.groups.Int.html#1040" class="Bound"
+      >l</a
+      ><a name="1090"
+      > </a
+      ><a name="1091" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >]</a
+      ><a name="1092"
+      >
+    </a
+      ><a name="1097" href="lib.groups.Int.html#1027" class="Function"
+      >to-from'</a
+      ><a name="1105"
+      > </a
+      ><a name="1106" href="lib.types.List.html#236" class="InductiveConstructor"
+      >nil</a
+      ><a name="1109"
+      > </a
+      ><a name="1110" class="Symbol"
+      >=</a
+      ><a name="1111"
+      > </a
+      ><a name="1112" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1115"
+      >
+    </a
+      ><a name="1120" href="lib.groups.Int.html#1027" class="Function"
+      >to-from'</a
+      ><a name="1128"
+      > </a
+      ><a name="1129" class="Symbol"
+      >(</a
+      ><a name="1130" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1133"
+      > </a
+      ><a name="1134" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="1138"
+      > </a
+      ><a name="1139" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="1141"
+      > </a
+      ><a name="1142" href="lib.groups.Int.html#1142" class="Bound"
+      >l</a
+      ><a name="1143" class="Symbol"
+      >)</a
+      ><a name="1144"
+      > </a
+      ><a name="1145" class="Symbol"
+      >=</a
+      ><a name="1146"
+      >
+        </a
+      ><a name="1155" href="lib.types.Group.html#5227" class="Function"
+      >FreeAbGroup.exp-succ</a
+      ><a name="1175"
+      > </a
+      ><a name="1176" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="1180"
+      > </a
+      ><a name="1181" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >fs[</a
+      ><a name="1184"
+      > </a
+      ><a name="1185" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="1196"
+      > </a
+      ><a name="1197" href="lib.types.List.html#236" class="InductiveConstructor"
+      >nil</a
+      ><a name="1200"
+      > </a
+      ><a name="1201" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >]</a
+      ><a name="1202"
+      > </a
+      ><a name="1203" class="Symbol"
+      >(</a
+      ><a name="1204" href="lib.types.Word.html#1029" class="Function"
+      >Word-extend&#7475;</a
+      ><a name="1216"
+      > </a
+      ><a name="1217" href="lib.groups.Int.html#514" class="Function"
+      >&#8484;-group</a
+      ><a name="1224"
+      > </a
+      ><a name="1225" class="Symbol"
+      >(&#955;</a
+      ><a name="1227"
+      > </a
+      ><a name="1228" href="lib.groups.Int.html#1228" class="Bound"
+      >_</a
+      ><a name="1229"
+      > </a
+      ><a name="1230" class="Symbol"
+      >&#8594;</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" class="Number"
+      >1</a
+      ><a name="1233" class="Symbol"
+      >)</a
+      ><a name="1234"
+      > </a
+      ><a name="1235" href="lib.groups.Int.html#1142" class="Bound"
+      >l</a
+      ><a name="1236" class="Symbol"
+      >)</a
+      ><a name="1237"
+      >
+      </a
+      ><a name="1244" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1245"
+      > </a
+      ><a name="1246" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1248"
+      > </a
+      ><a name="1249" class="Symbol"
+      >(</a
+      ><a name="1250" href="lib.types.Group.html#313" class="Function"
+      >FreeAbGroup.comp</a
+      ><a name="1266"
+      > </a
+      ><a name="1267" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="1271"
+      > </a
+      ><a name="1272" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >fs[</a
+      ><a name="1275"
+      > </a
+      ><a name="1276" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1279"
+      > </a
+      ><a name="1280" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="1284"
+      > </a
+      ><a name="1285" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="1287"
+      > </a
+      ><a name="1288" href="lib.types.List.html#236" class="InductiveConstructor"
+      >nil</a
+      ><a name="1291"
+      > </a
+      ><a name="1292" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >]</a
+      ><a name="1293" class="Symbol"
+      >)</a
+      ><a name="1294"
+      > </a
+      ><a name="1295" class="Symbol"
+      >(</a
+      ><a name="1296" href="lib.groups.Int.html#1027" class="Function"
+      >to-from'</a
+      ><a name="1304"
+      > </a
+      ><a name="1305" href="lib.groups.Int.html#1142" class="Bound"
+      >l</a
+      ><a name="1306" class="Symbol"
+      >)</a
+      ><a name="1307"
+      >
+    </a
+      ><a name="1312" href="lib.groups.Int.html#1027" class="Function"
+      >to-from'</a
+      ><a name="1320"
+      > </a
+      ><a name="1321" class="Symbol"
+      >(</a
+      ><a name="1322" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1325"
+      > </a
+      ><a name="1326" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="1330"
+      > </a
+      ><a name="1331" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="1333"
+      > </a
+      ><a name="1334" href="lib.groups.Int.html#1334" class="Bound"
+      >l</a
+      ><a name="1335" class="Symbol"
+      >)</a
+      ><a name="1336"
+      > </a
+      ><a name="1337" class="Symbol"
+      >=</a
+      ><a name="1338"
+      >
+        </a
+      ><a name="1347" href="lib.types.Group.html#5605" class="Function"
+      >FreeAbGroup.exp-pred</a
+      ><a name="1367"
+      > </a
+      ><a name="1368" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="1372"
+      > </a
+      ><a name="1373" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >fs[</a
+      ><a name="1376"
+      > </a
+      ><a name="1377" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1380"
+      > </a
+      ><a name="1381" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="1385"
+      > </a
+      ><a name="1386" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="1388"
+      > </a
+      ><a name="1389" href="lib.types.List.html#236" class="InductiveConstructor"
+      >nil</a
+      ><a name="1392"
+      > </a
+      ><a name="1393" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >]</a
+      ><a name="1394"
+      > </a
+      ><a name="1395" class="Symbol"
+      >(</a
+      ><a name="1396" href="lib.types.Word.html#1029" class="Function"
+      >Word-extend&#7475;</a
+      ><a name="1408"
+      > </a
+      ><a name="1409" href="lib.groups.Int.html#514" class="Function"
+      >&#8484;-group</a
+      ><a name="1416"
+      > </a
+      ><a name="1417" class="Symbol"
+      >(&#955;</a
+      ><a name="1419"
+      > </a
+      ><a name="1420" href="lib.groups.Int.html#1420" class="Bound"
+      >_</a
+      ><a name="1421"
+      > </a
+      ><a name="1422" class="Symbol"
+      >&#8594;</a
+      ><a name="1423"
+      > </a
+      ><a name="1424" class="Number"
+      >1</a
+      ><a name="1425" class="Symbol"
+      >)</a
+      ><a name="1426"
+      > </a
+      ><a name="1427" href="lib.groups.Int.html#1334" class="Bound"
+      >l</a
+      ><a name="1428" class="Symbol"
+      >)</a
+      ><a name="1429"
+      >
+      </a
+      ><a name="1436" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1437"
+      > </a
+      ><a name="1438" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1440"
+      > </a
+      ><a name="1441" class="Symbol"
+      >(</a
+      ><a name="1442" href="lib.types.Group.html#313" class="Function"
+      >FreeAbGroup.comp</a
+      ><a name="1458"
+      > </a
+      ><a name="1459" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="1463"
+      > </a
+      ><a name="1464" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >fs[</a
+      ><a name="1467"
+      > </a
+      ><a name="1468" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1471"
+      > </a
+      ><a name="1472" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="1476"
+      > </a
+      ><a name="1477" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="1479"
+      > </a
+      ><a name="1480" href="lib.types.List.html#236" class="InductiveConstructor"
+      >nil</a
+      ><a name="1483"
+      > </a
+      ><a name="1484" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >]</a
+      ><a name="1485" class="Symbol"
+      >)</a
+      ><a name="1486"
+      > </a
+      ><a name="1487" class="Symbol"
+      >(</a
+      ><a name="1488" href="lib.groups.Int.html#1027" class="Function"
+      >to-from'</a
+      ><a name="1496"
+      > </a
+      ><a name="1497" href="lib.groups.Int.html#1334" class="Bound"
+      >l</a
+      ><a name="1498" class="Symbol"
+      >)</a
+      ><a name="1499"
+      >
+
+    </a
+      ><a name="1505" href="lib.groups.Int.html#1505" class="Function"
+      >to-from</a
+      ><a name="1512"
+      > </a
+      ><a name="1513" class="Symbol"
+      >:</a
+      ><a name="1514"
+      > </a
+      ><a name="1515" class="Symbol"
+      >&#8704;</a
+      ><a name="1516"
+      > </a
+      ><a name="1517" href="lib.groups.Int.html#1517" class="Bound"
+      >fs</a
+      ><a name="1519"
+      > </a
+      ><a name="1520" class="Symbol"
+      >&#8594;</a
+      ><a name="1521"
+      > </a
+      ><a name="1522" href="lib.groups.Int.html#853" class="Function"
+      >to</a
+      ><a name="1524"
+      > </a
+      ><a name="1525" class="Symbol"
+      >(</a
+      ><a name="1526" href="lib.groups.Int.html#903" class="Function"
+      >from</a
+      ><a name="1530"
+      > </a
+      ><a name="1531" href="lib.groups.Int.html#1517" class="Bound"
+      >fs</a
+      ><a name="1533" class="Symbol"
+      >)</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1537"
+      > </a
+      ><a name="1538" href="lib.groups.Int.html#1517" class="Bound"
+      >fs</a
+      ><a name="1540"
+      >
+    </a
+      ><a name="1545" href="lib.groups.Int.html#1505" class="Function"
+      >to-from</a
+      ><a name="1552"
+      > </a
+      ><a name="1553" class="Symbol"
+      >=</a
+      ><a name="1554"
+      > </a
+      ><a name="1555" href="lib.types.SetQuotient.html#706" class="Function"
+      >FormalSum-elim</a
+      ><a name="1569"
+      > </a
+      ><a name="1570" class="Symbol"
+      >(&#955;</a
+      ><a name="1572"
+      > </a
+      ><a name="1573" href="lib.groups.Int.html#1573" class="Bound"
+      >_</a
+      ><a name="1574"
+      > </a
+      ><a name="1575" class="Symbol"
+      >&#8594;</a
+      ><a name="1576"
+      > </a
+      ><a name="1577" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="1592"
+      > </a
+      ><a name="1593" href="lib.groups.FreeAbelianGroup.html#1262" class="Function"
+      >FormalSum-level</a
+      ><a name="1608" class="Symbol"
+      >)</a
+      ><a name="1609"
+      >
+      </a
+      ><a name="1616" href="lib.groups.Int.html#1027" class="Function"
+      >to-from'</a
+      ><a name="1624"
+      > </a
+      ><a name="1625" class="Symbol"
+      >(&#955;</a
+      ><a name="1627"
+      > </a
+      ><a name="1628" href="lib.groups.Int.html#1628" class="Bound"
+      >_</a
+      ><a name="1629"
+      > </a
+      ><a name="1630" class="Symbol"
+      >&#8594;</a
+      ><a name="1631"
+      > </a
+      ><a name="1632" href="lib.NType2.html#1216" class="Function"
+      >prop-has-all-paths-&#8595;</a
+      ><a name="1652"
+      > </a
+      ><a name="1653" class="Symbol"
+      >(</a
+      ><a name="1654" href="lib.groups.FreeAbelianGroup.html#1262" class="Function"
+      >FormalSum-level</a
+      ><a name="1669"
+      > </a
+      ><a name="1670" class="Symbol"
+      >_</a
+      ><a name="1671"
+      > </a
+      ><a name="1672" class="Symbol"
+      >_))</a
+      ><a name="1675"
+      >
+
+    </a
+      ><a name="1681" href="lib.groups.Int.html#1681" class="Function"
+      >from-to</a
+      ><a name="1688"
+      > </a
+      ><a name="1689" class="Symbol"
+      >:</a
+      ><a name="1690"
+      > </a
+      ><a name="1691" class="Symbol"
+      >&#8704;</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" href="lib.groups.Int.html#1693" class="Bound"
+      >z</a
+      ><a name="1694"
+      > </a
+      ><a name="1695" class="Symbol"
+      >&#8594;</a
+      ><a name="1696"
+      > </a
+      ><a name="1697" href="lib.groups.Int.html#903" class="Function"
+      >from</a
+      ><a name="1701"
+      > </a
+      ><a name="1702" class="Symbol"
+      >(</a
+      ><a name="1703" href="lib.groups.Int.html#853" class="Function"
+      >to</a
+      ><a name="1705"
+      > </a
+      ><a name="1706" href="lib.groups.Int.html#1693" class="Bound"
+      >z</a
+      ><a name="1707" class="Symbol"
+      >)</a
+      ><a name="1708"
+      > </a
+      ><a name="1709" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1711"
+      > </a
+      ><a name="1712" href="lib.groups.Int.html#1693" class="Bound"
+      >z</a
+      ><a name="1713"
+      >
+    </a
+      ><a name="1718" href="lib.groups.Int.html#1681" class="Function"
+      >from-to</a
+      ><a name="1725"
+      > </a
+      ><a name="1726" class="Symbol"
+      >(</a
+      ><a name="1727" href="lib.types.Int.html#172" class="InductiveConstructor"
+      >pos</a
+      ><a name="1730"
+      > </a
+      ><a name="1731" class="Number"
+      >0</a
+      ><a name="1732" class="Symbol"
+      >)</a
+      ><a name="1733"
+      > </a
+      ><a name="1734" class="Symbol"
+      >=</a
+      ><a name="1735"
+      > </a
+      ><a name="1736" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1739"
+      >
+    </a
+      ><a name="1744" href="lib.groups.Int.html#1681" class="Function"
+      >from-to</a
+      ><a name="1751"
+      > </a
+      ><a name="1752" class="Symbol"
+      >(</a
+      ><a name="1753" href="lib.types.Int.html#172" class="InductiveConstructor"
+      >pos</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" class="Number"
+      >1</a
+      ><a name="1758" class="Symbol"
+      >)</a
+      ><a name="1759"
+      > </a
+      ><a name="1760" class="Symbol"
+      >=</a
+      ><a name="1761"
+      > </a
+      ><a name="1762" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1765"
+      >
+    </a
+      ><a name="1770" href="lib.groups.Int.html#1681" class="Function"
+      >from-to</a
+      ><a name="1777"
+      > </a
+      ><a name="1778" class="Symbol"
+      >(</a
+      ><a name="1779" href="lib.types.Int.html#192" class="InductiveConstructor"
+      >negsucc</a
+      ><a name="1786"
+      > </a
+      ><a name="1787" class="Number"
+      >0</a
+      ><a name="1788" class="Symbol"
+      >)</a
+      ><a name="1789"
+      > </a
+      ><a name="1790" class="Symbol"
+      >=</a
+      ><a name="1791"
+      > </a
+      ><a name="1792" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1795"
+      >
+    </a
+      ><a name="1800" href="lib.groups.Int.html#1681" class="Function"
+      >from-to</a
+      ><a name="1807"
+      > </a
+      ><a name="1808" class="Symbol"
+      >(</a
+      ><a name="1809" href="lib.types.Int.html#172" class="InductiveConstructor"
+      >pos</a
+      ><a name="1812"
+      > </a
+      ><a name="1813" class="Symbol"
+      >(</a
+      ><a name="1814" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1815"
+      > </a
+      ><a name="1816" class="Symbol"
+      >(</a
+      ><a name="1817" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1818"
+      > </a
+      ><a name="1819" href="lib.groups.Int.html#1819" class="Bound"
+      >n</a
+      ><a name="1820" class="Symbol"
+      >)))</a
+      ><a name="1823"
+      > </a
+      ><a name="1824" class="Symbol"
+      >=</a
+      ><a name="1825"
+      >
+        </a
+      ><a name="1834" href="lib.groups.Homomorphism.html#2630" class="Field"
+      >GroupHom.pres-comp</a
+      ><a name="1852"
+      > </a
+      ><a name="1853" class="Symbol"
+      >(</a
+      ><a name="1854" href="lib.groups.FreeAbelianGroup.html#8539" class="Function"
+      >FreeAbGroup-extend</a
+      ><a name="1872"
+      > </a
+      ><a name="1873" href="lib.groups.Int.html#647" class="Function"
+      >&#8484;-abgroup</a
+      ><a name="1882"
+      > </a
+      ><a name="1883" class="Symbol"
+      >(&#955;</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" href="lib.groups.Int.html#1886" class="Bound"
+      >_</a
+      ><a name="1887"
+      > </a
+      ><a name="1888" class="Symbol"
+      >&#8594;</a
+      ><a name="1889"
+      > </a
+      ><a name="1890" class="Number"
+      >1</a
+      ><a name="1891" class="Symbol"
+      >))</a
+      ><a name="1893"
+      >
+          </a
+      ><a name="1904" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >fs[</a
+      ><a name="1907"
+      > </a
+      ><a name="1908" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1911"
+      > </a
+      ><a name="1912" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="1916"
+      > </a
+      ><a name="1917" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="1919"
+      > </a
+      ><a name="1920" href="lib.types.List.html#236" class="InductiveConstructor"
+      >nil</a
+      ><a name="1923"
+      > </a
+      ><a name="1924" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >]</a
+      ><a name="1925"
+      > </a
+      ><a name="1926" class="Symbol"
+      >(</a
+      ><a name="1927" href="lib.types.Group.html#5009" class="Function"
+      >FreeAbGroup.exp</a
+      ><a name="1942"
+      > </a
+      ><a name="1943" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="1947"
+      > </a
+      ><a name="1948" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >fs[</a
+      ><a name="1951"
+      > </a
+      ><a name="1952" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1955"
+      > </a
+      ><a name="1956" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="1960"
+      > </a
+      ><a name="1961" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="1963"
+      > </a
+      ><a name="1964" href="lib.types.List.html#236" class="InductiveConstructor"
+      >nil</a
+      ><a name="1967"
+      > </a
+      ><a name="1968" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >]</a
+      ><a name="1969"
+      > </a
+      ><a name="1970" class="Symbol"
+      >(</a
+      ><a name="1971" href="lib.types.Int.html#172" class="InductiveConstructor"
+      >pos</a
+      ><a name="1974"
+      > </a
+      ><a name="1975" class="Symbol"
+      >(</a
+      ><a name="1976" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1977"
+      > </a
+      ><a name="1978" href="lib.groups.Int.html#1819" class="Bound"
+      >n</a
+      ><a name="1979" class="Symbol"
+      >)))</a
+      ><a name="1982"
+      >
+      </a
+      ><a name="1989" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1990"
+      > </a
+      ><a name="1991" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1993"
+      > </a
+      ><a name="1994" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1998"
+      > </a
+      ><a name="1999" class="Symbol"
+      >(</a
+      ><a name="2000" href="lib.groups.Int.html#1681" class="Function"
+      >from-to</a
+      ><a name="2007"
+      > </a
+      ><a name="2008" class="Symbol"
+      >(</a
+      ><a name="2009" href="lib.types.Int.html#172" class="InductiveConstructor"
+      >pos</a
+      ><a name="2012"
+      > </a
+      ><a name="2013" class="Symbol"
+      >(</a
+      ><a name="2014" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2015"
+      > </a
+      ><a name="2016" href="lib.groups.Int.html#1819" class="Bound"
+      >n</a
+      ><a name="2017" class="Symbol"
+      >)))</a
+      ><a name="2020"
+      >
+    </a
+      ><a name="2025" href="lib.groups.Int.html#1681" class="Function"
+      >from-to</a
+      ><a name="2032"
+      > </a
+      ><a name="2033" class="Symbol"
+      >(</a
+      ><a name="2034" href="lib.types.Int.html#192" class="InductiveConstructor"
+      >negsucc</a
+      ><a name="2041"
+      > </a
+      ><a name="2042" class="Symbol"
+      >(</a
+      ><a name="2043" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2044"
+      > </a
+      ><a name="2045" href="lib.groups.Int.html#2045" class="Bound"
+      >n</a
+      ><a name="2046" class="Symbol"
+      >))</a
+      ><a name="2048"
+      > </a
+      ><a name="2049" class="Symbol"
+      >=</a
+      ><a name="2050"
+      >
+        </a
+      ><a name="2059" href="lib.groups.Homomorphism.html#2630" class="Field"
+      >GroupHom.pres-comp</a
+      ><a name="2077"
+      > </a
+      ><a name="2078" class="Symbol"
+      >(</a
+      ><a name="2079" href="lib.groups.FreeAbelianGroup.html#8539" class="Function"
+      >FreeAbGroup-extend</a
+      ><a name="2097"
+      > </a
+      ><a name="2098" href="lib.groups.Int.html#647" class="Function"
+      >&#8484;-abgroup</a
+      ><a name="2107"
+      > </a
+      ><a name="2108" class="Symbol"
+      >(&#955;</a
+      ><a name="2110"
+      > </a
+      ><a name="2111" href="lib.groups.Int.html#2111" class="Bound"
+      >_</a
+      ><a name="2112"
+      > </a
+      ><a name="2113" class="Symbol"
+      >&#8594;</a
+      ><a name="2114"
+      > </a
+      ><a name="2115" class="Number"
+      >1</a
+      ><a name="2116" class="Symbol"
+      >))</a
+      ><a name="2118"
+      >
+          </a
+      ><a name="2129" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >fs[</a
+      ><a name="2132"
+      > </a
+      ><a name="2133" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2136"
+      > </a
+      ><a name="2137" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="2141"
+      > </a
+      ><a name="2142" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="2144"
+      > </a
+      ><a name="2145" href="lib.types.List.html#236" class="InductiveConstructor"
+      >nil</a
+      ><a name="2148"
+      > </a
+      ><a name="2149" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >]</a
+      ><a name="2150"
+      > </a
+      ><a name="2151" class="Symbol"
+      >(</a
+      ><a name="2152" href="lib.types.Group.html#5009" class="Function"
+      >FreeAbGroup.exp</a
+      ><a name="2167"
+      > </a
+      ><a name="2168" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="2172"
+      > </a
+      ><a name="2173" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >fs[</a
+      ><a name="2176"
+      > </a
+      ><a name="2177" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="2180"
+      > </a
+      ><a name="2181" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="2185"
+      > </a
+      ><a name="2186" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="2188"
+      > </a
+      ><a name="2189" href="lib.types.List.html#236" class="InductiveConstructor"
+      >nil</a
+      ><a name="2192"
+      > </a
+      ><a name="2193" href="lib.groups.FreeAbelianGroup.html#1215" class="Function Operator"
+      >]</a
+      ><a name="2194"
+      > </a
+      ><a name="2195" class="Symbol"
+      >(</a
+      ><a name="2196" href="lib.types.Int.html#192" class="InductiveConstructor"
+      >negsucc</a
+      ><a name="2203"
+      > </a
+      ><a name="2204" href="lib.groups.Int.html#2045" class="Bound"
+      >n</a
+      ><a name="2205" class="Symbol"
+      >))</a
+      ><a name="2207"
+      >
+      </a
+      ><a name="2214" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2215"
+      > </a
+      ><a name="2216" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2218"
+      > </a
+      ><a name="2219" href="lib.types.Int.html#718" class="Function"
+      >pred</a
+      ><a name="2223"
+      > </a
+      ><a name="2224" class="Symbol"
+      >(</a
+      ><a name="2225" href="lib.groups.Int.html#1681" class="Function"
+      >from-to</a
+      ><a name="2232"
+      > </a
+      ><a name="2233" class="Symbol"
+      >(</a
+      ><a name="2234" href="lib.types.Int.html#192" class="InductiveConstructor"
+      >negsucc</a
+      ><a name="2241"
+      > </a
+      ><a name="2242" href="lib.groups.Int.html#2045" class="Bound"
+      >n</a
+      ><a name="2243" class="Symbol"
+      >))</a
+      ><a name="2245"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

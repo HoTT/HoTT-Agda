@@ -1,0 +1,1999 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cw.cohomology.ReconstructedFirstCohomologyGroup</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="cohomology.ChainComplex.html#1" class="Module"
+      >cohomology.ChainComplex</a
+      ><a name="94"
+      >
+</a
+      ><a name="95" class="Keyword"
+      >open</a
+      ><a name="99"
+      > </a
+      ><a name="100" class="Keyword"
+      >import</a
+      ><a name="106"
+      > </a
+      ><a name="107" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="124"
+      >
+</a
+      ><a name="125" class="Keyword"
+      >open</a
+      ><a name="129"
+      > </a
+      ><a name="130" class="Keyword"
+      >import</a
+      ><a name="136"
+      > </a
+      ><a name="137" href="groups.KernelImage.html#1" class="Module"
+      >groups.KernelImage</a
+      ><a name="155"
+      >
+</a
+      ><a name="156" class="Keyword"
+      >open</a
+      ><a name="160"
+      > </a
+      ><a name="161" class="Keyword"
+      >import</a
+      ><a name="167"
+      > </a
+      ><a name="168" href="cw.CW.html#1" class="Module"
+      >cw.CW</a
+      ><a name="173"
+      >
+
+</a
+      ><a name="175" class="Keyword"
+      >module</a
+      ><a name="181"
+      > </a
+      ><a name="182" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1" class="Module"
+      >cw.cohomology.ReconstructedFirstCohomologyGroup</a
+      ><a name="229"
+      > </a
+      ><a name="230" class="Symbol"
+      >{</a
+      ><a name="231" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#231" class="Bound"
+      >i</a
+      ><a name="232"
+      > </a
+      ><a name="233" class="Symbol"
+      >:</a
+      ><a name="234"
+      > </a
+      ><a name="235" href="Agda.Primitive.html#408" class="Postulate"
+      >ULevel</a
+      ><a name="241" class="Symbol"
+      >}</a
+      ><a name="242"
+      > </a
+      ><a name="243" class="Symbol"
+      >(</a
+      ><a name="244" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#244" class="Bound"
+      >OT</a
+      ><a name="246"
+      > </a
+      ><a name="247" class="Symbol"
+      >:</a
+      ><a name="248"
+      > </a
+      ><a name="249" href="cohomology.Theory.html#7242" class="Record"
+      >OrdinaryTheory</a
+      ><a name="263"
+      > </a
+      ><a name="264" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#231" class="Bound"
+      >i</a
+      ><a name="265" class="Symbol"
+      >)</a
+      ><a name="266"
+      > </a
+      ><a name="267" class="Keyword"
+      >where</a
+      ><a name="272"
+      >
+
+  </a
+      ><a name="276" class="Keyword"
+      >open</a
+      ><a name="280"
+      > </a
+      ><a name="281" href="cohomology.Theory.html#7242" class="Module"
+      >OrdinaryTheory</a
+      ><a name="295"
+      > </a
+      ><a name="296" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#244" class="Bound"
+      >OT</a
+      ><a name="298"
+      >
+  </a
+      ><a name="301" class="Keyword"
+      >import</a
+      ><a name="307"
+      > </a
+      ><a name="308" href="cw.cohomology.TipCoboundary.html#1" class="Module"
+      >cw.cohomology.TipCoboundary</a
+      ><a name="335"
+      > </a
+      ><a name="336" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#244" class="Bound"
+      >OT</a
+      ><a name="338"
+      > </a
+      ><a name="339" class="Symbol"
+      >as</a
+      ><a name="341"
+      > </a
+      ><a name="342" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#342" class="Module"
+      >TC</a
+      ><a name="344"
+      >
+  </a
+      ><a name="347" class="Keyword"
+      >import</a
+      ><a name="353"
+      > </a
+      ><a name="354" href="cw.cohomology.HigherCoboundary.html#1" class="Module"
+      >cw.cohomology.HigherCoboundary</a
+      ><a name="384"
+      > </a
+      ><a name="385" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#244" class="Bound"
+      >OT</a
+      ><a name="387"
+      > </a
+      ><a name="388" class="Symbol"
+      >as</a
+      ><a name="390"
+      > </a
+      ><a name="391" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#391" class="Module"
+      >HC</a
+      ><a name="393"
+      >
+  </a
+      ><a name="396" class="Keyword"
+      >import</a
+      ><a name="402"
+      > </a
+      ><a name="403" href="cw.cohomology.TipAndAugment.html#1" class="Module"
+      >cw.cohomology.TipAndAugment</a
+      ><a name="430"
+      > </a
+      ><a name="431" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#244" class="Bound"
+      >OT</a
+      ><a name="433"
+      > </a
+      ><a name="434" class="Symbol"
+      >as</a
+      ><a name="436"
+      > </a
+      ><a name="437" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#437" class="Module"
+      >TAA</a
+      ><a name="440"
+      >
+  </a
+      ><a name="443" class="Keyword"
+      >open</a
+      ><a name="447"
+      > </a
+      ><a name="448" class="Keyword"
+      >import</a
+      ><a name="454"
+      > </a
+      ><a name="455" href="cw.cohomology.WedgeOfCells.html#1" class="Module"
+      >cw.cohomology.WedgeOfCells</a
+      ><a name="481"
+      > </a
+      ><a name="482" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#244" class="Bound"
+      >OT</a
+      ><a name="484"
+      >
+  </a
+      ><a name="487" class="Keyword"
+      >open</a
+      ><a name="491"
+      > </a
+      ><a name="492" class="Keyword"
+      >import</a
+      ><a name="498"
+      > </a
+      ><a name="499" href="cw.cohomology.Descending.html#1" class="Module"
+      >cw.cohomology.Descending</a
+      ><a name="523"
+      > </a
+      ><a name="524" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#244" class="Bound"
+      >OT</a
+      ><a name="526"
+      >
+  </a
+      ><a name="529" class="Keyword"
+      >open</a
+      ><a name="533"
+      > </a
+      ><a name="534" class="Keyword"
+      >import</a
+      ><a name="540"
+      > </a
+      ><a name="541" href="cw.cohomology.ReconstructedCochainComplex.html#1" class="Module"
+      >cw.cohomology.ReconstructedCochainComplex</a
+      ><a name="582"
+      > </a
+      ><a name="583" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#244" class="Bound"
+      >OT</a
+      ><a name="585"
+      >
+  </a
+      ><a name="588" class="Keyword"
+      >import</a
+      ><a name="594"
+      > </a
+      ><a name="595" href="cw.cohomology.FirstCohomologyGroup.html#1" class="Module"
+      >cw.cohomology.FirstCohomologyGroup</a
+      ><a name="629"
+      > </a
+      ><a name="630" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#244" class="Bound"
+      >OT</a
+      ><a name="632"
+      > </a
+      ><a name="633" class="Symbol"
+      >as</a
+      ><a name="635"
+      > </a
+      ><a name="636" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#636" class="Module"
+      >FCG</a
+      ><a name="639"
+      >
+  </a
+      ><a name="642" class="Keyword"
+      >import</a
+      ><a name="648"
+      > </a
+      ><a name="649" href="cw.cohomology.FirstCohomologyGroupOnDiag.html#1" class="Module"
+      >cw.cohomology.FirstCohomologyGroupOnDiag</a
+      ><a name="689"
+      > </a
+      ><a name="690" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#244" class="Bound"
+      >OT</a
+      ><a name="692"
+      > </a
+      ><a name="693" class="Symbol"
+      >as</a
+      ><a name="695"
+      > </a
+      ><a name="696" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#696" class="Module"
+      >FCGD</a
+      ><a name="700"
+      >
+  </a
+      ><a name="703" class="Keyword"
+      >import</a
+      ><a name="709"
+      > </a
+      ><a name="710" href="cw.cohomology.CohomologyGroupsTooHigh.html#1" class="Module"
+      >cw.cohomology.CohomologyGroupsTooHigh</a
+      ><a name="747"
+      > </a
+      ><a name="748" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#244" class="Bound"
+      >OT</a
+      ><a name="750"
+      > </a
+      ><a name="751" class="Symbol"
+      >as</a
+      ><a name="753"
+      > </a
+      ><a name="754" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#754" class="Module"
+      >CGTH</a
+      ><a name="758"
+      >
+
+  </a
+      ><a name="762" class="Keyword"
+      >private</a
+      ><a name="769"
+      >
+    </a
+      ><a name="774" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#774" class="Function"
+      >&#8804;-dec-has-all-paths</a
+      ><a name="793"
+      > </a
+      ><a name="794" class="Symbol"
+      >:</a
+      ><a name="795"
+      > </a
+      ><a name="796" class="Symbol"
+      >{</a
+      ><a name="797" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#797" class="Bound"
+      >m</a
+      ><a name="798"
+      > </a
+      ><a name="799" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#799" class="Bound"
+      >n</a
+      ><a name="800"
+      > </a
+      ><a name="801" class="Symbol"
+      >:</a
+      ><a name="802"
+      > </a
+      ><a name="803" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="804" class="Symbol"
+      >}</a
+      ><a name="805"
+      > </a
+      ><a name="806" class="Symbol"
+      >&#8594;</a
+      ><a name="807"
+      > </a
+      ><a name="808" href="lib.NType.html#558" class="Function"
+      >has-all-paths</a
+      ><a name="821"
+      > </a
+      ><a name="822" class="Symbol"
+      >(</a
+      ><a name="823" href="lib.Base.html#9406" class="Function"
+      >Dec</a
+      ><a name="826"
+      > </a
+      ><a name="827" class="Symbol"
+      >(</a
+      ><a name="828" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#797" class="Bound"
+      >m</a
+      ><a name="829"
+      > </a
+      ><a name="830" href="lib.types.Nat.html#1754" class="Function Operator"
+      >&#8804;</a
+      ><a name="831"
+      > </a
+      ><a name="832" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#799" class="Bound"
+      >n</a
+      ><a name="833" class="Symbol"
+      >))</a
+      ><a name="835"
+      >
+    </a
+      ><a name="840" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#774" class="Function"
+      >&#8804;-dec-has-all-paths</a
+      ><a name="859"
+      > </a
+      ><a name="860" class="Symbol"
+      >=</a
+      ><a name="861"
+      > </a
+      ><a name="862" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="880"
+      > </a
+      ><a name="881" class="Symbol"
+      >(</a
+      ><a name="882" href="lib.Relation2.html#214" class="Function"
+      >Dec-level</a
+      ><a name="891"
+      > </a
+      ><a name="892" href="lib.types.Nat.html#4856" class="Function"
+      >&#8804;-is-prop</a
+      ><a name="901" class="Symbol"
+      >)</a
+      ><a name="902"
+      >
+
+  </a
+      ><a name="906" class="Keyword"
+      >private</a
+      ><a name="913"
+      >
+    </a
+      ><a name="918" class="Keyword"
+      >abstract</a
+      ><a name="926"
+      >
+      </a
+      ><a name="933" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#933" class="Function"
+      >first-cohomology-group-descend</a
+      ><a name="963"
+      > </a
+      ><a name="964" class="Symbol"
+      >:</a
+      ><a name="965"
+      > </a
+      ><a name="966" class="Symbol"
+      >&#8704;</a
+      ><a name="967"
+      > </a
+      ><a name="968" class="Symbol"
+      >{</a
+      ><a name="969" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#969" class="Bound"
+      >n</a
+      ><a name="970" class="Symbol"
+      >}</a
+      ><a name="971"
+      > </a
+      ><a name="972" class="Symbol"
+      >(</a
+      ><a name="973" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#973" class="Bound"
+      >&#8857;skel</a
+      ><a name="978"
+      > </a
+      ><a name="979" class="Symbol"
+      >:</a
+      ><a name="980"
+      > </a
+      ><a name="981" href="cw.CW.html#1851" class="Record"
+      >&#8857;Skeleton</a
+      ><a name="990"
+      > </a
+      ><a name="991" class="Symbol"
+      >{</a
+      ><a name="992" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#231" class="Bound"
+      >i</a
+      ><a name="993" class="Symbol"
+      >}</a
+      ><a name="994"
+      > </a
+      ><a name="995" class="Symbol"
+      >(</a
+      ><a name="996" class="Number"
+      >3</a
+      ><a name="997"
+      > </a
+      ><a name="998" href="lib.types.Nat.html#267" class="Primitive Operator"
+      >+</a
+      ><a name="999"
+      > </a
+      ><a name="1000" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#969" class="Bound"
+      >n</a
+      ><a name="1001" class="Symbol"
+      >))</a
+      ><a name="1003"
+      >
+        </a
+      ><a name="1012" class="Symbol"
+      >&#8594;</a
+      ><a name="1013"
+      >  </a
+      ><a name="1015" href="cohomology.ChainComplex.html#1023" class="Function"
+      >cohomology-group</a
+      ><a name="1031"
+      > </a
+      ><a name="1032" class="Symbol"
+      >(</a
+      ><a name="1033" href="cw.cohomology.ReconstructedCochainComplex.html#2953" class="Function"
+      >cochain-complex</a
+      ><a name="1048"
+      > </a
+      ><a name="1049" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#973" class="Bound"
+      >&#8857;skel</a
+      ><a name="1054" class="Symbol"
+      >)</a
+      ><a name="1055"
+      > </a
+      ><a name="1056" class="Number"
+      >1</a
+      ><a name="1057"
+      >
+        </a
+      ><a name="1066" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1068"
+      > </a
+      ><a name="1069" href="cohomology.ChainComplex.html#1023" class="Function"
+      >cohomology-group</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" class="Symbol"
+      >(</a
+      ><a name="1087" href="cw.cohomology.ReconstructedCochainComplex.html#2953" class="Function"
+      >cochain-complex</a
+      ><a name="1102"
+      > </a
+      ><a name="1103" class="Symbol"
+      >(</a
+      ><a name="1104" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="1112"
+      > </a
+      ><a name="1113" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#973" class="Bound"
+      >&#8857;skel</a
+      ><a name="1118" class="Symbol"
+      >))</a
+      ><a name="1120"
+      > </a
+      ><a name="1121" class="Number"
+      >1</a
+      ><a name="1122"
+      >
+      </a
+      ><a name="1129" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#933" class="Function"
+      >first-cohomology-group-descend</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" class="Symbol"
+      >{</a
+      ><a name="1161" class="Argument"
+      >n</a
+      ><a name="1162"
+      > </a
+      ><a name="1163" class="Symbol"
+      >=</a
+      ><a name="1164"
+      > </a
+      ><a name="1165" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="1166" class="Symbol"
+      >}</a
+      ><a name="1167"
+      > </a
+      ><a name="1168" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1168" class="Bound"
+      >&#8857;skel</a
+      ><a name="1173"
+      >
+        </a
+      ><a name="1182" class="Symbol"
+      >=</a
+      ><a name="1183"
+      > </a
+      ><a name="1184" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="1187"
+      > </a
+      ><a name="1188" class="Symbol"
+      >(&#955;</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1191" class="Bound"
+      >&#948;&#8321;</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1194" class="Bound"
+      >&#948;&#8322;</a
+      ><a name="1196"
+      > </a
+      ><a name="1197" class="Symbol"
+      >&#8594;</a
+      ><a name="1198"
+      > </a
+      ><a name="1199" href="groups.KernelImage.html#5271" class="Function"
+      >Ker/Im</a
+      ><a name="1205"
+      > </a
+      ><a name="1206" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1194" class="Bound"
+      >&#948;&#8322;</a
+      ><a name="1208"
+      > </a
+      ><a name="1209" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1191" class="Bound"
+      >&#948;&#8321;</a
+      ><a name="1211"
+      > </a
+      ><a name="1212" class="Symbol"
+      >(</a
+      ><a name="1213" href="cw.cohomology.WedgeOfCells.html#547" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-is-abelian</a
+      ><a name="1232"
+      > </a
+      ><a name="1233" class="Symbol"
+      >(</a
+      ><a name="1234" href="cw.CW.html#2852" class="Function"
+      >&#8857;cw-take</a
+      ><a name="1242"
+      > </a
+      ><a name="1243" class="Symbol"
+      >(</a
+      ><a name="1244" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="1249"
+      > </a
+      ><a name="1250" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="1254" class="Symbol"
+      >)</a
+      ><a name="1255"
+      > </a
+      ><a name="1256" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1168" class="Bound"
+      >&#8857;skel</a
+      ><a name="1261" class="Symbol"
+      >)</a
+      ><a name="1262"
+      > </a
+      ><a name="1263" class="Number"
+      >1</a
+      ><a name="1264" class="Symbol"
+      >))</a
+      ><a name="1266"
+      >
+            </a
+      ><a name="1279" class="Symbol"
+      >(</a
+      ><a name="1280" href="cw.cohomology.ReconstructedCochainComplex.html#6095" class="Function"
+      >coboundary-first-template-descend-from-far</a
+      ><a name="1322"
+      > </a
+      ><a name="1323" class="Symbol"
+      >{</a
+      ><a name="1324" class="Argument"
+      >n</a
+      ><a name="1325"
+      > </a
+      ><a name="1326" class="Symbol"
+      >=</a
+      ><a name="1327"
+      > </a
+      ><a name="1328" class="Number"
+      >2</a
+      ><a name="1329" class="Symbol"
+      >}</a
+      ><a name="1330"
+      > </a
+      ><a name="1331" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1168" class="Bound"
+      >&#8857;skel</a
+      ><a name="1336"
+      > </a
+      ><a name="1337" class="Symbol"
+      >(</a
+      ><a name="1338" href="lib.types.Nat.html#1716" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="1342"
+      > </a
+      ><a name="1343" href="lib.types.Nat.html#1688" class="InductiveConstructor"
+      >ltS</a
+      ><a name="1346" class="Symbol"
+      >)</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" href="lib.types.Nat.html#1688" class="InductiveConstructor"
+      >ltS</a
+      ><a name="1351" class="Symbol"
+      >)</a
+      ><a name="1352"
+      >
+            </a
+      ><a name="1365" class="Symbol"
+      >(</a
+      ><a name="1366" href="cw.cohomology.ReconstructedCochainComplex.html#7845" class="Function"
+      >coboundary-higher-template-descend-from-one-above</a
+      ><a name="1415"
+      > </a
+      ><a name="1416" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1168" class="Bound"
+      >&#8857;skel</a
+      ><a name="1421" class="Symbol"
+      >)</a
+      ><a name="1422"
+      >
+      </a
+      ><a name="1429" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#933" class="Function"
+      >first-cohomology-group-descend</a
+      ><a name="1459"
+      > </a
+      ><a name="1460" class="Symbol"
+      >{</a
+      ><a name="1461" class="Argument"
+      >n</a
+      ><a name="1462"
+      > </a
+      ><a name="1463" class="Symbol"
+      >=</a
+      ><a name="1464"
+      > </a
+      ><a name="1465" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1466"
+      > </a
+      ><a name="1467" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1467" class="Bound"
+      >n</a
+      ><a name="1468" class="Symbol"
+      >}</a
+      ><a name="1469"
+      > </a
+      ><a name="1470" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1470" class="Bound"
+      >&#8857;skel</a
+      ><a name="1475"
+      > </a
+      ><a name="1476" class="Comment"
+      >-- n = S n</a
+      ><a name="1486"
+      >
+        </a
+      ><a name="1495" class="Symbol"
+      >=</a
+      ><a name="1496"
+      > </a
+      ><a name="1497" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="1500"
+      > </a
+      ><a name="1501" class="Symbol"
+      >(&#955;</a
+      ><a name="1503"
+      > </a
+      ><a name="1504" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1504" class="Bound"
+      >&#948;&#8321;</a
+      ><a name="1506"
+      > </a
+      ><a name="1507" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1507" class="Bound"
+      >&#948;&#8322;</a
+      ><a name="1509"
+      > </a
+      ><a name="1510" class="Symbol"
+      >&#8594;</a
+      ><a name="1511"
+      > </a
+      ><a name="1512" href="groups.KernelImage.html#5271" class="Function"
+      >Ker/Im</a
+      ><a name="1518"
+      > </a
+      ><a name="1519" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1507" class="Bound"
+      >&#948;&#8322;</a
+      ><a name="1521"
+      > </a
+      ><a name="1522" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1504" class="Bound"
+      >&#948;&#8321;</a
+      ><a name="1524"
+      > </a
+      ><a name="1525" class="Symbol"
+      >(</a
+      ><a name="1526" href="cw.cohomology.WedgeOfCells.html#547" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-is-abelian</a
+      ><a name="1545"
+      > </a
+      ><a name="1546" class="Symbol"
+      >(</a
+      ><a name="1547" href="cw.CW.html#2852" class="Function"
+      >&#8857;cw-take</a
+      ><a name="1555"
+      > </a
+      ><a name="1556" class="Symbol"
+      >(</a
+      ><a name="1557" href="lib.types.Nat.html#5053" class="Function"
+      >&#8804;-+-l</a
+      ><a name="1562"
+      > </a
+      ><a name="1563" class="Number"
+      >1</a
+      ><a name="1564"
+      > </a
+      ><a name="1565" class="Symbol"
+      >(</a
+      ><a name="1566" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="1571"
+      > </a
+      ><a name="1572" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1573"
+      > </a
+      ><a name="1574" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="1579"
+      > </a
+      ><a name="1580" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1581"
+      > </a
+      ><a name="1582" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1585"
+      > </a
+      ><a name="1586" class="Symbol"
+      >(</a
+      ><a name="1587" href="lib.types.Nat.html#2041" class="Function"
+      >O&lt;S</a
+      ><a name="1590"
+      > </a
+      ><a name="1591" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1467" class="Bound"
+      >n</a
+      ><a name="1592" class="Symbol"
+      >)))</a
+      ><a name="1595"
+      > </a
+      ><a name="1596" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1470" class="Bound"
+      >&#8857;skel</a
+      ><a name="1601" class="Symbol"
+      >)</a
+      ><a name="1602"
+      > </a
+      ><a name="1603" class="Number"
+      >1</a
+      ><a name="1604" class="Symbol"
+      >))</a
+      ><a name="1606"
+      >
+            </a
+      ><a name="1619" class="Symbol"
+      >(</a
+      ><a name="1620" href="cw.cohomology.ReconstructedCochainComplex.html#6095" class="Function"
+      >coboundary-first-template-descend-from-far</a
+      ><a name="1662"
+      >  </a
+      ><a name="1664" class="Symbol"
+      >{</a
+      ><a name="1665" class="Argument"
+      >n</a
+      ><a name="1666"
+      > </a
+      ><a name="1667" class="Symbol"
+      >=</a
+      ><a name="1668"
+      > </a
+      ><a name="1669" class="Number"
+      >3</a
+      ><a name="1670"
+      > </a
+      ><a name="1671" href="lib.types.Nat.html#267" class="Primitive Operator"
+      >+</a
+      ><a name="1672"
+      > </a
+      ><a name="1673" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1467" class="Bound"
+      >n</a
+      ><a name="1674" class="Symbol"
+      >}</a
+      ><a name="1675"
+      > </a
+      ><a name="1676" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1470" class="Bound"
+      >&#8857;skel</a
+      ><a name="1681"
+      > </a
+      ><a name="1682" class="Symbol"
+      >(</a
+      ><a name="1683" href="lib.types.Nat.html#1716" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="1687"
+      > </a
+      ><a name="1688" class="Symbol"
+      >(</a
+      ><a name="1689" href="lib.types.Nat.html#1716" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="1693"
+      > </a
+      ><a name="1694" class="Symbol"
+      >(</a
+      ><a name="1695" href="lib.types.Nat.html#2041" class="Function"
+      >O&lt;S</a
+      ><a name="1698"
+      > </a
+      ><a name="1699" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1467" class="Bound"
+      >n</a
+      ><a name="1700" class="Symbol"
+      >)))</a
+      ><a name="1703"
+      > </a
+      ><a name="1704" class="Symbol"
+      >(</a
+      ><a name="1705" href="lib.types.Nat.html#4945" class="Function"
+      >&lt;-+-l</a
+      ><a name="1710"
+      > </a
+      ><a name="1711" class="Number"
+      >1</a
+      ><a name="1712"
+      > </a
+      ><a name="1713" class="Symbol"
+      >(</a
+      ><a name="1714" href="lib.types.Nat.html#1716" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="1718"
+      > </a
+      ><a name="1719" class="Symbol"
+      >(</a
+      ><a name="1720" href="lib.types.Nat.html#2041" class="Function"
+      >O&lt;S</a
+      ><a name="1723"
+      > </a
+      ><a name="1724" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1467" class="Bound"
+      >n</a
+      ><a name="1725" class="Symbol"
+      >))))</a
+      ><a name="1729"
+      >
+            </a
+      ><a name="1742" class="Symbol"
+      >(</a
+      ><a name="1743" href="cw.cohomology.ReconstructedCochainComplex.html#7302" class="Function"
+      >coboundary-higher-template-descend-from-far</a
+      ><a name="1786"
+      > </a
+      ><a name="1787" class="Symbol"
+      >{</a
+      ><a name="1788" class="Argument"
+      >n</a
+      ><a name="1789"
+      > </a
+      ><a name="1790" class="Symbol"
+      >=</a
+      ><a name="1791"
+      > </a
+      ><a name="1792" class="Number"
+      >3</a
+      ><a name="1793"
+      > </a
+      ><a name="1794" href="lib.types.Nat.html#267" class="Primitive Operator"
+      >+</a
+      ><a name="1795"
+      > </a
+      ><a name="1796" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1467" class="Bound"
+      >n</a
+      ><a name="1797" class="Symbol"
+      >}</a
+      ><a name="1798"
+      > </a
+      ><a name="1799" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1470" class="Bound"
+      >&#8857;skel</a
+      ><a name="1804"
+      > </a
+      ><a name="1805" class="Symbol"
+      >(</a
+      ><a name="1806" href="lib.types.Nat.html#4945" class="Function"
+      >&lt;-+-l</a
+      ><a name="1811"
+      > </a
+      ><a name="1812" class="Number"
+      >1</a
+      ><a name="1813"
+      > </a
+      ><a name="1814" class="Symbol"
+      >(</a
+      ><a name="1815" href="lib.types.Nat.html#1716" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="1819"
+      > </a
+      ><a name="1820" class="Symbol"
+      >(</a
+      ><a name="1821" href="lib.types.Nat.html#2041" class="Function"
+      >O&lt;S</a
+      ><a name="1824"
+      > </a
+      ><a name="1825" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1467" class="Bound"
+      >n</a
+      ><a name="1826" class="Symbol"
+      >)))</a
+      ><a name="1829"
+      > </a
+      ><a name="1830" class="Symbol"
+      >(</a
+      ><a name="1831" href="lib.types.Nat.html#4945" class="Function"
+      >&lt;-+-l</a
+      ><a name="1836"
+      > </a
+      ><a name="1837" class="Number"
+      >2</a
+      ><a name="1838"
+      > </a
+      ><a name="1839" class="Symbol"
+      >(</a
+      ><a name="1840" href="lib.types.Nat.html#2041" class="Function"
+      >O&lt;S</a
+      ><a name="1843"
+      > </a
+      ><a name="1844" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1467" class="Bound"
+      >n</a
+      ><a name="1845" class="Symbol"
+      >)))</a
+      ><a name="1848"
+      >
+
+      </a
+      ><a name="1856" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1856" class="Function"
+      >first-cohomology-group-&#946;</a
+      ><a name="1880"
+      > </a
+      ><a name="1881" class="Symbol"
+      >:</a
+      ><a name="1882"
+      > </a
+      ><a name="1883" class="Symbol"
+      >&#8704;</a
+      ><a name="1884"
+      > </a
+      ><a name="1885" class="Symbol"
+      >(</a
+      ><a name="1886" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1886" class="Bound"
+      >&#8857;skel</a
+      ><a name="1891"
+      > </a
+      ><a name="1892" class="Symbol"
+      >:</a
+      ><a name="1893"
+      > </a
+      ><a name="1894" href="cw.CW.html#1851" class="Record"
+      >&#8857;Skeleton</a
+      ><a name="1903"
+      > </a
+      ><a name="1904" class="Symbol"
+      >{</a
+      ><a name="1905" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#231" class="Bound"
+      >i</a
+      ><a name="1906" class="Symbol"
+      >}</a
+      ><a name="1907"
+      > </a
+      ><a name="1908" class="Number"
+      >2</a
+      ><a name="1909" class="Symbol"
+      >)</a
+      ><a name="1910"
+      >
+        </a
+      ><a name="1919" class="Symbol"
+      >&#8594;</a
+      ><a name="1920"
+      >  </a
+      ><a name="1922" href="cohomology.ChainComplex.html#1023" class="Function"
+      >cohomology-group</a
+      ><a name="1938"
+      > </a
+      ><a name="1939" class="Symbol"
+      >(</a
+      ><a name="1940" href="cw.cohomology.ReconstructedCochainComplex.html#2953" class="Function"
+      >cochain-complex</a
+      ><a name="1955"
+      > </a
+      ><a name="1956" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1886" class="Bound"
+      >&#8857;skel</a
+      ><a name="1961" class="Symbol"
+      >)</a
+      ><a name="1962"
+      > </a
+      ><a name="1963" class="Number"
+      >1</a
+      ><a name="1964"
+      >
+        </a
+      ><a name="1973" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1975"
+      > </a
+      ><a name="1976" href="groups.KernelImage.html#5271" class="Function"
+      >Ker/Im</a
+      ><a name="1982"
+      >
+            </a
+      ><a name="1995" class="Symbol"
+      >(</a
+      ><a name="1996" href="cw.cohomology.HigherCoboundary.html#454" class="Function"
+      >HC.cw-co&#8706;-last</a
+      ><a name="2010"
+      > </a
+      ><a name="2011" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1886" class="Bound"
+      >&#8857;skel</a
+      ><a name="2016" class="Symbol"
+      >)</a
+      ><a name="2017"
+      >
+            </a
+      ><a name="2030" class="Symbol"
+      >(</a
+      ><a name="2031" href="cw.cohomology.TipCoboundary.html#610" class="Function"
+      >TC.cw-co&#8706;-head</a
+      ><a name="2045"
+      > </a
+      ><a name="2046" class="Symbol"
+      >(</a
+      ><a name="2047" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="2055"
+      > </a
+      ><a name="2056" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1886" class="Bound"
+      >&#8857;skel</a
+      ><a name="2061" class="Symbol"
+      >))</a
+      ><a name="2063"
+      >
+            </a
+      ><a name="2076" class="Symbol"
+      >(</a
+      ><a name="2077" href="cw.cohomology.WedgeOfCells.html#547" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-is-abelian</a
+      ><a name="2096"
+      > </a
+      ><a name="2097" class="Symbol"
+      >(</a
+      ><a name="2098" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="2106"
+      > </a
+      ><a name="2107" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1886" class="Bound"
+      >&#8857;skel</a
+      ><a name="2112" class="Symbol"
+      >)</a
+      ><a name="2113"
+      > </a
+      ><a name="2114" class="Number"
+      >1</a
+      ><a name="2115" class="Symbol"
+      >)</a
+      ><a name="2116"
+      >
+      </a
+      ><a name="2123" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1856" class="Function"
+      >first-cohomology-group-&#946;</a
+      ><a name="2147"
+      > </a
+      ><a name="2148" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2148" class="Bound"
+      >&#8857;skel</a
+      ><a name="2153"
+      >
+        </a
+      ><a name="2162" class="Symbol"
+      >=</a
+      ><a name="2163"
+      > </a
+      ><a name="2164" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="2167"
+      > </a
+      ><a name="2168" class="Symbol"
+      >(&#955;</a
+      ><a name="2170"
+      > </a
+      ><a name="2171" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2171" class="Bound"
+      >&#948;&#8321;</a
+      ><a name="2173"
+      > </a
+      ><a name="2174" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2174" class="Bound"
+      >&#948;&#8322;</a
+      ><a name="2176"
+      > </a
+      ><a name="2177" class="Symbol"
+      >&#8594;</a
+      ><a name="2178"
+      > </a
+      ><a name="2179" href="groups.KernelImage.html#5271" class="Function"
+      >Ker/Im</a
+      ><a name="2185"
+      > </a
+      ><a name="2186" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2174" class="Bound"
+      >&#948;&#8322;</a
+      ><a name="2188"
+      > </a
+      ><a name="2189" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2171" class="Bound"
+      >&#948;&#8321;</a
+      ><a name="2191"
+      > </a
+      ><a name="2192" class="Symbol"
+      >(</a
+      ><a name="2193" href="cw.cohomology.WedgeOfCells.html#547" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-is-abelian</a
+      ><a name="2212"
+      > </a
+      ><a name="2213" class="Symbol"
+      >(</a
+      ><a name="2214" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="2222"
+      > </a
+      ><a name="2223" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2148" class="Bound"
+      >&#8857;skel</a
+      ><a name="2228" class="Symbol"
+      >)</a
+      ><a name="2229"
+      > </a
+      ><a name="2230" class="Number"
+      >1</a
+      ><a name="2231" class="Symbol"
+      >))</a
+      ><a name="2233"
+      >
+            </a
+      ><a name="2246" class="Symbol"
+      >(</a
+      ><a name="2247"
+      > </a
+      ><a name="2248" href="cw.cohomology.ReconstructedCochainComplex.html#6591" class="Function"
+      >coboundary-first-template-descend-from-two</a
+      ><a name="2290"
+      > </a
+      ><a name="2291" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2148" class="Bound"
+      >&#8857;skel</a
+      ><a name="2296"
+      >
+            </a
+      ><a name="2309" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2310"
+      > </a
+      ><a name="2311" href="cw.cohomology.ReconstructedCochainComplex.html#6959" class="Function"
+      >coboundary-first-template-&#946;</a
+      ><a name="2338"
+      > </a
+      ><a name="2339" class="Symbol"
+      >(</a
+      ><a name="2340" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="2348"
+      > </a
+      ><a name="2349" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2148" class="Bound"
+      >&#8857;skel</a
+      ><a name="2354" class="Symbol"
+      >))</a
+      ><a name="2356"
+      >
+            </a
+      ><a name="2369" class="Symbol"
+      >(</a
+      ><a name="2370" href="cw.cohomology.ReconstructedCochainComplex.html#8280" class="Function"
+      >coboundary-higher-template-&#946;</a
+      ><a name="2398"
+      > </a
+      ><a name="2399" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2148" class="Bound"
+      >&#8857;skel</a
+      ><a name="2404" class="Symbol"
+      >)</a
+      ><a name="2405"
+      >
+
+      </a
+      ><a name="2413" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2413" class="Function"
+      >first-cohomology-group-&#946;-one-below</a
+      ><a name="2447"
+      > </a
+      ><a name="2448" class="Symbol"
+      >:</a
+      ><a name="2449"
+      > </a
+      ><a name="2450" class="Symbol"
+      >&#8704;</a
+      ><a name="2451"
+      > </a
+      ><a name="2452" class="Symbol"
+      >(</a
+      ><a name="2453" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2453" class="Bound"
+      >&#8857;skel</a
+      ><a name="2458"
+      > </a
+      ><a name="2459" class="Symbol"
+      >:</a
+      ><a name="2460"
+      > </a
+      ><a name="2461" href="cw.CW.html#1851" class="Record"
+      >&#8857;Skeleton</a
+      ><a name="2470"
+      > </a
+      ><a name="2471" class="Symbol"
+      >{</a
+      ><a name="2472" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#231" class="Bound"
+      >i</a
+      ><a name="2473" class="Symbol"
+      >}</a
+      ><a name="2474"
+      > </a
+      ><a name="2475" class="Number"
+      >1</a
+      ><a name="2476" class="Symbol"
+      >)</a
+      ><a name="2477"
+      >
+        </a
+      ><a name="2486" class="Symbol"
+      >&#8594;</a
+      ><a name="2487"
+      >  </a
+      ><a name="2489" href="cohomology.ChainComplex.html#1023" class="Function"
+      >cohomology-group</a
+      ><a name="2505"
+      > </a
+      ><a name="2506" class="Symbol"
+      >(</a
+      ><a name="2507" href="cw.cohomology.ReconstructedCochainComplex.html#2953" class="Function"
+      >cochain-complex</a
+      ><a name="2522"
+      > </a
+      ><a name="2523" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2453" class="Bound"
+      >&#8857;skel</a
+      ><a name="2528" class="Symbol"
+      >)</a
+      ><a name="2529"
+      > </a
+      ><a name="2530" class="Number"
+      >1</a
+      ><a name="2531"
+      >
+        </a
+      ><a name="2540" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2542"
+      > </a
+      ><a name="2543" href="groups.KernelImage.html#5271" class="Function"
+      >Ker/Im</a
+      ><a name="2549"
+      >
+            </a
+      ><a name="2562" class="Symbol"
+      >(</a
+      ><a name="2563" href="lib.groups.Homomorphism.html#3180" class="Function"
+      >cst-hom</a
+      ><a name="2570"
+      > </a
+      ><a name="2571" class="Symbol"
+      >{</a
+      ><a name="2572" class="Argument"
+      >H</a
+      ><a name="2573"
+      > </a
+      ><a name="2574" class="Symbol"
+      >=</a
+      ><a name="2575"
+      > </a
+      ><a name="2576" href="lib.groups.Lift.html#661" class="Function"
+      >Lift-group</a
+      ><a name="2586"
+      > </a
+      ><a name="2587" class="Symbol"
+      >{</a
+      ><a name="2588" class="Argument"
+      >j</a
+      ><a name="2589"
+      > </a
+      ><a name="2590" class="Symbol"
+      >=</a
+      ><a name="2591"
+      > </a
+      ><a name="2592" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#231" class="Bound"
+      >i</a
+      ><a name="2593" class="Symbol"
+      >}</a
+      ><a name="2594"
+      > </a
+      ><a name="2595" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="2605" class="Symbol"
+      >})</a
+      ><a name="2607"
+      >
+            </a
+      ><a name="2620" class="Symbol"
+      >(</a
+      ><a name="2621" href="cw.cohomology.TipCoboundary.html#610" class="Function"
+      >TC.cw-co&#8706;-head</a
+      ><a name="2635"
+      > </a
+      ><a name="2636" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2453" class="Bound"
+      >&#8857;skel</a
+      ><a name="2641" class="Symbol"
+      >)</a
+      ><a name="2642"
+      >
+            </a
+      ><a name="2655" class="Symbol"
+      >(</a
+      ><a name="2656" href="cw.cohomology.WedgeOfCells.html#547" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-is-abelian</a
+      ><a name="2675"
+      > </a
+      ><a name="2676" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2453" class="Bound"
+      >&#8857;skel</a
+      ><a name="2681"
+      > </a
+      ><a name="2682" class="Number"
+      >1</a
+      ><a name="2683" class="Symbol"
+      >)</a
+      ><a name="2684"
+      >
+      </a
+      ><a name="2691" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2413" class="Function"
+      >first-cohomology-group-&#946;-one-below</a
+      ><a name="2725"
+      > </a
+      ><a name="2726" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2726" class="Bound"
+      >&#8857;skel</a
+      ><a name="2731"
+      >
+        </a
+      ><a name="2740" class="Symbol"
+      >=</a
+      ><a name="2741"
+      > </a
+      ><a name="2742" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2744"
+      >
+            </a
+      ><a name="2757" class="Symbol"
+      >(&#955;</a
+      ><a name="2759"
+      > </a
+      ><a name="2760" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2760" class="Bound"
+      >&#948;&#8321;</a
+      ><a name="2762"
+      > </a
+      ><a name="2763" class="Symbol"
+      >&#8594;</a
+      ><a name="2764"
+      > </a
+      ><a name="2765" href="groups.KernelImage.html#5271" class="Function"
+      >Ker/Im</a
+      ><a name="2771"
+      >
+              </a
+      ><a name="2786" class="Symbol"
+      >(</a
+      ><a name="2787" href="lib.groups.Homomorphism.html#3180" class="Function"
+      >cst-hom</a
+      ><a name="2794"
+      > </a
+      ><a name="2795" class="Symbol"
+      >{</a
+      ><a name="2796" class="Argument"
+      >H</a
+      ><a name="2797"
+      > </a
+      ><a name="2798" class="Symbol"
+      >=</a
+      ><a name="2799"
+      > </a
+      ><a name="2800" href="lib.groups.Lift.html#661" class="Function"
+      >Lift-group</a
+      ><a name="2810"
+      > </a
+      ><a name="2811" class="Symbol"
+      >{</a
+      ><a name="2812" class="Argument"
+      >j</a
+      ><a name="2813"
+      > </a
+      ><a name="2814" class="Symbol"
+      >=</a
+      ><a name="2815"
+      > </a
+      ><a name="2816" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#231" class="Bound"
+      >i</a
+      ><a name="2817" class="Symbol"
+      >}</a
+      ><a name="2818"
+      > </a
+      ><a name="2819" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="2829" class="Symbol"
+      >})</a
+      ><a name="2831"
+      >
+              </a
+      ><a name="2846" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2760" class="Bound"
+      >&#948;&#8321;</a
+      ><a name="2848"
+      > </a
+      ><a name="2849" class="Symbol"
+      >(</a
+      ><a name="2850" href="cw.cohomology.WedgeOfCells.html#547" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-is-abelian</a
+      ><a name="2869"
+      > </a
+      ><a name="2870" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2726" class="Bound"
+      >&#8857;skel</a
+      ><a name="2875"
+      > </a
+      ><a name="2876" class="Number"
+      >1</a
+      ><a name="2877" class="Symbol"
+      >))</a
+      ><a name="2879"
+      >
+            </a
+      ><a name="2892" class="Symbol"
+      >(</a
+      ><a name="2893" href="cw.cohomology.ReconstructedCochainComplex.html#6959" class="Function"
+      >coboundary-first-template-&#946;</a
+      ><a name="2920"
+      > </a
+      ><a name="2921" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2726" class="Bound"
+      >&#8857;skel</a
+      ><a name="2926" class="Symbol"
+      >)</a
+      ><a name="2927"
+      >
+
+  </a
+      ><a name="2931" class="Keyword"
+      >abstract</a
+      ><a name="2939"
+      >
+    </a
+      ><a name="2944" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2944" class="Function"
+      >first-cohomology-group</a
+      ><a name="2966"
+      > </a
+      ><a name="2967" class="Symbol"
+      >:</a
+      ><a name="2968"
+      > </a
+      ><a name="2969" class="Symbol"
+      >&#8704;</a
+      ><a name="2970"
+      > </a
+      ><a name="2971" class="Symbol"
+      >{</a
+      ><a name="2972" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2972" class="Bound"
+      >n</a
+      ><a name="2973" class="Symbol"
+      >}</a
+      ><a name="2974"
+      > </a
+      ><a name="2975" class="Symbol"
+      >(</a
+      ><a name="2976" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2976" class="Bound"
+      >&#8857;skel</a
+      ><a name="2981"
+      > </a
+      ><a name="2982" class="Symbol"
+      >:</a
+      ><a name="2983"
+      > </a
+      ><a name="2984" href="cw.CW.html#1851" class="Record"
+      >&#8857;Skeleton</a
+      ><a name="2993"
+      > </a
+      ><a name="2994" class="Symbol"
+      >{</a
+      ><a name="2995" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#231" class="Bound"
+      >i</a
+      ><a name="2996" class="Symbol"
+      >}</a
+      ><a name="2997"
+      > </a
+      ><a name="2998" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2972" class="Bound"
+      >n</a
+      ><a name="2999" class="Symbol"
+      >)</a
+      ><a name="3000"
+      >
+      </a
+      ><a name="3007" class="Symbol"
+      >&#8594;</a
+      ><a name="3008"
+      > </a
+      ><a name="3009" href="cw.CW.html#8111" class="Function"
+      >&#8857;has-cells-with-choice</a
+      ><a name="3031"
+      > </a
+      ><a name="3032" class="Number"
+      >0</a
+      ><a name="3033"
+      > </a
+      ><a name="3034" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2976" class="Bound"
+      >&#8857;skel</a
+      ><a name="3039"
+      > </a
+      ><a name="3040" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#231" class="Bound"
+      >i</a
+      ><a name="3041"
+      >
+      </a
+      ><a name="3048" class="Symbol"
+      >&#8594;</a
+      ><a name="3049"
+      > </a
+      ><a name="3050" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="3051"
+      > </a
+      ><a name="3052" class="Number"
+      >1</a
+      ><a name="3053"
+      > </a
+      ><a name="3054" href="cw.CW.html#2125" class="Function Operator"
+      >&#8857;&#10214;</a
+      ><a name="3056"
+      > </a
+      ><a name="3057" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2976" class="Bound"
+      >&#8857;skel</a
+      ><a name="3062"
+      > </a
+      ><a name="3063" href="cw.CW.html#2125" class="Function Operator"
+      >&#10215;</a
+      ><a name="3064"
+      > </a
+      ><a name="3065" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="3067"
+      > </a
+      ><a name="3068" href="cohomology.ChainComplex.html#1023" class="Function"
+      >cohomology-group</a
+      ><a name="3084"
+      > </a
+      ><a name="3085" class="Symbol"
+      >(</a
+      ><a name="3086" href="cw.cohomology.ReconstructedCochainComplex.html#2953" class="Function"
+      >cochain-complex</a
+      ><a name="3101"
+      > </a
+      ><a name="3102" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2976" class="Bound"
+      >&#8857;skel</a
+      ><a name="3107" class="Symbol"
+      >)</a
+      ><a name="3108"
+      > </a
+      ><a name="3109" class="Number"
+      >1</a
+      ><a name="3110"
+      >
+    </a
+      ><a name="3115" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2944" class="Function"
+      >first-cohomology-group</a
+      ><a name="3137"
+      > </a
+      ><a name="3138" class="Symbol"
+      >{</a
+      ><a name="3139" class="Argument"
+      >n</a
+      ><a name="3140"
+      > </a
+      ><a name="3141" class="Symbol"
+      >=</a
+      ><a name="3142"
+      > </a
+      ><a name="3143" class="Number"
+      >0</a
+      ><a name="3144" class="Symbol"
+      >}</a
+      ><a name="3145"
+      > </a
+      ><a name="3146" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3146" class="Bound"
+      >&#8857;skel</a
+      ><a name="3151"
+      > </a
+      ><a name="3152" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3152" class="Bound"
+      >ac</a
+      ><a name="3154"
+      > </a
+      ><a name="3155" class="Symbol"
+      >=</a
+      ><a name="3156"
+      >
+      </a
+      ><a name="3163" href="cw.cohomology.CohomologyGroupsTooHigh.html#670" class="Function"
+      >CGTH.C-cw-iso-ker/im</a
+      ><a name="3183"
+      > </a
+      ><a name="3184" class="Number"
+      >1</a
+      ><a name="3185"
+      > </a
+      ><a name="3186" href="lib.types.Nat.html#1688" class="InductiveConstructor"
+      >ltS</a
+      ><a name="3189"
+      > </a
+      ><a name="3190" class="Symbol"
+      >(</a
+      ><a name="3191" href="cw.cohomology.TipAndAugment.html#477" class="Function"
+      >TAA.C2&#215;CX&#8320;</a
+      ><a name="3201"
+      > </a
+      ><a name="3202" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3146" class="Bound"
+      >&#8857;skel</a
+      ><a name="3207"
+      > </a
+      ><a name="3208" class="Number"
+      >0</a
+      ><a name="3209" class="Symbol"
+      >)</a
+      ><a name="3210"
+      > </a
+      ><a name="3211" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3146" class="Bound"
+      >&#8857;skel</a
+      ><a name="3216"
+      > </a
+      ><a name="3217" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3152" class="Bound"
+      >ac</a
+      ><a name="3219"
+      >
+    </a
+      ><a name="3224" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2944" class="Function"
+      >first-cohomology-group</a
+      ><a name="3246"
+      > </a
+      ><a name="3247" class="Symbol"
+      >{</a
+      ><a name="3248" class="Argument"
+      >n</a
+      ><a name="3249"
+      > </a
+      ><a name="3250" class="Symbol"
+      >=</a
+      ><a name="3251"
+      > </a
+      ><a name="3252" class="Number"
+      >1</a
+      ><a name="3253" class="Symbol"
+      >}</a
+      ><a name="3254"
+      > </a
+      ><a name="3255" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3255" class="Bound"
+      >&#8857;skel</a
+      ><a name="3260"
+      > </a
+      ><a name="3261" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3261" class="Bound"
+      >ac</a
+      ><a name="3263"
+      > </a
+      ><a name="3264" class="Symbol"
+      >=</a
+      ><a name="3265"
+      >
+          </a
+      ><a name="3276" href="lib.groups.Isomorphism.html#8025" class="Function"
+      >coe!&#7475;-iso</a
+      ><a name="3285"
+      > </a
+      ><a name="3286" class="Symbol"
+      >(</a
+      ><a name="3287" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2413" class="Function"
+      >first-cohomology-group-&#946;-one-below</a
+      ><a name="3321"
+      > </a
+      ><a name="3322" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3255" class="Bound"
+      >&#8857;skel</a
+      ><a name="3327" class="Symbol"
+      >)</a
+      ><a name="3328"
+      >
+      </a
+      ><a name="3335" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="3338"
+      > </a
+      ><a name="3339" href="cw.cohomology.FirstCohomologyGroupOnDiag.html#899" class="Function"
+      >FCGD.C-cw-iso-ker/im</a
+      ><a name="3359"
+      > </a
+      ><a name="3360" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3255" class="Bound"
+      >&#8857;skel</a
+      ><a name="3365"
+      > </a
+      ><a name="3366" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3261" class="Bound"
+      >ac</a
+      ><a name="3368"
+      >
+    </a
+      ><a name="3373" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2944" class="Function"
+      >first-cohomology-group</a
+      ><a name="3395"
+      > </a
+      ><a name="3396" class="Symbol"
+      >{</a
+      ><a name="3397" class="Argument"
+      >n</a
+      ><a name="3398"
+      > </a
+      ><a name="3399" class="Symbol"
+      >=</a
+      ><a name="3400"
+      > </a
+      ><a name="3401" class="Number"
+      >2</a
+      ><a name="3402" class="Symbol"
+      >}</a
+      ><a name="3403"
+      > </a
+      ><a name="3404" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3404" class="Bound"
+      >&#8857;skel</a
+      ><a name="3409"
+      > </a
+      ><a name="3410" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3410" class="Bound"
+      >ac</a
+      ><a name="3412"
+      > </a
+      ><a name="3413" class="Symbol"
+      >=</a
+      ><a name="3414"
+      >
+          </a
+      ><a name="3425" href="lib.groups.Isomorphism.html#8025" class="Function"
+      >coe!&#7475;-iso</a
+      ><a name="3434"
+      > </a
+      ><a name="3435" class="Symbol"
+      >(</a
+      ><a name="3436" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#1856" class="Function"
+      >first-cohomology-group-&#946;</a
+      ><a name="3460"
+      > </a
+      ><a name="3461" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3404" class="Bound"
+      >&#8857;skel</a
+      ><a name="3466" class="Symbol"
+      >)</a
+      ><a name="3467"
+      >
+      </a
+      ><a name="3474" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="3477"
+      > </a
+      ><a name="3478" href="cw.cohomology.FirstCohomologyGroup.html#2612" class="Function"
+      >FCG.C-cw-iso-ker/im</a
+      ><a name="3497"
+      > </a
+      ><a name="3498" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3404" class="Bound"
+      >&#8857;skel</a
+      ><a name="3503"
+      > </a
+      ><a name="3504" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3410" class="Bound"
+      >ac</a
+      ><a name="3506"
+      >
+    </a
+      ><a name="3511" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2944" class="Function"
+      >first-cohomology-group</a
+      ><a name="3533"
+      > </a
+      ><a name="3534" class="Symbol"
+      >{</a
+      ><a name="3535" class="Argument"
+      >n</a
+      ><a name="3536"
+      > </a
+      ><a name="3537" class="Symbol"
+      >=</a
+      ><a name="3538"
+      > </a
+      ><a name="3539" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3540"
+      > </a
+      ><a name="3541" class="Symbol"
+      >(</a
+      ><a name="3542" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3543"
+      > </a
+      ><a name="3544" class="Symbol"
+      >(</a
+      ><a name="3545" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3546"
+      > </a
+      ><a name="3547" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3547" class="Bound"
+      >n</a
+      ><a name="3548" class="Symbol"
+      >))}</a
+      ><a name="3551"
+      > </a
+      ><a name="3552" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3552" class="Bound"
+      >&#8857;skel</a
+      ><a name="3557"
+      > </a
+      ><a name="3558" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3558" class="Bound"
+      >ac</a
+      ><a name="3560"
+      > </a
+      ><a name="3561" class="Symbol"
+      >=</a
+      ><a name="3562"
+      >
+          </a
+      ><a name="3573" href="lib.groups.Isomorphism.html#8025" class="Function"
+      >coe!&#7475;-iso</a
+      ><a name="3582"
+      > </a
+      ><a name="3583" class="Symbol"
+      >(</a
+      ><a name="3584" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#933" class="Function"
+      >first-cohomology-group-descend</a
+      ><a name="3614"
+      > </a
+      ><a name="3615" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3552" class="Bound"
+      >&#8857;skel</a
+      ><a name="3620" class="Symbol"
+      >)</a
+      ><a name="3621"
+      >
+      </a
+      ><a name="3628" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="3631"
+      > </a
+      ><a name="3632" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#2944" class="Function"
+      >first-cohomology-group</a
+      ><a name="3654"
+      > </a
+      ><a name="3655" class="Symbol"
+      >(</a
+      ><a name="3656" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="3664"
+      > </a
+      ><a name="3665" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3552" class="Bound"
+      >&#8857;skel</a
+      ><a name="3670" class="Symbol"
+      >)</a
+      ><a name="3671"
+      > </a
+      ><a name="3672" class="Symbol"
+      >(</a
+      ><a name="3673" href="cw.CW.html#8547" class="Function"
+      >&#8857;init-has-cells-with-choice</a
+      ><a name="3700"
+      > </a
+      ><a name="3701" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3552" class="Bound"
+      >&#8857;skel</a
+      ><a name="3706"
+      > </a
+      ><a name="3707" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3558" class="Bound"
+      >ac</a
+      ><a name="3709" class="Symbol"
+      >)</a
+      ><a name="3710"
+      >
+      </a
+      ><a name="3717" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="3720"
+      > </a
+      ><a name="3721" href="cw.cohomology.Descending.html#2523" class="Function"
+      >C-cw-descend-at-lower</a
+      ><a name="3742"
+      > </a
+      ><a name="3743" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3552" class="Bound"
+      >&#8857;skel</a
+      ><a name="3748"
+      > </a
+      ><a name="3749" class="Symbol"
+      >(</a
+      ><a name="3750" href="lib.types.Nat.html#4945" class="Function"
+      >&lt;-+-l</a
+      ><a name="3755"
+      > </a
+      ><a name="3756" class="Number"
+      >1</a
+      ><a name="3757"
+      > </a
+      ><a name="3758" class="Symbol"
+      >(</a
+      ><a name="3759" href="lib.types.Nat.html#2041" class="Function"
+      >O&lt;S</a
+      ><a name="3762"
+      > </a
+      ><a name="3763" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3547" class="Bound"
+      >n</a
+      ><a name="3764" class="Symbol"
+      >))</a
+      ><a name="3766"
+      > </a
+      ><a name="3767" href="cw.cohomology.ReconstructedFirstCohomologyGroup.html#3558" class="Bound"
+      >ac</a
+      ><a name="3769"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

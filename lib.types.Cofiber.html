@@ -1,0 +1,2216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.Cofiber</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.Span.html#1" class="Module"
+      >lib.types.Span</a
+      ><a name="91"
+      >
+</a
+      ><a name="92" class="Keyword"
+      >open</a
+      ><a name="96"
+      > </a
+      ><a name="97" class="Keyword"
+      >import</a
+      ><a name="103"
+      > </a
+      ><a name="104" href="lib.types.Pushout.html#1" class="Module"
+      >lib.types.Pushout</a
+      ><a name="121"
+      >
+</a
+      ><a name="122" class="Keyword"
+      >open</a
+      ><a name="126"
+      > </a
+      ><a name="127" class="Keyword"
+      >import</a
+      ><a name="133"
+      > </a
+      ><a name="134" href="lib.types.PushoutFlattening.html#1" class="Module"
+      >lib.types.PushoutFlattening</a
+      ><a name="161"
+      >
+</a
+      ><a name="162" class="Keyword"
+      >open</a
+      ><a name="166"
+      > </a
+      ><a name="167" class="Keyword"
+      >import</a
+      ><a name="173"
+      > </a
+      ><a name="174" href="lib.types.Unit.html#1" class="Module"
+      >lib.types.Unit</a
+      ><a name="188"
+      >
+</a
+      ><a name="189" class="Keyword"
+      >open</a
+      ><a name="193"
+      > </a
+      ><a name="194" class="Keyword"
+      >import</a
+      ><a name="200"
+      > </a
+      ><a name="201" href="lib.types.Pointed.html#1" class="Module"
+      >lib.types.Pointed</a
+      ><a name="218"
+      >
+
+</a
+      ><a name="220" class="Comment"
+      >-- Cofiber is defined as a particular case of pushout</a
+      ><a name="273"
+      >
+
+</a
+      ><a name="275" class="Keyword"
+      >module</a
+      ><a name="281"
+      > </a
+      ><a name="282" href="lib.types.Cofiber.html#1" class="Module"
+      >lib.types.Cofiber</a
+      ><a name="299"
+      > </a
+      ><a name="300" class="Keyword"
+      >where</a
+      ><a name="305"
+      >
+
+</a
+      ><a name="307" class="Keyword"
+      >module</a
+      ><a name="313"
+      > </a
+      ><a name="314" href="lib.types.Cofiber.html#314" class="Module"
+      >_</a
+      ><a name="315"
+      > </a
+      ><a name="316" class="Symbol"
+      >{</a
+      ><a name="317" href="lib.types.Cofiber.html#317" class="Bound"
+      >i</a
+      ><a name="318"
+      > </a
+      ><a name="319" href="lib.types.Cofiber.html#319" class="Bound"
+      >j</a
+      ><a name="320" class="Symbol"
+      >}</a
+      ><a name="321"
+      > </a
+      ><a name="322" class="Symbol"
+      >{</a
+      ><a name="323" href="lib.types.Cofiber.html#323" class="Bound"
+      >A</a
+      ><a name="324"
+      > </a
+      ><a name="325" class="Symbol"
+      >:</a
+      ><a name="326"
+      > </a
+      ><a name="327" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="331"
+      > </a
+      ><a name="332" href="lib.types.Cofiber.html#317" class="Bound"
+      >i</a
+      ><a name="333" class="Symbol"
+      >}</a
+      ><a name="334"
+      > </a
+      ><a name="335" class="Symbol"
+      >{</a
+      ><a name="336" href="lib.types.Cofiber.html#336" class="Bound"
+      >B</a
+      ><a name="337"
+      > </a
+      ><a name="338" class="Symbol"
+      >:</a
+      ><a name="339"
+      > </a
+      ><a name="340" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="344"
+      > </a
+      ><a name="345" href="lib.types.Cofiber.html#319" class="Bound"
+      >j</a
+      ><a name="346" class="Symbol"
+      >}</a
+      ><a name="347"
+      > </a
+      ><a name="348" class="Symbol"
+      >(</a
+      ><a name="349" href="lib.types.Cofiber.html#349" class="Bound"
+      >f</a
+      ><a name="350"
+      > </a
+      ><a name="351" class="Symbol"
+      >:</a
+      ><a name="352"
+      > </a
+      ><a name="353" href="lib.types.Cofiber.html#323" class="Bound"
+      >A</a
+      ><a name="354"
+      > </a
+      ><a name="355" class="Symbol"
+      >&#8594;</a
+      ><a name="356"
+      > </a
+      ><a name="357" href="lib.types.Cofiber.html#336" class="Bound"
+      >B</a
+      ><a name="358" class="Symbol"
+      >)</a
+      ><a name="359"
+      > </a
+      ><a name="360" class="Keyword"
+      >where</a
+      ><a name="365"
+      >
+
+  </a
+      ><a name="369" href="lib.types.Cofiber.html#369" class="Function"
+      >cofiber-span</a
+      ><a name="381"
+      > </a
+      ><a name="382" class="Symbol"
+      >:</a
+      ><a name="383"
+      > </a
+      ><a name="384" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="388"
+      >
+  </a
+      ><a name="391" href="lib.types.Cofiber.html#369" class="Function"
+      >cofiber-span</a
+      ><a name="403"
+      > </a
+      ><a name="404" class="Symbol"
+      >=</a
+      ><a name="405"
+      > </a
+      ><a name="406" href="lib.types.Span.html#270" class="InductiveConstructor"
+      >span</a
+      ><a name="410"
+      > </a
+      ><a name="411" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="415"
+      > </a
+      ><a name="416" href="lib.types.Cofiber.html#336" class="Bound"
+      >B</a
+      ><a name="417"
+      > </a
+      ><a name="418" href="lib.types.Cofiber.html#323" class="Bound"
+      >A</a
+      ><a name="419"
+      > </a
+      ><a name="420" class="Symbol"
+      >(&#955;</a
+      ><a name="422"
+      > </a
+      ><a name="423" href="lib.types.Cofiber.html#423" class="Bound"
+      >_</a
+      ><a name="424"
+      > </a
+      ><a name="425" class="Symbol"
+      >&#8594;</a
+      ><a name="426"
+      > </a
+      ><a name="427" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="429" class="Symbol"
+      >)</a
+      ><a name="430"
+      > </a
+      ><a name="431" href="lib.types.Cofiber.html#349" class="Bound"
+      >f</a
+      ><a name="432"
+      >
+
+  </a
+      ><a name="436" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="443"
+      > </a
+      ><a name="444" class="Symbol"
+      >:</a
+      ><a name="445"
+      > </a
+      ><a name="446" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="450"
+      > </a
+      ><a name="451" class="Symbol"
+      >(</a
+      ><a name="452" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="lib.types.Cofiber.html#317" class="Bound"
+      >i</a
+      ><a name="458"
+      > </a
+      ><a name="459" href="lib.types.Cofiber.html#319" class="Bound"
+      >j</a
+      ><a name="460" class="Symbol"
+      >)</a
+      ><a name="461"
+      >
+  </a
+      ><a name="464" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="471"
+      > </a
+      ><a name="472" class="Symbol"
+      >=</a
+      ><a name="473"
+      > </a
+      ><a name="474" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="481"
+      > </a
+      ><a name="482" href="lib.types.Cofiber.html#369" class="Function"
+      >cofiber-span</a
+      ><a name="494"
+      >
+
+  </a
+      ><a name="498" href="lib.types.Cofiber.html#498" class="Function"
+      >cfbase'</a
+      ><a name="505"
+      > </a
+      ><a name="506" class="Symbol"
+      >:</a
+      ><a name="507"
+      > </a
+      ><a name="508" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="515"
+      >
+  </a
+      ><a name="518" href="lib.types.Cofiber.html#498" class="Function"
+      >cfbase'</a
+      ><a name="525"
+      > </a
+      ><a name="526" class="Symbol"
+      >=</a
+      ><a name="527"
+      > </a
+      ><a name="528" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="532"
+      > </a
+      ><a name="533" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="535"
+      >
+
+  </a
+      ><a name="539" class="Comment"
+      >-- codomain</a
+      ><a name="550"
+      >
+  </a
+      ><a name="553" href="lib.types.Cofiber.html#553" class="Function"
+      >cfcod'</a
+      ><a name="559"
+      > </a
+      ><a name="560" class="Symbol"
+      >:</a
+      ><a name="561"
+      > </a
+      ><a name="562" href="lib.types.Cofiber.html#336" class="Bound"
+      >B</a
+      ><a name="563"
+      > </a
+      ><a name="564" class="Symbol"
+      >&#8594;</a
+      ><a name="565"
+      > </a
+      ><a name="566" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="573"
+      >
+  </a
+      ><a name="576" href="lib.types.Cofiber.html#553" class="Function"
+      >cfcod'</a
+      ><a name="582"
+      > </a
+      ><a name="583" href="lib.types.Cofiber.html#583" class="Bound"
+      >b</a
+      ><a name="584"
+      > </a
+      ><a name="585" class="Symbol"
+      >=</a
+      ><a name="586"
+      > </a
+      ><a name="587" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="592"
+      > </a
+      ><a name="593" href="lib.types.Cofiber.html#583" class="Bound"
+      >b</a
+      ><a name="594"
+      >
+
+  </a
+      ><a name="598" href="lib.types.Cofiber.html#598" class="Function"
+      >cfglue'</a
+      ><a name="605"
+      > </a
+      ><a name="606" class="Symbol"
+      >:</a
+      ><a name="607"
+      > </a
+      ><a name="608" class="Symbol"
+      >(</a
+      ><a name="609" href="lib.types.Cofiber.html#609" class="Bound"
+      >a</a
+      ><a name="610"
+      > </a
+      ><a name="611" class="Symbol"
+      >:</a
+      ><a name="612"
+      > </a
+      ><a name="613" href="lib.types.Cofiber.html#323" class="Bound"
+      >A</a
+      ><a name="614" class="Symbol"
+      >)</a
+      ><a name="615"
+      > </a
+      ><a name="616" class="Symbol"
+      >&#8594;</a
+      ><a name="617"
+      > </a
+      ><a name="618" href="lib.types.Cofiber.html#498" class="Function"
+      >cfbase'</a
+      ><a name="625"
+      > </a
+      ><a name="626" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="628"
+      > </a
+      ><a name="629" href="lib.types.Cofiber.html#553" class="Function"
+      >cfcod'</a
+      ><a name="635"
+      > </a
+      ><a name="636" class="Symbol"
+      >(</a
+      ><a name="637" href="lib.types.Cofiber.html#349" class="Bound"
+      >f</a
+      ><a name="638"
+      > </a
+      ><a name="639" href="lib.types.Cofiber.html#609" class="Bound"
+      >a</a
+      ><a name="640" class="Symbol"
+      >)</a
+      ><a name="641"
+      >
+  </a
+      ><a name="644" href="lib.types.Cofiber.html#598" class="Function"
+      >cfglue'</a
+      ><a name="651"
+      > </a
+      ><a name="652" href="lib.types.Cofiber.html#652" class="Bound"
+      >a</a
+      ><a name="653"
+      > </a
+      ><a name="654" class="Symbol"
+      >=</a
+      ><a name="655"
+      > </a
+      ><a name="656" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="660"
+      > </a
+      ><a name="661" href="lib.types.Cofiber.html#652" class="Bound"
+      >a</a
+      ><a name="662"
+      >
+
+</a
+      ><a name="664" class="Keyword"
+      >module</a
+      ><a name="670"
+      > </a
+      ><a name="671" href="lib.types.Cofiber.html#671" class="Module"
+      >_</a
+      ><a name="672"
+      > </a
+      ><a name="673" class="Symbol"
+      >{</a
+      ><a name="674" href="lib.types.Cofiber.html#674" class="Bound"
+      >i</a
+      ><a name="675"
+      > </a
+      ><a name="676" href="lib.types.Cofiber.html#676" class="Bound"
+      >j</a
+      ><a name="677" class="Symbol"
+      >}</a
+      ><a name="678"
+      > </a
+      ><a name="679" class="Symbol"
+      >{</a
+      ><a name="680" href="lib.types.Cofiber.html#680" class="Bound"
+      >A</a
+      ><a name="681"
+      > </a
+      ><a name="682" class="Symbol"
+      >:</a
+      ><a name="683"
+      > </a
+      ><a name="684" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="688"
+      > </a
+      ><a name="689" href="lib.types.Cofiber.html#674" class="Bound"
+      >i</a
+      ><a name="690" class="Symbol"
+      >}</a
+      ><a name="691"
+      > </a
+      ><a name="692" class="Symbol"
+      >{</a
+      ><a name="693" href="lib.types.Cofiber.html#693" class="Bound"
+      >B</a
+      ><a name="694"
+      > </a
+      ><a name="695" class="Symbol"
+      >:</a
+      ><a name="696"
+      > </a
+      ><a name="697" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="701"
+      > </a
+      ><a name="702" href="lib.types.Cofiber.html#676" class="Bound"
+      >j</a
+      ><a name="703" class="Symbol"
+      >}</a
+      ><a name="704"
+      > </a
+      ><a name="705" class="Symbol"
+      >{</a
+      ><a name="706" href="lib.types.Cofiber.html#706" class="Bound"
+      >f</a
+      ><a name="707"
+      > </a
+      ><a name="708" class="Symbol"
+      >:</a
+      ><a name="709"
+      > </a
+      ><a name="710" href="lib.types.Cofiber.html#680" class="Bound"
+      >A</a
+      ><a name="711"
+      > </a
+      ><a name="712" class="Symbol"
+      >&#8594;</a
+      ><a name="713"
+      > </a
+      ><a name="714" href="lib.types.Cofiber.html#693" class="Bound"
+      >B</a
+      ><a name="715" class="Symbol"
+      >}</a
+      ><a name="716"
+      > </a
+      ><a name="717" class="Keyword"
+      >where</a
+      ><a name="722"
+      >
+
+  </a
+      ><a name="726" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="732"
+      > </a
+      ><a name="733" class="Symbol"
+      >:</a
+      ><a name="734"
+      > </a
+      ><a name="735" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="742"
+      > </a
+      ><a name="743" href="lib.types.Cofiber.html#706" class="Bound"
+      >f</a
+      ><a name="744"
+      >
+  </a
+      ><a name="747" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="753"
+      > </a
+      ><a name="754" class="Symbol"
+      >=</a
+      ><a name="755"
+      > </a
+      ><a name="756" href="lib.types.Cofiber.html#498" class="Function"
+      >cfbase'</a
+      ><a name="763"
+      > </a
+      ><a name="764" href="lib.types.Cofiber.html#706" class="Bound"
+      >f</a
+      ><a name="765"
+      >
+
+  </a
+      ><a name="769" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="774"
+      > </a
+      ><a name="775" class="Symbol"
+      >:</a
+      ><a name="776"
+      > </a
+      ><a name="777" href="lib.types.Cofiber.html#693" class="Bound"
+      >B</a
+      ><a name="778"
+      > </a
+      ><a name="779" class="Symbol"
+      >&#8594;</a
+      ><a name="780"
+      > </a
+      ><a name="781" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="788"
+      > </a
+      ><a name="789" href="lib.types.Cofiber.html#706" class="Bound"
+      >f</a
+      ><a name="790"
+      >
+  </a
+      ><a name="793" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="798"
+      > </a
+      ><a name="799" class="Symbol"
+      >=</a
+      ><a name="800"
+      > </a
+      ><a name="801" href="lib.types.Cofiber.html#553" class="Function"
+      >cfcod'</a
+      ><a name="807"
+      > </a
+      ><a name="808" href="lib.types.Cofiber.html#706" class="Bound"
+      >f</a
+      ><a name="809"
+      >
+
+  </a
+      ><a name="813" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="819"
+      > </a
+      ><a name="820" class="Symbol"
+      >:</a
+      ><a name="821"
+      > </a
+      ><a name="822" class="Symbol"
+      >(</a
+      ><a name="823" href="lib.types.Cofiber.html#823" class="Bound"
+      >a</a
+      ><a name="824"
+      > </a
+      ><a name="825" class="Symbol"
+      >:</a
+      ><a name="826"
+      > </a
+      ><a name="827" href="lib.types.Cofiber.html#680" class="Bound"
+      >A</a
+      ><a name="828" class="Symbol"
+      >)</a
+      ><a name="829"
+      > </a
+      ><a name="830" class="Symbol"
+      >&#8594;</a
+      ><a name="831"
+      > </a
+      ><a name="832" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="838"
+      > </a
+      ><a name="839" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="841"
+      > </a
+      ><a name="842" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="847"
+      > </a
+      ><a name="848" class="Symbol"
+      >(</a
+      ><a name="849" href="lib.types.Cofiber.html#706" class="Bound"
+      >f</a
+      ><a name="850"
+      > </a
+      ><a name="851" href="lib.types.Cofiber.html#823" class="Bound"
+      >a</a
+      ><a name="852" class="Symbol"
+      >)</a
+      ><a name="853"
+      >
+  </a
+      ><a name="856" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="862"
+      > </a
+      ><a name="863" class="Symbol"
+      >=</a
+      ><a name="864"
+      > </a
+      ><a name="865" href="lib.types.Cofiber.html#598" class="Function"
+      >cfglue'</a
+      ><a name="872"
+      > </a
+      ><a name="873" href="lib.types.Cofiber.html#706" class="Bound"
+      >f</a
+      ><a name="874"
+      >
+
+  </a
+      ><a name="878" class="Keyword"
+      >module</a
+      ><a name="884"
+      > </a
+      ><a name="885" href="lib.types.Cofiber.html#885" class="Module"
+      >CofiberElim</a
+      ><a name="896"
+      > </a
+      ><a name="897" class="Symbol"
+      >{</a
+      ><a name="898" href="lib.types.Cofiber.html#898" class="Bound"
+      >k</a
+      ><a name="899" class="Symbol"
+      >}</a
+      ><a name="900"
+      > </a
+      ><a name="901" class="Symbol"
+      >{</a
+      ><a name="902" href="lib.types.Cofiber.html#902" class="Bound"
+      >P</a
+      ><a name="903"
+      > </a
+      ><a name="904" class="Symbol"
+      >:</a
+      ><a name="905"
+      > </a
+      ><a name="906" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="913"
+      > </a
+      ><a name="914" href="lib.types.Cofiber.html#706" class="Bound"
+      >f</a
+      ><a name="915"
+      > </a
+      ><a name="916" class="Symbol"
+      >&#8594;</a
+      ><a name="917"
+      > </a
+      ><a name="918" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="922"
+      > </a
+      ><a name="923" href="lib.types.Cofiber.html#898" class="Bound"
+      >k</a
+      ><a name="924" class="Symbol"
+      >}</a
+      ><a name="925"
+      >
+    </a
+      ><a name="930" class="Symbol"
+      >(</a
+      ><a name="931" href="lib.types.Cofiber.html#931" class="Bound"
+      >b</a
+      ><a name="932"
+      > </a
+      ><a name="933" class="Symbol"
+      >:</a
+      ><a name="934"
+      > </a
+      ><a name="935" href="lib.types.Cofiber.html#902" class="Bound"
+      >P</a
+      ><a name="936"
+      > </a
+      ><a name="937" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="943" class="Symbol"
+      >)</a
+      ><a name="944"
+      > </a
+      ><a name="945" class="Symbol"
+      >(</a
+      ><a name="946" href="lib.types.Cofiber.html#946" class="Bound"
+      >c</a
+      ><a name="947"
+      > </a
+      ><a name="948" class="Symbol"
+      >:</a
+      ><a name="949"
+      > </a
+      ><a name="950" class="Symbol"
+      >(</a
+      ><a name="951" href="lib.types.Cofiber.html#951" class="Bound"
+      >y</a
+      ><a name="952"
+      > </a
+      ><a name="953" class="Symbol"
+      >:</a
+      ><a name="954"
+      > </a
+      ><a name="955" href="lib.types.Cofiber.html#693" class="Bound"
+      >B</a
+      ><a name="956" class="Symbol"
+      >)</a
+      ><a name="957"
+      > </a
+      ><a name="958" class="Symbol"
+      >&#8594;</a
+      ><a name="959"
+      > </a
+      ><a name="960" href="lib.types.Cofiber.html#902" class="Bound"
+      >P</a
+      ><a name="961"
+      > </a
+      ><a name="962" class="Symbol"
+      >(</a
+      ><a name="963" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="968"
+      > </a
+      ><a name="969" href="lib.types.Cofiber.html#951" class="Bound"
+      >y</a
+      ><a name="970" class="Symbol"
+      >))</a
+      ><a name="972"
+      >
+    </a
+      ><a name="977" class="Symbol"
+      >(</a
+      ><a name="978" href="lib.types.Cofiber.html#978" class="Bound"
+      >p</a
+      ><a name="979"
+      > </a
+      ><a name="980" class="Symbol"
+      >:</a
+      ><a name="981"
+      > </a
+      ><a name="982" class="Symbol"
+      >(</a
+      ><a name="983" href="lib.types.Cofiber.html#983" class="Bound"
+      >x</a
+      ><a name="984"
+      > </a
+      ><a name="985" class="Symbol"
+      >:</a
+      ><a name="986"
+      > </a
+      ><a name="987" href="lib.types.Cofiber.html#680" class="Bound"
+      >A</a
+      ><a name="988" class="Symbol"
+      >)</a
+      ><a name="989"
+      > </a
+      ><a name="990" class="Symbol"
+      >&#8594;</a
+      ><a name="991"
+      > </a
+      ><a name="992" href="lib.types.Cofiber.html#931" class="Bound"
+      >b</a
+      ><a name="993"
+      > </a
+      ><a name="994" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="996"
+      > </a
+      ><a name="997" href="lib.types.Cofiber.html#946" class="Bound"
+      >c</a
+      ><a name="998"
+      > </a
+      ><a name="999" class="Symbol"
+      >(</a
+      ><a name="1000" href="lib.types.Cofiber.html#706" class="Bound"
+      >f</a
+      ><a name="1001"
+      > </a
+      ><a name="1002" href="lib.types.Cofiber.html#983" class="Bound"
+      >x</a
+      ><a name="1003" class="Symbol"
+      >)</a
+      ><a name="1004"
+      > </a
+      ><a name="1005" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="1006"
+      > </a
+      ><a name="1007" href="lib.types.Cofiber.html#902" class="Bound"
+      >P</a
+      ><a name="1008"
+      > </a
+      ><a name="1009" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="1010"
+      > </a
+      ><a name="1011" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="1017"
+      > </a
+      ><a name="1018" href="lib.types.Cofiber.html#983" class="Bound"
+      >x</a
+      ><a name="1019"
+      > </a
+      ><a name="1020" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="1021" class="Symbol"
+      >)</a
+      ><a name="1022"
+      >
+    </a
+      ><a name="1027" class="Symbol"
+      >=</a
+      ><a name="1028"
+      > </a
+      ><a name="1029" href="lib.types.Pushout.html#589" class="Module"
+      >PushoutElim</a
+      ><a name="1040"
+      > </a
+      ><a name="1041" class="Symbol"
+      >(&#955;</a
+      ><a name="1043"
+      > </a
+      ><a name="1044" href="lib.types.Cofiber.html#1044" class="Bound"
+      >_</a
+      ><a name="1045"
+      > </a
+      ><a name="1046" class="Symbol"
+      >&#8594;</a
+      ><a name="1047"
+      > </a
+      ><a name="1048" href="lib.types.Cofiber.html#931" class="Bound"
+      >b</a
+      ><a name="1049" class="Symbol"
+      >)</a
+      ><a name="1050"
+      > </a
+      ><a name="1051" href="lib.types.Cofiber.html#946" class="Bound"
+      >c</a
+      ><a name="1052"
+      > </a
+      ><a name="1053" href="lib.types.Cofiber.html#978" class="Bound"
+      >p</a
+      ><a name="1054"
+      >
+
+  </a
+      ><a name="1058" class="Keyword"
+      >open</a
+      ><a name="1062"
+      > </a
+      ><a name="1063" href="lib.types.Cofiber.html#885" class="Module"
+      >CofiberElim</a
+      ><a name="1074"
+      > </a
+      ><a name="1075" class="Keyword"
+      >public</a
+      ><a name="1081"
+      > </a
+      ><a name="1082" class="Keyword"
+      >using</a
+      ><a name="1087"
+      > </a
+      ><a name="1088" class="Symbol"
+      >()</a
+      ><a name="1090"
+      > </a
+      ><a name="1091" class="Keyword"
+      >renaming</a
+      ><a name="1099"
+      > </a
+      ><a name="1100" class="Symbol"
+      >(</a
+      ><a name="1101" href="lib.types.Pushout.html#850" class="Function"
+      >f</a
+      ><a name="1102"
+      > </a
+      ><a name="1103" class="Symbol"
+      >to</a
+      ><a name="1105"
+      > </a
+      ><a name="1106" href="lib.types.Pushout.html#850" class="Function"
+      >Cofiber-elim</a
+      ><a name="1118" class="Symbol"
+      >)</a
+      ><a name="1119"
+      >
+
+  </a
+      ><a name="1123" class="Keyword"
+      >module</a
+      ><a name="1129"
+      > </a
+      ><a name="1130" href="lib.types.Cofiber.html#1130" class="Module"
+      >CofiberRec</a
+      ><a name="1140"
+      > </a
+      ><a name="1141" class="Symbol"
+      >{</a
+      ><a name="1142" href="lib.types.Cofiber.html#1142" class="Bound"
+      >k</a
+      ><a name="1143" class="Symbol"
+      >}</a
+      ><a name="1144"
+      > </a
+      ><a name="1145" class="Symbol"
+      >{</a
+      ><a name="1146" href="lib.types.Cofiber.html#1146" class="Bound"
+      >C</a
+      ><a name="1147"
+      > </a
+      ><a name="1148" class="Symbol"
+      >:</a
+      ><a name="1149"
+      > </a
+      ><a name="1150" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1154"
+      > </a
+      ><a name="1155" href="lib.types.Cofiber.html#1142" class="Bound"
+      >k</a
+      ><a name="1156" class="Symbol"
+      >}</a
+      ><a name="1157"
+      > </a
+      ><a name="1158" class="Symbol"
+      >(</a
+      ><a name="1159" href="lib.types.Cofiber.html#1159" class="Bound"
+      >b</a
+      ><a name="1160"
+      > </a
+      ><a name="1161" class="Symbol"
+      >:</a
+      ><a name="1162"
+      > </a
+      ><a name="1163" href="lib.types.Cofiber.html#1146" class="Bound"
+      >C</a
+      ><a name="1164" class="Symbol"
+      >)</a
+      ><a name="1165"
+      > </a
+      ><a name="1166" class="Symbol"
+      >(</a
+      ><a name="1167" href="lib.types.Cofiber.html#1167" class="Bound"
+      >c</a
+      ><a name="1168"
+      > </a
+      ><a name="1169" class="Symbol"
+      >:</a
+      ><a name="1170"
+      > </a
+      ><a name="1171" href="lib.types.Cofiber.html#693" class="Bound"
+      >B</a
+      ><a name="1172"
+      > </a
+      ><a name="1173" class="Symbol"
+      >&#8594;</a
+      ><a name="1174"
+      > </a
+      ><a name="1175" href="lib.types.Cofiber.html#1146" class="Bound"
+      >C</a
+      ><a name="1176" class="Symbol"
+      >)</a
+      ><a name="1177"
+      >
+    </a
+      ><a name="1182" class="Symbol"
+      >(</a
+      ><a name="1183" href="lib.types.Cofiber.html#1183" class="Bound"
+      >p</a
+      ><a name="1184"
+      > </a
+      ><a name="1185" class="Symbol"
+      >:</a
+      ><a name="1186"
+      > </a
+      ><a name="1187" class="Symbol"
+      >(</a
+      ><a name="1188" href="lib.types.Cofiber.html#1188" class="Bound"
+      >x</a
+      ><a name="1189"
+      > </a
+      ><a name="1190" class="Symbol"
+      >:</a
+      ><a name="1191"
+      > </a
+      ><a name="1192" href="lib.types.Cofiber.html#680" class="Bound"
+      >A</a
+      ><a name="1193" class="Symbol"
+      >)</a
+      ><a name="1194"
+      > </a
+      ><a name="1195" class="Symbol"
+      >&#8594;</a
+      ><a name="1196"
+      > </a
+      ><a name="1197" href="lib.types.Cofiber.html#1159" class="Bound"
+      >b</a
+      ><a name="1198"
+      > </a
+      ><a name="1199" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" href="lib.types.Cofiber.html#1167" class="Bound"
+      >c</a
+      ><a name="1203"
+      > </a
+      ><a name="1204" class="Symbol"
+      >(</a
+      ><a name="1205" href="lib.types.Cofiber.html#706" class="Bound"
+      >f</a
+      ><a name="1206"
+      > </a
+      ><a name="1207" href="lib.types.Cofiber.html#1188" class="Bound"
+      >x</a
+      ><a name="1208" class="Symbol"
+      >))</a
+      ><a name="1210"
+      >
+    </a
+      ><a name="1215" class="Symbol"
+      >=</a
+      ><a name="1216"
+      > </a
+      ><a name="1217" href="lib.types.Pushout.html#1131" class="Module"
+      >PushoutRec</a
+      ><a name="1227"
+      > </a
+      ><a name="1228" class="Symbol"
+      >{</a
+      ><a name="1229" class="Argument"
+      >d</a
+      ><a name="1230"
+      > </a
+      ><a name="1231" class="Symbol"
+      >=</a
+      ><a name="1232"
+      > </a
+      ><a name="1233" href="lib.types.Cofiber.html#369" class="Function"
+      >cofiber-span</a
+      ><a name="1245"
+      > </a
+      ><a name="1246" href="lib.types.Cofiber.html#706" class="Bound"
+      >f</a
+      ><a name="1247" class="Symbol"
+      >}</a
+      ><a name="1248"
+      > </a
+      ><a name="1249" class="Symbol"
+      >(&#955;</a
+      ><a name="1251"
+      > </a
+      ><a name="1252" href="lib.types.Cofiber.html#1252" class="Bound"
+      >_</a
+      ><a name="1253"
+      > </a
+      ><a name="1254" class="Symbol"
+      >&#8594;</a
+      ><a name="1255"
+      > </a
+      ><a name="1256" href="lib.types.Cofiber.html#1159" class="Bound"
+      >b</a
+      ><a name="1257" class="Symbol"
+      >)</a
+      ><a name="1258"
+      > </a
+      ><a name="1259" href="lib.types.Cofiber.html#1167" class="Bound"
+      >c</a
+      ><a name="1260"
+      > </a
+      ><a name="1261" href="lib.types.Cofiber.html#1183" class="Bound"
+      >p</a
+      ><a name="1262"
+      >
+
+  </a
+      ><a name="1266" class="Keyword"
+      >module</a
+      ><a name="1272"
+      > </a
+      ><a name="1273" href="lib.types.Cofiber.html#1273" class="Module"
+      >CofiberRecType</a
+      ><a name="1287"
+      > </a
+      ><a name="1288" class="Symbol"
+      >{</a
+      ><a name="1289" href="lib.types.Cofiber.html#1289" class="Bound"
+      >k</a
+      ><a name="1290" class="Symbol"
+      >}</a
+      ><a name="1291"
+      > </a
+      ><a name="1292" class="Symbol"
+      >(</a
+      ><a name="1293" href="lib.types.Cofiber.html#1293" class="Bound"
+      >b</a
+      ><a name="1294"
+      > </a
+      ><a name="1295" class="Symbol"
+      >:</a
+      ><a name="1296"
+      > </a
+      ><a name="1297" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1301"
+      > </a
+      ><a name="1302" href="lib.types.Cofiber.html#1289" class="Bound"
+      >k</a
+      ><a name="1303" class="Symbol"
+      >)</a
+      ><a name="1304"
+      > </a
+      ><a name="1305" class="Symbol"
+      >(</a
+      ><a name="1306" href="lib.types.Cofiber.html#1306" class="Bound"
+      >c</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" class="Symbol"
+      >:</a
+      ><a name="1309"
+      > </a
+      ><a name="1310" href="lib.types.Cofiber.html#693" class="Bound"
+      >B</a
+      ><a name="1311"
+      > </a
+      ><a name="1312" class="Symbol"
+      >&#8594;</a
+      ><a name="1313"
+      > </a
+      ><a name="1314" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1318"
+      > </a
+      ><a name="1319" href="lib.types.Cofiber.html#1289" class="Bound"
+      >k</a
+      ><a name="1320" class="Symbol"
+      >)</a
+      ><a name="1321"
+      >
+    </a
+      ><a name="1326" class="Symbol"
+      >(</a
+      ><a name="1327" href="lib.types.Cofiber.html#1327" class="Bound"
+      >p</a
+      ><a name="1328"
+      > </a
+      ><a name="1329" class="Symbol"
+      >:</a
+      ><a name="1330"
+      > </a
+      ><a name="1331" class="Symbol"
+      >(</a
+      ><a name="1332" href="lib.types.Cofiber.html#1332" class="Bound"
+      >x</a
+      ><a name="1333"
+      > </a
+      ><a name="1334" class="Symbol"
+      >:</a
+      ><a name="1335"
+      > </a
+      ><a name="1336" href="lib.types.Cofiber.html#680" class="Bound"
+      >A</a
+      ><a name="1337" class="Symbol"
+      >)</a
+      ><a name="1338"
+      > </a
+      ><a name="1339" class="Symbol"
+      >&#8594;</a
+      ><a name="1340"
+      > </a
+      ><a name="1341" href="lib.types.Cofiber.html#1293" class="Bound"
+      >b</a
+      ><a name="1342"
+      > </a
+      ><a name="1343" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="1344"
+      > </a
+      ><a name="1345" href="lib.types.Cofiber.html#1306" class="Bound"
+      >c</a
+      ><a name="1346"
+      > </a
+      ><a name="1347" class="Symbol"
+      >(</a
+      ><a name="1348" href="lib.types.Cofiber.html#706" class="Bound"
+      >f</a
+      ><a name="1349"
+      > </a
+      ><a name="1350" href="lib.types.Cofiber.html#1332" class="Bound"
+      >x</a
+      ><a name="1351" class="Symbol"
+      >))</a
+      ><a name="1353"
+      >
+    </a
+      ><a name="1358" class="Symbol"
+      >=</a
+      ><a name="1359"
+      > </a
+      ><a name="1360" href="lib.types.PushoutFlattening.html#371" class="Module"
+      >PushoutRecType</a
+      ><a name="1374"
+      > </a
+      ><a name="1375" class="Symbol"
+      >{</a
+      ><a name="1376" class="Argument"
+      >d</a
+      ><a name="1377"
+      > </a
+      ><a name="1378" class="Symbol"
+      >=</a
+      ><a name="1379"
+      > </a
+      ><a name="1380" href="lib.types.Cofiber.html#369" class="Function"
+      >cofiber-span</a
+      ><a name="1392"
+      > </a
+      ><a name="1393" href="lib.types.Cofiber.html#706" class="Bound"
+      >f</a
+      ><a name="1394" class="Symbol"
+      >}</a
+      ><a name="1395"
+      > </a
+      ><a name="1396" class="Symbol"
+      >(&#955;</a
+      ><a name="1398"
+      > </a
+      ><a name="1399" href="lib.types.Cofiber.html#1399" class="Bound"
+      >_</a
+      ><a name="1400"
+      > </a
+      ><a name="1401" class="Symbol"
+      >&#8594;</a
+      ><a name="1402"
+      > </a
+      ><a name="1403" href="lib.types.Cofiber.html#1293" class="Bound"
+      >b</a
+      ><a name="1404" class="Symbol"
+      >)</a
+      ><a name="1405"
+      > </a
+      ><a name="1406" href="lib.types.Cofiber.html#1306" class="Bound"
+      >c</a
+      ><a name="1407"
+      > </a
+      ><a name="1408" href="lib.types.Cofiber.html#1327" class="Bound"
+      >p</a
+      ><a name="1409"
+      >
+
+</a
+      ><a name="1411" class="Keyword"
+      >module</a
+      ><a name="1417"
+      > </a
+      ><a name="1418" href="lib.types.Cofiber.html#1418" class="Module"
+      >_</a
+      ><a name="1419"
+      > </a
+      ><a name="1420" class="Symbol"
+      >{</a
+      ><a name="1421" href="lib.types.Cofiber.html#1421" class="Bound"
+      >i</a
+      ><a name="1422"
+      > </a
+      ><a name="1423" href="lib.types.Cofiber.html#1423" class="Bound"
+      >j</a
+      ><a name="1424" class="Symbol"
+      >}</a
+      ><a name="1425"
+      > </a
+      ><a name="1426" class="Symbol"
+      >{</a
+      ><a name="1427" href="lib.types.Cofiber.html#1427" class="Bound"
+      >X</a
+      ><a name="1428"
+      > </a
+      ><a name="1429" class="Symbol"
+      >:</a
+      ><a name="1430"
+      > </a
+      ><a name="1431" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1434"
+      > </a
+      ><a name="1435" href="lib.types.Cofiber.html#1421" class="Bound"
+      >i</a
+      ><a name="1436" class="Symbol"
+      >}</a
+      ><a name="1437"
+      > </a
+      ><a name="1438" class="Symbol"
+      >{</a
+      ><a name="1439" href="lib.types.Cofiber.html#1439" class="Bound"
+      >Y</a
+      ><a name="1440"
+      > </a
+      ><a name="1441" class="Symbol"
+      >:</a
+      ><a name="1442"
+      > </a
+      ><a name="1443" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1446"
+      > </a
+      ><a name="1447" href="lib.types.Cofiber.html#1423" class="Bound"
+      >j</a
+      ><a name="1448" class="Symbol"
+      >}</a
+      ><a name="1449"
+      > </a
+      ><a name="1450" class="Symbol"
+      >(</a
+      ><a name="1451" href="lib.types.Cofiber.html#1451" class="Bound"
+      >F</a
+      ><a name="1452"
+      > </a
+      ><a name="1453" class="Symbol"
+      >:</a
+      ><a name="1454"
+      > </a
+      ><a name="1455" href="lib.types.Cofiber.html#1427" class="Bound"
+      >X</a
+      ><a name="1456"
+      > </a
+      ><a name="1457" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1459"
+      > </a
+      ><a name="1460" href="lib.types.Cofiber.html#1439" class="Bound"
+      >Y</a
+      ><a name="1461" class="Symbol"
+      >)</a
+      ><a name="1462"
+      > </a
+      ><a name="1463" class="Keyword"
+      >where</a
+      ><a name="1468"
+      >
+
+  </a
+      ><a name="1472" href="lib.types.Cofiber.html#1472" class="Function"
+      >&#8857;cofiber-span</a
+      ><a name="1485"
+      > </a
+      ><a name="1486" class="Symbol"
+      >:</a
+      ><a name="1487"
+      > </a
+      ><a name="1488" href="lib.types.Span.html#1479" class="Record"
+      >&#8857;Span</a
+      ><a name="1493"
+      >
+  </a
+      ><a name="1496" href="lib.types.Cofiber.html#1472" class="Function"
+      >&#8857;cofiber-span</a
+      ><a name="1509"
+      > </a
+      ><a name="1510" class="Symbol"
+      >=</a
+      ><a name="1511"
+      > </a
+      ><a name="1512" href="lib.types.Span.html#1557" class="InductiveConstructor"
+      >&#8857;span</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" href="lib.types.Unit.html#142" class="Function"
+      >&#8857;Unit</a
+      ><a name="1523"
+      > </a
+      ><a name="1524" href="lib.types.Cofiber.html#1439" class="Bound"
+      >Y</a
+      ><a name="1525"
+      > </a
+      ><a name="1526" href="lib.types.Cofiber.html#1427" class="Bound"
+      >X</a
+      ><a name="1527"
+      > </a
+      ><a name="1528" class="Symbol"
+      >((&#955;</a
+      ><a name="1531"
+      > </a
+      ><a name="1532" href="lib.types.Cofiber.html#1532" class="Bound"
+      >_</a
+      ><a name="1533"
+      > </a
+      ><a name="1534" class="Symbol"
+      >&#8594;</a
+      ><a name="1535"
+      > </a
+      ><a name="1536" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1538" class="Symbol"
+      >)</a
+      ><a name="1539"
+      > </a
+      ><a name="1540" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1541"
+      > </a
+      ><a name="1542" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1545" class="Symbol"
+      >)</a
+      ><a name="1546"
+      > </a
+      ><a name="1547" href="lib.types.Cofiber.html#1451" class="Bound"
+      >F</a
+      ><a name="1548"
+      >
+
+  </a
+      ><a name="1552" href="lib.types.Cofiber.html#1552" class="Function"
+      >&#8857;Cofiber</a
+      ><a name="1560"
+      > </a
+      ><a name="1561" class="Symbol"
+      >:</a
+      ><a name="1562"
+      > </a
+      ><a name="1563" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1566"
+      > </a
+      ><a name="1567" class="Symbol"
+      >(</a
+      ><a name="1568" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1572"
+      > </a
+      ><a name="1573" href="lib.types.Cofiber.html#1421" class="Bound"
+      >i</a
+      ><a name="1574"
+      > </a
+      ><a name="1575" href="lib.types.Cofiber.html#1423" class="Bound"
+      >j</a
+      ><a name="1576" class="Symbol"
+      >)</a
+      ><a name="1577"
+      >
+  </a
+      ><a name="1580" href="lib.types.Cofiber.html#1552" class="Function"
+      >&#8857;Cofiber</a
+      ><a name="1588"
+      > </a
+      ><a name="1589" class="Symbol"
+      >=</a
+      ><a name="1590"
+      > </a
+      ><a name="1591" href="lib.types.Pushout.html#3340" class="Function"
+      >&#8857;Pushout</a
+      ><a name="1599"
+      > </a
+      ><a name="1600" href="lib.types.Cofiber.html#1472" class="Function"
+      >&#8857;cofiber-span</a
+      ><a name="1613"
+      >
+
+  </a
+      ><a name="1617" href="lib.types.Cofiber.html#1617" class="Function"
+      >&#8857;cfcod'</a
+      ><a name="1624"
+      > </a
+      ><a name="1625" class="Symbol"
+      >:</a
+      ><a name="1626"
+      > </a
+      ><a name="1627" href="lib.types.Cofiber.html#1439" class="Bound"
+      >Y</a
+      ><a name="1628"
+      > </a
+      ><a name="1629" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1631"
+      > </a
+      ><a name="1632" href="lib.types.Cofiber.html#1552" class="Function"
+      >&#8857;Cofiber</a
+      ><a name="1640"
+      >
+  </a
+      ><a name="1643" href="lib.types.Cofiber.html#1617" class="Function"
+      >&#8857;cfcod'</a
+      ><a name="1650"
+      > </a
+      ><a name="1651" class="Symbol"
+      >=</a
+      ><a name="1652"
+      > </a
+      ><a name="1653" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="1658"
+      > </a
+      ><a name="1659" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1660"
+      > </a
+      ><a name="1661" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1663"
+      > </a
+      ><a name="1664" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="1669"
+      > </a
+      ><a name="1670" class="Symbol"
+      >(</a
+      ><a name="1671" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1672"
+      > </a
+      ><a name="1673" class="Symbol"
+      >(</a
+      ><a name="1674" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1677"
+      > </a
+      ><a name="1678" href="lib.types.Cofiber.html#1451" class="Bound"
+      >F</a
+      ><a name="1679" class="Symbol"
+      >))</a
+      ><a name="1681"
+      > </a
+      ><a name="1682" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1683"
+      > </a
+      ><a name="1684" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1685"
+      > </a
+      ><a name="1686" class="Symbol"
+      >(</a
+      ><a name="1687" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="1693"
+      > </a
+      ><a name="1694" class="Symbol"
+      >(</a
+      ><a name="1695" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1697"
+      > </a
+      ><a name="1698" href="lib.types.Cofiber.html#1427" class="Bound"
+      >X</a
+      ><a name="1699" class="Symbol"
+      >))</a
+      ><a name="1701"
+      >
+
+  </a
+      ><a name="1705" href="lib.types.Cofiber.html#1705" class="Function"
+      >&#8857;cfglue'</a
+      ><a name="1713"
+      > </a
+      ><a name="1714" class="Symbol"
+      >:</a
+      ><a name="1715"
+      > </a
+      ><a name="1716" href="lib.Base.html#10101" class="Function"
+      >&#8857;cst</a
+      ><a name="1720"
+      > </a
+      ><a name="1721" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1723"
+      > </a
+      ><a name="1724" href="lib.types.Cofiber.html#1617" class="Function"
+      >&#8857;cfcod'</a
+      ><a name="1731"
+      > </a
+      ><a name="1732" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="1734"
+      > </a
+      ><a name="1735" href="lib.types.Cofiber.html#1451" class="Bound"
+      >F</a
+      ><a name="1736"
+      >
+  </a
+      ><a name="1739" href="lib.types.Cofiber.html#1705" class="Function"
+      >&#8857;cfglue'</a
+      ><a name="1747"
+      > </a
+      ><a name="1748" class="Symbol"
+      >=</a
+      ><a name="1749"
+      > </a
+      ><a name="1750" href="lib.types.Pointed.html#438" class="Function"
+      >&#8857;&#955;=</a
+      ><a name="1753"
+      > </a
+      ><a name="1754" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="1760"
+      > </a
+      ><a name="1761" class="Symbol"
+      >(</a
+      ><a name="1762" href="lib.types.Cofiber.html#1813" class="Function"
+      >lemma</a
+      ><a name="1767"
+      > </a
+      ><a name="1768" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="1773"
+      > </a
+      ><a name="1774" class="Symbol"
+      >(</a
+      ><a name="1775" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="1781"
+      > </a
+      ><a name="1782" class="Symbol"
+      >(</a
+      ><a name="1783" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1785"
+      > </a
+      ><a name="1786" href="lib.types.Cofiber.html#1427" class="Bound"
+      >X</a
+      ><a name="1787" class="Symbol"
+      >))</a
+      ><a name="1789"
+      > </a
+      ><a name="1790" class="Symbol"
+      >(</a
+      ><a name="1791" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1794"
+      > </a
+      ><a name="1795" href="lib.types.Cofiber.html#1451" class="Bound"
+      >F</a
+      ><a name="1796" class="Symbol"
+      >))</a
+      ><a name="1798"
+      >
+    </a
+      ><a name="1803" class="Keyword"
+      >where</a
+      ><a name="1808"
+      >
+    </a
+      ><a name="1813" href="lib.types.Cofiber.html#1813" class="Function"
+      >lemma</a
+      ><a name="1818"
+      > </a
+      ><a name="1819" class="Symbol"
+      >:</a
+      ><a name="1820"
+      > </a
+      ><a name="1821" class="Symbol"
+      >&#8704;</a
+      ><a name="1822"
+      > </a
+      ><a name="1823" class="Symbol"
+      >{</a
+      ><a name="1824" href="lib.types.Cofiber.html#1824" class="Bound"
+      >i</a
+      ><a name="1825"
+      > </a
+      ><a name="1826" href="lib.types.Cofiber.html#1826" class="Bound"
+      >j</a
+      ><a name="1827" class="Symbol"
+      >}</a
+      ><a name="1828"
+      > </a
+      ><a name="1829" class="Symbol"
+      >{</a
+      ><a name="1830" href="lib.types.Cofiber.html#1830" class="Bound"
+      >A</a
+      ><a name="1831"
+      > </a
+      ><a name="1832" class="Symbol"
+      >:</a
+      ><a name="1833"
+      > </a
+      ><a name="1834" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1838"
+      > </a
+      ><a name="1839" href="lib.types.Cofiber.html#1824" class="Bound"
+      >i</a
+      ><a name="1840" class="Symbol"
+      >}</a
+      ><a name="1841"
+      > </a
+      ><a name="1842" class="Symbol"
+      >{</a
+      ><a name="1843" href="lib.types.Cofiber.html#1843" class="Bound"
+      >B</a
+      ><a name="1844"
+      > </a
+      ><a name="1845" class="Symbol"
+      >:</a
+      ><a name="1846"
+      > </a
+      ><a name="1847" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1851"
+      > </a
+      ><a name="1852" href="lib.types.Cofiber.html#1826" class="Bound"
+      >j</a
+      ><a name="1853" class="Symbol"
+      >}</a
+      ><a name="1854"
+      > </a
+      ><a name="1855" class="Symbol"
+      >(</a
+      ><a name="1856" href="lib.types.Cofiber.html#1856" class="Bound"
+      >f</a
+      ><a name="1857"
+      > </a
+      ><a name="1858" class="Symbol"
+      >:</a
+      ><a name="1859"
+      > </a
+      ><a name="1860" href="lib.types.Cofiber.html#1830" class="Bound"
+      >A</a
+      ><a name="1861"
+      > </a
+      ><a name="1862" class="Symbol"
+      >&#8594;</a
+      ><a name="1863"
+      > </a
+      ><a name="1864" href="lib.types.Cofiber.html#1843" class="Bound"
+      >B</a
+      ><a name="1865" class="Symbol"
+      >)</a
+      ><a name="1866"
+      >
+      </a
+      ><a name="1873" class="Symbol"
+      >{</a
+      ><a name="1874" href="lib.types.Cofiber.html#1874" class="Bound"
+      >x</a
+      ><a name="1875"
+      > </a
+      ><a name="1876" href="lib.types.Cofiber.html#1876" class="Bound"
+      >y</a
+      ><a name="1877"
+      > </a
+      ><a name="1878" class="Symbol"
+      >:</a
+      ><a name="1879"
+      > </a
+      ><a name="1880" href="lib.types.Cofiber.html#1830" class="Bound"
+      >A</a
+      ><a name="1881" class="Symbol"
+      >}</a
+      ><a name="1882"
+      > </a
+      ><a name="1883" class="Symbol"
+      >{</a
+      ><a name="1884" href="lib.types.Cofiber.html#1884" class="Bound"
+      >z</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" class="Symbol"
+      >:</a
+      ><a name="1887"
+      > </a
+      ><a name="1888" href="lib.types.Cofiber.html#1843" class="Bound"
+      >B</a
+      ><a name="1889" class="Symbol"
+      >}</a
+      ><a name="1890"
+      > </a
+      ><a name="1891" class="Symbol"
+      >(</a
+      ><a name="1892" href="lib.types.Cofiber.html#1892" class="Bound"
+      >p</a
+      ><a name="1893"
+      > </a
+      ><a name="1894" class="Symbol"
+      >:</a
+      ><a name="1895"
+      > </a
+      ><a name="1896" href="lib.types.Cofiber.html#1884" class="Bound"
+      >z</a
+      ><a name="1897"
+      > </a
+      ><a name="1898" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1900"
+      > </a
+      ><a name="1901" href="lib.types.Cofiber.html#1856" class="Bound"
+      >f</a
+      ><a name="1902"
+      > </a
+      ><a name="1903" href="lib.types.Cofiber.html#1874" class="Bound"
+      >x</a
+      ><a name="1904" class="Symbol"
+      >)</a
+      ><a name="1905"
+      > </a
+      ><a name="1906" class="Symbol"
+      >(</a
+      ><a name="1907" href="lib.types.Cofiber.html#1907" class="Bound"
+      >q</a
+      ><a name="1908"
+      > </a
+      ><a name="1909" class="Symbol"
+      >:</a
+      ><a name="1910"
+      > </a
+      ><a name="1911" href="lib.types.Cofiber.html#1874" class="Bound"
+      >x</a
+      ><a name="1912"
+      > </a
+      ><a name="1913" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1915"
+      > </a
+      ><a name="1916" href="lib.types.Cofiber.html#1876" class="Bound"
+      >y</a
+      ><a name="1917" class="Symbol"
+      >)</a
+      ><a name="1918"
+      >
+      </a
+      ><a name="1925" class="Symbol"
+      >&#8594;</a
+      ><a name="1926"
+      > </a
+      ><a name="1927" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1930"
+      > </a
+      ><a name="1931" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="1933"
+      > </a
+      ><a name="1934" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1936"
+      > </a
+      ><a name="1937" href="lib.types.Cofiber.html#1856" class="Bound"
+      >f</a
+      ><a name="1938"
+      > </a
+      ><a name="1939" href="lib.types.Cofiber.html#1907" class="Bound"
+      >q</a
+      ><a name="1940"
+      > </a
+      ><a name="1941" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1942"
+      > </a
+      ><a name="1943" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1945"
+      > </a
+      ><a name="1946" href="lib.types.Cofiber.html#1856" class="Bound"
+      >f</a
+      ><a name="1947"
+      > </a
+      ><a name="1948" class="Symbol"
+      >(</a
+      ><a name="1949" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1950"
+      > </a
+      ><a name="1951" href="lib.types.Cofiber.html#1907" class="Bound"
+      >q</a
+      ><a name="1952" class="Symbol"
+      >)</a
+      ><a name="1953"
+      > </a
+      ><a name="1954" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1955"
+      > </a
+      ><a name="1956" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1957"
+      > </a
+      ><a name="1958" href="lib.types.Cofiber.html#1892" class="Bound"
+      >p</a
+      ><a name="1959"
+      > </a
+      ><a name="1960" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="1961"
+      > </a
+      ><a name="1962" href="lib.Base.html#1878" class="Datatype Operator"
+      >_==</a
+      ><a name="1965"
+      > </a
+      ><a name="1966" href="lib.types.Cofiber.html#1884" class="Bound"
+      >z</a
+      ><a name="1967"
+      > </a
+      ><a name="1968" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="1969"
+      > </a
+      ><a name="1970" href="lib.types.Cofiber.html#1892" class="Bound"
+      >p</a
+      ><a name="1971"
+      > </a
+      ><a name="1972" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="1973"
+      >
+    </a
+      ><a name="1978" href="lib.types.Cofiber.html#1813" class="Function"
+      >lemma</a
+      ><a name="1983"
+      > </a
+      ><a name="1984" href="lib.types.Cofiber.html#1984" class="Bound"
+      >f</a
+      ><a name="1985"
+      > </a
+      ><a name="1986" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1989"
+      > </a
+      ><a name="1990" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1993"
+      > </a
+      ><a name="1994" class="Symbol"
+      >=</a
+      ><a name="1995"
+      > </a
+      ><a name="1996" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1999"
+      >
+
+</a
+      ><a name="2001" class="Keyword"
+      >module</a
+      ><a name="2007"
+      > </a
+      ><a name="2008" href="lib.types.Cofiber.html#2008" class="Module"
+      >_</a
+      ><a name="2009"
+      > </a
+      ><a name="2010" class="Symbol"
+      >{</a
+      ><a name="2011" href="lib.types.Cofiber.html#2011" class="Bound"
+      >i</a
+      ><a name="2012"
+      > </a
+      ><a name="2013" href="lib.types.Cofiber.html#2013" class="Bound"
+      >j</a
+      ><a name="2014" class="Symbol"
+      >}</a
+      ><a name="2015"
+      > </a
+      ><a name="2016" class="Symbol"
+      >{</a
+      ><a name="2017" href="lib.types.Cofiber.html#2017" class="Bound"
+      >X</a
+      ><a name="2018"
+      > </a
+      ><a name="2019" class="Symbol"
+      >:</a
+      ><a name="2020"
+      > </a
+      ><a name="2021" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2024"
+      > </a
+      ><a name="2025" href="lib.types.Cofiber.html#2011" class="Bound"
+      >i</a
+      ><a name="2026" class="Symbol"
+      >}</a
+      ><a name="2027"
+      > </a
+      ><a name="2028" class="Symbol"
+      >{</a
+      ><a name="2029" href="lib.types.Cofiber.html#2029" class="Bound"
+      >Y</a
+      ><a name="2030"
+      > </a
+      ><a name="2031" class="Symbol"
+      >:</a
+      ><a name="2032"
+      > </a
+      ><a name="2033" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2036"
+      > </a
+      ><a name="2037" href="lib.types.Cofiber.html#2013" class="Bound"
+      >j</a
+      ><a name="2038" class="Symbol"
+      >}</a
+      ><a name="2039"
+      > </a
+      ><a name="2040" class="Symbol"
+      >{</a
+      ><a name="2041" href="lib.types.Cofiber.html#2041" class="Bound"
+      >F</a
+      ><a name="2042"
+      > </a
+      ><a name="2043" class="Symbol"
+      >:</a
+      ><a name="2044"
+      > </a
+      ><a name="2045" href="lib.types.Cofiber.html#2017" class="Bound"
+      >X</a
+      ><a name="2046"
+      > </a
+      ><a name="2047" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="2049"
+      > </a
+      ><a name="2050" href="lib.types.Cofiber.html#2029" class="Bound"
+      >Y</a
+      ><a name="2051" class="Symbol"
+      >}</a
+      ><a name="2052"
+      > </a
+      ><a name="2053" class="Keyword"
+      >where</a
+      ><a name="2058"
+      >
+
+  </a
+      ><a name="2062" href="lib.types.Cofiber.html#2062" class="Function"
+      >&#8857;cfcod</a
+      ><a name="2068"
+      > </a
+      ><a name="2069" class="Symbol"
+      >:</a
+      ><a name="2070"
+      > </a
+      ><a name="2071" href="lib.types.Cofiber.html#2029" class="Bound"
+      >Y</a
+      ><a name="2072"
+      > </a
+      ><a name="2073" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="2075"
+      > </a
+      ><a name="2076" href="lib.types.Cofiber.html#1552" class="Function"
+      >&#8857;Cofiber</a
+      ><a name="2084"
+      > </a
+      ><a name="2085" href="lib.types.Cofiber.html#2041" class="Bound"
+      >F</a
+      ><a name="2086"
+      >
+  </a
+      ><a name="2089" href="lib.types.Cofiber.html#2062" class="Function"
+      >&#8857;cfcod</a
+      ><a name="2095"
+      > </a
+      ><a name="2096" class="Symbol"
+      >=</a
+      ><a name="2097"
+      > </a
+      ><a name="2098" href="lib.types.Cofiber.html#1617" class="Function"
+      >&#8857;cfcod'</a
+      ><a name="2105"
+      > </a
+      ><a name="2106" href="lib.types.Cofiber.html#2041" class="Bound"
+      >F</a
+      ><a name="2107"
+      >
+
+  </a
+      ><a name="2111" href="lib.types.Cofiber.html#2111" class="Function"
+      >&#8857;cfglue</a
+      ><a name="2118"
+      > </a
+      ><a name="2119" class="Symbol"
+      >:</a
+      ><a name="2120"
+      > </a
+      ><a name="2121" href="lib.Base.html#10101" class="Function"
+      >&#8857;cst</a
+      ><a name="2125"
+      > </a
+      ><a name="2126" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2128"
+      > </a
+      ><a name="2129" href="lib.types.Cofiber.html#2062" class="Function"
+      >&#8857;cfcod</a
+      ><a name="2135"
+      > </a
+      ><a name="2136" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="2138"
+      > </a
+      ><a name="2139" href="lib.types.Cofiber.html#2041" class="Bound"
+      >F</a
+      ><a name="2140"
+      >
+  </a
+      ><a name="2143" href="lib.types.Cofiber.html#2111" class="Function"
+      >&#8857;cfglue</a
+      ><a name="2150"
+      > </a
+      ><a name="2151" class="Symbol"
+      >=</a
+      ><a name="2152"
+      > </a
+      ><a name="2153" href="lib.types.Cofiber.html#1705" class="Function"
+      >&#8857;cfglue'</a
+      ><a name="2161"
+      > </a
+      ><a name="2162" href="lib.types.Cofiber.html#2041" class="Bound"
+      >F</a
+      ><a name="2163"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

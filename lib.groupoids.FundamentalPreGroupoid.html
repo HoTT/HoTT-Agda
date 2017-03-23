@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.groupoids.FundamentalPreGroupoid</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.Truncation.html#1" class="Module"
+      >lib.types.Truncation</a
+      ><a name="97"
+      >
+</a
+      ><a name="98" class="Keyword"
+      >open</a
+      ><a name="102"
+      > </a
+      ><a name="103" class="Keyword"
+      >import</a
+      ><a name="109"
+      > </a
+      ><a name="110" href="lib.types.Groupoid.html#1" class="Module"
+      >lib.types.Groupoid</a
+      ><a name="128"
+      >
+</a
+      ><a name="129" class="Keyword"
+      >open</a
+      ><a name="133"
+      > </a
+      ><a name="134" class="Keyword"
+      >import</a
+      ><a name="140"
+      > </a
+      ><a name="141" href="lib.types.PathSet.html#1" class="Module"
+      >lib.types.PathSet</a
+      ><a name="158"
+      >
+
+</a
+      ><a name="160" class="Keyword"
+      >module</a
+      ><a name="166"
+      > </a
+      ><a name="167" href="lib.groupoids.FundamentalPreGroupoid.html#1" class="Module"
+      >lib.groupoids.FundamentalPreGroupoid</a
+      ><a name="203"
+      > </a
+      ><a name="204" class="Symbol"
+      >{</a
+      ><a name="205" href="lib.groupoids.FundamentalPreGroupoid.html#205" class="Bound"
+      >i</a
+      ><a name="206" class="Symbol"
+      >}</a
+      ><a name="207"
+      > </a
+      ><a name="208" class="Symbol"
+      >(</a
+      ><a name="209" href="lib.groupoids.FundamentalPreGroupoid.html#209" class="Bound"
+      >A</a
+      ><a name="210"
+      > </a
+      ><a name="211" class="Symbol"
+      >:</a
+      ><a name="212"
+      > </a
+      ><a name="213" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="217"
+      > </a
+      ><a name="218" href="lib.groupoids.FundamentalPreGroupoid.html#205" class="Bound"
+      >i</a
+      ><a name="219" class="Symbol"
+      >)</a
+      ><a name="220"
+      > </a
+      ><a name="221" class="Keyword"
+      >where</a
+      ><a name="226"
+      >
+
+  </a
+      ><a name="230" href="lib.groupoids.FundamentalPreGroupoid.html#230" class="Function"
+      >fundamental-pregroupoid</a
+      ><a name="253"
+      > </a
+      ><a name="254" class="Symbol"
+      >:</a
+      ><a name="255"
+      > </a
+      ><a name="256" href="lib.types.Groupoid.html#1757" class="Record"
+      >PreGroupoid</a
+      ><a name="267"
+      > </a
+      ><a name="268" href="lib.groupoids.FundamentalPreGroupoid.html#205" class="Bound"
+      >i</a
+      ><a name="269"
+      > </a
+      ><a name="270" href="lib.groupoids.FundamentalPreGroupoid.html#205" class="Bound"
+      >i</a
+      ><a name="271"
+      >
+  </a
+      ><a name="274" href="lib.groupoids.FundamentalPreGroupoid.html#230" class="Function"
+      >fundamental-pregroupoid</a
+      ><a name="297"
+      > </a
+      ><a name="298" class="Symbol"
+      >=</a
+      ><a name="299"
+      > </a
+      ><a name="300" class="Keyword"
+      >record</a
+      ><a name="306"
+      >
+    </a
+      ><a name="311" class="Symbol"
+      >{</a
+      ><a name="312"
+      > </a
+      ><a name="313" class="Field"
+      >El</a
+      ><a name="315"
+      > </a
+      ><a name="316" class="Symbol"
+      >=</a
+      ><a name="317"
+      > </a
+      ><a name="318" href="lib.groupoids.FundamentalPreGroupoid.html#209" class="Bound"
+      >A</a
+      ><a name="319"
+      >
+    </a
+      ><a name="324" class="Symbol"
+      >;</a
+      ><a name="325"
+      > </a
+      ><a name="326" class="Field"
+      >Arr</a
+      ><a name="329"
+      > </a
+      ><a name="330" class="Symbol"
+      >=</a
+      ><a name="331"
+      > </a
+      ><a name="332" href="lib.types.PathSet.html#236" class="Function Operator"
+      >_=&#8320;_</a
+      ><a name="336"
+      > </a
+      ><a name="337" class="Symbol"
+      >{</a
+      ><a name="338" class="Argument"
+      >A</a
+      ><a name="339"
+      > </a
+      ><a name="340" class="Symbol"
+      >=</a
+      ><a name="341"
+      > </a
+      ><a name="342" href="lib.groupoids.FundamentalPreGroupoid.html#209" class="Bound"
+      >A</a
+      ><a name="343" class="Symbol"
+      >}</a
+      ><a name="344"
+      >
+    </a
+      ><a name="349" class="Symbol"
+      >;</a
+      ><a name="350"
+      > </a
+      ><a name="351" class="Field"
+      >Arr-level</a
+      ><a name="360"
+      > </a
+      ><a name="361" class="Symbol"
+      >=</a
+      ><a name="362"
+      > </a
+      ><a name="363" class="Symbol"
+      >&#955;</a
+      ><a name="364"
+      > </a
+      ><a name="365" href="lib.groupoids.FundamentalPreGroupoid.html#365" class="Bound"
+      >_</a
+      ><a name="366"
+      > </a
+      ><a name="367" href="lib.groupoids.FundamentalPreGroupoid.html#367" class="Bound"
+      >_</a
+      ><a name="368"
+      > </a
+      ><a name="369" class="Symbol"
+      >&#8594;</a
+      ><a name="370"
+      > </a
+      ><a name="371" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="382"
+      >
+    </a
+      ><a name="387" class="Symbol"
+      >;</a
+      ><a name="388"
+      > </a
+      ><a name="389" class="Field"
+      >groupoid-struct</a
+      ><a name="404"
+      > </a
+      ><a name="405" class="Symbol"
+      >=</a
+      ><a name="406"
+      > </a
+      ><a name="407" class="Keyword"
+      >record</a
+      ><a name="413"
+      >
+      </a
+      ><a name="420" class="Symbol"
+      >{</a
+      ><a name="421"
+      > </a
+      ><a name="422" class="Field"
+      >ident</a
+      ><a name="427"
+      > </a
+      ><a name="428" class="Symbol"
+      >=</a
+      ><a name="429"
+      > </a
+      ><a name="430" href="lib.types.PathSet.html#645" class="Function"
+      >idp&#8320;</a
+      ><a name="434"
+      >
+      </a
+      ><a name="441" class="Symbol"
+      >;</a
+      ><a name="442"
+      > </a
+      ><a name="443" class="Field"
+      >inv</a
+      ><a name="446"
+      > </a
+      ><a name="447" class="Symbol"
+      >=</a
+      ><a name="448"
+      > </a
+      ><a name="449" href="lib.types.PathSet.html#574" class="Function"
+      >!&#8320;</a
+      ><a name="451"
+      >
+      </a
+      ><a name="458" class="Symbol"
+      >;</a
+      ><a name="459"
+      > </a
+      ><a name="460" class="Field"
+      >comp</a
+      ><a name="464"
+      > </a
+      ><a name="465" class="Symbol"
+      >=</a
+      ><a name="466"
+      > </a
+      ><a name="467" href="lib.types.PathSet.html#393" class="Function Operator"
+      >_&#8729;&#8320;_</a
+      ><a name="471"
+      >
+      </a
+      ><a name="478" class="Symbol"
+      >;</a
+      ><a name="479"
+      > </a
+      ><a name="480" class="Field"
+      >unit-l</a
+      ><a name="486"
+      > </a
+      ><a name="487" class="Symbol"
+      >=</a
+      ><a name="488"
+      > </a
+      ><a name="489" href="lib.types.PathSet.html#1852" class="Function"
+      >&#8729;&#8320;-unit-l</a
+      ><a name="498"
+      >
+      </a
+      ><a name="505" class="Symbol"
+      >;</a
+      ><a name="506"
+      > </a
+      ><a name="507" class="Field"
+      >assoc</a
+      ><a name="512"
+      > </a
+      ><a name="513" class="Symbol"
+      >=</a
+      ><a name="514"
+      > </a
+      ><a name="515" href="lib.types.PathSet.html#2322" class="Function"
+      >&#8729;&#8320;-assoc</a
+      ><a name="523"
+      >
+      </a
+      ><a name="530" class="Symbol"
+      >;</a
+      ><a name="531"
+      > </a
+      ><a name="532" class="Field"
+      >inv-l</a
+      ><a name="537"
+      > </a
+      ><a name="538" class="Symbol"
+      >=</a
+      ><a name="539"
+      > </a
+      ><a name="540" href="lib.types.PathSet.html#3137" class="Function"
+      >!&#8320;-inv-l</a
+      ><a name="548"
+      >
+      </a
+      ><a name="555" class="Symbol"
+      >}</a
+      ><a name="556"
+      >
+    </a
+      ><a name="561" class="Symbol"
+      >}</a
+      ><a name="562"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

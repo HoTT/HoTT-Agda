@@ -1,0 +1,582 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cw.cohomology.CohomologyGroupsTooHigh</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="88"
+      >
+
+</a
+      ><a name="90" class="Keyword"
+      >open</a
+      ><a name="94"
+      > </a
+      ><a name="95" class="Keyword"
+      >import</a
+      ><a name="101"
+      > </a
+      ><a name="102" href="cw.CW.html#1" class="Module"
+      >cw.CW</a
+      ><a name="107"
+      >
+
+</a
+      ><a name="109" class="Keyword"
+      >module</a
+      ><a name="115"
+      > </a
+      ><a name="116" href="cw.cohomology.CohomologyGroupsTooHigh.html#1" class="Module"
+      >cw.cohomology.CohomologyGroupsTooHigh</a
+      ><a name="153"
+      > </a
+      ><a name="154" class="Symbol"
+      >{</a
+      ><a name="155" href="cw.cohomology.CohomologyGroupsTooHigh.html#155" class="Bound"
+      >i</a
+      ><a name="156" class="Symbol"
+      >}</a
+      ><a name="157"
+      > </a
+      ><a name="158" class="Symbol"
+      >(</a
+      ><a name="159" href="cw.cohomology.CohomologyGroupsTooHigh.html#159" class="Bound"
+      >OT</a
+      ><a name="161"
+      > </a
+      ><a name="162" class="Symbol"
+      >:</a
+      ><a name="163"
+      > </a
+      ><a name="164" href="cohomology.Theory.html#7242" class="Record"
+      >OrdinaryTheory</a
+      ><a name="178"
+      > </a
+      ><a name="179" href="cw.cohomology.CohomologyGroupsTooHigh.html#155" class="Bound"
+      >i</a
+      ><a name="180" class="Symbol"
+      >)</a
+      ><a name="181"
+      >
+  </a
+      ><a name="184" href="cw.cohomology.CohomologyGroupsTooHigh.html#184" class="Bound"
+      >m</a
+      ><a name="185"
+      > </a
+      ><a name="186" class="Symbol"
+      >{</a
+      ><a name="187" href="cw.cohomology.CohomologyGroupsTooHigh.html#187" class="Bound"
+      >n</a
+      ><a name="188" class="Symbol"
+      >}</a
+      ><a name="189"
+      > </a
+      ><a name="190" class="Symbol"
+      >(</a
+      ><a name="191" href="cw.cohomology.CohomologyGroupsTooHigh.html#191" class="Bound"
+      >n&lt;m</a
+      ><a name="194"
+      > </a
+      ><a name="195" class="Symbol"
+      >:</a
+      ><a name="196"
+      > </a
+      ><a name="197" href="cw.cohomology.CohomologyGroupsTooHigh.html#187" class="Bound"
+      >n</a
+      ><a name="198"
+      > </a
+      ><a name="199" href="lib.types.Nat.html#1660" class="Datatype Operator"
+      >&lt;</a
+      ><a name="200"
+      > </a
+      ><a name="201" href="cw.cohomology.CohomologyGroupsTooHigh.html#184" class="Bound"
+      >m</a
+      ><a name="202" class="Symbol"
+      >)</a
+      ><a name="203"
+      > </a
+      ><a name="204" class="Symbol"
+      >(</a
+      ><a name="205" href="cw.cohomology.CohomologyGroupsTooHigh.html#205" class="Bound"
+      >G</a
+      ><a name="206"
+      > </a
+      ><a name="207" class="Symbol"
+      >:</a
+      ><a name="208"
+      > </a
+      ><a name="209" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="214"
+      > </a
+      ><a name="215" href="cw.cohomology.CohomologyGroupsTooHigh.html#155" class="Bound"
+      >i</a
+      ><a name="216" class="Symbol"
+      >)</a
+      ><a name="217"
+      > </a
+      ><a name="218" class="Symbol"
+      >(</a
+      ><a name="219" href="cw.cohomology.CohomologyGroupsTooHigh.html#219" class="Bound"
+      >&#8857;skel</a
+      ><a name="224"
+      > </a
+      ><a name="225" class="Symbol"
+      >:</a
+      ><a name="226"
+      > </a
+      ><a name="227" href="cw.CW.html#1851" class="Record"
+      >&#8857;Skeleton</a
+      ><a name="236"
+      > </a
+      ><a name="237" class="Symbol"
+      >{</a
+      ><a name="238" href="cw.cohomology.CohomologyGroupsTooHigh.html#155" class="Bound"
+      >i</a
+      ><a name="239" class="Symbol"
+      >}</a
+      ><a name="240"
+      > </a
+      ><a name="241" href="cw.cohomology.CohomologyGroupsTooHigh.html#187" class="Bound"
+      >n</a
+      ><a name="242" class="Symbol"
+      >)</a
+      ><a name="243"
+      >
+  </a
+      ><a name="246" class="Symbol"
+      >(</a
+      ><a name="247" href="cw.cohomology.CohomologyGroupsTooHigh.html#247" class="Bound"
+      >ac</a
+      ><a name="249"
+      > </a
+      ><a name="250" class="Symbol"
+      >:</a
+      ><a name="251"
+      > </a
+      ><a name="252" href="cw.CW.html#8111" class="Function"
+      >&#8857;has-cells-with-choice</a
+      ><a name="274"
+      > </a
+      ><a name="275" class="Number"
+      >0</a
+      ><a name="276"
+      > </a
+      ><a name="277" href="cw.cohomology.CohomologyGroupsTooHigh.html#219" class="Bound"
+      >&#8857;skel</a
+      ><a name="282"
+      > </a
+      ><a name="283" href="cw.cohomology.CohomologyGroupsTooHigh.html#155" class="Bound"
+      >i</a
+      ><a name="284" class="Symbol"
+      >)</a
+      ><a name="285"
+      > </a
+      ><a name="286" class="Keyword"
+      >where</a
+      ><a name="291"
+      >
+
+</a
+      ><a name="293" class="Keyword"
+      >open</a
+      ><a name="297"
+      > </a
+      ><a name="298" href="cohomology.Theory.html#7242" class="Module"
+      >OrdinaryTheory</a
+      ><a name="312"
+      > </a
+      ><a name="313" href="cw.cohomology.CohomologyGroupsTooHigh.html#159" class="Bound"
+      >OT</a
+      ><a name="315"
+      >
+</a
+      ><a name="316" class="Keyword"
+      >open</a
+      ><a name="320"
+      > </a
+      ><a name="321" class="Keyword"
+      >import</a
+      ><a name="327"
+      > </a
+      ><a name="328" href="cw.cohomology.Descending.html#1" class="Module"
+      >cw.cohomology.Descending</a
+      ><a name="352"
+      > </a
+      ><a name="353" href="cw.cohomology.CohomologyGroupsTooHigh.html#159" class="Bound"
+      >OT</a
+      ><a name="355"
+      >
+
+</a
+      ><a name="357" class="Keyword"
+      >open</a
+      ><a name="361"
+      > </a
+      ><a name="362" class="Keyword"
+      >import</a
+      ><a name="368"
+      > </a
+      ><a name="369" href="groups.KernelImage.html#1" class="Module"
+      >groups.KernelImage</a
+      ><a name="387"
+      > </a
+      ><a name="388" class="Symbol"
+      >{</a
+      ><a name="389" class="Argument"
+      >G</a
+      ><a name="390"
+      > </a
+      ><a name="391" class="Symbol"
+      >=</a
+      ><a name="392"
+      > </a
+      ><a name="393" href="cw.cohomology.CohomologyGroupsTooHigh.html#205" class="Bound"
+      >G</a
+      ><a name="394" class="Symbol"
+      >}</a
+      ><a name="395"
+      >
+  </a
+      ><a name="398" class="Symbol"
+      >{</a
+      ><a name="399" class="Argument"
+      >H</a
+      ><a name="400"
+      > </a
+      ><a name="401" class="Symbol"
+      >=</a
+      ><a name="402"
+      > </a
+      ><a name="403" href="lib.groups.Lift.html#661" class="Function"
+      >Lift-group</a
+      ><a name="413"
+      > </a
+      ><a name="414" class="Symbol"
+      >{</a
+      ><a name="415" class="Argument"
+      >j</a
+      ><a name="416"
+      > </a
+      ><a name="417" class="Symbol"
+      >=</a
+      ><a name="418"
+      > </a
+      ><a name="419" href="cw.cohomology.CohomologyGroupsTooHigh.html#155" class="Bound"
+      >i</a
+      ><a name="420" class="Symbol"
+      >}</a
+      ><a name="421"
+      > </a
+      ><a name="422" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="432" class="Symbol"
+      >}</a
+      ><a name="433"
+      >
+  </a
+      ><a name="436" class="Symbol"
+      >{</a
+      ><a name="437" class="Argument"
+      >K</a
+      ><a name="438"
+      > </a
+      ><a name="439" class="Symbol"
+      >=</a
+      ><a name="440"
+      > </a
+      ><a name="441" href="lib.groups.Lift.html#661" class="Function"
+      >Lift-group</a
+      ><a name="451"
+      > </a
+      ><a name="452" class="Symbol"
+      >{</a
+      ><a name="453" class="Argument"
+      >j</a
+      ><a name="454"
+      > </a
+      ><a name="455" class="Symbol"
+      >=</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="cw.cohomology.CohomologyGroupsTooHigh.html#155" class="Bound"
+      >i</a
+      ><a name="458" class="Symbol"
+      >}</a
+      ><a name="459"
+      > </a
+      ><a name="460" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="470" class="Symbol"
+      >}</a
+      ><a name="471"
+      >
+  </a
+      ><a name="474" href="lib.groups.Homomorphism.html#3180" class="Function"
+      >cst-hom</a
+      ><a name="481"
+      > </a
+      ><a name="482" href="lib.groups.Homomorphism.html#3180" class="Function"
+      >cst-hom</a
+      ><a name="489"
+      >
+  </a
+      ><a name="492" class="Symbol"
+      >(</a
+      ><a name="493" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="496"
+      > </a
+      ><a name="497" class="Symbol"
+      >(</a
+      ><a name="498" href="lib.groups.Lift.html#1454" class="Function"
+      >Lift-abgroup</a
+      ><a name="510"
+      > </a
+      ><a name="511" href="lib.groups.Unit.html#1543" class="Function"
+      >Unit-abgroup</a
+      ><a name="523" class="Symbol"
+      >))</a
+      ><a name="525"
+      >
+</a
+      ><a name="526" class="Keyword"
+      >open</a
+      ><a name="530"
+      > </a
+      ><a name="531" class="Keyword"
+      >import</a
+      ><a name="537"
+      > </a
+      ><a name="538" href="groups.KernelCstImageCst.html#1" class="Module"
+      >groups.KernelCstImageCst</a
+      ><a name="562"
+      > </a
+      ><a name="563" href="cw.cohomology.CohomologyGroupsTooHigh.html#205" class="Bound"
+      >G</a
+      ><a name="564"
+      >
+  </a
+      ><a name="567" class="Symbol"
+      >(</a
+      ><a name="568" href="lib.groups.Lift.html#661" class="Function"
+      >Lift-group</a
+      ><a name="578"
+      > </a
+      ><a name="579" class="Symbol"
+      >{</a
+      ><a name="580" class="Argument"
+      >j</a
+      ><a name="581"
+      > </a
+      ><a name="582" class="Symbol"
+      >=</a
+      ><a name="583"
+      > </a
+      ><a name="584" href="cw.cohomology.CohomologyGroupsTooHigh.html#155" class="Bound"
+      >i</a
+      ><a name="585" class="Symbol"
+      >}</a
+      ><a name="586"
+      > </a
+      ><a name="587" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="597" class="Symbol"
+      >)</a
+      ><a name="598"
+      >
+  </a
+      ><a name="601" class="Symbol"
+      >(</a
+      ><a name="602" href="lib.groups.Lift.html#661" class="Function"
+      >Lift-group</a
+      ><a name="612"
+      > </a
+      ><a name="613" class="Symbol"
+      >{</a
+      ><a name="614" class="Argument"
+      >j</a
+      ><a name="615"
+      > </a
+      ><a name="616" class="Symbol"
+      >=</a
+      ><a name="617"
+      > </a
+      ><a name="618" href="cw.cohomology.CohomologyGroupsTooHigh.html#155" class="Bound"
+      >i</a
+      ><a name="619" class="Symbol"
+      >}</a
+      ><a name="620"
+      > </a
+      ><a name="621" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="631" class="Symbol"
+      >)</a
+      ><a name="632"
+      >
+  </a
+      ><a name="635" class="Symbol"
+      >(</a
+      ><a name="636" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="639"
+      > </a
+      ><a name="640" class="Symbol"
+      >(</a
+      ><a name="641" href="lib.groups.Lift.html#1454" class="Function"
+      >Lift-abgroup</a
+      ><a name="653"
+      > </a
+      ><a name="654" href="lib.groups.Unit.html#1543" class="Function"
+      >Unit-abgroup</a
+      ><a name="666" class="Symbol"
+      >))</a
+      ><a name="668"
+      >
+
+</a
+      ><a name="670" href="cw.cohomology.CohomologyGroupsTooHigh.html#670" class="Function"
+      >C-cw-iso-ker/im</a
+      ><a name="685"
+      > </a
+      ><a name="686" class="Symbol"
+      >:</a
+      ><a name="687"
+      > </a
+      ><a name="688" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="689"
+      > </a
+      ><a name="690" class="Symbol"
+      >(</a
+      ><a name="691" href="lib.types.Int.html#1633" class="Function"
+      >&#8469;-to-&#8484;</a
+      ><a name="697"
+      > </a
+      ><a name="698" href="cw.cohomology.CohomologyGroupsTooHigh.html#184" class="Bound"
+      >m</a
+      ><a name="699" class="Symbol"
+      >)</a
+      ><a name="700"
+      > </a
+      ><a name="701" href="cw.CW.html#2125" class="Function Operator"
+      >&#8857;&#10214;</a
+      ><a name="703"
+      > </a
+      ><a name="704" href="cw.cohomology.CohomologyGroupsTooHigh.html#219" class="Bound"
+      >&#8857;skel</a
+      ><a name="709"
+      > </a
+      ><a name="710" href="cw.CW.html#2125" class="Function Operator"
+      >&#10215;</a
+      ><a name="711"
+      > </a
+      ><a name="712" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="714"
+      > </a
+      ><a name="715" href="groups.KernelImage.html#5271" class="Function"
+      >Ker/Im</a
+      ><a name="721"
+      >
+</a
+      ><a name="722" href="cw.cohomology.CohomologyGroupsTooHigh.html#670" class="Function"
+      >C-cw-iso-ker/im</a
+      ><a name="737"
+      > </a
+      ><a name="738" class="Symbol"
+      >=</a
+      ><a name="739"
+      > </a
+      ><a name="740" href="groups.KernelCstImageCst.html#290" class="Function"
+      >Ker-cst-quot-Im-cst</a
+      ><a name="759"
+      > </a
+      ><a name="760" href="lib.groups.Isomorphism.html#3359" class="Function Operator"
+      >&#8315;&#185;&#7475;</a
+      ><a name="763"
+      > </a
+      ><a name="764" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="767"
+      > </a
+      ><a name="768" href="lib.groups.Lift.html#1078" class="Function"
+      >lift-iso</a
+      ><a name="776"
+      >
+  </a
+      ><a name="779" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="782"
+      > </a
+      ><a name="783" href="lib.groups.Unit.html#1142" class="Function"
+      >trivial-iso-0&#7475;</a
+      ><a name="797"
+      > </a
+      ><a name="798" class="Symbol"
+      >(</a
+      ><a name="799" href="cw.cohomology.Descending.html#1500" class="Function"
+      >C-cw-at-higher</a
+      ><a name="813"
+      > </a
+      ><a name="814" href="cw.cohomology.CohomologyGroupsTooHigh.html#219" class="Bound"
+      >&#8857;skel</a
+      ><a name="819"
+      > </a
+      ><a name="820" href="cw.cohomology.CohomologyGroupsTooHigh.html#191" class="Bound"
+      >n&lt;m</a
+      ><a name="823"
+      > </a
+      ><a name="824" href="cw.cohomology.CohomologyGroupsTooHigh.html#247" class="Bound"
+      >ac</a
+      ><a name="826" class="Symbol"
+      >)</a
+      ><a name="827"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

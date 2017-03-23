@@ -1,0 +1,680 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.PinSn</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="homotopy.CircleHSpace.html#1" class="Module"
+      >homotopy.CircleHSpace</a
+      ><a name="92"
+      >
+</a
+      ><a name="93" class="Keyword"
+      >open</a
+      ><a name="97"
+      > </a
+      ><a name="98" class="Keyword"
+      >import</a
+      ><a name="104"
+      > </a
+      ><a name="105" href="homotopy.LoopSpaceCircle.html#1" class="Module"
+      >homotopy.LoopSpaceCircle</a
+      ><a name="129"
+      >
+</a
+      ><a name="130" class="Keyword"
+      >open</a
+      ><a name="134"
+      > </a
+      ><a name="135" class="Keyword"
+      >import</a
+      ><a name="141"
+      > </a
+      ><a name="142" href="homotopy.Pi2HSusp.html#1" class="Module"
+      >homotopy.Pi2HSusp</a
+      ><a name="159"
+      >
+</a
+      ><a name="160" class="Keyword"
+      >open</a
+      ><a name="164"
+      > </a
+      ><a name="165" class="Keyword"
+      >import</a
+      ><a name="171"
+      > </a
+      ><a name="172" href="homotopy.IterSuspensionStable.html#1" class="Module"
+      >homotopy.IterSuspensionStable</a
+      ><a name="201"
+      >
+
+</a
+      ><a name="203" class="Comment"
+      >-- This summerizes all [&#960;&#8345; S&#8319;]</a
+      ><a name="233"
+      >
+</a
+      ><a name="234" class="Keyword"
+      >module</a
+      ><a name="240"
+      > </a
+      ><a name="241" href="homotopy.PinSn.html#1" class="Module"
+      >homotopy.PinSn</a
+      ><a name="255"
+      > </a
+      ><a name="256" class="Keyword"
+      >where</a
+      ><a name="261"
+      >
+
+  </a
+      ><a name="265" class="Keyword"
+      >private</a
+      ><a name="272"
+      >
+    </a
+      ><a name="277" href="homotopy.PinSn.html#277" class="Function"
+      >&#960;1S&#185;-iso-&#8484;</a
+      ><a name="287"
+      > </a
+      ><a name="288" class="Symbol"
+      >:</a
+      ><a name="289"
+      > </a
+      ><a name="290" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="292"
+      > </a
+      ><a name="293" class="Number"
+      >0</a
+      ><a name="294"
+      > </a
+      ><a name="295" href="lib.types.IteratedSuspension.html#2179" class="Function"
+      >&#8857;S&#185;</a
+      ><a name="298"
+      > </a
+      ><a name="299" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="301"
+      > </a
+      ><a name="302" href="lib.groups.Int.html#514" class="Function"
+      >&#8484;-group</a
+      ><a name="309"
+      >
+    </a
+      ><a name="314" href="homotopy.PinSn.html#277" class="Function"
+      >&#960;1S&#185;-iso-&#8484;</a
+      ><a name="324"
+      > </a
+      ><a name="325" class="Symbol"
+      >=</a
+      ><a name="326"
+      > </a
+      ><a name="327" href="homotopy.LoopSpaceCircle.html#9921" class="Function"
+      >&#937;S&#185;-iso-&#8484;</a
+      ><a name="336"
+      > </a
+      ><a name="337" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="340"
+      > </a
+      ><a name="341" href="lib.groups.TruncationGroup.html#4001" class="Function"
+      >unTrunc-iso</a
+      ><a name="352"
+      > </a
+      ><a name="353" href="homotopy.LoopSpaceCircle.html#2027" class="Function"
+      >&#937;S&#185;-group-structure</a
+      ><a name="372"
+      > </a
+      ><a name="373" href="homotopy.LoopSpaceCircle.html#9592" class="Function"
+      >&#937;S&#185;-is-set</a
+      ><a name="383"
+      >
+
+  </a
+      ><a name="387" class="Keyword"
+      >private</a
+      ><a name="394"
+      >
+    </a
+      ><a name="399" href="homotopy.PinSn.html#399" class="Function"
+      >&#960;S-SphereS'-iso-&#8484;</a
+      ><a name="416"
+      > </a
+      ><a name="417" class="Symbol"
+      >:</a
+      ><a name="418"
+      > </a
+      ><a name="419" class="Symbol"
+      >&#8704;</a
+      ><a name="420"
+      > </a
+      ><a name="421" href="homotopy.PinSn.html#421" class="Bound"
+      >n</a
+      ><a name="422"
+      > </a
+      ><a name="423" class="Symbol"
+      >&#8594;</a
+      ><a name="424"
+      > </a
+      ><a name="425" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="427"
+      > </a
+      ><a name="428" href="homotopy.PinSn.html#421" class="Bound"
+      >n</a
+      ><a name="429"
+      > </a
+      ><a name="430" class="Symbol"
+      >(</a
+      ><a name="431" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="437"
+      > </a
+      ><a name="438" href="homotopy.PinSn.html#421" class="Bound"
+      >n</a
+      ><a name="439"
+      > </a
+      ><a name="440" href="lib.types.IteratedSuspension.html#2179" class="Function"
+      >&#8857;S&#185;</a
+      ><a name="443" class="Symbol"
+      >)</a
+      ><a name="444"
+      > </a
+      ><a name="445" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="447"
+      > </a
+      ><a name="448" href="lib.groups.Int.html#514" class="Function"
+      >&#8484;-group</a
+      ><a name="455"
+      >
+    </a
+      ><a name="460" href="homotopy.PinSn.html#399" class="Function"
+      >&#960;S-SphereS'-iso-&#8484;</a
+      ><a name="477"
+      > </a
+      ><a name="478" class="Number"
+      >0</a
+      ><a name="479"
+      > </a
+      ><a name="480" class="Symbol"
+      >=</a
+      ><a name="481"
+      > </a
+      ><a name="482" href="homotopy.PinSn.html#277" class="Function"
+      >&#960;1S&#185;-iso-&#8484;</a
+      ><a name="492"
+      >
+    </a
+      ><a name="497" href="homotopy.PinSn.html#399" class="Function"
+      >&#960;S-SphereS'-iso-&#8484;</a
+      ><a name="514"
+      > </a
+      ><a name="515" class="Number"
+      >1</a
+      ><a name="516"
+      > </a
+      ><a name="517" class="Symbol"
+      >=</a
+      ><a name="518"
+      >
+      </a
+      ><a name="525" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="527"
+      > </a
+      ><a name="528" class="Number"
+      >1</a
+      ><a name="529"
+      > </a
+      ><a name="530" href="lib.types.IteratedSuspension.html#2195" class="Function"
+      >&#8857;S&#178;</a
+      ><a name="533"
+      >
+        </a
+      ><a name="542" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="545"
+      > </a
+      ><a name="546" href="homotopy.Pi2HSusp.html#5973" class="Function"
+      >Pi2HSusp.&#960;&#8322;-Susp</a
+      ><a name="562"
+      > </a
+      ><a name="563" href="homotopy.LoopSpaceCircle.html#9777" class="Function"
+      >S&#185;-level</a
+      ><a name="571"
+      > </a
+      ><a name="572" href="lib.types.Circle.html#5358" class="Function"
+      >S&#185;-conn</a
+      ><a name="579"
+      > </a
+      ><a name="580" href="homotopy.CircleHSpace.html#124" class="Function"
+      >&#8857;S&#185;-hSpace</a
+      ><a name="590"
+      > </a
+      ><a name="591" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="592"
+      >
+      </a
+      ><a name="599" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="601"
+      > </a
+      ><a name="602" class="Number"
+      >0</a
+      ><a name="603"
+      > </a
+      ><a name="604" href="lib.types.IteratedSuspension.html#2179" class="Function"
+      >&#8857;S&#185;</a
+      ><a name="607"
+      >
+        </a
+      ><a name="616" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="619"
+      > </a
+      ><a name="620" href="homotopy.PinSn.html#399" class="Function"
+      >&#960;S-SphereS'-iso-&#8484;</a
+      ><a name="637"
+      > </a
+      ><a name="638" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="639"
+      > </a
+      ><a name="640" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="641"
+      >
+      </a
+      ><a name="648" href="lib.groups.Int.html#514" class="Function"
+      >&#8484;-group</a
+      ><a name="655"
+      >
+        </a
+      ><a name="664" href="lib.groups.Isomorphism.html#3290" class="Function Operator"
+      >&#8771;&#7475;&#8718;</a
+      ><a name="667"
+      >
+    </a
+      ><a name="672" href="homotopy.PinSn.html#399" class="Function"
+      >&#960;S-SphereS'-iso-&#8484;</a
+      ><a name="689"
+      > </a
+      ><a name="690" class="Symbol"
+      >(</a
+      ><a name="691" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="692"
+      > </a
+      ><a name="693" class="Symbol"
+      >(</a
+      ><a name="694" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="695"
+      > </a
+      ><a name="696" href="homotopy.PinSn.html#696" class="Bound"
+      >n</a
+      ><a name="697" class="Symbol"
+      >))</a
+      ><a name="699"
+      > </a
+      ><a name="700" class="Symbol"
+      >=</a
+      ><a name="701"
+      >
+      </a
+      ><a name="708" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="710"
+      > </a
+      ><a name="711" class="Symbol"
+      >(</a
+      ><a name="712" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="713"
+      > </a
+      ><a name="714" class="Symbol"
+      >(</a
+      ><a name="715" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="716"
+      > </a
+      ><a name="717" href="homotopy.PinSn.html#696" class="Bound"
+      >n</a
+      ><a name="718" class="Symbol"
+      >))</a
+      ><a name="720"
+      > </a
+      ><a name="721" class="Symbol"
+      >(</a
+      ><a name="722" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="728"
+      > </a
+      ><a name="729" class="Symbol"
+      >(</a
+      ><a name="730" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="731"
+      > </a
+      ><a name="732" class="Symbol"
+      >(</a
+      ><a name="733" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="734"
+      > </a
+      ><a name="735" href="homotopy.PinSn.html#696" class="Bound"
+      >n</a
+      ><a name="736" class="Symbol"
+      >))</a
+      ><a name="738"
+      > </a
+      ><a name="739" href="lib.types.IteratedSuspension.html#2179" class="Function"
+      >&#8857;S&#185;</a
+      ><a name="742" class="Symbol"
+      >)</a
+      ><a name="743"
+      >
+        </a
+      ><a name="752" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="755"
+      > </a
+      ><a name="756" href="homotopy.IterSuspensionStable.html#931" class="Function"
+      >Susp^StableSucc.stable</a
+      ><a name="778"
+      > </a
+      ><a name="779" href="lib.types.IteratedSuspension.html#2179" class="Function"
+      >&#8857;S&#185;</a
+      ><a name="782"
+      > </a
+      ><a name="783" href="lib.types.Circle.html#5358" class="Function"
+      >S&#185;-conn</a
+      ><a name="790"
+      >
+             </a
+      ><a name="804" class="Symbol"
+      >(</a
+      ><a name="805" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="806"
+      > </a
+      ><a name="807" href="homotopy.PinSn.html#696" class="Bound"
+      >n</a
+      ><a name="808" class="Symbol"
+      >)</a
+      ><a name="809"
+      > </a
+      ><a name="810" class="Symbol"
+      >(</a
+      ><a name="811" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="812"
+      > </a
+      ><a name="813" href="homotopy.PinSn.html#696" class="Bound"
+      >n</a
+      ><a name="814" class="Symbol"
+      >)</a
+      ><a name="815"
+      > </a
+      ><a name="816" class="Symbol"
+      >(</a
+      ><a name="817" href="lib.types.Nat.html#2784" class="Function"
+      >&#8804;-ap-S</a
+      ><a name="823"
+      > </a
+      ><a name="824" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="825"
+      > </a
+      ><a name="826" href="lib.types.Nat.html#2784" class="Function"
+      >&#8804;-ap-S</a
+      ><a name="832"
+      > </a
+      ><a name="833" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="834"
+      > </a
+      ><a name="835" href="lib.types.Nat.html#5819" class="Function"
+      >*2-increasing</a
+      ><a name="848"
+      > </a
+      ><a name="849" href="homotopy.PinSn.html#696" class="Bound"
+      >n</a
+      ><a name="850" class="Symbol"
+      >)</a
+      ><a name="851"
+      > </a
+      ><a name="852" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="853"
+      >
+      </a
+      ><a name="860" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="862"
+      > </a
+      ><a name="863" class="Symbol"
+      >(</a
+      ><a name="864" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="865"
+      > </a
+      ><a name="866" href="homotopy.PinSn.html#696" class="Bound"
+      >n</a
+      ><a name="867" class="Symbol"
+      >)</a
+      ><a name="868"
+      > </a
+      ><a name="869" class="Symbol"
+      >(</a
+      ><a name="870" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="876"
+      > </a
+      ><a name="877" class="Symbol"
+      >(</a
+      ><a name="878" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="879"
+      > </a
+      ><a name="880" href="homotopy.PinSn.html#696" class="Bound"
+      >n</a
+      ><a name="881" class="Symbol"
+      >)</a
+      ><a name="882"
+      > </a
+      ><a name="883" href="lib.types.IteratedSuspension.html#2179" class="Function"
+      >&#8857;S&#185;</a
+      ><a name="886" class="Symbol"
+      >)</a
+      ><a name="887"
+      >
+        </a
+      ><a name="896" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="899"
+      > </a
+      ><a name="900" href="homotopy.PinSn.html#399" class="Function"
+      >&#960;S-SphereS'-iso-&#8484;</a
+      ><a name="917"
+      > </a
+      ><a name="918" class="Symbol"
+      >(</a
+      ><a name="919" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="920"
+      > </a
+      ><a name="921" href="homotopy.PinSn.html#696" class="Bound"
+      >n</a
+      ><a name="922" class="Symbol"
+      >)</a
+      ><a name="923"
+      > </a
+      ><a name="924" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="925"
+      >
+      </a
+      ><a name="932" href="lib.groups.Int.html#514" class="Function"
+      >&#8484;-group</a
+      ><a name="939"
+      >
+        </a
+      ><a name="948" href="lib.groups.Isomorphism.html#3290" class="Function Operator"
+      >&#8771;&#7475;&#8718;</a
+      ><a name="951"
+      >
+
+  </a
+      ><a name="955" href="homotopy.PinSn.html#955" class="Function"
+      >&#960;S-SphereS-iso-&#8484;</a
+      ><a name="971"
+      > </a
+      ><a name="972" class="Symbol"
+      >:</a
+      ><a name="973"
+      > </a
+      ><a name="974" class="Symbol"
+      >&#8704;</a
+      ><a name="975"
+      > </a
+      ><a name="976" href="homotopy.PinSn.html#976" class="Bound"
+      >n</a
+      ><a name="977"
+      > </a
+      ><a name="978" class="Symbol"
+      >&#8594;</a
+      ><a name="979"
+      > </a
+      ><a name="980" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="982"
+      > </a
+      ><a name="983" href="homotopy.PinSn.html#976" class="Bound"
+      >n</a
+      ><a name="984"
+      > </a
+      ><a name="985" class="Symbol"
+      >(</a
+      ><a name="986" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="993"
+      > </a
+      ><a name="994" class="Symbol"
+      >(</a
+      ><a name="995" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="996"
+      > </a
+      ><a name="997" href="homotopy.PinSn.html#976" class="Bound"
+      >n</a
+      ><a name="998" class="Symbol"
+      >))</a
+      ><a name="1000"
+      > </a
+      ><a name="1001" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="1003"
+      > </a
+      ><a name="1004" href="lib.groups.Int.html#514" class="Function"
+      >&#8484;-group</a
+      ><a name="1011"
+      >
+  </a
+      ><a name="1014" href="homotopy.PinSn.html#955" class="Function"
+      >&#960;S-SphereS-iso-&#8484;</a
+      ><a name="1030"
+      > </a
+      ><a name="1031" href="homotopy.PinSn.html#1031" class="Bound"
+      >n</a
+      ><a name="1032"
+      > </a
+      ><a name="1033" class="Symbol"
+      >=</a
+      ><a name="1034"
+      > </a
+      ><a name="1035" href="homotopy.PinSn.html#399" class="Function"
+      >&#960;S-SphereS'-iso-&#8484;</a
+      ><a name="1052"
+      > </a
+      ><a name="1053" href="homotopy.PinSn.html#1031" class="Bound"
+      >n</a
+      ><a name="1054"
+      >
+                   </a
+      ><a name="1074" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="1077"
+      > </a
+      ><a name="1078" href="lib.groups.HomotopyGroup.html#965" class="Function"
+      >&#960;S-emap</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" href="homotopy.PinSn.html#1031" class="Bound"
+      >n</a
+      ><a name="1087"
+      > </a
+      ><a name="1088" class="Symbol"
+      >(</a
+      ><a name="1089" href="lib.types.IteratedSuspension.html#1646" class="Function"
+      >&#8857;Susp^-Susp-split-iso</a
+      ><a name="1110"
+      > </a
+      ><a name="1111" href="homotopy.PinSn.html#1031" class="Bound"
+      >n</a
+      ><a name="1112"
+      > </a
+      ><a name="1113" href="lib.types.IteratedSuspension.html#2163" class="Function"
+      >&#8857;S&#8304;</a
+      ><a name="1116" class="Symbol"
+      >)</a
+      ><a name="1117"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

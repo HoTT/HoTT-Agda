@@ -1,0 +1,1338 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.groups.LoopSpace</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.TLevel.html#1" class="Module"
+      >lib.types.TLevel</a
+      ><a name="93"
+      >
+</a
+      ><a name="94" class="Keyword"
+      >open</a
+      ><a name="98"
+      > </a
+      ><a name="99" class="Keyword"
+      >import</a
+      ><a name="105"
+      > </a
+      ><a name="106" href="lib.types.Group.html#1" class="Module"
+      >lib.types.Group</a
+      ><a name="121"
+      >
+</a
+      ><a name="122" class="Keyword"
+      >open</a
+      ><a name="126"
+      > </a
+      ><a name="127" class="Keyword"
+      >import</a
+      ><a name="133"
+      > </a
+      ><a name="134" href="lib.types.LoopSpace.html#1" class="Module"
+      >lib.types.LoopSpace</a
+      ><a name="153"
+      >
+</a
+      ><a name="154" class="Keyword"
+      >open</a
+      ><a name="158"
+      > </a
+      ><a name="159" class="Keyword"
+      >import</a
+      ><a name="165"
+      > </a
+      ><a name="166" href="lib.groups.Homomorphism.html#1" class="Module"
+      >lib.groups.Homomorphism</a
+      ><a name="189"
+      >
+</a
+      ><a name="190" class="Keyword"
+      >open</a
+      ><a name="194"
+      > </a
+      ><a name="195" class="Keyword"
+      >import</a
+      ><a name="201"
+      > </a
+      ><a name="202" href="lib.groups.Isomorphism.html#1" class="Module"
+      >lib.groups.Isomorphism</a
+      ><a name="224"
+      >
+
+</a
+      ><a name="226" class="Keyword"
+      >module</a
+      ><a name="232"
+      > </a
+      ><a name="233" href="lib.groups.LoopSpace.html#1" class="Module"
+      >lib.groups.LoopSpace</a
+      ><a name="253"
+      > </a
+      ><a name="254" class="Keyword"
+      >where</a
+      ><a name="259"
+      >
+
+</a
+      ><a name="261" class="Comment"
+      >{- A loop space is a pregroup, and a group if it has the right level -}</a
+      ><a name="332"
+      >
+</a
+      ><a name="333" class="Keyword"
+      >module</a
+      ><a name="339"
+      > </a
+      ><a name="340" href="lib.groups.LoopSpace.html#340" class="Module"
+      >_</a
+      ><a name="341"
+      > </a
+      ><a name="342" class="Symbol"
+      >{</a
+      ><a name="343" href="lib.groups.LoopSpace.html#343" class="Bound"
+      >i</a
+      ><a name="344" class="Symbol"
+      >}</a
+      ><a name="345"
+      > </a
+      ><a name="346" class="Symbol"
+      >(</a
+      ><a name="347" href="lib.groups.LoopSpace.html#347" class="Bound"
+      >n</a
+      ><a name="348"
+      > </a
+      ><a name="349" class="Symbol"
+      >:</a
+      ><a name="350"
+      > </a
+      ><a name="351" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="352" class="Symbol"
+      >)</a
+      ><a name="353"
+      > </a
+      ><a name="354" class="Symbol"
+      >(</a
+      ><a name="355" href="lib.groups.LoopSpace.html#355" class="Bound"
+      >X</a
+      ><a name="356"
+      > </a
+      ><a name="357" class="Symbol"
+      >:</a
+      ><a name="358"
+      > </a
+      ><a name="359" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="362"
+      > </a
+      ><a name="363" href="lib.groups.LoopSpace.html#343" class="Bound"
+      >i</a
+      ><a name="364" class="Symbol"
+      >)</a
+      ><a name="365"
+      > </a
+      ><a name="366" class="Keyword"
+      >where</a
+      ><a name="371"
+      >
+
+  </a
+      ><a name="375" href="lib.groups.LoopSpace.html#375" class="Function"
+      >&#937;^S-group-structure</a
+      ><a name="394"
+      > </a
+      ><a name="395" class="Symbol"
+      >:</a
+      ><a name="396"
+      > </a
+      ><a name="397" href="lib.types.Group.html#154" class="Record"
+      >GroupStructure</a
+      ><a name="411"
+      > </a
+      ><a name="412" class="Symbol"
+      >(</a
+      ><a name="413" href="lib.types.LoopSpace.html#2942" class="Function"
+      >&#937;^</a
+      ><a name="415"
+      > </a
+      ><a name="416" class="Symbol"
+      >(</a
+      ><a name="417" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="418"
+      > </a
+      ><a name="419" href="lib.groups.LoopSpace.html#347" class="Bound"
+      >n</a
+      ><a name="420" class="Symbol"
+      >)</a
+      ><a name="421"
+      > </a
+      ><a name="422" href="lib.groups.LoopSpace.html#355" class="Bound"
+      >X</a
+      ><a name="423" class="Symbol"
+      >)</a
+      ><a name="424"
+      >
+  </a
+      ><a name="427" href="lib.groups.LoopSpace.html#375" class="Function"
+      >&#937;^S-group-structure</a
+      ><a name="446"
+      > </a
+      ><a name="447" class="Symbol"
+      >=</a
+      ><a name="448"
+      > </a
+      ><a name="449" class="Keyword"
+      >record</a
+      ><a name="455"
+      > </a
+      ><a name="456" class="Symbol"
+      >{</a
+      ><a name="457"
+      >
+    </a
+      ><a name="462" class="Field"
+      >ident</a
+      ><a name="467"
+      > </a
+      ><a name="468" class="Symbol"
+      >=</a
+      ><a name="469"
+      > </a
+      ><a name="470" href="lib.types.LoopSpace.html#3210" class="Function"
+      >idp^</a
+      ><a name="474"
+      > </a
+      ><a name="475" class="Symbol"
+      >(</a
+      ><a name="476" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="477"
+      > </a
+      ><a name="478" href="lib.groups.LoopSpace.html#347" class="Bound"
+      >n</a
+      ><a name="479" class="Symbol"
+      >);</a
+      ><a name="481"
+      >
+    </a
+      ><a name="486" class="Field"
+      >inv</a
+      ><a name="489"
+      > </a
+      ><a name="490" class="Symbol"
+      >=</a
+      ><a name="491"
+      > </a
+      ><a name="492" href="lib.types.LoopSpace.html#3101" class="Function"
+      >&#937;^S-!</a
+      ><a name="497"
+      > </a
+      ><a name="498" href="lib.groups.LoopSpace.html#347" class="Bound"
+      >n</a
+      ><a name="499" class="Symbol"
+      >;</a
+      ><a name="500"
+      >
+    </a
+      ><a name="505" class="Field"
+      >comp</a
+      ><a name="509"
+      > </a
+      ><a name="510" class="Symbol"
+      >=</a
+      ><a name="511"
+      > </a
+      ><a name="512" href="lib.types.LoopSpace.html#3150" class="Function"
+      >&#937;^S-&#8729;</a
+      ><a name="517"
+      > </a
+      ><a name="518" href="lib.groups.LoopSpace.html#347" class="Bound"
+      >n</a
+      ><a name="519" class="Symbol"
+      >;</a
+      ><a name="520"
+      >
+    </a
+      ><a name="525" class="Field"
+      >unit-l</a
+      ><a name="531"
+      > </a
+      ><a name="532" class="Symbol"
+      >=</a
+      ><a name="533"
+      > </a
+      ><a name="534" href="lib.types.LoopSpace.html#6650" class="Function"
+      >&#937;^S-&#8729;-unit-l</a
+      ><a name="546"
+      > </a
+      ><a name="547" href="lib.groups.LoopSpace.html#347" class="Bound"
+      >n</a
+      ><a name="548" class="Symbol"
+      >;</a
+      ><a name="549"
+      >
+    </a
+      ><a name="554" class="Field"
+      >assoc</a
+      ><a name="559"
+      > </a
+      ><a name="560" class="Symbol"
+      >=</a
+      ><a name="561"
+      > </a
+      ><a name="562" href="lib.types.LoopSpace.html#6841" class="Function"
+      >&#937;^S-&#8729;-assoc</a
+      ><a name="573"
+      > </a
+      ><a name="574" href="lib.groups.LoopSpace.html#347" class="Bound"
+      >n</a
+      ><a name="575" class="Symbol"
+      >;</a
+      ><a name="576"
+      >
+    </a
+      ><a name="581" class="Field"
+      >inv-l</a
+      ><a name="586"
+      > </a
+      ><a name="587" class="Symbol"
+      >=</a
+      ><a name="588"
+      > </a
+      ><a name="589" href="lib.types.LoopSpace.html#6960" class="Function"
+      >&#937;^S-!-inv-l</a
+      ><a name="600"
+      > </a
+      ><a name="601" href="lib.groups.LoopSpace.html#347" class="Bound"
+      >n</a
+      ><a name="602"
+      >
+    </a
+      ><a name="607" class="Symbol"
+      >}</a
+      ><a name="608"
+      >
+
+  </a
+      ><a name="612" href="lib.groups.LoopSpace.html#612" class="Function"
+      >&#937;^S-group</a
+      ><a name="621"
+      > </a
+      ><a name="622" class="Symbol"
+      >:</a
+      ><a name="623"
+      > </a
+      ><a name="624" href="lib.NType.html#304" class="Function"
+      >has-level</a
+      ><a name="633"
+      > </a
+      ><a name="634" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="635"
+      > </a
+      ><a name="636" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="637"
+      > </a
+      ><a name="638" href="lib.groups.LoopSpace.html#347" class="Bound"
+      >n</a
+      ><a name="639"
+      > </a
+      ><a name="640" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="641"
+      > </a
+      ><a name="642" class="Symbol"
+      >(</a
+      ><a name="643" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="646"
+      > </a
+      ><a name="647" href="lib.groups.LoopSpace.html#355" class="Bound"
+      >X</a
+      ><a name="648" class="Symbol"
+      >)</a
+      ><a name="649"
+      > </a
+      ><a name="650" class="Symbol"
+      >&#8594;</a
+      ><a name="651"
+      > </a
+      ><a name="652" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="657"
+      > </a
+      ><a name="658" href="lib.groups.LoopSpace.html#343" class="Bound"
+      >i</a
+      ><a name="659"
+      >
+  </a
+      ><a name="662" href="lib.groups.LoopSpace.html#612" class="Function"
+      >&#937;^S-group</a
+      ><a name="671"
+      > </a
+      ><a name="672" href="lib.groups.LoopSpace.html#672" class="Bound"
+      >pX</a
+      ><a name="674"
+      > </a
+      ><a name="675" class="Symbol"
+      >=</a
+      ><a name="676"
+      > </a
+      ><a name="677" href="lib.types.Group.html#6885" class="InductiveConstructor"
+      >group</a
+      ><a name="682"
+      >
+    </a
+      ><a name="687" class="Symbol"
+      >(</a
+      ><a name="688" href="lib.types.LoopSpace.html#2942" class="Function"
+      >&#937;^</a
+      ><a name="690"
+      > </a
+      ><a name="691" class="Symbol"
+      >(</a
+      ><a name="692" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="693"
+      > </a
+      ><a name="694" href="lib.groups.LoopSpace.html#347" class="Bound"
+      >n</a
+      ><a name="695" class="Symbol"
+      >)</a
+      ><a name="696"
+      > </a
+      ><a name="697" href="lib.groups.LoopSpace.html#355" class="Bound"
+      >X</a
+      ><a name="698" class="Symbol"
+      >)</a
+      ><a name="699"
+      >
+    </a
+      ><a name="704" class="Symbol"
+      >(</a
+      ><a name="705" href="lib.types.LoopSpace.html#8059" class="Function"
+      >&#937;^-level</a
+      ><a name="713"
+      > </a
+      ><a name="714" class="Number"
+      >0</a
+      ><a name="715"
+      > </a
+      ><a name="716" class="Symbol"
+      >(</a
+      ><a name="717" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="718"
+      > </a
+      ><a name="719" href="lib.groups.LoopSpace.html#347" class="Bound"
+      >n</a
+      ><a name="720" class="Symbol"
+      >)</a
+      ><a name="721"
+      > </a
+      ><a name="722" href="lib.groups.LoopSpace.html#355" class="Bound"
+      >X</a
+      ><a name="723"
+      > </a
+      ><a name="724" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="725"
+      >
+       </a
+      ><a name="733" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="742"
+      > </a
+      ><a name="743" class="Symbol"
+      >(&#955;</a
+      ><a name="745"
+      > </a
+      ><a name="746" href="lib.groups.LoopSpace.html#746" class="Bound"
+      >t</a
+      ><a name="747"
+      > </a
+      ><a name="748" class="Symbol"
+      >&#8594;</a
+      ><a name="749"
+      > </a
+      ><a name="750" href="lib.NType.html#304" class="Function"
+      >has-level</a
+      ><a name="759"
+      > </a
+      ><a name="760" href="lib.groups.LoopSpace.html#746" class="Bound"
+      >t</a
+      ><a name="761"
+      > </a
+      ><a name="762" class="Symbol"
+      >(</a
+      ><a name="763" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="766"
+      > </a
+      ><a name="767" href="lib.groups.LoopSpace.html#355" class="Bound"
+      >X</a
+      ><a name="768" class="Symbol"
+      >))</a
+      ><a name="770"
+      > </a
+      ><a name="771" class="Symbol"
+      >(</a
+      ><a name="772" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="773"
+      > </a
+      ><a name="774" class="Symbol"
+      >(</a
+      ><a name="775" href="lib.types.TLevel.html#669" class="Function"
+      >+2+0</a
+      ><a name="779"
+      > </a
+      ><a name="780" href="lib.Base.html#8938" class="Function Operator"
+      >&#10216;</a
+      ><a name="781"
+      > </a
+      ><a name="782" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="783"
+      > </a
+      ><a name="784" href="lib.groups.LoopSpace.html#347" class="Bound"
+      >n</a
+      ><a name="785"
+      > </a
+      ><a name="786" href="lib.Base.html#8938" class="Function Operator"
+      >&#10217;&#8331;&#8322;</a
+      ><a name="789" class="Symbol"
+      >))</a
+      ><a name="791"
+      > </a
+      ><a name="792" href="lib.groups.LoopSpace.html#672" class="Bound"
+      >pX</a
+      ><a name="794" class="Symbol"
+      >)</a
+      ><a name="795"
+      >
+    </a
+      ><a name="800" href="lib.groups.LoopSpace.html#375" class="Function"
+      >&#937;^S-group-structure</a
+      ><a name="819"
+      >
+
+</a
+      ><a name="821" class="Keyword"
+      >module</a
+      ><a name="827"
+      > </a
+      ><a name="828" href="lib.groups.LoopSpace.html#828" class="Module"
+      >_</a
+      ><a name="829"
+      > </a
+      ><a name="830" class="Symbol"
+      >{</a
+      ><a name="831" href="lib.groups.LoopSpace.html#831" class="Bound"
+      >i</a
+      ><a name="832"
+      > </a
+      ><a name="833" href="lib.groups.LoopSpace.html#833" class="Bound"
+      >j</a
+      ><a name="834" class="Symbol"
+      >}</a
+      ><a name="835"
+      > </a
+      ><a name="836" class="Symbol"
+      >(</a
+      ><a name="837" href="lib.groups.LoopSpace.html#837" class="Bound"
+      >n</a
+      ><a name="838"
+      > </a
+      ><a name="839" class="Symbol"
+      >:</a
+      ><a name="840"
+      > </a
+      ><a name="841" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="842" class="Symbol"
+      >)</a
+      ><a name="843"
+      > </a
+      ><a name="844" class="Symbol"
+      >{</a
+      ><a name="845" href="lib.groups.LoopSpace.html#845" class="Bound"
+      >X</a
+      ><a name="846"
+      > </a
+      ><a name="847" class="Symbol"
+      >:</a
+      ><a name="848"
+      > </a
+      ><a name="849" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="852"
+      > </a
+      ><a name="853" href="lib.groups.LoopSpace.html#831" class="Bound"
+      >i</a
+      ><a name="854" class="Symbol"
+      >}</a
+      ><a name="855"
+      > </a
+      ><a name="856" class="Symbol"
+      >{</a
+      ><a name="857" href="lib.groups.LoopSpace.html#857" class="Bound"
+      >Y</a
+      ><a name="858"
+      > </a
+      ><a name="859" class="Symbol"
+      >:</a
+      ><a name="860"
+      > </a
+      ><a name="861" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="864"
+      > </a
+      ><a name="865" href="lib.groups.LoopSpace.html#833" class="Bound"
+      >j</a
+      ><a name="866" class="Symbol"
+      >}</a
+      ><a name="867"
+      > </a
+      ><a name="868" class="Keyword"
+      >where</a
+      ><a name="873"
+      >
+  </a
+      ><a name="876" href="lib.groups.LoopSpace.html#876" class="Function"
+      >&#937;^S-group-structure-fmap</a
+      ><a name="900"
+      > </a
+      ><a name="901" class="Symbol"
+      >:</a
+      ><a name="902"
+      > </a
+      ><a name="903" href="lib.groups.LoopSpace.html#845" class="Bound"
+      >X</a
+      ><a name="904"
+      > </a
+      ><a name="905" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="907"
+      > </a
+      ><a name="908" href="lib.groups.LoopSpace.html#857" class="Bound"
+      >Y</a
+      ><a name="909"
+      >
+    </a
+      ><a name="914" class="Symbol"
+      >&#8594;</a
+      ><a name="915"
+      > </a
+      ><a name="916" href="lib.groups.Homomorphism.html#1059" class="Record"
+      >GroupStructureHom</a
+      ><a name="933"
+      > </a
+      ><a name="934" class="Symbol"
+      >(</a
+      ><a name="935" href="lib.groups.LoopSpace.html#375" class="Function"
+      >&#937;^S-group-structure</a
+      ><a name="954"
+      > </a
+      ><a name="955" href="lib.groups.LoopSpace.html#837" class="Bound"
+      >n</a
+      ><a name="956"
+      > </a
+      ><a name="957" href="lib.groups.LoopSpace.html#845" class="Bound"
+      >X</a
+      ><a name="958" class="Symbol"
+      >)</a
+      ><a name="959"
+      > </a
+      ><a name="960" class="Symbol"
+      >(</a
+      ><a name="961" href="lib.groups.LoopSpace.html#375" class="Function"
+      >&#937;^S-group-structure</a
+      ><a name="980"
+      > </a
+      ><a name="981" href="lib.groups.LoopSpace.html#837" class="Bound"
+      >n</a
+      ><a name="982"
+      > </a
+      ><a name="983" href="lib.groups.LoopSpace.html#857" class="Bound"
+      >Y</a
+      ><a name="984" class="Symbol"
+      >)</a
+      ><a name="985"
+      >
+  </a
+      ><a name="988" href="lib.groups.LoopSpace.html#876" class="Function"
+      >&#937;^S-group-structure-fmap</a
+      ><a name="1012"
+      > </a
+      ><a name="1013" href="lib.groups.LoopSpace.html#1013" class="Bound"
+      >F</a
+      ><a name="1014"
+      > </a
+      ><a name="1015" class="Symbol"
+      >=</a
+      ><a name="1016"
+      > </a
+      ><a name="1017" href="lib.groups.Homomorphism.html#1205" class="InductiveConstructor"
+      >group-structure-hom</a
+      ><a name="1036"
+      > </a
+      ><a name="1037" class="Symbol"
+      >(</a
+      ><a name="1038" href="lib.types.LoopSpace.html#3479" class="Function"
+      >&#937;^-fmap</a
+      ><a name="1045"
+      > </a
+      ><a name="1046" class="Symbol"
+      >(</a
+      ><a name="1047" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1048"
+      > </a
+      ><a name="1049" href="lib.groups.LoopSpace.html#837" class="Bound"
+      >n</a
+      ><a name="1050" class="Symbol"
+      >)</a
+      ><a name="1051"
+      > </a
+      ><a name="1052" href="lib.groups.LoopSpace.html#1013" class="Bound"
+      >F</a
+      ><a name="1053" class="Symbol"
+      >)</a
+      ><a name="1054"
+      > </a
+      ><a name="1055" class="Symbol"
+      >(</a
+      ><a name="1056" href="lib.types.LoopSpace.html#7334" class="Function"
+      >&#937;^S-fmap-&#8729;</a
+      ><a name="1066"
+      > </a
+      ><a name="1067" href="lib.groups.LoopSpace.html#837" class="Bound"
+      >n</a
+      ><a name="1068"
+      > </a
+      ><a name="1069" href="lib.groups.LoopSpace.html#1013" class="Bound"
+      >F</a
+      ><a name="1070" class="Symbol"
+      >)</a
+      ><a name="1071"
+      >
+
+  </a
+      ><a name="1075" href="lib.groups.LoopSpace.html#1075" class="Function"
+      >&#937;^S-group-structure-isemap</a
+      ><a name="1101"
+      > </a
+      ><a name="1102" class="Symbol"
+      >:</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" class="Symbol"
+      >{</a
+      ><a name="1105" href="lib.groups.LoopSpace.html#1105" class="Bound"
+      >F</a
+      ><a name="1106"
+      > </a
+      ><a name="1107" class="Symbol"
+      >:</a
+      ><a name="1108"
+      > </a
+      ><a name="1109" href="lib.groups.LoopSpace.html#845" class="Bound"
+      >X</a
+      ><a name="1110"
+      > </a
+      ><a name="1111" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1113"
+      > </a
+      ><a name="1114" href="lib.groups.LoopSpace.html#857" class="Bound"
+      >Y</a
+      ><a name="1115" class="Symbol"
+      >}</a
+      ><a name="1116"
+      >
+    </a
+      ><a name="1121" class="Symbol"
+      >&#8594;</a
+      ><a name="1122"
+      > </a
+      ><a name="1123" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="1131"
+      > </a
+      ><a name="1132" class="Symbol"
+      >(</a
+      ><a name="1133" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" href="lib.groups.LoopSpace.html#1105" class="Bound"
+      >F</a
+      ><a name="1138" class="Symbol"
+      >)</a
+      ><a name="1139"
+      > </a
+      ><a name="1140" class="Symbol"
+      >&#8594;</a
+      ><a name="1141"
+      > </a
+      ><a name="1142" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="1150"
+      > </a
+      ><a name="1151" class="Symbol"
+      >(</a
+      ><a name="1152" href="lib.groups.Homomorphism.html#1313" class="Field"
+      >GroupStructureHom.f</a
+      ><a name="1171"
+      > </a
+      ><a name="1172" class="Symbol"
+      >(</a
+      ><a name="1173" href="lib.groups.LoopSpace.html#876" class="Function"
+      >&#937;^S-group-structure-fmap</a
+      ><a name="1197"
+      > </a
+      ><a name="1198" href="lib.groups.LoopSpace.html#1105" class="Bound"
+      >F</a
+      ><a name="1199" class="Symbol"
+      >))</a
+      ><a name="1201"
+      >
+  </a
+      ><a name="1204" href="lib.groups.LoopSpace.html#1075" class="Function"
+      >&#937;^S-group-structure-isemap</a
+      ><a name="1230"
+      > </a
+      ><a name="1231" class="Symbol"
+      >{</a
+      ><a name="1232" href="lib.groups.LoopSpace.html#1232" class="Bound"
+      >F</a
+      ><a name="1233" class="Symbol"
+      >}</a
+      ><a name="1234"
+      > </a
+      ><a name="1235" href="lib.groups.LoopSpace.html#1235" class="Bound"
+      >F-is-equiv</a
+      ><a name="1245"
+      > </a
+      ><a name="1246" class="Symbol"
+      >=</a
+      ><a name="1247"
+      > </a
+      ><a name="1248" href="lib.types.LoopSpace.html#7652" class="Function"
+      >&#937;^-isemap</a
+      ><a name="1257"
+      > </a
+      ><a name="1258" class="Symbol"
+      >(</a
+      ><a name="1259" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1260"
+      > </a
+      ><a name="1261" href="lib.groups.LoopSpace.html#837" class="Bound"
+      >n</a
+      ><a name="1262" class="Symbol"
+      >)</a
+      ><a name="1263"
+      > </a
+      ><a name="1264" href="lib.groups.LoopSpace.html#1232" class="Bound"
+      >F</a
+      ><a name="1265"
+      > </a
+      ><a name="1266" href="lib.groups.LoopSpace.html#1235" class="Bound"
+      >F-is-equiv</a
+      ><a name="1276"
+      >
+
+  </a
+      ><a name="1280" href="lib.groups.LoopSpace.html#1280" class="Function"
+      >&#937;^S-group-structure-emap</a
+      ><a name="1304"
+      > </a
+      ><a name="1305" class="Symbol"
+      >:</a
+      ><a name="1306"
+      > </a
+      ><a name="1307" href="lib.groups.LoopSpace.html#845" class="Bound"
+      >X</a
+      ><a name="1308"
+      > </a
+      ><a name="1309" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="1311"
+      > </a
+      ><a name="1312" href="lib.groups.LoopSpace.html#857" class="Bound"
+      >Y</a
+      ><a name="1313"
+      >
+    </a
+      ><a name="1318" class="Symbol"
+      >&#8594;</a
+      ><a name="1319"
+      > </a
+      ><a name="1320" href="lib.groups.LoopSpace.html#375" class="Function"
+      >&#937;^S-group-structure</a
+      ><a name="1339"
+      > </a
+      ><a name="1340" href="lib.groups.LoopSpace.html#837" class="Bound"
+      >n</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" href="lib.groups.LoopSpace.html#845" class="Bound"
+      >X</a
+      ><a name="1343"
+      > </a
+      ><a name="1344" href="lib.groups.Isomorphism.html#632" class="Function Operator"
+      >&#8771;&#7475;&#738;</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" href="lib.groups.LoopSpace.html#375" class="Function"
+      >&#937;^S-group-structure</a
+      ><a name="1367"
+      > </a
+      ><a name="1368" href="lib.groups.LoopSpace.html#837" class="Bound"
+      >n</a
+      ><a name="1369"
+      > </a
+      ><a name="1370" href="lib.groups.LoopSpace.html#857" class="Bound"
+      >Y</a
+      ><a name="1371"
+      >
+  </a
+      ><a name="1374" href="lib.groups.LoopSpace.html#1280" class="Function"
+      >&#937;^S-group-structure-emap</a
+      ><a name="1398"
+      > </a
+      ><a name="1399" class="Symbol"
+      >(</a
+      ><a name="1400" href="lib.groups.LoopSpace.html#1400" class="Bound"
+      >F</a
+      ><a name="1401"
+      > </a
+      ><a name="1402" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1403"
+      > </a
+      ><a name="1404" href="lib.groups.LoopSpace.html#1404" class="Bound"
+      >F-is-equiv</a
+      ><a name="1414" class="Symbol"
+      >)</a
+      ><a name="1415"
+      > </a
+      ><a name="1416" class="Symbol"
+      >=</a
+      ><a name="1417"
+      >
+    </a
+      ><a name="1422" href="lib.groups.LoopSpace.html#876" class="Function"
+      >&#937;^S-group-structure-fmap</a
+      ><a name="1446"
+      > </a
+      ><a name="1447" href="lib.groups.LoopSpace.html#1400" class="Bound"
+      >F</a
+      ><a name="1448"
+      > </a
+      ><a name="1449" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1450"
+      > </a
+      ><a name="1451" href="lib.groups.LoopSpace.html#1075" class="Function"
+      >&#937;^S-group-structure-isemap</a
+      ><a name="1477"
+      > </a
+      ><a name="1478" href="lib.groups.LoopSpace.html#1404" class="Bound"
+      >F-is-equiv</a
+      ><a name="1488"
+      >
+
+</a
+      ><a name="1490" class="Keyword"
+      >module</a
+      ><a name="1496"
+      > </a
+      ><a name="1497" href="lib.groups.LoopSpace.html#1497" class="Module"
+      >_</a
+      ><a name="1498"
+      > </a
+      ><a name="1499" class="Symbol"
+      >{</a
+      ><a name="1500" href="lib.groups.LoopSpace.html#1500" class="Bound"
+      >i</a
+      ><a name="1501"
+      > </a
+      ><a name="1502" href="lib.groups.LoopSpace.html#1502" class="Bound"
+      >j</a
+      ><a name="1503" class="Symbol"
+      >}</a
+      ><a name="1504"
+      > </a
+      ><a name="1505" class="Symbol"
+      >(</a
+      ><a name="1506" href="lib.groups.LoopSpace.html#1506" class="Bound"
+      >n</a
+      ><a name="1507"
+      > </a
+      ><a name="1508" class="Symbol"
+      >:</a
+      ><a name="1509"
+      > </a
+      ><a name="1510" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="1511" class="Symbol"
+      >)</a
+      ><a name="1512"
+      > </a
+      ><a name="1513" class="Symbol"
+      >{</a
+      ><a name="1514" href="lib.groups.LoopSpace.html#1514" class="Bound"
+      >X</a
+      ><a name="1515"
+      > </a
+      ><a name="1516" class="Symbol"
+      >:</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1521"
+      > </a
+      ><a name="1522" href="lib.groups.LoopSpace.html#1500" class="Bound"
+      >i</a
+      ><a name="1523" class="Symbol"
+      >}</a
+      ><a name="1524"
+      > </a
+      ><a name="1525" class="Symbol"
+      >{</a
+      ><a name="1526" href="lib.groups.LoopSpace.html#1526" class="Bound"
+      >Y</a
+      ><a name="1527"
+      > </a
+      ><a name="1528" class="Symbol"
+      >:</a
+      ><a name="1529"
+      > </a
+      ><a name="1530" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1533"
+      > </a
+      ><a name="1534" href="lib.groups.LoopSpace.html#1502" class="Bound"
+      >j</a
+      ><a name="1535" class="Symbol"
+      >}</a
+      ><a name="1536"
+      >
+  </a
+      ><a name="1539" class="Symbol"
+      >(</a
+      ><a name="1540" href="lib.groups.LoopSpace.html#1540" class="Bound"
+      >X-level</a
+      ><a name="1547"
+      > </a
+      ><a name="1548" class="Symbol"
+      >:</a
+      ><a name="1549"
+      > </a
+      ><a name="1550" href="lib.NType.html#304" class="Function"
+      >has-level</a
+      ><a name="1559"
+      > </a
+      ><a name="1560" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="1561"
+      > </a
+      ><a name="1562" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1563"
+      > </a
+      ><a name="1564" href="lib.groups.LoopSpace.html#1506" class="Bound"
+      >n</a
+      ><a name="1565"
+      > </a
+      ><a name="1566" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="1567"
+      > </a
+      ><a name="1568" class="Symbol"
+      >(</a
+      ><a name="1569" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="1572"
+      > </a
+      ><a name="1573" href="lib.groups.LoopSpace.html#1514" class="Bound"
+      >X</a
+      ><a name="1574" class="Symbol"
+      >))</a
+      ><a name="1576"
+      >
+  </a
+      ><a name="1579" class="Symbol"
+      >(</a
+      ><a name="1580" href="lib.groups.LoopSpace.html#1580" class="Bound"
+      >Y-level</a
+      ><a name="1587"
+      > </a
+      ><a name="1588" class="Symbol"
+      >:</a
+      ><a name="1589"
+      > </a
+      ><a name="1590" href="lib.NType.html#304" class="Function"
+      >has-level</a
+      ><a name="1599"
+      > </a
+      ><a name="1600" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="1601"
+      > </a
+      ><a name="1602" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1603"
+      > </a
+      ><a name="1604" href="lib.groups.LoopSpace.html#1506" class="Bound"
+      >n</a
+      ><a name="1605"
+      > </a
+      ><a name="1606" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="1607"
+      > </a
+      ><a name="1608" class="Symbol"
+      >(</a
+      ><a name="1609" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="1612"
+      > </a
+      ><a name="1613" href="lib.groups.LoopSpace.html#1526" class="Bound"
+      >Y</a
+      ><a name="1614" class="Symbol"
+      >))</a
+      ><a name="1616"
+      >
+  </a
+      ><a name="1619" class="Keyword"
+      >where</a
+      ><a name="1624"
+      >
+
+  </a
+      ><a name="1628" href="lib.groups.LoopSpace.html#1628" class="Function"
+      >&#937;^S-group-fmap</a
+      ><a name="1642"
+      > </a
+      ><a name="1643" class="Symbol"
+      >:</a
+      ><a name="1644"
+      > </a
+      ><a name="1645" href="lib.groups.LoopSpace.html#1514" class="Bound"
+      >X</a
+      ><a name="1646"
+      > </a
+      ><a name="1647" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1649"
+      > </a
+      ><a name="1650" href="lib.groups.LoopSpace.html#1526" class="Bound"
+      >Y</a
+      ><a name="1651"
+      > </a
+      ><a name="1652" class="Symbol"
+      >&#8594;</a
+      ><a name="1653"
+      > </a
+      ><a name="1654" href="lib.groups.LoopSpace.html#612" class="Function"
+      >&#937;^S-group</a
+      ><a name="1663"
+      > </a
+      ><a name="1664" href="lib.groups.LoopSpace.html#1506" class="Bound"
+      >n</a
+      ><a name="1665"
+      > </a
+      ><a name="1666" href="lib.groups.LoopSpace.html#1514" class="Bound"
+      >X</a
+      ><a name="1667"
+      > </a
+      ><a name="1668" href="lib.groups.LoopSpace.html#1540" class="Bound"
+      >X-level</a
+      ><a name="1675"
+      > </a
+      ><a name="1676" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="1678"
+      > </a
+      ><a name="1679" href="lib.groups.LoopSpace.html#612" class="Function"
+      >&#937;^S-group</a
+      ><a name="1688"
+      > </a
+      ><a name="1689" href="lib.groups.LoopSpace.html#1506" class="Bound"
+      >n</a
+      ><a name="1690"
+      > </a
+      ><a name="1691" href="lib.groups.LoopSpace.html#1526" class="Bound"
+      >Y</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" href="lib.groups.LoopSpace.html#1580" class="Bound"
+      >Y-level</a
+      ><a name="1700"
+      >
+  </a
+      ><a name="1703" href="lib.groups.LoopSpace.html#1628" class="Function"
+      >&#937;^S-group-fmap</a
+      ><a name="1717"
+      > </a
+      ><a name="1718" class="Symbol"
+      >=</a
+      ><a name="1719"
+      > </a
+      ><a name="1720" href="lib.groups.Homomorphism.html#2866" class="Function"
+      >&#8594;&#7475;&#738;-to-&#8594;&#7475;</a
+      ><a name="1729"
+      > </a
+      ><a name="1730" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1731"
+      > </a
+      ><a name="1732" href="lib.groups.LoopSpace.html#876" class="Function"
+      >&#937;^S-group-structure-fmap</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" href="lib.groups.LoopSpace.html#1506" class="Bound"
+      >n</a
+      ><a name="1758"
+      >
+
+  </a
+      ><a name="1762" href="lib.groups.LoopSpace.html#1762" class="Function"
+      >&#937;^S-group-emap</a
+      ><a name="1776"
+      > </a
+      ><a name="1777" class="Symbol"
+      >:</a
+      ><a name="1778"
+      > </a
+      ><a name="1779" href="lib.groups.LoopSpace.html#1514" class="Bound"
+      >X</a
+      ><a name="1780"
+      > </a
+      ><a name="1781" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="1783"
+      > </a
+      ><a name="1784" href="lib.groups.LoopSpace.html#1526" class="Bound"
+      >Y</a
+      ><a name="1785"
+      > </a
+      ><a name="1786" class="Symbol"
+      >&#8594;</a
+      ><a name="1787"
+      > </a
+      ><a name="1788" href="lib.groups.LoopSpace.html#612" class="Function"
+      >&#937;^S-group</a
+      ><a name="1797"
+      > </a
+      ><a name="1798" href="lib.groups.LoopSpace.html#1506" class="Bound"
+      >n</a
+      ><a name="1799"
+      > </a
+      ><a name="1800" href="lib.groups.LoopSpace.html#1514" class="Bound"
+      >X</a
+      ><a name="1801"
+      > </a
+      ><a name="1802" href="lib.groups.LoopSpace.html#1540" class="Bound"
+      >X-level</a
+      ><a name="1809"
+      > </a
+      ><a name="1810" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="1812"
+      > </a
+      ><a name="1813" href="lib.groups.LoopSpace.html#612" class="Function"
+      >&#937;^S-group</a
+      ><a name="1822"
+      > </a
+      ><a name="1823" href="lib.groups.LoopSpace.html#1506" class="Bound"
+      >n</a
+      ><a name="1824"
+      > </a
+      ><a name="1825" href="lib.groups.LoopSpace.html#1526" class="Bound"
+      >Y</a
+      ><a name="1826"
+      > </a
+      ><a name="1827" href="lib.groups.LoopSpace.html#1580" class="Bound"
+      >Y-level</a
+      ><a name="1834"
+      >
+  </a
+      ><a name="1837" href="lib.groups.LoopSpace.html#1762" class="Function"
+      >&#937;^S-group-emap</a
+      ><a name="1851"
+      > </a
+      ><a name="1852" class="Symbol"
+      >=</a
+      ><a name="1853"
+      > </a
+      ><a name="1854" href="lib.groups.Isomorphism.html#814" class="Function"
+      >&#8771;&#7475;&#738;-to-&#8771;&#7475;</a
+      ><a name="1863"
+      > </a
+      ><a name="1864" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1865"
+      > </a
+      ><a name="1866" href="lib.groups.LoopSpace.html#1280" class="Function"
+      >&#937;^S-group-structure-emap</a
+      ><a name="1890"
+      > </a
+      ><a name="1891" href="lib.groups.LoopSpace.html#1506" class="Bound"
+      >n</a
+      ><a name="1892"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

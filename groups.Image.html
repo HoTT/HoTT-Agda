@@ -1,0 +1,625 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >groups.Image</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+
+</a
+      ><a name="60" class="Keyword"
+      >module</a
+      ><a name="66"
+      > </a
+      ><a name="67" href="groups.Image.html#1" class="Module"
+      >groups.Image</a
+      ><a name="79"
+      > </a
+      ><a name="80" class="Keyword"
+      >where</a
+      ><a name="85"
+      >
+
+</a
+      ><a name="87" class="Keyword"
+      >module</a
+      ><a name="93"
+      > </a
+      ><a name="94" href="groups.Image.html#94" class="Module"
+      >_</a
+      ><a name="95"
+      > </a
+      ><a name="96" class="Symbol"
+      >{</a
+      ><a name="97" href="groups.Image.html#97" class="Bound"
+      >i</a
+      ><a name="98"
+      > </a
+      ><a name="99" href="groups.Image.html#99" class="Bound"
+      >j</a
+      ><a name="100"
+      > </a
+      ><a name="101" href="groups.Image.html#101" class="Bound"
+      >k</a
+      ><a name="102" class="Symbol"
+      >}</a
+      ><a name="103"
+      > </a
+      ><a name="104" class="Symbol"
+      >{</a
+      ><a name="105" href="groups.Image.html#105" class="Bound"
+      >G</a
+      ><a name="106"
+      > </a
+      ><a name="107" class="Symbol"
+      >:</a
+      ><a name="108"
+      > </a
+      ><a name="109" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="114"
+      > </a
+      ><a name="115" href="groups.Image.html#97" class="Bound"
+      >i</a
+      ><a name="116" class="Symbol"
+      >}</a
+      ><a name="117"
+      > </a
+      ><a name="118" class="Symbol"
+      >{</a
+      ><a name="119" href="groups.Image.html#119" class="Bound"
+      >H</a
+      ><a name="120"
+      > </a
+      ><a name="121" class="Symbol"
+      >:</a
+      ><a name="122"
+      > </a
+      ><a name="123" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="128"
+      > </a
+      ><a name="129" href="groups.Image.html#99" class="Bound"
+      >j</a
+      ><a name="130" class="Symbol"
+      >}</a
+      ><a name="131"
+      >
+  </a
+      ><a name="134" class="Symbol"
+      >{</a
+      ><a name="135" href="groups.Image.html#135" class="Bound"
+      >K</a
+      ><a name="136"
+      > </a
+      ><a name="137" class="Symbol"
+      >:</a
+      ><a name="138"
+      > </a
+      ><a name="139" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="144"
+      > </a
+      ><a name="145" href="groups.Image.html#101" class="Bound"
+      >k</a
+      ><a name="146" class="Symbol"
+      >}</a
+      ><a name="147"
+      > </a
+      ><a name="148" class="Symbol"
+      >(</a
+      ><a name="149" href="groups.Image.html#149" class="Bound"
+      >&#966;</a
+      ><a name="150"
+      > </a
+      ><a name="151" class="Symbol"
+      >:</a
+      ><a name="152"
+      > </a
+      ><a name="153" href="groups.Image.html#119" class="Bound"
+      >H</a
+      ><a name="154"
+      > </a
+      ><a name="155" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="157"
+      > </a
+      ><a name="158" href="groups.Image.html#135" class="Bound"
+      >K</a
+      ><a name="159" class="Symbol"
+      >)</a
+      ><a name="160"
+      > </a
+      ><a name="161" class="Symbol"
+      >(</a
+      ><a name="162" href="groups.Image.html#162" class="Bound"
+      >&#968;</a
+      ><a name="163"
+      > </a
+      ><a name="164" class="Symbol"
+      >:</a
+      ><a name="165"
+      > </a
+      ><a name="166" href="groups.Image.html#105" class="Bound"
+      >G</a
+      ><a name="167"
+      > </a
+      ><a name="168" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="170"
+      > </a
+      ><a name="171" href="groups.Image.html#119" class="Bound"
+      >H</a
+      ><a name="172" class="Symbol"
+      >)</a
+      ><a name="173"
+      > </a
+      ><a name="174" class="Keyword"
+      >where</a
+      ><a name="179"
+      >
+
+  </a
+      ><a name="183" class="Keyword"
+      >abstract</a
+      ><a name="191"
+      >
+    </a
+      ><a name="196" href="groups.Image.html#196" class="Function"
+      >im-sub-im-&#8728;</a
+      ><a name="207"
+      > </a
+      ><a name="208" class="Symbol"
+      >:</a
+      ><a name="209"
+      > </a
+      ><a name="210" href="lib.groups.Homomorphism.html#5767" class="Function"
+      >is-surj&#7475;</a
+      ><a name="218"
+      > </a
+      ><a name="219" href="groups.Image.html#162" class="Bound"
+      >&#968;</a
+      ><a name="220"
+      > </a
+      ><a name="221" class="Symbol"
+      >&#8594;</a
+      ><a name="222"
+      > </a
+      ><a name="223" href="lib.groups.Homomorphism.html#7914" class="Function"
+      >im-prop&#7475;</a
+      ><a name="231"
+      > </a
+      ><a name="232" href="groups.Image.html#149" class="Bound"
+      >&#966;</a
+      ><a name="233"
+      > </a
+      ><a name="234" href="lib.groups.SubgroupProp.html#3591" class="Function Operator"
+      >&#8838;&#7475;</a
+      ><a name="236"
+      > </a
+      ><a name="237" href="lib.groups.Homomorphism.html#7914" class="Function"
+      >im-prop&#7475;</a
+      ><a name="245"
+      > </a
+      ><a name="246" class="Symbol"
+      >(</a
+      ><a name="247" href="groups.Image.html#149" class="Bound"
+      >&#966;</a
+      ><a name="248"
+      > </a
+      ><a name="249" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="251"
+      > </a
+      ><a name="252" href="groups.Image.html#162" class="Bound"
+      >&#968;</a
+      ><a name="253" class="Symbol"
+      >)</a
+      ><a name="254"
+      >
+    </a
+      ><a name="259" href="groups.Image.html#196" class="Function"
+      >im-sub-im-&#8728;</a
+      ><a name="270"
+      > </a
+      ><a name="271" href="groups.Image.html#271" class="Bound"
+      >&#968;-is-surj</a
+      ><a name="280"
+      > </a
+      ><a name="281" href="groups.Image.html#281" class="Bound"
+      >k</a
+      ><a name="282"
+      > </a
+      ><a name="283" class="Symbol"
+      >=</a
+      ><a name="284"
+      > </a
+      ><a name="285" href="lib.types.Truncation.html#863" class="Function"
+      >Trunc-rec</a
+      ><a name="294"
+      > </a
+      ><a name="295" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="306"
+      >
+      </a
+      ><a name="313" class="Symbol"
+      >(&#955;{(</a
+      ><a name="317" href="groups.Image.html#317" class="Bound"
+      >h</a
+      ><a name="318"
+      > </a
+      ><a name="319" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="320"
+      > </a
+      ><a name="321" href="groups.Image.html#321" class="Bound"
+      >&#966;h=k</a
+      ><a name="325" class="Symbol"
+      >)</a
+      ><a name="326"
+      > </a
+      ><a name="327" class="Symbol"
+      >&#8594;</a
+      ><a name="328"
+      > </a
+      ><a name="329" href="lib.types.Truncation.html#863" class="Function"
+      >Trunc-rec</a
+      ><a name="338"
+      > </a
+      ><a name="339" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="350"
+      >
+        </a
+      ><a name="359" class="Symbol"
+      >(&#955;{(</a
+      ><a name="363" href="groups.Image.html#363" class="Bound"
+      >g</a
+      ><a name="364"
+      > </a
+      ><a name="365" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="366"
+      > </a
+      ><a name="367" href="groups.Image.html#367" class="Bound"
+      >&#968;g=h</a
+      ><a name="371" class="Symbol"
+      >)</a
+      ><a name="372"
+      > </a
+      ><a name="373" class="Symbol"
+      >&#8594;</a
+      ><a name="374"
+      > </a
+      ><a name="375" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="376"
+      > </a
+      ><a name="377" href="groups.Image.html#363" class="Bound"
+      >g</a
+      ><a name="378"
+      > </a
+      ><a name="379" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="380"
+      > </a
+      ><a name="381" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="383"
+      > </a
+      ><a name="384" class="Symbol"
+      >(</a
+      ><a name="385" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="395"
+      > </a
+      ><a name="396" href="groups.Image.html#149" class="Bound"
+      >&#966;</a
+      ><a name="397" class="Symbol"
+      >)</a
+      ><a name="398"
+      > </a
+      ><a name="399" href="groups.Image.html#367" class="Bound"
+      >&#968;g=h</a
+      ><a name="403"
+      > </a
+      ><a name="404" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="405"
+      > </a
+      ><a name="406" href="groups.Image.html#321" class="Bound"
+      >&#966;h=k</a
+      ><a name="410"
+      > </a
+      ><a name="411" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="412" class="Symbol"
+      >})</a
+      ><a name="414"
+      >
+        </a
+      ><a name="423" class="Symbol"
+      >(</a
+      ><a name="424" href="groups.Image.html#271" class="Bound"
+      >&#968;-is-surj</a
+      ><a name="433"
+      > </a
+      ><a name="434" href="groups.Image.html#317" class="Bound"
+      >h</a
+      ><a name="435" class="Symbol"
+      >)})</a
+      ><a name="438"
+      >
+
+    </a
+      ><a name="444" href="groups.Image.html#444" class="Function"
+      >im-&#8728;-sub-im</a
+      ><a name="455"
+      > </a
+      ><a name="456" class="Symbol"
+      >:</a
+      ><a name="457"
+      > </a
+      ><a name="458" href="lib.groups.Homomorphism.html#7914" class="Function"
+      >im-prop&#7475;</a
+      ><a name="466"
+      > </a
+      ><a name="467" class="Symbol"
+      >(</a
+      ><a name="468" href="groups.Image.html#149" class="Bound"
+      >&#966;</a
+      ><a name="469"
+      > </a
+      ><a name="470" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="472"
+      > </a
+      ><a name="473" href="groups.Image.html#162" class="Bound"
+      >&#968;</a
+      ><a name="474" class="Symbol"
+      >)</a
+      ><a name="475"
+      > </a
+      ><a name="476" href="lib.groups.SubgroupProp.html#3591" class="Function Operator"
+      >&#8838;&#7475;</a
+      ><a name="478"
+      > </a
+      ><a name="479" href="lib.groups.Homomorphism.html#7914" class="Function"
+      >im-prop&#7475;</a
+      ><a name="487"
+      > </a
+      ><a name="488" href="groups.Image.html#149" class="Bound"
+      >&#966;</a
+      ><a name="489"
+      >
+    </a
+      ><a name="494" href="groups.Image.html#444" class="Function"
+      >im-&#8728;-sub-im</a
+      ><a name="505"
+      > </a
+      ><a name="506" href="groups.Image.html#506" class="Bound"
+      >k</a
+      ><a name="507"
+      > </a
+      ><a name="508" class="Symbol"
+      >=</a
+      ><a name="509"
+      > </a
+      ><a name="510" href="lib.types.Truncation.html#863" class="Function"
+      >Trunc-rec</a
+      ><a name="519"
+      > </a
+      ><a name="520" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="531"
+      >
+      </a
+      ><a name="538" class="Symbol"
+      >(&#955;{(</a
+      ><a name="542" href="groups.Image.html#542" class="Bound"
+      >g</a
+      ><a name="543"
+      > </a
+      ><a name="544" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="545"
+      > </a
+      ><a name="546" href="groups.Image.html#546" class="Bound"
+      >&#966;&#968;g=k</a
+      ><a name="551" class="Symbol"
+      >)</a
+      ><a name="552"
+      > </a
+      ><a name="553" class="Symbol"
+      >&#8594;</a
+      ><a name="554"
+      > </a
+      ><a name="555" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="556"
+      > </a
+      ><a name="557" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="567"
+      > </a
+      ><a name="568" href="groups.Image.html#162" class="Bound"
+      >&#968;</a
+      ><a name="569"
+      > </a
+      ><a name="570" href="groups.Image.html#542" class="Bound"
+      >g</a
+      ><a name="571"
+      > </a
+      ><a name="572" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="573"
+      > </a
+      ><a name="574" href="groups.Image.html#546" class="Bound"
+      >&#966;&#968;g=k</a
+      ><a name="579"
+      > </a
+      ><a name="580" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="581" class="Symbol"
+      >})</a
+      ><a name="583"
+      >
+
+  </a
+      ><a name="587" href="groups.Image.html#587" class="Function"
+      >im-iso-im-pre&#8728;</a
+      ><a name="601"
+      > </a
+      ><a name="602" class="Symbol"
+      >:</a
+      ><a name="603"
+      > </a
+      ><a name="604" href="lib.groups.Homomorphism.html#5767" class="Function"
+      >is-surj&#7475;</a
+      ><a name="612"
+      > </a
+      ><a name="613" href="groups.Image.html#162" class="Bound"
+      >&#968;</a
+      ><a name="614"
+      > </a
+      ><a name="615" class="Symbol"
+      >&#8594;</a
+      ><a name="616"
+      > </a
+      ><a name="617" href="lib.groups.Subgroup.html#2804" class="Function"
+      >Im</a
+      ><a name="619"
+      > </a
+      ><a name="620" href="groups.Image.html#149" class="Bound"
+      >&#966;</a
+      ><a name="621"
+      > </a
+      ><a name="622" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="624"
+      > </a
+      ><a name="625" href="lib.groups.Subgroup.html#2804" class="Function"
+      >Im</a
+      ><a name="627"
+      > </a
+      ><a name="628" class="Symbol"
+      >(</a
+      ><a name="629" href="groups.Image.html#149" class="Bound"
+      >&#966;</a
+      ><a name="630"
+      > </a
+      ><a name="631" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="633"
+      > </a
+      ><a name="634" href="groups.Image.html#162" class="Bound"
+      >&#968;</a
+      ><a name="635" class="Symbol"
+      >)</a
+      ><a name="636"
+      >
+  </a
+      ><a name="639" href="groups.Image.html#587" class="Function"
+      >im-iso-im-pre&#8728;</a
+      ><a name="653"
+      > </a
+      ><a name="654" href="groups.Image.html#654" class="Bound"
+      >&#968;-is-surj</a
+      ><a name="663"
+      > </a
+      ><a name="664" class="Symbol"
+      >=</a
+      ><a name="665"
+      > </a
+      ><a name="666" href="lib.groups.Subgroup.html#3315" class="Function"
+      >Subgroup-emap-r</a
+      ><a name="681"
+      >
+    </a
+      ><a name="686" class="Symbol"
+      >(</a
+      ><a name="687" href="lib.groups.Homomorphism.html#7914" class="Function"
+      >im-prop&#7475;</a
+      ><a name="695"
+      > </a
+      ><a name="696" href="groups.Image.html#149" class="Bound"
+      >&#966;</a
+      ><a name="697" class="Symbol"
+      >)</a
+      ><a name="698"
+      > </a
+      ><a name="699" class="Symbol"
+      >(</a
+      ><a name="700" href="lib.groups.Homomorphism.html#7914" class="Function"
+      >im-prop&#7475;</a
+      ><a name="708"
+      > </a
+      ><a name="709" class="Symbol"
+      >(</a
+      ><a name="710" href="groups.Image.html#149" class="Bound"
+      >&#966;</a
+      ><a name="711"
+      > </a
+      ><a name="712" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="714"
+      > </a
+      ><a name="715" href="groups.Image.html#162" class="Bound"
+      >&#968;</a
+      ><a name="716" class="Symbol"
+      >))</a
+      ><a name="718"
+      >
+    </a
+      ><a name="723" class="Symbol"
+      >(</a
+      ><a name="724" href="groups.Image.html#196" class="Function"
+      >im-sub-im-&#8728;</a
+      ><a name="735"
+      > </a
+      ><a name="736" href="groups.Image.html#654" class="Bound"
+      >&#968;-is-surj</a
+      ><a name="745" class="Symbol"
+      >)</a
+      ><a name="746"
+      > </a
+      ><a name="747" href="groups.Image.html#444" class="Function"
+      >im-&#8728;-sub-im</a
+      ><a name="758"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

@@ -1,0 +1,3627 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.PtdMapSequence</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+
+</a
+      ><a name="60" class="Comment"
+      >{-
+  Note: this module is for cohomology theories,
+        so the commuting squares below do not
+        care about the proof of pointedness,
+        because any cohomology theory is independent
+        of the possibly different proofs of pointedness.
+-}</a
+      ><a name="314"
+      >
+
+</a
+      ><a name="316" class="Keyword"
+      >module</a
+      ><a name="322"
+      > </a
+      ><a name="323" href="homotopy.PtdMapSequence.html#1" class="Module"
+      >homotopy.PtdMapSequence</a
+      ><a name="346"
+      > </a
+      ><a name="347" class="Keyword"
+      >where</a
+      ><a name="352"
+      >
+
+</a
+      ><a name="354" class="Keyword"
+      >infix</a
+      ><a name="359"
+      > </a
+      ><a name="360" class="Number"
+      >15</a
+      ><a name="362"
+      > </a
+      ><a name="363" href="homotopy.PtdMapSequence.html#462" class="InductiveConstructor Operator"
+      >_&#8857;&#8867;|</a
+      ><a name="367"
+      >
+</a
+      ><a name="368" class="Keyword"
+      >infixr</a
+      ><a name="374"
+      > </a
+      ><a name="375" class="Number"
+      >10</a
+      ><a name="377"
+      > </a
+      ><a name="378" href="homotopy.PtdMapSequence.html#504" class="InductiveConstructor Operator"
+      >_&#8857;&#8594;&#10216;_&#10217;_</a
+      ><a name="385"
+      >
+
+</a
+      ><a name="387" class="Keyword"
+      >data</a
+      ><a name="391"
+      > </a
+      ><a name="392" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="406"
+      > </a
+      ><a name="407" class="Symbol"
+      >{</a
+      ><a name="408" href="homotopy.PtdMapSequence.html#408" class="Bound"
+      >i</a
+      ><a name="409" class="Symbol"
+      >}</a
+      ><a name="410"
+      > </a
+      ><a name="411" class="Symbol"
+      >:</a
+      ><a name="412"
+      > </a
+      ><a name="413" class="Symbol"
+      >(</a
+      ><a name="414" href="homotopy.PtdMapSequence.html#414" class="Bound"
+      >X</a
+      ><a name="415"
+      > </a
+      ><a name="416" class="Symbol"
+      >:</a
+      ><a name="417"
+      > </a
+      ><a name="418" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="421"
+      > </a
+      ><a name="422" href="homotopy.PtdMapSequence.html#408" class="Bound"
+      >i</a
+      ><a name="423" class="Symbol"
+      >)</a
+      ><a name="424"
+      > </a
+      ><a name="425" class="Symbol"
+      >(</a
+      ><a name="426" href="homotopy.PtdMapSequence.html#426" class="Bound"
+      >Y</a
+      ><a name="427"
+      > </a
+      ><a name="428" class="Symbol"
+      >:</a
+      ><a name="429"
+      > </a
+      ><a name="430" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="433"
+      > </a
+      ><a name="434" href="homotopy.PtdMapSequence.html#408" class="Bound"
+      >i</a
+      ><a name="435" class="Symbol"
+      >)</a
+      ><a name="436"
+      > </a
+      ><a name="437" class="Symbol"
+      >&#8594;</a
+      ><a name="438"
+      > </a
+      ><a name="439" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="443"
+      > </a
+      ><a name="444" class="Symbol"
+      >(</a
+      ><a name="445" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="450"
+      > </a
+      ><a name="451" href="homotopy.PtdMapSequence.html#408" class="Bound"
+      >i</a
+      ><a name="452" class="Symbol"
+      >)</a
+      ><a name="453"
+      > </a
+      ><a name="454" class="Keyword"
+      >where</a
+      ><a name="459"
+      >
+  </a
+      ><a name="462" href="homotopy.PtdMapSequence.html#462" class="InductiveConstructor Operator"
+      >_&#8857;&#8867;|</a
+      ><a name="466"
+      > </a
+      ><a name="467" class="Symbol"
+      >:</a
+      ><a name="468"
+      > </a
+      ><a name="469" class="Symbol"
+      >(</a
+      ><a name="470" href="homotopy.PtdMapSequence.html#470" class="Bound"
+      >X</a
+      ><a name="471"
+      > </a
+      ><a name="472" class="Symbol"
+      >:</a
+      ><a name="473"
+      > </a
+      ><a name="474" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="477"
+      > </a
+      ><a name="478" href="homotopy.PtdMapSequence.html#408" class="Bound"
+      >i</a
+      ><a name="479" class="Symbol"
+      >)</a
+      ><a name="480"
+      > </a
+      ><a name="481" class="Symbol"
+      >&#8594;</a
+      ><a name="482"
+      > </a
+      ><a name="483" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="497"
+      > </a
+      ><a name="498" href="homotopy.PtdMapSequence.html#470" class="Bound"
+      >X</a
+      ><a name="499"
+      > </a
+      ><a name="500" href="homotopy.PtdMapSequence.html#470" class="Bound"
+      >X</a
+      ><a name="501"
+      >
+  </a
+      ><a name="504" href="homotopy.PtdMapSequence.html#504" class="InductiveConstructor Operator"
+      >_&#8857;&#8594;&#10216;_&#10217;_</a
+      ><a name="511"
+      > </a
+      ><a name="512" class="Symbol"
+      >:</a
+      ><a name="513"
+      > </a
+      ><a name="514" class="Symbol"
+      >(</a
+      ><a name="515" href="homotopy.PtdMapSequence.html#515" class="Bound"
+      >X</a
+      ><a name="516"
+      > </a
+      ><a name="517" class="Symbol"
+      >:</a
+      ><a name="518"
+      > </a
+      ><a name="519" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="522"
+      > </a
+      ><a name="523" href="homotopy.PtdMapSequence.html#408" class="Bound"
+      >i</a
+      ><a name="524" class="Symbol"
+      >)</a
+      ><a name="525"
+      > </a
+      ><a name="526" class="Symbol"
+      >{</a
+      ><a name="527" href="homotopy.PtdMapSequence.html#527" class="Bound"
+      >Y</a
+      ><a name="528"
+      > </a
+      ><a name="529" href="homotopy.PtdMapSequence.html#529" class="Bound"
+      >Z</a
+      ><a name="530"
+      > </a
+      ><a name="531" class="Symbol"
+      >:</a
+      ><a name="532"
+      > </a
+      ><a name="533" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="536"
+      > </a
+      ><a name="537" href="homotopy.PtdMapSequence.html#408" class="Bound"
+      >i</a
+      ><a name="538" class="Symbol"
+      >}</a
+      ><a name="539"
+      >
+    </a
+      ><a name="544" class="Symbol"
+      >&#8594;</a
+      ><a name="545"
+      > </a
+      ><a name="546" class="Symbol"
+      >(</a
+      ><a name="547" href="homotopy.PtdMapSequence.html#515" class="Bound"
+      >X</a
+      ><a name="548"
+      > </a
+      ><a name="549" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="551"
+      > </a
+      ><a name="552" href="homotopy.PtdMapSequence.html#527" class="Bound"
+      >Y</a
+      ><a name="553" class="Symbol"
+      >)</a
+      ><a name="554"
+      > </a
+      ><a name="555" class="Symbol"
+      >&#8594;</a
+      ><a name="556"
+      > </a
+      ><a name="557" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="571"
+      > </a
+      ><a name="572" href="homotopy.PtdMapSequence.html#527" class="Bound"
+      >Y</a
+      ><a name="573"
+      > </a
+      ><a name="574" href="homotopy.PtdMapSequence.html#529" class="Bound"
+      >Z</a
+      ><a name="575"
+      >
+    </a
+      ><a name="580" class="Symbol"
+      >&#8594;</a
+      ><a name="581"
+      > </a
+      ><a name="582" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="596"
+      > </a
+      ><a name="597" href="homotopy.PtdMapSequence.html#515" class="Bound"
+      >X</a
+      ><a name="598"
+      > </a
+      ><a name="599" href="homotopy.PtdMapSequence.html#529" class="Bound"
+      >Z</a
+      ><a name="600"
+      >
+
+</a
+      ><a name="602" class="Comment"
+      >{- maps between two pointed map sequences -}</a
+      ><a name="646"
+      >
+
+</a
+      ><a name="648" class="Keyword"
+      >infix</a
+      ><a name="653"
+      > </a
+      ><a name="654" class="Number"
+      >15</a
+      ><a name="656"
+      > </a
+      ><a name="657" href="homotopy.PtdMapSequence.html#879" class="InductiveConstructor Operator"
+      >_&#8857;&#8595;|</a
+      ><a name="661"
+      >
+</a
+      ><a name="662" class="Keyword"
+      >infixr</a
+      ><a name="668"
+      > </a
+      ><a name="669" class="Number"
+      >10</a
+      ><a name="671"
+      > </a
+      ><a name="672" href="homotopy.PtdMapSequence.html#968" class="InductiveConstructor Operator"
+      >_&#8857;&#8595;&#10216;_&#10217;_</a
+      ><a name="679"
+      >
+
+</a
+      ><a name="681" class="Keyword"
+      >data</a
+      ><a name="685"
+      > </a
+      ><a name="686" href="homotopy.PtdMapSequence.html#686" class="Datatype"
+      >PtdMapSeqMap</a
+      ><a name="698"
+      > </a
+      ><a name="699" class="Symbol"
+      >{</a
+      ><a name="700" href="homotopy.PtdMapSequence.html#700" class="Bound"
+      >i&#8320;</a
+      ><a name="702"
+      > </a
+      ><a name="703" href="homotopy.PtdMapSequence.html#703" class="Bound"
+      >i&#8321;</a
+      ><a name="705" class="Symbol"
+      >}</a
+      ><a name="706"
+      > </a
+      ><a name="707" class="Symbol"
+      >:</a
+      ><a name="708"
+      > </a
+      ><a name="709" class="Symbol"
+      >{</a
+      ><a name="710" href="homotopy.PtdMapSequence.html#710" class="Bound"
+      >X&#8320;</a
+      ><a name="712"
+      > </a
+      ><a name="713" href="homotopy.PtdMapSequence.html#713" class="Bound"
+      >Y&#8320;</a
+      ><a name="715"
+      > </a
+      ><a name="716" class="Symbol"
+      >:</a
+      ><a name="717"
+      > </a
+      ><a name="718" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="721"
+      > </a
+      ><a name="722" href="homotopy.PtdMapSequence.html#700" class="Bound"
+      >i&#8320;</a
+      ><a name="724" class="Symbol"
+      >}</a
+      ><a name="725"
+      > </a
+      ><a name="726" class="Symbol"
+      >{</a
+      ><a name="727" href="homotopy.PtdMapSequence.html#727" class="Bound"
+      >X&#8321;</a
+      ><a name="729"
+      > </a
+      ><a name="730" href="homotopy.PtdMapSequence.html#730" class="Bound"
+      >Y&#8321;</a
+      ><a name="732"
+      > </a
+      ><a name="733" class="Symbol"
+      >:</a
+      ><a name="734"
+      > </a
+      ><a name="735" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="738"
+      > </a
+      ><a name="739" href="homotopy.PtdMapSequence.html#703" class="Bound"
+      >i&#8321;</a
+      ><a name="741" class="Symbol"
+      >}</a
+      ><a name="742"
+      >
+  </a
+      ><a name="745" class="Symbol"
+      >(</a
+      ><a name="746" href="homotopy.PtdMapSequence.html#746" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="751"
+      > </a
+      ><a name="752" class="Symbol"
+      >:</a
+      ><a name="753"
+      > </a
+      ><a name="754" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="768"
+      > </a
+      ><a name="769" href="homotopy.PtdMapSequence.html#710" class="Bound"
+      >X&#8320;</a
+      ><a name="771"
+      > </a
+      ><a name="772" href="homotopy.PtdMapSequence.html#713" class="Bound"
+      >Y&#8320;</a
+      ><a name="774" class="Symbol"
+      >)</a
+      ><a name="775"
+      > </a
+      ><a name="776" class="Symbol"
+      >(</a
+      ><a name="777" href="homotopy.PtdMapSequence.html#777" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="782"
+      > </a
+      ><a name="783" class="Symbol"
+      >:</a
+      ><a name="784"
+      > </a
+      ><a name="785" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="799"
+      > </a
+      ><a name="800" href="homotopy.PtdMapSequence.html#727" class="Bound"
+      >X&#8321;</a
+      ><a name="802"
+      > </a
+      ><a name="803" href="homotopy.PtdMapSequence.html#730" class="Bound"
+      >Y&#8321;</a
+      ><a name="805" class="Symbol"
+      >)</a
+      ><a name="806"
+      >
+  </a
+      ><a name="809" class="Symbol"
+      >(</a
+      ><a name="810" href="homotopy.PtdMapSequence.html#810" class="Bound"
+      >&#8857;hX</a
+      ><a name="813"
+      > </a
+      ><a name="814" class="Symbol"
+      >:</a
+      ><a name="815"
+      > </a
+      ><a name="816" href="homotopy.PtdMapSequence.html#710" class="Bound"
+      >X&#8320;</a
+      ><a name="818"
+      > </a
+      ><a name="819" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="821"
+      > </a
+      ><a name="822" href="homotopy.PtdMapSequence.html#727" class="Bound"
+      >X&#8321;</a
+      ><a name="824" class="Symbol"
+      >)</a
+      ><a name="825"
+      > </a
+      ><a name="826" class="Symbol"
+      >(</a
+      ><a name="827" href="homotopy.PtdMapSequence.html#827" class="Bound"
+      >&#8857;fY</a
+      ><a name="830"
+      > </a
+      ><a name="831" class="Symbol"
+      >:</a
+      ><a name="832"
+      > </a
+      ><a name="833" href="homotopy.PtdMapSequence.html#713" class="Bound"
+      >Y&#8320;</a
+      ><a name="835"
+      > </a
+      ><a name="836" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="838"
+      > </a
+      ><a name="839" href="homotopy.PtdMapSequence.html#730" class="Bound"
+      >Y&#8321;</a
+      ><a name="841" class="Symbol"
+      >)</a
+      ><a name="842"
+      > </a
+      ><a name="843" class="Symbol"
+      >&#8594;</a
+      ><a name="844"
+      > </a
+      ><a name="845" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="849"
+      > </a
+      ><a name="850" class="Symbol"
+      >(</a
+      ><a name="851" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="856"
+      > </a
+      ><a name="857" class="Symbol"
+      >(</a
+      ><a name="858" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="862"
+      > </a
+      ><a name="863" href="homotopy.PtdMapSequence.html#700" class="Bound"
+      >i&#8320;</a
+      ><a name="865"
+      > </a
+      ><a name="866" href="homotopy.PtdMapSequence.html#703" class="Bound"
+      >i&#8321;</a
+      ><a name="868" class="Symbol"
+      >))</a
+      ><a name="870"
+      > </a
+      ><a name="871" class="Keyword"
+      >where</a
+      ><a name="876"
+      >
+  </a
+      ><a name="879" href="homotopy.PtdMapSequence.html#879" class="InductiveConstructor Operator"
+      >_&#8857;&#8595;|</a
+      ><a name="883"
+      > </a
+      ><a name="884" class="Symbol"
+      >:</a
+      ><a name="885"
+      > </a
+      ><a name="886" class="Symbol"
+      >{</a
+      ><a name="887" href="homotopy.PtdMapSequence.html#887" class="Bound"
+      >X&#8320;</a
+      ><a name="889"
+      > </a
+      ><a name="890" class="Symbol"
+      >:</a
+      ><a name="891"
+      > </a
+      ><a name="892" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="895"
+      > </a
+      ><a name="896" href="homotopy.PtdMapSequence.html#700" class="Bound"
+      >i&#8320;</a
+      ><a name="898" class="Symbol"
+      >}</a
+      ><a name="899"
+      > </a
+      ><a name="900" class="Symbol"
+      >{</a
+      ><a name="901" href="homotopy.PtdMapSequence.html#901" class="Bound"
+      >X&#8321;</a
+      ><a name="903"
+      > </a
+      ><a name="904" class="Symbol"
+      >:</a
+      ><a name="905"
+      > </a
+      ><a name="906" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="909"
+      > </a
+      ><a name="910" href="homotopy.PtdMapSequence.html#703" class="Bound"
+      >i&#8321;</a
+      ><a name="912" class="Symbol"
+      >}</a
+      ><a name="913"
+      > </a
+      ><a name="914" class="Symbol"
+      >(</a
+      ><a name="915" href="homotopy.PtdMapSequence.html#915" class="Bound"
+      >f</a
+      ><a name="916"
+      > </a
+      ><a name="917" class="Symbol"
+      >:</a
+      ><a name="918"
+      > </a
+      ><a name="919" href="homotopy.PtdMapSequence.html#887" class="Bound"
+      >X&#8320;</a
+      ><a name="921"
+      > </a
+      ><a name="922" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="924"
+      > </a
+      ><a name="925" href="homotopy.PtdMapSequence.html#901" class="Bound"
+      >X&#8321;</a
+      ><a name="927" class="Symbol"
+      >)</a
+      ><a name="928"
+      > </a
+      ><a name="929" class="Symbol"
+      >&#8594;</a
+      ><a name="930"
+      > </a
+      ><a name="931" href="homotopy.PtdMapSequence.html#686" class="Datatype"
+      >PtdMapSeqMap</a
+      ><a name="943"
+      > </a
+      ><a name="944" class="Symbol"
+      >(</a
+      ><a name="945" href="homotopy.PtdMapSequence.html#887" class="Bound"
+      >X&#8320;</a
+      ><a name="947"
+      > </a
+      ><a name="948" href="homotopy.PtdMapSequence.html#462" class="InductiveConstructor Operator"
+      >&#8857;&#8867;|</a
+      ><a name="951" class="Symbol"
+      >)</a
+      ><a name="952"
+      > </a
+      ><a name="953" class="Symbol"
+      >(</a
+      ><a name="954" href="homotopy.PtdMapSequence.html#901" class="Bound"
+      >X&#8321;</a
+      ><a name="956"
+      > </a
+      ><a name="957" href="homotopy.PtdMapSequence.html#462" class="InductiveConstructor Operator"
+      >&#8857;&#8867;|</a
+      ><a name="960" class="Symbol"
+      >)</a
+      ><a name="961"
+      > </a
+      ><a name="962" href="homotopy.PtdMapSequence.html#915" class="Bound"
+      >f</a
+      ><a name="963"
+      > </a
+      ><a name="964" href="homotopy.PtdMapSequence.html#915" class="Bound"
+      >f</a
+      ><a name="965"
+      >
+  </a
+      ><a name="968" href="homotopy.PtdMapSequence.html#968" class="InductiveConstructor Operator"
+      >_&#8857;&#8595;&#10216;_&#10217;_</a
+      ><a name="975"
+      > </a
+      ><a name="976" class="Symbol"
+      >:</a
+      ><a name="977"
+      > </a
+      ><a name="978" class="Symbol"
+      >&#8704;</a
+      ><a name="979"
+      > </a
+      ><a name="980" class="Symbol"
+      >{</a
+      ><a name="981" href="homotopy.PtdMapSequence.html#981" class="Bound"
+      >X&#8320;</a
+      ><a name="983"
+      > </a
+      ><a name="984" href="homotopy.PtdMapSequence.html#984" class="Bound"
+      >Y&#8320;</a
+      ><a name="986"
+      > </a
+      ><a name="987" href="homotopy.PtdMapSequence.html#987" class="Bound"
+      >Z&#8320;</a
+      ><a name="989"
+      > </a
+      ><a name="990" class="Symbol"
+      >:</a
+      ><a name="991"
+      > </a
+      ><a name="992" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="995"
+      > </a
+      ><a name="996" href="homotopy.PtdMapSequence.html#700" class="Bound"
+      >i&#8320;</a
+      ><a name="998" class="Symbol"
+      >}</a
+      ><a name="999"
+      > </a
+      ><a name="1000" class="Symbol"
+      >{</a
+      ><a name="1001" href="homotopy.PtdMapSequence.html#1001" class="Bound"
+      >X&#8321;</a
+      ><a name="1003"
+      > </a
+      ><a name="1004" href="homotopy.PtdMapSequence.html#1004" class="Bound"
+      >Y&#8321;</a
+      ><a name="1006"
+      > </a
+      ><a name="1007" href="homotopy.PtdMapSequence.html#1007" class="Bound"
+      >Z&#8321;</a
+      ><a name="1009"
+      > </a
+      ><a name="1010" class="Symbol"
+      >:</a
+      ><a name="1011"
+      > </a
+      ><a name="1012" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1015"
+      > </a
+      ><a name="1016" href="homotopy.PtdMapSequence.html#703" class="Bound"
+      >i&#8321;</a
+      ><a name="1018" class="Symbol"
+      >}</a
+      ><a name="1019"
+      >
+    </a
+      ><a name="1024" class="Symbol"
+      >&#8594;</a
+      ><a name="1025"
+      > </a
+      ><a name="1026" class="Symbol"
+      >{</a
+      ><a name="1027" href="homotopy.PtdMapSequence.html#1027" class="Bound"
+      >&#8857;f&#8320;</a
+      ><a name="1030"
+      > </a
+      ><a name="1031" class="Symbol"
+      >:</a
+      ><a name="1032"
+      > </a
+      ><a name="1033" href="homotopy.PtdMapSequence.html#981" class="Bound"
+      >X&#8320;</a
+      ><a name="1035"
+      > </a
+      ><a name="1036" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1038"
+      > </a
+      ><a name="1039" href="homotopy.PtdMapSequence.html#984" class="Bound"
+      >Y&#8320;</a
+      ><a name="1041" class="Symbol"
+      >}</a
+      ><a name="1042"
+      > </a
+      ><a name="1043" class="Symbol"
+      >{</a
+      ><a name="1044" href="homotopy.PtdMapSequence.html#1044" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="1049"
+      > </a
+      ><a name="1050" class="Symbol"
+      >:</a
+      ><a name="1051"
+      > </a
+      ><a name="1052" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="1066"
+      > </a
+      ><a name="1067" href="homotopy.PtdMapSequence.html#984" class="Bound"
+      >Y&#8320;</a
+      ><a name="1069"
+      > </a
+      ><a name="1070" href="homotopy.PtdMapSequence.html#987" class="Bound"
+      >Z&#8320;</a
+      ><a name="1072" class="Symbol"
+      >}</a
+      ><a name="1073"
+      >
+    </a
+      ><a name="1078" class="Symbol"
+      >&#8594;</a
+      ><a name="1079"
+      > </a
+      ><a name="1080" class="Symbol"
+      >{</a
+      ><a name="1081" href="homotopy.PtdMapSequence.html#1081" class="Bound"
+      >&#8857;f&#8321;</a
+      ><a name="1084"
+      > </a
+      ><a name="1085" class="Symbol"
+      >:</a
+      ><a name="1086"
+      > </a
+      ><a name="1087" href="homotopy.PtdMapSequence.html#1001" class="Bound"
+      >X&#8321;</a
+      ><a name="1089"
+      > </a
+      ><a name="1090" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1092"
+      > </a
+      ><a name="1093" href="homotopy.PtdMapSequence.html#1004" class="Bound"
+      >Y&#8321;</a
+      ><a name="1095" class="Symbol"
+      >}</a
+      ><a name="1096"
+      > </a
+      ><a name="1097" class="Symbol"
+      >{</a
+      ><a name="1098" href="homotopy.PtdMapSequence.html#1098" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" class="Symbol"
+      >:</a
+      ><a name="1105"
+      > </a
+      ><a name="1106" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="1120"
+      > </a
+      ><a name="1121" href="homotopy.PtdMapSequence.html#1004" class="Bound"
+      >Y&#8321;</a
+      ><a name="1123"
+      > </a
+      ><a name="1124" href="homotopy.PtdMapSequence.html#1007" class="Bound"
+      >Z&#8321;</a
+      ><a name="1126" class="Symbol"
+      >}</a
+      ><a name="1127"
+      >
+    </a
+      ><a name="1132" class="Symbol"
+      >&#8594;</a
+      ><a name="1133"
+      > </a
+      ><a name="1134" class="Symbol"
+      >(</a
+      ><a name="1135" href="homotopy.PtdMapSequence.html#1135" class="Bound"
+      >&#8857;hX</a
+      ><a name="1138"
+      > </a
+      ><a name="1139" class="Symbol"
+      >:</a
+      ><a name="1140"
+      > </a
+      ><a name="1141" href="homotopy.PtdMapSequence.html#981" class="Bound"
+      >X&#8320;</a
+      ><a name="1143"
+      > </a
+      ><a name="1144" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1146"
+      > </a
+      ><a name="1147" href="homotopy.PtdMapSequence.html#1001" class="Bound"
+      >X&#8321;</a
+      ><a name="1149" class="Symbol"
+      >)</a
+      ><a name="1150"
+      > </a
+      ><a name="1151" class="Symbol"
+      >{</a
+      ><a name="1152" href="homotopy.PtdMapSequence.html#1152" class="Bound"
+      >&#8857;hY</a
+      ><a name="1155"
+      > </a
+      ><a name="1156" class="Symbol"
+      >:</a
+      ><a name="1157"
+      > </a
+      ><a name="1158" href="homotopy.PtdMapSequence.html#984" class="Bound"
+      >Y&#8320;</a
+      ><a name="1160"
+      > </a
+      ><a name="1161" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1163"
+      > </a
+      ><a name="1164" href="homotopy.PtdMapSequence.html#1004" class="Bound"
+      >Y&#8321;</a
+      ><a name="1166" class="Symbol"
+      >}</a
+      ><a name="1167"
+      > </a
+      ><a name="1168" class="Symbol"
+      >{</a
+      ><a name="1169" href="homotopy.PtdMapSequence.html#1169" class="Bound"
+      >&#8857;hZ</a
+      ><a name="1172"
+      > </a
+      ><a name="1173" class="Symbol"
+      >:</a
+      ><a name="1174"
+      > </a
+      ><a name="1175" href="homotopy.PtdMapSequence.html#987" class="Bound"
+      >Z&#8320;</a
+      ><a name="1177"
+      > </a
+      ><a name="1178" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1180"
+      > </a
+      ><a name="1181" href="homotopy.PtdMapSequence.html#1007" class="Bound"
+      >Z&#8321;</a
+      ><a name="1183" class="Symbol"
+      >}</a
+      ><a name="1184"
+      >
+    </a
+      ><a name="1189" class="Symbol"
+      >&#8594;</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" class="Symbol"
+      >(</a
+      ><a name="1203" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1206"
+      > </a
+      ><a name="1207" href="homotopy.PtdMapSequence.html#1027" class="Bound"
+      >&#8857;f&#8320;</a
+      ><a name="1210" class="Symbol"
+      >)</a
+      ><a name="1211"
+      > </a
+      ><a name="1212" class="Symbol"
+      >(</a
+      ><a name="1213" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1216"
+      > </a
+      ><a name="1217" href="homotopy.PtdMapSequence.html#1081" class="Bound"
+      >&#8857;f&#8321;</a
+      ><a name="1220" class="Symbol"
+      >)</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" class="Symbol"
+      >(</a
+      ><a name="1223" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1226"
+      > </a
+      ><a name="1227" href="homotopy.PtdMapSequence.html#1135" class="Bound"
+      >&#8857;hX</a
+      ><a name="1230" class="Symbol"
+      >)</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" class="Symbol"
+      >(</a
+      ><a name="1233" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1236"
+      > </a
+      ><a name="1237" href="homotopy.PtdMapSequence.html#1152" class="Bound"
+      >&#8857;hY</a
+      ><a name="1240" class="Symbol"
+      >)</a
+      ><a name="1241"
+      >
+    </a
+      ><a name="1246" class="Symbol"
+      >&#8594;</a
+      ><a name="1247"
+      > </a
+      ><a name="1248" href="homotopy.PtdMapSequence.html#686" class="Datatype"
+      >PtdMapSeqMap</a
+      ><a name="1260"
+      > </a
+      ><a name="1261" href="homotopy.PtdMapSequence.html#1044" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="1266"
+      > </a
+      ><a name="1267" href="homotopy.PtdMapSequence.html#1098" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="1272"
+      > </a
+      ><a name="1273" href="homotopy.PtdMapSequence.html#1152" class="Bound"
+      >&#8857;hY</a
+      ><a name="1276"
+      > </a
+      ><a name="1277" href="homotopy.PtdMapSequence.html#1169" class="Bound"
+      >&#8857;hZ</a
+      ><a name="1280"
+      >
+    </a
+      ><a name="1285" class="Symbol"
+      >&#8594;</a
+      ><a name="1286"
+      > </a
+      ><a name="1287" href="homotopy.PtdMapSequence.html#686" class="Datatype"
+      >PtdMapSeqMap</a
+      ><a name="1299"
+      > </a
+      ><a name="1300" class="Symbol"
+      >(</a
+      ><a name="1301" href="homotopy.PtdMapSequence.html#981" class="Bound"
+      >X&#8320;</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" href="homotopy.PtdMapSequence.html#504" class="InductiveConstructor Operator"
+      >&#8857;&#8594;&#10216;</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" href="homotopy.PtdMapSequence.html#1027" class="Bound"
+      >&#8857;f&#8320;</a
+      ><a name="1311"
+      > </a
+      ><a name="1312" href="homotopy.PtdMapSequence.html#504" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="1313"
+      > </a
+      ><a name="1314" href="homotopy.PtdMapSequence.html#1044" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="1319" class="Symbol"
+      >)</a
+      ><a name="1320"
+      > </a
+      ><a name="1321" class="Symbol"
+      >(</a
+      ><a name="1322" href="homotopy.PtdMapSequence.html#1001" class="Bound"
+      >X&#8321;</a
+      ><a name="1324"
+      > </a
+      ><a name="1325" href="homotopy.PtdMapSequence.html#504" class="InductiveConstructor Operator"
+      >&#8857;&#8594;&#10216;</a
+      ><a name="1328"
+      > </a
+      ><a name="1329" href="homotopy.PtdMapSequence.html#1081" class="Bound"
+      >&#8857;f&#8321;</a
+      ><a name="1332"
+      > </a
+      ><a name="1333" href="homotopy.PtdMapSequence.html#504" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="1334"
+      > </a
+      ><a name="1335" href="homotopy.PtdMapSequence.html#1098" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="1340" class="Symbol"
+      >)</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" href="homotopy.PtdMapSequence.html#1135" class="Bound"
+      >&#8857;hX</a
+      ><a name="1345"
+      > </a
+      ><a name="1346" href="homotopy.PtdMapSequence.html#1169" class="Bound"
+      >&#8857;hZ</a
+      ><a name="1349"
+      >
+
+</a
+      ><a name="1351" class="Comment"
+      >{- equivalences between two pointed map sequences -}</a
+      ><a name="1403"
+      >
+
+</a
+      ><a name="1405" href="homotopy.PtdMapSequence.html#1405" class="Function"
+      >is-&#8857;seq-equiv</a
+      ><a name="1418"
+      > </a
+      ><a name="1419" class="Symbol"
+      >:</a
+      ><a name="1420"
+      > </a
+      ><a name="1421" class="Symbol"
+      >&#8704;</a
+      ><a name="1422"
+      > </a
+      ><a name="1423" class="Symbol"
+      >{</a
+      ><a name="1424" href="homotopy.PtdMapSequence.html#1424" class="Bound"
+      >i&#8320;</a
+      ><a name="1426"
+      > </a
+      ><a name="1427" href="homotopy.PtdMapSequence.html#1427" class="Bound"
+      >i&#8321;</a
+      ><a name="1429" class="Symbol"
+      >}</a
+      ><a name="1430"
+      > </a
+      ><a name="1431" class="Symbol"
+      >{</a
+      ><a name="1432" href="homotopy.PtdMapSequence.html#1432" class="Bound"
+      >X&#8320;</a
+      ><a name="1434"
+      > </a
+      ><a name="1435" href="homotopy.PtdMapSequence.html#1435" class="Bound"
+      >Y&#8320;</a
+      ><a name="1437"
+      > </a
+      ><a name="1438" class="Symbol"
+      >:</a
+      ><a name="1439"
+      > </a
+      ><a name="1440" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1443"
+      > </a
+      ><a name="1444" href="homotopy.PtdMapSequence.html#1424" class="Bound"
+      >i&#8320;</a
+      ><a name="1446" class="Symbol"
+      >}</a
+      ><a name="1447"
+      > </a
+      ><a name="1448" class="Symbol"
+      >{</a
+      ><a name="1449" href="homotopy.PtdMapSequence.html#1449" class="Bound"
+      >X&#8321;</a
+      ><a name="1451"
+      > </a
+      ><a name="1452" href="homotopy.PtdMapSequence.html#1452" class="Bound"
+      >Y&#8321;</a
+      ><a name="1454"
+      > </a
+      ><a name="1455" class="Symbol"
+      >:</a
+      ><a name="1456"
+      > </a
+      ><a name="1457" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1460"
+      > </a
+      ><a name="1461" href="homotopy.PtdMapSequence.html#1427" class="Bound"
+      >i&#8321;</a
+      ><a name="1463" class="Symbol"
+      >}</a
+      ><a name="1464"
+      >
+  </a
+      ><a name="1467" class="Symbol"
+      >{</a
+      ><a name="1468" href="homotopy.PtdMapSequence.html#1468" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="1473"
+      > </a
+      ><a name="1474" class="Symbol"
+      >:</a
+      ><a name="1475"
+      > </a
+      ><a name="1476" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="1490"
+      > </a
+      ><a name="1491" href="homotopy.PtdMapSequence.html#1432" class="Bound"
+      >X&#8320;</a
+      ><a name="1493"
+      > </a
+      ><a name="1494" href="homotopy.PtdMapSequence.html#1435" class="Bound"
+      >Y&#8320;</a
+      ><a name="1496" class="Symbol"
+      >}</a
+      ><a name="1497"
+      > </a
+      ><a name="1498" class="Symbol"
+      >{</a
+      ><a name="1499" href="homotopy.PtdMapSequence.html#1499" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="1504"
+      > </a
+      ><a name="1505" class="Symbol"
+      >:</a
+      ><a name="1506"
+      > </a
+      ><a name="1507" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="1521"
+      > </a
+      ><a name="1522" href="homotopy.PtdMapSequence.html#1449" class="Bound"
+      >X&#8321;</a
+      ><a name="1524"
+      > </a
+      ><a name="1525" href="homotopy.PtdMapSequence.html#1452" class="Bound"
+      >Y&#8321;</a
+      ><a name="1527" class="Symbol"
+      >}</a
+      ><a name="1528"
+      >
+  </a
+      ><a name="1531" class="Symbol"
+      >{</a
+      ><a name="1532" href="homotopy.PtdMapSequence.html#1532" class="Bound"
+      >&#8857;hX</a
+      ><a name="1535"
+      > </a
+      ><a name="1536" class="Symbol"
+      >:</a
+      ><a name="1537"
+      > </a
+      ><a name="1538" href="homotopy.PtdMapSequence.html#1432" class="Bound"
+      >X&#8320;</a
+      ><a name="1540"
+      > </a
+      ><a name="1541" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1543"
+      > </a
+      ><a name="1544" href="homotopy.PtdMapSequence.html#1449" class="Bound"
+      >X&#8321;</a
+      ><a name="1546" class="Symbol"
+      >}</a
+      ><a name="1547"
+      > </a
+      ><a name="1548" class="Symbol"
+      >{</a
+      ><a name="1549" href="homotopy.PtdMapSequence.html#1549" class="Bound"
+      >&#8857;hY</a
+      ><a name="1552"
+      > </a
+      ><a name="1553" class="Symbol"
+      >:</a
+      ><a name="1554"
+      > </a
+      ><a name="1555" href="homotopy.PtdMapSequence.html#1435" class="Bound"
+      >Y&#8320;</a
+      ><a name="1557"
+      > </a
+      ><a name="1558" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1560"
+      > </a
+      ><a name="1561" href="homotopy.PtdMapSequence.html#1452" class="Bound"
+      >Y&#8321;</a
+      ><a name="1563" class="Symbol"
+      >}</a
+      ><a name="1564"
+      >
+  </a
+      ><a name="1567" class="Symbol"
+      >&#8594;</a
+      ><a name="1568"
+      > </a
+      ><a name="1569" href="homotopy.PtdMapSequence.html#686" class="Datatype"
+      >PtdMapSeqMap</a
+      ><a name="1581"
+      > </a
+      ><a name="1582" href="homotopy.PtdMapSequence.html#1468" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="1587"
+      > </a
+      ><a name="1588" href="homotopy.PtdMapSequence.html#1499" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" href="homotopy.PtdMapSequence.html#1532" class="Bound"
+      >&#8857;hX</a
+      ><a name="1597"
+      > </a
+      ><a name="1598" href="homotopy.PtdMapSequence.html#1549" class="Bound"
+      >&#8857;hY</a
+      ><a name="1601"
+      >
+  </a
+      ><a name="1604" class="Symbol"
+      >&#8594;</a
+      ><a name="1605"
+      > </a
+      ><a name="1606" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1610"
+      > </a
+      ><a name="1611" class="Symbol"
+      >(</a
+      ><a name="1612" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1616"
+      > </a
+      ><a name="1617" href="homotopy.PtdMapSequence.html#1424" class="Bound"
+      >i&#8320;</a
+      ><a name="1619"
+      > </a
+      ><a name="1620" href="homotopy.PtdMapSequence.html#1427" class="Bound"
+      >i&#8321;</a
+      ><a name="1622" class="Symbol"
+      >)</a
+      ><a name="1623"
+      >
+</a
+      ><a name="1624" href="homotopy.PtdMapSequence.html#1405" class="Function"
+      >is-&#8857;seq-equiv</a
+      ><a name="1637"
+      > </a
+      ><a name="1638" class="Symbol"
+      >(</a
+      ><a name="1639" href="homotopy.PtdMapSequence.html#1639" class="Bound"
+      >&#8857;h</a
+      ><a name="1641"
+      > </a
+      ><a name="1642" href="homotopy.PtdMapSequence.html#879" class="InductiveConstructor Operator"
+      >&#8857;&#8595;|</a
+      ><a name="1645" class="Symbol"
+      >)</a
+      ><a name="1646"
+      > </a
+      ><a name="1647" class="Symbol"
+      >=</a
+      ><a name="1648"
+      > </a
+      ><a name="1649" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="1657"
+      > </a
+      ><a name="1658" class="Symbol"
+      >(</a
+      ><a name="1659" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1662"
+      > </a
+      ><a name="1663" href="homotopy.PtdMapSequence.html#1639" class="Bound"
+      >&#8857;h</a
+      ><a name="1665" class="Symbol"
+      >)</a
+      ><a name="1666"
+      >
+</a
+      ><a name="1667" href="homotopy.PtdMapSequence.html#1405" class="Function"
+      >is-&#8857;seq-equiv</a
+      ><a name="1680"
+      > </a
+      ><a name="1681" class="Symbol"
+      >(</a
+      ><a name="1682" href="homotopy.PtdMapSequence.html#1682" class="Bound"
+      >&#8857;h</a
+      ><a name="1684"
+      > </a
+      ><a name="1685" href="homotopy.PtdMapSequence.html#968" class="InductiveConstructor Operator"
+      >&#8857;&#8595;&#10216;</a
+      ><a name="1688"
+      > </a
+      ><a name="1689" class="Symbol"
+      >_</a
+      ><a name="1690"
+      > </a
+      ><a name="1691" href="homotopy.PtdMapSequence.html#968" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" href="homotopy.PtdMapSequence.html#1693" class="Bound"
+      >&#8857;seq</a
+      ><a name="1697" class="Symbol"
+      >)</a
+      ><a name="1698"
+      > </a
+      ><a name="1699" class="Symbol"
+      >=</a
+      ><a name="1700"
+      > </a
+      ><a name="1701" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="1709"
+      > </a
+      ><a name="1710" class="Symbol"
+      >(</a
+      ><a name="1711" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1714"
+      > </a
+      ><a name="1715" href="homotopy.PtdMapSequence.html#1682" class="Bound"
+      >&#8857;h</a
+      ><a name="1717" class="Symbol"
+      >)</a
+      ><a name="1718"
+      > </a
+      ><a name="1719" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="1720"
+      > </a
+      ><a name="1721" href="homotopy.PtdMapSequence.html#1405" class="Function"
+      >is-&#8857;seq-equiv</a
+      ><a name="1734"
+      > </a
+      ><a name="1735" href="homotopy.PtdMapSequence.html#1693" class="Bound"
+      >&#8857;seq</a
+      ><a name="1739"
+      >
+
+</a
+      ><a name="1741" href="homotopy.PtdMapSequence.html#1741" class="Function"
+      >PtdMapSeqEquiv</a
+      ><a name="1755"
+      > </a
+      ><a name="1756" class="Symbol"
+      >:</a
+      ><a name="1757"
+      > </a
+      ><a name="1758" class="Symbol"
+      >&#8704;</a
+      ><a name="1759"
+      > </a
+      ><a name="1760" class="Symbol"
+      >{</a
+      ><a name="1761" href="homotopy.PtdMapSequence.html#1761" class="Bound"
+      >i&#8320;</a
+      ><a name="1763"
+      > </a
+      ><a name="1764" href="homotopy.PtdMapSequence.html#1764" class="Bound"
+      >i&#8321;</a
+      ><a name="1766" class="Symbol"
+      >}</a
+      ><a name="1767"
+      > </a
+      ><a name="1768" class="Symbol"
+      >{</a
+      ><a name="1769" href="homotopy.PtdMapSequence.html#1769" class="Bound"
+      >X&#8320;</a
+      ><a name="1771"
+      > </a
+      ><a name="1772" href="homotopy.PtdMapSequence.html#1772" class="Bound"
+      >Y&#8320;</a
+      ><a name="1774"
+      > </a
+      ><a name="1775" class="Symbol"
+      >:</a
+      ><a name="1776"
+      > </a
+      ><a name="1777" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1780"
+      > </a
+      ><a name="1781" href="homotopy.PtdMapSequence.html#1761" class="Bound"
+      >i&#8320;</a
+      ><a name="1783" class="Symbol"
+      >}</a
+      ><a name="1784"
+      > </a
+      ><a name="1785" class="Symbol"
+      >{</a
+      ><a name="1786" href="homotopy.PtdMapSequence.html#1786" class="Bound"
+      >X&#8321;</a
+      ><a name="1788"
+      > </a
+      ><a name="1789" href="homotopy.PtdMapSequence.html#1789" class="Bound"
+      >Y&#8321;</a
+      ><a name="1791"
+      > </a
+      ><a name="1792" class="Symbol"
+      >:</a
+      ><a name="1793"
+      > </a
+      ><a name="1794" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1797"
+      > </a
+      ><a name="1798" href="homotopy.PtdMapSequence.html#1764" class="Bound"
+      >i&#8321;</a
+      ><a name="1800" class="Symbol"
+      >}</a
+      ><a name="1801"
+      >
+  </a
+      ><a name="1804" class="Symbol"
+      >(</a
+      ><a name="1805" href="homotopy.PtdMapSequence.html#1805" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="1810"
+      > </a
+      ><a name="1811" class="Symbol"
+      >:</a
+      ><a name="1812"
+      > </a
+      ><a name="1813" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="1827"
+      > </a
+      ><a name="1828" href="homotopy.PtdMapSequence.html#1769" class="Bound"
+      >X&#8320;</a
+      ><a name="1830"
+      > </a
+      ><a name="1831" href="homotopy.PtdMapSequence.html#1772" class="Bound"
+      >Y&#8320;</a
+      ><a name="1833" class="Symbol"
+      >)</a
+      ><a name="1834"
+      > </a
+      ><a name="1835" class="Symbol"
+      >(</a
+      ><a name="1836" href="homotopy.PtdMapSequence.html#1836" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="1841"
+      > </a
+      ><a name="1842" class="Symbol"
+      >:</a
+      ><a name="1843"
+      > </a
+      ><a name="1844" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="1858"
+      > </a
+      ><a name="1859" href="homotopy.PtdMapSequence.html#1786" class="Bound"
+      >X&#8321;</a
+      ><a name="1861"
+      > </a
+      ><a name="1862" href="homotopy.PtdMapSequence.html#1789" class="Bound"
+      >Y&#8321;</a
+      ><a name="1864" class="Symbol"
+      >)</a
+      ><a name="1865"
+      >
+  </a
+      ><a name="1868" class="Symbol"
+      >(</a
+      ><a name="1869" href="homotopy.PtdMapSequence.html#1869" class="Bound"
+      >&#8857;hX</a
+      ><a name="1872"
+      > </a
+      ><a name="1873" class="Symbol"
+      >:</a
+      ><a name="1874"
+      > </a
+      ><a name="1875" href="homotopy.PtdMapSequence.html#1769" class="Bound"
+      >X&#8320;</a
+      ><a name="1877"
+      > </a
+      ><a name="1878" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1880"
+      > </a
+      ><a name="1881" href="homotopy.PtdMapSequence.html#1786" class="Bound"
+      >X&#8321;</a
+      ><a name="1883" class="Symbol"
+      >)</a
+      ><a name="1884"
+      > </a
+      ><a name="1885" class="Symbol"
+      >(</a
+      ><a name="1886" href="homotopy.PtdMapSequence.html#1886" class="Bound"
+      >&#8857;hY</a
+      ><a name="1889"
+      > </a
+      ><a name="1890" class="Symbol"
+      >:</a
+      ><a name="1891"
+      > </a
+      ><a name="1892" href="homotopy.PtdMapSequence.html#1772" class="Bound"
+      >Y&#8320;</a
+      ><a name="1894"
+      > </a
+      ><a name="1895" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1897"
+      > </a
+      ><a name="1898" href="homotopy.PtdMapSequence.html#1789" class="Bound"
+      >Y&#8321;</a
+      ><a name="1900" class="Symbol"
+      >)</a
+      ><a name="1901"
+      > </a
+      ><a name="1902" class="Symbol"
+      >&#8594;</a
+      ><a name="1903"
+      > </a
+      ><a name="1904" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1908"
+      > </a
+      ><a name="1909" class="Symbol"
+      >(</a
+      ><a name="1910" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="1915"
+      > </a
+      ><a name="1916" class="Symbol"
+      >(</a
+      ><a name="1917" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1921"
+      > </a
+      ><a name="1922" href="homotopy.PtdMapSequence.html#1761" class="Bound"
+      >i&#8320;</a
+      ><a name="1924"
+      > </a
+      ><a name="1925" href="homotopy.PtdMapSequence.html#1764" class="Bound"
+      >i&#8321;</a
+      ><a name="1927" class="Symbol"
+      >))</a
+      ><a name="1929"
+      >
+</a
+      ><a name="1930" href="homotopy.PtdMapSequence.html#1741" class="Function"
+      >PtdMapSeqEquiv</a
+      ><a name="1944"
+      > </a
+      ><a name="1945" href="homotopy.PtdMapSequence.html#1945" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="1950"
+      > </a
+      ><a name="1951" href="homotopy.PtdMapSequence.html#1951" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="1956"
+      > </a
+      ><a name="1957" href="homotopy.PtdMapSequence.html#1957" class="Bound"
+      >&#8857;hX</a
+      ><a name="1960"
+      > </a
+      ><a name="1961" href="homotopy.PtdMapSequence.html#1961" class="Bound"
+      >&#8857;hY</a
+      ><a name="1964"
+      >
+  </a
+      ><a name="1967" class="Symbol"
+      >=</a
+      ><a name="1968"
+      > </a
+      ><a name="1969" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="1970"
+      > </a
+      ><a name="1971" class="Symbol"
+      >(</a
+      ><a name="1972" href="homotopy.PtdMapSequence.html#686" class="Datatype"
+      >PtdMapSeqMap</a
+      ><a name="1984"
+      > </a
+      ><a name="1985" href="homotopy.PtdMapSequence.html#1945" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="1990"
+      > </a
+      ><a name="1991" href="homotopy.PtdMapSequence.html#1951" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="1996"
+      > </a
+      ><a name="1997" href="homotopy.PtdMapSequence.html#1957" class="Bound"
+      >&#8857;hX</a
+      ><a name="2000"
+      > </a
+      ><a name="2001" href="homotopy.PtdMapSequence.html#1961" class="Bound"
+      >&#8857;hY</a
+      ><a name="2004" class="Symbol"
+      >)</a
+      ><a name="2005"
+      > </a
+      ><a name="2006" href="homotopy.PtdMapSequence.html#1405" class="Function"
+      >is-&#8857;seq-equiv</a
+      ><a name="2019"
+      >
+
+</a
+      ><a name="2021" class="Comment"
+      >{- Doesn't seem useful.
+
+infix 15 _&#8857;&#8597;&#8867;|
+infixr 10 _&#8857;&#8597;&#10216;_&#10217;&#8597;_
+
+_&#8857;&#8597;&#8867;| : &#8704; {i} {X&#8320; X&#8321; : Ptd i} (&#8857;eq : X&#8320; &#8857;&#8771; X&#8321;)
+  &#8594; PtdMapSequenceEquiv (X&#8320; &#8857;&#8867;|) (X&#8321; &#8857;&#8867;|) (&#8857;&#8211;&gt; &#8857;eq) (&#8857;&#8211;&gt; &#8857;eq)
+&#8857;eq &#8857;&#8597;&#8867;| = (&#8857;&#8211;&gt; &#8857;eq &#8857;&#8595;&#8867;|) , snd &#8857;eq
+
+_&#8857;&#8597;&#10216;_&#10217;&#8597;_ : &#8704; {i} {X&#8320; X&#8321; : Ptd i} &#8594; (&#8857;eqX : X&#8320; &#8857;&#8771; X&#8321;)
+           &#8594; &#8704; {Y&#8320; Y&#8321; : Ptd i} {&#8857;f : X&#8320; &#8857;&#8594; Y&#8320;} {&#8857;g : X&#8321; &#8857;&#8594; Y&#8321;} {&#8857;eqY : Y&#8320; &#8857;&#8771; Y&#8321;}
+           &#8594; &#8857;CommutingSquare &#8857;f &#8857;g (&#8857;&#8211;&gt; &#8857;eqX) (&#8857;&#8211;&gt; &#8857;eqY)
+           &#8594; &#8704; {Z&#8320; Z&#8321; : Ptd i} {&#8857;eqZ : Z&#8320; &#8857;&#8771; Z&#8321;} {&#8857;seq&#8320; : PtdMapSequence Y&#8320; Z&#8320;} {&#8857;seq&#8321; : PtdMapSequence Y&#8321; Z&#8321;}
+           &#8594; PtdMapSequenceEquiv &#8857;seq&#8320; &#8857;seq&#8321; (&#8857;&#8211;&gt; &#8857;eqY) (&#8857;&#8211;&gt; &#8857;eqZ)
+           &#8594; PtdMapSequenceEquiv (X&#8320; &#8857;&#10216; &#8857;f &#10217;&#8594; &#8857;seq&#8320;) (X&#8321; &#8857;&#10216; &#8857;g &#10217;&#8594; &#8857;seq&#8321;) (&#8857;&#8211;&gt; &#8857;eqX) (&#8857;&#8211;&gt; &#8857;eqZ)
+(&#8857;hX , hX-is-equiv) &#8857;&#8597;&#10216; sqr &#10217;&#8597; (&#8857;seq-map , &#8857;seq-map-is-equiv) =
+  (&#8857;hX &#8857;&#8595;&#10216; sqr &#10217;&#8595; &#8857;seq-map) , hX-is-equiv , &#8857;seq-map-is-equiv
+-}</a
+      ><a name="2820"
+      >
+
+</a
+      ><a name="2822" class="Keyword"
+      >private</a
+      ><a name="2829"
+      >
+  </a
+      ><a name="2832" href="homotopy.PtdMapSequence.html#2832" class="Function"
+      >is-&#8857;seq-equiv-head</a
+      ><a name="2850"
+      > </a
+      ><a name="2851" class="Symbol"
+      >:</a
+      ><a name="2852"
+      > </a
+      ><a name="2853" class="Symbol"
+      >&#8704;</a
+      ><a name="2854"
+      > </a
+      ><a name="2855" class="Symbol"
+      >{</a
+      ><a name="2856" href="homotopy.PtdMapSequence.html#2856" class="Bound"
+      >i&#8320;</a
+      ><a name="2858"
+      > </a
+      ><a name="2859" href="homotopy.PtdMapSequence.html#2859" class="Bound"
+      >i&#8321;</a
+      ><a name="2861" class="Symbol"
+      >}</a
+      ><a name="2862"
+      > </a
+      ><a name="2863" class="Symbol"
+      >{</a
+      ><a name="2864" href="homotopy.PtdMapSequence.html#2864" class="Bound"
+      >X&#8320;</a
+      ><a name="2866"
+      > </a
+      ><a name="2867" href="homotopy.PtdMapSequence.html#2867" class="Bound"
+      >Y&#8320;</a
+      ><a name="2869"
+      > </a
+      ><a name="2870" class="Symbol"
+      >:</a
+      ><a name="2871"
+      > </a
+      ><a name="2872" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2875"
+      > </a
+      ><a name="2876" href="homotopy.PtdMapSequence.html#2856" class="Bound"
+      >i&#8320;</a
+      ><a name="2878" class="Symbol"
+      >}</a
+      ><a name="2879"
+      > </a
+      ><a name="2880" class="Symbol"
+      >{</a
+      ><a name="2881" href="homotopy.PtdMapSequence.html#2881" class="Bound"
+      >X&#8321;</a
+      ><a name="2883"
+      > </a
+      ><a name="2884" href="homotopy.PtdMapSequence.html#2884" class="Bound"
+      >Y&#8321;</a
+      ><a name="2886"
+      > </a
+      ><a name="2887" class="Symbol"
+      >:</a
+      ><a name="2888"
+      > </a
+      ><a name="2889" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2892"
+      > </a
+      ><a name="2893" href="homotopy.PtdMapSequence.html#2859" class="Bound"
+      >i&#8321;</a
+      ><a name="2895" class="Symbol"
+      >}</a
+      ><a name="2896"
+      >
+    </a
+      ><a name="2901" class="Symbol"
+      >{</a
+      ><a name="2902" href="homotopy.PtdMapSequence.html#2902" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="2907"
+      > </a
+      ><a name="2908" class="Symbol"
+      >:</a
+      ><a name="2909"
+      > </a
+      ><a name="2910" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="2924"
+      > </a
+      ><a name="2925" href="homotopy.PtdMapSequence.html#2864" class="Bound"
+      >X&#8320;</a
+      ><a name="2927"
+      > </a
+      ><a name="2928" href="homotopy.PtdMapSequence.html#2867" class="Bound"
+      >Y&#8320;</a
+      ><a name="2930" class="Symbol"
+      >}</a
+      ><a name="2931"
+      > </a
+      ><a name="2932" class="Symbol"
+      >{</a
+      ><a name="2933" href="homotopy.PtdMapSequence.html#2933" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="2938"
+      > </a
+      ><a name="2939" class="Symbol"
+      >:</a
+      ><a name="2940"
+      > </a
+      ><a name="2941" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="2955"
+      > </a
+      ><a name="2956" href="homotopy.PtdMapSequence.html#2881" class="Bound"
+      >X&#8321;</a
+      ><a name="2958"
+      > </a
+      ><a name="2959" href="homotopy.PtdMapSequence.html#2884" class="Bound"
+      >Y&#8321;</a
+      ><a name="2961" class="Symbol"
+      >}</a
+      ><a name="2962"
+      >
+    </a
+      ><a name="2967" class="Symbol"
+      >{</a
+      ><a name="2968" href="homotopy.PtdMapSequence.html#2968" class="Bound"
+      >&#8857;hX</a
+      ><a name="2971"
+      > </a
+      ><a name="2972" class="Symbol"
+      >:</a
+      ><a name="2973"
+      > </a
+      ><a name="2974" href="homotopy.PtdMapSequence.html#2864" class="Bound"
+      >X&#8320;</a
+      ><a name="2976"
+      > </a
+      ><a name="2977" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="2979"
+      > </a
+      ><a name="2980" href="homotopy.PtdMapSequence.html#2881" class="Bound"
+      >X&#8321;</a
+      ><a name="2982" class="Symbol"
+      >}</a
+      ><a name="2983"
+      > </a
+      ><a name="2984" class="Symbol"
+      >{</a
+      ><a name="2985" href="homotopy.PtdMapSequence.html#2985" class="Bound"
+      >&#8857;hY</a
+      ><a name="2988"
+      > </a
+      ><a name="2989" class="Symbol"
+      >:</a
+      ><a name="2990"
+      > </a
+      ><a name="2991" href="homotopy.PtdMapSequence.html#2867" class="Bound"
+      >Y&#8320;</a
+      ><a name="2993"
+      > </a
+      ><a name="2994" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="2996"
+      > </a
+      ><a name="2997" href="homotopy.PtdMapSequence.html#2884" class="Bound"
+      >Y&#8321;</a
+      ><a name="2999" class="Symbol"
+      >}</a
+      ><a name="3000"
+      >
+    </a
+      ><a name="3005" class="Symbol"
+      >{</a
+      ><a name="3006" href="homotopy.PtdMapSequence.html#3006" class="Bound"
+      >seq-map</a
+      ><a name="3013"
+      > </a
+      ><a name="3014" class="Symbol"
+      >:</a
+      ><a name="3015"
+      > </a
+      ><a name="3016" href="homotopy.PtdMapSequence.html#686" class="Datatype"
+      >PtdMapSeqMap</a
+      ><a name="3028"
+      > </a
+      ><a name="3029" href="homotopy.PtdMapSequence.html#2902" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="3034"
+      > </a
+      ><a name="3035" href="homotopy.PtdMapSequence.html#2933" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="3040"
+      > </a
+      ><a name="3041" href="homotopy.PtdMapSequence.html#2968" class="Bound"
+      >&#8857;hX</a
+      ><a name="3044"
+      > </a
+      ><a name="3045" href="homotopy.PtdMapSequence.html#2985" class="Bound"
+      >&#8857;hY</a
+      ><a name="3048" class="Symbol"
+      >}</a
+      ><a name="3049"
+      >
+    </a
+      ><a name="3054" class="Symbol"
+      >&#8594;</a
+      ><a name="3055"
+      > </a
+      ><a name="3056" href="homotopy.PtdMapSequence.html#1405" class="Function"
+      >is-&#8857;seq-equiv</a
+      ><a name="3069"
+      > </a
+      ><a name="3070" href="homotopy.PtdMapSequence.html#3006" class="Bound"
+      >seq-map</a
+      ><a name="3077"
+      > </a
+      ><a name="3078" class="Symbol"
+      >&#8594;</a
+      ><a name="3079"
+      > </a
+      ><a name="3080" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="3088"
+      > </a
+      ><a name="3089" class="Symbol"
+      >(</a
+      ><a name="3090" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="3093"
+      > </a
+      ><a name="3094" href="homotopy.PtdMapSequence.html#2968" class="Bound"
+      >&#8857;hX</a
+      ><a name="3097" class="Symbol"
+      >)</a
+      ><a name="3098"
+      >
+  </a
+      ><a name="3101" href="homotopy.PtdMapSequence.html#2832" class="Function"
+      >is-&#8857;seq-equiv-head</a
+      ><a name="3119"
+      > </a
+      ><a name="3120" class="Symbol"
+      >{</a
+      ><a name="3121" class="Argument"
+      >seq-map</a
+      ><a name="3128"
+      > </a
+      ><a name="3129" class="Symbol"
+      >=</a
+      ><a name="3130"
+      > </a
+      ><a name="3131" href="homotopy.PtdMapSequence.html#3131" class="Bound"
+      >&#958;</a
+      ><a name="3132"
+      > </a
+      ><a name="3133" href="homotopy.PtdMapSequence.html#879" class="InductiveConstructor Operator"
+      >&#8857;&#8595;|</a
+      ><a name="3136" class="Symbol"
+      >}</a
+      ><a name="3137"
+      > </a
+      ><a name="3138" href="homotopy.PtdMapSequence.html#3138" class="Bound"
+      >ise</a
+      ><a name="3141"
+      > </a
+      ><a name="3142" class="Symbol"
+      >=</a
+      ><a name="3143"
+      > </a
+      ><a name="3144" href="homotopy.PtdMapSequence.html#3138" class="Bound"
+      >ise</a
+      ><a name="3147"
+      >
+  </a
+      ><a name="3150" href="homotopy.PtdMapSequence.html#2832" class="Function"
+      >is-&#8857;seq-equiv-head</a
+      ><a name="3168"
+      > </a
+      ><a name="3169" class="Symbol"
+      >{</a
+      ><a name="3170" class="Argument"
+      >seq-map</a
+      ><a name="3177"
+      > </a
+      ><a name="3178" class="Symbol"
+      >=</a
+      ><a name="3179"
+      > </a
+      ><a name="3180" href="homotopy.PtdMapSequence.html#3180" class="Bound"
+      >&#958;</a
+      ><a name="3181"
+      > </a
+      ><a name="3182" href="homotopy.PtdMapSequence.html#968" class="InductiveConstructor Operator"
+      >&#8857;&#8595;&#10216;</a
+      ><a name="3185"
+      > </a
+      ><a name="3186" class="Symbol"
+      >_</a
+      ><a name="3187"
+      > </a
+      ><a name="3188" href="homotopy.PtdMapSequence.html#968" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="3189"
+      > </a
+      ><a name="3190" class="Symbol"
+      >_}</a
+      ><a name="3192"
+      > </a
+      ><a name="3193" href="homotopy.PtdMapSequence.html#3193" class="Bound"
+      >ise</a
+      ><a name="3196"
+      > </a
+      ><a name="3197" class="Symbol"
+      >=</a
+      ><a name="3198"
+      > </a
+      ><a name="3199" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="3202"
+      > </a
+      ><a name="3203" href="homotopy.PtdMapSequence.html#3193" class="Bound"
+      >ise</a
+      ><a name="3206"
+      >
+
+</a
+      ><a name="3208" class="Keyword"
+      >private</a
+      ><a name="3215"
+      >
+  </a
+      ><a name="3218" href="homotopy.PtdMapSequence.html#3218" class="Function"
+      >ptd-map-seq-map-index-type</a
+      ><a name="3244"
+      > </a
+      ><a name="3245" class="Symbol"
+      >:</a
+      ><a name="3246"
+      > </a
+      ><a name="3247" class="Symbol"
+      >&#8704;</a
+      ><a name="3248"
+      > </a
+      ><a name="3249" class="Symbol"
+      >{</a
+      ><a name="3250" href="homotopy.PtdMapSequence.html#3250" class="Bound"
+      >i&#8320;</a
+      ><a name="3252"
+      > </a
+      ><a name="3253" href="homotopy.PtdMapSequence.html#3253" class="Bound"
+      >i&#8321;</a
+      ><a name="3255" class="Symbol"
+      >}</a
+      ><a name="3256"
+      > </a
+      ><a name="3257" class="Symbol"
+      >{</a
+      ><a name="3258" href="homotopy.PtdMapSequence.html#3258" class="Bound"
+      >X&#8320;</a
+      ><a name="3260"
+      > </a
+      ><a name="3261" href="homotopy.PtdMapSequence.html#3261" class="Bound"
+      >Y&#8320;</a
+      ><a name="3263"
+      > </a
+      ><a name="3264" class="Symbol"
+      >:</a
+      ><a name="3265"
+      > </a
+      ><a name="3266" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="3269"
+      > </a
+      ><a name="3270" href="homotopy.PtdMapSequence.html#3250" class="Bound"
+      >i&#8320;</a
+      ><a name="3272" class="Symbol"
+      >}</a
+      ><a name="3273"
+      > </a
+      ><a name="3274" class="Symbol"
+      >{</a
+      ><a name="3275" href="homotopy.PtdMapSequence.html#3275" class="Bound"
+      >X&#8321;</a
+      ><a name="3277"
+      > </a
+      ><a name="3278" href="homotopy.PtdMapSequence.html#3278" class="Bound"
+      >Y&#8321;</a
+      ><a name="3280"
+      > </a
+      ><a name="3281" class="Symbol"
+      >:</a
+      ><a name="3282"
+      > </a
+      ><a name="3283" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="3286"
+      > </a
+      ><a name="3287" href="homotopy.PtdMapSequence.html#3253" class="Bound"
+      >i&#8321;</a
+      ><a name="3289" class="Symbol"
+      >}</a
+      ><a name="3290"
+      >
+    </a
+      ><a name="3295" class="Symbol"
+      >{</a
+      ><a name="3296" href="homotopy.PtdMapSequence.html#3296" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="3301"
+      > </a
+      ><a name="3302" class="Symbol"
+      >:</a
+      ><a name="3303"
+      > </a
+      ><a name="3304" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="3318"
+      > </a
+      ><a name="3319" href="homotopy.PtdMapSequence.html#3258" class="Bound"
+      >X&#8320;</a
+      ><a name="3321"
+      > </a
+      ><a name="3322" href="homotopy.PtdMapSequence.html#3261" class="Bound"
+      >Y&#8320;</a
+      ><a name="3324" class="Symbol"
+      >}</a
+      ><a name="3325"
+      > </a
+      ><a name="3326" class="Symbol"
+      >{</a
+      ><a name="3327" href="homotopy.PtdMapSequence.html#3327" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="3332"
+      > </a
+      ><a name="3333" class="Symbol"
+      >:</a
+      ><a name="3334"
+      > </a
+      ><a name="3335" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="3349"
+      > </a
+      ><a name="3350" href="homotopy.PtdMapSequence.html#3275" class="Bound"
+      >X&#8321;</a
+      ><a name="3352"
+      > </a
+      ><a name="3353" href="homotopy.PtdMapSequence.html#3278" class="Bound"
+      >Y&#8321;</a
+      ><a name="3355" class="Symbol"
+      >}</a
+      ><a name="3356"
+      >
+    </a
+      ><a name="3361" class="Symbol"
+      >{</a
+      ><a name="3362" href="homotopy.PtdMapSequence.html#3362" class="Bound"
+      >&#8857;hX</a
+      ><a name="3365"
+      > </a
+      ><a name="3366" class="Symbol"
+      >:</a
+      ><a name="3367"
+      > </a
+      ><a name="3368" href="homotopy.PtdMapSequence.html#3258" class="Bound"
+      >X&#8320;</a
+      ><a name="3370"
+      > </a
+      ><a name="3371" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="3373"
+      > </a
+      ><a name="3374" href="homotopy.PtdMapSequence.html#3275" class="Bound"
+      >X&#8321;</a
+      ><a name="3376" class="Symbol"
+      >}</a
+      ><a name="3377"
+      > </a
+      ><a name="3378" class="Symbol"
+      >{</a
+      ><a name="3379" href="homotopy.PtdMapSequence.html#3379" class="Bound"
+      >&#8857;hY</a
+      ><a name="3382"
+      > </a
+      ><a name="3383" class="Symbol"
+      >:</a
+      ><a name="3384"
+      > </a
+      ><a name="3385" href="homotopy.PtdMapSequence.html#3261" class="Bound"
+      >Y&#8320;</a
+      ><a name="3387"
+      > </a
+      ><a name="3388" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="3390"
+      > </a
+      ><a name="3391" href="homotopy.PtdMapSequence.html#3278" class="Bound"
+      >Y&#8321;</a
+      ><a name="3393" class="Symbol"
+      >}</a
+      ><a name="3394"
+      >
+    </a
+      ><a name="3399" class="Symbol"
+      >&#8594;</a
+      ><a name="3400"
+      > </a
+      ><a name="3401" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="3402"
+      > </a
+      ><a name="3403" class="Symbol"
+      >&#8594;</a
+      ><a name="3404"
+      > </a
+      ><a name="3405" href="homotopy.PtdMapSequence.html#686" class="Datatype"
+      >PtdMapSeqMap</a
+      ><a name="3417"
+      > </a
+      ><a name="3418" href="homotopy.PtdMapSequence.html#3296" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="3423"
+      > </a
+      ><a name="3424" href="homotopy.PtdMapSequence.html#3327" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="3429"
+      > </a
+      ><a name="3430" href="homotopy.PtdMapSequence.html#3362" class="Bound"
+      >&#8857;hX</a
+      ><a name="3433"
+      > </a
+      ><a name="3434" href="homotopy.PtdMapSequence.html#3379" class="Bound"
+      >&#8857;hY</a
+      ><a name="3437"
+      > </a
+      ><a name="3438" class="Symbol"
+      >&#8594;</a
+      ><a name="3439"
+      > </a
+      ><a name="3440" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3444"
+      > </a
+      ><a name="3445" class="Symbol"
+      >(</a
+      ><a name="3446" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="3450"
+      > </a
+      ><a name="3451" href="homotopy.PtdMapSequence.html#3250" class="Bound"
+      >i&#8320;</a
+      ><a name="3453"
+      > </a
+      ><a name="3454" href="homotopy.PtdMapSequence.html#3253" class="Bound"
+      >i&#8321;</a
+      ><a name="3456" class="Symbol"
+      >)</a
+      ><a name="3457"
+      >
+  </a
+      ><a name="3460" href="homotopy.PtdMapSequence.html#3218" class="Function"
+      >ptd-map-seq-map-index-type</a
+      ><a name="3486"
+      > </a
+      ><a name="3487" class="Symbol"
+      >_</a
+      ><a name="3488"
+      >     </a
+      ><a name="3493" class="Symbol"
+      >(_</a
+      ><a name="3495"
+      > </a
+      ><a name="3496" href="homotopy.PtdMapSequence.html#879" class="InductiveConstructor Operator"
+      >&#8857;&#8595;|</a
+      ><a name="3499" class="Symbol"
+      >)</a
+      ><a name="3500"
+      > </a
+      ><a name="3501" class="Symbol"
+      >=</a
+      ><a name="3502"
+      > </a
+      ><a name="3503" href="lib.Base.html#6440" class="Record"
+      >Lift</a
+      ><a name="3507"
+      > </a
+      ><a name="3508" href="lib.Base.html#2859" class="Record"
+      >&#8868;</a
+      ><a name="3509"
+      >
+  </a
+      ><a name="3512" href="homotopy.PtdMapSequence.html#3218" class="Function"
+      >ptd-map-seq-map-index-type</a
+      ><a name="3538"
+      > </a
+      ><a name="3539" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="3540"
+      >     </a
+      ><a name="3545" class="Symbol"
+      >(</a
+      ><a name="3546" href="homotopy.PtdMapSequence.html#968" class="InductiveConstructor Operator"
+      >_&#8857;&#8595;&#10216;_&#10217;_</a
+      ><a name="3553"
+      > </a
+      ><a name="3554" class="Symbol"
+      >{</a
+      ><a name="3555" class="Argument"
+      >&#8857;f&#8320;</a
+      ><a name="3558"
+      > </a
+      ><a name="3559" class="Symbol"
+      >=</a
+      ><a name="3560"
+      > </a
+      ><a name="3561" href="homotopy.PtdMapSequence.html#3561" class="Bound"
+      >&#8857;f&#8320;</a
+      ><a name="3564" class="Symbol"
+      >}</a
+      ><a name="3565"
+      > </a
+      ><a name="3566" class="Symbol"
+      >{</a
+      ><a name="3567" class="Argument"
+      >&#8857;f&#8321;</a
+      ><a name="3570"
+      > </a
+      ><a name="3571" class="Symbol"
+      >=</a
+      ><a name="3572"
+      > </a
+      ><a name="3573" href="homotopy.PtdMapSequence.html#3573" class="Bound"
+      >&#8857;f&#8321;</a
+      ><a name="3576" class="Symbol"
+      >}</a
+      ><a name="3577"
+      > </a
+      ><a name="3578" href="homotopy.PtdMapSequence.html#3578" class="Bound"
+      >&#8857;hX</a
+      ><a name="3581"
+      > </a
+      ><a name="3582" class="Symbol"
+      >{</a
+      ><a name="3583" href="homotopy.PtdMapSequence.html#3583" class="Bound"
+      >&#8857;hY</a
+      ><a name="3586" class="Symbol"
+      >}</a
+      ><a name="3587"
+      > </a
+      ><a name="3588" class="Symbol"
+      >_</a
+      ><a name="3589"
+      > </a
+      ><a name="3590" class="Symbol"
+      >_)</a
+      ><a name="3592"
+      >
+    </a
+      ><a name="3597" class="Symbol"
+      >=</a
+      ><a name="3598"
+      > </a
+      ><a name="3599" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="3609"
+      > </a
+      ><a name="3610" class="Symbol"
+      >(</a
+      ><a name="3611" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="3614"
+      > </a
+      ><a name="3615" href="homotopy.PtdMapSequence.html#3561" class="Bound"
+      >&#8857;f&#8320;</a
+      ><a name="3618" class="Symbol"
+      >)</a
+      ><a name="3619"
+      > </a
+      ><a name="3620" class="Symbol"
+      >(</a
+      ><a name="3621" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="3624"
+      > </a
+      ><a name="3625" href="homotopy.PtdMapSequence.html#3573" class="Bound"
+      >&#8857;f&#8321;</a
+      ><a name="3628" class="Symbol"
+      >)</a
+      ><a name="3629"
+      > </a
+      ><a name="3630" class="Symbol"
+      >(</a
+      ><a name="3631" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="3634"
+      > </a
+      ><a name="3635" href="homotopy.PtdMapSequence.html#3578" class="Bound"
+      >&#8857;hX</a
+      ><a name="3638" class="Symbol"
+      >)</a
+      ><a name="3639"
+      > </a
+      ><a name="3640" class="Symbol"
+      >(</a
+      ><a name="3641" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="3644"
+      > </a
+      ><a name="3645" href="homotopy.PtdMapSequence.html#3583" class="Bound"
+      >&#8857;hY</a
+      ><a name="3648" class="Symbol"
+      >)</a
+      ><a name="3649"
+      >
+  </a
+      ><a name="3652" href="homotopy.PtdMapSequence.html#3218" class="Function"
+      >ptd-map-seq-map-index-type</a
+      ><a name="3678"
+      > </a
+      ><a name="3679" class="Symbol"
+      >(</a
+      ><a name="3680" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3681"
+      > </a
+      ><a name="3682" href="homotopy.PtdMapSequence.html#3682" class="Bound"
+      >n</a
+      ><a name="3683" class="Symbol"
+      >)</a
+      ><a name="3684"
+      > </a
+      ><a name="3685" class="Symbol"
+      >(_</a
+      ><a name="3687"
+      > </a
+      ><a name="3688" href="homotopy.PtdMapSequence.html#968" class="InductiveConstructor Operator"
+      >&#8857;&#8595;&#10216;</a
+      ><a name="3691"
+      > </a
+      ><a name="3692" class="Symbol"
+      >_</a
+      ><a name="3693"
+      > </a
+      ><a name="3694" href="homotopy.PtdMapSequence.html#968" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="3695"
+      > </a
+      ><a name="3696" href="homotopy.PtdMapSequence.html#3696" class="Bound"
+      >seq-map</a
+      ><a name="3703" class="Symbol"
+      >)</a
+      ><a name="3704"
+      >
+    </a
+      ><a name="3709" class="Symbol"
+      >=</a
+      ><a name="3710"
+      > </a
+      ><a name="3711" href="homotopy.PtdMapSequence.html#3218" class="Function"
+      >ptd-map-seq-map-index-type</a
+      ><a name="3737"
+      > </a
+      ><a name="3738" href="homotopy.PtdMapSequence.html#3682" class="Bound"
+      >n</a
+      ><a name="3739"
+      > </a
+      ><a name="3740" href="homotopy.PtdMapSequence.html#3696" class="Bound"
+      >seq-map</a
+      ><a name="3747"
+      >
+
+</a
+      ><a name="3749" class="Keyword"
+      >abstract</a
+      ><a name="3757"
+      >
+  </a
+      ><a name="3760" href="homotopy.PtdMapSequence.html#3760" class="Function"
+      >ptd-map-seq-map-index</a
+      ><a name="3781"
+      > </a
+      ><a name="3782" class="Symbol"
+      >:</a
+      ><a name="3783"
+      > </a
+      ><a name="3784" class="Symbol"
+      >&#8704;</a
+      ><a name="3785"
+      > </a
+      ><a name="3786" class="Symbol"
+      >{</a
+      ><a name="3787" href="homotopy.PtdMapSequence.html#3787" class="Bound"
+      >i&#8320;</a
+      ><a name="3789"
+      > </a
+      ><a name="3790" href="homotopy.PtdMapSequence.html#3790" class="Bound"
+      >i&#8321;</a
+      ><a name="3792" class="Symbol"
+      >}</a
+      ><a name="3793"
+      > </a
+      ><a name="3794" class="Symbol"
+      >{</a
+      ><a name="3795" href="homotopy.PtdMapSequence.html#3795" class="Bound"
+      >X&#8320;</a
+      ><a name="3797"
+      > </a
+      ><a name="3798" href="homotopy.PtdMapSequence.html#3798" class="Bound"
+      >Y&#8320;</a
+      ><a name="3800"
+      > </a
+      ><a name="3801" class="Symbol"
+      >:</a
+      ><a name="3802"
+      > </a
+      ><a name="3803" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="3806"
+      > </a
+      ><a name="3807" href="homotopy.PtdMapSequence.html#3787" class="Bound"
+      >i&#8320;</a
+      ><a name="3809" class="Symbol"
+      >}</a
+      ><a name="3810"
+      > </a
+      ><a name="3811" class="Symbol"
+      >{</a
+      ><a name="3812" href="homotopy.PtdMapSequence.html#3812" class="Bound"
+      >X&#8321;</a
+      ><a name="3814"
+      > </a
+      ><a name="3815" href="homotopy.PtdMapSequence.html#3815" class="Bound"
+      >Y&#8321;</a
+      ><a name="3817"
+      > </a
+      ><a name="3818" class="Symbol"
+      >:</a
+      ><a name="3819"
+      > </a
+      ><a name="3820" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="3823"
+      > </a
+      ><a name="3824" href="homotopy.PtdMapSequence.html#3790" class="Bound"
+      >i&#8321;</a
+      ><a name="3826" class="Symbol"
+      >}</a
+      ><a name="3827"
+      >
+    </a
+      ><a name="3832" class="Symbol"
+      >{</a
+      ><a name="3833" href="homotopy.PtdMapSequence.html#3833" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="3838"
+      > </a
+      ><a name="3839" class="Symbol"
+      >:</a
+      ><a name="3840"
+      > </a
+      ><a name="3841" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="3855"
+      > </a
+      ><a name="3856" href="homotopy.PtdMapSequence.html#3795" class="Bound"
+      >X&#8320;</a
+      ><a name="3858"
+      > </a
+      ><a name="3859" href="homotopy.PtdMapSequence.html#3798" class="Bound"
+      >Y&#8320;</a
+      ><a name="3861" class="Symbol"
+      >}</a
+      ><a name="3862"
+      > </a
+      ><a name="3863" class="Symbol"
+      >{</a
+      ><a name="3864" href="homotopy.PtdMapSequence.html#3864" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="3869"
+      > </a
+      ><a name="3870" class="Symbol"
+      >:</a
+      ><a name="3871"
+      > </a
+      ><a name="3872" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="3886"
+      > </a
+      ><a name="3887" href="homotopy.PtdMapSequence.html#3812" class="Bound"
+      >X&#8321;</a
+      ><a name="3889"
+      > </a
+      ><a name="3890" href="homotopy.PtdMapSequence.html#3815" class="Bound"
+      >Y&#8321;</a
+      ><a name="3892" class="Symbol"
+      >}</a
+      ><a name="3893"
+      >
+    </a
+      ><a name="3898" class="Symbol"
+      >{</a
+      ><a name="3899" href="homotopy.PtdMapSequence.html#3899" class="Bound"
+      >&#8857;hX</a
+      ><a name="3902"
+      > </a
+      ><a name="3903" class="Symbol"
+      >:</a
+      ><a name="3904"
+      > </a
+      ><a name="3905" href="homotopy.PtdMapSequence.html#3795" class="Bound"
+      >X&#8320;</a
+      ><a name="3907"
+      > </a
+      ><a name="3908" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="3910"
+      > </a
+      ><a name="3911" href="homotopy.PtdMapSequence.html#3812" class="Bound"
+      >X&#8321;</a
+      ><a name="3913" class="Symbol"
+      >}</a
+      ><a name="3914"
+      > </a
+      ><a name="3915" class="Symbol"
+      >{</a
+      ><a name="3916" href="homotopy.PtdMapSequence.html#3916" class="Bound"
+      >&#8857;hY</a
+      ><a name="3919"
+      > </a
+      ><a name="3920" class="Symbol"
+      >:</a
+      ><a name="3921"
+      > </a
+      ><a name="3922" href="homotopy.PtdMapSequence.html#3798" class="Bound"
+      >Y&#8320;</a
+      ><a name="3924"
+      > </a
+      ><a name="3925" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="3927"
+      > </a
+      ><a name="3928" href="homotopy.PtdMapSequence.html#3815" class="Bound"
+      >Y&#8321;</a
+      ><a name="3930" class="Symbol"
+      >}</a
+      ><a name="3931"
+      >
+    </a
+      ><a name="3936" class="Symbol"
+      >(</a
+      ><a name="3937" href="homotopy.PtdMapSequence.html#3937" class="Bound"
+      >n</a
+      ><a name="3938"
+      > </a
+      ><a name="3939" class="Symbol"
+      >:</a
+      ><a name="3940"
+      > </a
+      ><a name="3941" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="3942" class="Symbol"
+      >)</a
+      ><a name="3943"
+      > </a
+      ><a name="3944" class="Symbol"
+      >(</a
+      ><a name="3945" href="homotopy.PtdMapSequence.html#3945" class="Bound"
+      >seq-map</a
+      ><a name="3952"
+      > </a
+      ><a name="3953" class="Symbol"
+      >:</a
+      ><a name="3954"
+      > </a
+      ><a name="3955" href="homotopy.PtdMapSequence.html#686" class="Datatype"
+      >PtdMapSeqMap</a
+      ><a name="3967"
+      > </a
+      ><a name="3968" href="homotopy.PtdMapSequence.html#3833" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="3973"
+      > </a
+      ><a name="3974" href="homotopy.PtdMapSequence.html#3864" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="3979"
+      > </a
+      ><a name="3980" href="homotopy.PtdMapSequence.html#3899" class="Bound"
+      >&#8857;hX</a
+      ><a name="3983"
+      > </a
+      ><a name="3984" href="homotopy.PtdMapSequence.html#3916" class="Bound"
+      >&#8857;hY</a
+      ><a name="3987" class="Symbol"
+      >)</a
+      ><a name="3988"
+      >
+    </a
+      ><a name="3993" class="Symbol"
+      >&#8594;</a
+      ><a name="3994"
+      > </a
+      ><a name="3995" href="homotopy.PtdMapSequence.html#3218" class="Function"
+      >ptd-map-seq-map-index-type</a
+      ><a name="4021"
+      > </a
+      ><a name="4022" href="homotopy.PtdMapSequence.html#3937" class="Bound"
+      >n</a
+      ><a name="4023"
+      > </a
+      ><a name="4024" href="homotopy.PtdMapSequence.html#3945" class="Bound"
+      >seq-map</a
+      ><a name="4031"
+      >
+  </a
+      ><a name="4034" href="homotopy.PtdMapSequence.html#3760" class="Function"
+      >ptd-map-seq-map-index</a
+      ><a name="4055"
+      > </a
+      ><a name="4056" class="Symbol"
+      >_</a
+      ><a name="4057"
+      >     </a
+      ><a name="4062" class="Symbol"
+      >(_</a
+      ><a name="4064"
+      > </a
+      ><a name="4065" href="homotopy.PtdMapSequence.html#879" class="InductiveConstructor Operator"
+      >&#8857;&#8595;|</a
+      ><a name="4068" class="Symbol"
+      >)</a
+      ><a name="4069"
+      > </a
+      ><a name="4070" class="Symbol"
+      >=</a
+      ><a name="4071"
+      > </a
+      ><a name="4072" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="4076"
+      > </a
+      ><a name="4077" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="4079"
+      >
+  </a
+      ><a name="4082" href="homotopy.PtdMapSequence.html#3760" class="Function"
+      >ptd-map-seq-map-index</a
+      ><a name="4103"
+      > </a
+      ><a name="4104" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="4105"
+      >     </a
+      ><a name="4110" class="Symbol"
+      >(_</a
+      ><a name="4112"
+      > </a
+      ><a name="4113" href="homotopy.PtdMapSequence.html#968" class="InductiveConstructor Operator"
+      >&#8857;&#8595;&#10216;</a
+      ><a name="4116"
+      > </a
+      ><a name="4117" href="homotopy.PtdMapSequence.html#4117" class="Bound"
+      >&#9633;</a
+      ><a name="4118"
+      > </a
+      ><a name="4119" href="homotopy.PtdMapSequence.html#968" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="4120"
+      > </a
+      ><a name="4121" class="Symbol"
+      >_)</a
+      ><a name="4123"
+      > </a
+      ><a name="4124" class="Symbol"
+      >=</a
+      ><a name="4125"
+      > </a
+      ><a name="4126" href="homotopy.PtdMapSequence.html#4117" class="Bound"
+      >&#9633;</a
+      ><a name="4127"
+      >
+  </a
+      ><a name="4130" href="homotopy.PtdMapSequence.html#3760" class="Function"
+      >ptd-map-seq-map-index</a
+      ><a name="4151"
+      > </a
+      ><a name="4152" class="Symbol"
+      >(</a
+      ><a name="4153" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4154"
+      > </a
+      ><a name="4155" href="homotopy.PtdMapSequence.html#4155" class="Bound"
+      >n</a
+      ><a name="4156" class="Symbol"
+      >)</a
+      ><a name="4157"
+      > </a
+      ><a name="4158" class="Symbol"
+      >(_</a
+      ><a name="4160"
+      > </a
+      ><a name="4161" href="homotopy.PtdMapSequence.html#968" class="InductiveConstructor Operator"
+      >&#8857;&#8595;&#10216;</a
+      ><a name="4164"
+      > </a
+      ><a name="4165" class="Symbol"
+      >_</a
+      ><a name="4166"
+      > </a
+      ><a name="4167" href="homotopy.PtdMapSequence.html#968" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="4168"
+      > </a
+      ><a name="4169" href="homotopy.PtdMapSequence.html#4169" class="Bound"
+      >seq-map</a
+      ><a name="4176" class="Symbol"
+      >)</a
+      ><a name="4177"
+      >
+    </a
+      ><a name="4182" class="Symbol"
+      >=</a
+      ><a name="4183"
+      > </a
+      ><a name="4184" href="homotopy.PtdMapSequence.html#3760" class="Function"
+      >ptd-map-seq-map-index</a
+      ><a name="4205"
+      > </a
+      ><a name="4206" href="homotopy.PtdMapSequence.html#4155" class="Bound"
+      >n</a
+      ><a name="4207"
+      > </a
+      ><a name="4208" href="homotopy.PtdMapSequence.html#4169" class="Bound"
+      >seq-map</a
+      ><a name="4215"
+      >
+
+</a
+      ><a name="4217" class="Keyword"
+      >private</a
+      ><a name="4224"
+      >
+  </a
+      ><a name="4227" href="homotopy.PtdMapSequence.html#4227" class="Function"
+      >ptd-map-seq-equiv-index-type</a
+      ><a name="4255"
+      > </a
+      ><a name="4256" class="Symbol"
+      >:</a
+      ><a name="4257"
+      > </a
+      ><a name="4258" class="Symbol"
+      >&#8704;</a
+      ><a name="4259"
+      > </a
+      ><a name="4260" class="Symbol"
+      >{</a
+      ><a name="4261" href="homotopy.PtdMapSequence.html#4261" class="Bound"
+      >i&#8320;</a
+      ><a name="4263"
+      > </a
+      ><a name="4264" href="homotopy.PtdMapSequence.html#4264" class="Bound"
+      >i&#8321;</a
+      ><a name="4266" class="Symbol"
+      >}</a
+      ><a name="4267"
+      > </a
+      ><a name="4268" class="Symbol"
+      >{</a
+      ><a name="4269" href="homotopy.PtdMapSequence.html#4269" class="Bound"
+      >X&#8320;</a
+      ><a name="4271"
+      > </a
+      ><a name="4272" href="homotopy.PtdMapSequence.html#4272" class="Bound"
+      >Y&#8320;</a
+      ><a name="4274"
+      > </a
+      ><a name="4275" class="Symbol"
+      >:</a
+      ><a name="4276"
+      > </a
+      ><a name="4277" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="4280"
+      > </a
+      ><a name="4281" href="homotopy.PtdMapSequence.html#4261" class="Bound"
+      >i&#8320;</a
+      ><a name="4283" class="Symbol"
+      >}</a
+      ><a name="4284"
+      > </a
+      ><a name="4285" class="Symbol"
+      >{</a
+      ><a name="4286" href="homotopy.PtdMapSequence.html#4286" class="Bound"
+      >X&#8321;</a
+      ><a name="4288"
+      > </a
+      ><a name="4289" href="homotopy.PtdMapSequence.html#4289" class="Bound"
+      >Y&#8321;</a
+      ><a name="4291"
+      > </a
+      ><a name="4292" class="Symbol"
+      >:</a
+      ><a name="4293"
+      > </a
+      ><a name="4294" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="4297"
+      > </a
+      ><a name="4298" href="homotopy.PtdMapSequence.html#4264" class="Bound"
+      >i&#8321;</a
+      ><a name="4300" class="Symbol"
+      >}</a
+      ><a name="4301"
+      >
+    </a
+      ><a name="4306" class="Symbol"
+      >{</a
+      ><a name="4307" href="homotopy.PtdMapSequence.html#4307" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="4312"
+      > </a
+      ><a name="4313" class="Symbol"
+      >:</a
+      ><a name="4314"
+      > </a
+      ><a name="4315" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="4329"
+      > </a
+      ><a name="4330" href="homotopy.PtdMapSequence.html#4269" class="Bound"
+      >X&#8320;</a
+      ><a name="4332"
+      > </a
+      ><a name="4333" href="homotopy.PtdMapSequence.html#4272" class="Bound"
+      >Y&#8320;</a
+      ><a name="4335" class="Symbol"
+      >}</a
+      ><a name="4336"
+      > </a
+      ><a name="4337" class="Symbol"
+      >{</a
+      ><a name="4338" href="homotopy.PtdMapSequence.html#4338" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="4343"
+      > </a
+      ><a name="4344" class="Symbol"
+      >:</a
+      ><a name="4345"
+      > </a
+      ><a name="4346" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="4360"
+      > </a
+      ><a name="4361" href="homotopy.PtdMapSequence.html#4286" class="Bound"
+      >X&#8321;</a
+      ><a name="4363"
+      > </a
+      ><a name="4364" href="homotopy.PtdMapSequence.html#4289" class="Bound"
+      >Y&#8321;</a
+      ><a name="4366" class="Symbol"
+      >}</a
+      ><a name="4367"
+      >
+    </a
+      ><a name="4372" class="Symbol"
+      >{</a
+      ><a name="4373" href="homotopy.PtdMapSequence.html#4373" class="Bound"
+      >&#8857;hX</a
+      ><a name="4376"
+      > </a
+      ><a name="4377" class="Symbol"
+      >:</a
+      ><a name="4378"
+      > </a
+      ><a name="4379" href="homotopy.PtdMapSequence.html#4269" class="Bound"
+      >X&#8320;</a
+      ><a name="4381"
+      > </a
+      ><a name="4382" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="4384"
+      > </a
+      ><a name="4385" href="homotopy.PtdMapSequence.html#4286" class="Bound"
+      >X&#8321;</a
+      ><a name="4387" class="Symbol"
+      >}</a
+      ><a name="4388"
+      > </a
+      ><a name="4389" class="Symbol"
+      >{</a
+      ><a name="4390" href="homotopy.PtdMapSequence.html#4390" class="Bound"
+      >&#8857;hY</a
+      ><a name="4393"
+      > </a
+      ><a name="4394" class="Symbol"
+      >:</a
+      ><a name="4395"
+      > </a
+      ><a name="4396" href="homotopy.PtdMapSequence.html#4272" class="Bound"
+      >Y&#8320;</a
+      ><a name="4398"
+      > </a
+      ><a name="4399" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="4401"
+      > </a
+      ><a name="4402" href="homotopy.PtdMapSequence.html#4289" class="Bound"
+      >Y&#8321;</a
+      ><a name="4404" class="Symbol"
+      >}</a
+      ><a name="4405"
+      >
+    </a
+      ><a name="4410" class="Symbol"
+      >&#8594;</a
+      ><a name="4411"
+      > </a
+      ><a name="4412" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="4413"
+      > </a
+      ><a name="4414" class="Symbol"
+      >&#8594;</a
+      ><a name="4415"
+      > </a
+      ><a name="4416" href="homotopy.PtdMapSequence.html#686" class="Datatype"
+      >PtdMapSeqMap</a
+      ><a name="4428"
+      > </a
+      ><a name="4429" href="homotopy.PtdMapSequence.html#4307" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="4434"
+      > </a
+      ><a name="4435" href="homotopy.PtdMapSequence.html#4338" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="4440"
+      > </a
+      ><a name="4441" href="homotopy.PtdMapSequence.html#4373" class="Bound"
+      >&#8857;hX</a
+      ><a name="4444"
+      > </a
+      ><a name="4445" href="homotopy.PtdMapSequence.html#4390" class="Bound"
+      >&#8857;hY</a
+      ><a name="4448"
+      > </a
+      ><a name="4449" class="Symbol"
+      >&#8594;</a
+      ><a name="4450"
+      > </a
+      ><a name="4451" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="4455"
+      > </a
+      ><a name="4456" class="Symbol"
+      >(</a
+      ><a name="4457" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="4461"
+      > </a
+      ><a name="4462" href="homotopy.PtdMapSequence.html#4261" class="Bound"
+      >i&#8320;</a
+      ><a name="4464"
+      > </a
+      ><a name="4465" href="homotopy.PtdMapSequence.html#4264" class="Bound"
+      >i&#8321;</a
+      ><a name="4467" class="Symbol"
+      >)</a
+      ><a name="4468"
+      >
+  </a
+      ><a name="4471" href="homotopy.PtdMapSequence.html#4227" class="Function"
+      >ptd-map-seq-equiv-index-type</a
+      ><a name="4499"
+      > </a
+      ><a name="4500" class="Symbol"
+      >{</a
+      ><a name="4501" class="Argument"
+      >&#8857;hX</a
+      ><a name="4504"
+      > </a
+      ><a name="4505" class="Symbol"
+      >=</a
+      ><a name="4506"
+      > </a
+      ><a name="4507" href="homotopy.PtdMapSequence.html#4507" class="Bound"
+      >&#8857;hX</a
+      ><a name="4510" class="Symbol"
+      >}</a
+      ><a name="4511"
+      > </a
+      ><a name="4512" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="4513"
+      > </a
+      ><a name="4514" class="Symbol"
+      >_</a
+      ><a name="4515"
+      > </a
+      ><a name="4516" class="Symbol"
+      >=</a
+      ><a name="4517"
+      > </a
+      ><a name="4518" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="4526"
+      > </a
+      ><a name="4527" class="Symbol"
+      >(</a
+      ><a name="4528" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="4531"
+      > </a
+      ><a name="4532" href="homotopy.PtdMapSequence.html#4507" class="Bound"
+      >&#8857;hX</a
+      ><a name="4535" class="Symbol"
+      >)</a
+      ><a name="4536"
+      >
+  </a
+      ><a name="4539" href="homotopy.PtdMapSequence.html#4227" class="Function"
+      >ptd-map-seq-equiv-index-type</a
+      ><a name="4567"
+      > </a
+      ><a name="4568" class="Symbol"
+      >(</a
+      ><a name="4569" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4570"
+      > </a
+      ><a name="4571" class="Symbol"
+      >_)</a
+      ><a name="4573"
+      > </a
+      ><a name="4574" class="Symbol"
+      >(_</a
+      ><a name="4576"
+      > </a
+      ><a name="4577" href="homotopy.PtdMapSequence.html#879" class="InductiveConstructor Operator"
+      >&#8857;&#8595;|</a
+      ><a name="4580" class="Symbol"
+      >)</a
+      ><a name="4581"
+      > </a
+      ><a name="4582" class="Symbol"
+      >=</a
+      ><a name="4583"
+      > </a
+      ><a name="4584" href="lib.Base.html#6440" class="Record"
+      >Lift</a
+      ><a name="4588"
+      > </a
+      ><a name="4589" href="lib.Base.html#2859" class="Record"
+      >&#8868;</a
+      ><a name="4590"
+      >
+  </a
+      ><a name="4593" href="homotopy.PtdMapSequence.html#4227" class="Function"
+      >ptd-map-seq-equiv-index-type</a
+      ><a name="4621"
+      > </a
+      ><a name="4622" class="Symbol"
+      >(</a
+      ><a name="4623" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4624"
+      > </a
+      ><a name="4625" href="homotopy.PtdMapSequence.html#4625" class="Bound"
+      >n</a
+      ><a name="4626" class="Symbol"
+      >)</a
+      ><a name="4627"
+      > </a
+      ><a name="4628" class="Symbol"
+      >(_</a
+      ><a name="4630"
+      > </a
+      ><a name="4631" href="homotopy.PtdMapSequence.html#968" class="InductiveConstructor Operator"
+      >&#8857;&#8595;&#10216;</a
+      ><a name="4634"
+      > </a
+      ><a name="4635" class="Symbol"
+      >_</a
+      ><a name="4636"
+      > </a
+      ><a name="4637" href="homotopy.PtdMapSequence.html#968" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="4638"
+      > </a
+      ><a name="4639" href="homotopy.PtdMapSequence.html#4639" class="Bound"
+      >seq-map</a
+      ><a name="4646" class="Symbol"
+      >)</a
+      ><a name="4647"
+      >
+    </a
+      ><a name="4652" class="Symbol"
+      >=</a
+      ><a name="4653"
+      > </a
+      ><a name="4654" href="homotopy.PtdMapSequence.html#4227" class="Function"
+      >ptd-map-seq-equiv-index-type</a
+      ><a name="4682"
+      > </a
+      ><a name="4683" href="homotopy.PtdMapSequence.html#4625" class="Bound"
+      >n</a
+      ><a name="4684"
+      > </a
+      ><a name="4685" href="homotopy.PtdMapSequence.html#4639" class="Bound"
+      >seq-map</a
+      ><a name="4692"
+      >
+
+</a
+      ><a name="4694" class="Keyword"
+      >abstract</a
+      ><a name="4702"
+      >
+  </a
+      ><a name="4705" href="homotopy.PtdMapSequence.html#4705" class="Function"
+      >ptd-map-seq-equiv-index</a
+      ><a name="4728"
+      > </a
+      ><a name="4729" class="Symbol"
+      >:</a
+      ><a name="4730"
+      > </a
+      ><a name="4731" class="Symbol"
+      >&#8704;</a
+      ><a name="4732"
+      > </a
+      ><a name="4733" class="Symbol"
+      >{</a
+      ><a name="4734" href="homotopy.PtdMapSequence.html#4734" class="Bound"
+      >i&#8320;</a
+      ><a name="4736"
+      > </a
+      ><a name="4737" href="homotopy.PtdMapSequence.html#4737" class="Bound"
+      >i&#8321;</a
+      ><a name="4739" class="Symbol"
+      >}</a
+      ><a name="4740"
+      > </a
+      ><a name="4741" class="Symbol"
+      >{</a
+      ><a name="4742" href="homotopy.PtdMapSequence.html#4742" class="Bound"
+      >X&#8320;</a
+      ><a name="4744"
+      > </a
+      ><a name="4745" href="homotopy.PtdMapSequence.html#4745" class="Bound"
+      >Y&#8320;</a
+      ><a name="4747"
+      > </a
+      ><a name="4748" class="Symbol"
+      >:</a
+      ><a name="4749"
+      > </a
+      ><a name="4750" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="4753"
+      > </a
+      ><a name="4754" href="homotopy.PtdMapSequence.html#4734" class="Bound"
+      >i&#8320;</a
+      ><a name="4756" class="Symbol"
+      >}</a
+      ><a name="4757"
+      > </a
+      ><a name="4758" class="Symbol"
+      >{</a
+      ><a name="4759" href="homotopy.PtdMapSequence.html#4759" class="Bound"
+      >X&#8321;</a
+      ><a name="4761"
+      > </a
+      ><a name="4762" href="homotopy.PtdMapSequence.html#4762" class="Bound"
+      >Y&#8321;</a
+      ><a name="4764"
+      > </a
+      ><a name="4765" class="Symbol"
+      >:</a
+      ><a name="4766"
+      > </a
+      ><a name="4767" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="4770"
+      > </a
+      ><a name="4771" href="homotopy.PtdMapSequence.html#4737" class="Bound"
+      >i&#8321;</a
+      ><a name="4773" class="Symbol"
+      >}</a
+      ><a name="4774"
+      >
+    </a
+      ><a name="4779" class="Symbol"
+      >{</a
+      ><a name="4780" href="homotopy.PtdMapSequence.html#4780" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="4785"
+      > </a
+      ><a name="4786" class="Symbol"
+      >:</a
+      ><a name="4787"
+      > </a
+      ><a name="4788" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="4802"
+      > </a
+      ><a name="4803" href="homotopy.PtdMapSequence.html#4742" class="Bound"
+      >X&#8320;</a
+      ><a name="4805"
+      > </a
+      ><a name="4806" href="homotopy.PtdMapSequence.html#4745" class="Bound"
+      >Y&#8320;</a
+      ><a name="4808" class="Symbol"
+      >}</a
+      ><a name="4809"
+      > </a
+      ><a name="4810" class="Symbol"
+      >{</a
+      ><a name="4811" href="homotopy.PtdMapSequence.html#4811" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="4816"
+      > </a
+      ><a name="4817" class="Symbol"
+      >:</a
+      ><a name="4818"
+      > </a
+      ><a name="4819" href="homotopy.PtdMapSequence.html#392" class="Datatype"
+      >PtdMapSequence</a
+      ><a name="4833"
+      > </a
+      ><a name="4834" href="homotopy.PtdMapSequence.html#4759" class="Bound"
+      >X&#8321;</a
+      ><a name="4836"
+      > </a
+      ><a name="4837" href="homotopy.PtdMapSequence.html#4762" class="Bound"
+      >Y&#8321;</a
+      ><a name="4839" class="Symbol"
+      >}</a
+      ><a name="4840"
+      >
+    </a
+      ><a name="4845" class="Symbol"
+      >{</a
+      ><a name="4846" href="homotopy.PtdMapSequence.html#4846" class="Bound"
+      >&#8857;hX</a
+      ><a name="4849"
+      > </a
+      ><a name="4850" class="Symbol"
+      >:</a
+      ><a name="4851"
+      > </a
+      ><a name="4852" href="homotopy.PtdMapSequence.html#4742" class="Bound"
+      >X&#8320;</a
+      ><a name="4854"
+      > </a
+      ><a name="4855" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="4857"
+      > </a
+      ><a name="4858" href="homotopy.PtdMapSequence.html#4759" class="Bound"
+      >X&#8321;</a
+      ><a name="4860" class="Symbol"
+      >}</a
+      ><a name="4861"
+      > </a
+      ><a name="4862" class="Symbol"
+      >{</a
+      ><a name="4863" href="homotopy.PtdMapSequence.html#4863" class="Bound"
+      >&#8857;hY</a
+      ><a name="4866"
+      > </a
+      ><a name="4867" class="Symbol"
+      >:</a
+      ><a name="4868"
+      > </a
+      ><a name="4869" href="homotopy.PtdMapSequence.html#4745" class="Bound"
+      >Y&#8320;</a
+      ><a name="4871"
+      > </a
+      ><a name="4872" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="4874"
+      > </a
+      ><a name="4875" href="homotopy.PtdMapSequence.html#4762" class="Bound"
+      >Y&#8321;</a
+      ><a name="4877" class="Symbol"
+      >}</a
+      ><a name="4878"
+      >
+    </a
+      ><a name="4883" class="Symbol"
+      >(</a
+      ><a name="4884" href="homotopy.PtdMapSequence.html#4884" class="Bound"
+      >n</a
+      ><a name="4885"
+      > </a
+      ><a name="4886" class="Symbol"
+      >:</a
+      ><a name="4887"
+      > </a
+      ><a name="4888" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="4889" class="Symbol"
+      >)</a
+      ><a name="4890"
+      > </a
+      ><a name="4891" class="Symbol"
+      >(</a
+      ><a name="4892" href="homotopy.PtdMapSequence.html#4892" class="Bound"
+      >seq-equiv</a
+      ><a name="4901"
+      > </a
+      ><a name="4902" class="Symbol"
+      >:</a
+      ><a name="4903"
+      > </a
+      ><a name="4904" href="homotopy.PtdMapSequence.html#1741" class="Function"
+      >PtdMapSeqEquiv</a
+      ><a name="4918"
+      > </a
+      ><a name="4919" href="homotopy.PtdMapSequence.html#4780" class="Bound"
+      >&#8857;seq&#8320;</a
+      ><a name="4924"
+      > </a
+      ><a name="4925" href="homotopy.PtdMapSequence.html#4811" class="Bound"
+      >&#8857;seq&#8321;</a
+      ><a name="4930"
+      > </a
+      ><a name="4931" href="homotopy.PtdMapSequence.html#4846" class="Bound"
+      >&#8857;hX</a
+      ><a name="4934"
+      > </a
+      ><a name="4935" href="homotopy.PtdMapSequence.html#4863" class="Bound"
+      >&#8857;hY</a
+      ><a name="4938" class="Symbol"
+      >)</a
+      ><a name="4939"
+      >
+    </a
+      ><a name="4944" class="Symbol"
+      >&#8594;</a
+      ><a name="4945"
+      > </a
+      ><a name="4946" href="homotopy.PtdMapSequence.html#4227" class="Function"
+      >ptd-map-seq-equiv-index-type</a
+      ><a name="4974"
+      > </a
+      ><a name="4975" href="homotopy.PtdMapSequence.html#4884" class="Bound"
+      >n</a
+      ><a name="4976"
+      > </a
+      ><a name="4977" class="Symbol"
+      >(</a
+      ><a name="4978" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="4981"
+      > </a
+      ><a name="4982" href="homotopy.PtdMapSequence.html#4892" class="Bound"
+      >seq-equiv</a
+      ><a name="4991" class="Symbol"
+      >)</a
+      ><a name="4992"
+      >
+  </a
+      ><a name="4995" href="homotopy.PtdMapSequence.html#4705" class="Function"
+      >ptd-map-seq-equiv-index</a
+      ><a name="5018"
+      > </a
+      ><a name="5019" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="5020"
+      >     </a
+      ><a name="5025" class="Symbol"
+      >(</a
+      ><a name="5026" href="homotopy.PtdMapSequence.html#5026" class="Bound"
+      >seq-map</a
+      ><a name="5033"
+      > </a
+      ><a name="5034" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5035"
+      > </a
+      ><a name="5036" href="homotopy.PtdMapSequence.html#5036" class="Bound"
+      >ise</a
+      ><a name="5039" class="Symbol"
+      >)</a
+      ><a name="5040"
+      > </a
+      ><a name="5041" class="Symbol"
+      >=</a
+      ><a name="5042"
+      > </a
+      ><a name="5043" href="homotopy.PtdMapSequence.html#2832" class="Function"
+      >is-&#8857;seq-equiv-head</a
+      ><a name="5061"
+      > </a
+      ><a name="5062" href="homotopy.PtdMapSequence.html#5036" class="Bound"
+      >ise</a
+      ><a name="5065"
+      >
+  </a
+      ><a name="5068" href="homotopy.PtdMapSequence.html#4705" class="Function"
+      >ptd-map-seq-equiv-index</a
+      ><a name="5091"
+      > </a
+      ><a name="5092" class="Symbol"
+      >(</a
+      ><a name="5093" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5094"
+      > </a
+      ><a name="5095" class="Symbol"
+      >_)</a
+      ><a name="5097"
+      > </a
+      ><a name="5098" class="Symbol"
+      >((_</a
+      ><a name="5101"
+      > </a
+      ><a name="5102" href="homotopy.PtdMapSequence.html#879" class="InductiveConstructor Operator"
+      >&#8857;&#8595;|</a
+      ><a name="5105" class="Symbol"
+      >)</a
+      ><a name="5106"
+      > </a
+      ><a name="5107" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5108"
+      > </a
+      ><a name="5109" class="Symbol"
+      >_)</a
+      ><a name="5111"
+      > </a
+      ><a name="5112" class="Symbol"
+      >=</a
+      ><a name="5113"
+      > </a
+      ><a name="5114" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="5118"
+      > </a
+      ><a name="5119" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="5121"
+      >
+  </a
+      ><a name="5124" href="homotopy.PtdMapSequence.html#4705" class="Function"
+      >ptd-map-seq-equiv-index</a
+      ><a name="5147"
+      > </a
+      ><a name="5148" class="Symbol"
+      >(</a
+      ><a name="5149" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5150"
+      > </a
+      ><a name="5151" href="homotopy.PtdMapSequence.html#5151" class="Bound"
+      >n</a
+      ><a name="5152" class="Symbol"
+      >)</a
+      ><a name="5153"
+      > </a
+      ><a name="5154" class="Symbol"
+      >((_</a
+      ><a name="5157"
+      > </a
+      ><a name="5158" href="homotopy.PtdMapSequence.html#968" class="InductiveConstructor Operator"
+      >&#8857;&#8595;&#10216;</a
+      ><a name="5161"
+      > </a
+      ><a name="5162" class="Symbol"
+      >_</a
+      ><a name="5163"
+      > </a
+      ><a name="5164" href="homotopy.PtdMapSequence.html#968" class="InductiveConstructor Operator"
+      >&#10217;</a
+      ><a name="5165"
+      > </a
+      ><a name="5166" href="homotopy.PtdMapSequence.html#5166" class="Bound"
+      >seq-map</a
+      ><a name="5173" class="Symbol"
+      >)</a
+      ><a name="5174"
+      > </a
+      ><a name="5175" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5176"
+      > </a
+      ><a name="5177" href="homotopy.PtdMapSequence.html#5177" class="Bound"
+      >ise</a
+      ><a name="5180" class="Symbol"
+      >)</a
+      ><a name="5181"
+      >
+    </a
+      ><a name="5186" class="Symbol"
+      >=</a
+      ><a name="5187"
+      > </a
+      ><a name="5188" href="homotopy.PtdMapSequence.html#4705" class="Function"
+      >ptd-map-seq-equiv-index</a
+      ><a name="5211"
+      > </a
+      ><a name="5212" href="homotopy.PtdMapSequence.html#5151" class="Bound"
+      >n</a
+      ><a name="5213"
+      > </a
+      ><a name="5214" class="Symbol"
+      >(</a
+      ><a name="5215" href="homotopy.PtdMapSequence.html#5166" class="Bound"
+      >seq-map</a
+      ><a name="5222"
+      > </a
+      ><a name="5223" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5224"
+      > </a
+      ><a name="5225" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="5228"
+      > </a
+      ><a name="5229" href="homotopy.PtdMapSequence.html#5177" class="Bound"
+      >ise</a
+      ><a name="5232" class="Symbol"
+      >)</a
+      ><a name="5233"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

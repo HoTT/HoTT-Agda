@@ -1,0 +1,2730 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cw.cohomology.WedgeOfCells</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="88"
+      >
+</a
+      ><a name="89" class="Keyword"
+      >open</a
+      ><a name="93"
+      > </a
+      ><a name="94" class="Keyword"
+      >import</a
+      ><a name="100"
+      > </a
+      ><a name="101" href="homotopy.PushoutSplit.html#1" class="Module"
+      >homotopy.PushoutSplit</a
+      ><a name="122"
+      >
+</a
+      ><a name="123" class="Keyword"
+      >open</a
+      ><a name="127"
+      > </a
+      ><a name="128" class="Keyword"
+      >import</a
+      ><a name="134"
+      > </a
+      ><a name="135" href="homotopy.DisjointlyPointedSet.html#1" class="Module"
+      >homotopy.DisjointlyPointedSet</a
+      ><a name="164"
+      >
+</a
+      ><a name="165" class="Keyword"
+      >open</a
+      ><a name="169"
+      > </a
+      ><a name="170" class="Keyword"
+      >import</a
+      ><a name="176"
+      > </a
+      ><a name="177" href="cw.CW.html#1" class="Module"
+      >cw.CW</a
+      ><a name="182"
+      >
+
+</a
+      ><a name="184" class="Keyword"
+      >module</a
+      ><a name="190"
+      > </a
+      ><a name="191" href="cw.cohomology.WedgeOfCells.html#1" class="Module"
+      >cw.cohomology.WedgeOfCells</a
+      ><a name="217"
+      > </a
+      ><a name="218" class="Symbol"
+      >{</a
+      ><a name="219" href="cw.cohomology.WedgeOfCells.html#219" class="Bound"
+      >i</a
+      ><a name="220" class="Symbol"
+      >}</a
+      ><a name="221"
+      > </a
+      ><a name="222" class="Symbol"
+      >(</a
+      ><a name="223" href="cw.cohomology.WedgeOfCells.html#223" class="Bound"
+      >OT</a
+      ><a name="225"
+      > </a
+      ><a name="226" class="Symbol"
+      >:</a
+      ><a name="227"
+      > </a
+      ><a name="228" href="cohomology.Theory.html#7242" class="Record"
+      >OrdinaryTheory</a
+      ><a name="242"
+      > </a
+      ><a name="243" href="cw.cohomology.WedgeOfCells.html#219" class="Bound"
+      >i</a
+      ><a name="244" class="Symbol"
+      >)</a
+      ><a name="245"
+      >
+  </a
+      ><a name="248" class="Symbol"
+      >{</a
+      ><a name="249" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="250" class="Symbol"
+      >}</a
+      ><a name="251"
+      > </a
+      ><a name="252" class="Symbol"
+      >(</a
+      ><a name="253" href="cw.cohomology.WedgeOfCells.html#253" class="Bound"
+      >&#8857;skel</a
+      ><a name="258"
+      > </a
+      ><a name="259" class="Symbol"
+      >:</a
+      ><a name="260"
+      > </a
+      ><a name="261" href="cw.CW.html#1851" class="Record"
+      >&#8857;Skeleton</a
+      ><a name="270"
+      > </a
+      ><a name="271" class="Symbol"
+      >{</a
+      ><a name="272" href="cw.cohomology.WedgeOfCells.html#219" class="Bound"
+      >i</a
+      ><a name="273" class="Symbol"
+      >}</a
+      ><a name="274"
+      > </a
+      ><a name="275" class="Symbol"
+      >(</a
+      ><a name="276" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="277"
+      > </a
+      ><a name="278" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="279" class="Symbol"
+      >))</a
+      ><a name="281"
+      > </a
+      ><a name="282" class="Keyword"
+      >where</a
+      ><a name="287"
+      >
+
+</a
+      ><a name="289" class="Keyword"
+      >open</a
+      ><a name="293"
+      > </a
+      ><a name="294" href="cohomology.Theory.html#7242" class="Module"
+      >OrdinaryTheory</a
+      ><a name="308"
+      > </a
+      ><a name="309" href="cw.cohomology.WedgeOfCells.html#223" class="Bound"
+      >OT</a
+      ><a name="311"
+      >
+</a
+      ><a name="312" class="Keyword"
+      >open</a
+      ><a name="316"
+      > </a
+      ><a name="317" class="Keyword"
+      >import</a
+      ><a name="323"
+      > </a
+      ><a name="324" href="cohomology.Sphere.html#1" class="Module"
+      >cohomology.Sphere</a
+      ><a name="341"
+      > </a
+      ><a name="342" href="cw.cohomology.WedgeOfCells.html#223" class="Bound"
+      >OT</a
+      ><a name="344"
+      >
+
+</a
+      ><a name="346" href="cw.cohomology.WedgeOfCells.html#346" class="Function"
+      >X&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="353"
+      > </a
+      ><a name="354" class="Symbol"
+      >:</a
+      ><a name="355"
+      > </a
+      ><a name="356" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="359"
+      > </a
+      ><a name="360" href="cw.cohomology.WedgeOfCells.html#219" class="Bound"
+      >i</a
+      ><a name="361"
+      >
+</a
+      ><a name="362" href="cw.cohomology.WedgeOfCells.html#346" class="Function"
+      >X&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="369"
+      > </a
+      ><a name="370" class="Symbol"
+      >=</a
+      ><a name="371"
+      > </a
+      ><a name="372" href="lib.types.Cofiber.html#1552" class="Function"
+      >&#8857;Cofiber</a
+      ><a name="380"
+      > </a
+      ><a name="381" class="Symbol"
+      >(</a
+      ><a name="382" href="cw.CW.html#5014" class="Function"
+      >&#8857;cw-incl-last</a
+      ><a name="395"
+      > </a
+      ><a name="396" href="cw.cohomology.WedgeOfCells.html#253" class="Bound"
+      >&#8857;skel</a
+      ><a name="401" class="Symbol"
+      >)</a
+      ><a name="402"
+      >
+
+</a
+      ><a name="404" class="Keyword"
+      >module</a
+      ><a name="410"
+      > </a
+      ><a name="411" href="cw.cohomology.WedgeOfCells.html#411" class="Module"
+      >_</a
+      ><a name="412"
+      > </a
+      ><a name="413" class="Symbol"
+      >(</a
+      ><a name="414" href="cw.cohomology.WedgeOfCells.html#414" class="Bound"
+      >m</a
+      ><a name="415"
+      > </a
+      ><a name="416" class="Symbol"
+      >:</a
+      ><a name="417"
+      > </a
+      ><a name="418" href="lib.types.Int.html#154" class="Datatype"
+      >&#8484;</a
+      ><a name="419" class="Symbol"
+      >)</a
+      ><a name="420"
+      > </a
+      ><a name="421" class="Keyword"
+      >where</a
+      ><a name="426"
+      >
+  </a
+      ><a name="429" href="cw.cohomology.WedgeOfCells.html#429" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="437"
+      > </a
+      ><a name="438" class="Symbol"
+      >:</a
+      ><a name="439"
+      > </a
+      ><a name="440" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="445"
+      > </a
+      ><a name="446" href="cw.cohomology.WedgeOfCells.html#219" class="Bound"
+      >i</a
+      ><a name="447"
+      >
+  </a
+      ><a name="450" href="cw.cohomology.WedgeOfCells.html#429" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="458"
+      > </a
+      ><a name="459" class="Symbol"
+      >=</a
+      ><a name="460"
+      > </a
+      ><a name="461" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="462"
+      > </a
+      ><a name="463" href="cw.cohomology.WedgeOfCells.html#414" class="Bound"
+      >m</a
+      ><a name="464"
+      > </a
+      ><a name="465" href="cw.cohomology.WedgeOfCells.html#346" class="Function"
+      >X&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="472"
+      >
+
+  </a
+      ><a name="476" href="cw.cohomology.WedgeOfCells.html#476" class="Function"
+      >CEl-X&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="487"
+      > </a
+      ><a name="488" class="Symbol"
+      >:</a
+      ><a name="489"
+      > </a
+      ><a name="490" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="494"
+      > </a
+      ><a name="495" href="cw.cohomology.WedgeOfCells.html#219" class="Bound"
+      >i</a
+      ><a name="496"
+      >
+  </a
+      ><a name="499" href="cw.cohomology.WedgeOfCells.html#476" class="Function"
+      >CEl-X&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="510"
+      > </a
+      ><a name="511" class="Symbol"
+      >=</a
+      ><a name="512"
+      > </a
+      ><a name="513" href="lib.types.Group.html#6903" class="Field"
+      >Group.El</a
+      ><a name="521"
+      > </a
+      ><a name="522" href="cw.cohomology.WedgeOfCells.html#429" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="530"
+      >
+
+  </a
+      ><a name="534" class="Keyword"
+      >abstract</a
+      ><a name="542"
+      >
+    </a
+      ><a name="547" href="cw.cohomology.WedgeOfCells.html#547" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-is-abelian</a
+      ><a name="566"
+      > </a
+      ><a name="567" class="Symbol"
+      >:</a
+      ><a name="568"
+      > </a
+      ><a name="569" href="lib.types.Group.html#7098" class="Function"
+      >is-abelian</a
+      ><a name="579"
+      > </a
+      ><a name="580" href="cw.cohomology.WedgeOfCells.html#429" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="588"
+      >
+    </a
+      ><a name="593" href="cw.cohomology.WedgeOfCells.html#547" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-is-abelian</a
+      ><a name="612"
+      > </a
+      ><a name="613" class="Symbol"
+      >=</a
+      ><a name="614"
+      > </a
+      ><a name="615" href="cohomology.Theory.html#281" class="Function"
+      >C-is-abelian</a
+      ><a name="627"
+      > </a
+      ><a name="628" href="cw.cohomology.WedgeOfCells.html#414" class="Bound"
+      >m</a
+      ><a name="629"
+      > </a
+      ><a name="630" href="cw.cohomology.WedgeOfCells.html#346" class="Function"
+      >X&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="637"
+      >
+
+  </a
+      ><a name="641" href="cw.cohomology.WedgeOfCells.html#641" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-abgroup</a
+      ><a name="657"
+      > </a
+      ><a name="658" class="Symbol"
+      >:</a
+      ><a name="659"
+      > </a
+      ><a name="660" href="lib.types.Group.html#7210" class="Function"
+      >AbGroup</a
+      ><a name="667"
+      > </a
+      ><a name="668" href="cw.cohomology.WedgeOfCells.html#219" class="Bound"
+      >i</a
+      ><a name="669"
+      >
+  </a
+      ><a name="672" href="cw.cohomology.WedgeOfCells.html#641" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-abgroup</a
+      ><a name="688"
+      > </a
+      ><a name="689" class="Symbol"
+      >=</a
+      ><a name="690"
+      > </a
+      ><a name="691" href="cw.cohomology.WedgeOfCells.html#429" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="699"
+      > </a
+      ><a name="700" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="701"
+      > </a
+      ><a name="702" href="cw.cohomology.WedgeOfCells.html#547" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-is-abelian</a
+      ><a name="721"
+      >
+
+</a
+      ><a name="723" class="Comment"
+      >{- the equivalence is in the opposite direction because
+   cohomology functors are contravariant. -}</a
+      ><a name="823"
+      >
+</a
+      ><a name="824" href="cw.cohomology.WedgeOfCells.html#824" class="Function"
+      >BigWedge-&#8857;equiv-X&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="847"
+      > </a
+      ><a name="848" class="Symbol"
+      >:</a
+      ><a name="849"
+      > </a
+      ><a name="850" href="lib.types.BigWedge.html#885" class="Function"
+      >&#8857;BigWedge</a
+      ><a name="859"
+      > </a
+      ><a name="860" class="Symbol"
+      >{</a
+      ><a name="861" class="Argument"
+      >A</a
+      ><a name="862"
+      > </a
+      ><a name="863" class="Symbol"
+      >=</a
+      ><a name="864"
+      > </a
+      ><a name="865" href="cw.CW.html#3625" class="Function"
+      >&#8857;cells-last</a
+      ><a name="876"
+      > </a
+      ><a name="877" href="cw.cohomology.WedgeOfCells.html#253" class="Bound"
+      >&#8857;skel</a
+      ><a name="882" class="Symbol"
+      >}</a
+      ><a name="883"
+      > </a
+      ><a name="884" class="Symbol"
+      >(&#955;</a
+      ><a name="886"
+      > </a
+      ><a name="887" href="cw.cohomology.WedgeOfCells.html#887" class="Bound"
+      >_</a
+      ><a name="888"
+      > </a
+      ><a name="889" class="Symbol"
+      >&#8594;</a
+      ><a name="890"
+      > </a
+      ><a name="891" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="898"
+      > </a
+      ><a name="899" class="Symbol"
+      >(</a
+      ><a name="900" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="901"
+      > </a
+      ><a name="902" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="903" class="Symbol"
+      >))</a
+      ><a name="905"
+      > </a
+      ><a name="906" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="908"
+      > </a
+      ><a name="909" href="cw.cohomology.WedgeOfCells.html#346" class="Function"
+      >X&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="916"
+      >
+</a
+      ><a name="917" href="cw.cohomology.WedgeOfCells.html#824" class="Function"
+      >BigWedge-&#8857;equiv-X&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="940"
+      > </a
+      ><a name="941" class="Symbol"
+      >=</a
+      ><a name="942"
+      > </a
+      ><a name="943" href="lib.Equivalence.html#13119" class="Function"
+      >&#8771;-to-&#8857;&#8771;</a
+      ><a name="950"
+      >
+  </a
+      ><a name="953" class="Symbol"
+      >(</a
+      ><a name="954" href="homotopy.PushoutSplit.html#5997" class="Function"
+      >PS.split-equiv</a
+      ><a name="968"
+      > </a
+      ><a name="969" href="lib.Equivalence.html#5985" class="Function Operator"
+      >&#8728;e</a
+      ><a name="971"
+      > </a
+      ><a name="972" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="977"
+      > </a
+      ><a name="978" href="cw.cohomology.WedgeOfCells.html#1416" class="Function"
+      >to</a
+      ><a name="980"
+      > </a
+      ><a name="981" href="cw.cohomology.WedgeOfCells.html#1640" class="Function"
+      >from</a
+      ><a name="985"
+      > </a
+      ><a name="986" href="cw.cohomology.WedgeOfCells.html#2143" class="Function"
+      >to-from</a
+      ><a name="993"
+      > </a
+      ><a name="994" href="cw.cohomology.WedgeOfCells.html#1674" class="Function"
+      >from-to</a
+      ><a name="1001" class="Symbol"
+      >)</a
+      ><a name="1002"
+      > </a
+      ><a name="1003" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1006"
+      >
+  </a
+      ><a name="1009" class="Keyword"
+      >where</a
+      ><a name="1014"
+      >
+    </a
+      ><a name="1019" class="Keyword"
+      >open</a
+      ><a name="1023"
+      > </a
+      ><a name="1024" href="cw.CW.html#928" class="Module"
+      >AttachedSkeleton</a
+      ><a name="1040"
+      > </a
+      ><a name="1041" class="Symbol"
+      >(</a
+      ><a name="1042" href="cw.CW.html#1928" class="Field"
+      >&#8857;Skeleton.skel</a
+      ><a name="1056"
+      > </a
+      ><a name="1057" href="cw.cohomology.WedgeOfCells.html#253" class="Bound"
+      >&#8857;skel</a
+      ><a name="1062" class="Symbol"
+      >)</a
+      ><a name="1063"
+      >
+
+    </a
+      ><a name="1069" class="Keyword"
+      >module</a
+      ><a name="1075"
+      > </a
+      ><a name="1076" href="cw.cohomology.WedgeOfCells.html#1076" class="Module"
+      >PS</a
+      ><a name="1078"
+      > </a
+      ><a name="1079" class="Symbol"
+      >=</a
+      ><a name="1080"
+      > </a
+      ><a name="1081" href="homotopy.PushoutSplit.html#3510" class="Module"
+      >PushoutLSplit</a
+      ><a name="1094"
+      > </a
+      ><a name="1095" class="Symbol"
+      >(</a
+      ><a name="1096" href="lib.Base.html#8582" class="Function"
+      >uncurry</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" href="cw.CW.html#1098" class="Function"
+      >attaching</a
+      ><a name="1113" class="Symbol"
+      >)</a
+      ><a name="1114"
+      > </a
+      ><a name="1115" class="Symbol"
+      >(&#955;</a
+      ><a name="1117"
+      > </a
+      ><a name="1118" href="cw.cohomology.WedgeOfCells.html#1118" class="Bound"
+      >_</a
+      ><a name="1119"
+      > </a
+      ><a name="1120" class="Symbol"
+      >&#8594;</a
+      ><a name="1121"
+      > </a
+      ><a name="1122" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1124" class="Symbol"
+      >)</a
+      ><a name="1125"
+      > </a
+      ><a name="1126" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1129"
+      >
+
+    </a
+      ><a name="1135" class="Keyword"
+      >module</a
+      ><a name="1141"
+      > </a
+      ><a name="1142" href="cw.cohomology.WedgeOfCells.html#1142" class="Module"
+      >SphereToCofiber</a
+      ><a name="1157"
+      > </a
+      ><a name="1158" class="Symbol"
+      >(</a
+      ><a name="1159" href="cw.cohomology.WedgeOfCells.html#1159" class="Bound"
+      >a</a
+      ><a name="1160"
+      > </a
+      ><a name="1161" class="Symbol"
+      >:</a
+      ><a name="1162"
+      > </a
+      ><a name="1163" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1166"
+      > </a
+      ><a name="1167" href="cw.CW.html#1079" class="Function"
+      >cells</a
+      ><a name="1172" class="Symbol"
+      >)</a
+      ><a name="1173"
+      > </a
+      ><a name="1174" class="Symbol"
+      >=</a
+      ><a name="1175"
+      > </a
+      ><a name="1176" class="Module"
+      >SuspRec</a
+      ><a name="1183"
+      > </a
+      ><a name="1184" class="Symbol"
+      >{</a
+      ><a name="1185" class="Argument"
+      >A</a
+      ><a name="1186"
+      > </a
+      ><a name="1187" class="Symbol"
+      >=</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="1195"
+      > </a
+      ><a name="1196" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="1197" class="Symbol"
+      >}</a
+      ><a name="1198"
+      >
+      </a
+      ><a name="1205" class="Symbol"
+      >(</a
+      ><a name="1206" href="lib.types.Cofiber.html#498" class="Function"
+      >cfbase'</a
+      ><a name="1213"
+      > </a
+      ><a name="1214" class="Symbol"
+      >(</a
+      ><a name="1215" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1218"
+      > </a
+      ><a name="1219" href="lib.Base.html#1567" class="Function"
+      >:&gt;</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" class="Symbol"
+      >(</a
+      ><a name="1223" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1226"
+      > </a
+      ><a name="1227" href="cw.CW.html#1079" class="Function"
+      >cells</a
+      ><a name="1232"
+      > </a
+      ><a name="1233" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="1234"
+      > </a
+      ><a name="1235" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="1241"
+      > </a
+      ><a name="1242" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="1243"
+      > </a
+      ><a name="1244" class="Symbol"
+      >&#8594;</a
+      ><a name="1245"
+      > </a
+      ><a name="1246" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1249"
+      > </a
+      ><a name="1250" href="cw.CW.html#1079" class="Function"
+      >cells</a
+      ><a name="1255" class="Symbol"
+      >)))</a
+      ><a name="1258"
+      >
+      </a
+      ><a name="1265" class="Symbol"
+      >(</a
+      ><a name="1266" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="1271"
+      > </a
+      ><a name="1272" href="cw.cohomology.WedgeOfCells.html#1159" class="Bound"
+      >a</a
+      ><a name="1273" class="Symbol"
+      >)</a
+      ><a name="1274"
+      > </a
+      ><a name="1275" class="Symbol"
+      >(&#955;</a
+      ><a name="1277"
+      > </a
+      ><a name="1278" href="cw.cohomology.WedgeOfCells.html#1278" class="Bound"
+      >s</a
+      ><a name="1279"
+      > </a
+      ><a name="1280" class="Symbol"
+      >&#8594;</a
+      ><a name="1281"
+      > </a
+      ><a name="1282" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="1288"
+      > </a
+      ><a name="1289" class="Symbol"
+      >(</a
+      ><a name="1290" href="cw.cohomology.WedgeOfCells.html#1159" class="Bound"
+      >a</a
+      ><a name="1291"
+      > </a
+      ><a name="1292" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1293"
+      > </a
+      ><a name="1294" href="cw.cohomology.WedgeOfCells.html#1278" class="Bound"
+      >s</a
+      ><a name="1295" class="Symbol"
+      >))</a
+      ><a name="1297"
+      >
+
+    </a
+      ><a name="1303" class="Keyword"
+      >module</a
+      ><a name="1309"
+      > </a
+      ><a name="1310" href="cw.cohomology.WedgeOfCells.html#1310" class="Module"
+      >To</a
+      ><a name="1312"
+      > </a
+      ><a name="1313" class="Symbol"
+      >=</a
+      ><a name="1314"
+      > </a
+      ><a name="1315" href="lib.types.BigWedge.html#1472" class="Module"
+      >BigWedgeRec</a
+      ><a name="1326"
+      > </a
+      ><a name="1327" class="Symbol"
+      >{</a
+      ><a name="1328" class="Argument"
+      >A</a
+      ><a name="1329"
+      > </a
+      ><a name="1330" class="Symbol"
+      >=</a
+      ><a name="1331"
+      > </a
+      ><a name="1332" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1335"
+      > </a
+      ><a name="1336" href="cw.CW.html#1079" class="Function"
+      >cells</a
+      ><a name="1341" class="Symbol"
+      >}</a
+      ><a name="1342"
+      > </a
+      ><a name="1343" class="Symbol"
+      >{</a
+      ><a name="1344" class="Argument"
+      >X</a
+      ><a name="1345"
+      > </a
+      ><a name="1346" class="Symbol"
+      >=</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" class="Symbol"
+      >&#955;</a
+      ><a name="1349"
+      > </a
+      ><a name="1350" href="cw.cohomology.WedgeOfCells.html#1350" class="Bound"
+      >_</a
+      ><a name="1351"
+      > </a
+      ><a name="1352" class="Symbol"
+      >&#8594;</a
+      ><a name="1353"
+      > </a
+      ><a name="1354" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="1361"
+      > </a
+      ><a name="1362" class="Symbol"
+      >(</a
+      ><a name="1363" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1364"
+      > </a
+      ><a name="1365" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="1366" class="Symbol"
+      >)}</a
+      ><a name="1368"
+      >
+      </a
+      ><a name="1375" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="1381"
+      > </a
+      ><a name="1382" href="lib.types.Pushout.html#1397" class="Function"
+      >SphereToCofiber.f</a
+      ><a name="1399"
+      > </a
+      ><a name="1400" class="Symbol"
+      >(&#955;</a
+      ><a name="1402"
+      > </a
+      ><a name="1403" href="cw.cohomology.WedgeOfCells.html#1403" class="Bound"
+      >_</a
+      ><a name="1404"
+      > </a
+      ><a name="1405" class="Symbol"
+      >&#8594;</a
+      ><a name="1406"
+      > </a
+      ><a name="1407" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1410" class="Symbol"
+      >)</a
+      ><a name="1411"
+      >
+    </a
+      ><a name="1416" href="cw.cohomology.WedgeOfCells.html#1416" class="Function"
+      >to</a
+      ><a name="1418"
+      > </a
+      ><a name="1419" class="Symbol"
+      >=</a
+      ><a name="1420"
+      > </a
+      ><a name="1421" href="lib.types.Pushout.html#1397" class="Function"
+      >To.f</a
+      ><a name="1425"
+      >
+
+    </a
+      ><a name="1431" class="Keyword"
+      >module</a
+      ><a name="1437"
+      > </a
+      ><a name="1438" href="cw.cohomology.WedgeOfCells.html#1438" class="Module"
+      >From</a
+      ><a name="1442"
+      > </a
+      ><a name="1443" class="Symbol"
+      >=</a
+      ><a name="1444"
+      > </a
+      ><a name="1445" href="lib.types.Cofiber.html#1130" class="Module"
+      >CofiberRec</a
+      ><a name="1455"
+      > </a
+      ><a name="1456" class="Symbol"
+      >{</a
+      ><a name="1457" class="Argument"
+      >f</a
+      ><a name="1458"
+      > </a
+      ><a name="1459" class="Symbol"
+      >=</a
+      ><a name="1460"
+      > </a
+      ><a name="1461" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1464"
+      > </a
+      ><a name="1465" href="lib.Base.html#1567" class="Function"
+      >:&gt;</a
+      ><a name="1467"
+      > </a
+      ><a name="1468" class="Symbol"
+      >(</a
+      ><a name="1469" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1472"
+      > </a
+      ><a name="1473" href="cw.CW.html#1079" class="Function"
+      >cells</a
+      ><a name="1478"
+      > </a
+      ><a name="1479" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="1480"
+      > </a
+      ><a name="1481" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="1487"
+      > </a
+      ><a name="1488" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="1489"
+      > </a
+      ><a name="1490" class="Symbol"
+      >&#8594;</a
+      ><a name="1491"
+      > </a
+      ><a name="1492" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1495"
+      > </a
+      ><a name="1496" href="cw.CW.html#1079" class="Function"
+      >cells</a
+      ><a name="1501" class="Symbol"
+      >)}</a
+      ><a name="1503"
+      >
+      </a
+      ><a name="1510" class="Symbol"
+      >(</a
+      ><a name="1511" href="lib.types.BigWedge.html#744" class="Function"
+      >bwbase</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" class="Symbol"
+      >{</a
+      ><a name="1519" class="Argument"
+      >A</a
+      ><a name="1520"
+      > </a
+      ><a name="1521" class="Symbol"
+      >=</a
+      ><a name="1522"
+      > </a
+      ><a name="1523" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1526"
+      > </a
+      ><a name="1527" href="cw.CW.html#1079" class="Function"
+      >cells</a
+      ><a name="1532" class="Symbol"
+      >}</a
+      ><a name="1533"
+      > </a
+      ><a name="1534" class="Symbol"
+      >{</a
+      ><a name="1535" class="Argument"
+      >X</a
+      ><a name="1536"
+      > </a
+      ><a name="1537" class="Symbol"
+      >=</a
+      ><a name="1538"
+      > </a
+      ><a name="1539" class="Symbol"
+      >&#955;</a
+      ><a name="1540"
+      > </a
+      ><a name="1541" href="cw.cohomology.WedgeOfCells.html#1541" class="Bound"
+      >_</a
+      ><a name="1542"
+      > </a
+      ><a name="1543" class="Symbol"
+      >&#8594;</a
+      ><a name="1544"
+      > </a
+      ><a name="1545" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="1552"
+      > </a
+      ><a name="1553" class="Symbol"
+      >(</a
+      ><a name="1554" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1555"
+      > </a
+      ><a name="1556" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="1557" class="Symbol"
+      >)})</a
+      ><a name="1560"
+      >
+      </a
+      ><a name="1567" class="Symbol"
+      >(&#955;</a
+      ><a name="1569"
+      > </a
+      ><a name="1570" href="cw.cohomology.WedgeOfCells.html#1570" class="Bound"
+      >a</a
+      ><a name="1571"
+      > </a
+      ><a name="1572" class="Symbol"
+      >&#8594;</a
+      ><a name="1573"
+      > </a
+      ><a name="1574" href="lib.types.BigWedge.html#803" class="Function"
+      >bwin</a
+      ><a name="1578"
+      > </a
+      ><a name="1579" href="cw.cohomology.WedgeOfCells.html#1570" class="Bound"
+      >a</a
+      ><a name="1580"
+      > </a
+      ><a name="1581" href="lib.types.Suspension.html#895" class="Function"
+      >south</a
+      ><a name="1586" class="Symbol"
+      >)</a
+      ><a name="1587"
+      > </a
+      ><a name="1588" class="Symbol"
+      >(&#955;{(</a
+      ><a name="1592" href="cw.cohomology.WedgeOfCells.html#1592" class="Bound"
+      >a</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1595"
+      > </a
+      ><a name="1596" href="cw.cohomology.WedgeOfCells.html#1596" class="Bound"
+      >s</a
+      ><a name="1597" class="Symbol"
+      >)</a
+      ><a name="1598"
+      > </a
+      ><a name="1599" class="Symbol"
+      >&#8594;</a
+      ><a name="1600"
+      > </a
+      ><a name="1601" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="1607"
+      > </a
+      ><a name="1608" href="cw.cohomology.WedgeOfCells.html#1592" class="Bound"
+      >a</a
+      ><a name="1609"
+      > </a
+      ><a name="1610" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1611"
+      > </a
+      ><a name="1612" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1614"
+      > </a
+      ><a name="1615" class="Symbol"
+      >(</a
+      ><a name="1616" href="lib.types.BigWedge.html#803" class="Function"
+      >bwin</a
+      ><a name="1620"
+      > </a
+      ><a name="1621" href="cw.cohomology.WedgeOfCells.html#1592" class="Bound"
+      >a</a
+      ><a name="1622" class="Symbol"
+      >)</a
+      ><a name="1623"
+      > </a
+      ><a name="1624" class="Symbol"
+      >(</a
+      ><a name="1625" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1630"
+      > </a
+      ><a name="1631" href="cw.cohomology.WedgeOfCells.html#1596" class="Bound"
+      >s</a
+      ><a name="1632" class="Symbol"
+      >)})</a
+      ><a name="1635"
+      >
+    </a
+      ><a name="1640" href="cw.cohomology.WedgeOfCells.html#1640" class="Function"
+      >from</a
+      ><a name="1644"
+      > </a
+      ><a name="1645" class="Symbol"
+      >=</a
+      ><a name="1646"
+      > </a
+      ><a name="1647" href="lib.types.Pushout.html#1397" class="Function"
+      >From.f</a
+      ><a name="1653"
+      >
+
+    </a
+      ><a name="1659" class="Keyword"
+      >abstract</a
+      ><a name="1667"
+      >
+      </a
+      ><a name="1674" href="cw.cohomology.WedgeOfCells.html#1674" class="Function"
+      >from-to</a
+      ><a name="1681"
+      > </a
+      ><a name="1682" class="Symbol"
+      >:</a
+      ><a name="1683"
+      > </a
+      ><a name="1684" class="Symbol"
+      >&#8704;</a
+      ><a name="1685"
+      > </a
+      ><a name="1686" href="cw.cohomology.WedgeOfCells.html#1686" class="Bound"
+      >b</a
+      ><a name="1687"
+      > </a
+      ><a name="1688" class="Symbol"
+      >&#8594;</a
+      ><a name="1689"
+      > </a
+      ><a name="1690" href="cw.cohomology.WedgeOfCells.html#1640" class="Function"
+      >from</a
+      ><a name="1694"
+      > </a
+      ><a name="1695" class="Symbol"
+      >(</a
+      ><a name="1696" href="cw.cohomology.WedgeOfCells.html#1416" class="Function"
+      >to</a
+      ><a name="1698"
+      > </a
+      ><a name="1699" href="cw.cohomology.WedgeOfCells.html#1686" class="Bound"
+      >b</a
+      ><a name="1700" class="Symbol"
+      >)</a
+      ><a name="1701"
+      > </a
+      ><a name="1702" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1704"
+      > </a
+      ><a name="1705" href="cw.cohomology.WedgeOfCells.html#1686" class="Bound"
+      >b</a
+      ><a name="1706"
+      >
+      </a
+      ><a name="1713" href="cw.cohomology.WedgeOfCells.html#1674" class="Function"
+      >from-to</a
+      ><a name="1720"
+      > </a
+      ><a name="1721" class="Symbol"
+      >=</a
+      ><a name="1722"
+      > </a
+      ><a name="1723" href="lib.types.BigWedge.html#1431" class="Function"
+      >BigWedge-elim</a
+      ><a name="1736"
+      >
+        </a
+      ><a name="1745" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1748"
+      >
+        </a
+      ><a name="1757" class="Symbol"
+      >(&#955;</a
+      ><a name="1759"
+      > </a
+      ><a name="1760" href="cw.cohomology.WedgeOfCells.html#1760" class="Bound"
+      >a</a
+      ><a name="1761"
+      > </a
+      ><a name="1762" class="Symbol"
+      >&#8594;</a
+      ><a name="1763"
+      > </a
+      ><a name="1764" href="lib.types.Pushout.html#850" class="Function"
+      >Susp-elim</a
+      ><a name="1773"
+      > </a
+      ><a name="1774" class="Symbol"
+      >(</a
+      ><a name="1775" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="1781"
+      > </a
+      ><a name="1782" href="cw.cohomology.WedgeOfCells.html#1760" class="Bound"
+      >a</a
+      ><a name="1783" class="Symbol"
+      >)</a
+      ><a name="1784"
+      > </a
+      ><a name="1785" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1788"
+      >
+          </a
+      ><a name="1799" class="Symbol"
+      >(&#955;</a
+      ><a name="1801"
+      > </a
+      ><a name="1802" href="cw.cohomology.WedgeOfCells.html#1802" class="Bound"
+      >s</a
+      ><a name="1803"
+      > </a
+      ><a name="1804" class="Symbol"
+      >&#8594;</a
+      ><a name="1805"
+      > </a
+      ><a name="1806" href="lib.cubical.Square.html#8229" class="Function"
+      >&#8595;-='-from-square</a
+      ><a name="1822"
+      > </a
+      ><a name="1823" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1824"
+      >
+            </a
+      ><a name="1837" class="Symbol"
+      >(</a
+      ><a name="1838"
+      > </a
+      ><a name="1839" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="1843"
+      > </a
+      ><a name="1844" href="cw.cohomology.WedgeOfCells.html#1640" class="Function"
+      >from</a
+      ><a name="1848"
+      > </a
+      ><a name="1849" class="Symbol"
+      >(</a
+      ><a name="1850" href="lib.types.Pushout.html#1397" class="Function"
+      >SphereToCofiber.f</a
+      ><a name="1867"
+      > </a
+      ><a name="1868" href="cw.cohomology.WedgeOfCells.html#1760" class="Bound"
+      >a</a
+      ><a name="1869" class="Symbol"
+      >)</a
+      ><a name="1870"
+      > </a
+      ><a name="1871" class="Symbol"
+      >(</a
+      ><a name="1872" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1877"
+      > </a
+      ><a name="1878" href="cw.cohomology.WedgeOfCells.html#1802" class="Bound"
+      >s</a
+      ><a name="1879" class="Symbol"
+      >)</a
+      ><a name="1880"
+      >
+            </a
+      ><a name="1893" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1894"
+      > </a
+      ><a name="1895" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1897"
+      > </a
+      ><a name="1898" class="Symbol"
+      >(</a
+      ><a name="1899" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1901"
+      > </a
+      ><a name="1902" href="cw.cohomology.WedgeOfCells.html#1640" class="Function"
+      >from</a
+      ><a name="1906" class="Symbol"
+      >)</a
+      ><a name="1907"
+      > </a
+      ><a name="1908" class="Symbol"
+      >(</a
+      ><a name="1909" href="lib.types.Pushout.html#1428" class="Function"
+      >SphereToCofiber.merid-&#946;</a
+      ><a name="1932"
+      > </a
+      ><a name="1933" href="cw.cohomology.WedgeOfCells.html#1760" class="Bound"
+      >a</a
+      ><a name="1934"
+      > </a
+      ><a name="1935" href="cw.cohomology.WedgeOfCells.html#1802" class="Bound"
+      >s</a
+      ><a name="1936" class="Symbol"
+      >)</a
+      ><a name="1937"
+      >
+            </a
+      ><a name="1950" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1951"
+      > </a
+      ><a name="1952" href="lib.types.Pushout.html#1428" class="Function"
+      >From.glue-&#946;</a
+      ><a name="1963"
+      > </a
+      ><a name="1964" class="Symbol"
+      >(</a
+      ><a name="1965" href="cw.cohomology.WedgeOfCells.html#1760" class="Bound"
+      >a</a
+      ><a name="1966"
+      > </a
+      ><a name="1967" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1968"
+      > </a
+      ><a name="1969" href="cw.cohomology.WedgeOfCells.html#1802" class="Bound"
+      >s</a
+      ><a name="1970" class="Symbol"
+      >))</a
+      ><a name="1972"
+      >
+            </a
+      ><a name="1985" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="1988"
+      > </a
+      ><a name="1989" class="Symbol"
+      >(</a
+      ><a name="1990" href="lib.cubical.Square.html#18288" class="Function"
+      >tl-square</a
+      ><a name="1999"
+      > </a
+      ><a name="2000" class="Symbol"
+      >(</a
+      ><a name="2001" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="2007"
+      > </a
+      ><a name="2008" href="cw.cohomology.WedgeOfCells.html#1760" class="Bound"
+      >a</a
+      ><a name="2009" class="Symbol"
+      >)</a
+      ><a name="2010"
+      > </a
+      ><a name="2011" href="lib.cubical.Square.html#12549" class="Function Operator"
+      >&#8865;h</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" href="lib.cubical.Square.html#484" class="Function"
+      >vid-square</a
+      ><a name="2024" class="Symbol"
+      >)))</a
+      ><a name="2027"
+      >
+        </a
+      ><a name="2036" class="Symbol"
+      >(&#955;</a
+      ><a name="2038"
+      > </a
+      ><a name="2039" href="cw.cohomology.WedgeOfCells.html#2039" class="Bound"
+      >a</a
+      ><a name="2040"
+      > </a
+      ><a name="2041" class="Symbol"
+      >&#8594;</a
+      ><a name="2042"
+      > </a
+      ><a name="2043" href="lib.cubical.Square.html#10289" class="Function"
+      >&#8595;-&#8728;=idf-from-square</a
+      ><a name="2062"
+      > </a
+      ><a name="2063" href="cw.cohomology.WedgeOfCells.html#1640" class="Function"
+      >from</a
+      ><a name="2067"
+      > </a
+      ><a name="2068" href="cw.cohomology.WedgeOfCells.html#1416" class="Function"
+      >to</a
+      ><a name="2070"
+      > </a
+      ><a name="2071" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2072"
+      >
+          </a
+      ><a name="2083" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2085"
+      > </a
+      ><a name="2086" class="Symbol"
+      >(</a
+      ><a name="2087" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2089"
+      > </a
+      ><a name="2090" href="cw.cohomology.WedgeOfCells.html#1640" class="Function"
+      >from</a
+      ><a name="2094" class="Symbol"
+      >)</a
+      ><a name="2095"
+      > </a
+      ><a name="2096" class="Symbol"
+      >(</a
+      ><a name="2097" href="lib.types.Pushout.html#1428" class="Function"
+      >To.glue-&#946;</a
+      ><a name="2106"
+      > </a
+      ><a name="2107" href="cw.cohomology.WedgeOfCells.html#2039" class="Bound"
+      >a</a
+      ><a name="2108" class="Symbol"
+      >)</a
+      ><a name="2109"
+      > </a
+      ><a name="2110" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="2113"
+      > </a
+      ><a name="2114" href="lib.cubical.Square.html#17899" class="Function"
+      >br-square</a
+      ><a name="2123"
+      > </a
+      ><a name="2124" class="Symbol"
+      >(</a
+      ><a name="2125" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="2131"
+      > </a
+      ><a name="2132" href="cw.cohomology.WedgeOfCells.html#2039" class="Bound"
+      >a</a
+      ><a name="2133" class="Symbol"
+      >))</a
+      ><a name="2135"
+      >
+
+      </a
+      ><a name="2143" href="cw.cohomology.WedgeOfCells.html#2143" class="Function"
+      >to-from</a
+      ><a name="2150"
+      > </a
+      ><a name="2151" class="Symbol"
+      >:</a
+      ><a name="2152"
+      > </a
+      ><a name="2153" class="Symbol"
+      >&#8704;</a
+      ><a name="2154"
+      > </a
+      ><a name="2155" href="cw.cohomology.WedgeOfCells.html#2155" class="Bound"
+      >c</a
+      ><a name="2156"
+      > </a
+      ><a name="2157" class="Symbol"
+      >&#8594;</a
+      ><a name="2158"
+      > </a
+      ><a name="2159" href="cw.cohomology.WedgeOfCells.html#1416" class="Function"
+      >to</a
+      ><a name="2161"
+      > </a
+      ><a name="2162" class="Symbol"
+      >(</a
+      ><a name="2163" href="cw.cohomology.WedgeOfCells.html#1640" class="Function"
+      >from</a
+      ><a name="2167"
+      > </a
+      ><a name="2168" href="cw.cohomology.WedgeOfCells.html#2155" class="Bound"
+      >c</a
+      ><a name="2169" class="Symbol"
+      >)</a
+      ><a name="2170"
+      > </a
+      ><a name="2171" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2173"
+      > </a
+      ><a name="2174" href="cw.cohomology.WedgeOfCells.html#2155" class="Bound"
+      >c</a
+      ><a name="2175"
+      >
+      </a
+      ><a name="2182" href="cw.cohomology.WedgeOfCells.html#2143" class="Function"
+      >to-from</a
+      ><a name="2189"
+      > </a
+      ><a name="2190" class="Symbol"
+      >=</a
+      ><a name="2191"
+      > </a
+      ><a name="2192" href="lib.types.Pushout.html#850" class="Function"
+      >Cofiber-elim</a
+      ><a name="2204"
+      >
+        </a
+      ><a name="2213" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2216"
+      > </a
+      ><a name="2217" class="Symbol"
+      >(&#955;</a
+      ><a name="2219"
+      > </a
+      ><a name="2220" href="cw.cohomology.WedgeOfCells.html#2220" class="Bound"
+      >a</a
+      ><a name="2221"
+      > </a
+      ><a name="2222" class="Symbol"
+      >&#8594;</a
+      ><a name="2223"
+      > </a
+      ><a name="2224" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2227" class="Symbol"
+      >)</a
+      ><a name="2228"
+      >
+        </a
+      ><a name="2237" class="Symbol"
+      >(&#955;{(</a
+      ><a name="2241" href="cw.cohomology.WedgeOfCells.html#2241" class="Bound"
+      >a</a
+      ><a name="2242"
+      > </a
+      ><a name="2243" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2244"
+      > </a
+      ><a name="2245" href="cw.cohomology.WedgeOfCells.html#2245" class="Bound"
+      >s</a
+      ><a name="2246" class="Symbol"
+      >)</a
+      ><a name="2247"
+      > </a
+      ><a name="2248" class="Symbol"
+      >&#8594;</a
+      ><a name="2249"
+      > </a
+      ><a name="2250" href="lib.types.Paths.html#7720" class="Function"
+      >&#8595;-&#8728;=idf-in'</a
+      ><a name="2261"
+      > </a
+      ><a name="2262" href="cw.cohomology.WedgeOfCells.html#1416" class="Function"
+      >to</a
+      ><a name="2264"
+      > </a
+      ><a name="2265" href="cw.cohomology.WedgeOfCells.html#1640" class="Function"
+      >from</a
+      ><a name="2269"
+      > </a
+      ><a name="2270" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2271"
+      >
+            </a
+      ><a name="2284" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2286"
+      > </a
+      ><a name="2287" class="Symbol"
+      >(</a
+      ><a name="2288" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2290"
+      > </a
+      ><a name="2291" href="cw.cohomology.WedgeOfCells.html#1416" class="Function"
+      >to</a
+      ><a name="2293" class="Symbol"
+      >)</a
+      ><a name="2294"
+      > </a
+      ><a name="2295" class="Symbol"
+      >(</a
+      ><a name="2296" href="lib.types.Pushout.html#1428" class="Function"
+      >From.glue-&#946;</a
+      ><a name="2307"
+      > </a
+      ><a name="2308" class="Symbol"
+      >(</a
+      ><a name="2309" href="cw.cohomology.WedgeOfCells.html#2241" class="Bound"
+      >a</a
+      ><a name="2310"
+      > </a
+      ><a name="2311" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2312"
+      > </a
+      ><a name="2313" href="cw.cohomology.WedgeOfCells.html#2245" class="Bound"
+      >s</a
+      ><a name="2314" class="Symbol"
+      >))</a
+      ><a name="2316"
+      >
+          </a
+      ><a name="2327" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2328"
+      > </a
+      ><a name="2329" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="2333"
+      > </a
+      ><a name="2334" href="cw.cohomology.WedgeOfCells.html#1416" class="Function"
+      >to</a
+      ><a name="2336"
+      > </a
+      ><a name="2337" class="Symbol"
+      >(</a
+      ><a name="2338" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="2344"
+      > </a
+      ><a name="2345" href="cw.cohomology.WedgeOfCells.html#2241" class="Bound"
+      >a</a
+      ><a name="2346" class="Symbol"
+      >)</a
+      ><a name="2347"
+      > </a
+      ><a name="2348" class="Symbol"
+      >(</a
+      ><a name="2349" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2351"
+      > </a
+      ><a name="2352" class="Symbol"
+      >(</a
+      ><a name="2353" href="lib.types.BigWedge.html#803" class="Function"
+      >bwin</a
+      ><a name="2357"
+      > </a
+      ><a name="2358" href="cw.cohomology.WedgeOfCells.html#2241" class="Bound"
+      >a</a
+      ><a name="2359" class="Symbol"
+      >)</a
+      ><a name="2360"
+      > </a
+      ><a name="2361" class="Symbol"
+      >(</a
+      ><a name="2362" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2367"
+      > </a
+      ><a name="2368" href="cw.cohomology.WedgeOfCells.html#2245" class="Bound"
+      >s</a
+      ><a name="2369" class="Symbol"
+      >))</a
+      ><a name="2371"
+      >
+          </a
+      ><a name="2382" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2383"
+      > </a
+      ><a name="2384" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="2387"
+      > </a
+      ><a name="2388" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >_&#8729;_</a
+      ><a name="2391"
+      > </a
+      ><a name="2392" class="Symbol"
+      >(</a
+      ><a name="2393" href="lib.types.Pushout.html#1428" class="Function"
+      >To.glue-&#946;</a
+      ><a name="2402"
+      > </a
+      ><a name="2403" href="cw.cohomology.WedgeOfCells.html#2241" class="Bound"
+      >a</a
+      ><a name="2404" class="Symbol"
+      >)</a
+      ><a name="2405"
+      >
+                    </a
+      ><a name="2426" class="Symbol"
+      >(</a
+      ><a name="2427"
+      > </a
+      ><a name="2428" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="2432"
+      > </a
+      ><a name="2433" href="cw.cohomology.WedgeOfCells.html#1416" class="Function"
+      >to</a
+      ><a name="2435"
+      > </a
+      ><a name="2436" class="Symbol"
+      >(</a
+      ><a name="2437" href="lib.types.BigWedge.html#803" class="Function"
+      >bwin</a
+      ><a name="2441"
+      > </a
+      ><a name="2442" href="cw.cohomology.WedgeOfCells.html#2241" class="Bound"
+      >a</a
+      ><a name="2443" class="Symbol"
+      >)</a
+      ><a name="2444"
+      > </a
+      ><a name="2445" class="Symbol"
+      >(</a
+      ><a name="2446" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2451"
+      > </a
+      ><a name="2452" href="cw.cohomology.WedgeOfCells.html#2245" class="Bound"
+      >s</a
+      ><a name="2453" class="Symbol"
+      >)</a
+      ><a name="2454"
+      >
+                    </a
+      ><a name="2475" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2476"
+      > </a
+      ><a name="2477" href="lib.types.Pushout.html#1428" class="Function"
+      >SphereToCofiber.merid-&#946;</a
+      ><a name="2500"
+      > </a
+      ><a name="2501" href="cw.cohomology.WedgeOfCells.html#2241" class="Bound"
+      >a</a
+      ><a name="2502"
+      > </a
+      ><a name="2503" href="cw.cohomology.WedgeOfCells.html#2245" class="Bound"
+      >s</a
+      ><a name="2504" class="Symbol"
+      >)})</a
+      ><a name="2507"
+      >
+
+</a
+      ><a name="2509" href="cw.cohomology.WedgeOfCells.html#2509" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-&#946;</a
+      ><a name="2519"
+      > </a
+      ><a name="2520" class="Symbol"
+      >:</a
+      ><a name="2521"
+      > </a
+      ><a name="2522" class="Symbol"
+      >&#8704;</a
+      ><a name="2523"
+      > </a
+      ><a name="2524" href="cw.cohomology.WedgeOfCells.html#2524" class="Bound"
+      >m</a
+      ><a name="2525"
+      > </a
+      ><a name="2526" class="Symbol"
+      >&#8594;</a
+      ><a name="2527"
+      > </a
+      ><a name="2528" href="cw.CW.html#8111" class="Function"
+      >&#8857;has-cells-with-choice</a
+      ><a name="2550"
+      > </a
+      ><a name="2551" class="Number"
+      >0</a
+      ><a name="2552"
+      > </a
+      ><a name="2553" href="cw.cohomology.WedgeOfCells.html#253" class="Bound"
+      >&#8857;skel</a
+      ><a name="2558"
+      > </a
+      ><a name="2559" href="cw.cohomology.WedgeOfCells.html#219" class="Bound"
+      >i</a
+      ><a name="2560"
+      >
+  </a
+      ><a name="2563" class="Symbol"
+      >&#8594;</a
+      ><a name="2564"
+      > </a
+      ><a name="2565" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2566"
+      > </a
+      ><a name="2567" href="cw.cohomology.WedgeOfCells.html#2524" class="Bound"
+      >m</a
+      ><a name="2568"
+      > </a
+      ><a name="2569" href="cw.cohomology.WedgeOfCells.html#346" class="Function"
+      >X&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="2576"
+      > </a
+      ><a name="2577" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="2579"
+      > </a
+      ><a name="2580" href="lib.groups.GroupProduct.html#2020" class="Function"
+      >&#928;&#7475;</a
+      ><a name="2582"
+      > </a
+      ><a name="2583" class="Symbol"
+      >(</a
+      ><a name="2584" href="cw.CW.html#3625" class="Function"
+      >&#8857;cells-last</a
+      ><a name="2595"
+      > </a
+      ><a name="2596" href="cw.cohomology.WedgeOfCells.html#253" class="Bound"
+      >&#8857;skel</a
+      ><a name="2601" class="Symbol"
+      >)</a
+      ><a name="2602"
+      > </a
+      ><a name="2603" class="Symbol"
+      >(&#955;</a
+      ><a name="2605"
+      > </a
+      ><a name="2606" href="cw.cohomology.WedgeOfCells.html#2606" class="Bound"
+      >_</a
+      ><a name="2607"
+      > </a
+      ><a name="2608" class="Symbol"
+      >&#8594;</a
+      ><a name="2609"
+      > </a
+      ><a name="2610" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2611"
+      > </a
+      ><a name="2612" href="cw.cohomology.WedgeOfCells.html#2524" class="Bound"
+      >m</a
+      ><a name="2613"
+      > </a
+      ><a name="2614" class="Symbol"
+      >(</a
+      ><a name="2615" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="2620"
+      > </a
+      ><a name="2621" class="Symbol"
+      >(</a
+      ><a name="2622" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="2629"
+      > </a
+      ><a name="2630" class="Symbol"
+      >(</a
+      ><a name="2631" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2632"
+      > </a
+      ><a name="2633" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="2634" class="Symbol"
+      >))))</a
+      ><a name="2638"
+      >
+</a
+      ><a name="2639" href="cw.cohomology.WedgeOfCells.html#2509" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-&#946;</a
+      ><a name="2649"
+      > </a
+      ><a name="2650" href="cw.cohomology.WedgeOfCells.html#2650" class="Bound"
+      >m</a
+      ><a name="2651"
+      > </a
+      ><a name="2652" href="cw.cohomology.WedgeOfCells.html#2652" class="Bound"
+      >ac</a
+      ><a name="2654"
+      > </a
+      ><a name="2655" class="Symbol"
+      >=</a
+      ><a name="2656"
+      > </a
+      ><a name="2657" href="cohomology.Theory.html#2151" class="Function"
+      >C-additive-iso</a
+      ><a name="2671"
+      > </a
+      ><a name="2672" href="cw.cohomology.WedgeOfCells.html#2650" class="Bound"
+      >m</a
+      ><a name="2673"
+      > </a
+      ><a name="2674" class="Symbol"
+      >(&#955;</a
+      ><a name="2676"
+      > </a
+      ><a name="2677" href="cw.cohomology.WedgeOfCells.html#2677" class="Bound"
+      >_</a
+      ><a name="2678"
+      > </a
+      ><a name="2679" class="Symbol"
+      >&#8594;</a
+      ><a name="2680"
+      > </a
+      ><a name="2681" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="2686"
+      > </a
+      ><a name="2687" class="Symbol"
+      >(</a
+      ><a name="2688" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="2695"
+      > </a
+      ><a name="2696" class="Symbol"
+      >(</a
+      ><a name="2697" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2698"
+      > </a
+      ><a name="2699" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="2700" class="Symbol"
+      >)))</a
+      ><a name="2703"
+      > </a
+      ><a name="2704" class="Symbol"
+      >(</a
+      ><a name="2705" href="cw.CW.html#8293" class="Function"
+      >&#8857;cells-last-has-choice</a
+      ><a name="2727"
+      > </a
+      ><a name="2728" href="cw.cohomology.WedgeOfCells.html#253" class="Bound"
+      >&#8857;skel</a
+      ><a name="2733"
+      > </a
+      ><a name="2734" href="cw.cohomology.WedgeOfCells.html#2652" class="Bound"
+      >ac</a
+      ><a name="2736" class="Symbol"
+      >)</a
+      ><a name="2737"
+      >
+              </a
+      ><a name="2752" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="2755"
+      > </a
+      ><a name="2756" href="cohomology.Theory.html#3601" class="Function"
+      >C-emap</a
+      ><a name="2762"
+      > </a
+      ><a name="2763" href="cw.cohomology.WedgeOfCells.html#2650" class="Bound"
+      >m</a
+      ><a name="2764"
+      > </a
+      ><a name="2765" class="Symbol"
+      >(</a
+      ><a name="2766"
+      > </a
+      ><a name="2767" href="cw.cohomology.WedgeOfCells.html#824" class="Function"
+      >BigWedge-&#8857;equiv-X&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="2790"
+      >
+                         </a
+      ><a name="2816" href="lib.Equivalence.html#13349" class="Function Operator"
+      >&#8857;&#8728;e</a
+      ><a name="2819"
+      > </a
+      ><a name="2820" href="lib.types.BigWedge.html#2216" class="Function"
+      >&#8857;BigWedge-emap-r</a
+      ><a name="2836"
+      > </a
+      ><a name="2837" class="Symbol"
+      >(&#955;</a
+      ><a name="2839"
+      > </a
+      ><a name="2840" href="cw.cohomology.WedgeOfCells.html#2840" class="Bound"
+      >_</a
+      ><a name="2841"
+      > </a
+      ><a name="2842" class="Symbol"
+      >&#8594;</a
+      ><a name="2843"
+      > </a
+      ><a name="2844" href="lib.types.Lift.html#732" class="Function"
+      >&#8857;lower-equiv</a
+      ><a name="2856" class="Symbol"
+      >))</a
+      ><a name="2858"
+      >
+
+</a
+      ><a name="2860" href="cw.cohomology.WedgeOfCells.html#2860" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-&#946;-diag</a
+      ><a name="2875"
+      > </a
+      ><a name="2876" class="Symbol"
+      >:</a
+      ><a name="2877"
+      > </a
+      ><a name="2878" href="cw.CW.html#8111" class="Function"
+      >&#8857;has-cells-with-choice</a
+      ><a name="2900"
+      > </a
+      ><a name="2901" class="Number"
+      >0</a
+      ><a name="2902"
+      > </a
+      ><a name="2903" href="cw.cohomology.WedgeOfCells.html#253" class="Bound"
+      >&#8857;skel</a
+      ><a name="2908"
+      > </a
+      ><a name="2909" href="cw.cohomology.WedgeOfCells.html#219" class="Bound"
+      >i</a
+      ><a name="2910"
+      >
+  </a
+      ><a name="2913" class="Symbol"
+      >&#8594;</a
+      ><a name="2914"
+      > </a
+      ><a name="2915" href="cw.cohomology.WedgeOfCells.html#429" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="2923"
+      > </a
+      ><a name="2924" class="Symbol"
+      >(</a
+      ><a name="2925" href="lib.types.Int.html#1633" class="Function"
+      >&#8469;-to-&#8484;</a
+      ><a name="2931"
+      > </a
+      ><a name="2932" class="Symbol"
+      >(</a
+      ><a name="2933" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2934"
+      > </a
+      ><a name="2935" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="2936" class="Symbol"
+      >))</a
+      ><a name="2938"
+      > </a
+      ><a name="2939" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="2941"
+      > </a
+      ><a name="2942" href="lib.groups.GroupProduct.html#2020" class="Function"
+      >&#928;&#7475;</a
+      ><a name="2944"
+      > </a
+      ><a name="2945" class="Symbol"
+      >(</a
+      ><a name="2946" href="cw.CW.html#3625" class="Function"
+      >&#8857;cells-last</a
+      ><a name="2957"
+      > </a
+      ><a name="2958" href="cw.cohomology.WedgeOfCells.html#253" class="Bound"
+      >&#8857;skel</a
+      ><a name="2963" class="Symbol"
+      >)</a
+      ><a name="2964"
+      > </a
+      ><a name="2965" class="Symbol"
+      >(&#955;</a
+      ><a name="2967"
+      > </a
+      ><a name="2968" href="cw.cohomology.WedgeOfCells.html#2968" class="Bound"
+      >_</a
+      ><a name="2969"
+      > </a
+      ><a name="2970" class="Symbol"
+      >&#8594;</a
+      ><a name="2971"
+      > </a
+      ><a name="2972" href="cohomology.Theory.html#2346" class="Function"
+      >C2</a
+      ><a name="2974"
+      > </a
+      ><a name="2975" class="Number"
+      >0</a
+      ><a name="2976" class="Symbol"
+      >)</a
+      ><a name="2977"
+      >
+</a
+      ><a name="2978" href="cw.cohomology.WedgeOfCells.html#2860" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-&#946;-diag</a
+      ><a name="2993"
+      > </a
+      ><a name="2994" href="cw.cohomology.WedgeOfCells.html#2994" class="Bound"
+      >ac</a
+      ><a name="2996"
+      > </a
+      ><a name="2997" class="Symbol"
+      >=</a
+      ><a name="2998"
+      > </a
+      ><a name="2999" href="lib.groups.GroupProduct.html#2251" class="Function"
+      >&#928;&#7475;-emap-r</a
+      ><a name="3008"
+      > </a
+      ><a name="3009" class="Symbol"
+      >(</a
+      ><a name="3010" href="cw.CW.html#3625" class="Function"
+      >&#8857;cells-last</a
+      ><a name="3021"
+      > </a
+      ><a name="3022" href="cw.cohomology.WedgeOfCells.html#253" class="Bound"
+      >&#8857;skel</a
+      ><a name="3027" class="Symbol"
+      >)</a
+      ><a name="3028"
+      > </a
+      ><a name="3029" class="Symbol"
+      >(&#955;</a
+      ><a name="3031"
+      > </a
+      ><a name="3032" href="cw.cohomology.WedgeOfCells.html#3032" class="Bound"
+      >_</a
+      ><a name="3033"
+      > </a
+      ><a name="3034" class="Symbol"
+      >&#8594;</a
+      ><a name="3035"
+      > </a
+      ><a name="3036" href="cohomology.Sphere.html#767" class="Function"
+      >C-Sphere-diag</a
+      ><a name="3049"
+      > </a
+      ><a name="3050" class="Symbol"
+      >(</a
+      ><a name="3051" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3052"
+      > </a
+      ><a name="3053" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="3054" class="Symbol"
+      >))</a
+      ><a name="3056"
+      >
+                 </a
+      ><a name="3074" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="3077"
+      > </a
+      ><a name="3078" href="cw.cohomology.WedgeOfCells.html#2509" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-&#946;</a
+      ><a name="3088"
+      > </a
+      ><a name="3089" class="Symbol"
+      >(</a
+      ><a name="3090" href="lib.types.Int.html#1633" class="Function"
+      >&#8469;-to-&#8484;</a
+      ><a name="3096"
+      > </a
+      ><a name="3097" class="Symbol"
+      >(</a
+      ><a name="3098" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3099"
+      > </a
+      ><a name="3100" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="3101" class="Symbol"
+      >))</a
+      ><a name="3103"
+      > </a
+      ><a name="3104" href="cw.cohomology.WedgeOfCells.html#2994" class="Bound"
+      >ac</a
+      ><a name="3106"
+      >
+
+</a
+      ><a name="3108" class="Keyword"
+      >abstract</a
+      ><a name="3116"
+      >
+  </a
+      ><a name="3119" href="cw.cohomology.WedgeOfCells.html#3119" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-&#8800;-is-trivial</a
+      ><a name="3140"
+      > </a
+      ><a name="3141" class="Symbol"
+      >:</a
+      ><a name="3142"
+      > </a
+      ><a name="3143" class="Symbol"
+      >&#8704;</a
+      ><a name="3144"
+      > </a
+      ><a name="3145" class="Symbol"
+      >{</a
+      ><a name="3146" href="cw.cohomology.WedgeOfCells.html#3146" class="Bound"
+      >m</a
+      ><a name="3147" class="Symbol"
+      >}</a
+      ><a name="3148"
+      > </a
+      ><a name="3149" class="Symbol"
+      >(</a
+      ><a name="3150" href="cw.cohomology.WedgeOfCells.html#3150" class="Bound"
+      >m&#8800;Sn</a
+      ><a name="3154"
+      > </a
+      ><a name="3155" class="Symbol"
+      >:</a
+      ><a name="3156"
+      > </a
+      ><a name="3157" href="cw.cohomology.WedgeOfCells.html#3146" class="Bound"
+      >m</a
+      ><a name="3158"
+      > </a
+      ><a name="3159" href="lib.Base.html#6094" class="Function Operator"
+      >&#8800;</a
+      ><a name="3160"
+      > </a
+      ><a name="3161" href="lib.types.Int.html#1633" class="Function"
+      >&#8469;-to-&#8484;</a
+      ><a name="3167"
+      > </a
+      ><a name="3168" class="Symbol"
+      >(</a
+      ><a name="3169" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3170"
+      > </a
+      ><a name="3171" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="3172" class="Symbol"
+      >))</a
+      ><a name="3174"
+      >
+    </a
+      ><a name="3179" class="Symbol"
+      >&#8594;</a
+      ><a name="3180"
+      > </a
+      ><a name="3181" href="cw.CW.html#8111" class="Function"
+      >&#8857;has-cells-with-choice</a
+      ><a name="3203"
+      > </a
+      ><a name="3204" class="Number"
+      >0</a
+      ><a name="3205"
+      > </a
+      ><a name="3206" href="cw.cohomology.WedgeOfCells.html#253" class="Bound"
+      >&#8857;skel</a
+      ><a name="3211"
+      > </a
+      ><a name="3212" href="cw.cohomology.WedgeOfCells.html#219" class="Bound"
+      >i</a
+      ><a name="3213"
+      >
+    </a
+      ><a name="3218" class="Symbol"
+      >&#8594;</a
+      ><a name="3219"
+      > </a
+      ><a name="3220" href="lib.types.Group.html#8063" class="Function"
+      >is-trivial&#7475;</a
+      ><a name="3231"
+      > </a
+      ><a name="3232" class="Symbol"
+      >(</a
+      ><a name="3233" href="cw.cohomology.WedgeOfCells.html#429" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="3241"
+      > </a
+      ><a name="3242" href="cw.cohomology.WedgeOfCells.html#3146" class="Bound"
+      >m</a
+      ><a name="3243" class="Symbol"
+      >)</a
+      ><a name="3244"
+      >
+  </a
+      ><a name="3247" href="cw.cohomology.WedgeOfCells.html#3119" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-&#8800;-is-trivial</a
+      ><a name="3268"
+      > </a
+      ><a name="3269" class="Symbol"
+      >{</a
+      ><a name="3270" href="cw.cohomology.WedgeOfCells.html#3270" class="Bound"
+      >m</a
+      ><a name="3271" class="Symbol"
+      >}</a
+      ><a name="3272"
+      > </a
+      ><a name="3273" href="cw.cohomology.WedgeOfCells.html#3273" class="Bound"
+      >m&#8800;Sn</a
+      ><a name="3277"
+      > </a
+      ><a name="3278" href="cw.cohomology.WedgeOfCells.html#3278" class="Bound"
+      >ac</a
+      ><a name="3280"
+      > </a
+      ><a name="3281" class="Symbol"
+      >=</a
+      ><a name="3282"
+      >
+    </a
+      ><a name="3287" href="lib.groups.Isomorphism.html#8566" class="Function"
+      >iso-preserves'-trivial</a
+      ><a name="3309"
+      > </a
+      ><a name="3310" class="Symbol"
+      >(</a
+      ><a name="3311" href="cw.cohomology.WedgeOfCells.html#2509" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-&#946;</a
+      ><a name="3321"
+      > </a
+      ><a name="3322" href="cw.cohomology.WedgeOfCells.html#3270" class="Bound"
+      >m</a
+      ><a name="3323"
+      > </a
+      ><a name="3324" href="cw.cohomology.WedgeOfCells.html#3278" class="Bound"
+      >ac</a
+      ><a name="3326" class="Symbol"
+      >)</a
+      ><a name="3327"
+      > </a
+      ><a name="3328" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="3329"
+      >
+      </a
+      ><a name="3336" href="lib.groups.GroupProduct.html#9437" class="Function"
+      >&#928;&#7475;-is-trivial</a
+      ><a name="3349"
+      > </a
+      ><a name="3350" class="Symbol"
+      >(</a
+      ><a name="3351" href="cw.CW.html#3625" class="Function"
+      >&#8857;cells-last</a
+      ><a name="3362"
+      > </a
+      ><a name="3363" href="cw.cohomology.WedgeOfCells.html#253" class="Bound"
+      >&#8857;skel</a
+      ><a name="3368" class="Symbol"
+      >)</a
+      ><a name="3369"
+      >
+        </a
+      ><a name="3378" class="Symbol"
+      >(&#955;</a
+      ><a name="3380"
+      > </a
+      ><a name="3381" href="cw.cohomology.WedgeOfCells.html#3381" class="Bound"
+      >_</a
+      ><a name="3382"
+      > </a
+      ><a name="3383" class="Symbol"
+      >&#8594;</a
+      ><a name="3384"
+      > </a
+      ><a name="3385" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="3386"
+      > </a
+      ><a name="3387" href="cw.cohomology.WedgeOfCells.html#3270" class="Bound"
+      >m</a
+      ><a name="3388"
+      > </a
+      ><a name="3389" class="Symbol"
+      >(</a
+      ><a name="3390" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="3395"
+      > </a
+      ><a name="3396" class="Symbol"
+      >(</a
+      ><a name="3397" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="3404"
+      > </a
+      ><a name="3405" class="Symbol"
+      >(</a
+      ><a name="3406" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3407"
+      > </a
+      ><a name="3408" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="3409" class="Symbol"
+      >))))</a
+      ><a name="3413"
+      >
+        </a
+      ><a name="3422" class="Symbol"
+      >(&#955;</a
+      ><a name="3424"
+      > </a
+      ><a name="3425" href="cw.cohomology.WedgeOfCells.html#3425" class="Bound"
+      >_</a
+      ><a name="3426"
+      > </a
+      ><a name="3427" class="Symbol"
+      >&#8594;</a
+      ><a name="3428"
+      > </a
+      ><a name="3429" href="cohomology.Sphere.html#174" class="Function"
+      >C-Sphere-&#8800;-is-trivial</a
+      ><a name="3450"
+      > </a
+      ><a name="3451" href="cw.cohomology.WedgeOfCells.html#3270" class="Bound"
+      >m</a
+      ><a name="3452"
+      > </a
+      ><a name="3453" class="Symbol"
+      >(</a
+      ><a name="3454" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3455"
+      > </a
+      ><a name="3456" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="3457" class="Symbol"
+      >)</a
+      ><a name="3458"
+      > </a
+      ><a name="3459" href="cw.cohomology.WedgeOfCells.html#3273" class="Bound"
+      >m&#8800;Sn</a
+      ><a name="3463" class="Symbol"
+      >)</a
+      ><a name="3464"
+      >
+
+  </a
+      ><a name="3468" href="cw.cohomology.WedgeOfCells.html#3468" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-&lt;-is-trivial</a
+      ><a name="3489"
+      > </a
+      ><a name="3490" class="Symbol"
+      >:</a
+      ><a name="3491"
+      > </a
+      ><a name="3492" class="Symbol"
+      >&#8704;</a
+      ><a name="3493"
+      > </a
+      ><a name="3494" class="Symbol"
+      >{</a
+      ><a name="3495" href="cw.cohomology.WedgeOfCells.html#3495" class="Bound"
+      >m</a
+      ><a name="3496" class="Symbol"
+      >}</a
+      ><a name="3497"
+      > </a
+      ><a name="3498" class="Symbol"
+      >(</a
+      ><a name="3499" href="cw.cohomology.WedgeOfCells.html#3499" class="Bound"
+      >m&lt;Sn</a
+      ><a name="3503"
+      > </a
+      ><a name="3504" class="Symbol"
+      >:</a
+      ><a name="3505"
+      > </a
+      ><a name="3506" href="cw.cohomology.WedgeOfCells.html#3495" class="Bound"
+      >m</a
+      ><a name="3507"
+      > </a
+      ><a name="3508" href="lib.types.Nat.html#1660" class="Datatype Operator"
+      >&lt;</a
+      ><a name="3509"
+      > </a
+      ><a name="3510" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3511"
+      > </a
+      ><a name="3512" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="3513" class="Symbol"
+      >)</a
+      ><a name="3514"
+      >
+    </a
+      ><a name="3519" class="Symbol"
+      >&#8594;</a
+      ><a name="3520"
+      > </a
+      ><a name="3521" href="cw.CW.html#8111" class="Function"
+      >&#8857;has-cells-with-choice</a
+      ><a name="3543"
+      > </a
+      ><a name="3544" class="Number"
+      >0</a
+      ><a name="3545"
+      > </a
+      ><a name="3546" href="cw.cohomology.WedgeOfCells.html#253" class="Bound"
+      >&#8857;skel</a
+      ><a name="3551"
+      > </a
+      ><a name="3552" href="cw.cohomology.WedgeOfCells.html#219" class="Bound"
+      >i</a
+      ><a name="3553"
+      >
+    </a
+      ><a name="3558" class="Symbol"
+      >&#8594;</a
+      ><a name="3559"
+      > </a
+      ><a name="3560" href="lib.types.Group.html#8063" class="Function"
+      >is-trivial&#7475;</a
+      ><a name="3571"
+      > </a
+      ><a name="3572" class="Symbol"
+      >(</a
+      ><a name="3573" href="cw.cohomology.WedgeOfCells.html#429" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="3581"
+      > </a
+      ><a name="3582" class="Symbol"
+      >(</a
+      ><a name="3583" href="lib.types.Int.html#1633" class="Function"
+      >&#8469;-to-&#8484;</a
+      ><a name="3589"
+      > </a
+      ><a name="3590" href="cw.cohomology.WedgeOfCells.html#3495" class="Bound"
+      >m</a
+      ><a name="3591" class="Symbol"
+      >))</a
+      ><a name="3593"
+      >
+  </a
+      ><a name="3596" href="cw.cohomology.WedgeOfCells.html#3468" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-&lt;-is-trivial</a
+      ><a name="3617"
+      > </a
+      ><a name="3618" href="cw.cohomology.WedgeOfCells.html#3618" class="Bound"
+      >m&lt;Sn</a
+      ><a name="3622"
+      > </a
+      ><a name="3623" class="Symbol"
+      >=</a
+      ><a name="3624"
+      > </a
+      ><a name="3625" href="cw.cohomology.WedgeOfCells.html#3119" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-&#8800;-is-trivial</a
+      ><a name="3646"
+      > </a
+      ><a name="3647" class="Symbol"
+      >(</a
+      ><a name="3648" href="lib.types.Int.html#2227" class="Function"
+      >&#8469;-to-&#8484;-&#8800;</a
+      ><a name="3656"
+      > </a
+      ><a name="3657" class="Symbol"
+      >(</a
+      ><a name="3658" href="lib.types.Nat.html#3529" class="Function"
+      >&lt;-to-&#8800;</a
+      ><a name="3664"
+      > </a
+      ><a name="3665" href="cw.cohomology.WedgeOfCells.html#3618" class="Bound"
+      >m&lt;Sn</a
+      ><a name="3669" class="Symbol"
+      >))</a
+      ><a name="3671"
+      >
+
+  </a
+      ><a name="3675" href="cw.cohomology.WedgeOfCells.html#3675" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-&gt;-is-trivial</a
+      ><a name="3696"
+      > </a
+      ><a name="3697" class="Symbol"
+      >:</a
+      ><a name="3698"
+      > </a
+      ><a name="3699" class="Symbol"
+      >&#8704;</a
+      ><a name="3700"
+      > </a
+      ><a name="3701" class="Symbol"
+      >{</a
+      ><a name="3702" href="cw.cohomology.WedgeOfCells.html#3702" class="Bound"
+      >m</a
+      ><a name="3703" class="Symbol"
+      >}</a
+      ><a name="3704"
+      > </a
+      ><a name="3705" class="Symbol"
+      >(</a
+      ><a name="3706" href="cw.cohomology.WedgeOfCells.html#3706" class="Bound"
+      >m&gt;Sn</a
+      ><a name="3710"
+      > </a
+      ><a name="3711" class="Symbol"
+      >:</a
+      ><a name="3712"
+      > </a
+      ><a name="3713" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3714"
+      > </a
+      ><a name="3715" href="cw.cohomology.WedgeOfCells.html#249" class="Bound"
+      >n</a
+      ><a name="3716"
+      > </a
+      ><a name="3717" href="lib.types.Nat.html#1660" class="Datatype Operator"
+      >&lt;</a
+      ><a name="3718"
+      > </a
+      ><a name="3719" href="cw.cohomology.WedgeOfCells.html#3702" class="Bound"
+      >m</a
+      ><a name="3720" class="Symbol"
+      >)</a
+      ><a name="3721"
+      >
+    </a
+      ><a name="3726" class="Symbol"
+      >&#8594;</a
+      ><a name="3727"
+      > </a
+      ><a name="3728" href="cw.CW.html#8111" class="Function"
+      >&#8857;has-cells-with-choice</a
+      ><a name="3750"
+      > </a
+      ><a name="3751" class="Number"
+      >0</a
+      ><a name="3752"
+      > </a
+      ><a name="3753" href="cw.cohomology.WedgeOfCells.html#253" class="Bound"
+      >&#8857;skel</a
+      ><a name="3758"
+      > </a
+      ><a name="3759" href="cw.cohomology.WedgeOfCells.html#219" class="Bound"
+      >i</a
+      ><a name="3760"
+      >
+    </a
+      ><a name="3765" class="Symbol"
+      >&#8594;</a
+      ><a name="3766"
+      > </a
+      ><a name="3767" href="lib.types.Group.html#8063" class="Function"
+      >is-trivial&#7475;</a
+      ><a name="3778"
+      > </a
+      ><a name="3779" class="Symbol"
+      >(</a
+      ><a name="3780" href="cw.cohomology.WedgeOfCells.html#429" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="3788"
+      > </a
+      ><a name="3789" class="Symbol"
+      >(</a
+      ><a name="3790" href="lib.types.Int.html#1633" class="Function"
+      >&#8469;-to-&#8484;</a
+      ><a name="3796"
+      > </a
+      ><a name="3797" href="cw.cohomology.WedgeOfCells.html#3702" class="Bound"
+      >m</a
+      ><a name="3798" class="Symbol"
+      >))</a
+      ><a name="3800"
+      >
+  </a
+      ><a name="3803" href="cw.cohomology.WedgeOfCells.html#3675" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-&gt;-is-trivial</a
+      ><a name="3824"
+      > </a
+      ><a name="3825" href="cw.cohomology.WedgeOfCells.html#3825" class="Bound"
+      >m&gt;Sn</a
+      ><a name="3829"
+      > </a
+      ><a name="3830" class="Symbol"
+      >=</a
+      ><a name="3831"
+      > </a
+      ><a name="3832" href="cw.cohomology.WedgeOfCells.html#3119" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-&#8800;-is-trivial</a
+      ><a name="3853"
+      > </a
+      ><a name="3854" class="Symbol"
+      >(</a
+      ><a name="3855" href="lib.types.Paths.html#245" class="Function"
+      >&#8800;-inv</a
+      ><a name="3860"
+      > </a
+      ><a name="3861" class="Symbol"
+      >(</a
+      ><a name="3862" href="lib.types.Int.html#2227" class="Function"
+      >&#8469;-to-&#8484;-&#8800;</a
+      ><a name="3870"
+      > </a
+      ><a name="3871" class="Symbol"
+      >(</a
+      ><a name="3872" href="lib.types.Nat.html#3529" class="Function"
+      >&lt;-to-&#8800;</a
+      ><a name="3878"
+      > </a
+      ><a name="3879" href="cw.cohomology.WedgeOfCells.html#3825" class="Bound"
+      >m&gt;Sn</a
+      ><a name="3883" class="Symbol"
+      >)))</a
+      ><a name="3886"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

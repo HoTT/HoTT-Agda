@@ -1,0 +1,1433 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cw.cohomology.ReconstructedZerothCohomologyGroup</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="cohomology.ChainComplex.html#1" class="Module"
+      >cohomology.ChainComplex</a
+      ><a name="94"
+      >
+</a
+      ><a name="95" class="Keyword"
+      >open</a
+      ><a name="99"
+      > </a
+      ><a name="100" class="Keyword"
+      >import</a
+      ><a name="106"
+      > </a
+      ><a name="107" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="124"
+      >
+</a
+      ><a name="125" class="Keyword"
+      >open</a
+      ><a name="129"
+      > </a
+      ><a name="130" class="Keyword"
+      >import</a
+      ><a name="136"
+      > </a
+      ><a name="137" href="groups.KernelImage.html#1" class="Module"
+      >groups.KernelImage</a
+      ><a name="155"
+      >
+</a
+      ><a name="156" class="Keyword"
+      >open</a
+      ><a name="160"
+      > </a
+      ><a name="161" class="Keyword"
+      >import</a
+      ><a name="167"
+      > </a
+      ><a name="168" href="cw.CW.html#1" class="Module"
+      >cw.CW</a
+      ><a name="173"
+      >
+
+</a
+      ><a name="175" class="Keyword"
+      >module</a
+      ><a name="181"
+      > </a
+      ><a name="182" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1" class="Module"
+      >cw.cohomology.ReconstructedZerothCohomologyGroup</a
+      ><a name="230"
+      > </a
+      ><a name="231" class="Symbol"
+      >{</a
+      ><a name="232" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#232" class="Bound"
+      >i</a
+      ><a name="233"
+      > </a
+      ><a name="234" class="Symbol"
+      >:</a
+      ><a name="235"
+      > </a
+      ><a name="236" href="Agda.Primitive.html#408" class="Postulate"
+      >ULevel</a
+      ><a name="242" class="Symbol"
+      >}</a
+      ><a name="243"
+      > </a
+      ><a name="244" class="Symbol"
+      >(</a
+      ><a name="245" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#245" class="Bound"
+      >OT</a
+      ><a name="247"
+      > </a
+      ><a name="248" class="Symbol"
+      >:</a
+      ><a name="249"
+      > </a
+      ><a name="250" href="cohomology.Theory.html#7242" class="Record"
+      >OrdinaryTheory</a
+      ><a name="264"
+      > </a
+      ><a name="265" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#232" class="Bound"
+      >i</a
+      ><a name="266" class="Symbol"
+      >)</a
+      ><a name="267"
+      > </a
+      ><a name="268" class="Keyword"
+      >where</a
+      ><a name="273"
+      >
+
+  </a
+      ><a name="277" class="Keyword"
+      >open</a
+      ><a name="281"
+      > </a
+      ><a name="282" href="cohomology.Theory.html#7242" class="Module"
+      >OrdinaryTheory</a
+      ><a name="296"
+      > </a
+      ><a name="297" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#245" class="Bound"
+      >OT</a
+      ><a name="299"
+      >
+  </a
+      ><a name="302" class="Keyword"
+      >import</a
+      ><a name="308"
+      > </a
+      ><a name="309" href="cw.cohomology.TipCoboundary.html#1" class="Module"
+      >cw.cohomology.TipCoboundary</a
+      ><a name="336"
+      > </a
+      ><a name="337" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#245" class="Bound"
+      >OT</a
+      ><a name="339"
+      > </a
+      ><a name="340" class="Symbol"
+      >as</a
+      ><a name="342"
+      > </a
+      ><a name="343" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#343" class="Module"
+      >TC</a
+      ><a name="345"
+      >
+  </a
+      ><a name="348" class="Keyword"
+      >import</a
+      ><a name="354"
+      > </a
+      ><a name="355" href="cw.cohomology.TipAndAugment.html#1" class="Module"
+      >cw.cohomology.TipAndAugment</a
+      ><a name="382"
+      > </a
+      ><a name="383" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#245" class="Bound"
+      >OT</a
+      ><a name="385"
+      > </a
+      ><a name="386" class="Symbol"
+      >as</a
+      ><a name="388"
+      > </a
+      ><a name="389" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#389" class="Module"
+      >TAA</a
+      ><a name="392"
+      >
+  </a
+      ><a name="395" class="Keyword"
+      >open</a
+      ><a name="399"
+      > </a
+      ><a name="400" class="Keyword"
+      >import</a
+      ><a name="406"
+      > </a
+      ><a name="407" href="cw.cohomology.Descending.html#1" class="Module"
+      >cw.cohomology.Descending</a
+      ><a name="431"
+      > </a
+      ><a name="432" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#245" class="Bound"
+      >OT</a
+      ><a name="434"
+      >
+  </a
+      ><a name="437" class="Keyword"
+      >open</a
+      ><a name="441"
+      > </a
+      ><a name="442" class="Keyword"
+      >import</a
+      ><a name="448"
+      > </a
+      ><a name="449" href="cw.cohomology.ReconstructedCochainComplex.html#1" class="Module"
+      >cw.cohomology.ReconstructedCochainComplex</a
+      ><a name="490"
+      > </a
+      ><a name="491" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#245" class="Bound"
+      >OT</a
+      ><a name="493"
+      >
+  </a
+      ><a name="496" class="Keyword"
+      >import</a
+      ><a name="502"
+      > </a
+      ><a name="503" href="cw.cohomology.ZerothCohomologyGroup.html#1" class="Module"
+      >cw.cohomology.ZerothCohomologyGroup</a
+      ><a name="538"
+      > </a
+      ><a name="539" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#245" class="Bound"
+      >OT</a
+      ><a name="541"
+      > </a
+      ><a name="542" class="Symbol"
+      >as</a
+      ><a name="544"
+      > </a
+      ><a name="545" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#545" class="Module"
+      >ZCG</a
+      ><a name="548"
+      >
+  </a
+      ><a name="551" class="Keyword"
+      >import</a
+      ><a name="557"
+      > </a
+      ><a name="558" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#1" class="Module"
+      >cw.cohomology.ZerothCohomologyGroupOnDiag</a
+      ><a name="599"
+      > </a
+      ><a name="600" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#245" class="Bound"
+      >OT</a
+      ><a name="602"
+      > </a
+      ><a name="603" class="Symbol"
+      >as</a
+      ><a name="605"
+      > </a
+      ><a name="606" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#606" class="Module"
+      >ZCGD</a
+      ><a name="610"
+      >
+
+  </a
+      ><a name="614" class="Keyword"
+      >private</a
+      ><a name="621"
+      >
+    </a
+      ><a name="626" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#626" class="Function"
+      >&#8804;-dec-has-all-paths</a
+      ><a name="645"
+      > </a
+      ><a name="646" class="Symbol"
+      >:</a
+      ><a name="647"
+      > </a
+      ><a name="648" class="Symbol"
+      >{</a
+      ><a name="649" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#649" class="Bound"
+      >m</a
+      ><a name="650"
+      > </a
+      ><a name="651" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#651" class="Bound"
+      >n</a
+      ><a name="652"
+      > </a
+      ><a name="653" class="Symbol"
+      >:</a
+      ><a name="654"
+      > </a
+      ><a name="655" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="656" class="Symbol"
+      >}</a
+      ><a name="657"
+      > </a
+      ><a name="658" class="Symbol"
+      >&#8594;</a
+      ><a name="659"
+      > </a
+      ><a name="660" href="lib.NType.html#558" class="Function"
+      >has-all-paths</a
+      ><a name="673"
+      > </a
+      ><a name="674" class="Symbol"
+      >(</a
+      ><a name="675" href="lib.Base.html#9406" class="Function"
+      >Dec</a
+      ><a name="678"
+      > </a
+      ><a name="679" class="Symbol"
+      >(</a
+      ><a name="680" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#649" class="Bound"
+      >m</a
+      ><a name="681"
+      > </a
+      ><a name="682" href="lib.types.Nat.html#1754" class="Function Operator"
+      >&#8804;</a
+      ><a name="683"
+      > </a
+      ><a name="684" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#651" class="Bound"
+      >n</a
+      ><a name="685" class="Symbol"
+      >))</a
+      ><a name="687"
+      >
+    </a
+      ><a name="692" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#626" class="Function"
+      >&#8804;-dec-has-all-paths</a
+      ><a name="711"
+      > </a
+      ><a name="712" class="Symbol"
+      >=</a
+      ><a name="713"
+      > </a
+      ><a name="714" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="732"
+      > </a
+      ><a name="733" class="Symbol"
+      >(</a
+      ><a name="734" href="lib.Relation2.html#214" class="Function"
+      >Dec-level</a
+      ><a name="743"
+      > </a
+      ><a name="744" href="lib.types.Nat.html#4856" class="Function"
+      >&#8804;-is-prop</a
+      ><a name="753" class="Symbol"
+      >)</a
+      ><a name="754"
+      >
+
+  </a
+      ><a name="758" class="Keyword"
+      >private</a
+      ><a name="765"
+      >
+    </a
+      ><a name="770" class="Keyword"
+      >abstract</a
+      ><a name="778"
+      >
+      </a
+      ><a name="785" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#785" class="Function"
+      >zeroth-cohomology-group-descend</a
+      ><a name="816"
+      > </a
+      ><a name="817" class="Symbol"
+      >:</a
+      ><a name="818"
+      > </a
+      ><a name="819" class="Symbol"
+      >&#8704;</a
+      ><a name="820"
+      > </a
+      ><a name="821" class="Symbol"
+      >{</a
+      ><a name="822" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#822" class="Bound"
+      >n</a
+      ><a name="823" class="Symbol"
+      >}</a
+      ><a name="824"
+      > </a
+      ><a name="825" class="Symbol"
+      >(</a
+      ><a name="826" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#826" class="Bound"
+      >&#8857;skel</a
+      ><a name="831"
+      > </a
+      ><a name="832" class="Symbol"
+      >:</a
+      ><a name="833"
+      > </a
+      ><a name="834" href="cw.CW.html#1851" class="Record"
+      >&#8857;Skeleton</a
+      ><a name="843"
+      > </a
+      ><a name="844" class="Symbol"
+      >{</a
+      ><a name="845" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#232" class="Bound"
+      >i</a
+      ><a name="846" class="Symbol"
+      >}</a
+      ><a name="847"
+      > </a
+      ><a name="848" class="Symbol"
+      >(</a
+      ><a name="849" class="Number"
+      >2</a
+      ><a name="850"
+      > </a
+      ><a name="851" href="lib.types.Nat.html#267" class="Primitive Operator"
+      >+</a
+      ><a name="852"
+      > </a
+      ><a name="853" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#822" class="Bound"
+      >n</a
+      ><a name="854" class="Symbol"
+      >))</a
+      ><a name="856"
+      >
+        </a
+      ><a name="865" class="Symbol"
+      >&#8594;</a
+      ><a name="866"
+      >  </a
+      ><a name="868" href="cohomology.ChainComplex.html#1023" class="Function"
+      >cohomology-group</a
+      ><a name="884"
+      > </a
+      ><a name="885" class="Symbol"
+      >(</a
+      ><a name="886" href="cw.cohomology.ReconstructedCochainComplex.html#2953" class="Function"
+      >cochain-complex</a
+      ><a name="901"
+      > </a
+      ><a name="902" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#826" class="Bound"
+      >&#8857;skel</a
+      ><a name="907" class="Symbol"
+      >)</a
+      ><a name="908"
+      > </a
+      ><a name="909" class="Number"
+      >0</a
+      ><a name="910"
+      >
+        </a
+      ><a name="919" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="921"
+      > </a
+      ><a name="922" href="cohomology.ChainComplex.html#1023" class="Function"
+      >cohomology-group</a
+      ><a name="938"
+      > </a
+      ><a name="939" class="Symbol"
+      >(</a
+      ><a name="940" href="cw.cohomology.ReconstructedCochainComplex.html#2953" class="Function"
+      >cochain-complex</a
+      ><a name="955"
+      > </a
+      ><a name="956" class="Symbol"
+      >(</a
+      ><a name="957" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="965"
+      > </a
+      ><a name="966" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#826" class="Bound"
+      >&#8857;skel</a
+      ><a name="971" class="Symbol"
+      >))</a
+      ><a name="973"
+      > </a
+      ><a name="974" class="Number"
+      >0</a
+      ><a name="975"
+      >
+      </a
+      ><a name="982" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#785" class="Function"
+      >zeroth-cohomology-group-descend</a
+      ><a name="1013"
+      > </a
+      ><a name="1014" class="Symbol"
+      >{</a
+      ><a name="1015" class="Argument"
+      >n</a
+      ><a name="1016"
+      > </a
+      ><a name="1017" class="Symbol"
+      >=</a
+      ><a name="1018"
+      > </a
+      ><a name="1019" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="1020" class="Symbol"
+      >}</a
+      ><a name="1021"
+      > </a
+      ><a name="1022" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1022" class="Bound"
+      >&#8857;skel</a
+      ><a name="1027"
+      >
+        </a
+      ><a name="1036" class="Symbol"
+      >=</a
+      ><a name="1037"
+      > </a
+      ><a name="1038" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1040"
+      >
+            </a
+      ><a name="1053" class="Symbol"
+      >(&#955;</a
+      ><a name="1055"
+      > </a
+      ><a name="1056" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1056" class="Bound"
+      >&#948;</a
+      ><a name="1057"
+      > </a
+      ><a name="1058" class="Symbol"
+      >&#8594;</a
+      ><a name="1059"
+      > </a
+      ><a name="1060" href="groups.KernelImage.html#5271" class="Function"
+      >Ker/Im</a
+      ><a name="1066"
+      > </a
+      ><a name="1067" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1056" class="Bound"
+      >&#948;</a
+      ><a name="1068"
+      >
+              </a
+      ><a name="1083" class="Symbol"
+      >(</a
+      ><a name="1084" href="cw.cohomology.TipAndAugment.html#1213" class="Function"
+      >TAA.cw-co&#949;</a
+      ><a name="1094"
+      > </a
+      ><a name="1095" class="Symbol"
+      >(</a
+      ><a name="1096" href="cw.CW.html#2852" class="Function"
+      >&#8857;cw-take</a
+      ><a name="1104"
+      > </a
+      ><a name="1105" class="Symbol"
+      >(</a
+      ><a name="1106" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="1111"
+      > </a
+      ><a name="1112" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="1116" class="Symbol"
+      >)</a
+      ><a name="1117"
+      > </a
+      ><a name="1118" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1022" class="Bound"
+      >&#8857;skel</a
+      ><a name="1123" class="Symbol"
+      >))</a
+      ><a name="1125"
+      >
+              </a
+      ><a name="1140" class="Symbol"
+      >(</a
+      ><a name="1141" href="cw.cohomology.TipAndAugment.html#533" class="Function"
+      >TAA.C2&#215;CX&#8320;-is-abelian</a
+      ><a name="1162"
+      > </a
+      ><a name="1163" class="Symbol"
+      >(</a
+      ><a name="1164" href="cw.CW.html#2852" class="Function"
+      >&#8857;cw-take</a
+      ><a name="1172"
+      > </a
+      ><a name="1173" class="Symbol"
+      >(</a
+      ><a name="1174" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="1179"
+      > </a
+      ><a name="1180" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="1184" class="Symbol"
+      >)</a
+      ><a name="1185"
+      > </a
+      ><a name="1186" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1022" class="Bound"
+      >&#8857;skel</a
+      ><a name="1191" class="Symbol"
+      >)</a
+      ><a name="1192"
+      > </a
+      ><a name="1193" class="Number"
+      >0</a
+      ><a name="1194" class="Symbol"
+      >))</a
+      ><a name="1196"
+      >
+            </a
+      ><a name="1209" class="Symbol"
+      >(</a
+      ><a name="1210" href="cw.cohomology.ReconstructedCochainComplex.html#6591" class="Function"
+      >coboundary-first-template-descend-from-two</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1022" class="Bound"
+      >&#8857;skel</a
+      ><a name="1258" class="Symbol"
+      >)</a
+      ><a name="1259"
+      >
+      </a
+      ><a name="1266" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#785" class="Function"
+      >zeroth-cohomology-group-descend</a
+      ><a name="1297"
+      > </a
+      ><a name="1298" class="Symbol"
+      >{</a
+      ><a name="1299" class="Argument"
+      >n</a
+      ><a name="1300"
+      > </a
+      ><a name="1301" class="Symbol"
+      >=</a
+      ><a name="1302"
+      > </a
+      ><a name="1303" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1304"
+      > </a
+      ><a name="1305" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1305" class="Bound"
+      >n</a
+      ><a name="1306" class="Symbol"
+      >}</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1308" class="Bound"
+      >&#8857;skel</a
+      ><a name="1313"
+      >
+        </a
+      ><a name="1322" class="Symbol"
+      >=</a
+      ><a name="1323"
+      > </a
+      ><a name="1324" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1326"
+      > </a
+      ><a name="1327" class="Symbol"
+      >(&#955;</a
+      ><a name="1329"
+      > </a
+      ><a name="1330" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1330" class="Bound"
+      >&#948;</a
+      ><a name="1331"
+      > </a
+      ><a name="1332" class="Symbol"
+      >&#8594;</a
+      ><a name="1333"
+      > </a
+      ><a name="1334" href="groups.KernelImage.html#5271" class="Function"
+      >Ker/Im</a
+      ><a name="1340"
+      > </a
+      ><a name="1341" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1330" class="Bound"
+      >&#948;</a
+      ><a name="1342"
+      >
+                </a
+      ><a name="1359" class="Symbol"
+      >(</a
+      ><a name="1360" href="cw.cohomology.TipAndAugment.html#1213" class="Function"
+      >TAA.cw-co&#949;</a
+      ><a name="1370"
+      > </a
+      ><a name="1371" class="Symbol"
+      >(</a
+      ><a name="1372" href="cw.CW.html#2852" class="Function"
+      >&#8857;cw-take</a
+      ><a name="1380"
+      > </a
+      ><a name="1381" class="Symbol"
+      >(</a
+      ><a name="1382" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1385"
+      > </a
+      ><a name="1386" class="Symbol"
+      >(</a
+      ><a name="1387" href="lib.types.Nat.html#2041" class="Function"
+      >O&lt;S</a
+      ><a name="1390"
+      > </a
+      ><a name="1391" class="Symbol"
+      >(</a
+      ><a name="1392" class="Number"
+      >2</a
+      ><a name="1393"
+      > </a
+      ><a name="1394" href="lib.types.Nat.html#267" class="Primitive Operator"
+      >+</a
+      ><a name="1395"
+      > </a
+      ><a name="1396" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1305" class="Bound"
+      >n</a
+      ><a name="1397" class="Symbol"
+      >)))</a
+      ><a name="1400"
+      > </a
+      ><a name="1401" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1308" class="Bound"
+      >&#8857;skel</a
+      ><a name="1406" class="Symbol"
+      >))</a
+      ><a name="1408"
+      >
+                </a
+      ><a name="1425" class="Symbol"
+      >(</a
+      ><a name="1426" href="cw.cohomology.TipAndAugment.html#533" class="Function"
+      >TAA.C2&#215;CX&#8320;-is-abelian</a
+      ><a name="1447"
+      > </a
+      ><a name="1448" class="Symbol"
+      >(</a
+      ><a name="1449" href="cw.CW.html#2852" class="Function"
+      >&#8857;cw-take</a
+      ><a name="1457"
+      > </a
+      ><a name="1458" class="Symbol"
+      >(</a
+      ><a name="1459" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1462"
+      > </a
+      ><a name="1463" class="Symbol"
+      >(</a
+      ><a name="1464" href="lib.types.Nat.html#2041" class="Function"
+      >O&lt;S</a
+      ><a name="1467"
+      > </a
+      ><a name="1468" class="Symbol"
+      >(</a
+      ><a name="1469" class="Number"
+      >2</a
+      ><a name="1470"
+      > </a
+      ><a name="1471" href="lib.types.Nat.html#267" class="Primitive Operator"
+      >+</a
+      ><a name="1472"
+      > </a
+      ><a name="1473" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1305" class="Bound"
+      >n</a
+      ><a name="1474" class="Symbol"
+      >)))</a
+      ><a name="1477"
+      > </a
+      ><a name="1478" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1308" class="Bound"
+      >&#8857;skel</a
+      ><a name="1483" class="Symbol"
+      >)</a
+      ><a name="1484"
+      > </a
+      ><a name="1485" class="Number"
+      >0</a
+      ><a name="1486" class="Symbol"
+      >))</a
+      ><a name="1488"
+      >
+            </a
+      ><a name="1501" class="Symbol"
+      >(</a
+      ><a name="1502" href="cw.cohomology.ReconstructedCochainComplex.html#6095" class="Function"
+      >coboundary-first-template-descend-from-far</a
+      ><a name="1544"
+      > </a
+      ><a name="1545" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1308" class="Bound"
+      >&#8857;skel</a
+      ><a name="1550"
+      > </a
+      ><a name="1551" class="Symbol"
+      >(</a
+      ><a name="1552" href="lib.types.Nat.html#2041" class="Function"
+      >O&lt;S</a
+      ><a name="1555"
+      > </a
+      ><a name="1556" class="Symbol"
+      >(</a
+      ><a name="1557" class="Number"
+      >1</a
+      ><a name="1558"
+      > </a
+      ><a name="1559" href="lib.types.Nat.html#267" class="Primitive Operator"
+      >+</a
+      ><a name="1560"
+      > </a
+      ><a name="1561" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1305" class="Bound"
+      >n</a
+      ><a name="1562" class="Symbol"
+      >))</a
+      ><a name="1564"
+      > </a
+      ><a name="1565" class="Symbol"
+      >(</a
+      ><a name="1566" href="lib.types.Nat.html#4945" class="Function"
+      >&lt;-+-l</a
+      ><a name="1571"
+      > </a
+      ><a name="1572" class="Number"
+      >1</a
+      ><a name="1573"
+      > </a
+      ><a name="1574" class="Symbol"
+      >(</a
+      ><a name="1575" href="lib.types.Nat.html#2041" class="Function"
+      >O&lt;S</a
+      ><a name="1578"
+      > </a
+      ><a name="1579" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1305" class="Bound"
+      >n</a
+      ><a name="1580" class="Symbol"
+      >)))</a
+      ><a name="1583"
+      >
+
+      </a
+      ><a name="1591" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1591" class="Function"
+      >zeroth-cohomology-group-&#946;</a
+      ><a name="1616"
+      > </a
+      ><a name="1617" class="Symbol"
+      >:</a
+      ><a name="1618"
+      > </a
+      ><a name="1619" class="Symbol"
+      >&#8704;</a
+      ><a name="1620"
+      > </a
+      ><a name="1621" class="Symbol"
+      >(</a
+      ><a name="1622" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1622" class="Bound"
+      >&#8857;skel</a
+      ><a name="1627"
+      > </a
+      ><a name="1628" class="Symbol"
+      >:</a
+      ><a name="1629"
+      > </a
+      ><a name="1630" href="cw.CW.html#1851" class="Record"
+      >&#8857;Skeleton</a
+      ><a name="1639"
+      > </a
+      ><a name="1640" class="Symbol"
+      >{</a
+      ><a name="1641" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#232" class="Bound"
+      >i</a
+      ><a name="1642" class="Symbol"
+      >}</a
+      ><a name="1643"
+      > </a
+      ><a name="1644" class="Number"
+      >1</a
+      ><a name="1645" class="Symbol"
+      >)</a
+      ><a name="1646"
+      >
+        </a
+      ><a name="1655" class="Symbol"
+      >&#8594;</a
+      ><a name="1656"
+      >  </a
+      ><a name="1658" href="cohomology.ChainComplex.html#1023" class="Function"
+      >cohomology-group</a
+      ><a name="1674"
+      > </a
+      ><a name="1675" class="Symbol"
+      >(</a
+      ><a name="1676" href="cw.cohomology.ReconstructedCochainComplex.html#2953" class="Function"
+      >cochain-complex</a
+      ><a name="1691"
+      > </a
+      ><a name="1692" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1622" class="Bound"
+      >&#8857;skel</a
+      ><a name="1697" class="Symbol"
+      >)</a
+      ><a name="1698"
+      > </a
+      ><a name="1699" class="Number"
+      >0</a
+      ><a name="1700"
+      >
+        </a
+      ><a name="1709" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1711"
+      > </a
+      ><a name="1712" href="groups.KernelImage.html#5271" class="Function"
+      >Ker/Im</a
+      ><a name="1718"
+      >
+            </a
+      ><a name="1731" class="Symbol"
+      >(</a
+      ><a name="1732" href="cw.cohomology.TipCoboundary.html#610" class="Function"
+      >TC.cw-co&#8706;-head</a
+      ><a name="1746"
+      > </a
+      ><a name="1747" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1622" class="Bound"
+      >&#8857;skel</a
+      ><a name="1752" class="Symbol"
+      >)</a
+      ><a name="1753"
+      >
+            </a
+      ><a name="1766" class="Symbol"
+      >(</a
+      ><a name="1767" href="cw.cohomology.TipAndAugment.html#1213" class="Function"
+      >TAA.cw-co&#949;</a
+      ><a name="1777"
+      > </a
+      ><a name="1778" class="Symbol"
+      >(</a
+      ><a name="1779" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="1787"
+      > </a
+      ><a name="1788" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1622" class="Bound"
+      >&#8857;skel</a
+      ><a name="1793" class="Symbol"
+      >))</a
+      ><a name="1795"
+      >
+            </a
+      ><a name="1808" class="Symbol"
+      >(</a
+      ><a name="1809" href="cw.cohomology.TipAndAugment.html#533" class="Function"
+      >TAA.C2&#215;CX&#8320;-is-abelian</a
+      ><a name="1830"
+      > </a
+      ><a name="1831" class="Symbol"
+      >(</a
+      ><a name="1832" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="1840"
+      > </a
+      ><a name="1841" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1622" class="Bound"
+      >&#8857;skel</a
+      ><a name="1846" class="Symbol"
+      >)</a
+      ><a name="1847"
+      > </a
+      ><a name="1848" class="Number"
+      >0</a
+      ><a name="1849" class="Symbol"
+      >)</a
+      ><a name="1850"
+      >
+      </a
+      ><a name="1857" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1591" class="Function"
+      >zeroth-cohomology-group-&#946;</a
+      ><a name="1882"
+      > </a
+      ><a name="1883" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1883" class="Bound"
+      >&#8857;skel</a
+      ><a name="1888"
+      >
+        </a
+      ><a name="1897" class="Symbol"
+      >=</a
+      ><a name="1898"
+      > </a
+      ><a name="1899" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1901"
+      >
+            </a
+      ><a name="1914" class="Symbol"
+      >(&#955;</a
+      ><a name="1916"
+      > </a
+      ><a name="1917" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1917" class="Bound"
+      >&#948;</a
+      ><a name="1918"
+      > </a
+      ><a name="1919" class="Symbol"
+      >&#8594;</a
+      ><a name="1920"
+      > </a
+      ><a name="1921" href="groups.KernelImage.html#5271" class="Function"
+      >Ker/Im</a
+      ><a name="1927"
+      > </a
+      ><a name="1928" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1917" class="Bound"
+      >&#948;</a
+      ><a name="1929"
+      >
+              </a
+      ><a name="1944" class="Symbol"
+      >(</a
+      ><a name="1945" href="cw.cohomology.TipAndAugment.html#1213" class="Function"
+      >TAA.cw-co&#949;</a
+      ><a name="1955"
+      > </a
+      ><a name="1956" class="Symbol"
+      >(</a
+      ><a name="1957" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="1965"
+      > </a
+      ><a name="1966" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1883" class="Bound"
+      >&#8857;skel</a
+      ><a name="1971" class="Symbol"
+      >))</a
+      ><a name="1973"
+      >
+              </a
+      ><a name="1988" class="Symbol"
+      >(</a
+      ><a name="1989" href="cw.cohomology.TipAndAugment.html#533" class="Function"
+      >TAA.C2&#215;CX&#8320;-is-abelian</a
+      ><a name="2010"
+      > </a
+      ><a name="2011" class="Symbol"
+      >(</a
+      ><a name="2012" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="2020"
+      > </a
+      ><a name="2021" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1883" class="Bound"
+      >&#8857;skel</a
+      ><a name="2026" class="Symbol"
+      >)</a
+      ><a name="2027"
+      > </a
+      ><a name="2028" class="Number"
+      >0</a
+      ><a name="2029" class="Symbol"
+      >))</a
+      ><a name="2031"
+      >
+            </a
+      ><a name="2044" class="Symbol"
+      >(</a
+      ><a name="2045" href="cw.cohomology.ReconstructedCochainComplex.html#6959" class="Function"
+      >coboundary-first-template-&#946;</a
+      ><a name="2072"
+      > </a
+      ><a name="2073" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1883" class="Bound"
+      >&#8857;skel</a
+      ><a name="2078" class="Symbol"
+      >)</a
+      ><a name="2079"
+      >
+
+  </a
+      ><a name="2083" class="Keyword"
+      >abstract</a
+      ><a name="2091"
+      >
+    </a
+      ><a name="2096" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2096" class="Function"
+      >zeroth-cohomology-group</a
+      ><a name="2119"
+      > </a
+      ><a name="2120" class="Symbol"
+      >:</a
+      ><a name="2121"
+      > </a
+      ><a name="2122" class="Symbol"
+      >&#8704;</a
+      ><a name="2123"
+      > </a
+      ><a name="2124" class="Symbol"
+      >{</a
+      ><a name="2125" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2125" class="Bound"
+      >n</a
+      ><a name="2126" class="Symbol"
+      >}</a
+      ><a name="2127"
+      > </a
+      ><a name="2128" class="Symbol"
+      >(</a
+      ><a name="2129" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2129" class="Bound"
+      >&#8857;skel</a
+      ><a name="2134"
+      > </a
+      ><a name="2135" class="Symbol"
+      >:</a
+      ><a name="2136"
+      > </a
+      ><a name="2137" href="cw.CW.html#1851" class="Record"
+      >&#8857;Skeleton</a
+      ><a name="2146"
+      > </a
+      ><a name="2147" class="Symbol"
+      >{</a
+      ><a name="2148" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#232" class="Bound"
+      >i</a
+      ><a name="2149" class="Symbol"
+      >}</a
+      ><a name="2150"
+      > </a
+      ><a name="2151" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2125" class="Bound"
+      >n</a
+      ><a name="2152" class="Symbol"
+      >)</a
+      ><a name="2153"
+      >
+      </a
+      ><a name="2160" class="Symbol"
+      >&#8594;</a
+      ><a name="2161"
+      > </a
+      ><a name="2162" href="cw.CW.html#8111" class="Function"
+      >&#8857;has-cells-with-choice</a
+      ><a name="2184"
+      > </a
+      ><a name="2185" class="Number"
+      >0</a
+      ><a name="2186"
+      > </a
+      ><a name="2187" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2129" class="Bound"
+      >&#8857;skel</a
+      ><a name="2192"
+      > </a
+      ><a name="2193" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#232" class="Bound"
+      >i</a
+      ><a name="2194"
+      >
+      </a
+      ><a name="2201" class="Symbol"
+      >&#8594;</a
+      ><a name="2202"
+      > </a
+      ><a name="2203" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2204"
+      > </a
+      ><a name="2205" class="Number"
+      >0</a
+      ><a name="2206"
+      > </a
+      ><a name="2207" href="cw.CW.html#2125" class="Function Operator"
+      >&#8857;&#10214;</a
+      ><a name="2209"
+      > </a
+      ><a name="2210" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2129" class="Bound"
+      >&#8857;skel</a
+      ><a name="2215"
+      > </a
+      ><a name="2216" href="cw.CW.html#2125" class="Function Operator"
+      >&#10215;</a
+      ><a name="2217"
+      > </a
+      ><a name="2218" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="2220"
+      > </a
+      ><a name="2221" href="cohomology.ChainComplex.html#1023" class="Function"
+      >cohomology-group</a
+      ><a name="2237"
+      > </a
+      ><a name="2238" class="Symbol"
+      >(</a
+      ><a name="2239" href="cw.cohomology.ReconstructedCochainComplex.html#2953" class="Function"
+      >cochain-complex</a
+      ><a name="2254"
+      > </a
+      ><a name="2255" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2129" class="Bound"
+      >&#8857;skel</a
+      ><a name="2260" class="Symbol"
+      >)</a
+      ><a name="2261"
+      > </a
+      ><a name="2262" class="Number"
+      >0</a
+      ><a name="2263"
+      >
+    </a
+      ><a name="2268" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2096" class="Function"
+      >zeroth-cohomology-group</a
+      ><a name="2291"
+      > </a
+      ><a name="2292" class="Symbol"
+      >{</a
+      ><a name="2293" class="Argument"
+      >n</a
+      ><a name="2294"
+      > </a
+      ><a name="2295" class="Symbol"
+      >=</a
+      ><a name="2296"
+      > </a
+      ><a name="2297" class="Number"
+      >0</a
+      ><a name="2298" class="Symbol"
+      >}</a
+      ><a name="2299"
+      > </a
+      ><a name="2300" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2300" class="Bound"
+      >&#8857;skel</a
+      ><a name="2305"
+      > </a
+      ><a name="2306" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2306" class="Bound"
+      >ac</a
+      ><a name="2308"
+      > </a
+      ><a name="2309" class="Symbol"
+      >=</a
+      ><a name="2310"
+      > </a
+      ><a name="2311" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#609" class="Function"
+      >ZCGD.C-cw-iso-ker/im</a
+      ><a name="2331"
+      > </a
+      ><a name="2332" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2300" class="Bound"
+      >&#8857;skel</a
+      ><a name="2337"
+      > </a
+      ><a name="2338" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2306" class="Bound"
+      >ac</a
+      ><a name="2340"
+      >
+    </a
+      ><a name="2345" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2096" class="Function"
+      >zeroth-cohomology-group</a
+      ><a name="2368"
+      > </a
+      ><a name="2369" class="Symbol"
+      >{</a
+      ><a name="2370" class="Argument"
+      >n</a
+      ><a name="2371"
+      > </a
+      ><a name="2372" class="Symbol"
+      >=</a
+      ><a name="2373"
+      > </a
+      ><a name="2374" class="Number"
+      >1</a
+      ><a name="2375" class="Symbol"
+      >}</a
+      ><a name="2376"
+      > </a
+      ><a name="2377" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2377" class="Bound"
+      >&#8857;skel</a
+      ><a name="2382"
+      > </a
+      ><a name="2383" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2383" class="Bound"
+      >ac</a
+      ><a name="2385"
+      > </a
+      ><a name="2386" class="Symbol"
+      >=</a
+      ><a name="2387"
+      >
+          </a
+      ><a name="2398" href="lib.groups.Isomorphism.html#8025" class="Function"
+      >coe!&#7475;-iso</a
+      ><a name="2407"
+      > </a
+      ><a name="2408" class="Symbol"
+      >(</a
+      ><a name="2409" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#1591" class="Function"
+      >zeroth-cohomology-group-&#946;</a
+      ><a name="2434"
+      > </a
+      ><a name="2435" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2377" class="Bound"
+      >&#8857;skel</a
+      ><a name="2440" class="Symbol"
+      >)</a
+      ><a name="2441"
+      >
+      </a
+      ><a name="2448" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="2451"
+      > </a
+      ><a name="2452" href="cw.cohomology.ZerothCohomologyGroup.html#924" class="Function"
+      >ZCG.C-cw-iso-ker/im</a
+      ><a name="2471"
+      > </a
+      ><a name="2472" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2377" class="Bound"
+      >&#8857;skel</a
+      ><a name="2477"
+      > </a
+      ><a name="2478" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2383" class="Bound"
+      >ac</a
+      ><a name="2480"
+      >
+    </a
+      ><a name="2485" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2096" class="Function"
+      >zeroth-cohomology-group</a
+      ><a name="2508"
+      > </a
+      ><a name="2509" class="Symbol"
+      >{</a
+      ><a name="2510" class="Argument"
+      >n</a
+      ><a name="2511"
+      > </a
+      ><a name="2512" class="Symbol"
+      >=</a
+      ><a name="2513"
+      > </a
+      ><a name="2514" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2515"
+      > </a
+      ><a name="2516" class="Symbol"
+      >(</a
+      ><a name="2517" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2518"
+      > </a
+      ><a name="2519" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2519" class="Bound"
+      >n</a
+      ><a name="2520" class="Symbol"
+      >)}</a
+      ><a name="2522"
+      > </a
+      ><a name="2523" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2523" class="Bound"
+      >&#8857;skel</a
+      ><a name="2528"
+      > </a
+      ><a name="2529" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2529" class="Bound"
+      >ac</a
+      ><a name="2531"
+      > </a
+      ><a name="2532" class="Symbol"
+      >=</a
+      ><a name="2533"
+      >
+          </a
+      ><a name="2544" href="lib.groups.Isomorphism.html#8025" class="Function"
+      >coe!&#7475;-iso</a
+      ><a name="2553"
+      > </a
+      ><a name="2554" class="Symbol"
+      >(</a
+      ><a name="2555" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#785" class="Function"
+      >zeroth-cohomology-group-descend</a
+      ><a name="2586"
+      > </a
+      ><a name="2587" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2523" class="Bound"
+      >&#8857;skel</a
+      ><a name="2592" class="Symbol"
+      >)</a
+      ><a name="2593"
+      >
+      </a
+      ><a name="2600" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="2603"
+      > </a
+      ><a name="2604" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2096" class="Function"
+      >zeroth-cohomology-group</a
+      ><a name="2627"
+      > </a
+      ><a name="2628" class="Symbol"
+      >(</a
+      ><a name="2629" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="2637"
+      > </a
+      ><a name="2638" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2523" class="Bound"
+      >&#8857;skel</a
+      ><a name="2643" class="Symbol"
+      >)</a
+      ><a name="2644"
+      > </a
+      ><a name="2645" class="Symbol"
+      >(</a
+      ><a name="2646" href="cw.CW.html#8547" class="Function"
+      >&#8857;init-has-cells-with-choice</a
+      ><a name="2673"
+      > </a
+      ><a name="2674" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2523" class="Bound"
+      >&#8857;skel</a
+      ><a name="2679"
+      > </a
+      ><a name="2680" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2529" class="Bound"
+      >ac</a
+      ><a name="2682" class="Symbol"
+      >)</a
+      ><a name="2683"
+      >
+      </a
+      ><a name="2690" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="2693"
+      > </a
+      ><a name="2694" href="cw.cohomology.Descending.html#2523" class="Function"
+      >C-cw-descend-at-lower</a
+      ><a name="2715"
+      > </a
+      ><a name="2716" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2523" class="Bound"
+      >&#8857;skel</a
+      ><a name="2721"
+      > </a
+      ><a name="2722" class="Symbol"
+      >(</a
+      ><a name="2723" href="lib.types.Nat.html#2041" class="Function"
+      >O&lt;S</a
+      ><a name="2726"
+      > </a
+      ><a name="2727" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2519" class="Bound"
+      >n</a
+      ><a name="2728" class="Symbol"
+      >)</a
+      ><a name="2729"
+      > </a
+      ><a name="2730" href="cw.cohomology.ReconstructedZerothCohomologyGroup.html#2529" class="Bound"
+      >ac</a
+      ><a name="2732"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

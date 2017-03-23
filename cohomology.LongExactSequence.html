@@ -1,0 +1,1560 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cohomology.LongExactSequence</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="88"
+      >
+</a
+      ><a name="89" class="Keyword"
+      >open</a
+      ><a name="93"
+      > </a
+      ><a name="94" class="Keyword"
+      >import</a
+      ><a name="100"
+      > </a
+      ><a name="101" href="groups.ExactSequence.html#1" class="Module"
+      >groups.ExactSequence</a
+      ><a name="121"
+      >
+</a
+      ><a name="122" class="Keyword"
+      >open</a
+      ><a name="126"
+      > </a
+      ><a name="127" class="Keyword"
+      >import</a
+      ><a name="133"
+      > </a
+      ><a name="134" href="groups.HomSequence.html#1" class="Module"
+      >groups.HomSequence</a
+      ><a name="152"
+      >
+</a
+      ><a name="153" class="Keyword"
+      >open</a
+      ><a name="157"
+      > </a
+      ><a name="158" class="Keyword"
+      >import</a
+      ><a name="164"
+      > </a
+      ><a name="165" href="homotopy.CofiberSequence.html#1" class="Module"
+      >homotopy.CofiberSequence</a
+      ><a name="189"
+      >
+
+</a
+      ><a name="191" class="Keyword"
+      >module</a
+      ><a name="197"
+      > </a
+      ><a name="198" href="cohomology.LongExactSequence.html#1" class="Module"
+      >cohomology.LongExactSequence</a
+      ><a name="226"
+      > </a
+      ><a name="227" class="Symbol"
+      >{</a
+      ><a name="228" href="cohomology.LongExactSequence.html#228" class="Bound"
+      >i</a
+      ><a name="229" class="Symbol"
+      >}</a
+      ><a name="230"
+      > </a
+      ><a name="231" class="Symbol"
+      >(</a
+      ><a name="232" href="cohomology.LongExactSequence.html#232" class="Bound"
+      >CT</a
+      ><a name="234"
+      > </a
+      ><a name="235" class="Symbol"
+      >:</a
+      ><a name="236"
+      > </a
+      ><a name="237" href="cohomology.Theory.html#173" class="Record"
+      >CohomologyTheory</a
+      ><a name="253"
+      > </a
+      ><a name="254" href="cohomology.LongExactSequence.html#228" class="Bound"
+      >i</a
+      ><a name="255" class="Symbol"
+      >)</a
+      ><a name="256"
+      >
+  </a
+      ><a name="259" class="Symbol"
+      >{</a
+      ><a name="260" href="cohomology.LongExactSequence.html#260" class="Bound"
+      >X</a
+      ><a name="261"
+      > </a
+      ><a name="262" href="cohomology.LongExactSequence.html#262" class="Bound"
+      >Y</a
+      ><a name="263"
+      > </a
+      ><a name="264" class="Symbol"
+      >:</a
+      ><a name="265"
+      > </a
+      ><a name="266" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="269"
+      > </a
+      ><a name="270" href="cohomology.LongExactSequence.html#228" class="Bound"
+      >i</a
+      ><a name="271" class="Symbol"
+      >}</a
+      ><a name="272"
+      > </a
+      ><a name="273" class="Symbol"
+      >(</a
+      ><a name="274" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="275"
+      > </a
+      ><a name="276" class="Symbol"
+      >:</a
+      ><a name="277"
+      > </a
+      ><a name="278" href="lib.types.Int.html#154" class="Datatype"
+      >&#8484;</a
+      ><a name="279" class="Symbol"
+      >)</a
+      ><a name="280"
+      > </a
+      ><a name="281" class="Symbol"
+      >(</a
+      ><a name="282" href="cohomology.LongExactSequence.html#282" class="Bound"
+      >f</a
+      ><a name="283"
+      > </a
+      ><a name="284" class="Symbol"
+      >:</a
+      ><a name="285"
+      > </a
+      ><a name="286" href="cohomology.LongExactSequence.html#260" class="Bound"
+      >X</a
+      ><a name="287"
+      > </a
+      ><a name="288" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="290"
+      > </a
+      ><a name="291" href="cohomology.LongExactSequence.html#262" class="Bound"
+      >Y</a
+      ><a name="292" class="Symbol"
+      >)</a
+      ><a name="293"
+      > </a
+      ><a name="294" class="Keyword"
+      >where</a
+      ><a name="299"
+      >
+
+</a
+      ><a name="301" class="Keyword"
+      >open</a
+      ><a name="305"
+      > </a
+      ><a name="306" href="cohomology.Theory.html#173" class="Module"
+      >CohomologyTheory</a
+      ><a name="322"
+      > </a
+      ><a name="323" href="cohomology.LongExactSequence.html#232" class="Bound"
+      >CT</a
+      ><a name="325"
+      >
+</a
+      ><a name="326" class="Keyword"
+      >open</a
+      ><a name="330"
+      > </a
+      ><a name="331" class="Keyword"
+      >import</a
+      ><a name="337"
+      > </a
+      ><a name="338" href="cohomology.PtdMapSequence.html#1" class="Module"
+      >cohomology.PtdMapSequence</a
+      ><a name="363"
+      > </a
+      ><a name="364" href="cohomology.LongExactSequence.html#232" class="Bound"
+      >CT</a
+      ><a name="366"
+      >
+
+</a
+      ><a name="368" href="cohomology.LongExactSequence.html#368" class="Function"
+      >co&#8706;</a
+      ><a name="371"
+      > </a
+      ><a name="372" class="Symbol"
+      >:</a
+      ><a name="373"
+      > </a
+      ><a name="374" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="375"
+      > </a
+      ><a name="376" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="377"
+      > </a
+      ><a name="378" href="cohomology.LongExactSequence.html#260" class="Bound"
+      >X</a
+      ><a name="379"
+      > </a
+      ><a name="380" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="382"
+      > </a
+      ><a name="383" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="384"
+      > </a
+      ><a name="385" class="Symbol"
+      >(</a
+      ><a name="386" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="390"
+      > </a
+      ><a name="391" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="392" class="Symbol"
+      >)</a
+      ><a name="393"
+      > </a
+      ><a name="394" class="Symbol"
+      >(</a
+      ><a name="395" href="lib.types.Cofiber.html#1552" class="Function"
+      >&#8857;Cofiber</a
+      ><a name="403"
+      > </a
+      ><a name="404" href="cohomology.LongExactSequence.html#282" class="Bound"
+      >f</a
+      ><a name="405" class="Symbol"
+      >)</a
+      ><a name="406"
+      >
+</a
+      ><a name="407" href="cohomology.LongExactSequence.html#368" class="Function"
+      >co&#8706;</a
+      ><a name="410"
+      > </a
+      ><a name="411" class="Symbol"
+      >=</a
+      ><a name="412"
+      > </a
+      ><a name="413" class="Keyword"
+      >record</a
+      ><a name="419"
+      > </a
+      ><a name="420" class="Symbol"
+      >{</a
+      ><a name="421" class="Field"
+      >f</a
+      ><a name="422"
+      > </a
+      ><a name="423" class="Symbol"
+      >=</a
+      ><a name="424"
+      > </a
+      ><a name="425" href="cohomology.Theory.html#718" class="Function"
+      >CEl-fmap</a
+      ><a name="433"
+      > </a
+      ><a name="434" class="Symbol"
+      >(</a
+      ><a name="435" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="439"
+      > </a
+      ><a name="440" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="441" class="Symbol"
+      >)</a
+      ><a name="442"
+      > </a
+      ><a name="443" href="lib.types.Suspension.html#4802" class="Function"
+      >&#8857;extract-glue</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="458"
+      > </a
+      ><a name="459" href="lib.Equivalence.html#1668" class="Function"
+      >GroupIso.g</a
+      ><a name="469"
+      > </a
+      ><a name="470" class="Symbol"
+      >(</a
+      ><a name="471" href="cohomology.Theory.html#1066" class="Function"
+      >C-Susp</a
+      ><a name="477"
+      > </a
+      ><a name="478" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="479"
+      > </a
+      ><a name="480" href="cohomology.LongExactSequence.html#260" class="Bound"
+      >X</a
+      ><a name="481" class="Symbol"
+      >);</a
+      ><a name="483"
+      > </a
+      ><a name="484" class="Field"
+      >pres-comp</a
+      ><a name="493"
+      > </a
+      ><a name="494" class="Symbol"
+      >=</a
+      ><a name="495"
+      > </a
+      ><a name="496" href="cohomology.LongExactSequence.html#520" class="Function"
+      >lemma</a
+      ><a name="501" class="Symbol"
+      >}</a
+      ><a name="502"
+      > </a
+      ><a name="503" class="Keyword"
+      >where</a
+      ><a name="508"
+      >
+  </a
+      ><a name="511" class="Keyword"
+      >abstract</a
+      ><a name="519"
+      > </a
+      ><a name="520" href="cohomology.LongExactSequence.html#520" class="Function"
+      >lemma</a
+      ><a name="525"
+      > </a
+      ><a name="526" class="Symbol"
+      >=</a
+      ><a name="527"
+      > </a
+      ><a name="528" href="lib.groups.Homomorphism.html#4739" class="Function"
+      >&#8728;-pres-comp</a
+      ><a name="539"
+      > </a
+      ><a name="540" class="Symbol"
+      >(</a
+      ><a name="541" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="547"
+      > </a
+      ><a name="548" class="Symbol"
+      >(</a
+      ><a name="549" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="553"
+      > </a
+      ><a name="554" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="555" class="Symbol"
+      >)</a
+      ><a name="556"
+      > </a
+      ><a name="557" href="lib.types.Suspension.html#4802" class="Function"
+      >&#8857;extract-glue</a
+      ><a name="570" class="Symbol"
+      >)</a
+      ><a name="571"
+      > </a
+      ><a name="572" class="Symbol"
+      >(</a
+      ><a name="573" href="lib.groups.Isomorphism.html#2227" class="Function"
+      >GroupIso.g-hom</a
+      ><a name="587"
+      > </a
+      ><a name="588" class="Symbol"
+      >(</a
+      ><a name="589" href="cohomology.Theory.html#1066" class="Function"
+      >C-Susp</a
+      ><a name="595"
+      > </a
+      ><a name="596" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="597"
+      > </a
+      ><a name="598" href="cohomology.LongExactSequence.html#260" class="Bound"
+      >X</a
+      ><a name="599" class="Symbol"
+      >))</a
+      ><a name="601"
+      >
+
+</a
+      ><a name="603" href="cohomology.LongExactSequence.html#603" class="Function"
+      >C-cofiber-seq</a
+      ><a name="616"
+      > </a
+      ><a name="617" class="Symbol"
+      >:</a
+      ><a name="618"
+      > </a
+      ><a name="619" href="groups.HomSequence.html#131" class="Datatype"
+      >HomSequence</a
+      ><a name="630"
+      > </a
+      ><a name="631" class="Symbol"
+      >(</a
+      ><a name="632" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="633"
+      > </a
+      ><a name="634" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="635"
+      > </a
+      ><a name="636" href="cohomology.LongExactSequence.html#262" class="Bound"
+      >Y</a
+      ><a name="637" class="Symbol"
+      >)</a
+      ><a name="638"
+      > </a
+      ><a name="639" class="Symbol"
+      >(</a
+      ><a name="640" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="641"
+      > </a
+      ><a name="642" class="Symbol"
+      >(</a
+      ><a name="643" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="647"
+      > </a
+      ><a name="648" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="649" class="Symbol"
+      >)</a
+      ><a name="650"
+      > </a
+      ><a name="651" href="cohomology.LongExactSequence.html#260" class="Bound"
+      >X</a
+      ><a name="652" class="Symbol"
+      >)</a
+      ><a name="653"
+      >
+</a
+      ><a name="654" href="cohomology.LongExactSequence.html#603" class="Function"
+      >C-cofiber-seq</a
+      ><a name="667"
+      > </a
+      ><a name="668" class="Symbol"
+      >=</a
+      ><a name="669"
+      >
+  </a
+      ><a name="672" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="673"
+      > </a
+      ><a name="674" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="675"
+      > </a
+      ><a name="676" href="cohomology.LongExactSequence.html#262" class="Bound"
+      >Y</a
+      ><a name="677"
+      >                   </a
+      ><a name="696" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="698"
+      > </a
+      ><a name="699" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="705"
+      > </a
+      ><a name="706" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="707"
+      > </a
+      ><a name="708" href="cohomology.LongExactSequence.html#282" class="Bound"
+      >f</a
+      ><a name="709"
+      >                  </a
+      ><a name="727" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="729"
+      >
+  </a
+      ><a name="732" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="733"
+      > </a
+      ><a name="734" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="735"
+      > </a
+      ><a name="736" href="cohomology.LongExactSequence.html#260" class="Bound"
+      >X</a
+      ><a name="737"
+      >                   </a
+      ><a name="756" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="758"
+      > </a
+      ><a name="759" href="cohomology.LongExactSequence.html#368" class="Function"
+      >co&#8706;</a
+      ><a name="762"
+      >                         </a
+      ><a name="787" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="789"
+      >
+  </a
+      ><a name="792" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="793"
+      > </a
+      ><a name="794" class="Symbol"
+      >(</a
+      ><a name="795" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="799"
+      > </a
+      ><a name="800" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="801" class="Symbol"
+      >)</a
+      ><a name="802"
+      > </a
+      ><a name="803" class="Symbol"
+      >(</a
+      ><a name="804" href="lib.types.Cofiber.html#1552" class="Function"
+      >&#8857;Cofiber</a
+      ><a name="812"
+      > </a
+      ><a name="813" href="cohomology.LongExactSequence.html#282" class="Bound"
+      >f</a
+      ><a name="814" class="Symbol"
+      >)</a
+      ><a name="815"
+      > </a
+      ><a name="816" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="818"
+      > </a
+      ><a name="819" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="825"
+      > </a
+      ><a name="826" class="Symbol"
+      >(</a
+      ><a name="827" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="831"
+      > </a
+      ><a name="832" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="833" class="Symbol"
+      >)</a
+      ><a name="834"
+      > </a
+      ><a name="835" class="Symbol"
+      >(</a
+      ><a name="836" href="lib.types.Cofiber.html#1617" class="Function"
+      >&#8857;cfcod'</a
+      ><a name="843"
+      > </a
+      ><a name="844" href="cohomology.LongExactSequence.html#282" class="Bound"
+      >f</a
+      ><a name="845" class="Symbol"
+      >)</a
+      ><a name="846"
+      > </a
+      ><a name="847" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="849"
+      >
+  </a
+      ><a name="852" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="853"
+      > </a
+      ><a name="854" class="Symbol"
+      >(</a
+      ><a name="855" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="859"
+      > </a
+      ><a name="860" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="861" class="Symbol"
+      >)</a
+      ><a name="862"
+      > </a
+      ><a name="863" href="cohomology.LongExactSequence.html#262" class="Bound"
+      >Y</a
+      ><a name="864"
+      >            </a
+      ><a name="876" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#8594;&#10216;</a
+      ><a name="878"
+      > </a
+      ><a name="879" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="885"
+      > </a
+      ><a name="886" class="Symbol"
+      >(</a
+      ><a name="887" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="891"
+      > </a
+      ><a name="892" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="893" class="Symbol"
+      >)</a
+      ><a name="894"
+      > </a
+      ><a name="895" href="cohomology.LongExactSequence.html#282" class="Bound"
+      >f</a
+      ><a name="896"
+      >           </a
+      ><a name="907" href="groups.HomSequence.html#243" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="909"
+      >
+  </a
+      ><a name="912" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="913"
+      > </a
+      ><a name="914" class="Symbol"
+      >(</a
+      ><a name="915" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="919"
+      > </a
+      ><a name="920" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="921" class="Symbol"
+      >)</a
+      ><a name="922"
+      > </a
+      ><a name="923" href="cohomology.LongExactSequence.html#260" class="Bound"
+      >X</a
+      ><a name="924"
+      >            </a
+      ><a name="936" href="groups.HomSequence.html#202" class="InductiveConstructor Operator"
+      >&#8867;|&#7475;</a
+      ><a name="939"
+      >
+
+</a
+      ><a name="941" class="Keyword"
+      >private</a
+      ><a name="948"
+      >
+  </a
+      ><a name="951" href="cohomology.LongExactSequence.html#951" class="Function"
+      >C-iterated-cofiber-seq</a
+      ><a name="973"
+      > </a
+      ><a name="974" class="Symbol"
+      >=</a
+      ><a name="975"
+      > </a
+      ><a name="976" href="cohomology.PtdMapSequence.html#368" class="Function"
+      >C-seq</a
+      ><a name="981"
+      > </a
+      ><a name="982" class="Symbol"
+      >(</a
+      ><a name="983" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="987"
+      > </a
+      ><a name="988" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="989" class="Symbol"
+      >)</a
+      ><a name="990"
+      > </a
+      ><a name="991" class="Symbol"
+      >(</a
+      ><a name="992" href="homotopy.CofiberSequence.html#4876" class="Function"
+      >iterated-cofiber-seq</a
+      ><a name="1012"
+      > </a
+      ><a name="1013" href="cohomology.LongExactSequence.html#282" class="Bound"
+      >f</a
+      ><a name="1014" class="Symbol"
+      >)</a
+      ><a name="1015"
+      >
+
+  </a
+      ><a name="1019" href="cohomology.LongExactSequence.html#1019" class="Function"
+      >C-iterated-cofiber-seq-is-exact</a
+      ><a name="1050"
+      > </a
+      ><a name="1051" class="Symbol"
+      >:</a
+      ><a name="1052"
+      > </a
+      ><a name="1053" href="groups.ExactSequence.html#114" class="Function"
+      >is-exact-seq</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" href="cohomology.LongExactSequence.html#951" class="Function"
+      >C-iterated-cofiber-seq</a
+      ><a name="1088"
+      >
+  </a
+      ><a name="1091" href="cohomology.LongExactSequence.html#1019" class="Function"
+      >C-iterated-cofiber-seq-is-exact</a
+      ><a name="1122"
+      > </a
+      ><a name="1123" class="Symbol"
+      >=</a
+      ><a name="1124"
+      >
+    </a
+      ><a name="1129" href="cohomology.Theory.html#1744" class="Function"
+      >C-exact</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" class="Symbol"
+      >(</a
+      ><a name="1138" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1142"
+      > </a
+      ><a name="1143" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="1144" class="Symbol"
+      >)</a
+      ><a name="1145"
+      > </a
+      ><a name="1146" class="Symbol"
+      >(</a
+      ><a name="1147" href="homotopy.CofiberSequence.html#246" class="Function"
+      >&#8857;cfcod&#178;'</a
+      ><a name="1155"
+      > </a
+      ><a name="1156" href="cohomology.LongExactSequence.html#282" class="Bound"
+      >f</a
+      ><a name="1157" class="Symbol"
+      >)</a
+      ><a name="1158"
+      > </a
+      ><a name="1159" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1160"
+      > </a
+      ><a name="1161" href="cohomology.Theory.html#1744" class="Function"
+      >C-exact</a
+      ><a name="1168"
+      > </a
+      ><a name="1169" class="Symbol"
+      >(</a
+      ><a name="1170" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1174"
+      > </a
+      ><a name="1175" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="1176" class="Symbol"
+      >)</a
+      ><a name="1177"
+      > </a
+      ><a name="1178" class="Symbol"
+      >(</a
+      ><a name="1179" href="lib.types.Cofiber.html#1617" class="Function"
+      >&#8857;cfcod'</a
+      ><a name="1186"
+      > </a
+      ><a name="1187" href="cohomology.LongExactSequence.html#282" class="Bound"
+      >f</a
+      ><a name="1188" class="Symbol"
+      >)</a
+      ><a name="1189"
+      > </a
+      ><a name="1190" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1191"
+      > </a
+      ><a name="1192" href="cohomology.Theory.html#1744" class="Function"
+      >C-exact</a
+      ><a name="1199"
+      > </a
+      ><a name="1200" class="Symbol"
+      >(</a
+      ><a name="1201" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1205"
+      > </a
+      ><a name="1206" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="1207" class="Symbol"
+      >)</a
+      ><a name="1208"
+      > </a
+      ><a name="1209" href="cohomology.LongExactSequence.html#282" class="Bound"
+      >f</a
+      ><a name="1210"
+      > </a
+      ><a name="1211" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1212"
+      > </a
+      ><a name="1213" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="1217"
+      > </a
+      ><a name="1218" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1220"
+      >
+
+  </a
+      ><a name="1224" class="Comment"
+      >-- An intermediate sequence for proving exactness of [C-cofiber-seq].</a
+      ><a name="1293"
+      >
+  </a
+      ><a name="1296" href="cohomology.LongExactSequence.html#1296" class="Function"
+      >C-cofiber-seq'</a
+      ><a name="1310"
+      > </a
+      ><a name="1311" class="Symbol"
+      >=</a
+      ><a name="1312"
+      > </a
+      ><a name="1313" href="cohomology.PtdMapSequence.html#368" class="Function"
+      >C-seq</a
+      ><a name="1318"
+      > </a
+      ><a name="1319" class="Symbol"
+      >(</a
+      ><a name="1320" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1324"
+      > </a
+      ><a name="1325" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="1326" class="Symbol"
+      >)</a
+      ><a name="1327"
+      > </a
+      ><a name="1328" class="Symbol"
+      >(</a
+      ><a name="1329" href="homotopy.CofiberSequence.html#5063" class="Function"
+      >cyclic-cofiber-seq</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" href="cohomology.LongExactSequence.html#282" class="Bound"
+      >f</a
+      ><a name="1349" class="Symbol"
+      >)</a
+      ><a name="1350"
+      >
+
+  </a
+      ><a name="1354" href="cohomology.LongExactSequence.html#1354" class="Function"
+      >C-cofiber-seq'-is-exact</a
+      ><a name="1377"
+      > </a
+      ><a name="1378" class="Symbol"
+      >:</a
+      ><a name="1379"
+      > </a
+      ><a name="1380" href="groups.ExactSequence.html#114" class="Function"
+      >is-exact-seq</a
+      ><a name="1392"
+      > </a
+      ><a name="1393" href="cohomology.LongExactSequence.html#1296" class="Function"
+      >C-cofiber-seq'</a
+      ><a name="1407"
+      >
+  </a
+      ><a name="1410" href="cohomology.LongExactSequence.html#1354" class="Function"
+      >C-cofiber-seq'-is-exact</a
+      ><a name="1433"
+      > </a
+      ><a name="1434" class="Symbol"
+      >=</a
+      ><a name="1435"
+      >
+    </a
+      ><a name="1440" href="groups.ExactSequence.html#1258" class="Function"
+      >seq-equiv-preserves'-exact</a
+      ><a name="1466"
+      >
+      </a
+      ><a name="1473" class="Symbol"
+      >(</a
+      ><a name="1474" href="cohomology.PtdMapSequence.html#1856" class="Function"
+      >C-seq-emap</a
+      ><a name="1484"
+      > </a
+      ><a name="1485" class="Symbol"
+      >(</a
+      ><a name="1486" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1490"
+      > </a
+      ><a name="1491" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="1492" class="Symbol"
+      >)</a
+      ><a name="1493"
+      > </a
+      ><a name="1494" class="Symbol"
+      >(</a
+      ><a name="1495" href="homotopy.CofiberSequence.html#5975" class="Function"
+      >iterated-equiv-cyclic</a
+      ><a name="1516"
+      > </a
+      ><a name="1517" href="cohomology.LongExactSequence.html#282" class="Bound"
+      >f</a
+      ><a name="1518" class="Symbol"
+      >))</a
+      ><a name="1520"
+      >
+      </a
+      ><a name="1527" href="cohomology.LongExactSequence.html#1019" class="Function"
+      >C-iterated-cofiber-seq-is-exact</a
+      ><a name="1558"
+      >
+
+  </a
+      ><a name="1562" class="Comment"
+      >-- Now the final sequence</a
+      ><a name="1587"
+      >
+  </a
+      ><a name="1590" href="cohomology.LongExactSequence.html#1590" class="Function"
+      >C-cofiber-seq'-to-C-cofiber-seq</a
+      ><a name="1621"
+      > </a
+      ><a name="1622" class="Symbol"
+      >:</a
+      ><a name="1623"
+      >
+    </a
+      ><a name="1628" href="groups.HomSequence.html#740" class="Datatype"
+      >HomSeqMap</a
+      ><a name="1637"
+      > </a
+      ><a name="1638" href="cohomology.LongExactSequence.html#1296" class="Function"
+      >C-cofiber-seq'</a
+      ><a name="1652"
+      > </a
+      ><a name="1653" href="cohomology.LongExactSequence.html#603" class="Function"
+      >C-cofiber-seq</a
+      ><a name="1666"
+      >
+      </a
+      ><a name="1673" class="Symbol"
+      >(</a
+      ><a name="1674" href="lib.groups.Isomorphism.html#1996" class="Function"
+      >GroupIso.f-hom</a
+      ><a name="1688"
+      > </a
+      ><a name="1689" class="Symbol"
+      >(</a
+      ><a name="1690" href="cohomology.Theory.html#1066" class="Function"
+      >C-Susp</a
+      ><a name="1696"
+      > </a
+      ><a name="1697" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="1698"
+      > </a
+      ><a name="1699" href="cohomology.LongExactSequence.html#262" class="Bound"
+      >Y</a
+      ><a name="1700" class="Symbol"
+      >))</a
+      ><a name="1702"
+      > </a
+      ><a name="1703" class="Symbol"
+      >(</a
+      ><a name="1704" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="1709"
+      > </a
+      ><a name="1710" class="Symbol"
+      >_)</a
+      ><a name="1712"
+      >
+  </a
+      ><a name="1715" href="cohomology.LongExactSequence.html#1590" class="Function"
+      >C-cofiber-seq'-to-C-cofiber-seq</a
+      ><a name="1746"
+      > </a
+      ><a name="1747" class="Symbol"
+      >=</a
+      ><a name="1748"
+      >
+    </a
+      ><a name="1753" href="lib.groups.Isomorphism.html#1996" class="Function"
+      >GroupIso.f-hom</a
+      ><a name="1767"
+      > </a
+      ><a name="1768" class="Symbol"
+      >(</a
+      ><a name="1769" href="cohomology.Theory.html#1066" class="Function"
+      >C-Susp</a
+      ><a name="1775"
+      > </a
+      ><a name="1776" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="1777"
+      > </a
+      ><a name="1778" href="cohomology.LongExactSequence.html#262" class="Bound"
+      >Y</a
+      ><a name="1779" class="Symbol"
+      >)</a
+      ><a name="1780"
+      > </a
+      ><a name="1781" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#8595;&#10216;</a
+      ><a name="1783"
+      > </a
+      ><a name="1784" href="cohomology.Theory.html#1304" class="Function"
+      >C-Susp-fmap</a
+      ><a name="1795"
+      > </a
+      ><a name="1796" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="1797"
+      > </a
+      ><a name="1798" href="cohomology.LongExactSequence.html#282" class="Bound"
+      >f</a
+      ><a name="1799"
+      > </a
+      ><a name="1800" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="1802"
+      >
+    </a
+      ><a name="1807" href="lib.groups.Isomorphism.html#1996" class="Function"
+      >GroupIso.f-hom</a
+      ><a name="1821"
+      > </a
+      ><a name="1822" class="Symbol"
+      >(</a
+      ><a name="1823" href="cohomology.Theory.html#1066" class="Function"
+      >C-Susp</a
+      ><a name="1829"
+      > </a
+      ><a name="1830" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="1831"
+      > </a
+      ><a name="1832" href="cohomology.LongExactSequence.html#260" class="Bound"
+      >X</a
+      ><a name="1833" class="Symbol"
+      >)</a
+      ><a name="1834"
+      > </a
+      ><a name="1835" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#8595;&#10216;</a
+      ><a name="1837"
+      > </a
+      ><a name="1838" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="1847"
+      > </a
+      ><a name="1848" class="Symbol"
+      >(&#955;</a
+      ><a name="1850"
+      > </a
+      ><a name="1851" href="cohomology.LongExactSequence.html#1851" class="Bound"
+      >x</a
+      ><a name="1852"
+      > </a
+      ><a name="1853" class="Symbol"
+      >&#8594;</a
+      ><a name="1854"
+      > </a
+      ><a name="1855" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1857"
+      > </a
+      ><a name="1858" class="Symbol"
+      >(</a
+      ><a name="1859" href="cohomology.Theory.html#718" class="Function"
+      >CEl-fmap</a
+      ><a name="1867"
+      > </a
+      ><a name="1868" class="Symbol"
+      >(</a
+      ><a name="1869" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="1873"
+      > </a
+      ><a name="1874" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="1875" class="Symbol"
+      >)</a
+      ><a name="1876"
+      > </a
+      ><a name="1877" href="lib.types.Suspension.html#4802" class="Function"
+      >&#8857;extract-glue</a
+      ><a name="1890" class="Symbol"
+      >)</a
+      ><a name="1891"
+      > </a
+      ><a name="1892" class="Symbol"
+      >(</a
+      ><a name="1893" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1894"
+      > </a
+      ><a name="1895" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1896"
+      > </a
+      ><a name="1897" href="lib.Equivalence.html#1719" class="Function"
+      >GroupIso.g-f</a
+      ><a name="1909"
+      > </a
+      ><a name="1910" class="Symbol"
+      >(</a
+      ><a name="1911" href="cohomology.Theory.html#1066" class="Function"
+      >C-Susp</a
+      ><a name="1917"
+      > </a
+      ><a name="1918" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="1919"
+      > </a
+      ><a name="1920" href="cohomology.LongExactSequence.html#260" class="Bound"
+      >X</a
+      ><a name="1921" class="Symbol"
+      >)</a
+      ><a name="1922"
+      > </a
+      ><a name="1923" href="cohomology.LongExactSequence.html#1851" class="Bound"
+      >x</a
+      ><a name="1924" class="Symbol"
+      >))</a
+      ><a name="1926"
+      > </a
+      ><a name="1927" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="1929"
+      >
+    </a
+      ><a name="1934" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="1939"
+      > </a
+      ><a name="1940" class="Symbol"
+      >_</a
+      ><a name="1941"
+      >                     </a
+      ><a name="1962" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#8595;&#10216;</a
+      ><a name="1964"
+      > </a
+      ><a name="1965" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="1974"
+      > </a
+      ><a name="1975" class="Symbol"
+      >(&#955;</a
+      ><a name="1977"
+      > </a
+      ><a name="1978" href="cohomology.LongExactSequence.html#1978" class="Bound"
+      >_</a
+      ><a name="1979"
+      > </a
+      ><a name="1980" class="Symbol"
+      >&#8594;</a
+      ><a name="1981"
+      > </a
+      ><a name="1982" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1985" class="Symbol"
+      >)</a
+      ><a name="1986"
+      > </a
+      ><a name="1987" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="1989"
+      >
+    </a
+      ><a name="1994" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="1999"
+      > </a
+      ><a name="2000" class="Symbol"
+      >_</a
+      ><a name="2001"
+      >                     </a
+      ><a name="2022" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#8595;&#10216;</a
+      ><a name="2024"
+      > </a
+      ><a name="2025" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="2034"
+      > </a
+      ><a name="2035" class="Symbol"
+      >(&#955;</a
+      ><a name="2037"
+      > </a
+      ><a name="2038" href="cohomology.LongExactSequence.html#2038" class="Bound"
+      >_</a
+      ><a name="2039"
+      > </a
+      ><a name="2040" class="Symbol"
+      >&#8594;</a
+      ><a name="2041"
+      > </a
+      ><a name="2042" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2045" class="Symbol"
+      >)</a
+      ><a name="2046"
+      > </a
+      ><a name="2047" href="groups.HomSequence.html#994" class="InductiveConstructor Operator"
+      >&#10217;&#7475;</a
+      ><a name="2049"
+      >
+    </a
+      ><a name="2054" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="2059"
+      > </a
+      ><a name="2060" class="Symbol"
+      >_</a
+      ><a name="2061"
+      >                     </a
+      ><a name="2082" href="groups.HomSequence.html#904" class="InductiveConstructor Operator"
+      >&#8595;|&#7475;</a
+      ><a name="2085"
+      >
+
+  </a
+      ><a name="2089" href="cohomology.LongExactSequence.html#2089" class="Function"
+      >C-cofiber-seq'-equiv-C-cofiber-seq</a
+      ><a name="2123"
+      > </a
+      ><a name="2124" class="Symbol"
+      >:</a
+      ><a name="2125"
+      >
+    </a
+      ><a name="2130" href="groups.HomSequence.html#3896" class="Function"
+      >HomSeqEquiv</a
+      ><a name="2141"
+      > </a
+      ><a name="2142" href="cohomology.LongExactSequence.html#1296" class="Function"
+      >C-cofiber-seq'</a
+      ><a name="2156"
+      > </a
+      ><a name="2157" href="cohomology.LongExactSequence.html#603" class="Function"
+      >C-cofiber-seq</a
+      ><a name="2170"
+      >
+      </a
+      ><a name="2177" class="Symbol"
+      >(</a
+      ><a name="2178" href="lib.groups.Isomorphism.html#1996" class="Function"
+      >GroupIso.f-hom</a
+      ><a name="2192"
+      > </a
+      ><a name="2193" class="Symbol"
+      >(</a
+      ><a name="2194" href="cohomology.Theory.html#1066" class="Function"
+      >C-Susp</a
+      ><a name="2200"
+      > </a
+      ><a name="2201" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="2202"
+      > </a
+      ><a name="2203" href="cohomology.LongExactSequence.html#262" class="Bound"
+      >Y</a
+      ><a name="2204" class="Symbol"
+      >))</a
+      ><a name="2206"
+      > </a
+      ><a name="2207" class="Symbol"
+      >(</a
+      ><a name="2208" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="2213"
+      > </a
+      ><a name="2214" class="Symbol"
+      >_)</a
+      ><a name="2216"
+      >
+  </a
+      ><a name="2219" href="cohomology.LongExactSequence.html#2089" class="Function"
+      >C-cofiber-seq'-equiv-C-cofiber-seq</a
+      ><a name="2253"
+      > </a
+      ><a name="2254" class="Symbol"
+      >=</a
+      ><a name="2255"
+      >
+    </a
+      ><a name="2260" href="cohomology.LongExactSequence.html#1590" class="Function"
+      >C-cofiber-seq'-to-C-cofiber-seq</a
+      ><a name="2291"
+      > </a
+      ><a name="2292" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2293"
+      >
+    </a
+      ><a name="2298" class="Symbol"
+      >(</a
+      ><a name="2299" href="lib.groups.Isomorphism.html#2078" class="Function"
+      >GroupIso.f-is-equiv</a
+      ><a name="2318"
+      > </a
+      ><a name="2319" class="Symbol"
+      >(</a
+      ><a name="2320" href="cohomology.Theory.html#1066" class="Function"
+      >C-Susp</a
+      ><a name="2326"
+      > </a
+      ><a name="2327" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="2328"
+      > </a
+      ><a name="2329" href="cohomology.LongExactSequence.html#262" class="Bound"
+      >Y</a
+      ><a name="2330" class="Symbol"
+      >)</a
+      ><a name="2331"
+      > </a
+      ><a name="2332" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2333"
+      > </a
+      ><a name="2334" href="lib.groups.Isomorphism.html#2078" class="Function"
+      >GroupIso.f-is-equiv</a
+      ><a name="2353"
+      > </a
+      ><a name="2354" class="Symbol"
+      >(</a
+      ><a name="2355" href="cohomology.Theory.html#1066" class="Function"
+      >C-Susp</a
+      ><a name="2361"
+      > </a
+      ><a name="2362" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="2363"
+      > </a
+      ><a name="2364" href="cohomology.LongExactSequence.html#260" class="Bound"
+      >X</a
+      ><a name="2365" class="Symbol"
+      >)</a
+      ><a name="2366"
+      > </a
+      ><a name="2367" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2368"
+      > </a
+      ><a name="2369" href="lib.Equivalence.html#5614" class="Function"
+      >idf-is-equiv</a
+      ><a name="2381"
+      > </a
+      ><a name="2382" class="Symbol"
+      >_</a
+      ><a name="2383"
+      > </a
+      ><a name="2384" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2385"
+      > </a
+      ><a name="2386" href="lib.Equivalence.html#5614" class="Function"
+      >idf-is-equiv</a
+      ><a name="2398"
+      > </a
+      ><a name="2399" class="Symbol"
+      >_</a
+      ><a name="2400"
+      > </a
+      ><a name="2401" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2402"
+      > </a
+      ><a name="2403" href="lib.Equivalence.html#5614" class="Function"
+      >idf-is-equiv</a
+      ><a name="2415"
+      > </a
+      ><a name="2416" class="Symbol"
+      >_)</a
+      ><a name="2418"
+      >
+
+</a
+      ><a name="2420" class="Keyword"
+      >abstract</a
+      ><a name="2428"
+      >
+  </a
+      ><a name="2431" href="cohomology.LongExactSequence.html#2431" class="Function"
+      >C-cofiber-seq-is-exact</a
+      ><a name="2453"
+      > </a
+      ><a name="2454" class="Symbol"
+      >:</a
+      ><a name="2455"
+      > </a
+      ><a name="2456" href="groups.ExactSequence.html#114" class="Function"
+      >is-exact-seq</a
+      ><a name="2468"
+      > </a
+      ><a name="2469" href="cohomology.LongExactSequence.html#603" class="Function"
+      >C-cofiber-seq</a
+      ><a name="2482"
+      >
+  </a
+      ><a name="2485" href="cohomology.LongExactSequence.html#2431" class="Function"
+      >C-cofiber-seq-is-exact</a
+      ><a name="2507"
+      > </a
+      ><a name="2508" class="Symbol"
+      >=</a
+      ><a name="2509"
+      > </a
+      ><a name="2510" href="groups.ExactSequence.html#497" class="Function"
+      >seq-equiv-preserves-exact</a
+      ><a name="2535"
+      >
+    </a
+      ><a name="2540" href="cohomology.LongExactSequence.html#2089" class="Function"
+      >C-cofiber-seq'-equiv-C-cofiber-seq</a
+      ><a name="2574"
+      > </a
+      ><a name="2575" href="cohomology.LongExactSequence.html#1354" class="Function"
+      >C-cofiber-seq'-is-exact</a
+      ><a name="2598"
+      >
+
+</a
+      ><a name="2600" href="cohomology.LongExactSequence.html#2600" class="Function"
+      >C-cofiber-exact-seq</a
+      ><a name="2619"
+      > </a
+      ><a name="2620" class="Symbol"
+      >:</a
+      ><a name="2621"
+      > </a
+      ><a name="2622" href="groups.ExactSequence.html#338" class="Function"
+      >ExactSequence</a
+      ><a name="2635"
+      > </a
+      ><a name="2636" class="Symbol"
+      >(</a
+      ><a name="2637" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2638"
+      > </a
+      ><a name="2639" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="2640"
+      > </a
+      ><a name="2641" href="cohomology.LongExactSequence.html#262" class="Bound"
+      >Y</a
+      ><a name="2642" class="Symbol"
+      >)</a
+      ><a name="2643"
+      > </a
+      ><a name="2644" class="Symbol"
+      >(</a
+      ><a name="2645" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2646"
+      > </a
+      ><a name="2647" class="Symbol"
+      >(</a
+      ><a name="2648" href="lib.types.Int.html#621" class="Function"
+      >succ</a
+      ><a name="2652"
+      > </a
+      ><a name="2653" href="cohomology.LongExactSequence.html#274" class="Bound"
+      >n</a
+      ><a name="2654" class="Symbol"
+      >)</a
+      ><a name="2655"
+      > </a
+      ><a name="2656" href="cohomology.LongExactSequence.html#260" class="Bound"
+      >X</a
+      ><a name="2657" class="Symbol"
+      >)</a
+      ><a name="2658"
+      >
+</a
+      ><a name="2659" href="cohomology.LongExactSequence.html#2600" class="Function"
+      >C-cofiber-exact-seq</a
+      ><a name="2678"
+      > </a
+      ><a name="2679" class="Symbol"
+      >=</a
+      ><a name="2680"
+      > </a
+      ><a name="2681" href="cohomology.LongExactSequence.html#603" class="Function"
+      >C-cofiber-seq</a
+      ><a name="2694"
+      > </a
+      ><a name="2695" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2696"
+      > </a
+      ><a name="2697" href="cohomology.LongExactSequence.html#2431" class="Function"
+      >C-cofiber-seq-is-exact</a
+      ><a name="2719"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

@@ -1,0 +1,941 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.HSpace</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+
+</a
+      ><a name="60" class="Keyword"
+      >module</a
+      ><a name="66"
+      > </a
+      ><a name="67" href="homotopy.HSpace.html#1" class="Module"
+      >homotopy.HSpace</a
+      ><a name="82"
+      > </a
+      ><a name="83" class="Keyword"
+      >where</a
+      ><a name="88"
+      >
+
+</a
+      ><a name="90" class="Comment"
+      >-- This is just an approximation because</a
+      ><a name="130"
+      >
+</a
+      ><a name="131" class="Comment"
+      >-- not all higher cells are killed.</a
+      ><a name="166"
+      >
+</a
+      ><a name="167" class="Keyword"
+      >record</a
+      ><a name="173"
+      > </a
+      ><a name="174" href="homotopy.HSpace.html#174" class="Record"
+      >HSpaceStructure</a
+      ><a name="189"
+      > </a
+      ><a name="190" class="Symbol"
+      >{</a
+      ><a name="191" href="homotopy.HSpace.html#191" class="Bound"
+      >i</a
+      ><a name="192" class="Symbol"
+      >}</a
+      ><a name="193"
+      > </a
+      ><a name="194" class="Symbol"
+      >(</a
+      ><a name="195" href="homotopy.HSpace.html#195" class="Bound"
+      >X</a
+      ><a name="196"
+      > </a
+      ><a name="197" class="Symbol"
+      >:</a
+      ><a name="198"
+      > </a
+      ><a name="199" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="202"
+      > </a
+      ><a name="203" href="homotopy.HSpace.html#191" class="Bound"
+      >i</a
+      ><a name="204" class="Symbol"
+      >)</a
+      ><a name="205"
+      > </a
+      ><a name="206" class="Symbol"
+      >:</a
+      ><a name="207"
+      > </a
+      ><a name="208" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="212"
+      > </a
+      ><a name="213" href="homotopy.HSpace.html#191" class="Bound"
+      >i</a
+      ><a name="214"
+      > </a
+      ><a name="215" class="Keyword"
+      >where</a
+      ><a name="220"
+      >
+  </a
+      ><a name="223" class="Keyword"
+      >constructor</a
+      ><a name="234"
+      > </a
+      ><a name="235" href="homotopy.HSpace.html#235" class="InductiveConstructor"
+      >hSpaceStructure</a
+      ><a name="250"
+      >
+  </a
+      ><a name="253" class="Keyword"
+      >private</a
+      ><a name="260"
+      >
+    </a
+      ><a name="265" href="homotopy.HSpace.html#265" class="Function"
+      >A</a
+      ><a name="266"
+      > </a
+      ><a name="267" class="Symbol"
+      >=</a
+      ><a name="268"
+      > </a
+      ><a name="269" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="272"
+      > </a
+      ><a name="273" href="homotopy.HSpace.html#195" class="Bound"
+      >X</a
+      ><a name="274"
+      >
+    </a
+      ><a name="279" href="homotopy.HSpace.html#279" class="Function"
+      >e</a
+      ><a name="280"
+      > </a
+      ><a name="281" class="Symbol"
+      >=</a
+      ><a name="282"
+      > </a
+      ><a name="283" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="285"
+      > </a
+      ><a name="286" href="homotopy.HSpace.html#195" class="Bound"
+      >X</a
+      ><a name="287"
+      >
+  </a
+      ><a name="290" class="Keyword"
+      >field</a
+      ><a name="295"
+      >
+    </a
+      ><a name="300" href="homotopy.HSpace.html#300" class="Field"
+      >&#956;</a
+      ><a name="301"
+      > </a
+      ><a name="302" class="Symbol"
+      >:</a
+      ><a name="303"
+      > </a
+      ><a name="304" href="homotopy.HSpace.html#265" class="Function"
+      >A</a
+      ><a name="305"
+      > </a
+      ><a name="306" class="Symbol"
+      >&#8594;</a
+      ><a name="307"
+      > </a
+      ><a name="308" href="homotopy.HSpace.html#265" class="Function"
+      >A</a
+      ><a name="309"
+      > </a
+      ><a name="310" class="Symbol"
+      >&#8594;</a
+      ><a name="311"
+      > </a
+      ><a name="312" href="homotopy.HSpace.html#265" class="Function"
+      >A</a
+      ><a name="313"
+      >
+    </a
+      ><a name="318" href="homotopy.HSpace.html#318" class="Field"
+      >&#956;-e-l</a
+      ><a name="323"
+      > </a
+      ><a name="324" class="Symbol"
+      >:</a
+      ><a name="325"
+      > </a
+      ><a name="326" class="Symbol"
+      >(</a
+      ><a name="327" href="homotopy.HSpace.html#327" class="Bound"
+      >a</a
+      ><a name="328"
+      > </a
+      ><a name="329" class="Symbol"
+      >:</a
+      ><a name="330"
+      > </a
+      ><a name="331" href="homotopy.HSpace.html#265" class="Function"
+      >A</a
+      ><a name="332" class="Symbol"
+      >)</a
+      ><a name="333"
+      > </a
+      ><a name="334" class="Symbol"
+      >&#8594;</a
+      ><a name="335"
+      > </a
+      ><a name="336" href="homotopy.HSpace.html#300" class="Field"
+      >&#956;</a
+      ><a name="337"
+      > </a
+      ><a name="338" href="homotopy.HSpace.html#279" class="Function"
+      >e</a
+      ><a name="339"
+      > </a
+      ><a name="340" href="homotopy.HSpace.html#327" class="Bound"
+      >a</a
+      ><a name="341"
+      > </a
+      ><a name="342" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="344"
+      > </a
+      ><a name="345" href="homotopy.HSpace.html#327" class="Bound"
+      >a</a
+      ><a name="346"
+      >
+    </a
+      ><a name="351" href="homotopy.HSpace.html#351" class="Field"
+      >&#956;-e-r</a
+      ><a name="356"
+      > </a
+      ><a name="357" class="Symbol"
+      >:</a
+      ><a name="358"
+      > </a
+      ><a name="359" class="Symbol"
+      >(</a
+      ><a name="360" href="homotopy.HSpace.html#360" class="Bound"
+      >a</a
+      ><a name="361"
+      > </a
+      ><a name="362" class="Symbol"
+      >:</a
+      ><a name="363"
+      > </a
+      ><a name="364" href="homotopy.HSpace.html#265" class="Function"
+      >A</a
+      ><a name="365" class="Symbol"
+      >)</a
+      ><a name="366"
+      > </a
+      ><a name="367" class="Symbol"
+      >&#8594;</a
+      ><a name="368"
+      > </a
+      ><a name="369" href="homotopy.HSpace.html#300" class="Field"
+      >&#956;</a
+      ><a name="370"
+      > </a
+      ><a name="371" href="homotopy.HSpace.html#360" class="Bound"
+      >a</a
+      ><a name="372"
+      > </a
+      ><a name="373" href="homotopy.HSpace.html#279" class="Function"
+      >e</a
+      ><a name="374"
+      > </a
+      ><a name="375" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="377"
+      > </a
+      ><a name="378" href="homotopy.HSpace.html#360" class="Bound"
+      >a</a
+      ><a name="379"
+      >
+    </a
+      ><a name="384" href="homotopy.HSpace.html#384" class="Field"
+      >&#956;-coh</a
+      ><a name="389"
+      > </a
+      ><a name="390" class="Symbol"
+      >:</a
+      ><a name="391"
+      > </a
+      ><a name="392" href="homotopy.HSpace.html#318" class="Field"
+      >&#956;-e-l</a
+      ><a name="397"
+      > </a
+      ><a name="398" href="homotopy.HSpace.html#279" class="Function"
+      >e</a
+      ><a name="399"
+      > </a
+      ><a name="400" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="402"
+      > </a
+      ><a name="403" href="homotopy.HSpace.html#351" class="Field"
+      >&#956;-e-r</a
+      ><a name="408"
+      > </a
+      ><a name="409" href="homotopy.HSpace.html#279" class="Function"
+      >e</a
+      ><a name="410"
+      >
+
+</a
+      ><a name="412" class="Keyword"
+      >module</a
+      ><a name="418"
+      > </a
+      ><a name="419" href="homotopy.HSpace.html#419" class="Module"
+      >ConnectedHSpace</a
+      ><a name="434"
+      > </a
+      ><a name="435" class="Symbol"
+      >{</a
+      ><a name="436" href="homotopy.HSpace.html#436" class="Bound"
+      >i</a
+      ><a name="437" class="Symbol"
+      >}</a
+      ><a name="438"
+      > </a
+      ><a name="439" class="Symbol"
+      >{</a
+      ><a name="440" href="homotopy.HSpace.html#440" class="Bound"
+      >X</a
+      ><a name="441"
+      > </a
+      ><a name="442" class="Symbol"
+      >:</a
+      ><a name="443"
+      > </a
+      ><a name="444" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="447"
+      > </a
+      ><a name="448" href="homotopy.HSpace.html#436" class="Bound"
+      >i</a
+      ><a name="449" class="Symbol"
+      >}</a
+      ><a name="450"
+      > </a
+      ><a name="451" class="Symbol"
+      >(</a
+      ><a name="452" href="homotopy.HSpace.html#452" class="Bound"
+      >c</a
+      ><a name="453"
+      > </a
+      ><a name="454" class="Symbol"
+      >:</a
+      ><a name="455"
+      > </a
+      ><a name="456" href="lib.NConnected.html#343" class="Function"
+      >is-connected</a
+      ><a name="468"
+      > </a
+      ><a name="469" class="Number"
+      >0</a
+      ><a name="470"
+      > </a
+      ><a name="471" class="Symbol"
+      >(</a
+      ><a name="472" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="475"
+      > </a
+      ><a name="476" href="homotopy.HSpace.html#440" class="Bound"
+      >X</a
+      ><a name="477" class="Symbol"
+      >))</a
+      ><a name="479"
+      >
+  </a
+      ><a name="482" class="Symbol"
+      >(</a
+      ><a name="483" href="homotopy.HSpace.html#483" class="Bound"
+      >hX</a
+      ><a name="485"
+      > </a
+      ><a name="486" class="Symbol"
+      >:</a
+      ><a name="487"
+      > </a
+      ><a name="488" href="homotopy.HSpace.html#174" class="Record"
+      >HSpaceStructure</a
+      ><a name="503"
+      > </a
+      ><a name="504" href="homotopy.HSpace.html#440" class="Bound"
+      >X</a
+      ><a name="505" class="Symbol"
+      >)</a
+      ><a name="506"
+      > </a
+      ><a name="507" class="Keyword"
+      >where</a
+      ><a name="512"
+      >
+
+  </a
+      ><a name="516" class="Keyword"
+      >open</a
+      ><a name="520"
+      > </a
+      ><a name="521" href="homotopy.HSpace.html#174" class="Module"
+      >HSpaceStructure</a
+      ><a name="536"
+      > </a
+      ><a name="537" href="homotopy.HSpace.html#483" class="Bound"
+      >hX</a
+      ><a name="539"
+      >
+  </a
+      ><a name="542" class="Keyword"
+      >private</a
+      ><a name="549"
+      >
+    </a
+      ><a name="554" href="homotopy.HSpace.html#554" class="Function"
+      >A</a
+      ><a name="555"
+      > </a
+      ><a name="556" class="Symbol"
+      >=</a
+      ><a name="557"
+      > </a
+      ><a name="558" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="561"
+      > </a
+      ><a name="562" href="homotopy.HSpace.html#440" class="Bound"
+      >X</a
+      ><a name="563"
+      >
+    </a
+      ><a name="568" href="homotopy.HSpace.html#568" class="Function"
+      >e</a
+      ><a name="569"
+      > </a
+      ><a name="570" class="Symbol"
+      >=</a
+      ><a name="571"
+      > </a
+      ><a name="572" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="574"
+      > </a
+      ><a name="575" href="homotopy.HSpace.html#440" class="Bound"
+      >X</a
+      ><a name="576"
+      >
+
+  </a
+      ><a name="580" class="Comment"
+      >{-
+  Given that [A] is 0-connected, to prove that each [&#956; a] is an equivalence we
+  only need to prove that one of them is. But for [a] = [e], [&#956; a] is the
+  identity so we&#8217;re done.
+  -}</a
+      ><a name="766"
+      >
+
+  </a
+      ><a name="770" href="homotopy.HSpace.html#770" class="Function"
+      >&#956;-e-l-is-equiv</a
+      ><a name="784"
+      > </a
+      ><a name="785" class="Symbol"
+      >:</a
+      ><a name="786"
+      > </a
+      ><a name="787" class="Symbol"
+      >(</a
+      ><a name="788" href="homotopy.HSpace.html#788" class="Bound"
+      >a</a
+      ><a name="789"
+      > </a
+      ><a name="790" class="Symbol"
+      >:</a
+      ><a name="791"
+      > </a
+      ><a name="792" href="homotopy.HSpace.html#554" class="Function"
+      >A</a
+      ><a name="793" class="Symbol"
+      >)</a
+      ><a name="794"
+      > </a
+      ><a name="795" class="Symbol"
+      >&#8594;</a
+      ><a name="796"
+      > </a
+      ><a name="797" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="805"
+      > </a
+      ><a name="806" class="Symbol"
+      >(&#955;</a
+      ><a name="808"
+      > </a
+      ><a name="809" href="homotopy.HSpace.html#809" class="Bound"
+      >a'</a
+      ><a name="811"
+      > </a
+      ><a name="812" class="Symbol"
+      >&#8594;</a
+      ><a name="813"
+      > </a
+      ><a name="814" href="homotopy.HSpace.html#300" class="Field"
+      >&#956;</a
+      ><a name="815"
+      > </a
+      ><a name="816" href="homotopy.HSpace.html#809" class="Bound"
+      >a'</a
+      ><a name="818"
+      > </a
+      ><a name="819" href="homotopy.HSpace.html#788" class="Bound"
+      >a</a
+      ><a name="820" class="Symbol"
+      >)</a
+      ><a name="821"
+      >
+  </a
+      ><a name="824" href="homotopy.HSpace.html#770" class="Function"
+      >&#956;-e-l-is-equiv</a
+      ><a name="838"
+      > </a
+      ><a name="839" class="Symbol"
+      >=</a
+      ><a name="840"
+      > </a
+      ><a name="841" href="lib.NConnected.html#7138" class="Function"
+      >prop-over-connected</a
+      ><a name="860"
+      > </a
+      ><a name="861" class="Symbol"
+      >{</a
+      ><a name="862" class="Argument"
+      >a</a
+      ><a name="863"
+      > </a
+      ><a name="864" class="Symbol"
+      >=</a
+      ><a name="865"
+      > </a
+      ><a name="866" href="homotopy.HSpace.html#568" class="Function"
+      >e</a
+      ><a name="867" class="Symbol"
+      >}</a
+      ><a name="868"
+      > </a
+      ><a name="869" href="homotopy.HSpace.html#452" class="Bound"
+      >c</a
+      ><a name="870"
+      >
+    </a
+      ><a name="875" class="Symbol"
+      >(&#955;</a
+      ><a name="877"
+      > </a
+      ><a name="878" href="homotopy.HSpace.html#878" class="Bound"
+      >a</a
+      ><a name="879"
+      > </a
+      ><a name="880" class="Symbol"
+      >&#8594;</a
+      ><a name="881"
+      > </a
+      ><a name="882" class="Symbol"
+      >(</a
+      ><a name="883" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="891"
+      > </a
+      ><a name="892" class="Symbol"
+      >(&#955;</a
+      ><a name="894"
+      > </a
+      ><a name="895" href="homotopy.HSpace.html#895" class="Bound"
+      >a'</a
+      ><a name="897"
+      > </a
+      ><a name="898" class="Symbol"
+      >&#8594;</a
+      ><a name="899"
+      > </a
+      ><a name="900" href="homotopy.HSpace.html#300" class="Field"
+      >&#956;</a
+      ><a name="901"
+      > </a
+      ><a name="902" href="homotopy.HSpace.html#895" class="Bound"
+      >a'</a
+      ><a name="904"
+      > </a
+      ><a name="905" href="homotopy.HSpace.html#878" class="Bound"
+      >a</a
+      ><a name="906" class="Symbol"
+      >)</a
+      ><a name="907"
+      > </a
+      ><a name="908" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="909"
+      > </a
+      ><a name="910" href="lib.Equivalence2.html#4674" class="Function"
+      >is-equiv-is-prop</a
+      ><a name="926" class="Symbol"
+      >))</a
+      ><a name="928"
+      >
+    </a
+      ><a name="933" class="Symbol"
+      >(</a
+      ><a name="934" href="lib.Base.html#4901" class="Function"
+      >transport!</a
+      ><a name="944"
+      > </a
+      ><a name="945" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="953"
+      > </a
+      ><a name="954" class="Symbol"
+      >(</a
+      ><a name="955" href="lib.Funext.html#3966" class="Function"
+      >&#955;=</a
+      ><a name="957"
+      > </a
+      ><a name="958" href="homotopy.HSpace.html#351" class="Field"
+      >&#956;-e-r</a
+      ><a name="963" class="Symbol"
+      >)</a
+      ><a name="964"
+      > </a
+      ><a name="965" class="Symbol"
+      >(</a
+      ><a name="966" href="lib.Equivalence.html#5614" class="Function"
+      >idf-is-equiv</a
+      ><a name="978"
+      > </a
+      ><a name="979" href="homotopy.HSpace.html#554" class="Function"
+      >A</a
+      ><a name="980" class="Symbol"
+      >))</a
+      ><a name="982"
+      >
+
+  </a
+      ><a name="986" href="homotopy.HSpace.html#986" class="Function"
+      >&#956;-e-r-is-equiv</a
+      ><a name="1000"
+      > </a
+      ><a name="1001" class="Symbol"
+      >:</a
+      ><a name="1002"
+      > </a
+      ><a name="1003" class="Symbol"
+      >(</a
+      ><a name="1004" href="homotopy.HSpace.html#1004" class="Bound"
+      >a</a
+      ><a name="1005"
+      > </a
+      ><a name="1006" class="Symbol"
+      >:</a
+      ><a name="1007"
+      > </a
+      ><a name="1008" href="homotopy.HSpace.html#554" class="Function"
+      >A</a
+      ><a name="1009" class="Symbol"
+      >)</a
+      ><a name="1010"
+      > </a
+      ><a name="1011" class="Symbol"
+      >&#8594;</a
+      ><a name="1012"
+      > </a
+      ><a name="1013" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="1021"
+      > </a
+      ><a name="1022" class="Symbol"
+      >(</a
+      ><a name="1023" href="homotopy.HSpace.html#300" class="Field"
+      >&#956;</a
+      ><a name="1024"
+      > </a
+      ><a name="1025" href="homotopy.HSpace.html#1004" class="Bound"
+      >a</a
+      ><a name="1026" class="Symbol"
+      >)</a
+      ><a name="1027"
+      >
+  </a
+      ><a name="1030" href="homotopy.HSpace.html#986" class="Function"
+      >&#956;-e-r-is-equiv</a
+      ><a name="1044"
+      > </a
+      ><a name="1045" class="Symbol"
+      >=</a
+      ><a name="1046"
+      > </a
+      ><a name="1047" href="lib.NConnected.html#7138" class="Function"
+      >prop-over-connected</a
+      ><a name="1066"
+      > </a
+      ><a name="1067" class="Symbol"
+      >{</a
+      ><a name="1068" class="Argument"
+      >a</a
+      ><a name="1069"
+      > </a
+      ><a name="1070" class="Symbol"
+      >=</a
+      ><a name="1071"
+      > </a
+      ><a name="1072" href="homotopy.HSpace.html#568" class="Function"
+      >e</a
+      ><a name="1073" class="Symbol"
+      >}</a
+      ><a name="1074"
+      > </a
+      ><a name="1075" href="homotopy.HSpace.html#452" class="Bound"
+      >c</a
+      ><a name="1076"
+      >
+    </a
+      ><a name="1081" class="Symbol"
+      >(&#955;</a
+      ><a name="1083"
+      > </a
+      ><a name="1084" href="homotopy.HSpace.html#1084" class="Bound"
+      >a</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" class="Symbol"
+      >&#8594;</a
+      ><a name="1087"
+      > </a
+      ><a name="1088" class="Symbol"
+      >(</a
+      ><a name="1089" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="1097"
+      > </a
+      ><a name="1098" class="Symbol"
+      >(</a
+      ><a name="1099" href="homotopy.HSpace.html#300" class="Field"
+      >&#956;</a
+      ><a name="1100"
+      > </a
+      ><a name="1101" href="homotopy.HSpace.html#1084" class="Bound"
+      >a</a
+      ><a name="1102" class="Symbol"
+      >)</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1105"
+      > </a
+      ><a name="1106" href="lib.Equivalence2.html#4674" class="Function"
+      >is-equiv-is-prop</a
+      ><a name="1122" class="Symbol"
+      >))</a
+      ><a name="1124"
+      >
+    </a
+      ><a name="1129" class="Symbol"
+      >(</a
+      ><a name="1130" href="lib.Base.html#4901" class="Function"
+      >transport!</a
+      ><a name="1140"
+      > </a
+      ><a name="1141" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="1149"
+      > </a
+      ><a name="1150" class="Symbol"
+      >(</a
+      ><a name="1151" href="lib.Funext.html#3966" class="Function"
+      >&#955;=</a
+      ><a name="1153"
+      > </a
+      ><a name="1154" href="homotopy.HSpace.html#318" class="Field"
+      >&#956;-e-l</a
+      ><a name="1159" class="Symbol"
+      >)</a
+      ><a name="1160"
+      > </a
+      ><a name="1161" class="Symbol"
+      >(</a
+      ><a name="1162" href="lib.Equivalence.html#5614" class="Function"
+      >idf-is-equiv</a
+      ><a name="1174"
+      > </a
+      ><a name="1175" href="homotopy.HSpace.html#554" class="Function"
+      >A</a
+      ><a name="1176" class="Symbol"
+      >))</a
+      ><a name="1178"
+      >
+
+  </a
+      ><a name="1182" href="homotopy.HSpace.html#1182" class="Function"
+      >&#956;-e-l-equiv</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" class="Symbol"
+      >:</a
+      ><a name="1195"
+      > </a
+      ><a name="1196" href="homotopy.HSpace.html#554" class="Function"
+      >A</a
+      ><a name="1197"
+      > </a
+      ><a name="1198" class="Symbol"
+      >&#8594;</a
+      ><a name="1199"
+      > </a
+      ><a name="1200" href="homotopy.HSpace.html#554" class="Function"
+      >A</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="1203"
+      > </a
+      ><a name="1204" href="homotopy.HSpace.html#554" class="Function"
+      >A</a
+      ><a name="1205"
+      >
+  </a
+      ><a name="1208" href="homotopy.HSpace.html#1182" class="Function"
+      >&#956;-e-l-equiv</a
+      ><a name="1219"
+      > </a
+      ><a name="1220" href="homotopy.HSpace.html#1220" class="Bound"
+      >a</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" class="Symbol"
+      >=</a
+      ><a name="1223"
+      > </a
+      ><a name="1224" class="Symbol"
+      >_</a
+      ><a name="1225"
+      > </a
+      ><a name="1226" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1227"
+      > </a
+      ><a name="1228" href="homotopy.HSpace.html#770" class="Function"
+      >&#956;-e-l-is-equiv</a
+      ><a name="1242"
+      > </a
+      ><a name="1243" href="homotopy.HSpace.html#1220" class="Bound"
+      >a</a
+      ><a name="1244"
+      >
+
+  </a
+      ><a name="1248" href="homotopy.HSpace.html#1248" class="Function"
+      >&#956;-e-r-equiv</a
+      ><a name="1259"
+      > </a
+      ><a name="1260" class="Symbol"
+      >:</a
+      ><a name="1261"
+      > </a
+      ><a name="1262" href="homotopy.HSpace.html#554" class="Function"
+      >A</a
+      ><a name="1263"
+      > </a
+      ><a name="1264" class="Symbol"
+      >&#8594;</a
+      ><a name="1265"
+      > </a
+      ><a name="1266" href="homotopy.HSpace.html#554" class="Function"
+      >A</a
+      ><a name="1267"
+      > </a
+      ><a name="1268" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="1269"
+      > </a
+      ><a name="1270" href="homotopy.HSpace.html#554" class="Function"
+      >A</a
+      ><a name="1271"
+      >
+  </a
+      ><a name="1274" href="homotopy.HSpace.html#1248" class="Function"
+      >&#956;-e-r-equiv</a
+      ><a name="1285"
+      > </a
+      ><a name="1286" href="homotopy.HSpace.html#1286" class="Bound"
+      >a</a
+      ><a name="1287"
+      > </a
+      ><a name="1288" class="Symbol"
+      >=</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" class="Symbol"
+      >_</a
+      ><a name="1291"
+      > </a
+      ><a name="1292" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1293"
+      > </a
+      ><a name="1294" href="homotopy.HSpace.html#986" class="Function"
+      >&#956;-e-r-is-equiv</a
+      ><a name="1308"
+      > </a
+      ><a name="1309" href="homotopy.HSpace.html#1286" class="Bound"
+      >a</a
+      ><a name="1310"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

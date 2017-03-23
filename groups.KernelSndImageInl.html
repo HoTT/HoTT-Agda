@@ -1,0 +1,1521 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >groups.KernelSndImageInl</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+
+</a
+      ><a name="60" class="Keyword"
+      >module</a
+      ><a name="66"
+      > </a
+      ><a name="67" href="groups.KernelSndImageInl.html#1" class="Module"
+      >groups.KernelSndImageInl</a
+      ><a name="91"
+      > </a
+      ><a name="92" class="Symbol"
+      >{</a
+      ><a name="93" href="groups.KernelSndImageInl.html#93" class="Bound"
+      >i</a
+      ><a name="94"
+      > </a
+      ><a name="95" href="groups.KernelSndImageInl.html#95" class="Bound"
+      >j</a
+      ><a name="96"
+      > </a
+      ><a name="97" href="groups.KernelSndImageInl.html#97" class="Bound"
+      >k</a
+      ><a name="98" class="Symbol"
+      >}</a
+      ><a name="99"
+      >
+  </a
+      ><a name="102" class="Symbol"
+      >(</a
+      ><a name="103" href="groups.KernelSndImageInl.html#103" class="Bound"
+      >G</a
+      ><a name="104"
+      > </a
+      ><a name="105" class="Symbol"
+      >:</a
+      ><a name="106"
+      > </a
+      ><a name="107" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="112"
+      > </a
+      ><a name="113" href="groups.KernelSndImageInl.html#93" class="Bound"
+      >i</a
+      ><a name="114" class="Symbol"
+      >)</a
+      ><a name="115"
+      > </a
+      ><a name="116" class="Symbol"
+      >{</a
+      ><a name="117" href="groups.KernelSndImageInl.html#117" class="Bound"
+      >H</a
+      ><a name="118"
+      > </a
+      ><a name="119" class="Symbol"
+      >:</a
+      ><a name="120"
+      > </a
+      ><a name="121" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="126"
+      > </a
+      ><a name="127" href="groups.KernelSndImageInl.html#95" class="Bound"
+      >j</a
+      ><a name="128" class="Symbol"
+      >}</a
+      ><a name="129"
+      > </a
+      ><a name="130" class="Symbol"
+      >{</a
+      ><a name="131" href="groups.KernelSndImageInl.html#131" class="Bound"
+      >K</a
+      ><a name="132"
+      > </a
+      ><a name="133" class="Symbol"
+      >:</a
+      ><a name="134"
+      > </a
+      ><a name="135" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="140"
+      > </a
+      ><a name="141" href="groups.KernelSndImageInl.html#97" class="Bound"
+      >k</a
+      ><a name="142" class="Symbol"
+      >}</a
+      ><a name="143"
+      >
+  </a
+      ><a name="146" class="Comment"
+      >-- the argument [&#966;-snd], which is intended to be [&#966; &#8728;&#7475; &#215;-snd],</a
+      ><a name="208"
+      >
+  </a
+      ><a name="211" class="Comment"
+      >-- gives the possibility of making the second part</a
+      ><a name="261"
+      >
+  </a
+      ><a name="264" class="Comment"
+      >-- (the proof of being a group homomorphism) abstract.</a
+      ><a name="318"
+      >
+  </a
+      ><a name="321" class="Symbol"
+      >(</a
+      ><a name="322" href="groups.KernelSndImageInl.html#322" class="Bound"
+      >&#966;</a
+      ><a name="323"
+      > </a
+      ><a name="324" class="Symbol"
+      >:</a
+      ><a name="325"
+      > </a
+      ><a name="326" href="groups.KernelSndImageInl.html#117" class="Bound"
+      >H</a
+      ><a name="327"
+      > </a
+      ><a name="328" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="330"
+      > </a
+      ><a name="331" href="groups.KernelSndImageInl.html#131" class="Bound"
+      >K</a
+      ><a name="332" class="Symbol"
+      >)</a
+      ><a name="333"
+      > </a
+      ><a name="334" class="Symbol"
+      >(</a
+      ><a name="335" href="groups.KernelSndImageInl.html#335" class="Bound"
+      >&#966;-snd</a
+      ><a name="340"
+      > </a
+      ><a name="341" class="Symbol"
+      >:</a
+      ><a name="342"
+      > </a
+      ><a name="343" href="groups.KernelSndImageInl.html#103" class="Bound"
+      >G</a
+      ><a name="344"
+      > </a
+      ><a name="345" href="lib.groups.GroupProduct.html#1359" class="Function Operator"
+      >&#215;&#7475;</a
+      ><a name="347"
+      > </a
+      ><a name="348" href="groups.KernelSndImageInl.html#117" class="Bound"
+      >H</a
+      ><a name="349"
+      > </a
+      ><a name="350" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="352"
+      > </a
+      ><a name="353" href="groups.KernelSndImageInl.html#131" class="Bound"
+      >K</a
+      ><a name="354" class="Symbol"
+      >)</a
+      ><a name="355"
+      >
+  </a
+      ><a name="358" class="Symbol"
+      >(</a
+      ><a name="359" href="groups.KernelSndImageInl.html#359" class="Bound"
+      >&#966;-snd-&#946;</a
+      ><a name="366"
+      > </a
+      ><a name="367" class="Symbol"
+      >:</a
+      ><a name="368"
+      > </a
+      ><a name="369" class="Symbol"
+      >&#8704;</a
+      ><a name="370"
+      > </a
+      ><a name="371" href="groups.KernelSndImageInl.html#371" class="Bound"
+      >x</a
+      ><a name="372"
+      > </a
+      ><a name="373" class="Symbol"
+      >&#8594;</a
+      ><a name="374"
+      > </a
+      ><a name="375" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="385"
+      > </a
+      ><a name="386" href="groups.KernelSndImageInl.html#335" class="Bound"
+      >&#966;-snd</a
+      ><a name="391"
+      > </a
+      ><a name="392" href="groups.KernelSndImageInl.html#371" class="Bound"
+      >x</a
+      ><a name="393"
+      > </a
+      ><a name="394" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="396"
+      > </a
+      ><a name="397" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="407"
+      > </a
+      ><a name="408" href="groups.KernelSndImageInl.html#322" class="Bound"
+      >&#966;</a
+      ><a name="409"
+      > </a
+      ><a name="410" class="Symbol"
+      >(</a
+      ><a name="411" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="414"
+      > </a
+      ><a name="415" href="groups.KernelSndImageInl.html#371" class="Bound"
+      >x</a
+      ><a name="416" class="Symbol"
+      >))</a
+      ><a name="418"
+      >
+  </a
+      ><a name="421" class="Symbol"
+      >(</a
+      ><a name="422" href="groups.KernelSndImageInl.html#422" class="Bound"
+      >G&#215;H-is-abelian</a
+      ><a name="436"
+      > </a
+      ><a name="437" class="Symbol"
+      >:</a
+      ><a name="438"
+      > </a
+      ><a name="439" href="lib.types.Group.html#7098" class="Function"
+      >is-abelian</a
+      ><a name="449"
+      > </a
+      ><a name="450" class="Symbol"
+      >(</a
+      ><a name="451" href="groups.KernelSndImageInl.html#103" class="Bound"
+      >G</a
+      ><a name="452"
+      > </a
+      ><a name="453" href="lib.groups.GroupProduct.html#1359" class="Function Operator"
+      >&#215;&#7475;</a
+      ><a name="455"
+      > </a
+      ><a name="456" href="groups.KernelSndImageInl.html#117" class="Bound"
+      >H</a
+      ><a name="457" class="Symbol"
+      >))</a
+      ><a name="459"
+      >
+  </a
+      ><a name="462" class="Keyword"
+      >where</a
+      ><a name="467"
+      >
+
+  </a
+      ><a name="471" class="Keyword"
+      >open</a
+      ><a name="475"
+      > </a
+      ><a name="476" class="Keyword"
+      >import</a
+      ><a name="482"
+      > </a
+      ><a name="483" href="groups.KernelImage.html#1" class="Module"
+      >groups.KernelImage</a
+      ><a name="501"
+      >
+    </a
+      ><a name="506" href="groups.KernelSndImageInl.html#335" class="Bound"
+      >&#966;-snd</a
+      ><a name="511"
+      > </a
+      ><a name="512" class="Symbol"
+      >(</a
+      ><a name="513" href="lib.groups.GroupProduct.html#4091" class="Function"
+      >&#215;&#7475;-inl</a
+      ><a name="519"
+      > </a
+      ><a name="520" class="Symbol"
+      >{</a
+      ><a name="521" class="Argument"
+      >G</a
+      ><a name="522"
+      > </a
+      ><a name="523" class="Symbol"
+      >=</a
+      ><a name="524"
+      > </a
+      ><a name="525" href="groups.KernelSndImageInl.html#103" class="Bound"
+      >G</a
+      ><a name="526" class="Symbol"
+      >}</a
+      ><a name="527"
+      > </a
+      ><a name="528" class="Symbol"
+      >{</a
+      ><a name="529" class="Argument"
+      >H</a
+      ><a name="530"
+      > </a
+      ><a name="531" class="Symbol"
+      >=</a
+      ><a name="532"
+      > </a
+      ><a name="533" href="groups.KernelSndImageInl.html#117" class="Bound"
+      >H</a
+      ><a name="534" class="Symbol"
+      >})</a
+      ><a name="536"
+      > </a
+      ><a name="537" href="groups.KernelSndImageInl.html#422" class="Bound"
+      >G&#215;H-is-abelian</a
+      ><a name="551"
+      >
+
+  </a
+      ><a name="555" class="Keyword"
+      >private</a
+      ><a name="562"
+      >
+    </a
+      ><a name="567" class="Keyword"
+      >module</a
+      ><a name="573"
+      > </a
+      ><a name="574" href="groups.KernelSndImageInl.html#574" class="Module"
+      >G</a
+      ><a name="575"
+      > </a
+      ><a name="576" class="Symbol"
+      >=</a
+      ><a name="577"
+      > </a
+      ><a name="578" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="583"
+      > </a
+      ><a name="584" href="groups.KernelSndImageInl.html#103" class="Bound"
+      >G</a
+      ><a name="585"
+      >
+    </a
+      ><a name="590" class="Keyword"
+      >module</a
+      ><a name="596"
+      > </a
+      ><a name="597" href="groups.KernelSndImageInl.html#597" class="Module"
+      >H</a
+      ><a name="598"
+      > </a
+      ><a name="599" class="Symbol"
+      >=</a
+      ><a name="600"
+      > </a
+      ><a name="601" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="606"
+      > </a
+      ><a name="607" href="groups.KernelSndImageInl.html#117" class="Bound"
+      >H</a
+      ><a name="608"
+      >
+
+  </a
+      ><a name="612" href="groups.KernelSndImageInl.html#612" class="Function"
+      >Ker-&#966;-snd-quot-Im-inl</a
+      ><a name="633"
+      > </a
+      ><a name="634" class="Symbol"
+      >:</a
+      ><a name="635"
+      > </a
+      ><a name="636" href="lib.groups.Subgroup.html#2751" class="Function"
+      >Ker</a
+      ><a name="639"
+      > </a
+      ><a name="640" href="groups.KernelSndImageInl.html#322" class="Bound"
+      >&#966;</a
+      ><a name="641"
+      > </a
+      ><a name="642" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="644"
+      > </a
+      ><a name="645" href="groups.KernelImage.html#5271" class="Function"
+      >Ker/Im</a
+      ><a name="651"
+      >
+  </a
+      ><a name="654" href="groups.KernelSndImageInl.html#612" class="Function"
+      >Ker-&#966;-snd-quot-Im-inl</a
+      ><a name="675"
+      > </a
+      ><a name="676" class="Symbol"
+      >=</a
+      ><a name="677"
+      > </a
+      ><a name="678" href="groups.KernelSndImageInl.html#1066" class="Function"
+      >to-hom</a
+      ><a name="684"
+      > </a
+      ><a name="685" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="686"
+      > </a
+      ><a name="687" href="lib.Equivalence.html#2854" class="Function"
+      >is-eq</a
+      ><a name="692"
+      > </a
+      ><a name="693" href="groups.KernelSndImageInl.html#727" class="Function"
+      >to</a
+      ><a name="695"
+      > </a
+      ><a name="696" href="groups.KernelSndImageInl.html#1528" class="Function"
+      >from</a
+      ><a name="700"
+      > </a
+      ><a name="701" href="groups.KernelSndImageInl.html#1632" class="Function"
+      >to-from</a
+      ><a name="708"
+      > </a
+      ><a name="709" href="groups.KernelSndImageInl.html#1965" class="Function"
+      >from-to</a
+      ><a name="716"
+      > </a
+      ><a name="717" class="Keyword"
+      >where</a
+      ><a name="722"
+      >
+    </a
+      ><a name="727" href="groups.KernelSndImageInl.html#727" class="Function"
+      >to</a
+      ><a name="729"
+      > </a
+      ><a name="730" class="Symbol"
+      >:</a
+      ><a name="731"
+      > </a
+      ><a name="732" href="lib.types.Group.html#6903" class="Function"
+      >Ker.El</a
+      ><a name="738"
+      > </a
+      ><a name="739" href="groups.KernelSndImageInl.html#322" class="Bound"
+      >&#966;</a
+      ><a name="740"
+      > </a
+      ><a name="741" class="Symbol"
+      >&#8594;</a
+      ><a name="742"
+      > </a
+      ><a name="743" href="lib.types.Group.html#6903" class="Function"
+      >Ker/Im.El</a
+      ><a name="752"
+      >
+    </a
+      ><a name="757" href="groups.KernelSndImageInl.html#727" class="Function"
+      >to</a
+      ><a name="759"
+      > </a
+      ><a name="760" class="Symbol"
+      >(</a
+      ><a name="761" href="groups.KernelSndImageInl.html#761" class="Bound"
+      >h</a
+      ><a name="762"
+      > </a
+      ><a name="763" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="764"
+      > </a
+      ><a name="765" href="groups.KernelSndImageInl.html#765" class="Bound"
+      >h-in-ker</a
+      ><a name="773" class="Symbol"
+      >)</a
+      ><a name="774"
+      > </a
+      ><a name="775" class="Symbol"
+      >=</a
+      ><a name="776"
+      > </a
+      ><a name="777" href="lib.types.SetQuotient.html#313" class="Postulate Operator"
+      >q[</a
+      ><a name="779"
+      > </a
+      ><a name="780" class="Symbol"
+      >(</a
+      ><a name="781" href="lib.types.Group.html#276" class="Function"
+      >G.ident</a
+      ><a name="788"
+      > </a
+      ><a name="789" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="790"
+      > </a
+      ><a name="791" href="groups.KernelSndImageInl.html#761" class="Bound"
+      >h</a
+      ><a name="792" class="Symbol"
+      >)</a
+      ><a name="793"
+      > </a
+      ><a name="794" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="795"
+      > </a
+      ><a name="796" href="groups.KernelSndImageInl.html#825" class="Function"
+      >lemma</a
+      ><a name="801"
+      > </a
+      ><a name="802" href="lib.types.SetQuotient.html#313" class="Postulate Operator"
+      >]</a
+      ><a name="803"
+      >
+      </a
+      ><a name="810" class="Keyword"
+      >where</a
+      ><a name="815"
+      > </a
+      ><a name="816" class="Keyword"
+      >abstract</a
+      ><a name="824"
+      > </a
+      ><a name="825" href="groups.KernelSndImageInl.html#825" class="Function"
+      >lemma</a
+      ><a name="830"
+      > </a
+      ><a name="831" class="Symbol"
+      >=</a
+      ><a name="832"
+      > </a
+      ><a name="833" href="groups.KernelSndImageInl.html#359" class="Bound"
+      >&#966;-snd-&#946;</a
+      ><a name="840"
+      > </a
+      ><a name="841" class="Symbol"
+      >(</a
+      ><a name="842" href="lib.types.Group.html#276" class="Function"
+      >G.ident</a
+      ><a name="849"
+      > </a
+      ><a name="850" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="851"
+      > </a
+      ><a name="852" href="groups.KernelSndImageInl.html#761" class="Bound"
+      >h</a
+      ><a name="853" class="Symbol"
+      >)</a
+      ><a name="854"
+      > </a
+      ><a name="855" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="856"
+      > </a
+      ><a name="857" href="groups.KernelSndImageInl.html#765" class="Bound"
+      >h-in-ker</a
+      ><a name="865"
+      >
+
+    </a
+      ><a name="871" class="Keyword"
+      >abstract</a
+      ><a name="879"
+      >
+      </a
+      ><a name="886" href="groups.KernelSndImageInl.html#886" class="Function"
+      >to-pres-comp</a
+      ><a name="898"
+      > </a
+      ><a name="899" class="Symbol"
+      >:</a
+      ><a name="900"
+      > </a
+      ><a name="901" class="Symbol"
+      >&#8704;</a
+      ><a name="902"
+      > </a
+      ><a name="903" href="groups.KernelSndImageInl.html#903" class="Bound"
+      >k&#8321;</a
+      ><a name="905"
+      > </a
+      ><a name="906" href="groups.KernelSndImageInl.html#906" class="Bound"
+      >k&#8322;</a
+      ><a name="908"
+      > </a
+      ><a name="909" class="Symbol"
+      >&#8594;</a
+      ><a name="910"
+      > </a
+      ><a name="911" href="groups.KernelSndImageInl.html#727" class="Function"
+      >to</a
+      ><a name="913"
+      > </a
+      ><a name="914" class="Symbol"
+      >(</a
+      ><a name="915" href="lib.types.Group.html#313" class="Function"
+      >Ker.comp</a
+      ><a name="923"
+      > </a
+      ><a name="924" href="groups.KernelSndImageInl.html#322" class="Bound"
+      >&#966;</a
+      ><a name="925"
+      > </a
+      ><a name="926" href="groups.KernelSndImageInl.html#903" class="Bound"
+      >k&#8321;</a
+      ><a name="928"
+      > </a
+      ><a name="929" href="groups.KernelSndImageInl.html#906" class="Bound"
+      >k&#8322;</a
+      ><a name="931" class="Symbol"
+      >)</a
+      ><a name="932"
+      > </a
+      ><a name="933" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="935"
+      > </a
+      ><a name="936" href="lib.types.Group.html#313" class="Function"
+      >Ker/Im.comp</a
+      ><a name="947"
+      > </a
+      ><a name="948" class="Symbol"
+      >(</a
+      ><a name="949" href="groups.KernelSndImageInl.html#727" class="Function"
+      >to</a
+      ><a name="951"
+      > </a
+      ><a name="952" href="groups.KernelSndImageInl.html#903" class="Bound"
+      >k&#8321;</a
+      ><a name="954" class="Symbol"
+      >)</a
+      ><a name="955"
+      > </a
+      ><a name="956" class="Symbol"
+      >(</a
+      ><a name="957" href="groups.KernelSndImageInl.html#727" class="Function"
+      >to</a
+      ><a name="959"
+      > </a
+      ><a name="960" href="groups.KernelSndImageInl.html#906" class="Bound"
+      >k&#8322;</a
+      ><a name="962" class="Symbol"
+      >)</a
+      ><a name="963"
+      >
+      </a
+      ><a name="970" href="groups.KernelSndImageInl.html#886" class="Function"
+      >to-pres-comp</a
+      ><a name="982"
+      > </a
+      ><a name="983" class="Symbol"
+      >_</a
+      ><a name="984"
+      > </a
+      ><a name="985" class="Symbol"
+      >_</a
+      ><a name="986"
+      > </a
+      ><a name="987" class="Symbol"
+      >=</a
+      ><a name="988"
+      > </a
+      ><a name="989" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="991"
+      > </a
+      ><a name="992" href="lib.types.SetQuotient.html#313" class="Postulate Operator"
+      >q[_]</a
+      ><a name="996"
+      > </a
+      ><a name="997" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="998"
+      > </a
+      ><a name="999" href="lib.groups.Subgroup.html#1512" class="Function"
+      >Ker.El=-out</a
+      ><a name="1010"
+      > </a
+      ><a name="1011" href="groups.KernelSndImageInl.html#335" class="Bound"
+      >&#966;-snd</a
+      ><a name="1016"
+      > </a
+      ><a name="1017" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1018"
+      >
+        </a
+      ><a name="1027" href="lib.Base.html#5559" class="Function"
+      >pair&#215;=</a
+      ><a name="1033"
+      > </a
+      ><a name="1034" class="Symbol"
+      >(</a
+      ><a name="1035" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1036"
+      > </a
+      ><a name="1037" class="Symbol"
+      >(</a
+      ><a name="1038" href="lib.types.Group.html#339" class="Function"
+      >G.unit-l</a
+      ><a name="1046"
+      > </a
+      ><a name="1047" href="lib.types.Group.html#276" class="Function"
+      >G.ident</a
+      ><a name="1054" class="Symbol"
+      >))</a
+      ><a name="1056"
+      > </a
+      ><a name="1057" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1060"
+      >
+
+    </a
+      ><a name="1066" href="groups.KernelSndImageInl.html#1066" class="Function"
+      >to-hom</a
+      ><a name="1072"
+      > </a
+      ><a name="1073" class="Symbol"
+      >:</a
+      ><a name="1074"
+      > </a
+      ><a name="1075" href="lib.groups.Subgroup.html#2751" class="Function"
+      >Ker</a
+      ><a name="1078"
+      > </a
+      ><a name="1079" href="groups.KernelSndImageInl.html#322" class="Bound"
+      >&#966;</a
+      ><a name="1080"
+      > </a
+      ><a name="1081" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="1083"
+      > </a
+      ><a name="1084" href="groups.KernelImage.html#5271" class="Function"
+      >Ker/Im</a
+      ><a name="1090"
+      >
+    </a
+      ><a name="1095" href="groups.KernelSndImageInl.html#1066" class="Function"
+      >to-hom</a
+      ><a name="1101"
+      > </a
+      ><a name="1102" class="Symbol"
+      >=</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" href="lib.groups.Homomorphism.html#2532" class="InductiveConstructor"
+      >group-hom</a
+      ><a name="1113"
+      > </a
+      ><a name="1114" href="groups.KernelSndImageInl.html#727" class="Function"
+      >to</a
+      ><a name="1116"
+      > </a
+      ><a name="1117" href="groups.KernelSndImageInl.html#886" class="Function"
+      >to-pres-comp</a
+      ><a name="1129"
+      >
+
+    </a
+      ><a name="1135" class="Keyword"
+      >abstract</a
+      ><a name="1143"
+      >
+      </a
+      ><a name="1150" href="groups.KernelSndImageInl.html#1150" class="Function"
+      >from'</a
+      ><a name="1155"
+      > </a
+      ><a name="1156" class="Symbol"
+      >:</a
+      ><a name="1157"
+      > </a
+      ><a name="1158" href="lib.types.Group.html#6903" class="Function"
+      >Ker.El</a
+      ><a name="1164"
+      > </a
+      ><a name="1165" href="groups.KernelSndImageInl.html#335" class="Bound"
+      >&#966;-snd</a
+      ><a name="1170"
+      > </a
+      ><a name="1171" class="Symbol"
+      >&#8594;</a
+      ><a name="1172"
+      > </a
+      ><a name="1173" href="lib.types.Group.html#6903" class="Function"
+      >Ker.El</a
+      ><a name="1179"
+      > </a
+      ><a name="1180" href="groups.KernelSndImageInl.html#322" class="Bound"
+      >&#966;</a
+      ><a name="1181"
+      >
+      </a
+      ><a name="1188" href="groups.KernelSndImageInl.html#1150" class="Function"
+      >from'</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" class="Symbol"
+      >((</a
+      ><a name="1196" href="groups.KernelSndImageInl.html#1196" class="Bound"
+      >g</a
+      ><a name="1197"
+      > </a
+      ><a name="1198" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1199"
+      > </a
+      ><a name="1200" href="groups.KernelSndImageInl.html#1200" class="Bound"
+      >h</a
+      ><a name="1201" class="Symbol"
+      >)</a
+      ><a name="1202"
+      > </a
+      ><a name="1203" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1204"
+      > </a
+      ><a name="1205" href="groups.KernelSndImageInl.html#1205" class="Bound"
+      >h-in-ker</a
+      ><a name="1213" class="Symbol"
+      >)</a
+      ><a name="1214"
+      > </a
+      ><a name="1215" class="Symbol"
+      >=</a
+      ><a name="1216"
+      > </a
+      ><a name="1217" href="groups.KernelSndImageInl.html#1200" class="Bound"
+      >h</a
+      ><a name="1218"
+      > </a
+      ><a name="1219" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1220"
+      > </a
+      ><a name="1221" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1222"
+      > </a
+      ><a name="1223" class="Symbol"
+      >(</a
+      ><a name="1224" href="groups.KernelSndImageInl.html#359" class="Bound"
+      >&#966;-snd-&#946;</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" class="Symbol"
+      >(</a
+      ><a name="1233" href="groups.KernelSndImageInl.html#1196" class="Bound"
+      >g</a
+      ><a name="1234"
+      > </a
+      ><a name="1235" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1236"
+      > </a
+      ><a name="1237" href="groups.KernelSndImageInl.html#1200" class="Bound"
+      >h</a
+      ><a name="1238" class="Symbol"
+      >))</a
+      ><a name="1240"
+      > </a
+      ><a name="1241" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1242"
+      > </a
+      ><a name="1243" href="groups.KernelSndImageInl.html#1205" class="Bound"
+      >h-in-ker</a
+      ><a name="1251"
+      >
+
+      </a
+      ><a name="1259" href="groups.KernelSndImageInl.html#1259" class="Function"
+      >from-rel</a
+      ><a name="1267"
+      > </a
+      ><a name="1268" class="Symbol"
+      >:</a
+      ><a name="1269"
+      > </a
+      ><a name="1270" class="Symbol"
+      >&#8704;</a
+      ><a name="1271"
+      > </a
+      ><a name="1272" class="Symbol"
+      >{</a
+      ><a name="1273" href="groups.KernelSndImageInl.html#1273" class="Bound"
+      >gh&#8321;</a
+      ><a name="1276"
+      > </a
+      ><a name="1277" href="groups.KernelSndImageInl.html#1277" class="Bound"
+      >gh&#8322;</a
+      ><a name="1280" class="Symbol"
+      >}</a
+      ><a name="1281"
+      > </a
+      ><a name="1282" class="Symbol"
+      >&#8594;</a
+      ><a name="1283"
+      > </a
+      ><a name="1284" href="groups.KernelImage.html#914" class="Function"
+      >ker/im-rel</a
+      ><a name="1294"
+      > </a
+      ><a name="1295" href="groups.KernelSndImageInl.html#1273" class="Bound"
+      >gh&#8321;</a
+      ><a name="1298"
+      > </a
+      ><a name="1299" href="groups.KernelSndImageInl.html#1277" class="Bound"
+      >gh&#8322;</a
+      ><a name="1302"
+      > </a
+      ><a name="1303" class="Symbol"
+      >&#8594;</a
+      ><a name="1304"
+      > </a
+      ><a name="1305" href="groups.KernelSndImageInl.html#1150" class="Function"
+      >from'</a
+      ><a name="1310"
+      > </a
+      ><a name="1311" href="groups.KernelSndImageInl.html#1273" class="Bound"
+      >gh&#8321;</a
+      ><a name="1314"
+      > </a
+      ><a name="1315" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1317"
+      > </a
+      ><a name="1318" href="groups.KernelSndImageInl.html#1150" class="Function"
+      >from'</a
+      ><a name="1323"
+      > </a
+      ><a name="1324" href="groups.KernelSndImageInl.html#1277" class="Bound"
+      >gh&#8322;</a
+      ><a name="1327"
+      >
+      </a
+      ><a name="1334" href="groups.KernelSndImageInl.html#1259" class="Function"
+      >from-rel</a
+      ><a name="1342"
+      > </a
+      ><a name="1343" class="Symbol"
+      >{</a
+      ><a name="1344" href="groups.KernelSndImageInl.html#1344" class="Bound"
+      >gh&#8321;</a
+      ><a name="1347" class="Symbol"
+      >}</a
+      ><a name="1348"
+      > </a
+      ><a name="1349" class="Symbol"
+      >{</a
+      ><a name="1350" href="groups.KernelSndImageInl.html#1350" class="Bound"
+      >gh&#8322;</a
+      ><a name="1353" class="Symbol"
+      >}</a
+      ><a name="1354"
+      > </a
+      ><a name="1355" class="Symbol"
+      >=</a
+      ><a name="1356"
+      > </a
+      ><a name="1357" href="lib.types.Truncation.html#863" class="Function"
+      >Trunc-rec</a
+      ><a name="1366"
+      > </a
+      ><a name="1367" class="Symbol"
+      >(</a
+      ><a name="1368" href="lib.types.Group.html#7026" class="Function"
+      >Ker.El-is-set</a
+      ><a name="1381"
+      > </a
+      ><a name="1382" href="groups.KernelSndImageInl.html#322" class="Bound"
+      >&#966;</a
+      ><a name="1383"
+      > </a
+      ><a name="1384" class="Symbol"
+      >_</a
+      ><a name="1385"
+      > </a
+      ><a name="1386" class="Symbol"
+      >_)</a
+      ><a name="1388"
+      >
+        </a
+      ><a name="1397" class="Symbol"
+      >(&#955;{(</a
+      ><a name="1401" href="groups.KernelSndImageInl.html#1401" class="Bound"
+      >g</a
+      ><a name="1402"
+      > </a
+      ><a name="1403" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1404"
+      > </a
+      ><a name="1405" href="groups.KernelSndImageInl.html#1405" class="Bound"
+      >inl-g=h&#8321;h&#8322;&#8315;&#185;</a
+      ><a name="1417" class="Symbol"
+      >)</a
+      ><a name="1418"
+      > </a
+      ><a name="1419" class="Symbol"
+      >&#8594;</a
+      ><a name="1420"
+      > </a
+      ><a name="1421" href="lib.groups.Subgroup.html#1512" class="Function"
+      >Ker.El=-out</a
+      ><a name="1432"
+      > </a
+      ><a name="1433" href="groups.KernelSndImageInl.html#322" class="Bound"
+      >&#966;</a
+      ><a name="1434"
+      >
+          </a
+      ><a name="1445" class="Symbol"
+      >(</a
+      ><a name="1446" href="lib.types.Group.html#6584" class="Function"
+      >H.zero-diff-same</a
+      ><a name="1462"
+      > </a
+      ><a name="1463" class="Symbol"
+      >(</a
+      ><a name="1464" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1467"
+      > </a
+      ><a name="1468" class="Symbol"
+      >(</a
+      ><a name="1469" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1472"
+      > </a
+      ><a name="1473" href="groups.KernelSndImageInl.html#1344" class="Bound"
+      >gh&#8321;</a
+      ><a name="1476" class="Symbol"
+      >))</a
+      ><a name="1478"
+      > </a
+      ><a name="1479" class="Symbol"
+      >(</a
+      ><a name="1480" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1483"
+      > </a
+      ><a name="1484" class="Symbol"
+      >(</a
+      ><a name="1485" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1488"
+      > </a
+      ><a name="1489" href="groups.KernelSndImageInl.html#1350" class="Bound"
+      >gh&#8322;</a
+      ><a name="1492" class="Symbol"
+      >))</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" class="Symbol"
+      >(</a
+      ><a name="1496" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1497"
+      > </a
+      ><a name="1498" class="Symbol"
+      >(</a
+      ><a name="1499" href="lib.types.Sigma.html#2948" class="Function"
+      >snd&#215;=</a
+      ><a name="1504"
+      > </a
+      ><a name="1505" href="groups.KernelSndImageInl.html#1405" class="Bound"
+      >inl-g=h&#8321;h&#8322;&#8315;&#185;</a
+      ><a name="1517" class="Symbol"
+      >)))})</a
+      ><a name="1522"
+      >
+
+    </a
+      ><a name="1528" href="groups.KernelSndImageInl.html#1528" class="Function"
+      >from</a
+      ><a name="1532"
+      > </a
+      ><a name="1533" class="Symbol"
+      >:</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" href="lib.types.Group.html#6903" class="Function"
+      >Ker/Im.El</a
+      ><a name="1544"
+      > </a
+      ><a name="1545" class="Symbol"
+      >&#8594;</a
+      ><a name="1546"
+      > </a
+      ><a name="1547" href="lib.types.Group.html#6903" class="Function"
+      >Ker.El</a
+      ><a name="1553"
+      > </a
+      ><a name="1554" href="groups.KernelSndImageInl.html#322" class="Bound"
+      >&#966;</a
+      ><a name="1555"
+      >
+    </a
+      ><a name="1560" href="groups.KernelSndImageInl.html#1528" class="Function"
+      >from</a
+      ><a name="1564"
+      > </a
+      ><a name="1565" class="Symbol"
+      >=</a
+      ><a name="1566"
+      > </a
+      ><a name="1567" href="lib.types.SetQuotient.html#1191" class="Function"
+      >SetQuot-rec</a
+      ><a name="1578"
+      > </a
+      ><a name="1579" class="Symbol"
+      >(</a
+      ><a name="1580" href="lib.types.Group.html#7026" class="Function"
+      >Ker.El-is-set</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" href="groups.KernelSndImageInl.html#322" class="Bound"
+      >&#966;</a
+      ><a name="1595" class="Symbol"
+      >)</a
+      ><a name="1596"
+      > </a
+      ><a name="1597" href="groups.KernelSndImageInl.html#1150" class="Function"
+      >from'</a
+      ><a name="1602"
+      > </a
+      ><a name="1603" href="groups.KernelSndImageInl.html#1259" class="Function"
+      >from-rel</a
+      ><a name="1611"
+      >
+
+    </a
+      ><a name="1617" class="Keyword"
+      >abstract</a
+      ><a name="1625"
+      >
+      </a
+      ><a name="1632" href="groups.KernelSndImageInl.html#1632" class="Function"
+      >to-from</a
+      ><a name="1639"
+      > </a
+      ><a name="1640" class="Symbol"
+      >:</a
+      ><a name="1641"
+      > </a
+      ><a name="1642" class="Symbol"
+      >&#8704;</a
+      ><a name="1643"
+      > </a
+      ><a name="1644" href="groups.KernelSndImageInl.html#1644" class="Bound"
+      >g</a
+      ><a name="1645"
+      > </a
+      ><a name="1646" class="Symbol"
+      >&#8594;</a
+      ><a name="1647"
+      > </a
+      ><a name="1648" href="groups.KernelSndImageInl.html#727" class="Function"
+      >to</a
+      ><a name="1650"
+      > </a
+      ><a name="1651" class="Symbol"
+      >(</a
+      ><a name="1652" href="groups.KernelSndImageInl.html#1528" class="Function"
+      >from</a
+      ><a name="1656"
+      > </a
+      ><a name="1657" href="groups.KernelSndImageInl.html#1644" class="Bound"
+      >g</a
+      ><a name="1658" class="Symbol"
+      >)</a
+      ><a name="1659"
+      > </a
+      ><a name="1660" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1662"
+      > </a
+      ><a name="1663" href="groups.KernelSndImageInl.html#1644" class="Bound"
+      >g</a
+      ><a name="1664"
+      >
+      </a
+      ><a name="1671" href="groups.KernelSndImageInl.html#1632" class="Function"
+      >to-from</a
+      ><a name="1678"
+      > </a
+      ><a name="1679" class="Symbol"
+      >=</a
+      ><a name="1680"
+      > </a
+      ><a name="1681" href="lib.types.SetQuotient.html#706" class="Postulate"
+      >SetQuot-elim</a
+      ><a name="1693"
+      >
+        </a
+      ><a name="1702" class="Symbol"
+      >{</a
+      ><a name="1703" class="Argument"
+      >P</a
+      ><a name="1704"
+      > </a
+      ><a name="1705" class="Symbol"
+      >=</a
+      ><a name="1706"
+      > </a
+      ><a name="1707" class="Symbol"
+      >&#955;</a
+      ><a name="1708"
+      > </a
+      ><a name="1709" href="groups.KernelSndImageInl.html#1709" class="Bound"
+      >g</a
+      ><a name="1710"
+      > </a
+      ><a name="1711" class="Symbol"
+      >&#8594;</a
+      ><a name="1712"
+      > </a
+      ><a name="1713" href="groups.KernelSndImageInl.html#727" class="Function"
+      >to</a
+      ><a name="1715"
+      > </a
+      ><a name="1716" class="Symbol"
+      >(</a
+      ><a name="1717" href="groups.KernelSndImageInl.html#1528" class="Function"
+      >from</a
+      ><a name="1721"
+      > </a
+      ><a name="1722" href="groups.KernelSndImageInl.html#1709" class="Bound"
+      >g</a
+      ><a name="1723" class="Symbol"
+      >)</a
+      ><a name="1724"
+      > </a
+      ><a name="1725" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1727"
+      > </a
+      ><a name="1728" href="groups.KernelSndImageInl.html#1709" class="Bound"
+      >g</a
+      ><a name="1729" class="Symbol"
+      >}</a
+      ><a name="1730"
+      >
+        </a
+      ><a name="1739" class="Symbol"
+      >(&#955;</a
+      ><a name="1741"
+      > </a
+      ><a name="1742" href="groups.KernelSndImageInl.html#1742" class="Bound"
+      >_</a
+      ><a name="1743"
+      > </a
+      ><a name="1744" class="Symbol"
+      >&#8594;</a
+      ><a name="1745"
+      > </a
+      ><a name="1746" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="1761"
+      > </a
+      ><a name="1762" href="lib.types.Group.html#7026" class="Function"
+      >Ker/Im.El-is-set</a
+      ><a name="1778" class="Symbol"
+      >)</a
+      ><a name="1779"
+      >
+        </a
+      ><a name="1788" class="Symbol"
+      >(&#955;{((</a
+      ><a name="1793" href="groups.KernelSndImageInl.html#1793" class="Bound"
+      >g</a
+      ><a name="1794"
+      > </a
+      ><a name="1795" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1796"
+      > </a
+      ><a name="1797" href="groups.KernelSndImageInl.html#1797" class="Bound"
+      >h</a
+      ><a name="1798" class="Symbol"
+      >)</a
+      ><a name="1799"
+      > </a
+      ><a name="1800" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1801"
+      > </a
+      ><a name="1802" href="groups.KernelSndImageInl.html#1802" class="Bound"
+      >h-in-ker</a
+      ><a name="1810" class="Symbol"
+      >)</a
+      ><a name="1811"
+      > </a
+      ><a name="1812" class="Symbol"
+      >&#8594;</a
+      ><a name="1813"
+      > </a
+      ><a name="1814" href="lib.types.SetQuotient.html#344" class="Postulate"
+      >quot-rel</a
+      ><a name="1822"
+      >
+          </a
+      ><a name="1833" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="1834"
+      > </a
+      ><a name="1835" href="lib.types.Group.html#292" class="Function"
+      >G.inv</a
+      ><a name="1840"
+      > </a
+      ><a name="1841" href="groups.KernelSndImageInl.html#1793" class="Bound"
+      >g</a
+      ><a name="1842"
+      > </a
+      ><a name="1843" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1844"
+      > </a
+      ><a name="1845" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="1848"
+      > </a
+      ><a name="1849" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >_,_</a
+      ><a name="1852"
+      > </a
+      ><a name="1853" class="Symbol"
+      >(</a
+      ><a name="1854" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1855"
+      > </a
+      ><a name="1856" class="Symbol"
+      >(</a
+      ><a name="1857" href="lib.types.Group.html#339" class="Function"
+      >G.unit-l</a
+      ><a name="1865"
+      > </a
+      ><a name="1866" class="Symbol"
+      >(</a
+      ><a name="1867" href="lib.types.Group.html#292" class="Function"
+      >G.inv</a
+      ><a name="1872"
+      > </a
+      ><a name="1873" href="groups.KernelSndImageInl.html#1793" class="Bound"
+      >g</a
+      ><a name="1874" class="Symbol"
+      >)))</a
+      ><a name="1877"
+      > </a
+      ><a name="1878" class="Symbol"
+      >(</a
+      ><a name="1879" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1880"
+      > </a
+      ><a name="1881" class="Symbol"
+      >(</a
+      ><a name="1882" href="lib.types.Group.html#577" class="Function"
+      >H.inv-r</a
+      ><a name="1889"
+      > </a
+      ><a name="1890" href="groups.KernelSndImageInl.html#1797" class="Bound"
+      >h</a
+      ><a name="1891" class="Symbol"
+      >))</a
+      ><a name="1893"
+      > </a
+      ><a name="1894" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="1895" class="Symbol"
+      >})</a
+      ><a name="1897"
+      >
+        </a
+      ><a name="1906" class="Symbol"
+      >(&#955;</a
+      ><a name="1908"
+      > </a
+      ><a name="1909" href="groups.KernelSndImageInl.html#1909" class="Bound"
+      >_</a
+      ><a name="1910"
+      > </a
+      ><a name="1911" class="Symbol"
+      >&#8594;</a
+      ><a name="1912"
+      > </a
+      ><a name="1913" href="lib.NType2.html#1216" class="Function"
+      >prop-has-all-paths-&#8595;</a
+      ><a name="1933"
+      > </a
+      ><a name="1934" class="Symbol"
+      >(</a
+      ><a name="1935" href="lib.types.Group.html#7026" class="Function"
+      >Ker/Im.El-is-set</a
+      ><a name="1951"
+      > </a
+      ><a name="1952" class="Symbol"
+      >_</a
+      ><a name="1953"
+      > </a
+      ><a name="1954" class="Symbol"
+      >_))</a
+      ><a name="1957"
+      >
+
+      </a
+      ><a name="1965" href="groups.KernelSndImageInl.html#1965" class="Function"
+      >from-to</a
+      ><a name="1972"
+      > </a
+      ><a name="1973" class="Symbol"
+      >:</a
+      ><a name="1974"
+      > </a
+      ><a name="1975" class="Symbol"
+      >&#8704;</a
+      ><a name="1976"
+      > </a
+      ><a name="1977" href="groups.KernelSndImageInl.html#1977" class="Bound"
+      >g</a
+      ><a name="1978"
+      > </a
+      ><a name="1979" class="Symbol"
+      >&#8594;</a
+      ><a name="1980"
+      > </a
+      ><a name="1981" href="groups.KernelSndImageInl.html#1528" class="Function"
+      >from</a
+      ><a name="1985"
+      > </a
+      ><a name="1986" class="Symbol"
+      >(</a
+      ><a name="1987" href="groups.KernelSndImageInl.html#727" class="Function"
+      >to</a
+      ><a name="1989"
+      > </a
+      ><a name="1990" href="groups.KernelSndImageInl.html#1977" class="Bound"
+      >g</a
+      ><a name="1991" class="Symbol"
+      >)</a
+      ><a name="1992"
+      > </a
+      ><a name="1993" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1995"
+      > </a
+      ><a name="1996" href="groups.KernelSndImageInl.html#1977" class="Bound"
+      >g</a
+      ><a name="1997"
+      >
+      </a
+      ><a name="2004" href="groups.KernelSndImageInl.html#1965" class="Function"
+      >from-to</a
+      ><a name="2011"
+      > </a
+      ><a name="2012" class="Symbol"
+      >_</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" class="Symbol"
+      >=</a
+      ><a name="2015"
+      > </a
+      ><a name="2016" href="lib.groups.Subgroup.html#1512" class="Function"
+      >Ker.El=-out</a
+      ><a name="2027"
+      > </a
+      ><a name="2028" href="groups.KernelSndImageInl.html#322" class="Bound"
+      >&#966;</a
+      ><a name="2029"
+      > </a
+      ><a name="2030" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2033"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

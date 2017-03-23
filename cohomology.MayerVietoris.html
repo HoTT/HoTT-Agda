@@ -1,0 +1,4732 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cohomology.MayerVietoris</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="homotopy.elims.CofPushoutSection.html#1" class="Module"
+      >homotopy.elims.CofPushoutSection</a
+      ><a name="103"
+      >
+
+</a
+      ><a name="105" class="Keyword"
+      >module</a
+      ><a name="111"
+      > </a
+      ><a name="112" href="cohomology.MayerVietoris.html#1" class="Module"
+      >cohomology.MayerVietoris</a
+      ><a name="136"
+      > </a
+      ><a name="137" class="Symbol"
+      >{</a
+      ><a name="138" href="cohomology.MayerVietoris.html#138" class="Bound"
+      >i</a
+      ><a name="139" class="Symbol"
+      >}</a
+      ><a name="140"
+      > </a
+      ><a name="141" class="Keyword"
+      >where</a
+      ><a name="146"
+      >
+
+</a
+      ><a name="148" class="Comment"
+      >{- Mayer-Vietoris Sequence: Given a span X &#8592;f&#8211; Z &#8211;g&#8594; Y, the cofiber space
+   of the natural map [reglue : X &#8744; Y &#8594; X &#8852;_Z Y] (defined below) is equivalent
+   to the suspension of Z. -}</a
+      ><a name="330"
+      >
+
+</a
+      ><a name="332" class="Comment"
+      >{- Relevant functions -}</a
+      ><a name="356"
+      >
+</a
+      ><a name="357" class="Keyword"
+      >module</a
+      ><a name="363"
+      > </a
+      ><a name="364" href="cohomology.MayerVietoris.html#364" class="Module"
+      >MayerVietorisFunctions</a
+      ><a name="386"
+      > </a
+      ><a name="387" class="Symbol"
+      >(</a
+      ><a name="388" href="cohomology.MayerVietoris.html#388" class="Bound"
+      >ps</a
+      ><a name="390"
+      > </a
+      ><a name="391" class="Symbol"
+      >:</a
+      ><a name="392"
+      > </a
+      ><a name="393" href="lib.types.Span.html#1479" class="Record"
+      >&#8857;Span</a
+      ><a name="398"
+      > </a
+      ><a name="399" class="Symbol"
+      >{</a
+      ><a name="400" href="cohomology.MayerVietoris.html#138" class="Bound"
+      >i</a
+      ><a name="401" class="Symbol"
+      >}</a
+      ><a name="402"
+      > </a
+      ><a name="403" class="Symbol"
+      >{</a
+      ><a name="404" href="cohomology.MayerVietoris.html#138" class="Bound"
+      >i</a
+      ><a name="405" class="Symbol"
+      >}</a
+      ><a name="406"
+      > </a
+      ><a name="407" class="Symbol"
+      >{</a
+      ><a name="408" href="cohomology.MayerVietoris.html#138" class="Bound"
+      >i</a
+      ><a name="409" class="Symbol"
+      >})</a
+      ><a name="411"
+      > </a
+      ><a name="412" class="Keyword"
+      >where</a
+      ><a name="417"
+      >
+
+  </a
+      ><a name="421" class="Keyword"
+      >open</a
+      ><a name="425"
+      > </a
+      ><a name="426" href="lib.types.Span.html#1479" class="Module"
+      >&#8857;Span</a
+      ><a name="431"
+      > </a
+      ><a name="432" href="cohomology.MayerVietoris.html#388" class="Bound"
+      >ps</a
+      ><a name="434"
+      >
+
+
+  </a
+      ><a name="439" class="Keyword"
+      >module</a
+      ><a name="445"
+      > </a
+      ><a name="446" href="cohomology.MayerVietoris.html#446" class="Module"
+      >Reglue</a
+      ><a name="452"
+      > </a
+      ><a name="453" class="Symbol"
+      >=</a
+      ><a name="454"
+      > </a
+      ><a name="455" href="lib.types.Wedge.html#1817" class="Module"
+      >&#8857;WedgeRec</a
+      ><a name="464"
+      > </a
+      ><a name="465" class="Symbol"
+      >(</a
+      ><a name="466" href="lib.types.Pushout.html#3528" class="Function"
+      >&#8857;left</a
+      ><a name="471"
+      > </a
+      ><a name="472" href="cohomology.MayerVietoris.html#388" class="Bound"
+      >ps</a
+      ><a name="474" class="Symbol"
+      >)</a
+      ><a name="475"
+      > </a
+      ><a name="476" class="Symbol"
+      >(</a
+      ><a name="477" href="lib.types.Pushout.html#3578" class="Function"
+      >&#8857;right</a
+      ><a name="483"
+      > </a
+      ><a name="484" href="cohomology.MayerVietoris.html#388" class="Bound"
+      >ps</a
+      ><a name="486" class="Symbol"
+      >)</a
+      ><a name="487"
+      >
+
+  </a
+      ><a name="491" href="cohomology.MayerVietoris.html#491" class="Function"
+      >reglue</a
+      ><a name="497"
+      > </a
+      ><a name="498" class="Symbol"
+      >:</a
+      ><a name="499"
+      > </a
+      ><a name="500" href="lib.types.Span.html#1575" class="Field"
+      >X</a
+      ><a name="501"
+      > </a
+      ><a name="502" href="lib.types.Wedge.html#625" class="Function Operator"
+      >&#8744;</a
+      ><a name="503"
+      > </a
+      ><a name="504" href="lib.types.Span.html#1589" class="Field"
+      >Y</a
+      ><a name="505"
+      > </a
+      ><a name="506" class="Symbol"
+      >&#8594;</a
+      ><a name="507"
+      > </a
+      ><a name="508" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="511"
+      > </a
+      ><a name="512" class="Symbol"
+      >(</a
+      ><a name="513" href="lib.types.Pushout.html#3340" class="Function"
+      >&#8857;Pushout</a
+      ><a name="521"
+      > </a
+      ><a name="522" href="cohomology.MayerVietoris.html#388" class="Bound"
+      >ps</a
+      ><a name="524" class="Symbol"
+      >)</a
+      ><a name="525"
+      >
+  </a
+      ><a name="528" href="cohomology.MayerVietoris.html#491" class="Function"
+      >reglue</a
+      ><a name="534"
+      > </a
+      ><a name="535" class="Symbol"
+      >=</a
+      ><a name="536"
+      > </a
+      ><a name="537" href="lib.types.Wedge.html#1715" class="Function"
+      >Reglue.f</a
+      ><a name="545"
+      >
+
+  </a
+      ><a name="549" href="cohomology.MayerVietoris.html#549" class="Function"
+      >&#8857;reglue</a
+      ><a name="556"
+      > </a
+      ><a name="557" class="Symbol"
+      >:</a
+      ><a name="558"
+      > </a
+      ><a name="559" href="lib.types.Span.html#1575" class="Field"
+      >X</a
+      ><a name="560"
+      > </a
+      ><a name="561" href="lib.types.Wedge.html#956" class="Function Operator"
+      >&#8857;&#8744;</a
+      ><a name="563"
+      > </a
+      ><a name="564" href="lib.types.Span.html#1589" class="Field"
+      >Y</a
+      ><a name="565"
+      > </a
+      ><a name="566" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="568"
+      > </a
+      ><a name="569" href="lib.types.Pushout.html#3340" class="Function"
+      >&#8857;Pushout</a
+      ><a name="577"
+      > </a
+      ><a name="578" href="cohomology.MayerVietoris.html#388" class="Bound"
+      >ps</a
+      ><a name="580"
+      >
+  </a
+      ><a name="583" href="cohomology.MayerVietoris.html#549" class="Function"
+      >&#8857;reglue</a
+      ><a name="590"
+      > </a
+      ><a name="591" class="Symbol"
+      >=</a
+      ><a name="592"
+      > </a
+      ><a name="593" href="lib.types.Wedge.html#1968" class="Function"
+      >Reglue.&#8857;f</a
+      ><a name="602"
+      >
+
+  </a
+      ><a name="606" class="Keyword"
+      >module</a
+      ><a name="612"
+      > </a
+      ><a name="613" href="cohomology.MayerVietoris.html#613" class="Module"
+      >MVDiff</a
+      ><a name="619"
+      > </a
+      ><a name="620" class="Symbol"
+      >=</a
+      ><a name="621"
+      > </a
+      ><a name="622" class="Module"
+      >SuspRec</a
+      ><a name="629"
+      > </a
+      ><a name="630" class="Symbol"
+      >{</a
+      ><a name="631" class="Argument"
+      >C</a
+      ><a name="632"
+      > </a
+      ><a name="633" class="Symbol"
+      >=</a
+      ><a name="634"
+      > </a
+      ><a name="635" href="lib.types.Suspension.html#658" class="Function"
+      >Susp</a
+      ><a name="639"
+      > </a
+      ><a name="640" class="Symbol"
+      >(</a
+      ><a name="641" href="lib.types.Span.html#1575" class="Field"
+      >X</a
+      ><a name="642"
+      > </a
+      ><a name="643" href="lib.types.Wedge.html#625" class="Function Operator"
+      >&#8744;</a
+      ><a name="644"
+      > </a
+      ><a name="645" href="lib.types.Span.html#1589" class="Field"
+      >Y</a
+      ><a name="646" class="Symbol"
+      >)}</a
+      ><a name="648"
+      >
+    </a
+      ><a name="653" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="658"
+      >
+    </a
+      ><a name="663" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="668"
+      >
+    </a
+      ><a name="673" class="Symbol"
+      >(&#955;</a
+      ><a name="675"
+      > </a
+      ><a name="676" href="cohomology.MayerVietoris.html#676" class="Bound"
+      >z</a
+      ><a name="677"
+      > </a
+      ><a name="678" class="Symbol"
+      >&#8594;</a
+      ><a name="679"
+      > </a
+      ><a name="680" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="685"
+      > </a
+      ><a name="686" class="Symbol"
+      >(</a
+      ><a name="687" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="691"
+      > </a
+      ><a name="692" class="Symbol"
+      >(</a
+      ><a name="693" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="696"
+      > </a
+      ><a name="697" href="lib.types.Span.html#1617" class="Field"
+      >f</a
+      ><a name="698"
+      > </a
+      ><a name="699" href="cohomology.MayerVietoris.html#676" class="Bound"
+      >z</a
+      ><a name="700" class="Symbol"
+      >))</a
+      ><a name="702"
+      > </a
+      ><a name="703" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="704"
+      > </a
+      ><a name="705" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="706"
+      > </a
+      ><a name="707" class="Symbol"
+      >(</a
+      ><a name="708" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="713"
+      > </a
+      ><a name="714" class="Symbol"
+      >(</a
+      ><a name="715" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="719"
+      > </a
+      ><a name="720" class="Symbol"
+      >(</a
+      ><a name="721" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="724"
+      > </a
+      ><a name="725" href="lib.types.Span.html#1632" class="Field"
+      >g</a
+      ><a name="726"
+      > </a
+      ><a name="727" href="cohomology.MayerVietoris.html#676" class="Bound"
+      >z</a
+      ><a name="728" class="Symbol"
+      >))))</a
+      ><a name="732"
+      >
+
+  </a
+      ><a name="736" href="cohomology.MayerVietoris.html#736" class="Function"
+      >mv-diff</a
+      ><a name="743"
+      > </a
+      ><a name="744" class="Symbol"
+      >:</a
+      ><a name="745"
+      > </a
+      ><a name="746" href="lib.types.Suspension.html#658" class="Function"
+      >Susp</a
+      ><a name="750"
+      > </a
+      ><a name="751" class="Symbol"
+      >(</a
+      ><a name="752" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="755"
+      > </a
+      ><a name="756" href="lib.types.Span.html#1603" class="Field"
+      >Z</a
+      ><a name="757" class="Symbol"
+      >)</a
+      ><a name="758"
+      > </a
+      ><a name="759" class="Symbol"
+      >&#8594;</a
+      ><a name="760"
+      > </a
+      ><a name="761" href="lib.types.Suspension.html#658" class="Function"
+      >Susp</a
+      ><a name="765"
+      > </a
+      ><a name="766" class="Symbol"
+      >(</a
+      ><a name="767" href="lib.types.Span.html#1575" class="Field"
+      >X</a
+      ><a name="768"
+      > </a
+      ><a name="769" href="lib.types.Wedge.html#625" class="Function Operator"
+      >&#8744;</a
+      ><a name="770"
+      > </a
+      ><a name="771" href="lib.types.Span.html#1589" class="Field"
+      >Y</a
+      ><a name="772" class="Symbol"
+      >)</a
+      ><a name="773"
+      >
+  </a
+      ><a name="776" href="cohomology.MayerVietoris.html#736" class="Function"
+      >mv-diff</a
+      ><a name="783"
+      > </a
+      ><a name="784" class="Symbol"
+      >=</a
+      ><a name="785"
+      > </a
+      ><a name="786" href="lib.types.Pushout.html#1397" class="Function"
+      >MVDiff.f</a
+      ><a name="794"
+      >
+
+  </a
+      ><a name="798" href="cohomology.MayerVietoris.html#798" class="Function"
+      >&#8857;mv-diff</a
+      ><a name="806"
+      > </a
+      ><a name="807" class="Symbol"
+      >:</a
+      ><a name="808"
+      > </a
+      ><a name="809" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="814"
+      > </a
+      ><a name="815" href="lib.types.Span.html#1603" class="Field"
+      >Z</a
+      ><a name="816"
+      > </a
+      ><a name="817" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="819"
+      > </a
+      ><a name="820" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="825"
+      > </a
+      ><a name="826" class="Symbol"
+      >(</a
+      ><a name="827" href="lib.types.Span.html#1575" class="Field"
+      >X</a
+      ><a name="828"
+      > </a
+      ><a name="829" href="lib.types.Wedge.html#956" class="Function Operator"
+      >&#8857;&#8744;</a
+      ><a name="831"
+      > </a
+      ><a name="832" href="lib.types.Span.html#1589" class="Field"
+      >Y</a
+      ><a name="833" class="Symbol"
+      >)</a
+      ><a name="834"
+      >
+  </a
+      ><a name="837" href="cohomology.MayerVietoris.html#798" class="Function"
+      >&#8857;mv-diff</a
+      ><a name="845"
+      > </a
+      ><a name="846" class="Symbol"
+      >=</a
+      ><a name="847"
+      > </a
+      ><a name="848" class="Symbol"
+      >(</a
+      ><a name="849" href="cohomology.MayerVietoris.html#736" class="Function"
+      >mv-diff</a
+      ><a name="856"
+      > </a
+      ><a name="857" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="858"
+      > </a
+      ><a name="859" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="862" class="Symbol"
+      >)</a
+      ><a name="863"
+      >
+
+</a
+      ><a name="865" class="Comment"
+      >{- We use path induction (via [&#8857;pushout-J]) to assume that the
+   basepoint preservation paths of the span maps are [idp]. The module
+   [MayerVietorisBase] contains the proof of the theorem for this case. -}</a
+      ><a name="1073"
+      >
+</a
+      ><a name="1074" class="Keyword"
+      >module</a
+      ><a name="1080"
+      > </a
+      ><a name="1081" href="cohomology.MayerVietoris.html#1081" class="Module"
+      >MayerVietorisBase</a
+      ><a name="1098"
+      >
+  </a
+      ><a name="1101" class="Symbol"
+      >{</a
+      ><a name="1102" href="cohomology.MayerVietoris.html#1102" class="Bound"
+      >A</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" href="cohomology.MayerVietoris.html#1104" class="Bound"
+      >B</a
+      ><a name="1105"
+      > </a
+      ><a name="1106" class="Symbol"
+      >:</a
+      ><a name="1107"
+      > </a
+      ><a name="1108" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1112"
+      > </a
+      ><a name="1113" href="cohomology.MayerVietoris.html#138" class="Bound"
+      >i</a
+      ><a name="1114" class="Symbol"
+      >}</a
+      ><a name="1115"
+      > </a
+      ><a name="1116" class="Symbol"
+      >(</a
+      ><a name="1117" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="1118"
+      > </a
+      ><a name="1119" class="Symbol"
+      >:</a
+      ><a name="1120"
+      > </a
+      ><a name="1121" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1124"
+      > </a
+      ><a name="1125" href="cohomology.MayerVietoris.html#138" class="Bound"
+      >i</a
+      ><a name="1126" class="Symbol"
+      >)</a
+      ><a name="1127"
+      > </a
+      ><a name="1128" class="Symbol"
+      >(</a
+      ><a name="1129" href="cohomology.MayerVietoris.html#1129" class="Bound"
+      >f</a
+      ><a name="1130"
+      > </a
+      ><a name="1131" class="Symbol"
+      >:</a
+      ><a name="1132"
+      > </a
+      ><a name="1133" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="1138"
+      > </a
+      ><a name="1139" class="Symbol"
+      >&#8594;</a
+      ><a name="1140"
+      > </a
+      ><a name="1141" href="cohomology.MayerVietoris.html#1102" class="Bound"
+      >A</a
+      ><a name="1142" class="Symbol"
+      >)</a
+      ><a name="1143"
+      > </a
+      ><a name="1144" class="Symbol"
+      >(</a
+      ><a name="1145" href="cohomology.MayerVietoris.html#1145" class="Bound"
+      >g</a
+      ><a name="1146"
+      > </a
+      ><a name="1147" class="Symbol"
+      >:</a
+      ><a name="1148"
+      > </a
+      ><a name="1149" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="1152"
+      > </a
+      ><a name="1153" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="1154"
+      > </a
+      ><a name="1155" class="Symbol"
+      >&#8594;</a
+      ><a name="1156"
+      > </a
+      ><a name="1157" href="cohomology.MayerVietoris.html#1104" class="Bound"
+      >B</a
+      ><a name="1158" class="Symbol"
+      >)</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" class="Keyword"
+      >where</a
+      ><a name="1165"
+      >
+
+  </a
+      ><a name="1169" href="cohomology.MayerVietoris.html#1169" class="Function"
+      >X</a
+      ><a name="1170"
+      > </a
+      ><a name="1171" class="Symbol"
+      >=</a
+      ><a name="1172"
+      > </a
+      ><a name="1173" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >&#8857;[</a
+      ><a name="1175"
+      > </a
+      ><a name="1176" href="cohomology.MayerVietoris.html#1102" class="Bound"
+      >A</a
+      ><a name="1177"
+      > </a
+      ><a name="1178" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1179"
+      > </a
+      ><a name="1180" href="cohomology.MayerVietoris.html#1129" class="Bound"
+      >f</a
+      ><a name="1181"
+      > </a
+      ><a name="1182" class="Symbol"
+      >(</a
+      ><a name="1183" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1185"
+      > </a
+      ><a name="1186" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="1187" class="Symbol"
+      >)</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >]</a
+      ><a name="1190"
+      >
+  </a
+      ><a name="1193" href="cohomology.MayerVietoris.html#1193" class="Function"
+      >Y</a
+      ><a name="1194"
+      > </a
+      ><a name="1195" class="Symbol"
+      >=</a
+      ><a name="1196"
+      > </a
+      ><a name="1197" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >&#8857;[</a
+      ><a name="1199"
+      > </a
+      ><a name="1200" href="cohomology.MayerVietoris.html#1104" class="Bound"
+      >B</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1203"
+      > </a
+      ><a name="1204" href="cohomology.MayerVietoris.html#1145" class="Bound"
+      >g</a
+      ><a name="1205"
+      > </a
+      ><a name="1206" class="Symbol"
+      >(</a
+      ><a name="1207" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1209"
+      > </a
+      ><a name="1210" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="1211" class="Symbol"
+      >)</a
+      ><a name="1212"
+      > </a
+      ><a name="1213" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >]</a
+      ><a name="1214"
+      >
+  </a
+      ><a name="1217" href="cohomology.MayerVietoris.html#1217" class="Function"
+      >ps</a
+      ><a name="1219"
+      > </a
+      ><a name="1220" class="Symbol"
+      >=</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" href="lib.types.Span.html#1557" class="InductiveConstructor"
+      >&#8857;span</a
+      ><a name="1227"
+      > </a
+      ><a name="1228" href="cohomology.MayerVietoris.html#1169" class="Function"
+      >X</a
+      ><a name="1229"
+      > </a
+      ><a name="1230" href="cohomology.MayerVietoris.html#1193" class="Function"
+      >Y</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="1233"
+      > </a
+      ><a name="1234" class="Symbol"
+      >(</a
+      ><a name="1235" href="cohomology.MayerVietoris.html#1129" class="Bound"
+      >f</a
+      ><a name="1236"
+      > </a
+      ><a name="1237" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1238"
+      > </a
+      ><a name="1239" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1242" class="Symbol"
+      >)</a
+      ><a name="1243"
+      > </a
+      ><a name="1244" class="Symbol"
+      >(</a
+      ><a name="1245" href="cohomology.MayerVietoris.html#1145" class="Bound"
+      >g</a
+      ><a name="1246"
+      > </a
+      ><a name="1247" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1248"
+      > </a
+      ><a name="1249" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1252" class="Symbol"
+      >)</a
+      ><a name="1253"
+      >
+  </a
+      ><a name="1256" href="cohomology.MayerVietoris.html#1256" class="Function"
+      >F</a
+      ><a name="1257"
+      > </a
+      ><a name="1258" class="Symbol"
+      >:</a
+      ><a name="1259"
+      > </a
+      ><a name="1260" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="1261"
+      > </a
+      ><a name="1262" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1264"
+      > </a
+      ><a name="1265" href="cohomology.MayerVietoris.html#1169" class="Function"
+      >X</a
+      ><a name="1266"
+      >
+  </a
+      ><a name="1269" href="cohomology.MayerVietoris.html#1256" class="Function"
+      >F</a
+      ><a name="1270"
+      > </a
+      ><a name="1271" class="Symbol"
+      >=</a
+      ><a name="1272"
+      > </a
+      ><a name="1273" class="Symbol"
+      >(</a
+      ><a name="1274" href="cohomology.MayerVietoris.html#1129" class="Bound"
+      >f</a
+      ><a name="1275"
+      > </a
+      ><a name="1276" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1277"
+      > </a
+      ><a name="1278" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1281" class="Symbol"
+      >)</a
+      ><a name="1282"
+      >
+  </a
+      ><a name="1285" href="cohomology.MayerVietoris.html#1285" class="Function"
+      >G</a
+      ><a name="1286"
+      > </a
+      ><a name="1287" class="Symbol"
+      >:</a
+      ><a name="1288"
+      > </a
+      ><a name="1289" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="1290"
+      > </a
+      ><a name="1291" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1293"
+      > </a
+      ><a name="1294" href="cohomology.MayerVietoris.html#1193" class="Function"
+      >Y</a
+      ><a name="1295"
+      >
+  </a
+      ><a name="1298" href="cohomology.MayerVietoris.html#1285" class="Function"
+      >G</a
+      ><a name="1299"
+      > </a
+      ><a name="1300" class="Symbol"
+      >=</a
+      ><a name="1301"
+      > </a
+      ><a name="1302" class="Symbol"
+      >(</a
+      ><a name="1303" href="cohomology.MayerVietoris.html#1145" class="Bound"
+      >g</a
+      ><a name="1304"
+      > </a
+      ><a name="1305" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1306"
+      > </a
+      ><a name="1307" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1310" class="Symbol"
+      >)</a
+      ><a name="1311"
+      >
+
+  </a
+      ><a name="1315" class="Keyword"
+      >open</a
+      ><a name="1319"
+      > </a
+      ><a name="1320" href="cohomology.MayerVietoris.html#364" class="Module"
+      >MayerVietorisFunctions</a
+      ><a name="1342"
+      > </a
+      ><a name="1343" href="cohomology.MayerVietoris.html#1217" class="Function"
+      >ps</a
+      ><a name="1345"
+      >
+
+  </a
+      ><a name="1349" class="Comment"
+      >{- Definition of the maps
+       into : Cofiber reglue &#8594; &#931;Z
+       out  : &#931;Z &#8594; Cofiber reglue
+   -}</a
+      ><a name="1448"
+      >
+
+  </a
+      ><a name="1452" class="Keyword"
+      >private</a
+      ><a name="1459"
+      >
+    </a
+      ><a name="1464" href="cohomology.MayerVietoris.html#1464" class="Function"
+      >into-glue-square</a
+      ><a name="1480"
+      > </a
+      ><a name="1481" class="Symbol"
+      >:</a
+      ><a name="1482"
+      >
+      </a
+      ><a name="1489" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="1495"
+      > </a
+      ><a name="1496" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1499"
+      > </a
+      ><a name="1500" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1503"
+      > </a
+      ><a name="1504" class="Symbol"
+      >(</a
+      ><a name="1505" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1507"
+      > </a
+      ><a name="1508" class="Symbol"
+      >(</a
+      ><a name="1509" href="lib.types.Suspension.html#4734" class="Function"
+      >extract-glue</a
+      ><a name="1521"
+      > </a
+      ><a name="1522" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1523"
+      > </a
+      ><a name="1524" href="cohomology.MayerVietoris.html#491" class="Function"
+      >reglue</a
+      ><a name="1530" class="Symbol"
+      >)</a
+      ><a name="1531"
+      > </a
+      ><a name="1532" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="1537" class="Symbol"
+      >)</a
+      ><a name="1538"
+      > </a
+      ><a name="1539" class="Symbol"
+      >(</a
+      ><a name="1540" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1545"
+      > </a
+      ><a name="1546" class="Symbol"
+      >(</a
+      ><a name="1547" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1549"
+      > </a
+      ><a name="1550" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="1551" class="Symbol"
+      >))</a
+      ><a name="1553"
+      >
+    </a
+      ><a name="1558" href="cohomology.MayerVietoris.html#1464" class="Function"
+      >into-glue-square</a
+      ><a name="1574"
+      > </a
+      ><a name="1575" class="Symbol"
+      >=</a
+      ><a name="1576"
+      >
+      </a
+      ><a name="1583" href="lib.cubical.Square.html#17473" class="Function"
+      >connection</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" href="lib.cubical.Square.html#12327" class="Function Operator"
+      >&#8865;v&#8729;</a
+      ><a name="1597"
+      >
+      </a
+      ><a name="1604" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1605"
+      > </a
+      ><a name="1606" class="Symbol"
+      >(</a
+      ><a name="1607" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="1611"
+      > </a
+      ><a name="1612" href="lib.types.Suspension.html#4734" class="Function"
+      >extract-glue</a
+      ><a name="1624"
+      > </a
+      ><a name="1625" href="cohomology.MayerVietoris.html#491" class="Function"
+      >reglue</a
+      ><a name="1631"
+      > </a
+      ><a name="1632" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="1637"
+      >
+         </a
+      ><a name="1647" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1648"
+      > </a
+      ><a name="1649" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1651"
+      > </a
+      ><a name="1652" class="Symbol"
+      >(</a
+      ><a name="1653" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1655"
+      > </a
+      ><a name="1656" href="lib.types.Suspension.html#4734" class="Function"
+      >extract-glue</a
+      ><a name="1668" class="Symbol"
+      >)</a
+      ><a name="1669"
+      > </a
+      ><a name="1670" class="Symbol"
+      >(</a
+      ><a name="1671" href="lib.types.Wedge.html#1727" class="Function"
+      >Reglue.glue-&#946;</a
+      ><a name="1684"
+      > </a
+      ><a name="1685" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1686"
+      > </a
+      ><a name="1687" href="lib.PathGroupoid.html#2082" class="Function"
+      >!-!</a
+      ><a name="1690"
+      > </a
+      ><a name="1691" class="Symbol"
+      >(</a
+      ><a name="1692" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1696"
+      > </a
+      ><a name="1697" class="Symbol"
+      >(</a
+      ><a name="1698" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1700"
+      > </a
+      ><a name="1701" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="1702" class="Symbol"
+      >)))</a
+      ><a name="1705"
+      >
+         </a
+      ><a name="1715" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1716"
+      > </a
+      ><a name="1717" href="lib.types.Pushout.html#1428" class="Function"
+      >ExtractGlue.glue-&#946;</a
+      ><a name="1735"
+      > </a
+      ><a name="1736" class="Symbol"
+      >(</a
+      ><a name="1737" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1739"
+      > </a
+      ><a name="1740" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="1741" class="Symbol"
+      >))</a
+      ><a name="1743"
+      >
+
+    </a
+      ><a name="1749" class="Keyword"
+      >module</a
+      ><a name="1755"
+      > </a
+      ><a name="1756" href="cohomology.MayerVietoris.html#1756" class="Module"
+      >IntoGlue</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" class="Symbol"
+      >=</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" href="lib.types.Wedge.html#1168" class="Module"
+      >WedgeElim</a
+      ><a name="1776"
+      > </a
+      ><a name="1777" class="Symbol"
+      >{</a
+      ><a name="1778" class="Argument"
+      >P</a
+      ><a name="1779"
+      > </a
+      ><a name="1780" class="Symbol"
+      >=</a
+      ><a name="1781"
+      > </a
+      ><a name="1782" class="Symbol"
+      >&#955;</a
+      ><a name="1783"
+      > </a
+      ><a name="1784" href="cohomology.MayerVietoris.html#1784" class="Bound"
+      >xy</a
+      ><a name="1786"
+      > </a
+      ><a name="1787" class="Symbol"
+      >&#8594;</a
+      ><a name="1788"
+      > </a
+      ><a name="1789" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="1794"
+      > </a
+      ><a name="1795" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1797"
+      > </a
+      ><a name="1798" href="lib.types.Suspension.html#4734" class="Function"
+      >extract-glue</a
+      ><a name="1810"
+      > </a
+      ><a name="1811" class="Symbol"
+      >(</a
+      ><a name="1812" href="cohomology.MayerVietoris.html#491" class="Function"
+      >reglue</a
+      ><a name="1818"
+      > </a
+      ><a name="1819" href="cohomology.MayerVietoris.html#1784" class="Bound"
+      >xy</a
+      ><a name="1821" class="Symbol"
+      >)}</a
+      ><a name="1823"
+      >
+      </a
+      ><a name="1830" class="Symbol"
+      >(&#955;</a
+      ><a name="1832"
+      > </a
+      ><a name="1833" href="cohomology.MayerVietoris.html#1833" class="Bound"
+      >_</a
+      ><a name="1834"
+      > </a
+      ><a name="1835" class="Symbol"
+      >&#8594;</a
+      ><a name="1836"
+      > </a
+      ><a name="1837" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1840" class="Symbol"
+      >)</a
+      ><a name="1841"
+      >
+      </a
+      ><a name="1848" class="Symbol"
+      >(&#955;</a
+      ><a name="1850"
+      > </a
+      ><a name="1851" href="cohomology.MayerVietoris.html#1851" class="Bound"
+      >_</a
+      ><a name="1852"
+      > </a
+      ><a name="1853" class="Symbol"
+      >&#8594;</a
+      ><a name="1854"
+      > </a
+      ><a name="1855" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1860"
+      > </a
+      ><a name="1861" class="Symbol"
+      >(</a
+      ><a name="1862" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1864"
+      > </a
+      ><a name="1865" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="1866" class="Symbol"
+      >))</a
+      ><a name="1868"
+      >
+      </a
+      ><a name="1875" class="Symbol"
+      >(</a
+      ><a name="1876" href="lib.cubical.Square.html#8506" class="Function"
+      >&#8595;-cst=app-from-square</a
+      ><a name="1897"
+      > </a
+      ><a name="1898" href="cohomology.MayerVietoris.html#1464" class="Function"
+      >into-glue-square</a
+      ><a name="1914" class="Symbol"
+      >)</a
+      ><a name="1915"
+      >
+
+    </a
+      ><a name="1921" href="cohomology.MayerVietoris.html#1921" class="Function"
+      >into-glue</a
+      ><a name="1930"
+      > </a
+      ><a name="1931" class="Symbol"
+      >=</a
+      ><a name="1932"
+      > </a
+      ><a name="1933" href="lib.types.Wedge.html#1407" class="Function"
+      >IntoGlue.f</a
+      ><a name="1943"
+      >
+
+  </a
+      ><a name="1947" class="Keyword"
+      >module</a
+      ><a name="1953"
+      > </a
+      ><a name="1954" href="cohomology.MayerVietoris.html#1954" class="Module"
+      >Into</a
+      ><a name="1958"
+      > </a
+      ><a name="1959" class="Symbol"
+      >=</a
+      ><a name="1960"
+      > </a
+      ><a name="1961" href="lib.types.Cofiber.html#1130" class="Module"
+      >CofiberRec</a
+      ><a name="1971"
+      > </a
+      ><a name="1972" class="Symbol"
+      >{</a
+      ><a name="1973" class="Argument"
+      >f</a
+      ><a name="1974"
+      > </a
+      ><a name="1975" class="Symbol"
+      >=</a
+      ><a name="1976"
+      > </a
+      ><a name="1977" href="cohomology.MayerVietoris.html#491" class="Function"
+      >reglue</a
+      ><a name="1983" class="Symbol"
+      >}</a
+      ><a name="1984"
+      > </a
+      ><a name="1985" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="1990"
+      > </a
+      ><a name="1991" href="lib.types.Suspension.html#4734" class="Function"
+      >extract-glue</a
+      ><a name="2003"
+      > </a
+      ><a name="2004" href="cohomology.MayerVietoris.html#1921" class="Function"
+      >into-glue</a
+      ><a name="2013"
+      >
+
+  </a
+      ><a name="2017" class="Keyword"
+      >private</a
+      ><a name="2024"
+      >
+    </a
+      ><a name="2029" href="cohomology.MayerVietoris.html#2029" class="Function"
+      >out-glue-and-square</a
+      ><a name="2048"
+      > </a
+      ><a name="2049" class="Symbol"
+      >:</a
+      ><a name="2050"
+      > </a
+      ><a name="2051" class="Symbol"
+      >(</a
+      ><a name="2052" href="cohomology.MayerVietoris.html#2052" class="Bound"
+      >z</a
+      ><a name="2053"
+      > </a
+      ><a name="2054" class="Symbol"
+      >:</a
+      ><a name="2055"
+      > </a
+      ><a name="2056" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="2059"
+      > </a
+      ><a name="2060" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="2061" class="Symbol"
+      >)</a
+      ><a name="2062"
+      >
+      </a
+      ><a name="2069" class="Symbol"
+      >&#8594;</a
+      ><a name="2070"
+      > </a
+      ><a name="2071" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="2072"
+      > </a
+      ><a name="2073" class="Symbol"
+      >(</a
+      ><a name="2074" href="lib.types.Cofiber.html#498" class="Function"
+      >cfbase'</a
+      ><a name="2081"
+      > </a
+      ><a name="2082" href="cohomology.MayerVietoris.html#491" class="Function"
+      >reglue</a
+      ><a name="2088"
+      > </a
+      ><a name="2089" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2091"
+      > </a
+      ><a name="2092" href="lib.types.Cofiber.html#498" class="Function"
+      >cfbase'</a
+      ><a name="2099"
+      > </a
+      ><a name="2100" href="cohomology.MayerVietoris.html#491" class="Function"
+      >reglue</a
+      ><a name="2106" class="Symbol"
+      >)</a
+      ><a name="2107"
+      >
+          </a
+      ><a name="2118" class="Symbol"
+      >(&#955;</a
+      ><a name="2120"
+      > </a
+      ><a name="2121" href="cohomology.MayerVietoris.html#2121" class="Bound"
+      >p</a
+      ><a name="2122"
+      > </a
+      ><a name="2123" class="Symbol"
+      >&#8594;</a
+      ><a name="2124"
+      > </a
+      ><a name="2125" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="2131"
+      > </a
+      ><a name="2132" class="Symbol"
+      >(</a
+      ><a name="2133" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="2139"
+      > </a
+      ><a name="2140" class="Symbol"
+      >(</a
+      ><a name="2141" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="2145"
+      > </a
+      ><a name="2146" class="Symbol"
+      >(</a
+      ><a name="2147" href="cohomology.MayerVietoris.html#1129" class="Bound"
+      >f</a
+      ><a name="2148"
+      > </a
+      ><a name="2149" href="cohomology.MayerVietoris.html#2052" class="Bound"
+      >z</a
+      ><a name="2150" class="Symbol"
+      >)))</a
+      ><a name="2153"
+      > </a
+      ><a name="2154" href="cohomology.MayerVietoris.html#2121" class="Bound"
+      >p</a
+      ><a name="2155"
+      >
+                   </a
+      ><a name="2175" class="Symbol"
+      >(</a
+      ><a name="2176" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2178"
+      > </a
+      ><a name="2179" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="2184"
+      > </a
+      ><a name="2185" class="Symbol"
+      >(</a
+      ><a name="2186" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2190"
+      > </a
+      ><a name="2191" href="cohomology.MayerVietoris.html#2052" class="Bound"
+      >z</a
+      ><a name="2192" class="Symbol"
+      >))</a
+      ><a name="2194"
+      > </a
+      ><a name="2195" class="Symbol"
+      >(</a
+      ><a name="2196" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="2202"
+      > </a
+      ><a name="2203" class="Symbol"
+      >(</a
+      ><a name="2204" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="2208"
+      > </a
+      ><a name="2209" class="Symbol"
+      >(</a
+      ><a name="2210" href="cohomology.MayerVietoris.html#1145" class="Bound"
+      >g</a
+      ><a name="2211"
+      > </a
+      ><a name="2212" href="cohomology.MayerVietoris.html#2052" class="Bound"
+      >z</a
+      ><a name="2213" class="Symbol"
+      >))))</a
+      ><a name="2217"
+      >
+    </a
+      ><a name="2222" href="cohomology.MayerVietoris.html#2029" class="Function"
+      >out-glue-and-square</a
+      ><a name="2241"
+      > </a
+      ><a name="2242" href="cohomology.MayerVietoris.html#2242" class="Bound"
+      >z</a
+      ><a name="2243"
+      > </a
+      ><a name="2244" class="Symbol"
+      >=</a
+      ><a name="2245"
+      > </a
+      ><a name="2246" href="lib.cubical.Square.html#7343" class="Function"
+      >fill-square-top</a
+      ><a name="2261"
+      > </a
+      ><a name="2262" class="Symbol"
+      >_</a
+      ><a name="2263"
+      > </a
+      ><a name="2264" class="Symbol"
+      >_</a
+      ><a name="2265"
+      > </a
+      ><a name="2266" class="Symbol"
+      >_</a
+      ><a name="2267"
+      >
+
+    </a
+      ><a name="2273" href="cohomology.MayerVietoris.html#2273" class="Function"
+      >out-glue</a
+      ><a name="2281"
+      > </a
+      ><a name="2282" class="Symbol"
+      >=</a
+      ><a name="2283"
+      > </a
+      ><a name="2284" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="2287"
+      > </a
+      ><a name="2288" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="2289"
+      > </a
+      ><a name="2290" href="cohomology.MayerVietoris.html#2029" class="Function"
+      >out-glue-and-square</a
+      ><a name="2309"
+      >
+    </a
+      ><a name="2314" href="cohomology.MayerVietoris.html#2314" class="Function"
+      >out-square</a
+      ><a name="2324"
+      > </a
+      ><a name="2325" class="Symbol"
+      >=</a
+      ><a name="2326"
+      > </a
+      ><a name="2327" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2330"
+      > </a
+      ><a name="2331" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="2332"
+      > </a
+      ><a name="2333" href="cohomology.MayerVietoris.html#2029" class="Function"
+      >out-glue-and-square</a
+      ><a name="2352"
+      >
+
+  </a
+      ><a name="2356" class="Keyword"
+      >module</a
+      ><a name="2362"
+      > </a
+      ><a name="2363" href="cohomology.MayerVietoris.html#2363" class="Module"
+      >Out</a
+      ><a name="2366"
+      > </a
+      ><a name="2367" class="Symbol"
+      >=</a
+      ><a name="2368"
+      > </a
+      ><a name="2369" class="Module"
+      >SuspRec</a
+      ><a name="2376"
+      > </a
+      ><a name="2377" class="Symbol"
+      >{</a
+      ><a name="2378" class="Argument"
+      >C</a
+      ><a name="2379"
+      > </a
+      ><a name="2380" class="Symbol"
+      >=</a
+      ><a name="2381"
+      > </a
+      ><a name="2382" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="2389"
+      > </a
+      ><a name="2390" href="cohomology.MayerVietoris.html#491" class="Function"
+      >reglue</a
+      ><a name="2396" class="Symbol"
+      >}</a
+      ><a name="2397"
+      >
+    </a
+      ><a name="2402" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="2408"
+      >
+    </a
+      ><a name="2413" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="2419"
+      >
+    </a
+      ><a name="2424" href="cohomology.MayerVietoris.html#2273" class="Function"
+      >out-glue</a
+      ><a name="2432"
+      >
+
+  </a
+      ><a name="2436" href="cohomology.MayerVietoris.html#2436" class="Function"
+      >into</a
+      ><a name="2440"
+      > </a
+      ><a name="2441" class="Symbol"
+      >=</a
+      ><a name="2442"
+      > </a
+      ><a name="2443" href="lib.types.Pushout.html#1397" class="Function"
+      >Into.f</a
+      ><a name="2449"
+      >
+  </a
+      ><a name="2452" href="cohomology.MayerVietoris.html#2452" class="Function"
+      >out</a
+      ><a name="2455"
+      > </a
+      ><a name="2456" class="Symbol"
+      >=</a
+      ><a name="2457"
+      > </a
+      ><a name="2458" href="lib.types.Pushout.html#1397" class="Function"
+      >Out.f</a
+      ><a name="2463"
+      >
+
+  </a
+      ><a name="2467" class="Keyword"
+      >abstract</a
+      ><a name="2475"
+      >
+    </a
+      ><a name="2480" class="Comment"
+      >{- [out] is a right inverse for [into] -}</a
+      ><a name="2521"
+      >
+
+    </a
+      ><a name="2527" class="Keyword"
+      >private</a
+      ><a name="2534"
+      >
+      </a
+      ><a name="2541" href="cohomology.MayerVietoris.html#2541" class="Function"
+      >into-out-sq</a
+      ><a name="2552"
+      > </a
+      ><a name="2553" class="Symbol"
+      >:</a
+      ><a name="2554"
+      > </a
+      ><a name="2555" class="Symbol"
+      >(</a
+      ><a name="2556" href="cohomology.MayerVietoris.html#2556" class="Bound"
+      >z</a
+      ><a name="2557"
+      > </a
+      ><a name="2558" class="Symbol"
+      >:</a
+      ><a name="2559"
+      > </a
+      ><a name="2560" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="2563"
+      > </a
+      ><a name="2564" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="2565" class="Symbol"
+      >)</a
+      ><a name="2566"
+      > </a
+      ><a name="2567" class="Symbol"
+      >&#8594;</a
+      ><a name="2568"
+      >
+        </a
+      ><a name="2577" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="2583"
+      > </a
+      ><a name="2584" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2587"
+      > </a
+      ><a name="2588" class="Symbol"
+      >(</a
+      ><a name="2589" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2591"
+      > </a
+      ><a name="2592" href="cohomology.MayerVietoris.html#2436" class="Function"
+      >into</a
+      ><a name="2596"
+      > </a
+      ><a name="2597" class="Symbol"
+      >(</a
+      ><a name="2598" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2600"
+      > </a
+      ><a name="2601" href="cohomology.MayerVietoris.html#2452" class="Function"
+      >out</a
+      ><a name="2604"
+      > </a
+      ><a name="2605" class="Symbol"
+      >(</a
+      ><a name="2606" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2611"
+      > </a
+      ><a name="2612" href="cohomology.MayerVietoris.html#2556" class="Bound"
+      >z</a
+      ><a name="2613" class="Symbol"
+      >)))</a
+      ><a name="2616"
+      > </a
+      ><a name="2617" class="Symbol"
+      >(</a
+      ><a name="2618" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2623"
+      > </a
+      ><a name="2624" href="cohomology.MayerVietoris.html#2556" class="Bound"
+      >z</a
+      ><a name="2625" class="Symbol"
+      >)</a
+      ><a name="2626"
+      > </a
+      ><a name="2627" class="Symbol"
+      >(</a
+      ><a name="2628" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2633"
+      > </a
+      ><a name="2634" class="Symbol"
+      >(</a
+      ><a name="2635" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2637"
+      > </a
+      ><a name="2638" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="2639" class="Symbol"
+      >))</a
+      ><a name="2641"
+      >
+      </a
+      ><a name="2648" href="cohomology.MayerVietoris.html#2541" class="Function"
+      >into-out-sq</a
+      ><a name="2659"
+      > </a
+      ><a name="2660" href="cohomology.MayerVietoris.html#2660" class="Bound"
+      >z</a
+      ><a name="2661"
+      > </a
+      ><a name="2662" class="Symbol"
+      >=</a
+      ><a name="2663"
+      >
+        </a
+      ><a name="2672" class="Symbol"
+      >(</a
+      ><a name="2673" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2675"
+      > </a
+      ><a name="2676" class="Symbol"
+      >(</a
+      ><a name="2677" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2679"
+      > </a
+      ><a name="2680" href="cohomology.MayerVietoris.html#2436" class="Function"
+      >into</a
+      ><a name="2684" class="Symbol"
+      >)</a
+      ><a name="2685"
+      > </a
+      ><a name="2686" class="Symbol"
+      >(</a
+      ><a name="2687" href="lib.types.Pushout.html#1428" class="Function"
+      >Out.merid-&#946;</a
+      ><a name="2698"
+      > </a
+      ><a name="2699" href="cohomology.MayerVietoris.html#2660" class="Bound"
+      >z</a
+      ><a name="2700" class="Symbol"
+      >)</a
+      ><a name="2701"
+      > </a
+      ><a name="2702" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="2705"
+      >
+          </a
+      ><a name="2716" class="Symbol"
+      >(</a
+      ><a name="2717" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2718"
+      > </a
+      ><a name="2719" class="Symbol"
+      >(</a
+      ><a name="2720" href="lib.types.Pushout.html#1428" class="Function"
+      >Into.glue-&#946;</a
+      ><a name="2731"
+      > </a
+      ><a name="2732" class="Symbol"
+      >(</a
+      ><a name="2733" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="2737"
+      > </a
+      ><a name="2738" class="Symbol"
+      >(</a
+      ><a name="2739" href="cohomology.MayerVietoris.html#1129" class="Bound"
+      >f</a
+      ><a name="2740"
+      > </a
+      ><a name="2741" href="cohomology.MayerVietoris.html#2660" class="Bound"
+      >z</a
+      ><a name="2742" class="Symbol"
+      >))))</a
+      ><a name="2746"
+      > </a
+      ><a name="2747" href="lib.cubical.Square.html#13165" class="Function Operator"
+      >&#8729;h&#8865;</a
+      ><a name="2750"
+      >
+            </a
+      ><a name="2763" href="lib.cubical.Square.html#1636" class="Function"
+      >ap-square</a
+      ><a name="2772"
+      > </a
+      ><a name="2773" href="cohomology.MayerVietoris.html#2436" class="Function"
+      >into</a
+      ><a name="2777"
+      > </a
+      ><a name="2778" class="Symbol"
+      >(</a
+      ><a name="2779" href="cohomology.MayerVietoris.html#2314" class="Function"
+      >out-square</a
+      ><a name="2789"
+      > </a
+      ><a name="2790" href="cohomology.MayerVietoris.html#2660" class="Bound"
+      >z</a
+      ><a name="2791" class="Symbol"
+      >)</a
+      ><a name="2792"
+      >
+          </a
+      ><a name="2803" href="lib.cubical.Square.html#13387" class="Function Operator"
+      >&#8865;h&#8729;</a
+      ><a name="2806"
+      > </a
+      ><a name="2807" class="Symbol"
+      >(</a
+      ><a name="2808" href="lib.types.Pushout.html#1428" class="Function"
+      >Into.glue-&#946;</a
+      ><a name="2819"
+      > </a
+      ><a name="2820" class="Symbol"
+      >(</a
+      ><a name="2821" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="2825"
+      > </a
+      ><a name="2826" class="Symbol"
+      >(</a
+      ><a name="2827" href="cohomology.MayerVietoris.html#1145" class="Bound"
+      >g</a
+      ><a name="2828"
+      > </a
+      ><a name="2829" href="cohomology.MayerVietoris.html#2660" class="Bound"
+      >z</a
+      ><a name="2830" class="Symbol"
+      >))))</a
+      ><a name="2834"
+      >
+        </a
+      ><a name="2843" href="lib.cubical.Square.html#12327" class="Function Operator"
+      >&#8865;v&#8729;</a
+      ><a name="2846"
+      > </a
+      ><a name="2847" class="Symbol"
+      >(</a
+      ><a name="2848" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="2852"
+      > </a
+      ><a name="2853" href="cohomology.MayerVietoris.html#2436" class="Function"
+      >into</a
+      ><a name="2857"
+      > </a
+      ><a name="2858" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="2863"
+      > </a
+      ><a name="2864" class="Symbol"
+      >(</a
+      ><a name="2865" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2869"
+      > </a
+      ><a name="2870" href="cohomology.MayerVietoris.html#2660" class="Bound"
+      >z</a
+      ><a name="2871" class="Symbol"
+      >)</a
+      ><a name="2872"
+      > </a
+      ><a name="2873" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2874"
+      > </a
+      ><a name="2875" href="lib.types.Pushout.html#1428" class="Function"
+      >ExtractGlue.glue-&#946;</a
+      ><a name="2893"
+      > </a
+      ><a name="2894" href="cohomology.MayerVietoris.html#2660" class="Bound"
+      >z</a
+      ><a name="2895" class="Symbol"
+      >)</a
+      ><a name="2896"
+      >
+
+    </a
+      ><a name="2902" href="cohomology.MayerVietoris.html#2902" class="Function"
+      >into-out</a
+      ><a name="2910"
+      > </a
+      ><a name="2911" class="Symbol"
+      >:</a
+      ><a name="2912"
+      > </a
+      ><a name="2913" class="Symbol"
+      >&#8704;</a
+      ><a name="2914"
+      > </a
+      ><a name="2915" href="cohomology.MayerVietoris.html#2915" class="Bound"
+      >&#963;</a
+      ><a name="2916"
+      > </a
+      ><a name="2917" class="Symbol"
+      >&#8594;</a
+      ><a name="2918"
+      > </a
+      ><a name="2919" href="cohomology.MayerVietoris.html#2436" class="Function"
+      >into</a
+      ><a name="2923"
+      > </a
+      ><a name="2924" class="Symbol"
+      >(</a
+      ><a name="2925" href="cohomology.MayerVietoris.html#2452" class="Function"
+      >out</a
+      ><a name="2928"
+      > </a
+      ><a name="2929" href="cohomology.MayerVietoris.html#2915" class="Bound"
+      >&#963;</a
+      ><a name="2930" class="Symbol"
+      >)</a
+      ><a name="2931"
+      > </a
+      ><a name="2932" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2934"
+      > </a
+      ><a name="2935" href="cohomology.MayerVietoris.html#2915" class="Bound"
+      >&#963;</a
+      ><a name="2936"
+      >
+    </a
+      ><a name="2941" href="cohomology.MayerVietoris.html#2902" class="Function"
+      >into-out</a
+      ><a name="2949"
+      > </a
+      ><a name="2950" class="Symbol"
+      >=</a
+      ><a name="2951"
+      > </a
+      ><a name="2952" href="lib.types.Pushout.html#850" class="Function"
+      >Susp-elim</a
+      ><a name="2961"
+      >
+      </a
+      ><a name="2968" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2971"
+      >
+      </a
+      ><a name="2978" class="Symbol"
+      >(</a
+      ><a name="2979" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2984"
+      > </a
+      ><a name="2985" class="Symbol"
+      >(</a
+      ><a name="2986" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2988"
+      > </a
+      ><a name="2989" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="2990" class="Symbol"
+      >))</a
+      ><a name="2992"
+      >
+      </a
+      ><a name="2999" class="Symbol"
+      >(&#955;</a
+      ><a name="3001"
+      > </a
+      ><a name="3002" href="cohomology.MayerVietoris.html#3002" class="Bound"
+      >z</a
+      ><a name="3003"
+      > </a
+      ><a name="3004" class="Symbol"
+      >&#8594;</a
+      ><a name="3005"
+      > </a
+      ><a name="3006" href="lib.cubical.Square.html#10289" class="Function"
+      >&#8595;-&#8728;=idf-from-square</a
+      ><a name="3025"
+      > </a
+      ><a name="3026" href="cohomology.MayerVietoris.html#2436" class="Function"
+      >into</a
+      ><a name="3030"
+      > </a
+      ><a name="3031" href="cohomology.MayerVietoris.html#2452" class="Function"
+      >out</a
+      ><a name="3034"
+      > </a
+      ><a name="3035" class="Symbol"
+      >(</a
+      ><a name="3036" href="cohomology.MayerVietoris.html#2541" class="Function"
+      >into-out-sq</a
+      ><a name="3047"
+      > </a
+      ><a name="3048" href="cohomology.MayerVietoris.html#3002" class="Bound"
+      >z</a
+      ><a name="3049" class="Symbol"
+      >))</a
+      ><a name="3051"
+      >
+
+
+    </a
+      ><a name="3058" class="Comment"
+      >{- [out] is a left inverse for [into] -}</a
+      ><a name="3098"
+      >
+
+    </a
+      ><a name="3104" class="Comment"
+      >{- [out] is left inverse on codomain part of cofiber space,
+     - i.e. [out (into (cfcod &#947;)) == cfcod &#947;] -}</a
+      ><a name="3212"
+      >
+
+    </a
+      ><a name="3218" class="Keyword"
+      >private</a
+      ><a name="3225"
+      >
+      </a
+      ><a name="3232" href="cohomology.MayerVietoris.html#3232" class="Function"
+      >out-into-cod-square</a
+      ><a name="3251"
+      > </a
+      ><a name="3252" class="Symbol"
+      >:</a
+      ><a name="3253"
+      > </a
+      ><a name="3254" class="Symbol"
+      >(</a
+      ><a name="3255" href="cohomology.MayerVietoris.html#3255" class="Bound"
+      >z</a
+      ><a name="3256"
+      > </a
+      ><a name="3257" class="Symbol"
+      >:</a
+      ><a name="3258"
+      > </a
+      ><a name="3259" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="3262"
+      > </a
+      ><a name="3263" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="3264" class="Symbol"
+      >)</a
+      ><a name="3265"
+      > </a
+      ><a name="3266" class="Symbol"
+      >&#8594;</a
+      ><a name="3267"
+      >
+        </a
+      ><a name="3276" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="3282"
+      > </a
+      ><a name="3283" class="Symbol"
+      >(</a
+      ><a name="3284" href="lib.types.Cofiber.html#598" class="Function"
+      >cfglue'</a
+      ><a name="3291"
+      > </a
+      ><a name="3292" href="cohomology.MayerVietoris.html#491" class="Function"
+      >reglue</a
+      ><a name="3298"
+      > </a
+      ><a name="3299" class="Symbol"
+      >(</a
+      ><a name="3300" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="3304"
+      > </a
+      ><a name="3305" class="Symbol"
+      >(</a
+      ><a name="3306" href="cohomology.MayerVietoris.html#1129" class="Bound"
+      >f</a
+      ><a name="3307"
+      > </a
+      ><a name="3308" href="cohomology.MayerVietoris.html#3255" class="Bound"
+      >z</a
+      ><a name="3309" class="Symbol"
+      >)))</a
+      ><a name="3312"
+      >
+               </a
+      ><a name="3328" class="Symbol"
+      >(</a
+      ><a name="3329" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3331"
+      > </a
+      ><a name="3332" class="Symbol"
+      >(</a
+      ><a name="3333" href="cohomology.MayerVietoris.html#2452" class="Function"
+      >out</a
+      ><a name="3336"
+      > </a
+      ><a name="3337" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3338"
+      > </a
+      ><a name="3339" href="lib.types.Suspension.html#4734" class="Function"
+      >extract-glue</a
+      ><a name="3351"
+      > </a
+      ><a name="3352" class="Symbol"
+      >{</a
+      ><a name="3353" class="Argument"
+      >s</a
+      ><a name="3354"
+      > </a
+      ><a name="3355" class="Symbol"
+      >=</a
+      ><a name="3356"
+      > </a
+      ><a name="3357" href="lib.types.Span.html#1644" class="Function"
+      >&#8857;Span-to-Span</a
+      ><a name="3370"
+      > </a
+      ><a name="3371" href="cohomology.MayerVietoris.html#1217" class="Function"
+      >ps</a
+      ><a name="3373" class="Symbol"
+      >})</a
+      ><a name="3375"
+      > </a
+      ><a name="3376" class="Symbol"
+      >(</a
+      ><a name="3377" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="3381"
+      > </a
+      ><a name="3382" href="cohomology.MayerVietoris.html#3255" class="Bound"
+      >z</a
+      ><a name="3383" class="Symbol"
+      >))</a
+      ><a name="3385"
+      >
+               </a
+      ><a name="3401" class="Symbol"
+      >(</a
+      ><a name="3402" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3404"
+      > </a
+      ><a name="3405" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="3410"
+      > </a
+      ><a name="3411" class="Symbol"
+      >(</a
+      ><a name="3412" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="3416"
+      > </a
+      ><a name="3417" href="cohomology.MayerVietoris.html#3255" class="Bound"
+      >z</a
+      ><a name="3418" class="Symbol"
+      >))</a
+      ><a name="3420"
+      > </a
+      ><a name="3421" class="Symbol"
+      >(</a
+      ><a name="3422" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="3428"
+      > </a
+      ><a name="3429" class="Symbol"
+      >(</a
+      ><a name="3430" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="3434"
+      > </a
+      ><a name="3435" class="Symbol"
+      >(</a
+      ><a name="3436" href="cohomology.MayerVietoris.html#1145" class="Bound"
+      >g</a
+      ><a name="3437"
+      > </a
+      ><a name="3438" href="cohomology.MayerVietoris.html#3255" class="Bound"
+      >z</a
+      ><a name="3439" class="Symbol"
+      >)))</a
+      ><a name="3442"
+      >
+      </a
+      ><a name="3449" href="cohomology.MayerVietoris.html#3232" class="Function"
+      >out-into-cod-square</a
+      ><a name="3468"
+      > </a
+      ><a name="3469" href="cohomology.MayerVietoris.html#3469" class="Bound"
+      >z</a
+      ><a name="3470"
+      > </a
+      ><a name="3471" class="Symbol"
+      >=</a
+      ><a name="3472"
+      >
+        </a
+      ><a name="3481" class="Symbol"
+      >(</a
+      ><a name="3482" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="3486"
+      > </a
+      ><a name="3487" href="cohomology.MayerVietoris.html#2452" class="Function"
+      >out</a
+      ><a name="3490"
+      > </a
+      ><a name="3491" href="lib.types.Suspension.html#4734" class="Function"
+      >extract-glue</a
+      ><a name="3503"
+      > </a
+      ><a name="3504" class="Symbol"
+      >(</a
+      ><a name="3505" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="3509"
+      > </a
+      ><a name="3510" href="cohomology.MayerVietoris.html#3469" class="Bound"
+      >z</a
+      ><a name="3511" class="Symbol"
+      >)</a
+      ><a name="3512"
+      >
+          </a
+      ><a name="3523" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3524"
+      > </a
+      ><a name="3525" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3527"
+      > </a
+      ><a name="3528" class="Symbol"
+      >(</a
+      ><a name="3529" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3531"
+      > </a
+      ><a name="3532" href="cohomology.MayerVietoris.html#2452" class="Function"
+      >out</a
+      ><a name="3535" class="Symbol"
+      >)</a
+      ><a name="3536"
+      > </a
+      ><a name="3537" class="Symbol"
+      >(</a
+      ><a name="3538" href="lib.types.Pushout.html#1428" class="Function"
+      >ExtractGlue.glue-&#946;</a
+      ><a name="3556"
+      > </a
+      ><a name="3557" href="cohomology.MayerVietoris.html#3469" class="Bound"
+      >z</a
+      ><a name="3558" class="Symbol"
+      >)</a
+      ><a name="3559"
+      > </a
+      ><a name="3560" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3561"
+      > </a
+      ><a name="3562" href="lib.types.Pushout.html#1428" class="Function"
+      >Out.merid-&#946;</a
+      ><a name="3573"
+      > </a
+      ><a name="3574" href="cohomology.MayerVietoris.html#3469" class="Bound"
+      >z</a
+      ><a name="3575" class="Symbol"
+      >)</a
+      ><a name="3576"
+      >
+        </a
+      ><a name="3585" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="3588"
+      > </a
+      ><a name="3589" href="cohomology.MayerVietoris.html#2314" class="Function"
+      >out-square</a
+      ><a name="3599"
+      > </a
+      ><a name="3600" href="cohomology.MayerVietoris.html#3469" class="Bound"
+      >z</a
+      ><a name="3601"
+      >
+
+      </a
+      ><a name="3609" class="Keyword"
+      >module</a
+      ><a name="3615"
+      > </a
+      ><a name="3616" href="cohomology.MayerVietoris.html#3616" class="Module"
+      >OutIntoCod</a
+      ><a name="3626"
+      > </a
+      ><a name="3627" class="Symbol"
+      >=</a
+      ><a name="3628"
+      > </a
+      ><a name="3629" href="lib.types.Pushout.html#589" class="Module"
+      >PushoutElim</a
+      ><a name="3640"
+      >
+        </a
+      ><a name="3649" class="Symbol"
+      >{</a
+      ><a name="3650" class="Argument"
+      >d</a
+      ><a name="3651"
+      > </a
+      ><a name="3652" class="Symbol"
+      >=</a
+      ><a name="3653"
+      > </a
+      ><a name="3654" href="lib.types.Span.html#1644" class="Function"
+      >&#8857;Span-to-Span</a
+      ><a name="3667"
+      > </a
+      ><a name="3668" href="cohomology.MayerVietoris.html#1217" class="Function"
+      >ps</a
+      ><a name="3670" class="Symbol"
+      >}</a
+      ><a name="3671"
+      > </a
+      ><a name="3672" class="Symbol"
+      >{</a
+      ><a name="3673" class="Argument"
+      >P</a
+      ><a name="3674"
+      > </a
+      ><a name="3675" class="Symbol"
+      >=</a
+      ><a name="3676"
+      > </a
+      ><a name="3677" class="Symbol"
+      >&#955;</a
+      ><a name="3678"
+      > </a
+      ><a name="3679" href="cohomology.MayerVietoris.html#3679" class="Bound"
+      >&#947;</a
+      ><a name="3680"
+      > </a
+      ><a name="3681" class="Symbol"
+      >&#8594;</a
+      ><a name="3682"
+      > </a
+      ><a name="3683" href="cohomology.MayerVietoris.html#2452" class="Function"
+      >out</a
+      ><a name="3686"
+      > </a
+      ><a name="3687" class="Symbol"
+      >(</a
+      ><a name="3688" href="cohomology.MayerVietoris.html#2436" class="Function"
+      >into</a
+      ><a name="3692"
+      > </a
+      ><a name="3693" class="Symbol"
+      >(</a
+      ><a name="3694" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="3699"
+      > </a
+      ><a name="3700" href="cohomology.MayerVietoris.html#3679" class="Bound"
+      >&#947;</a
+      ><a name="3701" class="Symbol"
+      >))</a
+      ><a name="3703"
+      > </a
+      ><a name="3704" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3706"
+      > </a
+      ><a name="3707" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="3712"
+      > </a
+      ><a name="3713" href="cohomology.MayerVietoris.html#3679" class="Bound"
+      >&#947;</a
+      ><a name="3714" class="Symbol"
+      >}</a
+      ><a name="3715"
+      >
+        </a
+      ><a name="3724" class="Symbol"
+      >(&#955;</a
+      ><a name="3726"
+      > </a
+      ><a name="3727" href="cohomology.MayerVietoris.html#3727" class="Bound"
+      >x</a
+      ><a name="3728"
+      > </a
+      ><a name="3729" class="Symbol"
+      >&#8594;</a
+      ><a name="3730"
+      > </a
+      ><a name="3731" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="3737"
+      > </a
+      ><a name="3738" class="Symbol"
+      >(</a
+      ><a name="3739" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="3743"
+      > </a
+      ><a name="3744" href="cohomology.MayerVietoris.html#3727" class="Bound"
+      >x</a
+      ><a name="3745" class="Symbol"
+      >))</a
+      ><a name="3747"
+      >
+        </a
+      ><a name="3756" class="Symbol"
+      >(&#955;</a
+      ><a name="3758"
+      > </a
+      ><a name="3759" href="cohomology.MayerVietoris.html#3759" class="Bound"
+      >y</a
+      ><a name="3760"
+      > </a
+      ><a name="3761" class="Symbol"
+      >&#8594;</a
+      ><a name="3762"
+      > </a
+      ><a name="3763" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="3769"
+      > </a
+      ><a name="3770" class="Symbol"
+      >(</a
+      ><a name="3771" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="3775"
+      > </a
+      ><a name="3776" href="cohomology.MayerVietoris.html#3759" class="Bound"
+      >y</a
+      ><a name="3777" class="Symbol"
+      >))</a
+      ><a name="3779"
+      >
+        </a
+      ><a name="3788" class="Symbol"
+      >(&#955;</a
+      ><a name="3790"
+      > </a
+      ><a name="3791" href="cohomology.MayerVietoris.html#3791" class="Bound"
+      >z</a
+      ><a name="3792"
+      > </a
+      ><a name="3793" class="Symbol"
+      >&#8594;</a
+      ><a name="3794"
+      > </a
+      ><a name="3795" href="lib.cubical.Square.html#8229" class="Function"
+      >&#8595;-='-from-square</a
+      ><a name="3811"
+      > </a
+      ><a name="3812" class="Symbol"
+      >(</a
+      ><a name="3813" href="cohomology.MayerVietoris.html#3232" class="Function"
+      >out-into-cod-square</a
+      ><a name="3832"
+      > </a
+      ><a name="3833" href="cohomology.MayerVietoris.html#3791" class="Bound"
+      >z</a
+      ><a name="3834" class="Symbol"
+      >))</a
+      ><a name="3836"
+      >
+
+      </a
+      ><a name="3844" href="cohomology.MayerVietoris.html#3844" class="Function"
+      >out-into-cod</a
+      ><a name="3856"
+      > </a
+      ><a name="3857" class="Symbol"
+      >=</a
+      ><a name="3858"
+      > </a
+      ><a name="3859" href="lib.types.Pushout.html#850" class="Function"
+      >OutIntoCod.f</a
+      ><a name="3871"
+      >
+
+    </a
+      ><a name="3877" href="cohomology.MayerVietoris.html#3877" class="Function"
+      >out-into</a
+      ><a name="3885"
+      > </a
+      ><a name="3886" class="Symbol"
+      >:</a
+      ><a name="3887"
+      > </a
+      ><a name="3888" class="Symbol"
+      >&#8704;</a
+      ><a name="3889"
+      > </a
+      ><a name="3890" href="cohomology.MayerVietoris.html#3890" class="Bound"
+      >&#954;</a
+      ><a name="3891"
+      > </a
+      ><a name="3892" class="Symbol"
+      >&#8594;</a
+      ><a name="3893"
+      > </a
+      ><a name="3894" href="cohomology.MayerVietoris.html#2452" class="Function"
+      >out</a
+      ><a name="3897"
+      > </a
+      ><a name="3898" class="Symbol"
+      >(</a
+      ><a name="3899" href="cohomology.MayerVietoris.html#2436" class="Function"
+      >into</a
+      ><a name="3903"
+      > </a
+      ><a name="3904" href="cohomology.MayerVietoris.html#3890" class="Bound"
+      >&#954;</a
+      ><a name="3905" class="Symbol"
+      >)</a
+      ><a name="3906"
+      > </a
+      ><a name="3907" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3909"
+      > </a
+      ><a name="3910" href="cohomology.MayerVietoris.html#3890" class="Bound"
+      >&#954;</a
+      ><a name="3911"
+      >
+    </a
+      ><a name="3916" href="cohomology.MayerVietoris.html#3877" class="Function"
+      >out-into</a
+      ><a name="3924"
+      > </a
+      ><a name="3925" class="Symbol"
+      >=</a
+      ><a name="3926"
+      > </a
+      ><a name="3927" href="homotopy.elims.CofPushoutSection.html#969" class="Function"
+      >CofPushoutSection.elim</a
+      ><a name="3949"
+      >
+      </a
+      ><a name="3956" class="Symbol"
+      >(&#955;</a
+      ><a name="3958"
+      > </a
+      ><a name="3959" href="cohomology.MayerVietoris.html#3959" class="Bound"
+      >_</a
+      ><a name="3960"
+      > </a
+      ><a name="3961" class="Symbol"
+      >&#8594;</a
+      ><a name="3962"
+      > </a
+      ><a name="3963" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="3967" class="Symbol"
+      >)</a
+      ><a name="3968"
+      > </a
+      ><a name="3969" class="Symbol"
+      >(&#955;</a
+      ><a name="3971"
+      > </a
+      ><a name="3972" href="cohomology.MayerVietoris.html#3972" class="Bound"
+      >_</a
+      ><a name="3973"
+      > </a
+      ><a name="3974" class="Symbol"
+      >&#8594;</a
+      ><a name="3975"
+      > </a
+      ><a name="3976" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3979" class="Symbol"
+      >)</a
+      ><a name="3980"
+      >
+      </a
+      ><a name="3987" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3990"
+      >
+      </a
+      ><a name="3997" href="cohomology.MayerVietoris.html#3844" class="Function"
+      >out-into-cod</a
+      ><a name="4009"
+      >
+      </a
+      ><a name="4016" class="Symbol"
+      >(</a
+      ><a name="4017" href="lib.cubical.Square.html#8229" class="Function"
+      >&#8595;-='-from-square</a
+      ><a name="4033"
+      > </a
+      ><a name="4034" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4035"
+      > </a
+      ><a name="4036" class="Symbol"
+      >&#955;</a
+      ><a name="4037"
+      > </a
+      ><a name="4038" href="cohomology.MayerVietoris.html#4038" class="Bound"
+      >x</a
+      ><a name="4039"
+      > </a
+      ><a name="4040" class="Symbol"
+      >&#8594;</a
+      ><a name="4041"
+      >
+        </a
+      ><a name="4050" class="Symbol"
+      >(</a
+      ><a name="4051" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="4055"
+      > </a
+      ><a name="4056" href="cohomology.MayerVietoris.html#2452" class="Function"
+      >out</a
+      ><a name="4059"
+      > </a
+      ><a name="4060" href="cohomology.MayerVietoris.html#2436" class="Function"
+      >into</a
+      ><a name="4064"
+      > </a
+      ><a name="4065" class="Symbol"
+      >(</a
+      ><a name="4066" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="4072"
+      > </a
+      ><a name="4073" class="Symbol"
+      >(</a
+      ><a name="4074" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="4078"
+      > </a
+      ><a name="4079" href="cohomology.MayerVietoris.html#4038" class="Bound"
+      >x</a
+      ><a name="4080" class="Symbol"
+      >))</a
+      ><a name="4082"
+      >
+         </a
+      ><a name="4092" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4093"
+      > </a
+      ><a name="4094" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4096"
+      > </a
+      ><a name="4097" class="Symbol"
+      >(</a
+      ><a name="4098" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4100"
+      > </a
+      ><a name="4101" href="cohomology.MayerVietoris.html#2452" class="Function"
+      >out</a
+      ><a name="4104" class="Symbol"
+      >)</a
+      ><a name="4105"
+      > </a
+      ><a name="4106" class="Symbol"
+      >(</a
+      ><a name="4107" href="lib.types.Pushout.html#1428" class="Function"
+      >Into.glue-&#946;</a
+      ><a name="4118"
+      > </a
+      ><a name="4119" class="Symbol"
+      >(</a
+      ><a name="4120" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="4124"
+      > </a
+      ><a name="4125" href="cohomology.MayerVietoris.html#4038" class="Bound"
+      >x</a
+      ><a name="4126" class="Symbol"
+      >)))</a
+      ><a name="4129"
+      >
+        </a
+      ><a name="4138" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="4141"
+      > </a
+      ><a name="4142" href="lib.cubical.Square.html#17473" class="Function"
+      >connection</a
+      ><a name="4152"
+      >
+        </a
+      ><a name="4161" href="lib.cubical.Square.html#12327" class="Function Operator"
+      >&#8865;v&#8729;</a
+      ><a name="4164"
+      > </a
+      ><a name="4165" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4166"
+      > </a
+      ><a name="4167" class="Symbol"
+      >(</a
+      ><a name="4168" href="lib.PathFunctor.html#2204" class="Function"
+      >ap-idf</a
+      ><a name="4174"
+      > </a
+      ><a name="4175" class="Symbol"
+      >(</a
+      ><a name="4176" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="4180"
+      > </a
+      ><a name="4181" class="Symbol"
+      >(</a
+      ><a name="4182" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="4186"
+      > </a
+      ><a name="4187" href="cohomology.MayerVietoris.html#4038" class="Bound"
+      >x</a
+      ><a name="4188" class="Symbol"
+      >))))</a
+      ><a name="4192"
+      >
+      </a
+      ><a name="4199" class="Symbol"
+      >(</a
+      ><a name="4200" href="lib.cubical.Square.html#8229" class="Function"
+      >&#8595;-='-from-square</a
+      ><a name="4216"
+      > </a
+      ><a name="4217" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4218"
+      > </a
+      ><a name="4219" class="Symbol"
+      >&#955;</a
+      ><a name="4220"
+      > </a
+      ><a name="4221" href="cohomology.MayerVietoris.html#4221" class="Bound"
+      >y</a
+      ><a name="4222"
+      > </a
+      ><a name="4223" class="Symbol"
+      >&#8594;</a
+      ><a name="4224"
+      >
+        </a
+      ><a name="4233" class="Symbol"
+      >(</a
+      ><a name="4234" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="4238"
+      > </a
+      ><a name="4239" href="cohomology.MayerVietoris.html#2452" class="Function"
+      >out</a
+      ><a name="4242"
+      > </a
+      ><a name="4243" href="cohomology.MayerVietoris.html#2436" class="Function"
+      >into</a
+      ><a name="4247"
+      > </a
+      ><a name="4248" class="Symbol"
+      >(</a
+      ><a name="4249" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="4255"
+      > </a
+      ><a name="4256" class="Symbol"
+      >(</a
+      ><a name="4257" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="4261"
+      > </a
+      ><a name="4262" href="cohomology.MayerVietoris.html#4221" class="Bound"
+      >y</a
+      ><a name="4263" class="Symbol"
+      >))</a
+      ><a name="4265"
+      >
+         </a
+      ><a name="4275" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4276"
+      > </a
+      ><a name="4277" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4279"
+      > </a
+      ><a name="4280" class="Symbol"
+      >(</a
+      ><a name="4281" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4283"
+      > </a
+      ><a name="4284" href="cohomology.MayerVietoris.html#2452" class="Function"
+      >out</a
+      ><a name="4287" class="Symbol"
+      >)</a
+      ><a name="4288"
+      > </a
+      ><a name="4289" class="Symbol"
+      >(</a
+      ><a name="4290" href="lib.types.Pushout.html#1428" class="Function"
+      >Into.glue-&#946;</a
+      ><a name="4301"
+      > </a
+      ><a name="4302" class="Symbol"
+      >(</a
+      ><a name="4303" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="4307"
+      > </a
+      ><a name="4308" href="cohomology.MayerVietoris.html#4221" class="Bound"
+      >y</a
+      ><a name="4309" class="Symbol"
+      >))</a
+      ><a name="4311"
+      >
+         </a
+      ><a name="4321" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4322"
+      > </a
+      ><a name="4323" href="lib.types.Pushout.html#1428" class="Function"
+      >Out.merid-&#946;</a
+      ><a name="4334"
+      > </a
+      ><a name="4335" class="Symbol"
+      >(</a
+      ><a name="4336" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="4338"
+      > </a
+      ><a name="4339" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="4340" class="Symbol"
+      >)</a
+      ><a name="4341"
+      >
+         </a
+      ><a name="4351" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4352"
+      > </a
+      ><a name="4353" href="lib.cubical.Square.html#16515" class="Function"
+      >square-top-unique</a
+      ><a name="4370"
+      > </a
+      ><a name="4371" class="Symbol"
+      >(</a
+      ><a name="4372" href="cohomology.MayerVietoris.html#2314" class="Function"
+      >out-square</a
+      ><a name="4382"
+      > </a
+      ><a name="4383" class="Symbol"
+      >(</a
+      ><a name="4384" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="4386"
+      > </a
+      ><a name="4387" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="4388" class="Symbol"
+      >))</a
+      ><a name="4390"
+      >
+             </a
+      ><a name="4404" class="Symbol"
+      >(</a
+      ><a name="4405" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4406"
+      > </a
+      ><a name="4407" class="Symbol"
+      >(</a
+      ><a name="4408" href="lib.PathFunctor.html#2086" class="Function"
+      >ap-cst</a
+      ><a name="4414"
+      > </a
+      ><a name="4415" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="4421"
+      > </a
+      ><a name="4422" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="4427" class="Symbol"
+      >)</a
+      ><a name="4428"
+      > </a
+      ><a name="4429" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="4432"
+      >
+              </a
+      ><a name="4447" href="lib.cubical.Square.html#10785" class="Function"
+      >natural-square</a
+      ><a name="4461"
+      > </a
+      ><a name="4462" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="4468"
+      > </a
+      ><a name="4469" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="4474"
+      >
+              </a
+      ><a name="4489" href="lib.cubical.Square.html#12327" class="Function Operator"
+      >&#8865;v&#8729;</a
+      ><a name="4492"
+      > </a
+      ><a name="4493" class="Symbol"
+      >(</a
+      ><a name="4494" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="4498"
+      > </a
+      ><a name="4499" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="4504"
+      > </a
+      ><a name="4505" href="cohomology.MayerVietoris.html#491" class="Function"
+      >reglue</a
+      ><a name="4511"
+      > </a
+      ><a name="4512" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="4517"
+      >
+                   </a
+      ><a name="4537" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4538"
+      > </a
+      ><a name="4539" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4541"
+      > </a
+      ><a name="4542" class="Symbol"
+      >(</a
+      ><a name="4543" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4545"
+      > </a
+      ><a name="4546" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="4551" class="Symbol"
+      >)</a
+      ><a name="4552"
+      > </a
+      ><a name="4553" class="Symbol"
+      >(</a
+      ><a name="4554" href="lib.types.Wedge.html#1727" class="Function"
+      >Reglue.glue-&#946;</a
+      ><a name="4567"
+      > </a
+      ><a name="4568" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4569"
+      > </a
+      ><a name="4570" href="lib.PathGroupoid.html#2082" class="Function"
+      >!-!</a
+      ><a name="4573"
+      > </a
+      ><a name="4574" class="Symbol"
+      >(</a
+      ><a name="4575" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="4579"
+      > </a
+      ><a name="4580" class="Symbol"
+      >(</a
+      ><a name="4581" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="4583"
+      > </a
+      ><a name="4584" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="4585" class="Symbol"
+      >))))))</a
+      ><a name="4591"
+      >
+        </a
+      ><a name="4600" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="4603"
+      > </a
+      ><a name="4604" href="lib.cubical.Square.html#17473" class="Function"
+      >connection</a
+      ><a name="4614"
+      >
+        </a
+      ><a name="4623" href="lib.cubical.Square.html#12327" class="Function Operator"
+      >&#8865;v&#8729;</a
+      ><a name="4626"
+      > </a
+      ><a name="4627" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4628"
+      > </a
+      ><a name="4629" class="Symbol"
+      >(</a
+      ><a name="4630" href="lib.PathFunctor.html#2204" class="Function"
+      >ap-idf</a
+      ><a name="4636"
+      > </a
+      ><a name="4637" class="Symbol"
+      >(</a
+      ><a name="4638" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="4642"
+      > </a
+      ><a name="4643" class="Symbol"
+      >(</a
+      ><a name="4644" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="4648"
+      > </a
+      ><a name="4649" href="cohomology.MayerVietoris.html#4221" class="Bound"
+      >y</a
+      ><a name="4650" class="Symbol"
+      >))))</a
+      ><a name="4654"
+      >
+
+  </a
+      ><a name="4658" class="Comment"
+      >{- equivalence and path -}</a
+      ><a name="4684"
+      >
+
+  </a
+      ><a name="4688" href="cohomology.MayerVietoris.html#4688" class="Function"
+      >eq</a
+      ><a name="4690"
+      > </a
+      ><a name="4691" class="Symbol"
+      >:</a
+      ><a name="4692"
+      > </a
+      ><a name="4693" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="4700"
+      > </a
+      ><a name="4701" href="cohomology.MayerVietoris.html#491" class="Function"
+      >reglue</a
+      ><a name="4707"
+      > </a
+      ><a name="4708" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="4709"
+      > </a
+      ><a name="4710" href="lib.types.Suspension.html#658" class="Function"
+      >Susp</a
+      ><a name="4714"
+      > </a
+      ><a name="4715" class="Symbol"
+      >(</a
+      ><a name="4716" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="4719"
+      > </a
+      ><a name="4720" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="4721" class="Symbol"
+      >)</a
+      ><a name="4722"
+      >
+  </a
+      ><a name="4725" href="cohomology.MayerVietoris.html#4688" class="Function"
+      >eq</a
+      ><a name="4727"
+      > </a
+      ><a name="4728" class="Symbol"
+      >=</a
+      ><a name="4729"
+      > </a
+      ><a name="4730" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="4735"
+      > </a
+      ><a name="4736" href="cohomology.MayerVietoris.html#2436" class="Function"
+      >into</a
+      ><a name="4740"
+      > </a
+      ><a name="4741" href="cohomology.MayerVietoris.html#2452" class="Function"
+      >out</a
+      ><a name="4744"
+      > </a
+      ><a name="4745" href="cohomology.MayerVietoris.html#2902" class="Function"
+      >into-out</a
+      ><a name="4753"
+      > </a
+      ><a name="4754" href="cohomology.MayerVietoris.html#3877" class="Function"
+      >out-into</a
+      ><a name="4762"
+      >
+
+  </a
+      ><a name="4766" href="cohomology.MayerVietoris.html#4766" class="Function"
+      >&#8857;eq</a
+      ><a name="4769"
+      > </a
+      ><a name="4770" class="Symbol"
+      >:</a
+      ><a name="4771"
+      > </a
+      ><a name="4772" href="lib.types.Cofiber.html#1552" class="Function"
+      >&#8857;Cofiber</a
+      ><a name="4780"
+      > </a
+      ><a name="4781" href="cohomology.MayerVietoris.html#549" class="Function"
+      >&#8857;reglue</a
+      ><a name="4788"
+      > </a
+      ><a name="4789" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="4791"
+      > </a
+      ><a name="4792" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="4797"
+      > </a
+      ><a name="4798" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="4799"
+      >
+  </a
+      ><a name="4802" href="cohomology.MayerVietoris.html#4766" class="Function"
+      >&#8857;eq</a
+      ><a name="4805"
+      > </a
+      ><a name="4806" class="Symbol"
+      >=</a
+      ><a name="4807"
+      > </a
+      ><a name="4808" href="lib.Equivalence.html#13119" class="Function"
+      >&#8771;-to-&#8857;&#8771;</a
+      ><a name="4815"
+      > </a
+      ><a name="4816" href="cohomology.MayerVietoris.html#4688" class="Function"
+      >eq</a
+      ><a name="4818"
+      > </a
+      ><a name="4819" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4822"
+      >
+
+  </a
+      ><a name="4826" class="Comment"
+      >{- Transporting [cfcod reglue] over the equivalence -}</a
+      ><a name="4880"
+      >
+
+  </a
+      ><a name="4884" href="cohomology.MayerVietoris.html#4884" class="Function"
+      >cfcod-comm-sqr</a
+      ><a name="4898"
+      > </a
+      ><a name="4899" class="Symbol"
+      >:</a
+      ><a name="4900"
+      > </a
+      ><a name="4901" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="4911"
+      > </a
+      ><a name="4912" class="Symbol"
+      >(</a
+      ><a name="4913" href="lib.types.Cofiber.html#553" class="Function"
+      >cfcod'</a
+      ><a name="4919"
+      > </a
+      ><a name="4920" href="cohomology.MayerVietoris.html#491" class="Function"
+      >reglue</a
+      ><a name="4926" class="Symbol"
+      >)</a
+      ><a name="4927"
+      > </a
+      ><a name="4928" href="lib.types.Suspension.html#4734" class="Function"
+      >extract-glue</a
+      ><a name="4940"
+      > </a
+      ><a name="4941" class="Symbol"
+      >(</a
+      ><a name="4942" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="4945"
+      > </a
+      ><a name="4946" class="Symbol"
+      >_)</a
+      ><a name="4948"
+      > </a
+      ><a name="4949" href="cohomology.MayerVietoris.html#2436" class="Function"
+      >into</a
+      ><a name="4953"
+      >
+  </a
+      ><a name="4956" href="cohomology.MayerVietoris.html#4884" class="Function"
+      >cfcod-comm-sqr</a
+      ><a name="4970"
+      > </a
+      ><a name="4971" class="Symbol"
+      >=</a
+      ><a name="4972"
+      > </a
+      ><a name="4973" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="4981"
+      > </a
+      ><a name="4982" class="Symbol"
+      >&#955;</a
+      ><a name="4983"
+      > </a
+      ><a name="4984" href="cohomology.MayerVietoris.html#4984" class="Bound"
+      >_</a
+      ><a name="4985"
+      > </a
+      ><a name="4986" class="Symbol"
+      >&#8594;</a
+      ><a name="4987"
+      > </a
+      ><a name="4988" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4991"
+      >
+
+  </a
+      ><a name="4995" class="Comment"
+      >{- Transporting [extract-glue] over the equivalence. -}</a
+      ><a name="5050"
+      >
+
+  </a
+      ><a name="5054" href="cohomology.MayerVietoris.html#5054" class="Function"
+      >ext-comm-sqr</a
+      ><a name="5066"
+      > </a
+      ><a name="5067" class="Symbol"
+      >:</a
+      ><a name="5068"
+      > </a
+      ><a name="5069" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="5079"
+      > </a
+      ><a name="5080" href="lib.types.Suspension.html#4734" class="Function"
+      >extract-glue</a
+      ><a name="5092"
+      > </a
+      ><a name="5093" href="cohomology.MayerVietoris.html#736" class="Function"
+      >mv-diff</a
+      ><a name="5100"
+      > </a
+      ><a name="5101" href="cohomology.MayerVietoris.html#2436" class="Function"
+      >into</a
+      ><a name="5105"
+      > </a
+      ><a name="5106" class="Symbol"
+      >(</a
+      ><a name="5107" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="5110"
+      > </a
+      ><a name="5111" class="Symbol"
+      >_)</a
+      ><a name="5113"
+      >
+  </a
+      ><a name="5116" href="cohomology.MayerVietoris.html#5054" class="Function"
+      >ext-comm-sqr</a
+      ><a name="5128"
+      > </a
+      ><a name="5129" class="Symbol"
+      >=</a
+      ><a name="5130"
+      > </a
+      ><a name="5131" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="5139"
+      > </a
+      ><a name="5140" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="5141"
+      > </a
+      ><a name="5142" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5143"
+      > </a
+      ><a name="5144" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="5145"
+      > </a
+      ><a name="5146" href="cohomology.MayerVietoris.html#5169" class="Function"
+      >fn-lemma</a
+      ><a name="5154"
+      >
+    </a
+      ><a name="5159" class="Keyword"
+      >where</a
+      ><a name="5164"
+      >
+    </a
+      ><a name="5169" href="cohomology.MayerVietoris.html#5169" class="Function"
+      >fn-lemma</a
+      ><a name="5177"
+      > </a
+      ><a name="5178" class="Symbol"
+      >:</a
+      ><a name="5179"
+      > </a
+      ><a name="5180" class="Symbol"
+      >&#8704;</a
+      ><a name="5181"
+      > </a
+      ><a name="5182" href="cohomology.MayerVietoris.html#5182" class="Bound"
+      >&#954;</a
+      ><a name="5183"
+      > </a
+      ><a name="5184" class="Symbol"
+      >&#8594;</a
+      ><a name="5185"
+      > </a
+      ><a name="5186" href="cohomology.MayerVietoris.html#736" class="Function"
+      >mv-diff</a
+      ><a name="5193"
+      > </a
+      ><a name="5194" class="Symbol"
+      >(</a
+      ><a name="5195" href="cohomology.MayerVietoris.html#2436" class="Function"
+      >into</a
+      ><a name="5199"
+      > </a
+      ><a name="5200" href="cohomology.MayerVietoris.html#5182" class="Bound"
+      >&#954;</a
+      ><a name="5201" class="Symbol"
+      >)</a
+      ><a name="5202"
+      > </a
+      ><a name="5203" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5205"
+      > </a
+      ><a name="5206" href="lib.types.Suspension.html#4734" class="Function"
+      >extract-glue</a
+      ><a name="5218"
+      > </a
+      ><a name="5219" href="cohomology.MayerVietoris.html#5182" class="Bound"
+      >&#954;</a
+      ><a name="5220"
+      >
+    </a
+      ><a name="5225" href="cohomology.MayerVietoris.html#5169" class="Function"
+      >fn-lemma</a
+      ><a name="5233"
+      > </a
+      ><a name="5234" class="Symbol"
+      >=</a
+      ><a name="5235"
+      > </a
+      ><a name="5236" href="homotopy.elims.CofPushoutSection.html#969" class="Function"
+      >CofPushoutSection.elim</a
+      ><a name="5258"
+      >
+      </a
+      ><a name="5265" class="Symbol"
+      >(&#955;</a
+      ><a name="5267"
+      > </a
+      ><a name="5268" href="cohomology.MayerVietoris.html#5268" class="Bound"
+      >_</a
+      ><a name="5269"
+      > </a
+      ><a name="5270" class="Symbol"
+      >&#8594;</a
+      ><a name="5271"
+      > </a
+      ><a name="5272" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="5276" class="Symbol"
+      >)</a
+      ><a name="5277"
+      > </a
+      ><a name="5278" class="Symbol"
+      >(&#955;</a
+      ><a name="5280"
+      > </a
+      ><a name="5281" href="cohomology.MayerVietoris.html#5281" class="Bound"
+      >_</a
+      ><a name="5282"
+      > </a
+      ><a name="5283" class="Symbol"
+      >&#8594;</a
+      ><a name="5284"
+      > </a
+      ><a name="5285" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5288" class="Symbol"
+      >)</a
+      ><a name="5289"
+      >
+      </a
+      ><a name="5296" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5299"
+      >
+      </a
+      ><a name="5306" class="Symbol"
+      >(</a
+      ><a name="5307" href="lib.types.Pushout.html#1094" class="Function"
+      >Pushout-elim</a
+      ><a name="5319"
+      >
+        </a
+      ><a name="5328" class="Symbol"
+      >(&#955;</a
+      ><a name="5330"
+      > </a
+      ><a name="5331" href="cohomology.MayerVietoris.html#5331" class="Bound"
+      >x</a
+      ><a name="5332"
+      > </a
+      ><a name="5333" class="Symbol"
+      >&#8594;</a
+      ><a name="5334"
+      > </a
+      ><a name="5335" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="5340"
+      > </a
+      ><a name="5341" class="Symbol"
+      >(</a
+      ><a name="5342" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="5346"
+      > </a
+      ><a name="5347" href="cohomology.MayerVietoris.html#5331" class="Bound"
+      >x</a
+      ><a name="5348" class="Symbol"
+      >))</a
+      ><a name="5350"
+      >
+        </a
+      ><a name="5359" class="Symbol"
+      >(&#955;</a
+      ><a name="5361"
+      > </a
+      ><a name="5362" href="cohomology.MayerVietoris.html#5362" class="Bound"
+      >y</a
+      ><a name="5363"
+      > </a
+      ><a name="5364" class="Symbol"
+      >&#8594;</a
+      ><a name="5365"
+      > </a
+      ><a name="5366" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="5371"
+      > </a
+      ><a name="5372" class="Symbol"
+      >(</a
+      ><a name="5373" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="5377"
+      > </a
+      ><a name="5378" href="cohomology.MayerVietoris.html#5362" class="Bound"
+      >y</a
+      ><a name="5379" class="Symbol"
+      >))</a
+      ><a name="5381"
+      >
+        </a
+      ><a name="5390" class="Symbol"
+      >(</a
+      ><a name="5391" href="lib.cubical.Square.html#8229" class="Function"
+      >&#8595;-='-from-square</a
+      ><a name="5407"
+      > </a
+      ><a name="5408" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="5409"
+      > </a
+      ><a name="5410" class="Symbol"
+      >&#955;</a
+      ><a name="5411"
+      > </a
+      ><a name="5412" href="cohomology.MayerVietoris.html#5412" class="Bound"
+      >z</a
+      ><a name="5413"
+      > </a
+      ><a name="5414" class="Symbol"
+      >&#8594;</a
+      ><a name="5415"
+      >
+          </a
+      ><a name="5426" class="Symbol"
+      >(</a
+      ><a name="5427" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="5431"
+      > </a
+      ><a name="5432" href="cohomology.MayerVietoris.html#736" class="Function"
+      >mv-diff</a
+      ><a name="5439"
+      > </a
+      ><a name="5440" href="lib.types.Suspension.html#4734" class="Function"
+      >extract-glue</a
+      ><a name="5452"
+      > </a
+      ><a name="5453" class="Symbol"
+      >(</a
+      ><a name="5454" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="5458"
+      > </a
+      ><a name="5459" href="cohomology.MayerVietoris.html#5412" class="Bound"
+      >z</a
+      ><a name="5460" class="Symbol"
+      >)</a
+      ><a name="5461"
+      >
+           </a
+      ><a name="5473" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5474"
+      > </a
+      ><a name="5475" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5477"
+      > </a
+      ><a name="5478" class="Symbol"
+      >(</a
+      ><a name="5479" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5481"
+      > </a
+      ><a name="5482" href="cohomology.MayerVietoris.html#736" class="Function"
+      >mv-diff</a
+      ><a name="5489" class="Symbol"
+      >)</a
+      ><a name="5490"
+      > </a
+      ><a name="5491" class="Symbol"
+      >(</a
+      ><a name="5492" href="lib.types.Pushout.html#1428" class="Function"
+      >ExtractGlue.glue-&#946;</a
+      ><a name="5510"
+      > </a
+      ><a name="5511" href="cohomology.MayerVietoris.html#5412" class="Bound"
+      >z</a
+      ><a name="5512" class="Symbol"
+      >)</a
+      ><a name="5513"
+      >
+           </a
+      ><a name="5525" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5526"
+      > </a
+      ><a name="5527" href="lib.types.Pushout.html#1428" class="Function"
+      >MVDiff.merid-&#946;</a
+      ><a name="5541"
+      > </a
+      ><a name="5542" href="cohomology.MayerVietoris.html#5412" class="Bound"
+      >z</a
+      ><a name="5543" class="Symbol"
+      >)</a
+      ><a name="5544"
+      >
+          </a
+      ><a name="5555" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="5558"
+      > </a
+      ><a name="5559" class="Symbol"
+      >(</a
+      ><a name="5560" href="lib.cubical.Square.html#18199" class="Function"
+      >lt-square</a
+      ><a name="5569"
+      > </a
+      ><a name="5570" class="Symbol"
+      >(</a
+      ><a name="5571" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="5576"
+      > </a
+      ><a name="5577" class="Symbol"
+      >(</a
+      ><a name="5578" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="5582"
+      > </a
+      ><a name="5583" class="Symbol"
+      >(</a
+      ><a name="5584" href="cohomology.MayerVietoris.html#1129" class="Bound"
+      >f</a
+      ><a name="5585"
+      > </a
+      ><a name="5586" href="cohomology.MayerVietoris.html#5412" class="Bound"
+      >z</a
+      ><a name="5587" class="Symbol"
+      >)))</a
+      ><a name="5590"
+      >
+               </a
+      ><a name="5606" href="lib.cubical.Square.html#12549" class="Function Operator"
+      >&#8865;h</a
+      ><a name="5608"
+      > </a
+      ><a name="5609" href="lib.cubical.Square.html#18013" class="Function"
+      >rt-square</a
+      ><a name="5618"
+      > </a
+      ><a name="5619" class="Symbol"
+      >(</a
+      ><a name="5620" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="5625"
+      > </a
+      ><a name="5626" class="Symbol"
+      >(</a
+      ><a name="5627" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="5631"
+      > </a
+      ><a name="5632" class="Symbol"
+      >(</a
+      ><a name="5633" href="cohomology.MayerVietoris.html#1145" class="Bound"
+      >g</a
+      ><a name="5634"
+      > </a
+      ><a name="5635" href="cohomology.MayerVietoris.html#5412" class="Bound"
+      >z</a
+      ><a name="5636" class="Symbol"
+      >))))</a
+      ><a name="5640"
+      >
+          </a
+      ><a name="5651" href="lib.cubical.Square.html#12327" class="Function Operator"
+      >&#8865;v&#8729;</a
+      ><a name="5654"
+      > </a
+      ><a name="5655" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5656"
+      > </a
+      ><a name="5657" class="Symbol"
+      >(</a
+      ><a name="5658" href="lib.PathFunctor.html#2086" class="Function"
+      >ap-cst</a
+      ><a name="5664"
+      > </a
+      ><a name="5665" href="lib.types.Suspension.html#895" class="Function"
+      >south</a
+      ><a name="5670"
+      > </a
+      ><a name="5671" class="Symbol"
+      >(</a
+      ><a name="5672" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="5676"
+      > </a
+      ><a name="5677" href="cohomology.MayerVietoris.html#5412" class="Bound"
+      >z</a
+      ><a name="5678" class="Symbol"
+      >))))</a
+      ><a name="5682"
+      >
+      </a
+      ><a name="5689" class="Symbol"
+      >(</a
+      ><a name="5690" href="lib.cubical.Square.html#8229" class="Function"
+      >&#8595;-='-from-square</a
+      ><a name="5706"
+      > </a
+      ><a name="5707" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="5708"
+      > </a
+      ><a name="5709" class="Symbol"
+      >&#955;</a
+      ><a name="5710"
+      > </a
+      ><a name="5711" href="cohomology.MayerVietoris.html#5711" class="Bound"
+      >x</a
+      ><a name="5712"
+      > </a
+      ><a name="5713" class="Symbol"
+      >&#8594;</a
+      ><a name="5714"
+      >
+        </a
+      ><a name="5723" class="Symbol"
+      >(</a
+      ><a name="5724" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="5728"
+      > </a
+      ><a name="5729" href="cohomology.MayerVietoris.html#736" class="Function"
+      >mv-diff</a
+      ><a name="5736"
+      > </a
+      ><a name="5737" href="cohomology.MayerVietoris.html#2436" class="Function"
+      >into</a
+      ><a name="5741"
+      > </a
+      ><a name="5742" class="Symbol"
+      >(</a
+      ><a name="5743" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="5749"
+      > </a
+      ><a name="5750" class="Symbol"
+      >(</a
+      ><a name="5751" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="5755"
+      > </a
+      ><a name="5756" href="cohomology.MayerVietoris.html#5711" class="Bound"
+      >x</a
+      ><a name="5757" class="Symbol"
+      >))</a
+      ><a name="5759"
+      >
+         </a
+      ><a name="5769" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5770"
+      > </a
+      ><a name="5771" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5773"
+      > </a
+      ><a name="5774" class="Symbol"
+      >(</a
+      ><a name="5775" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5777"
+      > </a
+      ><a name="5778" href="cohomology.MayerVietoris.html#736" class="Function"
+      >mv-diff</a
+      ><a name="5785" class="Symbol"
+      >)</a
+      ><a name="5786"
+      > </a
+      ><a name="5787" class="Symbol"
+      >(</a
+      ><a name="5788" href="lib.types.Pushout.html#1428" class="Function"
+      >Into.glue-&#946;</a
+      ><a name="5799"
+      > </a
+      ><a name="5800" class="Symbol"
+      >(</a
+      ><a name="5801" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="5805"
+      > </a
+      ><a name="5806" href="cohomology.MayerVietoris.html#5711" class="Bound"
+      >x</a
+      ><a name="5807" class="Symbol"
+      >)))</a
+      ><a name="5810"
+      >
+        </a
+      ><a name="5819" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="5822"
+      > </a
+      ><a name="5823" href="lib.cubical.Square.html#17473" class="Function"
+      >connection</a
+      ><a name="5833"
+      >
+        </a
+      ><a name="5842" href="lib.cubical.Square.html#12327" class="Function Operator"
+      >&#8865;v&#8729;</a
+      ><a name="5845"
+      > </a
+      ><a name="5846" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5847"
+      > </a
+      ><a name="5848" class="Symbol"
+      >(</a
+      ><a name="5849" href="lib.types.Pushout.html#1428" class="Function"
+      >ExtractGlue.glue-&#946;</a
+      ><a name="5867"
+      > </a
+      ><a name="5868" class="Symbol"
+      >(</a
+      ><a name="5869" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="5873"
+      > </a
+      ><a name="5874" href="cohomology.MayerVietoris.html#5711" class="Bound"
+      >x</a
+      ><a name="5875" class="Symbol"
+      >)))</a
+      ><a name="5878"
+      >
+      </a
+      ><a name="5885" class="Symbol"
+      >(</a
+      ><a name="5886" href="lib.cubical.Square.html#8229" class="Function"
+      >&#8595;-='-from-square</a
+      ><a name="5902"
+      > </a
+      ><a name="5903" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="5904"
+      > </a
+      ><a name="5905" class="Symbol"
+      >&#955;</a
+      ><a name="5906"
+      > </a
+      ><a name="5907" href="cohomology.MayerVietoris.html#5907" class="Bound"
+      >y</a
+      ><a name="5908"
+      > </a
+      ><a name="5909" class="Symbol"
+      >&#8594;</a
+      ><a name="5910"
+      >
+        </a
+      ><a name="5919" class="Symbol"
+      >(</a
+      ><a name="5920" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="5924"
+      > </a
+      ><a name="5925" href="cohomology.MayerVietoris.html#736" class="Function"
+      >mv-diff</a
+      ><a name="5932"
+      > </a
+      ><a name="5933" href="cohomology.MayerVietoris.html#2436" class="Function"
+      >into</a
+      ><a name="5937"
+      > </a
+      ><a name="5938" class="Symbol"
+      >(</a
+      ><a name="5939" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="5945"
+      > </a
+      ><a name="5946" class="Symbol"
+      >(</a
+      ><a name="5947" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="5951"
+      > </a
+      ><a name="5952" href="cohomology.MayerVietoris.html#5907" class="Bound"
+      >y</a
+      ><a name="5953" class="Symbol"
+      >))</a
+      ><a name="5955"
+      >
+         </a
+      ><a name="5965" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5966"
+      > </a
+      ><a name="5967" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5969"
+      > </a
+      ><a name="5970" class="Symbol"
+      >(</a
+      ><a name="5971" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5973"
+      > </a
+      ><a name="5974" href="cohomology.MayerVietoris.html#736" class="Function"
+      >mv-diff</a
+      ><a name="5981" class="Symbol"
+      >)</a
+      ><a name="5982"
+      > </a
+      ><a name="5983" class="Symbol"
+      >(</a
+      ><a name="5984" href="lib.types.Pushout.html#1428" class="Function"
+      >Into.glue-&#946;</a
+      ><a name="5995"
+      > </a
+      ><a name="5996" class="Symbol"
+      >(</a
+      ><a name="5997" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="6001"
+      > </a
+      ><a name="6002" href="cohomology.MayerVietoris.html#5907" class="Bound"
+      >y</a
+      ><a name="6003" class="Symbol"
+      >))</a
+      ><a name="6005"
+      >
+         </a
+      ><a name="6015" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="6016"
+      > </a
+      ><a name="6017" href="lib.types.Pushout.html#1428" class="Function"
+      >MVDiff.merid-&#946;</a
+      ><a name="6031"
+      > </a
+      ><a name="6032" class="Symbol"
+      >(</a
+      ><a name="6033" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="6035"
+      > </a
+      ><a name="6036" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="6037" class="Symbol"
+      >)</a
+      ><a name="6038"
+      >
+         </a
+      ><a name="6048" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="6049"
+      > </a
+      ><a name="6050" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="6052"
+      > </a
+      ><a name="6053" class="Symbol"
+      >(&#955;</a
+      ><a name="6055"
+      > </a
+      ><a name="6056" href="cohomology.MayerVietoris.html#6056" class="Bound"
+      >w</a
+      ><a name="6057"
+      > </a
+      ><a name="6058" class="Symbol"
+      >&#8594;</a
+      ><a name="6059"
+      > </a
+      ><a name="6060" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="6065"
+      > </a
+      ><a name="6066" href="cohomology.MayerVietoris.html#6056" class="Bound"
+      >w</a
+      ><a name="6067"
+      > </a
+      ><a name="6068" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="6069"
+      > </a
+      ><a name="6070" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="6071"
+      > </a
+      ><a name="6072" class="Symbol"
+      >(</a
+      ><a name="6073" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="6078"
+      > </a
+      ><a name="6079" class="Symbol"
+      >(</a
+      ><a name="6080" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="6084"
+      > </a
+      ><a name="6085" class="Symbol"
+      >(</a
+      ><a name="6086" href="cohomology.MayerVietoris.html#1145" class="Bound"
+      >g</a
+      ><a name="6087"
+      > </a
+      ><a name="6088" class="Symbol"
+      >(</a
+      ><a name="6089" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="6091"
+      > </a
+      ><a name="6092" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="6093" class="Symbol"
+      >)))))</a
+      ><a name="6098"
+      > </a
+      ><a name="6099" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="6104"
+      >
+         </a
+      ><a name="6114" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="6115"
+      > </a
+      ><a name="6116" href="lib.PathGroupoid.html#1421" class="Function"
+      >!-inv-r</a
+      ><a name="6123"
+      > </a
+      ><a name="6124" class="Symbol"
+      >(</a
+      ><a name="6125" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="6130"
+      > </a
+      ><a name="6131" class="Symbol"
+      >(</a
+      ><a name="6132" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="6136"
+      > </a
+      ><a name="6137" class="Symbol"
+      >(</a
+      ><a name="6138" href="cohomology.MayerVietoris.html#1145" class="Bound"
+      >g</a
+      ><a name="6139"
+      > </a
+      ><a name="6140" class="Symbol"
+      >(</a
+      ><a name="6141" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="6143"
+      > </a
+      ><a name="6144" href="cohomology.MayerVietoris.html#1117" class="Bound"
+      >Z</a
+      ><a name="6145" class="Symbol"
+      >)))))</a
+      ><a name="6150"
+      >
+        </a
+      ><a name="6159" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="6162"
+      > </a
+      ><a name="6163" href="lib.cubical.Square.html#17473" class="Function"
+      >connection</a
+      ><a name="6173"
+      >
+        </a
+      ><a name="6182" href="lib.cubical.Square.html#12327" class="Function Operator"
+      >&#8865;v&#8729;</a
+      ><a name="6185"
+      > </a
+      ><a name="6186" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="6187"
+      > </a
+      ><a name="6188" class="Symbol"
+      >(</a
+      ><a name="6189" href="lib.types.Pushout.html#1428" class="Function"
+      >ExtractGlue.glue-&#946;</a
+      ><a name="6207"
+      > </a
+      ><a name="6208" class="Symbol"
+      >(</a
+      ><a name="6209" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="6213"
+      > </a
+      ><a name="6214" href="cohomology.MayerVietoris.html#5907" class="Bound"
+      >y</a
+      ><a name="6215" class="Symbol"
+      >)))</a
+      ><a name="6218"
+      >
+
+</a
+      ><a name="6220" class="Comment"
+      >{- Main results -}</a
+      ><a name="6238"
+      >
+</a
+      ><a name="6239" class="Keyword"
+      >module</a
+      ><a name="6245"
+      > </a
+      ><a name="6246" href="cohomology.MayerVietoris.html#6246" class="Module"
+      >MayerVietoris</a
+      ><a name="6259"
+      > </a
+      ><a name="6260" class="Symbol"
+      >(</a
+      ><a name="6261" href="cohomology.MayerVietoris.html#6261" class="Bound"
+      >ps</a
+      ><a name="6263"
+      > </a
+      ><a name="6264" class="Symbol"
+      >:</a
+      ><a name="6265"
+      > </a
+      ><a name="6266" href="lib.types.Span.html#1479" class="Record"
+      >&#8857;Span</a
+      ><a name="6271"
+      > </a
+      ><a name="6272" class="Symbol"
+      >{</a
+      ><a name="6273" href="cohomology.MayerVietoris.html#138" class="Bound"
+      >i</a
+      ><a name="6274" class="Symbol"
+      >}</a
+      ><a name="6275"
+      > </a
+      ><a name="6276" class="Symbol"
+      >{</a
+      ><a name="6277" href="cohomology.MayerVietoris.html#138" class="Bound"
+      >i</a
+      ><a name="6278" class="Symbol"
+      >}</a
+      ><a name="6279"
+      > </a
+      ><a name="6280" class="Symbol"
+      >{</a
+      ><a name="6281" href="cohomology.MayerVietoris.html#138" class="Bound"
+      >i</a
+      ><a name="6282" class="Symbol"
+      >})</a
+      ><a name="6284"
+      > </a
+      ><a name="6285" class="Keyword"
+      >where</a
+      ><a name="6290"
+      >
+
+  </a
+      ><a name="6294" class="Keyword"
+      >private</a
+      ><a name="6301"
+      >
+    </a
+      ><a name="6306" class="Keyword"
+      >record</a
+      ><a name="6312"
+      > </a
+      ><a name="6313" href="cohomology.MayerVietoris.html#6313" class="Record"
+      >Results</a
+      ><a name="6320"
+      > </a
+      ><a name="6321" class="Symbol"
+      >(</a
+      ><a name="6322" href="cohomology.MayerVietoris.html#6322" class="Bound"
+      >ps</a
+      ><a name="6324"
+      > </a
+      ><a name="6325" class="Symbol"
+      >:</a
+      ><a name="6326"
+      > </a
+      ><a name="6327" href="lib.types.Span.html#1479" class="Record"
+      >&#8857;Span</a
+      ><a name="6332"
+      > </a
+      ><a name="6333" class="Symbol"
+      >{</a
+      ><a name="6334" href="cohomology.MayerVietoris.html#138" class="Bound"
+      >i</a
+      ><a name="6335" class="Symbol"
+      >}</a
+      ><a name="6336"
+      > </a
+      ><a name="6337" class="Symbol"
+      >{</a
+      ><a name="6338" href="cohomology.MayerVietoris.html#138" class="Bound"
+      >i</a
+      ><a name="6339" class="Symbol"
+      >}</a
+      ><a name="6340"
+      > </a
+      ><a name="6341" class="Symbol"
+      >{</a
+      ><a name="6342" href="cohomology.MayerVietoris.html#138" class="Bound"
+      >i</a
+      ><a name="6343" class="Symbol"
+      >})</a
+      ><a name="6345"
+      > </a
+      ><a name="6346" class="Symbol"
+      >:</a
+      ><a name="6347"
+      > </a
+      ><a name="6348" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="6352"
+      > </a
+      ><a name="6353" class="Symbol"
+      >(</a
+      ><a name="6354" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="6359"
+      > </a
+      ><a name="6360" href="cohomology.MayerVietoris.html#138" class="Bound"
+      >i</a
+      ><a name="6361" class="Symbol"
+      >)</a
+      ><a name="6362"
+      > </a
+      ><a name="6363" class="Keyword"
+      >where</a
+      ><a name="6368"
+      >
+      </a
+      ><a name="6375" class="Keyword"
+      >open</a
+      ><a name="6379"
+      > </a
+      ><a name="6380" href="lib.types.Span.html#1479" class="Module"
+      >&#8857;Span</a
+      ><a name="6385"
+      > </a
+      ><a name="6386" href="cohomology.MayerVietoris.html#6322" class="Bound"
+      >ps</a
+      ><a name="6388"
+      >
+      </a
+      ><a name="6395" class="Keyword"
+      >open</a
+      ><a name="6399"
+      > </a
+      ><a name="6400" href="cohomology.MayerVietoris.html#364" class="Module"
+      >MayerVietorisFunctions</a
+      ><a name="6422"
+      > </a
+      ><a name="6423" href="cohomology.MayerVietoris.html#6322" class="Bound"
+      >ps</a
+      ><a name="6425"
+      > </a
+      ><a name="6426" class="Keyword"
+      >public</a
+      ><a name="6432"
+      >
+      </a
+      ><a name="6439" class="Keyword"
+      >field</a
+      ><a name="6444"
+      >
+        </a
+      ><a name="6453" href="cohomology.MayerVietoris.html#6453" class="Field"
+      >&#8857;eq</a
+      ><a name="6456"
+      > </a
+      ><a name="6457" class="Symbol"
+      >:</a
+      ><a name="6458"
+      > </a
+      ><a name="6459" href="lib.types.Cofiber.html#1552" class="Function"
+      >&#8857;Cofiber</a
+      ><a name="6467"
+      > </a
+      ><a name="6468" href="cohomology.MayerVietoris.html#549" class="Function"
+      >&#8857;reglue</a
+      ><a name="6475"
+      > </a
+      ><a name="6476" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="6478"
+      > </a
+      ><a name="6479" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="6484"
+      > </a
+      ><a name="6485" href="lib.types.Span.html#1603" class="Function"
+      >Z</a
+      ><a name="6486"
+      >
+        </a
+      ><a name="6495" href="cohomology.MayerVietoris.html#6495" class="Field"
+      >cfcod-comm-sqr</a
+      ><a name="6509"
+      > </a
+      ><a name="6510" class="Symbol"
+      >:</a
+      ><a name="6511"
+      > </a
+      ><a name="6512" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="6522"
+      >
+          </a
+      ><a name="6533" class="Symbol"
+      >(</a
+      ><a name="6534" href="lib.types.Cofiber.html#553" class="Function"
+      >cfcod'</a
+      ><a name="6540"
+      > </a
+      ><a name="6541" href="cohomology.MayerVietoris.html#491" class="Function"
+      >reglue</a
+      ><a name="6547" class="Symbol"
+      >)</a
+      ><a name="6548"
+      > </a
+      ><a name="6549" href="lib.types.Suspension.html#4734" class="Function"
+      >extract-glue</a
+      ><a name="6561"
+      >
+          </a
+      ><a name="6572" class="Symbol"
+      >(</a
+      ><a name="6573" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="6576"
+      > </a
+      ><a name="6577" class="Symbol"
+      >_)</a
+      ><a name="6579"
+      > </a
+      ><a name="6580" class="Symbol"
+      >(</a
+      ><a name="6581" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="6584"
+      > </a
+      ><a name="6585" class="Symbol"
+      >(</a
+      ><a name="6586" href="lib.types.Pointed.html#1690" class="Function"
+      >&#8857;&#8211;&gt;</a
+      ><a name="6589"
+      > </a
+      ><a name="6590" href="cohomology.MayerVietoris.html#6453" class="Field"
+      >&#8857;eq</a
+      ><a name="6593" class="Symbol"
+      >))</a
+      ><a name="6595"
+      >
+        </a
+      ><a name="6604" href="cohomology.MayerVietoris.html#6604" class="Field"
+      >ext-comm-sqr</a
+      ><a name="6616"
+      > </a
+      ><a name="6617" class="Symbol"
+      >:</a
+      ><a name="6618"
+      > </a
+      ><a name="6619" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="6629"
+      >
+          </a
+      ><a name="6640" href="lib.types.Suspension.html#4734" class="Function"
+      >extract-glue</a
+      ><a name="6652"
+      > </a
+      ><a name="6653" href="cohomology.MayerVietoris.html#736" class="Function"
+      >mv-diff</a
+      ><a name="6660"
+      > </a
+      ><a name="6661" class="Symbol"
+      >(</a
+      ><a name="6662" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="6665"
+      > </a
+      ><a name="6666" class="Symbol"
+      >(</a
+      ><a name="6667" href="lib.types.Pointed.html#1690" class="Function"
+      >&#8857;&#8211;&gt;</a
+      ><a name="6670"
+      > </a
+      ><a name="6671" href="cohomology.MayerVietoris.html#6453" class="Field"
+      >&#8857;eq</a
+      ><a name="6674" class="Symbol"
+      >))</a
+      ><a name="6676"
+      > </a
+      ><a name="6677" class="Symbol"
+      >(</a
+      ><a name="6678" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="6681"
+      > </a
+      ><a name="6682" class="Symbol"
+      >_)</a
+      ><a name="6684"
+      >
+
+    </a
+      ><a name="6690" href="cohomology.MayerVietoris.html#6690" class="Function"
+      >results</a
+      ><a name="6697"
+      > </a
+      ><a name="6698" class="Symbol"
+      >:</a
+      ><a name="6699"
+      > </a
+      ><a name="6700" href="cohomology.MayerVietoris.html#6313" class="Record"
+      >Results</a
+      ><a name="6707"
+      > </a
+      ><a name="6708" href="cohomology.MayerVietoris.html#6261" class="Bound"
+      >ps</a
+      ><a name="6710"
+      >
+    </a
+      ><a name="6715" href="cohomology.MayerVietoris.html#6690" class="Function"
+      >results</a
+      ><a name="6722"
+      > </a
+      ><a name="6723" class="Symbol"
+      >=</a
+      ><a name="6724"
+      > </a
+      ><a name="6725" href="lib.types.Pushout.html#4738" class="Function"
+      >&#8857;pushout-J</a
+      ><a name="6735"
+      > </a
+      ><a name="6736" href="cohomology.MayerVietoris.html#6313" class="Record"
+      >Results</a
+      ><a name="6743"
+      > </a
+      ><a name="6744" href="cohomology.MayerVietoris.html#6778" class="Function"
+      >base-results</a
+      ><a name="6756"
+      > </a
+      ><a name="6757" href="cohomology.MayerVietoris.html#6261" class="Bound"
+      >ps</a
+      ><a name="6759"
+      >
+      </a
+      ><a name="6766" class="Keyword"
+      >where</a
+      ><a name="6771"
+      >
+      </a
+      ><a name="6778" href="cohomology.MayerVietoris.html#6778" class="Function"
+      >base-results</a
+      ><a name="6790"
+      > </a
+      ><a name="6791" class="Symbol"
+      >:</a
+      ><a name="6792"
+      > </a
+      ><a name="6793" class="Symbol"
+      >&#8704;</a
+      ><a name="6794"
+      > </a
+      ><a name="6795" class="Symbol"
+      >{</a
+      ><a name="6796" href="cohomology.MayerVietoris.html#6796" class="Bound"
+      >A</a
+      ><a name="6797" class="Symbol"
+      >}</a
+      ><a name="6798"
+      > </a
+      ><a name="6799" class="Symbol"
+      >{</a
+      ><a name="6800" href="cohomology.MayerVietoris.html#6800" class="Bound"
+      >B</a
+      ><a name="6801" class="Symbol"
+      >}</a
+      ><a name="6802"
+      > </a
+      ><a name="6803" href="cohomology.MayerVietoris.html#6803" class="Bound"
+      >Z</a
+      ><a name="6804"
+      > </a
+      ><a name="6805" class="Symbol"
+      >(</a
+      ><a name="6806" href="cohomology.MayerVietoris.html#6806" class="Bound"
+      >f</a
+      ><a name="6807"
+      > </a
+      ><a name="6808" class="Symbol"
+      >:</a
+      ><a name="6809"
+      > </a
+      ><a name="6810" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="6813"
+      > </a
+      ><a name="6814" href="cohomology.MayerVietoris.html#6803" class="Bound"
+      >Z</a
+      ><a name="6815"
+      > </a
+      ><a name="6816" class="Symbol"
+      >&#8594;</a
+      ><a name="6817"
+      > </a
+      ><a name="6818" href="cohomology.MayerVietoris.html#6796" class="Bound"
+      >A</a
+      ><a name="6819" class="Symbol"
+      >)</a
+      ><a name="6820"
+      > </a
+      ><a name="6821" class="Symbol"
+      >(</a
+      ><a name="6822" href="cohomology.MayerVietoris.html#6822" class="Bound"
+      >g</a
+      ><a name="6823"
+      > </a
+      ><a name="6824" class="Symbol"
+      >:</a
+      ><a name="6825"
+      > </a
+      ><a name="6826" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="6829"
+      > </a
+      ><a name="6830" href="cohomology.MayerVietoris.html#6803" class="Bound"
+      >Z</a
+      ><a name="6831"
+      > </a
+      ><a name="6832" class="Symbol"
+      >&#8594;</a
+      ><a name="6833"
+      > </a
+      ><a name="6834" href="cohomology.MayerVietoris.html#6800" class="Bound"
+      >B</a
+      ><a name="6835" class="Symbol"
+      >)</a
+      ><a name="6836"
+      > </a
+      ><a name="6837" class="Symbol"
+      >&#8594;</a
+      ><a name="6838"
+      >
+        </a
+      ><a name="6847" href="cohomology.MayerVietoris.html#6313" class="Record"
+      >Results</a
+      ><a name="6854"
+      > </a
+      ><a name="6855" class="Symbol"
+      >(</a
+      ><a name="6856" href="lib.types.Span.html#1557" class="InductiveConstructor"
+      >&#8857;span</a
+      ><a name="6861"
+      > </a
+      ><a name="6862" class="Symbol"
+      >_</a
+      ><a name="6863"
+      > </a
+      ><a name="6864" class="Symbol"
+      >_</a
+      ><a name="6865"
+      > </a
+      ><a name="6866" href="cohomology.MayerVietoris.html#6803" class="Bound"
+      >Z</a
+      ><a name="6867"
+      > </a
+      ><a name="6868" class="Symbol"
+      >(</a
+      ><a name="6869" href="cohomology.MayerVietoris.html#6806" class="Bound"
+      >f</a
+      ><a name="6870"
+      > </a
+      ><a name="6871" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="6872"
+      > </a
+      ><a name="6873" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="6876" class="Symbol"
+      >)</a
+      ><a name="6877"
+      > </a
+      ><a name="6878" class="Symbol"
+      >(</a
+      ><a name="6879" href="cohomology.MayerVietoris.html#6822" class="Bound"
+      >g</a
+      ><a name="6880"
+      > </a
+      ><a name="6881" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="6882"
+      > </a
+      ><a name="6883" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="6886" class="Symbol"
+      >))</a
+      ><a name="6888"
+      >
+      </a
+      ><a name="6895" href="cohomology.MayerVietoris.html#6778" class="Function"
+      >base-results</a
+      ><a name="6907"
+      > </a
+      ><a name="6908" href="cohomology.MayerVietoris.html#6908" class="Bound"
+      >Z</a
+      ><a name="6909"
+      > </a
+      ><a name="6910" href="cohomology.MayerVietoris.html#6910" class="Bound"
+      >f</a
+      ><a name="6911"
+      > </a
+      ><a name="6912" href="cohomology.MayerVietoris.html#6912" class="Bound"
+      >g</a
+      ><a name="6913"
+      > </a
+      ><a name="6914" class="Symbol"
+      >=</a
+      ><a name="6915"
+      > </a
+      ><a name="6916" class="Keyword"
+      >record</a
+      ><a name="6922"
+      > </a
+      ><a name="6923" class="Symbol"
+      >{</a
+      ><a name="6924"
+      >
+        </a
+      ><a name="6933" class="Field"
+      >&#8857;eq</a
+      ><a name="6936"
+      > </a
+      ><a name="6937" class="Symbol"
+      >=</a
+      ><a name="6938"
+      > </a
+      ><a name="6939" href="cohomology.MayerVietoris.html#4766" class="Function"
+      >&#8857;eq</a
+      ><a name="6942" class="Symbol"
+      >;</a
+      ><a name="6943"
+      >
+        </a
+      ><a name="6952" class="Field"
+      >cfcod-comm-sqr</a
+      ><a name="6966"
+      > </a
+      ><a name="6967" class="Symbol"
+      >=</a
+      ><a name="6968"
+      > </a
+      ><a name="6969" href="cohomology.MayerVietoris.html#4884" class="Function"
+      >cfcod-comm-sqr</a
+      ><a name="6983" class="Symbol"
+      >;</a
+      ><a name="6984"
+      >
+        </a
+      ><a name="6993" class="Field"
+      >ext-comm-sqr</a
+      ><a name="7005"
+      > </a
+      ><a name="7006" class="Symbol"
+      >=</a
+      ><a name="7007"
+      > </a
+      ><a name="7008" href="cohomology.MayerVietoris.html#5054" class="Function"
+      >ext-comm-sqr</a
+      ><a name="7020" class="Symbol"
+      >}</a
+      ><a name="7021"
+      >
+        </a
+      ><a name="7030" class="Keyword"
+      >where</a
+      ><a name="7035"
+      > </a
+      ><a name="7036" class="Keyword"
+      >open</a
+      ><a name="7040"
+      > </a
+      ><a name="7041" href="cohomology.MayerVietoris.html#1081" class="Module"
+      >MayerVietorisBase</a
+      ><a name="7058"
+      > </a
+      ><a name="7059" href="cohomology.MayerVietoris.html#6908" class="Bound"
+      >Z</a
+      ><a name="7060"
+      > </a
+      ><a name="7061" href="cohomology.MayerVietoris.html#6910" class="Bound"
+      >f</a
+      ><a name="7062"
+      > </a
+      ><a name="7063" href="cohomology.MayerVietoris.html#6912" class="Bound"
+      >g</a
+      ><a name="7064"
+      >
+
+  </a
+      ><a name="7068" class="Keyword"
+      >open</a
+      ><a name="7072"
+      > </a
+      ><a name="7073" href="cohomology.MayerVietoris.html#6313" class="Module"
+      >Results</a
+      ><a name="7080"
+      > </a
+      ><a name="7081" href="cohomology.MayerVietoris.html#6690" class="Function"
+      >results</a
+      ><a name="7088"
+      > </a
+      ><a name="7089" class="Keyword"
+      >public</a
+      ><a name="7095"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

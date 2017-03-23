@@ -1,0 +1,639 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.Cospan</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.Pi.html#1" class="Module"
+      >lib.types.Pi</a
+      ><a name="89"
+      >
+
+</a
+      ><a name="91" class="Keyword"
+      >module</a
+      ><a name="97"
+      > </a
+      ><a name="98" href="lib.types.Cospan.html#1" class="Module"
+      >lib.types.Cospan</a
+      ><a name="114"
+      > </a
+      ><a name="115" class="Keyword"
+      >where</a
+      ><a name="120"
+      >
+
+</a
+      ><a name="122" class="Keyword"
+      >record</a
+      ><a name="128"
+      > </a
+      ><a name="129" href="lib.types.Cospan.html#129" class="Record"
+      >Cospan</a
+      ><a name="135"
+      > </a
+      ><a name="136" class="Symbol"
+      >{</a
+      ><a name="137" href="lib.types.Cospan.html#137" class="Bound"
+      >i</a
+      ><a name="138"
+      > </a
+      ><a name="139" href="lib.types.Cospan.html#139" class="Bound"
+      >j</a
+      ><a name="140"
+      > </a
+      ><a name="141" href="lib.types.Cospan.html#141" class="Bound"
+      >k</a
+      ><a name="142"
+      > </a
+      ><a name="143" class="Symbol"
+      >:</a
+      ><a name="144"
+      > </a
+      ><a name="145" href="Agda.Primitive.html#408" class="Postulate"
+      >ULevel</a
+      ><a name="151" class="Symbol"
+      >}</a
+      ><a name="152"
+      > </a
+      ><a name="153" class="Symbol"
+      >:</a
+      ><a name="154"
+      > </a
+      ><a name="155" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="159"
+      > </a
+      ><a name="160" class="Symbol"
+      >(</a
+      ><a name="161" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="166"
+      > </a
+      ><a name="167" class="Symbol"
+      >(</a
+      ><a name="168" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="172"
+      > </a
+      ><a name="173" class="Symbol"
+      >(</a
+      ><a name="174" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="178"
+      > </a
+      ><a name="179" href="lib.types.Cospan.html#137" class="Bound"
+      >i</a
+      ><a name="180"
+      > </a
+      ><a name="181" href="lib.types.Cospan.html#139" class="Bound"
+      >j</a
+      ><a name="182" class="Symbol"
+      >)</a
+      ><a name="183"
+      > </a
+      ><a name="184" href="lib.types.Cospan.html#141" class="Bound"
+      >k</a
+      ><a name="185" class="Symbol"
+      >))</a
+      ><a name="187"
+      > </a
+      ><a name="188" class="Keyword"
+      >where</a
+      ><a name="193"
+      >
+  </a
+      ><a name="196" class="Keyword"
+      >constructor</a
+      ><a name="207"
+      > </a
+      ><a name="208" href="lib.types.Cospan.html#208" class="InductiveConstructor"
+      >cospan</a
+      ><a name="214"
+      >
+  </a
+      ><a name="217" class="Keyword"
+      >field</a
+      ><a name="222"
+      >
+    </a
+      ><a name="227" href="lib.types.Cospan.html#227" class="Field"
+      >A</a
+      ><a name="228"
+      > </a
+      ><a name="229" class="Symbol"
+      >:</a
+      ><a name="230"
+      > </a
+      ><a name="231" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="235"
+      > </a
+      ><a name="236" href="lib.types.Cospan.html#137" class="Bound"
+      >i</a
+      ><a name="237"
+      >
+    </a
+      ><a name="242" href="lib.types.Cospan.html#242" class="Field"
+      >B</a
+      ><a name="243"
+      > </a
+      ><a name="244" class="Symbol"
+      >:</a
+      ><a name="245"
+      > </a
+      ><a name="246" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="250"
+      > </a
+      ><a name="251" href="lib.types.Cospan.html#139" class="Bound"
+      >j</a
+      ><a name="252"
+      >
+    </a
+      ><a name="257" href="lib.types.Cospan.html#257" class="Field"
+      >C</a
+      ><a name="258"
+      > </a
+      ><a name="259" class="Symbol"
+      >:</a
+      ><a name="260"
+      > </a
+      ><a name="261" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="265"
+      > </a
+      ><a name="266" href="lib.types.Cospan.html#141" class="Bound"
+      >k</a
+      ><a name="267"
+      >
+    </a
+      ><a name="272" href="lib.types.Cospan.html#272" class="Field"
+      >f</a
+      ><a name="273"
+      > </a
+      ><a name="274" class="Symbol"
+      >:</a
+      ><a name="275"
+      > </a
+      ><a name="276" href="lib.types.Cospan.html#227" class="Field"
+      >A</a
+      ><a name="277"
+      > </a
+      ><a name="278" class="Symbol"
+      >&#8594;</a
+      ><a name="279"
+      > </a
+      ><a name="280" href="lib.types.Cospan.html#257" class="Field"
+      >C</a
+      ><a name="281"
+      >
+    </a
+      ><a name="286" href="lib.types.Cospan.html#286" class="Field"
+      >g</a
+      ><a name="287"
+      > </a
+      ><a name="288" class="Symbol"
+      >:</a
+      ><a name="289"
+      > </a
+      ><a name="290" href="lib.types.Cospan.html#242" class="Field"
+      >B</a
+      ><a name="291"
+      > </a
+      ><a name="292" class="Symbol"
+      >&#8594;</a
+      ><a name="293"
+      > </a
+      ><a name="294" href="lib.types.Cospan.html#257" class="Field"
+      >C</a
+      ><a name="295"
+      >
+
+</a
+      ><a name="297" class="Keyword"
+      >record</a
+      ><a name="303"
+      > </a
+      ><a name="304" href="lib.types.Cospan.html#304" class="Record"
+      >&#8857;Cospan</a
+      ><a name="311"
+      > </a
+      ><a name="312" class="Symbol"
+      >{</a
+      ><a name="313" href="lib.types.Cospan.html#313" class="Bound"
+      >i</a
+      ><a name="314"
+      > </a
+      ><a name="315" href="lib.types.Cospan.html#315" class="Bound"
+      >j</a
+      ><a name="316"
+      > </a
+      ><a name="317" href="lib.types.Cospan.html#317" class="Bound"
+      >k</a
+      ><a name="318"
+      > </a
+      ><a name="319" class="Symbol"
+      >:</a
+      ><a name="320"
+      > </a
+      ><a name="321" href="Agda.Primitive.html#408" class="Postulate"
+      >ULevel</a
+      ><a name="327" class="Symbol"
+      >}</a
+      ><a name="328"
+      > </a
+      ><a name="329" class="Symbol"
+      >:</a
+      ><a name="330"
+      > </a
+      ><a name="331" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="335"
+      > </a
+      ><a name="336" class="Symbol"
+      >(</a
+      ><a name="337" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="342"
+      > </a
+      ><a name="343" class="Symbol"
+      >(</a
+      ><a name="344" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="348"
+      > </a
+      ><a name="349" class="Symbol"
+      >(</a
+      ><a name="350" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="354"
+      > </a
+      ><a name="355" href="lib.types.Cospan.html#313" class="Bound"
+      >i</a
+      ><a name="356"
+      > </a
+      ><a name="357" href="lib.types.Cospan.html#315" class="Bound"
+      >j</a
+      ><a name="358" class="Symbol"
+      >)</a
+      ><a name="359"
+      > </a
+      ><a name="360" href="lib.types.Cospan.html#317" class="Bound"
+      >k</a
+      ><a name="361" class="Symbol"
+      >))</a
+      ><a name="363"
+      > </a
+      ><a name="364" class="Keyword"
+      >where</a
+      ><a name="369"
+      >
+  </a
+      ><a name="372" class="Keyword"
+      >constructor</a
+      ><a name="383"
+      > </a
+      ><a name="384" href="lib.types.Cospan.html#384" class="InductiveConstructor"
+      >&#8857;cospan</a
+      ><a name="391"
+      >
+  </a
+      ><a name="394" class="Keyword"
+      >field</a
+      ><a name="399"
+      >
+    </a
+      ><a name="404" href="lib.types.Cospan.html#404" class="Field"
+      >X</a
+      ><a name="405"
+      > </a
+      ><a name="406" class="Symbol"
+      >:</a
+      ><a name="407"
+      > </a
+      ><a name="408" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="411"
+      > </a
+      ><a name="412" href="lib.types.Cospan.html#313" class="Bound"
+      >i</a
+      ><a name="413"
+      >
+    </a
+      ><a name="418" href="lib.types.Cospan.html#418" class="Field"
+      >Y</a
+      ><a name="419"
+      > </a
+      ><a name="420" class="Symbol"
+      >:</a
+      ><a name="421"
+      > </a
+      ><a name="422" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="425"
+      > </a
+      ><a name="426" href="lib.types.Cospan.html#315" class="Bound"
+      >j</a
+      ><a name="427"
+      >
+    </a
+      ><a name="432" href="lib.types.Cospan.html#432" class="Field"
+      >Z</a
+      ><a name="433"
+      > </a
+      ><a name="434" class="Symbol"
+      >:</a
+      ><a name="435"
+      > </a
+      ><a name="436" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="439"
+      > </a
+      ><a name="440" href="lib.types.Cospan.html#317" class="Bound"
+      >k</a
+      ><a name="441"
+      >
+    </a
+      ><a name="446" href="lib.types.Cospan.html#446" class="Field"
+      >f</a
+      ><a name="447"
+      > </a
+      ><a name="448" class="Symbol"
+      >:</a
+      ><a name="449"
+      > </a
+      ><a name="450" href="lib.types.Cospan.html#404" class="Field"
+      >X</a
+      ><a name="451"
+      > </a
+      ><a name="452" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="454"
+      > </a
+      ><a name="455" href="lib.types.Cospan.html#432" class="Field"
+      >Z</a
+      ><a name="456"
+      >
+    </a
+      ><a name="461" href="lib.types.Cospan.html#461" class="Field"
+      >g</a
+      ><a name="462"
+      > </a
+      ><a name="463" class="Symbol"
+      >:</a
+      ><a name="464"
+      > </a
+      ><a name="465" href="lib.types.Cospan.html#418" class="Field"
+      >Y</a
+      ><a name="466"
+      > </a
+      ><a name="467" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="469"
+      > </a
+      ><a name="470" href="lib.types.Cospan.html#432" class="Field"
+      >Z</a
+      ><a name="471"
+      >
+
+</a
+      ><a name="473" href="lib.types.Cospan.html#473" class="Function"
+      >&#8857;cospan-out</a
+      ><a name="484"
+      > </a
+      ><a name="485" class="Symbol"
+      >:</a
+      ><a name="486"
+      > </a
+      ><a name="487" class="Symbol"
+      >&#8704;</a
+      ><a name="488"
+      > </a
+      ><a name="489" class="Symbol"
+      >{</a
+      ><a name="490" href="lib.types.Cospan.html#490" class="Bound"
+      >i</a
+      ><a name="491"
+      > </a
+      ><a name="492" href="lib.types.Cospan.html#492" class="Bound"
+      >j</a
+      ><a name="493"
+      > </a
+      ><a name="494" href="lib.types.Cospan.html#494" class="Bound"
+      >k</a
+      ><a name="495" class="Symbol"
+      >}</a
+      ><a name="496"
+      > </a
+      ><a name="497" class="Symbol"
+      >&#8594;</a
+      ><a name="498"
+      > </a
+      ><a name="499" href="lib.types.Cospan.html#304" class="Record"
+      >&#8857;Cospan</a
+      ><a name="506"
+      > </a
+      ><a name="507" class="Symbol"
+      >{</a
+      ><a name="508" href="lib.types.Cospan.html#490" class="Bound"
+      >i</a
+      ><a name="509" class="Symbol"
+      >}</a
+      ><a name="510"
+      > </a
+      ><a name="511" class="Symbol"
+      >{</a
+      ><a name="512" href="lib.types.Cospan.html#492" class="Bound"
+      >j</a
+      ><a name="513" class="Symbol"
+      >}</a
+      ><a name="514"
+      > </a
+      ><a name="515" class="Symbol"
+      >{</a
+      ><a name="516" href="lib.types.Cospan.html#494" class="Bound"
+      >k</a
+      ><a name="517" class="Symbol"
+      >}</a
+      ><a name="518"
+      > </a
+      ><a name="519" class="Symbol"
+      >&#8594;</a
+      ><a name="520"
+      > </a
+      ><a name="521" href="lib.types.Cospan.html#129" class="Record"
+      >Cospan</a
+      ><a name="527"
+      > </a
+      ><a name="528" class="Symbol"
+      >{</a
+      ><a name="529" href="lib.types.Cospan.html#490" class="Bound"
+      >i</a
+      ><a name="530" class="Symbol"
+      >}</a
+      ><a name="531"
+      > </a
+      ><a name="532" class="Symbol"
+      >{</a
+      ><a name="533" href="lib.types.Cospan.html#492" class="Bound"
+      >j</a
+      ><a name="534" class="Symbol"
+      >}</a
+      ><a name="535"
+      > </a
+      ><a name="536" class="Symbol"
+      >{</a
+      ><a name="537" href="lib.types.Cospan.html#494" class="Bound"
+      >k</a
+      ><a name="538" class="Symbol"
+      >}</a
+      ><a name="539"
+      >
+</a
+      ><a name="540" href="lib.types.Cospan.html#473" class="Function"
+      >&#8857;cospan-out</a
+      ><a name="551"
+      > </a
+      ><a name="552" class="Symbol"
+      >(</a
+      ><a name="553" href="lib.types.Cospan.html#384" class="InductiveConstructor"
+      >&#8857;cospan</a
+      ><a name="560"
+      > </a
+      ><a name="561" href="lib.types.Cospan.html#561" class="Bound"
+      >X</a
+      ><a name="562"
+      > </a
+      ><a name="563" href="lib.types.Cospan.html#563" class="Bound"
+      >Y</a
+      ><a name="564"
+      > </a
+      ><a name="565" href="lib.types.Cospan.html#565" class="Bound"
+      >Z</a
+      ><a name="566"
+      > </a
+      ><a name="567" href="lib.types.Cospan.html#567" class="Bound"
+      >f</a
+      ><a name="568"
+      > </a
+      ><a name="569" href="lib.types.Cospan.html#569" class="Bound"
+      >g</a
+      ><a name="570" class="Symbol"
+      >)</a
+      ><a name="571"
+      > </a
+      ><a name="572" class="Symbol"
+      >=</a
+      ><a name="573"
+      >
+  </a
+      ><a name="576" href="lib.types.Cospan.html#208" class="InductiveConstructor"
+      >cospan</a
+      ><a name="582"
+      > </a
+      ><a name="583" class="Symbol"
+      >(</a
+      ><a name="584" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="587"
+      > </a
+      ><a name="588" href="lib.types.Cospan.html#561" class="Bound"
+      >X</a
+      ><a name="589" class="Symbol"
+      >)</a
+      ><a name="590"
+      > </a
+      ><a name="591" class="Symbol"
+      >(</a
+      ><a name="592" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="595"
+      > </a
+      ><a name="596" href="lib.types.Cospan.html#563" class="Bound"
+      >Y</a
+      ><a name="597" class="Symbol"
+      >)</a
+      ><a name="598"
+      > </a
+      ><a name="599" class="Symbol"
+      >(</a
+      ><a name="600" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="603"
+      > </a
+      ><a name="604" href="lib.types.Cospan.html#565" class="Bound"
+      >Z</a
+      ><a name="605" class="Symbol"
+      >)</a
+      ><a name="606"
+      > </a
+      ><a name="607" class="Symbol"
+      >(</a
+      ><a name="608" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="611"
+      > </a
+      ><a name="612" href="lib.types.Cospan.html#567" class="Bound"
+      >f</a
+      ><a name="613" class="Symbol"
+      >)</a
+      ><a name="614"
+      > </a
+      ><a name="615" class="Symbol"
+      >(</a
+      ><a name="616" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="619"
+      > </a
+      ><a name="620" href="lib.types.Cospan.html#569" class="Bound"
+      >g</a
+      ><a name="621" class="Symbol"
+      >)</a
+      ><a name="622"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

@@ -1,0 +1,6001 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.TLevel</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Base.html#1" class="Module"
+      >lib.Base</a
+      ><a name="62"
+      >
+</a
+      ><a name="63" class="Keyword"
+      >open</a
+      ><a name="67"
+      > </a
+      ><a name="68" class="Keyword"
+      >import</a
+      ><a name="74"
+      > </a
+      ><a name="75" href="lib.PathGroupoid.html#1" class="Module"
+      >lib.PathGroupoid</a
+      ><a name="91"
+      >
+</a
+      ><a name="92" class="Keyword"
+      >open</a
+      ><a name="96"
+      > </a
+      ><a name="97" class="Keyword"
+      >import</a
+      ><a name="103"
+      > </a
+      ><a name="104" href="lib.types.Empty.html#1" class="Module"
+      >lib.types.Empty</a
+      ><a name="119"
+      >
+</a
+      ><a name="120" class="Keyword"
+      >open</a
+      ><a name="124"
+      > </a
+      ><a name="125" class="Keyword"
+      >import</a
+      ><a name="131"
+      > </a
+      ><a name="132" href="lib.types.Nat.html#1" class="Module"
+      >lib.types.Nat</a
+      ><a name="145"
+      >
+
+</a
+      ><a name="147" class="Keyword"
+      >module</a
+      ><a name="153"
+      > </a
+      ><a name="154" href="lib.types.TLevel.html#1" class="Module"
+      >lib.types.TLevel</a
+      ><a name="170"
+      > </a
+      ><a name="171" class="Keyword"
+      >where</a
+      ><a name="176"
+      >
+
+</a
+      ><a name="178" href="lib.types.TLevel.html#178" class="Function Operator"
+      >&#10216;_&#10217;&#8331;&#8321;</a
+      ><a name="183"
+      > </a
+      ><a name="184" class="Symbol"
+      >:</a
+      ><a name="185"
+      > </a
+      ><a name="186" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="187"
+      > </a
+      ><a name="188" class="Symbol"
+      >&#8594;</a
+      ><a name="189"
+      > </a
+      ><a name="190" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="193"
+      >
+</a
+      ><a name="194" href="lib.types.TLevel.html#178" class="Function Operator"
+      >&#10216;</a
+      ><a name="195"
+      > </a
+      ><a name="196" href="lib.types.TLevel.html#196" class="Bound"
+      >n</a
+      ><a name="197"
+      > </a
+      ><a name="198" href="lib.types.TLevel.html#178" class="Function Operator"
+      >&#10217;&#8331;&#8321;</a
+      ><a name="201"
+      > </a
+      ><a name="202" class="Symbol"
+      >=</a
+      ><a name="203"
+      > </a
+      ><a name="204" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="205"
+      > </a
+      ><a name="206" href="lib.Base.html#8938" class="Function Operator"
+      >&#10216;</a
+      ><a name="207"
+      > </a
+      ><a name="208" href="lib.types.TLevel.html#196" class="Bound"
+      >n</a
+      ><a name="209"
+      > </a
+      ><a name="210" href="lib.Base.html#8938" class="Function Operator"
+      >&#10217;&#8331;&#8322;</a
+      ><a name="213"
+      >
+
+</a
+      ><a name="215" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;_&#10217;</a
+      ><a name="218"
+      > </a
+      ><a name="219" class="Symbol"
+      >:</a
+      ><a name="220"
+      > </a
+      ><a name="221" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="222"
+      > </a
+      ><a name="223" class="Symbol"
+      >&#8594;</a
+      ><a name="224"
+      > </a
+      ><a name="225" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="228"
+      >
+</a
+      ><a name="229" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="230"
+      > </a
+      ><a name="231" href="lib.types.TLevel.html#231" class="Bound"
+      >n</a
+      ><a name="232"
+      > </a
+      ><a name="233" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="234"
+      > </a
+      ><a name="235" class="Symbol"
+      >=</a
+      ><a name="236"
+      > </a
+      ><a name="237" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="238"
+      > </a
+      ><a name="239" class="Symbol"
+      >(</a
+      ><a name="240" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="241"
+      > </a
+      ><a name="242" href="lib.Base.html#8938" class="Function Operator"
+      >&#10216;</a
+      ><a name="243"
+      > </a
+      ><a name="244" href="lib.types.TLevel.html#231" class="Bound"
+      >n</a
+      ><a name="245"
+      > </a
+      ><a name="246" href="lib.Base.html#8938" class="Function Operator"
+      >&#10217;&#8331;&#8322;</a
+      ><a name="249" class="Symbol"
+      >)</a
+      ><a name="250"
+      >
+
+</a
+      ><a name="252" class="Keyword"
+      >infixl</a
+      ><a name="258"
+      > </a
+      ><a name="259" class="Number"
+      >80</a
+      ><a name="261"
+      > </a
+      ><a name="262" href="lib.types.TLevel.html#268" class="Function Operator"
+      >_+2+_</a
+      ><a name="267"
+      >
+</a
+      ><a name="268" href="lib.types.TLevel.html#268" class="Function Operator"
+      >_+2+_</a
+      ><a name="273"
+      > </a
+      ><a name="274" class="Symbol"
+      >:</a
+      ><a name="275"
+      > </a
+      ><a name="276" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="279"
+      > </a
+      ><a name="280" class="Symbol"
+      >&#8594;</a
+      ><a name="281"
+      > </a
+      ><a name="282" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="285"
+      > </a
+      ><a name="286" class="Symbol"
+      >&#8594;</a
+      ><a name="287"
+      > </a
+      ><a name="288" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="291"
+      >
+</a
+      ><a name="292" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="296"
+      > </a
+      ><a name="297" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="300"
+      > </a
+      ><a name="301" href="lib.types.TLevel.html#301" class="Bound"
+      >n</a
+      ><a name="302"
+      > </a
+      ><a name="303" class="Symbol"
+      >=</a
+      ><a name="304"
+      > </a
+      ><a name="305" href="lib.types.TLevel.html#301" class="Bound"
+      >n</a
+      ><a name="306"
+      >
+</a
+      ><a name="307" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="308"
+      > </a
+      ><a name="309" href="lib.types.TLevel.html#309" class="Bound"
+      >m</a
+      ><a name="310"
+      > </a
+      ><a name="311" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="314"
+      > </a
+      ><a name="315" href="lib.types.TLevel.html#315" class="Bound"
+      >n</a
+      ><a name="316"
+      > </a
+      ><a name="317" class="Symbol"
+      >=</a
+      ><a name="318"
+      > </a
+      ><a name="319" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="320"
+      > </a
+      ><a name="321" class="Symbol"
+      >(</a
+      ><a name="322" href="lib.types.TLevel.html#309" class="Bound"
+      >m</a
+      ><a name="323"
+      > </a
+      ><a name="324" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="327"
+      > </a
+      ><a name="328" href="lib.types.TLevel.html#315" class="Bound"
+      >n</a
+      ><a name="329" class="Symbol"
+      >)</a
+      ><a name="330"
+      >
+
+</a
+      ><a name="332" href="lib.types.TLevel.html#332" class="Function"
+      >+2+-unit-r</a
+      ><a name="342"
+      > </a
+      ><a name="343" class="Symbol"
+      >:</a
+      ><a name="344"
+      > </a
+      ><a name="345" class="Symbol"
+      >(</a
+      ><a name="346" href="lib.types.TLevel.html#346" class="Bound"
+      >m</a
+      ><a name="347"
+      > </a
+      ><a name="348" class="Symbol"
+      >:</a
+      ><a name="349"
+      > </a
+      ><a name="350" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="353" class="Symbol"
+      >)</a
+      ><a name="354"
+      > </a
+      ><a name="355" class="Symbol"
+      >&#8594;</a
+      ><a name="356"
+      > </a
+      ><a name="357" href="lib.types.TLevel.html#346" class="Bound"
+      >m</a
+      ><a name="358"
+      > </a
+      ><a name="359" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="362"
+      > </a
+      ><a name="363" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="367"
+      > </a
+      ><a name="368" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="370"
+      > </a
+      ><a name="371" href="lib.types.TLevel.html#346" class="Bound"
+      >m</a
+      ><a name="372"
+      >
+</a
+      ><a name="373" href="lib.types.TLevel.html#332" class="Function"
+      >+2+-unit-r</a
+      ><a name="383"
+      > </a
+      ><a name="384" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="388"
+      > </a
+      ><a name="389" class="Symbol"
+      >=</a
+      ><a name="390"
+      > </a
+      ><a name="391" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="394"
+      >
+</a
+      ><a name="395" href="lib.types.TLevel.html#332" class="Function"
+      >+2+-unit-r</a
+      ><a name="405"
+      > </a
+      ><a name="406" class="Symbol"
+      >(</a
+      ><a name="407" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="408"
+      > </a
+      ><a name="409" href="lib.types.TLevel.html#409" class="Bound"
+      >m</a
+      ><a name="410" class="Symbol"
+      >)</a
+      ><a name="411"
+      > </a
+      ><a name="412" class="Symbol"
+      >=</a
+      ><a name="413"
+      > </a
+      ><a name="414" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="416"
+      > </a
+      ><a name="417" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="418"
+      > </a
+      ><a name="419" class="Symbol"
+      >(</a
+      ><a name="420" href="lib.types.TLevel.html#332" class="Function"
+      >+2+-unit-r</a
+      ><a name="430"
+      > </a
+      ><a name="431" href="lib.types.TLevel.html#409" class="Bound"
+      >m</a
+      ><a name="432" class="Symbol"
+      >)</a
+      ><a name="433"
+      >
+
+</a
+      ><a name="435" href="lib.types.TLevel.html#435" class="Function"
+      >+2+-&#946;r</a
+      ><a name="441"
+      > </a
+      ><a name="442" class="Symbol"
+      >:</a
+      ><a name="443"
+      > </a
+      ><a name="444" class="Symbol"
+      >(</a
+      ><a name="445" href="lib.types.TLevel.html#445" class="Bound"
+      >m</a
+      ><a name="446"
+      > </a
+      ><a name="447" href="lib.types.TLevel.html#447" class="Bound"
+      >n</a
+      ><a name="448"
+      > </a
+      ><a name="449" class="Symbol"
+      >:</a
+      ><a name="450"
+      > </a
+      ><a name="451" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="454" class="Symbol"
+      >)</a
+      ><a name="455"
+      > </a
+      ><a name="456" class="Symbol"
+      >&#8594;</a
+      ><a name="457"
+      > </a
+      ><a name="458" href="lib.types.TLevel.html#445" class="Bound"
+      >m</a
+      ><a name="459"
+      > </a
+      ><a name="460" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="463"
+      > </a
+      ><a name="464" class="Symbol"
+      >(</a
+      ><a name="465" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="466"
+      > </a
+      ><a name="467" href="lib.types.TLevel.html#447" class="Bound"
+      >n</a
+      ><a name="468" class="Symbol"
+      >)</a
+      ><a name="469"
+      > </a
+      ><a name="470" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="472"
+      > </a
+      ><a name="473" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="474"
+      > </a
+      ><a name="475" class="Symbol"
+      >(</a
+      ><a name="476" href="lib.types.TLevel.html#445" class="Bound"
+      >m</a
+      ><a name="477"
+      > </a
+      ><a name="478" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="481"
+      > </a
+      ><a name="482" href="lib.types.TLevel.html#447" class="Bound"
+      >n</a
+      ><a name="483" class="Symbol"
+      >)</a
+      ><a name="484"
+      >
+</a
+      ><a name="485" href="lib.types.TLevel.html#435" class="Function"
+      >+2+-&#946;r</a
+      ><a name="491"
+      > </a
+      ><a name="492" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="496"
+      > </a
+      ><a name="497" href="lib.types.TLevel.html#497" class="Bound"
+      >n</a
+      ><a name="498"
+      > </a
+      ><a name="499" class="Symbol"
+      >=</a
+      ><a name="500"
+      > </a
+      ><a name="501" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="504"
+      >
+</a
+      ><a name="505" href="lib.types.TLevel.html#435" class="Function"
+      >+2+-&#946;r</a
+      ><a name="511"
+      > </a
+      ><a name="512" class="Symbol"
+      >(</a
+      ><a name="513" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="514"
+      > </a
+      ><a name="515" href="lib.types.TLevel.html#515" class="Bound"
+      >m</a
+      ><a name="516" class="Symbol"
+      >)</a
+      ><a name="517"
+      > </a
+      ><a name="518" href="lib.types.TLevel.html#518" class="Bound"
+      >n</a
+      ><a name="519"
+      > </a
+      ><a name="520" class="Symbol"
+      >=</a
+      ><a name="521"
+      > </a
+      ><a name="522" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="524"
+      > </a
+      ><a name="525" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="526"
+      > </a
+      ><a name="527" class="Symbol"
+      >(</a
+      ><a name="528" href="lib.types.TLevel.html#435" class="Function"
+      >+2+-&#946;r</a
+      ><a name="534"
+      > </a
+      ><a name="535" href="lib.types.TLevel.html#515" class="Bound"
+      >m</a
+      ><a name="536"
+      > </a
+      ><a name="537" href="lib.types.TLevel.html#518" class="Bound"
+      >n</a
+      ><a name="538" class="Symbol"
+      >)</a
+      ><a name="539"
+      >
+
+</a
+      ><a name="541" href="lib.types.TLevel.html#541" class="Function"
+      >+2+-comm</a
+      ><a name="549"
+      > </a
+      ><a name="550" class="Symbol"
+      >:</a
+      ><a name="551"
+      > </a
+      ><a name="552" class="Symbol"
+      >(</a
+      ><a name="553" href="lib.types.TLevel.html#553" class="Bound"
+      >m</a
+      ><a name="554"
+      > </a
+      ><a name="555" href="lib.types.TLevel.html#555" class="Bound"
+      >n</a
+      ><a name="556"
+      > </a
+      ><a name="557" class="Symbol"
+      >:</a
+      ><a name="558"
+      > </a
+      ><a name="559" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="562" class="Symbol"
+      >)</a
+      ><a name="563"
+      > </a
+      ><a name="564" class="Symbol"
+      >&#8594;</a
+      ><a name="565"
+      > </a
+      ><a name="566" href="lib.types.TLevel.html#553" class="Bound"
+      >m</a
+      ><a name="567"
+      > </a
+      ><a name="568" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="571"
+      > </a
+      ><a name="572" href="lib.types.TLevel.html#555" class="Bound"
+      >n</a
+      ><a name="573"
+      > </a
+      ><a name="574" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="576"
+      > </a
+      ><a name="577" href="lib.types.TLevel.html#555" class="Bound"
+      >n</a
+      ><a name="578"
+      > </a
+      ><a name="579" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="582"
+      > </a
+      ><a name="583" href="lib.types.TLevel.html#553" class="Bound"
+      >m</a
+      ><a name="584"
+      >
+</a
+      ><a name="585" href="lib.types.TLevel.html#541" class="Function"
+      >+2+-comm</a
+      ><a name="593"
+      > </a
+      ><a name="594" href="lib.types.TLevel.html#594" class="Bound"
+      >m</a
+      ><a name="595"
+      > </a
+      ><a name="596" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="600"
+      > </a
+      ><a name="601" class="Symbol"
+      >=</a
+      ><a name="602"
+      > </a
+      ><a name="603" href="lib.types.TLevel.html#332" class="Function"
+      >+2+-unit-r</a
+      ><a name="613"
+      > </a
+      ><a name="614" href="lib.types.TLevel.html#594" class="Bound"
+      >m</a
+      ><a name="615"
+      >
+</a
+      ><a name="616" href="lib.types.TLevel.html#541" class="Function"
+      >+2+-comm</a
+      ><a name="624"
+      > </a
+      ><a name="625" href="lib.types.TLevel.html#625" class="Bound"
+      >m</a
+      ><a name="626"
+      > </a
+      ><a name="627" class="Symbol"
+      >(</a
+      ><a name="628" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="629"
+      > </a
+      ><a name="630" href="lib.types.TLevel.html#630" class="Bound"
+      >n</a
+      ><a name="631" class="Symbol"
+      >)</a
+      ><a name="632"
+      > </a
+      ><a name="633" class="Symbol"
+      >=</a
+      ><a name="634"
+      > </a
+      ><a name="635" href="lib.types.TLevel.html#435" class="Function"
+      >+2+-&#946;r</a
+      ><a name="641"
+      > </a
+      ><a name="642" href="lib.types.TLevel.html#625" class="Bound"
+      >m</a
+      ><a name="643"
+      > </a
+      ><a name="644" href="lib.types.TLevel.html#630" class="Bound"
+      >n</a
+      ><a name="645"
+      > </a
+      ><a name="646" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="647"
+      > </a
+      ><a name="648" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="650"
+      > </a
+      ><a name="651" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="652"
+      > </a
+      ><a name="653" class="Symbol"
+      >(</a
+      ><a name="654" href="lib.types.TLevel.html#541" class="Function"
+      >+2+-comm</a
+      ><a name="662"
+      > </a
+      ><a name="663" href="lib.types.TLevel.html#625" class="Bound"
+      >m</a
+      ><a name="664"
+      > </a
+      ><a name="665" href="lib.types.TLevel.html#630" class="Bound"
+      >n</a
+      ><a name="666" class="Symbol"
+      >)</a
+      ><a name="667"
+      >
+
+</a
+      ><a name="669" href="lib.types.TLevel.html#669" class="Function"
+      >+2+0</a
+      ><a name="673"
+      > </a
+      ><a name="674" class="Symbol"
+      >:</a
+      ><a name="675"
+      > </a
+      ><a name="676" class="Symbol"
+      >(</a
+      ><a name="677" href="lib.types.TLevel.html#677" class="Bound"
+      >n</a
+      ><a name="678"
+      > </a
+      ><a name="679" class="Symbol"
+      >:</a
+      ><a name="680"
+      > </a
+      ><a name="681" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="684" class="Symbol"
+      >)</a
+      ><a name="685"
+      > </a
+      ><a name="686" class="Symbol"
+      >&#8594;</a
+      ><a name="687"
+      > </a
+      ><a name="688" href="lib.types.TLevel.html#677" class="Bound"
+      >n</a
+      ><a name="689"
+      > </a
+      ><a name="690" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="693"
+      > </a
+      ><a name="694" class="Number"
+      >0</a
+      ><a name="695"
+      > </a
+      ><a name="696" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="698"
+      > </a
+      ><a name="699" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="700"
+      > </a
+      ><a name="701" class="Symbol"
+      >(</a
+      ><a name="702" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="703"
+      > </a
+      ><a name="704" href="lib.types.TLevel.html#677" class="Bound"
+      >n</a
+      ><a name="705" class="Symbol"
+      >)</a
+      ><a name="706"
+      >
+</a
+      ><a name="707" href="lib.types.TLevel.html#669" class="Function"
+      >+2+0</a
+      ><a name="711"
+      > </a
+      ><a name="712" href="lib.types.TLevel.html#712" class="Bound"
+      >n</a
+      ><a name="713"
+      > </a
+      ><a name="714" class="Symbol"
+      >=</a
+      ><a name="715"
+      > </a
+      ><a name="716" href="lib.types.TLevel.html#541" class="Function"
+      >+2+-comm</a
+      ><a name="724"
+      > </a
+      ><a name="725" href="lib.types.TLevel.html#712" class="Bound"
+      >n</a
+      ><a name="726"
+      > </a
+      ><a name="727" class="Number"
+      >0</a
+      ><a name="728"
+      >
+
+</a
+      ><a name="730" class="Comment"
+      >{- Inequalities -}</a
+      ><a name="748"
+      >
+</a
+      ><a name="749" class="Keyword"
+      >infix</a
+      ><a name="754"
+      > </a
+      ><a name="755" class="Number"
+      >40</a
+      ><a name="757"
+      > </a
+      ><a name="758" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >_&lt;T_</a
+      ><a name="762"
+      >
+</a
+      ><a name="763" class="Keyword"
+      >infix</a
+      ><a name="768"
+      > </a
+      ><a name="769" class="Number"
+      >40</a
+      ><a name="771"
+      > </a
+      ><a name="772" href="lib.types.TLevel.html#889" class="Function Operator"
+      >_&#8804;T_</a
+      ><a name="776"
+      >
+
+</a
+      ><a name="778" class="Keyword"
+      >data</a
+      ><a name="782"
+      > </a
+      ><a name="783" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >_&lt;T_</a
+      ><a name="787"
+      > </a
+      ><a name="788" class="Symbol"
+      >:</a
+      ><a name="789"
+      > </a
+      ><a name="790" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="793"
+      > </a
+      ><a name="794" class="Symbol"
+      >&#8594;</a
+      ><a name="795"
+      > </a
+      ><a name="796" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="799"
+      > </a
+      ><a name="800" class="Symbol"
+      >&#8594;</a
+      ><a name="801"
+      > </a
+      ><a name="802" href="lib.Base.html#1196" class="Function"
+      >Type&#8320;</a
+      ><a name="807"
+      > </a
+      ><a name="808" class="Keyword"
+      >where</a
+      ><a name="813"
+      >
+  </a
+      ><a name="816" href="lib.types.TLevel.html#816" class="InductiveConstructor"
+      >ltS</a
+      ><a name="819"
+      > </a
+      ><a name="820" class="Symbol"
+      >:</a
+      ><a name="821"
+      > </a
+      ><a name="822" class="Symbol"
+      >{</a
+      ><a name="823" href="lib.types.TLevel.html#823" class="Bound"
+      >m</a
+      ><a name="824"
+      > </a
+      ><a name="825" class="Symbol"
+      >:</a
+      ><a name="826"
+      > </a
+      ><a name="827" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="830" class="Symbol"
+      >}</a
+      ><a name="831"
+      > </a
+      ><a name="832" class="Symbol"
+      >&#8594;</a
+      ><a name="833"
+      > </a
+      ><a name="834" href="lib.types.TLevel.html#823" class="Bound"
+      >m</a
+      ><a name="835"
+      > </a
+      ><a name="836" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="838"
+      > </a
+      ><a name="839" class="Symbol"
+      >(</a
+      ><a name="840" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="841"
+      > </a
+      ><a name="842" href="lib.types.TLevel.html#823" class="Bound"
+      >m</a
+      ><a name="843" class="Symbol"
+      >)</a
+      ><a name="844"
+      >
+  </a
+      ><a name="847" href="lib.types.TLevel.html#847" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="851"
+      > </a
+      ><a name="852" class="Symbol"
+      >:</a
+      ><a name="853"
+      > </a
+      ><a name="854" class="Symbol"
+      >{</a
+      ><a name="855" href="lib.types.TLevel.html#855" class="Bound"
+      >m</a
+      ><a name="856"
+      > </a
+      ><a name="857" href="lib.types.TLevel.html#857" class="Bound"
+      >n</a
+      ><a name="858"
+      > </a
+      ><a name="859" class="Symbol"
+      >:</a
+      ><a name="860"
+      > </a
+      ><a name="861" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="864" class="Symbol"
+      >}</a
+      ><a name="865"
+      > </a
+      ><a name="866" class="Symbol"
+      >&#8594;</a
+      ><a name="867"
+      > </a
+      ><a name="868" href="lib.types.TLevel.html#855" class="Bound"
+      >m</a
+      ><a name="869"
+      > </a
+      ><a name="870" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="872"
+      > </a
+      ><a name="873" href="lib.types.TLevel.html#857" class="Bound"
+      >n</a
+      ><a name="874"
+      > </a
+      ><a name="875" class="Symbol"
+      >&#8594;</a
+      ><a name="876"
+      > </a
+      ><a name="877" href="lib.types.TLevel.html#855" class="Bound"
+      >m</a
+      ><a name="878"
+      > </a
+      ><a name="879" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="881"
+      > </a
+      ><a name="882" class="Symbol"
+      >(</a
+      ><a name="883" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="884"
+      > </a
+      ><a name="885" href="lib.types.TLevel.html#857" class="Bound"
+      >n</a
+      ><a name="886" class="Symbol"
+      >)</a
+      ><a name="887"
+      >
+
+</a
+      ><a name="889" href="lib.types.TLevel.html#889" class="Function Operator"
+      >_&#8804;T_</a
+      ><a name="893"
+      > </a
+      ><a name="894" class="Symbol"
+      >:</a
+      ><a name="895"
+      > </a
+      ><a name="896" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="899"
+      > </a
+      ><a name="900" class="Symbol"
+      >&#8594;</a
+      ><a name="901"
+      > </a
+      ><a name="902" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="905"
+      > </a
+      ><a name="906" class="Symbol"
+      >&#8594;</a
+      ><a name="907"
+      > </a
+      ><a name="908" href="lib.Base.html#1196" class="Function"
+      >Type&#8320;</a
+      ><a name="913"
+      >
+</a
+      ><a name="914" href="lib.types.TLevel.html#914" class="Bound"
+      >m</a
+      ><a name="915"
+      > </a
+      ><a name="916" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="918"
+      > </a
+      ><a name="919" href="lib.types.TLevel.html#919" class="Bound"
+      >n</a
+      ><a name="920"
+      > </a
+      ><a name="921" class="Symbol"
+      >=</a
+      ><a name="922"
+      > </a
+      ><a name="923" href="lib.Base.html#9033" class="Datatype"
+      >Coprod</a
+      ><a name="929"
+      > </a
+      ><a name="930" class="Symbol"
+      >(</a
+      ><a name="931" href="lib.types.TLevel.html#914" class="Bound"
+      >m</a
+      ><a name="932"
+      > </a
+      ><a name="933" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="935"
+      > </a
+      ><a name="936" href="lib.types.TLevel.html#919" class="Bound"
+      >n</a
+      ><a name="937" class="Symbol"
+      >)</a
+      ><a name="938"
+      > </a
+      ><a name="939" class="Symbol"
+      >(</a
+      ><a name="940" href="lib.types.TLevel.html#914" class="Bound"
+      >m</a
+      ><a name="941"
+      > </a
+      ><a name="942" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="944"
+      > </a
+      ><a name="945" href="lib.types.TLevel.html#919" class="Bound"
+      >n</a
+      ><a name="946" class="Symbol"
+      >)</a
+      ><a name="947"
+      >
+
+</a
+      ><a name="949" href="lib.types.TLevel.html#949" class="Function"
+      >-2&lt;T</a
+      ><a name="953"
+      > </a
+      ><a name="954" class="Symbol"
+      >:</a
+      ><a name="955"
+      > </a
+      ><a name="956" class="Symbol"
+      >(</a
+      ><a name="957" href="lib.types.TLevel.html#957" class="Bound"
+      >m</a
+      ><a name="958"
+      > </a
+      ><a name="959" class="Symbol"
+      >:</a
+      ><a name="960"
+      > </a
+      ><a name="961" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="964" class="Symbol"
+      >)</a
+      ><a name="965"
+      > </a
+      ><a name="966" class="Symbol"
+      >&#8594;</a
+      ><a name="967"
+      > </a
+      ><a name="968" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="972"
+      > </a
+      ><a name="973" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="975"
+      > </a
+      ><a name="976" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="977"
+      > </a
+      ><a name="978" href="lib.types.TLevel.html#957" class="Bound"
+      >m</a
+      ><a name="979"
+      >
+</a
+      ><a name="980" href="lib.types.TLevel.html#949" class="Function"
+      >-2&lt;T</a
+      ><a name="984"
+      > </a
+      ><a name="985" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="989"
+      > </a
+      ><a name="990" class="Symbol"
+      >=</a
+      ><a name="991"
+      > </a
+      ><a name="992" href="lib.types.TLevel.html#816" class="InductiveConstructor"
+      >ltS</a
+      ><a name="995"
+      >
+</a
+      ><a name="996" href="lib.types.TLevel.html#949" class="Function"
+      >-2&lt;T</a
+      ><a name="1000"
+      > </a
+      ><a name="1001" class="Symbol"
+      >(</a
+      ><a name="1002" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="1003"
+      > </a
+      ><a name="1004" href="lib.types.TLevel.html#1004" class="Bound"
+      >m</a
+      ><a name="1005" class="Symbol"
+      >)</a
+      ><a name="1006"
+      > </a
+      ><a name="1007" class="Symbol"
+      >=</a
+      ><a name="1008"
+      > </a
+      ><a name="1009" href="lib.types.TLevel.html#847" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="1013"
+      > </a
+      ><a name="1014" class="Symbol"
+      >(</a
+      ><a name="1015" href="lib.types.TLevel.html#949" class="Function"
+      >-2&lt;T</a
+      ><a name="1019"
+      > </a
+      ><a name="1020" href="lib.types.TLevel.html#1004" class="Bound"
+      >m</a
+      ><a name="1021" class="Symbol"
+      >)</a
+      ><a name="1022"
+      >
+
+</a
+      ><a name="1024" href="lib.types.TLevel.html#1024" class="Function"
+      >-2&#8804;T</a
+      ><a name="1028"
+      > </a
+      ><a name="1029" class="Symbol"
+      >:</a
+      ><a name="1030"
+      > </a
+      ><a name="1031" class="Symbol"
+      >(</a
+      ><a name="1032" href="lib.types.TLevel.html#1032" class="Bound"
+      >m</a
+      ><a name="1033"
+      > </a
+      ><a name="1034" class="Symbol"
+      >:</a
+      ><a name="1035"
+      > </a
+      ><a name="1036" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="1039" class="Symbol"
+      >)</a
+      ><a name="1040"
+      > </a
+      ><a name="1041" class="Symbol"
+      >&#8594;</a
+      ><a name="1042"
+      > </a
+      ><a name="1043" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="1047"
+      > </a
+      ><a name="1048" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="1050"
+      > </a
+      ><a name="1051" href="lib.types.TLevel.html#1032" class="Bound"
+      >m</a
+      ><a name="1052"
+      >
+</a
+      ><a name="1053" href="lib.types.TLevel.html#1024" class="Function"
+      >-2&#8804;T</a
+      ><a name="1057"
+      > </a
+      ><a name="1058" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="1062"
+      > </a
+      ><a name="1063" class="Symbol"
+      >=</a
+      ><a name="1064"
+      > </a
+      ><a name="1065" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1068"
+      > </a
+      ><a name="1069" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1072"
+      >
+</a
+      ><a name="1073" href="lib.types.TLevel.html#1024" class="Function"
+      >-2&#8804;T</a
+      ><a name="1077"
+      > </a
+      ><a name="1078" class="Symbol"
+      >(</a
+      ><a name="1079" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="1080"
+      > </a
+      ><a name="1081" href="lib.types.TLevel.html#1081" class="Bound"
+      >m</a
+      ><a name="1082" class="Symbol"
+      >)</a
+      ><a name="1083"
+      > </a
+      ><a name="1084" class="Symbol"
+      >=</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1089"
+      > </a
+      ><a name="1090" class="Symbol"
+      >(</a
+      ><a name="1091" href="lib.types.TLevel.html#949" class="Function"
+      >-2&lt;T</a
+      ><a name="1095"
+      > </a
+      ><a name="1096" href="lib.types.TLevel.html#1081" class="Bound"
+      >m</a
+      ><a name="1097" class="Symbol"
+      >)</a
+      ><a name="1098"
+      >
+
+</a
+      ><a name="1100" href="lib.types.TLevel.html#1100" class="Function"
+      >&lt;T-trans</a
+      ><a name="1108"
+      > </a
+      ><a name="1109" class="Symbol"
+      >:</a
+      ><a name="1110"
+      > </a
+      ><a name="1111" class="Symbol"
+      >{</a
+      ><a name="1112" href="lib.types.TLevel.html#1112" class="Bound"
+      >m</a
+      ><a name="1113"
+      > </a
+      ><a name="1114" href="lib.types.TLevel.html#1114" class="Bound"
+      >n</a
+      ><a name="1115"
+      > </a
+      ><a name="1116" href="lib.types.TLevel.html#1116" class="Bound"
+      >k</a
+      ><a name="1117"
+      > </a
+      ><a name="1118" class="Symbol"
+      >:</a
+      ><a name="1119"
+      > </a
+      ><a name="1120" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="1123" class="Symbol"
+      >}</a
+      ><a name="1124"
+      > </a
+      ><a name="1125" class="Symbol"
+      >&#8594;</a
+      ><a name="1126"
+      > </a
+      ><a name="1127" href="lib.types.TLevel.html#1112" class="Bound"
+      >m</a
+      ><a name="1128"
+      > </a
+      ><a name="1129" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="1131"
+      > </a
+      ><a name="1132" href="lib.types.TLevel.html#1114" class="Bound"
+      >n</a
+      ><a name="1133"
+      > </a
+      ><a name="1134" class="Symbol"
+      >&#8594;</a
+      ><a name="1135"
+      > </a
+      ><a name="1136" href="lib.types.TLevel.html#1114" class="Bound"
+      >n</a
+      ><a name="1137"
+      > </a
+      ><a name="1138" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="1140"
+      > </a
+      ><a name="1141" href="lib.types.TLevel.html#1116" class="Bound"
+      >k</a
+      ><a name="1142"
+      > </a
+      ><a name="1143" class="Symbol"
+      >&#8594;</a
+      ><a name="1144"
+      > </a
+      ><a name="1145" href="lib.types.TLevel.html#1112" class="Bound"
+      >m</a
+      ><a name="1146"
+      > </a
+      ><a name="1147" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="1149"
+      > </a
+      ><a name="1150" href="lib.types.TLevel.html#1116" class="Bound"
+      >k</a
+      ><a name="1151"
+      >
+</a
+      ><a name="1152" href="lib.types.TLevel.html#1100" class="Function"
+      >&lt;T-trans</a
+      ><a name="1160"
+      > </a
+      ><a name="1161" href="lib.types.TLevel.html#1161" class="Bound"
+      >lt&#8321;</a
+      ><a name="1164"
+      > </a
+      ><a name="1165" href="lib.types.TLevel.html#816" class="InductiveConstructor"
+      >ltS</a
+      ><a name="1168"
+      > </a
+      ><a name="1169" class="Symbol"
+      >=</a
+      ><a name="1170"
+      > </a
+      ><a name="1171" href="lib.types.TLevel.html#847" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="1175"
+      > </a
+      ><a name="1176" href="lib.types.TLevel.html#1161" class="Bound"
+      >lt&#8321;</a
+      ><a name="1179"
+      >
+</a
+      ><a name="1180" href="lib.types.TLevel.html#1100" class="Function"
+      >&lt;T-trans</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" href="lib.types.TLevel.html#1189" class="Bound"
+      >lt&#8321;</a
+      ><a name="1192"
+      > </a
+      ><a name="1193" class="Symbol"
+      >(</a
+      ><a name="1194" href="lib.types.TLevel.html#847" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="1198"
+      > </a
+      ><a name="1199" href="lib.types.TLevel.html#1199" class="Bound"
+      >lt&#8322;</a
+      ><a name="1202" class="Symbol"
+      >)</a
+      ><a name="1203"
+      > </a
+      ><a name="1204" class="Symbol"
+      >=</a
+      ><a name="1205"
+      > </a
+      ><a name="1206" href="lib.types.TLevel.html#847" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="1210"
+      > </a
+      ><a name="1211" class="Symbol"
+      >(</a
+      ><a name="1212" href="lib.types.TLevel.html#1100" class="Function"
+      >&lt;T-trans</a
+      ><a name="1220"
+      > </a
+      ><a name="1221" href="lib.types.TLevel.html#1189" class="Bound"
+      >lt&#8321;</a
+      ><a name="1224"
+      > </a
+      ><a name="1225" href="lib.types.TLevel.html#1199" class="Bound"
+      >lt&#8322;</a
+      ><a name="1228" class="Symbol"
+      >)</a
+      ><a name="1229"
+      >
+
+</a
+      ><a name="1231" href="lib.types.TLevel.html#1231" class="Function"
+      >&#8804;T-refl</a
+      ><a name="1238"
+      > </a
+      ><a name="1239" class="Symbol"
+      >:</a
+      ><a name="1240"
+      > </a
+      ><a name="1241" class="Symbol"
+      >{</a
+      ><a name="1242" href="lib.types.TLevel.html#1242" class="Bound"
+      >m</a
+      ><a name="1243"
+      > </a
+      ><a name="1244" class="Symbol"
+      >:</a
+      ><a name="1245"
+      > </a
+      ><a name="1246" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="1249" class="Symbol"
+      >}</a
+      ><a name="1250"
+      > </a
+      ><a name="1251" class="Symbol"
+      >&#8594;</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" href="lib.types.TLevel.html#1242" class="Bound"
+      >m</a
+      ><a name="1254"
+      > </a
+      ><a name="1255" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="1257"
+      > </a
+      ><a name="1258" href="lib.types.TLevel.html#1242" class="Bound"
+      >m</a
+      ><a name="1259"
+      >
+</a
+      ><a name="1260" href="lib.types.TLevel.html#1231" class="Function"
+      >&#8804;T-refl</a
+      ><a name="1267"
+      > </a
+      ><a name="1268" class="Symbol"
+      >=</a
+      ><a name="1269"
+      > </a
+      ><a name="1270" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1273"
+      > </a
+      ><a name="1274" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1277"
+      >
+
+</a
+      ><a name="1279" href="lib.types.TLevel.html#1279" class="Function"
+      >&#8804;T-trans</a
+      ><a name="1287"
+      > </a
+      ><a name="1288" class="Symbol"
+      >:</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" class="Symbol"
+      >{</a
+      ><a name="1291" href="lib.types.TLevel.html#1291" class="Bound"
+      >m</a
+      ><a name="1292"
+      > </a
+      ><a name="1293" href="lib.types.TLevel.html#1293" class="Bound"
+      >n</a
+      ><a name="1294"
+      > </a
+      ><a name="1295" href="lib.types.TLevel.html#1295" class="Bound"
+      >k</a
+      ><a name="1296"
+      > </a
+      ><a name="1297" class="Symbol"
+      >:</a
+      ><a name="1298"
+      > </a
+      ><a name="1299" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="1302" class="Symbol"
+      >}</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" class="Symbol"
+      >&#8594;</a
+      ><a name="1305"
+      > </a
+      ><a name="1306" href="lib.types.TLevel.html#1291" class="Bound"
+      >m</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="1310"
+      > </a
+      ><a name="1311" href="lib.types.TLevel.html#1293" class="Bound"
+      >n</a
+      ><a name="1312"
+      > </a
+      ><a name="1313" class="Symbol"
+      >&#8594;</a
+      ><a name="1314"
+      > </a
+      ><a name="1315" href="lib.types.TLevel.html#1293" class="Bound"
+      >n</a
+      ><a name="1316"
+      > </a
+      ><a name="1317" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="1319"
+      > </a
+      ><a name="1320" href="lib.types.TLevel.html#1295" class="Bound"
+      >k</a
+      ><a name="1321"
+      > </a
+      ><a name="1322" class="Symbol"
+      >&#8594;</a
+      ><a name="1323"
+      > </a
+      ><a name="1324" href="lib.types.TLevel.html#1291" class="Bound"
+      >m</a
+      ><a name="1325"
+      > </a
+      ><a name="1326" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="1328"
+      > </a
+      ><a name="1329" href="lib.types.TLevel.html#1295" class="Bound"
+      >k</a
+      ><a name="1330"
+      >
+</a
+      ><a name="1331" href="lib.types.TLevel.html#1279" class="Function"
+      >&#8804;T-trans</a
+      ><a name="1339"
+      > </a
+      ><a name="1340" class="Symbol"
+      >{</a
+      ><a name="1341" class="Argument"
+      >k</a
+      ><a name="1342"
+      > </a
+      ><a name="1343" class="Symbol"
+      >=</a
+      ><a name="1344"
+      > </a
+      ><a name="1345" href="lib.types.TLevel.html#1345" class="Bound"
+      >k</a
+      ><a name="1346" class="Symbol"
+      >}</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" class="Symbol"
+      >(</a
+      ><a name="1349" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1352"
+      > </a
+      ><a name="1353" href="lib.types.TLevel.html#1353" class="Bound"
+      >p&#8321;</a
+      ><a name="1355" class="Symbol"
+      >)</a
+      ><a name="1356"
+      > </a
+      ><a name="1357" href="lib.types.TLevel.html#1357" class="Bound"
+      >lte&#8322;</a
+      ><a name="1361"
+      > </a
+      ><a name="1362" class="Symbol"
+      >=</a
+      ><a name="1363"
+      > </a
+      ><a name="1364" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="1373"
+      > </a
+      ><a name="1374" class="Symbol"
+      >(&#955;</a
+      ><a name="1376"
+      > </a
+      ><a name="1377" href="lib.types.TLevel.html#1377" class="Bound"
+      >t</a
+      ><a name="1378"
+      > </a
+      ><a name="1379" class="Symbol"
+      >&#8594;</a
+      ><a name="1380"
+      > </a
+      ><a name="1381" href="lib.types.TLevel.html#1377" class="Bound"
+      >t</a
+      ><a name="1382"
+      > </a
+      ><a name="1383" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="1385"
+      > </a
+      ><a name="1386" href="lib.types.TLevel.html#1345" class="Bound"
+      >k</a
+      ><a name="1387" class="Symbol"
+      >)</a
+      ><a name="1388"
+      > </a
+      ><a name="1389" class="Symbol"
+      >(</a
+      ><a name="1390" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1391"
+      > </a
+      ><a name="1392" href="lib.types.TLevel.html#1353" class="Bound"
+      >p&#8321;</a
+      ><a name="1394" class="Symbol"
+      >)</a
+      ><a name="1395"
+      > </a
+      ><a name="1396" href="lib.types.TLevel.html#1357" class="Bound"
+      >lte&#8322;</a
+      ><a name="1400"
+      >
+</a
+      ><a name="1401" href="lib.types.TLevel.html#1279" class="Function"
+      >&#8804;T-trans</a
+      ><a name="1409"
+      > </a
+      ><a name="1410" class="Symbol"
+      >{</a
+      ><a name="1411" class="Argument"
+      >m</a
+      ><a name="1412"
+      > </a
+      ><a name="1413" class="Symbol"
+      >=</a
+      ><a name="1414"
+      > </a
+      ><a name="1415" href="lib.types.TLevel.html#1415" class="Bound"
+      >m</a
+      ><a name="1416" class="Symbol"
+      >}</a
+      ><a name="1417"
+      > </a
+      ><a name="1418" href="lib.types.TLevel.html#1418" class="Bound"
+      >lte&#8321;</a
+      ><a name="1422"
+      > </a
+      ><a name="1423" class="Symbol"
+      >(</a
+      ><a name="1424" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1427"
+      > </a
+      ><a name="1428" href="lib.types.TLevel.html#1428" class="Bound"
+      >p&#8322;</a
+      ><a name="1430" class="Symbol"
+      >)</a
+      ><a name="1431"
+      > </a
+      ><a name="1432" class="Symbol"
+      >=</a
+      ><a name="1433"
+      > </a
+      ><a name="1434" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="1443"
+      > </a
+      ><a name="1444" class="Symbol"
+      >(&#955;</a
+      ><a name="1446"
+      > </a
+      ><a name="1447" href="lib.types.TLevel.html#1447" class="Bound"
+      >t</a
+      ><a name="1448"
+      > </a
+      ><a name="1449" class="Symbol"
+      >&#8594;</a
+      ><a name="1450"
+      > </a
+      ><a name="1451" href="lib.types.TLevel.html#1415" class="Bound"
+      >m</a
+      ><a name="1452"
+      > </a
+      ><a name="1453" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="1455"
+      > </a
+      ><a name="1456" href="lib.types.TLevel.html#1447" class="Bound"
+      >t</a
+      ><a name="1457" class="Symbol"
+      >)</a
+      ><a name="1458"
+      > </a
+      ><a name="1459" href="lib.types.TLevel.html#1428" class="Bound"
+      >p&#8322;</a
+      ><a name="1461"
+      > </a
+      ><a name="1462" href="lib.types.TLevel.html#1418" class="Bound"
+      >lte&#8321;</a
+      ><a name="1466"
+      >
+</a
+      ><a name="1467" href="lib.types.TLevel.html#1279" class="Function"
+      >&#8804;T-trans</a
+      ><a name="1475"
+      > </a
+      ><a name="1476" class="Symbol"
+      >(</a
+      ><a name="1477" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1480"
+      > </a
+      ><a name="1481" href="lib.types.TLevel.html#1481" class="Bound"
+      >lt&#8321;</a
+      ><a name="1484" class="Symbol"
+      >)</a
+      ><a name="1485"
+      > </a
+      ><a name="1486" class="Symbol"
+      >(</a
+      ><a name="1487" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1490"
+      > </a
+      ><a name="1491" href="lib.types.TLevel.html#1491" class="Bound"
+      >lt&#8322;</a
+      ><a name="1494" class="Symbol"
+      >)</a
+      ><a name="1495"
+      > </a
+      ><a name="1496" class="Symbol"
+      >=</a
+      ><a name="1497"
+      > </a
+      ><a name="1498" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1501"
+      > </a
+      ><a name="1502" class="Symbol"
+      >(</a
+      ><a name="1503" href="lib.types.TLevel.html#1100" class="Function"
+      >&lt;T-trans</a
+      ><a name="1511"
+      > </a
+      ><a name="1512" href="lib.types.TLevel.html#1481" class="Bound"
+      >lt&#8321;</a
+      ><a name="1515"
+      > </a
+      ><a name="1516" href="lib.types.TLevel.html#1491" class="Bound"
+      >lt&#8322;</a
+      ><a name="1519" class="Symbol"
+      >)</a
+      ><a name="1520"
+      >
+
+</a
+      ><a name="1522" href="lib.types.TLevel.html#1522" class="Function"
+      >&lt;T-ap-S</a
+      ><a name="1529"
+      > </a
+      ><a name="1530" class="Symbol"
+      >:</a
+      ><a name="1531"
+      > </a
+      ><a name="1532" class="Symbol"
+      >{</a
+      ><a name="1533" href="lib.types.TLevel.html#1533" class="Bound"
+      >m</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" href="lib.types.TLevel.html#1535" class="Bound"
+      >n</a
+      ><a name="1536"
+      > </a
+      ><a name="1537" class="Symbol"
+      >:</a
+      ><a name="1538"
+      > </a
+      ><a name="1539" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="1542" class="Symbol"
+      >}</a
+      ><a name="1543"
+      > </a
+      ><a name="1544" class="Symbol"
+      >&#8594;</a
+      ><a name="1545"
+      > </a
+      ><a name="1546" href="lib.types.TLevel.html#1533" class="Bound"
+      >m</a
+      ><a name="1547"
+      > </a
+      ><a name="1548" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="1550"
+      > </a
+      ><a name="1551" href="lib.types.TLevel.html#1535" class="Bound"
+      >n</a
+      ><a name="1552"
+      > </a
+      ><a name="1553" class="Symbol"
+      >&#8594;</a
+      ><a name="1554"
+      > </a
+      ><a name="1555" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="1556"
+      > </a
+      ><a name="1557" href="lib.types.TLevel.html#1533" class="Bound"
+      >m</a
+      ><a name="1558"
+      > </a
+      ><a name="1559" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="1561"
+      > </a
+      ><a name="1562" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="1563"
+      > </a
+      ><a name="1564" href="lib.types.TLevel.html#1535" class="Bound"
+      >n</a
+      ><a name="1565"
+      >
+</a
+      ><a name="1566" href="lib.types.TLevel.html#1522" class="Function"
+      >&lt;T-ap-S</a
+      ><a name="1573"
+      > </a
+      ><a name="1574" href="lib.types.TLevel.html#816" class="InductiveConstructor"
+      >ltS</a
+      ><a name="1577"
+      > </a
+      ><a name="1578" class="Symbol"
+      >=</a
+      ><a name="1579"
+      > </a
+      ><a name="1580" href="lib.types.TLevel.html#816" class="InductiveConstructor"
+      >ltS</a
+      ><a name="1583"
+      >
+</a
+      ><a name="1584" href="lib.types.TLevel.html#1522" class="Function"
+      >&lt;T-ap-S</a
+      ><a name="1591"
+      > </a
+      ><a name="1592" class="Symbol"
+      >(</a
+      ><a name="1593" href="lib.types.TLevel.html#847" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="1597"
+      > </a
+      ><a name="1598" href="lib.types.TLevel.html#1598" class="Bound"
+      >lt</a
+      ><a name="1600" class="Symbol"
+      >)</a
+      ><a name="1601"
+      > </a
+      ><a name="1602" class="Symbol"
+      >=</a
+      ><a name="1603"
+      > </a
+      ><a name="1604" href="lib.types.TLevel.html#847" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="1608"
+      > </a
+      ><a name="1609" class="Symbol"
+      >(</a
+      ><a name="1610" href="lib.types.TLevel.html#1522" class="Function"
+      >&lt;T-ap-S</a
+      ><a name="1617"
+      > </a
+      ><a name="1618" href="lib.types.TLevel.html#1598" class="Bound"
+      >lt</a
+      ><a name="1620" class="Symbol"
+      >)</a
+      ><a name="1621"
+      >
+
+</a
+      ><a name="1623" href="lib.types.TLevel.html#1623" class="Function"
+      >&#8804;T-ap-S</a
+      ><a name="1630"
+      > </a
+      ><a name="1631" class="Symbol"
+      >:</a
+      ><a name="1632"
+      > </a
+      ><a name="1633" class="Symbol"
+      >{</a
+      ><a name="1634" href="lib.types.TLevel.html#1634" class="Bound"
+      >m</a
+      ><a name="1635"
+      > </a
+      ><a name="1636" href="lib.types.TLevel.html#1636" class="Bound"
+      >n</a
+      ><a name="1637"
+      > </a
+      ><a name="1638" class="Symbol"
+      >:</a
+      ><a name="1639"
+      > </a
+      ><a name="1640" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="1643" class="Symbol"
+      >}</a
+      ><a name="1644"
+      > </a
+      ><a name="1645" class="Symbol"
+      >&#8594;</a
+      ><a name="1646"
+      > </a
+      ><a name="1647" href="lib.types.TLevel.html#1634" class="Bound"
+      >m</a
+      ><a name="1648"
+      > </a
+      ><a name="1649" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="1651"
+      > </a
+      ><a name="1652" href="lib.types.TLevel.html#1636" class="Bound"
+      >n</a
+      ><a name="1653"
+      > </a
+      ><a name="1654" class="Symbol"
+      >&#8594;</a
+      ><a name="1655"
+      > </a
+      ><a name="1656" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="1657"
+      > </a
+      ><a name="1658" href="lib.types.TLevel.html#1634" class="Bound"
+      >m</a
+      ><a name="1659"
+      > </a
+      ><a name="1660" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="1662"
+      > </a
+      ><a name="1663" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="1664"
+      > </a
+      ><a name="1665" href="lib.types.TLevel.html#1636" class="Bound"
+      >n</a
+      ><a name="1666"
+      >
+</a
+      ><a name="1667" href="lib.types.TLevel.html#1623" class="Function"
+      >&#8804;T-ap-S</a
+      ><a name="1674"
+      > </a
+      ><a name="1675" class="Symbol"
+      >(</a
+      ><a name="1676" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1679"
+      > </a
+      ><a name="1680" href="lib.types.TLevel.html#1680" class="Bound"
+      >p</a
+      ><a name="1681" class="Symbol"
+      >)</a
+      ><a name="1682"
+      > </a
+      ><a name="1683" class="Symbol"
+      >=</a
+      ><a name="1684"
+      > </a
+      ><a name="1685" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1688"
+      > </a
+      ><a name="1689" class="Symbol"
+      >(</a
+      ><a name="1690" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="1694"
+      > </a
+      ><a name="1695" href="lib.types.TLevel.html#1680" class="Bound"
+      >p</a
+      ><a name="1696" class="Symbol"
+      >)</a
+      ><a name="1697"
+      >
+</a
+      ><a name="1698" href="lib.types.TLevel.html#1623" class="Function"
+      >&#8804;T-ap-S</a
+      ><a name="1705"
+      > </a
+      ><a name="1706" class="Symbol"
+      >(</a
+      ><a name="1707" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1710"
+      > </a
+      ><a name="1711" href="lib.types.TLevel.html#1711" class="Bound"
+      >lt</a
+      ><a name="1713" class="Symbol"
+      >)</a
+      ><a name="1714"
+      > </a
+      ><a name="1715" class="Symbol"
+      >=</a
+      ><a name="1716"
+      > </a
+      ><a name="1717" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1720"
+      > </a
+      ><a name="1721" class="Symbol"
+      >(</a
+      ><a name="1722" href="lib.types.TLevel.html#1522" class="Function"
+      >&lt;T-ap-S</a
+      ><a name="1729"
+      > </a
+      ><a name="1730" href="lib.types.TLevel.html#1711" class="Bound"
+      >lt</a
+      ><a name="1732" class="Symbol"
+      >)</a
+      ><a name="1733"
+      >
+
+</a
+      ><a name="1735" href="lib.types.TLevel.html#1735" class="Function"
+      >&lt;T-cancel-S</a
+      ><a name="1746"
+      > </a
+      ><a name="1747" class="Symbol"
+      >:</a
+      ><a name="1748"
+      > </a
+      ><a name="1749" class="Symbol"
+      >{</a
+      ><a name="1750" href="lib.types.TLevel.html#1750" class="Bound"
+      >m</a
+      ><a name="1751"
+      > </a
+      ><a name="1752" href="lib.types.TLevel.html#1752" class="Bound"
+      >n</a
+      ><a name="1753"
+      > </a
+      ><a name="1754" class="Symbol"
+      >:</a
+      ><a name="1755"
+      > </a
+      ><a name="1756" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="1759" class="Symbol"
+      >}</a
+      ><a name="1760"
+      > </a
+      ><a name="1761" class="Symbol"
+      >&#8594;</a
+      ><a name="1762"
+      > </a
+      ><a name="1763" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" href="lib.types.TLevel.html#1750" class="Bound"
+      >m</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="1769"
+      > </a
+      ><a name="1770" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="1771"
+      > </a
+      ><a name="1772" href="lib.types.TLevel.html#1752" class="Bound"
+      >n</a
+      ><a name="1773"
+      > </a
+      ><a name="1774" class="Symbol"
+      >&#8594;</a
+      ><a name="1775"
+      > </a
+      ><a name="1776" href="lib.types.TLevel.html#1750" class="Bound"
+      >m</a
+      ><a name="1777"
+      > </a
+      ><a name="1778" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="1780"
+      > </a
+      ><a name="1781" href="lib.types.TLevel.html#1752" class="Bound"
+      >n</a
+      ><a name="1782"
+      >
+</a
+      ><a name="1783" href="lib.types.TLevel.html#1735" class="Function"
+      >&lt;T-cancel-S</a
+      ><a name="1794"
+      > </a
+      ><a name="1795" href="lib.types.TLevel.html#816" class="InductiveConstructor"
+      >ltS</a
+      ><a name="1798"
+      > </a
+      ><a name="1799" class="Symbol"
+      >=</a
+      ><a name="1800"
+      > </a
+      ><a name="1801" href="lib.types.TLevel.html#816" class="InductiveConstructor"
+      >ltS</a
+      ><a name="1804"
+      >
+</a
+      ><a name="1805" href="lib.types.TLevel.html#1735" class="Function"
+      >&lt;T-cancel-S</a
+      ><a name="1816"
+      > </a
+      ><a name="1817" class="Symbol"
+      >(</a
+      ><a name="1818" href="lib.types.TLevel.html#847" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="1822"
+      > </a
+      ><a name="1823" href="lib.types.TLevel.html#1823" class="Bound"
+      >lt</a
+      ><a name="1825" class="Symbol"
+      >)</a
+      ><a name="1826"
+      > </a
+      ><a name="1827" class="Symbol"
+      >=</a
+      ><a name="1828"
+      > </a
+      ><a name="1829" href="lib.types.TLevel.html#1100" class="Function"
+      >&lt;T-trans</a
+      ><a name="1837"
+      > </a
+      ><a name="1838" href="lib.types.TLevel.html#816" class="InductiveConstructor"
+      >ltS</a
+      ><a name="1841"
+      > </a
+      ><a name="1842" href="lib.types.TLevel.html#1823" class="Bound"
+      >lt</a
+      ><a name="1844"
+      >
+
+</a
+      ><a name="1846" href="lib.types.TLevel.html#1846" class="Function"
+      >&lt;T-+2+-l</a
+      ><a name="1854"
+      > </a
+      ><a name="1855" class="Symbol"
+      >:</a
+      ><a name="1856"
+      > </a
+      ><a name="1857" class="Symbol"
+      >{</a
+      ><a name="1858" href="lib.types.TLevel.html#1858" class="Bound"
+      >m</a
+      ><a name="1859"
+      > </a
+      ><a name="1860" href="lib.types.TLevel.html#1860" class="Bound"
+      >n</a
+      ><a name="1861"
+      > </a
+      ><a name="1862" class="Symbol"
+      >:</a
+      ><a name="1863"
+      > </a
+      ><a name="1864" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="1867" class="Symbol"
+      >}</a
+      ><a name="1868"
+      > </a
+      ><a name="1869" class="Symbol"
+      >(</a
+      ><a name="1870" href="lib.types.TLevel.html#1870" class="Bound"
+      >k</a
+      ><a name="1871"
+      > </a
+      ><a name="1872" class="Symbol"
+      >:</a
+      ><a name="1873"
+      > </a
+      ><a name="1874" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="1877" class="Symbol"
+      >)</a
+      ><a name="1878"
+      > </a
+      ><a name="1879" class="Symbol"
+      >&#8594;</a
+      ><a name="1880"
+      > </a
+      ><a name="1881" href="lib.types.TLevel.html#1858" class="Bound"
+      >m</a
+      ><a name="1882"
+      > </a
+      ><a name="1883" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" href="lib.types.TLevel.html#1860" class="Bound"
+      >n</a
+      ><a name="1887"
+      > </a
+      ><a name="1888" class="Symbol"
+      >&#8594;</a
+      ><a name="1889"
+      > </a
+      ><a name="1890" class="Symbol"
+      >(</a
+      ><a name="1891" href="lib.types.TLevel.html#1870" class="Bound"
+      >k</a
+      ><a name="1892"
+      > </a
+      ><a name="1893" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="1896"
+      > </a
+      ><a name="1897" href="lib.types.TLevel.html#1858" class="Bound"
+      >m</a
+      ><a name="1898" class="Symbol"
+      >)</a
+      ><a name="1899"
+      > </a
+      ><a name="1900" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="1902"
+      > </a
+      ><a name="1903" class="Symbol"
+      >(</a
+      ><a name="1904" href="lib.types.TLevel.html#1870" class="Bound"
+      >k</a
+      ><a name="1905"
+      > </a
+      ><a name="1906" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="1909"
+      > </a
+      ><a name="1910" href="lib.types.TLevel.html#1860" class="Bound"
+      >n</a
+      ><a name="1911" class="Symbol"
+      >)</a
+      ><a name="1912"
+      >
+</a
+      ><a name="1913" href="lib.types.TLevel.html#1846" class="Function"
+      >&lt;T-+2+-l</a
+      ><a name="1921"
+      > </a
+      ><a name="1922" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="1926"
+      > </a
+      ><a name="1927" href="lib.types.TLevel.html#1927" class="Bound"
+      >lt</a
+      ><a name="1929"
+      > </a
+      ><a name="1930" class="Symbol"
+      >=</a
+      ><a name="1931"
+      > </a
+      ><a name="1932" href="lib.types.TLevel.html#1927" class="Bound"
+      >lt</a
+      ><a name="1934"
+      >
+</a
+      ><a name="1935" href="lib.types.TLevel.html#1846" class="Function"
+      >&lt;T-+2+-l</a
+      ><a name="1943"
+      > </a
+      ><a name="1944" class="Symbol"
+      >(</a
+      ><a name="1945" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="1946"
+      > </a
+      ><a name="1947" href="lib.types.TLevel.html#1947" class="Bound"
+      >k</a
+      ><a name="1948" class="Symbol"
+      >)</a
+      ><a name="1949"
+      > </a
+      ><a name="1950" href="lib.types.TLevel.html#1950" class="Bound"
+      >lt</a
+      ><a name="1952"
+      > </a
+      ><a name="1953" class="Symbol"
+      >=</a
+      ><a name="1954"
+      > </a
+      ><a name="1955" href="lib.types.TLevel.html#1522" class="Function"
+      >&lt;T-ap-S</a
+      ><a name="1962"
+      > </a
+      ><a name="1963" class="Symbol"
+      >(</a
+      ><a name="1964" href="lib.types.TLevel.html#1846" class="Function"
+      >&lt;T-+2+-l</a
+      ><a name="1972"
+      > </a
+      ><a name="1973" href="lib.types.TLevel.html#1947" class="Bound"
+      >k</a
+      ><a name="1974"
+      > </a
+      ><a name="1975" href="lib.types.TLevel.html#1950" class="Bound"
+      >lt</a
+      ><a name="1977" class="Symbol"
+      >)</a
+      ><a name="1978"
+      >
+
+</a
+      ><a name="1980" href="lib.types.TLevel.html#1980" class="Function"
+      >&#8804;T-+2+-l</a
+      ><a name="1988"
+      > </a
+      ><a name="1989" class="Symbol"
+      >:</a
+      ><a name="1990"
+      > </a
+      ><a name="1991" class="Symbol"
+      >{</a
+      ><a name="1992" href="lib.types.TLevel.html#1992" class="Bound"
+      >m</a
+      ><a name="1993"
+      > </a
+      ><a name="1994" href="lib.types.TLevel.html#1994" class="Bound"
+      >n</a
+      ><a name="1995"
+      > </a
+      ><a name="1996" class="Symbol"
+      >:</a
+      ><a name="1997"
+      > </a
+      ><a name="1998" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="2001" class="Symbol"
+      >}</a
+      ><a name="2002"
+      > </a
+      ><a name="2003" class="Symbol"
+      >(</a
+      ><a name="2004" href="lib.types.TLevel.html#2004" class="Bound"
+      >k</a
+      ><a name="2005"
+      > </a
+      ><a name="2006" class="Symbol"
+      >:</a
+      ><a name="2007"
+      > </a
+      ><a name="2008" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="2011" class="Symbol"
+      >)</a
+      ><a name="2012"
+      > </a
+      ><a name="2013" class="Symbol"
+      >&#8594;</a
+      ><a name="2014"
+      > </a
+      ><a name="2015" href="lib.types.TLevel.html#1992" class="Bound"
+      >m</a
+      ><a name="2016"
+      > </a
+      ><a name="2017" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="2019"
+      > </a
+      ><a name="2020" href="lib.types.TLevel.html#1994" class="Bound"
+      >n</a
+      ><a name="2021"
+      > </a
+      ><a name="2022" class="Symbol"
+      >&#8594;</a
+      ><a name="2023"
+      > </a
+      ><a name="2024" class="Symbol"
+      >(</a
+      ><a name="2025" href="lib.types.TLevel.html#2004" class="Bound"
+      >k</a
+      ><a name="2026"
+      > </a
+      ><a name="2027" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="2030"
+      > </a
+      ><a name="2031" href="lib.types.TLevel.html#1992" class="Bound"
+      >m</a
+      ><a name="2032" class="Symbol"
+      >)</a
+      ><a name="2033"
+      > </a
+      ><a name="2034" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="2036"
+      > </a
+      ><a name="2037" class="Symbol"
+      >(</a
+      ><a name="2038" href="lib.types.TLevel.html#2004" class="Bound"
+      >k</a
+      ><a name="2039"
+      > </a
+      ><a name="2040" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="2043"
+      > </a
+      ><a name="2044" href="lib.types.TLevel.html#1994" class="Bound"
+      >n</a
+      ><a name="2045" class="Symbol"
+      >)</a
+      ><a name="2046"
+      >
+</a
+      ><a name="2047" href="lib.types.TLevel.html#1980" class="Function"
+      >&#8804;T-+2+-l</a
+      ><a name="2055"
+      > </a
+      ><a name="2056" href="lib.types.TLevel.html#2056" class="Bound"
+      >k</a
+      ><a name="2057"
+      > </a
+      ><a name="2058" class="Symbol"
+      >(</a
+      ><a name="2059" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="2062"
+      > </a
+      ><a name="2063" href="lib.types.TLevel.html#2063" class="Bound"
+      >p</a
+      ><a name="2064" class="Symbol"
+      >)</a
+      ><a name="2065"
+      > </a
+      ><a name="2066" class="Symbol"
+      >=</a
+      ><a name="2067"
+      > </a
+      ><a name="2068" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="2071"
+      > </a
+      ><a name="2072" class="Symbol"
+      >(</a
+      ><a name="2073" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2075"
+      > </a
+      ><a name="2076" class="Symbol"
+      >(&#955;</a
+      ><a name="2078"
+      > </a
+      ><a name="2079" href="lib.types.TLevel.html#2079" class="Bound"
+      >t</a
+      ><a name="2080"
+      > </a
+      ><a name="2081" class="Symbol"
+      >&#8594;</a
+      ><a name="2082"
+      > </a
+      ><a name="2083" href="lib.types.TLevel.html#2056" class="Bound"
+      >k</a
+      ><a name="2084"
+      > </a
+      ><a name="2085" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="2088"
+      > </a
+      ><a name="2089" href="lib.types.TLevel.html#2079" class="Bound"
+      >t</a
+      ><a name="2090" class="Symbol"
+      >)</a
+      ><a name="2091"
+      > </a
+      ><a name="2092" href="lib.types.TLevel.html#2063" class="Bound"
+      >p</a
+      ><a name="2093" class="Symbol"
+      >)</a
+      ><a name="2094"
+      >
+</a
+      ><a name="2095" href="lib.types.TLevel.html#1980" class="Function"
+      >&#8804;T-+2+-l</a
+      ><a name="2103"
+      > </a
+      ><a name="2104" href="lib.types.TLevel.html#2104" class="Bound"
+      >k</a
+      ><a name="2105"
+      > </a
+      ><a name="2106" class="Symbol"
+      >(</a
+      ><a name="2107" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2110"
+      > </a
+      ><a name="2111" href="lib.types.TLevel.html#2111" class="Bound"
+      >lt</a
+      ><a name="2113" class="Symbol"
+      >)</a
+      ><a name="2114"
+      > </a
+      ><a name="2115" class="Symbol"
+      >=</a
+      ><a name="2116"
+      > </a
+      ><a name="2117" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2120"
+      > </a
+      ><a name="2121" class="Symbol"
+      >(</a
+      ><a name="2122" href="lib.types.TLevel.html#1846" class="Function"
+      >&lt;T-+2+-l</a
+      ><a name="2130"
+      > </a
+      ><a name="2131" href="lib.types.TLevel.html#2104" class="Bound"
+      >k</a
+      ><a name="2132"
+      > </a
+      ><a name="2133" href="lib.types.TLevel.html#2111" class="Bound"
+      >lt</a
+      ><a name="2135" class="Symbol"
+      >)</a
+      ><a name="2136"
+      >
+
+</a
+      ><a name="2138" href="lib.types.TLevel.html#2138" class="Function"
+      >&lt;T-+2+-r</a
+      ><a name="2146"
+      > </a
+      ><a name="2147" class="Symbol"
+      >:</a
+      ><a name="2148"
+      > </a
+      ><a name="2149" class="Symbol"
+      >{</a
+      ><a name="2150" href="lib.types.TLevel.html#2150" class="Bound"
+      >m</a
+      ><a name="2151"
+      > </a
+      ><a name="2152" href="lib.types.TLevel.html#2152" class="Bound"
+      >n</a
+      ><a name="2153"
+      > </a
+      ><a name="2154" class="Symbol"
+      >:</a
+      ><a name="2155"
+      > </a
+      ><a name="2156" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="2159" class="Symbol"
+      >}</a
+      ><a name="2160"
+      > </a
+      ><a name="2161" class="Symbol"
+      >(</a
+      ><a name="2162" href="lib.types.TLevel.html#2162" class="Bound"
+      >k</a
+      ><a name="2163"
+      > </a
+      ><a name="2164" class="Symbol"
+      >:</a
+      ><a name="2165"
+      > </a
+      ><a name="2166" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="2169" class="Symbol"
+      >)</a
+      ><a name="2170"
+      > </a
+      ><a name="2171" class="Symbol"
+      >&#8594;</a
+      ><a name="2172"
+      > </a
+      ><a name="2173" href="lib.types.TLevel.html#2150" class="Bound"
+      >m</a
+      ><a name="2174"
+      > </a
+      ><a name="2175" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="2177"
+      > </a
+      ><a name="2178" href="lib.types.TLevel.html#2152" class="Bound"
+      >n</a
+      ><a name="2179"
+      > </a
+      ><a name="2180" class="Symbol"
+      >&#8594;</a
+      ><a name="2181"
+      > </a
+      ><a name="2182" class="Symbol"
+      >(</a
+      ><a name="2183" href="lib.types.TLevel.html#2150" class="Bound"
+      >m</a
+      ><a name="2184"
+      > </a
+      ><a name="2185" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="2188"
+      > </a
+      ><a name="2189" href="lib.types.TLevel.html#2162" class="Bound"
+      >k</a
+      ><a name="2190" class="Symbol"
+      >)</a
+      ><a name="2191"
+      > </a
+      ><a name="2192" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="2194"
+      > </a
+      ><a name="2195" class="Symbol"
+      >(</a
+      ><a name="2196" href="lib.types.TLevel.html#2152" class="Bound"
+      >n</a
+      ><a name="2197"
+      > </a
+      ><a name="2198" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="2201"
+      > </a
+      ><a name="2202" href="lib.types.TLevel.html#2162" class="Bound"
+      >k</a
+      ><a name="2203" class="Symbol"
+      >)</a
+      ><a name="2204"
+      >
+</a
+      ><a name="2205" href="lib.types.TLevel.html#2138" class="Function"
+      >&lt;T-+2+-r</a
+      ><a name="2213"
+      > </a
+      ><a name="2214" href="lib.types.TLevel.html#2214" class="Bound"
+      >k</a
+      ><a name="2215"
+      > </a
+      ><a name="2216" href="lib.types.TLevel.html#816" class="InductiveConstructor"
+      >ltS</a
+      ><a name="2219"
+      > </a
+      ><a name="2220" class="Symbol"
+      >=</a
+      ><a name="2221"
+      > </a
+      ><a name="2222" href="lib.types.TLevel.html#816" class="InductiveConstructor"
+      >ltS</a
+      ><a name="2225"
+      >
+</a
+      ><a name="2226" href="lib.types.TLevel.html#2138" class="Function"
+      >&lt;T-+2+-r</a
+      ><a name="2234"
+      > </a
+      ><a name="2235" href="lib.types.TLevel.html#2235" class="Bound"
+      >k</a
+      ><a name="2236"
+      > </a
+      ><a name="2237" class="Symbol"
+      >(</a
+      ><a name="2238" href="lib.types.TLevel.html#847" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="2242"
+      > </a
+      ><a name="2243" href="lib.types.TLevel.html#2243" class="Bound"
+      >lt</a
+      ><a name="2245" class="Symbol"
+      >)</a
+      ><a name="2246"
+      > </a
+      ><a name="2247" class="Symbol"
+      >=</a
+      ><a name="2248"
+      > </a
+      ><a name="2249" href="lib.types.TLevel.html#847" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="2253"
+      > </a
+      ><a name="2254" class="Symbol"
+      >(</a
+      ><a name="2255" href="lib.types.TLevel.html#2138" class="Function"
+      >&lt;T-+2+-r</a
+      ><a name="2263"
+      > </a
+      ><a name="2264" href="lib.types.TLevel.html#2235" class="Bound"
+      >k</a
+      ><a name="2265"
+      > </a
+      ><a name="2266" href="lib.types.TLevel.html#2243" class="Bound"
+      >lt</a
+      ><a name="2268" class="Symbol"
+      >)</a
+      ><a name="2269"
+      >
+
+</a
+      ><a name="2271" href="lib.types.TLevel.html#2271" class="Function"
+      >&#8804;T-+2+-r</a
+      ><a name="2279"
+      > </a
+      ><a name="2280" class="Symbol"
+      >:</a
+      ><a name="2281"
+      > </a
+      ><a name="2282" class="Symbol"
+      >{</a
+      ><a name="2283" href="lib.types.TLevel.html#2283" class="Bound"
+      >m</a
+      ><a name="2284"
+      > </a
+      ><a name="2285" href="lib.types.TLevel.html#2285" class="Bound"
+      >n</a
+      ><a name="2286"
+      > </a
+      ><a name="2287" class="Symbol"
+      >:</a
+      ><a name="2288"
+      > </a
+      ><a name="2289" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="2292" class="Symbol"
+      >}</a
+      ><a name="2293"
+      > </a
+      ><a name="2294" class="Symbol"
+      >(</a
+      ><a name="2295" href="lib.types.TLevel.html#2295" class="Bound"
+      >k</a
+      ><a name="2296"
+      > </a
+      ><a name="2297" class="Symbol"
+      >:</a
+      ><a name="2298"
+      > </a
+      ><a name="2299" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="2302" class="Symbol"
+      >)</a
+      ><a name="2303"
+      > </a
+      ><a name="2304" class="Symbol"
+      >&#8594;</a
+      ><a name="2305"
+      > </a
+      ><a name="2306" href="lib.types.TLevel.html#2283" class="Bound"
+      >m</a
+      ><a name="2307"
+      > </a
+      ><a name="2308" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="2310"
+      > </a
+      ><a name="2311" href="lib.types.TLevel.html#2285" class="Bound"
+      >n</a
+      ><a name="2312"
+      > </a
+      ><a name="2313" class="Symbol"
+      >&#8594;</a
+      ><a name="2314"
+      > </a
+      ><a name="2315" class="Symbol"
+      >(</a
+      ><a name="2316" href="lib.types.TLevel.html#2283" class="Bound"
+      >m</a
+      ><a name="2317"
+      > </a
+      ><a name="2318" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="2321"
+      > </a
+      ><a name="2322" href="lib.types.TLevel.html#2295" class="Bound"
+      >k</a
+      ><a name="2323" class="Symbol"
+      >)</a
+      ><a name="2324"
+      > </a
+      ><a name="2325" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="2327"
+      > </a
+      ><a name="2328" class="Symbol"
+      >(</a
+      ><a name="2329" href="lib.types.TLevel.html#2285" class="Bound"
+      >n</a
+      ><a name="2330"
+      > </a
+      ><a name="2331" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="2334"
+      > </a
+      ><a name="2335" href="lib.types.TLevel.html#2295" class="Bound"
+      >k</a
+      ><a name="2336" class="Symbol"
+      >)</a
+      ><a name="2337"
+      >
+</a
+      ><a name="2338" href="lib.types.TLevel.html#2271" class="Function"
+      >&#8804;T-+2+-r</a
+      ><a name="2346"
+      > </a
+      ><a name="2347" href="lib.types.TLevel.html#2347" class="Bound"
+      >k</a
+      ><a name="2348"
+      > </a
+      ><a name="2349" class="Symbol"
+      >(</a
+      ><a name="2350" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="2353"
+      > </a
+      ><a name="2354" href="lib.types.TLevel.html#2354" class="Bound"
+      >p</a
+      ><a name="2355" class="Symbol"
+      >)</a
+      ><a name="2356"
+      > </a
+      ><a name="2357" class="Symbol"
+      >=</a
+      ><a name="2358"
+      > </a
+      ><a name="2359" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="2362"
+      > </a
+      ><a name="2363" class="Symbol"
+      >(</a
+      ><a name="2364" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2366"
+      > </a
+      ><a name="2367" class="Symbol"
+      >(&#955;</a
+      ><a name="2369"
+      > </a
+      ><a name="2370" href="lib.types.TLevel.html#2370" class="Bound"
+      >t</a
+      ><a name="2371"
+      > </a
+      ><a name="2372" class="Symbol"
+      >&#8594;</a
+      ><a name="2373"
+      > </a
+      ><a name="2374" href="lib.types.TLevel.html#2370" class="Bound"
+      >t</a
+      ><a name="2375"
+      > </a
+      ><a name="2376" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="2379"
+      > </a
+      ><a name="2380" href="lib.types.TLevel.html#2347" class="Bound"
+      >k</a
+      ><a name="2381" class="Symbol"
+      >)</a
+      ><a name="2382"
+      > </a
+      ><a name="2383" href="lib.types.TLevel.html#2354" class="Bound"
+      >p</a
+      ><a name="2384" class="Symbol"
+      >)</a
+      ><a name="2385"
+      >
+</a
+      ><a name="2386" href="lib.types.TLevel.html#2271" class="Function"
+      >&#8804;T-+2+-r</a
+      ><a name="2394"
+      > </a
+      ><a name="2395" href="lib.types.TLevel.html#2395" class="Bound"
+      >k</a
+      ><a name="2396"
+      > </a
+      ><a name="2397" class="Symbol"
+      >(</a
+      ><a name="2398" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2401"
+      > </a
+      ><a name="2402" href="lib.types.TLevel.html#2402" class="Bound"
+      >lt</a
+      ><a name="2404" class="Symbol"
+      >)</a
+      ><a name="2405"
+      > </a
+      ><a name="2406" class="Symbol"
+      >=</a
+      ><a name="2407"
+      > </a
+      ><a name="2408" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2411"
+      > </a
+      ><a name="2412" class="Symbol"
+      >(</a
+      ><a name="2413" href="lib.types.TLevel.html#2138" class="Function"
+      >&lt;T-+2+-r</a
+      ><a name="2421"
+      > </a
+      ><a name="2422" href="lib.types.TLevel.html#2395" class="Bound"
+      >k</a
+      ><a name="2423"
+      > </a
+      ><a name="2424" href="lib.types.TLevel.html#2402" class="Bound"
+      >lt</a
+      ><a name="2426" class="Symbol"
+      >)</a
+      ><a name="2427"
+      >
+
+</a
+      ><a name="2429" class="Keyword"
+      >private</a
+      ><a name="2436"
+      >
+  </a
+      ><a name="2439" href="lib.types.TLevel.html#2439" class="Function"
+      >T-get-S</a
+      ><a name="2446"
+      > </a
+      ><a name="2447" class="Symbol"
+      >:</a
+      ><a name="2448"
+      > </a
+      ><a name="2449" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="2452"
+      > </a
+      ><a name="2453" class="Symbol"
+      >&#8594;</a
+      ><a name="2454"
+      > </a
+      ><a name="2455" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="2458"
+      >
+  </a
+      ><a name="2461" href="lib.types.TLevel.html#2439" class="Function"
+      >T-get-S</a
+      ><a name="2468"
+      > </a
+      ><a name="2469" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="2473"
+      > </a
+      ><a name="2474" class="Symbol"
+      >=</a
+      ><a name="2475"
+      > </a
+      ><a name="2476" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="2477"
+      > </a
+      ><a name="2478" class="Number"
+      >42</a
+      ><a name="2480"
+      > </a
+      ><a name="2481" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="2482"
+      >
+  </a
+      ><a name="2485" href="lib.types.TLevel.html#2439" class="Function"
+      >T-get-S</a
+      ><a name="2492"
+      > </a
+      ><a name="2493" class="Symbol"
+      >(</a
+      ><a name="2494" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2495"
+      > </a
+      ><a name="2496" href="lib.types.TLevel.html#2496" class="Bound"
+      >n</a
+      ><a name="2497" class="Symbol"
+      >)</a
+      ><a name="2498"
+      > </a
+      ><a name="2499" class="Symbol"
+      >=</a
+      ><a name="2500"
+      > </a
+      ><a name="2501" href="lib.types.TLevel.html#2496" class="Bound"
+      >n</a
+      ><a name="2502"
+      >
+
+  </a
+      ><a name="2506" href="lib.types.TLevel.html#2506" class="Function"
+      >T-S&#8800;&#10216;-2&#10217;-type</a
+      ><a name="2519"
+      > </a
+      ><a name="2520" class="Symbol"
+      >:</a
+      ><a name="2521"
+      > </a
+      ><a name="2522" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="2525"
+      > </a
+      ><a name="2526" class="Symbol"
+      >&#8594;</a
+      ><a name="2527"
+      > </a
+      ><a name="2528" href="lib.Base.html#1196" class="Function"
+      >Type&#8320;</a
+      ><a name="2533"
+      >
+  </a
+      ><a name="2536" href="lib.types.TLevel.html#2506" class="Function"
+      >T-S&#8800;&#10216;-2&#10217;-type</a
+      ><a name="2549"
+      > </a
+      ><a name="2550" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="2554"
+      > </a
+      ><a name="2555" class="Symbol"
+      >=</a
+      ><a name="2556"
+      > </a
+      ><a name="2557" href="lib.Base.html#5924" class="Function"
+      >Empty</a
+      ><a name="2562"
+      >
+  </a
+      ><a name="2565" href="lib.types.TLevel.html#2506" class="Function"
+      >T-S&#8800;&#10216;-2&#10217;-type</a
+      ><a name="2578"
+      > </a
+      ><a name="2579" class="Symbol"
+      >(</a
+      ><a name="2580" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2581"
+      > </a
+      ><a name="2582" href="lib.types.TLevel.html#2582" class="Bound"
+      >n</a
+      ><a name="2583" class="Symbol"
+      >)</a
+      ><a name="2584"
+      > </a
+      ><a name="2585" class="Symbol"
+      >=</a
+      ><a name="2586"
+      > </a
+      ><a name="2587" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="2591"
+      >
+
+</a
+      ><a name="2593" href="lib.types.TLevel.html#2593" class="Function"
+      >T-S&#8800;&#10216;-2&#10217;</a
+      ><a name="2601"
+      > </a
+      ><a name="2602" class="Symbol"
+      >:</a
+      ><a name="2603"
+      > </a
+      ><a name="2604" class="Symbol"
+      >(</a
+      ><a name="2605" href="lib.types.TLevel.html#2605" class="Bound"
+      >n</a
+      ><a name="2606"
+      > </a
+      ><a name="2607" class="Symbol"
+      >:</a
+      ><a name="2608"
+      > </a
+      ><a name="2609" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="2612" class="Symbol"
+      >)</a
+      ><a name="2613"
+      > </a
+      ><a name="2614" class="Symbol"
+      >&#8594;</a
+      ><a name="2615"
+      > </a
+      ><a name="2616" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2617"
+      > </a
+      ><a name="2618" href="lib.types.TLevel.html#2605" class="Bound"
+      >n</a
+      ><a name="2619"
+      > </a
+      ><a name="2620" href="lib.Base.html#6094" class="Function Operator"
+      >&#8800;</a
+      ><a name="2621"
+      > </a
+      ><a name="2622" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="2626"
+      >
+</a
+      ><a name="2627" href="lib.types.TLevel.html#2593" class="Function"
+      >T-S&#8800;&#10216;-2&#10217;</a
+      ><a name="2635"
+      > </a
+      ><a name="2636" href="lib.types.TLevel.html#2636" class="Bound"
+      >n</a
+      ><a name="2637"
+      > </a
+      ><a name="2638" href="lib.types.TLevel.html#2638" class="Bound"
+      >p</a
+      ><a name="2639"
+      > </a
+      ><a name="2640" class="Symbol"
+      >=</a
+      ><a name="2641"
+      > </a
+      ><a name="2642" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="2651"
+      > </a
+      ><a name="2652" href="lib.types.TLevel.html#2506" class="Function"
+      >T-S&#8800;&#10216;-2&#10217;-type</a
+      ><a name="2665"
+      > </a
+      ><a name="2666" href="lib.types.TLevel.html#2638" class="Bound"
+      >p</a
+      ><a name="2667"
+      > </a
+      ><a name="2668" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="2672"
+      >
+
+</a
+      ><a name="2674" href="lib.types.TLevel.html#2674" class="Function"
+      >T-S&#8800;</a
+      ><a name="2678"
+      > </a
+      ><a name="2679" class="Symbol"
+      >:</a
+      ><a name="2680"
+      > </a
+      ><a name="2681" class="Symbol"
+      >(</a
+      ><a name="2682" href="lib.types.TLevel.html#2682" class="Bound"
+      >n</a
+      ><a name="2683"
+      > </a
+      ><a name="2684" class="Symbol"
+      >:</a
+      ><a name="2685"
+      > </a
+      ><a name="2686" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="2689" class="Symbol"
+      >)</a
+      ><a name="2690"
+      > </a
+      ><a name="2691" class="Symbol"
+      >&#8594;</a
+      ><a name="2692"
+      > </a
+      ><a name="2693" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2694"
+      > </a
+      ><a name="2695" href="lib.types.TLevel.html#2682" class="Bound"
+      >n</a
+      ><a name="2696"
+      > </a
+      ><a name="2697" href="lib.Base.html#6094" class="Function Operator"
+      >&#8800;</a
+      ><a name="2698"
+      > </a
+      ><a name="2699" href="lib.types.TLevel.html#2682" class="Bound"
+      >n</a
+      ><a name="2700"
+      >
+</a
+      ><a name="2701" href="lib.types.TLevel.html#2674" class="Function"
+      >T-S&#8800;</a
+      ><a name="2705"
+      > </a
+      ><a name="2706" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="2710"
+      > </a
+      ><a name="2711" href="lib.types.TLevel.html#2711" class="Bound"
+      >p</a
+      ><a name="2712"
+      > </a
+      ><a name="2713" class="Symbol"
+      >=</a
+      ><a name="2714"
+      > </a
+      ><a name="2715" href="lib.types.TLevel.html#2593" class="Function"
+      >T-S&#8800;&#10216;-2&#10217;</a
+      ><a name="2723"
+      > </a
+      ><a name="2724" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="2728"
+      > </a
+      ><a name="2729" href="lib.types.TLevel.html#2711" class="Bound"
+      >p</a
+      ><a name="2730"
+      >
+</a
+      ><a name="2731" href="lib.types.TLevel.html#2674" class="Function"
+      >T-S&#8800;</a
+      ><a name="2735"
+      > </a
+      ><a name="2736" class="Symbol"
+      >(</a
+      ><a name="2737" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2738"
+      > </a
+      ><a name="2739" href="lib.types.TLevel.html#2739" class="Bound"
+      >n</a
+      ><a name="2740" class="Symbol"
+      >)</a
+      ><a name="2741"
+      > </a
+      ><a name="2742" href="lib.types.TLevel.html#2742" class="Bound"
+      >p</a
+      ><a name="2743"
+      > </a
+      ><a name="2744" class="Symbol"
+      >=</a
+      ><a name="2745"
+      > </a
+      ><a name="2746" href="lib.types.TLevel.html#2674" class="Function"
+      >T-S&#8800;</a
+      ><a name="2750"
+      > </a
+      ><a name="2751" href="lib.types.TLevel.html#2739" class="Bound"
+      >n</a
+      ><a name="2752"
+      > </a
+      ><a name="2753" class="Symbol"
+      >(</a
+      ><a name="2754" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2756"
+      > </a
+      ><a name="2757" href="lib.types.TLevel.html#2439" class="Function"
+      >T-get-S</a
+      ><a name="2764"
+      > </a
+      ><a name="2765" href="lib.types.TLevel.html#2742" class="Bound"
+      >p</a
+      ><a name="2766" class="Symbol"
+      >)</a
+      ><a name="2767"
+      >
+
+</a
+      ><a name="2769" href="lib.types.TLevel.html#2769" class="Function"
+      >T-S+2+&#8800;</a
+      ><a name="2776"
+      > </a
+      ><a name="2777" class="Symbol"
+      >:</a
+      ><a name="2778"
+      > </a
+      ><a name="2779" class="Symbol"
+      >(</a
+      ><a name="2780" href="lib.types.TLevel.html#2780" class="Bound"
+      >n</a
+      ><a name="2781"
+      > </a
+      ><a name="2782" href="lib.types.TLevel.html#2782" class="Bound"
+      >k</a
+      ><a name="2783"
+      > </a
+      ><a name="2784" class="Symbol"
+      >:</a
+      ><a name="2785"
+      > </a
+      ><a name="2786" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="2789" class="Symbol"
+      >)</a
+      ><a name="2790"
+      > </a
+      ><a name="2791" class="Symbol"
+      >&#8594;</a
+      ><a name="2792"
+      > </a
+      ><a name="2793" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2794"
+      > </a
+      ><a name="2795" class="Symbol"
+      >(</a
+      ><a name="2796" href="lib.types.TLevel.html#2782" class="Bound"
+      >k</a
+      ><a name="2797"
+      > </a
+      ><a name="2798" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="2801"
+      > </a
+      ><a name="2802" href="lib.types.TLevel.html#2780" class="Bound"
+      >n</a
+      ><a name="2803" class="Symbol"
+      >)</a
+      ><a name="2804"
+      > </a
+      ><a name="2805" href="lib.Base.html#6094" class="Function Operator"
+      >&#8800;</a
+      ><a name="2806"
+      > </a
+      ><a name="2807" href="lib.types.TLevel.html#2780" class="Bound"
+      >n</a
+      ><a name="2808"
+      >
+</a
+      ><a name="2809" href="lib.types.TLevel.html#2769" class="Function"
+      >T-S+2+&#8800;</a
+      ><a name="2816"
+      > </a
+      ><a name="2817" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="2821"
+      > </a
+      ><a name="2822" href="lib.types.TLevel.html#2822" class="Bound"
+      >k</a
+      ><a name="2823"
+      > </a
+      ><a name="2824" href="lib.types.TLevel.html#2824" class="Bound"
+      >p</a
+      ><a name="2825"
+      > </a
+      ><a name="2826" class="Symbol"
+      >=</a
+      ><a name="2827"
+      > </a
+      ><a name="2828" href="lib.types.TLevel.html#2593" class="Function"
+      >T-S&#8800;&#10216;-2&#10217;</a
+      ><a name="2836"
+      > </a
+      ><a name="2837" class="Symbol"
+      >(</a
+      ><a name="2838" href="lib.types.TLevel.html#2822" class="Bound"
+      >k</a
+      ><a name="2839"
+      > </a
+      ><a name="2840" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="2843"
+      > </a
+      ><a name="2844" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="2848" class="Symbol"
+      >)</a
+      ><a name="2849"
+      > </a
+      ><a name="2850" href="lib.types.TLevel.html#2824" class="Bound"
+      >p</a
+      ><a name="2851"
+      >
+</a
+      ><a name="2852" href="lib.types.TLevel.html#2769" class="Function"
+      >T-S+2+&#8800;</a
+      ><a name="2859"
+      > </a
+      ><a name="2860" class="Symbol"
+      >(</a
+      ><a name="2861" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2862"
+      > </a
+      ><a name="2863" href="lib.types.TLevel.html#2863" class="Bound"
+      >n</a
+      ><a name="2864" class="Symbol"
+      >)</a
+      ><a name="2865"
+      > </a
+      ><a name="2866" href="lib.types.TLevel.html#2866" class="Bound"
+      >k</a
+      ><a name="2867"
+      > </a
+      ><a name="2868" href="lib.types.TLevel.html#2868" class="Bound"
+      >p</a
+      ><a name="2869"
+      > </a
+      ><a name="2870" class="Symbol"
+      >=</a
+      ><a name="2871"
+      > </a
+      ><a name="2872" href="lib.types.TLevel.html#2769" class="Function"
+      >T-S+2+&#8800;</a
+      ><a name="2879"
+      > </a
+      ><a name="2880" href="lib.types.TLevel.html#2863" class="Bound"
+      >n</a
+      ><a name="2881"
+      > </a
+      ><a name="2882" href="lib.types.TLevel.html#2866" class="Bound"
+      >k</a
+      ><a name="2883"
+      > </a
+      ><a name="2884" class="Symbol"
+      >(</a
+      ><a name="2885" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2887"
+      > </a
+      ><a name="2888" href="lib.types.TLevel.html#2439" class="Function"
+      >T-get-S</a
+      ><a name="2895"
+      > </a
+      ><a name="2896" class="Symbol"
+      >(</a
+      ><a name="2897" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2899"
+      > </a
+      ><a name="2900" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2901"
+      > </a
+      ><a name="2902" class="Symbol"
+      >(</a
+      ><a name="2903" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2904"
+      > </a
+      ><a name="2905" class="Symbol"
+      >(</a
+      ><a name="2906" href="lib.types.TLevel.html#435" class="Function"
+      >+2+-&#946;r</a
+      ><a name="2912"
+      > </a
+      ><a name="2913" href="lib.types.TLevel.html#2866" class="Bound"
+      >k</a
+      ><a name="2914"
+      > </a
+      ><a name="2915" href="lib.types.TLevel.html#2863" class="Bound"
+      >n</a
+      ><a name="2916" class="Symbol"
+      >))</a
+      ><a name="2918"
+      > </a
+      ><a name="2919" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2920"
+      > </a
+      ><a name="2921" href="lib.types.TLevel.html#2868" class="Bound"
+      >p</a
+      ><a name="2922" class="Symbol"
+      >))</a
+      ><a name="2924"
+      >
+
+</a
+      ><a name="2926" href="lib.types.TLevel.html#2926" class="Function"
+      >&lt;T-witness</a
+      ><a name="2936"
+      > </a
+      ><a name="2937" class="Symbol"
+      >:</a
+      ><a name="2938"
+      > </a
+      ><a name="2939" class="Symbol"
+      >{</a
+      ><a name="2940" href="lib.types.TLevel.html#2940" class="Bound"
+      >m</a
+      ><a name="2941"
+      > </a
+      ><a name="2942" href="lib.types.TLevel.html#2942" class="Bound"
+      >n</a
+      ><a name="2943"
+      > </a
+      ><a name="2944" class="Symbol"
+      >:</a
+      ><a name="2945"
+      > </a
+      ><a name="2946" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="2949" class="Symbol"
+      >}</a
+      ><a name="2950"
+      > </a
+      ><a name="2951" class="Symbol"
+      >&#8594;</a
+      ><a name="2952"
+      > </a
+      ><a name="2953" class="Symbol"
+      >(</a
+      ><a name="2954" href="lib.types.TLevel.html#2940" class="Bound"
+      >m</a
+      ><a name="2955"
+      > </a
+      ><a name="2956" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="2958"
+      > </a
+      ><a name="2959" href="lib.types.TLevel.html#2942" class="Bound"
+      >n</a
+      ><a name="2960" class="Symbol"
+      >)</a
+      ><a name="2961"
+      > </a
+      ><a name="2962" class="Symbol"
+      >&#8594;</a
+      ><a name="2963"
+      > </a
+      ><a name="2964" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="2965"
+      > </a
+      ><a name="2966" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="2969"
+      > </a
+      ><a name="2970" class="Symbol"
+      >(&#955;</a
+      ><a name="2972"
+      > </a
+      ><a name="2973" href="lib.types.TLevel.html#2973" class="Bound"
+      >k</a
+      ><a name="2974"
+      > </a
+      ><a name="2975" class="Symbol"
+      >&#8594;</a
+      ><a name="2976"
+      > </a
+      ><a name="2977" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2978"
+      > </a
+      ><a name="2979" href="lib.types.TLevel.html#2973" class="Bound"
+      >k</a
+      ><a name="2980"
+      > </a
+      ><a name="2981" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="2984"
+      > </a
+      ><a name="2985" href="lib.types.TLevel.html#2940" class="Bound"
+      >m</a
+      ><a name="2986"
+      > </a
+      ><a name="2987" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2989"
+      > </a
+      ><a name="2990" href="lib.types.TLevel.html#2942" class="Bound"
+      >n</a
+      ><a name="2991" class="Symbol"
+      >)</a
+      ><a name="2992"
+      >
+</a
+      ><a name="2993" href="lib.types.TLevel.html#2926" class="Function"
+      >&lt;T-witness</a
+      ><a name="3003"
+      > </a
+      ><a name="3004" href="lib.types.TLevel.html#816" class="InductiveConstructor"
+      >ltS</a
+      ><a name="3007"
+      > </a
+      ><a name="3008" class="Symbol"
+      >=</a
+      ><a name="3009"
+      > </a
+      ><a name="3010" class="Symbol"
+      >(</a
+      ><a name="3011" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="3015"
+      > </a
+      ><a name="3016" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3017"
+      > </a
+      ><a name="3018" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3021" class="Symbol"
+      >)</a
+      ><a name="3022"
+      >
+</a
+      ><a name="3023" href="lib.types.TLevel.html#2926" class="Function"
+      >&lt;T-witness</a
+      ><a name="3033"
+      > </a
+      ><a name="3034" class="Symbol"
+      >(</a
+      ><a name="3035" href="lib.types.TLevel.html#847" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="3039"
+      > </a
+      ><a name="3040" href="lib.types.TLevel.html#3040" class="Bound"
+      >lt</a
+      ><a name="3042" class="Symbol"
+      >)</a
+      ><a name="3043"
+      > </a
+      ><a name="3044" class="Symbol"
+      >=</a
+      ><a name="3045"
+      > </a
+      ><a name="3046" class="Keyword"
+      >let</a
+      ><a name="3049"
+      > </a
+      ><a name="3050" href="lib.types.TLevel.html#3050" class="Bound"
+      >w'</a
+      ><a name="3052"
+      > </a
+      ><a name="3053" class="Symbol"
+      >=</a
+      ><a name="3054"
+      > </a
+      ><a name="3055" href="lib.types.TLevel.html#2926" class="Function"
+      >&lt;T-witness</a
+      ><a name="3065"
+      > </a
+      ><a name="3066" href="lib.types.TLevel.html#3040" class="Bound"
+      >lt</a
+      ><a name="3068"
+      > </a
+      ><a name="3069" class="Keyword"
+      >in</a
+      ><a name="3071"
+      > </a
+      ><a name="3072" class="Symbol"
+      >(</a
+      ><a name="3073" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="3074"
+      > </a
+      ><a name="3075" class="Symbol"
+      >(</a
+      ><a name="3076" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="3079"
+      > </a
+      ><a name="3080" href="lib.types.TLevel.html#3050" class="Bound"
+      >w'</a
+      ><a name="3082" class="Symbol"
+      >)</a
+      ><a name="3083"
+      > </a
+      ><a name="3084" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3085"
+      > </a
+      ><a name="3086" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3088"
+      > </a
+      ><a name="3089" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="3090"
+      > </a
+      ><a name="3091" class="Symbol"
+      >(</a
+      ><a name="3092" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="3095"
+      > </a
+      ><a name="3096" href="lib.types.TLevel.html#3050" class="Bound"
+      >w'</a
+      ><a name="3098" class="Symbol"
+      >))</a
+      ><a name="3100"
+      >
+
+</a
+      ><a name="3102" href="lib.types.TLevel.html#3102" class="Function"
+      >&#8804;T-witness</a
+      ><a name="3112"
+      > </a
+      ><a name="3113" class="Symbol"
+      >:</a
+      ><a name="3114"
+      > </a
+      ><a name="3115" class="Symbol"
+      >{</a
+      ><a name="3116" href="lib.types.TLevel.html#3116" class="Bound"
+      >m</a
+      ><a name="3117"
+      > </a
+      ><a name="3118" href="lib.types.TLevel.html#3118" class="Bound"
+      >n</a
+      ><a name="3119"
+      > </a
+      ><a name="3120" class="Symbol"
+      >:</a
+      ><a name="3121"
+      > </a
+      ><a name="3122" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="3125" class="Symbol"
+      >}</a
+      ><a name="3126"
+      > </a
+      ><a name="3127" class="Symbol"
+      >&#8594;</a
+      ><a name="3128"
+      > </a
+      ><a name="3129" class="Symbol"
+      >(</a
+      ><a name="3130" href="lib.types.TLevel.html#3116" class="Bound"
+      >m</a
+      ><a name="3131"
+      > </a
+      ><a name="3132" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="3134"
+      > </a
+      ><a name="3135" href="lib.types.TLevel.html#3118" class="Bound"
+      >n</a
+      ><a name="3136" class="Symbol"
+      >)</a
+      ><a name="3137"
+      > </a
+      ><a name="3138" class="Symbol"
+      >&#8594;</a
+      ><a name="3139"
+      > </a
+      ><a name="3140" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="3141"
+      > </a
+      ><a name="3142" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="3145"
+      > </a
+      ><a name="3146" class="Symbol"
+      >(&#955;</a
+      ><a name="3148"
+      > </a
+      ><a name="3149" href="lib.types.TLevel.html#3149" class="Bound"
+      >k</a
+      ><a name="3150"
+      > </a
+      ><a name="3151" class="Symbol"
+      >&#8594;</a
+      ><a name="3152"
+      > </a
+      ><a name="3153" href="lib.types.TLevel.html#3149" class="Bound"
+      >k</a
+      ><a name="3154"
+      > </a
+      ><a name="3155" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="3158"
+      > </a
+      ><a name="3159" href="lib.types.TLevel.html#3116" class="Bound"
+      >m</a
+      ><a name="3160"
+      > </a
+      ><a name="3161" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3163"
+      > </a
+      ><a name="3164" href="lib.types.TLevel.html#3118" class="Bound"
+      >n</a
+      ><a name="3165" class="Symbol"
+      >)</a
+      ><a name="3166"
+      >
+</a
+      ><a name="3167" href="lib.types.TLevel.html#3102" class="Function"
+      >&#8804;T-witness</a
+      ><a name="3177"
+      > </a
+      ><a name="3178" class="Symbol"
+      >(</a
+      ><a name="3179" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="3182"
+      > </a
+      ><a name="3183" href="lib.types.TLevel.html#3183" class="Bound"
+      >p</a
+      ><a name="3184" class="Symbol"
+      >)</a
+      ><a name="3185"
+      > </a
+      ><a name="3186" class="Symbol"
+      >=</a
+      ><a name="3187"
+      > </a
+      ><a name="3188" class="Symbol"
+      >(</a
+      ><a name="3189" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="3193"
+      > </a
+      ><a name="3194" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3195"
+      > </a
+      ><a name="3196" href="lib.types.TLevel.html#3183" class="Bound"
+      >p</a
+      ><a name="3197" class="Symbol"
+      >)</a
+      ><a name="3198"
+      >
+</a
+      ><a name="3199" href="lib.types.TLevel.html#3102" class="Function"
+      >&#8804;T-witness</a
+      ><a name="3209"
+      > </a
+      ><a name="3210" class="Symbol"
+      >(</a
+      ><a name="3211" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3214"
+      > </a
+      ><a name="3215" href="lib.types.TLevel.html#3215" class="Bound"
+      >lt</a
+      ><a name="3217" class="Symbol"
+      >)</a
+      ><a name="3218"
+      > </a
+      ><a name="3219" class="Symbol"
+      >=</a
+      ><a name="3220"
+      > </a
+      ><a name="3221" class="Keyword"
+      >let</a
+      ><a name="3224"
+      > </a
+      ><a name="3225" href="lib.types.TLevel.html#3225" class="Bound"
+      >w'</a
+      ><a name="3227"
+      > </a
+      ><a name="3228" class="Symbol"
+      >=</a
+      ><a name="3229"
+      > </a
+      ><a name="3230" href="lib.types.TLevel.html#2926" class="Function"
+      >&lt;T-witness</a
+      ><a name="3240"
+      > </a
+      ><a name="3241" href="lib.types.TLevel.html#3215" class="Bound"
+      >lt</a
+      ><a name="3243"
+      > </a
+      ><a name="3244" class="Keyword"
+      >in</a
+      ><a name="3246"
+      > </a
+      ><a name="3247" class="Symbol"
+      >(</a
+      ><a name="3248" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="3249"
+      > </a
+      ><a name="3250" class="Symbol"
+      >(</a
+      ><a name="3251" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="3254"
+      > </a
+      ><a name="3255" href="lib.types.TLevel.html#3225" class="Bound"
+      >w'</a
+      ><a name="3257" class="Symbol"
+      >)</a
+      ><a name="3258"
+      > </a
+      ><a name="3259" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3260"
+      > </a
+      ><a name="3261" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="3264"
+      > </a
+      ><a name="3265" href="lib.types.TLevel.html#3225" class="Bound"
+      >w'</a
+      ><a name="3267" class="Symbol"
+      >)</a
+      ><a name="3268"
+      >
+
+</a
+      ><a name="3270" href="lib.types.TLevel.html#3270" class="Function"
+      >&lt;T-to-&#8804;T</a
+      ><a name="3278"
+      > </a
+      ><a name="3279" class="Symbol"
+      >:</a
+      ><a name="3280"
+      > </a
+      ><a name="3281" class="Symbol"
+      >{</a
+      ><a name="3282" href="lib.types.TLevel.html#3282" class="Bound"
+      >m</a
+      ><a name="3283"
+      > </a
+      ><a name="3284" href="lib.types.TLevel.html#3284" class="Bound"
+      >n</a
+      ><a name="3285"
+      > </a
+      ><a name="3286" class="Symbol"
+      >:</a
+      ><a name="3287"
+      > </a
+      ><a name="3288" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="3291" class="Symbol"
+      >}</a
+      ><a name="3292"
+      > </a
+      ><a name="3293" class="Symbol"
+      >&#8594;</a
+      ><a name="3294"
+      > </a
+      ><a name="3295" href="lib.types.TLevel.html#3282" class="Bound"
+      >m</a
+      ><a name="3296"
+      > </a
+      ><a name="3297" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="3299"
+      > </a
+      ><a name="3300" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="3301"
+      > </a
+      ><a name="3302" href="lib.types.TLevel.html#3284" class="Bound"
+      >n</a
+      ><a name="3303"
+      > </a
+      ><a name="3304" class="Symbol"
+      >&#8594;</a
+      ><a name="3305"
+      > </a
+      ><a name="3306" href="lib.types.TLevel.html#3282" class="Bound"
+      >m</a
+      ><a name="3307"
+      > </a
+      ><a name="3308" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="3310"
+      > </a
+      ><a name="3311" href="lib.types.TLevel.html#3284" class="Bound"
+      >n</a
+      ><a name="3312"
+      >
+</a
+      ><a name="3313" href="lib.types.TLevel.html#3270" class="Function"
+      >&lt;T-to-&#8804;T</a
+      ><a name="3321"
+      > </a
+      ><a name="3322" href="lib.types.TLevel.html#816" class="InductiveConstructor"
+      >ltS</a
+      ><a name="3325"
+      > </a
+      ><a name="3326" class="Symbol"
+      >=</a
+      ><a name="3327"
+      > </a
+      ><a name="3328" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="3331"
+      > </a
+      ><a name="3332" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3335"
+      >
+</a
+      ><a name="3336" href="lib.types.TLevel.html#3270" class="Function"
+      >&lt;T-to-&#8804;T</a
+      ><a name="3344"
+      > </a
+      ><a name="3345" class="Symbol"
+      >(</a
+      ><a name="3346" href="lib.types.TLevel.html#847" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="3350"
+      > </a
+      ><a name="3351" href="lib.types.TLevel.html#3351" class="Bound"
+      >lt</a
+      ><a name="3353" class="Symbol"
+      >)</a
+      ><a name="3354"
+      > </a
+      ><a name="3355" class="Symbol"
+      >=</a
+      ><a name="3356"
+      > </a
+      ><a name="3357" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3360"
+      > </a
+      ><a name="3361" href="lib.types.TLevel.html#3351" class="Bound"
+      >lt</a
+      ><a name="3363"
+      >
+
+</a
+      ><a name="3365" href="lib.types.TLevel.html#3365" class="Function"
+      >&lt;T-to-&#8800;</a
+      ><a name="3372"
+      > </a
+      ><a name="3373" class="Symbol"
+      >:</a
+      ><a name="3374"
+      > </a
+      ><a name="3375" class="Symbol"
+      >{</a
+      ><a name="3376" href="lib.types.TLevel.html#3376" class="Bound"
+      >m</a
+      ><a name="3377"
+      > </a
+      ><a name="3378" href="lib.types.TLevel.html#3378" class="Bound"
+      >n</a
+      ><a name="3379"
+      > </a
+      ><a name="3380" class="Symbol"
+      >:</a
+      ><a name="3381"
+      > </a
+      ><a name="3382" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="3385" class="Symbol"
+      >}</a
+      ><a name="3386"
+      > </a
+      ><a name="3387" class="Symbol"
+      >&#8594;</a
+      ><a name="3388"
+      > </a
+      ><a name="3389" class="Symbol"
+      >(</a
+      ><a name="3390" href="lib.types.TLevel.html#3376" class="Bound"
+      >m</a
+      ><a name="3391"
+      > </a
+      ><a name="3392" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="3394"
+      > </a
+      ><a name="3395" href="lib.types.TLevel.html#3378" class="Bound"
+      >n</a
+      ><a name="3396" class="Symbol"
+      >)</a
+      ><a name="3397"
+      > </a
+      ><a name="3398" class="Symbol"
+      >&#8594;</a
+      ><a name="3399"
+      > </a
+      ><a name="3400" href="lib.types.TLevel.html#3376" class="Bound"
+      >m</a
+      ><a name="3401"
+      > </a
+      ><a name="3402" href="lib.Base.html#6094" class="Function Operator"
+      >&#8800;</a
+      ><a name="3403"
+      > </a
+      ><a name="3404" href="lib.types.TLevel.html#3378" class="Bound"
+      >n</a
+      ><a name="3405"
+      >
+</a
+      ><a name="3406" href="lib.types.TLevel.html#3365" class="Function"
+      >&lt;T-to-&#8800;</a
+      ><a name="3413"
+      > </a
+      ><a name="3414" class="Symbol"
+      >{</a
+      ><a name="3415" href="lib.types.TLevel.html#3415" class="Bound"
+      >m</a
+      ><a name="3416" class="Symbol"
+      >}</a
+      ><a name="3417"
+      > </a
+      ><a name="3418" class="Symbol"
+      >{</a
+      ><a name="3419" href="lib.types.TLevel.html#3419" class="Bound"
+      >n</a
+      ><a name="3420" class="Symbol"
+      >}</a
+      ><a name="3421"
+      > </a
+      ><a name="3422" href="lib.types.TLevel.html#3422" class="Bound"
+      >lt</a
+      ><a name="3424"
+      > </a
+      ><a name="3425" href="lib.types.TLevel.html#3425" class="Bound"
+      >p</a
+      ><a name="3426"
+      > </a
+      ><a name="3427" class="Symbol"
+      >=</a
+      ><a name="3428"
+      > </a
+      ><a name="3429" href="lib.types.TLevel.html#2769" class="Function"
+      >T-S+2+&#8800;</a
+      ><a name="3436"
+      > </a
+      ><a name="3437" href="lib.types.TLevel.html#3415" class="Bound"
+      >m</a
+      ><a name="3438"
+      > </a
+      ><a name="3439" class="Symbol"
+      >(</a
+      ><a name="3440" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="3443"
+      > </a
+      ><a name="3444" href="lib.types.TLevel.html#3469" class="Function"
+      >w</a
+      ><a name="3445" class="Symbol"
+      >)</a
+      ><a name="3446"
+      > </a
+      ><a name="3447" class="Symbol"
+      >(</a
+      ><a name="3448" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="3451"
+      > </a
+      ><a name="3452" href="lib.types.TLevel.html#3469" class="Function"
+      >w</a
+      ><a name="3453"
+      > </a
+      ><a name="3454" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3455"
+      > </a
+      ><a name="3456" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3457"
+      > </a
+      ><a name="3458" href="lib.types.TLevel.html#3425" class="Bound"
+      >p</a
+      ><a name="3459" class="Symbol"
+      >)</a
+      ><a name="3460"
+      >
+  </a
+      ><a name="3463" class="Keyword"
+      >where</a
+      ><a name="3468"
+      > </a
+      ><a name="3469" href="lib.types.TLevel.html#3469" class="Function"
+      >w</a
+      ><a name="3470"
+      > </a
+      ><a name="3471" class="Symbol"
+      >=</a
+      ><a name="3472"
+      > </a
+      ><a name="3473" href="lib.types.TLevel.html#2926" class="Function"
+      >&lt;T-witness</a
+      ><a name="3483"
+      > </a
+      ><a name="3484" href="lib.types.TLevel.html#3422" class="Bound"
+      >lt</a
+      ><a name="3486"
+      >
+
+</a
+      ><a name="3488" href="lib.types.TLevel.html#3488" class="Function"
+      >=-to-&#8814;T</a
+      ><a name="3495"
+      > </a
+      ><a name="3496" class="Symbol"
+      >:</a
+      ><a name="3497"
+      > </a
+      ><a name="3498" class="Symbol"
+      >{</a
+      ><a name="3499" href="lib.types.TLevel.html#3499" class="Bound"
+      >m</a
+      ><a name="3500"
+      > </a
+      ><a name="3501" href="lib.types.TLevel.html#3501" class="Bound"
+      >n</a
+      ><a name="3502"
+      > </a
+      ><a name="3503" class="Symbol"
+      >:</a
+      ><a name="3504"
+      > </a
+      ><a name="3505" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="3508" class="Symbol"
+      >}</a
+      ><a name="3509"
+      > </a
+      ><a name="3510" class="Symbol"
+      >&#8594;</a
+      ><a name="3511"
+      > </a
+      ><a name="3512" class="Symbol"
+      >(</a
+      ><a name="3513" href="lib.types.TLevel.html#3499" class="Bound"
+      >m</a
+      ><a name="3514"
+      > </a
+      ><a name="3515" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3517"
+      > </a
+      ><a name="3518" href="lib.types.TLevel.html#3501" class="Bound"
+      >n</a
+      ><a name="3519" class="Symbol"
+      >)</a
+      ><a name="3520"
+      > </a
+      ><a name="3521" class="Symbol"
+      >&#8594;</a
+      ><a name="3522"
+      > </a
+      ><a name="3523" href="lib.Base.html#6049" class="Function"
+      >&#172;</a
+      ><a name="3524"
+      > </a
+      ><a name="3525" class="Symbol"
+      >(</a
+      ><a name="3526" href="lib.types.TLevel.html#3499" class="Bound"
+      >m</a
+      ><a name="3527"
+      > </a
+      ><a name="3528" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="3530"
+      > </a
+      ><a name="3531" href="lib.types.TLevel.html#3501" class="Bound"
+      >n</a
+      ><a name="3532" class="Symbol"
+      >)</a
+      ><a name="3533"
+      >
+</a
+      ><a name="3534" href="lib.types.TLevel.html#3488" class="Function"
+      >=-to-&#8814;T</a
+      ><a name="3541"
+      > </a
+      ><a name="3542" href="lib.types.TLevel.html#3542" class="Bound"
+      >p</a
+      ><a name="3543"
+      > </a
+      ><a name="3544" href="lib.types.TLevel.html#3544" class="Bound"
+      >lt</a
+      ><a name="3546"
+      > </a
+      ><a name="3547" class="Symbol"
+      >=</a
+      ><a name="3548"
+      > </a
+      ><a name="3549" href="lib.types.TLevel.html#3365" class="Function"
+      >&lt;T-to-&#8800;</a
+      ><a name="3556"
+      > </a
+      ><a name="3557" href="lib.types.TLevel.html#3544" class="Bound"
+      >lt</a
+      ><a name="3559"
+      > </a
+      ><a name="3560" href="lib.types.TLevel.html#3542" class="Bound"
+      >p</a
+      ><a name="3561"
+      >
+
+</a
+      ><a name="3563" href="lib.types.TLevel.html#3563" class="Function"
+      >&lt;T-to-&#8815;T</a
+      ><a name="3571"
+      > </a
+      ><a name="3572" class="Symbol"
+      >:</a
+      ><a name="3573"
+      > </a
+      ><a name="3574" class="Symbol"
+      >{</a
+      ><a name="3575" href="lib.types.TLevel.html#3575" class="Bound"
+      >m</a
+      ><a name="3576"
+      > </a
+      ><a name="3577" href="lib.types.TLevel.html#3577" class="Bound"
+      >n</a
+      ><a name="3578"
+      > </a
+      ><a name="3579" class="Symbol"
+      >:</a
+      ><a name="3580"
+      > </a
+      ><a name="3581" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="3584" class="Symbol"
+      >}</a
+      ><a name="3585"
+      > </a
+      ><a name="3586" class="Symbol"
+      >&#8594;</a
+      ><a name="3587"
+      > </a
+      ><a name="3588" class="Symbol"
+      >(</a
+      ><a name="3589" href="lib.types.TLevel.html#3575" class="Bound"
+      >m</a
+      ><a name="3590"
+      > </a
+      ><a name="3591" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="3593"
+      > </a
+      ><a name="3594" href="lib.types.TLevel.html#3577" class="Bound"
+      >n</a
+      ><a name="3595" class="Symbol"
+      >)</a
+      ><a name="3596"
+      > </a
+      ><a name="3597" class="Symbol"
+      >&#8594;</a
+      ><a name="3598"
+      > </a
+      ><a name="3599" href="lib.Base.html#6049" class="Function"
+      >&#172;</a
+      ><a name="3600"
+      > </a
+      ><a name="3601" class="Symbol"
+      >(</a
+      ><a name="3602" href="lib.types.TLevel.html#3577" class="Bound"
+      >n</a
+      ><a name="3603"
+      > </a
+      ><a name="3604" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="3606"
+      > </a
+      ><a name="3607" href="lib.types.TLevel.html#3575" class="Bound"
+      >m</a
+      ><a name="3608" class="Symbol"
+      >)</a
+      ><a name="3609"
+      >
+</a
+      ><a name="3610" href="lib.types.TLevel.html#3563" class="Function"
+      >&lt;T-to-&#8815;T</a
+      ><a name="3618"
+      > </a
+      ><a name="3619" href="lib.types.TLevel.html#3619" class="Bound"
+      >lt</a
+      ><a name="3621"
+      > </a
+      ><a name="3622" href="lib.types.TLevel.html#3622" class="Bound"
+      >gt</a
+      ><a name="3624"
+      > </a
+      ><a name="3625" class="Symbol"
+      >=</a
+      ><a name="3626"
+      > </a
+      ><a name="3627" href="lib.types.TLevel.html#3488" class="Function"
+      >=-to-&#8814;T</a
+      ><a name="3634"
+      > </a
+      ><a name="3635" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3638"
+      > </a
+      ><a name="3639" class="Symbol"
+      >(</a
+      ><a name="3640" href="lib.types.TLevel.html#1100" class="Function"
+      >&lt;T-trans</a
+      ><a name="3648"
+      > </a
+      ><a name="3649" href="lib.types.TLevel.html#3619" class="Bound"
+      >lt</a
+      ><a name="3651"
+      > </a
+      ><a name="3652" href="lib.types.TLevel.html#3622" class="Bound"
+      >gt</a
+      ><a name="3654" class="Symbol"
+      >)</a
+      ><a name="3655"
+      >
+
+</a
+      ><a name="3657" href="lib.types.TLevel.html#3657" class="Function"
+      >&lt;T-to-&#8817;T</a
+      ><a name="3665"
+      > </a
+      ><a name="3666" class="Symbol"
+      >:</a
+      ><a name="3667"
+      > </a
+      ><a name="3668" class="Symbol"
+      >{</a
+      ><a name="3669" href="lib.types.TLevel.html#3669" class="Bound"
+      >m</a
+      ><a name="3670"
+      > </a
+      ><a name="3671" href="lib.types.TLevel.html#3671" class="Bound"
+      >n</a
+      ><a name="3672"
+      > </a
+      ><a name="3673" class="Symbol"
+      >:</a
+      ><a name="3674"
+      > </a
+      ><a name="3675" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="3678" class="Symbol"
+      >}</a
+      ><a name="3679"
+      > </a
+      ><a name="3680" class="Symbol"
+      >&#8594;</a
+      ><a name="3681"
+      > </a
+      ><a name="3682" class="Symbol"
+      >(</a
+      ><a name="3683" href="lib.types.TLevel.html#3669" class="Bound"
+      >m</a
+      ><a name="3684"
+      > </a
+      ><a name="3685" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="3687"
+      > </a
+      ><a name="3688" href="lib.types.TLevel.html#3671" class="Bound"
+      >n</a
+      ><a name="3689" class="Symbol"
+      >)</a
+      ><a name="3690"
+      > </a
+      ><a name="3691" class="Symbol"
+      >&#8594;</a
+      ><a name="3692"
+      > </a
+      ><a name="3693" href="lib.Base.html#6049" class="Function"
+      >&#172;</a
+      ><a name="3694"
+      > </a
+      ><a name="3695" class="Symbol"
+      >(</a
+      ><a name="3696" href="lib.types.TLevel.html#3671" class="Bound"
+      >n</a
+      ><a name="3697"
+      > </a
+      ><a name="3698" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="3700"
+      > </a
+      ><a name="3701" href="lib.types.TLevel.html#3669" class="Bound"
+      >m</a
+      ><a name="3702" class="Symbol"
+      >)</a
+      ><a name="3703"
+      >
+</a
+      ><a name="3704" href="lib.types.TLevel.html#3657" class="Function"
+      >&lt;T-to-&#8817;T</a
+      ><a name="3712"
+      > </a
+      ><a name="3713" href="lib.types.TLevel.html#3713" class="Bound"
+      >lt</a
+      ><a name="3715"
+      > </a
+      ><a name="3716" class="Symbol"
+      >(</a
+      ><a name="3717" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="3720"
+      > </a
+      ><a name="3721" href="lib.types.TLevel.html#3721" class="Bound"
+      >p</a
+      ><a name="3722" class="Symbol"
+      >)</a
+      ><a name="3723"
+      > </a
+      ><a name="3724" class="Symbol"
+      >=</a
+      ><a name="3725"
+      > </a
+      ><a name="3726" href="lib.types.TLevel.html#3365" class="Function"
+      >&lt;T-to-&#8800;</a
+      ><a name="3733"
+      > </a
+      ><a name="3734" href="lib.types.TLevel.html#3713" class="Bound"
+      >lt</a
+      ><a name="3736"
+      > </a
+      ><a name="3737" class="Symbol"
+      >(</a
+      ><a name="3738" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3739"
+      > </a
+      ><a name="3740" href="lib.types.TLevel.html#3721" class="Bound"
+      >p</a
+      ><a name="3741" class="Symbol"
+      >)</a
+      ><a name="3742"
+      >
+</a
+      ><a name="3743" href="lib.types.TLevel.html#3657" class="Function"
+      >&lt;T-to-&#8817;T</a
+      ><a name="3751"
+      > </a
+      ><a name="3752" href="lib.types.TLevel.html#3752" class="Bound"
+      >lt</a
+      ><a name="3754"
+      > </a
+      ><a name="3755" class="Symbol"
+      >(</a
+      ><a name="3756" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3759"
+      > </a
+      ><a name="3760" href="lib.types.TLevel.html#3760" class="Bound"
+      >gt</a
+      ><a name="3762" class="Symbol"
+      >)</a
+      ><a name="3763"
+      > </a
+      ><a name="3764" class="Symbol"
+      >=</a
+      ><a name="3765"
+      > </a
+      ><a name="3766" href="lib.types.TLevel.html#3563" class="Function"
+      >&lt;T-to-&#8815;T</a
+      ><a name="3774"
+      > </a
+      ><a name="3775" href="lib.types.TLevel.html#3752" class="Bound"
+      >lt</a
+      ><a name="3777"
+      > </a
+      ><a name="3778" href="lib.types.TLevel.html#3760" class="Bound"
+      >gt</a
+      ><a name="3780"
+      >
+
+</a
+      ><a name="3782" class="Comment"
+      >{-
+-2-monotone-&lt; : {m n : &#8469;} &#8594; (m &lt; n) &#8594; (m -2 &lt;T n -2)
+-2-monotone-&lt; ltS = ltS
+-2-monotone-&lt; (ltSR lt) = ltSR (-2-monotone-&lt; lt)
+
+-2-monotone-&#8804; : {m n : &#8469;} &#8594; (m &#8804; n) &#8594; (m -2 &#8804;T n -2)
+-2-monotone-&#8804; (inl p) = inl (ap _-2 p)
+-2-monotone-&#8804; (inr lt) = inr (-2-monotone-&lt; lt)
+-}</a
+      ><a name="4055"
+      >
+
+</a
+      ><a name="4057" href="lib.types.TLevel.html#4057" class="Function"
+      >&#10216;&#10217;-monotone-&lt;</a
+      ><a name="4070"
+      > </a
+      ><a name="4071" class="Symbol"
+      >:</a
+      ><a name="4072"
+      > </a
+      ><a name="4073" class="Symbol"
+      >{</a
+      ><a name="4074" href="lib.types.TLevel.html#4074" class="Bound"
+      >m</a
+      ><a name="4075"
+      > </a
+      ><a name="4076" href="lib.types.TLevel.html#4076" class="Bound"
+      >n</a
+      ><a name="4077"
+      > </a
+      ><a name="4078" class="Symbol"
+      >:</a
+      ><a name="4079"
+      > </a
+      ><a name="4080" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="4081" class="Symbol"
+      >}</a
+      ><a name="4082"
+      > </a
+      ><a name="4083" class="Symbol"
+      >&#8594;</a
+      ><a name="4084"
+      > </a
+      ><a name="4085" class="Symbol"
+      >(</a
+      ><a name="4086" href="lib.types.TLevel.html#4074" class="Bound"
+      >m</a
+      ><a name="4087"
+      > </a
+      ><a name="4088" href="lib.types.Nat.html#1660" class="Datatype Operator"
+      >&lt;</a
+      ><a name="4089"
+      > </a
+      ><a name="4090" href="lib.types.TLevel.html#4076" class="Bound"
+      >n</a
+      ><a name="4091" class="Symbol"
+      >)</a
+      ><a name="4092"
+      > </a
+      ><a name="4093" class="Symbol"
+      >&#8594;</a
+      ><a name="4094"
+      > </a
+      ><a name="4095" class="Symbol"
+      >(</a
+      ><a name="4096" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="4097"
+      > </a
+      ><a name="4098" href="lib.types.TLevel.html#4074" class="Bound"
+      >m</a
+      ><a name="4099"
+      > </a
+      ><a name="4100" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="4101"
+      > </a
+      ><a name="4102" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="4104"
+      > </a
+      ><a name="4105" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="4106"
+      > </a
+      ><a name="4107" href="lib.types.TLevel.html#4076" class="Bound"
+      >n</a
+      ><a name="4108"
+      > </a
+      ><a name="4109" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="4110" class="Symbol"
+      >)</a
+      ><a name="4111"
+      >
+</a
+      ><a name="4112" href="lib.types.TLevel.html#4057" class="Function"
+      >&#10216;&#10217;-monotone-&lt;</a
+      ><a name="4125"
+      > </a
+      ><a name="4126" href="lib.types.Nat.html#1688" class="InductiveConstructor"
+      >ltS</a
+      ><a name="4129"
+      > </a
+      ><a name="4130" class="Symbol"
+      >=</a
+      ><a name="4131"
+      > </a
+      ><a name="4132" href="lib.types.TLevel.html#816" class="InductiveConstructor"
+      >ltS</a
+      ><a name="4135"
+      >
+</a
+      ><a name="4136" href="lib.types.TLevel.html#4057" class="Function"
+      >&#10216;&#10217;-monotone-&lt;</a
+      ><a name="4149"
+      > </a
+      ><a name="4150" class="Symbol"
+      >(</a
+      ><a name="4151" href="lib.types.Nat.html#1716" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="4155"
+      > </a
+      ><a name="4156" href="lib.types.TLevel.html#4156" class="Bound"
+      >lt</a
+      ><a name="4158" class="Symbol"
+      >)</a
+      ><a name="4159"
+      > </a
+      ><a name="4160" class="Symbol"
+      >=</a
+      ><a name="4161"
+      > </a
+      ><a name="4162" href="lib.types.TLevel.html#847" class="InductiveConstructor"
+      >ltSR</a
+      ><a name="4166"
+      > </a
+      ><a name="4167" class="Symbol"
+      >(</a
+      ><a name="4168" href="lib.types.TLevel.html#4057" class="Function"
+      >&#10216;&#10217;-monotone-&lt;</a
+      ><a name="4181"
+      > </a
+      ><a name="4182" href="lib.types.TLevel.html#4156" class="Bound"
+      >lt</a
+      ><a name="4184" class="Symbol"
+      >)</a
+      ><a name="4185"
+      >
+
+</a
+      ><a name="4187" href="lib.types.TLevel.html#4187" class="Function"
+      >&#10216;&#10217;-monotone-&#8804;</a
+      ><a name="4200"
+      > </a
+      ><a name="4201" class="Symbol"
+      >:</a
+      ><a name="4202"
+      > </a
+      ><a name="4203" class="Symbol"
+      >{</a
+      ><a name="4204" href="lib.types.TLevel.html#4204" class="Bound"
+      >m</a
+      ><a name="4205"
+      > </a
+      ><a name="4206" href="lib.types.TLevel.html#4206" class="Bound"
+      >n</a
+      ><a name="4207"
+      > </a
+      ><a name="4208" class="Symbol"
+      >:</a
+      ><a name="4209"
+      > </a
+      ><a name="4210" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="4211" class="Symbol"
+      >}</a
+      ><a name="4212"
+      > </a
+      ><a name="4213" class="Symbol"
+      >&#8594;</a
+      ><a name="4214"
+      > </a
+      ><a name="4215" class="Symbol"
+      >(</a
+      ><a name="4216" href="lib.types.TLevel.html#4204" class="Bound"
+      >m</a
+      ><a name="4217"
+      > </a
+      ><a name="4218" href="lib.types.Nat.html#1754" class="Function Operator"
+      >&#8804;</a
+      ><a name="4219"
+      > </a
+      ><a name="4220" href="lib.types.TLevel.html#4206" class="Bound"
+      >n</a
+      ><a name="4221" class="Symbol"
+      >)</a
+      ><a name="4222"
+      > </a
+      ><a name="4223" class="Symbol"
+      >&#8594;</a
+      ><a name="4224"
+      > </a
+      ><a name="4225" class="Symbol"
+      >(</a
+      ><a name="4226" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="4227"
+      > </a
+      ><a name="4228" href="lib.types.TLevel.html#4204" class="Bound"
+      >m</a
+      ><a name="4229"
+      > </a
+      ><a name="4230" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="4231"
+      > </a
+      ><a name="4232" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="4234"
+      > </a
+      ><a name="4235" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="4236"
+      > </a
+      ><a name="4237" href="lib.types.TLevel.html#4206" class="Bound"
+      >n</a
+      ><a name="4238"
+      > </a
+      ><a name="4239" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="4240" class="Symbol"
+      >)</a
+      ><a name="4241"
+      >
+</a
+      ><a name="4242" href="lib.types.TLevel.html#4187" class="Function"
+      >&#10216;&#10217;-monotone-&#8804;</a
+      ><a name="4255"
+      > </a
+      ><a name="4256" class="Symbol"
+      >(</a
+      ><a name="4257" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="4260"
+      > </a
+      ><a name="4261" href="lib.types.TLevel.html#4261" class="Bound"
+      >p</a
+      ><a name="4262" class="Symbol"
+      >)</a
+      ><a name="4263"
+      > </a
+      ><a name="4264" class="Symbol"
+      >=</a
+      ><a name="4265"
+      > </a
+      ><a name="4266" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="4269"
+      > </a
+      ><a name="4270" class="Symbol"
+      >(</a
+      ><a name="4271" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4273"
+      > </a
+      ><a name="4274" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;_&#10217;</a
+      ><a name="4277"
+      > </a
+      ><a name="4278" href="lib.types.TLevel.html#4261" class="Bound"
+      >p</a
+      ><a name="4279" class="Symbol"
+      >)</a
+      ><a name="4280"
+      >
+</a
+      ><a name="4281" href="lib.types.TLevel.html#4187" class="Function"
+      >&#10216;&#10217;-monotone-&#8804;</a
+      ><a name="4294"
+      > </a
+      ><a name="4295" class="Symbol"
+      >(</a
+      ><a name="4296" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="4299"
+      > </a
+      ><a name="4300" href="lib.types.TLevel.html#4300" class="Bound"
+      >lt</a
+      ><a name="4302" class="Symbol"
+      >)</a
+      ><a name="4303"
+      > </a
+      ><a name="4304" class="Symbol"
+      >=</a
+      ><a name="4305"
+      > </a
+      ><a name="4306" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="4309"
+      > </a
+      ><a name="4310" class="Symbol"
+      >(</a
+      ><a name="4311" href="lib.types.TLevel.html#4057" class="Function"
+      >&#10216;&#10217;-monotone-&lt;</a
+      ><a name="4324"
+      > </a
+      ><a name="4325" href="lib.types.TLevel.html#4300" class="Bound"
+      >lt</a
+      ><a name="4327" class="Symbol"
+      >)</a
+      ><a name="4328"
+      >
+
+</a
+      ><a name="4330" href="lib.types.TLevel.html#4330" class="Function"
+      >minT</a
+      ><a name="4334"
+      > </a
+      ><a name="4335" class="Symbol"
+      >:</a
+      ><a name="4336"
+      > </a
+      ><a name="4337" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="4340"
+      > </a
+      ><a name="4341" class="Symbol"
+      >&#8594;</a
+      ><a name="4342"
+      > </a
+      ><a name="4343" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="4346"
+      > </a
+      ><a name="4347" class="Symbol"
+      >&#8594;</a
+      ><a name="4348"
+      > </a
+      ><a name="4349" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="4352"
+      >
+</a
+      ><a name="4353" href="lib.types.TLevel.html#4330" class="Function"
+      >minT</a
+      ><a name="4357"
+      > </a
+      ><a name="4358" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="4362"
+      > </a
+      ><a name="4363" href="lib.types.TLevel.html#4363" class="Bound"
+      >n</a
+      ><a name="4364"
+      > </a
+      ><a name="4365" class="Symbol"
+      >=</a
+      ><a name="4366"
+      > </a
+      ><a name="4367" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="4371"
+      >
+</a
+      ><a name="4372" href="lib.types.TLevel.html#4330" class="Function"
+      >minT</a
+      ><a name="4376"
+      > </a
+      ><a name="4377" class="Symbol"
+      >(</a
+      ><a name="4378" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="4379"
+      > </a
+      ><a name="4380" href="lib.types.TLevel.html#4380" class="Bound"
+      >m</a
+      ><a name="4381" class="Symbol"
+      >)</a
+      ><a name="4382"
+      > </a
+      ><a name="4383" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="4387"
+      > </a
+      ><a name="4388" class="Symbol"
+      >=</a
+      ><a name="4389"
+      > </a
+      ><a name="4390" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="4394"
+      >
+</a
+      ><a name="4395" href="lib.types.TLevel.html#4330" class="Function"
+      >minT</a
+      ><a name="4399"
+      > </a
+      ><a name="4400" class="Symbol"
+      >(</a
+      ><a name="4401" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="4402"
+      > </a
+      ><a name="4403" href="lib.types.TLevel.html#4403" class="Bound"
+      >m</a
+      ><a name="4404" class="Symbol"
+      >)</a
+      ><a name="4405"
+      > </a
+      ><a name="4406" class="Symbol"
+      >(</a
+      ><a name="4407" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="4408"
+      > </a
+      ><a name="4409" href="lib.types.TLevel.html#4409" class="Bound"
+      >n</a
+      ><a name="4410" class="Symbol"
+      >)</a
+      ><a name="4411"
+      > </a
+      ><a name="4412" class="Symbol"
+      >=</a
+      ><a name="4413"
+      > </a
+      ><a name="4414" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="4415"
+      > </a
+      ><a name="4416" class="Symbol"
+      >(</a
+      ><a name="4417" href="lib.types.TLevel.html#4330" class="Function"
+      >minT</a
+      ><a name="4421"
+      > </a
+      ><a name="4422" href="lib.types.TLevel.html#4403" class="Bound"
+      >m</a
+      ><a name="4423"
+      > </a
+      ><a name="4424" href="lib.types.TLevel.html#4409" class="Bound"
+      >n</a
+      ><a name="4425" class="Symbol"
+      >)</a
+      ><a name="4426"
+      >
+
+</a
+      ><a name="4428" href="lib.types.TLevel.html#4428" class="Function"
+      >minT&#8804;l</a
+      ><a name="4434"
+      > </a
+      ><a name="4435" class="Symbol"
+      >:</a
+      ><a name="4436"
+      > </a
+      ><a name="4437" class="Symbol"
+      >(</a
+      ><a name="4438" href="lib.types.TLevel.html#4438" class="Bound"
+      >m</a
+      ><a name="4439"
+      > </a
+      ><a name="4440" href="lib.types.TLevel.html#4440" class="Bound"
+      >n</a
+      ><a name="4441"
+      > </a
+      ><a name="4442" class="Symbol"
+      >:</a
+      ><a name="4443"
+      > </a
+      ><a name="4444" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="4447" class="Symbol"
+      >)</a
+      ><a name="4448"
+      > </a
+      ><a name="4449" class="Symbol"
+      >&#8594;</a
+      ><a name="4450"
+      > </a
+      ><a name="4451" href="lib.types.TLevel.html#4330" class="Function"
+      >minT</a
+      ><a name="4455"
+      > </a
+      ><a name="4456" href="lib.types.TLevel.html#4438" class="Bound"
+      >m</a
+      ><a name="4457"
+      > </a
+      ><a name="4458" href="lib.types.TLevel.html#4440" class="Bound"
+      >n</a
+      ><a name="4459"
+      > </a
+      ><a name="4460" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="4462"
+      > </a
+      ><a name="4463" href="lib.types.TLevel.html#4438" class="Bound"
+      >m</a
+      ><a name="4464"
+      >
+</a
+      ><a name="4465" href="lib.types.TLevel.html#4428" class="Function"
+      >minT&#8804;l</a
+      ><a name="4471"
+      > </a
+      ><a name="4472" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="4476"
+      > </a
+      ><a name="4477" href="lib.types.TLevel.html#4477" class="Bound"
+      >n</a
+      ><a name="4478"
+      > </a
+      ><a name="4479" class="Symbol"
+      >=</a
+      ><a name="4480"
+      > </a
+      ><a name="4481" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="4484"
+      > </a
+      ><a name="4485" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4488"
+      >
+</a
+      ><a name="4489" href="lib.types.TLevel.html#4428" class="Function"
+      >minT&#8804;l</a
+      ><a name="4495"
+      > </a
+      ><a name="4496" class="Symbol"
+      >(</a
+      ><a name="4497" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="4498"
+      > </a
+      ><a name="4499" href="lib.types.TLevel.html#4499" class="Bound"
+      >m</a
+      ><a name="4500" class="Symbol"
+      >)</a
+      ><a name="4501"
+      > </a
+      ><a name="4502" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="4506"
+      > </a
+      ><a name="4507" class="Symbol"
+      >=</a
+      ><a name="4508"
+      > </a
+      ><a name="4509" href="lib.types.TLevel.html#1024" class="Function"
+      >-2&#8804;T</a
+      ><a name="4513"
+      > </a
+      ><a name="4514" class="Symbol"
+      >(</a
+      ><a name="4515" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="4516"
+      > </a
+      ><a name="4517" href="lib.types.TLevel.html#4499" class="Bound"
+      >m</a
+      ><a name="4518" class="Symbol"
+      >)</a
+      ><a name="4519"
+      >
+</a
+      ><a name="4520" href="lib.types.TLevel.html#4428" class="Function"
+      >minT&#8804;l</a
+      ><a name="4526"
+      > </a
+      ><a name="4527" class="Symbol"
+      >(</a
+      ><a name="4528" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="4529"
+      > </a
+      ><a name="4530" href="lib.types.TLevel.html#4530" class="Bound"
+      >m</a
+      ><a name="4531" class="Symbol"
+      >)</a
+      ><a name="4532"
+      > </a
+      ><a name="4533" class="Symbol"
+      >(</a
+      ><a name="4534" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="4535"
+      > </a
+      ><a name="4536" href="lib.types.TLevel.html#4536" class="Bound"
+      >n</a
+      ><a name="4537" class="Symbol"
+      >)</a
+      ><a name="4538"
+      > </a
+      ><a name="4539" class="Symbol"
+      >=</a
+      ><a name="4540"
+      > </a
+      ><a name="4541" href="lib.types.TLevel.html#1623" class="Function"
+      >&#8804;T-ap-S</a
+      ><a name="4548"
+      > </a
+      ><a name="4549" class="Symbol"
+      >(</a
+      ><a name="4550" href="lib.types.TLevel.html#4428" class="Function"
+      >minT&#8804;l</a
+      ><a name="4556"
+      > </a
+      ><a name="4557" href="lib.types.TLevel.html#4530" class="Bound"
+      >m</a
+      ><a name="4558"
+      > </a
+      ><a name="4559" href="lib.types.TLevel.html#4536" class="Bound"
+      >n</a
+      ><a name="4560" class="Symbol"
+      >)</a
+      ><a name="4561"
+      >
+
+</a
+      ><a name="4563" href="lib.types.TLevel.html#4563" class="Function"
+      >minT&#8804;r</a
+      ><a name="4569"
+      > </a
+      ><a name="4570" class="Symbol"
+      >:</a
+      ><a name="4571"
+      > </a
+      ><a name="4572" class="Symbol"
+      >(</a
+      ><a name="4573" href="lib.types.TLevel.html#4573" class="Bound"
+      >m</a
+      ><a name="4574"
+      > </a
+      ><a name="4575" href="lib.types.TLevel.html#4575" class="Bound"
+      >n</a
+      ><a name="4576"
+      > </a
+      ><a name="4577" class="Symbol"
+      >:</a
+      ><a name="4578"
+      > </a
+      ><a name="4579" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="4582" class="Symbol"
+      >)</a
+      ><a name="4583"
+      > </a
+      ><a name="4584" class="Symbol"
+      >&#8594;</a
+      ><a name="4585"
+      > </a
+      ><a name="4586" href="lib.types.TLevel.html#4330" class="Function"
+      >minT</a
+      ><a name="4590"
+      > </a
+      ><a name="4591" href="lib.types.TLevel.html#4573" class="Bound"
+      >m</a
+      ><a name="4592"
+      > </a
+      ><a name="4593" href="lib.types.TLevel.html#4575" class="Bound"
+      >n</a
+      ><a name="4594"
+      > </a
+      ><a name="4595" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="4597"
+      > </a
+      ><a name="4598" href="lib.types.TLevel.html#4575" class="Bound"
+      >n</a
+      ><a name="4599"
+      >
+</a
+      ><a name="4600" href="lib.types.TLevel.html#4563" class="Function"
+      >minT&#8804;r</a
+      ><a name="4606"
+      > </a
+      ><a name="4607" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="4611"
+      > </a
+      ><a name="4612" href="lib.types.TLevel.html#4612" class="Bound"
+      >n</a
+      ><a name="4613"
+      > </a
+      ><a name="4614" class="Symbol"
+      >=</a
+      ><a name="4615"
+      > </a
+      ><a name="4616" href="lib.types.TLevel.html#1024" class="Function"
+      >-2&#8804;T</a
+      ><a name="4620"
+      > </a
+      ><a name="4621" href="lib.types.TLevel.html#4612" class="Bound"
+      >n</a
+      ><a name="4622"
+      >
+</a
+      ><a name="4623" href="lib.types.TLevel.html#4563" class="Function"
+      >minT&#8804;r</a
+      ><a name="4629"
+      > </a
+      ><a name="4630" class="Symbol"
+      >(</a
+      ><a name="4631" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="4632"
+      > </a
+      ><a name="4633" href="lib.types.TLevel.html#4633" class="Bound"
+      >m</a
+      ><a name="4634" class="Symbol"
+      >)</a
+      ><a name="4635"
+      > </a
+      ><a name="4636" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="4640"
+      > </a
+      ><a name="4641" class="Symbol"
+      >=</a
+      ><a name="4642"
+      > </a
+      ><a name="4643" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="4646"
+      > </a
+      ><a name="4647" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4650"
+      >
+</a
+      ><a name="4651" href="lib.types.TLevel.html#4563" class="Function"
+      >minT&#8804;r</a
+      ><a name="4657"
+      > </a
+      ><a name="4658" class="Symbol"
+      >(</a
+      ><a name="4659" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="4660"
+      > </a
+      ><a name="4661" href="lib.types.TLevel.html#4661" class="Bound"
+      >m</a
+      ><a name="4662" class="Symbol"
+      >)</a
+      ><a name="4663"
+      > </a
+      ><a name="4664" class="Symbol"
+      >(</a
+      ><a name="4665" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="4666"
+      > </a
+      ><a name="4667" href="lib.types.TLevel.html#4667" class="Bound"
+      >n</a
+      ><a name="4668" class="Symbol"
+      >)</a
+      ><a name="4669"
+      > </a
+      ><a name="4670" class="Symbol"
+      >=</a
+      ><a name="4671"
+      > </a
+      ><a name="4672" href="lib.types.TLevel.html#1623" class="Function"
+      >&#8804;T-ap-S</a
+      ><a name="4679"
+      > </a
+      ><a name="4680" class="Symbol"
+      >(</a
+      ><a name="4681" href="lib.types.TLevel.html#4563" class="Function"
+      >minT&#8804;r</a
+      ><a name="4687"
+      > </a
+      ><a name="4688" href="lib.types.TLevel.html#4661" class="Bound"
+      >m</a
+      ><a name="4689"
+      > </a
+      ><a name="4690" href="lib.types.TLevel.html#4667" class="Bound"
+      >n</a
+      ><a name="4691" class="Symbol"
+      >)</a
+      ><a name="4692"
+      >
+
+</a
+      ><a name="4694" href="lib.types.TLevel.html#4694" class="Function"
+      >minT-out</a
+      ><a name="4702"
+      > </a
+      ><a name="4703" class="Symbol"
+      >:</a
+      ><a name="4704"
+      > </a
+      ><a name="4705" class="Symbol"
+      >(</a
+      ><a name="4706" href="lib.types.TLevel.html#4706" class="Bound"
+      >m</a
+      ><a name="4707"
+      > </a
+      ><a name="4708" href="lib.types.TLevel.html#4708" class="Bound"
+      >n</a
+      ><a name="4709"
+      > </a
+      ><a name="4710" class="Symbol"
+      >:</a
+      ><a name="4711"
+      > </a
+      ><a name="4712" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="4715" class="Symbol"
+      >)</a
+      ><a name="4716"
+      > </a
+      ><a name="4717" class="Symbol"
+      >&#8594;</a
+      ><a name="4718"
+      > </a
+      ><a name="4719" href="lib.Base.html#9033" class="Datatype"
+      >Coprod</a
+      ><a name="4725"
+      > </a
+      ><a name="4726" class="Symbol"
+      >(</a
+      ><a name="4727" href="lib.types.TLevel.html#4330" class="Function"
+      >minT</a
+      ><a name="4731"
+      > </a
+      ><a name="4732" href="lib.types.TLevel.html#4706" class="Bound"
+      >m</a
+      ><a name="4733"
+      > </a
+      ><a name="4734" href="lib.types.TLevel.html#4708" class="Bound"
+      >n</a
+      ><a name="4735"
+      > </a
+      ><a name="4736" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4738"
+      > </a
+      ><a name="4739" href="lib.types.TLevel.html#4706" class="Bound"
+      >m</a
+      ><a name="4740" class="Symbol"
+      >)</a
+      ><a name="4741"
+      > </a
+      ><a name="4742" class="Symbol"
+      >(</a
+      ><a name="4743" href="lib.types.TLevel.html#4330" class="Function"
+      >minT</a
+      ><a name="4747"
+      > </a
+      ><a name="4748" href="lib.types.TLevel.html#4706" class="Bound"
+      >m</a
+      ><a name="4749"
+      > </a
+      ><a name="4750" href="lib.types.TLevel.html#4708" class="Bound"
+      >n</a
+      ><a name="4751"
+      > </a
+      ><a name="4752" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4754"
+      > </a
+      ><a name="4755" href="lib.types.TLevel.html#4708" class="Bound"
+      >n</a
+      ><a name="4756" class="Symbol"
+      >)</a
+      ><a name="4757"
+      >
+</a
+      ><a name="4758" href="lib.types.TLevel.html#4694" class="Function"
+      >minT-out</a
+      ><a name="4766"
+      > </a
+      ><a name="4767" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="4771"
+      > </a
+      ><a name="4772" class="Symbol"
+      >_</a
+      ><a name="4773"
+      > </a
+      ><a name="4774" class="Symbol"
+      >=</a
+      ><a name="4775"
+      > </a
+      ><a name="4776" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="4779"
+      > </a
+      ><a name="4780" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4783"
+      >
+</a
+      ><a name="4784" href="lib.types.TLevel.html#4694" class="Function"
+      >minT-out</a
+      ><a name="4792"
+      > </a
+      ><a name="4793" class="Symbol"
+      >(</a
+      ><a name="4794" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="4795"
+      > </a
+      ><a name="4796" class="Symbol"
+      >_)</a
+      ><a name="4798"
+      > </a
+      ><a name="4799" href="lib.Base.html#8881" class="InductiveConstructor"
+      >&#10216;-2&#10217;</a
+      ><a name="4803"
+      > </a
+      ><a name="4804" class="Symbol"
+      >=</a
+      ><a name="4805"
+      > </a
+      ><a name="4806" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="4809"
+      > </a
+      ><a name="4810" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4813"
+      >
+</a
+      ><a name="4814" href="lib.types.TLevel.html#4694" class="Function"
+      >minT-out</a
+      ><a name="4822"
+      > </a
+      ><a name="4823" class="Symbol"
+      >(</a
+      ><a name="4824" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="4825"
+      > </a
+      ><a name="4826" href="lib.types.TLevel.html#4826" class="Bound"
+      >m</a
+      ><a name="4827" class="Symbol"
+      >)</a
+      ><a name="4828"
+      > </a
+      ><a name="4829" class="Symbol"
+      >(</a
+      ><a name="4830" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="4831"
+      > </a
+      ><a name="4832" href="lib.types.TLevel.html#4832" class="Bound"
+      >n</a
+      ><a name="4833" class="Symbol"
+      >)</a
+      ><a name="4834"
+      > </a
+      ><a name="4835" class="Keyword"
+      >with</a
+      ><a name="4839"
+      > </a
+      ><a name="4840" href="lib.types.TLevel.html#4694" class="Function"
+      >minT-out</a
+      ><a name="4848"
+      > </a
+      ><a name="4849" href="lib.types.TLevel.html#4826" class="Bound"
+      >m</a
+      ><a name="4850"
+      > </a
+      ><a name="4851" href="lib.types.TLevel.html#4832" class="Bound"
+      >n</a
+      ><a name="4852"
+      >
+</a
+      ><a name="4853" href="lib.types.TLevel.html#4694" class="Function"
+      >minT-out</a
+      ><a name="4861"
+      > </a
+      ><a name="4862" class="Symbol"
+      >(</a
+      ><a name="4863" class="InductiveConstructor"
+      >S</a
+      ><a name="4864"
+      > </a
+      ><a name="4865" href="lib.types.TLevel.html#4865" class="Bound"
+      >m</a
+      ><a name="4866" class="Symbol"
+      >)</a
+      ><a name="4867"
+      > </a
+      ><a name="4868" class="Symbol"
+      >(</a
+      ><a name="4869" class="InductiveConstructor"
+      >S</a
+      ><a name="4870"
+      > </a
+      ><a name="4871" href="lib.types.TLevel.html#4871" class="Bound"
+      >n</a
+      ><a name="4872" class="Symbol"
+      >)</a
+      ><a name="4873"
+      > </a
+      ><a name="4874" class="Symbol"
+      >|</a
+      ><a name="4875"
+      > </a
+      ><a name="4876" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="4879"
+      > </a
+      ><a name="4880" href="lib.types.TLevel.html#4880" class="Bound"
+      >p</a
+      ><a name="4881"
+      > </a
+      ><a name="4882" class="Symbol"
+      >=</a
+      ><a name="4883"
+      > </a
+      ><a name="4884" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="4887"
+      > </a
+      ><a name="4888" class="Symbol"
+      >(</a
+      ><a name="4889" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4891"
+      > </a
+      ><a name="4892" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="4893"
+      > </a
+      ><a name="4894" href="lib.types.TLevel.html#4880" class="Bound"
+      >p</a
+      ><a name="4895" class="Symbol"
+      >)</a
+      ><a name="4896"
+      >
+</a
+      ><a name="4897" href="lib.types.TLevel.html#4694" class="Function"
+      >minT-out</a
+      ><a name="4905"
+      > </a
+      ><a name="4906" class="Symbol"
+      >(</a
+      ><a name="4907" class="InductiveConstructor"
+      >S</a
+      ><a name="4908"
+      > </a
+      ><a name="4909" href="lib.types.TLevel.html#4909" class="Bound"
+      >m</a
+      ><a name="4910" class="Symbol"
+      >)</a
+      ><a name="4911"
+      > </a
+      ><a name="4912" class="Symbol"
+      >(</a
+      ><a name="4913" class="InductiveConstructor"
+      >S</a
+      ><a name="4914"
+      > </a
+      ><a name="4915" href="lib.types.TLevel.html#4915" class="Bound"
+      >n</a
+      ><a name="4916" class="Symbol"
+      >)</a
+      ><a name="4917"
+      > </a
+      ><a name="4918" class="Symbol"
+      >|</a
+      ><a name="4919"
+      > </a
+      ><a name="4920" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="4923"
+      > </a
+      ><a name="4924" href="lib.types.TLevel.html#4924" class="Bound"
+      >q</a
+      ><a name="4925"
+      > </a
+      ><a name="4926" class="Symbol"
+      >=</a
+      ><a name="4927"
+      > </a
+      ><a name="4928" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="4931"
+      > </a
+      ><a name="4932" class="Symbol"
+      >(</a
+      ><a name="4933" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4935"
+      > </a
+      ><a name="4936" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="4937"
+      > </a
+      ><a name="4938" href="lib.types.TLevel.html#4924" class="Bound"
+      >q</a
+      ><a name="4939" class="Symbol"
+      >)</a
+      ><a name="4940"
+      >
+
+</a
+      ><a name="4942" href="lib.types.TLevel.html#4942" class="Function"
+      >minT-out-l</a
+      ><a name="4952"
+      > </a
+      ><a name="4953" class="Symbol"
+      >:</a
+      ><a name="4954"
+      > </a
+      ><a name="4955" class="Symbol"
+      >{</a
+      ><a name="4956" href="lib.types.TLevel.html#4956" class="Bound"
+      >m</a
+      ><a name="4957"
+      > </a
+      ><a name="4958" href="lib.types.TLevel.html#4958" class="Bound"
+      >n</a
+      ><a name="4959"
+      > </a
+      ><a name="4960" class="Symbol"
+      >:</a
+      ><a name="4961"
+      > </a
+      ><a name="4962" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="4965" class="Symbol"
+      >}</a
+      ><a name="4966"
+      > </a
+      ><a name="4967" class="Symbol"
+      >&#8594;</a
+      ><a name="4968"
+      > </a
+      ><a name="4969" class="Symbol"
+      >(</a
+      ><a name="4970" href="lib.types.TLevel.html#4956" class="Bound"
+      >m</a
+      ><a name="4971"
+      > </a
+      ><a name="4972" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="4974"
+      > </a
+      ><a name="4975" href="lib.types.TLevel.html#4958" class="Bound"
+      >n</a
+      ><a name="4976" class="Symbol"
+      >)</a
+      ><a name="4977"
+      > </a
+      ><a name="4978" class="Symbol"
+      >&#8594;</a
+      ><a name="4979"
+      > </a
+      ><a name="4980" href="lib.types.TLevel.html#4330" class="Function"
+      >minT</a
+      ><a name="4984"
+      > </a
+      ><a name="4985" href="lib.types.TLevel.html#4956" class="Bound"
+      >m</a
+      ><a name="4986"
+      > </a
+      ><a name="4987" href="lib.types.TLevel.html#4958" class="Bound"
+      >n</a
+      ><a name="4988"
+      > </a
+      ><a name="4989" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4991"
+      > </a
+      ><a name="4992" href="lib.types.TLevel.html#4956" class="Bound"
+      >m</a
+      ><a name="4993"
+      >
+</a
+      ><a name="4994" href="lib.types.TLevel.html#4942" class="Function"
+      >minT-out-l</a
+      ><a name="5004"
+      > </a
+      ><a name="5005" class="Symbol"
+      >{</a
+      ><a name="5006" href="lib.types.TLevel.html#5006" class="Bound"
+      >m</a
+      ><a name="5007" class="Symbol"
+      >}</a
+      ><a name="5008"
+      > </a
+      ><a name="5009" class="Symbol"
+      >{</a
+      ><a name="5010" href="lib.types.TLevel.html#5010" class="Bound"
+      >n</a
+      ><a name="5011" class="Symbol"
+      >}</a
+      ><a name="5012"
+      > </a
+      ><a name="5013" href="lib.types.TLevel.html#5013" class="Bound"
+      >lte</a
+      ><a name="5016"
+      > </a
+      ><a name="5017" class="Keyword"
+      >with</a
+      ><a name="5021"
+      > </a
+      ><a name="5022" href="lib.types.TLevel.html#4694" class="Function"
+      >minT-out</a
+      ><a name="5030"
+      > </a
+      ><a name="5031" href="lib.types.TLevel.html#5006" class="Bound"
+      >m</a
+      ><a name="5032"
+      > </a
+      ><a name="5033" href="lib.types.TLevel.html#5010" class="Bound"
+      >n</a
+      ><a name="5034"
+      >
+</a
+      ><a name="5035" href="lib.types.TLevel.html#4942" class="Function"
+      >minT-out-l</a
+      ><a name="5045"
+      > </a
+      ><a name="5046" href="lib.types.TLevel.html#5046" class="Bound"
+      >lte</a
+      ><a name="5049"
+      > </a
+      ><a name="5050" class="Symbol"
+      >|</a
+      ><a name="5051"
+      > </a
+      ><a name="5052" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="5055"
+      > </a
+      ><a name="5056" href="lib.types.TLevel.html#5056" class="Bound"
+      >eqm</a
+      ><a name="5059"
+      > </a
+      ><a name="5060" class="Symbol"
+      >=</a
+      ><a name="5061"
+      > </a
+      ><a name="5062" href="lib.types.TLevel.html#5056" class="Bound"
+      >eqm</a
+      ><a name="5065"
+      >
+</a
+      ><a name="5066" href="lib.types.TLevel.html#4942" class="Function"
+      >minT-out-l</a
+      ><a name="5076"
+      > </a
+      ><a name="5077" class="Symbol"
+      >(</a
+      ><a name="5078" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="5081"
+      > </a
+      ><a name="5082" href="lib.types.TLevel.html#5082" class="Bound"
+      >p</a
+      ><a name="5083" class="Symbol"
+      >)</a
+      ><a name="5084"
+      > </a
+      ><a name="5085" class="Symbol"
+      >|</a
+      ><a name="5086"
+      > </a
+      ><a name="5087" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="5090"
+      > </a
+      ><a name="5091" href="lib.types.TLevel.html#5091" class="Bound"
+      >eqn</a
+      ><a name="5094"
+      > </a
+      ><a name="5095" class="Symbol"
+      >=</a
+      ><a name="5096"
+      > </a
+      ><a name="5097" href="lib.types.TLevel.html#5091" class="Bound"
+      >eqn</a
+      ><a name="5100"
+      > </a
+      ><a name="5101" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5102"
+      > </a
+      ><a name="5103" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5104"
+      > </a
+      ><a name="5105" href="lib.types.TLevel.html#5082" class="Bound"
+      >p</a
+      ><a name="5106"
+      >
+</a
+      ><a name="5107" href="lib.types.TLevel.html#4942" class="Function"
+      >minT-out-l</a
+      ><a name="5117"
+      > </a
+      ><a name="5118" class="Symbol"
+      >{</a
+      ><a name="5119" href="lib.types.TLevel.html#5119" class="Bound"
+      >m</a
+      ><a name="5120" class="Symbol"
+      >}</a
+      ><a name="5121"
+      > </a
+      ><a name="5122" class="Symbol"
+      >{</a
+      ><a name="5123" href="lib.types.TLevel.html#5123" class="Bound"
+      >n</a
+      ><a name="5124" class="Symbol"
+      >}</a
+      ><a name="5125"
+      > </a
+      ><a name="5126" class="Symbol"
+      >(</a
+      ><a name="5127" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="5130"
+      > </a
+      ><a name="5131" href="lib.types.TLevel.html#5131" class="Bound"
+      >lt</a
+      ><a name="5133" class="Symbol"
+      >)</a
+      ><a name="5134"
+      > </a
+      ><a name="5135" class="Symbol"
+      >|</a
+      ><a name="5136"
+      > </a
+      ><a name="5137" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="5140"
+      > </a
+      ><a name="5141" href="lib.types.TLevel.html#5141" class="Bound"
+      >eq</a
+      ><a name="5143"
+      > </a
+      ><a name="5144" class="Symbol"
+      >=</a
+      ><a name="5145"
+      >
+  </a
+      ><a name="5148" href="lib.types.Empty.html#165" class="Function"
+      >&#8869;-rec</a
+      ><a name="5153"
+      > </a
+      ><a name="5154" class="Symbol"
+      >(</a
+      ><a name="5155" href="lib.types.TLevel.html#3657" class="Function"
+      >&lt;T-to-&#8817;T</a
+      ><a name="5163"
+      > </a
+      ><a name="5164" class="Symbol"
+      >(</a
+      ><a name="5165" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="5174"
+      > </a
+      ><a name="5175" class="Symbol"
+      >(&#955;</a
+      ><a name="5177"
+      > </a
+      ><a name="5178" href="lib.types.TLevel.html#5178" class="Bound"
+      >k</a
+      ><a name="5179"
+      > </a
+      ><a name="5180" class="Symbol"
+      >&#8594;</a
+      ><a name="5181"
+      > </a
+      ><a name="5182" href="lib.types.TLevel.html#5119" class="Bound"
+      >m</a
+      ><a name="5183"
+      > </a
+      ><a name="5184" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="5186"
+      > </a
+      ><a name="5187" href="lib.types.TLevel.html#5178" class="Bound"
+      >k</a
+      ><a name="5188" class="Symbol"
+      >)</a
+      ><a name="5189"
+      > </a
+      ><a name="5190" class="Symbol"
+      >(</a
+      ><a name="5191" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5192"
+      > </a
+      ><a name="5193" href="lib.types.TLevel.html#5141" class="Bound"
+      >eq</a
+      ><a name="5195" class="Symbol"
+      >)</a
+      ><a name="5196"
+      > </a
+      ><a name="5197" href="lib.types.TLevel.html#5131" class="Bound"
+      >lt</a
+      ><a name="5199" class="Symbol"
+      >)</a
+      ><a name="5200"
+      > </a
+      ><a name="5201" class="Symbol"
+      >(</a
+      ><a name="5202" href="lib.types.TLevel.html#4428" class="Function"
+      >minT&#8804;l</a
+      ><a name="5208"
+      > </a
+      ><a name="5209" href="lib.types.TLevel.html#5119" class="Bound"
+      >m</a
+      ><a name="5210"
+      > </a
+      ><a name="5211" href="lib.types.TLevel.html#5123" class="Bound"
+      >n</a
+      ><a name="5212" class="Symbol"
+      >))</a
+      ><a name="5214"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

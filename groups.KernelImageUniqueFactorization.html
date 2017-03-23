@@ -1,0 +1,882 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >groups.KernelImageUniqueFactorization</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="groups.Cokernel.html#1" class="Module"
+      >groups.Cokernel</a
+      ><a name="86"
+      >
+
+</a
+      ><a name="88" class="Comment"
+      >{-
+                 K
+                 &#8593;
+                 &#9550; &#968;&#8321;
+            q[_] &#9550;    &#968;&#8322;
+   Coker &#968;&#8322; &#8606;--- G &#8592;------ L
+      &#8593;          &#8593;
+   &#966;&#8321; &#9550;          &#9550; inject
+      &#8593;          &#8593;
+      H &#8606;------- Ker &#968;&#8321;
+           &#966;&#8322;
+
+     Then, H &#8771;&#7475; Ker/Im.
+-}</a
+      ><a name="334"
+      >
+
+</a
+      ><a name="336" class="Keyword"
+      >module</a
+      ><a name="342"
+      > </a
+      ><a name="343" href="groups.KernelImageUniqueFactorization.html#1" class="Module"
+      >groups.KernelImageUniqueFactorization</a
+      ><a name="380"
+      > </a
+      ><a name="381" class="Symbol"
+      >{</a
+      ><a name="382" href="groups.KernelImageUniqueFactorization.html#382" class="Bound"
+      >i</a
+      ><a name="383"
+      > </a
+      ><a name="384" href="groups.KernelImageUniqueFactorization.html#384" class="Bound"
+      >j</a
+      ><a name="385"
+      > </a
+      ><a name="386" href="groups.KernelImageUniqueFactorization.html#386" class="Bound"
+      >k</a
+      ><a name="387"
+      > </a
+      ><a name="388" href="groups.KernelImageUniqueFactorization.html#388" class="Bound"
+      >l</a
+      ><a name="389" class="Symbol"
+      >}</a
+      ><a name="390"
+      >
+  </a
+      ><a name="393" class="Symbol"
+      >{</a
+      ><a name="394" href="groups.KernelImageUniqueFactorization.html#394" class="Bound"
+      >G</a
+      ><a name="395"
+      > </a
+      ><a name="396" class="Symbol"
+      >:</a
+      ><a name="397"
+      > </a
+      ><a name="398" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="403"
+      > </a
+      ><a name="404" href="groups.KernelImageUniqueFactorization.html#382" class="Bound"
+      >i</a
+      ><a name="405" class="Symbol"
+      >}</a
+      ><a name="406"
+      > </a
+      ><a name="407" class="Symbol"
+      >{</a
+      ><a name="408" href="groups.KernelImageUniqueFactorization.html#408" class="Bound"
+      >H</a
+      ><a name="409"
+      > </a
+      ><a name="410" class="Symbol"
+      >:</a
+      ><a name="411"
+      > </a
+      ><a name="412" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="417"
+      > </a
+      ><a name="418" href="groups.KernelImageUniqueFactorization.html#384" class="Bound"
+      >j</a
+      ><a name="419" class="Symbol"
+      >}</a
+      ><a name="420"
+      > </a
+      ><a name="421" class="Symbol"
+      >{</a
+      ><a name="422" href="groups.KernelImageUniqueFactorization.html#422" class="Bound"
+      >K</a
+      ><a name="423"
+      > </a
+      ><a name="424" class="Symbol"
+      >:</a
+      ><a name="425"
+      > </a
+      ><a name="426" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="431"
+      > </a
+      ><a name="432" href="groups.KernelImageUniqueFactorization.html#386" class="Bound"
+      >k</a
+      ><a name="433" class="Symbol"
+      >}</a
+      ><a name="434"
+      > </a
+      ><a name="435" class="Symbol"
+      >{</a
+      ><a name="436" href="groups.KernelImageUniqueFactorization.html#436" class="Bound"
+      >L</a
+      ><a name="437"
+      > </a
+      ><a name="438" class="Symbol"
+      >:</a
+      ><a name="439"
+      > </a
+      ><a name="440" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="445"
+      > </a
+      ><a name="446" href="groups.KernelImageUniqueFactorization.html#388" class="Bound"
+      >l</a
+      ><a name="447" class="Symbol"
+      >}</a
+      ><a name="448"
+      >
+  </a
+      ><a name="451" class="Symbol"
+      >(</a
+      ><a name="452" href="groups.KernelImageUniqueFactorization.html#452" class="Bound"
+      >&#968;&#8321;</a
+      ><a name="454"
+      > </a
+      ><a name="455" class="Symbol"
+      >:</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="groups.KernelImageUniqueFactorization.html#394" class="Bound"
+      >G</a
+      ><a name="458"
+      > </a
+      ><a name="459" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="461"
+      > </a
+      ><a name="462" href="groups.KernelImageUniqueFactorization.html#422" class="Bound"
+      >K</a
+      ><a name="463" class="Symbol"
+      >)</a
+      ><a name="464"
+      > </a
+      ><a name="465" class="Symbol"
+      >(</a
+      ><a name="466" href="groups.KernelImageUniqueFactorization.html#466" class="Bound"
+      >&#968;&#8322;</a
+      ><a name="468"
+      > </a
+      ><a name="469" class="Symbol"
+      >:</a
+      ><a name="470"
+      > </a
+      ><a name="471" href="groups.KernelImageUniqueFactorization.html#436" class="Bound"
+      >L</a
+      ><a name="472"
+      > </a
+      ><a name="473" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="475"
+      > </a
+      ><a name="476" href="groups.KernelImageUniqueFactorization.html#394" class="Bound"
+      >G</a
+      ><a name="477" class="Symbol"
+      >)</a
+      ><a name="478"
+      > </a
+      ><a name="479" class="Symbol"
+      >(</a
+      ><a name="480" href="groups.KernelImageUniqueFactorization.html#480" class="Bound"
+      >G-ab</a
+      ><a name="484"
+      > </a
+      ><a name="485" class="Symbol"
+      >:</a
+      ><a name="486"
+      > </a
+      ><a name="487" href="lib.types.Group.html#7098" class="Function"
+      >is-abelian</a
+      ><a name="497"
+      > </a
+      ><a name="498" href="groups.KernelImageUniqueFactorization.html#394" class="Bound"
+      >G</a
+      ><a name="499" class="Symbol"
+      >)</a
+      ><a name="500"
+      >
+  </a
+      ><a name="503" class="Symbol"
+      >(</a
+      ><a name="504" href="groups.KernelImageUniqueFactorization.html#504" class="Bound"
+      >&#966;&#8321;</a
+      ><a name="506"
+      > </a
+      ><a name="507" class="Symbol"
+      >:</a
+      ><a name="508"
+      > </a
+      ><a name="509" href="lib.groups.Subgroup.html#2751" class="Function"
+      >Ker</a
+      ><a name="512"
+      > </a
+      ><a name="513" href="groups.KernelImageUniqueFactorization.html#452" class="Bound"
+      >&#968;&#8321;</a
+      ><a name="515"
+      > </a
+      ><a name="516" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="518"
+      > </a
+      ><a name="519" href="groups.KernelImageUniqueFactorization.html#408" class="Bound"
+      >H</a
+      ><a name="520" class="Symbol"
+      >)</a
+      ><a name="521"
+      > </a
+      ><a name="522" class="Symbol"
+      >(</a
+      ><a name="523" href="groups.KernelImageUniqueFactorization.html#523" class="Bound"
+      >&#966;&#8321;-is-surj</a
+      ><a name="533"
+      > </a
+      ><a name="534" class="Symbol"
+      >:</a
+      ><a name="535"
+      > </a
+      ><a name="536" href="lib.groups.Homomorphism.html#5767" class="Function"
+      >is-surj&#7475;</a
+      ><a name="544"
+      > </a
+      ><a name="545" href="groups.KernelImageUniqueFactorization.html#504" class="Bound"
+      >&#966;&#8321;</a
+      ><a name="547" class="Symbol"
+      >)</a
+      ><a name="548"
+      >
+  </a
+      ><a name="551" class="Symbol"
+      >(</a
+      ><a name="552" href="groups.KernelImageUniqueFactorization.html#552" class="Bound"
+      >&#966;&#8322;</a
+      ><a name="554"
+      > </a
+      ><a name="555" class="Symbol"
+      >:</a
+      ><a name="556"
+      > </a
+      ><a name="557" href="groups.KernelImageUniqueFactorization.html#408" class="Bound"
+      >H</a
+      ><a name="558"
+      > </a
+      ><a name="559" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="561"
+      > </a
+      ><a name="562" href="groups.Cokernel.html#4238" class="Function"
+      >Coker</a
+      ><a name="567"
+      > </a
+      ><a name="568" href="groups.KernelImageUniqueFactorization.html#466" class="Bound"
+      >&#968;&#8322;</a
+      ><a name="570"
+      > </a
+      ><a name="571" href="groups.KernelImageUniqueFactorization.html#480" class="Bound"
+      >G-ab</a
+      ><a name="575" class="Symbol"
+      >)</a
+      ><a name="576"
+      > </a
+      ><a name="577" class="Symbol"
+      >(</a
+      ><a name="578" href="groups.KernelImageUniqueFactorization.html#578" class="Bound"
+      >&#966;&#8322;-is-inj</a
+      ><a name="587"
+      > </a
+      ><a name="588" class="Symbol"
+      >:</a
+      ><a name="589"
+      > </a
+      ><a name="590" href="lib.groups.Homomorphism.html#5651" class="Function"
+      >is-inj&#7475;</a
+      ><a name="597"
+      > </a
+      ><a name="598" href="groups.KernelImageUniqueFactorization.html#552" class="Bound"
+      >&#966;&#8322;</a
+      ><a name="600" class="Symbol"
+      >)</a
+      ><a name="601"
+      >
+  </a
+      ><a name="604" class="Symbol"
+      >(</a
+      ><a name="605" href="groups.KernelImageUniqueFactorization.html#605" class="Bound"
+      >&#966;-comm</a
+      ><a name="611"
+      > </a
+      ><a name="612" class="Symbol"
+      >:</a
+      ><a name="613"
+      > </a
+      ><a name="614" class="Symbol"
+      >&#8704;</a
+      ><a name="615"
+      > </a
+      ><a name="616" href="groups.KernelImageUniqueFactorization.html#616" class="Bound"
+      >ker</a
+      ><a name="619"
+      > </a
+      ><a name="620" class="Symbol"
+      >&#8594;</a
+      ><a name="621"
+      > </a
+      ><a name="622" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="632"
+      > </a
+      ><a name="633" class="Symbol"
+      >(</a
+      ><a name="634" href="groups.KernelImageUniqueFactorization.html#552" class="Bound"
+      >&#966;&#8322;</a
+      ><a name="636"
+      > </a
+      ><a name="637" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="639"
+      > </a
+      ><a name="640" href="groups.KernelImageUniqueFactorization.html#504" class="Bound"
+      >&#966;&#8321;</a
+      ><a name="642" class="Symbol"
+      >)</a
+      ><a name="643"
+      > </a
+      ><a name="644" href="groups.KernelImageUniqueFactorization.html#616" class="Bound"
+      >ker</a
+      ><a name="647"
+      > </a
+      ><a name="648" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="650"
+      > </a
+      ><a name="651" href="lib.types.SetQuotient.html#313" class="Postulate Operator"
+      >q[</a
+      ><a name="653"
+      > </a
+      ><a name="654" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="657"
+      > </a
+      ><a name="658" href="groups.KernelImageUniqueFactorization.html#616" class="Bound"
+      >ker</a
+      ><a name="661"
+      > </a
+      ><a name="662" href="lib.types.SetQuotient.html#313" class="Postulate Operator"
+      >]</a
+      ><a name="663" class="Symbol"
+      >)</a
+      ><a name="664"
+      >
+  </a
+      ><a name="667" class="Keyword"
+      >where</a
+      ><a name="672"
+      >
+
+  </a
+      ><a name="676" class="Keyword"
+      >private</a
+      ><a name="683"
+      >
+    </a
+      ><a name="688" class="Keyword"
+      >module</a
+      ><a name="694"
+      > </a
+      ><a name="695" href="groups.KernelImageUniqueFactorization.html#695" class="Module"
+      >G</a
+      ><a name="696"
+      > </a
+      ><a name="697" class="Symbol"
+      >=</a
+      ><a name="698"
+      > </a
+      ><a name="699" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="704"
+      > </a
+      ><a name="705" href="groups.KernelImageUniqueFactorization.html#394" class="Bound"
+      >G</a
+      ><a name="706"
+      >
+    </a
+      ><a name="711" class="Keyword"
+      >module</a
+      ><a name="717"
+      > </a
+      ><a name="718" href="groups.KernelImageUniqueFactorization.html#718" class="Module"
+      >H</a
+      ><a name="719"
+      > </a
+      ><a name="720" class="Symbol"
+      >=</a
+      ><a name="721"
+      > </a
+      ><a name="722" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="727"
+      > </a
+      ><a name="728" href="groups.KernelImageUniqueFactorization.html#408" class="Bound"
+      >H</a
+      ><a name="729"
+      >
+    </a
+      ><a name="734" class="Keyword"
+      >module</a
+      ><a name="740"
+      > </a
+      ><a name="741" href="groups.KernelImageUniqueFactorization.html#741" class="Module"
+      >K</a
+      ><a name="742"
+      > </a
+      ><a name="743" class="Symbol"
+      >=</a
+      ><a name="744"
+      > </a
+      ><a name="745" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="750"
+      > </a
+      ><a name="751" href="groups.KernelImageUniqueFactorization.html#422" class="Bound"
+      >K</a
+      ><a name="752"
+      >
+    </a
+      ><a name="757" class="Keyword"
+      >module</a
+      ><a name="763"
+      > </a
+      ><a name="764" href="groups.KernelImageUniqueFactorization.html#764" class="Module"
+      >L</a
+      ><a name="765"
+      > </a
+      ><a name="766" class="Symbol"
+      >=</a
+      ><a name="767"
+      > </a
+      ><a name="768" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="773"
+      > </a
+      ><a name="774" href="groups.KernelImageUniqueFactorization.html#436" class="Bound"
+      >L</a
+      ><a name="775"
+      >
+    </a
+      ><a name="780" class="Keyword"
+      >module</a
+      ><a name="786"
+      > </a
+      ><a name="787" href="groups.KernelImageUniqueFactorization.html#787" class="Module"
+      >&#968;&#8321;</a
+      ><a name="789"
+      > </a
+      ><a name="790" class="Symbol"
+      >=</a
+      ><a name="791"
+      > </a
+      ><a name="792" href="lib.groups.Homomorphism.html#2451" class="Module"
+      >GroupHom</a
+      ><a name="800"
+      > </a
+      ><a name="801" href="groups.KernelImageUniqueFactorization.html#452" class="Bound"
+      >&#968;&#8321;</a
+      ><a name="803"
+      >
+    </a
+      ><a name="808" class="Keyword"
+      >module</a
+      ><a name="814"
+      > </a
+      ><a name="815" href="groups.KernelImageUniqueFactorization.html#815" class="Module"
+      >&#968;&#8322;</a
+      ><a name="817"
+      > </a
+      ><a name="818" class="Symbol"
+      >=</a
+      ><a name="819"
+      > </a
+      ><a name="820" href="lib.groups.Homomorphism.html#2451" class="Module"
+      >GroupHom</a
+      ><a name="828"
+      > </a
+      ><a name="829" href="groups.KernelImageUniqueFactorization.html#466" class="Bound"
+      >&#968;&#8322;</a
+      ><a name="831"
+      >
+    </a
+      ><a name="836" class="Keyword"
+      >module</a
+      ><a name="842"
+      > </a
+      ><a name="843" href="groups.KernelImageUniqueFactorization.html#843" class="Module"
+      >&#966;&#8321;</a
+      ><a name="845"
+      > </a
+      ><a name="846" class="Symbol"
+      >=</a
+      ><a name="847"
+      > </a
+      ><a name="848" href="lib.groups.Homomorphism.html#2451" class="Module"
+      >GroupHom</a
+      ><a name="856"
+      > </a
+      ><a name="857" href="groups.KernelImageUniqueFactorization.html#504" class="Bound"
+      >&#966;&#8321;</a
+      ><a name="859"
+      >
+    </a
+      ><a name="864" class="Keyword"
+      >module</a
+      ><a name="870"
+      > </a
+      ><a name="871" href="groups.KernelImageUniqueFactorization.html#871" class="Module"
+      >&#966;&#8322;</a
+      ><a name="873"
+      > </a
+      ><a name="874" class="Symbol"
+      >=</a
+      ><a name="875"
+      > </a
+      ><a name="876" href="lib.groups.Homomorphism.html#2451" class="Module"
+      >GroupHom</a
+      ><a name="884"
+      > </a
+      ><a name="885" href="groups.KernelImageUniqueFactorization.html#552" class="Bound"
+      >&#966;&#8322;</a
+      ><a name="887"
+      >
+
+    </a
+      ><a name="893" href="groups.KernelImageUniqueFactorization.html#893" class="Function"
+      >&#966;&#8322;'</a
+      ><a name="896"
+      > </a
+      ><a name="897" class="Symbol"
+      >:</a
+      ><a name="898"
+      > </a
+      ><a name="899" href="groups.KernelImageUniqueFactorization.html#408" class="Bound"
+      >H</a
+      ><a name="900"
+      > </a
+      ><a name="901" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="903"
+      > </a
+      ><a name="904" href="lib.groups.QuotientGroup.html#3884" class="Function"
+      >QuotGroup</a
+      ><a name="913"
+      > </a
+      ><a name="914" class="Symbol"
+      >(</a
+      ><a name="915" href="lib.groups.Homomorphism.html#8427" class="Function"
+      >im-nprop&#7475;</a
+      ><a name="924"
+      > </a
+      ><a name="925" href="groups.KernelImageUniqueFactorization.html#466" class="Bound"
+      >&#968;&#8322;</a
+      ><a name="927"
+      > </a
+      ><a name="928" href="groups.KernelImageUniqueFactorization.html#480" class="Bound"
+      >G-ab</a
+      ><a name="932" class="Symbol"
+      >)</a
+      ><a name="933"
+      >
+    </a
+      ><a name="938" href="groups.KernelImageUniqueFactorization.html#893" class="Function"
+      >&#966;&#8322;'</a
+      ><a name="941"
+      > </a
+      ><a name="942" class="Symbol"
+      >=</a
+      ><a name="943"
+      > </a
+      ><a name="944" href="lib.groups.Isomorphism.html#1996" class="Function"
+      >GroupIso.f-hom</a
+      ><a name="958"
+      > </a
+      ><a name="959" class="Symbol"
+      >(</a
+      ><a name="960" href="groups.Cokernel.html#4362" class="Function"
+      >Coker-&#946;</a
+      ><a name="967"
+      > </a
+      ><a name="968" href="groups.KernelImageUniqueFactorization.html#466" class="Bound"
+      >&#968;&#8322;</a
+      ><a name="970"
+      > </a
+      ><a name="971" href="groups.KernelImageUniqueFactorization.html#480" class="Bound"
+      >G-ab</a
+      ><a name="975" class="Symbol"
+      >)</a
+      ><a name="976"
+      > </a
+      ><a name="977" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="979"
+      > </a
+      ><a name="980" href="groups.KernelImageUniqueFactorization.html#552" class="Bound"
+      >&#966;&#8322;</a
+      ><a name="982"
+      >
+
+    </a
+      ><a name="988" class="Keyword"
+      >abstract</a
+      ><a name="996"
+      >
+      </a
+      ><a name="1003" href="groups.KernelImageUniqueFactorization.html#1003" class="Function"
+      >&#966;&#8322;'-is-inj</a
+      ><a name="1013"
+      > </a
+      ><a name="1014" class="Symbol"
+      >:</a
+      ><a name="1015"
+      > </a
+      ><a name="1016" href="lib.groups.Homomorphism.html#5651" class="Function"
+      >is-inj&#7475;</a
+      ><a name="1023"
+      > </a
+      ><a name="1024" href="groups.KernelImageUniqueFactorization.html#893" class="Function"
+      >&#966;&#8322;'</a
+      ><a name="1027"
+      >
+      </a
+      ><a name="1034" href="groups.KernelImageUniqueFactorization.html#1003" class="Function"
+      >&#966;&#8322;'-is-inj</a
+      ><a name="1044"
+      > </a
+      ><a name="1045" class="Symbol"
+      >=</a
+      ><a name="1046"
+      > </a
+      ><a name="1047" href="lib.Function.html#1440" class="Function"
+      >&#8728;-is-inj</a
+      ><a name="1055"
+      > </a
+      ><a name="1056" class="Symbol"
+      >(</a
+      ><a name="1057" href="lib.Equivalence.html#5410" class="Function"
+      >&#8211;&gt;-is-inj</a
+      ><a name="1066"
+      > </a
+      ><a name="1067" class="Symbol"
+      >(</a
+      ><a name="1068" href="lib.groups.Isomorphism.html#2163" class="Function"
+      >GroupIso.f-equiv</a
+      ><a name="1084"
+      > </a
+      ><a name="1085" class="Symbol"
+      >(</a
+      ><a name="1086" href="groups.Cokernel.html#4362" class="Function"
+      >Coker-&#946;</a
+      ><a name="1093"
+      > </a
+      ><a name="1094" href="groups.KernelImageUniqueFactorization.html#466" class="Bound"
+      >&#968;&#8322;</a
+      ><a name="1096"
+      > </a
+      ><a name="1097" href="groups.KernelImageUniqueFactorization.html#480" class="Bound"
+      >G-ab</a
+      ><a name="1101" class="Symbol"
+      >)))</a
+      ><a name="1104"
+      > </a
+      ><a name="1105" href="groups.KernelImageUniqueFactorization.html#578" class="Bound"
+      >&#966;&#8322;-is-inj</a
+      ><a name="1114"
+      >
+
+  </a
+      ><a name="1118" class="Keyword"
+      >open</a
+      ><a name="1122"
+      > </a
+      ><a name="1123" class="Keyword"
+      >import</a
+      ><a name="1129"
+      > </a
+      ><a name="1130" href="groups.PropQuotUniqueFactorization.html#1" class="Module"
+      >groups.PropQuotUniqueFactorization</a
+      ><a name="1164"
+      >
+    </a
+      ><a name="1169" class="Symbol"
+      >(</a
+      ><a name="1170" href="lib.groups.Homomorphism.html#7167" class="Function"
+      >ker-prop&#7475;</a
+      ><a name="1179"
+      > </a
+      ><a name="1180" href="groups.KernelImageUniqueFactorization.html#452" class="Bound"
+      >&#968;&#8321;</a
+      ><a name="1182" class="Symbol"
+      >)</a
+      ><a name="1183"
+      > </a
+      ><a name="1184" class="Symbol"
+      >(</a
+      ><a name="1185" href="lib.groups.Homomorphism.html#8427" class="Function"
+      >im-nprop&#7475;</a
+      ><a name="1194"
+      > </a
+      ><a name="1195" href="groups.KernelImageUniqueFactorization.html#466" class="Bound"
+      >&#968;&#8322;</a
+      ><a name="1197"
+      > </a
+      ><a name="1198" href="groups.KernelImageUniqueFactorization.html#480" class="Bound"
+      >G-ab</a
+      ><a name="1202" class="Symbol"
+      >)</a
+      ><a name="1203"
+      > </a
+      ><a name="1204" href="groups.KernelImageUniqueFactorization.html#504" class="Bound"
+      >&#966;&#8321;</a
+      ><a name="1206"
+      > </a
+      ><a name="1207" href="groups.KernelImageUniqueFactorization.html#523" class="Bound"
+      >&#966;&#8321;-is-surj</a
+      ><a name="1217"
+      > </a
+      ><a name="1218" href="groups.KernelImageUniqueFactorization.html#893" class="Function"
+      >&#966;&#8322;'</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" href="groups.KernelImageUniqueFactorization.html#1003" class="Function"
+      >&#966;&#8322;'-is-inj</a
+      ><a name="1232"
+      > </a
+      ><a name="1233" href="groups.KernelImageUniqueFactorization.html#605" class="Bound"
+      >&#966;-comm</a
+      ><a name="1239"
+      >
+  </a
+      ><a name="1242" class="Keyword"
+      >open</a
+      ><a name="1246"
+      > </a
+      ><a name="1247" class="Keyword"
+      >import</a
+      ><a name="1253"
+      > </a
+      ><a name="1254" href="groups.KernelImage.html#1" class="Module"
+      >groups.KernelImage</a
+      ><a name="1272"
+      > </a
+      ><a name="1273" href="groups.KernelImageUniqueFactorization.html#452" class="Bound"
+      >&#968;&#8321;</a
+      ><a name="1275"
+      > </a
+      ><a name="1276" href="groups.KernelImageUniqueFactorization.html#466" class="Bound"
+      >&#968;&#8322;</a
+      ><a name="1278"
+      > </a
+      ><a name="1279" href="groups.KernelImageUniqueFactorization.html#480" class="Bound"
+      >G-ab</a
+      ><a name="1283"
+      >
+
+  </a
+      ><a name="1287" href="groups.KernelImageUniqueFactorization.html#1287" class="Function"
+      >H-iso-Ker/Im</a
+      ><a name="1299"
+      > </a
+      ><a name="1300" class="Symbol"
+      >:</a
+      ><a name="1301"
+      > </a
+      ><a name="1302" href="groups.KernelImageUniqueFactorization.html#408" class="Bound"
+      >H</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="1306"
+      > </a
+      ><a name="1307" href="groups.KernelImage.html#5271" class="Function"
+      >Ker/Im</a
+      ><a name="1313"
+      >
+  </a
+      ><a name="1316" href="groups.KernelImageUniqueFactorization.html#1287" class="Function"
+      >H-iso-Ker/Im</a
+      ><a name="1328"
+      > </a
+      ><a name="1329" class="Symbol"
+      >=</a
+      ><a name="1330"
+      > </a
+      ><a name="1331" href="groups.KernelImage.html#5409" class="Function"
+      >Ker/Im-&#946;</a
+      ><a name="1339"
+      > </a
+      ><a name="1340" href="lib.groups.Isomorphism.html#3359" class="Function Operator"
+      >&#8315;&#185;&#7475;</a
+      ><a name="1343"
+      > </a
+      ><a name="1344" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" href="groups.PropQuotUniqueFactorization.html#2505" class="Function"
+      >H-iso-P/Q</a
+      ><a name="1357"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

@@ -1,0 +1,4908 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.BlakersMassey</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      > </a
+      ><a name="59" class="Keyword"
+      >hiding</a
+      ><a name="65"
+      > </a
+      ><a name="66" class="Symbol"
+      >(</a
+      ><a name="67" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="71" class="Symbol"
+      >;</a
+      ><a name="72"
+      > </a
+      ><a name="73" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="78" class="Symbol"
+      >)</a
+      ><a name="79"
+      >
+
+</a
+      ><a name="81" class="Keyword"
+      >module</a
+      ><a name="87"
+      > </a
+      ><a name="88" href="homotopy.BlakersMassey.html#1" class="Module"
+      >homotopy.BlakersMassey</a
+      ><a name="110"
+      > </a
+      ><a name="111" class="Symbol"
+      >{</a
+      ><a name="112" href="homotopy.BlakersMassey.html#112" class="Bound"
+      >i</a
+      ><a name="113"
+      > </a
+      ><a name="114" href="homotopy.BlakersMassey.html#114" class="Bound"
+      >j</a
+      ><a name="115"
+      > </a
+      ><a name="116" href="homotopy.BlakersMassey.html#116" class="Bound"
+      >k</a
+      ><a name="117" class="Symbol"
+      >}</a
+      ><a name="118"
+      >
+  </a
+      ><a name="121" class="Symbol"
+      >{</a
+      ><a name="122" href="homotopy.BlakersMassey.html#122" class="Bound"
+      >A</a
+      ><a name="123"
+      > </a
+      ><a name="124" class="Symbol"
+      >:</a
+      ><a name="125"
+      > </a
+      ><a name="126" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="130"
+      > </a
+      ><a name="131" href="homotopy.BlakersMassey.html#112" class="Bound"
+      >i</a
+      ><a name="132" class="Symbol"
+      >}</a
+      ><a name="133"
+      > </a
+      ><a name="134" class="Symbol"
+      >{</a
+      ><a name="135" href="homotopy.BlakersMassey.html#135" class="Bound"
+      >B</a
+      ><a name="136"
+      > </a
+      ><a name="137" class="Symbol"
+      >:</a
+      ><a name="138"
+      > </a
+      ><a name="139" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="143"
+      > </a
+      ><a name="144" href="homotopy.BlakersMassey.html#114" class="Bound"
+      >j</a
+      ><a name="145" class="Symbol"
+      >}</a
+      ><a name="146"
+      > </a
+      ><a name="147" class="Symbol"
+      >(</a
+      ><a name="148" href="homotopy.BlakersMassey.html#148" class="Bound"
+      >Q</a
+      ><a name="149"
+      > </a
+      ><a name="150" class="Symbol"
+      >:</a
+      ><a name="151"
+      > </a
+      ><a name="152" href="homotopy.BlakersMassey.html#122" class="Bound"
+      >A</a
+      ><a name="153"
+      > </a
+      ><a name="154" class="Symbol"
+      >&#8594;</a
+      ><a name="155"
+      > </a
+      ><a name="156" href="homotopy.BlakersMassey.html#135" class="Bound"
+      >B</a
+      ><a name="157"
+      > </a
+      ><a name="158" class="Symbol"
+      >&#8594;</a
+      ><a name="159"
+      > </a
+      ><a name="160" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="164"
+      > </a
+      ><a name="165" href="homotopy.BlakersMassey.html#116" class="Bound"
+      >k</a
+      ><a name="166" class="Symbol"
+      >)</a
+      ><a name="167"
+      >
+  </a
+      ><a name="170" href="homotopy.BlakersMassey.html#170" class="Bound"
+      >m</a
+      ><a name="171"
+      > </a
+      ><a name="172" class="Symbol"
+      >(</a
+      ><a name="173" href="homotopy.BlakersMassey.html#173" class="Bound"
+      >f-conn</a
+      ><a name="179"
+      > </a
+      ><a name="180" class="Symbol"
+      >:</a
+      ><a name="181"
+      > </a
+      ><a name="182" class="Symbol"
+      >&#8704;</a
+      ><a name="183"
+      > </a
+      ><a name="184" href="homotopy.BlakersMassey.html#184" class="Bound"
+      >a</a
+      ><a name="185"
+      > </a
+      ><a name="186" class="Symbol"
+      >&#8594;</a
+      ><a name="187"
+      > </a
+      ><a name="188" href="lib.NConnected.html#343" class="Function"
+      >is-connected</a
+      ><a name="200"
+      > </a
+      ><a name="201" class="Symbol"
+      >(</a
+      ><a name="202" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="203"
+      > </a
+      ><a name="204" href="homotopy.BlakersMassey.html#170" class="Bound"
+      >m</a
+      ><a name="205" class="Symbol"
+      >)</a
+      ><a name="206"
+      > </a
+      ><a name="207" class="Symbol"
+      >(</a
+      ><a name="208" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="209"
+      > </a
+      ><a name="210" href="homotopy.BlakersMassey.html#135" class="Bound"
+      >B</a
+      ><a name="211"
+      > </a
+      ><a name="212" class="Symbol"
+      >(&#955;</a
+      ><a name="214"
+      > </a
+      ><a name="215" href="homotopy.BlakersMassey.html#215" class="Bound"
+      >b</a
+      ><a name="216"
+      > </a
+      ><a name="217" class="Symbol"
+      >&#8594;</a
+      ><a name="218"
+      > </a
+      ><a name="219" href="homotopy.BlakersMassey.html#148" class="Bound"
+      >Q</a
+      ><a name="220"
+      > </a
+      ><a name="221" href="homotopy.BlakersMassey.html#184" class="Bound"
+      >a</a
+      ><a name="222"
+      > </a
+      ><a name="223" href="homotopy.BlakersMassey.html#215" class="Bound"
+      >b</a
+      ><a name="224" class="Symbol"
+      >)))</a
+      ><a name="227"
+      >
+  </a
+      ><a name="230" href="homotopy.BlakersMassey.html#230" class="Bound"
+      >n</a
+      ><a name="231"
+      > </a
+      ><a name="232" class="Symbol"
+      >(</a
+      ><a name="233" href="homotopy.BlakersMassey.html#233" class="Bound"
+      >g-conn</a
+      ><a name="239"
+      > </a
+      ><a name="240" class="Symbol"
+      >:</a
+      ><a name="241"
+      > </a
+      ><a name="242" class="Symbol"
+      >&#8704;</a
+      ><a name="243"
+      > </a
+      ><a name="244" href="homotopy.BlakersMassey.html#244" class="Bound"
+      >b</a
+      ><a name="245"
+      > </a
+      ><a name="246" class="Symbol"
+      >&#8594;</a
+      ><a name="247"
+      > </a
+      ><a name="248" href="lib.NConnected.html#343" class="Function"
+      >is-connected</a
+      ><a name="260"
+      > </a
+      ><a name="261" class="Symbol"
+      >(</a
+      ><a name="262" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="263"
+      > </a
+      ><a name="264" href="homotopy.BlakersMassey.html#230" class="Bound"
+      >n</a
+      ><a name="265" class="Symbol"
+      >)</a
+      ><a name="266"
+      > </a
+      ><a name="267" class="Symbol"
+      >(</a
+      ><a name="268" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="269"
+      > </a
+      ><a name="270" href="homotopy.BlakersMassey.html#122" class="Bound"
+      >A</a
+      ><a name="271"
+      > </a
+      ><a name="272" class="Symbol"
+      >(&#955;</a
+      ><a name="274"
+      > </a
+      ><a name="275" href="homotopy.BlakersMassey.html#275" class="Bound"
+      >a</a
+      ><a name="276"
+      > </a
+      ><a name="277" class="Symbol"
+      >&#8594;</a
+      ><a name="278"
+      > </a
+      ><a name="279" href="homotopy.BlakersMassey.html#148" class="Bound"
+      >Q</a
+      ><a name="280"
+      > </a
+      ><a name="281" href="homotopy.BlakersMassey.html#275" class="Bound"
+      >a</a
+      ><a name="282"
+      > </a
+      ><a name="283" href="homotopy.BlakersMassey.html#244" class="Bound"
+      >b</a
+      ><a name="284" class="Symbol"
+      >)))</a
+      ><a name="287"
+      >
+  </a
+      ><a name="290" class="Keyword"
+      >where</a
+      ><a name="295"
+      >
+
+</a
+      ><a name="297" class="Keyword"
+      >open</a
+      ><a name="301"
+      > </a
+      ><a name="302" class="Keyword"
+      >import</a
+      ><a name="308"
+      > </a
+      ><a name="309" href="homotopy.blakersmassey.Pushout.html#1" class="Module"
+      >homotopy.blakersmassey.Pushout</a
+      ><a name="339"
+      > </a
+      ><a name="340" href="homotopy.BlakersMassey.html#148" class="Bound"
+      >Q</a
+      ><a name="341"
+      >
+</a
+      ><a name="342" class="Keyword"
+      >import</a
+      ><a name="348"
+      > </a
+      ><a name="349" href="homotopy.blakersmassey.CoherenceData.html#1" class="Module"
+      >homotopy.blakersmassey.CoherenceData</a
+      ><a name="385"
+      > </a
+      ><a name="386" href="homotopy.BlakersMassey.html#148" class="Bound"
+      >Q</a
+      ><a name="387"
+      > </a
+      ><a name="388" href="homotopy.BlakersMassey.html#170" class="Bound"
+      >m</a
+      ><a name="389"
+      > </a
+      ><a name="390" href="homotopy.BlakersMassey.html#173" class="Bound"
+      >f-conn</a
+      ><a name="396"
+      > </a
+      ><a name="397" href="homotopy.BlakersMassey.html#230" class="Bound"
+      >n</a
+      ><a name="398"
+      > </a
+      ><a name="399" href="homotopy.BlakersMassey.html#233" class="Bound"
+      >g-conn</a
+      ><a name="405"
+      > </a
+      ><a name="406" class="Symbol"
+      >as</a
+      ><a name="408"
+      > </a
+      ><a name="409" href="homotopy.BlakersMassey.html#409" class="Module"
+      >Coh</a
+      ><a name="412"
+      >
+
+</a
+      ><a name="414" class="Comment"
+      >-- These extra parameters will be discharged in the end</a
+      ><a name="469"
+      >
+</a
+      ><a name="470" class="Keyword"
+      >module</a
+      ><a name="476"
+      > </a
+      ><a name="477" href="homotopy.BlakersMassey.html#477" class="Module"
+      >_</a
+      ><a name="478"
+      > </a
+      ><a name="479" class="Symbol"
+      >{</a
+      ><a name="480" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="482" class="Symbol"
+      >}</a
+      ><a name="483"
+      > </a
+      ><a name="484" class="Symbol"
+      >{</a
+      ><a name="485" href="homotopy.BlakersMassey.html#485" class="Bound"
+      >b&#8320;</a
+      ><a name="487" class="Symbol"
+      >}</a
+      ><a name="488"
+      > </a
+      ><a name="489" class="Symbol"
+      >(</a
+      ><a name="490" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="493"
+      > </a
+      ><a name="494" class="Symbol"
+      >:</a
+      ><a name="495"
+      > </a
+      ><a name="496" href="homotopy.BlakersMassey.html#148" class="Bound"
+      >Q</a
+      ><a name="497"
+      > </a
+      ><a name="498" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="500"
+      > </a
+      ><a name="501" href="homotopy.BlakersMassey.html#485" class="Bound"
+      >b&#8320;</a
+      ><a name="503" class="Symbol"
+      >)</a
+      ><a name="504"
+      > </a
+      ><a name="505" class="Keyword"
+      >where</a
+      ><a name="510"
+      >
+
+  </a
+      ><a name="514" class="Comment"
+      >-- Step 1:</a
+      ><a name="524"
+      >
+  </a
+      ><a name="527" class="Comment"
+      >-- Generalizing the theorem to [bmleft x == p] for arbitrary p.</a
+      ><a name="590"
+      >
+  </a
+      ><a name="593" class="Comment"
+      >-- This requires a pushout-rec</a
+      ><a name="623"
+      >
+
+  </a
+      ><a name="627" class="Comment"
+      >-- &quot;extended&quot; version</a
+      ><a name="648"
+      >
+  </a
+      ><a name="651" href="homotopy.BlakersMassey.html#651" class="Function"
+      >code-bmleft-template</a
+      ><a name="671"
+      > </a
+      ><a name="672" class="Symbol"
+      >:</a
+      ><a name="673"
+      > </a
+      ><a name="674" class="Symbol"
+      >&#8704;</a
+      ><a name="675"
+      > </a
+      ><a name="676" href="homotopy.BlakersMassey.html#676" class="Bound"
+      >a&#8321;</a
+      ><a name="678"
+      > </a
+      ><a name="679" class="Symbol"
+      >{</a
+      ><a name="680" href="homotopy.BlakersMassey.html#680" class="Bound"
+      >p</a
+      ><a name="681" class="Symbol"
+      >}</a
+      ><a name="682"
+      > </a
+      ><a name="683" class="Symbol"
+      >(</a
+      ><a name="684" href="homotopy.BlakersMassey.html#684" class="Bound"
+      >r'</a
+      ><a name="686"
+      > </a
+      ><a name="687" class="Symbol"
+      >:</a
+      ><a name="688"
+      > </a
+      ><a name="689" href="homotopy.blakersmassey.Pushout.html#370" class="Function"
+      >bmleft</a
+      ><a name="695"
+      > </a
+      ><a name="696" href="homotopy.BlakersMassey.html#676" class="Bound"
+      >a&#8321;</a
+      ><a name="698"
+      > </a
+      ><a name="699" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="701"
+      > </a
+      ><a name="702" href="homotopy.BlakersMassey.html#680" class="Bound"
+      >p</a
+      ><a name="703" class="Symbol"
+      >)</a
+      ><a name="704"
+      > </a
+      ><a name="705" class="Symbol"
+      >&#8594;</a
+      ><a name="706"
+      > </a
+      ><a name="707" href="homotopy.blakersmassey.Pushout.html#370" class="Function"
+      >bmleft</a
+      ><a name="713"
+      > </a
+      ><a name="714" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="716"
+      > </a
+      ><a name="717" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="719"
+      > </a
+      ><a name="720" href="homotopy.BlakersMassey.html#680" class="Bound"
+      >p</a
+      ><a name="721"
+      > </a
+      ><a name="722" class="Symbol"
+      >&#8594;</a
+      ><a name="723"
+      > </a
+      ><a name="724" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="728"
+      > </a
+      ><a name="729" class="Symbol"
+      >(</a
+      ><a name="730" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="734"
+      > </a
+      ><a name="735" href="homotopy.BlakersMassey.html#112" class="Bound"
+      >i</a
+      ><a name="736"
+      > </a
+      ><a name="737" class="Symbol"
+      >(</a
+      ><a name="738" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="742"
+      > </a
+      ><a name="743" href="homotopy.BlakersMassey.html#114" class="Bound"
+      >j</a
+      ><a name="744"
+      > </a
+      ><a name="745" href="homotopy.BlakersMassey.html#116" class="Bound"
+      >k</a
+      ><a name="746" class="Symbol"
+      >))</a
+      ><a name="748"
+      >
+  </a
+      ><a name="751" href="homotopy.BlakersMassey.html#651" class="Function"
+      >code-bmleft-template</a
+      ><a name="771"
+      > </a
+      ><a name="772" href="homotopy.BlakersMassey.html#772" class="Bound"
+      >a&#8321;</a
+      ><a name="774"
+      > </a
+      ><a name="775" href="homotopy.BlakersMassey.html#775" class="Bound"
+      >r'</a
+      ><a name="777"
+      > </a
+      ><a name="778" href="homotopy.BlakersMassey.html#778" class="Bound"
+      >r</a
+      ><a name="779"
+      > </a
+      ><a name="780" class="Symbol"
+      >=</a
+      ><a name="781"
+      > </a
+      ><a name="782" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="787"
+      > </a
+      ><a name="788" class="Symbol"
+      >(</a
+      ><a name="789" href="homotopy.BlakersMassey.html#170" class="Bound"
+      >m</a
+      ><a name="790"
+      > </a
+      ><a name="791" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="794"
+      > </a
+      ><a name="795" href="homotopy.BlakersMassey.html#230" class="Bound"
+      >n</a
+      ><a name="796" class="Symbol"
+      >)</a
+      ><a name="797"
+      > </a
+      ><a name="798" class="Symbol"
+      >(</a
+      ><a name="799" href="lib.Function.html#899" class="Function"
+      >hfiber</a
+      ><a name="805"
+      > </a
+      ><a name="806" class="Symbol"
+      >(&#955;</a
+      ><a name="808"
+      > </a
+      ><a name="809" href="homotopy.BlakersMassey.html#809" class="Bound"
+      >q&#8321;&#8320;</a
+      ><a name="812"
+      > </a
+      ><a name="813" class="Symbol"
+      >&#8594;</a
+      ><a name="814"
+      > </a
+      ><a name="815" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="821"
+      > </a
+      ><a name="822" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="825"
+      > </a
+      ><a name="826" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="828"
+      > </a
+      ><a name="829" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="830"
+      > </a
+      ><a name="831" class="Symbol"
+      >(</a
+      ><a name="832" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="838"
+      > </a
+      ><a name="839" href="homotopy.BlakersMassey.html#809" class="Bound"
+      >q&#8321;&#8320;</a
+      ><a name="842" class="Symbol"
+      >)</a
+      ><a name="843"
+      > </a
+      ><a name="844" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="846"
+      > </a
+      ><a name="847" href="homotopy.BlakersMassey.html#775" class="Bound"
+      >r'</a
+      ><a name="849" class="Symbol"
+      >)</a
+      ><a name="850"
+      > </a
+      ><a name="851" href="homotopy.BlakersMassey.html#778" class="Bound"
+      >r</a
+      ><a name="852" class="Symbol"
+      >)</a
+      ><a name="853"
+      >
+
+  </a
+      ><a name="857" href="homotopy.BlakersMassey.html#857" class="Function"
+      >code-bmleft</a
+      ><a name="868"
+      > </a
+      ><a name="869" class="Symbol"
+      >:</a
+      ><a name="870"
+      > </a
+      ><a name="871" class="Symbol"
+      >&#8704;</a
+      ><a name="872"
+      > </a
+      ><a name="873" href="homotopy.BlakersMassey.html#873" class="Bound"
+      >a&#8321;</a
+      ><a name="875"
+      > </a
+      ><a name="876" class="Symbol"
+      >&#8594;</a
+      ><a name="877"
+      > </a
+      ><a name="878" href="homotopy.blakersmassey.Pushout.html#370" class="Function"
+      >bmleft</a
+      ><a name="884"
+      > </a
+      ><a name="885" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="887"
+      > </a
+      ><a name="888" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="890"
+      > </a
+      ><a name="891" href="homotopy.blakersmassey.Pushout.html#370" class="Function"
+      >bmleft</a
+      ><a name="897"
+      > </a
+      ><a name="898" href="homotopy.BlakersMassey.html#873" class="Bound"
+      >a&#8321;</a
+      ><a name="900"
+      > </a
+      ><a name="901" class="Symbol"
+      >&#8594;</a
+      ><a name="902"
+      > </a
+      ><a name="903" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="907"
+      > </a
+      ><a name="908" class="Symbol"
+      >(</a
+      ><a name="909" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="913"
+      > </a
+      ><a name="914" href="homotopy.BlakersMassey.html#112" class="Bound"
+      >i</a
+      ><a name="915"
+      > </a
+      ><a name="916" class="Symbol"
+      >(</a
+      ><a name="917" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="921"
+      > </a
+      ><a name="922" href="homotopy.BlakersMassey.html#114" class="Bound"
+      >j</a
+      ><a name="923"
+      > </a
+      ><a name="924" href="homotopy.BlakersMassey.html#116" class="Bound"
+      >k</a
+      ><a name="925" class="Symbol"
+      >))</a
+      ><a name="927"
+      >
+  </a
+      ><a name="930" href="homotopy.BlakersMassey.html#857" class="Function"
+      >code-bmleft</a
+      ><a name="941"
+      > </a
+      ><a name="942" href="homotopy.BlakersMassey.html#942" class="Bound"
+      >a&#8321;</a
+      ><a name="944"
+      > </a
+      ><a name="945" class="Symbol"
+      >=</a
+      ><a name="946"
+      > </a
+      ><a name="947" href="homotopy.BlakersMassey.html#651" class="Function"
+      >code-bmleft-template</a
+      ><a name="967"
+      > </a
+      ><a name="968" href="homotopy.BlakersMassey.html#942" class="Bound"
+      >a&#8321;</a
+      ><a name="970"
+      > </a
+      ><a name="971" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="974"
+      >
+
+  </a
+      ><a name="978" href="homotopy.BlakersMassey.html#978" class="Function"
+      >code-bmright</a
+      ><a name="990"
+      > </a
+      ><a name="991" class="Symbol"
+      >:</a
+      ><a name="992"
+      > </a
+      ><a name="993" class="Symbol"
+      >&#8704;</a
+      ><a name="994"
+      > </a
+      ><a name="995" href="homotopy.BlakersMassey.html#995" class="Bound"
+      >b&#8321;</a
+      ><a name="997"
+      > </a
+      ><a name="998" class="Symbol"
+      >&#8594;</a
+      ><a name="999"
+      > </a
+      ><a name="1000" href="homotopy.blakersmassey.Pushout.html#370" class="Function"
+      >bmleft</a
+      ><a name="1006"
+      > </a
+      ><a name="1007" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="1009"
+      > </a
+      ><a name="1010" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1012"
+      > </a
+      ><a name="1013" href="homotopy.blakersmassey.Pushout.html#408" class="Function"
+      >bmright</a
+      ><a name="1020"
+      > </a
+      ><a name="1021" href="homotopy.BlakersMassey.html#995" class="Bound"
+      >b&#8321;</a
+      ><a name="1023"
+      > </a
+      ><a name="1024" class="Symbol"
+      >&#8594;</a
+      ><a name="1025"
+      > </a
+      ><a name="1026" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1030"
+      > </a
+      ><a name="1031" class="Symbol"
+      >(</a
+      ><a name="1032" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1036"
+      > </a
+      ><a name="1037" href="homotopy.BlakersMassey.html#112" class="Bound"
+      >i</a
+      ><a name="1038"
+      > </a
+      ><a name="1039" class="Symbol"
+      >(</a
+      ><a name="1040" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1044"
+      > </a
+      ><a name="1045" href="homotopy.BlakersMassey.html#114" class="Bound"
+      >j</a
+      ><a name="1046"
+      > </a
+      ><a name="1047" href="homotopy.BlakersMassey.html#116" class="Bound"
+      >k</a
+      ><a name="1048" class="Symbol"
+      >))</a
+      ><a name="1050"
+      >
+  </a
+      ><a name="1053" href="homotopy.BlakersMassey.html#978" class="Function"
+      >code-bmright</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" href="homotopy.BlakersMassey.html#1066" class="Bound"
+      >b&#8321;</a
+      ><a name="1068"
+      > </a
+      ><a name="1069" href="homotopy.BlakersMassey.html#1069" class="Bound"
+      >r</a
+      ><a name="1070"
+      > </a
+      ><a name="1071" class="Symbol"
+      >=</a
+      ><a name="1072"
+      > </a
+      ><a name="1073" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="1078"
+      > </a
+      ><a name="1079" class="Symbol"
+      >(</a
+      ><a name="1080" href="homotopy.BlakersMassey.html#170" class="Bound"
+      >m</a
+      ><a name="1081"
+      > </a
+      ><a name="1082" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" href="homotopy.BlakersMassey.html#230" class="Bound"
+      >n</a
+      ><a name="1087" class="Symbol"
+      >)</a
+      ><a name="1088"
+      > </a
+      ><a name="1089" class="Symbol"
+      >(</a
+      ><a name="1090" href="lib.Function.html#899" class="Function"
+      >hfiber</a
+      ><a name="1096"
+      > </a
+      ><a name="1097" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" href="homotopy.BlakersMassey.html#1069" class="Bound"
+      >r</a
+      ><a name="1105" class="Symbol"
+      >)</a
+      ><a name="1106"
+      >
+
+  </a
+      ><a name="1110" class="Comment"
+      >-- The template from [Coh.eqv] to the input for [apd code glue]</a
+      ><a name="1173"
+      >
+  </a
+      ><a name="1176" class="Comment"
+      >-- for using the identification elimination.</a
+      ><a name="1220"
+      >
+  </a
+      ><a name="1223" href="homotopy.BlakersMassey.html#1223" class="Function"
+      >code-bmglue-template</a
+      ><a name="1243"
+      > </a
+      ><a name="1244" class="Symbol"
+      >:</a
+      ><a name="1245"
+      > </a
+      ><a name="1246" class="Symbol"
+      >&#8704;</a
+      ><a name="1247"
+      > </a
+      ><a name="1248" class="Symbol"
+      >{</a
+      ><a name="1249" href="homotopy.BlakersMassey.html#1249" class="Bound"
+      >a&#8321;</a
+      ><a name="1251"
+      > </a
+      ><a name="1252" href="homotopy.BlakersMassey.html#1252" class="Bound"
+      >p</a
+      ><a name="1253" class="Symbol"
+      >}</a
+      ><a name="1254"
+      >
+    </a
+      ><a name="1259" class="Symbol"
+      >&#8594;</a
+      ><a name="1260"
+      > </a
+      ><a name="1261" class="Symbol"
+      >(</a
+      ><a name="1262" href="homotopy.BlakersMassey.html#1262" class="Bound"
+      >code</a
+      ><a name="1266"
+      > </a
+      ><a name="1267" class="Symbol"
+      >:</a
+      ><a name="1268"
+      > </a
+      ><a name="1269" class="Symbol"
+      >(</a
+      ><a name="1270" href="homotopy.BlakersMassey.html#1270" class="Bound"
+      >r</a
+      ><a name="1271"
+      > </a
+      ><a name="1272" class="Symbol"
+      >:</a
+      ><a name="1273"
+      > </a
+      ><a name="1274" href="homotopy.blakersmassey.Pushout.html#370" class="Function"
+      >bmleft</a
+      ><a name="1280"
+      > </a
+      ><a name="1281" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="1283"
+      > </a
+      ><a name="1284" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1286"
+      > </a
+      ><a name="1287" href="homotopy.BlakersMassey.html#1252" class="Bound"
+      >p</a
+      ><a name="1288" class="Symbol"
+      >)</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" class="Symbol"
+      >&#8594;</a
+      ><a name="1291"
+      > </a
+      ><a name="1292" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1296"
+      > </a
+      ><a name="1297" class="Symbol"
+      >(</a
+      ><a name="1298" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1302"
+      > </a
+      ><a name="1303" href="homotopy.BlakersMassey.html#112" class="Bound"
+      >i</a
+      ><a name="1304"
+      > </a
+      ><a name="1305" class="Symbol"
+      >(</a
+      ><a name="1306" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1310"
+      > </a
+      ><a name="1311" href="homotopy.BlakersMassey.html#114" class="Bound"
+      >j</a
+      ><a name="1312"
+      > </a
+      ><a name="1313" href="homotopy.BlakersMassey.html#116" class="Bound"
+      >k</a
+      ><a name="1314" class="Symbol"
+      >)))</a
+      ><a name="1317"
+      >
+    </a
+      ><a name="1322" class="Symbol"
+      >&#8594;</a
+      ><a name="1323"
+      > </a
+      ><a name="1324" class="Symbol"
+      >(</a
+      ><a name="1325" href="homotopy.BlakersMassey.html#1325" class="Bound"
+      >r</a
+      ><a name="1326"
+      > </a
+      ><a name="1327" class="Symbol"
+      >:</a
+      ><a name="1328"
+      > </a
+      ><a name="1329" href="homotopy.blakersmassey.Pushout.html#370" class="Function"
+      >bmleft</a
+      ><a name="1335"
+      > </a
+      ><a name="1336" href="homotopy.BlakersMassey.html#1249" class="Bound"
+      >a&#8321;</a
+      ><a name="1338"
+      > </a
+      ><a name="1339" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" href="homotopy.BlakersMassey.html#1252" class="Bound"
+      >p</a
+      ><a name="1343" class="Symbol"
+      >)</a
+      ><a name="1344"
+      >
+    </a
+      ><a name="1349" class="Symbol"
+      >&#8594;</a
+      ><a name="1350"
+      > </a
+      ><a name="1351" class="Symbol"
+      >(&#8704;</a
+      ><a name="1353"
+      > </a
+      ><a name="1354" href="homotopy.BlakersMassey.html#1354" class="Bound"
+      >r'</a
+      ><a name="1356"
+      > </a
+      ><a name="1357" class="Symbol"
+      >&#8594;</a
+      ><a name="1358"
+      > </a
+      ><a name="1359" href="homotopy.BlakersMassey.html#651" class="Function"
+      >code-bmleft-template</a
+      ><a name="1379"
+      > </a
+      ><a name="1380" href="homotopy.BlakersMassey.html#1249" class="Bound"
+      >a&#8321;</a
+      ><a name="1382"
+      > </a
+      ><a name="1383" href="homotopy.BlakersMassey.html#1325" class="Bound"
+      >r</a
+      ><a name="1384"
+      > </a
+      ><a name="1385" href="homotopy.BlakersMassey.html#1354" class="Bound"
+      >r'</a
+      ><a name="1387"
+      > </a
+      ><a name="1388" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="1389"
+      > </a
+      ><a name="1390" href="homotopy.BlakersMassey.html#1262" class="Bound"
+      >code</a
+      ><a name="1394"
+      > </a
+      ><a name="1395" href="homotopy.BlakersMassey.html#1354" class="Bound"
+      >r'</a
+      ><a name="1397" class="Symbol"
+      >)</a
+      ><a name="1398"
+      >
+    </a
+      ><a name="1403" class="Symbol"
+      >&#8594;</a
+      ><a name="1404"
+      > </a
+      ><a name="1405" href="homotopy.BlakersMassey.html#651" class="Function"
+      >code-bmleft-template</a
+      ><a name="1425"
+      > </a
+      ><a name="1426" href="homotopy.BlakersMassey.html#1249" class="Bound"
+      >a&#8321;</a
+      ><a name="1428"
+      > </a
+      ><a name="1429" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1432"
+      > </a
+      ><a name="1433" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="1435"
+      > </a
+      ><a name="1436" href="homotopy.BlakersMassey.html#1262" class="Bound"
+      >code</a
+      ><a name="1440"
+      > </a
+      ><a name="1441" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="1442"
+      > </a
+      ><a name="1443" class="Symbol"
+      >(&#955;</a
+      ><a name="1445"
+      > </a
+      ><a name="1446" href="homotopy.BlakersMassey.html#1446" class="Bound"
+      >p</a
+      ><a name="1447"
+      > </a
+      ><a name="1448" class="Symbol"
+      >&#8594;</a
+      ><a name="1449"
+      > </a
+      ><a name="1450" href="homotopy.blakersmassey.Pushout.html#370" class="Function"
+      >bmleft</a
+      ><a name="1456"
+      > </a
+      ><a name="1457" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="1459"
+      > </a
+      ><a name="1460" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1462"
+      > </a
+      ><a name="1463" href="homotopy.BlakersMassey.html#1446" class="Bound"
+      >p</a
+      ><a name="1464"
+      > </a
+      ><a name="1465" class="Symbol"
+      >&#8594;</a
+      ><a name="1466"
+      > </a
+      ><a name="1467" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1471"
+      > </a
+      ><a name="1472" class="Symbol"
+      >(</a
+      ><a name="1473" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1477"
+      > </a
+      ><a name="1478" href="homotopy.BlakersMassey.html#112" class="Bound"
+      >i</a
+      ><a name="1479"
+      > </a
+      ><a name="1480" class="Symbol"
+      >(</a
+      ><a name="1481" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1485"
+      > </a
+      ><a name="1486" href="homotopy.BlakersMassey.html#114" class="Bound"
+      >j</a
+      ><a name="1487"
+      > </a
+      ><a name="1488" href="homotopy.BlakersMassey.html#116" class="Bound"
+      >k</a
+      ><a name="1489" class="Symbol"
+      >)))</a
+      ><a name="1492"
+      > </a
+      ><a name="1493" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" href="homotopy.BlakersMassey.html#1325" class="Bound"
+      >r</a
+      ><a name="1496"
+      > </a
+      ><a name="1497" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="1498"
+      >
+  </a
+      ><a name="1501" href="homotopy.BlakersMassey.html#1223" class="Function"
+      >code-bmglue-template</a
+      ><a name="1521"
+      > </a
+      ><a name="1522" class="Symbol"
+      >_</a
+      ><a name="1523"
+      > </a
+      ><a name="1524" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1527"
+      > </a
+      ><a name="1528" href="homotopy.BlakersMassey.html#1528" class="Bound"
+      >lemma</a
+      ><a name="1533"
+      > </a
+      ><a name="1534" class="Symbol"
+      >=</a
+      ><a name="1535"
+      > </a
+      ><a name="1536" href="lib.Funext.html#3966" class="Function"
+      >&#955;=</a
+      ><a name="1538"
+      > </a
+      ><a name="1539" class="Symbol"
+      >(</a
+      ><a name="1540" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1542"
+      > </a
+      ><a name="1543" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1544"
+      > </a
+      ><a name="1545" href="homotopy.BlakersMassey.html#1528" class="Bound"
+      >lemma</a
+      ><a name="1550" class="Symbol"
+      >)</a
+      ><a name="1551"
+      >
+
+  </a
+      ><a name="1555" class="Comment"
+      >-- The real glue, that is, the template with actual equivalence.</a
+      ><a name="1619"
+      >
+  </a
+      ><a name="1622" href="homotopy.BlakersMassey.html#1622" class="Function"
+      >code-bmglue</a
+      ><a name="1633"
+      > </a
+      ><a name="1634" class="Symbol"
+      >:</a
+      ><a name="1635"
+      > </a
+      ><a name="1636" class="Symbol"
+      >&#8704;</a
+      ><a name="1637"
+      > </a
+      ><a name="1638" class="Symbol"
+      >{</a
+      ><a name="1639" href="homotopy.BlakersMassey.html#1639" class="Bound"
+      >a&#8321;</a
+      ><a name="1641"
+      > </a
+      ><a name="1642" href="homotopy.BlakersMassey.html#1642" class="Bound"
+      >b&#8321;</a
+      ><a name="1644" class="Symbol"
+      >}</a
+      ><a name="1645"
+      > </a
+      ><a name="1646" class="Symbol"
+      >(</a
+      ><a name="1647" href="homotopy.BlakersMassey.html#1647" class="Bound"
+      >q&#8321;&#8321;</a
+      ><a name="1650"
+      > </a
+      ><a name="1651" class="Symbol"
+      >:</a
+      ><a name="1652"
+      > </a
+      ><a name="1653" href="homotopy.BlakersMassey.html#148" class="Bound"
+      >Q</a
+      ><a name="1654"
+      > </a
+      ><a name="1655" href="homotopy.BlakersMassey.html#1639" class="Bound"
+      >a&#8321;</a
+      ><a name="1657"
+      > </a
+      ><a name="1658" href="homotopy.BlakersMassey.html#1642" class="Bound"
+      >b&#8321;</a
+      ><a name="1660" class="Symbol"
+      >)</a
+      ><a name="1661"
+      >
+    </a
+      ><a name="1666" class="Symbol"
+      >&#8594;</a
+      ><a name="1667"
+      > </a
+      ><a name="1668" href="homotopy.BlakersMassey.html#857" class="Function"
+      >code-bmleft</a
+      ><a name="1679"
+      > </a
+      ><a name="1680" href="homotopy.BlakersMassey.html#1639" class="Bound"
+      >a&#8321;</a
+      ><a name="1682"
+      > </a
+      ><a name="1683" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="1685"
+      > </a
+      ><a name="1686" href="homotopy.BlakersMassey.html#978" class="Function"
+      >code-bmright</a
+      ><a name="1698"
+      > </a
+      ><a name="1699" href="homotopy.BlakersMassey.html#1642" class="Bound"
+      >b&#8321;</a
+      ><a name="1701"
+      >
+      </a
+      ><a name="1708" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="1709"
+      > </a
+      ><a name="1710" class="Symbol"
+      >(&#955;</a
+      ><a name="1712"
+      > </a
+      ><a name="1713" href="homotopy.BlakersMassey.html#1713" class="Bound"
+      >p</a
+      ><a name="1714"
+      > </a
+      ><a name="1715" class="Symbol"
+      >&#8594;</a
+      ><a name="1716"
+      > </a
+      ><a name="1717" href="homotopy.blakersmassey.Pushout.html#370" class="Function"
+      >bmleft</a
+      ><a name="1723"
+      > </a
+      ><a name="1724" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="1726"
+      > </a
+      ><a name="1727" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1729"
+      > </a
+      ><a name="1730" href="homotopy.BlakersMassey.html#1713" class="Bound"
+      >p</a
+      ><a name="1731"
+      > </a
+      ><a name="1732" class="Symbol"
+      >&#8594;</a
+      ><a name="1733"
+      > </a
+      ><a name="1734" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1738"
+      > </a
+      ><a name="1739" class="Symbol"
+      >(</a
+      ><a name="1740" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1744"
+      > </a
+      ><a name="1745" href="homotopy.BlakersMassey.html#112" class="Bound"
+      >i</a
+      ><a name="1746"
+      > </a
+      ><a name="1747" class="Symbol"
+      >(</a
+      ><a name="1748" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1752"
+      > </a
+      ><a name="1753" href="homotopy.BlakersMassey.html#114" class="Bound"
+      >j</a
+      ><a name="1754"
+      > </a
+      ><a name="1755" href="homotopy.BlakersMassey.html#116" class="Bound"
+      >k</a
+      ><a name="1756" class="Symbol"
+      >)))</a
+      ><a name="1759"
+      > </a
+      ><a name="1760" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="1761"
+      > </a
+      ><a name="1762" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="1768"
+      > </a
+      ><a name="1769" href="homotopy.BlakersMassey.html#1647" class="Bound"
+      >q&#8321;&#8321;</a
+      ><a name="1772"
+      > </a
+      ><a name="1773" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="1774"
+      >
+  </a
+      ><a name="1777" href="homotopy.BlakersMassey.html#1622" class="Function"
+      >code-bmglue</a
+      ><a name="1788"
+      > </a
+      ><a name="1789" class="Symbol"
+      >{</a
+      ><a name="1790" href="homotopy.BlakersMassey.html#1790" class="Bound"
+      >a&#8321;</a
+      ><a name="1792" class="Symbol"
+      >}</a
+      ><a name="1793"
+      > </a
+      ><a name="1794" class="Symbol"
+      >{</a
+      ><a name="1795" href="homotopy.BlakersMassey.html#1795" class="Bound"
+      >b&#8321;</a
+      ><a name="1797" class="Symbol"
+      >}</a
+      ><a name="1798"
+      > </a
+      ><a name="1799" href="homotopy.BlakersMassey.html#1799" class="Bound"
+      >q&#8321;&#8321;</a
+      ><a name="1802"
+      > </a
+      ><a name="1803" class="Symbol"
+      >=</a
+      ><a name="1804"
+      >
+    </a
+      ><a name="1809" href="homotopy.BlakersMassey.html#1223" class="Function"
+      >code-bmglue-template</a
+      ><a name="1829"
+      > </a
+      ><a name="1830" class="Symbol"
+      >(</a
+      ><a name="1831" href="homotopy.BlakersMassey.html#978" class="Function"
+      >code-bmright</a
+      ><a name="1843"
+      > </a
+      ><a name="1844" href="homotopy.BlakersMassey.html#1795" class="Bound"
+      >b&#8321;</a
+      ><a name="1846" class="Symbol"
+      >)</a
+      ><a name="1847"
+      > </a
+      ><a name="1848" class="Symbol"
+      >(</a
+      ><a name="1849" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="1855"
+      > </a
+      ><a name="1856" href="homotopy.BlakersMassey.html#1799" class="Bound"
+      >q&#8321;&#8321;</a
+      ><a name="1859" class="Symbol"
+      >)</a
+      ><a name="1860"
+      > </a
+      ><a name="1861" class="Symbol"
+      >(</a
+      ><a name="1862" href="homotopy.blakersmassey.CoherenceData.html#15274" class="Function"
+      >Coh.eqv</a
+      ><a name="1869"
+      > </a
+      ><a name="1870" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="1873"
+      > </a
+      ><a name="1874" href="homotopy.BlakersMassey.html#1799" class="Bound"
+      >q&#8321;&#8321;</a
+      ><a name="1877" class="Symbol"
+      >)</a
+      ><a name="1878"
+      >
+
+  </a
+      ><a name="1882" class="Comment"
+      >-- Here's the data structure for the generalized theorem.</a
+      ><a name="1939"
+      >
+  </a
+      ><a name="1942" class="Keyword"
+      >module</a
+      ><a name="1948"
+      > </a
+      ><a name="1949" href="homotopy.BlakersMassey.html#1949" class="Module"
+      >Code</a
+      ><a name="1953"
+      > </a
+      ><a name="1954" class="Symbol"
+      >=</a
+      ><a name="1955"
+      > </a
+      ><a name="1956" href="homotopy.blakersmassey.Pushout.html#542" class="Module"
+      >BMPushoutElim</a
+      ><a name="1969"
+      > </a
+      ><a name="1970" href="homotopy.BlakersMassey.html#857" class="Function"
+      >code-bmleft</a
+      ><a name="1981"
+      > </a
+      ><a name="1982" href="homotopy.BlakersMassey.html#978" class="Function"
+      >code-bmright</a
+      ><a name="1994"
+      > </a
+      ><a name="1995" href="homotopy.BlakersMassey.html#1622" class="Function"
+      >code-bmglue</a
+      ><a name="2006"
+      >
+
+  </a
+      ><a name="2010" href="homotopy.BlakersMassey.html#2010" class="Function"
+      >code</a
+      ><a name="2014"
+      > </a
+      ><a name="2015" class="Symbol"
+      >:</a
+      ><a name="2016"
+      > </a
+      ><a name="2017" class="Symbol"
+      >&#8704;</a
+      ><a name="2018"
+      > </a
+      ><a name="2019" href="homotopy.BlakersMassey.html#2019" class="Bound"
+      >p</a
+      ><a name="2020"
+      > </a
+      ><a name="2021" class="Symbol"
+      >&#8594;</a
+      ><a name="2022"
+      > </a
+      ><a name="2023" href="homotopy.blakersmassey.Pushout.html#370" class="Function"
+      >bmleft</a
+      ><a name="2029"
+      > </a
+      ><a name="2030" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="2032"
+      > </a
+      ><a name="2033" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2035"
+      > </a
+      ><a name="2036" href="homotopy.BlakersMassey.html#2019" class="Bound"
+      >p</a
+      ><a name="2037"
+      > </a
+      ><a name="2038" class="Symbol"
+      >&#8594;</a
+      ><a name="2039"
+      > </a
+      ><a name="2040" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2044"
+      > </a
+      ><a name="2045" class="Symbol"
+      >(</a
+      ><a name="2046" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="2050"
+      > </a
+      ><a name="2051" href="homotopy.BlakersMassey.html#112" class="Bound"
+      >i</a
+      ><a name="2052"
+      > </a
+      ><a name="2053" class="Symbol"
+      >(</a
+      ><a name="2054" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="2058"
+      > </a
+      ><a name="2059" href="homotopy.BlakersMassey.html#114" class="Bound"
+      >j</a
+      ><a name="2060"
+      > </a
+      ><a name="2061" href="homotopy.BlakersMassey.html#116" class="Bound"
+      >k</a
+      ><a name="2062" class="Symbol"
+      >))</a
+      ><a name="2064"
+      >
+  </a
+      ><a name="2067" href="homotopy.BlakersMassey.html#2010" class="Function"
+      >code</a
+      ><a name="2071"
+      > </a
+      ><a name="2072" class="Symbol"
+      >=</a
+      ><a name="2073"
+      > </a
+      ><a name="2074" href="homotopy.blakersmassey.Pushout.html#857" class="Function"
+      >Code.f</a
+      ><a name="2080"
+      >
+
+  </a
+      ><a name="2084" class="Comment"
+      >-- Step 2:</a
+      ><a name="2094"
+      >
+  </a
+      ><a name="2097" class="Comment"
+      >-- [code] is contractible!</a
+      ><a name="2123"
+      >
+
+  </a
+      ><a name="2127" class="Comment"
+      >-- The center for [idp].  We will use transport to find the center</a
+      ><a name="2193"
+      >
+  </a
+      ><a name="2196" class="Comment"
+      >-- in other fibers.</a
+      ><a name="2215"
+      >
+  </a
+      ><a name="2218" href="homotopy.BlakersMassey.html#2218" class="Function"
+      >code-center-idp</a
+      ><a name="2233"
+      > </a
+      ><a name="2234" class="Symbol"
+      >:</a
+      ><a name="2235"
+      > </a
+      ><a name="2236" href="homotopy.BlakersMassey.html#2010" class="Function"
+      >code</a
+      ><a name="2240"
+      > </a
+      ><a name="2241" class="Symbol"
+      >(</a
+      ><a name="2242" href="homotopy.blakersmassey.Pushout.html#370" class="Function"
+      >bmleft</a
+      ><a name="2248"
+      > </a
+      ><a name="2249" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="2251" class="Symbol"
+      >)</a
+      ><a name="2252"
+      > </a
+      ><a name="2253" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2256"
+      >
+  </a
+      ><a name="2259" href="homotopy.BlakersMassey.html#2218" class="Function"
+      >code-center-idp</a
+      ><a name="2274"
+      > </a
+      ><a name="2275" class="Symbol"
+      >=</a
+      ><a name="2276"
+      > </a
+      ><a name="2277" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="2278"
+      > </a
+      ><a name="2279" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="2282"
+      > </a
+      ><a name="2283" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2284"
+      > </a
+      ><a name="2285" href="lib.PathGroupoid.html#1496" class="Function"
+      >!-inv'-r</a
+      ><a name="2293"
+      > </a
+      ><a name="2294" class="Symbol"
+      >(</a
+      ><a name="2295" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="2301"
+      > </a
+      ><a name="2302" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="2305" class="Symbol"
+      >)</a
+      ><a name="2306"
+      > </a
+      ><a name="2307" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="2308"
+      >
+
+  </a
+      ><a name="2312" class="Comment"
+      >-- The following is the breakdown of the path for coercing:</a
+      ><a name="2371"
+      >
+  </a
+      ><a name="2374" class="Comment"
+      >--   [ap2 code r (&#8595;-cst=idf-in' r)]</a
+      ><a name="2409"
+      >
+  </a
+      ><a name="2412" class="Comment"
+      >-- We will need the broken-down version anyway,</a
+      ><a name="2459"
+      >
+  </a
+      ><a name="2462" class="Comment"
+      >-- so why not breaking them down from the very beginning?</a
+      ><a name="2519"
+      >
+
+  </a
+      ><a name="2523" class="Comment"
+      >-- The template here, again, is to keep the possibility</a
+      ><a name="2578"
+      >
+  </a
+      ><a name="2581" class="Comment"
+      >-- of plugging in [idp] for [r].</a
+      ><a name="2613"
+      >
+  </a
+      ><a name="2616" href="homotopy.BlakersMassey.html#2616" class="Function"
+      >coerce-path-template</a
+      ><a name="2636"
+      > </a
+      ><a name="2637" class="Symbol"
+      >:</a
+      ><a name="2638"
+      > </a
+      ><a name="2639" class="Symbol"
+      >&#8704;</a
+      ><a name="2640"
+      > </a
+      ><a name="2641" class="Symbol"
+      >{</a
+      ><a name="2642" href="homotopy.BlakersMassey.html#2642" class="Bound"
+      >p</a
+      ><a name="2643" class="Symbol"
+      >}</a
+      ><a name="2644"
+      > </a
+      ><a name="2645" href="homotopy.BlakersMassey.html#2645" class="Bound"
+      >r</a
+      ><a name="2646"
+      >
+    </a
+      ><a name="2651" class="Symbol"
+      >&#8594;</a
+      ><a name="2652"
+      > </a
+      ><a name="2653" href="homotopy.BlakersMassey.html#857" class="Function"
+      >code-bmleft</a
+      ><a name="2664"
+      > </a
+      ><a name="2665" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="2667"
+      > </a
+      ><a name="2668" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="2670"
+      > </a
+      ><a name="2671" href="homotopy.BlakersMassey.html#2010" class="Function"
+      >code</a
+      ><a name="2675"
+      > </a
+      ><a name="2676" href="homotopy.BlakersMassey.html#2642" class="Bound"
+      >p</a
+      ><a name="2677"
+      > </a
+      ><a name="2678" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="2679"
+      > </a
+      ><a name="2680" class="Symbol"
+      >(&#955;</a
+      ><a name="2682"
+      > </a
+      ><a name="2683" href="homotopy.BlakersMassey.html#2683" class="Bound"
+      >p</a
+      ><a name="2684"
+      > </a
+      ><a name="2685" class="Symbol"
+      >&#8594;</a
+      ><a name="2686"
+      > </a
+      ><a name="2687" href="homotopy.blakersmassey.Pushout.html#370" class="Function"
+      >bmleft</a
+      ><a name="2693"
+      > </a
+      ><a name="2694" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="2696"
+      > </a
+      ><a name="2697" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2699"
+      > </a
+      ><a name="2700" href="homotopy.BlakersMassey.html#2683" class="Bound"
+      >p</a
+      ><a name="2701"
+      > </a
+      ><a name="2702" class="Symbol"
+      >&#8594;</a
+      ><a name="2703"
+      > </a
+      ><a name="2704" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2708"
+      > </a
+      ><a name="2709" class="Symbol"
+      >(</a
+      ><a name="2710" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="2714"
+      > </a
+      ><a name="2715" href="homotopy.BlakersMassey.html#112" class="Bound"
+      >i</a
+      ><a name="2716"
+      > </a
+      ><a name="2717" class="Symbol"
+      >(</a
+      ><a name="2718" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="2722"
+      > </a
+      ><a name="2723" href="homotopy.BlakersMassey.html#114" class="Bound"
+      >j</a
+      ><a name="2724"
+      > </a
+      ><a name="2725" href="homotopy.BlakersMassey.html#116" class="Bound"
+      >k</a
+      ><a name="2726" class="Symbol"
+      >)))</a
+      ><a name="2729"
+      > </a
+      ><a name="2730" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="2731"
+      > </a
+      ><a name="2732" href="homotopy.BlakersMassey.html#2645" class="Bound"
+      >r</a
+      ><a name="2733"
+      > </a
+      ><a name="2734" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="2735"
+      >
+    </a
+      ><a name="2740" class="Symbol"
+      >&#8594;</a
+      ><a name="2741"
+      > </a
+      ><a name="2742" href="homotopy.BlakersMassey.html#857" class="Function"
+      >code-bmleft</a
+      ><a name="2753"
+      > </a
+      ><a name="2754" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="2756"
+      > </a
+      ><a name="2757" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2760"
+      > </a
+      ><a name="2761" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2763"
+      > </a
+      ><a name="2764" href="homotopy.BlakersMassey.html#2010" class="Function"
+      >code</a
+      ><a name="2768"
+      > </a
+      ><a name="2769" href="homotopy.BlakersMassey.html#2642" class="Bound"
+      >p</a
+      ><a name="2770"
+      > </a
+      ><a name="2771" href="homotopy.BlakersMassey.html#2645" class="Bound"
+      >r</a
+      ><a name="2772"
+      >
+  </a
+      ><a name="2775" href="homotopy.BlakersMassey.html#2616" class="Function"
+      >coerce-path-template</a
+      ><a name="2795"
+      > </a
+      ><a name="2796" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2799"
+      > </a
+      ><a name="2800" href="homotopy.BlakersMassey.html#2800" class="Bound"
+      >lemma</a
+      ><a name="2805"
+      > </a
+      ><a name="2806" class="Symbol"
+      >=</a
+      ><a name="2807"
+      > </a
+      ><a name="2808" href="lib.Funext.html#3881" class="Function"
+      >app=</a
+      ><a name="2812"
+      > </a
+      ><a name="2813" href="homotopy.BlakersMassey.html#2800" class="Bound"
+      >lemma</a
+      ><a name="2818"
+      > </a
+      ><a name="2819" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2822"
+      >
+
+  </a
+      ><a name="2826" class="Comment"
+      >-- The real path.</a
+      ><a name="2843"
+      >
+  </a
+      ><a name="2846" href="homotopy.BlakersMassey.html#2846" class="Function"
+      >coerce-path</a
+      ><a name="2857"
+      > </a
+      ><a name="2858" class="Symbol"
+      >:</a
+      ><a name="2859"
+      > </a
+      ><a name="2860" class="Symbol"
+      >&#8704;</a
+      ><a name="2861"
+      > </a
+      ><a name="2862" class="Symbol"
+      >{</a
+      ><a name="2863" href="homotopy.BlakersMassey.html#2863" class="Bound"
+      >p</a
+      ><a name="2864" class="Symbol"
+      >}</a
+      ><a name="2865"
+      > </a
+      ><a name="2866" href="homotopy.BlakersMassey.html#2866" class="Bound"
+      >r</a
+      ><a name="2867"
+      > </a
+      ><a name="2868" class="Symbol"
+      >&#8594;</a
+      ><a name="2869"
+      > </a
+      ><a name="2870" href="homotopy.BlakersMassey.html#2010" class="Function"
+      >code</a
+      ><a name="2874"
+      > </a
+      ><a name="2875" class="Symbol"
+      >(</a
+      ><a name="2876" href="homotopy.blakersmassey.Pushout.html#370" class="Function"
+      >bmleft</a
+      ><a name="2882"
+      > </a
+      ><a name="2883" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="2885" class="Symbol"
+      >)</a
+      ><a name="2886"
+      > </a
+      ><a name="2887" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2890"
+      > </a
+      ><a name="2891" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2893"
+      > </a
+      ><a name="2894" href="homotopy.BlakersMassey.html#2010" class="Function"
+      >code</a
+      ><a name="2898"
+      > </a
+      ><a name="2899" href="homotopy.BlakersMassey.html#2863" class="Bound"
+      >p</a
+      ><a name="2900"
+      > </a
+      ><a name="2901" href="homotopy.BlakersMassey.html#2866" class="Bound"
+      >r</a
+      ><a name="2902"
+      >
+  </a
+      ><a name="2905" href="homotopy.BlakersMassey.html#2846" class="Function"
+      >coerce-path</a
+      ><a name="2916"
+      > </a
+      ><a name="2917" href="homotopy.BlakersMassey.html#2917" class="Bound"
+      >r</a
+      ><a name="2918"
+      > </a
+      ><a name="2919" class="Symbol"
+      >=</a
+      ><a name="2920"
+      > </a
+      ><a name="2921" href="homotopy.BlakersMassey.html#2616" class="Function"
+      >coerce-path-template</a
+      ><a name="2941"
+      > </a
+      ><a name="2942" href="homotopy.BlakersMassey.html#2917" class="Bound"
+      >r</a
+      ><a name="2943"
+      > </a
+      ><a name="2944" class="Symbol"
+      >(</a
+      ><a name="2945" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="2948"
+      > </a
+      ><a name="2949" href="homotopy.BlakersMassey.html#2010" class="Function"
+      >code</a
+      ><a name="2953"
+      > </a
+      ><a name="2954" href="homotopy.BlakersMassey.html#2917" class="Bound"
+      >r</a
+      ><a name="2955" class="Symbol"
+      >)</a
+      ><a name="2956"
+      >
+
+  </a
+      ><a name="2960" class="Comment"
+      >-- Find the center in other fibers.</a
+      ><a name="2995"
+      >
+  </a
+      ><a name="2998" href="homotopy.BlakersMassey.html#2998" class="Function"
+      >code-center</a
+      ><a name="3009"
+      > </a
+      ><a name="3010" class="Symbol"
+      >:</a
+      ><a name="3011"
+      > </a
+      ><a name="3012" class="Symbol"
+      >&#8704;</a
+      ><a name="3013"
+      > </a
+      ><a name="3014" class="Symbol"
+      >{</a
+      ><a name="3015" href="homotopy.BlakersMassey.html#3015" class="Bound"
+      >p</a
+      ><a name="3016" class="Symbol"
+      >}</a
+      ><a name="3017"
+      > </a
+      ><a name="3018" href="homotopy.BlakersMassey.html#3018" class="Bound"
+      >r</a
+      ><a name="3019"
+      > </a
+      ><a name="3020" class="Symbol"
+      >&#8594;</a
+      ><a name="3021"
+      > </a
+      ><a name="3022" href="homotopy.BlakersMassey.html#2010" class="Function"
+      >code</a
+      ><a name="3026"
+      > </a
+      ><a name="3027" href="homotopy.BlakersMassey.html#3015" class="Bound"
+      >p</a
+      ><a name="3028"
+      > </a
+      ><a name="3029" href="homotopy.BlakersMassey.html#3018" class="Bound"
+      >r</a
+      ><a name="3030"
+      >
+  </a
+      ><a name="3033" href="homotopy.BlakersMassey.html#2998" class="Function"
+      >code-center</a
+      ><a name="3044"
+      > </a
+      ><a name="3045" href="homotopy.BlakersMassey.html#3045" class="Bound"
+      >r</a
+      ><a name="3046"
+      > </a
+      ><a name="3047" class="Symbol"
+      >=</a
+      ><a name="3048"
+      > </a
+      ><a name="3049" href="lib.Base.html#4513" class="Function"
+      >coe</a
+      ><a name="3052"
+      > </a
+      ><a name="3053" class="Symbol"
+      >(</a
+      ><a name="3054" href="homotopy.BlakersMassey.html#2846" class="Function"
+      >coerce-path</a
+      ><a name="3065"
+      > </a
+      ><a name="3066" href="homotopy.BlakersMassey.html#3045" class="Bound"
+      >r</a
+      ><a name="3067" class="Symbol"
+      >)</a
+      ><a name="3068"
+      > </a
+      ><a name="3069" href="homotopy.BlakersMassey.html#2218" class="Function"
+      >code-center-idp</a
+      ><a name="3084"
+      >
+
+  </a
+      ><a name="3088" class="Comment"
+      >-- Part of the decomposed [coe (coerce-path r)]</a
+      ><a name="3135"
+      >
+  </a
+      ><a name="3138" href="homotopy.BlakersMassey.html#3138" class="Function"
+      >code-bmleft-template-diag</a
+      ><a name="3163"
+      > </a
+      ><a name="3164" class="Symbol"
+      >:</a
+      ><a name="3165"
+      > </a
+      ><a name="3166" class="Symbol"
+      >&#8704;</a
+      ><a name="3167"
+      > </a
+      ><a name="3168" class="Symbol"
+      >{</a
+      ><a name="3169" href="homotopy.BlakersMassey.html#3169" class="Bound"
+      >p</a
+      ><a name="3170" class="Symbol"
+      >}</a
+      ><a name="3171"
+      > </a
+      ><a name="3172" class="Symbol"
+      >(</a
+      ><a name="3173" href="homotopy.BlakersMassey.html#3173" class="Bound"
+      >r</a
+      ><a name="3174"
+      > </a
+      ><a name="3175" class="Symbol"
+      >:</a
+      ><a name="3176"
+      > </a
+      ><a name="3177" href="homotopy.blakersmassey.Pushout.html#370" class="Function"
+      >bmleft</a
+      ><a name="3183"
+      > </a
+      ><a name="3184" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="3186"
+      > </a
+      ><a name="3187" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3189"
+      > </a
+      ><a name="3190" href="homotopy.BlakersMassey.html#3169" class="Bound"
+      >p</a
+      ><a name="3191" class="Symbol"
+      >)</a
+      ><a name="3192"
+      >
+    </a
+      ><a name="3197" class="Symbol"
+      >&#8594;</a
+      ><a name="3198"
+      > </a
+      ><a name="3199" href="homotopy.BlakersMassey.html#857" class="Function"
+      >code-bmleft</a
+      ><a name="3210"
+      > </a
+      ><a name="3211" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="3213"
+      > </a
+      ><a name="3214" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3217"
+      > </a
+      ><a name="3218" class="Symbol"
+      >&#8594;</a
+      ><a name="3219"
+      > </a
+      ><a name="3220" href="homotopy.BlakersMassey.html#651" class="Function"
+      >code-bmleft-template</a
+      ><a name="3240"
+      > </a
+      ><a name="3241" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="3243"
+      > </a
+      ><a name="3244" href="homotopy.BlakersMassey.html#3173" class="Bound"
+      >r</a
+      ><a name="3245"
+      > </a
+      ><a name="3246" href="homotopy.BlakersMassey.html#3173" class="Bound"
+      >r</a
+      ><a name="3247"
+      >
+  </a
+      ><a name="3250" href="homotopy.BlakersMassey.html#3138" class="Function"
+      >code-bmleft-template-diag</a
+      ><a name="3275"
+      > </a
+      ><a name="3276" href="homotopy.BlakersMassey.html#3276" class="Bound"
+      >r</a
+      ><a name="3277"
+      > </a
+      ><a name="3278" class="Symbol"
+      >=</a
+      ><a name="3279"
+      > </a
+      ><a name="3280" href="lib.types.Truncation.html#863" class="Function"
+      >Trunc-rec</a
+      ><a name="3289"
+      > </a
+      ><a name="3290" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3301"
+      >
+    </a
+      ><a name="3306" class="Symbol"
+      >&#955;</a
+      ><a name="3307"
+      > </a
+      ><a name="3308" class="Symbol"
+      >{(</a
+      ><a name="3310" href="homotopy.BlakersMassey.html#3310" class="Bound"
+      >q&#8320;&#8320;'</a
+      ><a name="3314"
+      > </a
+      ><a name="3315" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3316"
+      > </a
+      ><a name="3317" href="homotopy.BlakersMassey.html#3317" class="Bound"
+      >shift</a
+      ><a name="3322" class="Symbol"
+      >)</a
+      ><a name="3323"
+      > </a
+      ><a name="3324" class="Symbol"
+      >&#8594;</a
+      ><a name="3325"
+      >
+      </a
+      ><a name="3332" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="3333"
+      > </a
+      ><a name="3334" href="homotopy.BlakersMassey.html#3310" class="Bound"
+      >q&#8320;&#8320;'</a
+      ><a name="3338"
+      > </a
+      ><a name="3339" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3340"
+      > </a
+      ><a name="3341" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3342"
+      > </a
+      ><a name="3343" class="Symbol"
+      >(</a
+      ><a name="3344" href="lib.PathGroupoid.html#862" class="Function"
+      >&#8729;'-assoc</a
+      ><a name="3352"
+      > </a
+      ><a name="3353" class="Symbol"
+      >(</a
+      ><a name="3354" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="3360"
+      > </a
+      ><a name="3361" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="3364" class="Symbol"
+      >)</a
+      ><a name="3365"
+      > </a
+      ><a name="3366" class="Symbol"
+      >(</a
+      ><a name="3367" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3368"
+      > </a
+      ><a name="3369" class="Symbol"
+      >(</a
+      ><a name="3370" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="3376"
+      > </a
+      ><a name="3377" href="homotopy.BlakersMassey.html#3310" class="Bound"
+      >q&#8320;&#8320;'</a
+      ><a name="3381" class="Symbol"
+      >))</a
+      ><a name="3383"
+      > </a
+      ><a name="3384" href="homotopy.BlakersMassey.html#3276" class="Bound"
+      >r</a
+      ><a name="3385" class="Symbol"
+      >)</a
+      ><a name="3386"
+      > </a
+      ><a name="3387" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3388"
+      > </a
+      ><a name="3389" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3391"
+      > </a
+      ><a name="3392" class="Symbol"
+      >(</a
+      ><a name="3393" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >_&#8729;'</a
+      ><a name="3396"
+      > </a
+      ><a name="3397" href="homotopy.BlakersMassey.html#3276" class="Bound"
+      >r</a
+      ><a name="3398" class="Symbol"
+      >)</a
+      ><a name="3399"
+      > </a
+      ><a name="3400" href="homotopy.BlakersMassey.html#3317" class="Bound"
+      >shift</a
+      ><a name="3405"
+      > </a
+      ><a name="3406" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="3408"
+      > </a
+      ><a name="3409" href="lib.PathGroupoid.html#1114" class="Function"
+      >&#8729;'-unit-l</a
+      ><a name="3418"
+      > </a
+      ><a name="3419" href="homotopy.BlakersMassey.html#3276" class="Bound"
+      >r</a
+      ><a name="3420"
+      > </a
+      ><a name="3421" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="3422" class="Symbol"
+      >}</a
+      ><a name="3423"
+      >
+
+  </a
+      ><a name="3427" class="Keyword"
+      >abstract</a
+      ><a name="3435"
+      >
+    </a
+      ><a name="3440" href="homotopy.BlakersMassey.html#3440" class="Function"
+      >code-bmleft-template-diag-idp</a
+      ><a name="3469"
+      > </a
+      ><a name="3470" class="Symbol"
+      >:</a
+      ><a name="3471"
+      > </a
+      ><a name="3472" class="Symbol"
+      >&#8704;</a
+      ><a name="3473"
+      > </a
+      ><a name="3474" href="homotopy.BlakersMassey.html#3474" class="Bound"
+      >x</a
+      ><a name="3475"
+      > </a
+      ><a name="3476" class="Symbol"
+      >&#8594;</a
+      ><a name="3477"
+      > </a
+      ><a name="3478" href="homotopy.BlakersMassey.html#3138" class="Function"
+      >code-bmleft-template-diag</a
+      ><a name="3503"
+      > </a
+      ><a name="3504" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3507"
+      > </a
+      ><a name="3508" href="homotopy.BlakersMassey.html#3474" class="Bound"
+      >x</a
+      ><a name="3509"
+      > </a
+      ><a name="3510" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3512"
+      > </a
+      ><a name="3513" href="homotopy.BlakersMassey.html#3474" class="Bound"
+      >x</a
+      ><a name="3514"
+      >
+    </a
+      ><a name="3519" href="homotopy.BlakersMassey.html#3440" class="Function"
+      >code-bmleft-template-diag-idp</a
+      ><a name="3548"
+      > </a
+      ><a name="3549" class="Symbol"
+      >=</a
+      ><a name="3550"
+      >
+      </a
+      ><a name="3557" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="3567"
+      > </a
+      ><a name="3568" class="Symbol"
+      >(&#955;</a
+      ><a name="3570"
+      > </a
+      ><a name="3571" href="homotopy.BlakersMassey.html#3571" class="Bound"
+      >_</a
+      ><a name="3572"
+      > </a
+      ><a name="3573" class="Symbol"
+      >&#8594;</a
+      ><a name="3574"
+      > </a
+      ><a name="3575" href="lib.NType.html#3994" class="Function"
+      >=-preserves-level</a
+      ><a name="3592"
+      > </a
+      ><a name="3593" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3604" class="Symbol"
+      >)</a
+      ><a name="3605"
+      >
+        </a
+      ><a name="3614" class="Symbol"
+      >&#955;{(</a
+      ><a name="3617" href="homotopy.BlakersMassey.html#3617" class="Bound"
+      >q&#8321;&#8320;</a
+      ><a name="3620"
+      > </a
+      ><a name="3621" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3622"
+      > </a
+      ><a name="3623" href="homotopy.BlakersMassey.html#3623" class="Bound"
+      >shift</a
+      ><a name="3628" class="Symbol"
+      >)</a
+      ><a name="3629"
+      > </a
+      ><a name="3630" class="Symbol"
+      >&#8594;</a
+      ><a name="3631"
+      > </a
+      ><a name="3632" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3634"
+      > </a
+      ><a name="3635" class="Symbol"
+      >(&#955;</a
+      ><a name="3637"
+      > </a
+      ><a name="3638" href="homotopy.BlakersMassey.html#3638" class="Bound"
+      >p</a
+      ><a name="3639"
+      > </a
+      ><a name="3640" class="Symbol"
+      >&#8594;</a
+      ><a name="3641"
+      > </a
+      ><a name="3642" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="3643"
+      > </a
+      ><a name="3644" href="homotopy.BlakersMassey.html#3617" class="Bound"
+      >q&#8321;&#8320;</a
+      ><a name="3647"
+      > </a
+      ><a name="3648" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3649"
+      > </a
+      ><a name="3650" href="homotopy.BlakersMassey.html#3638" class="Bound"
+      >p</a
+      ><a name="3651"
+      > </a
+      ><a name="3652" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="3653" class="Symbol"
+      >)</a
+      ><a name="3654"
+      > </a
+      ><a name="3655" class="Symbol"
+      >(</a
+      ><a name="3656" href="lib.PathFunctor.html#2204" class="Function"
+      >ap-idf</a
+      ><a name="3662"
+      > </a
+      ><a name="3663" href="homotopy.BlakersMassey.html#3623" class="Bound"
+      >shift</a
+      ><a name="3668" class="Symbol"
+      >)}</a
+      ><a name="3670"
+      >
+
+  </a
+      ><a name="3674" class="Comment"
+      >-- Here shows the use of two templates.  It will be super painful</a
+      ><a name="3739"
+      >
+  </a
+      ><a name="3742" class="Comment"
+      >-- if we cannot throw in [idp].  Now we only have to deal with</a
+      ><a name="3804"
+      >
+  </a
+      ><a name="3807" class="Comment"
+      >-- simple computations.</a
+      ><a name="3830"
+      >
+  </a
+      ><a name="3833" class="Keyword"
+      >abstract</a
+      ><a name="3841"
+      >
+    </a
+      ><a name="3846" href="homotopy.BlakersMassey.html#3846" class="Function"
+      >coe-coerce-path-code-bmglue-template</a
+      ><a name="3882"
+      > </a
+      ><a name="3883" class="Symbol"
+      >:</a
+      ><a name="3884"
+      > </a
+      ><a name="3885" class="Symbol"
+      >&#8704;</a
+      ><a name="3886"
+      > </a
+      ><a name="3887" class="Symbol"
+      >{</a
+      ><a name="3888" href="homotopy.BlakersMassey.html#3888" class="Bound"
+      >p</a
+      ><a name="3889" class="Symbol"
+      >}</a
+      ><a name="3890"
+      > </a
+      ><a name="3891" class="Symbol"
+      >(</a
+      ><a name="3892" href="homotopy.BlakersMassey.html#3892" class="Bound"
+      >r</a
+      ><a name="3893"
+      > </a
+      ><a name="3894" class="Symbol"
+      >:</a
+      ><a name="3895"
+      > </a
+      ><a name="3896" href="homotopy.blakersmassey.Pushout.html#370" class="Function"
+      >bmleft</a
+      ><a name="3902"
+      > </a
+      ><a name="3903" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="3905"
+      > </a
+      ><a name="3906" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3908"
+      > </a
+      ><a name="3909" href="homotopy.BlakersMassey.html#3888" class="Bound"
+      >p</a
+      ><a name="3910" class="Symbol"
+      >)</a
+      ><a name="3911"
+      >
+      </a
+      ><a name="3918" class="Symbol"
+      >(</a
+      ><a name="3919" href="homotopy.BlakersMassey.html#3919" class="Bound"
+      >lemma</a
+      ><a name="3924"
+      > </a
+      ><a name="3925" class="Symbol"
+      >:</a
+      ><a name="3926"
+      > </a
+      ><a name="3927" class="Symbol"
+      >&#8704;</a
+      ><a name="3928"
+      > </a
+      ><a name="3929" href="homotopy.BlakersMassey.html#3929" class="Bound"
+      >r'</a
+      ><a name="3931"
+      > </a
+      ><a name="3932" class="Symbol"
+      >&#8594;</a
+      ><a name="3933"
+      > </a
+      ><a name="3934" href="homotopy.BlakersMassey.html#651" class="Function"
+      >code-bmleft-template</a
+      ><a name="3954"
+      > </a
+      ><a name="3955" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="3957"
+      > </a
+      ><a name="3958" href="homotopy.BlakersMassey.html#3892" class="Bound"
+      >r</a
+      ><a name="3959"
+      > </a
+      ><a name="3960" href="homotopy.BlakersMassey.html#3929" class="Bound"
+      >r'</a
+      ><a name="3962"
+      > </a
+      ><a name="3963" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="3964"
+      > </a
+      ><a name="3965" href="homotopy.BlakersMassey.html#2010" class="Function"
+      >code</a
+      ><a name="3969"
+      > </a
+      ><a name="3970" href="homotopy.BlakersMassey.html#3888" class="Bound"
+      >p</a
+      ><a name="3971"
+      > </a
+      ><a name="3972" href="homotopy.BlakersMassey.html#3929" class="Bound"
+      >r'</a
+      ><a name="3974" class="Symbol"
+      >)</a
+      ><a name="3975"
+      >
+      </a
+      ><a name="3982" class="Symbol"
+      >(</a
+      ><a name="3983" href="homotopy.BlakersMassey.html#3983" class="Bound"
+      >x</a
+      ><a name="3984"
+      > </a
+      ><a name="3985" class="Symbol"
+      >:</a
+      ><a name="3986"
+      > </a
+      ><a name="3987" href="homotopy.BlakersMassey.html#857" class="Function"
+      >code-bmleft</a
+      ><a name="3998"
+      > </a
+      ><a name="3999" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="4001"
+      > </a
+      ><a name="4002" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4005" class="Symbol"
+      >)</a
+      ><a name="4006"
+      >
+      </a
+      ><a name="4013" class="Symbol"
+      >&#8594;</a
+      ><a name="4014"
+      > </a
+      ><a name="4015" href="lib.Base.html#4513" class="Function"
+      >coe</a
+      ><a name="4018"
+      > </a
+      ><a name="4019" class="Symbol"
+      >(</a
+      ><a name="4020" href="homotopy.BlakersMassey.html#2616" class="Function"
+      >coerce-path-template</a
+      ><a name="4040"
+      > </a
+      ><a name="4041" href="homotopy.BlakersMassey.html#3892" class="Bound"
+      >r</a
+      ><a name="4042"
+      > </a
+      ><a name="4043" class="Symbol"
+      >(</a
+      ><a name="4044" href="homotopy.BlakersMassey.html#1223" class="Function"
+      >code-bmglue-template</a
+      ><a name="4064"
+      > </a
+      ><a name="4065" class="Symbol"
+      >(</a
+      ><a name="4066" href="homotopy.BlakersMassey.html#2010" class="Function"
+      >code</a
+      ><a name="4070"
+      > </a
+      ><a name="4071" href="homotopy.BlakersMassey.html#3888" class="Bound"
+      >p</a
+      ><a name="4072" class="Symbol"
+      >)</a
+      ><a name="4073"
+      > </a
+      ><a name="4074" href="homotopy.BlakersMassey.html#3892" class="Bound"
+      >r</a
+      ><a name="4075"
+      > </a
+      ><a name="4076" href="homotopy.BlakersMassey.html#3919" class="Bound"
+      >lemma</a
+      ><a name="4081" class="Symbol"
+      >))</a
+      ><a name="4083"
+      > </a
+      ><a name="4084" href="homotopy.BlakersMassey.html#3983" class="Bound"
+      >x</a
+      ><a name="4085"
+      >
+      </a
+      ><a name="4092" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4094"
+      > </a
+      ><a name="4095" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="4097"
+      > </a
+      ><a name="4098" class="Symbol"
+      >(</a
+      ><a name="4099" href="homotopy.BlakersMassey.html#3919" class="Bound"
+      >lemma</a
+      ><a name="4104"
+      > </a
+      ><a name="4105" href="homotopy.BlakersMassey.html#3892" class="Bound"
+      >r</a
+      ><a name="4106" class="Symbol"
+      >)</a
+      ><a name="4107"
+      > </a
+      ><a name="4108" class="Symbol"
+      >(</a
+      ><a name="4109" href="homotopy.BlakersMassey.html#3138" class="Function"
+      >code-bmleft-template-diag</a
+      ><a name="4134"
+      > </a
+      ><a name="4135" href="homotopy.BlakersMassey.html#3892" class="Bound"
+      >r</a
+      ><a name="4136"
+      > </a
+      ><a name="4137" href="homotopy.BlakersMassey.html#3983" class="Bound"
+      >x</a
+      ><a name="4138" class="Symbol"
+      >)</a
+      ><a name="4139"
+      >
+    </a
+      ><a name="4144" href="homotopy.BlakersMassey.html#3846" class="Function"
+      >coe-coerce-path-code-bmglue-template</a
+      ><a name="4180"
+      > </a
+      ><a name="4181" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4184"
+      > </a
+      ><a name="4185" href="homotopy.BlakersMassey.html#4185" class="Bound"
+      >lemma</a
+      ><a name="4190"
+      > </a
+      ><a name="4191" href="homotopy.BlakersMassey.html#4191" class="Bound"
+      >x</a
+      ><a name="4192"
+      > </a
+      ><a name="4193" class="Symbol"
+      >=</a
+      ><a name="4194"
+      >
+      </a
+      ><a name="4201" href="lib.Base.html#4513" class="Function"
+      >coe</a
+      ><a name="4204"
+      > </a
+      ><a name="4205" class="Symbol"
+      >(</a
+      ><a name="4206" href="lib.Funext.html#3881" class="Function"
+      >app=</a
+      ><a name="4210"
+      > </a
+      ><a name="4211" class="Symbol"
+      >(</a
+      ><a name="4212" href="lib.Funext.html#3966" class="Function"
+      >&#955;=</a
+      ><a name="4214"
+      > </a
+      ><a name="4215" class="Symbol"
+      >(</a
+      ><a name="4216" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="4218"
+      > </a
+      ><a name="4219" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4220"
+      > </a
+      ><a name="4221" href="homotopy.BlakersMassey.html#4185" class="Bound"
+      >lemma</a
+      ><a name="4226" class="Symbol"
+      >))</a
+      ><a name="4228"
+      > </a
+      ><a name="4229" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4232" class="Symbol"
+      >)</a
+      ><a name="4233"
+      > </a
+      ><a name="4234" href="homotopy.BlakersMassey.html#4191" class="Bound"
+      >x</a
+      ><a name="4235"
+      >
+        </a
+      ><a name="4244" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4246"
+      > </a
+      ><a name="4247" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4249"
+      > </a
+      ><a name="4250" class="Symbol"
+      >(&#955;</a
+      ><a name="4252"
+      > </a
+      ><a name="4253" href="homotopy.BlakersMassey.html#4253" class="Bound"
+      >p</a
+      ><a name="4254"
+      > </a
+      ><a name="4255" class="Symbol"
+      >&#8594;</a
+      ><a name="4256"
+      > </a
+      ><a name="4257" href="lib.Base.html#4513" class="Function"
+      >coe</a
+      ><a name="4260"
+      > </a
+      ><a name="4261" href="homotopy.BlakersMassey.html#4253" class="Bound"
+      >p</a
+      ><a name="4262"
+      > </a
+      ><a name="4263" href="homotopy.BlakersMassey.html#4191" class="Bound"
+      >x</a
+      ><a name="4264" class="Symbol"
+      >)</a
+      ><a name="4265"
+      > </a
+      ><a name="4266" class="Symbol"
+      >(</a
+      ><a name="4267" href="lib.Funext.html#4034" class="Function"
+      >app=-&#946;</a
+      ><a name="4273"
+      > </a
+      ><a name="4274" class="Symbol"
+      >(</a
+      ><a name="4275" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="4277"
+      > </a
+      ><a name="4278" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4279"
+      > </a
+      ><a name="4280" href="homotopy.BlakersMassey.html#4185" class="Bound"
+      >lemma</a
+      ><a name="4285" class="Symbol"
+      >)</a
+      ><a name="4286"
+      > </a
+      ><a name="4287" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4290" class="Symbol"
+      >)</a
+      ><a name="4291"
+      > </a
+      ><a name="4292" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4293"
+      >
+      </a
+      ><a name="4300" href="lib.Base.html#4513" class="Function"
+      >coe</a
+      ><a name="4303"
+      > </a
+      ><a name="4304" class="Symbol"
+      >(</a
+      ><a name="4305" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="4307"
+      > </a
+      ><a name="4308" class="Symbol"
+      >(</a
+      ><a name="4309" href="homotopy.BlakersMassey.html#4185" class="Bound"
+      >lemma</a
+      ><a name="4314"
+      > </a
+      ><a name="4315" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4318" class="Symbol"
+      >))</a
+      ><a name="4320"
+      > </a
+      ><a name="4321" href="homotopy.BlakersMassey.html#4191" class="Bound"
+      >x</a
+      ><a name="4322"
+      >
+        </a
+      ><a name="4331" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4333"
+      > </a
+      ><a name="4334" href="lib.Univalence.html#1145" class="Function"
+      >coe-&#946;</a
+      ><a name="4339"
+      > </a
+      ><a name="4340" class="Symbol"
+      >(</a
+      ><a name="4341" href="homotopy.BlakersMassey.html#4185" class="Bound"
+      >lemma</a
+      ><a name="4346"
+      > </a
+      ><a name="4347" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4350" class="Symbol"
+      >)</a
+      ><a name="4351"
+      > </a
+      ><a name="4352" href="homotopy.BlakersMassey.html#4191" class="Bound"
+      >x</a
+      ><a name="4353"
+      > </a
+      ><a name="4354" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4355"
+      >
+      </a
+      ><a name="4362" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="4364"
+      > </a
+      ><a name="4365" class="Symbol"
+      >(</a
+      ><a name="4366" href="homotopy.BlakersMassey.html#4185" class="Bound"
+      >lemma</a
+      ><a name="4371"
+      > </a
+      ><a name="4372" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4375" class="Symbol"
+      >)</a
+      ><a name="4376"
+      > </a
+      ><a name="4377" href="homotopy.BlakersMassey.html#4191" class="Bound"
+      >x</a
+      ><a name="4378"
+      >
+        </a
+      ><a name="4387" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4389"
+      > </a
+      ><a name="4390" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4391"
+      > </a
+      ><a name="4392" class="Symbol"
+      >(</a
+      ><a name="4393" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4395"
+      > </a
+      ><a name="4396" class="Symbol"
+      >(</a
+      ><a name="4397" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="4399"
+      > </a
+      ><a name="4400" class="Symbol"
+      >(</a
+      ><a name="4401" href="homotopy.BlakersMassey.html#4185" class="Bound"
+      >lemma</a
+      ><a name="4406"
+      > </a
+      ><a name="4407" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4410" class="Symbol"
+      >))</a
+      ><a name="4412"
+      > </a
+      ><a name="4413" class="Symbol"
+      >(</a
+      ><a name="4414" href="homotopy.BlakersMassey.html#3440" class="Function"
+      >code-bmleft-template-diag-idp</a
+      ><a name="4443"
+      > </a
+      ><a name="4444" href="homotopy.BlakersMassey.html#4191" class="Bound"
+      >x</a
+      ><a name="4445" class="Symbol"
+      >))</a
+      ><a name="4447"
+      > </a
+      ><a name="4448" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4449"
+      >
+      </a
+      ><a name="4456" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="4458"
+      > </a
+      ><a name="4459" class="Symbol"
+      >(</a
+      ><a name="4460" href="homotopy.BlakersMassey.html#4185" class="Bound"
+      >lemma</a
+      ><a name="4465"
+      > </a
+      ><a name="4466" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4469" class="Symbol"
+      >)</a
+      ><a name="4470"
+      > </a
+      ><a name="4471" class="Symbol"
+      >(</a
+      ><a name="4472" href="homotopy.BlakersMassey.html#3138" class="Function"
+      >code-bmleft-template-diag</a
+      ><a name="4497"
+      > </a
+      ><a name="4498" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4501"
+      > </a
+      ><a name="4502" href="homotopy.BlakersMassey.html#4191" class="Bound"
+      >x</a
+      ><a name="4503" class="Symbol"
+      >)</a
+      ><a name="4504"
+      >
+        </a
+      ><a name="4513" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="4515"
+      >
+
+  </a
+      ><a name="4519" class="Comment"
+      >-- Here is the actually lemma we want!</a
+      ><a name="4557"
+      >
+  </a
+      ><a name="4560" class="Comment"
+      >-- A succinct breakdown of [coerce-path code (glue q)].</a
+      ><a name="4615"
+      >
+  </a
+      ><a name="4618" class="Keyword"
+      >abstract</a
+      ><a name="4626"
+      >
+    </a
+      ><a name="4631" href="homotopy.BlakersMassey.html#4631" class="Function"
+      >coe-coerce-path-code-bmglue</a
+      ><a name="4658"
+      > </a
+      ><a name="4659" class="Symbol"
+      >:</a
+      ><a name="4660"
+      > </a
+      ><a name="4661" class="Symbol"
+      >&#8704;</a
+      ><a name="4662"
+      > </a
+      ><a name="4663" class="Symbol"
+      >{</a
+      ><a name="4664" href="homotopy.BlakersMassey.html#4664" class="Bound"
+      >b&#8321;</a
+      ><a name="4666" class="Symbol"
+      >}</a
+      ><a name="4667"
+      > </a
+      ><a name="4668" class="Symbol"
+      >(</a
+      ><a name="4669" href="homotopy.BlakersMassey.html#4669" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="4672"
+      > </a
+      ><a name="4673" class="Symbol"
+      >:</a
+      ><a name="4674"
+      > </a
+      ><a name="4675" href="homotopy.BlakersMassey.html#148" class="Bound"
+      >Q</a
+      ><a name="4676"
+      > </a
+      ><a name="4677" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="4679"
+      > </a
+      ><a name="4680" href="homotopy.BlakersMassey.html#4664" class="Bound"
+      >b&#8321;</a
+      ><a name="4682" class="Symbol"
+      >)</a
+      ><a name="4683"
+      > </a
+      ><a name="4684" href="homotopy.BlakersMassey.html#4684" class="Bound"
+      >x</a
+      ><a name="4685"
+      >
+      </a
+      ><a name="4692" class="Symbol"
+      >&#8594;</a
+      ><a name="4693"
+      > </a
+      ><a name="4694" href="lib.Base.html#4513" class="Function"
+      >coe</a
+      ><a name="4697"
+      > </a
+      ><a name="4698" class="Symbol"
+      >(</a
+      ><a name="4699" href="homotopy.BlakersMassey.html#2846" class="Function"
+      >coerce-path</a
+      ><a name="4710"
+      > </a
+      ><a name="4711" class="Symbol"
+      >(</a
+      ><a name="4712" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="4718"
+      > </a
+      ><a name="4719" href="homotopy.BlakersMassey.html#4669" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="4722" class="Symbol"
+      >))</a
+      ><a name="4724"
+      > </a
+      ><a name="4725" href="homotopy.BlakersMassey.html#4684" class="Bound"
+      >x</a
+      ><a name="4726"
+      >
+      </a
+      ><a name="4733" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4735"
+      > </a
+      ><a name="4736" href="homotopy.blakersmassey.CoherenceData.html#4363" class="Function"
+      >Coh.to</a
+      ><a name="4742"
+      > </a
+      ><a name="4743" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="4746"
+      > </a
+      ><a name="4747" href="homotopy.BlakersMassey.html#4669" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="4750"
+      > </a
+      ><a name="4751" class="Symbol"
+      >(</a
+      ><a name="4752" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="4758"
+      > </a
+      ><a name="4759" href="homotopy.BlakersMassey.html#4669" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="4762" class="Symbol"
+      >)</a
+      ><a name="4763"
+      > </a
+      ><a name="4764" class="Symbol"
+      >(</a
+      ><a name="4765" href="homotopy.BlakersMassey.html#3138" class="Function"
+      >code-bmleft-template-diag</a
+      ><a name="4790"
+      > </a
+      ><a name="4791" class="Symbol"
+      >(</a
+      ><a name="4792" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="4798"
+      > </a
+      ><a name="4799" href="homotopy.BlakersMassey.html#4669" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="4802" class="Symbol"
+      >)</a
+      ><a name="4803"
+      > </a
+      ><a name="4804" href="homotopy.BlakersMassey.html#4684" class="Bound"
+      >x</a
+      ><a name="4805" class="Symbol"
+      >)</a
+      ><a name="4806"
+      >
+    </a
+      ><a name="4811" href="homotopy.BlakersMassey.html#4631" class="Function"
+      >coe-coerce-path-code-bmglue</a
+      ><a name="4838"
+      > </a
+      ><a name="4839" href="homotopy.BlakersMassey.html#4839" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="4842"
+      > </a
+      ><a name="4843" href="homotopy.BlakersMassey.html#4843" class="Bound"
+      >x</a
+      ><a name="4844"
+      > </a
+      ><a name="4845" class="Symbol"
+      >=</a
+      ><a name="4846"
+      >
+      </a
+      ><a name="4853" href="lib.Base.html#4513" class="Function"
+      >coe</a
+      ><a name="4856"
+      > </a
+      ><a name="4857" class="Symbol"
+      >(</a
+      ><a name="4858" href="homotopy.BlakersMassey.html#2616" class="Function"
+      >coerce-path-template</a
+      ><a name="4878"
+      > </a
+      ><a name="4879" class="Symbol"
+      >(</a
+      ><a name="4880" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="4886"
+      > </a
+      ><a name="4887" href="homotopy.BlakersMassey.html#4839" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="4890" class="Symbol"
+      >)</a
+      ><a name="4891"
+      > </a
+      ><a name="4892" class="Symbol"
+      >(</a
+      ><a name="4893" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="4896"
+      > </a
+      ><a name="4897" href="homotopy.BlakersMassey.html#2010" class="Function"
+      >code</a
+      ><a name="4901"
+      > </a
+      ><a name="4902" class="Symbol"
+      >(</a
+      ><a name="4903" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="4909"
+      > </a
+      ><a name="4910" href="homotopy.BlakersMassey.html#4839" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="4913" class="Symbol"
+      >)))</a
+      ><a name="4916"
+      > </a
+      ><a name="4917" href="homotopy.BlakersMassey.html#4843" class="Bound"
+      >x</a
+      ><a name="4918"
+      >
+        </a
+      ><a name="4927" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4929"
+      > </a
+      ><a name="4930" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4932"
+      > </a
+      ><a name="4933" class="Symbol"
+      >(&#955;</a
+      ><a name="4935"
+      > </a
+      ><a name="4936" href="homotopy.BlakersMassey.html#4936" class="Bound"
+      >p</a
+      ><a name="4937"
+      > </a
+      ><a name="4938" class="Symbol"
+      >&#8594;</a
+      ><a name="4939"
+      > </a
+      ><a name="4940" href="lib.Base.html#4513" class="Function"
+      >coe</a
+      ><a name="4943"
+      > </a
+      ><a name="4944" class="Symbol"
+      >(</a
+      ><a name="4945" href="homotopy.BlakersMassey.html#2616" class="Function"
+      >coerce-path-template</a
+      ><a name="4965"
+      > </a
+      ><a name="4966" class="Symbol"
+      >(</a
+      ><a name="4967" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="4973"
+      > </a
+      ><a name="4974" href="homotopy.BlakersMassey.html#4839" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="4977" class="Symbol"
+      >)</a
+      ><a name="4978"
+      > </a
+      ><a name="4979" href="homotopy.BlakersMassey.html#4936" class="Bound"
+      >p</a
+      ><a name="4980" class="Symbol"
+      >)</a
+      ><a name="4981"
+      > </a
+      ><a name="4982" href="homotopy.BlakersMassey.html#4843" class="Bound"
+      >x</a
+      ><a name="4983" class="Symbol"
+      >)</a
+      ><a name="4984"
+      > </a
+      ><a name="4985" class="Symbol"
+      >(</a
+      ><a name="4986" href="homotopy.blakersmassey.Pushout.html#868" class="Function"
+      >Code.glue-&#946;</a
+      ><a name="4997"
+      > </a
+      ><a name="4998" href="homotopy.BlakersMassey.html#4839" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5001" class="Symbol"
+      >)</a
+      ><a name="5002"
+      > </a
+      ><a name="5003" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5004"
+      >
+      </a
+      ><a name="5011" href="lib.Base.html#4513" class="Function"
+      >coe</a
+      ><a name="5014"
+      > </a
+      ><a name="5015" class="Symbol"
+      >(</a
+      ><a name="5016" href="homotopy.BlakersMassey.html#2616" class="Function"
+      >coerce-path-template</a
+      ><a name="5036"
+      > </a
+      ><a name="5037" class="Symbol"
+      >(</a
+      ><a name="5038" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="5044"
+      > </a
+      ><a name="5045" href="homotopy.BlakersMassey.html#4839" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5048" class="Symbol"
+      >)</a
+      ><a name="5049"
+      > </a
+      ><a name="5050" class="Symbol"
+      >(</a
+      ><a name="5051" href="homotopy.BlakersMassey.html#1622" class="Function"
+      >code-bmglue</a
+      ><a name="5062"
+      > </a
+      ><a name="5063" href="homotopy.BlakersMassey.html#4839" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5066" class="Symbol"
+      >))</a
+      ><a name="5068"
+      > </a
+      ><a name="5069" href="homotopy.BlakersMassey.html#4843" class="Bound"
+      >x</a
+      ><a name="5070"
+      >
+        </a
+      ><a name="5079" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5081"
+      > </a
+      ><a name="5082" href="homotopy.BlakersMassey.html#3846" class="Function"
+      >coe-coerce-path-code-bmglue-template</a
+      ><a name="5118"
+      > </a
+      ><a name="5119" class="Symbol"
+      >(</a
+      ><a name="5120" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="5126"
+      > </a
+      ><a name="5127" href="homotopy.BlakersMassey.html#4839" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5130" class="Symbol"
+      >)</a
+      ><a name="5131"
+      > </a
+      ><a name="5132" class="Symbol"
+      >(</a
+      ><a name="5133" href="homotopy.blakersmassey.CoherenceData.html#15274" class="Function"
+      >Coh.eqv</a
+      ><a name="5140"
+      > </a
+      ><a name="5141" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="5144"
+      > </a
+      ><a name="5145" href="homotopy.BlakersMassey.html#4839" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5148" class="Symbol"
+      >)</a
+      ><a name="5149"
+      > </a
+      ><a name="5150" href="homotopy.BlakersMassey.html#4843" class="Bound"
+      >x</a
+      ><a name="5151"
+      > </a
+      ><a name="5152" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5153"
+      >
+      </a
+      ><a name="5160" href="homotopy.blakersmassey.CoherenceData.html#4363" class="Function"
+      >Coh.to</a
+      ><a name="5166"
+      > </a
+      ><a name="5167" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="5170"
+      > </a
+      ><a name="5171" href="homotopy.BlakersMassey.html#4839" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5174"
+      > </a
+      ><a name="5175" class="Symbol"
+      >(</a
+      ><a name="5176" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="5182"
+      > </a
+      ><a name="5183" href="homotopy.BlakersMassey.html#4839" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5186" class="Symbol"
+      >)</a
+      ><a name="5187"
+      > </a
+      ><a name="5188" class="Symbol"
+      >(</a
+      ><a name="5189" href="homotopy.BlakersMassey.html#3138" class="Function"
+      >code-bmleft-template-diag</a
+      ><a name="5214"
+      > </a
+      ><a name="5215" class="Symbol"
+      >(</a
+      ><a name="5216" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="5222"
+      > </a
+      ><a name="5223" href="homotopy.BlakersMassey.html#4839" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5226" class="Symbol"
+      >)</a
+      ><a name="5227"
+      > </a
+      ><a name="5228" href="homotopy.BlakersMassey.html#4843" class="Bound"
+      >x</a
+      ><a name="5229" class="Symbol"
+      >)</a
+      ><a name="5230"
+      >
+        </a
+      ><a name="5239" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="5241"
+      >
+
+  </a
+      ><a name="5245" class="Comment"
+      >-- This is the only case you care for contractibiltiy.</a
+      ><a name="5299"
+      >
+  </a
+      ><a name="5302" class="Keyword"
+      >abstract</a
+      ><a name="5310"
+      >
+    </a
+      ><a name="5315" href="homotopy.BlakersMassey.html#5315" class="Function"
+      >code-coh-lemma</a
+      ><a name="5329"
+      > </a
+      ><a name="5330" class="Symbol"
+      >:</a
+      ><a name="5331"
+      > </a
+      ><a name="5332" class="Symbol"
+      >&#8704;</a
+      ><a name="5333"
+      > </a
+      ><a name="5334" class="Symbol"
+      >{</a
+      ><a name="5335" href="homotopy.BlakersMassey.html#5335" class="Bound"
+      >b&#8321;</a
+      ><a name="5337" class="Symbol"
+      >}</a
+      ><a name="5338"
+      > </a
+      ><a name="5339" class="Symbol"
+      >(</a
+      ><a name="5340" href="homotopy.BlakersMassey.html#5340" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5343"
+      > </a
+      ><a name="5344" class="Symbol"
+      >:</a
+      ><a name="5345"
+      > </a
+      ><a name="5346" href="homotopy.BlakersMassey.html#148" class="Bound"
+      >Q</a
+      ><a name="5347"
+      > </a
+      ><a name="5348" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="5350"
+      > </a
+      ><a name="5351" href="homotopy.BlakersMassey.html#5335" class="Bound"
+      >b&#8321;</a
+      ><a name="5353" class="Symbol"
+      >)</a
+      ><a name="5354"
+      > </a
+      ><a name="5355" class="Symbol"
+      >&#8594;</a
+      ><a name="5356"
+      > </a
+      ><a name="5357" href="homotopy.BlakersMassey.html#2998" class="Function"
+      >code-center</a
+      ><a name="5368"
+      > </a
+      ><a name="5369" class="Symbol"
+      >(</a
+      ><a name="5370" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="5376"
+      > </a
+      ><a name="5377" href="homotopy.BlakersMassey.html#5340" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5380" class="Symbol"
+      >)</a
+      ><a name="5381"
+      > </a
+      ><a name="5382" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5384"
+      > </a
+      ><a name="5385" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="5386"
+      > </a
+      ><a name="5387" href="homotopy.BlakersMassey.html#5340" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5390"
+      > </a
+      ><a name="5391" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5392"
+      > </a
+      ><a name="5393" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5396"
+      > </a
+      ><a name="5397" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="5398"
+      >
+    </a
+      ><a name="5403" href="homotopy.BlakersMassey.html#5315" class="Function"
+      >code-coh-lemma</a
+      ><a name="5417"
+      > </a
+      ><a name="5418" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5421"
+      > </a
+      ><a name="5422" class="Symbol"
+      >=</a
+      ><a name="5423"
+      >
+      </a
+      ><a name="5430" href="lib.Base.html#4513" class="Function"
+      >coe</a
+      ><a name="5433"
+      > </a
+      ><a name="5434" class="Symbol"
+      >(</a
+      ><a name="5435" href="homotopy.BlakersMassey.html#2846" class="Function"
+      >coerce-path</a
+      ><a name="5446"
+      > </a
+      ><a name="5447" class="Symbol"
+      >(</a
+      ><a name="5448" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="5454"
+      > </a
+      ><a name="5455" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5458" class="Symbol"
+      >))</a
+      ><a name="5460"
+      > </a
+      ><a name="5461" href="homotopy.BlakersMassey.html#2218" class="Function"
+      >code-center-idp</a
+      ><a name="5476"
+      >
+        </a
+      ><a name="5485" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5487"
+      > </a
+      ><a name="5488" href="homotopy.BlakersMassey.html#4631" class="Function"
+      >coe-coerce-path-code-bmglue</a
+      ><a name="5515"
+      > </a
+      ><a name="5516" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5519"
+      > </a
+      ><a name="5520" href="homotopy.BlakersMassey.html#2218" class="Function"
+      >code-center-idp</a
+      ><a name="5535"
+      > </a
+      ><a name="5536" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5537"
+      >
+      </a
+      ><a name="5544" href="homotopy.blakersmassey.CoherenceData.html#4101" class="Function"
+      >Coh.to'</a
+      ><a name="5551"
+      > </a
+      ><a name="5552" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="5555"
+      > </a
+      ><a name="5556" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5559"
+      > </a
+      ><a name="5560" class="Symbol"
+      >(</a
+      ><a name="5561" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="5567"
+      > </a
+      ><a name="5568" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5571" class="Symbol"
+      >)</a
+      ><a name="5572"
+      > </a
+      ><a name="5573" class="Symbol"
+      >(</a
+      ><a name="5574" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="5577"
+      > </a
+      ><a name="5578" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5579"
+      > </a
+      ><a name="5580" href="homotopy.BlakersMassey.html#6136" class="Function"
+      >&#945;&#8321;&#945;&#8321;&#8315;&#185;&#945;&#8322;=&#945;&#8322;</a
+      ><a name="5591"
+      > </a
+      ><a name="5592" class="Symbol"
+      >(</a
+      ><a name="5593" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="5599"
+      > </a
+      ><a name="5600" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="5603" class="Symbol"
+      >)</a
+      ><a name="5604"
+      > </a
+      ><a name="5605" class="Symbol"
+      >(</a
+      ><a name="5606" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="5612"
+      > </a
+      ><a name="5613" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5616" class="Symbol"
+      >))</a
+      ><a name="5618"
+      >
+        </a
+      ><a name="5627" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5629"
+      > </a
+      ><a name="5630" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5632"
+      > </a
+      ><a name="5633" class="Symbol"
+      >(</a
+      ><a name="5634" href="homotopy.blakersmassey.CoherenceData.html#2825" class="Function"
+      >Coh.To.ext</a
+      ><a name="5644"
+      > </a
+      ><a name="5645" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="5648"
+      > </a
+      ><a name="5649" class="Symbol"
+      >(_</a
+      ><a name="5651"
+      > </a
+      ><a name="5652" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5653"
+      > </a
+      ><a name="5654" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="5657" class="Symbol"
+      >)</a
+      ><a name="5658"
+      > </a
+      ><a name="5659" class="Symbol"
+      >(_</a
+      ><a name="5661"
+      > </a
+      ><a name="5662" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5663"
+      > </a
+      ><a name="5664" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5667" class="Symbol"
+      >)</a
+      ><a name="5668"
+      > </a
+      ><a name="5669" class="Symbol"
+      >(</a
+      ><a name="5670" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="5676"
+      > </a
+      ><a name="5677" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5680" class="Symbol"
+      >))</a
+      ><a name="5682"
+      > </a
+      ><a name="5683" class="Symbol"
+      >(</a
+      ><a name="5684" href="homotopy.BlakersMassey.html#6417" class="Function"
+      >path-lemma</a
+      ><a name="5694"
+      > </a
+      ><a name="5695" class="Symbol"
+      >(</a
+      ><a name="5696" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="5702"
+      > </a
+      ><a name="5703" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="5706" class="Symbol"
+      >)</a
+      ><a name="5707"
+      > </a
+      ><a name="5708" class="Symbol"
+      >(</a
+      ><a name="5709" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="5715"
+      > </a
+      ><a name="5716" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5719" class="Symbol"
+      >))</a
+      ><a name="5721"
+      > </a
+      ><a name="5722" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5723"
+      >
+      </a
+      ><a name="5730" href="homotopy.blakersmassey.CoherenceData.html#2825" class="Function"
+      >Coh.To.ext</a
+      ><a name="5740"
+      > </a
+      ><a name="5741" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="5744"
+      > </a
+      ><a name="5745" class="Symbol"
+      >(_</a
+      ><a name="5747"
+      > </a
+      ><a name="5748" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5749"
+      > </a
+      ><a name="5750" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="5753" class="Symbol"
+      >)</a
+      ><a name="5754"
+      > </a
+      ><a name="5755" class="Symbol"
+      >(_</a
+      ><a name="5757"
+      > </a
+      ><a name="5758" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5759"
+      > </a
+      ><a name="5760" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5763" class="Symbol"
+      >)</a
+      ><a name="5764"
+      > </a
+      ><a name="5765" class="Symbol"
+      >(</a
+      ><a name="5766" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="5772"
+      > </a
+      ><a name="5773" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5776" class="Symbol"
+      >)</a
+      ><a name="5777"
+      > </a
+      ><a name="5778" class="Symbol"
+      >(</a
+      ><a name="5779" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5780"
+      > </a
+      ><a name="5781" href="homotopy.BlakersMassey.html#5981" class="Function"
+      >path</a
+      ><a name="5785" class="Symbol"
+      >)</a
+      ><a name="5786"
+      >
+        </a
+      ><a name="5795" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5797"
+      > </a
+      ><a name="5798" href="homotopy.blakersmassey.CoherenceData.html#2984" class="Function"
+      >Coh.To.&#946;-r</a
+      ><a name="5808"
+      > </a
+      ><a name="5809" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="5812"
+      > </a
+      ><a name="5813" class="Symbol"
+      >(_</a
+      ><a name="5815"
+      > </a
+      ><a name="5816" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5817"
+      > </a
+      ><a name="5818" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5821" class="Symbol"
+      >)</a
+      ><a name="5822"
+      > </a
+      ><a name="5823" class="Symbol"
+      >(</a
+      ><a name="5824" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="5830"
+      > </a
+      ><a name="5831" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5834" class="Symbol"
+      >)</a
+      ><a name="5835"
+      > </a
+      ><a name="5836" class="Symbol"
+      >(</a
+      ><a name="5837" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5838"
+      > </a
+      ><a name="5839" href="homotopy.BlakersMassey.html#5981" class="Function"
+      >path</a
+      ><a name="5843" class="Symbol"
+      >)</a
+      ><a name="5844"
+      > </a
+      ><a name="5845" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5846"
+      >
+      </a
+      ><a name="5853" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="5854"
+      > </a
+      ><a name="5855" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5858"
+      > </a
+      ><a name="5859" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5860"
+      > </a
+      ><a name="5861" href="homotopy.BlakersMassey.html#5981" class="Function"
+      >path</a
+      ><a name="5865"
+      > </a
+      ><a name="5866" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="5868"
+      > </a
+      ><a name="5869" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5870"
+      > </a
+      ><a name="5871" href="homotopy.BlakersMassey.html#5981" class="Function"
+      >path</a
+      ><a name="5875"
+      > </a
+      ><a name="5876" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="5877"
+      >
+        </a
+      ><a name="5886" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5888"
+      > </a
+      ><a name="5889" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5891"
+      > </a
+      ><a name="5892" class="Symbol"
+      >(&#955;</a
+      ><a name="5894"
+      > </a
+      ><a name="5895" href="homotopy.BlakersMassey.html#5895" class="Bound"
+      >p</a
+      ><a name="5896"
+      > </a
+      ><a name="5897" class="Symbol"
+      >&#8594;</a
+      ><a name="5898"
+      > </a
+      ><a name="5899" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="5900"
+      > </a
+      ><a name="5901" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5904"
+      > </a
+      ><a name="5905" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5906"
+      > </a
+      ><a name="5907" href="homotopy.BlakersMassey.html#5895" class="Bound"
+      >p</a
+      ><a name="5908"
+      > </a
+      ><a name="5909" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="5910" class="Symbol"
+      >)</a
+      ><a name="5911"
+      > </a
+      ><a name="5912" class="Symbol"
+      >(</a
+      ><a name="5913" href="lib.PathGroupoid.html#1496" class="Function"
+      >!-inv'-r</a
+      ><a name="5921"
+      > </a
+      ><a name="5922" href="homotopy.BlakersMassey.html#5981" class="Function"
+      >path</a
+      ><a name="5926" class="Symbol"
+      >)</a
+      ><a name="5927"
+      > </a
+      ><a name="5928" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5929"
+      >
+      </a
+      ><a name="5936" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="5937"
+      > </a
+      ><a name="5938" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="5941"
+      > </a
+      ><a name="5942" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5943"
+      > </a
+      ><a name="5944" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5947"
+      > </a
+      ><a name="5948" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="5949"
+      >
+        </a
+      ><a name="5958" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="5960"
+      >
+      </a
+      ><a name="5967" class="Keyword"
+      >where</a
+      ><a name="5972"
+      >
+        </a
+      ><a name="5981" href="homotopy.BlakersMassey.html#5981" class="Function"
+      >path</a
+      ><a name="5985"
+      > </a
+      ><a name="5986" class="Symbol"
+      >=</a
+      ><a name="5987"
+      > </a
+      ><a name="5988" href="homotopy.blakersmassey.CoherenceData.html#7696" class="Field"
+      >Coh.&#946;Pair.path</a
+      ><a name="6002"
+      > </a
+      ><a name="6003" class="Symbol"
+      >(</a
+      ><a name="6004" href="homotopy.blakersmassey.CoherenceData.html#8250" class="Function"
+      >Coh.&#946;pair-bmright</a
+      ><a name="6021"
+      > </a
+      ><a name="6022" href="homotopy.BlakersMassey.html#490" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="6025"
+      > </a
+      ><a name="6026" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="6029"
+      > </a
+      ><a name="6030" class="Symbol"
+      >(</a
+      ><a name="6031" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="6037"
+      > </a
+      ><a name="6038" href="homotopy.BlakersMassey.html#5418" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="6041" class="Symbol"
+      >))</a
+      ><a name="6043"
+      >
+
+        </a
+      ><a name="6053" class="Comment"
+      >-- this is defined to be the path generated by [code-bmleft-template-diag]</a
+      ><a name="6127"
+      >
+        </a
+      ><a name="6136" href="homotopy.BlakersMassey.html#6136" class="Function"
+      >&#945;&#8321;&#945;&#8321;&#8315;&#185;&#945;&#8322;=&#945;&#8322;</a
+      ><a name="6147"
+      > </a
+      ><a name="6148" class="Symbol"
+      >:</a
+      ><a name="6149"
+      > </a
+      ><a name="6150" class="Symbol"
+      >&#8704;</a
+      ><a name="6151"
+      > </a
+      ><a name="6152" class="Symbol"
+      >{</a
+      ><a name="6153" href="homotopy.BlakersMassey.html#6153" class="Bound"
+      >p&#8321;</a
+      ><a name="6155"
+      > </a
+      ><a name="6156" href="homotopy.BlakersMassey.html#6156" class="Bound"
+      >p&#8322;</a
+      ><a name="6158"
+      > </a
+      ><a name="6159" href="homotopy.BlakersMassey.html#6159" class="Bound"
+      >p&#8323;</a
+      ><a name="6161"
+      > </a
+      ><a name="6162" class="Symbol"
+      >:</a
+      ><a name="6163"
+      > </a
+      ><a name="6164" href="homotopy.blakersmassey.Pushout.html#305" class="Function"
+      >BMPushout</a
+      ><a name="6173" class="Symbol"
+      >}</a
+      ><a name="6174"
+      > </a
+      ><a name="6175" class="Symbol"
+      >(</a
+      ><a name="6176" href="homotopy.BlakersMassey.html#6176" class="Bound"
+      >&#945;&#8321;</a
+      ><a name="6178"
+      > </a
+      ><a name="6179" class="Symbol"
+      >:</a
+      ><a name="6180"
+      > </a
+      ><a name="6181" href="homotopy.BlakersMassey.html#6153" class="Bound"
+      >p&#8321;</a
+      ><a name="6183"
+      > </a
+      ><a name="6184" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="6186"
+      > </a
+      ><a name="6187" href="homotopy.BlakersMassey.html#6156" class="Bound"
+      >p&#8322;</a
+      ><a name="6189" class="Symbol"
+      >)</a
+      ><a name="6190"
+      > </a
+      ><a name="6191" class="Symbol"
+      >(</a
+      ><a name="6192" href="homotopy.BlakersMassey.html#6192" class="Bound"
+      >&#945;&#8322;</a
+      ><a name="6194"
+      > </a
+      ><a name="6195" class="Symbol"
+      >:</a
+      ><a name="6196"
+      > </a
+      ><a name="6197" href="homotopy.BlakersMassey.html#6153" class="Bound"
+      >p&#8321;</a
+      ><a name="6199"
+      > </a
+      ><a name="6200" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="6202"
+      > </a
+      ><a name="6203" href="homotopy.BlakersMassey.html#6159" class="Bound"
+      >p&#8323;</a
+      ><a name="6205" class="Symbol"
+      >)</a
+      ><a name="6206"
+      >
+          </a
+      ><a name="6217" class="Symbol"
+      >&#8594;</a
+      ><a name="6218"
+      > </a
+      ><a name="6219" href="homotopy.BlakersMassey.html#6176" class="Bound"
+      >&#945;&#8321;</a
+      ><a name="6221"
+      > </a
+      ><a name="6222" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="6224"
+      > </a
+      ><a name="6225" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="6226"
+      > </a
+      ><a name="6227" href="homotopy.BlakersMassey.html#6176" class="Bound"
+      >&#945;&#8321;</a
+      ><a name="6229"
+      > </a
+      ><a name="6230" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="6232"
+      > </a
+      ><a name="6233" href="homotopy.BlakersMassey.html#6192" class="Bound"
+      >&#945;&#8322;</a
+      ><a name="6235"
+      > </a
+      ><a name="6236" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="6238"
+      > </a
+      ><a name="6239" href="homotopy.BlakersMassey.html#6192" class="Bound"
+      >&#945;&#8322;</a
+      ><a name="6241"
+      >
+        </a
+      ><a name="6250" href="homotopy.BlakersMassey.html#6136" class="Function"
+      >&#945;&#8321;&#945;&#8321;&#8315;&#185;&#945;&#8322;=&#945;&#8322;</a
+      ><a name="6261"
+      > </a
+      ><a name="6262" href="homotopy.BlakersMassey.html#6262" class="Bound"
+      >&#945;&#8321;</a
+      ><a name="6264"
+      > </a
+      ><a name="6265" href="homotopy.BlakersMassey.html#6265" class="Bound"
+      >&#945;&#8322;</a
+      ><a name="6267"
+      > </a
+      ><a name="6268" class="Symbol"
+      >=</a
+      ><a name="6269"
+      > </a
+      ><a name="6270" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="6271"
+      > </a
+      ><a name="6272" class="Symbol"
+      >(</a
+      ><a name="6273" href="lib.PathGroupoid.html#862" class="Function"
+      >&#8729;'-assoc</a
+      ><a name="6281"
+      > </a
+      ><a name="6282" href="homotopy.BlakersMassey.html#6262" class="Bound"
+      >&#945;&#8321;</a
+      ><a name="6284"
+      > </a
+      ><a name="6285" class="Symbol"
+      >(</a
+      ><a name="6286" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="6287"
+      > </a
+      ><a name="6288" href="homotopy.BlakersMassey.html#6262" class="Bound"
+      >&#945;&#8321;</a
+      ><a name="6290" class="Symbol"
+      >)</a
+      ><a name="6291"
+      > </a
+      ><a name="6292" href="homotopy.BlakersMassey.html#6265" class="Bound"
+      >&#945;&#8322;</a
+      ><a name="6294" class="Symbol"
+      >)</a
+      ><a name="6295"
+      > </a
+      ><a name="6296" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="6297"
+      > </a
+      ><a name="6298" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="6300"
+      > </a
+      ><a name="6301" class="Symbol"
+      >(</a
+      ><a name="6302" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >_&#8729;'</a
+      ><a name="6305"
+      > </a
+      ><a name="6306" href="homotopy.BlakersMassey.html#6265" class="Bound"
+      >&#945;&#8322;</a
+      ><a name="6308" class="Symbol"
+      >)</a
+      ><a name="6309"
+      > </a
+      ><a name="6310" class="Symbol"
+      >(</a
+      ><a name="6311" href="lib.PathGroupoid.html#1496" class="Function"
+      >!-inv'-r</a
+      ><a name="6319"
+      > </a
+      ><a name="6320" href="homotopy.BlakersMassey.html#6262" class="Bound"
+      >&#945;&#8321;</a
+      ><a name="6322" class="Symbol"
+      >)</a
+      ><a name="6323"
+      > </a
+      ><a name="6324" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="6326"
+      > </a
+      ><a name="6327" href="lib.PathGroupoid.html#1114" class="Function"
+      >&#8729;'-unit-l</a
+      ><a name="6336"
+      > </a
+      ><a name="6337" href="homotopy.BlakersMassey.html#6265" class="Bound"
+      >&#945;&#8322;</a
+      ><a name="6339"
+      >
+
+        </a
+      ><a name="6349" class="Comment"
+      >-- the relation of this path and the one from CoherenceData</a
+      ><a name="6408"
+      >
+        </a
+      ><a name="6417" href="homotopy.BlakersMassey.html#6417" class="Function"
+      >path-lemma</a
+      ><a name="6427"
+      > </a
+      ><a name="6428" class="Symbol"
+      >:</a
+      ><a name="6429"
+      > </a
+      ><a name="6430" class="Symbol"
+      >&#8704;</a
+      ><a name="6431"
+      > </a
+      ><a name="6432" class="Symbol"
+      >{</a
+      ><a name="6433" href="homotopy.BlakersMassey.html#6433" class="Bound"
+      >p&#8321;</a
+      ><a name="6435"
+      > </a
+      ><a name="6436" href="homotopy.BlakersMassey.html#6436" class="Bound"
+      >p&#8322;</a
+      ><a name="6438"
+      > </a
+      ><a name="6439" href="homotopy.BlakersMassey.html#6439" class="Bound"
+      >p&#8323;</a
+      ><a name="6441"
+      > </a
+      ><a name="6442" class="Symbol"
+      >:</a
+      ><a name="6443"
+      > </a
+      ><a name="6444" href="homotopy.blakersmassey.Pushout.html#305" class="Function"
+      >BMPushout</a
+      ><a name="6453" class="Symbol"
+      >}</a
+      ><a name="6454"
+      > </a
+      ><a name="6455" class="Symbol"
+      >(</a
+      ><a name="6456" href="homotopy.BlakersMassey.html#6456" class="Bound"
+      >&#945;&#8321;</a
+      ><a name="6458"
+      > </a
+      ><a name="6459" class="Symbol"
+      >:</a
+      ><a name="6460"
+      > </a
+      ><a name="6461" href="homotopy.BlakersMassey.html#6433" class="Bound"
+      >p&#8321;</a
+      ><a name="6463"
+      > </a
+      ><a name="6464" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="6466"
+      > </a
+      ><a name="6467" href="homotopy.BlakersMassey.html#6436" class="Bound"
+      >p&#8322;</a
+      ><a name="6469" class="Symbol"
+      >)</a
+      ><a name="6470"
+      > </a
+      ><a name="6471" class="Symbol"
+      >(</a
+      ><a name="6472" href="homotopy.BlakersMassey.html#6472" class="Bound"
+      >&#945;&#8322;</a
+      ><a name="6474"
+      > </a
+      ><a name="6475" class="Symbol"
+      >:</a
+      ><a name="6476"
+      > </a
+      ><a name="6477" href="homotopy.BlakersMassey.html#6433" class="Bound"
+      >p&#8321;</a
+      ><a name="6479"
+      > </a
+      ><a name="6480" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="6482"
+      > </a
+      ><a name="6483" href="homotopy.BlakersMassey.html#6439" class="Bound"
+      >p&#8323;</a
+      ><a name="6485" class="Symbol"
+      >)</a
+      ><a name="6486"
+      >
+          </a
+      ><a name="6497" class="Symbol"
+      >&#8594;</a
+      ><a name="6498"
+      > </a
+      ><a name="6499" href="homotopy.BlakersMassey.html#6136" class="Function"
+      >&#945;&#8321;&#945;&#8321;&#8315;&#185;&#945;&#8322;=&#945;&#8322;</a
+      ><a name="6510"
+      > </a
+      ><a name="6511" href="homotopy.BlakersMassey.html#6456" class="Bound"
+      >&#945;&#8321;</a
+      ><a name="6513"
+      > </a
+      ><a name="6514" href="homotopy.BlakersMassey.html#6472" class="Bound"
+      >&#945;&#8322;</a
+      ><a name="6516"
+      > </a
+      ><a name="6517" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="6519"
+      > </a
+      ><a name="6520" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="6521"
+      > </a
+      ><a name="6522" class="Symbol"
+      >(</a
+      ><a name="6523" href="homotopy.blakersmassey.CoherenceData.html#892" class="Function"
+      >Coh.&#945;&#8321;=&#945;&#8322;&#945;&#8322;&#8315;&#185;&#945;&#8321;</a
+      ><a name="6538"
+      > </a
+      ><a name="6539" href="homotopy.BlakersMassey.html#6472" class="Bound"
+      >&#945;&#8322;</a
+      ><a name="6541"
+      > </a
+      ><a name="6542" href="homotopy.BlakersMassey.html#6456" class="Bound"
+      >&#945;&#8321;</a
+      ><a name="6544" class="Symbol"
+      >)</a
+      ><a name="6545"
+      >
+        </a
+      ><a name="6554" href="homotopy.BlakersMassey.html#6417" class="Function"
+      >path-lemma</a
+      ><a name="6564"
+      > </a
+      ><a name="6565" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="6568"
+      > </a
+      ><a name="6569" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="6572"
+      > </a
+      ><a name="6573" class="Symbol"
+      >=</a
+      ><a name="6574"
+      > </a
+      ><a name="6575" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="6578"
+      >
+
+  </a
+      ><a name="6582" class="Comment"
+      >-- Make [r] free to apply identification elimination.</a
+      ><a name="6635"
+      >
+  </a
+      ><a name="6638" href="homotopy.BlakersMassey.html#6638" class="Function"
+      >code-coh</a
+      ><a name="6646"
+      > </a
+      ><a name="6647" class="Symbol"
+      >:</a
+      ><a name="6648"
+      > </a
+      ><a name="6649" class="Symbol"
+      >&#8704;</a
+      ><a name="6650"
+      > </a
+      ><a name="6651" class="Symbol"
+      >{</a
+      ><a name="6652" href="homotopy.BlakersMassey.html#6652" class="Bound"
+      >b&#8321;</a
+      ><a name="6654" class="Symbol"
+      >}</a
+      ><a name="6655"
+      > </a
+      ><a name="6656" class="Symbol"
+      >(</a
+      ><a name="6657" href="homotopy.BlakersMassey.html#6657" class="Bound"
+      >r</a
+      ><a name="6658"
+      > </a
+      ><a name="6659" class="Symbol"
+      >:</a
+      ><a name="6660"
+      > </a
+      ><a name="6661" href="homotopy.blakersmassey.Pushout.html#370" class="Function"
+      >bmleft</a
+      ><a name="6667"
+      > </a
+      ><a name="6668" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="6670"
+      > </a
+      ><a name="6671" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="6673"
+      > </a
+      ><a name="6674" href="homotopy.blakersmassey.Pushout.html#408" class="Function"
+      >bmright</a
+      ><a name="6681"
+      > </a
+      ><a name="6682" href="homotopy.BlakersMassey.html#6652" class="Bound"
+      >b&#8321;</a
+      ><a name="6684" class="Symbol"
+      >)</a
+      ><a name="6685"
+      > </a
+      ><a name="6686" class="Symbol"
+      >(</a
+      ><a name="6687" href="homotopy.BlakersMassey.html#6687" class="Bound"
+      >s</a
+      ><a name="6688"
+      > </a
+      ><a name="6689" class="Symbol"
+      >:</a
+      ><a name="6690"
+      > </a
+      ><a name="6691" href="lib.Function.html#899" class="Function"
+      >hfiber</a
+      ><a name="6697"
+      > </a
+      ><a name="6698" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="6704"
+      > </a
+      ><a name="6705" href="homotopy.BlakersMassey.html#6657" class="Bound"
+      >r</a
+      ><a name="6706" class="Symbol"
+      >)</a
+      ><a name="6707"
+      > </a
+      ><a name="6708" class="Symbol"
+      >&#8594;</a
+      ><a name="6709"
+      > </a
+      ><a name="6710" href="homotopy.BlakersMassey.html#2998" class="Function"
+      >code-center</a
+      ><a name="6721"
+      > </a
+      ><a name="6722" href="homotopy.BlakersMassey.html#6657" class="Bound"
+      >r</a
+      ><a name="6723"
+      > </a
+      ><a name="6724" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="6726"
+      > </a
+      ><a name="6727" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="6728"
+      > </a
+      ><a name="6729" href="homotopy.BlakersMassey.html#6687" class="Bound"
+      >s</a
+      ><a name="6730"
+      > </a
+      ><a name="6731" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="6732"
+      >
+  </a
+      ><a name="6735" href="homotopy.BlakersMassey.html#6638" class="Function"
+      >code-coh</a
+      ><a name="6743"
+      > </a
+      ><a name="6744" class="DottedPattern Symbol"
+      >._</a
+      ><a name="6746"
+      > </a
+      ><a name="6747" class="Symbol"
+      >(</a
+      ><a name="6748" href="homotopy.BlakersMassey.html#6748" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="6751"
+      > </a
+      ><a name="6752" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="6753"
+      > </a
+      ><a name="6754" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="6757" class="Symbol"
+      >)</a
+      ><a name="6758"
+      > </a
+      ><a name="6759" class="Symbol"
+      >=</a
+      ><a name="6760"
+      > </a
+      ><a name="6761" href="homotopy.BlakersMassey.html#5315" class="Function"
+      >code-coh-lemma</a
+      ><a name="6775"
+      > </a
+      ><a name="6776" href="homotopy.BlakersMassey.html#6748" class="Bound"
+      >q&#8320;&#8321;</a
+      ><a name="6779"
+      >
+
+  </a
+      ><a name="6783" class="Comment"
+      >-- Finish the lemma.</a
+      ><a name="6803"
+      >
+  </a
+      ><a name="6806" href="homotopy.BlakersMassey.html#6806" class="Function"
+      >code-contr</a
+      ><a name="6816"
+      > </a
+      ><a name="6817" class="Symbol"
+      >:</a
+      ><a name="6818"
+      > </a
+      ><a name="6819" class="Symbol"
+      >&#8704;</a
+      ><a name="6820"
+      > </a
+      ><a name="6821" class="Symbol"
+      >{</a
+      ><a name="6822" href="homotopy.BlakersMassey.html#6822" class="Bound"
+      >b&#8321;</a
+      ><a name="6824" class="Symbol"
+      >}</a
+      ><a name="6825"
+      > </a
+      ><a name="6826" class="Symbol"
+      >(</a
+      ><a name="6827" href="homotopy.BlakersMassey.html#6827" class="Bound"
+      >r</a
+      ><a name="6828"
+      > </a
+      ><a name="6829" class="Symbol"
+      >:</a
+      ><a name="6830"
+      > </a
+      ><a name="6831" href="homotopy.blakersmassey.Pushout.html#370" class="Function"
+      >bmleft</a
+      ><a name="6837"
+      > </a
+      ><a name="6838" href="homotopy.BlakersMassey.html#480" class="Bound"
+      >a&#8320;</a
+      ><a name="6840"
+      > </a
+      ><a name="6841" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="6843"
+      > </a
+      ><a name="6844" href="homotopy.blakersmassey.Pushout.html#408" class="Function"
+      >bmright</a
+      ><a name="6851"
+      > </a
+      ><a name="6852" href="homotopy.BlakersMassey.html#6822" class="Bound"
+      >b&#8321;</a
+      ><a name="6854" class="Symbol"
+      >)</a
+      ><a name="6855"
+      > </a
+      ><a name="6856" class="Symbol"
+      >&#8594;</a
+      ><a name="6857"
+      > </a
+      ><a name="6858" href="lib.NType.html#228" class="Function"
+      >is-contr</a
+      ><a name="6866"
+      > </a
+      ><a name="6867" class="Symbol"
+      >(</a
+      ><a name="6868" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="6873"
+      > </a
+      ><a name="6874" class="Symbol"
+      >(</a
+      ><a name="6875" href="homotopy.BlakersMassey.html#170" class="Bound"
+      >m</a
+      ><a name="6876"
+      > </a
+      ><a name="6877" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="6880"
+      > </a
+      ><a name="6881" href="homotopy.BlakersMassey.html#230" class="Bound"
+      >n</a
+      ><a name="6882" class="Symbol"
+      >)</a
+      ><a name="6883"
+      > </a
+      ><a name="6884" class="Symbol"
+      >(</a
+      ><a name="6885" href="lib.Function.html#899" class="Function"
+      >hfiber</a
+      ><a name="6891"
+      > </a
+      ><a name="6892" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="6898"
+      > </a
+      ><a name="6899" href="homotopy.BlakersMassey.html#6827" class="Bound"
+      >r</a
+      ><a name="6900" class="Symbol"
+      >))</a
+      ><a name="6902"
+      >
+  </a
+      ><a name="6905" href="homotopy.BlakersMassey.html#6806" class="Function"
+      >code-contr</a
+      ><a name="6915"
+      > </a
+      ><a name="6916" href="homotopy.BlakersMassey.html#6916" class="Bound"
+      >r</a
+      ><a name="6917"
+      > </a
+      ><a name="6918" class="Symbol"
+      >=</a
+      ><a name="6919"
+      > </a
+      ><a name="6920" href="homotopy.BlakersMassey.html#2998" class="Function"
+      >code-center</a
+      ><a name="6931"
+      > </a
+      ><a name="6932" href="homotopy.BlakersMassey.html#6916" class="Bound"
+      >r</a
+      ><a name="6933"
+      > </a
+      ><a name="6934" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="6935"
+      > </a
+      ><a name="6936" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="6946"
+      >
+    </a
+      ><a name="6951" class="Symbol"
+      >(&#955;</a
+      ><a name="6953"
+      > </a
+      ><a name="6954" href="homotopy.BlakersMassey.html#6954" class="Bound"
+      >_</a
+      ><a name="6955"
+      > </a
+      ><a name="6956" class="Symbol"
+      >&#8594;</a
+      ><a name="6957"
+      > </a
+      ><a name="6958" href="lib.NType.html#3994" class="Function"
+      >=-preserves-level</a
+      ><a name="6975"
+      > </a
+      ><a name="6976" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="6987" class="Symbol"
+      >)</a
+      ><a name="6988"
+      > </a
+      ><a name="6989" class="Symbol"
+      >(</a
+      ><a name="6990" href="homotopy.BlakersMassey.html#6638" class="Function"
+      >code-coh</a
+      ><a name="6998"
+      > </a
+      ><a name="6999" href="homotopy.BlakersMassey.html#6916" class="Bound"
+      >r</a
+      ><a name="7000" class="Symbol"
+      >)</a
+      ><a name="7001"
+      >
+
+</a
+      ><a name="7003" class="Comment"
+      >-- The final theorem.</a
+      ><a name="7024"
+      >
+</a
+      ><a name="7025" class="Comment"
+      >-- It is sufficient to find some [q&#8320;&#8320;].</a
+      ><a name="7064"
+      >
+</a
+      ><a name="7065" href="homotopy.BlakersMassey.html#7065" class="Function"
+      >blakers-massey</a
+      ><a name="7079"
+      > </a
+      ><a name="7080" class="Symbol"
+      >:</a
+      ><a name="7081"
+      > </a
+      ><a name="7082" class="Symbol"
+      >&#8704;</a
+      ><a name="7083"
+      > </a
+      ><a name="7084" class="Symbol"
+      >{</a
+      ><a name="7085" href="homotopy.BlakersMassey.html#7085" class="Bound"
+      >a&#8320;</a
+      ><a name="7087"
+      > </a
+      ><a name="7088" href="homotopy.BlakersMassey.html#7088" class="Bound"
+      >b&#8320;</a
+      ><a name="7090" class="Symbol"
+      >}</a
+      ><a name="7091"
+      > </a
+      ><a name="7092" class="Symbol"
+      >&#8594;</a
+      ><a name="7093"
+      > </a
+      ><a name="7094" href="lib.NConnected.html#429" class="Function"
+      >has-conn-fibers</a
+      ><a name="7109"
+      > </a
+      ><a name="7110" class="Symbol"
+      >(</a
+      ><a name="7111" href="homotopy.BlakersMassey.html#170" class="Bound"
+      >m</a
+      ><a name="7112"
+      > </a
+      ><a name="7113" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="7116"
+      > </a
+      ><a name="7117" href="homotopy.BlakersMassey.html#230" class="Bound"
+      >n</a
+      ><a name="7118" class="Symbol"
+      >)</a
+      ><a name="7119"
+      > </a
+      ><a name="7120" class="Symbol"
+      >(</a
+      ><a name="7121" href="homotopy.blakersmassey.Pushout.html#449" class="Function"
+      >bmglue</a
+      ><a name="7127"
+      > </a
+      ><a name="7128" class="Symbol"
+      >{</a
+      ><a name="7129" href="homotopy.BlakersMassey.html#7085" class="Bound"
+      >a&#8320;</a
+      ><a name="7131" class="Symbol"
+      >}</a
+      ><a name="7132"
+      > </a
+      ><a name="7133" class="Symbol"
+      >{</a
+      ><a name="7134" href="homotopy.BlakersMassey.html#7088" class="Bound"
+      >b&#8320;</a
+      ><a name="7136" class="Symbol"
+      >})</a
+      ><a name="7138"
+      >
+</a
+      ><a name="7139" href="homotopy.BlakersMassey.html#7065" class="Function"
+      >blakers-massey</a
+      ><a name="7153"
+      > </a
+      ><a name="7154" class="Symbol"
+      >{</a
+      ><a name="7155" href="homotopy.BlakersMassey.html#7155" class="Bound"
+      >a&#8320;</a
+      ><a name="7157" class="Symbol"
+      >}</a
+      ><a name="7158"
+      > </a
+      ><a name="7159" href="homotopy.BlakersMassey.html#7159" class="Bound"
+      >r</a
+      ><a name="7160"
+      > </a
+      ><a name="7161" class="Symbol"
+      >=</a
+      ><a name="7162"
+      > </a
+      ><a name="7163" href="lib.types.Truncation.html#863" class="Function"
+      >Trunc-rec</a
+      ><a name="7172"
+      >
+  </a
+      ><a name="7175" class="Symbol"
+      >(</a
+      ><a name="7176" href="lib.NType.html#3301" class="Function"
+      >prop-has-level-S</a
+      ><a name="7192"
+      > </a
+      ><a name="7193" href="lib.NConnected.html#897" class="Function"
+      >is-connected-is-prop</a
+      ><a name="7213" class="Symbol"
+      >)</a
+      ><a name="7214"
+      >
+  </a
+      ><a name="7217" class="Symbol"
+      >(&#955;{(_</a
+      ><a name="7222"
+      > </a
+      ><a name="7223" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="7224"
+      > </a
+      ><a name="7225" href="homotopy.BlakersMassey.html#7225" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="7228" class="Symbol"
+      >)</a
+      ><a name="7229"
+      > </a
+      ><a name="7230" class="Symbol"
+      >&#8594;</a
+      ><a name="7231"
+      > </a
+      ><a name="7232" href="homotopy.BlakersMassey.html#6806" class="Function"
+      >code-contr</a
+      ><a name="7242"
+      > </a
+      ><a name="7243" href="homotopy.BlakersMassey.html#7225" class="Bound"
+      >q&#8320;&#8320;</a
+      ><a name="7246"
+      > </a
+      ><a name="7247" href="homotopy.BlakersMassey.html#7159" class="Bound"
+      >r</a
+      ><a name="7248" class="Symbol"
+      >})</a
+      ><a name="7250"
+      >
+  </a
+      ><a name="7253" class="Symbol"
+      >(</a
+      ><a name="7254" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="7257"
+      > </a
+      ><a name="7258" class="Symbol"
+      >(</a
+      ><a name="7259" href="homotopy.BlakersMassey.html#173" class="Bound"
+      >f-conn</a
+      ><a name="7265"
+      > </a
+      ><a name="7266" href="homotopy.BlakersMassey.html#7155" class="Bound"
+      >a&#8320;</a
+      ><a name="7268" class="Symbol"
+      >))</a
+      ><a name="7270"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

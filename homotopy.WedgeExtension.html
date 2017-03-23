@@ -1,0 +1,2398 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.WedgeExtension</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+
+</a
+      ><a name="60" class="Keyword"
+      >module</a
+      ><a name="66"
+      > </a
+      ><a name="67" href="homotopy.WedgeExtension.html#1" class="Module"
+      >homotopy.WedgeExtension</a
+      ><a name="90"
+      >
+  </a
+      ><a name="93" class="Symbol"
+      >{</a
+      ><a name="94" href="homotopy.WedgeExtension.html#94" class="Bound"
+      >i</a
+      ><a name="95"
+      > </a
+      ><a name="96" href="homotopy.WedgeExtension.html#96" class="Bound"
+      >j</a
+      ><a name="97" class="Symbol"
+      >}</a
+      ><a name="98"
+      > </a
+      ><a name="99" class="Symbol"
+      >{</a
+      ><a name="100" href="homotopy.WedgeExtension.html#100" class="Bound"
+      >A</a
+      ><a name="101"
+      > </a
+      ><a name="102" class="Symbol"
+      >:</a
+      ><a name="103"
+      > </a
+      ><a name="104" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="108"
+      > </a
+      ><a name="109" href="homotopy.WedgeExtension.html#94" class="Bound"
+      >i</a
+      ><a name="110" class="Symbol"
+      >}</a
+      ><a name="111"
+      > </a
+      ><a name="112" class="Symbol"
+      >{</a
+      ><a name="113" href="homotopy.WedgeExtension.html#113" class="Bound"
+      >a&#8320;</a
+      ><a name="115"
+      > </a
+      ><a name="116" class="Symbol"
+      >:</a
+      ><a name="117"
+      > </a
+      ><a name="118" href="homotopy.WedgeExtension.html#100" class="Bound"
+      >A</a
+      ><a name="119" class="Symbol"
+      >}</a
+      ><a name="120"
+      > </a
+      ><a name="121" class="Symbol"
+      >{</a
+      ><a name="122" href="homotopy.WedgeExtension.html#122" class="Bound"
+      >B</a
+      ><a name="123"
+      > </a
+      ><a name="124" class="Symbol"
+      >:</a
+      ><a name="125"
+      > </a
+      ><a name="126" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="130"
+      > </a
+      ><a name="131" href="homotopy.WedgeExtension.html#96" class="Bound"
+      >j</a
+      ><a name="132" class="Symbol"
+      >}</a
+      ><a name="133"
+      > </a
+      ><a name="134" class="Symbol"
+      >{</a
+      ><a name="135" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="137"
+      > </a
+      ><a name="138" class="Symbol"
+      >:</a
+      ><a name="139"
+      > </a
+      ><a name="140" href="homotopy.WedgeExtension.html#122" class="Bound"
+      >B</a
+      ><a name="141" class="Symbol"
+      >}</a
+      ><a name="142"
+      > </a
+      ><a name="143" class="Keyword"
+      >where</a
+      ><a name="148"
+      >
+
+  </a
+      ><a name="152" class="Comment"
+      >-- easier to keep track of than a long list of arguments</a
+      ><a name="208"
+      >
+  </a
+      ><a name="211" class="Keyword"
+      >record</a
+      ><a name="217"
+      > </a
+      ><a name="218" href="homotopy.WedgeExtension.html#218" class="Record"
+      >args</a
+      ><a name="222"
+      > </a
+      ><a name="223" class="Symbol"
+      >:</a
+      ><a name="224"
+      > </a
+      ><a name="225" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="229"
+      > </a
+      ><a name="230" class="Symbol"
+      >(</a
+      ><a name="231" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="235"
+      > </a
+      ><a name="236" class="Symbol"
+      >(</a
+      ><a name="237" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="242"
+      > </a
+      ><a name="243" href="homotopy.WedgeExtension.html#94" class="Bound"
+      >i</a
+      ><a name="244" class="Symbol"
+      >)</a
+      ><a name="245"
+      > </a
+      ><a name="246" class="Symbol"
+      >(</a
+      ><a name="247" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="252"
+      > </a
+      ><a name="253" href="homotopy.WedgeExtension.html#96" class="Bound"
+      >j</a
+      ><a name="254" class="Symbol"
+      >))</a
+      ><a name="256"
+      > </a
+      ><a name="257" class="Keyword"
+      >where</a
+      ><a name="262"
+      >
+    </a
+      ><a name="267" class="Keyword"
+      >field</a
+      ><a name="272"
+      >
+      </a
+      ><a name="279" href="homotopy.WedgeExtension.html#279" class="Field"
+      >n</a
+      ><a name="280"
+      > </a
+      ><a name="281" href="homotopy.WedgeExtension.html#281" class="Field"
+      >m</a
+      ><a name="282"
+      > </a
+      ><a name="283" class="Symbol"
+      >:</a
+      ><a name="284"
+      > </a
+      ><a name="285" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="288"
+      >
+      </a
+      ><a name="295" href="homotopy.WedgeExtension.html#295" class="Field"
+      >cA</a
+      ><a name="297"
+      > </a
+      ><a name="298" class="Symbol"
+      >:</a
+      ><a name="299"
+      > </a
+      ><a name="300" href="lib.NConnected.html#343" class="Function"
+      >is-connected</a
+      ><a name="312"
+      > </a
+      ><a name="313" class="Symbol"
+      >(</a
+      ><a name="314" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="315"
+      > </a
+      ><a name="316" href="homotopy.WedgeExtension.html#279" class="Field"
+      >n</a
+      ><a name="317" class="Symbol"
+      >)</a
+      ><a name="318"
+      > </a
+      ><a name="319" href="homotopy.WedgeExtension.html#100" class="Bound"
+      >A</a
+      ><a name="320"
+      >
+      </a
+      ><a name="327" href="homotopy.WedgeExtension.html#327" class="Field"
+      >cB</a
+      ><a name="329"
+      > </a
+      ><a name="330" class="Symbol"
+      >:</a
+      ><a name="331"
+      > </a
+      ><a name="332" href="lib.NConnected.html#343" class="Function"
+      >is-connected</a
+      ><a name="344"
+      > </a
+      ><a name="345" class="Symbol"
+      >(</a
+      ><a name="346" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="347"
+      > </a
+      ><a name="348" href="homotopy.WedgeExtension.html#281" class="Field"
+      >m</a
+      ><a name="349" class="Symbol"
+      >)</a
+      ><a name="350"
+      > </a
+      ><a name="351" href="homotopy.WedgeExtension.html#122" class="Bound"
+      >B</a
+      ><a name="352"
+      >
+      </a
+      ><a name="359" href="homotopy.WedgeExtension.html#359" class="Field"
+      >P</a
+      ><a name="360"
+      > </a
+      ><a name="361" class="Symbol"
+      >:</a
+      ><a name="362"
+      > </a
+      ><a name="363" href="homotopy.WedgeExtension.html#100" class="Bound"
+      >A</a
+      ><a name="364"
+      > </a
+      ><a name="365" class="Symbol"
+      >&#8594;</a
+      ><a name="366"
+      > </a
+      ><a name="367" href="homotopy.WedgeExtension.html#122" class="Bound"
+      >B</a
+      ><a name="368"
+      > </a
+      ><a name="369" class="Symbol"
+      >&#8594;</a
+      ><a name="370"
+      > </a
+      ><a name="371" class="Symbol"
+      >(</a
+      ><a name="372" href="homotopy.WedgeExtension.html#279" class="Field"
+      >n</a
+      ><a name="373"
+      > </a
+      ><a name="374" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="377"
+      > </a
+      ><a name="378" href="homotopy.WedgeExtension.html#281" class="Field"
+      >m</a
+      ><a name="379" class="Symbol"
+      >)</a
+      ><a name="380"
+      > </a
+      ><a name="381" href="lib.NType2.html#4739" class="Function Operator"
+      >-Type</a
+      ><a name="386"
+      > </a
+      ><a name="387" class="Symbol"
+      >(</a
+      ><a name="388" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="392"
+      > </a
+      ><a name="393" href="homotopy.WedgeExtension.html#94" class="Bound"
+      >i</a
+      ><a name="394"
+      > </a
+      ><a name="395" href="homotopy.WedgeExtension.html#96" class="Bound"
+      >j</a
+      ><a name="396" class="Symbol"
+      >)</a
+      ><a name="397"
+      >
+      </a
+      ><a name="404" href="homotopy.WedgeExtension.html#404" class="Field"
+      >f</a
+      ><a name="405"
+      > </a
+      ><a name="406" class="Symbol"
+      >:</a
+      ><a name="407"
+      > </a
+      ><a name="408" class="Symbol"
+      >(</a
+      ><a name="409" href="homotopy.WedgeExtension.html#409" class="Bound"
+      >a</a
+      ><a name="410"
+      > </a
+      ><a name="411" class="Symbol"
+      >:</a
+      ><a name="412"
+      > </a
+      ><a name="413" href="homotopy.WedgeExtension.html#100" class="Bound"
+      >A</a
+      ><a name="414" class="Symbol"
+      >)</a
+      ><a name="415"
+      > </a
+      ><a name="416" class="Symbol"
+      >&#8594;</a
+      ><a name="417"
+      > </a
+      ><a name="418" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="421"
+      > </a
+      ><a name="422" class="Symbol"
+      >(</a
+      ><a name="423" href="homotopy.WedgeExtension.html#359" class="Field"
+      >P</a
+      ><a name="424"
+      > </a
+      ><a name="425" href="homotopy.WedgeExtension.html#409" class="Bound"
+      >a</a
+      ><a name="426"
+      > </a
+      ><a name="427" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="429" class="Symbol"
+      >)</a
+      ><a name="430"
+      >
+      </a
+      ><a name="437" href="homotopy.WedgeExtension.html#437" class="Field"
+      >g</a
+      ><a name="438"
+      > </a
+      ><a name="439" class="Symbol"
+      >:</a
+      ><a name="440"
+      > </a
+      ><a name="441" class="Symbol"
+      >(</a
+      ><a name="442" href="homotopy.WedgeExtension.html#442" class="Bound"
+      >b</a
+      ><a name="443"
+      > </a
+      ><a name="444" class="Symbol"
+      >:</a
+      ><a name="445"
+      > </a
+      ><a name="446" href="homotopy.WedgeExtension.html#122" class="Bound"
+      >B</a
+      ><a name="447" class="Symbol"
+      >)</a
+      ><a name="448"
+      > </a
+      ><a name="449" class="Symbol"
+      >&#8594;</a
+      ><a name="450"
+      > </a
+      ><a name="451" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="454"
+      > </a
+      ><a name="455" class="Symbol"
+      >(</a
+      ><a name="456" href="homotopy.WedgeExtension.html#359" class="Field"
+      >P</a
+      ><a name="457"
+      > </a
+      ><a name="458" href="homotopy.WedgeExtension.html#113" class="Bound"
+      >a&#8320;</a
+      ><a name="460"
+      > </a
+      ><a name="461" href="homotopy.WedgeExtension.html#442" class="Bound"
+      >b</a
+      ><a name="462" class="Symbol"
+      >)</a
+      ><a name="463"
+      >
+      </a
+      ><a name="470" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="471"
+      > </a
+      ><a name="472" class="Symbol"
+      >:</a
+      ><a name="473"
+      > </a
+      ><a name="474" href="homotopy.WedgeExtension.html#404" class="Field"
+      >f</a
+      ><a name="475"
+      > </a
+      ><a name="476" href="homotopy.WedgeExtension.html#113" class="Bound"
+      >a&#8320;</a
+      ><a name="478"
+      > </a
+      ><a name="479" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="481"
+      > </a
+      ><a name="482" href="homotopy.WedgeExtension.html#437" class="Field"
+      >g</a
+      ><a name="483"
+      > </a
+      ><a name="484" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="486"
+      >
+
+  </a
+      ><a name="490" class="Keyword"
+      >private</a
+      ><a name="497"
+      >
+    </a
+      ><a name="502" class="Keyword"
+      >module</a
+      ><a name="508"
+      > </a
+      ><a name="509" href="homotopy.WedgeExtension.html#509" class="Module"
+      >_</a
+      ><a name="510"
+      > </a
+      ><a name="511" class="Symbol"
+      >(</a
+      ><a name="512" href="homotopy.WedgeExtension.html#512" class="Bound"
+      >r</a
+      ><a name="513"
+      > </a
+      ><a name="514" class="Symbol"
+      >:</a
+      ><a name="515"
+      > </a
+      ><a name="516" href="homotopy.WedgeExtension.html#218" class="Record"
+      >args</a
+      ><a name="520" class="Symbol"
+      >)</a
+      ><a name="521"
+      > </a
+      ><a name="522" class="Keyword"
+      >where</a
+      ><a name="527"
+      >
+      </a
+      ><a name="534" class="Keyword"
+      >open</a
+      ><a name="538"
+      > </a
+      ><a name="539" href="homotopy.WedgeExtension.html#218" class="Module"
+      >args</a
+      ><a name="543"
+      > </a
+      ><a name="544" href="homotopy.WedgeExtension.html#512" class="Bound"
+      >r</a
+      ><a name="545"
+      >
+
+      </a
+      ><a name="553" href="homotopy.WedgeExtension.html#553" class="Function"
+      >Q</a
+      ><a name="554"
+      > </a
+      ><a name="555" class="Symbol"
+      >:</a
+      ><a name="556"
+      > </a
+      ><a name="557" href="homotopy.WedgeExtension.html#100" class="Bound"
+      >A</a
+      ><a name="558"
+      > </a
+      ><a name="559" class="Symbol"
+      >&#8594;</a
+      ><a name="560"
+      > </a
+      ><a name="561" href="homotopy.WedgeExtension.html#279" class="Field"
+      >n</a
+      ><a name="562"
+      > </a
+      ><a name="563" href="lib.NType2.html#4739" class="Function Operator"
+      >-Type</a
+      ><a name="568"
+      > </a
+      ><a name="569" class="Symbol"
+      >(</a
+      ><a name="570" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="574"
+      > </a
+      ><a name="575" href="homotopy.WedgeExtension.html#94" class="Bound"
+      >i</a
+      ><a name="576"
+      > </a
+      ><a name="577" href="homotopy.WedgeExtension.html#96" class="Bound"
+      >j</a
+      ><a name="578" class="Symbol"
+      >)</a
+      ><a name="579"
+      >
+      </a
+      ><a name="586" href="homotopy.WedgeExtension.html#553" class="Function"
+      >Q</a
+      ><a name="587"
+      > </a
+      ><a name="588" href="homotopy.WedgeExtension.html#588" class="Bound"
+      >a</a
+      ><a name="589"
+      > </a
+      ><a name="590" class="Symbol"
+      >=</a
+      ><a name="591"
+      > </a
+      ><a name="592" class="Symbol"
+      >((</a
+      ><a name="594" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="595"
+      > </a
+      ><a name="596" class="Symbol"
+      >(&#8704;</a
+      ><a name="598"
+      > </a
+      ><a name="599" href="homotopy.WedgeExtension.html#599" class="Bound"
+      >b</a
+      ><a name="600"
+      > </a
+      ><a name="601" class="Symbol"
+      >&#8594;</a
+      ><a name="602"
+      > </a
+      ><a name="603" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="606"
+      > </a
+      ><a name="607" class="Symbol"
+      >(</a
+      ><a name="608" href="homotopy.WedgeExtension.html#359" class="Field"
+      >P</a
+      ><a name="609"
+      > </a
+      ><a name="610" href="homotopy.WedgeExtension.html#588" class="Bound"
+      >a</a
+      ><a name="611"
+      > </a
+      ><a name="612" href="homotopy.WedgeExtension.html#599" class="Bound"
+      >b</a
+      ><a name="613" class="Symbol"
+      >))</a
+      ><a name="615"
+      > </a
+      ><a name="616" class="Symbol"
+      >(&#955;</a
+      ><a name="618"
+      > </a
+      ><a name="619" href="homotopy.WedgeExtension.html#619" class="Bound"
+      >k</a
+      ><a name="620"
+      > </a
+      ><a name="621" class="Symbol"
+      >&#8594;</a
+      ><a name="622"
+      > </a
+      ><a name="623" class="Symbol"
+      >(</a
+      ><a name="624" href="homotopy.WedgeExtension.html#619" class="Bound"
+      >k</a
+      ><a name="625"
+      > </a
+      ><a name="626" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="627"
+      > </a
+      ><a name="628" href="lib.Base.html#8054" class="Function"
+      >cst</a
+      ><a name="631"
+      > </a
+      ><a name="632" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="634" class="Symbol"
+      >)</a
+      ><a name="635"
+      > </a
+      ><a name="636" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="638"
+      > </a
+      ><a name="639" href="lib.Base.html#8054" class="Function"
+      >cst</a
+      ><a name="642"
+      > </a
+      ><a name="643" class="Symbol"
+      >(</a
+      ><a name="644" href="homotopy.WedgeExtension.html#404" class="Field"
+      >f</a
+      ><a name="645"
+      > </a
+      ><a name="646" href="homotopy.WedgeExtension.html#588" class="Bound"
+      >a</a
+      ><a name="647" class="Symbol"
+      >))</a
+      ><a name="649"
+      > </a
+      ><a name="650" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="651"
+      >
+                </a
+      ><a name="668" href="lib.NConnected.html#2999" class="Function"
+      >conn-elim-general</a
+      ><a name="685"
+      > </a
+      ><a name="686" class="Symbol"
+      >(</a
+      ><a name="687" href="lib.NConnected.html#5752" class="Function"
+      >pointed-conn-out</a
+      ><a name="703"
+      > </a
+      ><a name="704" href="homotopy.WedgeExtension.html#122" class="Bound"
+      >B</a
+      ><a name="705"
+      > </a
+      ><a name="706" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="708"
+      > </a
+      ><a name="709" href="homotopy.WedgeExtension.html#327" class="Field"
+      >cB</a
+      ><a name="711" class="Symbol"
+      >)</a
+      ><a name="712"
+      >
+                                  </a
+      ><a name="747" class="Symbol"
+      >(</a
+      ><a name="748" href="homotopy.WedgeExtension.html#359" class="Field"
+      >P</a
+      ><a name="749"
+      > </a
+      ><a name="750" href="homotopy.WedgeExtension.html#588" class="Bound"
+      >a</a
+      ><a name="751" class="Symbol"
+      >)</a
+      ><a name="752"
+      > </a
+      ><a name="753" class="Symbol"
+      >(</a
+      ><a name="754" href="lib.Base.html#8054" class="Function"
+      >cst</a
+      ><a name="757"
+      > </a
+      ><a name="758" class="Symbol"
+      >(</a
+      ><a name="759" href="homotopy.WedgeExtension.html#404" class="Field"
+      >f</a
+      ><a name="760"
+      > </a
+      ><a name="761" href="homotopy.WedgeExtension.html#588" class="Bound"
+      >a</a
+      ><a name="762" class="Symbol"
+      >))))</a
+      ><a name="766"
+      >
+
+      </a
+      ><a name="774" href="homotopy.WedgeExtension.html#774" class="Function"
+      >l</a
+      ><a name="775"
+      > </a
+      ><a name="776" class="Symbol"
+      >:</a
+      ><a name="777"
+      > </a
+      ><a name="778" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="779"
+      > </a
+      ><a name="780" href="homotopy.WedgeExtension.html#100" class="Bound"
+      >A</a
+      ><a name="781"
+      > </a
+      ><a name="782" class="Symbol"
+      >(</a
+      ><a name="783" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="786"
+      > </a
+      ><a name="787" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="788"
+      > </a
+      ><a name="789" href="homotopy.WedgeExtension.html#553" class="Function"
+      >Q</a
+      ><a name="790" class="Symbol"
+      >)</a
+      ><a name="791"
+      >
+      </a
+      ><a name="798" href="homotopy.WedgeExtension.html#774" class="Function"
+      >l</a
+      ><a name="799"
+      > </a
+      ><a name="800" class="Symbol"
+      >=</a
+      ><a name="801"
+      > </a
+      ><a name="802" href="lib.NConnected.html#2393" class="Function"
+      >conn-elim</a
+      ><a name="811"
+      > </a
+      ><a name="812" class="Symbol"
+      >(</a
+      ><a name="813" href="lib.NConnected.html#5752" class="Function"
+      >pointed-conn-out</a
+      ><a name="829"
+      > </a
+      ><a name="830" href="homotopy.WedgeExtension.html#100" class="Bound"
+      >A</a
+      ><a name="831"
+      > </a
+      ><a name="832" href="homotopy.WedgeExtension.html#113" class="Bound"
+      >a&#8320;</a
+      ><a name="834"
+      > </a
+      ><a name="835" href="homotopy.WedgeExtension.html#295" class="Field"
+      >cA</a
+      ><a name="837" class="Symbol"
+      >)</a
+      ><a name="838"
+      >
+                    </a
+      ><a name="859" href="homotopy.WedgeExtension.html#553" class="Function"
+      >Q</a
+      ><a name="860"
+      > </a
+      ><a name="861" class="Symbol"
+      >(&#955;</a
+      ><a name="863"
+      > </a
+      ><a name="864" class="Symbol"
+      >(</a
+      ><a name="865" href="homotopy.WedgeExtension.html#865" class="Bound"
+      >_</a
+      ><a name="866"
+      > </a
+      ><a name="867" class="Symbol"
+      >:</a
+      ><a name="868"
+      > </a
+      ><a name="869" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="873" class="Symbol"
+      >)</a
+      ><a name="874"
+      > </a
+      ><a name="875" class="Symbol"
+      >&#8594;</a
+      ><a name="876"
+      > </a
+      ><a name="877" class="Symbol"
+      >(</a
+      ><a name="878" href="homotopy.WedgeExtension.html#437" class="Field"
+      >g</a
+      ><a name="879"
+      > </a
+      ><a name="880" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="881"
+      > </a
+      ><a name="882" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="884"
+      > </a
+      ><a name="885" href="lib.Base.html#8054" class="Function"
+      >cst</a
+      ><a name="888"
+      > </a
+      ><a name="889" class="Symbol"
+      >(</a
+      ><a name="890" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="891"
+      > </a
+      ><a name="892" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="893" class="Symbol"
+      >)))</a
+      ><a name="896"
+      >
+
+
+  </a
+      ><a name="901" class="Keyword"
+      >module</a
+      ><a name="907"
+      > </a
+      ><a name="908" href="homotopy.WedgeExtension.html#908" class="Module"
+      >_</a
+      ><a name="909"
+      > </a
+      ><a name="910" class="Symbol"
+      >(</a
+      ><a name="911" href="homotopy.WedgeExtension.html#911" class="Bound"
+      >r</a
+      ><a name="912"
+      > </a
+      ><a name="913" class="Symbol"
+      >:</a
+      ><a name="914"
+      > </a
+      ><a name="915" href="homotopy.WedgeExtension.html#218" class="Record"
+      >args</a
+      ><a name="919" class="Symbol"
+      >)</a
+      ><a name="920"
+      > </a
+      ><a name="921" class="Keyword"
+      >where</a
+      ><a name="926"
+      >
+    </a
+      ><a name="931" class="Keyword"
+      >open</a
+      ><a name="935"
+      > </a
+      ><a name="936" href="homotopy.WedgeExtension.html#218" class="Module"
+      >args</a
+      ><a name="940"
+      > </a
+      ><a name="941" href="homotopy.WedgeExtension.html#911" class="Bound"
+      >r</a
+      ><a name="942"
+      >
+
+    </a
+      ><a name="948" href="homotopy.WedgeExtension.html#948" class="Function"
+      >ext</a
+      ><a name="951"
+      > </a
+      ><a name="952" class="Symbol"
+      >:</a
+      ><a name="953"
+      > </a
+      ><a name="954" class="Symbol"
+      >&#8704;</a
+      ><a name="955"
+      > </a
+      ><a name="956" href="homotopy.WedgeExtension.html#956" class="Bound"
+      >a</a
+      ><a name="957"
+      > </a
+      ><a name="958" class="Symbol"
+      >&#8594;</a
+      ><a name="959"
+      > </a
+      ><a name="960" class="Symbol"
+      >&#8704;</a
+      ><a name="961"
+      > </a
+      ><a name="962" href="homotopy.WedgeExtension.html#962" class="Bound"
+      >b</a
+      ><a name="963"
+      > </a
+      ><a name="964" class="Symbol"
+      >&#8594;</a
+      ><a name="965"
+      > </a
+      ><a name="966" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="969"
+      > </a
+      ><a name="970" class="Symbol"
+      >(</a
+      ><a name="971" href="homotopy.WedgeExtension.html#359" class="Field"
+      >P</a
+      ><a name="972"
+      > </a
+      ><a name="973" href="homotopy.WedgeExtension.html#956" class="Bound"
+      >a</a
+      ><a name="974"
+      > </a
+      ><a name="975" href="homotopy.WedgeExtension.html#962" class="Bound"
+      >b</a
+      ><a name="976" class="Symbol"
+      >)</a
+      ><a name="977"
+      >
+    </a
+      ><a name="982" href="homotopy.WedgeExtension.html#948" class="Function"
+      >ext</a
+      ><a name="985"
+      > </a
+      ><a name="986" href="homotopy.WedgeExtension.html#986" class="Bound"
+      >a</a
+      ><a name="987"
+      > </a
+      ><a name="988" class="Symbol"
+      >=</a
+      ><a name="989"
+      > </a
+      ><a name="990" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="993"
+      > </a
+      ><a name="994" class="Symbol"
+      >(</a
+      ><a name="995" href="homotopy.WedgeExtension.html#774" class="Function"
+      >l</a
+      ><a name="996"
+      > </a
+      ><a name="997" href="homotopy.WedgeExtension.html#911" class="Bound"
+      >r</a
+      ><a name="998"
+      > </a
+      ><a name="999" href="homotopy.WedgeExtension.html#986" class="Bound"
+      >a</a
+      ><a name="1000" class="Symbol"
+      >)</a
+      ><a name="1001"
+      >
+
+  </a
+      ><a name="1005" class="Keyword"
+      >module</a
+      ><a name="1011"
+      > </a
+      ><a name="1012" href="homotopy.WedgeExtension.html#1012" class="Module"
+      >_</a
+      ><a name="1013"
+      > </a
+      ><a name="1014" class="Symbol"
+      >{</a
+      ><a name="1015" href="homotopy.WedgeExtension.html#1015" class="Bound"
+      >r</a
+      ><a name="1016"
+      > </a
+      ><a name="1017" class="Symbol"
+      >:</a
+      ><a name="1018"
+      > </a
+      ><a name="1019" href="homotopy.WedgeExtension.html#218" class="Record"
+      >args</a
+      ><a name="1023" class="Symbol"
+      >}</a
+      ><a name="1024"
+      > </a
+      ><a name="1025" class="Keyword"
+      >where</a
+      ><a name="1030"
+      >
+    </a
+      ><a name="1035" class="Keyword"
+      >open</a
+      ><a name="1039"
+      > </a
+      ><a name="1040" href="homotopy.WedgeExtension.html#218" class="Module"
+      >args</a
+      ><a name="1044"
+      > </a
+      ><a name="1045" href="homotopy.WedgeExtension.html#1015" class="Bound"
+      >r</a
+      ><a name="1046"
+      >
+
+    </a
+      ><a name="1052" class="Keyword"
+      >abstract</a
+      ><a name="1060"
+      >
+      </a
+      ><a name="1067" href="homotopy.WedgeExtension.html#1067" class="Function"
+      >&#946;-l</a
+      ><a name="1070"
+      > </a
+      ><a name="1071" class="Symbol"
+      >:</a
+      ><a name="1072"
+      > </a
+      ><a name="1073" class="Symbol"
+      >&#8704;</a
+      ><a name="1074"
+      > </a
+      ><a name="1075" href="homotopy.WedgeExtension.html#1075" class="Bound"
+      >a</a
+      ><a name="1076"
+      > </a
+      ><a name="1077" class="Symbol"
+      >&#8594;</a
+      ><a name="1078"
+      > </a
+      ><a name="1079" href="homotopy.WedgeExtension.html#948" class="Function"
+      >ext</a
+      ><a name="1082"
+      > </a
+      ><a name="1083" href="homotopy.WedgeExtension.html#1015" class="Bound"
+      >r</a
+      ><a name="1084"
+      > </a
+      ><a name="1085" href="homotopy.WedgeExtension.html#1075" class="Bound"
+      >a</a
+      ><a name="1086"
+      > </a
+      ><a name="1087" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1089"
+      > </a
+      ><a name="1090" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1092"
+      > </a
+      ><a name="1093" href="homotopy.WedgeExtension.html#404" class="Field"
+      >f</a
+      ><a name="1094"
+      > </a
+      ><a name="1095" href="homotopy.WedgeExtension.html#1075" class="Bound"
+      >a</a
+      ><a name="1096"
+      >
+      </a
+      ><a name="1103" href="homotopy.WedgeExtension.html#1067" class="Function"
+      >&#946;-l</a
+      ><a name="1106"
+      > </a
+      ><a name="1107" href="homotopy.WedgeExtension.html#1107" class="Bound"
+      >a</a
+      ><a name="1108"
+      > </a
+      ><a name="1109" class="Symbol"
+      >=</a
+      ><a name="1110"
+      > </a
+      ><a name="1111" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1113"
+      > </a
+      ><a name="1114" class="Symbol"
+      >(&#955;</a
+      ><a name="1116"
+      > </a
+      ><a name="1117" href="homotopy.WedgeExtension.html#1117" class="Bound"
+      >t</a
+      ><a name="1118"
+      > </a
+      ><a name="1119" class="Symbol"
+      >&#8594;</a
+      ><a name="1120"
+      > </a
+      ><a name="1121" href="homotopy.WedgeExtension.html#1117" class="Bound"
+      >t</a
+      ><a name="1122"
+      > </a
+      ><a name="1123" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="1127" class="Symbol"
+      >)</a
+      ><a name="1128"
+      > </a
+      ><a name="1129" class="Symbol"
+      >(</a
+      ><a name="1130" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1133"
+      > </a
+      ><a name="1134" class="Symbol"
+      >(</a
+      ><a name="1135" href="homotopy.WedgeExtension.html#774" class="Function"
+      >l</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" href="homotopy.WedgeExtension.html#1015" class="Bound"
+      >r</a
+      ><a name="1138"
+      > </a
+      ><a name="1139" href="homotopy.WedgeExtension.html#1107" class="Bound"
+      >a</a
+      ><a name="1140" class="Symbol"
+      >))</a
+      ><a name="1142"
+      >
+
+    </a
+      ><a name="1148" class="Keyword"
+      >abstract</a
+      ><a name="1156"
+      >
+      </a
+      ><a name="1163" href="homotopy.WedgeExtension.html#1163" class="Function"
+      >&#946;-r-aux</a
+      ><a name="1170"
+      > </a
+      ><a name="1171" class="Symbol"
+      >:</a
+      ><a name="1172"
+      > </a
+      ><a name="1173" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1176"
+      > </a
+      ><a name="1177" class="Symbol"
+      >(</a
+      ><a name="1178" href="homotopy.WedgeExtension.html#774" class="Function"
+      >l</a
+      ><a name="1179"
+      > </a
+      ><a name="1180" href="homotopy.WedgeExtension.html#1015" class="Bound"
+      >r</a
+      ><a name="1181"
+      > </a
+      ><a name="1182" href="homotopy.WedgeExtension.html#113" class="Bound"
+      >a&#8320;</a
+      ><a name="1184" class="Symbol"
+      >)</a
+      ><a name="1185"
+      > </a
+      ><a name="1186" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" href="homotopy.WedgeExtension.html#437" class="Field"
+      >g</a
+      ><a name="1190"
+      >
+      </a
+      ><a name="1197" href="homotopy.WedgeExtension.html#1163" class="Function"
+      >&#946;-r-aux</a
+      ><a name="1204"
+      > </a
+      ><a name="1205" class="Symbol"
+      >=</a
+      ><a name="1206"
+      > </a
+      ><a name="1207" href="lib.types.Sigma.html#1936" class="Function"
+      >fst=</a
+      ><a name="1211"
+      > </a
+      ><a name="1212" class="Symbol"
+      >(</a
+      ><a name="1213" href="lib.NConnected.html#2607" class="Function"
+      >conn-elim-&#946;</a
+      ><a name="1224"
+      >
+        </a
+      ><a name="1233" class="Symbol"
+      >(</a
+      ><a name="1234" href="lib.NConnected.html#5752" class="Function"
+      >pointed-conn-out</a
+      ><a name="1250"
+      > </a
+      ><a name="1251" href="homotopy.WedgeExtension.html#100" class="Bound"
+      >A</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" href="homotopy.WedgeExtension.html#113" class="Bound"
+      >a&#8320;</a
+      ><a name="1255"
+      > </a
+      ><a name="1256" href="homotopy.WedgeExtension.html#295" class="Field"
+      >cA</a
+      ><a name="1258" class="Symbol"
+      >)</a
+      ><a name="1259"
+      >
+        </a
+      ><a name="1268" class="Symbol"
+      >(</a
+      ><a name="1269" href="homotopy.WedgeExtension.html#553" class="Function"
+      >Q</a
+      ><a name="1270"
+      > </a
+      ><a name="1271" href="homotopy.WedgeExtension.html#1015" class="Bound"
+      >r</a
+      ><a name="1272" class="Symbol"
+      >)</a
+      ><a name="1273"
+      > </a
+      ><a name="1274" class="Symbol"
+      >(&#955;</a
+      ><a name="1276"
+      > </a
+      ><a name="1277" class="Symbol"
+      >(</a
+      ><a name="1278" href="homotopy.WedgeExtension.html#1278" class="Bound"
+      >_</a
+      ><a name="1279"
+      > </a
+      ><a name="1280" class="Symbol"
+      >:</a
+      ><a name="1281"
+      > </a
+      ><a name="1282" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="1286" class="Symbol"
+      >)</a
+      ><a name="1287"
+      > </a
+      ><a name="1288" class="Symbol"
+      >&#8594;</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" class="Symbol"
+      >(</a
+      ><a name="1291" href="homotopy.WedgeExtension.html#437" class="Field"
+      >g</a
+      ><a name="1292"
+      > </a
+      ><a name="1293" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1294"
+      > </a
+      ><a name="1295" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1297"
+      > </a
+      ><a name="1298" href="lib.Base.html#8054" class="Function"
+      >cst</a
+      ><a name="1301"
+      > </a
+      ><a name="1302" class="Symbol"
+      >(</a
+      ><a name="1303" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1304"
+      > </a
+      ><a name="1305" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="1306" class="Symbol"
+      >)))</a
+      ><a name="1309"
+      > </a
+      ><a name="1310" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="1314" class="Symbol"
+      >)</a
+      ><a name="1315"
+      >
+
+    </a
+      ><a name="1321" class="Keyword"
+      >abstract</a
+      ><a name="1329"
+      >
+      </a
+      ><a name="1336" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1339"
+      > </a
+      ><a name="1340" class="Symbol"
+      >:</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" class="Symbol"
+      >&#8704;</a
+      ><a name="1343"
+      > </a
+      ><a name="1344" href="homotopy.WedgeExtension.html#1344" class="Bound"
+      >b</a
+      ><a name="1345"
+      > </a
+      ><a name="1346" class="Symbol"
+      >&#8594;</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" href="homotopy.WedgeExtension.html#948" class="Function"
+      >ext</a
+      ><a name="1351"
+      > </a
+      ><a name="1352" href="homotopy.WedgeExtension.html#1015" class="Bound"
+      >r</a
+      ><a name="1353"
+      > </a
+      ><a name="1354" href="homotopy.WedgeExtension.html#113" class="Bound"
+      >a&#8320;</a
+      ><a name="1356"
+      > </a
+      ><a name="1357" href="homotopy.WedgeExtension.html#1344" class="Bound"
+      >b</a
+      ><a name="1358"
+      > </a
+      ><a name="1359" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1361"
+      > </a
+      ><a name="1362" href="homotopy.WedgeExtension.html#437" class="Field"
+      >g</a
+      ><a name="1363"
+      > </a
+      ><a name="1364" href="homotopy.WedgeExtension.html#1344" class="Bound"
+      >b</a
+      ><a name="1365"
+      >
+      </a
+      ><a name="1372" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1375"
+      > </a
+      ><a name="1376" class="Symbol"
+      >=</a
+      ><a name="1377"
+      > </a
+      ><a name="1378" href="lib.Funext.html#3881" class="Function"
+      >app=</a
+      ><a name="1382"
+      > </a
+      ><a name="1383" href="homotopy.WedgeExtension.html#1163" class="Function"
+      >&#946;-r-aux</a
+      ><a name="1390"
+      >
+
+    </a
+      ><a name="1396" class="Keyword"
+      >abstract</a
+      ><a name="1404"
+      >
+      </a
+      ><a name="1411" href="homotopy.WedgeExtension.html#1411" class="Function"
+      >coh</a
+      ><a name="1414"
+      > </a
+      ><a name="1415" class="Symbol"
+      >:</a
+      ><a name="1416"
+      > </a
+      ><a name="1417" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1418"
+      > </a
+      ><a name="1419" class="Symbol"
+      >(</a
+      ><a name="1420" href="homotopy.WedgeExtension.html#1067" class="Function"
+      >&#946;-l</a
+      ><a name="1423"
+      > </a
+      ><a name="1424" href="homotopy.WedgeExtension.html#113" class="Bound"
+      >a&#8320;</a
+      ><a name="1426" class="Symbol"
+      >)</a
+      ><a name="1427"
+      > </a
+      ><a name="1428" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1429"
+      > </a
+      ><a name="1430" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1433"
+      > </a
+      ><a name="1434" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1439"
+      > </a
+      ><a name="1440" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="1441"
+      >
+      </a
+      ><a name="1448" href="homotopy.WedgeExtension.html#1411" class="Function"
+      >coh</a
+      ><a name="1451"
+      > </a
+      ><a name="1452" class="Symbol"
+      >=</a
+      ><a name="1453"
+      >
+        </a
+      ><a name="1462" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1463"
+      > </a
+      ><a name="1464" class="Symbol"
+      >(</a
+      ><a name="1465" href="homotopy.WedgeExtension.html#1067" class="Function"
+      >&#946;-l</a
+      ><a name="1468"
+      > </a
+      ><a name="1469" href="homotopy.WedgeExtension.html#113" class="Bound"
+      >a&#8320;</a
+      ><a name="1471" class="Symbol"
+      >)</a
+      ><a name="1472"
+      > </a
+      ><a name="1473" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1474"
+      > </a
+      ><a name="1475" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1478"
+      > </a
+      ><a name="1479" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1481"
+      >
+          </a
+      ><a name="1492" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1496"
+      > </a
+      ><a name="1497" href="homotopy.WedgeExtension.html#2243" class="Function"
+      >lemma&#8322;</a
+      ><a name="1503"
+      > </a
+      ><a name="1504" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1511"
+      > </a
+      ><a name="1512" class="Symbol"
+      >(&#955;</a
+      ><a name="1514"
+      > </a
+      ><a name="1515" href="homotopy.WedgeExtension.html#1515" class="Bound"
+      >w</a
+      ><a name="1516"
+      > </a
+      ><a name="1517" class="Symbol"
+      >&#8594;</a
+      ><a name="1518"
+      > </a
+      ><a name="1519" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1520"
+      > </a
+      ><a name="1521" href="homotopy.WedgeExtension.html#1515" class="Bound"
+      >w</a
+      ><a name="1522"
+      > </a
+      ><a name="1523" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1524"
+      > </a
+      ><a name="1525" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1528"
+      > </a
+      ><a name="1529" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1531" class="Symbol"
+      >)</a
+      ><a name="1532"
+      > </a
+      ><a name="1533" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1534"
+      >
+        </a
+      ><a name="1543" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1544"
+      > </a
+      ><a name="1545" class="Symbol"
+      >(</a
+      ><a name="1546" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1549"
+      > </a
+      ><a name="1550" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1552"
+      > </a
+      ><a name="1553" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1554"
+      > </a
+      ><a name="1555" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1556"
+      > </a
+      ><a name="1557" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="1558" class="Symbol"
+      >)</a
+      ><a name="1559"
+      > </a
+      ><a name="1560" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1561"
+      > </a
+      ><a name="1562" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1565"
+      > </a
+      ><a name="1566" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1568"
+      >
+          </a
+      ><a name="1579" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1581"
+      > </a
+      ><a name="1582" href="lib.PathGroupoid.html#1706" class="Function"
+      >!-&#8729;</a
+      ><a name="1585"
+      > </a
+      ><a name="1586" class="Symbol"
+      >(</a
+      ><a name="1587" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1590"
+      > </a
+      ><a name="1591" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1593" class="Symbol"
+      >)</a
+      ><a name="1594"
+      > </a
+      ><a name="1595" class="Symbol"
+      >(</a
+      ><a name="1596" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1597"
+      > </a
+      ><a name="1598" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="1599" class="Symbol"
+      >)</a
+      ><a name="1600"
+      > </a
+      ><a name="1601" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1608"
+      > </a
+      ><a name="1609" class="Symbol"
+      >(&#955;</a
+      ><a name="1611"
+      > </a
+      ><a name="1612" href="homotopy.WedgeExtension.html#1612" class="Bound"
+      >w</a
+      ><a name="1613"
+      > </a
+      ><a name="1614" class="Symbol"
+      >&#8594;</a
+      ><a name="1615"
+      > </a
+      ><a name="1616" href="homotopy.WedgeExtension.html#1612" class="Bound"
+      >w</a
+      ><a name="1617"
+      > </a
+      ><a name="1618" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1619"
+      > </a
+      ><a name="1620" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1623"
+      > </a
+      ><a name="1624" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1626" class="Symbol"
+      >)</a
+      ><a name="1627"
+      > </a
+      ><a name="1628" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1629"
+      >
+        </a
+      ><a name="1638" class="Symbol"
+      >(</a
+      ><a name="1639" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1640"
+      > </a
+      ><a name="1641" class="Symbol"
+      >(</a
+      ><a name="1642" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1643"
+      > </a
+      ><a name="1644" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="1645" class="Symbol"
+      >)</a
+      ><a name="1646"
+      > </a
+      ><a name="1647" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1648"
+      > </a
+      ><a name="1649" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1650"
+      > </a
+      ><a name="1651" class="Symbol"
+      >(</a
+      ><a name="1652" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1655"
+      > </a
+      ><a name="1656" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1658" class="Symbol"
+      >))</a
+      ><a name="1660"
+      > </a
+      ><a name="1661" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1662"
+      > </a
+      ><a name="1663" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1666"
+      > </a
+      ><a name="1667" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1669"
+      >
+          </a
+      ><a name="1680" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1682"
+      > </a
+      ><a name="1683" href="lib.PathGroupoid.html#2082" class="Function"
+      >!-!</a
+      ><a name="1686"
+      > </a
+      ><a name="1687" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="1688"
+      > </a
+      ><a name="1689" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1696"
+      > </a
+      ><a name="1697" class="Symbol"
+      >(&#955;</a
+      ><a name="1699"
+      > </a
+      ><a name="1700" href="homotopy.WedgeExtension.html#1700" class="Bound"
+      >w</a
+      ><a name="1701"
+      > </a
+      ><a name="1702" class="Symbol"
+      >&#8594;</a
+      ><a name="1703"
+      > </a
+      ><a name="1704" class="Symbol"
+      >(</a
+      ><a name="1705" href="homotopy.WedgeExtension.html#1700" class="Bound"
+      >w</a
+      ><a name="1706"
+      > </a
+      ><a name="1707" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1708"
+      > </a
+      ><a name="1709" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1710"
+      > </a
+      ><a name="1711" class="Symbol"
+      >(</a
+      ><a name="1712" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1715"
+      > </a
+      ><a name="1716" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1718" class="Symbol"
+      >))</a
+      ><a name="1720"
+      > </a
+      ><a name="1721" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1722"
+      > </a
+      ><a name="1723" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1726"
+      > </a
+      ><a name="1727" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1729" class="Symbol"
+      >)</a
+      ><a name="1730"
+      >  </a
+      ><a name="1732" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1733"
+      >
+        </a
+      ><a name="1742" class="Symbol"
+      >(</a
+      ><a name="1743" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="1744"
+      > </a
+      ><a name="1745" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1746"
+      > </a
+      ><a name="1747" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1748"
+      > </a
+      ><a name="1749" class="Symbol"
+      >(</a
+      ><a name="1750" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1753"
+      > </a
+      ><a name="1754" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1756" class="Symbol"
+      >))</a
+      ><a name="1758"
+      > </a
+      ><a name="1759" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1760"
+      > </a
+      ><a name="1761" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1767"
+      >
+          </a
+      ><a name="1778" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1780"
+      > </a
+      ><a name="1781" href="lib.PathGroupoid.html#739" class="Function"
+      >&#8729;-assoc</a
+      ><a name="1788"
+      > </a
+      ><a name="1789" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="1790"
+      > </a
+      ><a name="1791" class="Symbol"
+      >(</a
+      ><a name="1792" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1793"
+      > </a
+      ><a name="1794" class="Symbol"
+      >(</a
+      ><a name="1795" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1798"
+      > </a
+      ><a name="1799" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1801" class="Symbol"
+      >))</a
+      ><a name="1803"
+      > </a
+      ><a name="1804" class="Symbol"
+      >(</a
+      ><a name="1805" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1808"
+      > </a
+      ><a name="1809" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1811" class="Symbol"
+      >)</a
+      ><a name="1812"
+      > </a
+      ><a name="1813" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1814"
+      >
+        </a
+      ><a name="1823" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="1824"
+      > </a
+      ><a name="1825" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1826"
+      > </a
+      ><a name="1827" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1828"
+      > </a
+      ><a name="1829" class="Symbol"
+      >(</a
+      ><a name="1830" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1833"
+      > </a
+      ><a name="1834" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1836" class="Symbol"
+      >)</a
+      ><a name="1837"
+      > </a
+      ><a name="1838" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1839"
+      > </a
+      ><a name="1840" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1843"
+      > </a
+      ><a name="1844" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1846"
+      >
+          </a
+      ><a name="1857" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1859"
+      > </a
+      ><a name="1860" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1862"
+      > </a
+      ><a name="1863" class="Symbol"
+      >(&#955;</a
+      ><a name="1865"
+      > </a
+      ><a name="1866" href="homotopy.WedgeExtension.html#1866" class="Bound"
+      >w</a
+      ><a name="1867"
+      > </a
+      ><a name="1868" class="Symbol"
+      >&#8594;</a
+      ><a name="1869"
+      > </a
+      ><a name="1870" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="1871"
+      > </a
+      ><a name="1872" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1873"
+      > </a
+      ><a name="1874" href="homotopy.WedgeExtension.html#1866" class="Bound"
+      >w</a
+      ><a name="1875" class="Symbol"
+      >)</a
+      ><a name="1876"
+      > </a
+      ><a name="1877" class="Symbol"
+      >(</a
+      ><a name="1878" href="lib.PathGroupoid.html#1268" class="Function"
+      >!-inv-l</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" class="Symbol"
+      >(</a
+      ><a name="1887" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="1890"
+      > </a
+      ><a name="1891" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="1893" class="Symbol"
+      >))</a
+      ><a name="1895"
+      > </a
+      ><a name="1896" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1897"
+      > </a
+      ><a name="1898" href="lib.PathGroupoid.html#1041" class="Function"
+      >&#8729;-unit-r</a
+      ><a name="1906"
+      > </a
+      ><a name="1907" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="1908"
+      > </a
+      ><a name="1909" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1910"
+      >
+        </a
+      ><a name="1919" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="1920"
+      > </a
+      ><a name="1921" href="HoTT.html#767" class="Function Operator"
+      >&#8718;</a
+      ><a name="1922"
+      >
+        </a
+      ><a name="1931" class="Keyword"
+      >where</a
+      ><a name="1936"
+      >
+        </a
+      ><a name="1945" href="homotopy.WedgeExtension.html#1945" class="Function"
+      >lemma&#8321;</a
+      ><a name="1951"
+      > </a
+      ><a name="1952" class="Symbol"
+      >:</a
+      ><a name="1953"
+      > </a
+      ><a name="1954" href="homotopy.WedgeExtension.html#1067" class="Function"
+      >&#946;-l</a
+      ><a name="1957"
+      > </a
+      ><a name="1958" href="homotopy.WedgeExtension.html#113" class="Bound"
+      >a&#8320;</a
+      ><a name="1960"
+      > </a
+      ><a name="1961" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="1963"
+      > </a
+      ><a name="1964" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1966"
+      > </a
+      ><a name="1967" class="Symbol"
+      >(&#955;</a
+      ><a name="1969"
+      > </a
+      ><a name="1970" href="homotopy.WedgeExtension.html#1970" class="Bound"
+      >s</a
+      ><a name="1971"
+      > </a
+      ><a name="1972" class="Symbol"
+      >&#8594;</a
+      ><a name="1973"
+      > </a
+      ><a name="1974" href="homotopy.WedgeExtension.html#1970" class="Bound"
+      >s</a
+      ><a name="1975"
+      > </a
+      ><a name="1976" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="1980" class="Symbol"
+      >)</a
+      ><a name="1981"
+      > </a
+      ><a name="1982" class="Symbol"
+      >(</a
+      ><a name="1983" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1985"
+      > </a
+      ><a name="1986" href="lib.Base.html#8054" class="Function"
+      >cst</a
+      ><a name="1989"
+      > </a
+      ><a name="1990" class="Symbol"
+      >(</a
+      ><a name="1991" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1992"
+      > </a
+      ><a name="1993" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="1994" class="Symbol"
+      >))</a
+      ><a name="1996"
+      >
+                 </a
+      ><a name="2014" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="2015"
+      > </a
+      ><a name="2016" class="Symbol"
+      >(&#955;</a
+      ><a name="2018"
+      > </a
+      ><a name="2019" href="homotopy.WedgeExtension.html#2019" class="Bound"
+      >k</a
+      ><a name="2020"
+      > </a
+      ><a name="2021" class="Symbol"
+      >&#8594;</a
+      ><a name="2022"
+      > </a
+      ><a name="2023" href="homotopy.WedgeExtension.html#2019" class="Bound"
+      >k</a
+      ><a name="2024"
+      > </a
+      ><a name="2025" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="2027"
+      > </a
+      ><a name="2028" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2030"
+      > </a
+      ><a name="2031" href="homotopy.WedgeExtension.html#404" class="Field"
+      >f</a
+      ><a name="2032"
+      > </a
+      ><a name="2033" href="homotopy.WedgeExtension.html#113" class="Bound"
+      >a&#8320;</a
+      ><a name="2035" class="Symbol"
+      >)</a
+      ><a name="2036"
+      > </a
+      ><a name="2037" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="2038"
+      > </a
+      ><a name="2039" href="homotopy.WedgeExtension.html#1163" class="Function"
+      >&#946;-r-aux</a
+      ><a name="2046"
+      > </a
+      ><a name="2047" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="2048"
+      >
+        </a
+      ><a name="2057" href="homotopy.WedgeExtension.html#1945" class="Function"
+      >lemma&#8321;</a
+      ><a name="2063"
+      > </a
+      ><a name="2064" class="Symbol"
+      >=</a
+      ><a name="2065"
+      > </a
+      ><a name="2066" href="lib.Base.html#3991" class="Function"
+      >ap&#8595;</a
+      ><a name="2069"
+      > </a
+      ><a name="2070" class="Symbol"
+      >(</a
+      ><a name="2071" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2073"
+      > </a
+      ><a name="2074" class="Symbol"
+      >(&#955;</a
+      ><a name="2076"
+      > </a
+      ><a name="2077" href="homotopy.WedgeExtension.html#2077" class="Bound"
+      >s</a
+      ><a name="2078"
+      > </a
+      ><a name="2079" class="Symbol"
+      >&#8594;</a
+      ><a name="2080"
+      > </a
+      ><a name="2081" href="homotopy.WedgeExtension.html#2077" class="Bound"
+      >s</a
+      ><a name="2082"
+      > </a
+      ><a name="2083" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="2087" class="Symbol"
+      >))</a
+      ><a name="2089"
+      > </a
+      ><a name="2090" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2091"
+      >
+                      </a
+      ><a name="2114" href="lib.types.Sigma.html#2020" class="Function"
+      >snd=</a
+      ><a name="2118"
+      > </a
+      ><a name="2119" class="Symbol"
+      >(</a
+      ><a name="2120" href="lib.NConnected.html#2607" class="Function"
+      >conn-elim-&#946;</a
+      ><a name="2131"
+      > </a
+      ><a name="2132" class="Symbol"
+      >(</a
+      ><a name="2133" href="lib.NConnected.html#5752" class="Function"
+      >pointed-conn-out</a
+      ><a name="2149"
+      > </a
+      ><a name="2150" href="homotopy.WedgeExtension.html#100" class="Bound"
+      >A</a
+      ><a name="2151"
+      > </a
+      ><a name="2152" href="homotopy.WedgeExtension.html#113" class="Bound"
+      >a&#8320;</a
+      ><a name="2154"
+      > </a
+      ><a name="2155" href="homotopy.WedgeExtension.html#295" class="Field"
+      >cA</a
+      ><a name="2157" class="Symbol"
+      >)</a
+      ><a name="2158"
+      >
+                           </a
+      ><a name="2186" class="Symbol"
+      >(</a
+      ><a name="2187" href="homotopy.WedgeExtension.html#553" class="Function"
+      >Q</a
+      ><a name="2188"
+      > </a
+      ><a name="2189" href="homotopy.WedgeExtension.html#1015" class="Bound"
+      >r</a
+      ><a name="2190" class="Symbol"
+      >)</a
+      ><a name="2191"
+      > </a
+      ><a name="2192" class="Symbol"
+      >(&#955;</a
+      ><a name="2194"
+      > </a
+      ><a name="2195" class="Symbol"
+      >(</a
+      ><a name="2196" href="homotopy.WedgeExtension.html#2196" class="Bound"
+      >_</a
+      ><a name="2197"
+      > </a
+      ><a name="2198" class="Symbol"
+      >:</a
+      ><a name="2199"
+      > </a
+      ><a name="2200" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="2204" class="Symbol"
+      >)</a
+      ><a name="2205"
+      > </a
+      ><a name="2206" class="Symbol"
+      >&#8594;</a
+      ><a name="2207"
+      > </a
+      ><a name="2208" class="Symbol"
+      >(</a
+      ><a name="2209" href="homotopy.WedgeExtension.html#437" class="Field"
+      >g</a
+      ><a name="2210"
+      > </a
+      ><a name="2211" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2212"
+      > </a
+      ><a name="2213" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2215"
+      > </a
+      ><a name="2216" href="lib.Base.html#8054" class="Function"
+      >cst</a
+      ><a name="2219"
+      > </a
+      ><a name="2220" class="Symbol"
+      >(</a
+      ><a name="2221" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2222"
+      > </a
+      ><a name="2223" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="2224" class="Symbol"
+      >)))</a
+      ><a name="2227"
+      > </a
+      ><a name="2228" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="2232" class="Symbol"
+      >)</a
+      ><a name="2233"
+      >
+
+        </a
+      ><a name="2243" href="homotopy.WedgeExtension.html#2243" class="Function"
+      >lemma&#8322;</a
+      ><a name="2249"
+      > </a
+      ><a name="2250" class="Symbol"
+      >:</a
+      ><a name="2251"
+      > </a
+      ><a name="2252" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="2255"
+      > </a
+      ><a name="2256" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="2258"
+      > </a
+      ><a name="2259" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2260"
+      > </a
+      ><a name="2261" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2262"
+      > </a
+      ><a name="2263" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="2264"
+      > </a
+      ><a name="2265" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2267"
+      > </a
+      ><a name="2268" href="homotopy.WedgeExtension.html#1067" class="Function"
+      >&#946;-l</a
+      ><a name="2271"
+      > </a
+      ><a name="2272" href="homotopy.WedgeExtension.html#113" class="Bound"
+      >a&#8320;</a
+      ><a name="2274"
+      >
+        </a
+      ><a name="2283" href="homotopy.WedgeExtension.html#2243" class="Function"
+      >lemma&#8322;</a
+      ><a name="2289"
+      > </a
+      ><a name="2290" class="Symbol"
+      >=</a
+      ><a name="2291"
+      > </a
+      ><a name="2292" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2294"
+      > </a
+      ><a name="2295" class="Symbol"
+      >(&#955;</a
+      ><a name="2297"
+      > </a
+      ><a name="2298" href="homotopy.WedgeExtension.html#2298" class="Bound"
+      >w</a
+      ><a name="2299"
+      > </a
+      ><a name="2300" class="Symbol"
+      >&#8594;</a
+      ><a name="2301"
+      > </a
+      ><a name="2302" href="homotopy.WedgeExtension.html#1336" class="Function"
+      >&#946;-r</a
+      ><a name="2305"
+      > </a
+      ><a name="2306" href="homotopy.WedgeExtension.html#135" class="Bound"
+      >b&#8320;</a
+      ><a name="2308"
+      > </a
+      ><a name="2309" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2310"
+      > </a
+      ><a name="2311" href="homotopy.WedgeExtension.html#2298" class="Bound"
+      >w</a
+      ><a name="2312" class="Symbol"
+      >)</a
+      ><a name="2313"
+      >
+                    </a
+      ><a name="2334" class="Symbol"
+      >(</a
+      ><a name="2335" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2336"
+      > </a
+      ><a name="2337" class="Symbol"
+      >(</a
+      ><a name="2338" href="lib.PathFunctor.html#2204" class="Function"
+      >ap-idf</a
+      ><a name="2344"
+      > </a
+      ><a name="2345" class="Symbol"
+      >(</a
+      ><a name="2346" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2347"
+      > </a
+      ><a name="2348" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="2349" class="Symbol"
+      >))</a
+      ><a name="2351"
+      > </a
+      ><a name="2352" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2353"
+      > </a
+      ><a name="2354" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="2358"
+      > </a
+      ><a name="2359" class="Symbol"
+      >(&#955;</a
+      ><a name="2361"
+      > </a
+      ><a name="2362" href="homotopy.WedgeExtension.html#2362" class="Bound"
+      >s</a
+      ><a name="2363"
+      > </a
+      ><a name="2364" class="Symbol"
+      >&#8594;</a
+      ><a name="2365"
+      > </a
+      ><a name="2366" href="homotopy.WedgeExtension.html#2362" class="Bound"
+      >s</a
+      ><a name="2367"
+      > </a
+      ><a name="2368" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="2372" class="Symbol"
+      >)</a
+      ><a name="2373"
+      > </a
+      ><a name="2374" href="lib.Base.html#8054" class="Function"
+      >cst</a
+      ><a name="2377"
+      > </a
+      ><a name="2378" class="Symbol"
+      >(</a
+      ><a name="2379" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2380"
+      > </a
+      ><a name="2381" href="homotopy.WedgeExtension.html#470" class="Field"
+      >p</a
+      ><a name="2382" class="Symbol"
+      >))</a
+      ><a name="2384"
+      >
+                 </a
+      ><a name="2402" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2403"
+      > </a
+      ><a name="2404" class="Symbol"
+      >(</a
+      ><a name="2405" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2406"
+      > </a
+      ><a name="2407" class="Symbol"
+      >(</a
+      ><a name="2408" href="lib.types.Paths.html#2585" class="Function"
+      >&#8595;-app=cst-out</a
+      ><a name="2421"
+      > </a
+      ><a name="2422" href="homotopy.WedgeExtension.html#1945" class="Function"
+      >lemma&#8321;</a
+      ><a name="2428" class="Symbol"
+      >))</a
+      ><a name="2430"
+      >
+
+</a
+      ></pre
+    ></body
+  ></html
+>

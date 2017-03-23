@@ -1,0 +1,3281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.groups.SubgroupProp</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.NType2.html#1" class="Module"
+      >lib.NType2</a
+      ><a name="87"
+      >
+</a
+      ><a name="88" class="Keyword"
+      >open</a
+      ><a name="92"
+      > </a
+      ><a name="93" class="Keyword"
+      >import</a
+      ><a name="99"
+      > </a
+      ><a name="100" href="lib.types.Group.html#1" class="Module"
+      >lib.types.Group</a
+      ><a name="115"
+      >
+</a
+      ><a name="116" class="Keyword"
+      >open</a
+      ><a name="120"
+      > </a
+      ><a name="121" class="Keyword"
+      >import</a
+      ><a name="127"
+      > </a
+      ><a name="128" href="lib.types.Sigma.html#1" class="Module"
+      >lib.types.Sigma</a
+      ><a name="143"
+      >
+</a
+      ><a name="144" class="Keyword"
+      >open</a
+      ><a name="148"
+      > </a
+      ><a name="149" class="Keyword"
+      >import</a
+      ><a name="155"
+      > </a
+      ><a name="156" href="lib.types.Truncation.html#1" class="Module"
+      >lib.types.Truncation</a
+      ><a name="176"
+      >
+
+</a
+      ><a name="178" class="Keyword"
+      >module</a
+      ><a name="184"
+      > </a
+      ><a name="185" href="lib.groups.SubgroupProp.html#1" class="Module"
+      >lib.groups.SubgroupProp</a
+      ><a name="208"
+      > </a
+      ><a name="209" class="Keyword"
+      >where</a
+      ><a name="214"
+      >
+
+</a
+      ><a name="216" class="Keyword"
+      >record</a
+      ><a name="222"
+      > </a
+      ><a name="223" href="lib.groups.SubgroupProp.html#223" class="Record"
+      >SubgroupProp</a
+      ><a name="235"
+      > </a
+      ><a name="236" class="Symbol"
+      >{</a
+      ><a name="237" href="lib.groups.SubgroupProp.html#237" class="Bound"
+      >i</a
+      ><a name="238" class="Symbol"
+      >}</a
+      ><a name="239"
+      > </a
+      ><a name="240" class="Symbol"
+      >(</a
+      ><a name="241" href="lib.groups.SubgroupProp.html#241" class="Bound"
+      >G</a
+      ><a name="242"
+      > </a
+      ><a name="243" class="Symbol"
+      >:</a
+      ><a name="244"
+      > </a
+      ><a name="245" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="250"
+      > </a
+      ><a name="251" href="lib.groups.SubgroupProp.html#237" class="Bound"
+      >i</a
+      ><a name="252" class="Symbol"
+      >)</a
+      ><a name="253"
+      > </a
+      ><a name="254" href="lib.groups.SubgroupProp.html#254" class="Bound"
+      >j</a
+      ><a name="255"
+      > </a
+      ><a name="256" class="Symbol"
+      >:</a
+      ><a name="257"
+      > </a
+      ><a name="258" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="262"
+      > </a
+      ><a name="263" class="Symbol"
+      >(</a
+      ><a name="264" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="268"
+      > </a
+      ><a name="269" href="lib.groups.SubgroupProp.html#237" class="Bound"
+      >i</a
+      ><a name="270"
+      > </a
+      ><a name="271" class="Symbol"
+      >(</a
+      ><a name="272" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="277"
+      > </a
+      ><a name="278" href="lib.groups.SubgroupProp.html#254" class="Bound"
+      >j</a
+      ><a name="279" class="Symbol"
+      >))</a
+      ><a name="281"
+      > </a
+      ><a name="282" class="Keyword"
+      >where</a
+      ><a name="287"
+      >
+  </a
+      ><a name="290" class="Keyword"
+      >private</a
+      ><a name="297"
+      >
+    </a
+      ><a name="302" class="Keyword"
+      >module</a
+      ><a name="308"
+      > </a
+      ><a name="309" href="lib.groups.SubgroupProp.html#309" class="Module"
+      >G</a
+      ><a name="310"
+      > </a
+      ><a name="311" class="Symbol"
+      >=</a
+      ><a name="312"
+      > </a
+      ><a name="313" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="318"
+      > </a
+      ><a name="319" href="lib.groups.SubgroupProp.html#241" class="Bound"
+      >G</a
+      ><a name="320"
+      >
+  </a
+      ><a name="323" class="Keyword"
+      >field</a
+      ><a name="328"
+      >
+    </a
+      ><a name="333" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >prop</a
+      ><a name="337"
+      > </a
+      ><a name="338" class="Symbol"
+      >:</a
+      ><a name="339"
+      > </a
+      ><a name="340" href="lib.types.Group.html#6903" class="Function"
+      >G.El</a
+      ><a name="344"
+      > </a
+      ><a name="345" class="Symbol"
+      >&#8594;</a
+      ><a name="346"
+      > </a
+      ><a name="347" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="351"
+      > </a
+      ><a name="352" href="lib.groups.SubgroupProp.html#254" class="Bound"
+      >j</a
+      ><a name="353"
+      >
+    </a
+      ><a name="358" href="lib.groups.SubgroupProp.html#358" class="Field"
+      >level</a
+      ><a name="363"
+      > </a
+      ><a name="364" class="Symbol"
+      >:</a
+      ><a name="365"
+      > </a
+      ><a name="366" class="Symbol"
+      >&#8704;</a
+      ><a name="367"
+      > </a
+      ><a name="368" href="lib.groups.SubgroupProp.html#368" class="Bound"
+      >g</a
+      ><a name="369"
+      > </a
+      ><a name="370" class="Symbol"
+      >&#8594;</a
+      ><a name="371"
+      > </a
+      ><a name="372" href="lib.NType.html#430" class="Function"
+      >is-prop</a
+      ><a name="379"
+      > </a
+      ><a name="380" class="Symbol"
+      >(</a
+      ><a name="381" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >prop</a
+      ><a name="385"
+      > </a
+      ><a name="386" href="lib.groups.SubgroupProp.html#368" class="Bound"
+      >g</a
+      ><a name="387" class="Symbol"
+      >)</a
+      ><a name="388"
+      >
+    </a
+      ><a name="393" class="Comment"
+      >-- In theory being inhabited implies that the identity is included,</a
+      ><a name="460"
+      >
+    </a
+      ><a name="465" class="Comment"
+      >-- but in practice let's just prove the identity case.</a
+      ><a name="519"
+      >
+    </a
+      ><a name="524" href="lib.groups.SubgroupProp.html#524" class="Field"
+      >ident</a
+      ><a name="529"
+      > </a
+      ><a name="530" class="Symbol"
+      >:</a
+      ><a name="531"
+      > </a
+      ><a name="532" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >prop</a
+      ><a name="536"
+      > </a
+      ><a name="537" href="lib.types.Group.html#276" class="Function"
+      >G.ident</a
+      ><a name="544"
+      >
+    </a
+      ><a name="549" href="lib.groups.SubgroupProp.html#549" class="Field"
+      >diff</a
+      ><a name="553"
+      > </a
+      ><a name="554" class="Symbol"
+      >:</a
+      ><a name="555"
+      > </a
+      ><a name="556" class="Symbol"
+      >&#8704;</a
+      ><a name="557"
+      > </a
+      ><a name="558" class="Symbol"
+      >{</a
+      ><a name="559" href="lib.groups.SubgroupProp.html#559" class="Bound"
+      >g&#8321;</a
+      ><a name="561"
+      > </a
+      ><a name="562" href="lib.groups.SubgroupProp.html#562" class="Bound"
+      >g&#8322;</a
+      ><a name="564" class="Symbol"
+      >}</a
+      ><a name="565"
+      > </a
+      ><a name="566" class="Symbol"
+      >&#8594;</a
+      ><a name="567"
+      > </a
+      ><a name="568" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >prop</a
+      ><a name="572"
+      > </a
+      ><a name="573" href="lib.groups.SubgroupProp.html#559" class="Bound"
+      >g&#8321;</a
+      ><a name="575"
+      > </a
+      ><a name="576" class="Symbol"
+      >&#8594;</a
+      ><a name="577"
+      > </a
+      ><a name="578" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >prop</a
+      ><a name="582"
+      > </a
+      ><a name="583" href="lib.groups.SubgroupProp.html#562" class="Bound"
+      >g&#8322;</a
+      ><a name="585"
+      > </a
+      ><a name="586" class="Symbol"
+      >&#8594;</a
+      ><a name="587"
+      > </a
+      ><a name="588" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >prop</a
+      ><a name="592"
+      > </a
+      ><a name="593" class="Symbol"
+      >(</a
+      ><a name="594" href="lib.types.Group.html#6525" class="Function"
+      >G.diff</a
+      ><a name="600"
+      > </a
+      ><a name="601" href="lib.groups.SubgroupProp.html#559" class="Bound"
+      >g&#8321;</a
+      ><a name="603"
+      > </a
+      ><a name="604" href="lib.groups.SubgroupProp.html#562" class="Bound"
+      >g&#8322;</a
+      ><a name="606" class="Symbol"
+      >)</a
+      ><a name="607"
+      >
+
+  </a
+      ><a name="611" href="lib.groups.SubgroupProp.html#611" class="Function"
+      >subEl-prop</a
+      ><a name="621"
+      > </a
+      ><a name="622" class="Symbol"
+      >:</a
+      ><a name="623"
+      > </a
+      ><a name="624" href="lib.NType.html#5576" class="Function"
+      >SubtypeProp</a
+      ><a name="635"
+      > </a
+      ><a name="636" href="lib.types.Group.html#6903" class="Function"
+      >G.El</a
+      ><a name="640"
+      > </a
+      ><a name="641" href="lib.groups.SubgroupProp.html#254" class="Bound"
+      >j</a
+      ><a name="642"
+      >
+  </a
+      ><a name="645" href="lib.groups.SubgroupProp.html#611" class="Function"
+      >subEl-prop</a
+      ><a name="655"
+      > </a
+      ><a name="656" class="Symbol"
+      >=</a
+      ><a name="657"
+      > </a
+      ><a name="658" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >prop</a
+      ><a name="662"
+      > </a
+      ><a name="663" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="664"
+      > </a
+      ><a name="665" href="lib.groups.SubgroupProp.html#358" class="Field"
+      >level</a
+      ><a name="670"
+      >
+  </a
+      ><a name="673" href="lib.groups.SubgroupProp.html#673" class="Function"
+      >SubEl</a
+      ><a name="678"
+      > </a
+      ><a name="679" class="Symbol"
+      >=</a
+      ><a name="680"
+      > </a
+      ><a name="681" href="lib.NType.html#5878" class="Function"
+      >Subtype</a
+      ><a name="688"
+      > </a
+      ><a name="689" href="lib.groups.SubgroupProp.html#611" class="Function"
+      >subEl-prop</a
+      ><a name="699"
+      >
+
+  </a
+      ><a name="703" class="Keyword"
+      >abstract</a
+      ><a name="711"
+      >
+    </a
+      ><a name="716" class="Comment"
+      >{-
+      ident : prop G.ident
+      ident = transport prop (G.inv-r (fst inhab)) (diff (snd inhab) (snd inhab))
+    -}</a
+      ><a name="834"
+      >
+
+    </a
+      ><a name="840" href="lib.groups.SubgroupProp.html#840" class="Function"
+      >inv</a
+      ><a name="843"
+      > </a
+      ><a name="844" class="Symbol"
+      >:</a
+      ><a name="845"
+      > </a
+      ><a name="846" class="Symbol"
+      >&#8704;</a
+      ><a name="847"
+      > </a
+      ><a name="848" class="Symbol"
+      >{</a
+      ><a name="849" href="lib.groups.SubgroupProp.html#849" class="Bound"
+      >g</a
+      ><a name="850" class="Symbol"
+      >}</a
+      ><a name="851"
+      > </a
+      ><a name="852" class="Symbol"
+      >&#8594;</a
+      ><a name="853"
+      > </a
+      ><a name="854" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >prop</a
+      ><a name="858"
+      > </a
+      ><a name="859" href="lib.groups.SubgroupProp.html#849" class="Bound"
+      >g</a
+      ><a name="860"
+      > </a
+      ><a name="861" class="Symbol"
+      >&#8594;</a
+      ><a name="862"
+      > </a
+      ><a name="863" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >prop</a
+      ><a name="867"
+      > </a
+      ><a name="868" class="Symbol"
+      >(</a
+      ><a name="869" href="lib.types.Group.html#292" class="Function"
+      >G.inv</a
+      ><a name="874"
+      > </a
+      ><a name="875" href="lib.groups.SubgroupProp.html#849" class="Bound"
+      >g</a
+      ><a name="876" class="Symbol"
+      >)</a
+      ><a name="877"
+      >
+    </a
+      ><a name="882" href="lib.groups.SubgroupProp.html#840" class="Function"
+      >inv</a
+      ><a name="885"
+      > </a
+      ><a name="886" href="lib.groups.SubgroupProp.html#886" class="Bound"
+      >pg</a
+      ><a name="888"
+      > </a
+      ><a name="889" class="Symbol"
+      >=</a
+      ><a name="890"
+      > </a
+      ><a name="891" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="900"
+      > </a
+      ><a name="901" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >prop</a
+      ><a name="905"
+      > </a
+      ><a name="906" class="Symbol"
+      >(</a
+      ><a name="907" href="lib.types.Group.html#339" class="Function"
+      >G.unit-l</a
+      ><a name="915"
+      > </a
+      ><a name="916" class="Symbol"
+      >_)</a
+      ><a name="918"
+      > </a
+      ><a name="919" class="Symbol"
+      >(</a
+      ><a name="920" href="lib.groups.SubgroupProp.html#549" class="Field"
+      >diff</a
+      ><a name="924"
+      > </a
+      ><a name="925" href="lib.groups.SubgroupProp.html#524" class="Field"
+      >ident</a
+      ><a name="930"
+      > </a
+      ><a name="931" href="lib.groups.SubgroupProp.html#886" class="Bound"
+      >pg</a
+      ><a name="933" class="Symbol"
+      >)</a
+      ><a name="934"
+      >
+
+    </a
+      ><a name="940" href="lib.groups.SubgroupProp.html#940" class="Function"
+      >comp</a
+      ><a name="944"
+      > </a
+      ><a name="945" class="Symbol"
+      >:</a
+      ><a name="946"
+      > </a
+      ><a name="947" class="Symbol"
+      >&#8704;</a
+      ><a name="948"
+      > </a
+      ><a name="949" class="Symbol"
+      >{</a
+      ><a name="950" href="lib.groups.SubgroupProp.html#950" class="Bound"
+      >g&#8321;</a
+      ><a name="952"
+      > </a
+      ><a name="953" href="lib.groups.SubgroupProp.html#953" class="Bound"
+      >g&#8322;</a
+      ><a name="955" class="Symbol"
+      >}</a
+      ><a name="956"
+      > </a
+      ><a name="957" class="Symbol"
+      >&#8594;</a
+      ><a name="958"
+      > </a
+      ><a name="959" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >prop</a
+      ><a name="963"
+      > </a
+      ><a name="964" href="lib.groups.SubgroupProp.html#950" class="Bound"
+      >g&#8321;</a
+      ><a name="966"
+      > </a
+      ><a name="967" class="Symbol"
+      >&#8594;</a
+      ><a name="968"
+      > </a
+      ><a name="969" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >prop</a
+      ><a name="973"
+      > </a
+      ><a name="974" href="lib.groups.SubgroupProp.html#953" class="Bound"
+      >g&#8322;</a
+      ><a name="976"
+      > </a
+      ><a name="977" class="Symbol"
+      >&#8594;</a
+      ><a name="978"
+      > </a
+      ><a name="979" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >prop</a
+      ><a name="983"
+      > </a
+      ><a name="984" class="Symbol"
+      >(</a
+      ><a name="985" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="991"
+      > </a
+      ><a name="992" href="lib.groups.SubgroupProp.html#950" class="Bound"
+      >g&#8321;</a
+      ><a name="994"
+      > </a
+      ><a name="995" href="lib.groups.SubgroupProp.html#953" class="Bound"
+      >g&#8322;</a
+      ><a name="997" class="Symbol"
+      >)</a
+      ><a name="998"
+      >
+    </a
+      ><a name="1003" href="lib.groups.SubgroupProp.html#940" class="Function"
+      >comp</a
+      ><a name="1007"
+      > </a
+      ><a name="1008" class="Symbol"
+      >{</a
+      ><a name="1009" href="lib.groups.SubgroupProp.html#1009" class="Bound"
+      >g&#8321;</a
+      ><a name="1011" class="Symbol"
+      >}</a
+      ><a name="1012"
+      > </a
+      ><a name="1013" class="Symbol"
+      >{</a
+      ><a name="1014" href="lib.groups.SubgroupProp.html#1014" class="Bound"
+      >g&#8322;</a
+      ><a name="1016" class="Symbol"
+      >}</a
+      ><a name="1017"
+      > </a
+      ><a name="1018" href="lib.groups.SubgroupProp.html#1018" class="Bound"
+      >pg&#8321;</a
+      ><a name="1021"
+      > </a
+      ><a name="1022" href="lib.groups.SubgroupProp.html#1022" class="Bound"
+      >pg&#8322;</a
+      ><a name="1025"
+      > </a
+      ><a name="1026" class="Symbol"
+      >=</a
+      ><a name="1027"
+      >
+      </a
+      ><a name="1034" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="1043"
+      > </a
+      ><a name="1044" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >prop</a
+      ><a name="1048"
+      > </a
+      ><a name="1049" class="Symbol"
+      >(</a
+      ><a name="1050" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1052"
+      > </a
+      ><a name="1053" class="Symbol"
+      >(</a
+      ><a name="1054" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="1060"
+      > </a
+      ><a name="1061" href="lib.groups.SubgroupProp.html#1009" class="Bound"
+      >g&#8321;</a
+      ><a name="1063" class="Symbol"
+      >)</a
+      ><a name="1064"
+      > </a
+      ><a name="1065" class="Symbol"
+      >(</a
+      ><a name="1066" href="lib.types.Group.html#2941" class="Function"
+      >G.inv-inv</a
+      ><a name="1075"
+      > </a
+      ><a name="1076" href="lib.groups.SubgroupProp.html#1014" class="Bound"
+      >g&#8322;</a
+      ><a name="1078" class="Symbol"
+      >))</a
+      ><a name="1080"
+      > </a
+      ><a name="1081" class="Symbol"
+      >(</a
+      ><a name="1082" href="lib.groups.SubgroupProp.html#549" class="Field"
+      >diff</a
+      ><a name="1086"
+      > </a
+      ><a name="1087" href="lib.groups.SubgroupProp.html#1018" class="Bound"
+      >pg&#8321;</a
+      ><a name="1090"
+      > </a
+      ><a name="1091" class="Symbol"
+      >(</a
+      ><a name="1092" href="lib.groups.SubgroupProp.html#840" class="Function"
+      >inv</a
+      ><a name="1095"
+      > </a
+      ><a name="1096" href="lib.groups.SubgroupProp.html#1022" class="Bound"
+      >pg&#8322;</a
+      ><a name="1099" class="Symbol"
+      >))</a
+      ><a name="1101"
+      >
+
+</a
+      ><a name="1103" href="lib.groups.SubgroupProp.html#1103" class="Function"
+      >is-full&#7475;</a
+      ><a name="1111"
+      > </a
+      ><a name="1112" class="Symbol"
+      >:</a
+      ><a name="1113"
+      > </a
+      ><a name="1114" class="Symbol"
+      >&#8704;</a
+      ><a name="1115"
+      > </a
+      ><a name="1116" class="Symbol"
+      >{</a
+      ><a name="1117" href="lib.groups.SubgroupProp.html#1117" class="Bound"
+      >i</a
+      ><a name="1118"
+      > </a
+      ><a name="1119" href="lib.groups.SubgroupProp.html#1119" class="Bound"
+      >j</a
+      ><a name="1120" class="Symbol"
+      >}</a
+      ><a name="1121"
+      > </a
+      ><a name="1122" class="Symbol"
+      >{</a
+      ><a name="1123" href="lib.groups.SubgroupProp.html#1123" class="Bound"
+      >G</a
+      ><a name="1124"
+      > </a
+      ><a name="1125" class="Symbol"
+      >:</a
+      ><a name="1126"
+      > </a
+      ><a name="1127" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1132"
+      > </a
+      ><a name="1133" href="lib.groups.SubgroupProp.html#1117" class="Bound"
+      >i</a
+      ><a name="1134" class="Symbol"
+      >}</a
+      ><a name="1135"
+      > </a
+      ><a name="1136" class="Symbol"
+      >&#8594;</a
+      ><a name="1137"
+      > </a
+      ><a name="1138" href="lib.groups.SubgroupProp.html#223" class="Record"
+      >SubgroupProp</a
+      ><a name="1150"
+      > </a
+      ><a name="1151" href="lib.groups.SubgroupProp.html#1123" class="Bound"
+      >G</a
+      ><a name="1152"
+      > </a
+      ><a name="1153" href="lib.groups.SubgroupProp.html#1119" class="Bound"
+      >j</a
+      ><a name="1154"
+      > </a
+      ><a name="1155" class="Symbol"
+      >&#8594;</a
+      ><a name="1156"
+      > </a
+      ><a name="1157" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1161"
+      > </a
+      ><a name="1162" class="Symbol"
+      >(</a
+      ><a name="1163" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1167"
+      > </a
+      ><a name="1168" href="lib.groups.SubgroupProp.html#1117" class="Bound"
+      >i</a
+      ><a name="1169"
+      > </a
+      ><a name="1170" href="lib.groups.SubgroupProp.html#1119" class="Bound"
+      >j</a
+      ><a name="1171" class="Symbol"
+      >)</a
+      ><a name="1172"
+      >
+</a
+      ><a name="1173" href="lib.groups.SubgroupProp.html#1103" class="Function"
+      >is-full&#7475;</a
+      ><a name="1181"
+      > </a
+      ><a name="1182" href="lib.groups.SubgroupProp.html#1182" class="Bound"
+      >P</a
+      ><a name="1183"
+      > </a
+      ><a name="1184" class="Symbol"
+      >=</a
+      ><a name="1185"
+      > </a
+      ><a name="1186" class="Symbol"
+      >&#8704;</a
+      ><a name="1187"
+      > </a
+      ><a name="1188" href="lib.groups.SubgroupProp.html#1188" class="Bound"
+      >g</a
+      ><a name="1189"
+      > </a
+      ><a name="1190" class="Symbol"
+      >&#8594;</a
+      ><a name="1191"
+      > </a
+      ><a name="1192" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >SubgroupProp.prop</a
+      ><a name="1209"
+      > </a
+      ><a name="1210" href="lib.groups.SubgroupProp.html#1182" class="Bound"
+      >P</a
+      ><a name="1211"
+      > </a
+      ><a name="1212" href="lib.groups.SubgroupProp.html#1188" class="Bound"
+      >g</a
+      ><a name="1213"
+      >
+
+</a
+      ><a name="1215" class="Comment"
+      >-- Normal subgroups</a
+      ><a name="1234"
+      >
+
+</a
+      ><a name="1236" href="lib.groups.SubgroupProp.html#1236" class="Function"
+      >is-normal</a
+      ><a name="1245"
+      > </a
+      ><a name="1246" class="Symbol"
+      >:</a
+      ><a name="1247"
+      > </a
+      ><a name="1248" class="Symbol"
+      >&#8704;</a
+      ><a name="1249"
+      > </a
+      ><a name="1250" class="Symbol"
+      >{</a
+      ><a name="1251" href="lib.groups.SubgroupProp.html#1251" class="Bound"
+      >i</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" href="lib.groups.SubgroupProp.html#1253" class="Bound"
+      >j</a
+      ><a name="1254" class="Symbol"
+      >}</a
+      ><a name="1255"
+      > </a
+      ><a name="1256" class="Symbol"
+      >{</a
+      ><a name="1257" href="lib.groups.SubgroupProp.html#1257" class="Bound"
+      >G</a
+      ><a name="1258"
+      > </a
+      ><a name="1259" class="Symbol"
+      >:</a
+      ><a name="1260"
+      > </a
+      ><a name="1261" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1266"
+      > </a
+      ><a name="1267" href="lib.groups.SubgroupProp.html#1251" class="Bound"
+      >i</a
+      ><a name="1268" class="Symbol"
+      >}</a
+      ><a name="1269"
+      > </a
+      ><a name="1270" class="Symbol"
+      >&#8594;</a
+      ><a name="1271"
+      > </a
+      ><a name="1272" href="lib.groups.SubgroupProp.html#223" class="Record"
+      >SubgroupProp</a
+      ><a name="1284"
+      > </a
+      ><a name="1285" href="lib.groups.SubgroupProp.html#1257" class="Bound"
+      >G</a
+      ><a name="1286"
+      > </a
+      ><a name="1287" href="lib.groups.SubgroupProp.html#1253" class="Bound"
+      >j</a
+      ><a name="1288"
+      > </a
+      ><a name="1289" class="Symbol"
+      >&#8594;</a
+      ><a name="1290"
+      > </a
+      ><a name="1291" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1295"
+      > </a
+      ><a name="1296" class="Symbol"
+      >(</a
+      ><a name="1297" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1301"
+      > </a
+      ><a name="1302" href="lib.groups.SubgroupProp.html#1251" class="Bound"
+      >i</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" href="lib.groups.SubgroupProp.html#1253" class="Bound"
+      >j</a
+      ><a name="1305" class="Symbol"
+      >)</a
+      ><a name="1306"
+      >
+</a
+      ><a name="1307" href="lib.groups.SubgroupProp.html#1236" class="Function"
+      >is-normal</a
+      ><a name="1316"
+      > </a
+      ><a name="1317" class="Symbol"
+      >{</a
+      ><a name="1318" class="Argument"
+      >G</a
+      ><a name="1319"
+      > </a
+      ><a name="1320" class="Symbol"
+      >=</a
+      ><a name="1321"
+      > </a
+      ><a name="1322" href="lib.groups.SubgroupProp.html#1322" class="Bound"
+      >G</a
+      ><a name="1323" class="Symbol"
+      >}</a
+      ><a name="1324"
+      > </a
+      ><a name="1325" href="lib.groups.SubgroupProp.html#1325" class="Bound"
+      >P</a
+      ><a name="1326"
+      > </a
+      ><a name="1327" class="Symbol"
+      >=</a
+      ><a name="1328"
+      > </a
+      ><a name="1329" class="Symbol"
+      >&#8704;</a
+      ><a name="1330"
+      > </a
+      ><a name="1331" href="lib.groups.SubgroupProp.html#1331" class="Bound"
+      >g&#8321;</a
+      ><a name="1333"
+      > </a
+      ><a name="1334" class="Symbol"
+      >{</a
+      ><a name="1335" href="lib.groups.SubgroupProp.html#1335" class="Bound"
+      >g&#8322;</a
+      ><a name="1337" class="Symbol"
+      >}</a
+      ><a name="1338"
+      > </a
+      ><a name="1339" class="Symbol"
+      >&#8594;</a
+      ><a name="1340"
+      > </a
+      ><a name="1341" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >P.prop</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" href="lib.groups.SubgroupProp.html#1335" class="Bound"
+      >g&#8322;</a
+      ><a name="1350"
+      > </a
+      ><a name="1351" class="Symbol"
+      >&#8594;</a
+      ><a name="1352"
+      > </a
+      ><a name="1353" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >P.prop</a
+      ><a name="1359"
+      > </a
+      ><a name="1360" class="Symbol"
+      >(</a
+      ><a name="1361" href="lib.types.Group.html#4030" class="Function"
+      >Group.conj</a
+      ><a name="1371"
+      > </a
+      ><a name="1372" href="lib.groups.SubgroupProp.html#1322" class="Bound"
+      >G</a
+      ><a name="1373"
+      > </a
+      ><a name="1374" href="lib.groups.SubgroupProp.html#1331" class="Bound"
+      >g&#8321;</a
+      ><a name="1376"
+      > </a
+      ><a name="1377" href="lib.groups.SubgroupProp.html#1335" class="Bound"
+      >g&#8322;</a
+      ><a name="1379" class="Symbol"
+      >)</a
+      ><a name="1380"
+      >
+  </a
+      ><a name="1383" class="Keyword"
+      >where</a
+      ><a name="1388"
+      > </a
+      ><a name="1389" class="Keyword"
+      >module</a
+      ><a name="1395"
+      > </a
+      ><a name="1396" href="lib.groups.SubgroupProp.html#1396" class="Module"
+      >P</a
+      ><a name="1397"
+      > </a
+      ><a name="1398" class="Symbol"
+      >=</a
+      ><a name="1399"
+      > </a
+      ><a name="1400" href="lib.groups.SubgroupProp.html#223" class="Module"
+      >SubgroupProp</a
+      ><a name="1412"
+      > </a
+      ><a name="1413" href="lib.groups.SubgroupProp.html#1325" class="Bound"
+      >P</a
+      ><a name="1414"
+      >
+
+</a
+      ><a name="1416" href="lib.groups.SubgroupProp.html#1416" class="Function"
+      >NormalSubgroupProp</a
+      ><a name="1434"
+      > </a
+      ><a name="1435" class="Symbol"
+      >:</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" class="Symbol"
+      >&#8704;</a
+      ><a name="1438"
+      > </a
+      ><a name="1439" class="Symbol"
+      >{</a
+      ><a name="1440" href="lib.groups.SubgroupProp.html#1440" class="Bound"
+      >i</a
+      ><a name="1441" class="Symbol"
+      >}</a
+      ><a name="1442"
+      > </a
+      ><a name="1443" class="Symbol"
+      >(</a
+      ><a name="1444" href="lib.groups.SubgroupProp.html#1444" class="Bound"
+      >G</a
+      ><a name="1445"
+      > </a
+      ><a name="1446" class="Symbol"
+      >:</a
+      ><a name="1447"
+      > </a
+      ><a name="1448" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1453"
+      > </a
+      ><a name="1454" href="lib.groups.SubgroupProp.html#1440" class="Bound"
+      >i</a
+      ><a name="1455" class="Symbol"
+      >)</a
+      ><a name="1456"
+      > </a
+      ><a name="1457" href="lib.groups.SubgroupProp.html#1457" class="Bound"
+      >j</a
+      ><a name="1458"
+      > </a
+      ><a name="1459" class="Symbol"
+      >&#8594;</a
+      ><a name="1460"
+      > </a
+      ><a name="1461" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1465"
+      > </a
+      ><a name="1466" class="Symbol"
+      >(</a
+      ><a name="1467" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1471"
+      > </a
+      ><a name="1472" href="lib.groups.SubgroupProp.html#1440" class="Bound"
+      >i</a
+      ><a name="1473"
+      > </a
+      ><a name="1474" class="Symbol"
+      >(</a
+      ><a name="1475" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="1480"
+      > </a
+      ><a name="1481" href="lib.groups.SubgroupProp.html#1457" class="Bound"
+      >j</a
+      ><a name="1482" class="Symbol"
+      >))</a
+      ><a name="1484"
+      >
+</a
+      ><a name="1485" href="lib.groups.SubgroupProp.html#1416" class="Function"
+      >NormalSubgroupProp</a
+      ><a name="1503"
+      > </a
+      ><a name="1504" class="Symbol"
+      >{</a
+      ><a name="1505" href="lib.groups.SubgroupProp.html#1505" class="Bound"
+      >i</a
+      ><a name="1506" class="Symbol"
+      >}</a
+      ><a name="1507"
+      > </a
+      ><a name="1508" href="lib.groups.SubgroupProp.html#1508" class="Bound"
+      >G</a
+      ><a name="1509"
+      > </a
+      ><a name="1510" href="lib.groups.SubgroupProp.html#1510" class="Bound"
+      >j</a
+      ><a name="1511"
+      > </a
+      ><a name="1512" class="Symbol"
+      >=</a
+      ><a name="1513"
+      > </a
+      ><a name="1514" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="1515"
+      > </a
+      ><a name="1516" class="Symbol"
+      >(</a
+      ><a name="1517" href="lib.groups.SubgroupProp.html#223" class="Record"
+      >SubgroupProp</a
+      ><a name="1529"
+      > </a
+      ><a name="1530" href="lib.groups.SubgroupProp.html#1508" class="Bound"
+      >G</a
+      ><a name="1531"
+      > </a
+      ><a name="1532" href="lib.groups.SubgroupProp.html#1510" class="Bound"
+      >j</a
+      ><a name="1533" class="Symbol"
+      >)</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" href="lib.groups.SubgroupProp.html#1236" class="Function"
+      >is-normal</a
+      ><a name="1544"
+      >
+
+</a
+      ><a name="1546" class="Keyword"
+      >module</a
+      ><a name="1552"
+      > </a
+      ><a name="1553" href="lib.groups.SubgroupProp.html#1553" class="Module"
+      >NormalSubgroupProp</a
+      ><a name="1571"
+      > </a
+      ><a name="1572" class="Symbol"
+      >{</a
+      ><a name="1573" href="lib.groups.SubgroupProp.html#1573" class="Bound"
+      >i</a
+      ><a name="1574"
+      > </a
+      ><a name="1575" href="lib.groups.SubgroupProp.html#1575" class="Bound"
+      >j</a
+      ><a name="1576" class="Symbol"
+      >}</a
+      ><a name="1577"
+      > </a
+      ><a name="1578" class="Symbol"
+      >{</a
+      ><a name="1579" href="lib.groups.SubgroupProp.html#1579" class="Bound"
+      >G</a
+      ><a name="1580"
+      > </a
+      ><a name="1581" class="Symbol"
+      >:</a
+      ><a name="1582"
+      > </a
+      ><a name="1583" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1588"
+      > </a
+      ><a name="1589" href="lib.groups.SubgroupProp.html#1573" class="Bound"
+      >i</a
+      ><a name="1590" class="Symbol"
+      >}</a
+      ><a name="1591"
+      > </a
+      ><a name="1592" class="Symbol"
+      >(</a
+      ><a name="1593" href="lib.groups.SubgroupProp.html#1593" class="Bound"
+      >normal-prop</a
+      ><a name="1604"
+      > </a
+      ><a name="1605" class="Symbol"
+      >:</a
+      ><a name="1606"
+      > </a
+      ><a name="1607" href="lib.groups.SubgroupProp.html#1416" class="Function"
+      >NormalSubgroupProp</a
+      ><a name="1625"
+      > </a
+      ><a name="1626" href="lib.groups.SubgroupProp.html#1579" class="Bound"
+      >G</a
+      ><a name="1627"
+      > </a
+      ><a name="1628" href="lib.groups.SubgroupProp.html#1575" class="Bound"
+      >j</a
+      ><a name="1629" class="Symbol"
+      >)</a
+      ><a name="1630"
+      > </a
+      ><a name="1631" class="Keyword"
+      >where</a
+      ><a name="1636"
+      >
+  </a
+      ><a name="1639" class="Keyword"
+      >private</a
+      ><a name="1646"
+      >
+    </a
+      ><a name="1651" class="Keyword"
+      >module</a
+      ><a name="1657"
+      > </a
+      ><a name="1658" href="lib.groups.SubgroupProp.html#1658" class="Module"
+      >G</a
+      ><a name="1659"
+      > </a
+      ><a name="1660" class="Symbol"
+      >=</a
+      ><a name="1661"
+      > </a
+      ><a name="1662" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="1667"
+      > </a
+      ><a name="1668" href="lib.groups.SubgroupProp.html#1579" class="Bound"
+      >G</a
+      ><a name="1669"
+      >
+
+  </a
+      ><a name="1673" href="lib.groups.SubgroupProp.html#1673" class="Function"
+      >prop&#7475;</a
+      ><a name="1678"
+      > </a
+      ><a name="1679" class="Symbol"
+      >:</a
+      ><a name="1680"
+      > </a
+      ><a name="1681" href="lib.groups.SubgroupProp.html#223" class="Record"
+      >SubgroupProp</a
+      ><a name="1693"
+      > </a
+      ><a name="1694" href="lib.groups.SubgroupProp.html#1579" class="Bound"
+      >G</a
+      ><a name="1695"
+      > </a
+      ><a name="1696" href="lib.groups.SubgroupProp.html#1575" class="Bound"
+      >j</a
+      ><a name="1697"
+      >
+  </a
+      ><a name="1700" href="lib.groups.SubgroupProp.html#1673" class="Function"
+      >prop&#7475;</a
+      ><a name="1705"
+      > </a
+      ><a name="1706" class="Symbol"
+      >=</a
+      ><a name="1707"
+      > </a
+      ><a name="1708" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1711"
+      > </a
+      ><a name="1712" href="lib.groups.SubgroupProp.html#1593" class="Bound"
+      >normal-prop</a
+      ><a name="1723"
+      >
+  </a
+      ><a name="1726" class="Keyword"
+      >open</a
+      ><a name="1730"
+      > </a
+      ><a name="1731" href="lib.groups.SubgroupProp.html#223" class="Module"
+      >SubgroupProp</a
+      ><a name="1743"
+      > </a
+      ><a name="1744" href="lib.groups.SubgroupProp.html#1673" class="Function"
+      >prop&#7475;</a
+      ><a name="1749"
+      > </a
+      ><a name="1750" class="Keyword"
+      >public</a
+      ><a name="1756"
+      >
+
+  </a
+      ><a name="1760" href="lib.groups.SubgroupProp.html#1760" class="Function"
+      >conj</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" class="Symbol"
+      >:</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" href="lib.groups.SubgroupProp.html#1236" class="Function"
+      >is-normal</a
+      ><a name="1776"
+      > </a
+      ><a name="1777" href="lib.groups.SubgroupProp.html#1673" class="Function"
+      >prop&#7475;</a
+      ><a name="1782"
+      >
+  </a
+      ><a name="1785" href="lib.groups.SubgroupProp.html#1760" class="Function"
+      >conj</a
+      ><a name="1789"
+      > </a
+      ><a name="1790" class="Symbol"
+      >=</a
+      ><a name="1791"
+      > </a
+      ><a name="1792" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1795"
+      > </a
+      ><a name="1796" href="lib.groups.SubgroupProp.html#1593" class="Bound"
+      >normal-prop</a
+      ><a name="1807"
+      >
+
+  </a
+      ><a name="1811" class="Keyword"
+      >abstract</a
+      ><a name="1819"
+      >
+    </a
+      ><a name="1824" href="lib.groups.SubgroupProp.html#1824" class="Function"
+      >comm</a
+      ><a name="1828"
+      > </a
+      ><a name="1829" class="Symbol"
+      >:</a
+      ><a name="1830"
+      > </a
+      ><a name="1831" class="Symbol"
+      >&#8704;</a
+      ><a name="1832"
+      > </a
+      ><a name="1833" href="lib.groups.SubgroupProp.html#1833" class="Bound"
+      >g&#8321;</a
+      ><a name="1835"
+      > </a
+      ><a name="1836" href="lib.groups.SubgroupProp.html#1836" class="Bound"
+      >g&#8322;</a
+      ><a name="1838"
+      > </a
+      ><a name="1839" class="Symbol"
+      >&#8594;</a
+      ><a name="1840"
+      > </a
+      ><a name="1841" href="lib.groups.SubgroupProp.html#333" class="Function"
+      >prop</a
+      ><a name="1845"
+      > </a
+      ><a name="1846" class="Symbol"
+      >(</a
+      ><a name="1847" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="1853"
+      > </a
+      ><a name="1854" href="lib.groups.SubgroupProp.html#1833" class="Bound"
+      >g&#8321;</a
+      ><a name="1856"
+      > </a
+      ><a name="1857" href="lib.groups.SubgroupProp.html#1836" class="Bound"
+      >g&#8322;</a
+      ><a name="1859" class="Symbol"
+      >)</a
+      ><a name="1860"
+      > </a
+      ><a name="1861" class="Symbol"
+      >&#8594;</a
+      ><a name="1862"
+      > </a
+      ><a name="1863" href="lib.groups.SubgroupProp.html#333" class="Function"
+      >prop</a
+      ><a name="1867"
+      > </a
+      ><a name="1868" class="Symbol"
+      >(</a
+      ><a name="1869" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="1875"
+      > </a
+      ><a name="1876" href="lib.groups.SubgroupProp.html#1836" class="Bound"
+      >g&#8322;</a
+      ><a name="1878"
+      > </a
+      ><a name="1879" href="lib.groups.SubgroupProp.html#1833" class="Bound"
+      >g&#8321;</a
+      ><a name="1881" class="Symbol"
+      >)</a
+      ><a name="1882"
+      >
+    </a
+      ><a name="1887" href="lib.groups.SubgroupProp.html#1824" class="Function"
+      >comm</a
+      ><a name="1891"
+      > </a
+      ><a name="1892" href="lib.groups.SubgroupProp.html#1892" class="Bound"
+      >g&#8321;</a
+      ><a name="1894"
+      > </a
+      ><a name="1895" href="lib.groups.SubgroupProp.html#1895" class="Bound"
+      >g&#8322;</a
+      ><a name="1897"
+      > </a
+      ><a name="1898" href="lib.groups.SubgroupProp.html#1898" class="Bound"
+      >pg&#8321;g&#8322;</a
+      ><a name="1903"
+      > </a
+      ><a name="1904" class="Symbol"
+      >=</a
+      ><a name="1905"
+      > </a
+      ><a name="1906" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="1915"
+      > </a
+      ><a name="1916" href="lib.groups.SubgroupProp.html#333" class="Function"
+      >prop</a
+      ><a name="1920"
+      >
+      </a
+      ><a name="1927" class="Symbol"
+      >(</a
+      ><a name="1928"
+      > </a
+      ><a name="1929" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1931"
+      > </a
+      ><a name="1932" class="Symbol"
+      >(&#955;</a
+      ><a name="1934"
+      > </a
+      ><a name="1935" href="lib.groups.SubgroupProp.html#1935" class="Bound"
+      >g</a
+      ><a name="1936"
+      > </a
+      ><a name="1937" class="Symbol"
+      >&#8594;</a
+      ><a name="1938"
+      > </a
+      ><a name="1939" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="1945"
+      > </a
+      ><a name="1946" href="lib.groups.SubgroupProp.html#1935" class="Bound"
+      >g</a
+      ><a name="1947"
+      > </a
+      ><a name="1948" class="Symbol"
+      >(</a
+      ><a name="1949" href="lib.types.Group.html#292" class="Function"
+      >G.inv</a
+      ><a name="1954"
+      > </a
+      ><a name="1955" href="lib.groups.SubgroupProp.html#1895" class="Bound"
+      >g&#8322;</a
+      ><a name="1957" class="Symbol"
+      >))</a
+      ><a name="1959"
+      > </a
+      ><a name="1960" class="Symbol"
+      >(</a
+      ><a name="1961" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1962"
+      > </a
+      ><a name="1963" class="Symbol"
+      >(</a
+      ><a name="1964" href="lib.types.Group.html#376" class="Function"
+      >G.assoc</a
+      ><a name="1971"
+      > </a
+      ><a name="1972" href="lib.groups.SubgroupProp.html#1895" class="Bound"
+      >g&#8322;</a
+      ><a name="1974"
+      > </a
+      ><a name="1975" href="lib.groups.SubgroupProp.html#1892" class="Bound"
+      >g&#8321;</a
+      ><a name="1977"
+      > </a
+      ><a name="1978" href="lib.groups.SubgroupProp.html#1895" class="Bound"
+      >g&#8322;</a
+      ><a name="1980" class="Symbol"
+      >))</a
+      ><a name="1982"
+      >
+      </a
+      ><a name="1989" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1990"
+      > </a
+      ><a name="1991" href="lib.types.Group.html#376" class="Function"
+      >G.assoc</a
+      ><a name="1998"
+      > </a
+      ><a name="1999" class="Symbol"
+      >(</a
+      ><a name="2000" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="2006"
+      > </a
+      ><a name="2007" href="lib.groups.SubgroupProp.html#1895" class="Bound"
+      >g&#8322;</a
+      ><a name="2009"
+      > </a
+      ><a name="2010" href="lib.groups.SubgroupProp.html#1892" class="Bound"
+      >g&#8321;</a
+      ><a name="2012" class="Symbol"
+      >)</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" href="lib.groups.SubgroupProp.html#1895" class="Bound"
+      >g&#8322;</a
+      ><a name="2016"
+      > </a
+      ><a name="2017" class="Symbol"
+      >(</a
+      ><a name="2018" href="lib.types.Group.html#292" class="Function"
+      >G.inv</a
+      ><a name="2023"
+      > </a
+      ><a name="2024" href="lib.groups.SubgroupProp.html#1895" class="Bound"
+      >g&#8322;</a
+      ><a name="2026" class="Symbol"
+      >)</a
+      ><a name="2027"
+      >
+      </a
+      ><a name="2034" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2035"
+      > </a
+      ><a name="2036" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2038"
+      > </a
+      ><a name="2039" class="Symbol"
+      >(</a
+      ><a name="2040" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="2046"
+      > </a
+      ><a name="2047" class="Symbol"
+      >(</a
+      ><a name="2048" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="2054"
+      > </a
+      ><a name="2055" href="lib.groups.SubgroupProp.html#1895" class="Bound"
+      >g&#8322;</a
+      ><a name="2057"
+      > </a
+      ><a name="2058" href="lib.groups.SubgroupProp.html#1892" class="Bound"
+      >g&#8321;</a
+      ><a name="2060" class="Symbol"
+      >))</a
+      ><a name="2062"
+      > </a
+      ><a name="2063" class="Symbol"
+      >(</a
+      ><a name="2064" href="lib.types.Group.html#577" class="Function"
+      >G.inv-r</a
+      ><a name="2071"
+      > </a
+      ><a name="2072" href="lib.groups.SubgroupProp.html#1895" class="Bound"
+      >g&#8322;</a
+      ><a name="2074" class="Symbol"
+      >)</a
+      ><a name="2075"
+      >
+      </a
+      ><a name="2082" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2083"
+      > </a
+      ><a name="2084" href="lib.types.Group.html#1261" class="Function"
+      >G.unit-r</a
+      ><a name="2092"
+      > </a
+      ><a name="2093" class="Symbol"
+      >(</a
+      ><a name="2094" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="2100"
+      > </a
+      ><a name="2101" href="lib.groups.SubgroupProp.html#1895" class="Bound"
+      >g&#8322;</a
+      ><a name="2103"
+      > </a
+      ><a name="2104" href="lib.groups.SubgroupProp.html#1892" class="Bound"
+      >g&#8321;</a
+      ><a name="2106" class="Symbol"
+      >))</a
+      ><a name="2108"
+      >
+      </a
+      ><a name="2115" class="Symbol"
+      >(</a
+      ><a name="2116" href="lib.groups.SubgroupProp.html#1760" class="Function"
+      >conj</a
+      ><a name="2120"
+      > </a
+      ><a name="2121" href="lib.groups.SubgroupProp.html#1895" class="Bound"
+      >g&#8322;</a
+      ><a name="2123"
+      > </a
+      ><a name="2124" href="lib.groups.SubgroupProp.html#1898" class="Bound"
+      >pg&#8321;g&#8322;</a
+      ><a name="2129" class="Symbol"
+      >)</a
+      ><a name="2130"
+      >
+    </a
+      ><a name="2135" class="Comment"
+      >{- So far this is not used.
+    unconj : &#8704; g&#8321; g&#8322; &#8594; prop (G.conj g&#8321; g&#8322;) &#8594; prop g&#8322;
+    unconj g&#8321; g&#8322; pg&#8321;g&#8322; = transport prop path (conj (G.inv g&#8321;) pg&#8321;g&#8322;) where
+      path : G.conj (G.inv g&#8321;) (G.conj g&#8321; g&#8322;) == g&#8322;
+      path = ! (G.conj-comp-l (G.inv g&#8321;) g&#8321; g&#8322;) &#8729; ap (&#955; g &#8594; G.conj g g&#8322;) (G.inv-l g&#8321;) &#8729; G.conj-unit-l g&#8322;
+    -}</a
+      ><a name="2454"
+      >
+
+</a
+      ><a name="2456" class="Keyword"
+      >abstract</a
+      ><a name="2464"
+      >
+  </a
+      ><a name="2467" href="lib.groups.SubgroupProp.html#2467" class="Function"
+      >comm-is-normal</a
+      ><a name="2481"
+      > </a
+      ><a name="2482" class="Symbol"
+      >:</a
+      ><a name="2483"
+      > </a
+      ><a name="2484" class="Symbol"
+      >&#8704;</a
+      ><a name="2485"
+      > </a
+      ><a name="2486" class="Symbol"
+      >{</a
+      ><a name="2487" href="lib.groups.SubgroupProp.html#2487" class="Bound"
+      >i</a
+      ><a name="2488"
+      > </a
+      ><a name="2489" href="lib.groups.SubgroupProp.html#2489" class="Bound"
+      >j</a
+      ><a name="2490" class="Symbol"
+      >}</a
+      ><a name="2491"
+      > </a
+      ><a name="2492" class="Symbol"
+      >{</a
+      ><a name="2493" href="lib.groups.SubgroupProp.html#2493" class="Bound"
+      >G</a
+      ><a name="2494"
+      > </a
+      ><a name="2495" class="Symbol"
+      >:</a
+      ><a name="2496"
+      > </a
+      ><a name="2497" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="2502"
+      > </a
+      ><a name="2503" href="lib.groups.SubgroupProp.html#2487" class="Bound"
+      >i</a
+      ><a name="2504" class="Symbol"
+      >}</a
+      ><a name="2505"
+      > </a
+      ><a name="2506" class="Symbol"
+      >(</a
+      ><a name="2507" href="lib.groups.SubgroupProp.html#2507" class="Bound"
+      >P</a
+      ><a name="2508"
+      > </a
+      ><a name="2509" class="Symbol"
+      >:</a
+      ><a name="2510"
+      > </a
+      ><a name="2511" href="lib.groups.SubgroupProp.html#223" class="Record"
+      >SubgroupProp</a
+      ><a name="2523"
+      > </a
+      ><a name="2524" href="lib.groups.SubgroupProp.html#2493" class="Bound"
+      >G</a
+      ><a name="2525"
+      > </a
+      ><a name="2526" href="lib.groups.SubgroupProp.html#2489" class="Bound"
+      >j</a
+      ><a name="2527" class="Symbol"
+      >)</a
+      ><a name="2528"
+      >
+    </a
+      ><a name="2533" class="Symbol"
+      >&#8594;</a
+      ><a name="2534"
+      > </a
+      ><a name="2535" class="Symbol"
+      >(&#8704;</a
+      ><a name="2537"
+      > </a
+      ><a name="2538" href="lib.groups.SubgroupProp.html#2538" class="Bound"
+      >g&#8321;</a
+      ><a name="2540"
+      > </a
+      ><a name="2541" href="lib.groups.SubgroupProp.html#2541" class="Bound"
+      >g&#8322;</a
+      ><a name="2543"
+      > </a
+      ><a name="2544" class="Symbol"
+      >&#8594;</a
+      ><a name="2545"
+      > </a
+      ><a name="2546" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >SubgroupProp.prop</a
+      ><a name="2563"
+      > </a
+      ><a name="2564" href="lib.groups.SubgroupProp.html#2507" class="Bound"
+      >P</a
+      ><a name="2565"
+      > </a
+      ><a name="2566" class="Symbol"
+      >(</a
+      ><a name="2567" href="lib.types.Group.html#313" class="Function"
+      >Group.comp</a
+      ><a name="2577"
+      > </a
+      ><a name="2578" href="lib.groups.SubgroupProp.html#2493" class="Bound"
+      >G</a
+      ><a name="2579"
+      > </a
+      ><a name="2580" href="lib.groups.SubgroupProp.html#2538" class="Bound"
+      >g&#8321;</a
+      ><a name="2582"
+      > </a
+      ><a name="2583" href="lib.groups.SubgroupProp.html#2541" class="Bound"
+      >g&#8322;</a
+      ><a name="2585" class="Symbol"
+      >)</a
+      ><a name="2586"
+      >
+               </a
+      ><a name="2602" class="Symbol"
+      >&#8594;</a
+      ><a name="2603"
+      > </a
+      ><a name="2604" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >SubgroupProp.prop</a
+      ><a name="2621"
+      > </a
+      ><a name="2622" href="lib.groups.SubgroupProp.html#2507" class="Bound"
+      >P</a
+      ><a name="2623"
+      > </a
+      ><a name="2624" class="Symbol"
+      >(</a
+      ><a name="2625" href="lib.types.Group.html#313" class="Function"
+      >Group.comp</a
+      ><a name="2635"
+      > </a
+      ><a name="2636" href="lib.groups.SubgroupProp.html#2493" class="Bound"
+      >G</a
+      ><a name="2637"
+      > </a
+      ><a name="2638" href="lib.groups.SubgroupProp.html#2541" class="Bound"
+      >g&#8322;</a
+      ><a name="2640"
+      > </a
+      ><a name="2641" href="lib.groups.SubgroupProp.html#2538" class="Bound"
+      >g&#8321;</a
+      ><a name="2643" class="Symbol"
+      >))</a
+      ><a name="2645"
+      >
+    </a
+      ><a name="2650" class="Symbol"
+      >&#8594;</a
+      ><a name="2651"
+      > </a
+      ><a name="2652" href="lib.groups.SubgroupProp.html#1236" class="Function"
+      >is-normal</a
+      ><a name="2661"
+      > </a
+      ><a name="2662" href="lib.groups.SubgroupProp.html#2507" class="Bound"
+      >P</a
+      ><a name="2663"
+      >
+  </a
+      ><a name="2666" href="lib.groups.SubgroupProp.html#2467" class="Function"
+      >comm-is-normal</a
+      ><a name="2680"
+      > </a
+      ><a name="2681" class="Symbol"
+      >{</a
+      ><a name="2682" class="Argument"
+      >G</a
+      ><a name="2683"
+      > </a
+      ><a name="2684" class="Symbol"
+      >=</a
+      ><a name="2685"
+      > </a
+      ><a name="2686" href="lib.groups.SubgroupProp.html#2686" class="Bound"
+      >G</a
+      ><a name="2687" class="Symbol"
+      >}</a
+      ><a name="2688"
+      > </a
+      ><a name="2689" href="lib.groups.SubgroupProp.html#2689" class="Bound"
+      >P</a
+      ><a name="2690"
+      > </a
+      ><a name="2691" href="lib.groups.SubgroupProp.html#2691" class="Bound"
+      >P-comm</a
+      ><a name="2697"
+      > </a
+      ><a name="2698" href="lib.groups.SubgroupProp.html#2698" class="Bound"
+      >g&#8321;</a
+      ><a name="2700"
+      > </a
+      ><a name="2701" class="Symbol"
+      >{</a
+      ><a name="2702" href="lib.groups.SubgroupProp.html#2702" class="Bound"
+      >g&#8322;</a
+      ><a name="2704" class="Symbol"
+      >}</a
+      ><a name="2705"
+      > </a
+      ><a name="2706" href="lib.groups.SubgroupProp.html#2706" class="Bound"
+      >Pg&#8322;</a
+      ><a name="2709"
+      > </a
+      ><a name="2710" class="Symbol"
+      >=</a
+      ><a name="2711"
+      >
+    </a
+      ><a name="2716" href="lib.Base.html#4901" class="Function"
+      >transport!</a
+      ><a name="2726"
+      > </a
+      ><a name="2727" href="lib.groups.SubgroupProp.html#333" class="Function"
+      >P.prop</a
+      ><a name="2733"
+      > </a
+      ><a name="2734" class="Symbol"
+      >(</a
+      ><a name="2735" href="lib.types.Group.html#376" class="Function"
+      >G.assoc</a
+      ><a name="2742"
+      > </a
+      ><a name="2743" href="lib.groups.SubgroupProp.html#2698" class="Bound"
+      >g&#8321;</a
+      ><a name="2745"
+      > </a
+      ><a name="2746" href="lib.groups.SubgroupProp.html#2702" class="Bound"
+      >g&#8322;</a
+      ><a name="2748"
+      > </a
+      ><a name="2749" class="Symbol"
+      >(</a
+      ><a name="2750" href="lib.types.Group.html#292" class="Function"
+      >G.inv</a
+      ><a name="2755"
+      > </a
+      ><a name="2756" href="lib.groups.SubgroupProp.html#2698" class="Bound"
+      >g&#8321;</a
+      ><a name="2758" class="Symbol"
+      >))</a
+      ><a name="2760"
+      > </a
+      ><a name="2761" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2762"
+      >
+      </a
+      ><a name="2769" href="lib.groups.SubgroupProp.html#2691" class="Bound"
+      >P-comm</a
+      ><a name="2775"
+      > </a
+      ><a name="2776" class="Symbol"
+      >(</a
+      ><a name="2777" href="lib.types.Group.html#6525" class="Function"
+      >G.diff</a
+      ><a name="2783"
+      > </a
+      ><a name="2784" href="lib.groups.SubgroupProp.html#2702" class="Bound"
+      >g&#8322;</a
+      ><a name="2786"
+      > </a
+      ><a name="2787" href="lib.groups.SubgroupProp.html#2698" class="Bound"
+      >g&#8321;</a
+      ><a name="2789" class="Symbol"
+      >)</a
+      ><a name="2790"
+      > </a
+      ><a name="2791" href="lib.groups.SubgroupProp.html#2698" class="Bound"
+      >g&#8321;</a
+      ><a name="2793"
+      > </a
+      ><a name="2794" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2795"
+      >
+        </a
+      ><a name="2804" href="lib.Base.html#4901" class="Function"
+      >transport!</a
+      ><a name="2814"
+      > </a
+      ><a name="2815" href="lib.groups.SubgroupProp.html#333" class="Function"
+      >P.prop</a
+      ><a name="2821"
+      >
+          </a
+      ><a name="2832" class="Symbol"
+      >(</a
+      ><a name="2833"
+      > </a
+      ><a name="2834" href="lib.types.Group.html#376" class="Function"
+      >G.assoc</a
+      ><a name="2841"
+      > </a
+      ><a name="2842" href="lib.groups.SubgroupProp.html#2702" class="Bound"
+      >g&#8322;</a
+      ><a name="2844"
+      > </a
+      ><a name="2845" class="Symbol"
+      >(</a
+      ><a name="2846" href="lib.types.Group.html#292" class="Function"
+      >G.inv</a
+      ><a name="2851"
+      > </a
+      ><a name="2852" href="lib.groups.SubgroupProp.html#2698" class="Bound"
+      >g&#8321;</a
+      ><a name="2854" class="Symbol"
+      >)</a
+      ><a name="2855"
+      > </a
+      ><a name="2856" href="lib.groups.SubgroupProp.html#2698" class="Bound"
+      >g&#8321;</a
+      ><a name="2858"
+      >
+          </a
+      ><a name="2869" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2870"
+      > </a
+      ><a name="2871" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2873"
+      > </a
+      ><a name="2874" class="Symbol"
+      >(</a
+      ><a name="2875" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="2881"
+      > </a
+      ><a name="2882" href="lib.groups.SubgroupProp.html#2702" class="Bound"
+      >g&#8322;</a
+      ><a name="2884" class="Symbol"
+      >)</a
+      ><a name="2885"
+      > </a
+      ><a name="2886" class="Symbol"
+      >(</a
+      ><a name="2887" href="lib.types.Group.html#438" class="Function"
+      >G.inv-l</a
+      ><a name="2894"
+      > </a
+      ><a name="2895" href="lib.groups.SubgroupProp.html#2698" class="Bound"
+      >g&#8321;</a
+      ><a name="2897" class="Symbol"
+      >)</a
+      ><a name="2898"
+      >
+          </a
+      ><a name="2909" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2910"
+      > </a
+      ><a name="2911" href="lib.types.Group.html#1261" class="Function"
+      >G.unit-r</a
+      ><a name="2919"
+      > </a
+      ><a name="2920" href="lib.groups.SubgroupProp.html#2702" class="Bound"
+      >g&#8322;</a
+      ><a name="2922" class="Symbol"
+      >)</a
+      ><a name="2923"
+      >
+          </a
+      ><a name="2934" href="lib.groups.SubgroupProp.html#2706" class="Bound"
+      >Pg&#8322;</a
+      ><a name="2937"
+      >
+    </a
+      ><a name="2942" class="Keyword"
+      >where</a
+      ><a name="2947"
+      > </a
+      ><a name="2948" class="Keyword"
+      >module</a
+      ><a name="2954"
+      > </a
+      ><a name="2955" href="lib.groups.SubgroupProp.html#2955" class="Module"
+      >G</a
+      ><a name="2956"
+      > </a
+      ><a name="2957" class="Symbol"
+      >=</a
+      ><a name="2958"
+      > </a
+      ><a name="2959" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="2964"
+      > </a
+      ><a name="2965" href="lib.groups.SubgroupProp.html#2686" class="Bound"
+      >G</a
+      ><a name="2966"
+      >
+          </a
+      ><a name="2977" class="Keyword"
+      >module</a
+      ><a name="2983"
+      > </a
+      ><a name="2984" href="lib.groups.SubgroupProp.html#2984" class="Module"
+      >P</a
+      ><a name="2985"
+      > </a
+      ><a name="2986" class="Symbol"
+      >=</a
+      ><a name="2987"
+      > </a
+      ><a name="2988" href="lib.groups.SubgroupProp.html#223" class="Module"
+      >SubgroupProp</a
+      ><a name="3000"
+      > </a
+      ><a name="3001" href="lib.groups.SubgroupProp.html#2689" class="Bound"
+      >P</a
+      ><a name="3002"
+      >
+
+  </a
+      ><a name="3006" href="lib.groups.SubgroupProp.html#3006" class="Function"
+      >sub-abelian-is-normal</a
+      ><a name="3027"
+      > </a
+      ><a name="3028" class="Symbol"
+      >:</a
+      ><a name="3029"
+      > </a
+      ><a name="3030" class="Symbol"
+      >&#8704;</a
+      ><a name="3031"
+      > </a
+      ><a name="3032" class="Symbol"
+      >{</a
+      ><a name="3033" href="lib.groups.SubgroupProp.html#3033" class="Bound"
+      >i</a
+      ><a name="3034"
+      > </a
+      ><a name="3035" href="lib.groups.SubgroupProp.html#3035" class="Bound"
+      >j</a
+      ><a name="3036" class="Symbol"
+      >}</a
+      ><a name="3037"
+      > </a
+      ><a name="3038" class="Symbol"
+      >{</a
+      ><a name="3039" href="lib.groups.SubgroupProp.html#3039" class="Bound"
+      >G</a
+      ><a name="3040"
+      > </a
+      ><a name="3041" class="Symbol"
+      >:</a
+      ><a name="3042"
+      > </a
+      ><a name="3043" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="3048"
+      > </a
+      ><a name="3049" href="lib.groups.SubgroupProp.html#3033" class="Bound"
+      >i</a
+      ><a name="3050" class="Symbol"
+      >}</a
+      ><a name="3051"
+      >
+    </a
+      ><a name="3056" class="Symbol"
+      >&#8594;</a
+      ><a name="3057"
+      > </a
+      ><a name="3058" class="Symbol"
+      >(</a
+      ><a name="3059" href="lib.groups.SubgroupProp.html#3059" class="Bound"
+      >G-is-abelian</a
+      ><a name="3071"
+      > </a
+      ><a name="3072" class="Symbol"
+      >:</a
+      ><a name="3073"
+      > </a
+      ><a name="3074" href="lib.types.Group.html#7098" class="Function"
+      >is-abelian</a
+      ><a name="3084"
+      > </a
+      ><a name="3085" href="lib.groups.SubgroupProp.html#3039" class="Bound"
+      >G</a
+      ><a name="3086" class="Symbol"
+      >)</a
+      ><a name="3087"
+      >
+    </a
+      ><a name="3092" class="Symbol"
+      >&#8594;</a
+      ><a name="3093"
+      > </a
+      ><a name="3094" class="Symbol"
+      >(</a
+      ><a name="3095" href="lib.groups.SubgroupProp.html#3095" class="Bound"
+      >P</a
+      ><a name="3096"
+      > </a
+      ><a name="3097" class="Symbol"
+      >:</a
+      ><a name="3098"
+      > </a
+      ><a name="3099" href="lib.groups.SubgroupProp.html#223" class="Record"
+      >SubgroupProp</a
+      ><a name="3111"
+      > </a
+      ><a name="3112" href="lib.groups.SubgroupProp.html#3039" class="Bound"
+      >G</a
+      ><a name="3113"
+      > </a
+      ><a name="3114" href="lib.groups.SubgroupProp.html#3035" class="Bound"
+      >j</a
+      ><a name="3115" class="Symbol"
+      >)</a
+      ><a name="3116"
+      >
+    </a
+      ><a name="3121" class="Symbol"
+      >&#8594;</a
+      ><a name="3122"
+      > </a
+      ><a name="3123" href="lib.groups.SubgroupProp.html#1236" class="Function"
+      >is-normal</a
+      ><a name="3132"
+      > </a
+      ><a name="3133" href="lib.groups.SubgroupProp.html#3095" class="Bound"
+      >P</a
+      ><a name="3134"
+      >
+  </a
+      ><a name="3137" href="lib.groups.SubgroupProp.html#3006" class="Function"
+      >sub-abelian-is-normal</a
+      ><a name="3158"
+      > </a
+      ><a name="3159" class="Symbol"
+      >{</a
+      ><a name="3160" class="Argument"
+      >G</a
+      ><a name="3161"
+      > </a
+      ><a name="3162" class="Symbol"
+      >=</a
+      ><a name="3163"
+      > </a
+      ><a name="3164" href="lib.groups.SubgroupProp.html#3164" class="Bound"
+      >G</a
+      ><a name="3165" class="Symbol"
+      >}</a
+      ><a name="3166"
+      > </a
+      ><a name="3167" href="lib.groups.SubgroupProp.html#3167" class="Bound"
+      >G-is-abelian</a
+      ><a name="3179"
+      > </a
+      ><a name="3180" href="lib.groups.SubgroupProp.html#3180" class="Bound"
+      >P</a
+      ><a name="3181"
+      > </a
+      ><a name="3182" class="Symbol"
+      >=</a
+      ><a name="3183"
+      >
+    </a
+      ><a name="3188" href="lib.groups.SubgroupProp.html#2467" class="Function"
+      >comm-is-normal</a
+      ><a name="3202"
+      > </a
+      ><a name="3203" href="lib.groups.SubgroupProp.html#3180" class="Bound"
+      >P</a
+      ><a name="3204"
+      > </a
+      ><a name="3205" class="Symbol"
+      >&#955;</a
+      ><a name="3206"
+      > </a
+      ><a name="3207" href="lib.groups.SubgroupProp.html#3207" class="Bound"
+      >g&#8321;</a
+      ><a name="3209"
+      > </a
+      ><a name="3210" href="lib.groups.SubgroupProp.html#3210" class="Bound"
+      >g&#8322;</a
+      ><a name="3212"
+      > </a
+      ><a name="3213" href="lib.groups.SubgroupProp.html#3213" class="Bound"
+      >Pg&#8321;g&#8322;</a
+      ><a name="3218"
+      > </a
+      ><a name="3219" class="Symbol"
+      >&#8594;</a
+      ><a name="3220"
+      > </a
+      ><a name="3221" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="3230"
+      > </a
+      ><a name="3231" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >P.prop</a
+      ><a name="3237"
+      > </a
+      ><a name="3238" class="Symbol"
+      >(</a
+      ><a name="3239" href="lib.types.Group.html#7390" class="Function"
+      >G.comm</a
+      ><a name="3245"
+      > </a
+      ><a name="3246" href="lib.groups.SubgroupProp.html#3207" class="Bound"
+      >g&#8321;</a
+      ><a name="3248"
+      > </a
+      ><a name="3249" href="lib.groups.SubgroupProp.html#3210" class="Bound"
+      >g&#8322;</a
+      ><a name="3251" class="Symbol"
+      >)</a
+      ><a name="3252"
+      > </a
+      ><a name="3253" href="lib.groups.SubgroupProp.html#3213" class="Bound"
+      >Pg&#8321;g&#8322;</a
+      ><a name="3258"
+      >
+    </a
+      ><a name="3263" class="Keyword"
+      >where</a
+      ><a name="3268"
+      > </a
+      ><a name="3269" class="Keyword"
+      >module</a
+      ><a name="3275"
+      > </a
+      ><a name="3276" href="lib.groups.SubgroupProp.html#3276" class="Module"
+      >G</a
+      ><a name="3277"
+      > </a
+      ><a name="3278" class="Symbol"
+      >=</a
+      ><a name="3279"
+      > </a
+      ><a name="3280" href="lib.types.Group.html#7340" class="Module"
+      >AbGroup</a
+      ><a name="3287"
+      > </a
+      ><a name="3288" class="Symbol"
+      >(</a
+      ><a name="3289" href="lib.groups.SubgroupProp.html#3164" class="Bound"
+      >G</a
+      ><a name="3290"
+      > </a
+      ><a name="3291" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3292"
+      > </a
+      ><a name="3293" href="lib.groups.SubgroupProp.html#3167" class="Bound"
+      >G-is-abelian</a
+      ><a name="3305" class="Symbol"
+      >)</a
+      ><a name="3306"
+      >
+          </a
+      ><a name="3317" class="Keyword"
+      >module</a
+      ><a name="3323"
+      > </a
+      ><a name="3324" href="lib.groups.SubgroupProp.html#3324" class="Module"
+      >P</a
+      ><a name="3325"
+      > </a
+      ><a name="3326" class="Symbol"
+      >=</a
+      ><a name="3327"
+      > </a
+      ><a name="3328" href="lib.groups.SubgroupProp.html#223" class="Module"
+      >SubgroupProp</a
+      ><a name="3340"
+      > </a
+      ><a name="3341" href="lib.groups.SubgroupProp.html#3180" class="Bound"
+      >P</a
+      ><a name="3342"
+      >
+
+</a
+      ><a name="3344" href="lib.groups.SubgroupProp.html#3344" class="Function"
+      >sub-abelian-normal</a
+      ><a name="3362"
+      > </a
+      ><a name="3363" class="Symbol"
+      >:</a
+      ><a name="3364"
+      > </a
+      ><a name="3365" class="Symbol"
+      >&#8704;</a
+      ><a name="3366"
+      > </a
+      ><a name="3367" class="Symbol"
+      >{</a
+      ><a name="3368" href="lib.groups.SubgroupProp.html#3368" class="Bound"
+      >i</a
+      ><a name="3369"
+      > </a
+      ><a name="3370" href="lib.groups.SubgroupProp.html#3370" class="Bound"
+      >j</a
+      ><a name="3371" class="Symbol"
+      >}</a
+      ><a name="3372"
+      > </a
+      ><a name="3373" class="Symbol"
+      >{</a
+      ><a name="3374" href="lib.groups.SubgroupProp.html#3374" class="Bound"
+      >G</a
+      ><a name="3375"
+      > </a
+      ><a name="3376" class="Symbol"
+      >:</a
+      ><a name="3377"
+      > </a
+      ><a name="3378" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="3383"
+      > </a
+      ><a name="3384" href="lib.groups.SubgroupProp.html#3368" class="Bound"
+      >i</a
+      ><a name="3385" class="Symbol"
+      >}</a
+      ><a name="3386"
+      >
+  </a
+      ><a name="3389" class="Symbol"
+      >&#8594;</a
+      ><a name="3390"
+      > </a
+      ><a name="3391" class="Symbol"
+      >(</a
+      ><a name="3392" href="lib.groups.SubgroupProp.html#3392" class="Bound"
+      >G-is-abelian</a
+      ><a name="3404"
+      > </a
+      ><a name="3405" class="Symbol"
+      >:</a
+      ><a name="3406"
+      > </a
+      ><a name="3407" href="lib.types.Group.html#7098" class="Function"
+      >is-abelian</a
+      ><a name="3417"
+      > </a
+      ><a name="3418" href="lib.groups.SubgroupProp.html#3374" class="Bound"
+      >G</a
+      ><a name="3419" class="Symbol"
+      >)</a
+      ><a name="3420"
+      >
+  </a
+      ><a name="3423" class="Symbol"
+      >&#8594;</a
+      ><a name="3424"
+      > </a
+      ><a name="3425" href="lib.groups.SubgroupProp.html#223" class="Record"
+      >SubgroupProp</a
+      ><a name="3437"
+      > </a
+      ><a name="3438" href="lib.groups.SubgroupProp.html#3374" class="Bound"
+      >G</a
+      ><a name="3439"
+      > </a
+      ><a name="3440" href="lib.groups.SubgroupProp.html#3370" class="Bound"
+      >j</a
+      ><a name="3441"
+      >
+  </a
+      ><a name="3444" class="Symbol"
+      >&#8594;</a
+      ><a name="3445"
+      > </a
+      ><a name="3446" href="lib.groups.SubgroupProp.html#1416" class="Function"
+      >NormalSubgroupProp</a
+      ><a name="3464"
+      > </a
+      ><a name="3465" href="lib.groups.SubgroupProp.html#3374" class="Bound"
+      >G</a
+      ><a name="3466"
+      > </a
+      ><a name="3467" href="lib.groups.SubgroupProp.html#3370" class="Bound"
+      >j</a
+      ><a name="3468"
+      >
+</a
+      ><a name="3469" href="lib.groups.SubgroupProp.html#3344" class="Function"
+      >sub-abelian-normal</a
+      ><a name="3487"
+      > </a
+      ><a name="3488" href="lib.groups.SubgroupProp.html#3488" class="Bound"
+      >G-is-abelian</a
+      ><a name="3500"
+      > </a
+      ><a name="3501" href="lib.groups.SubgroupProp.html#3501" class="Bound"
+      >P</a
+      ><a name="3502"
+      > </a
+      ><a name="3503" class="Symbol"
+      >=</a
+      ><a name="3504"
+      > </a
+      ><a name="3505" href="lib.groups.SubgroupProp.html#3501" class="Bound"
+      >P</a
+      ><a name="3506"
+      > </a
+      ><a name="3507" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3508"
+      > </a
+      ><a name="3509" href="lib.groups.SubgroupProp.html#3006" class="Function"
+      >sub-abelian-is-normal</a
+      ><a name="3530"
+      > </a
+      ><a name="3531" href="lib.groups.SubgroupProp.html#3488" class="Bound"
+      >G-is-abelian</a
+      ><a name="3543"
+      > </a
+      ><a name="3544" href="lib.groups.SubgroupProp.html#3501" class="Bound"
+      >P</a
+      ><a name="3545"
+      >
+
+</a
+      ><a name="3547" class="Comment"
+      >{- Subgroups of subgroups -}</a
+      ><a name="3575"
+      >
+
+</a
+      ><a name="3577" class="Keyword"
+      >infix</a
+      ><a name="3582"
+      > </a
+      ><a name="3583" class="Number"
+      >40</a
+      ><a name="3585"
+      > </a
+      ><a name="3586" href="lib.groups.SubgroupProp.html#3591" class="Function Operator"
+      >_&#8838;&#7475;_</a
+      ><a name="3590"
+      >
+</a
+      ><a name="3591" href="lib.groups.SubgroupProp.html#3591" class="Function Operator"
+      >_&#8838;&#7475;_</a
+      ><a name="3595"
+      > </a
+      ><a name="3596" class="Symbol"
+      >:</a
+      ><a name="3597"
+      > </a
+      ><a name="3598" class="Symbol"
+      >&#8704;</a
+      ><a name="3599"
+      > </a
+      ><a name="3600" class="Symbol"
+      >{</a
+      ><a name="3601" href="lib.groups.SubgroupProp.html#3601" class="Bound"
+      >i</a
+      ><a name="3602"
+      > </a
+      ><a name="3603" href="lib.groups.SubgroupProp.html#3603" class="Bound"
+      >j</a
+      ><a name="3604"
+      > </a
+      ><a name="3605" href="lib.groups.SubgroupProp.html#3605" class="Bound"
+      >k</a
+      ><a name="3606" class="Symbol"
+      >}</a
+      ><a name="3607"
+      > </a
+      ><a name="3608" class="Symbol"
+      >{</a
+      ><a name="3609" href="lib.groups.SubgroupProp.html#3609" class="Bound"
+      >G</a
+      ><a name="3610"
+      > </a
+      ><a name="3611" class="Symbol"
+      >:</a
+      ><a name="3612"
+      > </a
+      ><a name="3613" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="3618"
+      > </a
+      ><a name="3619" href="lib.groups.SubgroupProp.html#3601" class="Bound"
+      >i</a
+      ><a name="3620" class="Symbol"
+      >}</a
+      ><a name="3621"
+      >
+  </a
+      ><a name="3624" class="Symbol"
+      >&#8594;</a
+      ><a name="3625"
+      > </a
+      ><a name="3626" href="lib.groups.SubgroupProp.html#223" class="Record"
+      >SubgroupProp</a
+      ><a name="3638"
+      > </a
+      ><a name="3639" href="lib.groups.SubgroupProp.html#3609" class="Bound"
+      >G</a
+      ><a name="3640"
+      > </a
+      ><a name="3641" href="lib.groups.SubgroupProp.html#3603" class="Bound"
+      >j</a
+      ><a name="3642"
+      > </a
+      ><a name="3643" class="Symbol"
+      >&#8594;</a
+      ><a name="3644"
+      > </a
+      ><a name="3645" href="lib.groups.SubgroupProp.html#223" class="Record"
+      >SubgroupProp</a
+      ><a name="3657"
+      > </a
+      ><a name="3658" href="lib.groups.SubgroupProp.html#3609" class="Bound"
+      >G</a
+      ><a name="3659"
+      > </a
+      ><a name="3660" href="lib.groups.SubgroupProp.html#3605" class="Bound"
+      >k</a
+      ><a name="3661"
+      > </a
+      ><a name="3662" class="Symbol"
+      >&#8594;</a
+      ><a name="3663"
+      > </a
+      ><a name="3664" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3668"
+      > </a
+      ><a name="3669" class="Symbol"
+      >(</a
+      ><a name="3670" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="3674"
+      > </a
+      ><a name="3675" href="lib.groups.SubgroupProp.html#3601" class="Bound"
+      >i</a
+      ><a name="3676"
+      > </a
+      ><a name="3677" class="Symbol"
+      >(</a
+      ><a name="3678" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="3682"
+      > </a
+      ><a name="3683" href="lib.groups.SubgroupProp.html#3603" class="Bound"
+      >j</a
+      ><a name="3684"
+      > </a
+      ><a name="3685" href="lib.groups.SubgroupProp.html#3605" class="Bound"
+      >k</a
+      ><a name="3686" class="Symbol"
+      >))</a
+      ><a name="3688"
+      >
+</a
+      ><a name="3689" href="lib.groups.SubgroupProp.html#3689" class="Bound"
+      >P</a
+      ><a name="3690"
+      > </a
+      ><a name="3691" href="lib.groups.SubgroupProp.html#3591" class="Function Operator"
+      >&#8838;&#7475;</a
+      ><a name="3693"
+      > </a
+      ><a name="3694" href="lib.groups.SubgroupProp.html#3694" class="Bound"
+      >Q</a
+      ><a name="3695"
+      > </a
+      ><a name="3696" class="Symbol"
+      >=</a
+      ><a name="3697"
+      > </a
+      ><a name="3698" class="Symbol"
+      >&#8704;</a
+      ><a name="3699"
+      > </a
+      ><a name="3700" href="lib.groups.SubgroupProp.html#3700" class="Bound"
+      >g</a
+      ><a name="3701"
+      > </a
+      ><a name="3702" class="Symbol"
+      >&#8594;</a
+      ><a name="3703"
+      > </a
+      ><a name="3704" href="lib.groups.SubgroupProp.html#333" class="Function"
+      >P.prop</a
+      ><a name="3710"
+      > </a
+      ><a name="3711" href="lib.groups.SubgroupProp.html#3700" class="Bound"
+      >g</a
+      ><a name="3712"
+      > </a
+      ><a name="3713" class="Symbol"
+      >&#8594;</a
+      ><a name="3714"
+      > </a
+      ><a name="3715" href="lib.groups.SubgroupProp.html#333" class="Field"
+      >Q.prop</a
+      ><a name="3721"
+      > </a
+      ><a name="3722" href="lib.groups.SubgroupProp.html#3700" class="Bound"
+      >g</a
+      ><a name="3723"
+      >
+  </a
+      ><a name="3726" class="Keyword"
+      >where</a
+      ><a name="3731"
+      > </a
+      ><a name="3732" class="Keyword"
+      >module</a
+      ><a name="3738"
+      > </a
+      ><a name="3739" href="lib.groups.SubgroupProp.html#3739" class="Module"
+      >P</a
+      ><a name="3740"
+      > </a
+      ><a name="3741" class="Symbol"
+      >=</a
+      ><a name="3742"
+      > </a
+      ><a name="3743" href="lib.groups.SubgroupProp.html#223" class="Module"
+      >SubgroupProp</a
+      ><a name="3755"
+      > </a
+      ><a name="3756" href="lib.groups.SubgroupProp.html#3689" class="Bound"
+      >P</a
+      ><a name="3757"
+      >
+        </a
+      ><a name="3766" class="Keyword"
+      >module</a
+      ><a name="3772"
+      > </a
+      ><a name="3773" href="lib.groups.SubgroupProp.html#3773" class="Module"
+      >Q</a
+      ><a name="3774"
+      > </a
+      ><a name="3775" class="Symbol"
+      >=</a
+      ><a name="3776"
+      > </a
+      ><a name="3777" href="lib.groups.SubgroupProp.html#223" class="Module"
+      >SubgroupProp</a
+      ><a name="3789"
+      > </a
+      ><a name="3790" href="lib.groups.SubgroupProp.html#3694" class="Bound"
+      >Q</a
+      ><a name="3791"
+      >
+
+</a
+      ><a name="3793" class="Comment"
+      >{- triviality -}</a
+      ><a name="3809"
+      >
+
+</a
+      ><a name="3811" href="lib.groups.SubgroupProp.html#3811" class="Function"
+      >trivial-prop&#7475;</a
+      ><a name="3824"
+      > </a
+      ><a name="3825" class="Symbol"
+      >:</a
+      ><a name="3826"
+      > </a
+      ><a name="3827" class="Symbol"
+      >&#8704;</a
+      ><a name="3828"
+      > </a
+      ><a name="3829" class="Symbol"
+      >{</a
+      ><a name="3830" href="lib.groups.SubgroupProp.html#3830" class="Bound"
+      >i</a
+      ><a name="3831" class="Symbol"
+      >}</a
+      ><a name="3832"
+      > </a
+      ><a name="3833" class="Symbol"
+      >(</a
+      ><a name="3834" href="lib.groups.SubgroupProp.html#3834" class="Bound"
+      >G</a
+      ><a name="3835"
+      > </a
+      ><a name="3836" class="Symbol"
+      >:</a
+      ><a name="3837"
+      > </a
+      ><a name="3838" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="3843"
+      > </a
+      ><a name="3844" href="lib.groups.SubgroupProp.html#3830" class="Bound"
+      >i</a
+      ><a name="3845" class="Symbol"
+      >)</a
+      ><a name="3846"
+      > </a
+      ><a name="3847" class="Symbol"
+      >&#8594;</a
+      ><a name="3848"
+      > </a
+      ><a name="3849" href="lib.groups.SubgroupProp.html#223" class="Record"
+      >SubgroupProp</a
+      ><a name="3861"
+      > </a
+      ><a name="3862" href="lib.groups.SubgroupProp.html#3834" class="Bound"
+      >G</a
+      ><a name="3863"
+      > </a
+      ><a name="3864" href="lib.groups.SubgroupProp.html#3830" class="Bound"
+      >i</a
+      ><a name="3865"
+      >
+</a
+      ><a name="3866" href="lib.groups.SubgroupProp.html#3811" class="Function"
+      >trivial-prop&#7475;</a
+      ><a name="3879"
+      > </a
+      ><a name="3880" class="Symbol"
+      >{</a
+      ><a name="3881" href="lib.groups.SubgroupProp.html#3881" class="Bound"
+      >i</a
+      ><a name="3882" class="Symbol"
+      >}</a
+      ><a name="3883"
+      > </a
+      ><a name="3884" href="lib.groups.SubgroupProp.html#3884" class="Bound"
+      >G</a
+      ><a name="3885"
+      > </a
+      ><a name="3886" class="Symbol"
+      >=</a
+      ><a name="3887"
+      > </a
+      ><a name="3888" class="Keyword"
+      >record</a
+      ><a name="3894"
+      > </a
+      ><a name="3895" class="Symbol"
+      >{</a
+      ><a name="3896" href="lib.groups.SubgroupProp.html#3935" class="Module"
+      >M</a
+      ><a name="3897" class="Symbol"
+      >}</a
+      ><a name="3898"
+      > </a
+      ><a name="3899" class="Keyword"
+      >where</a
+      ><a name="3904"
+      >
+  </a
+      ><a name="3907" class="Keyword"
+      >module</a
+      ><a name="3913"
+      > </a
+      ><a name="3914" href="lib.groups.SubgroupProp.html#3914" class="Module"
+      >G</a
+      ><a name="3915"
+      > </a
+      ><a name="3916" class="Symbol"
+      >=</a
+      ><a name="3917"
+      > </a
+      ><a name="3918" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="3923"
+      > </a
+      ><a name="3924" href="lib.groups.SubgroupProp.html#3884" class="Bound"
+      >G</a
+      ><a name="3925"
+      >
+  </a
+      ><a name="3928" class="Keyword"
+      >module</a
+      ><a name="3934"
+      > </a
+      ><a name="3935" href="lib.groups.SubgroupProp.html#3935" class="Module"
+      >M</a
+      ><a name="3936"
+      > </a
+      ><a name="3937" class="Keyword"
+      >where</a
+      ><a name="3942"
+      >
+    </a
+      ><a name="3947" href="lib.groups.SubgroupProp.html#3947" class="Function"
+      >prop</a
+      ><a name="3951"
+      > </a
+      ><a name="3952" class="Symbol"
+      >:</a
+      ><a name="3953"
+      > </a
+      ><a name="3954" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="3958"
+      > </a
+      ><a name="3959" class="Symbol"
+      >&#8594;</a
+      ><a name="3960"
+      > </a
+      ><a name="3961" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3965"
+      > </a
+      ><a name="3966" href="lib.groups.SubgroupProp.html#3881" class="Bound"
+      >i</a
+      ><a name="3967"
+      >
+    </a
+      ><a name="3972" href="lib.groups.SubgroupProp.html#3947" class="Function"
+      >prop</a
+      ><a name="3976"
+      > </a
+      ><a name="3977" href="lib.groups.SubgroupProp.html#3977" class="Bound"
+      >g</a
+      ><a name="3978"
+      > </a
+      ><a name="3979" class="Symbol"
+      >=</a
+      ><a name="3980"
+      > </a
+      ><a name="3981" href="lib.groups.SubgroupProp.html#3977" class="Bound"
+      >g</a
+      ><a name="3982"
+      > </a
+      ><a name="3983" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3985"
+      > </a
+      ><a name="3986" href="lib.types.Group.html#276" class="Function"
+      >G.ident</a
+      ><a name="3993"
+      >
+
+    </a
+      ><a name="3999" href="lib.groups.SubgroupProp.html#3999" class="Function"
+      >ident</a
+      ><a name="4004"
+      > </a
+      ><a name="4005" class="Symbol"
+      >:</a
+      ><a name="4006"
+      > </a
+      ><a name="4007" href="lib.groups.SubgroupProp.html#3947" class="Function"
+      >prop</a
+      ><a name="4011"
+      > </a
+      ><a name="4012" href="lib.types.Group.html#276" class="Function"
+      >G.ident</a
+      ><a name="4019"
+      >
+    </a
+      ><a name="4024" href="lib.groups.SubgroupProp.html#3999" class="Function"
+      >ident</a
+      ><a name="4029"
+      > </a
+      ><a name="4030" class="Symbol"
+      >=</a
+      ><a name="4031"
+      > </a
+      ><a name="4032" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4035"
+      >
+
+    </a
+      ><a name="4041" href="lib.groups.SubgroupProp.html#4041" class="Function"
+      >level</a
+      ><a name="4046"
+      > </a
+      ><a name="4047" class="Symbol"
+      >:</a
+      ><a name="4048"
+      > </a
+      ><a name="4049" class="Symbol"
+      >&#8704;</a
+      ><a name="4050"
+      > </a
+      ><a name="4051" href="lib.groups.SubgroupProp.html#4051" class="Bound"
+      >g</a
+      ><a name="4052"
+      > </a
+      ><a name="4053" class="Symbol"
+      >&#8594;</a
+      ><a name="4054"
+      > </a
+      ><a name="4055" href="lib.NType.html#430" class="Function"
+      >is-prop</a
+      ><a name="4062"
+      > </a
+      ><a name="4063" class="Symbol"
+      >(</a
+      ><a name="4064" href="lib.groups.SubgroupProp.html#3947" class="Function"
+      >prop</a
+      ><a name="4068"
+      > </a
+      ><a name="4069" href="lib.groups.SubgroupProp.html#4051" class="Bound"
+      >g</a
+      ><a name="4070" class="Symbol"
+      >)</a
+      ><a name="4071"
+      >
+    </a
+      ><a name="4076" href="lib.groups.SubgroupProp.html#4041" class="Function"
+      >level</a
+      ><a name="4081"
+      > </a
+      ><a name="4082" href="lib.groups.SubgroupProp.html#4082" class="Bound"
+      >g</a
+      ><a name="4083"
+      > </a
+      ><a name="4084" class="Symbol"
+      >=</a
+      ><a name="4085"
+      > </a
+      ><a name="4086" href="lib.types.Group.html#6919" class="Field"
+      >G.El-level</a
+      ><a name="4096"
+      > </a
+      ><a name="4097" href="lib.groups.SubgroupProp.html#4082" class="Bound"
+      >g</a
+      ><a name="4098"
+      > </a
+      ><a name="4099" href="lib.types.Group.html#276" class="Function"
+      >G.ident</a
+      ><a name="4106"
+      >
+
+    </a
+      ><a name="4112" class="Keyword"
+      >abstract</a
+      ><a name="4120"
+      >
+      </a
+      ><a name="4127" href="lib.groups.SubgroupProp.html#4127" class="Function"
+      >diff</a
+      ><a name="4131"
+      > </a
+      ><a name="4132" class="Symbol"
+      >:</a
+      ><a name="4133"
+      > </a
+      ><a name="4134" class="Symbol"
+      >{</a
+      ><a name="4135" href="lib.groups.SubgroupProp.html#4135" class="Bound"
+      >g&#8321;</a
+      ><a name="4137"
+      > </a
+      ><a name="4138" href="lib.groups.SubgroupProp.html#4138" class="Bound"
+      >g&#8322;</a
+      ><a name="4140"
+      > </a
+      ><a name="4141" class="Symbol"
+      >:</a
+      ><a name="4142"
+      > </a
+      ><a name="4143" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="4147" class="Symbol"
+      >}</a
+      ><a name="4148"
+      > </a
+      ><a name="4149" class="Symbol"
+      >&#8594;</a
+      ><a name="4150"
+      > </a
+      ><a name="4151" href="lib.groups.SubgroupProp.html#3947" class="Function"
+      >prop</a
+      ><a name="4155"
+      > </a
+      ><a name="4156" href="lib.groups.SubgroupProp.html#4135" class="Bound"
+      >g&#8321;</a
+      ><a name="4158"
+      > </a
+      ><a name="4159" class="Symbol"
+      >&#8594;</a
+      ><a name="4160"
+      > </a
+      ><a name="4161" href="lib.groups.SubgroupProp.html#3947" class="Function"
+      >prop</a
+      ><a name="4165"
+      > </a
+      ><a name="4166" href="lib.groups.SubgroupProp.html#4138" class="Bound"
+      >g&#8322;</a
+      ><a name="4168"
+      > </a
+      ><a name="4169" class="Symbol"
+      >&#8594;</a
+      ><a name="4170"
+      > </a
+      ><a name="4171" href="lib.groups.SubgroupProp.html#3947" class="Function"
+      >prop</a
+      ><a name="4175"
+      > </a
+      ><a name="4176" class="Symbol"
+      >(</a
+      ><a name="4177" href="lib.types.Group.html#6525" class="Function"
+      >G.diff</a
+      ><a name="4183"
+      > </a
+      ><a name="4184" href="lib.groups.SubgroupProp.html#4135" class="Bound"
+      >g&#8321;</a
+      ><a name="4186"
+      > </a
+      ><a name="4187" href="lib.groups.SubgroupProp.html#4138" class="Bound"
+      >g&#8322;</a
+      ><a name="4189" class="Symbol"
+      >)</a
+      ><a name="4190"
+      >
+      </a
+      ><a name="4197" href="lib.groups.SubgroupProp.html#4127" class="Function"
+      >diff</a
+      ><a name="4201"
+      > </a
+      ><a name="4202" href="lib.groups.SubgroupProp.html#4202" class="Bound"
+      >g&#8321;=id</a
+      ><a name="4207"
+      > </a
+      ><a name="4208" href="lib.groups.SubgroupProp.html#4208" class="Bound"
+      >g&#8322;=id</a
+      ><a name="4213"
+      > </a
+      ><a name="4214" class="Symbol"
+      >=</a
+      ><a name="4215"
+      > </a
+      ><a name="4216" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="4219"
+      > </a
+      ><a name="4220" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="4226"
+      > </a
+      ><a name="4227" href="lib.groups.SubgroupProp.html#4202" class="Bound"
+      >g&#8321;=id</a
+      ><a name="4232"
+      > </a
+      ><a name="4233" class="Symbol"
+      >(</a
+      ><a name="4234" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4236"
+      > </a
+      ><a name="4237" href="lib.types.Group.html#292" class="Function"
+      >G.inv</a
+      ><a name="4242"
+      > </a
+      ><a name="4243" href="lib.groups.SubgroupProp.html#4208" class="Bound"
+      >g&#8322;=id</a
+      ><a name="4248"
+      > </a
+      ><a name="4249" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4250"
+      > </a
+      ><a name="4251" href="lib.types.Group.html#2284" class="Function"
+      >G.inv-ident</a
+      ><a name="4262" class="Symbol"
+      >)</a
+      ><a name="4263"
+      >
+                       </a
+      ><a name="4287" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4288"
+      > </a
+      ><a name="4289" href="lib.types.Group.html#1261" class="Function"
+      >G.unit-r</a
+      ><a name="4297"
+      > </a
+      ><a name="4298" href="lib.types.Group.html#276" class="Function"
+      >G.ident</a
+      ><a name="4305"
+      >
+
+</a
+      ><a name="4307" href="lib.groups.SubgroupProp.html#4307" class="Function"
+      >is-trivial-prop&#7475;</a
+      ><a name="4323"
+      > </a
+      ><a name="4324" class="Symbol"
+      >:</a
+      ><a name="4325"
+      > </a
+      ><a name="4326" class="Symbol"
+      >&#8704;</a
+      ><a name="4327"
+      > </a
+      ><a name="4328" class="Symbol"
+      >{</a
+      ><a name="4329" href="lib.groups.SubgroupProp.html#4329" class="Bound"
+      >i</a
+      ><a name="4330"
+      > </a
+      ><a name="4331" href="lib.groups.SubgroupProp.html#4331" class="Bound"
+      >j</a
+      ><a name="4332" class="Symbol"
+      >}</a
+      ><a name="4333"
+      > </a
+      ><a name="4334" class="Symbol"
+      >{</a
+      ><a name="4335" href="lib.groups.SubgroupProp.html#4335" class="Bound"
+      >G</a
+      ><a name="4336"
+      > </a
+      ><a name="4337" class="Symbol"
+      >:</a
+      ><a name="4338"
+      > </a
+      ><a name="4339" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="4344"
+      > </a
+      ><a name="4345" href="lib.groups.SubgroupProp.html#4329" class="Bound"
+      >i</a
+      ><a name="4346" class="Symbol"
+      >}</a
+      ><a name="4347"
+      > </a
+      ><a name="4348" class="Symbol"
+      >&#8594;</a
+      ><a name="4349"
+      > </a
+      ><a name="4350" href="lib.groups.SubgroupProp.html#223" class="Record"
+      >SubgroupProp</a
+      ><a name="4362"
+      > </a
+      ><a name="4363" href="lib.groups.SubgroupProp.html#4335" class="Bound"
+      >G</a
+      ><a name="4364"
+      > </a
+      ><a name="4365" href="lib.groups.SubgroupProp.html#4331" class="Bound"
+      >j</a
+      ><a name="4366"
+      > </a
+      ><a name="4367" class="Symbol"
+      >&#8594;</a
+      ><a name="4368"
+      > </a
+      ><a name="4369" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="4373"
+      > </a
+      ><a name="4374" class="Symbol"
+      >(</a
+      ><a name="4375" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="4379"
+      > </a
+      ><a name="4380" href="lib.groups.SubgroupProp.html#4329" class="Bound"
+      >i</a
+      ><a name="4381"
+      > </a
+      ><a name="4382" href="lib.groups.SubgroupProp.html#4331" class="Bound"
+      >j</a
+      ><a name="4383" class="Symbol"
+      >)</a
+      ><a name="4384"
+      >
+</a
+      ><a name="4385" href="lib.groups.SubgroupProp.html#4307" class="Function"
+      >is-trivial-prop&#7475;</a
+      ><a name="4401"
+      > </a
+      ><a name="4402" class="Symbol"
+      >{</a
+      ><a name="4403" class="Argument"
+      >G</a
+      ><a name="4404"
+      > </a
+      ><a name="4405" class="Symbol"
+      >=</a
+      ><a name="4406"
+      > </a
+      ><a name="4407" href="lib.groups.SubgroupProp.html#4407" class="Bound"
+      >G</a
+      ><a name="4408" class="Symbol"
+      >}</a
+      ><a name="4409"
+      > </a
+      ><a name="4410" href="lib.groups.SubgroupProp.html#4410" class="Bound"
+      >P</a
+      ><a name="4411"
+      > </a
+      ><a name="4412" class="Symbol"
+      >=</a
+      ><a name="4413"
+      > </a
+      ><a name="4414" href="lib.groups.SubgroupProp.html#4410" class="Bound"
+      >P</a
+      ><a name="4415"
+      > </a
+      ><a name="4416" href="lib.groups.SubgroupProp.html#3591" class="Function Operator"
+      >&#8838;&#7475;</a
+      ><a name="4418"
+      > </a
+      ><a name="4419" href="lib.groups.SubgroupProp.html#3811" class="Function"
+      >trivial-prop&#7475;</a
+      ><a name="4432"
+      > </a
+      ><a name="4433" href="lib.groups.SubgroupProp.html#4407" class="Bound"
+      >G</a
+      ><a name="4434"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

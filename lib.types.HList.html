@@ -1,0 +1,792 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.HList</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.List.html#1" class="Module"
+      >lib.types.List</a
+      ><a name="91"
+      >
+
+</a
+      ><a name="93" class="Keyword"
+      >module</a
+      ><a name="99"
+      > </a
+      ><a name="100" href="lib.types.HList.html#1" class="Module"
+      >lib.types.HList</a
+      ><a name="115"
+      > </a
+      ><a name="116" class="Keyword"
+      >where</a
+      ><a name="121"
+      >
+
+</a
+      ><a name="123" class="Keyword"
+      >data</a
+      ><a name="127"
+      > </a
+      ><a name="128" href="lib.types.HList.html#128" class="Datatype"
+      >HList</a
+      ><a name="133"
+      > </a
+      ><a name="134" class="Symbol"
+      >{</a
+      ><a name="135" href="lib.types.HList.html#135" class="Bound"
+      >i</a
+      ><a name="136" class="Symbol"
+      >}</a
+      ><a name="137"
+      > </a
+      ><a name="138" class="Symbol"
+      >:</a
+      ><a name="139"
+      > </a
+      ><a name="140" href="lib.types.List.html#197" class="Datatype"
+      >List</a
+      ><a name="144"
+      > </a
+      ><a name="145" class="Symbol"
+      >(</a
+      ><a name="146" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="150"
+      > </a
+      ><a name="151" href="lib.types.HList.html#135" class="Bound"
+      >i</a
+      ><a name="152" class="Symbol"
+      >)</a
+      ><a name="153"
+      > </a
+      ><a name="154" class="Symbol"
+      >&#8594;</a
+      ><a name="155"
+      > </a
+      ><a name="156" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="160"
+      > </a
+      ><a name="161" class="Symbol"
+      >(</a
+      ><a name="162" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="167"
+      > </a
+      ><a name="168" href="lib.types.HList.html#135" class="Bound"
+      >i</a
+      ><a name="169" class="Symbol"
+      >)</a
+      ><a name="170"
+      > </a
+      ><a name="171" class="Keyword"
+      >where</a
+      ><a name="176"
+      >
+  </a
+      ><a name="179" href="lib.types.HList.html#179" class="InductiveConstructor"
+      >nil</a
+      ><a name="182"
+      > </a
+      ><a name="183" class="Symbol"
+      >:</a
+      ><a name="184"
+      > </a
+      ><a name="185" href="lib.types.HList.html#128" class="Datatype"
+      >HList</a
+      ><a name="190"
+      > </a
+      ><a name="191" href="lib.types.List.html#236" class="InductiveConstructor"
+      >nil</a
+      ><a name="194"
+      >
+  </a
+      ><a name="197" href="lib.types.HList.html#197" class="InductiveConstructor Operator"
+      >_::_</a
+      ><a name="201"
+      > </a
+      ><a name="202" class="Symbol"
+      >:</a
+      ><a name="203"
+      > </a
+      ><a name="204" class="Symbol"
+      >{</a
+      ><a name="205" href="lib.types.HList.html#205" class="Bound"
+      >A</a
+      ><a name="206"
+      > </a
+      ><a name="207" class="Symbol"
+      >:</a
+      ><a name="208"
+      > </a
+      ><a name="209" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="213"
+      > </a
+      ><a name="214" href="lib.types.HList.html#135" class="Bound"
+      >i</a
+      ><a name="215" class="Symbol"
+      >}</a
+      ><a name="216"
+      > </a
+      ><a name="217" class="Symbol"
+      >{</a
+      ><a name="218" href="lib.types.HList.html#218" class="Bound"
+      >L</a
+      ><a name="219"
+      > </a
+      ><a name="220" class="Symbol"
+      >:</a
+      ><a name="221"
+      > </a
+      ><a name="222" href="lib.types.List.html#197" class="Datatype"
+      >List</a
+      ><a name="226"
+      > </a
+      ><a name="227" class="Symbol"
+      >(</a
+      ><a name="228" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="232"
+      > </a
+      ><a name="233" href="lib.types.HList.html#135" class="Bound"
+      >i</a
+      ><a name="234" class="Symbol"
+      >)}</a
+      ><a name="236"
+      > </a
+      ><a name="237" class="Symbol"
+      >&#8594;</a
+      ><a name="238"
+      > </a
+      ><a name="239" href="lib.types.HList.html#205" class="Bound"
+      >A</a
+      ><a name="240"
+      > </a
+      ><a name="241" class="Symbol"
+      >&#8594;</a
+      ><a name="242"
+      > </a
+      ><a name="243" href="lib.types.HList.html#128" class="Datatype"
+      >HList</a
+      ><a name="248"
+      > </a
+      ><a name="249" href="lib.types.HList.html#218" class="Bound"
+      >L</a
+      ><a name="250"
+      > </a
+      ><a name="251" class="Symbol"
+      >&#8594;</a
+      ><a name="252"
+      > </a
+      ><a name="253" href="lib.types.HList.html#128" class="Datatype"
+      >HList</a
+      ><a name="258"
+      > </a
+      ><a name="259" class="Symbol"
+      >(</a
+      ><a name="260" href="lib.types.HList.html#205" class="Bound"
+      >A</a
+      ><a name="261"
+      > </a
+      ><a name="262" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="264"
+      > </a
+      ><a name="265" href="lib.types.HList.html#218" class="Bound"
+      >L</a
+      ><a name="266" class="Symbol"
+      >)</a
+      ><a name="267"
+      >
+
+</a
+      ><a name="269" href="lib.types.HList.html#269" class="Function"
+      >hlist-curry-type</a
+      ><a name="285"
+      > </a
+      ><a name="286" class="Symbol"
+      >:</a
+      ><a name="287"
+      > </a
+      ><a name="288" class="Symbol"
+      >&#8704;</a
+      ><a name="289"
+      > </a
+      ><a name="290" class="Symbol"
+      >{</a
+      ><a name="291" href="lib.types.HList.html#291" class="Bound"
+      >i</a
+      ><a name="292"
+      > </a
+      ><a name="293" href="lib.types.HList.html#293" class="Bound"
+      >j</a
+      ><a name="294" class="Symbol"
+      >}</a
+      ><a name="295"
+      > </a
+      ><a name="296" class="Symbol"
+      >(</a
+      ><a name="297" href="lib.types.HList.html#297" class="Bound"
+      >L</a
+      ><a name="298"
+      > </a
+      ><a name="299" class="Symbol"
+      >:</a
+      ><a name="300"
+      > </a
+      ><a name="301" href="lib.types.List.html#197" class="Datatype"
+      >List</a
+      ><a name="305"
+      > </a
+      ><a name="306" class="Symbol"
+      >(</a
+      ><a name="307" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="311"
+      > </a
+      ><a name="312" href="lib.types.HList.html#291" class="Bound"
+      >i</a
+      ><a name="313" class="Symbol"
+      >))</a
+      ><a name="315"
+      >
+  </a
+      ><a name="318" class="Symbol"
+      >(</a
+      ><a name="319" href="lib.types.HList.html#319" class="Bound"
+      >B</a
+      ><a name="320"
+      > </a
+      ><a name="321" class="Symbol"
+      >:</a
+      ><a name="322"
+      > </a
+      ><a name="323" href="lib.types.HList.html#128" class="Datatype"
+      >HList</a
+      ><a name="328"
+      > </a
+      ><a name="329" href="lib.types.HList.html#297" class="Bound"
+      >L</a
+      ><a name="330"
+      > </a
+      ><a name="331" class="Symbol"
+      >&#8594;</a
+      ><a name="332"
+      > </a
+      ><a name="333" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="337"
+      > </a
+      ><a name="338" class="Symbol"
+      >(</a
+      ><a name="339" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="343"
+      > </a
+      ><a name="344" href="lib.types.HList.html#291" class="Bound"
+      >i</a
+      ><a name="345"
+      > </a
+      ><a name="346" href="lib.types.HList.html#293" class="Bound"
+      >j</a
+      ><a name="347" class="Symbol"
+      >))</a
+      ><a name="349"
+      > </a
+      ><a name="350" class="Symbol"
+      >&#8594;</a
+      ><a name="351"
+      > </a
+      ><a name="352" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="356"
+      > </a
+      ><a name="357" class="Symbol"
+      >(</a
+      ><a name="358" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="362"
+      > </a
+      ><a name="363" href="lib.types.HList.html#291" class="Bound"
+      >i</a
+      ><a name="364"
+      > </a
+      ><a name="365" href="lib.types.HList.html#293" class="Bound"
+      >j</a
+      ><a name="366" class="Symbol"
+      >)</a
+      ><a name="367"
+      >
+</a
+      ><a name="368" href="lib.types.HList.html#269" class="Function"
+      >hlist-curry-type</a
+      ><a name="384"
+      > </a
+      ><a name="385" href="lib.types.List.html#236" class="InductiveConstructor"
+      >nil</a
+      ><a name="388"
+      > </a
+      ><a name="389" href="lib.types.HList.html#389" class="Bound"
+      >B</a
+      ><a name="390"
+      > </a
+      ><a name="391" class="Symbol"
+      >=</a
+      ><a name="392"
+      > </a
+      ><a name="393" href="lib.types.HList.html#389" class="Bound"
+      >B</a
+      ><a name="394"
+      > </a
+      ><a name="395" href="lib.types.HList.html#179" class="InductiveConstructor"
+      >nil</a
+      ><a name="398"
+      >
+</a
+      ><a name="399" href="lib.types.HList.html#269" class="Function"
+      >hlist-curry-type</a
+      ><a name="415"
+      > </a
+      ><a name="416" class="Symbol"
+      >{</a
+      ><a name="417" class="Argument"
+      >j</a
+      ><a name="418"
+      > </a
+      ><a name="419" class="Symbol"
+      >=</a
+      ><a name="420"
+      > </a
+      ><a name="421" href="lib.types.HList.html#421" class="Bound"
+      >j</a
+      ><a name="422" class="Symbol"
+      >}</a
+      ><a name="423"
+      > </a
+      ><a name="424" class="Symbol"
+      >(</a
+      ><a name="425" href="lib.types.HList.html#425" class="Bound"
+      >A</a
+      ><a name="426"
+      > </a
+      ><a name="427" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="429"
+      > </a
+      ><a name="430" href="lib.types.HList.html#430" class="Bound"
+      >L</a
+      ><a name="431" class="Symbol"
+      >)</a
+      ><a name="432"
+      > </a
+      ><a name="433" href="lib.types.HList.html#433" class="Bound"
+      >B</a
+      ><a name="434"
+      > </a
+      ><a name="435" class="Symbol"
+      >=</a
+      ><a name="436"
+      >
+  </a
+      ><a name="439" class="Symbol"
+      >(</a
+      ><a name="440" href="lib.types.HList.html#440" class="Bound"
+      >x</a
+      ><a name="441"
+      > </a
+      ><a name="442" class="Symbol"
+      >:</a
+      ><a name="443"
+      > </a
+      ><a name="444" href="lib.types.HList.html#425" class="Bound"
+      >A</a
+      ><a name="445" class="Symbol"
+      >)</a
+      ><a name="446"
+      > </a
+      ><a name="447" class="Symbol"
+      >&#8594;</a
+      ><a name="448"
+      > </a
+      ><a name="449" href="lib.types.HList.html#269" class="Function"
+      >hlist-curry-type</a
+      ><a name="465"
+      > </a
+      ><a name="466" class="Symbol"
+      >{</a
+      ><a name="467" class="Argument"
+      >j</a
+      ><a name="468"
+      > </a
+      ><a name="469" class="Symbol"
+      >=</a
+      ><a name="470"
+      > </a
+      ><a name="471" href="lib.types.HList.html#421" class="Bound"
+      >j</a
+      ><a name="472" class="Symbol"
+      >}</a
+      ><a name="473"
+      > </a
+      ><a name="474" href="lib.types.HList.html#430" class="Bound"
+      >L</a
+      ><a name="475"
+      > </a
+      ><a name="476" class="Symbol"
+      >(&#955;</a
+      ><a name="478"
+      > </a
+      ><a name="479" href="lib.types.HList.html#479" class="Bound"
+      >xs</a
+      ><a name="481"
+      > </a
+      ><a name="482" class="Symbol"
+      >&#8594;</a
+      ><a name="483"
+      > </a
+      ><a name="484" href="lib.types.HList.html#433" class="Bound"
+      >B</a
+      ><a name="485"
+      > </a
+      ><a name="486" class="Symbol"
+      >(</a
+      ><a name="487" href="lib.types.HList.html#440" class="Bound"
+      >x</a
+      ><a name="488"
+      > </a
+      ><a name="489" href="lib.types.HList.html#197" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="491"
+      > </a
+      ><a name="492" href="lib.types.HList.html#479" class="Bound"
+      >xs</a
+      ><a name="494" class="Symbol"
+      >))</a
+      ><a name="496"
+      >
+
+</a
+      ><a name="498" href="lib.types.HList.html#498" class="Function"
+      >hlist-curry</a
+      ><a name="509"
+      > </a
+      ><a name="510" class="Symbol"
+      >:</a
+      ><a name="511"
+      > </a
+      ><a name="512" class="Symbol"
+      >&#8704;</a
+      ><a name="513"
+      > </a
+      ><a name="514" class="Symbol"
+      >{</a
+      ><a name="515" href="lib.types.HList.html#515" class="Bound"
+      >i</a
+      ><a name="516"
+      > </a
+      ><a name="517" href="lib.types.HList.html#517" class="Bound"
+      >j</a
+      ><a name="518" class="Symbol"
+      >}</a
+      ><a name="519"
+      > </a
+      ><a name="520" class="Symbol"
+      >{</a
+      ><a name="521" href="lib.types.HList.html#521" class="Bound"
+      >L</a
+      ><a name="522"
+      > </a
+      ><a name="523" class="Symbol"
+      >:</a
+      ><a name="524"
+      > </a
+      ><a name="525" href="lib.types.List.html#197" class="Datatype"
+      >List</a
+      ><a name="529"
+      > </a
+      ><a name="530" class="Symbol"
+      >(</a
+      ><a name="531" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="535"
+      > </a
+      ><a name="536" href="lib.types.HList.html#515" class="Bound"
+      >i</a
+      ><a name="537" class="Symbol"
+      >)}</a
+      ><a name="539"
+      > </a
+      ><a name="540" class="Symbol"
+      >{</a
+      ><a name="541" href="lib.types.HList.html#541" class="Bound"
+      >B</a
+      ><a name="542"
+      > </a
+      ><a name="543" class="Symbol"
+      >:</a
+      ><a name="544"
+      > </a
+      ><a name="545" href="lib.types.HList.html#128" class="Datatype"
+      >HList</a
+      ><a name="550"
+      > </a
+      ><a name="551" href="lib.types.HList.html#521" class="Bound"
+      >L</a
+      ><a name="552"
+      > </a
+      ><a name="553" class="Symbol"
+      >&#8594;</a
+      ><a name="554"
+      > </a
+      ><a name="555" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="559"
+      > </a
+      ><a name="560" class="Symbol"
+      >(</a
+      ><a name="561" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="565"
+      > </a
+      ><a name="566" href="lib.types.HList.html#515" class="Bound"
+      >i</a
+      ><a name="567"
+      > </a
+      ><a name="568" href="lib.types.HList.html#517" class="Bound"
+      >j</a
+      ><a name="569" class="Symbol"
+      >)}</a
+      ><a name="571"
+      >
+  </a
+      ><a name="574" class="Symbol"
+      >(</a
+      ><a name="575" href="lib.types.HList.html#575" class="Bound"
+      >f</a
+      ><a name="576"
+      > </a
+      ><a name="577" class="Symbol"
+      >:</a
+      ><a name="578"
+      > </a
+      ><a name="579" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="580"
+      > </a
+      ><a name="581" class="Symbol"
+      >(</a
+      ><a name="582" href="lib.types.HList.html#128" class="Datatype"
+      >HList</a
+      ><a name="587"
+      > </a
+      ><a name="588" href="lib.types.HList.html#521" class="Bound"
+      >L</a
+      ><a name="589" class="Symbol"
+      >)</a
+      ><a name="590"
+      > </a
+      ><a name="591" href="lib.types.HList.html#541" class="Bound"
+      >B</a
+      ><a name="592" class="Symbol"
+      >)</a
+      ><a name="593"
+      > </a
+      ><a name="594" class="Symbol"
+      >&#8594;</a
+      ><a name="595"
+      > </a
+      ><a name="596" href="lib.types.HList.html#269" class="Function"
+      >hlist-curry-type</a
+      ><a name="612"
+      > </a
+      ><a name="613" class="Symbol"
+      >{</a
+      ><a name="614" class="Argument"
+      >j</a
+      ><a name="615"
+      > </a
+      ><a name="616" class="Symbol"
+      >=</a
+      ><a name="617"
+      > </a
+      ><a name="618" href="lib.types.HList.html#517" class="Bound"
+      >j</a
+      ><a name="619" class="Symbol"
+      >}</a
+      ><a name="620"
+      > </a
+      ><a name="621" href="lib.types.HList.html#521" class="Bound"
+      >L</a
+      ><a name="622"
+      > </a
+      ><a name="623" href="lib.types.HList.html#541" class="Bound"
+      >B</a
+      ><a name="624"
+      >
+</a
+      ><a name="625" href="lib.types.HList.html#498" class="Function"
+      >hlist-curry</a
+      ><a name="636"
+      > </a
+      ><a name="637" class="Symbol"
+      >{</a
+      ><a name="638" class="Argument"
+      >L</a
+      ><a name="639"
+      > </a
+      ><a name="640" class="Symbol"
+      >=</a
+      ><a name="641"
+      > </a
+      ><a name="642" href="lib.types.List.html#236" class="InductiveConstructor"
+      >nil</a
+      ><a name="645" class="Symbol"
+      >}</a
+      ><a name="646"
+      > </a
+      ><a name="647" href="lib.types.HList.html#647" class="Bound"
+      >f</a
+      ><a name="648"
+      > </a
+      ><a name="649" class="Symbol"
+      >=</a
+      ><a name="650"
+      > </a
+      ><a name="651" href="lib.types.HList.html#647" class="Bound"
+      >f</a
+      ><a name="652"
+      > </a
+      ><a name="653" href="lib.types.HList.html#179" class="InductiveConstructor"
+      >nil</a
+      ><a name="656"
+      >
+</a
+      ><a name="657" href="lib.types.HList.html#498" class="Function"
+      >hlist-curry</a
+      ><a name="668"
+      > </a
+      ><a name="669" class="Symbol"
+      >{</a
+      ><a name="670" class="Argument"
+      >L</a
+      ><a name="671"
+      > </a
+      ><a name="672" class="Symbol"
+      >=</a
+      ><a name="673"
+      > </a
+      ><a name="674" href="lib.types.HList.html#674" class="Bound"
+      >A</a
+      ><a name="675"
+      > </a
+      ><a name="676" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="678"
+      > </a
+      ><a name="679" class="Symbol"
+      >_}</a
+      ><a name="681"
+      > </a
+      ><a name="682" href="lib.types.HList.html#682" class="Bound"
+      >f</a
+      ><a name="683"
+      > </a
+      ><a name="684" class="Symbol"
+      >=</a
+      ><a name="685"
+      > </a
+      ><a name="686" class="Symbol"
+      >&#955;</a
+      ><a name="687"
+      > </a
+      ><a name="688" href="lib.types.HList.html#688" class="Bound"
+      >x</a
+      ><a name="689"
+      > </a
+      ><a name="690" class="Symbol"
+      >&#8594;</a
+      ><a name="691"
+      > </a
+      ><a name="692" href="lib.types.HList.html#498" class="Function"
+      >hlist-curry</a
+      ><a name="703"
+      > </a
+      ><a name="704" class="Symbol"
+      >(&#955;</a
+      ><a name="706"
+      > </a
+      ><a name="707" href="lib.types.HList.html#707" class="Bound"
+      >xs</a
+      ><a name="709"
+      > </a
+      ><a name="710" class="Symbol"
+      >&#8594;</a
+      ><a name="711"
+      > </a
+      ><a name="712" href="lib.types.HList.html#682" class="Bound"
+      >f</a
+      ><a name="713"
+      > </a
+      ><a name="714" class="Symbol"
+      >(</a
+      ><a name="715" href="lib.types.HList.html#688" class="Bound"
+      >x</a
+      ><a name="716"
+      > </a
+      ><a name="717" href="lib.types.HList.html#197" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="719"
+      > </a
+      ><a name="720" href="lib.types.HList.html#707" class="Bound"
+      >xs</a
+      ><a name="722" class="Symbol"
+      >))</a
+      ><a name="724"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

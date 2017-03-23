@@ -1,0 +1,4291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.Span</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.Pi.html#1" class="Module"
+      >lib.types.Pi</a
+      ><a name="89"
+      >
+</a
+      ><a name="90" class="Keyword"
+      >open</a
+      ><a name="94"
+      > </a
+      ><a name="95" class="Keyword"
+      >import</a
+      ><a name="101"
+      > </a
+      ><a name="102" href="lib.types.Sigma.html#1" class="Module"
+      >lib.types.Sigma</a
+      ><a name="117"
+      >
+</a
+      ><a name="118" class="Keyword"
+      >open</a
+      ><a name="122"
+      > </a
+      ><a name="123" class="Keyword"
+      >import</a
+      ><a name="129"
+      > </a
+      ><a name="130" href="lib.types.CommutingSquare.html#1" class="Module"
+      >lib.types.CommutingSquare</a
+      ><a name="155"
+      >
+
+</a
+      ><a name="157" class="Keyword"
+      >module</a
+      ><a name="163"
+      > </a
+      ><a name="164" href="lib.types.Span.html#1" class="Module"
+      >lib.types.Span</a
+      ><a name="178"
+      > </a
+      ><a name="179" class="Keyword"
+      >where</a
+      ><a name="184"
+      >
+
+</a
+      ><a name="186" class="Keyword"
+      >record</a
+      ><a name="192"
+      > </a
+      ><a name="193" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="197"
+      > </a
+      ><a name="198" class="Symbol"
+      >{</a
+      ><a name="199" href="lib.types.Span.html#199" class="Bound"
+      >i</a
+      ><a name="200"
+      > </a
+      ><a name="201" href="lib.types.Span.html#201" class="Bound"
+      >j</a
+      ><a name="202"
+      > </a
+      ><a name="203" href="lib.types.Span.html#203" class="Bound"
+      >k</a
+      ><a name="204"
+      > </a
+      ><a name="205" class="Symbol"
+      >:</a
+      ><a name="206"
+      > </a
+      ><a name="207" href="Agda.Primitive.html#408" class="Postulate"
+      >ULevel</a
+      ><a name="213" class="Symbol"
+      >}</a
+      ><a name="214"
+      > </a
+      ><a name="215" class="Symbol"
+      >:</a
+      ><a name="216"
+      > </a
+      ><a name="217" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="221"
+      > </a
+      ><a name="222" class="Symbol"
+      >(</a
+      ><a name="223" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="228"
+      > </a
+      ><a name="229" class="Symbol"
+      >(</a
+      ><a name="230" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="234"
+      > </a
+      ><a name="235" class="Symbol"
+      >(</a
+      ><a name="236" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="240"
+      > </a
+      ><a name="241" href="lib.types.Span.html#199" class="Bound"
+      >i</a
+      ><a name="242"
+      > </a
+      ><a name="243" href="lib.types.Span.html#201" class="Bound"
+      >j</a
+      ><a name="244" class="Symbol"
+      >)</a
+      ><a name="245"
+      > </a
+      ><a name="246" href="lib.types.Span.html#203" class="Bound"
+      >k</a
+      ><a name="247" class="Symbol"
+      >))</a
+      ><a name="249"
+      > </a
+      ><a name="250" class="Keyword"
+      >where</a
+      ><a name="255"
+      >
+  </a
+      ><a name="258" class="Keyword"
+      >constructor</a
+      ><a name="269"
+      > </a
+      ><a name="270" href="lib.types.Span.html#270" class="InductiveConstructor"
+      >span</a
+      ><a name="274"
+      >
+  </a
+      ><a name="277" class="Keyword"
+      >field</a
+      ><a name="282"
+      >
+    </a
+      ><a name="287" href="lib.types.Span.html#287" class="Field"
+      >A</a
+      ><a name="288"
+      > </a
+      ><a name="289" class="Symbol"
+      >:</a
+      ><a name="290"
+      > </a
+      ><a name="291" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="295"
+      > </a
+      ><a name="296" href="lib.types.Span.html#199" class="Bound"
+      >i</a
+      ><a name="297"
+      >
+    </a
+      ><a name="302" href="lib.types.Span.html#302" class="Field"
+      >B</a
+      ><a name="303"
+      > </a
+      ><a name="304" class="Symbol"
+      >:</a
+      ><a name="305"
+      > </a
+      ><a name="306" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="310"
+      > </a
+      ><a name="311" href="lib.types.Span.html#201" class="Bound"
+      >j</a
+      ><a name="312"
+      >
+    </a
+      ><a name="317" href="lib.types.Span.html#317" class="Field"
+      >C</a
+      ><a name="318"
+      > </a
+      ><a name="319" class="Symbol"
+      >:</a
+      ><a name="320"
+      > </a
+      ><a name="321" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="325"
+      > </a
+      ><a name="326" href="lib.types.Span.html#203" class="Bound"
+      >k</a
+      ><a name="327"
+      >
+    </a
+      ><a name="332" href="lib.types.Span.html#332" class="Field"
+      >f</a
+      ><a name="333"
+      > </a
+      ><a name="334" class="Symbol"
+      >:</a
+      ><a name="335"
+      > </a
+      ><a name="336" href="lib.types.Span.html#317" class="Field"
+      >C</a
+      ><a name="337"
+      > </a
+      ><a name="338" class="Symbol"
+      >&#8594;</a
+      ><a name="339"
+      > </a
+      ><a name="340" href="lib.types.Span.html#287" class="Field"
+      >A</a
+      ><a name="341"
+      >
+    </a
+      ><a name="346" href="lib.types.Span.html#346" class="Field"
+      >g</a
+      ><a name="347"
+      > </a
+      ><a name="348" class="Symbol"
+      >:</a
+      ><a name="349"
+      > </a
+      ><a name="350" href="lib.types.Span.html#317" class="Field"
+      >C</a
+      ><a name="351"
+      > </a
+      ><a name="352" class="Symbol"
+      >&#8594;</a
+      ><a name="353"
+      > </a
+      ><a name="354" href="lib.types.Span.html#302" class="Field"
+      >B</a
+      ><a name="355"
+      >
+
+</a
+      ><a name="357" class="Keyword"
+      >private</a
+      ><a name="364"
+      >
+  </a
+      ><a name="367" href="lib.types.Span.html#367" class="Function"
+      >span=-raw</a
+      ><a name="376"
+      > </a
+      ><a name="377" class="Symbol"
+      >:</a
+      ><a name="378"
+      > </a
+      ><a name="379" class="Symbol"
+      >&#8704;</a
+      ><a name="380"
+      > </a
+      ><a name="381" class="Symbol"
+      >{</a
+      ><a name="382" href="lib.types.Span.html#382" class="Bound"
+      >i</a
+      ><a name="383"
+      > </a
+      ><a name="384" href="lib.types.Span.html#384" class="Bound"
+      >j</a
+      ><a name="385"
+      > </a
+      ><a name="386" href="lib.types.Span.html#386" class="Bound"
+      >k</a
+      ><a name="387" class="Symbol"
+      >}</a
+      ><a name="388"
+      > </a
+      ><a name="389" class="Symbol"
+      >{</a
+      ><a name="390" href="lib.types.Span.html#390" class="Bound"
+      >A</a
+      ><a name="391"
+      > </a
+      ><a name="392" href="lib.types.Span.html#392" class="Bound"
+      >A'</a
+      ><a name="394"
+      > </a
+      ><a name="395" class="Symbol"
+      >:</a
+      ><a name="396"
+      > </a
+      ><a name="397" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="401"
+      > </a
+      ><a name="402" href="lib.types.Span.html#382" class="Bound"
+      >i</a
+      ><a name="403" class="Symbol"
+      >}</a
+      ><a name="404"
+      > </a
+      ><a name="405" class="Symbol"
+      >(</a
+      ><a name="406" href="lib.types.Span.html#406" class="Bound"
+      >p</a
+      ><a name="407"
+      > </a
+      ><a name="408" class="Symbol"
+      >:</a
+      ><a name="409"
+      > </a
+      ><a name="410" href="lib.types.Span.html#390" class="Bound"
+      >A</a
+      ><a name="411"
+      > </a
+      ><a name="412" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="414"
+      > </a
+      ><a name="415" href="lib.types.Span.html#392" class="Bound"
+      >A'</a
+      ><a name="417" class="Symbol"
+      >)</a
+      ><a name="418"
+      >
+    </a
+      ><a name="423" class="Symbol"
+      >{</a
+      ><a name="424" href="lib.types.Span.html#424" class="Bound"
+      >B</a
+      ><a name="425"
+      > </a
+      ><a name="426" href="lib.types.Span.html#426" class="Bound"
+      >B'</a
+      ><a name="428"
+      > </a
+      ><a name="429" class="Symbol"
+      >:</a
+      ><a name="430"
+      > </a
+      ><a name="431" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="435"
+      > </a
+      ><a name="436" href="lib.types.Span.html#384" class="Bound"
+      >j</a
+      ><a name="437" class="Symbol"
+      >}</a
+      ><a name="438"
+      > </a
+      ><a name="439" class="Symbol"
+      >(</a
+      ><a name="440" href="lib.types.Span.html#440" class="Bound"
+      >q</a
+      ><a name="441"
+      > </a
+      ><a name="442" class="Symbol"
+      >:</a
+      ><a name="443"
+      > </a
+      ><a name="444" href="lib.types.Span.html#424" class="Bound"
+      >B</a
+      ><a name="445"
+      > </a
+      ><a name="446" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="448"
+      > </a
+      ><a name="449" href="lib.types.Span.html#426" class="Bound"
+      >B'</a
+      ><a name="451" class="Symbol"
+      >)</a
+      ><a name="452"
+      > </a
+      ><a name="453" class="Symbol"
+      >{</a
+      ><a name="454" href="lib.types.Span.html#454" class="Bound"
+      >C</a
+      ><a name="455"
+      > </a
+      ><a name="456" href="lib.types.Span.html#456" class="Bound"
+      >C'</a
+      ><a name="458"
+      > </a
+      ><a name="459" class="Symbol"
+      >:</a
+      ><a name="460"
+      > </a
+      ><a name="461" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="465"
+      > </a
+      ><a name="466" href="lib.types.Span.html#386" class="Bound"
+      >k</a
+      ><a name="467" class="Symbol"
+      >}</a
+      ><a name="468"
+      > </a
+      ><a name="469" class="Symbol"
+      >(</a
+      ><a name="470" href="lib.types.Span.html#470" class="Bound"
+      >r</a
+      ><a name="471"
+      > </a
+      ><a name="472" class="Symbol"
+      >:</a
+      ><a name="473"
+      > </a
+      ><a name="474" href="lib.types.Span.html#454" class="Bound"
+      >C</a
+      ><a name="475"
+      > </a
+      ><a name="476" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="478"
+      > </a
+      ><a name="479" href="lib.types.Span.html#456" class="Bound"
+      >C'</a
+      ><a name="481" class="Symbol"
+      >)</a
+      ><a name="482"
+      >
+    </a
+      ><a name="487" class="Symbol"
+      >{</a
+      ><a name="488" href="lib.types.Span.html#488" class="Bound"
+      >f</a
+      ><a name="489"
+      > </a
+      ><a name="490" class="Symbol"
+      >:</a
+      ><a name="491"
+      > </a
+      ><a name="492" href="lib.types.Span.html#454" class="Bound"
+      >C</a
+      ><a name="493"
+      > </a
+      ><a name="494" class="Symbol"
+      >&#8594;</a
+      ><a name="495"
+      > </a
+      ><a name="496" href="lib.types.Span.html#390" class="Bound"
+      >A</a
+      ><a name="497" class="Symbol"
+      >}</a
+      ><a name="498"
+      > </a
+      ><a name="499" class="Symbol"
+      >{</a
+      ><a name="500" href="lib.types.Span.html#500" class="Bound"
+      >f'</a
+      ><a name="502"
+      > </a
+      ><a name="503" class="Symbol"
+      >:</a
+      ><a name="504"
+      > </a
+      ><a name="505" href="lib.types.Span.html#456" class="Bound"
+      >C'</a
+      ><a name="507"
+      > </a
+      ><a name="508" class="Symbol"
+      >&#8594;</a
+      ><a name="509"
+      > </a
+      ><a name="510" href="lib.types.Span.html#392" class="Bound"
+      >A'</a
+      ><a name="512" class="Symbol"
+      >}</a
+      ><a name="513"
+      >
+    </a
+      ><a name="518" class="Symbol"
+      >(</a
+      ><a name="519" href="lib.types.Span.html#519" class="Bound"
+      >s</a
+      ><a name="520"
+      > </a
+      ><a name="521" class="Symbol"
+      >:</a
+      ><a name="522"
+      > </a
+      ><a name="523" href="lib.types.Span.html#488" class="Bound"
+      >f</a
+      ><a name="524"
+      > </a
+      ><a name="525" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="527"
+      > </a
+      ><a name="528" href="lib.types.Span.html#500" class="Bound"
+      >f'</a
+      ><a name="530"
+      > </a
+      ><a name="531" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="532"
+      > </a
+      ><a name="533" class="Symbol"
+      >(&#955;</a
+      ><a name="535"
+      > </a
+      ><a name="536" href="lib.types.Span.html#536" class="Bound"
+      >CA</a
+      ><a name="538"
+      > </a
+      ><a name="539" class="Symbol"
+      >&#8594;</a
+      ><a name="540"
+      > </a
+      ><a name="541" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="544"
+      > </a
+      ><a name="545" href="lib.types.Span.html#536" class="Bound"
+      >CA</a
+      ><a name="547"
+      > </a
+      ><a name="548" class="Symbol"
+      >&#8594;</a
+      ><a name="549"
+      > </a
+      ><a name="550" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="553"
+      > </a
+      ><a name="554" href="lib.types.Span.html#536" class="Bound"
+      >CA</a
+      ><a name="556" class="Symbol"
+      >)</a
+      ><a name="557"
+      > </a
+      ><a name="558" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="559"
+      > </a
+      ><a name="560" href="lib.Base.html#5559" class="Function"
+      >pair&#215;=</a
+      ><a name="566"
+      > </a
+      ><a name="567" href="lib.types.Span.html#470" class="Bound"
+      >r</a
+      ><a name="568"
+      > </a
+      ><a name="569" href="lib.types.Span.html#406" class="Bound"
+      >p</a
+      ><a name="570"
+      > </a
+      ><a name="571" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="572" class="Symbol"
+      >)</a
+      ><a name="573"
+      >
+    </a
+      ><a name="578" class="Symbol"
+      >{</a
+      ><a name="579" href="lib.types.Span.html#579" class="Bound"
+      >g</a
+      ><a name="580"
+      > </a
+      ><a name="581" class="Symbol"
+      >:</a
+      ><a name="582"
+      > </a
+      ><a name="583" href="lib.types.Span.html#454" class="Bound"
+      >C</a
+      ><a name="584"
+      > </a
+      ><a name="585" class="Symbol"
+      >&#8594;</a
+      ><a name="586"
+      > </a
+      ><a name="587" href="lib.types.Span.html#424" class="Bound"
+      >B</a
+      ><a name="588" class="Symbol"
+      >}</a
+      ><a name="589"
+      > </a
+      ><a name="590" class="Symbol"
+      >{</a
+      ><a name="591" href="lib.types.Span.html#591" class="Bound"
+      >g'</a
+      ><a name="593"
+      > </a
+      ><a name="594" class="Symbol"
+      >:</a
+      ><a name="595"
+      > </a
+      ><a name="596" href="lib.types.Span.html#456" class="Bound"
+      >C'</a
+      ><a name="598"
+      > </a
+      ><a name="599" class="Symbol"
+      >&#8594;</a
+      ><a name="600"
+      > </a
+      ><a name="601" href="lib.types.Span.html#426" class="Bound"
+      >B'</a
+      ><a name="603" class="Symbol"
+      >}</a
+      ><a name="604"
+      >
+    </a
+      ><a name="609" class="Symbol"
+      >(</a
+      ><a name="610" href="lib.types.Span.html#610" class="Bound"
+      >t</a
+      ><a name="611"
+      > </a
+      ><a name="612" class="Symbol"
+      >:</a
+      ><a name="613"
+      > </a
+      ><a name="614" href="lib.types.Span.html#579" class="Bound"
+      >g</a
+      ><a name="615"
+      > </a
+      ><a name="616" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="618"
+      > </a
+      ><a name="619" href="lib.types.Span.html#591" class="Bound"
+      >g'</a
+      ><a name="621"
+      > </a
+      ><a name="622" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="623"
+      > </a
+      ><a name="624" class="Symbol"
+      >(&#955;</a
+      ><a name="626"
+      > </a
+      ><a name="627" href="lib.types.Span.html#627" class="Bound"
+      >CB</a
+      ><a name="629"
+      > </a
+      ><a name="630" class="Symbol"
+      >&#8594;</a
+      ><a name="631"
+      > </a
+      ><a name="632" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="635"
+      > </a
+      ><a name="636" href="lib.types.Span.html#627" class="Bound"
+      >CB</a
+      ><a name="638"
+      > </a
+      ><a name="639" class="Symbol"
+      >&#8594;</a
+      ><a name="640"
+      > </a
+      ><a name="641" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="644"
+      > </a
+      ><a name="645" href="lib.types.Span.html#627" class="Bound"
+      >CB</a
+      ><a name="647" class="Symbol"
+      >)</a
+      ><a name="648"
+      > </a
+      ><a name="649" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="650"
+      > </a
+      ><a name="651" href="lib.Base.html#5559" class="Function"
+      >pair&#215;=</a
+      ><a name="657"
+      > </a
+      ><a name="658" href="lib.types.Span.html#470" class="Bound"
+      >r</a
+      ><a name="659"
+      > </a
+      ><a name="660" href="lib.types.Span.html#440" class="Bound"
+      >q</a
+      ><a name="661"
+      > </a
+      ><a name="662" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="663" class="Symbol"
+      >)</a
+      ><a name="664"
+      >
+    </a
+      ><a name="669" class="Symbol"
+      >&#8594;</a
+      ><a name="670"
+      > </a
+      ><a name="671" class="Symbol"
+      >(</a
+      ><a name="672" href="lib.types.Span.html#270" class="InductiveConstructor"
+      >span</a
+      ><a name="676"
+      > </a
+      ><a name="677" href="lib.types.Span.html#390" class="Bound"
+      >A</a
+      ><a name="678"
+      > </a
+      ><a name="679" href="lib.types.Span.html#424" class="Bound"
+      >B</a
+      ><a name="680"
+      > </a
+      ><a name="681" href="lib.types.Span.html#454" class="Bound"
+      >C</a
+      ><a name="682"
+      > </a
+      ><a name="683" href="lib.types.Span.html#488" class="Bound"
+      >f</a
+      ><a name="684"
+      > </a
+      ><a name="685" href="lib.types.Span.html#579" class="Bound"
+      >g</a
+      ><a name="686" class="Symbol"
+      >)</a
+      ><a name="687"
+      > </a
+      ><a name="688" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="690"
+      > </a
+      ><a name="691" class="Symbol"
+      >(</a
+      ><a name="692" href="lib.types.Span.html#270" class="InductiveConstructor"
+      >span</a
+      ><a name="696"
+      > </a
+      ><a name="697" href="lib.types.Span.html#392" class="Bound"
+      >A'</a
+      ><a name="699"
+      > </a
+      ><a name="700" href="lib.types.Span.html#426" class="Bound"
+      >B'</a
+      ><a name="702"
+      > </a
+      ><a name="703" href="lib.types.Span.html#456" class="Bound"
+      >C'</a
+      ><a name="705"
+      > </a
+      ><a name="706" href="lib.types.Span.html#500" class="Bound"
+      >f'</a
+      ><a name="708"
+      > </a
+      ><a name="709" href="lib.types.Span.html#591" class="Bound"
+      >g'</a
+      ><a name="711" class="Symbol"
+      >)</a
+      ><a name="712"
+      >
+  </a
+      ><a name="715" href="lib.types.Span.html#367" class="Function"
+      >span=-raw</a
+      ><a name="724"
+      > </a
+      ><a name="725" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="728"
+      > </a
+      ><a name="729" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="732"
+      > </a
+      ><a name="733" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="736"
+      > </a
+      ><a name="737" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="740"
+      > </a
+      ><a name="741" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="744"
+      > </a
+      ><a name="745" class="Symbol"
+      >=</a
+      ><a name="746"
+      > </a
+      ><a name="747" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="750"
+      >
+
+</a
+      ><a name="752" class="Keyword"
+      >abstract</a
+      ><a name="760"
+      >
+  </a
+      ><a name="763" href="lib.types.Span.html#763" class="Function"
+      >span=</a
+      ><a name="768"
+      > </a
+      ><a name="769" class="Symbol"
+      >:</a
+      ><a name="770"
+      > </a
+      ><a name="771" class="Symbol"
+      >&#8704;</a
+      ><a name="772"
+      > </a
+      ><a name="773" class="Symbol"
+      >{</a
+      ><a name="774" href="lib.types.Span.html#774" class="Bound"
+      >i</a
+      ><a name="775"
+      > </a
+      ><a name="776" href="lib.types.Span.html#776" class="Bound"
+      >j</a
+      ><a name="777"
+      > </a
+      ><a name="778" href="lib.types.Span.html#778" class="Bound"
+      >k</a
+      ><a name="779" class="Symbol"
+      >}</a
+      ><a name="780"
+      > </a
+      ><a name="781" class="Symbol"
+      >{</a
+      ><a name="782" href="lib.types.Span.html#782" class="Bound"
+      >A</a
+      ><a name="783"
+      > </a
+      ><a name="784" href="lib.types.Span.html#784" class="Bound"
+      >A'</a
+      ><a name="786"
+      > </a
+      ><a name="787" class="Symbol"
+      >:</a
+      ><a name="788"
+      > </a
+      ><a name="789" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="793"
+      > </a
+      ><a name="794" href="lib.types.Span.html#774" class="Bound"
+      >i</a
+      ><a name="795" class="Symbol"
+      >}</a
+      ><a name="796"
+      > </a
+      ><a name="797" class="Symbol"
+      >(</a
+      ><a name="798" href="lib.types.Span.html#798" class="Bound"
+      >p</a
+      ><a name="799"
+      > </a
+      ><a name="800" class="Symbol"
+      >:</a
+      ><a name="801"
+      > </a
+      ><a name="802" href="lib.types.Span.html#782" class="Bound"
+      >A</a
+      ><a name="803"
+      > </a
+      ><a name="804" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="805"
+      > </a
+      ><a name="806" href="lib.types.Span.html#784" class="Bound"
+      >A'</a
+      ><a name="808" class="Symbol"
+      >)</a
+      ><a name="809"
+      >
+    </a
+      ><a name="814" class="Symbol"
+      >{</a
+      ><a name="815" href="lib.types.Span.html#815" class="Bound"
+      >B</a
+      ><a name="816"
+      > </a
+      ><a name="817" href="lib.types.Span.html#817" class="Bound"
+      >B'</a
+      ><a name="819"
+      > </a
+      ><a name="820" class="Symbol"
+      >:</a
+      ><a name="821"
+      > </a
+      ><a name="822" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="826"
+      > </a
+      ><a name="827" href="lib.types.Span.html#776" class="Bound"
+      >j</a
+      ><a name="828" class="Symbol"
+      >}</a
+      ><a name="829"
+      > </a
+      ><a name="830" class="Symbol"
+      >(</a
+      ><a name="831" href="lib.types.Span.html#831" class="Bound"
+      >q</a
+      ><a name="832"
+      > </a
+      ><a name="833" class="Symbol"
+      >:</a
+      ><a name="834"
+      > </a
+      ><a name="835" href="lib.types.Span.html#815" class="Bound"
+      >B</a
+      ><a name="836"
+      > </a
+      ><a name="837" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="838"
+      > </a
+      ><a name="839" href="lib.types.Span.html#817" class="Bound"
+      >B'</a
+      ><a name="841" class="Symbol"
+      >)</a
+      ><a name="842"
+      > </a
+      ><a name="843" class="Symbol"
+      >{</a
+      ><a name="844" href="lib.types.Span.html#844" class="Bound"
+      >C</a
+      ><a name="845"
+      > </a
+      ><a name="846" href="lib.types.Span.html#846" class="Bound"
+      >C'</a
+      ><a name="848"
+      > </a
+      ><a name="849" class="Symbol"
+      >:</a
+      ><a name="850"
+      > </a
+      ><a name="851" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="855"
+      > </a
+      ><a name="856" href="lib.types.Span.html#778" class="Bound"
+      >k</a
+      ><a name="857" class="Symbol"
+      >}</a
+      ><a name="858"
+      > </a
+      ><a name="859" class="Symbol"
+      >(</a
+      ><a name="860" href="lib.types.Span.html#860" class="Bound"
+      >r</a
+      ><a name="861"
+      > </a
+      ><a name="862" class="Symbol"
+      >:</a
+      ><a name="863"
+      > </a
+      ><a name="864" href="lib.types.Span.html#844" class="Bound"
+      >C</a
+      ><a name="865"
+      > </a
+      ><a name="866" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="867"
+      > </a
+      ><a name="868" href="lib.types.Span.html#846" class="Bound"
+      >C'</a
+      ><a name="870" class="Symbol"
+      >)</a
+      ><a name="871"
+      >
+    </a
+      ><a name="876" class="Symbol"
+      >{</a
+      ><a name="877" href="lib.types.Span.html#877" class="Bound"
+      >f</a
+      ><a name="878"
+      > </a
+      ><a name="879" class="Symbol"
+      >:</a
+      ><a name="880"
+      > </a
+      ><a name="881" href="lib.types.Span.html#844" class="Bound"
+      >C</a
+      ><a name="882"
+      > </a
+      ><a name="883" class="Symbol"
+      >&#8594;</a
+      ><a name="884"
+      > </a
+      ><a name="885" href="lib.types.Span.html#782" class="Bound"
+      >A</a
+      ><a name="886" class="Symbol"
+      >}</a
+      ><a name="887"
+      > </a
+      ><a name="888" class="Symbol"
+      >{</a
+      ><a name="889" href="lib.types.Span.html#889" class="Bound"
+      >f'</a
+      ><a name="891"
+      > </a
+      ><a name="892" class="Symbol"
+      >:</a
+      ><a name="893"
+      > </a
+      ><a name="894" href="lib.types.Span.html#846" class="Bound"
+      >C'</a
+      ><a name="896"
+      > </a
+      ><a name="897" class="Symbol"
+      >&#8594;</a
+      ><a name="898"
+      > </a
+      ><a name="899" href="lib.types.Span.html#784" class="Bound"
+      >A'</a
+      ><a name="901" class="Symbol"
+      >}</a
+      ><a name="902"
+      > </a
+      ><a name="903" class="Symbol"
+      >(</a
+      ><a name="904" href="lib.types.Span.html#904" class="Bound"
+      >s</a
+      ><a name="905"
+      > </a
+      ><a name="906" class="Symbol"
+      >:</a
+      ><a name="907"
+      > </a
+      ><a name="908" class="Symbol"
+      >(</a
+      ><a name="909" href="lib.types.Span.html#909" class="Bound"
+      >a</a
+      ><a name="910"
+      > </a
+      ><a name="911" class="Symbol"
+      >:</a
+      ><a name="912"
+      > </a
+      ><a name="913" href="lib.types.Span.html#844" class="Bound"
+      >C</a
+      ><a name="914" class="Symbol"
+      >)</a
+      ><a name="915"
+      > </a
+      ><a name="916" class="Symbol"
+      >&#8594;</a
+      ><a name="917"
+      > </a
+      ><a name="918" class="Symbol"
+      >(</a
+      ><a name="919" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="921"
+      > </a
+      ><a name="922" href="lib.types.Span.html#798" class="Bound"
+      >p</a
+      ><a name="923" class="Symbol"
+      >)</a
+      ><a name="924"
+      > </a
+      ><a name="925" class="Symbol"
+      >(</a
+      ><a name="926" href="lib.types.Span.html#877" class="Bound"
+      >f</a
+      ><a name="927"
+      > </a
+      ><a name="928" href="lib.types.Span.html#909" class="Bound"
+      >a</a
+      ><a name="929" class="Symbol"
+      >)</a
+      ><a name="930"
+      > </a
+      ><a name="931" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="933"
+      > </a
+      ><a name="934" href="lib.types.Span.html#889" class="Bound"
+      >f'</a
+      ><a name="936"
+      > </a
+      ><a name="937" class="Symbol"
+      >(</a
+      ><a name="938" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="940"
+      > </a
+      ><a name="941" href="lib.types.Span.html#860" class="Bound"
+      >r</a
+      ><a name="942"
+      > </a
+      ><a name="943" href="lib.types.Span.html#909" class="Bound"
+      >a</a
+      ><a name="944" class="Symbol"
+      >))</a
+      ><a name="946"
+      >
+    </a
+      ><a name="951" class="Symbol"
+      >{</a
+      ><a name="952" href="lib.types.Span.html#952" class="Bound"
+      >g</a
+      ><a name="953"
+      > </a
+      ><a name="954" class="Symbol"
+      >:</a
+      ><a name="955"
+      > </a
+      ><a name="956" href="lib.types.Span.html#844" class="Bound"
+      >C</a
+      ><a name="957"
+      > </a
+      ><a name="958" class="Symbol"
+      >&#8594;</a
+      ><a name="959"
+      > </a
+      ><a name="960" href="lib.types.Span.html#815" class="Bound"
+      >B</a
+      ><a name="961" class="Symbol"
+      >}</a
+      ><a name="962"
+      > </a
+      ><a name="963" class="Symbol"
+      >{</a
+      ><a name="964" href="lib.types.Span.html#964" class="Bound"
+      >g'</a
+      ><a name="966"
+      > </a
+      ><a name="967" class="Symbol"
+      >:</a
+      ><a name="968"
+      > </a
+      ><a name="969" href="lib.types.Span.html#846" class="Bound"
+      >C'</a
+      ><a name="971"
+      > </a
+      ><a name="972" class="Symbol"
+      >&#8594;</a
+      ><a name="973"
+      > </a
+      ><a name="974" href="lib.types.Span.html#817" class="Bound"
+      >B'</a
+      ><a name="976" class="Symbol"
+      >}</a
+      ><a name="977"
+      > </a
+      ><a name="978" class="Symbol"
+      >(</a
+      ><a name="979" href="lib.types.Span.html#979" class="Bound"
+      >t</a
+      ><a name="980"
+      > </a
+      ><a name="981" class="Symbol"
+      >:</a
+      ><a name="982"
+      > </a
+      ><a name="983" class="Symbol"
+      >(</a
+      ><a name="984" href="lib.types.Span.html#984" class="Bound"
+      >b</a
+      ><a name="985"
+      > </a
+      ><a name="986" class="Symbol"
+      >:</a
+      ><a name="987"
+      > </a
+      ><a name="988" href="lib.types.Span.html#844" class="Bound"
+      >C</a
+      ><a name="989" class="Symbol"
+      >)</a
+      ><a name="990"
+      > </a
+      ><a name="991" class="Symbol"
+      >&#8594;</a
+      ><a name="992"
+      > </a
+      ><a name="993" class="Symbol"
+      >(</a
+      ><a name="994" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="996"
+      > </a
+      ><a name="997" href="lib.types.Span.html#831" class="Bound"
+      >q</a
+      ><a name="998" class="Symbol"
+      >)</a
+      ><a name="999"
+      > </a
+      ><a name="1000" class="Symbol"
+      >(</a
+      ><a name="1001" href="lib.types.Span.html#952" class="Bound"
+      >g</a
+      ><a name="1002"
+      > </a
+      ><a name="1003" href="lib.types.Span.html#984" class="Bound"
+      >b</a
+      ><a name="1004" class="Symbol"
+      >)</a
+      ><a name="1005"
+      > </a
+      ><a name="1006" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1008"
+      > </a
+      ><a name="1009" href="lib.types.Span.html#964" class="Bound"
+      >g'</a
+      ><a name="1011"
+      > </a
+      ><a name="1012" class="Symbol"
+      >(</a
+      ><a name="1013" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="1015"
+      > </a
+      ><a name="1016" href="lib.types.Span.html#860" class="Bound"
+      >r</a
+      ><a name="1017"
+      > </a
+      ><a name="1018" href="lib.types.Span.html#984" class="Bound"
+      >b</a
+      ><a name="1019" class="Symbol"
+      >))</a
+      ><a name="1021"
+      >
+    </a
+      ><a name="1026" class="Symbol"
+      >&#8594;</a
+      ><a name="1027"
+      > </a
+      ><a name="1028" class="Symbol"
+      >(</a
+      ><a name="1029" href="lib.types.Span.html#270" class="InductiveConstructor"
+      >span</a
+      ><a name="1033"
+      > </a
+      ><a name="1034" href="lib.types.Span.html#782" class="Bound"
+      >A</a
+      ><a name="1035"
+      > </a
+      ><a name="1036" href="lib.types.Span.html#815" class="Bound"
+      >B</a
+      ><a name="1037"
+      > </a
+      ><a name="1038" href="lib.types.Span.html#844" class="Bound"
+      >C</a
+      ><a name="1039"
+      > </a
+      ><a name="1040" href="lib.types.Span.html#877" class="Bound"
+      >f</a
+      ><a name="1041"
+      > </a
+      ><a name="1042" href="lib.types.Span.html#952" class="Bound"
+      >g</a
+      ><a name="1043" class="Symbol"
+      >)</a
+      ><a name="1044"
+      > </a
+      ><a name="1045" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1047"
+      > </a
+      ><a name="1048" class="Symbol"
+      >(</a
+      ><a name="1049" href="lib.types.Span.html#270" class="InductiveConstructor"
+      >span</a
+      ><a name="1053"
+      > </a
+      ><a name="1054" href="lib.types.Span.html#784" class="Bound"
+      >A'</a
+      ><a name="1056"
+      > </a
+      ><a name="1057" href="lib.types.Span.html#817" class="Bound"
+      >B'</a
+      ><a name="1059"
+      > </a
+      ><a name="1060" href="lib.types.Span.html#846" class="Bound"
+      >C'</a
+      ><a name="1062"
+      > </a
+      ><a name="1063" href="lib.types.Span.html#889" class="Bound"
+      >f'</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" href="lib.types.Span.html#964" class="Bound"
+      >g'</a
+      ><a name="1068" class="Symbol"
+      >)</a
+      ><a name="1069"
+      >
+  </a
+      ><a name="1072" href="lib.types.Span.html#763" class="Function"
+      >span=</a
+      ><a name="1077"
+      > </a
+      ><a name="1078" href="lib.types.Span.html#1078" class="Bound"
+      >p</a
+      ><a name="1079"
+      > </a
+      ><a name="1080" href="lib.types.Span.html#1080" class="Bound"
+      >q</a
+      ><a name="1081"
+      > </a
+      ><a name="1082" href="lib.types.Span.html#1082" class="Bound"
+      >r</a
+      ><a name="1083"
+      > </a
+      ><a name="1084" class="Symbol"
+      >{</a
+      ><a name="1085" href="lib.types.Span.html#1085" class="Bound"
+      >f</a
+      ><a name="1086" class="Symbol"
+      >}</a
+      ><a name="1087"
+      > </a
+      ><a name="1088" class="Symbol"
+      >{</a
+      ><a name="1089" href="lib.types.Span.html#1089" class="Bound"
+      >f'</a
+      ><a name="1091" class="Symbol"
+      >}</a
+      ><a name="1092"
+      > </a
+      ><a name="1093" href="lib.types.Span.html#1093" class="Bound"
+      >s</a
+      ><a name="1094"
+      > </a
+      ><a name="1095" class="Symbol"
+      >{</a
+      ><a name="1096" href="lib.types.Span.html#1096" class="Bound"
+      >g</a
+      ><a name="1097" class="Symbol"
+      >}</a
+      ><a name="1098"
+      > </a
+      ><a name="1099" class="Symbol"
+      >{</a
+      ><a name="1100" href="lib.types.Span.html#1100" class="Bound"
+      >g'</a
+      ><a name="1102" class="Symbol"
+      >}</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" href="lib.types.Span.html#1104" class="Bound"
+      >t</a
+      ><a name="1105"
+      > </a
+      ><a name="1106" class="Symbol"
+      >=</a
+      ><a name="1107"
+      > </a
+      ><a name="1108" href="lib.types.Span.html#367" class="Function"
+      >span=-raw</a
+      ><a name="1117"
+      >
+    </a
+      ><a name="1122" class="Symbol"
+      >(</a
+      ><a name="1123" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1125"
+      > </a
+      ><a name="1126" href="lib.types.Span.html#1078" class="Bound"
+      >p</a
+      ><a name="1127" class="Symbol"
+      >)</a
+      ><a name="1128"
+      >
+    </a
+      ><a name="1133" class="Symbol"
+      >(</a
+      ><a name="1134" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" href="lib.types.Span.html#1080" class="Bound"
+      >q</a
+      ><a name="1138" class="Symbol"
+      >)</a
+      ><a name="1139"
+      >
+    </a
+      ><a name="1144" class="Symbol"
+      >(</a
+      ><a name="1145" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1147"
+      > </a
+      ><a name="1148" href="lib.types.Span.html#1082" class="Bound"
+      >r</a
+      ><a name="1149" class="Symbol"
+      >)</a
+      ><a name="1150"
+      >
+    </a
+      ><a name="1155" class="Symbol"
+      >(</a
+      ><a name="1156" href="lib.types.Pi.html#7851" class="Function"
+      >&#8595;-&#8594;-in</a
+      ><a name="1162"
+      > </a
+      ><a name="1163" class="Symbol"
+      >(&#955;</a
+      ><a name="1165"
+      > </a
+      ><a name="1166" href="lib.types.Span.html#1166" class="Bound"
+      >&#945;</a
+      ><a name="1167"
+      > </a
+      ><a name="1168" class="Symbol"
+      >&#8594;</a
+      ><a name="1169"
+      > </a
+      ><a name="1170" href="lib.PathOver.html#5935" class="Function"
+      >&#8595;-snd&#215;-in</a
+      ><a name="1179"
+      > </a
+      ><a name="1180" class="Symbol"
+      >(</a
+      ><a name="1181" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1183"
+      > </a
+      ><a name="1184" href="lib.types.Span.html#1082" class="Bound"
+      >r</a
+      ><a name="1185" class="Symbol"
+      >)</a
+      ><a name="1186"
+      > </a
+      ><a name="1187" class="Symbol"
+      >(</a
+      ><a name="1188" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" href="lib.types.Span.html#1078" class="Bound"
+      >p</a
+      ><a name="1192" class="Symbol"
+      >)</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" class="Symbol"
+      >(</a
+      ><a name="1195" href="lib.Univalence.html#1636" class="Function"
+      >&#8595;-idf-ua-in</a
+      ><a name="1206"
+      > </a
+      ><a name="1207" href="lib.types.Span.html#1078" class="Bound"
+      >p</a
+      ><a name="1208"
+      > </a
+      ><a name="1209" class="Symbol"
+      >(</a
+      ><a name="1210"
+      >
+                   </a
+      ><a name="1230" href="lib.types.Span.html#1093" class="Bound"
+      >s</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" class="Symbol"
+      >_</a
+      ><a name="1233"
+      >
+                   </a
+      ><a name="1253" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1254"
+      > </a
+      ><a name="1255" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1257"
+      > </a
+      ><a name="1258" href="lib.types.Span.html#1089" class="Bound"
+      >f'</a
+      ><a name="1260"
+      > </a
+      ><a name="1261" class="Symbol"
+      >(</a
+      ><a name="1262" href="lib.Univalence.html#1467" class="Function"
+      >&#8595;-idf-ua-out</a
+      ><a name="1274"
+      > </a
+      ><a name="1275" href="lib.types.Span.html#1082" class="Bound"
+      >r</a
+      ><a name="1276"
+      > </a
+      ><a name="1277" class="Symbol"
+      >(</a
+      ><a name="1278" href="lib.PathOver.html#5746" class="Function"
+      >&#8595;-fst&#215;-out</a
+      ><a name="1288"
+      > </a
+      ><a name="1289" class="Symbol"
+      >(</a
+      ><a name="1290" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1292"
+      > </a
+      ><a name="1293" href="lib.types.Span.html#1082" class="Bound"
+      >r</a
+      ><a name="1294" class="Symbol"
+      >)</a
+      ><a name="1295"
+      > </a
+      ><a name="1296" class="Symbol"
+      >(</a
+      ><a name="1297" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1299"
+      > </a
+      ><a name="1300" href="lib.types.Span.html#1078" class="Bound"
+      >p</a
+      ><a name="1301" class="Symbol"
+      >)</a
+      ><a name="1302"
+      > </a
+      ><a name="1303" href="lib.types.Span.html#1166" class="Bound"
+      >&#945;</a
+      ><a name="1304" class="Symbol"
+      >))))))</a
+      ><a name="1310"
+      >
+    </a
+      ><a name="1315" class="Symbol"
+      >(</a
+      ><a name="1316" href="lib.types.Pi.html#7851" class="Function"
+      >&#8595;-&#8594;-in</a
+      ><a name="1322"
+      > </a
+      ><a name="1323" class="Symbol"
+      >(&#955;</a
+      ><a name="1325"
+      > </a
+      ><a name="1326" href="lib.types.Span.html#1326" class="Bound"
+      >&#946;</a
+      ><a name="1327"
+      > </a
+      ><a name="1328" class="Symbol"
+      >&#8594;</a
+      ><a name="1329"
+      > </a
+      ><a name="1330" href="lib.PathOver.html#5935" class="Function"
+      >&#8595;-snd&#215;-in</a
+      ><a name="1339"
+      > </a
+      ><a name="1340" class="Symbol"
+      >(</a
+      ><a name="1341" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1343"
+      > </a
+      ><a name="1344" href="lib.types.Span.html#1082" class="Bound"
+      >r</a
+      ><a name="1345" class="Symbol"
+      >)</a
+      ><a name="1346"
+      > </a
+      ><a name="1347" class="Symbol"
+      >(</a
+      ><a name="1348" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1350"
+      > </a
+      ><a name="1351" href="lib.types.Span.html#1080" class="Bound"
+      >q</a
+      ><a name="1352" class="Symbol"
+      >)</a
+      ><a name="1353"
+      > </a
+      ><a name="1354" class="Symbol"
+      >(</a
+      ><a name="1355" href="lib.Univalence.html#1636" class="Function"
+      >&#8595;-idf-ua-in</a
+      ><a name="1366"
+      > </a
+      ><a name="1367" href="lib.types.Span.html#1080" class="Bound"
+      >q</a
+      ><a name="1368"
+      > </a
+      ><a name="1369" class="Symbol"
+      >(</a
+      ><a name="1370"
+      >
+                   </a
+      ><a name="1390" href="lib.types.Span.html#1104" class="Bound"
+      >t</a
+      ><a name="1391"
+      > </a
+      ><a name="1392" class="Symbol"
+      >_</a
+      ><a name="1393"
+      >
+                   </a
+      ><a name="1413" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1414"
+      > </a
+      ><a name="1415" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1417"
+      > </a
+      ><a name="1418" href="lib.types.Span.html#1100" class="Bound"
+      >g'</a
+      ><a name="1420"
+      > </a
+      ><a name="1421" class="Symbol"
+      >(</a
+      ><a name="1422" href="lib.Univalence.html#1467" class="Function"
+      >&#8595;-idf-ua-out</a
+      ><a name="1434"
+      > </a
+      ><a name="1435" href="lib.types.Span.html#1082" class="Bound"
+      >r</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" class="Symbol"
+      >(</a
+      ><a name="1438" href="lib.PathOver.html#5746" class="Function"
+      >&#8595;-fst&#215;-out</a
+      ><a name="1448"
+      > </a
+      ><a name="1449" class="Symbol"
+      >(</a
+      ><a name="1450" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1452"
+      > </a
+      ><a name="1453" href="lib.types.Span.html#1082" class="Bound"
+      >r</a
+      ><a name="1454" class="Symbol"
+      >)</a
+      ><a name="1455"
+      > </a
+      ><a name="1456" class="Symbol"
+      >(</a
+      ><a name="1457" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1459"
+      > </a
+      ><a name="1460" href="lib.types.Span.html#1080" class="Bound"
+      >q</a
+      ><a name="1461" class="Symbol"
+      >)</a
+      ><a name="1462"
+      > </a
+      ><a name="1463" href="lib.types.Span.html#1326" class="Bound"
+      >&#946;</a
+      ><a name="1464" class="Symbol"
+      >))))))</a
+      ><a name="1470"
+      >
+
+</a
+      ><a name="1472" class="Keyword"
+      >record</a
+      ><a name="1478"
+      > </a
+      ><a name="1479" href="lib.types.Span.html#1479" class="Record"
+      >&#8857;Span</a
+      ><a name="1484"
+      > </a
+      ><a name="1485" class="Symbol"
+      >{</a
+      ><a name="1486" href="lib.types.Span.html#1486" class="Bound"
+      >i</a
+      ><a name="1487"
+      > </a
+      ><a name="1488" href="lib.types.Span.html#1488" class="Bound"
+      >j</a
+      ><a name="1489"
+      > </a
+      ><a name="1490" href="lib.types.Span.html#1490" class="Bound"
+      >k</a
+      ><a name="1491"
+      > </a
+      ><a name="1492" class="Symbol"
+      >:</a
+      ><a name="1493"
+      > </a
+      ><a name="1494" href="Agda.Primitive.html#408" class="Postulate"
+      >ULevel</a
+      ><a name="1500" class="Symbol"
+      >}</a
+      ><a name="1501"
+      > </a
+      ><a name="1502" class="Symbol"
+      >:</a
+      ><a name="1503"
+      > </a
+      ><a name="1504" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1508"
+      > </a
+      ><a name="1509" class="Symbol"
+      >(</a
+      ><a name="1510" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="1515"
+      > </a
+      ><a name="1516" class="Symbol"
+      >(</a
+      ><a name="1517" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1521"
+      > </a
+      ><a name="1522" class="Symbol"
+      >(</a
+      ><a name="1523" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1527"
+      > </a
+      ><a name="1528" href="lib.types.Span.html#1486" class="Bound"
+      >i</a
+      ><a name="1529"
+      > </a
+      ><a name="1530" href="lib.types.Span.html#1488" class="Bound"
+      >j</a
+      ><a name="1531" class="Symbol"
+      >)</a
+      ><a name="1532"
+      > </a
+      ><a name="1533" href="lib.types.Span.html#1490" class="Bound"
+      >k</a
+      ><a name="1534" class="Symbol"
+      >))</a
+      ><a name="1536"
+      > </a
+      ><a name="1537" class="Keyword"
+      >where</a
+      ><a name="1542"
+      >
+  </a
+      ><a name="1545" class="Keyword"
+      >constructor</a
+      ><a name="1556"
+      > </a
+      ><a name="1557" href="lib.types.Span.html#1557" class="InductiveConstructor"
+      >&#8857;span</a
+      ><a name="1562"
+      >
+  </a
+      ><a name="1565" class="Keyword"
+      >field</a
+      ><a name="1570"
+      >
+    </a
+      ><a name="1575" href="lib.types.Span.html#1575" class="Field"
+      >X</a
+      ><a name="1576"
+      > </a
+      ><a name="1577" class="Symbol"
+      >:</a
+      ><a name="1578"
+      > </a
+      ><a name="1579" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1582"
+      > </a
+      ><a name="1583" href="lib.types.Span.html#1486" class="Bound"
+      >i</a
+      ><a name="1584"
+      >
+    </a
+      ><a name="1589" href="lib.types.Span.html#1589" class="Field"
+      >Y</a
+      ><a name="1590"
+      > </a
+      ><a name="1591" class="Symbol"
+      >:</a
+      ><a name="1592"
+      > </a
+      ><a name="1593" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1596"
+      > </a
+      ><a name="1597" href="lib.types.Span.html#1488" class="Bound"
+      >j</a
+      ><a name="1598"
+      >
+    </a
+      ><a name="1603" href="lib.types.Span.html#1603" class="Field"
+      >Z</a
+      ><a name="1604"
+      > </a
+      ><a name="1605" class="Symbol"
+      >:</a
+      ><a name="1606"
+      > </a
+      ><a name="1607" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1610"
+      > </a
+      ><a name="1611" href="lib.types.Span.html#1490" class="Bound"
+      >k</a
+      ><a name="1612"
+      >
+    </a
+      ><a name="1617" href="lib.types.Span.html#1617" class="Field"
+      >f</a
+      ><a name="1618"
+      > </a
+      ><a name="1619" class="Symbol"
+      >:</a
+      ><a name="1620"
+      > </a
+      ><a name="1621" href="lib.types.Span.html#1603" class="Field"
+      >Z</a
+      ><a name="1622"
+      > </a
+      ><a name="1623" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1625"
+      > </a
+      ><a name="1626" href="lib.types.Span.html#1575" class="Field"
+      >X</a
+      ><a name="1627"
+      >
+    </a
+      ><a name="1632" href="lib.types.Span.html#1632" class="Field"
+      >g</a
+      ><a name="1633"
+      > </a
+      ><a name="1634" class="Symbol"
+      >:</a
+      ><a name="1635"
+      > </a
+      ><a name="1636" href="lib.types.Span.html#1603" class="Field"
+      >Z</a
+      ><a name="1637"
+      > </a
+      ><a name="1638" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1640"
+      > </a
+      ><a name="1641" href="lib.types.Span.html#1589" class="Field"
+      >Y</a
+      ><a name="1642"
+      >
+
+</a
+      ><a name="1644" href="lib.types.Span.html#1644" class="Function"
+      >&#8857;Span-to-Span</a
+      ><a name="1657"
+      > </a
+      ><a name="1658" class="Symbol"
+      >:</a
+      ><a name="1659"
+      > </a
+      ><a name="1660" class="Symbol"
+      >&#8704;</a
+      ><a name="1661"
+      > </a
+      ><a name="1662" class="Symbol"
+      >{</a
+      ><a name="1663" href="lib.types.Span.html#1663" class="Bound"
+      >i</a
+      ><a name="1664"
+      > </a
+      ><a name="1665" href="lib.types.Span.html#1665" class="Bound"
+      >j</a
+      ><a name="1666"
+      > </a
+      ><a name="1667" href="lib.types.Span.html#1667" class="Bound"
+      >k</a
+      ><a name="1668" class="Symbol"
+      >}</a
+      ><a name="1669"
+      > </a
+      ><a name="1670" class="Symbol"
+      >&#8594;</a
+      ><a name="1671"
+      > </a
+      ><a name="1672" href="lib.types.Span.html#1479" class="Record"
+      >&#8857;Span</a
+      ><a name="1677"
+      > </a
+      ><a name="1678" class="Symbol"
+      >{</a
+      ><a name="1679" href="lib.types.Span.html#1663" class="Bound"
+      >i</a
+      ><a name="1680" class="Symbol"
+      >}</a
+      ><a name="1681"
+      > </a
+      ><a name="1682" class="Symbol"
+      >{</a
+      ><a name="1683" href="lib.types.Span.html#1665" class="Bound"
+      >j</a
+      ><a name="1684" class="Symbol"
+      >}</a
+      ><a name="1685"
+      > </a
+      ><a name="1686" class="Symbol"
+      >{</a
+      ><a name="1687" href="lib.types.Span.html#1667" class="Bound"
+      >k</a
+      ><a name="1688" class="Symbol"
+      >}</a
+      ><a name="1689"
+      > </a
+      ><a name="1690" class="Symbol"
+      >&#8594;</a
+      ><a name="1691"
+      > </a
+      ><a name="1692" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="1696"
+      > </a
+      ><a name="1697" class="Symbol"
+      >{</a
+      ><a name="1698" href="lib.types.Span.html#1663" class="Bound"
+      >i</a
+      ><a name="1699" class="Symbol"
+      >}</a
+      ><a name="1700"
+      > </a
+      ><a name="1701" class="Symbol"
+      >{</a
+      ><a name="1702" href="lib.types.Span.html#1665" class="Bound"
+      >j</a
+      ><a name="1703" class="Symbol"
+      >}</a
+      ><a name="1704"
+      > </a
+      ><a name="1705" class="Symbol"
+      >{</a
+      ><a name="1706" href="lib.types.Span.html#1667" class="Bound"
+      >k</a
+      ><a name="1707" class="Symbol"
+      >}</a
+      ><a name="1708"
+      >
+</a
+      ><a name="1709" href="lib.types.Span.html#1644" class="Function"
+      >&#8857;Span-to-Span</a
+      ><a name="1722"
+      > </a
+      ><a name="1723" class="Symbol"
+      >(</a
+      ><a name="1724" href="lib.types.Span.html#1557" class="InductiveConstructor"
+      >&#8857;span</a
+      ><a name="1729"
+      > </a
+      ><a name="1730" href="lib.types.Span.html#1730" class="Bound"
+      >X</a
+      ><a name="1731"
+      > </a
+      ><a name="1732" href="lib.types.Span.html#1732" class="Bound"
+      >Y</a
+      ><a name="1733"
+      > </a
+      ><a name="1734" href="lib.types.Span.html#1734" class="Bound"
+      >Z</a
+      ><a name="1735"
+      > </a
+      ><a name="1736" href="lib.types.Span.html#1736" class="Bound"
+      >f</a
+      ><a name="1737"
+      > </a
+      ><a name="1738" href="lib.types.Span.html#1738" class="Bound"
+      >g</a
+      ><a name="1739" class="Symbol"
+      >)</a
+      ><a name="1740"
+      > </a
+      ><a name="1741" class="Symbol"
+      >=</a
+      ><a name="1742"
+      > </a
+      ><a name="1743" href="lib.types.Span.html#270" class="InductiveConstructor"
+      >span</a
+      ><a name="1747"
+      > </a
+      ><a name="1748" class="Symbol"
+      >(</a
+      ><a name="1749" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="1752"
+      > </a
+      ><a name="1753" href="lib.types.Span.html#1730" class="Bound"
+      >X</a
+      ><a name="1754" class="Symbol"
+      >)</a
+      ><a name="1755"
+      > </a
+      ><a name="1756" class="Symbol"
+      >(</a
+      ><a name="1757" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="1760"
+      > </a
+      ><a name="1761" href="lib.types.Span.html#1732" class="Bound"
+      >Y</a
+      ><a name="1762" class="Symbol"
+      >)</a
+      ><a name="1763"
+      > </a
+      ><a name="1764" class="Symbol"
+      >(</a
+      ><a name="1765" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="1768"
+      > </a
+      ><a name="1769" href="lib.types.Span.html#1734" class="Bound"
+      >Z</a
+      ><a name="1770" class="Symbol"
+      >)</a
+      ><a name="1771"
+      > </a
+      ><a name="1772" class="Symbol"
+      >(</a
+      ><a name="1773" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1776"
+      > </a
+      ><a name="1777" href="lib.types.Span.html#1736" class="Bound"
+      >f</a
+      ><a name="1778" class="Symbol"
+      >)</a
+      ><a name="1779"
+      > </a
+      ><a name="1780" class="Symbol"
+      >(</a
+      ><a name="1781" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1784"
+      > </a
+      ><a name="1785" href="lib.types.Span.html#1738" class="Bound"
+      >g</a
+      ><a name="1786" class="Symbol"
+      >)</a
+      ><a name="1787"
+      >
+
+</a
+      ><a name="1789" class="Comment"
+      >{- Helper for path induction on pointed spans -}</a
+      ><a name="1837"
+      >
+</a
+      ><a name="1838" href="lib.types.Span.html#1838" class="Function"
+      >&#8857;span-J</a
+      ><a name="1845"
+      > </a
+      ><a name="1846" class="Symbol"
+      >:</a
+      ><a name="1847"
+      > </a
+      ><a name="1848" class="Symbol"
+      >&#8704;</a
+      ><a name="1849"
+      > </a
+      ><a name="1850" class="Symbol"
+      >{</a
+      ><a name="1851" href="lib.types.Span.html#1851" class="Bound"
+      >i</a
+      ><a name="1852"
+      > </a
+      ><a name="1853" href="lib.types.Span.html#1853" class="Bound"
+      >j</a
+      ><a name="1854"
+      > </a
+      ><a name="1855" href="lib.types.Span.html#1855" class="Bound"
+      >k</a
+      ><a name="1856"
+      > </a
+      ><a name="1857" href="lib.types.Span.html#1857" class="Bound"
+      >l</a
+      ><a name="1858" class="Symbol"
+      >}</a
+      ><a name="1859"
+      > </a
+      ><a name="1860" class="Symbol"
+      >(</a
+      ><a name="1861" href="lib.types.Span.html#1861" class="Bound"
+      >P</a
+      ><a name="1862"
+      > </a
+      ><a name="1863" class="Symbol"
+      >:</a
+      ><a name="1864"
+      > </a
+      ><a name="1865" href="lib.types.Span.html#1479" class="Record"
+      >&#8857;Span</a
+      ><a name="1870"
+      > </a
+      ><a name="1871" class="Symbol"
+      >{</a
+      ><a name="1872" href="lib.types.Span.html#1851" class="Bound"
+      >i</a
+      ><a name="1873" class="Symbol"
+      >}</a
+      ><a name="1874"
+      > </a
+      ><a name="1875" class="Symbol"
+      >{</a
+      ><a name="1876" href="lib.types.Span.html#1853" class="Bound"
+      >j</a
+      ><a name="1877" class="Symbol"
+      >}</a
+      ><a name="1878"
+      > </a
+      ><a name="1879" class="Symbol"
+      >{</a
+      ><a name="1880" href="lib.types.Span.html#1855" class="Bound"
+      >k</a
+      ><a name="1881" class="Symbol"
+      >}</a
+      ><a name="1882"
+      > </a
+      ><a name="1883" class="Symbol"
+      >&#8594;</a
+      ><a name="1884"
+      > </a
+      ><a name="1885" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1889"
+      > </a
+      ><a name="1890" href="lib.types.Span.html#1857" class="Bound"
+      >l</a
+      ><a name="1891" class="Symbol"
+      >)</a
+      ><a name="1892"
+      >
+  </a
+      ><a name="1895" class="Symbol"
+      >&#8594;</a
+      ><a name="1896"
+      > </a
+      ><a name="1897" class="Symbol"
+      >({</a
+      ><a name="1899" href="lib.types.Span.html#1899" class="Bound"
+      >A</a
+      ><a name="1900"
+      > </a
+      ><a name="1901" class="Symbol"
+      >:</a
+      ><a name="1902"
+      > </a
+      ><a name="1903" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1907"
+      > </a
+      ><a name="1908" href="lib.types.Span.html#1851" class="Bound"
+      >i</a
+      ><a name="1909" class="Symbol"
+      >}</a
+      ><a name="1910"
+      > </a
+      ><a name="1911" class="Symbol"
+      >{</a
+      ><a name="1912" href="lib.types.Span.html#1912" class="Bound"
+      >B</a
+      ><a name="1913"
+      > </a
+      ><a name="1914" class="Symbol"
+      >:</a
+      ><a name="1915"
+      > </a
+      ><a name="1916" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1920"
+      > </a
+      ><a name="1921" href="lib.types.Span.html#1853" class="Bound"
+      >j</a
+      ><a name="1922" class="Symbol"
+      >}</a
+      ><a name="1923"
+      > </a
+      ><a name="1924" class="Symbol"
+      >{</a
+      ><a name="1925" href="lib.types.Span.html#1925" class="Bound"
+      >Z</a
+      ><a name="1926"
+      > </a
+      ><a name="1927" class="Symbol"
+      >:</a
+      ><a name="1928"
+      > </a
+      ><a name="1929" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1932"
+      > </a
+      ><a name="1933" href="lib.types.Span.html#1855" class="Bound"
+      >k</a
+      ><a name="1934" class="Symbol"
+      >}</a
+      ><a name="1935"
+      > </a
+      ><a name="1936" class="Symbol"
+      >(</a
+      ><a name="1937" href="lib.types.Span.html#1937" class="Bound"
+      >f</a
+      ><a name="1938"
+      > </a
+      ><a name="1939" class="Symbol"
+      >:</a
+      ><a name="1940"
+      > </a
+      ><a name="1941" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="1944"
+      > </a
+      ><a name="1945" href="lib.types.Span.html#1925" class="Bound"
+      >Z</a
+      ><a name="1946"
+      > </a
+      ><a name="1947" class="Symbol"
+      >&#8594;</a
+      ><a name="1948"
+      > </a
+      ><a name="1949" href="lib.types.Span.html#1899" class="Bound"
+      >A</a
+      ><a name="1950" class="Symbol"
+      >)</a
+      ><a name="1951"
+      > </a
+      ><a name="1952" class="Symbol"
+      >(</a
+      ><a name="1953" href="lib.types.Span.html#1953" class="Bound"
+      >g</a
+      ><a name="1954"
+      > </a
+      ><a name="1955" class="Symbol"
+      >:</a
+      ><a name="1956"
+      > </a
+      ><a name="1957" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="1960"
+      > </a
+      ><a name="1961" href="lib.types.Span.html#1925" class="Bound"
+      >Z</a
+      ><a name="1962"
+      > </a
+      ><a name="1963" class="Symbol"
+      >&#8594;</a
+      ><a name="1964"
+      > </a
+      ><a name="1965" href="lib.types.Span.html#1912" class="Bound"
+      >B</a
+      ><a name="1966" class="Symbol"
+      >)</a
+      ><a name="1967"
+      >
+     </a
+      ><a name="1973" class="Symbol"
+      >&#8594;</a
+      ><a name="1974"
+      > </a
+      ><a name="1975" href="lib.types.Span.html#1861" class="Bound"
+      >P</a
+      ><a name="1976"
+      > </a
+      ><a name="1977" class="Symbol"
+      >(</a
+      ><a name="1978" href="lib.types.Span.html#1557" class="InductiveConstructor"
+      >&#8857;span</a
+      ><a name="1983"
+      > </a
+      ><a name="1984" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >&#8857;[</a
+      ><a name="1986"
+      > </a
+      ><a name="1987" href="lib.types.Span.html#1899" class="Bound"
+      >A</a
+      ><a name="1988"
+      > </a
+      ><a name="1989" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1990"
+      > </a
+      ><a name="1991" href="lib.types.Span.html#1937" class="Bound"
+      >f</a
+      ><a name="1992"
+      > </a
+      ><a name="1993" class="Symbol"
+      >(</a
+      ><a name="1994" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1996"
+      > </a
+      ><a name="1997" href="lib.types.Span.html#1925" class="Bound"
+      >Z</a
+      ><a name="1998" class="Symbol"
+      >)</a
+      ><a name="1999"
+      > </a
+      ><a name="2000" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >]</a
+      ><a name="2001"
+      > </a
+      ><a name="2002" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >&#8857;[</a
+      ><a name="2004"
+      > </a
+      ><a name="2005" href="lib.types.Span.html#1912" class="Bound"
+      >B</a
+      ><a name="2006"
+      > </a
+      ><a name="2007" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2008"
+      > </a
+      ><a name="2009" href="lib.types.Span.html#1953" class="Bound"
+      >g</a
+      ><a name="2010"
+      > </a
+      ><a name="2011" class="Symbol"
+      >(</a
+      ><a name="2012" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2014"
+      > </a
+      ><a name="2015" href="lib.types.Span.html#1925" class="Bound"
+      >Z</a
+      ><a name="2016" class="Symbol"
+      >)</a
+      ><a name="2017"
+      > </a
+      ><a name="2018" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >]</a
+      ><a name="2019"
+      > </a
+      ><a name="2020" href="lib.types.Span.html#1925" class="Bound"
+      >Z</a
+      ><a name="2021"
+      > </a
+      ><a name="2022" class="Symbol"
+      >(</a
+      ><a name="2023" href="lib.types.Span.html#1937" class="Bound"
+      >f</a
+      ><a name="2024"
+      > </a
+      ><a name="2025" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2026"
+      > </a
+      ><a name="2027" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2030" class="Symbol"
+      >)</a
+      ><a name="2031"
+      > </a
+      ><a name="2032" class="Symbol"
+      >(</a
+      ><a name="2033" href="lib.types.Span.html#1953" class="Bound"
+      >g</a
+      ><a name="2034"
+      > </a
+      ><a name="2035" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2036"
+      > </a
+      ><a name="2037" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2040" class="Symbol"
+      >)))</a
+      ><a name="2043"
+      >
+  </a
+      ><a name="2046" class="Symbol"
+      >&#8594;</a
+      ><a name="2047"
+      > </a
+      ><a name="2048" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="2049"
+      > </a
+      ><a name="2050" href="lib.types.Span.html#1479" class="Record"
+      >&#8857;Span</a
+      ><a name="2055"
+      > </a
+      ><a name="2056" href="lib.types.Span.html#1861" class="Bound"
+      >P</a
+      ><a name="2057"
+      >
+</a
+      ><a name="2058" href="lib.types.Span.html#1838" class="Function"
+      >&#8857;span-J</a
+      ><a name="2065"
+      > </a
+      ><a name="2066" href="lib.types.Span.html#2066" class="Bound"
+      >P</a
+      ><a name="2067"
+      > </a
+      ><a name="2068" href="lib.types.Span.html#2068" class="Bound"
+      >t</a
+      ><a name="2069"
+      > </a
+      ><a name="2070" class="Symbol"
+      >(</a
+      ><a name="2071" href="lib.types.Span.html#1557" class="InductiveConstructor"
+      >&#8857;span</a
+      ><a name="2076"
+      > </a
+      ><a name="2077" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >&#8857;[</a
+      ><a name="2079"
+      > </a
+      ><a name="2080" href="lib.types.Span.html#2080" class="Bound"
+      >A</a
+      ><a name="2081"
+      > </a
+      ><a name="2082" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2083"
+      > </a
+      ><a name="2084" class="DottedPattern Symbol"
+      >._</a
+      ><a name="2086"
+      > </a
+      ><a name="2087" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >]</a
+      ><a name="2088"
+      > </a
+      ><a name="2089" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >&#8857;[</a
+      ><a name="2091"
+      > </a
+      ><a name="2092" href="lib.types.Span.html#2092" class="Bound"
+      >B</a
+      ><a name="2093"
+      > </a
+      ><a name="2094" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2095"
+      > </a
+      ><a name="2096" class="DottedPattern Symbol"
+      >._</a
+      ><a name="2098"
+      > </a
+      ><a name="2099" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >]</a
+      ><a name="2100"
+      > </a
+      ><a name="2101" href="lib.types.Span.html#2101" class="Bound"
+      >Z</a
+      ><a name="2102"
+      > </a
+      ><a name="2103" class="Symbol"
+      >(</a
+      ><a name="2104" href="lib.types.Span.html#2104" class="Bound"
+      >f</a
+      ><a name="2105"
+      > </a
+      ><a name="2106" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2107"
+      > </a
+      ><a name="2108" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2111" class="Symbol"
+      >)</a
+      ><a name="2112"
+      > </a
+      ><a name="2113" class="Symbol"
+      >(</a
+      ><a name="2114" href="lib.types.Span.html#2114" class="Bound"
+      >g</a
+      ><a name="2115"
+      > </a
+      ><a name="2116" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2117"
+      > </a
+      ><a name="2118" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2121" class="Symbol"
+      >))</a
+      ><a name="2123"
+      > </a
+      ><a name="2124" class="Symbol"
+      >=</a
+      ><a name="2125"
+      > </a
+      ><a name="2126" href="lib.types.Span.html#2068" class="Bound"
+      >t</a
+      ><a name="2127"
+      > </a
+      ><a name="2128" href="lib.types.Span.html#2104" class="Bound"
+      >f</a
+      ><a name="2129"
+      > </a
+      ><a name="2130" href="lib.types.Span.html#2114" class="Bound"
+      >g</a
+      ><a name="2131"
+      >
+
+</a
+      ><a name="2133" class="Comment"
+      >{- Span-flipping functions -}</a
+      ><a name="2162"
+      >
+</a
+      ><a name="2163" href="lib.types.Span.html#2163" class="Function"
+      >Span-flip</a
+      ><a name="2172"
+      > </a
+      ><a name="2173" class="Symbol"
+      >:</a
+      ><a name="2174"
+      > </a
+      ><a name="2175" class="Symbol"
+      >&#8704;</a
+      ><a name="2176"
+      > </a
+      ><a name="2177" class="Symbol"
+      >{</a
+      ><a name="2178" href="lib.types.Span.html#2178" class="Bound"
+      >i</a
+      ><a name="2179"
+      > </a
+      ><a name="2180" href="lib.types.Span.html#2180" class="Bound"
+      >j</a
+      ><a name="2181"
+      > </a
+      ><a name="2182" href="lib.types.Span.html#2182" class="Bound"
+      >k</a
+      ><a name="2183" class="Symbol"
+      >}</a
+      ><a name="2184"
+      > </a
+      ><a name="2185" class="Symbol"
+      >&#8594;</a
+      ><a name="2186"
+      > </a
+      ><a name="2187" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="2191"
+      > </a
+      ><a name="2192" class="Symbol"
+      >{</a
+      ><a name="2193" href="lib.types.Span.html#2178" class="Bound"
+      >i</a
+      ><a name="2194" class="Symbol"
+      >}</a
+      ><a name="2195"
+      > </a
+      ><a name="2196" class="Symbol"
+      >{</a
+      ><a name="2197" href="lib.types.Span.html#2180" class="Bound"
+      >j</a
+      ><a name="2198" class="Symbol"
+      >}</a
+      ><a name="2199"
+      > </a
+      ><a name="2200" class="Symbol"
+      >{</a
+      ><a name="2201" href="lib.types.Span.html#2182" class="Bound"
+      >k</a
+      ><a name="2202" class="Symbol"
+      >}</a
+      ><a name="2203"
+      > </a
+      ><a name="2204" class="Symbol"
+      >&#8594;</a
+      ><a name="2205"
+      > </a
+      ><a name="2206" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="2210"
+      > </a
+      ><a name="2211" class="Symbol"
+      >{</a
+      ><a name="2212" href="lib.types.Span.html#2180" class="Bound"
+      >j</a
+      ><a name="2213" class="Symbol"
+      >}</a
+      ><a name="2214"
+      > </a
+      ><a name="2215" class="Symbol"
+      >{</a
+      ><a name="2216" href="lib.types.Span.html#2178" class="Bound"
+      >i</a
+      ><a name="2217" class="Symbol"
+      >}</a
+      ><a name="2218"
+      > </a
+      ><a name="2219" class="Symbol"
+      >{</a
+      ><a name="2220" href="lib.types.Span.html#2182" class="Bound"
+      >k</a
+      ><a name="2221" class="Symbol"
+      >}</a
+      ><a name="2222"
+      >
+</a
+      ><a name="2223" href="lib.types.Span.html#2163" class="Function"
+      >Span-flip</a
+      ><a name="2232"
+      > </a
+      ><a name="2233" class="Symbol"
+      >(</a
+      ><a name="2234" href="lib.types.Span.html#270" class="InductiveConstructor"
+      >span</a
+      ><a name="2238"
+      > </a
+      ><a name="2239" href="lib.types.Span.html#2239" class="Bound"
+      >A</a
+      ><a name="2240"
+      > </a
+      ><a name="2241" href="lib.types.Span.html#2241" class="Bound"
+      >B</a
+      ><a name="2242"
+      > </a
+      ><a name="2243" href="lib.types.Span.html#2243" class="Bound"
+      >C</a
+      ><a name="2244"
+      > </a
+      ><a name="2245" href="lib.types.Span.html#2245" class="Bound"
+      >f</a
+      ><a name="2246"
+      > </a
+      ><a name="2247" href="lib.types.Span.html#2247" class="Bound"
+      >g</a
+      ><a name="2248" class="Symbol"
+      >)</a
+      ><a name="2249"
+      > </a
+      ><a name="2250" class="Symbol"
+      >=</a
+      ><a name="2251"
+      > </a
+      ><a name="2252" href="lib.types.Span.html#270" class="InductiveConstructor"
+      >span</a
+      ><a name="2256"
+      > </a
+      ><a name="2257" href="lib.types.Span.html#2241" class="Bound"
+      >B</a
+      ><a name="2258"
+      > </a
+      ><a name="2259" href="lib.types.Span.html#2239" class="Bound"
+      >A</a
+      ><a name="2260"
+      > </a
+      ><a name="2261" href="lib.types.Span.html#2243" class="Bound"
+      >C</a
+      ><a name="2262"
+      > </a
+      ><a name="2263" href="lib.types.Span.html#2247" class="Bound"
+      >g</a
+      ><a name="2264"
+      > </a
+      ><a name="2265" href="lib.types.Span.html#2245" class="Bound"
+      >f</a
+      ><a name="2266"
+      >
+
+</a
+      ><a name="2268" href="lib.types.Span.html#2268" class="Function"
+      >&#8857;Span-flip</a
+      ><a name="2278"
+      > </a
+      ><a name="2279" class="Symbol"
+      >:</a
+      ><a name="2280"
+      > </a
+      ><a name="2281" class="Symbol"
+      >&#8704;</a
+      ><a name="2282"
+      > </a
+      ><a name="2283" class="Symbol"
+      >{</a
+      ><a name="2284" href="lib.types.Span.html#2284" class="Bound"
+      >i</a
+      ><a name="2285"
+      > </a
+      ><a name="2286" href="lib.types.Span.html#2286" class="Bound"
+      >j</a
+      ><a name="2287"
+      > </a
+      ><a name="2288" href="lib.types.Span.html#2288" class="Bound"
+      >k</a
+      ><a name="2289" class="Symbol"
+      >}</a
+      ><a name="2290"
+      > </a
+      ><a name="2291" class="Symbol"
+      >&#8594;</a
+      ><a name="2292"
+      > </a
+      ><a name="2293" href="lib.types.Span.html#1479" class="Record"
+      >&#8857;Span</a
+      ><a name="2298"
+      > </a
+      ><a name="2299" class="Symbol"
+      >{</a
+      ><a name="2300" href="lib.types.Span.html#2284" class="Bound"
+      >i</a
+      ><a name="2301" class="Symbol"
+      >}</a
+      ><a name="2302"
+      > </a
+      ><a name="2303" class="Symbol"
+      >{</a
+      ><a name="2304" href="lib.types.Span.html#2286" class="Bound"
+      >j</a
+      ><a name="2305" class="Symbol"
+      >}</a
+      ><a name="2306"
+      > </a
+      ><a name="2307" class="Symbol"
+      >{</a
+      ><a name="2308" href="lib.types.Span.html#2288" class="Bound"
+      >k</a
+      ><a name="2309" class="Symbol"
+      >}</a
+      ><a name="2310"
+      > </a
+      ><a name="2311" class="Symbol"
+      >&#8594;</a
+      ><a name="2312"
+      > </a
+      ><a name="2313" href="lib.types.Span.html#1479" class="Record"
+      >&#8857;Span</a
+      ><a name="2318"
+      > </a
+      ><a name="2319" class="Symbol"
+      >{</a
+      ><a name="2320" href="lib.types.Span.html#2286" class="Bound"
+      >j</a
+      ><a name="2321" class="Symbol"
+      >}</a
+      ><a name="2322"
+      > </a
+      ><a name="2323" class="Symbol"
+      >{</a
+      ><a name="2324" href="lib.types.Span.html#2284" class="Bound"
+      >i</a
+      ><a name="2325" class="Symbol"
+      >}</a
+      ><a name="2326"
+      > </a
+      ><a name="2327" class="Symbol"
+      >{</a
+      ><a name="2328" href="lib.types.Span.html#2288" class="Bound"
+      >k</a
+      ><a name="2329" class="Symbol"
+      >}</a
+      ><a name="2330"
+      >
+</a
+      ><a name="2331" href="lib.types.Span.html#2268" class="Function"
+      >&#8857;Span-flip</a
+      ><a name="2341"
+      > </a
+      ><a name="2342" class="Symbol"
+      >(</a
+      ><a name="2343" href="lib.types.Span.html#1557" class="InductiveConstructor"
+      >&#8857;span</a
+      ><a name="2348"
+      > </a
+      ><a name="2349" href="lib.types.Span.html#2349" class="Bound"
+      >X</a
+      ><a name="2350"
+      > </a
+      ><a name="2351" href="lib.types.Span.html#2351" class="Bound"
+      >Y</a
+      ><a name="2352"
+      > </a
+      ><a name="2353" href="lib.types.Span.html#2353" class="Bound"
+      >Z</a
+      ><a name="2354"
+      > </a
+      ><a name="2355" href="lib.types.Span.html#2355" class="Bound"
+      >f</a
+      ><a name="2356"
+      > </a
+      ><a name="2357" href="lib.types.Span.html#2357" class="Bound"
+      >g</a
+      ><a name="2358" class="Symbol"
+      >)</a
+      ><a name="2359"
+      > </a
+      ><a name="2360" class="Symbol"
+      >=</a
+      ><a name="2361"
+      > </a
+      ><a name="2362" href="lib.types.Span.html#1557" class="InductiveConstructor"
+      >&#8857;span</a
+      ><a name="2367"
+      > </a
+      ><a name="2368" href="lib.types.Span.html#2351" class="Bound"
+      >Y</a
+      ><a name="2369"
+      > </a
+      ><a name="2370" href="lib.types.Span.html#2349" class="Bound"
+      >X</a
+      ><a name="2371"
+      > </a
+      ><a name="2372" href="lib.types.Span.html#2353" class="Bound"
+      >Z</a
+      ><a name="2373"
+      > </a
+      ><a name="2374" href="lib.types.Span.html#2357" class="Bound"
+      >g</a
+      ><a name="2375"
+      > </a
+      ><a name="2376" href="lib.types.Span.html#2355" class="Bound"
+      >f</a
+      ><a name="2377"
+      >
+
+</a
+      ><a name="2379" class="Keyword"
+      >record</a
+      ><a name="2385"
+      > </a
+      ><a name="2386" href="lib.types.Span.html#2386" class="Record"
+      >SpanMap</a
+      ><a name="2393"
+      > </a
+      ><a name="2394" class="Symbol"
+      >{</a
+      ><a name="2395" href="lib.types.Span.html#2395" class="Bound"
+      >i&#8320;</a
+      ><a name="2397"
+      > </a
+      ><a name="2398" href="lib.types.Span.html#2398" class="Bound"
+      >j&#8320;</a
+      ><a name="2400"
+      > </a
+      ><a name="2401" href="lib.types.Span.html#2401" class="Bound"
+      >k&#8320;</a
+      ><a name="2403"
+      > </a
+      ><a name="2404" href="lib.types.Span.html#2404" class="Bound"
+      >i&#8321;</a
+      ><a name="2406"
+      > </a
+      ><a name="2407" href="lib.types.Span.html#2407" class="Bound"
+      >j&#8321;</a
+      ><a name="2409"
+      > </a
+      ><a name="2410" href="lib.types.Span.html#2410" class="Bound"
+      >k&#8321;</a
+      ><a name="2412" class="Symbol"
+      >}</a
+      ><a name="2413"
+      > </a
+      ><a name="2414" class="Symbol"
+      >(</a
+      ><a name="2415" href="lib.types.Span.html#2415" class="Bound"
+      >span&#8320;</a
+      ><a name="2420"
+      > </a
+      ><a name="2421" class="Symbol"
+      >:</a
+      ><a name="2422"
+      > </a
+      ><a name="2423" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="2427"
+      > </a
+      ><a name="2428" class="Symbol"
+      >{</a
+      ><a name="2429" href="lib.types.Span.html#2395" class="Bound"
+      >i&#8320;</a
+      ><a name="2431" class="Symbol"
+      >}</a
+      ><a name="2432"
+      > </a
+      ><a name="2433" class="Symbol"
+      >{</a
+      ><a name="2434" href="lib.types.Span.html#2398" class="Bound"
+      >j&#8320;</a
+      ><a name="2436" class="Symbol"
+      >}</a
+      ><a name="2437"
+      > </a
+      ><a name="2438" class="Symbol"
+      >{</a
+      ><a name="2439" href="lib.types.Span.html#2401" class="Bound"
+      >k&#8320;</a
+      ><a name="2441" class="Symbol"
+      >})</a
+      ><a name="2443"
+      > </a
+      ><a name="2444" class="Symbol"
+      >(</a
+      ><a name="2445" href="lib.types.Span.html#2445" class="Bound"
+      >span&#8321;</a
+      ><a name="2450"
+      > </a
+      ><a name="2451" class="Symbol"
+      >:</a
+      ><a name="2452"
+      > </a
+      ><a name="2453" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="2457"
+      > </a
+      ><a name="2458" class="Symbol"
+      >{</a
+      ><a name="2459" href="lib.types.Span.html#2404" class="Bound"
+      >i&#8321;</a
+      ><a name="2461" class="Symbol"
+      >}</a
+      ><a name="2462"
+      > </a
+      ><a name="2463" class="Symbol"
+      >{</a
+      ><a name="2464" href="lib.types.Span.html#2407" class="Bound"
+      >j&#8321;</a
+      ><a name="2466" class="Symbol"
+      >}</a
+      ><a name="2467"
+      > </a
+      ><a name="2468" class="Symbol"
+      >{</a
+      ><a name="2469" href="lib.types.Span.html#2410" class="Bound"
+      >k&#8321;</a
+      ><a name="2471" class="Symbol"
+      >})</a
+      ><a name="2473"
+      >
+  </a
+      ><a name="2476" class="Symbol"
+      >:</a
+      ><a name="2477"
+      > </a
+      ><a name="2478" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2482"
+      > </a
+      ><a name="2483" class="Symbol"
+      >(</a
+      ><a name="2484" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="2488"
+      > </a
+      ><a name="2489" class="Symbol"
+      >(</a
+      ><a name="2490" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="2494"
+      > </a
+      ><a name="2495" class="Symbol"
+      >(</a
+      ><a name="2496" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="2500"
+      > </a
+      ><a name="2501" href="lib.types.Span.html#2395" class="Bound"
+      >i&#8320;</a
+      ><a name="2503"
+      > </a
+      ><a name="2504" href="lib.types.Span.html#2398" class="Bound"
+      >j&#8320;</a
+      ><a name="2506" class="Symbol"
+      >)</a
+      ><a name="2507"
+      > </a
+      ><a name="2508" href="lib.types.Span.html#2401" class="Bound"
+      >k&#8320;</a
+      ><a name="2510" class="Symbol"
+      >)</a
+      ><a name="2511"
+      > </a
+      ><a name="2512" class="Symbol"
+      >(</a
+      ><a name="2513" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="2517"
+      > </a
+      ><a name="2518" class="Symbol"
+      >(</a
+      ><a name="2519" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="2523"
+      > </a
+      ><a name="2524" href="lib.types.Span.html#2404" class="Bound"
+      >i&#8321;</a
+      ><a name="2526"
+      > </a
+      ><a name="2527" href="lib.types.Span.html#2407" class="Bound"
+      >j&#8321;</a
+      ><a name="2529" class="Symbol"
+      >)</a
+      ><a name="2530"
+      > </a
+      ><a name="2531" href="lib.types.Span.html#2410" class="Bound"
+      >k&#8321;</a
+      ><a name="2533" class="Symbol"
+      >))</a
+      ><a name="2535"
+      > </a
+      ><a name="2536" class="Keyword"
+      >where</a
+      ><a name="2541"
+      >
+  </a
+      ><a name="2544" class="Keyword"
+      >constructor</a
+      ><a name="2555"
+      > </a
+      ><a name="2556" href="lib.types.Span.html#2556" class="InductiveConstructor"
+      >span-map</a
+      ><a name="2564"
+      >
+  </a
+      ><a name="2567" class="Keyword"
+      >module</a
+      ><a name="2573"
+      > </a
+      ><a name="2574" href="lib.types.Span.html#2574" class="Module"
+      >span&#8320;</a
+      ><a name="2579"
+      > </a
+      ><a name="2580" class="Symbol"
+      >=</a
+      ><a name="2581"
+      > </a
+      ><a name="2582" href="lib.types.Span.html#193" class="Module"
+      >Span</a
+      ><a name="2586"
+      > </a
+      ><a name="2587" href="lib.types.Span.html#2415" class="Bound"
+      >span&#8320;</a
+      ><a name="2592"
+      >
+  </a
+      ><a name="2595" class="Keyword"
+      >module</a
+      ><a name="2601"
+      > </a
+      ><a name="2602" href="lib.types.Span.html#2602" class="Module"
+      >span&#8321;</a
+      ><a name="2607"
+      > </a
+      ><a name="2608" class="Symbol"
+      >=</a
+      ><a name="2609"
+      > </a
+      ><a name="2610" href="lib.types.Span.html#193" class="Module"
+      >Span</a
+      ><a name="2614"
+      > </a
+      ><a name="2615" href="lib.types.Span.html#2445" class="Bound"
+      >span&#8321;</a
+      ><a name="2620"
+      >
+  </a
+      ><a name="2623" class="Keyword"
+      >field</a
+      ><a name="2628"
+      >
+    </a
+      ><a name="2633" href="lib.types.Span.html#2633" class="Field"
+      >hA</a
+      ><a name="2635"
+      > </a
+      ><a name="2636" class="Symbol"
+      >:</a
+      ><a name="2637"
+      > </a
+      ><a name="2638" href="lib.types.Span.html#287" class="Function"
+      >span&#8320;.A</a
+      ><a name="2645"
+      > </a
+      ><a name="2646" class="Symbol"
+      >&#8594;</a
+      ><a name="2647"
+      > </a
+      ><a name="2648" href="lib.types.Span.html#287" class="Function"
+      >span&#8321;.A</a
+      ><a name="2655"
+      >
+    </a
+      ><a name="2660" href="lib.types.Span.html#2660" class="Field"
+      >hB</a
+      ><a name="2662"
+      > </a
+      ><a name="2663" class="Symbol"
+      >:</a
+      ><a name="2664"
+      > </a
+      ><a name="2665" href="lib.types.Span.html#302" class="Function"
+      >span&#8320;.B</a
+      ><a name="2672"
+      > </a
+      ><a name="2673" class="Symbol"
+      >&#8594;</a
+      ><a name="2674"
+      > </a
+      ><a name="2675" href="lib.types.Span.html#302" class="Function"
+      >span&#8321;.B</a
+      ><a name="2682"
+      >
+    </a
+      ><a name="2687" href="lib.types.Span.html#2687" class="Field"
+      >hC</a
+      ><a name="2689"
+      > </a
+      ><a name="2690" class="Symbol"
+      >:</a
+      ><a name="2691"
+      > </a
+      ><a name="2692" href="lib.types.Span.html#317" class="Function"
+      >span&#8320;.C</a
+      ><a name="2699"
+      > </a
+      ><a name="2700" class="Symbol"
+      >&#8594;</a
+      ><a name="2701"
+      > </a
+      ><a name="2702" href="lib.types.Span.html#317" class="Function"
+      >span&#8321;.C</a
+      ><a name="2709"
+      >
+    </a
+      ><a name="2714" href="lib.types.Span.html#2714" class="Field"
+      >f-commutes</a
+      ><a name="2724"
+      > </a
+      ><a name="2725" class="Symbol"
+      >:</a
+      ><a name="2726"
+      > </a
+      ><a name="2727" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="2737"
+      > </a
+      ><a name="2738" href="lib.types.Span.html#332" class="Function"
+      >span&#8320;.f</a
+      ><a name="2745"
+      > </a
+      ><a name="2746" href="lib.types.Span.html#332" class="Function"
+      >span&#8321;.f</a
+      ><a name="2753"
+      > </a
+      ><a name="2754" href="lib.types.Span.html#2687" class="Field"
+      >hC</a
+      ><a name="2756"
+      > </a
+      ><a name="2757" href="lib.types.Span.html#2633" class="Field"
+      >hA</a
+      ><a name="2759"
+      >
+    </a
+      ><a name="2764" href="lib.types.Span.html#2764" class="Field"
+      >g-commutes</a
+      ><a name="2774"
+      > </a
+      ><a name="2775" class="Symbol"
+      >:</a
+      ><a name="2776"
+      > </a
+      ><a name="2777" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="2787"
+      > </a
+      ><a name="2788" href="lib.types.Span.html#346" class="Function"
+      >span&#8320;.g</a
+      ><a name="2795"
+      > </a
+      ><a name="2796" href="lib.types.Span.html#346" class="Function"
+      >span&#8321;.g</a
+      ><a name="2803"
+      > </a
+      ><a name="2804" href="lib.types.Span.html#2687" class="Field"
+      >hC</a
+      ><a name="2806"
+      > </a
+      ><a name="2807" href="lib.types.Span.html#2660" class="Field"
+      >hB</a
+      ><a name="2809"
+      >
+
+</a
+      ><a name="2811" href="lib.types.Span.html#2811" class="Function"
+      >SpanMap-&#8728;</a
+      ><a name="2820"
+      > </a
+      ><a name="2821" class="Symbol"
+      >:</a
+      ><a name="2822"
+      > </a
+      ><a name="2823" class="Symbol"
+      >&#8704;</a
+      ><a name="2824"
+      > </a
+      ><a name="2825" class="Symbol"
+      >{</a
+      ><a name="2826" href="lib.types.Span.html#2826" class="Bound"
+      >i&#8320;</a
+      ><a name="2828"
+      > </a
+      ><a name="2829" href="lib.types.Span.html#2829" class="Bound"
+      >j&#8320;</a
+      ><a name="2831"
+      > </a
+      ><a name="2832" href="lib.types.Span.html#2832" class="Bound"
+      >k&#8320;</a
+      ><a name="2834"
+      > </a
+      ><a name="2835" href="lib.types.Span.html#2835" class="Bound"
+      >i&#8321;</a
+      ><a name="2837"
+      > </a
+      ><a name="2838" href="lib.types.Span.html#2838" class="Bound"
+      >j&#8321;</a
+      ><a name="2840"
+      > </a
+      ><a name="2841" href="lib.types.Span.html#2841" class="Bound"
+      >k&#8321;</a
+      ><a name="2843"
+      > </a
+      ><a name="2844" href="lib.types.Span.html#2844" class="Bound"
+      >i&#8322;</a
+      ><a name="2846"
+      > </a
+      ><a name="2847" href="lib.types.Span.html#2847" class="Bound"
+      >j&#8322;</a
+      ><a name="2849"
+      > </a
+      ><a name="2850" href="lib.types.Span.html#2850" class="Bound"
+      >k&#8322;</a
+      ><a name="2852" class="Symbol"
+      >}</a
+      ><a name="2853"
+      > </a
+      ><a name="2854" class="Symbol"
+      >{</a
+      ><a name="2855" href="lib.types.Span.html#2855" class="Bound"
+      >span&#8320;</a
+      ><a name="2860"
+      > </a
+      ><a name="2861" class="Symbol"
+      >:</a
+      ><a name="2862"
+      > </a
+      ><a name="2863" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="2867"
+      > </a
+      ><a name="2868" class="Symbol"
+      >{</a
+      ><a name="2869" href="lib.types.Span.html#2826" class="Bound"
+      >i&#8320;</a
+      ><a name="2871" class="Symbol"
+      >}</a
+      ><a name="2872"
+      > </a
+      ><a name="2873" class="Symbol"
+      >{</a
+      ><a name="2874" href="lib.types.Span.html#2829" class="Bound"
+      >j&#8320;</a
+      ><a name="2876" class="Symbol"
+      >}</a
+      ><a name="2877"
+      > </a
+      ><a name="2878" class="Symbol"
+      >{</a
+      ><a name="2879" href="lib.types.Span.html#2832" class="Bound"
+      >k&#8320;</a
+      ><a name="2881" class="Symbol"
+      >}}</a
+      ><a name="2883"
+      >
+  </a
+      ><a name="2886" class="Symbol"
+      >{</a
+      ><a name="2887" href="lib.types.Span.html#2887" class="Bound"
+      >span&#8321;</a
+      ><a name="2892"
+      > </a
+      ><a name="2893" class="Symbol"
+      >:</a
+      ><a name="2894"
+      > </a
+      ><a name="2895" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="2899"
+      > </a
+      ><a name="2900" class="Symbol"
+      >{</a
+      ><a name="2901" href="lib.types.Span.html#2835" class="Bound"
+      >i&#8321;</a
+      ><a name="2903" class="Symbol"
+      >}</a
+      ><a name="2904"
+      > </a
+      ><a name="2905" class="Symbol"
+      >{</a
+      ><a name="2906" href="lib.types.Span.html#2838" class="Bound"
+      >j&#8321;</a
+      ><a name="2908" class="Symbol"
+      >}</a
+      ><a name="2909"
+      > </a
+      ><a name="2910" class="Symbol"
+      >{</a
+      ><a name="2911" href="lib.types.Span.html#2841" class="Bound"
+      >k&#8321;</a
+      ><a name="2913" class="Symbol"
+      >}}</a
+      ><a name="2915"
+      > </a
+      ><a name="2916" class="Symbol"
+      >{</a
+      ><a name="2917" href="lib.types.Span.html#2917" class="Bound"
+      >span&#8322;</a
+      ><a name="2922"
+      > </a
+      ><a name="2923" class="Symbol"
+      >:</a
+      ><a name="2924"
+      > </a
+      ><a name="2925" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="2929"
+      > </a
+      ><a name="2930" class="Symbol"
+      >{</a
+      ><a name="2931" href="lib.types.Span.html#2844" class="Bound"
+      >i&#8322;</a
+      ><a name="2933" class="Symbol"
+      >}</a
+      ><a name="2934"
+      > </a
+      ><a name="2935" class="Symbol"
+      >{</a
+      ><a name="2936" href="lib.types.Span.html#2847" class="Bound"
+      >j&#8322;</a
+      ><a name="2938" class="Symbol"
+      >}</a
+      ><a name="2939"
+      > </a
+      ><a name="2940" class="Symbol"
+      >{</a
+      ><a name="2941" href="lib.types.Span.html#2850" class="Bound"
+      >k&#8322;</a
+      ><a name="2943" class="Symbol"
+      >}}</a
+      ><a name="2945"
+      >
+  </a
+      ><a name="2948" class="Symbol"
+      >&#8594;</a
+      ><a name="2949"
+      > </a
+      ><a name="2950" href="lib.types.Span.html#2386" class="Record"
+      >SpanMap</a
+      ><a name="2957"
+      > </a
+      ><a name="2958" href="lib.types.Span.html#2887" class="Bound"
+      >span&#8321;</a
+      ><a name="2963"
+      > </a
+      ><a name="2964" href="lib.types.Span.html#2917" class="Bound"
+      >span&#8322;</a
+      ><a name="2969"
+      > </a
+      ><a name="2970" class="Symbol"
+      >&#8594;</a
+      ><a name="2971"
+      > </a
+      ><a name="2972" href="lib.types.Span.html#2386" class="Record"
+      >SpanMap</a
+      ><a name="2979"
+      > </a
+      ><a name="2980" href="lib.types.Span.html#2855" class="Bound"
+      >span&#8320;</a
+      ><a name="2985"
+      > </a
+      ><a name="2986" href="lib.types.Span.html#2887" class="Bound"
+      >span&#8321;</a
+      ><a name="2991"
+      > </a
+      ><a name="2992" class="Symbol"
+      >&#8594;</a
+      ><a name="2993"
+      > </a
+      ><a name="2994" href="lib.types.Span.html#2386" class="Record"
+      >SpanMap</a
+      ><a name="3001"
+      > </a
+      ><a name="3002" href="lib.types.Span.html#2855" class="Bound"
+      >span&#8320;</a
+      ><a name="3007"
+      > </a
+      ><a name="3008" href="lib.types.Span.html#2917" class="Bound"
+      >span&#8322;</a
+      ><a name="3013"
+      >
+</a
+      ><a name="3014" href="lib.types.Span.html#2811" class="Function"
+      >SpanMap-&#8728;</a
+      ><a name="3023"
+      > </a
+      ><a name="3024" href="lib.types.Span.html#3024" class="Bound"
+      >span-map&#8321;&#8322;</a
+      ><a name="3034"
+      > </a
+      ><a name="3035" href="lib.types.Span.html#3035" class="Bound"
+      >span-map&#8320;&#8321;</a
+      ><a name="3045"
+      > </a
+      ><a name="3046" class="Symbol"
+      >=</a
+      ><a name="3047"
+      > </a
+      ><a name="3048" class="Keyword"
+      >record</a
+      ><a name="3054"
+      > </a
+      ><a name="3055" class="Symbol"
+      >{</a
+      ><a name="3056"
+      >
+  </a
+      ><a name="3059" class="Field"
+      >hA</a
+      ><a name="3061"
+      > </a
+      ><a name="3062" class="Symbol"
+      >=</a
+      ><a name="3063"
+      > </a
+      ><a name="3064" href="lib.types.Span.html#2633" class="Function"
+      >span-map&#8321;&#8322;.hA</a
+      ><a name="3077"
+      > </a
+      ><a name="3078" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3079"
+      > </a
+      ><a name="3080" href="lib.types.Span.html#2633" class="Field"
+      >span-map&#8320;&#8321;.hA</a
+      ><a name="3093" class="Symbol"
+      >;</a
+      ><a name="3094"
+      >
+  </a
+      ><a name="3097" class="Field"
+      >hB</a
+      ><a name="3099"
+      > </a
+      ><a name="3100" class="Symbol"
+      >=</a
+      ><a name="3101"
+      > </a
+      ><a name="3102" href="lib.types.Span.html#2660" class="Function"
+      >span-map&#8321;&#8322;.hB</a
+      ><a name="3115"
+      > </a
+      ><a name="3116" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3117"
+      > </a
+      ><a name="3118" href="lib.types.Span.html#2660" class="Field"
+      >span-map&#8320;&#8321;.hB</a
+      ><a name="3131" class="Symbol"
+      >;</a
+      ><a name="3132"
+      >
+  </a
+      ><a name="3135" class="Field"
+      >hC</a
+      ><a name="3137"
+      > </a
+      ><a name="3138" class="Symbol"
+      >=</a
+      ><a name="3139"
+      > </a
+      ><a name="3140" href="lib.types.Span.html#2687" class="Function"
+      >span-map&#8321;&#8322;.hC</a
+      ><a name="3153"
+      > </a
+      ><a name="3154" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3155"
+      > </a
+      ><a name="3156" href="lib.types.Span.html#2687" class="Field"
+      >span-map&#8320;&#8321;.hC</a
+      ><a name="3169" class="Symbol"
+      >;</a
+      ><a name="3170"
+      >
+  </a
+      ><a name="3173" class="Field"
+      >f-commutes</a
+      ><a name="3183"
+      > </a
+      ><a name="3184" class="Symbol"
+      >=</a
+      ><a name="3185"
+      > </a
+      ><a name="3186" href="lib.types.CommutingSquare.html#237" class="Function"
+      >CommSquare-&#8728;v</a
+      ><a name="3199"
+      > </a
+      ><a name="3200" href="lib.types.Span.html#2714" class="Function"
+      >span-map&#8321;&#8322;.f-commutes</a
+      ><a name="3221"
+      > </a
+      ><a name="3222" href="lib.types.Span.html#2714" class="Field"
+      >span-map&#8320;&#8321;.f-commutes</a
+      ><a name="3243" class="Symbol"
+      >;</a
+      ><a name="3244"
+      >
+  </a
+      ><a name="3247" class="Field"
+      >g-commutes</a
+      ><a name="3257"
+      > </a
+      ><a name="3258" class="Symbol"
+      >=</a
+      ><a name="3259"
+      > </a
+      ><a name="3260" href="lib.types.CommutingSquare.html#237" class="Function"
+      >CommSquare-&#8728;v</a
+      ><a name="3273"
+      > </a
+      ><a name="3274" href="lib.types.Span.html#2764" class="Function"
+      >span-map&#8321;&#8322;.g-commutes</a
+      ><a name="3295"
+      > </a
+      ><a name="3296" href="lib.types.Span.html#2764" class="Field"
+      >span-map&#8320;&#8321;.g-commutes</a
+      ><a name="3317" class="Symbol"
+      >}</a
+      ><a name="3318"
+      >
+  </a
+      ><a name="3321" class="Keyword"
+      >where</a
+      ><a name="3326"
+      > </a
+      ><a name="3327" class="Keyword"
+      >module</a
+      ><a name="3333"
+      > </a
+      ><a name="3334" href="lib.types.Span.html#3334" class="Module"
+      >span-map&#8320;&#8321;</a
+      ><a name="3344"
+      > </a
+      ><a name="3345" class="Symbol"
+      >=</a
+      ><a name="3346"
+      > </a
+      ><a name="3347" href="lib.types.Span.html#2386" class="Module"
+      >SpanMap</a
+      ><a name="3354"
+      > </a
+      ><a name="3355" href="lib.types.Span.html#3035" class="Bound"
+      >span-map&#8320;&#8321;</a
+      ><a name="3365"
+      >
+        </a
+      ><a name="3374" class="Keyword"
+      >module</a
+      ><a name="3380"
+      > </a
+      ><a name="3381" href="lib.types.Span.html#3381" class="Module"
+      >span-map&#8321;&#8322;</a
+      ><a name="3391"
+      > </a
+      ><a name="3392" class="Symbol"
+      >=</a
+      ><a name="3393"
+      > </a
+      ><a name="3394" href="lib.types.Span.html#2386" class="Module"
+      >SpanMap</a
+      ><a name="3401"
+      > </a
+      ><a name="3402" href="lib.types.Span.html#3024" class="Bound"
+      >span-map&#8321;&#8322;</a
+      ><a name="3412"
+      >
+
+</a
+      ><a name="3414" href="lib.types.Span.html#3414" class="Function"
+      >SpanEquiv</a
+      ><a name="3423"
+      > </a
+      ><a name="3424" class="Symbol"
+      >:</a
+      ><a name="3425"
+      > </a
+      ><a name="3426" class="Symbol"
+      >&#8704;</a
+      ><a name="3427"
+      > </a
+      ><a name="3428" class="Symbol"
+      >{</a
+      ><a name="3429" href="lib.types.Span.html#3429" class="Bound"
+      >i&#8320;</a
+      ><a name="3431"
+      > </a
+      ><a name="3432" href="lib.types.Span.html#3432" class="Bound"
+      >j&#8320;</a
+      ><a name="3434"
+      > </a
+      ><a name="3435" href="lib.types.Span.html#3435" class="Bound"
+      >k&#8320;</a
+      ><a name="3437"
+      > </a
+      ><a name="3438" href="lib.types.Span.html#3438" class="Bound"
+      >i&#8321;</a
+      ><a name="3440"
+      > </a
+      ><a name="3441" href="lib.types.Span.html#3441" class="Bound"
+      >j&#8321;</a
+      ><a name="3443"
+      > </a
+      ><a name="3444" href="lib.types.Span.html#3444" class="Bound"
+      >k&#8321;</a
+      ><a name="3446" class="Symbol"
+      >}</a
+      ><a name="3447"
+      > </a
+      ><a name="3448" class="Symbol"
+      >(</a
+      ><a name="3449" href="lib.types.Span.html#3449" class="Bound"
+      >span&#8320;</a
+      ><a name="3454"
+      > </a
+      ><a name="3455" class="Symbol"
+      >:</a
+      ><a name="3456"
+      > </a
+      ><a name="3457" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="3461"
+      > </a
+      ><a name="3462" class="Symbol"
+      >{</a
+      ><a name="3463" href="lib.types.Span.html#3429" class="Bound"
+      >i&#8320;</a
+      ><a name="3465" class="Symbol"
+      >}</a
+      ><a name="3466"
+      > </a
+      ><a name="3467" class="Symbol"
+      >{</a
+      ><a name="3468" href="lib.types.Span.html#3432" class="Bound"
+      >j&#8320;</a
+      ><a name="3470" class="Symbol"
+      >}</a
+      ><a name="3471"
+      > </a
+      ><a name="3472" class="Symbol"
+      >{</a
+      ><a name="3473" href="lib.types.Span.html#3435" class="Bound"
+      >k&#8320;</a
+      ><a name="3475" class="Symbol"
+      >})</a
+      ><a name="3477"
+      > </a
+      ><a name="3478" class="Symbol"
+      >(</a
+      ><a name="3479" href="lib.types.Span.html#3479" class="Bound"
+      >span&#8321;</a
+      ><a name="3484"
+      > </a
+      ><a name="3485" class="Symbol"
+      >:</a
+      ><a name="3486"
+      > </a
+      ><a name="3487" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="3491"
+      > </a
+      ><a name="3492" class="Symbol"
+      >{</a
+      ><a name="3493" href="lib.types.Span.html#3438" class="Bound"
+      >i&#8321;</a
+      ><a name="3495" class="Symbol"
+      >}</a
+      ><a name="3496"
+      > </a
+      ><a name="3497" class="Symbol"
+      >{</a
+      ><a name="3498" href="lib.types.Span.html#3441" class="Bound"
+      >j&#8321;</a
+      ><a name="3500" class="Symbol"
+      >}</a
+      ><a name="3501"
+      > </a
+      ><a name="3502" class="Symbol"
+      >{</a
+      ><a name="3503" href="lib.types.Span.html#3444" class="Bound"
+      >k&#8321;</a
+      ><a name="3505" class="Symbol"
+      >})</a
+      ><a name="3507"
+      >
+  </a
+      ><a name="3510" class="Symbol"
+      >&#8594;</a
+      ><a name="3511"
+      > </a
+      ><a name="3512" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3516"
+      > </a
+      ><a name="3517" class="Symbol"
+      >(</a
+      ><a name="3518" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="3522"
+      > </a
+      ><a name="3523" class="Symbol"
+      >(</a
+      ><a name="3524" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="3528"
+      > </a
+      ><a name="3529" class="Symbol"
+      >(</a
+      ><a name="3530" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="3534"
+      > </a
+      ><a name="3535" href="lib.types.Span.html#3429" class="Bound"
+      >i&#8320;</a
+      ><a name="3537"
+      > </a
+      ><a name="3538" href="lib.types.Span.html#3432" class="Bound"
+      >j&#8320;</a
+      ><a name="3540" class="Symbol"
+      >)</a
+      ><a name="3541"
+      > </a
+      ><a name="3542" href="lib.types.Span.html#3435" class="Bound"
+      >k&#8320;</a
+      ><a name="3544" class="Symbol"
+      >)</a
+      ><a name="3545"
+      > </a
+      ><a name="3546" class="Symbol"
+      >(</a
+      ><a name="3547" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="3551"
+      > </a
+      ><a name="3552" class="Symbol"
+      >(</a
+      ><a name="3553" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="3557"
+      > </a
+      ><a name="3558" href="lib.types.Span.html#3438" class="Bound"
+      >i&#8321;</a
+      ><a name="3560"
+      > </a
+      ><a name="3561" href="lib.types.Span.html#3441" class="Bound"
+      >j&#8321;</a
+      ><a name="3563" class="Symbol"
+      >)</a
+      ><a name="3564"
+      > </a
+      ><a name="3565" href="lib.types.Span.html#3444" class="Bound"
+      >k&#8321;</a
+      ><a name="3567" class="Symbol"
+      >))</a
+      ><a name="3569"
+      >
+</a
+      ><a name="3570" href="lib.types.Span.html#3414" class="Function"
+      >SpanEquiv</a
+      ><a name="3579"
+      > </a
+      ><a name="3580" href="lib.types.Span.html#3580" class="Bound"
+      >span&#8320;</a
+      ><a name="3585"
+      > </a
+      ><a name="3586" href="lib.types.Span.html#3586" class="Bound"
+      >span&#8321;</a
+      ><a name="3591"
+      > </a
+      ><a name="3592" class="Symbol"
+      >=</a
+      ><a name="3593"
+      > </a
+      ><a name="3594" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="3595"
+      > </a
+      ><a name="3596" class="Symbol"
+      >(</a
+      ><a name="3597" href="lib.types.Span.html#2386" class="Record"
+      >SpanMap</a
+      ><a name="3604"
+      > </a
+      ><a name="3605" href="lib.types.Span.html#3580" class="Bound"
+      >span&#8320;</a
+      ><a name="3610"
+      > </a
+      ><a name="3611" href="lib.types.Span.html#3586" class="Bound"
+      >span&#8321;</a
+      ><a name="3616" class="Symbol"
+      >)</a
+      ><a name="3617"
+      >
+  </a
+      ><a name="3620" class="Symbol"
+      >(&#955;</a
+      ><a name="3622"
+      > </a
+      ><a name="3623" href="lib.types.Span.html#3623" class="Bound"
+      >span-map</a
+      ><a name="3631"
+      > </a
+      ><a name="3632" class="Symbol"
+      >&#8594;</a
+      ><a name="3633"
+      > </a
+      ><a name="3634" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="3642"
+      > </a
+      ><a name="3643" class="Symbol"
+      >(</a
+      ><a name="3644" href="lib.types.Span.html#2633" class="Field"
+      >SpanMap.hA</a
+      ><a name="3654"
+      > </a
+      ><a name="3655" href="lib.types.Span.html#3623" class="Bound"
+      >span-map</a
+      ><a name="3663" class="Symbol"
+      >)</a
+      ><a name="3664"
+      >
+              </a
+      ><a name="3679" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="3680"
+      > </a
+      ><a name="3681" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="3689"
+      > </a
+      ><a name="3690" class="Symbol"
+      >(</a
+      ><a name="3691" href="lib.types.Span.html#2660" class="Field"
+      >SpanMap.hB</a
+      ><a name="3701"
+      > </a
+      ><a name="3702" href="lib.types.Span.html#3623" class="Bound"
+      >span-map</a
+      ><a name="3710" class="Symbol"
+      >)</a
+      ><a name="3711"
+      >
+              </a
+      ><a name="3726" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="3727"
+      > </a
+      ><a name="3728" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="3736"
+      > </a
+      ><a name="3737" class="Symbol"
+      >(</a
+      ><a name="3738" href="lib.types.Span.html#2687" class="Field"
+      >SpanMap.hC</a
+      ><a name="3748"
+      > </a
+      ><a name="3749" href="lib.types.Span.html#3623" class="Bound"
+      >span-map</a
+      ><a name="3757" class="Symbol"
+      >))</a
+      ><a name="3759"
+      >
+
+</a
+      ><a name="3761" href="lib.types.Span.html#3761" class="Function"
+      >SpanEquiv-inverse</a
+      ><a name="3778"
+      > </a
+      ><a name="3779" class="Symbol"
+      >:</a
+      ><a name="3780"
+      > </a
+      ><a name="3781" class="Symbol"
+      >&#8704;</a
+      ><a name="3782"
+      > </a
+      ><a name="3783" class="Symbol"
+      >{</a
+      ><a name="3784" href="lib.types.Span.html#3784" class="Bound"
+      >i&#8320;</a
+      ><a name="3786"
+      > </a
+      ><a name="3787" href="lib.types.Span.html#3787" class="Bound"
+      >j&#8320;</a
+      ><a name="3789"
+      > </a
+      ><a name="3790" href="lib.types.Span.html#3790" class="Bound"
+      >k&#8320;</a
+      ><a name="3792"
+      > </a
+      ><a name="3793" href="lib.types.Span.html#3793" class="Bound"
+      >i&#8321;</a
+      ><a name="3795"
+      > </a
+      ><a name="3796" href="lib.types.Span.html#3796" class="Bound"
+      >j&#8321;</a
+      ><a name="3798"
+      > </a
+      ><a name="3799" href="lib.types.Span.html#3799" class="Bound"
+      >k&#8321;</a
+      ><a name="3801" class="Symbol"
+      >}</a
+      ><a name="3802"
+      > </a
+      ><a name="3803" class="Symbol"
+      >{</a
+      ><a name="3804" href="lib.types.Span.html#3804" class="Bound"
+      >span&#8320;</a
+      ><a name="3809"
+      > </a
+      ><a name="3810" class="Symbol"
+      >:</a
+      ><a name="3811"
+      > </a
+      ><a name="3812" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="3816"
+      > </a
+      ><a name="3817" class="Symbol"
+      >{</a
+      ><a name="3818" href="lib.types.Span.html#3784" class="Bound"
+      >i&#8320;</a
+      ><a name="3820" class="Symbol"
+      >}</a
+      ><a name="3821"
+      > </a
+      ><a name="3822" class="Symbol"
+      >{</a
+      ><a name="3823" href="lib.types.Span.html#3787" class="Bound"
+      >j&#8320;</a
+      ><a name="3825" class="Symbol"
+      >}</a
+      ><a name="3826"
+      > </a
+      ><a name="3827" class="Symbol"
+      >{</a
+      ><a name="3828" href="lib.types.Span.html#3790" class="Bound"
+      >k&#8320;</a
+      ><a name="3830" class="Symbol"
+      >}}</a
+      ><a name="3832"
+      > </a
+      ><a name="3833" class="Symbol"
+      >{</a
+      ><a name="3834" href="lib.types.Span.html#3834" class="Bound"
+      >span&#8321;</a
+      ><a name="3839"
+      > </a
+      ><a name="3840" class="Symbol"
+      >:</a
+      ><a name="3841"
+      > </a
+      ><a name="3842" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="3846"
+      > </a
+      ><a name="3847" class="Symbol"
+      >{</a
+      ><a name="3848" href="lib.types.Span.html#3793" class="Bound"
+      >i&#8321;</a
+      ><a name="3850" class="Symbol"
+      >}</a
+      ><a name="3851"
+      > </a
+      ><a name="3852" class="Symbol"
+      >{</a
+      ><a name="3853" href="lib.types.Span.html#3796" class="Bound"
+      >j&#8321;</a
+      ><a name="3855" class="Symbol"
+      >}</a
+      ><a name="3856"
+      > </a
+      ><a name="3857" class="Symbol"
+      >{</a
+      ><a name="3858" href="lib.types.Span.html#3799" class="Bound"
+      >k&#8321;</a
+      ><a name="3860" class="Symbol"
+      >}}</a
+      ><a name="3862"
+      >
+  </a
+      ><a name="3865" class="Symbol"
+      >&#8594;</a
+      ><a name="3866"
+      > </a
+      ><a name="3867" href="lib.types.Span.html#3414" class="Function"
+      >SpanEquiv</a
+      ><a name="3876"
+      > </a
+      ><a name="3877" href="lib.types.Span.html#3804" class="Bound"
+      >span&#8320;</a
+      ><a name="3882"
+      > </a
+      ><a name="3883" href="lib.types.Span.html#3834" class="Bound"
+      >span&#8321;</a
+      ><a name="3888"
+      > </a
+      ><a name="3889" class="Symbol"
+      >&#8594;</a
+      ><a name="3890"
+      > </a
+      ><a name="3891" href="lib.types.Span.html#3414" class="Function"
+      >SpanEquiv</a
+      ><a name="3900"
+      > </a
+      ><a name="3901" href="lib.types.Span.html#3834" class="Bound"
+      >span&#8321;</a
+      ><a name="3906"
+      > </a
+      ><a name="3907" href="lib.types.Span.html#3804" class="Bound"
+      >span&#8320;</a
+      ><a name="3912"
+      >
+</a
+      ><a name="3913" href="lib.types.Span.html#3761" class="Function"
+      >SpanEquiv-inverse</a
+      ><a name="3930"
+      > </a
+      ><a name="3931" class="Symbol"
+      >(</a
+      ><a name="3932" href="lib.types.Span.html#2556" class="InductiveConstructor"
+      >span-map</a
+      ><a name="3940"
+      > </a
+      ><a name="3941" href="lib.types.Span.html#3941" class="Bound"
+      >hA</a
+      ><a name="3943"
+      > </a
+      ><a name="3944" href="lib.types.Span.html#3944" class="Bound"
+      >hB</a
+      ><a name="3946"
+      > </a
+      ><a name="3947" href="lib.types.Span.html#3947" class="Bound"
+      >hC</a
+      ><a name="3949"
+      > </a
+      ><a name="3950" href="lib.types.Span.html#3950" class="Bound"
+      >f-commutes</a
+      ><a name="3960"
+      > </a
+      ><a name="3961" href="lib.types.Span.html#3961" class="Bound"
+      >g-commutes</a
+      ><a name="3971"
+      > </a
+      ><a name="3972" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3973"
+      > </a
+      ><a name="3974" href="lib.types.Span.html#3974" class="Bound"
+      >hA-ise</a
+      ><a name="3980"
+      > </a
+      ><a name="3981" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3982"
+      > </a
+      ><a name="3983" href="lib.types.Span.html#3983" class="Bound"
+      >hB-ise</a
+      ><a name="3989"
+      > </a
+      ><a name="3990" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3991"
+      > </a
+      ><a name="3992" href="lib.types.Span.html#3992" class="Bound"
+      >hC-ise</a
+      ><a name="3998" class="Symbol"
+      >)</a
+      ><a name="3999"
+      >
+  </a
+      ><a name="4002" class="Symbol"
+      >=</a
+      ><a name="4003"
+      > </a
+      ><a name="4004" class="Symbol"
+      >(</a
+      ><a name="4005"
+      > </a
+      ><a name="4006" href="lib.types.Span.html#2556" class="InductiveConstructor"
+      >span-map</a
+      ><a name="4014"
+      > </a
+      ><a name="4015" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="4019"
+      > </a
+      ><a name="4020" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="4024"
+      > </a
+      ><a name="4025" href="lib.Equivalence.html#1668" class="Field"
+      >hC.g</a
+      ><a name="4029"
+      >
+      </a
+      ><a name="4036" class="Symbol"
+      >(</a
+      ><a name="4037" href="lib.types.CommutingSquare.html#689" class="Function"
+      >CommSquare-inverse-v</a
+      ><a name="4057"
+      > </a
+      ><a name="4058" href="lib.types.Span.html#3950" class="Bound"
+      >f-commutes</a
+      ><a name="4068"
+      > </a
+      ><a name="4069" href="lib.types.Span.html#3992" class="Bound"
+      >hC-ise</a
+      ><a name="4075"
+      > </a
+      ><a name="4076" href="lib.types.Span.html#3974" class="Bound"
+      >hA-ise</a
+      ><a name="4082" class="Symbol"
+      >)</a
+      ><a name="4083"
+      >
+      </a
+      ><a name="4090" class="Symbol"
+      >(</a
+      ><a name="4091" href="lib.types.CommutingSquare.html#689" class="Function"
+      >CommSquare-inverse-v</a
+      ><a name="4111"
+      > </a
+      ><a name="4112" href="lib.types.Span.html#3961" class="Bound"
+      >g-commutes</a
+      ><a name="4122"
+      > </a
+      ><a name="4123" href="lib.types.Span.html#3992" class="Bound"
+      >hC-ise</a
+      ><a name="4129"
+      > </a
+      ><a name="4130" href="lib.types.Span.html#3983" class="Bound"
+      >hB-ise</a
+      ><a name="4136" class="Symbol"
+      >)</a
+      ><a name="4137"
+      >
+    </a
+      ><a name="4142" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="4143"
+      > </a
+      ><a name="4144" class="Symbol"
+      >(</a
+      ><a name="4145"
+      > </a
+      ><a name="4146" href="lib.Equivalence.html#8069" class="Function"
+      >is-equiv-inverse</a
+      ><a name="4162"
+      > </a
+      ><a name="4163" href="lib.types.Span.html#3974" class="Bound"
+      >hA-ise</a
+      ><a name="4169"
+      >
+      </a
+      ><a name="4176" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="4177"
+      > </a
+      ><a name="4178" href="lib.Equivalence.html#8069" class="Function"
+      >is-equiv-inverse</a
+      ><a name="4194"
+      > </a
+      ><a name="4195" href="lib.types.Span.html#3983" class="Bound"
+      >hB-ise</a
+      ><a name="4201"
+      >
+      </a
+      ><a name="4208" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="4209"
+      > </a
+      ><a name="4210" href="lib.Equivalence.html#8069" class="Function"
+      >is-equiv-inverse</a
+      ><a name="4226"
+      > </a
+      ><a name="4227" href="lib.types.Span.html#3992" class="Bound"
+      >hC-ise</a
+      ><a name="4233" class="Symbol"
+      >))</a
+      ><a name="4235"
+      >
+  </a
+      ><a name="4238" class="Keyword"
+      >where</a
+      ><a name="4243"
+      > </a
+      ><a name="4244" class="Keyword"
+      >module</a
+      ><a name="4250"
+      > </a
+      ><a name="4251" href="lib.types.Span.html#4251" class="Module"
+      >hA</a
+      ><a name="4253"
+      > </a
+      ><a name="4254" class="Symbol"
+      >=</a
+      ><a name="4255"
+      > </a
+      ><a name="4256" href="lib.Equivalence.html#1603" class="Module"
+      >is-equiv</a
+      ><a name="4264"
+      > </a
+      ><a name="4265" href="lib.types.Span.html#3974" class="Bound"
+      >hA-ise</a
+      ><a name="4271"
+      >
+        </a
+      ><a name="4280" class="Keyword"
+      >module</a
+      ><a name="4286"
+      > </a
+      ><a name="4287" href="lib.types.Span.html#4287" class="Module"
+      >hB</a
+      ><a name="4289"
+      > </a
+      ><a name="4290" class="Symbol"
+      >=</a
+      ><a name="4291"
+      > </a
+      ><a name="4292" href="lib.Equivalence.html#1603" class="Module"
+      >is-equiv</a
+      ><a name="4300"
+      > </a
+      ><a name="4301" href="lib.types.Span.html#3983" class="Bound"
+      >hB-ise</a
+      ><a name="4307"
+      >
+        </a
+      ><a name="4316" class="Keyword"
+      >module</a
+      ><a name="4322"
+      > </a
+      ><a name="4323" href="lib.types.Span.html#4323" class="Module"
+      >hC</a
+      ><a name="4325"
+      > </a
+      ><a name="4326" class="Symbol"
+      >=</a
+      ><a name="4327"
+      > </a
+      ><a name="4328" href="lib.Equivalence.html#1603" class="Module"
+      >is-equiv</a
+      ><a name="4336"
+      > </a
+      ><a name="4337" href="lib.types.Span.html#3992" class="Bound"
+      >hC-ise</a
+      ><a name="4343"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

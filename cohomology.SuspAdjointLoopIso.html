@@ -1,0 +1,1792 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cohomology.SuspAdjointLoopIso</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="homotopy.PtdAdjoint.html#1" class="Module"
+      >homotopy.PtdAdjoint</a
+      ><a name="90"
+      >
+</a
+      ><a name="91" class="Keyword"
+      >open</a
+      ><a name="95"
+      > </a
+      ><a name="96" class="Keyword"
+      >import</a
+      ><a name="102"
+      > </a
+      ><a name="103" href="homotopy.SuspAdjointLoop.html#1" class="Module"
+      >homotopy.SuspAdjointLoop</a
+      ><a name="127"
+      >
+</a
+      ><a name="128" class="Keyword"
+      >open</a
+      ><a name="132"
+      > </a
+      ><a name="133" class="Keyword"
+      >import</a
+      ><a name="139"
+      > </a
+      ><a name="140" href="cohomology.WithCoefficients.html#1" class="Module"
+      >cohomology.WithCoefficients</a
+      ><a name="167"
+      >
+
+</a
+      ><a name="169" class="Keyword"
+      >module</a
+      ><a name="175"
+      > </a
+      ><a name="176" href="cohomology.SuspAdjointLoopIso.html#1" class="Module"
+      >cohomology.SuspAdjointLoopIso</a
+      ><a name="205"
+      > </a
+      ><a name="206" class="Keyword"
+      >where</a
+      ><a name="211"
+      >
+
+</a
+      ><a name="213" class="Keyword"
+      >module</a
+      ><a name="219"
+      > </a
+      ><a name="220" href="cohomology.SuspAdjointLoopIso.html#220" class="Module"
+      >SuspAdjointLoopIso</a
+      ><a name="238"
+      > </a
+      ><a name="239" class="Symbol"
+      >{</a
+      ><a name="240" href="cohomology.SuspAdjointLoopIso.html#240" class="Bound"
+      >i</a
+      ><a name="241" class="Symbol"
+      >}</a
+      ><a name="242"
+      > </a
+      ><a name="243" class="Keyword"
+      >where</a
+      ><a name="248"
+      >
+
+  </a
+      ><a name="252" class="Keyword"
+      >private</a
+      ><a name="259"
+      >
+    </a
+      ><a name="264" href="cohomology.SuspAdjointLoopIso.html#264" class="Function"
+      >hadj</a
+      ><a name="268"
+      > </a
+      ><a name="269" class="Symbol"
+      >:</a
+      ><a name="270"
+      > </a
+      ><a name="271" href="homotopy.PtdAdjoint.html#1183" class="Record"
+      >HomAdjoint</a
+      ><a name="281"
+      > </a
+      ><a name="282" class="Symbol"
+      >{</a
+      ><a name="283" href="cohomology.SuspAdjointLoopIso.html#240" class="Bound"
+      >i</a
+      ><a name="284" class="Symbol"
+      >}</a
+      ><a name="285"
+      > </a
+      ><a name="286" class="Symbol"
+      >{</a
+      ><a name="287" href="cohomology.SuspAdjointLoopIso.html#240" class="Bound"
+      >i</a
+      ><a name="288" class="Symbol"
+      >}</a
+      ><a name="289"
+      > </a
+      ><a name="290" href="homotopy.SuspAdjointLoop.html#155" class="Function"
+      >&#931;&#8867;&#937;.SuspFunctor</a
+      ><a name="305"
+      > </a
+      ><a name="306" href="homotopy.SuspAdjointLoop.html#301" class="Function"
+      >&#931;&#8867;&#937;.LoopFunctor</a
+      ><a name="321"
+      >
+    </a
+      ><a name="326" href="cohomology.SuspAdjointLoopIso.html#264" class="Function"
+      >hadj</a
+      ><a name="330"
+      > </a
+      ><a name="331" class="Symbol"
+      >=</a
+      ><a name="332"
+      > </a
+      ><a name="333" href="homotopy.PtdAdjoint.html#2348" class="Function"
+      >counit-unit-to-hom</a
+      ><a name="351"
+      > </a
+      ><a name="352" href="homotopy.SuspAdjointLoop.html#2976" class="Function"
+      >&#931;&#8867;&#937;.adj</a
+      ><a name="359"
+      >
+
+    </a
+      ><a name="365" class="Keyword"
+      >module</a
+      ><a name="371"
+      > </a
+      ><a name="372" href="cohomology.SuspAdjointLoopIso.html#372" class="Module"
+      >A</a
+      ><a name="373"
+      > </a
+      ><a name="374" class="Symbol"
+      >=</a
+      ><a name="375"
+      > </a
+      ><a name="376" href="homotopy.PtdAdjoint.html#1183" class="Module"
+      >HomAdjoint</a
+      ><a name="386"
+      > </a
+      ><a name="387" href="cohomology.SuspAdjointLoopIso.html#264" class="Function"
+      >hadj</a
+      ><a name="391"
+      >
+
+  </a
+      ><a name="395" class="Keyword"
+      >module</a
+      ><a name="401"
+      > </a
+      ><a name="402" href="cohomology.SuspAdjointLoopIso.html#402" class="Module"
+      >_</a
+      ><a name="403"
+      > </a
+      ><a name="404" class="Symbol"
+      >(</a
+      ><a name="405" href="cohomology.SuspAdjointLoopIso.html#405" class="Bound"
+      >X</a
+      ><a name="406"
+      > </a
+      ><a name="407" href="cohomology.SuspAdjointLoopIso.html#407" class="Bound"
+      >Y</a
+      ><a name="408"
+      > </a
+      ><a name="409" class="Symbol"
+      >:</a
+      ><a name="410"
+      > </a
+      ><a name="411" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="414"
+      > </a
+      ><a name="415" href="cohomology.SuspAdjointLoopIso.html#240" class="Bound"
+      >i</a
+      ><a name="416" class="Symbol"
+      >)</a
+      ><a name="417"
+      > </a
+      ><a name="418" class="Keyword"
+      >where</a
+      ><a name="423"
+      >
+
+    </a
+      ><a name="429" class="Keyword"
+      >abstract</a
+      ><a name="437"
+      >
+      </a
+      ><a name="444" href="cohomology.SuspAdjointLoopIso.html#444" class="Function"
+      >pres-comp</a
+      ><a name="453"
+      > </a
+      ><a name="454" class="Symbol"
+      >:</a
+      ><a name="455"
+      > </a
+      ><a name="456" class="Symbol"
+      >(</a
+      ><a name="457" href="cohomology.SuspAdjointLoopIso.html#457" class="Bound"
+      >h&#8321;</a
+      ><a name="459"
+      > </a
+      ><a name="460" href="cohomology.SuspAdjointLoopIso.html#460" class="Bound"
+      >h&#8322;</a
+      ><a name="462"
+      > </a
+      ><a name="463" class="Symbol"
+      >:</a
+      ><a name="464"
+      > </a
+      ><a name="465" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="470"
+      > </a
+      ><a name="471" href="cohomology.SuspAdjointLoopIso.html#405" class="Bound"
+      >X</a
+      ><a name="472"
+      > </a
+      ><a name="473" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="475"
+      > </a
+      ><a name="476" href="lib.types.LoopSpace.html#394" class="Function"
+      >&#8857;&#937;</a
+      ><a name="478"
+      > </a
+      ><a name="479" href="cohomology.SuspAdjointLoopIso.html#407" class="Bound"
+      >Y</a
+      ><a name="480" class="Symbol"
+      >)</a
+      ><a name="481"
+      >
+        </a
+      ><a name="490" class="Symbol"
+      >&#8594;</a
+      ><a name="491"
+      > </a
+      ><a name="492" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="494"
+      > </a
+      ><a name="495" class="Symbol"
+      >(</a
+      ><a name="496" href="homotopy.PtdAdjoint.html#1356" class="Function"
+      >A.eq</a
+      ><a name="500"
+      > </a
+      ><a name="501" href="cohomology.SuspAdjointLoopIso.html#405" class="Bound"
+      >X</a
+      ><a name="502"
+      > </a
+      ><a name="503" class="Symbol"
+      >(</a
+      ><a name="504" href="lib.types.LoopSpace.html#394" class="Function"
+      >&#8857;&#937;</a
+      ><a name="506"
+      > </a
+      ><a name="507" href="cohomology.SuspAdjointLoopIso.html#407" class="Bound"
+      >Y</a
+      ><a name="508" class="Symbol"
+      >))</a
+      ><a name="510"
+      > </a
+      ><a name="511" class="Symbol"
+      >(</a
+      ><a name="512" href="lib.types.LoopSpace.html#633" class="Function"
+      >&#8857;&#937;-&#8729;</a
+      ><a name="516"
+      > </a
+      ><a name="517" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="519"
+      > </a
+      ><a name="520" href="lib.types.Sigma.html#978" class="Function"
+      >&#8857;fanout</a
+      ><a name="527"
+      > </a
+      ><a name="528" href="cohomology.SuspAdjointLoopIso.html#457" class="Bound"
+      >h&#8321;</a
+      ><a name="530"
+      > </a
+      ><a name="531" href="cohomology.SuspAdjointLoopIso.html#460" class="Bound"
+      >h&#8322;</a
+      ><a name="533" class="Symbol"
+      >)</a
+      ><a name="534"
+      >
+           </a
+      ><a name="546" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="548"
+      > </a
+      ><a name="549" href="lib.types.LoopSpace.html#633" class="Function"
+      >&#8857;&#937;-&#8729;</a
+      ><a name="553"
+      > </a
+      ><a name="554" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="556"
+      > </a
+      ><a name="557" href="lib.types.Sigma.html#978" class="Function"
+      >&#8857;fanout</a
+      ><a name="564"
+      > </a
+      ><a name="565" class="Symbol"
+      >(</a
+      ><a name="566" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="568"
+      > </a
+      ><a name="569" class="Symbol"
+      >(</a
+      ><a name="570" href="homotopy.PtdAdjoint.html#1356" class="Function"
+      >A.eq</a
+      ><a name="574"
+      > </a
+      ><a name="575" href="cohomology.SuspAdjointLoopIso.html#405" class="Bound"
+      >X</a
+      ><a name="576"
+      > </a
+      ><a name="577" class="Symbol"
+      >(</a
+      ><a name="578" href="lib.types.LoopSpace.html#394" class="Function"
+      >&#8857;&#937;</a
+      ><a name="580"
+      > </a
+      ><a name="581" href="cohomology.SuspAdjointLoopIso.html#407" class="Bound"
+      >Y</a
+      ><a name="582" class="Symbol"
+      >))</a
+      ><a name="584"
+      > </a
+      ><a name="585" href="cohomology.SuspAdjointLoopIso.html#457" class="Bound"
+      >h&#8321;</a
+      ><a name="587" class="Symbol"
+      >)</a
+      ><a name="588"
+      > </a
+      ><a name="589" class="Symbol"
+      >(</a
+      ><a name="590" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="592"
+      > </a
+      ><a name="593" class="Symbol"
+      >(</a
+      ><a name="594" href="homotopy.PtdAdjoint.html#1356" class="Function"
+      >A.eq</a
+      ><a name="598"
+      > </a
+      ><a name="599" href="cohomology.SuspAdjointLoopIso.html#405" class="Bound"
+      >X</a
+      ><a name="600"
+      > </a
+      ><a name="601" class="Symbol"
+      >(</a
+      ><a name="602" href="lib.types.LoopSpace.html#394" class="Function"
+      >&#8857;&#937;</a
+      ><a name="604"
+      > </a
+      ><a name="605" href="cohomology.SuspAdjointLoopIso.html#407" class="Bound"
+      >Y</a
+      ><a name="606" class="Symbol"
+      >))</a
+      ><a name="608"
+      > </a
+      ><a name="609" href="cohomology.SuspAdjointLoopIso.html#460" class="Bound"
+      >h&#8322;</a
+      ><a name="611" class="Symbol"
+      >)</a
+      ><a name="612"
+      >
+      </a
+      ><a name="619" href="cohomology.SuspAdjointLoopIso.html#444" class="Function"
+      >pres-comp</a
+      ><a name="628"
+      > </a
+      ><a name="629" href="cohomology.SuspAdjointLoopIso.html#629" class="Bound"
+      >h&#8321;</a
+      ><a name="631"
+      > </a
+      ><a name="632" href="cohomology.SuspAdjointLoopIso.html#632" class="Bound"
+      >h&#8322;</a
+      ><a name="634"
+      > </a
+      ><a name="635" class="Symbol"
+      >=</a
+      ><a name="636"
+      >
+        </a
+      ><a name="645" href="homotopy.PtdAdjoint.html#8538" class="Function"
+      >B.nat-cod</a
+      ><a name="654"
+      > </a
+      ><a name="655" href="cohomology.SuspAdjointLoopIso.html#629" class="Bound"
+      >h&#8321;</a
+      ><a name="657"
+      > </a
+      ><a name="658" href="cohomology.SuspAdjointLoopIso.html#632" class="Bound"
+      >h&#8322;</a
+      ><a name="660"
+      > </a
+      ><a name="661" href="lib.types.LoopSpace.html#633" class="Function"
+      >&#8857;&#937;-&#8729;</a
+      ><a name="665"
+      >
+        </a
+      ><a name="674" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="675"
+      > </a
+      ><a name="676" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="678"
+      > </a
+      ><a name="679" class="Symbol"
+      >(</a
+      ><a name="680" href="lib.Function.html#470" class="Function Operator"
+      >_&#8857;&#8728;</a
+      ><a name="683"
+      > </a
+      ><a name="684" href="lib.types.Sigma.html#978" class="Function"
+      >&#8857;fanout</a
+      ><a name="691"
+      > </a
+      ><a name="692" class="Symbol"
+      >(</a
+      ><a name="693" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="695"
+      > </a
+      ><a name="696" class="Symbol"
+      >(</a
+      ><a name="697" href="homotopy.PtdAdjoint.html#1356" class="Function"
+      >A.eq</a
+      ><a name="701"
+      > </a
+      ><a name="702" href="cohomology.SuspAdjointLoopIso.html#405" class="Bound"
+      >X</a
+      ><a name="703"
+      > </a
+      ><a name="704" class="Symbol"
+      >(</a
+      ><a name="705" href="lib.types.LoopSpace.html#394" class="Function"
+      >&#8857;&#937;</a
+      ><a name="707"
+      > </a
+      ><a name="708" href="cohomology.SuspAdjointLoopIso.html#407" class="Bound"
+      >Y</a
+      ><a name="709" class="Symbol"
+      >))</a
+      ><a name="711"
+      > </a
+      ><a name="712" href="cohomology.SuspAdjointLoopIso.html#629" class="Bound"
+      >h&#8321;</a
+      ><a name="714" class="Symbol"
+      >)</a
+      ><a name="715"
+      > </a
+      ><a name="716" class="Symbol"
+      >(</a
+      ><a name="717" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="719"
+      > </a
+      ><a name="720" class="Symbol"
+      >(</a
+      ><a name="721" href="homotopy.PtdAdjoint.html#1356" class="Function"
+      >A.eq</a
+      ><a name="725"
+      > </a
+      ><a name="726" href="cohomology.SuspAdjointLoopIso.html#405" class="Bound"
+      >X</a
+      ><a name="727"
+      > </a
+      ><a name="728" class="Symbol"
+      >(</a
+      ><a name="729" href="lib.types.LoopSpace.html#394" class="Function"
+      >&#8857;&#937;</a
+      ><a name="731"
+      > </a
+      ><a name="732" href="cohomology.SuspAdjointLoopIso.html#407" class="Bound"
+      >Y</a
+      ><a name="733" class="Symbol"
+      >))</a
+      ><a name="735"
+      > </a
+      ><a name="736" href="cohomology.SuspAdjointLoopIso.html#632" class="Bound"
+      >h&#8322;</a
+      ><a name="738" class="Symbol"
+      >))</a
+      ><a name="740"
+      >
+             </a
+      ><a name="754" href="cohomology.SuspAdjointLoopIso.html#1307" class="Function"
+      >arr2-lemma</a
+      ><a name="764"
+      >
+        </a
+      ><a name="773" class="Keyword"
+      >where</a
+      ><a name="778"
+      >
+        </a
+      ><a name="787" class="Keyword"
+      >module</a
+      ><a name="793"
+      > </a
+      ><a name="794" href="cohomology.SuspAdjointLoopIso.html#794" class="Module"
+      >A&#215;</a
+      ><a name="796"
+      > </a
+      ><a name="797" class="Symbol"
+      >=</a
+      ><a name="798"
+      > </a
+      ><a name="799" href="homotopy.PtdAdjoint.html#5014" class="Module"
+      >RightAdjoint&#215;</a
+      ><a name="812"
+      > </a
+      ><a name="813" href="cohomology.SuspAdjointLoopIso.html#264" class="Function"
+      >hadj</a
+      ><a name="817"
+      >
+        </a
+      ><a name="826" class="Keyword"
+      >module</a
+      ><a name="832"
+      > </a
+      ><a name="833" href="cohomology.SuspAdjointLoopIso.html#833" class="Module"
+      >B</a
+      ><a name="834"
+      > </a
+      ><a name="835" class="Symbol"
+      >=</a
+      ><a name="836"
+      > </a
+      ><a name="837" href="homotopy.PtdAdjoint.html#8182" class="Module"
+      >RightAdjointBinary</a
+      ><a name="855"
+      > </a
+      ><a name="856" href="cohomology.SuspAdjointLoopIso.html#264" class="Function"
+      >hadj</a
+      ><a name="860"
+      >
+
+        </a
+      ><a name="870" href="cohomology.SuspAdjointLoopIso.html#870" class="Function"
+      >ap2-lemma</a
+      ><a name="879"
+      > </a
+      ><a name="880" class="Symbol"
+      >:</a
+      ><a name="881"
+      > </a
+      ><a name="882" class="Symbol"
+      >&#8704;</a
+      ><a name="883"
+      > </a
+      ><a name="884" class="Symbol"
+      >{</a
+      ><a name="885" href="cohomology.SuspAdjointLoopIso.html#885" class="Bound"
+      >i</a
+      ><a name="886"
+      > </a
+      ><a name="887" href="cohomology.SuspAdjointLoopIso.html#887" class="Bound"
+      >j</a
+      ><a name="888"
+      > </a
+      ><a name="889" href="cohomology.SuspAdjointLoopIso.html#889" class="Bound"
+      >k</a
+      ><a name="890" class="Symbol"
+      >}</a
+      ><a name="891"
+      > </a
+      ><a name="892" class="Symbol"
+      >{</a
+      ><a name="893" href="cohomology.SuspAdjointLoopIso.html#893" class="Bound"
+      >A</a
+      ><a name="894"
+      > </a
+      ><a name="895" class="Symbol"
+      >:</a
+      ><a name="896"
+      > </a
+      ><a name="897" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="901"
+      > </a
+      ><a name="902" href="cohomology.SuspAdjointLoopIso.html#885" class="Bound"
+      >i</a
+      ><a name="903" class="Symbol"
+      >}</a
+      ><a name="904"
+      > </a
+      ><a name="905" class="Symbol"
+      >{</a
+      ><a name="906" href="cohomology.SuspAdjointLoopIso.html#906" class="Bound"
+      >B</a
+      ><a name="907"
+      > </a
+      ><a name="908" class="Symbol"
+      >:</a
+      ><a name="909"
+      > </a
+      ><a name="910" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="914"
+      > </a
+      ><a name="915" href="cohomology.SuspAdjointLoopIso.html#887" class="Bound"
+      >j</a
+      ><a name="916" class="Symbol"
+      >}</a
+      ><a name="917"
+      > </a
+      ><a name="918" class="Symbol"
+      >{</a
+      ><a name="919" href="cohomology.SuspAdjointLoopIso.html#919" class="Bound"
+      >C</a
+      ><a name="920"
+      > </a
+      ><a name="921" class="Symbol"
+      >:</a
+      ><a name="922"
+      > </a
+      ><a name="923" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="927"
+      > </a
+      ><a name="928" href="cohomology.SuspAdjointLoopIso.html#889" class="Bound"
+      >k</a
+      ><a name="929" class="Symbol"
+      >}</a
+      ><a name="930"
+      >
+          </a
+      ><a name="941" class="Symbol"
+      >(</a
+      ><a name="942" href="cohomology.SuspAdjointLoopIso.html#942" class="Bound"
+      >f</a
+      ><a name="943"
+      > </a
+      ><a name="944" class="Symbol"
+      >:</a
+      ><a name="945"
+      > </a
+      ><a name="946" href="cohomology.SuspAdjointLoopIso.html#893" class="Bound"
+      >A</a
+      ><a name="947"
+      > </a
+      ><a name="948" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="949"
+      > </a
+      ><a name="950" href="cohomology.SuspAdjointLoopIso.html#906" class="Bound"
+      >B</a
+      ><a name="951"
+      > </a
+      ><a name="952" class="Symbol"
+      >&#8594;</a
+      ><a name="953"
+      > </a
+      ><a name="954" href="cohomology.SuspAdjointLoopIso.html#919" class="Bound"
+      >C</a
+      ><a name="955" class="Symbol"
+      >)</a
+      ><a name="956"
+      > </a
+      ><a name="957" class="Symbol"
+      >{</a
+      ><a name="958" href="cohomology.SuspAdjointLoopIso.html#958" class="Bound"
+      >r</a
+      ><a name="959"
+      > </a
+      ><a name="960" href="cohomology.SuspAdjointLoopIso.html#960" class="Bound"
+      >s</a
+      ><a name="961"
+      > </a
+      ><a name="962" class="Symbol"
+      >:</a
+      ><a name="963"
+      > </a
+      ><a name="964" href="cohomology.SuspAdjointLoopIso.html#893" class="Bound"
+      >A</a
+      ><a name="965"
+      > </a
+      ><a name="966" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="967"
+      > </a
+      ><a name="968" href="cohomology.SuspAdjointLoopIso.html#906" class="Bound"
+      >B</a
+      ><a name="969" class="Symbol"
+      >}</a
+      ><a name="970"
+      > </a
+      ><a name="971" class="Symbol"
+      >(</a
+      ><a name="972" href="cohomology.SuspAdjointLoopIso.html#972" class="Bound"
+      >p</a
+      ><a name="973"
+      > </a
+      ><a name="974" class="Symbol"
+      >:</a
+      ><a name="975"
+      > </a
+      ><a name="976" href="cohomology.SuspAdjointLoopIso.html#958" class="Bound"
+      >r</a
+      ><a name="977"
+      > </a
+      ><a name="978" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="980"
+      > </a
+      ><a name="981" href="cohomology.SuspAdjointLoopIso.html#960" class="Bound"
+      >s</a
+      ><a name="982" class="Symbol"
+      >)</a
+      ><a name="983"
+      >
+          </a
+      ><a name="994" class="Symbol"
+      >&#8594;</a
+      ><a name="995"
+      > </a
+      ><a name="996" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="998"
+      > </a
+      ><a name="999" href="cohomology.SuspAdjointLoopIso.html#942" class="Bound"
+      >f</a
+      ><a name="1000"
+      > </a
+      ><a name="1001" href="cohomology.SuspAdjointLoopIso.html#972" class="Bound"
+      >p</a
+      ><a name="1002"
+      > </a
+      ><a name="1003" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1005"
+      > </a
+      ><a name="1006" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="1009"
+      > </a
+      ><a name="1010" class="Symbol"
+      >(</a
+      ><a name="1011" href="lib.Base.html#8450" class="Function"
+      >curry</a
+      ><a name="1016"
+      > </a
+      ><a name="1017" href="cohomology.SuspAdjointLoopIso.html#942" class="Bound"
+      >f</a
+      ><a name="1018" class="Symbol"
+      >)</a
+      ><a name="1019"
+      > </a
+      ><a name="1020" class="Symbol"
+      >(</a
+      ><a name="1021" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1023"
+      > </a
+      ><a name="1024" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1027"
+      > </a
+      ><a name="1028" href="cohomology.SuspAdjointLoopIso.html#972" class="Bound"
+      >p</a
+      ><a name="1029" class="Symbol"
+      >)</a
+      ><a name="1030"
+      > </a
+      ><a name="1031" class="Symbol"
+      >(</a
+      ><a name="1032" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1034"
+      > </a
+      ><a name="1035" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1038"
+      > </a
+      ><a name="1039" href="cohomology.SuspAdjointLoopIso.html#972" class="Bound"
+      >p</a
+      ><a name="1040" class="Symbol"
+      >)</a
+      ><a name="1041"
+      >
+        </a
+      ><a name="1050" href="cohomology.SuspAdjointLoopIso.html#870" class="Function"
+      >ap2-lemma</a
+      ><a name="1059"
+      > </a
+      ><a name="1060" href="cohomology.SuspAdjointLoopIso.html#1060" class="Bound"
+      >f</a
+      ><a name="1061"
+      > </a
+      ><a name="1062" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" class="Symbol"
+      >=</a
+      ><a name="1067"
+      > </a
+      ><a name="1068" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1071"
+      >
+
+        </a
+      ><a name="1081" href="cohomology.SuspAdjointLoopIso.html#1081" class="Function"
+      >&#8857;ap2-lemma</a
+      ><a name="1091"
+      > </a
+      ><a name="1092" class="Symbol"
+      >:</a
+      ><a name="1093"
+      > </a
+      ><a name="1094" class="Symbol"
+      >&#8704;</a
+      ><a name="1095"
+      > </a
+      ><a name="1096" class="Symbol"
+      >{</a
+      ><a name="1097" href="cohomology.SuspAdjointLoopIso.html#1097" class="Bound"
+      >i</a
+      ><a name="1098"
+      > </a
+      ><a name="1099" href="cohomology.SuspAdjointLoopIso.html#1099" class="Bound"
+      >j</a
+      ><a name="1100"
+      > </a
+      ><a name="1101" href="cohomology.SuspAdjointLoopIso.html#1101" class="Bound"
+      >k</a
+      ><a name="1102" class="Symbol"
+      >}</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" class="Symbol"
+      >{</a
+      ><a name="1105" href="cohomology.SuspAdjointLoopIso.html#1105" class="Bound"
+      >X</a
+      ><a name="1106"
+      > </a
+      ><a name="1107" class="Symbol"
+      >:</a
+      ><a name="1108"
+      > </a
+      ><a name="1109" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1112"
+      > </a
+      ><a name="1113" href="cohomology.SuspAdjointLoopIso.html#1097" class="Bound"
+      >i</a
+      ><a name="1114" class="Symbol"
+      >}</a
+      ><a name="1115"
+      > </a
+      ><a name="1116" class="Symbol"
+      >{</a
+      ><a name="1117" href="cohomology.SuspAdjointLoopIso.html#1117" class="Bound"
+      >Y</a
+      ><a name="1118"
+      > </a
+      ><a name="1119" class="Symbol"
+      >:</a
+      ><a name="1120"
+      > </a
+      ><a name="1121" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1124"
+      > </a
+      ><a name="1125" href="cohomology.SuspAdjointLoopIso.html#1099" class="Bound"
+      >j</a
+      ><a name="1126" class="Symbol"
+      >}</a
+      ><a name="1127"
+      > </a
+      ><a name="1128" class="Symbol"
+      >{</a
+      ><a name="1129" href="cohomology.SuspAdjointLoopIso.html#1129" class="Bound"
+      >Z</a
+      ><a name="1130"
+      > </a
+      ><a name="1131" class="Symbol"
+      >:</a
+      ><a name="1132"
+      > </a
+      ><a name="1133" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" href="cohomology.SuspAdjointLoopIso.html#1101" class="Bound"
+      >k</a
+      ><a name="1138" class="Symbol"
+      >}</a
+      ><a name="1139"
+      >
+          </a
+      ><a name="1150" class="Symbol"
+      >(</a
+      ><a name="1151" href="cohomology.SuspAdjointLoopIso.html#1151" class="Bound"
+      >f</a
+      ><a name="1152"
+      > </a
+      ><a name="1153" class="Symbol"
+      >:</a
+      ><a name="1154"
+      > </a
+      ><a name="1155" href="cohomology.SuspAdjointLoopIso.html#1105" class="Bound"
+      >X</a
+      ><a name="1156"
+      > </a
+      ><a name="1157" href="lib.types.Sigma.html#331" class="Function Operator"
+      >&#8857;&#215;</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" href="cohomology.SuspAdjointLoopIso.html#1117" class="Bound"
+      >Y</a
+      ><a name="1161"
+      > </a
+      ><a name="1162" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1164"
+      > </a
+      ><a name="1165" href="cohomology.SuspAdjointLoopIso.html#1129" class="Bound"
+      >Z</a
+      ><a name="1166" class="Symbol"
+      >)</a
+      ><a name="1167"
+      >
+          </a
+      ><a name="1178" class="Symbol"
+      >&#8594;</a
+      ><a name="1179"
+      > </a
+      ><a name="1180" href="lib.types.LoopSpace.html#709" class="Function"
+      >&#8857;&#937;-fmap</a
+      ><a name="1187"
+      > </a
+      ><a name="1188" href="cohomology.SuspAdjointLoopIso.html#1151" class="Bound"
+      >f</a
+      ><a name="1189"
+      > </a
+      ><a name="1190" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1192"
+      > </a
+      ><a name="1193" href="lib.types.LoopSpace.html#1306" class="Function"
+      >&#8857;&#937;-fmap2</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" href="cohomology.SuspAdjointLoopIso.html#1151" class="Bound"
+      >f</a
+      ><a name="1203"
+      > </a
+      ><a name="1204" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="1206"
+      > </a
+      ><a name="1207" href="lib.types.Sigma.html#978" class="Function"
+      >&#8857;fanout</a
+      ><a name="1214"
+      > </a
+      ><a name="1215" class="Symbol"
+      >(</a
+      ><a name="1216" href="lib.types.LoopSpace.html#709" class="Function"
+      >&#8857;&#937;-fmap</a
+      ><a name="1223"
+      > </a
+      ><a name="1224" href="lib.types.Sigma.html#556" class="Function"
+      >&#8857;fst</a
+      ><a name="1228" class="Symbol"
+      >)</a
+      ><a name="1229"
+      > </a
+      ><a name="1230" class="Symbol"
+      >(</a
+      ><a name="1231" href="lib.types.LoopSpace.html#709" class="Function"
+      >&#8857;&#937;-fmap</a
+      ><a name="1238"
+      > </a
+      ><a name="1239" href="lib.types.Sigma.html#625" class="Function"
+      >&#8857;snd</a
+      ><a name="1243" class="Symbol"
+      >)</a
+      ><a name="1244"
+      >
+        </a
+      ><a name="1253" href="cohomology.SuspAdjointLoopIso.html#1081" class="Function"
+      >&#8857;ap2-lemma</a
+      ><a name="1263"
+      > </a
+      ><a name="1264" class="Symbol"
+      >(</a
+      ><a name="1265" href="cohomology.SuspAdjointLoopIso.html#1265" class="Bound"
+      >f</a
+      ><a name="1266"
+      > </a
+      ><a name="1267" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1268"
+      > </a
+      ><a name="1269" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1272" class="Symbol"
+      >)</a
+      ><a name="1273"
+      > </a
+      ><a name="1274" class="Symbol"
+      >=</a
+      ><a name="1275"
+      > </a
+      ><a name="1276" href="lib.types.Pointed.html#438" class="Function"
+      >&#8857;&#955;=</a
+      ><a name="1279"
+      > </a
+      ><a name="1280" class="Symbol"
+      >(</a
+      ><a name="1281" href="cohomology.SuspAdjointLoopIso.html#870" class="Function"
+      >ap2-lemma</a
+      ><a name="1290"
+      > </a
+      ><a name="1291" href="cohomology.SuspAdjointLoopIso.html#1265" class="Bound"
+      >f</a
+      ><a name="1292" class="Symbol"
+      >)</a
+      ><a name="1293"
+      > </a
+      ><a name="1294" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1297"
+      >
+
+        </a
+      ><a name="1307" href="cohomology.SuspAdjointLoopIso.html#1307" class="Function"
+      >arr2-lemma</a
+      ><a name="1317"
+      > </a
+      ><a name="1318" class="Symbol"
+      >:</a
+      ><a name="1319"
+      > </a
+      ><a name="1320" href="homotopy.PtdAdjoint.html#8416" class="Function"
+      >B.arr2</a
+      ><a name="1326"
+      > </a
+      ><a name="1327" href="lib.types.LoopSpace.html#633" class="Function"
+      >&#8857;&#937;-&#8729;</a
+      ><a name="1331"
+      > </a
+      ><a name="1332" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1334"
+      > </a
+      ><a name="1335" href="lib.types.LoopSpace.html#633" class="Function"
+      >&#8857;&#937;-&#8729;</a
+      ><a name="1339"
+      >
+        </a
+      ><a name="1348" href="cohomology.SuspAdjointLoopIso.html#1307" class="Function"
+      >arr2-lemma</a
+      ><a name="1358"
+      > </a
+      ><a name="1359" class="Symbol"
+      >=</a
+      ><a name="1360"
+      >
+          </a
+      ><a name="1371" href="lib.types.LoopSpace.html#709" class="Function"
+      >&#8857;&#937;-fmap</a
+      ><a name="1378"
+      > </a
+      ><a name="1379" href="lib.types.LoopSpace.html#633" class="Function"
+      >&#8857;&#937;-&#8729;</a
+      ><a name="1383"
+      > </a
+      ><a name="1384" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="1386"
+      > </a
+      ><a name="1387" href="homotopy.PtdAdjoint.html#5313" class="Function"
+      >A&#215;.&#8857;out</a
+      ><a name="1394"
+      > </a
+      ><a name="1395" class="Symbol"
+      >_</a
+      ><a name="1396"
+      > </a
+      ><a name="1397" class="Symbol"
+      >_</a
+      ><a name="1398"
+      >
+            </a
+      ><a name="1411" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1413"
+      > </a
+      ><a name="1414" href="cohomology.SuspAdjointLoopIso.html#1081" class="Function"
+      >&#8857;ap2-lemma</a
+      ><a name="1424"
+      > </a
+      ><a name="1425" href="lib.types.LoopSpace.html#633" class="Function"
+      >&#8857;&#937;-&#8729;</a
+      ><a name="1429"
+      > </a
+      ><a name="1430" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1437"
+      > </a
+      ><a name="1438" href="lib.Function.html#470" class="Function Operator"
+      >_&#8857;&#8728;</a
+      ><a name="1441"
+      > </a
+      ><a name="1442" href="homotopy.PtdAdjoint.html#5313" class="Function"
+      >A&#215;.&#8857;out</a
+      ><a name="1449"
+      > </a
+      ><a name="1450" class="Symbol"
+      >_</a
+      ><a name="1451"
+      > </a
+      ><a name="1452" class="Symbol"
+      >_</a
+      ><a name="1453"
+      > </a
+      ><a name="1454" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1455"
+      >
+          </a
+      ><a name="1466" class="Symbol"
+      >(</a
+      ><a name="1467" href="lib.types.LoopSpace.html#1306" class="Function"
+      >&#8857;&#937;-fmap2</a
+      ><a name="1475"
+      > </a
+      ><a name="1476" href="lib.types.LoopSpace.html#633" class="Function"
+      >&#8857;&#937;-&#8729;</a
+      ><a name="1480"
+      > </a
+      ><a name="1481" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="1483"
+      > </a
+      ><a name="1484" href="homotopy.PtdAdjoint.html#5221" class="Function"
+      >A&#215;.&#8857;into</a
+      ><a name="1492"
+      > </a
+      ><a name="1493" class="Symbol"
+      >_</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" class="Symbol"
+      >_)</a
+      ><a name="1497"
+      > </a
+      ><a name="1498" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="1500"
+      > </a
+      ><a name="1501" href="homotopy.PtdAdjoint.html#5313" class="Function"
+      >A&#215;.&#8857;out</a
+      ><a name="1508"
+      > </a
+      ><a name="1509" class="Symbol"
+      >_</a
+      ><a name="1510"
+      > </a
+      ><a name="1511" class="Symbol"
+      >_</a
+      ><a name="1512"
+      >
+            </a
+      ><a name="1525" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1527"
+      > </a
+      ><a name="1528" href="lib.types.Pointed.html#1152" class="Function"
+      >&#8857;&#8728;-assoc</a
+      ><a name="1536"
+      > </a
+      ><a name="1537" class="Symbol"
+      >(</a
+      ><a name="1538" href="lib.types.LoopSpace.html#1306" class="Function"
+      >&#8857;&#937;-fmap2</a
+      ><a name="1546"
+      > </a
+      ><a name="1547" href="lib.types.LoopSpace.html#633" class="Function"
+      >&#8857;&#937;-&#8729;</a
+      ><a name="1551" class="Symbol"
+      >)</a
+      ><a name="1552"
+      > </a
+      ><a name="1553" class="Symbol"
+      >(</a
+      ><a name="1554" href="homotopy.PtdAdjoint.html#5221" class="Function"
+      >A&#215;.&#8857;into</a
+      ><a name="1562"
+      > </a
+      ><a name="1563" class="Symbol"
+      >_</a
+      ><a name="1564"
+      > </a
+      ><a name="1565" class="Symbol"
+      >_)</a
+      ><a name="1567"
+      > </a
+      ><a name="1568" class="Symbol"
+      >(</a
+      ><a name="1569" href="homotopy.PtdAdjoint.html#5313" class="Function"
+      >A&#215;.&#8857;out</a
+      ><a name="1576"
+      > </a
+      ><a name="1577" class="Symbol"
+      >_</a
+      ><a name="1578"
+      > </a
+      ><a name="1579" class="Symbol"
+      >_)</a
+      ><a name="1581"
+      > </a
+      ><a name="1582" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1583"
+      >
+          </a
+      ><a name="1594" href="lib.types.LoopSpace.html#1306" class="Function"
+      >&#8857;&#937;-fmap2</a
+      ><a name="1602"
+      > </a
+      ><a name="1603" href="lib.types.LoopSpace.html#633" class="Function"
+      >&#8857;&#937;-&#8729;</a
+      ><a name="1607"
+      > </a
+      ><a name="1608" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="1610"
+      > </a
+      ><a name="1611" class="Symbol"
+      >(</a
+      ><a name="1612" href="homotopy.PtdAdjoint.html#5221" class="Function"
+      >A&#215;.&#8857;into</a
+      ><a name="1620"
+      > </a
+      ><a name="1621" class="Symbol"
+      >_</a
+      ><a name="1622"
+      > </a
+      ><a name="1623" class="Symbol"
+      >_</a
+      ><a name="1624"
+      > </a
+      ><a name="1625" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="1627"
+      > </a
+      ><a name="1628" href="homotopy.PtdAdjoint.html#5313" class="Function"
+      >A&#215;.&#8857;out</a
+      ><a name="1635"
+      > </a
+      ><a name="1636" class="Symbol"
+      >_</a
+      ><a name="1637"
+      > </a
+      ><a name="1638" class="Symbol"
+      >_)</a
+      ><a name="1640"
+      >
+            </a
+      ><a name="1653" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1655"
+      > </a
+      ><a name="1656" href="homotopy.PtdAdjoint.html#5467" class="Function"
+      >A&#215;.&#8857;into-out</a
+      ><a name="1668"
+      > </a
+      ><a name="1669" class="Symbol"
+      >_</a
+      ><a name="1670"
+      > </a
+      ><a name="1671" class="Symbol"
+      >_</a
+      ><a name="1672"
+      > </a
+      ><a name="1673" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1680"
+      > </a
+      ><a name="1681" href="lib.types.LoopSpace.html#1306" class="Function"
+      >&#8857;&#937;-fmap2</a
+      ><a name="1689"
+      > </a
+      ><a name="1690" href="lib.types.LoopSpace.html#633" class="Function"
+      >&#8857;&#937;-&#8729;</a
+      ><a name="1694"
+      > </a
+      ><a name="1695" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;_</a
+      ><a name="1698"
+      > </a
+      ><a name="1699" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1700"
+      >
+          </a
+      ><a name="1711" href="lib.types.LoopSpace.html#1306" class="Function"
+      >&#8857;&#937;-fmap2</a
+      ><a name="1719"
+      > </a
+      ><a name="1720" href="lib.types.LoopSpace.html#633" class="Function"
+      >&#8857;&#937;-&#8729;</a
+      ><a name="1724"
+      >
+            </a
+      ><a name="1737" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1739"
+      > </a
+      ><a name="1740" href="lib.types.LoopSpace.html#8958" class="Function"
+      >&#8857;&#937;-fmap2-&#8729;</a
+      ><a name="1750"
+      > </a
+      ><a name="1751" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1752"
+      >
+          </a
+      ><a name="1763" href="lib.types.LoopSpace.html#633" class="Function"
+      >&#8857;&#937;-&#8729;</a
+      ><a name="1767"
+      > </a
+      ><a name="1768" href="HoTT.html#767" class="Function Operator"
+      >&#8718;</a
+      ><a name="1769"
+      >
+
+    </a
+      ><a name="1775" href="cohomology.SuspAdjointLoopIso.html#1775" class="Function"
+      >iso</a
+      ><a name="1778"
+      > </a
+      ><a name="1779" class="Symbol"
+      >:</a
+      ><a name="1780"
+      > </a
+      ><a name="1781" href="cohomology.WithCoefficients.html#1651" class="Function"
+      >Trunc-&#8857;&#8594;&#937;-group</a
+      ><a name="1796"
+      > </a
+      ><a name="1797" class="Symbol"
+      >(</a
+      ><a name="1798" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="1803"
+      > </a
+      ><a name="1804" href="cohomology.SuspAdjointLoopIso.html#405" class="Bound"
+      >X</a
+      ><a name="1805" class="Symbol"
+      >)</a
+      ><a name="1806"
+      > </a
+      ><a name="1807" href="cohomology.SuspAdjointLoopIso.html#407" class="Bound"
+      >Y</a
+      ><a name="1808"
+      > </a
+      ><a name="1809" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="1811"
+      > </a
+      ><a name="1812" href="cohomology.WithCoefficients.html#1651" class="Function"
+      >Trunc-&#8857;&#8594;&#937;-group</a
+      ><a name="1827"
+      > </a
+      ><a name="1828" href="cohomology.SuspAdjointLoopIso.html#405" class="Bound"
+      >X</a
+      ><a name="1829"
+      > </a
+      ><a name="1830" class="Symbol"
+      >(</a
+      ><a name="1831" href="lib.types.LoopSpace.html#394" class="Function"
+      >&#8857;&#937;</a
+      ><a name="1833"
+      > </a
+      ><a name="1834" href="cohomology.SuspAdjointLoopIso.html#407" class="Bound"
+      >Y</a
+      ><a name="1835" class="Symbol"
+      >)</a
+      ><a name="1836"
+      >
+    </a
+      ><a name="1841" href="cohomology.SuspAdjointLoopIso.html#1775" class="Function"
+      >iso</a
+      ><a name="1844"
+      > </a
+      ><a name="1845" class="Symbol"
+      >=</a
+      ><a name="1846"
+      > </a
+      ><a name="1847" href="lib.groups.TruncationGroup.html#3190" class="Function"
+      >Trunc-group-emap</a
+      ><a name="1863"
+      > </a
+      ><a name="1864" class="Symbol"
+      >(</a
+      ><a name="1865" href="lib.groups.Isomorphism.html#1194" class="Function"
+      >&#8771;-to-&#8771;&#7475;&#738;</a
+      ><a name="1873"
+      > </a
+      ><a name="1874" class="Symbol"
+      >(</a
+      ><a name="1875" href="homotopy.PtdAdjoint.html#1356" class="Function"
+      >A.eq</a
+      ><a name="1879"
+      > </a
+      ><a name="1880" href="cohomology.SuspAdjointLoopIso.html#405" class="Bound"
+      >X</a
+      ><a name="1881"
+      > </a
+      ><a name="1882" class="Symbol"
+      >(</a
+      ><a name="1883" href="lib.types.LoopSpace.html#394" class="Function"
+      >&#8857;&#937;</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" href="cohomology.SuspAdjointLoopIso.html#407" class="Bound"
+      >Y</a
+      ><a name="1887" class="Symbol"
+      >))</a
+      ><a name="1889"
+      > </a
+      ><a name="1890" href="cohomology.SuspAdjointLoopIso.html#444" class="Function"
+      >pres-comp</a
+      ><a name="1899" class="Symbol"
+      >)</a
+      ><a name="1900"
+      >
+
+  </a
+      ><a name="1904" class="Keyword"
+      >abstract</a
+      ><a name="1912"
+      >
+    </a
+      ><a name="1917" href="cohomology.SuspAdjointLoopIso.html#1917" class="Function"
+      >nat-dom</a
+      ><a name="1924"
+      > </a
+      ><a name="1925" class="Symbol"
+      >:</a
+      ><a name="1926"
+      > </a
+      ><a name="1927" class="Symbol"
+      >{</a
+      ><a name="1928" href="cohomology.SuspAdjointLoopIso.html#1928" class="Bound"
+      >X</a
+      ><a name="1929"
+      > </a
+      ><a name="1930" href="cohomology.SuspAdjointLoopIso.html#1930" class="Bound"
+      >Y</a
+      ><a name="1931"
+      > </a
+      ><a name="1932" class="Symbol"
+      >:</a
+      ><a name="1933"
+      > </a
+      ><a name="1934" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1937"
+      > </a
+      ><a name="1938" href="cohomology.SuspAdjointLoopIso.html#240" class="Bound"
+      >i</a
+      ><a name="1939" class="Symbol"
+      >}</a
+      ><a name="1940"
+      > </a
+      ><a name="1941" class="Symbol"
+      >(</a
+      ><a name="1942" href="cohomology.SuspAdjointLoopIso.html#1942" class="Bound"
+      >f</a
+      ><a name="1943"
+      > </a
+      ><a name="1944" class="Symbol"
+      >:</a
+      ><a name="1945"
+      > </a
+      ><a name="1946" href="cohomology.SuspAdjointLoopIso.html#1928" class="Bound"
+      >X</a
+      ><a name="1947"
+      > </a
+      ><a name="1948" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1950"
+      > </a
+      ><a name="1951" href="cohomology.SuspAdjointLoopIso.html#1930" class="Bound"
+      >Y</a
+      ><a name="1952" class="Symbol"
+      >)</a
+      ><a name="1953"
+      > </a
+      ><a name="1954" class="Symbol"
+      >(</a
+      ><a name="1955" href="cohomology.SuspAdjointLoopIso.html#1955" class="Bound"
+      >Z</a
+      ><a name="1956"
+      > </a
+      ><a name="1957" class="Symbol"
+      >:</a
+      ><a name="1958"
+      > </a
+      ><a name="1959" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1962"
+      > </a
+      ><a name="1963" href="cohomology.SuspAdjointLoopIso.html#240" class="Bound"
+      >i</a
+      ><a name="1964" class="Symbol"
+      >)</a
+      ><a name="1965"
+      >
+      </a
+      ><a name="1972" class="Symbol"
+      >&#8594;</a
+      ><a name="1973"
+      > </a
+      ><a name="1974" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1977"
+      > </a
+      ><a name="1978" class="Symbol"
+      >(</a
+      ><a name="1979" href="cohomology.SuspAdjointLoopIso.html#1775" class="Function"
+      >iso</a
+      ><a name="1982"
+      > </a
+      ><a name="1983" href="cohomology.SuspAdjointLoopIso.html#1928" class="Bound"
+      >X</a
+      ><a name="1984"
+      > </a
+      ><a name="1985" href="cohomology.SuspAdjointLoopIso.html#1955" class="Bound"
+      >Z</a
+      ><a name="1986" class="Symbol"
+      >)</a
+      ><a name="1987"
+      > </a
+      ><a name="1988" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="1990"
+      > </a
+      ><a name="1991" href="cohomology.WithCoefficients.html#2151" class="Function"
+      >Trunc-&#8857;&#8594;&#937;-group-fmap-dom</a
+      ><a name="2015"
+      > </a
+      ><a name="2016" class="Symbol"
+      >(</a
+      ><a name="2017" href="lib.types.Suspension.html#2607" class="Function"
+      >&#8857;Susp-fmap</a
+      ><a name="2027"
+      > </a
+      ><a name="2028" href="cohomology.SuspAdjointLoopIso.html#1942" class="Bound"
+      >f</a
+      ><a name="2029" class="Symbol"
+      >)</a
+      ><a name="2030"
+      > </a
+      ><a name="2031" href="cohomology.SuspAdjointLoopIso.html#1955" class="Bound"
+      >Z</a
+      ><a name="2032"
+      >
+        </a
+      ><a name="2041" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2043"
+      > </a
+      ><a name="2044" href="cohomology.WithCoefficients.html#2151" class="Function"
+      >Trunc-&#8857;&#8594;&#937;-group-fmap-dom</a
+      ><a name="2068"
+      > </a
+      ><a name="2069" href="cohomology.SuspAdjointLoopIso.html#1942" class="Bound"
+      >f</a
+      ><a name="2070"
+      > </a
+      ><a name="2071" class="Symbol"
+      >(</a
+      ><a name="2072" href="lib.types.LoopSpace.html#394" class="Function"
+      >&#8857;&#937;</a
+      ><a name="2074"
+      > </a
+      ><a name="2075" href="cohomology.SuspAdjointLoopIso.html#1955" class="Bound"
+      >Z</a
+      ><a name="2076" class="Symbol"
+      >)</a
+      ><a name="2077"
+      > </a
+      ><a name="2078" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="2080"
+      > </a
+      ><a name="2081" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="2084"
+      > </a
+      ><a name="2085" class="Symbol"
+      >(</a
+      ><a name="2086" href="cohomology.SuspAdjointLoopIso.html#1775" class="Function"
+      >iso</a
+      ><a name="2089"
+      > </a
+      ><a name="2090" href="cohomology.SuspAdjointLoopIso.html#1930" class="Bound"
+      >Y</a
+      ><a name="2091"
+      > </a
+      ><a name="2092" href="cohomology.SuspAdjointLoopIso.html#1955" class="Bound"
+      >Z</a
+      ><a name="2093" class="Symbol"
+      >)</a
+      ><a name="2094"
+      >
+    </a
+      ><a name="2099" href="cohomology.SuspAdjointLoopIso.html#1917" class="Function"
+      >nat-dom</a
+      ><a name="2106"
+      > </a
+      ><a name="2107" href="cohomology.SuspAdjointLoopIso.html#2107" class="Bound"
+      >f</a
+      ><a name="2108"
+      > </a
+      ><a name="2109" href="cohomology.SuspAdjointLoopIso.html#2109" class="Bound"
+      >Z</a
+      ><a name="2110"
+      > </a
+      ><a name="2111" class="Symbol"
+      >=</a
+      ><a name="2112"
+      > </a
+      ><a name="2113" href="lib.groups.Homomorphism.html#3739" class="Function"
+      >group-hom=</a
+      ><a name="2123"
+      > </a
+      ><a name="2124" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2125"
+      > </a
+      ><a name="2126" href="lib.Funext.html#3966" class="Function"
+      >&#955;=</a
+      ><a name="2128"
+      > </a
+      ><a name="2129" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2130"
+      > </a
+      ><a name="2131" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="2141"
+      >
+      </a
+      ><a name="2148" class="Symbol"
+      >(&#955;</a
+      ><a name="2150"
+      > </a
+      ><a name="2151" href="cohomology.SuspAdjointLoopIso.html#2151" class="Bound"
+      >_</a
+      ><a name="2152"
+      > </a
+      ><a name="2153" class="Symbol"
+      >&#8594;</a
+      ><a name="2154"
+      > </a
+      ><a name="2155" href="lib.NType.html#3994" class="Function"
+      >=-preserves-level</a
+      ><a name="2172"
+      > </a
+      ><a name="2173" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="2184" class="Symbol"
+      >)</a
+      ><a name="2185"
+      >
+      </a
+      ><a name="2192" class="Symbol"
+      >(&#955;</a
+      ><a name="2194"
+      > </a
+      ><a name="2195" href="cohomology.SuspAdjointLoopIso.html#2195" class="Bound"
+      >g</a
+      ><a name="2196"
+      > </a
+      ><a name="2197" class="Symbol"
+      >&#8594;</a
+      ><a name="2198"
+      > </a
+      ><a name="2199" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2201"
+      > </a
+      ><a name="2202" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[_]</a
+      ><a name="2205"
+      > </a
+      ><a name="2206" class="Symbol"
+      >(</a
+      ><a name="2207" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2208"
+      > </a
+      ><a name="2209" class="Symbol"
+      >(</a
+      ><a name="2210" href="homotopy.PtdAdjoint.html#1424" class="Function"
+      >A.nat-dom</a
+      ><a name="2219"
+      > </a
+      ><a name="2220" href="cohomology.SuspAdjointLoopIso.html#2107" class="Bound"
+      >f</a
+      ><a name="2221"
+      > </a
+      ><a name="2222" class="Symbol"
+      >(</a
+      ><a name="2223" href="lib.types.LoopSpace.html#394" class="Function"
+      >&#8857;&#937;</a
+      ><a name="2225"
+      > </a
+      ><a name="2226" href="cohomology.SuspAdjointLoopIso.html#2109" class="Bound"
+      >Z</a
+      ><a name="2227" class="Symbol"
+      >)</a
+      ><a name="2228"
+      > </a
+      ><a name="2229" href="cohomology.SuspAdjointLoopIso.html#2195" class="Bound"
+      >g</a
+      ><a name="2230" class="Symbol"
+      >)))</a
+      ><a name="2233"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

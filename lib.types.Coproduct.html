@@ -1,0 +1,4247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.Coproduct</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.Bool.html#1" class="Module"
+      >lib.types.Bool</a
+      ><a name="91"
+      >
+</a
+      ><a name="92" class="Keyword"
+      >open</a
+      ><a name="96"
+      > </a
+      ><a name="97" class="Keyword"
+      >import</a
+      ><a name="103"
+      > </a
+      ><a name="104" href="lib.types.Empty.html#1" class="Module"
+      >lib.types.Empty</a
+      ><a name="119"
+      >
+</a
+      ><a name="120" class="Keyword"
+      >open</a
+      ><a name="124"
+      > </a
+      ><a name="125" class="Keyword"
+      >import</a
+      ><a name="131"
+      > </a
+      ><a name="132" href="lib.types.Lift.html#1" class="Module"
+      >lib.types.Lift</a
+      ><a name="146"
+      >
+</a
+      ><a name="147" class="Keyword"
+      >open</a
+      ><a name="151"
+      > </a
+      ><a name="152" class="Keyword"
+      >import</a
+      ><a name="158"
+      > </a
+      ><a name="159" href="lib.types.Sigma.html#1" class="Module"
+      >lib.types.Sigma</a
+      ><a name="174"
+      >
+</a
+      ><a name="175" class="Keyword"
+      >open</a
+      ><a name="179"
+      > </a
+      ><a name="180" class="Keyword"
+      >import</a
+      ><a name="186"
+      > </a
+      ><a name="187" href="lib.types.Pi.html#1" class="Module"
+      >lib.types.Pi</a
+      ><a name="199"
+      >
+
+</a
+      ><a name="201" class="Keyword"
+      >module</a
+      ><a name="207"
+      > </a
+      ><a name="208" href="lib.types.Coproduct.html#1" class="Module"
+      >lib.types.Coproduct</a
+      ><a name="227"
+      > </a
+      ><a name="228" class="Keyword"
+      >where</a
+      ><a name="233"
+      >
+
+</a
+      ><a name="235" class="Keyword"
+      >module</a
+      ><a name="241"
+      > </a
+      ><a name="242" href="lib.types.Coproduct.html#242" class="Module"
+      >_</a
+      ><a name="243"
+      > </a
+      ><a name="244" class="Symbol"
+      >{</a
+      ><a name="245" href="lib.types.Coproduct.html#245" class="Bound"
+      >i</a
+      ><a name="246"
+      > </a
+      ><a name="247" href="lib.types.Coproduct.html#247" class="Bound"
+      >j</a
+      ><a name="248" class="Symbol"
+      >}</a
+      ><a name="249"
+      > </a
+      ><a name="250" class="Symbol"
+      >{</a
+      ><a name="251" href="lib.types.Coproduct.html#251" class="Bound"
+      >A</a
+      ><a name="252"
+      > </a
+      ><a name="253" class="Symbol"
+      >:</a
+      ><a name="254"
+      > </a
+      ><a name="255" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="259"
+      > </a
+      ><a name="260" href="lib.types.Coproduct.html#245" class="Bound"
+      >i</a
+      ><a name="261" class="Symbol"
+      >}</a
+      ><a name="262"
+      > </a
+      ><a name="263" class="Symbol"
+      >{</a
+      ><a name="264" href="lib.types.Coproduct.html#264" class="Bound"
+      >B</a
+      ><a name="265"
+      > </a
+      ><a name="266" class="Symbol"
+      >:</a
+      ><a name="267"
+      > </a
+      ><a name="268" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="272"
+      > </a
+      ><a name="273" href="lib.types.Coproduct.html#247" class="Bound"
+      >j</a
+      ><a name="274" class="Symbol"
+      >}</a
+      ><a name="275"
+      > </a
+      ><a name="276" class="Keyword"
+      >where</a
+      ><a name="281"
+      >
+
+  </a
+      ><a name="285" href="lib.types.Coproduct.html#285" class="Function"
+      >Coprod=</a
+      ><a name="292"
+      > </a
+      ><a name="293" class="Symbol"
+      >:</a
+      ><a name="294"
+      > </a
+      ><a name="295" href="lib.Base.html#9033" class="Datatype"
+      >Coprod</a
+      ><a name="301"
+      > </a
+      ><a name="302" href="lib.types.Coproduct.html#251" class="Bound"
+      >A</a
+      ><a name="303"
+      > </a
+      ><a name="304" href="lib.types.Coproduct.html#264" class="Bound"
+      >B</a
+      ><a name="305"
+      > </a
+      ><a name="306" class="Symbol"
+      >&#8594;</a
+      ><a name="307"
+      > </a
+      ><a name="308" href="lib.Base.html#9033" class="Datatype"
+      >Coprod</a
+      ><a name="314"
+      > </a
+      ><a name="315" href="lib.types.Coproduct.html#251" class="Bound"
+      >A</a
+      ><a name="316"
+      > </a
+      ><a name="317" href="lib.types.Coproduct.html#264" class="Bound"
+      >B</a
+      ><a name="318"
+      > </a
+      ><a name="319" class="Symbol"
+      >&#8594;</a
+      ><a name="320"
+      > </a
+      ><a name="321" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="325"
+      > </a
+      ><a name="326" class="Symbol"
+      >(</a
+      ><a name="327" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="331"
+      > </a
+      ><a name="332" href="lib.types.Coproduct.html#245" class="Bound"
+      >i</a
+      ><a name="333"
+      > </a
+      ><a name="334" href="lib.types.Coproduct.html#247" class="Bound"
+      >j</a
+      ><a name="335" class="Symbol"
+      >)</a
+      ><a name="336"
+      >
+  </a
+      ><a name="339" href="lib.types.Coproduct.html#285" class="Function"
+      >Coprod=</a
+      ><a name="346"
+      > </a
+      ><a name="347" class="Symbol"
+      >(</a
+      ><a name="348" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="351"
+      > </a
+      ><a name="352" href="lib.types.Coproduct.html#352" class="Bound"
+      >a&#8321;</a
+      ><a name="354" class="Symbol"
+      >)</a
+      ><a name="355"
+      > </a
+      ><a name="356" class="Symbol"
+      >(</a
+      ><a name="357" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="360"
+      > </a
+      ><a name="361" href="lib.types.Coproduct.html#361" class="Bound"
+      >a&#8322;</a
+      ><a name="363" class="Symbol"
+      >)</a
+      ><a name="364"
+      > </a
+      ><a name="365" class="Symbol"
+      >=</a
+      ><a name="366"
+      > </a
+      ><a name="367" href="lib.Base.html#6440" class="Record"
+      >Lift</a
+      ><a name="371"
+      > </a
+      ><a name="372" class="Symbol"
+      >{</a
+      ><a name="373" class="Argument"
+      >j</a
+      ><a name="374"
+      > </a
+      ><a name="375" class="Symbol"
+      >=</a
+      ><a name="376"
+      > </a
+      ><a name="377" class="Symbol"
+      >(</a
+      ><a name="378" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="382"
+      > </a
+      ><a name="383" href="lib.types.Coproduct.html#245" class="Bound"
+      >i</a
+      ><a name="384"
+      > </a
+      ><a name="385" href="lib.types.Coproduct.html#247" class="Bound"
+      >j</a
+      ><a name="386" class="Symbol"
+      >)}</a
+      ><a name="388"
+      > </a
+      ><a name="389" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="390"
+      > </a
+      ><a name="391" href="lib.types.Coproduct.html#352" class="Bound"
+      >a&#8321;</a
+      ><a name="393"
+      > </a
+      ><a name="394" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="396"
+      > </a
+      ><a name="397" href="lib.types.Coproduct.html#361" class="Bound"
+      >a&#8322;</a
+      ><a name="399"
+      >
+  </a
+      ><a name="402" href="lib.types.Coproduct.html#285" class="Function"
+      >Coprod=</a
+      ><a name="409"
+      > </a
+      ><a name="410" class="Symbol"
+      >(</a
+      ><a name="411" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="414"
+      > </a
+      ><a name="415" href="lib.types.Coproduct.html#415" class="Bound"
+      >a&#8321;</a
+      ><a name="417" class="Symbol"
+      >)</a
+      ><a name="418"
+      > </a
+      ><a name="419" class="Symbol"
+      >(</a
+      ><a name="420" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="423"
+      > </a
+      ><a name="424" href="lib.types.Coproduct.html#424" class="Bound"
+      >b&#8322;</a
+      ><a name="426" class="Symbol"
+      >)</a
+      ><a name="427"
+      > </a
+      ><a name="428" class="Symbol"
+      >=</a
+      ><a name="429"
+      > </a
+      ><a name="430" href="lib.Base.html#6440" class="Record"
+      >Lift</a
+      ><a name="434"
+      > </a
+      ><a name="435" href="lib.Base.html#5924" class="Function"
+      >Empty</a
+      ><a name="440"
+      >
+  </a
+      ><a name="443" href="lib.types.Coproduct.html#285" class="Function"
+      >Coprod=</a
+      ><a name="450"
+      > </a
+      ><a name="451" class="Symbol"
+      >(</a
+      ><a name="452" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="455"
+      > </a
+      ><a name="456" href="lib.types.Coproduct.html#456" class="Bound"
+      >b&#8321;</a
+      ><a name="458" class="Symbol"
+      >)</a
+      ><a name="459"
+      > </a
+      ><a name="460" class="Symbol"
+      >(</a
+      ><a name="461" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="464"
+      > </a
+      ><a name="465" href="lib.types.Coproduct.html#465" class="Bound"
+      >a&#8322;</a
+      ><a name="467" class="Symbol"
+      >)</a
+      ><a name="468"
+      > </a
+      ><a name="469" class="Symbol"
+      >=</a
+      ><a name="470"
+      > </a
+      ><a name="471" href="lib.Base.html#6440" class="Record"
+      >Lift</a
+      ><a name="475"
+      > </a
+      ><a name="476" href="lib.Base.html#5924" class="Function"
+      >Empty</a
+      ><a name="481"
+      >
+  </a
+      ><a name="484" href="lib.types.Coproduct.html#285" class="Function"
+      >Coprod=</a
+      ><a name="491"
+      > </a
+      ><a name="492" class="Symbol"
+      >(</a
+      ><a name="493" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="496"
+      > </a
+      ><a name="497" href="lib.types.Coproduct.html#497" class="Bound"
+      >b&#8321;</a
+      ><a name="499" class="Symbol"
+      >)</a
+      ><a name="500"
+      > </a
+      ><a name="501" class="Symbol"
+      >(</a
+      ><a name="502" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="505"
+      > </a
+      ><a name="506" href="lib.types.Coproduct.html#506" class="Bound"
+      >b&#8322;</a
+      ><a name="508" class="Symbol"
+      >)</a
+      ><a name="509"
+      > </a
+      ><a name="510" class="Symbol"
+      >=</a
+      ><a name="511"
+      > </a
+      ><a name="512" href="lib.Base.html#6440" class="Record"
+      >Lift</a
+      ><a name="516"
+      > </a
+      ><a name="517" class="Symbol"
+      >{</a
+      ><a name="518" class="Argument"
+      >j</a
+      ><a name="519"
+      > </a
+      ><a name="520" class="Symbol"
+      >=</a
+      ><a name="521"
+      > </a
+      ><a name="522" class="Symbol"
+      >(</a
+      ><a name="523" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="527"
+      > </a
+      ><a name="528" href="lib.types.Coproduct.html#245" class="Bound"
+      >i</a
+      ><a name="529"
+      > </a
+      ><a name="530" href="lib.types.Coproduct.html#247" class="Bound"
+      >j</a
+      ><a name="531" class="Symbol"
+      >)}</a
+      ><a name="533"
+      > </a
+      ><a name="534" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="535"
+      > </a
+      ><a name="536" href="lib.types.Coproduct.html#497" class="Bound"
+      >b&#8321;</a
+      ><a name="538"
+      > </a
+      ><a name="539" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="541"
+      > </a
+      ><a name="542" href="lib.types.Coproduct.html#506" class="Bound"
+      >b&#8322;</a
+      ><a name="544"
+      >
+
+  </a
+      ><a name="548" href="lib.types.Coproduct.html#548" class="Function"
+      >Coprod=-in</a
+      ><a name="558"
+      > </a
+      ><a name="559" class="Symbol"
+      >:</a
+      ><a name="560"
+      > </a
+      ><a name="561" class="Symbol"
+      >{</a
+      ><a name="562" href="lib.types.Coproduct.html#562" class="Bound"
+      >x</a
+      ><a name="563"
+      > </a
+      ><a name="564" href="lib.types.Coproduct.html#564" class="Bound"
+      >y</a
+      ><a name="565"
+      > </a
+      ><a name="566" class="Symbol"
+      >:</a
+      ><a name="567"
+      > </a
+      ><a name="568" href="lib.Base.html#9033" class="Datatype"
+      >Coprod</a
+      ><a name="574"
+      > </a
+      ><a name="575" href="lib.types.Coproduct.html#251" class="Bound"
+      >A</a
+      ><a name="576"
+      > </a
+      ><a name="577" href="lib.types.Coproduct.html#264" class="Bound"
+      >B</a
+      ><a name="578" class="Symbol"
+      >}</a
+      ><a name="579"
+      > </a
+      ><a name="580" class="Symbol"
+      >&#8594;</a
+      ><a name="581"
+      > </a
+      ><a name="582" class="Symbol"
+      >(</a
+      ><a name="583" href="lib.types.Coproduct.html#562" class="Bound"
+      >x</a
+      ><a name="584"
+      > </a
+      ><a name="585" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="587"
+      > </a
+      ><a name="588" href="lib.types.Coproduct.html#564" class="Bound"
+      >y</a
+      ><a name="589" class="Symbol"
+      >)</a
+      ><a name="590"
+      > </a
+      ><a name="591" class="Symbol"
+      >&#8594;</a
+      ><a name="592"
+      > </a
+      ><a name="593" href="lib.types.Coproduct.html#285" class="Function"
+      >Coprod=</a
+      ><a name="600"
+      > </a
+      ><a name="601" href="lib.types.Coproduct.html#562" class="Bound"
+      >x</a
+      ><a name="602"
+      > </a
+      ><a name="603" href="lib.types.Coproduct.html#564" class="Bound"
+      >y</a
+      ><a name="604"
+      >
+  </a
+      ><a name="607" href="lib.types.Coproduct.html#548" class="Function"
+      >Coprod=-in</a
+      ><a name="617"
+      > </a
+      ><a name="618" class="Symbol"
+      >{</a
+      ><a name="619" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="622"
+      > </a
+      ><a name="623" class="Symbol"
+      >_}</a
+      ><a name="625"
+      > </a
+      ><a name="626" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="629"
+      > </a
+      ><a name="630" class="Symbol"
+      >=</a
+      ><a name="631"
+      > </a
+      ><a name="632" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="636"
+      > </a
+      ><a name="637" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="640"
+      >
+  </a
+      ><a name="643" href="lib.types.Coproduct.html#548" class="Function"
+      >Coprod=-in</a
+      ><a name="653"
+      > </a
+      ><a name="654" class="Symbol"
+      >{</a
+      ><a name="655" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="658"
+      > </a
+      ><a name="659" class="Symbol"
+      >_}</a
+      ><a name="661"
+      > </a
+      ><a name="662" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="665"
+      > </a
+      ><a name="666" class="Symbol"
+      >=</a
+      ><a name="667"
+      > </a
+      ><a name="668" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="672"
+      > </a
+      ><a name="673" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="676"
+      >
+
+  </a
+      ><a name="680" href="lib.types.Coproduct.html#680" class="Function"
+      >Coprod=-out</a
+      ><a name="691"
+      > </a
+      ><a name="692" class="Symbol"
+      >:</a
+      ><a name="693"
+      > </a
+      ><a name="694" class="Symbol"
+      >{</a
+      ><a name="695" href="lib.types.Coproduct.html#695" class="Bound"
+      >x</a
+      ><a name="696"
+      > </a
+      ><a name="697" href="lib.types.Coproduct.html#697" class="Bound"
+      >y</a
+      ><a name="698"
+      > </a
+      ><a name="699" class="Symbol"
+      >:</a
+      ><a name="700"
+      > </a
+      ><a name="701" href="lib.Base.html#9033" class="Datatype"
+      >Coprod</a
+      ><a name="707"
+      > </a
+      ><a name="708" href="lib.types.Coproduct.html#251" class="Bound"
+      >A</a
+      ><a name="709"
+      > </a
+      ><a name="710" href="lib.types.Coproduct.html#264" class="Bound"
+      >B</a
+      ><a name="711" class="Symbol"
+      >}</a
+      ><a name="712"
+      > </a
+      ><a name="713" class="Symbol"
+      >&#8594;</a
+      ><a name="714"
+      > </a
+      ><a name="715" href="lib.types.Coproduct.html#285" class="Function"
+      >Coprod=</a
+      ><a name="722"
+      > </a
+      ><a name="723" href="lib.types.Coproduct.html#695" class="Bound"
+      >x</a
+      ><a name="724"
+      > </a
+      ><a name="725" href="lib.types.Coproduct.html#697" class="Bound"
+      >y</a
+      ><a name="726"
+      > </a
+      ><a name="727" class="Symbol"
+      >&#8594;</a
+      ><a name="728"
+      > </a
+      ><a name="729" class="Symbol"
+      >(</a
+      ><a name="730" href="lib.types.Coproduct.html#695" class="Bound"
+      >x</a
+      ><a name="731"
+      > </a
+      ><a name="732" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="734"
+      > </a
+      ><a name="735" href="lib.types.Coproduct.html#697" class="Bound"
+      >y</a
+      ><a name="736" class="Symbol"
+      >)</a
+      ><a name="737"
+      >
+  </a
+      ><a name="740" href="lib.types.Coproduct.html#680" class="Function"
+      >Coprod=-out</a
+      ><a name="751"
+      > </a
+      ><a name="752" class="Symbol"
+      >{</a
+      ><a name="753" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="756"
+      > </a
+      ><a name="757" class="Symbol"
+      >_}</a
+      ><a name="759"
+      > </a
+      ><a name="760" class="Symbol"
+      >{</a
+      ><a name="761" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="764"
+      > </a
+      ><a name="765" class="Symbol"
+      >_}</a
+      ><a name="767"
+      > </a
+      ><a name="768" href="lib.types.Coproduct.html#768" class="Bound"
+      >c</a
+      ><a name="769"
+      > </a
+      ><a name="770" class="Symbol"
+      >=</a
+      ><a name="771"
+      > </a
+      ><a name="772" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="774"
+      > </a
+      ><a name="775" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="778"
+      > </a
+      ><a name="779" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="780"
+      > </a
+      ><a name="781" href="lib.Base.html#6528" class="Field"
+      >lower</a
+      ><a name="786"
+      > </a
+      ><a name="787" href="lib.types.Coproduct.html#768" class="Bound"
+      >c</a
+      ><a name="788"
+      >
+  </a
+      ><a name="791" href="lib.types.Coproduct.html#680" class="Function"
+      >Coprod=-out</a
+      ><a name="802"
+      > </a
+      ><a name="803" class="Symbol"
+      >{</a
+      ><a name="804" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="807"
+      > </a
+      ><a name="808" class="Symbol"
+      >_}</a
+      ><a name="810"
+      > </a
+      ><a name="811" class="Symbol"
+      >{</a
+      ><a name="812" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="815"
+      > </a
+      ><a name="816" class="Symbol"
+      >_}</a
+      ><a name="818"
+      > </a
+      ><a name="819" href="lib.types.Coproduct.html#819" class="Bound"
+      >c</a
+      ><a name="820"
+      > </a
+      ><a name="821" class="Symbol"
+      >=</a
+      ><a name="822"
+      > </a
+      ><a name="823" href="lib.types.Empty.html#96" class="Function"
+      >Empty-rec</a
+      ><a name="832"
+      > </a
+      ><a name="833" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="834"
+      > </a
+      ><a name="835" href="lib.Base.html#6528" class="Field"
+      >lower</a
+      ><a name="840"
+      > </a
+      ><a name="841" href="lib.types.Coproduct.html#819" class="Bound"
+      >c</a
+      ><a name="842"
+      >
+  </a
+      ><a name="845" href="lib.types.Coproduct.html#680" class="Function"
+      >Coprod=-out</a
+      ><a name="856"
+      > </a
+      ><a name="857" class="Symbol"
+      >{</a
+      ><a name="858" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="861"
+      > </a
+      ><a name="862" class="Symbol"
+      >_}</a
+      ><a name="864"
+      > </a
+      ><a name="865" class="Symbol"
+      >{</a
+      ><a name="866" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="869"
+      > </a
+      ><a name="870" class="Symbol"
+      >_}</a
+      ><a name="872"
+      > </a
+      ><a name="873" href="lib.types.Coproduct.html#873" class="Bound"
+      >c</a
+      ><a name="874"
+      > </a
+      ><a name="875" class="Symbol"
+      >=</a
+      ><a name="876"
+      > </a
+      ><a name="877" href="lib.types.Empty.html#96" class="Function"
+      >Empty-rec</a
+      ><a name="886"
+      > </a
+      ><a name="887" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="888"
+      > </a
+      ><a name="889" href="lib.Base.html#6528" class="Field"
+      >lower</a
+      ><a name="894"
+      > </a
+      ><a name="895" href="lib.types.Coproduct.html#873" class="Bound"
+      >c</a
+      ><a name="896"
+      >
+  </a
+      ><a name="899" href="lib.types.Coproduct.html#680" class="Function"
+      >Coprod=-out</a
+      ><a name="910"
+      > </a
+      ><a name="911" class="Symbol"
+      >{</a
+      ><a name="912" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="915"
+      > </a
+      ><a name="916" class="Symbol"
+      >_}</a
+      ><a name="918"
+      > </a
+      ><a name="919" class="Symbol"
+      >{</a
+      ><a name="920" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="923"
+      > </a
+      ><a name="924" class="Symbol"
+      >_}</a
+      ><a name="926"
+      > </a
+      ><a name="927" href="lib.types.Coproduct.html#927" class="Bound"
+      >c</a
+      ><a name="928"
+      > </a
+      ><a name="929" class="Symbol"
+      >=</a
+      ><a name="930"
+      > </a
+      ><a name="931" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="933"
+      > </a
+      ><a name="934" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="937"
+      > </a
+      ><a name="938" class="Symbol"
+      >(</a
+      ><a name="939" href="lib.Base.html#6528" class="Field"
+      >lower</a
+      ><a name="944"
+      > </a
+      ><a name="945" href="lib.types.Coproduct.html#927" class="Bound"
+      >c</a
+      ><a name="946" class="Symbol"
+      >)</a
+      ><a name="947"
+      >
+
+  </a
+      ><a name="951" href="lib.types.Coproduct.html#951" class="Function"
+      >Coprod=-in-equiv</a
+      ><a name="967"
+      > </a
+      ><a name="968" class="Symbol"
+      >:</a
+      ><a name="969"
+      > </a
+      ><a name="970" class="Symbol"
+      >(</a
+      ><a name="971" href="lib.types.Coproduct.html#971" class="Bound"
+      >x</a
+      ><a name="972"
+      > </a
+      ><a name="973" href="lib.types.Coproduct.html#973" class="Bound"
+      >y</a
+      ><a name="974"
+      > </a
+      ><a name="975" class="Symbol"
+      >:</a
+      ><a name="976"
+      > </a
+      ><a name="977" href="lib.Base.html#9033" class="Datatype"
+      >Coprod</a
+      ><a name="983"
+      > </a
+      ><a name="984" href="lib.types.Coproduct.html#251" class="Bound"
+      >A</a
+      ><a name="985"
+      > </a
+      ><a name="986" href="lib.types.Coproduct.html#264" class="Bound"
+      >B</a
+      ><a name="987" class="Symbol"
+      >)</a
+      ><a name="988"
+      > </a
+      ><a name="989" class="Symbol"
+      >&#8594;</a
+      ><a name="990"
+      > </a
+      ><a name="991" class="Symbol"
+      >(</a
+      ><a name="992" href="lib.types.Coproduct.html#971" class="Bound"
+      >x</a
+      ><a name="993"
+      > </a
+      ><a name="994" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="996"
+      > </a
+      ><a name="997" href="lib.types.Coproduct.html#973" class="Bound"
+      >y</a
+      ><a name="998" class="Symbol"
+      >)</a
+      ><a name="999"
+      > </a
+      ><a name="1000" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="1001"
+      > </a
+      ><a name="1002" href="lib.types.Coproduct.html#285" class="Function"
+      >Coprod=</a
+      ><a name="1009"
+      > </a
+      ><a name="1010" href="lib.types.Coproduct.html#971" class="Bound"
+      >x</a
+      ><a name="1011"
+      > </a
+      ><a name="1012" href="lib.types.Coproduct.html#973" class="Bound"
+      >y</a
+      ><a name="1013"
+      >
+  </a
+      ><a name="1016" href="lib.types.Coproduct.html#951" class="Function"
+      >Coprod=-in-equiv</a
+      ><a name="1032"
+      > </a
+      ><a name="1033" href="lib.types.Coproduct.html#1033" class="Bound"
+      >x</a
+      ><a name="1034"
+      > </a
+      ><a name="1035" href="lib.types.Coproduct.html#1035" class="Bound"
+      >y</a
+      ><a name="1036"
+      > </a
+      ><a name="1037" class="Symbol"
+      >=</a
+      ><a name="1038"
+      > </a
+      ><a name="1039" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="1044"
+      > </a
+      ><a name="1045" href="lib.types.Coproduct.html#548" class="Function"
+      >Coprod=-in</a
+      ><a name="1055"
+      > </a
+      ><a name="1056" href="lib.types.Coproduct.html#680" class="Function"
+      >Coprod=-out</a
+      ><a name="1067"
+      > </a
+      ><a name="1068" class="Symbol"
+      >(</a
+      ><a name="1069" href="lib.types.Coproduct.html#1098" class="Function"
+      >f-g</a
+      ><a name="1072"
+      > </a
+      ><a name="1073" href="lib.types.Coproduct.html#1033" class="Bound"
+      >x</a
+      ><a name="1074"
+      > </a
+      ><a name="1075" href="lib.types.Coproduct.html#1035" class="Bound"
+      >y</a
+      ><a name="1076" class="Symbol"
+      >)</a
+      ><a name="1077"
+      > </a
+      ><a name="1078" class="Symbol"
+      >(</a
+      ><a name="1079" href="lib.types.Coproduct.html#1385" class="Function"
+      >g-f</a
+      ><a name="1082"
+      > </a
+      ><a name="1083" href="lib.types.Coproduct.html#1033" class="Bound"
+      >x</a
+      ><a name="1084"
+      > </a
+      ><a name="1085" href="lib.types.Coproduct.html#1035" class="Bound"
+      >y</a
+      ><a name="1086" class="Symbol"
+      >)</a
+      ><a name="1087"
+      >
+    </a
+      ><a name="1092" class="Keyword"
+      >where</a
+      ><a name="1097"
+      > </a
+      ><a name="1098" href="lib.types.Coproduct.html#1098" class="Function"
+      >f-g</a
+      ><a name="1101"
+      > </a
+      ><a name="1102" class="Symbol"
+      >:</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" class="Symbol"
+      >&#8704;</a
+      ><a name="1105"
+      > </a
+      ><a name="1106" href="lib.types.Coproduct.html#1106" class="Bound"
+      >x'</a
+      ><a name="1108"
+      > </a
+      ><a name="1109" href="lib.types.Coproduct.html#1109" class="Bound"
+      >y'</a
+      ><a name="1111"
+      > </a
+      ><a name="1112" class="Symbol"
+      >&#8594;</a
+      ><a name="1113"
+      > </a
+      ><a name="1114" class="Symbol"
+      >&#8704;</a
+      ><a name="1115"
+      > </a
+      ><a name="1116" href="lib.types.Coproduct.html#1116" class="Bound"
+      >c</a
+      ><a name="1117"
+      > </a
+      ><a name="1118" class="Symbol"
+      >&#8594;</a
+      ><a name="1119"
+      > </a
+      ><a name="1120" href="lib.types.Coproduct.html#548" class="Function"
+      >Coprod=-in</a
+      ><a name="1130"
+      > </a
+      ><a name="1131" class="Symbol"
+      >(</a
+      ><a name="1132" href="lib.types.Coproduct.html#680" class="Function"
+      >Coprod=-out</a
+      ><a name="1143"
+      > </a
+      ><a name="1144" class="Symbol"
+      >{</a
+      ><a name="1145" href="lib.types.Coproduct.html#1106" class="Bound"
+      >x'</a
+      ><a name="1147" class="Symbol"
+      >}</a
+      ><a name="1148"
+      > </a
+      ><a name="1149" class="Symbol"
+      >{</a
+      ><a name="1150" href="lib.types.Coproduct.html#1109" class="Bound"
+      >y'</a
+      ><a name="1152" class="Symbol"
+      >}</a
+      ><a name="1153"
+      > </a
+      ><a name="1154" href="lib.types.Coproduct.html#1116" class="Bound"
+      >c</a
+      ><a name="1155" class="Symbol"
+      >)</a
+      ><a name="1156"
+      > </a
+      ><a name="1157" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" href="lib.types.Coproduct.html#1116" class="Bound"
+      >c</a
+      ><a name="1161"
+      >
+          </a
+      ><a name="1172" href="lib.types.Coproduct.html#1098" class="Function"
+      >f-g</a
+      ><a name="1175"
+      > </a
+      ><a name="1176" class="Symbol"
+      >(</a
+      ><a name="1177" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1180"
+      > </a
+      ><a name="1181" href="lib.types.Coproduct.html#1181" class="Bound"
+      >a&#8321;</a
+      ><a name="1183" class="Symbol"
+      >)</a
+      ><a name="1184"
+      > </a
+      ><a name="1185" class="Symbol"
+      >(</a
+      ><a name="1186" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1189"
+      > </a
+      ><a name="1190" class="DottedPattern Symbol"
+      >.</a
+      ><a name="1191" href="lib.types.Coproduct.html#1181" class="DottedPattern Bound"
+      >a&#8321;</a
+      ><a name="1193" class="Symbol"
+      >)</a
+      ><a name="1194"
+      > </a
+      ><a name="1195" class="Symbol"
+      >(</a
+      ><a name="1196" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="1200"
+      > </a
+      ><a name="1201" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1204" class="Symbol"
+      >)</a
+      ><a name="1205"
+      > </a
+      ><a name="1206" class="Symbol"
+      >=</a
+      ><a name="1207"
+      > </a
+      ><a name="1208" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1211"
+      >
+          </a
+      ><a name="1222" href="lib.types.Coproduct.html#1098" class="Function"
+      >f-g</a
+      ><a name="1225"
+      > </a
+      ><a name="1226" class="Symbol"
+      >(</a
+      ><a name="1227" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1230"
+      > </a
+      ><a name="1231" href="lib.types.Coproduct.html#1231" class="Bound"
+      >a&#8321;</a
+      ><a name="1233" class="Symbol"
+      >)</a
+      ><a name="1234"
+      > </a
+      ><a name="1235" class="Symbol"
+      >(</a
+      ><a name="1236" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1239"
+      > </a
+      ><a name="1240" href="lib.types.Coproduct.html#1240" class="Bound"
+      >b&#8322;</a
+      ><a name="1242" class="Symbol"
+      >)</a
+      ><a name="1243"
+      > </a
+      ><a name="1244" href="lib.types.Coproduct.html#1244" class="Bound"
+      >b</a
+      ><a name="1245"
+      > </a
+      ><a name="1246" class="Symbol"
+      >=</a
+      ><a name="1247"
+      > </a
+      ><a name="1248" href="lib.types.Empty.html#96" class="Function"
+      >Empty-rec</a
+      ><a name="1257"
+      > </a
+      ><a name="1258" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1259"
+      > </a
+      ><a name="1260" href="lib.Base.html#6528" class="Field"
+      >lower</a
+      ><a name="1265"
+      > </a
+      ><a name="1266" href="lib.types.Coproduct.html#1244" class="Bound"
+      >b</a
+      ><a name="1267"
+      >
+          </a
+      ><a name="1278" href="lib.types.Coproduct.html#1098" class="Function"
+      >f-g</a
+      ><a name="1281"
+      > </a
+      ><a name="1282" class="Symbol"
+      >(</a
+      ><a name="1283" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1286"
+      > </a
+      ><a name="1287" href="lib.types.Coproduct.html#1287" class="Bound"
+      >b&#8321;</a
+      ><a name="1289" class="Symbol"
+      >)</a
+      ><a name="1290"
+      > </a
+      ><a name="1291" class="Symbol"
+      >(</a
+      ><a name="1292" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1295"
+      > </a
+      ><a name="1296" href="lib.types.Coproduct.html#1296" class="Bound"
+      >a&#8322;</a
+      ><a name="1298" class="Symbol"
+      >)</a
+      ><a name="1299"
+      > </a
+      ><a name="1300" href="lib.types.Coproduct.html#1300" class="Bound"
+      >b</a
+      ><a name="1301"
+      > </a
+      ><a name="1302" class="Symbol"
+      >=</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" href="lib.types.Empty.html#96" class="Function"
+      >Empty-rec</a
+      ><a name="1313"
+      > </a
+      ><a name="1314" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1315"
+      > </a
+      ><a name="1316" href="lib.Base.html#6528" class="Field"
+      >lower</a
+      ><a name="1321"
+      > </a
+      ><a name="1322" href="lib.types.Coproduct.html#1300" class="Bound"
+      >b</a
+      ><a name="1323"
+      >
+          </a
+      ><a name="1334" href="lib.types.Coproduct.html#1098" class="Function"
+      >f-g</a
+      ><a name="1337"
+      > </a
+      ><a name="1338" class="Symbol"
+      >(</a
+      ><a name="1339" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1342"
+      > </a
+      ><a name="1343" href="lib.types.Coproduct.html#1343" class="Bound"
+      >b&#8321;</a
+      ><a name="1345" class="Symbol"
+      >)</a
+      ><a name="1346"
+      > </a
+      ><a name="1347" class="Symbol"
+      >(</a
+      ><a name="1348" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1351"
+      > </a
+      ><a name="1352" class="DottedPattern Symbol"
+      >.</a
+      ><a name="1353" href="lib.types.Coproduct.html#1343" class="DottedPattern Bound"
+      >b&#8321;</a
+      ><a name="1355" class="Symbol"
+      >)</a
+      ><a name="1356"
+      > </a
+      ><a name="1357" class="Symbol"
+      >(</a
+      ><a name="1358" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="1362"
+      > </a
+      ><a name="1363" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1366" class="Symbol"
+      >)</a
+      ><a name="1367"
+      > </a
+      ><a name="1368" class="Symbol"
+      >=</a
+      ><a name="1369"
+      > </a
+      ><a name="1370" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1373"
+      >
+
+          </a
+      ><a name="1385" href="lib.types.Coproduct.html#1385" class="Function"
+      >g-f</a
+      ><a name="1388"
+      > </a
+      ><a name="1389" class="Symbol"
+      >:</a
+      ><a name="1390"
+      > </a
+      ><a name="1391" class="Symbol"
+      >&#8704;</a
+      ><a name="1392"
+      > </a
+      ><a name="1393" href="lib.types.Coproduct.html#1393" class="Bound"
+      >x'</a
+      ><a name="1395"
+      > </a
+      ><a name="1396" href="lib.types.Coproduct.html#1396" class="Bound"
+      >y'</a
+      ><a name="1398"
+      > </a
+      ><a name="1399" class="Symbol"
+      >&#8594;</a
+      ><a name="1400"
+      > </a
+      ><a name="1401" class="Symbol"
+      >&#8704;</a
+      ><a name="1402"
+      > </a
+      ><a name="1403" href="lib.types.Coproduct.html#1403" class="Bound"
+      >p</a
+      ><a name="1404"
+      > </a
+      ><a name="1405" class="Symbol"
+      >&#8594;</a
+      ><a name="1406"
+      > </a
+      ><a name="1407" href="lib.types.Coproduct.html#680" class="Function"
+      >Coprod=-out</a
+      ><a name="1418"
+      > </a
+      ><a name="1419" class="Symbol"
+      >(</a
+      ><a name="1420" href="lib.types.Coproduct.html#548" class="Function"
+      >Coprod=-in</a
+      ><a name="1430"
+      > </a
+      ><a name="1431" class="Symbol"
+      >{</a
+      ><a name="1432" href="lib.types.Coproduct.html#1393" class="Bound"
+      >x'</a
+      ><a name="1434" class="Symbol"
+      >}</a
+      ><a name="1435"
+      > </a
+      ><a name="1436" class="Symbol"
+      >{</a
+      ><a name="1437" href="lib.types.Coproduct.html#1396" class="Bound"
+      >y'</a
+      ><a name="1439" class="Symbol"
+      >}</a
+      ><a name="1440"
+      > </a
+      ><a name="1441" href="lib.types.Coproduct.html#1403" class="Bound"
+      >p</a
+      ><a name="1442" class="Symbol"
+      >)</a
+      ><a name="1443"
+      > </a
+      ><a name="1444" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1446"
+      > </a
+      ><a name="1447" href="lib.types.Coproduct.html#1403" class="Bound"
+      >p</a
+      ><a name="1448"
+      >
+          </a
+      ><a name="1459" href="lib.types.Coproduct.html#1385" class="Function"
+      >g-f</a
+      ><a name="1462"
+      > </a
+      ><a name="1463" class="Symbol"
+      >(</a
+      ><a name="1464" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1467"
+      > </a
+      ><a name="1468" class="Symbol"
+      >_)</a
+      ><a name="1470"
+      > </a
+      ><a name="1471" class="DottedPattern Symbol"
+      >.(</a
+      ><a name="1473" href="lib.Base.html#9098" class="DottedPattern InductiveConstructor"
+      >inl</a
+      ><a name="1476"
+      > </a
+      ><a name="1477" class="DottedPattern Symbol"
+      >_)</a
+      ><a name="1479"
+      > </a
+      ><a name="1480" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1483"
+      > </a
+      ><a name="1484" class="Symbol"
+      >=</a
+      ><a name="1485"
+      > </a
+      ><a name="1486" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1489"
+      >
+          </a
+      ><a name="1500" href="lib.types.Coproduct.html#1385" class="Function"
+      >g-f</a
+      ><a name="1503"
+      > </a
+      ><a name="1504" class="Symbol"
+      >(</a
+      ><a name="1505" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1508"
+      > </a
+      ><a name="1509" class="Symbol"
+      >_)</a
+      ><a name="1511"
+      > </a
+      ><a name="1512" class="DottedPattern Symbol"
+      >.(</a
+      ><a name="1514" href="lib.Base.html#9121" class="DottedPattern InductiveConstructor"
+      >inr</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" class="DottedPattern Symbol"
+      >_)</a
+      ><a name="1520"
+      > </a
+      ><a name="1521" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1524"
+      > </a
+      ><a name="1525" class="Symbol"
+      >=</a
+      ><a name="1526"
+      > </a
+      ><a name="1527" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1530"
+      >
+
+  </a
+      ><a name="1534" href="lib.types.Coproduct.html#1534" class="Function"
+      >inl=inl-equiv</a
+      ><a name="1547"
+      > </a
+      ><a name="1548" class="Symbol"
+      >:</a
+      ><a name="1549"
+      > </a
+      ><a name="1550" class="Symbol"
+      >(</a
+      ><a name="1551" href="lib.types.Coproduct.html#1551" class="Bound"
+      >a&#8321;</a
+      ><a name="1553"
+      > </a
+      ><a name="1554" href="lib.types.Coproduct.html#1554" class="Bound"
+      >a&#8322;</a
+      ><a name="1556"
+      > </a
+      ><a name="1557" class="Symbol"
+      >:</a
+      ><a name="1558"
+      > </a
+      ><a name="1559" href="lib.types.Coproduct.html#251" class="Bound"
+      >A</a
+      ><a name="1560" class="Symbol"
+      >)</a
+      ><a name="1561"
+      > </a
+      ><a name="1562" class="Symbol"
+      >&#8594;</a
+      ><a name="1563"
+      > </a
+      ><a name="1564" class="Symbol"
+      >(</a
+      ><a name="1565" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1568"
+      > </a
+      ><a name="1569" href="lib.types.Coproduct.html#1551" class="Bound"
+      >a&#8321;</a
+      ><a name="1571"
+      > </a
+      ><a name="1572" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1574"
+      > </a
+      ><a name="1575" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1578"
+      > </a
+      ><a name="1579" href="lib.types.Coproduct.html#1554" class="Bound"
+      >a&#8322;</a
+      ><a name="1581" class="Symbol"
+      >)</a
+      ><a name="1582"
+      > </a
+      ><a name="1583" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="1584"
+      > </a
+      ><a name="1585" class="Symbol"
+      >(</a
+      ><a name="1586" href="lib.types.Coproduct.html#1551" class="Bound"
+      >a&#8321;</a
+      ><a name="1588"
+      > </a
+      ><a name="1589" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1591"
+      > </a
+      ><a name="1592" href="lib.types.Coproduct.html#1554" class="Bound"
+      >a&#8322;</a
+      ><a name="1594" class="Symbol"
+      >)</a
+      ><a name="1595"
+      >
+  </a
+      ><a name="1598" href="lib.types.Coproduct.html#1534" class="Function"
+      >inl=inl-equiv</a
+      ><a name="1611"
+      > </a
+      ><a name="1612" href="lib.types.Coproduct.html#1612" class="Bound"
+      >a&#8321;</a
+      ><a name="1614"
+      > </a
+      ><a name="1615" href="lib.types.Coproduct.html#1615" class="Bound"
+      >a&#8322;</a
+      ><a name="1617"
+      > </a
+      ><a name="1618" class="Symbol"
+      >=</a
+      ><a name="1619"
+      > </a
+      ><a name="1620" href="lib.Equivalence.html#8890" class="Function"
+      >lower-equiv</a
+      ><a name="1631"
+      > </a
+      ><a name="1632" href="lib.Equivalence.html#5985" class="Function Operator"
+      >&#8728;e</a
+      ><a name="1634"
+      > </a
+      ><a name="1635" href="lib.types.Coproduct.html#951" class="Function"
+      >Coprod=-in-equiv</a
+      ><a name="1651"
+      > </a
+      ><a name="1652" class="Symbol"
+      >(</a
+      ><a name="1653" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1656"
+      > </a
+      ><a name="1657" href="lib.types.Coproduct.html#1612" class="Bound"
+      >a&#8321;</a
+      ><a name="1659" class="Symbol"
+      >)</a
+      ><a name="1660"
+      > </a
+      ><a name="1661" class="Symbol"
+      >(</a
+      ><a name="1662" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1665"
+      > </a
+      ><a name="1666" href="lib.types.Coproduct.html#1615" class="Bound"
+      >a&#8322;</a
+      ><a name="1668" class="Symbol"
+      >)</a
+      ><a name="1669"
+      >
+
+  </a
+      ><a name="1673" href="lib.types.Coproduct.html#1673" class="Function"
+      >inr=inr-equiv</a
+      ><a name="1686"
+      > </a
+      ><a name="1687" class="Symbol"
+      >:</a
+      ><a name="1688"
+      > </a
+      ><a name="1689" class="Symbol"
+      >(</a
+      ><a name="1690" href="lib.types.Coproduct.html#1690" class="Bound"
+      >b&#8321;</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" href="lib.types.Coproduct.html#1693" class="Bound"
+      >b&#8322;</a
+      ><a name="1695"
+      > </a
+      ><a name="1696" class="Symbol"
+      >:</a
+      ><a name="1697"
+      > </a
+      ><a name="1698" href="lib.types.Coproduct.html#264" class="Bound"
+      >B</a
+      ><a name="1699" class="Symbol"
+      >)</a
+      ><a name="1700"
+      > </a
+      ><a name="1701" class="Symbol"
+      >&#8594;</a
+      ><a name="1702"
+      > </a
+      ><a name="1703" class="Symbol"
+      >(</a
+      ><a name="1704" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1707"
+      > </a
+      ><a name="1708" href="lib.types.Coproduct.html#1690" class="Bound"
+      >b&#8321;</a
+      ><a name="1710"
+      > </a
+      ><a name="1711" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1713"
+      > </a
+      ><a name="1714" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1717"
+      > </a
+      ><a name="1718" href="lib.types.Coproduct.html#1693" class="Bound"
+      >b&#8322;</a
+      ><a name="1720" class="Symbol"
+      >)</a
+      ><a name="1721"
+      > </a
+      ><a name="1722" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="1723"
+      > </a
+      ><a name="1724" class="Symbol"
+      >(</a
+      ><a name="1725" href="lib.types.Coproduct.html#1690" class="Bound"
+      >b&#8321;</a
+      ><a name="1727"
+      > </a
+      ><a name="1728" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1730"
+      > </a
+      ><a name="1731" href="lib.types.Coproduct.html#1693" class="Bound"
+      >b&#8322;</a
+      ><a name="1733" class="Symbol"
+      >)</a
+      ><a name="1734"
+      >
+  </a
+      ><a name="1737" href="lib.types.Coproduct.html#1673" class="Function"
+      >inr=inr-equiv</a
+      ><a name="1750"
+      > </a
+      ><a name="1751" href="lib.types.Coproduct.html#1751" class="Bound"
+      >b&#8321;</a
+      ><a name="1753"
+      > </a
+      ><a name="1754" href="lib.types.Coproduct.html#1754" class="Bound"
+      >b&#8322;</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" class="Symbol"
+      >=</a
+      ><a name="1758"
+      > </a
+      ><a name="1759" href="lib.Equivalence.html#8890" class="Function"
+      >lower-equiv</a
+      ><a name="1770"
+      > </a
+      ><a name="1771" href="lib.Equivalence.html#5985" class="Function Operator"
+      >&#8728;e</a
+      ><a name="1773"
+      > </a
+      ><a name="1774" href="lib.types.Coproduct.html#951" class="Function"
+      >Coprod=-in-equiv</a
+      ><a name="1790"
+      > </a
+      ><a name="1791" class="Symbol"
+      >(</a
+      ><a name="1792" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1795"
+      > </a
+      ><a name="1796" href="lib.types.Coproduct.html#1751" class="Bound"
+      >b&#8321;</a
+      ><a name="1798" class="Symbol"
+      >)</a
+      ><a name="1799"
+      > </a
+      ><a name="1800" class="Symbol"
+      >(</a
+      ><a name="1801" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1804"
+      > </a
+      ><a name="1805" href="lib.types.Coproduct.html#1754" class="Bound"
+      >b&#8322;</a
+      ><a name="1807" class="Symbol"
+      >)</a
+      ><a name="1808"
+      >
+
+  </a
+      ><a name="1812" href="lib.types.Coproduct.html#1812" class="Function"
+      >inl&#8800;inr</a
+      ><a name="1819"
+      > </a
+      ><a name="1820" class="Symbol"
+      >:</a
+      ><a name="1821"
+      > </a
+      ><a name="1822" class="Symbol"
+      >(</a
+      ><a name="1823" href="lib.types.Coproduct.html#1823" class="Bound"
+      >a&#8321;</a
+      ><a name="1825"
+      > </a
+      ><a name="1826" class="Symbol"
+      >:</a
+      ><a name="1827"
+      > </a
+      ><a name="1828" href="lib.types.Coproduct.html#251" class="Bound"
+      >A</a
+      ><a name="1829" class="Symbol"
+      >)</a
+      ><a name="1830"
+      > </a
+      ><a name="1831" class="Symbol"
+      >(</a
+      ><a name="1832" href="lib.types.Coproduct.html#1832" class="Bound"
+      >b&#8322;</a
+      ><a name="1834"
+      > </a
+      ><a name="1835" class="Symbol"
+      >:</a
+      ><a name="1836"
+      > </a
+      ><a name="1837" href="lib.types.Coproduct.html#264" class="Bound"
+      >B</a
+      ><a name="1838" class="Symbol"
+      >)</a
+      ><a name="1839"
+      > </a
+      ><a name="1840" class="Symbol"
+      >&#8594;</a
+      ><a name="1841"
+      > </a
+      ><a name="1842" class="Symbol"
+      >(</a
+      ><a name="1843" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1846"
+      > </a
+      ><a name="1847" href="lib.types.Coproduct.html#1823" class="Bound"
+      >a&#8321;</a
+      ><a name="1849"
+      > </a
+      ><a name="1850" href="lib.Base.html#6094" class="Function Operator"
+      >&#8800;</a
+      ><a name="1851"
+      > </a
+      ><a name="1852" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1855"
+      > </a
+      ><a name="1856" href="lib.types.Coproduct.html#1832" class="Bound"
+      >b&#8322;</a
+      ><a name="1858" class="Symbol"
+      >)</a
+      ><a name="1859"
+      >
+  </a
+      ><a name="1862" href="lib.types.Coproduct.html#1812" class="Function"
+      >inl&#8800;inr</a
+      ><a name="1869"
+      > </a
+      ><a name="1870" href="lib.types.Coproduct.html#1870" class="Bound"
+      >a&#8321;</a
+      ><a name="1872"
+      > </a
+      ><a name="1873" href="lib.types.Coproduct.html#1873" class="Bound"
+      >b&#8322;</a
+      ><a name="1875"
+      > </a
+      ><a name="1876" href="lib.types.Coproduct.html#1876" class="Bound"
+      >p</a
+      ><a name="1877"
+      > </a
+      ><a name="1878" class="Symbol"
+      >=</a
+      ><a name="1879"
+      > </a
+      ><a name="1880" href="lib.Base.html#6528" class="Field"
+      >lower</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1887"
+      > </a
+      ><a name="1888" href="lib.types.Coproduct.html#548" class="Function"
+      >Coprod=-in</a
+      ><a name="1898"
+      > </a
+      ><a name="1899" href="lib.types.Coproduct.html#1876" class="Bound"
+      >p</a
+      ><a name="1900"
+      >
+
+  </a
+      ><a name="1904" href="lib.types.Coproduct.html#1904" class="Function"
+      >inr&#8800;inl</a
+      ><a name="1911"
+      > </a
+      ><a name="1912" class="Symbol"
+      >:</a
+      ><a name="1913"
+      > </a
+      ><a name="1914" class="Symbol"
+      >(</a
+      ><a name="1915" href="lib.types.Coproduct.html#1915" class="Bound"
+      >b&#8321;</a
+      ><a name="1917"
+      > </a
+      ><a name="1918" class="Symbol"
+      >:</a
+      ><a name="1919"
+      > </a
+      ><a name="1920" href="lib.types.Coproduct.html#264" class="Bound"
+      >B</a
+      ><a name="1921" class="Symbol"
+      >)</a
+      ><a name="1922"
+      > </a
+      ><a name="1923" class="Symbol"
+      >(</a
+      ><a name="1924" href="lib.types.Coproduct.html#1924" class="Bound"
+      >a&#8322;</a
+      ><a name="1926"
+      > </a
+      ><a name="1927" class="Symbol"
+      >:</a
+      ><a name="1928"
+      > </a
+      ><a name="1929" href="lib.types.Coproduct.html#251" class="Bound"
+      >A</a
+      ><a name="1930" class="Symbol"
+      >)</a
+      ><a name="1931"
+      > </a
+      ><a name="1932" class="Symbol"
+      >&#8594;</a
+      ><a name="1933"
+      > </a
+      ><a name="1934" class="Symbol"
+      >(</a
+      ><a name="1935" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1938"
+      > </a
+      ><a name="1939" href="lib.types.Coproduct.html#1915" class="Bound"
+      >b&#8321;</a
+      ><a name="1941"
+      > </a
+      ><a name="1942" href="lib.Base.html#6094" class="Function Operator"
+      >&#8800;</a
+      ><a name="1943"
+      > </a
+      ><a name="1944" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1947"
+      > </a
+      ><a name="1948" href="lib.types.Coproduct.html#1924" class="Bound"
+      >a&#8322;</a
+      ><a name="1950" class="Symbol"
+      >)</a
+      ><a name="1951"
+      >
+  </a
+      ><a name="1954" href="lib.types.Coproduct.html#1904" class="Function"
+      >inr&#8800;inl</a
+      ><a name="1961"
+      > </a
+      ><a name="1962" href="lib.types.Coproduct.html#1962" class="Bound"
+      >a&#8321;</a
+      ><a name="1964"
+      > </a
+      ><a name="1965" href="lib.types.Coproduct.html#1965" class="Bound"
+      >b&#8322;</a
+      ><a name="1967"
+      > </a
+      ><a name="1968" href="lib.types.Coproduct.html#1968" class="Bound"
+      >p</a
+      ><a name="1969"
+      > </a
+      ><a name="1970" class="Symbol"
+      >=</a
+      ><a name="1971"
+      > </a
+      ><a name="1972" href="lib.Base.html#6528" class="Field"
+      >lower</a
+      ><a name="1977"
+      > </a
+      ><a name="1978" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1979"
+      > </a
+      ><a name="1980" href="lib.types.Coproduct.html#548" class="Function"
+      >Coprod=-in</a
+      ><a name="1990"
+      > </a
+      ><a name="1991" href="lib.types.Coproduct.html#1968" class="Bound"
+      >p</a
+      ><a name="1992"
+      >
+
+  </a
+      ><a name="1996" href="lib.types.Coproduct.html#1996" class="Function"
+      >&#8852;-level</a
+      ><a name="2003"
+      > </a
+      ><a name="2004" class="Symbol"
+      >:</a
+      ><a name="2005"
+      > </a
+      ><a name="2006" class="Symbol"
+      >&#8704;</a
+      ><a name="2007"
+      > </a
+      ><a name="2008" class="Symbol"
+      >{</a
+      ><a name="2009" href="lib.types.Coproduct.html#2009" class="Bound"
+      >n</a
+      ><a name="2010" class="Symbol"
+      >}</a
+      ><a name="2011"
+      > </a
+      ><a name="2012" class="Symbol"
+      >&#8594;</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" href="lib.NType.html#304" class="Function"
+      >has-level</a
+      ><a name="2023"
+      > </a
+      ><a name="2024" class="Symbol"
+      >(</a
+      ><a name="2025" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2026"
+      > </a
+      ><a name="2027" class="Symbol"
+      >(</a
+      ><a name="2028" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2029"
+      > </a
+      ><a name="2030" href="lib.types.Coproduct.html#2009" class="Bound"
+      >n</a
+      ><a name="2031" class="Symbol"
+      >))</a
+      ><a name="2033"
+      > </a
+      ><a name="2034" href="lib.types.Coproduct.html#251" class="Bound"
+      >A</a
+      ><a name="2035"
+      > </a
+      ><a name="2036" class="Symbol"
+      >&#8594;</a
+      ><a name="2037"
+      > </a
+      ><a name="2038" href="lib.NType.html#304" class="Function"
+      >has-level</a
+      ><a name="2047"
+      > </a
+      ><a name="2048" class="Symbol"
+      >(</a
+      ><a name="2049" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2050"
+      > </a
+      ><a name="2051" class="Symbol"
+      >(</a
+      ><a name="2052" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2053"
+      > </a
+      ><a name="2054" href="lib.types.Coproduct.html#2009" class="Bound"
+      >n</a
+      ><a name="2055" class="Symbol"
+      >))</a
+      ><a name="2057"
+      > </a
+      ><a name="2058" href="lib.types.Coproduct.html#264" class="Bound"
+      >B</a
+      ><a name="2059"
+      >
+            </a
+      ><a name="2072" class="Symbol"
+      >&#8594;</a
+      ><a name="2073"
+      > </a
+      ><a name="2074" href="lib.NType.html#304" class="Function"
+      >has-level</a
+      ><a name="2083"
+      > </a
+      ><a name="2084" class="Symbol"
+      >(</a
+      ><a name="2085" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2086"
+      > </a
+      ><a name="2087" class="Symbol"
+      >(</a
+      ><a name="2088" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2089"
+      > </a
+      ><a name="2090" href="lib.types.Coproduct.html#2009" class="Bound"
+      >n</a
+      ><a name="2091" class="Symbol"
+      >))</a
+      ><a name="2093"
+      > </a
+      ><a name="2094" class="Symbol"
+      >(</a
+      ><a name="2095" href="lib.Base.html#9033" class="Datatype"
+      >Coprod</a
+      ><a name="2101"
+      > </a
+      ><a name="2102" href="lib.types.Coproduct.html#251" class="Bound"
+      >A</a
+      ><a name="2103"
+      > </a
+      ><a name="2104" href="lib.types.Coproduct.html#264" class="Bound"
+      >B</a
+      ><a name="2105" class="Symbol"
+      >)</a
+      ><a name="2106"
+      >
+  </a
+      ><a name="2109" href="lib.types.Coproduct.html#1996" class="Function"
+      >&#8852;-level</a
+      ><a name="2116"
+      > </a
+      ><a name="2117" href="lib.types.Coproduct.html#2117" class="Bound"
+      >pA</a
+      ><a name="2119"
+      > </a
+      ><a name="2120" class="Symbol"
+      >_</a
+      ><a name="2121"
+      > </a
+      ><a name="2122" class="Symbol"
+      >(</a
+      ><a name="2123" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="2126"
+      > </a
+      ><a name="2127" href="lib.types.Coproduct.html#2127" class="Bound"
+      >a&#8321;</a
+      ><a name="2129" class="Symbol"
+      >)</a
+      ><a name="2130"
+      > </a
+      ><a name="2131" class="Symbol"
+      >(</a
+      ><a name="2132" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="2135"
+      > </a
+      ><a name="2136" href="lib.types.Coproduct.html#2136" class="Bound"
+      >a&#8322;</a
+      ><a name="2138" class="Symbol"
+      >)</a
+      ><a name="2139"
+      > </a
+      ><a name="2140" class="Symbol"
+      >=</a
+      ><a name="2141"
+      >
+    </a
+      ><a name="2146" href="lib.Equivalence.html#11334" class="Function"
+      >equiv-preserves-level</a
+      ><a name="2167"
+      > </a
+      ><a name="2168" class="Symbol"
+      >(</a
+      ><a name="2169" href="lib.types.Coproduct.html#1534" class="Function"
+      >inl=inl-equiv</a
+      ><a name="2182"
+      > </a
+      ><a name="2183" href="lib.types.Coproduct.html#2127" class="Bound"
+      >a&#8321;</a
+      ><a name="2185"
+      > </a
+      ><a name="2186" href="lib.types.Coproduct.html#2136" class="Bound"
+      >a&#8322;</a
+      ><a name="2188"
+      > </a
+      ><a name="2189" href="lib.Equivalence.html#8519" class="Function Operator"
+      >&#8315;&#185;</a
+      ><a name="2191" class="Symbol"
+      >)</a
+      ><a name="2192"
+      > </a
+      ><a name="2193" class="Symbol"
+      >(</a
+      ><a name="2194" href="lib.types.Coproduct.html#2117" class="Bound"
+      >pA</a
+      ><a name="2196"
+      > </a
+      ><a name="2197" href="lib.types.Coproduct.html#2127" class="Bound"
+      >a&#8321;</a
+      ><a name="2199"
+      > </a
+      ><a name="2200" href="lib.types.Coproduct.html#2136" class="Bound"
+      >a&#8322;</a
+      ><a name="2202" class="Symbol"
+      >)</a
+      ><a name="2203"
+      >
+  </a
+      ><a name="2206" href="lib.types.Coproduct.html#1996" class="Function"
+      >&#8852;-level</a
+      ><a name="2213"
+      > </a
+      ><a name="2214" class="Symbol"
+      >_</a
+      ><a name="2215"
+      > </a
+      ><a name="2216" class="Symbol"
+      >_</a
+      ><a name="2217"
+      > </a
+      ><a name="2218" class="Symbol"
+      >(</a
+      ><a name="2219" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="2222"
+      > </a
+      ><a name="2223" href="lib.types.Coproduct.html#2223" class="Bound"
+      >a&#8321;</a
+      ><a name="2225" class="Symbol"
+      >)</a
+      ><a name="2226"
+      > </a
+      ><a name="2227" class="Symbol"
+      >(</a
+      ><a name="2228" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2231"
+      > </a
+      ><a name="2232" href="lib.types.Coproduct.html#2232" class="Bound"
+      >b&#8322;</a
+      ><a name="2234" class="Symbol"
+      >)</a
+      ><a name="2235"
+      > </a
+      ><a name="2236" class="Symbol"
+      >=</a
+      ><a name="2237"
+      > </a
+      ><a name="2238" class="Symbol"
+      >&#955;</a
+      ><a name="2239"
+      > </a
+      ><a name="2240" href="lib.types.Coproduct.html#2240" class="Bound"
+      >p</a
+      ><a name="2241"
+      > </a
+      ><a name="2242" class="Symbol"
+      >&#8594;</a
+      ><a name="2243"
+      > </a
+      ><a name="2244" href="lib.types.Empty.html#96" class="Function"
+      >Empty-rec</a
+      ><a name="2253"
+      > </a
+      ><a name="2254" class="Symbol"
+      >(</a
+      ><a name="2255" href="lib.types.Coproduct.html#1812" class="Function"
+      >inl&#8800;inr</a
+      ><a name="2262"
+      > </a
+      ><a name="2263" href="lib.types.Coproduct.html#2223" class="Bound"
+      >a&#8321;</a
+      ><a name="2265"
+      > </a
+      ><a name="2266" href="lib.types.Coproduct.html#2232" class="Bound"
+      >b&#8322;</a
+      ><a name="2268"
+      > </a
+      ><a name="2269" href="lib.types.Coproduct.html#2240" class="Bound"
+      >p</a
+      ><a name="2270" class="Symbol"
+      >)</a
+      ><a name="2271"
+      >
+  </a
+      ><a name="2274" href="lib.types.Coproduct.html#1996" class="Function"
+      >&#8852;-level</a
+      ><a name="2281"
+      > </a
+      ><a name="2282" class="Symbol"
+      >_</a
+      ><a name="2283"
+      > </a
+      ><a name="2284" class="Symbol"
+      >_</a
+      ><a name="2285"
+      > </a
+      ><a name="2286" class="Symbol"
+      >(</a
+      ><a name="2287" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2290"
+      > </a
+      ><a name="2291" href="lib.types.Coproduct.html#2291" class="Bound"
+      >b&#8321;</a
+      ><a name="2293" class="Symbol"
+      >)</a
+      ><a name="2294"
+      > </a
+      ><a name="2295" class="Symbol"
+      >(</a
+      ><a name="2296" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="2299"
+      > </a
+      ><a name="2300" href="lib.types.Coproduct.html#2300" class="Bound"
+      >a&#8322;</a
+      ><a name="2302" class="Symbol"
+      >)</a
+      ><a name="2303"
+      > </a
+      ><a name="2304" class="Symbol"
+      >=</a
+      ><a name="2305"
+      > </a
+      ><a name="2306" class="Symbol"
+      >&#955;</a
+      ><a name="2307"
+      > </a
+      ><a name="2308" href="lib.types.Coproduct.html#2308" class="Bound"
+      >p</a
+      ><a name="2309"
+      > </a
+      ><a name="2310" class="Symbol"
+      >&#8594;</a
+      ><a name="2311"
+      > </a
+      ><a name="2312" href="lib.types.Empty.html#96" class="Function"
+      >Empty-rec</a
+      ><a name="2321"
+      > </a
+      ><a name="2322" class="Symbol"
+      >(</a
+      ><a name="2323" href="lib.types.Coproduct.html#1904" class="Function"
+      >inr&#8800;inl</a
+      ><a name="2330"
+      > </a
+      ><a name="2331" href="lib.types.Coproduct.html#2291" class="Bound"
+      >b&#8321;</a
+      ><a name="2333"
+      > </a
+      ><a name="2334" href="lib.types.Coproduct.html#2300" class="Bound"
+      >a&#8322;</a
+      ><a name="2336"
+      > </a
+      ><a name="2337" href="lib.types.Coproduct.html#2308" class="Bound"
+      >p</a
+      ><a name="2338" class="Symbol"
+      >)</a
+      ><a name="2339"
+      >
+  </a
+      ><a name="2342" href="lib.types.Coproduct.html#1996" class="Function"
+      >&#8852;-level</a
+      ><a name="2349"
+      > </a
+      ><a name="2350" class="Symbol"
+      >_</a
+      ><a name="2351"
+      > </a
+      ><a name="2352" href="lib.types.Coproduct.html#2352" class="Bound"
+      >pB</a
+      ><a name="2354"
+      > </a
+      ><a name="2355" class="Symbol"
+      >(</a
+      ><a name="2356" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2359"
+      > </a
+      ><a name="2360" href="lib.types.Coproduct.html#2360" class="Bound"
+      >b&#8321;</a
+      ><a name="2362" class="Symbol"
+      >)</a
+      ><a name="2363"
+      > </a
+      ><a name="2364" class="Symbol"
+      >(</a
+      ><a name="2365" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2368"
+      > </a
+      ><a name="2369" href="lib.types.Coproduct.html#2369" class="Bound"
+      >b&#8322;</a
+      ><a name="2371" class="Symbol"
+      >)</a
+      ><a name="2372"
+      > </a
+      ><a name="2373" class="Symbol"
+      >=</a
+      ><a name="2374"
+      >
+    </a
+      ><a name="2379" href="lib.Equivalence.html#11334" class="Function"
+      >equiv-preserves-level</a
+      ><a name="2400"
+      > </a
+      ><a name="2401" class="Symbol"
+      >((</a
+      ><a name="2403" href="lib.types.Coproduct.html#1673" class="Function"
+      >inr=inr-equiv</a
+      ><a name="2416"
+      > </a
+      ><a name="2417" href="lib.types.Coproduct.html#2360" class="Bound"
+      >b&#8321;</a
+      ><a name="2419"
+      > </a
+      ><a name="2420" href="lib.types.Coproduct.html#2369" class="Bound"
+      >b&#8322;</a
+      ><a name="2422" class="Symbol"
+      >)</a
+      ><a name="2423" href="lib.Equivalence.html#8519" class="Function Operator"
+      >&#8315;&#185;</a
+      ><a name="2425" class="Symbol"
+      >)</a
+      ><a name="2426"
+      > </a
+      ><a name="2427" class="Symbol"
+      >(</a
+      ><a name="2428" href="lib.types.Coproduct.html#2352" class="Bound"
+      >pB</a
+      ><a name="2430"
+      > </a
+      ><a name="2431" href="lib.types.Coproduct.html#2360" class="Bound"
+      >b&#8321;</a
+      ><a name="2433"
+      > </a
+      ><a name="2434" href="lib.types.Coproduct.html#2369" class="Bound"
+      >b&#8322;</a
+      ><a name="2436" class="Symbol"
+      >)</a
+      ><a name="2437"
+      >
+
+  </a
+      ><a name="2441" href="lib.types.Coproduct.html#2441" class="Function"
+      >Coprod-level</a
+      ><a name="2453"
+      > </a
+      ><a name="2454" class="Symbol"
+      >=</a
+      ><a name="2455"
+      > </a
+      ><a name="2456" href="lib.types.Coproduct.html#1996" class="Function"
+      >&#8852;-level</a
+      ><a name="2463"
+      >
+
+</a
+      ><a name="2465" class="Keyword"
+      >infix</a
+      ><a name="2470"
+      > </a
+      ><a name="2471" class="Number"
+      >80</a
+      ><a name="2473"
+      > </a
+      ><a name="2474" href="lib.types.Coproduct.html#2479" class="Function Operator"
+      >_&#8857;&#8852;_</a
+      ><a name="2478"
+      >
+</a
+      ><a name="2479" href="lib.types.Coproduct.html#2479" class="Function Operator"
+      >_&#8857;&#8852;_</a
+      ><a name="2483"
+      > </a
+      ><a name="2484" class="Symbol"
+      >:</a
+      ><a name="2485"
+      > </a
+      ><a name="2486" class="Symbol"
+      >&#8704;</a
+      ><a name="2487"
+      > </a
+      ><a name="2488" class="Symbol"
+      >{</a
+      ><a name="2489" href="lib.types.Coproduct.html#2489" class="Bound"
+      >i</a
+      ><a name="2490"
+      > </a
+      ><a name="2491" href="lib.types.Coproduct.html#2491" class="Bound"
+      >j</a
+      ><a name="2492" class="Symbol"
+      >}</a
+      ><a name="2493"
+      > </a
+      ><a name="2494" class="Symbol"
+      >&#8594;</a
+      ><a name="2495"
+      > </a
+      ><a name="2496" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2499"
+      > </a
+      ><a name="2500" href="lib.types.Coproduct.html#2489" class="Bound"
+      >i</a
+      ><a name="2501"
+      > </a
+      ><a name="2502" class="Symbol"
+      >&#8594;</a
+      ><a name="2503"
+      > </a
+      ><a name="2504" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2507"
+      > </a
+      ><a name="2508" href="lib.types.Coproduct.html#2491" class="Bound"
+      >j</a
+      ><a name="2509"
+      > </a
+      ><a name="2510" class="Symbol"
+      >&#8594;</a
+      ><a name="2511"
+      > </a
+      ><a name="2512" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2515"
+      > </a
+      ><a name="2516" class="Symbol"
+      >(</a
+      ><a name="2517" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="2521"
+      > </a
+      ><a name="2522" href="lib.types.Coproduct.html#2489" class="Bound"
+      >i</a
+      ><a name="2523"
+      > </a
+      ><a name="2524" href="lib.types.Coproduct.html#2491" class="Bound"
+      >j</a
+      ><a name="2525" class="Symbol"
+      >)</a
+      ><a name="2526"
+      >
+</a
+      ><a name="2527" href="lib.types.Coproduct.html#2527" class="Bound"
+      >X</a
+      ><a name="2528"
+      > </a
+      ><a name="2529" href="lib.types.Coproduct.html#2479" class="Function Operator"
+      >&#8857;&#8852;</a
+      ><a name="2531"
+      > </a
+      ><a name="2532" href="lib.types.Coproduct.html#2532" class="Bound"
+      >Y</a
+      ><a name="2533"
+      > </a
+      ><a name="2534" class="Symbol"
+      >=</a
+      ><a name="2535"
+      > </a
+      ><a name="2536" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >&#8857;[</a
+      ><a name="2538"
+      > </a
+      ><a name="2539" href="lib.Base.html#9033" class="Datatype"
+      >Coprod</a
+      ><a name="2545"
+      > </a
+      ><a name="2546" class="Symbol"
+      >(</a
+      ><a name="2547" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="2550"
+      > </a
+      ><a name="2551" href="lib.types.Coproduct.html#2527" class="Bound"
+      >X</a
+      ><a name="2552" class="Symbol"
+      >)</a
+      ><a name="2553"
+      > </a
+      ><a name="2554" class="Symbol"
+      >(</a
+      ><a name="2555" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="2558"
+      > </a
+      ><a name="2559" href="lib.types.Coproduct.html#2532" class="Bound"
+      >Y</a
+      ><a name="2560" class="Symbol"
+      >)</a
+      ><a name="2561"
+      > </a
+      ><a name="2562" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2563"
+      > </a
+      ><a name="2564" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="2567"
+      > </a
+      ><a name="2568" class="Symbol"
+      >(</a
+      ><a name="2569" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2571"
+      > </a
+      ><a name="2572" href="lib.types.Coproduct.html#2527" class="Bound"
+      >X</a
+      ><a name="2573" class="Symbol"
+      >)</a
+      ><a name="2574"
+      > </a
+      ><a name="2575" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >]</a
+      ><a name="2576"
+      >
+
+</a
+      ><a name="2578" href="lib.types.Coproduct.html#2578" class="Function Operator"
+      >_&#8852;&#8857;_</a
+      ><a name="2582"
+      > </a
+      ><a name="2583" class="Symbol"
+      >:</a
+      ><a name="2584"
+      > </a
+      ><a name="2585" class="Symbol"
+      >&#8704;</a
+      ><a name="2586"
+      > </a
+      ><a name="2587" class="Symbol"
+      >{</a
+      ><a name="2588" href="lib.types.Coproduct.html#2588" class="Bound"
+      >i</a
+      ><a name="2589"
+      > </a
+      ><a name="2590" href="lib.types.Coproduct.html#2590" class="Bound"
+      >j</a
+      ><a name="2591" class="Symbol"
+      >}</a
+      ><a name="2592"
+      > </a
+      ><a name="2593" class="Symbol"
+      >&#8594;</a
+      ><a name="2594"
+      > </a
+      ><a name="2595" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2598"
+      > </a
+      ><a name="2599" href="lib.types.Coproduct.html#2588" class="Bound"
+      >i</a
+      ><a name="2600"
+      > </a
+      ><a name="2601" class="Symbol"
+      >&#8594;</a
+      ><a name="2602"
+      > </a
+      ><a name="2603" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2606"
+      > </a
+      ><a name="2607" href="lib.types.Coproduct.html#2590" class="Bound"
+      >j</a
+      ><a name="2608"
+      > </a
+      ><a name="2609" class="Symbol"
+      >&#8594;</a
+      ><a name="2610"
+      > </a
+      ><a name="2611" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2614"
+      > </a
+      ><a name="2615" class="Symbol"
+      >(</a
+      ><a name="2616" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="2620"
+      > </a
+      ><a name="2621" href="lib.types.Coproduct.html#2588" class="Bound"
+      >i</a
+      ><a name="2622"
+      > </a
+      ><a name="2623" href="lib.types.Coproduct.html#2590" class="Bound"
+      >j</a
+      ><a name="2624" class="Symbol"
+      >)</a
+      ><a name="2625"
+      >
+</a
+      ><a name="2626" href="lib.types.Coproduct.html#2626" class="Bound"
+      >X</a
+      ><a name="2627"
+      > </a
+      ><a name="2628" href="lib.types.Coproduct.html#2578" class="Function Operator"
+      >&#8852;&#8857;</a
+      ><a name="2630"
+      > </a
+      ><a name="2631" href="lib.types.Coproduct.html#2631" class="Bound"
+      >Y</a
+      ><a name="2632"
+      > </a
+      ><a name="2633" class="Symbol"
+      >=</a
+      ><a name="2634"
+      > </a
+      ><a name="2635" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >&#8857;[</a
+      ><a name="2637"
+      > </a
+      ><a name="2638" href="lib.Base.html#9033" class="Datatype"
+      >Coprod</a
+      ><a name="2644"
+      > </a
+      ><a name="2645" class="Symbol"
+      >(</a
+      ><a name="2646" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="2649"
+      > </a
+      ><a name="2650" href="lib.types.Coproduct.html#2626" class="Bound"
+      >X</a
+      ><a name="2651" class="Symbol"
+      >)</a
+      ><a name="2652"
+      > </a
+      ><a name="2653" class="Symbol"
+      >(</a
+      ><a name="2654" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="2657"
+      > </a
+      ><a name="2658" href="lib.types.Coproduct.html#2631" class="Bound"
+      >Y</a
+      ><a name="2659" class="Symbol"
+      >)</a
+      ><a name="2660"
+      > </a
+      ><a name="2661" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2662"
+      > </a
+      ><a name="2663" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2666"
+      > </a
+      ><a name="2667" class="Symbol"
+      >(</a
+      ><a name="2668" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2670"
+      > </a
+      ><a name="2671" href="lib.types.Coproduct.html#2631" class="Bound"
+      >Y</a
+      ><a name="2672" class="Symbol"
+      >)</a
+      ><a name="2673"
+      > </a
+      ><a name="2674" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >]</a
+      ><a name="2675"
+      >
+
+</a
+      ><a name="2677" href="lib.types.Coproduct.html#2677" class="Function"
+      >codiag</a
+      ><a name="2683"
+      > </a
+      ><a name="2684" class="Symbol"
+      >:</a
+      ><a name="2685"
+      > </a
+      ><a name="2686" class="Symbol"
+      >&#8704;</a
+      ><a name="2687"
+      > </a
+      ><a name="2688" class="Symbol"
+      >{</a
+      ><a name="2689" href="lib.types.Coproduct.html#2689" class="Bound"
+      >i</a
+      ><a name="2690" class="Symbol"
+      >}</a
+      ><a name="2691"
+      > </a
+      ><a name="2692" class="Symbol"
+      >{</a
+      ><a name="2693" href="lib.types.Coproduct.html#2693" class="Bound"
+      >A</a
+      ><a name="2694"
+      > </a
+      ><a name="2695" class="Symbol"
+      >:</a
+      ><a name="2696"
+      > </a
+      ><a name="2697" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2701"
+      > </a
+      ><a name="2702" href="lib.types.Coproduct.html#2689" class="Bound"
+      >i</a
+      ><a name="2703" class="Symbol"
+      >}</a
+      ><a name="2704"
+      > </a
+      ><a name="2705" class="Symbol"
+      >&#8594;</a
+      ><a name="2706"
+      > </a
+      ><a name="2707" href="lib.types.Coproduct.html#2693" class="Bound"
+      >A</a
+      ><a name="2708"
+      > </a
+      ><a name="2709" href="lib.Base.html#9157" class="Function Operator"
+      >&#8852;</a
+      ><a name="2710"
+      > </a
+      ><a name="2711" href="lib.types.Coproduct.html#2693" class="Bound"
+      >A</a
+      ><a name="2712"
+      > </a
+      ><a name="2713" class="Symbol"
+      >&#8594;</a
+      ><a name="2714"
+      > </a
+      ><a name="2715" href="lib.types.Coproduct.html#2693" class="Bound"
+      >A</a
+      ><a name="2716"
+      >
+</a
+      ><a name="2717" href="lib.types.Coproduct.html#2677" class="Function"
+      >codiag</a
+      ><a name="2723"
+      > </a
+      ><a name="2724" class="Symbol"
+      >(</a
+      ><a name="2725" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="2728"
+      > </a
+      ><a name="2729" href="lib.types.Coproduct.html#2729" class="Bound"
+      >a</a
+      ><a name="2730" class="Symbol"
+      >)</a
+      ><a name="2731"
+      > </a
+      ><a name="2732" class="Symbol"
+      >=</a
+      ><a name="2733"
+      > </a
+      ><a name="2734" href="lib.types.Coproduct.html#2729" class="Bound"
+      >a</a
+      ><a name="2735"
+      >
+</a
+      ><a name="2736" href="lib.types.Coproduct.html#2677" class="Function"
+      >codiag</a
+      ><a name="2742"
+      > </a
+      ><a name="2743" class="Symbol"
+      >(</a
+      ><a name="2744" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2747"
+      > </a
+      ><a name="2748" href="lib.types.Coproduct.html#2748" class="Bound"
+      >a</a
+      ><a name="2749" class="Symbol"
+      >)</a
+      ><a name="2750"
+      > </a
+      ><a name="2751" class="Symbol"
+      >=</a
+      ><a name="2752"
+      > </a
+      ><a name="2753" href="lib.types.Coproduct.html#2748" class="Bound"
+      >a</a
+      ><a name="2754"
+      >
+
+</a
+      ><a name="2756" href="lib.types.Coproduct.html#2756" class="Function"
+      >&#8857;codiag</a
+      ><a name="2763"
+      > </a
+      ><a name="2764" class="Symbol"
+      >:</a
+      ><a name="2765"
+      > </a
+      ><a name="2766" class="Symbol"
+      >&#8704;</a
+      ><a name="2767"
+      > </a
+      ><a name="2768" class="Symbol"
+      >{</a
+      ><a name="2769" href="lib.types.Coproduct.html#2769" class="Bound"
+      >i</a
+      ><a name="2770" class="Symbol"
+      >}</a
+      ><a name="2771"
+      > </a
+      ><a name="2772" class="Symbol"
+      >{</a
+      ><a name="2773" href="lib.types.Coproduct.html#2773" class="Bound"
+      >X</a
+      ><a name="2774"
+      > </a
+      ><a name="2775" class="Symbol"
+      >:</a
+      ><a name="2776"
+      > </a
+      ><a name="2777" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2780"
+      > </a
+      ><a name="2781" href="lib.types.Coproduct.html#2769" class="Bound"
+      >i</a
+      ><a name="2782" class="Symbol"
+      >}</a
+      ><a name="2783"
+      > </a
+      ><a name="2784" class="Symbol"
+      >&#8594;</a
+      ><a name="2785"
+      > </a
+      ><a name="2786" href="lib.types.Coproduct.html#2773" class="Bound"
+      >X</a
+      ><a name="2787"
+      > </a
+      ><a name="2788" href="lib.types.Coproduct.html#2479" class="Function Operator"
+      >&#8857;&#8852;</a
+      ><a name="2790"
+      > </a
+      ><a name="2791" href="lib.types.Coproduct.html#2773" class="Bound"
+      >X</a
+      ><a name="2792"
+      > </a
+      ><a name="2793" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="2795"
+      > </a
+      ><a name="2796" href="lib.types.Coproduct.html#2773" class="Bound"
+      >X</a
+      ><a name="2797"
+      >
+</a
+      ><a name="2798" href="lib.types.Coproduct.html#2756" class="Function"
+      >&#8857;codiag</a
+      ><a name="2805"
+      > </a
+      ><a name="2806" class="Symbol"
+      >=</a
+      ><a name="2807"
+      > </a
+      ><a name="2808" class="Symbol"
+      >(</a
+      ><a name="2809" href="lib.types.Coproduct.html#2677" class="Function"
+      >codiag</a
+      ><a name="2815"
+      > </a
+      ><a name="2816" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2817"
+      > </a
+      ><a name="2818" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2821" class="Symbol"
+      >)</a
+      ><a name="2822"
+      >
+
+</a
+      ><a name="2824" class="Comment"
+      >-- A binary sigma is a coproduct</a
+      ><a name="2856"
+      >
+</a
+      ><a name="2857" href="lib.types.Coproduct.html#2857" class="Function"
+      >&#931;Bool-equiv-&#8852;</a
+      ><a name="2870"
+      > </a
+      ><a name="2871" class="Symbol"
+      >:</a
+      ><a name="2872"
+      > </a
+      ><a name="2873" class="Symbol"
+      >&#8704;</a
+      ><a name="2874"
+      > </a
+      ><a name="2875" class="Symbol"
+      >{</a
+      ><a name="2876" href="lib.types.Coproduct.html#2876" class="Bound"
+      >i</a
+      ><a name="2877" class="Symbol"
+      >}</a
+      ><a name="2878"
+      > </a
+      ><a name="2879" class="Symbol"
+      >(</a
+      ><a name="2880" href="lib.types.Coproduct.html#2880" class="Bound"
+      >Pick</a
+      ><a name="2884"
+      > </a
+      ><a name="2885" class="Symbol"
+      >:</a
+      ><a name="2886"
+      > </a
+      ><a name="2887" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="2891"
+      > </a
+      ><a name="2892" class="Symbol"
+      >&#8594;</a
+      ><a name="2893"
+      > </a
+      ><a name="2894" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2898"
+      > </a
+      ><a name="2899" href="lib.types.Coproduct.html#2876" class="Bound"
+      >i</a
+      ><a name="2900" class="Symbol"
+      >)</a
+      ><a name="2901"
+      >
+  </a
+      ><a name="2904" class="Symbol"
+      >&#8594;</a
+      ><a name="2905"
+      > </a
+      ><a name="2906" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="2907"
+      > </a
+      ><a name="2908" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="2912"
+      > </a
+      ><a name="2913" href="lib.types.Coproduct.html#2880" class="Bound"
+      >Pick</a
+      ><a name="2917"
+      > </a
+      ><a name="2918" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="2919"
+      > </a
+      ><a name="2920" href="lib.types.Coproduct.html#2880" class="Bound"
+      >Pick</a
+      ><a name="2924"
+      > </a
+      ><a name="2925" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="2929"
+      > </a
+      ><a name="2930" href="lib.Base.html#9157" class="Function Operator"
+      >&#8852;</a
+      ><a name="2931"
+      > </a
+      ><a name="2932" href="lib.types.Coproduct.html#2880" class="Bound"
+      >Pick</a
+      ><a name="2936"
+      > </a
+      ><a name="2937" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2942"
+      >
+</a
+      ><a name="2943" href="lib.types.Coproduct.html#2857" class="Function"
+      >&#931;Bool-equiv-&#8852;</a
+      ><a name="2956"
+      > </a
+      ><a name="2957" href="lib.types.Coproduct.html#2957" class="Bound"
+      >Pick</a
+      ><a name="2961"
+      > </a
+      ><a name="2962" class="Symbol"
+      >=</a
+      ><a name="2963"
+      > </a
+      ><a name="2964" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="2969"
+      > </a
+      ><a name="2970" href="lib.types.Coproduct.html#3007" class="Function"
+      >into</a
+      ><a name="2974"
+      > </a
+      ><a name="2975" href="lib.types.Coproduct.html#3104" class="Function"
+      >out</a
+      ><a name="2978"
+      > </a
+      ><a name="2979" href="lib.types.Coproduct.html#3217" class="Function"
+      >into-out</a
+      ><a name="2987"
+      > </a
+      ><a name="2988" href="lib.types.Coproduct.html#3311" class="Function"
+      >out-into</a
+      ><a name="2996"
+      >
+  </a
+      ><a name="2999" class="Keyword"
+      >where</a
+      ><a name="3004"
+      >
+  </a
+      ><a name="3007" href="lib.types.Coproduct.html#3007" class="Function"
+      >into</a
+      ><a name="3011"
+      > </a
+      ><a name="3012" class="Symbol"
+      >:</a
+      ><a name="3013"
+      > </a
+      ><a name="3014" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="3015"
+      > </a
+      ><a name="3016" class="Symbol"
+      >_</a
+      ><a name="3017"
+      > </a
+      ><a name="3018" href="lib.types.Coproduct.html#2957" class="Bound"
+      >Pick</a
+      ><a name="3022"
+      > </a
+      ><a name="3023" class="Symbol"
+      >&#8594;</a
+      ><a name="3024"
+      > </a
+      ><a name="3025" href="lib.types.Coproduct.html#2957" class="Bound"
+      >Pick</a
+      ><a name="3029"
+      > </a
+      ><a name="3030" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3034"
+      > </a
+      ><a name="3035" href="lib.Base.html#9157" class="Function Operator"
+      >&#8852;</a
+      ><a name="3036"
+      > </a
+      ><a name="3037" href="lib.types.Coproduct.html#2957" class="Bound"
+      >Pick</a
+      ><a name="3041"
+      > </a
+      ><a name="3042" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="3047"
+      >
+  </a
+      ><a name="3050" href="lib.types.Coproduct.html#3007" class="Function"
+      >into</a
+      ><a name="3054"
+      > </a
+      ><a name="3055" class="Symbol"
+      >(</a
+      ><a name="3056" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3060"
+      > </a
+      ><a name="3061" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3062"
+      > </a
+      ><a name="3063" href="lib.types.Coproduct.html#3063" class="Bound"
+      >a</a
+      ><a name="3064" class="Symbol"
+      >)</a
+      ><a name="3065"
+      > </a
+      ><a name="3066" class="Symbol"
+      >=</a
+      ><a name="3067"
+      > </a
+      ><a name="3068" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="3071"
+      > </a
+      ><a name="3072" href="lib.types.Coproduct.html#3063" class="Bound"
+      >a</a
+      ><a name="3073"
+      >
+  </a
+      ><a name="3076" href="lib.types.Coproduct.html#3007" class="Function"
+      >into</a
+      ><a name="3080"
+      > </a
+      ><a name="3081" class="Symbol"
+      >(</a
+      ><a name="3082" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="3087"
+      > </a
+      ><a name="3088" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3089"
+      > </a
+      ><a name="3090" href="lib.types.Coproduct.html#3090" class="Bound"
+      >b</a
+      ><a name="3091" class="Symbol"
+      >)</a
+      ><a name="3092"
+      > </a
+      ><a name="3093" class="Symbol"
+      >=</a
+      ><a name="3094"
+      > </a
+      ><a name="3095" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3098"
+      > </a
+      ><a name="3099" href="lib.types.Coproduct.html#3090" class="Bound"
+      >b</a
+      ><a name="3100"
+      >
+
+  </a
+      ><a name="3104" href="lib.types.Coproduct.html#3104" class="Function"
+      >out</a
+      ><a name="3107"
+      > </a
+      ><a name="3108" class="Symbol"
+      >:</a
+      ><a name="3109"
+      > </a
+      ><a name="3110" class="Symbol"
+      >(</a
+      ><a name="3111" href="lib.types.Coproduct.html#2957" class="Bound"
+      >Pick</a
+      ><a name="3115"
+      > </a
+      ><a name="3116" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3120"
+      > </a
+      ><a name="3121" href="lib.Base.html#9157" class="Function Operator"
+      >&#8852;</a
+      ><a name="3122"
+      > </a
+      ><a name="3123" href="lib.types.Coproduct.html#2957" class="Bound"
+      >Pick</a
+      ><a name="3127"
+      > </a
+      ><a name="3128" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="3133" class="Symbol"
+      >)</a
+      ><a name="3134"
+      > </a
+      ><a name="3135" class="Symbol"
+      >&#8594;</a
+      ><a name="3136"
+      > </a
+      ><a name="3137" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="3138"
+      > </a
+      ><a name="3139" class="Symbol"
+      >_</a
+      ><a name="3140"
+      > </a
+      ><a name="3141" href="lib.types.Coproduct.html#2957" class="Bound"
+      >Pick</a
+      ><a name="3145"
+      >
+  </a
+      ><a name="3148" href="lib.types.Coproduct.html#3104" class="Function"
+      >out</a
+      ><a name="3151"
+      > </a
+      ><a name="3152" class="Symbol"
+      >(</a
+      ><a name="3153" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="3156"
+      > </a
+      ><a name="3157" href="lib.types.Coproduct.html#3157" class="Bound"
+      >a</a
+      ><a name="3158" class="Symbol"
+      >)</a
+      ><a name="3159"
+      > </a
+      ><a name="3160" class="Symbol"
+      >=</a
+      ><a name="3161"
+      > </a
+      ><a name="3162" class="Symbol"
+      >(</a
+      ><a name="3163" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3167"
+      > </a
+      ><a name="3168" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3169"
+      > </a
+      ><a name="3170" href="lib.types.Coproduct.html#3157" class="Bound"
+      >a</a
+      ><a name="3171" class="Symbol"
+      >)</a
+      ><a name="3172"
+      >
+  </a
+      ><a name="3175" href="lib.types.Coproduct.html#3104" class="Function"
+      >out</a
+      ><a name="3178"
+      > </a
+      ><a name="3179" class="Symbol"
+      >(</a
+      ><a name="3180" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3183"
+      > </a
+      ><a name="3184" href="lib.types.Coproduct.html#3184" class="Bound"
+      >b</a
+      ><a name="3185" class="Symbol"
+      >)</a
+      ><a name="3186"
+      > </a
+      ><a name="3187" class="Symbol"
+      >=</a
+      ><a name="3188"
+      > </a
+      ><a name="3189" class="Symbol"
+      >(</a
+      ><a name="3190" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="3195"
+      > </a
+      ><a name="3196" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3197"
+      > </a
+      ><a name="3198" href="lib.types.Coproduct.html#3184" class="Bound"
+      >b</a
+      ><a name="3199" class="Symbol"
+      >)</a
+      ><a name="3200"
+      >
+
+  </a
+      ><a name="3204" class="Keyword"
+      >abstract</a
+      ><a name="3212"
+      >
+    </a
+      ><a name="3217" href="lib.types.Coproduct.html#3217" class="Function"
+      >into-out</a
+      ><a name="3225"
+      > </a
+      ><a name="3226" class="Symbol"
+      >:</a
+      ><a name="3227"
+      > </a
+      ><a name="3228" class="Symbol"
+      >&#8704;</a
+      ><a name="3229"
+      > </a
+      ><a name="3230" href="lib.types.Coproduct.html#3230" class="Bound"
+      >c</a
+      ><a name="3231"
+      > </a
+      ><a name="3232" class="Symbol"
+      >&#8594;</a
+      ><a name="3233"
+      > </a
+      ><a name="3234" href="lib.types.Coproduct.html#3007" class="Function"
+      >into</a
+      ><a name="3238"
+      > </a
+      ><a name="3239" class="Symbol"
+      >(</a
+      ><a name="3240" href="lib.types.Coproduct.html#3104" class="Function"
+      >out</a
+      ><a name="3243"
+      > </a
+      ><a name="3244" href="lib.types.Coproduct.html#3230" class="Bound"
+      >c</a
+      ><a name="3245" class="Symbol"
+      >)</a
+      ><a name="3246"
+      > </a
+      ><a name="3247" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3249"
+      > </a
+      ><a name="3250" href="lib.types.Coproduct.html#3230" class="Bound"
+      >c</a
+      ><a name="3251"
+      >
+    </a
+      ><a name="3256" href="lib.types.Coproduct.html#3217" class="Function"
+      >into-out</a
+      ><a name="3264"
+      > </a
+      ><a name="3265" class="Symbol"
+      >(</a
+      ><a name="3266" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="3269"
+      > </a
+      ><a name="3270" href="lib.types.Coproduct.html#3270" class="Bound"
+      >a</a
+      ><a name="3271" class="Symbol"
+      >)</a
+      ><a name="3272"
+      > </a
+      ><a name="3273" class="Symbol"
+      >=</a
+      ><a name="3274"
+      > </a
+      ><a name="3275" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3278"
+      >
+    </a
+      ><a name="3283" href="lib.types.Coproduct.html#3217" class="Function"
+      >into-out</a
+      ><a name="3291"
+      > </a
+      ><a name="3292" class="Symbol"
+      >(</a
+      ><a name="3293" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3296"
+      > </a
+      ><a name="3297" href="lib.types.Coproduct.html#3297" class="Bound"
+      >b</a
+      ><a name="3298" class="Symbol"
+      >)</a
+      ><a name="3299"
+      > </a
+      ><a name="3300" class="Symbol"
+      >=</a
+      ><a name="3301"
+      > </a
+      ><a name="3302" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3305"
+      >
+
+    </a
+      ><a name="3311" href="lib.types.Coproduct.html#3311" class="Function"
+      >out-into</a
+      ><a name="3319"
+      > </a
+      ><a name="3320" class="Symbol"
+      >:</a
+      ><a name="3321"
+      > </a
+      ><a name="3322" class="Symbol"
+      >&#8704;</a
+      ><a name="3323"
+      > </a
+      ><a name="3324" href="lib.types.Coproduct.html#3324" class="Bound"
+      >s</a
+      ><a name="3325"
+      > </a
+      ><a name="3326" class="Symbol"
+      >&#8594;</a
+      ><a name="3327"
+      > </a
+      ><a name="3328" href="lib.types.Coproduct.html#3104" class="Function"
+      >out</a
+      ><a name="3331"
+      > </a
+      ><a name="3332" class="Symbol"
+      >(</a
+      ><a name="3333" href="lib.types.Coproduct.html#3007" class="Function"
+      >into</a
+      ><a name="3337"
+      > </a
+      ><a name="3338" href="lib.types.Coproduct.html#3324" class="Bound"
+      >s</a
+      ><a name="3339" class="Symbol"
+      >)</a
+      ><a name="3340"
+      > </a
+      ><a name="3341" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3343"
+      > </a
+      ><a name="3344" href="lib.types.Coproduct.html#3324" class="Bound"
+      >s</a
+      ><a name="3345"
+      >
+    </a
+      ><a name="3350" href="lib.types.Coproduct.html#3311" class="Function"
+      >out-into</a
+      ><a name="3358"
+      > </a
+      ><a name="3359" class="Symbol"
+      >(</a
+      ><a name="3360" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3364"
+      > </a
+      ><a name="3365" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3366"
+      > </a
+      ><a name="3367" href="lib.types.Coproduct.html#3367" class="Bound"
+      >a</a
+      ><a name="3368" class="Symbol"
+      >)</a
+      ><a name="3369"
+      > </a
+      ><a name="3370" class="Symbol"
+      >=</a
+      ><a name="3371"
+      > </a
+      ><a name="3372" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3375"
+      >
+    </a
+      ><a name="3380" href="lib.types.Coproduct.html#3311" class="Function"
+      >out-into</a
+      ><a name="3388"
+      > </a
+      ><a name="3389" class="Symbol"
+      >(</a
+      ><a name="3390" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="3395"
+      > </a
+      ><a name="3396" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3397"
+      > </a
+      ><a name="3398" href="lib.types.Coproduct.html#3398" class="Bound"
+      >b</a
+      ><a name="3399" class="Symbol"
+      >)</a
+      ><a name="3400"
+      > </a
+      ><a name="3401" class="Symbol"
+      >=</a
+      ><a name="3402"
+      > </a
+      ><a name="3403" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3406"
+      >
+
+</a
+      ><a name="3408" class="Keyword"
+      >module</a
+      ><a name="3414"
+      > </a
+      ><a name="3415" href="lib.types.Coproduct.html#3415" class="Module"
+      >_</a
+      ><a name="3416"
+      > </a
+      ><a name="3417" class="Symbol"
+      >{</a
+      ><a name="3418" href="lib.types.Coproduct.html#3418" class="Bound"
+      >i</a
+      ><a name="3419"
+      > </a
+      ><a name="3420" href="lib.types.Coproduct.html#3420" class="Bound"
+      >j</a
+      ><a name="3421"
+      > </a
+      ><a name="3422" href="lib.types.Coproduct.html#3422" class="Bound"
+      >k</a
+      ><a name="3423" class="Symbol"
+      >}</a
+      ><a name="3424"
+      > </a
+      ><a name="3425" class="Symbol"
+      >{</a
+      ><a name="3426" href="lib.types.Coproduct.html#3426" class="Bound"
+      >A</a
+      ><a name="3427"
+      > </a
+      ><a name="3428" class="Symbol"
+      >:</a
+      ><a name="3429"
+      > </a
+      ><a name="3430" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3434"
+      > </a
+      ><a name="3435" href="lib.types.Coproduct.html#3418" class="Bound"
+      >i</a
+      ><a name="3436" class="Symbol"
+      >}</a
+      ><a name="3437"
+      > </a
+      ><a name="3438" class="Symbol"
+      >{</a
+      ><a name="3439" href="lib.types.Coproduct.html#3439" class="Bound"
+      >B</a
+      ><a name="3440"
+      > </a
+      ><a name="3441" class="Symbol"
+      >:</a
+      ><a name="3442"
+      > </a
+      ><a name="3443" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3447"
+      > </a
+      ><a name="3448" href="lib.types.Coproduct.html#3420" class="Bound"
+      >j</a
+      ><a name="3449" class="Symbol"
+      >}</a
+      ><a name="3450"
+      > </a
+      ><a name="3451" class="Symbol"
+      >(</a
+      ><a name="3452" href="lib.types.Coproduct.html#3452" class="Bound"
+      >P</a
+      ><a name="3453"
+      > </a
+      ><a name="3454" class="Symbol"
+      >:</a
+      ><a name="3455"
+      > </a
+      ><a name="3456" href="lib.types.Coproduct.html#3426" class="Bound"
+      >A</a
+      ><a name="3457"
+      > </a
+      ><a name="3458" href="lib.Base.html#9157" class="Function Operator"
+      >&#8852;</a
+      ><a name="3459"
+      > </a
+      ><a name="3460" href="lib.types.Coproduct.html#3439" class="Bound"
+      >B</a
+      ><a name="3461"
+      > </a
+      ><a name="3462" class="Symbol"
+      >&#8594;</a
+      ><a name="3463"
+      > </a
+      ><a name="3464" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3468"
+      > </a
+      ><a name="3469" href="lib.types.Coproduct.html#3422" class="Bound"
+      >k</a
+      ><a name="3470" class="Symbol"
+      >)</a
+      ><a name="3471"
+      > </a
+      ><a name="3472" class="Keyword"
+      >where</a
+      ><a name="3477"
+      >
+  </a
+      ><a name="3480" href="lib.types.Coproduct.html#3480" class="Function"
+      >&#928;&#8321;-&#8852;-equiv-&#215;</a
+      ><a name="3492"
+      > </a
+      ><a name="3493" class="Symbol"
+      >:</a
+      ><a name="3494"
+      > </a
+      ><a name="3495" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="3496"
+      > </a
+      ><a name="3497" class="Symbol"
+      >(</a
+      ><a name="3498" href="lib.types.Coproduct.html#3426" class="Bound"
+      >A</a
+      ><a name="3499"
+      > </a
+      ><a name="3500" href="lib.Base.html#9157" class="Function Operator"
+      >&#8852;</a
+      ><a name="3501"
+      > </a
+      ><a name="3502" href="lib.types.Coproduct.html#3439" class="Bound"
+      >B</a
+      ><a name="3503" class="Symbol"
+      >)</a
+      ><a name="3504"
+      > </a
+      ><a name="3505" href="lib.types.Coproduct.html#3452" class="Bound"
+      >P</a
+      ><a name="3506"
+      > </a
+      ><a name="3507" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="3508"
+      > </a
+      ><a name="3509" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="3510"
+      > </a
+      ><a name="3511" href="lib.types.Coproduct.html#3426" class="Bound"
+      >A</a
+      ><a name="3512"
+      > </a
+      ><a name="3513" class="Symbol"
+      >(</a
+      ><a name="3514" href="lib.types.Coproduct.html#3452" class="Bound"
+      >P</a
+      ><a name="3515"
+      > </a
+      ><a name="3516" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3517"
+      > </a
+      ><a name="3518" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="3521" class="Symbol"
+      >)</a
+      ><a name="3522"
+      > </a
+      ><a name="3523" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="3524"
+      > </a
+      ><a name="3525" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="3526"
+      > </a
+      ><a name="3527" href="lib.types.Coproduct.html#3439" class="Bound"
+      >B</a
+      ><a name="3528"
+      > </a
+      ><a name="3529" class="Symbol"
+      >(</a
+      ><a name="3530" href="lib.types.Coproduct.html#3452" class="Bound"
+      >P</a
+      ><a name="3531"
+      > </a
+      ><a name="3532" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3533"
+      > </a
+      ><a name="3534" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3537" class="Symbol"
+      >)</a
+      ><a name="3538"
+      >
+  </a
+      ><a name="3541" href="lib.types.Coproduct.html#3480" class="Function"
+      >&#928;&#8321;-&#8852;-equiv-&#215;</a
+      ><a name="3553"
+      > </a
+      ><a name="3554" class="Symbol"
+      >=</a
+      ><a name="3555"
+      > </a
+      ><a name="3556" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="3561"
+      > </a
+      ><a name="3562" href="lib.types.Coproduct.html#3600" class="Function"
+      >to</a
+      ><a name="3564"
+      > </a
+      ><a name="3565" href="lib.types.Coproduct.html#3703" class="Function"
+      >from</a
+      ><a name="3569"
+      > </a
+      ><a name="3570" href="lib.types.Coproduct.html#3836" class="Function"
+      >to-from</a
+      ><a name="3577"
+      > </a
+      ><a name="3578" href="lib.types.Coproduct.html#3901" class="Function"
+      >from-to</a
+      ><a name="3585"
+      >
+    </a
+      ><a name="3590" class="Keyword"
+      >where</a
+      ><a name="3595"
+      >
+    </a
+      ><a name="3600" href="lib.types.Coproduct.html#3600" class="Function"
+      >to</a
+      ><a name="3602"
+      > </a
+      ><a name="3603" class="Symbol"
+      >:</a
+      ><a name="3604"
+      > </a
+      ><a name="3605" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="3606"
+      > </a
+      ><a name="3607" class="Symbol"
+      >(</a
+      ><a name="3608" href="lib.types.Coproduct.html#3426" class="Bound"
+      >A</a
+      ><a name="3609"
+      > </a
+      ><a name="3610" href="lib.Base.html#9157" class="Function Operator"
+      >&#8852;</a
+      ><a name="3611"
+      > </a
+      ><a name="3612" href="lib.types.Coproduct.html#3439" class="Bound"
+      >B</a
+      ><a name="3613" class="Symbol"
+      >)</a
+      ><a name="3614"
+      > </a
+      ><a name="3615" href="lib.types.Coproduct.html#3452" class="Bound"
+      >P</a
+      ><a name="3616"
+      > </a
+      ><a name="3617" class="Symbol"
+      >&#8594;</a
+      ><a name="3618"
+      > </a
+      ><a name="3619" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="3620"
+      > </a
+      ><a name="3621" href="lib.types.Coproduct.html#3426" class="Bound"
+      >A</a
+      ><a name="3622"
+      > </a
+      ><a name="3623" class="Symbol"
+      >(</a
+      ><a name="3624" href="lib.types.Coproduct.html#3452" class="Bound"
+      >P</a
+      ><a name="3625"
+      > </a
+      ><a name="3626" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3627"
+      > </a
+      ><a name="3628" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="3631" class="Symbol"
+      >)</a
+      ><a name="3632"
+      > </a
+      ><a name="3633" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="3634"
+      > </a
+      ><a name="3635" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="3636"
+      > </a
+      ><a name="3637" href="lib.types.Coproduct.html#3439" class="Bound"
+      >B</a
+      ><a name="3638"
+      > </a
+      ><a name="3639" class="Symbol"
+      >(</a
+      ><a name="3640" href="lib.types.Coproduct.html#3452" class="Bound"
+      >P</a
+      ><a name="3641"
+      > </a
+      ><a name="3642" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3643"
+      > </a
+      ><a name="3644" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3647" class="Symbol"
+      >)</a
+      ><a name="3648"
+      >
+    </a
+      ><a name="3653" href="lib.types.Coproduct.html#3600" class="Function"
+      >to</a
+      ><a name="3655"
+      > </a
+      ><a name="3656" href="lib.types.Coproduct.html#3656" class="Bound"
+      >f</a
+      ><a name="3657"
+      > </a
+      ><a name="3658" class="Symbol"
+      >=</a
+      ><a name="3659"
+      > </a
+      ><a name="3660" class="Symbol"
+      >(&#955;</a
+      ><a name="3662"
+      > </a
+      ><a name="3663" href="lib.types.Coproduct.html#3663" class="Bound"
+      >a</a
+      ><a name="3664"
+      > </a
+      ><a name="3665" class="Symbol"
+      >&#8594;</a
+      ><a name="3666"
+      > </a
+      ><a name="3667" href="lib.types.Coproduct.html#3656" class="Bound"
+      >f</a
+      ><a name="3668"
+      > </a
+      ><a name="3669" class="Symbol"
+      >(</a
+      ><a name="3670" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="3673"
+      > </a
+      ><a name="3674" href="lib.types.Coproduct.html#3663" class="Bound"
+      >a</a
+      ><a name="3675" class="Symbol"
+      >))</a
+      ><a name="3677"
+      > </a
+      ><a name="3678" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3679"
+      > </a
+      ><a name="3680" class="Symbol"
+      >(&#955;</a
+      ><a name="3682"
+      > </a
+      ><a name="3683" href="lib.types.Coproduct.html#3683" class="Bound"
+      >b</a
+      ><a name="3684"
+      > </a
+      ><a name="3685" class="Symbol"
+      >&#8594;</a
+      ><a name="3686"
+      > </a
+      ><a name="3687" href="lib.types.Coproduct.html#3656" class="Bound"
+      >f</a
+      ><a name="3688"
+      > </a
+      ><a name="3689" class="Symbol"
+      >(</a
+      ><a name="3690" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3693"
+      > </a
+      ><a name="3694" href="lib.types.Coproduct.html#3683" class="Bound"
+      >b</a
+      ><a name="3695" class="Symbol"
+      >))</a
+      ><a name="3697"
+      >
+
+    </a
+      ><a name="3703" href="lib.types.Coproduct.html#3703" class="Function"
+      >from</a
+      ><a name="3707"
+      > </a
+      ><a name="3708" class="Symbol"
+      >:</a
+      ><a name="3709"
+      > </a
+      ><a name="3710" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="3711"
+      > </a
+      ><a name="3712" href="lib.types.Coproduct.html#3426" class="Bound"
+      >A</a
+      ><a name="3713"
+      > </a
+      ><a name="3714" class="Symbol"
+      >(</a
+      ><a name="3715" href="lib.types.Coproduct.html#3452" class="Bound"
+      >P</a
+      ><a name="3716"
+      > </a
+      ><a name="3717" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3718"
+      > </a
+      ><a name="3719" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="3722" class="Symbol"
+      >)</a
+      ><a name="3723"
+      > </a
+      ><a name="3724" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="3725"
+      > </a
+      ><a name="3726" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="3727"
+      > </a
+      ><a name="3728" href="lib.types.Coproduct.html#3439" class="Bound"
+      >B</a
+      ><a name="3729"
+      > </a
+      ><a name="3730" class="Symbol"
+      >(</a
+      ><a name="3731" href="lib.types.Coproduct.html#3452" class="Bound"
+      >P</a
+      ><a name="3732"
+      > </a
+      ><a name="3733" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3734"
+      > </a
+      ><a name="3735" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3738" class="Symbol"
+      >)</a
+      ><a name="3739"
+      > </a
+      ><a name="3740" class="Symbol"
+      >&#8594;</a
+      ><a name="3741"
+      > </a
+      ><a name="3742" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="3743"
+      > </a
+      ><a name="3744" class="Symbol"
+      >(</a
+      ><a name="3745" href="lib.types.Coproduct.html#3426" class="Bound"
+      >A</a
+      ><a name="3746"
+      > </a
+      ><a name="3747" href="lib.Base.html#9157" class="Function Operator"
+      >&#8852;</a
+      ><a name="3748"
+      > </a
+      ><a name="3749" href="lib.types.Coproduct.html#3439" class="Bound"
+      >B</a
+      ><a name="3750" class="Symbol"
+      >)</a
+      ><a name="3751"
+      > </a
+      ><a name="3752" href="lib.types.Coproduct.html#3452" class="Bound"
+      >P</a
+      ><a name="3753"
+      >
+    </a
+      ><a name="3758" href="lib.types.Coproduct.html#3703" class="Function"
+      >from</a
+      ><a name="3762"
+      > </a
+      ><a name="3763" class="Symbol"
+      >(</a
+      ><a name="3764" href="lib.types.Coproduct.html#3764" class="Bound"
+      >f</a
+      ><a name="3765"
+      > </a
+      ><a name="3766" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3767"
+      > </a
+      ><a name="3768" href="lib.types.Coproduct.html#3768" class="Bound"
+      >g</a
+      ><a name="3769" class="Symbol"
+      >)</a
+      ><a name="3770"
+      > </a
+      ><a name="3771" class="Symbol"
+      >(</a
+      ><a name="3772" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="3775"
+      > </a
+      ><a name="3776" href="lib.types.Coproduct.html#3776" class="Bound"
+      >a</a
+      ><a name="3777" class="Symbol"
+      >)</a
+      ><a name="3778"
+      > </a
+      ><a name="3779" class="Symbol"
+      >=</a
+      ><a name="3780"
+      > </a
+      ><a name="3781" href="lib.types.Coproduct.html#3764" class="Bound"
+      >f</a
+      ><a name="3782"
+      > </a
+      ><a name="3783" href="lib.types.Coproduct.html#3776" class="Bound"
+      >a</a
+      ><a name="3784"
+      >
+    </a
+      ><a name="3789" href="lib.types.Coproduct.html#3703" class="Function"
+      >from</a
+      ><a name="3793"
+      > </a
+      ><a name="3794" class="Symbol"
+      >(</a
+      ><a name="3795" href="lib.types.Coproduct.html#3795" class="Bound"
+      >f</a
+      ><a name="3796"
+      > </a
+      ><a name="3797" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3798"
+      > </a
+      ><a name="3799" href="lib.types.Coproduct.html#3799" class="Bound"
+      >g</a
+      ><a name="3800" class="Symbol"
+      >)</a
+      ><a name="3801"
+      > </a
+      ><a name="3802" class="Symbol"
+      >(</a
+      ><a name="3803" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3806"
+      > </a
+      ><a name="3807" href="lib.types.Coproduct.html#3807" class="Bound"
+      >b</a
+      ><a name="3808" class="Symbol"
+      >)</a
+      ><a name="3809"
+      > </a
+      ><a name="3810" class="Symbol"
+      >=</a
+      ><a name="3811"
+      > </a
+      ><a name="3812" href="lib.types.Coproduct.html#3799" class="Bound"
+      >g</a
+      ><a name="3813"
+      > </a
+      ><a name="3814" href="lib.types.Coproduct.html#3807" class="Bound"
+      >b</a
+      ><a name="3815"
+      >
+
+    </a
+      ><a name="3821" class="Keyword"
+      >abstract</a
+      ><a name="3829"
+      >
+      </a
+      ><a name="3836" href="lib.types.Coproduct.html#3836" class="Function"
+      >to-from</a
+      ><a name="3843"
+      > </a
+      ><a name="3844" class="Symbol"
+      >:</a
+      ><a name="3845"
+      > </a
+      ><a name="3846" class="Symbol"
+      >&#8704;</a
+      ><a name="3847"
+      > </a
+      ><a name="3848" href="lib.types.Coproduct.html#3848" class="Bound"
+      >fg</a
+      ><a name="3850"
+      > </a
+      ><a name="3851" class="Symbol"
+      >&#8594;</a
+      ><a name="3852"
+      > </a
+      ><a name="3853" href="lib.types.Coproduct.html#3600" class="Function"
+      >to</a
+      ><a name="3855"
+      > </a
+      ><a name="3856" class="Symbol"
+      >(</a
+      ><a name="3857" href="lib.types.Coproduct.html#3703" class="Function"
+      >from</a
+      ><a name="3861"
+      > </a
+      ><a name="3862" href="lib.types.Coproduct.html#3848" class="Bound"
+      >fg</a
+      ><a name="3864" class="Symbol"
+      >)</a
+      ><a name="3865"
+      > </a
+      ><a name="3866" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3868"
+      > </a
+      ><a name="3869" href="lib.types.Coproduct.html#3848" class="Bound"
+      >fg</a
+      ><a name="3871"
+      >
+      </a
+      ><a name="3878" href="lib.types.Coproduct.html#3836" class="Function"
+      >to-from</a
+      ><a name="3885"
+      > </a
+      ><a name="3886" class="Symbol"
+      >_</a
+      ><a name="3887"
+      > </a
+      ><a name="3888" class="Symbol"
+      >=</a
+      ><a name="3889"
+      > </a
+      ><a name="3890" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3893"
+      >
+
+      </a
+      ><a name="3901" href="lib.types.Coproduct.html#3901" class="Function"
+      >from-to</a
+      ><a name="3908"
+      > </a
+      ><a name="3909" class="Symbol"
+      >:</a
+      ><a name="3910"
+      > </a
+      ><a name="3911" class="Symbol"
+      >&#8704;</a
+      ><a name="3912"
+      > </a
+      ><a name="3913" href="lib.types.Coproduct.html#3913" class="Bound"
+      >fg</a
+      ><a name="3915"
+      > </a
+      ><a name="3916" class="Symbol"
+      >&#8594;</a
+      ><a name="3917"
+      > </a
+      ><a name="3918" href="lib.types.Coproduct.html#3703" class="Function"
+      >from</a
+      ><a name="3922"
+      > </a
+      ><a name="3923" class="Symbol"
+      >(</a
+      ><a name="3924" href="lib.types.Coproduct.html#3600" class="Function"
+      >to</a
+      ><a name="3926"
+      > </a
+      ><a name="3927" href="lib.types.Coproduct.html#3913" class="Bound"
+      >fg</a
+      ><a name="3929" class="Symbol"
+      >)</a
+      ><a name="3930"
+      > </a
+      ><a name="3931" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3933"
+      > </a
+      ><a name="3934" href="lib.types.Coproduct.html#3913" class="Bound"
+      >fg</a
+      ><a name="3936"
+      >
+      </a
+      ><a name="3943" href="lib.types.Coproduct.html#3901" class="Function"
+      >from-to</a
+      ><a name="3950"
+      > </a
+      ><a name="3951" href="lib.types.Coproduct.html#3951" class="Bound"
+      >fg</a
+      ><a name="3953"
+      > </a
+      ><a name="3954" class="Symbol"
+      >=</a
+      ><a name="3955"
+      > </a
+      ><a name="3956" href="lib.Funext.html#3966" class="Function"
+      >&#955;=</a
+      ><a name="3958"
+      > </a
+      ><a name="3959" class="Symbol"
+      >&#955;</a
+      ><a name="3960"
+      > </a
+      ><a name="3961" class="Keyword"
+      >where</a
+      ><a name="3966"
+      > </a
+      ><a name="3967" class="Symbol"
+      >(</a
+      ><a name="3968" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="3971"
+      > </a
+      ><a name="3972" class="Symbol"
+      >_)</a
+      ><a name="3974"
+      > </a
+      ><a name="3975" class="Symbol"
+      >&#8594;</a
+      ><a name="3976"
+      > </a
+      ><a name="3977" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3980"
+      >
+                              </a
+      ><a name="4011" class="Symbol"
+      >(</a
+      ><a name="4012" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="4015"
+      > </a
+      ><a name="4016" class="Symbol"
+      >_)</a
+      ><a name="4018"
+      > </a
+      ><a name="4019" class="Symbol"
+      >&#8594;</a
+      ><a name="4020"
+      > </a
+      ><a name="4021" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4024"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

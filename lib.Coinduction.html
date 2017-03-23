@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.Coinduction</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Base.html#1" class="Module"
+      >lib.Base</a
+      ><a name="62"
+      >
+
+</a
+      ><a name="64" class="Keyword"
+      >module</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="lib.Coinduction.html#1" class="Module"
+      >lib.Coinduction</a
+      ><a name="86"
+      > </a
+      ><a name="87" class="Keyword"
+      >where</a
+      ><a name="92"
+      >
+
+</a
+      ><a name="94" class="Keyword"
+      >infix</a
+      ><a name="99"
+      > </a
+      ><a name="100" class="Number"
+      >100</a
+      ><a name="103"
+      > </a
+      ><a name="104" href="lib.Coinduction.html#171" class="CoinductiveConstructor Operator"
+      >&#9839;_</a
+      ><a name="106"
+      >
+
+</a
+      ><a name="108" class="Keyword"
+      >postulate</a
+      ><a name="117"
+      >  </a
+      ><a name="119" class="Comment"
+      >-- Coinduction</a
+      ><a name="133"
+      >
+  </a
+      ><a name="136" href="lib.Coinduction.html#136" class="Postulate"
+      >&#8734;</a
+      ><a name="137"
+      >  </a
+      ><a name="139" class="Symbol"
+      >:</a
+      ><a name="140"
+      > </a
+      ><a name="141" class="Symbol"
+      >&#8704;</a
+      ><a name="142"
+      > </a
+      ><a name="143" class="Symbol"
+      >{</a
+      ><a name="144" href="lib.Coinduction.html#144" class="Bound"
+      >i</a
+      ><a name="145" class="Symbol"
+      >}</a
+      ><a name="146"
+      > </a
+      ><a name="147" class="Symbol"
+      >(</a
+      ><a name="148" href="lib.Coinduction.html#148" class="Bound"
+      >A</a
+      ><a name="149"
+      > </a
+      ><a name="150" class="Symbol"
+      >:</a
+      ><a name="151"
+      > </a
+      ><a name="152" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="156"
+      > </a
+      ><a name="157" href="lib.Coinduction.html#144" class="Bound"
+      >i</a
+      ><a name="158" class="Symbol"
+      >)</a
+      ><a name="159"
+      > </a
+      ><a name="160" class="Symbol"
+      >&#8594;</a
+      ><a name="161"
+      > </a
+      ><a name="162" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="166"
+      > </a
+      ><a name="167" href="lib.Coinduction.html#144" class="Bound"
+      >i</a
+      ><a name="168"
+      >
+  </a
+      ><a name="171" href="lib.Coinduction.html#171" class="Postulate Operator"
+      >&#9839;_</a
+      ><a name="173"
+      > </a
+      ><a name="174" class="Symbol"
+      >:</a
+      ><a name="175"
+      > </a
+      ><a name="176" class="Symbol"
+      >&#8704;</a
+      ><a name="177"
+      > </a
+      ><a name="178" class="Symbol"
+      >{</a
+      ><a name="179" href="lib.Coinduction.html#179" class="Bound"
+      >i</a
+      ><a name="180" class="Symbol"
+      >}</a
+      ><a name="181"
+      > </a
+      ><a name="182" class="Symbol"
+      >{</a
+      ><a name="183" href="lib.Coinduction.html#183" class="Bound"
+      >A</a
+      ><a name="184"
+      > </a
+      ><a name="185" class="Symbol"
+      >:</a
+      ><a name="186"
+      > </a
+      ><a name="187" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="191"
+      > </a
+      ><a name="192" href="lib.Coinduction.html#179" class="Bound"
+      >i</a
+      ><a name="193" class="Symbol"
+      >}</a
+      ><a name="194"
+      > </a
+      ><a name="195" class="Symbol"
+      >&#8594;</a
+      ><a name="196"
+      > </a
+      ><a name="197" href="lib.Coinduction.html#183" class="Bound"
+      >A</a
+      ><a name="198"
+      > </a
+      ><a name="199" class="Symbol"
+      >&#8594;</a
+      ><a name="200"
+      > </a
+      ><a name="201" href="lib.Coinduction.html#136" class="Postulate"
+      >&#8734;</a
+      ><a name="202"
+      > </a
+      ><a name="203" href="lib.Coinduction.html#183" class="Bound"
+      >A</a
+      ><a name="204"
+      >
+  </a
+      ><a name="207" href="lib.Coinduction.html#207" class="Postulate"
+      >&#9837;</a
+      ><a name="208"
+      >  </a
+      ><a name="210" class="Symbol"
+      >:</a
+      ><a name="211"
+      > </a
+      ><a name="212" class="Symbol"
+      >&#8704;</a
+      ><a name="213"
+      > </a
+      ><a name="214" class="Symbol"
+      >{</a
+      ><a name="215" href="lib.Coinduction.html#215" class="Bound"
+      >i</a
+      ><a name="216" class="Symbol"
+      >}</a
+      ><a name="217"
+      > </a
+      ><a name="218" class="Symbol"
+      >{</a
+      ><a name="219" href="lib.Coinduction.html#219" class="Bound"
+      >A</a
+      ><a name="220"
+      > </a
+      ><a name="221" class="Symbol"
+      >:</a
+      ><a name="222"
+      > </a
+      ><a name="223" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="227"
+      > </a
+      ><a name="228" href="lib.Coinduction.html#215" class="Bound"
+      >i</a
+      ><a name="229" class="Symbol"
+      >}</a
+      ><a name="230"
+      > </a
+      ><a name="231" class="Symbol"
+      >&#8594;</a
+      ><a name="232"
+      > </a
+      ><a name="233" href="lib.Coinduction.html#136" class="Postulate"
+      >&#8734;</a
+      ><a name="234"
+      > </a
+      ><a name="235" href="lib.Coinduction.html#219" class="Bound"
+      >A</a
+      ><a name="236"
+      > </a
+      ><a name="237" class="Symbol"
+      >&#8594;</a
+      ><a name="238"
+      > </a
+      ><a name="239" href="lib.Coinduction.html#219" class="Bound"
+      >A</a
+      ><a name="240"
+      >
+
+</a
+      ><a name="242" class="Symbol"
+      >{-#</a
+      ><a name="245"
+      > </a
+      ><a name="246" class="Keyword"
+      >BUILTIN</a
+      ><a name="253"
+      > INFINITY </a
+      ><a name="263" href="lib.Coinduction.html#136" class="Postulate"
+      >&#8734;</a
+      ><a name="264"
+      >  </a
+      ><a name="266" class="Symbol"
+      >#-}</a
+      ><a name="269"
+      >
+</a
+      ><a name="270" class="Symbol"
+      >{-#</a
+      ><a name="273"
+      > </a
+      ><a name="274" class="Keyword"
+      >BUILTIN</a
+      ><a name="281"
+      > SHARP    </a
+      ><a name="291" href="lib.Coinduction.html#171" class="CoinductiveConstructor Operator"
+      >&#9839;_</a
+      ><a name="293"
+      > </a
+      ><a name="294" class="Symbol"
+      >#-}</a
+      ><a name="297"
+      >
+</a
+      ><a name="298" class="Symbol"
+      >{-#</a
+      ><a name="301"
+      > </a
+      ><a name="302" class="Keyword"
+      >BUILTIN</a
+      ><a name="309"
+      > FLAT     </a
+      ><a name="319" href="lib.Coinduction.html#207" class="Field"
+      >&#9837;</a
+      ><a name="320"
+      >  </a
+      ><a name="322" class="Symbol"
+      >#-}</a
+      ><a name="325"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

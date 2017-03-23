@@ -1,0 +1,2333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.WedgeCofiber</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+
+</a
+      ><a name="60" class="Comment"
+      >{- The cofiber space of [winl : X &#8594; X &#8744; Y] is equivalent to [Y],
+ - and the cofiber space of [winr : Y &#8594; X &#8744; Y] is equivalent to [X]. -}</a
+      ><a name="196"
+      >
+
+</a
+      ><a name="198" class="Keyword"
+      >module</a
+      ><a name="204"
+      > </a
+      ><a name="205" href="homotopy.WedgeCofiber.html#1" class="Module"
+      >homotopy.WedgeCofiber</a
+      ><a name="226"
+      > </a
+      ><a name="227" class="Symbol"
+      >{</a
+      ><a name="228" href="homotopy.WedgeCofiber.html#228" class="Bound"
+      >i</a
+      ><a name="229" class="Symbol"
+      >}</a
+      ><a name="230"
+      > </a
+      ><a name="231" class="Symbol"
+      >(</a
+      ><a name="232" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="233"
+      > </a
+      ><a name="234" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="235"
+      > </a
+      ><a name="236" class="Symbol"
+      >:</a
+      ><a name="237"
+      > </a
+      ><a name="238" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="241"
+      > </a
+      ><a name="242" href="homotopy.WedgeCofiber.html#228" class="Bound"
+      >i</a
+      ><a name="243" class="Symbol"
+      >)</a
+      ><a name="244"
+      > </a
+      ><a name="245" class="Keyword"
+      >where</a
+      ><a name="250"
+      >
+
+  </a
+      ><a name="254" class="Keyword"
+      >module</a
+      ><a name="260"
+      > </a
+      ><a name="261" href="homotopy.WedgeCofiber.html#261" class="Module"
+      >CofWinl</a
+      ><a name="268"
+      > </a
+      ><a name="269" class="Keyword"
+      >where</a
+      ><a name="274"
+      >
+
+    </a
+      ><a name="280" class="Keyword"
+      >module</a
+      ><a name="286"
+      > </a
+      ><a name="287" href="homotopy.WedgeCofiber.html#287" class="Module"
+      >Into</a
+      ><a name="291"
+      > </a
+      ><a name="292" class="Symbol"
+      >=</a
+      ><a name="293"
+      > </a
+      ><a name="294" href="lib.types.Cofiber.html#1130" class="Module"
+      >CofiberRec</a
+      ><a name="304"
+      > </a
+      ><a name="305" class="Symbol"
+      >{</a
+      ><a name="306" class="Argument"
+      >f</a
+      ><a name="307"
+      > </a
+      ><a name="308" class="Symbol"
+      >=</a
+      ><a name="309"
+      > </a
+      ><a name="310" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="314" class="Symbol"
+      >}</a
+      ><a name="315"
+      > </a
+      ><a name="316" class="Symbol"
+      >(</a
+      ><a name="317" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="319"
+      > </a
+      ><a name="320" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="321" class="Symbol"
+      >)</a
+      ><a name="322"
+      > </a
+      ><a name="323" class="Symbol"
+      >(</a
+      ><a name="324" href="lib.types.Wedge.html#3780" class="Function"
+      >projr</a
+      ><a name="329"
+      > </a
+      ><a name="330" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="331"
+      > </a
+      ><a name="332" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="333" class="Symbol"
+      >)</a
+      ><a name="334"
+      > </a
+      ><a name="335" class="Symbol"
+      >(&#955;</a
+      ><a name="337"
+      > </a
+      ><a name="338" href="homotopy.WedgeCofiber.html#338" class="Bound"
+      >_</a
+      ><a name="339"
+      > </a
+      ><a name="340" class="Symbol"
+      >&#8594;</a
+      ><a name="341"
+      > </a
+      ><a name="342" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="345" class="Symbol"
+      >)</a
+      ><a name="346"
+      >
+
+    </a
+      ><a name="352" href="homotopy.WedgeCofiber.html#352" class="Function"
+      >into</a
+      ><a name="356"
+      > </a
+      ><a name="357" class="Symbol"
+      >=</a
+      ><a name="358"
+      > </a
+      ><a name="359" href="lib.types.Pushout.html#1397" class="Function"
+      >Into.f</a
+      ><a name="365"
+      >
+
+    </a
+      ><a name="371" href="homotopy.WedgeCofiber.html#371" class="Function"
+      >out</a
+      ><a name="374"
+      > </a
+      ><a name="375" class="Symbol"
+      >:</a
+      ><a name="376"
+      > </a
+      ><a name="377" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="380"
+      > </a
+      ><a name="381" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="382"
+      > </a
+      ><a name="383" class="Symbol"
+      >&#8594;</a
+      ><a name="384"
+      > </a
+      ><a name="385" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="392"
+      > </a
+      ><a name="393" class="Symbol"
+      >(</a
+      ><a name="394" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="398"
+      > </a
+      ><a name="399" class="Symbol"
+      >{</a
+      ><a name="400" class="Argument"
+      >X</a
+      ><a name="401"
+      > </a
+      ><a name="402" class="Symbol"
+      >=</a
+      ><a name="403"
+      > </a
+      ><a name="404" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="405" class="Symbol"
+      >}</a
+      ><a name="406"
+      > </a
+      ><a name="407" class="Symbol"
+      >{</a
+      ><a name="408" class="Argument"
+      >Y</a
+      ><a name="409"
+      > </a
+      ><a name="410" class="Symbol"
+      >=</a
+      ><a name="411"
+      > </a
+      ><a name="412" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="413" class="Symbol"
+      >})</a
+      ><a name="415"
+      >
+    </a
+      ><a name="420" href="homotopy.WedgeCofiber.html#371" class="Function"
+      >out</a
+      ><a name="423"
+      > </a
+      ><a name="424" class="Symbol"
+      >=</a
+      ><a name="425"
+      > </a
+      ><a name="426" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="431"
+      > </a
+      ><a name="432" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="433"
+      > </a
+      ><a name="434" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="438"
+      >
+
+    </a
+      ><a name="444" class="Keyword"
+      >abstract</a
+      ><a name="452"
+      >
+      </a
+      ><a name="459" href="homotopy.WedgeCofiber.html#459" class="Function"
+      >out-into</a
+      ><a name="467"
+      > </a
+      ><a name="468" class="Symbol"
+      >:</a
+      ><a name="469"
+      > </a
+      ><a name="470" class="Symbol"
+      >(</a
+      ><a name="471" href="homotopy.WedgeCofiber.html#471" class="Bound"
+      >&#954;</a
+      ><a name="472"
+      > </a
+      ><a name="473" class="Symbol"
+      >:</a
+      ><a name="474"
+      > </a
+      ><a name="475" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="482"
+      > </a
+      ><a name="483" class="Symbol"
+      >(</a
+      ><a name="484" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="488"
+      > </a
+      ><a name="489" class="Symbol"
+      >{</a
+      ><a name="490" class="Argument"
+      >X</a
+      ><a name="491"
+      > </a
+      ><a name="492" class="Symbol"
+      >=</a
+      ><a name="493"
+      > </a
+      ><a name="494" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="495" class="Symbol"
+      >}</a
+      ><a name="496"
+      > </a
+      ><a name="497" class="Symbol"
+      >{</a
+      ><a name="498" class="Argument"
+      >Y</a
+      ><a name="499"
+      > </a
+      ><a name="500" class="Symbol"
+      >=</a
+      ><a name="501"
+      > </a
+      ><a name="502" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="503" class="Symbol"
+      >}))</a
+      ><a name="506"
+      > </a
+      ><a name="507" class="Symbol"
+      >&#8594;</a
+      ><a name="508"
+      > </a
+      ><a name="509" href="homotopy.WedgeCofiber.html#371" class="Function"
+      >out</a
+      ><a name="512"
+      > </a
+      ><a name="513" class="Symbol"
+      >(</a
+      ><a name="514" href="homotopy.WedgeCofiber.html#352" class="Function"
+      >into</a
+      ><a name="518"
+      > </a
+      ><a name="519" href="homotopy.WedgeCofiber.html#471" class="Bound"
+      >&#954;</a
+      ><a name="520" class="Symbol"
+      >)</a
+      ><a name="521"
+      > </a
+      ><a name="522" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="524"
+      > </a
+      ><a name="525" href="homotopy.WedgeCofiber.html#471" class="Bound"
+      >&#954;</a
+      ><a name="526"
+      >
+      </a
+      ><a name="533" href="homotopy.WedgeCofiber.html#459" class="Function"
+      >out-into</a
+      ><a name="541"
+      > </a
+      ><a name="542" class="Symbol"
+      >=</a
+      ><a name="543"
+      > </a
+      ><a name="544" href="lib.types.Pushout.html#850" class="Function"
+      >Cofiber-elim</a
+      ><a name="556"
+      >
+        </a
+      ><a name="565" class="Symbol"
+      >(</a
+      ><a name="566" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="567"
+      > </a
+      ><a name="568" class="Symbol"
+      >(</a
+      ><a name="569" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="575"
+      > </a
+      ><a name="576" class="Symbol"
+      >(</a
+      ><a name="577" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="579"
+      > </a
+      ><a name="580" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="581" class="Symbol"
+      >)</a
+      ><a name="582"
+      > </a
+      ><a name="583" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="584"
+      > </a
+      ><a name="585" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="587"
+      > </a
+      ><a name="588" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="593"
+      > </a
+      ><a name="594" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="599" class="Symbol"
+      >))</a
+      ><a name="601"
+      >
+        </a
+      ><a name="610" class="Symbol"
+      >(</a
+      ><a name="611" href="lib.types.Wedge.html#1407" class="Function"
+      >Wedge-elim</a
+      ><a name="621"
+      >
+          </a
+      ><a name="632" class="Symbol"
+      >(&#955;</a
+      ><a name="634"
+      > </a
+      ><a name="635" href="homotopy.WedgeCofiber.html#635" class="Bound"
+      >x</a
+      ><a name="636"
+      > </a
+      ><a name="637" class="Symbol"
+      >&#8594;</a
+      ><a name="638"
+      > </a
+      ><a name="639" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="640"
+      > </a
+      ><a name="641" class="Symbol"
+      >(</a
+      ><a name="642" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="648"
+      > </a
+      ><a name="649" class="Symbol"
+      >(</a
+      ><a name="650" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="652"
+      > </a
+      ><a name="653" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="654" class="Symbol"
+      >)</a
+      ><a name="655"
+      > </a
+      ><a name="656" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="657"
+      > </a
+      ><a name="658" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="660"
+      > </a
+      ><a name="661" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="666"
+      > </a
+      ><a name="667" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="672" class="Symbol"
+      >)</a
+      ><a name="673"
+      > </a
+      ><a name="674" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="675"
+      > </a
+      ><a name="676" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="682"
+      > </a
+      ><a name="683" href="homotopy.WedgeCofiber.html#635" class="Bound"
+      >x</a
+      ><a name="684" class="Symbol"
+      >)</a
+      ><a name="685"
+      >
+          </a
+      ><a name="696" class="Symbol"
+      >(&#955;</a
+      ><a name="698"
+      > </a
+      ><a name="699" href="homotopy.WedgeCofiber.html#699" class="Bound"
+      >y</a
+      ><a name="700"
+      > </a
+      ><a name="701" class="Symbol"
+      >&#8594;</a
+      ><a name="702"
+      > </a
+      ><a name="703" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="706" class="Symbol"
+      >)</a
+      ><a name="707"
+      >
+          </a
+      ><a name="718" class="Symbol"
+      >(</a
+      ><a name="719" href="lib.cubical.Square.html#8229" class="Function"
+      >&#8595;-='-from-square</a
+      ><a name="735"
+      > </a
+      ><a name="736" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="737"
+      >
+            </a
+      ><a name="750" class="Symbol"
+      >(</a
+      ><a name="751" href="homotopy.WedgeCofiber.html#1178" class="Function"
+      >lemma</a
+      ><a name="756"
+      > </a
+      ><a name="757" class="Symbol"
+      >(</a
+      ><a name="758" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="764"
+      > </a
+      ><a name="765" class="Symbol"
+      >(</a
+      ><a name="766" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="768"
+      > </a
+      ><a name="769" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="770" class="Symbol"
+      >))</a
+      ><a name="772"
+      > </a
+      ><a name="773" class="Symbol"
+      >(</a
+      ><a name="774" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="776"
+      > </a
+      ><a name="777" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="782"
+      > </a
+      ><a name="783" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="788" class="Symbol"
+      >)</a
+      ><a name="789"
+      >
+             </a
+      ><a name="803" href="lib.cubical.Square.html#13165" class="Function Operator"
+      >&#8729;h&#8865;</a
+      ><a name="806"
+      > </a
+      ><a name="807" class="Symbol"
+      >(</a
+      ><a name="808" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="812"
+      > </a
+      ><a name="813" href="homotopy.WedgeCofiber.html#371" class="Function"
+      >out</a
+      ><a name="816"
+      > </a
+      ><a name="817" class="Symbol"
+      >(</a
+      ><a name="818" href="lib.types.Wedge.html#3780" class="Function"
+      >projr</a
+      ><a name="823"
+      > </a
+      ><a name="824" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="825"
+      > </a
+      ><a name="826" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="827" class="Symbol"
+      >)</a
+      ><a name="828"
+      > </a
+      ><a name="829" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="834"
+      > </a
+      ><a name="835" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="836"
+      > </a
+      ><a name="837" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="839"
+      > </a
+      ><a name="840" class="Symbol"
+      >(</a
+      ><a name="841" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="843"
+      > </a
+      ><a name="844" href="homotopy.WedgeCofiber.html#371" class="Function"
+      >out</a
+      ><a name="847" class="Symbol"
+      >)</a
+      ><a name="848"
+      > </a
+      ><a name="849" class="Symbol"
+      >(</a
+      ><a name="850" href="lib.types.Wedge.html#1727" class="Function"
+      >Projr.glue-&#946;</a
+      ><a name="862"
+      > </a
+      ><a name="863" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="864"
+      > </a
+      ><a name="865" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="866" class="Symbol"
+      >))</a
+      ><a name="868"
+      >
+                  </a
+      ><a name="887" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="890"
+      > </a
+      ><a name="891" href="lib.cubical.Square.html#17806" class="Function"
+      >bl-square</a
+      ><a name="900"
+      > </a
+      ><a name="901" class="Symbol"
+      >(</a
+      ><a name="902" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="904"
+      > </a
+      ><a name="905" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="910"
+      > </a
+      ><a name="911" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="916" class="Symbol"
+      >))))</a
+      ><a name="920"
+      >
+        </a
+      ><a name="929" class="Symbol"
+      >(&#955;</a
+      ><a name="931"
+      > </a
+      ><a name="932" href="homotopy.WedgeCofiber.html#932" class="Bound"
+      >x</a
+      ><a name="933"
+      > </a
+      ><a name="934" class="Symbol"
+      >&#8594;</a
+      ><a name="935"
+      > </a
+      ><a name="936" href="lib.cubical.Square.html#10289" class="Function"
+      >&#8595;-&#8728;=idf-from-square</a
+      ><a name="955"
+      > </a
+      ><a name="956" href="homotopy.WedgeCofiber.html#371" class="Function"
+      >out</a
+      ><a name="959"
+      > </a
+      ><a name="960" href="homotopy.WedgeCofiber.html#352" class="Function"
+      >into</a
+      ><a name="964"
+      > </a
+      ><a name="965" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="966"
+      >
+          </a
+      ><a name="977" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="978"
+      > </a
+      ><a name="979" class="Symbol"
+      >(</a
+      ><a name="980" href="lib.PathGroupoid.html#1041" class="Function"
+      >&#8729;-unit-r</a
+      ><a name="988"
+      > </a
+      ><a name="989" class="Symbol"
+      >_)</a
+      ><a name="991"
+      > </a
+      ><a name="992" href="lib.cubical.Square.html#13165" class="Function Operator"
+      >&#8729;h&#8865;</a
+      ><a name="995"
+      >
+            </a
+      ><a name="1008" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1010"
+      > </a
+      ><a name="1011" class="Symbol"
+      >(</a
+      ><a name="1012" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1014"
+      > </a
+      ><a name="1015" href="homotopy.WedgeCofiber.html#371" class="Function"
+      >out</a
+      ><a name="1018" class="Symbol"
+      >)</a
+      ><a name="1019"
+      > </a
+      ><a name="1020" class="Symbol"
+      >(</a
+      ><a name="1021" href="lib.types.Pushout.html#1428" class="Function"
+      >Into.glue-&#946;</a
+      ><a name="1032"
+      > </a
+      ><a name="1033" href="homotopy.WedgeCofiber.html#932" class="Bound"
+      >x</a
+      ><a name="1034" class="Symbol"
+      >)</a
+      ><a name="1035"
+      > </a
+      ><a name="1036" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="1039"
+      >
+             </a
+      ><a name="1053" href="lib.cubical.Square.html#370" class="Function"
+      >hid-square</a
+      ><a name="1063"
+      > </a
+      ><a name="1064" class="Symbol"
+      >{</a
+      ><a name="1065" class="Argument"
+      >p</a
+      ><a name="1066"
+      > </a
+      ><a name="1067" class="Symbol"
+      >=</a
+      ><a name="1068"
+      > </a
+      ><a name="1069" class="Symbol"
+      >(</a
+      ><a name="1070" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1071"
+      > </a
+      ><a name="1072" class="Symbol"
+      >(</a
+      ><a name="1073" href="lib.types.Cofiber.html#598" class="Function"
+      >cfglue'</a
+      ><a name="1080"
+      > </a
+      ><a name="1081" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" class="Symbol"
+      >(</a
+      ><a name="1087" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1089"
+      > </a
+      ><a name="1090" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="1091" class="Symbol"
+      >)</a
+      ><a name="1092"
+      > </a
+      ><a name="1093" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1094"
+      > </a
+      ><a name="1095" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1097"
+      > </a
+      ><a name="1098" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="1109" class="Symbol"
+      >))}</a
+      ><a name="1112"
+      >
+             </a
+      ><a name="1126" href="lib.cubical.Square.html#11493" class="Function Operator"
+      >&#8865;v</a
+      ><a name="1128"
+      > </a
+      ><a name="1129" href="lib.cubical.Square.html#17473" class="Function"
+      >connection</a
+      ><a name="1139"
+      > </a
+      ><a name="1140" class="Symbol"
+      >{</a
+      ><a name="1141" class="Argument"
+      >q</a
+      ><a name="1142"
+      > </a
+      ><a name="1143" class="Symbol"
+      >=</a
+      ><a name="1144"
+      > </a
+      ><a name="1145" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="1151"
+      > </a
+      ><a name="1152" href="homotopy.WedgeCofiber.html#932" class="Bound"
+      >x</a
+      ><a name="1153" class="Symbol"
+      >})</a
+      ><a name="1155"
+      >
+        </a
+      ><a name="1164" class="Keyword"
+      >where</a
+      ><a name="1169"
+      >
+        </a
+      ><a name="1178" href="homotopy.WedgeCofiber.html#1178" class="Function"
+      >lemma</a
+      ><a name="1183"
+      > </a
+      ><a name="1184" class="Symbol"
+      >:</a
+      ><a name="1185"
+      > </a
+      ><a name="1186" class="Symbol"
+      >&#8704;</a
+      ><a name="1187"
+      > </a
+      ><a name="1188" class="Symbol"
+      >{</a
+      ><a name="1189" href="homotopy.WedgeCofiber.html#1189" class="Bound"
+      >i</a
+      ><a name="1190" class="Symbol"
+      >}</a
+      ><a name="1191"
+      > </a
+      ><a name="1192" class="Symbol"
+      >{</a
+      ><a name="1193" href="homotopy.WedgeCofiber.html#1193" class="Bound"
+      >A</a
+      ><a name="1194"
+      > </a
+      ><a name="1195" class="Symbol"
+      >:</a
+      ><a name="1196"
+      > </a
+      ><a name="1197" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" href="homotopy.WedgeCofiber.html#1189" class="Bound"
+      >i</a
+      ><a name="1203" class="Symbol"
+      >}</a
+      ><a name="1204"
+      > </a
+      ><a name="1205" class="Symbol"
+      >{</a
+      ><a name="1206" href="homotopy.WedgeCofiber.html#1206" class="Bound"
+      >x</a
+      ><a name="1207"
+      > </a
+      ><a name="1208" href="homotopy.WedgeCofiber.html#1208" class="Bound"
+      >y</a
+      ><a name="1209"
+      > </a
+      ><a name="1210" href="homotopy.WedgeCofiber.html#1210" class="Bound"
+      >z</a
+      ><a name="1211"
+      > </a
+      ><a name="1212" class="Symbol"
+      >:</a
+      ><a name="1213"
+      > </a
+      ><a name="1214" href="homotopy.WedgeCofiber.html#1193" class="Bound"
+      >A</a
+      ><a name="1215" class="Symbol"
+      >}</a
+      ><a name="1216"
+      > </a
+      ><a name="1217" class="Symbol"
+      >(</a
+      ><a name="1218" href="homotopy.WedgeCofiber.html#1218" class="Bound"
+      >p</a
+      ><a name="1219"
+      > </a
+      ><a name="1220" class="Symbol"
+      >:</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" href="homotopy.WedgeCofiber.html#1206" class="Bound"
+      >x</a
+      ><a name="1223"
+      > </a
+      ><a name="1224" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1226"
+      > </a
+      ><a name="1227" href="homotopy.WedgeCofiber.html#1208" class="Bound"
+      >y</a
+      ><a name="1228" class="Symbol"
+      >)</a
+      ><a name="1229"
+      > </a
+      ><a name="1230" class="Symbol"
+      >(</a
+      ><a name="1231" href="homotopy.WedgeCofiber.html#1231" class="Bound"
+      >q</a
+      ><a name="1232"
+      > </a
+      ><a name="1233" class="Symbol"
+      >:</a
+      ><a name="1234"
+      > </a
+      ><a name="1235" href="homotopy.WedgeCofiber.html#1208" class="Bound"
+      >y</a
+      ><a name="1236"
+      > </a
+      ><a name="1237" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1239"
+      > </a
+      ><a name="1240" href="homotopy.WedgeCofiber.html#1210" class="Bound"
+      >z</a
+      ><a name="1241" class="Symbol"
+      >)</a
+      ><a name="1242"
+      >
+          </a
+      ><a name="1253" class="Symbol"
+      >&#8594;</a
+      ><a name="1254"
+      > </a
+      ><a name="1255" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1256"
+      > </a
+      ><a name="1257" class="Symbol"
+      >(</a
+      ><a name="1258" href="homotopy.WedgeCofiber.html#1218" class="Bound"
+      >p</a
+      ><a name="1259"
+      > </a
+      ><a name="1260" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1261"
+      > </a
+      ><a name="1262" href="homotopy.WedgeCofiber.html#1231" class="Bound"
+      >q</a
+      ><a name="1263" class="Symbol"
+      >)</a
+      ><a name="1264"
+      > </a
+      ><a name="1265" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1266"
+      > </a
+      ><a name="1267" href="homotopy.WedgeCofiber.html#1218" class="Bound"
+      >p</a
+      ><a name="1268"
+      > </a
+      ><a name="1269" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1271"
+      > </a
+      ><a name="1272" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1273"
+      > </a
+      ><a name="1274" href="homotopy.WedgeCofiber.html#1231" class="Bound"
+      >q</a
+      ><a name="1275"
+      >
+        </a
+      ><a name="1284" href="homotopy.WedgeCofiber.html#1178" class="Function"
+      >lemma</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1293"
+      > </a
+      ><a name="1294" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1297"
+      > </a
+      ><a name="1298" class="Symbol"
+      >=</a
+      ><a name="1299"
+      > </a
+      ><a name="1300" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1303"
+      >
+
+    </a
+      ><a name="1309" href="homotopy.WedgeCofiber.html#1309" class="Function"
+      >eq</a
+      ><a name="1311"
+      > </a
+      ><a name="1312" class="Symbol"
+      >:</a
+      ><a name="1313"
+      > </a
+      ><a name="1314" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="1321"
+      > </a
+      ><a name="1322" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="1326"
+      > </a
+      ><a name="1327" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="1328"
+      > </a
+      ><a name="1329" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="1332"
+      > </a
+      ><a name="1333" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="1334"
+      >
+    </a
+      ><a name="1339" href="homotopy.WedgeCofiber.html#1309" class="Function"
+      >eq</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" class="Symbol"
+      >=</a
+      ><a name="1343"
+      > </a
+      ><a name="1344" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="1349"
+      > </a
+      ><a name="1350" href="homotopy.WedgeCofiber.html#352" class="Function"
+      >into</a
+      ><a name="1354"
+      > </a
+      ><a name="1355" href="homotopy.WedgeCofiber.html#371" class="Function"
+      >out</a
+      ><a name="1358"
+      > </a
+      ><a name="1359" class="Symbol"
+      >(&#955;</a
+      ><a name="1361"
+      > </a
+      ><a name="1362" href="homotopy.WedgeCofiber.html#1362" class="Bound"
+      >_</a
+      ><a name="1363"
+      > </a
+      ><a name="1364" class="Symbol"
+      >&#8594;</a
+      ><a name="1365"
+      > </a
+      ><a name="1366" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1369" class="Symbol"
+      >)</a
+      ><a name="1370"
+      > </a
+      ><a name="1371" href="homotopy.WedgeCofiber.html#459" class="Function"
+      >out-into</a
+      ><a name="1379"
+      >
+
+    </a
+      ><a name="1385" href="homotopy.WedgeCofiber.html#1385" class="Function"
+      >&#8857;eq</a
+      ><a name="1388"
+      > </a
+      ><a name="1389" class="Symbol"
+      >:</a
+      ><a name="1390"
+      > </a
+      ><a name="1391" href="lib.types.Cofiber.html#1552" class="Function"
+      >&#8857;Cofiber</a
+      ><a name="1399"
+      > </a
+      ><a name="1400" href="lib.types.Wedge.html#1019" class="Function"
+      >&#8857;winl</a
+      ><a name="1405"
+      > </a
+      ><a name="1406" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="1408"
+      > </a
+      ><a name="1409" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="1410"
+      >
+    </a
+      ><a name="1415" href="homotopy.WedgeCofiber.html#1385" class="Function"
+      >&#8857;eq</a
+      ><a name="1418"
+      > </a
+      ><a name="1419" class="Symbol"
+      >=</a
+      ><a name="1420"
+      > </a
+      ><a name="1421" href="lib.Equivalence.html#13119" class="Function"
+      >&#8771;-to-&#8857;&#8771;</a
+      ><a name="1428"
+      > </a
+      ><a name="1429" href="homotopy.WedgeCofiber.html#1309" class="Function"
+      >eq</a
+      ><a name="1431"
+      > </a
+      ><a name="1432" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1435"
+      >
+
+  </a
+      ><a name="1439" href="homotopy.WedgeCofiber.html#1439" class="Function"
+      >cfcod-winl-projr-comm-sqr</a
+      ><a name="1464"
+      > </a
+      ><a name="1465" class="Symbol"
+      >:</a
+      ><a name="1466"
+      > </a
+      ><a name="1467" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="1477"
+      > </a
+      ><a name="1478" class="Symbol"
+      >(</a
+      ><a name="1479" href="lib.types.Cofiber.html#553" class="Function"
+      >cfcod'</a
+      ><a name="1485"
+      > </a
+      ><a name="1486" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="1490" class="Symbol"
+      >)</a
+      ><a name="1491"
+      > </a
+      ><a name="1492" class="Symbol"
+      >(</a
+      ><a name="1493" href="lib.types.Wedge.html#3780" class="Function"
+      >projr</a
+      ><a name="1498"
+      > </a
+      ><a name="1499" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="1500"
+      > </a
+      ><a name="1501" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="1502" class="Symbol"
+      >)</a
+      ><a name="1503"
+      > </a
+      ><a name="1504" class="Symbol"
+      >(</a
+      ><a name="1505" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="1508"
+      > </a
+      ><a name="1509" class="Symbol"
+      >_)</a
+      ><a name="1511"
+      > </a
+      ><a name="1512" href="homotopy.WedgeCofiber.html#352" class="Function"
+      >CofWinl.into</a
+      ><a name="1524"
+      >
+  </a
+      ><a name="1527" href="homotopy.WedgeCofiber.html#1439" class="Function"
+      >cfcod-winl-projr-comm-sqr</a
+      ><a name="1552"
+      > </a
+      ><a name="1553" class="Symbol"
+      >=</a
+      ><a name="1554"
+      > </a
+      ><a name="1555" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="1563"
+      > </a
+      ><a name="1564" class="Symbol"
+      >&#955;</a
+      ><a name="1565"
+      > </a
+      ><a name="1566" href="homotopy.WedgeCofiber.html#1566" class="Bound"
+      >_</a
+      ><a name="1567"
+      > </a
+      ><a name="1568" class="Symbol"
+      >&#8594;</a
+      ><a name="1569"
+      > </a
+      ><a name="1570" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1573"
+      >
+
+  </a
+      ><a name="1577" class="Keyword"
+      >module</a
+      ><a name="1583"
+      > </a
+      ><a name="1584" href="homotopy.WedgeCofiber.html#1584" class="Module"
+      >CofWinr</a
+      ><a name="1591"
+      > </a
+      ><a name="1592" class="Keyword"
+      >where</a
+      ><a name="1597"
+      >
+
+    </a
+      ><a name="1603" class="Keyword"
+      >module</a
+      ><a name="1609"
+      > </a
+      ><a name="1610" href="homotopy.WedgeCofiber.html#1610" class="Module"
+      >Into</a
+      ><a name="1614"
+      > </a
+      ><a name="1615" class="Symbol"
+      >=</a
+      ><a name="1616"
+      > </a
+      ><a name="1617" href="lib.types.Cofiber.html#1130" class="Module"
+      >CofiberRec</a
+      ><a name="1627"
+      > </a
+      ><a name="1628" class="Symbol"
+      >{</a
+      ><a name="1629" class="Argument"
+      >f</a
+      ><a name="1630"
+      > </a
+      ><a name="1631" class="Symbol"
+      >=</a
+      ><a name="1632"
+      > </a
+      ><a name="1633" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="1637" class="Symbol"
+      >}</a
+      ><a name="1638"
+      > </a
+      ><a name="1639" class="Symbol"
+      >(</a
+      ><a name="1640" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1642"
+      > </a
+      ><a name="1643" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="1644" class="Symbol"
+      >)</a
+      ><a name="1645"
+      > </a
+      ><a name="1646" class="Symbol"
+      >(</a
+      ><a name="1647" href="lib.types.Wedge.html#3762" class="Function"
+      >projl</a
+      ><a name="1652"
+      > </a
+      ><a name="1653" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="1654"
+      > </a
+      ><a name="1655" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="1656" class="Symbol"
+      >)</a
+      ><a name="1657"
+      > </a
+      ><a name="1658" class="Symbol"
+      >(&#955;</a
+      ><a name="1660"
+      > </a
+      ><a name="1661" href="homotopy.WedgeCofiber.html#1661" class="Bound"
+      >_</a
+      ><a name="1662"
+      > </a
+      ><a name="1663" class="Symbol"
+      >&#8594;</a
+      ><a name="1664"
+      > </a
+      ><a name="1665" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1668" class="Symbol"
+      >)</a
+      ><a name="1669"
+      >
+
+    </a
+      ><a name="1675" href="homotopy.WedgeCofiber.html#1675" class="Function"
+      >into</a
+      ><a name="1679"
+      > </a
+      ><a name="1680" class="Symbol"
+      >=</a
+      ><a name="1681"
+      > </a
+      ><a name="1682" href="lib.types.Pushout.html#1397" class="Function"
+      >Into.f</a
+      ><a name="1688"
+      >
+
+    </a
+      ><a name="1694" href="homotopy.WedgeCofiber.html#1694" class="Function"
+      >out</a
+      ><a name="1697"
+      > </a
+      ><a name="1698" class="Symbol"
+      >:</a
+      ><a name="1699"
+      > </a
+      ><a name="1700" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="1703"
+      > </a
+      ><a name="1704" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="1705"
+      > </a
+      ><a name="1706" class="Symbol"
+      >&#8594;</a
+      ><a name="1707"
+      > </a
+      ><a name="1708" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="1715"
+      > </a
+      ><a name="1716" class="Symbol"
+      >(</a
+      ><a name="1717" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="1721"
+      > </a
+      ><a name="1722" class="Symbol"
+      >{</a
+      ><a name="1723" class="Argument"
+      >X</a
+      ><a name="1724"
+      > </a
+      ><a name="1725" class="Symbol"
+      >=</a
+      ><a name="1726"
+      > </a
+      ><a name="1727" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="1728" class="Symbol"
+      >}</a
+      ><a name="1729"
+      > </a
+      ><a name="1730" class="Symbol"
+      >{</a
+      ><a name="1731" class="Argument"
+      >Y</a
+      ><a name="1732"
+      > </a
+      ><a name="1733" class="Symbol"
+      >=</a
+      ><a name="1734"
+      > </a
+      ><a name="1735" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="1736" class="Symbol"
+      >})</a
+      ><a name="1738"
+      >
+    </a
+      ><a name="1743" href="homotopy.WedgeCofiber.html#1694" class="Function"
+      >out</a
+      ><a name="1746"
+      > </a
+      ><a name="1747" class="Symbol"
+      >=</a
+      ><a name="1748"
+      > </a
+      ><a name="1749" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="1754"
+      > </a
+      ><a name="1755" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="1761"
+      >
+
+    </a
+      ><a name="1767" class="Keyword"
+      >abstract</a
+      ><a name="1775"
+      >
+      </a
+      ><a name="1782" href="homotopy.WedgeCofiber.html#1782" class="Function"
+      >out-into</a
+      ><a name="1790"
+      > </a
+      ><a name="1791" class="Symbol"
+      >:</a
+      ><a name="1792"
+      > </a
+      ><a name="1793" class="Symbol"
+      >&#8704;</a
+      ><a name="1794"
+      > </a
+      ><a name="1795" href="homotopy.WedgeCofiber.html#1795" class="Bound"
+      >&#954;</a
+      ><a name="1796"
+      > </a
+      ><a name="1797" class="Symbol"
+      >&#8594;</a
+      ><a name="1798"
+      > </a
+      ><a name="1799" href="homotopy.WedgeCofiber.html#1694" class="Function"
+      >out</a
+      ><a name="1802"
+      > </a
+      ><a name="1803" class="Symbol"
+      >(</a
+      ><a name="1804" href="homotopy.WedgeCofiber.html#1675" class="Function"
+      >into</a
+      ><a name="1808"
+      > </a
+      ><a name="1809" href="homotopy.WedgeCofiber.html#1795" class="Bound"
+      >&#954;</a
+      ><a name="1810" class="Symbol"
+      >)</a
+      ><a name="1811"
+      > </a
+      ><a name="1812" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1814"
+      > </a
+      ><a name="1815" href="homotopy.WedgeCofiber.html#1795" class="Bound"
+      >&#954;</a
+      ><a name="1816"
+      >
+      </a
+      ><a name="1823" href="homotopy.WedgeCofiber.html#1782" class="Function"
+      >out-into</a
+      ><a name="1831"
+      > </a
+      ><a name="1832" class="Symbol"
+      >=</a
+      ><a name="1833"
+      > </a
+      ><a name="1834" href="lib.types.Pushout.html#850" class="Function"
+      >Cofiber-elim</a
+      ><a name="1846"
+      >
+        </a
+      ><a name="1855" class="Symbol"
+      >(</a
+      ><a name="1856" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1858"
+      > </a
+      ><a name="1859" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="1864"
+      > </a
+      ><a name="1865" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="1870"
+      > </a
+      ><a name="1871" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1872"
+      > </a
+      ><a name="1873" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1874"
+      > </a
+      ><a name="1875" class="Symbol"
+      >(</a
+      ><a name="1876" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="1882"
+      > </a
+      ><a name="1883" class="Symbol"
+      >(</a
+      ><a name="1884" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1886"
+      > </a
+      ><a name="1887" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="1888" class="Symbol"
+      >)))</a
+      ><a name="1891"
+      >
+        </a
+      ><a name="1900" class="Symbol"
+      >(</a
+      ><a name="1901" href="lib.types.Wedge.html#1407" class="Function"
+      >Wedge-elim</a
+      ><a name="1911"
+      >
+          </a
+      ><a name="1922" class="Symbol"
+      >(&#955;</a
+      ><a name="1924"
+      > </a
+      ><a name="1925" href="homotopy.WedgeCofiber.html#1925" class="Bound"
+      >x</a
+      ><a name="1926"
+      > </a
+      ><a name="1927" class="Symbol"
+      >&#8594;</a
+      ><a name="1928"
+      > </a
+      ><a name="1929" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1932" class="Symbol"
+      >)</a
+      ><a name="1933"
+      >
+          </a
+      ><a name="1944" class="Symbol"
+      >(&#955;</a
+      ><a name="1946"
+      > </a
+      ><a name="1947" href="homotopy.WedgeCofiber.html#1947" class="Bound"
+      >y</a
+      ><a name="1948"
+      > </a
+      ><a name="1949" class="Symbol"
+      >&#8594;</a
+      ><a name="1950"
+      > </a
+      ><a name="1951" class="Symbol"
+      >(</a
+      ><a name="1952" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1954"
+      > </a
+      ><a name="1955" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="1960"
+      > </a
+      ><a name="1961" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="1966"
+      > </a
+      ><a name="1967" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1968"
+      > </a
+      ><a name="1969" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1970"
+      > </a
+      ><a name="1971" class="Symbol"
+      >(</a
+      ><a name="1972" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="1978"
+      > </a
+      ><a name="1979" class="Symbol"
+      >(</a
+      ><a name="1980" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1982"
+      > </a
+      ><a name="1983" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="1984" class="Symbol"
+      >)))</a
+      ><a name="1987"
+      > </a
+      ><a name="1988" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1989"
+      > </a
+      ><a name="1990" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="1996"
+      > </a
+      ><a name="1997" href="homotopy.WedgeCofiber.html#1947" class="Bound"
+      >y</a
+      ><a name="1998" class="Symbol"
+      >)</a
+      ><a name="1999"
+      >
+          </a
+      ><a name="2010" class="Symbol"
+      >(</a
+      ><a name="2011" href="lib.cubical.Square.html#8229" class="Function"
+      >&#8595;-='-from-square</a
+      ><a name="2027"
+      > </a
+      ><a name="2028" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2029"
+      >
+            </a
+      ><a name="2042" class="Symbol"
+      >(</a
+      ><a name="2043" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="2047"
+      > </a
+      ><a name="2048" href="homotopy.WedgeCofiber.html#1694" class="Function"
+      >out</a
+      ><a name="2051"
+      > </a
+      ><a name="2052" class="Symbol"
+      >(</a
+      ><a name="2053" href="lib.types.Wedge.html#3762" class="Function"
+      >projl</a
+      ><a name="2058"
+      > </a
+      ><a name="2059" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="2060"
+      > </a
+      ><a name="2061" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="2062" class="Symbol"
+      >)</a
+      ><a name="2063"
+      > </a
+      ><a name="2064" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="2069"
+      > </a
+      ><a name="2070" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2071"
+      > </a
+      ><a name="2072" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2074"
+      > </a
+      ><a name="2075" class="Symbol"
+      >(</a
+      ><a name="2076" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2078"
+      > </a
+      ><a name="2079" href="homotopy.WedgeCofiber.html#1694" class="Function"
+      >out</a
+      ><a name="2082" class="Symbol"
+      >)</a
+      ><a name="2083"
+      > </a
+      ><a name="2084" class="Symbol"
+      >(</a
+      ><a name="2085" href="lib.types.Wedge.html#1727" class="Function"
+      >Projl.glue-&#946;</a
+      ><a name="2097"
+      > </a
+      ><a name="2098" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="2099"
+      > </a
+      ><a name="2100" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="2101" class="Symbol"
+      >))</a
+      ><a name="2103"
+      > </a
+      ><a name="2104" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="2107"
+      >
+               </a
+      ><a name="2123" href="lib.cubical.Square.html#17473" class="Function"
+      >connection</a
+      ><a name="2133"
+      >
+             </a
+      ><a name="2147" href="lib.cubical.Square.html#13387" class="Function Operator"
+      >&#8865;h&#8729;</a
+      ><a name="2150"
+      > </a
+      ><a name="2151" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2152"
+      > </a
+      ><a name="2153" class="Symbol"
+      >(</a
+      ><a name="2154" href="homotopy.WedgeCofiber.html#2465" class="Function"
+      >lemma</a
+      ><a name="2159"
+      > </a
+      ><a name="2160" class="Symbol"
+      >(</a
+      ><a name="2161" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2163"
+      > </a
+      ><a name="2164" class="Symbol"
+      >(</a
+      ><a name="2165" href="lib.types.Cofiber.html#553" class="Function"
+      >cfcod'</a
+      ><a name="2171"
+      > </a
+      ><a name="2172" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="2176" class="Symbol"
+      >)</a
+      ><a name="2177"
+      > </a
+      ><a name="2178" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="2183" class="Symbol"
+      >)</a
+      ><a name="2184"
+      > </a
+      ><a name="2185" class="Symbol"
+      >(</a
+      ><a name="2186" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="2192"
+      > </a
+      ><a name="2193" class="Symbol"
+      >(</a
+      ><a name="2194" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2196"
+      > </a
+      ><a name="2197" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="2198" class="Symbol"
+      >)))))</a
+      ><a name="2203"
+      >
+        </a
+      ><a name="2212" class="Symbol"
+      >(&#955;</a
+      ><a name="2214"
+      > </a
+      ><a name="2215" href="homotopy.WedgeCofiber.html#2215" class="Bound"
+      >y</a
+      ><a name="2216"
+      > </a
+      ><a name="2217" class="Symbol"
+      >&#8594;</a
+      ><a name="2218"
+      > </a
+      ><a name="2219" href="lib.cubical.Square.html#10289" class="Function"
+      >&#8595;-&#8728;=idf-from-square</a
+      ><a name="2238"
+      > </a
+      ><a name="2239" href="homotopy.WedgeCofiber.html#1694" class="Function"
+      >out</a
+      ><a name="2242"
+      > </a
+      ><a name="2243" href="homotopy.WedgeCofiber.html#1675" class="Function"
+      >into</a
+      ><a name="2247"
+      > </a
+      ><a name="2248" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2249"
+      >
+          </a
+      ><a name="2260" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2261"
+      > </a
+      ><a name="2262" class="Symbol"
+      >(</a
+      ><a name="2263" href="lib.PathGroupoid.html#1041" class="Function"
+      >&#8729;-unit-r</a
+      ><a name="2271"
+      > </a
+      ><a name="2272" class="Symbol"
+      >_)</a
+      ><a name="2274"
+      > </a
+      ><a name="2275" href="lib.cubical.Square.html#13165" class="Function Operator"
+      >&#8729;h&#8865;</a
+      ><a name="2278"
+      >
+            </a
+      ><a name="2291" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2293"
+      > </a
+      ><a name="2294" class="Symbol"
+      >(</a
+      ><a name="2295" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2297"
+      > </a
+      ><a name="2298" href="homotopy.WedgeCofiber.html#1694" class="Function"
+      >out</a
+      ><a name="2301" class="Symbol"
+      >)</a
+      ><a name="2302"
+      > </a
+      ><a name="2303" class="Symbol"
+      >(</a
+      ><a name="2304" href="lib.types.Pushout.html#1428" class="Function"
+      >Into.glue-&#946;</a
+      ><a name="2315"
+      > </a
+      ><a name="2316" href="homotopy.WedgeCofiber.html#2215" class="Bound"
+      >y</a
+      ><a name="2317" class="Symbol"
+      >)</a
+      ><a name="2318"
+      > </a
+      ><a name="2319" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="2322"
+      >
+              </a
+      ><a name="2337" href="lib.cubical.Square.html#370" class="Function"
+      >hid-square</a
+      ><a name="2347"
+      > </a
+      ><a name="2348" class="Symbol"
+      >{</a
+      ><a name="2349" class="Argument"
+      >p</a
+      ><a name="2350"
+      > </a
+      ><a name="2351" class="Symbol"
+      >=</a
+      ><a name="2352"
+      > </a
+      ><a name="2353" class="Symbol"
+      >(</a
+      ><a name="2354" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2356"
+      > </a
+      ><a name="2357" class="Symbol"
+      >(</a
+      ><a name="2358" href="lib.types.Cofiber.html#553" class="Function"
+      >cfcod'</a
+      ><a name="2364"
+      > </a
+      ><a name="2365" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="2369" class="Symbol"
+      >)</a
+      ><a name="2370"
+      > </a
+      ><a name="2371" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="2376"
+      > </a
+      ><a name="2377" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2378"
+      > </a
+      ><a name="2379" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2380"
+      > </a
+      ><a name="2381" class="Symbol"
+      >(</a
+      ><a name="2382" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="2388"
+      > </a
+      ><a name="2389" class="Symbol"
+      >(</a
+      ><a name="2390" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2392"
+      > </a
+      ><a name="2393" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="2394" class="Symbol"
+      >)))}</a
+      ><a name="2398"
+      >
+              </a
+      ><a name="2413" href="lib.cubical.Square.html#11493" class="Function Operator"
+      >&#8865;v</a
+      ><a name="2415"
+      > </a
+      ><a name="2416" href="lib.cubical.Square.html#17473" class="Function"
+      >connection</a
+      ><a name="2426"
+      > </a
+      ><a name="2427" class="Symbol"
+      >{</a
+      ><a name="2428" class="Argument"
+      >q</a
+      ><a name="2429"
+      > </a
+      ><a name="2430" class="Symbol"
+      >=</a
+      ><a name="2431"
+      > </a
+      ><a name="2432" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="2438"
+      > </a
+      ><a name="2439" href="homotopy.WedgeCofiber.html#2215" class="Bound"
+      >y</a
+      ><a name="2440" class="Symbol"
+      >})</a
+      ><a name="2442"
+      >
+        </a
+      ><a name="2451" class="Keyword"
+      >where</a
+      ><a name="2456"
+      >
+        </a
+      ><a name="2465" href="homotopy.WedgeCofiber.html#2465" class="Function"
+      >lemma</a
+      ><a name="2470"
+      > </a
+      ><a name="2471" class="Symbol"
+      >:</a
+      ><a name="2472"
+      > </a
+      ><a name="2473" class="Symbol"
+      >&#8704;</a
+      ><a name="2474"
+      > </a
+      ><a name="2475" class="Symbol"
+      >{</a
+      ><a name="2476" href="homotopy.WedgeCofiber.html#2476" class="Bound"
+      >i</a
+      ><a name="2477" class="Symbol"
+      >}</a
+      ><a name="2478"
+      > </a
+      ><a name="2479" class="Symbol"
+      >{</a
+      ><a name="2480" href="homotopy.WedgeCofiber.html#2480" class="Bound"
+      >A</a
+      ><a name="2481"
+      > </a
+      ><a name="2482" class="Symbol"
+      >:</a
+      ><a name="2483"
+      > </a
+      ><a name="2484" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2488"
+      > </a
+      ><a name="2489" href="homotopy.WedgeCofiber.html#2476" class="Bound"
+      >i</a
+      ><a name="2490" class="Symbol"
+      >}</a
+      ><a name="2491"
+      > </a
+      ><a name="2492" class="Symbol"
+      >{</a
+      ><a name="2493" href="homotopy.WedgeCofiber.html#2493" class="Bound"
+      >x</a
+      ><a name="2494"
+      > </a
+      ><a name="2495" href="homotopy.WedgeCofiber.html#2495" class="Bound"
+      >y</a
+      ><a name="2496"
+      > </a
+      ><a name="2497" href="homotopy.WedgeCofiber.html#2497" class="Bound"
+      >z</a
+      ><a name="2498"
+      > </a
+      ><a name="2499" class="Symbol"
+      >:</a
+      ><a name="2500"
+      > </a
+      ><a name="2501" href="homotopy.WedgeCofiber.html#2480" class="Bound"
+      >A</a
+      ><a name="2502" class="Symbol"
+      >}</a
+      ><a name="2503"
+      > </a
+      ><a name="2504" class="Symbol"
+      >(</a
+      ><a name="2505" href="homotopy.WedgeCofiber.html#2505" class="Bound"
+      >p</a
+      ><a name="2506"
+      > </a
+      ><a name="2507" class="Symbol"
+      >:</a
+      ><a name="2508"
+      > </a
+      ><a name="2509" href="homotopy.WedgeCofiber.html#2493" class="Bound"
+      >x</a
+      ><a name="2510"
+      > </a
+      ><a name="2511" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2513"
+      > </a
+      ><a name="2514" href="homotopy.WedgeCofiber.html#2495" class="Bound"
+      >y</a
+      ><a name="2515" class="Symbol"
+      >)</a
+      ><a name="2516"
+      > </a
+      ><a name="2517" class="Symbol"
+      >(</a
+      ><a name="2518" href="homotopy.WedgeCofiber.html#2518" class="Bound"
+      >q</a
+      ><a name="2519"
+      > </a
+      ><a name="2520" class="Symbol"
+      >:</a
+      ><a name="2521"
+      > </a
+      ><a name="2522" href="homotopy.WedgeCofiber.html#2497" class="Bound"
+      >z</a
+      ><a name="2523"
+      > </a
+      ><a name="2524" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2526"
+      > </a
+      ><a name="2527" href="homotopy.WedgeCofiber.html#2495" class="Bound"
+      >y</a
+      ><a name="2528" class="Symbol"
+      >)</a
+      ><a name="2529"
+      >
+          </a
+      ><a name="2540" class="Symbol"
+      >&#8594;</a
+      ><a name="2541"
+      > </a
+      ><a name="2542" class="Symbol"
+      >(</a
+      ><a name="2543" href="homotopy.WedgeCofiber.html#2505" class="Bound"
+      >p</a
+      ><a name="2544"
+      > </a
+      ><a name="2545" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2546"
+      > </a
+      ><a name="2547" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2548"
+      > </a
+      ><a name="2549" href="homotopy.WedgeCofiber.html#2518" class="Bound"
+      >q</a
+      ><a name="2550" class="Symbol"
+      >)</a
+      ><a name="2551"
+      > </a
+      ><a name="2552" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2553"
+      > </a
+      ><a name="2554" href="homotopy.WedgeCofiber.html#2518" class="Bound"
+      >q</a
+      ><a name="2555"
+      > </a
+      ><a name="2556" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2558"
+      > </a
+      ><a name="2559" href="homotopy.WedgeCofiber.html#2505" class="Bound"
+      >p</a
+      ><a name="2560"
+      >
+        </a
+      ><a name="2569" href="homotopy.WedgeCofiber.html#2465" class="Function"
+      >lemma</a
+      ><a name="2574"
+      > </a
+      ><a name="2575" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2578"
+      > </a
+      ><a name="2579" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2582"
+      > </a
+      ><a name="2583" class="Symbol"
+      >=</a
+      ><a name="2584"
+      > </a
+      ><a name="2585" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2588"
+      >
+
+    </a
+      ><a name="2594" href="homotopy.WedgeCofiber.html#2594" class="Function"
+      >eq</a
+      ><a name="2596"
+      > </a
+      ><a name="2597" class="Symbol"
+      >:</a
+      ><a name="2598"
+      > </a
+      ><a name="2599" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="2606"
+      > </a
+      ><a name="2607" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="2611"
+      > </a
+      ><a name="2612" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="2613"
+      > </a
+      ><a name="2614" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="2617"
+      > </a
+      ><a name="2618" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="2619"
+      >
+    </a
+      ><a name="2624" href="homotopy.WedgeCofiber.html#2594" class="Function"
+      >eq</a
+      ><a name="2626"
+      > </a
+      ><a name="2627" class="Symbol"
+      >=</a
+      ><a name="2628"
+      > </a
+      ><a name="2629" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="2634"
+      > </a
+      ><a name="2635" href="homotopy.WedgeCofiber.html#1675" class="Function"
+      >into</a
+      ><a name="2639"
+      > </a
+      ><a name="2640" href="homotopy.WedgeCofiber.html#1694" class="Function"
+      >out</a
+      ><a name="2643"
+      > </a
+      ><a name="2644" class="Symbol"
+      >(&#955;</a
+      ><a name="2646"
+      > </a
+      ><a name="2647" href="homotopy.WedgeCofiber.html#2647" class="Bound"
+      >_</a
+      ><a name="2648"
+      > </a
+      ><a name="2649" class="Symbol"
+      >&#8594;</a
+      ><a name="2650"
+      > </a
+      ><a name="2651" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2654" class="Symbol"
+      >)</a
+      ><a name="2655"
+      > </a
+      ><a name="2656" href="homotopy.WedgeCofiber.html#1782" class="Function"
+      >out-into</a
+      ><a name="2664"
+      >
+
+    </a
+      ><a name="2670" href="homotopy.WedgeCofiber.html#2670" class="Function"
+      >&#8857;eq</a
+      ><a name="2673"
+      > </a
+      ><a name="2674" class="Symbol"
+      >:</a
+      ><a name="2675"
+      > </a
+      ><a name="2676" href="lib.types.Cofiber.html#1552" class="Function"
+      >&#8857;Cofiber</a
+      ><a name="2684"
+      > </a
+      ><a name="2685" href="lib.types.Wedge.html#1065" class="Function"
+      >&#8857;winr</a
+      ><a name="2690"
+      > </a
+      ><a name="2691" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="2693"
+      > </a
+      ><a name="2694" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="2695"
+      >
+    </a
+      ><a name="2700" href="homotopy.WedgeCofiber.html#2670" class="Function"
+      >&#8857;eq</a
+      ><a name="2703"
+      > </a
+      ><a name="2704" class="Symbol"
+      >=</a
+      ><a name="2705"
+      > </a
+      ><a name="2706" href="lib.Equivalence.html#13119" class="Function"
+      >&#8771;-to-&#8857;&#8771;</a
+      ><a name="2713"
+      > </a
+      ><a name="2714" href="homotopy.WedgeCofiber.html#2594" class="Function"
+      >eq</a
+      ><a name="2716"
+      > </a
+      ><a name="2717" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2720"
+      >
+
+  </a
+      ><a name="2724" href="homotopy.WedgeCofiber.html#2724" class="Function"
+      >cfcod-winr-projl-comm-sqr</a
+      ><a name="2749"
+      > </a
+      ><a name="2750" class="Symbol"
+      >:</a
+      ><a name="2751"
+      > </a
+      ><a name="2752" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="2762"
+      > </a
+      ><a name="2763" class="Symbol"
+      >(</a
+      ><a name="2764" href="lib.types.Cofiber.html#553" class="Function"
+      >cfcod'</a
+      ><a name="2770"
+      > </a
+      ><a name="2771" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="2775" class="Symbol"
+      >)</a
+      ><a name="2776"
+      > </a
+      ><a name="2777" class="Symbol"
+      >(</a
+      ><a name="2778" href="lib.types.Wedge.html#3762" class="Function"
+      >projl</a
+      ><a name="2783"
+      > </a
+      ><a name="2784" href="homotopy.WedgeCofiber.html#232" class="Bound"
+      >X</a
+      ><a name="2785"
+      > </a
+      ><a name="2786" href="homotopy.WedgeCofiber.html#234" class="Bound"
+      >Y</a
+      ><a name="2787" class="Symbol"
+      >)</a
+      ><a name="2788"
+      > </a
+      ><a name="2789" class="Symbol"
+      >(</a
+      ><a name="2790" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="2793"
+      > </a
+      ><a name="2794" class="Symbol"
+      >_)</a
+      ><a name="2796"
+      > </a
+      ><a name="2797" href="homotopy.WedgeCofiber.html#1675" class="Function"
+      >CofWinr.into</a
+      ><a name="2809"
+      >
+  </a
+      ><a name="2812" href="homotopy.WedgeCofiber.html#2724" class="Function"
+      >cfcod-winr-projl-comm-sqr</a
+      ><a name="2837"
+      > </a
+      ><a name="2838" class="Symbol"
+      >=</a
+      ><a name="2839"
+      > </a
+      ><a name="2840" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="2848"
+      > </a
+      ><a name="2849" class="Symbol"
+      >&#955;</a
+      ><a name="2850"
+      > </a
+      ><a name="2851" href="homotopy.WedgeCofiber.html#2851" class="Bound"
+      >_</a
+      ><a name="2852"
+      > </a
+      ><a name="2853" class="Symbol"
+      >&#8594;</a
+      ><a name="2854"
+      > </a
+      ><a name="2855" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2858"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

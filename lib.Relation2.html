@@ -1,0 +1,490 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.Relation2</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.Coproduct.html#1" class="Module"
+      >lib.types.Coproduct</a
+      ><a name="96"
+      >
+</a
+      ><a name="97" class="Keyword"
+      >open</a
+      ><a name="101"
+      > </a
+      ><a name="102" class="Keyword"
+      >import</a
+      ><a name="108"
+      > </a
+      ><a name="109" href="lib.types.Empty.html#1" class="Module"
+      >lib.types.Empty</a
+      ><a name="124"
+      >
+</a
+      ><a name="125" class="Keyword"
+      >open</a
+      ><a name="129"
+      > </a
+      ><a name="130" class="Keyword"
+      >import</a
+      ><a name="136"
+      > </a
+      ><a name="137" href="lib.types.Pi.html#1" class="Module"
+      >lib.types.Pi</a
+      ><a name="149"
+      >
+
+</a
+      ><a name="151" class="Keyword"
+      >module</a
+      ><a name="157"
+      > </a
+      ><a name="158" href="lib.Relation2.html#1" class="Module"
+      >lib.Relation2</a
+      ><a name="171"
+      > </a
+      ><a name="172" class="Keyword"
+      >where</a
+      ><a name="177"
+      >
+
+</a
+      ><a name="179" class="Keyword"
+      >module</a
+      ><a name="185"
+      > </a
+      ><a name="186" href="lib.Relation2.html#186" class="Module"
+      >_</a
+      ><a name="187"
+      > </a
+      ><a name="188" class="Symbol"
+      >{</a
+      ><a name="189" href="lib.Relation2.html#189" class="Bound"
+      >i</a
+      ><a name="190" class="Symbol"
+      >}</a
+      ><a name="191"
+      > </a
+      ><a name="192" class="Symbol"
+      >{</a
+      ><a name="193" href="lib.Relation2.html#193" class="Bound"
+      >P</a
+      ><a name="194"
+      > </a
+      ><a name="195" class="Symbol"
+      >:</a
+      ><a name="196"
+      > </a
+      ><a name="197" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="201"
+      > </a
+      ><a name="202" href="lib.Relation2.html#189" class="Bound"
+      >i</a
+      ><a name="203" class="Symbol"
+      >}</a
+      ><a name="204"
+      > </a
+      ><a name="205" class="Keyword"
+      >where</a
+      ><a name="210"
+      >
+
+  </a
+      ><a name="214" href="lib.Relation2.html#214" class="Function"
+      >Dec-level</a
+      ><a name="223"
+      > </a
+      ><a name="224" class="Symbol"
+      >:</a
+      ><a name="225"
+      > </a
+      ><a name="226" class="Symbol"
+      >&#8704;</a
+      ><a name="227"
+      > </a
+      ><a name="228" class="Symbol"
+      >{</a
+      ><a name="229" href="lib.Relation2.html#229" class="Bound"
+      >n</a
+      ><a name="230" class="Symbol"
+      >}</a
+      ><a name="231"
+      > </a
+      ><a name="232" class="Symbol"
+      >&#8594;</a
+      ><a name="233"
+      > </a
+      ><a name="234" href="lib.NType.html#304" class="Function"
+      >has-level</a
+      ><a name="243"
+      > </a
+      ><a name="244" class="Symbol"
+      >(</a
+      ><a name="245" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="246"
+      > </a
+      ><a name="247" href="lib.Relation2.html#229" class="Bound"
+      >n</a
+      ><a name="248" class="Symbol"
+      >)</a
+      ><a name="249"
+      > </a
+      ><a name="250" href="lib.Relation2.html#193" class="Bound"
+      >P</a
+      ><a name="251"
+      > </a
+      ><a name="252" class="Symbol"
+      >&#8594;</a
+      ><a name="253"
+      > </a
+      ><a name="254" href="lib.NType.html#304" class="Function"
+      >has-level</a
+      ><a name="263"
+      > </a
+      ><a name="264" class="Symbol"
+      >(</a
+      ><a name="265" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="266"
+      > </a
+      ><a name="267" href="lib.Relation2.html#229" class="Bound"
+      >n</a
+      ><a name="268" class="Symbol"
+      >)</a
+      ><a name="269"
+      > </a
+      ><a name="270" class="Symbol"
+      >(</a
+      ><a name="271" href="lib.Base.html#9406" class="Function"
+      >Dec</a
+      ><a name="274"
+      > </a
+      ><a name="275" href="lib.Relation2.html#193" class="Bound"
+      >P</a
+      ><a name="276" class="Symbol"
+      >)</a
+      ><a name="277"
+      >
+  </a
+      ><a name="280" href="lib.Relation2.html#214" class="Function"
+      >Dec-level</a
+      ><a name="289"
+      > </a
+      ><a name="290" href="lib.Relation2.html#290" class="Bound"
+      >pP</a
+      ><a name="292"
+      > </a
+      ><a name="293" class="Symbol"
+      >(</a
+      ><a name="294" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="297"
+      > </a
+      ><a name="298" href="lib.Relation2.html#298" class="Bound"
+      >p&#8321;</a
+      ><a name="300" class="Symbol"
+      >)</a
+      ><a name="301"
+      > </a
+      ><a name="302" class="Symbol"
+      >(</a
+      ><a name="303" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="306"
+      > </a
+      ><a name="307" href="lib.Relation2.html#307" class="Bound"
+      >p&#8322;</a
+      ><a name="309" class="Symbol"
+      >)</a
+      ><a name="310"
+      > </a
+      ><a name="311" class="Symbol"
+      >=</a
+      ><a name="312"
+      >
+    </a
+      ><a name="317" href="lib.Equivalence.html#11334" class="Function"
+      >equiv-preserves-level</a
+      ><a name="338"
+      > </a
+      ><a name="339" class="Symbol"
+      >(</a
+      ><a name="340" href="lib.types.Coproduct.html#1534" class="Function"
+      >inl=inl-equiv</a
+      ><a name="353"
+      > </a
+      ><a name="354" href="lib.Relation2.html#298" class="Bound"
+      >p&#8321;</a
+      ><a name="356"
+      > </a
+      ><a name="357" href="lib.Relation2.html#307" class="Bound"
+      >p&#8322;</a
+      ><a name="359"
+      > </a
+      ><a name="360" href="lib.Equivalence.html#8519" class="Function Operator"
+      >&#8315;&#185;</a
+      ><a name="362" class="Symbol"
+      >)</a
+      ><a name="363"
+      > </a
+      ><a name="364" class="Symbol"
+      >(</a
+      ><a name="365" href="lib.Relation2.html#290" class="Bound"
+      >pP</a
+      ><a name="367"
+      > </a
+      ><a name="368" href="lib.Relation2.html#298" class="Bound"
+      >p&#8321;</a
+      ><a name="370"
+      > </a
+      ><a name="371" href="lib.Relation2.html#307" class="Bound"
+      >p&#8322;</a
+      ><a name="373" class="Symbol"
+      >)</a
+      ><a name="374"
+      >
+  </a
+      ><a name="377" href="lib.Relation2.html#214" class="Function"
+      >Dec-level</a
+      ><a name="386"
+      > </a
+      ><a name="387" href="lib.Relation2.html#387" class="Bound"
+      >pP</a
+      ><a name="389"
+      > </a
+      ><a name="390" class="Symbol"
+      >(</a
+      ><a name="391" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="394"
+      > </a
+      ><a name="395" href="lib.Relation2.html#395" class="Bound"
+      >p</a
+      ><a name="396" class="Symbol"
+      >)</a
+      ><a name="397"
+      > </a
+      ><a name="398" class="Symbol"
+      >(</a
+      ><a name="399" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="402"
+      > </a
+      ><a name="403" href="lib.Relation2.html#403" class="Bound"
+      >&#172;p</a
+      ><a name="405" class="Symbol"
+      >)</a
+      ><a name="406"
+      > </a
+      ><a name="407" class="Symbol"
+      >=</a
+      ><a name="408"
+      > </a
+      ><a name="409" href="lib.types.Empty.html#165" class="Function"
+      >&#8869;-rec</a
+      ><a name="414"
+      > </a
+      ><a name="415" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="416"
+      > </a
+      ><a name="417" href="lib.Relation2.html#403" class="Bound"
+      >&#172;p</a
+      ><a name="419"
+      > </a
+      ><a name="420" href="lib.Relation2.html#395" class="Bound"
+      >p</a
+      ><a name="421"
+      >
+  </a
+      ><a name="424" href="lib.Relation2.html#214" class="Function"
+      >Dec-level</a
+      ><a name="433"
+      > </a
+      ><a name="434" href="lib.Relation2.html#434" class="Bound"
+      >pP</a
+      ><a name="436"
+      > </a
+      ><a name="437" class="Symbol"
+      >(</a
+      ><a name="438" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="441"
+      > </a
+      ><a name="442" href="lib.Relation2.html#442" class="Bound"
+      >&#172;p</a
+      ><a name="444" class="Symbol"
+      >)</a
+      ><a name="445"
+      > </a
+      ><a name="446" class="Symbol"
+      >(</a
+      ><a name="447" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="450"
+      > </a
+      ><a name="451" href="lib.Relation2.html#451" class="Bound"
+      >p</a
+      ><a name="452" class="Symbol"
+      >)</a
+      ><a name="453"
+      > </a
+      ><a name="454" class="Symbol"
+      >=</a
+      ><a name="455"
+      > </a
+      ><a name="456" href="lib.types.Empty.html#165" class="Function"
+      >&#8869;-rec</a
+      ><a name="461"
+      > </a
+      ><a name="462" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="463"
+      > </a
+      ><a name="464" href="lib.Relation2.html#442" class="Bound"
+      >&#172;p</a
+      ><a name="466"
+      > </a
+      ><a name="467" href="lib.Relation2.html#451" class="Bound"
+      >p</a
+      ><a name="468"
+      >
+  </a
+      ><a name="471" href="lib.Relation2.html#214" class="Function"
+      >Dec-level</a
+      ><a name="480"
+      > </a
+      ><a name="481" class="Symbol"
+      >{</a
+      ><a name="482" href="lib.Relation2.html#482" class="Bound"
+      >n</a
+      ><a name="483" class="Symbol"
+      >}</a
+      ><a name="484"
+      > </a
+      ><a name="485" href="lib.Relation2.html#485" class="Bound"
+      >pP</a
+      ><a name="487"
+      > </a
+      ><a name="488" class="Symbol"
+      >(</a
+      ><a name="489" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="492"
+      > </a
+      ><a name="493" href="lib.Relation2.html#493" class="Bound"
+      >&#172;p&#8321;</a
+      ><a name="496" class="Symbol"
+      >)</a
+      ><a name="497"
+      > </a
+      ><a name="498" class="Symbol"
+      >(</a
+      ><a name="499" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="502"
+      > </a
+      ><a name="503" href="lib.Relation2.html#503" class="Bound"
+      >&#172;p&#8322;</a
+      ><a name="506" class="Symbol"
+      >)</a
+      ><a name="507"
+      > </a
+      ><a name="508" class="Symbol"
+      >=</a
+      ><a name="509"
+      >
+    </a
+      ><a name="514" href="lib.Equivalence.html#11334" class="Function"
+      >equiv-preserves-level</a
+      ><a name="535"
+      > </a
+      ><a name="536" class="Symbol"
+      >(</a
+      ><a name="537" href="lib.types.Coproduct.html#1673" class="Function"
+      >inr=inr-equiv</a
+      ><a name="550"
+      > </a
+      ><a name="551" href="lib.Relation2.html#493" class="Bound"
+      >&#172;p&#8321;</a
+      ><a name="554"
+      > </a
+      ><a name="555" href="lib.Relation2.html#503" class="Bound"
+      >&#172;p&#8322;</a
+      ><a name="558"
+      > </a
+      ><a name="559" href="lib.Equivalence.html#8519" class="Function Operator"
+      >&#8315;&#185;</a
+      ><a name="561" class="Symbol"
+      >)</a
+      ><a name="562"
+      >
+      </a
+      ><a name="569" class="Symbol"
+      >(</a
+      ><a name="570" href="lib.NType.html#3301" class="Function"
+      >prop-has-level-S</a
+      ><a name="586"
+      > </a
+      ><a name="587" href="lib.types.Pi.html#1066" class="Function"
+      >&#172;-is-prop</a
+      ><a name="596"
+      > </a
+      ><a name="597" href="lib.Relation2.html#493" class="Bound"
+      >&#172;p&#8321;</a
+      ><a name="600"
+      > </a
+      ><a name="601" href="lib.Relation2.html#503" class="Bound"
+      >&#172;p&#8322;</a
+      ><a name="604" class="Symbol"
+      >)</a
+      ><a name="605"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

@@ -1,0 +1,667 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.Bool</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+
+</a
+      ><a name="66" class="Keyword"
+      >module</a
+      ><a name="72"
+      > </a
+      ><a name="73" href="lib.types.Bool.html#1" class="Module"
+      >lib.types.Bool</a
+      ><a name="87"
+      > </a
+      ><a name="88" class="Keyword"
+      >where</a
+      ><a name="93"
+      >
+
+</a
+      ><a name="95" class="Comment"
+      >{-
+data Bool : Type&#8320; where
+  true : Bool
+  false : Bool
+
+{-# BUILTIN BOOL Bool #-}
+{-# BUILTIN FALSE false #-}
+{-# BUILTIN TRUE true #-}
+-}</a
+      ><a name="234"
+      >
+
+</a
+      ><a name="236" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="240"
+      > </a
+      ><a name="241" class="Symbol"
+      >=</a
+      ><a name="242"
+      > </a
+      ><a name="243" href="lib.Base.html#2859" class="Record"
+      >&#8868;</a
+      ><a name="244"
+      > </a
+      ><a name="245" href="lib.Base.html#9157" class="Function Operator"
+      >&#8852;</a
+      ><a name="246"
+      > </a
+      ><a name="247" href="lib.Base.html#2859" class="Record"
+      >&#8868;</a
+      ><a name="248"
+      >
+
+</a
+      ><a name="250" class="Keyword"
+      >pattern</a
+      ><a name="257"
+      > </a
+      ><a name="258" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="262"
+      > </a
+      ><a name="263" class="Symbol"
+      >=</a
+      ><a name="264"
+      > </a
+      ><a name="265" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="268"
+      > </a
+      ><a name="269" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="273"
+      >
+</a
+      ><a name="274" class="Keyword"
+      >pattern</a
+      ><a name="281"
+      > </a
+      ><a name="282" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="287"
+      > </a
+      ><a name="288" class="Symbol"
+      >=</a
+      ><a name="289"
+      > </a
+      ><a name="290" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="293"
+      > </a
+      ><a name="294" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="298"
+      >
+
+</a
+      ><a name="300" href="lib.types.Bool.html#300" class="Function"
+      >&#8857;Bool</a
+      ><a name="305"
+      > </a
+      ><a name="306" class="Symbol"
+      >:</a
+      ><a name="307"
+      > </a
+      ><a name="308" href="lib.Base.html#9901" class="Function"
+      >Ptd&#8320;</a
+      ><a name="312"
+      >
+</a
+      ><a name="313" href="lib.types.Bool.html#300" class="Function"
+      >&#8857;Bool</a
+      ><a name="318"
+      > </a
+      ><a name="319" class="Symbol"
+      >=</a
+      ><a name="320"
+      > </a
+      ><a name="321" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >&#8857;[</a
+      ><a name="323"
+      > </a
+      ><a name="324" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="328"
+      > </a
+      ><a name="329" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="330"
+      > </a
+      ><a name="331" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="335"
+      > </a
+      ><a name="336" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >]</a
+      ><a name="337"
+      >
+
+</a
+      ><a name="339" class="Comment"
+      >-- Non-dependent</a
+      ><a name="355"
+      >
+</a
+      ><a name="356" href="lib.types.Bool.html#356" class="Function Operator"
+      >if_then_else_</a
+      ><a name="369"
+      > </a
+      ><a name="370" class="Symbol"
+      >:</a
+      ><a name="371"
+      > </a
+      ><a name="372" class="Symbol"
+      >&#8704;</a
+      ><a name="373"
+      > </a
+      ><a name="374" class="Symbol"
+      >{</a
+      ><a name="375" href="lib.types.Bool.html#375" class="Bound"
+      >i</a
+      ><a name="376" class="Symbol"
+      >}</a
+      ><a name="377"
+      > </a
+      ><a name="378" class="Symbol"
+      >{</a
+      ><a name="379" href="lib.types.Bool.html#379" class="Bound"
+      >A</a
+      ><a name="380"
+      > </a
+      ><a name="381" class="Symbol"
+      >:</a
+      ><a name="382"
+      > </a
+      ><a name="383" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="387"
+      > </a
+      ><a name="388" href="lib.types.Bool.html#375" class="Bound"
+      >i</a
+      ><a name="389" class="Symbol"
+      >}</a
+      ><a name="390"
+      >
+  </a
+      ><a name="393" class="Symbol"
+      >&#8594;</a
+      ><a name="394"
+      > </a
+      ><a name="395" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="399"
+      > </a
+      ><a name="400" class="Symbol"
+      >&#8594;</a
+      ><a name="401"
+      > </a
+      ><a name="402" href="lib.types.Bool.html#379" class="Bound"
+      >A</a
+      ><a name="403"
+      > </a
+      ><a name="404" class="Symbol"
+      >&#8594;</a
+      ><a name="405"
+      > </a
+      ><a name="406" href="lib.types.Bool.html#379" class="Bound"
+      >A</a
+      ><a name="407"
+      > </a
+      ><a name="408" class="Symbol"
+      >&#8594;</a
+      ><a name="409"
+      > </a
+      ><a name="410" href="lib.types.Bool.html#379" class="Bound"
+      >A</a
+      ><a name="411"
+      >
+</a
+      ><a name="412" href="lib.types.Bool.html#356" class="Function Operator"
+      >if</a
+      ><a name="414"
+      > </a
+      ><a name="415" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="419"
+      > </a
+      ><a name="420" href="lib.types.Bool.html#356" class="Function Operator"
+      >then</a
+      ><a name="424"
+      > </a
+      ><a name="425" href="lib.types.Bool.html#425" class="Bound"
+      >t</a
+      ><a name="426"
+      > </a
+      ><a name="427" href="lib.types.Bool.html#356" class="Function Operator"
+      >else</a
+      ><a name="431"
+      > </a
+      ><a name="432" href="lib.types.Bool.html#432" class="Bound"
+      >e</a
+      ><a name="433"
+      > </a
+      ><a name="434" class="Symbol"
+      >=</a
+      ><a name="435"
+      > </a
+      ><a name="436" href="lib.types.Bool.html#425" class="Bound"
+      >t</a
+      ><a name="437"
+      >
+</a
+      ><a name="438" href="lib.types.Bool.html#356" class="Function Operator"
+      >if</a
+      ><a name="440"
+      > </a
+      ><a name="441" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="446"
+      > </a
+      ><a name="447" href="lib.types.Bool.html#356" class="Function Operator"
+      >then</a
+      ><a name="451"
+      > </a
+      ><a name="452" href="lib.types.Bool.html#452" class="Bound"
+      >t</a
+      ><a name="453"
+      > </a
+      ><a name="454" href="lib.types.Bool.html#356" class="Function Operator"
+      >else</a
+      ><a name="458"
+      > </a
+      ><a name="459" href="lib.types.Bool.html#459" class="Bound"
+      >e</a
+      ><a name="460"
+      > </a
+      ><a name="461" class="Symbol"
+      >=</a
+      ><a name="462"
+      > </a
+      ><a name="463" href="lib.types.Bool.html#459" class="Bound"
+      >e</a
+      ><a name="464"
+      >
+
+</a
+      ><a name="466" class="Keyword"
+      >private</a
+      ><a name="473"
+      >
+  </a
+      ><a name="476" href="lib.types.Bool.html#476" class="Function"
+      >Bool-true&#8800;false-type</a
+      ><a name="496"
+      > </a
+      ><a name="497" class="Symbol"
+      >:</a
+      ><a name="498"
+      > </a
+      ><a name="499" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="503"
+      > </a
+      ><a name="504" class="Symbol"
+      >&#8594;</a
+      ><a name="505"
+      > </a
+      ><a name="506" href="lib.Base.html#1196" class="Function"
+      >Type&#8320;</a
+      ><a name="511"
+      >
+  </a
+      ><a name="514" href="lib.types.Bool.html#476" class="Function"
+      >Bool-true&#8800;false-type</a
+      ><a name="534"
+      > </a
+      ><a name="535" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="539"
+      >  </a
+      ><a name="541" class="Symbol"
+      >=</a
+      ><a name="542"
+      > </a
+      ><a name="543" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="547"
+      >
+  </a
+      ><a name="550" href="lib.types.Bool.html#476" class="Function"
+      >Bool-true&#8800;false-type</a
+      ><a name="570"
+      > </a
+      ><a name="571" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="576"
+      > </a
+      ><a name="577" class="Symbol"
+      >=</a
+      ><a name="578"
+      > </a
+      ><a name="579" href="lib.Base.html#5924" class="Function"
+      >Empty</a
+      ><a name="584"
+      >
+
+</a
+      ><a name="586" class="Keyword"
+      >abstract</a
+      ><a name="594"
+      >
+  </a
+      ><a name="597" href="lib.types.Bool.html#597" class="Function"
+      >Bool-true&#8800;false</a
+      ><a name="612"
+      > </a
+      ><a name="613" class="Symbol"
+      >:</a
+      ><a name="614"
+      > </a
+      ><a name="615" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="619"
+      > </a
+      ><a name="620" href="lib.Base.html#6094" class="Function Operator"
+      >&#8800;</a
+      ><a name="621"
+      > </a
+      ><a name="622" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="627"
+      >
+  </a
+      ><a name="630" href="lib.types.Bool.html#597" class="Function"
+      >Bool-true&#8800;false</a
+      ><a name="645"
+      > </a
+      ><a name="646" href="lib.types.Bool.html#646" class="Bound"
+      >p</a
+      ><a name="647"
+      > </a
+      ><a name="648" class="Symbol"
+      >=</a
+      ><a name="649"
+      > </a
+      ><a name="650" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="659"
+      > </a
+      ><a name="660" href="lib.types.Bool.html#476" class="Function"
+      >Bool-true&#8800;false-type</a
+      ><a name="680"
+      > </a
+      ><a name="681" href="lib.types.Bool.html#646" class="Bound"
+      >p</a
+      ><a name="682"
+      > </a
+      ><a name="683" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="687"
+      >
+
+  </a
+      ><a name="691" href="lib.types.Bool.html#691" class="Function"
+      >Bool-false&#8800;true</a
+      ><a name="706"
+      > </a
+      ><a name="707" class="Symbol"
+      >:</a
+      ><a name="708"
+      > </a
+      ><a name="709" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="714"
+      > </a
+      ><a name="715" href="lib.Base.html#6094" class="Function Operator"
+      >&#8800;</a
+      ><a name="716"
+      > </a
+      ><a name="717" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="721"
+      >
+  </a
+      ><a name="724" href="lib.types.Bool.html#691" class="Function"
+      >Bool-false&#8800;true</a
+      ><a name="739"
+      > </a
+      ><a name="740" href="lib.types.Bool.html#740" class="Bound"
+      >p</a
+      ><a name="741"
+      > </a
+      ><a name="742" class="Symbol"
+      >=</a
+      ><a name="743"
+      > </a
+      ><a name="744" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="753"
+      > </a
+      ><a name="754" href="lib.types.Bool.html#476" class="Function"
+      >Bool-true&#8800;false-type</a
+      ><a name="774"
+      > </a
+      ><a name="775" class="Symbol"
+      >(</a
+      ><a name="776" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="777"
+      > </a
+      ><a name="778" href="lib.types.Bool.html#740" class="Bound"
+      >p</a
+      ><a name="779" class="Symbol"
+      >)</a
+      ><a name="780"
+      > </a
+      ><a name="781" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="785"
+      >
+
+  </a
+      ><a name="789" href="lib.types.Bool.html#789" class="Function"
+      >Bool-has-dec-eq</a
+      ><a name="804"
+      > </a
+      ><a name="805" class="Symbol"
+      >:</a
+      ><a name="806"
+      > </a
+      ><a name="807" href="lib.NType.html#1510" class="Function"
+      >has-dec-eq</a
+      ><a name="817"
+      > </a
+      ><a name="818" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="822"
+      >
+  </a
+      ><a name="825" href="lib.types.Bool.html#789" class="Function"
+      >Bool-has-dec-eq</a
+      ><a name="840"
+      > </a
+      ><a name="841" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="845"
+      > </a
+      ><a name="846" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="850"
+      > </a
+      ><a name="851" class="Symbol"
+      >=</a
+      ><a name="852"
+      > </a
+      ><a name="853" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="856"
+      > </a
+      ><a name="857" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="860"
+      >
+  </a
+      ><a name="863" href="lib.types.Bool.html#789" class="Function"
+      >Bool-has-dec-eq</a
+      ><a name="878"
+      > </a
+      ><a name="879" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="883"
+      > </a
+      ><a name="884" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="889"
+      > </a
+      ><a name="890" class="Symbol"
+      >=</a
+      ><a name="891"
+      > </a
+      ><a name="892" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="895"
+      > </a
+      ><a name="896" href="lib.types.Bool.html#597" class="Function"
+      >Bool-true&#8800;false</a
+      ><a name="911"
+      >
+  </a
+      ><a name="914" href="lib.types.Bool.html#789" class="Function"
+      >Bool-has-dec-eq</a
+      ><a name="929"
+      > </a
+      ><a name="930" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="935"
+      > </a
+      ><a name="936" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="940"
+      > </a
+      ><a name="941" class="Symbol"
+      >=</a
+      ><a name="942"
+      > </a
+      ><a name="943" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="946"
+      > </a
+      ><a name="947" href="lib.types.Bool.html#691" class="Function"
+      >Bool-false&#8800;true</a
+      ><a name="962"
+      >
+  </a
+      ><a name="965" href="lib.types.Bool.html#789" class="Function"
+      >Bool-has-dec-eq</a
+      ><a name="980"
+      > </a
+      ><a name="981" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="986"
+      > </a
+      ><a name="987" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="992"
+      > </a
+      ><a name="993" class="Symbol"
+      >=</a
+      ><a name="994"
+      > </a
+      ><a name="995" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="998"
+      > </a
+      ><a name="999" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1002"
+      >
+
+  </a
+      ><a name="1006" href="lib.types.Bool.html#1006" class="Function"
+      >Bool-is-set</a
+      ><a name="1017"
+      > </a
+      ><a name="1018" class="Symbol"
+      >:</a
+      ><a name="1019"
+      > </a
+      ><a name="1020" href="lib.NType.html#455" class="Function"
+      >is-set</a
+      ><a name="1026"
+      > </a
+      ><a name="1027" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="1031"
+      >
+  </a
+      ><a name="1034" href="lib.types.Bool.html#1006" class="Function"
+      >Bool-is-set</a
+      ><a name="1045"
+      > </a
+      ><a name="1046" class="Symbol"
+      >=</a
+      ><a name="1047"
+      > </a
+      ><a name="1048" href="lib.NType.html#2330" class="Function"
+      >dec-eq-is-set</a
+      ><a name="1061"
+      > </a
+      ><a name="1062" href="lib.types.Bool.html#789" class="Function"
+      >Bool-has-dec-eq</a
+      ><a name="1077"
+      >
+
+</a
+      ><a name="1079" href="lib.types.Bool.html#1079" class="Function"
+      >Bool-level</a
+      ><a name="1089"
+      > </a
+      ><a name="1090" class="Symbol"
+      >=</a
+      ><a name="1091"
+      > </a
+      ><a name="1092" href="lib.types.Bool.html#1006" class="Function"
+      >Bool-is-set</a
+      ><a name="1103"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

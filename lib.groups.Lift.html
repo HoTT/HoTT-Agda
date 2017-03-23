@@ -1,0 +1,1528 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.groups.Lift</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.Group.html#1" class="Module"
+      >lib.types.Group</a
+      ><a name="92"
+      >
+</a
+      ><a name="93" class="Keyword"
+      >open</a
+      ><a name="97"
+      > </a
+      ><a name="98" class="Keyword"
+      >import</a
+      ><a name="104"
+      > </a
+      ><a name="105" href="lib.types.Lift.html#1" class="Module"
+      >lib.types.Lift</a
+      ><a name="119"
+      >
+</a
+      ><a name="120" class="Keyword"
+      >open</a
+      ><a name="124"
+      > </a
+      ><a name="125" class="Keyword"
+      >import</a
+      ><a name="131"
+      > </a
+      ><a name="132" href="lib.groups.Homomorphism.html#1" class="Module"
+      >lib.groups.Homomorphism</a
+      ><a name="155"
+      >
+</a
+      ><a name="156" class="Keyword"
+      >open</a
+      ><a name="160"
+      > </a
+      ><a name="161" class="Keyword"
+      >import</a
+      ><a name="167"
+      > </a
+      ><a name="168" href="lib.groups.Isomorphism.html#1" class="Module"
+      >lib.groups.Isomorphism</a
+      ><a name="190"
+      >
+
+</a
+      ><a name="192" class="Keyword"
+      >module</a
+      ><a name="198"
+      > </a
+      ><a name="199" href="lib.groups.Lift.html#1" class="Module"
+      >lib.groups.Lift</a
+      ><a name="214"
+      > </a
+      ><a name="215" class="Keyword"
+      >where</a
+      ><a name="220"
+      >
+
+</a
+      ><a name="222" href="lib.groups.Lift.html#222" class="Function"
+      >Lift-group-structure</a
+      ><a name="242"
+      > </a
+      ><a name="243" class="Symbol"
+      >:</a
+      ><a name="244"
+      > </a
+      ><a name="245" class="Symbol"
+      >&#8704;</a
+      ><a name="246"
+      > </a
+      ><a name="247" class="Symbol"
+      >{</a
+      ><a name="248" href="lib.groups.Lift.html#248" class="Bound"
+      >i</a
+      ><a name="249"
+      > </a
+      ><a name="250" href="lib.groups.Lift.html#250" class="Bound"
+      >j</a
+      ><a name="251" class="Symbol"
+      >}</a
+      ><a name="252"
+      > </a
+      ><a name="253" class="Symbol"
+      >{</a
+      ><a name="254" href="lib.groups.Lift.html#254" class="Bound"
+      >A</a
+      ><a name="255"
+      > </a
+      ><a name="256" class="Symbol"
+      >:</a
+      ><a name="257"
+      > </a
+      ><a name="258" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="262"
+      > </a
+      ><a name="263" href="lib.groups.Lift.html#248" class="Bound"
+      >i</a
+      ><a name="264" class="Symbol"
+      >}</a
+      ><a name="265"
+      >
+  </a
+      ><a name="268" class="Symbol"
+      >&#8594;</a
+      ><a name="269"
+      > </a
+      ><a name="270" href="lib.types.Group.html#154" class="Record"
+      >GroupStructure</a
+      ><a name="284"
+      > </a
+      ><a name="285" href="lib.groups.Lift.html#254" class="Bound"
+      >A</a
+      ><a name="286"
+      > </a
+      ><a name="287" class="Symbol"
+      >&#8594;</a
+      ><a name="288"
+      > </a
+      ><a name="289" href="lib.types.Group.html#154" class="Record"
+      >GroupStructure</a
+      ><a name="303"
+      > </a
+      ><a name="304" class="Symbol"
+      >(</a
+      ><a name="305" href="lib.Base.html#6440" class="Record"
+      >Lift</a
+      ><a name="309"
+      > </a
+      ><a name="310" class="Symbol"
+      >{</a
+      ><a name="311" class="Argument"
+      >j</a
+      ><a name="312"
+      > </a
+      ><a name="313" class="Symbol"
+      >=</a
+      ><a name="314"
+      > </a
+      ><a name="315" href="lib.groups.Lift.html#250" class="Bound"
+      >j</a
+      ><a name="316" class="Symbol"
+      >}</a
+      ><a name="317"
+      > </a
+      ><a name="318" href="lib.groups.Lift.html#254" class="Bound"
+      >A</a
+      ><a name="319" class="Symbol"
+      >)</a
+      ><a name="320"
+      >
+</a
+      ><a name="321" href="lib.groups.Lift.html#222" class="Function"
+      >Lift-group-structure</a
+      ><a name="341"
+      > </a
+      ><a name="342" href="lib.groups.Lift.html#342" class="Bound"
+      >GS</a
+      ><a name="344"
+      > </a
+      ><a name="345" class="Symbol"
+      >=</a
+      ><a name="346"
+      > </a
+      ><a name="347" class="Keyword"
+      >record</a
+      ><a name="353"
+      >
+  </a
+      ><a name="356" class="Symbol"
+      >{</a
+      ><a name="357"
+      > </a
+      ><a name="358" class="Field"
+      >ident</a
+      ><a name="363"
+      > </a
+      ><a name="364" class="Symbol"
+      >=</a
+      ><a name="365"
+      > </a
+      ><a name="366" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="370"
+      > </a
+      ><a name="371" href="lib.types.Group.html#276" class="Field"
+      >ident</a
+      ><a name="376"
+      >
+  </a
+      ><a name="379" class="Symbol"
+      >;</a
+      ><a name="380"
+      > </a
+      ><a name="381" class="Field"
+      >inv</a
+      ><a name="384"
+      > </a
+      ><a name="385" class="Symbol"
+      >=</a
+      ><a name="386"
+      > </a
+      ><a name="387" class="Symbol"
+      >&#955;</a
+      ><a name="388"
+      > </a
+      ><a name="389" class="Symbol"
+      >{(</a
+      ><a name="391" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="395"
+      > </a
+      ><a name="396" href="lib.groups.Lift.html#396" class="Bound"
+      >x</a
+      ><a name="397" class="Symbol"
+      >)</a
+      ><a name="398"
+      > </a
+      ><a name="399" class="Symbol"
+      >&#8594;</a
+      ><a name="400"
+      > </a
+      ><a name="401" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="405"
+      > </a
+      ><a name="406" class="Symbol"
+      >(</a
+      ><a name="407" href="lib.types.Group.html#292" class="Field"
+      >inv</a
+      ><a name="410"
+      > </a
+      ><a name="411" href="lib.groups.Lift.html#396" class="Bound"
+      >x</a
+      ><a name="412" class="Symbol"
+      >)}</a
+      ><a name="414"
+      >
+  </a
+      ><a name="417" class="Symbol"
+      >;</a
+      ><a name="418"
+      > </a
+      ><a name="419" class="Field"
+      >comp</a
+      ><a name="423"
+      > </a
+      ><a name="424" class="Symbol"
+      >=</a
+      ><a name="425"
+      > </a
+      ><a name="426" class="Symbol"
+      >&#955;</a
+      ><a name="427"
+      > </a
+      ><a name="428" class="Symbol"
+      >{(</a
+      ><a name="430" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="434"
+      > </a
+      ><a name="435" href="lib.groups.Lift.html#435" class="Bound"
+      >x</a
+      ><a name="436" class="Symbol"
+      >)</a
+      ><a name="437"
+      > </a
+      ><a name="438" class="Symbol"
+      >(</a
+      ><a name="439" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="443"
+      > </a
+      ><a name="444" href="lib.groups.Lift.html#444" class="Bound"
+      >y</a
+      ><a name="445" class="Symbol"
+      >)</a
+      ><a name="446"
+      > </a
+      ><a name="447" class="Symbol"
+      >&#8594;</a
+      ><a name="448"
+      > </a
+      ><a name="449" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="453"
+      > </a
+      ><a name="454" class="Symbol"
+      >(</a
+      ><a name="455" href="lib.types.Group.html#313" class="Field"
+      >comp</a
+      ><a name="459"
+      > </a
+      ><a name="460" href="lib.groups.Lift.html#435" class="Bound"
+      >x</a
+      ><a name="461"
+      > </a
+      ><a name="462" href="lib.groups.Lift.html#444" class="Bound"
+      >y</a
+      ><a name="463" class="Symbol"
+      >)}</a
+      ><a name="465"
+      >
+  </a
+      ><a name="468" class="Symbol"
+      >;</a
+      ><a name="469"
+      > </a
+      ><a name="470" class="Field"
+      >unit-l</a
+      ><a name="476"
+      > </a
+      ><a name="477" class="Symbol"
+      >=</a
+      ><a name="478"
+      > </a
+      ><a name="479" class="Symbol"
+      >&#955;</a
+      ><a name="480"
+      > </a
+      ><a name="481" class="Symbol"
+      >{(</a
+      ><a name="483" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="487"
+      > </a
+      ><a name="488" href="lib.groups.Lift.html#488" class="Bound"
+      >y</a
+      ><a name="489" class="Symbol"
+      >)</a
+      ><a name="490"
+      > </a
+      ><a name="491" class="Symbol"
+      >&#8594;</a
+      ><a name="492"
+      > </a
+      ><a name="493" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="495"
+      > </a
+      ><a name="496" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="500"
+      > </a
+      ><a name="501" class="Symbol"
+      >(</a
+      ><a name="502" href="lib.types.Group.html#339" class="Field"
+      >unit-l</a
+      ><a name="508"
+      > </a
+      ><a name="509" href="lib.groups.Lift.html#488" class="Bound"
+      >y</a
+      ><a name="510" class="Symbol"
+      >)}</a
+      ><a name="512"
+      >
+  </a
+      ><a name="515" class="Symbol"
+      >;</a
+      ><a name="516"
+      > </a
+      ><a name="517" class="Field"
+      >assoc</a
+      ><a name="522"
+      > </a
+      ><a name="523" class="Symbol"
+      >=</a
+      ><a name="524"
+      > </a
+      ><a name="525" class="Symbol"
+      >&#955;</a
+      ><a name="526"
+      > </a
+      ><a name="527" class="Symbol"
+      >{(</a
+      ><a name="529" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="533"
+      > </a
+      ><a name="534" href="lib.groups.Lift.html#534" class="Bound"
+      >x</a
+      ><a name="535" class="Symbol"
+      >)</a
+      ><a name="536"
+      > </a
+      ><a name="537" class="Symbol"
+      >(</a
+      ><a name="538" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="542"
+      > </a
+      ><a name="543" href="lib.groups.Lift.html#543" class="Bound"
+      >y</a
+      ><a name="544" class="Symbol"
+      >)</a
+      ><a name="545"
+      > </a
+      ><a name="546" class="Symbol"
+      >(</a
+      ><a name="547" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="551"
+      > </a
+      ><a name="552" href="lib.groups.Lift.html#552" class="Bound"
+      >z</a
+      ><a name="553" class="Symbol"
+      >)</a
+      ><a name="554"
+      > </a
+      ><a name="555" class="Symbol"
+      >&#8594;</a
+      ><a name="556"
+      > </a
+      ><a name="557" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="559"
+      > </a
+      ><a name="560" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="564"
+      > </a
+      ><a name="565" class="Symbol"
+      >(</a
+      ><a name="566" href="lib.types.Group.html#376" class="Field"
+      >assoc</a
+      ><a name="571"
+      > </a
+      ><a name="572" href="lib.groups.Lift.html#534" class="Bound"
+      >x</a
+      ><a name="573"
+      > </a
+      ><a name="574" href="lib.groups.Lift.html#543" class="Bound"
+      >y</a
+      ><a name="575"
+      > </a
+      ><a name="576" href="lib.groups.Lift.html#552" class="Bound"
+      >z</a
+      ><a name="577" class="Symbol"
+      >)}</a
+      ><a name="579"
+      >
+  </a
+      ><a name="582" class="Symbol"
+      >;</a
+      ><a name="583"
+      > </a
+      ><a name="584" class="Field"
+      >inv-l</a
+      ><a name="589"
+      > </a
+      ><a name="590" class="Symbol"
+      >=</a
+      ><a name="591"
+      > </a
+      ><a name="592" class="Symbol"
+      >&#955;</a
+      ><a name="593"
+      > </a
+      ><a name="594" class="Symbol"
+      >{(</a
+      ><a name="596" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="600"
+      > </a
+      ><a name="601" href="lib.groups.Lift.html#601" class="Bound"
+      >x</a
+      ><a name="602" class="Symbol"
+      >)</a
+      ><a name="603"
+      > </a
+      ><a name="604" class="Symbol"
+      >&#8594;</a
+      ><a name="605"
+      > </a
+      ><a name="606" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="608"
+      > </a
+      ><a name="609" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="613"
+      > </a
+      ><a name="614" class="Symbol"
+      >(</a
+      ><a name="615" href="lib.types.Group.html#438" class="Field"
+      >inv-l</a
+      ><a name="620"
+      > </a
+      ><a name="621" href="lib.groups.Lift.html#601" class="Bound"
+      >x</a
+      ><a name="622" class="Symbol"
+      >)}</a
+      ><a name="624"
+      >
+  </a
+      ><a name="627" class="Symbol"
+      >}</a
+      ><a name="628"
+      >
+  </a
+      ><a name="631" class="Keyword"
+      >where</a
+      ><a name="636"
+      > </a
+      ><a name="637" class="Keyword"
+      >open</a
+      ><a name="641"
+      > </a
+      ><a name="642" href="lib.types.Group.html#154" class="Module"
+      >GroupStructure</a
+      ><a name="656"
+      > </a
+      ><a name="657" href="lib.groups.Lift.html#342" class="Bound"
+      >GS</a
+      ><a name="659"
+      >
+
+</a
+      ><a name="661" href="lib.groups.Lift.html#661" class="Function"
+      >Lift-group</a
+      ><a name="671"
+      > </a
+      ><a name="672" class="Symbol"
+      >:</a
+      ><a name="673"
+      > </a
+      ><a name="674" class="Symbol"
+      >&#8704;</a
+      ><a name="675"
+      > </a
+      ><a name="676" class="Symbol"
+      >{</a
+      ><a name="677" href="lib.groups.Lift.html#677" class="Bound"
+      >i</a
+      ><a name="678"
+      > </a
+      ><a name="679" href="lib.groups.Lift.html#679" class="Bound"
+      >j</a
+      ><a name="680" class="Symbol"
+      >}</a
+      ><a name="681"
+      > </a
+      ><a name="682" class="Symbol"
+      >&#8594;</a
+      ><a name="683"
+      > </a
+      ><a name="684" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="689"
+      > </a
+      ><a name="690" href="lib.groups.Lift.html#677" class="Bound"
+      >i</a
+      ><a name="691"
+      > </a
+      ><a name="692" class="Symbol"
+      >&#8594;</a
+      ><a name="693"
+      > </a
+      ><a name="694" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="699"
+      > </a
+      ><a name="700" class="Symbol"
+      >(</a
+      ><a name="701" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="705"
+      > </a
+      ><a name="706" href="lib.groups.Lift.html#677" class="Bound"
+      >i</a
+      ><a name="707"
+      > </a
+      ><a name="708" href="lib.groups.Lift.html#679" class="Bound"
+      >j</a
+      ><a name="709" class="Symbol"
+      >)</a
+      ><a name="710"
+      >
+</a
+      ><a name="711" href="lib.groups.Lift.html#661" class="Function"
+      >Lift-group</a
+      ><a name="721"
+      > </a
+      ><a name="722" class="Symbol"
+      >{</a
+      ><a name="723" class="Argument"
+      >j</a
+      ><a name="724"
+      > </a
+      ><a name="725" class="Symbol"
+      >=</a
+      ><a name="726"
+      > </a
+      ><a name="727" href="lib.groups.Lift.html#727" class="Bound"
+      >j</a
+      ><a name="728" class="Symbol"
+      >}</a
+      ><a name="729"
+      > </a
+      ><a name="730" href="lib.groups.Lift.html#730" class="Bound"
+      >G</a
+      ><a name="731"
+      > </a
+      ><a name="732" class="Symbol"
+      >=</a
+      ><a name="733"
+      > </a
+      ><a name="734" href="lib.types.Group.html#6885" class="InductiveConstructor"
+      >group</a
+      ><a name="739"
+      > </a
+      ><a name="740" class="Symbol"
+      >(</a
+      ><a name="741" href="lib.Base.html#6440" class="Record"
+      >Lift</a
+      ><a name="745"
+      > </a
+      ><a name="746" class="Symbol"
+      >{</a
+      ><a name="747" class="Argument"
+      >j</a
+      ><a name="748"
+      > </a
+      ><a name="749" class="Symbol"
+      >=</a
+      ><a name="750"
+      > </a
+      ><a name="751" href="lib.groups.Lift.html#727" class="Bound"
+      >j</a
+      ><a name="752" class="Symbol"
+      >}</a
+      ><a name="753"
+      > </a
+      ><a name="754" href="lib.types.Group.html#6903" class="Field"
+      >El</a
+      ><a name="756" class="Symbol"
+      >)</a
+      ><a name="757"
+      > </a
+      ><a name="758" class="Symbol"
+      >(</a
+      ><a name="759" href="lib.types.Lift.html#495" class="Function"
+      >Lift-level</a
+      ><a name="769"
+      > </a
+      ><a name="770" href="lib.types.Group.html#6919" class="Field"
+      >El-level</a
+      ><a name="778" class="Symbol"
+      >)</a
+      ><a name="779"
+      >
+                             </a
+      ><a name="809" class="Symbol"
+      >(</a
+      ><a name="810" href="lib.groups.Lift.html#222" class="Function"
+      >Lift-group-structure</a
+      ><a name="830"
+      > </a
+      ><a name="831" href="lib.types.Group.html#6949" class="Field"
+      >group-struct</a
+      ><a name="843" class="Symbol"
+      >)</a
+      ><a name="844"
+      >
+  </a
+      ><a name="847" class="Keyword"
+      >where</a
+      ><a name="852"
+      > </a
+      ><a name="853" class="Keyword"
+      >open</a
+      ><a name="857"
+      > </a
+      ><a name="858" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="863"
+      > </a
+      ><a name="864" href="lib.groups.Lift.html#730" class="Bound"
+      >G</a
+      ><a name="865"
+      >
+
+</a
+      ><a name="867" href="lib.groups.Lift.html#867" class="Function"
+      >lift-hom</a
+      ><a name="875"
+      > </a
+      ><a name="876" class="Symbol"
+      >:</a
+      ><a name="877"
+      > </a
+      ><a name="878" class="Symbol"
+      >&#8704;</a
+      ><a name="879"
+      > </a
+      ><a name="880" class="Symbol"
+      >{</a
+      ><a name="881" href="lib.groups.Lift.html#881" class="Bound"
+      >i</a
+      ><a name="882"
+      > </a
+      ><a name="883" href="lib.groups.Lift.html#883" class="Bound"
+      >j</a
+      ><a name="884" class="Symbol"
+      >}</a
+      ><a name="885"
+      > </a
+      ><a name="886" class="Symbol"
+      >{</a
+      ><a name="887" href="lib.groups.Lift.html#887" class="Bound"
+      >G</a
+      ><a name="888"
+      > </a
+      ><a name="889" class="Symbol"
+      >:</a
+      ><a name="890"
+      > </a
+      ><a name="891" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="896"
+      > </a
+      ><a name="897" href="lib.groups.Lift.html#881" class="Bound"
+      >i</a
+      ><a name="898" class="Symbol"
+      >}</a
+      ><a name="899"
+      > </a
+      ><a name="900" class="Symbol"
+      >&#8594;</a
+      ><a name="901"
+      > </a
+      ><a name="902" class="Symbol"
+      >(</a
+      ><a name="903" href="lib.groups.Lift.html#887" class="Bound"
+      >G</a
+      ><a name="904"
+      > </a
+      ><a name="905" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="907"
+      > </a
+      ><a name="908" href="lib.groups.Lift.html#661" class="Function"
+      >Lift-group</a
+      ><a name="918"
+      > </a
+      ><a name="919" class="Symbol"
+      >{</a
+      ><a name="920" class="Argument"
+      >j</a
+      ><a name="921"
+      > </a
+      ><a name="922" class="Symbol"
+      >=</a
+      ><a name="923"
+      > </a
+      ><a name="924" href="lib.groups.Lift.html#883" class="Bound"
+      >j</a
+      ><a name="925" class="Symbol"
+      >}</a
+      ><a name="926"
+      > </a
+      ><a name="927" href="lib.groups.Lift.html#887" class="Bound"
+      >G</a
+      ><a name="928" class="Symbol"
+      >)</a
+      ><a name="929"
+      >
+</a
+      ><a name="930" href="lib.groups.Lift.html#867" class="Function"
+      >lift-hom</a
+      ><a name="938"
+      > </a
+      ><a name="939" class="Symbol"
+      >=</a
+      ><a name="940"
+      > </a
+      ><a name="941" href="lib.groups.Homomorphism.html#2532" class="InductiveConstructor"
+      >group-hom</a
+      ><a name="950"
+      > </a
+      ><a name="951" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="955"
+      > </a
+      ><a name="956" class="Symbol"
+      >(&#955;</a
+      ><a name="958"
+      > </a
+      ><a name="959" href="lib.groups.Lift.html#959" class="Bound"
+      >_</a
+      ><a name="960"
+      > </a
+      ><a name="961" href="lib.groups.Lift.html#961" class="Bound"
+      >_</a
+      ><a name="962"
+      > </a
+      ><a name="963" class="Symbol"
+      >&#8594;</a
+      ><a name="964"
+      > </a
+      ><a name="965" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="968" class="Symbol"
+      >)</a
+      ><a name="969"
+      >
+
+</a
+      ><a name="971" href="lib.groups.Lift.html#971" class="Function"
+      >lower-hom</a
+      ><a name="980"
+      > </a
+      ><a name="981" class="Symbol"
+      >:</a
+      ><a name="982"
+      > </a
+      ><a name="983" class="Symbol"
+      >&#8704;</a
+      ><a name="984"
+      > </a
+      ><a name="985" class="Symbol"
+      >{</a
+      ><a name="986" href="lib.groups.Lift.html#986" class="Bound"
+      >i</a
+      ><a name="987"
+      > </a
+      ><a name="988" href="lib.groups.Lift.html#988" class="Bound"
+      >j</a
+      ><a name="989" class="Symbol"
+      >}</a
+      ><a name="990"
+      > </a
+      ><a name="991" class="Symbol"
+      >{</a
+      ><a name="992" href="lib.groups.Lift.html#992" class="Bound"
+      >G</a
+      ><a name="993"
+      > </a
+      ><a name="994" class="Symbol"
+      >:</a
+      ><a name="995"
+      > </a
+      ><a name="996" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1001"
+      > </a
+      ><a name="1002" href="lib.groups.Lift.html#986" class="Bound"
+      >i</a
+      ><a name="1003" class="Symbol"
+      >}</a
+      ><a name="1004"
+      > </a
+      ><a name="1005" class="Symbol"
+      >&#8594;</a
+      ><a name="1006"
+      > </a
+      ><a name="1007" class="Symbol"
+      >(</a
+      ><a name="1008" href="lib.groups.Lift.html#661" class="Function"
+      >Lift-group</a
+      ><a name="1018"
+      > </a
+      ><a name="1019" class="Symbol"
+      >{</a
+      ><a name="1020" class="Argument"
+      >j</a
+      ><a name="1021"
+      > </a
+      ><a name="1022" class="Symbol"
+      >=</a
+      ><a name="1023"
+      > </a
+      ><a name="1024" href="lib.groups.Lift.html#988" class="Bound"
+      >j</a
+      ><a name="1025" class="Symbol"
+      >}</a
+      ><a name="1026"
+      > </a
+      ><a name="1027" href="lib.groups.Lift.html#992" class="Bound"
+      >G</a
+      ><a name="1028"
+      > </a
+      ><a name="1029" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="1031"
+      > </a
+      ><a name="1032" href="lib.groups.Lift.html#992" class="Bound"
+      >G</a
+      ><a name="1033" class="Symbol"
+      >)</a
+      ><a name="1034"
+      >
+</a
+      ><a name="1035" href="lib.groups.Lift.html#971" class="Function"
+      >lower-hom</a
+      ><a name="1044"
+      > </a
+      ><a name="1045" class="Symbol"
+      >=</a
+      ><a name="1046"
+      > </a
+      ><a name="1047" href="lib.groups.Homomorphism.html#2532" class="InductiveConstructor"
+      >group-hom</a
+      ><a name="1056"
+      > </a
+      ><a name="1057" href="lib.Base.html#6528" class="Field"
+      >lower</a
+      ><a name="1062"
+      > </a
+      ><a name="1063" class="Symbol"
+      >(&#955;</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" href="lib.groups.Lift.html#1066" class="Bound"
+      >_</a
+      ><a name="1067"
+      > </a
+      ><a name="1068" href="lib.groups.Lift.html#1068" class="Bound"
+      >_</a
+      ><a name="1069"
+      > </a
+      ><a name="1070" class="Symbol"
+      >&#8594;</a
+      ><a name="1071"
+      > </a
+      ><a name="1072" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1075" class="Symbol"
+      >)</a
+      ><a name="1076"
+      >
+
+</a
+      ><a name="1078" href="lib.groups.Lift.html#1078" class="Function"
+      >lift-iso</a
+      ><a name="1086"
+      > </a
+      ><a name="1087" class="Symbol"
+      >:</a
+      ><a name="1088"
+      > </a
+      ><a name="1089" class="Symbol"
+      >&#8704;</a
+      ><a name="1090"
+      > </a
+      ><a name="1091" class="Symbol"
+      >{</a
+      ><a name="1092" href="lib.groups.Lift.html#1092" class="Bound"
+      >i</a
+      ><a name="1093"
+      > </a
+      ><a name="1094" href="lib.groups.Lift.html#1094" class="Bound"
+      >j</a
+      ><a name="1095" class="Symbol"
+      >}</a
+      ><a name="1096"
+      > </a
+      ><a name="1097" class="Symbol"
+      >{</a
+      ><a name="1098" href="lib.groups.Lift.html#1098" class="Bound"
+      >G</a
+      ><a name="1099"
+      > </a
+      ><a name="1100" class="Symbol"
+      >:</a
+      ><a name="1101"
+      > </a
+      ><a name="1102" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1107"
+      > </a
+      ><a name="1108" href="lib.groups.Lift.html#1092" class="Bound"
+      >i</a
+      ><a name="1109" class="Symbol"
+      >}</a
+      ><a name="1110"
+      > </a
+      ><a name="1111" class="Symbol"
+      >&#8594;</a
+      ><a name="1112"
+      > </a
+      ><a name="1113" class="Symbol"
+      >(</a
+      ><a name="1114" href="lib.groups.Lift.html#1098" class="Bound"
+      >G</a
+      ><a name="1115"
+      > </a
+      ><a name="1116" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="1118"
+      > </a
+      ><a name="1119" href="lib.groups.Lift.html#661" class="Function"
+      >Lift-group</a
+      ><a name="1129"
+      > </a
+      ><a name="1130" class="Symbol"
+      >{</a
+      ><a name="1131" class="Argument"
+      >j</a
+      ><a name="1132"
+      > </a
+      ><a name="1133" class="Symbol"
+      >=</a
+      ><a name="1134"
+      > </a
+      ><a name="1135" href="lib.groups.Lift.html#1094" class="Bound"
+      >j</a
+      ><a name="1136" class="Symbol"
+      >}</a
+      ><a name="1137"
+      > </a
+      ><a name="1138" href="lib.groups.Lift.html#1098" class="Bound"
+      >G</a
+      ><a name="1139" class="Symbol"
+      >)</a
+      ><a name="1140"
+      >
+</a
+      ><a name="1141" href="lib.groups.Lift.html#1078" class="Function"
+      >lift-iso</a
+      ><a name="1149"
+      > </a
+      ><a name="1150" class="Symbol"
+      >=</a
+      ><a name="1151"
+      > </a
+      ><a name="1152" href="lib.groups.Lift.html#867" class="Function"
+      >lift-hom</a
+      ><a name="1160"
+      > </a
+      ><a name="1161" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1162"
+      > </a
+      ><a name="1163" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1166"
+      > </a
+      ><a name="1167" href="lib.types.Lift.html#343" class="Function"
+      >lift-equiv</a
+      ><a name="1177"
+      >
+
+</a
+      ><a name="1179" href="lib.groups.Lift.html#1179" class="Function"
+      >lower-iso</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" class="Symbol"
+      >:</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" class="Symbol"
+      >&#8704;</a
+      ><a name="1192"
+      > </a
+      ><a name="1193" class="Symbol"
+      >{</a
+      ><a name="1194" href="lib.groups.Lift.html#1194" class="Bound"
+      >i</a
+      ><a name="1195"
+      > </a
+      ><a name="1196" href="lib.groups.Lift.html#1196" class="Bound"
+      >j</a
+      ><a name="1197" class="Symbol"
+      >}</a
+      ><a name="1198"
+      > </a
+      ><a name="1199" class="Symbol"
+      >{</a
+      ><a name="1200" href="lib.groups.Lift.html#1200" class="Bound"
+      >G</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" class="Symbol"
+      >:</a
+      ><a name="1203"
+      > </a
+      ><a name="1204" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1209"
+      > </a
+      ><a name="1210" href="lib.groups.Lift.html#1194" class="Bound"
+      >i</a
+      ><a name="1211" class="Symbol"
+      >}</a
+      ><a name="1212"
+      > </a
+      ><a name="1213" class="Symbol"
+      >&#8594;</a
+      ><a name="1214"
+      > </a
+      ><a name="1215" class="Symbol"
+      >(</a
+      ><a name="1216" href="lib.groups.Lift.html#661" class="Function"
+      >Lift-group</a
+      ><a name="1226"
+      > </a
+      ><a name="1227" class="Symbol"
+      >{</a
+      ><a name="1228" class="Argument"
+      >j</a
+      ><a name="1229"
+      > </a
+      ><a name="1230" class="Symbol"
+      >=</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" href="lib.groups.Lift.html#1196" class="Bound"
+      >j</a
+      ><a name="1233" class="Symbol"
+      >}</a
+      ><a name="1234"
+      > </a
+      ><a name="1235" href="lib.groups.Lift.html#1200" class="Bound"
+      >G</a
+      ><a name="1236"
+      > </a
+      ><a name="1237" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="1239"
+      > </a
+      ><a name="1240" href="lib.groups.Lift.html#1200" class="Bound"
+      >G</a
+      ><a name="1241" class="Symbol"
+      >)</a
+      ><a name="1242"
+      >
+</a
+      ><a name="1243" href="lib.groups.Lift.html#1179" class="Function"
+      >lower-iso</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" class="Symbol"
+      >=</a
+      ><a name="1254"
+      > </a
+      ><a name="1255" href="lib.groups.Lift.html#971" class="Function"
+      >lower-hom</a
+      ><a name="1264"
+      > </a
+      ><a name="1265" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1266"
+      > </a
+      ><a name="1267" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1270"
+      > </a
+      ><a name="1271" href="lib.Equivalence.html#8890" class="Function"
+      >lower-equiv</a
+      ><a name="1282"
+      >
+
+</a
+      ><a name="1284" href="lib.groups.Lift.html#1284" class="Function"
+      >Lift-group-is-abelian</a
+      ><a name="1305"
+      > </a
+      ><a name="1306" class="Symbol"
+      >:</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" class="Symbol"
+      >&#8704;</a
+      ><a name="1309"
+      > </a
+      ><a name="1310" class="Symbol"
+      >{</a
+      ><a name="1311" href="lib.groups.Lift.html#1311" class="Bound"
+      >i</a
+      ><a name="1312"
+      > </a
+      ><a name="1313" href="lib.groups.Lift.html#1313" class="Bound"
+      >j</a
+      ><a name="1314" class="Symbol"
+      >}</a
+      ><a name="1315"
+      > </a
+      ><a name="1316" class="Symbol"
+      >(</a
+      ><a name="1317" href="lib.groups.Lift.html#1317" class="Bound"
+      >G</a
+      ><a name="1318"
+      > </a
+      ><a name="1319" class="Symbol"
+      >:</a
+      ><a name="1320"
+      > </a
+      ><a name="1321" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1326"
+      > </a
+      ><a name="1327" href="lib.groups.Lift.html#1311" class="Bound"
+      >i</a
+      ><a name="1328" class="Symbol"
+      >)</a
+      ><a name="1329"
+      > </a
+      ><a name="1330" class="Symbol"
+      >&#8594;</a
+      ><a name="1331"
+      > </a
+      ><a name="1332" href="lib.types.Group.html#7098" class="Function"
+      >is-abelian</a
+      ><a name="1342"
+      > </a
+      ><a name="1343" href="lib.groups.Lift.html#1317" class="Bound"
+      >G</a
+      ><a name="1344"
+      > </a
+      ><a name="1345" class="Symbol"
+      >&#8594;</a
+      ><a name="1346"
+      > </a
+      ><a name="1347" href="lib.types.Group.html#7098" class="Function"
+      >is-abelian</a
+      ><a name="1357"
+      > </a
+      ><a name="1358" class="Symbol"
+      >(</a
+      ><a name="1359" href="lib.groups.Lift.html#661" class="Function"
+      >Lift-group</a
+      ><a name="1369"
+      > </a
+      ><a name="1370" class="Symbol"
+      >{</a
+      ><a name="1371" class="Argument"
+      >j</a
+      ><a name="1372"
+      > </a
+      ><a name="1373" class="Symbol"
+      >=</a
+      ><a name="1374"
+      > </a
+      ><a name="1375" href="lib.groups.Lift.html#1313" class="Bound"
+      >j</a
+      ><a name="1376" class="Symbol"
+      >}</a
+      ><a name="1377"
+      > </a
+      ><a name="1378" href="lib.groups.Lift.html#1317" class="Bound"
+      >G</a
+      ><a name="1379" class="Symbol"
+      >)</a
+      ><a name="1380"
+      >
+</a
+      ><a name="1381" href="lib.groups.Lift.html#1284" class="Function"
+      >Lift-group-is-abelian</a
+      ><a name="1402"
+      > </a
+      ><a name="1403" href="lib.groups.Lift.html#1403" class="Bound"
+      >G</a
+      ><a name="1404"
+      > </a
+      ><a name="1405" href="lib.groups.Lift.html#1405" class="Bound"
+      >comm</a
+      ><a name="1409"
+      > </a
+      ><a name="1410" class="Symbol"
+      >(</a
+      ><a name="1411" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="1415"
+      > </a
+      ><a name="1416" href="lib.groups.Lift.html#1416" class="Bound"
+      >g&#8321;</a
+      ><a name="1418" class="Symbol"
+      >)</a
+      ><a name="1419"
+      > </a
+      ><a name="1420" class="Symbol"
+      >(</a
+      ><a name="1421" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="1425"
+      > </a
+      ><a name="1426" href="lib.groups.Lift.html#1426" class="Bound"
+      >g&#8322;</a
+      ><a name="1428" class="Symbol"
+      >)</a
+      ><a name="1429"
+      > </a
+      ><a name="1430" class="Symbol"
+      >=</a
+      ><a name="1431"
+      > </a
+      ><a name="1432" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1434"
+      > </a
+      ><a name="1435" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="1439"
+      > </a
+      ><a name="1440" class="Symbol"
+      >(</a
+      ><a name="1441" href="lib.groups.Lift.html#1405" class="Bound"
+      >comm</a
+      ><a name="1445"
+      > </a
+      ><a name="1446" href="lib.groups.Lift.html#1416" class="Bound"
+      >g&#8321;</a
+      ><a name="1448"
+      > </a
+      ><a name="1449" href="lib.groups.Lift.html#1426" class="Bound"
+      >g&#8322;</a
+      ><a name="1451" class="Symbol"
+      >)</a
+      ><a name="1452"
+      >
+
+</a
+      ><a name="1454" href="lib.groups.Lift.html#1454" class="Function"
+      >Lift-abgroup</a
+      ><a name="1466"
+      > </a
+      ><a name="1467" class="Symbol"
+      >:</a
+      ><a name="1468"
+      > </a
+      ><a name="1469" class="Symbol"
+      >&#8704;</a
+      ><a name="1470"
+      > </a
+      ><a name="1471" class="Symbol"
+      >{</a
+      ><a name="1472" href="lib.groups.Lift.html#1472" class="Bound"
+      >i</a
+      ><a name="1473"
+      > </a
+      ><a name="1474" href="lib.groups.Lift.html#1474" class="Bound"
+      >j</a
+      ><a name="1475" class="Symbol"
+      >}</a
+      ><a name="1476"
+      > </a
+      ><a name="1477" class="Symbol"
+      >(</a
+      ><a name="1478" href="lib.groups.Lift.html#1478" class="Bound"
+      >G</a
+      ><a name="1479"
+      > </a
+      ><a name="1480" class="Symbol"
+      >:</a
+      ><a name="1481"
+      > </a
+      ><a name="1482" href="lib.types.Group.html#7210" class="Function"
+      >AbGroup</a
+      ><a name="1489"
+      > </a
+      ><a name="1490" href="lib.groups.Lift.html#1472" class="Bound"
+      >i</a
+      ><a name="1491" class="Symbol"
+      >)</a
+      ><a name="1492"
+      > </a
+      ><a name="1493" class="Symbol"
+      >&#8594;</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" href="lib.types.Group.html#7210" class="Function"
+      >AbGroup</a
+      ><a name="1502"
+      > </a
+      ><a name="1503" class="Symbol"
+      >(</a
+      ><a name="1504" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1508"
+      > </a
+      ><a name="1509" href="lib.groups.Lift.html#1472" class="Bound"
+      >i</a
+      ><a name="1510"
+      > </a
+      ><a name="1511" href="lib.groups.Lift.html#1474" class="Bound"
+      >j</a
+      ><a name="1512" class="Symbol"
+      >)</a
+      ><a name="1513"
+      >
+</a
+      ><a name="1514" href="lib.groups.Lift.html#1454" class="Function"
+      >Lift-abgroup</a
+      ><a name="1526"
+      > </a
+      ><a name="1527" class="Symbol"
+      >{</a
+      ><a name="1528" class="Argument"
+      >j</a
+      ><a name="1529"
+      > </a
+      ><a name="1530" class="Symbol"
+      >=</a
+      ><a name="1531"
+      > </a
+      ><a name="1532" href="lib.groups.Lift.html#1532" class="Bound"
+      >j</a
+      ><a name="1533" class="Symbol"
+      >}</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" href="lib.groups.Lift.html#1535" class="Bound"
+      >G</a
+      ><a name="1536"
+      > </a
+      ><a name="1537" class="Symbol"
+      >=</a
+      ><a name="1538"
+      > </a
+      ><a name="1539" href="lib.groups.Lift.html#661" class="Function"
+      >Lift-group</a
+      ><a name="1549"
+      > </a
+      ><a name="1550" class="Symbol"
+      >{</a
+      ><a name="1551" class="Argument"
+      >j</a
+      ><a name="1552"
+      > </a
+      ><a name="1553" class="Symbol"
+      >=</a
+      ><a name="1554"
+      > </a
+      ><a name="1555" href="lib.groups.Lift.html#1532" class="Bound"
+      >j</a
+      ><a name="1556" class="Symbol"
+      >}</a
+      ><a name="1557"
+      > </a
+      ><a name="1558" class="Symbol"
+      >(</a
+      ><a name="1559" href="lib.types.Group.html#7376" class="Function"
+      >AbGroup.grp</a
+      ><a name="1570"
+      > </a
+      ><a name="1571" href="lib.groups.Lift.html#1535" class="Bound"
+      >G</a
+      ><a name="1572" class="Symbol"
+      >)</a
+      ><a name="1573"
+      >
+  </a
+      ><a name="1576" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1577"
+      > </a
+      ><a name="1578" href="lib.groups.Lift.html#1284" class="Function"
+      >Lift-group-is-abelian</a
+      ><a name="1599"
+      > </a
+      ><a name="1600" class="Symbol"
+      >(</a
+      ><a name="1601" href="lib.types.Group.html#7376" class="Function"
+      >AbGroup.grp</a
+      ><a name="1612"
+      > </a
+      ><a name="1613" href="lib.groups.Lift.html#1535" class="Bound"
+      >G</a
+      ><a name="1614" class="Symbol"
+      >)</a
+      ><a name="1615"
+      > </a
+      ><a name="1616" class="Symbol"
+      >(</a
+      ><a name="1617" href="lib.types.Group.html#7390" class="Function"
+      >AbGroup.comm</a
+      ><a name="1629"
+      > </a
+      ><a name="1630" href="lib.groups.Lift.html#1535" class="Bound"
+      >G</a
+      ><a name="1631" class="Symbol"
+      >)</a
+      ><a name="1632"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

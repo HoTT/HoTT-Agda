@@ -1,0 +1,1996 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.AnyUniversalCoverIsPathSet</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+
+</a
+      ><a name="60" class="Keyword"
+      >module</a
+      ><a name="66"
+      > </a
+      ><a name="67" href="homotopy.AnyUniversalCoverIsPathSet.html#1" class="Module"
+      >homotopy.AnyUniversalCoverIsPathSet</a
+      ><a name="102"
+      > </a
+      ><a name="103" class="Symbol"
+      >{</a
+      ><a name="104" href="homotopy.AnyUniversalCoverIsPathSet.html#104" class="Bound"
+      >i</a
+      ><a name="105" class="Symbol"
+      >}</a
+      ><a name="106"
+      > </a
+      ><a name="107" class="Symbol"
+      >(</a
+      ><a name="108" href="homotopy.AnyUniversalCoverIsPathSet.html#108" class="Bound"
+      >X</a
+      ><a name="109"
+      > </a
+      ><a name="110" class="Symbol"
+      >:</a
+      ><a name="111"
+      > </a
+      ><a name="112" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="115"
+      > </a
+      ><a name="116" href="homotopy.AnyUniversalCoverIsPathSet.html#104" class="Bound"
+      >i</a
+      ><a name="117" class="Symbol"
+      >)</a
+      ><a name="118"
+      > </a
+      ><a name="119" class="Keyword"
+      >where</a
+      ><a name="124"
+      >
+
+</a
+      ><a name="126" class="Keyword"
+      >private</a
+      ><a name="133"
+      >
+  </a
+      ><a name="136" href="homotopy.AnyUniversalCoverIsPathSet.html#136" class="Function"
+      >a&#8321;</a
+      ><a name="138"
+      > </a
+      ><a name="139" class="Symbol"
+      >=</a
+      ><a name="140"
+      > </a
+      ><a name="141" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="143"
+      > </a
+      ><a name="144" href="homotopy.AnyUniversalCoverIsPathSet.html#108" class="Bound"
+      >X</a
+      ><a name="145"
+      >
+
+</a
+      ><a name="147" href="homotopy.AnyUniversalCoverIsPathSet.html#147" class="Function"
+      >path-set-is-universal</a
+      ><a name="168"
+      > </a
+      ><a name="169" class="Symbol"
+      >:</a
+      ><a name="170"
+      > </a
+      ><a name="171" href="lib.types.Cover.html#1300" class="Function"
+      >is-universal</a
+      ><a name="183"
+      > </a
+      ><a name="184" class="Symbol"
+      >(</a
+      ><a name="185" href="lib.types.Cover.html#5307" class="Function"
+      >path-set-cover</a
+      ><a name="199"
+      > </a
+      ><a name="200" href="homotopy.AnyUniversalCoverIsPathSet.html#108" class="Bound"
+      >X</a
+      ><a name="201" class="Symbol"
+      >)</a
+      ><a name="202"
+      >
+</a
+      ><a name="203" href="homotopy.AnyUniversalCoverIsPathSet.html#147" class="Function"
+      >path-set-is-universal</a
+      ><a name="224"
+      > </a
+      ><a name="225" class="Symbol"
+      >=</a
+      ><a name="226"
+      > </a
+      ><a name="227" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="228"
+      > </a
+      ><a name="229" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="231"
+      > </a
+      ><a name="232" href="homotopy.AnyUniversalCoverIsPathSet.html#108" class="Bound"
+      >X</a
+      ><a name="233"
+      > </a
+      ><a name="234" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="235"
+      > </a
+      ><a name="236" href="lib.types.PathSet.html#645" class="Function"
+      >idp&#8320;</a
+      ><a name="240"
+      > </a
+      ><a name="241" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="242"
+      > </a
+      ><a name="243" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="244"
+      >
+  </a
+      ><a name="247" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="257"
+      >
+    </a
+      ><a name="262" class="Symbol"
+      >{</a
+      ><a name="263" class="Argument"
+      >P</a
+      ><a name="264"
+      > </a
+      ><a name="265" class="Symbol"
+      >=</a
+      ><a name="266"
+      > </a
+      ><a name="267" class="Symbol"
+      >&#955;</a
+      ><a name="268"
+      > </a
+      ><a name="269" href="homotopy.AnyUniversalCoverIsPathSet.html#269" class="Bound"
+      >xp&#8320;</a
+      ><a name="272"
+      > </a
+      ><a name="273" class="Symbol"
+      >&#8594;</a
+      ><a name="274"
+      > </a
+      ><a name="275" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="276"
+      > </a
+      ><a name="277" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="279"
+      > </a
+      ><a name="280" href="homotopy.AnyUniversalCoverIsPathSet.html#108" class="Bound"
+      >X</a
+      ><a name="281"
+      > </a
+      ><a name="282" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="283"
+      > </a
+      ><a name="284" href="lib.types.PathSet.html#645" class="Function"
+      >idp&#8320;</a
+      ><a name="288"
+      > </a
+      ><a name="289" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="290"
+      > </a
+      ><a name="291" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="293"
+      > </a
+      ><a name="294" href="homotopy.AnyUniversalCoverIsPathSet.html#269" class="Bound"
+      >xp&#8320;</a
+      ><a name="297" class="Symbol"
+      >}</a
+      ><a name="298"
+      >
+    </a
+      ><a name="303" class="Symbol"
+      >(&#955;</a
+      ><a name="305"
+      > </a
+      ><a name="306" href="homotopy.AnyUniversalCoverIsPathSet.html#306" class="Bound"
+      >xp&#8320;</a
+      ><a name="309"
+      > </a
+      ><a name="310" class="Symbol"
+      >&#8594;</a
+      ><a name="311"
+      > </a
+      ><a name="312" href="lib.NType.html#3994" class="Function"
+      >=-preserves-level</a
+      ><a name="329"
+      > </a
+      ><a name="330" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="341" class="Symbol"
+      >)</a
+      ><a name="342"
+      >
+    </a
+      ><a name="347" class="Symbol"
+      >(&#955;{(</a
+      ><a name="351" href="homotopy.AnyUniversalCoverIsPathSet.html#351" class="Bound"
+      >x</a
+      ><a name="352"
+      > </a
+      ><a name="353" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="354"
+      > </a
+      ><a name="355" href="homotopy.AnyUniversalCoverIsPathSet.html#355" class="Bound"
+      >p&#8320;</a
+      ><a name="357" class="Symbol"
+      >)</a
+      ><a name="358"
+      > </a
+      ><a name="359" class="Symbol"
+      >&#8594;</a
+      ><a name="360"
+      > </a
+      ><a name="361" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="371"
+      >
+      </a
+      ><a name="378" class="Symbol"
+      >{</a
+      ><a name="379" class="Argument"
+      >P</a
+      ><a name="380"
+      > </a
+      ><a name="381" class="Symbol"
+      >=</a
+      ><a name="382"
+      > </a
+      ><a name="383" class="Symbol"
+      >&#955;</a
+      ><a name="384"
+      > </a
+      ><a name="385" href="homotopy.AnyUniversalCoverIsPathSet.html#385" class="Bound"
+      >p&#8320;</a
+      ><a name="387"
+      > </a
+      ><a name="388" class="Symbol"
+      >&#8594;</a
+      ><a name="389"
+      > </a
+      ><a name="390" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="391"
+      > </a
+      ><a name="392" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="394"
+      > </a
+      ><a name="395" href="homotopy.AnyUniversalCoverIsPathSet.html#108" class="Bound"
+      >X</a
+      ><a name="396"
+      > </a
+      ><a name="397" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="398"
+      > </a
+      ><a name="399" href="lib.types.PathSet.html#645" class="Function"
+      >idp&#8320;</a
+      ><a name="403"
+      > </a
+      ><a name="404" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="405"
+      > </a
+      ><a name="406" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="408"
+      > </a
+      ><a name="409" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="410"
+      > </a
+      ><a name="411" href="homotopy.AnyUniversalCoverIsPathSet.html#351" class="Bound"
+      >x</a
+      ><a name="412"
+      > </a
+      ><a name="413" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="414"
+      > </a
+      ><a name="415" href="homotopy.AnyUniversalCoverIsPathSet.html#385" class="Bound"
+      >p&#8320;</a
+      ><a name="417"
+      > </a
+      ><a name="418" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="419" class="Symbol"
+      >}</a
+      ><a name="420"
+      >
+      </a
+      ><a name="427" class="Symbol"
+      >(&#955;</a
+      ><a name="429"
+      > </a
+      ><a name="430" href="homotopy.AnyUniversalCoverIsPathSet.html#430" class="Bound"
+      >p&#8320;</a
+      ><a name="432"
+      > </a
+      ><a name="433" class="Symbol"
+      >&#8594;</a
+      ><a name="434"
+      > </a
+      ><a name="435" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="446"
+      > </a
+      ><a name="447" class="Symbol"
+      >{</a
+      ><a name="448" class="Argument"
+      >n</a
+      ><a name="449"
+      > </a
+      ><a name="450" class="Symbol"
+      >=</a
+      ><a name="451"
+      > </a
+      ><a name="452" class="Number"
+      >1</a
+      ><a name="453" class="Symbol"
+      >}</a
+      ><a name="454"
+      > </a
+      ><a name="455" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="459"
+      > </a
+      ><a name="460" href="homotopy.AnyUniversalCoverIsPathSet.html#108" class="Bound"
+      >X</a
+      ><a name="461"
+      > </a
+      ><a name="462" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="463"
+      > </a
+      ><a name="464" href="lib.types.PathSet.html#645" class="Function"
+      >idp&#8320;</a
+      ><a name="468"
+      > </a
+      ><a name="469" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="470"
+      > </a
+      ><a name="471" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="472"
+      > </a
+      ><a name="473" href="homotopy.AnyUniversalCoverIsPathSet.html#351" class="Bound"
+      >x</a
+      ><a name="474"
+      > </a
+      ><a name="475" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="476"
+      > </a
+      ><a name="477" href="homotopy.AnyUniversalCoverIsPathSet.html#430" class="Bound"
+      >p&#8320;</a
+      ><a name="479"
+      > </a
+      ><a name="480" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="481" class="Symbol"
+      >)</a
+      ><a name="482"
+      >
+      </a
+      ><a name="489" class="Symbol"
+      >(&#955;</a
+      ><a name="491"
+      > </a
+      ><a name="492" href="homotopy.AnyUniversalCoverIsPathSet.html#492" class="Bound"
+      >p</a
+      ><a name="493"
+      > </a
+      ><a name="494" class="Symbol"
+      >&#8594;</a
+      ><a name="495"
+      > </a
+      ><a name="496" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="498"
+      > </a
+      ><a name="499" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[_]</a
+      ><a name="502"
+      > </a
+      ><a name="503" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="504"
+      > </a
+      ><a name="505" href="lib.Base.html#5386" class="Function"
+      >pair=</a
+      ><a name="510"
+      > </a
+      ><a name="511" href="homotopy.AnyUniversalCoverIsPathSet.html#492" class="Bound"
+      >p</a
+      ><a name="512"
+      > </a
+      ><a name="513" class="Symbol"
+      >(</a
+      ><a name="514" href="homotopy.AnyUniversalCoverIsPathSet.html#548" class="Function"
+      >lemma</a
+      ><a name="519"
+      > </a
+      ><a name="520" href="homotopy.AnyUniversalCoverIsPathSet.html#492" class="Bound"
+      >p</a
+      ><a name="521" class="Symbol"
+      >))</a
+      ><a name="523"
+      >
+      </a
+      ><a name="530" href="homotopy.AnyUniversalCoverIsPathSet.html#355" class="Bound"
+      >p&#8320;</a
+      ><a name="532"
+      > </a
+      ><a name="533" class="Symbol"
+      >})</a
+      ><a name="535"
+      >
+  </a
+      ><a name="538" class="Keyword"
+      >where</a
+      ><a name="543"
+      >
+    </a
+      ><a name="548" href="homotopy.AnyUniversalCoverIsPathSet.html#548" class="Function"
+      >lemma</a
+      ><a name="553"
+      > </a
+      ><a name="554" class="Symbol"
+      >:</a
+      ><a name="555"
+      > </a
+      ><a name="556" class="Symbol"
+      >&#8704;</a
+      ><a name="557"
+      > </a
+      ><a name="558" class="Symbol"
+      >{</a
+      ><a name="559" href="homotopy.AnyUniversalCoverIsPathSet.html#559" class="Bound"
+      >x</a
+      ><a name="560" class="Symbol"
+      >}</a
+      ><a name="561"
+      > </a
+      ><a name="562" class="Symbol"
+      >(</a
+      ><a name="563" href="homotopy.AnyUniversalCoverIsPathSet.html#563" class="Bound"
+      >p</a
+      ><a name="564"
+      > </a
+      ><a name="565" class="Symbol"
+      >:</a
+      ><a name="566"
+      > </a
+      ><a name="567" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="569"
+      > </a
+      ><a name="570" href="homotopy.AnyUniversalCoverIsPathSet.html#108" class="Bound"
+      >X</a
+      ><a name="571"
+      > </a
+      ><a name="572" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="574"
+      > </a
+      ><a name="575" href="homotopy.AnyUniversalCoverIsPathSet.html#559" class="Bound"
+      >x</a
+      ><a name="576" class="Symbol"
+      >)</a
+      ><a name="577"
+      > </a
+      ><a name="578" class="Symbol"
+      >&#8594;</a
+      ><a name="579"
+      > </a
+      ><a name="580" href="lib.types.PathSet.html#645" class="Function"
+      >idp&#8320;</a
+      ><a name="584"
+      > </a
+      ><a name="585" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="587"
+      > </a
+      ><a name="588" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="589"
+      > </a
+      ><a name="590" href="homotopy.AnyUniversalCoverIsPathSet.html#563" class="Bound"
+      >p</a
+      ><a name="591"
+      > </a
+      ><a name="592" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="593"
+      > </a
+      ><a name="594" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="595"
+      > </a
+      ><a name="596" class="Symbol"
+      >(</a
+      ><a name="597" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="599"
+      > </a
+      ><a name="600" href="homotopy.AnyUniversalCoverIsPathSet.html#108" class="Bound"
+      >X</a
+      ><a name="601"
+      > </a
+      ><a name="602" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;_</a
+      ><a name="605" class="Symbol"
+      >)</a
+      ><a name="606"
+      > </a
+      ><a name="607" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="608"
+      > </a
+      ><a name="609" href="homotopy.AnyUniversalCoverIsPathSet.html#563" class="Bound"
+      >p</a
+      ><a name="610"
+      > </a
+      ><a name="611" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="612"
+      >
+    </a
+      ><a name="617" href="homotopy.AnyUniversalCoverIsPathSet.html#548" class="Function"
+      >lemma</a
+      ><a name="622"
+      > </a
+      ><a name="623" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="626"
+      > </a
+      ><a name="627" class="Symbol"
+      >=</a
+      ><a name="628"
+      > </a
+      ><a name="629" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="632"
+      >
+
+</a
+      ><a name="634" class="Keyword"
+      >module</a
+      ><a name="640"
+      > </a
+      ><a name="641" href="homotopy.AnyUniversalCoverIsPathSet.html#641" class="Module"
+      >_</a
+      ><a name="642"
+      > </a
+      ><a name="643" class="Symbol"
+      >{</a
+      ><a name="644" href="homotopy.AnyUniversalCoverIsPathSet.html#644" class="Bound"
+      >j</a
+      ><a name="645" class="Symbol"
+      >}</a
+      ><a name="646"
+      > </a
+      ><a name="647" class="Symbol"
+      >(</a
+      ><a name="648" href="homotopy.AnyUniversalCoverIsPathSet.html#648" class="Bound"
+      >univ-cov</a
+      ><a name="656"
+      > </a
+      ><a name="657" class="Symbol"
+      >:</a
+      ><a name="658"
+      > </a
+      ><a name="659" href="lib.types.Cover.html#1610" class="Function"
+      >&#8857;UniversalCover</a
+      ><a name="674"
+      > </a
+      ><a name="675" href="homotopy.AnyUniversalCoverIsPathSet.html#108" class="Bound"
+      >X</a
+      ><a name="676"
+      > </a
+      ><a name="677" href="homotopy.AnyUniversalCoverIsPathSet.html#644" class="Bound"
+      >j</a
+      ><a name="678" class="Symbol"
+      >)</a
+      ><a name="679"
+      > </a
+      ><a name="680" class="Keyword"
+      >where</a
+      ><a name="685"
+      >
+  </a
+      ><a name="688" class="Keyword"
+      >private</a
+      ><a name="695"
+      >
+    </a
+      ><a name="700" class="Keyword"
+      >module</a
+      ><a name="706"
+      > </a
+      ><a name="707" href="homotopy.AnyUniversalCoverIsPathSet.html#707" class="Module"
+      >univ-cov</a
+      ><a name="715"
+      > </a
+      ><a name="716" class="Symbol"
+      >=</a
+      ><a name="717"
+      > </a
+      ><a name="718" href="lib.types.Cover.html#1730" class="Module"
+      >&#8857;UniversalCover</a
+      ><a name="733"
+      > </a
+      ><a name="734" href="homotopy.AnyUniversalCoverIsPathSet.html#648" class="Bound"
+      >univ-cov</a
+      ><a name="742"
+      >
+
+    </a
+      ><a name="748" class="Comment"
+      >-- One-to-one mapping between the universal cover</a
+      ><a name="797"
+      >
+    </a
+      ><a name="802" class="Comment"
+      >-- and the truncated path spaces from one point.</a
+      ><a name="850"
+      >
+
+    </a
+      ><a name="856" href="homotopy.AnyUniversalCoverIsPathSet.html#856" class="Function"
+      >[path]</a
+      ><a name="862"
+      > </a
+      ><a name="863" class="Symbol"
+      >:</a
+      ><a name="864"
+      > </a
+      ><a name="865" class="Symbol"
+      >&#8704;</a
+      ><a name="866"
+      > </a
+      ><a name="867" class="Symbol"
+      >(</a
+      ><a name="868" href="homotopy.AnyUniversalCoverIsPathSet.html#868" class="Bound"
+      >a&#8657;&#8321;</a
+      ><a name="871"
+      > </a
+      ><a name="872" href="homotopy.AnyUniversalCoverIsPathSet.html#872" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="875"
+      > </a
+      ><a name="876" class="Symbol"
+      >:</a
+      ><a name="877"
+      > </a
+      ><a name="878" href="lib.types.Cover.html#574" class="Function"
+      >univ-cov.TotalSpace</a
+      ><a name="897" class="Symbol"
+      >)</a
+      ><a name="898"
+      > </a
+      ><a name="899" class="Symbol"
+      >&#8594;</a
+      ><a name="900"
+      > </a
+      ><a name="901" href="homotopy.AnyUniversalCoverIsPathSet.html#868" class="Bound"
+      >a&#8657;&#8321;</a
+      ><a name="904"
+      > </a
+      ><a name="905" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="907"
+      > </a
+      ><a name="908" href="homotopy.AnyUniversalCoverIsPathSet.html#872" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="911"
+      >
+    </a
+      ><a name="916" href="homotopy.AnyUniversalCoverIsPathSet.html#856" class="Function"
+      >[path]</a
+      ><a name="922"
+      > </a
+      ><a name="923" href="homotopy.AnyUniversalCoverIsPathSet.html#923" class="Bound"
+      >a&#8657;&#8321;</a
+      ><a name="926"
+      > </a
+      ><a name="927" href="homotopy.AnyUniversalCoverIsPathSet.html#927" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="930"
+      > </a
+      ><a name="931" class="Symbol"
+      >=</a
+      ><a name="932"
+      > </a
+      ><a name="933" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="935"
+      > </a
+      ><a name="936" class="Symbol"
+      >(</a
+      ><a name="937" href="lib.types.Truncation.html#2602" class="Function"
+      >Trunc=-equiv</a
+      ><a name="949"
+      > </a
+      ><a name="950" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="951"
+      > </a
+      ><a name="952" href="homotopy.AnyUniversalCoverIsPathSet.html#923" class="Bound"
+      >a&#8657;&#8321;</a
+      ><a name="955"
+      > </a
+      ><a name="956" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="957"
+      > </a
+      ><a name="958" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="959"
+      > </a
+      ><a name="960" href="homotopy.AnyUniversalCoverIsPathSet.html#927" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="963"
+      > </a
+      ><a name="964" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="965" class="Symbol"
+      >)</a
+      ><a name="966"
+      >
+      </a
+      ><a name="973" class="Symbol"
+      >(</a
+      ><a name="974" href="lib.NType.html#2533" class="Function"
+      >contr-has-all-paths</a
+      ><a name="993"
+      > </a
+      ><a name="994" href="lib.types.Cover.html#1815" class="Function"
+      >univ-cov.is-univ</a
+      ><a name="1010"
+      > </a
+      ><a name="1011" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="1012"
+      > </a
+      ><a name="1013" href="homotopy.AnyUniversalCoverIsPathSet.html#923" class="Bound"
+      >a&#8657;&#8321;</a
+      ><a name="1016"
+      > </a
+      ><a name="1017" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="1018"
+      > </a
+      ><a name="1019" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="1020"
+      > </a
+      ><a name="1021" href="homotopy.AnyUniversalCoverIsPathSet.html#927" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="1024"
+      > </a
+      ><a name="1025" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="1026" class="Symbol"
+      >)</a
+      ><a name="1027"
+      >
+
+    </a
+      ><a name="1033" class="Keyword"
+      >abstract</a
+      ><a name="1041"
+      >
+      </a
+      ><a name="1048" href="homotopy.AnyUniversalCoverIsPathSet.html#1048" class="Function"
+      >[path]-has-all-paths</a
+      ><a name="1068"
+      > </a
+      ><a name="1069" class="Symbol"
+      >:</a
+      ><a name="1070"
+      >
+        </a
+      ><a name="1079" class="Symbol"
+      >&#8704;</a
+      ><a name="1080"
+      > </a
+      ><a name="1081" class="Symbol"
+      >{</a
+      ><a name="1082" href="homotopy.AnyUniversalCoverIsPathSet.html#1082" class="Bound"
+      >a&#8657;&#8321;</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" href="homotopy.AnyUniversalCoverIsPathSet.html#1086" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="1089"
+      > </a
+      ><a name="1090" class="Symbol"
+      >:</a
+      ><a name="1091"
+      > </a
+      ><a name="1092" href="lib.types.Cover.html#574" class="Function"
+      >univ-cov.TotalSpace</a
+      ><a name="1111" class="Symbol"
+      >}</a
+      ><a name="1112"
+      >
+        </a
+      ><a name="1121" class="Symbol"
+      >&#8594;</a
+      ><a name="1122"
+      > </a
+      ><a name="1123" href="lib.NType.html#558" class="Function"
+      >has-all-paths</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" class="Symbol"
+      >(</a
+      ><a name="1138" href="homotopy.AnyUniversalCoverIsPathSet.html#1082" class="Bound"
+      >a&#8657;&#8321;</a
+      ><a name="1141"
+      > </a
+      ><a name="1142" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="1144"
+      > </a
+      ><a name="1145" href="homotopy.AnyUniversalCoverIsPathSet.html#1086" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="1148" class="Symbol"
+      >)</a
+      ><a name="1149"
+      >
+      </a
+      ><a name="1156" href="homotopy.AnyUniversalCoverIsPathSet.html#1048" class="Function"
+      >[path]-has-all-paths</a
+      ><a name="1176"
+      > </a
+      ><a name="1177" class="Symbol"
+      >{</a
+      ><a name="1178" href="homotopy.AnyUniversalCoverIsPathSet.html#1178" class="Bound"
+      >a&#8657;&#8321;</a
+      ><a name="1181" class="Symbol"
+      >}</a
+      ><a name="1182"
+      > </a
+      ><a name="1183" class="Symbol"
+      >{</a
+      ><a name="1184" href="homotopy.AnyUniversalCoverIsPathSet.html#1184" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="1187" class="Symbol"
+      >}</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" class="Symbol"
+      >=</a
+      ><a name="1190"
+      >
+        </a
+      ><a name="1199" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="1208"
+      > </a
+      ><a name="1209" href="lib.NType.html#558" class="Function"
+      >has-all-paths</a
+      ><a name="1222"
+      > </a
+      ><a name="1223" class="Symbol"
+      >(</a
+      ><a name="1224" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1226"
+      > </a
+      ><a name="1227" class="Symbol"
+      >(</a
+      ><a name="1228" href="lib.types.Truncation.html#2602" class="Function"
+      >Trunc=-equiv</a
+      ><a name="1240"
+      > </a
+      ><a name="1241" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="1242"
+      > </a
+      ><a name="1243" href="homotopy.AnyUniversalCoverIsPathSet.html#1178" class="Bound"
+      >a&#8657;&#8321;</a
+      ><a name="1246"
+      > </a
+      ><a name="1247" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="1248"
+      > </a
+      ><a name="1249" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="1250"
+      > </a
+      ><a name="1251" href="homotopy.AnyUniversalCoverIsPathSet.html#1184" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="1254"
+      > </a
+      ><a name="1255" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="1256" class="Symbol"
+      >))</a
+      ><a name="1258"
+      > </a
+      ><a name="1259" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1260"
+      >
+          </a
+      ><a name="1271" href="lib.NType.html#2533" class="Function"
+      >contr-has-all-paths</a
+      ><a name="1290"
+      > </a
+      ><a name="1291" class="Symbol"
+      >(</a
+      ><a name="1292" href="lib.NType.html#1123" class="Function"
+      >raise-level</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" class="Number"
+      >-2</a
+      ><a name="1306"
+      > </a
+      ><a name="1307" href="lib.types.Cover.html#1815" class="Function"
+      >univ-cov.is-univ</a
+      ><a name="1323"
+      > </a
+      ><a name="1324" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="1325"
+      > </a
+      ><a name="1326" href="homotopy.AnyUniversalCoverIsPathSet.html#1178" class="Bound"
+      >a&#8657;&#8321;</a
+      ><a name="1329"
+      > </a
+      ><a name="1330" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="1331"
+      > </a
+      ><a name="1332" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="1333"
+      > </a
+      ><a name="1334" href="homotopy.AnyUniversalCoverIsPathSet.html#1184" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="1337"
+      > </a
+      ><a name="1338" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="1339" class="Symbol"
+      >)</a
+      ><a name="1340"
+      >
+
+    </a
+      ><a name="1346" href="homotopy.AnyUniversalCoverIsPathSet.html#1346" class="Function"
+      >to</a
+      ><a name="1348"
+      > </a
+      ><a name="1349" class="Symbol"
+      >:</a
+      ><a name="1350"
+      > </a
+      ><a name="1351" class="Symbol"
+      >&#8704;</a
+      ><a name="1352"
+      > </a
+      ><a name="1353" class="Symbol"
+      >{</a
+      ><a name="1354" href="homotopy.AnyUniversalCoverIsPathSet.html#1354" class="Bound"
+      >a&#8322;</a
+      ><a name="1356" class="Symbol"
+      >}</a
+      ><a name="1357"
+      > </a
+      ><a name="1358" class="Symbol"
+      >&#8594;</a
+      ><a name="1359"
+      > </a
+      ><a name="1360" href="lib.types.Cover.html#483" class="Function"
+      >univ-cov.Fiber</a
+      ><a name="1374"
+      > </a
+      ><a name="1375" href="homotopy.AnyUniversalCoverIsPathSet.html#1354" class="Bound"
+      >a&#8322;</a
+      ><a name="1377"
+      > </a
+      ><a name="1378" class="Symbol"
+      >&#8594;</a
+      ><a name="1379"
+      > </a
+      ><a name="1380" href="homotopy.AnyUniversalCoverIsPathSet.html#136" class="Function"
+      >a&#8321;</a
+      ><a name="1382"
+      > </a
+      ><a name="1383" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="1385"
+      > </a
+      ><a name="1386" href="homotopy.AnyUniversalCoverIsPathSet.html#1354" class="Bound"
+      >a&#8322;</a
+      ><a name="1388"
+      >
+    </a
+      ><a name="1393" href="homotopy.AnyUniversalCoverIsPathSet.html#1346" class="Function"
+      >to</a
+      ><a name="1395"
+      > </a
+      ><a name="1396" class="Symbol"
+      >{</a
+      ><a name="1397" href="homotopy.AnyUniversalCoverIsPathSet.html#1397" class="Bound"
+      >a&#8322;</a
+      ><a name="1399" class="Symbol"
+      >}</a
+      ><a name="1400"
+      > </a
+      ><a name="1401" href="homotopy.AnyUniversalCoverIsPathSet.html#1401" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="1404"
+      > </a
+      ><a name="1405" class="Symbol"
+      >=</a
+      ><a name="1406"
+      > </a
+      ><a name="1407" href="lib.types.PathSet.html#704" class="Function"
+      >ap&#8320;</a
+      ><a name="1410"
+      > </a
+      ><a name="1411" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1414"
+      > </a
+      ><a name="1415" class="Symbol"
+      >(</a
+      ><a name="1416" href="homotopy.AnyUniversalCoverIsPathSet.html#856" class="Function"
+      >[path]</a
+      ><a name="1422"
+      > </a
+      ><a name="1423" class="Symbol"
+      >(</a
+      ><a name="1424" href="homotopy.AnyUniversalCoverIsPathSet.html#136" class="Function"
+      >a&#8321;</a
+      ><a name="1426"
+      > </a
+      ><a name="1427" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1428"
+      > </a
+      ><a name="1429" href="lib.types.Cover.html#786" class="Function"
+      >univ-cov.pt</a
+      ><a name="1440" class="Symbol"
+      >)</a
+      ><a name="1441"
+      > </a
+      ><a name="1442" class="Symbol"
+      >(</a
+      ><a name="1443" href="homotopy.AnyUniversalCoverIsPathSet.html#1397" class="Bound"
+      >a&#8322;</a
+      ><a name="1445"
+      > </a
+      ><a name="1446" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1447"
+      > </a
+      ><a name="1448" href="homotopy.AnyUniversalCoverIsPathSet.html#1401" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="1451" class="Symbol"
+      >))</a
+      ><a name="1453"
+      >
+
+    </a
+      ><a name="1459" href="homotopy.AnyUniversalCoverIsPathSet.html#1459" class="Function"
+      >from</a
+      ><a name="1463"
+      > </a
+      ><a name="1464" class="Symbol"
+      >:</a
+      ><a name="1465"
+      > </a
+      ><a name="1466" class="Symbol"
+      >&#8704;</a
+      ><a name="1467"
+      > </a
+      ><a name="1468" class="Symbol"
+      >{</a
+      ><a name="1469" href="homotopy.AnyUniversalCoverIsPathSet.html#1469" class="Bound"
+      >a&#8322;</a
+      ><a name="1471" class="Symbol"
+      >}</a
+      ><a name="1472"
+      > </a
+      ><a name="1473" class="Symbol"
+      >&#8594;</a
+      ><a name="1474"
+      > </a
+      ><a name="1475" href="homotopy.AnyUniversalCoverIsPathSet.html#136" class="Function"
+      >a&#8321;</a
+      ><a name="1477"
+      > </a
+      ><a name="1478" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="1480"
+      > </a
+      ><a name="1481" href="homotopy.AnyUniversalCoverIsPathSet.html#1469" class="Bound"
+      >a&#8322;</a
+      ><a name="1483"
+      > </a
+      ><a name="1484" class="Symbol"
+      >&#8594;</a
+      ><a name="1485"
+      > </a
+      ><a name="1486" href="lib.types.Cover.html#483" class="Function"
+      >univ-cov.Fiber</a
+      ><a name="1500"
+      > </a
+      ><a name="1501" href="homotopy.AnyUniversalCoverIsPathSet.html#1469" class="Bound"
+      >a&#8322;</a
+      ><a name="1503"
+      >
+    </a
+      ><a name="1508" href="homotopy.AnyUniversalCoverIsPathSet.html#1459" class="Function"
+      >from</a
+      ><a name="1512"
+      > </a
+      ><a name="1513" href="homotopy.AnyUniversalCoverIsPathSet.html#1513" class="Bound"
+      >p</a
+      ><a name="1514"
+      > </a
+      ><a name="1515" class="Symbol"
+      >=</a
+      ><a name="1516"
+      > </a
+      ><a name="1517" href="lib.types.Cover.html#4609" class="Function"
+      >cover-trace</a
+      ><a name="1528"
+      > </a
+      ><a name="1529" href="lib.types.Cover.html#769" class="Function"
+      >univ-cov.cov</a
+      ><a name="1541"
+      > </a
+      ><a name="1542" href="lib.types.Cover.html#786" class="Function"
+      >univ-cov.pt</a
+      ><a name="1553"
+      > </a
+      ><a name="1554" href="homotopy.AnyUniversalCoverIsPathSet.html#1513" class="Bound"
+      >p</a
+      ><a name="1555"
+      >
+
+    </a
+      ><a name="1561" class="Keyword"
+      >abstract</a
+      ><a name="1569"
+      >
+      </a
+      ><a name="1576" href="homotopy.AnyUniversalCoverIsPathSet.html#1576" class="Function"
+      >to-from</a
+      ><a name="1583"
+      > </a
+      ><a name="1584" class="Symbol"
+      >:</a
+      ><a name="1585"
+      > </a
+      ><a name="1586" class="Symbol"
+      >&#8704;</a
+      ><a name="1587"
+      > </a
+      ><a name="1588" class="Symbol"
+      >{</a
+      ><a name="1589" href="homotopy.AnyUniversalCoverIsPathSet.html#1589" class="Bound"
+      >a&#8322;</a
+      ><a name="1591" class="Symbol"
+      >}</a
+      ><a name="1592"
+      > </a
+      ><a name="1593" class="Symbol"
+      >(</a
+      ><a name="1594" href="homotopy.AnyUniversalCoverIsPathSet.html#1594" class="Bound"
+      >p</a
+      ><a name="1595"
+      > </a
+      ><a name="1596" class="Symbol"
+      >:</a
+      ><a name="1597"
+      > </a
+      ><a name="1598" href="homotopy.AnyUniversalCoverIsPathSet.html#136" class="Function"
+      >a&#8321;</a
+      ><a name="1600"
+      > </a
+      ><a name="1601" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="1603"
+      > </a
+      ><a name="1604" href="homotopy.AnyUniversalCoverIsPathSet.html#1589" class="Bound"
+      >a&#8322;</a
+      ><a name="1606" class="Symbol"
+      >)</a
+      ><a name="1607"
+      > </a
+      ><a name="1608" class="Symbol"
+      >&#8594;</a
+      ><a name="1609"
+      > </a
+      ><a name="1610" href="homotopy.AnyUniversalCoverIsPathSet.html#1346" class="Function"
+      >to</a
+      ><a name="1612"
+      > </a
+      ><a name="1613" class="Symbol"
+      >(</a
+      ><a name="1614" href="homotopy.AnyUniversalCoverIsPathSet.html#1459" class="Function"
+      >from</a
+      ><a name="1618"
+      > </a
+      ><a name="1619" href="homotopy.AnyUniversalCoverIsPathSet.html#1594" class="Bound"
+      >p</a
+      ><a name="1620" class="Symbol"
+      >)</a
+      ><a name="1621"
+      > </a
+      ><a name="1622" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1624"
+      > </a
+      ><a name="1625" href="homotopy.AnyUniversalCoverIsPathSet.html#1594" class="Bound"
+      >p</a
+      ><a name="1626"
+      >
+      </a
+      ><a name="1633" href="homotopy.AnyUniversalCoverIsPathSet.html#1576" class="Function"
+      >to-from</a
+      ><a name="1640"
+      > </a
+      ><a name="1641" class="Symbol"
+      >=</a
+      ><a name="1642"
+      > </a
+      ><a name="1643" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="1653"
+      >
+        </a
+      ><a name="1662" class="Symbol"
+      >(&#955;</a
+      ><a name="1664"
+      > </a
+      ><a name="1665" href="homotopy.AnyUniversalCoverIsPathSet.html#1665" class="Bound"
+      >_</a
+      ><a name="1666"
+      > </a
+      ><a name="1667" class="Symbol"
+      >&#8594;</a
+      ><a name="1668"
+      > </a
+      ><a name="1669" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="1684"
+      > </a
+      ><a name="1685" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="1696" class="Symbol"
+      >)</a
+      ><a name="1697"
+      >
+        </a
+      ><a name="1706" class="Symbol"
+      >(&#955;</a
+      ><a name="1708"
+      > </a
+      ><a name="1709" href="homotopy.AnyUniversalCoverIsPathSet.html#1709" class="Bound"
+      >p</a
+      ><a name="1710"
+      > </a
+      ><a name="1711" class="Symbol"
+      >&#8594;</a
+      ><a name="1712"
+      > </a
+      ><a name="1713" href="homotopy.AnyUniversalCoverIsPathSet.html#1746" class="Function"
+      >lemma</a
+      ><a name="1718"
+      > </a
+      ><a name="1719" href="homotopy.AnyUniversalCoverIsPathSet.html#1709" class="Bound"
+      >p</a
+      ><a name="1720" class="Symbol"
+      >)</a
+      ><a name="1721"
+      >
+        </a
+      ><a name="1730" class="Keyword"
+      >where</a
+      ><a name="1735"
+      >
+          </a
+      ><a name="1746" href="homotopy.AnyUniversalCoverIsPathSet.html#1746" class="Function"
+      >lemma</a
+      ><a name="1751"
+      > </a
+      ><a name="1752" class="Symbol"
+      >:</a
+      ><a name="1753"
+      > </a
+      ><a name="1754" class="Symbol"
+      >&#8704;</a
+      ><a name="1755"
+      > </a
+      ><a name="1756" class="Symbol"
+      >{</a
+      ><a name="1757" href="homotopy.AnyUniversalCoverIsPathSet.html#1757" class="Bound"
+      >a&#8322;</a
+      ><a name="1759" class="Symbol"
+      >}</a
+      ><a name="1760"
+      > </a
+      ><a name="1761" class="Symbol"
+      >(</a
+      ><a name="1762" href="homotopy.AnyUniversalCoverIsPathSet.html#1762" class="Bound"
+      >p</a
+      ><a name="1763"
+      > </a
+      ><a name="1764" class="Symbol"
+      >:</a
+      ><a name="1765"
+      > </a
+      ><a name="1766" href="homotopy.AnyUniversalCoverIsPathSet.html#136" class="Function"
+      >a&#8321;</a
+      ><a name="1768"
+      > </a
+      ><a name="1769" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1771"
+      > </a
+      ><a name="1772" href="homotopy.AnyUniversalCoverIsPathSet.html#1757" class="Bound"
+      >a&#8322;</a
+      ><a name="1774" class="Symbol"
+      >)</a
+      ><a name="1775"
+      > </a
+      ><a name="1776" class="Symbol"
+      >&#8594;</a
+      ><a name="1777"
+      > </a
+      ><a name="1778" href="homotopy.AnyUniversalCoverIsPathSet.html#1346" class="Function"
+      >to</a
+      ><a name="1780"
+      > </a
+      ><a name="1781" class="Symbol"
+      >(</a
+      ><a name="1782" href="homotopy.AnyUniversalCoverIsPathSet.html#1459" class="Function"
+      >from</a
+      ><a name="1786"
+      > </a
+      ><a name="1787" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="1788"
+      > </a
+      ><a name="1789" href="homotopy.AnyUniversalCoverIsPathSet.html#1762" class="Bound"
+      >p</a
+      ><a name="1790"
+      > </a
+      ><a name="1791" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="1792" class="Symbol"
+      >)</a
+      ><a name="1793"
+      > </a
+      ><a name="1794" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1796"
+      > </a
+      ><a name="1797" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="1798"
+      > </a
+      ><a name="1799" href="homotopy.AnyUniversalCoverIsPathSet.html#1762" class="Bound"
+      >p</a
+      ><a name="1800"
+      > </a
+      ><a name="1801" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="1802"
+      >
+          </a
+      ><a name="1813" href="homotopy.AnyUniversalCoverIsPathSet.html#1746" class="Function"
+      >lemma</a
+      ><a name="1818"
+      > </a
+      ><a name="1819" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1822"
+      > </a
+      ><a name="1823" class="Symbol"
+      >=</a
+      ><a name="1824"
+      >
+            </a
+      ><a name="1837" href="lib.types.PathSet.html#704" class="Function"
+      >ap&#8320;</a
+      ><a name="1840"
+      > </a
+      ><a name="1841" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1844"
+      > </a
+      ><a name="1845" class="Symbol"
+      >(</a
+      ><a name="1846" href="homotopy.AnyUniversalCoverIsPathSet.html#856" class="Function"
+      >[path]</a
+      ><a name="1852"
+      > </a
+      ><a name="1853" class="Symbol"
+      >(</a
+      ><a name="1854" href="homotopy.AnyUniversalCoverIsPathSet.html#136" class="Function"
+      >a&#8321;</a
+      ><a name="1856"
+      > </a
+      ><a name="1857" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1858"
+      > </a
+      ><a name="1859" href="lib.types.Cover.html#786" class="Function"
+      >univ-cov.pt</a
+      ><a name="1870" class="Symbol"
+      >)</a
+      ><a name="1871"
+      > </a
+      ><a name="1872" class="Symbol"
+      >(</a
+      ><a name="1873" href="homotopy.AnyUniversalCoverIsPathSet.html#136" class="Function"
+      >a&#8321;</a
+      ><a name="1875"
+      > </a
+      ><a name="1876" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1877"
+      > </a
+      ><a name="1878" href="lib.types.Cover.html#786" class="Function"
+      >univ-cov.pt</a
+      ><a name="1889" class="Symbol"
+      >))</a
+      ><a name="1891"
+      >
+              </a
+      ><a name="1906" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1908"
+      > </a
+      ><a name="1909" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1911"
+      > </a
+      ><a name="1912" class="Symbol"
+      >(</a
+      ><a name="1913" href="lib.types.PathSet.html#704" class="Function"
+      >ap&#8320;</a
+      ><a name="1916"
+      > </a
+      ><a name="1917" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1920" class="Symbol"
+      >)</a
+      ><a name="1921"
+      >
+                    </a
+      ><a name="1942" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1943"
+      > </a
+      ><a name="1944" href="homotopy.AnyUniversalCoverIsPathSet.html#1048" class="Function"
+      >[path]-has-all-paths</a
+      ><a name="1964"
+      >
+                      </a
+      ><a name="1987" class="Symbol"
+      >(</a
+      ><a name="1988" href="homotopy.AnyUniversalCoverIsPathSet.html#856" class="Function"
+      >[path]</a
+      ><a name="1994"
+      > </a
+      ><a name="1995" class="Symbol"
+      >(</a
+      ><a name="1996" href="homotopy.AnyUniversalCoverIsPathSet.html#136" class="Function"
+      >a&#8321;</a
+      ><a name="1998"
+      > </a
+      ><a name="1999" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2000"
+      > </a
+      ><a name="2001" href="lib.types.Cover.html#786" class="Function"
+      >univ-cov.pt</a
+      ><a name="2012" class="Symbol"
+      >)</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" class="Symbol"
+      >(</a
+      ><a name="2015" href="homotopy.AnyUniversalCoverIsPathSet.html#136" class="Function"
+      >a&#8321;</a
+      ><a name="2017"
+      > </a
+      ><a name="2018" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2019"
+      > </a
+      ><a name="2020" href="lib.types.Cover.html#786" class="Function"
+      >univ-cov.pt</a
+      ><a name="2031" class="Symbol"
+      >))</a
+      ><a name="2033"
+      >
+                      </a
+      ><a name="2056" class="Symbol"
+      >(</a
+      ><a name="2057" href="lib.types.PathSet.html#645" class="Function"
+      >idp&#8320;</a
+      ><a name="2061"
+      > </a
+      ><a name="2062" href="lib.Base.html#1567" class="Function"
+      >:&gt;</a
+      ><a name="2064"
+      > </a
+      ><a name="2065" class="Symbol"
+      >((</a
+      ><a name="2067" href="homotopy.AnyUniversalCoverIsPathSet.html#136" class="Function"
+      >a&#8321;</a
+      ><a name="2069"
+      > </a
+      ><a name="2070" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2071"
+      > </a
+      ><a name="2072" href="lib.types.Cover.html#786" class="Function"
+      >univ-cov.pt</a
+      ><a name="2083" class="Symbol"
+      >)</a
+      ><a name="2084"
+      > </a
+      ><a name="2085" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="2087"
+      > </a
+      ><a name="2088" class="Symbol"
+      >(</a
+      ><a name="2089" href="homotopy.AnyUniversalCoverIsPathSet.html#136" class="Function"
+      >a&#8321;</a
+      ><a name="2091"
+      > </a
+      ><a name="2092" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2093"
+      > </a
+      ><a name="2094" href="lib.types.Cover.html#786" class="Function"
+      >univ-cov.pt</a
+      ><a name="2105" class="Symbol"
+      >)))</a
+      ><a name="2108"
+      > </a
+      ><a name="2109" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2110"
+      >
+            </a
+      ><a name="2123" class="Symbol"
+      >(</a
+      ><a name="2124" href="lib.types.PathSet.html#645" class="Function"
+      >idp&#8320;</a
+      ><a name="2128"
+      > </a
+      ><a name="2129" href="lib.Base.html#1567" class="Function"
+      >:&gt;</a
+      ><a name="2131"
+      > </a
+      ><a name="2132" class="Symbol"
+      >(</a
+      ><a name="2133" href="homotopy.AnyUniversalCoverIsPathSet.html#136" class="Function"
+      >a&#8321;</a
+      ><a name="2135"
+      > </a
+      ><a name="2136" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="2138"
+      > </a
+      ><a name="2139" href="homotopy.AnyUniversalCoverIsPathSet.html#136" class="Function"
+      >a&#8321;</a
+      ><a name="2141" class="Symbol"
+      >))</a
+      ><a name="2143"
+      >
+              </a
+      ><a name="2158" href="HoTT.html#767" class="Function Operator"
+      >&#8718;</a
+      ><a name="2159"
+      >
+
+      </a
+      ><a name="2167" href="homotopy.AnyUniversalCoverIsPathSet.html#2167" class="Function"
+      >from-to</a
+      ><a name="2174"
+      > </a
+      ><a name="2175" class="Symbol"
+      >:</a
+      ><a name="2176"
+      > </a
+      ><a name="2177" class="Symbol"
+      >&#8704;</a
+      ><a name="2178"
+      > </a
+      ><a name="2179" class="Symbol"
+      >{</a
+      ><a name="2180" href="homotopy.AnyUniversalCoverIsPathSet.html#2180" class="Bound"
+      >a&#8322;</a
+      ><a name="2182" class="Symbol"
+      >}</a
+      ><a name="2183"
+      > </a
+      ><a name="2184" class="Symbol"
+      >(</a
+      ><a name="2185" href="homotopy.AnyUniversalCoverIsPathSet.html#2185" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="2188"
+      > </a
+      ><a name="2189" class="Symbol"
+      >:</a
+      ><a name="2190"
+      > </a
+      ><a name="2191" href="lib.types.Cover.html#483" class="Function"
+      >univ-cov.Fiber</a
+      ><a name="2205"
+      > </a
+      ><a name="2206" href="homotopy.AnyUniversalCoverIsPathSet.html#2180" class="Bound"
+      >a&#8322;</a
+      ><a name="2208" class="Symbol"
+      >)</a
+      ><a name="2209"
+      > </a
+      ><a name="2210" class="Symbol"
+      >&#8594;</a
+      ><a name="2211"
+      > </a
+      ><a name="2212" href="homotopy.AnyUniversalCoverIsPathSet.html#1459" class="Function"
+      >from</a
+      ><a name="2216"
+      > </a
+      ><a name="2217" class="Symbol"
+      >(</a
+      ><a name="2218" href="homotopy.AnyUniversalCoverIsPathSet.html#1346" class="Function"
+      >to</a
+      ><a name="2220"
+      > </a
+      ><a name="2221" href="homotopy.AnyUniversalCoverIsPathSet.html#2185" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="2224" class="Symbol"
+      >)</a
+      ><a name="2225"
+      > </a
+      ><a name="2226" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2228"
+      > </a
+      ><a name="2229" href="homotopy.AnyUniversalCoverIsPathSet.html#2185" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="2232"
+      >
+      </a
+      ><a name="2239" href="homotopy.AnyUniversalCoverIsPathSet.html#2167" class="Function"
+      >from-to</a
+      ><a name="2246"
+      > </a
+      ><a name="2247" class="Symbol"
+      >{</a
+      ><a name="2248" href="homotopy.AnyUniversalCoverIsPathSet.html#2248" class="Bound"
+      >a&#8322;</a
+      ><a name="2250" class="Symbol"
+      >}</a
+      ><a name="2251"
+      > </a
+      ><a name="2252" href="homotopy.AnyUniversalCoverIsPathSet.html#2252" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="2255"
+      > </a
+      ><a name="2256" class="Symbol"
+      >=</a
+      ><a name="2257"
+      > </a
+      ><a name="2258" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="2268"
+      >
+        </a
+      ><a name="2277" class="Symbol"
+      >(&#955;</a
+      ><a name="2279"
+      > </a
+      ><a name="2280" href="homotopy.AnyUniversalCoverIsPathSet.html#2280" class="Bound"
+      >p</a
+      ><a name="2281"
+      > </a
+      ><a name="2282" class="Symbol"
+      >&#8594;</a
+      ><a name="2283"
+      > </a
+      ><a name="2284" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="2299"
+      >
+                </a
+      ><a name="2316" class="Symbol"
+      >{</a
+      ><a name="2317" class="Argument"
+      >x</a
+      ><a name="2318"
+      > </a
+      ><a name="2319" class="Symbol"
+      >=</a
+      ><a name="2320"
+      > </a
+      ><a name="2321" href="homotopy.AnyUniversalCoverIsPathSet.html#1459" class="Function"
+      >from</a
+      ><a name="2325"
+      > </a
+      ><a name="2326" class="Symbol"
+      >(</a
+      ><a name="2327" href="lib.types.PathSet.html#704" class="Function"
+      >ap&#8320;</a
+      ><a name="2330"
+      > </a
+      ><a name="2331" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="2334"
+      > </a
+      ><a name="2335" href="homotopy.AnyUniversalCoverIsPathSet.html#2280" class="Bound"
+      >p</a
+      ><a name="2336" class="Symbol"
+      >)}</a
+      ><a name="2338"
+      >
+                </a
+      ><a name="2355" class="Symbol"
+      >{</a
+      ><a name="2356" class="Argument"
+      >y</a
+      ><a name="2357"
+      > </a
+      ><a name="2358" class="Symbol"
+      >=</a
+      ><a name="2359"
+      > </a
+      ><a name="2360" href="homotopy.AnyUniversalCoverIsPathSet.html#2252" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="2363" class="Symbol"
+      >}</a
+      ><a name="2364"
+      >
+                </a
+      ><a name="2381" class="Symbol"
+      >(</a
+      ><a name="2382" href="lib.types.Cover.html#545" class="Function"
+      >univ-cov.Fiber-is-set</a
+      ><a name="2403"
+      > </a
+      ><a name="2404" href="homotopy.AnyUniversalCoverIsPathSet.html#2248" class="Bound"
+      >a&#8322;</a
+      ><a name="2406" class="Symbol"
+      >))</a
+      ><a name="2408"
+      >
+        </a
+      ><a name="2417" class="Symbol"
+      >(&#955;</a
+      ><a name="2419"
+      > </a
+      ><a name="2420" href="homotopy.AnyUniversalCoverIsPathSet.html#2420" class="Bound"
+      >p</a
+      ><a name="2421"
+      > </a
+      ><a name="2422" class="Symbol"
+      >&#8594;</a
+      ><a name="2423"
+      > </a
+      ><a name="2424" href="lib.PathOver.html#6382" class="Function"
+      >to-transp</a
+      ><a name="2433"
+      > </a
+      ><a name="2434" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2435"
+      > </a
+      ><a name="2436" href="lib.types.Sigma.html#2020" class="Function"
+      >snd=</a
+      ><a name="2440"
+      > </a
+      ><a name="2441" href="homotopy.AnyUniversalCoverIsPathSet.html#2420" class="Bound"
+      >p</a
+      ><a name="2442" class="Symbol"
+      >)</a
+      ><a name="2443"
+      >
+        </a
+      ><a name="2452" class="Symbol"
+      >(</a
+      ><a name="2453" href="homotopy.AnyUniversalCoverIsPathSet.html#856" class="Function"
+      >[path]</a
+      ><a name="2459"
+      > </a
+      ><a name="2460" class="Symbol"
+      >(</a
+      ><a name="2461" href="homotopy.AnyUniversalCoverIsPathSet.html#136" class="Function"
+      >a&#8321;</a
+      ><a name="2463"
+      > </a
+      ><a name="2464" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2465"
+      > </a
+      ><a name="2466" href="lib.types.Cover.html#786" class="Function"
+      >univ-cov.pt</a
+      ><a name="2477" class="Symbol"
+      >)</a
+      ><a name="2478"
+      > </a
+      ><a name="2479" class="Symbol"
+      >(</a
+      ><a name="2480" href="homotopy.AnyUniversalCoverIsPathSet.html#2248" class="Bound"
+      >a&#8322;</a
+      ><a name="2482"
+      > </a
+      ><a name="2483" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2484"
+      > </a
+      ><a name="2485" href="homotopy.AnyUniversalCoverIsPathSet.html#2252" class="Bound"
+      >a&#8657;&#8322;</a
+      ><a name="2488" class="Symbol"
+      >))</a
+      ><a name="2490"
+      >
+
+  </a
+      ><a name="2494" href="homotopy.AnyUniversalCoverIsPathSet.html#2494" class="Function"
+      >theorem</a
+      ><a name="2501"
+      > </a
+      ><a name="2502" class="Symbol"
+      >:</a
+      ><a name="2503"
+      > </a
+      ><a name="2504" class="Symbol"
+      >&#8704;</a
+      ><a name="2505"
+      > </a
+      ><a name="2506" href="homotopy.AnyUniversalCoverIsPathSet.html#2506" class="Bound"
+      >a&#8322;</a
+      ><a name="2508"
+      > </a
+      ><a name="2509" class="Symbol"
+      >&#8594;</a
+      ><a name="2510"
+      > </a
+      ><a name="2511" href="lib.types.Cover.html#483" class="Function"
+      >univ-cov.Fiber</a
+      ><a name="2525"
+      > </a
+      ><a name="2526" href="homotopy.AnyUniversalCoverIsPathSet.html#2506" class="Bound"
+      >a&#8322;</a
+      ><a name="2528"
+      > </a
+      ><a name="2529" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="2530"
+      > </a
+      ><a name="2531" class="Symbol"
+      >(</a
+      ><a name="2532" href="homotopy.AnyUniversalCoverIsPathSet.html#136" class="Function"
+      >a&#8321;</a
+      ><a name="2534"
+      > </a
+      ><a name="2535" href="lib.types.PathSet.html#236" class="Function Operator"
+      >=&#8320;</a
+      ><a name="2537"
+      > </a
+      ><a name="2538" href="homotopy.AnyUniversalCoverIsPathSet.html#2506" class="Bound"
+      >a&#8322;</a
+      ><a name="2540" class="Symbol"
+      >)</a
+      ><a name="2541"
+      >
+  </a
+      ><a name="2544" href="homotopy.AnyUniversalCoverIsPathSet.html#2494" class="Function"
+      >theorem</a
+      ><a name="2551"
+      > </a
+      ><a name="2552" href="homotopy.AnyUniversalCoverIsPathSet.html#2552" class="Bound"
+      >a&#8322;</a
+      ><a name="2554"
+      > </a
+      ><a name="2555" class="Symbol"
+      >=</a
+      ><a name="2556"
+      > </a
+      ><a name="2557" href="homotopy.AnyUniversalCoverIsPathSet.html#1346" class="Function"
+      >to</a
+      ><a name="2559"
+      > </a
+      ><a name="2560" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2561"
+      > </a
+      ><a name="2562" href="lib.Equivalence.html#2854" class="Function"
+      >is-eq</a
+      ><a name="2567"
+      > </a
+      ><a name="2568" class="Symbol"
+      >_</a
+      ><a name="2569"
+      > </a
+      ><a name="2570" href="homotopy.AnyUniversalCoverIsPathSet.html#1459" class="Function"
+      >from</a
+      ><a name="2574"
+      > </a
+      ><a name="2575" href="homotopy.AnyUniversalCoverIsPathSet.html#1576" class="Function"
+      >to-from</a
+      ><a name="2582"
+      > </a
+      ><a name="2583" href="homotopy.AnyUniversalCoverIsPathSet.html#2167" class="Function"
+      >from-to</a
+      ><a name="2590"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

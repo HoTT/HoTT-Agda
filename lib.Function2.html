@@ -1,0 +1,776 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.Function2</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.Truncation.html#1" class="Module"
+      >lib.types.Truncation</a
+      ><a name="97"
+      >
+
+</a
+      ><a name="99" class="Keyword"
+      >module</a
+      ><a name="105"
+      > </a
+      ><a name="106" href="lib.Function2.html#1" class="Module"
+      >lib.Function2</a
+      ><a name="119"
+      > </a
+      ><a name="120" class="Keyword"
+      >where</a
+      ><a name="125"
+      >
+
+</a
+      ><a name="127" href="lib.Function2.html#127" class="Function"
+      >is-surj</a
+      ><a name="134"
+      > </a
+      ><a name="135" class="Symbol"
+      >:</a
+      ><a name="136"
+      > </a
+      ><a name="137" class="Symbol"
+      >&#8704;</a
+      ><a name="138"
+      > </a
+      ><a name="139" class="Symbol"
+      >{</a
+      ><a name="140" href="lib.Function2.html#140" class="Bound"
+      >i</a
+      ><a name="141"
+      > </a
+      ><a name="142" href="lib.Function2.html#142" class="Bound"
+      >j</a
+      ><a name="143" class="Symbol"
+      >}</a
+      ><a name="144"
+      > </a
+      ><a name="145" class="Symbol"
+      >{</a
+      ><a name="146" href="lib.Function2.html#146" class="Bound"
+      >A</a
+      ><a name="147"
+      > </a
+      ><a name="148" class="Symbol"
+      >:</a
+      ><a name="149"
+      > </a
+      ><a name="150" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="154"
+      > </a
+      ><a name="155" href="lib.Function2.html#140" class="Bound"
+      >i</a
+      ><a name="156" class="Symbol"
+      >}</a
+      ><a name="157"
+      > </a
+      ><a name="158" class="Symbol"
+      >{</a
+      ><a name="159" href="lib.Function2.html#159" class="Bound"
+      >B</a
+      ><a name="160"
+      > </a
+      ><a name="161" class="Symbol"
+      >:</a
+      ><a name="162"
+      > </a
+      ><a name="163" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="167"
+      > </a
+      ><a name="168" href="lib.Function2.html#142" class="Bound"
+      >j</a
+      ><a name="169" class="Symbol"
+      >}</a
+      ><a name="170"
+      > </a
+      ><a name="171" class="Symbol"
+      >(</a
+      ><a name="172" href="lib.Function2.html#172" class="Bound"
+      >f</a
+      ><a name="173"
+      > </a
+      ><a name="174" class="Symbol"
+      >:</a
+      ><a name="175"
+      > </a
+      ><a name="176" href="lib.Function2.html#146" class="Bound"
+      >A</a
+      ><a name="177"
+      > </a
+      ><a name="178" class="Symbol"
+      >&#8594;</a
+      ><a name="179"
+      > </a
+      ><a name="180" href="lib.Function2.html#159" class="Bound"
+      >B</a
+      ><a name="181" class="Symbol"
+      >)</a
+      ><a name="182"
+      > </a
+      ><a name="183" class="Symbol"
+      >&#8594;</a
+      ><a name="184"
+      > </a
+      ><a name="185" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="189"
+      > </a
+      ><a name="190" class="Symbol"
+      >(</a
+      ><a name="191" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="195"
+      > </a
+      ><a name="196" href="lib.Function2.html#140" class="Bound"
+      >i</a
+      ><a name="197"
+      > </a
+      ><a name="198" href="lib.Function2.html#142" class="Bound"
+      >j</a
+      ><a name="199" class="Symbol"
+      >)</a
+      ><a name="200"
+      >
+</a
+      ><a name="201" href="lib.Function2.html#127" class="Function"
+      >is-surj</a
+      ><a name="208"
+      > </a
+      ><a name="209" class="Symbol"
+      >{</a
+      ><a name="210" class="Argument"
+      >A</a
+      ><a name="211"
+      > </a
+      ><a name="212" class="Symbol"
+      >=</a
+      ><a name="213"
+      > </a
+      ><a name="214" href="lib.Function2.html#214" class="Bound"
+      >A</a
+      ><a name="215" class="Symbol"
+      >}</a
+      ><a name="216"
+      > </a
+      ><a name="217" href="lib.Function2.html#217" class="Bound"
+      >f</a
+      ><a name="218"
+      > </a
+      ><a name="219" class="Symbol"
+      >=</a
+      ><a name="220"
+      > </a
+      ><a name="221" class="Symbol"
+      >&#8704;</a
+      ><a name="222"
+      > </a
+      ><a name="223" href="lib.Function2.html#223" class="Bound"
+      >b</a
+      ><a name="224"
+      > </a
+      ><a name="225" class="Symbol"
+      >&#8594;</a
+      ><a name="226"
+      > </a
+      ><a name="227" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="232"
+      > </a
+      ><a name="233" class="Number"
+      >-1</a
+      ><a name="235"
+      > </a
+      ><a name="236" class="Symbol"
+      >(</a
+      ><a name="237" href="lib.Function.html#899" class="Function"
+      >hfiber</a
+      ><a name="243"
+      > </a
+      ><a name="244" href="lib.Function2.html#217" class="Bound"
+      >f</a
+      ><a name="245"
+      > </a
+      ><a name="246" href="lib.Function2.html#223" class="Bound"
+      >b</a
+      ><a name="247" class="Symbol"
+      >)</a
+      ><a name="248"
+      >
+
+</a
+      ><a name="250" class="Keyword"
+      >module</a
+      ><a name="256"
+      > </a
+      ><a name="257" href="lib.Function2.html#257" class="Module"
+      >_</a
+      ><a name="258"
+      > </a
+      ><a name="259" class="Symbol"
+      >{</a
+      ><a name="260" href="lib.Function2.html#260" class="Bound"
+      >i</a
+      ><a name="261"
+      > </a
+      ><a name="262" href="lib.Function2.html#262" class="Bound"
+      >j</a
+      ><a name="263"
+      > </a
+      ><a name="264" href="lib.Function2.html#264" class="Bound"
+      >k</a
+      ><a name="265" class="Symbol"
+      >}</a
+      ><a name="266"
+      > </a
+      ><a name="267" class="Symbol"
+      >{</a
+      ><a name="268" href="lib.Function2.html#268" class="Bound"
+      >A</a
+      ><a name="269"
+      > </a
+      ><a name="270" class="Symbol"
+      >:</a
+      ><a name="271"
+      > </a
+      ><a name="272" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="276"
+      > </a
+      ><a name="277" href="lib.Function2.html#260" class="Bound"
+      >i</a
+      ><a name="278" class="Symbol"
+      >}</a
+      ><a name="279"
+      > </a
+      ><a name="280" class="Symbol"
+      >{</a
+      ><a name="281" href="lib.Function2.html#281" class="Bound"
+      >B</a
+      ><a name="282"
+      > </a
+      ><a name="283" class="Symbol"
+      >:</a
+      ><a name="284"
+      > </a
+      ><a name="285" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="289"
+      > </a
+      ><a name="290" href="lib.Function2.html#262" class="Bound"
+      >j</a
+      ><a name="291" class="Symbol"
+      >}</a
+      ><a name="292"
+      > </a
+      ><a name="293" class="Symbol"
+      >{</a
+      ><a name="294" href="lib.Function2.html#294" class="Bound"
+      >C</a
+      ><a name="295"
+      > </a
+      ><a name="296" class="Symbol"
+      >:</a
+      ><a name="297"
+      > </a
+      ><a name="298" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="302"
+      > </a
+      ><a name="303" href="lib.Function2.html#264" class="Bound"
+      >k</a
+      ><a name="304" class="Symbol"
+      >}</a
+      ><a name="305"
+      >
+  </a
+      ><a name="308" class="Symbol"
+      >{</a
+      ><a name="309" href="lib.Function2.html#309" class="Bound"
+      >f</a
+      ><a name="310"
+      > </a
+      ><a name="311" class="Symbol"
+      >:</a
+      ><a name="312"
+      > </a
+      ><a name="313" href="lib.Function2.html#268" class="Bound"
+      >A</a
+      ><a name="314"
+      > </a
+      ><a name="315" class="Symbol"
+      >&#8594;</a
+      ><a name="316"
+      > </a
+      ><a name="317" href="lib.Function2.html#281" class="Bound"
+      >B</a
+      ><a name="318" class="Symbol"
+      >}</a
+      ><a name="319"
+      > </a
+      ><a name="320" class="Symbol"
+      >{</a
+      ><a name="321" href="lib.Function2.html#321" class="Bound"
+      >g</a
+      ><a name="322"
+      > </a
+      ><a name="323" class="Symbol"
+      >:</a
+      ><a name="324"
+      > </a
+      ><a name="325" href="lib.Function2.html#281" class="Bound"
+      >B</a
+      ><a name="326"
+      > </a
+      ><a name="327" class="Symbol"
+      >&#8594;</a
+      ><a name="328"
+      > </a
+      ><a name="329" href="lib.Function2.html#294" class="Bound"
+      >C</a
+      ><a name="330" class="Symbol"
+      >}</a
+      ><a name="331"
+      > </a
+      ><a name="332" class="Keyword"
+      >where</a
+      ><a name="337"
+      >
+  </a
+      ><a name="340" class="Keyword"
+      >abstract</a
+      ><a name="348"
+      >
+    </a
+      ><a name="353" href="lib.Function2.html#353" class="Function"
+      >&#8728;-is-surj</a
+      ><a name="362"
+      > </a
+      ><a name="363" class="Symbol"
+      >:</a
+      ><a name="364"
+      > </a
+      ><a name="365" href="lib.Function2.html#127" class="Function"
+      >is-surj</a
+      ><a name="372"
+      > </a
+      ><a name="373" href="lib.Function2.html#321" class="Bound"
+      >g</a
+      ><a name="374"
+      > </a
+      ><a name="375" class="Symbol"
+      >&#8594;</a
+      ><a name="376"
+      > </a
+      ><a name="377" href="lib.Function2.html#127" class="Function"
+      >is-surj</a
+      ><a name="384"
+      > </a
+      ><a name="385" href="lib.Function2.html#309" class="Bound"
+      >f</a
+      ><a name="386"
+      > </a
+      ><a name="387" class="Symbol"
+      >&#8594;</a
+      ><a name="388"
+      > </a
+      ><a name="389" href="lib.Function2.html#127" class="Function"
+      >is-surj</a
+      ><a name="396"
+      > </a
+      ><a name="397" class="Symbol"
+      >(</a
+      ><a name="398" href="lib.Function2.html#321" class="Bound"
+      >g</a
+      ><a name="399"
+      > </a
+      ><a name="400" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="401"
+      > </a
+      ><a name="402" href="lib.Function2.html#309" class="Bound"
+      >f</a
+      ><a name="403" class="Symbol"
+      >)</a
+      ><a name="404"
+      >
+    </a
+      ><a name="409" href="lib.Function2.html#353" class="Function"
+      >&#8728;-is-surj</a
+      ><a name="418"
+      > </a
+      ><a name="419" href="lib.Function2.html#419" class="Bound"
+      >g-is-surj</a
+      ><a name="428"
+      > </a
+      ><a name="429" href="lib.Function2.html#429" class="Bound"
+      >f-is-surj</a
+      ><a name="438"
+      > </a
+      ><a name="439" href="lib.Function2.html#439" class="Bound"
+      >c</a
+      ><a name="440"
+      > </a
+      ><a name="441" class="Symbol"
+      >=</a
+      ><a name="442"
+      >
+      </a
+      ><a name="449" href="lib.types.Truncation.html#863" class="Function"
+      >Trunc-rec</a
+      ><a name="458"
+      > </a
+      ><a name="459" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="470"
+      >
+        </a
+      ><a name="479" class="Symbol"
+      >(&#955;{(</a
+      ><a name="483" href="lib.Function2.html#483" class="Bound"
+      >b</a
+      ><a name="484"
+      > </a
+      ><a name="485" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="486"
+      > </a
+      ><a name="487" href="lib.Function2.html#487" class="Bound"
+      >gb=c</a
+      ><a name="491" class="Symbol"
+      >)</a
+      ><a name="492"
+      > </a
+      ><a name="493" class="Symbol"
+      >&#8594;</a
+      ><a name="494"
+      >
+          </a
+      ><a name="505" href="lib.types.Truncation.html#863" class="Function"
+      >Trunc-rec</a
+      ><a name="514"
+      > </a
+      ><a name="515" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="526"
+      >
+          </a
+      ><a name="537" class="Symbol"
+      >(&#955;{(</a
+      ><a name="541" href="lib.Function2.html#541" class="Bound"
+      >a</a
+      ><a name="542"
+      > </a
+      ><a name="543" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="544"
+      > </a
+      ><a name="545" href="lib.Function2.html#545" class="Bound"
+      >fa=b</a
+      ><a name="549" class="Symbol"
+      >)</a
+      ><a name="550"
+      > </a
+      ><a name="551" class="Symbol"
+      >&#8594;</a
+      ><a name="552"
+      > </a
+      ><a name="553" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="554"
+      > </a
+      ><a name="555" href="lib.Function2.html#541" class="Bound"
+      >a</a
+      ><a name="556"
+      > </a
+      ><a name="557" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="558"
+      > </a
+      ><a name="559" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="561"
+      > </a
+      ><a name="562" href="lib.Function2.html#321" class="Bound"
+      >g</a
+      ><a name="563"
+      > </a
+      ><a name="564" href="lib.Function2.html#545" class="Bound"
+      >fa=b</a
+      ><a name="568"
+      > </a
+      ><a name="569" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="570"
+      > </a
+      ><a name="571" href="lib.Function2.html#487" class="Bound"
+      >gb=c</a
+      ><a name="575"
+      > </a
+      ><a name="576" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="577" class="Symbol"
+      >})</a
+      ><a name="579"
+      >
+          </a
+      ><a name="590" class="Symbol"
+      >(</a
+      ><a name="591" href="lib.Function2.html#429" class="Bound"
+      >f-is-surj</a
+      ><a name="600"
+      > </a
+      ><a name="601" href="lib.Function2.html#483" class="Bound"
+      >b</a
+      ><a name="602" class="Symbol"
+      >)})</a
+      ><a name="605"
+      >
+        </a
+      ><a name="614" class="Symbol"
+      >(</a
+      ><a name="615" href="lib.Function2.html#419" class="Bound"
+      >g-is-surj</a
+      ><a name="624"
+      > </a
+      ><a name="625" href="lib.Function2.html#439" class="Bound"
+      >c</a
+      ><a name="626" class="Symbol"
+      >)</a
+      ><a name="627"
+      >
+
+</a
+      ><a name="629" class="Keyword"
+      >module</a
+      ><a name="635"
+      > </a
+      ><a name="636" href="lib.Function2.html#636" class="Module"
+      >_</a
+      ><a name="637"
+      > </a
+      ><a name="638" class="Symbol"
+      >{</a
+      ><a name="639" href="lib.Function2.html#639" class="Bound"
+      >i</a
+      ><a name="640"
+      > </a
+      ><a name="641" href="lib.Function2.html#641" class="Bound"
+      >j</a
+      ><a name="642" class="Symbol"
+      >}</a
+      ><a name="643"
+      > </a
+      ><a name="644" class="Symbol"
+      >{</a
+      ><a name="645" href="lib.Function2.html#645" class="Bound"
+      >A</a
+      ><a name="646"
+      > </a
+      ><a name="647" class="Symbol"
+      >:</a
+      ><a name="648"
+      > </a
+      ><a name="649" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="653"
+      > </a
+      ><a name="654" href="lib.Function2.html#639" class="Bound"
+      >i</a
+      ><a name="655" class="Symbol"
+      >}</a
+      ><a name="656"
+      > </a
+      ><a name="657" class="Symbol"
+      >{</a
+      ><a name="658" href="lib.Function2.html#658" class="Bound"
+      >B</a
+      ><a name="659"
+      > </a
+      ><a name="660" class="Symbol"
+      >:</a
+      ><a name="661"
+      > </a
+      ><a name="662" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="666"
+      > </a
+      ><a name="667" href="lib.Function2.html#641" class="Bound"
+      >j</a
+      ><a name="668" class="Symbol"
+      >}</a
+      ><a name="669"
+      > </a
+      ><a name="670" class="Symbol"
+      >{</a
+      ><a name="671" href="lib.Function2.html#671" class="Bound"
+      >f</a
+      ><a name="672"
+      > </a
+      ><a name="673" class="Symbol"
+      >:</a
+      ><a name="674"
+      > </a
+      ><a name="675" href="lib.Function2.html#645" class="Bound"
+      >A</a
+      ><a name="676"
+      > </a
+      ><a name="677" class="Symbol"
+      >&#8594;</a
+      ><a name="678"
+      > </a
+      ><a name="679" href="lib.Function2.html#658" class="Bound"
+      >B</a
+      ><a name="680" class="Symbol"
+      >}</a
+      ><a name="681"
+      > </a
+      ><a name="682" class="Keyword"
+      >where</a
+      ><a name="687"
+      >
+  </a
+      ><a name="690" class="Keyword"
+      >abstract</a
+      ><a name="698"
+      >
+    </a
+      ><a name="703" href="lib.Function2.html#703" class="Function"
+      >equiv-is-surj</a
+      ><a name="716"
+      > </a
+      ><a name="717" class="Symbol"
+      >:</a
+      ><a name="718"
+      > </a
+      ><a name="719" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="727"
+      > </a
+      ><a name="728" href="lib.Function2.html#671" class="Bound"
+      >f</a
+      ><a name="729"
+      > </a
+      ><a name="730" class="Symbol"
+      >&#8594;</a
+      ><a name="731"
+      > </a
+      ><a name="732" href="lib.Function2.html#127" class="Function"
+      >is-surj</a
+      ><a name="739"
+      > </a
+      ><a name="740" href="lib.Function2.html#671" class="Bound"
+      >f</a
+      ><a name="741"
+      >
+    </a
+      ><a name="746" href="lib.Function2.html#703" class="Function"
+      >equiv-is-surj</a
+      ><a name="759"
+      > </a
+      ><a name="760" href="lib.Function2.html#760" class="Bound"
+      >f-is-equiv</a
+      ><a name="770"
+      > </a
+      ><a name="771" href="lib.Function2.html#771" class="Bound"
+      >b</a
+      ><a name="772"
+      > </a
+      ><a name="773" class="Symbol"
+      >=</a
+      ><a name="774"
+      > </a
+      ><a name="775" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="776"
+      > </a
+      ><a name="777" href="lib.Equivalence.html#1668" class="Function"
+      >g</a
+      ><a name="778"
+      > </a
+      ><a name="779" href="lib.Function2.html#771" class="Bound"
+      >b</a
+      ><a name="780"
+      > </a
+      ><a name="781" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="782"
+      > </a
+      ><a name="783" href="lib.Equivalence.html#1684" class="Function"
+      >f-g</a
+      ><a name="786"
+      > </a
+      ><a name="787" href="lib.Function2.html#771" class="Bound"
+      >b</a
+      ><a name="788"
+      > </a
+      ><a name="789" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="790"
+      >
+      </a
+      ><a name="797" class="Keyword"
+      >where</a
+      ><a name="802"
+      > </a
+      ><a name="803" class="Keyword"
+      >open</a
+      ><a name="807"
+      > </a
+      ><a name="808" href="lib.Equivalence.html#1603" class="Module"
+      >is-equiv</a
+      ><a name="816"
+      > </a
+      ><a name="817" href="lib.Function2.html#760" class="Bound"
+      >f-is-equiv</a
+      ><a name="827"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

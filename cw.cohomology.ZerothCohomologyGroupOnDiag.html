@@ -1,0 +1,531 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cw.cohomology.ZerothCohomologyGroupOnDiag</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="88"
+      >
+
+</a
+      ><a name="90" class="Keyword"
+      >open</a
+      ><a name="94"
+      > </a
+      ><a name="95" class="Keyword"
+      >import</a
+      ><a name="101"
+      > </a
+      ><a name="102" href="cw.CW.html#1" class="Module"
+      >cw.CW</a
+      ><a name="107"
+      >
+
+</a
+      ><a name="109" class="Keyword"
+      >module</a
+      ><a name="115"
+      > </a
+      ><a name="116" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#1" class="Module"
+      >cw.cohomology.ZerothCohomologyGroupOnDiag</a
+      ><a name="157"
+      > </a
+      ><a name="158" class="Symbol"
+      >{</a
+      ><a name="159" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#159" class="Bound"
+      >i</a
+      ><a name="160" class="Symbol"
+      >}</a
+      ><a name="161"
+      > </a
+      ><a name="162" class="Symbol"
+      >(</a
+      ><a name="163" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#163" class="Bound"
+      >OT</a
+      ><a name="165"
+      > </a
+      ><a name="166" class="Symbol"
+      >:</a
+      ><a name="167"
+      > </a
+      ><a name="168" href="cohomology.Theory.html#7242" class="Record"
+      >OrdinaryTheory</a
+      ><a name="182"
+      > </a
+      ><a name="183" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#159" class="Bound"
+      >i</a
+      ><a name="184" class="Symbol"
+      >)</a
+      ><a name="185"
+      >
+  </a
+      ><a name="188" class="Symbol"
+      >(</a
+      ><a name="189" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#189" class="Bound"
+      >&#8857;skel</a
+      ><a name="194"
+      > </a
+      ><a name="195" class="Symbol"
+      >:</a
+      ><a name="196"
+      > </a
+      ><a name="197" href="cw.CW.html#1851" class="Record"
+      >&#8857;Skeleton</a
+      ><a name="206"
+      > </a
+      ><a name="207" class="Symbol"
+      >{</a
+      ><a name="208" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#159" class="Bound"
+      >i</a
+      ><a name="209" class="Symbol"
+      >}</a
+      ><a name="210"
+      > </a
+      ><a name="211" class="Number"
+      >0</a
+      ><a name="212" class="Symbol"
+      >)</a
+      ><a name="213"
+      > </a
+      ><a name="214" class="Symbol"
+      >(</a
+      ><a name="215" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#215" class="Bound"
+      >ac</a
+      ><a name="217"
+      > </a
+      ><a name="218" class="Symbol"
+      >:</a
+      ><a name="219"
+      > </a
+      ><a name="220" href="cw.CW.html#8111" class="Function"
+      >&#8857;has-cells-with-choice</a
+      ><a name="242"
+      > </a
+      ><a name="243" class="Number"
+      >0</a
+      ><a name="244"
+      > </a
+      ><a name="245" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#189" class="Bound"
+      >&#8857;skel</a
+      ><a name="250"
+      > </a
+      ><a name="251" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#159" class="Bound"
+      >i</a
+      ><a name="252" class="Symbol"
+      >)</a
+      ><a name="253"
+      > </a
+      ><a name="254" class="Keyword"
+      >where</a
+      ><a name="259"
+      >
+
+</a
+      ><a name="261" class="Keyword"
+      >open</a
+      ><a name="265"
+      > </a
+      ><a name="266" href="cohomology.Theory.html#7242" class="Module"
+      >OrdinaryTheory</a
+      ><a name="280"
+      > </a
+      ><a name="281" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#163" class="Bound"
+      >OT</a
+      ><a name="283"
+      >
+</a
+      ><a name="284" class="Keyword"
+      >open</a
+      ><a name="288"
+      > </a
+      ><a name="289" class="Keyword"
+      >import</a
+      ><a name="295"
+      > </a
+      ><a name="296" href="cw.cohomology.TipAndAugment.html#1" class="Module"
+      >cw.cohomology.TipAndAugment</a
+      ><a name="323"
+      > </a
+      ><a name="324" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#163" class="Bound"
+      >OT</a
+      ><a name="326"
+      > </a
+      ><a name="327" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#189" class="Bound"
+      >&#8857;skel</a
+      ><a name="332"
+      >
+
+</a
+      ><a name="334" class="Keyword"
+      >open</a
+      ><a name="338"
+      > </a
+      ><a name="339" class="Keyword"
+      >import</a
+      ><a name="345"
+      > </a
+      ><a name="346" href="groups.KernelSndImageInl.html#1" class="Module"
+      >groups.KernelSndImageInl</a
+      ><a name="370"
+      > </a
+      ><a name="371" class="Symbol"
+      >(</a
+      ><a name="372" href="cohomology.Theory.html#2346" class="Function"
+      >C2</a
+      ><a name="374"
+      > </a
+      ><a name="375" class="Number"
+      >0</a
+      ><a name="376" class="Symbol"
+      >)</a
+      ><a name="377"
+      > </a
+      ><a name="378" class="Symbol"
+      >{</a
+      ><a name="379" class="Argument"
+      >H</a
+      ><a name="380"
+      > </a
+      ><a name="381" class="Symbol"
+      >=</a
+      ><a name="382"
+      > </a
+      ><a name="383" href="cw.cohomology.TipAndAugment.html#345" class="Function"
+      >CX&#8320;</a
+      ><a name="386"
+      > </a
+      ><a name="387" class="Number"
+      >0</a
+      ><a name="388" class="Symbol"
+      >}</a
+      ><a name="389"
+      >
+  </a
+      ><a name="392" class="Symbol"
+      >{</a
+      ><a name="393" class="Argument"
+      >K</a
+      ><a name="394"
+      > </a
+      ><a name="395" class="Symbol"
+      >=</a
+      ><a name="396"
+      > </a
+      ><a name="397" href="lib.groups.Lift.html#661" class="Function"
+      >Lift-group</a
+      ><a name="407"
+      > </a
+      ><a name="408" class="Symbol"
+      >{</a
+      ><a name="409" class="Argument"
+      >j</a
+      ><a name="410"
+      > </a
+      ><a name="411" class="Symbol"
+      >=</a
+      ><a name="412"
+      > </a
+      ><a name="413" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#159" class="Bound"
+      >i</a
+      ><a name="414" class="Symbol"
+      >}</a
+      ><a name="415"
+      > </a
+      ><a name="416" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="426" class="Symbol"
+      >}</a
+      ><a name="427"
+      >
+  </a
+      ><a name="430" href="lib.groups.Homomorphism.html#3180" class="Function"
+      >cst-hom</a
+      ><a name="437"
+      > </a
+      ><a name="438" href="lib.groups.Homomorphism.html#3180" class="Function"
+      >cst-hom</a
+      ><a name="445"
+      > </a
+      ><a name="446" class="Symbol"
+      >(&#955;</a
+      ><a name="448"
+      > </a
+      ><a name="449" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#449" class="Bound"
+      >_</a
+      ><a name="450"
+      > </a
+      ><a name="451" class="Symbol"
+      >&#8594;</a
+      ><a name="452"
+      > </a
+      ><a name="453" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="456" class="Symbol"
+      >)</a
+      ><a name="457"
+      >
+  </a
+      ><a name="460" class="Symbol"
+      >(</a
+      ><a name="461" href="cw.cohomology.TipAndAugment.html#533" class="Function"
+      >C2&#215;CX&#8320;-is-abelian</a
+      ><a name="478"
+      > </a
+      ><a name="479" class="Number"
+      >0</a
+      ><a name="480" class="Symbol"
+      >)</a
+      ><a name="481"
+      >
+
+</a
+      ><a name="483" class="Keyword"
+      >open</a
+      ><a name="487"
+      > </a
+      ><a name="488" class="Keyword"
+      >import</a
+      ><a name="494"
+      > </a
+      ><a name="495" href="groups.KernelImage.html#1" class="Module"
+      >groups.KernelImage</a
+      ><a name="513"
+      >
+  </a
+      ><a name="516" class="Symbol"
+      >(</a
+      ><a name="517" href="lib.groups.Homomorphism.html#3180" class="Function"
+      >cst-hom</a
+      ><a name="524"
+      > </a
+      ><a name="525" class="Symbol"
+      >{</a
+      ><a name="526" class="Argument"
+      >G</a
+      ><a name="527"
+      > </a
+      ><a name="528" class="Symbol"
+      >=</a
+      ><a name="529"
+      > </a
+      ><a name="530" href="cw.cohomology.TipAndAugment.html#477" class="Function"
+      >C2&#215;CX&#8320;</a
+      ><a name="536"
+      > </a
+      ><a name="537" class="Number"
+      >0</a
+      ><a name="538" class="Symbol"
+      >}</a
+      ><a name="539"
+      > </a
+      ><a name="540" class="Symbol"
+      >{</a
+      ><a name="541" class="Argument"
+      >H</a
+      ><a name="542"
+      > </a
+      ><a name="543" class="Symbol"
+      >=</a
+      ><a name="544"
+      > </a
+      ><a name="545" href="lib.groups.Lift.html#661" class="Function"
+      >Lift-group</a
+      ><a name="555"
+      > </a
+      ><a name="556" class="Symbol"
+      >{</a
+      ><a name="557" class="Argument"
+      >j</a
+      ><a name="558"
+      > </a
+      ><a name="559" class="Symbol"
+      >=</a
+      ><a name="560"
+      > </a
+      ><a name="561" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#159" class="Bound"
+      >i</a
+      ><a name="562" class="Symbol"
+      >}</a
+      ><a name="563"
+      > </a
+      ><a name="564" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="574" class="Symbol"
+      >})</a
+      ><a name="576"
+      >
+  </a
+      ><a name="579" href="cw.cohomology.TipAndAugment.html#1213" class="Function"
+      >cw-co&#949;</a
+      ><a name="585"
+      > </a
+      ><a name="586" class="Symbol"
+      >(</a
+      ><a name="587" href="cw.cohomology.TipAndAugment.html#533" class="Function"
+      >C2&#215;CX&#8320;-is-abelian</a
+      ><a name="604"
+      > </a
+      ><a name="605" class="Number"
+      >0</a
+      ><a name="606" class="Symbol"
+      >)</a
+      ><a name="607"
+      >
+
+</a
+      ><a name="609" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#609" class="Function"
+      >C-cw-iso-ker/im</a
+      ><a name="624"
+      > </a
+      ><a name="625" class="Symbol"
+      >:</a
+      ><a name="626"
+      > </a
+      ><a name="627" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="628"
+      > </a
+      ><a name="629" class="Number"
+      >0</a
+      ><a name="630"
+      > </a
+      ><a name="631" href="cw.CW.html#2125" class="Function Operator"
+      >&#8857;&#10214;</a
+      ><a name="633"
+      > </a
+      ><a name="634" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#189" class="Bound"
+      >&#8857;skel</a
+      ><a name="639"
+      > </a
+      ><a name="640" href="cw.CW.html#2125" class="Function Operator"
+      >&#10215;</a
+      ><a name="641"
+      > </a
+      ><a name="642" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="644"
+      > </a
+      ><a name="645" href="groups.KernelImage.html#5271" class="Function"
+      >Ker/Im</a
+      ><a name="651"
+      >
+</a
+      ><a name="652" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#609" class="Function"
+      >C-cw-iso-ker/im</a
+      ><a name="667"
+      > </a
+      ><a name="668" class="Symbol"
+      >=</a
+      ><a name="669"
+      >
+      </a
+      ><a name="676" href="groups.KernelSndImageInl.html#612" class="Function"
+      >Ker-&#966;-snd-quot-Im-inl</a
+      ><a name="697"
+      >
+  </a
+      ><a name="700" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="703"
+      > </a
+      ><a name="704" href="lib.groups.Subgroup.html#2152" class="Function"
+      >full-subgroup</a
+      ><a name="717"
+      > </a
+      ><a name="718" class="Symbol"
+      >(</a
+      ><a name="719" href="lib.groups.Homomorphism.html#8939" class="Function"
+      >ker-cst-hom-is-full</a
+      ><a name="738"
+      > </a
+      ><a name="739" class="Symbol"
+      >(</a
+      ><a name="740" href="cw.cohomology.TipAndAugment.html#345" class="Function"
+      >CX&#8320;</a
+      ><a name="743"
+      > </a
+      ><a name="744" class="Number"
+      >0</a
+      ><a name="745" class="Symbol"
+      >)</a
+      ><a name="746"
+      > </a
+      ><a name="747" class="Symbol"
+      >(</a
+      ><a name="748" href="lib.groups.Lift.html#661" class="Function"
+      >Lift-group</a
+      ><a name="758"
+      > </a
+      ><a name="759" class="Symbol"
+      >{</a
+      ><a name="760" class="Argument"
+      >j</a
+      ><a name="761"
+      > </a
+      ><a name="762" class="Symbol"
+      >=</a
+      ><a name="763"
+      > </a
+      ><a name="764" href="cw.cohomology.ZerothCohomologyGroupOnDiag.html#159" class="Bound"
+      >i</a
+      ><a name="765" class="Symbol"
+      >}</a
+      ><a name="766"
+      > </a
+      ><a name="767" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="777" class="Symbol"
+      >))</a
+      ><a name="779"
+      > </a
+      ><a name="780" href="lib.groups.Isomorphism.html#3359" class="Function Operator"
+      >&#8315;&#185;&#7475;</a
+      ><a name="783"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

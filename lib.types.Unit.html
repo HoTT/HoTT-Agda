@@ -1,0 +1,339 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.Unit</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.Paths.html#1" class="Module"
+      >lib.types.Paths</a
+      ><a name="92"
+      >
+
+</a
+      ><a name="94" class="Keyword"
+      >module</a
+      ><a name="100"
+      > </a
+      ><a name="101" href="lib.types.Unit.html#1" class="Module"
+      >lib.types.Unit</a
+      ><a name="115"
+      > </a
+      ><a name="116" class="Keyword"
+      >where</a
+      ><a name="121"
+      >
+
+</a
+      ><a name="123" class="Keyword"
+      >pattern</a
+      ><a name="130"
+      > </a
+      ><a name="131" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="133"
+      > </a
+      ><a name="134" class="Symbol"
+      >=</a
+      ><a name="135"
+      > </a
+      ><a name="136" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="140"
+      >
+
+</a
+      ><a name="142" href="lib.types.Unit.html#142" class="Function"
+      >&#8857;Unit</a
+      ><a name="147"
+      > </a
+      ><a name="148" class="Symbol"
+      >:</a
+      ><a name="149"
+      > </a
+      ><a name="150" href="lib.Base.html#9901" class="Function"
+      >Ptd&#8320;</a
+      ><a name="154"
+      >
+</a
+      ><a name="155" href="lib.types.Unit.html#142" class="Function"
+      >&#8857;Unit</a
+      ><a name="160"
+      > </a
+      ><a name="161" class="Symbol"
+      >=</a
+      ><a name="162"
+      > </a
+      ><a name="163" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >&#8857;[</a
+      ><a name="165"
+      > </a
+      ><a name="166" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="170"
+      > </a
+      ><a name="171" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="172"
+      > </a
+      ><a name="173" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="177"
+      > </a
+      ><a name="178" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >]</a
+      ><a name="179"
+      >
+
+</a
+      ><a name="181" class="Keyword"
+      >abstract</a
+      ><a name="189"
+      >
+  </a
+      ><a name="192" class="Comment"
+      >-- Unit is contractible</a
+      ><a name="215"
+      >
+  </a
+      ><a name="218" href="lib.types.Unit.html#218" class="Function"
+      >Unit-is-contr</a
+      ><a name="231"
+      > </a
+      ><a name="232" class="Symbol"
+      >:</a
+      ><a name="233"
+      > </a
+      ><a name="234" href="lib.NType.html#228" class="Function"
+      >is-contr</a
+      ><a name="242"
+      > </a
+      ><a name="243" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="247"
+      >
+  </a
+      ><a name="250" href="lib.types.Unit.html#218" class="Function"
+      >Unit-is-contr</a
+      ><a name="263"
+      > </a
+      ><a name="264" class="Symbol"
+      >=</a
+      ><a name="265"
+      > </a
+      ><a name="266" class="Symbol"
+      >(</a
+      ><a name="267" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="271"
+      > </a
+      ><a name="272" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="273"
+      > </a
+      ><a name="274" class="Symbol"
+      >&#955;</a
+      ><a name="275"
+      > </a
+      ><a name="276" href="lib.types.Unit.html#276" class="Bound"
+      >y</a
+      ><a name="277"
+      > </a
+      ><a name="278" class="Symbol"
+      >&#8594;</a
+      ><a name="279"
+      > </a
+      ><a name="280" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="283" class="Symbol"
+      >)</a
+      ><a name="284"
+      >
+
+  </a
+      ><a name="288" href="lib.types.Unit.html#288" class="Function"
+      >Unit-is-prop</a
+      ><a name="300"
+      > </a
+      ><a name="301" class="Symbol"
+      >:</a
+      ><a name="302"
+      > </a
+      ><a name="303" href="lib.NType.html#430" class="Function"
+      >is-prop</a
+      ><a name="310"
+      > </a
+      ><a name="311" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="315"
+      >
+  </a
+      ><a name="318" href="lib.types.Unit.html#288" class="Function"
+      >Unit-is-prop</a
+      ><a name="330"
+      > </a
+      ><a name="331" class="Symbol"
+      >=</a
+      ><a name="332"
+      > </a
+      ><a name="333" href="lib.NType.html#1123" class="Function"
+      >raise-level</a
+      ><a name="344"
+      > </a
+      ><a name="345" class="Number"
+      >-2</a
+      ><a name="347"
+      > </a
+      ><a name="348" href="lib.types.Unit.html#218" class="Function"
+      >Unit-is-contr</a
+      ><a name="361"
+      >
+
+  </a
+      ><a name="365" href="lib.types.Unit.html#365" class="Function"
+      >Unit-is-set</a
+      ><a name="376"
+      > </a
+      ><a name="377" class="Symbol"
+      >:</a
+      ><a name="378"
+      > </a
+      ><a name="379" href="lib.NType.html#455" class="Function"
+      >is-set</a
+      ><a name="385"
+      > </a
+      ><a name="386" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="390"
+      >
+  </a
+      ><a name="393" href="lib.types.Unit.html#365" class="Function"
+      >Unit-is-set</a
+      ><a name="404"
+      > </a
+      ><a name="405" class="Symbol"
+      >=</a
+      ><a name="406"
+      > </a
+      ><a name="407" href="lib.NType.html#1123" class="Function"
+      >raise-level</a
+      ><a name="418"
+      > </a
+      ><a name="419" class="Number"
+      >-1</a
+      ><a name="421"
+      > </a
+      ><a name="422" href="lib.types.Unit.html#288" class="Function"
+      >Unit-is-prop</a
+      ><a name="434"
+      >
+
+  </a
+      ><a name="438" href="lib.types.Unit.html#438" class="Function"
+      >Unit-level</a
+      ><a name="448"
+      > </a
+      ><a name="449" class="Symbol"
+      >=</a
+      ><a name="450"
+      > </a
+      ><a name="451" href="lib.types.Unit.html#218" class="Function"
+      >Unit-is-contr</a
+      ><a name="464"
+      >
+  </a
+      ><a name="467" href="lib.types.Unit.html#467" class="Function"
+      >&#8868;-is-contr</a
+      ><a name="477"
+      > </a
+      ><a name="478" class="Symbol"
+      >=</a
+      ><a name="479"
+      > </a
+      ><a name="480" href="lib.types.Unit.html#218" class="Function"
+      >Unit-is-contr</a
+      ><a name="493"
+      >
+  </a
+      ><a name="496" href="lib.types.Unit.html#496" class="Function"
+      >&#8868;-level</a
+      ><a name="503"
+      > </a
+      ><a name="504" class="Symbol"
+      >=</a
+      ><a name="505"
+      > </a
+      ><a name="506" href="lib.types.Unit.html#218" class="Function"
+      >Unit-is-contr</a
+      ><a name="519"
+      >
+  </a
+      ><a name="522" href="lib.types.Unit.html#522" class="Function"
+      >&#8868;-is-prop</a
+      ><a name="531"
+      > </a
+      ><a name="532" class="Symbol"
+      >=</a
+      ><a name="533"
+      > </a
+      ><a name="534" href="lib.types.Unit.html#288" class="Function"
+      >Unit-is-prop</a
+      ><a name="546"
+      >
+  </a
+      ><a name="549" href="lib.types.Unit.html#549" class="Function"
+      >&#8868;-is-set</a
+      ><a name="557"
+      > </a
+      ><a name="558" class="Symbol"
+      >=</a
+      ><a name="559"
+      > </a
+      ><a name="560" href="lib.types.Unit.html#365" class="Function"
+      >Unit-is-set</a
+      ><a name="571"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

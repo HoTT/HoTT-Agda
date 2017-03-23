@@ -1,0 +1,582 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.Relation</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Base.html#1" class="Module"
+      >lib.Base</a
+      ><a name="62"
+      >
+
+</a
+      ><a name="64" class="Keyword"
+      >module</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="lib.Relation.html#1" class="Module"
+      >lib.Relation</a
+      ><a name="83"
+      > </a
+      ><a name="84" class="Symbol"
+      >{</a
+      ><a name="85" href="lib.Relation.html#85" class="Bound"
+      >i</a
+      ><a name="86" class="Symbol"
+      >}</a
+      ><a name="87"
+      > </a
+      ><a name="88" class="Keyword"
+      >where</a
+      ><a name="93"
+      >
+
+</a
+      ><a name="95" href="lib.Relation.html#95" class="Function"
+      >Rel</a
+      ><a name="98"
+      > </a
+      ><a name="99" class="Symbol"
+      >:</a
+      ><a name="100"
+      > </a
+      ><a name="101" class="Symbol"
+      >&#8704;</a
+      ><a name="102"
+      > </a
+      ><a name="103" class="Symbol"
+      >(</a
+      ><a name="104" href="lib.Relation.html#104" class="Bound"
+      >A</a
+      ><a name="105"
+      > </a
+      ><a name="106" class="Symbol"
+      >:</a
+      ><a name="107"
+      > </a
+      ><a name="108" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="112"
+      > </a
+      ><a name="113" href="lib.Relation.html#85" class="Bound"
+      >i</a
+      ><a name="114" class="Symbol"
+      >)</a
+      ><a name="115"
+      > </a
+      ><a name="116" href="lib.Relation.html#116" class="Bound"
+      >j</a
+      ><a name="117"
+      > </a
+      ><a name="118" class="Symbol"
+      >&#8594;</a
+      ><a name="119"
+      > </a
+      ><a name="120" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="124"
+      > </a
+      ><a name="125" class="Symbol"
+      >(</a
+      ><a name="126" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="130"
+      > </a
+      ><a name="131" href="lib.Relation.html#85" class="Bound"
+      >i</a
+      ><a name="132"
+      > </a
+      ><a name="133" class="Symbol"
+      >(</a
+      ><a name="134" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="139"
+      > </a
+      ><a name="140" href="lib.Relation.html#116" class="Bound"
+      >j</a
+      ><a name="141" class="Symbol"
+      >))</a
+      ><a name="143"
+      >
+</a
+      ><a name="144" href="lib.Relation.html#95" class="Function"
+      >Rel</a
+      ><a name="147"
+      > </a
+      ><a name="148" href="lib.Relation.html#148" class="Bound"
+      >A</a
+      ><a name="149"
+      > </a
+      ><a name="150" href="lib.Relation.html#150" class="Bound"
+      >j</a
+      ><a name="151"
+      > </a
+      ><a name="152" class="Symbol"
+      >=</a
+      ><a name="153"
+      > </a
+      ><a name="154" href="lib.Relation.html#148" class="Bound"
+      >A</a
+      ><a name="155"
+      > </a
+      ><a name="156" class="Symbol"
+      >&#8594;</a
+      ><a name="157"
+      > </a
+      ><a name="158" href="lib.Relation.html#148" class="Bound"
+      >A</a
+      ><a name="159"
+      > </a
+      ><a name="160" class="Symbol"
+      >&#8594;</a
+      ><a name="161"
+      > </a
+      ><a name="162" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="166"
+      > </a
+      ><a name="167" href="lib.Relation.html#150" class="Bound"
+      >j</a
+      ><a name="168"
+      >
+
+</a
+      ><a name="170" class="Keyword"
+      >module</a
+      ><a name="176"
+      > </a
+      ><a name="177" href="lib.Relation.html#177" class="Module"
+      >_</a
+      ><a name="178"
+      > </a
+      ><a name="179" class="Symbol"
+      >{</a
+      ><a name="180" href="lib.Relation.html#180" class="Bound"
+      >A</a
+      ><a name="181"
+      > </a
+      ><a name="182" class="Symbol"
+      >:</a
+      ><a name="183"
+      > </a
+      ><a name="184" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="188"
+      > </a
+      ><a name="189" href="lib.Relation.html#85" class="Bound"
+      >i</a
+      ><a name="190" class="Symbol"
+      >}</a
+      ><a name="191"
+      > </a
+      ><a name="192" class="Symbol"
+      >{</a
+      ><a name="193" href="lib.Relation.html#193" class="Bound"
+      >j</a
+      ><a name="194" class="Symbol"
+      >}</a
+      ><a name="195"
+      > </a
+      ><a name="196" class="Symbol"
+      >(</a
+      ><a name="197" href="lib.Relation.html#197" class="Bound"
+      >rel</a
+      ><a name="200"
+      > </a
+      ><a name="201" class="Symbol"
+      >:</a
+      ><a name="202"
+      > </a
+      ><a name="203" href="lib.Relation.html#95" class="Function"
+      >Rel</a
+      ><a name="206"
+      > </a
+      ><a name="207" href="lib.Relation.html#180" class="Bound"
+      >A</a
+      ><a name="208"
+      > </a
+      ><a name="209" href="lib.Relation.html#193" class="Bound"
+      >j</a
+      ><a name="210" class="Symbol"
+      >)</a
+      ><a name="211"
+      > </a
+      ><a name="212" class="Keyword"
+      >where</a
+      ><a name="217"
+      >
+
+  </a
+      ><a name="221" href="lib.Relation.html#221" class="Function"
+      >Decidable</a
+      ><a name="230"
+      > </a
+      ><a name="231" class="Symbol"
+      >:</a
+      ><a name="232"
+      > </a
+      ><a name="233" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="237"
+      > </a
+      ><a name="238" class="Symbol"
+      >(</a
+      ><a name="239" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="243"
+      > </a
+      ><a name="244" href="lib.Relation.html#85" class="Bound"
+      >i</a
+      ><a name="245"
+      > </a
+      ><a name="246" href="lib.Relation.html#193" class="Bound"
+      >j</a
+      ><a name="247" class="Symbol"
+      >)</a
+      ><a name="248"
+      >
+  </a
+      ><a name="251" href="lib.Relation.html#221" class="Function"
+      >Decidable</a
+      ><a name="260"
+      > </a
+      ><a name="261" class="Symbol"
+      >=</a
+      ><a name="262"
+      > </a
+      ><a name="263" class="Symbol"
+      >&#8704;</a
+      ><a name="264"
+      > </a
+      ><a name="265" href="lib.Relation.html#265" class="Bound"
+      >a&#8321;</a
+      ><a name="267"
+      > </a
+      ><a name="268" href="lib.Relation.html#268" class="Bound"
+      >a&#8322;</a
+      ><a name="270"
+      > </a
+      ><a name="271" class="Symbol"
+      >&#8594;</a
+      ><a name="272"
+      > </a
+      ><a name="273" href="lib.Base.html#9406" class="Function"
+      >Dec</a
+      ><a name="276"
+      > </a
+      ><a name="277" class="Symbol"
+      >(</a
+      ><a name="278" href="lib.Relation.html#197" class="Bound"
+      >rel</a
+      ><a name="281"
+      > </a
+      ><a name="282" href="lib.Relation.html#265" class="Bound"
+      >a&#8321;</a
+      ><a name="284"
+      > </a
+      ><a name="285" href="lib.Relation.html#268" class="Bound"
+      >a&#8322;</a
+      ><a name="287" class="Symbol"
+      >)</a
+      ><a name="288"
+      >
+
+  </a
+      ><a name="292" href="lib.Relation.html#292" class="Function"
+      >is-refl</a
+      ><a name="299"
+      > </a
+      ><a name="300" class="Symbol"
+      >:</a
+      ><a name="301"
+      > </a
+      ><a name="302" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="306"
+      > </a
+      ><a name="307" class="Symbol"
+      >(</a
+      ><a name="308" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="312"
+      > </a
+      ><a name="313" href="lib.Relation.html#85" class="Bound"
+      >i</a
+      ><a name="314"
+      > </a
+      ><a name="315" href="lib.Relation.html#193" class="Bound"
+      >j</a
+      ><a name="316" class="Symbol"
+      >)</a
+      ><a name="317"
+      >
+  </a
+      ><a name="320" href="lib.Relation.html#292" class="Function"
+      >is-refl</a
+      ><a name="327"
+      > </a
+      ><a name="328" class="Symbol"
+      >=</a
+      ><a name="329"
+      > </a
+      ><a name="330" class="Symbol"
+      >&#8704;</a
+      ><a name="331"
+      > </a
+      ><a name="332" href="lib.Relation.html#332" class="Bound"
+      >a</a
+      ><a name="333"
+      > </a
+      ><a name="334" class="Symbol"
+      >&#8594;</a
+      ><a name="335"
+      > </a
+      ><a name="336" href="lib.Relation.html#197" class="Bound"
+      >rel</a
+      ><a name="339"
+      > </a
+      ><a name="340" href="lib.Relation.html#332" class="Bound"
+      >a</a
+      ><a name="341"
+      > </a
+      ><a name="342" href="lib.Relation.html#332" class="Bound"
+      >a</a
+      ><a name="343"
+      >
+
+  </a
+      ><a name="347" href="lib.Relation.html#347" class="Function"
+      >is-sym</a
+      ><a name="353"
+      > </a
+      ><a name="354" class="Symbol"
+      >:</a
+      ><a name="355"
+      > </a
+      ><a name="356" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="360"
+      > </a
+      ><a name="361" class="Symbol"
+      >(</a
+      ><a name="362" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="366"
+      > </a
+      ><a name="367" href="lib.Relation.html#85" class="Bound"
+      >i</a
+      ><a name="368"
+      > </a
+      ><a name="369" href="lib.Relation.html#193" class="Bound"
+      >j</a
+      ><a name="370" class="Symbol"
+      >)</a
+      ><a name="371"
+      >
+  </a
+      ><a name="374" href="lib.Relation.html#347" class="Function"
+      >is-sym</a
+      ><a name="380"
+      > </a
+      ><a name="381" class="Symbol"
+      >=</a
+      ><a name="382"
+      > </a
+      ><a name="383" class="Symbol"
+      >&#8704;</a
+      ><a name="384"
+      > </a
+      ><a name="385" class="Symbol"
+      >{</a
+      ><a name="386" href="lib.Relation.html#386" class="Bound"
+      >a</a
+      ><a name="387"
+      > </a
+      ><a name="388" href="lib.Relation.html#388" class="Bound"
+      >b</a
+      ><a name="389" class="Symbol"
+      >}</a
+      ><a name="390"
+      > </a
+      ><a name="391" class="Symbol"
+      >&#8594;</a
+      ><a name="392"
+      > </a
+      ><a name="393" href="lib.Relation.html#197" class="Bound"
+      >rel</a
+      ><a name="396"
+      > </a
+      ><a name="397" href="lib.Relation.html#386" class="Bound"
+      >a</a
+      ><a name="398"
+      > </a
+      ><a name="399" href="lib.Relation.html#388" class="Bound"
+      >b</a
+      ><a name="400"
+      > </a
+      ><a name="401" class="Symbol"
+      >&#8594;</a
+      ><a name="402"
+      > </a
+      ><a name="403" href="lib.Relation.html#197" class="Bound"
+      >rel</a
+      ><a name="406"
+      > </a
+      ><a name="407" href="lib.Relation.html#388" class="Bound"
+      >b</a
+      ><a name="408"
+      > </a
+      ><a name="409" href="lib.Relation.html#386" class="Bound"
+      >a</a
+      ><a name="410"
+      >
+
+  </a
+      ><a name="414" href="lib.Relation.html#414" class="Function"
+      >is-trans</a
+      ><a name="422"
+      > </a
+      ><a name="423" class="Symbol"
+      >:</a
+      ><a name="424"
+      > </a
+      ><a name="425" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="429"
+      > </a
+      ><a name="430" class="Symbol"
+      >(</a
+      ><a name="431" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="435"
+      > </a
+      ><a name="436" href="lib.Relation.html#85" class="Bound"
+      >i</a
+      ><a name="437"
+      > </a
+      ><a name="438" href="lib.Relation.html#193" class="Bound"
+      >j</a
+      ><a name="439" class="Symbol"
+      >)</a
+      ><a name="440"
+      >
+  </a
+      ><a name="443" href="lib.Relation.html#414" class="Function"
+      >is-trans</a
+      ><a name="451"
+      > </a
+      ><a name="452" class="Symbol"
+      >=</a
+      ><a name="453"
+      > </a
+      ><a name="454" class="Symbol"
+      >&#8704;</a
+      ><a name="455"
+      > </a
+      ><a name="456" class="Symbol"
+      >{</a
+      ><a name="457" href="lib.Relation.html#457" class="Bound"
+      >a</a
+      ><a name="458"
+      > </a
+      ><a name="459" href="lib.Relation.html#459" class="Bound"
+      >b</a
+      ><a name="460"
+      > </a
+      ><a name="461" href="lib.Relation.html#461" class="Bound"
+      >c</a
+      ><a name="462" class="Symbol"
+      >}</a
+      ><a name="463"
+      > </a
+      ><a name="464" class="Symbol"
+      >&#8594;</a
+      ><a name="465"
+      > </a
+      ><a name="466" href="lib.Relation.html#197" class="Bound"
+      >rel</a
+      ><a name="469"
+      > </a
+      ><a name="470" href="lib.Relation.html#457" class="Bound"
+      >a</a
+      ><a name="471"
+      > </a
+      ><a name="472" href="lib.Relation.html#459" class="Bound"
+      >b</a
+      ><a name="473"
+      > </a
+      ><a name="474" class="Symbol"
+      >&#8594;</a
+      ><a name="475"
+      > </a
+      ><a name="476" href="lib.Relation.html#197" class="Bound"
+      >rel</a
+      ><a name="479"
+      > </a
+      ><a name="480" href="lib.Relation.html#459" class="Bound"
+      >b</a
+      ><a name="481"
+      > </a
+      ><a name="482" href="lib.Relation.html#461" class="Bound"
+      >c</a
+      ><a name="483"
+      > </a
+      ><a name="484" class="Symbol"
+      >&#8594;</a
+      ><a name="485"
+      > </a
+      ><a name="486" href="lib.Relation.html#197" class="Bound"
+      >rel</a
+      ><a name="489"
+      > </a
+      ><a name="490" href="lib.Relation.html#457" class="Bound"
+      >a</a
+      ><a name="491"
+      > </a
+      ><a name="492" href="lib.Relation.html#461" class="Bound"
+      >c</a
+      ><a name="493"
+      >
+
+  </a
+      ><a name="497" class="Comment"
+      >-- as equivalence relation</a
+      ><a name="523"
+      >
+  </a
+      ><a name="526" class="Comment"
+      >-- is-equational : Type (lmax i j)</a
+      ><a name="560"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

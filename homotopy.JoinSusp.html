@@ -1,0 +1,1897 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.JoinSusp</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="homotopy.JoinComm.html#1" class="Module"
+      >homotopy.JoinComm</a
+      ><a name="88"
+      >
+</a
+      ><a name="89" class="Keyword"
+      >open</a
+      ><a name="93"
+      > </a
+      ><a name="94" class="Keyword"
+      >import</a
+      ><a name="100"
+      > </a
+      ><a name="101" href="homotopy.JoinAssocCubical.html#1" class="Module"
+      >homotopy.JoinAssocCubical</a
+      ><a name="126"
+      >
+
+</a
+      ><a name="128" class="Keyword"
+      >module</a
+      ><a name="134"
+      > </a
+      ><a name="135" href="homotopy.JoinSusp.html#1" class="Module"
+      >homotopy.JoinSusp</a
+      ><a name="152"
+      > </a
+      ><a name="153" class="Keyword"
+      >where</a
+      ><a name="158"
+      >
+
+</a
+      ><a name="160" class="Keyword"
+      >module</a
+      ><a name="166"
+      > </a
+      ><a name="167" href="homotopy.JoinSusp.html#167" class="Module"
+      >_</a
+      ><a name="168"
+      > </a
+      ><a name="169" class="Symbol"
+      >{</a
+      ><a name="170" href="homotopy.JoinSusp.html#170" class="Bound"
+      >i</a
+      ><a name="171" class="Symbol"
+      >}</a
+      ><a name="172"
+      > </a
+      ><a name="173" class="Symbol"
+      >(</a
+      ><a name="174" href="homotopy.JoinSusp.html#174" class="Bound"
+      >A</a
+      ><a name="175"
+      > </a
+      ><a name="176" class="Symbol"
+      >:</a
+      ><a name="177"
+      > </a
+      ><a name="178" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="182"
+      > </a
+      ><a name="183" href="homotopy.JoinSusp.html#170" class="Bound"
+      >i</a
+      ><a name="184" class="Symbol"
+      >)</a
+      ><a name="185"
+      > </a
+      ><a name="186" class="Keyword"
+      >where</a
+      ><a name="191"
+      >
+
+  </a
+      ><a name="195" class="Keyword"
+      >private</a
+      ><a name="202"
+      >
+
+      </a
+      ><a name="210" class="Keyword"
+      >module</a
+      ><a name="216"
+      > </a
+      ><a name="217" href="homotopy.JoinSusp.html#217" class="Module"
+      >Into</a
+      ><a name="221"
+      > </a
+      ><a name="222" class="Symbol"
+      >=</a
+      ><a name="223"
+      > </a
+      ><a name="224" class="Module"
+      >JoinRec</a
+      ><a name="231"
+      > </a
+      ><a name="232" class="Symbol"
+      >{</a
+      ><a name="233" class="Argument"
+      >A</a
+      ><a name="234"
+      > </a
+      ><a name="235" class="Symbol"
+      >=</a
+      ><a name="236"
+      > </a
+      ><a name="237" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="241" class="Symbol"
+      >}</a
+      ><a name="242"
+      > </a
+      ><a name="243" class="Symbol"
+      >{</a
+      ><a name="244" class="Argument"
+      >B</a
+      ><a name="245"
+      > </a
+      ><a name="246" class="Symbol"
+      >=</a
+      ><a name="247"
+      > </a
+      ><a name="248" href="homotopy.JoinSusp.html#174" class="Bound"
+      >A</a
+      ><a name="249" class="Symbol"
+      >}</a
+      ><a name="250"
+      >
+        </a
+      ><a name="259" class="Symbol"
+      >{</a
+      ><a name="260" class="Argument"
+      >D</a
+      ><a name="261"
+      > </a
+      ><a name="262" class="Symbol"
+      >=</a
+      ><a name="263"
+      > </a
+      ><a name="264" href="lib.types.Suspension.html#658" class="Function"
+      >Susp</a
+      ><a name="268"
+      > </a
+      ><a name="269" href="homotopy.JoinSusp.html#174" class="Bound"
+      >A</a
+      ><a name="270" class="Symbol"
+      >}</a
+      ><a name="271"
+      >
+        </a
+      ><a name="280" class="Symbol"
+      >(</a
+      ><a name="281" href="lib.types.Bool.html#356" class="Function Operator"
+      >if_then</a
+      ><a name="288"
+      > </a
+      ><a name="289" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="294"
+      > </a
+      ><a name="295" href="lib.types.Bool.html#356" class="Function Operator"
+      >else</a
+      ><a name="299"
+      > </a
+      ><a name="300" href="lib.types.Suspension.html#895" class="Function"
+      >south</a
+      ><a name="305" class="Symbol"
+      >)</a
+      ><a name="306"
+      >
+        </a
+      ><a name="315" class="Symbol"
+      >(&#955;</a
+      ><a name="317"
+      > </a
+      ><a name="318" href="homotopy.JoinSusp.html#318" class="Bound"
+      >_</a
+      ><a name="319"
+      > </a
+      ><a name="320" class="Symbol"
+      >&#8594;</a
+      ><a name="321"
+      > </a
+      ><a name="322" href="lib.types.Suspension.html#895" class="Function"
+      >south</a
+      ><a name="327" class="Symbol"
+      >)</a
+      ><a name="328"
+      >
+        </a
+      ><a name="337" class="Symbol"
+      >(&#955;</a
+      ><a name="339"
+      > </a
+      ><a name="340" class="Symbol"
+      >{(</a
+      ><a name="342" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="346"
+      > </a
+      ><a name="347" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="348"
+      > </a
+      ><a name="349" href="homotopy.JoinSusp.html#349" class="Bound"
+      >a</a
+      ><a name="350" class="Symbol"
+      >)</a
+      ><a name="351"
+      > </a
+      ><a name="352" class="Symbol"
+      >&#8594;</a
+      ><a name="353"
+      > </a
+      ><a name="354" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="359"
+      > </a
+      ><a name="360" href="homotopy.JoinSusp.html#349" class="Bound"
+      >a</a
+      ><a name="361" class="Symbol"
+      >;</a
+      ><a name="362"
+      >
+            </a
+      ><a name="375" class="Symbol"
+      >(</a
+      ><a name="376" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="381"
+      > </a
+      ><a name="382" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="383"
+      > </a
+      ><a name="384" href="homotopy.JoinSusp.html#384" class="Bound"
+      >a</a
+      ><a name="385" class="Symbol"
+      >)</a
+      ><a name="386"
+      > </a
+      ><a name="387" class="Symbol"
+      >&#8594;</a
+      ><a name="388"
+      > </a
+      ><a name="389" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="392" class="Symbol"
+      >})</a
+      ><a name="394"
+      >
+
+      </a
+      ><a name="402" href="homotopy.JoinSusp.html#402" class="Function"
+      >into</a
+      ><a name="406"
+      > </a
+      ><a name="407" class="Symbol"
+      >=</a
+      ><a name="408"
+      > </a
+      ><a name="409" href="lib.types.Pushout.html#1397" class="Function"
+      >Into.f</a
+      ><a name="415"
+      >
+
+      </a
+      ><a name="423" class="Keyword"
+      >module</a
+      ><a name="429"
+      > </a
+      ><a name="430" href="homotopy.JoinSusp.html#430" class="Module"
+      >Out</a
+      ><a name="433"
+      > </a
+      ><a name="434" class="Symbol"
+      >=</a
+      ><a name="435"
+      > </a
+      ><a name="436" class="Module"
+      >SuspRec</a
+      ><a name="443"
+      > </a
+      ><a name="444" class="Symbol"
+      >{</a
+      ><a name="445" class="Argument"
+      >C</a
+      ><a name="446"
+      > </a
+      ><a name="447" class="Symbol"
+      >=</a
+      ><a name="448"
+      > </a
+      ><a name="449" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="453"
+      > </a
+      ><a name="454" href="lib.types.Join.html#392" class="Function Operator"
+      >*</a
+      ><a name="455"
+      > </a
+      ><a name="456" href="homotopy.JoinSusp.html#174" class="Bound"
+      >A</a
+      ><a name="457" class="Symbol"
+      >}</a
+      ><a name="458"
+      >
+        </a
+      ><a name="467" class="Symbol"
+      >(</a
+      ><a name="468" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="472"
+      > </a
+      ><a name="473" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="477" class="Symbol"
+      >)</a
+      ><a name="478"
+      >
+        </a
+      ><a name="487" class="Symbol"
+      >(</a
+      ><a name="488" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="492"
+      > </a
+      ><a name="493" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="498" class="Symbol"
+      >)</a
+      ><a name="499"
+      >
+        </a
+      ><a name="508" class="Symbol"
+      >(&#955;</a
+      ><a name="510"
+      > </a
+      ><a name="511" href="homotopy.JoinSusp.html#511" class="Bound"
+      >a</a
+      ><a name="512"
+      > </a
+      ><a name="513" class="Symbol"
+      >&#8594;</a
+      ><a name="514"
+      > </a
+      ><a name="515" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="519"
+      > </a
+      ><a name="520" class="Symbol"
+      >(</a
+      ><a name="521" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="525"
+      > </a
+      ><a name="526" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="527"
+      > </a
+      ><a name="528" href="homotopy.JoinSusp.html#511" class="Bound"
+      >a</a
+      ><a name="529" class="Symbol"
+      >)</a
+      ><a name="530"
+      > </a
+      ><a name="531" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="532"
+      > </a
+      ><a name="533" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="534"
+      > </a
+      ><a name="535" class="Symbol"
+      >(</a
+      ><a name="536" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="540"
+      > </a
+      ><a name="541" class="Symbol"
+      >(</a
+      ><a name="542" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="547"
+      > </a
+      ><a name="548" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="549"
+      > </a
+      ><a name="550" href="homotopy.JoinSusp.html#511" class="Bound"
+      >a</a
+      ><a name="551" class="Symbol"
+      >)))</a
+      ><a name="554"
+      >
+
+      </a
+      ><a name="562" href="homotopy.JoinSusp.html#562" class="Function"
+      >out</a
+      ><a name="565"
+      > </a
+      ><a name="566" class="Symbol"
+      >=</a
+      ><a name="567"
+      > </a
+      ><a name="568" href="lib.types.Pushout.html#1397" class="Function"
+      >Out.f</a
+      ><a name="573"
+      >
+
+      </a
+      ><a name="581" href="homotopy.JoinSusp.html#581" class="Function"
+      >into-out</a
+      ><a name="589"
+      > </a
+      ><a name="590" class="Symbol"
+      >:</a
+      ><a name="591"
+      > </a
+      ><a name="592" class="Symbol"
+      >&#8704;</a
+      ><a name="593"
+      > </a
+      ><a name="594" href="homotopy.JoinSusp.html#594" class="Bound"
+      >&#963;</a
+      ><a name="595"
+      > </a
+      ><a name="596" class="Symbol"
+      >&#8594;</a
+      ><a name="597"
+      > </a
+      ><a name="598" href="homotopy.JoinSusp.html#402" class="Function"
+      >into</a
+      ><a name="602"
+      > </a
+      ><a name="603" class="Symbol"
+      >(</a
+      ><a name="604" href="homotopy.JoinSusp.html#562" class="Function"
+      >out</a
+      ><a name="607"
+      > </a
+      ><a name="608" href="homotopy.JoinSusp.html#594" class="Bound"
+      >&#963;</a
+      ><a name="609" class="Symbol"
+      >)</a
+      ><a name="610"
+      > </a
+      ><a name="611" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="613"
+      > </a
+      ><a name="614" href="homotopy.JoinSusp.html#594" class="Bound"
+      >&#963;</a
+      ><a name="615"
+      >
+      </a
+      ><a name="622" href="homotopy.JoinSusp.html#581" class="Function"
+      >into-out</a
+      ><a name="630"
+      > </a
+      ><a name="631" class="Symbol"
+      >=</a
+      ><a name="632"
+      > </a
+      ><a name="633" href="lib.types.Pushout.html#850" class="Function"
+      >Susp-elim</a
+      ><a name="642"
+      >
+        </a
+      ><a name="651" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="654"
+      >
+        </a
+      ><a name="663" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="666"
+      >
+        </a
+      ><a name="675" class="Symbol"
+      >(</a
+      ><a name="676" href="lib.cubical.Square.html#10289" class="Function"
+      >&#8595;-&#8728;=idf-from-square</a
+      ><a name="695"
+      > </a
+      ><a name="696" href="homotopy.JoinSusp.html#402" class="Function"
+      >into</a
+      ><a name="700"
+      > </a
+      ><a name="701" href="homotopy.JoinSusp.html#562" class="Function"
+      >out</a
+      ><a name="704"
+      > </a
+      ><a name="705" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="706"
+      > </a
+      ><a name="707" class="Symbol"
+      >&#955;</a
+      ><a name="708"
+      > </a
+      ><a name="709" href="homotopy.JoinSusp.html#709" class="Bound"
+      >a</a
+      ><a name="710"
+      > </a
+      ><a name="711" class="Symbol"
+      >&#8594;</a
+      ><a name="712"
+      > </a
+      ><a name="713" href="lib.cubical.Square.html#2914" class="Function"
+      >vert-degen-square</a
+      ><a name="730"
+      > </a
+      ><a name="731" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="732"
+      >
+           </a
+      ><a name="744" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="746"
+      > </a
+      ><a name="747" class="Symbol"
+      >(</a
+      ><a name="748" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="750"
+      > </a
+      ><a name="751" href="homotopy.JoinSusp.html#402" class="Function"
+      >into</a
+      ><a name="755" class="Symbol"
+      >)</a
+      ><a name="756"
+      > </a
+      ><a name="757" class="Symbol"
+      >(</a
+      ><a name="758" href="lib.types.Pushout.html#1428" class="Function"
+      >Out.merid-&#946;</a
+      ><a name="769"
+      > </a
+      ><a name="770" href="homotopy.JoinSusp.html#709" class="Bound"
+      >a</a
+      ><a name="771" class="Symbol"
+      >)</a
+      ><a name="772"
+      >
+           </a
+      ><a name="784" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="785"
+      > </a
+      ><a name="786" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="790"
+      > </a
+      ><a name="791" href="homotopy.JoinSusp.html#402" class="Function"
+      >into</a
+      ><a name="795"
+      > </a
+      ><a name="796" class="Symbol"
+      >(</a
+      ><a name="797" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="801"
+      > </a
+      ><a name="802" class="Symbol"
+      >(</a
+      ><a name="803" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="807"
+      > </a
+      ><a name="808" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="809"
+      > </a
+      ><a name="810" href="homotopy.JoinSusp.html#709" class="Bound"
+      >a</a
+      ><a name="811" class="Symbol"
+      >))</a
+      ><a name="813"
+      > </a
+      ><a name="814" class="Symbol"
+      >(</a
+      ><a name="815" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="816"
+      > </a
+      ><a name="817" class="Symbol"
+      >(</a
+      ><a name="818" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="822"
+      > </a
+      ><a name="823" class="Symbol"
+      >(</a
+      ><a name="824" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="829"
+      > </a
+      ><a name="830" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="831"
+      > </a
+      ><a name="832" href="homotopy.JoinSusp.html#709" class="Bound"
+      >a</a
+      ><a name="833" class="Symbol"
+      >)))</a
+      ><a name="836"
+      >
+           </a
+      ><a name="848" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="849"
+      > </a
+      ><a name="850" class="Symbol"
+      >(</a
+      ><a name="851" href="lib.types.Pushout.html#1428" class="Function"
+      >Into.glue-&#946;</a
+      ><a name="862"
+      > </a
+      ><a name="863" class="Symbol"
+      >(</a
+      ><a name="864" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="868"
+      > </a
+      ><a name="869" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="870"
+      > </a
+      ><a name="871" href="homotopy.JoinSusp.html#709" class="Bound"
+      >a</a
+      ><a name="872" class="Symbol"
+      >)</a
+      ><a name="873"
+      >
+              </a
+      ><a name="888" href="lib.PathGroupoid.html#2202" class="Function Operator"
+      >&#8729;2</a
+      ><a name="890"
+      > </a
+      ><a name="891" class="Symbol"
+      >(</a
+      ><a name="892" href="lib.PathFunctor.html#291" class="Function"
+      >ap-!</a
+      ><a name="896"
+      > </a
+      ><a name="897" href="homotopy.JoinSusp.html#402" class="Function"
+      >into</a
+      ><a name="901"
+      > </a
+      ><a name="902" class="Symbol"
+      >(</a
+      ><a name="903" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="907"
+      > </a
+      ><a name="908" class="Symbol"
+      >(</a
+      ><a name="909" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="914"
+      > </a
+      ><a name="915" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="916"
+      > </a
+      ><a name="917" href="homotopy.JoinSusp.html#709" class="Bound"
+      >a</a
+      ><a name="918" class="Symbol"
+      >))</a
+      ><a name="920"
+      >
+                  </a
+      ><a name="939" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="940"
+      > </a
+      ><a name="941" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="943"
+      > </a
+      ><a name="944" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="945"
+      > </a
+      ><a name="946" class="Symbol"
+      >(</a
+      ><a name="947" href="lib.types.Pushout.html#1428" class="Function"
+      >Into.glue-&#946;</a
+      ><a name="958"
+      > </a
+      ><a name="959" class="Symbol"
+      >(</a
+      ><a name="960" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="965"
+      > </a
+      ><a name="966" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="967"
+      > </a
+      ><a name="968" href="homotopy.JoinSusp.html#709" class="Bound"
+      >a</a
+      ><a name="969" class="Symbol"
+      >))))</a
+      ><a name="973"
+      >
+           </a
+      ><a name="985" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="986"
+      > </a
+      ><a name="987" href="lib.PathGroupoid.html#1041" class="Function"
+      >&#8729;-unit-r</a
+      ><a name="995"
+      > </a
+      ><a name="996" class="Symbol"
+      >_)</a
+      ><a name="998"
+      >
+
+      </a
+      ><a name="1006" href="homotopy.JoinSusp.html#1006" class="Function"
+      >out-into</a
+      ><a name="1014"
+      > </a
+      ><a name="1015" class="Symbol"
+      >:</a
+      ><a name="1016"
+      > </a
+      ><a name="1017" class="Symbol"
+      >&#8704;</a
+      ><a name="1018"
+      > </a
+      ><a name="1019" href="homotopy.JoinSusp.html#1019" class="Bound"
+      >j</a
+      ><a name="1020"
+      > </a
+      ><a name="1021" class="Symbol"
+      >&#8594;</a
+      ><a name="1022"
+      > </a
+      ><a name="1023" href="homotopy.JoinSusp.html#562" class="Function"
+      >out</a
+      ><a name="1026"
+      > </a
+      ><a name="1027" class="Symbol"
+      >(</a
+      ><a name="1028" href="homotopy.JoinSusp.html#402" class="Function"
+      >into</a
+      ><a name="1032"
+      > </a
+      ><a name="1033" href="homotopy.JoinSusp.html#1019" class="Bound"
+      >j</a
+      ><a name="1034" class="Symbol"
+      >)</a
+      ><a name="1035"
+      > </a
+      ><a name="1036" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1038"
+      > </a
+      ><a name="1039" href="homotopy.JoinSusp.html#1019" class="Bound"
+      >j</a
+      ><a name="1040"
+      >
+      </a
+      ><a name="1047" href="homotopy.JoinSusp.html#1006" class="Function"
+      >out-into</a
+      ><a name="1055"
+      > </a
+      ><a name="1056" class="Symbol"
+      >=</a
+      ><a name="1057"
+      > </a
+      ><a name="1058" href="lib.types.Pushout.html#850" class="Function"
+      >Join-elim</a
+      ><a name="1067"
+      >
+        </a
+      ><a name="1076" class="Symbol"
+      >(&#955;{</a
+      ><a name="1079" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1083"
+      > </a
+      ><a name="1084" class="Symbol"
+      >&#8594;</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1089"
+      > </a
+      ><a name="1090" class="Symbol"
+      >;</a
+      ><a name="1091"
+      > </a
+      ><a name="1092" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1097"
+      > </a
+      ><a name="1098" class="Symbol"
+      >&#8594;</a
+      ><a name="1099"
+      > </a
+      ><a name="1100" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1103" class="Symbol"
+      >})</a
+      ><a name="1105"
+      >
+        </a
+      ><a name="1114" class="Symbol"
+      >(&#955;</a
+      ><a name="1116"
+      > </a
+      ><a name="1117" href="homotopy.JoinSusp.html#1117" class="Bound"
+      >a</a
+      ><a name="1118"
+      > </a
+      ><a name="1119" class="Symbol"
+      >&#8594;</a
+      ><a name="1120"
+      > </a
+      ><a name="1121" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1125"
+      > </a
+      ><a name="1126" class="Symbol"
+      >(</a
+      ><a name="1127" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1132"
+      > </a
+      ><a name="1133" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1134"
+      > </a
+      ><a name="1135" href="homotopy.JoinSusp.html#1117" class="Bound"
+      >a</a
+      ><a name="1136" class="Symbol"
+      >))</a
+      ><a name="1138"
+      >
+        </a
+      ><a name="1147" class="Symbol"
+      >(</a
+      ><a name="1148" href="lib.cubical.Square.html#10289" class="Function"
+      >&#8595;-&#8728;=idf-from-square</a
+      ><a name="1167"
+      > </a
+      ><a name="1168" href="homotopy.JoinSusp.html#562" class="Function"
+      >out</a
+      ><a name="1171"
+      > </a
+      ><a name="1172" href="homotopy.JoinSusp.html#402" class="Function"
+      >into</a
+      ><a name="1176"
+      > </a
+      ><a name="1177" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1178"
+      >
+          </a
+      ><a name="1189" class="Symbol"
+      >&#955;</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" class="Symbol"
+      >{(</a
+      ><a name="1193" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1197"
+      > </a
+      ><a name="1198" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1199"
+      > </a
+      ><a name="1200" href="homotopy.JoinSusp.html#1200" class="Bound"
+      >a</a
+      ><a name="1201" class="Symbol"
+      >)</a
+      ><a name="1202"
+      > </a
+      ><a name="1203" class="Symbol"
+      >&#8594;</a
+      ><a name="1204"
+      >
+                </a
+      ><a name="1221" class="Symbol"
+      >(</a
+      ><a name="1222" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1224"
+      > </a
+      ><a name="1225" class="Symbol"
+      >(</a
+      ><a name="1226" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1228"
+      > </a
+      ><a name="1229" href="homotopy.JoinSusp.html#562" class="Function"
+      >out</a
+      ><a name="1232" class="Symbol"
+      >)</a
+      ><a name="1233"
+      > </a
+      ><a name="1234" class="Symbol"
+      >(</a
+      ><a name="1235" href="lib.types.Pushout.html#1428" class="Function"
+      >Into.glue-&#946;</a
+      ><a name="1246"
+      > </a
+      ><a name="1247" class="Symbol"
+      >(</a
+      ><a name="1248" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1254"
+      > </a
+      ><a name="1255" href="homotopy.JoinSusp.html#1200" class="Bound"
+      >a</a
+      ><a name="1256" class="Symbol"
+      >))</a
+      ><a name="1258"
+      > </a
+      ><a name="1259" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1260"
+      > </a
+      ><a name="1261" href="lib.types.Pushout.html#1428" class="Function"
+      >Out.merid-&#946;</a
+      ><a name="1272"
+      > </a
+      ><a name="1273" href="homotopy.JoinSusp.html#1200" class="Bound"
+      >a</a
+      ><a name="1274" class="Symbol"
+      >)</a
+      ><a name="1275"
+      >
+                </a
+      ><a name="1292" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="1295"
+      > </a
+      ><a name="1296" class="Symbol"
+      >(</a
+      ><a name="1297" href="lib.cubical.Square.html#484" class="Function"
+      >vid-square</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" class="Symbol"
+      >{</a
+      ><a name="1309" class="Argument"
+      >p</a
+      ><a name="1310"
+      > </a
+      ><a name="1311" class="Symbol"
+      >=</a
+      ><a name="1312"
+      > </a
+      ><a name="1313" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1317"
+      > </a
+      ><a name="1318" class="Symbol"
+      >(</a
+      ><a name="1319" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1323"
+      > </a
+      ><a name="1324" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1325"
+      > </a
+      ><a name="1326" href="homotopy.JoinSusp.html#1200" class="Bound"
+      >a</a
+      ><a name="1327" class="Symbol"
+      >)}</a
+      ><a name="1329"
+      >
+                      </a
+      ><a name="1352" href="lib.cubical.Square.html#12549" class="Function Operator"
+      >&#8865;h</a
+      ><a name="1354"
+      > </a
+      ><a name="1355" href="lib.cubical.Square.html#18013" class="Function"
+      >rt-square</a
+      ><a name="1364"
+      > </a
+      ><a name="1365" class="Symbol"
+      >(</a
+      ><a name="1366" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1370"
+      > </a
+      ><a name="1371" class="Symbol"
+      >(</a
+      ><a name="1372" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1377"
+      > </a
+      ><a name="1378" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1379"
+      > </a
+      ><a name="1380" href="homotopy.JoinSusp.html#1200" class="Bound"
+      >a</a
+      ><a name="1381" class="Symbol"
+      >)))</a
+      ><a name="1384"
+      >
+                </a
+      ><a name="1401" href="lib.cubical.Square.html#12327" class="Function Operator"
+      >&#8865;v&#8729;</a
+      ><a name="1404"
+      > </a
+      ><a name="1405" href="lib.PathGroupoid.html#1041" class="Function"
+      >&#8729;-unit-r</a
+      ><a name="1413"
+      > </a
+      ><a name="1414" class="Symbol"
+      >_;</a
+      ><a name="1416"
+      >
+             </a
+      ><a name="1430" class="Symbol"
+      >(</a
+      ><a name="1431" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1438"
+      > </a
+      ><a name="1439" href="homotopy.JoinSusp.html#1439" class="Bound"
+      >a</a
+      ><a name="1440" class="Symbol"
+      >)</a
+      ><a name="1441"
+      > </a
+      ><a name="1442" class="Symbol"
+      >&#8594;</a
+      ><a name="1443"
+      >
+               </a
+      ><a name="1459" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1461"
+      > </a
+      ><a name="1462" class="Symbol"
+      >(</a
+      ><a name="1463" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1465"
+      > </a
+      ><a name="1466" href="homotopy.JoinSusp.html#562" class="Function"
+      >out</a
+      ><a name="1469" class="Symbol"
+      >)</a
+      ><a name="1470"
+      > </a
+      ><a name="1471" class="Symbol"
+      >(</a
+      ><a name="1472" href="lib.types.Pushout.html#1428" class="Function"
+      >Into.glue-&#946;</a
+      ><a name="1483"
+      > </a
+      ><a name="1484" class="Symbol"
+      >(</a
+      ><a name="1485" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1490"
+      > </a
+      ><a name="1491" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1492"
+      > </a
+      ><a name="1493" href="homotopy.JoinSusp.html#1439" class="Bound"
+      >a</a
+      ><a name="1494" class="Symbol"
+      >))</a
+      ><a name="1496"
+      > </a
+      ><a name="1497" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="1500"
+      > </a
+      ><a name="1501" href="lib.cubical.Square.html#17473" class="Function"
+      >connection</a
+      ><a name="1511" class="Symbol"
+      >})</a
+      ><a name="1513"
+      >
+
+  </a
+      ><a name="1517" href="homotopy.JoinSusp.html#1517" class="Function"
+      >*-Bool-l</a
+      ><a name="1525"
+      > </a
+      ><a name="1526" class="Symbol"
+      >:</a
+      ><a name="1527"
+      > </a
+      ><a name="1528" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="1532"
+      > </a
+      ><a name="1533" href="lib.types.Join.html#392" class="Function Operator"
+      >*</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" href="homotopy.JoinSusp.html#174" class="Bound"
+      >A</a
+      ><a name="1536"
+      > </a
+      ><a name="1537" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="1538"
+      > </a
+      ><a name="1539" href="lib.types.Suspension.html#658" class="Function"
+      >Susp</a
+      ><a name="1543"
+      > </a
+      ><a name="1544" href="homotopy.JoinSusp.html#174" class="Bound"
+      >A</a
+      ><a name="1545"
+      >
+  </a
+      ><a name="1548" href="homotopy.JoinSusp.html#1517" class="Function"
+      >*-Bool-l</a
+      ><a name="1556"
+      > </a
+      ><a name="1557" class="Symbol"
+      >=</a
+      ><a name="1558"
+      > </a
+      ><a name="1559" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="1564"
+      > </a
+      ><a name="1565" href="homotopy.JoinSusp.html#402" class="Function"
+      >into</a
+      ><a name="1569"
+      > </a
+      ><a name="1570" href="homotopy.JoinSusp.html#562" class="Function"
+      >out</a
+      ><a name="1573"
+      > </a
+      ><a name="1574" href="homotopy.JoinSusp.html#581" class="Function"
+      >into-out</a
+      ><a name="1582"
+      > </a
+      ><a name="1583" href="homotopy.JoinSusp.html#1006" class="Function"
+      >out-into</a
+      ><a name="1591"
+      >
+
+</a
+      ><a name="1593" class="Keyword"
+      >module</a
+      ><a name="1599"
+      > </a
+      ><a name="1600" href="homotopy.JoinSusp.html#1600" class="Module"
+      >_</a
+      ><a name="1601"
+      > </a
+      ><a name="1602" class="Symbol"
+      >{</a
+      ><a name="1603" href="homotopy.JoinSusp.html#1603" class="Bound"
+      >i</a
+      ><a name="1604" class="Symbol"
+      >}</a
+      ><a name="1605"
+      > </a
+      ><a name="1606" class="Symbol"
+      >(</a
+      ><a name="1607" href="homotopy.JoinSusp.html#1607" class="Bound"
+      >X</a
+      ><a name="1608"
+      > </a
+      ><a name="1609" class="Symbol"
+      >:</a
+      ><a name="1610"
+      > </a
+      ><a name="1611" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1614"
+      > </a
+      ><a name="1615" href="homotopy.JoinSusp.html#1603" class="Bound"
+      >i</a
+      ><a name="1616" class="Symbol"
+      >)</a
+      ><a name="1617"
+      > </a
+      ><a name="1618" class="Keyword"
+      >where</a
+      ><a name="1623"
+      >
+
+  </a
+      ><a name="1627" href="homotopy.JoinSusp.html#1627" class="Function"
+      >&#8857;*-Bool-l</a
+      ><a name="1636"
+      > </a
+      ><a name="1637" class="Symbol"
+      >:</a
+      ><a name="1638"
+      > </a
+      ><a name="1639" href="lib.types.Bool.html#300" class="Function"
+      >&#8857;Bool</a
+      ><a name="1644"
+      > </a
+      ><a name="1645" href="lib.types.Join.html#1123" class="Function Operator"
+      >&#8857;*</a
+      ><a name="1647"
+      > </a
+      ><a name="1648" href="homotopy.JoinSusp.html#1607" class="Bound"
+      >X</a
+      ><a name="1649"
+      > </a
+      ><a name="1650" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="1652"
+      > </a
+      ><a name="1653" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="1658"
+      > </a
+      ><a name="1659" href="homotopy.JoinSusp.html#1607" class="Bound"
+      >X</a
+      ><a name="1660"
+      >
+  </a
+      ><a name="1663" href="homotopy.JoinSusp.html#1627" class="Function"
+      >&#8857;*-Bool-l</a
+      ><a name="1672"
+      > </a
+      ><a name="1673" class="Symbol"
+      >=</a
+      ><a name="1674"
+      > </a
+      ><a name="1675" href="lib.Equivalence.html#13119" class="Function"
+      >&#8771;-to-&#8857;&#8771;</a
+      ><a name="1682"
+      > </a
+      ><a name="1683" class="Symbol"
+      >(</a
+      ><a name="1684" href="homotopy.JoinSusp.html#1517" class="Function"
+      >*-Bool-l</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" class="Symbol"
+      >(</a
+      ><a name="1694" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="1697"
+      > </a
+      ><a name="1698" href="homotopy.JoinSusp.html#1607" class="Bound"
+      >X</a
+      ><a name="1699" class="Symbol"
+      >))</a
+      ><a name="1701"
+      > </a
+      ><a name="1702" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1705"
+      >
+
+</a
+      ><a name="1707" class="Keyword"
+      >module</a
+      ><a name="1713"
+      > </a
+      ><a name="1714" href="homotopy.JoinSusp.html#1714" class="Module"
+      >_</a
+      ><a name="1715"
+      > </a
+      ><a name="1716" class="Symbol"
+      >{</a
+      ><a name="1717" href="homotopy.JoinSusp.html#1717" class="Bound"
+      >i</a
+      ><a name="1718"
+      > </a
+      ><a name="1719" href="homotopy.JoinSusp.html#1719" class="Bound"
+      >j</a
+      ><a name="1720" class="Symbol"
+      >}</a
+      ><a name="1721"
+      > </a
+      ><a name="1722" class="Symbol"
+      >(</a
+      ><a name="1723" href="homotopy.JoinSusp.html#1723" class="Bound"
+      >A</a
+      ><a name="1724"
+      > </a
+      ><a name="1725" class="Symbol"
+      >:</a
+      ><a name="1726"
+      > </a
+      ><a name="1727" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1731"
+      > </a
+      ><a name="1732" href="homotopy.JoinSusp.html#1717" class="Bound"
+      >i</a
+      ><a name="1733" class="Symbol"
+      >)</a
+      ><a name="1734"
+      > </a
+      ><a name="1735" class="Symbol"
+      >(</a
+      ><a name="1736" href="homotopy.JoinSusp.html#1736" class="Bound"
+      >B</a
+      ><a name="1737"
+      > </a
+      ><a name="1738" class="Symbol"
+      >:</a
+      ><a name="1739"
+      > </a
+      ><a name="1740" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1744"
+      > </a
+      ><a name="1745" href="homotopy.JoinSusp.html#1719" class="Bound"
+      >j</a
+      ><a name="1746" class="Symbol"
+      >)</a
+      ><a name="1747"
+      > </a
+      ><a name="1748" class="Keyword"
+      >where</a
+      ><a name="1753"
+      >
+
+  </a
+      ><a name="1757" href="homotopy.JoinSusp.html#1757" class="Function"
+      >*-Susp-l</a
+      ><a name="1765"
+      > </a
+      ><a name="1766" class="Symbol"
+      >:</a
+      ><a name="1767"
+      > </a
+      ><a name="1768" href="lib.types.Suspension.html#658" class="Function"
+      >Susp</a
+      ><a name="1772"
+      > </a
+      ><a name="1773" href="homotopy.JoinSusp.html#1723" class="Bound"
+      >A</a
+      ><a name="1774"
+      > </a
+      ><a name="1775" href="lib.types.Join.html#392" class="Function Operator"
+      >*</a
+      ><a name="1776"
+      > </a
+      ><a name="1777" href="homotopy.JoinSusp.html#1736" class="Bound"
+      >B</a
+      ><a name="1778"
+      > </a
+      ><a name="1779" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="1780"
+      > </a
+      ><a name="1781" href="lib.types.Suspension.html#658" class="Function"
+      >Susp</a
+      ><a name="1785"
+      > </a
+      ><a name="1786" class="Symbol"
+      >(</a
+      ><a name="1787" href="homotopy.JoinSusp.html#1723" class="Bound"
+      >A</a
+      ><a name="1788"
+      > </a
+      ><a name="1789" href="lib.types.Join.html#392" class="Function Operator"
+      >*</a
+      ><a name="1790"
+      > </a
+      ><a name="1791" href="homotopy.JoinSusp.html#1736" class="Bound"
+      >B</a
+      ><a name="1792" class="Symbol"
+      >)</a
+      ><a name="1793"
+      >
+  </a
+      ><a name="1796" href="homotopy.JoinSusp.html#1757" class="Function"
+      >*-Susp-l</a
+      ><a name="1804"
+      > </a
+      ><a name="1805" class="Symbol"
+      >=</a
+      ><a name="1806"
+      > </a
+      ><a name="1807" href="homotopy.JoinSusp.html#1517" class="Function"
+      >*-Bool-l</a
+      ><a name="1815"
+      > </a
+      ><a name="1816" class="Symbol"
+      >(</a
+      ><a name="1817" href="homotopy.JoinSusp.html#1723" class="Bound"
+      >A</a
+      ><a name="1818"
+      > </a
+      ><a name="1819" href="lib.types.Join.html#392" class="Function Operator"
+      >*</a
+      ><a name="1820"
+      > </a
+      ><a name="1821" href="homotopy.JoinSusp.html#1736" class="Bound"
+      >B</a
+      ><a name="1822" class="Symbol"
+      >)</a
+      ><a name="1823"
+      > </a
+      ><a name="1824" href="lib.Equivalence.html#5985" class="Function Operator"
+      >&#8728;e</a
+      ><a name="1826"
+      > </a
+      ><a name="1827" href="homotopy.JoinAssocCubical.html#12101" class="Function"
+      >*-assoc</a
+      ><a name="1834"
+      > </a
+      ><a name="1835" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="1839"
+      > </a
+      ><a name="1840" href="homotopy.JoinSusp.html#1723" class="Bound"
+      >A</a
+      ><a name="1841"
+      > </a
+      ><a name="1842" href="homotopy.JoinSusp.html#1736" class="Bound"
+      >B</a
+      ><a name="1843"
+      > </a
+      ><a name="1844" href="lib.Equivalence.html#5985" class="Function Operator"
+      >&#8728;e</a
+      ><a name="1846"
+      > </a
+      ><a name="1847" href="lib.types.Join.html#1522" class="Function"
+      >*-emap</a
+      ><a name="1853"
+      > </a
+      ><a name="1854" class="Symbol"
+      >(</a
+      ><a name="1855" href="homotopy.JoinSusp.html#1517" class="Function"
+      >*-Bool-l</a
+      ><a name="1863"
+      > </a
+      ><a name="1864" href="homotopy.JoinSusp.html#1723" class="Bound"
+      >A</a
+      ><a name="1865" class="Symbol"
+      >)</a
+      ><a name="1866"
+      > </a
+      ><a name="1867" class="Symbol"
+      >(</a
+      ><a name="1868" href="lib.Equivalence.html#5761" class="Function"
+      >ide</a
+      ><a name="1871"
+      > </a
+      ><a name="1872" href="homotopy.JoinSusp.html#1736" class="Bound"
+      >B</a
+      ><a name="1873" class="Symbol"
+      >)</a
+      ><a name="1874"
+      > </a
+      ><a name="1875" href="lib.Equivalence.html#8519" class="Function Operator"
+      >&#8315;&#185;</a
+      ><a name="1877"
+      >
+
+</a
+      ><a name="1879" class="Keyword"
+      >module</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" href="homotopy.JoinSusp.html#1886" class="Module"
+      >_</a
+      ><a name="1887"
+      > </a
+      ><a name="1888" class="Symbol"
+      >{</a
+      ><a name="1889" href="homotopy.JoinSusp.html#1889" class="Bound"
+      >i</a
+      ><a name="1890"
+      > </a
+      ><a name="1891" href="homotopy.JoinSusp.html#1891" class="Bound"
+      >j</a
+      ><a name="1892" class="Symbol"
+      >}</a
+      ><a name="1893"
+      > </a
+      ><a name="1894" class="Symbol"
+      >(</a
+      ><a name="1895" href="homotopy.JoinSusp.html#1895" class="Bound"
+      >X</a
+      ><a name="1896"
+      > </a
+      ><a name="1897" class="Symbol"
+      >:</a
+      ><a name="1898"
+      > </a
+      ><a name="1899" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1902"
+      > </a
+      ><a name="1903" href="homotopy.JoinSusp.html#1889" class="Bound"
+      >i</a
+      ><a name="1904" class="Symbol"
+      >)</a
+      ><a name="1905"
+      > </a
+      ><a name="1906" class="Symbol"
+      >(</a
+      ><a name="1907" href="homotopy.JoinSusp.html#1907" class="Bound"
+      >Y</a
+      ><a name="1908"
+      > </a
+      ><a name="1909" class="Symbol"
+      >:</a
+      ><a name="1910"
+      > </a
+      ><a name="1911" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1914"
+      > </a
+      ><a name="1915" href="homotopy.JoinSusp.html#1891" class="Bound"
+      >j</a
+      ><a name="1916" class="Symbol"
+      >)</a
+      ><a name="1917"
+      > </a
+      ><a name="1918" class="Keyword"
+      >where</a
+      ><a name="1923"
+      >
+
+  </a
+      ><a name="1927" href="homotopy.JoinSusp.html#1927" class="Function"
+      >&#8857;*-Susp-l</a
+      ><a name="1936"
+      > </a
+      ><a name="1937" class="Symbol"
+      >:</a
+      ><a name="1938"
+      > </a
+      ><a name="1939" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="1944"
+      > </a
+      ><a name="1945" href="homotopy.JoinSusp.html#1895" class="Bound"
+      >X</a
+      ><a name="1946"
+      > </a
+      ><a name="1947" href="lib.types.Join.html#1123" class="Function Operator"
+      >&#8857;*</a
+      ><a name="1949"
+      > </a
+      ><a name="1950" href="homotopy.JoinSusp.html#1907" class="Bound"
+      >Y</a
+      ><a name="1951"
+      > </a
+      ><a name="1952" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="1954"
+      > </a
+      ><a name="1955" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="1960"
+      > </a
+      ><a name="1961" class="Symbol"
+      >(</a
+      ><a name="1962" href="homotopy.JoinSusp.html#1895" class="Bound"
+      >X</a
+      ><a name="1963"
+      > </a
+      ><a name="1964" href="lib.types.Join.html#1123" class="Function Operator"
+      >&#8857;*</a
+      ><a name="1966"
+      > </a
+      ><a name="1967" href="homotopy.JoinSusp.html#1907" class="Bound"
+      >Y</a
+      ><a name="1968" class="Symbol"
+      >)</a
+      ><a name="1969"
+      >
+  </a
+      ><a name="1972" href="homotopy.JoinSusp.html#1927" class="Function"
+      >&#8857;*-Susp-l</a
+      ><a name="1981"
+      > </a
+      ><a name="1982" class="Symbol"
+      >=</a
+      ><a name="1983"
+      > </a
+      ><a name="1984" href="lib.Equivalence.html#13119" class="Function"
+      >&#8771;-to-&#8857;&#8771;</a
+      ><a name="1991"
+      > </a
+      ><a name="1992" class="Symbol"
+      >(</a
+      ><a name="1993" href="homotopy.JoinSusp.html#1757" class="Function"
+      >*-Susp-l</a
+      ><a name="2001"
+      > </a
+      ><a name="2002" class="Symbol"
+      >(</a
+      ><a name="2003" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="2006"
+      > </a
+      ><a name="2007" href="homotopy.JoinSusp.html#1895" class="Bound"
+      >X</a
+      ><a name="2008" class="Symbol"
+      >)</a
+      ><a name="2009"
+      > </a
+      ><a name="2010" class="Symbol"
+      >(</a
+      ><a name="2011" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="2014"
+      > </a
+      ><a name="2015" href="homotopy.JoinSusp.html#1907" class="Bound"
+      >Y</a
+      ><a name="2016" class="Symbol"
+      >))</a
+      ><a name="2018"
+      > </a
+      ><a name="2019" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2022"
+      >
+
+</a
+      ><a name="2024" class="Keyword"
+      >module</a
+      ><a name="2030"
+      > </a
+      ><a name="2031" href="homotopy.JoinSusp.html#2031" class="Module"
+      >_</a
+      ><a name="2032"
+      > </a
+      ><a name="2033" class="Symbol"
+      >{</a
+      ><a name="2034" href="homotopy.JoinSusp.html#2034" class="Bound"
+      >i</a
+      ><a name="2035" class="Symbol"
+      >}</a
+      ><a name="2036"
+      > </a
+      ><a name="2037" class="Keyword"
+      >where</a
+      ><a name="2042"
+      >
+
+  </a
+      ><a name="2046" href="homotopy.JoinSusp.html#2046" class="Function"
+      >&#8857;*-Sphere-l</a
+      ><a name="2057"
+      > </a
+      ><a name="2058" class="Symbol"
+      >:</a
+      ><a name="2059"
+      > </a
+      ><a name="2060" class="Symbol"
+      >(</a
+      ><a name="2061" href="homotopy.JoinSusp.html#2061" class="Bound"
+      >m</a
+      ><a name="2062"
+      > </a
+      ><a name="2063" class="Symbol"
+      >:</a
+      ><a name="2064"
+      > </a
+      ><a name="2065" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="2066" class="Symbol"
+      >)</a
+      ><a name="2067"
+      > </a
+      ><a name="2068" class="Symbol"
+      >(</a
+      ><a name="2069" href="homotopy.JoinSusp.html#2069" class="Bound"
+      >X</a
+      ><a name="2070"
+      > </a
+      ><a name="2071" class="Symbol"
+      >:</a
+      ><a name="2072"
+      > </a
+      ><a name="2073" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2076"
+      > </a
+      ><a name="2077" href="homotopy.JoinSusp.html#2034" class="Bound"
+      >i</a
+      ><a name="2078" class="Symbol"
+      >)</a
+      ><a name="2079"
+      > </a
+      ><a name="2080" class="Symbol"
+      >&#8594;</a
+      ><a name="2081"
+      > </a
+      ><a name="2082" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="2089"
+      > </a
+      ><a name="2090" href="homotopy.JoinSusp.html#2061" class="Bound"
+      >m</a
+      ><a name="2091"
+      > </a
+      ><a name="2092" href="lib.types.Join.html#1123" class="Function Operator"
+      >&#8857;*</a
+      ><a name="2094"
+      > </a
+      ><a name="2095" href="homotopy.JoinSusp.html#2069" class="Bound"
+      >X</a
+      ><a name="2096"
+      > </a
+      ><a name="2097" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="2099"
+      > </a
+      ><a name="2100" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="2106"
+      > </a
+      ><a name="2107" class="Symbol"
+      >(</a
+      ><a name="2108" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2109"
+      > </a
+      ><a name="2110" href="homotopy.JoinSusp.html#2061" class="Bound"
+      >m</a
+      ><a name="2111" class="Symbol"
+      >)</a
+      ><a name="2112"
+      > </a
+      ><a name="2113" href="homotopy.JoinSusp.html#2069" class="Bound"
+      >X</a
+      ><a name="2114"
+      >
+  </a
+      ><a name="2117" href="homotopy.JoinSusp.html#2046" class="Function"
+      >&#8857;*-Sphere-l</a
+      ><a name="2128"
+      > </a
+      ><a name="2129" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="2130"
+      > </a
+      ><a name="2131" href="homotopy.JoinSusp.html#2131" class="Bound"
+      >X</a
+      ><a name="2132"
+      > </a
+      ><a name="2133" class="Symbol"
+      >=</a
+      ><a name="2134"
+      > </a
+      ><a name="2135" href="homotopy.JoinSusp.html#1627" class="Function"
+      >&#8857;*-Bool-l</a
+      ><a name="2144"
+      > </a
+      ><a name="2145" href="homotopy.JoinSusp.html#2131" class="Bound"
+      >X</a
+      ><a name="2146"
+      >
+  </a
+      ><a name="2149" href="homotopy.JoinSusp.html#2046" class="Function"
+      >&#8857;*-Sphere-l</a
+      ><a name="2160"
+      > </a
+      ><a name="2161" class="Symbol"
+      >(</a
+      ><a name="2162" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2163"
+      > </a
+      ><a name="2164" href="homotopy.JoinSusp.html#2164" class="Bound"
+      >m</a
+      ><a name="2165" class="Symbol"
+      >)</a
+      ><a name="2166"
+      > </a
+      ><a name="2167" href="homotopy.JoinSusp.html#2167" class="Bound"
+      >X</a
+      ><a name="2168"
+      > </a
+      ><a name="2169" class="Symbol"
+      >=</a
+      ><a name="2170"
+      > </a
+      ><a name="2171" href="lib.types.Suspension.html#5455" class="Function"
+      >&#8857;Susp-emap</a
+      ><a name="2181"
+      > </a
+      ><a name="2182" class="Symbol"
+      >(</a
+      ><a name="2183" href="homotopy.JoinSusp.html#2046" class="Function"
+      >&#8857;*-Sphere-l</a
+      ><a name="2194"
+      > </a
+      ><a name="2195" href="homotopy.JoinSusp.html#2164" class="Bound"
+      >m</a
+      ><a name="2196"
+      > </a
+      ><a name="2197" href="homotopy.JoinSusp.html#2167" class="Bound"
+      >X</a
+      ><a name="2198" class="Symbol"
+      >)</a
+      ><a name="2199"
+      > </a
+      ><a name="2200" href="lib.Equivalence.html#13349" class="Function Operator"
+      >&#8857;&#8728;e</a
+      ><a name="2203"
+      > </a
+      ><a name="2204" href="homotopy.JoinSusp.html#1927" class="Function"
+      >&#8857;*-Susp-l</a
+      ><a name="2213"
+      > </a
+      ><a name="2214" class="Symbol"
+      >(</a
+      ><a name="2215" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="2222"
+      > </a
+      ><a name="2223" href="homotopy.JoinSusp.html#2164" class="Bound"
+      >m</a
+      ><a name="2224" class="Symbol"
+      >)</a
+      ><a name="2225"
+      > </a
+      ><a name="2226" href="homotopy.JoinSusp.html#2167" class="Bound"
+      >X</a
+      ><a name="2227"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

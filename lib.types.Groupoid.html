@@ -1,0 +1,2047 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.Groupoid</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.NType2.html#1" class="Module"
+      >lib.NType2</a
+      ><a name="87"
+      >
+</a
+      ><a name="88" class="Keyword"
+      >open</a
+      ><a name="92"
+      > </a
+      ><a name="93" class="Keyword"
+      >import</a
+      ><a name="99"
+      > </a
+      ><a name="100" href="lib.types.TLevel.html#1" class="Module"
+      >lib.types.TLevel</a
+      ><a name="116"
+      >
+</a
+      ><a name="117" class="Keyword"
+      >open</a
+      ><a name="121"
+      > </a
+      ><a name="122" class="Keyword"
+      >import</a
+      ><a name="128"
+      > </a
+      ><a name="129" href="lib.types.Sigma.html#1" class="Module"
+      >lib.types.Sigma</a
+      ><a name="144"
+      >
+</a
+      ><a name="145" class="Keyword"
+      >open</a
+      ><a name="149"
+      > </a
+      ><a name="150" class="Keyword"
+      >import</a
+      ><a name="156"
+      > </a
+      ><a name="157" href="lib.types.Pi.html#1" class="Module"
+      >lib.types.Pi</a
+      ><a name="169"
+      >
+
+</a
+      ><a name="171" class="Keyword"
+      >module</a
+      ><a name="177"
+      > </a
+      ><a name="178" href="lib.types.Groupoid.html#1" class="Module"
+      >lib.types.Groupoid</a
+      ><a name="196"
+      > </a
+      ><a name="197" class="Keyword"
+      >where</a
+      ><a name="202"
+      >
+
+</a
+      ><a name="204" class="Keyword"
+      >record</a
+      ><a name="210"
+      > </a
+      ><a name="211" href="lib.types.Groupoid.html#211" class="Record"
+      >GroupoidStructure</a
+      ><a name="228"
+      > </a
+      ><a name="229" class="Symbol"
+      >{</a
+      ><a name="230" href="lib.types.Groupoid.html#230" class="Bound"
+      >i</a
+      ><a name="231"
+      > </a
+      ><a name="232" href="lib.types.Groupoid.html#232" class="Bound"
+      >j</a
+      ><a name="233" class="Symbol"
+      >}</a
+      ><a name="234"
+      > </a
+      ><a name="235" class="Symbol"
+      >{</a
+      ><a name="236" href="lib.types.Groupoid.html#236" class="Bound"
+      >El</a
+      ><a name="238"
+      > </a
+      ><a name="239" class="Symbol"
+      >:</a
+      ><a name="240"
+      > </a
+      ><a name="241" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="245"
+      > </a
+      ><a name="246" href="lib.types.Groupoid.html#230" class="Bound"
+      >i</a
+      ><a name="247" class="Symbol"
+      >}</a
+      ><a name="248"
+      > </a
+      ><a name="249" class="Symbol"
+      >(</a
+      ><a name="250" href="lib.types.Groupoid.html#250" class="Bound"
+      >Arr</a
+      ><a name="253"
+      > </a
+      ><a name="254" class="Symbol"
+      >:</a
+      ><a name="255"
+      > </a
+      ><a name="256" href="lib.types.Groupoid.html#236" class="Bound"
+      >El</a
+      ><a name="258"
+      > </a
+      ><a name="259" class="Symbol"
+      >&#8594;</a
+      ><a name="260"
+      > </a
+      ><a name="261" href="lib.types.Groupoid.html#236" class="Bound"
+      >El</a
+      ><a name="263"
+      > </a
+      ><a name="264" class="Symbol"
+      >&#8594;</a
+      ><a name="265"
+      > </a
+      ><a name="266" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="270"
+      > </a
+      ><a name="271" href="lib.types.Groupoid.html#232" class="Bound"
+      >j</a
+      ><a name="272" class="Symbol"
+      >)</a
+      ><a name="273"
+      >
+  </a
+      ><a name="276" class="Symbol"
+      >(</a
+      ><a name="277" href="lib.types.Groupoid.html#277" class="Bound"
+      >_</a
+      ><a name="278"
+      > </a
+      ><a name="279" class="Symbol"
+      >:</a
+      ><a name="280"
+      > </a
+      ><a name="281" class="Symbol"
+      >&#8704;</a
+      ><a name="282"
+      > </a
+      ><a name="283" href="lib.types.Groupoid.html#283" class="Bound"
+      >x</a
+      ><a name="284"
+      > </a
+      ><a name="285" href="lib.types.Groupoid.html#285" class="Bound"
+      >y</a
+      ><a name="286"
+      > </a
+      ><a name="287" class="Symbol"
+      >&#8594;</a
+      ><a name="288"
+      > </a
+      ><a name="289" href="lib.NType.html#304" class="Function"
+      >has-level</a
+      ><a name="298"
+      > </a
+      ><a name="299" class="Number"
+      >0</a
+      ><a name="300"
+      > </a
+      ><a name="301" class="Symbol"
+      >(</a
+      ><a name="302" href="lib.types.Groupoid.html#250" class="Bound"
+      >Arr</a
+      ><a name="305"
+      > </a
+      ><a name="306" href="lib.types.Groupoid.html#283" class="Bound"
+      >x</a
+      ><a name="307"
+      > </a
+      ><a name="308" href="lib.types.Groupoid.html#285" class="Bound"
+      >y</a
+      ><a name="309" class="Symbol"
+      >))</a
+      ><a name="311"
+      > </a
+      ><a name="312" class="Symbol"
+      >:</a
+      ><a name="313"
+      > </a
+      ><a name="314" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="318"
+      > </a
+      ><a name="319" class="Symbol"
+      >(</a
+      ><a name="320" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="324"
+      > </a
+      ><a name="325" href="lib.types.Groupoid.html#230" class="Bound"
+      >i</a
+      ><a name="326"
+      > </a
+      ><a name="327" href="lib.types.Groupoid.html#232" class="Bound"
+      >j</a
+      ><a name="328" class="Symbol"
+      >)</a
+      ><a name="329"
+      > </a
+      ><a name="330" class="Keyword"
+      >where</a
+      ><a name="335"
+      >
+  </a
+      ><a name="338" class="Keyword"
+      >field</a
+      ><a name="343"
+      >
+    </a
+      ><a name="348" href="lib.types.Groupoid.html#348" class="Field"
+      >ident</a
+      ><a name="353"
+      > </a
+      ><a name="354" class="Symbol"
+      >:</a
+      ><a name="355"
+      > </a
+      ><a name="356" class="Symbol"
+      >&#8704;</a
+      ><a name="357"
+      > </a
+      ><a name="358" class="Symbol"
+      >{</a
+      ><a name="359" href="lib.types.Groupoid.html#359" class="Bound"
+      >x</a
+      ><a name="360" class="Symbol"
+      >}</a
+      ><a name="361"
+      > </a
+      ><a name="362" class="Symbol"
+      >&#8594;</a
+      ><a name="363"
+      > </a
+      ><a name="364" href="lib.types.Groupoid.html#250" class="Bound"
+      >Arr</a
+      ><a name="367"
+      > </a
+      ><a name="368" href="lib.types.Groupoid.html#359" class="Bound"
+      >x</a
+      ><a name="369"
+      > </a
+      ><a name="370" href="lib.types.Groupoid.html#359" class="Bound"
+      >x</a
+      ><a name="371"
+      >
+    </a
+      ><a name="376" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="379"
+      > </a
+      ><a name="380" class="Symbol"
+      >:</a
+      ><a name="381"
+      > </a
+      ><a name="382" class="Symbol"
+      >&#8704;</a
+      ><a name="383"
+      > </a
+      ><a name="384" class="Symbol"
+      >{</a
+      ><a name="385" href="lib.types.Groupoid.html#385" class="Bound"
+      >x</a
+      ><a name="386"
+      > </a
+      ><a name="387" href="lib.types.Groupoid.html#387" class="Bound"
+      >y</a
+      ><a name="388" class="Symbol"
+      >}</a
+      ><a name="389"
+      > </a
+      ><a name="390" class="Symbol"
+      >&#8594;</a
+      ><a name="391"
+      > </a
+      ><a name="392" href="lib.types.Groupoid.html#250" class="Bound"
+      >Arr</a
+      ><a name="395"
+      > </a
+      ><a name="396" href="lib.types.Groupoid.html#385" class="Bound"
+      >x</a
+      ><a name="397"
+      > </a
+      ><a name="398" href="lib.types.Groupoid.html#387" class="Bound"
+      >y</a
+      ><a name="399"
+      > </a
+      ><a name="400" class="Symbol"
+      >&#8594;</a
+      ><a name="401"
+      > </a
+      ><a name="402" href="lib.types.Groupoid.html#250" class="Bound"
+      >Arr</a
+      ><a name="405"
+      > </a
+      ><a name="406" href="lib.types.Groupoid.html#387" class="Bound"
+      >y</a
+      ><a name="407"
+      > </a
+      ><a name="408" href="lib.types.Groupoid.html#385" class="Bound"
+      >x</a
+      ><a name="409"
+      >
+    </a
+      ><a name="414" href="lib.types.Groupoid.html#414" class="Field"
+      >comp</a
+      ><a name="418"
+      > </a
+      ><a name="419" class="Symbol"
+      >:</a
+      ><a name="420"
+      > </a
+      ><a name="421" class="Symbol"
+      >&#8704;</a
+      ><a name="422"
+      > </a
+      ><a name="423" class="Symbol"
+      >{</a
+      ><a name="424" href="lib.types.Groupoid.html#424" class="Bound"
+      >x</a
+      ><a name="425"
+      > </a
+      ><a name="426" href="lib.types.Groupoid.html#426" class="Bound"
+      >y</a
+      ><a name="427"
+      > </a
+      ><a name="428" href="lib.types.Groupoid.html#428" class="Bound"
+      >z</a
+      ><a name="429" class="Symbol"
+      >}</a
+      ><a name="430"
+      > </a
+      ><a name="431" class="Symbol"
+      >&#8594;</a
+      ><a name="432"
+      > </a
+      ><a name="433" href="lib.types.Groupoid.html#250" class="Bound"
+      >Arr</a
+      ><a name="436"
+      > </a
+      ><a name="437" href="lib.types.Groupoid.html#424" class="Bound"
+      >x</a
+      ><a name="438"
+      > </a
+      ><a name="439" href="lib.types.Groupoid.html#426" class="Bound"
+      >y</a
+      ><a name="440"
+      > </a
+      ><a name="441" class="Symbol"
+      >&#8594;</a
+      ><a name="442"
+      > </a
+      ><a name="443" href="lib.types.Groupoid.html#250" class="Bound"
+      >Arr</a
+      ><a name="446"
+      > </a
+      ><a name="447" href="lib.types.Groupoid.html#426" class="Bound"
+      >y</a
+      ><a name="448"
+      > </a
+      ><a name="449" href="lib.types.Groupoid.html#428" class="Bound"
+      >z</a
+      ><a name="450"
+      > </a
+      ><a name="451" class="Symbol"
+      >&#8594;</a
+      ><a name="452"
+      > </a
+      ><a name="453" href="lib.types.Groupoid.html#250" class="Bound"
+      >Arr</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="lib.types.Groupoid.html#424" class="Bound"
+      >x</a
+      ><a name="458"
+      > </a
+      ><a name="459" href="lib.types.Groupoid.html#428" class="Bound"
+      >z</a
+      ><a name="460"
+      >
+    </a
+      ><a name="465" href="lib.types.Groupoid.html#465" class="Field"
+      >unit-l</a
+      ><a name="471"
+      > </a
+      ><a name="472" class="Symbol"
+      >:</a
+      ><a name="473"
+      > </a
+      ><a name="474" class="Symbol"
+      >&#8704;</a
+      ><a name="475"
+      > </a
+      ><a name="476" class="Symbol"
+      >{</a
+      ><a name="477" href="lib.types.Groupoid.html#477" class="Bound"
+      >x</a
+      ><a name="478"
+      > </a
+      ><a name="479" href="lib.types.Groupoid.html#479" class="Bound"
+      >y</a
+      ><a name="480" class="Symbol"
+      >}</a
+      ><a name="481"
+      > </a
+      ><a name="482" class="Symbol"
+      >(</a
+      ><a name="483" href="lib.types.Groupoid.html#483" class="Bound"
+      >a</a
+      ><a name="484"
+      > </a
+      ><a name="485" class="Symbol"
+      >:</a
+      ><a name="486"
+      > </a
+      ><a name="487" href="lib.types.Groupoid.html#250" class="Bound"
+      >Arr</a
+      ><a name="490"
+      > </a
+      ><a name="491" href="lib.types.Groupoid.html#477" class="Bound"
+      >x</a
+      ><a name="492"
+      > </a
+      ><a name="493" href="lib.types.Groupoid.html#479" class="Bound"
+      >y</a
+      ><a name="494" class="Symbol"
+      >)</a
+      ><a name="495"
+      > </a
+      ><a name="496" class="Symbol"
+      >&#8594;</a
+      ><a name="497"
+      > </a
+      ><a name="498" href="lib.types.Groupoid.html#414" class="Field"
+      >comp</a
+      ><a name="502"
+      > </a
+      ><a name="503" href="lib.types.Groupoid.html#348" class="Field"
+      >ident</a
+      ><a name="508"
+      > </a
+      ><a name="509" href="lib.types.Groupoid.html#483" class="Bound"
+      >a</a
+      ><a name="510"
+      > </a
+      ><a name="511" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="513"
+      > </a
+      ><a name="514" href="lib.types.Groupoid.html#483" class="Bound"
+      >a</a
+      ><a name="515"
+      >
+    </a
+      ><a name="520" href="lib.types.Groupoid.html#520" class="Field"
+      >assoc</a
+      ><a name="525"
+      > </a
+      ><a name="526" class="Symbol"
+      >:</a
+      ><a name="527"
+      > </a
+      ><a name="528" class="Symbol"
+      >&#8704;</a
+      ><a name="529"
+      > </a
+      ><a name="530" class="Symbol"
+      >{</a
+      ><a name="531" href="lib.types.Groupoid.html#531" class="Bound"
+      >x</a
+      ><a name="532"
+      > </a
+      ><a name="533" href="lib.types.Groupoid.html#533" class="Bound"
+      >y</a
+      ><a name="534"
+      > </a
+      ><a name="535" href="lib.types.Groupoid.html#535" class="Bound"
+      >z</a
+      ><a name="536"
+      > </a
+      ><a name="537" href="lib.types.Groupoid.html#537" class="Bound"
+      >w</a
+      ><a name="538" class="Symbol"
+      >}</a
+      ><a name="539"
+      > </a
+      ><a name="540" class="Symbol"
+      >(</a
+      ><a name="541" href="lib.types.Groupoid.html#541" class="Bound"
+      >a</a
+      ><a name="542"
+      > </a
+      ><a name="543" class="Symbol"
+      >:</a
+      ><a name="544"
+      > </a
+      ><a name="545" href="lib.types.Groupoid.html#250" class="Bound"
+      >Arr</a
+      ><a name="548"
+      > </a
+      ><a name="549" href="lib.types.Groupoid.html#531" class="Bound"
+      >x</a
+      ><a name="550"
+      > </a
+      ><a name="551" href="lib.types.Groupoid.html#533" class="Bound"
+      >y</a
+      ><a name="552" class="Symbol"
+      >)</a
+      ><a name="553"
+      > </a
+      ><a name="554" class="Symbol"
+      >(</a
+      ><a name="555" href="lib.types.Groupoid.html#555" class="Bound"
+      >b</a
+      ><a name="556"
+      > </a
+      ><a name="557" class="Symbol"
+      >:</a
+      ><a name="558"
+      > </a
+      ><a name="559" href="lib.types.Groupoid.html#250" class="Bound"
+      >Arr</a
+      ><a name="562"
+      > </a
+      ><a name="563" href="lib.types.Groupoid.html#533" class="Bound"
+      >y</a
+      ><a name="564"
+      > </a
+      ><a name="565" href="lib.types.Groupoid.html#535" class="Bound"
+      >z</a
+      ><a name="566" class="Symbol"
+      >)</a
+      ><a name="567"
+      > </a
+      ><a name="568" class="Symbol"
+      >(</a
+      ><a name="569" href="lib.types.Groupoid.html#569" class="Bound"
+      >c</a
+      ><a name="570"
+      > </a
+      ><a name="571" class="Symbol"
+      >:</a
+      ><a name="572"
+      > </a
+      ><a name="573" href="lib.types.Groupoid.html#250" class="Bound"
+      >Arr</a
+      ><a name="576"
+      > </a
+      ><a name="577" href="lib.types.Groupoid.html#535" class="Bound"
+      >z</a
+      ><a name="578"
+      > </a
+      ><a name="579" href="lib.types.Groupoid.html#537" class="Bound"
+      >w</a
+      ><a name="580" class="Symbol"
+      >)</a
+      ><a name="581"
+      >
+              </a
+      ><a name="596" class="Symbol"
+      >&#8594;</a
+      ><a name="597"
+      > </a
+      ><a name="598" href="lib.types.Groupoid.html#414" class="Field"
+      >comp</a
+      ><a name="602"
+      > </a
+      ><a name="603" class="Symbol"
+      >(</a
+      ><a name="604" href="lib.types.Groupoid.html#414" class="Field"
+      >comp</a
+      ><a name="608"
+      > </a
+      ><a name="609" href="lib.types.Groupoid.html#541" class="Bound"
+      >a</a
+      ><a name="610"
+      > </a
+      ><a name="611" href="lib.types.Groupoid.html#555" class="Bound"
+      >b</a
+      ><a name="612" class="Symbol"
+      >)</a
+      ><a name="613"
+      > </a
+      ><a name="614" href="lib.types.Groupoid.html#569" class="Bound"
+      >c</a
+      ><a name="615"
+      > </a
+      ><a name="616" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="618"
+      > </a
+      ><a name="619" href="lib.types.Groupoid.html#414" class="Field"
+      >comp</a
+      ><a name="623"
+      > </a
+      ><a name="624" href="lib.types.Groupoid.html#541" class="Bound"
+      >a</a
+      ><a name="625"
+      > </a
+      ><a name="626" class="Symbol"
+      >(</a
+      ><a name="627" href="lib.types.Groupoid.html#414" class="Field"
+      >comp</a
+      ><a name="631"
+      > </a
+      ><a name="632" href="lib.types.Groupoid.html#555" class="Bound"
+      >b</a
+      ><a name="633"
+      > </a
+      ><a name="634" href="lib.types.Groupoid.html#569" class="Bound"
+      >c</a
+      ><a name="635" class="Symbol"
+      >)</a
+      ><a name="636"
+      >
+    </a
+      ><a name="641" href="lib.types.Groupoid.html#641" class="Field"
+      >inv-l</a
+      ><a name="646"
+      > </a
+      ><a name="647" class="Symbol"
+      >:</a
+      ><a name="648"
+      > </a
+      ><a name="649" class="Symbol"
+      >&#8704;</a
+      ><a name="650"
+      > </a
+      ><a name="651" class="Symbol"
+      >{</a
+      ><a name="652" href="lib.types.Groupoid.html#652" class="Bound"
+      >x</a
+      ><a name="653"
+      > </a
+      ><a name="654" href="lib.types.Groupoid.html#654" class="Bound"
+      >y</a
+      ><a name="655"
+      > </a
+      ><a name="656" class="Symbol"
+      >}</a
+      ><a name="657"
+      > </a
+      ><a name="658" class="Symbol"
+      >(</a
+      ><a name="659" href="lib.types.Groupoid.html#659" class="Bound"
+      >a</a
+      ><a name="660"
+      > </a
+      ><a name="661" class="Symbol"
+      >:</a
+      ><a name="662"
+      > </a
+      ><a name="663" href="lib.types.Groupoid.html#250" class="Bound"
+      >Arr</a
+      ><a name="666"
+      > </a
+      ><a name="667" href="lib.types.Groupoid.html#652" class="Bound"
+      >x</a
+      ><a name="668"
+      > </a
+      ><a name="669" href="lib.types.Groupoid.html#654" class="Bound"
+      >y</a
+      ><a name="670" class="Symbol"
+      >)</a
+      ><a name="671"
+      > </a
+      ><a name="672" class="Symbol"
+      >&#8594;</a
+      ><a name="673"
+      > </a
+      ><a name="674" class="Symbol"
+      >(</a
+      ><a name="675" href="lib.types.Groupoid.html#414" class="Field"
+      >comp</a
+      ><a name="679"
+      > </a
+      ><a name="680" class="Symbol"
+      >(</a
+      ><a name="681" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="684"
+      > </a
+      ><a name="685" href="lib.types.Groupoid.html#659" class="Bound"
+      >a</a
+      ><a name="686" class="Symbol"
+      >)</a
+      ><a name="687"
+      > </a
+      ><a name="688" href="lib.types.Groupoid.html#659" class="Bound"
+      >a</a
+      ><a name="689" class="Symbol"
+      >)</a
+      ><a name="690"
+      > </a
+      ><a name="691" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="693"
+      > </a
+      ><a name="694" href="lib.types.Groupoid.html#348" class="Field"
+      >ident</a
+      ><a name="699"
+      >
+
+  </a
+      ><a name="703" class="Keyword"
+      >private</a
+      ><a name="710"
+      >
+    </a
+      ><a name="715" class="Keyword"
+      >infix</a
+      ><a name="720"
+      > </a
+      ><a name="721" class="Number"
+      >80</a
+      ><a name="723"
+      > </a
+      ><a name="724" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >_&#8857;_</a
+      ><a name="727"
+      >
+    </a
+      ><a name="732" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >_&#8857;_</a
+      ><a name="735"
+      > </a
+      ><a name="736" class="Symbol"
+      >=</a
+      ><a name="737"
+      > </a
+      ><a name="738" href="lib.types.Groupoid.html#414" class="Field"
+      >comp</a
+      ><a name="742"
+      >
+
+  </a
+      ><a name="746" class="Keyword"
+      >abstract</a
+      ><a name="754"
+      >
+    </a
+      ><a name="759" href="lib.types.Groupoid.html#759" class="Function"
+      >inv-r</a
+      ><a name="764"
+      >  </a
+      ><a name="766" class="Symbol"
+      >:</a
+      ><a name="767"
+      > </a
+      ><a name="768" class="Symbol"
+      >&#8704;</a
+      ><a name="769"
+      > </a
+      ><a name="770" class="Symbol"
+      >{</a
+      ><a name="771" href="lib.types.Groupoid.html#771" class="Bound"
+      >x</a
+      ><a name="772"
+      > </a
+      ><a name="773" href="lib.types.Groupoid.html#773" class="Bound"
+      >y</a
+      ><a name="774" class="Symbol"
+      >}</a
+      ><a name="775"
+      > </a
+      ><a name="776" class="Symbol"
+      >(</a
+      ><a name="777" href="lib.types.Groupoid.html#777" class="Bound"
+      >a</a
+      ><a name="778"
+      > </a
+      ><a name="779" class="Symbol"
+      >:</a
+      ><a name="780"
+      > </a
+      ><a name="781" href="lib.types.Groupoid.html#250" class="Bound"
+      >Arr</a
+      ><a name="784"
+      > </a
+      ><a name="785" href="lib.types.Groupoid.html#771" class="Bound"
+      >x</a
+      ><a name="786"
+      > </a
+      ><a name="787" href="lib.types.Groupoid.html#773" class="Bound"
+      >y</a
+      ><a name="788" class="Symbol"
+      >)</a
+      ><a name="789"
+      > </a
+      ><a name="790" class="Symbol"
+      >&#8594;</a
+      ><a name="791"
+      > </a
+      ><a name="792" href="lib.types.Groupoid.html#777" class="Bound"
+      >a</a
+      ><a name="793"
+      > </a
+      ><a name="794" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="795"
+      > </a
+      ><a name="796" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="799"
+      > </a
+      ><a name="800" href="lib.types.Groupoid.html#777" class="Bound"
+      >a</a
+      ><a name="801"
+      > </a
+      ><a name="802" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="804"
+      > </a
+      ><a name="805" href="lib.types.Groupoid.html#348" class="Field"
+      >ident</a
+      ><a name="810"
+      >
+    </a
+      ><a name="815" href="lib.types.Groupoid.html#759" class="Function"
+      >inv-r</a
+      ><a name="820"
+      > </a
+      ><a name="821" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="822"
+      > </a
+      ><a name="823" class="Symbol"
+      >=</a
+      ><a name="824"
+      >
+      </a
+      ><a name="831" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="832"
+      > </a
+      ><a name="833" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="834"
+      > </a
+      ><a name="835" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="838"
+      > </a
+      ><a name="839" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="840"
+      >                           </a
+      ><a name="867" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="869"
+      > </a
+      ><a name="870" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="871"
+      > </a
+      ><a name="872" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="873"
+      > </a
+      ><a name="874" href="lib.types.Groupoid.html#465" class="Field"
+      >unit-l</a
+      ><a name="880"
+      > </a
+      ><a name="881" class="Symbol"
+      >(</a
+      ><a name="882" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="883"
+      > </a
+      ><a name="884" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="885"
+      > </a
+      ><a name="886" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="889"
+      > </a
+      ><a name="890" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="891" class="Symbol"
+      >)</a
+      ><a name="892"
+      > </a
+      ><a name="893" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="894"
+      >
+      </a
+      ><a name="901" href="lib.types.Groupoid.html#348" class="Field"
+      >ident</a
+      ><a name="906"
+      > </a
+      ><a name="907" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="908"
+      > </a
+      ><a name="909" class="Symbol"
+      >(</a
+      ><a name="910" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="911"
+      > </a
+      ><a name="912" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="913"
+      > </a
+      ><a name="914" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="917"
+      > </a
+      ><a name="918" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="919" class="Symbol"
+      >)</a
+      ><a name="920"
+      >                 </a
+      ><a name="937" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="939"
+      > </a
+      ><a name="940" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="941"
+      > </a
+      ><a name="942" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="943"
+      > </a
+      ><a name="944" href="lib.types.Groupoid.html#641" class="Field"
+      >inv-l</a
+      ><a name="949"
+      > </a
+      ><a name="950" class="Symbol"
+      >(</a
+      ><a name="951" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="954"
+      > </a
+      ><a name="955" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="956" class="Symbol"
+      >)</a
+      ><a name="957"
+      > </a
+      ><a name="958" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="965"
+      > </a
+      ><a name="966" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >_&#8857;</a
+      ><a name="968"
+      > </a
+      ><a name="969" class="Symbol"
+      >(</a
+      ><a name="970" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="971"
+      > </a
+      ><a name="972" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="973"
+      > </a
+      ><a name="974" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="977"
+      > </a
+      ><a name="978" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="979" class="Symbol"
+      >)</a
+      ><a name="980"
+      > </a
+      ><a name="981" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="982"
+      >
+      </a
+      ><a name="989" class="Symbol"
+      >(</a
+      ><a name="990" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="993"
+      > </a
+      ><a name="994" class="Symbol"
+      >(</a
+      ><a name="995" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="998"
+      > </a
+      ><a name="999" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1000" class="Symbol"
+      >)</a
+      ><a name="1001"
+      > </a
+      ><a name="1002" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1003"
+      > </a
+      ><a name="1004" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1007"
+      > </a
+      ><a name="1008" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1009" class="Symbol"
+      >)</a
+      ><a name="1010"
+      > </a
+      ><a name="1011" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1012"
+      > </a
+      ><a name="1013" class="Symbol"
+      >(</a
+      ><a name="1014" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1015"
+      > </a
+      ><a name="1016" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1017"
+      > </a
+      ><a name="1018" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1021"
+      > </a
+      ><a name="1022" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1023" class="Symbol"
+      >)</a
+      ><a name="1024"
+      > </a
+      ><a name="1025" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1027"
+      > </a
+      ><a name="1028" href="lib.types.Groupoid.html#520" class="Field"
+      >assoc</a
+      ><a name="1033"
+      > </a
+      ><a name="1034" class="Symbol"
+      >(</a
+      ><a name="1035" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1038"
+      > </a
+      ><a name="1039" class="Symbol"
+      >(</a
+      ><a name="1040" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1043"
+      > </a
+      ><a name="1044" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1045" class="Symbol"
+      >))</a
+      ><a name="1047"
+      > </a
+      ><a name="1048" class="Symbol"
+      >(</a
+      ><a name="1049" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1052"
+      > </a
+      ><a name="1053" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1054" class="Symbol"
+      >)</a
+      ><a name="1055"
+      > </a
+      ><a name="1056" class="Symbol"
+      >(</a
+      ><a name="1057" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1058"
+      > </a
+      ><a name="1059" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1060"
+      > </a
+      ><a name="1061" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1064"
+      > </a
+      ><a name="1065" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1066" class="Symbol"
+      >)</a
+      ><a name="1067"
+      > </a
+      ><a name="1068" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1069"
+      >
+      </a
+      ><a name="1076" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1079"
+      > </a
+      ><a name="1080" class="Symbol"
+      >(</a
+      ><a name="1081" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1084"
+      > </a
+      ><a name="1085" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1086" class="Symbol"
+      >)</a
+      ><a name="1087"
+      > </a
+      ><a name="1088" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1089"
+      > </a
+      ><a name="1090" class="Symbol"
+      >(</a
+      ><a name="1091" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1094"
+      > </a
+      ><a name="1095" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1096"
+      > </a
+      ><a name="1097" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1098"
+      > </a
+      ><a name="1099" class="Symbol"
+      >(</a
+      ><a name="1100" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1101"
+      > </a
+      ><a name="1102" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1107"
+      > </a
+      ><a name="1108" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1109" class="Symbol"
+      >))</a
+      ><a name="1111"
+      > </a
+      ><a name="1112" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1114"
+      > </a
+      ><a name="1115" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1116"
+      > </a
+      ><a name="1117" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1118"
+      > </a
+      ><a name="1119" href="lib.types.Groupoid.html#520" class="Field"
+      >assoc</a
+      ><a name="1124"
+      > </a
+      ><a name="1125" class="Symbol"
+      >(</a
+      ><a name="1126" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1129"
+      > </a
+      ><a name="1130" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1131" class="Symbol"
+      >)</a
+      ><a name="1132"
+      > </a
+      ><a name="1133" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1134"
+      > </a
+      ><a name="1135" class="Symbol"
+      >(</a
+      ><a name="1136" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1139"
+      > </a
+      ><a name="1140" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1141" class="Symbol"
+      >)</a
+      ><a name="1142"
+      > </a
+      ><a name="1143" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1150"
+      > </a
+      ><a name="1151" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1154"
+      > </a
+      ><a name="1155" class="Symbol"
+      >(</a
+      ><a name="1156" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1161" class="Symbol"
+      >)</a
+      ><a name="1162"
+      > </a
+      ><a name="1163" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;_</a
+      ><a name="1165"
+      > </a
+      ><a name="1166" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1167"
+      >
+      </a
+      ><a name="1174" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1177"
+      > </a
+      ><a name="1178" class="Symbol"
+      >(</a
+      ><a name="1179" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1182"
+      > </a
+      ><a name="1183" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1184" class="Symbol"
+      >)</a
+      ><a name="1185"
+      > </a
+      ><a name="1186" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1187"
+      > </a
+      ><a name="1188" class="Symbol"
+      >((</a
+      ><a name="1190" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1195"
+      > </a
+      ><a name="1196" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1197"
+      > </a
+      ><a name="1198" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1199" class="Symbol"
+      >)</a
+      ><a name="1200"
+      > </a
+      ><a name="1201" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1202"
+      > </a
+      ><a name="1203" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1206"
+      > </a
+      ><a name="1207" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1208" class="Symbol"
+      >)</a
+      ><a name="1209"
+      > </a
+      ><a name="1210" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1212"
+      > </a
+      ><a name="1213" href="lib.types.Groupoid.html#641" class="Field"
+      >inv-l</a
+      ><a name="1218"
+      > </a
+      ><a name="1219" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1220"
+      > </a
+      ><a name="1221" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1228"
+      > </a
+      ><a name="1229" class="Symbol"
+      >(&#955;</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" href="lib.types.Groupoid.html#1232" class="Bound"
+      >h</a
+      ><a name="1233"
+      > </a
+      ><a name="1234" class="Symbol"
+      >&#8594;</a
+      ><a name="1235"
+      > </a
+      ><a name="1236" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1239"
+      > </a
+      ><a name="1240" class="Symbol"
+      >(</a
+      ><a name="1241" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1244"
+      > </a
+      ><a name="1245" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1246" class="Symbol"
+      >)</a
+      ><a name="1247"
+      > </a
+      ><a name="1248" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1249"
+      > </a
+      ><a name="1250" class="Symbol"
+      >(</a
+      ><a name="1251" href="lib.types.Groupoid.html#1232" class="Bound"
+      >h</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1254"
+      > </a
+      ><a name="1255" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1258"
+      > </a
+      ><a name="1259" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1260" class="Symbol"
+      >))</a
+      ><a name="1262"
+      > </a
+      ><a name="1263" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1264"
+      >
+      </a
+      ><a name="1271" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1274"
+      > </a
+      ><a name="1275" class="Symbol"
+      >(</a
+      ><a name="1276" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1279"
+      > </a
+      ><a name="1280" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1281" class="Symbol"
+      >)</a
+      ><a name="1282"
+      > </a
+      ><a name="1283" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1284"
+      > </a
+      ><a name="1285" class="Symbol"
+      >(</a
+      ><a name="1286" href="lib.types.Groupoid.html#348" class="Field"
+      >ident</a
+      ><a name="1291"
+      > </a
+      ><a name="1292" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1293"
+      > </a
+      ><a name="1294" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1297"
+      > </a
+      ><a name="1298" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1299" class="Symbol"
+      >)</a
+      ><a name="1300"
+      >       </a
+      ><a name="1307" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1309"
+      > </a
+      ><a name="1310" href="lib.types.Groupoid.html#465" class="Field"
+      >unit-l</a
+      ><a name="1316"
+      > </a
+      ><a name="1317" class="Symbol"
+      >(</a
+      ><a name="1318" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1321"
+      > </a
+      ><a name="1322" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1323" class="Symbol"
+      >)</a
+      ><a name="1324"
+      > </a
+      ><a name="1325" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1332"
+      > </a
+      ><a name="1333" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1336"
+      > </a
+      ><a name="1337" class="Symbol"
+      >(</a
+      ><a name="1338" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1343" class="Symbol"
+      >)</a
+      ><a name="1344"
+      > </a
+      ><a name="1345" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;_</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1349"
+      >
+      </a
+      ><a name="1356" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1359"
+      > </a
+      ><a name="1360" class="Symbol"
+      >(</a
+      ><a name="1361" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1364"
+      > </a
+      ><a name="1365" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1366" class="Symbol"
+      >)</a
+      ><a name="1367"
+      > </a
+      ><a name="1368" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1369"
+      > </a
+      ><a name="1370" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1373"
+      > </a
+      ><a name="1374" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1375"
+      >                 </a
+      ><a name="1392" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1394"
+      > </a
+      ><a name="1395" href="lib.types.Groupoid.html#641" class="Field"
+      >inv-l</a
+      ><a name="1400"
+      > </a
+      ><a name="1401" class="Symbol"
+      >(</a
+      ><a name="1402" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1405"
+      > </a
+      ><a name="1406" href="lib.types.Groupoid.html#821" class="Bound"
+      >a</a
+      ><a name="1407" class="Symbol"
+      >)</a
+      ><a name="1408"
+      > </a
+      ><a name="1409" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1410"
+      >
+      </a
+      ><a name="1417" href="lib.types.Groupoid.html#348" class="Field"
+      >ident</a
+      ><a name="1422"
+      >                               </a
+      ><a name="1453" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="1455"
+      >
+
+    </a
+      ><a name="1461" href="lib.types.Groupoid.html#1461" class="Function"
+      >unit-r</a
+      ><a name="1467"
+      > </a
+      ><a name="1468" class="Symbol"
+      >:</a
+      ><a name="1469"
+      > </a
+      ><a name="1470" class="Symbol"
+      >&#8704;</a
+      ><a name="1471"
+      > </a
+      ><a name="1472" class="Symbol"
+      >{</a
+      ><a name="1473" href="lib.types.Groupoid.html#1473" class="Bound"
+      >x</a
+      ><a name="1474"
+      > </a
+      ><a name="1475" href="lib.types.Groupoid.html#1475" class="Bound"
+      >y</a
+      ><a name="1476" class="Symbol"
+      >}</a
+      ><a name="1477"
+      > </a
+      ><a name="1478" class="Symbol"
+      >(</a
+      ><a name="1479" href="lib.types.Groupoid.html#1479" class="Bound"
+      >a</a
+      ><a name="1480"
+      > </a
+      ><a name="1481" class="Symbol"
+      >:</a
+      ><a name="1482"
+      > </a
+      ><a name="1483" href="lib.types.Groupoid.html#250" class="Bound"
+      >Arr</a
+      ><a name="1486"
+      > </a
+      ><a name="1487" href="lib.types.Groupoid.html#1473" class="Bound"
+      >x</a
+      ><a name="1488"
+      > </a
+      ><a name="1489" href="lib.types.Groupoid.html#1475" class="Bound"
+      >y</a
+      ><a name="1490" class="Symbol"
+      >)</a
+      ><a name="1491"
+      > </a
+      ><a name="1492" class="Symbol"
+      >&#8594;</a
+      ><a name="1493"
+      > </a
+      ><a name="1494" href="lib.types.Groupoid.html#1479" class="Bound"
+      >a</a
+      ><a name="1495"
+      > </a
+      ><a name="1496" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1497"
+      > </a
+      ><a name="1498" href="lib.types.Groupoid.html#348" class="Field"
+      >ident</a
+      ><a name="1503"
+      > </a
+      ><a name="1504" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1506"
+      > </a
+      ><a name="1507" href="lib.types.Groupoid.html#1479" class="Bound"
+      >a</a
+      ><a name="1508"
+      >
+    </a
+      ><a name="1513" href="lib.types.Groupoid.html#1461" class="Function"
+      >unit-r</a
+      ><a name="1519"
+      > </a
+      ><a name="1520" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1521"
+      > </a
+      ><a name="1522" class="Symbol"
+      >=</a
+      ><a name="1523"
+      >
+      </a
+      ><a name="1530" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1531"
+      > </a
+      ><a name="1532" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1533"
+      > </a
+      ><a name="1534" href="lib.types.Groupoid.html#348" class="Field"
+      >ident</a
+      ><a name="1539"
+      >          </a
+      ><a name="1549" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1551"
+      > </a
+      ><a name="1552" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1553"
+      > </a
+      ><a name="1554" class="Symbol"
+      >(</a
+      ><a name="1555" href="lib.types.Groupoid.html#641" class="Field"
+      >inv-l</a
+      ><a name="1560"
+      > </a
+      ><a name="1561" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1562" class="Symbol"
+      >)</a
+      ><a name="1563"
+      > </a
+      ><a name="1564" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1571"
+      > </a
+      ><a name="1572" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1573"
+      > </a
+      ><a name="1574" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;_</a
+      ><a name="1576"
+      > </a
+      ><a name="1577" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1578"
+      >
+      </a
+      ><a name="1585" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1586"
+      > </a
+      ><a name="1587" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1588"
+      > </a
+      ><a name="1589" class="Symbol"
+      >(</a
+      ><a name="1590" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1595"
+      > </a
+      ><a name="1596" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1597"
+      > </a
+      ><a name="1598" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1599" class="Symbol"
+      >)</a
+      ><a name="1600"
+      >    </a
+      ><a name="1604" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1606"
+      > </a
+      ><a name="1607" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1608"
+      > </a
+      ><a name="1609" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1610"
+      > </a
+      ><a name="1611" href="lib.types.Groupoid.html#520" class="Field"
+      >assoc</a
+      ><a name="1616"
+      > </a
+      ><a name="1617" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1618"
+      > </a
+      ><a name="1619" class="Symbol"
+      >(</a
+      ><a name="1620" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1623"
+      > </a
+      ><a name="1624" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1625" class="Symbol"
+      >)</a
+      ><a name="1626"
+      > </a
+      ><a name="1627" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1628"
+      > </a
+      ><a name="1629" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1630"
+      >
+      </a
+      ><a name="1637" class="Symbol"
+      >(</a
+      ><a name="1638" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1639"
+      > </a
+      ><a name="1640" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1641"
+      > </a
+      ><a name="1642" href="lib.types.Groupoid.html#376" class="Field"
+      >inv</a
+      ><a name="1645"
+      > </a
+      ><a name="1646" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1647" class="Symbol"
+      >)</a
+      ><a name="1648"
+      > </a
+      ><a name="1649" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1650"
+      > </a
+      ><a name="1651" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1652"
+      >    </a
+      ><a name="1656" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1658"
+      > </a
+      ><a name="1659" href="lib.types.Groupoid.html#759" class="Function"
+      >inv-r</a
+      ><a name="1664"
+      > </a
+      ><a name="1665" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1666"
+      > </a
+      ><a name="1667" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1674"
+      > </a
+      ><a name="1675" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >_&#8857;</a
+      ><a name="1677"
+      > </a
+      ><a name="1678" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1679"
+      > </a
+      ><a name="1680" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1681"
+      >
+      </a
+      ><a name="1688" href="lib.types.Groupoid.html#348" class="Field"
+      >ident</a
+      ><a name="1693"
+      > </a
+      ><a name="1694" href="lib.types.Groupoid.html#732" class="Function Operator"
+      >&#8857;</a
+      ><a name="1695"
+      > </a
+      ><a name="1696" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1697"
+      >          </a
+      ><a name="1707" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1709"
+      > </a
+      ><a name="1710" href="lib.types.Groupoid.html#465" class="Field"
+      >unit-l</a
+      ><a name="1716"
+      > </a
+      ><a name="1717" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1718"
+      > </a
+      ><a name="1719" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1720"
+      >
+      </a
+      ><a name="1727" href="lib.types.Groupoid.html#1520" class="Bound"
+      >a</a
+      ><a name="1728"
+      >                  </a
+      ><a name="1746" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="1748"
+      >
+
+</a
+      ><a name="1750" class="Keyword"
+      >record</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" href="lib.types.Groupoid.html#1757" class="Record"
+      >PreGroupoid</a
+      ><a name="1768"
+      > </a
+      ><a name="1769" href="lib.types.Groupoid.html#1769" class="Bound"
+      >i</a
+      ><a name="1770"
+      > </a
+      ><a name="1771" href="lib.types.Groupoid.html#1771" class="Bound"
+      >j</a
+      ><a name="1772"
+      > </a
+      ><a name="1773" class="Symbol"
+      >:</a
+      ><a name="1774"
+      > </a
+      ><a name="1775" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1779"
+      > </a
+      ><a name="1780" class="Symbol"
+      >(</a
+      ><a name="1781" href="Agda.Primitive.html#625" class="Primitive"
+      >lsucc</a
+      ><a name="1786"
+      > </a
+      ><a name="1787" class="Symbol"
+      >(</a
+      ><a name="1788" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="1792"
+      > </a
+      ><a name="1793" href="lib.types.Groupoid.html#1769" class="Bound"
+      >i</a
+      ><a name="1794"
+      > </a
+      ><a name="1795" href="lib.types.Groupoid.html#1771" class="Bound"
+      >j</a
+      ><a name="1796" class="Symbol"
+      >))</a
+      ><a name="1798"
+      > </a
+      ><a name="1799" class="Keyword"
+      >where</a
+      ><a name="1804"
+      >
+  </a
+      ><a name="1807" class="Keyword"
+      >constructor</a
+      ><a name="1818"
+      > </a
+      ><a name="1819" href="lib.types.Groupoid.html#1819" class="InductiveConstructor"
+      >groupoid</a
+      ><a name="1827"
+      >
+  </a
+      ><a name="1830" class="Keyword"
+      >field</a
+      ><a name="1835"
+      >
+    </a
+      ><a name="1840" href="lib.types.Groupoid.html#1840" class="Field"
+      >El</a
+      ><a name="1842"
+      > </a
+      ><a name="1843" class="Symbol"
+      >:</a
+      ><a name="1844"
+      > </a
+      ><a name="1845" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1849"
+      > </a
+      ><a name="1850" href="lib.types.Groupoid.html#1769" class="Bound"
+      >i</a
+      ><a name="1851"
+      >
+    </a
+      ><a name="1856" href="lib.types.Groupoid.html#1856" class="Field"
+      >Arr</a
+      ><a name="1859"
+      > </a
+      ><a name="1860" class="Symbol"
+      >:</a
+      ><a name="1861"
+      > </a
+      ><a name="1862" href="lib.types.Groupoid.html#1840" class="Field"
+      >El</a
+      ><a name="1864"
+      > </a
+      ><a name="1865" class="Symbol"
+      >&#8594;</a
+      ><a name="1866"
+      > </a
+      ><a name="1867" href="lib.types.Groupoid.html#1840" class="Field"
+      >El</a
+      ><a name="1869"
+      > </a
+      ><a name="1870" class="Symbol"
+      >&#8594;</a
+      ><a name="1871"
+      > </a
+      ><a name="1872" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1876"
+      > </a
+      ><a name="1877" href="lib.types.Groupoid.html#1771" class="Bound"
+      >j</a
+      ><a name="1878"
+      >
+    </a
+      ><a name="1883" href="lib.types.Groupoid.html#1883" class="Field"
+      >Arr-level</a
+      ><a name="1892"
+      > </a
+      ><a name="1893" class="Symbol"
+      >:</a
+      ><a name="1894"
+      > </a
+      ><a name="1895" class="Symbol"
+      >&#8704;</a
+      ><a name="1896"
+      > </a
+      ><a name="1897" href="lib.types.Groupoid.html#1897" class="Bound"
+      >x</a
+      ><a name="1898"
+      > </a
+      ><a name="1899" href="lib.types.Groupoid.html#1899" class="Bound"
+      >y</a
+      ><a name="1900"
+      > </a
+      ><a name="1901" class="Symbol"
+      >&#8594;</a
+      ><a name="1902"
+      > </a
+      ><a name="1903" href="lib.NType.html#304" class="Function"
+      >has-level</a
+      ><a name="1912"
+      > </a
+      ><a name="1913" class="Number"
+      >0</a
+      ><a name="1914"
+      > </a
+      ><a name="1915" class="Symbol"
+      >(</a
+      ><a name="1916" href="lib.types.Groupoid.html#1856" class="Field"
+      >Arr</a
+      ><a name="1919"
+      > </a
+      ><a name="1920" href="lib.types.Groupoid.html#1897" class="Bound"
+      >x</a
+      ><a name="1921"
+      > </a
+      ><a name="1922" href="lib.types.Groupoid.html#1899" class="Bound"
+      >y</a
+      ><a name="1923" class="Symbol"
+      >)</a
+      ><a name="1924"
+      >
+    </a
+      ><a name="1929" href="lib.types.Groupoid.html#1929" class="Field"
+      >groupoid-struct</a
+      ><a name="1944"
+      > </a
+      ><a name="1945" class="Symbol"
+      >:</a
+      ><a name="1946"
+      > </a
+      ><a name="1947" href="lib.types.Groupoid.html#211" class="Record"
+      >GroupoidStructure</a
+      ><a name="1964"
+      > </a
+      ><a name="1965" href="lib.types.Groupoid.html#1856" class="Field"
+      >Arr</a
+      ><a name="1968"
+      > </a
+      ><a name="1969" href="lib.types.Groupoid.html#1883" class="Field"
+      >Arr-level</a
+      ><a name="1978"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

@@ -1,0 +1,459 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cw.cohomology.HigherCoboundary</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="groups.Cokernel.html#1" class="Module"
+      >groups.Cokernel</a
+      ><a name="86"
+      >
+</a
+      ><a name="87" class="Keyword"
+      >open</a
+      ><a name="91"
+      > </a
+      ><a name="92" class="Keyword"
+      >import</a
+      ><a name="98"
+      > </a
+      ><a name="99" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="116"
+      >
+
+</a
+      ><a name="118" class="Keyword"
+      >open</a
+      ><a name="122"
+      > </a
+      ><a name="123" class="Keyword"
+      >import</a
+      ><a name="129"
+      > </a
+      ><a name="130" href="cw.CW.html#1" class="Module"
+      >cw.CW</a
+      ><a name="135"
+      >
+
+</a
+      ><a name="137" class="Keyword"
+      >module</a
+      ><a name="143"
+      > </a
+      ><a name="144" href="cw.cohomology.HigherCoboundary.html#1" class="Module"
+      >cw.cohomology.HigherCoboundary</a
+      ><a name="174"
+      > </a
+      ><a name="175" class="Symbol"
+      >{</a
+      ><a name="176" href="cw.cohomology.HigherCoboundary.html#176" class="Bound"
+      >i</a
+      ><a name="177" class="Symbol"
+      >}</a
+      ><a name="178"
+      > </a
+      ><a name="179" class="Symbol"
+      >(</a
+      ><a name="180" href="cw.cohomology.HigherCoboundary.html#180" class="Bound"
+      >OT</a
+      ><a name="182"
+      > </a
+      ><a name="183" class="Symbol"
+      >:</a
+      ><a name="184"
+      > </a
+      ><a name="185" href="cohomology.Theory.html#7242" class="Record"
+      >OrdinaryTheory</a
+      ><a name="199"
+      > </a
+      ><a name="200" href="cw.cohomology.HigherCoboundary.html#176" class="Bound"
+      >i</a
+      ><a name="201" class="Symbol"
+      >)</a
+      ><a name="202"
+      >
+  </a
+      ><a name="205" class="Symbol"
+      >{</a
+      ><a name="206" href="cw.cohomology.HigherCoboundary.html#206" class="Bound"
+      >n</a
+      ><a name="207" class="Symbol"
+      >}</a
+      ><a name="208"
+      > </a
+      ><a name="209" class="Symbol"
+      >(</a
+      ><a name="210" href="cw.cohomology.HigherCoboundary.html#210" class="Bound"
+      >&#8857;skel</a
+      ><a name="215"
+      > </a
+      ><a name="216" class="Symbol"
+      >:</a
+      ><a name="217"
+      > </a
+      ><a name="218" href="cw.CW.html#1851" class="Record"
+      >&#8857;Skeleton</a
+      ><a name="227"
+      > </a
+      ><a name="228" class="Symbol"
+      >{</a
+      ><a name="229" href="cw.cohomology.HigherCoboundary.html#176" class="Bound"
+      >i</a
+      ><a name="230" class="Symbol"
+      >}</a
+      ><a name="231"
+      > </a
+      ><a name="232" class="Symbol"
+      >(</a
+      ><a name="233" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="234"
+      > </a
+      ><a name="235" class="Symbol"
+      >(</a
+      ><a name="236" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="237"
+      > </a
+      ><a name="238" href="cw.cohomology.HigherCoboundary.html#206" class="Bound"
+      >n</a
+      ><a name="239" class="Symbol"
+      >)))</a
+      ><a name="242"
+      > </a
+      ><a name="243" class="Keyword"
+      >where</a
+      ><a name="248"
+      >
+
+</a
+      ><a name="250" class="Keyword"
+      >open</a
+      ><a name="254"
+      > </a
+      ><a name="255" href="cohomology.Theory.html#7242" class="Module"
+      >OrdinaryTheory</a
+      ><a name="269"
+      > </a
+      ><a name="270" href="cw.cohomology.HigherCoboundary.html#180" class="Bound"
+      >OT</a
+      ><a name="272"
+      >
+</a
+      ><a name="273" class="Keyword"
+      >open</a
+      ><a name="277"
+      > </a
+      ><a name="278" class="Keyword"
+      >import</a
+      ><a name="284"
+      > </a
+      ><a name="285" href="cw.cohomology.WedgeOfCells.html#1" class="Module"
+      >cw.cohomology.WedgeOfCells</a
+      ><a name="311"
+      > </a
+      ><a name="312" href="cw.cohomology.HigherCoboundary.html#180" class="Bound"
+      >OT</a
+      ><a name="314"
+      >
+</a
+      ><a name="315" class="Keyword"
+      >open</a
+      ><a name="319"
+      > </a
+      ><a name="320" class="Keyword"
+      >import</a
+      ><a name="326"
+      > </a
+      ><a name="327" href="cw.cohomology.GridLongExactSequence.html#1" class="Module"
+      >cw.cohomology.GridLongExactSequence</a
+      ><a name="362"
+      > </a
+      ><a name="363" href="cohomology.Theory.html#7365" class="Function"
+      >cohomology-theory</a
+      ><a name="380"
+      >
+  </a
+      ><a name="383" class="Symbol"
+      >(</a
+      ><a name="384" href="lib.types.Int.html#1633" class="Function"
+      >&#8469;-to-&#8484;</a
+      ><a name="390"
+      > </a
+      ><a name="391" class="Symbol"
+      >(</a
+      ><a name="392" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="393"
+      > </a
+      ><a name="394" href="cw.cohomology.HigherCoboundary.html#206" class="Bound"
+      >n</a
+      ><a name="395" class="Symbol"
+      >))</a
+      ><a name="397"
+      > </a
+      ><a name="398" class="Symbol"
+      >(</a
+      ><a name="399" href="cw.CW.html#5014" class="Function"
+      >&#8857;cw-incl-last</a
+      ><a name="412"
+      > </a
+      ><a name="413" class="Symbol"
+      >(</a
+      ><a name="414" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="422"
+      > </a
+      ><a name="423" href="cw.cohomology.HigherCoboundary.html#210" class="Bound"
+      >&#8857;skel</a
+      ><a name="428" class="Symbol"
+      >))</a
+      ><a name="430"
+      > </a
+      ><a name="431" class="Symbol"
+      >(</a
+      ><a name="432" href="cw.CW.html#5014" class="Function"
+      >&#8857;cw-incl-last</a
+      ><a name="445"
+      > </a
+      ><a name="446" href="cw.cohomology.HigherCoboundary.html#210" class="Bound"
+      >&#8857;skel</a
+      ><a name="451" class="Symbol"
+      >)</a
+      ><a name="452"
+      >
+
+</a
+      ><a name="454" href="cw.cohomology.HigherCoboundary.html#454" class="Function"
+      >cw-co&#8706;-last</a
+      ><a name="465"
+      > </a
+      ><a name="466" class="Symbol"
+      >:</a
+      ><a name="467"
+      > </a
+      ><a name="468" href="cw.cohomology.WedgeOfCells.html#429" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="476"
+      > </a
+      ><a name="477" class="Symbol"
+      >(</a
+      ><a name="478" href="cw.CW.html#2266" class="Function"
+      >&#8857;cw-init</a
+      ><a name="486"
+      > </a
+      ><a name="487" href="cw.cohomology.HigherCoboundary.html#210" class="Bound"
+      >&#8857;skel</a
+      ><a name="492" class="Symbol"
+      >)</a
+      ><a name="493"
+      > </a
+      ><a name="494" class="Symbol"
+      >(</a
+      ><a name="495" href="lib.types.Int.html#1633" class="Function"
+      >&#8469;-to-&#8484;</a
+      ><a name="501"
+      > </a
+      ><a name="502" class="Symbol"
+      >(</a
+      ><a name="503" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="504"
+      > </a
+      ><a name="505" href="cw.cohomology.HigherCoboundary.html#206" class="Bound"
+      >n</a
+      ><a name="506" class="Symbol"
+      >))</a
+      ><a name="508"
+      > </a
+      ><a name="509" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="511"
+      > </a
+      ><a name="512" href="cw.cohomology.WedgeOfCells.html#429" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;</a
+      ><a name="520"
+      > </a
+      ><a name="521" href="cw.cohomology.HigherCoboundary.html#210" class="Bound"
+      >&#8857;skel</a
+      ><a name="526"
+      > </a
+      ><a name="527" class="Symbol"
+      >(</a
+      ><a name="528" href="lib.types.Int.html#1633" class="Function"
+      >&#8469;-to-&#8484;</a
+      ><a name="534"
+      > </a
+      ><a name="535" class="Symbol"
+      >(</a
+      ><a name="536" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="537"
+      > </a
+      ><a name="538" class="Symbol"
+      >(</a
+      ><a name="539" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="540"
+      > </a
+      ><a name="541" href="cw.cohomology.HigherCoboundary.html#206" class="Bound"
+      >n</a
+      ><a name="542" class="Symbol"
+      >)))</a
+      ><a name="545"
+      >
+</a
+      ><a name="546" href="cw.cohomology.HigherCoboundary.html#454" class="Function"
+      >cw-co&#8706;-last</a
+      ><a name="557"
+      > </a
+      ><a name="558" class="Symbol"
+      >=</a
+      ><a name="559"
+      > </a
+      ><a name="560" href="cw.cohomology.GridLongExactSequence.html#948" class="Function"
+      >grid-co&#8706;</a
+      ><a name="568"
+      >
+
+</a
+      ><a name="570" class="Keyword"
+      >module</a
+      ><a name="576"
+      > </a
+      ><a name="577" href="cw.cohomology.HigherCoboundary.html#577" class="Module"
+      >CokerCo&#8706;</a
+      ><a name="585"
+      > </a
+      ><a name="586" class="Keyword"
+      >where</a
+      ><a name="591"
+      >
+  </a
+      ><a name="594" href="cw.cohomology.HigherCoboundary.html#594" class="Function"
+      >grp</a
+      ><a name="597"
+      > </a
+      ><a name="598" class="Symbol"
+      >=</a
+      ><a name="599"
+      > </a
+      ><a name="600" href="groups.Cokernel.html#4238" class="Function"
+      >Coker</a
+      ><a name="605"
+      > </a
+      ><a name="606" href="cw.cohomology.HigherCoboundary.html#454" class="Function"
+      >cw-co&#8706;-last</a
+      ><a name="617"
+      > </a
+      ><a name="618" class="Symbol"
+      >(</a
+      ><a name="619" href="cw.cohomology.WedgeOfCells.html#547" class="Function"
+      >CX&#8345;/X&#8345;&#8331;&#8321;-is-abelian</a
+      ><a name="638"
+      > </a
+      ><a name="639" href="cw.cohomology.HigherCoboundary.html#210" class="Bound"
+      >&#8857;skel</a
+      ><a name="644"
+      > </a
+      ><a name="645" class="Symbol"
+      >(</a
+      ><a name="646" href="lib.types.Int.html#1633" class="Function"
+      >&#8469;-to-&#8484;</a
+      ><a name="652"
+      > </a
+      ><a name="653" class="Symbol"
+      >(</a
+      ><a name="654" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="655"
+      > </a
+      ><a name="656" class="Symbol"
+      >(</a
+      ><a name="657" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="658"
+      > </a
+      ><a name="659" href="cw.cohomology.HigherCoboundary.html#206" class="Bound"
+      >n</a
+      ><a name="660" class="Symbol"
+      >))))</a
+      ><a name="664"
+      >
+  </a
+      ><a name="667" class="Keyword"
+      >open</a
+      ><a name="671"
+      > </a
+      ><a name="672" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="677"
+      > </a
+      ><a name="678" href="cw.cohomology.HigherCoboundary.html#594" class="Function"
+      >grp</a
+      ><a name="681"
+      > </a
+      ><a name="682" class="Keyword"
+      >public</a
+      ><a name="688"
+      >
+
+</a
+      ><a name="690" href="cw.cohomology.HigherCoboundary.html#690" class="Function"
+      >CokerCo&#8706;</a
+      ><a name="698"
+      > </a
+      ><a name="699" class="Symbol"
+      >=</a
+      ><a name="700"
+      > </a
+      ><a name="701" href="cw.cohomology.HigherCoboundary.html#594" class="Function"
+      >CokerCo&#8706;.grp</a
+      ><a name="713"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

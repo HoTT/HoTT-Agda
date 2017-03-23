@@ -1,0 +1,1536 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cw.Attached</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+
+</a
+      ><a name="60" class="Keyword"
+      >module</a
+      ><a name="66"
+      > </a
+      ><a name="67" href="cw.Attached.html#1" class="Module"
+      >cw.Attached</a
+      ><a name="78"
+      > </a
+      ><a name="79" class="Symbol"
+      >{</a
+      ><a name="80" href="cw.Attached.html#80" class="Bound"
+      >i</a
+      ><a name="81"
+      > </a
+      ><a name="82" href="cw.Attached.html#82" class="Bound"
+      >j</a
+      ><a name="83"
+      > </a
+      ><a name="84" href="cw.Attached.html#84" class="Bound"
+      >k</a
+      ><a name="85"
+      > </a
+      ><a name="86" class="Symbol"
+      >:</a
+      ><a name="87"
+      > </a
+      ><a name="88" href="Agda.Primitive.html#408" class="Postulate"
+      >ULevel</a
+      ><a name="94" class="Symbol"
+      >}</a
+      ><a name="95"
+      > </a
+      ><a name="96" class="Keyword"
+      >where</a
+      ><a name="101"
+      >
+
+</a
+      ><a name="103" class="Comment"
+      >-- The type of attaching maps.</a
+      ><a name="133"
+      >
+</a
+      ><a name="134" class="Comment"
+      >-- In intended uses, [B] is the type of cells and [C] is the [Sphere]s.</a
+      ><a name="205"
+      >
+</a
+      ><a name="206" href="cw.Attached.html#206" class="Function"
+      >Attaching</a
+      ><a name="215"
+      > </a
+      ><a name="216" class="Symbol"
+      >:</a
+      ><a name="217"
+      > </a
+      ><a name="218" class="Symbol"
+      >(</a
+      ><a name="219" href="cw.Attached.html#219" class="Bound"
+      >A</a
+      ><a name="220"
+      > </a
+      ><a name="221" class="Symbol"
+      >:</a
+      ><a name="222"
+      > </a
+      ><a name="223" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="227"
+      > </a
+      ><a name="228" href="cw.Attached.html#80" class="Bound"
+      >i</a
+      ><a name="229" class="Symbol"
+      >)</a
+      ><a name="230"
+      > </a
+      ><a name="231" class="Symbol"
+      >(</a
+      ><a name="232" href="cw.Attached.html#232" class="Bound"
+      >B</a
+      ><a name="233"
+      > </a
+      ><a name="234" class="Symbol"
+      >:</a
+      ><a name="235"
+      > </a
+      ><a name="236" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="240"
+      > </a
+      ><a name="241" href="cw.Attached.html#82" class="Bound"
+      >j</a
+      ><a name="242" class="Symbol"
+      >)</a
+      ><a name="243"
+      > </a
+      ><a name="244" class="Symbol"
+      >(</a
+      ><a name="245" href="cw.Attached.html#245" class="Bound"
+      >C</a
+      ><a name="246"
+      > </a
+      ><a name="247" class="Symbol"
+      >:</a
+      ><a name="248"
+      > </a
+      ><a name="249" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="253"
+      > </a
+      ><a name="254" href="cw.Attached.html#84" class="Bound"
+      >k</a
+      ><a name="255" class="Symbol"
+      >)</a
+      ><a name="256"
+      > </a
+      ><a name="257" class="Symbol"
+      >&#8594;</a
+      ><a name="258"
+      > </a
+      ><a name="259" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="263"
+      > </a
+      ><a name="264" class="Symbol"
+      >(</a
+      ><a name="265" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="269"
+      > </a
+      ><a name="270" href="cw.Attached.html#80" class="Bound"
+      >i</a
+      ><a name="271"
+      > </a
+      ><a name="272" class="Symbol"
+      >(</a
+      ><a name="273" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="277"
+      > </a
+      ><a name="278" href="cw.Attached.html#82" class="Bound"
+      >j</a
+      ><a name="279"
+      > </a
+      ><a name="280" href="cw.Attached.html#84" class="Bound"
+      >k</a
+      ><a name="281" class="Symbol"
+      >))</a
+      ><a name="283"
+      >
+</a
+      ><a name="284" href="cw.Attached.html#206" class="Function"
+      >Attaching</a
+      ><a name="293"
+      > </a
+      ><a name="294" href="cw.Attached.html#294" class="Bound"
+      >A</a
+      ><a name="295"
+      > </a
+      ><a name="296" href="cw.Attached.html#296" class="Bound"
+      >B</a
+      ><a name="297"
+      > </a
+      ><a name="298" href="cw.Attached.html#298" class="Bound"
+      >C</a
+      ><a name="299"
+      > </a
+      ><a name="300" class="Symbol"
+      >=</a
+      ><a name="301"
+      > </a
+      ><a name="302" href="cw.Attached.html#296" class="Bound"
+      >B</a
+      ><a name="303"
+      > </a
+      ><a name="304" class="Symbol"
+      >&#8594;</a
+      ><a name="305"
+      > </a
+      ><a name="306" href="cw.Attached.html#298" class="Bound"
+      >C</a
+      ><a name="307"
+      > </a
+      ><a name="308" class="Symbol"
+      >&#8594;</a
+      ><a name="309"
+      > </a
+      ><a name="310" href="cw.Attached.html#294" class="Bound"
+      >A</a
+      ><a name="311"
+      >
+
+</a
+      ><a name="313" class="Keyword"
+      >module</a
+      ><a name="319"
+      > </a
+      ><a name="320" href="cw.Attached.html#320" class="Module"
+      >_</a
+      ><a name="321"
+      > </a
+      ><a name="322" class="Symbol"
+      >{</a
+      ><a name="323" href="cw.Attached.html#323" class="Bound"
+      >A</a
+      ><a name="324"
+      > </a
+      ><a name="325" class="Symbol"
+      >:</a
+      ><a name="326"
+      > </a
+      ><a name="327" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="331"
+      > </a
+      ><a name="332" href="cw.Attached.html#80" class="Bound"
+      >i</a
+      ><a name="333" class="Symbol"
+      >}</a
+      ><a name="334"
+      > </a
+      ><a name="335" class="Symbol"
+      >{</a
+      ><a name="336" href="cw.Attached.html#336" class="Bound"
+      >B</a
+      ><a name="337"
+      > </a
+      ><a name="338" class="Symbol"
+      >:</a
+      ><a name="339"
+      > </a
+      ><a name="340" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="344"
+      > </a
+      ><a name="345" href="cw.Attached.html#82" class="Bound"
+      >j</a
+      ><a name="346" class="Symbol"
+      >}</a
+      ><a name="347"
+      > </a
+      ><a name="348" class="Symbol"
+      >{</a
+      ><a name="349" href="cw.Attached.html#349" class="Bound"
+      >C</a
+      ><a name="350"
+      > </a
+      ><a name="351" class="Symbol"
+      >:</a
+      ><a name="352"
+      > </a
+      ><a name="353" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="357"
+      > </a
+      ><a name="358" href="cw.Attached.html#84" class="Bound"
+      >k</a
+      ><a name="359" class="Symbol"
+      >}</a
+      ><a name="360"
+      > </a
+      ><a name="361" class="Keyword"
+      >where</a
+      ><a name="366"
+      >
+
+  </a
+      ><a name="370" class="Comment"
+      >-- [Attached] is the type with all the cells attached.</a
+      ><a name="424"
+      >
+
+  </a
+      ><a name="428" href="cw.Attached.html#428" class="Function"
+      >attached-span</a
+      ><a name="441"
+      > </a
+      ><a name="442" class="Symbol"
+      >:</a
+      ><a name="443"
+      > </a
+      ><a name="444" href="cw.Attached.html#206" class="Function"
+      >Attaching</a
+      ><a name="453"
+      > </a
+      ><a name="454" href="cw.Attached.html#323" class="Bound"
+      >A</a
+      ><a name="455"
+      > </a
+      ><a name="456" href="cw.Attached.html#336" class="Bound"
+      >B</a
+      ><a name="457"
+      > </a
+      ><a name="458" href="cw.Attached.html#349" class="Bound"
+      >C</a
+      ><a name="459"
+      > </a
+      ><a name="460" class="Symbol"
+      >&#8594;</a
+      ><a name="461"
+      > </a
+      ><a name="462" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="466"
+      > </a
+      ><a name="467" class="Symbol"
+      >{</a
+      ><a name="468" href="cw.Attached.html#80" class="Bound"
+      >i</a
+      ><a name="469" class="Symbol"
+      >}</a
+      ><a name="470"
+      > </a
+      ><a name="471" class="Symbol"
+      >{</a
+      ><a name="472" href="cw.Attached.html#82" class="Bound"
+      >j</a
+      ><a name="473" class="Symbol"
+      >}</a
+      ><a name="474"
+      > </a
+      ><a name="475" class="Symbol"
+      >{</a
+      ><a name="476" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="480"
+      > </a
+      ><a name="481" href="cw.Attached.html#82" class="Bound"
+      >j</a
+      ><a name="482"
+      > </a
+      ><a name="483" href="cw.Attached.html#84" class="Bound"
+      >k</a
+      ><a name="484" class="Symbol"
+      >}</a
+      ><a name="485"
+      >
+  </a
+      ><a name="488" href="cw.Attached.html#428" class="Function"
+      >attached-span</a
+      ><a name="501"
+      > </a
+      ><a name="502" href="cw.Attached.html#502" class="Bound"
+      >attaching</a
+      ><a name="511"
+      > </a
+      ><a name="512" class="Symbol"
+      >=</a
+      ><a name="513"
+      > </a
+      ><a name="514" href="lib.types.Span.html#270" class="InductiveConstructor"
+      >span</a
+      ><a name="518"
+      > </a
+      ><a name="519" href="cw.Attached.html#323" class="Bound"
+      >A</a
+      ><a name="520"
+      > </a
+      ><a name="521" href="cw.Attached.html#336" class="Bound"
+      >B</a
+      ><a name="522"
+      > </a
+      ><a name="523" class="Symbol"
+      >(</a
+      ><a name="524" href="cw.Attached.html#336" class="Bound"
+      >B</a
+      ><a name="525"
+      > </a
+      ><a name="526" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="527"
+      > </a
+      ><a name="528" href="cw.Attached.html#349" class="Bound"
+      >C</a
+      ><a name="529" class="Symbol"
+      >)</a
+      ><a name="530"
+      > </a
+      ><a name="531" class="Symbol"
+      >(</a
+      ><a name="532" href="lib.Base.html#8582" class="Function"
+      >uncurry</a
+      ><a name="539"
+      > </a
+      ><a name="540" href="cw.Attached.html#502" class="Bound"
+      >attaching</a
+      ><a name="549" class="Symbol"
+      >)</a
+      ><a name="550"
+      > </a
+      ><a name="551" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="554"
+      >
+
+  </a
+      ><a name="558" href="cw.Attached.html#558" class="Function"
+      >Attached</a
+      ><a name="566"
+      > </a
+      ><a name="567" class="Symbol"
+      >:</a
+      ><a name="568"
+      > </a
+      ><a name="569" href="cw.Attached.html#206" class="Function"
+      >Attaching</a
+      ><a name="578"
+      > </a
+      ><a name="579" href="cw.Attached.html#323" class="Bound"
+      >A</a
+      ><a name="580"
+      > </a
+      ><a name="581" href="cw.Attached.html#336" class="Bound"
+      >B</a
+      ><a name="582"
+      > </a
+      ><a name="583" href="cw.Attached.html#349" class="Bound"
+      >C</a
+      ><a name="584"
+      > </a
+      ><a name="585" class="Symbol"
+      >&#8594;</a
+      ><a name="586"
+      > </a
+      ><a name="587" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="591"
+      > </a
+      ><a name="592" class="Symbol"
+      >(</a
+      ><a name="593" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="597"
+      > </a
+      ><a name="598" href="cw.Attached.html#80" class="Bound"
+      >i</a
+      ><a name="599"
+      > </a
+      ><a name="600" class="Symbol"
+      >(</a
+      ><a name="601" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="605"
+      > </a
+      ><a name="606" href="cw.Attached.html#82" class="Bound"
+      >j</a
+      ><a name="607"
+      > </a
+      ><a name="608" href="cw.Attached.html#84" class="Bound"
+      >k</a
+      ><a name="609" class="Symbol"
+      >))</a
+      ><a name="611"
+      >
+  </a
+      ><a name="614" href="cw.Attached.html#558" class="Function"
+      >Attached</a
+      ><a name="622"
+      > </a
+      ><a name="623" href="cw.Attached.html#623" class="Bound"
+      >attaching</a
+      ><a name="632"
+      > </a
+      ><a name="633" class="Symbol"
+      >=</a
+      ><a name="634"
+      > </a
+      ><a name="635" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="642"
+      > </a
+      ><a name="643" class="Symbol"
+      >(</a
+      ><a name="644" href="cw.Attached.html#428" class="Function"
+      >attached-span</a
+      ><a name="657"
+      > </a
+      ><a name="658" href="cw.Attached.html#623" class="Bound"
+      >attaching</a
+      ><a name="667" class="Symbol"
+      >)</a
+      ><a name="668"
+      >
+
+</a
+      ><a name="670" class="Keyword"
+      >module</a
+      ><a name="676"
+      > </a
+      ><a name="677" href="cw.Attached.html#677" class="Module"
+      >_</a
+      ><a name="678"
+      > </a
+      ><a name="679" class="Symbol"
+      >{</a
+      ><a name="680" href="cw.Attached.html#680" class="Bound"
+      >A</a
+      ><a name="681"
+      > </a
+      ><a name="682" class="Symbol"
+      >:</a
+      ><a name="683"
+      > </a
+      ><a name="684" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="688"
+      > </a
+      ><a name="689" href="cw.Attached.html#80" class="Bound"
+      >i</a
+      ><a name="690" class="Symbol"
+      >}</a
+      ><a name="691"
+      > </a
+      ><a name="692" class="Symbol"
+      >{</a
+      ><a name="693" href="cw.Attached.html#693" class="Bound"
+      >B</a
+      ><a name="694"
+      > </a
+      ><a name="695" class="Symbol"
+      >:</a
+      ><a name="696"
+      > </a
+      ><a name="697" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="701"
+      > </a
+      ><a name="702" href="cw.Attached.html#82" class="Bound"
+      >j</a
+      ><a name="703" class="Symbol"
+      >}</a
+      ><a name="704"
+      > </a
+      ><a name="705" class="Symbol"
+      >{</a
+      ><a name="706" href="cw.Attached.html#706" class="Bound"
+      >C</a
+      ><a name="707"
+      > </a
+      ><a name="708" class="Symbol"
+      >:</a
+      ><a name="709"
+      > </a
+      ><a name="710" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="714"
+      > </a
+      ><a name="715" href="cw.Attached.html#84" class="Bound"
+      >k</a
+      ><a name="716" class="Symbol"
+      >}</a
+      ><a name="717"
+      > </a
+      ><a name="718" class="Symbol"
+      >{</a
+      ><a name="719" href="cw.Attached.html#719" class="Bound"
+      >attaching</a
+      ><a name="728"
+      > </a
+      ><a name="729" class="Symbol"
+      >:</a
+      ><a name="730"
+      > </a
+      ><a name="731" href="cw.Attached.html#206" class="Function"
+      >Attaching</a
+      ><a name="740"
+      > </a
+      ><a name="741" href="cw.Attached.html#680" class="Bound"
+      >A</a
+      ><a name="742"
+      > </a
+      ><a name="743" href="cw.Attached.html#693" class="Bound"
+      >B</a
+      ><a name="744"
+      > </a
+      ><a name="745" href="cw.Attached.html#706" class="Bound"
+      >C</a
+      ><a name="746" class="Symbol"
+      >}</a
+      ><a name="747"
+      > </a
+      ><a name="748" class="Keyword"
+      >where</a
+      ><a name="753"
+      >
+
+  </a
+      ><a name="757" href="cw.Attached.html#757" class="Function"
+      >incl</a
+      ><a name="761"
+      > </a
+      ><a name="762" class="Symbol"
+      >:</a
+      ><a name="763"
+      > </a
+      ><a name="764" href="cw.Attached.html#680" class="Bound"
+      >A</a
+      ><a name="765"
+      > </a
+      ><a name="766" class="Symbol"
+      >&#8594;</a
+      ><a name="767"
+      > </a
+      ><a name="768" href="cw.Attached.html#558" class="Function"
+      >Attached</a
+      ><a name="776"
+      > </a
+      ><a name="777" href="cw.Attached.html#719" class="Bound"
+      >attaching</a
+      ><a name="786"
+      >
+  </a
+      ><a name="789" href="cw.Attached.html#757" class="Function"
+      >incl</a
+      ><a name="793"
+      > </a
+      ><a name="794" class="Symbol"
+      >=</a
+      ><a name="795"
+      > </a
+      ><a name="796" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="800"
+      >
+
+  </a
+      ><a name="804" href="cw.Attached.html#804" class="Function"
+      >hub</a
+      ><a name="807"
+      > </a
+      ><a name="808" class="Symbol"
+      >:</a
+      ><a name="809"
+      > </a
+      ><a name="810" href="cw.Attached.html#693" class="Bound"
+      >B</a
+      ><a name="811"
+      > </a
+      ><a name="812" class="Symbol"
+      >&#8594;</a
+      ><a name="813"
+      > </a
+      ><a name="814" href="cw.Attached.html#558" class="Function"
+      >Attached</a
+      ><a name="822"
+      > </a
+      ><a name="823" href="cw.Attached.html#719" class="Bound"
+      >attaching</a
+      ><a name="832"
+      >
+  </a
+      ><a name="835" href="cw.Attached.html#804" class="Function"
+      >hub</a
+      ><a name="838"
+      > </a
+      ><a name="839" class="Symbol"
+      >=</a
+      ><a name="840"
+      > </a
+      ><a name="841" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="846"
+      >
+
+  </a
+      ><a name="850" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="855"
+      > </a
+      ><a name="856" class="Symbol"
+      >:</a
+      ><a name="857"
+      > </a
+      ><a name="858" class="Symbol"
+      >&#8704;</a
+      ><a name="859"
+      > </a
+      ><a name="860" href="cw.Attached.html#860" class="Bound"
+      >b</a
+      ><a name="861"
+      > </a
+      ><a name="862" href="cw.Attached.html#862" class="Bound"
+      >c</a
+      ><a name="863"
+      > </a
+      ><a name="864" class="Symbol"
+      >&#8594;</a
+      ><a name="865"
+      > </a
+      ><a name="866" href="cw.Attached.html#757" class="Function"
+      >incl</a
+      ><a name="870"
+      > </a
+      ><a name="871" class="Symbol"
+      >(</a
+      ><a name="872" href="cw.Attached.html#719" class="Bound"
+      >attaching</a
+      ><a name="881"
+      > </a
+      ><a name="882" href="cw.Attached.html#860" class="Bound"
+      >b</a
+      ><a name="883"
+      > </a
+      ><a name="884" href="cw.Attached.html#862" class="Bound"
+      >c</a
+      ><a name="885" class="Symbol"
+      >)</a
+      ><a name="886"
+      > </a
+      ><a name="887" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="889"
+      > </a
+      ><a name="890" href="cw.Attached.html#804" class="Function"
+      >hub</a
+      ><a name="893"
+      > </a
+      ><a name="894" href="cw.Attached.html#860" class="Bound"
+      >b</a
+      ><a name="895"
+      >
+  </a
+      ><a name="898" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="903"
+      > </a
+      ><a name="904" class="Symbol"
+      >=</a
+      ><a name="905"
+      > </a
+      ><a name="906" href="lib.Base.html#8450" class="Function"
+      >curry</a
+      ><a name="911"
+      > </a
+      ><a name="912" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="916"
+      >
+
+  </a
+      ><a name="920" class="Keyword"
+      >module</a
+      ><a name="926"
+      > </a
+      ><a name="927" href="cw.Attached.html#927" class="Module"
+      >AttachedElim</a
+      ><a name="939"
+      > </a
+      ><a name="940" class="Symbol"
+      >{</a
+      ><a name="941" href="cw.Attached.html#941" class="Bound"
+      >l</a
+      ><a name="942" class="Symbol"
+      >}</a
+      ><a name="943"
+      > </a
+      ><a name="944" class="Symbol"
+      >{</a
+      ><a name="945" href="cw.Attached.html#945" class="Bound"
+      >P</a
+      ><a name="946"
+      > </a
+      ><a name="947" class="Symbol"
+      >:</a
+      ><a name="948"
+      > </a
+      ><a name="949" href="cw.Attached.html#558" class="Function"
+      >Attached</a
+      ><a name="957"
+      > </a
+      ><a name="958" href="cw.Attached.html#719" class="Bound"
+      >attaching</a
+      ><a name="967"
+      > </a
+      ><a name="968" class="Symbol"
+      >&#8594;</a
+      ><a name="969"
+      > </a
+      ><a name="970" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="974"
+      > </a
+      ><a name="975" href="cw.Attached.html#941" class="Bound"
+      >l</a
+      ><a name="976" class="Symbol"
+      >}</a
+      ><a name="977"
+      >
+    </a
+      ><a name="982" class="Symbol"
+      >(</a
+      ><a name="983" href="cw.Attached.html#983" class="Bound"
+      >incl*</a
+      ><a name="988"
+      > </a
+      ><a name="989" class="Symbol"
+      >:</a
+      ><a name="990"
+      > </a
+      ><a name="991" class="Symbol"
+      >(</a
+      ><a name="992" href="cw.Attached.html#992" class="Bound"
+      >a</a
+      ><a name="993"
+      > </a
+      ><a name="994" class="Symbol"
+      >:</a
+      ><a name="995"
+      > </a
+      ><a name="996" href="cw.Attached.html#680" class="Bound"
+      >A</a
+      ><a name="997" class="Symbol"
+      >)</a
+      ><a name="998"
+      > </a
+      ><a name="999" class="Symbol"
+      >&#8594;</a
+      ><a name="1000"
+      > </a
+      ><a name="1001" href="cw.Attached.html#945" class="Bound"
+      >P</a
+      ><a name="1002"
+      > </a
+      ><a name="1003" class="Symbol"
+      >(</a
+      ><a name="1004" href="cw.Attached.html#757" class="Function"
+      >incl</a
+      ><a name="1008"
+      > </a
+      ><a name="1009" href="cw.Attached.html#992" class="Bound"
+      >a</a
+      ><a name="1010" class="Symbol"
+      >))</a
+      ><a name="1012"
+      >
+    </a
+      ><a name="1017" class="Symbol"
+      >(</a
+      ><a name="1018" href="cw.Attached.html#1018" class="Bound"
+      >hub*</a
+      ><a name="1022"
+      > </a
+      ><a name="1023" class="Symbol"
+      >:</a
+      ><a name="1024"
+      > </a
+      ><a name="1025" class="Symbol"
+      >(</a
+      ><a name="1026" href="cw.Attached.html#1026" class="Bound"
+      >b</a
+      ><a name="1027"
+      > </a
+      ><a name="1028" class="Symbol"
+      >:</a
+      ><a name="1029"
+      > </a
+      ><a name="1030" href="cw.Attached.html#693" class="Bound"
+      >B</a
+      ><a name="1031" class="Symbol"
+      >)</a
+      ><a name="1032"
+      > </a
+      ><a name="1033" class="Symbol"
+      >&#8594;</a
+      ><a name="1034"
+      > </a
+      ><a name="1035" href="cw.Attached.html#945" class="Bound"
+      >P</a
+      ><a name="1036"
+      > </a
+      ><a name="1037" class="Symbol"
+      >(</a
+      ><a name="1038" href="cw.Attached.html#804" class="Function"
+      >hub</a
+      ><a name="1041"
+      > </a
+      ><a name="1042" href="cw.Attached.html#1026" class="Bound"
+      >b</a
+      ><a name="1043" class="Symbol"
+      >))</a
+      ><a name="1045"
+      >
+    </a
+      ><a name="1050" class="Symbol"
+      >(</a
+      ><a name="1051" href="cw.Attached.html#1051" class="Bound"
+      >spoke*</a
+      ><a name="1057"
+      > </a
+      ><a name="1058" class="Symbol"
+      >:</a
+      ><a name="1059"
+      > </a
+      ><a name="1060" class="Symbol"
+      >(</a
+      ><a name="1061" href="cw.Attached.html#1061" class="Bound"
+      >b</a
+      ><a name="1062"
+      > </a
+      ><a name="1063" class="Symbol"
+      >:</a
+      ><a name="1064"
+      > </a
+      ><a name="1065" href="cw.Attached.html#693" class="Bound"
+      >B</a
+      ><a name="1066" class="Symbol"
+      >)</a
+      ><a name="1067"
+      > </a
+      ><a name="1068" class="Symbol"
+      >(</a
+      ><a name="1069" href="cw.Attached.html#1069" class="Bound"
+      >c</a
+      ><a name="1070"
+      > </a
+      ><a name="1071" class="Symbol"
+      >:</a
+      ><a name="1072"
+      > </a
+      ><a name="1073" href="cw.Attached.html#706" class="Bound"
+      >C</a
+      ><a name="1074" class="Symbol"
+      >)</a
+      ><a name="1075"
+      >
+      </a
+      ><a name="1082" class="Symbol"
+      >&#8594;</a
+      ><a name="1083"
+      > </a
+      ><a name="1084" href="cw.Attached.html#983" class="Bound"
+      >incl*</a
+      ><a name="1089"
+      > </a
+      ><a name="1090" class="Symbol"
+      >(</a
+      ><a name="1091" href="cw.Attached.html#719" class="Bound"
+      >attaching</a
+      ><a name="1100"
+      > </a
+      ><a name="1101" href="cw.Attached.html#1061" class="Bound"
+      >b</a
+      ><a name="1102"
+      > </a
+      ><a name="1103" href="cw.Attached.html#1069" class="Bound"
+      >c</a
+      ><a name="1104" class="Symbol"
+      >)</a
+      ><a name="1105"
+      > </a
+      ><a name="1106" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="1108"
+      > </a
+      ><a name="1109" href="cw.Attached.html#1018" class="Bound"
+      >hub*</a
+      ><a name="1113"
+      > </a
+      ><a name="1114" href="cw.Attached.html#1061" class="Bound"
+      >b</a
+      ><a name="1115"
+      > </a
+      ><a name="1116" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="1117"
+      > </a
+      ><a name="1118" href="cw.Attached.html#945" class="Bound"
+      >P</a
+      ><a name="1119"
+      > </a
+      ><a name="1120" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="1121"
+      > </a
+      ><a name="1122" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="1127"
+      > </a
+      ><a name="1128" href="cw.Attached.html#1061" class="Bound"
+      >b</a
+      ><a name="1129"
+      > </a
+      ><a name="1130" href="cw.Attached.html#1069" class="Bound"
+      >c</a
+      ><a name="1131"
+      > </a
+      ><a name="1132" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="1133" class="Symbol"
+      >)</a
+      ><a name="1134"
+      > </a
+      ><a name="1135" class="Keyword"
+      >where</a
+      ><a name="1140"
+      >
+
+    </a
+      ><a name="1146" class="Keyword"
+      >module</a
+      ><a name="1152"
+      > </a
+      ><a name="1153" href="cw.Attached.html#1153" class="Module"
+      >P</a
+      ><a name="1154"
+      > </a
+      ><a name="1155" class="Symbol"
+      >=</a
+      ><a name="1156"
+      > </a
+      ><a name="1157" href="lib.types.Pushout.html#589" class="Module"
+      >PushoutElim</a
+      ><a name="1168"
+      >
+      </a
+      ><a name="1175" class="Symbol"
+      >{</a
+      ><a name="1176" class="Argument"
+      >d</a
+      ><a name="1177"
+      > </a
+      ><a name="1178" class="Symbol"
+      >=</a
+      ><a name="1179"
+      > </a
+      ><a name="1180" href="cw.Attached.html#428" class="Function"
+      >attached-span</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" href="cw.Attached.html#719" class="Bound"
+      >attaching</a
+      ><a name="1203" class="Symbol"
+      >}</a
+      ><a name="1204"
+      > </a
+      ><a name="1205" class="Symbol"
+      >{</a
+      ><a name="1206" class="Argument"
+      >P</a
+      ><a name="1207"
+      > </a
+      ><a name="1208" class="Symbol"
+      >=</a
+      ><a name="1209"
+      > </a
+      ><a name="1210" href="cw.Attached.html#945" class="Bound"
+      >P</a
+      ><a name="1211" class="Symbol"
+      >}</a
+      ><a name="1212"
+      >
+      </a
+      ><a name="1219" href="cw.Attached.html#983" class="Bound"
+      >incl*</a
+      ><a name="1224"
+      > </a
+      ><a name="1225" href="cw.Attached.html#1018" class="Bound"
+      >hub*</a
+      ><a name="1229"
+      > </a
+      ><a name="1230" class="Symbol"
+      >(</a
+      ><a name="1231" href="lib.Base.html#8582" class="Function"
+      >uncurry</a
+      ><a name="1238"
+      > </a
+      ><a name="1239" href="cw.Attached.html#1051" class="Bound"
+      >spoke*</a
+      ><a name="1245" class="Symbol"
+      >)</a
+      ><a name="1246"
+      >
+
+    </a
+      ><a name="1252" href="cw.Attached.html#1252" class="Function"
+      >f</a
+      ><a name="1253"
+      > </a
+      ><a name="1254" class="Symbol"
+      >=</a
+      ><a name="1255"
+      > </a
+      ><a name="1256" href="lib.types.Pushout.html#850" class="Function"
+      >P.f</a
+      ><a name="1259"
+      >
+    </a
+      ><a name="1264" href="cw.Attached.html#1264" class="Function"
+      >spoke-&#946;</a
+      ><a name="1271"
+      > </a
+      ><a name="1272" class="Symbol"
+      >=</a
+      ><a name="1273"
+      > </a
+      ><a name="1274" href="lib.Base.html#8450" class="Function"
+      >curry</a
+      ><a name="1279"
+      > </a
+      ><a name="1280" href="lib.types.Pushout.html#1041" class="Function"
+      >P.glue-&#946;</a
+      ><a name="1288"
+      >
+
+  </a
+      ><a name="1292" class="Keyword"
+      >open</a
+      ><a name="1296"
+      > </a
+      ><a name="1297" href="cw.Attached.html#927" class="Module"
+      >AttachedElim</a
+      ><a name="1309"
+      > </a
+      ><a name="1310" class="Keyword"
+      >public</a
+      ><a name="1316"
+      > </a
+      ><a name="1317" class="Keyword"
+      >using</a
+      ><a name="1322"
+      > </a
+      ><a name="1323" class="Symbol"
+      >()</a
+      ><a name="1325"
+      > </a
+      ><a name="1326" class="Keyword"
+      >renaming</a
+      ><a name="1334"
+      > </a
+      ><a name="1335" class="Symbol"
+      >(</a
+      ><a name="1336" href="cw.Attached.html#1252" class="Function"
+      >f</a
+      ><a name="1337"
+      > </a
+      ><a name="1338" class="Symbol"
+      >to</a
+      ><a name="1340"
+      > </a
+      ><a name="1341" href="cw.Attached.html#1252" class="Function"
+      >Attached-elim</a
+      ><a name="1354" class="Symbol"
+      >)</a
+      ><a name="1355"
+      >
+
+  </a
+      ><a name="1359" class="Keyword"
+      >module</a
+      ><a name="1365"
+      > </a
+      ><a name="1366" href="cw.Attached.html#1366" class="Module"
+      >AttachedRec</a
+      ><a name="1377"
+      > </a
+      ><a name="1378" class="Symbol"
+      >{</a
+      ><a name="1379" href="cw.Attached.html#1379" class="Bound"
+      >l</a
+      ><a name="1380" class="Symbol"
+      >}</a
+      ><a name="1381"
+      > </a
+      ><a name="1382" class="Symbol"
+      >{</a
+      ><a name="1383" href="cw.Attached.html#1383" class="Bound"
+      >D</a
+      ><a name="1384"
+      > </a
+      ><a name="1385" class="Symbol"
+      >:</a
+      ><a name="1386"
+      > </a
+      ><a name="1387" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1391"
+      > </a
+      ><a name="1392" href="cw.Attached.html#1379" class="Bound"
+      >l</a
+      ><a name="1393" class="Symbol"
+      >}</a
+      ><a name="1394"
+      >
+    </a
+      ><a name="1399" class="Symbol"
+      >(</a
+      ><a name="1400" href="cw.Attached.html#1400" class="Bound"
+      >incl*</a
+      ><a name="1405"
+      > </a
+      ><a name="1406" class="Symbol"
+      >:</a
+      ><a name="1407"
+      > </a
+      ><a name="1408" class="Symbol"
+      >(</a
+      ><a name="1409" href="cw.Attached.html#1409" class="Bound"
+      >a</a
+      ><a name="1410"
+      > </a
+      ><a name="1411" class="Symbol"
+      >:</a
+      ><a name="1412"
+      > </a
+      ><a name="1413" href="cw.Attached.html#680" class="Bound"
+      >A</a
+      ><a name="1414" class="Symbol"
+      >)</a
+      ><a name="1415"
+      > </a
+      ><a name="1416" class="Symbol"
+      >&#8594;</a
+      ><a name="1417"
+      > </a
+      ><a name="1418" href="cw.Attached.html#1383" class="Bound"
+      >D</a
+      ><a name="1419" class="Symbol"
+      >)</a
+      ><a name="1420"
+      >
+    </a
+      ><a name="1425" class="Symbol"
+      >(</a
+      ><a name="1426" href="cw.Attached.html#1426" class="Bound"
+      >hub*</a
+      ><a name="1430"
+      > </a
+      ><a name="1431" class="Symbol"
+      >:</a
+      ><a name="1432"
+      > </a
+      ><a name="1433" class="Symbol"
+      >(</a
+      ><a name="1434" href="cw.Attached.html#1434" class="Bound"
+      >b</a
+      ><a name="1435"
+      > </a
+      ><a name="1436" class="Symbol"
+      >:</a
+      ><a name="1437"
+      > </a
+      ><a name="1438" href="cw.Attached.html#693" class="Bound"
+      >B</a
+      ><a name="1439" class="Symbol"
+      >)</a
+      ><a name="1440"
+      > </a
+      ><a name="1441" class="Symbol"
+      >&#8594;</a
+      ><a name="1442"
+      > </a
+      ><a name="1443" href="cw.Attached.html#1383" class="Bound"
+      >D</a
+      ><a name="1444" class="Symbol"
+      >)</a
+      ><a name="1445"
+      >
+    </a
+      ><a name="1450" class="Symbol"
+      >(</a
+      ><a name="1451" href="cw.Attached.html#1451" class="Bound"
+      >spoke*</a
+      ><a name="1457"
+      > </a
+      ><a name="1458" class="Symbol"
+      >:</a
+      ><a name="1459"
+      > </a
+      ><a name="1460" class="Symbol"
+      >(</a
+      ><a name="1461" href="cw.Attached.html#1461" class="Bound"
+      >b</a
+      ><a name="1462"
+      > </a
+      ><a name="1463" class="Symbol"
+      >:</a
+      ><a name="1464"
+      > </a
+      ><a name="1465" href="cw.Attached.html#693" class="Bound"
+      >B</a
+      ><a name="1466" class="Symbol"
+      >)</a
+      ><a name="1467"
+      > </a
+      ><a name="1468" class="Symbol"
+      >(</a
+      ><a name="1469" href="cw.Attached.html#1469" class="Bound"
+      >c</a
+      ><a name="1470"
+      > </a
+      ><a name="1471" class="Symbol"
+      >:</a
+      ><a name="1472"
+      > </a
+      ><a name="1473" href="cw.Attached.html#706" class="Bound"
+      >C</a
+      ><a name="1474" class="Symbol"
+      >)</a
+      ><a name="1475"
+      > </a
+      ><a name="1476" class="Symbol"
+      >&#8594;</a
+      ><a name="1477"
+      > </a
+      ><a name="1478" href="cw.Attached.html#1400" class="Bound"
+      >incl*</a
+      ><a name="1483"
+      > </a
+      ><a name="1484" class="Symbol"
+      >(</a
+      ><a name="1485" href="cw.Attached.html#719" class="Bound"
+      >attaching</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" href="cw.Attached.html#1461" class="Bound"
+      >b</a
+      ><a name="1496"
+      > </a
+      ><a name="1497" href="cw.Attached.html#1469" class="Bound"
+      >c</a
+      ><a name="1498" class="Symbol"
+      >)</a
+      ><a name="1499"
+      > </a
+      ><a name="1500" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1502"
+      > </a
+      ><a name="1503" href="cw.Attached.html#1426" class="Bound"
+      >hub*</a
+      ><a name="1507"
+      > </a
+      ><a name="1508" href="cw.Attached.html#1461" class="Bound"
+      >b</a
+      ><a name="1509" class="Symbol"
+      >)</a
+      ><a name="1510"
+      > </a
+      ><a name="1511" class="Keyword"
+      >where</a
+      ><a name="1516"
+      >
+
+    </a
+      ><a name="1522" class="Keyword"
+      >module</a
+      ><a name="1528"
+      > </a
+      ><a name="1529" href="cw.Attached.html#1529" class="Module"
+      >P</a
+      ><a name="1530"
+      > </a
+      ><a name="1531" class="Symbol"
+      >=</a
+      ><a name="1532"
+      > </a
+      ><a name="1533" href="lib.types.Pushout.html#1131" class="Module"
+      >PushoutRec</a
+      ><a name="1543"
+      >
+      </a
+      ><a name="1550" class="Symbol"
+      >{</a
+      ><a name="1551" class="Argument"
+      >d</a
+      ><a name="1552"
+      > </a
+      ><a name="1553" class="Symbol"
+      >=</a
+      ><a name="1554"
+      > </a
+      ><a name="1555" href="cw.Attached.html#428" class="Function"
+      >attached-span</a
+      ><a name="1568"
+      > </a
+      ><a name="1569" href="cw.Attached.html#719" class="Bound"
+      >attaching</a
+      ><a name="1578" class="Symbol"
+      >}</a
+      ><a name="1579"
+      > </a
+      ><a name="1580" class="Symbol"
+      >{</a
+      ><a name="1581" class="Argument"
+      >D</a
+      ><a name="1582"
+      > </a
+      ><a name="1583" class="Symbol"
+      >=</a
+      ><a name="1584"
+      > </a
+      ><a name="1585" href="cw.Attached.html#1383" class="Bound"
+      >D</a
+      ><a name="1586" class="Symbol"
+      >}</a
+      ><a name="1587"
+      >
+      </a
+      ><a name="1594" href="cw.Attached.html#1400" class="Bound"
+      >incl*</a
+      ><a name="1599"
+      > </a
+      ><a name="1600" href="cw.Attached.html#1426" class="Bound"
+      >hub*</a
+      ><a name="1604"
+      > </a
+      ><a name="1605" class="Symbol"
+      >(</a
+      ><a name="1606" href="lib.Base.html#8582" class="Function"
+      >uncurry</a
+      ><a name="1613"
+      > </a
+      ><a name="1614" href="cw.Attached.html#1451" class="Bound"
+      >spoke*</a
+      ><a name="1620" class="Symbol"
+      >)</a
+      ><a name="1621"
+      >
+
+    </a
+      ><a name="1627" href="cw.Attached.html#1627" class="Function"
+      >f</a
+      ><a name="1628"
+      > </a
+      ><a name="1629" class="Symbol"
+      >=</a
+      ><a name="1630"
+      > </a
+      ><a name="1631" href="lib.types.Pushout.html#1397" class="Function"
+      >P.f</a
+      ><a name="1634"
+      >
+    </a
+      ><a name="1639" href="cw.Attached.html#1639" class="Function"
+      >spoke-&#946;</a
+      ><a name="1646"
+      > </a
+      ><a name="1647" class="Symbol"
+      >=</a
+      ><a name="1648"
+      > </a
+      ><a name="1649" href="lib.Base.html#8450" class="Function"
+      >curry</a
+      ><a name="1654"
+      > </a
+      ><a name="1655" href="lib.types.Pushout.html#1428" class="Function"
+      >P.glue-&#946;</a
+      ><a name="1663"
+      >
+
+  </a
+      ><a name="1667" class="Keyword"
+      >open</a
+      ><a name="1671"
+      > </a
+      ><a name="1672" href="cw.Attached.html#1366" class="Module"
+      >AttachedRec</a
+      ><a name="1683"
+      > </a
+      ><a name="1684" class="Keyword"
+      >public</a
+      ><a name="1690"
+      > </a
+      ><a name="1691" class="Keyword"
+      >using</a
+      ><a name="1696"
+      > </a
+      ><a name="1697" class="Symbol"
+      >()</a
+      ><a name="1699"
+      > </a
+      ><a name="1700" class="Keyword"
+      >renaming</a
+      ><a name="1708"
+      > </a
+      ><a name="1709" class="Symbol"
+      >(</a
+      ><a name="1710" href="cw.Attached.html#1627" class="Function"
+      >f</a
+      ><a name="1711"
+      > </a
+      ><a name="1712" class="Symbol"
+      >to</a
+      ><a name="1714"
+      > </a
+      ><a name="1715" href="cw.Attached.html#1627" class="Function"
+      >Attached-rec</a
+      ><a name="1727" class="Symbol"
+      >)</a
+      ><a name="1728"
+      >
+
+</a
+      ></pre
+    ></body
+  ></html
+>

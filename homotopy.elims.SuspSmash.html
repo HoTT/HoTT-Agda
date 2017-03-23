@@ -1,0 +1,1934 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.elims.SuspSmash</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="homotopy.elims.Lemmas.html#1" class="Module"
+      >homotopy.elims.Lemmas</a
+      ><a name="92"
+      >
+</a
+      ><a name="93" class="Keyword"
+      >open</a
+      ><a name="97"
+      > </a
+      ><a name="98" class="Keyword"
+      >import</a
+      ><a name="104"
+      > </a
+      ><a name="105" href="homotopy.elims.CofPushoutSection.html#1" class="Module"
+      >homotopy.elims.CofPushoutSection</a
+      ><a name="137"
+      >
+
+</a
+      ><a name="139" class="Keyword"
+      >module</a
+      ><a name="145"
+      > </a
+      ><a name="146" href="homotopy.elims.SuspSmash.html#1" class="Module"
+      >homotopy.elims.SuspSmash</a
+      ><a name="170"
+      > </a
+      ><a name="171" class="Symbol"
+      >{</a
+      ><a name="172" href="homotopy.elims.SuspSmash.html#172" class="Bound"
+      >i</a
+      ><a name="173"
+      > </a
+      ><a name="174" href="homotopy.elims.SuspSmash.html#174" class="Bound"
+      >j</a
+      ><a name="175"
+      > </a
+      ><a name="176" href="homotopy.elims.SuspSmash.html#176" class="Bound"
+      >k</a
+      ><a name="177" class="Symbol"
+      >}</a
+      ><a name="178"
+      > </a
+      ><a name="179" class="Symbol"
+      >{</a
+      ><a name="180" href="homotopy.elims.SuspSmash.html#180" class="Bound"
+      >X</a
+      ><a name="181"
+      > </a
+      ><a name="182" class="Symbol"
+      >:</a
+      ><a name="183"
+      > </a
+      ><a name="184" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="187"
+      > </a
+      ><a name="188" href="homotopy.elims.SuspSmash.html#172" class="Bound"
+      >i</a
+      ><a name="189" class="Symbol"
+      >}</a
+      ><a name="190"
+      > </a
+      ><a name="191" class="Symbol"
+      >{</a
+      ><a name="192" href="homotopy.elims.SuspSmash.html#192" class="Bound"
+      >Y</a
+      ><a name="193"
+      > </a
+      ><a name="194" class="Symbol"
+      >:</a
+      ><a name="195"
+      > </a
+      ><a name="196" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="199"
+      > </a
+      ><a name="200" href="homotopy.elims.SuspSmash.html#174" class="Bound"
+      >j</a
+      ><a name="201" class="Symbol"
+      >}</a
+      ><a name="202"
+      >
+  </a
+      ><a name="205" class="Symbol"
+      >{</a
+      ><a name="206" href="homotopy.elims.SuspSmash.html#206" class="Bound"
+      >P</a
+      ><a name="207"
+      > </a
+      ><a name="208" class="Symbol"
+      >:</a
+      ><a name="209"
+      > </a
+      ><a name="210" href="lib.types.Suspension.html#658" class="Function"
+      >Susp</a
+      ><a name="214"
+      > </a
+      ><a name="215" class="Symbol"
+      >(</a
+      ><a name="216" href="homotopy.elims.SuspSmash.html#180" class="Bound"
+      >X</a
+      ><a name="217"
+      > </a
+      ><a name="218" href="lib.types.Smash.html#437" class="Function Operator"
+      >&#8743;</a
+      ><a name="219"
+      > </a
+      ><a name="220" href="homotopy.elims.SuspSmash.html#192" class="Bound"
+      >Y</a
+      ><a name="221" class="Symbol"
+      >)</a
+      ><a name="222"
+      > </a
+      ><a name="223" class="Symbol"
+      >&#8594;</a
+      ><a name="224"
+      > </a
+      ><a name="225" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="229"
+      > </a
+      ><a name="230" href="homotopy.elims.SuspSmash.html#176" class="Bound"
+      >k</a
+      ><a name="231" class="Symbol"
+      >}</a
+      ><a name="232"
+      >
+  </a
+      ><a name="235" class="Symbol"
+      >(</a
+      ><a name="236" href="homotopy.elims.SuspSmash.html#236" class="Bound"
+      >north*</a
+      ><a name="242"
+      > </a
+      ><a name="243" class="Symbol"
+      >:</a
+      ><a name="244"
+      > </a
+      ><a name="245" href="homotopy.elims.SuspSmash.html#206" class="Bound"
+      >P</a
+      ><a name="246"
+      > </a
+      ><a name="247" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="252" class="Symbol"
+      >)</a
+      ><a name="253"
+      > </a
+      ><a name="254" class="Symbol"
+      >(</a
+      ><a name="255" href="homotopy.elims.SuspSmash.html#255" class="Bound"
+      >south*</a
+      ><a name="261"
+      > </a
+      ><a name="262" class="Symbol"
+      >:</a
+      ><a name="263"
+      > </a
+      ><a name="264" href="homotopy.elims.SuspSmash.html#206" class="Bound"
+      >P</a
+      ><a name="265"
+      > </a
+      ><a name="266" href="lib.types.Suspension.html#895" class="Function"
+      >south</a
+      ><a name="271" class="Symbol"
+      >)</a
+      ><a name="272"
+      >
+  </a
+      ><a name="275" class="Symbol"
+      >(</a
+      ><a name="276" href="homotopy.elims.SuspSmash.html#276" class="Bound"
+      >cod*</a
+      ><a name="280"
+      > </a
+      ><a name="281" class="Symbol"
+      >:</a
+      ><a name="282"
+      > </a
+      ><a name="283" class="Symbol"
+      >(</a
+      ><a name="284" href="homotopy.elims.SuspSmash.html#284" class="Bound"
+      >s</a
+      ><a name="285"
+      > </a
+      ><a name="286" class="Symbol"
+      >:</a
+      ><a name="287"
+      > </a
+      ><a name="288" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="291"
+      > </a
+      ><a name="292" href="homotopy.elims.SuspSmash.html#180" class="Bound"
+      >X</a
+      ><a name="293"
+      > </a
+      ><a name="294" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="295"
+      > </a
+      ><a name="296" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="299"
+      > </a
+      ><a name="300" href="homotopy.elims.SuspSmash.html#192" class="Bound"
+      >Y</a
+      ><a name="301" class="Symbol"
+      >)</a
+      ><a name="302"
+      > </a
+      ><a name="303" class="Symbol"
+      >&#8594;</a
+      ><a name="304"
+      > </a
+      ><a name="305" href="homotopy.elims.SuspSmash.html#236" class="Bound"
+      >north*</a
+      ><a name="311"
+      > </a
+      ><a name="312" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="314"
+      > </a
+      ><a name="315" href="homotopy.elims.SuspSmash.html#255" class="Bound"
+      >south*</a
+      ><a name="321"
+      > </a
+      ><a name="322" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="323"
+      > </a
+      ><a name="324" href="homotopy.elims.SuspSmash.html#206" class="Bound"
+      >P</a
+      ><a name="325"
+      > </a
+      ><a name="326" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="327"
+      > </a
+      ><a name="328" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="333"
+      > </a
+      ><a name="334" class="Symbol"
+      >(</a
+      ><a name="335" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="340"
+      > </a
+      ><a name="341" href="homotopy.elims.SuspSmash.html#284" class="Bound"
+      >s</a
+      ><a name="342" class="Symbol"
+      >)</a
+      ><a name="343"
+      > </a
+      ><a name="344" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="345" class="Symbol"
+      >)</a
+      ><a name="346"
+      >
+  </a
+      ><a name="349" class="Keyword"
+      >where</a
+      ><a name="354"
+      >
+
+</a
+      ><a name="356" class="Keyword"
+      >private</a
+      ><a name="363"
+      >
+  </a
+      ><a name="366" href="homotopy.elims.SuspSmash.html#366" class="Function"
+      >base*</a
+      ><a name="371"
+      > </a
+      ><a name="372" class="Symbol"
+      >=</a
+      ><a name="373"
+      > </a
+      ><a name="374" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="383"
+      > </a
+      ><a name="384" class="Symbol"
+      >(&#955;</a
+      ><a name="386"
+      > </a
+      ><a name="387" href="homotopy.elims.SuspSmash.html#387" class="Bound"
+      >&#954;</a
+      ><a name="388"
+      > </a
+      ><a name="389" class="Symbol"
+      >&#8594;</a
+      ><a name="390"
+      > </a
+      ><a name="391" href="homotopy.elims.SuspSmash.html#236" class="Bound"
+      >north*</a
+      ><a name="397"
+      > </a
+      ><a name="398" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="400"
+      > </a
+      ><a name="401" href="homotopy.elims.SuspSmash.html#255" class="Bound"
+      >south*</a
+      ><a name="407"
+      > </a
+      ><a name="408" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="409"
+      > </a
+      ><a name="410" href="homotopy.elims.SuspSmash.html#206" class="Bound"
+      >P</a
+      ><a name="411"
+      > </a
+      ><a name="412" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="413"
+      > </a
+      ><a name="414" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="419"
+      > </a
+      ><a name="420" href="homotopy.elims.SuspSmash.html#387" class="Bound"
+      >&#954;</a
+      ><a name="421"
+      > </a
+      ><a name="422" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="423" class="Symbol"
+      >)</a
+      ><a name="424"
+      >
+    </a
+      ><a name="429" class="Symbol"
+      >(</a
+      ><a name="430" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="431"
+      > </a
+      ><a name="432" class="Symbol"
+      >(</a
+      ><a name="433" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="439"
+      > </a
+      ><a name="440" class="Symbol"
+      >(</a
+      ><a name="441" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="445"
+      > </a
+      ><a name="446" class="Symbol"
+      >(</a
+      ><a name="447" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="449"
+      > </a
+      ><a name="450" href="homotopy.elims.SuspSmash.html#180" class="Bound"
+      >X</a
+      ><a name="451" class="Symbol"
+      >))))</a
+      ><a name="455"
+      >
+    </a
+      ><a name="460" class="Symbol"
+      >(</a
+      ><a name="461" href="homotopy.elims.SuspSmash.html#276" class="Bound"
+      >cod*</a
+      ><a name="465"
+      > </a
+      ><a name="466" class="Symbol"
+      >(</a
+      ><a name="467" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="469"
+      > </a
+      ><a name="470" href="homotopy.elims.SuspSmash.html#180" class="Bound"
+      >X</a
+      ><a name="471"
+      > </a
+      ><a name="472" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="473"
+      > </a
+      ><a name="474" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="476"
+      > </a
+      ><a name="477" href="homotopy.elims.SuspSmash.html#192" class="Bound"
+      >Y</a
+      ><a name="478" class="Symbol"
+      >))</a
+      ><a name="480"
+      >
+
+  </a
+      ><a name="484" href="homotopy.elims.SuspSmash.html#484" class="Function"
+      >coh*</a
+      ><a name="488"
+      > </a
+      ><a name="489" class="Symbol"
+      >:</a
+      ><a name="490"
+      > </a
+      ><a name="491" class="Symbol"
+      >(</a
+      ><a name="492" href="homotopy.elims.SuspSmash.html#492" class="Bound"
+      >s</a
+      ><a name="493"
+      > </a
+      ><a name="494" class="Symbol"
+      >:</a
+      ><a name="495"
+      > </a
+      ><a name="496" href="homotopy.elims.SuspSmash.html#180" class="Bound"
+      >X</a
+      ><a name="497"
+      > </a
+      ><a name="498" href="lib.types.Smash.html#437" class="Function Operator"
+      >&#8743;</a
+      ><a name="499"
+      > </a
+      ><a name="500" href="homotopy.elims.SuspSmash.html#192" class="Bound"
+      >Y</a
+      ><a name="501" class="Symbol"
+      >)</a
+      ><a name="502"
+      > </a
+      ><a name="503" class="Symbol"
+      >&#8594;</a
+      ><a name="504"
+      > </a
+      ><a name="505" href="homotopy.elims.SuspSmash.html#236" class="Bound"
+      >north*</a
+      ><a name="511"
+      > </a
+      ><a name="512" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="514"
+      > </a
+      ><a name="515" href="homotopy.elims.SuspSmash.html#255" class="Bound"
+      >south*</a
+      ><a name="521"
+      > </a
+      ><a name="522" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="523"
+      > </a
+      ><a name="524" href="homotopy.elims.SuspSmash.html#206" class="Bound"
+      >P</a
+      ><a name="525"
+      > </a
+      ><a name="526" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="527"
+      > </a
+      ><a name="528" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="533"
+      > </a
+      ><a name="534" href="homotopy.elims.SuspSmash.html#492" class="Bound"
+      >s</a
+      ><a name="535"
+      > </a
+      ><a name="536" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="537"
+      >
+  </a
+      ><a name="540" href="homotopy.elims.SuspSmash.html#484" class="Function"
+      >coh*</a
+      ><a name="544"
+      > </a
+      ><a name="545" class="Symbol"
+      >=</a
+      ><a name="546"
+      > </a
+      ><a name="547" href="homotopy.elims.CofPushoutSection.html#969" class="Function"
+      >CofPushoutSection.elim</a
+      ><a name="569"
+      > </a
+      ><a name="570" class="Symbol"
+      >(&#955;</a
+      ><a name="572"
+      > </a
+      ><a name="573" href="homotopy.elims.SuspSmash.html#573" class="Bound"
+      >_</a
+      ><a name="574"
+      > </a
+      ><a name="575" class="Symbol"
+      >&#8594;</a
+      ><a name="576"
+      > </a
+      ><a name="577" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="579" class="Symbol"
+      >)</a
+      ><a name="580"
+      > </a
+      ><a name="581" class="Symbol"
+      >(&#955;</a
+      ><a name="583"
+      > </a
+      ><a name="584" href="homotopy.elims.SuspSmash.html#584" class="Bound"
+      >_</a
+      ><a name="585"
+      > </a
+      ><a name="586" class="Symbol"
+      >&#8594;</a
+      ><a name="587"
+      > </a
+      ><a name="588" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="591" class="Symbol"
+      >)</a
+      ><a name="592"
+      >
+    </a
+      ><a name="597" href="homotopy.elims.SuspSmash.html#366" class="Function"
+      >base*</a
+      ><a name="602"
+      >
+    </a
+      ><a name="607" class="Symbol"
+      >(&#955;</a
+      ><a name="609"
+      > </a
+      ><a name="610" class="Symbol"
+      >{(</a
+      ><a name="612" href="homotopy.elims.SuspSmash.html#612" class="Bound"
+      >x</a
+      ><a name="613"
+      > </a
+      ><a name="614" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="615"
+      > </a
+      ><a name="616" href="homotopy.elims.SuspSmash.html#616" class="Bound"
+      >y</a
+      ><a name="617" class="Symbol"
+      >)</a
+      ><a name="618"
+      > </a
+      ><a name="619" class="Symbol"
+      >&#8594;</a
+      ><a name="620"
+      >
+      </a
+      ><a name="627" class="Symbol"
+      >(</a
+      ><a name="628" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="631"
+      > </a
+      ><a name="632" class="Symbol"
+      >(</a
+      ><a name="633" href="homotopy.elims.SuspSmash.html#1519" class="Function"
+      >fillX</a
+      ><a name="638"
+      > </a
+      ><a name="639" href="homotopy.elims.SuspSmash.html#612" class="Bound"
+      >x</a
+      ><a name="640" class="Symbol"
+      >)</a
+      ><a name="641"
+      > </a
+      ><a name="642" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="643"
+      > </a
+      ><a name="644" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="647"
+      > </a
+      ><a name="648" class="Symbol"
+      >(</a
+      ><a name="649" href="homotopy.elims.SuspSmash.html#1587" class="Function"
+      >fillY</a
+      ><a name="654"
+      > </a
+      ><a name="655" href="homotopy.elims.SuspSmash.html#616" class="Bound"
+      >y</a
+      ><a name="656" class="Symbol"
+      >))</a
+      ><a name="658"
+      > </a
+      ><a name="659" href="lib.PathGroupoid.html#4673" class="Function Operator"
+      >&#9667;</a
+      ><a name="660"
+      > </a
+      ><a name="661" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="664"
+      > </a
+      ><a name="665" href="homotopy.elims.SuspSmash.html#1461" class="Function"
+      >fill0</a
+      ><a name="670"
+      > </a
+      ><a name="671" href="lib.PathGroupoid.html#4673" class="Function Operator"
+      >&#9667;</a
+      ><a name="672"
+      > </a
+      ><a name="673" href="homotopy.elims.SuspSmash.html#276" class="Bound"
+      >cod*</a
+      ><a name="677"
+      > </a
+      ><a name="678" class="Symbol"
+      >(</a
+      ><a name="679" href="homotopy.elims.SuspSmash.html#612" class="Bound"
+      >x</a
+      ><a name="680"
+      > </a
+      ><a name="681" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="682"
+      > </a
+      ><a name="683" href="homotopy.elims.SuspSmash.html#616" class="Bound"
+      >y</a
+      ><a name="684" class="Symbol"
+      >)})</a
+      ><a name="687"
+      >
+    </a
+      ><a name="692" class="Symbol"
+      >(</a
+      ><a name="693" href="lib.cubical.SquareOver.html#1887" class="Function"
+      >&#8595;&#8595;-from-squareover</a
+      ><a name="711"
+      > </a
+      ><a name="712" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="713"
+      > </a
+      ><a name="714" class="Symbol"
+      >&#955;</a
+      ><a name="715"
+      > </a
+      ><a name="716" href="homotopy.elims.SuspSmash.html#716" class="Bound"
+      >x</a
+      ><a name="717"
+      > </a
+      ><a name="718" class="Symbol"
+      >&#8594;</a
+      ><a name="719"
+      >
+      </a
+      ><a name="726" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="729"
+      > </a
+      ><a name="730" class="Symbol"
+      >(</a
+      ><a name="731" href="homotopy.elims.SuspSmash.html#1519" class="Function"
+      >fillX</a
+      ><a name="736"
+      > </a
+      ><a name="737" href="homotopy.elims.SuspSmash.html#716" class="Bound"
+      >x</a
+      ><a name="738" class="Symbol"
+      >)</a
+      ><a name="739"
+      > </a
+      ><a name="740" href="lib.cubical.SquareOver.html#4756" class="Function Operator"
+      >&#8595;&#8865;h&#8729;</a
+      ><a name="744"
+      >
+      </a
+      ><a name="751" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="753"
+      > </a
+      ><a name="754" class="Symbol"
+      >(&#955;</a
+      ><a name="756"
+      > </a
+      ><a name="757" href="homotopy.elims.SuspSmash.html#757" class="Bound"
+      >p</a
+      ><a name="758"
+      > </a
+      ><a name="759" class="Symbol"
+      >&#8594;</a
+      ><a name="760"
+      > </a
+      ><a name="761" href="homotopy.elims.SuspSmash.html#757" class="Bound"
+      >p</a
+      ><a name="762"
+      > </a
+      ><a name="763" href="lib.PathGroupoid.html#4673" class="Function Operator"
+      >&#9667;</a
+      ><a name="764"
+      > </a
+      ><a name="765" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="768"
+      > </a
+      ><a name="769" href="homotopy.elims.SuspSmash.html#1461" class="Function"
+      >fill0</a
+      ><a name="774"
+      > </a
+      ><a name="775" href="lib.PathGroupoid.html#4673" class="Function Operator"
+      >&#9667;</a
+      ><a name="776"
+      > </a
+      ><a name="777" href="homotopy.elims.SuspSmash.html#276" class="Bound"
+      >cod*</a
+      ><a name="781"
+      > </a
+      ><a name="782" class="Symbol"
+      >(</a
+      ><a name="783" href="homotopy.elims.SuspSmash.html#716" class="Bound"
+      >x</a
+      ><a name="784"
+      > </a
+      ><a name="785" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="786"
+      > </a
+      ><a name="787" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="789"
+      > </a
+      ><a name="790" href="homotopy.elims.SuspSmash.html#192" class="Bound"
+      >Y</a
+      ><a name="791" class="Symbol"
+      >))</a
+      ><a name="793"
+      >
+         </a
+      ><a name="803" class="Symbol"
+      >(</a
+      ><a name="804" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="805"
+      > </a
+      ><a name="806" class="Symbol"
+      >(</a
+      ><a name="807" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="809"
+      > </a
+      ><a name="810" class="Symbol"
+      >(&#955;</a
+      ><a name="812"
+      > </a
+      ><a name="813" href="homotopy.elims.SuspSmash.html#813" class="Bound"
+      >q</a
+      ><a name="814"
+      > </a
+      ><a name="815" class="Symbol"
+      >&#8594;</a
+      ><a name="816"
+      > </a
+      ><a name="817" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="820"
+      > </a
+      ><a name="821" class="Symbol"
+      >(</a
+      ><a name="822" href="homotopy.elims.SuspSmash.html#1519" class="Function"
+      >fillX</a
+      ><a name="827"
+      > </a
+      ><a name="828" href="homotopy.elims.SuspSmash.html#716" class="Bound"
+      >x</a
+      ><a name="829" class="Symbol"
+      >)</a
+      ><a name="830"
+      > </a
+      ><a name="831" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="832"
+      > </a
+      ><a name="833" href="homotopy.elims.SuspSmash.html#813" class="Bound"
+      >q</a
+      ><a name="834" class="Symbol"
+      >)</a
+      ><a name="835"
+      > </a
+      ><a name="836" href="homotopy.elims.SuspSmash.html#1795" class="Function"
+      >fillY-lemma</a
+      ><a name="847"
+      > </a
+      ><a name="848" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="849"
+      > </a
+      ><a name="850" href="lib.PathGroupoid.html#1041" class="Function"
+      >&#8729;-unit-r</a
+      ><a name="858"
+      > </a
+      ><a name="859" class="Symbol"
+      >_)))</a
+      ><a name="863"
+      >
+    </a
+      ><a name="868" class="Symbol"
+      >(</a
+      ><a name="869" href="lib.cubical.SquareOver.html#1887" class="Function"
+      >&#8595;&#8595;-from-squareover</a
+      ><a name="887"
+      > </a
+      ><a name="888" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="889"
+      > </a
+      ><a name="890" class="Symbol"
+      >&#955;</a
+      ><a name="891"
+      > </a
+      ><a name="892" href="homotopy.elims.SuspSmash.html#892" class="Bound"
+      >y</a
+      ><a name="893"
+      > </a
+      ><a name="894" class="Symbol"
+      >&#8594;</a
+      ><a name="895"
+      >
+      </a
+      ><a name="902" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="905"
+      > </a
+      ><a name="906" class="Symbol"
+      >(</a
+      ><a name="907" href="homotopy.elims.SuspSmash.html#1587" class="Function"
+      >fillY</a
+      ><a name="912"
+      > </a
+      ><a name="913" href="homotopy.elims.SuspSmash.html#892" class="Bound"
+      >y</a
+      ><a name="914" class="Symbol"
+      >)</a
+      ><a name="915"
+      > </a
+      ><a name="916" href="lib.cubical.SquareOver.html#4756" class="Function Operator"
+      >&#8595;&#8865;h&#8729;</a
+      ><a name="920"
+      >
+      </a
+      ><a name="927" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="929"
+      > </a
+      ><a name="930" class="Symbol"
+      >(&#955;</a
+      ><a name="932"
+      > </a
+      ><a name="933" href="homotopy.elims.SuspSmash.html#933" class="Bound"
+      >p</a
+      ><a name="934"
+      > </a
+      ><a name="935" class="Symbol"
+      >&#8594;</a
+      ><a name="936"
+      > </a
+      ><a name="937" href="homotopy.elims.SuspSmash.html#933" class="Bound"
+      >p</a
+      ><a name="938"
+      > </a
+      ><a name="939" href="lib.PathGroupoid.html#4673" class="Function Operator"
+      >&#9667;</a
+      ><a name="940"
+      > </a
+      ><a name="941" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="944"
+      > </a
+      ><a name="945" href="homotopy.elims.SuspSmash.html#1461" class="Function"
+      >fill0</a
+      ><a name="950"
+      > </a
+      ><a name="951" href="lib.PathGroupoid.html#4673" class="Function Operator"
+      >&#9667;</a
+      ><a name="952"
+      > </a
+      ><a name="953" href="homotopy.elims.SuspSmash.html#276" class="Bound"
+      >cod*</a
+      ><a name="957"
+      > </a
+      ><a name="958" class="Symbol"
+      >(</a
+      ><a name="959" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="961"
+      > </a
+      ><a name="962" href="homotopy.elims.SuspSmash.html#180" class="Bound"
+      >X</a
+      ><a name="963"
+      > </a
+      ><a name="964" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="965"
+      > </a
+      ><a name="966" href="homotopy.elims.SuspSmash.html#892" class="Bound"
+      >y</a
+      ><a name="967" class="Symbol"
+      >))</a
+      ><a name="969"
+      >
+         </a
+      ><a name="979" class="Symbol"
+      >(</a
+      ><a name="980" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="981"
+      > </a
+      ><a name="982" class="Symbol"
+      >(</a
+      ><a name="983" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="985"
+      > </a
+      ><a name="986" class="Symbol"
+      >(&#955;</a
+      ><a name="988"
+      > </a
+      ><a name="989" href="homotopy.elims.SuspSmash.html#989" class="Bound"
+      >q</a
+      ><a name="990"
+      > </a
+      ><a name="991" class="Symbol"
+      >&#8594;</a
+      ><a name="992"
+      > </a
+      ><a name="993" href="homotopy.elims.SuspSmash.html#989" class="Bound"
+      >q</a
+      ><a name="994"
+      > </a
+      ><a name="995" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="996"
+      > </a
+      ><a name="997" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1000"
+      > </a
+      ><a name="1001" class="Symbol"
+      >(</a
+      ><a name="1002" href="homotopy.elims.SuspSmash.html#1587" class="Function"
+      >fillY</a
+      ><a name="1007"
+      > </a
+      ><a name="1008" href="homotopy.elims.SuspSmash.html#892" class="Bound"
+      >y</a
+      ><a name="1009" class="Symbol"
+      >))</a
+      ><a name="1011"
+      > </a
+      ><a name="1012" href="homotopy.elims.SuspSmash.html#1656" class="Function"
+      >fillX-lemma</a
+      ><a name="1023" class="Symbol"
+      >)))</a
+      ><a name="1026"
+      >
+    </a
+      ><a name="1031" class="Keyword"
+      >where</a
+      ><a name="1036"
+      >
+    </a
+      ><a name="1041" href="homotopy.elims.SuspSmash.html#1041" class="Function"
+      >fill-lemma</a
+      ><a name="1051"
+      > </a
+      ><a name="1052" class="Symbol"
+      >:</a
+      ><a name="1053"
+      > </a
+      ><a name="1054" class="Symbol"
+      >(</a
+      ><a name="1055" href="homotopy.elims.SuspSmash.html#1055" class="Bound"
+      >w</a
+      ><a name="1056"
+      > </a
+      ><a name="1057" class="Symbol"
+      >:</a
+      ><a name="1058"
+      > </a
+      ><a name="1059" href="homotopy.elims.SuspSmash.html#180" class="Bound"
+      >X</a
+      ><a name="1060"
+      > </a
+      ><a name="1061" href="lib.types.Wedge.html#625" class="Function Operator"
+      >&#8744;</a
+      ><a name="1062"
+      > </a
+      ><a name="1063" href="homotopy.elims.SuspSmash.html#192" class="Bound"
+      >Y</a
+      ><a name="1064" class="Symbol"
+      >)</a
+      ><a name="1065"
+      >
+      </a
+      ><a name="1072" class="Symbol"
+      >(</a
+      ><a name="1073" href="homotopy.elims.SuspSmash.html#1073" class="Bound"
+      >&#945;</a
+      ><a name="1074"
+      > </a
+      ><a name="1075" class="Symbol"
+      >:</a
+      ><a name="1076"
+      > </a
+      ><a name="1077" href="homotopy.elims.SuspSmash.html#236" class="Bound"
+      >north*</a
+      ><a name="1083"
+      > </a
+      ><a name="1084" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="1086"
+      > </a
+      ><a name="1087" href="homotopy.elims.SuspSmash.html#255" class="Bound"
+      >south*</a
+      ><a name="1093"
+      > </a
+      ><a name="1094" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="1095"
+      > </a
+      ><a name="1096" href="homotopy.elims.SuspSmash.html#206" class="Bound"
+      >P</a
+      ><a name="1097"
+      > </a
+      ><a name="1098" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="1099"
+      > </a
+      ><a name="1100" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1105"
+      > </a
+      ><a name="1106" class="Symbol"
+      >(</a
+      ><a name="1107" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="1112"
+      > </a
+      ><a name="1113" class="Symbol"
+      >(</a
+      ><a name="1114" href="lib.types.Smash.html#296" class="Function"
+      >&#8744;-in-&#215;</a
+      ><a name="1120"
+      > </a
+      ><a name="1121" href="homotopy.elims.SuspSmash.html#180" class="Bound"
+      >X</a
+      ><a name="1122"
+      > </a
+      ><a name="1123" href="homotopy.elims.SuspSmash.html#192" class="Bound"
+      >Y</a
+      ><a name="1124"
+      > </a
+      ><a name="1125" href="homotopy.elims.SuspSmash.html#1055" class="Bound"
+      >w</a
+      ><a name="1126" class="Symbol"
+      >))</a
+      ><a name="1128"
+      > </a
+      ><a name="1129" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="1130" class="Symbol"
+      >)</a
+      ><a name="1131"
+      >
+      </a
+      ><a name="1138" class="Symbol"
+      >&#8594;</a
+      ><a name="1139"
+      > </a
+      ><a name="1140" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="1141"
+      > </a
+      ><a name="1142" class="Symbol"
+      >(</a
+      ><a name="1143" href="homotopy.elims.SuspSmash.html#236" class="Bound"
+      >north*</a
+      ><a name="1149"
+      > </a
+      ><a name="1150" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1152"
+      > </a
+      ><a name="1153" href="homotopy.elims.SuspSmash.html#236" class="Bound"
+      >north*</a
+      ><a name="1159" class="Symbol"
+      >)</a
+      ><a name="1160"
+      >
+          </a
+      ><a name="1171" class="Symbol"
+      >(&#955;</a
+      ><a name="1173"
+      > </a
+      ><a name="1174" href="homotopy.elims.SuspSmash.html#1174" class="Bound"
+      >p</a
+      ><a name="1175"
+      > </a
+      ><a name="1176" class="Symbol"
+      >&#8594;</a
+      ><a name="1177"
+      > </a
+      ><a name="1178" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" href="homotopy.elims.SuspSmash.html#206" class="Bound"
+      >P</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" class="Symbol"
+      >(</a
+      ><a name="1192" href="lib.cubical.Square.html#10785" class="Function"
+      >natural-square</a
+      ><a name="1206"
+      > </a
+      ><a name="1207" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1212"
+      > </a
+      ><a name="1213" class="Symbol"
+      >(</a
+      ><a name="1214" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="1220"
+      > </a
+      ><a name="1221" href="homotopy.elims.SuspSmash.html#1055" class="Bound"
+      >w</a
+      ><a name="1222" class="Symbol"
+      >))</a
+      ><a name="1224"
+      >
+                   </a
+      ><a name="1244" href="homotopy.elims.SuspSmash.html#366" class="Function"
+      >base*</a
+      ><a name="1249"
+      >
+                   </a
+      ><a name="1269" class="Symbol"
+      >(</a
+      ><a name="1270" href="lib.PathOver.html#4388" class="Function"
+      >&#8595;-ap-in</a
+      ><a name="1277"
+      > </a
+      ><a name="1278" class="Symbol"
+      >_</a
+      ><a name="1279"
+      > </a
+      ><a name="1280" class="Symbol"
+      >_</a
+      ><a name="1281"
+      > </a
+      ><a name="1282" class="Symbol"
+      >(</a
+      ><a name="1283" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1286"
+      > </a
+      ><a name="1287" class="Symbol"
+      >(&#955;</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" href="homotopy.elims.SuspSmash.html#1290" class="Bound"
+      >_</a
+      ><a name="1291"
+      > </a
+      ><a name="1292" class="Symbol"
+      >&#8594;</a
+      ><a name="1293"
+      > </a
+      ><a name="1294" href="homotopy.elims.SuspSmash.html#236" class="Bound"
+      >north*</a
+      ><a name="1300" class="Symbol"
+      >)</a
+      ><a name="1301"
+      > </a
+      ><a name="1302" class="Symbol"
+      >(</a
+      ><a name="1303" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="1309"
+      > </a
+      ><a name="1310" href="homotopy.elims.SuspSmash.html#1055" class="Bound"
+      >w</a
+      ><a name="1311" class="Symbol"
+      >)))</a
+      ><a name="1314"
+      >
+                   </a
+      ><a name="1334" class="Symbol"
+      >(</a
+      ><a name="1335" href="lib.PathOver.html#4388" class="Function"
+      >&#8595;-ap-in</a
+      ><a name="1342"
+      > </a
+      ><a name="1343" class="Symbol"
+      >_</a
+      ><a name="1344"
+      > </a
+      ><a name="1345" class="Symbol"
+      >_</a
+      ><a name="1346"
+      > </a
+      ><a name="1347" class="Symbol"
+      >(</a
+      ><a name="1348" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1351"
+      > </a
+      ><a name="1352" class="Symbol"
+      >(&#955;</a
+      ><a name="1354"
+      > </a
+      ><a name="1355" href="homotopy.elims.SuspSmash.html#1355" class="Bound"
+      >_</a
+      ><a name="1356"
+      > </a
+      ><a name="1357" class="Symbol"
+      >&#8594;</a
+      ><a name="1358"
+      > </a
+      ><a name="1359" href="homotopy.elims.SuspSmash.html#255" class="Bound"
+      >south*</a
+      ><a name="1365" class="Symbol"
+      >)</a
+      ><a name="1366"
+      > </a
+      ><a name="1367" class="Symbol"
+      >(</a
+      ><a name="1368" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="1374"
+      > </a
+      ><a name="1375" href="homotopy.elims.SuspSmash.html#1055" class="Bound"
+      >w</a
+      ><a name="1376" class="Symbol"
+      >)))</a
+      ><a name="1379"
+      >
+                   </a
+      ><a name="1399" class="Symbol"
+      >(</a
+      ><a name="1400" href="homotopy.elims.SuspSmash.html#1174" class="Bound"
+      >p</a
+      ><a name="1401"
+      > </a
+      ><a name="1402" href="lib.PathGroupoid.html#4673" class="Function Operator"
+      >&#9667;</a
+      ><a name="1403"
+      > </a
+      ><a name="1404" href="homotopy.elims.SuspSmash.html#1073" class="Bound"
+      >&#945;</a
+      ><a name="1405" class="Symbol"
+      >))</a
+      ><a name="1407"
+      >
+    </a
+      ><a name="1412" href="homotopy.elims.SuspSmash.html#1041" class="Function"
+      >fill-lemma</a
+      ><a name="1422"
+      > </a
+      ><a name="1423" href="homotopy.elims.SuspSmash.html#1423" class="Bound"
+      >w</a
+      ><a name="1424"
+      > </a
+      ><a name="1425" href="homotopy.elims.SuspSmash.html#1425" class="Bound"
+      >&#945;</a
+      ><a name="1426"
+      > </a
+      ><a name="1427" class="Symbol"
+      >=</a
+      ><a name="1428"
+      > </a
+      ><a name="1429" href="homotopy.elims.Lemmas.html#96" class="Function"
+      >fill-upper-right</a
+      ><a name="1445"
+      > </a
+      ><a name="1446" class="Symbol"
+      >_</a
+      ><a name="1447"
+      > </a
+      ><a name="1448" class="Symbol"
+      >_</a
+      ><a name="1449"
+      > </a
+      ><a name="1450" class="Symbol"
+      >_</a
+      ><a name="1451"
+      > </a
+      ><a name="1452" class="Symbol"
+      >_</a
+      ><a name="1453"
+      > </a
+      ><a name="1454" class="Symbol"
+      >_</a
+      ><a name="1455"
+      >
+
+    </a
+      ><a name="1461" href="homotopy.elims.SuspSmash.html#1461" class="Function"
+      >fill0</a
+      ><a name="1466"
+      > </a
+      ><a name="1467" class="Symbol"
+      >=</a
+      ><a name="1468"
+      > </a
+      ><a name="1469" href="homotopy.elims.SuspSmash.html#1041" class="Function"
+      >fill-lemma</a
+      ><a name="1479"
+      > </a
+      ><a name="1480" class="Symbol"
+      >(</a
+      ><a name="1481" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="1485"
+      > </a
+      ><a name="1486" class="Symbol"
+      >(</a
+      ><a name="1487" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1489"
+      > </a
+      ><a name="1490" href="homotopy.elims.SuspSmash.html#180" class="Bound"
+      >X</a
+      ><a name="1491" class="Symbol"
+      >))</a
+      ><a name="1493"
+      > </a
+      ><a name="1494" class="Symbol"
+      >(</a
+      ><a name="1495" href="homotopy.elims.SuspSmash.html#276" class="Bound"
+      >cod*</a
+      ><a name="1499"
+      > </a
+      ><a name="1500" class="Symbol"
+      >(</a
+      ><a name="1501" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1503"
+      > </a
+      ><a name="1504" href="homotopy.elims.SuspSmash.html#180" class="Bound"
+      >X</a
+      ><a name="1505"
+      > </a
+      ><a name="1506" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1507"
+      > </a
+      ><a name="1508" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1510"
+      > </a
+      ><a name="1511" href="homotopy.elims.SuspSmash.html#192" class="Bound"
+      >Y</a
+      ><a name="1512" class="Symbol"
+      >))</a
+      ><a name="1514"
+      >
+    </a
+      ><a name="1519" href="homotopy.elims.SuspSmash.html#1519" class="Function"
+      >fillX</a
+      ><a name="1524"
+      > </a
+      ><a name="1525" class="Symbol"
+      >=</a
+      ><a name="1526"
+      > </a
+      ><a name="1527" class="Symbol"
+      >&#955;</a
+      ><a name="1528"
+      > </a
+      ><a name="1529" href="homotopy.elims.SuspSmash.html#1529" class="Bound"
+      >x</a
+      ><a name="1530"
+      > </a
+      ><a name="1531" class="Symbol"
+      >&#8594;</a
+      ><a name="1532"
+      > </a
+      ><a name="1533" href="homotopy.elims.SuspSmash.html#1041" class="Function"
+      >fill-lemma</a
+      ><a name="1543"
+      > </a
+      ><a name="1544" class="Symbol"
+      >(</a
+      ><a name="1545" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="1549"
+      > </a
+      ><a name="1550" href="homotopy.elims.SuspSmash.html#1529" class="Bound"
+      >x</a
+      ><a name="1551" class="Symbol"
+      >)</a
+      ><a name="1552"
+      > </a
+      ><a name="1553" class="Symbol"
+      >(</a
+      ><a name="1554" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1557"
+      > </a
+      ><a name="1558" href="homotopy.elims.SuspSmash.html#1461" class="Function"
+      >fill0</a
+      ><a name="1563"
+      > </a
+      ><a name="1564" href="lib.PathGroupoid.html#4673" class="Function Operator"
+      >&#9667;</a
+      ><a name="1565"
+      > </a
+      ><a name="1566" href="homotopy.elims.SuspSmash.html#276" class="Bound"
+      >cod*</a
+      ><a name="1570"
+      > </a
+      ><a name="1571" class="Symbol"
+      >(</a
+      ><a name="1572" href="homotopy.elims.SuspSmash.html#1529" class="Bound"
+      >x</a
+      ><a name="1573"
+      > </a
+      ><a name="1574" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1575"
+      > </a
+      ><a name="1576" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1578"
+      > </a
+      ><a name="1579" href="homotopy.elims.SuspSmash.html#192" class="Bound"
+      >Y</a
+      ><a name="1580" class="Symbol"
+      >))</a
+      ><a name="1582"
+      >
+    </a
+      ><a name="1587" href="homotopy.elims.SuspSmash.html#1587" class="Function"
+      >fillY</a
+      ><a name="1592"
+      > </a
+      ><a name="1593" class="Symbol"
+      >=</a
+      ><a name="1594"
+      > </a
+      ><a name="1595" class="Symbol"
+      >&#955;</a
+      ><a name="1596"
+      > </a
+      ><a name="1597" href="homotopy.elims.SuspSmash.html#1597" class="Bound"
+      >y</a
+      ><a name="1598"
+      > </a
+      ><a name="1599" class="Symbol"
+      >&#8594;</a
+      ><a name="1600"
+      > </a
+      ><a name="1601" href="homotopy.elims.SuspSmash.html#1041" class="Function"
+      >fill-lemma</a
+      ><a name="1611"
+      > </a
+      ><a name="1612" class="Symbol"
+      >(</a
+      ><a name="1613" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="1617"
+      > </a
+      ><a name="1618" href="homotopy.elims.SuspSmash.html#1597" class="Bound"
+      >y</a
+      ><a name="1619" class="Symbol"
+      >)</a
+      ><a name="1620"
+      > </a
+      ><a name="1621" class="Symbol"
+      >(</a
+      ><a name="1622" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1625"
+      > </a
+      ><a name="1626" href="homotopy.elims.SuspSmash.html#1461" class="Function"
+      >fill0</a
+      ><a name="1631"
+      > </a
+      ><a name="1632" href="lib.PathGroupoid.html#4673" class="Function Operator"
+      >&#9667;</a
+      ><a name="1633"
+      > </a
+      ><a name="1634" href="homotopy.elims.SuspSmash.html#276" class="Bound"
+      >cod*</a
+      ><a name="1638"
+      > </a
+      ><a name="1639" class="Symbol"
+      >(</a
+      ><a name="1640" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1642"
+      > </a
+      ><a name="1643" href="homotopy.elims.SuspSmash.html#180" class="Bound"
+      >X</a
+      ><a name="1644"
+      > </a
+      ><a name="1645" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1646"
+      > </a
+      ><a name="1647" href="homotopy.elims.SuspSmash.html#1597" class="Bound"
+      >y</a
+      ><a name="1648" class="Symbol"
+      >))</a
+      ><a name="1650"
+      >
+
+    </a
+      ><a name="1656" href="homotopy.elims.SuspSmash.html#1656" class="Function"
+      >fillX-lemma</a
+      ><a name="1667"
+      > </a
+      ><a name="1668" class="Symbol"
+      >:</a
+      ><a name="1669"
+      > </a
+      ><a name="1670" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1673"
+      > </a
+      ><a name="1674" class="Symbol"
+      >(</a
+      ><a name="1675" href="homotopy.elims.SuspSmash.html#1519" class="Function"
+      >fillX</a
+      ><a name="1680"
+      > </a
+      ><a name="1681" class="Symbol"
+      >(</a
+      ><a name="1682" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1684"
+      > </a
+      ><a name="1685" href="homotopy.elims.SuspSmash.html#180" class="Bound"
+      >X</a
+      ><a name="1686" class="Symbol"
+      >))</a
+      ><a name="1688"
+      > </a
+      ><a name="1689" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1691"
+      > </a
+      ><a name="1692" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1695"
+      >
+    </a
+      ><a name="1700" href="homotopy.elims.SuspSmash.html#1656" class="Function"
+      >fillX-lemma</a
+      ><a name="1711"
+      > </a
+      ><a name="1712" class="Symbol"
+      >=</a
+      ><a name="1713"
+      > </a
+      ><a name="1714" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1715"
+      > </a
+      ><a name="1716" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1717"
+      >
+      </a
+      ><a name="1724" href="homotopy.elims.Lemmas.html#603" class="Function"
+      >fill-upper-right-unique</a
+      ><a name="1747"
+      > </a
+      ><a name="1748" class="Symbol"
+      >_</a
+      ><a name="1749"
+      > </a
+      ><a name="1750" class="Symbol"
+      >_</a
+      ><a name="1751"
+      > </a
+      ><a name="1752" class="Symbol"
+      >_</a
+      ><a name="1753"
+      > </a
+      ><a name="1754" class="Symbol"
+      >_</a
+      ><a name="1755"
+      > </a
+      ><a name="1756" class="Symbol"
+      >_</a
+      ><a name="1757"
+      > </a
+      ><a name="1758" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1761"
+      > </a
+      ><a name="1762" class="Symbol"
+      >(</a
+      ><a name="1763" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" href="homotopy.elims.SuspSmash.html#1461" class="Function"
+      >fill0</a
+      ><a name="1772"
+      > </a
+      ><a name="1773" href="lib.cubical.SquareOver.html#4756" class="Function Operator"
+      >&#8595;&#8865;h&#8729;</a
+      ><a name="1777"
+      > </a
+      ><a name="1778" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1779"
+      > </a
+      ><a name="1780" class="Symbol"
+      >(</a
+      ><a name="1781" href="lib.PathGroupoid.html#4766" class="Function"
+      >idp&#9667;</a
+      ><a name="1785"
+      > </a
+      ><a name="1786" class="Symbol"
+      >_))</a
+      ><a name="1789"
+      >
+
+    </a
+      ><a name="1795" href="homotopy.elims.SuspSmash.html#1795" class="Function"
+      >fillY-lemma</a
+      ><a name="1806"
+      > </a
+      ><a name="1807" class="Symbol"
+      >:</a
+      ><a name="1808"
+      > </a
+      ><a name="1809" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1812"
+      > </a
+      ><a name="1813" class="Symbol"
+      >(</a
+      ><a name="1814" href="homotopy.elims.SuspSmash.html#1587" class="Function"
+      >fillY</a
+      ><a name="1819"
+      > </a
+      ><a name="1820" class="Symbol"
+      >(</a
+      ><a name="1821" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1823"
+      > </a
+      ><a name="1824" href="homotopy.elims.SuspSmash.html#192" class="Bound"
+      >Y</a
+      ><a name="1825" class="Symbol"
+      >))</a
+      ><a name="1827"
+      > </a
+      ><a name="1828" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1830"
+      > </a
+      ><a name="1831" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1834"
+      >
+    </a
+      ><a name="1839" href="homotopy.elims.SuspSmash.html#1795" class="Function"
+      >fillY-lemma</a
+      ><a name="1850"
+      > </a
+      ><a name="1851" class="Symbol"
+      >=</a
+      ><a name="1852"
+      > </a
+      ><a name="1853" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1854"
+      > </a
+      ><a name="1855" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1856"
+      >
+      </a
+      ><a name="1863" href="homotopy.elims.Lemmas.html#603" class="Function"
+      >fill-upper-right-unique</a
+      ><a name="1886"
+      > </a
+      ><a name="1887" class="Symbol"
+      >_</a
+      ><a name="1888"
+      > </a
+      ><a name="1889" class="Symbol"
+      >_</a
+      ><a name="1890"
+      > </a
+      ><a name="1891" class="Symbol"
+      >_</a
+      ><a name="1892"
+      > </a
+      ><a name="1893" class="Symbol"
+      >_</a
+      ><a name="1894"
+      > </a
+      ><a name="1895" class="Symbol"
+      >_</a
+      ><a name="1896"
+      > </a
+      ><a name="1897" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1900"
+      > </a
+      ><a name="1901" class="Symbol"
+      >(</a
+      ><a name="1902" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1905"
+      > </a
+      ><a name="1906" href="homotopy.elims.SuspSmash.html#1461" class="Function"
+      >fill0</a
+      ><a name="1911"
+      > </a
+      ><a name="1912" href="lib.cubical.SquareOver.html#4756" class="Function Operator"
+      >&#8595;&#8865;h&#8729;</a
+      ><a name="1916"
+      > </a
+      ><a name="1917" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1918"
+      > </a
+      ><a name="1919" class="Symbol"
+      >(</a
+      ><a name="1920" href="lib.PathGroupoid.html#4766" class="Function"
+      >idp&#9667;</a
+      ><a name="1924"
+      > </a
+      ><a name="1925" class="Symbol"
+      >_))</a
+      ><a name="1928"
+      >
+      </a
+      ><a name="1935" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1936"
+      > </a
+      ><a name="1937" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1939"
+      > </a
+      ><a name="1940" class="Symbol"
+      >(&#955;</a
+      ><a name="1942"
+      > </a
+      ><a name="1943" href="homotopy.elims.SuspSmash.html#1943" class="Bound"
+      >w</a
+      ><a name="1944"
+      > </a
+      ><a name="1945" class="Symbol"
+      >&#8594;</a
+      ><a name="1946"
+      > </a
+      ><a name="1947" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1950"
+      > </a
+      ><a name="1951" class="Symbol"
+      >(</a
+      ><a name="1952" href="homotopy.elims.SuspSmash.html#1041" class="Function"
+      >fill-lemma</a
+      ><a name="1962"
+      > </a
+      ><a name="1963" href="homotopy.elims.SuspSmash.html#1943" class="Bound"
+      >w</a
+      ><a name="1964"
+      > </a
+      ><a name="1965" class="Symbol"
+      >(</a
+      ><a name="1966" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1969"
+      > </a
+      ><a name="1970" href="homotopy.elims.SuspSmash.html#1461" class="Function"
+      >fill0</a
+      ><a name="1975"
+      > </a
+      ><a name="1976" href="lib.PathGroupoid.html#4673" class="Function Operator"
+      >&#9667;</a
+      ><a name="1977"
+      > </a
+      ><a name="1978" href="homotopy.elims.SuspSmash.html#276" class="Bound"
+      >cod*</a
+      ><a name="1982"
+      > </a
+      ><a name="1983" class="Symbol"
+      >(</a
+      ><a name="1984" href="lib.types.Smash.html#296" class="Function"
+      >&#8744;-in-&#215;</a
+      ><a name="1990"
+      > </a
+      ><a name="1991" href="homotopy.elims.SuspSmash.html#180" class="Bound"
+      >X</a
+      ><a name="1992"
+      > </a
+      ><a name="1993" href="homotopy.elims.SuspSmash.html#192" class="Bound"
+      >Y</a
+      ><a name="1994"
+      > </a
+      ><a name="1995" href="homotopy.elims.SuspSmash.html#1943" class="Bound"
+      >w</a
+      ><a name="1996" class="Symbol"
+      >))))</a
+      ><a name="2000"
+      >
+           </a
+      ><a name="2012" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="2017"
+      >
+
+</a
+      ><a name="2019" href="homotopy.elims.SuspSmash.html#2019" class="Function"
+      >susp-smash-elim</a
+      ><a name="2034"
+      > </a
+      ><a name="2035" class="Symbol"
+      >:</a
+      ><a name="2036"
+      > </a
+      ><a name="2037" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="2038"
+      > </a
+      ><a name="2039" class="Symbol"
+      >(</a
+      ><a name="2040" href="lib.types.Suspension.html#658" class="Function"
+      >Susp</a
+      ><a name="2044"
+      > </a
+      ><a name="2045" class="Symbol"
+      >(</a
+      ><a name="2046" href="homotopy.elims.SuspSmash.html#180" class="Bound"
+      >X</a
+      ><a name="2047"
+      > </a
+      ><a name="2048" href="lib.types.Smash.html#437" class="Function Operator"
+      >&#8743;</a
+      ><a name="2049"
+      > </a
+      ><a name="2050" href="homotopy.elims.SuspSmash.html#192" class="Bound"
+      >Y</a
+      ><a name="2051" class="Symbol"
+      >))</a
+      ><a name="2053"
+      > </a
+      ><a name="2054" href="homotopy.elims.SuspSmash.html#206" class="Bound"
+      >P</a
+      ><a name="2055"
+      >
+</a
+      ><a name="2056" href="homotopy.elims.SuspSmash.html#2019" class="Function"
+      >susp-smash-elim</a
+      ><a name="2071"
+      > </a
+      ><a name="2072" class="Symbol"
+      >=</a
+      ><a name="2073"
+      > </a
+      ><a name="2074" href="lib.types.Pushout.html#850" class="Function"
+      >Susp-elim</a
+      ><a name="2083"
+      > </a
+      ><a name="2084" href="homotopy.elims.SuspSmash.html#236" class="Bound"
+      >north*</a
+      ><a name="2090"
+      > </a
+      ><a name="2091" href="homotopy.elims.SuspSmash.html#255" class="Bound"
+      >south*</a
+      ><a name="2097"
+      > </a
+      ><a name="2098" href="homotopy.elims.SuspSmash.html#484" class="Function"
+      >coh*</a
+      ><a name="2102"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

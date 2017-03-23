@@ -1,0 +1,2467 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cohomology.InverseInSusp</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="groups.ProductRepr.html#1" class="Module"
+      >groups.ProductRepr</a
+      ><a name="89"
+      >
+</a
+      ><a name="90" class="Keyword"
+      >open</a
+      ><a name="94"
+      > </a
+      ><a name="95" class="Keyword"
+      >import</a
+      ><a name="101"
+      > </a
+      ><a name="102" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="119"
+      >
+</a
+      ><a name="120" class="Keyword"
+      >open</a
+      ><a name="124"
+      > </a
+      ><a name="125" class="Keyword"
+      >import</a
+      ><a name="131"
+      > </a
+      ><a name="132" href="homotopy.WedgeCofiber.html#1" class="Module"
+      >homotopy.WedgeCofiber</a
+      ><a name="153"
+      >
+
+</a
+      ><a name="155" class="Comment"
+      >{- For the cohomology group of a suspension &#931;X, the group inverse has the
+ - explicit form C&#8319;(flip-susp) : C&#8319;(&#931;X) &#8594; C&#8319;(&#931;X).
+ -}</a
+      ><a name="282"
+      >
+
+</a
+      ><a name="284" class="Keyword"
+      >module</a
+      ><a name="290"
+      > </a
+      ><a name="291" href="cohomology.InverseInSusp.html#1" class="Module"
+      >cohomology.InverseInSusp</a
+      ><a name="315"
+      > </a
+      ><a name="316" class="Symbol"
+      >{</a
+      ><a name="317" href="cohomology.InverseInSusp.html#317" class="Bound"
+      >i</a
+      ><a name="318" class="Symbol"
+      >}</a
+      ><a name="319"
+      > </a
+      ><a name="320" class="Symbol"
+      >(</a
+      ><a name="321" href="cohomology.InverseInSusp.html#321" class="Bound"
+      >CT</a
+      ><a name="323"
+      > </a
+      ><a name="324" class="Symbol"
+      >:</a
+      ><a name="325"
+      > </a
+      ><a name="326" href="cohomology.Theory.html#173" class="Record"
+      >CohomologyTheory</a
+      ><a name="342"
+      > </a
+      ><a name="343" href="cohomology.InverseInSusp.html#317" class="Bound"
+      >i</a
+      ><a name="344" class="Symbol"
+      >)</a
+      ><a name="345"
+      >
+  </a
+      ><a name="348" class="Symbol"
+      >(</a
+      ><a name="349" href="cohomology.InverseInSusp.html#349" class="Bound"
+      >n</a
+      ><a name="350"
+      > </a
+      ><a name="351" class="Symbol"
+      >:</a
+      ><a name="352"
+      > </a
+      ><a name="353" href="lib.types.Int.html#154" class="Datatype"
+      >&#8484;</a
+      ><a name="354" class="Symbol"
+      >)</a
+      ><a name="355"
+      > </a
+      ><a name="356" class="Symbol"
+      >{</a
+      ><a name="357" href="cohomology.InverseInSusp.html#357" class="Bound"
+      >X</a
+      ><a name="358"
+      > </a
+      ><a name="359" class="Symbol"
+      >:</a
+      ><a name="360"
+      > </a
+      ><a name="361" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="364"
+      > </a
+      ><a name="365" href="cohomology.InverseInSusp.html#317" class="Bound"
+      >i</a
+      ><a name="366" class="Symbol"
+      >}</a
+      ><a name="367"
+      > </a
+      ><a name="368" class="Keyword"
+      >where</a
+      ><a name="373"
+      >
+
+</a
+      ><a name="375" class="Keyword"
+      >open</a
+      ><a name="379"
+      > </a
+      ><a name="380" href="cohomology.Theory.html#173" class="Module"
+      >CohomologyTheory</a
+      ><a name="396"
+      > </a
+      ><a name="397" href="cohomology.InverseInSusp.html#321" class="Bound"
+      >CT</a
+      ><a name="399"
+      >
+</a
+      ><a name="400" class="Keyword"
+      >open</a
+      ><a name="404"
+      > </a
+      ><a name="405" class="Keyword"
+      >import</a
+      ><a name="411"
+      > </a
+      ><a name="412" href="cohomology.Wedge.html#1" class="Module"
+      >cohomology.Wedge</a
+      ><a name="428"
+      > </a
+      ><a name="429" href="cohomology.InverseInSusp.html#321" class="Bound"
+      >CT</a
+      ><a name="431"
+      > </a
+      ><a name="432" href="cohomology.InverseInSusp.html#349" class="Bound"
+      >n</a
+      ><a name="433"
+      > </a
+      ><a name="434" class="Symbol"
+      >(</a
+      ><a name="435" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="440"
+      > </a
+      ><a name="441" href="cohomology.InverseInSusp.html#357" class="Bound"
+      >X</a
+      ><a name="442" class="Symbol"
+      >)</a
+      ><a name="443"
+      > </a
+      ><a name="444" class="Symbol"
+      >(</a
+      ><a name="445" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="450"
+      > </a
+      ><a name="451" href="cohomology.InverseInSusp.html#357" class="Bound"
+      >X</a
+      ><a name="452" class="Symbol"
+      >)</a
+      ><a name="453"
+      >
+
+</a
+      ><a name="455" class="Keyword"
+      >private</a
+      ><a name="462"
+      >
+  </a
+      ><a name="465" class="Keyword"
+      >module</a
+      ><a name="471"
+      > </a
+      ><a name="472" href="cohomology.InverseInSusp.html#472" class="Module"
+      >Subtract</a
+      ><a name="480"
+      > </a
+      ><a name="481" class="Symbol"
+      >=</a
+      ><a name="482"
+      > </a
+      ><a name="483" class="Module"
+      >SuspRec</a
+      ><a name="490"
+      > </a
+      ><a name="491" class="Symbol"
+      >{</a
+      ><a name="492" class="Argument"
+      >C</a
+      ><a name="493"
+      > </a
+      ><a name="494" class="Symbol"
+      >=</a
+      ><a name="495"
+      > </a
+      ><a name="496" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="499"
+      > </a
+      ><a name="500" class="Symbol"
+      >(</a
+      ><a name="501" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="506"
+      > </a
+      ><a name="507" href="cohomology.InverseInSusp.html#357" class="Bound"
+      >X</a
+      ><a name="508"
+      > </a
+      ><a name="509" href="lib.types.Wedge.html#956" class="Function Operator"
+      >&#8857;&#8744;</a
+      ><a name="511"
+      > </a
+      ><a name="512" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="517"
+      > </a
+      ><a name="518" href="cohomology.InverseInSusp.html#357" class="Bound"
+      >X</a
+      ><a name="519" class="Symbol"
+      >)}</a
+      ><a name="521"
+      >
+    </a
+      ><a name="526" class="Symbol"
+      >(</a
+      ><a name="527" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="531"
+      > </a
+      ><a name="532" href="lib.types.Suspension.html#895" class="Function"
+      >south</a
+      ><a name="537" class="Symbol"
+      >)</a
+      ><a name="538"
+      >
+    </a
+      ><a name="543" class="Symbol"
+      >(</a
+      ><a name="544" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="548"
+      > </a
+      ><a name="549" href="lib.types.Suspension.html#895" class="Function"
+      >south</a
+      ><a name="554" class="Symbol"
+      >)</a
+      ><a name="555"
+      >
+    </a
+      ><a name="560" class="Symbol"
+      >(&#955;</a
+      ><a name="562"
+      > </a
+      ><a name="563" href="cohomology.InverseInSusp.html#563" class="Bound"
+      >x</a
+      ><a name="564"
+      > </a
+      ><a name="565" class="Symbol"
+      >&#8594;</a
+      ><a name="566"
+      > </a
+      ><a name="567" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="569"
+      > </a
+      ><a name="570" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="574"
+      > </a
+      ><a name="575" class="Symbol"
+      >(</a
+      ><a name="576" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="577"
+      > </a
+      ><a name="578" class="Symbol"
+      >(</a
+      ><a name="579" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="584"
+      > </a
+      ><a name="585" href="cohomology.InverseInSusp.html#563" class="Bound"
+      >x</a
+      ><a name="586" class="Symbol"
+      >))</a
+      ><a name="588"
+      > </a
+      ><a name="589" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="590"
+      > </a
+      ><a name="591" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="596"
+      > </a
+      ><a name="597" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="598"
+      > </a
+      ><a name="599" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="601"
+      > </a
+      ><a name="602" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="606"
+      > </a
+      ><a name="607" class="Symbol"
+      >(</a
+      ><a name="608" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="613"
+      > </a
+      ><a name="614" href="cohomology.InverseInSusp.html#563" class="Bound"
+      >x</a
+      ><a name="615" class="Symbol"
+      >))</a
+      ><a name="617"
+      >
+
+  </a
+      ><a name="621" href="cohomology.InverseInSusp.html#621" class="Function"
+      >subtract</a
+      ><a name="629"
+      > </a
+      ><a name="630" class="Symbol"
+      >=</a
+      ><a name="631"
+      > </a
+      ><a name="632" href="lib.types.Pushout.html#1397" class="Function"
+      >Subtract.f</a
+      ><a name="642"
+      >
+
+  </a
+      ><a name="646" href="cohomology.InverseInSusp.html#646" class="Function"
+      >&#8857;subtract</a
+      ><a name="655"
+      > </a
+      ><a name="656" class="Symbol"
+      >:</a
+      ><a name="657"
+      > </a
+      ><a name="658" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="663"
+      > </a
+      ><a name="664" href="cohomology.InverseInSusp.html#357" class="Bound"
+      >X</a
+      ><a name="665"
+      > </a
+      ><a name="666" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="668"
+      > </a
+      ><a name="669" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="674"
+      > </a
+      ><a name="675" href="cohomology.InverseInSusp.html#357" class="Bound"
+      >X</a
+      ><a name="676"
+      > </a
+      ><a name="677" href="lib.types.Wedge.html#956" class="Function Operator"
+      >&#8857;&#8744;</a
+      ><a name="679"
+      > </a
+      ><a name="680" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="685"
+      > </a
+      ><a name="686" href="cohomology.InverseInSusp.html#357" class="Bound"
+      >X</a
+      ><a name="687"
+      >
+  </a
+      ><a name="690" href="cohomology.InverseInSusp.html#646" class="Function"
+      >&#8857;subtract</a
+      ><a name="699"
+      > </a
+      ><a name="700" class="Symbol"
+      >=</a
+      ><a name="701"
+      > </a
+      ><a name="702" class="Symbol"
+      >(</a
+      ><a name="703" href="cohomology.InverseInSusp.html#621" class="Function"
+      >subtract</a
+      ><a name="711"
+      > </a
+      ><a name="712" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="713"
+      > </a
+      ><a name="714" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="715"
+      > </a
+      ><a name="716" class="Symbol"
+      >(</a
+      ><a name="717" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="719"
+      > </a
+      ><a name="720" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="724"
+      > </a
+      ><a name="725" class="Symbol"
+      >(</a
+      ><a name="726" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="731"
+      > </a
+      ><a name="732" class="Symbol"
+      >(</a
+      ><a name="733" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="735"
+      > </a
+      ><a name="736" href="cohomology.InverseInSusp.html#357" class="Bound"
+      >X</a
+      ><a name="737" class="Symbol"
+      >))))</a
+      ><a name="741"
+      >
+
+  </a
+      ><a name="745" href="cohomology.InverseInSusp.html#745" class="Function"
+      >projl-subtract</a
+      ><a name="759"
+      > </a
+      ><a name="760" class="Symbol"
+      >:</a
+      ><a name="761"
+      > </a
+      ><a name="762" class="Symbol"
+      >&#8704;</a
+      ><a name="763"
+      > </a
+      ><a name="764" href="cohomology.InverseInSusp.html#764" class="Bound"
+      >&#963;</a
+      ><a name="765"
+      > </a
+      ><a name="766" class="Symbol"
+      >&#8594;</a
+      ><a name="767"
+      > </a
+      ><a name="768" href="lib.types.Wedge.html#3762" class="Function"
+      >projl</a
+      ><a name="773"
+      > </a
+      ><a name="774" class="Symbol"
+      >_</a
+      ><a name="775"
+      > </a
+      ><a name="776" class="Symbol"
+      >_</a
+      ><a name="777"
+      > </a
+      ><a name="778" class="Symbol"
+      >(</a
+      ><a name="779" href="cohomology.InverseInSusp.html#621" class="Function"
+      >subtract</a
+      ><a name="787"
+      > </a
+      ><a name="788" href="cohomology.InverseInSusp.html#764" class="Bound"
+      >&#963;</a
+      ><a name="789" class="Symbol"
+      >)</a
+      ><a name="790"
+      > </a
+      ><a name="791" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="793"
+      > </a
+      ><a name="794" href="lib.types.Suspension.html#2099" class="Function"
+      >Susp-flip</a
+      ><a name="803"
+      > </a
+      ><a name="804" href="cohomology.InverseInSusp.html#764" class="Bound"
+      >&#963;</a
+      ><a name="805"
+      >
+  </a
+      ><a name="808" href="cohomology.InverseInSusp.html#745" class="Function"
+      >projl-subtract</a
+      ><a name="822"
+      > </a
+      ><a name="823" class="Symbol"
+      >=</a
+      ><a name="824"
+      > </a
+      ><a name="825" href="lib.types.Pushout.html#850" class="Function"
+      >Susp-elim</a
+      ><a name="834"
+      > </a
+      ><a name="835" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="838"
+      > </a
+      ><a name="839" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="842"
+      > </a
+      ><a name="843" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="844"
+      >
+    </a
+      ><a name="849" href="lib.cubical.Square.html#8229" class="Function"
+      >&#8595;-='-from-square</a
+      ><a name="865"
+      > </a
+      ><a name="866" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="867"
+      > </a
+      ><a name="868" href="lib.cubical.Square.html#2914" class="Function"
+      >vert-degen-square</a
+      ><a name="885"
+      > </a
+      ><a name="886" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="887"
+      > </a
+      ><a name="888" class="Symbol"
+      >&#955;</a
+      ><a name="889"
+      > </a
+      ><a name="890" href="cohomology.InverseInSusp.html#890" class="Bound"
+      >x</a
+      ><a name="891"
+      > </a
+      ><a name="892" class="Symbol"
+      >&#8594;</a
+      ><a name="893"
+      >
+      </a
+      ><a name="900" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="904"
+      > </a
+      ><a name="905" class="Symbol"
+      >(</a
+      ><a name="906" href="lib.types.Wedge.html#3762" class="Function"
+      >projl</a
+      ><a name="911"
+      > </a
+      ><a name="912" class="Symbol"
+      >_</a
+      ><a name="913"
+      > </a
+      ><a name="914" class="Symbol"
+      >_)</a
+      ><a name="916"
+      > </a
+      ><a name="917" href="cohomology.InverseInSusp.html#621" class="Function"
+      >subtract</a
+      ><a name="925"
+      > </a
+      ><a name="926" class="Symbol"
+      >(</a
+      ><a name="927" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="932"
+      > </a
+      ><a name="933" href="cohomology.InverseInSusp.html#890" class="Bound"
+      >x</a
+      ><a name="934" class="Symbol"
+      >)</a
+      ><a name="935"
+      >
+      </a
+      ><a name="942" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="943"
+      > </a
+      ><a name="944" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="946"
+      > </a
+      ><a name="947" class="Symbol"
+      >(</a
+      ><a name="948" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="950"
+      > </a
+      ><a name="951" class="Symbol"
+      >(</a
+      ><a name="952" href="lib.types.Wedge.html#3762" class="Function"
+      >projl</a
+      ><a name="957"
+      > </a
+      ><a name="958" class="Symbol"
+      >_</a
+      ><a name="959"
+      > </a
+      ><a name="960" class="Symbol"
+      >_))</a
+      ><a name="963"
+      > </a
+      ><a name="964" class="Symbol"
+      >(</a
+      ><a name="965" href="lib.types.Pushout.html#1428" class="Function"
+      >Subtract.merid-&#946;</a
+      ><a name="981"
+      > </a
+      ><a name="982" href="cohomology.InverseInSusp.html#890" class="Bound"
+      >x</a
+      ><a name="983" class="Symbol"
+      >)</a
+      ><a name="984"
+      >
+      </a
+      ><a name="991" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="992"
+      > </a
+      ><a name="993" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="997"
+      > </a
+      ><a name="998" class="Symbol"
+      >(</a
+      ><a name="999" href="lib.types.Wedge.html#3762" class="Function"
+      >projl</a
+      ><a name="1004"
+      > </a
+      ><a name="1005" class="Symbol"
+      >_</a
+      ><a name="1006"
+      > </a
+      ><a name="1007" class="Symbol"
+      >_)</a
+      ><a name="1009"
+      > </a
+      ><a name="1010" class="Symbol"
+      >(</a
+      ><a name="1011" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1013"
+      > </a
+      ><a name="1014" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="1018"
+      > </a
+      ><a name="1019" class="Symbol"
+      >(</a
+      ><a name="1020" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1021"
+      > </a
+      ><a name="1022" class="Symbol"
+      >(</a
+      ><a name="1023" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1028"
+      > </a
+      ><a name="1029" href="cohomology.InverseInSusp.html#890" class="Bound"
+      >x</a
+      ><a name="1030" class="Symbol"
+      >)))</a
+      ><a name="1033"
+      > </a
+      ><a name="1034" class="Symbol"
+      >(</a
+      ><a name="1035" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="1040"
+      > </a
+      ><a name="1041" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1042"
+      > </a
+      ><a name="1043" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1045"
+      > </a
+      ><a name="1046" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="1050"
+      > </a
+      ><a name="1051" class="Symbol"
+      >(</a
+      ><a name="1052" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1057"
+      > </a
+      ><a name="1058" href="cohomology.InverseInSusp.html#890" class="Bound"
+      >x</a
+      ><a name="1059" class="Symbol"
+      >))</a
+      ><a name="1061"
+      >
+      </a
+      ><a name="1068" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1069"
+      > </a
+      ><a name="1070" class="Symbol"
+      >((</a
+      ><a name="1072" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="1076"
+      > </a
+      ><a name="1077" class="Symbol"
+      >(</a
+      ><a name="1078" href="lib.types.Wedge.html#3762" class="Function"
+      >projl</a
+      ><a name="1083"
+      > </a
+      ><a name="1084" class="Symbol"
+      >_</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" class="Symbol"
+      >_)</a
+      ><a name="1088"
+      > </a
+      ><a name="1089" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="1093"
+      > </a
+      ><a name="1094" class="Symbol"
+      >(</a
+      ><a name="1095" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1096"
+      > </a
+      ><a name="1097" class="Symbol"
+      >(</a
+      ><a name="1098" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" href="cohomology.InverseInSusp.html#890" class="Bound"
+      >x</a
+      ><a name="1105" class="Symbol"
+      >))</a
+      ><a name="1107"
+      >
+          </a
+      ><a name="1118" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1119"
+      > </a
+      ><a name="1120" href="lib.PathFunctor.html#2204" class="Function"
+      >ap-idf</a
+      ><a name="1126"
+      > </a
+      ><a name="1127" class="Symbol"
+      >_)</a
+      ><a name="1129"
+      >
+         </a
+      ><a name="1139" href="lib.PathGroupoid.html#2202" class="Function Operator"
+      >&#8729;2</a
+      ><a name="1141"
+      > </a
+      ><a name="1142" class="Symbol"
+      >(</a
+      ><a name="1143" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="1147"
+      > </a
+      ><a name="1148" class="Symbol"
+      >(</a
+      ><a name="1149" href="lib.types.Wedge.html#3762" class="Function"
+      >projl</a
+      ><a name="1154"
+      > </a
+      ><a name="1155" class="Symbol"
+      >_</a
+      ><a name="1156"
+      > </a
+      ><a name="1157" class="Symbol"
+      >_)</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="1165"
+      > </a
+      ><a name="1166" class="Symbol"
+      >(</a
+      ><a name="1167" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1169"
+      > </a
+      ><a name="1170" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="1174"
+      > </a
+      ><a name="1175" class="Symbol"
+      >(</a
+      ><a name="1176" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1181"
+      > </a
+      ><a name="1182" href="cohomology.InverseInSusp.html#890" class="Bound"
+      >x</a
+      ><a name="1183" class="Symbol"
+      >))</a
+      ><a name="1185"
+      >
+             </a
+      ><a name="1199" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1200"
+      > </a
+      ><a name="1201" class="Symbol"
+      >(</a
+      ><a name="1202" href="lib.types.Wedge.html#1727" class="Function"
+      >Projl.glue-&#946;</a
+      ><a name="1214"
+      > </a
+      ><a name="1215" class="Symbol"
+      >_</a
+      ><a name="1216"
+      > </a
+      ><a name="1217" class="Symbol"
+      >_</a
+      ><a name="1218"
+      >
+                </a
+      ><a name="1235" href="lib.PathGroupoid.html#2202" class="Function Operator"
+      >&#8729;2</a
+      ><a name="1237"
+      > </a
+      ><a name="1238" class="Symbol"
+      >(</a
+      ><a name="1239" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="1243"
+      > </a
+      ><a name="1244" class="Symbol"
+      >(</a
+      ><a name="1245" href="lib.types.Wedge.html#3762" class="Function"
+      >projl</a
+      ><a name="1250"
+      > </a
+      ><a name="1251" class="Symbol"
+      >_</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" class="Symbol"
+      >_)</a
+      ><a name="1255"
+      > </a
+      ><a name="1256" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="1260"
+      > </a
+      ><a name="1261" class="Symbol"
+      >(</a
+      ><a name="1262" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1267"
+      > </a
+      ><a name="1268" href="cohomology.InverseInSusp.html#890" class="Bound"
+      >x</a
+      ><a name="1269" class="Symbol"
+      >)</a
+      ><a name="1270"
+      > </a
+      ><a name="1271" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1272"
+      > </a
+      ><a name="1273" href="lib.PathFunctor.html#2086" class="Function"
+      >ap-cst</a
+      ><a name="1279"
+      > </a
+      ><a name="1280" class="Symbol"
+      >_</a
+      ><a name="1281"
+      > </a
+      ><a name="1282" class="Symbol"
+      >_))))</a
+      ><a name="1287"
+      >
+      </a
+      ><a name="1294" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1295"
+      > </a
+      ><a name="1296" href="lib.PathGroupoid.html#1041" class="Function"
+      >&#8729;-unit-r</a
+      ><a name="1304"
+      > </a
+      ><a name="1305" class="Symbol"
+      >_</a
+      ><a name="1306"
+      >
+      </a
+      ><a name="1313" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1314"
+      > </a
+      ><a name="1315" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1316"
+      > </a
+      ><a name="1317" class="Symbol"
+      >(</a
+      ><a name="1318" href="lib.types.Pushout.html#1428" class="Function"
+      >SuspFlip.merid-&#946;</a
+      ><a name="1334"
+      > </a
+      ><a name="1335" href="cohomology.InverseInSusp.html#890" class="Bound"
+      >x</a
+      ><a name="1336" class="Symbol"
+      >)</a
+      ><a name="1337"
+      >
+
+  </a
+      ><a name="1341" href="cohomology.InverseInSusp.html#1341" class="Function"
+      >projr-subtract</a
+      ><a name="1355"
+      > </a
+      ><a name="1356" class="Symbol"
+      >:</a
+      ><a name="1357"
+      > </a
+      ><a name="1358" class="Symbol"
+      >&#8704;</a
+      ><a name="1359"
+      > </a
+      ><a name="1360" href="cohomology.InverseInSusp.html#1360" class="Bound"
+      >&#963;</a
+      ><a name="1361"
+      > </a
+      ><a name="1362" class="Symbol"
+      >&#8594;</a
+      ><a name="1363"
+      > </a
+      ><a name="1364" href="lib.types.Wedge.html#3780" class="Function"
+      >projr</a
+      ><a name="1369"
+      > </a
+      ><a name="1370" class="Symbol"
+      >_</a
+      ><a name="1371"
+      > </a
+      ><a name="1372" class="Symbol"
+      >_</a
+      ><a name="1373"
+      > </a
+      ><a name="1374" class="Symbol"
+      >(</a
+      ><a name="1375" href="cohomology.InverseInSusp.html#621" class="Function"
+      >subtract</a
+      ><a name="1383"
+      > </a
+      ><a name="1384" href="cohomology.InverseInSusp.html#1360" class="Bound"
+      >&#963;</a
+      ><a name="1385" class="Symbol"
+      >)</a
+      ><a name="1386"
+      > </a
+      ><a name="1387" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1389"
+      > </a
+      ><a name="1390" href="cohomology.InverseInSusp.html#1360" class="Bound"
+      >&#963;</a
+      ><a name="1391"
+      >
+  </a
+      ><a name="1394" href="cohomology.InverseInSusp.html#1341" class="Function"
+      >projr-subtract</a
+      ><a name="1408"
+      > </a
+      ><a name="1409" class="Symbol"
+      >=</a
+      ><a name="1410"
+      > </a
+      ><a name="1411" href="lib.types.Pushout.html#850" class="Function"
+      >Susp-elim</a
+      ><a name="1420"
+      > </a
+      ><a name="1421" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1424"
+      > </a
+      ><a name="1425" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1428"
+      > </a
+      ><a name="1429" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1430"
+      >
+    </a
+      ><a name="1435" href="lib.types.Paths.html#7720" class="Function"
+      >&#8595;-&#8728;=idf-in'</a
+      ><a name="1446"
+      > </a
+      ><a name="1447" class="Symbol"
+      >(</a
+      ><a name="1448" href="lib.types.Wedge.html#3780" class="Function"
+      >projr</a
+      ><a name="1453"
+      > </a
+      ><a name="1454" class="Symbol"
+      >_</a
+      ><a name="1455"
+      > </a
+      ><a name="1456" class="Symbol"
+      >_)</a
+      ><a name="1458"
+      > </a
+      ><a name="1459" href="cohomology.InverseInSusp.html#621" class="Function"
+      >subtract</a
+      ><a name="1467"
+      > </a
+      ><a name="1468" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1469"
+      > </a
+      ><a name="1470" class="Symbol"
+      >&#955;</a
+      ><a name="1471"
+      > </a
+      ><a name="1472" href="cohomology.InverseInSusp.html#1472" class="Bound"
+      >x</a
+      ><a name="1473"
+      > </a
+      ><a name="1474" class="Symbol"
+      >&#8594;</a
+      ><a name="1475"
+      >
+      </a
+      ><a name="1482" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1484"
+      > </a
+      ><a name="1485" class="Symbol"
+      >(</a
+      ><a name="1486" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1488"
+      > </a
+      ><a name="1489" class="Symbol"
+      >(</a
+      ><a name="1490" href="lib.types.Wedge.html#3780" class="Function"
+      >projr</a
+      ><a name="1495"
+      > </a
+      ><a name="1496" class="Symbol"
+      >_</a
+      ><a name="1497"
+      > </a
+      ><a name="1498" class="Symbol"
+      >_))</a
+      ><a name="1501"
+      > </a
+      ><a name="1502" class="Symbol"
+      >(</a
+      ><a name="1503" href="lib.types.Pushout.html#1428" class="Function"
+      >Subtract.merid-&#946;</a
+      ><a name="1519"
+      > </a
+      ><a name="1520" href="cohomology.InverseInSusp.html#1472" class="Bound"
+      >x</a
+      ><a name="1521" class="Symbol"
+      >)</a
+      ><a name="1522"
+      >
+      </a
+      ><a name="1529" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1530"
+      > </a
+      ><a name="1531" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="1535"
+      > </a
+      ><a name="1536" class="Symbol"
+      >(</a
+      ><a name="1537" href="lib.types.Wedge.html#3780" class="Function"
+      >projr</a
+      ><a name="1542"
+      > </a
+      ><a name="1543" class="Symbol"
+      >_</a
+      ><a name="1544"
+      > </a
+      ><a name="1545" class="Symbol"
+      >_)</a
+      ><a name="1547"
+      > </a
+      ><a name="1548" class="Symbol"
+      >(</a
+      ><a name="1549" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1551"
+      > </a
+      ><a name="1552" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="1556"
+      > </a
+      ><a name="1557" class="Symbol"
+      >(</a
+      ><a name="1558" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1559"
+      > </a
+      ><a name="1560" class="Symbol"
+      >(</a
+      ><a name="1561" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1566"
+      > </a
+      ><a name="1567" href="cohomology.InverseInSusp.html#1472" class="Bound"
+      >x</a
+      ><a name="1568" class="Symbol"
+      >)))</a
+      ><a name="1571"
+      > </a
+      ><a name="1572" class="Symbol"
+      >(</a
+      ><a name="1573" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="1578"
+      > </a
+      ><a name="1579" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1580"
+      > </a
+      ><a name="1581" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1583"
+      > </a
+      ><a name="1584" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="1588"
+      > </a
+      ><a name="1589" class="Symbol"
+      >(</a
+      ><a name="1590" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1595"
+      > </a
+      ><a name="1596" href="cohomology.InverseInSusp.html#1472" class="Bound"
+      >x</a
+      ><a name="1597" class="Symbol"
+      >))</a
+      ><a name="1599"
+      >
+      </a
+      ><a name="1606" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1607"
+      > </a
+      ><a name="1608" class="Symbol"
+      >((</a
+      ><a name="1610" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="1614"
+      > </a
+      ><a name="1615" class="Symbol"
+      >(</a
+      ><a name="1616" href="lib.types.Wedge.html#3780" class="Function"
+      >projr</a
+      ><a name="1621"
+      > </a
+      ><a name="1622" class="Symbol"
+      >_</a
+      ><a name="1623"
+      > </a
+      ><a name="1624" class="Symbol"
+      >_)</a
+      ><a name="1626"
+      > </a
+      ><a name="1627" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="1631"
+      > </a
+      ><a name="1632" class="Symbol"
+      >(</a
+      ><a name="1633" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1634"
+      > </a
+      ><a name="1635" class="Symbol"
+      >(</a
+      ><a name="1636" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1641"
+      > </a
+      ><a name="1642" href="cohomology.InverseInSusp.html#1472" class="Bound"
+      >x</a
+      ><a name="1643" class="Symbol"
+      >))</a
+      ><a name="1645"
+      > </a
+      ><a name="1646" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1647"
+      > </a
+      ><a name="1648" href="lib.PathFunctor.html#2086" class="Function"
+      >ap-cst</a
+      ><a name="1654"
+      > </a
+      ><a name="1655" class="Symbol"
+      >_</a
+      ><a name="1656"
+      > </a
+      ><a name="1657" class="Symbol"
+      >_)</a
+      ><a name="1659"
+      >
+         </a
+      ><a name="1669" href="lib.PathGroupoid.html#2202" class="Function Operator"
+      >&#8729;2</a
+      ><a name="1671"
+      > </a
+      ><a name="1672" class="Symbol"
+      >(</a
+      ><a name="1673" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="1677"
+      > </a
+      ><a name="1678" class="Symbol"
+      >(</a
+      ><a name="1679" href="lib.types.Wedge.html#3780" class="Function"
+      >projr</a
+      ><a name="1684"
+      > </a
+      ><a name="1685" class="Symbol"
+      >_</a
+      ><a name="1686"
+      > </a
+      ><a name="1687" class="Symbol"
+      >_)</a
+      ><a name="1689"
+      > </a
+      ><a name="1690" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="1695"
+      > </a
+      ><a name="1696" class="Symbol"
+      >(</a
+      ><a name="1697" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1699"
+      > </a
+      ><a name="1700" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="1704"
+      > </a
+      ><a name="1705" class="Symbol"
+      >(</a
+      ><a name="1706" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1711"
+      > </a
+      ><a name="1712" href="cohomology.InverseInSusp.html#1472" class="Bound"
+      >x</a
+      ><a name="1713" class="Symbol"
+      >))</a
+      ><a name="1715"
+      >
+             </a
+      ><a name="1729" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1730"
+      > </a
+      ><a name="1731" class="Symbol"
+      >(</a
+      ><a name="1732" href="lib.types.Wedge.html#1727" class="Function"
+      >Projr.glue-&#946;</a
+      ><a name="1744"
+      > </a
+      ><a name="1745" class="Symbol"
+      >_</a
+      ><a name="1746"
+      > </a
+      ><a name="1747" class="Symbol"
+      >_</a
+      ><a name="1748"
+      >
+                </a
+      ><a name="1765" href="lib.PathGroupoid.html#2202" class="Function Operator"
+      >&#8729;2</a
+      ><a name="1767"
+      > </a
+      ><a name="1768" class="Symbol"
+      >(</a
+      ><a name="1769" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="1773"
+      > </a
+      ><a name="1774" class="Symbol"
+      >(</a
+      ><a name="1775" href="lib.types.Wedge.html#3780" class="Function"
+      >projr</a
+      ><a name="1780"
+      > </a
+      ><a name="1781" class="Symbol"
+      >_</a
+      ><a name="1782"
+      > </a
+      ><a name="1783" class="Symbol"
+      >_)</a
+      ><a name="1785"
+      > </a
+      ><a name="1786" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="1790"
+      > </a
+      ><a name="1791" class="Symbol"
+      >(</a
+      ><a name="1792" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1797"
+      > </a
+      ><a name="1798" href="cohomology.InverseInSusp.html#1472" class="Bound"
+      >x</a
+      ><a name="1799" class="Symbol"
+      >)</a
+      ><a name="1800"
+      > </a
+      ><a name="1801" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1802"
+      > </a
+      ><a name="1803" href="lib.PathFunctor.html#2204" class="Function"
+      >ap-idf</a
+      ><a name="1809"
+      > </a
+      ><a name="1810" class="Symbol"
+      >_))))</a
+      ><a name="1815"
+      >
+
+  </a
+      ><a name="1819" href="cohomology.InverseInSusp.html#1819" class="Function"
+      >fold-subtract</a
+      ><a name="1832"
+      > </a
+      ><a name="1833" class="Symbol"
+      >:</a
+      ><a name="1834"
+      > </a
+      ><a name="1835" class="Symbol"
+      >&#8704;</a
+      ><a name="1836"
+      > </a
+      ><a name="1837" href="cohomology.InverseInSusp.html#1837" class="Bound"
+      >&#963;</a
+      ><a name="1838"
+      > </a
+      ><a name="1839" class="Symbol"
+      >&#8594;</a
+      ><a name="1840"
+      > </a
+      ><a name="1841" href="lib.types.Wedge.html#3580" class="Function"
+      >fold</a
+      ><a name="1845"
+      > </a
+      ><a name="1846" class="Symbol"
+      >(</a
+      ><a name="1847" href="cohomology.InverseInSusp.html#621" class="Function"
+      >subtract</a
+      ><a name="1855"
+      > </a
+      ><a name="1856" href="cohomology.InverseInSusp.html#1837" class="Bound"
+      >&#963;</a
+      ><a name="1857" class="Symbol"
+      >)</a
+      ><a name="1858"
+      > </a
+      ><a name="1859" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1861"
+      > </a
+      ><a name="1862" href="lib.types.Suspension.html#895" class="Function"
+      >south</a
+      ><a name="1867"
+      >
+  </a
+      ><a name="1870" href="cohomology.InverseInSusp.html#1819" class="Function"
+      >fold-subtract</a
+      ><a name="1883"
+      > </a
+      ><a name="1884" class="Symbol"
+      >=</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" href="lib.types.Pushout.html#850" class="Function"
+      >Susp-elim</a
+      ><a name="1895"
+      > </a
+      ><a name="1896" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1899"
+      > </a
+      ><a name="1900" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1903"
+      > </a
+      ><a name="1904" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1905"
+      >
+    </a
+      ><a name="1910" href="lib.types.Paths.html#2419" class="Function"
+      >&#8595;-app=cst-in</a
+      ><a name="1922"
+      > </a
+      ><a name="1923" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1924"
+      > </a
+      ><a name="1925" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1926"
+      > </a
+      ><a name="1927" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1928"
+      > </a
+      ><a name="1929" class="Symbol"
+      >&#955;</a
+      ><a name="1930"
+      > </a
+      ><a name="1931" href="cohomology.InverseInSusp.html#1931" class="Bound"
+      >x</a
+      ><a name="1932"
+      > </a
+      ><a name="1933" class="Symbol"
+      >&#8594;</a
+      ><a name="1934"
+      >
+      </a
+      ><a name="1941" href="lib.PathGroupoid.html#1041" class="Function"
+      >&#8729;-unit-r</a
+      ><a name="1949"
+      > </a
+      ><a name="1950" class="Symbol"
+      >_</a
+      ><a name="1951"
+      >
+      </a
+      ><a name="1958" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1959"
+      > </a
+      ><a name="1960" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="1964"
+      > </a
+      ><a name="1965" href="lib.types.Wedge.html#3580" class="Function"
+      >fold</a
+      ><a name="1969"
+      > </a
+      ><a name="1970" href="cohomology.InverseInSusp.html#621" class="Function"
+      >subtract</a
+      ><a name="1978"
+      > </a
+      ><a name="1979" class="Symbol"
+      >(</a
+      ><a name="1980" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1985"
+      > </a
+      ><a name="1986" href="cohomology.InverseInSusp.html#1931" class="Bound"
+      >x</a
+      ><a name="1987" class="Symbol"
+      >)</a
+      ><a name="1988"
+      >
+      </a
+      ><a name="1995" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1996"
+      > </a
+      ><a name="1997" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1999"
+      > </a
+      ><a name="2000" class="Symbol"
+      >(</a
+      ><a name="2001" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2003"
+      > </a
+      ><a name="2004" href="lib.types.Wedge.html#3580" class="Function"
+      >fold</a
+      ><a name="2008" class="Symbol"
+      >)</a
+      ><a name="2009"
+      > </a
+      ><a name="2010" class="Symbol"
+      >(</a
+      ><a name="2011" href="lib.types.Pushout.html#1428" class="Function"
+      >Subtract.merid-&#946;</a
+      ><a name="2027"
+      > </a
+      ><a name="2028" href="cohomology.InverseInSusp.html#1931" class="Bound"
+      >x</a
+      ><a name="2029" class="Symbol"
+      >)</a
+      ><a name="2030"
+      >
+      </a
+      ><a name="2037" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2038"
+      > </a
+      ><a name="2039" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="2043"
+      > </a
+      ><a name="2044" href="lib.types.Wedge.html#3580" class="Function"
+      >fold</a
+      ><a name="2048"
+      > </a
+      ><a name="2049" class="Symbol"
+      >(</a
+      ><a name="2050" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2052"
+      > </a
+      ><a name="2053" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="2057"
+      > </a
+      ><a name="2058" class="Symbol"
+      >(</a
+      ><a name="2059" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2060"
+      > </a
+      ><a name="2061" class="Symbol"
+      >(</a
+      ><a name="2062" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2067"
+      > </a
+      ><a name="2068" href="cohomology.InverseInSusp.html#1931" class="Bound"
+      >x</a
+      ><a name="2069" class="Symbol"
+      >)))</a
+      ><a name="2072"
+      > </a
+      ><a name="2073" class="Symbol"
+      >(</a
+      ><a name="2074" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="2079"
+      > </a
+      ><a name="2080" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2081"
+      > </a
+      ><a name="2082" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2084"
+      > </a
+      ><a name="2085" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="2089"
+      > </a
+      ><a name="2090" class="Symbol"
+      >(</a
+      ><a name="2091" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2096"
+      > </a
+      ><a name="2097" href="cohomology.InverseInSusp.html#1931" class="Bound"
+      >x</a
+      ><a name="2098" class="Symbol"
+      >))</a
+      ><a name="2100"
+      >
+      </a
+      ><a name="2107" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2108"
+      > </a
+      ><a name="2109" class="Symbol"
+      >((</a
+      ><a name="2111" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="2115"
+      > </a
+      ><a name="2116" href="lib.types.Wedge.html#3580" class="Function"
+      >fold</a
+      ><a name="2120"
+      > </a
+      ><a name="2121" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="2125"
+      > </a
+      ><a name="2126" class="Symbol"
+      >(</a
+      ><a name="2127" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2128"
+      > </a
+      ><a name="2129" class="Symbol"
+      >(</a
+      ><a name="2130" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2135"
+      > </a
+      ><a name="2136" href="cohomology.InverseInSusp.html#1931" class="Bound"
+      >x</a
+      ><a name="2137" class="Symbol"
+      >))</a
+      ><a name="2139"
+      > </a
+      ><a name="2140" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2141"
+      > </a
+      ><a name="2142" href="lib.PathFunctor.html#2204" class="Function"
+      >ap-idf</a
+      ><a name="2148"
+      > </a
+      ><a name="2149" class="Symbol"
+      >_)</a
+      ><a name="2151"
+      >
+         </a
+      ><a name="2161" href="lib.PathGroupoid.html#2202" class="Function Operator"
+      >&#8729;2</a
+      ><a name="2163"
+      > </a
+      ><a name="2164" class="Symbol"
+      >(</a
+      ><a name="2165" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="2169"
+      > </a
+      ><a name="2170" href="lib.types.Wedge.html#3580" class="Function"
+      >fold</a
+      ><a name="2174"
+      > </a
+      ><a name="2175" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="2180"
+      > </a
+      ><a name="2181" class="Symbol"
+      >(</a
+      ><a name="2182" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2184"
+      > </a
+      ><a name="2185" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="2189"
+      > </a
+      ><a name="2190" class="Symbol"
+      >(</a
+      ><a name="2191" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2196"
+      > </a
+      ><a name="2197" href="cohomology.InverseInSusp.html#1931" class="Bound"
+      >x</a
+      ><a name="2198" class="Symbol"
+      >))</a
+      ><a name="2200"
+      >
+             </a
+      ><a name="2214" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2215"
+      > </a
+      ><a name="2216" class="Symbol"
+      >(</a
+      ><a name="2217" href="lib.types.Wedge.html#1727" class="Function"
+      >Fold.glue-&#946;</a
+      ><a name="2228"
+      >
+                </a
+      ><a name="2245" href="lib.PathGroupoid.html#2202" class="Function Operator"
+      >&#8729;2</a
+      ><a name="2247"
+      > </a
+      ><a name="2248" class="Symbol"
+      >(</a
+      ><a name="2249" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="2253"
+      > </a
+      ><a name="2254" href="lib.types.Wedge.html#3580" class="Function"
+      >fold</a
+      ><a name="2258"
+      > </a
+      ><a name="2259" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="2263"
+      > </a
+      ><a name="2264" class="Symbol"
+      >(</a
+      ><a name="2265" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2270"
+      > </a
+      ><a name="2271" href="cohomology.InverseInSusp.html#1931" class="Bound"
+      >x</a
+      ><a name="2272" class="Symbol"
+      >)</a
+      ><a name="2273"
+      > </a
+      ><a name="2274" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2275"
+      > </a
+      ><a name="2276" href="lib.PathFunctor.html#2204" class="Function"
+      >ap-idf</a
+      ><a name="2282"
+      > </a
+      ><a name="2283" class="Symbol"
+      >_))))</a
+      ><a name="2288"
+      >
+      </a
+      ><a name="2295" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2296"
+      > </a
+      ><a name="2297" href="lib.PathGroupoid.html#1268" class="Function"
+      >!-inv-l</a
+      ><a name="2304"
+      > </a
+      ><a name="2305" class="Symbol"
+      >(</a
+      ><a name="2306" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2311"
+      > </a
+      ><a name="2312" href="cohomology.InverseInSusp.html#1931" class="Bound"
+      >x</a
+      ><a name="2313" class="Symbol"
+      >)</a
+      ><a name="2314"
+      >
+
+  </a
+      ><a name="2318" class="Keyword"
+      >abstract</a
+      ><a name="2326"
+      >
+    </a
+      ><a name="2331" href="cohomology.InverseInSusp.html#2331" class="Function"
+      >cancel</a
+      ><a name="2337"
+      > </a
+      ><a name="2338" class="Symbol"
+      >:</a
+      ><a name="2339"
+      > </a
+      ><a name="2340" class="Symbol"
+      >&#8704;</a
+      ><a name="2341"
+      > </a
+      ><a name="2342" href="cohomology.InverseInSusp.html#2342" class="Bound"
+      >x</a
+      ><a name="2343"
+      >
+      </a
+      ><a name="2350" class="Symbol"
+      >&#8594;</a
+      ><a name="2351"
+      > </a
+      ><a name="2352" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="2362"
+      > </a
+      ><a name="2363" class="Symbol"
+      >(</a
+      ><a name="2364" href="lib.groups.GroupProduct.html#5325" class="Function"
+      >&#215;&#7475;-fanin</a
+      ><a name="2372"
+      > </a
+      ><a name="2373" class="Symbol"
+      >(</a
+      ><a name="2374" href="cohomology.Theory.html#281" class="Function"
+      >C-is-abelian</a
+      ><a name="2386"
+      > </a
+      ><a name="2387" href="cohomology.InverseInSusp.html#349" class="Bound"
+      >n</a
+      ><a name="2388"
+      > </a
+      ><a name="2389" class="Symbol"
+      >_)</a
+      ><a name="2391"
+      > </a
+      ><a name="2392" class="Symbol"
+      >(</a
+      ><a name="2393" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="2399"
+      > </a
+      ><a name="2400" href="cohomology.InverseInSusp.html#349" class="Bound"
+      >n</a
+      ><a name="2401"
+      > </a
+      ><a name="2402" class="Symbol"
+      >(</a
+      ><a name="2403" href="lib.types.Suspension.html#2172" class="Function"
+      >&#8857;Susp-flip</a
+      ><a name="2413"
+      > </a
+      ><a name="2414" href="cohomology.InverseInSusp.html#357" class="Bound"
+      >X</a
+      ><a name="2415" class="Symbol"
+      >))</a
+      ><a name="2417"
+      > </a
+      ><a name="2418" class="Symbol"
+      >(</a
+      ><a name="2419" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="2424"
+      > </a
+      ><a name="2425" class="Symbol"
+      >_))</a
+      ><a name="2428"
+      > </a
+      ><a name="2429" class="Symbol"
+      >(</a
+      ><a name="2430" href="cohomology.InverseInSusp.html#2342" class="Bound"
+      >x</a
+      ><a name="2431"
+      > </a
+      ><a name="2432" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2433"
+      > </a
+      ><a name="2434" href="cohomology.InverseInSusp.html#2342" class="Bound"
+      >x</a
+      ><a name="2435" class="Symbol"
+      >)</a
+      ><a name="2436"
+      >
+      </a
+      ><a name="2443" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2445"
+      > </a
+      ><a name="2446" href="cohomology.Theory.html#477" class="Function"
+      >Cident</a
+      ><a name="2452"
+      > </a
+      ><a name="2453" href="cohomology.InverseInSusp.html#349" class="Bound"
+      >n</a
+      ><a name="2454"
+      > </a
+      ><a name="2455" class="Symbol"
+      >(</a
+      ><a name="2456" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="2461"
+      > </a
+      ><a name="2462" href="cohomology.InverseInSusp.html#357" class="Bound"
+      >X</a
+      ><a name="2463" class="Symbol"
+      >)</a
+      ><a name="2464"
+      >
+    </a
+      ><a name="2469" href="cohomology.InverseInSusp.html#2331" class="Function"
+      >cancel</a
+      ><a name="2475"
+      > </a
+      ><a name="2476" href="cohomology.InverseInSusp.html#2476" class="Bound"
+      >x</a
+      ><a name="2477"
+      > </a
+      ><a name="2478" class="Symbol"
+      >=</a
+      ><a name="2479"
+      >
+        </a
+      ><a name="2488" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="2491"
+      > </a
+      ><a name="2492" class="Symbol"
+      >(</a
+      ><a name="2493" href="lib.types.Group.html#313" class="Function"
+      >Group.comp</a
+      ><a name="2503"
+      > </a
+      ><a name="2504" class="Symbol"
+      >(</a
+      ><a name="2505" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="2506"
+      > </a
+      ><a name="2507" href="cohomology.InverseInSusp.html#349" class="Bound"
+      >n</a
+      ><a name="2508"
+      > </a
+      ><a name="2509" class="Symbol"
+      >(</a
+      ><a name="2510" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="2515"
+      > </a
+      ><a name="2516" href="cohomology.InverseInSusp.html#357" class="Bound"
+      >X</a
+      ><a name="2517" class="Symbol"
+      >)))</a
+      ><a name="2520"
+      >
+          </a
+      ><a name="2531" class="Symbol"
+      >(</a
+      ><a name="2532" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2533"
+      > </a
+      ><a name="2534" class="Symbol"
+      >(</a
+      ><a name="2535" href="cohomology.Theory.html#5003" class="Function"
+      >CEl-fmap-base-indep</a
+      ><a name="2554"
+      > </a
+      ><a name="2555" href="cohomology.InverseInSusp.html#349" class="Bound"
+      >n</a
+      ><a name="2556"
+      > </a
+      ><a name="2557" href="cohomology.InverseInSusp.html#745" class="Function"
+      >projl-subtract</a
+      ><a name="2571"
+      > </a
+      ><a name="2572" href="cohomology.InverseInSusp.html#2476" class="Bound"
+      >x</a
+      ><a name="2573" class="Symbol"
+      >))</a
+      ><a name="2575"
+      >
+          </a
+      ><a name="2586" class="Symbol"
+      >(</a
+      ><a name="2587" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2588"
+      > </a
+      ><a name="2589" class="Symbol"
+      >(</a
+      ><a name="2590" href="cohomology.Theory.html#2842" class="Function"
+      >CEl-fmap-idf</a
+      ><a name="2602"
+      > </a
+      ><a name="2603" href="cohomology.InverseInSusp.html#349" class="Bound"
+      >n</a
+      ><a name="2604"
+      > </a
+      ><a name="2605" href="cohomology.InverseInSusp.html#2476" class="Bound"
+      >x</a
+      ><a name="2606" class="Symbol"
+      >)</a
+      ><a name="2607"
+      > </a
+      ><a name="2608" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2609"
+      > </a
+      ><a name="2610" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2611"
+      > </a
+      ><a name="2612" class="Symbol"
+      >(</a
+      ><a name="2613" href="cohomology.Theory.html#5003" class="Function"
+      >CEl-fmap-base-indep</a
+      ><a name="2632"
+      > </a
+      ><a name="2633" href="cohomology.InverseInSusp.html#349" class="Bound"
+      >n</a
+      ><a name="2634"
+      > </a
+      ><a name="2635" href="cohomology.InverseInSusp.html#1341" class="Function"
+      >projr-subtract</a
+      ><a name="2649"
+      > </a
+      ><a name="2650" href="cohomology.InverseInSusp.html#2476" class="Bound"
+      >x</a
+      ><a name="2651" class="Symbol"
+      >))</a
+      ><a name="2653"
+      >
+      </a
+      ><a name="2660" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2661"
+      > </a
+      ><a name="2662" class="Symbol"
+      >(</a
+      ><a name="2663" href="cohomology.Wedge.html#4761" class="Function"
+      >Wedge-in-comm-sqr'</a
+      ><a name="2681"
+      > </a
+      ><a name="2682" href="cohomology.InverseInSusp.html#646" class="Function"
+      >&#8857;subtract</a
+      ><a name="2691"
+      > </a
+      ><a name="2692" href="lib.groups.CommutingSquare.html#618" class="Function Operator"
+      >&#9633;$&#7475;</a
+      ><a name="2695"
+      > </a
+      ><a name="2696" class="Symbol"
+      >(</a
+      ><a name="2697" href="cohomology.InverseInSusp.html#2476" class="Bound"
+      >x</a
+      ><a name="2698"
+      > </a
+      ><a name="2699" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2700"
+      > </a
+      ><a name="2701" href="cohomology.InverseInSusp.html#2476" class="Bound"
+      >x</a
+      ><a name="2702" class="Symbol"
+      >))</a
+      ><a name="2704"
+      >
+      </a
+      ><a name="2711" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2712"
+      > </a
+      ><a name="2713" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2715"
+      > </a
+      ><a name="2716" class="Symbol"
+      >(</a
+      ><a name="2717" href="cohomology.Theory.html#718" class="Function"
+      >CEl-fmap</a
+      ><a name="2725"
+      > </a
+      ><a name="2726" href="cohomology.InverseInSusp.html#349" class="Bound"
+      >n</a
+      ><a name="2727"
+      > </a
+      ><a name="2728" href="cohomology.InverseInSusp.html#646" class="Function"
+      >&#8857;subtract</a
+      ><a name="2737" class="Symbol"
+      >)</a
+      ><a name="2738"
+      >
+          </a
+      ><a name="2749" class="Symbol"
+      >(</a
+      ><a name="2750"
+      > </a
+      ><a name="2751" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2753"
+      > </a
+      ><a name="2754" class="Symbol"
+      >(</a
+      ><a name="2755" href="lib.Equivalence.html#1668" class="Function"
+      >GroupIso.g</a
+      ><a name="2765"
+      > </a
+      ><a name="2766" href="cohomology.Wedge.html#2074" class="Function"
+      >C-Wedge</a
+      ><a name="2773"
+      > </a
+      ><a name="2774" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="2775"
+      > </a
+      ><a name="2776" href="lib.types.Sigma.html#1131" class="Function"
+      >diag</a
+      ><a name="2780" class="Symbol"
+      >)</a
+      ><a name="2781"
+      > </a
+      ><a name="2782" class="Symbol"
+      >(</a
+      ><a name="2783" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2784"
+      > </a
+      ><a name="2785" class="Symbol"
+      >(</a
+      ><a name="2786" href="cohomology.Theory.html#2842" class="Function"
+      >CEl-fmap-idf</a
+      ><a name="2798"
+      > </a
+      ><a name="2799" href="cohomology.InverseInSusp.html#349" class="Bound"
+      >n</a
+      ><a name="2800"
+      > </a
+      ><a name="2801" href="cohomology.InverseInSusp.html#2476" class="Bound"
+      >x</a
+      ><a name="2802" class="Symbol"
+      >))</a
+      ><a name="2804"
+      >
+          </a
+      ><a name="2815" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2816"
+      > </a
+      ><a name="2817" class="Symbol"
+      >(</a
+      ><a name="2818" href="cohomology.Wedge.html#2924" class="Function"
+      >C-Wedge-rec-comm-sqr'</a
+      ><a name="2839"
+      > </a
+      ><a name="2840" class="Symbol"
+      >(</a
+      ><a name="2841" href="lib.Base.html#10041" class="Function"
+      >&#8857;idf</a
+      ><a name="2845"
+      > </a
+      ><a name="2846" class="Symbol"
+      >_)</a
+      ><a name="2848"
+      > </a
+      ><a name="2849" class="Symbol"
+      >(</a
+      ><a name="2850" href="lib.Base.html#10041" class="Function"
+      >&#8857;idf</a
+      ><a name="2854"
+      > </a
+      ><a name="2855" class="Symbol"
+      >_)</a
+      ><a name="2857"
+      > </a
+      ><a name="2858" href="lib.groups.CommutingSquare.html#618" class="Function Operator"
+      >&#9633;$&#7475;</a
+      ><a name="2861"
+      > </a
+      ><a name="2862" href="cohomology.InverseInSusp.html#2476" class="Bound"
+      >x</a
+      ><a name="2863" class="Symbol"
+      >))</a
+      ><a name="2865"
+      >
+      </a
+      ><a name="2872" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2873"
+      > </a
+      ><a name="2874" href="cohomology.Theory.html#2894" class="Function"
+      >&#8728;-CEl-fmap</a
+      ><a name="2884"
+      > </a
+      ><a name="2885" href="cohomology.InverseInSusp.html#349" class="Bound"
+      >n</a
+      ><a name="2886"
+      > </a
+      ><a name="2887" href="cohomology.InverseInSusp.html#646" class="Function"
+      >&#8857;subtract</a
+      ><a name="2896"
+      > </a
+      ><a name="2897" href="lib.types.Wedge.html#3594" class="Function"
+      >&#8857;fold</a
+      ><a name="2902"
+      > </a
+      ><a name="2903" href="cohomology.InverseInSusp.html#2476" class="Bound"
+      >x</a
+      ><a name="2904"
+      >
+      </a
+      ><a name="2911" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2912"
+      > </a
+      ><a name="2913" href="cohomology.Theory.html#5003" class="Function"
+      >CEl-fmap-base-indep</a
+      ><a name="2932"
+      > </a
+      ><a name="2933" href="cohomology.InverseInSusp.html#349" class="Bound"
+      >n</a
+      ><a name="2934"
+      > </a
+      ><a name="2935" class="Symbol"
+      >(&#955;</a
+      ><a name="2937"
+      > </a
+      ><a name="2938" href="cohomology.InverseInSusp.html#2938" class="Bound"
+      >&#963;</a
+      ><a name="2939"
+      > </a
+      ><a name="2940" class="Symbol"
+      >&#8594;</a
+      ><a name="2941"
+      > </a
+      ><a name="2942" href="cohomology.InverseInSusp.html#1819" class="Function"
+      >fold-subtract</a
+      ><a name="2955"
+      > </a
+      ><a name="2956" href="cohomology.InverseInSusp.html#2938" class="Bound"
+      >&#963;</a
+      ><a name="2957"
+      > </a
+      ><a name="2958" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2959"
+      > </a
+      ><a name="2960" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2961"
+      > </a
+      ><a name="2962" class="Symbol"
+      >(</a
+      ><a name="2963" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2968"
+      > </a
+      ><a name="2969" class="Symbol"
+      >(</a
+      ><a name="2970" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2972"
+      > </a
+      ><a name="2973" href="cohomology.InverseInSusp.html#357" class="Bound"
+      >X</a
+      ><a name="2974" class="Symbol"
+      >)))</a
+      ><a name="2977"
+      > </a
+      ><a name="2978" href="cohomology.InverseInSusp.html#2476" class="Bound"
+      >x</a
+      ><a name="2979"
+      >
+      </a
+      ><a name="2986" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2987"
+      > </a
+      ><a name="2988" href="cohomology.Theory.html#7140" class="Function"
+      >CEl-fmap-cst</a
+      ><a name="3000"
+      > </a
+      ><a name="3001" href="cohomology.InverseInSusp.html#349" class="Bound"
+      >n</a
+      ><a name="3002"
+      > </a
+      ><a name="3003" href="cohomology.InverseInSusp.html#2476" class="Bound"
+      >x</a
+      ><a name="3004"
+      >
+
+</a
+      ><a name="3006" class="Keyword"
+      >abstract</a
+      ><a name="3014"
+      >
+  </a
+      ><a name="3017" href="cohomology.InverseInSusp.html#3017" class="Function"
+      >C-Susp-flip-is-inv</a
+      ><a name="3035"
+      > </a
+      ><a name="3036" class="Symbol"
+      >:</a
+      ><a name="3037"
+      > </a
+      ><a name="3038" class="Symbol"
+      >&#8704;</a
+      ><a name="3039"
+      > </a
+      ><a name="3040" href="cohomology.InverseInSusp.html#3040" class="Bound"
+      >x</a
+      ><a name="3041"
+      > </a
+      ><a name="3042" class="Symbol"
+      >&#8594;</a
+      ><a name="3043"
+      > </a
+      ><a name="3044" href="cohomology.Theory.html#718" class="Function"
+      >CEl-fmap</a
+      ><a name="3052"
+      > </a
+      ><a name="3053" href="cohomology.InverseInSusp.html#349" class="Bound"
+      >n</a
+      ><a name="3054"
+      > </a
+      ><a name="3055" class="Symbol"
+      >(</a
+      ><a name="3056" href="lib.types.Suspension.html#2172" class="Function"
+      >&#8857;Susp-flip</a
+      ><a name="3066"
+      > </a
+      ><a name="3067" href="cohomology.InverseInSusp.html#357" class="Bound"
+      >X</a
+      ><a name="3068" class="Symbol"
+      >)</a
+      ><a name="3069"
+      > </a
+      ><a name="3070" href="cohomology.InverseInSusp.html#3040" class="Bound"
+      >x</a
+      ><a name="3071"
+      > </a
+      ><a name="3072" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3074"
+      > </a
+      ><a name="3075" href="lib.types.Group.html#292" class="Function"
+      >Group.inv</a
+      ><a name="3084"
+      > </a
+      ><a name="3085" class="Symbol"
+      >(</a
+      ><a name="3086" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="3087"
+      > </a
+      ><a name="3088" href="cohomology.InverseInSusp.html#349" class="Bound"
+      >n</a
+      ><a name="3089"
+      > </a
+      ><a name="3090" class="Symbol"
+      >(</a
+      ><a name="3091" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="3096"
+      > </a
+      ><a name="3097" href="cohomology.InverseInSusp.html#357" class="Bound"
+      >X</a
+      ><a name="3098" class="Symbol"
+      >))</a
+      ><a name="3100"
+      > </a
+      ><a name="3101" href="cohomology.InverseInSusp.html#3040" class="Bound"
+      >x</a
+      ><a name="3102"
+      >
+  </a
+      ><a name="3105" href="cohomology.InverseInSusp.html#3017" class="Function"
+      >C-Susp-flip-is-inv</a
+      ><a name="3123"
+      > </a
+      ><a name="3124" href="cohomology.InverseInSusp.html#3124" class="Bound"
+      >x</a
+      ><a name="3125"
+      > </a
+      ><a name="3126" class="Symbol"
+      >=</a
+      ><a name="3127"
+      > </a
+      ><a name="3128" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3129"
+      > </a
+      ><a name="3130" class="Symbol"
+      >(</a
+      ><a name="3131" href="lib.types.Group.html#1536" class="Function"
+      >Group.inv-unique-l</a
+      ><a name="3149"
+      > </a
+      ><a name="3150" class="Symbol"
+      >(</a
+      ><a name="3151" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="3152"
+      > </a
+      ><a name="3153" href="cohomology.InverseInSusp.html#349" class="Bound"
+      >n</a
+      ><a name="3154"
+      > </a
+      ><a name="3155" class="Symbol"
+      >(</a
+      ><a name="3156" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="3161"
+      > </a
+      ><a name="3162" href="cohomology.InverseInSusp.html#357" class="Bound"
+      >X</a
+      ><a name="3163" class="Symbol"
+      >))</a
+      ><a name="3165"
+      > </a
+      ><a name="3166" class="Symbol"
+      >_</a
+      ><a name="3167"
+      > </a
+      ><a name="3168" href="cohomology.InverseInSusp.html#3124" class="Bound"
+      >x</a
+      ><a name="3169"
+      > </a
+      ><a name="3170" class="Symbol"
+      >(</a
+      ><a name="3171" href="cohomology.InverseInSusp.html#2331" class="Function"
+      >cancel</a
+      ><a name="3177"
+      > </a
+      ><a name="3178" href="cohomology.InverseInSusp.html#3124" class="Bound"
+      >x</a
+      ><a name="3179" class="Symbol"
+      >))</a
+      ><a name="3181"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

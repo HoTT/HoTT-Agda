@@ -1,0 +1,5454 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.CommutingSquare</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.Sigma.html#1" class="Module"
+      >lib.types.Sigma</a
+      ><a name="92"
+      >
+</a
+      ><a name="93" class="Keyword"
+      >open</a
+      ><a name="97"
+      > </a
+      ><a name="98" class="Keyword"
+      >import</a
+      ><a name="104"
+      > </a
+      ><a name="105" href="lib.types.Paths.html#1" class="Module"
+      >lib.types.Paths</a
+      ><a name="120"
+      >
+
+</a
+      ><a name="122" class="Keyword"
+      >module</a
+      ><a name="128"
+      > </a
+      ><a name="129" href="lib.types.CommutingSquare.html#1" class="Module"
+      >lib.types.CommutingSquare</a
+      ><a name="154"
+      > </a
+      ><a name="155" class="Keyword"
+      >where</a
+      ><a name="160"
+      >
+
+</a
+      ><a name="162" class="Comment"
+      >{- maps between two functions -}</a
+      ><a name="194"
+      >
+
+</a
+      ><a name="196" class="Keyword"
+      >infix</a
+      ><a name="201"
+      > </a
+      ><a name="202" class="Number"
+      >0</a
+      ><a name="203"
+      > </a
+      ><a name="204" href="lib.types.CommutingSquare.html#209" class="Function Operator"
+      >_&#9633;$_</a
+      ><a name="208"
+      >
+</a
+      ><a name="209" href="lib.types.CommutingSquare.html#209" class="Function Operator"
+      >_&#9633;$_</a
+      ><a name="213"
+      > </a
+      ><a name="214" class="Symbol"
+      >=</a
+      ><a name="215"
+      > </a
+      ><a name="216" href="lib.Function.html#1839" class="Field"
+      >CommSquare.commutes</a
+      ><a name="235"
+      >
+
+</a
+      ><a name="237" href="lib.types.CommutingSquare.html#237" class="Function"
+      >CommSquare-&#8728;v</a
+      ><a name="250"
+      > </a
+      ><a name="251" class="Symbol"
+      >:</a
+      ><a name="252"
+      > </a
+      ><a name="253" class="Symbol"
+      >&#8704;</a
+      ><a name="254"
+      > </a
+      ><a name="255" class="Symbol"
+      >{</a
+      ><a name="256" href="lib.types.CommutingSquare.html#256" class="Bound"
+      >i&#8320;</a
+      ><a name="258"
+      > </a
+      ><a name="259" href="lib.types.CommutingSquare.html#259" class="Bound"
+      >i&#8321;</a
+      ><a name="261"
+      > </a
+      ><a name="262" href="lib.types.CommutingSquare.html#262" class="Bound"
+      >i&#8322;</a
+      ><a name="264"
+      > </a
+      ><a name="265" href="lib.types.CommutingSquare.html#265" class="Bound"
+      >j&#8320;</a
+      ><a name="267"
+      > </a
+      ><a name="268" href="lib.types.CommutingSquare.html#268" class="Bound"
+      >j&#8321;</a
+      ><a name="270"
+      > </a
+      ><a name="271" href="lib.types.CommutingSquare.html#271" class="Bound"
+      >j&#8322;</a
+      ><a name="273" class="Symbol"
+      >}</a
+      ><a name="274"
+      >
+  </a
+      ><a name="277" class="Symbol"
+      >{</a
+      ><a name="278" href="lib.types.CommutingSquare.html#278" class="Bound"
+      >A&#8320;</a
+      ><a name="280"
+      > </a
+      ><a name="281" class="Symbol"
+      >:</a
+      ><a name="282"
+      > </a
+      ><a name="283" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="287"
+      > </a
+      ><a name="288" href="lib.types.CommutingSquare.html#256" class="Bound"
+      >i&#8320;</a
+      ><a name="290" class="Symbol"
+      >}</a
+      ><a name="291"
+      > </a
+      ><a name="292" class="Symbol"
+      >{</a
+      ><a name="293" href="lib.types.CommutingSquare.html#293" class="Bound"
+      >A&#8321;</a
+      ><a name="295"
+      > </a
+      ><a name="296" class="Symbol"
+      >:</a
+      ><a name="297"
+      > </a
+      ><a name="298" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="302"
+      > </a
+      ><a name="303" href="lib.types.CommutingSquare.html#259" class="Bound"
+      >i&#8321;</a
+      ><a name="305" class="Symbol"
+      >}</a
+      ><a name="306"
+      > </a
+      ><a name="307" class="Symbol"
+      >{</a
+      ><a name="308" href="lib.types.CommutingSquare.html#308" class="Bound"
+      >A&#8322;</a
+      ><a name="310"
+      > </a
+      ><a name="311" class="Symbol"
+      >:</a
+      ><a name="312"
+      > </a
+      ><a name="313" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="317"
+      > </a
+      ><a name="318" href="lib.types.CommutingSquare.html#262" class="Bound"
+      >i&#8322;</a
+      ><a name="320" class="Symbol"
+      >}</a
+      ><a name="321"
+      >
+  </a
+      ><a name="324" class="Symbol"
+      >{</a
+      ><a name="325" href="lib.types.CommutingSquare.html#325" class="Bound"
+      >B&#8320;</a
+      ><a name="327"
+      > </a
+      ><a name="328" class="Symbol"
+      >:</a
+      ><a name="329"
+      > </a
+      ><a name="330" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="334"
+      > </a
+      ><a name="335" href="lib.types.CommutingSquare.html#265" class="Bound"
+      >j&#8320;</a
+      ><a name="337" class="Symbol"
+      >}</a
+      ><a name="338"
+      > </a
+      ><a name="339" class="Symbol"
+      >{</a
+      ><a name="340" href="lib.types.CommutingSquare.html#340" class="Bound"
+      >B&#8321;</a
+      ><a name="342"
+      > </a
+      ><a name="343" class="Symbol"
+      >:</a
+      ><a name="344"
+      > </a
+      ><a name="345" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="349"
+      > </a
+      ><a name="350" href="lib.types.CommutingSquare.html#268" class="Bound"
+      >j&#8321;</a
+      ><a name="352" class="Symbol"
+      >}</a
+      ><a name="353"
+      > </a
+      ><a name="354" class="Symbol"
+      >{</a
+      ><a name="355" href="lib.types.CommutingSquare.html#355" class="Bound"
+      >B&#8322;</a
+      ><a name="357"
+      > </a
+      ><a name="358" class="Symbol"
+      >:</a
+      ><a name="359"
+      > </a
+      ><a name="360" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="364"
+      > </a
+      ><a name="365" href="lib.types.CommutingSquare.html#271" class="Bound"
+      >j&#8322;</a
+      ><a name="367" class="Symbol"
+      >}</a
+      ><a name="368"
+      >
+  </a
+      ><a name="371" class="Symbol"
+      >{</a
+      ><a name="372" href="lib.types.CommutingSquare.html#372" class="Bound"
+      >f&#8320;</a
+      ><a name="374"
+      > </a
+      ><a name="375" class="Symbol"
+      >:</a
+      ><a name="376"
+      > </a
+      ><a name="377" href="lib.types.CommutingSquare.html#278" class="Bound"
+      >A&#8320;</a
+      ><a name="379"
+      > </a
+      ><a name="380" class="Symbol"
+      >&#8594;</a
+      ><a name="381"
+      > </a
+      ><a name="382" href="lib.types.CommutingSquare.html#325" class="Bound"
+      >B&#8320;</a
+      ><a name="384" class="Symbol"
+      >}</a
+      ><a name="385"
+      > </a
+      ><a name="386" class="Symbol"
+      >{</a
+      ><a name="387" href="lib.types.CommutingSquare.html#387" class="Bound"
+      >f&#8321;</a
+      ><a name="389"
+      > </a
+      ><a name="390" class="Symbol"
+      >:</a
+      ><a name="391"
+      > </a
+      ><a name="392" href="lib.types.CommutingSquare.html#293" class="Bound"
+      >A&#8321;</a
+      ><a name="394"
+      > </a
+      ><a name="395" class="Symbol"
+      >&#8594;</a
+      ><a name="396"
+      > </a
+      ><a name="397" href="lib.types.CommutingSquare.html#340" class="Bound"
+      >B&#8321;</a
+      ><a name="399" class="Symbol"
+      >}</a
+      ><a name="400"
+      > </a
+      ><a name="401" class="Symbol"
+      >{</a
+      ><a name="402" href="lib.types.CommutingSquare.html#402" class="Bound"
+      >f&#8322;</a
+      ><a name="404"
+      > </a
+      ><a name="405" class="Symbol"
+      >:</a
+      ><a name="406"
+      > </a
+      ><a name="407" href="lib.types.CommutingSquare.html#308" class="Bound"
+      >A&#8322;</a
+      ><a name="409"
+      > </a
+      ><a name="410" class="Symbol"
+      >&#8594;</a
+      ><a name="411"
+      > </a
+      ><a name="412" href="lib.types.CommutingSquare.html#355" class="Bound"
+      >B&#8322;</a
+      ><a name="414" class="Symbol"
+      >}</a
+      ><a name="415"
+      >
+  </a
+      ><a name="418" class="Symbol"
+      >{</a
+      ><a name="419" href="lib.types.CommutingSquare.html#419" class="Bound"
+      >hA</a
+      ><a name="421"
+      > </a
+      ><a name="422" class="Symbol"
+      >:</a
+      ><a name="423"
+      > </a
+      ><a name="424" href="lib.types.CommutingSquare.html#278" class="Bound"
+      >A&#8320;</a
+      ><a name="426"
+      > </a
+      ><a name="427" class="Symbol"
+      >&#8594;</a
+      ><a name="428"
+      > </a
+      ><a name="429" href="lib.types.CommutingSquare.html#293" class="Bound"
+      >A&#8321;</a
+      ><a name="431" class="Symbol"
+      >}</a
+      ><a name="432"
+      > </a
+      ><a name="433" class="Symbol"
+      >{</a
+      ><a name="434" href="lib.types.CommutingSquare.html#434" class="Bound"
+      >hB</a
+      ><a name="436"
+      > </a
+      ><a name="437" class="Symbol"
+      >:</a
+      ><a name="438"
+      > </a
+      ><a name="439" href="lib.types.CommutingSquare.html#325" class="Bound"
+      >B&#8320;</a
+      ><a name="441"
+      > </a
+      ><a name="442" class="Symbol"
+      >&#8594;</a
+      ><a name="443"
+      > </a
+      ><a name="444" href="lib.types.CommutingSquare.html#340" class="Bound"
+      >B&#8321;</a
+      ><a name="446" class="Symbol"
+      >}</a
+      ><a name="447"
+      >
+  </a
+      ><a name="450" class="Symbol"
+      >{</a
+      ><a name="451" href="lib.types.CommutingSquare.html#451" class="Bound"
+      >kA</a
+      ><a name="453"
+      > </a
+      ><a name="454" class="Symbol"
+      >:</a
+      ><a name="455"
+      > </a
+      ><a name="456" href="lib.types.CommutingSquare.html#293" class="Bound"
+      >A&#8321;</a
+      ><a name="458"
+      > </a
+      ><a name="459" class="Symbol"
+      >&#8594;</a
+      ><a name="460"
+      > </a
+      ><a name="461" href="lib.types.CommutingSquare.html#308" class="Bound"
+      >A&#8322;</a
+      ><a name="463" class="Symbol"
+      >}</a
+      ><a name="464"
+      > </a
+      ><a name="465" class="Symbol"
+      >{</a
+      ><a name="466" href="lib.types.CommutingSquare.html#466" class="Bound"
+      >kB</a
+      ><a name="468"
+      > </a
+      ><a name="469" class="Symbol"
+      >:</a
+      ><a name="470"
+      > </a
+      ><a name="471" href="lib.types.CommutingSquare.html#340" class="Bound"
+      >B&#8321;</a
+      ><a name="473"
+      > </a
+      ><a name="474" class="Symbol"
+      >&#8594;</a
+      ><a name="475"
+      > </a
+      ><a name="476" href="lib.types.CommutingSquare.html#355" class="Bound"
+      >B&#8322;</a
+      ><a name="478" class="Symbol"
+      >}</a
+      ><a name="479"
+      >
+  </a
+      ><a name="482" class="Symbol"
+      >&#8594;</a
+      ><a name="483"
+      > </a
+      ><a name="484" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="494"
+      > </a
+      ><a name="495" href="lib.types.CommutingSquare.html#387" class="Bound"
+      >f&#8321;</a
+      ><a name="497"
+      > </a
+      ><a name="498" href="lib.types.CommutingSquare.html#402" class="Bound"
+      >f&#8322;</a
+      ><a name="500"
+      > </a
+      ><a name="501" href="lib.types.CommutingSquare.html#451" class="Bound"
+      >kA</a
+      ><a name="503"
+      > </a
+      ><a name="504" href="lib.types.CommutingSquare.html#466" class="Bound"
+      >kB</a
+      ><a name="506"
+      >
+  </a
+      ><a name="509" class="Symbol"
+      >&#8594;</a
+      ><a name="510"
+      > </a
+      ><a name="511" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="521"
+      > </a
+      ><a name="522" href="lib.types.CommutingSquare.html#372" class="Bound"
+      >f&#8320;</a
+      ><a name="524"
+      > </a
+      ><a name="525" href="lib.types.CommutingSquare.html#387" class="Bound"
+      >f&#8321;</a
+      ><a name="527"
+      > </a
+      ><a name="528" href="lib.types.CommutingSquare.html#419" class="Bound"
+      >hA</a
+      ><a name="530"
+      > </a
+      ><a name="531" href="lib.types.CommutingSquare.html#434" class="Bound"
+      >hB</a
+      ><a name="533"
+      >
+  </a
+      ><a name="536" class="Symbol"
+      >&#8594;</a
+      ><a name="537"
+      > </a
+      ><a name="538" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="548"
+      > </a
+      ><a name="549" href="lib.types.CommutingSquare.html#372" class="Bound"
+      >f&#8320;</a
+      ><a name="551"
+      > </a
+      ><a name="552" href="lib.types.CommutingSquare.html#402" class="Bound"
+      >f&#8322;</a
+      ><a name="554"
+      > </a
+      ><a name="555" class="Symbol"
+      >(</a
+      ><a name="556" href="lib.types.CommutingSquare.html#451" class="Bound"
+      >kA</a
+      ><a name="558"
+      > </a
+      ><a name="559" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="560"
+      > </a
+      ><a name="561" href="lib.types.CommutingSquare.html#419" class="Bound"
+      >hA</a
+      ><a name="563" class="Symbol"
+      >)</a
+      ><a name="564"
+      > </a
+      ><a name="565" class="Symbol"
+      >(</a
+      ><a name="566" href="lib.types.CommutingSquare.html#466" class="Bound"
+      >kB</a
+      ><a name="568"
+      > </a
+      ><a name="569" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="570"
+      > </a
+      ><a name="571" href="lib.types.CommutingSquare.html#434" class="Bound"
+      >hB</a
+      ><a name="573" class="Symbol"
+      >)</a
+      ><a name="574"
+      >
+</a
+      ><a name="575" href="lib.types.CommutingSquare.html#237" class="Function"
+      >CommSquare-&#8728;v</a
+      ><a name="588"
+      > </a
+      ><a name="589" class="Symbol"
+      >{</a
+      ><a name="590" class="Argument"
+      >hA</a
+      ><a name="592"
+      > </a
+      ><a name="593" class="Symbol"
+      >=</a
+      ><a name="594"
+      > </a
+      ><a name="595" href="lib.types.CommutingSquare.html#595" class="Bound"
+      >hA</a
+      ><a name="597" class="Symbol"
+      >}</a
+      ><a name="598"
+      > </a
+      ><a name="599" class="Symbol"
+      >{</a
+      ><a name="600" class="Argument"
+      >kB</a
+      ><a name="602"
+      > </a
+      ><a name="603" class="Symbol"
+      >=</a
+      ><a name="604"
+      > </a
+      ><a name="605" href="lib.types.CommutingSquare.html#605" class="Bound"
+      >kB</a
+      ><a name="607" class="Symbol"
+      >}</a
+      ><a name="608"
+      > </a
+      ><a name="609" class="Symbol"
+      >(</a
+      ><a name="610" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="618"
+      > </a
+      ><a name="619" href="lib.types.CommutingSquare.html#619" class="Bound"
+      >&#9633;&#8321;&#8322;</a
+      ><a name="622" class="Symbol"
+      >)</a
+      ><a name="623"
+      > </a
+      ><a name="624" class="Symbol"
+      >(</a
+      ><a name="625" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="633"
+      > </a
+      ><a name="634" href="lib.types.CommutingSquare.html#634" class="Bound"
+      >&#9633;&#8320;&#8321;</a
+      ><a name="637" class="Symbol"
+      >)</a
+      ><a name="638"
+      > </a
+      ><a name="639" class="Symbol"
+      >=</a
+      ><a name="640"
+      >
+  </a
+      ><a name="643" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="651"
+      > </a
+      ><a name="652" class="Symbol"
+      >&#955;</a
+      ><a name="653"
+      > </a
+      ><a name="654" href="lib.types.CommutingSquare.html#654" class="Bound"
+      >a&#8320;</a
+      ><a name="656"
+      > </a
+      ><a name="657" class="Symbol"
+      >&#8594;</a
+      ><a name="658"
+      > </a
+      ><a name="659" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="661"
+      > </a
+      ><a name="662" href="lib.types.CommutingSquare.html#605" class="Bound"
+      >kB</a
+      ><a name="664"
+      > </a
+      ><a name="665" class="Symbol"
+      >(</a
+      ><a name="666" href="lib.types.CommutingSquare.html#634" class="Bound"
+      >&#9633;&#8320;&#8321;</a
+      ><a name="669"
+      > </a
+      ><a name="670" href="lib.types.CommutingSquare.html#654" class="Bound"
+      >a&#8320;</a
+      ><a name="672" class="Symbol"
+      >)</a
+      ><a name="673"
+      > </a
+      ><a name="674" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="675"
+      > </a
+      ><a name="676" href="lib.types.CommutingSquare.html#619" class="Bound"
+      >&#9633;&#8321;&#8322;</a
+      ><a name="679"
+      > </a
+      ><a name="680" class="Symbol"
+      >(</a
+      ><a name="681" href="lib.types.CommutingSquare.html#595" class="Bound"
+      >hA</a
+      ><a name="683"
+      > </a
+      ><a name="684" href="lib.types.CommutingSquare.html#654" class="Bound"
+      >a&#8320;</a
+      ><a name="686" class="Symbol"
+      >)</a
+      ><a name="687"
+      >
+
+</a
+      ><a name="689" href="lib.types.CommutingSquare.html#689" class="Function"
+      >CommSquare-inverse-v</a
+      ><a name="709"
+      > </a
+      ><a name="710" class="Symbol"
+      >:</a
+      ><a name="711"
+      > </a
+      ><a name="712" class="Symbol"
+      >&#8704;</a
+      ><a name="713"
+      > </a
+      ><a name="714" class="Symbol"
+      >{</a
+      ><a name="715" href="lib.types.CommutingSquare.html#715" class="Bound"
+      >i&#8320;</a
+      ><a name="717"
+      > </a
+      ><a name="718" href="lib.types.CommutingSquare.html#718" class="Bound"
+      >i&#8321;</a
+      ><a name="720"
+      > </a
+      ><a name="721" href="lib.types.CommutingSquare.html#721" class="Bound"
+      >j&#8320;</a
+      ><a name="723"
+      > </a
+      ><a name="724" href="lib.types.CommutingSquare.html#724" class="Bound"
+      >j&#8321;</a
+      ><a name="726" class="Symbol"
+      >}</a
+      ><a name="727"
+      >
+  </a
+      ><a name="730" class="Symbol"
+      >{</a
+      ><a name="731" href="lib.types.CommutingSquare.html#731" class="Bound"
+      >A&#8320;</a
+      ><a name="733"
+      > </a
+      ><a name="734" class="Symbol"
+      >:</a
+      ><a name="735"
+      > </a
+      ><a name="736" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="740"
+      > </a
+      ><a name="741" href="lib.types.CommutingSquare.html#715" class="Bound"
+      >i&#8320;</a
+      ><a name="743" class="Symbol"
+      >}</a
+      ><a name="744"
+      > </a
+      ><a name="745" class="Symbol"
+      >{</a
+      ><a name="746" href="lib.types.CommutingSquare.html#746" class="Bound"
+      >A&#8321;</a
+      ><a name="748"
+      > </a
+      ><a name="749" class="Symbol"
+      >:</a
+      ><a name="750"
+      > </a
+      ><a name="751" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="755"
+      > </a
+      ><a name="756" href="lib.types.CommutingSquare.html#718" class="Bound"
+      >i&#8321;</a
+      ><a name="758" class="Symbol"
+      >}</a
+      ><a name="759"
+      > </a
+      ><a name="760" class="Symbol"
+      >{</a
+      ><a name="761" href="lib.types.CommutingSquare.html#761" class="Bound"
+      >B&#8320;</a
+      ><a name="763"
+      > </a
+      ><a name="764" class="Symbol"
+      >:</a
+      ><a name="765"
+      > </a
+      ><a name="766" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="770"
+      > </a
+      ><a name="771" href="lib.types.CommutingSquare.html#721" class="Bound"
+      >j&#8320;</a
+      ><a name="773" class="Symbol"
+      >}</a
+      ><a name="774"
+      > </a
+      ><a name="775" class="Symbol"
+      >{</a
+      ><a name="776" href="lib.types.CommutingSquare.html#776" class="Bound"
+      >B&#8321;</a
+      ><a name="778"
+      > </a
+      ><a name="779" class="Symbol"
+      >:</a
+      ><a name="780"
+      > </a
+      ><a name="781" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="785"
+      > </a
+      ><a name="786" href="lib.types.CommutingSquare.html#724" class="Bound"
+      >j&#8321;</a
+      ><a name="788" class="Symbol"
+      >}</a
+      ><a name="789"
+      >
+  </a
+      ><a name="792" class="Symbol"
+      >{</a
+      ><a name="793" href="lib.types.CommutingSquare.html#793" class="Bound"
+      >f&#8320;</a
+      ><a name="795"
+      > </a
+      ><a name="796" class="Symbol"
+      >:</a
+      ><a name="797"
+      > </a
+      ><a name="798" href="lib.types.CommutingSquare.html#731" class="Bound"
+      >A&#8320;</a
+      ><a name="800"
+      > </a
+      ><a name="801" class="Symbol"
+      >&#8594;</a
+      ><a name="802"
+      > </a
+      ><a name="803" href="lib.types.CommutingSquare.html#761" class="Bound"
+      >B&#8320;</a
+      ><a name="805" class="Symbol"
+      >}</a
+      ><a name="806"
+      > </a
+      ><a name="807" class="Symbol"
+      >{</a
+      ><a name="808" href="lib.types.CommutingSquare.html#808" class="Bound"
+      >f&#8321;</a
+      ><a name="810"
+      > </a
+      ><a name="811" class="Symbol"
+      >:</a
+      ><a name="812"
+      > </a
+      ><a name="813" href="lib.types.CommutingSquare.html#746" class="Bound"
+      >A&#8321;</a
+      ><a name="815"
+      > </a
+      ><a name="816" class="Symbol"
+      >&#8594;</a
+      ><a name="817"
+      > </a
+      ><a name="818" href="lib.types.CommutingSquare.html#776" class="Bound"
+      >B&#8321;</a
+      ><a name="820" class="Symbol"
+      >}</a
+      ><a name="821"
+      > </a
+      ><a name="822" class="Symbol"
+      >{</a
+      ><a name="823" href="lib.types.CommutingSquare.html#823" class="Bound"
+      >hA</a
+      ><a name="825"
+      > </a
+      ><a name="826" class="Symbol"
+      >:</a
+      ><a name="827"
+      > </a
+      ><a name="828" href="lib.types.CommutingSquare.html#731" class="Bound"
+      >A&#8320;</a
+      ><a name="830"
+      > </a
+      ><a name="831" class="Symbol"
+      >&#8594;</a
+      ><a name="832"
+      > </a
+      ><a name="833" href="lib.types.CommutingSquare.html#746" class="Bound"
+      >A&#8321;</a
+      ><a name="835" class="Symbol"
+      >}</a
+      ><a name="836"
+      > </a
+      ><a name="837" class="Symbol"
+      >{</a
+      ><a name="838" href="lib.types.CommutingSquare.html#838" class="Bound"
+      >hB</a
+      ><a name="840"
+      > </a
+      ><a name="841" class="Symbol"
+      >:</a
+      ><a name="842"
+      > </a
+      ><a name="843" href="lib.types.CommutingSquare.html#761" class="Bound"
+      >B&#8320;</a
+      ><a name="845"
+      > </a
+      ><a name="846" class="Symbol"
+      >&#8594;</a
+      ><a name="847"
+      > </a
+      ><a name="848" href="lib.types.CommutingSquare.html#776" class="Bound"
+      >B&#8321;</a
+      ><a name="850" class="Symbol"
+      >}</a
+      ><a name="851"
+      >
+  </a
+      ><a name="854" class="Symbol"
+      >&#8594;</a
+      ><a name="855"
+      > </a
+      ><a name="856" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="866"
+      > </a
+      ><a name="867" href="lib.types.CommutingSquare.html#793" class="Bound"
+      >f&#8320;</a
+      ><a name="869"
+      > </a
+      ><a name="870" href="lib.types.CommutingSquare.html#808" class="Bound"
+      >f&#8321;</a
+      ><a name="872"
+      > </a
+      ><a name="873" href="lib.types.CommutingSquare.html#823" class="Bound"
+      >hA</a
+      ><a name="875"
+      > </a
+      ><a name="876" href="lib.types.CommutingSquare.html#838" class="Bound"
+      >hB</a
+      ><a name="878"
+      > </a
+      ><a name="879" class="Symbol"
+      >&#8594;</a
+      ><a name="880"
+      > </a
+      ><a name="881" class="Symbol"
+      >(</a
+      ><a name="882" href="lib.types.CommutingSquare.html#882" class="Bound"
+      >hA-ise</a
+      ><a name="888"
+      > </a
+      ><a name="889" class="Symbol"
+      >:</a
+      ><a name="890"
+      > </a
+      ><a name="891" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="899"
+      > </a
+      ><a name="900" href="lib.types.CommutingSquare.html#823" class="Bound"
+      >hA</a
+      ><a name="902" class="Symbol"
+      >)</a
+      ><a name="903"
+      > </a
+      ><a name="904" class="Symbol"
+      >(</a
+      ><a name="905" href="lib.types.CommutingSquare.html#905" class="Bound"
+      >hB-ise</a
+      ><a name="911"
+      > </a
+      ><a name="912" class="Symbol"
+      >:</a
+      ><a name="913"
+      > </a
+      ><a name="914" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="922"
+      > </a
+      ><a name="923" href="lib.types.CommutingSquare.html#838" class="Bound"
+      >hB</a
+      ><a name="925" class="Symbol"
+      >)</a
+      ><a name="926"
+      >
+  </a
+      ><a name="929" class="Symbol"
+      >&#8594;</a
+      ><a name="930"
+      > </a
+      ><a name="931" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="941"
+      > </a
+      ><a name="942" href="lib.types.CommutingSquare.html#808" class="Bound"
+      >f&#8321;</a
+      ><a name="944"
+      > </a
+      ><a name="945" href="lib.types.CommutingSquare.html#793" class="Bound"
+      >f&#8320;</a
+      ><a name="947"
+      > </a
+      ><a name="948" class="Symbol"
+      >(</a
+      ><a name="949" href="lib.Equivalence.html#1668" class="Field"
+      >is-equiv.g</a
+      ><a name="959"
+      > </a
+      ><a name="960" href="lib.types.CommutingSquare.html#882" class="Bound"
+      >hA-ise</a
+      ><a name="966" class="Symbol"
+      >)</a
+      ><a name="967"
+      > </a
+      ><a name="968" class="Symbol"
+      >(</a
+      ><a name="969" href="lib.Equivalence.html#1668" class="Field"
+      >is-equiv.g</a
+      ><a name="979"
+      > </a
+      ><a name="980" href="lib.types.CommutingSquare.html#905" class="Bound"
+      >hB-ise</a
+      ><a name="986" class="Symbol"
+      >)</a
+      ><a name="987"
+      >
+</a
+      ><a name="988" href="lib.types.CommutingSquare.html#689" class="Function"
+      >CommSquare-inverse-v</a
+      ><a name="1008"
+      > </a
+      ><a name="1009" class="Symbol"
+      >{</a
+      ><a name="1010" class="Argument"
+      >f&#8320;</a
+      ><a name="1012"
+      > </a
+      ><a name="1013" class="Symbol"
+      >=</a
+      ><a name="1014"
+      > </a
+      ><a name="1015" href="lib.types.CommutingSquare.html#1015" class="Bound"
+      >f&#8320;</a
+      ><a name="1017" class="Symbol"
+      >}</a
+      ><a name="1018"
+      > </a
+      ><a name="1019" class="Symbol"
+      >{</a
+      ><a name="1020" href="lib.types.CommutingSquare.html#1020" class="Bound"
+      >f&#8321;</a
+      ><a name="1022" class="Symbol"
+      >}</a
+      ><a name="1023"
+      > </a
+      ><a name="1024" class="Symbol"
+      >{</a
+      ><a name="1025" href="lib.types.CommutingSquare.html#1025" class="Bound"
+      >hA</a
+      ><a name="1027" class="Symbol"
+      >}</a
+      ><a name="1028"
+      > </a
+      ><a name="1029" class="Symbol"
+      >{</a
+      ><a name="1030" href="lib.types.CommutingSquare.html#1030" class="Bound"
+      >hB</a
+      ><a name="1032" class="Symbol"
+      >}</a
+      ><a name="1033"
+      > </a
+      ><a name="1034" class="Symbol"
+      >(</a
+      ><a name="1035" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="1043"
+      > </a
+      ><a name="1044" href="lib.types.CommutingSquare.html#1044" class="Bound"
+      >&#9633;</a
+      ><a name="1045" class="Symbol"
+      >)</a
+      ><a name="1046"
+      > </a
+      ><a name="1047" href="lib.types.CommutingSquare.html#1047" class="Bound"
+      >hA-ise</a
+      ><a name="1053"
+      > </a
+      ><a name="1054" href="lib.types.CommutingSquare.html#1054" class="Bound"
+      >hB-ise</a
+      ><a name="1060"
+      > </a
+      ><a name="1061" class="Symbol"
+      >=</a
+      ><a name="1062"
+      >
+  </a
+      ><a name="1065" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="1073"
+      > </a
+      ><a name="1074" class="Symbol"
+      >&#955;</a
+      ><a name="1075"
+      > </a
+      ><a name="1076" href="lib.types.CommutingSquare.html#1076" class="Bound"
+      >a&#8321;</a
+      ><a name="1078"
+      > </a
+      ><a name="1079" class="Symbol"
+      >&#8594;</a
+      ><a name="1080"
+      > </a
+      ><a name="1081" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1083"
+      > </a
+      ><a name="1084" href="lib.Equivalence.html#1668" class="Field"
+      >hB.g</a
+      ><a name="1088"
+      > </a
+      ><a name="1089" class="Symbol"
+      >(</a
+      ><a name="1090" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1091"
+      > </a
+      ><a name="1092" class="Symbol"
+      >(</a
+      ><a name="1093" href="lib.types.CommutingSquare.html#1044" class="Bound"
+      >&#9633;</a
+      ><a name="1094"
+      > </a
+      ><a name="1095" class="Symbol"
+      >(</a
+      ><a name="1096" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="1100"
+      > </a
+      ><a name="1101" href="lib.types.CommutingSquare.html#1076" class="Bound"
+      >a&#8321;</a
+      ><a name="1103" class="Symbol"
+      >)</a
+      ><a name="1104"
+      > </a
+      ><a name="1105" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1106"
+      > </a
+      ><a name="1107" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1109"
+      > </a
+      ><a name="1110" href="lib.types.CommutingSquare.html#1020" class="Bound"
+      >f&#8321;</a
+      ><a name="1112"
+      > </a
+      ><a name="1113" class="Symbol"
+      >(</a
+      ><a name="1114" href="lib.Equivalence.html#1684" class="Function"
+      >hA.f-g</a
+      ><a name="1120"
+      > </a
+      ><a name="1121" href="lib.types.CommutingSquare.html#1076" class="Bound"
+      >a&#8321;</a
+      ><a name="1123" class="Symbol"
+      >)))</a
+      ><a name="1126"
+      > </a
+      ><a name="1127" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1128"
+      > </a
+      ><a name="1129" href="lib.Equivalence.html#1719" class="Field"
+      >hB.g-f</a
+      ><a name="1135"
+      > </a
+      ><a name="1136" class="Symbol"
+      >(</a
+      ><a name="1137" href="lib.types.CommutingSquare.html#1015" class="Bound"
+      >f&#8320;</a
+      ><a name="1139"
+      > </a
+      ><a name="1140" class="Symbol"
+      >(</a
+      ><a name="1141" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="1145"
+      > </a
+      ><a name="1146" href="lib.types.CommutingSquare.html#1076" class="Bound"
+      >a&#8321;</a
+      ><a name="1148" class="Symbol"
+      >))</a
+      ><a name="1150"
+      >
+  </a
+      ><a name="1153" class="Keyword"
+      >where</a
+      ><a name="1158"
+      > </a
+      ><a name="1159" class="Keyword"
+      >module</a
+      ><a name="1165"
+      > </a
+      ><a name="1166" href="lib.types.CommutingSquare.html#1166" class="Module"
+      >hA</a
+      ><a name="1168"
+      > </a
+      ><a name="1169" class="Symbol"
+      >=</a
+      ><a name="1170"
+      > </a
+      ><a name="1171" href="lib.Equivalence.html#1603" class="Module"
+      >is-equiv</a
+      ><a name="1179"
+      > </a
+      ><a name="1180" href="lib.types.CommutingSquare.html#1047" class="Bound"
+      >hA-ise</a
+      ><a name="1186"
+      >
+        </a
+      ><a name="1195" class="Keyword"
+      >module</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" href="lib.types.CommutingSquare.html#1202" class="Module"
+      >hB</a
+      ><a name="1204"
+      > </a
+      ><a name="1205" class="Symbol"
+      >=</a
+      ><a name="1206"
+      > </a
+      ><a name="1207" href="lib.Equivalence.html#1603" class="Module"
+      >is-equiv</a
+      ><a name="1215"
+      > </a
+      ><a name="1216" href="lib.types.CommutingSquare.html#1054" class="Bound"
+      >hB-ise</a
+      ><a name="1222"
+      >
+
+</a
+      ><a name="1224" class="Keyword"
+      >abstract</a
+      ><a name="1232"
+      >
+  </a
+      ><a name="1235" class="Comment"
+      >-- 'r' with respect to '&#8728;v'</a
+      ><a name="1262"
+      >
+  </a
+      ><a name="1265" href="lib.types.CommutingSquare.html#1265" class="Function"
+      >CommSquare-inverse-inv-r</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" class="Symbol"
+      >:</a
+      ><a name="1291"
+      > </a
+      ><a name="1292" class="Symbol"
+      >&#8704;</a
+      ><a name="1293"
+      > </a
+      ><a name="1294" class="Symbol"
+      >{</a
+      ><a name="1295" href="lib.types.CommutingSquare.html#1295" class="Bound"
+      >i&#8320;</a
+      ><a name="1297"
+      > </a
+      ><a name="1298" href="lib.types.CommutingSquare.html#1298" class="Bound"
+      >i&#8321;</a
+      ><a name="1300"
+      > </a
+      ><a name="1301" href="lib.types.CommutingSquare.html#1301" class="Bound"
+      >j&#8320;</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" href="lib.types.CommutingSquare.html#1304" class="Bound"
+      >j&#8321;</a
+      ><a name="1306" class="Symbol"
+      >}</a
+      ><a name="1307"
+      >
+    </a
+      ><a name="1312" class="Symbol"
+      >{</a
+      ><a name="1313" href="lib.types.CommutingSquare.html#1313" class="Bound"
+      >A&#8320;</a
+      ><a name="1315"
+      > </a
+      ><a name="1316" class="Symbol"
+      >:</a
+      ><a name="1317"
+      > </a
+      ><a name="1318" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1322"
+      > </a
+      ><a name="1323" href="lib.types.CommutingSquare.html#1295" class="Bound"
+      >i&#8320;</a
+      ><a name="1325" class="Symbol"
+      >}</a
+      ><a name="1326"
+      > </a
+      ><a name="1327" class="Symbol"
+      >{</a
+      ><a name="1328" href="lib.types.CommutingSquare.html#1328" class="Bound"
+      >A&#8321;</a
+      ><a name="1330"
+      > </a
+      ><a name="1331" class="Symbol"
+      >:</a
+      ><a name="1332"
+      > </a
+      ><a name="1333" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1337"
+      > </a
+      ><a name="1338" href="lib.types.CommutingSquare.html#1298" class="Bound"
+      >i&#8321;</a
+      ><a name="1340" class="Symbol"
+      >}</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" class="Symbol"
+      >{</a
+      ><a name="1343" href="lib.types.CommutingSquare.html#1343" class="Bound"
+      >B&#8320;</a
+      ><a name="1345"
+      > </a
+      ><a name="1346" class="Symbol"
+      >:</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1352"
+      > </a
+      ><a name="1353" href="lib.types.CommutingSquare.html#1301" class="Bound"
+      >j&#8320;</a
+      ><a name="1355" class="Symbol"
+      >}</a
+      ><a name="1356"
+      > </a
+      ><a name="1357" class="Symbol"
+      >{</a
+      ><a name="1358" href="lib.types.CommutingSquare.html#1358" class="Bound"
+      >B&#8321;</a
+      ><a name="1360"
+      > </a
+      ><a name="1361" class="Symbol"
+      >:</a
+      ><a name="1362"
+      > </a
+      ><a name="1363" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1367"
+      > </a
+      ><a name="1368" href="lib.types.CommutingSquare.html#1304" class="Bound"
+      >j&#8321;</a
+      ><a name="1370" class="Symbol"
+      >}</a
+      ><a name="1371"
+      >
+    </a
+      ><a name="1376" class="Symbol"
+      >{</a
+      ><a name="1377" href="lib.types.CommutingSquare.html#1377" class="Bound"
+      >f&#8320;</a
+      ><a name="1379"
+      > </a
+      ><a name="1380" class="Symbol"
+      >:</a
+      ><a name="1381"
+      > </a
+      ><a name="1382" href="lib.types.CommutingSquare.html#1313" class="Bound"
+      >A&#8320;</a
+      ><a name="1384"
+      > </a
+      ><a name="1385" class="Symbol"
+      >&#8594;</a
+      ><a name="1386"
+      > </a
+      ><a name="1387" href="lib.types.CommutingSquare.html#1343" class="Bound"
+      >B&#8320;</a
+      ><a name="1389" class="Symbol"
+      >}</a
+      ><a name="1390"
+      > </a
+      ><a name="1391" class="Symbol"
+      >{</a
+      ><a name="1392" href="lib.types.CommutingSquare.html#1392" class="Bound"
+      >f&#8321;</a
+      ><a name="1394"
+      > </a
+      ><a name="1395" class="Symbol"
+      >:</a
+      ><a name="1396"
+      > </a
+      ><a name="1397" href="lib.types.CommutingSquare.html#1328" class="Bound"
+      >A&#8321;</a
+      ><a name="1399"
+      > </a
+      ><a name="1400" class="Symbol"
+      >&#8594;</a
+      ><a name="1401"
+      > </a
+      ><a name="1402" href="lib.types.CommutingSquare.html#1358" class="Bound"
+      >B&#8321;</a
+      ><a name="1404" class="Symbol"
+      >}</a
+      ><a name="1405"
+      > </a
+      ><a name="1406" class="Symbol"
+      >{</a
+      ><a name="1407" href="lib.types.CommutingSquare.html#1407" class="Bound"
+      >hA</a
+      ><a name="1409"
+      > </a
+      ><a name="1410" class="Symbol"
+      >:</a
+      ><a name="1411"
+      > </a
+      ><a name="1412" href="lib.types.CommutingSquare.html#1313" class="Bound"
+      >A&#8320;</a
+      ><a name="1414"
+      > </a
+      ><a name="1415" class="Symbol"
+      >&#8594;</a
+      ><a name="1416"
+      > </a
+      ><a name="1417" href="lib.types.CommutingSquare.html#1328" class="Bound"
+      >A&#8321;</a
+      ><a name="1419" class="Symbol"
+      >}</a
+      ><a name="1420"
+      > </a
+      ><a name="1421" class="Symbol"
+      >{</a
+      ><a name="1422" href="lib.types.CommutingSquare.html#1422" class="Bound"
+      >hB</a
+      ><a name="1424"
+      > </a
+      ><a name="1425" class="Symbol"
+      >:</a
+      ><a name="1426"
+      > </a
+      ><a name="1427" href="lib.types.CommutingSquare.html#1343" class="Bound"
+      >B&#8320;</a
+      ><a name="1429"
+      > </a
+      ><a name="1430" class="Symbol"
+      >&#8594;</a
+      ><a name="1431"
+      > </a
+      ><a name="1432" href="lib.types.CommutingSquare.html#1358" class="Bound"
+      >B&#8321;</a
+      ><a name="1434" class="Symbol"
+      >}</a
+      ><a name="1435"
+      >
+    </a
+      ><a name="1440" class="Symbol"
+      >(</a
+      ><a name="1441" href="lib.types.CommutingSquare.html#1441" class="Bound"
+      >cs</a
+      ><a name="1443"
+      > </a
+      ><a name="1444" class="Symbol"
+      >:</a
+      ><a name="1445"
+      > </a
+      ><a name="1446" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="1456"
+      > </a
+      ><a name="1457" href="lib.types.CommutingSquare.html#1377" class="Bound"
+      >f&#8320;</a
+      ><a name="1459"
+      > </a
+      ><a name="1460" href="lib.types.CommutingSquare.html#1392" class="Bound"
+      >f&#8321;</a
+      ><a name="1462"
+      > </a
+      ><a name="1463" href="lib.types.CommutingSquare.html#1407" class="Bound"
+      >hA</a
+      ><a name="1465"
+      > </a
+      ><a name="1466" href="lib.types.CommutingSquare.html#1422" class="Bound"
+      >hB</a
+      ><a name="1468" class="Symbol"
+      >)</a
+      ><a name="1469"
+      > </a
+      ><a name="1470" class="Symbol"
+      >(</a
+      ><a name="1471" href="lib.types.CommutingSquare.html#1471" class="Bound"
+      >hA-ise</a
+      ><a name="1477"
+      > </a
+      ><a name="1478" class="Symbol"
+      >:</a
+      ><a name="1479"
+      > </a
+      ><a name="1480" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="1488"
+      > </a
+      ><a name="1489" href="lib.types.CommutingSquare.html#1407" class="Bound"
+      >hA</a
+      ><a name="1491" class="Symbol"
+      >)</a
+      ><a name="1492"
+      > </a
+      ><a name="1493" class="Symbol"
+      >(</a
+      ><a name="1494" href="lib.types.CommutingSquare.html#1494" class="Bound"
+      >hB-ise</a
+      ><a name="1500"
+      > </a
+      ><a name="1501" class="Symbol"
+      >:</a
+      ><a name="1502"
+      > </a
+      ><a name="1503" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="1511"
+      > </a
+      ><a name="1512" href="lib.types.CommutingSquare.html#1422" class="Bound"
+      >hB</a
+      ><a name="1514" class="Symbol"
+      >)</a
+      ><a name="1515"
+      >
+    </a
+      ><a name="1520" class="Symbol"
+      >&#8594;</a
+      ><a name="1521"
+      > </a
+      ><a name="1522" class="Symbol"
+      >&#8704;</a
+      ><a name="1523"
+      > </a
+      ><a name="1524" href="lib.types.CommutingSquare.html#1524" class="Bound"
+      >a&#8321;</a
+      ><a name="1526"
+      > </a
+      ><a name="1527" class="Symbol"
+      >&#8594;</a
+      ><a name="1528"
+      > </a
+      ><a name="1529" class="Symbol"
+      >(</a
+      ><a name="1530" href="lib.types.CommutingSquare.html#237" class="Function"
+      >CommSquare-&#8728;v</a
+      ><a name="1543"
+      > </a
+      ><a name="1544" href="lib.types.CommutingSquare.html#1441" class="Bound"
+      >cs</a
+      ><a name="1546"
+      > </a
+      ><a name="1547" class="Symbol"
+      >(</a
+      ><a name="1548" href="lib.types.CommutingSquare.html#689" class="Function"
+      >CommSquare-inverse-v</a
+      ><a name="1568"
+      > </a
+      ><a name="1569" href="lib.types.CommutingSquare.html#1441" class="Bound"
+      >cs</a
+      ><a name="1571"
+      > </a
+      ><a name="1572" href="lib.types.CommutingSquare.html#1471" class="Bound"
+      >hA-ise</a
+      ><a name="1578"
+      > </a
+      ><a name="1579" href="lib.types.CommutingSquare.html#1494" class="Bound"
+      >hB-ise</a
+      ><a name="1585" class="Symbol"
+      >)</a
+      ><a name="1586"
+      > </a
+      ><a name="1587" href="lib.types.CommutingSquare.html#209" class="Function Operator"
+      >&#9633;$</a
+      ><a name="1589"
+      > </a
+      ><a name="1590" href="lib.types.CommutingSquare.html#1524" class="Bound"
+      >a&#8321;</a
+      ><a name="1592" class="Symbol"
+      >)</a
+      ><a name="1593"
+      >
+          </a
+      ><a name="1604" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1606"
+      > </a
+      ><a name="1607" href="lib.Equivalence.html#1684" class="Field"
+      >is-equiv.f-g</a
+      ><a name="1619"
+      > </a
+      ><a name="1620" href="lib.types.CommutingSquare.html#1494" class="Bound"
+      >hB-ise</a
+      ><a name="1626"
+      > </a
+      ><a name="1627" class="Symbol"
+      >(</a
+      ><a name="1628" href="lib.types.CommutingSquare.html#1392" class="Bound"
+      >f&#8321;</a
+      ><a name="1630"
+      > </a
+      ><a name="1631" href="lib.types.CommutingSquare.html#1524" class="Bound"
+      >a&#8321;</a
+      ><a name="1633" class="Symbol"
+      >)</a
+      ><a name="1634"
+      > </a
+      ><a name="1635" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1636"
+      > </a
+      ><a name="1637" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1638"
+      > </a
+      ><a name="1639" class="Symbol"
+      >(</a
+      ><a name="1640" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1642"
+      > </a
+      ><a name="1643" href="lib.types.CommutingSquare.html#1392" class="Bound"
+      >f&#8321;</a
+      ><a name="1645"
+      > </a
+      ><a name="1646" class="Symbol"
+      >(</a
+      ><a name="1647" href="lib.Equivalence.html#1684" class="Field"
+      >is-equiv.f-g</a
+      ><a name="1659"
+      > </a
+      ><a name="1660" href="lib.types.CommutingSquare.html#1471" class="Bound"
+      >hA-ise</a
+      ><a name="1666"
+      > </a
+      ><a name="1667" href="lib.types.CommutingSquare.html#1524" class="Bound"
+      >a&#8321;</a
+      ><a name="1669" class="Symbol"
+      >))</a
+      ><a name="1671"
+      >
+  </a
+      ><a name="1674" href="lib.types.CommutingSquare.html#1265" class="Function"
+      >CommSquare-inverse-inv-r</a
+      ><a name="1698"
+      > </a
+      ><a name="1699" class="Symbol"
+      >{</a
+      ><a name="1700" class="Argument"
+      >f&#8320;</a
+      ><a name="1702"
+      > </a
+      ><a name="1703" class="Symbol"
+      >=</a
+      ><a name="1704"
+      > </a
+      ><a name="1705" href="lib.types.CommutingSquare.html#1705" class="Bound"
+      >f&#8320;</a
+      ><a name="1707" class="Symbol"
+      >}</a
+      ><a name="1708"
+      > </a
+      ><a name="1709" class="Symbol"
+      >{</a
+      ><a name="1710" href="lib.types.CommutingSquare.html#1710" class="Bound"
+      >f&#8321;</a
+      ><a name="1712" class="Symbol"
+      >}</a
+      ><a name="1713"
+      > </a
+      ><a name="1714" class="Symbol"
+      >{</a
+      ><a name="1715" href="lib.types.CommutingSquare.html#1715" class="Bound"
+      >hA</a
+      ><a name="1717" class="Symbol"
+      >}</a
+      ><a name="1718"
+      > </a
+      ><a name="1719" class="Symbol"
+      >{</a
+      ><a name="1720" href="lib.types.CommutingSquare.html#1720" class="Bound"
+      >hB</a
+      ><a name="1722" class="Symbol"
+      >}</a
+      ><a name="1723"
+      > </a
+      ><a name="1724" class="Symbol"
+      >(</a
+      ><a name="1725" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="1733"
+      > </a
+      ><a name="1734" href="lib.types.CommutingSquare.html#1734" class="Bound"
+      >&#9633;</a
+      ><a name="1735" class="Symbol"
+      >)</a
+      ><a name="1736"
+      > </a
+      ><a name="1737" href="lib.types.CommutingSquare.html#1737" class="Bound"
+      >hA-ise</a
+      ><a name="1743"
+      > </a
+      ><a name="1744" href="lib.types.CommutingSquare.html#1744" class="Bound"
+      >hB-ise</a
+      ><a name="1750"
+      > </a
+      ><a name="1751" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="1753"
+      > </a
+      ><a name="1754" class="Symbol"
+      >=</a
+      ><a name="1755"
+      >
+    </a
+      ><a name="1760" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1762"
+      > </a
+      ><a name="1763" href="lib.types.CommutingSquare.html#1720" class="Bound"
+      >hB</a
+      ><a name="1765"
+      > </a
+      ><a name="1766" class="Symbol"
+      >(</a
+      ><a name="1767"
+      > </a
+      ><a name="1768" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1770"
+      > </a
+      ><a name="1771" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="1775"
+      > </a
+      ><a name="1776" class="Symbol"
+      >(</a
+      ><a name="1777" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1778"
+      > </a
+      ><a name="1779" class="Symbol"
+      >(</a
+      ><a name="1780" href="lib.types.CommutingSquare.html#1734" class="Bound"
+      >&#9633;</a
+      ><a name="1781"
+      > </a
+      ><a name="1782" class="Symbol"
+      >(</a
+      ><a name="1783" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="1787"
+      > </a
+      ><a name="1788" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="1790" class="Symbol"
+      >)</a
+      ><a name="1791"
+      > </a
+      ><a name="1792" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1793"
+      > </a
+      ><a name="1794" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1796"
+      > </a
+      ><a name="1797" href="lib.types.CommutingSquare.html#1710" class="Bound"
+      >f&#8321;</a
+      ><a name="1799"
+      > </a
+      ><a name="1800" class="Symbol"
+      >(</a
+      ><a name="1801" href="lib.Equivalence.html#1684" class="Function"
+      >hA.f-g</a
+      ><a name="1807"
+      > </a
+      ><a name="1808" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="1810" class="Symbol"
+      >)))</a
+      ><a name="1813"
+      >
+            </a
+      ><a name="1826" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1827"
+      > </a
+      ><a name="1828" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="1834"
+      > </a
+      ><a name="1835" class="Symbol"
+      >(</a
+      ><a name="1836" href="lib.types.CommutingSquare.html#1705" class="Bound"
+      >f&#8320;</a
+      ><a name="1838"
+      > </a
+      ><a name="1839" class="Symbol"
+      >(</a
+      ><a name="1840" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="1844"
+      > </a
+      ><a name="1845" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="1847" class="Symbol"
+      >)))</a
+      ><a name="1850"
+      >
+    </a
+      ><a name="1855" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1856"
+      > </a
+      ><a name="1857" href="lib.types.CommutingSquare.html#1734" class="Bound"
+      >&#9633;</a
+      ><a name="1858"
+      > </a
+      ><a name="1859" class="Symbol"
+      >(</a
+      ><a name="1860" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="1864"
+      > </a
+      ><a name="1865" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="1867" class="Symbol"
+      >)</a
+      ><a name="1868"
+      >
+      </a
+      ><a name="1875" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1877"
+      > </a
+      ><a name="1878" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="1882"
+      > </a
+      ><a name="1883" href="lib.types.CommutingSquare.html#1720" class="Bound"
+      >hB</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" class="Symbol"
+      >(</a
+      ><a name="1887" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1889"
+      > </a
+      ><a name="1890" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="1894"
+      > </a
+      ><a name="1895" class="Symbol"
+      >(</a
+      ><a name="1896" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1897"
+      > </a
+      ><a name="1898" class="Symbol"
+      >(</a
+      ><a name="1899" href="lib.types.CommutingSquare.html#1734" class="Bound"
+      >&#9633;</a
+      ><a name="1900"
+      > </a
+      ><a name="1901" class="Symbol"
+      >(</a
+      ><a name="1902" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="1906"
+      > </a
+      ><a name="1907" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="1909" class="Symbol"
+      >)</a
+      ><a name="1910"
+      > </a
+      ><a name="1911" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1912"
+      > </a
+      ><a name="1913" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1915"
+      > </a
+      ><a name="1916" href="lib.types.CommutingSquare.html#1710" class="Bound"
+      >f&#8321;</a
+      ><a name="1918"
+      > </a
+      ><a name="1919" class="Symbol"
+      >(</a
+      ><a name="1920" href="lib.Equivalence.html#1684" class="Function"
+      >hA.f-g</a
+      ><a name="1926"
+      > </a
+      ><a name="1927" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="1929" class="Symbol"
+      >))))</a
+      ><a name="1933"
+      > </a
+      ><a name="1934" class="Symbol"
+      >(</a
+      ><a name="1935" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="1941"
+      > </a
+      ><a name="1942" class="Symbol"
+      >(</a
+      ><a name="1943" href="lib.types.CommutingSquare.html#1705" class="Bound"
+      >f&#8320;</a
+      ><a name="1945"
+      > </a
+      ><a name="1946" class="Symbol"
+      >(</a
+      ><a name="1947" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="1951"
+      > </a
+      ><a name="1952" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="1954" class="Symbol"
+      >)))</a
+      ><a name="1957"
+      >
+          </a
+      ><a name="1968" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1975"
+      > </a
+      ><a name="1976" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >_&#8729;</a
+      ><a name="1978"
+      > </a
+      ><a name="1979" href="lib.types.CommutingSquare.html#1734" class="Bound"
+      >&#9633;</a
+      ><a name="1980"
+      > </a
+      ><a name="1981" class="Symbol"
+      >(</a
+      ><a name="1982" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="1986"
+      > </a
+      ><a name="1987" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="1989" class="Symbol"
+      >)</a
+      ><a name="1990"
+      > </a
+      ><a name="1991" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1992"
+      >
+    </a
+      ><a name="1997" class="Symbol"
+      >(</a
+      ><a name="1998"
+      > </a
+      ><a name="1999" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2001"
+      > </a
+      ><a name="2002" href="lib.types.CommutingSquare.html#1720" class="Bound"
+      >hB</a
+      ><a name="2004"
+      > </a
+      ><a name="2005" class="Symbol"
+      >(</a
+      ><a name="2006" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2008"
+      > </a
+      ><a name="2009" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" class="Symbol"
+      >(</a
+      ><a name="2015" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2016"
+      > </a
+      ><a name="2017" class="Symbol"
+      >(</a
+      ><a name="2018" href="lib.types.CommutingSquare.html#1734" class="Bound"
+      >&#9633;</a
+      ><a name="2019"
+      > </a
+      ><a name="2020" class="Symbol"
+      >(</a
+      ><a name="2021" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="2025"
+      > </a
+      ><a name="2026" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2028" class="Symbol"
+      >)</a
+      ><a name="2029"
+      > </a
+      ><a name="2030" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2031"
+      > </a
+      ><a name="2032" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2034"
+      > </a
+      ><a name="2035" href="lib.types.CommutingSquare.html#1710" class="Bound"
+      >f&#8321;</a
+      ><a name="2037"
+      > </a
+      ><a name="2038" class="Symbol"
+      >(</a
+      ><a name="2039" href="lib.Equivalence.html#1684" class="Function"
+      >hA.f-g</a
+      ><a name="2045"
+      > </a
+      ><a name="2046" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2048" class="Symbol"
+      >))))</a
+      ><a name="2052"
+      >
+      </a
+      ><a name="2059" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2060"
+      > </a
+      ><a name="2061" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2063"
+      > </a
+      ><a name="2064" href="lib.types.CommutingSquare.html#1720" class="Bound"
+      >hB</a
+      ><a name="2066"
+      > </a
+      ><a name="2067" class="Symbol"
+      >(</a
+      ><a name="2068" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="2074"
+      > </a
+      ><a name="2075" class="Symbol"
+      >(</a
+      ><a name="2076" href="lib.types.CommutingSquare.html#1705" class="Bound"
+      >f&#8320;</a
+      ><a name="2078"
+      > </a
+      ><a name="2079" class="Symbol"
+      >(</a
+      ><a name="2080" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="2084"
+      > </a
+      ><a name="2085" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2087" class="Symbol"
+      >))))</a
+      ><a name="2091"
+      >
+    </a
+      ><a name="2096" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2097"
+      > </a
+      ><a name="2098" href="lib.types.CommutingSquare.html#1734" class="Bound"
+      >&#9633;</a
+      ><a name="2099"
+      > </a
+      ><a name="2100" class="Symbol"
+      >(</a
+      ><a name="2101" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="2105"
+      > </a
+      ><a name="2106" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2108" class="Symbol"
+      >)</a
+      ><a name="2109"
+      >
+      </a
+      ><a name="2116" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2118"
+      > </a
+      ><a name="2119" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="2122"
+      > </a
+      ><a name="2123" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >_&#8729;_</a
+      ><a name="2126"
+      >
+          </a
+      ><a name="2137" class="Symbol"
+      >(</a
+      ><a name="2138" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="2142"
+      > </a
+      ><a name="2143" href="lib.types.CommutingSquare.html#1720" class="Bound"
+      >hB</a
+      ><a name="2145"
+      > </a
+      ><a name="2146" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="2150"
+      > </a
+      ><a name="2151" class="Symbol"
+      >(</a
+      ><a name="2152" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2153"
+      > </a
+      ><a name="2154" class="Symbol"
+      >(</a
+      ><a name="2155" href="lib.types.CommutingSquare.html#1734" class="Bound"
+      >&#9633;</a
+      ><a name="2156"
+      > </a
+      ><a name="2157" class="Symbol"
+      >(</a
+      ><a name="2158" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="2162"
+      > </a
+      ><a name="2163" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2165" class="Symbol"
+      >)</a
+      ><a name="2166"
+      > </a
+      ><a name="2167" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2168"
+      > </a
+      ><a name="2169" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2171"
+      > </a
+      ><a name="2172" href="lib.types.CommutingSquare.html#1710" class="Bound"
+      >f&#8321;</a
+      ><a name="2174"
+      > </a
+      ><a name="2175" class="Symbol"
+      >(</a
+      ><a name="2176" href="lib.Equivalence.html#1684" class="Function"
+      >hA.f-g</a
+      ><a name="2182"
+      > </a
+      ><a name="2183" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2185" class="Symbol"
+      >))))</a
+      ><a name="2189"
+      >
+          </a
+      ><a name="2200" class="Symbol"
+      >(</a
+      ><a name="2201" href="lib.Equivalence.html#1754" class="Function"
+      >hB.adj</a
+      ><a name="2207"
+      > </a
+      ><a name="2208" class="Symbol"
+      >(</a
+      ><a name="2209" href="lib.types.CommutingSquare.html#1705" class="Bound"
+      >f&#8320;</a
+      ><a name="2211"
+      > </a
+      ><a name="2212" class="Symbol"
+      >(</a
+      ><a name="2213" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="2217"
+      > </a
+      ><a name="2218" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2220" class="Symbol"
+      >)))</a
+      ><a name="2223"
+      >
+          </a
+      ><a name="2234" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="2241"
+      > </a
+      ><a name="2242" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >_&#8729;</a
+      ><a name="2244"
+      > </a
+      ><a name="2245" href="lib.types.CommutingSquare.html#1734" class="Bound"
+      >&#9633;</a
+      ><a name="2246"
+      > </a
+      ><a name="2247" class="Symbol"
+      >(</a
+      ><a name="2248" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="2252"
+      > </a
+      ><a name="2253" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2255" class="Symbol"
+      >)</a
+      ><a name="2256"
+      > </a
+      ><a name="2257" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2258"
+      >
+    </a
+      ><a name="2263" class="Symbol"
+      >(</a
+      ><a name="2264"
+      > </a
+      ><a name="2265" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2267"
+      > </a
+      ><a name="2268" class="Symbol"
+      >(</a
+      ><a name="2269" href="lib.types.CommutingSquare.html#1720" class="Bound"
+      >hB</a
+      ><a name="2271"
+      > </a
+      ><a name="2272" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="2273"
+      > </a
+      ><a name="2274" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="2278" class="Symbol"
+      >)</a
+      ><a name="2279"
+      > </a
+      ><a name="2280" class="Symbol"
+      >(</a
+      ><a name="2281" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2282"
+      > </a
+      ><a name="2283" class="Symbol"
+      >(</a
+      ><a name="2284" href="lib.types.CommutingSquare.html#1734" class="Bound"
+      >&#9633;</a
+      ><a name="2285"
+      > </a
+      ><a name="2286" class="Symbol"
+      >(</a
+      ><a name="2287" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="2291"
+      > </a
+      ><a name="2292" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2294" class="Symbol"
+      >)</a
+      ><a name="2295"
+      > </a
+      ><a name="2296" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2297"
+      > </a
+      ><a name="2298" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2300"
+      > </a
+      ><a name="2301" href="lib.types.CommutingSquare.html#1710" class="Bound"
+      >f&#8321;</a
+      ><a name="2303"
+      > </a
+      ><a name="2304" class="Symbol"
+      >(</a
+      ><a name="2305" href="lib.Equivalence.html#1684" class="Function"
+      >hA.f-g</a
+      ><a name="2311"
+      > </a
+      ><a name="2312" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2314" class="Symbol"
+      >)))</a
+      ><a name="2317"
+      >
+      </a
+      ><a name="2324" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2325"
+      > </a
+      ><a name="2326" href="lib.Equivalence.html#1684" class="Function"
+      >hB.f-g</a
+      ><a name="2332"
+      > </a
+      ><a name="2333" class="Symbol"
+      >(</a
+      ><a name="2334" href="lib.types.CommutingSquare.html#1720" class="Bound"
+      >hB</a
+      ><a name="2336"
+      > </a
+      ><a name="2337" class="Symbol"
+      >(</a
+      ><a name="2338" href="lib.types.CommutingSquare.html#1705" class="Bound"
+      >f&#8320;</a
+      ><a name="2340"
+      > </a
+      ><a name="2341" class="Symbol"
+      >(</a
+      ><a name="2342" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="2346"
+      > </a
+      ><a name="2347" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2349" class="Symbol"
+      >))))</a
+      ><a name="2353"
+      >
+    </a
+      ><a name="2358" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2359"
+      > </a
+      ><a name="2360" href="lib.types.CommutingSquare.html#1734" class="Bound"
+      >&#9633;</a
+      ><a name="2361"
+      > </a
+      ><a name="2362" class="Symbol"
+      >(</a
+      ><a name="2363" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="2367"
+      > </a
+      ><a name="2368" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2370" class="Symbol"
+      >)</a
+      ><a name="2371"
+      >
+      </a
+      ><a name="2378" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2380"
+      > </a
+      ><a name="2381" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2382"
+      > </a
+      ><a name="2383" class="Symbol"
+      >(</a
+      ><a name="2384" href="lib.types.Paths.html#4600" class="Function"
+      >&#8595;-app=idf-out</a
+      ><a name="2397"
+      > </a
+      ><a name="2398" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2399"
+      > </a
+      ><a name="2400" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="2403"
+      > </a
+      ><a name="2404" href="lib.Equivalence.html#1684" class="Function"
+      >hB.f-g</a
+      ><a name="2410"
+      > </a
+      ><a name="2411" class="Symbol"
+      >(</a
+      ><a name="2412" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2413"
+      > </a
+      ><a name="2414" class="Symbol"
+      >(</a
+      ><a name="2415" href="lib.types.CommutingSquare.html#1734" class="Bound"
+      >&#9633;</a
+      ><a name="2416"
+      > </a
+      ><a name="2417" class="Symbol"
+      >(</a
+      ><a name="2418" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="2422"
+      > </a
+      ><a name="2423" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2425" class="Symbol"
+      >)</a
+      ><a name="2426"
+      > </a
+      ><a name="2427" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2428"
+      > </a
+      ><a name="2429" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2431"
+      > </a
+      ><a name="2432" href="lib.types.CommutingSquare.html#1710" class="Bound"
+      >f&#8321;</a
+      ><a name="2434"
+      > </a
+      ><a name="2435" class="Symbol"
+      >(</a
+      ><a name="2436" href="lib.Equivalence.html#1684" class="Function"
+      >hA.f-g</a
+      ><a name="2442"
+      > </a
+      ><a name="2443" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2445" class="Symbol"
+      >))))</a
+      ><a name="2449"
+      >
+          </a
+      ><a name="2460" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="2467"
+      > </a
+      ><a name="2468" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >_&#8729;</a
+      ><a name="2470"
+      > </a
+      ><a name="2471" href="lib.types.CommutingSquare.html#1734" class="Bound"
+      >&#9633;</a
+      ><a name="2472"
+      > </a
+      ><a name="2473" class="Symbol"
+      >(</a
+      ><a name="2474" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="2478"
+      > </a
+      ><a name="2479" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2481" class="Symbol"
+      >)</a
+      ><a name="2482"
+      > </a
+      ><a name="2483" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2484"
+      >
+    </a
+      ><a name="2489" class="Symbol"
+      >(</a
+      ><a name="2490"
+      > </a
+      ><a name="2491" href="lib.Equivalence.html#1684" class="Function"
+      >hB.f-g</a
+      ><a name="2497"
+      > </a
+      ><a name="2498" class="Symbol"
+      >(</a
+      ><a name="2499" href="lib.types.CommutingSquare.html#1710" class="Bound"
+      >f&#8321;</a
+      ><a name="2501"
+      > </a
+      ><a name="2502" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2504" class="Symbol"
+      >)</a
+      ><a name="2505"
+      >
+      </a
+      ><a name="2512" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2514"
+      > </a
+      ><a name="2515" class="Symbol"
+      >(</a
+      ><a name="2516" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2517"
+      > </a
+      ><a name="2518" class="Symbol"
+      >(</a
+      ><a name="2519" href="lib.types.CommutingSquare.html#1734" class="Bound"
+      >&#9633;</a
+      ><a name="2520"
+      > </a
+      ><a name="2521" class="Symbol"
+      >(</a
+      ><a name="2522" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="2526"
+      > </a
+      ><a name="2527" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2529" class="Symbol"
+      >)</a
+      ><a name="2530"
+      > </a
+      ><a name="2531" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2532"
+      > </a
+      ><a name="2533" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2535"
+      > </a
+      ><a name="2536" href="lib.types.CommutingSquare.html#1710" class="Bound"
+      >f&#8321;</a
+      ><a name="2538"
+      > </a
+      ><a name="2539" class="Symbol"
+      >(</a
+      ><a name="2540" href="lib.Equivalence.html#1684" class="Function"
+      >hA.f-g</a
+      ><a name="2546"
+      > </a
+      ><a name="2547" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2549" class="Symbol"
+      >))))</a
+      ><a name="2553"
+      >
+    </a
+      ><a name="2558" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2559"
+      > </a
+      ><a name="2560" href="lib.types.CommutingSquare.html#1734" class="Bound"
+      >&#9633;</a
+      ><a name="2561"
+      > </a
+      ><a name="2562" class="Symbol"
+      >(</a
+      ><a name="2563" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="2567"
+      > </a
+      ><a name="2568" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2570" class="Symbol"
+      >)</a
+      ><a name="2571"
+      >
+      </a
+      ><a name="2578" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2580"
+      > </a
+      ><a name="2581" href="lib.types.CommutingSquare.html#2779" class="Function"
+      >lemma</a
+      ><a name="2586"
+      > </a
+      ><a name="2587" class="Symbol"
+      >(</a
+      ><a name="2588" href="lib.Equivalence.html#1684" class="Function"
+      >hB.f-g</a
+      ><a name="2594"
+      > </a
+      ><a name="2595" class="Symbol"
+      >(</a
+      ><a name="2596" href="lib.types.CommutingSquare.html#1710" class="Bound"
+      >f&#8321;</a
+      ><a name="2598"
+      > </a
+      ><a name="2599" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2601" class="Symbol"
+      >))</a
+      ><a name="2603"
+      > </a
+      ><a name="2604" class="Symbol"
+      >(</a
+      ><a name="2605" href="lib.types.CommutingSquare.html#1734" class="Bound"
+      >&#9633;</a
+      ><a name="2606"
+      > </a
+      ><a name="2607" class="Symbol"
+      >(</a
+      ><a name="2608" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="2612"
+      > </a
+      ><a name="2613" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2615" class="Symbol"
+      >))</a
+      ><a name="2617"
+      > </a
+      ><a name="2618" class="Symbol"
+      >(</a
+      ><a name="2619" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2621"
+      > </a
+      ><a name="2622" href="lib.types.CommutingSquare.html#1710" class="Bound"
+      >f&#8321;</a
+      ><a name="2624"
+      > </a
+      ><a name="2625" class="Symbol"
+      >(</a
+      ><a name="2626" href="lib.Equivalence.html#1684" class="Function"
+      >hA.f-g</a
+      ><a name="2632"
+      > </a
+      ><a name="2633" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2635" class="Symbol"
+      >))</a
+      ><a name="2637"
+      > </a
+      ><a name="2638" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2639"
+      >
+    </a
+      ><a name="2644" href="lib.Equivalence.html#1684" class="Function"
+      >hB.f-g</a
+      ><a name="2650"
+      > </a
+      ><a name="2651" class="Symbol"
+      >(</a
+      ><a name="2652" href="lib.types.CommutingSquare.html#1710" class="Bound"
+      >f&#8321;</a
+      ><a name="2654"
+      > </a
+      ><a name="2655" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2657" class="Symbol"
+      >)</a
+      ><a name="2658"
+      > </a
+      ><a name="2659" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2660"
+      > </a
+      ><a name="2661" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2662"
+      > </a
+      ><a name="2663" class="Symbol"
+      >(</a
+      ><a name="2664" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2666"
+      > </a
+      ><a name="2667" href="lib.types.CommutingSquare.html#1710" class="Bound"
+      >f&#8321;</a
+      ><a name="2669"
+      > </a
+      ><a name="2670" class="Symbol"
+      >(</a
+      ><a name="2671" href="lib.Equivalence.html#1684" class="Function"
+      >hA.f-g</a
+      ><a name="2677"
+      > </a
+      ><a name="2678" href="lib.types.CommutingSquare.html#1751" class="Bound"
+      >a&#8321;</a
+      ><a name="2680" class="Symbol"
+      >))</a
+      ><a name="2682"
+      >
+      </a
+      ><a name="2689" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="2691"
+      >
+    </a
+      ><a name="2696" class="Keyword"
+      >where</a
+      ><a name="2701"
+      > </a
+      ><a name="2702" class="Keyword"
+      >module</a
+      ><a name="2708"
+      > </a
+      ><a name="2709" href="lib.types.CommutingSquare.html#2709" class="Module"
+      >hA</a
+      ><a name="2711"
+      > </a
+      ><a name="2712" class="Symbol"
+      >=</a
+      ><a name="2713"
+      > </a
+      ><a name="2714" href="lib.Equivalence.html#1603" class="Module"
+      >is-equiv</a
+      ><a name="2722"
+      > </a
+      ><a name="2723" href="lib.types.CommutingSquare.html#1737" class="Bound"
+      >hA-ise</a
+      ><a name="2729"
+      >
+          </a
+      ><a name="2740" class="Keyword"
+      >module</a
+      ><a name="2746"
+      > </a
+      ><a name="2747" href="lib.types.CommutingSquare.html#2747" class="Module"
+      >hB</a
+      ><a name="2749"
+      > </a
+      ><a name="2750" class="Symbol"
+      >=</a
+      ><a name="2751"
+      > </a
+      ><a name="2752" href="lib.Equivalence.html#1603" class="Module"
+      >is-equiv</a
+      ><a name="2760"
+      > </a
+      ><a name="2761" href="lib.types.CommutingSquare.html#1744" class="Bound"
+      >hB-ise</a
+      ><a name="2767"
+      >
+
+          </a
+      ><a name="2779" href="lib.types.CommutingSquare.html#2779" class="Function"
+      >lemma</a
+      ><a name="2784"
+      > </a
+      ><a name="2785" class="Symbol"
+      >:</a
+      ><a name="2786"
+      > </a
+      ><a name="2787" class="Symbol"
+      >&#8704;</a
+      ><a name="2788"
+      > </a
+      ><a name="2789" class="Symbol"
+      >{</a
+      ><a name="2790" href="lib.types.CommutingSquare.html#2790" class="Bound"
+      >i</a
+      ><a name="2791" class="Symbol"
+      >}</a
+      ><a name="2792"
+      > </a
+      ><a name="2793" class="Symbol"
+      >{</a
+      ><a name="2794" href="lib.types.CommutingSquare.html#2794" class="Bound"
+      >A</a
+      ><a name="2795"
+      > </a
+      ><a name="2796" class="Symbol"
+      >:</a
+      ><a name="2797"
+      > </a
+      ><a name="2798" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2802"
+      > </a
+      ><a name="2803" href="lib.types.CommutingSquare.html#2790" class="Bound"
+      >i</a
+      ><a name="2804" class="Symbol"
+      >}</a
+      ><a name="2805"
+      > </a
+      ><a name="2806" class="Symbol"
+      >{</a
+      ><a name="2807" href="lib.types.CommutingSquare.html#2807" class="Bound"
+      >a&#8320;</a
+      ><a name="2809"
+      > </a
+      ><a name="2810" href="lib.types.CommutingSquare.html#2810" class="Bound"
+      >a&#8321;</a
+      ><a name="2812"
+      > </a
+      ><a name="2813" href="lib.types.CommutingSquare.html#2813" class="Bound"
+      >a&#8322;</a
+      ><a name="2815"
+      > </a
+      ><a name="2816" href="lib.types.CommutingSquare.html#2816" class="Bound"
+      >a&#8323;</a
+      ><a name="2818"
+      > </a
+      ><a name="2819" class="Symbol"
+      >:</a
+      ><a name="2820"
+      > </a
+      ><a name="2821" href="lib.types.CommutingSquare.html#2794" class="Bound"
+      >A</a
+      ><a name="2822" class="Symbol"
+      >}</a
+      ><a name="2823"
+      >
+            </a
+      ><a name="2836" class="Symbol"
+      >(</a
+      ><a name="2837" href="lib.types.CommutingSquare.html#2837" class="Bound"
+      >p&#8320;</a
+      ><a name="2839"
+      > </a
+      ><a name="2840" class="Symbol"
+      >:</a
+      ><a name="2841"
+      > </a
+      ><a name="2842" href="lib.types.CommutingSquare.html#2807" class="Bound"
+      >a&#8320;</a
+      ><a name="2844"
+      > </a
+      ><a name="2845" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2847"
+      > </a
+      ><a name="2848" href="lib.types.CommutingSquare.html#2810" class="Bound"
+      >a&#8321;</a
+      ><a name="2850" class="Symbol"
+      >)</a
+      ><a name="2851"
+      > </a
+      ><a name="2852" class="Symbol"
+      >(</a
+      ><a name="2853" href="lib.types.CommutingSquare.html#2853" class="Bound"
+      >p&#8321;</a
+      ><a name="2855"
+      > </a
+      ><a name="2856" class="Symbol"
+      >:</a
+      ><a name="2857"
+      > </a
+      ><a name="2858" href="lib.types.CommutingSquare.html#2816" class="Bound"
+      >a&#8323;</a
+      ><a name="2860"
+      > </a
+      ><a name="2861" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2863"
+      > </a
+      ><a name="2864" href="lib.types.CommutingSquare.html#2813" class="Bound"
+      >a&#8322;</a
+      ><a name="2866" class="Symbol"
+      >)</a
+      ><a name="2867"
+      > </a
+      ><a name="2868" class="Symbol"
+      >(</a
+      ><a name="2869" href="lib.types.CommutingSquare.html#2869" class="Bound"
+      >p&#8322;</a
+      ><a name="2871"
+      > </a
+      ><a name="2872" class="Symbol"
+      >:</a
+      ><a name="2873"
+      > </a
+      ><a name="2874" href="lib.types.CommutingSquare.html#2813" class="Bound"
+      >a&#8322;</a
+      ><a name="2876"
+      > </a
+      ><a name="2877" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2879"
+      > </a
+      ><a name="2880" href="lib.types.CommutingSquare.html#2810" class="Bound"
+      >a&#8321;</a
+      ><a name="2882" class="Symbol"
+      >)</a
+      ><a name="2883"
+      >
+            </a
+      ><a name="2896" class="Symbol"
+      >&#8594;</a
+      ><a name="2897"
+      > </a
+      ><a name="2898" class="Symbol"
+      >(</a
+      ><a name="2899" href="lib.types.CommutingSquare.html#2837" class="Bound"
+      >p&#8320;</a
+      ><a name="2901"
+      > </a
+      ><a name="2902" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2904"
+      > </a
+      ><a name="2905" class="Symbol"
+      >(</a
+      ><a name="2906" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2907"
+      > </a
+      ><a name="2908" class="Symbol"
+      >(</a
+      ><a name="2909" href="lib.types.CommutingSquare.html#2853" class="Bound"
+      >p&#8321;</a
+      ><a name="2911"
+      > </a
+      ><a name="2912" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2913"
+      > </a
+      ><a name="2914" href="lib.types.CommutingSquare.html#2869" class="Bound"
+      >p&#8322;</a
+      ><a name="2916" class="Symbol"
+      >)))</a
+      ><a name="2919"
+      > </a
+      ><a name="2920" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2921"
+      > </a
+      ><a name="2922" href="lib.types.CommutingSquare.html#2853" class="Bound"
+      >p&#8321;</a
+      ><a name="2924"
+      > </a
+      ><a name="2925" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2927"
+      > </a
+      ><a name="2928" href="lib.types.CommutingSquare.html#2837" class="Bound"
+      >p&#8320;</a
+      ><a name="2930"
+      > </a
+      ><a name="2931" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2932"
+      > </a
+      ><a name="2933" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2934"
+      > </a
+      ><a name="2935" href="lib.types.CommutingSquare.html#2869" class="Bound"
+      >p&#8322;</a
+      ><a name="2937"
+      >
+          </a
+      ><a name="2948" href="lib.types.CommutingSquare.html#2779" class="Function"
+      >lemma</a
+      ><a name="2953"
+      > </a
+      ><a name="2954" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2957"
+      > </a
+      ><a name="2958" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2961"
+      > </a
+      ><a name="2962" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2965"
+      > </a
+      ><a name="2966" class="Symbol"
+      >=</a
+      ><a name="2967"
+      > </a
+      ><a name="2968" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2971"
+      >
+
+  </a
+      ><a name="2975" class="Comment"
+      >-- 'l' with respect to '&#8728;v'</a
+      ><a name="3002"
+      >
+  </a
+      ><a name="3005" href="lib.types.CommutingSquare.html#3005" class="Function"
+      >CommSquare-inverse-inv-l</a
+      ><a name="3029"
+      > </a
+      ><a name="3030" class="Symbol"
+      >:</a
+      ><a name="3031"
+      > </a
+      ><a name="3032" class="Symbol"
+      >&#8704;</a
+      ><a name="3033"
+      > </a
+      ><a name="3034" class="Symbol"
+      >{</a
+      ><a name="3035" href="lib.types.CommutingSquare.html#3035" class="Bound"
+      >i&#8320;</a
+      ><a name="3037"
+      > </a
+      ><a name="3038" href="lib.types.CommutingSquare.html#3038" class="Bound"
+      >i&#8321;</a
+      ><a name="3040"
+      > </a
+      ><a name="3041" href="lib.types.CommutingSquare.html#3041" class="Bound"
+      >j&#8320;</a
+      ><a name="3043"
+      > </a
+      ><a name="3044" href="lib.types.CommutingSquare.html#3044" class="Bound"
+      >j&#8321;</a
+      ><a name="3046" class="Symbol"
+      >}</a
+      ><a name="3047"
+      >
+    </a
+      ><a name="3052" class="Symbol"
+      >{</a
+      ><a name="3053" href="lib.types.CommutingSquare.html#3053" class="Bound"
+      >A&#8320;</a
+      ><a name="3055"
+      > </a
+      ><a name="3056" class="Symbol"
+      >:</a
+      ><a name="3057"
+      > </a
+      ><a name="3058" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3062"
+      > </a
+      ><a name="3063" href="lib.types.CommutingSquare.html#3035" class="Bound"
+      >i&#8320;</a
+      ><a name="3065" class="Symbol"
+      >}</a
+      ><a name="3066"
+      > </a
+      ><a name="3067" class="Symbol"
+      >{</a
+      ><a name="3068" href="lib.types.CommutingSquare.html#3068" class="Bound"
+      >A&#8321;</a
+      ><a name="3070"
+      > </a
+      ><a name="3071" class="Symbol"
+      >:</a
+      ><a name="3072"
+      > </a
+      ><a name="3073" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3077"
+      > </a
+      ><a name="3078" href="lib.types.CommutingSquare.html#3038" class="Bound"
+      >i&#8321;</a
+      ><a name="3080" class="Symbol"
+      >}</a
+      ><a name="3081"
+      > </a
+      ><a name="3082" class="Symbol"
+      >{</a
+      ><a name="3083" href="lib.types.CommutingSquare.html#3083" class="Bound"
+      >B&#8320;</a
+      ><a name="3085"
+      > </a
+      ><a name="3086" class="Symbol"
+      >:</a
+      ><a name="3087"
+      > </a
+      ><a name="3088" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3092"
+      > </a
+      ><a name="3093" href="lib.types.CommutingSquare.html#3041" class="Bound"
+      >j&#8320;</a
+      ><a name="3095" class="Symbol"
+      >}</a
+      ><a name="3096"
+      > </a
+      ><a name="3097" class="Symbol"
+      >{</a
+      ><a name="3098" href="lib.types.CommutingSquare.html#3098" class="Bound"
+      >B&#8321;</a
+      ><a name="3100"
+      > </a
+      ><a name="3101" class="Symbol"
+      >:</a
+      ><a name="3102"
+      > </a
+      ><a name="3103" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3107"
+      > </a
+      ><a name="3108" href="lib.types.CommutingSquare.html#3044" class="Bound"
+      >j&#8321;</a
+      ><a name="3110" class="Symbol"
+      >}</a
+      ><a name="3111"
+      >
+    </a
+      ><a name="3116" class="Symbol"
+      >{</a
+      ><a name="3117" href="lib.types.CommutingSquare.html#3117" class="Bound"
+      >f&#8320;</a
+      ><a name="3119"
+      > </a
+      ><a name="3120" class="Symbol"
+      >:</a
+      ><a name="3121"
+      > </a
+      ><a name="3122" href="lib.types.CommutingSquare.html#3053" class="Bound"
+      >A&#8320;</a
+      ><a name="3124"
+      > </a
+      ><a name="3125" class="Symbol"
+      >&#8594;</a
+      ><a name="3126"
+      > </a
+      ><a name="3127" href="lib.types.CommutingSquare.html#3083" class="Bound"
+      >B&#8320;</a
+      ><a name="3129" class="Symbol"
+      >}</a
+      ><a name="3130"
+      > </a
+      ><a name="3131" class="Symbol"
+      >{</a
+      ><a name="3132" href="lib.types.CommutingSquare.html#3132" class="Bound"
+      >f&#8321;</a
+      ><a name="3134"
+      > </a
+      ><a name="3135" class="Symbol"
+      >:</a
+      ><a name="3136"
+      > </a
+      ><a name="3137" href="lib.types.CommutingSquare.html#3068" class="Bound"
+      >A&#8321;</a
+      ><a name="3139"
+      > </a
+      ><a name="3140" class="Symbol"
+      >&#8594;</a
+      ><a name="3141"
+      > </a
+      ><a name="3142" href="lib.types.CommutingSquare.html#3098" class="Bound"
+      >B&#8321;</a
+      ><a name="3144" class="Symbol"
+      >}</a
+      ><a name="3145"
+      > </a
+      ><a name="3146" class="Symbol"
+      >{</a
+      ><a name="3147" href="lib.types.CommutingSquare.html#3147" class="Bound"
+      >hA</a
+      ><a name="3149"
+      > </a
+      ><a name="3150" class="Symbol"
+      >:</a
+      ><a name="3151"
+      > </a
+      ><a name="3152" href="lib.types.CommutingSquare.html#3053" class="Bound"
+      >A&#8320;</a
+      ><a name="3154"
+      > </a
+      ><a name="3155" class="Symbol"
+      >&#8594;</a
+      ><a name="3156"
+      > </a
+      ><a name="3157" href="lib.types.CommutingSquare.html#3068" class="Bound"
+      >A&#8321;</a
+      ><a name="3159" class="Symbol"
+      >}</a
+      ><a name="3160"
+      > </a
+      ><a name="3161" class="Symbol"
+      >{</a
+      ><a name="3162" href="lib.types.CommutingSquare.html#3162" class="Bound"
+      >hB</a
+      ><a name="3164"
+      > </a
+      ><a name="3165" class="Symbol"
+      >:</a
+      ><a name="3166"
+      > </a
+      ><a name="3167" href="lib.types.CommutingSquare.html#3083" class="Bound"
+      >B&#8320;</a
+      ><a name="3169"
+      > </a
+      ><a name="3170" class="Symbol"
+      >&#8594;</a
+      ><a name="3171"
+      > </a
+      ><a name="3172" href="lib.types.CommutingSquare.html#3098" class="Bound"
+      >B&#8321;</a
+      ><a name="3174" class="Symbol"
+      >}</a
+      ><a name="3175"
+      >
+    </a
+      ><a name="3180" class="Symbol"
+      >(</a
+      ><a name="3181" href="lib.types.CommutingSquare.html#3181" class="Bound"
+      >cs</a
+      ><a name="3183"
+      > </a
+      ><a name="3184" class="Symbol"
+      >:</a
+      ><a name="3185"
+      > </a
+      ><a name="3186" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="3196"
+      > </a
+      ><a name="3197" href="lib.types.CommutingSquare.html#3117" class="Bound"
+      >f&#8320;</a
+      ><a name="3199"
+      > </a
+      ><a name="3200" href="lib.types.CommutingSquare.html#3132" class="Bound"
+      >f&#8321;</a
+      ><a name="3202"
+      > </a
+      ><a name="3203" href="lib.types.CommutingSquare.html#3147" class="Bound"
+      >hA</a
+      ><a name="3205"
+      > </a
+      ><a name="3206" href="lib.types.CommutingSquare.html#3162" class="Bound"
+      >hB</a
+      ><a name="3208" class="Symbol"
+      >)</a
+      ><a name="3209"
+      > </a
+      ><a name="3210" class="Symbol"
+      >(</a
+      ><a name="3211" href="lib.types.CommutingSquare.html#3211" class="Bound"
+      >hA-ise</a
+      ><a name="3217"
+      > </a
+      ><a name="3218" class="Symbol"
+      >:</a
+      ><a name="3219"
+      > </a
+      ><a name="3220" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="3228"
+      > </a
+      ><a name="3229" href="lib.types.CommutingSquare.html#3147" class="Bound"
+      >hA</a
+      ><a name="3231" class="Symbol"
+      >)</a
+      ><a name="3232"
+      > </a
+      ><a name="3233" class="Symbol"
+      >(</a
+      ><a name="3234" href="lib.types.CommutingSquare.html#3234" class="Bound"
+      >hB-ise</a
+      ><a name="3240"
+      > </a
+      ><a name="3241" class="Symbol"
+      >:</a
+      ><a name="3242"
+      > </a
+      ><a name="3243" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="3251"
+      > </a
+      ><a name="3252" href="lib.types.CommutingSquare.html#3162" class="Bound"
+      >hB</a
+      ><a name="3254" class="Symbol"
+      >)</a
+      ><a name="3255"
+      >
+    </a
+      ><a name="3260" class="Symbol"
+      >&#8594;</a
+      ><a name="3261"
+      > </a
+      ><a name="3262" class="Symbol"
+      >&#8704;</a
+      ><a name="3263"
+      > </a
+      ><a name="3264" href="lib.types.CommutingSquare.html#3264" class="Bound"
+      >a&#8320;</a
+      ><a name="3266"
+      > </a
+      ><a name="3267" class="Symbol"
+      >&#8594;</a
+      ><a name="3268"
+      > </a
+      ><a name="3269" class="Symbol"
+      >(</a
+      ><a name="3270" href="lib.types.CommutingSquare.html#237" class="Function"
+      >CommSquare-&#8728;v</a
+      ><a name="3283"
+      > </a
+      ><a name="3284" class="Symbol"
+      >(</a
+      ><a name="3285" href="lib.types.CommutingSquare.html#689" class="Function"
+      >CommSquare-inverse-v</a
+      ><a name="3305"
+      > </a
+      ><a name="3306" href="lib.types.CommutingSquare.html#3181" class="Bound"
+      >cs</a
+      ><a name="3308"
+      > </a
+      ><a name="3309" href="lib.types.CommutingSquare.html#3211" class="Bound"
+      >hA-ise</a
+      ><a name="3315"
+      > </a
+      ><a name="3316" href="lib.types.CommutingSquare.html#3234" class="Bound"
+      >hB-ise</a
+      ><a name="3322" class="Symbol"
+      >)</a
+      ><a name="3323"
+      > </a
+      ><a name="3324" href="lib.types.CommutingSquare.html#3181" class="Bound"
+      >cs</a
+      ><a name="3326"
+      > </a
+      ><a name="3327" href="lib.types.CommutingSquare.html#209" class="Function Operator"
+      >&#9633;$</a
+      ><a name="3329"
+      > </a
+      ><a name="3330" href="lib.types.CommutingSquare.html#3264" class="Bound"
+      >a&#8320;</a
+      ><a name="3332" class="Symbol"
+      >)</a
+      ><a name="3333"
+      >
+          </a
+      ><a name="3344" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3346"
+      > </a
+      ><a name="3347" href="lib.Equivalence.html#1719" class="Field"
+      >is-equiv.g-f</a
+      ><a name="3359"
+      > </a
+      ><a name="3360" href="lib.types.CommutingSquare.html#3234" class="Bound"
+      >hB-ise</a
+      ><a name="3366"
+      > </a
+      ><a name="3367" class="Symbol"
+      >(</a
+      ><a name="3368" href="lib.types.CommutingSquare.html#3117" class="Bound"
+      >f&#8320;</a
+      ><a name="3370"
+      > </a
+      ><a name="3371" href="lib.types.CommutingSquare.html#3264" class="Bound"
+      >a&#8320;</a
+      ><a name="3373" class="Symbol"
+      >)</a
+      ><a name="3374"
+      > </a
+      ><a name="3375" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3376"
+      > </a
+      ><a name="3377" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3378"
+      > </a
+      ><a name="3379" class="Symbol"
+      >(</a
+      ><a name="3380" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3382"
+      > </a
+      ><a name="3383" href="lib.types.CommutingSquare.html#3117" class="Bound"
+      >f&#8320;</a
+      ><a name="3385"
+      > </a
+      ><a name="3386" class="Symbol"
+      >(</a
+      ><a name="3387" href="lib.Equivalence.html#1719" class="Field"
+      >is-equiv.g-f</a
+      ><a name="3399"
+      > </a
+      ><a name="3400" href="lib.types.CommutingSquare.html#3211" class="Bound"
+      >hA-ise</a
+      ><a name="3406"
+      > </a
+      ><a name="3407" href="lib.types.CommutingSquare.html#3264" class="Bound"
+      >a&#8320;</a
+      ><a name="3409" class="Symbol"
+      >))</a
+      ><a name="3411"
+      >
+  </a
+      ><a name="3414" href="lib.types.CommutingSquare.html#3005" class="Function"
+      >CommSquare-inverse-inv-l</a
+      ><a name="3438"
+      > </a
+      ><a name="3439" class="Symbol"
+      >{</a
+      ><a name="3440" class="Argument"
+      >f&#8320;</a
+      ><a name="3442"
+      > </a
+      ><a name="3443" class="Symbol"
+      >=</a
+      ><a name="3444"
+      > </a
+      ><a name="3445" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="3447" class="Symbol"
+      >}</a
+      ><a name="3448"
+      > </a
+      ><a name="3449" class="Symbol"
+      >{</a
+      ><a name="3450" href="lib.types.CommutingSquare.html#3450" class="Bound"
+      >f&#8321;</a
+      ><a name="3452" class="Symbol"
+      >}</a
+      ><a name="3453"
+      > </a
+      ><a name="3454" class="Symbol"
+      >{</a
+      ><a name="3455" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="3457" class="Symbol"
+      >}</a
+      ><a name="3458"
+      > </a
+      ><a name="3459" class="Symbol"
+      >{</a
+      ><a name="3460" href="lib.types.CommutingSquare.html#3460" class="Bound"
+      >hB</a
+      ><a name="3462" class="Symbol"
+      >}</a
+      ><a name="3463"
+      > </a
+      ><a name="3464" class="Symbol"
+      >(</a
+      ><a name="3465" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="3473"
+      > </a
+      ><a name="3474" href="lib.types.CommutingSquare.html#3474" class="Bound"
+      >&#9633;</a
+      ><a name="3475" class="Symbol"
+      >)</a
+      ><a name="3476"
+      > </a
+      ><a name="3477" href="lib.types.CommutingSquare.html#3477" class="Bound"
+      >hA-ise</a
+      ><a name="3483"
+      > </a
+      ><a name="3484" href="lib.types.CommutingSquare.html#3484" class="Bound"
+      >hB-ise</a
+      ><a name="3490"
+      > </a
+      ><a name="3491" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="3493"
+      > </a
+      ><a name="3494" class="Symbol"
+      >=</a
+      ><a name="3495"
+      >
+    </a
+      ><a name="3500" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3502"
+      > </a
+      ><a name="3503" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="3507"
+      > </a
+      ><a name="3508" class="Symbol"
+      >(</a
+      ><a name="3509" href="lib.types.CommutingSquare.html#3474" class="Bound"
+      >&#9633;</a
+      ><a name="3510"
+      > </a
+      ><a name="3511" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="3513" class="Symbol"
+      >)</a
+      ><a name="3514"
+      >
+    </a
+      ><a name="3519" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3520"
+      > </a
+      ><a name="3521" class="Symbol"
+      >(</a
+      ><a name="3522"
+      > </a
+      ><a name="3523" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3525"
+      > </a
+      ><a name="3526" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="3530"
+      > </a
+      ><a name="3531" class="Symbol"
+      >(</a
+      ><a name="3532" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3533"
+      > </a
+      ><a name="3534" class="Symbol"
+      >(</a
+      ><a name="3535" href="lib.types.CommutingSquare.html#3474" class="Bound"
+      >&#9633;</a
+      ><a name="3536"
+      > </a
+      ><a name="3537" class="Symbol"
+      >(</a
+      ><a name="3538" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="3542"
+      > </a
+      ><a name="3543" class="Symbol"
+      >(</a
+      ><a name="3544" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="3546"
+      > </a
+      ><a name="3547" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="3549" class="Symbol"
+      >))</a
+      ><a name="3551"
+      > </a
+      ><a name="3552" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3553"
+      > </a
+      ><a name="3554" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3556"
+      > </a
+      ><a name="3557" href="lib.types.CommutingSquare.html#3450" class="Bound"
+      >f&#8321;</a
+      ><a name="3559"
+      > </a
+      ><a name="3560" class="Symbol"
+      >(</a
+      ><a name="3561" href="lib.Equivalence.html#1684" class="Function"
+      >hA.f-g</a
+      ><a name="3567"
+      > </a
+      ><a name="3568" class="Symbol"
+      >(</a
+      ><a name="3569" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="3571"
+      > </a
+      ><a name="3572" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="3574" class="Symbol"
+      >))))</a
+      ><a name="3578"
+      >
+        </a
+      ><a name="3587" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3588"
+      > </a
+      ><a name="3589" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="3595"
+      > </a
+      ><a name="3596" class="Symbol"
+      >(</a
+      ><a name="3597" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="3599"
+      > </a
+      ><a name="3600" class="Symbol"
+      >(</a
+      ><a name="3601" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="3605"
+      > </a
+      ><a name="3606" class="Symbol"
+      >(</a
+      ><a name="3607" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="3609"
+      > </a
+      ><a name="3610" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="3612" class="Symbol"
+      >))))</a
+      ><a name="3616"
+      >
+      </a
+      ><a name="3623" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="3625"
+      > </a
+      ><a name="3626" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3627"
+      > </a
+      ><a name="3628" class="Symbol"
+      >(</a
+      ><a name="3629" href="lib.Equivalence.html#1754" class="Function"
+      >hA.adj</a
+      ><a name="3635"
+      > </a
+      ><a name="3636" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="3638" class="Symbol"
+      >)</a
+      ><a name="3639"
+      > </a
+      ><a name="3640" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="3647"
+      > </a
+      ><a name="3648" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3650"
+      > </a
+      ><a name="3651" href="lib.types.CommutingSquare.html#3450" class="Bound"
+      >f&#8321;</a
+      ><a name="3653"
+      >
+          </a
+      ><a name="3664" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="3671"
+      > </a
+      ><a name="3672" href="lib.types.CommutingSquare.html#3474" class="Bound"
+      >&#9633;</a
+      ><a name="3673"
+      > </a
+      ><a name="3674" class="Symbol"
+      >(</a
+      ><a name="3675" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="3679"
+      > </a
+      ><a name="3680" class="Symbol"
+      >(</a
+      ><a name="3681" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="3683"
+      > </a
+      ><a name="3684" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="3686" class="Symbol"
+      >))</a
+      ><a name="3688"
+      > </a
+      ><a name="3689" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;_</a
+      ><a name="3691"
+      >
+          </a
+      ><a name="3702" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="3709"
+      > </a
+      ><a name="3710" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3711"
+      > </a
+      ><a name="3712" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="3719"
+      > </a
+      ><a name="3720" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3722"
+      > </a
+      ><a name="3723" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="3727"
+      >
+          </a
+      ><a name="3738" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="3745"
+      > </a
+      ><a name="3746" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >_&#8729;</a
+      ><a name="3748"
+      > </a
+      ><a name="3749" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="3755"
+      > </a
+      ><a name="3756" class="Symbol"
+      >(</a
+      ><a name="3757" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="3759"
+      > </a
+      ><a name="3760" class="Symbol"
+      >(</a
+      ><a name="3761" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="3765"
+      > </a
+      ><a name="3766" class="Symbol"
+      >(</a
+      ><a name="3767" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="3769"
+      > </a
+      ><a name="3770" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="3772" class="Symbol"
+      >)))</a
+      ><a name="3775"
+      >
+          </a
+      ><a name="3786" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="3793"
+      > </a
+      ><a name="3794" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3796"
+      > </a
+      ><a name="3797" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="3801"
+      > </a
+      ><a name="3802" class="Symbol"
+      >(</a
+      ><a name="3803" href="lib.types.CommutingSquare.html#3474" class="Bound"
+      >&#9633;</a
+      ><a name="3804"
+      > </a
+      ><a name="3805" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="3807" class="Symbol"
+      >)</a
+      ><a name="3808"
+      > </a
+      ><a name="3809" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;_</a
+      ><a name="3811"
+      > </a
+      ><a name="3812" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="3813"
+      >
+    </a
+      ><a name="3818" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3820"
+      > </a
+      ><a name="3821" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="3825"
+      > </a
+      ><a name="3826" class="Symbol"
+      >(</a
+      ><a name="3827" href="lib.types.CommutingSquare.html#3474" class="Bound"
+      >&#9633;</a
+      ><a name="3828"
+      > </a
+      ><a name="3829" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="3831" class="Symbol"
+      >)</a
+      ><a name="3832"
+      >
+    </a
+      ><a name="3837" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3838"
+      > </a
+      ><a name="3839" class="Symbol"
+      >(</a
+      ><a name="3840"
+      > </a
+      ><a name="3841" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3843"
+      > </a
+      ><a name="3844" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="3848"
+      > </a
+      ><a name="3849" class="Symbol"
+      >(</a
+      ><a name="3850" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3851"
+      > </a
+      ><a name="3852" class="Symbol"
+      >(</a
+      ><a name="3853" href="lib.types.CommutingSquare.html#3474" class="Bound"
+      >&#9633;</a
+      ><a name="3854"
+      > </a
+      ><a name="3855" class="Symbol"
+      >(</a
+      ><a name="3856" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="3860"
+      > </a
+      ><a name="3861" class="Symbol"
+      >(</a
+      ><a name="3862" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="3864"
+      > </a
+      ><a name="3865" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="3867" class="Symbol"
+      >))</a
+      ><a name="3869"
+      > </a
+      ><a name="3870" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3871"
+      > </a
+      ><a name="3872" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3874"
+      > </a
+      ><a name="3875" href="lib.types.CommutingSquare.html#3450" class="Bound"
+      >f&#8321;</a
+      ><a name="3877"
+      > </a
+      ><a name="3878" class="Symbol"
+      >(</a
+      ><a name="3879" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3881"
+      > </a
+      ><a name="3882" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="3884"
+      > </a
+      ><a name="3885" class="Symbol"
+      >(</a
+      ><a name="3886" href="lib.Equivalence.html#1719" class="Function"
+      >hA.g-f</a
+      ><a name="3892"
+      > </a
+      ><a name="3893" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="3895" class="Symbol"
+      >))))</a
+      ><a name="3899"
+      >
+        </a
+      ><a name="3908" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3909"
+      > </a
+      ><a name="3910" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="3916"
+      > </a
+      ><a name="3917" class="Symbol"
+      >(</a
+      ><a name="3918" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="3920"
+      > </a
+      ><a name="3921" class="Symbol"
+      >(</a
+      ><a name="3922" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="3926"
+      > </a
+      ><a name="3927" class="Symbol"
+      >(</a
+      ><a name="3928" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="3930"
+      > </a
+      ><a name="3931" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="3933" class="Symbol"
+      >))))</a
+      ><a name="3937"
+      >
+      </a
+      ><a name="3944" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="3946"
+      > </a
+      ><a name="3947" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="3951"
+      > </a
+      ><a name="3952" href="lib.types.CommutingSquare.html#3450" class="Bound"
+      >f&#8321;</a
+      ><a name="3954"
+      > </a
+      ><a name="3955" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="3957"
+      > </a
+      ><a name="3958" class="Symbol"
+      >(</a
+      ><a name="3959" href="lib.Equivalence.html#1719" class="Function"
+      >hA.g-f</a
+      ><a name="3965"
+      > </a
+      ><a name="3966" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="3968" class="Symbol"
+      >)</a
+      ><a name="3969"
+      >
+          </a
+      ><a name="3980" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="3987"
+      > </a
+      ><a name="3988" href="lib.types.CommutingSquare.html#3474" class="Bound"
+      >&#9633;</a
+      ><a name="3989"
+      > </a
+      ><a name="3990" class="Symbol"
+      >(</a
+      ><a name="3991" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="3995"
+      > </a
+      ><a name="3996" class="Symbol"
+      >(</a
+      ><a name="3997" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="3999"
+      > </a
+      ><a name="4000" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4002" class="Symbol"
+      >))</a
+      ><a name="4004"
+      > </a
+      ><a name="4005" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;_</a
+      ><a name="4007"
+      >
+          </a
+      ><a name="4018" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="4025"
+      > </a
+      ><a name="4026" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4027"
+      > </a
+      ><a name="4028" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="4035"
+      > </a
+      ><a name="4036" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4038"
+      > </a
+      ><a name="4039" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="4043"
+      >
+          </a
+      ><a name="4054" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="4061"
+      > </a
+      ><a name="4062" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >_&#8729;</a
+      ><a name="4064"
+      > </a
+      ><a name="4065" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="4071"
+      > </a
+      ><a name="4072" class="Symbol"
+      >(</a
+      ><a name="4073" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="4075"
+      > </a
+      ><a name="4076" class="Symbol"
+      >(</a
+      ><a name="4077" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="4081"
+      > </a
+      ><a name="4082" class="Symbol"
+      >(</a
+      ><a name="4083" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="4085"
+      > </a
+      ><a name="4086" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4088" class="Symbol"
+      >)))</a
+      ><a name="4091"
+      >
+          </a
+      ><a name="4102" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="4109"
+      > </a
+      ><a name="4110" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4112"
+      > </a
+      ><a name="4113" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="4117"
+      > </a
+      ><a name="4118" class="Symbol"
+      >(</a
+      ><a name="4119" href="lib.types.CommutingSquare.html#3474" class="Bound"
+      >&#9633;</a
+      ><a name="4120"
+      > </a
+      ><a name="4121" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4123" class="Symbol"
+      >)</a
+      ><a name="4124"
+      > </a
+      ><a name="4125" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;_</a
+      ><a name="4127"
+      > </a
+      ><a name="4128" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4129"
+      >
+    </a
+      ><a name="4134" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4136"
+      > </a
+      ><a name="4137" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="4141"
+      > </a
+      ><a name="4142" class="Symbol"
+      >(</a
+      ><a name="4143" href="lib.types.CommutingSquare.html#3474" class="Bound"
+      >&#9633;</a
+      ><a name="4144"
+      > </a
+      ><a name="4145" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4147" class="Symbol"
+      >)</a
+      ><a name="4148"
+      >
+    </a
+      ><a name="4153" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4154"
+      > </a
+      ><a name="4155" class="Symbol"
+      >(</a
+      ><a name="4156"
+      > </a
+      ><a name="4157" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4159"
+      > </a
+      ><a name="4160" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="4164"
+      > </a
+      ><a name="4165" class="Symbol"
+      >(</a
+      ><a name="4166" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4167"
+      > </a
+      ><a name="4168" class="Symbol"
+      >(</a
+      ><a name="4169" href="lib.types.CommutingSquare.html#3474" class="Bound"
+      >&#9633;</a
+      ><a name="4170"
+      > </a
+      ><a name="4171" class="Symbol"
+      >(</a
+      ><a name="4172" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="4176"
+      > </a
+      ><a name="4177" class="Symbol"
+      >(</a
+      ><a name="4178" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="4180"
+      > </a
+      ><a name="4181" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4183" class="Symbol"
+      >))</a
+      ><a name="4185"
+      > </a
+      ><a name="4186" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4187"
+      > </a
+      ><a name="4188" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4190"
+      > </a
+      ><a name="4191" class="Symbol"
+      >(</a
+      ><a name="4192" href="lib.types.CommutingSquare.html#3450" class="Bound"
+      >f&#8321;</a
+      ><a name="4194"
+      > </a
+      ><a name="4195" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4196"
+      > </a
+      ><a name="4197" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="4199" class="Symbol"
+      >)</a
+      ><a name="4200"
+      > </a
+      ><a name="4201" class="Symbol"
+      >(</a
+      ><a name="4202" href="lib.Equivalence.html#1719" class="Function"
+      >hA.g-f</a
+      ><a name="4208"
+      > </a
+      ><a name="4209" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4211" class="Symbol"
+      >)))</a
+      ><a name="4214"
+      >
+        </a
+      ><a name="4223" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4224"
+      > </a
+      ><a name="4225" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="4231"
+      > </a
+      ><a name="4232" class="Symbol"
+      >(</a
+      ><a name="4233" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="4235"
+      > </a
+      ><a name="4236" class="Symbol"
+      >(</a
+      ><a name="4237" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="4241"
+      > </a
+      ><a name="4242" class="Symbol"
+      >(</a
+      ><a name="4243" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="4245"
+      > </a
+      ><a name="4246" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4248" class="Symbol"
+      >))))</a
+      ><a name="4252"
+      >
+      </a
+      ><a name="4259" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4261"
+      > </a
+      ><a name="4262" href="lib.types.Paths.html#6734" class="Function"
+      >&#8595;-='-out'</a
+      ><a name="4271"
+      > </a
+      ><a name="4272" class="Symbol"
+      >(</a
+      ><a name="4273" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="4276"
+      > </a
+      ><a name="4277" href="lib.types.CommutingSquare.html#3474" class="Bound"
+      >&#9633;</a
+      ><a name="4278"
+      > </a
+      ><a name="4279" class="Symbol"
+      >(</a
+      ><a name="4280" href="lib.Equivalence.html#1719" class="Function"
+      >hA.g-f</a
+      ><a name="4286"
+      > </a
+      ><a name="4287" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4289" class="Symbol"
+      >))</a
+      ><a name="4291"
+      >
+          </a
+      ><a name="4302" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="4309"
+      > </a
+      ><a name="4310" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4311"
+      > </a
+      ><a name="4312" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="4319"
+      > </a
+      ><a name="4320" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4322"
+      > </a
+      ><a name="4323" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="4327"
+      >
+          </a
+      ><a name="4338" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="4345"
+      > </a
+      ><a name="4346" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >_&#8729;</a
+      ><a name="4348"
+      > </a
+      ><a name="4349" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="4355"
+      > </a
+      ><a name="4356" class="Symbol"
+      >(</a
+      ><a name="4357" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="4359"
+      > </a
+      ><a name="4360" class="Symbol"
+      >(</a
+      ><a name="4361" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="4365"
+      > </a
+      ><a name="4366" class="Symbol"
+      >(</a
+      ><a name="4367" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="4369"
+      > </a
+      ><a name="4370" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4372" class="Symbol"
+      >)))</a
+      ><a name="4375"
+      >
+          </a
+      ><a name="4386" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="4393"
+      > </a
+      ><a name="4394" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4396"
+      > </a
+      ><a name="4397" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="4401"
+      > </a
+      ><a name="4402" class="Symbol"
+      >(</a
+      ><a name="4403" href="lib.types.CommutingSquare.html#3474" class="Bound"
+      >&#9633;</a
+      ><a name="4404"
+      > </a
+      ><a name="4405" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4407" class="Symbol"
+      >)</a
+      ><a name="4408"
+      > </a
+      ><a name="4409" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;_</a
+      ><a name="4411"
+      > </a
+      ><a name="4412" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4413"
+      >
+    </a
+      ><a name="4418" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4420"
+      > </a
+      ><a name="4421" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="4425"
+      > </a
+      ><a name="4426" class="Symbol"
+      >(</a
+      ><a name="4427" href="lib.types.CommutingSquare.html#3474" class="Bound"
+      >&#9633;</a
+      ><a name="4428"
+      > </a
+      ><a name="4429" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4431" class="Symbol"
+      >)</a
+      ><a name="4432"
+      >
+    </a
+      ><a name="4437" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4438"
+      > </a
+      ><a name="4439" class="Symbol"
+      >(</a
+      ><a name="4440"
+      > </a
+      ><a name="4441" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4443"
+      > </a
+      ><a name="4444" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="4448"
+      > </a
+      ><a name="4449" class="Symbol"
+      >(</a
+      ><a name="4450" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4451"
+      > </a
+      ><a name="4452" class="Symbol"
+      >(</a
+      ><a name="4453" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4455"
+      > </a
+      ><a name="4456" class="Symbol"
+      >(</a
+      ><a name="4457" href="lib.types.CommutingSquare.html#3460" class="Bound"
+      >hB</a
+      ><a name="4459"
+      > </a
+      ><a name="4460" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4461"
+      > </a
+      ><a name="4462" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="4464" class="Symbol"
+      >)</a
+      ><a name="4465"
+      > </a
+      ><a name="4466" class="Symbol"
+      >(</a
+      ><a name="4467" href="lib.Equivalence.html#1719" class="Function"
+      >hA.g-f</a
+      ><a name="4473"
+      > </a
+      ><a name="4474" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4476" class="Symbol"
+      >)</a
+      ><a name="4477"
+      > </a
+      ><a name="4478" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="4480"
+      > </a
+      ><a name="4481" href="lib.types.CommutingSquare.html#3474" class="Bound"
+      >&#9633;</a
+      ><a name="4482"
+      > </a
+      ><a name="4483" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4485" class="Symbol"
+      >))</a
+      ><a name="4487"
+      >
+        </a
+      ><a name="4496" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4497"
+      > </a
+      ><a name="4498" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="4504"
+      > </a
+      ><a name="4505" class="Symbol"
+      >(</a
+      ><a name="4506" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="4508"
+      > </a
+      ><a name="4509" class="Symbol"
+      >(</a
+      ><a name="4510" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="4514"
+      > </a
+      ><a name="4515" class="Symbol"
+      >(</a
+      ><a name="4516" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="4518"
+      > </a
+      ><a name="4519" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4521" class="Symbol"
+      >))))</a
+      ><a name="4525"
+      >
+      </a
+      ><a name="4532" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4534"
+      > </a
+      ><a name="4535" href="lib.types.CommutingSquare.html#5332" class="Function"
+      >lemma</a
+      ><a name="4540"
+      > </a
+      ><a name="4541" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="4545"
+      > </a
+      ><a name="4546" class="Symbol"
+      >(</a
+      ><a name="4547" href="lib.types.CommutingSquare.html#3474" class="Bound"
+      >&#9633;</a
+      ><a name="4548"
+      > </a
+      ><a name="4549" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4551" class="Symbol"
+      >)</a
+      ><a name="4552"
+      > </a
+      ><a name="4553" class="Symbol"
+      >(</a
+      ><a name="4554" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4556"
+      > </a
+      ><a name="4557" class="Symbol"
+      >(</a
+      ><a name="4558" href="lib.types.CommutingSquare.html#3460" class="Bound"
+      >hB</a
+      ><a name="4560"
+      > </a
+      ><a name="4561" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4562"
+      > </a
+      ><a name="4563" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="4565" class="Symbol"
+      >)</a
+      ><a name="4566"
+      > </a
+      ><a name="4567" class="Symbol"
+      >(</a
+      ><a name="4568" href="lib.Equivalence.html#1719" class="Function"
+      >hA.g-f</a
+      ><a name="4574"
+      > </a
+      ><a name="4575" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4577" class="Symbol"
+      >))</a
+      ><a name="4579"
+      > </a
+      ><a name="4580" class="Symbol"
+      >(</a
+      ><a name="4581" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="4587"
+      > </a
+      ><a name="4588" class="Symbol"
+      >(</a
+      ><a name="4589" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="4591"
+      > </a
+      ><a name="4592" class="Symbol"
+      >(</a
+      ><a name="4593" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="4597"
+      > </a
+      ><a name="4598" class="Symbol"
+      >(</a
+      ><a name="4599" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="4601"
+      > </a
+      ><a name="4602" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4604" class="Symbol"
+      >))))</a
+      ><a name="4608"
+      > </a
+      ><a name="4609" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4610"
+      >
+    </a
+      ><a name="4615" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4616"
+      > </a
+      ><a name="4617" class="Symbol"
+      >(</a
+      ><a name="4618" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4620"
+      > </a
+      ><a name="4621" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="4625"
+      > </a
+      ><a name="4626" class="Symbol"
+      >(</a
+      ><a name="4627" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4629"
+      > </a
+      ><a name="4630" class="Symbol"
+      >(</a
+      ><a name="4631" href="lib.types.CommutingSquare.html#3460" class="Bound"
+      >hB</a
+      ><a name="4633"
+      > </a
+      ><a name="4634" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4635"
+      > </a
+      ><a name="4636" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="4638" class="Symbol"
+      >)</a
+      ><a name="4639"
+      > </a
+      ><a name="4640" class="Symbol"
+      >(</a
+      ><a name="4641" href="lib.Equivalence.html#1719" class="Function"
+      >hA.g-f</a
+      ><a name="4647"
+      > </a
+      ><a name="4648" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4650" class="Symbol"
+      >)))</a
+      ><a name="4653"
+      >
+    </a
+      ><a name="4658" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="4660"
+      > </a
+      ><a name="4661" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="4667"
+      > </a
+      ><a name="4668" class="Symbol"
+      >(</a
+      ><a name="4669" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="4671"
+      > </a
+      ><a name="4672" class="Symbol"
+      >(</a
+      ><a name="4673" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="4677"
+      > </a
+      ><a name="4678" class="Symbol"
+      >(</a
+      ><a name="4679" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="4681"
+      > </a
+      ><a name="4682" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4684" class="Symbol"
+      >)))</a
+      ><a name="4687"
+      >
+      </a
+      ><a name="4694" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4696"
+      > </a
+      ><a name="4697" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="4701"
+      > </a
+      ><a name="4702" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="4706"
+      > </a
+      ><a name="4707" class="Symbol"
+      >(</a
+      ><a name="4708" href="lib.types.CommutingSquare.html#3460" class="Bound"
+      >hB</a
+      ><a name="4710"
+      > </a
+      ><a name="4711" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4712"
+      > </a
+      ><a name="4713" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="4715" class="Symbol"
+      >)</a
+      ><a name="4716"
+      > </a
+      ><a name="4717" class="Symbol"
+      >(</a
+      ><a name="4718" href="lib.Equivalence.html#1719" class="Function"
+      >hA.g-f</a
+      ><a name="4724"
+      > </a
+      ><a name="4725" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4727" class="Symbol"
+      >)</a
+      ><a name="4728"
+      >
+          </a
+      ><a name="4739" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="4746"
+      > </a
+      ><a name="4747" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4748"
+      > </a
+      ><a name="4749" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="4756"
+      > </a
+      ><a name="4757" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >_&#8729;'</a
+      ><a name="4760"
+      > </a
+      ><a name="4761" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="4767"
+      > </a
+      ><a name="4768" class="Symbol"
+      >(</a
+      ><a name="4769" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="4771"
+      > </a
+      ><a name="4772" class="Symbol"
+      >(</a
+      ><a name="4773" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="4777"
+      > </a
+      ><a name="4778" class="Symbol"
+      >(</a
+      ><a name="4779" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="4781"
+      > </a
+      ><a name="4782" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4784" class="Symbol"
+      >)))</a
+      ><a name="4787"
+      > </a
+      ><a name="4788" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4789"
+      >
+    </a
+      ><a name="4794" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4795"
+      > </a
+      ><a name="4796" class="Symbol"
+      >(</a
+      ><a name="4797" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4799"
+      > </a
+      ><a name="4800" class="Symbol"
+      >(</a
+      ><a name="4801" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="4805"
+      > </a
+      ><a name="4806" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4807"
+      > </a
+      ><a name="4808" href="lib.types.CommutingSquare.html#3460" class="Bound"
+      >hB</a
+      ><a name="4810"
+      > </a
+      ><a name="4811" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4812"
+      > </a
+      ><a name="4813" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="4815" class="Symbol"
+      >)</a
+      ><a name="4816"
+      > </a
+      ><a name="4817" class="Symbol"
+      >(</a
+      ><a name="4818" href="lib.Equivalence.html#1719" class="Function"
+      >hA.g-f</a
+      ><a name="4824"
+      > </a
+      ><a name="4825" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4827" class="Symbol"
+      >))</a
+      ><a name="4829"
+      >
+    </a
+      ><a name="4834" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="4836"
+      > </a
+      ><a name="4837" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="4843"
+      > </a
+      ><a name="4844" class="Symbol"
+      >(</a
+      ><a name="4845" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="4847"
+      > </a
+      ><a name="4848" class="Symbol"
+      >(</a
+      ><a name="4849" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="4853"
+      > </a
+      ><a name="4854" class="Symbol"
+      >(</a
+      ><a name="4855" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="4857"
+      > </a
+      ><a name="4858" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4860" class="Symbol"
+      >)))</a
+      ><a name="4863"
+      >
+      </a
+      ><a name="4870" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4872"
+      > </a
+      ><a name="4873" href="lib.PathFunctor.html#210" class="Function"
+      >!-ap</a
+      ><a name="4877"
+      > </a
+      ><a name="4878" class="Symbol"
+      >(</a
+      ><a name="4879" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="4883"
+      > </a
+      ><a name="4884" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4885"
+      > </a
+      ><a name="4886" href="lib.types.CommutingSquare.html#3460" class="Bound"
+      >hB</a
+      ><a name="4888"
+      > </a
+      ><a name="4889" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4890"
+      > </a
+      ><a name="4891" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="4893" class="Symbol"
+      >)</a
+      ><a name="4894"
+      > </a
+      ><a name="4895" class="Symbol"
+      >(</a
+      ><a name="4896" href="lib.Equivalence.html#1719" class="Function"
+      >hA.g-f</a
+      ><a name="4902"
+      > </a
+      ><a name="4903" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4905" class="Symbol"
+      >)</a
+      ><a name="4906"
+      >
+          </a
+      ><a name="4917" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="4924"
+      > </a
+      ><a name="4925" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >_&#8729;'</a
+      ><a name="4928"
+      > </a
+      ><a name="4929" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="4935"
+      > </a
+      ><a name="4936" class="Symbol"
+      >(</a
+      ><a name="4937" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="4939"
+      > </a
+      ><a name="4940" class="Symbol"
+      >(</a
+      ><a name="4941" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="4945"
+      > </a
+      ><a name="4946" class="Symbol"
+      >(</a
+      ><a name="4947" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="4949"
+      > </a
+      ><a name="4950" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4952" class="Symbol"
+      >)))</a
+      ><a name="4955"
+      > </a
+      ><a name="4956" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4957"
+      >
+    </a
+      ><a name="4962" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4964"
+      > </a
+      ><a name="4965" class="Symbol"
+      >(</a
+      ><a name="4966" href="lib.Equivalence.html#1668" class="Function"
+      >hB.g</a
+      ><a name="4970"
+      > </a
+      ><a name="4971" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4972"
+      > </a
+      ><a name="4973" href="lib.types.CommutingSquare.html#3460" class="Bound"
+      >hB</a
+      ><a name="4975"
+      > </a
+      ><a name="4976" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4977"
+      > </a
+      ><a name="4978" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="4980" class="Symbol"
+      >)</a
+      ><a name="4981"
+      > </a
+      ><a name="4982" class="Symbol"
+      >(</a
+      ><a name="4983" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4984"
+      > </a
+      ><a name="4985" class="Symbol"
+      >(</a
+      ><a name="4986" href="lib.Equivalence.html#1719" class="Function"
+      >hA.g-f</a
+      ><a name="4992"
+      > </a
+      ><a name="4993" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="4995" class="Symbol"
+      >))</a
+      ><a name="4997"
+      >
+    </a
+      ><a name="5002" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="5004"
+      > </a
+      ><a name="5005" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="5011"
+      > </a
+      ><a name="5012" class="Symbol"
+      >(</a
+      ><a name="5013" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="5015"
+      > </a
+      ><a name="5016" class="Symbol"
+      >(</a
+      ><a name="5017" href="lib.Equivalence.html#1668" class="Function"
+      >hA.g</a
+      ><a name="5021"
+      > </a
+      ><a name="5022" class="Symbol"
+      >(</a
+      ><a name="5023" href="lib.types.CommutingSquare.html#3455" class="Bound"
+      >hA</a
+      ><a name="5025"
+      > </a
+      ><a name="5026" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="5028" class="Symbol"
+      >)))</a
+      ><a name="5031"
+      >
+      </a
+      ><a name="5038" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5040"
+      > </a
+      ><a name="5041" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5042"
+      > </a
+      ><a name="5043" class="Symbol"
+      >(</a
+      ><a name="5044" href="lib.types.Paths.html#6734" class="Function"
+      >&#8595;-='-out'</a
+      ><a name="5053"
+      > </a
+      ><a name="5054" class="Symbol"
+      >(</a
+      ><a name="5055" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="5058"
+      > </a
+      ><a name="5059" class="Symbol"
+      >(</a
+      ><a name="5060" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="5066"
+      > </a
+      ><a name="5067" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="5068"
+      > </a
+      ><a name="5069" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="5071" class="Symbol"
+      >)</a
+      ><a name="5072"
+      > </a
+      ><a name="5073" class="Symbol"
+      >(</a
+      ><a name="5074" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5075"
+      > </a
+      ><a name="5076" class="Symbol"
+      >(</a
+      ><a name="5077" href="lib.Equivalence.html#1719" class="Function"
+      >hA.g-f</a
+      ><a name="5083"
+      > </a
+      ><a name="5084" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="5086" class="Symbol"
+      >))))</a
+      ><a name="5090"
+      > </a
+      ><a name="5091" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5092"
+      >
+    </a
+      ><a name="5097" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="5103"
+      > </a
+      ><a name="5104" class="Symbol"
+      >(</a
+      ><a name="5105" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="5107"
+      > </a
+      ><a name="5108" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="5110" class="Symbol"
+      >)</a
+      ><a name="5111"
+      > </a
+      ><a name="5112" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5113"
+      > </a
+      ><a name="5114" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5116"
+      > </a
+      ><a name="5117" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="5119"
+      > </a
+      ><a name="5120" class="Symbol"
+      >(</a
+      ><a name="5121" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5122"
+      > </a
+      ><a name="5123" class="Symbol"
+      >(</a
+      ><a name="5124" href="lib.Equivalence.html#1719" class="Function"
+      >hA.g-f</a
+      ><a name="5130"
+      > </a
+      ><a name="5131" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="5133" class="Symbol"
+      >))</a
+      ><a name="5135"
+      >
+      </a
+      ><a name="5142" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5144"
+      > </a
+      ><a name="5145" href="lib.PathFunctor.html#291" class="Function"
+      >ap-!</a
+      ><a name="5149"
+      > </a
+      ><a name="5150" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="5152"
+      > </a
+      ><a name="5153" class="Symbol"
+      >(</a
+      ><a name="5154" href="lib.Equivalence.html#1719" class="Function"
+      >hA.g-f</a
+      ><a name="5160"
+      > </a
+      ><a name="5161" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="5163" class="Symbol"
+      >)</a
+      ><a name="5164"
+      > </a
+      ><a name="5165" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="5172"
+      > </a
+      ><a name="5173" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="5179"
+      > </a
+      ><a name="5180" class="Symbol"
+      >(</a
+      ><a name="5181" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="5183"
+      > </a
+      ><a name="5184" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="5186" class="Symbol"
+      >)</a
+      ><a name="5187"
+      > </a
+      ><a name="5188" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;_</a
+      ><a name="5190"
+      > </a
+      ><a name="5191" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5192"
+      >
+    </a
+      ><a name="5197" href="lib.Equivalence.html#1719" class="Function"
+      >hB.g-f</a
+      ><a name="5203"
+      > </a
+      ><a name="5204" class="Symbol"
+      >(</a
+      ><a name="5205" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="5207"
+      > </a
+      ><a name="5208" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="5210" class="Symbol"
+      >)</a
+      ><a name="5211"
+      > </a
+      ><a name="5212" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5213"
+      > </a
+      ><a name="5214" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5215"
+      > </a
+      ><a name="5216" class="Symbol"
+      >(</a
+      ><a name="5217" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5219"
+      > </a
+      ><a name="5220" href="lib.types.CommutingSquare.html#3445" class="Bound"
+      >f&#8320;</a
+      ><a name="5222"
+      > </a
+      ><a name="5223" class="Symbol"
+      >(</a
+      ><a name="5224" href="lib.Equivalence.html#1719" class="Function"
+      >hA.g-f</a
+      ><a name="5230"
+      > </a
+      ><a name="5231" href="lib.types.CommutingSquare.html#3491" class="Bound"
+      >a&#8320;</a
+      ><a name="5233" class="Symbol"
+      >))</a
+      ><a name="5235"
+      >
+      </a
+      ><a name="5242" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="5244"
+      >
+    </a
+      ><a name="5249" class="Keyword"
+      >where</a
+      ><a name="5254"
+      > </a
+      ><a name="5255" class="Keyword"
+      >module</a
+      ><a name="5261"
+      > </a
+      ><a name="5262" href="lib.types.CommutingSquare.html#5262" class="Module"
+      >hA</a
+      ><a name="5264"
+      > </a
+      ><a name="5265" class="Symbol"
+      >=</a
+      ><a name="5266"
+      > </a
+      ><a name="5267" href="lib.Equivalence.html#1603" class="Module"
+      >is-equiv</a
+      ><a name="5275"
+      > </a
+      ><a name="5276" href="lib.types.CommutingSquare.html#3477" class="Bound"
+      >hA-ise</a
+      ><a name="5282"
+      >
+          </a
+      ><a name="5293" class="Keyword"
+      >module</a
+      ><a name="5299"
+      > </a
+      ><a name="5300" href="lib.types.CommutingSquare.html#5300" class="Module"
+      >hB</a
+      ><a name="5302"
+      > </a
+      ><a name="5303" class="Symbol"
+      >=</a
+      ><a name="5304"
+      > </a
+      ><a name="5305" href="lib.Equivalence.html#1603" class="Module"
+      >is-equiv</a
+      ><a name="5313"
+      > </a
+      ><a name="5314" href="lib.types.CommutingSquare.html#3484" class="Bound"
+      >hB-ise</a
+      ><a name="5320"
+      >
+
+          </a
+      ><a name="5332" href="lib.types.CommutingSquare.html#5332" class="Function"
+      >lemma</a
+      ><a name="5337"
+      > </a
+      ><a name="5338" class="Symbol"
+      >:</a
+      ><a name="5339"
+      > </a
+      ><a name="5340" class="Symbol"
+      >&#8704;</a
+      ><a name="5341"
+      > </a
+      ><a name="5342" class="Symbol"
+      >{</a
+      ><a name="5343" href="lib.types.CommutingSquare.html#5343" class="Bound"
+      >i</a
+      ><a name="5344"
+      > </a
+      ><a name="5345" href="lib.types.CommutingSquare.html#5345" class="Bound"
+      >j</a
+      ><a name="5346" class="Symbol"
+      >}</a
+      ><a name="5347"
+      > </a
+      ><a name="5348" class="Symbol"
+      >{</a
+      ><a name="5349" href="lib.types.CommutingSquare.html#5349" class="Bound"
+      >A</a
+      ><a name="5350"
+      > </a
+      ><a name="5351" class="Symbol"
+      >:</a
+      ><a name="5352"
+      > </a
+      ><a name="5353" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="5357"
+      > </a
+      ><a name="5358" href="lib.types.CommutingSquare.html#5343" class="Bound"
+      >i</a
+      ><a name="5359" class="Symbol"
+      >}</a
+      ><a name="5360"
+      > </a
+      ><a name="5361" class="Symbol"
+      >{</a
+      ><a name="5362" href="lib.types.CommutingSquare.html#5362" class="Bound"
+      >B</a
+      ><a name="5363"
+      > </a
+      ><a name="5364" class="Symbol"
+      >:</a
+      ><a name="5365"
+      > </a
+      ><a name="5366" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="5370"
+      > </a
+      ><a name="5371" href="lib.types.CommutingSquare.html#5345" class="Bound"
+      >j</a
+      ><a name="5372" class="Symbol"
+      >}</a
+      ><a name="5373"
+      > </a
+      ><a name="5374" class="Symbol"
+      >(</a
+      ><a name="5375" href="lib.types.CommutingSquare.html#5375" class="Bound"
+      >f</a
+      ><a name="5376"
+      > </a
+      ><a name="5377" class="Symbol"
+      >:</a
+      ><a name="5378"
+      > </a
+      ><a name="5379" href="lib.types.CommutingSquare.html#5349" class="Bound"
+      >A</a
+      ><a name="5380"
+      > </a
+      ><a name="5381" class="Symbol"
+      >&#8594;</a
+      ><a name="5382"
+      > </a
+      ><a name="5383" href="lib.types.CommutingSquare.html#5362" class="Bound"
+      >B</a
+      ><a name="5384" class="Symbol"
+      >)</a
+      ><a name="5385"
+      >
+            </a
+      ><a name="5398" class="Symbol"
+      >{</a
+      ><a name="5399" href="lib.types.CommutingSquare.html#5399" class="Bound"
+      >a&#8320;</a
+      ><a name="5401"
+      > </a
+      ><a name="5402" href="lib.types.CommutingSquare.html#5402" class="Bound"
+      >a&#8321;</a
+      ><a name="5404"
+      > </a
+      ><a name="5405" href="lib.types.CommutingSquare.html#5405" class="Bound"
+      >a&#8322;</a
+      ><a name="5407"
+      > </a
+      ><a name="5408" class="Symbol"
+      >:</a
+      ><a name="5409"
+      > </a
+      ><a name="5410" href="lib.types.CommutingSquare.html#5349" class="Bound"
+      >A</a
+      ><a name="5411" class="Symbol"
+      >}</a
+      ><a name="5412"
+      > </a
+      ><a name="5413" class="Symbol"
+      >{</a
+      ><a name="5414" href="lib.types.CommutingSquare.html#5414" class="Bound"
+      >b</a
+      ><a name="5415"
+      > </a
+      ><a name="5416" class="Symbol"
+      >:</a
+      ><a name="5417"
+      > </a
+      ><a name="5418" href="lib.types.CommutingSquare.html#5362" class="Bound"
+      >B</a
+      ><a name="5419" class="Symbol"
+      >}</a
+      ><a name="5420"
+      >
+            </a
+      ><a name="5433" class="Symbol"
+      >(</a
+      ><a name="5434" href="lib.types.CommutingSquare.html#5434" class="Bound"
+      >p&#8320;</a
+      ><a name="5436"
+      > </a
+      ><a name="5437" class="Symbol"
+      >:</a
+      ><a name="5438"
+      > </a
+      ><a name="5439" href="lib.types.CommutingSquare.html#5399" class="Bound"
+      >a&#8320;</a
+      ><a name="5441"
+      > </a
+      ><a name="5442" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5444"
+      > </a
+      ><a name="5445" href="lib.types.CommutingSquare.html#5402" class="Bound"
+      >a&#8321;</a
+      ><a name="5447" class="Symbol"
+      >)</a
+      ><a name="5448"
+      > </a
+      ><a name="5449" class="Symbol"
+      >(</a
+      ><a name="5450" href="lib.types.CommutingSquare.html#5450" class="Bound"
+      >p&#8321;</a
+      ><a name="5452"
+      > </a
+      ><a name="5453" class="Symbol"
+      >:</a
+      ><a name="5454"
+      > </a
+      ><a name="5455" href="lib.types.CommutingSquare.html#5405" class="Bound"
+      >a&#8322;</a
+      ><a name="5457"
+      > </a
+      ><a name="5458" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5460"
+      > </a
+      ><a name="5461" href="lib.types.CommutingSquare.html#5399" class="Bound"
+      >a&#8320;</a
+      ><a name="5463" class="Symbol"
+      >)</a
+      ><a name="5464"
+      > </a
+      ><a name="5465" class="Symbol"
+      >(</a
+      ><a name="5466" href="lib.types.CommutingSquare.html#5466" class="Bound"
+      >q&#8320;</a
+      ><a name="5468"
+      > </a
+      ><a name="5469" class="Symbol"
+      >:</a
+      ><a name="5470"
+      > </a
+      ><a name="5471" href="lib.types.CommutingSquare.html#5375" class="Bound"
+      >f</a
+      ><a name="5472"
+      > </a
+      ><a name="5473" href="lib.types.CommutingSquare.html#5405" class="Bound"
+      >a&#8322;</a
+      ><a name="5475"
+      > </a
+      ><a name="5476" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5478"
+      > </a
+      ><a name="5479" href="lib.types.CommutingSquare.html#5414" class="Bound"
+      >b</a
+      ><a name="5480" class="Symbol"
+      >)</a
+      ><a name="5481"
+      >
+            </a
+      ><a name="5494" class="Symbol"
+      >&#8594;</a
+      ><a name="5495"
+      > </a
+      ><a name="5496" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5498"
+      > </a
+      ><a name="5499" href="lib.types.CommutingSquare.html#5375" class="Bound"
+      >f</a
+      ><a name="5500"
+      > </a
+      ><a name="5501" href="lib.types.CommutingSquare.html#5434" class="Bound"
+      >p&#8320;</a
+      ><a name="5503"
+      > </a
+      ><a name="5504" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5505"
+      > </a
+      ><a name="5506" class="Symbol"
+      >(</a
+      ><a name="5507" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5509"
+      > </a
+      ><a name="5510" href="lib.types.CommutingSquare.html#5375" class="Bound"
+      >f</a
+      ><a name="5511"
+      > </a
+      ><a name="5512" class="Symbol"
+      >(</a
+      ><a name="5513" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5514"
+      > </a
+      ><a name="5515" class="Symbol"
+      >(</a
+      ><a name="5516" href="lib.types.CommutingSquare.html#5450" class="Bound"
+      >p&#8321;</a
+      ><a name="5518"
+      > </a
+      ><a name="5519" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="5521"
+      > </a
+      ><a name="5522" href="lib.types.CommutingSquare.html#5434" class="Bound"
+      >p&#8320;</a
+      ><a name="5524" class="Symbol"
+      >))</a
+      ><a name="5526"
+      > </a
+      ><a name="5527" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5528"
+      > </a
+      ><a name="5529" href="lib.types.CommutingSquare.html#5466" class="Bound"
+      >q&#8320;</a
+      ><a name="5531" class="Symbol"
+      >)</a
+      ><a name="5532"
+      > </a
+      ><a name="5533" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5535"
+      > </a
+      ><a name="5536" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5537"
+      > </a
+      ><a name="5538" class="Symbol"
+      >(</a
+      ><a name="5539" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5541"
+      > </a
+      ><a name="5542" href="lib.types.CommutingSquare.html#5375" class="Bound"
+      >f</a
+      ><a name="5543"
+      > </a
+      ><a name="5544" href="lib.types.CommutingSquare.html#5450" class="Bound"
+      >p&#8321;</a
+      ><a name="5546" class="Symbol"
+      >)</a
+      ><a name="5547"
+      > </a
+      ><a name="5548" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="5550"
+      > </a
+      ><a name="5551" href="lib.types.CommutingSquare.html#5466" class="Bound"
+      >q&#8320;</a
+      ><a name="5553"
+      >
+          </a
+      ><a name="5564" href="lib.types.CommutingSquare.html#5332" class="Function"
+      >lemma</a
+      ><a name="5569"
+      > </a
+      ><a name="5570" href="lib.types.CommutingSquare.html#5570" class="Bound"
+      >f</a
+      ><a name="5571"
+      > </a
+      ><a name="5572" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5575"
+      > </a
+      ><a name="5576" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5579"
+      > </a
+      ><a name="5580" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5583"
+      > </a
+      ><a name="5584" class="Symbol"
+      >=</a
+      ><a name="5585"
+      > </a
+      ><a name="5586" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5589"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

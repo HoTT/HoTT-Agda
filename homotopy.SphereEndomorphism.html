@@ -1,0 +1,3392 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.SphereEndomorphism</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="homotopy.LoopSpaceCircle.html#1" class="Module"
+      >homotopy.LoopSpaceCircle</a
+      ><a name="95"
+      >
+
+</a
+      ><a name="97" class="Comment"
+      >-- This file is temporarily put in the cw/ directory for</a
+      ><a name="153"
+      >
+</a
+      ><a name="154" class="Comment"
+      >-- development, but it actually belongs to somewhere else.</a
+      ><a name="212"
+      >
+
+</a
+      ><a name="214" class="Keyword"
+      >module</a
+      ><a name="220"
+      > </a
+      ><a name="221" href="homotopy.SphereEndomorphism.html#1" class="Module"
+      >homotopy.SphereEndomorphism</a
+      ><a name="248"
+      > </a
+      ><a name="249" class="Keyword"
+      >where</a
+      ><a name="254"
+      >
+
+  </a
+      ><a name="258" href="homotopy.SphereEndomorphism.html#258" class="Function"
+      >&#8857;SphereS-endo-out</a
+      ><a name="275"
+      > </a
+      ><a name="276" class="Symbol"
+      >:</a
+      ><a name="277"
+      > </a
+      ><a name="278" class="Symbol"
+      >&#8704;</a
+      ><a name="279"
+      > </a
+      ><a name="280" href="homotopy.SphereEndomorphism.html#280" class="Bound"
+      >n</a
+      ><a name="281"
+      >
+    </a
+      ><a name="286" class="Symbol"
+      >&#8594;</a
+      ><a name="287"
+      > </a
+      ><a name="288" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="293"
+      > </a
+      ><a name="294" class="Number"
+      >0</a
+      ><a name="295"
+      > </a
+      ><a name="296" class="Symbol"
+      >(</a
+      ><a name="297" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="304"
+      > </a
+      ><a name="305" class="Symbol"
+      >(</a
+      ><a name="306" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="307"
+      > </a
+      ><a name="308" href="homotopy.SphereEndomorphism.html#280" class="Bound"
+      >n</a
+      ><a name="309" class="Symbol"
+      >)</a
+      ><a name="310"
+      > </a
+      ><a name="311" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="313"
+      > </a
+      ><a name="314" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="321"
+      > </a
+      ><a name="322" class="Symbol"
+      >(</a
+      ><a name="323" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="324"
+      > </a
+      ><a name="325" href="homotopy.SphereEndomorphism.html#280" class="Bound"
+      >n</a
+      ><a name="326" class="Symbol"
+      >))</a
+      ><a name="328"
+      >
+    </a
+      ><a name="333" class="Symbol"
+      >&#8594;</a
+      ><a name="334"
+      > </a
+      ><a name="335" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="340"
+      > </a
+      ><a name="341" class="Number"
+      >0</a
+      ><a name="342"
+      > </a
+      ><a name="343" class="Symbol"
+      >(</a
+      ><a name="344"
+      > </a
+      ><a name="345" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="351"
+      > </a
+      ><a name="352" class="Symbol"
+      >(</a
+      ><a name="353" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="354"
+      > </a
+      ><a name="355" href="homotopy.SphereEndomorphism.html#280" class="Bound"
+      >n</a
+      ><a name="356" class="Symbol"
+      >)</a
+      ><a name="357"
+      >  </a
+      ><a name="359" class="Symbol"
+      >&#8594;</a
+      ><a name="360"
+      >  </a
+      ><a name="362" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="368"
+      > </a
+      ><a name="369" class="Symbol"
+      >(</a
+      ><a name="370" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="371"
+      > </a
+      ><a name="372" href="homotopy.SphereEndomorphism.html#280" class="Bound"
+      >n</a
+      ><a name="373" class="Symbol"
+      >))</a
+      ><a name="375"
+      >
+  </a
+      ><a name="378" href="homotopy.SphereEndomorphism.html#258" class="Function"
+      >&#8857;SphereS-endo-out</a
+      ><a name="395"
+      > </a
+      ><a name="396" href="homotopy.SphereEndomorphism.html#396" class="Bound"
+      >n</a
+      ><a name="397"
+      > </a
+      ><a name="398" class="Symbol"
+      >=</a
+      ><a name="399"
+      > </a
+      ><a name="400" href="lib.types.Truncation.html#863" class="Function"
+      >Trunc-rec</a
+      ><a name="409"
+      > </a
+      ><a name="410" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="421"
+      > </a
+      ><a name="422" class="Symbol"
+      >(</a
+      ><a name="423" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[_]</a
+      ><a name="426"
+      > </a
+      ><a name="427" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="428"
+      > </a
+      ><a name="429" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="432" class="Symbol"
+      >)</a
+      ><a name="433"
+      >
+
+  </a
+      ><a name="437" class="Comment"
+      >-- For [S&#185;], the pointedness is free because of the commutativity of its loop space.</a
+      ><a name="521"
+      >
+
+  </a
+      ><a name="525" class="Comment"
+      >-- favonia: maybe one can simplify the proofs through</a
+      ><a name="578"
+      >
+  </a
+      ><a name="581" class="Comment"
+      >--          an intermediate type [&#931; S&#185; (&#955; x &#8594; x == x)]?</a
+      ><a name="636"
+      >
+
+  </a
+      ><a name="640" class="Keyword"
+      >private</a
+      ><a name="647"
+      >
+    </a
+      ><a name="652" href="homotopy.SphereEndomorphism.html#652" class="Function"
+      >&#8857;S&#185;-endo-in''</a
+      ><a name="665"
+      > </a
+      ><a name="666" class="Symbol"
+      >:</a
+      ><a name="667"
+      > </a
+      ><a name="668" class="Symbol"
+      >(</a
+      ><a name="669" href="homotopy.SphereEndomorphism.html#669" class="Bound"
+      >base*</a
+      ><a name="674"
+      > </a
+      ><a name="675" class="Symbol"
+      >:</a
+      ><a name="676"
+      > </a
+      ><a name="677" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="679" class="Symbol"
+      >)</a
+      ><a name="680"
+      > </a
+      ><a name="681" class="Symbol"
+      >(</a
+      ><a name="682" href="homotopy.SphereEndomorphism.html#682" class="Bound"
+      >loop*</a
+      ><a name="687"
+      > </a
+      ><a name="688" class="Symbol"
+      >:</a
+      ><a name="689"
+      > </a
+      ><a name="690" href="homotopy.SphereEndomorphism.html#669" class="Bound"
+      >base*</a
+      ><a name="695"
+      > </a
+      ><a name="696" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="698"
+      > </a
+      ><a name="699" href="homotopy.SphereEndomorphism.html#669" class="Bound"
+      >base*</a
+      ><a name="704" class="Symbol"
+      >)</a
+      ><a name="705"
+      > </a
+      ><a name="706" class="Symbol"
+      >&#8594;</a
+      ><a name="707"
+      > </a
+      ><a name="708" class="Symbol"
+      >(</a
+      ><a name="709" href="lib.types.IteratedSuspension.html#2179" class="Function"
+      >&#8857;S&#185;</a
+      ><a name="712"
+      > </a
+      ><a name="713" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="715"
+      > </a
+      ><a name="716" href="lib.types.IteratedSuspension.html#2179" class="Function"
+      >&#8857;S&#185;</a
+      ><a name="719" class="Symbol"
+      >)</a
+      ><a name="720"
+      >
+    </a
+      ><a name="725" href="homotopy.SphereEndomorphism.html#652" class="Function"
+      >&#8857;S&#185;-endo-in''</a
+      ><a name="738"
+      > </a
+      ><a name="739" class="Symbol"
+      >=</a
+      ><a name="740"
+      > </a
+      ><a name="741" href="lib.types.Circle.html#1517" class="Function"
+      >S&#185;-elim</a
+      ><a name="748"
+      >
+      </a
+      ><a name="755" class="Symbol"
+      >(&#955;</a
+      ><a name="757"
+      > </a
+      ><a name="758" href="homotopy.SphereEndomorphism.html#758" class="Bound"
+      >loop*</a
+      ><a name="763"
+      > </a
+      ><a name="764" class="Symbol"
+      >&#8594;</a
+      ><a name="765"
+      > </a
+      ><a name="766" href="lib.types.Circle.html#2572" class="Function"
+      >S&#185;-rec</a
+      ><a name="772"
+      > </a
+      ><a name="773" href="lib.types.Circle.html#708" class="Function"
+      >base</a
+      ><a name="777"
+      > </a
+      ><a name="778" href="homotopy.SphereEndomorphism.html#758" class="Bound"
+      >loop*</a
+      ><a name="783"
+      > </a
+      ><a name="784" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="785"
+      > </a
+      ><a name="786" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="789" class="Symbol"
+      >)</a
+      ><a name="790"
+      >
+      </a
+      ><a name="797" class="Symbol"
+      >(</a
+      ><a name="798" href="lib.types.Pi.html#5266" class="Function"
+      >&#8595;-app&#8594;cst-in</a
+      ><a name="810"
+      > </a
+      ><a name="811" class="Symbol"
+      >&#955;</a
+      ><a name="812"
+      > </a
+      ><a name="813" href="homotopy.SphereEndomorphism.html#813" class="Bound"
+      >r</a
+      ><a name="814"
+      > </a
+      ><a name="815" class="Symbol"
+      >&#8594;</a
+      ><a name="816"
+      > </a
+      ><a name="817" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="819"
+      > </a
+      ><a name="820" class="Symbol"
+      >(&#955;</a
+      ><a name="822"
+      > </a
+      ><a name="823" href="homotopy.SphereEndomorphism.html#823" class="Bound"
+      >loop*</a
+      ><a name="828"
+      > </a
+      ><a name="829" class="Symbol"
+      >&#8594;</a
+      ><a name="830"
+      > </a
+      ><a name="831" class="Symbol"
+      >(</a
+      ><a name="832" href="lib.types.Circle.html#2572" class="Function"
+      >S&#185;-rec</a
+      ><a name="838"
+      > </a
+      ><a name="839" href="lib.types.Circle.html#708" class="Function"
+      >base</a
+      ><a name="843"
+      > </a
+      ><a name="844" href="homotopy.SphereEndomorphism.html#823" class="Bound"
+      >loop*</a
+      ><a name="849"
+      > </a
+      ><a name="850" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="851"
+      > </a
+      ><a name="852" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="855" class="Symbol"
+      >))</a
+      ><a name="857"
+      > </a
+      ><a name="858" class="Symbol"
+      >(</a
+      ><a name="859" href="homotopy.SphereEndomorphism.html#899" class="Function"
+      >lemma&#8320;</a
+      ><a name="865"
+      > </a
+      ><a name="866" href="homotopy.SphereEndomorphism.html#813" class="Bound"
+      >r</a
+      ><a name="867" class="Symbol"
+      >))</a
+      ><a name="869"
+      > </a
+      ><a name="870" class="Keyword"
+      >where</a
+      ><a name="875"
+      >
+      </a
+      ><a name="882" class="Keyword"
+      >abstract</a
+      ><a name="890"
+      >
+        </a
+      ><a name="899" href="homotopy.SphereEndomorphism.html#899" class="Function"
+      >lemma&#8320;</a
+      ><a name="905"
+      > </a
+      ><a name="906" class="Symbol"
+      >:</a
+      ><a name="907"
+      > </a
+      ><a name="908" class="Symbol"
+      >&#8704;</a
+      ><a name="909"
+      > </a
+      ><a name="910" class="Symbol"
+      >{</a
+      ><a name="911" href="homotopy.SphereEndomorphism.html#911" class="Bound"
+      >loop&#8321;</a
+      ><a name="916"
+      > </a
+      ><a name="917" href="homotopy.SphereEndomorphism.html#917" class="Bound"
+      >loop&#8322;</a
+      ><a name="922" class="Symbol"
+      >}</a
+      ><a name="923"
+      >
+          </a
+      ><a name="934" class="Symbol"
+      >&#8594;</a
+      ><a name="935"
+      > </a
+      ><a name="936" href="homotopy.SphereEndomorphism.html#911" class="Bound"
+      >loop&#8321;</a
+      ><a name="941"
+      > </a
+      ><a name="942" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="944"
+      > </a
+      ><a name="945" href="homotopy.SphereEndomorphism.html#917" class="Bound"
+      >loop&#8322;</a
+      ><a name="950"
+      > </a
+      ><a name="951" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="952"
+      > </a
+      ><a name="953" class="Symbol"
+      >(&#955;</a
+      ><a name="955"
+      > </a
+      ><a name="956" href="homotopy.SphereEndomorphism.html#956" class="Bound"
+      >x</a
+      ><a name="957"
+      > </a
+      ><a name="958" class="Symbol"
+      >&#8594;</a
+      ><a name="959"
+      > </a
+      ><a name="960" href="homotopy.SphereEndomorphism.html#956" class="Bound"
+      >x</a
+      ><a name="961"
+      > </a
+      ><a name="962" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="964"
+      > </a
+      ><a name="965" href="homotopy.SphereEndomorphism.html#956" class="Bound"
+      >x</a
+      ><a name="966" class="Symbol"
+      >)</a
+      ><a name="967"
+      > </a
+      ><a name="968" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="969"
+      > </a
+      ><a name="970" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="974"
+      > </a
+      ><a name="975" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="976"
+      >
+          </a
+      ><a name="987" class="Symbol"
+      >&#8594;</a
+      ><a name="988"
+      > </a
+      ><a name="989" href="homotopy.SphereEndomorphism.html#911" class="Bound"
+      >loop&#8321;</a
+      ><a name="994"
+      > </a
+      ><a name="995" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="997"
+      > </a
+      ><a name="998" href="homotopy.SphereEndomorphism.html#917" class="Bound"
+      >loop&#8322;</a
+      ><a name="1003"
+      >
+        </a
+      ><a name="1012" href="homotopy.SphereEndomorphism.html#899" class="Function"
+      >lemma&#8320;</a
+      ><a name="1018"
+      > </a
+      ><a name="1019" class="Symbol"
+      >{</a
+      ><a name="1020" href="homotopy.SphereEndomorphism.html#1020" class="Bound"
+      >loop&#8321;</a
+      ><a name="1025" class="Symbol"
+      >}</a
+      ><a name="1026"
+      > </a
+      ><a name="1027" class="Symbol"
+      >{</a
+      ><a name="1028" href="homotopy.SphereEndomorphism.html#1028" class="Bound"
+      >loop&#8322;</a
+      ><a name="1033" class="Symbol"
+      >}</a
+      ><a name="1034"
+      > </a
+      ><a name="1035" href="homotopy.SphereEndomorphism.html#1035" class="Bound"
+      >p</a
+      ><a name="1036"
+      > </a
+      ><a name="1037" class="Symbol"
+      >=</a
+      ><a name="1038"
+      > </a
+      ><a name="1039" href="lib.PathGroupoid.html#3780" class="Function"
+      >anti-whisker-right</a
+      ><a name="1057"
+      > </a
+      ><a name="1058" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="1062"
+      > </a
+      ><a name="1063" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1064"
+      >
+          </a
+      ><a name="1075" href="homotopy.SphereEndomorphism.html#1020" class="Bound"
+      >loop&#8321;</a
+      ><a name="1080"
+      > </a
+      ><a name="1081" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1082"
+      > </a
+      ><a name="1083" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="1087"
+      >
+            </a
+      ><a name="1100" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1102"
+      > </a
+      ><a name="1103" href="lib.types.Paths.html#5824" class="Function"
+      >&#8595;-idf=idf-out'</a
+      ><a name="1117"
+      > </a
+      ><a name="1118" href="homotopy.SphereEndomorphism.html#1035" class="Bound"
+      >p</a
+      ><a name="1119"
+      > </a
+      ><a name="1120" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1121"
+      >
+          </a
+      ><a name="1132" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="1139"
+      > </a
+      ><a name="1140" href="homotopy.SphereEndomorphism.html#1028" class="Bound"
+      >loop&#8322;</a
+      ><a name="1145"
+      >
+            </a
+      ><a name="1158" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1160"
+      > </a
+      ><a name="1161" href="lib.PathGroupoid.html#648" class="Function"
+      >&#8729;'=&#8729;</a
+      ><a name="1165"
+      > </a
+      ><a name="1166" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="1170"
+      > </a
+      ><a name="1171" href="homotopy.SphereEndomorphism.html#1028" class="Bound"
+      >loop&#8322;</a
+      ><a name="1176"
+      > </a
+      ><a name="1177" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1178"
+      >
+          </a
+      ><a name="1189" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1195"
+      > </a
+      ><a name="1196" href="homotopy.SphereEndomorphism.html#1028" class="Bound"
+      >loop&#8322;</a
+      ><a name="1201"
+      >
+            </a
+      ><a name="1214" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1216"
+      > </a
+      ><a name="1217" href="homotopy.LoopSpaceCircle.html#10788" class="Function"
+      >&#937;S&#185;-is-abelian</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="1236"
+      > </a
+      ><a name="1237" href="homotopy.SphereEndomorphism.html#1028" class="Bound"
+      >loop&#8322;</a
+      ><a name="1242"
+      > </a
+      ><a name="1243" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1244"
+      >
+          </a
+      ><a name="1255" href="homotopy.SphereEndomorphism.html#1028" class="Bound"
+      >loop&#8322;</a
+      ><a name="1260"
+      > </a
+      ><a name="1261" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1262"
+      > </a
+      ><a name="1263" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="1267"
+      >
+            </a
+      ><a name="1280" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="1282"
+      >
+
+    </a
+      ><a name="1288" href="homotopy.SphereEndomorphism.html#1288" class="Function"
+      >&#8857;S&#185;-endo-in'</a
+      ><a name="1300"
+      > </a
+      ><a name="1301" class="Symbol"
+      >:</a
+      ><a name="1302"
+      > </a
+      ><a name="1303" class="Symbol"
+      >(</a
+      ><a name="1304" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="1306"
+      > </a
+      ><a name="1307" class="Symbol"
+      >&#8594;</a
+      ><a name="1308"
+      > </a
+      ><a name="1309" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="1311" class="Symbol"
+      >)</a
+      ><a name="1312"
+      > </a
+      ><a name="1313" class="Symbol"
+      >&#8594;</a
+      ><a name="1314"
+      > </a
+      ><a name="1315" class="Symbol"
+      >(</a
+      ><a name="1316" href="lib.types.IteratedSuspension.html#2179" class="Function"
+      >&#8857;S&#185;</a
+      ><a name="1319"
+      > </a
+      ><a name="1320" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1322"
+      > </a
+      ><a name="1323" href="lib.types.IteratedSuspension.html#2179" class="Function"
+      >&#8857;S&#185;</a
+      ><a name="1326" class="Symbol"
+      >)</a
+      ><a name="1327"
+      >
+    </a
+      ><a name="1332" href="homotopy.SphereEndomorphism.html#1288" class="Function"
+      >&#8857;S&#185;-endo-in'</a
+      ><a name="1344"
+      > </a
+      ><a name="1345" href="homotopy.SphereEndomorphism.html#1345" class="Bound"
+      >f</a
+      ><a name="1346"
+      > </a
+      ><a name="1347" class="Symbol"
+      >=</a
+      ><a name="1348"
+      > </a
+      ><a name="1349" href="homotopy.SphereEndomorphism.html#652" class="Function"
+      >&#8857;S&#185;-endo-in''</a
+      ><a name="1362"
+      > </a
+      ><a name="1363" class="Symbol"
+      >(</a
+      ><a name="1364" href="homotopy.SphereEndomorphism.html#1345" class="Bound"
+      >f</a
+      ><a name="1365"
+      > </a
+      ><a name="1366" href="lib.types.Circle.html#708" class="Function"
+      >base</a
+      ><a name="1370" class="Symbol"
+      >)</a
+      ><a name="1371"
+      > </a
+      ><a name="1372" class="Symbol"
+      >(</a
+      ><a name="1373" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1375"
+      > </a
+      ><a name="1376" href="homotopy.SphereEndomorphism.html#1345" class="Bound"
+      >f</a
+      ><a name="1377"
+      > </a
+      ><a name="1378" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="1382" class="Symbol"
+      >)</a
+      ><a name="1383"
+      >
+
+  </a
+      ><a name="1387" href="homotopy.SphereEndomorphism.html#1387" class="Function"
+      >&#8857;S&#185;-endo-in</a
+      ><a name="1398"
+      > </a
+      ><a name="1399" class="Symbol"
+      >:</a
+      ><a name="1400"
+      > </a
+      ><a name="1401" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="1406"
+      > </a
+      ><a name="1407" class="Number"
+      >0</a
+      ><a name="1408"
+      > </a
+      ><a name="1409" class="Symbol"
+      >(</a
+      ><a name="1410" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="1412"
+      > </a
+      ><a name="1413" class="Symbol"
+      >&#8594;</a
+      ><a name="1414"
+      > </a
+      ><a name="1415" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="1417" class="Symbol"
+      >)</a
+      ><a name="1418"
+      > </a
+      ><a name="1419" class="Symbol"
+      >&#8594;</a
+      ><a name="1420"
+      > </a
+      ><a name="1421" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="1426"
+      > </a
+      ><a name="1427" class="Number"
+      >0</a
+      ><a name="1428"
+      > </a
+      ><a name="1429" class="Symbol"
+      >(</a
+      ><a name="1430" href="lib.types.IteratedSuspension.html#2179" class="Function"
+      >&#8857;S&#185;</a
+      ><a name="1433"
+      > </a
+      ><a name="1434" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" href="lib.types.IteratedSuspension.html#2179" class="Function"
+      >&#8857;S&#185;</a
+      ><a name="1440" class="Symbol"
+      >)</a
+      ><a name="1441"
+      >
+  </a
+      ><a name="1444" href="homotopy.SphereEndomorphism.html#1387" class="Function"
+      >&#8857;S&#185;-endo-in</a
+      ><a name="1455"
+      > </a
+      ><a name="1456" class="Symbol"
+      >=</a
+      ><a name="1457"
+      > </a
+      ><a name="1458" href="lib.types.Truncation.html#6046" class="Function"
+      >Trunc-fmap</a
+      ><a name="1468"
+      > </a
+      ><a name="1469" href="homotopy.SphereEndomorphism.html#1288" class="Function"
+      >&#8857;S&#185;-endo-in'</a
+      ><a name="1481"
+      >
+
+  </a
+      ><a name="1485" class="Keyword"
+      >abstract</a
+      ><a name="1493"
+      >
+    </a
+      ><a name="1498" href="homotopy.SphereEndomorphism.html#1498" class="Function"
+      >&#8857;S&#185;-endo-in-&#951;</a
+      ><a name="1511"
+      > </a
+      ><a name="1512" class="Symbol"
+      >:</a
+      ><a name="1513"
+      > </a
+      ><a name="1514" class="Symbol"
+      >&#8704;</a
+      ><a name="1515"
+      > </a
+      ><a name="1516" href="homotopy.SphereEndomorphism.html#1516" class="Bound"
+      >f</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" class="Symbol"
+      >&#8594;</a
+      ><a name="1519"
+      > </a
+      ><a name="1520" href="homotopy.SphereEndomorphism.html#1387" class="Function"
+      >&#8857;S&#185;-endo-in</a
+      ><a name="1531"
+      > </a
+      ><a name="1532" class="Symbol"
+      >(</a
+      ><a name="1533" href="homotopy.SphereEndomorphism.html#258" class="Function"
+      >&#8857;SphereS-endo-out</a
+      ><a name="1550"
+      > </a
+      ><a name="1551" class="Number"
+      >0</a
+      ><a name="1552"
+      > </a
+      ><a name="1553" href="homotopy.SphereEndomorphism.html#1516" class="Bound"
+      >f</a
+      ><a name="1554" class="Symbol"
+      >)</a
+      ><a name="1555"
+      > </a
+      ><a name="1556" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1558"
+      > </a
+      ><a name="1559" href="homotopy.SphereEndomorphism.html#1516" class="Bound"
+      >f</a
+      ><a name="1560"
+      >
+    </a
+      ><a name="1565" href="homotopy.SphereEndomorphism.html#1498" class="Function"
+      >&#8857;S&#185;-endo-in-&#951;</a
+      ><a name="1578"
+      > </a
+      ><a name="1579" class="Symbol"
+      >=</a
+      ><a name="1580"
+      > </a
+      ><a name="1581" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="1591"
+      > </a
+      ><a name="1592" class="Symbol"
+      >(&#955;</a
+      ><a name="1594"
+      > </a
+      ><a name="1595" href="homotopy.SphereEndomorphism.html#1595" class="Bound"
+      >_</a
+      ><a name="1596"
+      > </a
+      ><a name="1597" class="Symbol"
+      >&#8594;</a
+      ><a name="1598"
+      > </a
+      ><a name="1599" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="1614"
+      > </a
+      ><a name="1615" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="1626" class="Symbol"
+      >)</a
+      ><a name="1627"
+      >
+      </a
+      ><a name="1634" class="Symbol"
+      >&#955;{(</a
+      ><a name="1637" href="homotopy.SphereEndomorphism.html#1637" class="Bound"
+      >f</a
+      ><a name="1638"
+      > </a
+      ><a name="1639" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1640"
+      > </a
+      ><a name="1641" href="homotopy.SphereEndomorphism.html#1641" class="Bound"
+      >pt</a
+      ><a name="1643" class="Symbol"
+      >)</a
+      ><a name="1644"
+      > </a
+      ><a name="1645" class="Symbol"
+      >&#8594;</a
+      ><a name="1646"
+      > </a
+      ><a name="1647" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1649"
+      > </a
+      ><a name="1650" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[_]</a
+      ><a name="1653"
+      > </a
+      ><a name="1654" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1655"
+      >
+        </a
+      ><a name="1664" href="homotopy.SphereEndomorphism.html#1801" class="Function"
+      >&#8857;S&#185;-endo-in''-shifted</a
+      ><a name="1685"
+      > </a
+      ><a name="1686" href="homotopy.SphereEndomorphism.html#1641" class="Bound"
+      >pt</a
+      ><a name="1688"
+      > </a
+      ><a name="1689" class="Symbol"
+      >(</a
+      ><a name="1690" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" href="homotopy.SphereEndomorphism.html#1637" class="Bound"
+      >f</a
+      ><a name="1694"
+      > </a
+      ><a name="1695" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="1699" class="Symbol"
+      >)</a
+      ><a name="1700"
+      > </a
+      ><a name="1701" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1702"
+      > </a
+      ><a name="1703" href="lib.types.Pointed.html#438" class="Function"
+      >&#8857;&#955;=</a
+      ><a name="1706"
+      > </a
+      ><a name="1707" class="Symbol"
+      >(</a
+      ><a name="1708" href="lib.types.Circle.html#2715" class="Function"
+      >S&#185;-rec-&#951;</a
+      ><a name="1716"
+      > </a
+      ><a name="1717" href="homotopy.SphereEndomorphism.html#1637" class="Bound"
+      >f</a
+      ><a name="1718" class="Symbol"
+      >)</a
+      ><a name="1719"
+      > </a
+      ><a name="1720" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1723" class="Symbol"
+      >}</a
+      ><a name="1724"
+      >
+      </a
+      ><a name="1731" class="Keyword"
+      >where</a
+      ><a name="1736"
+      >
+      </a
+      ><a name="1743" class="Comment"
+      >-- free one end to apply identification elimination</a
+      ><a name="1794"
+      >
+      </a
+      ><a name="1801" href="homotopy.SphereEndomorphism.html#1801" class="Function"
+      >&#8857;S&#185;-endo-in''-shifted</a
+      ><a name="1822"
+      > </a
+      ><a name="1823" class="Symbol"
+      >:</a
+      ><a name="1824"
+      > </a
+      ><a name="1825" class="Symbol"
+      >{</a
+      ><a name="1826" href="homotopy.SphereEndomorphism.html#1826" class="Bound"
+      >base*</a
+      ><a name="1831"
+      > </a
+      ><a name="1832" class="Symbol"
+      >:</a
+      ><a name="1833"
+      > </a
+      ><a name="1834" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="1836" class="Symbol"
+      >}</a
+      ><a name="1837"
+      >
+        </a
+      ><a name="1846" class="Symbol"
+      >(</a
+      ><a name="1847" href="homotopy.SphereEndomorphism.html#1847" class="Bound"
+      >shift</a
+      ><a name="1852"
+      > </a
+      ><a name="1853" class="Symbol"
+      >:</a
+      ><a name="1854"
+      > </a
+      ><a name="1855" href="homotopy.SphereEndomorphism.html#1826" class="Bound"
+      >base*</a
+      ><a name="1860"
+      > </a
+      ><a name="1861" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1863"
+      > </a
+      ><a name="1864" href="lib.types.Circle.html#708" class="Function"
+      >base</a
+      ><a name="1868" class="Symbol"
+      >)</a
+      ><a name="1869"
+      > </a
+      ><a name="1870" class="Symbol"
+      >(</a
+      ><a name="1871" href="homotopy.SphereEndomorphism.html#1871" class="Bound"
+      >loop*</a
+      ><a name="1876"
+      > </a
+      ><a name="1877" class="Symbol"
+      >:</a
+      ><a name="1878"
+      > </a
+      ><a name="1879" href="homotopy.SphereEndomorphism.html#1826" class="Bound"
+      >base*</a
+      ><a name="1884"
+      > </a
+      ><a name="1885" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1887"
+      > </a
+      ><a name="1888" href="homotopy.SphereEndomorphism.html#1826" class="Bound"
+      >base*</a
+      ><a name="1893" class="Symbol"
+      >)</a
+      ><a name="1894"
+      >
+        </a
+      ><a name="1903" class="Symbol"
+      >&#8594;</a
+      ><a name="1904"
+      > </a
+      ><a name="1905" href="homotopy.SphereEndomorphism.html#652" class="Function"
+      >&#8857;S&#185;-endo-in''</a
+      ><a name="1918"
+      > </a
+      ><a name="1919" href="homotopy.SphereEndomorphism.html#1826" class="Bound"
+      >base*</a
+      ><a name="1924"
+      > </a
+      ><a name="1925" href="homotopy.SphereEndomorphism.html#1871" class="Bound"
+      >loop*</a
+      ><a name="1930"
+      > </a
+      ><a name="1931" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1933"
+      > </a
+      ><a name="1934" class="Symbol"
+      >(</a
+      ><a name="1935" href="lib.types.Circle.html#2572" class="Function"
+      >S&#185;-rec</a
+      ><a name="1941"
+      > </a
+      ><a name="1942" href="homotopy.SphereEndomorphism.html#1826" class="Bound"
+      >base*</a
+      ><a name="1947"
+      > </a
+      ><a name="1948" href="homotopy.SphereEndomorphism.html#1871" class="Bound"
+      >loop*</a
+      ><a name="1953"
+      > </a
+      ><a name="1954" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1955"
+      > </a
+      ><a name="1956" href="homotopy.SphereEndomorphism.html#1847" class="Bound"
+      >shift</a
+      ><a name="1961" class="Symbol"
+      >)</a
+      ><a name="1962"
+      >
+      </a
+      ><a name="1969" href="homotopy.SphereEndomorphism.html#1801" class="Function"
+      >&#8857;S&#185;-endo-in''-shifted</a
+      ><a name="1990"
+      > </a
+      ><a name="1991" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1994"
+      > </a
+      ><a name="1995" class="Symbol"
+      >_</a
+      ><a name="1996"
+      > </a
+      ><a name="1997" class="Symbol"
+      >=</a
+      ><a name="1998"
+      > </a
+      ><a name="1999" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2002"
+      >
+
+    </a
+      ><a name="2008" href="homotopy.SphereEndomorphism.html#2008" class="Function"
+      >&#8857;S&#185;-endo-out-&#946;</a
+      ><a name="2022"
+      > </a
+      ><a name="2023" class="Symbol"
+      >:</a
+      ><a name="2024"
+      > </a
+      ><a name="2025" class="Symbol"
+      >&#8704;</a
+      ><a name="2026"
+      > </a
+      ><a name="2027" href="homotopy.SphereEndomorphism.html#2027" class="Bound"
+      >f</a
+      ><a name="2028"
+      > </a
+      ><a name="2029" class="Symbol"
+      >&#8594;</a
+      ><a name="2030"
+      > </a
+      ><a name="2031" href="homotopy.SphereEndomorphism.html#258" class="Function"
+      >&#8857;SphereS-endo-out</a
+      ><a name="2048"
+      > </a
+      ><a name="2049" class="Number"
+      >0</a
+      ><a name="2050"
+      > </a
+      ><a name="2051" class="Symbol"
+      >(</a
+      ><a name="2052" href="homotopy.SphereEndomorphism.html#1387" class="Function"
+      >&#8857;S&#185;-endo-in</a
+      ><a name="2063"
+      > </a
+      ><a name="2064" href="homotopy.SphereEndomorphism.html#2027" class="Bound"
+      >f</a
+      ><a name="2065" class="Symbol"
+      >)</a
+      ><a name="2066"
+      > </a
+      ><a name="2067" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2069"
+      > </a
+      ><a name="2070" href="homotopy.SphereEndomorphism.html#2027" class="Bound"
+      >f</a
+      ><a name="2071"
+      >
+    </a
+      ><a name="2076" href="homotopy.SphereEndomorphism.html#2008" class="Function"
+      >&#8857;S&#185;-endo-out-&#946;</a
+      ><a name="2090"
+      > </a
+      ><a name="2091" class="Symbol"
+      >=</a
+      ><a name="2092"
+      > </a
+      ><a name="2093" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="2103"
+      > </a
+      ><a name="2104" class="Symbol"
+      >(&#955;</a
+      ><a name="2106"
+      > </a
+      ><a name="2107" href="homotopy.SphereEndomorphism.html#2107" class="Bound"
+      >_</a
+      ><a name="2108"
+      > </a
+      ><a name="2109" class="Symbol"
+      >&#8594;</a
+      ><a name="2110"
+      > </a
+      ><a name="2111" href="lib.NType.html#3994" class="Function"
+      >=-preserves-level</a
+      ><a name="2128"
+      > </a
+      ><a name="2129" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="2140" class="Symbol"
+      >)</a
+      ><a name="2141"
+      >
+      </a
+      ><a name="2148" class="Symbol"
+      >&#955;</a
+      ><a name="2149"
+      > </a
+      ><a name="2150" href="homotopy.SphereEndomorphism.html#2150" class="Bound"
+      >f</a
+      ><a name="2151"
+      > </a
+      ><a name="2152" class="Symbol"
+      >&#8594;</a
+      ><a name="2153"
+      > </a
+      ><a name="2154" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2155"
+      > </a
+      ><a name="2156" class="Symbol"
+      >(</a
+      ><a name="2157" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2159"
+      > </a
+      ><a name="2160" class="Symbol"
+      >(&#955;</a
+      ><a name="2162"
+      > </a
+      ><a name="2163" href="homotopy.SphereEndomorphism.html#2163" class="Bound"
+      >f</a
+      ><a name="2164"
+      > </a
+      ><a name="2165" class="Symbol"
+      >&#8594;</a
+      ><a name="2166"
+      > </a
+      ><a name="2167" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="2168"
+      > </a
+      ><a name="2169" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="2172"
+      > </a
+      ><a name="2173" class="Symbol"
+      >(</a
+      ><a name="2174" href="homotopy.SphereEndomorphism.html#1288" class="Function"
+      >&#8857;S&#185;-endo-in'</a
+      ><a name="2186"
+      > </a
+      ><a name="2187" href="homotopy.SphereEndomorphism.html#2163" class="Bound"
+      >f</a
+      ><a name="2188" class="Symbol"
+      >)</a
+      ><a name="2189"
+      > </a
+      ><a name="2190" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="2191" class="Symbol"
+      >)</a
+      ><a name="2192"
+      > </a
+      ><a name="2193" class="Symbol"
+      >(</a
+      ><a name="2194" href="lib.Funext.html#3966" class="Function"
+      >&#955;=</a
+      ><a name="2196"
+      > </a
+      ><a name="2197" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2198"
+      > </a
+      ><a name="2199" href="lib.types.Circle.html#2715" class="Function"
+      >S&#185;-rec-&#951;</a
+      ><a name="2207"
+      > </a
+      ><a name="2208" href="homotopy.SphereEndomorphism.html#2150" class="Bound"
+      >f</a
+      ><a name="2209" class="Symbol"
+      >))</a
+      ><a name="2211"
+      >
+          </a
+      ><a name="2222" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2223"
+      > </a
+      ><a name="2224" href="homotopy.SphereEndomorphism.html#2370" class="Function"
+      >&#8857;S&#185;-endo-out'-&#946;</a
+      ><a name="2239"
+      > </a
+      ><a name="2240" class="Symbol"
+      >(</a
+      ><a name="2241" href="homotopy.SphereEndomorphism.html#2150" class="Bound"
+      >f</a
+      ><a name="2242"
+      > </a
+      ><a name="2243" href="lib.types.Circle.html#708" class="Function"
+      >base</a
+      ><a name="2247" class="Symbol"
+      >)</a
+      ><a name="2248"
+      > </a
+      ><a name="2249" class="Symbol"
+      >(</a
+      ><a name="2250" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2252"
+      > </a
+      ><a name="2253" href="homotopy.SphereEndomorphism.html#2150" class="Bound"
+      >f</a
+      ><a name="2254"
+      > </a
+      ><a name="2255" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="2259" class="Symbol"
+      >)</a
+      ><a name="2260"
+      >
+          </a
+      ><a name="2271" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2272"
+      > </a
+      ><a name="2273" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2275"
+      > </a
+      ><a name="2276" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[_]</a
+      ><a name="2279"
+      > </a
+      ><a name="2280" class="Symbol"
+      >(</a
+      ><a name="2281" href="lib.Funext.html#3966" class="Function"
+      >&#955;=</a
+      ><a name="2283"
+      > </a
+      ><a name="2284" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2285"
+      > </a
+      ><a name="2286" href="lib.types.Circle.html#2715" class="Function"
+      >S&#185;-rec-&#951;</a
+      ><a name="2294"
+      > </a
+      ><a name="2295" href="homotopy.SphereEndomorphism.html#2150" class="Bound"
+      >f</a
+      ><a name="2296" class="Symbol"
+      >)</a
+      ><a name="2297"
+      >
+      </a
+      ><a name="2304" class="Keyword"
+      >where</a
+      ><a name="2309"
+      >
+        </a
+      ><a name="2318" class="Comment"
+      >-- free [base*] to apply circle elimination</a
+      ><a name="2361"
+      >
+        </a
+      ><a name="2370" href="homotopy.SphereEndomorphism.html#2370" class="Function"
+      >&#8857;S&#185;-endo-out'-&#946;</a
+      ><a name="2385"
+      > </a
+      ><a name="2386" class="Symbol"
+      >:</a
+      ><a name="2387"
+      > </a
+      ><a name="2388" class="Symbol"
+      >(</a
+      ><a name="2389" href="homotopy.SphereEndomorphism.html#2389" class="Bound"
+      >base*</a
+      ><a name="2394"
+      > </a
+      ><a name="2395" class="Symbol"
+      >:</a
+      ><a name="2396"
+      > </a
+      ><a name="2397" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="2399" class="Symbol"
+      >)</a
+      ><a name="2400"
+      > </a
+      ><a name="2401" class="Symbol"
+      >(</a
+      ><a name="2402" href="homotopy.SphereEndomorphism.html#2402" class="Bound"
+      >loop*</a
+      ><a name="2407"
+      > </a
+      ><a name="2408" class="Symbol"
+      >:</a
+      ><a name="2409"
+      > </a
+      ><a name="2410" href="homotopy.SphereEndomorphism.html#2389" class="Bound"
+      >base*</a
+      ><a name="2415"
+      > </a
+      ><a name="2416" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2418"
+      > </a
+      ><a name="2419" href="homotopy.SphereEndomorphism.html#2389" class="Bound"
+      >base*</a
+      ><a name="2424" class="Symbol"
+      >)</a
+      ><a name="2425"
+      >
+          </a
+      ><a name="2436" class="Symbol"
+      >&#8594;</a
+      ><a name="2437"
+      >  </a
+      ><a name="2439" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="2440"
+      > </a
+      ><a name="2441" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="2444"
+      > </a
+      ><a name="2445" class="Symbol"
+      >(</a
+      ><a name="2446" href="homotopy.SphereEndomorphism.html#1288" class="Function"
+      >&#8857;S&#185;-endo-in'</a
+      ><a name="2458"
+      > </a
+      ><a name="2459" class="Symbol"
+      >(</a
+      ><a name="2460" href="lib.types.Circle.html#2572" class="Function"
+      >S&#185;-rec</a
+      ><a name="2466"
+      > </a
+      ><a name="2467" href="homotopy.SphereEndomorphism.html#2389" class="Bound"
+      >base*</a
+      ><a name="2472"
+      > </a
+      ><a name="2473" href="homotopy.SphereEndomorphism.html#2402" class="Bound"
+      >loop*</a
+      ><a name="2478" class="Symbol"
+      >))</a
+      ><a name="2480"
+      > </a
+      ><a name="2481" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="2482"
+      >
+          </a
+      ><a name="2493" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2495"
+      > </a
+      ><a name="2496" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="2497"
+      > </a
+      ><a name="2498" href="lib.types.Circle.html#2572" class="Function"
+      >S&#185;-rec</a
+      ><a name="2504"
+      > </a
+      ><a name="2505" href="homotopy.SphereEndomorphism.html#2389" class="Bound"
+      >base*</a
+      ><a name="2510"
+      > </a
+      ><a name="2511" href="homotopy.SphereEndomorphism.html#2402" class="Bound"
+      >loop*</a
+      ><a name="2516"
+      > </a
+      ><a name="2517" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="2518"
+      > </a
+      ><a name="2519" href="lib.Base.html#1567" class="Function"
+      >:&gt;</a
+      ><a name="2521"
+      > </a
+      ><a name="2522" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="2527"
+      > </a
+      ><a name="2528" class="Number"
+      >0</a
+      ><a name="2529"
+      > </a
+      ><a name="2530" class="Symbol"
+      >(</a
+      ><a name="2531" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="2533"
+      > </a
+      ><a name="2534" class="Symbol"
+      >&#8594;</a
+      ><a name="2535"
+      > </a
+      ><a name="2536" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="2538" class="Symbol"
+      >)</a
+      ><a name="2539"
+      >
+        </a
+      ><a name="2548" href="homotopy.SphereEndomorphism.html#2370" class="Function"
+      >&#8857;S&#185;-endo-out'-&#946;</a
+      ><a name="2563"
+      > </a
+      ><a name="2564" class="Symbol"
+      >=</a
+      ><a name="2565"
+      > </a
+      ><a name="2566" href="lib.types.Circle.html#1517" class="Function"
+      >S&#185;-elim</a
+      ><a name="2573"
+      >
+          </a
+      ><a name="2584" class="Symbol"
+      >(&#955;</a
+      ><a name="2586"
+      > </a
+      ><a name="2587" href="homotopy.SphereEndomorphism.html#2587" class="Bound"
+      >loop*</a
+      ><a name="2592"
+      > </a
+      ><a name="2593" class="Symbol"
+      >&#8594;</a
+      ><a name="2594"
+      > </a
+      ><a name="2595" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2597"
+      > </a
+      ><a name="2598" class="Symbol"
+      >(&#955;</a
+      ><a name="2600"
+      > </a
+      ><a name="2601" href="homotopy.SphereEndomorphism.html#2601" class="Bound"
+      >loop*</a
+      ><a name="2606"
+      > </a
+      ><a name="2607" class="Symbol"
+      >&#8594;</a
+      ><a name="2608"
+      > </a
+      ><a name="2609" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="2610"
+      > </a
+      ><a name="2611" href="lib.types.Circle.html#2572" class="Function"
+      >S&#185;-rec</a
+      ><a name="2617"
+      > </a
+      ><a name="2618" href="lib.types.Circle.html#708" class="Function"
+      >base</a
+      ><a name="2622"
+      > </a
+      ><a name="2623" href="homotopy.SphereEndomorphism.html#2601" class="Bound"
+      >loop*</a
+      ><a name="2628"
+      > </a
+      ><a name="2629" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="2630" class="Symbol"
+      >)</a
+      ><a name="2631"
+      > </a
+      ><a name="2632" class="Symbol"
+      >(</a
+      ><a name="2633" href="lib.types.Circle.html#2596" class="Function"
+      >S&#185;Rec.loop-&#946;</a
+      ><a name="2645"
+      > </a
+      ><a name="2646" href="lib.types.Circle.html#708" class="Function"
+      >base</a
+      ><a name="2650"
+      > </a
+      ><a name="2651" href="homotopy.SphereEndomorphism.html#2587" class="Bound"
+      >loop*</a
+      ><a name="2656" class="Symbol"
+      >))</a
+      ><a name="2658"
+      >
+          </a
+      ><a name="2669" class="Symbol"
+      >(</a
+      ><a name="2670" href="lib.NType2.html#1216" class="Function"
+      >prop-has-all-paths-&#8595;</a
+      ><a name="2690"
+      > </a
+      ><a name="2691" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2692"
+      > </a
+      ><a name="2693" href="lib.types.Pi.html#566" class="Function"
+      >&#928;-is-prop</a
+      ><a name="2702"
+      > </a
+      ><a name="2703" class="Symbol"
+      >&#955;</a
+      ><a name="2704"
+      > </a
+      ><a name="2705" href="homotopy.SphereEndomorphism.html#2705" class="Bound"
+      >loop*</a
+      ><a name="2710"
+      > </a
+      ><a name="2711" class="Symbol"
+      >&#8594;</a
+      ><a name="2712"
+      > </a
+      ><a name="2713" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="2724"
+      > </a
+      ><a name="2725" class="Symbol"
+      >{</a
+      ><a name="2726" class="Argument"
+      >n</a
+      ><a name="2727"
+      > </a
+      ><a name="2728" class="Symbol"
+      >=</a
+      ><a name="2729"
+      > </a
+      ><a name="2730" class="Number"
+      >0</a
+      ><a name="2731" class="Symbol"
+      >}</a
+      ><a name="2732"
+      > </a
+      ><a name="2733" class="Symbol"
+      >_</a
+      ><a name="2734"
+      > </a
+      ><a name="2735" class="Symbol"
+      >_)</a
+      ><a name="2737"
+      >
+
+  </a
+      ><a name="2741" href="homotopy.SphereEndomorphism.html#2741" class="Function"
+      >&#8857;S&#185;-endo-out-is-equiv</a
+      ><a name="2762"
+      > </a
+      ><a name="2763" class="Symbol"
+      >:</a
+      ><a name="2764"
+      > </a
+      ><a name="2765" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="2773"
+      > </a
+      ><a name="2774" class="Symbol"
+      >(</a
+      ><a name="2775" href="homotopy.SphereEndomorphism.html#258" class="Function"
+      >&#8857;SphereS-endo-out</a
+      ><a name="2792"
+      > </a
+      ><a name="2793" class="Number"
+      >0</a
+      ><a name="2794" class="Symbol"
+      >)</a
+      ><a name="2795"
+      >
+  </a
+      ><a name="2798" href="homotopy.SphereEndomorphism.html#2741" class="Function"
+      >&#8857;S&#185;-endo-out-is-equiv</a
+      ><a name="2819"
+      > </a
+      ><a name="2820" class="Symbol"
+      >=</a
+      ><a name="2821"
+      > </a
+      ><a name="2822" href="lib.Equivalence.html#2854" class="Function"
+      >is-eq</a
+      ><a name="2827"
+      > </a
+      ><a name="2828" class="Symbol"
+      >_</a
+      ><a name="2829"
+      > </a
+      ><a name="2830" href="homotopy.SphereEndomorphism.html#1387" class="Function"
+      >&#8857;S&#185;-endo-in</a
+      ><a name="2841"
+      > </a
+      ><a name="2842" href="homotopy.SphereEndomorphism.html#2008" class="Function"
+      >&#8857;S&#185;-endo-out-&#946;</a
+      ><a name="2856"
+      > </a
+      ><a name="2857" href="homotopy.SphereEndomorphism.html#1498" class="Function"
+      >&#8857;S&#185;-endo-in-&#951;</a
+      ><a name="2870"
+      >
+
+  </a
+      ><a name="2874" class="Comment"
+      >-- For [Sphere (S (S n))], the pointedness is free because of its connectivity.</a
+      ><a name="2953"
+      >
+
+  </a
+      ><a name="2957" class="Keyword"
+      >private</a
+      ><a name="2964"
+      >
+    </a
+      ><a name="2969" href="homotopy.SphereEndomorphism.html#2969" class="Function"
+      >SphereSS-conn</a
+      ><a name="2982"
+      > </a
+      ><a name="2983" class="Symbol"
+      >:</a
+      ><a name="2984"
+      > </a
+      ><a name="2985" class="Symbol"
+      >&#8704;</a
+      ><a name="2986"
+      > </a
+      ><a name="2987" href="homotopy.SphereEndomorphism.html#2987" class="Bound"
+      >n</a
+      ><a name="2988"
+      > </a
+      ><a name="2989" class="Symbol"
+      >&#8594;</a
+      ><a name="2990"
+      > </a
+      ><a name="2991" href="lib.NConnected.html#343" class="Function"
+      >is-connected</a
+      ><a name="3003"
+      > </a
+      ><a name="3004" class="Number"
+      >1</a
+      ><a name="3005"
+      > </a
+      ><a name="3006" class="Symbol"
+      >(</a
+      ><a name="3007" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="3013"
+      > </a
+      ><a name="3014" class="Symbol"
+      >(</a
+      ><a name="3015" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3016"
+      > </a
+      ><a name="3017" class="Symbol"
+      >(</a
+      ><a name="3018" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3019"
+      > </a
+      ><a name="3020" href="homotopy.SphereEndomorphism.html#2987" class="Bound"
+      >n</a
+      ><a name="3021" class="Symbol"
+      >)))</a
+      ><a name="3024"
+      >
+    </a
+      ><a name="3029" href="homotopy.SphereEndomorphism.html#2969" class="Function"
+      >SphereSS-conn</a
+      ><a name="3042"
+      > </a
+      ><a name="3043" href="homotopy.SphereEndomorphism.html#3043" class="Bound"
+      >n</a
+      ><a name="3044"
+      > </a
+      ><a name="3045" class="Symbol"
+      >=</a
+      ><a name="3046"
+      > </a
+      ><a name="3047" href="lib.NConnected.html#10215" class="Function"
+      >connected-&#8804;T</a
+      ><a name="3059"
+      > </a
+      ><a name="3060" class="Symbol"
+      >(</a
+      ><a name="3061" href="lib.types.TLevel.html#1980" class="Function"
+      >&#8804;T-+2+-l</a
+      ><a name="3069"
+      > </a
+      ><a name="3070" class="Number"
+      >1</a
+      ><a name="3071"
+      > </a
+      ><a name="3072" class="Symbol"
+      >(</a
+      ><a name="3073" href="lib.types.TLevel.html#1024" class="Function"
+      >-2&#8804;T</a
+      ><a name="3077"
+      > </a
+      ><a name="3078" href="lib.Base.html#8938" class="Function Operator"
+      >&#10216;</a
+      ><a name="3079"
+      > </a
+      ><a name="3080" href="homotopy.SphereEndomorphism.html#3043" class="Bound"
+      >n</a
+      ><a name="3081"
+      > </a
+      ><a name="3082" href="lib.Base.html#8938" class="Function Operator"
+      >&#10217;&#8331;&#8322;</a
+      ><a name="3085" class="Symbol"
+      >))</a
+      ><a name="3087"
+      > </a
+      ><a name="3088" class="Symbol"
+      >(</a
+      ><a name="3089" href="lib.types.IteratedSuspension.html#1966" class="Function"
+      >Sphere-conn</a
+      ><a name="3100"
+      > </a
+      ><a name="3101" class="Symbol"
+      >(</a
+      ><a name="3102" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3103"
+      > </a
+      ><a name="3104" class="Symbol"
+      >(</a
+      ><a name="3105" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3106"
+      > </a
+      ><a name="3107" href="homotopy.SphereEndomorphism.html#3043" class="Bound"
+      >n</a
+      ><a name="3108" class="Symbol"
+      >)))</a
+      ><a name="3111"
+      >
+
+    </a
+      ><a name="3117" href="homotopy.SphereEndomorphism.html#3117" class="Function"
+      >SphereSS-conn-path</a
+      ><a name="3135"
+      > </a
+      ><a name="3136" class="Symbol"
+      >:</a
+      ><a name="3137"
+      > </a
+      ><a name="3138" class="Symbol"
+      >&#8704;</a
+      ><a name="3139"
+      > </a
+      ><a name="3140" href="homotopy.SphereEndomorphism.html#3140" class="Bound"
+      >n</a
+      ><a name="3141"
+      > </a
+      ><a name="3142" class="Symbol"
+      >(</a
+      ><a name="3143" href="homotopy.SphereEndomorphism.html#3143" class="Bound"
+      >x</a
+      ><a name="3144"
+      > </a
+      ><a name="3145" href="homotopy.SphereEndomorphism.html#3145" class="Bound"
+      >y</a
+      ><a name="3146"
+      > </a
+      ><a name="3147" class="Symbol"
+      >:</a
+      ><a name="3148"
+      > </a
+      ><a name="3149" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="3155"
+      > </a
+      ><a name="3156" class="Symbol"
+      >(</a
+      ><a name="3157" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3158"
+      > </a
+      ><a name="3159" class="Symbol"
+      >(</a
+      ><a name="3160" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3161"
+      > </a
+      ><a name="3162" href="homotopy.SphereEndomorphism.html#3140" class="Bound"
+      >n</a
+      ><a name="3163" class="Symbol"
+      >)))</a
+      ><a name="3166"
+      > </a
+      ><a name="3167" class="Symbol"
+      >&#8594;</a
+      ><a name="3168"
+      > </a
+      ><a name="3169" href="lib.NConnected.html#343" class="Function"
+      >is-connected</a
+      ><a name="3181"
+      > </a
+      ><a name="3182" class="Number"
+      >0</a
+      ><a name="3183"
+      > </a
+      ><a name="3184" class="Symbol"
+      >(</a
+      ><a name="3185" href="homotopy.SphereEndomorphism.html#3143" class="Bound"
+      >x</a
+      ><a name="3186"
+      > </a
+      ><a name="3187" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3189"
+      > </a
+      ><a name="3190" href="homotopy.SphereEndomorphism.html#3145" class="Bound"
+      >y</a
+      ><a name="3191" class="Symbol"
+      >)</a
+      ><a name="3192"
+      >
+    </a
+      ><a name="3197" href="homotopy.SphereEndomorphism.html#3117" class="Function"
+      >SphereSS-conn-path</a
+      ><a name="3215"
+      > </a
+      ><a name="3216" href="homotopy.SphereEndomorphism.html#3216" class="Bound"
+      >n</a
+      ><a name="3217"
+      > </a
+      ><a name="3218" href="homotopy.SphereEndomorphism.html#3218" class="Bound"
+      >x</a
+      ><a name="3219"
+      > </a
+      ><a name="3220" href="homotopy.SphereEndomorphism.html#3220" class="Bound"
+      >y</a
+      ><a name="3221"
+      > </a
+      ><a name="3222" class="Symbol"
+      >=</a
+      ><a name="3223"
+      > </a
+      ><a name="3224" href="lib.NConnected.html#9681" class="Function"
+      >path-conn</a
+      ><a name="3233"
+      > </a
+      ><a name="3234" class="Symbol"
+      >(</a
+      ><a name="3235" href="homotopy.SphereEndomorphism.html#2969" class="Function"
+      >SphereSS-conn</a
+      ><a name="3248"
+      > </a
+      ><a name="3249" href="homotopy.SphereEndomorphism.html#3216" class="Bound"
+      >n</a
+      ><a name="3250" class="Symbol"
+      >)</a
+      ><a name="3251"
+      >
+
+    </a
+      ><a name="3257" href="homotopy.SphereEndomorphism.html#3257" class="Function"
+      >SphereSS-has-all-trunc-paths</a
+      ><a name="3285"
+      > </a
+      ><a name="3286" class="Symbol"
+      >:</a
+      ><a name="3287"
+      > </a
+      ><a name="3288" class="Symbol"
+      >&#8704;</a
+      ><a name="3289"
+      > </a
+      ><a name="3290" href="homotopy.SphereEndomorphism.html#3290" class="Bound"
+      >n</a
+      ><a name="3291"
+      > </a
+      ><a name="3292" class="Symbol"
+      >(</a
+      ><a name="3293" href="homotopy.SphereEndomorphism.html#3293" class="Bound"
+      >x</a
+      ><a name="3294"
+      > </a
+      ><a name="3295" href="homotopy.SphereEndomorphism.html#3295" class="Bound"
+      >y</a
+      ><a name="3296"
+      > </a
+      ><a name="3297" class="Symbol"
+      >:</a
+      ><a name="3298"
+      > </a
+      ><a name="3299" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="3305"
+      > </a
+      ><a name="3306" class="Symbol"
+      >(</a
+      ><a name="3307" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3308"
+      > </a
+      ><a name="3309" class="Symbol"
+      >(</a
+      ><a name="3310" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3311"
+      > </a
+      ><a name="3312" href="homotopy.SphereEndomorphism.html#3290" class="Bound"
+      >n</a
+      ><a name="3313" class="Symbol"
+      >)))</a
+      ><a name="3316"
+      > </a
+      ><a name="3317" class="Symbol"
+      >&#8594;</a
+      ><a name="3318"
+      > </a
+      ><a name="3319" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="3324"
+      > </a
+      ><a name="3325" class="Number"
+      >0</a
+      ><a name="3326"
+      > </a
+      ><a name="3327" class="Symbol"
+      >(</a
+      ><a name="3328" href="homotopy.SphereEndomorphism.html#3293" class="Bound"
+      >x</a
+      ><a name="3329"
+      > </a
+      ><a name="3330" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3332"
+      > </a
+      ><a name="3333" href="homotopy.SphereEndomorphism.html#3295" class="Bound"
+      >y</a
+      ><a name="3334" class="Symbol"
+      >)</a
+      ><a name="3335"
+      >
+    </a
+      ><a name="3340" href="homotopy.SphereEndomorphism.html#3257" class="Function"
+      >SphereSS-has-all-trunc-paths</a
+      ><a name="3368"
+      > </a
+      ><a name="3369" href="homotopy.SphereEndomorphism.html#3369" class="Bound"
+      >n</a
+      ><a name="3370"
+      > </a
+      ><a name="3371" href="homotopy.SphereEndomorphism.html#3371" class="Bound"
+      >x</a
+      ><a name="3372"
+      > </a
+      ><a name="3373" href="homotopy.SphereEndomorphism.html#3373" class="Bound"
+      >y</a
+      ><a name="3374"
+      > </a
+      ><a name="3375" class="Symbol"
+      >=</a
+      ><a name="3376"
+      > </a
+      ><a name="3377" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="3379"
+      > </a
+      ><a name="3380" class="Symbol"
+      >(</a
+      ><a name="3381" href="lib.types.Truncation.html#2602" class="Function"
+      >Trunc=-equiv</a
+      ><a name="3393"
+      > </a
+      ><a name="3394" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="3395"
+      > </a
+      ><a name="3396" href="homotopy.SphereEndomorphism.html#3371" class="Bound"
+      >x</a
+      ><a name="3397"
+      > </a
+      ><a name="3398" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="3399"
+      > </a
+      ><a name="3400" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="3401"
+      > </a
+      ><a name="3402" href="homotopy.SphereEndomorphism.html#3373" class="Bound"
+      >y</a
+      ><a name="3403"
+      > </a
+      ><a name="3404" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="3405" class="Symbol"
+      >)</a
+      ><a name="3406"
+      >
+      </a
+      ><a name="3413" class="Symbol"
+      >(</a
+      ><a name="3414" href="lib.NType.html#2533" class="Function"
+      >contr-has-all-paths</a
+      ><a name="3433"
+      > </a
+      ><a name="3434" class="Symbol"
+      >(</a
+      ><a name="3435" href="homotopy.SphereEndomorphism.html#2969" class="Function"
+      >SphereSS-conn</a
+      ><a name="3448"
+      > </a
+      ><a name="3449" href="homotopy.SphereEndomorphism.html#3369" class="Bound"
+      >n</a
+      ><a name="3450" class="Symbol"
+      >)</a
+      ><a name="3451"
+      > </a
+      ><a name="3452" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="3453"
+      > </a
+      ><a name="3454" href="homotopy.SphereEndomorphism.html#3371" class="Bound"
+      >x</a
+      ><a name="3455"
+      > </a
+      ><a name="3456" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="3457"
+      > </a
+      ><a name="3458" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="3459"
+      > </a
+      ><a name="3460" href="homotopy.SphereEndomorphism.html#3373" class="Bound"
+      >y</a
+      ><a name="3461"
+      > </a
+      ><a name="3462" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="3463" class="Symbol"
+      >)</a
+      ><a name="3464"
+      >
+
+  </a
+      ><a name="3468" href="homotopy.SphereEndomorphism.html#3468" class="Function"
+      >&#8857;SphereSS-endo-in</a
+      ><a name="3485"
+      > </a
+      ><a name="3486" class="Symbol"
+      >:</a
+      ><a name="3487"
+      > </a
+      ><a name="3488" class="Symbol"
+      >&#8704;</a
+      ><a name="3489"
+      > </a
+      ><a name="3490" href="homotopy.SphereEndomorphism.html#3490" class="Bound"
+      >n</a
+      ><a name="3491"
+      >
+    </a
+      ><a name="3496" class="Symbol"
+      >&#8594;</a
+      ><a name="3497"
+      > </a
+      ><a name="3498" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="3503"
+      > </a
+      ><a name="3504" class="Number"
+      >0</a
+      ><a name="3505"
+      > </a
+      ><a name="3506" class="Symbol"
+      >(</a
+      ><a name="3507"
+      > </a
+      ><a name="3508" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="3514"
+      > </a
+      ><a name="3515" class="Symbol"
+      >(</a
+      ><a name="3516" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3517"
+      > </a
+      ><a name="3518" class="Symbol"
+      >(</a
+      ><a name="3519" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3520"
+      > </a
+      ><a name="3521" href="homotopy.SphereEndomorphism.html#3490" class="Bound"
+      >n</a
+      ><a name="3522" class="Symbol"
+      >))</a
+      ><a name="3524"
+      >  </a
+      ><a name="3526" class="Symbol"
+      >&#8594;</a
+      ><a name="3527"
+      >  </a
+      ><a name="3529" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="3535"
+      > </a
+      ><a name="3536" class="Symbol"
+      >(</a
+      ><a name="3537" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3538"
+      > </a
+      ><a name="3539" class="Symbol"
+      >(</a
+      ><a name="3540" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3541"
+      > </a
+      ><a name="3542" href="homotopy.SphereEndomorphism.html#3490" class="Bound"
+      >n</a
+      ><a name="3543" class="Symbol"
+      >)))</a
+      ><a name="3546"
+      >
+    </a
+      ><a name="3551" class="Symbol"
+      >&#8594;</a
+      ><a name="3552"
+      > </a
+      ><a name="3553" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="3558"
+      > </a
+      ><a name="3559" class="Number"
+      >0</a
+      ><a name="3560"
+      > </a
+      ><a name="3561" class="Symbol"
+      >(</a
+      ><a name="3562" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="3569"
+      > </a
+      ><a name="3570" class="Symbol"
+      >(</a
+      ><a name="3571" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3572"
+      > </a
+      ><a name="3573" class="Symbol"
+      >(</a
+      ><a name="3574" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3575"
+      > </a
+      ><a name="3576" href="homotopy.SphereEndomorphism.html#3490" class="Bound"
+      >n</a
+      ><a name="3577" class="Symbol"
+      >))</a
+      ><a name="3579"
+      > </a
+      ><a name="3580" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="3582"
+      > </a
+      ><a name="3583" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="3590"
+      > </a
+      ><a name="3591" class="Symbol"
+      >(</a
+      ><a name="3592" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3593"
+      > </a
+      ><a name="3594" class="Symbol"
+      >(</a
+      ><a name="3595" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3596"
+      > </a
+      ><a name="3597" href="homotopy.SphereEndomorphism.html#3490" class="Bound"
+      >n</a
+      ><a name="3598" class="Symbol"
+      >)))</a
+      ><a name="3601"
+      >
+  </a
+      ><a name="3604" href="homotopy.SphereEndomorphism.html#3468" class="Function"
+      >&#8857;SphereSS-endo-in</a
+      ><a name="3621"
+      > </a
+      ><a name="3622" href="homotopy.SphereEndomorphism.html#3622" class="Bound"
+      >n</a
+      ><a name="3623"
+      > </a
+      ><a name="3624" class="Symbol"
+      >=</a
+      ><a name="3625"
+      > </a
+      ><a name="3626" href="lib.types.Truncation.html#863" class="Function"
+      >Trunc-rec</a
+      ><a name="3635"
+      > </a
+      ><a name="3636" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3647"
+      > </a
+      ><a name="3648" class="Symbol"
+      >&#955;</a
+      ><a name="3649"
+      > </a
+      ><a name="3650" href="homotopy.SphereEndomorphism.html#3650" class="Bound"
+      >f</a
+      ><a name="3651"
+      > </a
+      ><a name="3652" class="Symbol"
+      >&#8594;</a
+      ><a name="3653"
+      >
+    </a
+      ><a name="3658" href="lib.types.Truncation.html#863" class="Function"
+      >Trunc-rec</a
+      ><a name="3667"
+      > </a
+      ><a name="3668" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3679"
+      > </a
+      ><a name="3680" class="Symbol"
+      >(&#955;</a
+      ><a name="3682"
+      > </a
+      ><a name="3683" href="homotopy.SphereEndomorphism.html#3683" class="Bound"
+      >pt</a
+      ><a name="3685"
+      > </a
+      ><a name="3686" class="Symbol"
+      >&#8594;</a
+      ><a name="3687"
+      > </a
+      ><a name="3688" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="3689"
+      > </a
+      ><a name="3690" href="homotopy.SphereEndomorphism.html#3650" class="Bound"
+      >f</a
+      ><a name="3691"
+      > </a
+      ><a name="3692" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3693"
+      > </a
+      ><a name="3694" href="homotopy.SphereEndomorphism.html#3683" class="Bound"
+      >pt</a
+      ><a name="3696"
+      > </a
+      ><a name="3697" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="3698" class="Symbol"
+      >)</a
+      ><a name="3699"
+      >
+      </a
+      ><a name="3706" class="Symbol"
+      >(</a
+      ><a name="3707" href="homotopy.SphereEndomorphism.html#3257" class="Function"
+      >SphereSS-has-all-trunc-paths</a
+      ><a name="3735"
+      > </a
+      ><a name="3736" href="homotopy.SphereEndomorphism.html#3622" class="Bound"
+      >n</a
+      ><a name="3737"
+      > </a
+      ><a name="3738" class="Symbol"
+      >(</a
+      ><a name="3739" href="homotopy.SphereEndomorphism.html#3650" class="Bound"
+      >f</a
+      ><a name="3740"
+      > </a
+      ><a name="3741" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="3746" class="Symbol"
+      >)</a
+      ><a name="3747"
+      > </a
+      ><a name="3748" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="3753" class="Symbol"
+      >)</a
+      ><a name="3754"
+      >
+
+  </a
+      ><a name="3758" class="Keyword"
+      >abstract</a
+      ><a name="3766"
+      >
+    </a
+      ><a name="3771" href="homotopy.SphereEndomorphism.html#3771" class="Function"
+      >&#8857;SphereSS-endo-in-&#951;</a
+      ><a name="3790"
+      > </a
+      ><a name="3791" class="Symbol"
+      >:</a
+      ><a name="3792"
+      > </a
+      ><a name="3793" class="Symbol"
+      >&#8704;</a
+      ><a name="3794"
+      > </a
+      ><a name="3795" href="homotopy.SphereEndomorphism.html#3795" class="Bound"
+      >n</a
+      ><a name="3796"
+      > </a
+      ><a name="3797" href="homotopy.SphereEndomorphism.html#3797" class="Bound"
+      >f</a
+      ><a name="3798"
+      > </a
+      ><a name="3799" class="Symbol"
+      >&#8594;</a
+      ><a name="3800"
+      > </a
+      ><a name="3801" href="homotopy.SphereEndomorphism.html#3468" class="Function"
+      >&#8857;SphereSS-endo-in</a
+      ><a name="3818"
+      > </a
+      ><a name="3819" href="homotopy.SphereEndomorphism.html#3795" class="Bound"
+      >n</a
+      ><a name="3820"
+      > </a
+      ><a name="3821" class="Symbol"
+      >(</a
+      ><a name="3822" href="homotopy.SphereEndomorphism.html#258" class="Function"
+      >&#8857;SphereS-endo-out</a
+      ><a name="3839"
+      > </a
+      ><a name="3840" class="Symbol"
+      >(</a
+      ><a name="3841" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3842"
+      > </a
+      ><a name="3843" href="homotopy.SphereEndomorphism.html#3795" class="Bound"
+      >n</a
+      ><a name="3844" class="Symbol"
+      >)</a
+      ><a name="3845"
+      > </a
+      ><a name="3846" href="homotopy.SphereEndomorphism.html#3797" class="Bound"
+      >f</a
+      ><a name="3847" class="Symbol"
+      >)</a
+      ><a name="3848"
+      > </a
+      ><a name="3849" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3851"
+      > </a
+      ><a name="3852" href="homotopy.SphereEndomorphism.html#3797" class="Bound"
+      >f</a
+      ><a name="3853"
+      >
+    </a
+      ><a name="3858" href="homotopy.SphereEndomorphism.html#3771" class="Function"
+      >&#8857;SphereSS-endo-in-&#951;</a
+      ><a name="3877"
+      > </a
+      ><a name="3878" href="homotopy.SphereEndomorphism.html#3878" class="Bound"
+      >n</a
+      ><a name="3879"
+      > </a
+      ><a name="3880" class="Symbol"
+      >=</a
+      ><a name="3881"
+      > </a
+      ><a name="3882" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="3892"
+      > </a
+      ><a name="3893" class="Symbol"
+      >(&#955;</a
+      ><a name="3895"
+      > </a
+      ><a name="3896" href="homotopy.SphereEndomorphism.html#3896" class="Bound"
+      >_</a
+      ><a name="3897"
+      > </a
+      ><a name="3898" class="Symbol"
+      >&#8594;</a
+      ><a name="3899"
+      > </a
+      ><a name="3900" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="3915"
+      > </a
+      ><a name="3916" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3927" class="Symbol"
+      >)</a
+      ><a name="3928"
+      >
+      </a
+      ><a name="3935" class="Symbol"
+      >&#955;{(</a
+      ><a name="3938" href="homotopy.SphereEndomorphism.html#3938" class="Bound"
+      >f</a
+      ><a name="3939"
+      > </a
+      ><a name="3940" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3941"
+      > </a
+      ><a name="3942" href="homotopy.SphereEndomorphism.html#3942" class="Bound"
+      >pt</a
+      ><a name="3944" class="Symbol"
+      >)</a
+      ><a name="3945"
+      > </a
+      ><a name="3946" class="Symbol"
+      >&#8594;</a
+      ><a name="3947"
+      > </a
+      ><a name="3948" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3950"
+      > </a
+      ><a name="3951" class="Symbol"
+      >(</a
+      ><a name="3952" href="lib.types.Truncation.html#863" class="Function"
+      >Trunc-rec</a
+      ><a name="3961"
+      > </a
+      ><a name="3962" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3973"
+      > </a
+      ><a name="3974" class="Symbol"
+      >(&#955;</a
+      ><a name="3976"
+      > </a
+      ><a name="3977" href="homotopy.SphereEndomorphism.html#3977" class="Bound"
+      >pt</a
+      ><a name="3979"
+      > </a
+      ><a name="3980" class="Symbol"
+      >&#8594;</a
+      ><a name="3981"
+      > </a
+      ><a name="3982" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="3983"
+      > </a
+      ><a name="3984" href="homotopy.SphereEndomorphism.html#3938" class="Bound"
+      >f</a
+      ><a name="3985"
+      > </a
+      ><a name="3986" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3987"
+      > </a
+      ><a name="3988" href="homotopy.SphereEndomorphism.html#3977" class="Bound"
+      >pt</a
+      ><a name="3990"
+      > </a
+      ><a name="3991" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="3992" class="Symbol"
+      >))</a
+      ><a name="3994"
+      >
+        </a
+      ><a name="4003" class="Symbol"
+      >(</a
+      ><a name="4004" href="lib.NType.html#2533" class="Function"
+      >contr-has-all-paths</a
+      ><a name="4023"
+      > </a
+      ><a name="4024" class="Symbol"
+      >(</a
+      ><a name="4025" href="homotopy.SphereEndomorphism.html#3117" class="Function"
+      >SphereSS-conn-path</a
+      ><a name="4043"
+      > </a
+      ><a name="4044" href="homotopy.SphereEndomorphism.html#3878" class="Bound"
+      >n</a
+      ><a name="4045"
+      > </a
+      ><a name="4046" class="Symbol"
+      >(</a
+      ><a name="4047" href="homotopy.SphereEndomorphism.html#3938" class="Bound"
+      >f</a
+      ><a name="4048"
+      > </a
+      ><a name="4049" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="4054" class="Symbol"
+      >)</a
+      ><a name="4055"
+      > </a
+      ><a name="4056" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="4061" class="Symbol"
+      >)</a
+      ><a name="4062"
+      >
+          </a
+      ><a name="4073" class="Symbol"
+      >(</a
+      ><a name="4074" href="homotopy.SphereEndomorphism.html#3257" class="Function"
+      >SphereSS-has-all-trunc-paths</a
+      ><a name="4102"
+      > </a
+      ><a name="4103" href="homotopy.SphereEndomorphism.html#3878" class="Bound"
+      >n</a
+      ><a name="4104"
+      > </a
+      ><a name="4105" class="Symbol"
+      >(</a
+      ><a name="4106" href="homotopy.SphereEndomorphism.html#3938" class="Bound"
+      >f</a
+      ><a name="4107"
+      > </a
+      ><a name="4108" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="4113" class="Symbol"
+      >)</a
+      ><a name="4114"
+      > </a
+      ><a name="4115" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="4120" class="Symbol"
+      >)</a
+      ><a name="4121"
+      > </a
+      ><a name="4122" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="4123"
+      > </a
+      ><a name="4124" href="homotopy.SphereEndomorphism.html#3942" class="Bound"
+      >pt</a
+      ><a name="4126"
+      > </a
+      ><a name="4127" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="4128" class="Symbol"
+      >)}</a
+      ><a name="4130"
+      >
+
+    </a
+      ><a name="4136" href="homotopy.SphereEndomorphism.html#4136" class="Function"
+      >&#8857;SphereSS-endo-out-&#946;</a
+      ><a name="4156"
+      > </a
+      ><a name="4157" class="Symbol"
+      >:</a
+      ><a name="4158"
+      > </a
+      ><a name="4159" class="Symbol"
+      >&#8704;</a
+      ><a name="4160"
+      > </a
+      ><a name="4161" href="homotopy.SphereEndomorphism.html#4161" class="Bound"
+      >n</a
+      ><a name="4162"
+      > </a
+      ><a name="4163" href="homotopy.SphereEndomorphism.html#4163" class="Bound"
+      >f</a
+      ><a name="4164"
+      > </a
+      ><a name="4165" class="Symbol"
+      >&#8594;</a
+      ><a name="4166"
+      > </a
+      ><a name="4167" href="homotopy.SphereEndomorphism.html#258" class="Function"
+      >&#8857;SphereS-endo-out</a
+      ><a name="4184"
+      > </a
+      ><a name="4185" class="Symbol"
+      >(</a
+      ><a name="4186" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4187"
+      > </a
+      ><a name="4188" href="homotopy.SphereEndomorphism.html#4161" class="Bound"
+      >n</a
+      ><a name="4189" class="Symbol"
+      >)</a
+      ><a name="4190"
+      > </a
+      ><a name="4191" class="Symbol"
+      >(</a
+      ><a name="4192" href="homotopy.SphereEndomorphism.html#3468" class="Function"
+      >&#8857;SphereSS-endo-in</a
+      ><a name="4209"
+      > </a
+      ><a name="4210" href="homotopy.SphereEndomorphism.html#4161" class="Bound"
+      >n</a
+      ><a name="4211"
+      > </a
+      ><a name="4212" href="homotopy.SphereEndomorphism.html#4163" class="Bound"
+      >f</a
+      ><a name="4213" class="Symbol"
+      >)</a
+      ><a name="4214"
+      > </a
+      ><a name="4215" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4217"
+      > </a
+      ><a name="4218" href="homotopy.SphereEndomorphism.html#4163" class="Bound"
+      >f</a
+      ><a name="4219"
+      >
+    </a
+      ><a name="4224" href="homotopy.SphereEndomorphism.html#4136" class="Function"
+      >&#8857;SphereSS-endo-out-&#946;</a
+      ><a name="4244"
+      > </a
+      ><a name="4245" href="homotopy.SphereEndomorphism.html#4245" class="Bound"
+      >n</a
+      ><a name="4246"
+      > </a
+      ><a name="4247" class="Symbol"
+      >=</a
+      ><a name="4248"
+      > </a
+      ><a name="4249" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="4259"
+      > </a
+      ><a name="4260" class="Symbol"
+      >(&#955;</a
+      ><a name="4262"
+      > </a
+      ><a name="4263" href="homotopy.SphereEndomorphism.html#4263" class="Bound"
+      >_</a
+      ><a name="4264"
+      > </a
+      ><a name="4265" class="Symbol"
+      >&#8594;</a
+      ><a name="4266"
+      > </a
+      ><a name="4267" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="4282"
+      > </a
+      ><a name="4283" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="4294" class="Symbol"
+      >)</a
+      ><a name="4295"
+      >
+      </a
+      ><a name="4302" class="Symbol"
+      >&#955;</a
+      ><a name="4303"
+      > </a
+      ><a name="4304" href="homotopy.SphereEndomorphism.html#4304" class="Bound"
+      >f</a
+      ><a name="4305"
+      > </a
+      ><a name="4306" class="Symbol"
+      >&#8594;</a
+      ><a name="4307"
+      > </a
+      ><a name="4308" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="4318"
+      >
+        </a
+      ><a name="4327" class="Symbol"
+      >{</a
+      ><a name="4328" class="Argument"
+      >P</a
+      ><a name="4329"
+      > </a
+      ><a name="4330" class="Symbol"
+      >=</a
+      ><a name="4331"
+      > </a
+      ><a name="4332" class="Symbol"
+      >&#955;</a
+      ><a name="4333"
+      > </a
+      ><a name="4334" href="homotopy.SphereEndomorphism.html#4334" class="Bound"
+      >pt</a
+      ><a name="4336"
+      > </a
+      ><a name="4337" class="Symbol"
+      >&#8594;</a
+      ><a name="4338"
+      > </a
+      ><a name="4339" href="homotopy.SphereEndomorphism.html#258" class="Function"
+      >&#8857;SphereS-endo-out</a
+      ><a name="4356"
+      > </a
+      ><a name="4357" class="Symbol"
+      >(</a
+      ><a name="4358" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4359"
+      > </a
+      ><a name="4360" href="homotopy.SphereEndomorphism.html#4245" class="Bound"
+      >n</a
+      ><a name="4361" class="Symbol"
+      >)</a
+      ><a name="4362"
+      > </a
+      ><a name="4363" class="Symbol"
+      >(</a
+      ><a name="4364" href="lib.types.Truncation.html#863" class="Function"
+      >Trunc-rec</a
+      ><a name="4373"
+      > </a
+      ><a name="4374" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="4385"
+      > </a
+      ><a name="4386" class="Symbol"
+      >(&#955;</a
+      ><a name="4388"
+      > </a
+      ><a name="4389" href="homotopy.SphereEndomorphism.html#4389" class="Bound"
+      >pt</a
+      ><a name="4391"
+      > </a
+      ><a name="4392" class="Symbol"
+      >&#8594;</a
+      ><a name="4393"
+      > </a
+      ><a name="4394" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="4395"
+      > </a
+      ><a name="4396" href="homotopy.SphereEndomorphism.html#4304" class="Bound"
+      >f</a
+      ><a name="4397"
+      > </a
+      ><a name="4398" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="4399"
+      > </a
+      ><a name="4400" href="homotopy.SphereEndomorphism.html#4389" class="Bound"
+      >pt</a
+      ><a name="4402"
+      > </a
+      ><a name="4403" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="4404" class="Symbol"
+      >)</a
+      ><a name="4405"
+      > </a
+      ><a name="4406" href="homotopy.SphereEndomorphism.html#4334" class="Bound"
+      >pt</a
+      ><a name="4408" class="Symbol"
+      >)</a
+      ><a name="4409"
+      > </a
+      ><a name="4410" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4412"
+      > </a
+      ><a name="4413" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="4414"
+      > </a
+      ><a name="4415" href="homotopy.SphereEndomorphism.html#4304" class="Bound"
+      >f</a
+      ><a name="4416"
+      > </a
+      ><a name="4417" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="4418" class="Symbol"
+      >}</a
+      ><a name="4419"
+      >
+        </a
+      ><a name="4428" class="Symbol"
+      >(&#955;</a
+      ><a name="4430"
+      > </a
+      ><a name="4431" href="homotopy.SphereEndomorphism.html#4431" class="Bound"
+      >_</a
+      ><a name="4432"
+      > </a
+      ><a name="4433" class="Symbol"
+      >&#8594;</a
+      ><a name="4434"
+      > </a
+      ><a name="4435" href="lib.NType.html#4369" class="Function"
+      >=-preserves-set</a
+      ><a name="4450"
+      > </a
+      ><a name="4451" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="4462" class="Symbol"
+      >)</a
+      ><a name="4463"
+      >
+        </a
+      ><a name="4472" class="Symbol"
+      >(&#955;</a
+      ><a name="4474"
+      > </a
+      ><a name="4475" href="homotopy.SphereEndomorphism.html#4475" class="Bound"
+      >pt</a
+      ><a name="4477"
+      > </a
+      ><a name="4478" class="Symbol"
+      >&#8594;</a
+      ><a name="4479"
+      > </a
+      ><a name="4480" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4483" class="Symbol"
+      >)</a
+      ><a name="4484"
+      > </a
+      ><a name="4485" class="Symbol"
+      >(</a
+      ><a name="4486" href="homotopy.SphereEndomorphism.html#3257" class="Function"
+      >SphereSS-has-all-trunc-paths</a
+      ><a name="4514"
+      > </a
+      ><a name="4515" href="homotopy.SphereEndomorphism.html#4245" class="Bound"
+      >n</a
+      ><a name="4516"
+      > </a
+      ><a name="4517" class="Symbol"
+      >(</a
+      ><a name="4518" href="homotopy.SphereEndomorphism.html#4304" class="Bound"
+      >f</a
+      ><a name="4519"
+      > </a
+      ><a name="4520" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="4525" class="Symbol"
+      >)</a
+      ><a name="4526"
+      > </a
+      ><a name="4527" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="4532" class="Symbol"
+      >)</a
+      ><a name="4533"
+      >
+
+  </a
+      ><a name="4537" href="homotopy.SphereEndomorphism.html#4537" class="Function"
+      >&#8857;SphereSS-endo-out-is-equiv</a
+      ><a name="4564"
+      > </a
+      ><a name="4565" class="Symbol"
+      >:</a
+      ><a name="4566"
+      > </a
+      ><a name="4567" class="Symbol"
+      >&#8704;</a
+      ><a name="4568"
+      > </a
+      ><a name="4569" href="homotopy.SphereEndomorphism.html#4569" class="Bound"
+      >n</a
+      ><a name="4570"
+      > </a
+      ><a name="4571" class="Symbol"
+      >&#8594;</a
+      ><a name="4572"
+      > </a
+      ><a name="4573" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="4581"
+      > </a
+      ><a name="4582" class="Symbol"
+      >(</a
+      ><a name="4583" href="homotopy.SphereEndomorphism.html#258" class="Function"
+      >&#8857;SphereS-endo-out</a
+      ><a name="4600"
+      > </a
+      ><a name="4601" class="Symbol"
+      >(</a
+      ><a name="4602" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4603"
+      > </a
+      ><a name="4604" href="homotopy.SphereEndomorphism.html#4569" class="Bound"
+      >n</a
+      ><a name="4605" class="Symbol"
+      >))</a
+      ><a name="4607"
+      >
+  </a
+      ><a name="4610" href="homotopy.SphereEndomorphism.html#4537" class="Function"
+      >&#8857;SphereSS-endo-out-is-equiv</a
+      ><a name="4637"
+      > </a
+      ><a name="4638" href="homotopy.SphereEndomorphism.html#4638" class="Bound"
+      >n</a
+      ><a name="4639"
+      > </a
+      ><a name="4640" class="Symbol"
+      >=</a
+      ><a name="4641"
+      > </a
+      ><a name="4642" href="lib.Equivalence.html#2854" class="Function"
+      >is-eq</a
+      ><a name="4647"
+      >
+    </a
+      ><a name="4652" class="Symbol"
+      >(</a
+      ><a name="4653" href="homotopy.SphereEndomorphism.html#258" class="Function"
+      >&#8857;SphereS-endo-out</a
+      ><a name="4670"
+      > </a
+      ><a name="4671" class="Symbol"
+      >(</a
+      ><a name="4672" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4673"
+      > </a
+      ><a name="4674" href="homotopy.SphereEndomorphism.html#4638" class="Bound"
+      >n</a
+      ><a name="4675" class="Symbol"
+      >))</a
+      ><a name="4677"
+      > </a
+      ><a name="4678" class="Symbol"
+      >(</a
+      ><a name="4679" href="homotopy.SphereEndomorphism.html#3468" class="Function"
+      >&#8857;SphereSS-endo-in</a
+      ><a name="4696"
+      > </a
+      ><a name="4697" href="homotopy.SphereEndomorphism.html#4638" class="Bound"
+      >n</a
+      ><a name="4698" class="Symbol"
+      >)</a
+      ><a name="4699"
+      >
+    </a
+      ><a name="4704" class="Symbol"
+      >(</a
+      ><a name="4705" href="homotopy.SphereEndomorphism.html#4136" class="Function"
+      >&#8857;SphereSS-endo-out-&#946;</a
+      ><a name="4725"
+      > </a
+      ><a name="4726" href="homotopy.SphereEndomorphism.html#4638" class="Bound"
+      >n</a
+      ><a name="4727" class="Symbol"
+      >)</a
+      ><a name="4728"
+      > </a
+      ><a name="4729" class="Symbol"
+      >(</a
+      ><a name="4730" href="homotopy.SphereEndomorphism.html#3771" class="Function"
+      >&#8857;SphereSS-endo-in-&#951;</a
+      ><a name="4749"
+      > </a
+      ><a name="4750" href="homotopy.SphereEndomorphism.html#4638" class="Bound"
+      >n</a
+      ><a name="4751" class="Symbol"
+      >)</a
+      ><a name="4752"
+      >
+
+  </a
+      ><a name="4756" class="Comment"
+      >-- the unified interface</a
+      ><a name="4780"
+      >
+
+  </a
+      ><a name="4784" href="homotopy.SphereEndomorphism.html#4784" class="Function"
+      >&#8857;SphereS-endo-out-is-equiv</a
+      ><a name="4810"
+      > </a
+      ><a name="4811" class="Symbol"
+      >:</a
+      ><a name="4812"
+      > </a
+      ><a name="4813" class="Symbol"
+      >&#8704;</a
+      ><a name="4814"
+      > </a
+      ><a name="4815" href="homotopy.SphereEndomorphism.html#4815" class="Bound"
+      >n</a
+      ><a name="4816"
+      > </a
+      ><a name="4817" class="Symbol"
+      >&#8594;</a
+      ><a name="4818"
+      > </a
+      ><a name="4819" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="4827"
+      > </a
+      ><a name="4828" class="Symbol"
+      >(</a
+      ><a name="4829" href="homotopy.SphereEndomorphism.html#258" class="Function"
+      >&#8857;SphereS-endo-out</a
+      ><a name="4846"
+      > </a
+      ><a name="4847" href="homotopy.SphereEndomorphism.html#4815" class="Bound"
+      >n</a
+      ><a name="4848" class="Symbol"
+      >)</a
+      ><a name="4849"
+      >
+  </a
+      ><a name="4852" href="homotopy.SphereEndomorphism.html#4784" class="Function"
+      >&#8857;SphereS-endo-out-is-equiv</a
+      ><a name="4878"
+      > </a
+      ><a name="4879" class="Number"
+      >0</a
+      ><a name="4880"
+      > </a
+      ><a name="4881" class="Symbol"
+      >=</a
+      ><a name="4882"
+      > </a
+      ><a name="4883" href="homotopy.SphereEndomorphism.html#2741" class="Function"
+      >&#8857;S&#185;-endo-out-is-equiv</a
+      ><a name="4904"
+      >
+  </a
+      ><a name="4907" href="homotopy.SphereEndomorphism.html#4784" class="Function"
+      >&#8857;SphereS-endo-out-is-equiv</a
+      ><a name="4933"
+      > </a
+      ><a name="4934" class="Symbol"
+      >(</a
+      ><a name="4935" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4936"
+      > </a
+      ><a name="4937" href="homotopy.SphereEndomorphism.html#4937" class="Bound"
+      >n</a
+      ><a name="4938" class="Symbol"
+      >)</a
+      ><a name="4939"
+      > </a
+      ><a name="4940" class="Symbol"
+      >=</a
+      ><a name="4941"
+      > </a
+      ><a name="4942" href="homotopy.SphereEndomorphism.html#4537" class="Function"
+      >&#8857;SphereSS-endo-out-is-equiv</a
+      ><a name="4969"
+      > </a
+      ><a name="4970" href="homotopy.SphereEndomorphism.html#4937" class="Bound"
+      >n</a
+      ><a name="4971"
+      >
+
+  </a
+      ><a name="4975" href="homotopy.SphereEndomorphism.html#4975" class="Function"
+      >&#8857;SphereS-endo-in</a
+      ><a name="4991"
+      > </a
+      ><a name="4992" class="Symbol"
+      >:</a
+      ><a name="4993"
+      > </a
+      ><a name="4994" class="Symbol"
+      >&#8704;</a
+      ><a name="4995"
+      > </a
+      ><a name="4996" href="homotopy.SphereEndomorphism.html#4996" class="Bound"
+      >n</a
+      ><a name="4997"
+      >
+    </a
+      ><a name="5002" class="Symbol"
+      >&#8594;</a
+      ><a name="5003"
+      > </a
+      ><a name="5004" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="5009"
+      > </a
+      ><a name="5010" class="Number"
+      >0</a
+      ><a name="5011"
+      > </a
+      ><a name="5012" class="Symbol"
+      >(</a
+      ><a name="5013"
+      > </a
+      ><a name="5014" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="5020"
+      > </a
+      ><a name="5021" class="Symbol"
+      >(</a
+      ><a name="5022" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5023"
+      > </a
+      ><a name="5024" href="homotopy.SphereEndomorphism.html#4996" class="Bound"
+      >n</a
+      ><a name="5025" class="Symbol"
+      >)</a
+      ><a name="5026"
+      >  </a
+      ><a name="5028" class="Symbol"
+      >&#8594;</a
+      ><a name="5029"
+      >  </a
+      ><a name="5031" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="5037"
+      > </a
+      ><a name="5038" class="Symbol"
+      >(</a
+      ><a name="5039" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5040"
+      > </a
+      ><a name="5041" href="homotopy.SphereEndomorphism.html#4996" class="Bound"
+      >n</a
+      ><a name="5042" class="Symbol"
+      >))</a
+      ><a name="5044"
+      >
+    </a
+      ><a name="5049" class="Symbol"
+      >&#8594;</a
+      ><a name="5050"
+      > </a
+      ><a name="5051" href="lib.types.Truncation.html#250" class="Postulate"
+      >Trunc</a
+      ><a name="5056"
+      > </a
+      ><a name="5057" class="Number"
+      >0</a
+      ><a name="5058"
+      > </a
+      ><a name="5059" class="Symbol"
+      >(</a
+      ><a name="5060" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="5067"
+      > </a
+      ><a name="5068" class="Symbol"
+      >(</a
+      ><a name="5069" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5070"
+      > </a
+      ><a name="5071" href="homotopy.SphereEndomorphism.html#4996" class="Bound"
+      >n</a
+      ><a name="5072" class="Symbol"
+      >)</a
+      ><a name="5073"
+      > </a
+      ><a name="5074" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="5076"
+      > </a
+      ><a name="5077" href="lib.types.IteratedSuspension.html#1849" class="Function"
+      >&#8857;Sphere</a
+      ><a name="5084"
+      > </a
+      ><a name="5085" class="Symbol"
+      >(</a
+      ><a name="5086" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5087"
+      > </a
+      ><a name="5088" href="homotopy.SphereEndomorphism.html#4996" class="Bound"
+      >n</a
+      ><a name="5089" class="Symbol"
+      >))</a
+      ><a name="5091"
+      >
+  </a
+      ><a name="5094" href="homotopy.SphereEndomorphism.html#4975" class="Function"
+      >&#8857;SphereS-endo-in</a
+      ><a name="5110"
+      > </a
+      ><a name="5111" href="homotopy.SphereEndomorphism.html#5111" class="Bound"
+      >n</a
+      ><a name="5112"
+      > </a
+      ><a name="5113" class="Symbol"
+      >=</a
+      ><a name="5114"
+      > </a
+      ><a name="5115" href="lib.Equivalence.html#1668" class="Field"
+      >is-equiv.g</a
+      ><a name="5125"
+      > </a
+      ><a name="5126" class="Symbol"
+      >(</a
+      ><a name="5127" href="homotopy.SphereEndomorphism.html#4784" class="Function"
+      >&#8857;SphereS-endo-out-is-equiv</a
+      ><a name="5153"
+      > </a
+      ><a name="5154" href="homotopy.SphereEndomorphism.html#5111" class="Bound"
+      >n</a
+      ><a name="5155" class="Symbol"
+      >)</a
+      ><a name="5156"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

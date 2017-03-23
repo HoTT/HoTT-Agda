@@ -1,0 +1,1238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.PropJoinProp</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+
+</a
+      ><a name="60" class="Comment"
+      >{- Proof that if [A] and [B] are two propositions, then so is [A * B]. -}</a
+      ><a name="133"
+      >
+
+</a
+      ><a name="135" class="Keyword"
+      >module</a
+      ><a name="141"
+      > </a
+      ><a name="142" href="homotopy.PropJoinProp.html#1" class="Module"
+      >homotopy.PropJoinProp</a
+      ><a name="163"
+      >
+  </a
+      ><a name="166" class="Symbol"
+      >{</a
+      ><a name="167" href="homotopy.PropJoinProp.html#167" class="Bound"
+      >i</a
+      ><a name="168" class="Symbol"
+      >}</a
+      ><a name="169"
+      > </a
+      ><a name="170" class="Symbol"
+      >{</a
+      ><a name="171" href="homotopy.PropJoinProp.html#171" class="Bound"
+      >A</a
+      ><a name="172"
+      > </a
+      ><a name="173" class="Symbol"
+      >:</a
+      ><a name="174"
+      > </a
+      ><a name="175" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="179"
+      > </a
+      ><a name="180" href="homotopy.PropJoinProp.html#167" class="Bound"
+      >i</a
+      ><a name="181" class="Symbol"
+      >}</a
+      ><a name="182"
+      > </a
+      ><a name="183" class="Symbol"
+      >(</a
+      ><a name="184" href="homotopy.PropJoinProp.html#184" class="Bound"
+      >pA</a
+      ><a name="186"
+      > </a
+      ><a name="187" class="Symbol"
+      >:</a
+      ><a name="188"
+      > </a
+      ><a name="189" href="lib.NType.html#430" class="Function"
+      >is-prop</a
+      ><a name="196"
+      > </a
+      ><a name="197" href="homotopy.PropJoinProp.html#171" class="Bound"
+      >A</a
+      ><a name="198" class="Symbol"
+      >)</a
+      ><a name="199"
+      >
+  </a
+      ><a name="202" class="Symbol"
+      >{</a
+      ><a name="203" href="homotopy.PropJoinProp.html#203" class="Bound"
+      >j</a
+      ><a name="204" class="Symbol"
+      >}</a
+      ><a name="205"
+      > </a
+      ><a name="206" class="Symbol"
+      >{</a
+      ><a name="207" href="homotopy.PropJoinProp.html#207" class="Bound"
+      >B</a
+      ><a name="208"
+      > </a
+      ><a name="209" class="Symbol"
+      >:</a
+      ><a name="210"
+      > </a
+      ><a name="211" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="215"
+      > </a
+      ><a name="216" href="homotopy.PropJoinProp.html#203" class="Bound"
+      >j</a
+      ><a name="217" class="Symbol"
+      >}</a
+      ><a name="218"
+      > </a
+      ><a name="219" class="Symbol"
+      >(</a
+      ><a name="220" href="homotopy.PropJoinProp.html#220" class="Bound"
+      >pB</a
+      ><a name="222"
+      > </a
+      ><a name="223" class="Symbol"
+      >:</a
+      ><a name="224"
+      > </a
+      ><a name="225" href="lib.NType.html#430" class="Function"
+      >is-prop</a
+      ><a name="232"
+      > </a
+      ><a name="233" href="homotopy.PropJoinProp.html#207" class="Bound"
+      >B</a
+      ><a name="234" class="Symbol"
+      >)</a
+      ><a name="235"
+      > </a
+      ><a name="236" class="Keyword"
+      >where</a
+      ><a name="241"
+      >
+
+</a
+      ><a name="243" href="homotopy.PropJoinProp.html#243" class="Function"
+      >contr-left</a
+      ><a name="253"
+      > </a
+      ><a name="254" class="Symbol"
+      >:</a
+      ><a name="255"
+      > </a
+      ><a name="256" class="Symbol"
+      >(</a
+      ><a name="257" href="homotopy.PropJoinProp.html#257" class="Bound"
+      >a</a
+      ><a name="258"
+      > </a
+      ><a name="259" class="Symbol"
+      >:</a
+      ><a name="260"
+      > </a
+      ><a name="261" href="homotopy.PropJoinProp.html#171" class="Bound"
+      >A</a
+      ><a name="262" class="Symbol"
+      >)</a
+      ><a name="263"
+      > </a
+      ><a name="264" class="Symbol"
+      >&#8594;</a
+      ><a name="265"
+      > </a
+      ><a name="266" href="lib.NType.html#228" class="Function"
+      >is-contr</a
+      ><a name="274"
+      > </a
+      ><a name="275" class="Symbol"
+      >(</a
+      ><a name="276" href="homotopy.PropJoinProp.html#171" class="Bound"
+      >A</a
+      ><a name="277"
+      > </a
+      ><a name="278" href="lib.types.Join.html#392" class="Function Operator"
+      >*</a
+      ><a name="279"
+      > </a
+      ><a name="280" href="homotopy.PropJoinProp.html#207" class="Bound"
+      >B</a
+      ><a name="281" class="Symbol"
+      >)</a
+      ><a name="282"
+      >
+</a
+      ><a name="283" href="homotopy.PropJoinProp.html#243" class="Function"
+      >contr-left</a
+      ><a name="293"
+      > </a
+      ><a name="294" href="homotopy.PropJoinProp.html#294" class="Bound"
+      >a</a
+      ><a name="295"
+      > </a
+      ><a name="296" class="Symbol"
+      >=</a
+      ><a name="297"
+      > </a
+      ><a name="298" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="302"
+      > </a
+      ><a name="303" href="homotopy.PropJoinProp.html#294" class="Bound"
+      >a</a
+      ><a name="304"
+      > </a
+      ><a name="305" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="306"
+      > </a
+      ><a name="307" href="lib.types.Pushout.html#1094" class="Function"
+      >Pushout-elim</a
+      ><a name="319"
+      >
+  </a
+      ><a name="322" class="Symbol"
+      >(&#955;</a
+      ><a name="324"
+      > </a
+      ><a name="325" href="homotopy.PropJoinProp.html#325" class="Bound"
+      >a'</a
+      ><a name="327"
+      > </a
+      ><a name="328" class="Symbol"
+      >&#8594;</a
+      ><a name="329"
+      > </a
+      ><a name="330" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="332"
+      > </a
+      ><a name="333" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="337"
+      > </a
+      ><a name="338" class="Symbol"
+      >(</a
+      ><a name="339" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="357"
+      > </a
+      ><a name="358" href="homotopy.PropJoinProp.html#184" class="Bound"
+      >pA</a
+      ><a name="360"
+      > </a
+      ><a name="361" href="homotopy.PropJoinProp.html#294" class="Bound"
+      >a</a
+      ><a name="362"
+      > </a
+      ><a name="363" href="homotopy.PropJoinProp.html#325" class="Bound"
+      >a'</a
+      ><a name="365" class="Symbol"
+      >))</a
+      ><a name="367"
+      >
+  </a
+      ><a name="370" class="Symbol"
+      >(&#955;</a
+      ><a name="372"
+      > </a
+      ><a name="373" href="homotopy.PropJoinProp.html#373" class="Bound"
+      >b'</a
+      ><a name="375"
+      > </a
+      ><a name="376" class="Symbol"
+      >&#8594;</a
+      ><a name="377"
+      > </a
+      ><a name="378" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="382"
+      > </a
+      ><a name="383" class="Symbol"
+      >(</a
+      ><a name="384" href="homotopy.PropJoinProp.html#294" class="Bound"
+      >a</a
+      ><a name="385"
+      > </a
+      ><a name="386" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="387"
+      > </a
+      ><a name="388" href="homotopy.PropJoinProp.html#373" class="Bound"
+      >b'</a
+      ><a name="390" class="Symbol"
+      >))</a
+      ><a name="392"
+      >
+  </a
+      ><a name="395" class="Symbol"
+      >(&#955;</a
+      ><a name="397"
+      > </a
+      ><a name="398" class="Symbol"
+      >{(</a
+      ><a name="400" href="homotopy.PropJoinProp.html#400" class="Bound"
+      >a'</a
+      ><a name="402"
+      > </a
+      ><a name="403" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="404"
+      > </a
+      ><a name="405" href="homotopy.PropJoinProp.html#405" class="Bound"
+      >b'</a
+      ><a name="407" class="Symbol"
+      >)</a
+      ><a name="408"
+      > </a
+      ><a name="409" class="Symbol"
+      >&#8594;</a
+      ><a name="410"
+      > </a
+      ><a name="411" href="lib.types.Paths.html#4949" class="Function"
+      >&#8595;-cst=idf-in'</a
+      ><a name="424"
+      > </a
+      ><a name="425" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="426"
+      > </a
+      ><a name="427" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="428"
+      > </a
+      ><a name="429" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="430"
+      >
+    </a
+      ><a name="435" href="lib.types.Paths.html#2585" class="Function"
+      >&#8595;-app=cst-out</a
+      ><a name="448"
+      > </a
+      ><a name="449" class="Symbol"
+      >(</a
+      ><a name="450" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="453"
+      > </a
+      ><a name="454" class="Symbol"
+      >(&#955;</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="homotopy.PropJoinProp.html#457" class="Bound"
+      >a</a
+      ><a name="458"
+      > </a
+      ><a name="459" class="Symbol"
+      >&#8594;</a
+      ><a name="460"
+      > </a
+      ><a name="461" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="465"
+      > </a
+      ><a name="466" class="Symbol"
+      >(</a
+      ><a name="467" href="homotopy.PropJoinProp.html#457" class="Bound"
+      >a</a
+      ><a name="468"
+      > </a
+      ><a name="469" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="470"
+      > </a
+      ><a name="471" href="homotopy.PropJoinProp.html#405" class="Bound"
+      >b'</a
+      ><a name="473" class="Symbol"
+      >))</a
+      ><a name="475"
+      > </a
+      ><a name="476" class="Symbol"
+      >(</a
+      ><a name="477" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="495"
+      > </a
+      ><a name="496" href="homotopy.PropJoinProp.html#184" class="Bound"
+      >pA</a
+      ><a name="498"
+      > </a
+      ><a name="499" href="homotopy.PropJoinProp.html#294" class="Bound"
+      >a</a
+      ><a name="500"
+      > </a
+      ><a name="501" href="homotopy.PropJoinProp.html#400" class="Bound"
+      >a'</a
+      ><a name="503" class="Symbol"
+      >))})</a
+      ><a name="507"
+      >
+
+</a
+      ><a name="509" href="homotopy.PropJoinProp.html#509" class="Function"
+      >contr-right</a
+      ><a name="520"
+      > </a
+      ><a name="521" class="Symbol"
+      >:</a
+      ><a name="522"
+      > </a
+      ><a name="523" class="Symbol"
+      >(</a
+      ><a name="524" href="homotopy.PropJoinProp.html#524" class="Bound"
+      >b</a
+      ><a name="525"
+      > </a
+      ><a name="526" class="Symbol"
+      >:</a
+      ><a name="527"
+      > </a
+      ><a name="528" href="homotopy.PropJoinProp.html#207" class="Bound"
+      >B</a
+      ><a name="529" class="Symbol"
+      >)</a
+      ><a name="530"
+      > </a
+      ><a name="531" class="Symbol"
+      >&#8594;</a
+      ><a name="532"
+      > </a
+      ><a name="533" href="lib.NType.html#228" class="Function"
+      >is-contr</a
+      ><a name="541"
+      > </a
+      ><a name="542" class="Symbol"
+      >(</a
+      ><a name="543" href="homotopy.PropJoinProp.html#171" class="Bound"
+      >A</a
+      ><a name="544"
+      > </a
+      ><a name="545" href="lib.types.Join.html#392" class="Function Operator"
+      >*</a
+      ><a name="546"
+      > </a
+      ><a name="547" href="homotopy.PropJoinProp.html#207" class="Bound"
+      >B</a
+      ><a name="548" class="Symbol"
+      >)</a
+      ><a name="549"
+      >
+</a
+      ><a name="550" href="homotopy.PropJoinProp.html#509" class="Function"
+      >contr-right</a
+      ><a name="561"
+      > </a
+      ><a name="562" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="563"
+      > </a
+      ><a name="564" class="Symbol"
+      >=</a
+      ><a name="565"
+      > </a
+      ><a name="566" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="571"
+      > </a
+      ><a name="572" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="573"
+      > </a
+      ><a name="574" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="575"
+      > </a
+      ><a name="576" href="lib.types.Pushout.html#1094" class="Function"
+      >Pushout-elim</a
+      ><a name="588"
+      >
+  </a
+      ><a name="591" class="Symbol"
+      >(&#955;</a
+      ><a name="593"
+      > </a
+      ><a name="594" href="homotopy.PropJoinProp.html#594" class="Bound"
+      >a'</a
+      ><a name="596"
+      > </a
+      ><a name="597" class="Symbol"
+      >&#8594;</a
+      ><a name="598"
+      > </a
+      ><a name="599" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="600"
+      > </a
+      ><a name="601" class="Symbol"
+      >(</a
+      ><a name="602" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="606"
+      > </a
+      ><a name="607" class="Symbol"
+      >(</a
+      ><a name="608" href="homotopy.PropJoinProp.html#594" class="Bound"
+      >a'</a
+      ><a name="610"
+      > </a
+      ><a name="611" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="612"
+      > </a
+      ><a name="613" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="614" class="Symbol"
+      >)))</a
+      ><a name="617"
+      >
+  </a
+      ><a name="620" class="Symbol"
+      >(&#955;</a
+      ><a name="622"
+      > </a
+      ><a name="623" href="homotopy.PropJoinProp.html#623" class="Bound"
+      >b'</a
+      ><a name="625"
+      > </a
+      ><a name="626" class="Symbol"
+      >&#8594;</a
+      ><a name="627"
+      > </a
+      ><a name="628" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="630"
+      > </a
+      ><a name="631" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="636"
+      > </a
+      ><a name="637" class="Symbol"
+      >(</a
+      ><a name="638" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="656"
+      > </a
+      ><a name="657" href="homotopy.PropJoinProp.html#220" class="Bound"
+      >pB</a
+      ><a name="659"
+      > </a
+      ><a name="660" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="661"
+      > </a
+      ><a name="662" href="homotopy.PropJoinProp.html#623" class="Bound"
+      >b'</a
+      ><a name="664" class="Symbol"
+      >))</a
+      ><a name="666"
+      >
+  </a
+      ><a name="669" class="Symbol"
+      >(&#955;</a
+      ><a name="671"
+      > </a
+      ><a name="672" class="Symbol"
+      >{(</a
+      ><a name="674" href="homotopy.PropJoinProp.html#674" class="Bound"
+      >a'</a
+      ><a name="676"
+      > </a
+      ><a name="677" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="678"
+      > </a
+      ><a name="679" href="homotopy.PropJoinProp.html#679" class="Bound"
+      >b'</a
+      ><a name="681" class="Symbol"
+      >)</a
+      ><a name="682"
+      > </a
+      ><a name="683" class="Symbol"
+      >&#8594;</a
+      ><a name="684"
+      > </a
+      ><a name="685" href="lib.types.Paths.html#4949" class="Function"
+      >&#8595;-cst=idf-in'</a
+      ><a name="698"
+      > </a
+      ><a name="699" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="700"
+      >
+    </a
+      ><a name="705" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="706"
+      > </a
+      ><a name="707" class="Symbol"
+      >(</a
+      ><a name="708" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="712"
+      > </a
+      ><a name="713" class="Symbol"
+      >(</a
+      ><a name="714" href="homotopy.PropJoinProp.html#674" class="Bound"
+      >a'</a
+      ><a name="716"
+      > </a
+      ><a name="717" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="718"
+      > </a
+      ><a name="719" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="720" class="Symbol"
+      >))</a
+      ><a name="722"
+      > </a
+      ><a name="723" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="724"
+      > </a
+      ><a name="725" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="729"
+      > </a
+      ><a name="730" class="Symbol"
+      >(</a
+      ><a name="731" href="homotopy.PropJoinProp.html#674" class="Bound"
+      >a'</a
+      ><a name="733"
+      > </a
+      ><a name="734" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="735"
+      > </a
+      ><a name="736" href="homotopy.PropJoinProp.html#679" class="Bound"
+      >b'</a
+      ><a name="738" class="Symbol"
+      >)</a
+      ><a name="739"
+      >
+      </a
+      ><a name="746" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="748"
+      > </a
+      ><a name="749" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="750"
+      > </a
+      ><a name="751" class="Symbol"
+      >(</a
+      ><a name="752" href="lib.types.Paths.html#4196" class="Function"
+      >&#8595;-cst=app-out'</a
+      ><a name="766"
+      > </a
+      ><a name="767" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="768"
+      > </a
+      ><a name="769" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="772"
+      > </a
+      ><a name="773" class="Symbol"
+      >(&#955;</a
+      ><a name="775"
+      > </a
+      ><a name="776" href="homotopy.PropJoinProp.html#776" class="Bound"
+      >b</a
+      ><a name="777"
+      > </a
+      ><a name="778" class="Symbol"
+      >&#8594;</a
+      ><a name="779"
+      > </a
+      ><a name="780" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="784"
+      > </a
+      ><a name="785" class="Symbol"
+      >(</a
+      ><a name="786" href="homotopy.PropJoinProp.html#674" class="Bound"
+      >a'</a
+      ><a name="788"
+      > </a
+      ><a name="789" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="790"
+      > </a
+      ><a name="791" href="homotopy.PropJoinProp.html#776" class="Bound"
+      >b</a
+      ><a name="792" class="Symbol"
+      >))</a
+      ><a name="794"
+      > </a
+      ><a name="795" class="Symbol"
+      >(</a
+      ><a name="796" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="814"
+      > </a
+      ><a name="815" href="homotopy.PropJoinProp.html#220" class="Bound"
+      >pB</a
+      ><a name="817"
+      > </a
+      ><a name="818" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="819"
+      > </a
+      ><a name="820" href="homotopy.PropJoinProp.html#679" class="Bound"
+      >b'</a
+      ><a name="822" class="Symbol"
+      >))</a
+      ><a name="824"
+      >
+        </a
+      ><a name="833" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="840"
+      > </a
+      ><a name="841" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="842"
+      > </a
+      ><a name="843" class="Symbol"
+      >(</a
+      ><a name="844" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="848"
+      > </a
+      ><a name="849" class="Symbol"
+      >(</a
+      ><a name="850" href="homotopy.PropJoinProp.html#674" class="Bound"
+      >a'</a
+      ><a name="852"
+      > </a
+      ><a name="853" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="854"
+      > </a
+      ><a name="855" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="856" class="Symbol"
+      >))</a
+      ><a name="858"
+      > </a
+      ><a name="859" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;_</a
+      ><a name="861"
+      > </a
+      ><a name="862" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="863"
+      >
+    </a
+      ><a name="868" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="869"
+      > </a
+      ><a name="870" class="Symbol"
+      >(</a
+      ><a name="871" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="875"
+      > </a
+      ><a name="876" class="Symbol"
+      >(</a
+      ><a name="877" href="homotopy.PropJoinProp.html#674" class="Bound"
+      >a'</a
+      ><a name="879"
+      > </a
+      ><a name="880" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="881"
+      > </a
+      ><a name="882" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="883" class="Symbol"
+      >))</a
+      ><a name="885"
+      > </a
+      ><a name="886" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="887"
+      > </a
+      ><a name="888" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="892"
+      > </a
+      ><a name="893" class="Symbol"
+      >(</a
+      ><a name="894" href="homotopy.PropJoinProp.html#674" class="Bound"
+      >a'</a
+      ><a name="896"
+      > </a
+      ><a name="897" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="898"
+      > </a
+      ><a name="899" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="900" class="Symbol"
+      >)</a
+      ><a name="901"
+      > </a
+      ><a name="902" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="903"
+      > </a
+      ><a name="904" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="906"
+      > </a
+      ><a name="907" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="912"
+      > </a
+      ><a name="913" class="Symbol"
+      >(</a
+      ><a name="914" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="932"
+      > </a
+      ><a name="933" href="homotopy.PropJoinProp.html#220" class="Bound"
+      >pB</a
+      ><a name="935"
+      > </a
+      ><a name="936" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="937"
+      > </a
+      ><a name="938" href="homotopy.PropJoinProp.html#679" class="Bound"
+      >b'</a
+      ><a name="940" class="Symbol"
+      >)</a
+      ><a name="941"
+      >
+      </a
+      ><a name="948" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="950"
+      > </a
+      ><a name="951" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="952"
+      > </a
+      ><a name="953" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="954"
+      > </a
+      ><a name="955" href="lib.PathGroupoid.html#739" class="Function"
+      >&#8729;-assoc</a
+      ><a name="962"
+      > </a
+      ><a name="963" class="Symbol"
+      >(</a
+      ><a name="964" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="965"
+      > </a
+      ><a name="966" class="Symbol"
+      >(</a
+      ><a name="967" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="971"
+      > </a
+      ><a name="972" class="Symbol"
+      >(</a
+      ><a name="973" href="homotopy.PropJoinProp.html#674" class="Bound"
+      >a'</a
+      ><a name="975"
+      > </a
+      ><a name="976" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="977"
+      > </a
+      ><a name="978" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="979" class="Symbol"
+      >)))</a
+      ><a name="982"
+      > </a
+      ><a name="983" class="Symbol"
+      >(</a
+      ><a name="984" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="988"
+      > </a
+      ><a name="989" class="Symbol"
+      >(</a
+      ><a name="990" href="homotopy.PropJoinProp.html#674" class="Bound"
+      >a'</a
+      ><a name="992"
+      > </a
+      ><a name="993" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="994"
+      > </a
+      ><a name="995" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="996" class="Symbol"
+      >))</a
+      ><a name="998"
+      > </a
+      ><a name="999" class="Symbol"
+      >(</a
+      ><a name="1000" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1002"
+      > </a
+      ><a name="1003" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="1008"
+      > </a
+      ><a name="1009" class="Symbol"
+      >(</a
+      ><a name="1010" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="1028"
+      > </a
+      ><a name="1029" href="homotopy.PropJoinProp.html#220" class="Bound"
+      >pB</a
+      ><a name="1031"
+      > </a
+      ><a name="1032" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="1033"
+      > </a
+      ><a name="1034" href="homotopy.PropJoinProp.html#679" class="Bound"
+      >b'</a
+      ><a name="1036" class="Symbol"
+      >))</a
+      ><a name="1038"
+      > </a
+      ><a name="1039" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1040"
+      >
+    </a
+      ><a name="1045" class="Symbol"
+      >(</a
+      ><a name="1046" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1047"
+      > </a
+      ><a name="1048" class="Symbol"
+      >(</a
+      ><a name="1049" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1053"
+      > </a
+      ><a name="1054" class="Symbol"
+      >(</a
+      ><a name="1055" href="homotopy.PropJoinProp.html#674" class="Bound"
+      >a'</a
+      ><a name="1057"
+      > </a
+      ><a name="1058" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1059"
+      > </a
+      ><a name="1060" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="1061" class="Symbol"
+      >))</a
+      ><a name="1063"
+      > </a
+      ><a name="1064" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1070"
+      > </a
+      ><a name="1071" class="Symbol"
+      >(</a
+      ><a name="1072" href="homotopy.PropJoinProp.html#674" class="Bound"
+      >a'</a
+      ><a name="1074"
+      > </a
+      ><a name="1075" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1076"
+      > </a
+      ><a name="1077" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="1078" class="Symbol"
+      >))</a
+      ><a name="1080"
+      > </a
+      ><a name="1081" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1082"
+      > </a
+      ><a name="1083" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="1091"
+      > </a
+      ><a name="1092" class="Symbol"
+      >(</a
+      ><a name="1093" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="1111"
+      > </a
+      ><a name="1112" href="homotopy.PropJoinProp.html#220" class="Bound"
+      >pB</a
+      ><a name="1114"
+      > </a
+      ><a name="1115" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="1116"
+      > </a
+      ><a name="1117" href="homotopy.PropJoinProp.html#679" class="Bound"
+      >b'</a
+      ><a name="1119" class="Symbol"
+      >)</a
+      ><a name="1120"
+      >
+      </a
+      ><a name="1127" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1129"
+      > </a
+      ><a name="1130" href="lib.PathGroupoid.html#1268" class="Function"
+      >!-inv-l</a
+      ><a name="1137"
+      > </a
+      ><a name="1138" class="Symbol"
+      >(</a
+      ><a name="1139" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1143"
+      > </a
+      ><a name="1144" class="Symbol"
+      >(</a
+      ><a name="1145" href="homotopy.PropJoinProp.html#674" class="Bound"
+      >a'</a
+      ><a name="1147"
+      > </a
+      ><a name="1148" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1149"
+      > </a
+      ><a name="1150" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="1151" class="Symbol"
+      >))</a
+      ><a name="1153"
+      > </a
+      ><a name="1154" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1161"
+      > </a
+      ><a name="1162" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >_&#8729;</a
+      ><a name="1164"
+      > </a
+      ><a name="1165" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1167"
+      > </a
+      ><a name="1168" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="1173"
+      > </a
+      ><a name="1174" class="Symbol"
+      >(</a
+      ><a name="1175" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" href="homotopy.PropJoinProp.html#220" class="Bound"
+      >pB</a
+      ><a name="1196"
+      > </a
+      ><a name="1197" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="1198"
+      > </a
+      ><a name="1199" href="homotopy.PropJoinProp.html#679" class="Bound"
+      >b'</a
+      ><a name="1201" class="Symbol"
+      >)</a
+      ><a name="1202"
+      > </a
+      ><a name="1203" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1204"
+      >
+    </a
+      ><a name="1209" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1211"
+      > </a
+      ><a name="1212" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="1217"
+      > </a
+      ><a name="1218" class="Symbol"
+      >(</a
+      ><a name="1219" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="1237"
+      > </a
+      ><a name="1238" href="homotopy.PropJoinProp.html#220" class="Bound"
+      >pB</a
+      ><a name="1240"
+      > </a
+      ><a name="1241" href="homotopy.PropJoinProp.html#562" class="Bound"
+      >b</a
+      ><a name="1242"
+      > </a
+      ><a name="1243" href="homotopy.PropJoinProp.html#679" class="Bound"
+      >b'</a
+      ><a name="1245" class="Symbol"
+      >)</a
+      ><a name="1246"
+      >
+      </a
+      ><a name="1253" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="1255" class="Symbol"
+      >})</a
+      ><a name="1257"
+      >
+
+</a
+      ><a name="1259" href="homotopy.PropJoinProp.html#1259" class="Function"
+      >prop*prop-is-prop</a
+      ><a name="1276"
+      > </a
+      ><a name="1277" class="Symbol"
+      >:</a
+      ><a name="1278"
+      > </a
+      ><a name="1279" href="lib.NType.html#430" class="Function"
+      >is-prop</a
+      ><a name="1286"
+      > </a
+      ><a name="1287" class="Symbol"
+      >(</a
+      ><a name="1288" href="homotopy.PropJoinProp.html#171" class="Bound"
+      >A</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" href="lib.types.Join.html#392" class="Function Operator"
+      >*</a
+      ><a name="1291"
+      > </a
+      ><a name="1292" href="homotopy.PropJoinProp.html#207" class="Bound"
+      >B</a
+      ><a name="1293" class="Symbol"
+      >)</a
+      ><a name="1294"
+      >
+</a
+      ><a name="1295" href="homotopy.PropJoinProp.html#1259" class="Function"
+      >prop*prop-is-prop</a
+      ><a name="1312"
+      > </a
+      ><a name="1313" class="Symbol"
+      >=</a
+      ><a name="1314"
+      > </a
+      ><a name="1315" href="lib.NType.html#2863" class="Function"
+      >inhab-to-contr-is-prop</a
+      ><a name="1337"
+      > </a
+      ><a name="1338" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1339"
+      >
+  </a
+      ><a name="1342" href="lib.types.Pushout.html#1525" class="Function"
+      >Pushout-rec</a
+      ><a name="1353"
+      > </a
+      ><a name="1354" href="homotopy.PropJoinProp.html#243" class="Function"
+      >contr-left</a
+      ><a name="1364"
+      > </a
+      ><a name="1365" href="homotopy.PropJoinProp.html#509" class="Function"
+      >contr-right</a
+      ><a name="1376"
+      > </a
+      ><a name="1377" class="Symbol"
+      >(&#955;</a
+      ><a name="1379"
+      > </a
+      ><a name="1380" href="homotopy.PropJoinProp.html#1380" class="Bound"
+      >_</a
+      ><a name="1381"
+      > </a
+      ><a name="1382" class="Symbol"
+      >&#8594;</a
+      ><a name="1383"
+      > </a
+      ><a name="1384" href="lib.NType.html#2647" class="Function"
+      >prop-has-all-paths</a
+      ><a name="1402"
+      > </a
+      ><a name="1403" href="lib.NType2.html#2204" class="Function"
+      >is-contr-is-prop</a
+      ><a name="1419"
+      > </a
+      ><a name="1420" class="Symbol"
+      >_</a
+      ><a name="1421"
+      > </a
+      ><a name="1422" class="Symbol"
+      >_)</a
+      ><a name="1424"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

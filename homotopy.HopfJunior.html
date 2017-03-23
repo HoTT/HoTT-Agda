@@ -1,0 +1,2541 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.HopfJunior</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+
+</a
+      ><a name="60" class="Keyword"
+      >module</a
+      ><a name="66"
+      > </a
+      ><a name="67" href="homotopy.HopfJunior.html#1" class="Module"
+      >homotopy.HopfJunior</a
+      ><a name="86"
+      > </a
+      ><a name="87" class="Keyword"
+      >where</a
+      ><a name="92"
+      >
+
+</a
+      ><a name="94" class="Comment"
+      >-- We define the negation function and prove that it&#8217;s an equivalence</a
+      ><a name="163"
+      >
+
+</a
+      ><a name="165" href="homotopy.HopfJunior.html#165" class="Function"
+      >not</a
+      ><a name="168"
+      > </a
+      ><a name="169" class="Symbol"
+      >:</a
+      ><a name="170"
+      > </a
+      ><a name="171" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="175"
+      > </a
+      ><a name="176" class="Symbol"
+      >&#8594;</a
+      ><a name="177"
+      > </a
+      ><a name="178" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="182"
+      >
+</a
+      ><a name="183" href="homotopy.HopfJunior.html#165" class="Function"
+      >not</a
+      ><a name="186"
+      > </a
+      ><a name="187" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="191"
+      > </a
+      ><a name="192" class="Symbol"
+      >=</a
+      ><a name="193"
+      > </a
+      ><a name="194" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="199"
+      >
+</a
+      ><a name="200" href="homotopy.HopfJunior.html#165" class="Function"
+      >not</a
+      ><a name="203"
+      > </a
+      ><a name="204" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="209"
+      > </a
+      ><a name="210" class="Symbol"
+      >=</a
+      ><a name="211"
+      > </a
+      ><a name="212" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="216"
+      >
+
+</a
+      ><a name="218" href="homotopy.HopfJunior.html#218" class="Function"
+      >not-not</a
+      ><a name="225"
+      > </a
+      ><a name="226" class="Symbol"
+      >:</a
+      ><a name="227"
+      > </a
+      ><a name="228" class="Symbol"
+      >(</a
+      ><a name="229" href="homotopy.HopfJunior.html#229" class="Bound"
+      >b</a
+      ><a name="230"
+      > </a
+      ><a name="231" class="Symbol"
+      >:</a
+      ><a name="232"
+      > </a
+      ><a name="233" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="237" class="Symbol"
+      >)</a
+      ><a name="238"
+      > </a
+      ><a name="239" class="Symbol"
+      >&#8594;</a
+      ><a name="240"
+      > </a
+      ><a name="241" href="homotopy.HopfJunior.html#165" class="Function"
+      >not</a
+      ><a name="244"
+      > </a
+      ><a name="245" class="Symbol"
+      >(</a
+      ><a name="246" href="homotopy.HopfJunior.html#165" class="Function"
+      >not</a
+      ><a name="249"
+      > </a
+      ><a name="250" href="homotopy.HopfJunior.html#229" class="Bound"
+      >b</a
+      ><a name="251" class="Symbol"
+      >)</a
+      ><a name="252"
+      > </a
+      ><a name="253" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="255"
+      > </a
+      ><a name="256" href="homotopy.HopfJunior.html#229" class="Bound"
+      >b</a
+      ><a name="257"
+      >
+</a
+      ><a name="258" href="homotopy.HopfJunior.html#218" class="Function"
+      >not-not</a
+      ><a name="265"
+      > </a
+      ><a name="266" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="270"
+      > </a
+      ><a name="271" class="Symbol"
+      >=</a
+      ><a name="272"
+      > </a
+      ><a name="273" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="276"
+      >
+</a
+      ><a name="277" href="homotopy.HopfJunior.html#218" class="Function"
+      >not-not</a
+      ><a name="284"
+      > </a
+      ><a name="285" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="290"
+      > </a
+      ><a name="291" class="Symbol"
+      >=</a
+      ><a name="292"
+      > </a
+      ><a name="293" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="296"
+      >
+
+</a
+      ><a name="298" href="homotopy.HopfJunior.html#298" class="Function"
+      >not-equiv</a
+      ><a name="307"
+      > </a
+      ><a name="308" class="Symbol"
+      >:</a
+      ><a name="309"
+      > </a
+      ><a name="310" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="314"
+      > </a
+      ><a name="315" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="316"
+      > </a
+      ><a name="317" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="321"
+      >
+</a
+      ><a name="322" href="homotopy.HopfJunior.html#298" class="Function"
+      >not-equiv</a
+      ><a name="331"
+      > </a
+      ><a name="332" class="Symbol"
+      >=</a
+      ><a name="333"
+      > </a
+      ><a name="334" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="339"
+      > </a
+      ><a name="340" href="homotopy.HopfJunior.html#165" class="Function"
+      >not</a
+      ><a name="343"
+      > </a
+      ><a name="344" href="homotopy.HopfJunior.html#165" class="Function"
+      >not</a
+      ><a name="347"
+      > </a
+      ><a name="348" href="homotopy.HopfJunior.html#218" class="Function"
+      >not-not</a
+      ><a name="355"
+      > </a
+      ><a name="356" href="homotopy.HopfJunior.html#218" class="Function"
+      >not-not</a
+      ><a name="363"
+      >
+
+</a
+      ><a name="365" class="Comment"
+      >-- Definition of the junior Hopf fibration</a
+      ><a name="407"
+      >
+</a
+      ><a name="408" class="Keyword"
+      >module</a
+      ><a name="414"
+      > </a
+      ><a name="415" href="homotopy.HopfJunior.html#415" class="Module"
+      >HopfJunior</a
+      ><a name="425"
+      > </a
+      ><a name="426" class="Symbol"
+      >=</a
+      ><a name="427"
+      > </a
+      ><a name="428" href="lib.types.Circle.html#2889" class="Module"
+      >S&#185;RecType</a
+      ><a name="437"
+      > </a
+      ><a name="438" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="442"
+      > </a
+      ><a name="443" href="homotopy.HopfJunior.html#298" class="Function"
+      >not-equiv</a
+      ><a name="452"
+      >
+</a
+      ><a name="453" class="Keyword"
+      >open</a
+      ><a name="457"
+      > </a
+      ><a name="458" href="homotopy.HopfJunior.html#415" class="Module"
+      >HopfJunior</a
+      ><a name="468"
+      > </a
+      ><a name="469" class="Keyword"
+      >using</a
+      ><a name="474"
+      > </a
+      ><a name="475" class="Symbol"
+      >(</a
+      ><a name="476" class="Keyword"
+      >module</a
+      ><a name="482"
+      > </a
+      ><a name="483" href="lib.types.Flattening.html#721" class="Module"
+      >Wt</a
+      ><a name="485" class="Symbol"
+      >;</a
+      ><a name="486"
+      > </a
+      ><a name="487" href="lib.types.Generic1HIT.html#376" class="Function"
+      >Wt</a
+      ><a name="489" class="Symbol"
+      >;</a
+      ><a name="490"
+      > </a
+      ><a name="491" href="lib.types.Flattening.html#809" class="Function"
+      >cct</a
+      ><a name="494" class="Symbol"
+      >;</a
+      ><a name="495"
+      > </a
+      ><a name="496" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="499" class="Symbol"
+      >;</a
+      ><a name="500"
+      > </a
+      ><a name="501" href="lib.types.Circle.html#5264" class="Function"
+      >flattening-S&#185;</a
+      ><a name="514" class="Symbol"
+      >)</a
+      ><a name="515"
+      >
+
+</a
+      ><a name="517" href="homotopy.HopfJunior.html#517" class="Function"
+      >HopfJunior</a
+      ><a name="527"
+      > </a
+      ><a name="528" class="Symbol"
+      >:</a
+      ><a name="529"
+      > </a
+      ><a name="530" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="532"
+      > </a
+      ><a name="533" class="Symbol"
+      >&#8594;</a
+      ><a name="534"
+      > </a
+      ><a name="535" href="lib.Base.html#1196" class="Function"
+      >Type&#8320;</a
+      ><a name="540"
+      >
+</a
+      ><a name="541" href="homotopy.HopfJunior.html#517" class="Function"
+      >HopfJunior</a
+      ><a name="551"
+      > </a
+      ><a name="552" class="Symbol"
+      >=</a
+      ><a name="553"
+      > </a
+      ><a name="554" href="lib.types.Circle.html#2572" class="Function"
+      >HopfJunior.f</a
+      ><a name="566"
+      >
+
+</a
+      ><a name="568" class="Comment"
+      >-- We get that the total space is the type Wt defined in the flattening lemma.</a
+      ><a name="646"
+      >
+</a
+      ><a name="647" href="homotopy.HopfJunior.html#647" class="Function"
+      >tot-is-Wt</a
+      ><a name="656"
+      > </a
+      ><a name="657" class="Symbol"
+      >:</a
+      ><a name="658"
+      > </a
+      ><a name="659" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="660"
+      > </a
+      ><a name="661" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="663"
+      > </a
+      ><a name="664" href="homotopy.HopfJunior.html#517" class="Function"
+      >HopfJunior</a
+      ><a name="674"
+      > </a
+      ><a name="675" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="677"
+      > </a
+      ><a name="678" href="lib.types.Generic1HIT.html#376" class="Function"
+      >Wt</a
+      ><a name="680"
+      >
+</a
+      ><a name="681" href="homotopy.HopfJunior.html#647" class="Function"
+      >tot-is-Wt</a
+      ><a name="690"
+      > </a
+      ><a name="691" class="Symbol"
+      >=</a
+      ><a name="692"
+      > </a
+      ><a name="693" href="lib.types.Circle.html#5264" class="Function"
+      >flattening-S&#185;</a
+      ><a name="706"
+      >
+
+</a
+      ><a name="708" class="Comment"
+      >-- Now we prove that Wt is equivalent to S&#185;</a
+      ><a name="751"
+      >
+
+</a
+      ><a name="753" class="Keyword"
+      >private</a
+      ><a name="760"
+      >
+  </a
+      ><a name="763" class="Comment"
+      >-- Map from [Wt] to [S&#185;]</a
+      ><a name="787"
+      >
+  </a
+      ><a name="790" href="homotopy.HopfJunior.html#790" class="Function"
+      >to-cct</a
+      ><a name="796"
+      > </a
+      ><a name="797" class="Symbol"
+      >:</a
+      ><a name="798"
+      > </a
+      ><a name="799" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="803"
+      > </a
+      ><a name="804" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="805"
+      > </a
+      ><a name="806" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="810"
+      > </a
+      ><a name="811" class="Symbol"
+      >&#8594;</a
+      ><a name="812"
+      > </a
+      ><a name="813" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="815"
+      >
+  </a
+      ><a name="818" href="homotopy.HopfJunior.html#790" class="Function"
+      >to-cct</a
+      ><a name="824"
+      > </a
+      ><a name="825" class="Symbol"
+      >_</a
+      ><a name="826"
+      > </a
+      ><a name="827" class="Symbol"
+      >=</a
+      ><a name="828"
+      > </a
+      ><a name="829" href="lib.types.Circle.html#708" class="Function"
+      >base</a
+      ><a name="833"
+      >
+
+  </a
+      ><a name="837" href="homotopy.HopfJunior.html#837" class="Function"
+      >to-ppt</a
+      ><a name="843"
+      > </a
+      ><a name="844" class="Symbol"
+      >:</a
+      ><a name="845"
+      > </a
+      ><a name="846" class="Symbol"
+      >(</a
+      ><a name="847" href="homotopy.HopfJunior.html#847" class="Bound"
+      >x</a
+      ><a name="848"
+      > </a
+      ><a name="849" class="Symbol"
+      >:</a
+      ><a name="850"
+      > </a
+      ><a name="851" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="855"
+      > </a
+      ><a name="856" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="857"
+      > </a
+      ><a name="858" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="862" class="Symbol"
+      >)</a
+      ><a name="863"
+      > </a
+      ><a name="864" class="Symbol"
+      >&#8594;</a
+      ><a name="865"
+      > </a
+      ><a name="866" href="homotopy.HopfJunior.html#790" class="Function"
+      >to-cct</a
+      ><a name="872"
+      > </a
+      ><a name="873" href="homotopy.HopfJunior.html#847" class="Bound"
+      >x</a
+      ><a name="874"
+      > </a
+      ><a name="875" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="877"
+      > </a
+      ><a name="878" href="homotopy.HopfJunior.html#790" class="Function"
+      >to-cct</a
+      ><a name="884"
+      > </a
+      ><a name="885" href="homotopy.HopfJunior.html#847" class="Bound"
+      >x</a
+      ><a name="886"
+      >
+  </a
+      ><a name="889" href="homotopy.HopfJunior.html#837" class="Function"
+      >to-ppt</a
+      ><a name="895"
+      > </a
+      ><a name="896" class="Symbol"
+      >(_</a
+      ><a name="898"
+      > </a
+      ><a name="899" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="900"
+      > </a
+      ><a name="901" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="905" class="Symbol"
+      >)</a
+      ><a name="906"
+      > </a
+      ><a name="907" class="Symbol"
+      >=</a
+      ><a name="908"
+      > </a
+      ><a name="909" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="913"
+      >
+  </a
+      ><a name="916" href="homotopy.HopfJunior.html#837" class="Function"
+      >to-ppt</a
+      ><a name="922"
+      > </a
+      ><a name="923" class="Symbol"
+      >(_</a
+      ><a name="925"
+      > </a
+      ><a name="926" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="927"
+      > </a
+      ><a name="928" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="933" class="Symbol"
+      >)</a
+      ><a name="934"
+      > </a
+      ><a name="935" class="Symbol"
+      >=</a
+      ><a name="936"
+      > </a
+      ><a name="937" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="940"
+      >
+
+  </a
+      ><a name="944" class="Keyword"
+      >module</a
+      ><a name="950"
+      > </a
+      ><a name="951" href="homotopy.HopfJunior.html#951" class="Module"
+      >To</a
+      ><a name="953"
+      > </a
+      ><a name="954" class="Symbol"
+      >=</a
+      ><a name="955"
+      > </a
+      ><a name="956" class="Module"
+      >Wt.</a
+      ><a name="959" href="lib.types.Generic1HIT.html#802" class="Module"
+      >Rec</a
+      ><a name="962"
+      > </a
+      ><a name="963" href="homotopy.HopfJunior.html#790" class="Function"
+      >to-cct</a
+      ><a name="969"
+      > </a
+      ><a name="970" href="homotopy.HopfJunior.html#837" class="Function"
+      >to-ppt</a
+      ><a name="976"
+      >
+
+  </a
+      ><a name="980" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="982"
+      > </a
+      ><a name="983" class="Symbol"
+      >:</a
+      ><a name="984"
+      > </a
+      ><a name="985" href="lib.types.Generic1HIT.html#376" class="Function"
+      >Wt</a
+      ><a name="987"
+      > </a
+      ><a name="988" class="Symbol"
+      >&#8594;</a
+      ><a name="989"
+      > </a
+      ><a name="990" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="992"
+      >
+  </a
+      ><a name="995" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="997"
+      > </a
+      ><a name="998" class="Symbol"
+      >=</a
+      ><a name="999"
+      > </a
+      ><a name="1000" href="lib.types.Generic1HIT.html#945" class="Function"
+      >To.f</a
+      ><a name="1004"
+      >
+
+  </a
+      ><a name="1008" class="Comment"
+      >-- Map from [S&#185;] to [Wt]</a
+      ><a name="1032"
+      >
+  </a
+      ><a name="1035" href="homotopy.HopfJunior.html#1035" class="Function"
+      >from-base</a
+      ><a name="1044"
+      > </a
+      ><a name="1045" class="Symbol"
+      >:</a
+      ><a name="1046"
+      > </a
+      ><a name="1047" href="lib.types.Generic1HIT.html#376" class="Function"
+      >Wt</a
+      ><a name="1049"
+      >
+  </a
+      ><a name="1052" href="homotopy.HopfJunior.html#1035" class="Function"
+      >from-base</a
+      ><a name="1061"
+      > </a
+      ><a name="1062" class="Symbol"
+      >=</a
+      ><a name="1063"
+      > </a
+      ><a name="1064" href="lib.types.Flattening.html#809" class="Function"
+      >cct</a
+      ><a name="1067"
+      > </a
+      ><a name="1068" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1070"
+      > </a
+      ><a name="1071" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1075"
+      >
+
+  </a
+      ><a name="1079" href="homotopy.HopfJunior.html#1079" class="Function"
+      >from-loop</a
+      ><a name="1088"
+      > </a
+      ><a name="1089" class="Symbol"
+      >:</a
+      ><a name="1090"
+      > </a
+      ><a name="1091" href="homotopy.HopfJunior.html#1035" class="Function"
+      >from-base</a
+      ><a name="1100"
+      > </a
+      ><a name="1101" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" href="homotopy.HopfJunior.html#1035" class="Function"
+      >from-base</a
+      ><a name="1113"
+      >
+  </a
+      ><a name="1116" href="homotopy.HopfJunior.html#1079" class="Function"
+      >from-loop</a
+      ><a name="1125"
+      > </a
+      ><a name="1126" class="Symbol"
+      >=</a
+      ><a name="1127"
+      > </a
+      ><a name="1128" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="1131"
+      > </a
+      ><a name="1132" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1134"
+      > </a
+      ><a name="1135" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1139"
+      > </a
+      ><a name="1140" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1141"
+      > </a
+      ><a name="1142" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="1145"
+      > </a
+      ><a name="1146" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1148"
+      > </a
+      ><a name="1149" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1154"
+      >
+
+  </a
+      ><a name="1158" class="Keyword"
+      >module</a
+      ><a name="1164"
+      > </a
+      ><a name="1165" href="homotopy.HopfJunior.html#1165" class="Module"
+      >From</a
+      ><a name="1169"
+      > </a
+      ><a name="1170" class="Symbol"
+      >=</a
+      ><a name="1171"
+      > </a
+      ><a name="1172" href="lib.types.Circle.html#2447" class="Module"
+      >S&#185;Rec</a
+      ><a name="1177"
+      > </a
+      ><a name="1178" href="homotopy.HopfJunior.html#1035" class="Function"
+      >from-base</a
+      ><a name="1187"
+      > </a
+      ><a name="1188" href="homotopy.HopfJunior.html#1079" class="Function"
+      >from-loop</a
+      ><a name="1197"
+      >
+
+  </a
+      ><a name="1201" href="homotopy.HopfJunior.html#1201" class="Function"
+      >from</a
+      ><a name="1205"
+      > </a
+      ><a name="1206" class="Symbol"
+      >:</a
+      ><a name="1207"
+      > </a
+      ><a name="1208" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="1210"
+      > </a
+      ><a name="1211" class="Symbol"
+      >&#8594;</a
+      ><a name="1212"
+      > </a
+      ><a name="1213" href="lib.types.Generic1HIT.html#376" class="Function"
+      >Wt</a
+      ><a name="1215"
+      >
+  </a
+      ><a name="1218" href="homotopy.HopfJunior.html#1201" class="Function"
+      >from</a
+      ><a name="1222"
+      > </a
+      ><a name="1223" class="Symbol"
+      >=</a
+      ><a name="1224"
+      > </a
+      ><a name="1225" href="lib.types.Circle.html#2572" class="Function"
+      >From.f</a
+      ><a name="1231"
+      >
+
+  </a
+      ><a name="1235" class="Comment"
+      >-- First composite</a
+      ><a name="1253"
+      >
+  </a
+      ><a name="1256" class="Keyword"
+      >abstract</a
+      ><a name="1264"
+      >
+    </a
+      ><a name="1269" href="homotopy.HopfJunior.html#1269" class="Function"
+      >to-from</a
+      ><a name="1276"
+      > </a
+      ><a name="1277" class="Symbol"
+      >:</a
+      ><a name="1278"
+      > </a
+      ><a name="1279" class="Symbol"
+      >(</a
+      ><a name="1280" href="homotopy.HopfJunior.html#1280" class="Bound"
+      >x</a
+      ><a name="1281"
+      > </a
+      ><a name="1282" class="Symbol"
+      >:</a
+      ><a name="1283"
+      > </a
+      ><a name="1284" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="1286" class="Symbol"
+      >)</a
+      ><a name="1287"
+      > </a
+      ><a name="1288" class="Symbol"
+      >&#8594;</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="1292"
+      > </a
+      ><a name="1293" class="Symbol"
+      >(</a
+      ><a name="1294" href="homotopy.HopfJunior.html#1201" class="Function"
+      >from</a
+      ><a name="1298"
+      > </a
+      ><a name="1299" href="homotopy.HopfJunior.html#1280" class="Bound"
+      >x</a
+      ><a name="1300" class="Symbol"
+      >)</a
+      ><a name="1301"
+      > </a
+      ><a name="1302" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1304"
+      > </a
+      ><a name="1305" href="homotopy.HopfJunior.html#1280" class="Bound"
+      >x</a
+      ><a name="1306"
+      >
+    </a
+      ><a name="1311" href="homotopy.HopfJunior.html#1269" class="Function"
+      >to-from</a
+      ><a name="1318"
+      > </a
+      ><a name="1319" class="Symbol"
+      >=</a
+      ><a name="1320"
+      > </a
+      ><a name="1321" href="lib.types.Circle.html#1517" class="Function"
+      >S&#185;-elim</a
+      ><a name="1328"
+      > </a
+      ><a name="1329" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1332"
+      > </a
+      ><a name="1333" class="Symbol"
+      >(</a
+      ><a name="1334" href="lib.types.Paths.html#7720" class="Function"
+      >&#8595;-&#8728;=idf-in'</a
+      ><a name="1345"
+      > </a
+      ><a name="1346" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="1348"
+      > </a
+      ><a name="1349" href="homotopy.HopfJunior.html#1201" class="Function"
+      >from</a
+      ><a name="1353"
+      >
+      </a
+      ><a name="1360" class="Symbol"
+      >(</a
+      ><a name="1361" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1363"
+      > </a
+      ><a name="1364" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="1366"
+      > </a
+      ><a name="1367" class="Symbol"
+      >(</a
+      ><a name="1368" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1370"
+      > </a
+      ><a name="1371" href="homotopy.HopfJunior.html#1201" class="Function"
+      >from</a
+      ><a name="1375"
+      > </a
+      ><a name="1376" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="1380" class="Symbol"
+      >)</a
+      ><a name="1381"
+      >                       </a
+      ><a name="1404" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1406"
+      > </a
+      ><a name="1407" href="lib.types.Circle.html#2596" class="Function"
+      >From.loop-&#946;</a
+      ><a name="1418"
+      > </a
+      ><a name="1419" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1426"
+      > </a
+      ><a name="1427" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1429"
+      > </a
+      ><a name="1430" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="1432"
+      > </a
+      ><a name="1433" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1434"
+      >
+      </a
+      ><a name="1441" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1443"
+      > </a
+      ><a name="1444" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="1446"
+      > </a
+      ><a name="1447" class="Symbol"
+      >(</a
+      ><a name="1448" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="1451"
+      > </a
+      ><a name="1452" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1454"
+      > </a
+      ><a name="1455" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1459"
+      > </a
+      ><a name="1460" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1461"
+      > </a
+      ><a name="1462" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="1465"
+      > </a
+      ><a name="1466" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1468"
+      > </a
+      ><a name="1469" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1474" class="Symbol"
+      >)</a
+      ><a name="1475"
+      >         </a
+      ><a name="1484" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1486"
+      > </a
+      ><a name="1487" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="1491"
+      > </a
+      ><a name="1492" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" class="Symbol"
+      >(</a
+      ><a name="1496" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="1499"
+      > </a
+      ><a name="1500" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1502"
+      > </a
+      ><a name="1503" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1507" class="Symbol"
+      >)</a
+      ><a name="1508"
+      > </a
+      ><a name="1509" class="Symbol"
+      >(</a
+      ><a name="1510" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="1513"
+      > </a
+      ><a name="1514" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1516"
+      > </a
+      ><a name="1517" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1522" class="Symbol"
+      >)</a
+      ><a name="1523"
+      > </a
+      ><a name="1524" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1525"
+      >
+      </a
+      ><a name="1532" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="1537"
+      > </a
+      ><a name="1538" class="Symbol"
+      >(</a
+      ><a name="1539" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="1542"
+      > </a
+      ><a name="1543" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1545"
+      > </a
+      ><a name="1546" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1550" class="Symbol"
+      >)</a
+      ><a name="1551"
+      > </a
+      ><a name="1552" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1553"
+      > </a
+      ><a name="1554" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1556"
+      > </a
+      ><a name="1557" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="1559"
+      > </a
+      ><a name="1560" class="Symbol"
+      >(</a
+      ><a name="1561" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="1564"
+      > </a
+      ><a name="1565" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1567"
+      > </a
+      ><a name="1568" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1573" class="Symbol"
+      >)</a
+      ><a name="1574"
+      > </a
+      ><a name="1575" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1577"
+      > </a
+      ><a name="1578" href="lib.types.Generic1HIT.html#968" class="Function"
+      >To.pp-&#946;</a
+      ><a name="1585"
+      > </a
+      ><a name="1586" class="Symbol"
+      >(</a
+      ><a name="1587" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1589"
+      > </a
+      ><a name="1590" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1591"
+      > </a
+      ><a name="1592" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1596" class="Symbol"
+      >)</a
+      ><a name="1597"
+      > </a
+      ><a name="1598" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1605"
+      > </a
+      ><a name="1606" class="Symbol"
+      >(&#955;</a
+      ><a name="1608"
+      > </a
+      ><a name="1609" href="homotopy.HopfJunior.html#1609" class="Bound"
+      >u</a
+      ><a name="1610"
+      > </a
+      ><a name="1611" class="Symbol"
+      >&#8594;</a
+      ><a name="1612"
+      > </a
+      ><a name="1613" href="homotopy.HopfJunior.html#1609" class="Bound"
+      >u</a
+      ><a name="1614"
+      > </a
+      ><a name="1615" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1616"
+      > </a
+      ><a name="1617" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1619"
+      > </a
+      ><a name="1620" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="1622"
+      > </a
+      ><a name="1623" class="Symbol"
+      >(</a
+      ><a name="1624" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="1627"
+      > </a
+      ><a name="1628" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1630"
+      > </a
+      ><a name="1631" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1636" class="Symbol"
+      >))</a
+      ><a name="1638"
+      > </a
+      ><a name="1639" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1640"
+      >
+      </a
+      ><a name="1647" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="1651"
+      > </a
+      ><a name="1652" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1653"
+      > </a
+      ><a name="1654" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1656"
+      > </a
+      ><a name="1657" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="1659"
+      > </a
+      ><a name="1660" class="Symbol"
+      >(</a
+      ><a name="1661" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="1664"
+      > </a
+      ><a name="1665" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1667"
+      > </a
+      ><a name="1668" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1673" class="Symbol"
+      >)</a
+      ><a name="1674"
+      >                </a
+      ><a name="1690" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" href="lib.types.Generic1HIT.html#968" class="Function"
+      >To.pp-&#946;</a
+      ><a name="1700"
+      > </a
+      ><a name="1701" class="Symbol"
+      >(</a
+      ><a name="1702" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1704"
+      > </a
+      ><a name="1705" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1706"
+      > </a
+      ><a name="1707" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1712" class="Symbol"
+      >)</a
+      ><a name="1713"
+      > </a
+      ><a name="1714" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1721"
+      > </a
+      ><a name="1722" class="Symbol"
+      >(&#955;</a
+      ><a name="1724"
+      > </a
+      ><a name="1725" href="homotopy.HopfJunior.html#1725" class="Bound"
+      >u</a
+      ><a name="1726"
+      > </a
+      ><a name="1727" class="Symbol"
+      >&#8594;</a
+      ><a name="1728"
+      > </a
+      ><a name="1729" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="1733"
+      > </a
+      ><a name="1734" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1735"
+      > </a
+      ><a name="1736" href="homotopy.HopfJunior.html#1725" class="Bound"
+      >u</a
+      ><a name="1737" class="Symbol"
+      >)</a
+      ><a name="1738"
+      > </a
+      ><a name="1739" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1740"
+      >
+      </a
+      ><a name="1747" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="1751"
+      > </a
+      ><a name="1752" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1753"
+      > </a
+      ><a name="1754" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1757"
+      >                                 </a
+      ><a name="1790" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1792"
+      > </a
+      ><a name="1793" href="lib.PathGroupoid.html#1041" class="Function"
+      >&#8729;-unit-r</a
+      ><a name="1801"
+      > </a
+      ><a name="1802" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="1806"
+      > </a
+      ><a name="1807" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1808"
+      >
+      </a
+      ><a name="1815" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="1819"
+      > </a
+      ><a name="1820" href="HoTT.html#767" class="Function Operator"
+      >&#8718;</a
+      ><a name="1821" class="Symbol"
+      >))</a
+      ><a name="1823"
+      >
+
+  </a
+      ><a name="1827" class="Comment"
+      >-- Second composite</a
+      ><a name="1846"
+      >
+  </a
+      ><a name="1849" href="homotopy.HopfJunior.html#1849" class="Function"
+      >from-to-cct</a
+      ><a name="1860"
+      > </a
+      ><a name="1861" class="Symbol"
+      >:</a
+      ><a name="1862"
+      > </a
+      ><a name="1863" class="Symbol"
+      >(</a
+      ><a name="1864" href="homotopy.HopfJunior.html#1864" class="Bound"
+      >b</a
+      ><a name="1865"
+      > </a
+      ><a name="1866" class="Symbol"
+      >:</a
+      ><a name="1867"
+      > </a
+      ><a name="1868" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="1872" class="Symbol"
+      >)</a
+      ><a name="1873"
+      > </a
+      ><a name="1874" class="Symbol"
+      >&#8594;</a
+      ><a name="1875"
+      > </a
+      ><a name="1876" href="homotopy.HopfJunior.html#1201" class="Function"
+      >from</a
+      ><a name="1880"
+      > </a
+      ><a name="1881" class="Symbol"
+      >(</a
+      ><a name="1882" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="1884"
+      > </a
+      ><a name="1885" class="Symbol"
+      >(</a
+      ><a name="1886" href="lib.types.Flattening.html#809" class="Function"
+      >cct</a
+      ><a name="1889"
+      > </a
+      ><a name="1890" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1892"
+      > </a
+      ><a name="1893" href="homotopy.HopfJunior.html#1864" class="Bound"
+      >b</a
+      ><a name="1894" class="Symbol"
+      >))</a
+      ><a name="1896"
+      > </a
+      ><a name="1897" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1899"
+      > </a
+      ><a name="1900" href="lib.types.Flattening.html#809" class="Function"
+      >cct</a
+      ><a name="1903"
+      > </a
+      ><a name="1904" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1906"
+      > </a
+      ><a name="1907" href="homotopy.HopfJunior.html#1864" class="Bound"
+      >b</a
+      ><a name="1908"
+      >
+  </a
+      ><a name="1911" href="homotopy.HopfJunior.html#1849" class="Function"
+      >from-to-cct</a
+      ><a name="1922"
+      > </a
+      ><a name="1923" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1927"
+      > </a
+      ><a name="1928" class="Symbol"
+      >=</a
+      ><a name="1929"
+      > </a
+      ><a name="1930" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1933"
+      >
+  </a
+      ><a name="1936" href="homotopy.HopfJunior.html#1849" class="Function"
+      >from-to-cct</a
+      ><a name="1947"
+      > </a
+      ><a name="1948" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1953"
+      > </a
+      ><a name="1954" class="Symbol"
+      >=</a
+      ><a name="1955"
+      > </a
+      ><a name="1956" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1957"
+      > </a
+      ><a name="1958" class="Symbol"
+      >(</a
+      ><a name="1959" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="1962"
+      > </a
+      ><a name="1963" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1965"
+      > </a
+      ><a name="1966" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1971" class="Symbol"
+      >)</a
+      ><a name="1972"
+      >
+
+  </a
+      ><a name="1976" class="Keyword"
+      >abstract</a
+      ><a name="1984"
+      >
+    </a
+      ><a name="1989" href="homotopy.HopfJunior.html#1989" class="Function"
+      >from-to-ppt</a
+      ><a name="2000"
+      > </a
+      ><a name="2001" class="Symbol"
+      >:</a
+      ><a name="2002"
+      > </a
+      ><a name="2003" class="Symbol"
+      >(</a
+      ><a name="2004" href="homotopy.HopfJunior.html#2004" class="Bound"
+      >b</a
+      ><a name="2005"
+      > </a
+      ><a name="2006" class="Symbol"
+      >:</a
+      ><a name="2007"
+      > </a
+      ><a name="2008" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="2012" class="Symbol"
+      >)</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" class="Symbol"
+      >&#8594;</a
+      ><a name="2015"
+      > </a
+      ><a name="2016" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2018"
+      > </a
+      ><a name="2019" href="homotopy.HopfJunior.html#1201" class="Function"
+      >from</a
+      ><a name="2023"
+      > </a
+      ><a name="2024" class="Symbol"
+      >(</a
+      ><a name="2025" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2027"
+      > </a
+      ><a name="2028" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="2030"
+      > </a
+      ><a name="2031" class="Symbol"
+      >(</a
+      ><a name="2032" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="2035"
+      > </a
+      ><a name="2036" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2038"
+      > </a
+      ><a name="2039" href="homotopy.HopfJunior.html#2004" class="Bound"
+      >b</a
+      ><a name="2040" class="Symbol"
+      >))</a
+      ><a name="2042"
+      > </a
+      ><a name="2043" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2045"
+      > </a
+      ><a name="2046" href="homotopy.HopfJunior.html#1849" class="Function"
+      >from-to-cct</a
+      ><a name="2057"
+      > </a
+      ><a name="2058" class="Symbol"
+      >(</a
+      ><a name="2059" href="homotopy.HopfJunior.html#165" class="Function"
+      >not</a
+      ><a name="2062"
+      > </a
+      ><a name="2063" href="homotopy.HopfJunior.html#2004" class="Bound"
+      >b</a
+      ><a name="2064" class="Symbol"
+      >)</a
+      ><a name="2065"
+      > </a
+      ><a name="2066" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2068"
+      > </a
+      ><a name="2069" href="homotopy.HopfJunior.html#1849" class="Function"
+      >from-to-cct</a
+      ><a name="2080"
+      > </a
+      ><a name="2081" href="homotopy.HopfJunior.html#2004" class="Bound"
+      >b</a
+      ><a name="2082"
+      > </a
+      ><a name="2083" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2084"
+      > </a
+      ><a name="2085" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="2088"
+      > </a
+      ><a name="2089" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2091"
+      > </a
+      ><a name="2092" href="homotopy.HopfJunior.html#2004" class="Bound"
+      >b</a
+      ><a name="2093"
+      >
+    </a
+      ><a name="2098" href="homotopy.HopfJunior.html#1989" class="Function"
+      >from-to-ppt</a
+      ><a name="2109"
+      > </a
+      ><a name="2110" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="2114"
+      > </a
+      ><a name="2115" class="Symbol"
+      >=</a
+      ><a name="2116"
+      >
+      </a
+      ><a name="2123" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2125"
+      > </a
+      ><a name="2126" href="homotopy.HopfJunior.html#1201" class="Function"
+      >from</a
+      ><a name="2130"
+      > </a
+      ><a name="2131" class="Symbol"
+      >(</a
+      ><a name="2132" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2134"
+      > </a
+      ><a name="2135" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="2137"
+      > </a
+      ><a name="2138" class="Symbol"
+      >(</a
+      ><a name="2139" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="2142"
+      > </a
+      ><a name="2143" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2145"
+      > </a
+      ><a name="2146" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="2150" class="Symbol"
+      >))</a
+      ><a name="2152"
+      > </a
+      ><a name="2153" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2155"
+      > </a
+      ><a name="2156" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2157"
+      > </a
+      ><a name="2158" class="Symbol"
+      >(</a
+      ><a name="2159" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="2162"
+      > </a
+      ><a name="2163" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2165"
+      > </a
+      ><a name="2166" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2171" class="Symbol"
+      >)</a
+      ><a name="2172"
+      > </a
+      ><a name="2173" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2175"
+      > </a
+      ><a name="2176" href="lib.types.Generic1HIT.html#968" class="Function"
+      >To.pp-&#946;</a
+      ><a name="2183"
+      > </a
+      ><a name="2184" class="Symbol"
+      >(</a
+      ><a name="2185" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2187"
+      > </a
+      ><a name="2188" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2189"
+      > </a
+      ><a name="2190" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="2194" class="Symbol"
+      >)</a
+      ><a name="2195"
+      > </a
+      ><a name="2196" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="2203"
+      > </a
+      ><a name="2204" class="Symbol"
+      >(&#955;</a
+      ><a name="2206"
+      > </a
+      ><a name="2207" href="homotopy.HopfJunior.html#2207" class="Bound"
+      >u</a
+      ><a name="2208"
+      > </a
+      ><a name="2209" class="Symbol"
+      >&#8594;</a
+      ><a name="2210"
+      > </a
+      ><a name="2211" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2213"
+      > </a
+      ><a name="2214" href="homotopy.HopfJunior.html#1201" class="Function"
+      >from</a
+      ><a name="2218"
+      > </a
+      ><a name="2219" href="homotopy.HopfJunior.html#2207" class="Bound"
+      >u</a
+      ><a name="2220"
+      > </a
+      ><a name="2221" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2223"
+      > </a
+      ><a name="2224" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2225"
+      > </a
+      ><a name="2226" class="Symbol"
+      >(</a
+      ><a name="2227" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="2230"
+      > </a
+      ><a name="2231" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2233"
+      > </a
+      ><a name="2234" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2239" class="Symbol"
+      >))</a
+      ><a name="2241"
+      > </a
+      ><a name="2242" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2243"
+      >
+      </a
+      ><a name="2250" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2252"
+      > </a
+      ><a name="2253" href="homotopy.HopfJunior.html#1201" class="Function"
+      >from</a
+      ><a name="2257"
+      > </a
+      ><a name="2258" href="lib.types.Circle.html#736" class="Function"
+      >loop</a
+      ><a name="2262"
+      > </a
+      ><a name="2263" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2265"
+      > </a
+      ><a name="2266" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2267"
+      > </a
+      ><a name="2268" class="Symbol"
+      >(</a
+      ><a name="2269" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="2272"
+      > </a
+      ><a name="2273" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2275"
+      > </a
+      ><a name="2276" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2281" class="Symbol"
+      >)</a
+      ><a name="2282"
+      >                  </a
+      ><a name="2300" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2302"
+      > </a
+      ><a name="2303" href="lib.types.Circle.html#2596" class="Function"
+      >From.loop-&#946;</a
+      ><a name="2314"
+      > </a
+      ><a name="2315" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="2322"
+      > </a
+      ><a name="2323" class="Symbol"
+      >(&#955;</a
+      ><a name="2325"
+      > </a
+      ><a name="2326" href="homotopy.HopfJunior.html#2326" class="Bound"
+      >u</a
+      ><a name="2327"
+      > </a
+      ><a name="2328" class="Symbol"
+      >&#8594;</a
+      ><a name="2329"
+      > </a
+      ><a name="2330" href="homotopy.HopfJunior.html#2326" class="Bound"
+      >u</a
+      ><a name="2331"
+      > </a
+      ><a name="2332" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2334"
+      > </a
+      ><a name="2335" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2336"
+      > </a
+      ><a name="2337" class="Symbol"
+      >(</a
+      ><a name="2338" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="2341"
+      > </a
+      ><a name="2342" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2344"
+      > </a
+      ><a name="2345" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2350" class="Symbol"
+      >))</a
+      ><a name="2352"
+      > </a
+      ><a name="2353" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2354"
+      >
+      </a
+      ><a name="2361" class="Symbol"
+      >(</a
+      ><a name="2362" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="2365"
+      > </a
+      ><a name="2366" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2368"
+      > </a
+      ><a name="2369" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="2373"
+      > </a
+      ><a name="2374" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2375"
+      > </a
+      ><a name="2376" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="2379"
+      > </a
+      ><a name="2380" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2382"
+      > </a
+      ><a name="2383" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2388" class="Symbol"
+      >)</a
+      ><a name="2389"
+      > </a
+      ><a name="2390" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2392"
+      > </a
+      ><a name="2393" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2394"
+      > </a
+      ><a name="2395" class="Symbol"
+      >(</a
+      ><a name="2396" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="2399"
+      > </a
+      ><a name="2400" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2402"
+      > </a
+      ><a name="2403" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2408" class="Symbol"
+      >)</a
+      ><a name="2409"
+      >  </a
+      ><a name="2411" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2413"
+      > </a
+      ><a name="2414" href="homotopy.HopfJunior.html#2486" class="Function"
+      >lemma</a
+      ><a name="2419"
+      > </a
+      ><a name="2420" class="Symbol"
+      >(</a
+      ><a name="2421" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="2424"
+      > </a
+      ><a name="2425" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2427"
+      > </a
+      ><a name="2428" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="2432" class="Symbol"
+      >)</a
+      ><a name="2433"
+      > </a
+      ><a name="2434" class="Symbol"
+      >(</a
+      ><a name="2435" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="2438"
+      > </a
+      ><a name="2439" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2441"
+      > </a
+      ><a name="2442" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2447" class="Symbol"
+      >)</a
+      ><a name="2448"
+      > </a
+      ><a name="2449" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2450"
+      >
+      </a
+      ><a name="2457" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="2460"
+      > </a
+      ><a name="2461" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2463"
+      > </a
+      ><a name="2464" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="2468"
+      > </a
+      ><a name="2469" href="HoTT.html#767" class="Function Operator"
+      >&#8718;</a
+      ><a name="2470"
+      >  </a
+      ><a name="2472" class="Keyword"
+      >where</a
+      ><a name="2477"
+      >
+        </a
+      ><a name="2486" href="homotopy.HopfJunior.html#2486" class="Function"
+      >lemma</a
+      ><a name="2491"
+      > </a
+      ><a name="2492" class="Symbol"
+      >:</a
+      ><a name="2493"
+      > </a
+      ><a name="2494" class="Symbol"
+      >&#8704;</a
+      ><a name="2495"
+      > </a
+      ><a name="2496" class="Symbol"
+      >{</a
+      ><a name="2497" href="homotopy.HopfJunior.html#2497" class="Bound"
+      >i</a
+      ><a name="2498" class="Symbol"
+      >}</a
+      ><a name="2499"
+      > </a
+      ><a name="2500" class="Symbol"
+      >{</a
+      ><a name="2501" href="homotopy.HopfJunior.html#2501" class="Bound"
+      >A</a
+      ><a name="2502"
+      > </a
+      ><a name="2503" class="Symbol"
+      >:</a
+      ><a name="2504"
+      > </a
+      ><a name="2505" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2509"
+      > </a
+      ><a name="2510" href="homotopy.HopfJunior.html#2497" class="Bound"
+      >i</a
+      ><a name="2511" class="Symbol"
+      >}</a
+      ><a name="2512"
+      > </a
+      ><a name="2513" class="Symbol"
+      >{</a
+      ><a name="2514" href="homotopy.HopfJunior.html#2514" class="Bound"
+      >a</a
+      ><a name="2515"
+      > </a
+      ><a name="2516" href="homotopy.HopfJunior.html#2516" class="Bound"
+      >b</a
+      ><a name="2517"
+      > </a
+      ><a name="2518" href="homotopy.HopfJunior.html#2518" class="Bound"
+      >c</a
+      ><a name="2519"
+      > </a
+      ><a name="2520" class="Symbol"
+      >:</a
+      ><a name="2521"
+      > </a
+      ><a name="2522" href="homotopy.HopfJunior.html#2501" class="Bound"
+      >A</a
+      ><a name="2523" class="Symbol"
+      >}</a
+      ><a name="2524"
+      > </a
+      ><a name="2525" class="Symbol"
+      >(</a
+      ><a name="2526" href="homotopy.HopfJunior.html#2526" class="Bound"
+      >p</a
+      ><a name="2527"
+      > </a
+      ><a name="2528" class="Symbol"
+      >:</a
+      ><a name="2529"
+      > </a
+      ><a name="2530" href="homotopy.HopfJunior.html#2514" class="Bound"
+      >a</a
+      ><a name="2531"
+      > </a
+      ><a name="2532" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2534"
+      > </a
+      ><a name="2535" href="homotopy.HopfJunior.html#2516" class="Bound"
+      >b</a
+      ><a name="2536" class="Symbol"
+      >)</a
+      ><a name="2537"
+      > </a
+      ><a name="2538" class="Symbol"
+      >(</a
+      ><a name="2539" href="homotopy.HopfJunior.html#2539" class="Bound"
+      >q</a
+      ><a name="2540"
+      > </a
+      ><a name="2541" class="Symbol"
+      >:</a
+      ><a name="2542"
+      > </a
+      ><a name="2543" href="homotopy.HopfJunior.html#2516" class="Bound"
+      >b</a
+      ><a name="2544"
+      > </a
+      ><a name="2545" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2547"
+      > </a
+      ><a name="2548" href="homotopy.HopfJunior.html#2518" class="Bound"
+      >c</a
+      ><a name="2549" class="Symbol"
+      >)</a
+      ><a name="2550"
+      > </a
+      ><a name="2551" class="Symbol"
+      >&#8594;</a
+      ><a name="2552"
+      > </a
+      ><a name="2553" class="Symbol"
+      >(</a
+      ><a name="2554" href="homotopy.HopfJunior.html#2526" class="Bound"
+      >p</a
+      ><a name="2555"
+      > </a
+      ><a name="2556" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2557"
+      > </a
+      ><a name="2558" href="homotopy.HopfJunior.html#2539" class="Bound"
+      >q</a
+      ><a name="2559" class="Symbol"
+      >)</a
+      ><a name="2560"
+      > </a
+      ><a name="2561" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2563"
+      > </a
+      ><a name="2564" class="Symbol"
+      >(</a
+      ><a name="2565" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2566"
+      > </a
+      ><a name="2567" href="homotopy.HopfJunior.html#2539" class="Bound"
+      >q</a
+      ><a name="2568" class="Symbol"
+      >)</a
+      ><a name="2569"
+      > </a
+      ><a name="2570" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2572"
+      > </a
+      ><a name="2573" href="homotopy.HopfJunior.html#2526" class="Bound"
+      >p</a
+      ><a name="2574"
+      >
+        </a
+      ><a name="2583" href="homotopy.HopfJunior.html#2486" class="Function"
+      >lemma</a
+      ><a name="2588"
+      > </a
+      ><a name="2589" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2592"
+      > </a
+      ><a name="2593" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2596"
+      > </a
+      ><a name="2597" class="Symbol"
+      >=</a
+      ><a name="2598"
+      > </a
+      ><a name="2599" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2602"
+      >
+    </a
+      ><a name="2607" href="homotopy.HopfJunior.html#1989" class="Function"
+      >from-to-ppt</a
+      ><a name="2618"
+      > </a
+      ><a name="2619" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2624"
+      > </a
+      ><a name="2625" class="Symbol"
+      >=</a
+      ><a name="2626"
+      >
+      </a
+      ><a name="2633" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2635"
+      > </a
+      ><a name="2636" href="homotopy.HopfJunior.html#1201" class="Function"
+      >from</a
+      ><a name="2640"
+      > </a
+      ><a name="2641" class="Symbol"
+      >(</a
+      ><a name="2642" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2644"
+      > </a
+      ><a name="2645" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="2647"
+      > </a
+      ><a name="2648" class="Symbol"
+      >(</a
+      ><a name="2649" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="2652"
+      > </a
+      ><a name="2653" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2655"
+      > </a
+      ><a name="2656" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2661" class="Symbol"
+      >))</a
+      ><a name="2663"
+      >                    </a
+      ><a name="2683" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2685"
+      > </a
+      ><a name="2686" href="lib.types.Generic1HIT.html#968" class="Function"
+      >To.pp-&#946;</a
+      ><a name="2693"
+      > </a
+      ><a name="2694" class="Symbol"
+      >(</a
+      ><a name="2695" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2697"
+      > </a
+      ><a name="2698" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2699"
+      > </a
+      ><a name="2700" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2705" class="Symbol"
+      >)</a
+      ><a name="2706"
+      > </a
+      ><a name="2707" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="2714"
+      > </a
+      ><a name="2715" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2717"
+      > </a
+      ><a name="2718" href="homotopy.HopfJunior.html#1201" class="Function"
+      >from</a
+      ><a name="2722"
+      > </a
+      ><a name="2723" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2724"
+      >
+      </a
+      ><a name="2731" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2733"
+      > </a
+      ><a name="2734" href="homotopy.HopfJunior.html#1201" class="Function"
+      >from</a
+      ><a name="2738"
+      > </a
+      ><a name="2739" class="Symbol"
+      >(</a
+      ><a name="2740" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2743"
+      > </a
+      ><a name="2744" class="Symbol"
+      >{</a
+      ><a name="2745" class="Argument"
+      >a</a
+      ><a name="2746"
+      > </a
+      ><a name="2747" class="Symbol"
+      >=</a
+      ><a name="2748"
+      > </a
+      ><a name="2749" href="lib.types.Circle.html#708" class="Function"
+      >base</a
+      ><a name="2753" class="Symbol"
+      >})</a
+      ><a name="2755"
+      >                          </a
+      ><a name="2781" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2783"
+      > </a
+      ><a name="2784" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2785"
+      > </a
+      ><a name="2786" class="Symbol"
+      >(</a
+      ><a name="2787" href="lib.PathGroupoid.html#1268" class="Function"
+      >!-inv-l</a
+      ><a name="2794"
+      > </a
+      ><a name="2795" class="Symbol"
+      >(</a
+      ><a name="2796" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="2799"
+      > </a
+      ><a name="2800" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2802"
+      > </a
+      ><a name="2803" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2808" class="Symbol"
+      >))</a
+      ><a name="2810"
+      > </a
+      ><a name="2811" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2812"
+      >
+      </a
+      ><a name="2819" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2820"
+      > </a
+      ><a name="2821" class="Symbol"
+      >(</a
+      ><a name="2822" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="2825"
+      > </a
+      ><a name="2826" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2828"
+      > </a
+      ><a name="2829" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2834" class="Symbol"
+      >)</a
+      ><a name="2835"
+      > </a
+      ><a name="2836" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2837"
+      > </a
+      ><a name="2838" href="lib.types.Flattening.html#827" class="Function"
+      >ppt</a
+      ><a name="2841"
+      > </a
+      ><a name="2842" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="2844"
+      > </a
+      ><a name="2845" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2850"
+      > </a
+      ><a name="2851" href="HoTT.html#767" class="Function Operator"
+      >&#8718;</a
+      ><a name="2852"
+      >
+
+    </a
+      ><a name="2858" href="homotopy.HopfJunior.html#2858" class="Function"
+      >from-to</a
+      ><a name="2865"
+      > </a
+      ><a name="2866" class="Symbol"
+      >:</a
+      ><a name="2867"
+      > </a
+      ><a name="2868" class="Symbol"
+      >(</a
+      ><a name="2869" href="homotopy.HopfJunior.html#2869" class="Bound"
+      >x</a
+      ><a name="2870"
+      > </a
+      ><a name="2871" class="Symbol"
+      >:</a
+      ><a name="2872"
+      > </a
+      ><a name="2873" href="lib.types.Generic1HIT.html#376" class="Function"
+      >Wt</a
+      ><a name="2875" class="Symbol"
+      >)</a
+      ><a name="2876"
+      > </a
+      ><a name="2877" class="Symbol"
+      >&#8594;</a
+      ><a name="2878"
+      > </a
+      ><a name="2879" href="homotopy.HopfJunior.html#1201" class="Function"
+      >from</a
+      ><a name="2883"
+      > </a
+      ><a name="2884" class="Symbol"
+      >(</a
+      ><a name="2885" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="2887"
+      > </a
+      ><a name="2888" href="homotopy.HopfJunior.html#2869" class="Bound"
+      >x</a
+      ><a name="2889" class="Symbol"
+      >)</a
+      ><a name="2890"
+      > </a
+      ><a name="2891" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2893"
+      > </a
+      ><a name="2894" href="homotopy.HopfJunior.html#2869" class="Bound"
+      >x</a
+      ><a name="2895"
+      >
+    </a
+      ><a name="2900" href="homotopy.HopfJunior.html#2858" class="Function"
+      >from-to</a
+      ><a name="2907"
+      > </a
+      ><a name="2908" class="Symbol"
+      >=</a
+      ><a name="2909"
+      > </a
+      ><a name="2910" href="lib.types.Generic1HIT.html#607" class="Function"
+      >Wt.elim</a
+      ><a name="2917"
+      > </a
+      ><a name="2918" class="Symbol"
+      >(</a
+      ><a name="2919" href="homotopy.HopfJunior.html#1849" class="Function"
+      >from-to-cct</a
+      ><a name="2930"
+      > </a
+      ><a name="2931" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="2932"
+      > </a
+      ><a name="2933" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2936" class="Symbol"
+      >)</a
+      ><a name="2937"
+      > </a
+      ><a name="2938" class="Symbol"
+      >(&#955;</a
+      ><a name="2940"
+      > </a
+      ><a name="2941" href="homotopy.HopfJunior.html#2941" class="Bound"
+      >b</a
+      ><a name="2942"
+      > </a
+      ><a name="2943" class="Symbol"
+      >&#8594;</a
+      ><a name="2944"
+      > </a
+      ><a name="2945" href="lib.types.Paths.html#7720" class="Function"
+      >&#8595;-&#8728;=idf-in'</a
+      ><a name="2956"
+      > </a
+      ><a name="2957" href="homotopy.HopfJunior.html#1201" class="Function"
+      >from</a
+      ><a name="2961"
+      > </a
+      ><a name="2962" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="2964"
+      > </a
+      ><a name="2965" class="Symbol"
+      >(</a
+      ><a name="2966" href="homotopy.HopfJunior.html#1989" class="Function"
+      >from-to-ppt</a
+      ><a name="2977"
+      > </a
+      ><a name="2978" class="Symbol"
+      >(</a
+      ><a name="2979" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2982"
+      > </a
+      ><a name="2983" href="homotopy.HopfJunior.html#2941" class="Bound"
+      >b</a
+      ><a name="2984" class="Symbol"
+      >)))</a
+      ><a name="2987"
+      >
+
+  </a
+      ><a name="2991" class="Comment"
+      >-- Conclusion</a
+      ><a name="3004"
+      >
+  </a
+      ><a name="3007" href="homotopy.HopfJunior.html#3007" class="Function"
+      >subresult</a
+      ><a name="3016"
+      > </a
+      ><a name="3017" class="Symbol"
+      >:</a
+      ><a name="3018"
+      > </a
+      ><a name="3019" href="lib.types.Generic1HIT.html#376" class="Function"
+      >Wt</a
+      ><a name="3021"
+      > </a
+      ><a name="3022" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="3023"
+      > </a
+      ><a name="3024" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="3026"
+      >
+  </a
+      ><a name="3029" href="homotopy.HopfJunior.html#3007" class="Function"
+      >subresult</a
+      ><a name="3038"
+      > </a
+      ><a name="3039" class="Symbol"
+      >=</a
+      ><a name="3040"
+      > </a
+      ><a name="3041" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="3046"
+      > </a
+      ><a name="3047" href="homotopy.HopfJunior.html#980" class="Function"
+      >to</a
+      ><a name="3049"
+      > </a
+      ><a name="3050" href="homotopy.HopfJunior.html#1201" class="Function"
+      >from</a
+      ><a name="3054"
+      > </a
+      ><a name="3055" href="homotopy.HopfJunior.html#1269" class="Function"
+      >to-from</a
+      ><a name="3062"
+      > </a
+      ><a name="3063" href="homotopy.HopfJunior.html#2858" class="Function"
+      >from-to</a
+      ><a name="3070"
+      >
+
+</a
+      ><a name="3072" class="Comment"
+      >-- Conclusion</a
+      ><a name="3085"
+      >
+</a
+      ><a name="3086" href="homotopy.HopfJunior.html#3086" class="Function"
+      >result</a
+      ><a name="3092"
+      > </a
+      ><a name="3093" class="Symbol"
+      >:</a
+      ><a name="3094"
+      > </a
+      ><a name="3095" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="3096"
+      > </a
+      ><a name="3097" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="3099"
+      > </a
+      ><a name="3100" href="homotopy.HopfJunior.html#517" class="Function"
+      >HopfJunior</a
+      ><a name="3110"
+      > </a
+      ><a name="3111" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="3112"
+      > </a
+      ><a name="3113" href="lib.types.IteratedSuspension.html#2241" class="Function"
+      >S&#185;</a
+      ><a name="3115"
+      >
+</a
+      ><a name="3116" href="homotopy.HopfJunior.html#3086" class="Function"
+      >result</a
+      ><a name="3122"
+      > </a
+      ><a name="3123" class="Symbol"
+      >=</a
+      ><a name="3124"
+      > </a
+      ><a name="3125" href="homotopy.HopfJunior.html#3007" class="Function"
+      >subresult</a
+      ><a name="3134"
+      > </a
+      ><a name="3135" href="lib.Equivalence.html#5985" class="Function Operator"
+      >&#8728;e</a
+      ><a name="3137"
+      > </a
+      ><a name="3138" class="Symbol"
+      >(</a
+      ><a name="3139" href="lib.Univalence.html#435" class="Function"
+      >coe-equiv</a
+      ><a name="3148"
+      > </a
+      ><a name="3149" href="homotopy.HopfJunior.html#647" class="Function"
+      >tot-is-Wt</a
+      ><a name="3158" class="Symbol"
+      >)</a
+      ><a name="3159"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

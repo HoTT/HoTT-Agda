@@ -1,0 +1,529 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cohomology.Coproduct</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="88"
+      >
+
+</a
+      ><a name="90" class="Keyword"
+      >module</a
+      ><a name="96"
+      > </a
+      ><a name="97" href="cohomology.Coproduct.html#1" class="Module"
+      >cohomology.Coproduct</a
+      ><a name="117"
+      > </a
+      ><a name="118" class="Symbol"
+      >{</a
+      ><a name="119" href="cohomology.Coproduct.html#119" class="Bound"
+      >i</a
+      ><a name="120" class="Symbol"
+      >}</a
+      ><a name="121"
+      > </a
+      ><a name="122" class="Symbol"
+      >(</a
+      ><a name="123" href="cohomology.Coproduct.html#123" class="Bound"
+      >CT</a
+      ><a name="125"
+      > </a
+      ><a name="126" class="Symbol"
+      >:</a
+      ><a name="127"
+      > </a
+      ><a name="128" href="cohomology.Theory.html#173" class="Record"
+      >CohomologyTheory</a
+      ><a name="144"
+      > </a
+      ><a name="145" href="cohomology.Coproduct.html#119" class="Bound"
+      >i</a
+      ><a name="146" class="Symbol"
+      >)</a
+      ><a name="147"
+      >
+  </a
+      ><a name="150" class="Symbol"
+      >(</a
+      ><a name="151" href="cohomology.Coproduct.html#151" class="Bound"
+      >n</a
+      ><a name="152"
+      > </a
+      ><a name="153" class="Symbol"
+      >:</a
+      ><a name="154"
+      > </a
+      ><a name="155" href="lib.types.Int.html#154" class="Datatype"
+      >&#8484;</a
+      ><a name="156" class="Symbol"
+      >)</a
+      ><a name="157"
+      > </a
+      ><a name="158" class="Symbol"
+      >(</a
+      ><a name="159" href="cohomology.Coproduct.html#159" class="Bound"
+      >X</a
+      ><a name="160"
+      > </a
+      ><a name="161" href="cohomology.Coproduct.html#161" class="Bound"
+      >Y</a
+      ><a name="162"
+      > </a
+      ><a name="163" class="Symbol"
+      >:</a
+      ><a name="164"
+      > </a
+      ><a name="165" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="168"
+      > </a
+      ><a name="169" href="cohomology.Coproduct.html#119" class="Bound"
+      >i</a
+      ><a name="170" class="Symbol"
+      >)</a
+      ><a name="171"
+      > </a
+      ><a name="172" class="Keyword"
+      >where</a
+      ><a name="177"
+      >
+
+</a
+      ><a name="179" class="Keyword"
+      >open</a
+      ><a name="183"
+      > </a
+      ><a name="184" href="cohomology.Theory.html#173" class="Module"
+      >CohomologyTheory</a
+      ><a name="200"
+      > </a
+      ><a name="201" href="cohomology.Coproduct.html#123" class="Bound"
+      >CT</a
+      ><a name="203"
+      >
+</a
+      ><a name="204" class="Keyword"
+      >open</a
+      ><a name="208"
+      > </a
+      ><a name="209" class="Keyword"
+      >import</a
+      ><a name="215"
+      > </a
+      ><a name="216" href="cohomology.Sigma.html#1" class="Module"
+      >cohomology.Sigma</a
+      ><a name="232"
+      > </a
+      ><a name="233" href="cohomology.Coproduct.html#123" class="Bound"
+      >CT</a
+      ><a name="235"
+      >
+
+</a
+      ><a name="237" class="Keyword"
+      >private</a
+      ><a name="244"
+      >
+  </a
+      ><a name="247" href="cohomology.Coproduct.html#247" class="Function"
+      >P</a
+      ><a name="248"
+      > </a
+      ><a name="249" class="Symbol"
+      >:</a
+      ><a name="250"
+      > </a
+      ><a name="251" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="255"
+      > </a
+      ><a name="256" class="Symbol"
+      >&#8594;</a
+      ><a name="257"
+      > </a
+      ><a name="258" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="261"
+      > </a
+      ><a name="262" href="cohomology.Coproduct.html#119" class="Bound"
+      >i</a
+      ><a name="263"
+      >
+  </a
+      ><a name="266" href="cohomology.Coproduct.html#247" class="Function"
+      >P</a
+      ><a name="267"
+      > </a
+      ><a name="268" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="272"
+      > </a
+      ><a name="273" class="Symbol"
+      >=</a
+      ><a name="274"
+      > </a
+      ><a name="275" href="cohomology.Coproduct.html#159" class="Bound"
+      >X</a
+      ><a name="276"
+      >
+  </a
+      ><a name="279" href="cohomology.Coproduct.html#247" class="Function"
+      >P</a
+      ><a name="280"
+      > </a
+      ><a name="281" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="286"
+      > </a
+      ><a name="287" class="Symbol"
+      >=</a
+      ><a name="288"
+      > </a
+      ><a name="289" href="cohomology.Coproduct.html#161" class="Bound"
+      >Y</a
+      ><a name="290"
+      >
+
+</a
+      ><a name="292" href="cohomology.Coproduct.html#292" class="Function"
+      >C-&#8852;</a
+      ><a name="295"
+      > </a
+      ><a name="296" class="Symbol"
+      >:</a
+      ><a name="297"
+      > </a
+      ><a name="298" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="299"
+      > </a
+      ><a name="300" href="cohomology.Coproduct.html#151" class="Bound"
+      >n</a
+      ><a name="301"
+      > </a
+      ><a name="302" class="Symbol"
+      >(</a
+      ><a name="303" href="cohomology.Coproduct.html#159" class="Bound"
+      >X</a
+      ><a name="304"
+      > </a
+      ><a name="305" href="lib.types.Coproduct.html#2479" class="Function Operator"
+      >&#8857;&#8852;</a
+      ><a name="307"
+      > </a
+      ><a name="308" href="cohomology.Coproduct.html#161" class="Bound"
+      >Y</a
+      ><a name="309" class="Symbol"
+      >)</a
+      ><a name="310"
+      > </a
+      ><a name="311" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="313"
+      > </a
+      ><a name="314" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="315"
+      > </a
+      ><a name="316" href="cohomology.Coproduct.html#151" class="Bound"
+      >n</a
+      ><a name="317"
+      > </a
+      ><a name="318" class="Symbol"
+      >(</a
+      ><a name="319" href="cohomology.Coproduct.html#159" class="Bound"
+      >X</a
+      ><a name="320"
+      > </a
+      ><a name="321" href="lib.types.Wedge.html#956" class="Function Operator"
+      >&#8857;&#8744;</a
+      ><a name="323"
+      > </a
+      ><a name="324" href="cohomology.Coproduct.html#161" class="Bound"
+      >Y</a
+      ><a name="325" class="Symbol"
+      >)</a
+      ><a name="326"
+      > </a
+      ><a name="327" href="lib.groups.GroupProduct.html#1359" class="Function Operator"
+      >&#215;&#7475;</a
+      ><a name="329"
+      > </a
+      ><a name="330" href="cohomology.Theory.html#2346" class="Function"
+      >C2</a
+      ><a name="332"
+      > </a
+      ><a name="333" href="cohomology.Coproduct.html#151" class="Bound"
+      >n</a
+      ><a name="334"
+      >
+</a
+      ><a name="335" href="cohomology.Coproduct.html#292" class="Function"
+      >C-&#8852;</a
+      ><a name="338"
+      > </a
+      ><a name="339" class="Symbol"
+      >=</a
+      ><a name="340"
+      > </a
+      ><a name="341" class="Symbol"
+      >(</a
+      ><a name="342" href="lib.groups.GroupProduct.html#7428" class="Function"
+      >&#215;&#7475;-emap</a
+      ><a name="349"
+      >
+        </a
+      ><a name="358" class="Symbol"
+      >(</a
+      ><a name="359" href="cohomology.Theory.html#3601" class="Function"
+      >C-emap</a
+      ><a name="365"
+      > </a
+      ><a name="366" href="cohomology.Coproduct.html#151" class="Bound"
+      >n</a
+      ><a name="367"
+      > </a
+      ><a name="368" class="Symbol"
+      >(</a
+      ><a name="369" href="lib.Equivalence.html#13119" class="Function"
+      >&#8771;-to-&#8857;&#8771;</a
+      ><a name="376"
+      > </a
+      ><a name="377" class="Symbol"
+      >(</a
+      ><a name="378"
+      > </a
+      ><a name="379" href="lib.types.BigWedge.html#3386" class="Function"
+      >BigWedge-Bool-equiv-Wedge</a
+      ><a name="404"
+      > </a
+      ><a name="405" href="cohomology.Coproduct.html#247" class="Function"
+      >P</a
+      ><a name="406"
+      >
+                          </a
+      ><a name="433" href="lib.Equivalence.html#5985" class="Function Operator"
+      >&#8728;e</a
+      ><a name="435"
+      > </a
+      ><a name="436" href="lib.types.BigWedge.html#2705" class="Function"
+      >BigWedge-emap-l</a
+      ><a name="451"
+      > </a
+      ><a name="452" href="cohomology.Coproduct.html#247" class="Function"
+      >P</a
+      ><a name="453"
+      > </a
+      ><a name="454" href="lib.Equivalence.html#8890" class="Function"
+      >lower-equiv</a
+      ><a name="465" class="Symbol"
+      >)</a
+      ><a name="466"
+      > </a
+      ><a name="467" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="470" class="Symbol"
+      >))</a
+      ><a name="472"
+      >
+        </a
+      ><a name="481" class="Symbol"
+      >(</a
+      ><a name="482" href="lib.groups.Isomorphism.html#2475" class="Function"
+      >idiso</a
+      ><a name="487"
+      > </a
+      ><a name="488" class="Symbol"
+      >_))</a
+      ><a name="491"
+      > </a
+      ><a name="492" href="lib.groups.Isomorphism.html#3359" class="Function Operator"
+      >&#8315;&#185;&#7475;</a
+      ><a name="495"
+      >
+  </a
+      ><a name="498" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="501"
+      > </a
+      ><a name="502" href="cohomology.Sigma.html#1899" class="Function"
+      >C-&#931;</a
+      ><a name="505"
+      > </a
+      ><a name="506" href="cohomology.Coproduct.html#151" class="Bound"
+      >n</a
+      ><a name="507"
+      > </a
+      ><a name="508" class="Symbol"
+      >(</a
+      ><a name="509" href="lib.types.Lift.html#95" class="Function"
+      >&#8857;Lift</a
+      ><a name="514"
+      > </a
+      ><a name="515" class="Symbol"
+      >{</a
+      ><a name="516" class="Argument"
+      >j</a
+      ><a name="517"
+      > </a
+      ><a name="518" class="Symbol"
+      >=</a
+      ><a name="519"
+      > </a
+      ><a name="520" href="cohomology.Coproduct.html#119" class="Bound"
+      >i</a
+      ><a name="521" class="Symbol"
+      >}</a
+      ><a name="522"
+      > </a
+      ><a name="523" href="lib.types.Bool.html#300" class="Function"
+      >&#8857;Bool</a
+      ><a name="528" class="Symbol"
+      >)</a
+      ><a name="529"
+      > </a
+      ><a name="530" class="Symbol"
+      >(</a
+      ><a name="531" href="cohomology.Coproduct.html#247" class="Function"
+      >P</a
+      ><a name="532"
+      > </a
+      ><a name="533" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="534"
+      > </a
+      ><a name="535" href="lib.Base.html#6528" class="Field"
+      >lower</a
+      ><a name="540" class="Symbol"
+      >)</a
+      ><a name="541"
+      >
+  </a
+      ><a name="544" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="547"
+      > </a
+      ><a name="548" href="cohomology.Theory.html#3601" class="Function"
+      >C-emap</a
+      ><a name="554"
+      > </a
+      ><a name="555" href="cohomology.Coproduct.html#151" class="Bound"
+      >n</a
+      ><a name="556"
+      > </a
+      ><a name="557" class="Symbol"
+      >(</a
+      ><a name="558" href="lib.Equivalence.html#13119" class="Function"
+      >&#8771;-to-&#8857;&#8771;</a
+      ><a name="565"
+      > </a
+      ><a name="566" class="Symbol"
+      >(</a
+      ><a name="567"
+      > </a
+      ><a name="568" href="lib.types.Coproduct.html#2857" class="Function"
+      >&#931;Bool-equiv-&#8852;</a
+      ><a name="581"
+      > </a
+      ><a name="582" class="Symbol"
+      >(</a
+      ><a name="583" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="586"
+      > </a
+      ><a name="587" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="588"
+      > </a
+      ><a name="589" href="cohomology.Coproduct.html#247" class="Function"
+      >P</a
+      ><a name="590" class="Symbol"
+      >)</a
+      ><a name="591"
+      >
+                       </a
+      ><a name="615" href="lib.Equivalence.html#5985" class="Function Operator"
+      >&#8728;e</a
+      ><a name="617"
+      > </a
+      ><a name="618" href="lib.types.Sigma.html#5823" class="Function"
+      >&#931;-emap-l</a
+      ><a name="626"
+      > </a
+      ><a name="627" class="Symbol"
+      >(</a
+      ><a name="628" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="631"
+      > </a
+      ><a name="632" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="633"
+      > </a
+      ><a name="634" href="cohomology.Coproduct.html#247" class="Function"
+      >P</a
+      ><a name="635" class="Symbol"
+      >)</a
+      ><a name="636"
+      > </a
+      ><a name="637" href="lib.Equivalence.html#8890" class="Function"
+      >lower-equiv</a
+      ><a name="648" class="Symbol"
+      >)</a
+      ><a name="649"
+      > </a
+      ><a name="650" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="653" class="Symbol"
+      >)</a
+      ><a name="654"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

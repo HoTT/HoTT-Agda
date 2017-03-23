@@ -1,0 +1,5079 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.groups.HomotopyGroup</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.NType2.html#1" class="Module"
+      >lib.NType2</a
+      ><a name="87"
+      >
+</a
+      ><a name="88" class="Keyword"
+      >open</a
+      ><a name="92"
+      > </a
+      ><a name="93" class="Keyword"
+      >import</a
+      ><a name="99"
+      > </a
+      ><a name="100" href="lib.types.Empty.html#1" class="Module"
+      >lib.types.Empty</a
+      ><a name="115"
+      >
+</a
+      ><a name="116" class="Keyword"
+      >open</a
+      ><a name="120"
+      > </a
+      ><a name="121" class="Keyword"
+      >import</a
+      ><a name="127"
+      > </a
+      ><a name="128" href="lib.types.Group.html#1" class="Module"
+      >lib.types.Group</a
+      ><a name="143"
+      >
+</a
+      ><a name="144" class="Keyword"
+      >open</a
+      ><a name="148"
+      > </a
+      ><a name="149" class="Keyword"
+      >import</a
+      ><a name="155"
+      > </a
+      ><a name="156" href="lib.types.LoopSpace.html#1" class="Module"
+      >lib.types.LoopSpace</a
+      ><a name="175"
+      >
+</a
+      ><a name="176" class="Keyword"
+      >open</a
+      ><a name="180"
+      > </a
+      ><a name="181" class="Keyword"
+      >import</a
+      ><a name="187"
+      > </a
+      ><a name="188" href="lib.types.Nat.html#1" class="Module"
+      >lib.types.Nat</a
+      ><a name="201"
+      >
+</a
+      ><a name="202" class="Keyword"
+      >open</a
+      ><a name="206"
+      > </a
+      ><a name="207" class="Keyword"
+      >import</a
+      ><a name="213"
+      > </a
+      ><a name="214" href="lib.types.Pi.html#1" class="Module"
+      >lib.types.Pi</a
+      ><a name="226"
+      >
+</a
+      ><a name="227" class="Keyword"
+      >open</a
+      ><a name="231"
+      > </a
+      ><a name="232" class="Keyword"
+      >import</a
+      ><a name="238"
+      > </a
+      ><a name="239" href="lib.types.Pointed.html#1" class="Module"
+      >lib.types.Pointed</a
+      ><a name="256"
+      >
+</a
+      ><a name="257" class="Keyword"
+      >open</a
+      ><a name="261"
+      > </a
+      ><a name="262" class="Keyword"
+      >import</a
+      ><a name="268"
+      > </a
+      ><a name="269" href="lib.types.Sigma.html#1" class="Module"
+      >lib.types.Sigma</a
+      ><a name="284"
+      >
+</a
+      ><a name="285" class="Keyword"
+      >open</a
+      ><a name="289"
+      > </a
+      ><a name="290" class="Keyword"
+      >import</a
+      ><a name="296"
+      > </a
+      ><a name="297" href="lib.types.TLevel.html#1" class="Module"
+      >lib.types.TLevel</a
+      ><a name="313"
+      >
+</a
+      ><a name="314" class="Keyword"
+      >open</a
+      ><a name="318"
+      > </a
+      ><a name="319" class="Keyword"
+      >import</a
+      ><a name="325"
+      > </a
+      ><a name="326" href="lib.types.Truncation.html#1" class="Module"
+      >lib.types.Truncation</a
+      ><a name="346"
+      >
+</a
+      ><a name="347" class="Keyword"
+      >open</a
+      ><a name="351"
+      > </a
+      ><a name="352" class="Keyword"
+      >import</a
+      ><a name="358"
+      > </a
+      ><a name="359" href="lib.groups.GroupProduct.html#1" class="Module"
+      >lib.groups.GroupProduct</a
+      ><a name="382"
+      >
+</a
+      ><a name="383" class="Keyword"
+      >open</a
+      ><a name="387"
+      > </a
+      ><a name="388" class="Keyword"
+      >import</a
+      ><a name="394"
+      > </a
+      ><a name="395" href="lib.groups.Homomorphism.html#1" class="Module"
+      >lib.groups.Homomorphism</a
+      ><a name="418"
+      >
+</a
+      ><a name="419" class="Keyword"
+      >open</a
+      ><a name="423"
+      > </a
+      ><a name="424" class="Keyword"
+      >import</a
+      ><a name="430"
+      > </a
+      ><a name="431" href="lib.groups.Isomorphism.html#1" class="Module"
+      >lib.groups.Isomorphism</a
+      ><a name="453"
+      >
+</a
+      ><a name="454" class="Keyword"
+      >open</a
+      ><a name="458"
+      > </a
+      ><a name="459" class="Keyword"
+      >import</a
+      ><a name="465"
+      > </a
+      ><a name="466" href="lib.groups.LoopSpace.html#1" class="Module"
+      >lib.groups.LoopSpace</a
+      ><a name="486"
+      >
+</a
+      ><a name="487" class="Keyword"
+      >open</a
+      ><a name="491"
+      > </a
+      ><a name="492" class="Keyword"
+      >import</a
+      ><a name="498"
+      > </a
+      ><a name="499" href="lib.groups.TruncationGroup.html#1" class="Module"
+      >lib.groups.TruncationGroup</a
+      ><a name="525"
+      >
+</a
+      ><a name="526" class="Keyword"
+      >open</a
+      ><a name="530"
+      > </a
+      ><a name="531" class="Keyword"
+      >import</a
+      ><a name="537"
+      > </a
+      ><a name="538" href="lib.groups.Unit.html#1" class="Module"
+      >lib.groups.Unit</a
+      ><a name="553"
+      >
+
+</a
+      ><a name="555" class="Keyword"
+      >module</a
+      ><a name="561"
+      > </a
+      ><a name="562" href="lib.groups.HomotopyGroup.html#1" class="Module"
+      >lib.groups.HomotopyGroup</a
+      ><a name="586"
+      > </a
+      ><a name="587" class="Keyword"
+      >where</a
+      ><a name="592"
+      >
+
+</a
+      ><a name="594" class="Comment"
+      >{- Higher homotopy groups -}</a
+      ><a name="622"
+      >
+</a
+      ><a name="623" class="Keyword"
+      >module</a
+      ><a name="629"
+      > </a
+      ><a name="630" href="lib.groups.HomotopyGroup.html#630" class="Module"
+      >_</a
+      ><a name="631"
+      > </a
+      ><a name="632" class="Symbol"
+      >{</a
+      ><a name="633" href="lib.groups.HomotopyGroup.html#633" class="Bound"
+      >i</a
+      ><a name="634" class="Symbol"
+      >}</a
+      ><a name="635"
+      > </a
+      ><a name="636" class="Keyword"
+      >where</a
+      ><a name="641"
+      >
+
+  </a
+      ><a name="645" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="647"
+      > </a
+      ><a name="648" class="Symbol"
+      >:</a
+      ><a name="649"
+      > </a
+      ><a name="650" class="Symbol"
+      >(</a
+      ><a name="651" href="lib.groups.HomotopyGroup.html#651" class="Bound"
+      >n</a
+      ><a name="652"
+      > </a
+      ><a name="653" class="Symbol"
+      >:</a
+      ><a name="654"
+      > </a
+      ><a name="655" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="656" class="Symbol"
+      >)</a
+      ><a name="657"
+      > </a
+      ><a name="658" class="Symbol"
+      >(</a
+      ><a name="659" href="lib.groups.HomotopyGroup.html#659" class="Bound"
+      >X</a
+      ><a name="660"
+      > </a
+      ><a name="661" class="Symbol"
+      >:</a
+      ><a name="662"
+      > </a
+      ><a name="663" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="666"
+      > </a
+      ><a name="667" href="lib.groups.HomotopyGroup.html#633" class="Bound"
+      >i</a
+      ><a name="668" class="Symbol"
+      >)</a
+      ><a name="669"
+      > </a
+      ><a name="670" class="Symbol"
+      >&#8594;</a
+      ><a name="671"
+      > </a
+      ><a name="672" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="677"
+      > </a
+      ><a name="678" href="lib.groups.HomotopyGroup.html#633" class="Bound"
+      >i</a
+      ><a name="679"
+      >
+  </a
+      ><a name="682" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="684"
+      > </a
+      ><a name="685" href="lib.groups.HomotopyGroup.html#685" class="Bound"
+      >n</a
+      ><a name="686"
+      > </a
+      ><a name="687" href="lib.groups.HomotopyGroup.html#687" class="Bound"
+      >X</a
+      ><a name="688"
+      > </a
+      ><a name="689" class="Symbol"
+      >=</a
+      ><a name="690"
+      > </a
+      ><a name="691" href="lib.groups.TruncationGroup.html#1430" class="Function"
+      >Trunc-group</a
+      ><a name="702"
+      > </a
+      ><a name="703" class="Symbol"
+      >(</a
+      ><a name="704" href="lib.groups.LoopSpace.html#375" class="Function"
+      >&#937;^S-group-structure</a
+      ><a name="723"
+      > </a
+      ><a name="724" href="lib.groups.HomotopyGroup.html#685" class="Bound"
+      >n</a
+      ><a name="725"
+      > </a
+      ><a name="726" href="lib.groups.HomotopyGroup.html#687" class="Bound"
+      >X</a
+      ><a name="727" class="Symbol"
+      >)</a
+      ><a name="728"
+      >
+
+  </a
+      ><a name="732" href="lib.groups.HomotopyGroup.html#732" class="Function"
+      >fundamental-group</a
+      ><a name="749"
+      > </a
+      ><a name="750" class="Symbol"
+      >:</a
+      ><a name="751"
+      > </a
+      ><a name="752" class="Symbol"
+      >(</a
+      ><a name="753" href="lib.groups.HomotopyGroup.html#753" class="Bound"
+      >X</a
+      ><a name="754"
+      > </a
+      ><a name="755" class="Symbol"
+      >:</a
+      ><a name="756"
+      > </a
+      ><a name="757" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="760"
+      > </a
+      ><a name="761" href="lib.groups.HomotopyGroup.html#633" class="Bound"
+      >i</a
+      ><a name="762" class="Symbol"
+      >)</a
+      ><a name="763"
+      > </a
+      ><a name="764" class="Symbol"
+      >&#8594;</a
+      ><a name="765"
+      > </a
+      ><a name="766" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="771"
+      > </a
+      ><a name="772" href="lib.groups.HomotopyGroup.html#633" class="Bound"
+      >i</a
+      ><a name="773"
+      >
+  </a
+      ><a name="776" href="lib.groups.HomotopyGroup.html#732" class="Function"
+      >fundamental-group</a
+      ><a name="793"
+      > </a
+      ><a name="794" href="lib.groups.HomotopyGroup.html#794" class="Bound"
+      >X</a
+      ><a name="795"
+      > </a
+      ><a name="796" class="Symbol"
+      >=</a
+      ><a name="797"
+      > </a
+      ><a name="798" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="800"
+      > </a
+      ><a name="801" class="Number"
+      >0</a
+      ><a name="802"
+      > </a
+      ><a name="803" href="lib.groups.HomotopyGroup.html#794" class="Bound"
+      >X</a
+      ><a name="804"
+      >
+
+</a
+      ><a name="806" class="Keyword"
+      >module</a
+      ><a name="812"
+      > </a
+      ><a name="813" href="lib.groups.HomotopyGroup.html#813" class="Module"
+      >_</a
+      ><a name="814"
+      > </a
+      ><a name="815" class="Symbol"
+      >{</a
+      ><a name="816" href="lib.groups.HomotopyGroup.html#816" class="Bound"
+      >i</a
+      ><a name="817"
+      > </a
+      ><a name="818" href="lib.groups.HomotopyGroup.html#818" class="Bound"
+      >j</a
+      ><a name="819" class="Symbol"
+      >}</a
+      ><a name="820"
+      > </a
+      ><a name="821" class="Symbol"
+      >(</a
+      ><a name="822" href="lib.groups.HomotopyGroup.html#822" class="Bound"
+      >n</a
+      ><a name="823"
+      > </a
+      ><a name="824" class="Symbol"
+      >:</a
+      ><a name="825"
+      > </a
+      ><a name="826" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="827" class="Symbol"
+      >)</a
+      ><a name="828"
+      > </a
+      ><a name="829" class="Symbol"
+      >{</a
+      ><a name="830" href="lib.groups.HomotopyGroup.html#830" class="Bound"
+      >X</a
+      ><a name="831"
+      > </a
+      ><a name="832" class="Symbol"
+      >:</a
+      ><a name="833"
+      > </a
+      ><a name="834" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="837"
+      > </a
+      ><a name="838" href="lib.groups.HomotopyGroup.html#816" class="Bound"
+      >i</a
+      ><a name="839" class="Symbol"
+      >}</a
+      ><a name="840"
+      > </a
+      ><a name="841" class="Symbol"
+      >{</a
+      ><a name="842" href="lib.groups.HomotopyGroup.html#842" class="Bound"
+      >Y</a
+      ><a name="843"
+      > </a
+      ><a name="844" class="Symbol"
+      >:</a
+      ><a name="845"
+      > </a
+      ><a name="846" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="849"
+      > </a
+      ><a name="850" href="lib.groups.HomotopyGroup.html#818" class="Bound"
+      >j</a
+      ><a name="851" class="Symbol"
+      >}</a
+      ><a name="852"
+      > </a
+      ><a name="853" class="Keyword"
+      >where</a
+      ><a name="858"
+      >
+
+  </a
+      ><a name="862" href="lib.groups.HomotopyGroup.html#862" class="Function"
+      >&#960;S-fmap</a
+      ><a name="869"
+      > </a
+      ><a name="870" class="Symbol"
+      >:</a
+      ><a name="871"
+      > </a
+      ><a name="872" href="lib.groups.HomotopyGroup.html#830" class="Bound"
+      >X</a
+      ><a name="873"
+      > </a
+      ><a name="874" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="876"
+      > </a
+      ><a name="877" href="lib.groups.HomotopyGroup.html#842" class="Bound"
+      >Y</a
+      ><a name="878"
+      > </a
+      ><a name="879" class="Symbol"
+      >&#8594;</a
+      ><a name="880"
+      > </a
+      ><a name="881" class="Symbol"
+      >(</a
+      ><a name="882" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="884"
+      > </a
+      ><a name="885" href="lib.groups.HomotopyGroup.html#822" class="Bound"
+      >n</a
+      ><a name="886"
+      > </a
+      ><a name="887" href="lib.groups.HomotopyGroup.html#830" class="Bound"
+      >X</a
+      ><a name="888"
+      > </a
+      ><a name="889" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="891"
+      > </a
+      ><a name="892" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="894"
+      > </a
+      ><a name="895" href="lib.groups.HomotopyGroup.html#822" class="Bound"
+      >n</a
+      ><a name="896"
+      > </a
+      ><a name="897" href="lib.groups.HomotopyGroup.html#842" class="Bound"
+      >Y</a
+      ><a name="898" class="Symbol"
+      >)</a
+      ><a name="899"
+      >
+  </a
+      ><a name="902" href="lib.groups.HomotopyGroup.html#862" class="Function"
+      >&#960;S-fmap</a
+      ><a name="909"
+      > </a
+      ><a name="910" href="lib.groups.HomotopyGroup.html#910" class="Bound"
+      >F</a
+      ><a name="911"
+      > </a
+      ><a name="912" class="Symbol"
+      >=</a
+      ><a name="913"
+      > </a
+      ><a name="914" href="lib.groups.TruncationGroup.html#2520" class="Function"
+      >Trunc-group-fmap</a
+      ><a name="930"
+      > </a
+      ><a name="931" class="Symbol"
+      >(</a
+      ><a name="932" href="lib.groups.LoopSpace.html#876" class="Function"
+      >&#937;^S-group-structure-fmap</a
+      ><a name="956"
+      > </a
+      ><a name="957" href="lib.groups.HomotopyGroup.html#822" class="Bound"
+      >n</a
+      ><a name="958"
+      > </a
+      ><a name="959" href="lib.groups.HomotopyGroup.html#910" class="Bound"
+      >F</a
+      ><a name="960" class="Symbol"
+      >)</a
+      ><a name="961"
+      >
+
+  </a
+      ><a name="965" href="lib.groups.HomotopyGroup.html#965" class="Function"
+      >&#960;S-emap</a
+      ><a name="972"
+      > </a
+      ><a name="973" class="Symbol"
+      >:</a
+      ><a name="974"
+      > </a
+      ><a name="975" class="Symbol"
+      >(</a
+      ><a name="976" href="lib.groups.HomotopyGroup.html#830" class="Bound"
+      >X</a
+      ><a name="977"
+      > </a
+      ><a name="978" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="980"
+      > </a
+      ><a name="981" href="lib.groups.HomotopyGroup.html#842" class="Bound"
+      >Y</a
+      ><a name="982" class="Symbol"
+      >)</a
+      ><a name="983"
+      > </a
+      ><a name="984" class="Symbol"
+      >&#8594;</a
+      ><a name="985"
+      > </a
+      ><a name="986" class="Symbol"
+      >(</a
+      ><a name="987" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="989"
+      > </a
+      ><a name="990" href="lib.groups.HomotopyGroup.html#822" class="Bound"
+      >n</a
+      ><a name="991"
+      > </a
+      ><a name="992" href="lib.groups.HomotopyGroup.html#830" class="Bound"
+      >X</a
+      ><a name="993"
+      > </a
+      ><a name="994" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="996"
+      > </a
+      ><a name="997" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="999"
+      > </a
+      ><a name="1000" href="lib.groups.HomotopyGroup.html#822" class="Bound"
+      >n</a
+      ><a name="1001"
+      > </a
+      ><a name="1002" href="lib.groups.HomotopyGroup.html#842" class="Bound"
+      >Y</a
+      ><a name="1003" class="Symbol"
+      >)</a
+      ><a name="1004"
+      >
+  </a
+      ><a name="1007" href="lib.groups.HomotopyGroup.html#965" class="Function"
+      >&#960;S-emap</a
+      ><a name="1014"
+      > </a
+      ><a name="1015" href="lib.groups.HomotopyGroup.html#1015" class="Bound"
+      >e</a
+      ><a name="1016"
+      > </a
+      ><a name="1017" class="Symbol"
+      >=</a
+      ><a name="1018"
+      > </a
+      ><a name="1019" href="lib.groups.TruncationGroup.html#3190" class="Function"
+      >Trunc-group-emap</a
+      ><a name="1035"
+      > </a
+      ><a name="1036" class="Symbol"
+      >(</a
+      ><a name="1037" href="lib.groups.LoopSpace.html#1280" class="Function"
+      >&#937;^S-group-structure-emap</a
+      ><a name="1061"
+      > </a
+      ><a name="1062" href="lib.groups.HomotopyGroup.html#822" class="Bound"
+      >n</a
+      ><a name="1063"
+      > </a
+      ><a name="1064" href="lib.groups.HomotopyGroup.html#1015" class="Bound"
+      >e</a
+      ><a name="1065" class="Symbol"
+      >)</a
+      ><a name="1066"
+      >
+
+</a
+      ><a name="1068" class="Comment"
+      >{- &#960;_(n+1) of a space is &#960;_n of its loop space -}</a
+      ><a name="1117"
+      >
+</a
+      ><a name="1118" class="Keyword"
+      >abstract</a
+      ><a name="1126"
+      >
+  </a
+      ><a name="1129" href="lib.groups.HomotopyGroup.html#1129" class="Function"
+      >&#960;S-&#937;-split-iso</a
+      ><a name="1143"
+      > </a
+      ><a name="1144" class="Symbol"
+      >:</a
+      ><a name="1145"
+      > </a
+      ><a name="1146" class="Symbol"
+      >&#8704;</a
+      ><a name="1147"
+      > </a
+      ><a name="1148" class="Symbol"
+      >{</a
+      ><a name="1149" href="lib.groups.HomotopyGroup.html#1149" class="Bound"
+      >i</a
+      ><a name="1150" class="Symbol"
+      >}</a
+      ><a name="1151"
+      > </a
+      ><a name="1152" class="Symbol"
+      >(</a
+      ><a name="1153" href="lib.groups.HomotopyGroup.html#1153" class="Bound"
+      >n</a
+      ><a name="1154"
+      > </a
+      ><a name="1155" class="Symbol"
+      >:</a
+      ><a name="1156"
+      > </a
+      ><a name="1157" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="1158" class="Symbol"
+      >)</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" class="Symbol"
+      >(</a
+      ><a name="1161" href="lib.groups.HomotopyGroup.html#1161" class="Bound"
+      >X</a
+      ><a name="1162"
+      > </a
+      ><a name="1163" class="Symbol"
+      >:</a
+      ><a name="1164"
+      > </a
+      ><a name="1165" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1168"
+      > </a
+      ><a name="1169" href="lib.groups.HomotopyGroup.html#1149" class="Bound"
+      >i</a
+      ><a name="1170" class="Symbol"
+      >)</a
+      ><a name="1171"
+      >
+    </a
+      ><a name="1176" class="Symbol"
+      >&#8594;</a
+      ><a name="1177"
+      > </a
+      ><a name="1178" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="1180"
+      > </a
+      ><a name="1181" class="Symbol"
+      >(</a
+      ><a name="1182" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1183"
+      > </a
+      ><a name="1184" href="lib.groups.HomotopyGroup.html#1153" class="Bound"
+      >n</a
+      ><a name="1185" class="Symbol"
+      >)</a
+      ><a name="1186"
+      > </a
+      ><a name="1187" href="lib.groups.HomotopyGroup.html#1161" class="Bound"
+      >X</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="1191"
+      > </a
+      ><a name="1192" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="1194"
+      > </a
+      ><a name="1195" href="lib.groups.HomotopyGroup.html#1153" class="Bound"
+      >n</a
+      ><a name="1196"
+      > </a
+      ><a name="1197" class="Symbol"
+      >(</a
+      ><a name="1198" href="lib.types.LoopSpace.html#394" class="Function"
+      >&#8857;&#937;</a
+      ><a name="1200"
+      > </a
+      ><a name="1201" href="lib.groups.HomotopyGroup.html#1161" class="Bound"
+      >X</a
+      ><a name="1202" class="Symbol"
+      >)</a
+      ><a name="1203"
+      >
+  </a
+      ><a name="1206" href="lib.groups.HomotopyGroup.html#1129" class="Function"
+      >&#960;S-&#937;-split-iso</a
+      ><a name="1220"
+      > </a
+      ><a name="1221" href="lib.groups.HomotopyGroup.html#1221" class="Bound"
+      >n</a
+      ><a name="1222"
+      > </a
+      ><a name="1223" href="lib.groups.HomotopyGroup.html#1223" class="Bound"
+      >X</a
+      ><a name="1224"
+      > </a
+      ><a name="1225" class="Symbol"
+      >=</a
+      ><a name="1226"
+      >
+    </a
+      ><a name="1231" href="lib.groups.Homomorphism.html#2532" class="InductiveConstructor"
+      >group-hom</a
+      ><a name="1240"
+      >
+      </a
+      ><a name="1247" class="Symbol"
+      >(</a
+      ><a name="1248" href="lib.types.Truncation.html#6046" class="Function"
+      >Trunc-fmap</a
+      ><a name="1258"
+      > </a
+      ><a name="1259" class="Symbol"
+      >(</a
+      ><a name="1260" href="lib.types.LoopSpace.html#10497" class="Function"
+      >&#937;^-&#937;-split</a
+      ><a name="1270"
+      > </a
+      ><a name="1271" class="Symbol"
+      >(</a
+      ><a name="1272" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1273"
+      > </a
+      ><a name="1274" href="lib.groups.HomotopyGroup.html#1221" class="Bound"
+      >n</a
+      ><a name="1275" class="Symbol"
+      >)</a
+      ><a name="1276"
+      > </a
+      ><a name="1277" href="lib.groups.HomotopyGroup.html#1223" class="Bound"
+      >X</a
+      ><a name="1278" class="Symbol"
+      >))</a
+      ><a name="1280"
+      >
+      </a
+      ><a name="1287" class="Symbol"
+      >(</a
+      ><a name="1288" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="1298"
+      > </a
+      ><a name="1299" class="Symbol"
+      >(&#955;</a
+      ><a name="1301"
+      > </a
+      ><a name="1302" href="lib.groups.HomotopyGroup.html#1302" class="Bound"
+      >_</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" class="Symbol"
+      >&#8594;</a
+      ><a name="1305"
+      > </a
+      ><a name="1306" href="lib.types.Pi.html#188" class="Function"
+      >&#928;-level</a
+      ><a name="1313"
+      > </a
+      ><a name="1314" class="Symbol"
+      >(&#955;</a
+      ><a name="1316"
+      > </a
+      ><a name="1317" href="lib.groups.HomotopyGroup.html#1317" class="Bound"
+      >_</a
+      ><a name="1318"
+      > </a
+      ><a name="1319" class="Symbol"
+      >&#8594;</a
+      ><a name="1320"
+      > </a
+      ><a name="1321" href="lib.NType.html#3994" class="Function"
+      >=-preserves-level</a
+      ><a name="1338"
+      > </a
+      ><a name="1339" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="1350" class="Symbol"
+      >))</a
+      ><a name="1352"
+      >
+        </a
+      ><a name="1361" class="Symbol"
+      >(&#955;</a
+      ><a name="1363"
+      > </a
+      ><a name="1364" href="lib.groups.HomotopyGroup.html#1364" class="Bound"
+      >p</a
+      ><a name="1365"
+      > </a
+      ><a name="1366" class="Symbol"
+      >&#8594;</a
+      ><a name="1367"
+      > </a
+      ><a name="1368" href="lib.types.Truncation.html#583" class="Postulate"
+      >Trunc-elim</a
+      ><a name="1378"
+      > </a
+      ><a name="1379" class="Symbol"
+      >(&#955;</a
+      ><a name="1381"
+      > </a
+      ><a name="1382" href="lib.groups.HomotopyGroup.html#1382" class="Bound"
+      >_</a
+      ><a name="1383"
+      > </a
+      ><a name="1384" class="Symbol"
+      >&#8594;</a
+      ><a name="1385"
+      > </a
+      ><a name="1386" href="lib.NType.html#3994" class="Function"
+      >=-preserves-level</a
+      ><a name="1403"
+      > </a
+      ><a name="1404" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="1415" class="Symbol"
+      >)</a
+      ><a name="1416"
+      >
+          </a
+      ><a name="1427" class="Symbol"
+      >(&#955;</a
+      ><a name="1429"
+      > </a
+      ><a name="1430" href="lib.groups.HomotopyGroup.html#1430" class="Bound"
+      >q</a
+      ><a name="1431"
+      > </a
+      ><a name="1432" class="Symbol"
+      >&#8594;</a
+      ><a name="1433"
+      > </a
+      ><a name="1434" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[_]</a
+      ><a name="1440"
+      > </a
+      ><a name="1441" class="Symbol"
+      >(</a
+      ><a name="1442" href="lib.types.LoopSpace.html#10607" class="Function"
+      >&#937;^S-&#937;-split-&#8729;</a
+      ><a name="1455"
+      > </a
+      ><a name="1456" href="lib.groups.HomotopyGroup.html#1221" class="Bound"
+      >n</a
+      ><a name="1457"
+      > </a
+      ><a name="1458" href="lib.groups.HomotopyGroup.html#1223" class="Bound"
+      >X</a
+      ><a name="1459"
+      > </a
+      ><a name="1460" href="lib.groups.HomotopyGroup.html#1364" class="Bound"
+      >p</a
+      ><a name="1461"
+      > </a
+      ><a name="1462" href="lib.groups.HomotopyGroup.html#1430" class="Bound"
+      >q</a
+      ><a name="1463" class="Symbol"
+      >))))</a
+      ><a name="1467"
+      > </a
+      ><a name="1468" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1469"
+      >
+    </a
+      ><a name="1474" href="lib.types.Truncation.html#8752" class="Function"
+      >Trunc-isemap</a
+      ><a name="1486"
+      > </a
+      ><a name="1487" class="Number"
+      >0</a
+      ><a name="1488"
+      > </a
+      ><a name="1489" class="Symbol"
+      >(</a
+      ><a name="1490" href="lib.types.LoopSpace.html#10844" class="Function"
+      >&#937;^-&#937;-split-is-equiv</a
+      ><a name="1509"
+      > </a
+      ><a name="1510" class="Symbol"
+      >(</a
+      ><a name="1511" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1512"
+      > </a
+      ><a name="1513" href="lib.groups.HomotopyGroup.html#1221" class="Bound"
+      >n</a
+      ><a name="1514" class="Symbol"
+      >)</a
+      ><a name="1515"
+      > </a
+      ><a name="1516" href="lib.groups.HomotopyGroup.html#1223" class="Bound"
+      >X</a
+      ><a name="1517" class="Symbol"
+      >)</a
+      ><a name="1518"
+      >
+
+</a
+      ><a name="1520" class="Comment"
+      >{- We can shift the truncation inside the loop in the definition of &#960; -}</a
+      ><a name="1592"
+      >
+</a
+      ><a name="1593" class="Keyword"
+      >module</a
+      ><a name="1599"
+      > </a
+      ><a name="1600" href="lib.groups.HomotopyGroup.html#1600" class="Module"
+      >_</a
+      ><a name="1601"
+      > </a
+      ><a name="1602" class="Symbol"
+      >{</a
+      ><a name="1603" href="lib.groups.HomotopyGroup.html#1603" class="Bound"
+      >i</a
+      ><a name="1604" class="Symbol"
+      >}</a
+      ><a name="1605"
+      > </a
+      ><a name="1606" class="Keyword"
+      >where</a
+      ><a name="1611"
+      >
+
+  </a
+      ><a name="1615" class="Keyword"
+      >private</a
+      ><a name="1622"
+      >
+    </a
+      ><a name="1627" class="Keyword"
+      >record</a
+      ><a name="1633"
+      > </a
+      ><a name="1634" href="lib.groups.HomotopyGroup.html#1634" class="Record"
+      >&#937;^STruncPreIso</a
+      ><a name="1648"
+      > </a
+      ><a name="1649" class="Symbol"
+      >(</a
+      ><a name="1650" href="lib.groups.HomotopyGroup.html#1650" class="Bound"
+      >n</a
+      ><a name="1651"
+      > </a
+      ><a name="1652" class="Symbol"
+      >:</a
+      ><a name="1653"
+      > </a
+      ><a name="1654" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="1655" class="Symbol"
+      >)</a
+      ><a name="1656"
+      > </a
+      ><a name="1657" class="Symbol"
+      >(</a
+      ><a name="1658" href="lib.groups.HomotopyGroup.html#1658" class="Bound"
+      >m</a
+      ><a name="1659"
+      > </a
+      ><a name="1660" class="Symbol"
+      >:</a
+      ><a name="1661"
+      > </a
+      ><a name="1662" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="1665" class="Symbol"
+      >)</a
+      ><a name="1666"
+      > </a
+      ><a name="1667" class="Symbol"
+      >(</a
+      ><a name="1668" href="lib.groups.HomotopyGroup.html#1668" class="Bound"
+      >k</a
+      ><a name="1669"
+      > </a
+      ><a name="1670" class="Symbol"
+      >:</a
+      ><a name="1671"
+      > </a
+      ><a name="1672" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="1675" class="Symbol"
+      >)</a
+      ><a name="1676"
+      > </a
+      ><a name="1677" class="Symbol"
+      >(</a
+      ><a name="1678" href="lib.groups.HomotopyGroup.html#1678" class="Bound"
+      >X</a
+      ><a name="1679"
+      > </a
+      ><a name="1680" class="Symbol"
+      >:</a
+      ><a name="1681"
+      > </a
+      ><a name="1682" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1685"
+      > </a
+      ><a name="1686" href="lib.groups.HomotopyGroup.html#1603" class="Bound"
+      >i</a
+      ><a name="1687" class="Symbol"
+      >)</a
+      ><a name="1688"
+      >
+      </a
+      ><a name="1695" class="Symbol"
+      >:</a
+      ><a name="1696"
+      > </a
+      ><a name="1697" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1701"
+      > </a
+      ><a name="1702" href="lib.groups.HomotopyGroup.html#1603" class="Bound"
+      >i</a
+      ><a name="1703"
+      > </a
+      ><a name="1704" class="Keyword"
+      >where</a
+      ><a name="1709"
+      >
+      </a
+      ><a name="1716" class="Keyword"
+      >field</a
+      ><a name="1721"
+      >
+        </a
+      ><a name="1730" href="lib.groups.HomotopyGroup.html#1730" class="Field"
+      >F</a
+      ><a name="1731"
+      > </a
+      ><a name="1732" class="Symbol"
+      >:</a
+      ><a name="1733"
+      > </a
+      ><a name="1734" href="lib.types.LoopSpace.html#2866" class="Function"
+      >&#8857;&#937;^</a
+      ><a name="1737"
+      > </a
+      ><a name="1738" class="Symbol"
+      >(</a
+      ><a name="1739" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1740"
+      > </a
+      ><a name="1741" href="lib.groups.HomotopyGroup.html#1650" class="Bound"
+      >n</a
+      ><a name="1742" class="Symbol"
+      >)</a
+      ><a name="1743"
+      > </a
+      ><a name="1744" class="Symbol"
+      >(</a
+      ><a name="1745" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="1751"
+      > </a
+      ><a name="1752" href="lib.groups.HomotopyGroup.html#1668" class="Bound"
+      >k</a
+      ><a name="1753"
+      > </a
+      ><a name="1754" href="lib.groups.HomotopyGroup.html#1678" class="Bound"
+      >X</a
+      ><a name="1755" class="Symbol"
+      >)</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1759"
+      > </a
+      ><a name="1760" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" href="lib.groups.HomotopyGroup.html#1658" class="Bound"
+      >m</a
+      ><a name="1768"
+      > </a
+      ><a name="1769" class="Symbol"
+      >(</a
+      ><a name="1770" href="lib.types.LoopSpace.html#2866" class="Function"
+      >&#8857;&#937;^</a
+      ><a name="1773"
+      > </a
+      ><a name="1774" class="Symbol"
+      >(</a
+      ><a name="1775" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1776"
+      > </a
+      ><a name="1777" href="lib.groups.HomotopyGroup.html#1650" class="Bound"
+      >n</a
+      ><a name="1778" class="Symbol"
+      >)</a
+      ><a name="1779"
+      > </a
+      ><a name="1780" href="lib.groups.HomotopyGroup.html#1678" class="Bound"
+      >X</a
+      ><a name="1781" class="Symbol"
+      >)</a
+      ><a name="1782"
+      >
+        </a
+      ><a name="1791" href="lib.groups.HomotopyGroup.html#1791" class="Field"
+      >pres-comp</a
+      ><a name="1800"
+      > </a
+      ><a name="1801" class="Symbol"
+      >:</a
+      ><a name="1802"
+      > </a
+      ><a name="1803" class="Symbol"
+      >&#8704;</a
+      ><a name="1804"
+      > </a
+      ><a name="1805" class="Symbol"
+      >(</a
+      ><a name="1806" href="lib.groups.HomotopyGroup.html#1806" class="Bound"
+      >p</a
+      ><a name="1807"
+      > </a
+      ><a name="1808" href="lib.groups.HomotopyGroup.html#1808" class="Bound"
+      >q</a
+      ><a name="1809"
+      > </a
+      ><a name="1810" class="Symbol"
+      >:</a
+      ><a name="1811"
+      > </a
+      ><a name="1812" href="lib.types.LoopSpace.html#2942" class="Function"
+      >&#937;^</a
+      ><a name="1814"
+      > </a
+      ><a name="1815" class="Symbol"
+      >(</a
+      ><a name="1816" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1817"
+      > </a
+      ><a name="1818" href="lib.groups.HomotopyGroup.html#1650" class="Bound"
+      >n</a
+      ><a name="1819" class="Symbol"
+      >)</a
+      ><a name="1820"
+      > </a
+      ><a name="1821" class="Symbol"
+      >(</a
+      ><a name="1822" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="1828"
+      > </a
+      ><a name="1829" href="lib.groups.HomotopyGroup.html#1668" class="Bound"
+      >k</a
+      ><a name="1830"
+      > </a
+      ><a name="1831" href="lib.groups.HomotopyGroup.html#1678" class="Bound"
+      >X</a
+      ><a name="1832" class="Symbol"
+      >))</a
+      ><a name="1834"
+      >
+          </a
+      ><a name="1845" class="Symbol"
+      >&#8594;</a
+      ><a name="1846"
+      > </a
+      ><a name="1847" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1850"
+      > </a
+      ><a name="1851" href="lib.groups.HomotopyGroup.html#1730" class="Field"
+      >F</a
+      ><a name="1852"
+      > </a
+      ><a name="1853" class="Symbol"
+      >(</a
+      ><a name="1854" href="lib.types.LoopSpace.html#3150" class="Function"
+      >&#937;^S-&#8729;</a
+      ><a name="1859"
+      > </a
+      ><a name="1860" href="lib.groups.HomotopyGroup.html#1650" class="Bound"
+      >n</a
+      ><a name="1861"
+      > </a
+      ><a name="1862" href="lib.groups.HomotopyGroup.html#1806" class="Bound"
+      >p</a
+      ><a name="1863"
+      > </a
+      ><a name="1864" href="lib.groups.HomotopyGroup.html#1808" class="Bound"
+      >q</a
+      ><a name="1865" class="Symbol"
+      >)</a
+      ><a name="1866"
+      > </a
+      ><a name="1867" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1869"
+      > </a
+      ><a name="1870" href="lib.types.Truncation.html#6189" class="Function"
+      >Trunc-fmap2</a
+      ><a name="1881"
+      > </a
+      ><a name="1882" class="Symbol"
+      >(</a
+      ><a name="1883" href="lib.types.LoopSpace.html#3150" class="Function"
+      >&#937;^S-&#8729;</a
+      ><a name="1888"
+      > </a
+      ><a name="1889" href="lib.groups.HomotopyGroup.html#1650" class="Bound"
+      >n</a
+      ><a name="1890" class="Symbol"
+      >)</a
+      ><a name="1891"
+      > </a
+      ><a name="1892" class="Symbol"
+      >(</a
+      ><a name="1893" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1896"
+      > </a
+      ><a name="1897" href="lib.groups.HomotopyGroup.html#1730" class="Field"
+      >F</a
+      ><a name="1898"
+      > </a
+      ><a name="1899" href="lib.groups.HomotopyGroup.html#1806" class="Bound"
+      >p</a
+      ><a name="1900" class="Symbol"
+      >)</a
+      ><a name="1901"
+      > </a
+      ><a name="1902" class="Symbol"
+      >(</a
+      ><a name="1903" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1906"
+      > </a
+      ><a name="1907" href="lib.groups.HomotopyGroup.html#1730" class="Field"
+      >F</a
+      ><a name="1908"
+      > </a
+      ><a name="1909" href="lib.groups.HomotopyGroup.html#1808" class="Bound"
+      >q</a
+      ><a name="1910" class="Symbol"
+      >)</a
+      ><a name="1911"
+      >
+        </a
+      ><a name="1920" href="lib.groups.HomotopyGroup.html#1920" class="Field"
+      >e</a
+      ><a name="1921"
+      > </a
+      ><a name="1922" class="Symbol"
+      >:</a
+      ><a name="1923"
+      > </a
+      ><a name="1924" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="1932"
+      > </a
+      ><a name="1933" class="Symbol"
+      >(</a
+      ><a name="1934" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1937"
+      > </a
+      ><a name="1938" href="lib.groups.HomotopyGroup.html#1730" class="Field"
+      >F</a
+      ><a name="1939" class="Symbol"
+      >)</a
+      ><a name="1940"
+      >
+
+    </a
+      ><a name="1946" href="lib.groups.HomotopyGroup.html#1946" class="Function"
+      >&#937;^S-Trunc-preiso</a
+      ><a name="1962"
+      > </a
+      ><a name="1963" class="Symbol"
+      >:</a
+      ><a name="1964"
+      > </a
+      ><a name="1965" class="Symbol"
+      >(</a
+      ><a name="1966" href="lib.groups.HomotopyGroup.html#1966" class="Bound"
+      >n</a
+      ><a name="1967"
+      > </a
+      ><a name="1968" class="Symbol"
+      >:</a
+      ><a name="1969"
+      > </a
+      ><a name="1970" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="1971" class="Symbol"
+      >)</a
+      ><a name="1972"
+      > </a
+      ><a name="1973" class="Symbol"
+      >(</a
+      ><a name="1974" href="lib.groups.HomotopyGroup.html#1974" class="Bound"
+      >m</a
+      ><a name="1975"
+      > </a
+      ><a name="1976" class="Symbol"
+      >:</a
+      ><a name="1977"
+      > </a
+      ><a name="1978" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="1981" class="Symbol"
+      >)</a
+      ><a name="1982"
+      > </a
+      ><a name="1983" class="Symbol"
+      >(</a
+      ><a name="1984" href="lib.groups.HomotopyGroup.html#1984" class="Bound"
+      >X</a
+      ><a name="1985"
+      > </a
+      ><a name="1986" class="Symbol"
+      >:</a
+      ><a name="1987"
+      > </a
+      ><a name="1988" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1991"
+      > </a
+      ><a name="1992" href="lib.groups.HomotopyGroup.html#1603" class="Bound"
+      >i</a
+      ><a name="1993" class="Symbol"
+      >)</a
+      ><a name="1994"
+      >
+      </a
+      ><a name="2001" class="Symbol"
+      >&#8594;</a
+      ><a name="2002"
+      > </a
+      ><a name="2003" href="lib.groups.HomotopyGroup.html#1634" class="Record"
+      >&#937;^STruncPreIso</a
+      ><a name="2017"
+      > </a
+      ><a name="2018" href="lib.groups.HomotopyGroup.html#1966" class="Bound"
+      >n</a
+      ><a name="2019"
+      > </a
+      ><a name="2020" href="lib.groups.HomotopyGroup.html#1974" class="Bound"
+      >m</a
+      ><a name="2021"
+      > </a
+      ><a name="2022" class="Symbol"
+      >(</a
+      ><a name="2023" href="lib.Base.html#8938" class="Function Operator"
+      >&#10216;</a
+      ><a name="2024"
+      > </a
+      ><a name="2025" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2026"
+      > </a
+      ><a name="2027" href="lib.groups.HomotopyGroup.html#1966" class="Bound"
+      >n</a
+      ><a name="2028"
+      > </a
+      ><a name="2029" href="lib.Base.html#8938" class="Function Operator"
+      >&#10217;&#8331;&#8322;</a
+      ><a name="2032"
+      > </a
+      ><a name="2033" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="2036"
+      > </a
+      ><a name="2037" href="lib.groups.HomotopyGroup.html#1974" class="Bound"
+      >m</a
+      ><a name="2038" class="Symbol"
+      >)</a
+      ><a name="2039"
+      > </a
+      ><a name="2040" href="lib.groups.HomotopyGroup.html#1984" class="Bound"
+      >X</a
+      ><a name="2041"
+      >
+    </a
+      ><a name="2046" href="lib.groups.HomotopyGroup.html#1946" class="Function"
+      >&#937;^S-Trunc-preiso</a
+      ><a name="2062"
+      > </a
+      ><a name="2063" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="2064"
+      > </a
+      ><a name="2065" href="lib.groups.HomotopyGroup.html#2065" class="Bound"
+      >m</a
+      ><a name="2066"
+      > </a
+      ><a name="2067" href="lib.groups.HomotopyGroup.html#2067" class="Bound"
+      >X</a
+      ><a name="2068"
+      > </a
+      ><a name="2069" class="Symbol"
+      >=</a
+      ><a name="2070"
+      >
+      </a
+      ><a name="2077" class="Keyword"
+      >record</a
+      ><a name="2083"
+      > </a
+      ><a name="2084" class="Symbol"
+      >{</a
+      ><a name="2085"
+      > </a
+      ><a name="2086" class="Field"
+      >F</a
+      ><a name="2087"
+      > </a
+      ><a name="2088" class="Symbol"
+      >=</a
+      ><a name="2089"
+      > </a
+      ><a name="2090" class="Symbol"
+      >(</a
+      ><a name="2091" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="2093"
+      > </a
+      ><a name="2094" class="Symbol"
+      >(</a
+      ><a name="2095" href="lib.types.Truncation.html#2602" class="Function"
+      >Trunc=-equiv</a
+      ><a name="2107"
+      > </a
+      ><a name="2108" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="2109"
+      > </a
+      ><a name="2110" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2112"
+      > </a
+      ><a name="2113" href="lib.groups.HomotopyGroup.html#2067" class="Bound"
+      >X</a
+      ><a name="2114"
+      > </a
+      ><a name="2115" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="2116"
+      > </a
+      ><a name="2117" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="2118"
+      > </a
+      ><a name="2119" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2121"
+      > </a
+      ><a name="2122" href="lib.groups.HomotopyGroup.html#2067" class="Bound"
+      >X</a
+      ><a name="2123"
+      > </a
+      ><a name="2124" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="2125" class="Symbol"
+      >)</a
+      ><a name="2126"
+      > </a
+      ><a name="2127" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2128"
+      > </a
+      ><a name="2129" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2132" class="Symbol"
+      >);</a
+      ><a name="2134"
+      >
+               </a
+      ><a name="2150" class="Field"
+      >pres-comp</a
+      ><a name="2159"
+      > </a
+      ><a name="2160" class="Symbol"
+      >=</a
+      ><a name="2161"
+      > </a
+      ><a name="2162" href="lib.types.Truncation.html#8043" class="Function"
+      >Trunc=-&#8729;-comm</a
+      ><a name="2175" class="Symbol"
+      >;</a
+      ><a name="2176"
+      >
+               </a
+      ><a name="2192" class="Field"
+      >e</a
+      ><a name="2193"
+      > </a
+      ><a name="2194" class="Symbol"
+      >=</a
+      ><a name="2195"
+      > </a
+      ><a name="2196" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2199"
+      > </a
+      ><a name="2200" class="Symbol"
+      >(</a
+      ><a name="2201" href="lib.types.Truncation.html#2602" class="Function"
+      >Trunc=-equiv</a
+      ><a name="2213"
+      > </a
+      ><a name="2214" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="2215"
+      > </a
+      ><a name="2216" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2218"
+      > </a
+      ><a name="2219" href="lib.groups.HomotopyGroup.html#2067" class="Bound"
+      >X</a
+      ><a name="2220"
+      > </a
+      ><a name="2221" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="2222"
+      > </a
+      ><a name="2223" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="2224"
+      > </a
+      ><a name="2225" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="2227"
+      > </a
+      ><a name="2228" href="lib.groups.HomotopyGroup.html#2067" class="Bound"
+      >X</a
+      ><a name="2229"
+      > </a
+      ><a name="2230" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="2231" class="Symbol"
+      >)</a
+      ><a name="2232"
+      > </a
+      ><a name="2233" class="Symbol"
+      >}</a
+      ><a name="2234"
+      >
+    </a
+      ><a name="2239" href="lib.groups.HomotopyGroup.html#1946" class="Function"
+      >&#937;^S-Trunc-preiso</a
+      ><a name="2255"
+      > </a
+      ><a name="2256" class="Symbol"
+      >(</a
+      ><a name="2257" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2258"
+      > </a
+      ><a name="2259" href="lib.groups.HomotopyGroup.html#2259" class="Bound"
+      >n</a
+      ><a name="2260" class="Symbol"
+      >)</a
+      ><a name="2261"
+      > </a
+      ><a name="2262" href="lib.groups.HomotopyGroup.html#2262" class="Bound"
+      >m</a
+      ><a name="2263"
+      > </a
+      ><a name="2264" href="lib.groups.HomotopyGroup.html#2264" class="Bound"
+      >X</a
+      ><a name="2265"
+      > </a
+      ><a name="2266" class="Symbol"
+      >=</a
+      ><a name="2267"
+      >
+      </a
+      ><a name="2274" class="Keyword"
+      >let</a
+      ><a name="2277"
+      >
+        </a
+      ><a name="2286" href="lib.groups.HomotopyGroup.html#2286" class="Bound"
+      >r</a
+      ><a name="2287"
+      > </a
+      ><a name="2288" class="Symbol"
+      >:</a
+      ><a name="2289"
+      > </a
+      ><a name="2290" href="lib.groups.HomotopyGroup.html#1634" class="Record"
+      >&#937;^STruncPreIso</a
+      ><a name="2304"
+      > </a
+      ><a name="2305" href="lib.groups.HomotopyGroup.html#2259" class="Bound"
+      >n</a
+      ><a name="2306"
+      > </a
+      ><a name="2307" class="Symbol"
+      >(</a
+      ><a name="2308" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2309"
+      > </a
+      ><a name="2310" href="lib.groups.HomotopyGroup.html#2262" class="Bound"
+      >m</a
+      ><a name="2311" class="Symbol"
+      >)</a
+      ><a name="2312"
+      > </a
+      ><a name="2313" class="Symbol"
+      >(</a
+      ><a name="2314" href="lib.Base.html#8938" class="Function Operator"
+      >&#10216;</a
+      ><a name="2315"
+      > </a
+      ><a name="2316" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2317"
+      > </a
+      ><a name="2318" href="lib.groups.HomotopyGroup.html#2259" class="Bound"
+      >n</a
+      ><a name="2319"
+      > </a
+      ><a name="2320" href="lib.Base.html#8938" class="Function Operator"
+      >&#10217;&#8331;&#8322;</a
+      ><a name="2323"
+      > </a
+      ><a name="2324" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="2327"
+      > </a
+      ><a name="2328" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2329"
+      > </a
+      ><a name="2330" href="lib.groups.HomotopyGroup.html#2262" class="Bound"
+      >m</a
+      ><a name="2331" class="Symbol"
+      >)</a
+      ><a name="2332"
+      > </a
+      ><a name="2333" href="lib.groups.HomotopyGroup.html#2264" class="Bound"
+      >X</a
+      ><a name="2334"
+      >
+        </a
+      ><a name="2343" href="lib.groups.HomotopyGroup.html#2286" class="Bound"
+      >r</a
+      ><a name="2344"
+      > </a
+      ><a name="2345" class="Symbol"
+      >=</a
+      ><a name="2346"
+      > </a
+      ><a name="2347" href="lib.groups.HomotopyGroup.html#1946" class="Function"
+      >&#937;^S-Trunc-preiso</a
+      ><a name="2363"
+      > </a
+      ><a name="2364" href="lib.groups.HomotopyGroup.html#2259" class="Bound"
+      >n</a
+      ><a name="2365"
+      > </a
+      ><a name="2366" class="Symbol"
+      >(</a
+      ><a name="2367" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="2368"
+      > </a
+      ><a name="2369" href="lib.groups.HomotopyGroup.html#2262" class="Bound"
+      >m</a
+      ><a name="2370" class="Symbol"
+      >)</a
+      ><a name="2371"
+      > </a
+      ><a name="2372" href="lib.groups.HomotopyGroup.html#2264" class="Bound"
+      >X</a
+      ><a name="2373"
+      >
+
+        </a
+      ><a name="2383" href="lib.groups.HomotopyGroup.html#2383" class="Bound"
+      >H</a
+      ><a name="2384"
+      > </a
+      ><a name="2385" class="Symbol"
+      >=</a
+      ><a name="2386"
+      > </a
+      ><a name="2387" class="Symbol"
+      >(</a
+      ><a name="2388" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="2390"
+      > </a
+      ><a name="2391" class="Symbol"
+      >(</a
+      ><a name="2392" href="lib.types.Truncation.html#2602" class="Function"
+      >Trunc=-equiv</a
+      ><a name="2404"
+      > </a
+      ><a name="2405" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="2406"
+      > </a
+      ><a name="2407" href="lib.types.LoopSpace.html#3210" class="Function"
+      >idp^</a
+      ><a name="2411"
+      > </a
+      ><a name="2412" class="Symbol"
+      >(</a
+      ><a name="2413" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2414"
+      > </a
+      ><a name="2415" href="lib.groups.HomotopyGroup.html#2259" class="Bound"
+      >n</a
+      ><a name="2416" class="Symbol"
+      >)</a
+      ><a name="2417"
+      > </a
+      ><a name="2418" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="2419"
+      > </a
+      ><a name="2420" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="2421"
+      > </a
+      ><a name="2422" href="lib.types.LoopSpace.html#3210" class="Function"
+      >idp^</a
+      ><a name="2426"
+      > </a
+      ><a name="2427" class="Symbol"
+      >(</a
+      ><a name="2428" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2429"
+      > </a
+      ><a name="2430" href="lib.groups.HomotopyGroup.html#2259" class="Bound"
+      >n</a
+      ><a name="2431" class="Symbol"
+      >)</a
+      ><a name="2432"
+      > </a
+      ><a name="2433" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="2434" class="Symbol"
+      >)</a
+      ><a name="2435"
+      > </a
+      ><a name="2436" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2437"
+      > </a
+      ><a name="2438" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2441" class="Symbol"
+      >)</a
+      ><a name="2442"
+      >
+        </a
+      ><a name="2451" href="lib.groups.HomotopyGroup.html#2451" class="Bound"
+      >G</a
+      ><a name="2452"
+      > </a
+      ><a name="2453" class="Symbol"
+      >=</a
+      ><a name="2454"
+      > </a
+      ><a name="2455" href="lib.types.LoopSpace.html#709" class="Function"
+      >&#8857;&#937;-fmap</a
+      ><a name="2462"
+      > </a
+      ><a name="2463" class="Symbol"
+      >(</a
+      ><a name="2464" href="lib.groups.HomotopyGroup.html#1730" class="Field"
+      >&#937;^STruncPreIso.F</a
+      ><a name="2480"
+      > </a
+      ><a name="2481" href="lib.groups.HomotopyGroup.html#2286" class="Bound"
+      >r</a
+      ><a name="2482" class="Symbol"
+      >)</a
+      ><a name="2483"
+      >
+      </a
+      ><a name="2490" class="Keyword"
+      >in</a
+      ><a name="2492"
+      >
+      </a
+      ><a name="2499" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="2508"
+      > </a
+      ><a name="2509" class="Symbol"
+      >(&#955;</a
+      ><a name="2511"
+      > </a
+      ><a name="2512" href="lib.groups.HomotopyGroup.html#2512" class="Bound"
+      >k</a
+      ><a name="2513"
+      > </a
+      ><a name="2514" class="Symbol"
+      >&#8594;</a
+      ><a name="2515"
+      > </a
+      ><a name="2516" href="lib.groups.HomotopyGroup.html#1634" class="Record"
+      >&#937;^STruncPreIso</a
+      ><a name="2530"
+      > </a
+      ><a name="2531" class="Symbol"
+      >(</a
+      ><a name="2532" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2533"
+      > </a
+      ><a name="2534" href="lib.groups.HomotopyGroup.html#2259" class="Bound"
+      >n</a
+      ><a name="2535" class="Symbol"
+      >)</a
+      ><a name="2536"
+      > </a
+      ><a name="2537" href="lib.groups.HomotopyGroup.html#2262" class="Bound"
+      >m</a
+      ><a name="2538"
+      > </a
+      ><a name="2539" href="lib.groups.HomotopyGroup.html#2512" class="Bound"
+      >k</a
+      ><a name="2540"
+      > </a
+      ><a name="2541" href="lib.groups.HomotopyGroup.html#2264" class="Bound"
+      >X</a
+      ><a name="2542" class="Symbol"
+      >)</a
+      ><a name="2543"
+      >
+        </a
+      ><a name="2552" class="Symbol"
+      >(</a
+      ><a name="2553" href="lib.types.TLevel.html#435" class="Function"
+      >+2+-&#946;r</a
+      ><a name="2559"
+      > </a
+      ><a name="2560" href="lib.Base.html#8938" class="Function Operator"
+      >&#10216;</a
+      ><a name="2561"
+      > </a
+      ><a name="2562" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2563"
+      > </a
+      ><a name="2564" href="lib.groups.HomotopyGroup.html#2259" class="Bound"
+      >n</a
+      ><a name="2565"
+      > </a
+      ><a name="2566" href="lib.Base.html#8938" class="Function Operator"
+      >&#10217;&#8331;&#8322;</a
+      ><a name="2569"
+      > </a
+      ><a name="2570" href="lib.groups.HomotopyGroup.html#2262" class="Bound"
+      >m</a
+      ><a name="2571" class="Symbol"
+      >)</a
+      ><a name="2572"
+      >
+        </a
+      ><a name="2581" class="Symbol"
+      >(</a
+      ><a name="2582" class="Keyword"
+      >record</a
+      ><a name="2588"
+      > </a
+      ><a name="2589" class="Symbol"
+      >{</a
+      ><a name="2590"
+      >
+           </a
+      ><a name="2602" class="Field"
+      >F</a
+      ><a name="2603"
+      > </a
+      ><a name="2604" class="Symbol"
+      >=</a
+      ><a name="2605"
+      > </a
+      ><a name="2606" href="lib.groups.HomotopyGroup.html#2383" class="Bound"
+      >H</a
+      ><a name="2607"
+      > </a
+      ><a name="2608" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="2610"
+      > </a
+      ><a name="2611" href="lib.groups.HomotopyGroup.html#2451" class="Bound"
+      >G</a
+      ><a name="2612" class="Symbol"
+      >;</a
+      ><a name="2613"
+      >
+           </a
+      ><a name="2625" class="Field"
+      >pres-comp</a
+      ><a name="2634"
+      > </a
+      ><a name="2635" class="Symbol"
+      >=</a
+      ><a name="2636"
+      > </a
+      ><a name="2637" class="Symbol"
+      >&#955;</a
+      ><a name="2638"
+      > </a
+      ><a name="2639" href="lib.groups.HomotopyGroup.html#2639" class="Bound"
+      >p</a
+      ><a name="2640"
+      > </a
+      ><a name="2641" href="lib.groups.HomotopyGroup.html#2641" class="Bound"
+      >q</a
+      ><a name="2642"
+      > </a
+      ><a name="2643" class="Symbol"
+      >&#8594;</a
+      ><a name="2644"
+      >
+             </a
+      ><a name="2658" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2660"
+      > </a
+      ><a name="2661" class="Symbol"
+      >(</a
+      ><a name="2662" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="2665"
+      > </a
+      ><a name="2666" href="lib.groups.HomotopyGroup.html#2383" class="Bound"
+      >H</a
+      ><a name="2667" class="Symbol"
+      >)</a
+      ><a name="2668"
+      > </a
+      ><a name="2669" class="Symbol"
+      >(</a
+      ><a name="2670" href="lib.types.LoopSpace.html#7334" class="Function"
+      >&#937;^S-fmap-&#8729;</a
+      ><a name="2680"
+      > </a
+      ><a name="2681" class="Number"
+      >0</a
+      ><a name="2682"
+      > </a
+      ><a name="2683" class="Symbol"
+      >(</a
+      ><a name="2684" href="lib.groups.HomotopyGroup.html#1730" class="Field"
+      >&#937;^STruncPreIso.F</a
+      ><a name="2700"
+      > </a
+      ><a name="2701" href="lib.groups.HomotopyGroup.html#2286" class="Bound"
+      >r</a
+      ><a name="2702" class="Symbol"
+      >)</a
+      ><a name="2703"
+      > </a
+      ><a name="2704" href="lib.groups.HomotopyGroup.html#2639" class="Bound"
+      >p</a
+      ><a name="2705"
+      > </a
+      ><a name="2706" href="lib.groups.HomotopyGroup.html#2641" class="Bound"
+      >q</a
+      ><a name="2707" class="Symbol"
+      >)</a
+      ><a name="2708"
+      >
+             </a
+      ><a name="2722" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2723"
+      > </a
+      ><a name="2724" class="Symbol"
+      >(</a
+      ><a name="2725" href="lib.types.Truncation.html#8043" class="Function"
+      >Trunc=-&#8729;-comm</a
+      ><a name="2738"
+      > </a
+      ><a name="2739" class="Symbol"
+      >(</a
+      ><a name="2740" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="2743"
+      > </a
+      ><a name="2744" href="lib.groups.HomotopyGroup.html#2451" class="Bound"
+      >G</a
+      ><a name="2745"
+      > </a
+      ><a name="2746" href="lib.groups.HomotopyGroup.html#2639" class="Bound"
+      >p</a
+      ><a name="2747" class="Symbol"
+      >)</a
+      ><a name="2748"
+      > </a
+      ><a name="2749" class="Symbol"
+      >(</a
+      ><a name="2750" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="2753"
+      > </a
+      ><a name="2754" href="lib.groups.HomotopyGroup.html#2451" class="Bound"
+      >G</a
+      ><a name="2755"
+      > </a
+      ><a name="2756" href="lib.groups.HomotopyGroup.html#2641" class="Bound"
+      >q</a
+      ><a name="2757" class="Symbol"
+      >));</a
+      ><a name="2760"
+      >
+           </a
+      ><a name="2772" class="Field"
+      >e</a
+      ><a name="2773"
+      > </a
+      ><a name="2774" class="Symbol"
+      >=</a
+      ><a name="2775"
+      > </a
+      ><a name="2776" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2779"
+      > </a
+      ><a name="2780" class="Symbol"
+      >(</a
+      ><a name="2781" href="lib.types.Truncation.html#2602" class="Function"
+      >Trunc=-equiv</a
+      ><a name="2793"
+      > </a
+      ><a name="2794" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="2795"
+      > </a
+      ><a name="2796" href="lib.types.LoopSpace.html#3210" class="Function"
+      >idp^</a
+      ><a name="2800"
+      > </a
+      ><a name="2801" class="Symbol"
+      >(</a
+      ><a name="2802" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2803"
+      > </a
+      ><a name="2804" href="lib.groups.HomotopyGroup.html#2259" class="Bound"
+      >n</a
+      ><a name="2805" class="Symbol"
+      >)</a
+      ><a name="2806"
+      > </a
+      ><a name="2807" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="2808"
+      > </a
+      ><a name="2809" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >[</a
+      ><a name="2810"
+      > </a
+      ><a name="2811" href="lib.types.LoopSpace.html#3210" class="Function"
+      >idp^</a
+      ><a name="2815"
+      > </a
+      ><a name="2816" class="Symbol"
+      >(</a
+      ><a name="2817" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2818"
+      > </a
+      ><a name="2819" href="lib.groups.HomotopyGroup.html#2259" class="Bound"
+      >n</a
+      ><a name="2820" class="Symbol"
+      >)</a
+      ><a name="2821"
+      > </a
+      ><a name="2822" href="lib.types.Truncation.html#294" class="Postulate Operator"
+      >]</a
+      ><a name="2823"
+      >
+                    </a
+      ><a name="2844" href="lib.Equivalence.html#5985" class="Function Operator"
+      >&#8728;e</a
+      ><a name="2846"
+      > </a
+      ><a name="2847" href="lib.types.LoopSpace.html#7854" class="Function"
+      >&#937;^-emap</a
+      ><a name="2854"
+      > </a
+      ><a name="2855" class="Number"
+      >1</a
+      ><a name="2856"
+      > </a
+      ><a name="2857" class="Symbol"
+      >(</a
+      ><a name="2858" href="lib.groups.HomotopyGroup.html#1730" class="Field"
+      >&#937;^STruncPreIso.F</a
+      ><a name="2874"
+      > </a
+      ><a name="2875" href="lib.groups.HomotopyGroup.html#2286" class="Bound"
+      >r</a
+      ><a name="2876"
+      > </a
+      ><a name="2877" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2878"
+      > </a
+      ><a name="2879" href="lib.groups.HomotopyGroup.html#1920" class="Field"
+      >&#937;^STruncPreIso.e</a
+      ><a name="2895"
+      > </a
+      ><a name="2896" href="lib.groups.HomotopyGroup.html#2286" class="Bound"
+      >r</a
+      ><a name="2897" class="Symbol"
+      >))})</a
+      ><a name="2901"
+      >
+
+  </a
+      ><a name="2905" href="lib.groups.HomotopyGroup.html#2905" class="Function"
+      >&#937;^S-group-Trunc-fuse-diag-iso</a
+      ><a name="2934"
+      > </a
+      ><a name="2935" class="Symbol"
+      >:</a
+      ><a name="2936"
+      > </a
+      ><a name="2937" class="Symbol"
+      >(</a
+      ><a name="2938" href="lib.groups.HomotopyGroup.html#2938" class="Bound"
+      >n</a
+      ><a name="2939"
+      > </a
+      ><a name="2940" class="Symbol"
+      >:</a
+      ><a name="2941"
+      > </a
+      ><a name="2942" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="2943" class="Symbol"
+      >)</a
+      ><a name="2944"
+      > </a
+      ><a name="2945" class="Symbol"
+      >(</a
+      ><a name="2946" href="lib.groups.HomotopyGroup.html#2946" class="Bound"
+      >X</a
+      ><a name="2947"
+      > </a
+      ><a name="2948" class="Symbol"
+      >:</a
+      ><a name="2949"
+      > </a
+      ><a name="2950" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2953"
+      > </a
+      ><a name="2954" href="lib.groups.HomotopyGroup.html#1603" class="Bound"
+      >i</a
+      ><a name="2955" class="Symbol"
+      >)</a
+      ><a name="2956"
+      >
+    </a
+      ><a name="2961" class="Symbol"
+      >&#8594;</a
+      ><a name="2962"
+      > </a
+      ><a name="2963" href="lib.groups.LoopSpace.html#612" class="Function"
+      >&#937;^S-group</a
+      ><a name="2972"
+      > </a
+      ><a name="2973" href="lib.groups.HomotopyGroup.html#2938" class="Bound"
+      >n</a
+      ><a name="2974"
+      > </a
+      ><a name="2975" class="Symbol"
+      >(</a
+      ><a name="2976" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="2982"
+      > </a
+      ><a name="2983" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="2984"
+      > </a
+      ><a name="2985" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2986"
+      > </a
+      ><a name="2987" href="lib.groups.HomotopyGroup.html#2938" class="Bound"
+      >n</a
+      ><a name="2988"
+      > </a
+      ><a name="2989" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="2990"
+      > </a
+      ><a name="2991" href="lib.groups.HomotopyGroup.html#2946" class="Bound"
+      >X</a
+      ><a name="2992" class="Symbol"
+      >)</a
+      ><a name="2993"
+      > </a
+      ><a name="2994" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3005"
+      > </a
+      ><a name="3006" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="3008"
+      > </a
+      ><a name="3009" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="3011"
+      > </a
+      ><a name="3012" href="lib.groups.HomotopyGroup.html#2938" class="Bound"
+      >n</a
+      ><a name="3013"
+      > </a
+      ><a name="3014" href="lib.groups.HomotopyGroup.html#2946" class="Bound"
+      >X</a
+      ><a name="3015"
+      >
+  </a
+      ><a name="3018" href="lib.groups.HomotopyGroup.html#2905" class="Function"
+      >&#937;^S-group-Trunc-fuse-diag-iso</a
+      ><a name="3047"
+      > </a
+      ><a name="3048" href="lib.groups.HomotopyGroup.html#3048" class="Bound"
+      >n</a
+      ><a name="3049"
+      > </a
+      ><a name="3050" href="lib.groups.HomotopyGroup.html#3050" class="Bound"
+      >X</a
+      ><a name="3051"
+      > </a
+      ><a name="3052" class="Symbol"
+      >=</a
+      ><a name="3053"
+      > </a
+      ><a name="3054" href="lib.groups.Homomorphism.html#2532" class="InductiveConstructor"
+      >group-hom</a
+      ><a name="3063"
+      > </a
+      ><a name="3064" class="Symbol"
+      >(</a
+      ><a name="3065" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="3068"
+      > </a
+      ><a name="3069" href="lib.groups.HomotopyGroup.html#1730" class="Function"
+      >F</a
+      ><a name="3070" class="Symbol"
+      >)</a
+      ><a name="3071"
+      > </a
+      ><a name="3072" href="lib.groups.HomotopyGroup.html#1791" class="Function"
+      >pres-comp</a
+      ><a name="3081"
+      > </a
+      ><a name="3082" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3083"
+      > </a
+      ><a name="3084" href="lib.groups.HomotopyGroup.html#1920" class="Function"
+      >e</a
+      ><a name="3085"
+      >
+    </a
+      ><a name="3090" class="Keyword"
+      >where</a
+      ><a name="3095"
+      >
+    </a
+      ><a name="3100" href="lib.groups.HomotopyGroup.html#3100" class="Function"
+      >r</a
+      ><a name="3101"
+      > </a
+      ><a name="3102" class="Symbol"
+      >=</a
+      ><a name="3103"
+      > </a
+      ><a name="3104" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="3113"
+      > </a
+      ><a name="3114" class="Symbol"
+      >(&#955;</a
+      ><a name="3116"
+      > </a
+      ><a name="3117" href="lib.groups.HomotopyGroup.html#3117" class="Bound"
+      >k</a
+      ><a name="3118"
+      > </a
+      ><a name="3119" class="Symbol"
+      >&#8594;</a
+      ><a name="3120"
+      > </a
+      ><a name="3121" href="lib.groups.HomotopyGroup.html#1634" class="Record"
+      >&#937;^STruncPreIso</a
+      ><a name="3135"
+      > </a
+      ><a name="3136" href="lib.groups.HomotopyGroup.html#3048" class="Bound"
+      >n</a
+      ><a name="3137"
+      > </a
+      ><a name="3138" class="Number"
+      >0</a
+      ><a name="3139"
+      > </a
+      ><a name="3140" href="lib.groups.HomotopyGroup.html#3117" class="Bound"
+      >k</a
+      ><a name="3141"
+      > </a
+      ><a name="3142" href="lib.groups.HomotopyGroup.html#3050" class="Bound"
+      >X</a
+      ><a name="3143" class="Symbol"
+      >)</a
+      ><a name="3144"
+      >
+                  </a
+      ><a name="3163" class="Symbol"
+      >(</a
+      ><a name="3164" href="lib.types.TLevel.html#669" class="Function"
+      >+2+0</a
+      ><a name="3168"
+      > </a
+      ><a name="3169" href="lib.Base.html#8938" class="Function Operator"
+      >&#10216;</a
+      ><a name="3170"
+      > </a
+      ><a name="3171" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3172"
+      > </a
+      ><a name="3173" href="lib.groups.HomotopyGroup.html#3048" class="Bound"
+      >n</a
+      ><a name="3174"
+      > </a
+      ><a name="3175" href="lib.Base.html#8938" class="Function Operator"
+      >&#10217;&#8331;&#8322;</a
+      ><a name="3178" class="Symbol"
+      >)</a
+      ><a name="3179"
+      > </a
+      ><a name="3180" class="Symbol"
+      >(</a
+      ><a name="3181" href="lib.groups.HomotopyGroup.html#1946" class="Function"
+      >&#937;^S-Trunc-preiso</a
+      ><a name="3197"
+      > </a
+      ><a name="3198" href="lib.groups.HomotopyGroup.html#3048" class="Bound"
+      >n</a
+      ><a name="3199"
+      > </a
+      ><a name="3200" class="Number"
+      >0</a
+      ><a name="3201"
+      > </a
+      ><a name="3202" href="lib.groups.HomotopyGroup.html#3050" class="Bound"
+      >X</a
+      ><a name="3203" class="Symbol"
+      >)</a
+      ><a name="3204"
+      >
+    </a
+      ><a name="3209" class="Keyword"
+      >open</a
+      ><a name="3213"
+      > </a
+      ><a name="3214" href="lib.groups.HomotopyGroup.html#1634" class="Module"
+      >&#937;^STruncPreIso</a
+      ><a name="3228"
+      > </a
+      ><a name="3229" href="lib.groups.HomotopyGroup.html#3100" class="Function"
+      >r</a
+      ><a name="3230"
+      >
+
+</a
+      ><a name="3232" class="Keyword"
+      >abstract</a
+      ><a name="3240"
+      >
+  </a
+      ><a name="3243" href="lib.groups.HomotopyGroup.html#3243" class="Function"
+      >&#960;S-Trunc-fuse-&#8804;-iso</a
+      ><a name="3262"
+      > </a
+      ><a name="3263" class="Symbol"
+      >:</a
+      ><a name="3264"
+      > </a
+      ><a name="3265" class="Symbol"
+      >&#8704;</a
+      ><a name="3266"
+      > </a
+      ><a name="3267" class="Symbol"
+      >{</a
+      ><a name="3268" href="lib.groups.HomotopyGroup.html#3268" class="Bound"
+      >i</a
+      ><a name="3269" class="Symbol"
+      >}</a
+      ><a name="3270"
+      > </a
+      ><a name="3271" class="Symbol"
+      >(</a
+      ><a name="3272" href="lib.groups.HomotopyGroup.html#3272" class="Bound"
+      >n</a
+      ><a name="3273"
+      > </a
+      ><a name="3274" class="Symbol"
+      >:</a
+      ><a name="3275"
+      > </a
+      ><a name="3276" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="3277" class="Symbol"
+      >)</a
+      ><a name="3278"
+      > </a
+      ><a name="3279" class="Symbol"
+      >(</a
+      ><a name="3280" href="lib.groups.HomotopyGroup.html#3280" class="Bound"
+      >m</a
+      ><a name="3281"
+      > </a
+      ><a name="3282" class="Symbol"
+      >:</a
+      ><a name="3283"
+      > </a
+      ><a name="3284" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="3287" class="Symbol"
+      >)</a
+      ><a name="3288"
+      > </a
+      ><a name="3289" class="Symbol"
+      >(</a
+      ><a name="3290" href="lib.groups.HomotopyGroup.html#3290" class="Bound"
+      >X</a
+      ><a name="3291"
+      > </a
+      ><a name="3292" class="Symbol"
+      >:</a
+      ><a name="3293"
+      > </a
+      ><a name="3294" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="3297"
+      > </a
+      ><a name="3298" href="lib.groups.HomotopyGroup.html#3268" class="Bound"
+      >i</a
+      ><a name="3299" class="Symbol"
+      >)</a
+      ><a name="3300"
+      >
+    </a
+      ><a name="3305" class="Symbol"
+      >&#8594;</a
+      ><a name="3306"
+      > </a
+      ><a name="3307" class="Symbol"
+      >(</a
+      ><a name="3308" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="3309"
+      > </a
+      ><a name="3310" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3311"
+      > </a
+      ><a name="3312" href="lib.groups.HomotopyGroup.html#3272" class="Bound"
+      >n</a
+      ><a name="3313"
+      > </a
+      ><a name="3314" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="3315"
+      > </a
+      ><a name="3316" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="3318"
+      > </a
+      ><a name="3319" href="lib.groups.HomotopyGroup.html#3280" class="Bound"
+      >m</a
+      ><a name="3320" class="Symbol"
+      >)</a
+      ><a name="3321"
+      > </a
+      ><a name="3322" class="Symbol"
+      >&#8594;</a
+      ><a name="3323"
+      > </a
+      ><a name="3324" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="3326"
+      > </a
+      ><a name="3327" href="lib.groups.HomotopyGroup.html#3272" class="Bound"
+      >n</a
+      ><a name="3328"
+      > </a
+      ><a name="3329" class="Symbol"
+      >(</a
+      ><a name="3330" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="3336"
+      > </a
+      ><a name="3337" href="lib.groups.HomotopyGroup.html#3280" class="Bound"
+      >m</a
+      ><a name="3338"
+      > </a
+      ><a name="3339" href="lib.groups.HomotopyGroup.html#3290" class="Bound"
+      >X</a
+      ><a name="3340" class="Symbol"
+      >)</a
+      ><a name="3341"
+      > </a
+      ><a name="3342" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="3344"
+      > </a
+      ><a name="3345" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="3347"
+      > </a
+      ><a name="3348" href="lib.groups.HomotopyGroup.html#3272" class="Bound"
+      >n</a
+      ><a name="3349"
+      > </a
+      ><a name="3350" href="lib.groups.HomotopyGroup.html#3290" class="Bound"
+      >X</a
+      ><a name="3351"
+      >
+  </a
+      ><a name="3354" href="lib.groups.HomotopyGroup.html#3243" class="Function"
+      >&#960;S-Trunc-fuse-&#8804;-iso</a
+      ><a name="3373"
+      > </a
+      ><a name="3374" href="lib.groups.HomotopyGroup.html#3374" class="Bound"
+      >n</a
+      ><a name="3375"
+      > </a
+      ><a name="3376" href="lib.groups.HomotopyGroup.html#3376" class="Bound"
+      >m</a
+      ><a name="3377"
+      > </a
+      ><a name="3378" href="lib.groups.HomotopyGroup.html#3378" class="Bound"
+      >X</a
+      ><a name="3379"
+      > </a
+      ><a name="3380" href="lib.groups.HomotopyGroup.html#3380" class="Bound"
+      >Sn&#8804;m</a
+      ><a name="3384"
+      > </a
+      ><a name="3385" class="Symbol"
+      >=</a
+      ><a name="3386"
+      >
+    </a
+      ><a name="3391" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="3393"
+      > </a
+      ><a name="3394" href="lib.groups.HomotopyGroup.html#3374" class="Bound"
+      >n</a
+      ><a name="3395"
+      > </a
+      ><a name="3396" class="Symbol"
+      >(</a
+      ><a name="3397" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="3403"
+      > </a
+      ><a name="3404" href="lib.groups.HomotopyGroup.html#3376" class="Bound"
+      >m</a
+      ><a name="3405"
+      > </a
+      ><a name="3406" href="lib.groups.HomotopyGroup.html#3378" class="Bound"
+      >X</a
+      ><a name="3407" class="Symbol"
+      >)</a
+      ><a name="3408"
+      >
+      </a
+      ><a name="3415" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="3418"
+      > </a
+      ><a name="3419" href="lib.groups.HomotopyGroup.html#2905" class="Function"
+      >&#937;^S-group-Trunc-fuse-diag-iso</a
+      ><a name="3448"
+      > </a
+      ><a name="3449" href="lib.groups.HomotopyGroup.html#3374" class="Bound"
+      >n</a
+      ><a name="3450"
+      > </a
+      ><a name="3451" class="Symbol"
+      >(</a
+      ><a name="3452" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="3458"
+      > </a
+      ><a name="3459" href="lib.groups.HomotopyGroup.html#3376" class="Bound"
+      >m</a
+      ><a name="3460"
+      > </a
+      ><a name="3461" href="lib.groups.HomotopyGroup.html#3378" class="Bound"
+      >X</a
+      ><a name="3462" class="Symbol"
+      >)</a
+      ><a name="3463"
+      > </a
+      ><a name="3464" href="lib.groups.Isomorphism.html#3359" class="Function Operator"
+      >&#8315;&#185;&#7475;</a
+      ><a name="3467"
+      > </a
+      ><a name="3468" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="3469"
+      >
+    </a
+      ><a name="3474" href="lib.groups.LoopSpace.html#612" class="Function"
+      >&#937;^S-group</a
+      ><a name="3483"
+      > </a
+      ><a name="3484" href="lib.groups.HomotopyGroup.html#3374" class="Bound"
+      >n</a
+      ><a name="3485"
+      > </a
+      ><a name="3486" class="Symbol"
+      >(</a
+      ><a name="3487" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="3493"
+      > </a
+      ><a name="3494" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="3495"
+      > </a
+      ><a name="3496" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3497"
+      > </a
+      ><a name="3498" href="lib.groups.HomotopyGroup.html#3374" class="Bound"
+      >n</a
+      ><a name="3499"
+      > </a
+      ><a name="3500" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="3501"
+      > </a
+      ><a name="3502" class="Symbol"
+      >(</a
+      ><a name="3503" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="3509"
+      > </a
+      ><a name="3510" href="lib.groups.HomotopyGroup.html#3376" class="Bound"
+      >m</a
+      ><a name="3511"
+      > </a
+      ><a name="3512" href="lib.groups.HomotopyGroup.html#3378" class="Bound"
+      >X</a
+      ><a name="3513" class="Symbol"
+      >))</a
+      ><a name="3515"
+      > </a
+      ><a name="3516" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3527"
+      >
+      </a
+      ><a name="3534" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="3537"
+      > </a
+      ><a name="3538" href="lib.groups.LoopSpace.html#1762" class="Function"
+      >&#937;^S-group-emap</a
+      ><a name="3552"
+      > </a
+      ><a name="3553" href="lib.groups.HomotopyGroup.html#3374" class="Bound"
+      >n</a
+      ><a name="3554"
+      > </a
+      ><a name="3555" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3566"
+      > </a
+      ><a name="3567" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3578"
+      > </a
+      ><a name="3579" class="Symbol"
+      >(</a
+      ><a name="3580" href="lib.Equivalence.html#13119" class="Function"
+      >&#8771;-to-&#8857;&#8771;</a
+      ><a name="3587"
+      > </a
+      ><a name="3588" class="Symbol"
+      >(</a
+      ><a name="3589" href="lib.types.Truncation.html#10358" class="Function"
+      >Trunc-fuse-&#8804;</a
+      ><a name="3601"
+      > </a
+      ><a name="3602" class="Symbol"
+      >(</a
+      ><a name="3603" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="3606"
+      > </a
+      ><a name="3607" href="lib.groups.HomotopyGroup.html#3378" class="Bound"
+      >X</a
+      ><a name="3608" class="Symbol"
+      >)</a
+      ><a name="3609"
+      > </a
+      ><a name="3610" href="lib.groups.HomotopyGroup.html#3380" class="Bound"
+      >Sn&#8804;m</a
+      ><a name="3614" class="Symbol"
+      >)</a
+      ><a name="3615"
+      > </a
+      ><a name="3616" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3619" class="Symbol"
+      >)</a
+      ><a name="3620"
+      > </a
+      ><a name="3621" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="3622"
+      >
+    </a
+      ><a name="3627" href="lib.groups.LoopSpace.html#612" class="Function"
+      >&#937;^S-group</a
+      ><a name="3636"
+      > </a
+      ><a name="3637" href="lib.groups.HomotopyGroup.html#3374" class="Bound"
+      >n</a
+      ><a name="3638"
+      > </a
+      ><a name="3639" class="Symbol"
+      >(</a
+      ><a name="3640" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="3646"
+      > </a
+      ><a name="3647" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="3648"
+      > </a
+      ><a name="3649" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3650"
+      > </a
+      ><a name="3651" href="lib.groups.HomotopyGroup.html#3374" class="Bound"
+      >n</a
+      ><a name="3652"
+      > </a
+      ><a name="3653" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="3654"
+      > </a
+      ><a name="3655" href="lib.groups.HomotopyGroup.html#3378" class="Bound"
+      >X</a
+      ><a name="3656" class="Symbol"
+      >)</a
+      ><a name="3657"
+      > </a
+      ><a name="3658" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="3669"
+      >
+      </a
+      ><a name="3676" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="3679"
+      > </a
+      ><a name="3680" href="lib.groups.HomotopyGroup.html#2905" class="Function"
+      >&#937;^S-group-Trunc-fuse-diag-iso</a
+      ><a name="3709"
+      > </a
+      ><a name="3710" href="lib.groups.HomotopyGroup.html#3374" class="Bound"
+      >n</a
+      ><a name="3711"
+      > </a
+      ><a name="3712" href="lib.groups.HomotopyGroup.html#3378" class="Bound"
+      >X</a
+      ><a name="3713"
+      > </a
+      ><a name="3714" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="3715"
+      >
+    </a
+      ><a name="3720" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="3722"
+      > </a
+      ><a name="3723" href="lib.groups.HomotopyGroup.html#3374" class="Bound"
+      >n</a
+      ><a name="3724"
+      > </a
+      ><a name="3725" href="lib.groups.HomotopyGroup.html#3378" class="Bound"
+      >X</a
+      ><a name="3726"
+      >
+      </a
+      ><a name="3733" href="lib.groups.Isomorphism.html#3290" class="Function Operator"
+      >&#8771;&#7475;&#8718;</a
+      ><a name="3736"
+      >
+
+  </a
+      ><a name="3740" href="lib.groups.HomotopyGroup.html#3740" class="Function"
+      >&#960;S-Trunc-fuse-&gt;-iso</a
+      ><a name="3759"
+      > </a
+      ><a name="3760" class="Symbol"
+      >:</a
+      ><a name="3761"
+      > </a
+      ><a name="3762" class="Symbol"
+      >&#8704;</a
+      ><a name="3763"
+      > </a
+      ><a name="3764" class="Symbol"
+      >{</a
+      ><a name="3765" href="lib.groups.HomotopyGroup.html#3765" class="Bound"
+      >i</a
+      ><a name="3766" class="Symbol"
+      >}</a
+      ><a name="3767"
+      > </a
+      ><a name="3768" class="Symbol"
+      >(</a
+      ><a name="3769" href="lib.groups.HomotopyGroup.html#3769" class="Bound"
+      >n</a
+      ><a name="3770"
+      > </a
+      ><a name="3771" class="Symbol"
+      >:</a
+      ><a name="3772"
+      > </a
+      ><a name="3773" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="3774" class="Symbol"
+      >)</a
+      ><a name="3775"
+      > </a
+      ><a name="3776" class="Symbol"
+      >(</a
+      ><a name="3777" href="lib.groups.HomotopyGroup.html#3777" class="Bound"
+      >m</a
+      ><a name="3778"
+      > </a
+      ><a name="3779" class="Symbol"
+      >:</a
+      ><a name="3780"
+      > </a
+      ><a name="3781" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="3784" class="Symbol"
+      >)</a
+      ><a name="3785"
+      > </a
+      ><a name="3786" class="Symbol"
+      >(</a
+      ><a name="3787" href="lib.groups.HomotopyGroup.html#3787" class="Bound"
+      >X</a
+      ><a name="3788"
+      > </a
+      ><a name="3789" class="Symbol"
+      >:</a
+      ><a name="3790"
+      > </a
+      ><a name="3791" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="3794"
+      > </a
+      ><a name="3795" href="lib.groups.HomotopyGroup.html#3765" class="Bound"
+      >i</a
+      ><a name="3796" class="Symbol"
+      >)</a
+      ><a name="3797"
+      >
+    </a
+      ><a name="3802" class="Symbol"
+      >&#8594;</a
+      ><a name="3803"
+      > </a
+      ><a name="3804" class="Symbol"
+      >(</a
+      ><a name="3805" href="lib.groups.HomotopyGroup.html#3777" class="Bound"
+      >m</a
+      ><a name="3806"
+      > </a
+      ><a name="3807" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="3809"
+      > </a
+      ><a name="3810" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="3811"
+      > </a
+      ><a name="3812" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3813"
+      > </a
+      ><a name="3814" href="lib.groups.HomotopyGroup.html#3769" class="Bound"
+      >n</a
+      ><a name="3815"
+      > </a
+      ><a name="3816" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="3817" class="Symbol"
+      >)</a
+      ><a name="3818"
+      > </a
+      ><a name="3819" class="Symbol"
+      >&#8594;</a
+      ><a name="3820"
+      > </a
+      ><a name="3821" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="3823"
+      > </a
+      ><a name="3824" href="lib.groups.HomotopyGroup.html#3769" class="Bound"
+      >n</a
+      ><a name="3825"
+      > </a
+      ><a name="3826" class="Symbol"
+      >(</a
+      ><a name="3827" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="3833"
+      > </a
+      ><a name="3834" href="lib.groups.HomotopyGroup.html#3777" class="Bound"
+      >m</a
+      ><a name="3835"
+      > </a
+      ><a name="3836" href="lib.groups.HomotopyGroup.html#3787" class="Bound"
+      >X</a
+      ><a name="3837" class="Symbol"
+      >)</a
+      ><a name="3838"
+      > </a
+      ><a name="3839" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="3841"
+      > </a
+      ><a name="3842" href="lib.groups.Unit.html#577" class="Function"
+      >0&#7475;</a
+      ><a name="3844"
+      >
+  </a
+      ><a name="3847" href="lib.groups.HomotopyGroup.html#3740" class="Function"
+      >&#960;S-Trunc-fuse-&gt;-iso</a
+      ><a name="3866"
+      > </a
+      ><a name="3867" href="lib.groups.HomotopyGroup.html#3867" class="Bound"
+      >n</a
+      ><a name="3868"
+      > </a
+      ><a name="3869" href="lib.groups.HomotopyGroup.html#3869" class="Bound"
+      >m</a
+      ><a name="3870"
+      > </a
+      ><a name="3871" href="lib.groups.HomotopyGroup.html#3871" class="Bound"
+      >X</a
+      ><a name="3872"
+      > </a
+      ><a name="3873" href="lib.groups.HomotopyGroup.html#3873" class="Bound"
+      >m&lt;n</a
+      ><a name="3876"
+      > </a
+      ><a name="3877" class="Symbol"
+      >=</a
+      ><a name="3878"
+      >
+    </a
+      ><a name="3883" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="3885"
+      > </a
+      ><a name="3886" href="lib.groups.HomotopyGroup.html#3867" class="Bound"
+      >n</a
+      ><a name="3887"
+      > </a
+      ><a name="3888" class="Symbol"
+      >(</a
+      ><a name="3889" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="3895"
+      > </a
+      ><a name="3896" href="lib.groups.HomotopyGroup.html#3869" class="Bound"
+      >m</a
+      ><a name="3897"
+      > </a
+      ><a name="3898" href="lib.groups.HomotopyGroup.html#3871" class="Bound"
+      >X</a
+      ><a name="3899" class="Symbol"
+      >)</a
+      ><a name="3900"
+      >
+      </a
+      ><a name="3907" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="3910"
+      > </a
+      ><a name="3911" href="lib.groups.HomotopyGroup.html#2905" class="Function"
+      >&#937;^S-group-Trunc-fuse-diag-iso</a
+      ><a name="3940"
+      > </a
+      ><a name="3941" href="lib.groups.HomotopyGroup.html#3867" class="Bound"
+      >n</a
+      ><a name="3942"
+      > </a
+      ><a name="3943" class="Symbol"
+      >(</a
+      ><a name="3944" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="3950"
+      > </a
+      ><a name="3951" href="lib.groups.HomotopyGroup.html#3869" class="Bound"
+      >m</a
+      ><a name="3952"
+      > </a
+      ><a name="3953" href="lib.groups.HomotopyGroup.html#3871" class="Bound"
+      >X</a
+      ><a name="3954" class="Symbol"
+      >)</a
+      ><a name="3955"
+      > </a
+      ><a name="3956" href="lib.groups.Isomorphism.html#3359" class="Function Operator"
+      >&#8315;&#185;&#7475;</a
+      ><a name="3959"
+      > </a
+      ><a name="3960" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="3961"
+      >
+    </a
+      ><a name="3966" href="lib.groups.LoopSpace.html#612" class="Function"
+      >&#937;^S-group</a
+      ><a name="3975"
+      > </a
+      ><a name="3976" href="lib.groups.HomotopyGroup.html#3867" class="Bound"
+      >n</a
+      ><a name="3977"
+      > </a
+      ><a name="3978" class="Symbol"
+      >(</a
+      ><a name="3979" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="3985"
+      > </a
+      ><a name="3986" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="3987"
+      > </a
+      ><a name="3988" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3989"
+      > </a
+      ><a name="3990" href="lib.groups.HomotopyGroup.html#3867" class="Bound"
+      >n</a
+      ><a name="3991"
+      > </a
+      ><a name="3992" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="3993"
+      > </a
+      ><a name="3994" class="Symbol"
+      >(</a
+      ><a name="3995" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="4001"
+      > </a
+      ><a name="4002" href="lib.groups.HomotopyGroup.html#3869" class="Bound"
+      >m</a
+      ><a name="4003"
+      > </a
+      ><a name="4004" href="lib.groups.HomotopyGroup.html#3871" class="Bound"
+      >X</a
+      ><a name="4005" class="Symbol"
+      >))</a
+      ><a name="4007"
+      > </a
+      ><a name="4008" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="4019"
+      >
+      </a
+      ><a name="4026" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="4029"
+      > </a
+      ><a name="4030" href="lib.groups.Unit.html#1402" class="Function"
+      >contr-iso-0&#7475;</a
+      ><a name="4042"
+      > </a
+      ><a name="4043" class="Symbol"
+      >_</a
+      ><a name="4044"
+      > </a
+      ><a name="4045" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="4046"
+      > </a
+      ><a name="4047" href="lib.NType.html#2748" class="Function"
+      >inhab-prop-is-contr</a
+      ><a name="4066"
+      >
+           </a
+      ><a name="4078" class="Symbol"
+      >(</a
+      ><a name="4079" href="lib.types.Group.html#276" class="Function"
+      >Group.ident</a
+      ><a name="4090"
+      > </a
+      ><a name="4091" class="Symbol"
+      >(</a
+      ><a name="4092" href="lib.groups.LoopSpace.html#612" class="Function"
+      >&#937;^S-group</a
+      ><a name="4101"
+      > </a
+      ><a name="4102" href="lib.groups.HomotopyGroup.html#3867" class="Bound"
+      >n</a
+      ><a name="4103"
+      > </a
+      ><a name="4104" class="Symbol"
+      >(</a
+      ><a name="4105" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="4111"
+      > </a
+      ><a name="4112" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="4113"
+      > </a
+      ><a name="4114" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4115"
+      > </a
+      ><a name="4116" href="lib.groups.HomotopyGroup.html#3867" class="Bound"
+      >n</a
+      ><a name="4117"
+      > </a
+      ><a name="4118" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="4119"
+      > </a
+      ><a name="4120" class="Symbol"
+      >(</a
+      ><a name="4121" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="4127"
+      > </a
+      ><a name="4128" href="lib.groups.HomotopyGroup.html#3869" class="Bound"
+      >m</a
+      ><a name="4129"
+      > </a
+      ><a name="4130" href="lib.groups.HomotopyGroup.html#3871" class="Bound"
+      >X</a
+      ><a name="4131" class="Symbol"
+      >))</a
+      ><a name="4133"
+      > </a
+      ><a name="4134" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="4145" class="Symbol"
+      >))</a
+      ><a name="4147"
+      >
+           </a
+      ><a name="4159" class="Symbol"
+      >(</a
+      ><a name="4160" href="lib.types.LoopSpace.html#8059" class="Function"
+      >&#937;^-level</a
+      ><a name="4168"
+      > </a
+      ><a name="4169" class="Number"
+      >-1</a
+      ><a name="4171"
+      > </a
+      ><a name="4172" class="Symbol"
+      >(</a
+      ><a name="4173" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4174"
+      > </a
+      ><a name="4175" href="lib.groups.HomotopyGroup.html#3867" class="Bound"
+      >n</a
+      ><a name="4176" class="Symbol"
+      >)</a
+      ><a name="4177"
+      > </a
+      ><a name="4178" class="Symbol"
+      >_</a
+      ><a name="4179"
+      > </a
+      ><a name="4180" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="4181"
+      > </a
+      ><a name="4182" href="lib.types.Truncation.html#4649" class="Function"
+      >Trunc-preserves-level</a
+      ><a name="4203"
+      > </a
+      ><a name="4204" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="4205"
+      > </a
+      ><a name="4206" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4207"
+      > </a
+      ><a name="4208" href="lib.groups.HomotopyGroup.html#3867" class="Bound"
+      >n</a
+      ><a name="4209"
+      > </a
+      ><a name="4210" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="4211"
+      > </a
+      ><a name="4212" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="4213"
+      >
+             </a
+      ><a name="4227" href="lib.NType2.html#7471" class="Function"
+      >raise-level-&#8804;T</a
+      ><a name="4241"
+      >
+               </a
+      ><a name="4257" class="Symbol"
+      >(</a
+      ><a name="4258" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="4267"
+      > </a
+      ><a name="4268" class="Symbol"
+      >(&#955;</a
+      ><a name="4270"
+      > </a
+      ><a name="4271" href="lib.groups.HomotopyGroup.html#4271" class="Bound"
+      >k</a
+      ><a name="4272"
+      > </a
+      ><a name="4273" class="Symbol"
+      >&#8594;</a
+      ><a name="4274"
+      > </a
+      ><a name="4275" href="lib.groups.HomotopyGroup.html#3869" class="Bound"
+      >m</a
+      ><a name="4276"
+      > </a
+      ><a name="4277" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="4279"
+      > </a
+      ><a name="4280" href="lib.groups.HomotopyGroup.html#4271" class="Bound"
+      >k</a
+      ><a name="4281" class="Symbol"
+      >)</a
+      ><a name="4282"
+      > </a
+      ><a name="4283" class="Symbol"
+      >(</a
+      ><a name="4284" href="lib.types.TLevel.html#541" class="Function"
+      >+2+-comm</a
+      ><a name="4292"
+      > </a
+      ><a name="4293" class="Number"
+      >-1</a
+      ><a name="4295"
+      > </a
+      ><a name="4296" href="lib.Base.html#8938" class="Function Operator"
+      >&#10216;</a
+      ><a name="4297"
+      > </a
+      ><a name="4298" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4299"
+      > </a
+      ><a name="4300" href="lib.groups.HomotopyGroup.html#3867" class="Bound"
+      >n</a
+      ><a name="4301"
+      > </a
+      ><a name="4302" href="lib.Base.html#8938" class="Function Operator"
+      >&#10217;&#8331;&#8322;</a
+      ><a name="4305" class="Symbol"
+      >)</a
+      ><a name="4306"
+      > </a
+      ><a name="4307" class="Symbol"
+      >(</a
+      ><a name="4308" href="lib.types.TLevel.html#3270" class="Function"
+      >&lt;T-to-&#8804;T</a
+      ><a name="4316"
+      > </a
+      ><a name="4317" href="lib.groups.HomotopyGroup.html#3873" class="Bound"
+      >m&lt;n</a
+      ><a name="4320" class="Symbol"
+      >))</a
+      ><a name="4322"
+      >
+               </a
+      ><a name="4338" class="Symbol"
+      >(</a
+      ><a name="4339" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="4350"
+      > </a
+      ><a name="4351" class="Symbol"
+      >{</a
+      ><a name="4352" class="Argument"
+      >n</a
+      ><a name="4353"
+      > </a
+      ><a name="4354" class="Symbol"
+      >=</a
+      ><a name="4355"
+      > </a
+      ><a name="4356" href="lib.groups.HomotopyGroup.html#3869" class="Bound"
+      >m</a
+      ><a name="4357" class="Symbol"
+      >}))</a
+      ><a name="4360"
+      > </a
+      ><a name="4361" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="4362"
+      >
+    </a
+      ><a name="4367" href="lib.groups.Unit.html#577" class="Function"
+      >0&#7475;</a
+      ><a name="4369"
+      > </a
+      ><a name="4370" href="lib.groups.Isomorphism.html#3290" class="Function Operator"
+      >&#8771;&#7475;&#8718;</a
+      ><a name="4373"
+      >
+
+  </a
+      ><a name="4377" class="Comment"
+      >-- XXX Naming conventions?</a
+      ><a name="4403"
+      >
+  </a
+      ><a name="4406" href="lib.groups.HomotopyGroup.html#4406" class="Function"
+      >&#960;S-&gt;level-econv</a
+      ><a name="4421"
+      > </a
+      ><a name="4422" class="Symbol"
+      >:</a
+      ><a name="4423"
+      > </a
+      ><a name="4424" class="Symbol"
+      >&#8704;</a
+      ><a name="4425"
+      > </a
+      ><a name="4426" class="Symbol"
+      >{</a
+      ><a name="4427" href="lib.groups.HomotopyGroup.html#4427" class="Bound"
+      >i</a
+      ><a name="4428" class="Symbol"
+      >}</a
+      ><a name="4429"
+      > </a
+      ><a name="4430" class="Symbol"
+      >(</a
+      ><a name="4431" href="lib.groups.HomotopyGroup.html#4431" class="Bound"
+      >n</a
+      ><a name="4432"
+      > </a
+      ><a name="4433" class="Symbol"
+      >:</a
+      ><a name="4434"
+      > </a
+      ><a name="4435" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="4436" class="Symbol"
+      >)</a
+      ><a name="4437"
+      > </a
+      ><a name="4438" class="Symbol"
+      >(</a
+      ><a name="4439" href="lib.groups.HomotopyGroup.html#4439" class="Bound"
+      >m</a
+      ><a name="4440"
+      > </a
+      ><a name="4441" class="Symbol"
+      >:</a
+      ><a name="4442"
+      > </a
+      ><a name="4443" href="lib.Base.html#8924" class="Function"
+      >&#8469;&#8331;&#8322;</a
+      ><a name="4446" class="Symbol"
+      >)</a
+      ><a name="4447"
+      > </a
+      ><a name="4448" class="Symbol"
+      >(</a
+      ><a name="4449" href="lib.groups.HomotopyGroup.html#4449" class="Bound"
+      >X</a
+      ><a name="4450"
+      > </a
+      ><a name="4451" class="Symbol"
+      >:</a
+      ><a name="4452"
+      > </a
+      ><a name="4453" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="4456"
+      > </a
+      ><a name="4457" href="lib.groups.HomotopyGroup.html#4427" class="Bound"
+      >i</a
+      ><a name="4458" class="Symbol"
+      >)</a
+      ><a name="4459"
+      >
+    </a
+      ><a name="4464" class="Symbol"
+      >&#8594;</a
+      ><a name="4465"
+      > </a
+      ><a name="4466" class="Symbol"
+      >(</a
+      ><a name="4467" href="lib.groups.HomotopyGroup.html#4439" class="Bound"
+      >m</a
+      ><a name="4468"
+      > </a
+      ><a name="4469" href="lib.types.TLevel.html#783" class="Datatype Operator"
+      >&lt;T</a
+      ><a name="4471"
+      > </a
+      ><a name="4472" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="4473"
+      > </a
+      ><a name="4474" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4475"
+      > </a
+      ><a name="4476" href="lib.groups.HomotopyGroup.html#4431" class="Bound"
+      >n</a
+      ><a name="4477"
+      > </a
+      ><a name="4478" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="4479" class="Symbol"
+      >)</a
+      ><a name="4480"
+      > </a
+      ><a name="4481" class="Symbol"
+      >&#8594;</a
+      ><a name="4482"
+      > </a
+      ><a name="4483" href="lib.NType.html#304" class="Function"
+      >has-level</a
+      ><a name="4492"
+      > </a
+      ><a name="4493" href="lib.groups.HomotopyGroup.html#4439" class="Bound"
+      >m</a
+      ><a name="4494"
+      > </a
+      ><a name="4495" class="Symbol"
+      >(</a
+      ><a name="4496" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="4499"
+      > </a
+      ><a name="4500" href="lib.groups.HomotopyGroup.html#4449" class="Bound"
+      >X</a
+      ><a name="4501" class="Symbol"
+      >)</a
+      ><a name="4502"
+      >
+    </a
+      ><a name="4507" class="Symbol"
+      >&#8594;</a
+      ><a name="4508"
+      > </a
+      ><a name="4509" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="4511"
+      > </a
+      ><a name="4512" href="lib.groups.HomotopyGroup.html#4431" class="Bound"
+      >n</a
+      ><a name="4513"
+      > </a
+      ><a name="4514" href="lib.groups.HomotopyGroup.html#4449" class="Bound"
+      >X</a
+      ><a name="4515"
+      > </a
+      ><a name="4516" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="4518"
+      > </a
+      ><a name="4519" href="lib.groups.Unit.html#577" class="Function"
+      >0&#7475;</a
+      ><a name="4521"
+      >
+  </a
+      ><a name="4524" href="lib.groups.HomotopyGroup.html#4406" class="Function"
+      >&#960;S-&gt;level-econv</a
+      ><a name="4539"
+      > </a
+      ><a name="4540" href="lib.groups.HomotopyGroup.html#4540" class="Bound"
+      >n</a
+      ><a name="4541"
+      > </a
+      ><a name="4542" href="lib.groups.HomotopyGroup.html#4542" class="Bound"
+      >m</a
+      ><a name="4543"
+      > </a
+      ><a name="4544" href="lib.groups.HomotopyGroup.html#4544" class="Bound"
+      >X</a
+      ><a name="4545"
+      > </a
+      ><a name="4546" href="lib.groups.HomotopyGroup.html#4546" class="Bound"
+      >lt</a
+      ><a name="4548"
+      > </a
+      ><a name="4549" href="lib.groups.HomotopyGroup.html#4549" class="Bound"
+      >pX</a
+      ><a name="4551"
+      > </a
+      ><a name="4552" class="Symbol"
+      >=</a
+      ><a name="4553"
+      >
+    </a
+      ><a name="4558" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="4560"
+      > </a
+      ><a name="4561" href="lib.groups.HomotopyGroup.html#4540" class="Bound"
+      >n</a
+      ><a name="4562"
+      > </a
+      ><a name="4563" href="lib.groups.HomotopyGroup.html#4544" class="Bound"
+      >X</a
+      ><a name="4564"
+      >
+      </a
+      ><a name="4571" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="4574"
+      > </a
+      ><a name="4575" href="lib.groups.HomotopyGroup.html#965" class="Function"
+      >&#960;S-emap</a
+      ><a name="4582"
+      > </a
+      ><a name="4583" href="lib.groups.HomotopyGroup.html#4540" class="Bound"
+      >n</a
+      ><a name="4584"
+      > </a
+      ><a name="4585" class="Symbol"
+      >(</a
+      ><a name="4586" href="lib.types.Truncation.html#5649" class="Function"
+      >&#8857;unTrunc-equiv</a
+      ><a name="4600"
+      > </a
+      ><a name="4601" href="lib.groups.HomotopyGroup.html#4544" class="Bound"
+      >X</a
+      ><a name="4602"
+      > </a
+      ><a name="4603" href="lib.groups.HomotopyGroup.html#4549" class="Bound"
+      >pX</a
+      ><a name="4605"
+      > </a
+      ><a name="4606" href="lib.types.Pointed.html#1860" class="Function Operator"
+      >&#8857;&#8315;&#185;</a
+      ><a name="4609" class="Symbol"
+      >)</a
+      ><a name="4610"
+      > </a
+      ><a name="4611" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="4612"
+      >
+    </a
+      ><a name="4617" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="4619"
+      > </a
+      ><a name="4620" href="lib.groups.HomotopyGroup.html#4540" class="Bound"
+      >n</a
+      ><a name="4621"
+      > </a
+      ><a name="4622" class="Symbol"
+      >(</a
+      ><a name="4623" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="4629"
+      > </a
+      ><a name="4630" href="lib.groups.HomotopyGroup.html#4542" class="Bound"
+      >m</a
+      ><a name="4631"
+      > </a
+      ><a name="4632" href="lib.groups.HomotopyGroup.html#4544" class="Bound"
+      >X</a
+      ><a name="4633" class="Symbol"
+      >)</a
+      ><a name="4634"
+      >
+      </a
+      ><a name="4641" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="4644"
+      > </a
+      ><a name="4645" href="lib.groups.HomotopyGroup.html#3740" class="Function"
+      >&#960;S-Trunc-fuse-&gt;-iso</a
+      ><a name="4664"
+      > </a
+      ><a name="4665" href="lib.groups.HomotopyGroup.html#4540" class="Bound"
+      >n</a
+      ><a name="4666"
+      > </a
+      ><a name="4667" href="lib.groups.HomotopyGroup.html#4542" class="Bound"
+      >m</a
+      ><a name="4668"
+      > </a
+      ><a name="4669" href="lib.groups.HomotopyGroup.html#4544" class="Bound"
+      >X</a
+      ><a name="4670"
+      > </a
+      ><a name="4671" href="lib.groups.HomotopyGroup.html#4546" class="Bound"
+      >lt</a
+      ><a name="4673"
+      > </a
+      ><a name="4674" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="4675"
+      >
+    </a
+      ><a name="4680" href="lib.groups.Unit.html#577" class="Function"
+      >0&#7475;</a
+      ><a name="4682"
+      >
+      </a
+      ><a name="4689" href="lib.groups.Isomorphism.html#3290" class="Function Operator"
+      >&#8771;&#7475;&#8718;</a
+      ><a name="4692"
+      >
+
+</a
+      ><a name="4694" class="Comment"
+      >{- &#960;&#8345;(X &#215; Y) == &#960;&#8345;(X) &#215; &#960;&#8345;(Y) -}</a
+      ><a name="4726"
+      >
+</a
+      ><a name="4727" class="Keyword"
+      >module</a
+      ><a name="4733"
+      > </a
+      ><a name="4734" href="lib.groups.HomotopyGroup.html#4734" class="Module"
+      >_</a
+      ><a name="4735"
+      > </a
+      ><a name="4736" class="Symbol"
+      >{</a
+      ><a name="4737" href="lib.groups.HomotopyGroup.html#4737" class="Bound"
+      >i</a
+      ><a name="4738"
+      > </a
+      ><a name="4739" href="lib.groups.HomotopyGroup.html#4739" class="Bound"
+      >j</a
+      ><a name="4740" class="Symbol"
+      >}</a
+      ><a name="4741"
+      > </a
+      ><a name="4742" class="Symbol"
+      >(</a
+      ><a name="4743" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="4744"
+      > </a
+      ><a name="4745" class="Symbol"
+      >:</a
+      ><a name="4746"
+      > </a
+      ><a name="4747" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="4748" class="Symbol"
+      >)</a
+      ><a name="4749"
+      > </a
+      ><a name="4750" class="Symbol"
+      >(</a
+      ><a name="4751" href="lib.groups.HomotopyGroup.html#4751" class="Bound"
+      >X</a
+      ><a name="4752"
+      > </a
+      ><a name="4753" class="Symbol"
+      >:</a
+      ><a name="4754"
+      > </a
+      ><a name="4755" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="4758"
+      > </a
+      ><a name="4759" href="lib.groups.HomotopyGroup.html#4737" class="Bound"
+      >i</a
+      ><a name="4760" class="Symbol"
+      >)</a
+      ><a name="4761"
+      > </a
+      ><a name="4762" class="Symbol"
+      >(</a
+      ><a name="4763" href="lib.groups.HomotopyGroup.html#4763" class="Bound"
+      >Y</a
+      ><a name="4764"
+      > </a
+      ><a name="4765" class="Symbol"
+      >:</a
+      ><a name="4766"
+      > </a
+      ><a name="4767" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="4770"
+      >  </a
+      ><a name="4772" href="lib.groups.HomotopyGroup.html#4739" class="Bound"
+      >j</a
+      ><a name="4773" class="Symbol"
+      >)</a
+      ><a name="4774"
+      > </a
+      ><a name="4775" class="Keyword"
+      >where</a
+      ><a name="4780"
+      >
+
+  </a
+      ><a name="4784" href="lib.groups.HomotopyGroup.html#4784" class="Function"
+      >&#960;S-&#215;</a
+      ><a name="4788"
+      > </a
+      ><a name="4789" class="Symbol"
+      >:</a
+      ><a name="4790"
+      > </a
+      ><a name="4791" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="4793"
+      > </a
+      ><a name="4794" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="4795"
+      > </a
+      ><a name="4796" class="Symbol"
+      >(</a
+      ><a name="4797" href="lib.groups.HomotopyGroup.html#4751" class="Bound"
+      >X</a
+      ><a name="4798"
+      > </a
+      ><a name="4799" href="lib.types.Sigma.html#331" class="Function Operator"
+      >&#8857;&#215;</a
+      ><a name="4801"
+      > </a
+      ><a name="4802" href="lib.groups.HomotopyGroup.html#4763" class="Bound"
+      >Y</a
+      ><a name="4803" class="Symbol"
+      >)</a
+      ><a name="4804"
+      > </a
+      ><a name="4805" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="4807"
+      > </a
+      ><a name="4808" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="4810"
+      > </a
+      ><a name="4811" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="4812"
+      > </a
+      ><a name="4813" href="lib.groups.HomotopyGroup.html#4751" class="Bound"
+      >X</a
+      ><a name="4814"
+      > </a
+      ><a name="4815" href="lib.groups.GroupProduct.html#1359" class="Function Operator"
+      >&#215;&#7475;</a
+      ><a name="4817"
+      > </a
+      ><a name="4818" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="4820"
+      > </a
+      ><a name="4821" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="4822"
+      > </a
+      ><a name="4823" href="lib.groups.HomotopyGroup.html#4763" class="Bound"
+      >Y</a
+      ><a name="4824"
+      >
+  </a
+      ><a name="4827" href="lib.groups.HomotopyGroup.html#4784" class="Function"
+      >&#960;S-&#215;</a
+      ><a name="4831"
+      > </a
+      ><a name="4832" class="Symbol"
+      >=</a
+      ><a name="4833"
+      > </a
+      ><a name="4834" href="lib.groups.TruncationGroup.html#1567" class="Function"
+      >Trunc-group-&#215;</a
+      ><a name="4847"
+      > </a
+      ><a name="4848" class="Symbol"
+      >_</a
+      ><a name="4849"
+      > </a
+      ><a name="4850" class="Symbol"
+      >_</a
+      ><a name="4851"
+      >
+     </a
+      ><a name="4857" href="lib.groups.Isomorphism.html#2994" class="Function Operator"
+      >&#8728;e&#7475;</a
+      ><a name="4860"
+      > </a
+      ><a name="4861" href="lib.groups.TruncationGroup.html#3190" class="Function"
+      >Trunc-group-emap</a
+      ><a name="4877"
+      > </a
+      ><a name="4878" class="Symbol"
+      >(</a
+      ><a name="4879" href="lib.groups.Homomorphism.html#1205" class="InductiveConstructor"
+      >group-structure-hom</a
+      ><a name="4898"
+      > </a
+      ><a name="4899" href="lib.groups.HomotopyGroup.html#4946" class="Function"
+      >f</a
+      ><a name="4900"
+      > </a
+      ><a name="4901" href="lib.groups.HomotopyGroup.html#5588" class="Function"
+      >pres-comp</a
+      ><a name="4910"
+      > </a
+      ><a name="4911" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="4912"
+      > </a
+      ><a name="4913" href="lib.Equivalence.html#2854" class="Function"
+      >is-eq</a
+      ><a name="4918"
+      > </a
+      ><a name="4919" href="lib.groups.HomotopyGroup.html#4946" class="Function"
+      >f</a
+      ><a name="4920"
+      > </a
+      ><a name="4921" href="lib.groups.HomotopyGroup.html#5055" class="Function"
+      >g</a
+      ><a name="4922"
+      > </a
+      ><a name="4923" href="lib.groups.HomotopyGroup.html#5140" class="Function"
+      >f-g</a
+      ><a name="4926"
+      > </a
+      ><a name="4927" href="lib.groups.HomotopyGroup.html#5377" class="Function"
+      >g-f</a
+      ><a name="4930" class="Symbol"
+      >)</a
+      ><a name="4931"
+      >
+    </a
+      ><a name="4936" class="Keyword"
+      >where</a
+      ><a name="4941"
+      >
+    </a
+      ><a name="4946" href="lib.groups.HomotopyGroup.html#4946" class="Function"
+      >f</a
+      ><a name="4947"
+      > </a
+      ><a name="4948" class="Symbol"
+      >:</a
+      ><a name="4949"
+      > </a
+      ><a name="4950" href="lib.types.LoopSpace.html#2942" class="Function"
+      >&#937;^</a
+      ><a name="4952"
+      > </a
+      ><a name="4953" class="Symbol"
+      >(</a
+      ><a name="4954" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4955"
+      > </a
+      ><a name="4956" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="4957" class="Symbol"
+      >)</a
+      ><a name="4958"
+      > </a
+      ><a name="4959" class="Symbol"
+      >(</a
+      ><a name="4960" href="lib.groups.HomotopyGroup.html#4751" class="Bound"
+      >X</a
+      ><a name="4961"
+      > </a
+      ><a name="4962" href="lib.types.Sigma.html#331" class="Function Operator"
+      >&#8857;&#215;</a
+      ><a name="4964"
+      > </a
+      ><a name="4965" href="lib.groups.HomotopyGroup.html#4763" class="Bound"
+      >Y</a
+      ><a name="4966" class="Symbol"
+      >)</a
+      ><a name="4967"
+      > </a
+      ><a name="4968" class="Symbol"
+      >&#8594;</a
+      ><a name="4969"
+      > </a
+      ><a name="4970" href="lib.types.LoopSpace.html#2942" class="Function"
+      >&#937;^</a
+      ><a name="4972"
+      > </a
+      ><a name="4973" class="Symbol"
+      >(</a
+      ><a name="4974" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4975"
+      > </a
+      ><a name="4976" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="4977" class="Symbol"
+      >)</a
+      ><a name="4978"
+      > </a
+      ><a name="4979" href="lib.groups.HomotopyGroup.html#4751" class="Bound"
+      >X</a
+      ><a name="4980"
+      > </a
+      ><a name="4981" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="4982"
+      > </a
+      ><a name="4983" href="lib.types.LoopSpace.html#2942" class="Function"
+      >&#937;^</a
+      ><a name="4985"
+      > </a
+      ><a name="4986" class="Symbol"
+      >(</a
+      ><a name="4987" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4988"
+      > </a
+      ><a name="4989" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="4990" class="Symbol"
+      >)</a
+      ><a name="4991"
+      > </a
+      ><a name="4992" href="lib.groups.HomotopyGroup.html#4763" class="Bound"
+      >Y</a
+      ><a name="4993"
+      >
+    </a
+      ><a name="4998" href="lib.groups.HomotopyGroup.html#4946" class="Function"
+      >f</a
+      ><a name="4999"
+      > </a
+      ><a name="5000" href="lib.groups.HomotopyGroup.html#5000" class="Bound"
+      >r</a
+      ><a name="5001"
+      > </a
+      ><a name="5002" class="Symbol"
+      >=</a
+      ><a name="5003"
+      > </a
+      ><a name="5004" class="Symbol"
+      >(</a
+      ><a name="5005" href="lib.types.LoopSpace.html#3479" class="Function"
+      >&#937;^-fmap</a
+      ><a name="5012"
+      > </a
+      ><a name="5013" class="Symbol"
+      >(</a
+      ><a name="5014" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5015"
+      > </a
+      ><a name="5016" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5017" class="Symbol"
+      >)</a
+      ><a name="5018"
+      > </a
+      ><a name="5019" href="lib.types.Sigma.html#556" class="Function"
+      >&#8857;fst</a
+      ><a name="5023"
+      > </a
+      ><a name="5024" href="lib.groups.HomotopyGroup.html#5000" class="Bound"
+      >r</a
+      ><a name="5025"
+      > </a
+      ><a name="5026" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5027"
+      > </a
+      ><a name="5028" href="lib.types.LoopSpace.html#3479" class="Function"
+      >&#937;^-fmap</a
+      ><a name="5035"
+      > </a
+      ><a name="5036" class="Symbol"
+      >(</a
+      ><a name="5037" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5038"
+      > </a
+      ><a name="5039" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5040" class="Symbol"
+      >)</a
+      ><a name="5041"
+      > </a
+      ><a name="5042" href="lib.types.Sigma.html#625" class="Function"
+      >&#8857;snd</a
+      ><a name="5046"
+      > </a
+      ><a name="5047" href="lib.groups.HomotopyGroup.html#5000" class="Bound"
+      >r</a
+      ><a name="5048" class="Symbol"
+      >)</a
+      ><a name="5049"
+      >
+
+    </a
+      ><a name="5055" href="lib.groups.HomotopyGroup.html#5055" class="Function"
+      >g</a
+      ><a name="5056"
+      > </a
+      ><a name="5057" class="Symbol"
+      >:</a
+      ><a name="5058"
+      > </a
+      ><a name="5059" href="lib.types.LoopSpace.html#2942" class="Function"
+      >&#937;^</a
+      ><a name="5061"
+      > </a
+      ><a name="5062" class="Symbol"
+      >(</a
+      ><a name="5063" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5064"
+      > </a
+      ><a name="5065" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5066" class="Symbol"
+      >)</a
+      ><a name="5067"
+      > </a
+      ><a name="5068" href="lib.groups.HomotopyGroup.html#4751" class="Bound"
+      >X</a
+      ><a name="5069"
+      > </a
+      ><a name="5070" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="5071"
+      > </a
+      ><a name="5072" href="lib.types.LoopSpace.html#2942" class="Function"
+      >&#937;^</a
+      ><a name="5074"
+      > </a
+      ><a name="5075" class="Symbol"
+      >(</a
+      ><a name="5076" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5077"
+      > </a
+      ><a name="5078" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5079" class="Symbol"
+      >)</a
+      ><a name="5080"
+      > </a
+      ><a name="5081" href="lib.groups.HomotopyGroup.html#4763" class="Bound"
+      >Y</a
+      ><a name="5082"
+      > </a
+      ><a name="5083" class="Symbol"
+      >&#8594;</a
+      ><a name="5084"
+      > </a
+      ><a name="5085" href="lib.types.LoopSpace.html#2942" class="Function"
+      >&#937;^</a
+      ><a name="5087"
+      > </a
+      ><a name="5088" class="Symbol"
+      >(</a
+      ><a name="5089" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5090"
+      > </a
+      ><a name="5091" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5092" class="Symbol"
+      >)</a
+      ><a name="5093"
+      > </a
+      ><a name="5094" class="Symbol"
+      >(</a
+      ><a name="5095" href="lib.groups.HomotopyGroup.html#4751" class="Bound"
+      >X</a
+      ><a name="5096"
+      > </a
+      ><a name="5097" href="lib.types.Sigma.html#331" class="Function Operator"
+      >&#8857;&#215;</a
+      ><a name="5099"
+      > </a
+      ><a name="5100" href="lib.groups.HomotopyGroup.html#4763" class="Bound"
+      >Y</a
+      ><a name="5101" class="Symbol"
+      >)</a
+      ><a name="5102"
+      >
+    </a
+      ><a name="5107" href="lib.groups.HomotopyGroup.html#5055" class="Function"
+      >g</a
+      ><a name="5108"
+      > </a
+      ><a name="5109" class="Symbol"
+      >=</a
+      ><a name="5110"
+      > </a
+      ><a name="5111" href="lib.types.LoopSpace.html#3796" class="Function"
+      >&#937;^-fmap2</a
+      ><a name="5119"
+      > </a
+      ><a name="5120" class="Symbol"
+      >(</a
+      ><a name="5121" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5122"
+      > </a
+      ><a name="5123" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5124" class="Symbol"
+      >)</a
+      ><a name="5125"
+      > </a
+      ><a name="5126" class="Symbol"
+      >(</a
+      ><a name="5127" href="lib.Base.html#10041" class="Function"
+      >&#8857;idf</a
+      ><a name="5131"
+      > </a
+      ><a name="5132" class="Symbol"
+      >_)</a
+      ><a name="5134"
+      >
+
+    </a
+      ><a name="5140" href="lib.groups.HomotopyGroup.html#5140" class="Function"
+      >f-g</a
+      ><a name="5143"
+      > </a
+      ><a name="5144" class="Symbol"
+      >:</a
+      ><a name="5145"
+      > </a
+      ><a name="5146" class="Symbol"
+      >(</a
+      ><a name="5147" href="lib.groups.HomotopyGroup.html#5147" class="Bound"
+      >s</a
+      ><a name="5148"
+      > </a
+      ><a name="5149" class="Symbol"
+      >:</a
+      ><a name="5150"
+      > </a
+      ><a name="5151" href="lib.types.LoopSpace.html#2942" class="Function"
+      >&#937;^</a
+      ><a name="5153"
+      > </a
+      ><a name="5154" class="Symbol"
+      >(</a
+      ><a name="5155" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5156"
+      > </a
+      ><a name="5157" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5158" class="Symbol"
+      >)</a
+      ><a name="5159"
+      > </a
+      ><a name="5160" href="lib.groups.HomotopyGroup.html#4751" class="Bound"
+      >X</a
+      ><a name="5161"
+      > </a
+      ><a name="5162" href="lib.types.Sigma.html#250" class="Function Operator"
+      >&#215;</a
+      ><a name="5163"
+      > </a
+      ><a name="5164" href="lib.types.LoopSpace.html#2942" class="Function"
+      >&#937;^</a
+      ><a name="5166"
+      > </a
+      ><a name="5167" class="Symbol"
+      >(</a
+      ><a name="5168" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5169"
+      > </a
+      ><a name="5170" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5171" class="Symbol"
+      >)</a
+      ><a name="5172"
+      > </a
+      ><a name="5173" href="lib.groups.HomotopyGroup.html#4763" class="Bound"
+      >Y</a
+      ><a name="5174" class="Symbol"
+      >)</a
+      ><a name="5175"
+      > </a
+      ><a name="5176" class="Symbol"
+      >&#8594;</a
+      ><a name="5177"
+      > </a
+      ><a name="5178" href="lib.groups.HomotopyGroup.html#4946" class="Function"
+      >f</a
+      ><a name="5179"
+      > </a
+      ><a name="5180" class="Symbol"
+      >(</a
+      ><a name="5181" href="lib.groups.HomotopyGroup.html#5055" class="Function"
+      >g</a
+      ><a name="5182"
+      > </a
+      ><a name="5183" href="lib.groups.HomotopyGroup.html#5147" class="Bound"
+      >s</a
+      ><a name="5184" class="Symbol"
+      >)</a
+      ><a name="5185"
+      > </a
+      ><a name="5186" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5188"
+      > </a
+      ><a name="5189" href="lib.groups.HomotopyGroup.html#5147" class="Bound"
+      >s</a
+      ><a name="5190"
+      >
+    </a
+      ><a name="5195" href="lib.groups.HomotopyGroup.html#5140" class="Function"
+      >f-g</a
+      ><a name="5198"
+      > </a
+      ><a name="5199" class="Symbol"
+      >(</a
+      ><a name="5200" href="lib.groups.HomotopyGroup.html#5200" class="Bound"
+      >p</a
+      ><a name="5201"
+      > </a
+      ><a name="5202" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5203"
+      > </a
+      ><a name="5204" href="lib.groups.HomotopyGroup.html#5204" class="Bound"
+      >q</a
+      ><a name="5205" class="Symbol"
+      >)</a
+      ><a name="5206"
+      > </a
+      ><a name="5207" class="Symbol"
+      >=</a
+      ><a name="5208"
+      > </a
+      ><a name="5209" href="lib.Base.html#5559" class="Function"
+      >pair&#215;=</a
+      ><a name="5215"
+      >
+      </a
+      ><a name="5222" class="Symbol"
+      >(</a
+      ><a name="5223" href="lib.Funext.html#3881" class="Function"
+      >app=</a
+      ><a name="5227"
+      > </a
+      ><a name="5228" class="Symbol"
+      >(</a
+      ><a name="5229" href="lib.types.LoopSpace.html#4534" class="Function"
+      >&#937;^-fmap-fmap2</a
+      ><a name="5242"
+      > </a
+      ><a name="5243" class="Symbol"
+      >(</a
+      ><a name="5244" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5245"
+      > </a
+      ><a name="5246" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5247" class="Symbol"
+      >)</a
+      ><a name="5248"
+      > </a
+      ><a name="5249" href="lib.types.Sigma.html#556" class="Function"
+      >&#8857;fst</a
+      ><a name="5253"
+      > </a
+      ><a name="5254" class="Symbol"
+      >(</a
+      ><a name="5255" href="lib.Base.html#10041" class="Function"
+      >&#8857;idf</a
+      ><a name="5259"
+      > </a
+      ><a name="5260" class="Symbol"
+      >_)</a
+      ><a name="5262"
+      > </a
+      ><a name="5263" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5264"
+      > </a
+      ><a name="5265" href="lib.types.LoopSpace.html#4941" class="Function"
+      >&#937;^-fmap2-fst</a
+      ><a name="5277"
+      > </a
+      ><a name="5278" class="Symbol"
+      >(</a
+      ><a name="5279" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5280"
+      > </a
+      ><a name="5281" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5282" class="Symbol"
+      >))</a
+      ><a name="5284"
+      > </a
+      ><a name="5285" class="Symbol"
+      >(</a
+      ><a name="5286" href="lib.groups.HomotopyGroup.html#5200" class="Bound"
+      >p</a
+      ><a name="5287"
+      > </a
+      ><a name="5288" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5289"
+      > </a
+      ><a name="5290" href="lib.groups.HomotopyGroup.html#5204" class="Bound"
+      >q</a
+      ><a name="5291" class="Symbol"
+      >))</a
+      ><a name="5293"
+      >
+      </a
+      ><a name="5300" class="Symbol"
+      >(</a
+      ><a name="5301" href="lib.Funext.html#3881" class="Function"
+      >app=</a
+      ><a name="5305"
+      > </a
+      ><a name="5306" class="Symbol"
+      >(</a
+      ><a name="5307" href="lib.types.LoopSpace.html#4534" class="Function"
+      >&#937;^-fmap-fmap2</a
+      ><a name="5320"
+      > </a
+      ><a name="5321" class="Symbol"
+      >(</a
+      ><a name="5322" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5323"
+      > </a
+      ><a name="5324" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5325" class="Symbol"
+      >)</a
+      ><a name="5326"
+      > </a
+      ><a name="5327" href="lib.types.Sigma.html#625" class="Function"
+      >&#8857;snd</a
+      ><a name="5331"
+      > </a
+      ><a name="5332" class="Symbol"
+      >(</a
+      ><a name="5333" href="lib.Base.html#10041" class="Function"
+      >&#8857;idf</a
+      ><a name="5337"
+      > </a
+      ><a name="5338" class="Symbol"
+      >_)</a
+      ><a name="5340"
+      > </a
+      ><a name="5341" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5342"
+      > </a
+      ><a name="5343" href="lib.types.LoopSpace.html#5255" class="Function"
+      >&#937;^-fmap2-snd</a
+      ><a name="5355"
+      > </a
+      ><a name="5356" class="Symbol"
+      >(</a
+      ><a name="5357" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5358"
+      > </a
+      ><a name="5359" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5360" class="Symbol"
+      >))</a
+      ><a name="5362"
+      > </a
+      ><a name="5363" class="Symbol"
+      >(</a
+      ><a name="5364" href="lib.groups.HomotopyGroup.html#5200" class="Bound"
+      >p</a
+      ><a name="5365"
+      > </a
+      ><a name="5366" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5367"
+      > </a
+      ><a name="5368" href="lib.groups.HomotopyGroup.html#5204" class="Bound"
+      >q</a
+      ><a name="5369" class="Symbol"
+      >))</a
+      ><a name="5371"
+      >
+
+    </a
+      ><a name="5377" href="lib.groups.HomotopyGroup.html#5377" class="Function"
+      >g-f</a
+      ><a name="5380"
+      > </a
+      ><a name="5381" class="Symbol"
+      >:</a
+      ><a name="5382"
+      > </a
+      ><a name="5383" class="Symbol"
+      >(</a
+      ><a name="5384" href="lib.groups.HomotopyGroup.html#5384" class="Bound"
+      >r</a
+      ><a name="5385"
+      > </a
+      ><a name="5386" class="Symbol"
+      >:</a
+      ><a name="5387"
+      > </a
+      ><a name="5388" href="lib.types.LoopSpace.html#2942" class="Function"
+      >&#937;^</a
+      ><a name="5390"
+      > </a
+      ><a name="5391" class="Symbol"
+      >(</a
+      ><a name="5392" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5393"
+      > </a
+      ><a name="5394" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5395" class="Symbol"
+      >)</a
+      ><a name="5396"
+      > </a
+      ><a name="5397" class="Symbol"
+      >(</a
+      ><a name="5398" href="lib.groups.HomotopyGroup.html#4751" class="Bound"
+      >X</a
+      ><a name="5399"
+      > </a
+      ><a name="5400" href="lib.types.Sigma.html#331" class="Function Operator"
+      >&#8857;&#215;</a
+      ><a name="5402"
+      > </a
+      ><a name="5403" href="lib.groups.HomotopyGroup.html#4763" class="Bound"
+      >Y</a
+      ><a name="5404" class="Symbol"
+      >))</a
+      ><a name="5406"
+      > </a
+      ><a name="5407" class="Symbol"
+      >&#8594;</a
+      ><a name="5408"
+      > </a
+      ><a name="5409" href="lib.groups.HomotopyGroup.html#5055" class="Function"
+      >g</a
+      ><a name="5410"
+      > </a
+      ><a name="5411" class="Symbol"
+      >(</a
+      ><a name="5412" href="lib.groups.HomotopyGroup.html#4946" class="Function"
+      >f</a
+      ><a name="5413"
+      > </a
+      ><a name="5414" href="lib.groups.HomotopyGroup.html#5384" class="Bound"
+      >r</a
+      ><a name="5415" class="Symbol"
+      >)</a
+      ><a name="5416"
+      > </a
+      ><a name="5417" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5419"
+      > </a
+      ><a name="5420" href="lib.groups.HomotopyGroup.html#5384" class="Bound"
+      >r</a
+      ><a name="5421"
+      >
+    </a
+      ><a name="5426" href="lib.groups.HomotopyGroup.html#5377" class="Function"
+      >g-f</a
+      ><a name="5429"
+      > </a
+      ><a name="5430" class="Symbol"
+      >=</a
+      ><a name="5431"
+      > </a
+      ><a name="5432" href="lib.Funext.html#3881" class="Function"
+      >app=</a
+      ><a name="5436"
+      > </a
+      ><a name="5437" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="5438"
+      >
+      </a
+      ><a name="5445" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5447"
+      > </a
+      ><a name="5448" class="Symbol"
+      >(</a
+      ><a name="5449" href="lib.Base.html#8144" class="Function Operator"
+      >_&#8728;</a
+      ><a name="5451"
+      > </a
+      ><a name="5452" href="lib.types.Sigma.html#1131" class="Function"
+      >diag</a
+      ><a name="5456" class="Symbol"
+      >)</a
+      ><a name="5457"
+      > </a
+      ><a name="5458" class="Symbol"
+      >(</a
+      ><a name="5459" href="lib.types.LoopSpace.html#5802" class="Function"
+      >&#937;^-fmap2-fmap</a
+      ><a name="5472"
+      > </a
+      ><a name="5473" class="Symbol"
+      >(</a
+      ><a name="5474" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5475"
+      > </a
+      ><a name="5476" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5477" class="Symbol"
+      >)</a
+      ><a name="5478"
+      > </a
+      ><a name="5479" class="Symbol"
+      >(</a
+      ><a name="5480" href="lib.Base.html#10041" class="Function"
+      >&#8857;idf</a
+      ><a name="5484"
+      > </a
+      ><a name="5485" class="Symbol"
+      >_)</a
+      ><a name="5487"
+      > </a
+      ><a name="5488" href="lib.types.Sigma.html#556" class="Function"
+      >&#8857;fst</a
+      ><a name="5492"
+      > </a
+      ><a name="5493" href="lib.types.Sigma.html#625" class="Function"
+      >&#8857;snd</a
+      ><a name="5497" class="Symbol"
+      >)</a
+      ><a name="5498"
+      >
+      </a
+      ><a name="5505" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5506"
+      > </a
+      ><a name="5507" href="lib.types.LoopSpace.html#6346" class="Function"
+      >&#937;^-fmap2-diag</a
+      ><a name="5520"
+      > </a
+      ><a name="5521" class="Symbol"
+      >(</a
+      ><a name="5522" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5523"
+      > </a
+      ><a name="5524" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5525" class="Symbol"
+      >)</a
+      ><a name="5526"
+      > </a
+      ><a name="5527" class="Symbol"
+      >(</a
+      ><a name="5528" href="lib.Base.html#10041" class="Function"
+      >&#8857;idf</a
+      ><a name="5532"
+      > </a
+      ><a name="5533" class="Symbol"
+      >_</a
+      ><a name="5534"
+      > </a
+      ><a name="5535" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="5537"
+      > </a
+      ><a name="5538" href="lib.types.Sigma.html#8198" class="Function"
+      >&#8857;&#215;-fmap</a
+      ><a name="5545"
+      > </a
+      ><a name="5546" href="lib.types.Sigma.html#556" class="Function"
+      >&#8857;fst</a
+      ><a name="5550"
+      > </a
+      ><a name="5551" href="lib.types.Sigma.html#625" class="Function"
+      >&#8857;snd</a
+      ><a name="5555" class="Symbol"
+      >)</a
+      ><a name="5556"
+      >
+      </a
+      ><a name="5563" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5564"
+      > </a
+      ><a name="5565" href="lib.types.LoopSpace.html#4110" class="Function"
+      >&#937;^-fmap-idf</a
+      ><a name="5576"
+      > </a
+      ><a name="5577" class="Symbol"
+      >(</a
+      ><a name="5578" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5579"
+      > </a
+      ><a name="5580" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5581" class="Symbol"
+      >)</a
+      ><a name="5582"
+      >
+
+    </a
+      ><a name="5588" href="lib.groups.HomotopyGroup.html#5588" class="Function"
+      >pres-comp</a
+      ><a name="5597"
+      > </a
+      ><a name="5598" class="Symbol"
+      >:</a
+      ><a name="5599"
+      > </a
+      ><a name="5600" class="Symbol"
+      >(</a
+      ><a name="5601" href="lib.groups.HomotopyGroup.html#5601" class="Bound"
+      >p</a
+      ><a name="5602"
+      > </a
+      ><a name="5603" href="lib.groups.HomotopyGroup.html#5603" class="Bound"
+      >q</a
+      ><a name="5604"
+      > </a
+      ><a name="5605" class="Symbol"
+      >:</a
+      ><a name="5606"
+      > </a
+      ><a name="5607" href="lib.types.LoopSpace.html#2942" class="Function"
+      >&#937;^</a
+      ><a name="5609"
+      > </a
+      ><a name="5610" class="Symbol"
+      >(</a
+      ><a name="5611" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5612"
+      > </a
+      ><a name="5613" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5614" class="Symbol"
+      >)</a
+      ><a name="5615"
+      > </a
+      ><a name="5616" class="Symbol"
+      >(</a
+      ><a name="5617" href="lib.groups.HomotopyGroup.html#4751" class="Bound"
+      >X</a
+      ><a name="5618"
+      > </a
+      ><a name="5619" href="lib.types.Sigma.html#331" class="Function Operator"
+      >&#8857;&#215;</a
+      ><a name="5621"
+      > </a
+      ><a name="5622" href="lib.groups.HomotopyGroup.html#4763" class="Bound"
+      >Y</a
+      ><a name="5623" class="Symbol"
+      >))</a
+      ><a name="5625"
+      >
+      </a
+      ><a name="5632" class="Symbol"
+      >&#8594;</a
+      ><a name="5633"
+      > </a
+      ><a name="5634" href="lib.groups.HomotopyGroup.html#4946" class="Function"
+      >f</a
+      ><a name="5635"
+      > </a
+      ><a name="5636" class="Symbol"
+      >(</a
+      ><a name="5637" href="lib.types.LoopSpace.html#3150" class="Function"
+      >&#937;^S-&#8729;</a
+      ><a name="5642"
+      > </a
+      ><a name="5643" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5644"
+      > </a
+      ><a name="5645" href="lib.groups.HomotopyGroup.html#5601" class="Bound"
+      >p</a
+      ><a name="5646"
+      > </a
+      ><a name="5647" href="lib.groups.HomotopyGroup.html#5603" class="Bound"
+      >q</a
+      ><a name="5648" class="Symbol"
+      >)</a
+      ><a name="5649"
+      > </a
+      ><a name="5650" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5652"
+      > </a
+      ><a name="5653" class="Symbol"
+      >(</a
+      ><a name="5654" href="lib.types.LoopSpace.html#3150" class="Function"
+      >&#937;^S-&#8729;</a
+      ><a name="5659"
+      > </a
+      ><a name="5660" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5661"
+      > </a
+      ><a name="5662" class="Symbol"
+      >(</a
+      ><a name="5663" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="5666"
+      > </a
+      ><a name="5667" class="Symbol"
+      >(</a
+      ><a name="5668" href="lib.groups.HomotopyGroup.html#4946" class="Function"
+      >f</a
+      ><a name="5669"
+      > </a
+      ><a name="5670" href="lib.groups.HomotopyGroup.html#5601" class="Bound"
+      >p</a
+      ><a name="5671" class="Symbol"
+      >))</a
+      ><a name="5673"
+      > </a
+      ><a name="5674" class="Symbol"
+      >(</a
+      ><a name="5675" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="5678"
+      > </a
+      ><a name="5679" class="Symbol"
+      >(</a
+      ><a name="5680" href="lib.groups.HomotopyGroup.html#4946" class="Function"
+      >f</a
+      ><a name="5681"
+      > </a
+      ><a name="5682" href="lib.groups.HomotopyGroup.html#5603" class="Bound"
+      >q</a
+      ><a name="5683" class="Symbol"
+      >))</a
+      ><a name="5685"
+      > </a
+      ><a name="5686" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5687"
+      >
+                            </a
+      ><a name="5716" href="lib.types.LoopSpace.html#3150" class="Function"
+      >&#937;^S-&#8729;</a
+      ><a name="5721"
+      > </a
+      ><a name="5722" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5723"
+      > </a
+      ><a name="5724" class="Symbol"
+      >(</a
+      ><a name="5725" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="5728"
+      > </a
+      ><a name="5729" class="Symbol"
+      >(</a
+      ><a name="5730" href="lib.groups.HomotopyGroup.html#4946" class="Function"
+      >f</a
+      ><a name="5731"
+      > </a
+      ><a name="5732" href="lib.groups.HomotopyGroup.html#5601" class="Bound"
+      >p</a
+      ><a name="5733" class="Symbol"
+      >))</a
+      ><a name="5735"
+      > </a
+      ><a name="5736" class="Symbol"
+      >(</a
+      ><a name="5737" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="5740"
+      > </a
+      ><a name="5741" class="Symbol"
+      >(</a
+      ><a name="5742" href="lib.groups.HomotopyGroup.html#4946" class="Function"
+      >f</a
+      ><a name="5743"
+      > </a
+      ><a name="5744" href="lib.groups.HomotopyGroup.html#5603" class="Bound"
+      >q</a
+      ><a name="5745" class="Symbol"
+      >)))</a
+      ><a name="5748"
+      >
+    </a
+      ><a name="5753" href="lib.groups.HomotopyGroup.html#5588" class="Function"
+      >pres-comp</a
+      ><a name="5762"
+      > </a
+      ><a name="5763" href="lib.groups.HomotopyGroup.html#5763" class="Bound"
+      >p</a
+      ><a name="5764"
+      > </a
+      ><a name="5765" href="lib.groups.HomotopyGroup.html#5765" class="Bound"
+      >q</a
+      ><a name="5766"
+      > </a
+      ><a name="5767" class="Symbol"
+      >=</a
+      ><a name="5768"
+      > </a
+      ><a name="5769" href="lib.Base.html#5559" class="Function"
+      >pair&#215;=</a
+      ><a name="5775"
+      > </a
+      ><a name="5776" class="Symbol"
+      >(</a
+      ><a name="5777" href="lib.types.LoopSpace.html#7334" class="Function"
+      >&#937;^S-fmap-&#8729;</a
+      ><a name="5787"
+      > </a
+      ><a name="5788" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5789"
+      > </a
+      ><a name="5790" href="lib.types.Sigma.html#556" class="Function"
+      >&#8857;fst</a
+      ><a name="5794"
+      > </a
+      ><a name="5795" href="lib.groups.HomotopyGroup.html#5763" class="Bound"
+      >p</a
+      ><a name="5796"
+      > </a
+      ><a name="5797" href="lib.groups.HomotopyGroup.html#5765" class="Bound"
+      >q</a
+      ><a name="5798" class="Symbol"
+      >)</a
+      ><a name="5799"
+      > </a
+      ><a name="5800" class="Symbol"
+      >(</a
+      ><a name="5801" href="lib.types.LoopSpace.html#7334" class="Function"
+      >&#937;^S-fmap-&#8729;</a
+      ><a name="5811"
+      > </a
+      ><a name="5812" href="lib.groups.HomotopyGroup.html#4743" class="Bound"
+      >n</a
+      ><a name="5813"
+      > </a
+      ><a name="5814" href="lib.types.Sigma.html#625" class="Function"
+      >&#8857;snd</a
+      ><a name="5818"
+      > </a
+      ><a name="5819" href="lib.groups.HomotopyGroup.html#5763" class="Bound"
+      >p</a
+      ><a name="5820"
+      > </a
+      ><a name="5821" href="lib.groups.HomotopyGroup.html#5765" class="Bound"
+      >q</a
+      ><a name="5822" class="Symbol"
+      >)</a
+      ><a name="5823"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

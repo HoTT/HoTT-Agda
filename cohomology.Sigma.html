@@ -1,0 +1,1332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cohomology.Sigma</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="homotopy.PtdMapSequence.html#1" class="Module"
+      >homotopy.PtdMapSequence</a
+      ><a name="94"
+      >
+</a
+      ><a name="95" class="Keyword"
+      >open</a
+      ><a name="99"
+      > </a
+      ><a name="100" class="Keyword"
+      >import</a
+      ><a name="106"
+      > </a
+      ><a name="107" href="homotopy.CofiberSequence.html#1" class="Module"
+      >homotopy.CofiberSequence</a
+      ><a name="131"
+      >
+</a
+      ><a name="132" class="Keyword"
+      >open</a
+      ><a name="136"
+      > </a
+      ><a name="137" class="Keyword"
+      >import</a
+      ><a name="143"
+      > </a
+      ><a name="144" href="groups.Exactness.html#1" class="Module"
+      >groups.Exactness</a
+      ><a name="160"
+      >
+</a
+      ><a name="161" class="Keyword"
+      >open</a
+      ><a name="165"
+      > </a
+      ><a name="166" class="Keyword"
+      >import</a
+      ><a name="172"
+      > </a
+      ><a name="173" href="groups.ExactSequence.html#1" class="Module"
+      >groups.ExactSequence</a
+      ><a name="193"
+      >
+</a
+      ><a name="194" class="Keyword"
+      >open</a
+      ><a name="198"
+      > </a
+      ><a name="199" class="Keyword"
+      >import</a
+      ><a name="205"
+      > </a
+      ><a name="206" href="groups.HomSequence.html#1" class="Module"
+      >groups.HomSequence</a
+      ><a name="224"
+      >
+</a
+      ><a name="225" class="Keyword"
+      >open</a
+      ><a name="229"
+      > </a
+      ><a name="230" class="Keyword"
+      >import</a
+      ><a name="236"
+      > </a
+      ><a name="237" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="254"
+      >
+
+</a
+      ><a name="256" class="Keyword"
+      >module</a
+      ><a name="262"
+      > </a
+      ><a name="263" href="cohomology.Sigma.html#1" class="Module"
+      >cohomology.Sigma</a
+      ><a name="279"
+      > </a
+      ><a name="280" class="Symbol"
+      >{</a
+      ><a name="281" href="cohomology.Sigma.html#281" class="Bound"
+      >i</a
+      ><a name="282" class="Symbol"
+      >}</a
+      ><a name="283"
+      > </a
+      ><a name="284" class="Symbol"
+      >(</a
+      ><a name="285" href="cohomology.Sigma.html#285" class="Bound"
+      >CT</a
+      ><a name="287"
+      > </a
+      ><a name="288" class="Symbol"
+      >:</a
+      ><a name="289"
+      > </a
+      ><a name="290" href="cohomology.Theory.html#173" class="Record"
+      >CohomologyTheory</a
+      ><a name="306"
+      > </a
+      ><a name="307" href="cohomology.Sigma.html#281" class="Bound"
+      >i</a
+      ><a name="308" class="Symbol"
+      >)</a
+      ><a name="309"
+      >
+  </a
+      ><a name="312" class="Symbol"
+      >(</a
+      ><a name="313" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="314"
+      > </a
+      ><a name="315" class="Symbol"
+      >:</a
+      ><a name="316"
+      > </a
+      ><a name="317" href="lib.types.Int.html#154" class="Datatype"
+      >&#8484;</a
+      ><a name="318" class="Symbol"
+      >)</a
+      ><a name="319"
+      > </a
+      ><a name="320" class="Symbol"
+      >(</a
+      ><a name="321" href="cohomology.Sigma.html#321" class="Bound"
+      >X</a
+      ><a name="322"
+      > </a
+      ><a name="323" class="Symbol"
+      >:</a
+      ><a name="324"
+      > </a
+      ><a name="325" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="328"
+      > </a
+      ><a name="329" href="cohomology.Sigma.html#281" class="Bound"
+      >i</a
+      ><a name="330" class="Symbol"
+      >)</a
+      ><a name="331"
+      > </a
+      ><a name="332" class="Symbol"
+      >(</a
+      ><a name="333" href="cohomology.Sigma.html#333" class="Bound"
+      >Y</a
+      ><a name="334"
+      > </a
+      ><a name="335" class="Symbol"
+      >:</a
+      ><a name="336"
+      > </a
+      ><a name="337" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="340"
+      > </a
+      ><a name="341" href="cohomology.Sigma.html#321" class="Bound"
+      >X</a
+      ><a name="342"
+      > </a
+      ><a name="343" class="Symbol"
+      >&#8594;</a
+      ><a name="344"
+      > </a
+      ><a name="345" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="348"
+      > </a
+      ><a name="349" href="cohomology.Sigma.html#281" class="Bound"
+      >i</a
+      ><a name="350" class="Symbol"
+      >)</a
+      ><a name="351"
+      > </a
+      ><a name="352" class="Keyword"
+      >where</a
+      ><a name="357"
+      >
+
+</a
+      ><a name="359" class="Keyword"
+      >open</a
+      ><a name="363"
+      > </a
+      ><a name="364" href="cohomology.Theory.html#173" class="Module"
+      >CohomologyTheory</a
+      ><a name="380"
+      > </a
+      ><a name="381" href="cohomology.Sigma.html#285" class="Bound"
+      >CT</a
+      ><a name="383"
+      >
+</a
+      ><a name="384" class="Keyword"
+      >open</a
+      ><a name="388"
+      > </a
+      ><a name="389" class="Keyword"
+      >import</a
+      ><a name="395"
+      > </a
+      ><a name="396" href="cohomology.PtdMapSequence.html#1" class="Module"
+      >cohomology.PtdMapSequence</a
+      ><a name="421"
+      > </a
+      ><a name="422" href="cohomology.Sigma.html#285" class="Bound"
+      >CT</a
+      ><a name="424"
+      >
+
+</a
+      ><a name="426" class="Comment"
+      >{- C&#8319;(&#931;x:X.Y) = C&#8319;(&#8897;x:X.Y) &#215; C&#8319;(X). The proof is by constructing a
+ - splitting exact sequence
+
+       0 &#8594; C&#8319;(&#8897;x:X.Y) &#8594; C&#8319;(&#931;x:X.Y) &#8594; C&#8319;(X)
+
+ - by observing that the map [select : x &#8614; (x, pt Y&#8339;)] has a left inverse
+ - and satisfies [Cofiber select == &#8897;x:X.Y. -}</a
+      ><a name="686"
+      >
+
+</a
+      ><a name="688" href="cohomology.Sigma.html#688" class="Function"
+      >&#8857;select</a
+      ><a name="695"
+      > </a
+      ><a name="696" class="Symbol"
+      >:</a
+      ><a name="697"
+      > </a
+      ><a name="698" href="cohomology.Sigma.html#321" class="Bound"
+      >X</a
+      ><a name="699"
+      > </a
+      ><a name="700" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="702"
+      > </a
+      ><a name="703" href="lib.types.Sigma.html#111" class="Function"
+      >&#8857;&#931;</a
+      ><a name="705"
+      > </a
+      ><a name="706" href="cohomology.Sigma.html#321" class="Bound"
+      >X</a
+      ><a name="707"
+      > </a
+      ><a name="708" href="cohomology.Sigma.html#333" class="Bound"
+      >Y</a
+      ><a name="709"
+      >
+</a
+      ><a name="710" href="cohomology.Sigma.html#688" class="Function"
+      >&#8857;select</a
+      ><a name="717"
+      > </a
+      ><a name="718" class="Symbol"
+      >=</a
+      ><a name="719"
+      > </a
+      ><a name="720" class="Symbol"
+      >(</a
+      ><a name="721" href="lib.types.BigWedge.html#492" class="Function"
+      >bigwedge-f</a
+      ><a name="731"
+      > </a
+      ><a name="732" href="cohomology.Sigma.html#333" class="Bound"
+      >Y</a
+      ><a name="733"
+      > </a
+      ><a name="734" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="735"
+      > </a
+      ><a name="736" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="739" class="Symbol"
+      >)</a
+      ><a name="740"
+      >
+
+</a
+      ><a name="742" href="cohomology.Sigma.html#742" class="Function"
+      >&#8857;&#931;bwin</a
+      ><a name="748"
+      > </a
+      ><a name="749" class="Symbol"
+      >:</a
+      ><a name="750"
+      > </a
+      ><a name="751" href="lib.types.Sigma.html#111" class="Function"
+      >&#8857;&#931;</a
+      ><a name="753"
+      > </a
+      ><a name="754" href="cohomology.Sigma.html#321" class="Bound"
+      >X</a
+      ><a name="755"
+      > </a
+      ><a name="756" href="cohomology.Sigma.html#333" class="Bound"
+      >Y</a
+      ><a name="757"
+      > </a
+      ><a name="758" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="760"
+      > </a
+      ><a name="761" href="lib.types.BigWedge.html#885" class="Function"
+      >&#8857;BigWedge</a
+      ><a name="770"
+      > </a
+      ><a name="771" href="cohomology.Sigma.html#333" class="Bound"
+      >Y</a
+      ><a name="772"
+      >
+</a
+      ><a name="773" href="cohomology.Sigma.html#742" class="Function"
+      >&#8857;&#931;bwin</a
+      ><a name="779"
+      > </a
+      ><a name="780" class="Symbol"
+      >=</a
+      ><a name="781"
+      > </a
+      ><a name="782" href="lib.types.Cofiber.html#1617" class="Function"
+      >&#8857;cfcod'</a
+      ><a name="789"
+      > </a
+      ><a name="790" href="cohomology.Sigma.html#688" class="Function"
+      >&#8857;select</a
+      ><a name="797"
+      >
+
+</a
+      ><a name="799" class="Keyword"
+      >private</a
+      ><a name="806"
+      >
+  </a
+      ><a name="809" class="Keyword"
+      >abstract</a
+      ><a name="817"
+      >
+    </a
+      ><a name="822" href="cohomology.Sigma.html#822" class="Function"
+      >cst-C-&#931;bwin-is-exact</a
+      ><a name="842"
+      > </a
+      ><a name="843" class="Symbol"
+      >:</a
+      ><a name="844"
+      > </a
+      ><a name="845" href="lib.groups.Homomorphism.html#9329" class="Record"
+      >is-exact</a
+      ><a name="853"
+      > </a
+      ><a name="854" class="Symbol"
+      >(</a
+      ><a name="855" href="lib.groups.Homomorphism.html#3180" class="Function"
+      >cst-hom</a
+      ><a name="862"
+      > </a
+      ><a name="863" class="Symbol"
+      >{</a
+      ><a name="864" class="Argument"
+      >G</a
+      ><a name="865"
+      > </a
+      ><a name="866" class="Symbol"
+      >=</a
+      ><a name="867"
+      > </a
+      ><a name="868" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="869"
+      > </a
+      ><a name="870" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="871"
+      > </a
+      ><a name="872" class="Symbol"
+      >(</a
+      ><a name="873" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="878"
+      > </a
+      ><a name="879" href="cohomology.Sigma.html#321" class="Bound"
+      >X</a
+      ><a name="880" class="Symbol"
+      >)})</a
+      ><a name="883"
+      > </a
+      ><a name="884" class="Symbol"
+      >(</a
+      ><a name="885" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="891"
+      > </a
+      ><a name="892" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="893"
+      > </a
+      ><a name="894" href="cohomology.Sigma.html#742" class="Function"
+      >&#8857;&#931;bwin</a
+      ><a name="900" class="Symbol"
+      >)</a
+      ><a name="901"
+      >
+    </a
+      ><a name="906" href="cohomology.Sigma.html#822" class="Function"
+      >cst-C-&#931;bwin-is-exact</a
+      ><a name="926"
+      > </a
+      ><a name="927" class="Symbol"
+      >=</a
+      ><a name="928"
+      > </a
+      ><a name="929" href="groups.Exactness.html#12155" class="Function"
+      >equiv-preserves-exact</a
+      ><a name="950"
+      >
+      </a
+      ><a name="957" class="Symbol"
+      >{</a
+      ><a name="958" class="Argument"
+      >&#966;&#8321;</a
+      ><a name="960"
+      > </a
+      ><a name="961" class="Symbol"
+      >=</a
+      ><a name="962"
+      > </a
+      ><a name="963" href="lib.groups.Homomorphism.html#3180" class="Function"
+      >cst-hom</a
+      ><a name="970"
+      > </a
+      ><a name="971" class="Symbol"
+      >{</a
+      ><a name="972" class="Argument"
+      >G</a
+      ><a name="973"
+      > </a
+      ><a name="974" class="Symbol"
+      >=</a
+      ><a name="975"
+      > </a
+      ><a name="976" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="977"
+      > </a
+      ><a name="978" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="979"
+      > </a
+      ><a name="980" class="Symbol"
+      >(</a
+      ><a name="981" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="986"
+      > </a
+      ><a name="987" href="cohomology.Sigma.html#321" class="Bound"
+      >X</a
+      ><a name="988" class="Symbol"
+      >)}}</a
+      ><a name="991"
+      >
+      </a
+      ><a name="998" class="Symbol"
+      >{</a
+      ><a name="999" class="Argument"
+      >&#958;G</a
+      ><a name="1001"
+      > </a
+      ><a name="1002" class="Symbol"
+      >=</a
+      ><a name="1003"
+      > </a
+      ><a name="1004" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1010"
+      > </a
+      ><a name="1011" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1012"
+      > </a
+      ><a name="1013" class="Symbol"
+      >(</a
+      ><a name="1014" href="homotopy.CofiberSequence.html#2939" class="Function"
+      >&#8857;Susp-to-&#8857;Cof&#178;</a
+      ><a name="1028"
+      > </a
+      ><a name="1029" href="cohomology.Sigma.html#688" class="Function"
+      >&#8857;select</a
+      ><a name="1036" class="Symbol"
+      >)}</a
+      ><a name="1038"
+      > </a
+      ><a name="1039" class="Symbol"
+      >{</a
+      ><a name="1040" class="Argument"
+      >&#958;H</a
+      ><a name="1042"
+      > </a
+      ><a name="1043" class="Symbol"
+      >=</a
+      ><a name="1044"
+      > </a
+      ><a name="1045" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="1050"
+      > </a
+      ><a name="1051" class="Symbol"
+      >_}</a
+      ><a name="1053"
+      > </a
+      ><a name="1054" class="Symbol"
+      >{</a
+      ><a name="1055" class="Argument"
+      >&#958;K</a
+      ><a name="1057"
+      > </a
+      ><a name="1058" class="Symbol"
+      >=</a
+      ><a name="1059"
+      > </a
+      ><a name="1060" href="lib.groups.Homomorphism.html#3046" class="Function"
+      >idhom</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" class="Symbol"
+      >_}</a
+      ><a name="1068"
+      >
+      </a
+      ><a name="1075" class="Symbol"
+      >(</a
+      ><a name="1076" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" class="Symbol"
+      >&#955;</a
+      ><a name="1087"
+      > </a
+      ><a name="1088" href="cohomology.Sigma.html#1088" class="Bound"
+      >x</a
+      ><a name="1089"
+      > </a
+      ><a name="1090" class="Symbol"
+      >&#8594;</a
+      ><a name="1091"
+      >
+        </a
+      ><a name="1100" href="cohomology.Theory.html#718" class="Function"
+      >CEl-fmap</a
+      ><a name="1108"
+      > </a
+      ><a name="1109" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1110"
+      > </a
+      ><a name="1111" class="Symbol"
+      >(</a
+      ><a name="1112" href="homotopy.CofiberSequence.html#246" class="Function"
+      >&#8857;cfcod&#178;'</a
+      ><a name="1120"
+      > </a
+      ><a name="1121" href="cohomology.Sigma.html#688" class="Function"
+      >&#8857;select</a
+      ><a name="1128" class="Symbol"
+      >)</a
+      ><a name="1129"
+      > </a
+      ><a name="1130" href="cohomology.Sigma.html#1088" class="Bound"
+      >x</a
+      ><a name="1131"
+      >
+          </a
+      ><a name="1142" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1144"
+      > </a
+      ><a name="1145" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1146"
+      > </a
+      ><a name="1147" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1148"
+      > </a
+      ><a name="1149" href="cohomology.Theory.html#2842" class="Function"
+      >CEl-fmap-idf</a
+      ><a name="1161"
+      > </a
+      ><a name="1162" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1163"
+      > </a
+      ><a name="1164" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1165"
+      > </a
+      ><a name="1166" href="cohomology.Theory.html#718" class="Function"
+      >CEl-fmap</a
+      ><a name="1174"
+      > </a
+      ><a name="1175" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1176"
+      > </a
+      ><a name="1177" class="Symbol"
+      >(</a
+      ><a name="1178" href="homotopy.CofiberSequence.html#246" class="Function"
+      >&#8857;cfcod&#178;'</a
+      ><a name="1186"
+      > </a
+      ><a name="1187" href="cohomology.Sigma.html#688" class="Function"
+      >&#8857;select</a
+      ><a name="1194" class="Symbol"
+      >)</a
+      ><a name="1195"
+      > </a
+      ><a name="1196" href="cohomology.Sigma.html#1088" class="Bound"
+      >x</a
+      ><a name="1197"
+      > </a
+      ><a name="1198" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1199"
+      >
+        </a
+      ><a name="1208" href="cohomology.Theory.html#718" class="Function"
+      >CEl-fmap</a
+      ><a name="1216"
+      > </a
+      ><a name="1217" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1218"
+      > </a
+      ><a name="1219" class="Symbol"
+      >(</a
+      ><a name="1220" href="lib.Base.html#10041" class="Function"
+      >&#8857;idf</a
+      ><a name="1224"
+      > </a
+      ><a name="1225" class="Symbol"
+      >_)</a
+      ><a name="1227"
+      > </a
+      ><a name="1228" class="Symbol"
+      >(</a
+      ><a name="1229" href="cohomology.Theory.html#718" class="Function"
+      >CEl-fmap</a
+      ><a name="1237"
+      > </a
+      ><a name="1238" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1239"
+      > </a
+      ><a name="1240" class="Symbol"
+      >(</a
+      ><a name="1241" href="homotopy.CofiberSequence.html#246" class="Function"
+      >&#8857;cfcod&#178;'</a
+      ><a name="1249"
+      > </a
+      ><a name="1250" href="cohomology.Sigma.html#688" class="Function"
+      >&#8857;select</a
+      ><a name="1257" class="Symbol"
+      >)</a
+      ><a name="1258"
+      > </a
+      ><a name="1259" href="cohomology.Sigma.html#1088" class="Bound"
+      >x</a
+      ><a name="1260" class="Symbol"
+      >)</a
+      ><a name="1261"
+      >
+          </a
+      ><a name="1272" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1274"
+      > </a
+      ><a name="1275" href="cohomology.PtdMapSequence.html#559" class="Function"
+      >C-comm-square</a
+      ><a name="1288"
+      > </a
+      ><a name="1289" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1290"
+      > </a
+      ><a name="1291" class="Symbol"
+      >(</a
+      ><a name="1292" href="homotopy.CofiberSequence.html#3288" class="Function"
+      >extract-glue-cod&#178;-comm-sqr</a
+      ><a name="1318"
+      > </a
+      ><a name="1319" href="cohomology.Sigma.html#688" class="Function"
+      >&#8857;select</a
+      ><a name="1326" class="Symbol"
+      >)</a
+      ><a name="1327"
+      > </a
+      ><a name="1328" href="lib.groups.CommutingSquare.html#618" class="Function Operator"
+      >&#9633;$&#7475;</a
+      ><a name="1331"
+      > </a
+      ><a name="1332" href="cohomology.Sigma.html#1088" class="Bound"
+      >x</a
+      ><a name="1333"
+      > </a
+      ><a name="1334" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1335"
+      >
+        </a
+      ><a name="1344" href="cohomology.Theory.html#718" class="Function"
+      >CEl-fmap</a
+      ><a name="1352"
+      > </a
+      ><a name="1353" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1354"
+      > </a
+      ><a name="1355" href="lib.types.Suspension.html#4802" class="Function"
+      >&#8857;extract-glue</a
+      ><a name="1368"
+      > </a
+      ><a name="1369" class="Symbol"
+      >(</a
+      ><a name="1370" href="cohomology.Theory.html#718" class="Function"
+      >CEl-fmap</a
+      ><a name="1378"
+      > </a
+      ><a name="1379" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1380"
+      > </a
+      ><a name="1381" class="Symbol"
+      >(</a
+      ><a name="1382" href="homotopy.CofiberSequence.html#2939" class="Function"
+      >&#8857;Susp-to-&#8857;Cof&#178;</a
+      ><a name="1396"
+      > </a
+      ><a name="1397" href="cohomology.Sigma.html#688" class="Function"
+      >&#8857;select</a
+      ><a name="1404" class="Symbol"
+      >)</a
+      ><a name="1405"
+      > </a
+      ><a name="1406" href="cohomology.Sigma.html#1088" class="Bound"
+      >x</a
+      ><a name="1407" class="Symbol"
+      >)</a
+      ><a name="1408"
+      >
+          </a
+      ><a name="1419" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1421"
+      > </a
+      ><a name="1422" href="cohomology.Theory.html#7168" class="Function"
+      >CEl-fmap-const</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1438"
+      > </a
+      ><a name="1439" class="Symbol"
+      >(</a
+      ><a name="1440" href="lib.types.BigWedge.html#2973" class="Function"
+      >extract-glue-from-BigWedge-is-const</a
+      ><a name="1475"
+      > </a
+      ><a name="1476" href="cohomology.Sigma.html#333" class="Bound"
+      >Y</a
+      ><a name="1477" class="Symbol"
+      >)</a
+      ><a name="1478"
+      > </a
+      ><a name="1479" class="Symbol"
+      >_</a
+      ><a name="1480"
+      > </a
+      ><a name="1481" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1482"
+      >
+        </a
+      ><a name="1491" href="cohomology.Theory.html#477" class="Function"
+      >Cident</a
+      ><a name="1497"
+      > </a
+      ><a name="1498" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1499"
+      > </a
+      ><a name="1500" class="Symbol"
+      >_</a
+      ><a name="1501"
+      >
+          </a
+      ><a name="1512" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="1514" class="Symbol"
+      >)</a
+      ><a name="1515"
+      >
+      </a
+      ><a name="1522" class="Symbol"
+      >(</a
+      ><a name="1523" href="lib.groups.CommutingSquare.html#509" class="InductiveConstructor"
+      >comm-sqr&#7475;</a
+      ><a name="1532"
+      > </a
+      ><a name="1533" class="Symbol"
+      >&#955;</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" href="cohomology.Sigma.html#1535" class="Bound"
+      >_</a
+      ><a name="1536"
+      > </a
+      ><a name="1537" class="Symbol"
+      >&#8594;</a
+      ><a name="1538"
+      > </a
+      ><a name="1539" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1542" class="Symbol"
+      >)</a
+      ><a name="1543"
+      >
+      </a
+      ><a name="1550" class="Symbol"
+      >(</a
+      ><a name="1551" href="cohomology.Theory.html#3776" class="Function"
+      >C-isemap</a
+      ><a name="1559"
+      > </a
+      ><a name="1560" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1561"
+      > </a
+      ><a name="1562" class="Symbol"
+      >(</a
+      ><a name="1563" href="homotopy.CofiberSequence.html#2939" class="Function"
+      >&#8857;Susp-to-&#8857;Cof&#178;</a
+      ><a name="1577"
+      > </a
+      ><a name="1578" href="cohomology.Sigma.html#688" class="Function"
+      >&#8857;select</a
+      ><a name="1585" class="Symbol"
+      >)</a
+      ><a name="1586"
+      > </a
+      ><a name="1587" class="Symbol"
+      >(</a
+      ><a name="1588" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1591"
+      > </a
+      ><a name="1592" class="Symbol"
+      >(</a
+      ><a name="1593" href="homotopy.CofiberSequence.html#3057" class="Function"
+      >Cof&#178;-equiv-Susp</a
+      ><a name="1608"
+      > </a
+      ><a name="1609" href="cohomology.Sigma.html#688" class="Function"
+      >&#8857;select</a
+      ><a name="1616"
+      > </a
+      ><a name="1617" href="lib.Equivalence.html#8519" class="Function Operator"
+      >&#8315;&#185;</a
+      ><a name="1619" class="Symbol"
+      >)))</a
+      ><a name="1622"
+      >
+      </a
+      ><a name="1629" class="Symbol"
+      >(</a
+      ><a name="1630" href="lib.Equivalence.html#5614" class="Function"
+      >idf-is-equiv</a
+      ><a name="1642"
+      > </a
+      ><a name="1643" class="Symbol"
+      >_)</a
+      ><a name="1645"
+      >
+      </a
+      ><a name="1652" class="Symbol"
+      >(</a
+      ><a name="1653" href="lib.Equivalence.html#5614" class="Function"
+      >idf-is-equiv</a
+      ><a name="1665"
+      > </a
+      ><a name="1666" class="Symbol"
+      >_)</a
+      ><a name="1668"
+      >
+      </a
+      ><a name="1675" class="Symbol"
+      >(</a
+      ><a name="1676" href="cohomology.Theory.html#1744" class="Function"
+      >C-exact</a
+      ><a name="1683"
+      > </a
+      ><a name="1684" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1685"
+      > </a
+      ><a name="1686" href="cohomology.Sigma.html#742" class="Function"
+      >&#8857;&#931;bwin</a
+      ><a name="1692" class="Symbol"
+      >)</a
+      ><a name="1693"
+      >
+
+  </a
+      ><a name="1697" href="cohomology.Sigma.html#1697" class="Function"
+      >&#967;</a
+      ><a name="1698"
+      > </a
+      ><a name="1699" class="Symbol"
+      >:</a
+      ><a name="1700"
+      > </a
+      ><a name="1701" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1702"
+      > </a
+      ><a name="1703" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1704"
+      > </a
+      ><a name="1705" href="cohomology.Sigma.html#321" class="Bound"
+      >X</a
+      ><a name="1706"
+      > </a
+      ><a name="1707" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="1709"
+      > </a
+      ><a name="1710" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1711"
+      > </a
+      ><a name="1712" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1713"
+      > </a
+      ><a name="1714" class="Symbol"
+      >(</a
+      ><a name="1715" href="lib.types.Sigma.html#111" class="Function"
+      >&#8857;&#931;</a
+      ><a name="1717"
+      > </a
+      ><a name="1718" href="cohomology.Sigma.html#321" class="Bound"
+      >X</a
+      ><a name="1719"
+      > </a
+      ><a name="1720" href="cohomology.Sigma.html#333" class="Bound"
+      >Y</a
+      ><a name="1721" class="Symbol"
+      >)</a
+      ><a name="1722"
+      >
+  </a
+      ><a name="1725" href="cohomology.Sigma.html#1697" class="Function"
+      >&#967;</a
+      ><a name="1726"
+      > </a
+      ><a name="1727" class="Symbol"
+      >=</a
+      ><a name="1728"
+      > </a
+      ><a name="1729" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="1735"
+      > </a
+      ><a name="1736" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1737"
+      > </a
+      ><a name="1738" class="Symbol"
+      >(</a
+      ><a name="1739" href="lib.types.Sigma.html#473" class="Function"
+      >&#8857;fst&#7496;</a
+      ><a name="1744"
+      > </a
+      ><a name="1745" href="cohomology.Sigma.html#333" class="Bound"
+      >Y</a
+      ><a name="1746" class="Symbol"
+      >)</a
+      ><a name="1747"
+      >
+
+  </a
+      ><a name="1751" class="Keyword"
+      >abstract</a
+      ><a name="1759"
+      >
+    </a
+      ><a name="1764" href="cohomology.Sigma.html#1764" class="Function"
+      >select-&#967;-is-idf</a
+      ><a name="1779"
+      > </a
+      ><a name="1780" class="Symbol"
+      >:</a
+      ><a name="1781"
+      > </a
+      ><a name="1782" class="Symbol"
+      >&#8704;</a
+      ><a name="1783"
+      > </a
+      ><a name="1784" href="cohomology.Sigma.html#1784" class="Bound"
+      >s</a
+      ><a name="1785"
+      > </a
+      ><a name="1786" class="Symbol"
+      >&#8594;</a
+      ><a name="1787"
+      > </a
+      ><a name="1788" href="cohomology.Theory.html#718" class="Function"
+      >CEl-fmap</a
+      ><a name="1796"
+      > </a
+      ><a name="1797" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1798"
+      > </a
+      ><a name="1799" href="cohomology.Sigma.html#688" class="Function"
+      >&#8857;select</a
+      ><a name="1806"
+      > </a
+      ><a name="1807" class="Symbol"
+      >(</a
+      ><a name="1808" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="1818"
+      > </a
+      ><a name="1819" href="cohomology.Sigma.html#1697" class="Function"
+      >&#967;</a
+      ><a name="1820"
+      > </a
+      ><a name="1821" href="cohomology.Sigma.html#1784" class="Bound"
+      >s</a
+      ><a name="1822" class="Symbol"
+      >)</a
+      ><a name="1823"
+      > </a
+      ><a name="1824" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1826"
+      > </a
+      ><a name="1827" href="cohomology.Sigma.html#1784" class="Bound"
+      >s</a
+      ><a name="1828"
+      >
+    </a
+      ><a name="1833" href="cohomology.Sigma.html#1764" class="Function"
+      >select-&#967;-is-idf</a
+      ><a name="1848"
+      > </a
+      ><a name="1849" class="Symbol"
+      >=</a
+      ><a name="1850"
+      > </a
+      ><a name="1851" href="cohomology.Theory.html#7200" class="Function"
+      >CEl-fmap-inverse</a
+      ><a name="1867"
+      > </a
+      ><a name="1868" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1869"
+      > </a
+      ><a name="1870" href="cohomology.Sigma.html#688" class="Function"
+      >&#8857;select</a
+      ><a name="1877"
+      > </a
+      ><a name="1878" class="Symbol"
+      >(</a
+      ><a name="1879" href="lib.types.Sigma.html#473" class="Function"
+      >&#8857;fst&#7496;</a
+      ><a name="1884"
+      > </a
+      ><a name="1885" href="cohomology.Sigma.html#333" class="Bound"
+      >Y</a
+      ><a name="1886" class="Symbol"
+      >)</a
+      ><a name="1887"
+      > </a
+      ><a name="1888" class="Symbol"
+      >&#955;</a
+      ><a name="1889"
+      > </a
+      ><a name="1890" href="cohomology.Sigma.html#1890" class="Bound"
+      >_</a
+      ><a name="1891"
+      > </a
+      ><a name="1892" class="Symbol"
+      >&#8594;</a
+      ><a name="1893"
+      > </a
+      ><a name="1894" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1897"
+      >
+
+</a
+      ><a name="1899" href="cohomology.Sigma.html#1899" class="Function"
+      >C-&#931;</a
+      ><a name="1902"
+      > </a
+      ><a name="1903" class="Symbol"
+      >:</a
+      ><a name="1904"
+      > </a
+      ><a name="1905" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1906"
+      > </a
+      ><a name="1907" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1908"
+      > </a
+      ><a name="1909" class="Symbol"
+      >(</a
+      ><a name="1910" href="lib.types.Sigma.html#111" class="Function"
+      >&#8857;&#931;</a
+      ><a name="1912"
+      > </a
+      ><a name="1913" href="cohomology.Sigma.html#321" class="Bound"
+      >X</a
+      ><a name="1914"
+      > </a
+      ><a name="1915" href="cohomology.Sigma.html#333" class="Bound"
+      >Y</a
+      ><a name="1916" class="Symbol"
+      >)</a
+      ><a name="1917"
+      > </a
+      ><a name="1918" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="1920"
+      > </a
+      ><a name="1921" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1922"
+      > </a
+      ><a name="1923" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1924"
+      > </a
+      ><a name="1925" class="Symbol"
+      >(</a
+      ><a name="1926" href="lib.types.BigWedge.html#885" class="Function"
+      >&#8857;BigWedge</a
+      ><a name="1935"
+      > </a
+      ><a name="1936" href="cohomology.Sigma.html#333" class="Bound"
+      >Y</a
+      ><a name="1937" class="Symbol"
+      >)</a
+      ><a name="1938"
+      > </a
+      ><a name="1939" href="lib.groups.GroupProduct.html#1359" class="Function Operator"
+      >&#215;&#7475;</a
+      ><a name="1941"
+      > </a
+      ><a name="1942" href="cohomology.Theory.html#252" class="Function"
+      >C</a
+      ><a name="1943"
+      > </a
+      ><a name="1944" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1945"
+      > </a
+      ><a name="1946" href="cohomology.Sigma.html#321" class="Bound"
+      >X</a
+      ><a name="1947"
+      >
+</a
+      ><a name="1948" href="cohomology.Sigma.html#1899" class="Function"
+      >C-&#931;</a
+      ><a name="1951"
+      > </a
+      ><a name="1952" class="Symbol"
+      >=</a
+      ><a name="1953"
+      > </a
+      ><a name="1954" href="groups.Exactness.html#9662" class="Function"
+      >Exact.&#966;-inj-and-&#968;-has-rinv-split</a
+      ><a name="1986"
+      >
+  </a
+      ><a name="1989" class="Symbol"
+      >(</a
+      ><a name="1990" href="cohomology.Theory.html#1744" class="Function"
+      >C-exact</a
+      ><a name="1997"
+      > </a
+      ><a name="1998" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="1999"
+      > </a
+      ><a name="2000" href="cohomology.Sigma.html#688" class="Function"
+      >&#8857;select</a
+      ><a name="2007" class="Symbol"
+      >)</a
+      ><a name="2008"
+      > </a
+      ><a name="2009" class="Symbol"
+      >(</a
+      ><a name="2010" href="cohomology.Theory.html#281" class="Function"
+      >C-is-abelian</a
+      ><a name="2022"
+      > </a
+      ><a name="2023" href="cohomology.Sigma.html#313" class="Bound"
+      >n</a
+      ><a name="2024"
+      > </a
+      ><a name="2025" class="Symbol"
+      >_)</a
+      ><a name="2027"
+      >
+  </a
+      ><a name="2030" class="Symbol"
+      >(</a
+      ><a name="2031" href="groups.Exactness.html#561" class="Function"
+      >Exact.&#966;-const-implies-&#968;-is-inj</a
+      ><a name="2061"
+      > </a
+      ><a name="2062" href="cohomology.Sigma.html#822" class="Function"
+      >cst-C-&#931;bwin-is-exact</a
+      ><a name="2082"
+      > </a
+      ><a name="2083" class="Symbol"
+      >(&#955;</a
+      ><a name="2085"
+      > </a
+      ><a name="2086" href="cohomology.Sigma.html#2086" class="Bound"
+      >_</a
+      ><a name="2087"
+      > </a
+      ><a name="2088" class="Symbol"
+      >&#8594;</a
+      ><a name="2089"
+      > </a
+      ><a name="2090" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2093" class="Symbol"
+      >))</a
+      ><a name="2095"
+      >
+  </a
+      ><a name="2098" href="cohomology.Sigma.html#1697" class="Function"
+      >&#967;</a
+      ><a name="2099"
+      > </a
+      ><a name="2100" href="cohomology.Sigma.html#1764" class="Function"
+      >select-&#967;-is-idf</a
+      ><a name="2115"
+      >
+
+</a
+      ><a name="2117" class="Comment"
+      >{-
+  &#8857;&#931;bwin-over : CF-hom n &#8857;&#931;bwin == &#215;&#7475;-inl
+                [ (&#955; G &#8594; GroupHom (C n (&#8857;BigWedge Y)) G) &#8595; path ]
+  &#8857;&#931;bwin-over = SER.&#966;-over-iso
+
+  &#8857;select-over : CF-hom n &#8857;select == &#215;&#7475;-snd {G = C n (&#8857;BigWedge Y)}
+                 [ (&#955; G &#8594; GroupHom G (C n X)) &#8595; path ]
+  &#8857;select-over = SER.&#968;-over-iso
+
+  open CofSelect public using (select; &#8857;select; &#8857;&#931;bwin)
+-}</a
+      ><a name="2474"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

@@ -1,0 +1,4469 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cw.examples.Sphere</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting --termination-depth=2 </a
+      ><a name="59" class="Symbol"
+      >#-}</a
+      ><a name="62"
+      >
+
+</a
+      ><a name="64" class="Keyword"
+      >open</a
+      ><a name="68"
+      > </a
+      ><a name="69" class="Keyword"
+      >import</a
+      ><a name="75"
+      > </a
+      ><a name="76" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="80"
+      >
+</a
+      ><a name="81" class="Keyword"
+      >open</a
+      ><a name="85"
+      > </a
+      ><a name="86" class="Keyword"
+      >import</a
+      ><a name="92"
+      > </a
+      ><a name="93" href="cw.CW.html#1" class="Module"
+      >cw.CW</a
+      ><a name="98"
+      >
+
+</a
+      ><a name="100" class="Keyword"
+      >module</a
+      ><a name="106"
+      > </a
+      ><a name="107" href="cw.examples.Sphere.html#1" class="Module"
+      >cw.examples.Sphere</a
+      ><a name="125"
+      > </a
+      ><a name="126" class="Keyword"
+      >where</a
+      ><a name="131"
+      >
+
+</a
+      ><a name="133" href="cw.examples.Sphere.html#133" class="Function"
+      >cw-sphere-skel</a
+      ><a name="147"
+      > </a
+      ><a name="148" class="Symbol"
+      >:</a
+      ><a name="149"
+      > </a
+      ><a name="150" class="Symbol"
+      >&#8704;</a
+      ><a name="151"
+      > </a
+      ><a name="152" href="cw.examples.Sphere.html#152" class="Bound"
+      >n</a
+      ><a name="153"
+      > </a
+      ><a name="154" class="Symbol"
+      >&#8594;</a
+      ><a name="155"
+      > </a
+      ><a name="156" href="cw.CW.html#1156" class="Function"
+      >Skeleton</a
+      ><a name="164"
+      > </a
+      ><a name="165" class="Symbol"
+      >{</a
+      ><a name="166" href="Agda.Primitive.html#609" class="Primitive"
+      >lzero</a
+      ><a name="171" class="Symbol"
+      >}</a
+      ><a name="172"
+      > </a
+      ><a name="173" href="cw.examples.Sphere.html#152" class="Bound"
+      >n</a
+      ><a name="174"
+      >
+
+</a
+      ><a name="176" href="cw.examples.Sphere.html#176" class="Function"
+      >CWSphere</a
+      ><a name="184"
+      > </a
+      ><a name="185" class="Symbol"
+      >:</a
+      ><a name="186"
+      > </a
+      ><a name="187" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="188"
+      > </a
+      ><a name="189" class="Symbol"
+      >&#8594;</a
+      ><a name="190"
+      > </a
+      ><a name="191" href="lib.Base.html#1196" class="Function"
+      >Type&#8320;</a
+      ><a name="196"
+      >
+</a
+      ><a name="197" href="cw.examples.Sphere.html#176" class="Function"
+      >CWSphere</a
+      ><a name="205"
+      > </a
+      ><a name="206" href="cw.examples.Sphere.html#206" class="Bound"
+      >n</a
+      ><a name="207"
+      > </a
+      ><a name="208" class="Symbol"
+      >=</a
+      ><a name="209"
+      > </a
+      ><a name="210" href="cw.CW.html#1393" class="Function Operator"
+      >&#10214;</a
+      ><a name="211"
+      > </a
+      ><a name="212" href="cw.examples.Sphere.html#133" class="Function"
+      >cw-sphere-skel</a
+      ><a name="226"
+      > </a
+      ><a name="227" href="cw.examples.Sphere.html#206" class="Bound"
+      >n</a
+      ><a name="228"
+      > </a
+      ><a name="229" href="cw.CW.html#1393" class="Function Operator"
+      >&#10215;</a
+      ><a name="230"
+      >
+
+</a
+      ><a name="232" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="250"
+      > </a
+      ><a name="251" class="Symbol"
+      >:</a
+      ><a name="252"
+      > </a
+      ><a name="253" class="Symbol"
+      >(</a
+      ><a name="254" href="cw.examples.Sphere.html#254" class="Bound"
+      >n</a
+      ><a name="255"
+      > </a
+      ><a name="256" class="Symbol"
+      >:</a
+      ><a name="257"
+      > </a
+      ><a name="258" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="259" class="Symbol"
+      >)</a
+      ><a name="260"
+      > </a
+      ><a name="261" class="Symbol"
+      >&#8594;</a
+      ><a name="262"
+      > </a
+      ><a name="263" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="269"
+      > </a
+      ><a name="270" href="cw.examples.Sphere.html#254" class="Bound"
+      >n</a
+      ><a name="271"
+      > </a
+      ><a name="272" class="Symbol"
+      >&#8594;</a
+      ><a name="273"
+      > </a
+      ><a name="274" href="cw.examples.Sphere.html#176" class="Function"
+      >CWSphere</a
+      ><a name="282"
+      > </a
+      ><a name="283" href="cw.examples.Sphere.html#254" class="Bound"
+      >n</a
+      ><a name="284"
+      >
+
+</a
+      ><a name="286" href="cw.examples.Sphere.html#133" class="Function"
+      >cw-sphere-skel</a
+      ><a name="300"
+      > </a
+      ><a name="301" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="302"
+      > </a
+      ><a name="303" class="Symbol"
+      >=</a
+      ><a name="304"
+      > </a
+      ><a name="305" class="Symbol"
+      >(</a
+      ><a name="306" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="310"
+      > </a
+      ><a name="311" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="312"
+      > </a
+      ><a name="313" href="lib.types.Bool.html#1006" class="Function"
+      >Bool-is-set</a
+      ><a name="324" class="Symbol"
+      >)</a
+      ><a name="325"
+      >
+</a
+      ><a name="326" href="cw.examples.Sphere.html#133" class="Function"
+      >cw-sphere-skel</a
+      ><a name="340"
+      > </a
+      ><a name="341" class="Symbol"
+      >(</a
+      ><a name="342" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="343"
+      > </a
+      ><a name="344" href="cw.examples.Sphere.html#344" class="Bound"
+      >n</a
+      ><a name="345" class="Symbol"
+      >)</a
+      ><a name="346"
+      > </a
+      ><a name="347" class="Symbol"
+      >=</a
+      ><a name="348"
+      > </a
+      ><a name="349" href="cw.CW.html#1033" class="InductiveConstructor"
+      >attached-skeleton</a
+      ><a name="366"
+      >
+  </a
+      ><a name="369" class="Symbol"
+      >(</a
+      ><a name="370" href="cw.examples.Sphere.html#133" class="Function"
+      >cw-sphere-skel</a
+      ><a name="384"
+      > </a
+      ><a name="385" href="cw.examples.Sphere.html#344" class="Bound"
+      >n</a
+      ><a name="386" class="Symbol"
+      >)</a
+      ><a name="387"
+      > </a
+      ><a name="388" class="Symbol"
+      >(</a
+      ><a name="389" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="393"
+      > </a
+      ><a name="394" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="395"
+      > </a
+      ><a name="396" href="lib.types.Bool.html#1006" class="Function"
+      >Bool-is-set</a
+      ><a name="407" class="Symbol"
+      >)</a
+      ><a name="408"
+      > </a
+      ><a name="409" class="Symbol"
+      >(</a
+      ><a name="410" href="lib.Base.html#8054" class="Function"
+      >cst</a
+      ><a name="413"
+      > </a
+      ><a name="414" class="Symbol"
+      >(</a
+      ><a name="415" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="433"
+      > </a
+      ><a name="434" href="cw.examples.Sphere.html#344" class="Bound"
+      >n</a
+      ><a name="435" class="Symbol"
+      >))</a
+      ><a name="437"
+      >
+
+</a
+      ><a name="439" class="Comment"
+      >{-
+  mapping:
+
+  hub true &lt;-&gt; north
+  hub false &lt;-&gt; south
+  incl _ -&gt; north
+  spoke true x -&gt; idp
+  spoke fales x -&gt; merid x
+  ! spoke true x &#8729; spoke false x  &lt;- merid x
+-}</a
+      ><a name="611"
+      >
+
+
+</a
+      ><a name="614" class="Keyword"
+      >private</a
+      ><a name="621"
+      >
+  </a
+      ><a name="624" class="Keyword"
+      >module</a
+      ><a name="630"
+      > </a
+      ><a name="631" href="cw.examples.Sphere.html#631" class="Module"
+      >PosToCW</a
+      ><a name="638"
+      > </a
+      ><a name="639" href="cw.examples.Sphere.html#639" class="Bound"
+      >n</a
+      ><a name="640"
+      > </a
+      ><a name="641" class="Symbol"
+      >=</a
+      ><a name="642"
+      > </a
+      ><a name="643" class="Module"
+      >SuspRec</a
+      ><a name="650"
+      >
+    </a
+      ><a name="655" class="Symbol"
+      >{</a
+      ><a name="656" class="Argument"
+      >C</a
+      ><a name="657"
+      > </a
+      ><a name="658" class="Symbol"
+      >=</a
+      ><a name="659"
+      > </a
+      ><a name="660" href="cw.examples.Sphere.html#176" class="Function"
+      >CWSphere</a
+      ><a name="668"
+      > </a
+      ><a name="669" class="Symbol"
+      >(</a
+      ><a name="670" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="671"
+      > </a
+      ><a name="672" href="cw.examples.Sphere.html#639" class="Bound"
+      >n</a
+      ><a name="673" class="Symbol"
+      >)}</a
+      ><a name="675"
+      >
+    </a
+      ><a name="680" class="Symbol"
+      >(</a
+      ><a name="681" href="cw.Attached.html#804" class="Function"
+      >hub</a
+      ><a name="684"
+      > </a
+      ><a name="685" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="689" class="Symbol"
+      >)</a
+      ><a name="690"
+      > </a
+      ><a name="691" class="Symbol"
+      >(</a
+      ><a name="692" href="cw.Attached.html#804" class="Function"
+      >hub</a
+      ><a name="695"
+      > </a
+      ><a name="696" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="701" class="Symbol"
+      >)</a
+      ><a name="702"
+      >
+    </a
+      ><a name="707" class="Symbol"
+      >(&#955;</a
+      ><a name="709"
+      > </a
+      ><a name="710" href="cw.examples.Sphere.html#710" class="Bound"
+      >x</a
+      ><a name="711"
+      > </a
+      ><a name="712" class="Symbol"
+      >&#8594;</a
+      ><a name="713"
+      > </a
+      ><a name="714" class="Symbol"
+      >(</a
+      ><a name="715" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="716"
+      > </a
+      ><a name="717" class="Symbol"
+      >(</a
+      ><a name="718" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="723"
+      > </a
+      ><a name="724" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="728"
+      > </a
+      ><a name="729" href="cw.examples.Sphere.html#710" class="Bound"
+      >x</a
+      ><a name="730" class="Symbol"
+      >))</a
+      ><a name="732"
+      > </a
+      ><a name="733" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="735"
+      > </a
+      ><a name="736" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="741"
+      > </a
+      ><a name="742" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="747"
+      > </a
+      ><a name="748" href="cw.examples.Sphere.html#710" class="Bound"
+      >x</a
+      ><a name="749" class="Symbol"
+      >)</a
+      ><a name="750"
+      >
+
+</a
+      ><a name="752" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="770"
+      > </a
+      ><a name="771" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="772"
+      > </a
+      ><a name="773" class="Symbol"
+      >=</a
+      ><a name="774"
+      > </a
+      ><a name="775" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="778"
+      > </a
+      ><a name="779" class="Symbol"
+      >_</a
+      ><a name="780"
+      >
+</a
+      ><a name="781" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="799"
+      > </a
+      ><a name="800" class="Symbol"
+      >(</a
+      ><a name="801" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="802"
+      > </a
+      ><a name="803" href="cw.examples.Sphere.html#803" class="Bound"
+      >n</a
+      ><a name="804" class="Symbol"
+      >)</a
+      ><a name="805"
+      > </a
+      ><a name="806" class="Symbol"
+      >=</a
+      ><a name="807"
+      > </a
+      ><a name="808" href="lib.types.Pushout.html#1397" class="Function"
+      >PosToCW.f</a
+      ><a name="817"
+      > </a
+      ><a name="818" href="cw.examples.Sphere.html#803" class="Bound"
+      >n</a
+      ><a name="819"
+      >
+
+</a
+      ><a name="821" class="Comment"
+      >{-
+  Now proving the equivalence
+-}</a
+      ><a name="856"
+      >
+
+</a
+      ><a name="858" class="Keyword"
+      >private</a
+      ><a name="865"
+      >
+  </a
+      ><a name="868" href="cw.examples.Sphere.html#868" class="Function"
+      >CWSphere-to-Sphere-incl</a
+      ><a name="891"
+      > </a
+      ><a name="892" class="Symbol"
+      >:</a
+      ><a name="893"
+      > </a
+      ><a name="894" class="Symbol"
+      >&#8704;</a
+      ><a name="895"
+      > </a
+      ><a name="896" href="cw.examples.Sphere.html#896" class="Bound"
+      >n</a
+      ><a name="897"
+      > </a
+      ><a name="898" class="Symbol"
+      >&#8594;</a
+      ><a name="899"
+      > </a
+      ><a name="900" href="cw.examples.Sphere.html#176" class="Function"
+      >CWSphere</a
+      ><a name="908"
+      > </a
+      ><a name="909" href="cw.examples.Sphere.html#896" class="Bound"
+      >n</a
+      ><a name="910"
+      > </a
+      ><a name="911" class="Symbol"
+      >&#8594;</a
+      ><a name="912"
+      > </a
+      ><a name="913" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="919"
+      > </a
+      ><a name="920" class="Symbol"
+      >(</a
+      ><a name="921" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="922"
+      > </a
+      ><a name="923" href="cw.examples.Sphere.html#896" class="Bound"
+      >n</a
+      ><a name="924" class="Symbol"
+      >)</a
+      ><a name="925"
+      >
+  </a
+      ><a name="928" href="cw.examples.Sphere.html#868" class="Function"
+      >CWSphere-to-Sphere-incl</a
+      ><a name="951"
+      > </a
+      ><a name="952" class="Symbol"
+      >_</a
+      ><a name="953"
+      > </a
+      ><a name="954" class="Symbol"
+      >_</a
+      ><a name="955"
+      > </a
+      ><a name="956" class="Symbol"
+      >=</a
+      ><a name="957"
+      > </a
+      ><a name="958" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="963"
+      >
+
+  </a
+      ><a name="967" href="cw.examples.Sphere.html#967" class="Function"
+      >CWSphere-to-Sphere-hub</a
+      ><a name="989"
+      > </a
+      ><a name="990" class="Symbol"
+      >:</a
+      ><a name="991"
+      > </a
+      ><a name="992" class="Symbol"
+      >&#8704;</a
+      ><a name="993"
+      > </a
+      ><a name="994" href="cw.examples.Sphere.html#994" class="Bound"
+      >n</a
+      ><a name="995"
+      > </a
+      ><a name="996" class="Symbol"
+      >&#8594;</a
+      ><a name="997"
+      > </a
+      ><a name="998" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="1002"
+      > </a
+      ><a name="1003" class="Symbol"
+      >&#8594;</a
+      ><a name="1004"
+      > </a
+      ><a name="1005" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="1011"
+      > </a
+      ><a name="1012" class="Symbol"
+      >(</a
+      ><a name="1013" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1014"
+      > </a
+      ><a name="1015" href="cw.examples.Sphere.html#994" class="Bound"
+      >n</a
+      ><a name="1016" class="Symbol"
+      >)</a
+      ><a name="1017"
+      >
+  </a
+      ><a name="1020" href="cw.examples.Sphere.html#967" class="Function"
+      >CWSphere-to-Sphere-hub</a
+      ><a name="1042"
+      > </a
+      ><a name="1043" class="Symbol"
+      >_</a
+      ><a name="1044"
+      > </a
+      ><a name="1045" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1049"
+      > </a
+      ><a name="1050" class="Symbol"
+      >=</a
+      ><a name="1051"
+      > </a
+      ><a name="1052" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="1057"
+      >
+  </a
+      ><a name="1060" href="cw.examples.Sphere.html#967" class="Function"
+      >CWSphere-to-Sphere-hub</a
+      ><a name="1082"
+      > </a
+      ><a name="1083" class="Symbol"
+      >_</a
+      ><a name="1084"
+      > </a
+      ><a name="1085" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1090"
+      > </a
+      ><a name="1091" class="Symbol"
+      >=</a
+      ><a name="1092"
+      > </a
+      ><a name="1093" href="lib.types.Suspension.html#895" class="Function"
+      >south</a
+      ><a name="1098"
+      >
+
+  </a
+      ><a name="1102" href="cw.examples.Sphere.html#1102" class="Function"
+      >CWSphere-to-Sphere-spoke</a
+      ><a name="1126"
+      > </a
+      ><a name="1127" class="Symbol"
+      >:</a
+      ><a name="1128"
+      > </a
+      ><a name="1129" class="Symbol"
+      >&#8704;</a
+      ><a name="1130"
+      > </a
+      ><a name="1131" href="cw.examples.Sphere.html#1131" class="Bound"
+      >n</a
+      ><a name="1132"
+      > </a
+      ><a name="1133" class="Symbol"
+      >(</a
+      ><a name="1134" href="cw.examples.Sphere.html#1134" class="Bound"
+      >b</a
+      ><a name="1135"
+      > </a
+      ><a name="1136" class="Symbol"
+      >:</a
+      ><a name="1137"
+      > </a
+      ><a name="1138" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="1142" class="Symbol"
+      >)</a
+      ><a name="1143"
+      > </a
+      ><a name="1144" class="Symbol"
+      >(</a
+      ><a name="1145" href="cw.examples.Sphere.html#1145" class="Bound"
+      >x</a
+      ><a name="1146"
+      > </a
+      ><a name="1147" class="Symbol"
+      >:</a
+      ><a name="1148"
+      > </a
+      ><a name="1149" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="1155"
+      > </a
+      ><a name="1156" href="cw.examples.Sphere.html#1131" class="Bound"
+      >n</a
+      ><a name="1157" class="Symbol"
+      >)</a
+      ><a name="1158"
+      >
+    </a
+      ><a name="1163" class="Symbol"
+      >&#8594;</a
+      ><a name="1164"
+      > </a
+      ><a name="1165" href="cw.examples.Sphere.html#868" class="Function"
+      >CWSphere-to-Sphere-incl</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" href="cw.examples.Sphere.html#1131" class="Bound"
+      >n</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" class="Symbol"
+      >(</a
+      ><a name="1192" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="1210"
+      > </a
+      ><a name="1211" href="cw.examples.Sphere.html#1131" class="Bound"
+      >n</a
+      ><a name="1212"
+      > </a
+      ><a name="1213" href="cw.examples.Sphere.html#1145" class="Bound"
+      >x</a
+      ><a name="1214" class="Symbol"
+      >)</a
+      ><a name="1215"
+      >
+    </a
+      ><a name="1220" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1222"
+      > </a
+      ><a name="1223" href="cw.examples.Sphere.html#967" class="Function"
+      >CWSphere-to-Sphere-hub</a
+      ><a name="1245"
+      > </a
+      ><a name="1246" href="cw.examples.Sphere.html#1131" class="Bound"
+      >n</a
+      ><a name="1247"
+      > </a
+      ><a name="1248" href="cw.examples.Sphere.html#1134" class="Bound"
+      >b</a
+      ><a name="1249"
+      >
+  </a
+      ><a name="1252" href="cw.examples.Sphere.html#1102" class="Function"
+      >CWSphere-to-Sphere-spoke</a
+      ><a name="1276"
+      > </a
+      ><a name="1277" class="Symbol"
+      >_</a
+      ><a name="1278"
+      > </a
+      ><a name="1279" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="1283"
+      > </a
+      ><a name="1284" class="Symbol"
+      >_</a
+      ><a name="1285"
+      > </a
+      ><a name="1286" class="Symbol"
+      >=</a
+      ><a name="1287"
+      > </a
+      ><a name="1288" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1291"
+      >
+  </a
+      ><a name="1294" href="cw.examples.Sphere.html#1102" class="Function"
+      >CWSphere-to-Sphere-spoke</a
+      ><a name="1318"
+      > </a
+      ><a name="1319" class="Symbol"
+      >_</a
+      ><a name="1320"
+      > </a
+      ><a name="1321" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="1326"
+      > </a
+      ><a name="1327" href="cw.examples.Sphere.html#1327" class="Bound"
+      >x</a
+      ><a name="1328"
+      > </a
+      ><a name="1329" class="Symbol"
+      >=</a
+      ><a name="1330"
+      > </a
+      ><a name="1331" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1336"
+      > </a
+      ><a name="1337" href="cw.examples.Sphere.html#1327" class="Bound"
+      >x</a
+      ><a name="1338"
+      >
+
+  </a
+      ><a name="1342" class="Keyword"
+      >module</a
+      ><a name="1348"
+      > </a
+      ><a name="1349" href="cw.examples.Sphere.html#1349" class="Module"
+      >PosFromCW</a
+      ><a name="1358"
+      > </a
+      ><a name="1359" href="cw.examples.Sphere.html#1359" class="Bound"
+      >n</a
+      ><a name="1360"
+      > </a
+      ><a name="1361" class="Symbol"
+      >=</a
+      ><a name="1362"
+      > </a
+      ><a name="1363" href="cw.Attached.html#1366" class="Module"
+      >AttachedRec</a
+      ><a name="1374"
+      >
+    </a
+      ><a name="1379" class="Symbol"
+      >{</a
+      ><a name="1380" class="Argument"
+      >attaching</a
+      ><a name="1389"
+      > </a
+      ><a name="1390" class="Symbol"
+      >=</a
+      ><a name="1391"
+      > </a
+      ><a name="1392" href="lib.Base.html#8054" class="Function"
+      >cst</a
+      ><a name="1395"
+      > </a
+      ><a name="1396" class="Symbol"
+      >(</a
+      ><a name="1397" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="1415"
+      > </a
+      ><a name="1416" href="cw.examples.Sphere.html#1359" class="Bound"
+      >n</a
+      ><a name="1417" class="Symbol"
+      >)}</a
+      ><a name="1419"
+      >
+    </a
+      ><a name="1424" class="Symbol"
+      >(</a
+      ><a name="1425" href="cw.examples.Sphere.html#868" class="Function"
+      >CWSphere-to-Sphere-incl</a
+      ><a name="1448"
+      > </a
+      ><a name="1449" href="cw.examples.Sphere.html#1359" class="Bound"
+      >n</a
+      ><a name="1450" class="Symbol"
+      >)</a
+      ><a name="1451"
+      >
+    </a
+      ><a name="1456" class="Symbol"
+      >(</a
+      ><a name="1457" href="cw.examples.Sphere.html#967" class="Function"
+      >CWSphere-to-Sphere-hub</a
+      ><a name="1479"
+      > </a
+      ><a name="1480" href="cw.examples.Sphere.html#1359" class="Bound"
+      >n</a
+      ><a name="1481" class="Symbol"
+      >)</a
+      ><a name="1482"
+      >
+    </a
+      ><a name="1487" class="Symbol"
+      >(</a
+      ><a name="1488" href="cw.examples.Sphere.html#1102" class="Function"
+      >CWSphere-to-Sphere-spoke</a
+      ><a name="1512"
+      > </a
+      ><a name="1513" href="cw.examples.Sphere.html#1359" class="Bound"
+      >n</a
+      ><a name="1514" class="Symbol"
+      >)</a
+      ><a name="1515"
+      >
+
+</a
+      ><a name="1517" href="cw.examples.Sphere.html#1517" class="Function"
+      >CWSphere-to-Sphere</a
+      ><a name="1535"
+      > </a
+      ><a name="1536" class="Symbol"
+      >:</a
+      ><a name="1537"
+      > </a
+      ><a name="1538" class="Symbol"
+      >&#8704;</a
+      ><a name="1539"
+      > </a
+      ><a name="1540" href="cw.examples.Sphere.html#1540" class="Bound"
+      >n</a
+      ><a name="1541"
+      > </a
+      ><a name="1542" class="Symbol"
+      >&#8594;</a
+      ><a name="1543"
+      > </a
+      ><a name="1544" href="cw.examples.Sphere.html#176" class="Function"
+      >CWSphere</a
+      ><a name="1552"
+      > </a
+      ><a name="1553" href="cw.examples.Sphere.html#1540" class="Bound"
+      >n</a
+      ><a name="1554"
+      > </a
+      ><a name="1555" class="Symbol"
+      >&#8594;</a
+      ><a name="1556"
+      > </a
+      ><a name="1557" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="1563"
+      > </a
+      ><a name="1564" href="cw.examples.Sphere.html#1540" class="Bound"
+      >n</a
+      ><a name="1565"
+      >
+</a
+      ><a name="1566" href="cw.examples.Sphere.html#1517" class="Function"
+      >CWSphere-to-Sphere</a
+      ><a name="1584"
+      > </a
+      ><a name="1585" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="1586"
+      > </a
+      ><a name="1587" class="Symbol"
+      >=</a
+      ><a name="1588"
+      > </a
+      ><a name="1589" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="1592"
+      > </a
+      ><a name="1593" class="Symbol"
+      >_</a
+      ><a name="1594"
+      >
+</a
+      ><a name="1595" href="cw.examples.Sphere.html#1517" class="Function"
+      >CWSphere-to-Sphere</a
+      ><a name="1613"
+      > </a
+      ><a name="1614" class="Symbol"
+      >(</a
+      ><a name="1615" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1616"
+      > </a
+      ><a name="1617" href="cw.examples.Sphere.html#1617" class="Bound"
+      >n</a
+      ><a name="1618" class="Symbol"
+      >)</a
+      ><a name="1619"
+      > </a
+      ><a name="1620" class="Symbol"
+      >=</a
+      ><a name="1621"
+      > </a
+      ><a name="1622" href="cw.Attached.html#1627" class="Function"
+      >PosFromCW.f</a
+      ><a name="1633"
+      > </a
+      ><a name="1634" href="cw.examples.Sphere.html#1617" class="Bound"
+      >n</a
+      ><a name="1635"
+      >
+
+</a
+      ><a name="1637" class="Keyword"
+      >private</a
+      ><a name="1644"
+      >
+  </a
+      ><a name="1647" href="cw.examples.Sphere.html#1647" class="Function"
+      >from-to</a
+      ><a name="1654"
+      > </a
+      ><a name="1655" class="Symbol"
+      >:</a
+      ><a name="1656"
+      > </a
+      ><a name="1657" class="Symbol"
+      >&#8704;</a
+      ><a name="1658"
+      > </a
+      ><a name="1659" href="cw.examples.Sphere.html#1659" class="Bound"
+      >n</a
+      ><a name="1660"
+      > </a
+      ><a name="1661" href="cw.examples.Sphere.html#1661" class="Bound"
+      >x</a
+      ><a name="1662"
+      > </a
+      ><a name="1663" class="Symbol"
+      >&#8594;</a
+      ><a name="1664"
+      > </a
+      ><a name="1665" href="cw.examples.Sphere.html#1517" class="Function"
+      >CWSphere-to-Sphere</a
+      ><a name="1683"
+      > </a
+      ><a name="1684" href="cw.examples.Sphere.html#1659" class="Bound"
+      >n</a
+      ><a name="1685"
+      > </a
+      ><a name="1686" class="Symbol"
+      >(</a
+      ><a name="1687" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="1705"
+      > </a
+      ><a name="1706" href="cw.examples.Sphere.html#1659" class="Bound"
+      >n</a
+      ><a name="1707"
+      > </a
+      ><a name="1708" href="cw.examples.Sphere.html#1661" class="Bound"
+      >x</a
+      ><a name="1709" class="Symbol"
+      >)</a
+      ><a name="1710"
+      > </a
+      ><a name="1711" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1713"
+      > </a
+      ><a name="1714" href="cw.examples.Sphere.html#1661" class="Bound"
+      >x</a
+      ><a name="1715"
+      >
+</a
+      ><a name="1716" href="cw.examples.Sphere.html#1647" class="Function"
+      >from-to</a
+      ><a name="1723"
+      > </a
+      ><a name="1724" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="1725"
+      > </a
+      ><a name="1726" class="Symbol"
+      >_</a
+      ><a name="1727"
+      > </a
+      ><a name="1728" class="Symbol"
+      >=</a
+      ><a name="1729"
+      > </a
+      ><a name="1730" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1733"
+      >
+</a
+      ><a name="1734" href="cw.examples.Sphere.html#1647" class="Function"
+      >from-to</a
+      ><a name="1741"
+      > </a
+      ><a name="1742" class="Symbol"
+      >(</a
+      ><a name="1743" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1744"
+      > </a
+      ><a name="1745" href="cw.examples.Sphere.html#1745" class="Bound"
+      >n</a
+      ><a name="1746" class="Symbol"
+      >)</a
+      ><a name="1747"
+      > </a
+      ><a name="1748" class="Symbol"
+      >=</a
+      ><a name="1749"
+      > </a
+      ><a name="1750" href="lib.types.Pushout.html#850" class="Function"
+      >SuspElim.f</a
+      ><a name="1760"
+      > </a
+      ><a name="1761" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1768"
+      > </a
+      ><a name="1769" href="cw.examples.Sphere.html#1913" class="Function"
+      >path</a
+      ><a name="1773"
+      >
+  </a
+      ><a name="1776" class="Keyword"
+      >where</a
+      ><a name="1781"
+      >
+    </a
+      ><a name="1786" href="cw.examples.Sphere.html#1786" class="Function"
+      >to</a
+      ><a name="1788"
+      > </a
+      ><a name="1789" class="Symbol"
+      >=</a
+      ><a name="1790"
+      > </a
+      ><a name="1791" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="1809"
+      > </a
+      ><a name="1810" class="Symbol"
+      >(</a
+      ><a name="1811" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1812"
+      > </a
+      ><a name="1813" href="cw.examples.Sphere.html#1745" class="Bound"
+      >n</a
+      ><a name="1814" class="Symbol"
+      >)</a
+      ><a name="1815"
+      >
+    </a
+      ><a name="1820" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="1824"
+      > </a
+      ><a name="1825" class="Symbol"
+      >=</a
+      ><a name="1826"
+      > </a
+      ><a name="1827" href="cw.examples.Sphere.html#1517" class="Function"
+      >CWSphere-to-Sphere</a
+      ><a name="1845"
+      > </a
+      ><a name="1846" class="Symbol"
+      >(</a
+      ><a name="1847" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1848"
+      > </a
+      ><a name="1849" href="cw.examples.Sphere.html#1745" class="Bound"
+      >n</a
+      ><a name="1850" class="Symbol"
+      >)</a
+      ><a name="1851"
+      >
+    </a
+      ><a name="1856" class="Keyword"
+      >module</a
+      ><a name="1862"
+      > </a
+      ><a name="1863" href="cw.examples.Sphere.html#1863" class="Module"
+      >To</a
+      ><a name="1865"
+      > </a
+      ><a name="1866" class="Symbol"
+      >=</a
+      ><a name="1867"
+      > </a
+      ><a name="1868" href="cw.examples.Sphere.html#631" class="Module"
+      >PosToCW</a
+      ><a name="1875"
+      > </a
+      ><a name="1876" href="cw.examples.Sphere.html#1745" class="Bound"
+      >n</a
+      ><a name="1877"
+      >
+    </a
+      ><a name="1882" class="Keyword"
+      >module</a
+      ><a name="1888"
+      > </a
+      ><a name="1889" href="cw.examples.Sphere.html#1889" class="Module"
+      >From</a
+      ><a name="1893"
+      > </a
+      ><a name="1894" class="Symbol"
+      >=</a
+      ><a name="1895"
+      > </a
+      ><a name="1896" href="cw.examples.Sphere.html#1349" class="Module"
+      >PosFromCW</a
+      ><a name="1905"
+      > </a
+      ><a name="1906" href="cw.examples.Sphere.html#1745" class="Bound"
+      >n</a
+      ><a name="1907"
+      >
+
+    </a
+      ><a name="1913" href="cw.examples.Sphere.html#1913" class="Function"
+      >path</a
+      ><a name="1917"
+      > </a
+      ><a name="1918" class="Symbol"
+      >:</a
+      ><a name="1919"
+      > </a
+      ><a name="1920" class="Symbol"
+      >&#8704;</a
+      ><a name="1921"
+      > </a
+      ><a name="1922" href="cw.examples.Sphere.html#1922" class="Bound"
+      >x</a
+      ><a name="1923"
+      > </a
+      ><a name="1924" class="Symbol"
+      >&#8594;</a
+      ><a name="1925"
+      > </a
+      ><a name="1926" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1929"
+      > </a
+      ><a name="1930" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="1932"
+      > </a
+      ><a name="1933" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1936"
+      > </a
+      ><a name="1937" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="1938"
+      > </a
+      ><a name="1939" class="Symbol"
+      >(&#955;</a
+      ><a name="1941"
+      > </a
+      ><a name="1942" href="cw.examples.Sphere.html#1942" class="Bound"
+      >x</a
+      ><a name="1943"
+      > </a
+      ><a name="1944" class="Symbol"
+      >&#8594;</a
+      ><a name="1945"
+      > </a
+      ><a name="1946" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="1950"
+      > </a
+      ><a name="1951" class="Symbol"
+      >(</a
+      ><a name="1952" href="cw.examples.Sphere.html#1786" class="Function"
+      >to</a
+      ><a name="1954"
+      > </a
+      ><a name="1955" href="cw.examples.Sphere.html#1942" class="Bound"
+      >x</a
+      ><a name="1956" class="Symbol"
+      >)</a
+      ><a name="1957"
+      > </a
+      ><a name="1958" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1960"
+      > </a
+      ><a name="1961" href="cw.examples.Sphere.html#1942" class="Bound"
+      >x</a
+      ><a name="1962" class="Symbol"
+      >)</a
+      ><a name="1963"
+      > </a
+      ><a name="1964" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="1965"
+      > </a
+      ><a name="1966" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1971"
+      > </a
+      ><a name="1972" href="cw.examples.Sphere.html#1922" class="Bound"
+      >x</a
+      ><a name="1973"
+      > </a
+      ><a name="1974" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="1975"
+      >
+    </a
+      ><a name="1980" href="cw.examples.Sphere.html#1913" class="Function"
+      >path</a
+      ><a name="1984"
+      > </a
+      ><a name="1985" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="1986"
+      > </a
+      ><a name="1987" class="Symbol"
+      >=</a
+      ><a name="1988"
+      > </a
+      ><a name="1989" href="lib.types.Paths.html#4417" class="Function"
+      >&#8595;-app=idf-in</a
+      ><a name="2001"
+      > </a
+      ><a name="2002" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2003"
+      > </a
+      ><a name="2004" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2005"
+      > </a
+      ><a name="2006" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2007"
+      >
+      </a
+      ><a name="2014" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2016"
+      > </a
+      ><a name="2017" class="Symbol"
+      >(</a
+      ><a name="2018" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="2022"
+      > </a
+      ><a name="2023" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="2024"
+      > </a
+      ><a name="2025" href="cw.examples.Sphere.html#1786" class="Function"
+      >to</a
+      ><a name="2027" class="Symbol"
+      >)</a
+      ><a name="2028"
+      > </a
+      ><a name="2029" class="Symbol"
+      >(</a
+      ><a name="2030" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2035"
+      > </a
+      ><a name="2036" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2037" class="Symbol"
+      >)</a
+      ><a name="2038"
+      > </a
+      ><a name="2039" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2040"
+      > </a
+      ><a name="2041" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2044"
+      >
+        </a
+      ><a name="2053" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2055"
+      > </a
+      ><a name="2056" href="lib.PathGroupoid.html#1041" class="Function"
+      >&#8729;-unit-r</a
+      ><a name="2064"
+      > </a
+      ><a name="2065" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2066"
+      > </a
+      ><a name="2067" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2069"
+      > </a
+      ><a name="2070" class="Symbol"
+      >(</a
+      ><a name="2071" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="2075"
+      > </a
+      ><a name="2076" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="2077"
+      > </a
+      ><a name="2078" href="cw.examples.Sphere.html#1786" class="Function"
+      >to</a
+      ><a name="2080" class="Symbol"
+      >)</a
+      ><a name="2081"
+      > </a
+      ><a name="2082" class="Symbol"
+      >(</a
+      ><a name="2083" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2088"
+      > </a
+      ><a name="2089" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2090" class="Symbol"
+      >)</a
+      ><a name="2091"
+      > </a
+      ><a name="2092" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2093"
+      >
+      </a
+      ><a name="2100" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2102"
+      > </a
+      ><a name="2103" class="Symbol"
+      >(</a
+      ><a name="2104" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="2108"
+      > </a
+      ><a name="2109" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="2110"
+      > </a
+      ><a name="2111" href="cw.examples.Sphere.html#1786" class="Function"
+      >to</a
+      ><a name="2113" class="Symbol"
+      >)</a
+      ><a name="2114"
+      > </a
+      ><a name="2115" class="Symbol"
+      >(</a
+      ><a name="2116" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2121"
+      > </a
+      ><a name="2122" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2123" class="Symbol"
+      >)</a
+      ><a name="2124"
+      >
+        </a
+      ><a name="2133" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2135"
+      > </a
+      ><a name="2136" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="2140"
+      > </a
+      ><a name="2141" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="2145"
+      > </a
+      ><a name="2146" href="cw.examples.Sphere.html#1786" class="Function"
+      >to</a
+      ><a name="2148"
+      > </a
+      ><a name="2149" class="Symbol"
+      >(</a
+      ><a name="2150" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2155"
+      > </a
+      ><a name="2156" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2157" class="Symbol"
+      >)</a
+      ><a name="2158"
+      > </a
+      ><a name="2159" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2160"
+      >
+      </a
+      ><a name="2167" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2169"
+      > </a
+      ><a name="2170" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="2174"
+      > </a
+      ><a name="2175" class="Symbol"
+      >(</a
+      ><a name="2176" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2178"
+      > </a
+      ><a name="2179" href="cw.examples.Sphere.html#1786" class="Function"
+      >to</a
+      ><a name="2181"
+      > </a
+      ><a name="2182" class="Symbol"
+      >(</a
+      ><a name="2183" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2188"
+      > </a
+      ><a name="2189" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2190" class="Symbol"
+      >))</a
+      ><a name="2192"
+      >
+        </a
+      ><a name="2201" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2203"
+      > </a
+      ><a name="2204" href="lib.types.Pushout.html#1428" class="Function"
+      >To.merid-&#946;</a
+      ><a name="2214"
+      > </a
+      ><a name="2215" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2216"
+      > </a
+      ><a name="2217" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="2224"
+      > </a
+      ><a name="2225" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2227"
+      > </a
+      ><a name="2228" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="2232"
+      > </a
+      ><a name="2233" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2234"
+      >
+      </a
+      ><a name="2241" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2243"
+      > </a
+      ><a name="2244" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="2248"
+      > </a
+      ><a name="2249" class="Symbol"
+      >(</a
+      ><a name="2250" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2251"
+      > </a
+      ><a name="2252" class="Symbol"
+      >(</a
+      ><a name="2253" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="2258"
+      > </a
+      ><a name="2259" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="2263"
+      > </a
+      ><a name="2264" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2265" class="Symbol"
+      >)</a
+      ><a name="2266"
+      > </a
+      ><a name="2267" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2269"
+      > </a
+      ><a name="2270" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="2275"
+      > </a
+      ><a name="2276" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2281"
+      > </a
+      ><a name="2282" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2283" class="Symbol"
+      >)</a
+      ><a name="2284"
+      >
+        </a
+      ><a name="2293" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2295"
+      > </a
+      ><a name="2296" href="lib.PathFunctor.html#691" class="Function"
+      >ap-&#8729;'</a
+      ><a name="2301"
+      > </a
+      ><a name="2302" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="2306"
+      > </a
+      ><a name="2307" class="Symbol"
+      >(</a
+      ><a name="2308" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2309"
+      > </a
+      ><a name="2310" class="Symbol"
+      >(</a
+      ><a name="2311" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="2316"
+      > </a
+      ><a name="2317" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="2321"
+      > </a
+      ><a name="2322" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2323" class="Symbol"
+      >))</a
+      ><a name="2325"
+      > </a
+      ><a name="2326" class="Symbol"
+      >(</a
+      ><a name="2327" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="2332"
+      > </a
+      ><a name="2333" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2338"
+      > </a
+      ><a name="2339" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2340" class="Symbol"
+      >)</a
+      ><a name="2341"
+      > </a
+      ><a name="2342" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2343"
+      >
+      </a
+      ><a name="2350" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2352"
+      > </a
+      ><a name="2353" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="2357"
+      > </a
+      ><a name="2358" class="Symbol"
+      >(</a
+      ><a name="2359" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2360"
+      > </a
+      ><a name="2361" class="Symbol"
+      >(</a
+      ><a name="2362" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="2367"
+      > </a
+      ><a name="2368" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="2372"
+      > </a
+      ><a name="2373" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2374" class="Symbol"
+      >))</a
+      ><a name="2376"
+      > </a
+      ><a name="2377" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2379"
+      > </a
+      ><a name="2380" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2382"
+      > </a
+      ><a name="2383" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="2387"
+      > </a
+      ><a name="2388" class="Symbol"
+      >(</a
+      ><a name="2389" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="2394"
+      > </a
+      ><a name="2395" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2400"
+      > </a
+      ><a name="2401" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2402" class="Symbol"
+      >)</a
+      ><a name="2403"
+      >
+        </a
+      ><a name="2412" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2414"
+      > </a
+      ><a name="2415" href="lib.PathFunctor.html#291" class="Function"
+      >ap-!</a
+      ><a name="2419"
+      > </a
+      ><a name="2420" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="2424"
+      > </a
+      ><a name="2425" class="Symbol"
+      >(</a
+      ><a name="2426" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="2431"
+      > </a
+      ><a name="2432" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="2436"
+      > </a
+      ><a name="2437" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2438" class="Symbol"
+      >)</a
+      ><a name="2439"
+      > </a
+      ><a name="2440" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="2447"
+      > </a
+      ><a name="2448" class="Symbol"
+      >(&#955;</a
+      ><a name="2450"
+      > </a
+      ><a name="2451" href="cw.examples.Sphere.html#2451" class="Bound"
+      >p</a
+      ><a name="2452"
+      > </a
+      ><a name="2453" class="Symbol"
+      >&#8594;</a
+      ><a name="2454"
+      > </a
+      ><a name="2455" href="cw.examples.Sphere.html#2451" class="Bound"
+      >p</a
+      ><a name="2456"
+      > </a
+      ><a name="2457" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2459"
+      > </a
+      ><a name="2460" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2462"
+      > </a
+      ><a name="2463" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="2467"
+      > </a
+      ><a name="2468" class="Symbol"
+      >(</a
+      ><a name="2469" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="2474"
+      > </a
+      ><a name="2475" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2480"
+      > </a
+      ><a name="2481" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2482" class="Symbol"
+      >))</a
+      ><a name="2484"
+      > </a
+      ><a name="2485" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2486"
+      >
+      </a
+      ><a name="2493" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2494"
+      > </a
+      ><a name="2495" class="Symbol"
+      >(</a
+      ><a name="2496" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2498"
+      > </a
+      ><a name="2499" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="2503"
+      > </a
+      ><a name="2504" class="Symbol"
+      >(</a
+      ><a name="2505" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="2510"
+      > </a
+      ><a name="2511" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="2515"
+      > </a
+      ><a name="2516" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2517" class="Symbol"
+      >))</a
+      ><a name="2519"
+      > </a
+      ><a name="2520" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2522"
+      > </a
+      ><a name="2523" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2525"
+      > </a
+      ><a name="2526" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="2530"
+      > </a
+      ><a name="2531" class="Symbol"
+      >(</a
+      ><a name="2532" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="2537"
+      > </a
+      ><a name="2538" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2543"
+      > </a
+      ><a name="2544" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2545" class="Symbol"
+      >)</a
+      ><a name="2546"
+      >
+        </a
+      ><a name="2555" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2557"
+      > </a
+      ><a name="2558" href="cw.Attached.html#1639" class="Function"
+      >From.spoke-&#946;</a
+      ><a name="2570"
+      > </a
+      ><a name="2571" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="2575"
+      > </a
+      ><a name="2576" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2577"
+      > </a
+      ><a name="2578" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="2585"
+      > </a
+      ><a name="2586" class="Symbol"
+      >(&#955;</a
+      ><a name="2588"
+      > </a
+      ><a name="2589" href="cw.examples.Sphere.html#2589" class="Bound"
+      >p</a
+      ><a name="2590"
+      > </a
+      ><a name="2591" class="Symbol"
+      >&#8594;</a
+      ><a name="2592"
+      > </a
+      ><a name="2593" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2594"
+      > </a
+      ><a name="2595" href="cw.examples.Sphere.html#2589" class="Bound"
+      >p</a
+      ><a name="2596"
+      > </a
+      ><a name="2597" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2599"
+      > </a
+      ><a name="2600" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2602"
+      > </a
+      ><a name="2603" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="2607"
+      > </a
+      ><a name="2608" class="Symbol"
+      >(</a
+      ><a name="2609" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="2614"
+      > </a
+      ><a name="2615" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2620"
+      > </a
+      ><a name="2621" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2622" class="Symbol"
+      >))</a
+      ><a name="2624"
+      > </a
+      ><a name="2625" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2626"
+      >
+      </a
+      ><a name="2633" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2636"
+      > </a
+      ><a name="2637" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2639"
+      > </a
+      ><a name="2640" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2642"
+      > </a
+      ><a name="2643" href="cw.examples.Sphere.html#1820" class="Function"
+      >from</a
+      ><a name="2647"
+      > </a
+      ><a name="2648" class="Symbol"
+      >(</a
+      ><a name="2649" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="2654"
+      > </a
+      ><a name="2655" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2660"
+      > </a
+      ><a name="2661" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2662" class="Symbol"
+      >)</a
+      ><a name="2663"
+      >
+        </a
+      ><a name="2672" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2674"
+      > </a
+      ><a name="2675" href="cw.Attached.html#1639" class="Function"
+      >From.spoke-&#946;</a
+      ><a name="2687"
+      > </a
+      ><a name="2688" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="2693"
+      > </a
+      ><a name="2694" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2695"
+      > </a
+      ><a name="2696" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="2703"
+      > </a
+      ><a name="2704" class="Symbol"
+      >(</a
+      ><a name="2705" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2708"
+      > </a
+      ><a name="2709" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'_</a
+      ><a name="2712" class="Symbol"
+      >)</a
+      ><a name="2713"
+      > </a
+      ><a name="2714" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2715"
+      >
+      </a
+      ><a name="2722" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2725"
+      > </a
+      ><a name="2726" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="2728"
+      > </a
+      ><a name="2729" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2734"
+      > </a
+      ><a name="2735" href="cw.examples.Sphere.html#1985" class="Bound"
+      >x</a
+      ><a name="2736"
+      >
+        </a
+      ><a name="2745" href="HoTT.html#767" class="Function Operator"
+      >&#8718;</a
+      ><a name="2746"
+      >
+
+</a
+      ><a name="2748" href="cw.examples.Sphere.html#2748" class="Function"
+      >Sphere-to-CWSphere-is-equiv</a
+      ><a name="2775"
+      > </a
+      ><a name="2776" class="Symbol"
+      >:</a
+      ><a name="2777"
+      > </a
+      ><a name="2778" class="Symbol"
+      >&#8704;</a
+      ><a name="2779"
+      > </a
+      ><a name="2780" href="cw.examples.Sphere.html#2780" class="Bound"
+      >n</a
+      ><a name="2781"
+      > </a
+      ><a name="2782" class="Symbol"
+      >&#8594;</a
+      ><a name="2783"
+      > </a
+      ><a name="2784" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="2792"
+      > </a
+      ><a name="2793" class="Symbol"
+      >(</a
+      ><a name="2794" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="2812"
+      > </a
+      ><a name="2813" href="cw.examples.Sphere.html#2780" class="Bound"
+      >n</a
+      ><a name="2814" class="Symbol"
+      >)</a
+      ><a name="2815"
+      >
+</a
+      ><a name="2816" class="Keyword"
+      >private</a
+      ><a name="2823"
+      >
+  </a
+      ><a name="2826" href="cw.examples.Sphere.html#2826" class="Function"
+      >to-from</a
+      ><a name="2833"
+      > </a
+      ><a name="2834" class="Symbol"
+      >:</a
+      ><a name="2835"
+      > </a
+      ><a name="2836" class="Symbol"
+      >&#8704;</a
+      ><a name="2837"
+      > </a
+      ><a name="2838" href="cw.examples.Sphere.html#2838" class="Bound"
+      >n</a
+      ><a name="2839"
+      > </a
+      ><a name="2840" href="cw.examples.Sphere.html#2840" class="Bound"
+      >x</a
+      ><a name="2841"
+      > </a
+      ><a name="2842" class="Symbol"
+      >&#8594;</a
+      ><a name="2843"
+      > </a
+      ><a name="2844" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="2862"
+      > </a
+      ><a name="2863" href="cw.examples.Sphere.html#2838" class="Bound"
+      >n</a
+      ><a name="2864"
+      > </a
+      ><a name="2865" class="Symbol"
+      >(</a
+      ><a name="2866" href="cw.examples.Sphere.html#1517" class="Function"
+      >CWSphere-to-Sphere</a
+      ><a name="2884"
+      > </a
+      ><a name="2885" href="cw.examples.Sphere.html#2838" class="Bound"
+      >n</a
+      ><a name="2886"
+      > </a
+      ><a name="2887" href="cw.examples.Sphere.html#2840" class="Bound"
+      >x</a
+      ><a name="2888" class="Symbol"
+      >)</a
+      ><a name="2889"
+      > </a
+      ><a name="2890" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2892"
+      > </a
+      ><a name="2893" href="cw.examples.Sphere.html#2840" class="Bound"
+      >x</a
+      ><a name="2894"
+      >
+</a
+      ><a name="2895" href="cw.examples.Sphere.html#2748" class="Function"
+      >Sphere-to-CWSphere-is-equiv</a
+      ><a name="2922"
+      > </a
+      ><a name="2923" href="cw.examples.Sphere.html#2923" class="Bound"
+      >n</a
+      ><a name="2924"
+      > </a
+      ><a name="2925" class="Symbol"
+      >=</a
+      ><a name="2926"
+      > </a
+      ><a name="2927" href="lib.Equivalence.html#2854" class="Function"
+      >is-eq</a
+      ><a name="2932"
+      > </a
+      ><a name="2933" class="Symbol"
+      >_</a
+      ><a name="2934"
+      > </a
+      ><a name="2935" class="Symbol"
+      >(</a
+      ><a name="2936" href="cw.examples.Sphere.html#1517" class="Function"
+      >CWSphere-to-Sphere</a
+      ><a name="2954"
+      > </a
+      ><a name="2955" href="cw.examples.Sphere.html#2923" class="Bound"
+      >n</a
+      ><a name="2956" class="Symbol"
+      >)</a
+      ><a name="2957"
+      > </a
+      ><a name="2958" class="Symbol"
+      >(</a
+      ><a name="2959" href="cw.examples.Sphere.html#2826" class="Function"
+      >to-from</a
+      ><a name="2966"
+      > </a
+      ><a name="2967" href="cw.examples.Sphere.html#2923" class="Bound"
+      >n</a
+      ><a name="2968" class="Symbol"
+      >)</a
+      ><a name="2969"
+      > </a
+      ><a name="2970" class="Symbol"
+      >(</a
+      ><a name="2971" href="cw.examples.Sphere.html#1647" class="Function"
+      >from-to</a
+      ><a name="2978"
+      > </a
+      ><a name="2979" href="cw.examples.Sphere.html#2923" class="Bound"
+      >n</a
+      ><a name="2980" class="Symbol"
+      >)</a
+      ><a name="2981"
+      >
+
+</a
+      ><a name="2983" href="cw.examples.Sphere.html#2826" class="Function"
+      >to-from</a
+      ><a name="2990"
+      > </a
+      ><a name="2991" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="2992"
+      > </a
+      ><a name="2993" class="Symbol"
+      >_</a
+      ><a name="2994"
+      > </a
+      ><a name="2995" class="Symbol"
+      >=</a
+      ><a name="2996"
+      > </a
+      ><a name="2997" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3000"
+      >
+</a
+      ><a name="3001" href="cw.examples.Sphere.html#2826" class="Function"
+      >to-from</a
+      ><a name="3008"
+      > </a
+      ><a name="3009" class="Symbol"
+      >(</a
+      ><a name="3010" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3011"
+      > </a
+      ><a name="3012" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="3013" class="Symbol"
+      >)</a
+      ><a name="3014"
+      > </a
+      ><a name="3015" class="Symbol"
+      >=</a
+      ><a name="3016"
+      > </a
+      ><a name="3017" href="cw.Attached.html#1252" class="Function"
+      >AttachedElim.f</a
+      ><a name="3031"
+      > </a
+      ><a name="3032" href="cw.examples.Sphere.html#3210" class="Function"
+      >to-from-incl</a
+      ><a name="3044"
+      > </a
+      ><a name="3045" href="cw.examples.Sphere.html#3420" class="Function"
+      >to-from-hub</a
+      ><a name="3056"
+      > </a
+      ><a name="3057" href="cw.examples.Sphere.html#4637" class="Function"
+      >to-from-spoke</a
+      ><a name="3070"
+      >
+  </a
+      ><a name="3073" class="Keyword"
+      >where</a
+      ><a name="3078"
+      >
+    </a
+      ><a name="3083" href="cw.examples.Sphere.html#3083" class="Function"
+      >to</a
+      ><a name="3085"
+      > </a
+      ><a name="3086" class="Symbol"
+      >=</a
+      ><a name="3087"
+      > </a
+      ><a name="3088" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="3106"
+      > </a
+      ><a name="3107" class="Symbol"
+      >(</a
+      ><a name="3108" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3109"
+      > </a
+      ><a name="3110" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="3111" class="Symbol"
+      >)</a
+      ><a name="3112"
+      >
+    </a
+      ><a name="3117" href="cw.examples.Sphere.html#3117" class="Function"
+      >from</a
+      ><a name="3121"
+      > </a
+      ><a name="3122" class="Symbol"
+      >=</a
+      ><a name="3123"
+      > </a
+      ><a name="3124" href="cw.examples.Sphere.html#1517" class="Function"
+      >CWSphere-to-Sphere</a
+      ><a name="3142"
+      > </a
+      ><a name="3143" class="Symbol"
+      >(</a
+      ><a name="3144" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3145"
+      > </a
+      ><a name="3146" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="3147" class="Symbol"
+      >)</a
+      ><a name="3148"
+      >
+    </a
+      ><a name="3153" class="Keyword"
+      >module</a
+      ><a name="3159"
+      > </a
+      ><a name="3160" href="cw.examples.Sphere.html#3160" class="Module"
+      >To</a
+      ><a name="3162"
+      > </a
+      ><a name="3163" class="Symbol"
+      >=</a
+      ><a name="3164"
+      > </a
+      ><a name="3165" href="cw.examples.Sphere.html#631" class="Module"
+      >PosToCW</a
+      ><a name="3172"
+      > </a
+      ><a name="3173" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="3174"
+      >
+    </a
+      ><a name="3179" class="Keyword"
+      >module</a
+      ><a name="3185"
+      > </a
+      ><a name="3186" href="cw.examples.Sphere.html#3186" class="Module"
+      >From</a
+      ><a name="3190"
+      > </a
+      ><a name="3191" class="Symbol"
+      >=</a
+      ><a name="3192"
+      > </a
+      ><a name="3193" href="cw.examples.Sphere.html#1349" class="Module"
+      >PosFromCW</a
+      ><a name="3202"
+      > </a
+      ><a name="3203" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="3204"
+      >
+
+    </a
+      ><a name="3210" href="cw.examples.Sphere.html#3210" class="Function"
+      >to-from-incl</a
+      ><a name="3222"
+      > </a
+      ><a name="3223" class="Symbol"
+      >:</a
+      ><a name="3224"
+      > </a
+      ><a name="3225" class="Symbol"
+      >&#8704;</a
+      ><a name="3226"
+      > </a
+      ><a name="3227" class="Symbol"
+      >(</a
+      ><a name="3228" href="cw.examples.Sphere.html#3228" class="Bound"
+      >c</a
+      ><a name="3229"
+      > </a
+      ><a name="3230" class="Symbol"
+      >:</a
+      ><a name="3231"
+      > </a
+      ><a name="3232" href="cw.examples.Sphere.html#176" class="Function"
+      >CWSphere</a
+      ><a name="3240"
+      > </a
+      ><a name="3241" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="3242" class="Symbol"
+      >)</a
+      ><a name="3243"
+      >
+      </a
+      ><a name="3250" class="Symbol"
+      >&#8594;</a
+      ><a name="3251"
+      > </a
+      ><a name="3252" href="cw.examples.Sphere.html#3083" class="Function"
+      >to</a
+      ><a name="3254"
+      > </a
+      ><a name="3255" class="Symbol"
+      >(</a
+      ><a name="3256" href="cw.examples.Sphere.html#3117" class="Function"
+      >from</a
+      ><a name="3260"
+      > </a
+      ><a name="3261" class="Symbol"
+      >(</a
+      ><a name="3262" href="cw.Attached.html#757" class="Function"
+      >incl</a
+      ><a name="3266"
+      > </a
+      ><a name="3267" href="cw.examples.Sphere.html#3228" class="Bound"
+      >c</a
+      ><a name="3268" class="Symbol"
+      >))</a
+      ><a name="3270"
+      > </a
+      ><a name="3271" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3273"
+      > </a
+      ><a name="3274" href="cw.Attached.html#757" class="Function"
+      >incl</a
+      ><a name="3278"
+      > </a
+      ><a name="3279" href="cw.examples.Sphere.html#3228" class="Bound"
+      >c</a
+      ><a name="3280"
+      >
+    </a
+      ><a name="3285" href="cw.examples.Sphere.html#3210" class="Function"
+      >to-from-incl</a
+      ><a name="3297"
+      > </a
+      ><a name="3298" href="cw.examples.Sphere.html#3298" class="Bound"
+      >c</a
+      ><a name="3299"
+      > </a
+      ><a name="3300" class="Symbol"
+      >=</a
+      ><a name="3301"
+      >
+        </a
+      ><a name="3310" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3311"
+      > </a
+      ><a name="3312" class="Symbol"
+      >(</a
+      ><a name="3313" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="3318"
+      > </a
+      ><a name="3319" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3323"
+      > </a
+      ><a name="3324" class="Symbol"
+      >(</a
+      ><a name="3325" href="cw.examples.Sphere.html#1517" class="Function"
+      >CWSphere-to-Sphere</a
+      ><a name="3343"
+      > </a
+      ><a name="3344" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="3345"
+      > </a
+      ><a name="3346" href="cw.examples.Sphere.html#3298" class="Bound"
+      >c</a
+      ><a name="3347" class="Symbol"
+      >))</a
+      ><a name="3349"
+      >
+      </a
+      ><a name="3356" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3357"
+      > </a
+      ><a name="3358" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3360"
+      > </a
+      ><a name="3361" href="cw.Attached.html#757" class="Function"
+      >incl</a
+      ><a name="3365"
+      > </a
+      ><a name="3366" class="Symbol"
+      >(</a
+      ><a name="3367" href="lib.Equivalence.html#1684" class="Field"
+      >is-equiv.f-g</a
+      ><a name="3379"
+      > </a
+      ><a name="3380" class="Symbol"
+      >(</a
+      ><a name="3381" href="cw.examples.Sphere.html#2748" class="Function"
+      >Sphere-to-CWSphere-is-equiv</a
+      ><a name="3408"
+      > </a
+      ><a name="3409" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="3410" class="Symbol"
+      >)</a
+      ><a name="3411"
+      > </a
+      ><a name="3412" href="cw.examples.Sphere.html#3298" class="Bound"
+      >c</a
+      ><a name="3413" class="Symbol"
+      >)</a
+      ><a name="3414"
+      >
+
+    </a
+      ><a name="3420" href="cw.examples.Sphere.html#3420" class="Function"
+      >to-from-hub</a
+      ><a name="3431"
+      > </a
+      ><a name="3432" class="Symbol"
+      >:</a
+      ><a name="3433"
+      > </a
+      ><a name="3434" class="Symbol"
+      >&#8704;</a
+      ><a name="3435"
+      > </a
+      ><a name="3436" href="cw.examples.Sphere.html#3436" class="Bound"
+      >b</a
+      ><a name="3437"
+      > </a
+      ><a name="3438" class="Symbol"
+      >&#8594;</a
+      ><a name="3439"
+      > </a
+      ><a name="3440" href="cw.examples.Sphere.html#3083" class="Function"
+      >to</a
+      ><a name="3442"
+      > </a
+      ><a name="3443" class="Symbol"
+      >(</a
+      ><a name="3444" href="cw.examples.Sphere.html#3117" class="Function"
+      >from</a
+      ><a name="3448"
+      > </a
+      ><a name="3449" class="Symbol"
+      >(</a
+      ><a name="3450" href="cw.Attached.html#804" class="Function"
+      >hub</a
+      ><a name="3453"
+      > </a
+      ><a name="3454" href="cw.examples.Sphere.html#3436" class="Bound"
+      >b</a
+      ><a name="3455" class="Symbol"
+      >))</a
+      ><a name="3457"
+      > </a
+      ><a name="3458" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3460"
+      > </a
+      ><a name="3461" href="cw.Attached.html#804" class="Function"
+      >hub</a
+      ><a name="3464"
+      > </a
+      ><a name="3465" href="cw.examples.Sphere.html#3436" class="Bound"
+      >b</a
+      ><a name="3466"
+      >
+    </a
+      ><a name="3471" href="cw.examples.Sphere.html#3420" class="Function"
+      >to-from-hub</a
+      ><a name="3482"
+      > </a
+      ><a name="3483" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3487"
+      > </a
+      ><a name="3488" class="Symbol"
+      >=</a
+      ><a name="3489"
+      > </a
+      ><a name="3490" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3493"
+      >
+    </a
+      ><a name="3498" href="cw.examples.Sphere.html#3420" class="Function"
+      >to-from-hub</a
+      ><a name="3509"
+      > </a
+      ><a name="3510" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="3515"
+      > </a
+      ><a name="3516" class="Symbol"
+      >=</a
+      ><a name="3517"
+      > </a
+      ><a name="3518" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3521"
+      >
+
+    </a
+      ><a name="3527" href="cw.examples.Sphere.html#3527" class="Function"
+      >to-from-incl-to</a
+      ><a name="3542"
+      > </a
+      ><a name="3543" class="Symbol"
+      >:</a
+      ><a name="3544"
+      > </a
+      ><a name="3545" class="Symbol"
+      >&#8704;</a
+      ><a name="3546"
+      > </a
+      ><a name="3547" class="Symbol"
+      >(</a
+      ><a name="3548" href="cw.examples.Sphere.html#3548" class="Bound"
+      >x</a
+      ><a name="3549"
+      > </a
+      ><a name="3550" class="Symbol"
+      >:</a
+      ><a name="3551"
+      > </a
+      ><a name="3552" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="3558"
+      > </a
+      ><a name="3559" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="3560" class="Symbol"
+      >)</a
+      ><a name="3561"
+      >
+      </a
+      ><a name="3568" class="Symbol"
+      >&#8594;</a
+      ><a name="3569"
+      > </a
+      ><a name="3570" href="cw.examples.Sphere.html#3210" class="Function"
+      >to-from-incl</a
+      ><a name="3582"
+      > </a
+      ><a name="3583" class="Symbol"
+      >(</a
+      ><a name="3584" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="3602"
+      > </a
+      ><a name="3603" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="3604"
+      > </a
+      ><a name="3605" href="cw.examples.Sphere.html#3548" class="Bound"
+      >x</a
+      ><a name="3606" class="Symbol"
+      >)</a
+      ><a name="3607"
+      > </a
+      ><a name="3608" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3610"
+      > </a
+      ><a name="3611" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3612"
+      > </a
+      ><a name="3613" class="Symbol"
+      >(</a
+      ><a name="3614" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="3619"
+      > </a
+      ><a name="3620" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3624"
+      > </a
+      ><a name="3625" href="cw.examples.Sphere.html#3548" class="Bound"
+      >x</a
+      ><a name="3626" class="Symbol"
+      >)</a
+      ><a name="3627"
+      >
+    </a
+      ><a name="3632" href="cw.examples.Sphere.html#3527" class="Function"
+      >to-from-incl-to</a
+      ><a name="3647"
+      > </a
+      ><a name="3648" href="cw.examples.Sphere.html#3648" class="Bound"
+      >x</a
+      ><a name="3649"
+      > </a
+      ><a name="3650" class="Symbol"
+      >=</a
+      ><a name="3651"
+      >
+      </a
+      ><a name="3658" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3659"
+      > </a
+      ><a name="3660" class="Symbol"
+      >(</a
+      ><a name="3661" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="3666"
+      > </a
+      ><a name="3667" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3671"
+      > </a
+      ><a name="3672" class="Symbol"
+      >(</a
+      ><a name="3673" href="cw.examples.Sphere.html#1517" class="Function"
+      >CWSphere-to-Sphere</a
+      ><a name="3691"
+      > </a
+      ><a name="3692" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="3693"
+      > </a
+      ><a name="3694" class="Symbol"
+      >(</a
+      ><a name="3695" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="3713"
+      > </a
+      ><a name="3714" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="3715"
+      > </a
+      ><a name="3716" href="cw.examples.Sphere.html#3648" class="Bound"
+      >x</a
+      ><a name="3717" class="Symbol"
+      >)))</a
+      ><a name="3720"
+      >
+      </a
+      ><a name="3727" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3728"
+      > </a
+      ><a name="3729" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3731"
+      > </a
+      ><a name="3732" href="cw.Attached.html#757" class="Function"
+      >incl</a
+      ><a name="3736"
+      > </a
+      ><a name="3737" class="Symbol"
+      >(</a
+      ><a name="3738" href="lib.Equivalence.html#1684" class="Field"
+      >is-equiv.f-g</a
+      ><a name="3750"
+      > </a
+      ><a name="3751" class="Symbol"
+      >(</a
+      ><a name="3752" href="cw.examples.Sphere.html#2748" class="Function"
+      >Sphere-to-CWSphere-is-equiv</a
+      ><a name="3779"
+      > </a
+      ><a name="3780" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="3781" class="Symbol"
+      >)</a
+      ><a name="3782"
+      > </a
+      ><a name="3783" class="Symbol"
+      >(</a
+      ><a name="3784" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="3802"
+      > </a
+      ><a name="3803" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="3804"
+      > </a
+      ><a name="3805" href="cw.examples.Sphere.html#3648" class="Bound"
+      >x</a
+      ><a name="3806" class="Symbol"
+      >))</a
+      ><a name="3808"
+      >
+        </a
+      ><a name="3817" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="3819"
+      > </a
+      ><a name="3820" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3821"
+      > </a
+      ><a name="3822" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="3823"
+      > </a
+      ><a name="3824" href="lib.Equivalence.html#1754" class="Field"
+      >is-equiv.adj</a
+      ><a name="3836"
+      > </a
+      ><a name="3837" class="Symbol"
+      >(</a
+      ><a name="3838" href="cw.examples.Sphere.html#2748" class="Function"
+      >Sphere-to-CWSphere-is-equiv</a
+      ><a name="3865"
+      > </a
+      ><a name="3866" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="3867" class="Symbol"
+      >)</a
+      ><a name="3868"
+      > </a
+      ><a name="3869" href="cw.examples.Sphere.html#3648" class="Bound"
+      >x</a
+      ><a name="3870"
+      >
+          </a
+      ><a name="3881" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="3888"
+      > </a
+      ><a name="3889" class="Symbol"
+      >(&#955;</a
+      ><a name="3891"
+      > </a
+      ><a name="3892" href="cw.examples.Sphere.html#3892" class="Bound"
+      >p</a
+      ><a name="3893"
+      > </a
+      ><a name="3894" class="Symbol"
+      >&#8594;</a
+      ><a name="3895"
+      > </a
+      ><a name="3896" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3897"
+      > </a
+      ><a name="3898" class="Symbol"
+      >(</a
+      ><a name="3899" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="3904"
+      > </a
+      ><a name="3905" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3909"
+      > </a
+      ><a name="3910" class="Symbol"
+      >(</a
+      ><a name="3911" href="cw.examples.Sphere.html#1517" class="Function"
+      >CWSphere-to-Sphere</a
+      ><a name="3929"
+      > </a
+      ><a name="3930" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="3931"
+      > </a
+      ><a name="3932" class="Symbol"
+      >(</a
+      ><a name="3933" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="3951"
+      > </a
+      ><a name="3952" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="3953"
+      > </a
+      ><a name="3954" href="cw.examples.Sphere.html#3648" class="Bound"
+      >x</a
+      ><a name="3955" class="Symbol"
+      >)))</a
+      ><a name="3958"
+      > </a
+      ><a name="3959" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3960"
+      > </a
+      ><a name="3961" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3963"
+      > </a
+      ><a name="3964" href="cw.Attached.html#757" class="Function"
+      >incl</a
+      ><a name="3968"
+      > </a
+      ><a name="3969" href="cw.examples.Sphere.html#3892" class="Bound"
+      >p</a
+      ><a name="3970" class="Symbol"
+      >)</a
+      ><a name="3971"
+      > </a
+      ><a name="3972" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="3973"
+      >
+      </a
+      ><a name="3980" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3981"
+      > </a
+      ><a name="3982" class="Symbol"
+      >(</a
+      ><a name="3983" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="3988"
+      > </a
+      ><a name="3989" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3993"
+      > </a
+      ><a name="3994" class="Symbol"
+      >(</a
+      ><a name="3995" href="cw.examples.Sphere.html#1517" class="Function"
+      >CWSphere-to-Sphere</a
+      ><a name="4013"
+      > </a
+      ><a name="4014" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="4015"
+      > </a
+      ><a name="4016" class="Symbol"
+      >(</a
+      ><a name="4017" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="4035"
+      > </a
+      ><a name="4036" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="4037"
+      > </a
+      ><a name="4038" href="cw.examples.Sphere.html#3648" class="Bound"
+      >x</a
+      ><a name="4039" class="Symbol"
+      >)))</a
+      ><a name="4042"
+      >
+      </a
+      ><a name="4049" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4050"
+      > </a
+      ><a name="4051" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4053"
+      > </a
+      ><a name="4054" href="cw.Attached.html#757" class="Function"
+      >incl</a
+      ><a name="4058"
+      > </a
+      ><a name="4059" class="Symbol"
+      >(</a
+      ><a name="4060" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4062"
+      > </a
+      ><a name="4063" class="Symbol"
+      >(</a
+      ><a name="4064" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="4082"
+      > </a
+      ><a name="4083" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="4084" class="Symbol"
+      >)</a
+      ><a name="4085"
+      > </a
+      ><a name="4086" class="Symbol"
+      >(</a
+      ><a name="4087" href="lib.Equivalence.html#1719" class="Field"
+      >is-equiv.g-f</a
+      ><a name="4099"
+      > </a
+      ><a name="4100" class="Symbol"
+      >(</a
+      ><a name="4101" href="cw.examples.Sphere.html#2748" class="Function"
+      >Sphere-to-CWSphere-is-equiv</a
+      ><a name="4128"
+      > </a
+      ><a name="4129" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="4130" class="Symbol"
+      >)</a
+      ><a name="4131"
+      > </a
+      ><a name="4132" href="cw.examples.Sphere.html#3648" class="Bound"
+      >x</a
+      ><a name="4133" class="Symbol"
+      >))</a
+      ><a name="4135"
+      >
+        </a
+      ><a name="4144" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4146"
+      > </a
+      ><a name="4147" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4148"
+      > </a
+      ><a name="4149" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="4150"
+      > </a
+      ><a name="4151" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="4155"
+      > </a
+      ><a name="4156" href="cw.Attached.html#757" class="Function"
+      >incl</a
+      ><a name="4160"
+      > </a
+      ><a name="4161" class="Symbol"
+      >(</a
+      ><a name="4162" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="4180"
+      > </a
+      ><a name="4181" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="4182" class="Symbol"
+      >)</a
+      ><a name="4183"
+      > </a
+      ><a name="4184" class="Symbol"
+      >(</a
+      ><a name="4185" href="lib.Equivalence.html#1719" class="Field"
+      >is-equiv.g-f</a
+      ><a name="4197"
+      > </a
+      ><a name="4198" class="Symbol"
+      >(</a
+      ><a name="4199" href="cw.examples.Sphere.html#2748" class="Function"
+      >Sphere-to-CWSphere-is-equiv</a
+      ><a name="4226"
+      > </a
+      ><a name="4227" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="4228" class="Symbol"
+      >)</a
+      ><a name="4229"
+      > </a
+      ><a name="4230" href="cw.examples.Sphere.html#3648" class="Bound"
+      >x</a
+      ><a name="4231" class="Symbol"
+      >)</a
+      ><a name="4232"
+      >
+          </a
+      ><a name="4243" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="4250"
+      > </a
+      ><a name="4251" class="Symbol"
+      >(&#955;</a
+      ><a name="4253"
+      > </a
+      ><a name="4254" href="cw.examples.Sphere.html#4254" class="Bound"
+      >p</a
+      ><a name="4255"
+      > </a
+      ><a name="4256" class="Symbol"
+      >&#8594;</a
+      ><a name="4257"
+      > </a
+      ><a name="4258" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4259"
+      > </a
+      ><a name="4260" class="Symbol"
+      >(</a
+      ><a name="4261" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="4266"
+      > </a
+      ><a name="4267" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4271"
+      > </a
+      ><a name="4272" class="Symbol"
+      >(</a
+      ><a name="4273" href="cw.examples.Sphere.html#1517" class="Function"
+      >CWSphere-to-Sphere</a
+      ><a name="4291"
+      > </a
+      ><a name="4292" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="4293"
+      > </a
+      ><a name="4294" class="Symbol"
+      >(</a
+      ><a name="4295" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="4313"
+      > </a
+      ><a name="4314" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="4315"
+      > </a
+      ><a name="4316" href="cw.examples.Sphere.html#3648" class="Bound"
+      >x</a
+      ><a name="4317" class="Symbol"
+      >)))</a
+      ><a name="4320"
+      > </a
+      ><a name="4321" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4322"
+      > </a
+      ><a name="4323" href="cw.examples.Sphere.html#4254" class="Bound"
+      >p</a
+      ><a name="4324" class="Symbol"
+      >)</a
+      ><a name="4325"
+      > </a
+      ><a name="4326" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4327"
+      >
+      </a
+      ><a name="4334" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4335"
+      > </a
+      ><a name="4336" class="Symbol"
+      >(</a
+      ><a name="4337" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="4342"
+      > </a
+      ><a name="4343" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4347"
+      > </a
+      ><a name="4348" class="Symbol"
+      >(</a
+      ><a name="4349" href="cw.examples.Sphere.html#1517" class="Function"
+      >CWSphere-to-Sphere</a
+      ><a name="4367"
+      > </a
+      ><a name="4368" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="4369"
+      > </a
+      ><a name="4370" class="Symbol"
+      >(</a
+      ><a name="4371" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="4389"
+      > </a
+      ><a name="4390" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="4391"
+      > </a
+      ><a name="4392" href="cw.examples.Sphere.html#3648" class="Bound"
+      >x</a
+      ><a name="4393" class="Symbol"
+      >)))</a
+      ><a name="4396"
+      >
+      </a
+      ><a name="4403" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4404"
+      > </a
+      ><a name="4405" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4407"
+      > </a
+      ><a name="4408" class="Symbol"
+      >(</a
+      ><a name="4409" href="cw.Attached.html#757" class="Function"
+      >incl</a
+      ><a name="4413"
+      > </a
+      ><a name="4414" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4415"
+      > </a
+      ><a name="4416" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="4434"
+      > </a
+      ><a name="4435" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="4436" class="Symbol"
+      >)</a
+      ><a name="4437"
+      > </a
+      ><a name="4438" class="Symbol"
+      >(</a
+      ><a name="4439" href="lib.Equivalence.html#1719" class="Field"
+      >is-equiv.g-f</a
+      ><a name="4451"
+      > </a
+      ><a name="4452" class="Symbol"
+      >(</a
+      ><a name="4453" href="cw.examples.Sphere.html#2748" class="Function"
+      >Sphere-to-CWSphere-is-equiv</a
+      ><a name="4480"
+      > </a
+      ><a name="4481" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="4482" class="Symbol"
+      >)</a
+      ><a name="4483"
+      > </a
+      ><a name="4484" href="cw.examples.Sphere.html#3648" class="Bound"
+      >x</a
+      ><a name="4485" class="Symbol"
+      >)</a
+      ><a name="4486"
+      >
+          </a
+      ><a name="4497" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4499"
+      > </a
+      ><a name="4500" href="lib.types.Paths.html#4196" class="Function"
+      >&#8595;-cst=app-out'</a
+      ><a name="4514"
+      > </a
+      ><a name="4515" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="4516"
+      > </a
+      ><a name="4517" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="4520"
+      > </a
+      ><a name="4521" class="Symbol"
+      >(&#955;</a
+      ><a name="4523"
+      > </a
+      ><a name="4524" href="cw.examples.Sphere.html#4524" class="Bound"
+      >x</a
+      ><a name="4525"
+      > </a
+      ><a name="4526" class="Symbol"
+      >&#8594;</a
+      ><a name="4527"
+      > </a
+      ><a name="4528" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4529"
+      > </a
+      ><a name="4530" class="Symbol"
+      >(</a
+      ><a name="4531" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="4536"
+      > </a
+      ><a name="4537" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4541"
+      > </a
+      ><a name="4542" href="cw.examples.Sphere.html#4524" class="Bound"
+      >x</a
+      ><a name="4543" class="Symbol"
+      >))</a
+      ><a name="4545"
+      > </a
+      ><a name="4546" class="Symbol"
+      >(</a
+      ><a name="4547" href="lib.Equivalence.html#1719" class="Field"
+      >is-equiv.g-f</a
+      ><a name="4559"
+      > </a
+      ><a name="4560" class="Symbol"
+      >(</a
+      ><a name="4561" href="cw.examples.Sphere.html#2748" class="Function"
+      >Sphere-to-CWSphere-is-equiv</a
+      ><a name="4588"
+      > </a
+      ><a name="4589" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="4590" class="Symbol"
+      >)</a
+      ><a name="4591"
+      > </a
+      ><a name="4592" href="cw.examples.Sphere.html#3648" class="Bound"
+      >x</a
+      ><a name="4593" class="Symbol"
+      >)</a
+      ><a name="4594"
+      > </a
+      ><a name="4595" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4596"
+      >
+      </a
+      ><a name="4603" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4604"
+      > </a
+      ><a name="4605" class="Symbol"
+      >(</a
+      ><a name="4606" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="4611"
+      > </a
+      ><a name="4612" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4616"
+      > </a
+      ><a name="4617" href="cw.examples.Sphere.html#3648" class="Bound"
+      >x</a
+      ><a name="4618" class="Symbol"
+      >)</a
+      ><a name="4619"
+      >
+          </a
+      ><a name="4630" href="HoTT.html#767" class="Function Operator"
+      >&#8718;</a
+      ><a name="4631"
+      >
+
+    </a
+      ><a name="4637" href="cw.examples.Sphere.html#4637" class="Function"
+      >to-from-spoke</a
+      ><a name="4650"
+      > </a
+      ><a name="4651" class="Symbol"
+      >:</a
+      ><a name="4652"
+      > </a
+      ><a name="4653" class="Symbol"
+      >&#8704;</a
+      ><a name="4654"
+      > </a
+      ><a name="4655" class="Symbol"
+      >(</a
+      ><a name="4656" href="cw.examples.Sphere.html#4656" class="Bound"
+      >b</a
+      ><a name="4657"
+      > </a
+      ><a name="4658" class="Symbol"
+      >:</a
+      ><a name="4659"
+      > </a
+      ><a name="4660" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="4664" class="Symbol"
+      >)</a
+      ><a name="4665"
+      > </a
+      ><a name="4666" class="Symbol"
+      >(</a
+      ><a name="4667" href="cw.examples.Sphere.html#4667" class="Bound"
+      >x</a
+      ><a name="4668"
+      > </a
+      ><a name="4669" class="Symbol"
+      >:</a
+      ><a name="4670"
+      > </a
+      ><a name="4671" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="4677"
+      > </a
+      ><a name="4678" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="4679" class="Symbol"
+      >)</a
+      ><a name="4680"
+      >
+      </a
+      ><a name="4687" class="Symbol"
+      >&#8594;</a
+      ><a name="4688"
+      > </a
+      ><a name="4689" href="cw.examples.Sphere.html#3210" class="Function"
+      >to-from-incl</a
+      ><a name="4701"
+      > </a
+      ><a name="4702" class="Symbol"
+      >(</a
+      ><a name="4703" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="4721"
+      > </a
+      ><a name="4722" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="4723"
+      > </a
+      ><a name="4724" href="cw.examples.Sphere.html#4667" class="Bound"
+      >x</a
+      ><a name="4725" class="Symbol"
+      >)</a
+      ><a name="4726"
+      > </a
+      ><a name="4727" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="4729"
+      > </a
+      ><a name="4730" href="cw.examples.Sphere.html#3420" class="Function"
+      >to-from-hub</a
+      ><a name="4741"
+      > </a
+      ><a name="4742" href="cw.examples.Sphere.html#4656" class="Bound"
+      >b</a
+      ><a name="4743"
+      >
+          </a
+      ><a name="4754" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="4755"
+      > </a
+      ><a name="4756" class="Symbol"
+      >(&#955;</a
+      ><a name="4758"
+      > </a
+      ><a name="4759" href="cw.examples.Sphere.html#4759" class="Bound"
+      >x</a
+      ><a name="4760"
+      > </a
+      ><a name="4761" class="Symbol"
+      >&#8594;</a
+      ><a name="4762"
+      > </a
+      ><a name="4763" href="cw.examples.Sphere.html#3083" class="Function"
+      >to</a
+      ><a name="4765"
+      > </a
+      ><a name="4766" class="Symbol"
+      >(</a
+      ><a name="4767" href="cw.examples.Sphere.html#3117" class="Function"
+      >from</a
+      ><a name="4771"
+      > </a
+      ><a name="4772" href="cw.examples.Sphere.html#4759" class="Bound"
+      >x</a
+      ><a name="4773" class="Symbol"
+      >)</a
+      ><a name="4774"
+      > </a
+      ><a name="4775" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4777"
+      > </a
+      ><a name="4778" href="cw.examples.Sphere.html#4759" class="Bound"
+      >x</a
+      ><a name="4779" class="Symbol"
+      >)</a
+      ><a name="4780"
+      > </a
+      ><a name="4781" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="4782"
+      > </a
+      ><a name="4783" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="4788"
+      > </a
+      ><a name="4789" href="cw.examples.Sphere.html#4656" class="Bound"
+      >b</a
+      ><a name="4790"
+      > </a
+      ><a name="4791" href="cw.examples.Sphere.html#4667" class="Bound"
+      >x</a
+      ><a name="4792"
+      > </a
+      ><a name="4793" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="4794"
+      >
+    </a
+      ><a name="4799" href="cw.examples.Sphere.html#4637" class="Function"
+      >to-from-spoke</a
+      ><a name="4812"
+      > </a
+      ><a name="4813" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4817"
+      > </a
+      ><a name="4818" href="cw.examples.Sphere.html#4818" class="Bound"
+      >x</a
+      ><a name="4819"
+      > </a
+      ><a name="4820" class="Symbol"
+      >=</a
+      ><a name="4821"
+      > </a
+      ><a name="4822" href="lib.types.Paths.html#4417" class="Function"
+      >&#8595;-app=idf-in</a
+      ><a name="4834"
+      > </a
+      ><a name="4835" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="4836"
+      >
+      </a
+      ><a name="4843" href="cw.examples.Sphere.html#3210" class="Function"
+      >to-from-incl</a
+      ><a name="4855"
+      > </a
+      ><a name="4856" class="Symbol"
+      >(</a
+      ><a name="4857" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="4875"
+      > </a
+      ><a name="4876" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="4877"
+      > </a
+      ><a name="4878" href="cw.examples.Sphere.html#4818" class="Bound"
+      >x</a
+      ><a name="4879" class="Symbol"
+      >)</a
+      ><a name="4880"
+      > </a
+      ><a name="4881" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="4883"
+      > </a
+      ><a name="4884" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="4889"
+      > </a
+      ><a name="4890" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4894"
+      > </a
+      ><a name="4895" href="cw.examples.Sphere.html#4818" class="Bound"
+      >x</a
+      ><a name="4896"
+      >
+        </a
+      ><a name="4905" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4907"
+      > </a
+      ><a name="4908" href="cw.examples.Sphere.html#3527" class="Function"
+      >to-from-incl-to</a
+      ><a name="4923"
+      > </a
+      ><a name="4924" href="cw.examples.Sphere.html#4818" class="Bound"
+      >x</a
+      ><a name="4925"
+      > </a
+      ><a name="4926" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="4933"
+      > </a
+      ><a name="4934" class="Symbol"
+      >(&#955;</a
+      ><a name="4936"
+      > </a
+      ><a name="4937" href="cw.examples.Sphere.html#4937" class="Bound"
+      >p</a
+      ><a name="4938"
+      > </a
+      ><a name="4939" class="Symbol"
+      >&#8594;</a
+      ><a name="4940"
+      > </a
+      ><a name="4941" href="cw.examples.Sphere.html#4937" class="Bound"
+      >p</a
+      ><a name="4942"
+      > </a
+      ><a name="4943" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="4945"
+      > </a
+      ><a name="4946" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="4951"
+      > </a
+      ><a name="4952" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4956"
+      > </a
+      ><a name="4957" href="cw.examples.Sphere.html#4818" class="Bound"
+      >x</a
+      ><a name="4958" class="Symbol"
+      >)</a
+      ><a name="4959"
+      > </a
+      ><a name="4960" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4961"
+      >
+      </a
+      ><a name="4968" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4969"
+      > </a
+      ><a name="4970" class="Symbol"
+      >(</a
+      ><a name="4971" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="4976"
+      > </a
+      ><a name="4977" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4981"
+      > </a
+      ><a name="4982" href="cw.examples.Sphere.html#4818" class="Bound"
+      >x</a
+      ><a name="4983" class="Symbol"
+      >)</a
+      ><a name="4984"
+      > </a
+      ><a name="4985" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="4987"
+      > </a
+      ><a name="4988" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="4993"
+      > </a
+      ><a name="4994" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4998"
+      > </a
+      ><a name="4999" href="cw.examples.Sphere.html#4818" class="Bound"
+      >x</a
+      ><a name="5000"
+      >
+        </a
+      ><a name="5009" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5011"
+      > </a
+      ><a name="5012" href="lib.PathGroupoid.html#1343" class="Function"
+      >!-inv'-l</a
+      ><a name="5020"
+      > </a
+      ><a name="5021" class="Symbol"
+      >(</a
+      ><a name="5022" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="5027"
+      > </a
+      ><a name="5028" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="5032"
+      > </a
+      ><a name="5033" href="cw.examples.Sphere.html#4818" class="Bound"
+      >x</a
+      ><a name="5034" class="Symbol"
+      >)</a
+      ><a name="5035"
+      > </a
+      ><a name="5036" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5037"
+      >
+      </a
+      ><a name="5044" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5047"
+      >
+        </a
+      ><a name="5056" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5058"
+      > </a
+      ><a name="5059" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5060"
+      > </a
+      ><a name="5061" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="5062"
+      > </a
+      ><a name="5063" href="cw.Attached.html#1639" class="Function"
+      >From.spoke-&#946;</a
+      ><a name="5075"
+      > </a
+      ><a name="5076" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="5080"
+      > </a
+      ><a name="5081" href="cw.examples.Sphere.html#4818" class="Bound"
+      >x</a
+      ><a name="5082"
+      > </a
+      ><a name="5083" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="5090"
+      > </a
+      ><a name="5091" class="Symbol"
+      >(&#955;</a
+      ><a name="5093"
+      > </a
+      ><a name="5094" href="cw.examples.Sphere.html#5094" class="Bound"
+      >p</a
+      ><a name="5095"
+      > </a
+      ><a name="5096" class="Symbol"
+      >&#8594;</a
+      ><a name="5097"
+      > </a
+      ><a name="5098" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5100"
+      > </a
+      ><a name="5101" href="cw.examples.Sphere.html#3083" class="Function"
+      >to</a
+      ><a name="5103"
+      > </a
+      ><a name="5104" href="cw.examples.Sphere.html#5094" class="Bound"
+      >p</a
+      ><a name="5105"
+      > </a
+      ><a name="5106" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5107"
+      > </a
+      ><a name="5108" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5111" class="Symbol"
+      >)</a
+      ><a name="5112"
+      > </a
+      ><a name="5113" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5114"
+      >
+      </a
+      ><a name="5121" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5123"
+      > </a
+      ><a name="5124" href="cw.examples.Sphere.html#3083" class="Function"
+      >to</a
+      ><a name="5126"
+      > </a
+      ><a name="5127" class="Symbol"
+      >(</a
+      ><a name="5128" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5130"
+      > </a
+      ><a name="5131" href="cw.examples.Sphere.html#3117" class="Function"
+      >from</a
+      ><a name="5135"
+      > </a
+      ><a name="5136" class="Symbol"
+      >(</a
+      ><a name="5137" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="5142"
+      > </a
+      ><a name="5143" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="5147"
+      > </a
+      ><a name="5148" href="cw.examples.Sphere.html#4818" class="Bound"
+      >x</a
+      ><a name="5149" class="Symbol"
+      >))</a
+      ><a name="5151"
+      > </a
+      ><a name="5152" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5153"
+      > </a
+      ><a name="5154" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5157"
+      >
+        </a
+      ><a name="5166" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5168"
+      > </a
+      ><a name="5169" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="5173"
+      > </a
+      ><a name="5174" href="cw.examples.Sphere.html#3083" class="Function"
+      >to</a
+      ><a name="5176"
+      > </a
+      ><a name="5177" href="cw.examples.Sphere.html#3117" class="Function"
+      >from</a
+      ><a name="5181"
+      > </a
+      ><a name="5182" class="Symbol"
+      >(</a
+      ><a name="5183" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="5188"
+      > </a
+      ><a name="5189" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="5193"
+      > </a
+      ><a name="5194" href="cw.examples.Sphere.html#4818" class="Bound"
+      >x</a
+      ><a name="5195" class="Symbol"
+      >)</a
+      ><a name="5196"
+      > </a
+      ><a name="5197" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="5204"
+      > </a
+      ><a name="5205" class="Symbol"
+      >(&#955;</a
+      ><a name="5207"
+      > </a
+      ><a name="5208" href="cw.examples.Sphere.html#5208" class="Bound"
+      >p</a
+      ><a name="5209"
+      > </a
+      ><a name="5210" class="Symbol"
+      >&#8594;</a
+      ><a name="5211"
+      > </a
+      ><a name="5212" href="cw.examples.Sphere.html#5208" class="Bound"
+      >p</a
+      ><a name="5213"
+      > </a
+      ><a name="5214" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5215"
+      > </a
+      ><a name="5216" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5219" class="Symbol"
+      >)</a
+      ><a name="5220"
+      > </a
+      ><a name="5221" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5222"
+      >
+      </a
+      ><a name="5229" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5231"
+      > </a
+      ><a name="5232" class="Symbol"
+      >(</a
+      ><a name="5233" href="cw.examples.Sphere.html#3083" class="Function"
+      >to</a
+      ><a name="5235"
+      > </a
+      ><a name="5236" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="5237"
+      > </a
+      ><a name="5238" href="cw.examples.Sphere.html#3117" class="Function"
+      >from</a
+      ><a name="5242" class="Symbol"
+      >)</a
+      ><a name="5243"
+      > </a
+      ><a name="5244" class="Symbol"
+      >(</a
+      ><a name="5245" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="5250"
+      > </a
+      ><a name="5251" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="5255"
+      > </a
+      ><a name="5256" href="cw.examples.Sphere.html#4818" class="Bound"
+      >x</a
+      ><a name="5257" class="Symbol"
+      >)</a
+      ><a name="5258"
+      > </a
+      ><a name="5259" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5260"
+      > </a
+      ><a name="5261" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5264"
+      >
+        </a
+      ><a name="5273" href="HoTT.html#767" class="Function Operator"
+      >&#8718;</a
+      ><a name="5274"
+      >
+    </a
+      ><a name="5279" href="cw.examples.Sphere.html#4637" class="Function"
+      >to-from-spoke</a
+      ><a name="5292"
+      > </a
+      ><a name="5293" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="5298"
+      > </a
+      ><a name="5299" href="cw.examples.Sphere.html#5299" class="Bound"
+      >x</a
+      ><a name="5300"
+      > </a
+      ><a name="5301" class="Symbol"
+      >=</a
+      ><a name="5302"
+      > </a
+      ><a name="5303" href="lib.types.Paths.html#4417" class="Function"
+      >&#8595;-app=idf-in</a
+      ><a name="5315"
+      > </a
+      ><a name="5316" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="5317"
+      >
+      </a
+      ><a name="5324" href="cw.examples.Sphere.html#3210" class="Function"
+      >to-from-incl</a
+      ><a name="5336"
+      > </a
+      ><a name="5337" class="Symbol"
+      >(</a
+      ><a name="5338" href="cw.examples.Sphere.html#232" class="Function"
+      >Sphere-to-CWSphere</a
+      ><a name="5356"
+      > </a
+      ><a name="5357" href="cw.examples.Sphere.html#3012" class="Bound"
+      >n</a
+      ><a name="5358"
+      > </a
+      ><a name="5359" href="cw.examples.Sphere.html#5299" class="Bound"
+      >x</a
+      ><a name="5360" class="Symbol"
+      >)</a
+      ><a name="5361"
+      > </a
+      ><a name="5362" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="5364"
+      > </a
+      ><a name="5365" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="5370"
+      > </a
+      ><a name="5371" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="5376"
+      > </a
+      ><a name="5377" href="cw.examples.Sphere.html#5299" class="Bound"
+      >x</a
+      ><a name="5378"
+      >
+        </a
+      ><a name="5387" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5389"
+      > </a
+      ><a name="5390" href="cw.examples.Sphere.html#3527" class="Function"
+      >to-from-incl-to</a
+      ><a name="5405"
+      > </a
+      ><a name="5406" href="cw.examples.Sphere.html#5299" class="Bound"
+      >x</a
+      ><a name="5407"
+      > </a
+      ><a name="5408" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="5415"
+      > </a
+      ><a name="5416" class="Symbol"
+      >(&#955;</a
+      ><a name="5418"
+      > </a
+      ><a name="5419" href="cw.examples.Sphere.html#5419" class="Bound"
+      >p</a
+      ><a name="5420"
+      > </a
+      ><a name="5421" class="Symbol"
+      >&#8594;</a
+      ><a name="5422"
+      > </a
+      ><a name="5423" href="cw.examples.Sphere.html#5419" class="Bound"
+      >p</a
+      ><a name="5424"
+      > </a
+      ><a name="5425" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="5427"
+      > </a
+      ><a name="5428" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="5433"
+      > </a
+      ><a name="5434" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="5439"
+      > </a
+      ><a name="5440" href="cw.examples.Sphere.html#5299" class="Bound"
+      >x</a
+      ><a name="5441" class="Symbol"
+      >)</a
+      ><a name="5442"
+      > </a
+      ><a name="5443" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5444"
+      >
+      </a
+      ><a name="5451" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5452"
+      > </a
+      ><a name="5453" class="Symbol"
+      >(</a
+      ><a name="5454" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="5459"
+      > </a
+      ><a name="5460" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="5464"
+      > </a
+      ><a name="5465" href="cw.examples.Sphere.html#5299" class="Bound"
+      >x</a
+      ><a name="5466" class="Symbol"
+      >)</a
+      ><a name="5467"
+      > </a
+      ><a name="5468" href="lib.PathGroupoid.html#487" class="Function Operator"
+      >&#8729;'</a
+      ><a name="5470"
+      > </a
+      ><a name="5471" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="5476"
+      > </a
+      ><a name="5477" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="5482"
+      > </a
+      ><a name="5483" href="cw.examples.Sphere.html#5299" class="Bound"
+      >x</a
+      ><a name="5484"
+      >
+        </a
+      ><a name="5493" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5495"
+      > </a
+      ><a name="5496" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5497"
+      > </a
+      ><a name="5498" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="5499"
+      > </a
+      ><a name="5500" href="lib.types.Pushout.html#1428" class="Function"
+      >To.merid-&#946;</a
+      ><a name="5510"
+      > </a
+      ><a name="5511" href="cw.examples.Sphere.html#5299" class="Bound"
+      >x</a
+      ><a name="5512"
+      > </a
+      ><a name="5513" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5514"
+      >
+      </a
+      ><a name="5521" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5523"
+      > </a
+      ><a name="5524" href="cw.examples.Sphere.html#3083" class="Function"
+      >to</a
+      ><a name="5526"
+      > </a
+      ><a name="5527" class="Symbol"
+      >(</a
+      ><a name="5528" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="5533"
+      > </a
+      ><a name="5534" href="cw.examples.Sphere.html#5299" class="Bound"
+      >x</a
+      ><a name="5535" class="Symbol"
+      >)</a
+      ><a name="5536"
+      >
+        </a
+      ><a name="5545" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5547"
+      > </a
+      ><a name="5548" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5549"
+      > </a
+      ><a name="5550" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="5551"
+      > </a
+      ><a name="5552" href="cw.Attached.html#1639" class="Function"
+      >From.spoke-&#946;</a
+      ><a name="5564"
+      > </a
+      ><a name="5565" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="5570"
+      > </a
+      ><a name="5571" href="cw.examples.Sphere.html#5299" class="Bound"
+      >x</a
+      ><a name="5572"
+      > </a
+      ><a name="5573" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="5580"
+      > </a
+      ><a name="5581" class="Symbol"
+      >(</a
+      ><a name="5582" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5584"
+      > </a
+      ><a name="5585" href="cw.examples.Sphere.html#3083" class="Function"
+      >to</a
+      ><a name="5587" class="Symbol"
+      >)</a
+      ><a name="5588"
+      > </a
+      ><a name="5589" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5590"
+      >
+      </a
+      ><a name="5597" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5599"
+      > </a
+      ><a name="5600" href="cw.examples.Sphere.html#3083" class="Function"
+      >to</a
+      ><a name="5602"
+      > </a
+      ><a name="5603" class="Symbol"
+      >(</a
+      ><a name="5604" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5606"
+      > </a
+      ><a name="5607" href="cw.examples.Sphere.html#3117" class="Function"
+      >from</a
+      ><a name="5611"
+      > </a
+      ><a name="5612" class="Symbol"
+      >(</a
+      ><a name="5613" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="5618"
+      > </a
+      ><a name="5619" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="5624"
+      > </a
+      ><a name="5625" href="cw.examples.Sphere.html#5299" class="Bound"
+      >x</a
+      ><a name="5626" class="Symbol"
+      >))</a
+      ><a name="5628"
+      >
+        </a
+      ><a name="5637" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5639"
+      > </a
+      ><a name="5640" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="5644"
+      > </a
+      ><a name="5645" href="cw.examples.Sphere.html#3083" class="Function"
+      >to</a
+      ><a name="5647"
+      > </a
+      ><a name="5648" href="cw.examples.Sphere.html#3117" class="Function"
+      >from</a
+      ><a name="5652"
+      > </a
+      ><a name="5653" class="Symbol"
+      >(</a
+      ><a name="5654" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="5659"
+      > </a
+      ><a name="5660" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="5665"
+      > </a
+      ><a name="5666" href="cw.examples.Sphere.html#5299" class="Bound"
+      >x</a
+      ><a name="5667" class="Symbol"
+      >)</a
+      ><a name="5668"
+      > </a
+      ><a name="5669" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5670"
+      >
+      </a
+      ><a name="5677" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5679"
+      > </a
+      ><a name="5680" class="Symbol"
+      >(</a
+      ><a name="5681" href="cw.examples.Sphere.html#3083" class="Function"
+      >to</a
+      ><a name="5683"
+      > </a
+      ><a name="5684" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="5685"
+      > </a
+      ><a name="5686" href="cw.examples.Sphere.html#3117" class="Function"
+      >from</a
+      ><a name="5690" class="Symbol"
+      >)</a
+      ><a name="5691"
+      > </a
+      ><a name="5692" class="Symbol"
+      >(</a
+      ><a name="5693" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="5698"
+      > </a
+      ><a name="5699" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="5704"
+      > </a
+      ><a name="5705" href="cw.examples.Sphere.html#5299" class="Bound"
+      >x</a
+      ><a name="5706" class="Symbol"
+      >)</a
+      ><a name="5707"
+      >
+        </a
+      ><a name="5716" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="5718"
+      > </a
+      ><a name="5719" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5720"
+      > </a
+      ><a name="5721" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="5722"
+      > </a
+      ><a name="5723" href="lib.PathGroupoid.html#1041" class="Function"
+      >&#8729;-unit-r</a
+      ><a name="5731"
+      > </a
+      ><a name="5732" class="Symbol"
+      >_</a
+      ><a name="5733"
+      > </a
+      ><a name="5734" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="5735"
+      >
+      </a
+      ><a name="5742" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5744"
+      > </a
+      ><a name="5745" class="Symbol"
+      >(</a
+      ><a name="5746" href="cw.examples.Sphere.html#3083" class="Function"
+      >to</a
+      ><a name="5748"
+      > </a
+      ><a name="5749" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="5750"
+      > </a
+      ><a name="5751" href="cw.examples.Sphere.html#3117" class="Function"
+      >from</a
+      ><a name="5755" class="Symbol"
+      >)</a
+      ><a name="5756"
+      > </a
+      ><a name="5757" class="Symbol"
+      >(</a
+      ><a name="5758" href="cw.Attached.html#850" class="Function"
+      >spoke</a
+      ><a name="5763"
+      > </a
+      ><a name="5764" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="5769"
+      > </a
+      ><a name="5770" href="cw.examples.Sphere.html#5299" class="Bound"
+      >x</a
+      ><a name="5771" class="Symbol"
+      >)</a
+      ><a name="5772"
+      > </a
+      ><a name="5773" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5774"
+      > </a
+      ><a name="5775" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5778"
+      >
+        </a
+      ><a name="5787" href="HoTT.html#767" class="Function Operator"
+      >&#8718;</a
+      ><a name="5788"
+      >
+
+</a
+      ><a name="5790" href="cw.examples.Sphere.html#5790" class="Function"
+      >Sphere-equiv-CWSphere</a
+      ><a name="5811"
+      > </a
+      ><a name="5812" class="Symbol"
+      >:</a
+      ><a name="5813"
+      > </a
+      ><a name="5814" class="Symbol"
+      >&#8704;</a
+      ><a name="5815"
+      > </a
+      ><a name="5816" href="cw.examples.Sphere.html#5816" class="Bound"
+      >n</a
+      ><a name="5817"
+      > </a
+      ><a name="5818" class="Symbol"
+      >&#8594;</a
+      ><a name="5819"
+      > </a
+      ><a name="5820" href="lib.types.IteratedSuspension.html#1902" class="Function"
+      >Sphere</a
+      ><a name="5826"
+      > </a
+      ><a name="5827" href="cw.examples.Sphere.html#5816" class="Bound"
+      >n</a
+      ><a name="5828"
+      > </a
+      ><a name="5829" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="5830"
+      > </a
+      ><a name="5831" href="cw.examples.Sphere.html#176" class="Function"
+      >CWSphere</a
+      ><a name="5839"
+      > </a
+      ><a name="5840" href="cw.examples.Sphere.html#5816" class="Bound"
+      >n</a
+      ><a name="5841"
+      >
+</a
+      ><a name="5842" href="cw.examples.Sphere.html#5790" class="Function"
+      >Sphere-equiv-CWSphere</a
+      ><a name="5863"
+      > </a
+      ><a name="5864" href="cw.examples.Sphere.html#5864" class="Bound"
+      >n</a
+      ><a name="5865"
+      > </a
+      ><a name="5866" class="Symbol"
+      >=</a
+      ><a name="5867"
+      > </a
+      ><a name="5868" class="Symbol"
+      >_</a
+      ><a name="5869"
+      > </a
+      ><a name="5870" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="5871"
+      > </a
+      ><a name="5872" href="cw.examples.Sphere.html#2748" class="Function"
+      >Sphere-to-CWSphere-is-equiv</a
+      ><a name="5899"
+      > </a
+      ><a name="5900" href="cw.examples.Sphere.html#5864" class="Bound"
+      >n</a
+      ><a name="5901"
+      >
+
+</a
+      ><a name="5903" href="cw.examples.Sphere.html#5903" class="Function"
+      >cw-sphere-has-dec-eq</a
+      ><a name="5923"
+      > </a
+      ><a name="5924" class="Symbol"
+      >:</a
+      ><a name="5925"
+      > </a
+      ><a name="5926" class="Symbol"
+      >&#8704;</a
+      ><a name="5927"
+      > </a
+      ><a name="5928" href="cw.examples.Sphere.html#5928" class="Bound"
+      >n</a
+      ><a name="5929"
+      > </a
+      ><a name="5930" class="Symbol"
+      >&#8594;</a
+      ><a name="5931"
+      > </a
+      ><a name="5932" href="cw.CW.html#6128" class="Function"
+      >has-cells-with-dec-eq</a
+      ><a name="5953"
+      > </a
+      ><a name="5954" class="Symbol"
+      >(</a
+      ><a name="5955" href="cw.examples.Sphere.html#133" class="Function"
+      >cw-sphere-skel</a
+      ><a name="5969"
+      > </a
+      ><a name="5970" href="cw.examples.Sphere.html#5928" class="Bound"
+      >n</a
+      ><a name="5971" class="Symbol"
+      >)</a
+      ><a name="5972"
+      >
+</a
+      ><a name="5973" href="cw.examples.Sphere.html#5903" class="Function"
+      >cw-sphere-has-dec-eq</a
+      ><a name="5993"
+      > </a
+      ><a name="5994" class="Number"
+      >0</a
+      ><a name="5995"
+      > </a
+      ><a name="5996" class="Symbol"
+      >=</a
+      ><a name="5997"
+      > </a
+      ><a name="5998" href="lib.types.Bool.html#789" class="Function"
+      >Bool-has-dec-eq</a
+      ><a name="6013"
+      >
+</a
+      ><a name="6014" href="cw.examples.Sphere.html#5903" class="Function"
+      >cw-sphere-has-dec-eq</a
+      ><a name="6034"
+      > </a
+      ><a name="6035" class="Symbol"
+      >(</a
+      ><a name="6036" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="6037"
+      > </a
+      ><a name="6038" href="cw.examples.Sphere.html#6038" class="Bound"
+      >n</a
+      ><a name="6039" class="Symbol"
+      >)</a
+      ><a name="6040"
+      > </a
+      ><a name="6041" class="Symbol"
+      >=</a
+      ><a name="6042"
+      > </a
+      ><a name="6043" href="cw.examples.Sphere.html#5903" class="Function"
+      >cw-sphere-has-dec-eq</a
+      ><a name="6063"
+      > </a
+      ><a name="6064" href="cw.examples.Sphere.html#6038" class="Bound"
+      >n</a
+      ><a name="6065"
+      > </a
+      ><a name="6066" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="6067"
+      > </a
+      ><a name="6068" href="lib.types.Bool.html#789" class="Function"
+      >Bool-has-dec-eq</a
+      ><a name="6083"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

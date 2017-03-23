@@ -1,0 +1,1723 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cw.cohomology.CofiberGrid</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="homotopy.PushoutSplit.html#1" class="Module"
+      >homotopy.PushoutSplit</a
+      ><a name="92"
+      >
+
+</a
+      ><a name="94" class="Keyword"
+      >module</a
+      ><a name="100"
+      > </a
+      ><a name="101" href="cw.cohomology.CofiberGrid.html#1" class="Module"
+      >cw.cohomology.CofiberGrid</a
+      ><a name="126"
+      > </a
+      ><a name="127" class="Symbol"
+      >{</a
+      ><a name="128" href="cw.cohomology.CofiberGrid.html#128" class="Bound"
+      >i</a
+      ><a name="129"
+      > </a
+      ><a name="130" href="cw.cohomology.CofiberGrid.html#130" class="Bound"
+      >j</a
+      ><a name="131"
+      > </a
+      ><a name="132" href="cw.cohomology.CofiberGrid.html#132" class="Bound"
+      >k</a
+      ><a name="133" class="Symbol"
+      >}</a
+      ><a name="134"
+      >
+  </a
+      ><a name="137" class="Symbol"
+      >{</a
+      ><a name="138" href="cw.cohomology.CofiberGrid.html#138" class="Bound"
+      >A</a
+      ><a name="139"
+      > </a
+      ><a name="140" class="Symbol"
+      >:</a
+      ><a name="141"
+      > </a
+      ><a name="142" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="146"
+      > </a
+      ><a name="147" href="cw.cohomology.CofiberGrid.html#128" class="Bound"
+      >i</a
+      ><a name="148" class="Symbol"
+      >}</a
+      ><a name="149"
+      > </a
+      ><a name="150" class="Symbol"
+      >{</a
+      ><a name="151" href="cw.cohomology.CofiberGrid.html#151" class="Bound"
+      >B</a
+      ><a name="152"
+      > </a
+      ><a name="153" class="Symbol"
+      >:</a
+      ><a name="154"
+      > </a
+      ><a name="155" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="159"
+      > </a
+      ><a name="160" href="cw.cohomology.CofiberGrid.html#130" class="Bound"
+      >j</a
+      ><a name="161" class="Symbol"
+      >}</a
+      ><a name="162"
+      > </a
+      ><a name="163" class="Symbol"
+      >{</a
+      ><a name="164" href="cw.cohomology.CofiberGrid.html#164" class="Bound"
+      >C</a
+      ><a name="165"
+      > </a
+      ><a name="166" class="Symbol"
+      >:</a
+      ><a name="167"
+      > </a
+      ><a name="168" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="172"
+      > </a
+      ><a name="173" href="cw.cohomology.CofiberGrid.html#132" class="Bound"
+      >k</a
+      ><a name="174" class="Symbol"
+      >}</a
+      ><a name="175"
+      >
+  </a
+      ><a name="178" class="Symbol"
+      >(</a
+      ><a name="179" href="cw.cohomology.CofiberGrid.html#179" class="Bound"
+      >f</a
+      ><a name="180"
+      > </a
+      ><a name="181" class="Symbol"
+      >:</a
+      ><a name="182"
+      > </a
+      ><a name="183" href="cw.cohomology.CofiberGrid.html#138" class="Bound"
+      >A</a
+      ><a name="184"
+      > </a
+      ><a name="185" class="Symbol"
+      >&#8594;</a
+      ><a name="186"
+      > </a
+      ><a name="187" href="cw.cohomology.CofiberGrid.html#151" class="Bound"
+      >B</a
+      ><a name="188" class="Symbol"
+      >)</a
+      ><a name="189"
+      > </a
+      ><a name="190" class="Symbol"
+      >(</a
+      ><a name="191" href="cw.cohomology.CofiberGrid.html#191" class="Bound"
+      >g</a
+      ><a name="192"
+      > </a
+      ><a name="193" class="Symbol"
+      >:</a
+      ><a name="194"
+      > </a
+      ><a name="195" href="cw.cohomology.CofiberGrid.html#151" class="Bound"
+      >B</a
+      ><a name="196"
+      > </a
+      ><a name="197" class="Symbol"
+      >&#8594;</a
+      ><a name="198"
+      > </a
+      ><a name="199" href="cw.cohomology.CofiberGrid.html#164" class="Bound"
+      >C</a
+      ><a name="200" class="Symbol"
+      >)</a
+      ><a name="201"
+      > </a
+      ><a name="202" class="Keyword"
+      >where</a
+      ><a name="207"
+      >
+
+  </a
+      ><a name="211" class="Comment"
+      >{-
+    A -------&gt; B -----------&gt; C
+    |          |           _/|
+    |          |         _/  |
+    |          |     __.D_   |
+    v          v .--'   | `-.v
+    1 ------&gt; B/A ------|-&gt; C/A
+               |        |    |
+               |        v    |
+               |     __.E_   |
+               v .--'     `-.v
+               1 ---------&gt; C/B
+  -}</a
+      ><a name="562"
+      >
+
+  </a
+      ><a name="566" class="Keyword"
+      >open</a
+      ><a name="570"
+      > </a
+      ><a name="571" class="Keyword"
+      >import</a
+      ><a name="577"
+      > </a
+      ><a name="578" href="cw.cohomology.GridMap.html#1" class="Module"
+      >cw.cohomology.GridMap</a
+      ><a name="599"
+      > </a
+      ><a name="600" href="cw.cohomology.CofiberGrid.html#179" class="Bound"
+      >f</a
+      ><a name="601"
+      > </a
+      ><a name="602" href="cw.cohomology.CofiberGrid.html#191" class="Bound"
+      >g</a
+      ><a name="603"
+      >
+
+  </a
+      ><a name="607" class="Keyword"
+      >private</a
+      ><a name="614"
+      >
+    </a
+      ><a name="619" href="cw.cohomology.CofiberGrid.html#619" class="Function"
+      >B-to-B/A</a
+      ><a name="627"
+      > </a
+      ><a name="628" class="Symbol"
+      >:</a
+      ><a name="629"
+      > </a
+      ><a name="630" href="cw.cohomology.CofiberGrid.html#151" class="Bound"
+      >B</a
+      ><a name="631"
+      > </a
+      ><a name="632" class="Symbol"
+      >&#8594;</a
+      ><a name="633"
+      > </a
+      ><a name="634" href="cw.cohomology.GridMap.html#173" class="Function"
+      >B/A</a
+      ><a name="637"
+      >
+    </a
+      ><a name="642" href="cw.cohomology.CofiberGrid.html#619" class="Function"
+      >B-to-B/A</a
+      ><a name="650"
+      > </a
+      ><a name="651" class="Symbol"
+      >=</a
+      ><a name="652"
+      > </a
+      ><a name="653" href="lib.types.Cofiber.html#553" class="Function"
+      >cfcod'</a
+      ><a name="659"
+      > </a
+      ><a name="660" href="cw.cohomology.CofiberGrid.html#179" class="Bound"
+      >f</a
+      ><a name="661"
+      >
+
+    </a
+      ><a name="667" href="cw.cohomology.CofiberGrid.html#667" class="Function"
+      >D-span</a
+      ><a name="673"
+      > </a
+      ><a name="674" class="Symbol"
+      >:</a
+      ><a name="675"
+      > </a
+      ><a name="676" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="680"
+      >
+    </a
+      ><a name="685" href="cw.cohomology.CofiberGrid.html#667" class="Function"
+      >D-span</a
+      ><a name="691"
+      > </a
+      ><a name="692" class="Symbol"
+      >=</a
+      ><a name="693"
+      > </a
+      ><a name="694" href="lib.types.Span.html#270" class="InductiveConstructor"
+      >span</a
+      ><a name="698"
+      > </a
+      ><a name="699" href="cw.cohomology.GridMap.html#173" class="Function"
+      >B/A</a
+      ><a name="702"
+      > </a
+      ><a name="703" href="cw.cohomology.CofiberGrid.html#164" class="Bound"
+      >C</a
+      ><a name="704"
+      > </a
+      ><a name="705" href="cw.cohomology.CofiberGrid.html#151" class="Bound"
+      >B</a
+      ><a name="706"
+      > </a
+      ><a name="707" href="cw.cohomology.CofiberGrid.html#619" class="Function"
+      >B-to-B/A</a
+      ><a name="715"
+      > </a
+      ><a name="716" href="cw.cohomology.CofiberGrid.html#191" class="Bound"
+      >g</a
+      ><a name="717"
+      >
+    </a
+      ><a name="722" href="cw.cohomology.CofiberGrid.html#722" class="Function"
+      >D</a
+      ><a name="723"
+      > </a
+      ><a name="724" class="Symbol"
+      >:</a
+      ><a name="725"
+      > </a
+      ><a name="726" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="730"
+      > </a
+      ><a name="731" class="Symbol"
+      >(</a
+      ><a name="732" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="736"
+      > </a
+      ><a name="737" href="cw.cohomology.CofiberGrid.html#128" class="Bound"
+      >i</a
+      ><a name="738"
+      > </a
+      ><a name="739" class="Symbol"
+      >(</a
+      ><a name="740" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="744"
+      > </a
+      ><a name="745" href="cw.cohomology.CofiberGrid.html#130" class="Bound"
+      >j</a
+      ><a name="746"
+      > </a
+      ><a name="747" href="cw.cohomology.CofiberGrid.html#132" class="Bound"
+      >k</a
+      ><a name="748" class="Symbol"
+      >))</a
+      ><a name="750"
+      >
+    </a
+      ><a name="755" href="cw.cohomology.CofiberGrid.html#722" class="Function"
+      >D</a
+      ><a name="756"
+      > </a
+      ><a name="757" class="Symbol"
+      >=</a
+      ><a name="758"
+      > </a
+      ><a name="759" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="766"
+      > </a
+      ><a name="767" href="cw.cohomology.CofiberGrid.html#667" class="Function"
+      >D-span</a
+      ><a name="773"
+      >
+
+  </a
+      ><a name="777" class="Keyword"
+      >private</a
+      ><a name="784"
+      >
+    </a
+      ><a name="789" class="Keyword"
+      >module</a
+      ><a name="795"
+      > </a
+      ><a name="796" href="cw.cohomology.CofiberGrid.html#796" class="Module"
+      >VSplit</a
+      ><a name="802"
+      > </a
+      ><a name="803" class="Symbol"
+      >=</a
+      ><a name="804"
+      > </a
+      ><a name="805" href="homotopy.PushoutSplit.html#346" class="Module"
+      >PushoutRSplit</a
+      ><a name="818"
+      > </a
+      ><a name="819" class="Symbol"
+      >(&#955;</a
+      ><a name="821"
+      > </a
+      ><a name="822" href="cw.cohomology.CofiberGrid.html#822" class="Bound"
+      >_</a
+      ><a name="823"
+      > </a
+      ><a name="824" class="Symbol"
+      >&#8594;</a
+      ><a name="825"
+      > </a
+      ><a name="826" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="828" class="Symbol"
+      >)</a
+      ><a name="829"
+      > </a
+      ><a name="830" href="cw.cohomology.CofiberGrid.html#179" class="Bound"
+      >f</a
+      ><a name="831"
+      > </a
+      ><a name="832" href="cw.cohomology.CofiberGrid.html#191" class="Bound"
+      >g</a
+      ><a name="833"
+      >
+    </a
+      ><a name="838" class="Keyword"
+      >module</a
+      ><a name="844"
+      > </a
+      ><a name="845" href="cw.cohomology.CofiberGrid.html#845" class="Module"
+      >C/AToD</a
+      ><a name="851"
+      > </a
+      ><a name="852" class="Symbol"
+      >=</a
+      ><a name="853"
+      > </a
+      ><a name="854" class="Module"
+      >VSplit.</a
+      ><a name="861" href="homotopy.PushoutSplit.html#743" class="Module"
+      >Split</a
+      ><a name="866"
+      >
+  </a
+      ><a name="869" href="cw.cohomology.CofiberGrid.html#869" class="Function"
+      >C/A-to-D</a
+      ><a name="877"
+      > </a
+      ><a name="878" class="Symbol"
+      >:</a
+      ><a name="879"
+      > </a
+      ><a name="880" href="cw.cohomology.GridMap.html#191" class="Function"
+      >C/A</a
+      ><a name="883"
+      > </a
+      ><a name="884" class="Symbol"
+      >&#8594;</a
+      ><a name="885"
+      > </a
+      ><a name="886" href="cw.cohomology.CofiberGrid.html#722" class="Function"
+      >D</a
+      ><a name="887"
+      >
+  </a
+      ><a name="890" href="cw.cohomology.CofiberGrid.html#869" class="Function"
+      >C/A-to-D</a
+      ><a name="898"
+      > </a
+      ><a name="899" class="Symbol"
+      >=</a
+      ><a name="900"
+      > </a
+      ><a name="901" href="lib.types.Pushout.html#1397" class="Function"
+      >C/AToD.f</a
+      ><a name="909"
+      >
+
+  </a
+      ><a name="913" href="cw.cohomology.CofiberGrid.html#913" class="Function"
+      >B/A-to-D</a
+      ><a name="921"
+      > </a
+      ><a name="922" class="Symbol"
+      >:</a
+      ><a name="923"
+      > </a
+      ><a name="924" href="cw.cohomology.GridMap.html#173" class="Function"
+      >B/A</a
+      ><a name="927"
+      > </a
+      ><a name="928" class="Symbol"
+      >&#8594;</a
+      ><a name="929"
+      > </a
+      ><a name="930" href="cw.cohomology.CofiberGrid.html#722" class="Function"
+      >D</a
+      ><a name="931"
+      >
+  </a
+      ><a name="934" href="cw.cohomology.CofiberGrid.html#913" class="Function"
+      >B/A-to-D</a
+      ><a name="942"
+      > </a
+      ><a name="943" class="Symbol"
+      >=</a
+      ><a name="944"
+      > </a
+      ><a name="945" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="949"
+      >
+
+  </a
+      ><a name="953" class="Keyword"
+      >private</a
+      ><a name="960"
+      >
+    </a
+      ><a name="965" href="cw.cohomology.CofiberGrid.html#965" class="Function"
+      >E</a
+      ><a name="966"
+      > </a
+      ><a name="967" class="Symbol"
+      >:</a
+      ><a name="968"
+      > </a
+      ><a name="969" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="973"
+      > </a
+      ><a name="974" class="Symbol"
+      >(</a
+      ><a name="975" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="979"
+      > </a
+      ><a name="980" href="cw.cohomology.CofiberGrid.html#128" class="Bound"
+      >i</a
+      ><a name="981"
+      > </a
+      ><a name="982" class="Symbol"
+      >(</a
+      ><a name="983" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="987"
+      > </a
+      ><a name="988" href="cw.cohomology.CofiberGrid.html#130" class="Bound"
+      >j</a
+      ><a name="989"
+      > </a
+      ><a name="990" href="cw.cohomology.CofiberGrid.html#132" class="Bound"
+      >k</a
+      ><a name="991" class="Symbol"
+      >))</a
+      ><a name="993"
+      >
+    </a
+      ><a name="998" href="cw.cohomology.CofiberGrid.html#965" class="Function"
+      >E</a
+      ><a name="999"
+      > </a
+      ><a name="1000" class="Symbol"
+      >=</a
+      ><a name="1001"
+      > </a
+      ><a name="1002" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="1009"
+      > </a
+      ><a name="1010" href="cw.cohomology.CofiberGrid.html#913" class="Function"
+      >B/A-to-D</a
+      ><a name="1018"
+      >
+
+  </a
+      ><a name="1022" class="Keyword"
+      >private</a
+      ><a name="1029"
+      >
+    </a
+      ><a name="1034" class="Keyword"
+      >module</a
+      ><a name="1040"
+      > </a
+      ><a name="1041" href="cw.cohomology.CofiberGrid.html#1041" class="Module"
+      >HSplit</a
+      ><a name="1047"
+      > </a
+      ><a name="1048" class="Symbol"
+      >=</a
+      ><a name="1049"
+      > </a
+      ><a name="1050" href="homotopy.PushoutSplit.html#3510" class="Module"
+      >PushoutLSplit</a
+      ><a name="1063"
+      > </a
+      ><a name="1064" href="cw.cohomology.CofiberGrid.html#619" class="Function"
+      >B-to-B/A</a
+      ><a name="1072"
+      > </a
+      ><a name="1073" class="Symbol"
+      >(&#955;</a
+      ><a name="1075"
+      > </a
+      ><a name="1076" href="cw.cohomology.CofiberGrid.html#1076" class="Bound"
+      >_</a
+      ><a name="1077"
+      > </a
+      ><a name="1078" class="Symbol"
+      >&#8594;</a
+      ><a name="1079"
+      > </a
+      ><a name="1080" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1082" class="Symbol"
+      >)</a
+      ><a name="1083"
+      > </a
+      ><a name="1084" href="cw.cohomology.CofiberGrid.html#191" class="Bound"
+      >g</a
+      ><a name="1085"
+      >
+    </a
+      ><a name="1090" class="Keyword"
+      >module</a
+      ><a name="1096"
+      > </a
+      ><a name="1097" href="cw.cohomology.CofiberGrid.html#1097" class="Module"
+      >C/BToE</a
+      ><a name="1103"
+      > </a
+      ><a name="1104" class="Symbol"
+      >=</a
+      ><a name="1105"
+      > </a
+      ><a name="1106" class="Module"
+      >HSplit.</a
+      ><a name="1113" href="homotopy.PushoutSplit.html#3911" class="Module"
+      >Split</a
+      ><a name="1118"
+      >
+  </a
+      ><a name="1121" href="cw.cohomology.CofiberGrid.html#1121" class="Function"
+      >C/B-to-E</a
+      ><a name="1129"
+      > </a
+      ><a name="1130" class="Symbol"
+      >:</a
+      ><a name="1131"
+      > </a
+      ><a name="1132" href="cw.cohomology.GridMap.html#215" class="Function"
+      >C/B</a
+      ><a name="1135"
+      > </a
+      ><a name="1136" class="Symbol"
+      >&#8594;</a
+      ><a name="1137"
+      > </a
+      ><a name="1138" href="cw.cohomology.CofiberGrid.html#965" class="Function"
+      >E</a
+      ><a name="1139"
+      >
+  </a
+      ><a name="1142" href="cw.cohomology.CofiberGrid.html#1121" class="Function"
+      >C/B-to-E</a
+      ><a name="1150"
+      > </a
+      ><a name="1151" class="Symbol"
+      >=</a
+      ><a name="1152"
+      > </a
+      ><a name="1153" href="lib.types.Pushout.html#1397" class="Function"
+      >C/BToE.f</a
+      ><a name="1161"
+      >
+
+  </a
+      ><a name="1165" class="Keyword"
+      >private</a
+      ><a name="1172"
+      >
+    </a
+      ><a name="1177" class="Keyword"
+      >module</a
+      ><a name="1183"
+      > </a
+      ><a name="1184" href="cw.cohomology.CofiberGrid.html#1184" class="Module"
+      >DToC/B</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" class="Symbol"
+      >=</a
+      ><a name="1192"
+      > </a
+      ><a name="1193" class="Module"
+      >HSplit.</a
+      ><a name="1200" href="homotopy.PushoutSplit.html#4129" class="Module"
+      >Inner</a
+      ><a name="1205"
+      >
+    </a
+      ><a name="1210" href="cw.cohomology.CofiberGrid.html#1210" class="Function"
+      >D-to-C/B</a
+      ><a name="1218"
+      > </a
+      ><a name="1219" class="Symbol"
+      >:</a
+      ><a name="1220"
+      > </a
+      ><a name="1221" href="cw.cohomology.CofiberGrid.html#722" class="Function"
+      >D</a
+      ><a name="1222"
+      > </a
+      ><a name="1223" class="Symbol"
+      >&#8594;</a
+      ><a name="1224"
+      > </a
+      ><a name="1225" href="cw.cohomology.GridMap.html#215" class="Function"
+      >C/B</a
+      ><a name="1228"
+      >
+    </a
+      ><a name="1233" href="cw.cohomology.CofiberGrid.html#1210" class="Function"
+      >D-to-C/B</a
+      ><a name="1241"
+      > </a
+      ><a name="1242" class="Symbol"
+      >=</a
+      ><a name="1243"
+      > </a
+      ><a name="1244" href="lib.types.Pushout.html#1397" class="Function"
+      >DToC/B.f</a
+      ><a name="1252"
+      >
+
+    </a
+      ><a name="1258" href="cw.cohomology.CofiberGrid.html#1258" class="Function"
+      >D-to-E</a
+      ><a name="1264"
+      > </a
+      ><a name="1265" class="Symbol"
+      >:</a
+      ><a name="1266"
+      > </a
+      ><a name="1267" href="cw.cohomology.CofiberGrid.html#722" class="Function"
+      >D</a
+      ><a name="1268"
+      > </a
+      ><a name="1269" class="Symbol"
+      >&#8594;</a
+      ><a name="1270"
+      > </a
+      ><a name="1271" href="cw.cohomology.CofiberGrid.html#965" class="Function"
+      >E</a
+      ><a name="1272"
+      >
+    </a
+      ><a name="1277" href="cw.cohomology.CofiberGrid.html#1258" class="Function"
+      >D-to-E</a
+      ><a name="1283"
+      > </a
+      ><a name="1284" class="Symbol"
+      >=</a
+      ><a name="1285"
+      > </a
+      ><a name="1286" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="1291"
+      >
+
+    </a
+      ><a name="1297" href="cw.cohomology.CofiberGrid.html#1297" class="Function"
+      >C/A-to-D-to-C/B</a
+      ><a name="1312"
+      > </a
+      ><a name="1313" class="Symbol"
+      >:</a
+      ><a name="1314"
+      > </a
+      ><a name="1315" class="Symbol"
+      >&#8704;</a
+      ><a name="1316"
+      > </a
+      ><a name="1317" href="cw.cohomology.CofiberGrid.html#1317" class="Bound"
+      >c/a</a
+      ><a name="1320"
+      > </a
+      ><a name="1321" class="Symbol"
+      >&#8594;</a
+      ><a name="1322"
+      > </a
+      ><a name="1323" href="cw.cohomology.CofiberGrid.html#1210" class="Function"
+      >D-to-C/B</a
+      ><a name="1331"
+      > </a
+      ><a name="1332" class="Symbol"
+      >(</a
+      ><a name="1333" href="cw.cohomology.CofiberGrid.html#869" class="Function"
+      >C/A-to-D</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" href="cw.cohomology.CofiberGrid.html#1317" class="Bound"
+      >c/a</a
+      ><a name="1345" class="Symbol"
+      >)</a
+      ><a name="1346"
+      > </a
+      ><a name="1347" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1349"
+      > </a
+      ><a name="1350" href="cw.cohomology.GridMap.html#728" class="Function"
+      >C/A-to-C/B</a
+      ><a name="1360"
+      > </a
+      ><a name="1361" href="cw.cohomology.CofiberGrid.html#1317" class="Bound"
+      >c/a</a
+      ><a name="1364"
+      >
+    </a
+      ><a name="1369" href="cw.cohomology.CofiberGrid.html#1297" class="Function"
+      >C/A-to-D-to-C/B</a
+      ><a name="1384"
+      > </a
+      ><a name="1385" class="Symbol"
+      >=</a
+      ><a name="1386"
+      > </a
+      ><a name="1387" href="lib.types.Pushout.html#850" class="Function"
+      >Cofiber-elim</a
+      ><a name="1399"
+      >
+      </a
+      ><a name="1406" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1409"
+      >
+      </a
+      ><a name="1416" class="Symbol"
+      >(&#955;</a
+      ><a name="1418"
+      > </a
+      ><a name="1419" href="cw.cohomology.CofiberGrid.html#1419" class="Bound"
+      >c</a
+      ><a name="1420"
+      > </a
+      ><a name="1421" class="Symbol"
+      >&#8594;</a
+      ><a name="1422"
+      > </a
+      ><a name="1423" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1426" class="Symbol"
+      >)</a
+      ><a name="1427"
+      >
+      </a
+      ><a name="1434" class="Symbol"
+      >(&#955;</a
+      ><a name="1436"
+      > </a
+      ><a name="1437" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="1438"
+      > </a
+      ><a name="1439" class="Symbol"
+      >&#8594;</a
+      ><a name="1440"
+      > </a
+      ><a name="1441" href="lib.types.Paths.html#6483" class="Function"
+      >&#8595;-='-in'</a
+      ><a name="1449"
+      > </a
+      ><a name="1450" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1451"
+      > </a
+      ><a name="1452" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1453"
+      > </a
+      ><a name="1454" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1455"
+      >
+        </a
+      ><a name="1464" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1466"
+      > </a
+      ><a name="1467" class="Symbol"
+      >(</a
+      ><a name="1468" href="cw.cohomology.CofiberGrid.html#1210" class="Function"
+      >D-to-C/B</a
+      ><a name="1476"
+      > </a
+      ><a name="1477" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1478"
+      > </a
+      ><a name="1479" href="cw.cohomology.CofiberGrid.html#869" class="Function"
+      >C/A-to-D</a
+      ><a name="1487" class="Symbol"
+      >)</a
+      ><a name="1488"
+      > </a
+      ><a name="1489" class="Symbol"
+      >(</a
+      ><a name="1490" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="1496" class="Symbol"
+      >)</a
+      ><a name="1497"
+      >
+          </a
+      ><a name="1508" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1510"
+      > </a
+      ><a name="1511" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="1515"
+      > </a
+      ><a name="1516" href="cw.cohomology.CofiberGrid.html#1210" class="Function"
+      >D-to-C/B</a
+      ><a name="1524"
+      > </a
+      ><a name="1525" href="cw.cohomology.CofiberGrid.html#869" class="Function"
+      >C/A-to-D</a
+      ><a name="1533"
+      > </a
+      ><a name="1534" class="Symbol"
+      >(</a
+      ><a name="1535" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1539"
+      > </a
+      ><a name="1540" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="1541" class="Symbol"
+      >)</a
+      ><a name="1542"
+      > </a
+      ><a name="1543" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1544"
+      >
+        </a
+      ><a name="1553" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1555"
+      > </a
+      ><a name="1556" href="cw.cohomology.CofiberGrid.html#1210" class="Function"
+      >D-to-C/B</a
+      ><a name="1564"
+      > </a
+      ><a name="1565" class="Symbol"
+      >(</a
+      ><a name="1566" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1568"
+      > </a
+      ><a name="1569" href="cw.cohomology.CofiberGrid.html#869" class="Function"
+      >C/A-to-D</a
+      ><a name="1577"
+      > </a
+      ><a name="1578" class="Symbol"
+      >(</a
+      ><a name="1579" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1583"
+      > </a
+      ><a name="1584" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="1585" class="Symbol"
+      >))</a
+      ><a name="1587"
+      >
+          </a
+      ><a name="1598" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1600"
+      > </a
+      ><a name="1601" href="lib.types.Pushout.html#1428" class="Function"
+      >C/AToD.glue-&#946;</a
+      ><a name="1614"
+      > </a
+      ><a name="1615" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="1616"
+      > </a
+      ><a name="1617" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1624"
+      > </a
+      ><a name="1625" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1627"
+      > </a
+      ><a name="1628" href="cw.cohomology.CofiberGrid.html#1210" class="Function"
+      >D-to-C/B</a
+      ><a name="1636"
+      > </a
+      ><a name="1637" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1638"
+      >
+        </a
+      ><a name="1647" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1649"
+      > </a
+      ><a name="1650" href="cw.cohomology.CofiberGrid.html#1210" class="Function"
+      >D-to-C/B</a
+      ><a name="1658"
+      > </a
+      ><a name="1659" class="Symbol"
+      >(</a
+      ><a name="1660" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1662"
+      > </a
+      ><a name="1663" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="1667"
+      > </a
+      ><a name="1668" class="Symbol"
+      >(</a
+      ><a name="1669" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1673"
+      > </a
+      ><a name="1674" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="1675" class="Symbol"
+      >)</a
+      ><a name="1676"
+      > </a
+      ><a name="1677" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1678"
+      > </a
+      ><a name="1679" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1683"
+      > </a
+      ><a name="1684" class="Symbol"
+      >(</a
+      ><a name="1685" href="cw.cohomology.CofiberGrid.html#179" class="Bound"
+      >f</a
+      ><a name="1686"
+      > </a
+      ><a name="1687" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="1688" class="Symbol"
+      >))</a
+      ><a name="1690"
+      >
+          </a
+      ><a name="1701" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1703"
+      > </a
+      ><a name="1704" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="1708"
+      > </a
+      ><a name="1709" href="cw.cohomology.CofiberGrid.html#1210" class="Function"
+      >D-to-C/B</a
+      ><a name="1717"
+      > </a
+      ><a name="1718" class="Symbol"
+      >(</a
+      ><a name="1719" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1721"
+      > </a
+      ><a name="1722" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="1726"
+      > </a
+      ><a name="1727" class="Symbol"
+      >(</a
+      ><a name="1728" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1732"
+      > </a
+      ><a name="1733" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="1734" class="Symbol"
+      >))</a
+      ><a name="1736"
+      > </a
+      ><a name="1737" class="Symbol"
+      >(</a
+      ><a name="1738" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1742"
+      > </a
+      ><a name="1743" class="Symbol"
+      >(</a
+      ><a name="1744" href="cw.cohomology.CofiberGrid.html#179" class="Bound"
+      >f</a
+      ><a name="1745"
+      > </a
+      ><a name="1746" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="1747" class="Symbol"
+      >))</a
+      ><a name="1749"
+      > </a
+      ><a name="1750" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1751"
+      >
+        </a
+      ><a name="1760" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1762"
+      > </a
+      ><a name="1763" href="cw.cohomology.CofiberGrid.html#1210" class="Function"
+      >D-to-C/B</a
+      ><a name="1771"
+      > </a
+      ><a name="1772" class="Symbol"
+      >(</a
+      ><a name="1773" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1775"
+      > </a
+      ><a name="1776" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="1780"
+      > </a
+      ><a name="1781" class="Symbol"
+      >(</a
+      ><a name="1782" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1786"
+      > </a
+      ><a name="1787" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="1788" class="Symbol"
+      >))</a
+      ><a name="1790"
+      > </a
+      ><a name="1791" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1792"
+      > </a
+      ><a name="1793" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1795"
+      > </a
+      ><a name="1796" href="cw.cohomology.CofiberGrid.html#1210" class="Function"
+      >D-to-C/B</a
+      ><a name="1804"
+      > </a
+      ><a name="1805" class="Symbol"
+      >(</a
+      ><a name="1806" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1810"
+      > </a
+      ><a name="1811" class="Symbol"
+      >(</a
+      ><a name="1812" href="cw.cohomology.CofiberGrid.html#179" class="Bound"
+      >f</a
+      ><a name="1813"
+      > </a
+      ><a name="1814" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="1815" class="Symbol"
+      >))</a
+      ><a name="1817"
+      >
+          </a
+      ><a name="1828" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1830"
+      > </a
+      ><a name="1831" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="1834"
+      > </a
+      ><a name="1835" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >_&#8729;_</a
+      ><a name="1838"
+      > </a
+      ><a name="1839" class="Symbol"
+      >(</a
+      ><a name="1840" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="1844"
+      > </a
+      ><a name="1845" href="cw.cohomology.CofiberGrid.html#1210" class="Function"
+      >D-to-C/B</a
+      ><a name="1853"
+      > </a
+      ><a name="1854" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="1858"
+      > </a
+      ><a name="1859" class="Symbol"
+      >(</a
+      ><a name="1860" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1864"
+      > </a
+      ><a name="1865" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="1866" class="Symbol"
+      >))</a
+      ><a name="1868"
+      > </a
+      ><a name="1869" class="Symbol"
+      >(</a
+      ><a name="1870" href="lib.types.Pushout.html#1428" class="Function"
+      >DToC/B.glue-&#946;</a
+      ><a name="1883"
+      > </a
+      ><a name="1884" class="Symbol"
+      >(</a
+      ><a name="1885" href="cw.cohomology.CofiberGrid.html#179" class="Bound"
+      >f</a
+      ><a name="1886"
+      > </a
+      ><a name="1887" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="1888" class="Symbol"
+      >))</a
+      ><a name="1890"
+      > </a
+      ><a name="1891" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="1892"
+      >
+        </a
+      ><a name="1901" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1903"
+      > </a
+      ><a name="1904" class="Symbol"
+      >(&#955;</a
+      ><a name="1906"
+      > </a
+      ><a name="1907" href="cw.cohomology.CofiberGrid.html#1907" class="Bound"
+      >_</a
+      ><a name="1908"
+      > </a
+      ><a name="1909" class="Symbol"
+      >&#8594;</a
+      ><a name="1910"
+      > </a
+      ><a name="1911" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="1917" class="Symbol"
+      >)</a
+      ><a name="1918"
+      > </a
+      ><a name="1919" class="Symbol"
+      >(</a
+      ><a name="1920" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1924"
+      > </a
+      ><a name="1925" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="1926" class="Symbol"
+      >)</a
+      ><a name="1927"
+      > </a
+      ><a name="1928" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1929"
+      > </a
+      ><a name="1930" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1934"
+      > </a
+      ><a name="1935" class="Symbol"
+      >(</a
+      ><a name="1936" href="cw.cohomology.CofiberGrid.html#179" class="Bound"
+      >f</a
+      ><a name="1937"
+      > </a
+      ><a name="1938" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="1939" class="Symbol"
+      >)</a
+      ><a name="1940"
+      >
+          </a
+      ><a name="1951" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="1953"
+      > </a
+      ><a name="1954" href="lib.PathFunctor.html#2086" class="Function"
+      >ap-cst</a
+      ><a name="1960"
+      > </a
+      ><a name="1961" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="1967"
+      > </a
+      ><a name="1968" class="Symbol"
+      >(</a
+      ><a name="1969" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1973"
+      > </a
+      ><a name="1974" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="1975" class="Symbol"
+      >)</a
+      ><a name="1976"
+      > </a
+      ><a name="1977" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="1984"
+      > </a
+      ><a name="1985" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >_&#8729;</a
+      ><a name="1987"
+      > </a
+      ><a name="1988" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1992"
+      > </a
+      ><a name="1993" class="Symbol"
+      >(</a
+      ><a name="1994" href="cw.cohomology.CofiberGrid.html#179" class="Bound"
+      >f</a
+      ><a name="1995"
+      > </a
+      ><a name="1996" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="1997" class="Symbol"
+      >)</a
+      ><a name="1998"
+      > </a
+      ><a name="1999" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2000"
+      >
+        </a
+      ><a name="2009" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" class="Symbol"
+      >(</a
+      ><a name="2015" href="cw.cohomology.CofiberGrid.html#179" class="Bound"
+      >f</a
+      ><a name="2016"
+      > </a
+      ><a name="2017" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="2018" class="Symbol"
+      >)</a
+      ><a name="2019"
+      >
+          </a
+      ><a name="2030" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="2032"
+      > </a
+      ><a name="2033" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2034"
+      > </a
+      ><a name="2035" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2036"
+      > </a
+      ><a name="2037" href="lib.types.Pushout.html#1428" class="Function"
+      >C/AToC/B.glue-&#946;</a
+      ><a name="2052"
+      > </a
+      ><a name="2053" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="2054"
+      > </a
+      ><a name="2055" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="2056"
+      >
+        </a
+      ><a name="2065" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2067"
+      > </a
+      ><a name="2068" href="cw.cohomology.GridMap.html#728" class="Function"
+      >C/A-to-C/B</a
+      ><a name="2078"
+      > </a
+      ><a name="2079" class="Symbol"
+      >(</a
+      ><a name="2080" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2084"
+      > </a
+      ><a name="2085" href="cw.cohomology.CofiberGrid.html#1437" class="Bound"
+      >a</a
+      ><a name="2086" class="Symbol"
+      >)</a
+      ><a name="2087"
+      >
+          </a
+      ><a name="2098" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="2100" class="Symbol"
+      >)</a
+      ><a name="2101"
+      >
+
+    </a
+      ><a name="2107" href="cw.cohomology.CofiberGrid.html#2107" class="Function"
+      >D-to-C/B-to-E</a
+      ><a name="2120"
+      > </a
+      ><a name="2121" class="Symbol"
+      >:</a
+      ><a name="2122"
+      > </a
+      ><a name="2123" class="Symbol"
+      >&#8704;</a
+      ><a name="2124"
+      > </a
+      ><a name="2125" href="cw.cohomology.CofiberGrid.html#2125" class="Bound"
+      >d</a
+      ><a name="2126"
+      > </a
+      ><a name="2127" class="Symbol"
+      >&#8594;</a
+      ><a name="2128"
+      > </a
+      ><a name="2129" href="cw.cohomology.CofiberGrid.html#1121" class="Function"
+      >C/B-to-E</a
+      ><a name="2137"
+      > </a
+      ><a name="2138" class="Symbol"
+      >(</a
+      ><a name="2139" href="cw.cohomology.CofiberGrid.html#1210" class="Function"
+      >D-to-C/B</a
+      ><a name="2147"
+      > </a
+      ><a name="2148" href="cw.cohomology.CofiberGrid.html#2125" class="Bound"
+      >d</a
+      ><a name="2149" class="Symbol"
+      >)</a
+      ><a name="2150"
+      > </a
+      ><a name="2151" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2153"
+      > </a
+      ><a name="2154" href="cw.cohomology.CofiberGrid.html#1258" class="Function"
+      >D-to-E</a
+      ><a name="2160"
+      > </a
+      ><a name="2161" href="cw.cohomology.CofiberGrid.html#2125" class="Bound"
+      >d</a
+      ><a name="2162"
+      >
+    </a
+      ><a name="2167" href="cw.cohomology.CofiberGrid.html#2107" class="Function"
+      >D-to-C/B-to-E</a
+      ><a name="2180"
+      > </a
+      ><a name="2181" class="Symbol"
+      >=</a
+      ><a name="2182"
+      > </a
+      ><a name="2183" href="homotopy.PushoutSplit.html#4643" class="Function"
+      >HSplit.split-inner</a
+      ><a name="2201"
+      >
+
+  </a
+      ><a name="2205" class="Comment"
+      >{- The public interface -}</a
+      ><a name="2231"
+      >
+
+  </a
+      ><a name="2235" href="cw.cohomology.CofiberGrid.html#2235" class="Function"
+      >C/A-to-C/B-comm-square</a
+      ><a name="2257"
+      > </a
+      ><a name="2258" class="Symbol"
+      >:</a
+      ><a name="2259"
+      > </a
+      ><a name="2260" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="2270"
+      > </a
+      ><a name="2271" href="cw.cohomology.GridMap.html#728" class="Function"
+      >C/A-to-C/B</a
+      ><a name="2281"
+      > </a
+      ><a name="2282" href="cw.cohomology.CofiberGrid.html#1258" class="Function"
+      >D-to-E</a
+      ><a name="2288"
+      > </a
+      ><a name="2289" href="cw.cohomology.CofiberGrid.html#869" class="Function"
+      >C/A-to-D</a
+      ><a name="2297"
+      > </a
+      ><a name="2298" href="cw.cohomology.CofiberGrid.html#1121" class="Function"
+      >C/B-to-E</a
+      ><a name="2306"
+      >
+  </a
+      ><a name="2309" href="cw.cohomology.CofiberGrid.html#2235" class="Function"
+      >C/A-to-C/B-comm-square</a
+      ><a name="2331"
+      > </a
+      ><a name="2332" class="Symbol"
+      >=</a
+      ><a name="2333"
+      > </a
+      ><a name="2334" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="2342"
+      > </a
+      ><a name="2343" class="Symbol"
+      >&#955;</a
+      ><a name="2344"
+      > </a
+      ><a name="2345" href="cw.cohomology.CofiberGrid.html#2345" class="Bound"
+      >c/a</a
+      ><a name="2348"
+      > </a
+      ><a name="2349" class="Symbol"
+      >&#8594;</a
+      ><a name="2350"
+      > </a
+      ><a name="2351" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2353"
+      > </a
+      ><a name="2354" href="cw.cohomology.CofiberGrid.html#1121" class="Function"
+      >C/B-to-E</a
+      ><a name="2362"
+      > </a
+      ><a name="2363" class="Symbol"
+      >(</a
+      ><a name="2364" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2365"
+      > </a
+      ><a name="2366" class="Symbol"
+      >(</a
+      ><a name="2367" href="cw.cohomology.CofiberGrid.html#1297" class="Function"
+      >C/A-to-D-to-C/B</a
+      ><a name="2382"
+      > </a
+      ><a name="2383" href="cw.cohomology.CofiberGrid.html#2345" class="Bound"
+      >c/a</a
+      ><a name="2386" class="Symbol"
+      >))</a
+      ><a name="2388"
+      >
+                                     </a
+      ><a name="2426" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2427"
+      > </a
+      ><a name="2428" href="cw.cohomology.CofiberGrid.html#2107" class="Function"
+      >D-to-C/B-to-E</a
+      ><a name="2441"
+      > </a
+      ><a name="2442" class="Symbol"
+      >(</a
+      ><a name="2443" href="cw.cohomology.CofiberGrid.html#869" class="Function"
+      >C/A-to-D</a
+      ><a name="2451"
+      > </a
+      ><a name="2452" href="cw.cohomology.CofiberGrid.html#2345" class="Bound"
+      >c/a</a
+      ><a name="2455" class="Symbol"
+      >)</a
+      ><a name="2456"
+      >
+
+  </a
+      ><a name="2460" href="cw.cohomology.CofiberGrid.html#2460" class="Function"
+      >B/A-to-C/A-comm-square</a
+      ><a name="2482"
+      > </a
+      ><a name="2483" class="Symbol"
+      >:</a
+      ><a name="2484"
+      > </a
+      ><a name="2485" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="2495"
+      > </a
+      ><a name="2496" href="cw.cohomology.GridMap.html#455" class="Function"
+      >B/A-to-C/A</a
+      ><a name="2506"
+      > </a
+      ><a name="2507" href="cw.cohomology.CofiberGrid.html#913" class="Function"
+      >B/A-to-D</a
+      ><a name="2515"
+      > </a
+      ><a name="2516" class="Symbol"
+      >(</a
+      ><a name="2517" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="2520"
+      > </a
+      ><a name="2521" href="cw.cohomology.GridMap.html#173" class="Function"
+      >B/A</a
+      ><a name="2524" class="Symbol"
+      >)</a
+      ><a name="2525"
+      > </a
+      ><a name="2526" href="cw.cohomology.CofiberGrid.html#869" class="Function"
+      >C/A-to-D</a
+      ><a name="2534"
+      >
+  </a
+      ><a name="2537" href="cw.cohomology.CofiberGrid.html#2460" class="Function"
+      >B/A-to-C/A-comm-square</a
+      ><a name="2559"
+      > </a
+      ><a name="2560" class="Symbol"
+      >=</a
+      ><a name="2561"
+      > </a
+      ><a name="2562" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="2570"
+      > </a
+      ><a name="2571" href="homotopy.PushoutSplit.html#1477" class="Function"
+      >VSplit.split-inner</a
+      ><a name="2589"
+      >
+
+  </a
+      ><a name="2593" href="cw.cohomology.CofiberGrid.html#2593" class="Function"
+      >C/A-to-D-is-equiv</a
+      ><a name="2610"
+      > </a
+      ><a name="2611" class="Symbol"
+      >:</a
+      ><a name="2612"
+      > </a
+      ><a name="2613" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="2621"
+      > </a
+      ><a name="2622" href="cw.cohomology.CofiberGrid.html#869" class="Function"
+      >C/A-to-D</a
+      ><a name="2630"
+      >
+  </a
+      ><a name="2633" href="cw.cohomology.CofiberGrid.html#2593" class="Function"
+      >C/A-to-D-is-equiv</a
+      ><a name="2650"
+      > </a
+      ><a name="2651" class="Symbol"
+      >=</a
+      ><a name="2652"
+      > </a
+      ><a name="2653" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2656"
+      > </a
+      ><a name="2657" href="homotopy.PushoutSplit.html#2646" class="Function"
+      >VSplit.split-equiv</a
+      ><a name="2675"
+      >
+
+  </a
+      ><a name="2679" href="cw.cohomology.CofiberGrid.html#2679" class="Function"
+      >C/B-to-E-is-equiv</a
+      ><a name="2696"
+      > </a
+      ><a name="2697" class="Symbol"
+      >:</a
+      ><a name="2698"
+      > </a
+      ><a name="2699" href="lib.Equivalence.html#1603" class="Record"
+      >is-equiv</a
+      ><a name="2707"
+      > </a
+      ><a name="2708" href="cw.cohomology.CofiberGrid.html#1121" class="Function"
+      >C/B-to-E</a
+      ><a name="2716"
+      >
+  </a
+      ><a name="2719" href="cw.cohomology.CofiberGrid.html#2679" class="Function"
+      >C/B-to-E-is-equiv</a
+      ><a name="2736"
+      > </a
+      ><a name="2737" class="Symbol"
+      >=</a
+      ><a name="2738"
+      > </a
+      ><a name="2739" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2742"
+      > </a
+      ><a name="2743" href="homotopy.PushoutSplit.html#5997" class="Function"
+      >HSplit.split-equiv</a
+      ><a name="2761"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

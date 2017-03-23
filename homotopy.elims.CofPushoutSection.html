@@ -1,0 +1,1544 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.elims.CofPushoutSection</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="homotopy.elims.Lemmas.html#1" class="Module"
+      >homotopy.elims.Lemmas</a
+      ><a name="92"
+      >
+
+</a
+      ><a name="94" class="Comment"
+      >{- Given a span [A &#8592;f&#8211; C &#8211;g&#8594; B] and a map [h : A &#8852;_C B &#8594; D] where
+ - [g] has a left inverse:
+
+ - To define a fundction  [&#928; (Cof h) P], one can give only the [cfbase],
+ - [cfcod], [cfglue&#8728;left], and [cfglue&#8728;right] cases, and construct a map
+ - which has the right behavior on [cfbase], [cfcod], [cfglue&#8728;left],
+ - with [cfglue&#8728;right] edited to achieve the highest coherence.
+
+ - This is useful for for proving equivalences where (at least) one side
+ - involves one of these iterated pushouts. It could be generalized
+ - further by loosening from cofiber to some more general class of pushouts,
+ - but this is sufficient for the current applications. -}</a
+      ><a name="744"
+      >
+
+</a
+      ><a name="746" class="Keyword"
+      >module</a
+      ><a name="752"
+      > </a
+      ><a name="753" href="homotopy.elims.CofPushoutSection.html#1" class="Module"
+      >homotopy.elims.CofPushoutSection</a
+      ><a name="785"
+      > </a
+      ><a name="786" class="Keyword"
+      >where</a
+      ><a name="791"
+      >
+
+</a
+      ><a name="793" class="Keyword"
+      >module</a
+      ><a name="799"
+      > </a
+      ><a name="800" href="homotopy.elims.CofPushoutSection.html#800" class="Module"
+      >_</a
+      ><a name="801"
+      > </a
+      ><a name="802" class="Symbol"
+      >{</a
+      ><a name="803" href="homotopy.elims.CofPushoutSection.html#803" class="Bound"
+      >i</a
+      ><a name="804"
+      > </a
+      ><a name="805" href="homotopy.elims.CofPushoutSection.html#805" class="Bound"
+      >j</a
+      ><a name="806"
+      > </a
+      ><a name="807" href="homotopy.elims.CofPushoutSection.html#807" class="Bound"
+      >k</a
+      ><a name="808"
+      > </a
+      ><a name="809" href="homotopy.elims.CofPushoutSection.html#809" class="Bound"
+      >l</a
+      ><a name="810" class="Symbol"
+      >}</a
+      ><a name="811"
+      > </a
+      ><a name="812" class="Symbol"
+      >{</a
+      ><a name="813" href="homotopy.elims.CofPushoutSection.html#813" class="Bound"
+      >s</a
+      ><a name="814"
+      > </a
+      ><a name="815" class="Symbol"
+      >:</a
+      ><a name="816"
+      > </a
+      ><a name="817" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="821"
+      > </a
+      ><a name="822" class="Symbol"
+      >{</a
+      ><a name="823" href="homotopy.elims.CofPushoutSection.html#803" class="Bound"
+      >i</a
+      ><a name="824" class="Symbol"
+      >}</a
+      ><a name="825"
+      > </a
+      ><a name="826" class="Symbol"
+      >{</a
+      ><a name="827" href="homotopy.elims.CofPushoutSection.html#805" class="Bound"
+      >j</a
+      ><a name="828" class="Symbol"
+      >}</a
+      ><a name="829"
+      > </a
+      ><a name="830" class="Symbol"
+      >{</a
+      ><a name="831" href="homotopy.elims.CofPushoutSection.html#807" class="Bound"
+      >k</a
+      ><a name="832" class="Symbol"
+      >}}</a
+      ><a name="834"
+      > </a
+      ><a name="835" class="Symbol"
+      >{</a
+      ><a name="836" href="homotopy.elims.CofPushoutSection.html#836" class="Bound"
+      >D</a
+      ><a name="837"
+      > </a
+      ><a name="838" class="Symbol"
+      >:</a
+      ><a name="839"
+      > </a
+      ><a name="840" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="844"
+      > </a
+      ><a name="845" href="homotopy.elims.CofPushoutSection.html#809" class="Bound"
+      >l</a
+      ><a name="846" class="Symbol"
+      >}</a
+      ><a name="847"
+      >
+  </a
+      ><a name="850" class="Symbol"
+      >{</a
+      ><a name="851" href="homotopy.elims.CofPushoutSection.html#851" class="Bound"
+      >h</a
+      ><a name="852"
+      > </a
+      ><a name="853" class="Symbol"
+      >:</a
+      ><a name="854"
+      > </a
+      ><a name="855" href="lib.types.Pushout.html#328" class="Postulate"
+      >Pushout</a
+      ><a name="862"
+      > </a
+      ><a name="863" href="homotopy.elims.CofPushoutSection.html#813" class="Bound"
+      >s</a
+      ><a name="864"
+      > </a
+      ><a name="865" class="Symbol"
+      >&#8594;</a
+      ><a name="866"
+      > </a
+      ><a name="867" href="homotopy.elims.CofPushoutSection.html#836" class="Bound"
+      >D</a
+      ><a name="868" class="Symbol"
+      >}</a
+      ><a name="869"
+      > </a
+      ><a name="870" class="Keyword"
+      >where</a
+      ><a name="875"
+      >
+
+  </a
+      ><a name="879" class="Keyword"
+      >open</a
+      ><a name="883"
+      > </a
+      ><a name="884" href="lib.types.Span.html#193" class="Module"
+      >Span</a
+      ><a name="888"
+      > </a
+      ><a name="889" href="homotopy.elims.CofPushoutSection.html#813" class="Bound"
+      >s</a
+      ><a name="890"
+      >
+
+  </a
+      ><a name="894" class="Keyword"
+      >module</a
+      ><a name="900"
+      > </a
+      ><a name="901" href="homotopy.elims.CofPushoutSection.html#901" class="Module"
+      >CofPushoutSection</a
+      ><a name="918"
+      > </a
+      ><a name="919" class="Symbol"
+      >(</a
+      ><a name="920" href="homotopy.elims.CofPushoutSection.html#920" class="Bound"
+      >r</a
+      ><a name="921"
+      > </a
+      ><a name="922" class="Symbol"
+      >:</a
+      ><a name="923"
+      > </a
+      ><a name="924" href="lib.types.Span.html#302" class="Function"
+      >B</a
+      ><a name="925"
+      > </a
+      ><a name="926" class="Symbol"
+      >&#8594;</a
+      ><a name="927"
+      > </a
+      ><a name="928" href="lib.types.Span.html#317" class="Function"
+      >C</a
+      ><a name="929" class="Symbol"
+      >)</a
+      ><a name="930"
+      > </a
+      ><a name="931" class="Symbol"
+      >(</a
+      ><a name="932" href="homotopy.elims.CofPushoutSection.html#932" class="Bound"
+      >inv</a
+      ><a name="935"
+      > </a
+      ><a name="936" class="Symbol"
+      >:</a
+      ><a name="937"
+      > </a
+      ><a name="938" class="Symbol"
+      >&#8704;</a
+      ><a name="939"
+      > </a
+      ><a name="940" href="homotopy.elims.CofPushoutSection.html#940" class="Bound"
+      >c</a
+      ><a name="941"
+      > </a
+      ><a name="942" class="Symbol"
+      >&#8594;</a
+      ><a name="943"
+      > </a
+      ><a name="944" href="homotopy.elims.CofPushoutSection.html#920" class="Bound"
+      >r</a
+      ><a name="945"
+      > </a
+      ><a name="946" class="Symbol"
+      >(</a
+      ><a name="947" href="lib.types.Span.html#346" class="Function"
+      >g</a
+      ><a name="948"
+      > </a
+      ><a name="949" href="homotopy.elims.CofPushoutSection.html#940" class="Bound"
+      >c</a
+      ><a name="950" class="Symbol"
+      >)</a
+      ><a name="951"
+      > </a
+      ><a name="952" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="954"
+      > </a
+      ><a name="955" href="homotopy.elims.CofPushoutSection.html#940" class="Bound"
+      >c</a
+      ><a name="956" class="Symbol"
+      >)</a
+      ><a name="957"
+      > </a
+      ><a name="958" class="Keyword"
+      >where</a
+      ><a name="963"
+      >
+
+    </a
+      ><a name="969" href="homotopy.elims.CofPushoutSection.html#969" class="Function"
+      >elim</a
+      ><a name="973"
+      > </a
+      ><a name="974" class="Symbol"
+      >:</a
+      ><a name="975"
+      > </a
+      ><a name="976" class="Symbol"
+      >&#8704;</a
+      ><a name="977"
+      > </a
+      ><a name="978" class="Symbol"
+      >{</a
+      ><a name="979" href="homotopy.elims.CofPushoutSection.html#979" class="Bound"
+      >m</a
+      ><a name="980" class="Symbol"
+      >}</a
+      ><a name="981"
+      > </a
+      ><a name="982" class="Symbol"
+      >{</a
+      ><a name="983" href="homotopy.elims.CofPushoutSection.html#983" class="Bound"
+      >P</a
+      ><a name="984"
+      > </a
+      ><a name="985" class="Symbol"
+      >:</a
+      ><a name="986"
+      > </a
+      ><a name="987" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="994"
+      > </a
+      ><a name="995" href="homotopy.elims.CofPushoutSection.html#851" class="Bound"
+      >h</a
+      ><a name="996"
+      > </a
+      ><a name="997" class="Symbol"
+      >&#8594;</a
+      ><a name="998"
+      > </a
+      ><a name="999" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1003"
+      > </a
+      ><a name="1004" href="homotopy.elims.CofPushoutSection.html#979" class="Bound"
+      >m</a
+      ><a name="1005" class="Symbol"
+      >}</a
+      ><a name="1006"
+      >
+      </a
+      ><a name="1013" class="Symbol"
+      >(</a
+      ><a name="1014" href="homotopy.elims.CofPushoutSection.html#1014" class="Bound"
+      >cfbase*</a
+      ><a name="1021"
+      > </a
+      ><a name="1022" class="Symbol"
+      >:</a
+      ><a name="1023"
+      > </a
+      ><a name="1024" href="homotopy.elims.CofPushoutSection.html#983" class="Bound"
+      >P</a
+      ><a name="1025"
+      > </a
+      ><a name="1026" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="1032" class="Symbol"
+      >)</a
+      ><a name="1033"
+      > </a
+      ><a name="1034" class="Symbol"
+      >(</a
+      ><a name="1035" href="homotopy.elims.CofPushoutSection.html#1035" class="Bound"
+      >cfcod*</a
+      ><a name="1041"
+      > </a
+      ><a name="1042" class="Symbol"
+      >:</a
+      ><a name="1043"
+      > </a
+      ><a name="1044" class="Symbol"
+      >(</a
+      ><a name="1045" href="homotopy.elims.CofPushoutSection.html#1045" class="Bound"
+      >d</a
+      ><a name="1046"
+      > </a
+      ><a name="1047" class="Symbol"
+      >:</a
+      ><a name="1048"
+      > </a
+      ><a name="1049" href="homotopy.elims.CofPushoutSection.html#836" class="Bound"
+      >D</a
+      ><a name="1050" class="Symbol"
+      >)</a
+      ><a name="1051"
+      > </a
+      ><a name="1052" class="Symbol"
+      >&#8594;</a
+      ><a name="1053"
+      > </a
+      ><a name="1054" href="homotopy.elims.CofPushoutSection.html#983" class="Bound"
+      >P</a
+      ><a name="1055"
+      > </a
+      ><a name="1056" class="Symbol"
+      >(</a
+      ><a name="1057" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="1062"
+      > </a
+      ><a name="1063" href="homotopy.elims.CofPushoutSection.html#1045" class="Bound"
+      >d</a
+      ><a name="1064" class="Symbol"
+      >))</a
+      ><a name="1066"
+      >
+      </a
+      ><a name="1073" class="Symbol"
+      >(</a
+      ><a name="1074" href="homotopy.elims.CofPushoutSection.html#1074" class="Bound"
+      >cfglue-left*</a
+      ><a name="1086"
+      > </a
+      ><a name="1087" class="Symbol"
+      >:</a
+      ><a name="1088"
+      > </a
+      ><a name="1089" class="Symbol"
+      >(</a
+      ><a name="1090" href="homotopy.elims.CofPushoutSection.html#1090" class="Bound"
+      >a</a
+      ><a name="1091"
+      > </a
+      ><a name="1092" class="Symbol"
+      >:</a
+      ><a name="1093"
+      > </a
+      ><a name="1094" href="lib.types.Span.html#287" class="Function"
+      >A</a
+      ><a name="1095" class="Symbol"
+      >)</a
+      ><a name="1096"
+      > </a
+      ><a name="1097" class="Symbol"
+      >&#8594;</a
+      ><a name="1098"
+      >
+        </a
+      ><a name="1107" href="homotopy.elims.CofPushoutSection.html#1014" class="Bound"
+      >cfbase*</a
+      ><a name="1114"
+      > </a
+      ><a name="1115" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="1117"
+      > </a
+      ><a name="1118" href="homotopy.elims.CofPushoutSection.html#1035" class="Bound"
+      >cfcod*</a
+      ><a name="1124"
+      > </a
+      ><a name="1125" class="Symbol"
+      >(</a
+      ><a name="1126" href="homotopy.elims.CofPushoutSection.html#851" class="Bound"
+      >h</a
+      ><a name="1127"
+      > </a
+      ><a name="1128" class="Symbol"
+      >(</a
+      ><a name="1129" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="1133"
+      > </a
+      ><a name="1134" href="homotopy.elims.CofPushoutSection.html#1090" class="Bound"
+      >a</a
+      ><a name="1135" class="Symbol"
+      >))</a
+      ><a name="1137"
+      > </a
+      ><a name="1138" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="1139"
+      > </a
+      ><a name="1140" href="homotopy.elims.CofPushoutSection.html#983" class="Bound"
+      >P</a
+      ><a name="1141"
+      > </a
+      ><a name="1142" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="1143"
+      > </a
+      ><a name="1144" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="1150"
+      > </a
+      ><a name="1151" class="Symbol"
+      >(</a
+      ><a name="1152" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="1156"
+      > </a
+      ><a name="1157" href="homotopy.elims.CofPushoutSection.html#1090" class="Bound"
+      >a</a
+      ><a name="1158" class="Symbol"
+      >)</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="1161" class="Symbol"
+      >)</a
+      ><a name="1162"
+      >
+      </a
+      ><a name="1169" class="Symbol"
+      >(</a
+      ><a name="1170" href="homotopy.elims.CofPushoutSection.html#1170" class="Bound"
+      >cfglue-right*</a
+      ><a name="1183"
+      > </a
+      ><a name="1184" class="Symbol"
+      >:</a
+      ><a name="1185"
+      > </a
+      ><a name="1186" class="Symbol"
+      >(</a
+      ><a name="1187" href="homotopy.elims.CofPushoutSection.html#1187" class="Bound"
+      >b</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" class="Symbol"
+      >:</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" href="lib.types.Span.html#302" class="Function"
+      >B</a
+      ><a name="1192" class="Symbol"
+      >)</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" class="Symbol"
+      >&#8594;</a
+      ><a name="1195"
+      >
+        </a
+      ><a name="1204" href="homotopy.elims.CofPushoutSection.html#1014" class="Bound"
+      >cfbase*</a
+      ><a name="1211"
+      > </a
+      ><a name="1212" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="1214"
+      > </a
+      ><a name="1215" href="homotopy.elims.CofPushoutSection.html#1035" class="Bound"
+      >cfcod*</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" class="Symbol"
+      >(</a
+      ><a name="1223" href="homotopy.elims.CofPushoutSection.html#851" class="Bound"
+      >h</a
+      ><a name="1224"
+      > </a
+      ><a name="1225" class="Symbol"
+      >(</a
+      ><a name="1226" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" href="homotopy.elims.CofPushoutSection.html#1187" class="Bound"
+      >b</a
+      ><a name="1233" class="Symbol"
+      >))</a
+      ><a name="1235"
+      > </a
+      ><a name="1236" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="1237"
+      > </a
+      ><a name="1238" href="homotopy.elims.CofPushoutSection.html#983" class="Bound"
+      >P</a
+      ><a name="1239"
+      > </a
+      ><a name="1240" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="1241"
+      > </a
+      ><a name="1242" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="1248"
+      > </a
+      ><a name="1249" class="Symbol"
+      >(</a
+      ><a name="1250" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="1255"
+      > </a
+      ><a name="1256" href="homotopy.elims.CofPushoutSection.html#1187" class="Bound"
+      >b</a
+      ><a name="1257" class="Symbol"
+      >)</a
+      ><a name="1258"
+      > </a
+      ><a name="1259" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="1260" class="Symbol"
+      >)</a
+      ><a name="1261"
+      >
+      </a
+      ><a name="1268" class="Symbol"
+      >&#8594;</a
+      ><a name="1269"
+      > </a
+      ><a name="1270" href="lib.Base.html#5069" class="Function"
+      >&#928;</a
+      ><a name="1271"
+      > </a
+      ><a name="1272" class="Symbol"
+      >(</a
+      ><a name="1273" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="1280"
+      > </a
+      ><a name="1281" href="homotopy.elims.CofPushoutSection.html#851" class="Bound"
+      >h</a
+      ><a name="1282" class="Symbol"
+      >)</a
+      ><a name="1283"
+      > </a
+      ><a name="1284" href="homotopy.elims.CofPushoutSection.html#983" class="Bound"
+      >P</a
+      ><a name="1285"
+      >
+    </a
+      ><a name="1290" href="homotopy.elims.CofPushoutSection.html#969" class="Function"
+      >elim</a
+      ><a name="1294"
+      > </a
+      ><a name="1295" class="Symbol"
+      >{</a
+      ><a name="1296" class="Argument"
+      >P</a
+      ><a name="1297"
+      > </a
+      ><a name="1298" class="Symbol"
+      >=</a
+      ><a name="1299"
+      > </a
+      ><a name="1300" href="homotopy.elims.CofPushoutSection.html#1300" class="Bound"
+      >P</a
+      ><a name="1301" class="Symbol"
+      >}</a
+      ><a name="1302"
+      > </a
+      ><a name="1303" href="homotopy.elims.CofPushoutSection.html#1303" class="Bound"
+      >cfbase*</a
+      ><a name="1310"
+      > </a
+      ><a name="1311" href="homotopy.elims.CofPushoutSection.html#1311" class="Bound"
+      >cfcod*</a
+      ><a name="1317"
+      > </a
+      ><a name="1318" href="homotopy.elims.CofPushoutSection.html#1318" class="Bound"
+      >cfglue-left*</a
+      ><a name="1330"
+      > </a
+      ><a name="1331" href="homotopy.elims.CofPushoutSection.html#1331" class="Bound"
+      >cfglue-right*</a
+      ><a name="1344"
+      > </a
+      ><a name="1345" class="Symbol"
+      >=</a
+      ><a name="1346"
+      >
+      </a
+      ><a name="1353" href="lib.types.Pushout.html#850" class="Function"
+      >Cofiber-elim</a
+      ><a name="1365"
+      >
+        </a
+      ><a name="1374" href="homotopy.elims.CofPushoutSection.html#1303" class="Bound"
+      >cfbase*</a
+      ><a name="1381"
+      >
+        </a
+      ><a name="1390" href="homotopy.elims.CofPushoutSection.html#1311" class="Bound"
+      >cfcod*</a
+      ><a name="1396"
+      >
+        </a
+      ><a name="1405" class="Symbol"
+      >(</a
+      ><a name="1406" href="lib.types.Pushout.html#1094" class="Function"
+      >Pushout-elim</a
+      ><a name="1418"
+      >
+          </a
+      ><a name="1429" href="homotopy.elims.CofPushoutSection.html#1318" class="Bound"
+      >cfglue-left*</a
+      ><a name="1441"
+      >
+          </a
+      ><a name="1452" class="Symbol"
+      >(&#955;</a
+      ><a name="1454"
+      > </a
+      ><a name="1455" href="homotopy.elims.CofPushoutSection.html#1455" class="Bound"
+      >b</a
+      ><a name="1456"
+      > </a
+      ><a name="1457" class="Symbol"
+      >&#8594;</a
+      ><a name="1458"
+      > </a
+      ><a name="1459" class="Symbol"
+      >(</a
+      ><a name="1460" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1463"
+      > </a
+      ><a name="1464" class="Symbol"
+      >(</a
+      ><a name="1465" href="homotopy.elims.CofPushoutSection.html#1942" class="Function"
+      >fill</a
+      ><a name="1469"
+      > </a
+      ><a name="1470" class="Symbol"
+      >(</a
+      ><a name="1471" href="homotopy.elims.CofPushoutSection.html#920" class="Bound"
+      >r</a
+      ><a name="1472"
+      > </a
+      ><a name="1473" href="homotopy.elims.CofPushoutSection.html#1455" class="Bound"
+      >b</a
+      ><a name="1474" class="Symbol"
+      >)))</a
+      ><a name="1477"
+      > </a
+      ><a name="1478" href="lib.PathGroupoid.html#4673" class="Function Operator"
+      >&#9667;</a
+      ><a name="1479"
+      > </a
+      ><a name="1480" href="homotopy.elims.CofPushoutSection.html#1331" class="Bound"
+      >cfglue-right*</a
+      ><a name="1493"
+      > </a
+      ><a name="1494" href="homotopy.elims.CofPushoutSection.html#1455" class="Bound"
+      >b</a
+      ><a name="1495" class="Symbol"
+      >)</a
+      ><a name="1496"
+      >
+          </a
+      ><a name="1507" class="Symbol"
+      >(&#955;</a
+      ><a name="1509"
+      > </a
+      ><a name="1510" href="homotopy.elims.CofPushoutSection.html#1510" class="Bound"
+      >c</a
+      ><a name="1511"
+      > </a
+      ><a name="1512" class="Symbol"
+      >&#8594;</a
+      ><a name="1513"
+      > </a
+      ><a name="1514" href="lib.cubical.SquareOver.html#1887" class="Function"
+      >&#8595;&#8595;-from-squareover</a
+      ><a name="1532"
+      > </a
+      ><a name="1533" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1534"
+      >
+            </a
+      ><a name="1547" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="1556"
+      >
+              </a
+      ><a name="1571" class="Symbol"
+      >(&#955;</a
+      ><a name="1573"
+      > </a
+      ><a name="1574" href="homotopy.elims.CofPushoutSection.html#1574" class="Bound"
+      >c'</a
+      ><a name="1576"
+      > </a
+      ><a name="1577" class="Symbol"
+      >&#8594;</a
+      ><a name="1578"
+      > </a
+      ><a name="1579" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="1589"
+      > </a
+      ><a name="1590" href="homotopy.elims.CofPushoutSection.html#1300" class="Bound"
+      >P</a
+      ><a name="1591"
+      > </a
+      ><a name="1592" class="Symbol"
+      >(</a
+      ><a name="1593" href="lib.cubical.Square.html#10785" class="Function"
+      >natural-square</a
+      ><a name="1607"
+      > </a
+      ><a name="1608" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="1614"
+      > </a
+      ><a name="1615" class="Symbol"
+      >(</a
+      ><a name="1616" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1620"
+      > </a
+      ><a name="1621" href="homotopy.elims.CofPushoutSection.html#1510" class="Bound"
+      >c</a
+      ><a name="1622" class="Symbol"
+      >))</a
+      ><a name="1624"
+      >
+                  </a
+      ><a name="1643" class="Symbol"
+      >(</a
+      ><a name="1644" href="homotopy.elims.CofPushoutSection.html#1318" class="Bound"
+      >cfglue-left*</a
+      ><a name="1656"
+      > </a
+      ><a name="1657" class="Symbol"
+      >(</a
+      ><a name="1658" href="lib.types.Span.html#332" class="Function"
+      >f</a
+      ><a name="1659"
+      > </a
+      ><a name="1660" href="homotopy.elims.CofPushoutSection.html#1510" class="Bound"
+      >c</a
+      ><a name="1661" class="Symbol"
+      >))</a
+      ><a name="1663"
+      >
+                  </a
+      ><a name="1682" class="Symbol"
+      >(</a
+      ><a name="1683" href="lib.PathOver.html#4388" class="Function"
+      >&#8595;-ap-in</a
+      ><a name="1690"
+      > </a
+      ><a name="1691" href="homotopy.elims.CofPushoutSection.html#1300" class="Bound"
+      >P</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" class="Symbol"
+      >(&#955;</a
+      ><a name="1695"
+      > </a
+      ><a name="1696" href="homotopy.elims.CofPushoutSection.html#1696" class="Bound"
+      >_</a
+      ><a name="1697"
+      > </a
+      ><a name="1698" class="Symbol"
+      >&#8594;</a
+      ><a name="1699"
+      > </a
+      ><a name="1700" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="1706" class="Symbol"
+      >)</a
+      ><a name="1707"
+      > </a
+      ><a name="1708" class="Symbol"
+      >(</a
+      ><a name="1709" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1712"
+      > </a
+      ><a name="1713" class="Symbol"
+      >(&#955;</a
+      ><a name="1715"
+      > </a
+      ><a name="1716" href="homotopy.elims.CofPushoutSection.html#1716" class="Bound"
+      >_</a
+      ><a name="1717"
+      > </a
+      ><a name="1718" class="Symbol"
+      >&#8594;</a
+      ><a name="1719"
+      > </a
+      ><a name="1720" href="homotopy.elims.CofPushoutSection.html#1303" class="Bound"
+      >cfbase*</a
+      ><a name="1727" class="Symbol"
+      >)</a
+      ><a name="1728"
+      > </a
+      ><a name="1729" class="Symbol"
+      >(</a
+      ><a name="1730" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1734"
+      > </a
+      ><a name="1735" href="homotopy.elims.CofPushoutSection.html#1510" class="Bound"
+      >c</a
+      ><a name="1736" class="Symbol"
+      >)))</a
+      ><a name="1739"
+      >
+                  </a
+      ><a name="1758" class="Symbol"
+      >(</a
+      ><a name="1759" href="lib.PathOver.html#4388" class="Function"
+      >&#8595;-ap-in</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" href="homotopy.elims.CofPushoutSection.html#1300" class="Bound"
+      >P</a
+      ><a name="1768"
+      > </a
+      ><a name="1769" class="Symbol"
+      >(</a
+      ><a name="1770" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="1775"
+      > </a
+      ><a name="1776" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1777"
+      > </a
+      ><a name="1778" href="homotopy.elims.CofPushoutSection.html#851" class="Bound"
+      >h</a
+      ><a name="1779" class="Symbol"
+      >)</a
+      ><a name="1780"
+      > </a
+      ><a name="1781" class="Symbol"
+      >(</a
+      ><a name="1782" href="lib.Base.html#4319" class="Function"
+      >apd</a
+      ><a name="1785"
+      > </a
+      ><a name="1786" class="Symbol"
+      >(</a
+      ><a name="1787" href="homotopy.elims.CofPushoutSection.html#1311" class="Bound"
+      >cfcod*</a
+      ><a name="1793"
+      > </a
+      ><a name="1794" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1795"
+      > </a
+      ><a name="1796" href="homotopy.elims.CofPushoutSection.html#851" class="Bound"
+      >h</a
+      ><a name="1797" class="Symbol"
+      >)</a
+      ><a name="1798"
+      > </a
+      ><a name="1799" class="Symbol"
+      >(</a
+      ><a name="1800" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="1804"
+      > </a
+      ><a name="1805" href="homotopy.elims.CofPushoutSection.html#1510" class="Bound"
+      >c</a
+      ><a name="1806" class="Symbol"
+      >)))</a
+      ><a name="1809"
+      >
+                  </a
+      ><a name="1828" class="Symbol"
+      >(</a
+      ><a name="1829" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1832"
+      > </a
+      ><a name="1833" class="Symbol"
+      >(</a
+      ><a name="1834" href="homotopy.elims.CofPushoutSection.html#1942" class="Function"
+      >fill</a
+      ><a name="1838"
+      > </a
+      ><a name="1839" href="homotopy.elims.CofPushoutSection.html#1574" class="Bound"
+      >c'</a
+      ><a name="1841" class="Symbol"
+      >)</a
+      ><a name="1842"
+      > </a
+      ><a name="1843" href="lib.PathGroupoid.html#4673" class="Function Operator"
+      >&#9667;</a
+      ><a name="1844"
+      > </a
+      ><a name="1845" href="homotopy.elims.CofPushoutSection.html#1331" class="Bound"
+      >cfglue-right*</a
+      ><a name="1858"
+      > </a
+      ><a name="1859" class="Symbol"
+      >(</a
+      ><a name="1860" href="lib.types.Span.html#346" class="Function"
+      >g</a
+      ><a name="1861"
+      > </a
+      ><a name="1862" href="homotopy.elims.CofPushoutSection.html#1510" class="Bound"
+      >c</a
+      ><a name="1863" class="Symbol"
+      >)))</a
+      ><a name="1866"
+      >
+              </a
+      ><a name="1881" class="Symbol"
+      >(</a
+      ><a name="1882" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1883"
+      > </a
+      ><a name="1884" class="Symbol"
+      >(</a
+      ><a name="1885" href="homotopy.elims.CofPushoutSection.html#932" class="Bound"
+      >inv</a
+      ><a name="1888"
+      > </a
+      ><a name="1889" href="homotopy.elims.CofPushoutSection.html#1510" class="Bound"
+      >c</a
+      ><a name="1890" class="Symbol"
+      >))</a
+      ><a name="1892"
+      >
+              </a
+      ><a name="1907" class="Symbol"
+      >(</a
+      ><a name="1908" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="1911"
+      > </a
+      ><a name="1912" class="Symbol"
+      >(</a
+      ><a name="1913" href="homotopy.elims.CofPushoutSection.html#1942" class="Function"
+      >fill</a
+      ><a name="1917"
+      > </a
+      ><a name="1918" href="homotopy.elims.CofPushoutSection.html#1510" class="Bound"
+      >c</a
+      ><a name="1919" class="Symbol"
+      >))))</a
+      ><a name="1923"
+      >
+      </a
+      ><a name="1930" class="Keyword"
+      >where</a
+      ><a name="1935"
+      >
+      </a
+      ><a name="1942" href="homotopy.elims.CofPushoutSection.html#1942" class="Function"
+      >fill</a
+      ><a name="1946"
+      > </a
+      ><a name="1947" class="Symbol"
+      >:</a
+      ><a name="1948"
+      > </a
+      ><a name="1949" class="Symbol"
+      >(</a
+      ><a name="1950" href="homotopy.elims.CofPushoutSection.html#1950" class="Bound"
+      >c</a
+      ><a name="1951"
+      > </a
+      ><a name="1952" class="Symbol"
+      >:</a
+      ><a name="1953"
+      > </a
+      ><a name="1954" href="lib.types.Span.html#317" class="Function"
+      >C</a
+      ><a name="1955" class="Symbol"
+      >)</a
+      ><a name="1956"
+      >
+        </a
+      ><a name="1965" class="Symbol"
+      >&#8594;</a
+      ><a name="1966"
+      > </a
+      ><a name="1967" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="1968"
+      > </a
+      ><a name="1969" class="Symbol"
+      >(</a
+      ><a name="1970" href="homotopy.elims.CofPushoutSection.html#1303" class="Bound"
+      >cfbase*</a
+      ><a name="1977"
+      > </a
+      ><a name="1978" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1980"
+      > </a
+      ><a name="1981" href="homotopy.elims.CofPushoutSection.html#1303" class="Bound"
+      >cfbase*</a
+      ><a name="1988" class="Symbol"
+      >)</a
+      ><a name="1989"
+      >
+            </a
+      ><a name="2002" class="Symbol"
+      >(&#955;</a
+      ><a name="2004"
+      > </a
+      ><a name="2005" href="homotopy.elims.CofPushoutSection.html#2005" class="Bound"
+      >q</a
+      ><a name="2006"
+      > </a
+      ><a name="2007" class="Symbol"
+      >&#8594;</a
+      ><a name="2008"
+      > </a
+      ><a name="2009" href="lib.cubical.SquareOver.html#186" class="Function"
+      >SquareOver</a
+      ><a name="2019"
+      > </a
+      ><a name="2020" href="homotopy.elims.CofPushoutSection.html#1300" class="Bound"
+      >P</a
+      ><a name="2021"
+      > </a
+      ><a name="2022" class="Symbol"
+      >(</a
+      ><a name="2023" href="lib.cubical.Square.html#10785" class="Function"
+      >natural-square</a
+      ><a name="2037"
+      > </a
+      ><a name="2038" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="2044"
+      > </a
+      ><a name="2045" class="Symbol"
+      >(</a
+      ><a name="2046" href="lib.types.Pushout.html#515" class="Postulate"
+      >glue</a
+      ><a name="2050"
+      > </a
+      ><a name="2051" href="homotopy.elims.CofPushoutSection.html#1950" class="Bound"
+      >c</a
+      ><a name="2052" class="Symbol"
+      >))</a
+      ><a name="2054"
+      >
+                     </a
+      ><a name="2076" class="Symbol"
+      >(</a
+      ><a name="2077" href="homotopy.elims.CofPushoutSection.html#1318" class="Bound"
+      >cfglue-left*</a
+      ><a name="2089"
+      > </a
+      ><a name="2090" class="Symbol"
+      >(</a
+      ><a name="2091" href="lib.types.Span.html#332" class="Function"
+      >f</a
+      ><a name="2092"
+      > </a
+      ><a name="2093" href="homotopy.elims.CofPushoutSection.html#1950" class="Bound"
+      >c</a
+      ><a name="2094" class="Symbol"
+      >))</a
+      ><a name="2096"
+      > </a
+      ><a name="2097" class="Symbol"
+      >_</a
+      ><a name="2098"
+      > </a
+      ><a name="2099" class="Symbol"
+      >_</a
+      ><a name="2100"
+      > </a
+      ><a name="2101" class="Symbol"
+      >(</a
+      ><a name="2102" href="homotopy.elims.CofPushoutSection.html#2005" class="Bound"
+      >q</a
+      ><a name="2103"
+      > </a
+      ><a name="2104" href="lib.PathGroupoid.html#4673" class="Function Operator"
+      >&#9667;</a
+      ><a name="2105"
+      > </a
+      ><a name="2106" href="homotopy.elims.CofPushoutSection.html#1331" class="Bound"
+      >cfglue-right*</a
+      ><a name="2119"
+      > </a
+      ><a name="2120" class="Symbol"
+      >(</a
+      ><a name="2121" href="lib.types.Span.html#346" class="Function"
+      >g</a
+      ><a name="2122"
+      > </a
+      ><a name="2123" href="homotopy.elims.CofPushoutSection.html#1950" class="Bound"
+      >c</a
+      ><a name="2124" class="Symbol"
+      >)))</a
+      ><a name="2127"
+      >
+      </a
+      ><a name="2134" href="homotopy.elims.CofPushoutSection.html#1942" class="Function"
+      >fill</a
+      ><a name="2138"
+      > </a
+      ><a name="2139" href="homotopy.elims.CofPushoutSection.html#2139" class="Bound"
+      >c</a
+      ><a name="2140"
+      > </a
+      ><a name="2141" class="Symbol"
+      >=</a
+      ><a name="2142"
+      > </a
+      ><a name="2143" href="homotopy.elims.Lemmas.html#96" class="Function"
+      >fill-upper-right</a
+      ><a name="2159"
+      > </a
+      ><a name="2160" class="Symbol"
+      >_</a
+      ><a name="2161"
+      > </a
+      ><a name="2162" class="Symbol"
+      >_</a
+      ><a name="2163"
+      > </a
+      ><a name="2164" class="Symbol"
+      >_</a
+      ><a name="2165"
+      > </a
+      ><a name="2166" class="Symbol"
+      >_</a
+      ><a name="2167"
+      > </a
+      ><a name="2168" class="Symbol"
+      >_</a
+      ><a name="2169"
+      >
+
+
+    </a
+      ><a name="2176" href="homotopy.elims.CofPushoutSection.html#2176" class="Function"
+      >rec</a
+      ><a name="2179"
+      > </a
+      ><a name="2180" class="Symbol"
+      >:</a
+      ><a name="2181"
+      > </a
+      ><a name="2182" class="Symbol"
+      >&#8704;</a
+      ><a name="2183"
+      > </a
+      ><a name="2184" class="Symbol"
+      >{</a
+      ><a name="2185" href="homotopy.elims.CofPushoutSection.html#2185" class="Bound"
+      >m</a
+      ><a name="2186" class="Symbol"
+      >}</a
+      ><a name="2187"
+      > </a
+      ><a name="2188" class="Symbol"
+      >{</a
+      ><a name="2189" href="homotopy.elims.CofPushoutSection.html#2189" class="Bound"
+      >E</a
+      ><a name="2190"
+      > </a
+      ><a name="2191" class="Symbol"
+      >:</a
+      ><a name="2192"
+      > </a
+      ><a name="2193" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2197"
+      > </a
+      ><a name="2198" href="homotopy.elims.CofPushoutSection.html#2185" class="Bound"
+      >m</a
+      ><a name="2199" class="Symbol"
+      >}</a
+      ><a name="2200"
+      >
+      </a
+      ><a name="2207" class="Symbol"
+      >(</a
+      ><a name="2208" href="homotopy.elims.CofPushoutSection.html#2208" class="Bound"
+      >cfbase*</a
+      ><a name="2215"
+      > </a
+      ><a name="2216" class="Symbol"
+      >:</a
+      ><a name="2217"
+      > </a
+      ><a name="2218" href="homotopy.elims.CofPushoutSection.html#2189" class="Bound"
+      >E</a
+      ><a name="2219" class="Symbol"
+      >)</a
+      ><a name="2220"
+      > </a
+      ><a name="2221" class="Symbol"
+      >(</a
+      ><a name="2222" href="homotopy.elims.CofPushoutSection.html#2222" class="Bound"
+      >cfcod*</a
+      ><a name="2228"
+      > </a
+      ><a name="2229" class="Symbol"
+      >:</a
+      ><a name="2230"
+      > </a
+      ><a name="2231" href="homotopy.elims.CofPushoutSection.html#836" class="Bound"
+      >D</a
+      ><a name="2232"
+      > </a
+      ><a name="2233" class="Symbol"
+      >&#8594;</a
+      ><a name="2234"
+      > </a
+      ><a name="2235" href="homotopy.elims.CofPushoutSection.html#2189" class="Bound"
+      >E</a
+      ><a name="2236" class="Symbol"
+      >)</a
+      ><a name="2237"
+      >
+      </a
+      ><a name="2244" class="Symbol"
+      >(</a
+      ><a name="2245" href="homotopy.elims.CofPushoutSection.html#2245" class="Bound"
+      >cfglue-left*</a
+      ><a name="2257"
+      > </a
+      ><a name="2258" class="Symbol"
+      >:</a
+      ><a name="2259"
+      > </a
+      ><a name="2260" class="Symbol"
+      >(</a
+      ><a name="2261" href="homotopy.elims.CofPushoutSection.html#2261" class="Bound"
+      >a</a
+      ><a name="2262"
+      > </a
+      ><a name="2263" class="Symbol"
+      >:</a
+      ><a name="2264"
+      > </a
+      ><a name="2265" href="lib.types.Span.html#287" class="Function"
+      >A</a
+      ><a name="2266" class="Symbol"
+      >)</a
+      ><a name="2267"
+      > </a
+      ><a name="2268" class="Symbol"
+      >&#8594;</a
+      ><a name="2269"
+      > </a
+      ><a name="2270" href="homotopy.elims.CofPushoutSection.html#2208" class="Bound"
+      >cfbase*</a
+      ><a name="2277"
+      > </a
+      ><a name="2278" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2280"
+      > </a
+      ><a name="2281" href="homotopy.elims.CofPushoutSection.html#2222" class="Bound"
+      >cfcod*</a
+      ><a name="2287"
+      > </a
+      ><a name="2288" class="Symbol"
+      >(</a
+      ><a name="2289" href="homotopy.elims.CofPushoutSection.html#851" class="Bound"
+      >h</a
+      ><a name="2290"
+      > </a
+      ><a name="2291" class="Symbol"
+      >(</a
+      ><a name="2292" href="lib.types.Pushout.html#446" class="Postulate"
+      >left</a
+      ><a name="2296"
+      > </a
+      ><a name="2297" href="homotopy.elims.CofPushoutSection.html#2261" class="Bound"
+      >a</a
+      ><a name="2298" class="Symbol"
+      >)))</a
+      ><a name="2301"
+      >
+      </a
+      ><a name="2308" class="Symbol"
+      >(</a
+      ><a name="2309" href="homotopy.elims.CofPushoutSection.html#2309" class="Bound"
+      >cfglue-right*</a
+      ><a name="2322"
+      > </a
+      ><a name="2323" class="Symbol"
+      >:</a
+      ><a name="2324"
+      > </a
+      ><a name="2325" class="Symbol"
+      >(</a
+      ><a name="2326" href="homotopy.elims.CofPushoutSection.html#2326" class="Bound"
+      >b</a
+      ><a name="2327"
+      > </a
+      ><a name="2328" class="Symbol"
+      >:</a
+      ><a name="2329"
+      > </a
+      ><a name="2330" href="lib.types.Span.html#302" class="Function"
+      >B</a
+      ><a name="2331" class="Symbol"
+      >)</a
+      ><a name="2332"
+      > </a
+      ><a name="2333" class="Symbol"
+      >&#8594;</a
+      ><a name="2334"
+      > </a
+      ><a name="2335" href="homotopy.elims.CofPushoutSection.html#2208" class="Bound"
+      >cfbase*</a
+      ><a name="2342"
+      > </a
+      ><a name="2343" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2345"
+      > </a
+      ><a name="2346" href="homotopy.elims.CofPushoutSection.html#2222" class="Bound"
+      >cfcod*</a
+      ><a name="2352"
+      > </a
+      ><a name="2353" class="Symbol"
+      >(</a
+      ><a name="2354" href="homotopy.elims.CofPushoutSection.html#851" class="Bound"
+      >h</a
+      ><a name="2355"
+      > </a
+      ><a name="2356" class="Symbol"
+      >(</a
+      ><a name="2357" href="lib.types.Pushout.html#480" class="Postulate"
+      >right</a
+      ><a name="2362"
+      > </a
+      ><a name="2363" href="homotopy.elims.CofPushoutSection.html#2326" class="Bound"
+      >b</a
+      ><a name="2364" class="Symbol"
+      >)))</a
+      ><a name="2367"
+      >
+      </a
+      ><a name="2374" class="Symbol"
+      >&#8594;</a
+      ><a name="2375"
+      > </a
+      ><a name="2376" class="Symbol"
+      >(</a
+      ><a name="2377" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="2384"
+      > </a
+      ><a name="2385" href="homotopy.elims.CofPushoutSection.html#851" class="Bound"
+      >h</a
+      ><a name="2386"
+      > </a
+      ><a name="2387" class="Symbol"
+      >&#8594;</a
+      ><a name="2388"
+      > </a
+      ><a name="2389" href="homotopy.elims.CofPushoutSection.html#2189" class="Bound"
+      >E</a
+      ><a name="2390" class="Symbol"
+      >)</a
+      ><a name="2391"
+      >
+    </a
+      ><a name="2396" href="homotopy.elims.CofPushoutSection.html#2176" class="Function"
+      >rec</a
+      ><a name="2399"
+      > </a
+      ><a name="2400" href="homotopy.elims.CofPushoutSection.html#2400" class="Bound"
+      >cfbase*</a
+      ><a name="2407"
+      > </a
+      ><a name="2408" href="homotopy.elims.CofPushoutSection.html#2408" class="Bound"
+      >cfcod*</a
+      ><a name="2414"
+      > </a
+      ><a name="2415" href="homotopy.elims.CofPushoutSection.html#2415" class="Bound"
+      >cfglue-left*</a
+      ><a name="2427"
+      > </a
+      ><a name="2428" href="homotopy.elims.CofPushoutSection.html#2428" class="Bound"
+      >cfglue-right*</a
+      ><a name="2441"
+      > </a
+      ><a name="2442" class="Symbol"
+      >=</a
+      ><a name="2443"
+      >
+      </a
+      ><a name="2450" href="homotopy.elims.CofPushoutSection.html#969" class="Function"
+      >elim</a
+      ><a name="2454"
+      > </a
+      ><a name="2455" href="homotopy.elims.CofPushoutSection.html#2400" class="Bound"
+      >cfbase*</a
+      ><a name="2462"
+      > </a
+      ><a name="2463" href="homotopy.elims.CofPushoutSection.html#2408" class="Bound"
+      >cfcod*</a
+      ><a name="2469"
+      > </a
+      ><a name="2470" class="Symbol"
+      >(</a
+      ><a name="2471" href="lib.PathOver.html#1569" class="Function"
+      >&#8595;-cst-in</a
+      ><a name="2479"
+      > </a
+      ><a name="2480" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="2481"
+      > </a
+      ><a name="2482" href="homotopy.elims.CofPushoutSection.html#2415" class="Bound"
+      >cfglue-left*</a
+      ><a name="2494" class="Symbol"
+      >)</a
+      ><a name="2495"
+      > </a
+      ><a name="2496" class="Symbol"
+      >(</a
+      ><a name="2497" href="lib.PathOver.html#1569" class="Function"
+      >&#8595;-cst-in</a
+      ><a name="2505"
+      > </a
+      ><a name="2506" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="2507"
+      > </a
+      ><a name="2508" href="homotopy.elims.CofPushoutSection.html#2428" class="Bound"
+      >cfglue-right*</a
+      ><a name="2521" class="Symbol"
+      >)</a
+      ><a name="2522"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

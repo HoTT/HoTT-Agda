@@ -1,0 +1,1975 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.Word</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.NType2.html#1" class="Module"
+      >lib.NType2</a
+      ><a name="87"
+      >
+</a
+      ><a name="88" class="Keyword"
+      >open</a
+      ><a name="92"
+      > </a
+      ><a name="93" class="Keyword"
+      >import</a
+      ><a name="99"
+      > </a
+      ><a name="100" href="lib.types.Empty.html#1" class="Module"
+      >lib.types.Empty</a
+      ><a name="115"
+      >
+</a
+      ><a name="116" class="Keyword"
+      >open</a
+      ><a name="120"
+      > </a
+      ><a name="121" class="Keyword"
+      >import</a
+      ><a name="127"
+      > </a
+      ><a name="128" href="lib.types.Sigma.html#1" class="Module"
+      >lib.types.Sigma</a
+      ><a name="143"
+      >
+</a
+      ><a name="144" class="Keyword"
+      >open</a
+      ><a name="148"
+      > </a
+      ><a name="149" class="Keyword"
+      >import</a
+      ><a name="155"
+      > </a
+      ><a name="156" href="lib.types.Pi.html#1" class="Module"
+      >lib.types.Pi</a
+      ><a name="168"
+      >
+</a
+      ><a name="169" class="Keyword"
+      >open</a
+      ><a name="173"
+      > </a
+      ><a name="174" class="Keyword"
+      >import</a
+      ><a name="180"
+      > </a
+      ><a name="181" href="lib.types.Group.html#1" class="Module"
+      >lib.types.Group</a
+      ><a name="196"
+      >
+</a
+      ><a name="197" class="Keyword"
+      >open</a
+      ><a name="201"
+      > </a
+      ><a name="202" class="Keyword"
+      >import</a
+      ><a name="208"
+      > </a
+      ><a name="209" href="lib.types.Nat.html#1" class="Module"
+      >lib.types.Nat</a
+      ><a name="222"
+      >
+</a
+      ><a name="223" class="Keyword"
+      >open</a
+      ><a name="227"
+      > </a
+      ><a name="228" class="Keyword"
+      >import</a
+      ><a name="234"
+      > </a
+      ><a name="235" href="lib.types.List.html#1" class="Module"
+      >lib.types.List</a
+      ><a name="249"
+      >
+
+</a
+      ><a name="251" class="Keyword"
+      >module</a
+      ><a name="257"
+      > </a
+      ><a name="258" href="lib.types.Word.html#1" class="Module"
+      >lib.types.Word</a
+      ><a name="272"
+      > </a
+      ><a name="273" class="Symbol"
+      >{</a
+      ><a name="274" href="lib.types.Word.html#274" class="Bound"
+      >i</a
+      ><a name="275" class="Symbol"
+      >}</a
+      ><a name="276"
+      > </a
+      ><a name="277" class="Keyword"
+      >where</a
+      ><a name="282"
+      >
+
+</a
+      ><a name="284" class="Keyword"
+      >module</a
+      ><a name="290"
+      > </a
+      ><a name="291" href="lib.types.Word.html#291" class="Module"
+      >_</a
+      ><a name="292"
+      > </a
+      ><a name="293" class="Symbol"
+      >(</a
+      ><a name="294" href="lib.types.Word.html#294" class="Bound"
+      >A</a
+      ><a name="295"
+      > </a
+      ><a name="296" class="Symbol"
+      >:</a
+      ><a name="297"
+      > </a
+      ><a name="298" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="302"
+      > </a
+      ><a name="303" href="lib.types.Word.html#274" class="Bound"
+      >i</a
+      ><a name="304" class="Symbol"
+      >)</a
+      ><a name="305"
+      > </a
+      ><a name="306" class="Keyword"
+      >where</a
+      ><a name="311"
+      >
+
+  </a
+      ><a name="315" href="lib.types.Word.html#315" class="Function"
+      >PlusMinus</a
+      ><a name="324"
+      > </a
+      ><a name="325" class="Symbol"
+      >:</a
+      ><a name="326"
+      > </a
+      ><a name="327" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="331"
+      > </a
+      ><a name="332" href="lib.types.Word.html#274" class="Bound"
+      >i</a
+      ><a name="333"
+      >
+  </a
+      ><a name="336" href="lib.types.Word.html#315" class="Function"
+      >PlusMinus</a
+      ><a name="345"
+      > </a
+      ><a name="346" class="Symbol"
+      >=</a
+      ><a name="347"
+      > </a
+      ><a name="348" href="lib.Base.html#9033" class="Datatype"
+      >Coprod</a
+      ><a name="354"
+      > </a
+      ><a name="355" href="lib.types.Word.html#294" class="Bound"
+      >A</a
+      ><a name="356"
+      > </a
+      ><a name="357" href="lib.types.Word.html#294" class="Bound"
+      >A</a
+      ><a name="358"
+      >
+
+  </a
+      ><a name="362" href="lib.types.Word.html#362" class="Function"
+      >Word</a
+      ><a name="366"
+      > </a
+      ><a name="367" class="Symbol"
+      >:</a
+      ><a name="368"
+      > </a
+      ><a name="369" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="373"
+      > </a
+      ><a name="374" href="lib.types.Word.html#274" class="Bound"
+      >i</a
+      ><a name="375"
+      >
+  </a
+      ><a name="378" href="lib.types.Word.html#362" class="Function"
+      >Word</a
+      ><a name="382"
+      > </a
+      ><a name="383" class="Symbol"
+      >=</a
+      ><a name="384"
+      > </a
+      ><a name="385" href="lib.types.List.html#197" class="Datatype"
+      >List</a
+      ><a name="389"
+      > </a
+      ><a name="390" href="lib.types.Word.html#315" class="Function"
+      >PlusMinus</a
+      ><a name="399"
+      >
+
+</a
+      ><a name="401" class="Keyword"
+      >module</a
+      ><a name="407"
+      > </a
+      ><a name="408" href="lib.types.Word.html#408" class="Module"
+      >_</a
+      ><a name="409"
+      > </a
+      ><a name="410" class="Symbol"
+      >{</a
+      ><a name="411" href="lib.types.Word.html#411" class="Bound"
+      >A</a
+      ><a name="412"
+      > </a
+      ><a name="413" class="Symbol"
+      >:</a
+      ><a name="414"
+      > </a
+      ><a name="415" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="419"
+      > </a
+      ><a name="420" href="lib.types.Word.html#274" class="Bound"
+      >i</a
+      ><a name="421" class="Symbol"
+      >}</a
+      ><a name="422"
+      > </a
+      ><a name="423" class="Keyword"
+      >where</a
+      ><a name="428"
+      >
+
+  </a
+      ><a name="432" href="lib.types.Word.html#432" class="Function"
+      >flip</a
+      ><a name="436"
+      > </a
+      ><a name="437" class="Symbol"
+      >:</a
+      ><a name="438"
+      > </a
+      ><a name="439" href="lib.types.Word.html#315" class="Function"
+      >PlusMinus</a
+      ><a name="448"
+      > </a
+      ><a name="449" href="lib.types.Word.html#411" class="Bound"
+      >A</a
+      ><a name="450"
+      > </a
+      ><a name="451" class="Symbol"
+      >&#8594;</a
+      ><a name="452"
+      > </a
+      ><a name="453" href="lib.types.Word.html#315" class="Function"
+      >PlusMinus</a
+      ><a name="462"
+      > </a
+      ><a name="463" href="lib.types.Word.html#411" class="Bound"
+      >A</a
+      ><a name="464"
+      >
+  </a
+      ><a name="467" href="lib.types.Word.html#432" class="Function"
+      >flip</a
+      ><a name="471"
+      > </a
+      ><a name="472" class="Symbol"
+      >(</a
+      ><a name="473" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="476"
+      > </a
+      ><a name="477" href="lib.types.Word.html#477" class="Bound"
+      >a</a
+      ><a name="478" class="Symbol"
+      >)</a
+      ><a name="479"
+      > </a
+      ><a name="480" class="Symbol"
+      >=</a
+      ><a name="481"
+      > </a
+      ><a name="482" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="485"
+      > </a
+      ><a name="486" href="lib.types.Word.html#477" class="Bound"
+      >a</a
+      ><a name="487"
+      >
+  </a
+      ><a name="490" href="lib.types.Word.html#432" class="Function"
+      >flip</a
+      ><a name="494"
+      > </a
+      ><a name="495" class="Symbol"
+      >(</a
+      ><a name="496" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="499"
+      > </a
+      ><a name="500" href="lib.types.Word.html#500" class="Bound"
+      >a</a
+      ><a name="501" class="Symbol"
+      >)</a
+      ><a name="502"
+      > </a
+      ><a name="503" class="Symbol"
+      >=</a
+      ><a name="504"
+      > </a
+      ><a name="505" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="508"
+      > </a
+      ><a name="509" href="lib.types.Word.html#500" class="Bound"
+      >a</a
+      ><a name="510"
+      >
+
+  </a
+      ><a name="514" href="lib.types.Word.html#514" class="Function"
+      >flip-flip</a
+      ><a name="523"
+      > </a
+      ><a name="524" class="Symbol"
+      >:</a
+      ><a name="525"
+      > </a
+      ><a name="526" class="Symbol"
+      >&#8704;</a
+      ><a name="527"
+      > </a
+      ><a name="528" href="lib.types.Word.html#528" class="Bound"
+      >x</a
+      ><a name="529"
+      > </a
+      ><a name="530" class="Symbol"
+      >&#8594;</a
+      ><a name="531"
+      > </a
+      ><a name="532" href="lib.types.Word.html#432" class="Function"
+      >flip</a
+      ><a name="536"
+      > </a
+      ><a name="537" class="Symbol"
+      >(</a
+      ><a name="538" href="lib.types.Word.html#432" class="Function"
+      >flip</a
+      ><a name="542"
+      > </a
+      ><a name="543" href="lib.types.Word.html#528" class="Bound"
+      >x</a
+      ><a name="544" class="Symbol"
+      >)</a
+      ><a name="545"
+      > </a
+      ><a name="546" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="548"
+      > </a
+      ><a name="549" href="lib.types.Word.html#528" class="Bound"
+      >x</a
+      ><a name="550"
+      >
+  </a
+      ><a name="553" href="lib.types.Word.html#514" class="Function"
+      >flip-flip</a
+      ><a name="562"
+      > </a
+      ><a name="563" class="Symbol"
+      >(</a
+      ><a name="564" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="567"
+      > </a
+      ><a name="568" href="lib.types.Word.html#568" class="Bound"
+      >x</a
+      ><a name="569" class="Symbol"
+      >)</a
+      ><a name="570"
+      > </a
+      ><a name="571" class="Symbol"
+      >=</a
+      ><a name="572"
+      > </a
+      ><a name="573" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="576"
+      >
+  </a
+      ><a name="579" href="lib.types.Word.html#514" class="Function"
+      >flip-flip</a
+      ><a name="588"
+      > </a
+      ><a name="589" class="Symbol"
+      >(</a
+      ><a name="590" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="593"
+      > </a
+      ><a name="594" href="lib.types.Word.html#594" class="Bound"
+      >x</a
+      ><a name="595" class="Symbol"
+      >)</a
+      ><a name="596"
+      > </a
+      ><a name="597" class="Symbol"
+      >=</a
+      ><a name="598"
+      > </a
+      ><a name="599" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="602"
+      >
+
+  </a
+      ><a name="606" href="lib.types.Word.html#606" class="Function"
+      >Word-flip</a
+      ><a name="615"
+      > </a
+      ><a name="616" class="Symbol"
+      >:</a
+      ><a name="617"
+      > </a
+      ><a name="618" href="lib.types.Word.html#362" class="Function"
+      >Word</a
+      ><a name="622"
+      > </a
+      ><a name="623" href="lib.types.Word.html#411" class="Bound"
+      >A</a
+      ><a name="624"
+      > </a
+      ><a name="625" class="Symbol"
+      >&#8594;</a
+      ><a name="626"
+      > </a
+      ><a name="627" href="lib.types.Word.html#362" class="Function"
+      >Word</a
+      ><a name="631"
+      > </a
+      ><a name="632" href="lib.types.Word.html#411" class="Bound"
+      >A</a
+      ><a name="633"
+      >
+  </a
+      ><a name="636" href="lib.types.Word.html#606" class="Function"
+      >Word-flip</a
+      ><a name="645"
+      > </a
+      ><a name="646" class="Symbol"
+      >=</a
+      ><a name="647"
+      > </a
+      ><a name="648" href="lib.types.List.html#4007" class="Function"
+      >map</a
+      ><a name="651"
+      > </a
+      ><a name="652" href="lib.types.Word.html#432" class="Function"
+      >flip</a
+      ><a name="656"
+      >
+
+  </a
+      ><a name="660" href="lib.types.Word.html#660" class="Function"
+      >Word-flip-flip</a
+      ><a name="674"
+      > </a
+      ><a name="675" class="Symbol"
+      >:</a
+      ><a name="676"
+      > </a
+      ><a name="677" class="Symbol"
+      >&#8704;</a
+      ><a name="678"
+      > </a
+      ><a name="679" href="lib.types.Word.html#679" class="Bound"
+      >w</a
+      ><a name="680"
+      > </a
+      ><a name="681" class="Symbol"
+      >&#8594;</a
+      ><a name="682"
+      > </a
+      ><a name="683" href="lib.types.Word.html#606" class="Function"
+      >Word-flip</a
+      ><a name="692"
+      > </a
+      ><a name="693" class="Symbol"
+      >(</a
+      ><a name="694" href="lib.types.Word.html#606" class="Function"
+      >Word-flip</a
+      ><a name="703"
+      > </a
+      ><a name="704" href="lib.types.Word.html#679" class="Bound"
+      >w</a
+      ><a name="705" class="Symbol"
+      >)</a
+      ><a name="706"
+      > </a
+      ><a name="707" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="709"
+      > </a
+      ><a name="710" href="lib.types.Word.html#679" class="Bound"
+      >w</a
+      ><a name="711"
+      >
+  </a
+      ><a name="714" href="lib.types.Word.html#660" class="Function"
+      >Word-flip-flip</a
+      ><a name="728"
+      > </a
+      ><a name="729" href="lib.types.List.html#236" class="InductiveConstructor"
+      >nil</a
+      ><a name="732"
+      > </a
+      ><a name="733" class="Symbol"
+      >=</a
+      ><a name="734"
+      > </a
+      ><a name="735" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="738"
+      >
+  </a
+      ><a name="741" href="lib.types.Word.html#660" class="Function"
+      >Word-flip-flip</a
+      ><a name="755"
+      > </a
+      ><a name="756" class="Symbol"
+      >(</a
+      ><a name="757" href="lib.types.Word.html#757" class="Bound"
+      >x</a
+      ><a name="758"
+      > </a
+      ><a name="759" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="761"
+      > </a
+      ><a name="762" href="lib.types.Word.html#762" class="Bound"
+      >l</a
+      ><a name="763" class="Symbol"
+      >)</a
+      ><a name="764"
+      > </a
+      ><a name="765" class="Symbol"
+      >=</a
+      ><a name="766"
+      > </a
+      ><a name="767" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="770"
+      > </a
+      ><a name="771" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >_::_</a
+      ><a name="775"
+      > </a
+      ><a name="776" class="Symbol"
+      >(</a
+      ><a name="777" href="lib.types.Word.html#514" class="Function"
+      >flip-flip</a
+      ><a name="786"
+      > </a
+      ><a name="787" href="lib.types.Word.html#757" class="Bound"
+      >x</a
+      ><a name="788" class="Symbol"
+      >)</a
+      ><a name="789"
+      > </a
+      ><a name="790" class="Symbol"
+      >(</a
+      ><a name="791" href="lib.types.Word.html#660" class="Function"
+      >Word-flip-flip</a
+      ><a name="805"
+      > </a
+      ><a name="806" href="lib.types.Word.html#762" class="Bound"
+      >l</a
+      ><a name="807" class="Symbol"
+      >)</a
+      ><a name="808"
+      >
+
+</a
+      ><a name="810" class="Keyword"
+      >module</a
+      ><a name="816"
+      > </a
+      ><a name="817" href="lib.types.Word.html#817" class="Module"
+      >_</a
+      ><a name="818"
+      > </a
+      ><a name="819" class="Symbol"
+      >{</a
+      ><a name="820" href="lib.types.Word.html#820" class="Bound"
+      >A</a
+      ><a name="821"
+      > </a
+      ><a name="822" class="Symbol"
+      >:</a
+      ><a name="823"
+      > </a
+      ><a name="824" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="828"
+      > </a
+      ><a name="829" href="lib.types.Word.html#274" class="Bound"
+      >i</a
+      ><a name="830" class="Symbol"
+      >}</a
+      ><a name="831"
+      > </a
+      ><a name="832" class="Symbol"
+      >{</a
+      ><a name="833" href="lib.types.Word.html#833" class="Bound"
+      >j</a
+      ><a name="834" class="Symbol"
+      >}</a
+      ><a name="835"
+      > </a
+      ><a name="836" class="Symbol"
+      >(</a
+      ><a name="837" href="lib.types.Word.html#837" class="Bound"
+      >G</a
+      ><a name="838"
+      > </a
+      ><a name="839" class="Symbol"
+      >:</a
+      ><a name="840"
+      > </a
+      ><a name="841" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="846"
+      > </a
+      ><a name="847" href="lib.types.Word.html#833" class="Bound"
+      >j</a
+      ><a name="848" class="Symbol"
+      >)</a
+      ><a name="849"
+      > </a
+      ><a name="850" class="Keyword"
+      >where</a
+      ><a name="855"
+      >
+  </a
+      ><a name="858" class="Keyword"
+      >private</a
+      ><a name="865"
+      >
+    </a
+      ><a name="870" class="Keyword"
+      >module</a
+      ><a name="876"
+      > </a
+      ><a name="877" href="lib.types.Word.html#877" class="Module"
+      >G</a
+      ><a name="878"
+      > </a
+      ><a name="879" class="Symbol"
+      >=</a
+      ><a name="880"
+      > </a
+      ><a name="881" href="lib.types.Group.html#6840" class="Module"
+      >Group</a
+      ><a name="886"
+      > </a
+      ><a name="887" href="lib.types.Word.html#837" class="Bound"
+      >G</a
+      ><a name="888"
+      >
+
+  </a
+      ><a name="892" href="lib.types.Word.html#892" class="Function"
+      >PlusMinus-extend&#7475;</a
+      ><a name="909"
+      > </a
+      ><a name="910" class="Symbol"
+      >:</a
+      ><a name="911"
+      > </a
+      ><a name="912" class="Symbol"
+      >(</a
+      ><a name="913" href="lib.types.Word.html#820" class="Bound"
+      >A</a
+      ><a name="914"
+      > </a
+      ><a name="915" class="Symbol"
+      >&#8594;</a
+      ><a name="916"
+      > </a
+      ><a name="917" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="921" class="Symbol"
+      >)</a
+      ><a name="922"
+      > </a
+      ><a name="923" class="Symbol"
+      >&#8594;</a
+      ><a name="924"
+      > </a
+      ><a name="925" class="Symbol"
+      >(</a
+      ><a name="926" href="lib.types.Word.html#315" class="Function"
+      >PlusMinus</a
+      ><a name="935"
+      > </a
+      ><a name="936" href="lib.types.Word.html#820" class="Bound"
+      >A</a
+      ><a name="937"
+      > </a
+      ><a name="938" class="Symbol"
+      >&#8594;</a
+      ><a name="939"
+      > </a
+      ><a name="940" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="944" class="Symbol"
+      >)</a
+      ><a name="945"
+      >
+  </a
+      ><a name="948" href="lib.types.Word.html#892" class="Function"
+      >PlusMinus-extend&#7475;</a
+      ><a name="965"
+      > </a
+      ><a name="966" href="lib.types.Word.html#966" class="Bound"
+      >f</a
+      ><a name="967"
+      > </a
+      ><a name="968" class="Symbol"
+      >(</a
+      ><a name="969" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="972"
+      > </a
+      ><a name="973" href="lib.types.Word.html#973" class="Bound"
+      >a</a
+      ><a name="974" class="Symbol"
+      >)</a
+      ><a name="975"
+      > </a
+      ><a name="976" class="Symbol"
+      >=</a
+      ><a name="977"
+      > </a
+      ><a name="978" href="lib.types.Word.html#966" class="Bound"
+      >f</a
+      ><a name="979"
+      > </a
+      ><a name="980" href="lib.types.Word.html#973" class="Bound"
+      >a</a
+      ><a name="981"
+      >
+  </a
+      ><a name="984" href="lib.types.Word.html#892" class="Function"
+      >PlusMinus-extend&#7475;</a
+      ><a name="1001"
+      > </a
+      ><a name="1002" href="lib.types.Word.html#1002" class="Bound"
+      >f</a
+      ><a name="1003"
+      > </a
+      ><a name="1004" class="Symbol"
+      >(</a
+      ><a name="1005" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1008"
+      > </a
+      ><a name="1009" href="lib.types.Word.html#1009" class="Bound"
+      >a</a
+      ><a name="1010" class="Symbol"
+      >)</a
+      ><a name="1011"
+      > </a
+      ><a name="1012" class="Symbol"
+      >=</a
+      ><a name="1013"
+      > </a
+      ><a name="1014" href="lib.types.Group.html#292" class="Function"
+      >G.inv</a
+      ><a name="1019"
+      > </a
+      ><a name="1020" class="Symbol"
+      >(</a
+      ><a name="1021" href="lib.types.Word.html#1002" class="Bound"
+      >f</a
+      ><a name="1022"
+      > </a
+      ><a name="1023" href="lib.types.Word.html#1009" class="Bound"
+      >a</a
+      ><a name="1024" class="Symbol"
+      >)</a
+      ><a name="1025"
+      >
+
+  </a
+      ><a name="1029" href="lib.types.Word.html#1029" class="Function"
+      >Word-extend&#7475;</a
+      ><a name="1041"
+      > </a
+      ><a name="1042" class="Symbol"
+      >:</a
+      ><a name="1043"
+      > </a
+      ><a name="1044" class="Symbol"
+      >(</a
+      ><a name="1045" href="lib.types.Word.html#820" class="Bound"
+      >A</a
+      ><a name="1046"
+      > </a
+      ><a name="1047" class="Symbol"
+      >&#8594;</a
+      ><a name="1048"
+      > </a
+      ><a name="1049" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="1053" class="Symbol"
+      >)</a
+      ><a name="1054"
+      > </a
+      ><a name="1055" class="Symbol"
+      >&#8594;</a
+      ><a name="1056"
+      > </a
+      ><a name="1057" class="Symbol"
+      >(</a
+      ><a name="1058" href="lib.types.Word.html#362" class="Function"
+      >Word</a
+      ><a name="1062"
+      > </a
+      ><a name="1063" href="lib.types.Word.html#820" class="Bound"
+      >A</a
+      ><a name="1064"
+      > </a
+      ><a name="1065" class="Symbol"
+      >&#8594;</a
+      ><a name="1066"
+      > </a
+      ><a name="1067" href="lib.types.Group.html#6903" class="Field"
+      >G.El</a
+      ><a name="1071" class="Symbol"
+      >)</a
+      ><a name="1072"
+      >
+  </a
+      ><a name="1075" href="lib.types.Word.html#1029" class="Function"
+      >Word-extend&#7475;</a
+      ><a name="1087"
+      > </a
+      ><a name="1088" href="lib.types.Word.html#1088" class="Bound"
+      >f</a
+      ><a name="1089"
+      > </a
+      ><a name="1090" class="Symbol"
+      >=</a
+      ><a name="1091"
+      > </a
+      ><a name="1092" href="lib.types.List.html#2325" class="Function"
+      >foldr</a
+      ><a name="1097"
+      > </a
+      ><a name="1098" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="1104"
+      > </a
+      ><a name="1105" href="lib.types.Group.html#276" class="Function"
+      >G.ident</a
+      ><a name="1112"
+      > </a
+      ><a name="1113" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1114"
+      > </a
+      ><a name="1115" href="lib.types.List.html#4007" class="Function"
+      >map</a
+      ><a name="1118"
+      > </a
+      ><a name="1119" class="Symbol"
+      >(</a
+      ><a name="1120" href="lib.types.Word.html#892" class="Function"
+      >PlusMinus-extend&#7475;</a
+      ><a name="1137"
+      > </a
+      ><a name="1138" href="lib.types.Word.html#1088" class="Bound"
+      >f</a
+      ><a name="1139" class="Symbol"
+      >)</a
+      ><a name="1140"
+      >
+
+  </a
+      ><a name="1144" class="Keyword"
+      >abstract</a
+      ><a name="1152"
+      >
+    </a
+      ><a name="1157" href="lib.types.Word.html#1157" class="Function"
+      >Word-extend&#7475;-++</a
+      ><a name="1172"
+      > </a
+      ><a name="1173" class="Symbol"
+      >:</a
+      ><a name="1174"
+      > </a
+      ><a name="1175" class="Symbol"
+      >&#8704;</a
+      ><a name="1176"
+      > </a
+      ><a name="1177" href="lib.types.Word.html#1177" class="Bound"
+      >f</a
+      ><a name="1178"
+      > </a
+      ><a name="1179" href="lib.types.Word.html#1179" class="Bound"
+      >l&#8321;</a
+      ><a name="1181"
+      > </a
+      ><a name="1182" href="lib.types.Word.html#1182" class="Bound"
+      >l&#8322;</a
+      ><a name="1184"
+      >
+      </a
+      ><a name="1191" class="Symbol"
+      >&#8594;</a
+      ><a name="1192"
+      > </a
+      ><a name="1193" href="lib.types.Word.html#1029" class="Function"
+      >Word-extend&#7475;</a
+      ><a name="1205"
+      > </a
+      ><a name="1206" href="lib.types.Word.html#1177" class="Bound"
+      >f</a
+      ><a name="1207"
+      > </a
+      ><a name="1208" class="Symbol"
+      >(</a
+      ><a name="1209" href="lib.types.Word.html#1179" class="Bound"
+      >l&#8321;</a
+      ><a name="1211"
+      > </a
+      ><a name="1212" href="lib.types.List.html#330" class="Function Operator"
+      >++</a
+      ><a name="1214"
+      > </a
+      ><a name="1215" href="lib.types.Word.html#1182" class="Bound"
+      >l&#8322;</a
+      ><a name="1217" class="Symbol"
+      >)</a
+      ><a name="1218"
+      > </a
+      ><a name="1219" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="1228"
+      > </a
+      ><a name="1229" class="Symbol"
+      >(</a
+      ><a name="1230" href="lib.types.Word.html#1029" class="Function"
+      >Word-extend&#7475;</a
+      ><a name="1242"
+      > </a
+      ><a name="1243" href="lib.types.Word.html#1177" class="Bound"
+      >f</a
+      ><a name="1244"
+      > </a
+      ><a name="1245" href="lib.types.Word.html#1179" class="Bound"
+      >l&#8321;</a
+      ><a name="1247" class="Symbol"
+      >)</a
+      ><a name="1248"
+      > </a
+      ><a name="1249" class="Symbol"
+      >(</a
+      ><a name="1250" href="lib.types.Word.html#1029" class="Function"
+      >Word-extend&#7475;</a
+      ><a name="1262"
+      > </a
+      ><a name="1263" href="lib.types.Word.html#1177" class="Bound"
+      >f</a
+      ><a name="1264"
+      > </a
+      ><a name="1265" href="lib.types.Word.html#1182" class="Bound"
+      >l&#8322;</a
+      ><a name="1267" class="Symbol"
+      >)</a
+      ><a name="1268"
+      >
+    </a
+      ><a name="1273" href="lib.types.Word.html#1157" class="Function"
+      >Word-extend&#7475;-++</a
+      ><a name="1288"
+      > </a
+      ><a name="1289" href="lib.types.Word.html#1289" class="Bound"
+      >f</a
+      ><a name="1290"
+      > </a
+      ><a name="1291" href="lib.types.List.html#236" class="InductiveConstructor"
+      >nil</a
+      ><a name="1294"
+      > </a
+      ><a name="1295" href="lib.types.Word.html#1295" class="Bound"
+      >l&#8322;</a
+      ><a name="1297"
+      > </a
+      ><a name="1298" class="Symbol"
+      >=</a
+      ><a name="1299"
+      > </a
+      ><a name="1300" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1301"
+      > </a
+      ><a name="1302" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" href="lib.types.Group.html#339" class="Function"
+      >G.unit-l</a
+      ><a name="1312"
+      > </a
+      ><a name="1313" class="Symbol"
+      >_</a
+      ><a name="1314"
+      >
+    </a
+      ><a name="1319" href="lib.types.Word.html#1157" class="Function"
+      >Word-extend&#7475;-++</a
+      ><a name="1334"
+      > </a
+      ><a name="1335" href="lib.types.Word.html#1335" class="Bound"
+      >f</a
+      ><a name="1336"
+      > </a
+      ><a name="1337" class="Symbol"
+      >(</a
+      ><a name="1338" href="lib.types.Word.html#1338" class="Bound"
+      >x</a
+      ><a name="1339"
+      > </a
+      ><a name="1340" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="1342"
+      > </a
+      ><a name="1343" href="lib.types.Word.html#1343" class="Bound"
+      >l&#8321;</a
+      ><a name="1345" class="Symbol"
+      >)</a
+      ><a name="1346"
+      > </a
+      ><a name="1347" href="lib.types.Word.html#1347" class="Bound"
+      >l&#8322;</a
+      ><a name="1349"
+      > </a
+      ><a name="1350" class="Symbol"
+      >=</a
+      ><a name="1351"
+      >
+        </a
+      ><a name="1360" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1362"
+      > </a
+      ><a name="1363" class="Symbol"
+      >(</a
+      ><a name="1364" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="1370"
+      > </a
+      ><a name="1371" class="Symbol"
+      >(</a
+      ><a name="1372" href="lib.types.Word.html#892" class="Function"
+      >PlusMinus-extend&#7475;</a
+      ><a name="1389"
+      > </a
+      ><a name="1390" href="lib.types.Word.html#1335" class="Bound"
+      >f</a
+      ><a name="1391"
+      > </a
+      ><a name="1392" href="lib.types.Word.html#1338" class="Bound"
+      >x</a
+      ><a name="1393" class="Symbol"
+      >))</a
+      ><a name="1395"
+      > </a
+      ><a name="1396" class="Symbol"
+      >(</a
+      ><a name="1397" href="lib.types.Word.html#1157" class="Function"
+      >Word-extend&#7475;-++</a
+      ><a name="1412"
+      > </a
+      ><a name="1413" href="lib.types.Word.html#1335" class="Bound"
+      >f</a
+      ><a name="1414"
+      > </a
+      ><a name="1415" href="lib.types.Word.html#1343" class="Bound"
+      >l&#8321;</a
+      ><a name="1417"
+      > </a
+      ><a name="1418" href="lib.types.Word.html#1347" class="Bound"
+      >l&#8322;</a
+      ><a name="1420" class="Symbol"
+      >)</a
+      ><a name="1421"
+      >
+      </a
+      ><a name="1428" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1429"
+      > </a
+      ><a name="1430" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1431"
+      > </a
+      ><a name="1432" class="Symbol"
+      >(</a
+      ><a name="1433" href="lib.types.Group.html#376" class="Function"
+      >G.assoc</a
+      ><a name="1440"
+      > </a
+      ><a name="1441" class="Symbol"
+      >(</a
+      ><a name="1442" href="lib.types.Word.html#892" class="Function"
+      >PlusMinus-extend&#7475;</a
+      ><a name="1459"
+      > </a
+      ><a name="1460" href="lib.types.Word.html#1335" class="Bound"
+      >f</a
+      ><a name="1461"
+      > </a
+      ><a name="1462" href="lib.types.Word.html#1338" class="Bound"
+      >x</a
+      ><a name="1463" class="Symbol"
+      >)</a
+      ><a name="1464"
+      > </a
+      ><a name="1465" class="Symbol"
+      >(</a
+      ><a name="1466" href="lib.types.Word.html#1029" class="Function"
+      >Word-extend&#7475;</a
+      ><a name="1478"
+      > </a
+      ><a name="1479" href="lib.types.Word.html#1335" class="Bound"
+      >f</a
+      ><a name="1480"
+      > </a
+      ><a name="1481" href="lib.types.Word.html#1343" class="Bound"
+      >l&#8321;</a
+      ><a name="1483" class="Symbol"
+      >)</a
+      ><a name="1484"
+      >  </a
+      ><a name="1486" class="Symbol"
+      >(</a
+      ><a name="1487" href="lib.types.Word.html#1029" class="Function"
+      >Word-extend&#7475;</a
+      ><a name="1499"
+      > </a
+      ><a name="1500" href="lib.types.Word.html#1335" class="Bound"
+      >f</a
+      ><a name="1501"
+      > </a
+      ><a name="1502" href="lib.types.Word.html#1347" class="Bound"
+      >l&#8322;</a
+      ><a name="1504" class="Symbol"
+      >))</a
+      ><a name="1506"
+      >
+
+</a
+      ><a name="1508" class="Keyword"
+      >module</a
+      ><a name="1514"
+      > </a
+      ><a name="1515" href="lib.types.Word.html#1515" class="Module"
+      >_</a
+      ><a name="1516"
+      > </a
+      ><a name="1517" class="Symbol"
+      >{</a
+      ><a name="1518" href="lib.types.Word.html#1518" class="Bound"
+      >A</a
+      ><a name="1519"
+      > </a
+      ><a name="1520" class="Symbol"
+      >:</a
+      ><a name="1521"
+      > </a
+      ><a name="1522" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1526"
+      > </a
+      ><a name="1527" href="lib.types.Word.html#274" class="Bound"
+      >i</a
+      ><a name="1528" class="Symbol"
+      >}</a
+      ><a name="1529"
+      > </a
+      ><a name="1530" class="Symbol"
+      >{</a
+      ><a name="1531" href="lib.types.Word.html#1531" class="Bound"
+      >j</a
+      ><a name="1532" class="Symbol"
+      >}</a
+      ><a name="1533"
+      > </a
+      ><a name="1534" class="Symbol"
+      >(</a
+      ><a name="1535" href="lib.types.Word.html#1535" class="Bound"
+      >G</a
+      ><a name="1536"
+      > </a
+      ><a name="1537" class="Symbol"
+      >:</a
+      ><a name="1538"
+      > </a
+      ><a name="1539" href="lib.types.Group.html#7210" class="Function"
+      >AbGroup</a
+      ><a name="1546"
+      > </a
+      ><a name="1547" href="lib.types.Word.html#1531" class="Bound"
+      >j</a
+      ><a name="1548" class="Symbol"
+      >)</a
+      ><a name="1549"
+      > </a
+      ><a name="1550" class="Keyword"
+      >where</a
+      ><a name="1555"
+      >
+  </a
+      ><a name="1558" class="Keyword"
+      >private</a
+      ><a name="1565"
+      >
+    </a
+      ><a name="1570" class="Keyword"
+      >module</a
+      ><a name="1576"
+      > </a
+      ><a name="1577" href="lib.types.Word.html#1577" class="Module"
+      >G</a
+      ><a name="1578"
+      > </a
+      ><a name="1579" class="Symbol"
+      >=</a
+      ><a name="1580"
+      > </a
+      ><a name="1581" href="lib.types.Group.html#7340" class="Module"
+      >AbGroup</a
+      ><a name="1588"
+      > </a
+      ><a name="1589" href="lib.types.Word.html#1535" class="Bound"
+      >G</a
+      ><a name="1590"
+      >
+
+  </a
+      ><a name="1594" class="Keyword"
+      >abstract</a
+      ><a name="1602"
+      >
+    </a
+      ><a name="1607" href="lib.types.Word.html#1607" class="Function"
+      >PlusMinus-extend&#7475;-comp</a
+      ><a name="1629"
+      > </a
+      ><a name="1630" class="Symbol"
+      >:</a
+      ><a name="1631"
+      > </a
+      ><a name="1632" class="Symbol"
+      >&#8704;</a
+      ><a name="1633"
+      > </a
+      ><a name="1634" class="Symbol"
+      >(</a
+      ><a name="1635" href="lib.types.Word.html#1635" class="Bound"
+      >f</a
+      ><a name="1636"
+      > </a
+      ><a name="1637" href="lib.types.Word.html#1637" class="Bound"
+      >g</a
+      ><a name="1638"
+      > </a
+      ><a name="1639" class="Symbol"
+      >:</a
+      ><a name="1640"
+      > </a
+      ><a name="1641" href="lib.types.Word.html#1518" class="Bound"
+      >A</a
+      ><a name="1642"
+      > </a
+      ><a name="1643" class="Symbol"
+      >&#8594;</a
+      ><a name="1644"
+      > </a
+      ><a name="1645" href="lib.types.Group.html#6903" class="Function"
+      >G.El</a
+      ><a name="1649" class="Symbol"
+      >)</a
+      ><a name="1650"
+      > </a
+      ><a name="1651" href="lib.types.Word.html#1651" class="Bound"
+      >x</a
+      ><a name="1652"
+      >
+      </a
+      ><a name="1659" class="Symbol"
+      >&#8594;</a
+      ><a name="1660"
+      > </a
+      ><a name="1661" href="lib.types.Word.html#892" class="Function"
+      >PlusMinus-extend&#7475;</a
+      ><a name="1678"
+      > </a
+      ><a name="1679" href="lib.types.Group.html#7376" class="Function"
+      >G.grp</a
+      ><a name="1684"
+      > </a
+      ><a name="1685" class="Symbol"
+      >(&#955;</a
+      ><a name="1687"
+      > </a
+      ><a name="1688" href="lib.types.Word.html#1688" class="Bound"
+      >a</a
+      ><a name="1689"
+      > </a
+      ><a name="1690" class="Symbol"
+      >&#8594;</a
+      ><a name="1691"
+      > </a
+      ><a name="1692" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="1698"
+      > </a
+      ><a name="1699" class="Symbol"
+      >(</a
+      ><a name="1700" href="lib.types.Word.html#1635" class="Bound"
+      >f</a
+      ><a name="1701"
+      > </a
+      ><a name="1702" href="lib.types.Word.html#1688" class="Bound"
+      >a</a
+      ><a name="1703" class="Symbol"
+      >)</a
+      ><a name="1704"
+      > </a
+      ><a name="1705" class="Symbol"
+      >(</a
+      ><a name="1706" href="lib.types.Word.html#1637" class="Bound"
+      >g</a
+      ><a name="1707"
+      > </a
+      ><a name="1708" href="lib.types.Word.html#1688" class="Bound"
+      >a</a
+      ><a name="1709" class="Symbol"
+      >))</a
+      ><a name="1711"
+      > </a
+      ><a name="1712" href="lib.types.Word.html#1651" class="Bound"
+      >x</a
+      ><a name="1713"
+      >
+      </a
+      ><a name="1720" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1722"
+      > </a
+      ><a name="1723" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="1729"
+      > </a
+      ><a name="1730" class="Symbol"
+      >(</a
+      ><a name="1731" href="lib.types.Word.html#892" class="Function"
+      >PlusMinus-extend&#7475;</a
+      ><a name="1748"
+      > </a
+      ><a name="1749" href="lib.types.Group.html#7376" class="Function"
+      >G.grp</a
+      ><a name="1754"
+      > </a
+      ><a name="1755" href="lib.types.Word.html#1635" class="Bound"
+      >f</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" href="lib.types.Word.html#1651" class="Bound"
+      >x</a
+      ><a name="1758" class="Symbol"
+      >)</a
+      ><a name="1759"
+      > </a
+      ><a name="1760" class="Symbol"
+      >(</a
+      ><a name="1761" href="lib.types.Word.html#892" class="Function"
+      >PlusMinus-extend&#7475;</a
+      ><a name="1778"
+      > </a
+      ><a name="1779" href="lib.types.Group.html#7376" class="Function"
+      >G.grp</a
+      ><a name="1784"
+      > </a
+      ><a name="1785" href="lib.types.Word.html#1637" class="Bound"
+      >g</a
+      ><a name="1786"
+      > </a
+      ><a name="1787" href="lib.types.Word.html#1651" class="Bound"
+      >x</a
+      ><a name="1788" class="Symbol"
+      >)</a
+      ><a name="1789"
+      >
+    </a
+      ><a name="1794" href="lib.types.Word.html#1607" class="Function"
+      >PlusMinus-extend&#7475;-comp</a
+      ><a name="1816"
+      > </a
+      ><a name="1817" href="lib.types.Word.html#1817" class="Bound"
+      >f</a
+      ><a name="1818"
+      > </a
+      ><a name="1819" href="lib.types.Word.html#1819" class="Bound"
+      >g</a
+      ><a name="1820"
+      > </a
+      ><a name="1821" class="Symbol"
+      >(</a
+      ><a name="1822" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1825"
+      > </a
+      ><a name="1826" href="lib.types.Word.html#1826" class="Bound"
+      >a</a
+      ><a name="1827" class="Symbol"
+      >)</a
+      ><a name="1828"
+      > </a
+      ><a name="1829" class="Symbol"
+      >=</a
+      ><a name="1830"
+      > </a
+      ><a name="1831" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1834"
+      >
+    </a
+      ><a name="1839" href="lib.types.Word.html#1607" class="Function"
+      >PlusMinus-extend&#7475;-comp</a
+      ><a name="1861"
+      > </a
+      ><a name="1862" href="lib.types.Word.html#1862" class="Bound"
+      >f</a
+      ><a name="1863"
+      > </a
+      ><a name="1864" href="lib.types.Word.html#1864" class="Bound"
+      >g</a
+      ><a name="1865"
+      > </a
+      ><a name="1866" class="Symbol"
+      >(</a
+      ><a name="1867" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1870"
+      > </a
+      ><a name="1871" href="lib.types.Word.html#1871" class="Bound"
+      >a</a
+      ><a name="1872" class="Symbol"
+      >)</a
+      ><a name="1873"
+      > </a
+      ><a name="1874" class="Symbol"
+      >=</a
+      ><a name="1875"
+      > </a
+      ><a name="1876" href="lib.types.Group.html#2376" class="Function"
+      >G.inv-comp</a
+      ><a name="1886"
+      > </a
+      ><a name="1887" class="Symbol"
+      >(</a
+      ><a name="1888" href="lib.types.Word.html#1862" class="Bound"
+      >f</a
+      ><a name="1889"
+      > </a
+      ><a name="1890" href="lib.types.Word.html#1871" class="Bound"
+      >a</a
+      ><a name="1891" class="Symbol"
+      >)</a
+      ><a name="1892"
+      > </a
+      ><a name="1893" class="Symbol"
+      >(</a
+      ><a name="1894" href="lib.types.Word.html#1864" class="Bound"
+      >g</a
+      ><a name="1895"
+      > </a
+      ><a name="1896" href="lib.types.Word.html#1871" class="Bound"
+      >a</a
+      ><a name="1897" class="Symbol"
+      >)</a
+      ><a name="1898"
+      > </a
+      ><a name="1899" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1900"
+      > </a
+      ><a name="1901" href="lib.types.Group.html#7390" class="Function"
+      >G.comm</a
+      ><a name="1907"
+      > </a
+      ><a name="1908" class="Symbol"
+      >(</a
+      ><a name="1909" href="lib.types.Group.html#292" class="Function"
+      >G.inv</a
+      ><a name="1914"
+      > </a
+      ><a name="1915" class="Symbol"
+      >(</a
+      ><a name="1916" href="lib.types.Word.html#1864" class="Bound"
+      >g</a
+      ><a name="1917"
+      > </a
+      ><a name="1918" href="lib.types.Word.html#1871" class="Bound"
+      >a</a
+      ><a name="1919" class="Symbol"
+      >))</a
+      ><a name="1921"
+      > </a
+      ><a name="1922" class="Symbol"
+      >(</a
+      ><a name="1923" href="lib.types.Group.html#292" class="Function"
+      >G.inv</a
+      ><a name="1928"
+      > </a
+      ><a name="1929" class="Symbol"
+      >(</a
+      ><a name="1930" href="lib.types.Word.html#1862" class="Bound"
+      >f</a
+      ><a name="1931"
+      > </a
+      ><a name="1932" href="lib.types.Word.html#1871" class="Bound"
+      >a</a
+      ><a name="1933" class="Symbol"
+      >))</a
+      ><a name="1935"
+      >
+
+    </a
+      ><a name="1941" href="lib.types.Word.html#1941" class="Function"
+      >Word-extend&#7475;-comp</a
+      ><a name="1958"
+      > </a
+      ><a name="1959" class="Symbol"
+      >:</a
+      ><a name="1960"
+      > </a
+      ><a name="1961" class="Symbol"
+      >&#8704;</a
+      ><a name="1962"
+      > </a
+      ><a name="1963" class="Symbol"
+      >(</a
+      ><a name="1964" href="lib.types.Word.html#1964" class="Bound"
+      >f</a
+      ><a name="1965"
+      > </a
+      ><a name="1966" href="lib.types.Word.html#1966" class="Bound"
+      >g</a
+      ><a name="1967"
+      > </a
+      ><a name="1968" class="Symbol"
+      >:</a
+      ><a name="1969"
+      > </a
+      ><a name="1970" href="lib.types.Word.html#1518" class="Bound"
+      >A</a
+      ><a name="1971"
+      > </a
+      ><a name="1972" class="Symbol"
+      >&#8594;</a
+      ><a name="1973"
+      > </a
+      ><a name="1974" href="lib.types.Group.html#6903" class="Function"
+      >G.El</a
+      ><a name="1978" class="Symbol"
+      >)</a
+      ><a name="1979"
+      > </a
+      ><a name="1980" href="lib.types.Word.html#1980" class="Bound"
+      >l</a
+      ><a name="1981"
+      >
+      </a
+      ><a name="1988" class="Symbol"
+      >&#8594;</a
+      ><a name="1989"
+      > </a
+      ><a name="1990" href="lib.types.Word.html#1029" class="Function"
+      >Word-extend&#7475;</a
+      ><a name="2002"
+      > </a
+      ><a name="2003" href="lib.types.Group.html#7376" class="Function"
+      >G.grp</a
+      ><a name="2008"
+      > </a
+      ><a name="2009" class="Symbol"
+      >(&#955;</a
+      ><a name="2011"
+      > </a
+      ><a name="2012" href="lib.types.Word.html#2012" class="Bound"
+      >a</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" class="Symbol"
+      >&#8594;</a
+      ><a name="2015"
+      > </a
+      ><a name="2016" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="2022"
+      > </a
+      ><a name="2023" class="Symbol"
+      >(</a
+      ><a name="2024" href="lib.types.Word.html#1964" class="Bound"
+      >f</a
+      ><a name="2025"
+      > </a
+      ><a name="2026" href="lib.types.Word.html#2012" class="Bound"
+      >a</a
+      ><a name="2027" class="Symbol"
+      >)</a
+      ><a name="2028"
+      > </a
+      ><a name="2029" class="Symbol"
+      >(</a
+      ><a name="2030" href="lib.types.Word.html#1966" class="Bound"
+      >g</a
+      ><a name="2031"
+      > </a
+      ><a name="2032" href="lib.types.Word.html#2012" class="Bound"
+      >a</a
+      ><a name="2033" class="Symbol"
+      >))</a
+      ><a name="2035"
+      > </a
+      ><a name="2036" href="lib.types.Word.html#1980" class="Bound"
+      >l</a
+      ><a name="2037"
+      >
+      </a
+      ><a name="2044" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2046"
+      > </a
+      ><a name="2047" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="2053"
+      > </a
+      ><a name="2054" class="Symbol"
+      >(</a
+      ><a name="2055" href="lib.types.Word.html#1029" class="Function"
+      >Word-extend&#7475;</a
+      ><a name="2067"
+      > </a
+      ><a name="2068" href="lib.types.Group.html#7376" class="Function"
+      >G.grp</a
+      ><a name="2073"
+      > </a
+      ><a name="2074" href="lib.types.Word.html#1964" class="Bound"
+      >f</a
+      ><a name="2075"
+      > </a
+      ><a name="2076" href="lib.types.Word.html#1980" class="Bound"
+      >l</a
+      ><a name="2077" class="Symbol"
+      >)</a
+      ><a name="2078"
+      > </a
+      ><a name="2079" class="Symbol"
+      >(</a
+      ><a name="2080" href="lib.types.Word.html#1029" class="Function"
+      >Word-extend&#7475;</a
+      ><a name="2092"
+      > </a
+      ><a name="2093" href="lib.types.Group.html#7376" class="Function"
+      >G.grp</a
+      ><a name="2098"
+      > </a
+      ><a name="2099" href="lib.types.Word.html#1966" class="Bound"
+      >g</a
+      ><a name="2100"
+      > </a
+      ><a name="2101" href="lib.types.Word.html#1980" class="Bound"
+      >l</a
+      ><a name="2102" class="Symbol"
+      >)</a
+      ><a name="2103"
+      >
+    </a
+      ><a name="2108" href="lib.types.Word.html#1941" class="Function"
+      >Word-extend&#7475;-comp</a
+      ><a name="2125"
+      > </a
+      ><a name="2126" href="lib.types.Word.html#2126" class="Bound"
+      >f</a
+      ><a name="2127"
+      > </a
+      ><a name="2128" href="lib.types.Word.html#2128" class="Bound"
+      >g</a
+      ><a name="2129"
+      > </a
+      ><a name="2130" href="lib.types.List.html#236" class="InductiveConstructor"
+      >nil</a
+      ><a name="2133"
+      > </a
+      ><a name="2134" class="Symbol"
+      >=</a
+      ><a name="2135"
+      > </a
+      ><a name="2136" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2137"
+      > </a
+      ><a name="2138" class="Symbol"
+      >(</a
+      ><a name="2139" href="lib.types.Group.html#339" class="Function"
+      >G.unit-l</a
+      ><a name="2147"
+      > </a
+      ><a name="2148" href="lib.types.Group.html#276" class="Function"
+      >G.ident</a
+      ><a name="2155" class="Symbol"
+      >)</a
+      ><a name="2156"
+      >
+    </a
+      ><a name="2161" href="lib.types.Word.html#1941" class="Function"
+      >Word-extend&#7475;-comp</a
+      ><a name="2178"
+      > </a
+      ><a name="2179" href="lib.types.Word.html#2179" class="Bound"
+      >f</a
+      ><a name="2180"
+      > </a
+      ><a name="2181" href="lib.types.Word.html#2181" class="Bound"
+      >g</a
+      ><a name="2182"
+      > </a
+      ><a name="2183" class="Symbol"
+      >(</a
+      ><a name="2184" href="lib.types.Word.html#2184" class="Bound"
+      >x</a
+      ><a name="2185"
+      > </a
+      ><a name="2186" href="lib.types.List.html#251" class="InductiveConstructor Operator"
+      >::</a
+      ><a name="2188"
+      > </a
+      ><a name="2189" href="lib.types.Word.html#2189" class="Bound"
+      >l</a
+      ><a name="2190" class="Symbol"
+      >)</a
+      ><a name="2191"
+      > </a
+      ><a name="2192" class="Symbol"
+      >=</a
+      ><a name="2193"
+      >
+        </a
+      ><a name="2202" href="lib.PathFunctor.html#3837" class="Function"
+      >ap2</a
+      ><a name="2205"
+      > </a
+      ><a name="2206" href="lib.types.Group.html#313" class="Function"
+      >G.comp</a
+      ><a name="2212"
+      > </a
+      ><a name="2213" class="Symbol"
+      >(</a
+      ><a name="2214" href="lib.types.Word.html#1607" class="Function"
+      >PlusMinus-extend&#7475;-comp</a
+      ><a name="2236"
+      > </a
+      ><a name="2237" href="lib.types.Word.html#2179" class="Bound"
+      >f</a
+      ><a name="2238"
+      > </a
+      ><a name="2239" href="lib.types.Word.html#2181" class="Bound"
+      >g</a
+      ><a name="2240"
+      > </a
+      ><a name="2241" href="lib.types.Word.html#2184" class="Bound"
+      >x</a
+      ><a name="2242" class="Symbol"
+      >)</a
+      ><a name="2243"
+      > </a
+      ><a name="2244" class="Symbol"
+      >(</a
+      ><a name="2245" href="lib.types.Word.html#1941" class="Function"
+      >Word-extend&#7475;-comp</a
+      ><a name="2262"
+      > </a
+      ><a name="2263" href="lib.types.Word.html#2179" class="Bound"
+      >f</a
+      ><a name="2264"
+      > </a
+      ><a name="2265" href="lib.types.Word.html#2181" class="Bound"
+      >g</a
+      ><a name="2266"
+      > </a
+      ><a name="2267" href="lib.types.Word.html#2189" class="Bound"
+      >l</a
+      ><a name="2268" class="Symbol"
+      >)</a
+      ><a name="2269"
+      >
+      </a
+      ><a name="2276" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2277"
+      > </a
+      ><a name="2278" href="lib.types.Group.html#7443" class="Function"
+      >G.interchange</a
+      ><a name="2291"
+      > </a
+      ><a name="2292" class="Symbol"
+      >(</a
+      ><a name="2293" href="lib.types.Word.html#892" class="Function"
+      >PlusMinus-extend&#7475;</a
+      ><a name="2310"
+      > </a
+      ><a name="2311" href="lib.types.Group.html#7376" class="Function"
+      >G.grp</a
+      ><a name="2316"
+      > </a
+      ><a name="2317" href="lib.types.Word.html#2179" class="Bound"
+      >f</a
+      ><a name="2318"
+      > </a
+      ><a name="2319" href="lib.types.Word.html#2184" class="Bound"
+      >x</a
+      ><a name="2320" class="Symbol"
+      >)</a
+      ><a name="2321"
+      > </a
+      ><a name="2322" class="Symbol"
+      >(</a
+      ><a name="2323" href="lib.types.Word.html#892" class="Function"
+      >PlusMinus-extend&#7475;</a
+      ><a name="2340"
+      > </a
+      ><a name="2341" href="lib.types.Group.html#7376" class="Function"
+      >G.grp</a
+      ><a name="2346"
+      > </a
+      ><a name="2347" href="lib.types.Word.html#2181" class="Bound"
+      >g</a
+      ><a name="2348"
+      > </a
+      ><a name="2349" href="lib.types.Word.html#2184" class="Bound"
+      >x</a
+      ><a name="2350" class="Symbol"
+      >)</a
+      ><a name="2351"
+      >
+          </a
+      ><a name="2362" class="Symbol"
+      >(</a
+      ><a name="2363" href="lib.types.Word.html#1029" class="Function"
+      >Word-extend&#7475;</a
+      ><a name="2375"
+      > </a
+      ><a name="2376" href="lib.types.Group.html#7376" class="Function"
+      >G.grp</a
+      ><a name="2381"
+      > </a
+      ><a name="2382" href="lib.types.Word.html#2179" class="Bound"
+      >f</a
+      ><a name="2383"
+      > </a
+      ><a name="2384" href="lib.types.Word.html#2189" class="Bound"
+      >l</a
+      ><a name="2385" class="Symbol"
+      >)</a
+      ><a name="2386"
+      > </a
+      ><a name="2387" class="Symbol"
+      >(</a
+      ><a name="2388" href="lib.types.Word.html#1029" class="Function"
+      >Word-extend&#7475;</a
+      ><a name="2400"
+      > </a
+      ><a name="2401" href="lib.types.Group.html#7376" class="Function"
+      >G.grp</a
+      ><a name="2406"
+      > </a
+      ><a name="2407" href="lib.types.Word.html#2181" class="Bound"
+      >g</a
+      ><a name="2408"
+      > </a
+      ><a name="2409" href="lib.types.Word.html#2189" class="Bound"
+      >l</a
+      ><a name="2410" class="Symbol"
+      >)</a
+      ><a name="2411"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

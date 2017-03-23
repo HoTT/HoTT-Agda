@@ -1,0 +1,624 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cw.cohomology.GridMap</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+
+</a
+      ><a name="60" class="Keyword"
+      >module</a
+      ><a name="66"
+      > </a
+      ><a name="67" href="cw.cohomology.GridMap.html#1" class="Module"
+      >cw.cohomology.GridMap</a
+      ><a name="88"
+      > </a
+      ><a name="89" class="Symbol"
+      >{</a
+      ><a name="90" href="cw.cohomology.GridMap.html#90" class="Bound"
+      >i</a
+      ><a name="91"
+      > </a
+      ><a name="92" href="cw.cohomology.GridMap.html#92" class="Bound"
+      >j</a
+      ><a name="93"
+      > </a
+      ><a name="94" href="cw.cohomology.GridMap.html#94" class="Bound"
+      >k</a
+      ><a name="95" class="Symbol"
+      >}</a
+      ><a name="96"
+      >
+  </a
+      ><a name="99" class="Symbol"
+      >{</a
+      ><a name="100" href="cw.cohomology.GridMap.html#100" class="Bound"
+      >A</a
+      ><a name="101"
+      > </a
+      ><a name="102" class="Symbol"
+      >:</a
+      ><a name="103"
+      > </a
+      ><a name="104" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="108"
+      > </a
+      ><a name="109" href="cw.cohomology.GridMap.html#90" class="Bound"
+      >i</a
+      ><a name="110" class="Symbol"
+      >}</a
+      ><a name="111"
+      > </a
+      ><a name="112" class="Symbol"
+      >{</a
+      ><a name="113" href="cw.cohomology.GridMap.html#113" class="Bound"
+      >B</a
+      ><a name="114"
+      > </a
+      ><a name="115" class="Symbol"
+      >:</a
+      ><a name="116"
+      > </a
+      ><a name="117" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="121"
+      > </a
+      ><a name="122" href="cw.cohomology.GridMap.html#92" class="Bound"
+      >j</a
+      ><a name="123" class="Symbol"
+      >}</a
+      ><a name="124"
+      > </a
+      ><a name="125" class="Symbol"
+      >{</a
+      ><a name="126" href="cw.cohomology.GridMap.html#126" class="Bound"
+      >C</a
+      ><a name="127"
+      > </a
+      ><a name="128" class="Symbol"
+      >:</a
+      ><a name="129"
+      > </a
+      ><a name="130" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="134"
+      > </a
+      ><a name="135" href="cw.cohomology.GridMap.html#94" class="Bound"
+      >k</a
+      ><a name="136" class="Symbol"
+      >}</a
+      ><a name="137"
+      >
+  </a
+      ><a name="140" class="Symbol"
+      >(</a
+      ><a name="141" href="cw.cohomology.GridMap.html#141" class="Bound"
+      >f</a
+      ><a name="142"
+      > </a
+      ><a name="143" class="Symbol"
+      >:</a
+      ><a name="144"
+      > </a
+      ><a name="145" href="cw.cohomology.GridMap.html#100" class="Bound"
+      >A</a
+      ><a name="146"
+      > </a
+      ><a name="147" class="Symbol"
+      >&#8594;</a
+      ><a name="148"
+      > </a
+      ><a name="149" href="cw.cohomology.GridMap.html#113" class="Bound"
+      >B</a
+      ><a name="150" class="Symbol"
+      >)</a
+      ><a name="151"
+      > </a
+      ><a name="152" class="Symbol"
+      >(</a
+      ><a name="153" href="cw.cohomology.GridMap.html#153" class="Bound"
+      >g</a
+      ><a name="154"
+      > </a
+      ><a name="155" class="Symbol"
+      >:</a
+      ><a name="156"
+      > </a
+      ><a name="157" href="cw.cohomology.GridMap.html#113" class="Bound"
+      >B</a
+      ><a name="158"
+      > </a
+      ><a name="159" class="Symbol"
+      >&#8594;</a
+      ><a name="160"
+      > </a
+      ><a name="161" href="cw.cohomology.GridMap.html#126" class="Bound"
+      >C</a
+      ><a name="162" class="Symbol"
+      >)</a
+      ><a name="163"
+      > </a
+      ><a name="164" class="Keyword"
+      >where</a
+      ><a name="169"
+      >
+
+  </a
+      ><a name="173" href="cw.cohomology.GridMap.html#173" class="Function"
+      >B/A</a
+      ><a name="176"
+      > </a
+      ><a name="177" class="Symbol"
+      >=</a
+      ><a name="178"
+      > </a
+      ><a name="179" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="186"
+      > </a
+      ><a name="187" href="cw.cohomology.GridMap.html#141" class="Bound"
+      >f</a
+      ><a name="188"
+      >
+  </a
+      ><a name="191" href="cw.cohomology.GridMap.html#191" class="Function"
+      >C/A</a
+      ><a name="194"
+      > </a
+      ><a name="195" class="Symbol"
+      >=</a
+      ><a name="196"
+      > </a
+      ><a name="197" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="204"
+      > </a
+      ><a name="205" class="Symbol"
+      >(</a
+      ><a name="206" href="cw.cohomology.GridMap.html#153" class="Bound"
+      >g</a
+      ><a name="207"
+      > </a
+      ><a name="208" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="209"
+      > </a
+      ><a name="210" href="cw.cohomology.GridMap.html#141" class="Bound"
+      >f</a
+      ><a name="211" class="Symbol"
+      >)</a
+      ><a name="212"
+      >
+  </a
+      ><a name="215" href="cw.cohomology.GridMap.html#215" class="Function"
+      >C/B</a
+      ><a name="218"
+      > </a
+      ><a name="219" class="Symbol"
+      >=</a
+      ><a name="220"
+      > </a
+      ><a name="221" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="228"
+      > </a
+      ><a name="229" href="cw.cohomology.GridMap.html#153" class="Bound"
+      >g</a
+      ><a name="230"
+      >
+
+  </a
+      ><a name="234" href="cw.cohomology.GridMap.html#234" class="Function"
+      >B/A-to-C/A-span-map</a
+      ><a name="253"
+      > </a
+      ><a name="254" class="Symbol"
+      >:</a
+      ><a name="255"
+      > </a
+      ><a name="256" href="lib.types.Span.html#2386" class="Record"
+      >SpanMap</a
+      ><a name="263"
+      > </a
+      ><a name="264" class="Symbol"
+      >(</a
+      ><a name="265" href="lib.types.Cofiber.html#369" class="Function"
+      >cofiber-span</a
+      ><a name="277"
+      > </a
+      ><a name="278" href="cw.cohomology.GridMap.html#141" class="Bound"
+      >f</a
+      ><a name="279" class="Symbol"
+      >)</a
+      ><a name="280"
+      > </a
+      ><a name="281" class="Symbol"
+      >(</a
+      ><a name="282" href="lib.types.Cofiber.html#369" class="Function"
+      >cofiber-span</a
+      ><a name="294"
+      > </a
+      ><a name="295" class="Symbol"
+      >(</a
+      ><a name="296" href="cw.cohomology.GridMap.html#153" class="Bound"
+      >g</a
+      ><a name="297"
+      > </a
+      ><a name="298" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="299"
+      > </a
+      ><a name="300" href="cw.cohomology.GridMap.html#141" class="Bound"
+      >f</a
+      ><a name="301" class="Symbol"
+      >))</a
+      ><a name="303"
+      >
+  </a
+      ><a name="306" href="cw.cohomology.GridMap.html#234" class="Function"
+      >B/A-to-C/A-span-map</a
+      ><a name="325"
+      > </a
+      ><a name="326" class="Symbol"
+      >=</a
+      ><a name="327"
+      > </a
+      ><a name="328" href="lib.types.Span.html#2556" class="InductiveConstructor"
+      >span-map</a
+      ><a name="336"
+      > </a
+      ><a name="337" class="Symbol"
+      >(</a
+      ><a name="338" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="341"
+      > </a
+      ><a name="342" class="Symbol"
+      >_)</a
+      ><a name="344"
+      > </a
+      ><a name="345" href="cw.cohomology.GridMap.html#153" class="Bound"
+      >g</a
+      ><a name="346"
+      > </a
+      ><a name="347" class="Symbol"
+      >(</a
+      ><a name="348" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="351"
+      > </a
+      ><a name="352" class="Symbol"
+      >_)</a
+      ><a name="354"
+      >
+    </a
+      ><a name="359" class="Symbol"
+      >(</a
+      ><a name="360" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="368"
+      > </a
+      ><a name="369" class="Symbol"
+      >&#955;</a
+      ><a name="370"
+      > </a
+      ><a name="371" href="cw.cohomology.GridMap.html#371" class="Bound"
+      >_</a
+      ><a name="372"
+      > </a
+      ><a name="373" class="Symbol"
+      >&#8594;</a
+      ><a name="374"
+      > </a
+      ><a name="375" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="378" class="Symbol"
+      >)</a
+      ><a name="379"
+      > </a
+      ><a name="380" class="Symbol"
+      >(</a
+      ><a name="381" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="389"
+      > </a
+      ><a name="390" class="Symbol"
+      >&#955;</a
+      ><a name="391"
+      > </a
+      ><a name="392" href="cw.cohomology.GridMap.html#392" class="Bound"
+      >_</a
+      ><a name="393"
+      > </a
+      ><a name="394" class="Symbol"
+      >&#8594;</a
+      ><a name="395"
+      > </a
+      ><a name="396" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="399" class="Symbol"
+      >)</a
+      ><a name="400"
+      >
+  </a
+      ><a name="403" class="Keyword"
+      >module</a
+      ><a name="409"
+      > </a
+      ><a name="410" href="cw.cohomology.GridMap.html#410" class="Module"
+      >B/AToC/A</a
+      ><a name="418"
+      > </a
+      ><a name="419" class="Symbol"
+      >=</a
+      ><a name="420"
+      > </a
+      ><a name="421" href="lib.types.PushoutFmap.html#291" class="Module"
+      >PushoutFmap</a
+      ><a name="432"
+      > </a
+      ><a name="433" href="cw.cohomology.GridMap.html#234" class="Function"
+      >B/A-to-C/A-span-map</a
+      ><a name="452"
+      >
+  </a
+      ><a name="455" href="cw.cohomology.GridMap.html#455" class="Function"
+      >B/A-to-C/A</a
+      ><a name="465"
+      > </a
+      ><a name="466" class="Symbol"
+      >:</a
+      ><a name="467"
+      > </a
+      ><a name="468" href="cw.cohomology.GridMap.html#173" class="Function"
+      >B/A</a
+      ><a name="471"
+      > </a
+      ><a name="472" class="Symbol"
+      >&#8594;</a
+      ><a name="473"
+      > </a
+      ><a name="474" href="cw.cohomology.GridMap.html#191" class="Function"
+      >C/A</a
+      ><a name="477"
+      >
+  </a
+      ><a name="480" href="cw.cohomology.GridMap.html#455" class="Function"
+      >B/A-to-C/A</a
+      ><a name="490"
+      > </a
+      ><a name="491" class="Symbol"
+      >=</a
+      ><a name="492"
+      > </a
+      ><a name="493" href="lib.types.Pushout.html#1397" class="Function"
+      >B/AToC/A.f</a
+      ><a name="503"
+      >
+
+  </a
+      ><a name="507" href="cw.cohomology.GridMap.html#507" class="Function"
+      >C/A-to-C/B-span-map</a
+      ><a name="526"
+      > </a
+      ><a name="527" class="Symbol"
+      >:</a
+      ><a name="528"
+      > </a
+      ><a name="529" href="lib.types.Span.html#2386" class="Record"
+      >SpanMap</a
+      ><a name="536"
+      > </a
+      ><a name="537" class="Symbol"
+      >(</a
+      ><a name="538" href="lib.types.Cofiber.html#369" class="Function"
+      >cofiber-span</a
+      ><a name="550"
+      > </a
+      ><a name="551" class="Symbol"
+      >(</a
+      ><a name="552" href="cw.cohomology.GridMap.html#153" class="Bound"
+      >g</a
+      ><a name="553"
+      > </a
+      ><a name="554" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="555"
+      > </a
+      ><a name="556" href="cw.cohomology.GridMap.html#141" class="Bound"
+      >f</a
+      ><a name="557" class="Symbol"
+      >))</a
+      ><a name="559"
+      > </a
+      ><a name="560" class="Symbol"
+      >(</a
+      ><a name="561" href="lib.types.Cofiber.html#369" class="Function"
+      >cofiber-span</a
+      ><a name="573"
+      > </a
+      ><a name="574" href="cw.cohomology.GridMap.html#153" class="Bound"
+      >g</a
+      ><a name="575" class="Symbol"
+      >)</a
+      ><a name="576"
+      >
+  </a
+      ><a name="579" href="cw.cohomology.GridMap.html#507" class="Function"
+      >C/A-to-C/B-span-map</a
+      ><a name="598"
+      > </a
+      ><a name="599" class="Symbol"
+      >=</a
+      ><a name="600"
+      > </a
+      ><a name="601" href="lib.types.Span.html#2556" class="InductiveConstructor"
+      >span-map</a
+      ><a name="609"
+      > </a
+      ><a name="610" class="Symbol"
+      >(</a
+      ><a name="611" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="614"
+      > </a
+      ><a name="615" class="Symbol"
+      >_)</a
+      ><a name="617"
+      > </a
+      ><a name="618" class="Symbol"
+      >(</a
+      ><a name="619" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="622"
+      > </a
+      ><a name="623" class="Symbol"
+      >_)</a
+      ><a name="625"
+      > </a
+      ><a name="626" href="cw.cohomology.GridMap.html#141" class="Bound"
+      >f</a
+      ><a name="627"
+      >
+    </a
+      ><a name="632" class="Symbol"
+      >(</a
+      ><a name="633" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="641"
+      > </a
+      ><a name="642" class="Symbol"
+      >&#955;</a
+      ><a name="643"
+      > </a
+      ><a name="644" href="cw.cohomology.GridMap.html#644" class="Bound"
+      >_</a
+      ><a name="645"
+      > </a
+      ><a name="646" class="Symbol"
+      >&#8594;</a
+      ><a name="647"
+      > </a
+      ><a name="648" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="651" class="Symbol"
+      >)</a
+      ><a name="652"
+      > </a
+      ><a name="653" class="Symbol"
+      >(</a
+      ><a name="654" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="662"
+      > </a
+      ><a name="663" class="Symbol"
+      >&#955;</a
+      ><a name="664"
+      > </a
+      ><a name="665" href="cw.cohomology.GridMap.html#665" class="Bound"
+      >_</a
+      ><a name="666"
+      > </a
+      ><a name="667" class="Symbol"
+      >&#8594;</a
+      ><a name="668"
+      > </a
+      ><a name="669" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="672" class="Symbol"
+      >)</a
+      ><a name="673"
+      >
+  </a
+      ><a name="676" class="Keyword"
+      >module</a
+      ><a name="682"
+      > </a
+      ><a name="683" href="cw.cohomology.GridMap.html#683" class="Module"
+      >C/AToC/B</a
+      ><a name="691"
+      > </a
+      ><a name="692" class="Symbol"
+      >=</a
+      ><a name="693"
+      > </a
+      ><a name="694" href="lib.types.PushoutFmap.html#291" class="Module"
+      >PushoutFmap</a
+      ><a name="705"
+      > </a
+      ><a name="706" href="cw.cohomology.GridMap.html#507" class="Function"
+      >C/A-to-C/B-span-map</a
+      ><a name="725"
+      >
+  </a
+      ><a name="728" href="cw.cohomology.GridMap.html#728" class="Function"
+      >C/A-to-C/B</a
+      ><a name="738"
+      > </a
+      ><a name="739" class="Symbol"
+      >:</a
+      ><a name="740"
+      > </a
+      ><a name="741" href="cw.cohomology.GridMap.html#191" class="Function"
+      >C/A</a
+      ><a name="744"
+      > </a
+      ><a name="745" class="Symbol"
+      >&#8594;</a
+      ><a name="746"
+      > </a
+      ><a name="747" href="cw.cohomology.GridMap.html#215" class="Function"
+      >C/B</a
+      ><a name="750"
+      >
+  </a
+      ><a name="753" href="cw.cohomology.GridMap.html#728" class="Function"
+      >C/A-to-C/B</a
+      ><a name="763"
+      > </a
+      ><a name="764" class="Symbol"
+      >=</a
+      ><a name="765"
+      > </a
+      ><a name="766" href="lib.types.Pushout.html#1397" class="Function"
+      >C/AToC/B.f</a
+      ><a name="776"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

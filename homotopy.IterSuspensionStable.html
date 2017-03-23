@@ -1,0 +1,1109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.IterSuspensionStable</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="homotopy.Freudenthal.html#1" class="Module"
+      >homotopy.Freudenthal</a
+      ><a name="91"
+      >
+
+</a
+      ><a name="93" class="Keyword"
+      >module</a
+      ><a name="99"
+      > </a
+      ><a name="100" href="homotopy.IterSuspensionStable.html#1" class="Module"
+      >homotopy.IterSuspensionStable</a
+      ><a name="129"
+      > </a
+      ><a name="130" class="Keyword"
+      >where</a
+      ><a name="135"
+      >
+
+</a
+      ><a name="137" class="Comment"
+      >{- &#960; (S k) (Ptd-Susp^ (S n) X) == &#960; k (Ptd-Susp^ n X), where k = S k'
+   Susp^Stable below assumes k &#8800; O instead of taking k' as the argument -}</a
+      ><a name="281"
+      >
+</a
+      ><a name="282" class="Keyword"
+      >module</a
+      ><a name="288"
+      > </a
+      ><a name="289" href="homotopy.IterSuspensionStable.html#289" class="Module"
+      >Susp^StableSucc</a
+      ><a name="304"
+      > </a
+      ><a name="305" class="Symbol"
+      >{</a
+      ><a name="306" href="homotopy.IterSuspensionStable.html#306" class="Bound"
+      >i</a
+      ><a name="307" class="Symbol"
+      >}</a
+      ><a name="308"
+      > </a
+      ><a name="309" class="Symbol"
+      >(</a
+      ><a name="310" href="homotopy.IterSuspensionStable.html#310" class="Bound"
+      >X</a
+      ><a name="311"
+      > </a
+      ><a name="312" class="Symbol"
+      >:</a
+      ><a name="313"
+      > </a
+      ><a name="314" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="317"
+      > </a
+      ><a name="318" href="homotopy.IterSuspensionStable.html#306" class="Bound"
+      >i</a
+      ><a name="319" class="Symbol"
+      >)</a
+      ><a name="320"
+      > </a
+      ><a name="321" class="Symbol"
+      >(</a
+      ><a name="322" href="homotopy.IterSuspensionStable.html#322" class="Bound"
+      >cX</a
+      ><a name="324"
+      > </a
+      ><a name="325" class="Symbol"
+      >:</a
+      ><a name="326"
+      > </a
+      ><a name="327" href="lib.NConnected.html#343" class="Function"
+      >is-connected</a
+      ><a name="339"
+      > </a
+      ><a name="340" class="Number"
+      >0</a
+      ><a name="341"
+      > </a
+      ><a name="342" class="Symbol"
+      >(</a
+      ><a name="343" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="346"
+      > </a
+      ><a name="347" href="homotopy.IterSuspensionStable.html#310" class="Bound"
+      >X</a
+      ><a name="348" class="Symbol"
+      >))</a
+      ><a name="350"
+      >
+  </a
+      ><a name="353" class="Symbol"
+      >(</a
+      ><a name="354" href="homotopy.IterSuspensionStable.html#354" class="Bound"
+      >k</a
+      ><a name="355"
+      > </a
+      ><a name="356" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="357"
+      > </a
+      ><a name="358" class="Symbol"
+      >:</a
+      ><a name="359"
+      > </a
+      ><a name="360" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="361" class="Symbol"
+      >)</a
+      ><a name="362"
+      > </a
+      ><a name="363" class="Symbol"
+      >(</a
+      ><a name="364" href="homotopy.IterSuspensionStable.html#364" class="Bound"
+      >Skle</a
+      ><a name="368"
+      > </a
+      ><a name="369" class="Symbol"
+      >:</a
+      ><a name="370"
+      > </a
+      ><a name="371" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="372"
+      > </a
+      ><a name="373" href="homotopy.IterSuspensionStable.html#354" class="Bound"
+      >k</a
+      ><a name="374"
+      > </a
+      ><a name="375" href="lib.types.Nat.html#1754" class="Function Operator"
+      >&#8804;</a
+      ><a name="376"
+      > </a
+      ><a name="377" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="378"
+      > </a
+      ><a name="379" href="lib.types.Nat.html#5773" class="Function Operator"
+      >*2</a
+      ><a name="381" class="Symbol"
+      >)</a
+      ><a name="382"
+      > </a
+      ><a name="383" class="Keyword"
+      >where</a
+      ><a name="388"
+      >
+
+  </a
+      ><a name="392" class="Comment"
+      >{- some numeric computations -}</a
+      ><a name="423"
+      >
+  </a
+      ><a name="426" class="Keyword"
+      >private</a
+      ><a name="433"
+      >
+    </a
+      ><a name="438" href="homotopy.IterSuspensionStable.html#438" class="Function"
+      >Skle'</a
+      ><a name="443"
+      > </a
+      ><a name="444" class="Symbol"
+      >:</a
+      ><a name="445"
+      > </a
+      ><a name="446" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="447"
+      > </a
+      ><a name="448" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="449"
+      > </a
+      ><a name="450" href="homotopy.IterSuspensionStable.html#354" class="Bound"
+      >k</a
+      ><a name="451"
+      > </a
+      ><a name="452" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="453"
+      > </a
+      ><a name="454" href="lib.types.TLevel.html#889" class="Function Operator"
+      >&#8804;T</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="lib.types.TLevel.html#178" class="Function Operator"
+      >&#10216;</a
+      ><a name="458"
+      > </a
+      ><a name="459" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="460"
+      > </a
+      ><a name="461" href="lib.types.TLevel.html#178" class="Function Operator"
+      >&#10217;&#8331;&#8321;</a
+      ><a name="464"
+      > </a
+      ><a name="465" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="468"
+      > </a
+      ><a name="469" href="lib.types.TLevel.html#178" class="Function Operator"
+      >&#10216;</a
+      ><a name="470"
+      > </a
+      ><a name="471" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="472"
+      > </a
+      ><a name="473" href="lib.types.TLevel.html#178" class="Function Operator"
+      >&#10217;&#8331;&#8321;</a
+      ><a name="476"
+      >
+    </a
+      ><a name="481" href="homotopy.IterSuspensionStable.html#438" class="Function"
+      >Skle'</a
+      ><a name="486"
+      > </a
+      ><a name="487" class="Symbol"
+      >=</a
+      ><a name="488"
+      > </a
+      ><a name="489" href="lib.types.TLevel.html#1279" class="Function"
+      >&#8804;T-trans</a
+      ><a name="497"
+      > </a
+      ><a name="498" class="Symbol"
+      >(</a
+      ><a name="499" href="lib.types.TLevel.html#4187" class="Function"
+      >&#10216;&#10217;-monotone-&#8804;</a
+      ><a name="512"
+      > </a
+      ><a name="513" href="homotopy.IterSuspensionStable.html#364" class="Bound"
+      >Skle</a
+      ><a name="517" class="Symbol"
+      >)</a
+      ><a name="518"
+      > </a
+      ><a name="519" class="Symbol"
+      >(</a
+      ><a name="520" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="523"
+      > </a
+      ><a name="524" class="Symbol"
+      >(</a
+      ><a name="525" href="homotopy.IterSuspensionStable.html#547" class="Function"
+      >lemma</a
+      ><a name="530"
+      > </a
+      ><a name="531" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="532" class="Symbol"
+      >))</a
+      ><a name="534"
+      >
+      </a
+      ><a name="541" class="Keyword"
+      >where</a
+      ><a name="546"
+      > </a
+      ><a name="547" href="homotopy.IterSuspensionStable.html#547" class="Function"
+      >lemma</a
+      ><a name="552"
+      > </a
+      ><a name="553" class="Symbol"
+      >:</a
+      ><a name="554"
+      > </a
+      ><a name="555" class="Symbol"
+      >(</a
+      ><a name="556" href="homotopy.IterSuspensionStable.html#556" class="Bound"
+      >n</a
+      ><a name="557"
+      > </a
+      ><a name="558" class="Symbol"
+      >:</a
+      ><a name="559"
+      > </a
+      ><a name="560" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="561" class="Symbol"
+      >)</a
+      ><a name="562"
+      > </a
+      ><a name="563" class="Symbol"
+      >&#8594;</a
+      ><a name="564"
+      > </a
+      ><a name="565" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="566"
+      > </a
+      ><a name="567" href="homotopy.IterSuspensionStable.html#556" class="Bound"
+      >n</a
+      ><a name="568"
+      > </a
+      ><a name="569" href="lib.types.Nat.html#5773" class="Function Operator"
+      >*2</a
+      ><a name="571"
+      > </a
+      ><a name="572" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="573"
+      > </a
+      ><a name="574" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="576"
+      > </a
+      ><a name="577" href="lib.types.TLevel.html#178" class="Function Operator"
+      >&#10216;</a
+      ><a name="578"
+      > </a
+      ><a name="579" href="homotopy.IterSuspensionStable.html#556" class="Bound"
+      >n</a
+      ><a name="580"
+      > </a
+      ><a name="581" href="lib.types.TLevel.html#178" class="Function Operator"
+      >&#10217;&#8331;&#8321;</a
+      ><a name="584"
+      > </a
+      ><a name="585" href="lib.types.TLevel.html#268" class="Function Operator"
+      >+2+</a
+      ><a name="588"
+      > </a
+      ><a name="589" href="lib.types.TLevel.html#178" class="Function Operator"
+      >&#10216;</a
+      ><a name="590"
+      > </a
+      ><a name="591" href="homotopy.IterSuspensionStable.html#556" class="Bound"
+      >n</a
+      ><a name="592"
+      > </a
+      ><a name="593" href="lib.types.TLevel.html#178" class="Function Operator"
+      >&#10217;&#8331;&#8321;</a
+      ><a name="596"
+      >
+            </a
+      ><a name="609" href="homotopy.IterSuspensionStable.html#547" class="Function"
+      >lemma</a
+      ><a name="614"
+      > </a
+      ><a name="615" href="lib.Base.html#6205" class="InductiveConstructor"
+      >O</a
+      ><a name="616"
+      > </a
+      ><a name="617" class="Symbol"
+      >=</a
+      ><a name="618"
+      > </a
+      ><a name="619" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="622"
+      >
+            </a
+      ><a name="635" href="homotopy.IterSuspensionStable.html#547" class="Function"
+      >lemma</a
+      ><a name="640"
+      > </a
+      ><a name="641" class="Symbol"
+      >(</a
+      ><a name="642" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="643"
+      > </a
+      ><a name="644" href="homotopy.IterSuspensionStable.html#644" class="Bound"
+      >n'</a
+      ><a name="646" class="Symbol"
+      >)</a
+      ><a name="647"
+      > </a
+      ><a name="648" class="Symbol"
+      >=</a
+      ><a name="649"
+      > </a
+      ><a name="650" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="652"
+      > </a
+      ><a name="653" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="654"
+      > </a
+      ><a name="655" class="Symbol"
+      >(</a
+      ><a name="656" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="658"
+      > </a
+      ><a name="659" href="lib.Base.html#8897" class="InductiveConstructor"
+      >S</a
+      ><a name="660"
+      > </a
+      ><a name="661" class="Symbol"
+      >(</a
+      ><a name="662" href="homotopy.IterSuspensionStable.html#547" class="Function"
+      >lemma</a
+      ><a name="667"
+      > </a
+      ><a name="668" href="homotopy.IterSuspensionStable.html#644" class="Bound"
+      >n'</a
+      ><a name="670" class="Symbol"
+      >)</a
+      ><a name="671"
+      >
+                                 </a
+      ><a name="705" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="706"
+      > </a
+      ><a name="707" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="708"
+      > </a
+      ><a name="709" class="Symbol"
+      >(</a
+      ><a name="710" href="lib.types.TLevel.html#435" class="Function"
+      >+2+-&#946;r</a
+      ><a name="716"
+      > </a
+      ><a name="717" href="lib.Base.html#8938" class="Function Operator"
+      >&#10216;</a
+      ><a name="718"
+      > </a
+      ><a name="719" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="720"
+      > </a
+      ><a name="721" href="homotopy.IterSuspensionStable.html#644" class="Bound"
+      >n'</a
+      ><a name="723"
+      > </a
+      ><a name="724" href="lib.Base.html#8938" class="Function Operator"
+      >&#10217;&#8331;&#8322;</a
+      ><a name="727"
+      > </a
+      ><a name="728" href="lib.Base.html#8938" class="Function Operator"
+      >&#10216;</a
+      ><a name="729"
+      > </a
+      ><a name="730" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="731"
+      > </a
+      ><a name="732" href="homotopy.IterSuspensionStable.html#644" class="Bound"
+      >n'</a
+      ><a name="734"
+      > </a
+      ><a name="735" href="lib.Base.html#8938" class="Function Operator"
+      >&#10217;&#8331;&#8322;</a
+      ><a name="738" class="Symbol"
+      >))</a
+      ><a name="740"
+      >
+
+  </a
+      ><a name="744" class="Keyword"
+      >private</a
+      ><a name="751"
+      >
+    </a
+      ><a name="756" class="Keyword"
+      >module</a
+      ><a name="762"
+      > </a
+      ><a name="763" href="homotopy.IterSuspensionStable.html#763" class="Module"
+      >F</a
+      ><a name="764"
+      > </a
+      ><a name="765" class="Symbol"
+      >=</a
+      ><a name="766"
+      > </a
+      ><a name="767" href="homotopy.Freudenthal.html#9767" class="Module"
+      >FreudenthalIso</a
+      ><a name="781"
+      >
+      </a
+      ><a name="788" href="lib.Base.html#8938" class="Function Operator"
+      >&#10216;</a
+      ><a name="789"
+      > </a
+      ><a name="790" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="791"
+      > </a
+      ><a name="792" href="lib.Base.html#8938" class="Function Operator"
+      >&#10217;&#8331;&#8322;</a
+      ><a name="795"
+      > </a
+      ><a name="796" href="homotopy.IterSuspensionStable.html#354" class="Bound"
+      >k</a
+      ><a name="797"
+      > </a
+      ><a name="798" href="homotopy.IterSuspensionStable.html#438" class="Function"
+      >Skle'</a
+      ><a name="803"
+      > </a
+      ><a name="804" class="Symbol"
+      >(</a
+      ><a name="805" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="811"
+      > </a
+      ><a name="812" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="813"
+      > </a
+      ><a name="814" href="homotopy.IterSuspensionStable.html#310" class="Bound"
+      >X</a
+      ><a name="815" class="Symbol"
+      >)</a
+      ><a name="816"
+      >
+      </a
+      ><a name="823" class="Symbol"
+      >(</a
+      ><a name="824" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="833"
+      > </a
+      ><a name="834" class="Symbol"
+      >(&#955;</a
+      ><a name="836"
+      > </a
+      ><a name="837" href="homotopy.IterSuspensionStable.html#837" class="Bound"
+      >t</a
+      ><a name="838"
+      > </a
+      ><a name="839" class="Symbol"
+      >&#8594;</a
+      ><a name="840"
+      > </a
+      ><a name="841" href="lib.NConnected.html#343" class="Function"
+      >is-connected</a
+      ><a name="853"
+      > </a
+      ><a name="854" href="homotopy.IterSuspensionStable.html#837" class="Bound"
+      >t</a
+      ><a name="855"
+      > </a
+      ><a name="856" class="Symbol"
+      >(</a
+      ><a name="857" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="860"
+      > </a
+      ><a name="861" class="Symbol"
+      >(</a
+      ><a name="862" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="868"
+      > </a
+      ><a name="869" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="870"
+      > </a
+      ><a name="871" href="homotopy.IterSuspensionStable.html#310" class="Bound"
+      >X</a
+      ><a name="872" class="Symbol"
+      >)))</a
+      ><a name="875"
+      >
+                 </a
+      ><a name="893" class="Symbol"
+      >(</a
+      ><a name="894" href="lib.types.TLevel.html#669" class="Function"
+      >+2+0</a
+      ><a name="898"
+      > </a
+      ><a name="899" href="lib.Base.html#8938" class="Function Operator"
+      >&#10216;</a
+      ><a name="900"
+      > </a
+      ><a name="901" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="902"
+      > </a
+      ><a name="903" href="lib.Base.html#8938" class="Function Operator"
+      >&#10217;&#8331;&#8322;</a
+      ><a name="906" class="Symbol"
+      >)</a
+      ><a name="907"
+      > </a
+      ><a name="908" class="Symbol"
+      >(</a
+      ><a name="909" href="lib.types.IteratedSuspension.html#353" class="Function"
+      >&#8857;Susp^-conn</a
+      ><a name="920"
+      > </a
+      ><a name="921" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="922"
+      > </a
+      ><a name="923" href="homotopy.IterSuspensionStable.html#322" class="Bound"
+      >cX</a
+      ><a name="925" class="Symbol"
+      >))</a
+      ><a name="927"
+      >
+
+  </a
+      ><a name="931" href="homotopy.IterSuspensionStable.html#931" class="Function"
+      >stable</a
+      ><a name="937"
+      > </a
+      ><a name="938" class="Symbol"
+      >:</a
+      ><a name="939"
+      > </a
+      ><a name="940" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="942"
+      > </a
+      ><a name="943" class="Symbol"
+      >(</a
+      ><a name="944" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="945"
+      > </a
+      ><a name="946" href="homotopy.IterSuspensionStable.html#354" class="Bound"
+      >k</a
+      ><a name="947" class="Symbol"
+      >)</a
+      ><a name="948"
+      > </a
+      ><a name="949" class="Symbol"
+      >(</a
+      ><a name="950" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="956"
+      > </a
+      ><a name="957" class="Symbol"
+      >(</a
+      ><a name="958" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="959"
+      > </a
+      ><a name="960" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="961" class="Symbol"
+      >)</a
+      ><a name="962"
+      > </a
+      ><a name="963" href="homotopy.IterSuspensionStable.html#310" class="Bound"
+      >X</a
+      ><a name="964" class="Symbol"
+      >)</a
+      ><a name="965"
+      > </a
+      ><a name="966" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="968"
+      > </a
+      ><a name="969" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="971"
+      > </a
+      ><a name="972" href="homotopy.IterSuspensionStable.html#354" class="Bound"
+      >k</a
+      ><a name="973"
+      > </a
+      ><a name="974" class="Symbol"
+      >(</a
+      ><a name="975" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="981"
+      > </a
+      ><a name="982" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="983"
+      > </a
+      ><a name="984" href="homotopy.IterSuspensionStable.html#310" class="Bound"
+      >X</a
+      ><a name="985" class="Symbol"
+      >)</a
+      ><a name="986"
+      >
+  </a
+      ><a name="989" href="homotopy.IterSuspensionStable.html#931" class="Function"
+      >stable</a
+      ><a name="995"
+      > </a
+      ><a name="996" class="Symbol"
+      >=</a
+      ><a name="997"
+      >
+    </a
+      ><a name="1002" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="1004"
+      > </a
+      ><a name="1005" class="Symbol"
+      >(</a
+      ><a name="1006" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1007"
+      > </a
+      ><a name="1008" href="homotopy.IterSuspensionStable.html#354" class="Bound"
+      >k</a
+      ><a name="1009" class="Symbol"
+      >)</a
+      ><a name="1010"
+      > </a
+      ><a name="1011" class="Symbol"
+      >(</a
+      ><a name="1012" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1018"
+      > </a
+      ><a name="1019" class="Symbol"
+      >(</a
+      ><a name="1020" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1021"
+      > </a
+      ><a name="1022" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="1023" class="Symbol"
+      >)</a
+      ><a name="1024"
+      > </a
+      ><a name="1025" href="homotopy.IterSuspensionStable.html#310" class="Bound"
+      >X</a
+      ><a name="1026" class="Symbol"
+      >)</a
+      ><a name="1027"
+      >
+      </a
+      ><a name="1034" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="1037"
+      > </a
+      ><a name="1038" href="lib.groups.HomotopyGroup.html#1129" class="Function"
+      >&#960;S-&#937;-split-iso</a
+      ><a name="1052"
+      > </a
+      ><a name="1053" href="homotopy.IterSuspensionStable.html#354" class="Bound"
+      >k</a
+      ><a name="1054"
+      > </a
+      ><a name="1055" class="Symbol"
+      >(</a
+      ><a name="1056" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1062"
+      > </a
+      ><a name="1063" class="Symbol"
+      >(</a
+      ><a name="1064" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="1067" class="Symbol"
+      >)</a
+      ><a name="1068"
+      > </a
+      ><a name="1069" href="homotopy.IterSuspensionStable.html#310" class="Bound"
+      >X</a
+      ><a name="1070" class="Symbol"
+      >)</a
+      ><a name="1071"
+      > </a
+      ><a name="1072" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="1073"
+      >
+    </a
+      ><a name="1078" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="1080"
+      > </a
+      ><a name="1081" href="homotopy.IterSuspensionStable.html#354" class="Bound"
+      >k</a
+      ><a name="1082"
+      > </a
+      ><a name="1083" class="Symbol"
+      >(</a
+      ><a name="1084" href="lib.types.LoopSpace.html#394" class="Function"
+      >&#8857;&#937;</a
+      ><a name="1086"
+      > </a
+      ><a name="1087" class="Symbol"
+      >(</a
+      ><a name="1088" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1094"
+      > </a
+      ><a name="1095" class="Symbol"
+      >(</a
+      ><a name="1096" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1097"
+      > </a
+      ><a name="1098" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="1099" class="Symbol"
+      >)</a
+      ><a name="1100"
+      > </a
+      ><a name="1101" href="homotopy.IterSuspensionStable.html#310" class="Bound"
+      >X</a
+      ><a name="1102" class="Symbol"
+      >))</a
+      ><a name="1104"
+      >
+      </a
+      ><a name="1111" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="1114"
+      > </a
+      ><a name="1115" href="lib.groups.HomotopyGroup.html#2905" class="Function"
+      >&#937;^S-group-Trunc-fuse-diag-iso</a
+      ><a name="1144"
+      > </a
+      ><a name="1145" href="homotopy.IterSuspensionStable.html#354" class="Bound"
+      >k</a
+      ><a name="1146"
+      > </a
+      ><a name="1147" class="Symbol"
+      >(</a
+      ><a name="1148" href="lib.types.LoopSpace.html#394" class="Function"
+      >&#8857;&#937;</a
+      ><a name="1150"
+      > </a
+      ><a name="1151" class="Symbol"
+      >(</a
+      ><a name="1152" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1158"
+      > </a
+      ><a name="1159" class="Symbol"
+      >(</a
+      ><a name="1160" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1161"
+      > </a
+      ><a name="1162" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="1163" class="Symbol"
+      >)</a
+      ><a name="1164"
+      > </a
+      ><a name="1165" href="homotopy.IterSuspensionStable.html#310" class="Bound"
+      >X</a
+      ><a name="1166" class="Symbol"
+      >))</a
+      ><a name="1168"
+      > </a
+      ><a name="1169" href="lib.groups.Isomorphism.html#3359" class="Function Operator"
+      >&#8315;&#185;&#7475;</a
+      ><a name="1172"
+      > </a
+      ><a name="1173" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="1174"
+      >
+    </a
+      ><a name="1179" href="lib.groups.LoopSpace.html#612" class="Function"
+      >&#937;^S-group</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" href="homotopy.IterSuspensionStable.html#354" class="Bound"
+      >k</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" class="Symbol"
+      >(</a
+      ><a name="1192" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="1198"
+      > </a
+      ><a name="1199" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="1200"
+      > </a
+      ><a name="1201" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1202"
+      > </a
+      ><a name="1203" href="homotopy.IterSuspensionStable.html#354" class="Bound"
+      >k</a
+      ><a name="1204"
+      > </a
+      ><a name="1205" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="1206"
+      > </a
+      ><a name="1207" class="Symbol"
+      >(</a
+      ><a name="1208" href="lib.types.LoopSpace.html#394" class="Function"
+      >&#8857;&#937;</a
+      ><a name="1210"
+      > </a
+      ><a name="1211" class="Symbol"
+      >(</a
+      ><a name="1212" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1218"
+      > </a
+      ><a name="1219" class="Symbol"
+      >(</a
+      ><a name="1220" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1221"
+      > </a
+      ><a name="1222" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="1223" class="Symbol"
+      >)</a
+      ><a name="1224"
+      > </a
+      ><a name="1225" href="homotopy.IterSuspensionStable.html#310" class="Bound"
+      >X</a
+      ><a name="1226" class="Symbol"
+      >)))</a
+      ><a name="1229"
+      > </a
+      ><a name="1230" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="1241"
+      >
+      </a
+      ><a name="1248" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="1251"
+      > </a
+      ><a name="1252" href="homotopy.Freudenthal.html#10139" class="Function"
+      >F.iso</a
+      ><a name="1257"
+      > </a
+      ><a name="1258" href="lib.groups.Isomorphism.html#3359" class="Function Operator"
+      >&#8315;&#185;&#7475;</a
+      ><a name="1261"
+      > </a
+      ><a name="1262" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="1263"
+      >
+    </a
+      ><a name="1268" href="lib.groups.LoopSpace.html#612" class="Function"
+      >&#937;^S-group</a
+      ><a name="1277"
+      > </a
+      ><a name="1278" href="homotopy.IterSuspensionStable.html#354" class="Bound"
+      >k</a
+      ><a name="1279"
+      > </a
+      ><a name="1280" class="Symbol"
+      >(</a
+      ><a name="1281" href="lib.types.Truncation.html#2272" class="Function"
+      >&#8857;Trunc</a
+      ><a name="1287"
+      > </a
+      ><a name="1288" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10216;</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1291"
+      > </a
+      ><a name="1292" href="homotopy.IterSuspensionStable.html#354" class="Bound"
+      >k</a
+      ><a name="1293"
+      > </a
+      ><a name="1294" href="lib.types.TLevel.html#215" class="Function Operator"
+      >&#10217;</a
+      ><a name="1295"
+      > </a
+      ><a name="1296" class="Symbol"
+      >(</a
+      ><a name="1297" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1303"
+      > </a
+      ><a name="1304" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="1305"
+      > </a
+      ><a name="1306" href="homotopy.IterSuspensionStable.html#310" class="Bound"
+      >X</a
+      ><a name="1307" class="Symbol"
+      >))</a
+      ><a name="1309"
+      > </a
+      ><a name="1310" href="lib.types.Truncation.html#343" class="Postulate"
+      >Trunc-level</a
+      ><a name="1321"
+      >
+      </a
+      ><a name="1328" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#8771;&#7475;&#10216;</a
+      ><a name="1331"
+      > </a
+      ><a name="1332" href="lib.groups.HomotopyGroup.html#2905" class="Function"
+      >&#937;^S-group-Trunc-fuse-diag-iso</a
+      ><a name="1361"
+      > </a
+      ><a name="1362" href="homotopy.IterSuspensionStable.html#354" class="Bound"
+      >k</a
+      ><a name="1363"
+      > </a
+      ><a name="1364" class="Symbol"
+      >(</a
+      ><a name="1365" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1371"
+      > </a
+      ><a name="1372" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="1373"
+      > </a
+      ><a name="1374" href="homotopy.IterSuspensionStable.html#310" class="Bound"
+      >X</a
+      ><a name="1375" class="Symbol"
+      >)</a
+      ><a name="1376"
+      > </a
+      ><a name="1377" href="lib.groups.Isomorphism.html#3172" class="Function Operator"
+      >&#10217;</a
+      ><a name="1378"
+      >
+    </a
+      ><a name="1383" href="lib.groups.HomotopyGroup.html#645" class="Function"
+      >&#960;S</a
+      ><a name="1385"
+      > </a
+      ><a name="1386" href="homotopy.IterSuspensionStable.html#354" class="Bound"
+      >k</a
+      ><a name="1387"
+      > </a
+      ><a name="1388" class="Symbol"
+      >(</a
+      ><a name="1389" href="lib.types.IteratedSuspension.html#251" class="Function"
+      >&#8857;Susp^</a
+      ><a name="1395"
+      > </a
+      ><a name="1396" href="homotopy.IterSuspensionStable.html#356" class="Bound"
+      >n</a
+      ><a name="1397"
+      > </a
+      ><a name="1398" href="homotopy.IterSuspensionStable.html#310" class="Bound"
+      >X</a
+      ><a name="1399" class="Symbol"
+      >)</a
+      ><a name="1400"
+      > </a
+      ><a name="1401" href="lib.groups.Isomorphism.html#3290" class="Function Operator"
+      >&#8771;&#7475;&#8718;</a
+      ><a name="1404"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

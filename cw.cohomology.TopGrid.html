@@ -1,0 +1,462 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cw.cohomology.TopGrid</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="cohomology.Theory.html#1" class="Module"
+      >cohomology.Theory</a
+      ><a name="88"
+      >
+
+</a
+      ><a name="90" class="Keyword"
+      >module</a
+      ><a name="96"
+      > </a
+      ><a name="97" href="cw.cohomology.TopGrid.html#1" class="Module"
+      >cw.cohomology.TopGrid</a
+      ><a name="118"
+      > </a
+      ><a name="119" class="Symbol"
+      >{</a
+      ><a name="120" href="cw.cohomology.TopGrid.html#120" class="Bound"
+      >i</a
+      ><a name="121" class="Symbol"
+      >}</a
+      ><a name="122"
+      > </a
+      ><a name="123" class="Symbol"
+      >(</a
+      ><a name="124" href="cw.cohomology.TopGrid.html#124" class="Bound"
+      >OT</a
+      ><a name="126"
+      > </a
+      ><a name="127" class="Symbol"
+      >:</a
+      ><a name="128"
+      > </a
+      ><a name="129" href="cohomology.Theory.html#7242" class="Record"
+      >OrdinaryTheory</a
+      ><a name="143"
+      > </a
+      ><a name="144" href="cw.cohomology.TopGrid.html#120" class="Bound"
+      >i</a
+      ><a name="145" class="Symbol"
+      >)</a
+      ><a name="146"
+      >
+  </a
+      ><a name="149" class="Symbol"
+      >(</a
+      ><a name="150" href="cw.cohomology.TopGrid.html#150" class="Bound"
+      >n</a
+      ><a name="151"
+      > </a
+      ><a name="152" class="Symbol"
+      >:</a
+      ><a name="153"
+      > </a
+      ><a name="154" href="lib.types.Int.html#154" class="Datatype"
+      >&#8484;</a
+      ><a name="155" class="Symbol"
+      >)</a
+      ><a name="156"
+      > </a
+      ><a name="157" class="Symbol"
+      >{</a
+      ><a name="158" href="cw.cohomology.TopGrid.html#158" class="Bound"
+      >X</a
+      ><a name="159"
+      > </a
+      ><a name="160" href="cw.cohomology.TopGrid.html#160" class="Bound"
+      >Y</a
+      ><a name="161"
+      > </a
+      ><a name="162" href="cw.cohomology.TopGrid.html#162" class="Bound"
+      >Z</a
+      ><a name="163"
+      > </a
+      ><a name="164" class="Symbol"
+      >:</a
+      ><a name="165"
+      > </a
+      ><a name="166" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="169"
+      > </a
+      ><a name="170" href="cw.cohomology.TopGrid.html#120" class="Bound"
+      >i</a
+      ><a name="171" class="Symbol"
+      >}</a
+      ><a name="172"
+      > </a
+      ><a name="173" class="Symbol"
+      >(</a
+      ><a name="174" href="cw.cohomology.TopGrid.html#174" class="Bound"
+      >f</a
+      ><a name="175"
+      > </a
+      ><a name="176" class="Symbol"
+      >:</a
+      ><a name="177"
+      > </a
+      ><a name="178" href="cw.cohomology.TopGrid.html#158" class="Bound"
+      >X</a
+      ><a name="179"
+      > </a
+      ><a name="180" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="182"
+      > </a
+      ><a name="183" href="cw.cohomology.TopGrid.html#160" class="Bound"
+      >Y</a
+      ><a name="184" class="Symbol"
+      >)</a
+      ><a name="185"
+      > </a
+      ><a name="186" class="Symbol"
+      >(</a
+      ><a name="187" href="cw.cohomology.TopGrid.html#187" class="Bound"
+      >g</a
+      ><a name="188"
+      > </a
+      ><a name="189" class="Symbol"
+      >:</a
+      ><a name="190"
+      > </a
+      ><a name="191" href="cw.cohomology.TopGrid.html#160" class="Bound"
+      >Y</a
+      ><a name="192"
+      > </a
+      ><a name="193" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="195"
+      > </a
+      ><a name="196" href="cw.cohomology.TopGrid.html#162" class="Bound"
+      >Z</a
+      ><a name="197" class="Symbol"
+      >)</a
+      ><a name="198"
+      > </a
+      ><a name="199" class="Keyword"
+      >where</a
+      ><a name="204"
+      >
+
+</a
+      ><a name="206" class="Comment"
+      >{-
+  X --&gt; Y ---&gt; Z
+  |     | this |
+  v     v  one v
+  1 -&gt; Y/X -&gt; Z/X
+-}</a
+      ><a name="280"
+      >
+
+  </a
+      ><a name="284" class="Keyword"
+      >open</a
+      ><a name="288"
+      > </a
+      ><a name="289" href="cohomology.Theory.html#7242" class="Module"
+      >OrdinaryTheory</a
+      ><a name="303"
+      > </a
+      ><a name="304" href="cw.cohomology.TopGrid.html#124" class="Bound"
+      >OT</a
+      ><a name="306"
+      >
+  </a
+      ><a name="309" class="Keyword"
+      >open</a
+      ><a name="313"
+      > </a
+      ><a name="314" class="Keyword"
+      >import</a
+      ><a name="320"
+      > </a
+      ><a name="321" href="cohomology.PtdMapSequence.html#1" class="Module"
+      >cohomology.PtdMapSequence</a
+      ><a name="346"
+      > </a
+      ><a name="347" href="cohomology.Theory.html#7365" class="Function"
+      >cohomology-theory</a
+      ><a name="364"
+      >
+  </a
+      ><a name="367" class="Keyword"
+      >open</a
+      ><a name="371"
+      > </a
+      ><a name="372" class="Keyword"
+      >import</a
+      ><a name="378"
+      > </a
+      ><a name="379" href="cw.cohomology.GridPtdMap.html#1" class="Module"
+      >cw.cohomology.GridPtdMap</a
+      ><a name="403"
+      > </a
+      ><a name="404" href="cw.cohomology.TopGrid.html#174" class="Bound"
+      >f</a
+      ><a name="405"
+      > </a
+      ><a name="406" href="cw.cohomology.TopGrid.html#187" class="Bound"
+      >g</a
+      ><a name="407"
+      > </a
+      ><a name="408" class="Keyword"
+      >using</a
+      ><a name="413"
+      > </a
+      ><a name="414" class="Symbol"
+      >(</a
+      ><a name="415"
+      >Y/X-to-Z/X</a
+      ><a name="425" class="Symbol"
+      >)</a
+      ><a name="426"
+      >
+
+  </a
+      ><a name="430" href="cw.cohomology.TopGrid.html#430" class="Function"
+      >top-grid-comm-sqr</a
+      ><a name="447"
+      > </a
+      ><a name="448" class="Symbol"
+      >:</a
+      ><a name="449"
+      > </a
+      ><a name="450" href="lib.Function.html#1607" class="Record"
+      >CommSquare</a
+      ><a name="460"
+      > </a
+      ><a name="461" class="Symbol"
+      >(</a
+      ><a name="462" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="465"
+      > </a
+      ><a name="466" href="cw.cohomology.TopGrid.html#187" class="Bound"
+      >g</a
+      ><a name="467" class="Symbol"
+      >)</a
+      ><a name="468"
+      > </a
+      ><a name="469" class="Symbol"
+      >(</a
+      ><a name="470" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="473"
+      > </a
+      ><a name="474" href="cw.cohomology.GridPtdMap.html#300" class="Function"
+      >Y/X-to-Z/X</a
+      ><a name="484" class="Symbol"
+      >)</a
+      ><a name="485"
+      > </a
+      ><a name="486" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="491"
+      > </a
+      ><a name="492" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="497"
+      >
+  </a
+      ><a name="500" href="cw.cohomology.TopGrid.html#430" class="Function"
+      >top-grid-comm-sqr</a
+      ><a name="517"
+      > </a
+      ><a name="518" class="Symbol"
+      >=</a
+      ><a name="519"
+      > </a
+      ><a name="520" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="528"
+      > </a
+      ><a name="529" class="Symbol"
+      >&#955;</a
+      ><a name="530"
+      > </a
+      ><a name="531" href="cw.cohomology.TopGrid.html#531" class="Bound"
+      >_</a
+      ><a name="532"
+      > </a
+      ><a name="533" class="Symbol"
+      >&#8594;</a
+      ><a name="534"
+      > </a
+      ><a name="535" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="538"
+      >
+
+  </a
+      ><a name="542" href="cw.cohomology.TopGrid.html#542" class="Function"
+      >C-top-grid-commutes</a
+      ><a name="561"
+      > </a
+      ><a name="562" class="Symbol"
+      >:</a
+      ><a name="563"
+      > </a
+      ><a name="564" href="lib.groups.CommutingSquare.html#289" class="Record"
+      >CommSquare&#7475;</a
+      ><a name="575"
+      >
+    </a
+      ><a name="580" class="Symbol"
+      >(</a
+      ><a name="581" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="587"
+      > </a
+      ><a name="588" href="cw.cohomology.TopGrid.html#150" class="Bound"
+      >n</a
+      ><a name="589"
+      > </a
+      ><a name="590" href="cw.cohomology.GridPtdMap.html#300" class="Function"
+      >Y/X-to-Z/X</a
+      ><a name="600" class="Symbol"
+      >)</a
+      ><a name="601"
+      > </a
+      ><a name="602" class="Symbol"
+      >(</a
+      ><a name="603" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="609"
+      > </a
+      ><a name="610" href="cw.cohomology.TopGrid.html#150" class="Bound"
+      >n</a
+      ><a name="611"
+      > </a
+      ><a name="612" href="cw.cohomology.TopGrid.html#187" class="Bound"
+      >g</a
+      ><a name="613" class="Symbol"
+      >)</a
+      ><a name="614"
+      > </a
+      ><a name="615" class="Symbol"
+      >(</a
+      ><a name="616" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="622"
+      > </a
+      ><a name="623" href="cw.cohomology.TopGrid.html#150" class="Bound"
+      >n</a
+      ><a name="624"
+      > </a
+      ><a name="625" class="Symbol"
+      >(</a
+      ><a name="626" href="lib.types.Cofiber.html#1617" class="Function"
+      >&#8857;cfcod'</a
+      ><a name="633"
+      > </a
+      ><a name="634" class="Symbol"
+      >(</a
+      ><a name="635" href="cw.cohomology.TopGrid.html#187" class="Bound"
+      >g</a
+      ><a name="636"
+      > </a
+      ><a name="637" href="lib.Function.html#470" class="Function Operator"
+      >&#8857;&#8728;</a
+      ><a name="639"
+      > </a
+      ><a name="640" href="cw.cohomology.TopGrid.html#174" class="Bound"
+      >f</a
+      ><a name="641" class="Symbol"
+      >)))</a
+      ><a name="644"
+      > </a
+      ><a name="645" class="Symbol"
+      >(</a
+      ><a name="646" href="cohomology.Theory.html#656" class="Function"
+      >C-fmap</a
+      ><a name="652"
+      > </a
+      ><a name="653" href="cw.cohomology.TopGrid.html#150" class="Bound"
+      >n</a
+      ><a name="654"
+      > </a
+      ><a name="655" class="Symbol"
+      >(</a
+      ><a name="656" href="lib.types.Cofiber.html#1617" class="Function"
+      >&#8857;cfcod'</a
+      ><a name="663"
+      > </a
+      ><a name="664" href="cw.cohomology.TopGrid.html#174" class="Bound"
+      >f</a
+      ><a name="665" class="Symbol"
+      >))</a
+      ><a name="667"
+      >
+  </a
+      ><a name="670" href="cw.cohomology.TopGrid.html#542" class="Function"
+      >C-top-grid-commutes</a
+      ><a name="689"
+      > </a
+      ><a name="690" class="Symbol"
+      >=</a
+      ><a name="691"
+      > </a
+      ><a name="692" href="cohomology.PtdMapSequence.html#559" class="Function"
+      >C-comm-square</a
+      ><a name="705"
+      > </a
+      ><a name="706" href="cw.cohomology.TopGrid.html#150" class="Bound"
+      >n</a
+      ><a name="707"
+      > </a
+      ><a name="708" href="cw.cohomology.TopGrid.html#430" class="Function"
+      >top-grid-comm-sqr</a
+      ><a name="725"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

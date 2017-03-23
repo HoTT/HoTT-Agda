@@ -1,0 +1,4593 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >cw.cohomology.CellularChainComplex</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="cw.CW.html#1" class="Module"
+      >cw.CW</a
+      ><a name="76"
+      >
+</a
+      ><a name="77" class="Keyword"
+      >open</a
+      ><a name="81"
+      > </a
+      ><a name="82" class="Keyword"
+      >import</a
+      ><a name="88"
+      > </a
+      ><a name="89" href="cw.DegreeBySquashing.html#1" class="Module"
+      >cw.DegreeBySquashing</a
+      ><a name="109"
+      >
+</a
+      ><a name="110" class="Keyword"
+      >open</a
+      ><a name="114"
+      > </a
+      ><a name="115" class="Keyword"
+      >import</a
+      ><a name="121"
+      > </a
+      ><a name="122" href="cohomology.ChainComplex.html#1" class="Module"
+      >cohomology.ChainComplex</a
+      ><a name="145"
+      >
+
+</a
+      ><a name="147" class="Keyword"
+      >module</a
+      ><a name="153"
+      > </a
+      ><a name="154" href="cw.cohomology.CellularChainComplex.html#1" class="Module"
+      >cw.cohomology.CellularChainComplex</a
+      ><a name="188"
+      > </a
+      ><a name="189" class="Symbol"
+      >{</a
+      ><a name="190" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="191"
+      > </a
+      ><a name="192" class="Symbol"
+      >:</a
+      ><a name="193"
+      > </a
+      ><a name="194" href="Agda.Primitive.html#408" class="Postulate"
+      >ULevel</a
+      ><a name="200" class="Symbol"
+      >}</a
+      ><a name="201"
+      > </a
+      ><a name="202" class="Keyword"
+      >where</a
+      ><a name="207"
+      >
+
+  </a
+      ><a name="211" href="cw.cohomology.CellularChainComplex.html#211" class="Function"
+      >chain-template</a
+      ><a name="225"
+      > </a
+      ><a name="226" class="Symbol"
+      >:</a
+      ><a name="227"
+      > </a
+      ><a name="228" class="Symbol"
+      >&#8704;</a
+      ><a name="229"
+      > </a
+      ><a name="230" class="Symbol"
+      >{</a
+      ><a name="231" href="cw.cohomology.CellularChainComplex.html#231" class="Bound"
+      >n</a
+      ><a name="232" class="Symbol"
+      >}</a
+      ><a name="233"
+      > </a
+      ><a name="234" class="Symbol"
+      >(</a
+      ><a name="235" href="cw.cohomology.CellularChainComplex.html#235" class="Bound"
+      >skel</a
+      ><a name="239"
+      > </a
+      ><a name="240" class="Symbol"
+      >:</a
+      ><a name="241"
+      > </a
+      ><a name="242" href="cw.CW.html#1156" class="Function"
+      >Skeleton</a
+      ><a name="250"
+      > </a
+      ><a name="251" class="Symbol"
+      >{</a
+      ><a name="252" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="253" class="Symbol"
+      >}</a
+      ><a name="254"
+      > </a
+      ><a name="255" href="cw.cohomology.CellularChainComplex.html#231" class="Bound"
+      >n</a
+      ><a name="256" class="Symbol"
+      >)</a
+      ><a name="257"
+      > </a
+      ><a name="258" class="Symbol"
+      >{</a
+      ><a name="259" href="cw.cohomology.CellularChainComplex.html#259" class="Bound"
+      >m</a
+      ><a name="260" class="Symbol"
+      >}</a
+      ><a name="261"
+      >
+    </a
+      ><a name="266" class="Symbol"
+      >&#8594;</a
+      ><a name="267"
+      > </a
+      ><a name="268" href="lib.Base.html#9406" class="Function"
+      >Dec</a
+      ><a name="271"
+      > </a
+      ><a name="272" class="Symbol"
+      >(</a
+      ><a name="273" href="cw.cohomology.CellularChainComplex.html#259" class="Bound"
+      >m</a
+      ><a name="274"
+      > </a
+      ><a name="275" href="lib.types.Nat.html#1754" class="Function Operator"
+      >&#8804;</a
+      ><a name="276"
+      > </a
+      ><a name="277" href="cw.cohomology.CellularChainComplex.html#231" class="Bound"
+      >n</a
+      ><a name="278" class="Symbol"
+      >)</a
+      ><a name="279"
+      > </a
+      ><a name="280" class="Symbol"
+      >&#8594;</a
+      ><a name="281"
+      > </a
+      ><a name="282" href="lib.types.Group.html#7210" class="Function"
+      >AbGroup</a
+      ><a name="289"
+      > </a
+      ><a name="290" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="291"
+      >
+  </a
+      ><a name="294" href="cw.cohomology.CellularChainComplex.html#211" class="Function"
+      >chain-template</a
+      ><a name="308"
+      > </a
+      ><a name="309" href="cw.cohomology.CellularChainComplex.html#309" class="Bound"
+      >skel</a
+      ><a name="313"
+      > </a
+      ><a name="314" class="Symbol"
+      >(</a
+      ><a name="315" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="318"
+      > </a
+      ><a name="319" href="cw.cohomology.CellularChainComplex.html#319" class="Bound"
+      >m&#8804;n</a
+      ><a name="322" class="Symbol"
+      >)</a
+      ><a name="323"
+      > </a
+      ><a name="324" class="Symbol"
+      >=</a
+      ><a name="325"
+      > </a
+      ><a name="326" href="lib.groups.FreeAbelianGroup.html#6842" class="Function"
+      >FreeAbGroup</a
+      ><a name="337"
+      > </a
+      ><a name="338" class="Symbol"
+      >(</a
+      ><a name="339" href="cw.CW.html#3724" class="Function"
+      >cells-nth</a
+      ><a name="348"
+      > </a
+      ><a name="349" href="cw.cohomology.CellularChainComplex.html#319" class="Bound"
+      >m&#8804;n</a
+      ><a name="352"
+      > </a
+      ><a name="353" href="cw.cohomology.CellularChainComplex.html#309" class="Bound"
+      >skel</a
+      ><a name="357" class="Symbol"
+      >)</a
+      ><a name="358"
+      >
+  </a
+      ><a name="361" href="cw.cohomology.CellularChainComplex.html#211" class="Function"
+      >chain-template</a
+      ><a name="375"
+      > </a
+      ><a name="376" href="cw.cohomology.CellularChainComplex.html#376" class="Bound"
+      >skel</a
+      ><a name="380"
+      > </a
+      ><a name="381" class="Symbol"
+      >(</a
+      ><a name="382" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="385"
+      > </a
+      ><a name="386" class="Symbol"
+      >_)</a
+      ><a name="388"
+      > </a
+      ><a name="389" class="Symbol"
+      >=</a
+      ><a name="390"
+      > </a
+      ><a name="391" href="lib.groups.Lift.html#1454" class="Function"
+      >Lift-abgroup</a
+      ><a name="403"
+      > </a
+      ><a name="404" class="Symbol"
+      >{</a
+      ><a name="405" class="Argument"
+      >j</a
+      ><a name="406"
+      > </a
+      ><a name="407" class="Symbol"
+      >=</a
+      ><a name="408"
+      > </a
+      ><a name="409" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="410" class="Symbol"
+      >}</a
+      ><a name="411"
+      > </a
+      ><a name="412" href="lib.groups.Unit.html#1543" class="Function"
+      >Unit-abgroup</a
+      ><a name="424"
+      >
+
+  </a
+      ><a name="428" class="Keyword"
+      >abstract</a
+      ><a name="436"
+      >
+    </a
+      ><a name="441" href="cw.cohomology.CellularChainComplex.html#441" class="Function"
+      >boundary-nth-template</a
+      ><a name="462"
+      > </a
+      ><a name="463" class="Symbol"
+      >:</a
+      ><a name="464"
+      > </a
+      ><a name="465" class="Symbol"
+      >&#8704;</a
+      ><a name="466"
+      > </a
+      ><a name="467" class="Symbol"
+      >{</a
+      ><a name="468" href="cw.cohomology.CellularChainComplex.html#468" class="Bound"
+      >n</a
+      ><a name="469" class="Symbol"
+      >}</a
+      ><a name="470"
+      > </a
+      ><a name="471" class="Symbol"
+      >(</a
+      ><a name="472" href="cw.cohomology.CellularChainComplex.html#472" class="Bound"
+      >skel</a
+      ><a name="476"
+      > </a
+      ><a name="477" class="Symbol"
+      >:</a
+      ><a name="478"
+      > </a
+      ><a name="479" href="cw.CW.html#1156" class="Function"
+      >Skeleton</a
+      ><a name="487"
+      > </a
+      ><a name="488" class="Symbol"
+      >{</a
+      ><a name="489" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="490" class="Symbol"
+      >}</a
+      ><a name="491"
+      > </a
+      ><a name="492" href="cw.cohomology.CellularChainComplex.html#468" class="Bound"
+      >n</a
+      ><a name="493" class="Symbol"
+      >)</a
+      ><a name="494"
+      > </a
+      ><a name="495" href="cw.cohomology.CellularChainComplex.html#495" class="Bound"
+      >dec</a
+      ><a name="498"
+      >
+      </a
+      ><a name="505" class="Symbol"
+      >&#8594;</a
+      ><a name="506"
+      > </a
+      ><a name="507" href="cw.DegreeBySquashing.html#2893" class="Function"
+      >has-degrees-with-finite-support</a
+      ><a name="538"
+      > </a
+      ><a name="539" href="cw.cohomology.CellularChainComplex.html#472" class="Bound"
+      >skel</a
+      ><a name="543"
+      > </a
+      ><a name="544" href="cw.cohomology.CellularChainComplex.html#495" class="Bound"
+      >dec</a
+      ><a name="547"
+      >
+      </a
+      ><a name="554" class="Symbol"
+      >&#8594;</a
+      ><a name="555"
+      > </a
+      ><a name="556" class="Symbol"
+      >{</a
+      ><a name="557" href="cw.cohomology.CellularChainComplex.html#557" class="Bound"
+      >m</a
+      ><a name="558"
+      > </a
+      ><a name="559" class="Symbol"
+      >:</a
+      ><a name="560"
+      > </a
+      ><a name="561" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="562" class="Symbol"
+      >}</a
+      ><a name="563"
+      > </a
+      ><a name="564" class="Symbol"
+      >(</a
+      ><a name="565" href="cw.cohomology.CellularChainComplex.html#565" class="Bound"
+      >m&#8804;n</a
+      ><a name="568"
+      > </a
+      ><a name="569" class="Symbol"
+      >:</a
+      ><a name="570"
+      > </a
+      ><a name="571" href="cw.cohomology.CellularChainComplex.html#557" class="Bound"
+      >m</a
+      ><a name="572"
+      > </a
+      ><a name="573" href="lib.types.Nat.html#1754" class="Function Operator"
+      >&#8804;</a
+      ><a name="574"
+      > </a
+      ><a name="575" href="cw.cohomology.CellularChainComplex.html#468" class="Bound"
+      >n</a
+      ><a name="576" class="Symbol"
+      >)</a
+      ><a name="577"
+      > </a
+      ><a name="578" class="Symbol"
+      >(</a
+      ><a name="579" href="cw.cohomology.CellularChainComplex.html#579" class="Bound"
+      >Sm&#8804;n</a
+      ><a name="583"
+      > </a
+      ><a name="584" class="Symbol"
+      >:</a
+      ><a name="585"
+      > </a
+      ><a name="586" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="587"
+      > </a
+      ><a name="588" href="cw.cohomology.CellularChainComplex.html#557" class="Bound"
+      >m</a
+      ><a name="589"
+      > </a
+      ><a name="590" href="lib.types.Nat.html#1754" class="Function Operator"
+      >&#8804;</a
+      ><a name="591"
+      > </a
+      ><a name="592" href="cw.cohomology.CellularChainComplex.html#468" class="Bound"
+      >n</a
+      ><a name="593" class="Symbol"
+      >)</a
+      ><a name="594"
+      >
+      </a
+      ><a name="601" class="Symbol"
+      >&#8594;</a
+      ><a name="602"
+      > </a
+      ><a name="603" href="cw.CW.html#2175" class="Function"
+      >cw-init</a
+      ><a name="610"
+      > </a
+      ><a name="611" class="Symbol"
+      >(</a
+      ><a name="612" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="619"
+      > </a
+      ><a name="620" href="cw.cohomology.CellularChainComplex.html#579" class="Bound"
+      >Sm&#8804;n</a
+      ><a name="624"
+      > </a
+      ><a name="625" href="cw.cohomology.CellularChainComplex.html#472" class="Bound"
+      >skel</a
+      ><a name="629" class="Symbol"
+      >)</a
+      ><a name="630"
+      > </a
+      ><a name="631" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="633"
+      > </a
+      ><a name="634" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="641"
+      > </a
+      ><a name="642" class="Symbol"
+      >(</a
+      ><a name="643" href="lib.types.Nat.html#2410" class="Function"
+      >&#8804;-trans</a
+      ><a name="650"
+      > </a
+      ><a name="651" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="655"
+      > </a
+      ><a name="656" href="cw.cohomology.CellularChainComplex.html#579" class="Bound"
+      >Sm&#8804;n</a
+      ><a name="660" class="Symbol"
+      >)</a
+      ><a name="661"
+      > </a
+      ><a name="662" href="cw.cohomology.CellularChainComplex.html#472" class="Bound"
+      >skel</a
+      ><a name="666"
+      >
+      </a
+      ><a name="673" class="Symbol"
+      >&#8594;</a
+      ><a name="674"
+      > </a
+      ><a name="675" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="682"
+      > </a
+      ><a name="683" class="Symbol"
+      >(</a
+      ><a name="684" href="lib.types.Nat.html#2410" class="Function"
+      >&#8804;-trans</a
+      ><a name="691"
+      > </a
+      ><a name="692" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="696"
+      > </a
+      ><a name="697" href="cw.cohomology.CellularChainComplex.html#579" class="Bound"
+      >Sm&#8804;n</a
+      ><a name="701" class="Symbol"
+      >)</a
+      ><a name="702"
+      > </a
+      ><a name="703" href="cw.cohomology.CellularChainComplex.html#472" class="Bound"
+      >skel</a
+      ><a name="707"
+      > </a
+      ><a name="708" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="710"
+      > </a
+      ><a name="711" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="718"
+      > </a
+      ><a name="719" href="cw.cohomology.CellularChainComplex.html#565" class="Bound"
+      >m&#8804;n</a
+      ><a name="722"
+      > </a
+      ><a name="723" href="cw.cohomology.CellularChainComplex.html#472" class="Bound"
+      >skel</a
+      ><a name="727"
+      >
+      </a
+      ><a name="734" class="Symbol"
+      >&#8594;</a
+      ><a name="735"
+      >  </a
+      ><a name="737" href="lib.types.Group.html#7376" class="Function"
+      >FreeAbGroup.grp</a
+      ><a name="752"
+      > </a
+      ><a name="753" class="Symbol"
+      >(</a
+      ><a name="754" href="cw.CW.html#3724" class="Function"
+      >cells-nth</a
+      ><a name="763"
+      > </a
+      ><a name="764" href="cw.cohomology.CellularChainComplex.html#579" class="Bound"
+      >Sm&#8804;n</a
+      ><a name="768"
+      > </a
+      ><a name="769" href="cw.cohomology.CellularChainComplex.html#472" class="Bound"
+      >skel</a
+      ><a name="773" class="Symbol"
+      >)</a
+      ><a name="774"
+      >
+      </a
+      ><a name="781" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="783"
+      > </a
+      ><a name="784" href="lib.types.Group.html#7376" class="Function"
+      >FreeAbGroup.grp</a
+      ><a name="799"
+      > </a
+      ><a name="800" class="Symbol"
+      >(</a
+      ><a name="801" href="cw.CW.html#3724" class="Function"
+      >cells-nth</a
+      ><a name="810"
+      > </a
+      ><a name="811" href="cw.cohomology.CellularChainComplex.html#565" class="Bound"
+      >m&#8804;n</a
+      ><a name="814"
+      > </a
+      ><a name="815" href="cw.cohomology.CellularChainComplex.html#472" class="Bound"
+      >skel</a
+      ><a name="819" class="Symbol"
+      >)</a
+      ><a name="820"
+      >
+    </a
+      ><a name="825" href="cw.cohomology.CellularChainComplex.html#441" class="Function"
+      >boundary-nth-template</a
+      ><a name="846"
+      > </a
+      ><a name="847" href="cw.cohomology.CellularChainComplex.html#847" class="Bound"
+      >skel</a
+      ><a name="851"
+      > </a
+      ><a name="852" href="cw.cohomology.CellularChainComplex.html#852" class="Bound"
+      >dec</a
+      ><a name="855"
+      > </a
+      ><a name="856" href="cw.cohomology.CellularChainComplex.html#856" class="Bound"
+      >fin-sup</a
+      ><a name="863"
+      > </a
+      ><a name="864" href="cw.cohomology.CellularChainComplex.html#864" class="Bound"
+      >m&#8804;n</a
+      ><a name="867"
+      > </a
+      ><a name="868" href="cw.cohomology.CellularChainComplex.html#868" class="Bound"
+      >Sm&#8804;n</a
+      ><a name="872"
+      > </a
+      ><a name="873" href="cw.cohomology.CellularChainComplex.html#873" class="Bound"
+      >path&#8320;</a
+      ><a name="878"
+      > </a
+      ><a name="879" href="cw.cohomology.CellularChainComplex.html#879" class="Bound"
+      >path&#8321;</a
+      ><a name="884"
+      > </a
+      ><a name="885" class="Symbol"
+      >=</a
+      ><a name="886"
+      >
+         </a
+      ><a name="896" href="lib.groups.Isomorphism.html#6720" class="Function"
+      >transport&#7475;</a
+      ><a name="906"
+      > </a
+      ><a name="907" class="Symbol"
+      >(&#955;</a
+      ><a name="909"
+      > </a
+      ><a name="910" href="cw.cohomology.CellularChainComplex.html#910" class="Bound"
+      >lower-skel</a
+      ><a name="920"
+      > </a
+      ><a name="921" class="Symbol"
+      >&#8594;</a
+      ><a name="922"
+      > </a
+      ><a name="923" href="lib.types.Group.html#7376" class="Function"
+      >FreeAbGroup.grp</a
+      ><a name="938"
+      > </a
+      ><a name="939" class="Symbol"
+      >(</a
+      ><a name="940" href="cw.CW.html#3479" class="Function"
+      >cells-last</a
+      ><a name="950"
+      > </a
+      ><a name="951" href="cw.cohomology.CellularChainComplex.html#910" class="Bound"
+      >lower-skel</a
+      ><a name="961" class="Symbol"
+      >))</a
+      ><a name="963"
+      > </a
+      ><a name="964" class="Symbol"
+      >(</a
+      ><a name="965" href="cw.cohomology.CellularChainComplex.html#873" class="Bound"
+      >path&#8320;</a
+      ><a name="970"
+      > </a
+      ><a name="971" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="972"
+      > </a
+      ><a name="973" href="cw.cohomology.CellularChainComplex.html#879" class="Bound"
+      >path&#8321;</a
+      ><a name="978" class="Symbol"
+      >)</a
+      ><a name="979"
+      >
+      </a
+      ><a name="986" href="lib.groups.Homomorphism.html#5049" class="Function Operator"
+      >&#8728;&#7475;</a
+      ><a name="988"
+      > </a
+      ><a name="989" href="lib.groups.FreeAbelianGroup.html#8539" class="Function"
+      >FreeAbGroup-extend</a
+      ><a name="1007"
+      > </a
+      ><a name="1008" class="Symbol"
+      >(</a
+      ><a name="1009" href="lib.groups.FreeAbelianGroup.html#6842" class="Function"
+      >FreeAbGroup</a
+      ><a name="1020"
+      > </a
+      ><a name="1021" class="Symbol"
+      >(</a
+      ><a name="1022" href="cw.CW.html#3479" class="Function"
+      >cells-last</a
+      ><a name="1032"
+      > </a
+      ><a name="1033" class="Symbol"
+      >(</a
+      ><a name="1034" href="cw.CW.html#2175" class="Function"
+      >cw-init</a
+      ><a name="1041"
+      > </a
+      ><a name="1042" class="Symbol"
+      >(</a
+      ><a name="1043" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="1050"
+      > </a
+      ><a name="1051" href="cw.cohomology.CellularChainComplex.html#868" class="Bound"
+      >Sm&#8804;n</a
+      ><a name="1055"
+      > </a
+      ><a name="1056" href="cw.cohomology.CellularChainComplex.html#847" class="Bound"
+      >skel</a
+      ><a name="1060" class="Symbol"
+      >))))</a
+      ><a name="1064"
+      >
+           </a
+      ><a name="1076" class="Symbol"
+      >(</a
+      ><a name="1077" href="cw.DegreeBySquashing.html#5562" class="Function"
+      >boundary'-nth</a
+      ><a name="1090"
+      > </a
+      ><a name="1091" href="cw.cohomology.CellularChainComplex.html#868" class="Bound"
+      >Sm&#8804;n</a
+      ><a name="1095"
+      > </a
+      ><a name="1096" href="cw.cohomology.CellularChainComplex.html#847" class="Bound"
+      >skel</a
+      ><a name="1100"
+      > </a
+      ><a name="1101" href="cw.cohomology.CellularChainComplex.html#852" class="Bound"
+      >dec</a
+      ><a name="1104"
+      > </a
+      ><a name="1105" href="cw.cohomology.CellularChainComplex.html#856" class="Bound"
+      >fin-sup</a
+      ><a name="1112" class="Symbol"
+      >)</a
+      ><a name="1113"
+      >
+
+  </a
+      ><a name="1117" href="cw.cohomology.CellularChainComplex.html#1117" class="Function"
+      >boundary-template</a
+      ><a name="1134"
+      > </a
+      ><a name="1135" class="Symbol"
+      >:</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" class="Symbol"
+      >&#8704;</a
+      ><a name="1138"
+      > </a
+      ><a name="1139" class="Symbol"
+      >{</a
+      ><a name="1140" href="cw.cohomology.CellularChainComplex.html#1140" class="Bound"
+      >n</a
+      ><a name="1141" class="Symbol"
+      >}</a
+      ><a name="1142"
+      > </a
+      ><a name="1143" class="Symbol"
+      >(</a
+      ><a name="1144" href="cw.cohomology.CellularChainComplex.html#1144" class="Bound"
+      >skel</a
+      ><a name="1148"
+      > </a
+      ><a name="1149" class="Symbol"
+      >:</a
+      ><a name="1150"
+      > </a
+      ><a name="1151" href="cw.CW.html#1156" class="Function"
+      >Skeleton</a
+      ><a name="1159"
+      > </a
+      ><a name="1160" class="Symbol"
+      >{</a
+      ><a name="1161" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="1162" class="Symbol"
+      >}</a
+      ><a name="1163"
+      > </a
+      ><a name="1164" href="cw.cohomology.CellularChainComplex.html#1140" class="Bound"
+      >n</a
+      ><a name="1165" class="Symbol"
+      >)</a
+      ><a name="1166"
+      > </a
+      ><a name="1167" href="cw.cohomology.CellularChainComplex.html#1167" class="Bound"
+      >dec</a
+      ><a name="1170"
+      >
+    </a
+      ><a name="1175" class="Symbol"
+      >&#8594;</a
+      ><a name="1176"
+      > </a
+      ><a name="1177" href="cw.DegreeBySquashing.html#2893" class="Function"
+      >has-degrees-with-finite-support</a
+      ><a name="1208"
+      > </a
+      ><a name="1209" href="cw.cohomology.CellularChainComplex.html#1144" class="Bound"
+      >skel</a
+      ><a name="1213"
+      > </a
+      ><a name="1214" href="cw.cohomology.CellularChainComplex.html#1167" class="Bound"
+      >dec</a
+      ><a name="1217"
+      >
+    </a
+      ><a name="1222" class="Symbol"
+      >&#8594;</a
+      ><a name="1223"
+      > </a
+      ><a name="1224" class="Symbol"
+      >{</a
+      ><a name="1225" href="cw.cohomology.CellularChainComplex.html#1225" class="Bound"
+      >m</a
+      ><a name="1226"
+      > </a
+      ><a name="1227" class="Symbol"
+      >:</a
+      ><a name="1228"
+      > </a
+      ><a name="1229" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="1230" class="Symbol"
+      >}</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" class="Symbol"
+      >(</a
+      ><a name="1233" href="cw.cohomology.CellularChainComplex.html#1233" class="Bound"
+      >m&#8804;n?</a
+      ><a name="1237"
+      > </a
+      ><a name="1238" class="Symbol"
+      >:</a
+      ><a name="1239"
+      > </a
+      ><a name="1240" href="lib.Base.html#9406" class="Function"
+      >Dec</a
+      ><a name="1243"
+      > </a
+      ><a name="1244" class="Symbol"
+      >(</a
+      ><a name="1245" href="cw.cohomology.CellularChainComplex.html#1225" class="Bound"
+      >m</a
+      ><a name="1246"
+      > </a
+      ><a name="1247" href="lib.types.Nat.html#1754" class="Function Operator"
+      >&#8804;</a
+      ><a name="1248"
+      > </a
+      ><a name="1249" href="cw.cohomology.CellularChainComplex.html#1140" class="Bound"
+      >n</a
+      ><a name="1250" class="Symbol"
+      >))</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" class="Symbol"
+      >(</a
+      ><a name="1254" href="cw.cohomology.CellularChainComplex.html#1254" class="Bound"
+      >Sm&#8804;n?</a
+      ><a name="1259"
+      > </a
+      ><a name="1260" class="Symbol"
+      >:</a
+      ><a name="1261"
+      > </a
+      ><a name="1262" href="lib.Base.html#9406" class="Function"
+      >Dec</a
+      ><a name="1265"
+      > </a
+      ><a name="1266" class="Symbol"
+      >(</a
+      ><a name="1267" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="1268"
+      > </a
+      ><a name="1269" href="cw.cohomology.CellularChainComplex.html#1225" class="Bound"
+      >m</a
+      ><a name="1270"
+      > </a
+      ><a name="1271" href="lib.types.Nat.html#1754" class="Function Operator"
+      >&#8804;</a
+      ><a name="1272"
+      > </a
+      ><a name="1273" href="cw.cohomology.CellularChainComplex.html#1140" class="Bound"
+      >n</a
+      ><a name="1274" class="Symbol"
+      >))</a
+      ><a name="1276"
+      >
+    </a
+      ><a name="1281" class="Symbol"
+      >&#8594;</a
+      ><a name="1282"
+      >  </a
+      ><a name="1284" href="lib.types.Group.html#7376" class="Function"
+      >AbGroup.grp</a
+      ><a name="1295"
+      > </a
+      ><a name="1296" class="Symbol"
+      >(</a
+      ><a name="1297" href="cw.cohomology.CellularChainComplex.html#211" class="Function"
+      >chain-template</a
+      ><a name="1311"
+      > </a
+      ><a name="1312" href="cw.cohomology.CellularChainComplex.html#1144" class="Bound"
+      >skel</a
+      ><a name="1316"
+      > </a
+      ><a name="1317" href="cw.cohomology.CellularChainComplex.html#1254" class="Bound"
+      >Sm&#8804;n?</a
+      ><a name="1322" class="Symbol"
+      >)</a
+      ><a name="1323"
+      >
+    </a
+      ><a name="1328" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="1330"
+      > </a
+      ><a name="1331" href="lib.types.Group.html#7376" class="Function"
+      >AbGroup.grp</a
+      ><a name="1342"
+      > </a
+      ><a name="1343" class="Symbol"
+      >(</a
+      ><a name="1344" href="cw.cohomology.CellularChainComplex.html#211" class="Function"
+      >chain-template</a
+      ><a name="1358"
+      > </a
+      ><a name="1359" href="cw.cohomology.CellularChainComplex.html#1144" class="Bound"
+      >skel</a
+      ><a name="1363"
+      > </a
+      ><a name="1364" href="cw.cohomology.CellularChainComplex.html#1233" class="Bound"
+      >m&#8804;n?</a
+      ><a name="1368" class="Symbol"
+      >)</a
+      ><a name="1369"
+      >
+  </a
+      ><a name="1372" href="cw.cohomology.CellularChainComplex.html#1117" class="Function"
+      >boundary-template</a
+      ><a name="1389"
+      > </a
+      ><a name="1390" href="cw.cohomology.CellularChainComplex.html#1390" class="Bound"
+      >skel</a
+      ><a name="1394"
+      > </a
+      ><a name="1395" href="cw.cohomology.CellularChainComplex.html#1395" class="Bound"
+      >dec</a
+      ><a name="1398"
+      > </a
+      ><a name="1399" href="cw.cohomology.CellularChainComplex.html#1399" class="Bound"
+      >fin-sup</a
+      ><a name="1406"
+      > </a
+      ><a name="1407" class="Symbol"
+      >_</a
+      ><a name="1408"
+      > </a
+      ><a name="1409" class="Symbol"
+      >(</a
+      ><a name="1410" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1413"
+      > </a
+      ><a name="1414" class="Symbol"
+      >_)</a
+      ><a name="1416"
+      > </a
+      ><a name="1417" class="Symbol"
+      >=</a
+      ><a name="1418"
+      > </a
+      ><a name="1419" href="lib.groups.Homomorphism.html#3180" class="Function"
+      >cst-hom</a
+      ><a name="1426"
+      >
+  </a
+      ><a name="1429" href="cw.cohomology.CellularChainComplex.html#1117" class="Function"
+      >boundary-template</a
+      ><a name="1446"
+      > </a
+      ><a name="1447" href="cw.cohomology.CellularChainComplex.html#1447" class="Bound"
+      >skel</a
+      ><a name="1451"
+      > </a
+      ><a name="1452" href="cw.cohomology.CellularChainComplex.html#1452" class="Bound"
+      >dec</a
+      ><a name="1455"
+      > </a
+      ><a name="1456" href="cw.cohomology.CellularChainComplex.html#1456" class="Bound"
+      >fin-sup</a
+      ><a name="1463"
+      > </a
+      ><a name="1464" class="Symbol"
+      >(</a
+      ><a name="1465" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="1468"
+      > </a
+      ><a name="1469" href="cw.cohomology.CellularChainComplex.html#1469" class="Bound"
+      >m&#8816;n</a
+      ><a name="1472" class="Symbol"
+      >)</a
+      ><a name="1473"
+      > </a
+      ><a name="1474" class="Symbol"
+      >(</a
+      ><a name="1475" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1478"
+      > </a
+      ><a name="1479" href="cw.cohomology.CellularChainComplex.html#1479" class="Bound"
+      >Sm&#8804;n</a
+      ><a name="1483" class="Symbol"
+      >)</a
+      ><a name="1484"
+      > </a
+      ><a name="1485" class="Symbol"
+      >=</a
+      ><a name="1486"
+      > </a
+      ><a name="1487" href="lib.types.Empty.html#165" class="Function"
+      >&#8869;-rec</a
+      ><a name="1492"
+      > </a
+      ><a name="1493" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" href="cw.cohomology.CellularChainComplex.html#1469" class="Bound"
+      >m&#8816;n</a
+      ><a name="1498"
+      > </a
+      ><a name="1499" class="Symbol"
+      >(</a
+      ><a name="1500" href="lib.types.Nat.html#2410" class="Function"
+      >&#8804;-trans</a
+      ><a name="1507"
+      > </a
+      ><a name="1508" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="1512"
+      > </a
+      ><a name="1513" href="cw.cohomology.CellularChainComplex.html#1479" class="Bound"
+      >Sm&#8804;n</a
+      ><a name="1517" class="Symbol"
+      >)</a
+      ><a name="1518"
+      >
+  </a
+      ><a name="1521" href="cw.cohomology.CellularChainComplex.html#1117" class="Function"
+      >boundary-template</a
+      ><a name="1538"
+      > </a
+      ><a name="1539" href="cw.cohomology.CellularChainComplex.html#1539" class="Bound"
+      >skel</a
+      ><a name="1543"
+      > </a
+      ><a name="1544" href="cw.cohomology.CellularChainComplex.html#1544" class="Bound"
+      >dec</a
+      ><a name="1547"
+      > </a
+      ><a name="1548" href="cw.cohomology.CellularChainComplex.html#1548" class="Bound"
+      >fin-sup</a
+      ><a name="1555"
+      > </a
+      ><a name="1556" class="Symbol"
+      >(</a
+      ><a name="1557" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1560"
+      > </a
+      ><a name="1561" href="cw.cohomology.CellularChainComplex.html#1561" class="Bound"
+      >m&#8804;n</a
+      ><a name="1564" class="Symbol"
+      >)</a
+      ><a name="1565"
+      > </a
+      ><a name="1566" class="Symbol"
+      >(</a
+      ><a name="1567" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="1570"
+      > </a
+      ><a name="1571" href="cw.cohomology.CellularChainComplex.html#1571" class="Bound"
+      >Sm&#8804;n</a
+      ><a name="1575" class="Symbol"
+      >)</a
+      ><a name="1576"
+      > </a
+      ><a name="1577" class="Symbol"
+      >=</a
+      ><a name="1578"
+      >
+    </a
+      ><a name="1583" href="cw.cohomology.CellularChainComplex.html#441" class="Function"
+      >boundary-nth-template</a
+      ><a name="1604"
+      > </a
+      ><a name="1605" href="cw.cohomology.CellularChainComplex.html#1539" class="Bound"
+      >skel</a
+      ><a name="1609"
+      > </a
+      ><a name="1610" href="cw.cohomology.CellularChainComplex.html#1544" class="Bound"
+      >dec</a
+      ><a name="1613"
+      > </a
+      ><a name="1614" href="cw.cohomology.CellularChainComplex.html#1548" class="Bound"
+      >fin-sup</a
+      ><a name="1621"
+      > </a
+      ><a name="1622" href="cw.cohomology.CellularChainComplex.html#1561" class="Bound"
+      >m&#8804;n</a
+      ><a name="1625"
+      > </a
+      ><a name="1626" href="cw.cohomology.CellularChainComplex.html#1571" class="Bound"
+      >Sm&#8804;n</a
+      ><a name="1630"
+      > </a
+      ><a name="1631" class="Symbol"
+      >(</a
+      ><a name="1632" href="cw.CW.html#2593" class="Function"
+      >cw-init-take</a
+      ><a name="1644"
+      > </a
+      ><a name="1645" href="cw.cohomology.CellularChainComplex.html#1571" class="Bound"
+      >Sm&#8804;n</a
+      ><a name="1649"
+      > </a
+      ><a name="1650" href="cw.cohomology.CellularChainComplex.html#1539" class="Bound"
+      >skel</a
+      ><a name="1654" class="Symbol"
+      >)</a
+      ><a name="1655"
+      >
+      </a
+      ><a name="1662" class="Symbol"
+      >(</a
+      ><a name="1663" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1665"
+      > </a
+      ><a name="1666" class="Symbol"
+      >(&#955;</a
+      ><a name="1668"
+      > </a
+      ><a name="1669" href="cw.cohomology.CellularChainComplex.html#1669" class="Bound"
+      >m&#8804;n</a
+      ><a name="1672"
+      > </a
+      ><a name="1673" class="Symbol"
+      >&#8594;</a
+      ><a name="1674"
+      > </a
+      ><a name="1675" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="1682"
+      > </a
+      ><a name="1683" href="cw.cohomology.CellularChainComplex.html#1669" class="Bound"
+      >m&#8804;n</a
+      ><a name="1686"
+      > </a
+      ><a name="1687" href="cw.cohomology.CellularChainComplex.html#1539" class="Bound"
+      >skel</a
+      ><a name="1691" class="Symbol"
+      >)</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" class="Symbol"
+      >(</a
+      ><a name="1694" href="lib.types.Nat.html#4544" class="Function"
+      >&#8804;-has-all-paths</a
+      ><a name="1709"
+      > </a
+      ><a name="1710" class="Symbol"
+      >(</a
+      ><a name="1711" href="lib.types.Nat.html#2410" class="Function"
+      >&#8804;-trans</a
+      ><a name="1718"
+      > </a
+      ><a name="1719" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="1723"
+      > </a
+      ><a name="1724" href="cw.cohomology.CellularChainComplex.html#1571" class="Bound"
+      >Sm&#8804;n</a
+      ><a name="1728" class="Symbol"
+      >)</a
+      ><a name="1729"
+      > </a
+      ><a name="1730" href="cw.cohomology.CellularChainComplex.html#1561" class="Bound"
+      >m&#8804;n</a
+      ><a name="1733" class="Symbol"
+      >))</a
+      ><a name="1735"
+      >
+
+  </a
+      ><a name="1739" href="cw.cohomology.CellularChainComplex.html#1739" class="Function"
+      >chain-complex</a
+      ><a name="1752"
+      > </a
+      ><a name="1753" class="Symbol"
+      >:</a
+      ><a name="1754"
+      > </a
+      ><a name="1755" class="Symbol"
+      >&#8704;</a
+      ><a name="1756"
+      > </a
+      ><a name="1757" class="Symbol"
+      >{</a
+      ><a name="1758" href="cw.cohomology.CellularChainComplex.html#1758" class="Bound"
+      >n</a
+      ><a name="1759" class="Symbol"
+      >}</a
+      ><a name="1760"
+      > </a
+      ><a name="1761" class="Symbol"
+      >(</a
+      ><a name="1762" href="cw.cohomology.CellularChainComplex.html#1762" class="Bound"
+      >skel</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" class="Symbol"
+      >:</a
+      ><a name="1768"
+      > </a
+      ><a name="1769" href="cw.CW.html#1156" class="Function"
+      >Skeleton</a
+      ><a name="1777"
+      > </a
+      ><a name="1778" class="Symbol"
+      >{</a
+      ><a name="1779" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="1780" class="Symbol"
+      >}</a
+      ><a name="1781"
+      > </a
+      ><a name="1782" href="cw.cohomology.CellularChainComplex.html#1758" class="Bound"
+      >n</a
+      ><a name="1783" class="Symbol"
+      >)</a
+      ><a name="1784"
+      > </a
+      ><a name="1785" href="cw.cohomology.CellularChainComplex.html#1785" class="Bound"
+      >dec</a
+      ><a name="1788"
+      >
+    </a
+      ><a name="1793" class="Symbol"
+      >&#8594;</a
+      ><a name="1794"
+      > </a
+      ><a name="1795" href="cw.DegreeBySquashing.html#2893" class="Function"
+      >has-degrees-with-finite-support</a
+      ><a name="1826"
+      > </a
+      ><a name="1827" href="cw.cohomology.CellularChainComplex.html#1762" class="Bound"
+      >skel</a
+      ><a name="1831"
+      > </a
+      ><a name="1832" href="cw.cohomology.CellularChainComplex.html#1785" class="Bound"
+      >dec</a
+      ><a name="1835"
+      >
+    </a
+      ><a name="1840" class="Symbol"
+      >&#8594;</a
+      ><a name="1841"
+      > </a
+      ><a name="1842" href="cohomology.ChainComplex.html#138" class="Record"
+      >ChainComplex</a
+      ><a name="1854"
+      > </a
+      ><a name="1855" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="1856"
+      >
+  </a
+      ><a name="1859" href="cw.cohomology.CellularChainComplex.html#1739" class="Function"
+      >chain-complex</a
+      ><a name="1872"
+      > </a
+      ><a name="1873" class="Symbol"
+      >{</a
+      ><a name="1874" href="cw.cohomology.CellularChainComplex.html#1874" class="Bound"
+      >n</a
+      ><a name="1875" class="Symbol"
+      >}</a
+      ><a name="1876"
+      > </a
+      ><a name="1877" href="cw.cohomology.CellularChainComplex.html#1877" class="Bound"
+      >skel</a
+      ><a name="1881"
+      > </a
+      ><a name="1882" href="cw.cohomology.CellularChainComplex.html#1882" class="Bound"
+      >dec</a
+      ><a name="1885"
+      > </a
+      ><a name="1886" href="cw.cohomology.CellularChainComplex.html#1886" class="Bound"
+      >fin-sup</a
+      ><a name="1893"
+      > </a
+      ><a name="1894" class="Symbol"
+      >=</a
+      ><a name="1895"
+      > </a
+      ><a name="1896" class="Keyword"
+      >record</a
+      ><a name="1902"
+      > </a
+      ><a name="1903" class="Symbol"
+      >{</a
+      ><a name="1904" href="cw.cohomology.CellularChainComplex.html#1924" class="Module"
+      >M</a
+      ><a name="1905" class="Symbol"
+      >}</a
+      ><a name="1906"
+      > </a
+      ><a name="1907" class="Keyword"
+      >where</a
+      ><a name="1912"
+      >
+    </a
+      ><a name="1917" class="Keyword"
+      >module</a
+      ><a name="1923"
+      > </a
+      ><a name="1924" href="cw.cohomology.CellularChainComplex.html#1924" class="Module"
+      >M</a
+      ><a name="1925"
+      > </a
+      ><a name="1926" class="Keyword"
+      >where</a
+      ><a name="1931"
+      >
+      </a
+      ><a name="1938" href="cw.cohomology.CellularChainComplex.html#1938" class="Function"
+      >head</a
+      ><a name="1942"
+      > </a
+      ><a name="1943" class="Symbol"
+      >:</a
+      ><a name="1944"
+      > </a
+      ><a name="1945" href="lib.types.Group.html#7210" class="Function"
+      >AbGroup</a
+      ><a name="1952"
+      > </a
+      ><a name="1953" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="1954"
+      >
+      </a
+      ><a name="1961" href="cw.cohomology.CellularChainComplex.html#1938" class="Function"
+      >head</a
+      ><a name="1965"
+      > </a
+      ><a name="1966" class="Symbol"
+      >=</a
+      ><a name="1967"
+      > </a
+      ><a name="1968" href="lib.groups.Lift.html#1454" class="Function"
+      >Lift-abgroup</a
+      ><a name="1980"
+      > </a
+      ><a name="1981" class="Symbol"
+      >{</a
+      ><a name="1982" class="Argument"
+      >j</a
+      ><a name="1983"
+      > </a
+      ><a name="1984" class="Symbol"
+      >=</a
+      ><a name="1985"
+      > </a
+      ><a name="1986" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="1987" class="Symbol"
+      >}</a
+      ><a name="1988"
+      > </a
+      ><a name="1989" href="lib.groups.Int.html#647" class="Function"
+      >&#8484;-abgroup</a
+      ><a name="1998"
+      >
+
+      </a
+      ><a name="2006" href="cw.cohomology.CellularChainComplex.html#2006" class="Function"
+      >chain</a
+      ><a name="2011"
+      > </a
+      ><a name="2012" class="Symbol"
+      >:</a
+      ><a name="2013"
+      > </a
+      ><a name="2014" href="lib.Base.html#6187" class="Datatype"
+      >&#8469;</a
+      ><a name="2015"
+      > </a
+      ><a name="2016" class="Symbol"
+      >&#8594;</a
+      ><a name="2017"
+      > </a
+      ><a name="2018" href="lib.types.Group.html#7210" class="Function"
+      >AbGroup</a
+      ><a name="2025"
+      > </a
+      ><a name="2026" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="2027"
+      >
+      </a
+      ><a name="2034" href="cw.cohomology.CellularChainComplex.html#2006" class="Function"
+      >chain</a
+      ><a name="2039"
+      > </a
+      ><a name="2040" href="cw.cohomology.CellularChainComplex.html#2040" class="Bound"
+      >m</a
+      ><a name="2041"
+      > </a
+      ><a name="2042" class="Symbol"
+      >=</a
+      ><a name="2043"
+      > </a
+      ><a name="2044" href="cw.cohomology.CellularChainComplex.html#211" class="Function"
+      >chain-template</a
+      ><a name="2058"
+      > </a
+      ><a name="2059" href="cw.cohomology.CellularChainComplex.html#1877" class="Bound"
+      >skel</a
+      ><a name="2063"
+      > </a
+      ><a name="2064" class="Symbol"
+      >(</a
+      ><a name="2065" href="lib.types.Nat.html#3317" class="Function"
+      >&#8804;-dec</a
+      ><a name="2070"
+      > </a
+      ><a name="2071" href="cw.cohomology.CellularChainComplex.html#2040" class="Bound"
+      >m</a
+      ><a name="2072"
+      > </a
+      ><a name="2073" href="cw.cohomology.CellularChainComplex.html#1874" class="Bound"
+      >n</a
+      ><a name="2074" class="Symbol"
+      >)</a
+      ><a name="2075"
+      >
+
+      </a
+      ><a name="2083" href="cw.cohomology.CellularChainComplex.html#2083" class="Function"
+      >augment</a
+      ><a name="2090"
+      > </a
+      ><a name="2091" class="Symbol"
+      >:</a
+      ><a name="2092"
+      > </a
+      ><a name="2093" href="lib.types.Group.html#7376" class="Function"
+      >AbGroup.grp</a
+      ><a name="2104"
+      > </a
+      ><a name="2105" class="Symbol"
+      >(</a
+      ><a name="2106" href="cw.cohomology.CellularChainComplex.html#2006" class="Function"
+      >chain</a
+      ><a name="2111"
+      > </a
+      ><a name="2112" class="Number"
+      >0</a
+      ><a name="2113" class="Symbol"
+      >)</a
+      ><a name="2114"
+      > </a
+      ><a name="2115" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="2117"
+      > </a
+      ><a name="2118" href="lib.types.Group.html#7376" class="Function"
+      >AbGroup.grp</a
+      ><a name="2129"
+      > </a
+      ><a name="2130" href="cw.cohomology.CellularChainComplex.html#1938" class="Function"
+      >head</a
+      ><a name="2134"
+      >
+      </a
+      ><a name="2141" href="cw.cohomology.CellularChainComplex.html#2083" class="Function"
+      >augment</a
+      ><a name="2148"
+      > </a
+      ><a name="2149" class="Symbol"
+      >=</a
+      ><a name="2150"
+      > </a
+      ><a name="2151" href="lib.groups.FreeAbelianGroup.html#8539" class="Function"
+      >FreeAbGroup-extend</a
+      ><a name="2169"
+      > </a
+      ><a name="2170" href="cw.cohomology.CellularChainComplex.html#1938" class="Function"
+      >head</a
+      ><a name="2174"
+      > </a
+      ><a name="2175" class="Symbol"
+      >&#955;</a
+      ><a name="2176"
+      > </a
+      ><a name="2177" href="cw.cohomology.CellularChainComplex.html#2177" class="Bound"
+      >_</a
+      ><a name="2178"
+      > </a
+      ><a name="2179" class="Symbol"
+      >&#8594;</a
+      ><a name="2180"
+      > </a
+      ><a name="2181" href="lib.Base.html#6511" class="InductiveConstructor"
+      >lift</a
+      ><a name="2185"
+      > </a
+      ><a name="2186" class="Number"
+      >1</a
+      ><a name="2187"
+      >
+
+      </a
+      ><a name="2195" href="cw.cohomology.CellularChainComplex.html#2195" class="Function"
+      >boundary</a
+      ><a name="2203"
+      > </a
+      ><a name="2204" class="Symbol"
+      >:</a
+      ><a name="2205"
+      > </a
+      ><a name="2206" class="Symbol"
+      >&#8704;</a
+      ><a name="2207"
+      > </a
+      ><a name="2208" href="cw.cohomology.CellularChainComplex.html#2208" class="Bound"
+      >m</a
+      ><a name="2209"
+      > </a
+      ><a name="2210" class="Symbol"
+      >&#8594;</a
+      ><a name="2211"
+      > </a
+      ><a name="2212" class="Symbol"
+      >(</a
+      ><a name="2213" href="lib.types.Group.html#7376" class="Function"
+      >AbGroup.grp</a
+      ><a name="2224"
+      > </a
+      ><a name="2225" class="Symbol"
+      >(</a
+      ><a name="2226" href="cw.cohomology.CellularChainComplex.html#2006" class="Function"
+      >chain</a
+      ><a name="2231"
+      > </a
+      ><a name="2232" class="Symbol"
+      >(</a
+      ><a name="2233" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2234"
+      > </a
+      ><a name="2235" href="cw.cohomology.CellularChainComplex.html#2208" class="Bound"
+      >m</a
+      ><a name="2236" class="Symbol"
+      >))</a
+      ><a name="2238"
+      > </a
+      ><a name="2239" href="lib.groups.Homomorphism.html#2849" class="Function Operator"
+      >&#8594;&#7475;</a
+      ><a name="2241"
+      > </a
+      ><a name="2242" href="lib.types.Group.html#7376" class="Function"
+      >AbGroup.grp</a
+      ><a name="2253"
+      > </a
+      ><a name="2254" class="Symbol"
+      >(</a
+      ><a name="2255" href="cw.cohomology.CellularChainComplex.html#2006" class="Function"
+      >chain</a
+      ><a name="2260"
+      > </a
+      ><a name="2261" href="cw.cohomology.CellularChainComplex.html#2208" class="Bound"
+      >m</a
+      ><a name="2262" class="Symbol"
+      >))</a
+      ><a name="2264"
+      >
+      </a
+      ><a name="2271" href="cw.cohomology.CellularChainComplex.html#2195" class="Function"
+      >boundary</a
+      ><a name="2279"
+      > </a
+      ><a name="2280" href="cw.cohomology.CellularChainComplex.html#2280" class="Bound"
+      >m</a
+      ><a name="2281"
+      > </a
+      ><a name="2282" class="Symbol"
+      >=</a
+      ><a name="2283"
+      > </a
+      ><a name="2284" href="cw.cohomology.CellularChainComplex.html#1117" class="Function"
+      >boundary-template</a
+      ><a name="2301"
+      > </a
+      ><a name="2302" href="cw.cohomology.CellularChainComplex.html#1877" class="Bound"
+      >skel</a
+      ><a name="2306"
+      > </a
+      ><a name="2307" href="cw.cohomology.CellularChainComplex.html#1882" class="Bound"
+      >dec</a
+      ><a name="2310"
+      > </a
+      ><a name="2311" href="cw.cohomology.CellularChainComplex.html#1886" class="Bound"
+      >fin-sup</a
+      ><a name="2318"
+      > </a
+      ><a name="2319" class="Symbol"
+      >(</a
+      ><a name="2320" href="lib.types.Nat.html#3317" class="Function"
+      >&#8804;-dec</a
+      ><a name="2325"
+      > </a
+      ><a name="2326" href="cw.cohomology.CellularChainComplex.html#2280" class="Bound"
+      >m</a
+      ><a name="2327"
+      > </a
+      ><a name="2328" href="cw.cohomology.CellularChainComplex.html#1874" class="Bound"
+      >n</a
+      ><a name="2329" class="Symbol"
+      >)</a
+      ><a name="2330"
+      > </a
+      ><a name="2331" class="Symbol"
+      >(</a
+      ><a name="2332" href="lib.types.Nat.html#3317" class="Function"
+      >&#8804;-dec</a
+      ><a name="2337"
+      > </a
+      ><a name="2338" class="Symbol"
+      >(</a
+      ><a name="2339" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2340"
+      > </a
+      ><a name="2341" href="cw.cohomology.CellularChainComplex.html#2280" class="Bound"
+      >m</a
+      ><a name="2342" class="Symbol"
+      >)</a
+      ><a name="2343"
+      > </a
+      ><a name="2344" href="cw.cohomology.CellularChainComplex.html#1874" class="Bound"
+      >n</a
+      ><a name="2345" class="Symbol"
+      >)</a
+      ><a name="2346"
+      >
+
+  </a
+      ><a name="2350" href="cw.cohomology.CellularChainComplex.html#2350" class="Function"
+      >cochain-complex</a
+      ><a name="2365"
+      > </a
+      ><a name="2366" class="Symbol"
+      >:</a
+      ><a name="2367"
+      > </a
+      ><a name="2368" class="Symbol"
+      >&#8704;</a
+      ><a name="2369"
+      > </a
+      ><a name="2370" class="Symbol"
+      >{</a
+      ><a name="2371" href="cw.cohomology.CellularChainComplex.html#2371" class="Bound"
+      >j</a
+      ><a name="2372" class="Symbol"
+      >}</a
+      ><a name="2373"
+      > </a
+      ><a name="2374" class="Symbol"
+      >{</a
+      ><a name="2375" href="cw.cohomology.CellularChainComplex.html#2375" class="Bound"
+      >n</a
+      ><a name="2376" class="Symbol"
+      >}</a
+      ><a name="2377"
+      > </a
+      ><a name="2378" class="Symbol"
+      >(</a
+      ><a name="2379" href="cw.cohomology.CellularChainComplex.html#2379" class="Bound"
+      >skel</a
+      ><a name="2383"
+      > </a
+      ><a name="2384" class="Symbol"
+      >:</a
+      ><a name="2385"
+      > </a
+      ><a name="2386" href="cw.CW.html#1156" class="Function"
+      >Skeleton</a
+      ><a name="2394"
+      > </a
+      ><a name="2395" class="Symbol"
+      >{</a
+      ><a name="2396" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="2397" class="Symbol"
+      >}</a
+      ><a name="2398"
+      > </a
+      ><a name="2399" href="cw.cohomology.CellularChainComplex.html#2375" class="Bound"
+      >n</a
+      ><a name="2400" class="Symbol"
+      >)</a
+      ><a name="2401"
+      > </a
+      ><a name="2402" href="cw.cohomology.CellularChainComplex.html#2402" class="Bound"
+      >dec</a
+      ><a name="2405"
+      >
+    </a
+      ><a name="2410" class="Symbol"
+      >&#8594;</a
+      ><a name="2411"
+      > </a
+      ><a name="2412" href="cw.DegreeBySquashing.html#2893" class="Function"
+      >has-degrees-with-finite-support</a
+      ><a name="2443"
+      > </a
+      ><a name="2444" href="cw.cohomology.CellularChainComplex.html#2379" class="Bound"
+      >skel</a
+      ><a name="2448"
+      > </a
+      ><a name="2449" href="cw.cohomology.CellularChainComplex.html#2402" class="Bound"
+      >dec</a
+      ><a name="2452"
+      >
+    </a
+      ><a name="2457" class="Symbol"
+      >&#8594;</a
+      ><a name="2458"
+      > </a
+      ><a name="2459" href="lib.types.Group.html#7210" class="Function"
+      >AbGroup</a
+      ><a name="2466"
+      > </a
+      ><a name="2467" href="cw.cohomology.CellularChainComplex.html#2371" class="Bound"
+      >j</a
+      ><a name="2468"
+      > </a
+      ><a name="2469" class="Symbol"
+      >&#8594;</a
+      ><a name="2470"
+      > </a
+      ><a name="2471" href="cohomology.ChainComplex.html#381" class="Record"
+      >CochainComplex</a
+      ><a name="2485"
+      > </a
+      ><a name="2486" class="Symbol"
+      >(</a
+      ><a name="2487" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="2491"
+      > </a
+      ><a name="2492" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="2493"
+      > </a
+      ><a name="2494" href="cw.cohomology.CellularChainComplex.html#2371" class="Bound"
+      >j</a
+      ><a name="2495" class="Symbol"
+      >)</a
+      ><a name="2496"
+      >
+  </a
+      ><a name="2499" href="cw.cohomology.CellularChainComplex.html#2350" class="Function"
+      >cochain-complex</a
+      ><a name="2514"
+      > </a
+      ><a name="2515" href="cw.cohomology.CellularChainComplex.html#2515" class="Bound"
+      >skel</a
+      ><a name="2519"
+      > </a
+      ><a name="2520" href="cw.cohomology.CellularChainComplex.html#2520" class="Bound"
+      >dec</a
+      ><a name="2523"
+      > </a
+      ><a name="2524" href="cw.cohomology.CellularChainComplex.html#2524" class="Bound"
+      >fin-sup</a
+      ><a name="2531"
+      > </a
+      ><a name="2532" href="cw.cohomology.CellularChainComplex.html#2532" class="Bound"
+      >G</a
+      ><a name="2533"
+      > </a
+      ><a name="2534" class="Symbol"
+      >=</a
+      ><a name="2535"
+      > </a
+      ><a name="2536" href="cohomology.ChainComplex.html#1441" class="Function"
+      >complex-dualize</a
+      ><a name="2551"
+      >
+    </a
+      ><a name="2556" class="Symbol"
+      >(</a
+      ><a name="2557" href="cw.cohomology.CellularChainComplex.html#1739" class="Function"
+      >chain-complex</a
+      ><a name="2570"
+      > </a
+      ><a name="2571" href="cw.cohomology.CellularChainComplex.html#2515" class="Bound"
+      >skel</a
+      ><a name="2575"
+      > </a
+      ><a name="2576" href="cw.cohomology.CellularChainComplex.html#2520" class="Bound"
+      >dec</a
+      ><a name="2579"
+      > </a
+      ><a name="2580" href="cw.cohomology.CellularChainComplex.html#2524" class="Bound"
+      >fin-sup</a
+      ><a name="2587" class="Symbol"
+      >)</a
+      ><a name="2588"
+      > </a
+      ><a name="2589" href="cw.cohomology.CellularChainComplex.html#2532" class="Bound"
+      >G</a
+      ><a name="2590"
+      >
+
+  </a
+      ><a name="2594" class="Comment"
+      >{- properties of coboundaries -}</a
+      ><a name="2626"
+      >
+
+  </a
+      ><a name="2630" class="Keyword"
+      >abstract</a
+      ><a name="2638"
+      >
+    </a
+      ><a name="2643" class="Keyword"
+      >private</a
+      ><a name="2650"
+      >
+      </a
+      ><a name="2657" href="cw.cohomology.CellularChainComplex.html#2657" class="Function"
+      >path-lemma&#8320;</a
+      ><a name="2668"
+      > </a
+      ><a name="2669" class="Symbol"
+      >:</a
+      ><a name="2670"
+      > </a
+      ><a name="2671" class="Symbol"
+      >&#8704;</a
+      ><a name="2672"
+      > </a
+      ><a name="2673" class="Symbol"
+      >{</a
+      ><a name="2674" href="cw.cohomology.CellularChainComplex.html#2674" class="Bound"
+      >n</a
+      ><a name="2675" class="Symbol"
+      >}</a
+      ><a name="2676"
+      > </a
+      ><a name="2677" class="Symbol"
+      >(</a
+      ><a name="2678" href="cw.cohomology.CellularChainComplex.html#2678" class="Bound"
+      >skel</a
+      ><a name="2682"
+      > </a
+      ><a name="2683" class="Symbol"
+      >:</a
+      ><a name="2684"
+      > </a
+      ><a name="2685" href="cw.CW.html#1156" class="Function"
+      >Skeleton</a
+      ><a name="2693"
+      > </a
+      ><a name="2694" class="Symbol"
+      >{</a
+      ><a name="2695" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="2696" class="Symbol"
+      >}</a
+      ><a name="2697"
+      > </a
+      ><a name="2698" class="Symbol"
+      >(</a
+      ><a name="2699" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2700"
+      > </a
+      ><a name="2701" href="cw.cohomology.CellularChainComplex.html#2674" class="Bound"
+      >n</a
+      ><a name="2702" class="Symbol"
+      >))</a
+      ><a name="2704"
+      > </a
+      ><a name="2705" class="Symbol"
+      >{</a
+      ><a name="2706" href="cw.cohomology.CellularChainComplex.html#2706" class="Bound"
+      >m</a
+      ><a name="2707" class="Symbol"
+      >}</a
+      ><a name="2708"
+      > </a
+      ><a name="2709" class="Symbol"
+      >(</a
+      ><a name="2710" href="cw.cohomology.CellularChainComplex.html#2710" class="Bound"
+      >m&lt;n</a
+      ><a name="2713"
+      > </a
+      ><a name="2714" class="Symbol"
+      >:</a
+      ><a name="2715"
+      > </a
+      ><a name="2716" href="cw.cohomology.CellularChainComplex.html#2706" class="Bound"
+      >m</a
+      ><a name="2717"
+      > </a
+      ><a name="2718" href="lib.types.Nat.html#1660" class="Datatype Operator"
+      >&lt;</a
+      ><a name="2719"
+      > </a
+      ><a name="2720" href="cw.cohomology.CellularChainComplex.html#2674" class="Bound"
+      >n</a
+      ><a name="2721" class="Symbol"
+      >)</a
+      ><a name="2722"
+      > </a
+      ><a name="2723" class="Symbol"
+      >(</a
+      ><a name="2724" href="cw.cohomology.CellularChainComplex.html#2724" class="Bound"
+      >Sm&lt;n</a
+      ><a name="2728"
+      > </a
+      ><a name="2729" class="Symbol"
+      >:</a
+      ><a name="2730"
+      > </a
+      ><a name="2731" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="2732"
+      > </a
+      ><a name="2733" href="cw.cohomology.CellularChainComplex.html#2706" class="Bound"
+      >m</a
+      ><a name="2734"
+      > </a
+      ><a name="2735" href="lib.types.Nat.html#1660" class="Datatype Operator"
+      >&lt;</a
+      ><a name="2736"
+      > </a
+      ><a name="2737" href="cw.cohomology.CellularChainComplex.html#2674" class="Bound"
+      >n</a
+      ><a name="2738" class="Symbol"
+      >)</a
+      ><a name="2739"
+      >
+        </a
+      ><a name="2748" class="Symbol"
+      >&#8594;</a
+      ><a name="2749"
+      >  </a
+      ><a name="2751" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2753"
+      > </a
+      ><a name="2754" class="Symbol"
+      >(&#955;</a
+      ><a name="2756"
+      > </a
+      ><a name="2757" href="cw.cohomology.CellularChainComplex.html#2757" class="Bound"
+      >m&#8804;Sn</a
+      ><a name="2761"
+      > </a
+      ><a name="2762" class="Symbol"
+      >&#8594;</a
+      ><a name="2763"
+      > </a
+      ><a name="2764" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="2771"
+      > </a
+      ><a name="2772" href="cw.cohomology.CellularChainComplex.html#2757" class="Bound"
+      >m&#8804;Sn</a
+      ><a name="2776"
+      > </a
+      ><a name="2777" href="cw.cohomology.CellularChainComplex.html#2678" class="Bound"
+      >skel</a
+      ><a name="2781" class="Symbol"
+      >)</a
+      ><a name="2782"
+      > </a
+      ><a name="2783" class="Symbol"
+      >(</a
+      ><a name="2784" href="lib.types.Nat.html#4544" class="Function"
+      >&#8804;-has-all-paths</a
+      ><a name="2799"
+      > </a
+      ><a name="2800" class="Symbol"
+      >(</a
+      ><a name="2801" href="lib.types.Nat.html#2410" class="Function"
+      >&#8804;-trans</a
+      ><a name="2808"
+      > </a
+      ><a name="2809" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="2813"
+      > </a
+      ><a name="2814" class="Symbol"
+      >(</a
+      ><a name="2815" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="2820"
+      > </a
+      ><a name="2821" class="Symbol"
+      >(</a
+      ><a name="2822" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2825"
+      > </a
+      ><a name="2826" href="cw.cohomology.CellularChainComplex.html#2724" class="Bound"
+      >Sm&lt;n</a
+      ><a name="2830" class="Symbol"
+      >)))</a
+      ><a name="2833"
+      > </a
+      ><a name="2834" class="Symbol"
+      >(</a
+      ><a name="2835" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="2840"
+      > </a
+      ><a name="2841" class="Symbol"
+      >(</a
+      ><a name="2842" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2845"
+      > </a
+      ><a name="2846" href="cw.cohomology.CellularChainComplex.html#2710" class="Bound"
+      >m&lt;n</a
+      ><a name="2849" class="Symbol"
+      >)))</a
+      ><a name="2852"
+      >
+        </a
+      ><a name="2861" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2863"
+      > </a
+      ><a name="2864" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2866"
+      > </a
+      ><a name="2867" class="Symbol"
+      >(&#955;</a
+      ><a name="2869"
+      > </a
+      ><a name="2870" href="cw.cohomology.CellularChainComplex.html#2870" class="Bound"
+      >m&#8804;n</a
+      ><a name="2873"
+      > </a
+      ><a name="2874" class="Symbol"
+      >&#8594;</a
+      ><a name="2875"
+      > </a
+      ><a name="2876" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="2883"
+      > </a
+      ><a name="2884" href="cw.cohomology.CellularChainComplex.html#2870" class="Bound"
+      >m&#8804;n</a
+      ><a name="2887"
+      > </a
+      ><a name="2888" class="Symbol"
+      >(</a
+      ><a name="2889" href="cw.CW.html#2175" class="Function"
+      >cw-init</a
+      ><a name="2896"
+      > </a
+      ><a name="2897" href="cw.cohomology.CellularChainComplex.html#2678" class="Bound"
+      >skel</a
+      ><a name="2901" class="Symbol"
+      >))</a
+      ><a name="2903"
+      > </a
+      ><a name="2904" class="Symbol"
+      >(</a
+      ><a name="2905" href="lib.types.Nat.html#4544" class="Function"
+      >&#8804;-has-all-paths</a
+      ><a name="2920"
+      > </a
+      ><a name="2921" class="Symbol"
+      >(</a
+      ><a name="2922" href="lib.types.Nat.html#2410" class="Function"
+      >&#8804;-trans</a
+      ><a name="2929"
+      > </a
+      ><a name="2930" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="2934"
+      > </a
+      ><a name="2935" class="Symbol"
+      >(</a
+      ><a name="2936" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2939"
+      > </a
+      ><a name="2940" href="cw.cohomology.CellularChainComplex.html#2724" class="Bound"
+      >Sm&lt;n</a
+      ><a name="2944" class="Symbol"
+      >))</a
+      ><a name="2946"
+      > </a
+      ><a name="2947" class="Symbol"
+      >(</a
+      ><a name="2948" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="2951"
+      > </a
+      ><a name="2952" href="cw.cohomology.CellularChainComplex.html#2710" class="Bound"
+      >m&lt;n</a
+      ><a name="2955" class="Symbol"
+      >))</a
+      ><a name="2957"
+      >
+      </a
+      ><a name="2964" href="cw.cohomology.CellularChainComplex.html#2657" class="Function"
+      >path-lemma&#8320;</a
+      ><a name="2975"
+      > </a
+      ><a name="2976" href="cw.cohomology.CellularChainComplex.html#2976" class="Bound"
+      >skel</a
+      ><a name="2980"
+      > </a
+      ><a name="2981" href="cw.cohomology.CellularChainComplex.html#2981" class="Bound"
+      >m&lt;n</a
+      ><a name="2984"
+      > </a
+      ><a name="2985" href="cw.cohomology.CellularChainComplex.html#2985" class="Bound"
+      >Sm&lt;n</a
+      ><a name="2989"
+      > </a
+      ><a name="2990" class="Symbol"
+      >=</a
+      ><a name="2991"
+      >
+        </a
+      ><a name="3000" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3002"
+      > </a
+      ><a name="3003" class="Symbol"
+      >(&#955;</a
+      ><a name="3005"
+      > </a
+      ><a name="3006" href="cw.cohomology.CellularChainComplex.html#3006" class="Bound"
+      >m&#8804;Sn</a
+      ><a name="3010"
+      > </a
+      ><a name="3011" class="Symbol"
+      >&#8594;</a
+      ><a name="3012"
+      > </a
+      ><a name="3013" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="3020"
+      > </a
+      ><a name="3021" href="cw.cohomology.CellularChainComplex.html#3006" class="Bound"
+      >m&#8804;Sn</a
+      ><a name="3025"
+      > </a
+      ><a name="3026" href="cw.cohomology.CellularChainComplex.html#2976" class="Bound"
+      >skel</a
+      ><a name="3030" class="Symbol"
+      >)</a
+      ><a name="3031"
+      > </a
+      ><a name="3032" class="Symbol"
+      >(</a
+      ><a name="3033" href="lib.types.Nat.html#4544" class="Function"
+      >&#8804;-has-all-paths</a
+      ><a name="3048"
+      > </a
+      ><a name="3049" class="Symbol"
+      >(</a
+      ><a name="3050" href="lib.types.Nat.html#2410" class="Function"
+      >&#8804;-trans</a
+      ><a name="3057"
+      > </a
+      ><a name="3058" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="3062"
+      > </a
+      ><a name="3063" class="Symbol"
+      >(</a
+      ><a name="3064" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="3069"
+      > </a
+      ><a name="3070" class="Symbol"
+      >(</a
+      ><a name="3071" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3074"
+      > </a
+      ><a name="3075" href="cw.cohomology.CellularChainComplex.html#2985" class="Bound"
+      >Sm&lt;n</a
+      ><a name="3079" class="Symbol"
+      >)))</a
+      ><a name="3082"
+      > </a
+      ><a name="3083" class="Symbol"
+      >(</a
+      ><a name="3084" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="3089"
+      > </a
+      ><a name="3090" class="Symbol"
+      >(</a
+      ><a name="3091" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3094"
+      > </a
+      ><a name="3095" href="cw.cohomology.CellularChainComplex.html#2981" class="Bound"
+      >m&lt;n</a
+      ><a name="3098" class="Symbol"
+      >)))</a
+      ><a name="3101"
+      >
+          </a
+      ><a name="3112" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="3114"
+      > </a
+      ><a name="3115" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3117"
+      > </a
+      ><a name="3118" class="Symbol"
+      >(</a
+      ><a name="3119" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3121"
+      > </a
+      ><a name="3122" class="Symbol"
+      >(&#955;</a
+      ><a name="3124"
+      > </a
+      ><a name="3125" href="cw.cohomology.CellularChainComplex.html#3125" class="Bound"
+      >m&#8804;Sn</a
+      ><a name="3129"
+      > </a
+      ><a name="3130" class="Symbol"
+      >&#8594;</a
+      ><a name="3131"
+      > </a
+      ><a name="3132" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="3139"
+      > </a
+      ><a name="3140" href="cw.cohomology.CellularChainComplex.html#3125" class="Bound"
+      >m&#8804;Sn</a
+      ><a name="3144"
+      > </a
+      ><a name="3145" href="cw.cohomology.CellularChainComplex.html#2976" class="Bound"
+      >skel</a
+      ><a name="3149" class="Symbol"
+      >))</a
+      ><a name="3151"
+      > </a
+      ><a name="3152" class="Symbol"
+      >(</a
+      ><a name="3153" href="lib.NType.html#2533" class="Function"
+      >contr-has-all-paths</a
+      ><a name="3172"
+      > </a
+      ><a name="3173" class="Symbol"
+      >(</a
+      ><a name="3174" href="lib.types.Nat.html#4856" class="Function"
+      >&#8804;-is-prop</a
+      ><a name="3183"
+      > </a
+      ><a name="3184" class="Symbol"
+      >_</a
+      ><a name="3185"
+      > </a
+      ><a name="3186" class="Symbol"
+      >_)</a
+      ><a name="3188"
+      > </a
+      ><a name="3189" class="Symbol"
+      >_</a
+      ><a name="3190"
+      > </a
+      ><a name="3191" class="Symbol"
+      >_)</a
+      ><a name="3193"
+      > </a
+      ><a name="3194" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="3195"
+      >
+        </a
+      ><a name="3204" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3206"
+      > </a
+      ><a name="3207" class="Symbol"
+      >(&#955;</a
+      ><a name="3209"
+      > </a
+      ><a name="3210" href="cw.cohomology.CellularChainComplex.html#3210" class="Bound"
+      >m&#8804;Sn</a
+      ><a name="3214"
+      > </a
+      ><a name="3215" class="Symbol"
+      >&#8594;</a
+      ><a name="3216"
+      > </a
+      ><a name="3217" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="3224"
+      > </a
+      ><a name="3225" href="cw.cohomology.CellularChainComplex.html#3210" class="Bound"
+      >m&#8804;Sn</a
+      ><a name="3229"
+      > </a
+      ><a name="3230" href="cw.cohomology.CellularChainComplex.html#2976" class="Bound"
+      >skel</a
+      ><a name="3234" class="Symbol"
+      >)</a
+      ><a name="3235"
+      > </a
+      ><a name="3236" class="Symbol"
+      >(</a
+      ><a name="3237" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3239"
+      > </a
+      ><a name="3240" class="Symbol"
+      >(</a
+      ><a name="3241" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="3246"
+      > </a
+      ><a name="3247" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3248"
+      > </a
+      ><a name="3249" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3252" class="Symbol"
+      >)</a
+      ><a name="3253"
+      > </a
+      ><a name="3254" class="Symbol"
+      >(</a
+      ><a name="3255" href="lib.types.Nat.html#3866" class="Function"
+      >&lt;-has-all-paths</a
+      ><a name="3270"
+      > </a
+      ><a name="3271" class="Symbol"
+      >(</a
+      ><a name="3272" href="lib.types.Nat.html#2248" class="Function"
+      >&lt;-trans</a
+      ><a name="3279"
+      > </a
+      ><a name="3280" href="lib.types.Nat.html#1688" class="InductiveConstructor"
+      >ltS</a
+      ><a name="3283"
+      > </a
+      ><a name="3284" href="cw.cohomology.CellularChainComplex.html#2985" class="Bound"
+      >Sm&lt;n</a
+      ><a name="3288" class="Symbol"
+      >)</a
+      ><a name="3289"
+      > </a
+      ><a name="3290" href="cw.cohomology.CellularChainComplex.html#2981" class="Bound"
+      >m&lt;n</a
+      ><a name="3293" class="Symbol"
+      >))</a
+      ><a name="3295"
+      >
+          </a
+      ><a name="3306" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="3308"
+      > </a
+      ><a name="3309" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="3313"
+      > </a
+      ><a name="3314" class="Symbol"
+      >(&#955;</a
+      ><a name="3316"
+      > </a
+      ><a name="3317" href="cw.cohomology.CellularChainComplex.html#3317" class="Bound"
+      >m&#8804;Sn</a
+      ><a name="3321"
+      > </a
+      ><a name="3322" class="Symbol"
+      >&#8594;</a
+      ><a name="3323"
+      > </a
+      ><a name="3324" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="3331"
+      > </a
+      ><a name="3332" href="cw.cohomology.CellularChainComplex.html#3317" class="Bound"
+      >m&#8804;Sn</a
+      ><a name="3336"
+      > </a
+      ><a name="3337" href="cw.cohomology.CellularChainComplex.html#2976" class="Bound"
+      >skel</a
+      ><a name="3341" class="Symbol"
+      >)</a
+      ><a name="3342"
+      > </a
+      ><a name="3343" class="Symbol"
+      >(</a
+      ><a name="3344" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="3349"
+      > </a
+      ><a name="3350" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3351"
+      > </a
+      ><a name="3352" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3355" class="Symbol"
+      >)</a
+      ><a name="3356"
+      > </a
+      ><a name="3357" class="Symbol"
+      >_</a
+      ><a name="3358"
+      > </a
+      ><a name="3359" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="3360"
+      >
+        </a
+      ><a name="3369" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3371"
+      > </a
+      ><a name="3372" class="Symbol"
+      >(&#955;</a
+      ><a name="3374"
+      > </a
+      ><a name="3375" href="cw.cohomology.CellularChainComplex.html#3375" class="Bound"
+      >Sm&lt;n</a
+      ><a name="3379"
+      > </a
+      ><a name="3380" class="Symbol"
+      >&#8594;</a
+      ><a name="3381"
+      > </a
+      ><a name="3382" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="3389"
+      > </a
+      ><a name="3390" class="Symbol"
+      >(</a
+      ><a name="3391" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="3396"
+      > </a
+      ><a name="3397" class="Symbol"
+      >(</a
+      ><a name="3398" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3401"
+      > </a
+      ><a name="3402" href="cw.cohomology.CellularChainComplex.html#3375" class="Bound"
+      >Sm&lt;n</a
+      ><a name="3406" class="Symbol"
+      >))</a
+      ><a name="3408"
+      > </a
+      ><a name="3409" href="cw.cohomology.CellularChainComplex.html#2976" class="Bound"
+      >skel</a
+      ><a name="3413" class="Symbol"
+      >)</a
+      ><a name="3414"
+      > </a
+      ><a name="3415" class="Symbol"
+      >(</a
+      ><a name="3416" href="lib.types.Nat.html#3866" class="Function"
+      >&lt;-has-all-paths</a
+      ><a name="3431"
+      > </a
+      ><a name="3432" class="Symbol"
+      >(</a
+      ><a name="3433" href="lib.types.Nat.html#2248" class="Function"
+      >&lt;-trans</a
+      ><a name="3440"
+      > </a
+      ><a name="3441" href="lib.types.Nat.html#1688" class="InductiveConstructor"
+      >ltS</a
+      ><a name="3444"
+      > </a
+      ><a name="3445" href="cw.cohomology.CellularChainComplex.html#2985" class="Bound"
+      >Sm&lt;n</a
+      ><a name="3449" class="Symbol"
+      >)</a
+      ><a name="3450"
+      > </a
+      ><a name="3451" href="cw.cohomology.CellularChainComplex.html#2981" class="Bound"
+      >m&lt;n</a
+      ><a name="3454" class="Symbol"
+      >)</a
+      ><a name="3455"
+      >
+          </a
+      ><a name="3466" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="3468"
+      > </a
+      ><a name="3469" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="3473"
+      > </a
+      ><a name="3474" class="Symbol"
+      >(&#955;</a
+      ><a name="3476"
+      > </a
+      ><a name="3477" href="cw.cohomology.CellularChainComplex.html#3477" class="Bound"
+      >m&#8804;n</a
+      ><a name="3480"
+      > </a
+      ><a name="3481" class="Symbol"
+      >&#8594;</a
+      ><a name="3482"
+      > </a
+      ><a name="3483" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="3490"
+      > </a
+      ><a name="3491" href="cw.cohomology.CellularChainComplex.html#3477" class="Bound"
+      >m&#8804;n</a
+      ><a name="3494"
+      > </a
+      ><a name="3495" class="Symbol"
+      >(</a
+      ><a name="3496" href="cw.CW.html#2175" class="Function"
+      >cw-init</a
+      ><a name="3503"
+      > </a
+      ><a name="3504" href="cw.cohomology.CellularChainComplex.html#2976" class="Bound"
+      >skel</a
+      ><a name="3508" class="Symbol"
+      >))</a
+      ><a name="3510"
+      > </a
+      ><a name="3511" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3514"
+      > </a
+      ><a name="3515" class="Symbol"
+      >_</a
+      ><a name="3516"
+      > </a
+      ><a name="3517" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="3518"
+      >
+        </a
+      ><a name="3527" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3529"
+      > </a
+      ><a name="3530" class="Symbol"
+      >(&#955;</a
+      ><a name="3532"
+      > </a
+      ><a name="3533" href="cw.cohomology.CellularChainComplex.html#3533" class="Bound"
+      >m&#8804;n</a
+      ><a name="3536"
+      > </a
+      ><a name="3537" class="Symbol"
+      >&#8594;</a
+      ><a name="3538"
+      > </a
+      ><a name="3539" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="3546"
+      > </a
+      ><a name="3547" href="cw.cohomology.CellularChainComplex.html#3533" class="Bound"
+      >m&#8804;n</a
+      ><a name="3550"
+      > </a
+      ><a name="3551" class="Symbol"
+      >(</a
+      ><a name="3552" href="cw.CW.html#2175" class="Function"
+      >cw-init</a
+      ><a name="3559"
+      > </a
+      ><a name="3560" href="cw.cohomology.CellularChainComplex.html#2976" class="Bound"
+      >skel</a
+      ><a name="3564" class="Symbol"
+      >))</a
+      ><a name="3566"
+      > </a
+      ><a name="3567" class="Symbol"
+      >(</a
+      ><a name="3568" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3570"
+      > </a
+      ><a name="3571" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3574"
+      > </a
+      ><a name="3575" class="Symbol"
+      >(</a
+      ><a name="3576" href="lib.types.Nat.html#3866" class="Function"
+      >&lt;-has-all-paths</a
+      ><a name="3591"
+      > </a
+      ><a name="3592" class="Symbol"
+      >(</a
+      ><a name="3593" href="lib.types.Nat.html#2248" class="Function"
+      >&lt;-trans</a
+      ><a name="3600"
+      > </a
+      ><a name="3601" href="lib.types.Nat.html#1688" class="InductiveConstructor"
+      >ltS</a
+      ><a name="3604"
+      > </a
+      ><a name="3605" href="cw.cohomology.CellularChainComplex.html#2985" class="Bound"
+      >Sm&lt;n</a
+      ><a name="3609" class="Symbol"
+      >)</a
+      ><a name="3610"
+      > </a
+      ><a name="3611" href="cw.cohomology.CellularChainComplex.html#2981" class="Bound"
+      >m&lt;n</a
+      ><a name="3614" class="Symbol"
+      >))</a
+      ><a name="3616"
+      >
+          </a
+      ><a name="3627" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="3629"
+      > </a
+      ><a name="3630" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3632"
+      > </a
+      ><a name="3633" class="Symbol"
+      >(</a
+      ><a name="3634" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3636"
+      > </a
+      ><a name="3637" class="Symbol"
+      >(&#955;</a
+      ><a name="3639"
+      > </a
+      ><a name="3640" href="cw.cohomology.CellularChainComplex.html#3640" class="Bound"
+      >m&#8804;n</a
+      ><a name="3643"
+      > </a
+      ><a name="3644" class="Symbol"
+      >&#8594;</a
+      ><a name="3645"
+      > </a
+      ><a name="3646" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="3653"
+      > </a
+      ><a name="3654" href="cw.cohomology.CellularChainComplex.html#3640" class="Bound"
+      >m&#8804;n</a
+      ><a name="3657"
+      > </a
+      ><a name="3658" class="Symbol"
+      >(</a
+      ><a name="3659" href="cw.CW.html#2175" class="Function"
+      >cw-init</a
+      ><a name="3666"
+      > </a
+      ><a name="3667" href="cw.cohomology.CellularChainComplex.html#2976" class="Bound"
+      >skel</a
+      ><a name="3671" class="Symbol"
+      >)))</a
+      ><a name="3674"
+      > </a
+      ><a name="3675" class="Symbol"
+      >(</a
+      ><a name="3676" href="lib.NType.html#2533" class="Function"
+      >contr-has-all-paths</a
+      ><a name="3695"
+      > </a
+      ><a name="3696" class="Symbol"
+      >(</a
+      ><a name="3697" href="lib.types.Nat.html#4856" class="Function"
+      >&#8804;-is-prop</a
+      ><a name="3706"
+      > </a
+      ><a name="3707" class="Symbol"
+      >_</a
+      ><a name="3708"
+      > </a
+      ><a name="3709" class="Symbol"
+      >_)</a
+      ><a name="3711"
+      > </a
+      ><a name="3712" class="Symbol"
+      >_</a
+      ><a name="3713"
+      > </a
+      ><a name="3714" class="Symbol"
+      >_)</a
+      ><a name="3716"
+      > </a
+      ><a name="3717" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="3718"
+      >
+        </a
+      ><a name="3727" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3729"
+      > </a
+      ><a name="3730" class="Symbol"
+      >(&#955;</a
+      ><a name="3732"
+      > </a
+      ><a name="3733" href="cw.cohomology.CellularChainComplex.html#3733" class="Bound"
+      >m&#8804;n</a
+      ><a name="3736"
+      > </a
+      ><a name="3737" class="Symbol"
+      >&#8594;</a
+      ><a name="3738"
+      > </a
+      ><a name="3739" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="3746"
+      > </a
+      ><a name="3747" href="cw.cohomology.CellularChainComplex.html#3733" class="Bound"
+      >m&#8804;n</a
+      ><a name="3750"
+      > </a
+      ><a name="3751" class="Symbol"
+      >(</a
+      ><a name="3752" href="cw.CW.html#2175" class="Function"
+      >cw-init</a
+      ><a name="3759"
+      > </a
+      ><a name="3760" href="cw.cohomology.CellularChainComplex.html#2976" class="Bound"
+      >skel</a
+      ><a name="3764" class="Symbol"
+      >))</a
+      ><a name="3766"
+      > </a
+      ><a name="3767" class="Symbol"
+      >(</a
+      ><a name="3768" href="lib.types.Nat.html#4544" class="Function"
+      >&#8804;-has-all-paths</a
+      ><a name="3783"
+      > </a
+      ><a name="3784" class="Symbol"
+      >(</a
+      ><a name="3785" href="lib.types.Nat.html#2410" class="Function"
+      >&#8804;-trans</a
+      ><a name="3792"
+      > </a
+      ><a name="3793" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="3797"
+      > </a
+      ><a name="3798" class="Symbol"
+      >(</a
+      ><a name="3799" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3802"
+      > </a
+      ><a name="3803" href="cw.cohomology.CellularChainComplex.html#2985" class="Bound"
+      >Sm&lt;n</a
+      ><a name="3807" class="Symbol"
+      >))</a
+      ><a name="3809"
+      > </a
+      ><a name="3810" class="Symbol"
+      >(</a
+      ><a name="3811" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="3814"
+      > </a
+      ><a name="3815" href="cw.cohomology.CellularChainComplex.html#2981" class="Bound"
+      >m&lt;n</a
+      ><a name="3818" class="Symbol"
+      >))</a
+      ><a name="3820"
+      >
+          </a
+      ><a name="3831" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="3833"
+      >
+
+      </a
+      ><a name="3841" href="cw.cohomology.CellularChainComplex.html#3841" class="Function"
+      >path-lemma&#8321;</a
+      ><a name="3852"
+      > </a
+      ><a name="3853" class="Symbol"
+      >:</a
+      ><a name="3854"
+      > </a
+      ><a name="3855" class="Symbol"
+      >&#8704;</a
+      ><a name="3856"
+      > </a
+      ><a name="3857" class="Symbol"
+      >{</a
+      ><a name="3858" href="cw.cohomology.CellularChainComplex.html#3858" class="Bound"
+      >n</a
+      ><a name="3859" class="Symbol"
+      >}</a
+      ><a name="3860"
+      > </a
+      ><a name="3861" class="Symbol"
+      >(</a
+      ><a name="3862" href="cw.cohomology.CellularChainComplex.html#3862" class="Bound"
+      >skel</a
+      ><a name="3866"
+      > </a
+      ><a name="3867" class="Symbol"
+      >:</a
+      ><a name="3868"
+      > </a
+      ><a name="3869" href="cw.CW.html#1156" class="Function"
+      >Skeleton</a
+      ><a name="3877"
+      > </a
+      ><a name="3878" class="Symbol"
+      >{</a
+      ><a name="3879" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="3880" class="Symbol"
+      >}</a
+      ><a name="3881"
+      > </a
+      ><a name="3882" class="Symbol"
+      >(</a
+      ><a name="3883" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3884"
+      > </a
+      ><a name="3885" class="Symbol"
+      >(</a
+      ><a name="3886" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="3887"
+      > </a
+      ><a name="3888" href="cw.cohomology.CellularChainComplex.html#3858" class="Bound"
+      >n</a
+      ><a name="3889" class="Symbol"
+      >)))</a
+      ><a name="3892"
+      >
+        </a
+      ><a name="3901" class="Symbol"
+      >&#8594;</a
+      ><a name="3902"
+      >  </a
+      ><a name="3904" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3906"
+      > </a
+      ><a name="3907" class="Symbol"
+      >(&#955;</a
+      ><a name="3909"
+      > </a
+      ><a name="3910" href="cw.cohomology.CellularChainComplex.html#3910" class="Bound"
+      >n&#8804;SSn</a
+      ><a name="3915"
+      > </a
+      ><a name="3916" class="Symbol"
+      >&#8594;</a
+      ><a name="3917"
+      > </a
+      ><a name="3918" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="3925"
+      > </a
+      ><a name="3926" href="cw.cohomology.CellularChainComplex.html#3910" class="Bound"
+      >n&#8804;SSn</a
+      ><a name="3931"
+      > </a
+      ><a name="3932" href="cw.cohomology.CellularChainComplex.html#3862" class="Bound"
+      >skel</a
+      ><a name="3936" class="Symbol"
+      >)</a
+      ><a name="3937"
+      > </a
+      ><a name="3938" class="Symbol"
+      >(</a
+      ><a name="3939" href="lib.types.Nat.html#4544" class="Function"
+      >&#8804;-has-all-paths</a
+      ><a name="3954"
+      > </a
+      ><a name="3955" class="Symbol"
+      >(</a
+      ><a name="3956" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="3961"
+      > </a
+      ><a name="3962" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="3966" class="Symbol"
+      >)</a
+      ><a name="3967"
+      > </a
+      ><a name="3968" class="Symbol"
+      >(</a
+      ><a name="3969" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="3974"
+      > </a
+      ><a name="3975" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="3979" class="Symbol"
+      >))</a
+      ><a name="3981"
+      >
+        </a
+      ><a name="3990" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3992"
+      > </a
+      ><a name="3993" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3995"
+      > </a
+      ><a name="3996" class="Symbol"
+      >(&#955;</a
+      ><a name="3998"
+      > </a
+      ><a name="3999" href="cw.cohomology.CellularChainComplex.html#3999" class="Bound"
+      >n&#8804;Sn</a
+      ><a name="4003"
+      > </a
+      ><a name="4004" class="Symbol"
+      >&#8594;</a
+      ><a name="4005"
+      > </a
+      ><a name="4006" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="4013"
+      > </a
+      ><a name="4014" href="cw.cohomology.CellularChainComplex.html#3999" class="Bound"
+      >n&#8804;Sn</a
+      ><a name="4018"
+      > </a
+      ><a name="4019" class="Symbol"
+      >(</a
+      ><a name="4020" href="cw.CW.html#2175" class="Function"
+      >cw-init</a
+      ><a name="4027"
+      > </a
+      ><a name="4028" href="cw.cohomology.CellularChainComplex.html#3862" class="Bound"
+      >skel</a
+      ><a name="4032" class="Symbol"
+      >))</a
+      ><a name="4034"
+      > </a
+      ><a name="4035" class="Symbol"
+      >(</a
+      ><a name="4036" href="lib.types.Nat.html#4544" class="Function"
+      >&#8804;-has-all-paths</a
+      ><a name="4051"
+      > </a
+      ><a name="4052" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="4056"
+      > </a
+      ><a name="4057" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="4061" class="Symbol"
+      >)</a
+      ><a name="4062"
+      >
+      </a
+      ><a name="4069" href="cw.cohomology.CellularChainComplex.html#3841" class="Function"
+      >path-lemma&#8321;</a
+      ><a name="4080"
+      > </a
+      ><a name="4081" href="cw.cohomology.CellularChainComplex.html#4081" class="Bound"
+      >skel</a
+      ><a name="4085"
+      > </a
+      ><a name="4086" class="Symbol"
+      >=</a
+      ><a name="4087"
+      >
+        </a
+      ><a name="4096" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4098"
+      > </a
+      ><a name="4099" class="Symbol"
+      >(&#955;</a
+      ><a name="4101"
+      > </a
+      ><a name="4102" href="cw.cohomology.CellularChainComplex.html#4102" class="Bound"
+      >n&#8804;SSn</a
+      ><a name="4107"
+      > </a
+      ><a name="4108" class="Symbol"
+      >&#8594;</a
+      ><a name="4109"
+      > </a
+      ><a name="4110" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="4117"
+      > </a
+      ><a name="4118" href="cw.cohomology.CellularChainComplex.html#4102" class="Bound"
+      >n&#8804;SSn</a
+      ><a name="4123"
+      > </a
+      ><a name="4124" href="cw.cohomology.CellularChainComplex.html#4081" class="Bound"
+      >skel</a
+      ><a name="4128" class="Symbol"
+      >)</a
+      ><a name="4129"
+      > </a
+      ><a name="4130" class="Symbol"
+      >(</a
+      ><a name="4131" href="lib.types.Nat.html#4544" class="Function"
+      >&#8804;-has-all-paths</a
+      ><a name="4146"
+      > </a
+      ><a name="4147" class="Symbol"
+      >(</a
+      ><a name="4148" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="4153"
+      > </a
+      ><a name="4154" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="4158" class="Symbol"
+      >)</a
+      ><a name="4159"
+      > </a
+      ><a name="4160" class="Symbol"
+      >(</a
+      ><a name="4161" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="4166"
+      > </a
+      ><a name="4167" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="4171" class="Symbol"
+      >))</a
+      ><a name="4173"
+      >
+          </a
+      ><a name="4184" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4186"
+      > </a
+      ><a name="4187" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4189"
+      > </a
+      ><a name="4190" class="Symbol"
+      >(</a
+      ><a name="4191" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4193"
+      > </a
+      ><a name="4194" class="Symbol"
+      >(&#955;</a
+      ><a name="4196"
+      > </a
+      ><a name="4197" href="cw.cohomology.CellularChainComplex.html#4197" class="Bound"
+      >n&#8804;SSn</a
+      ><a name="4202"
+      > </a
+      ><a name="4203" class="Symbol"
+      >&#8594;</a
+      ><a name="4204"
+      > </a
+      ><a name="4205" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="4212"
+      > </a
+      ><a name="4213" href="cw.cohomology.CellularChainComplex.html#4197" class="Bound"
+      >n&#8804;SSn</a
+      ><a name="4218"
+      > </a
+      ><a name="4219" href="cw.cohomology.CellularChainComplex.html#4081" class="Bound"
+      >skel</a
+      ><a name="4223" class="Symbol"
+      >))</a
+      ><a name="4225"
+      > </a
+      ><a name="4226" class="Symbol"
+      >(</a
+      ><a name="4227" href="lib.NType.html#2533" class="Function"
+      >contr-has-all-paths</a
+      ><a name="4246"
+      > </a
+      ><a name="4247" class="Symbol"
+      >(</a
+      ><a name="4248" href="lib.types.Nat.html#4856" class="Function"
+      >&#8804;-is-prop</a
+      ><a name="4257"
+      > </a
+      ><a name="4258" class="Symbol"
+      >_</a
+      ><a name="4259"
+      > </a
+      ><a name="4260" class="Symbol"
+      >_)</a
+      ><a name="4262"
+      > </a
+      ><a name="4263" class="Symbol"
+      >_</a
+      ><a name="4264"
+      > </a
+      ><a name="4265" class="Symbol"
+      >_)</a
+      ><a name="4267"
+      > </a
+      ><a name="4268" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4269"
+      >
+        </a
+      ><a name="4278" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4281"
+      >
+          </a
+      ><a name="4292" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4294"
+      > </a
+      ><a name="4295" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4297"
+      > </a
+      ><a name="4298" class="Symbol"
+      >(</a
+      ><a name="4299" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4301"
+      > </a
+      ><a name="4302" class="Symbol"
+      >(&#955;</a
+      ><a name="4304"
+      > </a
+      ><a name="4305" href="cw.cohomology.CellularChainComplex.html#4305" class="Bound"
+      >n&#8804;Sn</a
+      ><a name="4309"
+      > </a
+      ><a name="4310" class="Symbol"
+      >&#8594;</a
+      ><a name="4311"
+      > </a
+      ><a name="4312" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="4319"
+      > </a
+      ><a name="4320" href="cw.cohomology.CellularChainComplex.html#4305" class="Bound"
+      >n&#8804;Sn</a
+      ><a name="4324"
+      > </a
+      ><a name="4325" class="Symbol"
+      >(</a
+      ><a name="4326" href="cw.CW.html#2175" class="Function"
+      >cw-init</a
+      ><a name="4333"
+      > </a
+      ><a name="4334" href="cw.cohomology.CellularChainComplex.html#4081" class="Bound"
+      >skel</a
+      ><a name="4338" class="Symbol"
+      >)))</a
+      ><a name="4341"
+      > </a
+      ><a name="4342" class="Symbol"
+      >(</a
+      ><a name="4343" href="lib.NType.html#2533" class="Function"
+      >contr-has-all-paths</a
+      ><a name="4362"
+      > </a
+      ><a name="4363" class="Symbol"
+      >(</a
+      ><a name="4364" href="lib.types.Nat.html#4856" class="Function"
+      >&#8804;-is-prop</a
+      ><a name="4373"
+      > </a
+      ><a name="4374" class="Symbol"
+      >_</a
+      ><a name="4375"
+      > </a
+      ><a name="4376" class="Symbol"
+      >_)</a
+      ><a name="4378"
+      > </a
+      ><a name="4379" class="Symbol"
+      >_</a
+      ><a name="4380"
+      > </a
+      ><a name="4381" class="Symbol"
+      >_)</a
+      ><a name="4383"
+      > </a
+      ><a name="4384" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4385"
+      >
+        </a
+      ><a name="4394" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4396"
+      > </a
+      ><a name="4397" class="Symbol"
+      >(&#955;</a
+      ><a name="4399"
+      > </a
+      ><a name="4400" href="cw.cohomology.CellularChainComplex.html#4400" class="Bound"
+      >n&#8804;Sn</a
+      ><a name="4404"
+      > </a
+      ><a name="4405" class="Symbol"
+      >&#8594;</a
+      ><a name="4406"
+      > </a
+      ><a name="4407" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="4414"
+      > </a
+      ><a name="4415" href="cw.cohomology.CellularChainComplex.html#4400" class="Bound"
+      >n&#8804;Sn</a
+      ><a name="4419"
+      > </a
+      ><a name="4420" class="Symbol"
+      >(</a
+      ><a name="4421" href="cw.CW.html#2175" class="Function"
+      >cw-init</a
+      ><a name="4428"
+      > </a
+      ><a name="4429" href="cw.cohomology.CellularChainComplex.html#4081" class="Bound"
+      >skel</a
+      ><a name="4433" class="Symbol"
+      >))</a
+      ><a name="4435"
+      > </a
+      ><a name="4436" class="Symbol"
+      >(</a
+      ><a name="4437" href="lib.types.Nat.html#4544" class="Function"
+      >&#8804;-has-all-paths</a
+      ><a name="4452"
+      > </a
+      ><a name="4453" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="4457"
+      > </a
+      ><a name="4458" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="4462" class="Symbol"
+      >)</a
+      ><a name="4463"
+      >
+          </a
+      ><a name="4474" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="4476"
+      >
+
+      </a
+      ><a name="4484" href="cw.cohomology.CellularChainComplex.html#4484" class="Function"
+      >path-lemma&#8322;</a
+      ><a name="4495"
+      > </a
+      ><a name="4496" class="Symbol"
+      >:</a
+      ><a name="4497"
+      > </a
+      ><a name="4498" class="Symbol"
+      >&#8704;</a
+      ><a name="4499"
+      > </a
+      ><a name="4500" class="Symbol"
+      >{</a
+      ><a name="4501" href="cw.cohomology.CellularChainComplex.html#4501" class="Bound"
+      >n</a
+      ><a name="4502" class="Symbol"
+      >}</a
+      ><a name="4503"
+      > </a
+      ><a name="4504" class="Symbol"
+      >(</a
+      ><a name="4505" href="cw.cohomology.CellularChainComplex.html#4505" class="Bound"
+      >skel</a
+      ><a name="4509"
+      > </a
+      ><a name="4510" class="Symbol"
+      >:</a
+      ><a name="4511"
+      > </a
+      ><a name="4512" href="cw.CW.html#1156" class="Function"
+      >Skeleton</a
+      ><a name="4520"
+      > </a
+      ><a name="4521" class="Symbol"
+      >{</a
+      ><a name="4522" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="4523" class="Symbol"
+      >}</a
+      ><a name="4524"
+      > </a
+      ><a name="4525" class="Symbol"
+      >(</a
+      ><a name="4526" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4527"
+      > </a
+      ><a name="4528" href="cw.cohomology.CellularChainComplex.html#4501" class="Bound"
+      >n</a
+      ><a name="4529" class="Symbol"
+      >))</a
+      ><a name="4531"
+      >
+        </a
+      ><a name="4540" class="Symbol"
+      >&#8594;</a
+      ><a name="4541"
+      > </a
+      ><a name="4542" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4544"
+      > </a
+      ><a name="4545" class="Symbol"
+      >(&#955;</a
+      ><a name="4547"
+      > </a
+      ><a name="4548" href="cw.cohomology.CellularChainComplex.html#4548" class="Bound"
+      >n&#8804;Sn</a
+      ><a name="4552"
+      > </a
+      ><a name="4553" class="Symbol"
+      >&#8594;</a
+      ><a name="4554"
+      > </a
+      ><a name="4555" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="4562"
+      > </a
+      ><a name="4563" href="cw.cohomology.CellularChainComplex.html#4548" class="Bound"
+      >n&#8804;Sn</a
+      ><a name="4567"
+      > </a
+      ><a name="4568" href="cw.cohomology.CellularChainComplex.html#4505" class="Bound"
+      >skel</a
+      ><a name="4572" class="Symbol"
+      >)</a
+      ><a name="4573"
+      > </a
+      ><a name="4574" class="Symbol"
+      >(</a
+      ><a name="4575" href="lib.types.Nat.html#4544" class="Function"
+      >&#8804;-has-all-paths</a
+      ><a name="4590"
+      > </a
+      ><a name="4591" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="4595"
+      > </a
+      ><a name="4596" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="4600" class="Symbol"
+      >)</a
+      ><a name="4601"
+      > </a
+      ><a name="4602" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4604"
+      > </a
+      ><a name="4605" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4608"
+      >
+      </a
+      ><a name="4615" href="cw.cohomology.CellularChainComplex.html#4484" class="Function"
+      >path-lemma&#8322;</a
+      ><a name="4626"
+      > </a
+      ><a name="4627" href="cw.cohomology.CellularChainComplex.html#4627" class="Bound"
+      >skel</a
+      ><a name="4631"
+      > </a
+      ><a name="4632" class="Symbol"
+      >=</a
+      ><a name="4633"
+      >
+        </a
+      ><a name="4642" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4644"
+      > </a
+      ><a name="4645" class="Symbol"
+      >(&#955;</a
+      ><a name="4647"
+      > </a
+      ><a name="4648" href="cw.cohomology.CellularChainComplex.html#4648" class="Bound"
+      >n&#8804;Sn</a
+      ><a name="4652"
+      > </a
+      ><a name="4653" class="Symbol"
+      >&#8594;</a
+      ><a name="4654"
+      > </a
+      ><a name="4655" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="4662"
+      > </a
+      ><a name="4663" href="cw.cohomology.CellularChainComplex.html#4648" class="Bound"
+      >n&#8804;Sn</a
+      ><a name="4667"
+      > </a
+      ><a name="4668" href="cw.cohomology.CellularChainComplex.html#4627" class="Bound"
+      >skel</a
+      ><a name="4672" class="Symbol"
+      >)</a
+      ><a name="4673"
+      > </a
+      ><a name="4674" class="Symbol"
+      >(</a
+      ><a name="4675" href="lib.types.Nat.html#4544" class="Function"
+      >&#8804;-has-all-paths</a
+      ><a name="4690"
+      > </a
+      ><a name="4691" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="4695"
+      > </a
+      ><a name="4696" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="4700" class="Symbol"
+      >)</a
+      ><a name="4701"
+      >
+          </a
+      ><a name="4712" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4714"
+      > </a
+      ><a name="4715" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4717"
+      > </a
+      ><a name="4718" class="Symbol"
+      >(</a
+      ><a name="4719" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4721"
+      > </a
+      ><a name="4722" class="Symbol"
+      >(&#955;</a
+      ><a name="4724"
+      > </a
+      ><a name="4725" href="cw.cohomology.CellularChainComplex.html#4725" class="Bound"
+      >n&#8804;Sn</a
+      ><a name="4729"
+      > </a
+      ><a name="4730" class="Symbol"
+      >&#8594;</a
+      ><a name="4731"
+      > </a
+      ><a name="4732" href="cw.CW.html#2383" class="Function"
+      >cw-take</a
+      ><a name="4739"
+      > </a
+      ><a name="4740" href="cw.cohomology.CellularChainComplex.html#4725" class="Bound"
+      >n&#8804;Sn</a
+      ><a name="4744"
+      > </a
+      ><a name="4745" href="cw.cohomology.CellularChainComplex.html#4627" class="Bound"
+      >skel</a
+      ><a name="4749" class="Symbol"
+      >))</a
+      ><a name="4751"
+      > </a
+      ><a name="4752" class="Symbol"
+      >(</a
+      ><a name="4753" href="lib.NType.html#2533" class="Function"
+      >contr-has-all-paths</a
+      ><a name="4772"
+      > </a
+      ><a name="4773" class="Symbol"
+      >(</a
+      ><a name="4774" href="lib.types.Nat.html#4856" class="Function"
+      >&#8804;-is-prop</a
+      ><a name="4783"
+      > </a
+      ><a name="4784" class="Symbol"
+      >_</a
+      ><a name="4785"
+      > </a
+      ><a name="4786" class="Symbol"
+      >_)</a
+      ><a name="4788"
+      > </a
+      ><a name="4789" class="Symbol"
+      >_</a
+      ><a name="4790"
+      > </a
+      ><a name="4791" class="Symbol"
+      >_)</a
+      ><a name="4793"
+      > </a
+      ><a name="4794" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4795"
+      >
+        </a
+      ><a name="4804" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4807"
+      >
+          </a
+      ><a name="4818" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="4820"
+      >
+
+  </a
+      ><a name="4824" class="Keyword"
+      >abstract</a
+      ><a name="4832"
+      >
+    </a
+      ><a name="4837" href="cw.cohomology.CellularChainComplex.html#4837" class="Function"
+      >boundary-template-descend-from-far</a
+      ><a name="4871"
+      > </a
+      ><a name="4872" class="Symbol"
+      >:</a
+      ><a name="4873"
+      > </a
+      ><a name="4874" class="Symbol"
+      >&#8704;</a
+      ><a name="4875"
+      > </a
+      ><a name="4876" class="Symbol"
+      >{</a
+      ><a name="4877" href="cw.cohomology.CellularChainComplex.html#4877" class="Bound"
+      >n</a
+      ><a name="4878" class="Symbol"
+      >}</a
+      ><a name="4879"
+      > </a
+      ><a name="4880" class="Symbol"
+      >(</a
+      ><a name="4881" href="cw.cohomology.CellularChainComplex.html#4881" class="Bound"
+      >skel</a
+      ><a name="4885"
+      > </a
+      ><a name="4886" class="Symbol"
+      >:</a
+      ><a name="4887"
+      > </a
+      ><a name="4888" href="cw.CW.html#1156" class="Function"
+      >Skeleton</a
+      ><a name="4896"
+      > </a
+      ><a name="4897" class="Symbol"
+      >{</a
+      ><a name="4898" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="4899" class="Symbol"
+      >}</a
+      ><a name="4900"
+      > </a
+      ><a name="4901" class="Symbol"
+      >(</a
+      ><a name="4902" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4903"
+      > </a
+      ><a name="4904" href="cw.cohomology.CellularChainComplex.html#4877" class="Bound"
+      >n</a
+      ><a name="4905" class="Symbol"
+      >))</a
+      ><a name="4907"
+      > </a
+      ><a name="4908" href="cw.cohomology.CellularChainComplex.html#4908" class="Bound"
+      >dec</a
+      ><a name="4911"
+      > </a
+      ><a name="4912" href="cw.cohomology.CellularChainComplex.html#4912" class="Bound"
+      >fin-sup</a
+      ><a name="4919"
+      > </a
+      ><a name="4920" class="Symbol"
+      >{</a
+      ><a name="4921" href="cw.cohomology.CellularChainComplex.html#4921" class="Bound"
+      >m</a
+      ><a name="4922" class="Symbol"
+      >}</a
+      ><a name="4923"
+      > </a
+      ><a name="4924" href="cw.cohomology.CellularChainComplex.html#4924" class="Bound"
+      >m&lt;n</a
+      ><a name="4927"
+      > </a
+      ><a name="4928" href="cw.cohomology.CellularChainComplex.html#4928" class="Bound"
+      >Sm&lt;n</a
+      ><a name="4932"
+      >
+      </a
+      ><a name="4939" class="Symbol"
+      >&#8594;</a
+      ><a name="4940"
+      > </a
+      ><a name="4941" href="cw.cohomology.CellularChainComplex.html#1117" class="Function"
+      >boundary-template</a
+      ><a name="4958"
+      > </a
+      ><a name="4959" class="Symbol"
+      >{</a
+      ><a name="4960" class="Argument"
+      >n</a
+      ><a name="4961"
+      > </a
+      ><a name="4962" class="Symbol"
+      >=</a
+      ><a name="4963"
+      > </a
+      ><a name="4964" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="4965"
+      > </a
+      ><a name="4966" href="cw.cohomology.CellularChainComplex.html#4877" class="Bound"
+      >n</a
+      ><a name="4967" class="Symbol"
+      >}</a
+      ><a name="4968"
+      > </a
+      ><a name="4969" href="cw.cohomology.CellularChainComplex.html#4881" class="Bound"
+      >skel</a
+      ><a name="4973"
+      > </a
+      ><a name="4974" href="cw.cohomology.CellularChainComplex.html#4908" class="Bound"
+      >dec</a
+      ><a name="4977"
+      > </a
+      ><a name="4978" href="cw.cohomology.CellularChainComplex.html#4912" class="Bound"
+      >fin-sup</a
+      ><a name="4985"
+      > </a
+      ><a name="4986" class="Symbol"
+      >{</a
+      ><a name="4987" href="cw.cohomology.CellularChainComplex.html#4921" class="Bound"
+      >m</a
+      ><a name="4988" class="Symbol"
+      >}</a
+      ><a name="4989"
+      > </a
+      ><a name="4990" class="Symbol"
+      >(</a
+      ><a name="4991" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="4994"
+      > </a
+      ><a name="4995" class="Symbol"
+      >(</a
+      ><a name="4996" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="5001"
+      > </a
+      ><a name="5002" class="Symbol"
+      >(</a
+      ><a name="5003" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="5006"
+      > </a
+      ><a name="5007" href="cw.cohomology.CellularChainComplex.html#4924" class="Bound"
+      >m&lt;n</a
+      ><a name="5010" class="Symbol"
+      >)))</a
+      ><a name="5013"
+      > </a
+      ><a name="5014" class="Symbol"
+      >(</a
+      ><a name="5015" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="5018"
+      > </a
+      ><a name="5019" class="Symbol"
+      >(</a
+      ><a name="5020" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="5025"
+      > </a
+      ><a name="5026" class="Symbol"
+      >(</a
+      ><a name="5027" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="5030"
+      > </a
+      ><a name="5031" href="cw.cohomology.CellularChainComplex.html#4928" class="Bound"
+      >Sm&lt;n</a
+      ><a name="5035" class="Symbol"
+      >)))</a
+      ><a name="5038"
+      >
+        </a
+      ><a name="5047" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5049"
+      > </a
+      ><a name="5050" href="cw.cohomology.CellularChainComplex.html#1117" class="Function"
+      >boundary-template</a
+      ><a name="5067"
+      > </a
+      ><a name="5068" class="Symbol"
+      >{</a
+      ><a name="5069" class="Argument"
+      >n</a
+      ><a name="5070"
+      > </a
+      ><a name="5071" class="Symbol"
+      >=</a
+      ><a name="5072"
+      > </a
+      ><a name="5073" href="cw.cohomology.CellularChainComplex.html#4877" class="Bound"
+      >n</a
+      ><a name="5074" class="Symbol"
+      >}</a
+      ><a name="5075"
+      > </a
+      ><a name="5076" class="Symbol"
+      >(</a
+      ><a name="5077" href="cw.CW.html#2175" class="Function"
+      >cw-init</a
+      ><a name="5084"
+      > </a
+      ><a name="5085" href="cw.cohomology.CellularChainComplex.html#4881" class="Bound"
+      >skel</a
+      ><a name="5089" class="Symbol"
+      >)</a
+      ><a name="5090"
+      >
+          </a
+      ><a name="5101" class="Symbol"
+      >(</a
+      ><a name="5102" href="cw.CW.html#6684" class="Function"
+      >init-has-cells-with-dec-eq</a
+      ><a name="5128"
+      > </a
+      ><a name="5129" href="cw.cohomology.CellularChainComplex.html#4881" class="Bound"
+      >skel</a
+      ><a name="5133"
+      > </a
+      ><a name="5134" href="cw.cohomology.CellularChainComplex.html#4908" class="Bound"
+      >dec</a
+      ><a name="5137" class="Symbol"
+      >)</a
+      ><a name="5138"
+      >
+          </a
+      ><a name="5149" class="Symbol"
+      >(</a
+      ><a name="5150" href="cw.DegreeBySquashing.html#3307" class="Function"
+      >init-has-degrees-with-finite-support</a
+      ><a name="5186"
+      > </a
+      ><a name="5187" href="cw.cohomology.CellularChainComplex.html#4881" class="Bound"
+      >skel</a
+      ><a name="5191"
+      > </a
+      ><a name="5192" href="cw.cohomology.CellularChainComplex.html#4908" class="Bound"
+      >dec</a
+      ><a name="5195"
+      > </a
+      ><a name="5196" href="cw.cohomology.CellularChainComplex.html#4912" class="Bound"
+      >fin-sup</a
+      ><a name="5203" class="Symbol"
+      >)</a
+      ><a name="5204"
+      >
+          </a
+      ><a name="5215" class="Symbol"
+      >(</a
+      ><a name="5216" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="5219"
+      > </a
+      ><a name="5220" class="Symbol"
+      >(</a
+      ><a name="5221" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="5224"
+      > </a
+      ><a name="5225" href="cw.cohomology.CellularChainComplex.html#4924" class="Bound"
+      >m&lt;n</a
+      ><a name="5228" class="Symbol"
+      >))</a
+      ><a name="5230"
+      > </a
+      ><a name="5231" class="Symbol"
+      >(</a
+      ><a name="5232" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="5235"
+      > </a
+      ><a name="5236" class="Symbol"
+      >(</a
+      ><a name="5237" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="5240"
+      > </a
+      ><a name="5241" href="cw.cohomology.CellularChainComplex.html#4928" class="Bound"
+      >Sm&lt;n</a
+      ><a name="5245" class="Symbol"
+      >))</a
+      ><a name="5247"
+      >
+    </a
+      ><a name="5252" href="cw.cohomology.CellularChainComplex.html#4837" class="Function"
+      >boundary-template-descend-from-far</a
+      ><a name="5286"
+      > </a
+      ><a name="5287" href="cw.cohomology.CellularChainComplex.html#5287" class="Bound"
+      >skel</a
+      ><a name="5291"
+      > </a
+      ><a name="5292" href="cw.cohomology.CellularChainComplex.html#5292" class="Bound"
+      >dec</a
+      ><a name="5295"
+      > </a
+      ><a name="5296" href="cw.cohomology.CellularChainComplex.html#5296" class="Bound"
+      >fin-sup</a
+      ><a name="5303"
+      > </a
+      ><a name="5304" href="cw.cohomology.CellularChainComplex.html#5304" class="Bound"
+      >m&lt;n</a
+      ><a name="5307"
+      > </a
+      ><a name="5308" href="cw.cohomology.CellularChainComplex.html#5308" class="Bound"
+      >Sm&lt;n</a
+      ><a name="5312"
+      > </a
+      ><a name="5313" class="Symbol"
+      >=</a
+      ><a name="5314"
+      >
+      </a
+      ><a name="5321" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5323"
+      > </a
+      ><a name="5324" class="Symbol"
+      >(</a
+      ><a name="5325" href="cw.cohomology.CellularChainComplex.html#441" class="Function"
+      >boundary-nth-template</a
+      ><a name="5346"
+      > </a
+      ><a name="5347" href="cw.cohomology.CellularChainComplex.html#5287" class="Bound"
+      >skel</a
+      ><a name="5351"
+      > </a
+      ><a name="5352" href="cw.cohomology.CellularChainComplex.html#5292" class="Bound"
+      >dec</a
+      ><a name="5355"
+      > </a
+      ><a name="5356" href="cw.cohomology.CellularChainComplex.html#5296" class="Bound"
+      >fin-sup</a
+      ><a name="5363"
+      > </a
+      ><a name="5364" class="Symbol"
+      >(</a
+      ><a name="5365" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="5370"
+      > </a
+      ><a name="5371" class="Symbol"
+      >(</a
+      ><a name="5372" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="5375"
+      > </a
+      ><a name="5376" href="cw.cohomology.CellularChainComplex.html#5304" class="Bound"
+      >m&lt;n</a
+      ><a name="5379" class="Symbol"
+      >))</a
+      ><a name="5381"
+      > </a
+      ><a name="5382" class="Symbol"
+      >(</a
+      ><a name="5383" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="5388"
+      > </a
+      ><a name="5389" class="Symbol"
+      >(</a
+      ><a name="5390" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="5393"
+      > </a
+      ><a name="5394" href="cw.cohomology.CellularChainComplex.html#5308" class="Bound"
+      >Sm&lt;n</a
+      ><a name="5398" class="Symbol"
+      >))</a
+      ><a name="5400"
+      > </a
+      ><a name="5401" class="Symbol"
+      >(</a
+      ><a name="5402" href="cw.CW.html#2593" class="Function"
+      >cw-init-take</a
+      ><a name="5414"
+      > </a
+      ><a name="5415" class="Symbol"
+      >(</a
+      ><a name="5416" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="5421"
+      > </a
+      ><a name="5422" class="Symbol"
+      >(</a
+      ><a name="5423" href="lib.Base.html#9121" class="InductiveConstructor"
+      >inr</a
+      ><a name="5426"
+      > </a
+      ><a name="5427" href="cw.cohomology.CellularChainComplex.html#5308" class="Bound"
+      >Sm&lt;n</a
+      ><a name="5431" class="Symbol"
+      >))</a
+      ><a name="5433"
+      > </a
+      ><a name="5434" href="cw.cohomology.CellularChainComplex.html#5287" class="Bound"
+      >skel</a
+      ><a name="5438" class="Symbol"
+      >))</a
+      ><a name="5440"
+      >
+        </a
+      ><a name="5449" class="Symbol"
+      >(</a
+      ><a name="5450" href="cw.cohomology.CellularChainComplex.html#2657" class="Function"
+      >path-lemma&#8320;</a
+      ><a name="5461"
+      > </a
+      ><a name="5462" href="cw.cohomology.CellularChainComplex.html#5287" class="Bound"
+      >skel</a
+      ><a name="5466"
+      > </a
+      ><a name="5467" href="cw.cohomology.CellularChainComplex.html#5304" class="Bound"
+      >m&lt;n</a
+      ><a name="5470"
+      > </a
+      ><a name="5471" href="cw.cohomology.CellularChainComplex.html#5308" class="Bound"
+      >Sm&lt;n</a
+      ><a name="5475" class="Symbol"
+      >)</a
+      ><a name="5476"
+      >
+
+    </a
+      ><a name="5482" href="cw.cohomology.CellularChainComplex.html#5482" class="Function"
+      >boundary-template-descend-from-two-above</a
+      ><a name="5522"
+      > </a
+      ><a name="5523" class="Symbol"
+      >:</a
+      ><a name="5524"
+      > </a
+      ><a name="5525" class="Symbol"
+      >&#8704;</a
+      ><a name="5526"
+      > </a
+      ><a name="5527" class="Symbol"
+      >{</a
+      ><a name="5528" href="cw.cohomology.CellularChainComplex.html#5528" class="Bound"
+      >n</a
+      ><a name="5529" class="Symbol"
+      >}</a
+      ><a name="5530"
+      > </a
+      ><a name="5531" class="Symbol"
+      >(</a
+      ><a name="5532" href="cw.cohomology.CellularChainComplex.html#5532" class="Bound"
+      >skel</a
+      ><a name="5536"
+      > </a
+      ><a name="5537" class="Symbol"
+      >:</a
+      ><a name="5538"
+      > </a
+      ><a name="5539" href="cw.CW.html#1156" class="Function"
+      >Skeleton</a
+      ><a name="5547"
+      > </a
+      ><a name="5548" class="Symbol"
+      >{</a
+      ><a name="5549" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="5550" class="Symbol"
+      >}</a
+      ><a name="5551"
+      > </a
+      ><a name="5552" class="Symbol"
+      >(</a
+      ><a name="5553" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5554"
+      > </a
+      ><a name="5555" class="Symbol"
+      >(</a
+      ><a name="5556" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5557"
+      > </a
+      ><a name="5558" href="cw.cohomology.CellularChainComplex.html#5528" class="Bound"
+      >n</a
+      ><a name="5559" class="Symbol"
+      >)))</a
+      ><a name="5562"
+      > </a
+      ><a name="5563" href="cw.cohomology.CellularChainComplex.html#5563" class="Bound"
+      >dec</a
+      ><a name="5566"
+      > </a
+      ><a name="5567" href="cw.cohomology.CellularChainComplex.html#5567" class="Bound"
+      >fin-sup</a
+      ><a name="5574"
+      >
+      </a
+      ><a name="5581" class="Symbol"
+      >&#8594;</a
+      ><a name="5582"
+      > </a
+      ><a name="5583" href="cw.cohomology.CellularChainComplex.html#1117" class="Function"
+      >boundary-template</a
+      ><a name="5600"
+      > </a
+      ><a name="5601" class="Symbol"
+      >{</a
+      ><a name="5602" class="Argument"
+      >n</a
+      ><a name="5603"
+      > </a
+      ><a name="5604" class="Symbol"
+      >=</a
+      ><a name="5605"
+      > </a
+      ><a name="5606" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5607"
+      > </a
+      ><a name="5608" class="Symbol"
+      >(</a
+      ><a name="5609" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5610"
+      > </a
+      ><a name="5611" href="cw.cohomology.CellularChainComplex.html#5528" class="Bound"
+      >n</a
+      ><a name="5612" class="Symbol"
+      >)}</a
+      ><a name="5614"
+      > </a
+      ><a name="5615" href="cw.cohomology.CellularChainComplex.html#5532" class="Bound"
+      >skel</a
+      ><a name="5619"
+      > </a
+      ><a name="5620" href="cw.cohomology.CellularChainComplex.html#5563" class="Bound"
+      >dec</a
+      ><a name="5623"
+      > </a
+      ><a name="5624" href="cw.cohomology.CellularChainComplex.html#5567" class="Bound"
+      >fin-sup</a
+      ><a name="5631"
+      > </a
+      ><a name="5632" class="Symbol"
+      >(</a
+      ><a name="5633" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="5636"
+      > </a
+      ><a name="5637" class="Symbol"
+      >(</a
+      ><a name="5638" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="5643"
+      > </a
+      ><a name="5644" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="5648" class="Symbol"
+      >))</a
+      ><a name="5650"
+      > </a
+      ><a name="5651" class="Symbol"
+      >(</a
+      ><a name="5652" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="5655"
+      > </a
+      ><a name="5656" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="5660" class="Symbol"
+      >)</a
+      ><a name="5661"
+      >
+        </a
+      ><a name="5670" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="5672"
+      > </a
+      ><a name="5673" href="cw.cohomology.CellularChainComplex.html#1117" class="Function"
+      >boundary-template</a
+      ><a name="5690"
+      > </a
+      ><a name="5691" class="Symbol"
+      >{</a
+      ><a name="5692" class="Argument"
+      >n</a
+      ><a name="5693"
+      > </a
+      ><a name="5694" class="Symbol"
+      >=</a
+      ><a name="5695"
+      > </a
+      ><a name="5696" class="Symbol"
+      >(</a
+      ><a name="5697" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="5698"
+      > </a
+      ><a name="5699" href="cw.cohomology.CellularChainComplex.html#5528" class="Bound"
+      >n</a
+      ><a name="5700" class="Symbol"
+      >)}</a
+      ><a name="5702"
+      > </a
+      ><a name="5703" class="Symbol"
+      >(</a
+      ><a name="5704" href="cw.CW.html#2175" class="Function"
+      >cw-init</a
+      ><a name="5711"
+      > </a
+      ><a name="5712" href="cw.cohomology.CellularChainComplex.html#5532" class="Bound"
+      >skel</a
+      ><a name="5716" class="Symbol"
+      >)</a
+      ><a name="5717"
+      >
+          </a
+      ><a name="5728" class="Symbol"
+      >(</a
+      ><a name="5729" href="cw.CW.html#6684" class="Function"
+      >init-has-cells-with-dec-eq</a
+      ><a name="5755"
+      > </a
+      ><a name="5756" href="cw.cohomology.CellularChainComplex.html#5532" class="Bound"
+      >skel</a
+      ><a name="5760"
+      > </a
+      ><a name="5761" href="cw.cohomology.CellularChainComplex.html#5563" class="Bound"
+      >dec</a
+      ><a name="5764" class="Symbol"
+      >)</a
+      ><a name="5765"
+      >
+          </a
+      ><a name="5776" class="Symbol"
+      >(</a
+      ><a name="5777" href="cw.DegreeBySquashing.html#3307" class="Function"
+      >init-has-degrees-with-finite-support</a
+      ><a name="5813"
+      > </a
+      ><a name="5814" href="cw.cohomology.CellularChainComplex.html#5532" class="Bound"
+      >skel</a
+      ><a name="5818"
+      > </a
+      ><a name="5819" href="cw.cohomology.CellularChainComplex.html#5563" class="Bound"
+      >dec</a
+      ><a name="5822"
+      > </a
+      ><a name="5823" href="cw.cohomology.CellularChainComplex.html#5567" class="Bound"
+      >fin-sup</a
+      ><a name="5830" class="Symbol"
+      >)</a
+      ><a name="5831"
+      >
+          </a
+      ><a name="5842" class="Symbol"
+      >(</a
+      ><a name="5843" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="5846"
+      > </a
+      ><a name="5847" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="5851" class="Symbol"
+      >)</a
+      ><a name="5852"
+      > </a
+      ><a name="5853" class="Symbol"
+      >(</a
+      ><a name="5854" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="5857"
+      > </a
+      ><a name="5858" href="lib.types.Nat.html#1846" class="Function"
+      >lteE</a
+      ><a name="5862" class="Symbol"
+      >)</a
+      ><a name="5863"
+      >
+    </a
+      ><a name="5868" href="cw.cohomology.CellularChainComplex.html#5482" class="Function"
+      >boundary-template-descend-from-two-above</a
+      ><a name="5908"
+      > </a
+      ><a name="5909" href="cw.cohomology.CellularChainComplex.html#5909" class="Bound"
+      >skel</a
+      ><a name="5913"
+      > </a
+      ><a name="5914" href="cw.cohomology.CellularChainComplex.html#5914" class="Bound"
+      >dec</a
+      ><a name="5917"
+      > </a
+      ><a name="5918" href="cw.cohomology.CellularChainComplex.html#5918" class="Bound"
+      >fin-sup</a
+      ><a name="5925"
+      > </a
+      ><a name="5926" class="Symbol"
+      >=</a
+      ><a name="5927"
+      >
+      </a
+      ><a name="5934" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5936"
+      > </a
+      ><a name="5937" class="Symbol"
+      >(</a
+      ><a name="5938" href="cw.cohomology.CellularChainComplex.html#441" class="Function"
+      >boundary-nth-template</a
+      ><a name="5959"
+      > </a
+      ><a name="5960" href="cw.cohomology.CellularChainComplex.html#5909" class="Bound"
+      >skel</a
+      ><a name="5964"
+      > </a
+      ><a name="5965" href="cw.cohomology.CellularChainComplex.html#5914" class="Bound"
+      >dec</a
+      ><a name="5968"
+      > </a
+      ><a name="5969" href="cw.cohomology.CellularChainComplex.html#5918" class="Bound"
+      >fin-sup</a
+      ><a name="5976"
+      > </a
+      ><a name="5977" class="Symbol"
+      >(</a
+      ><a name="5978" href="lib.types.Nat.html#1926" class="Function"
+      >lteSR</a
+      ><a name="5983"
+      > </a
+      ><a name="5984" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="5988" class="Symbol"
+      >)</a
+      ><a name="5989"
+      > </a
+      ><a name="5990" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="5994"
+      > </a
+      ><a name="5995" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="5998" class="Symbol"
+      >)</a
+      ><a name="5999"
+      > </a
+      ><a name="6000" class="Symbol"
+      >(</a
+      ><a name="6001" href="cw.cohomology.CellularChainComplex.html#3841" class="Function"
+      >path-lemma&#8321;</a
+      ><a name="6012"
+      > </a
+      ><a name="6013" href="cw.cohomology.CellularChainComplex.html#5909" class="Bound"
+      >skel</a
+      ><a name="6017" class="Symbol"
+      >)</a
+      ><a name="6018"
+      >
+
+    </a
+      ><a name="6024" href="cw.cohomology.CellularChainComplex.html#6024" class="Function"
+      >boundary-template-&#946;</a
+      ><a name="6043"
+      > </a
+      ><a name="6044" class="Symbol"
+      >:</a
+      ><a name="6045"
+      > </a
+      ><a name="6046" class="Symbol"
+      >&#8704;</a
+      ><a name="6047"
+      > </a
+      ><a name="6048" class="Symbol"
+      >{</a
+      ><a name="6049" href="cw.cohomology.CellularChainComplex.html#6049" class="Bound"
+      >n</a
+      ><a name="6050" class="Symbol"
+      >}</a
+      ><a name="6051"
+      > </a
+      ><a name="6052" class="Symbol"
+      >(</a
+      ><a name="6053" href="cw.cohomology.CellularChainComplex.html#6053" class="Bound"
+      >skel</a
+      ><a name="6057"
+      > </a
+      ><a name="6058" class="Symbol"
+      >:</a
+      ><a name="6059"
+      > </a
+      ><a name="6060" href="cw.CW.html#1156" class="Function"
+      >Skeleton</a
+      ><a name="6068"
+      > </a
+      ><a name="6069" class="Symbol"
+      >{</a
+      ><a name="6070" href="cw.cohomology.CellularChainComplex.html#190" class="Bound"
+      >i</a
+      ><a name="6071" class="Symbol"
+      >}</a
+      ><a name="6072"
+      > </a
+      ><a name="6073" class="Symbol"
+      >(</a
+      ><a name="6074" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="6075"
+      > </a
+      ><a name="6076" href="cw.cohomology.CellularChainComplex.html#6049" class="Bound"
+      >n</a
+      ><a name="6077" class="Symbol"
+      >))</a
+      ><a name="6079"
+      > </a
+      ><a name="6080" href="cw.cohomology.CellularChainComplex.html#6080" class="Bound"
+      >dec</a
+      ><a name="6083"
+      > </a
+      ><a name="6084" href="cw.cohomology.CellularChainComplex.html#6084" class="Bound"
+      >fin-sup</a
+      ><a name="6091"
+      >
+      </a
+      ><a name="6098" class="Symbol"
+      >&#8594;</a
+      ><a name="6099"
+      >  </a
+      ><a name="6101" href="cw.cohomology.CellularChainComplex.html#1117" class="Function"
+      >boundary-template</a
+      ><a name="6118"
+      > </a
+      ><a name="6119" class="Symbol"
+      >{</a
+      ><a name="6120" class="Argument"
+      >n</a
+      ><a name="6121"
+      > </a
+      ><a name="6122" class="Symbol"
+      >=</a
+      ><a name="6123"
+      > </a
+      ><a name="6124" href="lib.Base.html#6213" class="InductiveConstructor"
+      >S</a
+      ><a name="6125"
+      > </a
+      ><a name="6126" href="cw.cohomology.CellularChainComplex.html#6049" class="Bound"
+      >n</a
+      ><a name="6127" class="Symbol"
+      >}</a
+      ><a name="6128"
+      > </a
+      ><a name="6129" href="cw.cohomology.CellularChainComplex.html#6053" class="Bound"
+      >skel</a
+      ><a name="6133"
+      > </a
+      ><a name="6134" href="cw.cohomology.CellularChainComplex.html#6080" class="Bound"
+      >dec</a
+      ><a name="6137"
+      > </a
+      ><a name="6138" href="cw.cohomology.CellularChainComplex.html#6084" class="Bound"
+      >fin-sup</a
+      ><a name="6145"
+      > </a
+      ><a name="6146" class="Symbol"
+      >(</a
+      ><a name="6147" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="6150"
+      > </a
+      ><a name="6151" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="6155" class="Symbol"
+      >)</a
+      ><a name="6156"
+      > </a
+      ><a name="6157" class="Symbol"
+      >(</a
+      ><a name="6158" href="lib.Base.html#9098" class="InductiveConstructor"
+      >inl</a
+      ><a name="6161"
+      > </a
+      ><a name="6162" href="lib.types.Nat.html#1846" class="Function"
+      >lteE</a
+      ><a name="6166" class="Symbol"
+      >)</a
+      ><a name="6167"
+      >
+      </a
+      ><a name="6174" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="6176"
+      > </a
+      ><a name="6177" href="lib.groups.FreeAbelianGroup.html#8539" class="Function"
+      >FreeAbGroup-extend</a
+      ><a name="6195"
+      >
+            </a
+      ><a name="6208" class="Symbol"
+      >(</a
+      ><a name="6209" href="lib.groups.FreeAbelianGroup.html#6842" class="Function"
+      >FreeAbGroup</a
+      ><a name="6220"
+      > </a
+      ><a name="6221" class="Symbol"
+      >(</a
+      ><a name="6222" href="cw.CW.html#3479" class="Function"
+      >cells-last</a
+      ><a name="6232"
+      > </a
+      ><a name="6233" class="Symbol"
+      >(</a
+      ><a name="6234" href="cw.CW.html#2175" class="Function"
+      >cw-init</a
+      ><a name="6241"
+      > </a
+      ><a name="6242" href="cw.cohomology.CellularChainComplex.html#6053" class="Bound"
+      >skel</a
+      ><a name="6246" class="Symbol"
+      >)))</a
+      ><a name="6249"
+      >
+            </a
+      ><a name="6262" class="Symbol"
+      >(</a
+      ><a name="6263" href="cw.DegreeBySquashing.html#5322" class="Function"
+      >boundary'-last</a
+      ><a name="6277"
+      > </a
+      ><a name="6278" href="cw.cohomology.CellularChainComplex.html#6053" class="Bound"
+      >skel</a
+      ><a name="6282"
+      > </a
+      ><a name="6283" href="cw.cohomology.CellularChainComplex.html#6080" class="Bound"
+      >dec</a
+      ><a name="6286"
+      > </a
+      ><a name="6287" href="cw.cohomology.CellularChainComplex.html#6084" class="Bound"
+      >fin-sup</a
+      ><a name="6294" class="Symbol"
+      >)</a
+      ><a name="6295"
+      >
+    </a
+      ><a name="6300" href="cw.cohomology.CellularChainComplex.html#6024" class="Function"
+      >boundary-template-&#946;</a
+      ><a name="6319"
+      > </a
+      ><a name="6320" href="cw.cohomology.CellularChainComplex.html#6320" class="Bound"
+      >skel</a
+      ><a name="6324"
+      > </a
+      ><a name="6325" href="cw.cohomology.CellularChainComplex.html#6325" class="Bound"
+      >dec</a
+      ><a name="6328"
+      > </a
+      ><a name="6329" href="cw.cohomology.CellularChainComplex.html#6329" class="Bound"
+      >fin-sup</a
+      ><a name="6336"
+      > </a
+      ><a name="6337" class="Symbol"
+      >=</a
+      ><a name="6338"
+      > </a
+      ><a name="6339" href="lib.groups.Homomorphism.html#3739" class="Function"
+      >group-hom=</a
+      ><a name="6349"
+      > </a
+      ><a name="6350" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="6351"
+      >
+      </a
+      ><a name="6358" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="6360"
+      > </a
+      ><a name="6361" class="Symbol"
+      >(</a
+      ><a name="6362" href="lib.groups.Homomorphism.html#2610" class="Field"
+      >GroupHom.f</a
+      ><a name="6372"
+      > </a
+      ><a name="6373" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="6374"
+      > </a
+      ><a name="6375" href="cw.cohomology.CellularChainComplex.html#441" class="Function"
+      >boundary-nth-template</a
+      ><a name="6396"
+      > </a
+      ><a name="6397" href="cw.cohomology.CellularChainComplex.html#6320" class="Bound"
+      >skel</a
+      ><a name="6401"
+      > </a
+      ><a name="6402" href="cw.cohomology.CellularChainComplex.html#6325" class="Bound"
+      >dec</a
+      ><a name="6405"
+      > </a
+      ><a name="6406" href="cw.cohomology.CellularChainComplex.html#6329" class="Bound"
+      >fin-sup</a
+      ><a name="6413"
+      > </a
+      ><a name="6414" href="lib.types.Nat.html#1885" class="Function"
+      >lteS</a
+      ><a name="6418"
+      > </a
+      ><a name="6419" href="lib.types.Nat.html#1846" class="Function"
+      >lteE</a
+      ><a name="6423"
+      > </a
+      ><a name="6424" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="6427" class="Symbol"
+      >)</a
+      ><a name="6428"
+      > </a
+      ><a name="6429" class="Symbol"
+      >(</a
+      ><a name="6430" href="cw.cohomology.CellularChainComplex.html#4484" class="Function"
+      >path-lemma&#8322;</a
+      ><a name="6441"
+      > </a
+      ><a name="6442" href="cw.cohomology.CellularChainComplex.html#6320" class="Bound"
+      >skel</a
+      ><a name="6446" class="Symbol"
+      >)</a
+      ><a name="6447"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

@@ -1,0 +1,5089 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >homotopy.SuspSectionDecomp</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="58"
+      >
+</a
+      ><a name="59" class="Keyword"
+      >open</a
+      ><a name="63"
+      > </a
+      ><a name="64" class="Keyword"
+      >import</a
+      ><a name="70"
+      > </a
+      ><a name="71" href="homotopy.elims.CofPushoutSection.html#1" class="Module"
+      >homotopy.elims.CofPushoutSection</a
+      ><a name="103"
+      >
+
+</a
+      ><a name="105" class="Comment"
+      >{- If f : X &#8594; Y is a section, then &#931;Y &#8771; &#931;X &#8744; &#931;Cof(f) -}</a
+      ><a name="160"
+      >
+
+</a
+      ><a name="162" class="Keyword"
+      >module</a
+      ><a name="168"
+      > </a
+      ><a name="169" href="homotopy.SuspSectionDecomp.html#1" class="Module"
+      >homotopy.SuspSectionDecomp</a
+      ><a name="195"
+      >
+  </a
+      ><a name="198" class="Symbol"
+      >{</a
+      ><a name="199" href="homotopy.SuspSectionDecomp.html#199" class="Bound"
+      >i</a
+      ><a name="200"
+      > </a
+      ><a name="201" href="homotopy.SuspSectionDecomp.html#201" class="Bound"
+      >j</a
+      ><a name="202" class="Symbol"
+      >}</a
+      ><a name="203"
+      > </a
+      ><a name="204" class="Symbol"
+      >{</a
+      ><a name="205" href="homotopy.SuspSectionDecomp.html#205" class="Bound"
+      >X</a
+      ><a name="206"
+      > </a
+      ><a name="207" class="Symbol"
+      >:</a
+      ><a name="208"
+      > </a
+      ><a name="209" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="212"
+      > </a
+      ><a name="213" href="homotopy.SuspSectionDecomp.html#199" class="Bound"
+      >i</a
+      ><a name="214" class="Symbol"
+      >}</a
+      ><a name="215"
+      > </a
+      ><a name="216" class="Symbol"
+      >{</a
+      ><a name="217" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="218"
+      > </a
+      ><a name="219" class="Symbol"
+      >:</a
+      ><a name="220"
+      > </a
+      ><a name="221" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="224"
+      > </a
+      ><a name="225" href="homotopy.SuspSectionDecomp.html#201" class="Bound"
+      >j</a
+      ><a name="226" class="Symbol"
+      >}</a
+      ><a name="227"
+      > </a
+      ><a name="228" class="Symbol"
+      >(</a
+      ><a name="229" href="homotopy.SuspSectionDecomp.html#229" class="Bound"
+      >&#8857;f</a
+      ><a name="231"
+      > </a
+      ><a name="232" class="Symbol"
+      >:</a
+      ><a name="233"
+      > </a
+      ><a name="234" href="homotopy.SuspSectionDecomp.html#205" class="Bound"
+      >X</a
+      ><a name="235"
+      > </a
+      ><a name="236" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="238"
+      > </a
+      ><a name="239" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="240" class="Symbol"
+      >)</a
+      ><a name="241"
+      >
+  </a
+      ><a name="244" class="Symbol"
+      >(</a
+      ><a name="245" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="246"
+      > </a
+      ><a name="247" class="Symbol"
+      >:</a
+      ><a name="248"
+      > </a
+      ><a name="249" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="252"
+      > </a
+      ><a name="253" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="254"
+      > </a
+      ><a name="255" class="Symbol"
+      >&#8594;</a
+      ><a name="256"
+      > </a
+      ><a name="257" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="260"
+      > </a
+      ><a name="261" href="homotopy.SuspSectionDecomp.html#205" class="Bound"
+      >X</a
+      ><a name="262" class="Symbol"
+      >)</a
+      ><a name="263"
+      > </a
+      ><a name="264" class="Symbol"
+      >(</a
+      ><a name="265" href="homotopy.SuspSectionDecomp.html#265" class="Bound"
+      >inv</a
+      ><a name="268"
+      > </a
+      ><a name="269" class="Symbol"
+      >:</a
+      ><a name="270"
+      > </a
+      ><a name="271" class="Symbol"
+      >&#8704;</a
+      ><a name="272"
+      > </a
+      ><a name="273" href="homotopy.SuspSectionDecomp.html#273" class="Bound"
+      >x</a
+      ><a name="274"
+      > </a
+      ><a name="275" class="Symbol"
+      >&#8594;</a
+      ><a name="276"
+      > </a
+      ><a name="277" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="278"
+      > </a
+      ><a name="279" class="Symbol"
+      >(</a
+      ><a name="280" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="283"
+      > </a
+      ><a name="284" href="homotopy.SuspSectionDecomp.html#229" class="Bound"
+      >&#8857;f</a
+      ><a name="286"
+      > </a
+      ><a name="287" href="homotopy.SuspSectionDecomp.html#273" class="Bound"
+      >x</a
+      ><a name="288" class="Symbol"
+      >)</a
+      ><a name="289"
+      > </a
+      ><a name="290" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="292"
+      > </a
+      ><a name="293" href="homotopy.SuspSectionDecomp.html#273" class="Bound"
+      >x</a
+      ><a name="294" class="Symbol"
+      >)</a
+      ><a name="295"
+      >
+  </a
+      ><a name="298" class="Keyword"
+      >where</a
+      ><a name="303"
+      >
+
+</a
+      ><a name="305" class="Keyword"
+      >module</a
+      ><a name="311"
+      > </a
+      ><a name="312" href="homotopy.SuspSectionDecomp.html#312" class="Module"
+      >SuspSectionDecomp</a
+      ><a name="329"
+      > </a
+      ><a name="330" class="Keyword"
+      >where</a
+      ><a name="335"
+      >
+
+  </a
+      ><a name="339" class="Keyword"
+      >private</a
+      ><a name="346"
+      >
+    </a
+      ><a name="351" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="352"
+      > </a
+      ><a name="353" class="Symbol"
+      >=</a
+      ><a name="354"
+      > </a
+      ><a name="355" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="358"
+      > </a
+      ><a name="359" href="homotopy.SuspSectionDecomp.html#229" class="Bound"
+      >&#8857;f</a
+      ><a name="361"
+      >
+
+  </a
+      ><a name="365" class="Keyword"
+      >module</a
+      ><a name="371"
+      > </a
+      ><a name="372" href="homotopy.SuspSectionDecomp.html#372" class="Module"
+      >Into</a
+      ><a name="376"
+      > </a
+      ><a name="377" class="Symbol"
+      >=</a
+      ><a name="378"
+      > </a
+      ><a name="379" class="Module"
+      >SuspRec</a
+      ><a name="386"
+      > </a
+      ><a name="387" class="Symbol"
+      >{</a
+      ><a name="388" class="Argument"
+      >C</a
+      ><a name="389"
+      > </a
+      ><a name="390" class="Symbol"
+      >=</a
+      ><a name="391"
+      > </a
+      ><a name="392" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="395"
+      > </a
+      ><a name="396" class="Symbol"
+      >(</a
+      ><a name="397" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="402"
+      > </a
+      ><a name="403" href="homotopy.SuspSectionDecomp.html#205" class="Bound"
+      >X</a
+      ><a name="404"
+      > </a
+      ><a name="405" href="lib.types.Wedge.html#956" class="Function Operator"
+      >&#8857;&#8744;</a
+      ><a name="407"
+      > </a
+      ><a name="408" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="413"
+      > </a
+      ><a name="414" class="Symbol"
+      >(</a
+      ><a name="415" href="lib.types.Cofiber.html#1552" class="Function"
+      >&#8857;Cofiber</a
+      ><a name="423"
+      > </a
+      ><a name="424" href="homotopy.SuspSectionDecomp.html#229" class="Bound"
+      >&#8857;f</a
+      ><a name="426" class="Symbol"
+      >))}</a
+      ><a name="429"
+      >
+    </a
+      ><a name="434" class="Symbol"
+      >(</a
+      ><a name="435" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="439"
+      > </a
+      ><a name="440" href="lib.types.Suspension.html#895" class="Function"
+      >south</a
+      ><a name="445" class="Symbol"
+      >)</a
+      ><a name="446"
+      >
+    </a
+      ><a name="451" class="Symbol"
+      >(</a
+      ><a name="452" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="456"
+      > </a
+      ><a name="457" href="lib.types.Suspension.html#895" class="Function"
+      >south</a
+      ><a name="462" class="Symbol"
+      >)</a
+      ><a name="463"
+      >
+    </a
+      ><a name="468" class="Symbol"
+      >(&#955;</a
+      ><a name="470"
+      > </a
+      ><a name="471" href="homotopy.SuspSectionDecomp.html#471" class="Bound"
+      >y</a
+      ><a name="472"
+      > </a
+      ><a name="473" class="Symbol"
+      >&#8594;</a
+      ><a name="474"
+      > </a
+      ><a name="475" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="476"
+      > </a
+      ><a name="477" class="Symbol"
+      >(</a
+      ><a name="478" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="480"
+      > </a
+      ><a name="481" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="485"
+      > </a
+      ><a name="486" class="Symbol"
+      >(</a
+      ><a name="487" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="492"
+      > </a
+      ><a name="493" class="Symbol"
+      >(</a
+      ><a name="494" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="495"
+      > </a
+      ><a name="496" href="homotopy.SuspSectionDecomp.html#471" class="Bound"
+      >y</a
+      ><a name="497" class="Symbol"
+      >)))</a
+      ><a name="500"
+      > </a
+      ><a name="501" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="502"
+      > </a
+      ><a name="503" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="508"
+      > </a
+      ><a name="509" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="510"
+      > </a
+      ><a name="511" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="513"
+      > </a
+      ><a name="514" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="518"
+      > </a
+      ><a name="519" class="Symbol"
+      >(</a
+      ><a name="520" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="525"
+      > </a
+      ><a name="526" class="Symbol"
+      >(</a
+      ><a name="527" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="532"
+      > </a
+      ><a name="533" href="homotopy.SuspSectionDecomp.html#471" class="Bound"
+      >y</a
+      ><a name="534" class="Symbol"
+      >)))</a
+      ><a name="537"
+      >
+
+  </a
+      ><a name="541" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="545"
+      > </a
+      ><a name="546" class="Symbol"
+      >=</a
+      ><a name="547"
+      > </a
+      ><a name="548" href="lib.types.Pushout.html#1397" class="Function"
+      >Into.f</a
+      ><a name="554"
+      >
+
+  </a
+      ><a name="558" class="Keyword"
+      >module</a
+      ><a name="564"
+      > </a
+      ><a name="565" href="homotopy.SuspSectionDecomp.html#565" class="Module"
+      >OutWinl</a
+      ><a name="572"
+      > </a
+      ><a name="573" class="Symbol"
+      >=</a
+      ><a name="574"
+      > </a
+      ><a name="575" class="Module"
+      >SuspRec</a
+      ><a name="582"
+      > </a
+      ><a name="583" href="lib.types.Suspension.html#895" class="Function"
+      >south</a
+      ><a name="588"
+      > </a
+      ><a name="589" href="lib.types.Suspension.html#895" class="Function"
+      >south</a
+      ><a name="594"
+      >
+    </a
+      ><a name="599" class="Symbol"
+      >(&#955;</a
+      ><a name="601"
+      > </a
+      ><a name="602" href="homotopy.SuspSectionDecomp.html#602" class="Bound"
+      >x</a
+      ><a name="603"
+      > </a
+      ><a name="604" class="Symbol"
+      >&#8594;</a
+      ><a name="605"
+      > </a
+      ><a name="606" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="607"
+      > </a
+      ><a name="608" class="Symbol"
+      >(</a
+      ><a name="609" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="614"
+      > </a
+      ><a name="615" class="Symbol"
+      >(</a
+      ><a name="616" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="617"
+      > </a
+      ><a name="618" href="homotopy.SuspSectionDecomp.html#602" class="Bound"
+      >x</a
+      ><a name="619" class="Symbol"
+      >))</a
+      ><a name="621"
+      > </a
+      ><a name="622" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="623"
+      > </a
+      ><a name="624" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="629"
+      > </a
+      ><a name="630" class="Symbol"
+      >(</a
+      ><a name="631" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="633"
+      > </a
+      ><a name="634" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="635" class="Symbol"
+      >))</a
+      ><a name="637"
+      >
+
+  </a
+      ><a name="641" href="homotopy.SuspSectionDecomp.html#641" class="Function"
+      >out-winr-glue</a
+      ><a name="654"
+      > </a
+      ><a name="655" class="Symbol"
+      >:</a
+      ><a name="656"
+      > </a
+      ><a name="657" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="660"
+      > </a
+      ><a name="661" class="Symbol"
+      >(</a
+      ><a name="662" href="lib.types.Cofiber.html#1552" class="Function"
+      >&#8857;Cofiber</a
+      ><a name="670"
+      > </a
+      ><a name="671" href="homotopy.SuspSectionDecomp.html#229" class="Bound"
+      >&#8857;f</a
+      ><a name="673" class="Symbol"
+      >)</a
+      ><a name="674"
+      > </a
+      ><a name="675" class="Symbol"
+      >&#8594;</a
+      ><a name="676"
+      > </a
+      ><a name="677" href="lib.types.Suspension.html#788" class="Function"
+      >south'</a
+      ><a name="683"
+      > </a
+      ><a name="684" class="Symbol"
+      >(</a
+      ><a name="685" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="688"
+      > </a
+      ><a name="689" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="690" class="Symbol"
+      >)</a
+      ><a name="691"
+      > </a
+      ><a name="692" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="694"
+      > </a
+      ><a name="695" href="lib.types.Suspension.html#895" class="Function"
+      >south</a
+      ><a name="700"
+      >
+  </a
+      ><a name="703" href="homotopy.SuspSectionDecomp.html#641" class="Function"
+      >out-winr-glue</a
+      ><a name="716"
+      > </a
+      ><a name="717" class="Symbol"
+      >=</a
+      ><a name="718"
+      > </a
+      ><a name="719" href="lib.types.Pushout.html#1397" class="Function"
+      >CofiberRec.f</a
+      ><a name="731"
+      >
+    </a
+      ><a name="736" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="739"
+      >
+    </a
+      ><a name="744" class="Symbol"
+      >(&#955;</a
+      ><a name="746"
+      > </a
+      ><a name="747" href="homotopy.SuspSectionDecomp.html#747" class="Bound"
+      >y</a
+      ><a name="748"
+      > </a
+      ><a name="749" class="Symbol"
+      >&#8594;</a
+      ><a name="750"
+      > </a
+      ><a name="751" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="752"
+      > </a
+      ><a name="753" class="Symbol"
+      >(</a
+      ><a name="754" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="759"
+      > </a
+      ><a name="760" class="Symbol"
+      >(</a
+      ><a name="761" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="762"
+      > </a
+      ><a name="763" class="Symbol"
+      >(</a
+      ><a name="764" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="765"
+      > </a
+      ><a name="766" href="homotopy.SuspSectionDecomp.html#747" class="Bound"
+      >y</a
+      ><a name="767" class="Symbol"
+      >)))</a
+      ><a name="770"
+      > </a
+      ><a name="771" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="772"
+      > </a
+      ><a name="773" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="778"
+      > </a
+      ><a name="779" href="homotopy.SuspSectionDecomp.html#747" class="Bound"
+      >y</a
+      ><a name="780" class="Symbol"
+      >)</a
+      ><a name="781"
+      >
+    </a
+      ><a name="786" class="Symbol"
+      >(&#955;</a
+      ><a name="788"
+      > </a
+      ><a name="789" href="homotopy.SuspSectionDecomp.html#789" class="Bound"
+      >x</a
+      ><a name="790"
+      > </a
+      ><a name="791" class="Symbol"
+      >&#8594;</a
+      ><a name="792"
+      > </a
+      ><a name="793" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="794"
+      > </a
+      ><a name="795" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="796"
+      >
+      </a
+      ><a name="803" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="805"
+      > </a
+      ><a name="806" class="Symbol"
+      >(&#955;</a
+      ><a name="808"
+      > </a
+      ><a name="809" href="homotopy.SuspSectionDecomp.html#809" class="Bound"
+      >w</a
+      ><a name="810"
+      > </a
+      ><a name="811" class="Symbol"
+      >&#8594;</a
+      ><a name="812"
+      > </a
+      ><a name="813" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="814"
+      > </a
+      ><a name="815" class="Symbol"
+      >(</a
+      ><a name="816" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="821"
+      > </a
+      ><a name="822" class="Symbol"
+      >(</a
+      ><a name="823" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="824"
+      > </a
+      ><a name="825" href="homotopy.SuspSectionDecomp.html#809" class="Bound"
+      >w</a
+      ><a name="826" class="Symbol"
+      >))</a
+      ><a name="828"
+      > </a
+      ><a name="829" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="830"
+      > </a
+      ><a name="831" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="836"
+      > </a
+      ><a name="837" class="Symbol"
+      >(</a
+      ><a name="838" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="839"
+      > </a
+      ><a name="840" href="homotopy.SuspSectionDecomp.html#789" class="Bound"
+      >x</a
+      ><a name="841" class="Symbol"
+      >))</a
+      ><a name="843"
+      >
+         </a
+      ><a name="853" class="Symbol"
+      >(</a
+      ><a name="854" href="homotopy.SuspSectionDecomp.html#265" class="Bound"
+      >inv</a
+      ><a name="857"
+      > </a
+      ><a name="858" href="homotopy.SuspSectionDecomp.html#789" class="Bound"
+      >x</a
+      ><a name="859" class="Symbol"
+      >)</a
+      ><a name="860"
+      >
+      </a
+      ><a name="867" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="868"
+      > </a
+      ><a name="869" href="lib.PathGroupoid.html#1268" class="Function"
+      >!-inv-l</a
+      ><a name="876"
+      > </a
+      ><a name="877" class="Symbol"
+      >(</a
+      ><a name="878" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="883"
+      > </a
+      ><a name="884" class="Symbol"
+      >(</a
+      ><a name="885" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="886"
+      > </a
+      ><a name="887" href="homotopy.SuspSectionDecomp.html#789" class="Bound"
+      >x</a
+      ><a name="888" class="Symbol"
+      >)))</a
+      ><a name="891"
+      >
+
+  </a
+      ><a name="895" class="Keyword"
+      >module</a
+      ><a name="901"
+      > </a
+      ><a name="902" href="homotopy.SuspSectionDecomp.html#902" class="Module"
+      >OutWinr</a
+      ><a name="909"
+      > </a
+      ><a name="910" class="Symbol"
+      >=</a
+      ><a name="911"
+      > </a
+      ><a name="912" class="Module"
+      >SuspRec</a
+      ><a name="919"
+      > </a
+      ><a name="920" href="lib.types.Suspension.html#895" class="Function"
+      >south</a
+      ><a name="925"
+      > </a
+      ><a name="926" href="lib.types.Suspension.html#895" class="Function"
+      >south</a
+      ><a name="931"
+      > </a
+      ><a name="932" href="homotopy.SuspSectionDecomp.html#641" class="Function"
+      >out-winr-glue</a
+      ><a name="945"
+      >
+
+  </a
+      ><a name="949" href="homotopy.SuspSectionDecomp.html#949" class="Function"
+      >out-winl</a
+      ><a name="957"
+      > </a
+      ><a name="958" class="Symbol"
+      >=</a
+      ><a name="959"
+      > </a
+      ><a name="960" href="lib.types.Pushout.html#1397" class="Function"
+      >OutWinl.f</a
+      ><a name="969"
+      >
+  </a
+      ><a name="972" href="homotopy.SuspSectionDecomp.html#972" class="Function"
+      >out-winr</a
+      ><a name="980"
+      > </a
+      ><a name="981" class="Symbol"
+      >=</a
+      ><a name="982"
+      > </a
+      ><a name="983" href="lib.types.Pushout.html#1397" class="Function"
+      >OutWinr.f</a
+      ><a name="992"
+      >
+
+  </a
+      ><a name="996" class="Keyword"
+      >module</a
+      ><a name="1002"
+      > </a
+      ><a name="1003" href="homotopy.SuspSectionDecomp.html#1003" class="Module"
+      >Out</a
+      ><a name="1006"
+      > </a
+      ><a name="1007" class="Symbol"
+      >=</a
+      ><a name="1008"
+      > </a
+      ><a name="1009" href="lib.types.Wedge.html#1513" class="Module"
+      >WedgeRec</a
+      ><a name="1017"
+      > </a
+      ><a name="1018" class="Symbol"
+      >{</a
+      ><a name="1019" class="Argument"
+      >X</a
+      ><a name="1020"
+      > </a
+      ><a name="1021" class="Symbol"
+      >=</a
+      ><a name="1022"
+      > </a
+      ><a name="1023" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="1028"
+      > </a
+      ><a name="1029" href="homotopy.SuspSectionDecomp.html#205" class="Bound"
+      >X</a
+      ><a name="1030" class="Symbol"
+      >}</a
+      ><a name="1031"
+      > </a
+      ><a name="1032" class="Symbol"
+      >{</a
+      ><a name="1033" class="Argument"
+      >Y</a
+      ><a name="1034"
+      > </a
+      ><a name="1035" class="Symbol"
+      >=</a
+      ><a name="1036"
+      > </a
+      ><a name="1037" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="1042"
+      > </a
+      ><a name="1043" class="Symbol"
+      >(</a
+      ><a name="1044" href="lib.types.Cofiber.html#1552" class="Function"
+      >&#8857;Cofiber</a
+      ><a name="1052"
+      > </a
+      ><a name="1053" href="homotopy.SuspSectionDecomp.html#229" class="Bound"
+      >&#8857;f</a
+      ><a name="1055" class="Symbol"
+      >)}</a
+      ><a name="1057"
+      >
+    </a
+      ><a name="1062" href="homotopy.SuspSectionDecomp.html#949" class="Function"
+      >out-winl</a
+      ><a name="1070"
+      > </a
+      ><a name="1071" href="homotopy.SuspSectionDecomp.html#972" class="Function"
+      >out-winr</a
+      ><a name="1079"
+      > </a
+      ><a name="1080" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1083"
+      >
+
+  </a
+      ><a name="1087" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="1090"
+      > </a
+      ><a name="1091" class="Symbol"
+      >=</a
+      ><a name="1092"
+      > </a
+      ><a name="1093" href="lib.types.Wedge.html#1715" class="Function"
+      >Out.f</a
+      ><a name="1098"
+      >
+
+  </a
+      ><a name="1102" href="homotopy.SuspSectionDecomp.html#1102" class="Function"
+      >out-into</a
+      ><a name="1110"
+      > </a
+      ><a name="1111" class="Symbol"
+      >:</a
+      ><a name="1112"
+      > </a
+      ><a name="1113" class="Symbol"
+      >&#8704;</a
+      ><a name="1114"
+      > </a
+      ><a name="1115" href="homotopy.SuspSectionDecomp.html#1115" class="Bound"
+      >&#963;y</a
+      ><a name="1117"
+      > </a
+      ><a name="1118" class="Symbol"
+      >&#8594;</a
+      ><a name="1119"
+      > </a
+      ><a name="1120" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="1123"
+      > </a
+      ><a name="1124" class="Symbol"
+      >(</a
+      ><a name="1125" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="1129"
+      > </a
+      ><a name="1130" href="homotopy.SuspSectionDecomp.html#1115" class="Bound"
+      >&#963;y</a
+      ><a name="1132" class="Symbol"
+      >)</a
+      ><a name="1133"
+      > </a
+      ><a name="1134" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" href="homotopy.SuspSectionDecomp.html#1115" class="Bound"
+      >&#963;y</a
+      ><a name="1139"
+      >
+  </a
+      ><a name="1142" href="homotopy.SuspSectionDecomp.html#1102" class="Function"
+      >out-into</a
+      ><a name="1150"
+      > </a
+      ><a name="1151" class="Symbol"
+      >=</a
+      ><a name="1152"
+      > </a
+      ><a name="1153" href="lib.types.Pushout.html#850" class="Function"
+      >Susp-elim</a
+      ><a name="1162"
+      >
+    </a
+      ><a name="1167" class="Symbol"
+      >(</a
+      ><a name="1168" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1169"
+      > </a
+      ><a name="1170" class="Symbol"
+      >(</a
+      ><a name="1171" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1176"
+      > </a
+      ><a name="1177" class="Symbol"
+      >(</a
+      ><a name="1178" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1180"
+      > </a
+      ><a name="1181" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="1182" class="Symbol"
+      >)))</a
+      ><a name="1185"
+      >
+    </a
+      ><a name="1190" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1193"
+      >
+    </a
+      ><a name="1198" class="Symbol"
+      >(</a
+      ><a name="1199" href="lib.cubical.Square.html#10289" class="Function"
+      >&#8595;-&#8728;=idf-from-square</a
+      ><a name="1218"
+      > </a
+      ><a name="1219" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="1222"
+      > </a
+      ><a name="1223" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="1227"
+      > </a
+      ><a name="1228" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="1229"
+      > </a
+      ><a name="1230" class="Symbol"
+      >&#955;</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" href="homotopy.SuspSectionDecomp.html#1232" class="Bound"
+      >y</a
+      ><a name="1233"
+      > </a
+      ><a name="1234" class="Symbol"
+      >&#8594;</a
+      ><a name="1235"
+      >
+      </a
+      ><a name="1242" class="Symbol"
+      >(</a
+      ><a name="1243" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1245"
+      > </a
+      ><a name="1246" class="Symbol"
+      >(</a
+      ><a name="1247" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1249"
+      > </a
+      ><a name="1250" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="1253" class="Symbol"
+      >)</a
+      ><a name="1254"
+      > </a
+      ><a name="1255" class="Symbol"
+      >(</a
+      ><a name="1256" href="lib.types.Pushout.html#1428" class="Function"
+      >Into.merid-&#946;</a
+      ><a name="1268"
+      > </a
+      ><a name="1269" href="homotopy.SuspSectionDecomp.html#1232" class="Bound"
+      >y</a
+      ><a name="1270" class="Symbol"
+      >)</a
+      ><a name="1271"
+      >
+       </a
+      ><a name="1279" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1280"
+      > </a
+      ><a name="1281" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="1285"
+      > </a
+      ><a name="1286" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" class="Symbol"
+      >(</a
+      ><a name="1291" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1292"
+      > </a
+      ><a name="1293" class="Symbol"
+      >(</a
+      ><a name="1294" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1296"
+      > </a
+      ><a name="1297" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="1301"
+      > </a
+      ><a name="1302" class="Symbol"
+      >(</a
+      ><a name="1303" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1308"
+      > </a
+      ><a name="1309" class="Symbol"
+      >(</a
+      ><a name="1310" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="1311"
+      > </a
+      ><a name="1312" href="homotopy.SuspSectionDecomp.html#1232" class="Bound"
+      >y</a
+      ><a name="1313" class="Symbol"
+      >))))</a
+      ><a name="1317"
+      >
+                  </a
+      ><a name="1336" class="Symbol"
+      >(</a
+      ><a name="1337" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="1342"
+      > </a
+      ><a name="1343" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1344"
+      > </a
+      ><a name="1345" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1347"
+      > </a
+      ><a name="1348" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="1352"
+      > </a
+      ><a name="1353" class="Symbol"
+      >(</a
+      ><a name="1354" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1359"
+      > </a
+      ><a name="1360" class="Symbol"
+      >(</a
+      ><a name="1361" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="1366"
+      > </a
+      ><a name="1367" href="homotopy.SuspSectionDecomp.html#1232" class="Bound"
+      >y</a
+      ><a name="1368" class="Symbol"
+      >)))</a
+      ><a name="1371"
+      >
+       </a
+      ><a name="1379" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1380"
+      > </a
+      ><a name="1381" href="homotopy.SuspSectionDecomp.html#1565" class="Function"
+      >part&#8321;</a
+      ><a name="1386"
+      > </a
+      ><a name="1387" href="homotopy.SuspSectionDecomp.html#1232" class="Bound"
+      >y</a
+      ><a name="1388"
+      >
+         </a
+      ><a name="1398" href="lib.PathGroupoid.html#2202" class="Function Operator"
+      >&#8729;2</a
+      ><a name="1400"
+      > </a
+      ><a name="1401" class="Symbol"
+      >(</a
+      ><a name="1402" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="1406"
+      > </a
+      ><a name="1407" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="1410"
+      > </a
+      ><a name="1411" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="1416"
+      > </a
+      ><a name="1417" class="Symbol"
+      >(</a
+      ><a name="1418" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1420"
+      > </a
+      ><a name="1421" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="1425"
+      > </a
+      ><a name="1426" class="Symbol"
+      >(</a
+      ><a name="1427" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1432"
+      > </a
+      ><a name="1433" class="Symbol"
+      >(</a
+      ><a name="1434" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="1439"
+      > </a
+      ><a name="1440" href="homotopy.SuspSectionDecomp.html#1232" class="Bound"
+      >y</a
+      ><a name="1441" class="Symbol"
+      >)))</a
+      ><a name="1444"
+      >
+             </a
+      ><a name="1458" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1459"
+      > </a
+      ><a name="1460" href="lib.types.Wedge.html#1727" class="Function"
+      >Out.glue-&#946;</a
+      ><a name="1470"
+      > </a
+      ><a name="1471" href="lib.PathGroupoid.html#2202" class="Function Operator"
+      >&#8729;2</a
+      ><a name="1473"
+      > </a
+      ><a name="1474" href="homotopy.SuspSectionDecomp.html#1945" class="Function"
+      >part&#8322;</a
+      ><a name="1479"
+      > </a
+      ><a name="1480" href="homotopy.SuspSectionDecomp.html#1232" class="Bound"
+      >y</a
+      ><a name="1481" class="Symbol"
+      >))</a
+      ><a name="1483"
+      >
+      </a
+      ><a name="1490" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="1493"
+      > </a
+      ><a name="1494" href="homotopy.SuspSectionDecomp.html#2149" class="Function"
+      >square-lemma</a
+      ><a name="1506"
+      > </a
+      ><a name="1507" class="Symbol"
+      >(</a
+      ><a name="1508" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1513"
+      > </a
+      ><a name="1514" class="Symbol"
+      >(</a
+      ><a name="1515" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="1519" class="Symbol"
+      >))</a
+      ><a name="1521"
+      > </a
+      ><a name="1522" class="Symbol"
+      >(</a
+      ><a name="1523" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1528"
+      > </a
+      ><a name="1529" class="Symbol"
+      >(</a
+      ><a name="1530" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="1531"
+      > </a
+      ><a name="1532" class="Symbol"
+      >(</a
+      ><a name="1533" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" href="homotopy.SuspSectionDecomp.html#1232" class="Bound"
+      >y</a
+      ><a name="1536" class="Symbol"
+      >)))</a
+      ><a name="1539"
+      > </a
+      ><a name="1540" class="Symbol"
+      >(</a
+      ><a name="1541" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1546"
+      > </a
+      ><a name="1547" href="homotopy.SuspSectionDecomp.html#1232" class="Bound"
+      >y</a
+      ><a name="1548" class="Symbol"
+      >))</a
+      ><a name="1550"
+      >
+    </a
+      ><a name="1555" class="Keyword"
+      >where</a
+      ><a name="1560"
+      >
+    </a
+      ><a name="1565" href="homotopy.SuspSectionDecomp.html#1565" class="Function"
+      >part&#8321;</a
+      ><a name="1570"
+      > </a
+      ><a name="1571" class="Symbol"
+      >:</a
+      ><a name="1572"
+      > </a
+      ><a name="1573" class="Symbol"
+      >(</a
+      ><a name="1574" href="homotopy.SuspSectionDecomp.html#1574" class="Bound"
+      >y</a
+      ><a name="1575"
+      > </a
+      ><a name="1576" class="Symbol"
+      >:</a
+      ><a name="1577"
+      > </a
+      ><a name="1578" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="1581"
+      > </a
+      ><a name="1582" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="1583" class="Symbol"
+      >)</a
+      ><a name="1584"
+      > </a
+      ><a name="1585" class="Symbol"
+      >&#8594;</a
+      ><a name="1586"
+      > </a
+      ><a name="1587" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1589"
+      > </a
+      ><a name="1590" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" class="Symbol"
+      >(</a
+      ><a name="1595" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1596"
+      > </a
+      ><a name="1597" class="Symbol"
+      >(</a
+      ><a name="1598" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1600"
+      > </a
+      ><a name="1601" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="1605"
+      > </a
+      ><a name="1606" class="Symbol"
+      >(</a
+      ><a name="1607" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1612"
+      > </a
+      ><a name="1613" class="Symbol"
+      >(</a
+      ><a name="1614" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="1615"
+      > </a
+      ><a name="1616" href="homotopy.SuspSectionDecomp.html#1574" class="Bound"
+      >y</a
+      ><a name="1617" class="Symbol"
+      >))))</a
+      ><a name="1621"
+      >
+                       </a
+      ><a name="1645" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1647"
+      > </a
+      ><a name="1648" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1649"
+      > </a
+      ><a name="1650" class="Symbol"
+      >(</a
+      ><a name="1651" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1656"
+      > </a
+      ><a name="1657" class="Symbol"
+      >(</a
+      ><a name="1658" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1660"
+      > </a
+      ><a name="1661" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="1662" class="Symbol"
+      >))</a
+      ><a name="1664"
+      > </a
+      ><a name="1665" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1666"
+      > </a
+      ><a name="1667" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1672"
+      > </a
+      ><a name="1673" class="Symbol"
+      >(</a
+      ><a name="1674" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="1675"
+      > </a
+      ><a name="1676" class="Symbol"
+      >(</a
+      ><a name="1677" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="1678"
+      > </a
+      ><a name="1679" href="homotopy.SuspSectionDecomp.html#1574" class="Bound"
+      >y</a
+      ><a name="1680" class="Symbol"
+      >))</a
+      ><a name="1682"
+      >
+    </a
+      ><a name="1687" href="homotopy.SuspSectionDecomp.html#1565" class="Function"
+      >part&#8321;</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" href="homotopy.SuspSectionDecomp.html#1693" class="Bound"
+      >y</a
+      ><a name="1694"
+      > </a
+      ><a name="1695" class="Symbol"
+      >=</a
+      ><a name="1696"
+      >
+      </a
+      ><a name="1703" href="lib.PathFunctor.html#291" class="Function"
+      >ap-!</a
+      ><a name="1707"
+      > </a
+      ><a name="1708" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="1711"
+      > </a
+      ><a name="1712" class="Symbol"
+      >(</a
+      ><a name="1713" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1715"
+      > </a
+      ><a name="1716" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="1720"
+      > </a
+      ><a name="1721" class="Symbol"
+      >(</a
+      ><a name="1722" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1727"
+      > </a
+      ><a name="1728" class="Symbol"
+      >(</a
+      ><a name="1729" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="1730"
+      > </a
+      ><a name="1731" href="homotopy.SuspSectionDecomp.html#1693" class="Bound"
+      >y</a
+      ><a name="1732" class="Symbol"
+      >)))</a
+      ><a name="1735"
+      >
+      </a
+      ><a name="1742" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1743"
+      > </a
+      ><a name="1744" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1746"
+      > </a
+      ><a name="1747" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1748"
+      > </a
+      ><a name="1749" class="Symbol"
+      >(</a
+      ><a name="1750" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="1754"
+      > </a
+      ><a name="1755" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="1758"
+      > </a
+      ><a name="1759" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="1763"
+      > </a
+      ><a name="1764" class="Symbol"
+      >(</a
+      ><a name="1765" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1770"
+      > </a
+      ><a name="1771" class="Symbol"
+      >(</a
+      ><a name="1772" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="1773"
+      > </a
+      ><a name="1774" href="homotopy.SuspSectionDecomp.html#1693" class="Bound"
+      >y</a
+      ><a name="1775" class="Symbol"
+      >)))</a
+      ><a name="1778"
+      >
+      </a
+      ><a name="1785" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1786"
+      > </a
+      ><a name="1787" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1789"
+      > </a
+      ><a name="1790" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1791"
+      > </a
+      ><a name="1792" class="Symbol"
+      >(</a
+      ><a name="1793" href="lib.types.Pushout.html#1428" class="Function"
+      >OutWinl.merid-&#946;</a
+      ><a name="1808"
+      > </a
+      ><a name="1809" class="Symbol"
+      >(</a
+      ><a name="1810" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="1811"
+      > </a
+      ><a name="1812" href="homotopy.SuspSectionDecomp.html#1693" class="Bound"
+      >y</a
+      ><a name="1813" class="Symbol"
+      >))</a
+      ><a name="1815"
+      >
+      </a
+      ><a name="1822" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1823"
+      > </a
+      ><a name="1824" href="lib.PathGroupoid.html#1706" class="Function"
+      >!-&#8729;</a
+      ><a name="1827"
+      > </a
+      ><a name="1828" class="Symbol"
+      >(</a
+      ><a name="1829" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1830"
+      > </a
+      ><a name="1831" class="Symbol"
+      >(</a
+      ><a name="1832" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1837"
+      > </a
+      ><a name="1838" class="Symbol"
+      >(</a
+      ><a name="1839" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="1840"
+      > </a
+      ><a name="1841" class="Symbol"
+      >(</a
+      ><a name="1842" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="1843"
+      > </a
+      ><a name="1844" href="homotopy.SuspSectionDecomp.html#1693" class="Bound"
+      >y</a
+      ><a name="1845" class="Symbol"
+      >))))</a
+      ><a name="1849"
+      > </a
+      ><a name="1850" class="Symbol"
+      >(</a
+      ><a name="1851" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1856"
+      > </a
+      ><a name="1857" class="Symbol"
+      >(</a
+      ><a name="1858" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1860"
+      > </a
+      ><a name="1861" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="1862" class="Symbol"
+      >))</a
+      ><a name="1864"
+      >
+      </a
+      ><a name="1871" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1872"
+      > </a
+      ><a name="1873" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1875"
+      > </a
+      ><a name="1876" class="Symbol"
+      >(&#955;</a
+      ><a name="1878"
+      > </a
+      ><a name="1879" href="homotopy.SuspSectionDecomp.html#1879" class="Bound"
+      >w</a
+      ><a name="1880"
+      > </a
+      ><a name="1881" class="Symbol"
+      >&#8594;</a
+      ><a name="1882"
+      > </a
+      ><a name="1883" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1884"
+      > </a
+      ><a name="1885" class="Symbol"
+      >(</a
+      ><a name="1886" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1891"
+      > </a
+      ><a name="1892" class="Symbol"
+      >(</a
+      ><a name="1893" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1895"
+      > </a
+      ><a name="1896" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="1897" class="Symbol"
+      >))</a
+      ><a name="1899"
+      > </a
+      ><a name="1900" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1901"
+      > </a
+      ><a name="1902" href="homotopy.SuspSectionDecomp.html#1879" class="Bound"
+      >w</a
+      ><a name="1903" class="Symbol"
+      >)</a
+      ><a name="1904"
+      >
+           </a
+      ><a name="1916" class="Symbol"
+      >(</a
+      ><a name="1917" href="lib.PathGroupoid.html#2082" class="Function"
+      >!-!</a
+      ><a name="1920"
+      > </a
+      ><a name="1921" class="Symbol"
+      >(</a
+      ><a name="1922" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1927"
+      > </a
+      ><a name="1928" class="Symbol"
+      >(</a
+      ><a name="1929" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="1930"
+      > </a
+      ><a name="1931" class="Symbol"
+      >(</a
+      ><a name="1932" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="1933"
+      > </a
+      ><a name="1934" href="homotopy.SuspSectionDecomp.html#1693" class="Bound"
+      >y</a
+      ><a name="1935" class="Symbol"
+      >))))</a
+      ><a name="1939"
+      >
+
+    </a
+      ><a name="1945" href="homotopy.SuspSectionDecomp.html#1945" class="Function"
+      >part&#8322;</a
+      ><a name="1950"
+      > </a
+      ><a name="1951" class="Symbol"
+      >:</a
+      ><a name="1952"
+      > </a
+      ><a name="1953" class="Symbol"
+      >(</a
+      ><a name="1954" href="homotopy.SuspSectionDecomp.html#1954" class="Bound"
+      >y</a
+      ><a name="1955"
+      > </a
+      ><a name="1956" class="Symbol"
+      >:</a
+      ><a name="1957"
+      > </a
+      ><a name="1958" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="1961"
+      > </a
+      ><a name="1962" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="1963" class="Symbol"
+      >)</a
+      ><a name="1964"
+      > </a
+      ><a name="1965" class="Symbol"
+      >&#8594;</a
+      ><a name="1966"
+      > </a
+      ><a name="1967" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1969"
+      > </a
+      ><a name="1970" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="1973"
+      > </a
+      ><a name="1974" class="Symbol"
+      >(</a
+      ><a name="1975" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1977"
+      > </a
+      ><a name="1978" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="1982"
+      > </a
+      ><a name="1983" class="Symbol"
+      >(</a
+      ><a name="1984" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="1989"
+      > </a
+      ><a name="1990" class="Symbol"
+      >(</a
+      ><a name="1991" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="1996"
+      > </a
+      ><a name="1997" href="homotopy.SuspSectionDecomp.html#1954" class="Bound"
+      >y</a
+      ><a name="1998" class="Symbol"
+      >)))</a
+      ><a name="2001"
+      >
+                       </a
+      ><a name="2025" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2027"
+      > </a
+      ><a name="2028" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2029"
+      > </a
+      ><a name="2030" class="Symbol"
+      >(</a
+      ><a name="2031" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2036"
+      > </a
+      ><a name="2037" class="Symbol"
+      >(</a
+      ><a name="2038" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="2039"
+      > </a
+      ><a name="2040" class="Symbol"
+      >(</a
+      ><a name="2041" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="2042"
+      > </a
+      ><a name="2043" href="homotopy.SuspSectionDecomp.html#1954" class="Bound"
+      >y</a
+      ><a name="2044" class="Symbol"
+      >)))</a
+      ><a name="2047"
+      > </a
+      ><a name="2048" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2049"
+      > </a
+      ><a name="2050" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2055"
+      > </a
+      ><a name="2056" href="homotopy.SuspSectionDecomp.html#1954" class="Bound"
+      >y</a
+      ><a name="2057"
+      >
+    </a
+      ><a name="2062" href="homotopy.SuspSectionDecomp.html#1945" class="Function"
+      >part&#8322;</a
+      ><a name="2067"
+      > </a
+      ><a name="2068" href="homotopy.SuspSectionDecomp.html#2068" class="Bound"
+      >y</a
+      ><a name="2069"
+      > </a
+      ><a name="2070" class="Symbol"
+      >=</a
+      ><a name="2071"
+      >
+      </a
+      ><a name="2078" href="lib.PathFunctor.html#1772" class="Function"
+      >&#8728;-ap</a
+      ><a name="2082"
+      > </a
+      ><a name="2083" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="2086"
+      > </a
+      ><a name="2087" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="2091"
+      > </a
+      ><a name="2092" class="Symbol"
+      >(</a
+      ><a name="2093" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2098"
+      > </a
+      ><a name="2099" class="Symbol"
+      >(</a
+      ><a name="2100" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="2105"
+      > </a
+      ><a name="2106" href="homotopy.SuspSectionDecomp.html#2068" class="Bound"
+      >y</a
+      ><a name="2107" class="Symbol"
+      >))</a
+      ><a name="2109"
+      >
+      </a
+      ><a name="2116" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2117"
+      > </a
+      ><a name="2118" href="lib.types.Pushout.html#1428" class="Function"
+      >OutWinr.merid-&#946;</a
+      ><a name="2133"
+      > </a
+      ><a name="2134" class="Symbol"
+      >(</a
+      ><a name="2135" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="2140"
+      > </a
+      ><a name="2141" href="homotopy.SuspSectionDecomp.html#2068" class="Bound"
+      >y</a
+      ><a name="2142" class="Symbol"
+      >)</a
+      ><a name="2143"
+      >
+
+    </a
+      ><a name="2149" href="homotopy.SuspSectionDecomp.html#2149" class="Function"
+      >square-lemma</a
+      ><a name="2161"
+      > </a
+      ><a name="2162" class="Symbol"
+      >:</a
+      ><a name="2163"
+      > </a
+      ><a name="2164" class="Symbol"
+      >&#8704;</a
+      ><a name="2165"
+      > </a
+      ><a name="2166" class="Symbol"
+      >{</a
+      ><a name="2167" href="homotopy.SuspSectionDecomp.html#2167" class="Bound"
+      >i</a
+      ><a name="2168" class="Symbol"
+      >}</a
+      ><a name="2169"
+      > </a
+      ><a name="2170" class="Symbol"
+      >{</a
+      ><a name="2171" href="homotopy.SuspSectionDecomp.html#2171" class="Bound"
+      >A</a
+      ><a name="2172"
+      > </a
+      ><a name="2173" class="Symbol"
+      >:</a
+      ><a name="2174"
+      > </a
+      ><a name="2175" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2179"
+      > </a
+      ><a name="2180" href="homotopy.SuspSectionDecomp.html#2167" class="Bound"
+      >i</a
+      ><a name="2181" class="Symbol"
+      >}</a
+      ><a name="2182"
+      > </a
+      ><a name="2183" class="Symbol"
+      >{</a
+      ><a name="2184" href="homotopy.SuspSectionDecomp.html#2184" class="Bound"
+      >x</a
+      ><a name="2185"
+      > </a
+      ><a name="2186" href="homotopy.SuspSectionDecomp.html#2186" class="Bound"
+      >y</a
+      ><a name="2187"
+      > </a
+      ><a name="2188" href="homotopy.SuspSectionDecomp.html#2188" class="Bound"
+      >z</a
+      ><a name="2189"
+      > </a
+      ><a name="2190" href="homotopy.SuspSectionDecomp.html#2190" class="Bound"
+      >w</a
+      ><a name="2191"
+      > </a
+      ><a name="2192" class="Symbol"
+      >:</a
+      ><a name="2193"
+      > </a
+      ><a name="2194" href="homotopy.SuspSectionDecomp.html#2171" class="Bound"
+      >A</a
+      ><a name="2195" class="Symbol"
+      >}</a
+      ><a name="2196"
+      >
+      </a
+      ><a name="2203" class="Symbol"
+      >(</a
+      ><a name="2204" href="homotopy.SuspSectionDecomp.html#2204" class="Bound"
+      >p</a
+      ><a name="2205"
+      > </a
+      ><a name="2206" class="Symbol"
+      >:</a
+      ><a name="2207"
+      > </a
+      ><a name="2208" href="homotopy.SuspSectionDecomp.html#2184" class="Bound"
+      >x</a
+      ><a name="2209"
+      > </a
+      ><a name="2210" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2212"
+      > </a
+      ><a name="2213" href="homotopy.SuspSectionDecomp.html#2186" class="Bound"
+      >y</a
+      ><a name="2214" class="Symbol"
+      >)</a
+      ><a name="2215"
+      > </a
+      ><a name="2216" class="Symbol"
+      >(</a
+      ><a name="2217" href="homotopy.SuspSectionDecomp.html#2217" class="Bound"
+      >q</a
+      ><a name="2218"
+      > </a
+      ><a name="2219" class="Symbol"
+      >:</a
+      ><a name="2220"
+      > </a
+      ><a name="2221" href="homotopy.SuspSectionDecomp.html#2184" class="Bound"
+      >x</a
+      ><a name="2222"
+      > </a
+      ><a name="2223" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2225"
+      > </a
+      ><a name="2226" href="homotopy.SuspSectionDecomp.html#2188" class="Bound"
+      >z</a
+      ><a name="2227" class="Symbol"
+      >)</a
+      ><a name="2228"
+      > </a
+      ><a name="2229" class="Symbol"
+      >(</a
+      ><a name="2230" href="homotopy.SuspSectionDecomp.html#2230" class="Bound"
+      >r</a
+      ><a name="2231"
+      > </a
+      ><a name="2232" class="Symbol"
+      >:</a
+      ><a name="2233"
+      > </a
+      ><a name="2234" href="homotopy.SuspSectionDecomp.html#2184" class="Bound"
+      >x</a
+      ><a name="2235"
+      > </a
+      ><a name="2236" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2238"
+      > </a
+      ><a name="2239" href="homotopy.SuspSectionDecomp.html#2190" class="Bound"
+      >w</a
+      ><a name="2240" class="Symbol"
+      >)</a
+      ><a name="2241"
+      >
+      </a
+      ><a name="2248" class="Symbol"
+      >&#8594;</a
+      ><a name="2249"
+      > </a
+      ><a name="2250" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="2256"
+      > </a
+      ><a name="2257" class="Symbol"
+      >(</a
+      ><a name="2258" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2259"
+      > </a
+      ><a name="2260" href="homotopy.SuspSectionDecomp.html#2204" class="Bound"
+      >p</a
+      ><a name="2261" class="Symbol"
+      >)</a
+      ><a name="2262"
+      > </a
+      ><a name="2263" class="Symbol"
+      >((</a
+      ><a name="2265" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2266"
+      > </a
+      ><a name="2267" href="homotopy.SuspSectionDecomp.html#2204" class="Bound"
+      >p</a
+      ><a name="2268"
+      > </a
+      ><a name="2269" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2270"
+      > </a
+      ><a name="2271" href="homotopy.SuspSectionDecomp.html#2217" class="Bound"
+      >q</a
+      ><a name="2272" class="Symbol"
+      >)</a
+      ><a name="2273"
+      > </a
+      ><a name="2274" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2275"
+      > </a
+      ><a name="2276" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2277"
+      > </a
+      ><a name="2278" href="homotopy.SuspSectionDecomp.html#2217" class="Bound"
+      >q</a
+      ><a name="2279"
+      > </a
+      ><a name="2280" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2281"
+      > </a
+      ><a name="2282" href="homotopy.SuspSectionDecomp.html#2230" class="Bound"
+      >r</a
+      ><a name="2283" class="Symbol"
+      >)</a
+      ><a name="2284"
+      > </a
+      ><a name="2285" href="homotopy.SuspSectionDecomp.html#2230" class="Bound"
+      >r</a
+      ><a name="2286"
+      > </a
+      ><a name="2287" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2290"
+      >
+    </a
+      ><a name="2295" href="homotopy.SuspSectionDecomp.html#2149" class="Function"
+      >square-lemma</a
+      ><a name="2307"
+      > </a
+      ><a name="2308" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2311"
+      > </a
+      ><a name="2312" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2315"
+      > </a
+      ><a name="2316" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2319"
+      > </a
+      ><a name="2320" class="Symbol"
+      >=</a
+      ><a name="2321"
+      > </a
+      ><a name="2322" href="lib.cubical.Square.html#340" class="InductiveConstructor"
+      >ids</a
+      ><a name="2325"
+      >
+
+  </a
+      ><a name="2329" href="homotopy.SuspSectionDecomp.html#2329" class="Function"
+      >into-out</a
+      ><a name="2337"
+      > </a
+      ><a name="2338" class="Symbol"
+      >:</a
+      ><a name="2339"
+      > </a
+      ><a name="2340" class="Symbol"
+      >&#8704;</a
+      ><a name="2341"
+      > </a
+      ><a name="2342" href="homotopy.SuspSectionDecomp.html#2342" class="Bound"
+      >w</a
+      ><a name="2343"
+      > </a
+      ><a name="2344" class="Symbol"
+      >&#8594;</a
+      ><a name="2345"
+      > </a
+      ><a name="2346" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="2350"
+      > </a
+      ><a name="2351" class="Symbol"
+      >(</a
+      ><a name="2352" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="2355"
+      > </a
+      ><a name="2356" href="homotopy.SuspSectionDecomp.html#2342" class="Bound"
+      >w</a
+      ><a name="2357" class="Symbol"
+      >)</a
+      ><a name="2358"
+      > </a
+      ><a name="2359" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2361"
+      > </a
+      ><a name="2362" href="homotopy.SuspSectionDecomp.html#2342" class="Bound"
+      >w</a
+      ><a name="2363"
+      >
+  </a
+      ><a name="2366" href="homotopy.SuspSectionDecomp.html#2329" class="Function"
+      >into-out</a
+      ><a name="2374"
+      > </a
+      ><a name="2375" class="Symbol"
+      >=</a
+      ><a name="2376"
+      > </a
+      ><a name="2377" href="lib.types.Wedge.html#1407" class="Function"
+      >Wedge-elim</a
+      ><a name="2387"
+      >
+    </a
+      ><a name="2392" href="homotopy.SuspSectionDecomp.html#3376" class="Function"
+      >into-out-winl</a
+      ><a name="2405"
+      >
+    </a
+      ><a name="2410" href="homotopy.SuspSectionDecomp.html#4358" class="Function"
+      >into-out-winr</a
+      ><a name="2423"
+      >
+    </a
+      ><a name="2428" class="Symbol"
+      >(</a
+      ><a name="2429" href="lib.cubical.Square.html#10289" class="Function"
+      >&#8595;-&#8728;=idf-from-square</a
+      ><a name="2448"
+      > </a
+      ><a name="2449" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="2453"
+      > </a
+      ><a name="2454" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="2457"
+      > </a
+      ><a name="2458" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="2459"
+      >
+      </a
+      ><a name="2466" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2468"
+      > </a
+      ><a name="2469" class="Symbol"
+      >(</a
+      ><a name="2470" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2472"
+      > </a
+      ><a name="2473" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="2477" class="Symbol"
+      >)</a
+      ><a name="2478"
+      > </a
+      ><a name="2479" href="lib.types.Wedge.html#1727" class="Function"
+      >Out.glue-&#946;</a
+      ><a name="2489"
+      >
+      </a
+      ><a name="2496" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="2499"
+      > </a
+      ><a name="2500" href="homotopy.SuspSectionDecomp.html#3219" class="Function"
+      >glue-square-lemma</a
+      ><a name="2517"
+      > </a
+      ><a name="2518" class="Symbol"
+      >(</a
+      ><a name="2519" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2520"
+      > </a
+      ><a name="2521" class="Symbol"
+      >(</a
+      ><a name="2522" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="2524"
+      > </a
+      ><a name="2525" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="2529"
+      > </a
+      ><a name="2530" class="Symbol"
+      >(</a
+      ><a name="2531" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="2536"
+      > </a
+      ><a name="2537" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="2543" class="Symbol"
+      >)))</a
+      ><a name="2546"
+      > </a
+      ><a name="2547" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="2552" class="Symbol"
+      >)</a
+      ><a name="2553"
+      >
+    </a
+      ><a name="2558" class="Keyword"
+      >where</a
+      ><a name="2563"
+      >
+    </a
+      ><a name="2568" class="Comment"
+      >{- Three path induction lemmas to simply some squares -}</a
+      ><a name="2624"
+      >
+
+    </a
+      ><a name="2630" href="homotopy.SuspSectionDecomp.html#2630" class="Function"
+      >winl-square-lemma</a
+      ><a name="2647"
+      > </a
+      ><a name="2648" class="Symbol"
+      >:</a
+      ><a name="2649"
+      > </a
+      ><a name="2650" class="Symbol"
+      >&#8704;</a
+      ><a name="2651"
+      > </a
+      ><a name="2652" class="Symbol"
+      >{</a
+      ><a name="2653" href="homotopy.SuspSectionDecomp.html#2653" class="Bound"
+      >i</a
+      ><a name="2654" class="Symbol"
+      >}</a
+      ><a name="2655"
+      > </a
+      ><a name="2656" class="Symbol"
+      >{</a
+      ><a name="2657" href="homotopy.SuspSectionDecomp.html#2657" class="Bound"
+      >A</a
+      ><a name="2658"
+      > </a
+      ><a name="2659" class="Symbol"
+      >:</a
+      ><a name="2660"
+      > </a
+      ><a name="2661" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2665"
+      > </a
+      ><a name="2666" href="homotopy.SuspSectionDecomp.html#2653" class="Bound"
+      >i</a
+      ><a name="2667" class="Symbol"
+      >}</a
+      ><a name="2668"
+      > </a
+      ><a name="2669" class="Symbol"
+      >{</a
+      ><a name="2670" href="homotopy.SuspSectionDecomp.html#2670" class="Bound"
+      >x</a
+      ><a name="2671"
+      > </a
+      ><a name="2672" href="homotopy.SuspSectionDecomp.html#2672" class="Bound"
+      >y</a
+      ><a name="2673"
+      > </a
+      ><a name="2674" href="homotopy.SuspSectionDecomp.html#2674" class="Bound"
+      >z</a
+      ><a name="2675"
+      > </a
+      ><a name="2676" href="homotopy.SuspSectionDecomp.html#2676" class="Bound"
+      >w</a
+      ><a name="2677"
+      > </a
+      ><a name="2678" class="Symbol"
+      >:</a
+      ><a name="2679"
+      > </a
+      ><a name="2680" href="homotopy.SuspSectionDecomp.html#2657" class="Bound"
+      >A</a
+      ><a name="2681" class="Symbol"
+      >}</a
+      ><a name="2682"
+      >
+      </a
+      ><a name="2689" class="Symbol"
+      >(</a
+      ><a name="2690" href="homotopy.SuspSectionDecomp.html#2690" class="Bound"
+      >p</a
+      ><a name="2691"
+      > </a
+      ><a name="2692" href="homotopy.SuspSectionDecomp.html#2692" class="Bound"
+      >q</a
+      ><a name="2693"
+      > </a
+      ><a name="2694" class="Symbol"
+      >:</a
+      ><a name="2695"
+      > </a
+      ><a name="2696" href="homotopy.SuspSectionDecomp.html#2670" class="Bound"
+      >x</a
+      ><a name="2697"
+      > </a
+      ><a name="2698" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2700"
+      > </a
+      ><a name="2701" href="homotopy.SuspSectionDecomp.html#2672" class="Bound"
+      >y</a
+      ><a name="2702" class="Symbol"
+      >)</a
+      ><a name="2703"
+      > </a
+      ><a name="2704" class="Symbol"
+      >(</a
+      ><a name="2705" href="homotopy.SuspSectionDecomp.html#2705" class="Bound"
+      >s</a
+      ><a name="2706"
+      > </a
+      ><a name="2707" class="Symbol"
+      >:</a
+      ><a name="2708"
+      > </a
+      ><a name="2709" href="homotopy.SuspSectionDecomp.html#2670" class="Bound"
+      >x</a
+      ><a name="2710"
+      > </a
+      ><a name="2711" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2713"
+      > </a
+      ><a name="2714" href="homotopy.SuspSectionDecomp.html#2674" class="Bound"
+      >z</a
+      ><a name="2715" class="Symbol"
+      >)</a
+      ><a name="2716"
+      > </a
+      ><a name="2717" class="Symbol"
+      >(</a
+      ><a name="2718" href="homotopy.SuspSectionDecomp.html#2718" class="Bound"
+      >r</a
+      ><a name="2719"
+      > </a
+      ><a name="2720" href="homotopy.SuspSectionDecomp.html#2720" class="Bound"
+      >t</a
+      ><a name="2721"
+      > </a
+      ><a name="2722" href="homotopy.SuspSectionDecomp.html#2722" class="Bound"
+      >u</a
+      ><a name="2723"
+      > </a
+      ><a name="2724" class="Symbol"
+      >:</a
+      ><a name="2725"
+      > </a
+      ><a name="2726" href="homotopy.SuspSectionDecomp.html#2674" class="Bound"
+      >z</a
+      ><a name="2727"
+      > </a
+      ><a name="2728" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2730"
+      > </a
+      ><a name="2731" href="homotopy.SuspSectionDecomp.html#2676" class="Bound"
+      >w</a
+      ><a name="2732" class="Symbol"
+      >)</a
+      ><a name="2733"
+      > </a
+      ><a name="2734" class="Symbol"
+      >(</a
+      ><a name="2735" href="homotopy.SuspSectionDecomp.html#2735" class="Bound"
+      >v</a
+      ><a name="2736"
+      > </a
+      ><a name="2737" class="Symbol"
+      >:</a
+      ><a name="2738"
+      > </a
+      ><a name="2739" href="homotopy.SuspSectionDecomp.html#2670" class="Bound"
+      >x</a
+      ><a name="2740"
+      > </a
+      ><a name="2741" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2743"
+      > </a
+      ><a name="2744" href="homotopy.SuspSectionDecomp.html#2672" class="Bound"
+      >y</a
+      ><a name="2745" class="Symbol"
+      >)</a
+      ><a name="2746"
+      >
+      </a
+      ><a name="2753" class="Symbol"
+      >&#8594;</a
+      ><a name="2754"
+      > </a
+      ><a name="2755" href="homotopy.SuspSectionDecomp.html#2690" class="Bound"
+      >p</a
+      ><a name="2756"
+      > </a
+      ><a name="2757" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2759"
+      > </a
+      ><a name="2760" href="homotopy.SuspSectionDecomp.html#2692" class="Bound"
+      >q</a
+      ><a name="2761"
+      > </a
+      ><a name="2762" class="Symbol"
+      >&#8594;</a
+      ><a name="2763"
+      > </a
+      ><a name="2764" href="homotopy.SuspSectionDecomp.html#2718" class="Bound"
+      >r</a
+      ><a name="2765"
+      > </a
+      ><a name="2766" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2768"
+      > </a
+      ><a name="2769" href="homotopy.SuspSectionDecomp.html#2720" class="Bound"
+      >t</a
+      ><a name="2770"
+      > </a
+      ><a name="2771" class="Symbol"
+      >&#8594;</a
+      ><a name="2772"
+      > </a
+      ><a name="2773" href="homotopy.SuspSectionDecomp.html#2718" class="Bound"
+      >r</a
+      ><a name="2774"
+      > </a
+      ><a name="2775" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2777"
+      > </a
+      ><a name="2778" href="homotopy.SuspSectionDecomp.html#2722" class="Bound"
+      >u</a
+      ><a name="2779"
+      >
+      </a
+      ><a name="2786" class="Symbol"
+      >&#8594;</a
+      ><a name="2787"
+      > </a
+      ><a name="2788" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="2794"
+      > </a
+      ><a name="2795" class="Symbol"
+      >(</a
+      ><a name="2796" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2797"
+      > </a
+      ><a name="2798" href="homotopy.SuspSectionDecomp.html#2718" class="Bound"
+      >r</a
+      ><a name="2799"
+      > </a
+      ><a name="2800" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2801"
+      > </a
+      ><a name="2802" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2803"
+      > </a
+      ><a name="2804" href="homotopy.SuspSectionDecomp.html#2705" class="Bound"
+      >s</a
+      ><a name="2805" class="Symbol"
+      >)</a
+      ><a name="2806"
+      > </a
+      ><a name="2807" class="Symbol"
+      >(</a
+      ><a name="2808" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2809"
+      > </a
+      ><a name="2810" class="Symbol"
+      >(</a
+      ><a name="2811" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2812"
+      > </a
+      ><a name="2813" href="homotopy.SuspSectionDecomp.html#2690" class="Bound"
+      >p</a
+      ><a name="2814"
+      > </a
+      ><a name="2815" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2816"
+      > </a
+      ><a name="2817" href="homotopy.SuspSectionDecomp.html#2705" class="Bound"
+      >s</a
+      ><a name="2818"
+      > </a
+      ><a name="2819" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2820"
+      > </a
+      ><a name="2821" href="homotopy.SuspSectionDecomp.html#2720" class="Bound"
+      >t</a
+      ><a name="2822" class="Symbol"
+      >)</a
+      ><a name="2823"
+      > </a
+      ><a name="2824" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2825"
+      > </a
+      ><a name="2826" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2827"
+      > </a
+      ><a name="2828" href="homotopy.SuspSectionDecomp.html#2735" class="Bound"
+      >v</a
+      ><a name="2829"
+      > </a
+      ><a name="2830" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2831"
+      > </a
+      ><a name="2832" href="homotopy.SuspSectionDecomp.html#2705" class="Bound"
+      >s</a
+      ><a name="2833"
+      > </a
+      ><a name="2834" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2835"
+      > </a
+      ><a name="2836" href="homotopy.SuspSectionDecomp.html#2722" class="Bound"
+      >u</a
+      ><a name="2837" class="Symbol"
+      >)</a
+      ><a name="2838"
+      > </a
+      ><a name="2839" href="homotopy.SuspSectionDecomp.html#2692" class="Bound"
+      >q</a
+      ><a name="2840"
+      > </a
+      ><a name="2841" class="Symbol"
+      >(</a
+      ><a name="2842" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2843"
+      > </a
+      ><a name="2844" href="homotopy.SuspSectionDecomp.html#2718" class="Bound"
+      >r</a
+      ><a name="2845"
+      > </a
+      ><a name="2846" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2847"
+      > </a
+      ><a name="2848" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="2849"
+      > </a
+      ><a name="2850" href="homotopy.SuspSectionDecomp.html#2705" class="Bound"
+      >s</a
+      ><a name="2851"
+      > </a
+      ><a name="2852" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="2853"
+      > </a
+      ><a name="2854" href="homotopy.SuspSectionDecomp.html#2735" class="Bound"
+      >v</a
+      ><a name="2855" class="Symbol"
+      >)</a
+      ><a name="2856"
+      >
+    </a
+      ><a name="2861" href="homotopy.SuspSectionDecomp.html#2630" class="Function"
+      >winl-square-lemma</a
+      ><a name="2878"
+      > </a
+      ><a name="2879" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2882"
+      > </a
+      ><a name="2883" class="DottedPattern Symbol"
+      >.</a
+      ><a name="2884" href="lib.Base.html#1929" class="DottedPattern InductiveConstructor"
+      >idp</a
+      ><a name="2887"
+      > </a
+      ><a name="2888" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2891"
+      > </a
+      ><a name="2892" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2895"
+      > </a
+      ><a name="2896" class="DottedPattern Symbol"
+      >.</a
+      ><a name="2897" href="lib.Base.html#1929" class="DottedPattern InductiveConstructor"
+      >idp</a
+      ><a name="2900"
+      > </a
+      ><a name="2901" class="DottedPattern Symbol"
+      >.</a
+      ><a name="2902" href="lib.Base.html#1929" class="DottedPattern InductiveConstructor"
+      >idp</a
+      ><a name="2905"
+      > </a
+      ><a name="2906" href="homotopy.SuspSectionDecomp.html#2906" class="Bound"
+      >v</a
+      ><a name="2907"
+      > </a
+      ><a name="2908" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2911"
+      > </a
+      ><a name="2912" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2915"
+      > </a
+      ><a name="2916" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2919"
+      > </a
+      ><a name="2920" class="Symbol"
+      >=</a
+      ><a name="2921"
+      >
+      </a
+      ><a name="2928" href="lib.PathGroupoid.html#1041" class="Function"
+      >&#8729;-unit-r</a
+      ><a name="2936"
+      > </a
+      ><a name="2937" class="Symbol"
+      >_</a
+      ><a name="2938"
+      > </a
+      ><a name="2939" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="2942"
+      > </a
+      ><a name="2943" href="lib.cubical.Square.html#18013" class="Function"
+      >rt-square</a
+      ><a name="2952"
+      > </a
+      ><a name="2953" href="homotopy.SuspSectionDecomp.html#2906" class="Bound"
+      >v</a
+      ><a name="2954"
+      >
+
+    </a
+      ><a name="2960" href="homotopy.SuspSectionDecomp.html#2960" class="Function"
+      >winr-square-lemma</a
+      ><a name="2977"
+      > </a
+      ><a name="2978" class="Symbol"
+      >:</a
+      ><a name="2979"
+      > </a
+      ><a name="2980" class="Symbol"
+      >&#8704;</a
+      ><a name="2981"
+      > </a
+      ><a name="2982" class="Symbol"
+      >{</a
+      ><a name="2983" href="homotopy.SuspSectionDecomp.html#2983" class="Bound"
+      >i</a
+      ><a name="2984" class="Symbol"
+      >}</a
+      ><a name="2985"
+      > </a
+      ><a name="2986" class="Symbol"
+      >{</a
+      ><a name="2987" href="homotopy.SuspSectionDecomp.html#2987" class="Bound"
+      >A</a
+      ><a name="2988"
+      > </a
+      ><a name="2989" class="Symbol"
+      >:</a
+      ><a name="2990"
+      > </a
+      ><a name="2991" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2995"
+      > </a
+      ><a name="2996" href="homotopy.SuspSectionDecomp.html#2983" class="Bound"
+      >i</a
+      ><a name="2997" class="Symbol"
+      >}</a
+      ><a name="2998"
+      > </a
+      ><a name="2999" class="Symbol"
+      >{</a
+      ><a name="3000" href="homotopy.SuspSectionDecomp.html#3000" class="Bound"
+      >x</a
+      ><a name="3001"
+      > </a
+      ><a name="3002" href="homotopy.SuspSectionDecomp.html#3002" class="Bound"
+      >y</a
+      ><a name="3003"
+      > </a
+      ><a name="3004" href="homotopy.SuspSectionDecomp.html#3004" class="Bound"
+      >z</a
+      ><a name="3005"
+      > </a
+      ><a name="3006" href="homotopy.SuspSectionDecomp.html#3006" class="Bound"
+      >w</a
+      ><a name="3007"
+      > </a
+      ><a name="3008" class="Symbol"
+      >:</a
+      ><a name="3009"
+      > </a
+      ><a name="3010" href="homotopy.SuspSectionDecomp.html#2987" class="Bound"
+      >A</a
+      ><a name="3011" class="Symbol"
+      >}</a
+      ><a name="3012"
+      >
+      </a
+      ><a name="3019" class="Symbol"
+      >(</a
+      ><a name="3020" href="homotopy.SuspSectionDecomp.html#3020" class="Bound"
+      >p</a
+      ><a name="3021"
+      > </a
+      ><a name="3022" href="homotopy.SuspSectionDecomp.html#3022" class="Bound"
+      >q</a
+      ><a name="3023"
+      > </a
+      ><a name="3024" href="homotopy.SuspSectionDecomp.html#3024" class="Bound"
+      >u</a
+      ><a name="3025"
+      > </a
+      ><a name="3026" class="Symbol"
+      >:</a
+      ><a name="3027"
+      > </a
+      ><a name="3028" href="homotopy.SuspSectionDecomp.html#3000" class="Bound"
+      >x</a
+      ><a name="3029"
+      > </a
+      ><a name="3030" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3032"
+      > </a
+      ><a name="3033" href="homotopy.SuspSectionDecomp.html#3002" class="Bound"
+      >y</a
+      ><a name="3034" class="Symbol"
+      >)</a
+      ><a name="3035"
+      > </a
+      ><a name="3036" class="Symbol"
+      >(</a
+      ><a name="3037" href="homotopy.SuspSectionDecomp.html#3037" class="Bound"
+      >r</a
+      ><a name="3038"
+      > </a
+      ><a name="3039" href="homotopy.SuspSectionDecomp.html#3039" class="Bound"
+      >t</a
+      ><a name="3040"
+      > </a
+      ><a name="3041" class="Symbol"
+      >:</a
+      ><a name="3042"
+      > </a
+      ><a name="3043" href="homotopy.SuspSectionDecomp.html#3004" class="Bound"
+      >z</a
+      ><a name="3044"
+      > </a
+      ><a name="3045" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3047"
+      > </a
+      ><a name="3048" href="homotopy.SuspSectionDecomp.html#3006" class="Bound"
+      >w</a
+      ><a name="3049" class="Symbol"
+      >)</a
+      ><a name="3050"
+      > </a
+      ><a name="3051" class="Symbol"
+      >(</a
+      ><a name="3052" href="homotopy.SuspSectionDecomp.html#3052" class="Bound"
+      >s</a
+      ><a name="3053"
+      > </a
+      ><a name="3054" class="Symbol"
+      >:</a
+      ><a name="3055"
+      > </a
+      ><a name="3056" href="homotopy.SuspSectionDecomp.html#3004" class="Bound"
+      >z</a
+      ><a name="3057"
+      > </a
+      ><a name="3058" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3060"
+      > </a
+      ><a name="3061" href="homotopy.SuspSectionDecomp.html#3000" class="Bound"
+      >x</a
+      ><a name="3062" class="Symbol"
+      >)</a
+      ><a name="3063"
+      >
+      </a
+      ><a name="3070" class="Symbol"
+      >&#8594;</a
+      ><a name="3071"
+      > </a
+      ><a name="3072" href="homotopy.SuspSectionDecomp.html#3020" class="Bound"
+      >p</a
+      ><a name="3073"
+      > </a
+      ><a name="3074" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3076"
+      > </a
+      ><a name="3077" href="homotopy.SuspSectionDecomp.html#3022" class="Bound"
+      >q</a
+      ><a name="3078"
+      > </a
+      ><a name="3079" class="Symbol"
+      >&#8594;</a
+      ><a name="3080"
+      > </a
+      ><a name="3081" href="homotopy.SuspSectionDecomp.html#3037" class="Bound"
+      >r</a
+      ><a name="3082"
+      > </a
+      ><a name="3083" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3085"
+      > </a
+      ><a name="3086" href="homotopy.SuspSectionDecomp.html#3039" class="Bound"
+      >t</a
+      ><a name="3087"
+      >
+      </a
+      ><a name="3094" class="Symbol"
+      >&#8594;</a
+      ><a name="3095"
+      > </a
+      ><a name="3096" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="3102"
+      > </a
+      ><a name="3103" class="Symbol"
+      >(</a
+      ><a name="3104" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3105"
+      > </a
+      ><a name="3106" href="homotopy.SuspSectionDecomp.html#3020" class="Bound"
+      >p</a
+      ><a name="3107" class="Symbol"
+      >)</a
+      ><a name="3108"
+      > </a
+      ><a name="3109" class="Symbol"
+      >(</a
+      ><a name="3110" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3111"
+      > </a
+      ><a name="3112" class="Symbol"
+      >(</a
+      ><a name="3113" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3114"
+      > </a
+      ><a name="3115" href="homotopy.SuspSectionDecomp.html#3037" class="Bound"
+      >r</a
+      ><a name="3116"
+      > </a
+      ><a name="3117" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3118"
+      > </a
+      ><a name="3119" href="homotopy.SuspSectionDecomp.html#3052" class="Bound"
+      >s</a
+      ><a name="3120"
+      > </a
+      ><a name="3121" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3122"
+      > </a
+      ><a name="3123" href="homotopy.SuspSectionDecomp.html#3022" class="Bound"
+      >q</a
+      ><a name="3124" class="Symbol"
+      >)</a
+      ><a name="3125"
+      > </a
+      ><a name="3126" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3127"
+      > </a
+      ><a name="3128" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3129"
+      > </a
+      ><a name="3130" href="homotopy.SuspSectionDecomp.html#3039" class="Bound"
+      >t</a
+      ><a name="3131"
+      > </a
+      ><a name="3132" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3133"
+      > </a
+      ><a name="3134" href="homotopy.SuspSectionDecomp.html#3052" class="Bound"
+      >s</a
+      ><a name="3135"
+      > </a
+      ><a name="3136" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3137"
+      > </a
+      ><a name="3138" href="homotopy.SuspSectionDecomp.html#3024" class="Bound"
+      >u</a
+      ><a name="3139" class="Symbol"
+      >)</a
+      ><a name="3140"
+      > </a
+      ><a name="3141" href="homotopy.SuspSectionDecomp.html#3024" class="Bound"
+      >u</a
+      ><a name="3142"
+      > </a
+      ><a name="3143" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3146"
+      >
+    </a
+      ><a name="3151" href="homotopy.SuspSectionDecomp.html#2960" class="Function"
+      >winr-square-lemma</a
+      ><a name="3168"
+      > </a
+      ><a name="3169" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3172"
+      > </a
+      ><a name="3173" class="DottedPattern Symbol"
+      >.</a
+      ><a name="3174" href="lib.Base.html#1929" class="DottedPattern InductiveConstructor"
+      >idp</a
+      ><a name="3177"
+      > </a
+      ><a name="3178" href="homotopy.SuspSectionDecomp.html#3178" class="Bound"
+      >u</a
+      ><a name="3179"
+      > </a
+      ><a name="3180" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3183"
+      > </a
+      ><a name="3184" class="DottedPattern Symbol"
+      >.</a
+      ><a name="3185" href="lib.Base.html#1929" class="DottedPattern InductiveConstructor"
+      >idp</a
+      ><a name="3188"
+      > </a
+      ><a name="3189" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3192"
+      > </a
+      ><a name="3193" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3196"
+      > </a
+      ><a name="3197" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3200"
+      > </a
+      ><a name="3201" class="Symbol"
+      >=</a
+      ><a name="3202"
+      > </a
+      ><a name="3203" href="lib.cubical.Square.html#484" class="Function"
+      >vid-square</a
+      ><a name="3213"
+      >
+
+    </a
+      ><a name="3219" href="homotopy.SuspSectionDecomp.html#3219" class="Function"
+      >glue-square-lemma</a
+      ><a name="3236"
+      > </a
+      ><a name="3237" class="Symbol"
+      >:</a
+      ><a name="3238"
+      > </a
+      ><a name="3239" class="Symbol"
+      >&#8704;</a
+      ><a name="3240"
+      > </a
+      ><a name="3241" class="Symbol"
+      >{</a
+      ><a name="3242" href="homotopy.SuspSectionDecomp.html#3242" class="Bound"
+      >i</a
+      ><a name="3243" class="Symbol"
+      >}</a
+      ><a name="3244"
+      > </a
+      ><a name="3245" class="Symbol"
+      >{</a
+      ><a name="3246" href="homotopy.SuspSectionDecomp.html#3246" class="Bound"
+      >A</a
+      ><a name="3247"
+      > </a
+      ><a name="3248" class="Symbol"
+      >:</a
+      ><a name="3249"
+      > </a
+      ><a name="3250" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="3254"
+      > </a
+      ><a name="3255" href="homotopy.SuspSectionDecomp.html#3242" class="Bound"
+      >i</a
+      ><a name="3256" class="Symbol"
+      >}</a
+      ><a name="3257"
+      > </a
+      ><a name="3258" class="Symbol"
+      >{</a
+      ><a name="3259" href="homotopy.SuspSectionDecomp.html#3259" class="Bound"
+      >x</a
+      ><a name="3260"
+      > </a
+      ><a name="3261" href="homotopy.SuspSectionDecomp.html#3261" class="Bound"
+      >y</a
+      ><a name="3262"
+      > </a
+      ><a name="3263" href="homotopy.SuspSectionDecomp.html#3263" class="Bound"
+      >z</a
+      ><a name="3264"
+      > </a
+      ><a name="3265" class="Symbol"
+      >:</a
+      ><a name="3266"
+      > </a
+      ><a name="3267" href="homotopy.SuspSectionDecomp.html#3246" class="Bound"
+      >A</a
+      ><a name="3268" class="Symbol"
+      >}</a
+      ><a name="3269"
+      >
+      </a
+      ><a name="3276" class="Symbol"
+      >(</a
+      ><a name="3277" href="homotopy.SuspSectionDecomp.html#3277" class="Bound"
+      >p</a
+      ><a name="3278"
+      > </a
+      ><a name="3279" class="Symbol"
+      >:</a
+      ><a name="3280"
+      > </a
+      ><a name="3281" href="homotopy.SuspSectionDecomp.html#3259" class="Bound"
+      >x</a
+      ><a name="3282"
+      > </a
+      ><a name="3283" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3285"
+      > </a
+      ><a name="3286" href="homotopy.SuspSectionDecomp.html#3261" class="Bound"
+      >y</a
+      ><a name="3287" class="Symbol"
+      >)</a
+      ><a name="3288"
+      > </a
+      ><a name="3289" class="Symbol"
+      >(</a
+      ><a name="3290" href="homotopy.SuspSectionDecomp.html#3290" class="Bound"
+      >q</a
+      ><a name="3291"
+      > </a
+      ><a name="3292" class="Symbol"
+      >:</a
+      ><a name="3293"
+      > </a
+      ><a name="3294" href="homotopy.SuspSectionDecomp.html#3263" class="Bound"
+      >z</a
+      ><a name="3295"
+      > </a
+      ><a name="3296" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3298"
+      > </a
+      ><a name="3299" href="homotopy.SuspSectionDecomp.html#3261" class="Bound"
+      >y</a
+      ><a name="3300" class="Symbol"
+      >)</a
+      ><a name="3301"
+      >
+      </a
+      ><a name="3308" class="Symbol"
+      >&#8594;</a
+      ><a name="3309"
+      > </a
+      ><a name="3310" href="lib.cubical.Square.html#213" class="Datatype"
+      >Square</a
+      ><a name="3316"
+      > </a
+      ><a name="3317" class="Symbol"
+      >(</a
+      ><a name="3318" href="homotopy.SuspSectionDecomp.html#3277" class="Bound"
+      >p</a
+      ><a name="3319"
+      > </a
+      ><a name="3320" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3321"
+      > </a
+      ><a name="3322" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3323"
+      > </a
+      ><a name="3324" href="homotopy.SuspSectionDecomp.html#3290" class="Bound"
+      >q</a
+      ><a name="3325" class="Symbol"
+      >)</a
+      ><a name="3326"
+      > </a
+      ><a name="3327" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3330"
+      > </a
+      ><a name="3331" href="homotopy.SuspSectionDecomp.html#3290" class="Bound"
+      >q</a
+      ><a name="3332"
+      > </a
+      ><a name="3333" href="homotopy.SuspSectionDecomp.html#3277" class="Bound"
+      >p</a
+      ><a name="3334"
+      >
+    </a
+      ><a name="3339" href="homotopy.SuspSectionDecomp.html#3219" class="Function"
+      >glue-square-lemma</a
+      ><a name="3356"
+      > </a
+      ><a name="3357" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3360"
+      > </a
+      ><a name="3361" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3364"
+      > </a
+      ><a name="3365" class="Symbol"
+      >=</a
+      ><a name="3366"
+      > </a
+      ><a name="3367" href="lib.cubical.Square.html#340" class="InductiveConstructor"
+      >ids</a
+      ><a name="3370"
+      >
+
+    </a
+      ><a name="3376" href="homotopy.SuspSectionDecomp.html#3376" class="Function"
+      >into-out-winl</a
+      ><a name="3389"
+      > </a
+      ><a name="3390" class="Symbol"
+      >:</a
+      ><a name="3391"
+      > </a
+      ><a name="3392" class="Symbol"
+      >&#8704;</a
+      ><a name="3393"
+      > </a
+      ><a name="3394" href="homotopy.SuspSectionDecomp.html#3394" class="Bound"
+      >&#963;x</a
+      ><a name="3396"
+      > </a
+      ><a name="3397" class="Symbol"
+      >&#8594;</a
+      ><a name="3398"
+      > </a
+      ><a name="3399" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="3403"
+      > </a
+      ><a name="3404" class="Symbol"
+      >(</a
+      ><a name="3405" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="3408"
+      > </a
+      ><a name="3409" class="Symbol"
+      >(</a
+      ><a name="3410" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="3414"
+      > </a
+      ><a name="3415" href="homotopy.SuspSectionDecomp.html#3394" class="Bound"
+      >&#963;x</a
+      ><a name="3417" class="Symbol"
+      >))</a
+      ><a name="3419"
+      > </a
+      ><a name="3420" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3422"
+      > </a
+      ><a name="3423" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="3427"
+      > </a
+      ><a name="3428" href="homotopy.SuspSectionDecomp.html#3394" class="Bound"
+      >&#963;x</a
+      ><a name="3430"
+      >
+    </a
+      ><a name="3435" href="homotopy.SuspSectionDecomp.html#3376" class="Function"
+      >into-out-winl</a
+      ><a name="3448"
+      > </a
+      ><a name="3449" class="Symbol"
+      >=</a
+      ><a name="3450"
+      > </a
+      ><a name="3451" href="lib.types.Pushout.html#850" class="Function"
+      >Susp-elim</a
+      ><a name="3460"
+      >
+      </a
+      ><a name="3467" class="Symbol"
+      >(</a
+      ><a name="3468" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3469"
+      > </a
+      ><a name="3470" class="Symbol"
+      >(</a
+      ><a name="3471" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3473"
+      > </a
+      ><a name="3474" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="3478"
+      > </a
+      ><a name="3479" class="Symbol"
+      >(</a
+      ><a name="3480" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="3485"
+      > </a
+      ><a name="3486" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="3492" class="Symbol"
+      >))</a
+      ><a name="3494"
+      > </a
+      ><a name="3495" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3496"
+      > </a
+      ><a name="3497" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3498"
+      > </a
+      ><a name="3499" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="3504" class="Symbol"
+      >)</a
+      ><a name="3505"
+      >
+      </a
+      ><a name="3512" class="Symbol"
+      >(</a
+      ><a name="3513" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3514"
+      > </a
+      ><a name="3515" class="Symbol"
+      >(</a
+      ><a name="3516" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3518"
+      > </a
+      ><a name="3519" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="3523"
+      > </a
+      ><a name="3524" class="Symbol"
+      >(</a
+      ><a name="3525" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="3530"
+      > </a
+      ><a name="3531" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="3537" class="Symbol"
+      >))</a
+      ><a name="3539"
+      > </a
+      ><a name="3540" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3541"
+      > </a
+      ><a name="3542" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3543"
+      > </a
+      ><a name="3544" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="3549"
+      >
+       </a
+      ><a name="3557" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3558"
+      > </a
+      ><a name="3559" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3561"
+      > </a
+      ><a name="3562" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="3566"
+      > </a
+      ><a name="3567" class="Symbol"
+      >(</a
+      ><a name="3568" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="3573"
+      > </a
+      ><a name="3574" class="Symbol"
+      >(</a
+      ><a name="3575" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="3576"
+      > </a
+      ><a name="3577" class="Symbol"
+      >(</a
+      ><a name="3578" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="3580"
+      > </a
+      ><a name="3581" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="3582" class="Symbol"
+      >))))</a
+      ><a name="3586"
+      >
+      </a
+      ><a name="3593" class="Symbol"
+      >(</a
+      ><a name="3594" href="lib.cubical.Square.html#8229" class="Function"
+      >&#8595;-='-from-square</a
+      ><a name="3610"
+      > </a
+      ><a name="3611" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3612"
+      > </a
+      ><a name="3613" class="Symbol"
+      >&#955;</a
+      ><a name="3614"
+      > </a
+      ><a name="3615" href="homotopy.SuspSectionDecomp.html#3615" class="Bound"
+      >x</a
+      ><a name="3616"
+      > </a
+      ><a name="3617" class="Symbol"
+      >&#8594;</a
+      ><a name="3618"
+      >
+        </a
+      ><a name="3627" class="Symbol"
+      >(</a
+      ><a name="3628" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="3632"
+      > </a
+      ><a name="3633" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="3637"
+      > </a
+      ><a name="3638" href="homotopy.SuspSectionDecomp.html#949" class="Function"
+      >out-winl</a
+      ><a name="3646"
+      > </a
+      ><a name="3647" class="Symbol"
+      >(</a
+      ><a name="3648" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="3653"
+      > </a
+      ><a name="3654" href="homotopy.SuspSectionDecomp.html#3615" class="Bound"
+      >x</a
+      ><a name="3655" class="Symbol"
+      >)</a
+      ><a name="3656"
+      >
+         </a
+      ><a name="3666" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3667"
+      > </a
+      ><a name="3668" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3670"
+      > </a
+      ><a name="3671" class="Symbol"
+      >(</a
+      ><a name="3672" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3674"
+      > </a
+      ><a name="3675" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="3679" class="Symbol"
+      >)</a
+      ><a name="3680"
+      > </a
+      ><a name="3681" class="Symbol"
+      >(</a
+      ><a name="3682" href="lib.types.Pushout.html#1428" class="Function"
+      >OutWinl.merid-&#946;</a
+      ><a name="3697"
+      > </a
+      ><a name="3698" href="homotopy.SuspSectionDecomp.html#3615" class="Bound"
+      >x</a
+      ><a name="3699" class="Symbol"
+      >)</a
+      ><a name="3700"
+      >
+         </a
+      ><a name="3710" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3711"
+      > </a
+      ><a name="3712" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="3716"
+      > </a
+      ><a name="3717" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="3721"
+      > </a
+      ><a name="3722" class="Symbol"
+      >(</a
+      ><a name="3723" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3724"
+      > </a
+      ><a name="3725" class="Symbol"
+      >(</a
+      ><a name="3726" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="3731"
+      > </a
+      ><a name="3732" class="Symbol"
+      >(</a
+      ><a name="3733" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="3734"
+      > </a
+      ><a name="3735" href="homotopy.SuspSectionDecomp.html#3615" class="Bound"
+      >x</a
+      ><a name="3736" class="Symbol"
+      >)))</a
+      ><a name="3739"
+      > </a
+      ><a name="3740" class="Symbol"
+      >(</a
+      ><a name="3741" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="3746"
+      > </a
+      ><a name="3747" class="Symbol"
+      >(</a
+      ><a name="3748" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="3750"
+      > </a
+      ><a name="3751" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="3752" class="Symbol"
+      >))</a
+      ><a name="3754"
+      >
+         </a
+      ><a name="3764" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3765"
+      > </a
+      ><a name="3766" class="Symbol"
+      >(</a
+      ><a name="3767" href="lib.PathFunctor.html#291" class="Function"
+      >ap-!</a
+      ><a name="3771"
+      > </a
+      ><a name="3772" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="3776"
+      > </a
+      ><a name="3777" class="Symbol"
+      >(</a
+      ><a name="3778" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="3783"
+      > </a
+      ><a name="3784" class="Symbol"
+      >(</a
+      ><a name="3785" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="3786"
+      > </a
+      ><a name="3787" href="homotopy.SuspSectionDecomp.html#3615" class="Bound"
+      >x</a
+      ><a name="3788" class="Symbol"
+      >))</a
+      ><a name="3790"
+      >
+            </a
+      ><a name="3803" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3804"
+      > </a
+      ><a name="3805" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3807"
+      > </a
+      ><a name="3808" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3809"
+      > </a
+      ><a name="3810" class="Symbol"
+      >(</a
+      ><a name="3811" href="lib.types.Pushout.html#1428" class="Function"
+      >Into.merid-&#946;</a
+      ><a name="3823"
+      > </a
+      ><a name="3824" class="Symbol"
+      >(</a
+      ><a name="3825" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="3826"
+      > </a
+      ><a name="3827" href="homotopy.SuspSectionDecomp.html#3615" class="Bound"
+      >x</a
+      ><a name="3828" class="Symbol"
+      >)))</a
+      ><a name="3831"
+      >
+           </a
+      ><a name="3843" href="lib.PathGroupoid.html#2202" class="Function Operator"
+      >&#8729;2</a
+      ><a name="3845"
+      > </a
+      ><a name="3846" href="lib.types.Pushout.html#1428" class="Function"
+      >Into.merid-&#946;</a
+      ><a name="3858"
+      > </a
+      ><a name="3859" class="Symbol"
+      >(</a
+      ><a name="3860" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="3862"
+      > </a
+      ><a name="3863" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="3864" class="Symbol"
+      >))</a
+      ><a name="3866"
+      >
+        </a
+      ><a name="3875" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="3878"
+      > </a
+      ><a name="3879" href="homotopy.SuspSectionDecomp.html#2630" class="Function"
+      >winl-square-lemma</a
+      ><a name="3896"
+      >
+              </a
+      ><a name="3911" class="Symbol"
+      >(</a
+      ><a name="3912" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3914"
+      > </a
+      ><a name="3915" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="3919"
+      > </a
+      ><a name="3920" class="Symbol"
+      >(</a
+      ><a name="3921" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="3926"
+      > </a
+      ><a name="3927" class="Symbol"
+      >(</a
+      ><a name="3928" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="3929"
+      > </a
+      ><a name="3930" class="Symbol"
+      >(</a
+      ><a name="3931" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="3932"
+      > </a
+      ><a name="3933" href="homotopy.SuspSectionDecomp.html#3615" class="Bound"
+      >x</a
+      ><a name="3934" class="Symbol"
+      >))))</a
+      ><a name="3938"
+      >
+              </a
+      ><a name="3953" class="Symbol"
+      >(</a
+      ><a name="3954" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="3956"
+      > </a
+      ><a name="3957" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="3961"
+      > </a
+      ><a name="3962" class="Symbol"
+      >(</a
+      ><a name="3963" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="3968"
+      > </a
+      ><a name="3969" href="homotopy.SuspSectionDecomp.html#3615" class="Bound"
+      >x</a
+      ><a name="3970" class="Symbol"
+      >))</a
+      ><a name="3972"
+      >
+              </a
+      ><a name="3987" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="3992"
+      >
+              </a
+      ><a name="4007" class="Symbol"
+      >(</a
+      ><a name="4008" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4010"
+      > </a
+      ><a name="4011" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="4015"
+      > </a
+      ><a name="4016" class="Symbol"
+      >(</a
+      ><a name="4017" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="4022"
+      > </a
+      ><a name="4023" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="4029" class="Symbol"
+      >))</a
+      ><a name="4031"
+      >
+              </a
+      ><a name="4046" class="Symbol"
+      >(</a
+      ><a name="4047" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4049"
+      > </a
+      ><a name="4050" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="4054"
+      > </a
+      ><a name="4055" class="Symbol"
+      >(</a
+      ><a name="4056" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="4061"
+      > </a
+      ><a name="4062" class="Symbol"
+      >(</a
+      ><a name="4063" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="4068"
+      > </a
+      ><a name="4069" class="Symbol"
+      >(</a
+      ><a name="4070" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="4071"
+      > </a
+      ><a name="4072" href="homotopy.SuspSectionDecomp.html#3615" class="Bound"
+      >x</a
+      ><a name="4073" class="Symbol"
+      >))))</a
+      ><a name="4077"
+      >
+              </a
+      ><a name="4092" class="Symbol"
+      >(</a
+      ><a name="4093" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4095"
+      > </a
+      ><a name="4096" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="4100"
+      > </a
+      ><a name="4101" class="Symbol"
+      >(</a
+      ><a name="4102" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="4107"
+      > </a
+      ><a name="4108" class="Symbol"
+      >(</a
+      ><a name="4109" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="4114"
+      > </a
+      ><a name="4115" class="Symbol"
+      >(</a
+      ><a name="4116" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="4118"
+      > </a
+      ><a name="4119" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="4120" class="Symbol"
+      >))))</a
+      ><a name="4124"
+      >
+              </a
+      ><a name="4139" class="Symbol"
+      >(</a
+      ><a name="4140" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4142"
+      > </a
+      ><a name="4143" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="4147"
+      > </a
+      ><a name="4148" class="Symbol"
+      >(</a
+      ><a name="4149" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="4154"
+      > </a
+      ><a name="4155" class="Symbol"
+      >(</a
+      ><a name="4156" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="4157"
+      > </a
+      ><a name="4158" class="Symbol"
+      >(</a
+      ><a name="4159" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="4161"
+      > </a
+      ><a name="4162" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="4163" class="Symbol"
+      >))))</a
+      ><a name="4167"
+      >
+              </a
+      ><a name="4182" class="Symbol"
+      >(</a
+      ><a name="4183" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4185"
+      > </a
+      ><a name="4186" class="Symbol"
+      >(</a
+      ><a name="4187" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4189"
+      > </a
+      ><a name="4190" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="4194"
+      > </a
+      ><a name="4195" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4196"
+      > </a
+      ><a name="4197" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="4202" class="Symbol"
+      >)</a
+      ><a name="4203"
+      > </a
+      ><a name="4204" class="Symbol"
+      >(</a
+      ><a name="4205" href="homotopy.SuspSectionDecomp.html#265" class="Bound"
+      >inv</a
+      ><a name="4208"
+      > </a
+      ><a name="4209" href="homotopy.SuspSectionDecomp.html#3615" class="Bound"
+      >x</a
+      ><a name="4210" class="Symbol"
+      >))</a
+      ><a name="4212"
+      >
+              </a
+      ><a name="4227" class="Symbol"
+      >(</a
+      ><a name="4228" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4230"
+      > </a
+      ><a name="4231" class="Symbol"
+      >(</a
+      ><a name="4232" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4234"
+      > </a
+      ><a name="4235" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="4239"
+      > </a
+      ><a name="4240" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4241"
+      > </a
+      ><a name="4242" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="4247" class="Symbol"
+      >)</a
+      ><a name="4248"
+      > </a
+      ><a name="4249" class="Symbol"
+      >(</a
+      ><a name="4250" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="4256"
+      > </a
+      ><a name="4257" href="homotopy.SuspSectionDecomp.html#3615" class="Bound"
+      >x</a
+      ><a name="4258" class="Symbol"
+      >))</a
+      ><a name="4260"
+      >
+              </a
+      ><a name="4275" class="Symbol"
+      >(</a
+      ><a name="4276" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4278"
+      > </a
+      ><a name="4279" class="Symbol"
+      >(</a
+      ><a name="4280" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4282"
+      > </a
+      ><a name="4283" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="4287"
+      > </a
+      ><a name="4288" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="4289"
+      > </a
+      ><a name="4290" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="4295" class="Symbol"
+      >)</a
+      ><a name="4296"
+      >
+                  </a
+      ><a name="4315" class="Symbol"
+      >(</a
+      ><a name="4316" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="4322"
+      > </a
+      ><a name="4323" class="Symbol"
+      >(</a
+      ><a name="4324" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="4326"
+      > </a
+      ><a name="4327" href="homotopy.SuspSectionDecomp.html#205" class="Bound"
+      >X</a
+      ><a name="4328" class="Symbol"
+      >)</a
+      ><a name="4329"
+      > </a
+      ><a name="4330" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4331"
+      > </a
+      ><a name="4332" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4334"
+      > </a
+      ><a name="4335" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="4340"
+      > </a
+      ><a name="4341" class="Symbol"
+      >(</a
+      ><a name="4342" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="4345"
+      > </a
+      ><a name="4346" href="homotopy.SuspSectionDecomp.html#229" class="Bound"
+      >&#8857;f</a
+      ><a name="4348" class="Symbol"
+      >))))</a
+      ><a name="4352"
+      >
+
+    </a
+      ><a name="4358" href="homotopy.SuspSectionDecomp.html#4358" class="Function"
+      >into-out-winr</a
+      ><a name="4371"
+      > </a
+      ><a name="4372" class="Symbol"
+      >:</a
+      ><a name="4373"
+      > </a
+      ><a name="4374" class="Symbol"
+      >&#8704;</a
+      ><a name="4375"
+      > </a
+      ><a name="4376" href="homotopy.SuspSectionDecomp.html#4376" class="Bound"
+      >&#963;&#954;</a
+      ><a name="4378"
+      > </a
+      ><a name="4379" class="Symbol"
+      >&#8594;</a
+      ><a name="4380"
+      > </a
+      ><a name="4381" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="4385"
+      > </a
+      ><a name="4386" class="Symbol"
+      >(</a
+      ><a name="4387" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="4390"
+      > </a
+      ><a name="4391" class="Symbol"
+      >(</a
+      ><a name="4392" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="4396"
+      > </a
+      ><a name="4397" href="homotopy.SuspSectionDecomp.html#4376" class="Bound"
+      >&#963;&#954;</a
+      ><a name="4399" class="Symbol"
+      >))</a
+      ><a name="4401"
+      > </a
+      ><a name="4402" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4404"
+      > </a
+      ><a name="4405" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="4409"
+      > </a
+      ><a name="4410" href="homotopy.SuspSectionDecomp.html#4376" class="Bound"
+      >&#963;&#954;</a
+      ><a name="4412"
+      >
+    </a
+      ><a name="4417" href="homotopy.SuspSectionDecomp.html#4358" class="Function"
+      >into-out-winr</a
+      ><a name="4430"
+      > </a
+      ><a name="4431" class="Symbol"
+      >=</a
+      ><a name="4432"
+      > </a
+      ><a name="4433" href="homotopy.elims.CofPushoutSection.html#969" class="Function"
+      >CofPushoutSection.elim</a
+      ><a name="4455"
+      > </a
+      ><a name="4456" class="Symbol"
+      >{</a
+      ><a name="4457" class="Argument"
+      >h</a
+      ><a name="4458"
+      > </a
+      ><a name="4459" class="Symbol"
+      >=</a
+      ><a name="4460"
+      > </a
+      ><a name="4461" class="Symbol"
+      >&#955;</a
+      ><a name="4462"
+      > </a
+      ><a name="4463" href="homotopy.SuspSectionDecomp.html#4463" class="Bound"
+      >_</a
+      ><a name="4464"
+      > </a
+      ><a name="4465" class="Symbol"
+      >&#8594;</a
+      ><a name="4466"
+      > </a
+      ><a name="4467" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="4471" class="Symbol"
+      >}</a
+      ><a name="4472"
+      > </a
+      ><a name="4473" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="4474"
+      > </a
+      ><a name="4475" href="homotopy.SuspSectionDecomp.html#265" class="Bound"
+      >inv</a
+      ><a name="4478"
+      >
+      </a
+      ><a name="4485" class="Symbol"
+      >(</a
+      ><a name="4486" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4487"
+      > </a
+      ><a name="4488" class="Symbol"
+      >(</a
+      ><a name="4489" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4491"
+      > </a
+      ><a name="4492" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="4496"
+      > </a
+      ><a name="4497" class="Symbol"
+      >(</a
+      ><a name="4498" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="4503"
+      > </a
+      ><a name="4504" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="4510" class="Symbol"
+      >)))</a
+      ><a name="4513"
+      >
+      </a
+      ><a name="4520" class="Symbol"
+      >(&#955;</a
+      ><a name="4522"
+      > </a
+      ><a name="4523" href="homotopy.SuspSectionDecomp.html#4523" class="Bound"
+      >tt</a
+      ><a name="4525"
+      > </a
+      ><a name="4526" class="Symbol"
+      >&#8594;</a
+      ><a name="4527"
+      > </a
+      ><a name="4528" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4531" class="Symbol"
+      >)</a
+      ><a name="4532"
+      >
+      </a
+      ><a name="4539" class="Symbol"
+      >(&#955;</a
+      ><a name="4541"
+      > </a
+      ><a name="4542" href="homotopy.SuspSectionDecomp.html#4542" class="Bound"
+      >tt</a
+      ><a name="4544"
+      > </a
+      ><a name="4545" class="Symbol"
+      >&#8594;</a
+      ><a name="4546"
+      > </a
+      ><a name="4547" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="4556"
+      >
+        </a
+      ><a name="4565" class="Symbol"
+      >(&#955;</a
+      ><a name="4567"
+      > </a
+      ><a name="4568" href="homotopy.SuspSectionDecomp.html#4568" class="Bound"
+      >&#954;</a
+      ><a name="4569"
+      > </a
+      ><a name="4570" class="Symbol"
+      >&#8594;</a
+      ><a name="4571"
+      > </a
+      ><a name="4572" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4573"
+      > </a
+      ><a name="4574" class="Symbol"
+      >(</a
+      ><a name="4575" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4577"
+      > </a
+      ><a name="4578" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="4582"
+      > </a
+      ><a name="4583" class="Symbol"
+      >(</a
+      ><a name="4584" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="4589"
+      > </a
+      ><a name="4590" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="4596" class="Symbol"
+      >))</a
+      ><a name="4598"
+      > </a
+      ><a name="4599" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="4601"
+      > </a
+      ><a name="4602" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4605"
+      >
+               </a
+      ><a name="4621" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="4622"
+      > </a
+      ><a name="4623" class="Symbol"
+      >(&#955;</a
+      ><a name="4625"
+      > </a
+      ><a name="4626" href="homotopy.SuspSectionDecomp.html#4626" class="Bound"
+      >&#963;&#954;</a
+      ><a name="4628"
+      > </a
+      ><a name="4629" class="Symbol"
+      >&#8594;</a
+      ><a name="4630"
+      > </a
+      ><a name="4631" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="4635"
+      > </a
+      ><a name="4636" class="Symbol"
+      >(</a
+      ><a name="4637" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="4640"
+      > </a
+      ><a name="4641" class="Symbol"
+      >(</a
+      ><a name="4642" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="4646"
+      > </a
+      ><a name="4647" href="homotopy.SuspSectionDecomp.html#4626" class="Bound"
+      >&#963;&#954;</a
+      ><a name="4649" class="Symbol"
+      >))</a
+      ><a name="4651"
+      > </a
+      ><a name="4652" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4654"
+      > </a
+      ><a name="4655" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="4659"
+      > </a
+      ><a name="4660" href="homotopy.SuspSectionDecomp.html#4626" class="Bound"
+      >&#963;&#954;</a
+      ><a name="4662" class="Symbol"
+      >)</a
+      ><a name="4663"
+      > </a
+      ><a name="4664" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="4665"
+      > </a
+      ><a name="4666" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="4671"
+      > </a
+      ><a name="4672" href="homotopy.SuspSectionDecomp.html#4568" class="Bound"
+      >&#954;</a
+      ><a name="4673"
+      > </a
+      ><a name="4674" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="4675" class="Symbol"
+      >)</a
+      ><a name="4676"
+      >
+        </a
+      ><a name="4685" class="Symbol"
+      >(</a
+      ><a name="4686" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4687"
+      > </a
+      ><a name="4688" class="Symbol"
+      >(</a
+      ><a name="4689" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="4695"
+      > </a
+      ><a name="4696" class="Symbol"
+      >(</a
+      ><a name="4697" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="4699"
+      > </a
+      ><a name="4700" href="homotopy.SuspSectionDecomp.html#205" class="Bound"
+      >X</a
+      ><a name="4701" class="Symbol"
+      >)))</a
+      ><a name="4704"
+      >
+        </a
+      ><a name="4713" class="Symbol"
+      >(</a
+      ><a name="4714" href="homotopy.SuspSectionDecomp.html#4787" class="Function"
+      >into-out-winr-coh</a
+      ><a name="4731"
+      > </a
+      ><a name="4732" class="Symbol"
+      >(</a
+      ><a name="4733" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="4734"
+      > </a
+      ><a name="4735" class="Symbol"
+      >(</a
+      ><a name="4736" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="4738"
+      > </a
+      ><a name="4739" href="homotopy.SuspSectionDecomp.html#205" class="Bound"
+      >X</a
+      ><a name="4740" class="Symbol"
+      >))))</a
+      ><a name="4744"
+      >
+      </a
+      ><a name="4751" href="homotopy.SuspSectionDecomp.html#4787" class="Function"
+      >into-out-winr-coh</a
+      ><a name="4768"
+      >
+      </a
+      ><a name="4775" class="Keyword"
+      >where</a
+      ><a name="4780"
+      >
+      </a
+      ><a name="4787" href="homotopy.SuspSectionDecomp.html#4787" class="Function"
+      >into-out-winr-coh</a
+      ><a name="4804"
+      > </a
+      ><a name="4805" class="Symbol"
+      >:</a
+      ><a name="4806"
+      > </a
+      ><a name="4807" class="Symbol"
+      >(</a
+      ><a name="4808" href="homotopy.SuspSectionDecomp.html#4808" class="Bound"
+      >y</a
+      ><a name="4809"
+      > </a
+      ><a name="4810" class="Symbol"
+      >:</a
+      ><a name="4811"
+      > </a
+      ><a name="4812" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="4815"
+      > </a
+      ><a name="4816" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="4817" class="Symbol"
+      >)</a
+      ><a name="4818"
+      >
+        </a
+      ><a name="4827" class="Symbol"
+      >&#8594;</a
+      ><a name="4828"
+      > </a
+      ><a name="4829" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4830"
+      > </a
+      ><a name="4831" class="Symbol"
+      >(</a
+      ><a name="4832" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4834"
+      > </a
+      ><a name="4835" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="4839"
+      > </a
+      ><a name="4840" class="Symbol"
+      >(</a
+      ><a name="4841" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="4846"
+      > </a
+      ><a name="4847" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="4853" class="Symbol"
+      >))</a
+      ><a name="4855"
+      > </a
+      ><a name="4856" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="4858"
+      > </a
+      ><a name="4859" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4862"
+      >
+          </a
+      ><a name="4873" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="4874"
+      > </a
+      ><a name="4875" class="Symbol"
+      >(&#955;</a
+      ><a name="4877"
+      > </a
+      ><a name="4878" href="homotopy.SuspSectionDecomp.html#4878" class="Bound"
+      >&#963;&#954;</a
+      ><a name="4880"
+      > </a
+      ><a name="4881" class="Symbol"
+      >&#8594;</a
+      ><a name="4882"
+      > </a
+      ><a name="4883" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="4887"
+      > </a
+      ><a name="4888" class="Symbol"
+      >(</a
+      ><a name="4889" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="4892"
+      > </a
+      ><a name="4893" class="Symbol"
+      >(</a
+      ><a name="4894" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="4898"
+      > </a
+      ><a name="4899" href="homotopy.SuspSectionDecomp.html#4878" class="Bound"
+      >&#963;&#954;</a
+      ><a name="4901" class="Symbol"
+      >))</a
+      ><a name="4903"
+      > </a
+      ><a name="4904" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4906"
+      > </a
+      ><a name="4907" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="4911"
+      > </a
+      ><a name="4912" href="homotopy.SuspSectionDecomp.html#4878" class="Bound"
+      >&#963;&#954;</a
+      ><a name="4914" class="Symbol"
+      >)</a
+      ><a name="4915"
+      > </a
+      ><a name="4916" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="4917"
+      > </a
+      ><a name="4918" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="4923"
+      > </a
+      ><a name="4924" class="Symbol"
+      >(</a
+      ><a name="4925" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="4930"
+      > </a
+      ><a name="4931" href="homotopy.SuspSectionDecomp.html#4808" class="Bound"
+      >y</a
+      ><a name="4932" class="Symbol"
+      >)</a
+      ><a name="4933"
+      > </a
+      ><a name="4934" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="4935"
+      >
+      </a
+      ><a name="4942" href="homotopy.SuspSectionDecomp.html#4787" class="Function"
+      >into-out-winr-coh</a
+      ><a name="4959"
+      > </a
+      ><a name="4960" href="homotopy.SuspSectionDecomp.html#4960" class="Bound"
+      >y</a
+      ><a name="4961"
+      > </a
+      ><a name="4962" class="Symbol"
+      >=</a
+      ><a name="4963"
+      > </a
+      ><a name="4964" href="lib.cubical.Square.html#8229" class="Function"
+      >&#8595;-='-from-square</a
+      ><a name="4980"
+      > </a
+      ><a name="4981" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="4982"
+      >
+        </a
+      ><a name="4991" class="Symbol"
+      >(</a
+      ><a name="4992" href="lib.PathFunctor.html#1929" class="Function"
+      >ap-&#8728;</a
+      ><a name="4996"
+      > </a
+      ><a name="4997" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="5001"
+      > </a
+      ><a name="5002" href="homotopy.SuspSectionDecomp.html#972" class="Function"
+      >out-winr</a
+      ><a name="5010"
+      > </a
+      ><a name="5011" class="Symbol"
+      >(</a
+      ><a name="5012" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="5017"
+      > </a
+      ><a name="5018" class="Symbol"
+      >(</a
+      ><a name="5019" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="5024"
+      > </a
+      ><a name="5025" href="homotopy.SuspSectionDecomp.html#4960" class="Bound"
+      >y</a
+      ><a name="5026" class="Symbol"
+      >))</a
+      ><a name="5028"
+      >
+         </a
+      ><a name="5038" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5039"
+      > </a
+      ><a name="5040" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5042"
+      > </a
+      ><a name="5043" class="Symbol"
+      >(</a
+      ><a name="5044" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5046"
+      > </a
+      ><a name="5047" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="5051" class="Symbol"
+      >)</a
+      ><a name="5052"
+      > </a
+      ><a name="5053" class="Symbol"
+      >(</a
+      ><a name="5054" href="lib.types.Pushout.html#1428" class="Function"
+      >OutWinr.merid-&#946;</a
+      ><a name="5069"
+      > </a
+      ><a name="5070" class="Symbol"
+      >(</a
+      ><a name="5071" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="5076"
+      > </a
+      ><a name="5077" href="homotopy.SuspSectionDecomp.html#4960" class="Bound"
+      >y</a
+      ><a name="5078" class="Symbol"
+      >))</a
+      ><a name="5080"
+      >
+         </a
+      ><a name="5090" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5091"
+      > </a
+      ><a name="5092" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="5096"
+      > </a
+      ><a name="5097" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="5101"
+      > </a
+      ><a name="5102" class="Symbol"
+      >(</a
+      ><a name="5103" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5104"
+      > </a
+      ><a name="5105" class="Symbol"
+      >(</a
+      ><a name="5106" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="5111"
+      > </a
+      ><a name="5112" class="Symbol"
+      >(</a
+      ><a name="5113" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="5114"
+      > </a
+      ><a name="5115" class="Symbol"
+      >(</a
+      ><a name="5116" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="5117"
+      > </a
+      ><a name="5118" href="homotopy.SuspSectionDecomp.html#4960" class="Bound"
+      >y</a
+      ><a name="5119" class="Symbol"
+      >))))</a
+      ><a name="5123"
+      > </a
+      ><a name="5124" class="Symbol"
+      >(</a
+      ><a name="5125" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="5130"
+      > </a
+      ><a name="5131" href="homotopy.SuspSectionDecomp.html#4960" class="Bound"
+      >y</a
+      ><a name="5132" class="Symbol"
+      >)</a
+      ><a name="5133"
+      >
+         </a
+      ><a name="5143" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5144"
+      > </a
+      ><a name="5145" class="Symbol"
+      >(</a
+      ><a name="5146" href="lib.PathFunctor.html#291" class="Function"
+      >ap-!</a
+      ><a name="5150"
+      > </a
+      ><a name="5151" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="5155"
+      > </a
+      ><a name="5156" class="Symbol"
+      >(</a
+      ><a name="5157" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="5162"
+      > </a
+      ><a name="5163" class="Symbol"
+      >(</a
+      ><a name="5164" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="5165"
+      > </a
+      ><a name="5166" class="Symbol"
+      >(</a
+      ><a name="5167" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="5168"
+      > </a
+      ><a name="5169" href="homotopy.SuspSectionDecomp.html#4960" class="Bound"
+      >y</a
+      ><a name="5170" class="Symbol"
+      >)))</a
+      ><a name="5173"
+      >
+            </a
+      ><a name="5186" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="5187"
+      > </a
+      ><a name="5188" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5190"
+      > </a
+      ><a name="5191" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="5192"
+      > </a
+      ><a name="5193" class="Symbol"
+      >(</a
+      ><a name="5194" href="lib.types.Pushout.html#1428" class="Function"
+      >Into.merid-&#946;</a
+      ><a name="5206"
+      > </a
+      ><a name="5207" class="Symbol"
+      >(</a
+      ><a name="5208" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="5209"
+      > </a
+      ><a name="5210" class="Symbol"
+      >(</a
+      ><a name="5211" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="5212"
+      > </a
+      ><a name="5213" href="homotopy.SuspSectionDecomp.html#4960" class="Bound"
+      >y</a
+      ><a name="5214" class="Symbol"
+      >))))</a
+      ><a name="5218"
+      >
+           </a
+      ><a name="5230" href="lib.PathGroupoid.html#2202" class="Function Operator"
+      >&#8729;2</a
+      ><a name="5232"
+      > </a
+      ><a name="5233" href="lib.types.Pushout.html#1428" class="Function"
+      >Into.merid-&#946;</a
+      ><a name="5245"
+      > </a
+      ><a name="5246" href="homotopy.SuspSectionDecomp.html#4960" class="Bound"
+      >y</a
+      ><a name="5247" class="Symbol"
+      >)</a
+      ><a name="5248"
+      >
+        </a
+      ><a name="5257" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="5260"
+      > </a
+      ><a name="5261" href="homotopy.SuspSectionDecomp.html#2960" class="Function"
+      >winr-square-lemma</a
+      ><a name="5278"
+      >
+              </a
+      ><a name="5293" class="Symbol"
+      >(</a
+      ><a name="5294" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5296"
+      > </a
+      ><a name="5297" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="5301"
+      > </a
+      ><a name="5302" class="Symbol"
+      >(</a
+      ><a name="5303" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="5308"
+      > </a
+      ><a name="5309" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="5315" class="Symbol"
+      >))</a
+      ><a name="5317"
+      >
+              </a
+      ><a name="5332" class="Symbol"
+      >(</a
+      ><a name="5333" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5335"
+      > </a
+      ><a name="5336" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="5340"
+      > </a
+      ><a name="5341" class="Symbol"
+      >(</a
+      ><a name="5342" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="5347"
+      > </a
+      ><a name="5348" class="Symbol"
+      >(</a
+      ><a name="5349" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="5354"
+      > </a
+      ><a name="5355" class="Symbol"
+      >(</a
+      ><a name="5356" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="5357"
+      > </a
+      ><a name="5358" class="Symbol"
+      >(</a
+      ><a name="5359" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="5360"
+      > </a
+      ><a name="5361" href="homotopy.SuspSectionDecomp.html#4960" class="Bound"
+      >y</a
+      ><a name="5362" class="Symbol"
+      >)))))</a
+      ><a name="5367"
+      >
+              </a
+      ><a name="5382" class="Symbol"
+      >(</a
+      ><a name="5383" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5385"
+      > </a
+      ><a name="5386" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="5390"
+      > </a
+      ><a name="5391" class="Symbol"
+      >(</a
+      ><a name="5392" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="5397"
+      > </a
+      ><a name="5398" class="Symbol"
+      >(</a
+      ><a name="5399" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="5404"
+      > </a
+      ><a name="5405" href="homotopy.SuspSectionDecomp.html#4960" class="Bound"
+      >y</a
+      ><a name="5406" class="Symbol"
+      >)))</a
+      ><a name="5409"
+      >
+              </a
+      ><a name="5424" class="Symbol"
+      >(</a
+      ><a name="5425" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5427"
+      > </a
+      ><a name="5428" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="5432"
+      > </a
+      ><a name="5433" class="Symbol"
+      >(</a
+      ><a name="5434" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="5439"
+      > </a
+      ><a name="5440" class="Symbol"
+      >(</a
+      ><a name="5441" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="5442"
+      > </a
+      ><a name="5443" class="Symbol"
+      >(</a
+      ><a name="5444" href="homotopy.SuspSectionDecomp.html#351" class="Function"
+      >f</a
+      ><a name="5445"
+      > </a
+      ><a name="5446" class="Symbol"
+      >(</a
+      ><a name="5447" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="5448"
+      > </a
+      ><a name="5449" href="homotopy.SuspSectionDecomp.html#4960" class="Bound"
+      >y</a
+      ><a name="5450" class="Symbol"
+      >)))))</a
+      ><a name="5455"
+      >
+              </a
+      ><a name="5470" class="Symbol"
+      >(</a
+      ><a name="5471" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5473"
+      > </a
+      ><a name="5474" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="5478"
+      > </a
+      ><a name="5479" class="Symbol"
+      >(</a
+      ><a name="5480" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="5485"
+      > </a
+      ><a name="5486" class="Symbol"
+      >(</a
+      ><a name="5487" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="5488"
+      > </a
+      ><a name="5489" href="homotopy.SuspSectionDecomp.html#4960" class="Bound"
+      >y</a
+      ><a name="5490" class="Symbol"
+      >)))</a
+      ><a name="5493"
+      >
+              </a
+      ><a name="5508" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="5513"
+      >
+              </a
+      ><a name="5528" class="Symbol"
+      >(</a
+      ><a name="5529" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5531"
+      > </a
+      ><a name="5532" class="Symbol"
+      >(</a
+      ><a name="5533" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5535"
+      > </a
+      ><a name="5536" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="5540"
+      > </a
+      ><a name="5541" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="5542"
+      > </a
+      ><a name="5543" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="5548" class="Symbol"
+      >)</a
+      ><a name="5549"
+      > </a
+      ><a name="5550" class="Symbol"
+      >(</a
+      ><a name="5551" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="5557"
+      > </a
+      ><a name="5558" class="Symbol"
+      >(</a
+      ><a name="5559" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="5560"
+      > </a
+      ><a name="5561" href="homotopy.SuspSectionDecomp.html#4960" class="Bound"
+      >y</a
+      ><a name="5562" class="Symbol"
+      >)))</a
+      ><a name="5565"
+      >
+              </a
+      ><a name="5580" class="Symbol"
+      >(</a
+      ><a name="5581" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5583"
+      > </a
+      ><a name="5584" class="Symbol"
+      >(</a
+      ><a name="5585" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="5587"
+      > </a
+      ><a name="5588" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="5592"
+      > </a
+      ><a name="5593" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="5594"
+      > </a
+      ><a name="5595" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="5600" class="Symbol"
+      >)</a
+      ><a name="5601"
+      > </a
+      ><a name="5602" class="Symbol"
+      >(</a
+      ><a name="5603" href="homotopy.SuspSectionDecomp.html#265" class="Bound"
+      >inv</a
+      ><a name="5606"
+      > </a
+      ><a name="5607" class="Symbol"
+      >(</a
+      ><a name="5608" href="homotopy.SuspSectionDecomp.html#245" class="Bound"
+      >g</a
+      ><a name="5609"
+      > </a
+      ><a name="5610" href="homotopy.SuspSectionDecomp.html#4960" class="Bound"
+      >y</a
+      ><a name="5611" class="Symbol"
+      >)))</a
+      ><a name="5614"
+      >
+
+  </a
+      ><a name="5618" href="homotopy.SuspSectionDecomp.html#5618" class="Function"
+      >eq</a
+      ><a name="5620"
+      > </a
+      ><a name="5621" class="Symbol"
+      >:</a
+      ><a name="5622"
+      > </a
+      ><a name="5623" href="lib.types.Suspension.html#658" class="Function"
+      >Susp</a
+      ><a name="5627"
+      > </a
+      ><a name="5628" class="Symbol"
+      >(</a
+      ><a name="5629" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="5632"
+      > </a
+      ><a name="5633" href="homotopy.SuspSectionDecomp.html#217" class="Bound"
+      >Y</a
+      ><a name="5634" class="Symbol"
+      >)</a
+      ><a name="5635"
+      > </a
+      ><a name="5636" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="5637"
+      > </a
+      ><a name="5638" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="5643"
+      > </a
+      ><a name="5644" href="homotopy.SuspSectionDecomp.html#205" class="Bound"
+      >X</a
+      ><a name="5645"
+      > </a
+      ><a name="5646" href="lib.types.Wedge.html#625" class="Function Operator"
+      >&#8744;</a
+      ><a name="5647"
+      > </a
+      ><a name="5648" href="lib.types.Suspension.html#1735" class="Function"
+      >&#8857;Susp</a
+      ><a name="5653"
+      > </a
+      ><a name="5654" class="Symbol"
+      >(</a
+      ><a name="5655" href="lib.types.Cofiber.html#1552" class="Function"
+      >&#8857;Cofiber</a
+      ><a name="5663"
+      > </a
+      ><a name="5664" href="homotopy.SuspSectionDecomp.html#229" class="Bound"
+      >&#8857;f</a
+      ><a name="5666" class="Symbol"
+      >)</a
+      ><a name="5667"
+      >
+  </a
+      ><a name="5670" href="homotopy.SuspSectionDecomp.html#5618" class="Function"
+      >eq</a
+      ><a name="5672"
+      > </a
+      ><a name="5673" class="Symbol"
+      >=</a
+      ><a name="5674"
+      > </a
+      ><a name="5675" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="5680"
+      > </a
+      ><a name="5681" href="homotopy.SuspSectionDecomp.html#541" class="Function"
+      >into</a
+      ><a name="5685"
+      > </a
+      ><a name="5686" href="homotopy.SuspSectionDecomp.html#1087" class="Function"
+      >out</a
+      ><a name="5689"
+      > </a
+      ><a name="5690" href="homotopy.SuspSectionDecomp.html#2329" class="Function"
+      >into-out</a
+      ><a name="5698"
+      > </a
+      ><a name="5699" href="homotopy.SuspSectionDecomp.html#1102" class="Function"
+      >out-into</a
+      ><a name="5707"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

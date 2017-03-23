@@ -1,0 +1,2334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.Univalence</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Base.html#1" class="Module"
+      >lib.Base</a
+      ><a name="62"
+      >
+</a
+      ><a name="63" class="Keyword"
+      >open</a
+      ><a name="67"
+      > </a
+      ><a name="68" class="Keyword"
+      >import</a
+      ><a name="74"
+      > </a
+      ><a name="75" href="lib.PathGroupoid.html#1" class="Module"
+      >lib.PathGroupoid</a
+      ><a name="91"
+      >
+</a
+      ><a name="92" class="Keyword"
+      >open</a
+      ><a name="96"
+      > </a
+      ><a name="97" class="Keyword"
+      >import</a
+      ><a name="103"
+      > </a
+      ><a name="104" href="lib.PathFunctor.html#1" class="Module"
+      >lib.PathFunctor</a
+      ><a name="119"
+      >
+</a
+      ><a name="120" class="Keyword"
+      >open</a
+      ><a name="124"
+      > </a
+      ><a name="125" class="Keyword"
+      >import</a
+      ><a name="131"
+      > </a
+      ><a name="132" href="lib.Equivalence.html#1" class="Module"
+      >lib.Equivalence</a
+      ><a name="147"
+      >
+</a
+      ><a name="148" class="Keyword"
+      >open</a
+      ><a name="152"
+      > </a
+      ><a name="153" class="Keyword"
+      >import</a
+      ><a name="159"
+      > </a
+      ><a name="160" href="lib.PathOver.html#1" class="Module"
+      >lib.PathOver</a
+      ><a name="172"
+      >
+
+</a
+      ><a name="174" class="Keyword"
+      >module</a
+      ><a name="180"
+      > </a
+      ><a name="181" href="lib.Univalence.html#1" class="Module"
+      >lib.Univalence</a
+      ><a name="195"
+      > </a
+      ><a name="196" class="Keyword"
+      >where</a
+      ><a name="201"
+      >
+
+</a
+      ><a name="203" class="Comment"
+      >{-
+The map [coe-equiv] is the map which is supposed to be an equivalence according
+to the univalence axiom. We do not define it directly by path induction because
+it may be helpful to know definitionally what are the components.
+-}</a
+      ><a name="434"
+      >
+</a
+      ><a name="435" href="lib.Univalence.html#435" class="Function"
+      >coe-equiv</a
+      ><a name="444"
+      > </a
+      ><a name="445" class="Symbol"
+      >:</a
+      ><a name="446"
+      > </a
+      ><a name="447" class="Symbol"
+      >&#8704;</a
+      ><a name="448"
+      > </a
+      ><a name="449" class="Symbol"
+      >{</a
+      ><a name="450" href="lib.Univalence.html#450" class="Bound"
+      >i</a
+      ><a name="451" class="Symbol"
+      >}</a
+      ><a name="452"
+      > </a
+      ><a name="453" class="Symbol"
+      >{</a
+      ><a name="454" href="lib.Univalence.html#454" class="Bound"
+      >A</a
+      ><a name="455"
+      > </a
+      ><a name="456" href="lib.Univalence.html#456" class="Bound"
+      >B</a
+      ><a name="457"
+      > </a
+      ><a name="458" class="Symbol"
+      >:</a
+      ><a name="459"
+      > </a
+      ><a name="460" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="464"
+      > </a
+      ><a name="465" href="lib.Univalence.html#450" class="Bound"
+      >i</a
+      ><a name="466" class="Symbol"
+      >}</a
+      ><a name="467"
+      > </a
+      ><a name="468" class="Symbol"
+      >&#8594;</a
+      ><a name="469"
+      > </a
+      ><a name="470" href="lib.Univalence.html#454" class="Bound"
+      >A</a
+      ><a name="471"
+      > </a
+      ><a name="472" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="474"
+      > </a
+      ><a name="475" href="lib.Univalence.html#456" class="Bound"
+      >B</a
+      ><a name="476"
+      > </a
+      ><a name="477" class="Symbol"
+      >&#8594;</a
+      ><a name="478"
+      > </a
+      ><a name="479" href="lib.Univalence.html#454" class="Bound"
+      >A</a
+      ><a name="480"
+      > </a
+      ><a name="481" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="482"
+      > </a
+      ><a name="483" href="lib.Univalence.html#456" class="Bound"
+      >B</a
+      ><a name="484"
+      >
+</a
+      ><a name="485" href="lib.Univalence.html#435" class="Function"
+      >coe-equiv</a
+      ><a name="494"
+      > </a
+      ><a name="495" href="lib.Univalence.html#495" class="Bound"
+      >p</a
+      ><a name="496"
+      > </a
+      ><a name="497" class="Symbol"
+      >=</a
+      ><a name="498"
+      > </a
+      ><a name="499" class="Symbol"
+      >(</a
+      ><a name="500" href="lib.Base.html#4513" class="Function"
+      >coe</a
+      ><a name="503"
+      > </a
+      ><a name="504" href="lib.Univalence.html#495" class="Bound"
+      >p</a
+      ><a name="505"
+      > </a
+      ><a name="506" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="507"
+      > </a
+      ><a name="508" class="Keyword"
+      >record</a
+      ><a name="514"
+      > </a
+      ><a name="515" class="Symbol"
+      >{</a
+      ><a name="516"
+      > </a
+      ><a name="517" class="Field"
+      >g</a
+      ><a name="518"
+      > </a
+      ><a name="519" class="Symbol"
+      >=</a
+      ><a name="520"
+      > </a
+      ><a name="521" href="lib.Base.html#4576" class="Function"
+      >coe!</a
+      ><a name="525"
+      > </a
+      ><a name="526" href="lib.Univalence.html#495" class="Bound"
+      >p</a
+      ><a name="527"
+      > </a
+      ><a name="528" class="Symbol"
+      >;</a
+      ><a name="529"
+      > </a
+      ><a name="530" class="Field"
+      >f-g</a
+      ><a name="533"
+      > </a
+      ><a name="534" class="Symbol"
+      >=</a
+      ><a name="535"
+      > </a
+      ><a name="536" href="lib.PathFunctor.html#2540" class="Function"
+      >coe!-inv-r</a
+      ><a name="546"
+      > </a
+      ><a name="547" href="lib.Univalence.html#495" class="Bound"
+      >p</a
+      ><a name="548"
+      > </a
+      ><a name="549" class="Symbol"
+      >;</a
+      ><a name="550"
+      > </a
+      ><a name="551" class="Field"
+      >g-f</a
+      ><a name="554"
+      > </a
+      ><a name="555" class="Symbol"
+      >=</a
+      ><a name="556"
+      > </a
+      ><a name="557" href="lib.PathFunctor.html#2645" class="Function"
+      >coe!-inv-l</a
+      ><a name="567"
+      > </a
+      ><a name="568" href="lib.Univalence.html#495" class="Bound"
+      >p</a
+      ><a name="569"
+      > </a
+      ><a name="570" class="Symbol"
+      >;</a
+      ><a name="571"
+      > </a
+      ><a name="572" class="Field"
+      >adj</a
+      ><a name="575"
+      > </a
+      ><a name="576" class="Symbol"
+      >=</a
+      ><a name="577"
+      > </a
+      ><a name="578" href="lib.PathFunctor.html#2750" class="Function"
+      >coe-inv-adj</a
+      ><a name="589"
+      > </a
+      ><a name="590" href="lib.Univalence.html#495" class="Bound"
+      >p</a
+      ><a name="591"
+      > </a
+      ><a name="592" class="Symbol"
+      >})</a
+      ><a name="594"
+      >
+
+</a
+      ><a name="596" class="Comment"
+      >{- We postulate the univalence axiom as three separate axioms because it&#8217;s more
+natural this way. But it doesn&#8217;t change anything in practice. -}</a
+      ><a name="740"
+      >
+
+</a
+      ><a name="742" class="Keyword"
+      >postulate</a
+      ><a name="751"
+      >  </a
+      ><a name="753" class="Comment"
+      >-- Univalence axiom</a
+      ><a name="772"
+      >
+  </a
+      ><a name="775" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="777"
+      > </a
+      ><a name="778" class="Symbol"
+      >:</a
+      ><a name="779"
+      > </a
+      ><a name="780" class="Symbol"
+      >&#8704;</a
+      ><a name="781"
+      > </a
+      ><a name="782" class="Symbol"
+      >{</a
+      ><a name="783" href="lib.Univalence.html#783" class="Bound"
+      >i</a
+      ><a name="784" class="Symbol"
+      >}</a
+      ><a name="785"
+      > </a
+      ><a name="786" class="Symbol"
+      >{</a
+      ><a name="787" href="lib.Univalence.html#787" class="Bound"
+      >A</a
+      ><a name="788"
+      > </a
+      ><a name="789" href="lib.Univalence.html#789" class="Bound"
+      >B</a
+      ><a name="790"
+      > </a
+      ><a name="791" class="Symbol"
+      >:</a
+      ><a name="792"
+      > </a
+      ><a name="793" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="797"
+      > </a
+      ><a name="798" href="lib.Univalence.html#783" class="Bound"
+      >i</a
+      ><a name="799" class="Symbol"
+      >}</a
+      ><a name="800"
+      > </a
+      ><a name="801" class="Symbol"
+      >&#8594;</a
+      ><a name="802"
+      > </a
+      ><a name="803" class="Symbol"
+      >(</a
+      ><a name="804" href="lib.Univalence.html#787" class="Bound"
+      >A</a
+      ><a name="805"
+      > </a
+      ><a name="806" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="807"
+      > </a
+      ><a name="808" href="lib.Univalence.html#789" class="Bound"
+      >B</a
+      ><a name="809" class="Symbol"
+      >)</a
+      ><a name="810"
+      > </a
+      ><a name="811" class="Symbol"
+      >&#8594;</a
+      ><a name="812"
+      > </a
+      ><a name="813" href="lib.Univalence.html#787" class="Bound"
+      >A</a
+      ><a name="814"
+      > </a
+      ><a name="815" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="817"
+      > </a
+      ><a name="818" href="lib.Univalence.html#789" class="Bound"
+      >B</a
+      ><a name="819"
+      >
+  </a
+      ><a name="822" href="lib.Univalence.html#822" class="Postulate"
+      >coe-equiv-&#946;</a
+      ><a name="833"
+      > </a
+      ><a name="834" class="Symbol"
+      >:</a
+      ><a name="835"
+      > </a
+      ><a name="836" class="Symbol"
+      >&#8704;</a
+      ><a name="837"
+      > </a
+      ><a name="838" class="Symbol"
+      >{</a
+      ><a name="839" href="lib.Univalence.html#839" class="Bound"
+      >i</a
+      ><a name="840" class="Symbol"
+      >}</a
+      ><a name="841"
+      > </a
+      ><a name="842" class="Symbol"
+      >{</a
+      ><a name="843" href="lib.Univalence.html#843" class="Bound"
+      >A</a
+      ><a name="844"
+      > </a
+      ><a name="845" href="lib.Univalence.html#845" class="Bound"
+      >B</a
+      ><a name="846"
+      > </a
+      ><a name="847" class="Symbol"
+      >:</a
+      ><a name="848"
+      > </a
+      ><a name="849" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="853"
+      > </a
+      ><a name="854" href="lib.Univalence.html#839" class="Bound"
+      >i</a
+      ><a name="855" class="Symbol"
+      >}</a
+      ><a name="856"
+      > </a
+      ><a name="857" class="Symbol"
+      >(</a
+      ><a name="858" href="lib.Univalence.html#858" class="Bound"
+      >e</a
+      ><a name="859"
+      > </a
+      ><a name="860" class="Symbol"
+      >:</a
+      ><a name="861"
+      > </a
+      ><a name="862" href="lib.Univalence.html#843" class="Bound"
+      >A</a
+      ><a name="863"
+      > </a
+      ><a name="864" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="865"
+      > </a
+      ><a name="866" href="lib.Univalence.html#845" class="Bound"
+      >B</a
+      ><a name="867" class="Symbol"
+      >)</a
+      ><a name="868"
+      > </a
+      ><a name="869" class="Symbol"
+      >&#8594;</a
+      ><a name="870"
+      > </a
+      ><a name="871" href="lib.Univalence.html#435" class="Function"
+      >coe-equiv</a
+      ><a name="880"
+      > </a
+      ><a name="881" class="Symbol"
+      >(</a
+      ><a name="882" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="884"
+      > </a
+      ><a name="885" href="lib.Univalence.html#858" class="Bound"
+      >e</a
+      ><a name="886" class="Symbol"
+      >)</a
+      ><a name="887"
+      > </a
+      ><a name="888" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="890"
+      > </a
+      ><a name="891" href="lib.Univalence.html#858" class="Bound"
+      >e</a
+      ><a name="892"
+      >
+  </a
+      ><a name="895" href="lib.Univalence.html#895" class="Postulate"
+      >ua-&#951;</a
+      ><a name="899"
+      > </a
+      ><a name="900" class="Symbol"
+      >:</a
+      ><a name="901"
+      > </a
+      ><a name="902" class="Symbol"
+      >&#8704;</a
+      ><a name="903"
+      > </a
+      ><a name="904" class="Symbol"
+      >{</a
+      ><a name="905" href="lib.Univalence.html#905" class="Bound"
+      >i</a
+      ><a name="906" class="Symbol"
+      >}</a
+      ><a name="907"
+      > </a
+      ><a name="908" class="Symbol"
+      >{</a
+      ><a name="909" href="lib.Univalence.html#909" class="Bound"
+      >A</a
+      ><a name="910"
+      > </a
+      ><a name="911" href="lib.Univalence.html#911" class="Bound"
+      >B</a
+      ><a name="912"
+      > </a
+      ><a name="913" class="Symbol"
+      >:</a
+      ><a name="914"
+      > </a
+      ><a name="915" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="919"
+      > </a
+      ><a name="920" href="lib.Univalence.html#905" class="Bound"
+      >i</a
+      ><a name="921" class="Symbol"
+      >}</a
+      ><a name="922"
+      > </a
+      ><a name="923" class="Symbol"
+      >(</a
+      ><a name="924" href="lib.Univalence.html#924" class="Bound"
+      >p</a
+      ><a name="925"
+      > </a
+      ><a name="926" class="Symbol"
+      >:</a
+      ><a name="927"
+      > </a
+      ><a name="928" href="lib.Univalence.html#909" class="Bound"
+      >A</a
+      ><a name="929"
+      > </a
+      ><a name="930" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="932"
+      > </a
+      ><a name="933" href="lib.Univalence.html#911" class="Bound"
+      >B</a
+      ><a name="934" class="Symbol"
+      >)</a
+      ><a name="935"
+      > </a
+      ><a name="936" class="Symbol"
+      >&#8594;</a
+      ><a name="937"
+      > </a
+      ><a name="938" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="940"
+      > </a
+      ><a name="941" class="Symbol"
+      >(</a
+      ><a name="942" href="lib.Univalence.html#435" class="Function"
+      >coe-equiv</a
+      ><a name="951"
+      > </a
+      ><a name="952" href="lib.Univalence.html#924" class="Bound"
+      >p</a
+      ><a name="953" class="Symbol"
+      >)</a
+      ><a name="954"
+      > </a
+      ><a name="955" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="957"
+      > </a
+      ><a name="958" href="lib.Univalence.html#924" class="Bound"
+      >p</a
+      ><a name="959"
+      >
+
+</a
+      ><a name="961" href="lib.Univalence.html#961" class="Function"
+      >ua-equiv</a
+      ><a name="969"
+      > </a
+      ><a name="970" class="Symbol"
+      >:</a
+      ><a name="971"
+      > </a
+      ><a name="972" class="Symbol"
+      >&#8704;</a
+      ><a name="973"
+      > </a
+      ><a name="974" class="Symbol"
+      >{</a
+      ><a name="975" href="lib.Univalence.html#975" class="Bound"
+      >i</a
+      ><a name="976" class="Symbol"
+      >}</a
+      ><a name="977"
+      > </a
+      ><a name="978" class="Symbol"
+      >{</a
+      ><a name="979" href="lib.Univalence.html#979" class="Bound"
+      >A</a
+      ><a name="980"
+      > </a
+      ><a name="981" href="lib.Univalence.html#981" class="Bound"
+      >B</a
+      ><a name="982"
+      > </a
+      ><a name="983" class="Symbol"
+      >:</a
+      ><a name="984"
+      > </a
+      ><a name="985" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="989"
+      > </a
+      ><a name="990" href="lib.Univalence.html#975" class="Bound"
+      >i</a
+      ><a name="991" class="Symbol"
+      >}</a
+      ><a name="992"
+      > </a
+      ><a name="993" class="Symbol"
+      >&#8594;</a
+      ><a name="994"
+      > </a
+      ><a name="995" class="Symbol"
+      >(</a
+      ><a name="996" href="lib.Univalence.html#979" class="Bound"
+      >A</a
+      ><a name="997"
+      > </a
+      ><a name="998" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="999"
+      > </a
+      ><a name="1000" href="lib.Univalence.html#981" class="Bound"
+      >B</a
+      ><a name="1001" class="Symbol"
+      >)</a
+      ><a name="1002"
+      > </a
+      ><a name="1003" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="1004"
+      > </a
+      ><a name="1005" class="Symbol"
+      >(</a
+      ><a name="1006" href="lib.Univalence.html#979" class="Bound"
+      >A</a
+      ><a name="1007"
+      > </a
+      ><a name="1008" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1010"
+      > </a
+      ><a name="1011" href="lib.Univalence.html#981" class="Bound"
+      >B</a
+      ><a name="1012" class="Symbol"
+      >)</a
+      ><a name="1013"
+      >
+</a
+      ><a name="1014" href="lib.Univalence.html#961" class="Function"
+      >ua-equiv</a
+      ><a name="1022"
+      > </a
+      ><a name="1023" class="Symbol"
+      >=</a
+      ><a name="1024"
+      > </a
+      ><a name="1025" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="1030"
+      > </a
+      ><a name="1031" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1033"
+      > </a
+      ><a name="1034" href="lib.Univalence.html#435" class="Function"
+      >coe-equiv</a
+      ><a name="1043"
+      > </a
+      ><a name="1044" href="lib.Univalence.html#895" class="Postulate"
+      >ua-&#951;</a
+      ><a name="1048"
+      > </a
+      ><a name="1049" href="lib.Univalence.html#822" class="Postulate"
+      >coe-equiv-&#946;</a
+      ><a name="1060"
+      >
+
+</a
+      ><a name="1062" class="Comment"
+      >{- Reductions for coercions along a path constructed with the univalence axiom -}</a
+      ><a name="1143"
+      >
+
+</a
+      ><a name="1145" href="lib.Univalence.html#1145" class="Function"
+      >coe-&#946;</a
+      ><a name="1150"
+      > </a
+      ><a name="1151" class="Symbol"
+      >:</a
+      ><a name="1152"
+      > </a
+      ><a name="1153" class="Symbol"
+      >&#8704;</a
+      ><a name="1154"
+      > </a
+      ><a name="1155" class="Symbol"
+      >{</a
+      ><a name="1156" href="lib.Univalence.html#1156" class="Bound"
+      >i</a
+      ><a name="1157" class="Symbol"
+      >}</a
+      ><a name="1158"
+      > </a
+      ><a name="1159" class="Symbol"
+      >{</a
+      ><a name="1160" href="lib.Univalence.html#1160" class="Bound"
+      >A</a
+      ><a name="1161"
+      > </a
+      ><a name="1162" href="lib.Univalence.html#1162" class="Bound"
+      >B</a
+      ><a name="1163"
+      > </a
+      ><a name="1164" class="Symbol"
+      >:</a
+      ><a name="1165"
+      > </a
+      ><a name="1166" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1170"
+      > </a
+      ><a name="1171" href="lib.Univalence.html#1156" class="Bound"
+      >i</a
+      ><a name="1172" class="Symbol"
+      >}</a
+      ><a name="1173"
+      > </a
+      ><a name="1174" class="Symbol"
+      >(</a
+      ><a name="1175" href="lib.Univalence.html#1175" class="Bound"
+      >e</a
+      ><a name="1176"
+      > </a
+      ><a name="1177" class="Symbol"
+      >:</a
+      ><a name="1178"
+      > </a
+      ><a name="1179" href="lib.Univalence.html#1160" class="Bound"
+      >A</a
+      ><a name="1180"
+      > </a
+      ><a name="1181" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="1182"
+      > </a
+      ><a name="1183" href="lib.Univalence.html#1162" class="Bound"
+      >B</a
+      ><a name="1184" class="Symbol"
+      >)</a
+      ><a name="1185"
+      > </a
+      ><a name="1186" class="Symbol"
+      >(</a
+      ><a name="1187" href="lib.Univalence.html#1187" class="Bound"
+      >a</a
+      ><a name="1188"
+      > </a
+      ><a name="1189" class="Symbol"
+      >:</a
+      ><a name="1190"
+      > </a
+      ><a name="1191" href="lib.Univalence.html#1160" class="Bound"
+      >A</a
+      ><a name="1192" class="Symbol"
+      >)</a
+      ><a name="1193"
+      >
+  </a
+      ><a name="1196" class="Symbol"
+      >&#8594;</a
+      ><a name="1197"
+      > </a
+      ><a name="1198" href="lib.Base.html#4513" class="Function"
+      >coe</a
+      ><a name="1201"
+      > </a
+      ><a name="1202" class="Symbol"
+      >(</a
+      ><a name="1203" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1205"
+      > </a
+      ><a name="1206" href="lib.Univalence.html#1175" class="Bound"
+      >e</a
+      ><a name="1207" class="Symbol"
+      >)</a
+      ><a name="1208"
+      > </a
+      ><a name="1209" href="lib.Univalence.html#1187" class="Bound"
+      >a</a
+      ><a name="1210"
+      > </a
+      ><a name="1211" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1213"
+      > </a
+      ><a name="1214" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="1216"
+      > </a
+      ><a name="1217" href="lib.Univalence.html#1175" class="Bound"
+      >e</a
+      ><a name="1218"
+      > </a
+      ><a name="1219" href="lib.Univalence.html#1187" class="Bound"
+      >a</a
+      ><a name="1220"
+      >
+</a
+      ><a name="1221" href="lib.Univalence.html#1145" class="Function"
+      >coe-&#946;</a
+      ><a name="1226"
+      > </a
+      ><a name="1227" href="lib.Univalence.html#1227" class="Bound"
+      >e</a
+      ><a name="1228"
+      > </a
+      ><a name="1229" href="lib.Univalence.html#1229" class="Bound"
+      >a</a
+      ><a name="1230"
+      > </a
+      ><a name="1231" class="Symbol"
+      >=</a
+      ><a name="1232"
+      > </a
+      ><a name="1233" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1235"
+      > </a
+      ><a name="1236" class="Symbol"
+      >(&#955;</a
+      ><a name="1238"
+      > </a
+      ><a name="1239" href="lib.Univalence.html#1239" class="Bound"
+      >e</a
+      ><a name="1240"
+      > </a
+      ><a name="1241" class="Symbol"
+      >&#8594;</a
+      ><a name="1242"
+      > </a
+      ><a name="1243" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="1245"
+      > </a
+      ><a name="1246" href="lib.Univalence.html#1239" class="Bound"
+      >e</a
+      ><a name="1247"
+      > </a
+      ><a name="1248" href="lib.Univalence.html#1229" class="Bound"
+      >a</a
+      ><a name="1249" class="Symbol"
+      >)</a
+      ><a name="1250"
+      > </a
+      ><a name="1251" class="Symbol"
+      >(</a
+      ><a name="1252" href="lib.Univalence.html#822" class="Postulate"
+      >coe-equiv-&#946;</a
+      ><a name="1263"
+      > </a
+      ><a name="1264" href="lib.Univalence.html#1227" class="Bound"
+      >e</a
+      ><a name="1265" class="Symbol"
+      >)</a
+      ><a name="1266"
+      >
+
+</a
+      ><a name="1268" href="lib.Univalence.html#1268" class="Function"
+      >coe!-&#946;</a
+      ><a name="1274"
+      > </a
+      ><a name="1275" class="Symbol"
+      >:</a
+      ><a name="1276"
+      > </a
+      ><a name="1277" class="Symbol"
+      >&#8704;</a
+      ><a name="1278"
+      > </a
+      ><a name="1279" class="Symbol"
+      >{</a
+      ><a name="1280" href="lib.Univalence.html#1280" class="Bound"
+      >i</a
+      ><a name="1281" class="Symbol"
+      >}</a
+      ><a name="1282"
+      > </a
+      ><a name="1283" class="Symbol"
+      >{</a
+      ><a name="1284" href="lib.Univalence.html#1284" class="Bound"
+      >A</a
+      ><a name="1285"
+      > </a
+      ><a name="1286" href="lib.Univalence.html#1286" class="Bound"
+      >B</a
+      ><a name="1287"
+      > </a
+      ><a name="1288" class="Symbol"
+      >:</a
+      ><a name="1289"
+      > </a
+      ><a name="1290" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1294"
+      > </a
+      ><a name="1295" href="lib.Univalence.html#1280" class="Bound"
+      >i</a
+      ><a name="1296" class="Symbol"
+      >}</a
+      ><a name="1297"
+      > </a
+      ><a name="1298" class="Symbol"
+      >(</a
+      ><a name="1299" href="lib.Univalence.html#1299" class="Bound"
+      >e</a
+      ><a name="1300"
+      > </a
+      ><a name="1301" class="Symbol"
+      >:</a
+      ><a name="1302"
+      > </a
+      ><a name="1303" href="lib.Univalence.html#1284" class="Bound"
+      >A</a
+      ><a name="1304"
+      > </a
+      ><a name="1305" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="1306"
+      > </a
+      ><a name="1307" href="lib.Univalence.html#1286" class="Bound"
+      >B</a
+      ><a name="1308" class="Symbol"
+      >)</a
+      ><a name="1309"
+      > </a
+      ><a name="1310" class="Symbol"
+      >(</a
+      ><a name="1311" href="lib.Univalence.html#1311" class="Bound"
+      >b</a
+      ><a name="1312"
+      > </a
+      ><a name="1313" class="Symbol"
+      >:</a
+      ><a name="1314"
+      > </a
+      ><a name="1315" href="lib.Univalence.html#1286" class="Bound"
+      >B</a
+      ><a name="1316" class="Symbol"
+      >)</a
+      ><a name="1317"
+      >
+  </a
+      ><a name="1320" class="Symbol"
+      >&#8594;</a
+      ><a name="1321"
+      > </a
+      ><a name="1322" href="lib.Base.html#4576" class="Function"
+      >coe!</a
+      ><a name="1326"
+      > </a
+      ><a name="1327" class="Symbol"
+      >(</a
+      ><a name="1328" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1330"
+      > </a
+      ><a name="1331" href="lib.Univalence.html#1299" class="Bound"
+      >e</a
+      ><a name="1332" class="Symbol"
+      >)</a
+      ><a name="1333"
+      > </a
+      ><a name="1334" href="lib.Univalence.html#1311" class="Bound"
+      >b</a
+      ><a name="1335"
+      > </a
+      ><a name="1336" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1338"
+      > </a
+      ><a name="1339" href="lib.Equivalence.html#4849" class="Function"
+      >&lt;&#8211;</a
+      ><a name="1341"
+      > </a
+      ><a name="1342" href="lib.Univalence.html#1299" class="Bound"
+      >e</a
+      ><a name="1343"
+      > </a
+      ><a name="1344" href="lib.Univalence.html#1311" class="Bound"
+      >b</a
+      ><a name="1345"
+      >
+</a
+      ><a name="1346" href="lib.Univalence.html#1268" class="Function"
+      >coe!-&#946;</a
+      ><a name="1352"
+      > </a
+      ><a name="1353" href="lib.Univalence.html#1353" class="Bound"
+      >e</a
+      ><a name="1354"
+      > </a
+      ><a name="1355" href="lib.Univalence.html#1355" class="Bound"
+      >a</a
+      ><a name="1356"
+      > </a
+      ><a name="1357" class="Symbol"
+      >=</a
+      ><a name="1358"
+      > </a
+      ><a name="1359" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="1361"
+      > </a
+      ><a name="1362" class="Symbol"
+      >(&#955;</a
+      ><a name="1364"
+      > </a
+      ><a name="1365" href="lib.Univalence.html#1365" class="Bound"
+      >e</a
+      ><a name="1366"
+      > </a
+      ><a name="1367" class="Symbol"
+      >&#8594;</a
+      ><a name="1368"
+      > </a
+      ><a name="1369" href="lib.Equivalence.html#4849" class="Function"
+      >&lt;&#8211;</a
+      ><a name="1371"
+      > </a
+      ><a name="1372" href="lib.Univalence.html#1365" class="Bound"
+      >e</a
+      ><a name="1373"
+      > </a
+      ><a name="1374" href="lib.Univalence.html#1355" class="Bound"
+      >a</a
+      ><a name="1375" class="Symbol"
+      >)</a
+      ><a name="1376"
+      > </a
+      ><a name="1377" class="Symbol"
+      >(</a
+      ><a name="1378" href="lib.Univalence.html#822" class="Postulate"
+      >coe-equiv-&#946;</a
+      ><a name="1389"
+      > </a
+      ><a name="1390" href="lib.Univalence.html#1353" class="Bound"
+      >e</a
+      ><a name="1391" class="Symbol"
+      >)</a
+      ><a name="1392"
+      >
+
+</a
+      ><a name="1394" class="Comment"
+      >{- Paths over a path in a universe in the identity fibration reduces -}</a
+      ><a name="1465"
+      >
+
+</a
+      ><a name="1467" href="lib.Univalence.html#1467" class="Function"
+      >&#8595;-idf-ua-out</a
+      ><a name="1479"
+      > </a
+      ><a name="1480" class="Symbol"
+      >:</a
+      ><a name="1481"
+      > </a
+      ><a name="1482" class="Symbol"
+      >&#8704;</a
+      ><a name="1483"
+      > </a
+      ><a name="1484" class="Symbol"
+      >{</a
+      ><a name="1485" href="lib.Univalence.html#1485" class="Bound"
+      >i</a
+      ><a name="1486" class="Symbol"
+      >}</a
+      ><a name="1487"
+      > </a
+      ><a name="1488" class="Symbol"
+      >{</a
+      ><a name="1489" href="lib.Univalence.html#1489" class="Bound"
+      >A</a
+      ><a name="1490"
+      > </a
+      ><a name="1491" href="lib.Univalence.html#1491" class="Bound"
+      >B</a
+      ><a name="1492"
+      > </a
+      ><a name="1493" class="Symbol"
+      >:</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1499"
+      > </a
+      ><a name="1500" href="lib.Univalence.html#1485" class="Bound"
+      >i</a
+      ><a name="1501" class="Symbol"
+      >}</a
+      ><a name="1502"
+      > </a
+      ><a name="1503" class="Symbol"
+      >(</a
+      ><a name="1504" href="lib.Univalence.html#1504" class="Bound"
+      >e</a
+      ><a name="1505"
+      > </a
+      ><a name="1506" class="Symbol"
+      >:</a
+      ><a name="1507"
+      > </a
+      ><a name="1508" href="lib.Univalence.html#1489" class="Bound"
+      >A</a
+      ><a name="1509"
+      > </a
+      ><a name="1510" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="1511"
+      > </a
+      ><a name="1512" href="lib.Univalence.html#1491" class="Bound"
+      >B</a
+      ><a name="1513" class="Symbol"
+      >)</a
+      ><a name="1514"
+      > </a
+      ><a name="1515" class="Symbol"
+      >{</a
+      ><a name="1516" href="lib.Univalence.html#1516" class="Bound"
+      >u</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" class="Symbol"
+      >:</a
+      ><a name="1519"
+      > </a
+      ><a name="1520" href="lib.Univalence.html#1489" class="Bound"
+      >A</a
+      ><a name="1521" class="Symbol"
+      >}</a
+      ><a name="1522"
+      > </a
+      ><a name="1523" class="Symbol"
+      >{</a
+      ><a name="1524" href="lib.Univalence.html#1524" class="Bound"
+      >v</a
+      ><a name="1525"
+      > </a
+      ><a name="1526" class="Symbol"
+      >:</a
+      ><a name="1527"
+      > </a
+      ><a name="1528" href="lib.Univalence.html#1491" class="Bound"
+      >B</a
+      ><a name="1529" class="Symbol"
+      >}</a
+      ><a name="1530"
+      >
+  </a
+      ><a name="1533" class="Symbol"
+      >&#8594;</a
+      ><a name="1534"
+      > </a
+      ><a name="1535" href="lib.Univalence.html#1516" class="Bound"
+      >u</a
+      ><a name="1536"
+      > </a
+      ><a name="1537" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="1539"
+      > </a
+      ><a name="1540" href="lib.Univalence.html#1524" class="Bound"
+      >v</a
+      ><a name="1541"
+      > </a
+      ><a name="1542" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="1543"
+      > </a
+      ><a name="1544" class="Symbol"
+      >(&#955;</a
+      ><a name="1546"
+      > </a
+      ><a name="1547" href="lib.Univalence.html#1547" class="Bound"
+      >x</a
+      ><a name="1548"
+      > </a
+      ><a name="1549" class="Symbol"
+      >&#8594;</a
+      ><a name="1550"
+      > </a
+      ><a name="1551" href="lib.Univalence.html#1547" class="Bound"
+      >x</a
+      ><a name="1552" class="Symbol"
+      >)</a
+      ><a name="1553"
+      > </a
+      ><a name="1554" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="1555"
+      > </a
+      ><a name="1556" class="Symbol"
+      >(</a
+      ><a name="1557" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1559"
+      > </a
+      ><a name="1560" href="lib.Univalence.html#1504" class="Bound"
+      >e</a
+      ><a name="1561" class="Symbol"
+      >)</a
+      ><a name="1562"
+      > </a
+      ><a name="1563" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="1564"
+      >
+  </a
+      ><a name="1567" class="Symbol"
+      >&#8594;</a
+      ><a name="1568"
+      > </a
+      ><a name="1569" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="1571"
+      > </a
+      ><a name="1572" href="lib.Univalence.html#1504" class="Bound"
+      >e</a
+      ><a name="1573"
+      > </a
+      ><a name="1574" href="lib.Univalence.html#1516" class="Bound"
+      >u</a
+      ><a name="1575"
+      > </a
+      ><a name="1576" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1578"
+      > </a
+      ><a name="1579" href="lib.Univalence.html#1524" class="Bound"
+      >v</a
+      ><a name="1580"
+      >
+</a
+      ><a name="1581" href="lib.Univalence.html#1467" class="Function"
+      >&#8595;-idf-ua-out</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" href="lib.Univalence.html#1594" class="Bound"
+      >e</a
+      ><a name="1595"
+      > </a
+      ><a name="1596" href="lib.Univalence.html#1596" class="Bound"
+      >p</a
+      ><a name="1597"
+      > </a
+      ><a name="1598" class="Symbol"
+      >=</a
+      ><a name="1599"
+      > </a
+      ><a name="1600" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1601"
+      > </a
+      ><a name="1602" class="Symbol"
+      >(</a
+      ><a name="1603" href="lib.Univalence.html#1145" class="Function"
+      >coe-&#946;</a
+      ><a name="1608"
+      > </a
+      ><a name="1609" href="lib.Univalence.html#1594" class="Bound"
+      >e</a
+      ><a name="1610"
+      > </a
+      ><a name="1611" class="Symbol"
+      >_)</a
+      ><a name="1613"
+      > </a
+      ><a name="1614" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1615"
+      > </a
+      ><a name="1616" href="lib.PathOver.html#4014" class="Function"
+      >&#8595;-idf-out</a
+      ><a name="1625"
+      > </a
+      ><a name="1626" class="Symbol"
+      >(</a
+      ><a name="1627" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1629"
+      > </a
+      ><a name="1630" href="lib.Univalence.html#1594" class="Bound"
+      >e</a
+      ><a name="1631" class="Symbol"
+      >)</a
+      ><a name="1632"
+      > </a
+      ><a name="1633" href="lib.Univalence.html#1596" class="Bound"
+      >p</a
+      ><a name="1634"
+      >
+
+</a
+      ><a name="1636" href="lib.Univalence.html#1636" class="Function"
+      >&#8595;-idf-ua-in</a
+      ><a name="1647"
+      > </a
+      ><a name="1648" class="Symbol"
+      >:</a
+      ><a name="1649"
+      > </a
+      ><a name="1650" class="Symbol"
+      >&#8704;</a
+      ><a name="1651"
+      > </a
+      ><a name="1652" class="Symbol"
+      >{</a
+      ><a name="1653" href="lib.Univalence.html#1653" class="Bound"
+      >i</a
+      ><a name="1654" class="Symbol"
+      >}</a
+      ><a name="1655"
+      > </a
+      ><a name="1656" class="Symbol"
+      >{</a
+      ><a name="1657" href="lib.Univalence.html#1657" class="Bound"
+      >A</a
+      ><a name="1658"
+      > </a
+      ><a name="1659" href="lib.Univalence.html#1659" class="Bound"
+      >B</a
+      ><a name="1660"
+      > </a
+      ><a name="1661" class="Symbol"
+      >:</a
+      ><a name="1662"
+      > </a
+      ><a name="1663" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1667"
+      > </a
+      ><a name="1668" href="lib.Univalence.html#1653" class="Bound"
+      >i</a
+      ><a name="1669" class="Symbol"
+      >}</a
+      ><a name="1670"
+      > </a
+      ><a name="1671" class="Symbol"
+      >(</a
+      ><a name="1672" href="lib.Univalence.html#1672" class="Bound"
+      >e</a
+      ><a name="1673"
+      > </a
+      ><a name="1674" class="Symbol"
+      >:</a
+      ><a name="1675"
+      > </a
+      ><a name="1676" href="lib.Univalence.html#1657" class="Bound"
+      >A</a
+      ><a name="1677"
+      > </a
+      ><a name="1678" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="1679"
+      > </a
+      ><a name="1680" href="lib.Univalence.html#1659" class="Bound"
+      >B</a
+      ><a name="1681" class="Symbol"
+      >)</a
+      ><a name="1682"
+      > </a
+      ><a name="1683" class="Symbol"
+      >{</a
+      ><a name="1684" href="lib.Univalence.html#1684" class="Bound"
+      >u</a
+      ><a name="1685"
+      > </a
+      ><a name="1686" class="Symbol"
+      >:</a
+      ><a name="1687"
+      > </a
+      ><a name="1688" href="lib.Univalence.html#1657" class="Bound"
+      >A</a
+      ><a name="1689" class="Symbol"
+      >}</a
+      ><a name="1690"
+      > </a
+      ><a name="1691" class="Symbol"
+      >{</a
+      ><a name="1692" href="lib.Univalence.html#1692" class="Bound"
+      >v</a
+      ><a name="1693"
+      > </a
+      ><a name="1694" class="Symbol"
+      >:</a
+      ><a name="1695"
+      > </a
+      ><a name="1696" href="lib.Univalence.html#1659" class="Bound"
+      >B</a
+      ><a name="1697" class="Symbol"
+      >}</a
+      ><a name="1698"
+      >
+  </a
+      ><a name="1701" class="Symbol"
+      >&#8594;</a
+      ><a name="1702"
+      > </a
+      ><a name="1703" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="1705"
+      > </a
+      ><a name="1706" href="lib.Univalence.html#1672" class="Bound"
+      >e</a
+      ><a name="1707"
+      > </a
+      ><a name="1708" href="lib.Univalence.html#1684" class="Bound"
+      >u</a
+      ><a name="1709"
+      > </a
+      ><a name="1710" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1712"
+      > </a
+      ><a name="1713" href="lib.Univalence.html#1692" class="Bound"
+      >v</a
+      ><a name="1714"
+      >
+  </a
+      ><a name="1717" class="Symbol"
+      >&#8594;</a
+      ><a name="1718"
+      > </a
+      ><a name="1719" href="lib.Univalence.html#1684" class="Bound"
+      >u</a
+      ><a name="1720"
+      > </a
+      ><a name="1721" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="1723"
+      > </a
+      ><a name="1724" href="lib.Univalence.html#1692" class="Bound"
+      >v</a
+      ><a name="1725"
+      > </a
+      ><a name="1726" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="1727"
+      > </a
+      ><a name="1728" class="Symbol"
+      >(&#955;</a
+      ><a name="1730"
+      > </a
+      ><a name="1731" href="lib.Univalence.html#1731" class="Bound"
+      >x</a
+      ><a name="1732"
+      > </a
+      ><a name="1733" class="Symbol"
+      >&#8594;</a
+      ><a name="1734"
+      > </a
+      ><a name="1735" href="lib.Univalence.html#1731" class="Bound"
+      >x</a
+      ><a name="1736" class="Symbol"
+      >)</a
+      ><a name="1737"
+      > </a
+      ><a name="1738" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="1739"
+      > </a
+      ><a name="1740" class="Symbol"
+      >(</a
+      ><a name="1741" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1743"
+      > </a
+      ><a name="1744" href="lib.Univalence.html#1672" class="Bound"
+      >e</a
+      ><a name="1745" class="Symbol"
+      >)</a
+      ><a name="1746"
+      > </a
+      ><a name="1747" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="1748"
+      >
+</a
+      ><a name="1749" href="lib.Univalence.html#1636" class="Function"
+      >&#8595;-idf-ua-in</a
+      ><a name="1760"
+      > </a
+      ><a name="1761" href="lib.Univalence.html#1761" class="Bound"
+      >e</a
+      ><a name="1762"
+      > </a
+      ><a name="1763" href="lib.Univalence.html#1763" class="Bound"
+      >p</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" class="Symbol"
+      >=</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" href="lib.PathOver.html#4145" class="Function"
+      >&#8595;-idf-in</a
+      ><a name="1775"
+      > </a
+      ><a name="1776" class="Symbol"
+      >(</a
+      ><a name="1777" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="1779"
+      > </a
+      ><a name="1780" href="lib.Univalence.html#1761" class="Bound"
+      >e</a
+      ><a name="1781" class="Symbol"
+      >)</a
+      ><a name="1782"
+      > </a
+      ><a name="1783" class="Symbol"
+      >(</a
+      ><a name="1784" href="lib.Univalence.html#1145" class="Function"
+      >coe-&#946;</a
+      ><a name="1789"
+      > </a
+      ><a name="1790" href="lib.Univalence.html#1761" class="Bound"
+      >e</a
+      ><a name="1791"
+      > </a
+      ><a name="1792" class="Symbol"
+      >_</a
+      ><a name="1793"
+      > </a
+      ><a name="1794" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="1795"
+      > </a
+      ><a name="1796" href="lib.Univalence.html#1763" class="Bound"
+      >p</a
+      ><a name="1797" class="Symbol"
+      >)</a
+      ><a name="1798"
+      >
+
+</a
+      ><a name="1800" class="Comment"
+      >{- Induction along equivalences
+
+If [P] is a predicate over all equivalences in a universe [Type i] and [d] is a
+proof of [P] over all [ide A], then we get a section of [P]
+-}</a
+      ><a name="1975"
+      >
+
+</a
+      ><a name="1977" href="lib.Univalence.html#1977" class="Function"
+      >equiv-induction</a
+      ><a name="1992"
+      > </a
+      ><a name="1993" class="Symbol"
+      >:</a
+      ><a name="1994"
+      > </a
+      ><a name="1995" class="Symbol"
+      >&#8704;</a
+      ><a name="1996"
+      > </a
+      ><a name="1997" class="Symbol"
+      >{</a
+      ><a name="1998" href="lib.Univalence.html#1998" class="Bound"
+      >i</a
+      ><a name="1999"
+      > </a
+      ><a name="2000" href="lib.Univalence.html#2000" class="Bound"
+      >j</a
+      ><a name="2001" class="Symbol"
+      >}</a
+      ><a name="2002"
+      > </a
+      ><a name="2003" class="Symbol"
+      >(</a
+      ><a name="2004" href="lib.Univalence.html#2004" class="Bound"
+      >P</a
+      ><a name="2005"
+      > </a
+      ><a name="2006" class="Symbol"
+      >:</a
+      ><a name="2007"
+      > </a
+      ><a name="2008" class="Symbol"
+      >{</a
+      ><a name="2009" href="lib.Univalence.html#2009" class="Bound"
+      >A</a
+      ><a name="2010"
+      > </a
+      ><a name="2011" href="lib.Univalence.html#2011" class="Bound"
+      >B</a
+      ><a name="2012"
+      > </a
+      ><a name="2013" class="Symbol"
+      >:</a
+      ><a name="2014"
+      > </a
+      ><a name="2015" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2019"
+      > </a
+      ><a name="2020" href="lib.Univalence.html#1998" class="Bound"
+      >i</a
+      ><a name="2021" class="Symbol"
+      >}</a
+      ><a name="2022"
+      > </a
+      ><a name="2023" class="Symbol"
+      >(</a
+      ><a name="2024" href="lib.Univalence.html#2024" class="Bound"
+      >f</a
+      ><a name="2025"
+      > </a
+      ><a name="2026" class="Symbol"
+      >:</a
+      ><a name="2027"
+      > </a
+      ><a name="2028" href="lib.Univalence.html#2009" class="Bound"
+      >A</a
+      ><a name="2029"
+      > </a
+      ><a name="2030" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="2031"
+      > </a
+      ><a name="2032" href="lib.Univalence.html#2011" class="Bound"
+      >B</a
+      ><a name="2033" class="Symbol"
+      >)</a
+      ><a name="2034"
+      > </a
+      ><a name="2035" class="Symbol"
+      >&#8594;</a
+      ><a name="2036"
+      > </a
+      ><a name="2037" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2041"
+      > </a
+      ><a name="2042" href="lib.Univalence.html#2000" class="Bound"
+      >j</a
+      ><a name="2043" class="Symbol"
+      >)</a
+      ><a name="2044"
+      >
+  </a
+      ><a name="2047" class="Symbol"
+      >(</a
+      ><a name="2048" href="lib.Univalence.html#2048" class="Bound"
+      >d</a
+      ><a name="2049"
+      > </a
+      ><a name="2050" class="Symbol"
+      >:</a
+      ><a name="2051"
+      > </a
+      ><a name="2052" class="Symbol"
+      >(</a
+      ><a name="2053" href="lib.Univalence.html#2053" class="Bound"
+      >A</a
+      ><a name="2054"
+      > </a
+      ><a name="2055" class="Symbol"
+      >:</a
+      ><a name="2056"
+      > </a
+      ><a name="2057" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2061"
+      > </a
+      ><a name="2062" href="lib.Univalence.html#1998" class="Bound"
+      >i</a
+      ><a name="2063" class="Symbol"
+      >)</a
+      ><a name="2064"
+      > </a
+      ><a name="2065" class="Symbol"
+      >&#8594;</a
+      ><a name="2066"
+      > </a
+      ><a name="2067" href="lib.Univalence.html#2004" class="Bound"
+      >P</a
+      ><a name="2068"
+      > </a
+      ><a name="2069" class="Symbol"
+      >(</a
+      ><a name="2070" href="lib.Equivalence.html#5761" class="Function"
+      >ide</a
+      ><a name="2073"
+      > </a
+      ><a name="2074" href="lib.Univalence.html#2053" class="Bound"
+      >A</a
+      ><a name="2075" class="Symbol"
+      >))</a
+      ><a name="2077"
+      > </a
+      ><a name="2078" class="Symbol"
+      >{</a
+      ><a name="2079" href="lib.Univalence.html#2079" class="Bound"
+      >A</a
+      ><a name="2080"
+      > </a
+      ><a name="2081" href="lib.Univalence.html#2081" class="Bound"
+      >B</a
+      ><a name="2082"
+      > </a
+      ><a name="2083" class="Symbol"
+      >:</a
+      ><a name="2084"
+      > </a
+      ><a name="2085" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2089"
+      > </a
+      ><a name="2090" href="lib.Univalence.html#1998" class="Bound"
+      >i</a
+      ><a name="2091" class="Symbol"
+      >}</a
+      ><a name="2092"
+      > </a
+      ><a name="2093" class="Symbol"
+      >(</a
+      ><a name="2094" href="lib.Univalence.html#2094" class="Bound"
+      >f</a
+      ><a name="2095"
+      > </a
+      ><a name="2096" class="Symbol"
+      >:</a
+      ><a name="2097"
+      > </a
+      ><a name="2098" href="lib.Univalence.html#2079" class="Bound"
+      >A</a
+      ><a name="2099"
+      > </a
+      ><a name="2100" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="2101"
+      > </a
+      ><a name="2102" href="lib.Univalence.html#2081" class="Bound"
+      >B</a
+      ><a name="2103" class="Symbol"
+      >)</a
+      ><a name="2104"
+      >
+  </a
+      ><a name="2107" class="Symbol"
+      >&#8594;</a
+      ><a name="2108"
+      > </a
+      ><a name="2109" href="lib.Univalence.html#2004" class="Bound"
+      >P</a
+      ><a name="2110"
+      > </a
+      ><a name="2111" href="lib.Univalence.html#2094" class="Bound"
+      >f</a
+      ><a name="2112"
+      >
+</a
+      ><a name="2113" href="lib.Univalence.html#1977" class="Function"
+      >equiv-induction</a
+      ><a name="2128"
+      > </a
+      ><a name="2129" class="Symbol"
+      >{</a
+      ><a name="2130" href="lib.Univalence.html#2130" class="Bound"
+      >i</a
+      ><a name="2131" class="Symbol"
+      >}</a
+      ><a name="2132"
+      > </a
+      ><a name="2133" class="Symbol"
+      >{</a
+      ><a name="2134" href="lib.Univalence.html#2134" class="Bound"
+      >j</a
+      ><a name="2135" class="Symbol"
+      >}</a
+      ><a name="2136"
+      > </a
+      ><a name="2137" href="lib.Univalence.html#2137" class="Bound"
+      >P</a
+      ><a name="2138"
+      > </a
+      ><a name="2139" href="lib.Univalence.html#2139" class="Bound"
+      >d</a
+      ><a name="2140"
+      > </a
+      ><a name="2141" href="lib.Univalence.html#2141" class="Bound"
+      >f</a
+      ><a name="2142"
+      > </a
+      ><a name="2143" class="Symbol"
+      >=</a
+      ><a name="2144"
+      >
+  </a
+      ><a name="2147" href="lib.Base.html#4782" class="Function"
+      >transport</a
+      ><a name="2156"
+      > </a
+      ><a name="2157" href="lib.Univalence.html#2137" class="Bound"
+      >P</a
+      ><a name="2158"
+      > </a
+      ><a name="2159" class="Symbol"
+      >(</a
+      ><a name="2160" href="lib.Univalence.html#822" class="Postulate"
+      >coe-equiv-&#946;</a
+      ><a name="2171"
+      > </a
+      ><a name="2172" href="lib.Univalence.html#2141" class="Bound"
+      >f</a
+      ><a name="2173" class="Symbol"
+      >)</a
+      ><a name="2174"
+      >
+    </a
+      ><a name="2179" class="Symbol"
+      >(</a
+      ><a name="2180" href="lib.Univalence.html#2205" class="Function"
+      >aux</a
+      ><a name="2183"
+      > </a
+      ><a name="2184" href="lib.Univalence.html#2137" class="Bound"
+      >P</a
+      ><a name="2185"
+      > </a
+      ><a name="2186" href="lib.Univalence.html#2139" class="Bound"
+      >d</a
+      ><a name="2187"
+      > </a
+      ><a name="2188" class="Symbol"
+      >(</a
+      ><a name="2189" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="2191"
+      > </a
+      ><a name="2192" href="lib.Univalence.html#2141" class="Bound"
+      >f</a
+      ><a name="2193" class="Symbol"
+      >))</a
+      ><a name="2195"
+      > </a
+      ><a name="2196" class="Keyword"
+      >where</a
+      ><a name="2201"
+      >
+
+  </a
+      ><a name="2205" href="lib.Univalence.html#2205" class="Function"
+      >aux</a
+      ><a name="2208"
+      > </a
+      ><a name="2209" class="Symbol"
+      >:</a
+      ><a name="2210"
+      > </a
+      ><a name="2211" class="Symbol"
+      >&#8704;</a
+      ><a name="2212"
+      > </a
+      ><a name="2213" class="Symbol"
+      >{</a
+      ><a name="2214" href="lib.Univalence.html#2214" class="Bound"
+      >j</a
+      ><a name="2215" class="Symbol"
+      >}</a
+      ><a name="2216"
+      > </a
+      ><a name="2217" class="Symbol"
+      >(</a
+      ><a name="2218" href="lib.Univalence.html#2218" class="Bound"
+      >P</a
+      ><a name="2219"
+      > </a
+      ><a name="2220" class="Symbol"
+      >:</a
+      ><a name="2221"
+      > </a
+      ><a name="2222" class="Symbol"
+      >{</a
+      ><a name="2223" href="lib.Univalence.html#2223" class="Bound"
+      >A</a
+      ><a name="2224"
+      > </a
+      ><a name="2225" class="Symbol"
+      >:</a
+      ><a name="2226"
+      > </a
+      ><a name="2227" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2231"
+      > </a
+      ><a name="2232" href="lib.Univalence.html#2130" class="Bound"
+      >i</a
+      ><a name="2233" class="Symbol"
+      >}</a
+      ><a name="2234"
+      > </a
+      ><a name="2235" class="Symbol"
+      >{</a
+      ><a name="2236" href="lib.Univalence.html#2236" class="Bound"
+      >B</a
+      ><a name="2237"
+      > </a
+      ><a name="2238" class="Symbol"
+      >:</a
+      ><a name="2239"
+      > </a
+      ><a name="2240" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2244"
+      > </a
+      ><a name="2245" href="lib.Univalence.html#2130" class="Bound"
+      >i</a
+      ><a name="2246" class="Symbol"
+      >}</a
+      ><a name="2247"
+      > </a
+      ><a name="2248" class="Symbol"
+      >(</a
+      ><a name="2249" href="lib.Univalence.html#2249" class="Bound"
+      >f</a
+      ><a name="2250"
+      > </a
+      ><a name="2251" class="Symbol"
+      >:</a
+      ><a name="2252"
+      > </a
+      ><a name="2253" href="lib.Univalence.html#2223" class="Bound"
+      >A</a
+      ><a name="2254"
+      > </a
+      ><a name="2255" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="2256"
+      > </a
+      ><a name="2257" href="lib.Univalence.html#2236" class="Bound"
+      >B</a
+      ><a name="2258" class="Symbol"
+      >)</a
+      ><a name="2259"
+      > </a
+      ><a name="2260" class="Symbol"
+      >&#8594;</a
+      ><a name="2261"
+      > </a
+      ><a name="2262" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2266"
+      > </a
+      ><a name="2267" href="lib.Univalence.html#2214" class="Bound"
+      >j</a
+      ><a name="2268" class="Symbol"
+      >)</a
+      ><a name="2269"
+      >
+    </a
+      ><a name="2274" class="Symbol"
+      >(</a
+      ><a name="2275" href="lib.Univalence.html#2275" class="Bound"
+      >d</a
+      ><a name="2276"
+      > </a
+      ><a name="2277" class="Symbol"
+      >:</a
+      ><a name="2278"
+      > </a
+      ><a name="2279" class="Symbol"
+      >(</a
+      ><a name="2280" href="lib.Univalence.html#2280" class="Bound"
+      >A</a
+      ><a name="2281"
+      > </a
+      ><a name="2282" class="Symbol"
+      >:</a
+      ><a name="2283"
+      > </a
+      ><a name="2284" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2288"
+      > </a
+      ><a name="2289" href="lib.Univalence.html#2130" class="Bound"
+      >i</a
+      ><a name="2290" class="Symbol"
+      >)</a
+      ><a name="2291"
+      > </a
+      ><a name="2292" class="Symbol"
+      >&#8594;</a
+      ><a name="2293"
+      > </a
+      ><a name="2294" href="lib.Univalence.html#2218" class="Bound"
+      >P</a
+      ><a name="2295"
+      > </a
+      ><a name="2296" class="Symbol"
+      >(</a
+      ><a name="2297" href="lib.Equivalence.html#5761" class="Function"
+      >ide</a
+      ><a name="2300"
+      > </a
+      ><a name="2301" href="lib.Univalence.html#2280" class="Bound"
+      >A</a
+      ><a name="2302" class="Symbol"
+      >))</a
+      ><a name="2304"
+      > </a
+      ><a name="2305" class="Symbol"
+      >{</a
+      ><a name="2306" href="lib.Univalence.html#2306" class="Bound"
+      >A</a
+      ><a name="2307"
+      > </a
+      ><a name="2308" href="lib.Univalence.html#2308" class="Bound"
+      >B</a
+      ><a name="2309"
+      > </a
+      ><a name="2310" class="Symbol"
+      >:</a
+      ><a name="2311"
+      > </a
+      ><a name="2312" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2316"
+      > </a
+      ><a name="2317" href="lib.Univalence.html#2130" class="Bound"
+      >i</a
+      ><a name="2318" class="Symbol"
+      >}</a
+      ><a name="2319"
+      > </a
+      ><a name="2320" class="Symbol"
+      >(</a
+      ><a name="2321" href="lib.Univalence.html#2321" class="Bound"
+      >p</a
+      ><a name="2322"
+      > </a
+      ><a name="2323" class="Symbol"
+      >:</a
+      ><a name="2324"
+      > </a
+      ><a name="2325" href="lib.Univalence.html#2306" class="Bound"
+      >A</a
+      ><a name="2326"
+      > </a
+      ><a name="2327" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2329"
+      > </a
+      ><a name="2330" href="lib.Univalence.html#2308" class="Bound"
+      >B</a
+      ><a name="2331" class="Symbol"
+      >)</a
+      ><a name="2332"
+      >
+    </a
+      ><a name="2337" class="Symbol"
+      >&#8594;</a
+      ><a name="2338"
+      > </a
+      ><a name="2339" href="lib.Univalence.html#2218" class="Bound"
+      >P</a
+      ><a name="2340"
+      > </a
+      ><a name="2341" class="Symbol"
+      >(</a
+      ><a name="2342" href="lib.Univalence.html#435" class="Function"
+      >coe-equiv</a
+      ><a name="2351"
+      > </a
+      ><a name="2352" href="lib.Univalence.html#2321" class="Bound"
+      >p</a
+      ><a name="2353" class="Symbol"
+      >)</a
+      ><a name="2354"
+      >
+  </a
+      ><a name="2357" href="lib.Univalence.html#2205" class="Function"
+      >aux</a
+      ><a name="2360"
+      > </a
+      ><a name="2361" href="lib.Univalence.html#2361" class="Bound"
+      >P</a
+      ><a name="2362"
+      > </a
+      ><a name="2363" href="lib.Univalence.html#2363" class="Bound"
+      >d</a
+      ><a name="2364"
+      > </a
+      ><a name="2365" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2368"
+      > </a
+      ><a name="2369" class="Symbol"
+      >=</a
+      ><a name="2370"
+      > </a
+      ><a name="2371" href="lib.Univalence.html#2363" class="Bound"
+      >d</a
+      ><a name="2372"
+      > </a
+      ><a name="2373" class="Symbol"
+      >_</a
+      ><a name="2374"
+      >
+
+</a
+      ><a name="2376" class="Comment"
+      >{- Univalence for pointed types -}</a
+      ><a name="2410"
+      >
+</a
+      ><a name="2411" class="Keyword"
+      >abstract</a
+      ><a name="2419"
+      >
+  </a
+      ><a name="2422" href="lib.Univalence.html#2422" class="Function"
+      >&#8857;ua</a
+      ><a name="2425"
+      > </a
+      ><a name="2426" class="Symbol"
+      >:</a
+      ><a name="2427"
+      > </a
+      ><a name="2428" class="Symbol"
+      >&#8704;</a
+      ><a name="2429"
+      > </a
+      ><a name="2430" class="Symbol"
+      >{</a
+      ><a name="2431" href="lib.Univalence.html#2431" class="Bound"
+      >i</a
+      ><a name="2432" class="Symbol"
+      >}</a
+      ><a name="2433"
+      > </a
+      ><a name="2434" class="Symbol"
+      >{</a
+      ><a name="2435" href="lib.Univalence.html#2435" class="Bound"
+      >X</a
+      ><a name="2436"
+      > </a
+      ><a name="2437" href="lib.Univalence.html#2437" class="Bound"
+      >Y</a
+      ><a name="2438"
+      > </a
+      ><a name="2439" class="Symbol"
+      >:</a
+      ><a name="2440"
+      > </a
+      ><a name="2441" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2444"
+      > </a
+      ><a name="2445" href="lib.Univalence.html#2431" class="Bound"
+      >i</a
+      ><a name="2446" class="Symbol"
+      >}</a
+      ><a name="2447"
+      > </a
+      ><a name="2448" class="Symbol"
+      >&#8594;</a
+      ><a name="2449"
+      > </a
+      ><a name="2450" href="lib.Univalence.html#2435" class="Bound"
+      >X</a
+      ><a name="2451"
+      > </a
+      ><a name="2452" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="2454"
+      > </a
+      ><a name="2455" href="lib.Univalence.html#2437" class="Bound"
+      >Y</a
+      ><a name="2456"
+      > </a
+      ><a name="2457" class="Symbol"
+      >&#8594;</a
+      ><a name="2458"
+      > </a
+      ><a name="2459" href="lib.Univalence.html#2435" class="Bound"
+      >X</a
+      ><a name="2460"
+      > </a
+      ><a name="2461" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="2463"
+      > </a
+      ><a name="2464" href="lib.Univalence.html#2437" class="Bound"
+      >Y</a
+      ><a name="2465"
+      >
+  </a
+      ><a name="2468" href="lib.Univalence.html#2422" class="Function"
+      >&#8857;ua</a
+      ><a name="2471"
+      > </a
+      ><a name="2472" class="Symbol"
+      >((</a
+      ><a name="2474" href="lib.Univalence.html#2474" class="Bound"
+      >f</a
+      ><a name="2475"
+      > </a
+      ><a name="2476" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2477"
+      > </a
+      ><a name="2478" href="lib.Univalence.html#2478" class="Bound"
+      >p</a
+      ><a name="2479" class="Symbol"
+      >)</a
+      ><a name="2480"
+      > </a
+      ><a name="2481" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2482"
+      > </a
+      ><a name="2483" href="lib.Univalence.html#2483" class="Bound"
+      >ie</a
+      ><a name="2485" class="Symbol"
+      >)</a
+      ><a name="2486"
+      > </a
+      ><a name="2487" class="Symbol"
+      >=</a
+      ><a name="2488"
+      > </a
+      ><a name="2489" href="lib.Base.html#9751" class="Function"
+      >ptd=</a
+      ><a name="2493"
+      > </a
+      ><a name="2494" class="Symbol"
+      >(</a
+      ><a name="2495" href="lib.Univalence.html#775" class="Postulate"
+      >ua</a
+      ><a name="2497"
+      > </a
+      ><a name="2498" class="Symbol"
+      >(</a
+      ><a name="2499" href="lib.Univalence.html#2474" class="Bound"
+      >f</a
+      ><a name="2500"
+      > </a
+      ><a name="2501" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2502"
+      > </a
+      ><a name="2503" href="lib.Univalence.html#2483" class="Bound"
+      >ie</a
+      ><a name="2505" class="Symbol"
+      >))</a
+      ><a name="2507"
+      > </a
+      ><a name="2508" class="Symbol"
+      >(</a
+      ><a name="2509" href="lib.Univalence.html#1636" class="Function"
+      >&#8595;-idf-ua-in</a
+      ><a name="2520"
+      > </a
+      ><a name="2521" class="Symbol"
+      >(</a
+      ><a name="2522" href="lib.Univalence.html#2474" class="Bound"
+      >f</a
+      ><a name="2523"
+      > </a
+      ><a name="2524" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2525"
+      > </a
+      ><a name="2526" href="lib.Univalence.html#2483" class="Bound"
+      >ie</a
+      ><a name="2528" class="Symbol"
+      >)</a
+      ><a name="2529"
+      > </a
+      ><a name="2530" href="lib.Univalence.html#2478" class="Bound"
+      >p</a
+      ><a name="2531" class="Symbol"
+      >)</a
+      ><a name="2532"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

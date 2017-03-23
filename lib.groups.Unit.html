@@ -1,0 +1,1200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.groups.Unit</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.types.Group.html#1" class="Module"
+      >lib.types.Group</a
+      ><a name="92"
+      >
+</a
+      ><a name="93" class="Keyword"
+      >open</a
+      ><a name="97"
+      > </a
+      ><a name="98" class="Keyword"
+      >import</a
+      ><a name="104"
+      > </a
+      ><a name="105" href="lib.types.Unit.html#1" class="Module"
+      >lib.types.Unit</a
+      ><a name="119"
+      >
+</a
+      ><a name="120" class="Keyword"
+      >open</a
+      ><a name="124"
+      > </a
+      ><a name="125" class="Keyword"
+      >import</a
+      ><a name="131"
+      > </a
+      ><a name="132" href="lib.groups.SubgroupProp.html#1" class="Module"
+      >lib.groups.SubgroupProp</a
+      ><a name="155"
+      >
+</a
+      ><a name="156" class="Keyword"
+      >open</a
+      ><a name="160"
+      > </a
+      ><a name="161" class="Keyword"
+      >import</a
+      ><a name="167"
+      > </a
+      ><a name="168" href="lib.groups.Homomorphism.html#1" class="Module"
+      >lib.groups.Homomorphism</a
+      ><a name="191"
+      >
+</a
+      ><a name="192" class="Keyword"
+      >open</a
+      ><a name="196"
+      > </a
+      ><a name="197" class="Keyword"
+      >import</a
+      ><a name="203"
+      > </a
+      ><a name="204" href="lib.groups.Isomorphism.html#1" class="Module"
+      >lib.groups.Isomorphism</a
+      ><a name="226"
+      >
+</a
+      ><a name="227" class="Keyword"
+      >open</a
+      ><a name="231"
+      > </a
+      ><a name="232" class="Keyword"
+      >import</a
+      ><a name="238"
+      > </a
+      ><a name="239" href="lib.groups.Lift.html#1" class="Module"
+      >lib.groups.Lift</a
+      ><a name="254"
+      >
+
+</a
+      ><a name="256" class="Keyword"
+      >module</a
+      ><a name="262"
+      > </a
+      ><a name="263" href="lib.groups.Unit.html#1" class="Module"
+      >lib.groups.Unit</a
+      ><a name="278"
+      > </a
+      ><a name="279" class="Keyword"
+      >where</a
+      ><a name="284"
+      >
+
+</a
+      ><a name="286" href="lib.groups.Unit.html#286" class="Function"
+      >Unit-group-structure</a
+      ><a name="306"
+      > </a
+      ><a name="307" class="Symbol"
+      >:</a
+      ><a name="308"
+      > </a
+      ><a name="309" href="lib.types.Group.html#154" class="Record"
+      >GroupStructure</a
+      ><a name="323"
+      > </a
+      ><a name="324" href="lib.Base.html#2904" class="Function"
+      >Unit</a
+      ><a name="328"
+      >
+</a
+      ><a name="329" href="lib.groups.Unit.html#286" class="Function"
+      >Unit-group-structure</a
+      ><a name="349"
+      > </a
+      ><a name="350" class="Symbol"
+      >=</a
+      ><a name="351"
+      > </a
+      ><a name="352" class="Keyword"
+      >record</a
+      ><a name="358"
+      >
+  </a
+      ><a name="361" class="Symbol"
+      >{</a
+      ><a name="362"
+      > </a
+      ><a name="363" class="Field"
+      >ident</a
+      ><a name="368"
+      > </a
+      ><a name="369" class="Symbol"
+      >=</a
+      ><a name="370"
+      > </a
+      ><a name="371" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="375"
+      >
+  </a
+      ><a name="378" class="Symbol"
+      >;</a
+      ><a name="379"
+      > </a
+      ><a name="380" class="Field"
+      >inv</a
+      ><a name="383"
+      > </a
+      ><a name="384" class="Symbol"
+      >=</a
+      ><a name="385"
+      > </a
+      ><a name="386" class="Symbol"
+      >&#955;</a
+      ><a name="387"
+      > </a
+      ><a name="388" href="lib.groups.Unit.html#388" class="Bound"
+      >_</a
+      ><a name="389"
+      > </a
+      ><a name="390" class="Symbol"
+      >&#8594;</a
+      ><a name="391"
+      > </a
+      ><a name="392" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="396"
+      >
+  </a
+      ><a name="399" class="Symbol"
+      >;</a
+      ><a name="400"
+      > </a
+      ><a name="401" class="Field"
+      >comp</a
+      ><a name="405"
+      > </a
+      ><a name="406" class="Symbol"
+      >=</a
+      ><a name="407"
+      > </a
+      ><a name="408" class="Symbol"
+      >&#955;</a
+      ><a name="409"
+      > </a
+      ><a name="410" href="lib.groups.Unit.html#410" class="Bound"
+      >_</a
+      ><a name="411"
+      > </a
+      ><a name="412" href="lib.groups.Unit.html#412" class="Bound"
+      >_</a
+      ><a name="413"
+      > </a
+      ><a name="414" class="Symbol"
+      >&#8594;</a
+      ><a name="415"
+      > </a
+      ><a name="416" href="lib.Base.html#2898" class="InductiveConstructor"
+      >unit</a
+      ><a name="420"
+      >
+  </a
+      ><a name="423" class="Symbol"
+      >;</a
+      ><a name="424"
+      > </a
+      ><a name="425" class="Field"
+      >unit-l</a
+      ><a name="431"
+      > </a
+      ><a name="432" class="Symbol"
+      >=</a
+      ><a name="433"
+      > </a
+      ><a name="434" class="Symbol"
+      >&#955;</a
+      ><a name="435"
+      > </a
+      ><a name="436" href="lib.groups.Unit.html#436" class="Bound"
+      >_</a
+      ><a name="437"
+      > </a
+      ><a name="438" class="Symbol"
+      >&#8594;</a
+      ><a name="439"
+      > </a
+      ><a name="440" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="443"
+      >
+  </a
+      ><a name="446" class="Symbol"
+      >;</a
+      ><a name="447"
+      > </a
+      ><a name="448" class="Field"
+      >assoc</a
+      ><a name="453"
+      > </a
+      ><a name="454" class="Symbol"
+      >=</a
+      ><a name="455"
+      > </a
+      ><a name="456" class="Symbol"
+      >&#955;</a
+      ><a name="457"
+      > </a
+      ><a name="458" href="lib.groups.Unit.html#458" class="Bound"
+      >_</a
+      ><a name="459"
+      > </a
+      ><a name="460" href="lib.groups.Unit.html#460" class="Bound"
+      >_</a
+      ><a name="461"
+      > </a
+      ><a name="462" href="lib.groups.Unit.html#462" class="Bound"
+      >_</a
+      ><a name="463"
+      > </a
+      ><a name="464" class="Symbol"
+      >&#8594;</a
+      ><a name="465"
+      > </a
+      ><a name="466" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="469"
+      >
+  </a
+      ><a name="472" class="Symbol"
+      >;</a
+      ><a name="473"
+      > </a
+      ><a name="474" class="Field"
+      >inv-l</a
+      ><a name="479"
+      > </a
+      ><a name="480" class="Symbol"
+      >=</a
+      ><a name="481"
+      > </a
+      ><a name="482" class="Symbol"
+      >&#955;</a
+      ><a name="483"
+      > </a
+      ><a name="484" href="lib.groups.Unit.html#484" class="Bound"
+      >_</a
+      ><a name="485"
+      > </a
+      ><a name="486" class="Symbol"
+      >&#8594;</a
+      ><a name="487"
+      > </a
+      ><a name="488" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="491"
+      >
+  </a
+      ><a name="494" class="Symbol"
+      >}</a
+      ><a name="495"
+      >
+
+</a
+      ><a name="497" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="507"
+      > </a
+      ><a name="508" class="Symbol"
+      >:</a
+      ><a name="509"
+      > </a
+      ><a name="510" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="515"
+      > </a
+      ><a name="516" href="Agda.Primitive.html#609" class="Primitive"
+      >lzero</a
+      ><a name="521"
+      >
+</a
+      ><a name="522" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="532"
+      > </a
+      ><a name="533" class="Symbol"
+      >=</a
+      ><a name="534"
+      > </a
+      ><a name="535" href="lib.types.Group.html#6885" class="InductiveConstructor"
+      >group</a
+      ><a name="540"
+      > </a
+      ><a name="541" class="Symbol"
+      >_</a
+      ><a name="542"
+      > </a
+      ><a name="543" href="lib.types.Unit.html#365" class="Function"
+      >Unit-is-set</a
+      ><a name="554"
+      > </a
+      ><a name="555" href="lib.groups.Unit.html#286" class="Function"
+      >Unit-group-structure</a
+      ><a name="575"
+      >
+
+</a
+      ><a name="577" href="lib.groups.Unit.html#577" class="Function"
+      >0&#7475;</a
+      ><a name="579"
+      > </a
+      ><a name="580" class="Symbol"
+      >=</a
+      ><a name="581"
+      > </a
+      ><a name="582" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="592"
+      >
+
+</a
+      ><a name="594" class="Keyword"
+      >abstract</a
+      ><a name="602"
+      >
+  </a
+      ><a name="605" href="lib.groups.Unit.html#605" class="Function"
+      >Unit-group-is-trivial</a
+      ><a name="626"
+      > </a
+      ><a name="627" class="Symbol"
+      >:</a
+      ><a name="628"
+      > </a
+      ><a name="629" href="lib.types.Group.html#8063" class="Function"
+      >is-trivial&#7475;</a
+      ><a name="640"
+      > </a
+      ><a name="641" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="651"
+      >
+  </a
+      ><a name="654" href="lib.groups.Unit.html#605" class="Function"
+      >Unit-group-is-trivial</a
+      ><a name="675"
+      > </a
+      ><a name="676" class="Symbol"
+      >=</a
+      ><a name="677"
+      > </a
+      ><a name="678" class="Symbol"
+      >&#955;</a
+      ><a name="679"
+      > </a
+      ><a name="680" href="lib.groups.Unit.html#680" class="Bound"
+      >_</a
+      ><a name="681"
+      > </a
+      ><a name="682" class="Symbol"
+      >&#8594;</a
+      ><a name="683"
+      > </a
+      ><a name="684" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="687"
+      >
+
+  </a
+      ><a name="691" href="lib.groups.Unit.html#691" class="Function"
+      >iso-Unit-is-trivial</a
+      ><a name="710"
+      > </a
+      ><a name="711" class="Symbol"
+      >:</a
+      ><a name="712"
+      > </a
+      ><a name="713" class="Symbol"
+      >&#8704;</a
+      ><a name="714"
+      > </a
+      ><a name="715" class="Symbol"
+      >{</a
+      ><a name="716" href="lib.groups.Unit.html#716" class="Bound"
+      >i</a
+      ><a name="717" class="Symbol"
+      >}</a
+      ><a name="718"
+      > </a
+      ><a name="719" class="Symbol"
+      >{</a
+      ><a name="720" href="lib.groups.Unit.html#720" class="Bound"
+      >G</a
+      ><a name="721"
+      > </a
+      ><a name="722" class="Symbol"
+      >:</a
+      ><a name="723"
+      > </a
+      ><a name="724" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="729"
+      > </a
+      ><a name="730" href="lib.groups.Unit.html#716" class="Bound"
+      >i</a
+      ><a name="731" class="Symbol"
+      >}</a
+      ><a name="732"
+      > </a
+      ><a name="733" class="Symbol"
+      >&#8594;</a
+      ><a name="734"
+      > </a
+      ><a name="735" href="lib.groups.Unit.html#720" class="Bound"
+      >G</a
+      ><a name="736"
+      > </a
+      ><a name="737" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="739"
+      > </a
+      ><a name="740" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="750"
+      > </a
+      ><a name="751" class="Symbol"
+      >&#8594;</a
+      ><a name="752"
+      > </a
+      ><a name="753" href="lib.types.Group.html#8063" class="Function"
+      >is-trivial&#7475;</a
+      ><a name="764"
+      > </a
+      ><a name="765" href="lib.groups.Unit.html#720" class="Bound"
+      >G</a
+      ><a name="766"
+      >
+  </a
+      ><a name="769" href="lib.groups.Unit.html#691" class="Function"
+      >iso-Unit-is-trivial</a
+      ><a name="788"
+      > </a
+      ><a name="789" href="lib.groups.Unit.html#789" class="Bound"
+      >G-iso-0</a
+      ><a name="796"
+      > </a
+      ><a name="797" class="Symbol"
+      >=</a
+      ><a name="798"
+      > </a
+      ><a name="799" href="lib.groups.Isomorphism.html#8566" class="Function"
+      >iso-preserves'-trivial</a
+      ><a name="821"
+      > </a
+      ><a name="822" href="lib.groups.Unit.html#789" class="Bound"
+      >G-iso-0</a
+      ><a name="829"
+      > </a
+      ><a name="830" href="lib.groups.Unit.html#605" class="Function"
+      >Unit-group-is-trivial</a
+      ><a name="851"
+      >
+
+</a
+      ><a name="853" href="lib.groups.Unit.html#853" class="Function"
+      >0&#7475;-is-trivial</a
+      ><a name="866"
+      > </a
+      ><a name="867" class="Symbol"
+      >=</a
+      ><a name="868"
+      > </a
+      ><a name="869" href="lib.groups.Unit.html#605" class="Function"
+      >Unit-group-is-trivial</a
+      ><a name="890"
+      >
+</a
+      ><a name="891" href="lib.groups.Unit.html#891" class="Function"
+      >iso-0&#7475;-is-trivial</a
+      ><a name="908"
+      > </a
+      ><a name="909" class="Symbol"
+      >=</a
+      ><a name="910"
+      > </a
+      ><a name="911" href="lib.groups.Unit.html#691" class="Function"
+      >iso-Unit-is-trivial</a
+      ><a name="930"
+      >
+
+</a
+      ><a name="932" href="lib.groups.Unit.html#932" class="Function"
+      >trivial-iso-Unit</a
+      ><a name="948"
+      > </a
+      ><a name="949" class="Symbol"
+      >:</a
+      ><a name="950"
+      > </a
+      ><a name="951" class="Symbol"
+      >&#8704;</a
+      ><a name="952"
+      > </a
+      ><a name="953" class="Symbol"
+      >{</a
+      ><a name="954" href="lib.groups.Unit.html#954" class="Bound"
+      >i</a
+      ><a name="955" class="Symbol"
+      >}</a
+      ><a name="956"
+      > </a
+      ><a name="957" class="Symbol"
+      >{</a
+      ><a name="958" href="lib.groups.Unit.html#958" class="Bound"
+      >G</a
+      ><a name="959"
+      > </a
+      ><a name="960" class="Symbol"
+      >:</a
+      ><a name="961"
+      > </a
+      ><a name="962" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="967"
+      > </a
+      ><a name="968" href="lib.groups.Unit.html#954" class="Bound"
+      >i</a
+      ><a name="969" class="Symbol"
+      >}</a
+      ><a name="970"
+      > </a
+      ><a name="971" class="Symbol"
+      >&#8594;</a
+      ><a name="972"
+      > </a
+      ><a name="973" href="lib.types.Group.html#8063" class="Function"
+      >is-trivial&#7475;</a
+      ><a name="984"
+      > </a
+      ><a name="985" href="lib.groups.Unit.html#958" class="Bound"
+      >G</a
+      ><a name="986"
+      > </a
+      ><a name="987" class="Symbol"
+      >&#8594;</a
+      ><a name="988"
+      > </a
+      ><a name="989" href="lib.groups.Unit.html#958" class="Bound"
+      >G</a
+      ><a name="990"
+      > </a
+      ><a name="991" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="993"
+      > </a
+      ><a name="994" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="1004"
+      >
+</a
+      ><a name="1005" href="lib.groups.Unit.html#932" class="Function"
+      >trivial-iso-Unit</a
+      ><a name="1021"
+      > </a
+      ><a name="1022" class="Symbol"
+      >{</a
+      ><a name="1023" class="Argument"
+      >G</a
+      ><a name="1024"
+      > </a
+      ><a name="1025" class="Symbol"
+      >=</a
+      ><a name="1026"
+      > </a
+      ><a name="1027" href="lib.groups.Unit.html#1027" class="Bound"
+      >G</a
+      ><a name="1028" class="Symbol"
+      >}</a
+      ><a name="1029"
+      > </a
+      ><a name="1030" href="lib.groups.Unit.html#1030" class="Bound"
+      >G-triv</a
+      ><a name="1036"
+      > </a
+      ><a name="1037" class="Symbol"
+      >=</a
+      ><a name="1038"
+      > </a
+      ><a name="1039" href="lib.groups.Homomorphism.html#2532" class="InductiveConstructor"
+      >group-hom</a
+      ><a name="1048"
+      > </a
+      ><a name="1049" class="Symbol"
+      >(&#955;</a
+      ><a name="1051"
+      > </a
+      ><a name="1052" href="lib.groups.Unit.html#1052" class="Bound"
+      >_</a
+      ><a name="1053"
+      > </a
+      ><a name="1054" class="Symbol"
+      >&#8594;</a
+      ><a name="1055"
+      > </a
+      ><a name="1056" href="lib.types.Unit.html#131" class="InductiveConstructor"
+      >tt</a
+      ><a name="1058" class="Symbol"
+      >)</a
+      ><a name="1059"
+      > </a
+      ><a name="1060" class="Symbol"
+      >(&#955;</a
+      ><a name="1062"
+      > </a
+      ><a name="1063" href="lib.groups.Unit.html#1063" class="Bound"
+      >_</a
+      ><a name="1064"
+      > </a
+      ><a name="1065" href="lib.groups.Unit.html#1065" class="Bound"
+      >_</a
+      ><a name="1066"
+      > </a
+      ><a name="1067" class="Symbol"
+      >&#8594;</a
+      ><a name="1068"
+      > </a
+      ><a name="1069" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1072" class="Symbol"
+      >)</a
+      ><a name="1073"
+      > </a
+      ><a name="1074" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1075"
+      >
+  </a
+      ><a name="1078" href="lib.Equivalence.html#2854" class="Function"
+      >is-eq</a
+      ><a name="1083"
+      > </a
+      ><a name="1084" class="Symbol"
+      >_</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" class="Symbol"
+      >(&#955;</a
+      ><a name="1088"
+      > </a
+      ><a name="1089" href="lib.groups.Unit.html#1089" class="Bound"
+      >_</a
+      ><a name="1090"
+      > </a
+      ><a name="1091" class="Symbol"
+      >&#8594;</a
+      ><a name="1092"
+      > </a
+      ><a name="1093" href="lib.types.Group.html#276" class="Function"
+      >Group.ident</a
+      ><a name="1104"
+      > </a
+      ><a name="1105" href="lib.groups.Unit.html#1027" class="Bound"
+      >G</a
+      ><a name="1106" class="Symbol"
+      >)</a
+      ><a name="1107"
+      > </a
+      ><a name="1108" class="Symbol"
+      >(&#955;</a
+      ><a name="1110"
+      > </a
+      ><a name="1111" href="lib.groups.Unit.html#1111" class="Bound"
+      >_</a
+      ><a name="1112"
+      > </a
+      ><a name="1113" class="Symbol"
+      >&#8594;</a
+      ><a name="1114"
+      > </a
+      ><a name="1115" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1118" class="Symbol"
+      >)</a
+      ><a name="1119"
+      > </a
+      ><a name="1120" class="Symbol"
+      >(&#955;</a
+      ><a name="1122"
+      > </a
+      ><a name="1123" href="lib.groups.Unit.html#1123" class="Bound"
+      >_</a
+      ><a name="1124"
+      > </a
+      ><a name="1125" class="Symbol"
+      >&#8594;</a
+      ><a name="1126"
+      > </a
+      ><a name="1127" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1128"
+      > </a
+      ><a name="1129" class="Symbol"
+      >(</a
+      ><a name="1130" href="lib.groups.Unit.html#1030" class="Bound"
+      >G-triv</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" class="Symbol"
+      >_))</a
+      ><a name="1140"
+      >
+
+</a
+      ><a name="1142" href="lib.groups.Unit.html#1142" class="Function"
+      >trivial-iso-0&#7475;</a
+      ><a name="1156"
+      > </a
+      ><a name="1157" class="Symbol"
+      >=</a
+      ><a name="1158"
+      > </a
+      ><a name="1159" href="lib.groups.Unit.html#932" class="Function"
+      >trivial-iso-Unit</a
+      ><a name="1175"
+      >
+
+</a
+      ><a name="1177" class="Comment"
+      >{- the following should be replaced by [is-trivial] completely -}</a
+      ><a name="1242"
+      >
+
+</a
+      ><a name="1244" class="Keyword"
+      >abstract</a
+      ><a name="1252"
+      >
+  </a
+      ><a name="1255" href="lib.groups.Unit.html#1255" class="Function"
+      >contr-iso-Unit</a
+      ><a name="1269"
+      > </a
+      ><a name="1270" class="Symbol"
+      >:</a
+      ><a name="1271"
+      > </a
+      ><a name="1272" class="Symbol"
+      >&#8704;</a
+      ><a name="1273"
+      > </a
+      ><a name="1274" class="Symbol"
+      >{</a
+      ><a name="1275" href="lib.groups.Unit.html#1275" class="Bound"
+      >i</a
+      ><a name="1276" class="Symbol"
+      >}</a
+      ><a name="1277"
+      > </a
+      ><a name="1278" class="Symbol"
+      >(</a
+      ><a name="1279" href="lib.groups.Unit.html#1279" class="Bound"
+      >G</a
+      ><a name="1280"
+      > </a
+      ><a name="1281" class="Symbol"
+      >:</a
+      ><a name="1282"
+      > </a
+      ><a name="1283" href="lib.types.Group.html#6840" class="Record"
+      >Group</a
+      ><a name="1288"
+      > </a
+      ><a name="1289" href="lib.groups.Unit.html#1275" class="Bound"
+      >i</a
+      ><a name="1290" class="Symbol"
+      >)</a
+      ><a name="1291"
+      > </a
+      ><a name="1292" class="Symbol"
+      >&#8594;</a
+      ><a name="1293"
+      > </a
+      ><a name="1294" href="lib.NType.html#228" class="Function"
+      >is-contr</a
+      ><a name="1302"
+      > </a
+      ><a name="1303" class="Symbol"
+      >(</a
+      ><a name="1304" href="lib.types.Group.html#6903" class="Field"
+      >Group.El</a
+      ><a name="1312"
+      > </a
+      ><a name="1313" href="lib.groups.Unit.html#1279" class="Bound"
+      >G</a
+      ><a name="1314" class="Symbol"
+      >)</a
+      ><a name="1315"
+      > </a
+      ><a name="1316" class="Symbol"
+      >&#8594;</a
+      ><a name="1317"
+      > </a
+      ><a name="1318" href="lib.groups.Unit.html#1279" class="Bound"
+      >G</a
+      ><a name="1319"
+      > </a
+      ><a name="1320" href="lib.groups.Isomorphism.html#797" class="Function Operator"
+      >&#8771;&#7475;</a
+      ><a name="1322"
+      > </a
+      ><a name="1323" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="1333"
+      >
+  </a
+      ><a name="1336" href="lib.groups.Unit.html#1255" class="Function"
+      >contr-iso-Unit</a
+      ><a name="1350"
+      > </a
+      ><a name="1351" href="lib.groups.Unit.html#1351" class="Bound"
+      >G</a
+      ><a name="1352"
+      > </a
+      ><a name="1353" href="lib.groups.Unit.html#1353" class="Bound"
+      >pA</a
+      ><a name="1355"
+      > </a
+      ><a name="1356" class="Symbol"
+      >=</a
+      ><a name="1357"
+      > </a
+      ><a name="1358" href="lib.groups.Isomorphism.html#980" class="Function"
+      >&#8771;-to-&#8771;&#7475;</a
+      ><a name="1365"
+      > </a
+      ><a name="1366" class="Symbol"
+      >(</a
+      ><a name="1367" href="lib.Equivalence.html#9130" class="Function"
+      >contr-equiv-Unit</a
+      ><a name="1383"
+      > </a
+      ><a name="1384" href="lib.groups.Unit.html#1353" class="Bound"
+      >pA</a
+      ><a name="1386" class="Symbol"
+      >)</a
+      ><a name="1387"
+      > </a
+      ><a name="1388" class="Symbol"
+      >(&#955;</a
+      ><a name="1390"
+      > </a
+      ><a name="1391" href="lib.groups.Unit.html#1391" class="Bound"
+      >_</a
+      ><a name="1392"
+      > </a
+      ><a name="1393" href="lib.groups.Unit.html#1393" class="Bound"
+      >_</a
+      ><a name="1394"
+      > </a
+      ><a name="1395" class="Symbol"
+      >&#8594;</a
+      ><a name="1396"
+      > </a
+      ><a name="1397" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1400" class="Symbol"
+      >)</a
+      ><a name="1401"
+      >
+</a
+      ><a name="1402" href="lib.groups.Unit.html#1402" class="Function"
+      >contr-iso-0&#7475;</a
+      ><a name="1414"
+      > </a
+      ><a name="1415" class="Symbol"
+      >=</a
+      ><a name="1416"
+      > </a
+      ><a name="1417" href="lib.groups.Unit.html#1255" class="Function"
+      >contr-iso-Unit</a
+      ><a name="1431"
+      >
+
+</a
+      ><a name="1433" href="lib.groups.Unit.html#1433" class="Function"
+      >Unit-group-is-abelian</a
+      ><a name="1454"
+      > </a
+      ><a name="1455" class="Symbol"
+      >:</a
+      ><a name="1456"
+      > </a
+      ><a name="1457" href="lib.types.Group.html#7098" class="Function"
+      >is-abelian</a
+      ><a name="1467"
+      > </a
+      ><a name="1468" href="lib.groups.Unit.html#577" class="Function"
+      >0&#7475;</a
+      ><a name="1470"
+      >
+</a
+      ><a name="1471" href="lib.groups.Unit.html#1433" class="Function"
+      >Unit-group-is-abelian</a
+      ><a name="1492"
+      > </a
+      ><a name="1493" class="Symbol"
+      >_</a
+      ><a name="1494"
+      > </a
+      ><a name="1495" class="Symbol"
+      >_</a
+      ><a name="1496"
+      > </a
+      ><a name="1497" class="Symbol"
+      >=</a
+      ><a name="1498"
+      > </a
+      ><a name="1499" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1502"
+      >
+
+</a
+      ><a name="1504" href="lib.groups.Unit.html#1504" class="Function"
+      >0&#7475;-is-abelian</a
+      ><a name="1517"
+      > </a
+      ><a name="1518" class="Symbol"
+      >=</a
+      ><a name="1519"
+      > </a
+      ><a name="1520" href="lib.groups.Unit.html#1433" class="Function"
+      >Unit-group-is-abelian</a
+      ><a name="1541"
+      >
+
+</a
+      ><a name="1543" href="lib.groups.Unit.html#1543" class="Function"
+      >Unit-abgroup</a
+      ><a name="1555"
+      > </a
+      ><a name="1556" class="Symbol"
+      >:</a
+      ><a name="1557"
+      > </a
+      ><a name="1558" href="lib.types.Group.html#7277" class="Function"
+      >AbGroup&#8320;</a
+      ><a name="1566"
+      >
+</a
+      ><a name="1567" href="lib.groups.Unit.html#1543" class="Function"
+      >Unit-abgroup</a
+      ><a name="1579"
+      > </a
+      ><a name="1580" class="Symbol"
+      >=</a
+      ><a name="1581"
+      > </a
+      ><a name="1582" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="1592"
+      > </a
+      ><a name="1593" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1594"
+      > </a
+      ><a name="1595" href="lib.groups.Unit.html#1433" class="Function"
+      >Unit-group-is-abelian</a
+      ><a name="1616"
+      >
+
+</a
+      ><a name="1618" href="lib.groups.Unit.html#1618" class="Function"
+      >0&#7475;-abgroup</a
+      ><a name="1628"
+      > </a
+      ><a name="1629" class="Symbol"
+      >=</a
+      ><a name="1630"
+      > </a
+      ><a name="1631" href="lib.groups.Unit.html#1543" class="Function"
+      >Unit-abgroup</a
+      ><a name="1643"
+      >
+
+</a
+      ><a name="1645" class="Keyword"
+      >abstract</a
+      ><a name="1653"
+      >
+  </a
+      ><a name="1656" href="lib.groups.Unit.html#1656" class="Function"
+      >hom&#8321;-Unit-is-trivial</a
+      ><a name="1676"
+      > </a
+      ><a name="1677" class="Symbol"
+      >:</a
+      ><a name="1678"
+      > </a
+      ><a name="1679" class="Symbol"
+      >&#8704;</a
+      ><a name="1680"
+      > </a
+      ><a name="1681" class="Symbol"
+      >{</a
+      ><a name="1682" href="lib.groups.Unit.html#1682" class="Bound"
+      >i</a
+      ><a name="1683" class="Symbol"
+      >}</a
+      ><a name="1684"
+      > </a
+      ><a name="1685" class="Symbol"
+      >(</a
+      ><a name="1686" href="lib.groups.Unit.html#1686" class="Bound"
+      >G</a
+      ><a name="1687"
+      > </a
+      ><a name="1688" class="Symbol"
+      >:</a
+      ><a name="1689"
+      > </a
+      ><a name="1690" href="lib.types.Group.html#7210" class="Function"
+      >AbGroup</a
+      ><a name="1697"
+      > </a
+      ><a name="1698" href="lib.groups.Unit.html#1682" class="Bound"
+      >i</a
+      ><a name="1699" class="Symbol"
+      >)</a
+      ><a name="1700"
+      > </a
+      ><a name="1701" class="Symbol"
+      >&#8594;</a
+      ><a name="1702"
+      > </a
+      ><a name="1703" href="lib.types.Group.html#8063" class="Function"
+      >is-trivial&#7475;</a
+      ><a name="1714"
+      > </a
+      ><a name="1715" class="Symbol"
+      >(</a
+      ><a name="1716" href="lib.groups.Homomorphism.html#11441" class="Function"
+      >hom-group</a
+      ><a name="1725"
+      > </a
+      ><a name="1726" href="lib.groups.Unit.html#497" class="Function"
+      >Unit-group</a
+      ><a name="1736"
+      > </a
+      ><a name="1737" href="lib.groups.Unit.html#1686" class="Bound"
+      >G</a
+      ><a name="1738" class="Symbol"
+      >)</a
+      ><a name="1739"
+      >
+  </a
+      ><a name="1742" href="lib.groups.Unit.html#1656" class="Function"
+      >hom&#8321;-Unit-is-trivial</a
+      ><a name="1762"
+      > </a
+      ><a name="1763" href="lib.groups.Unit.html#1763" class="Bound"
+      >G</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" href="lib.groups.Unit.html#1765" class="Bound"
+      >&#966;</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" class="Symbol"
+      >=</a
+      ><a name="1768"
+      > </a
+      ><a name="1769" href="lib.groups.Homomorphism.html#3739" class="Function"
+      >group-hom=</a
+      ><a name="1779"
+      > </a
+      ><a name="1780" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="1781"
+      > </a
+      ><a name="1782" href="lib.Funext.html#3966" class="Function"
+      >&#955;=</a
+      ><a name="1784"
+      > </a
+      ><a name="1785" class="Symbol"
+      >&#955;</a
+      ><a name="1786"
+      > </a
+      ><a name="1787" href="lib.groups.Unit.html#1787" class="Bound"
+      >_</a
+      ><a name="1788"
+      > </a
+      ><a name="1789" class="Symbol"
+      >&#8594;</a
+      ><a name="1790"
+      > </a
+      ><a name="1791" href="lib.groups.Homomorphism.html#1390" class="Function"
+      >GroupHom.pres-ident</a
+      ><a name="1810"
+      > </a
+      ><a name="1811" href="lib.groups.Unit.html#1765" class="Bound"
+      >&#966;</a
+      ><a name="1812"
+      >
+
+</a
+      ><a name="1814" href="lib.groups.Unit.html#1814" class="Function"
+      >hom&#8321;-0&#7475;-is-trivial</a
+      ><a name="1832"
+      > </a
+      ><a name="1833" class="Symbol"
+      >=</a
+      ><a name="1834"
+      > </a
+      ><a name="1835" href="lib.groups.Unit.html#1656" class="Function"
+      >hom&#8321;-Unit-is-trivial</a
+      ><a name="1855"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

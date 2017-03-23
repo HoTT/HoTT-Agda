@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >HoTT</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >module</a
+      ><a name="48"
+      > </a
+      ><a name="49" href="HoTT.html#1" class="Module"
+      >HoTT</a
+      ><a name="53"
+      > </a
+      ><a name="54" class="Keyword"
+      >where</a
+      ><a name="59"
+      >
+
+</a
+      ><a name="61" class="Keyword"
+      >open</a
+      ><a name="65"
+      > </a
+      ><a name="66" class="Keyword"
+      >import</a
+      ><a name="72"
+      > </a
+      ><a name="73" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="83"
+      > </a
+      ><a name="84" class="Keyword"
+      >public</a
+      ><a name="90"
+      >
+
+</a
+      ><a name="92" class="Keyword"
+      >open</a
+      ><a name="96"
+      > </a
+      ><a name="97" class="Keyword"
+      >import</a
+      ><a name="103"
+      > </a
+      ><a name="104" href="lib.Equivalence2.html#1" class="Module"
+      >lib.Equivalence2</a
+      ><a name="120"
+      > </a
+      ><a name="121" class="Keyword"
+      >public</a
+      ><a name="127"
+      >
+</a
+      ><a name="128" class="Keyword"
+      >open</a
+      ><a name="132"
+      > </a
+      ><a name="133" class="Keyword"
+      >import</a
+      ><a name="139"
+      > </a
+      ><a name="140" href="lib.NConnected.html#1" class="Module"
+      >lib.NConnected</a
+      ><a name="154"
+      > </a
+      ><a name="155" class="Keyword"
+      >public</a
+      ><a name="161"
+      >
+</a
+      ><a name="162" class="Keyword"
+      >open</a
+      ><a name="166"
+      > </a
+      ><a name="167" class="Keyword"
+      >import</a
+      ><a name="173"
+      > </a
+      ><a name="174" href="lib.NType2.html#1" class="Module"
+      >lib.NType2</a
+      ><a name="184"
+      > </a
+      ><a name="185" class="Keyword"
+      >public</a
+      ><a name="191"
+      >
+</a
+      ><a name="192" class="Keyword"
+      >open</a
+      ><a name="196"
+      > </a
+      ><a name="197" class="Keyword"
+      >import</a
+      ><a name="203"
+      > </a
+      ><a name="204" href="lib.Relation2.html#1" class="Module"
+      >lib.Relation2</a
+      ><a name="217"
+      > </a
+      ><a name="218" class="Keyword"
+      >public</a
+      ><a name="224"
+      >
+</a
+      ><a name="225" class="Keyword"
+      >open</a
+      ><a name="229"
+      > </a
+      ><a name="230" class="Keyword"
+      >import</a
+      ><a name="236"
+      > </a
+      ><a name="237" href="lib.Function2.html#1" class="Module"
+      >lib.Function2</a
+      ><a name="250"
+      > </a
+      ><a name="251" class="Keyword"
+      >public</a
+      ><a name="257"
+      >
+
+</a
+      ><a name="259" class="Keyword"
+      >open</a
+      ><a name="263"
+      > </a
+      ><a name="264" class="Keyword"
+      >import</a
+      ><a name="270"
+      > </a
+      ><a name="271" href="lib.cubical.Cubical.html#1" class="Module"
+      >lib.cubical.Cubical</a
+      ><a name="290"
+      > </a
+      ><a name="291" class="Keyword"
+      >public</a
+      ><a name="297"
+      >
+</a
+      ><a name="298" class="Keyword"
+      >open</a
+      ><a name="302"
+      > </a
+      ><a name="303" class="Keyword"
+      >import</a
+      ><a name="309"
+      > </a
+      ><a name="310" href="lib.groups.Groups.html#1" class="Module"
+      >lib.groups.Groups</a
+      ><a name="327"
+      > </a
+      ><a name="328" class="Keyword"
+      >public</a
+      ><a name="334"
+      >
+</a
+      ><a name="335" class="Keyword"
+      >open</a
+      ><a name="339"
+      > </a
+      ><a name="340" class="Keyword"
+      >import</a
+      ><a name="346"
+      > </a
+      ><a name="347" href="lib.groupoids.Groupoids.html#1" class="Module"
+      >lib.groupoids.Groupoids</a
+      ><a name="370"
+      > </a
+      ><a name="371" class="Keyword"
+      >public</a
+      ><a name="377"
+      >
+</a
+      ><a name="378" class="Keyword"
+      >open</a
+      ><a name="382"
+      > </a
+      ><a name="383" class="Keyword"
+      >import</a
+      ><a name="389"
+      > </a
+      ><a name="390" href="lib.types.Types.html#1" class="Module"
+      >lib.types.Types</a
+      ><a name="405"
+      > </a
+      ><a name="406" class="Keyword"
+      >public</a
+      ><a name="412"
+      >
+
+</a
+      ><a name="414" class="Comment"
+      >{-
+To use coinduction in the form of [&#8734;], [&#9837;] and [&#9839;] you can do:
+
+open import HoTT
+open Coinduction
+
+You can also use coinductive records and copatterns instead, that&#8217;s prettier
+(see experimental/GlobularTypes.agda for an example)
+-}</a
+      ><a name="648"
+      >
+</a
+      ><a name="649" class="Keyword"
+      >module</a
+      ><a name="655"
+      > </a
+      ><a name="656" href="HoTT.html#656" class="Module"
+      >Coinduction</a
+      ><a name="667"
+      > </a
+      ><a name="668" class="Keyword"
+      >where</a
+      ><a name="673"
+      >
+  </a
+      ><a name="676" class="Keyword"
+      >open</a
+      ><a name="680"
+      > </a
+      ><a name="681" class="Keyword"
+      >import</a
+      ><a name="687"
+      > </a
+      ><a name="688" href="lib.Coinduction.html#1" class="Module"
+      >lib.Coinduction</a
+      ><a name="703"
+      > </a
+      ><a name="704" class="Keyword"
+      >public</a
+      ><a name="710"
+      >
+
+</a
+      ><a name="712" class="Comment"
+      >-- deprecated operators</a
+      ><a name="735"
+      >
+</a
+      ><a name="736" class="Keyword"
+      >module</a
+      ><a name="742"
+      > </a
+      ><a name="743" href="HoTT.html#743" class="Module"
+      >_</a
+      ><a name="744"
+      > </a
+      ><a name="745" class="Keyword"
+      >where</a
+      ><a name="750"
+      >
+  </a
+      ><a name="753" class="Keyword"
+      >infix</a
+      ><a name="758"
+      > </a
+      ><a name="759" class="Number"
+      >15</a
+      ><a name="761"
+      > </a
+      ><a name="762" href="HoTT.html#767" class="Function Operator"
+      >_&#8718;</a
+      ><a name="764"
+      >
+  </a
+      ><a name="767" href="HoTT.html#767" class="Function Operator"
+      >_&#8718;</a
+      ><a name="769"
+      > </a
+      ><a name="770" class="Symbol"
+      >=</a
+      ><a name="771"
+      > </a
+      ><a name="772" href="lib.Base.html#7681" class="Function Operator"
+      >_=&#8718;</a
+      ><a name="775"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>

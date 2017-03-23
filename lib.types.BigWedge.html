@@ -1,0 +1,4240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >lib.types.BigWedge</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Symbol"
+      >{-#</a
+      ><a name="4"
+      > </a
+      ><a name="5" class="Keyword"
+      >OPTIONS</a
+      ><a name="12"
+      > --without-K --rewriting </a
+      ><a name="37" class="Symbol"
+      >#-}</a
+      ><a name="40"
+      >
+
+</a
+      ><a name="42" class="Keyword"
+      >open</a
+      ><a name="46"
+      > </a
+      ><a name="47" class="Keyword"
+      >import</a
+      ><a name="53"
+      > </a
+      ><a name="54" href="lib.Basics.html#1" class="Module"
+      >lib.Basics</a
+      ><a name="64"
+      >
+</a
+      ><a name="65" class="Keyword"
+      >open</a
+      ><a name="69"
+      > </a
+      ><a name="70" class="Keyword"
+      >import</a
+      ><a name="76"
+      > </a
+      ><a name="77" href="lib.cubical.Square.html#1" class="Module"
+      >lib.cubical.Square</a
+      ><a name="95"
+      >
+</a
+      ><a name="96" class="Keyword"
+      >open</a
+      ><a name="100"
+      > </a
+      ><a name="101" class="Keyword"
+      >import</a
+      ><a name="107"
+      > </a
+      ><a name="108" href="lib.types.Bool.html#1" class="Module"
+      >lib.types.Bool</a
+      ><a name="122"
+      >
+</a
+      ><a name="123" class="Keyword"
+      >open</a
+      ><a name="127"
+      > </a
+      ><a name="128" class="Keyword"
+      >import</a
+      ><a name="134"
+      > </a
+      ><a name="135" href="lib.types.Cofiber.html#1" class="Module"
+      >lib.types.Cofiber</a
+      ><a name="152"
+      >
+</a
+      ><a name="153" class="Keyword"
+      >open</a
+      ><a name="157"
+      > </a
+      ><a name="158" class="Keyword"
+      >import</a
+      ><a name="164"
+      > </a
+      ><a name="165" href="lib.types.Lift.html#1" class="Module"
+      >lib.types.Lift</a
+      ><a name="179"
+      >
+</a
+      ><a name="180" class="Keyword"
+      >open</a
+      ><a name="184"
+      > </a
+      ><a name="185" class="Keyword"
+      >import</a
+      ><a name="191"
+      > </a
+      ><a name="192" href="lib.types.Paths.html#1" class="Module"
+      >lib.types.Paths</a
+      ><a name="207"
+      >
+</a
+      ><a name="208" class="Keyword"
+      >open</a
+      ><a name="212"
+      > </a
+      ><a name="213" class="Keyword"
+      >import</a
+      ><a name="219"
+      > </a
+      ><a name="220" href="lib.types.Pointed.html#1" class="Module"
+      >lib.types.Pointed</a
+      ><a name="237"
+      >
+</a
+      ><a name="238" class="Keyword"
+      >open</a
+      ><a name="242"
+      > </a
+      ><a name="243" class="Keyword"
+      >import</a
+      ><a name="249"
+      > </a
+      ><a name="250" href="lib.types.PushoutFmap.html#1" class="Module"
+      >lib.types.PushoutFmap</a
+      ><a name="271"
+      >
+</a
+      ><a name="272" class="Keyword"
+      >open</a
+      ><a name="276"
+      > </a
+      ><a name="277" class="Keyword"
+      >import</a
+      ><a name="283"
+      > </a
+      ><a name="284" href="lib.types.Sigma.html#1" class="Module"
+      >lib.types.Sigma</a
+      ><a name="299"
+      >
+</a
+      ><a name="300" class="Keyword"
+      >open</a
+      ><a name="304"
+      > </a
+      ><a name="305" class="Keyword"
+      >import</a
+      ><a name="311"
+      > </a
+      ><a name="312" href="lib.types.Span.html#1" class="Module"
+      >lib.types.Span</a
+      ><a name="326"
+      >
+</a
+      ><a name="327" class="Keyword"
+      >open</a
+      ><a name="331"
+      > </a
+      ><a name="332" class="Keyword"
+      >import</a
+      ><a name="338"
+      > </a
+      ><a name="339" href="lib.types.Suspension.html#1" class="Module"
+      >lib.types.Suspension</a
+      ><a name="359"
+      >
+</a
+      ><a name="360" class="Keyword"
+      >open</a
+      ><a name="364"
+      > </a
+      ><a name="365" class="Keyword"
+      >import</a
+      ><a name="371"
+      > </a
+      ><a name="372" href="lib.types.Wedge.html#1" class="Module"
+      >lib.types.Wedge</a
+      ><a name="387"
+      >
+
+</a
+      ><a name="389" class="Keyword"
+      >module</a
+      ><a name="395"
+      > </a
+      ><a name="396" href="lib.types.BigWedge.html#1" class="Module"
+      >lib.types.BigWedge</a
+      ><a name="414"
+      > </a
+      ><a name="415" class="Keyword"
+      >where</a
+      ><a name="420"
+      >
+
+</a
+      ><a name="422" class="Keyword"
+      >module</a
+      ><a name="428"
+      > </a
+      ><a name="429" href="lib.types.BigWedge.html#429" class="Module"
+      >_</a
+      ><a name="430"
+      > </a
+      ><a name="431" class="Symbol"
+      >{</a
+      ><a name="432" href="lib.types.BigWedge.html#432" class="Bound"
+      >i</a
+      ><a name="433"
+      > </a
+      ><a name="434" href="lib.types.BigWedge.html#434" class="Bound"
+      >j</a
+      ><a name="435" class="Symbol"
+      >}</a
+      ><a name="436"
+      > </a
+      ><a name="437" class="Symbol"
+      >{</a
+      ><a name="438" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="439"
+      > </a
+      ><a name="440" class="Symbol"
+      >:</a
+      ><a name="441"
+      > </a
+      ><a name="442" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="446"
+      > </a
+      ><a name="447" href="lib.types.BigWedge.html#432" class="Bound"
+      >i</a
+      ><a name="448" class="Symbol"
+      >}</a
+      ><a name="449"
+      > </a
+      ><a name="450" class="Keyword"
+      >where</a
+      ><a name="455"
+      >
+
+  </a
+      ><a name="459" class="Comment"
+      >{- the function for cofiber -}</a
+      ><a name="489"
+      >
+  </a
+      ><a name="492" href="lib.types.BigWedge.html#492" class="Function"
+      >bigwedge-f</a
+      ><a name="502"
+      > </a
+      ><a name="503" class="Symbol"
+      >:</a
+      ><a name="504"
+      > </a
+      ><a name="505" class="Symbol"
+      >(</a
+      ><a name="506" href="lib.types.BigWedge.html#506" class="Bound"
+      >X</a
+      ><a name="507"
+      > </a
+      ><a name="508" class="Symbol"
+      >:</a
+      ><a name="509"
+      > </a
+      ><a name="510" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="511"
+      > </a
+      ><a name="512" class="Symbol"
+      >&#8594;</a
+      ><a name="513"
+      > </a
+      ><a name="514" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="517"
+      > </a
+      ><a name="518" href="lib.types.BigWedge.html#434" class="Bound"
+      >j</a
+      ><a name="519" class="Symbol"
+      >)</a
+      ><a name="520"
+      > </a
+      ><a name="521" class="Symbol"
+      >&#8594;</a
+      ><a name="522"
+      > </a
+      ><a name="523" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="524"
+      > </a
+      ><a name="525" class="Symbol"
+      >&#8594;</a
+      ><a name="526"
+      > </a
+      ><a name="527" href="lib.Base.html#5255" class="Record"
+      >&#931;</a
+      ><a name="528"
+      > </a
+      ><a name="529" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="530"
+      > </a
+      ><a name="531" class="Symbol"
+      >(</a
+      ><a name="532" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="535"
+      > </a
+      ><a name="536" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="537"
+      > </a
+      ><a name="538" href="lib.types.BigWedge.html#506" class="Bound"
+      >X</a
+      ><a name="539" class="Symbol"
+      >)</a
+      ><a name="540"
+      >
+  </a
+      ><a name="543" href="lib.types.BigWedge.html#492" class="Function"
+      >bigwedge-f</a
+      ><a name="553"
+      > </a
+      ><a name="554" href="lib.types.BigWedge.html#554" class="Bound"
+      >X</a
+      ><a name="555"
+      > </a
+      ><a name="556" href="lib.types.BigWedge.html#556" class="Bound"
+      >a</a
+      ><a name="557"
+      > </a
+      ><a name="558" class="Symbol"
+      >=</a
+      ><a name="559"
+      > </a
+      ><a name="560" href="lib.types.BigWedge.html#556" class="Bound"
+      >a</a
+      ><a name="561"
+      > </a
+      ><a name="562" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="563"
+      > </a
+      ><a name="564" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="566"
+      > </a
+      ><a name="567" class="Symbol"
+      >(</a
+      ><a name="568" href="lib.types.BigWedge.html#554" class="Bound"
+      >X</a
+      ><a name="569"
+      > </a
+      ><a name="570" href="lib.types.BigWedge.html#556" class="Bound"
+      >a</a
+      ><a name="571" class="Symbol"
+      >)</a
+      ><a name="572"
+      >
+
+  </a
+      ><a name="576" href="lib.types.BigWedge.html#576" class="Function"
+      >bigwedge-span</a
+      ><a name="589"
+      > </a
+      ><a name="590" class="Symbol"
+      >:</a
+      ><a name="591"
+      > </a
+      ><a name="592" class="Symbol"
+      >(</a
+      ><a name="593" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="594"
+      > </a
+      ><a name="595" class="Symbol"
+      >&#8594;</a
+      ><a name="596"
+      > </a
+      ><a name="597" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="600"
+      > </a
+      ><a name="601" href="lib.types.BigWedge.html#434" class="Bound"
+      >j</a
+      ><a name="602" class="Symbol"
+      >)</a
+      ><a name="603"
+      > </a
+      ><a name="604" class="Symbol"
+      >&#8594;</a
+      ><a name="605"
+      > </a
+      ><a name="606" href="lib.types.Span.html#193" class="Record"
+      >Span</a
+      ><a name="610"
+      >
+  </a
+      ><a name="613" href="lib.types.BigWedge.html#576" class="Function"
+      >bigwedge-span</a
+      ><a name="626"
+      > </a
+      ><a name="627" href="lib.types.BigWedge.html#627" class="Bound"
+      >X</a
+      ><a name="628"
+      > </a
+      ><a name="629" class="Symbol"
+      >=</a
+      ><a name="630"
+      > </a
+      ><a name="631" href="lib.types.Cofiber.html#369" class="Function"
+      >cofiber-span</a
+      ><a name="643"
+      > </a
+      ><a name="644" class="Symbol"
+      >(</a
+      ><a name="645" href="lib.types.BigWedge.html#492" class="Function"
+      >bigwedge-f</a
+      ><a name="655"
+      > </a
+      ><a name="656" href="lib.types.BigWedge.html#627" class="Bound"
+      >X</a
+      ><a name="657" class="Symbol"
+      >)</a
+      ><a name="658"
+      >
+
+  </a
+      ><a name="662" href="lib.types.BigWedge.html#662" class="Function"
+      >BigWedge</a
+      ><a name="670"
+      > </a
+      ><a name="671" class="Symbol"
+      >:</a
+      ><a name="672"
+      > </a
+      ><a name="673" class="Symbol"
+      >(</a
+      ><a name="674" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="675"
+      > </a
+      ><a name="676" class="Symbol"
+      >&#8594;</a
+      ><a name="677"
+      > </a
+      ><a name="678" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="681"
+      > </a
+      ><a name="682" href="lib.types.BigWedge.html#434" class="Bound"
+      >j</a
+      ><a name="683" class="Symbol"
+      >)</a
+      ><a name="684"
+      > </a
+      ><a name="685" class="Symbol"
+      >&#8594;</a
+      ><a name="686"
+      > </a
+      ><a name="687" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="691"
+      > </a
+      ><a name="692" class="Symbol"
+      >(</a
+      ><a name="693" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="697"
+      > </a
+      ><a name="698" href="lib.types.BigWedge.html#432" class="Bound"
+      >i</a
+      ><a name="699"
+      > </a
+      ><a name="700" href="lib.types.BigWedge.html#434" class="Bound"
+      >j</a
+      ><a name="701" class="Symbol"
+      >)</a
+      ><a name="702"
+      >
+  </a
+      ><a name="705" href="lib.types.BigWedge.html#662" class="Function"
+      >BigWedge</a
+      ><a name="713"
+      > </a
+      ><a name="714" href="lib.types.BigWedge.html#714" class="Bound"
+      >X</a
+      ><a name="715"
+      > </a
+      ><a name="716" class="Symbol"
+      >=</a
+      ><a name="717"
+      > </a
+      ><a name="718" href="lib.types.Cofiber.html#436" class="Function"
+      >Cofiber</a
+      ><a name="725"
+      > </a
+      ><a name="726" class="Symbol"
+      >(</a
+      ><a name="727" href="lib.types.BigWedge.html#492" class="Function"
+      >bigwedge-f</a
+      ><a name="737"
+      > </a
+      ><a name="738" href="lib.types.BigWedge.html#714" class="Bound"
+      >X</a
+      ><a name="739" class="Symbol"
+      >)</a
+      ><a name="740"
+      >
+
+  </a
+      ><a name="744" href="lib.types.BigWedge.html#744" class="Function"
+      >bwbase</a
+      ><a name="750"
+      > </a
+      ><a name="751" class="Symbol"
+      >:</a
+      ><a name="752"
+      > </a
+      ><a name="753" class="Symbol"
+      >{</a
+      ><a name="754" href="lib.types.BigWedge.html#754" class="Bound"
+      >X</a
+      ><a name="755"
+      > </a
+      ><a name="756" class="Symbol"
+      >:</a
+      ><a name="757"
+      > </a
+      ><a name="758" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="759"
+      > </a
+      ><a name="760" class="Symbol"
+      >&#8594;</a
+      ><a name="761"
+      > </a
+      ><a name="762" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="765"
+      > </a
+      ><a name="766" href="lib.types.BigWedge.html#434" class="Bound"
+      >j</a
+      ><a name="767" class="Symbol"
+      >}</a
+      ><a name="768"
+      > </a
+      ><a name="769" class="Symbol"
+      >&#8594;</a
+      ><a name="770"
+      > </a
+      ><a name="771" href="lib.types.BigWedge.html#662" class="Function"
+      >BigWedge</a
+      ><a name="779"
+      > </a
+      ><a name="780" href="lib.types.BigWedge.html#754" class="Bound"
+      >X</a
+      ><a name="781"
+      >
+  </a
+      ><a name="784" href="lib.types.BigWedge.html#744" class="Function"
+      >bwbase</a
+      ><a name="790"
+      > </a
+      ><a name="791" class="Symbol"
+      >=</a
+      ><a name="792"
+      > </a
+      ><a name="793" href="lib.types.Cofiber.html#726" class="Function"
+      >cfbase</a
+      ><a name="799"
+      >
+
+  </a
+      ><a name="803" href="lib.types.BigWedge.html#803" class="Function"
+      >bwin</a
+      ><a name="807"
+      > </a
+      ><a name="808" class="Symbol"
+      >:</a
+      ><a name="809"
+      > </a
+      ><a name="810" class="Symbol"
+      >{</a
+      ><a name="811" href="lib.types.BigWedge.html#811" class="Bound"
+      >X</a
+      ><a name="812"
+      > </a
+      ><a name="813" class="Symbol"
+      >:</a
+      ><a name="814"
+      > </a
+      ><a name="815" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="816"
+      > </a
+      ><a name="817" class="Symbol"
+      >&#8594;</a
+      ><a name="818"
+      > </a
+      ><a name="819" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="822"
+      > </a
+      ><a name="823" href="lib.types.BigWedge.html#434" class="Bound"
+      >j</a
+      ><a name="824" class="Symbol"
+      >}</a
+      ><a name="825"
+      > </a
+      ><a name="826" class="Symbol"
+      >&#8594;</a
+      ><a name="827"
+      > </a
+      ><a name="828" class="Symbol"
+      >(</a
+      ><a name="829" href="lib.types.BigWedge.html#829" class="Bound"
+      >a</a
+      ><a name="830"
+      > </a
+      ><a name="831" class="Symbol"
+      >:</a
+      ><a name="832"
+      > </a
+      ><a name="833" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="834" class="Symbol"
+      >)</a
+      ><a name="835"
+      > </a
+      ><a name="836" class="Symbol"
+      >&#8594;</a
+      ><a name="837"
+      > </a
+      ><a name="838" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="841"
+      > </a
+      ><a name="842" class="Symbol"
+      >(</a
+      ><a name="843" href="lib.types.BigWedge.html#811" class="Bound"
+      >X</a
+      ><a name="844"
+      > </a
+      ><a name="845" href="lib.types.BigWedge.html#829" class="Bound"
+      >a</a
+      ><a name="846" class="Symbol"
+      >)</a
+      ><a name="847"
+      > </a
+      ><a name="848" class="Symbol"
+      >&#8594;</a
+      ><a name="849"
+      > </a
+      ><a name="850" href="lib.types.BigWedge.html#662" class="Function"
+      >BigWedge</a
+      ><a name="858"
+      > </a
+      ><a name="859" href="lib.types.BigWedge.html#811" class="Bound"
+      >X</a
+      ><a name="860"
+      >
+  </a
+      ><a name="863" href="lib.types.BigWedge.html#803" class="Function"
+      >bwin</a
+      ><a name="867"
+      > </a
+      ><a name="868" class="Symbol"
+      >=</a
+      ><a name="869"
+      > </a
+      ><a name="870" href="lib.Base.html#8450" class="Function"
+      >curry</a
+      ><a name="875"
+      > </a
+      ><a name="876" href="lib.types.Cofiber.html#769" class="Function"
+      >cfcod</a
+      ><a name="881"
+      >
+
+  </a
+      ><a name="885" href="lib.types.BigWedge.html#885" class="Function"
+      >&#8857;BigWedge</a
+      ><a name="894"
+      > </a
+      ><a name="895" class="Symbol"
+      >:</a
+      ><a name="896"
+      > </a
+      ><a name="897" class="Symbol"
+      >(</a
+      ><a name="898" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="899"
+      > </a
+      ><a name="900" class="Symbol"
+      >&#8594;</a
+      ><a name="901"
+      > </a
+      ><a name="902" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="905"
+      > </a
+      ><a name="906" href="lib.types.BigWedge.html#434" class="Bound"
+      >j</a
+      ><a name="907" class="Symbol"
+      >)</a
+      ><a name="908"
+      > </a
+      ><a name="909" class="Symbol"
+      >&#8594;</a
+      ><a name="910"
+      > </a
+      ><a name="911" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="914"
+      > </a
+      ><a name="915" class="Symbol"
+      >(</a
+      ><a name="916" href="Agda.Primitive.html#655" class="Primitive"
+      >lmax</a
+      ><a name="920"
+      > </a
+      ><a name="921" href="lib.types.BigWedge.html#432" class="Bound"
+      >i</a
+      ><a name="922"
+      > </a
+      ><a name="923" href="lib.types.BigWedge.html#434" class="Bound"
+      >j</a
+      ><a name="924" class="Symbol"
+      >)</a
+      ><a name="925"
+      >
+  </a
+      ><a name="928" href="lib.types.BigWedge.html#885" class="Function"
+      >&#8857;BigWedge</a
+      ><a name="937"
+      > </a
+      ><a name="938" href="lib.types.BigWedge.html#938" class="Bound"
+      >X</a
+      ><a name="939"
+      > </a
+      ><a name="940" class="Symbol"
+      >=</a
+      ><a name="941"
+      > </a
+      ><a name="942" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >&#8857;[</a
+      ><a name="944"
+      > </a
+      ><a name="945" href="lib.types.BigWedge.html#662" class="Function"
+      >BigWedge</a
+      ><a name="953"
+      > </a
+      ><a name="954" href="lib.types.BigWedge.html#938" class="Bound"
+      >X</a
+      ><a name="955"
+      > </a
+      ><a name="956" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="957"
+      > </a
+      ><a name="958" href="lib.types.BigWedge.html#744" class="Function"
+      >bwbase</a
+      ><a name="964"
+      > </a
+      ><a name="965" href="lib.Base.html#9638" class="InductiveConstructor Operator"
+      >]</a
+      ><a name="966"
+      >
+
+  </a
+      ><a name="970" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="976"
+      > </a
+      ><a name="977" class="Symbol"
+      >:</a
+      ><a name="978"
+      > </a
+      ><a name="979" class="Symbol"
+      >{</a
+      ><a name="980" href="lib.types.BigWedge.html#980" class="Bound"
+      >X</a
+      ><a name="981"
+      > </a
+      ><a name="982" class="Symbol"
+      >:</a
+      ><a name="983"
+      > </a
+      ><a name="984" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="985"
+      > </a
+      ><a name="986" class="Symbol"
+      >&#8594;</a
+      ><a name="987"
+      > </a
+      ><a name="988" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="991"
+      > </a
+      ><a name="992" href="lib.types.BigWedge.html#434" class="Bound"
+      >j</a
+      ><a name="993" class="Symbol"
+      >}</a
+      ><a name="994"
+      > </a
+      ><a name="995" class="Symbol"
+      >&#8594;</a
+      ><a name="996"
+      > </a
+      ><a name="997" class="Symbol"
+      >(</a
+      ><a name="998" href="lib.types.BigWedge.html#998" class="Bound"
+      >a</a
+      ><a name="999"
+      > </a
+      ><a name="1000" class="Symbol"
+      >:</a
+      ><a name="1001"
+      > </a
+      ><a name="1002" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="1003" class="Symbol"
+      >)</a
+      ><a name="1004"
+      > </a
+      ><a name="1005" class="Symbol"
+      >&#8594;</a
+      ><a name="1006"
+      > </a
+      ><a name="1007" href="lib.types.BigWedge.html#744" class="Function"
+      >bwbase</a
+      ><a name="1013"
+      > </a
+      ><a name="1014" class="Symbol"
+      >{</a
+      ><a name="1015" href="lib.types.BigWedge.html#980" class="Bound"
+      >X</a
+      ><a name="1016" class="Symbol"
+      >}</a
+      ><a name="1017"
+      > </a
+      ><a name="1018" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1020"
+      > </a
+      ><a name="1021" href="lib.types.BigWedge.html#803" class="Function"
+      >bwin</a
+      ><a name="1025"
+      > </a
+      ><a name="1026" href="lib.types.BigWedge.html#998" class="Bound"
+      >a</a
+      ><a name="1027"
+      > </a
+      ><a name="1028" class="Symbol"
+      >(</a
+      ><a name="1029" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1031"
+      > </a
+      ><a name="1032" class="Symbol"
+      >(</a
+      ><a name="1033" href="lib.types.BigWedge.html#980" class="Bound"
+      >X</a
+      ><a name="1034"
+      > </a
+      ><a name="1035" href="lib.types.BigWedge.html#998" class="Bound"
+      >a</a
+      ><a name="1036" class="Symbol"
+      >))</a
+      ><a name="1038"
+      >
+  </a
+      ><a name="1041" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="1047"
+      > </a
+      ><a name="1048" class="Symbol"
+      >=</a
+      ><a name="1049"
+      > </a
+      ><a name="1050" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="1056"
+      >
+
+  </a
+      ><a name="1060" href="lib.types.BigWedge.html#1060" class="Function"
+      >&#8857;bwin</a
+      ><a name="1065"
+      > </a
+      ><a name="1066" class="Symbol"
+      >:</a
+      ><a name="1067"
+      > </a
+      ><a name="1068" class="Symbol"
+      >{</a
+      ><a name="1069" href="lib.types.BigWedge.html#1069" class="Bound"
+      >X</a
+      ><a name="1070"
+      > </a
+      ><a name="1071" class="Symbol"
+      >:</a
+      ><a name="1072"
+      > </a
+      ><a name="1073" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="1074"
+      > </a
+      ><a name="1075" class="Symbol"
+      >&#8594;</a
+      ><a name="1076"
+      > </a
+      ><a name="1077" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1080"
+      > </a
+      ><a name="1081" href="lib.types.BigWedge.html#434" class="Bound"
+      >j</a
+      ><a name="1082" class="Symbol"
+      >}</a
+      ><a name="1083"
+      > </a
+      ><a name="1084" class="Symbol"
+      >&#8594;</a
+      ><a name="1085"
+      > </a
+      ><a name="1086" class="Symbol"
+      >(</a
+      ><a name="1087" href="lib.types.BigWedge.html#1087" class="Bound"
+      >a</a
+      ><a name="1088"
+      > </a
+      ><a name="1089" class="Symbol"
+      >:</a
+      ><a name="1090"
+      > </a
+      ><a name="1091" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="1092" class="Symbol"
+      >)</a
+      ><a name="1093"
+      > </a
+      ><a name="1094" class="Symbol"
+      >&#8594;</a
+      ><a name="1095"
+      > </a
+      ><a name="1096" href="lib.types.BigWedge.html#1069" class="Bound"
+      >X</a
+      ><a name="1097"
+      > </a
+      ><a name="1098" href="lib.types.BigWedge.html#1087" class="Bound"
+      >a</a
+      ><a name="1099"
+      > </a
+      ><a name="1100" href="lib.Base.html#9933" class="Function Operator"
+      >&#8857;&#8594;</a
+      ><a name="1102"
+      > </a
+      ><a name="1103" href="lib.types.BigWedge.html#885" class="Function"
+      >&#8857;BigWedge</a
+      ><a name="1112"
+      > </a
+      ><a name="1113" href="lib.types.BigWedge.html#1069" class="Bound"
+      >X</a
+      ><a name="1114"
+      >
+  </a
+      ><a name="1117" href="lib.types.BigWedge.html#1060" class="Function"
+      >&#8857;bwin</a
+      ><a name="1122"
+      > </a
+      ><a name="1123" href="lib.types.BigWedge.html#1123" class="Bound"
+      >a</a
+      ><a name="1124"
+      > </a
+      ><a name="1125" class="Symbol"
+      >=</a
+      ><a name="1126"
+      > </a
+      ><a name="1127" class="Symbol"
+      >(</a
+      ><a name="1128" href="lib.types.BigWedge.html#803" class="Function"
+      >bwin</a
+      ><a name="1132"
+      > </a
+      ><a name="1133" href="lib.types.BigWedge.html#1123" class="Bound"
+      >a</a
+      ><a name="1134"
+      > </a
+      ><a name="1135" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1136"
+      > </a
+      ><a name="1137" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="1138"
+      > </a
+      ><a name="1139" class="Symbol"
+      >(</a
+      ><a name="1140" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="1146"
+      > </a
+      ><a name="1147" href="lib.types.BigWedge.html#1123" class="Bound"
+      >a</a
+      ><a name="1148" class="Symbol"
+      >))</a
+      ><a name="1150"
+      >
+
+  </a
+      ><a name="1154" class="Keyword"
+      >module</a
+      ><a name="1160"
+      > </a
+      ><a name="1161" href="lib.types.BigWedge.html#1161" class="Module"
+      >BigWedgeElim</a
+      ><a name="1173"
+      > </a
+      ><a name="1174" class="Symbol"
+      >{</a
+      ><a name="1175" href="lib.types.BigWedge.html#1175" class="Bound"
+      >X</a
+      ><a name="1176"
+      > </a
+      ><a name="1177" class="Symbol"
+      >:</a
+      ><a name="1178"
+      > </a
+      ><a name="1179" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="1180"
+      > </a
+      ><a name="1181" class="Symbol"
+      >&#8594;</a
+      ><a name="1182"
+      > </a
+      ><a name="1183" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1186"
+      > </a
+      ><a name="1187" href="lib.types.BigWedge.html#434" class="Bound"
+      >j</a
+      ><a name="1188" class="Symbol"
+      >}</a
+      ><a name="1189"
+      > </a
+      ><a name="1190" class="Symbol"
+      >{</a
+      ><a name="1191" href="lib.types.BigWedge.html#1191" class="Bound"
+      >k</a
+      ><a name="1192" class="Symbol"
+      >}</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" class="Symbol"
+      >{</a
+      ><a name="1195" href="lib.types.BigWedge.html#1195" class="Bound"
+      >P</a
+      ><a name="1196"
+      > </a
+      ><a name="1197" class="Symbol"
+      >:</a
+      ><a name="1198"
+      > </a
+      ><a name="1199" href="lib.types.BigWedge.html#662" class="Function"
+      >BigWedge</a
+      ><a name="1207"
+      > </a
+      ><a name="1208" href="lib.types.BigWedge.html#1175" class="Bound"
+      >X</a
+      ><a name="1209"
+      > </a
+      ><a name="1210" class="Symbol"
+      >&#8594;</a
+      ><a name="1211"
+      > </a
+      ><a name="1212" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1216"
+      > </a
+      ><a name="1217" href="lib.types.BigWedge.html#1191" class="Bound"
+      >k</a
+      ><a name="1218" class="Symbol"
+      >}</a
+      ><a name="1219"
+      >
+    </a
+      ><a name="1224" class="Symbol"
+      >(</a
+      ><a name="1225" href="lib.types.BigWedge.html#1225" class="Bound"
+      >base*</a
+      ><a name="1230"
+      > </a
+      ><a name="1231" class="Symbol"
+      >:</a
+      ><a name="1232"
+      > </a
+      ><a name="1233" href="lib.types.BigWedge.html#1195" class="Bound"
+      >P</a
+      ><a name="1234"
+      > </a
+      ><a name="1235" href="lib.types.BigWedge.html#744" class="Function"
+      >bwbase</a
+      ><a name="1241" class="Symbol"
+      >)</a
+      ><a name="1242"
+      > </a
+      ><a name="1243" class="Symbol"
+      >(</a
+      ><a name="1244" href="lib.types.BigWedge.html#1244" class="Bound"
+      >in*</a
+      ><a name="1247"
+      > </a
+      ><a name="1248" class="Symbol"
+      >:</a
+      ><a name="1249"
+      > </a
+      ><a name="1250" class="Symbol"
+      >(</a
+      ><a name="1251" href="lib.types.BigWedge.html#1251" class="Bound"
+      >a</a
+      ><a name="1252"
+      > </a
+      ><a name="1253" class="Symbol"
+      >:</a
+      ><a name="1254"
+      > </a
+      ><a name="1255" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="1256" class="Symbol"
+      >)</a
+      ><a name="1257"
+      > </a
+      ><a name="1258" class="Symbol"
+      >(</a
+      ><a name="1259" href="lib.types.BigWedge.html#1259" class="Bound"
+      >x</a
+      ><a name="1260"
+      > </a
+      ><a name="1261" class="Symbol"
+      >:</a
+      ><a name="1262"
+      > </a
+      ><a name="1263" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="1266"
+      > </a
+      ><a name="1267" class="Symbol"
+      >(</a
+      ><a name="1268" href="lib.types.BigWedge.html#1175" class="Bound"
+      >X</a
+      ><a name="1269"
+      > </a
+      ><a name="1270" href="lib.types.BigWedge.html#1251" class="Bound"
+      >a</a
+      ><a name="1271" class="Symbol"
+      >))</a
+      ><a name="1273"
+      > </a
+      ><a name="1274" class="Symbol"
+      >&#8594;</a
+      ><a name="1275"
+      > </a
+      ><a name="1276" href="lib.types.BigWedge.html#1195" class="Bound"
+      >P</a
+      ><a name="1277"
+      > </a
+      ><a name="1278" class="Symbol"
+      >(</a
+      ><a name="1279" href="lib.types.BigWedge.html#803" class="Function"
+      >bwin</a
+      ><a name="1283"
+      > </a
+      ><a name="1284" href="lib.types.BigWedge.html#1251" class="Bound"
+      >a</a
+      ><a name="1285"
+      > </a
+      ><a name="1286" href="lib.types.BigWedge.html#1259" class="Bound"
+      >x</a
+      ><a name="1287" class="Symbol"
+      >))</a
+      ><a name="1289"
+      >
+    </a
+      ><a name="1294" class="Symbol"
+      >(</a
+      ><a name="1295" href="lib.types.BigWedge.html#1295" class="Bound"
+      >glue*</a
+      ><a name="1300"
+      > </a
+      ><a name="1301" class="Symbol"
+      >:</a
+      ><a name="1302"
+      > </a
+      ><a name="1303" class="Symbol"
+      >(</a
+      ><a name="1304" href="lib.types.BigWedge.html#1304" class="Bound"
+      >a</a
+      ><a name="1305"
+      > </a
+      ><a name="1306" class="Symbol"
+      >:</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="1309" class="Symbol"
+      >)</a
+      ><a name="1310"
+      > </a
+      ><a name="1311" class="Symbol"
+      >&#8594;</a
+      ><a name="1312"
+      > </a
+      ><a name="1313" href="lib.types.BigWedge.html#1225" class="Bound"
+      >base*</a
+      ><a name="1318"
+      > </a
+      ><a name="1319" href="lib.Base.html#3320" class="Function"
+      >==</a
+      ><a name="1321"
+      > </a
+      ><a name="1322" href="lib.types.BigWedge.html#1244" class="Bound"
+      >in*</a
+      ><a name="1325"
+      > </a
+      ><a name="1326" href="lib.types.BigWedge.html#1304" class="Bound"
+      >a</a
+      ><a name="1327"
+      > </a
+      ><a name="1328" class="Symbol"
+      >(</a
+      ><a name="1329" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1331"
+      > </a
+      ><a name="1332" class="Symbol"
+      >(</a
+      ><a name="1333" href="lib.types.BigWedge.html#1175" class="Bound"
+      >X</a
+      ><a name="1334"
+      > </a
+      ><a name="1335" href="lib.types.BigWedge.html#1304" class="Bound"
+      >a</a
+      ><a name="1336" class="Symbol"
+      >))</a
+      ><a name="1338"
+      > </a
+      ><a name="1339" href="lib.Base.html#3320" class="Function"
+      >[</a
+      ><a name="1340"
+      > </a
+      ><a name="1341" href="lib.types.BigWedge.html#1195" class="Bound"
+      >P</a
+      ><a name="1342"
+      > </a
+      ><a name="1343" href="lib.Base.html#3320" class="Function"
+      >&#8595;</a
+      ><a name="1344"
+      > </a
+      ><a name="1345" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="1351"
+      > </a
+      ><a name="1352" href="lib.types.BigWedge.html#1304" class="Bound"
+      >a</a
+      ><a name="1353"
+      > </a
+      ><a name="1354" href="lib.Base.html#3320" class="Function"
+      >]</a
+      ><a name="1355" class="Symbol"
+      >)</a
+      ><a name="1356"
+      >
+    </a
+      ><a name="1361" class="Symbol"
+      >=</a
+      ><a name="1362"
+      > </a
+      ><a name="1363" href="lib.types.Cofiber.html#885" class="Module"
+      >CofiberElim</a
+      ><a name="1374"
+      > </a
+      ><a name="1375" class="Symbol"
+      >{</a
+      ><a name="1376" class="Argument"
+      >f</a
+      ><a name="1377"
+      > </a
+      ><a name="1378" class="Symbol"
+      >=</a
+      ><a name="1379"
+      > </a
+      ><a name="1380" href="lib.types.BigWedge.html#492" class="Function"
+      >bigwedge-f</a
+      ><a name="1390"
+      > </a
+      ><a name="1391" href="lib.types.BigWedge.html#1175" class="Bound"
+      >X</a
+      ><a name="1392" class="Symbol"
+      >}</a
+      ><a name="1393"
+      > </a
+      ><a name="1394" class="Symbol"
+      >{</a
+      ><a name="1395" class="Argument"
+      >P</a
+      ><a name="1396"
+      > </a
+      ><a name="1397" class="Symbol"
+      >=</a
+      ><a name="1398"
+      > </a
+      ><a name="1399" href="lib.types.BigWedge.html#1195" class="Bound"
+      >P</a
+      ><a name="1400" class="Symbol"
+      >}</a
+      ><a name="1401"
+      > </a
+      ><a name="1402" href="lib.types.BigWedge.html#1225" class="Bound"
+      >base*</a
+      ><a name="1407"
+      > </a
+      ><a name="1408" class="Symbol"
+      >(</a
+      ><a name="1409" href="lib.Base.html#8582" class="Function"
+      >uncurry</a
+      ><a name="1416"
+      > </a
+      ><a name="1417" href="lib.types.BigWedge.html#1244" class="Bound"
+      >in*</a
+      ><a name="1420" class="Symbol"
+      >)</a
+      ><a name="1421"
+      > </a
+      ><a name="1422" href="lib.types.BigWedge.html#1295" class="Bound"
+      >glue*</a
+      ><a name="1427"
+      >
+
+  </a
+      ><a name="1431" href="lib.types.BigWedge.html#1431" class="Function"
+      >BigWedge-elim</a
+      ><a name="1444"
+      > </a
+      ><a name="1445" class="Symbol"
+      >=</a
+      ><a name="1446"
+      > </a
+      ><a name="1447" href="lib.types.Pushout.html#850" class="Function"
+      >BigWedgeElim.f</a
+      ><a name="1461"
+      >
+
+  </a
+      ><a name="1465" class="Keyword"
+      >module</a
+      ><a name="1471"
+      > </a
+      ><a name="1472" href="lib.types.BigWedge.html#1472" class="Module"
+      >BigWedgeRec</a
+      ><a name="1483"
+      > </a
+      ><a name="1484" class="Symbol"
+      >{</a
+      ><a name="1485" href="lib.types.BigWedge.html#1485" class="Bound"
+      >X</a
+      ><a name="1486"
+      > </a
+      ><a name="1487" class="Symbol"
+      >:</a
+      ><a name="1488"
+      > </a
+      ><a name="1489" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="1490"
+      > </a
+      ><a name="1491" class="Symbol"
+      >&#8594;</a
+      ><a name="1492"
+      > </a
+      ><a name="1493" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1496"
+      > </a
+      ><a name="1497" href="lib.types.BigWedge.html#434" class="Bound"
+      >j</a
+      ><a name="1498" class="Symbol"
+      >}</a
+      ><a name="1499"
+      > </a
+      ><a name="1500" class="Symbol"
+      >{</a
+      ><a name="1501" href="lib.types.BigWedge.html#1501" class="Bound"
+      >k</a
+      ><a name="1502" class="Symbol"
+      >}</a
+      ><a name="1503"
+      > </a
+      ><a name="1504" class="Symbol"
+      >{</a
+      ><a name="1505" href="lib.types.BigWedge.html#1505" class="Bound"
+      >C</a
+      ><a name="1506"
+      > </a
+      ><a name="1507" class="Symbol"
+      >:</a
+      ><a name="1508"
+      > </a
+      ><a name="1509" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1513"
+      > </a
+      ><a name="1514" href="lib.types.BigWedge.html#1501" class="Bound"
+      >k</a
+      ><a name="1515" class="Symbol"
+      >}</a
+      ><a name="1516"
+      >
+    </a
+      ><a name="1521" class="Symbol"
+      >(</a
+      ><a name="1522" href="lib.types.BigWedge.html#1522" class="Bound"
+      >base*</a
+      ><a name="1527"
+      > </a
+      ><a name="1528" class="Symbol"
+      >:</a
+      ><a name="1529"
+      > </a
+      ><a name="1530" href="lib.types.BigWedge.html#1505" class="Bound"
+      >C</a
+      ><a name="1531" class="Symbol"
+      >)</a
+      ><a name="1532"
+      > </a
+      ><a name="1533" class="Symbol"
+      >(</a
+      ><a name="1534" href="lib.types.BigWedge.html#1534" class="Bound"
+      >in*</a
+      ><a name="1537"
+      > </a
+      ><a name="1538" class="Symbol"
+      >:</a
+      ><a name="1539"
+      > </a
+      ><a name="1540" class="Symbol"
+      >(</a
+      ><a name="1541" href="lib.types.BigWedge.html#1541" class="Bound"
+      >a</a
+      ><a name="1542"
+      > </a
+      ><a name="1543" class="Symbol"
+      >:</a
+      ><a name="1544"
+      > </a
+      ><a name="1545" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="1546" class="Symbol"
+      >)</a
+      ><a name="1547"
+      > </a
+      ><a name="1548" class="Symbol"
+      >&#8594;</a
+      ><a name="1549"
+      > </a
+      ><a name="1550" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="1553"
+      > </a
+      ><a name="1554" class="Symbol"
+      >(</a
+      ><a name="1555" href="lib.types.BigWedge.html#1485" class="Bound"
+      >X</a
+      ><a name="1556"
+      > </a
+      ><a name="1557" href="lib.types.BigWedge.html#1541" class="Bound"
+      >a</a
+      ><a name="1558" class="Symbol"
+      >)</a
+      ><a name="1559"
+      > </a
+      ><a name="1560" class="Symbol"
+      >&#8594;</a
+      ><a name="1561"
+      > </a
+      ><a name="1562" href="lib.types.BigWedge.html#1505" class="Bound"
+      >C</a
+      ><a name="1563" class="Symbol"
+      >)</a
+      ><a name="1564"
+      >
+    </a
+      ><a name="1569" class="Symbol"
+      >(</a
+      ><a name="1570" href="lib.types.BigWedge.html#1570" class="Bound"
+      >glue*</a
+      ><a name="1575"
+      > </a
+      ><a name="1576" class="Symbol"
+      >:</a
+      ><a name="1577"
+      > </a
+      ><a name="1578" class="Symbol"
+      >(</a
+      ><a name="1579" href="lib.types.BigWedge.html#1579" class="Bound"
+      >a</a
+      ><a name="1580"
+      > </a
+      ><a name="1581" class="Symbol"
+      >:</a
+      ><a name="1582"
+      > </a
+      ><a name="1583" href="lib.types.BigWedge.html#438" class="Bound"
+      >A</a
+      ><a name="1584" class="Symbol"
+      >)</a
+      ><a name="1585"
+      > </a
+      ><a name="1586" class="Symbol"
+      >&#8594;</a
+      ><a name="1587"
+      > </a
+      ><a name="1588" href="lib.types.BigWedge.html#1522" class="Bound"
+      >base*</a
+      ><a name="1593"
+      > </a
+      ><a name="1594" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="1596"
+      > </a
+      ><a name="1597" href="lib.types.BigWedge.html#1534" class="Bound"
+      >in*</a
+      ><a name="1600"
+      > </a
+      ><a name="1601" href="lib.types.BigWedge.html#1579" class="Bound"
+      >a</a
+      ><a name="1602"
+      > </a
+      ><a name="1603" class="Symbol"
+      >(</a
+      ><a name="1604" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="1606"
+      > </a
+      ><a name="1607" class="Symbol"
+      >(</a
+      ><a name="1608" href="lib.types.BigWedge.html#1485" class="Bound"
+      >X</a
+      ><a name="1609"
+      > </a
+      ><a name="1610" href="lib.types.BigWedge.html#1579" class="Bound"
+      >a</a
+      ><a name="1611" class="Symbol"
+      >)))</a
+      ><a name="1614"
+      >
+    </a
+      ><a name="1619" class="Symbol"
+      >=</a
+      ><a name="1620"
+      > </a
+      ><a name="1621" href="lib.types.Cofiber.html#1130" class="Module"
+      >CofiberRec</a
+      ><a name="1631"
+      > </a
+      ><a name="1632" class="Symbol"
+      >{</a
+      ><a name="1633" class="Argument"
+      >f</a
+      ><a name="1634"
+      > </a
+      ><a name="1635" class="Symbol"
+      >=</a
+      ><a name="1636"
+      > </a
+      ><a name="1637" href="lib.types.BigWedge.html#492" class="Function"
+      >bigwedge-f</a
+      ><a name="1647"
+      > </a
+      ><a name="1648" href="lib.types.BigWedge.html#1485" class="Bound"
+      >X</a
+      ><a name="1649" class="Symbol"
+      >}</a
+      ><a name="1650"
+      > </a
+      ><a name="1651" class="Symbol"
+      >{</a
+      ><a name="1652" class="Argument"
+      >C</a
+      ><a name="1653"
+      > </a
+      ><a name="1654" class="Symbol"
+      >=</a
+      ><a name="1655"
+      > </a
+      ><a name="1656" href="lib.types.BigWedge.html#1505" class="Bound"
+      >C</a
+      ><a name="1657" class="Symbol"
+      >}</a
+      ><a name="1658"
+      > </a
+      ><a name="1659" href="lib.types.BigWedge.html#1522" class="Bound"
+      >base*</a
+      ><a name="1664"
+      > </a
+      ><a name="1665" class="Symbol"
+      >(</a
+      ><a name="1666" href="lib.Base.html#8582" class="Function"
+      >uncurry</a
+      ><a name="1673"
+      > </a
+      ><a name="1674" href="lib.types.BigWedge.html#1534" class="Bound"
+      >in*</a
+      ><a name="1677" class="Symbol"
+      >)</a
+      ><a name="1678"
+      > </a
+      ><a name="1679" href="lib.types.BigWedge.html#1570" class="Bound"
+      >glue*</a
+      ><a name="1684"
+      >
+
+</a
+      ><a name="1686" class="Keyword"
+      >module</a
+      ><a name="1692"
+      > </a
+      ><a name="1693" href="lib.types.BigWedge.html#1693" class="Module"
+      >_</a
+      ><a name="1694"
+      > </a
+      ><a name="1695" class="Symbol"
+      >{</a
+      ><a name="1696" href="lib.types.BigWedge.html#1696" class="Bound"
+      >i</a
+      ><a name="1697"
+      > </a
+      ><a name="1698" href="lib.types.BigWedge.html#1698" class="Bound"
+      >j&#8320;</a
+      ><a name="1700"
+      > </a
+      ><a name="1701" href="lib.types.BigWedge.html#1701" class="Bound"
+      >j&#8321;</a
+      ><a name="1703" class="Symbol"
+      >}</a
+      ><a name="1704"
+      > </a
+      ><a name="1705" class="Symbol"
+      >{</a
+      ><a name="1706" href="lib.types.BigWedge.html#1706" class="Bound"
+      >A</a
+      ><a name="1707"
+      > </a
+      ><a name="1708" class="Symbol"
+      >:</a
+      ><a name="1709"
+      > </a
+      ><a name="1710" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="1714"
+      > </a
+      ><a name="1715" href="lib.types.BigWedge.html#1696" class="Bound"
+      >i</a
+      ><a name="1716" class="Symbol"
+      >}</a
+      ><a name="1717"
+      > </a
+      ><a name="1718" class="Symbol"
+      >{</a
+      ><a name="1719" href="lib.types.BigWedge.html#1719" class="Bound"
+      >X&#8320;</a
+      ><a name="1721"
+      > </a
+      ><a name="1722" class="Symbol"
+      >:</a
+      ><a name="1723"
+      > </a
+      ><a name="1724" href="lib.types.BigWedge.html#1706" class="Bound"
+      >A</a
+      ><a name="1725"
+      > </a
+      ><a name="1726" class="Symbol"
+      >&#8594;</a
+      ><a name="1727"
+      > </a
+      ><a name="1728" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1731"
+      > </a
+      ><a name="1732" href="lib.types.BigWedge.html#1698" class="Bound"
+      >j&#8320;</a
+      ><a name="1734" class="Symbol"
+      >}</a
+      ><a name="1735"
+      > </a
+      ><a name="1736" class="Symbol"
+      >{</a
+      ><a name="1737" href="lib.types.BigWedge.html#1737" class="Bound"
+      >X&#8321;</a
+      ><a name="1739"
+      > </a
+      ><a name="1740" class="Symbol"
+      >:</a
+      ><a name="1741"
+      > </a
+      ><a name="1742" href="lib.types.BigWedge.html#1706" class="Bound"
+      >A</a
+      ><a name="1743"
+      > </a
+      ><a name="1744" class="Symbol"
+      >&#8594;</a
+      ><a name="1745"
+      > </a
+      ><a name="1746" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="1749"
+      > </a
+      ><a name="1750" href="lib.types.BigWedge.html#1701" class="Bound"
+      >j&#8321;</a
+      ><a name="1752" class="Symbol"
+      >}</a
+      ><a name="1753"
+      >
+  </a
+      ><a name="1756" class="Symbol"
+      >(</a
+      ><a name="1757" href="lib.types.BigWedge.html#1757" class="Bound"
+      >Xeq</a
+      ><a name="1760"
+      > </a
+      ><a name="1761" class="Symbol"
+      >:</a
+      ><a name="1762"
+      > </a
+      ><a name="1763" class="Symbol"
+      >&#8704;</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" href="lib.types.BigWedge.html#1765" class="Bound"
+      >a</a
+      ><a name="1766"
+      > </a
+      ><a name="1767" class="Symbol"
+      >&#8594;</a
+      ><a name="1768"
+      > </a
+      ><a name="1769" href="lib.types.BigWedge.html#1719" class="Bound"
+      >X&#8320;</a
+      ><a name="1771"
+      > </a
+      ><a name="1772" href="lib.types.BigWedge.html#1765" class="Bound"
+      >a</a
+      ><a name="1773"
+      > </a
+      ><a name="1774" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="1776"
+      > </a
+      ><a name="1777" href="lib.types.BigWedge.html#1737" class="Bound"
+      >X&#8321;</a
+      ><a name="1779"
+      > </a
+      ><a name="1780" href="lib.types.BigWedge.html#1765" class="Bound"
+      >a</a
+      ><a name="1781" class="Symbol"
+      >)</a
+      ><a name="1782"
+      > </a
+      ><a name="1783" class="Keyword"
+      >where</a
+      ><a name="1788"
+      >
+
+  </a
+      ><a name="1792" href="lib.types.BigWedge.html#1792" class="Function"
+      >bigwedge-span-emap-r</a
+      ><a name="1812"
+      > </a
+      ><a name="1813" class="Symbol"
+      >:</a
+      ><a name="1814"
+      > </a
+      ><a name="1815" href="lib.types.Span.html#3414" class="Function"
+      >SpanEquiv</a
+      ><a name="1824"
+      > </a
+      ><a name="1825" class="Symbol"
+      >(</a
+      ><a name="1826" href="lib.types.Cofiber.html#369" class="Function"
+      >cofiber-span</a
+      ><a name="1838"
+      > </a
+      ><a name="1839" class="Symbol"
+      >(</a
+      ><a name="1840" href="lib.types.BigWedge.html#492" class="Function"
+      >bigwedge-f</a
+      ><a name="1850"
+      > </a
+      ><a name="1851" href="lib.types.BigWedge.html#1719" class="Bound"
+      >X&#8320;</a
+      ><a name="1853" class="Symbol"
+      >))</a
+      ><a name="1855"
+      > </a
+      ><a name="1856" class="Symbol"
+      >(</a
+      ><a name="1857" href="lib.types.Cofiber.html#369" class="Function"
+      >cofiber-span</a
+      ><a name="1869"
+      > </a
+      ><a name="1870" class="Symbol"
+      >(</a
+      ><a name="1871" href="lib.types.BigWedge.html#492" class="Function"
+      >bigwedge-f</a
+      ><a name="1881"
+      > </a
+      ><a name="1882" href="lib.types.BigWedge.html#1737" class="Bound"
+      >X&#8321;</a
+      ><a name="1884" class="Symbol"
+      >))</a
+      ><a name="1886"
+      >
+  </a
+      ><a name="1889" href="lib.types.BigWedge.html#1792" class="Function"
+      >bigwedge-span-emap-r</a
+      ><a name="1909"
+      > </a
+      ><a name="1910" class="Symbol"
+      >=</a
+      ><a name="1911"
+      > </a
+      ><a name="1912" href="lib.types.Span.html#2556" class="InductiveConstructor"
+      >span-map</a
+      ><a name="1920"
+      > </a
+      ><a name="1921" class="Symbol"
+      >(</a
+      ><a name="1922" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="1925"
+      > </a
+      ><a name="1926" class="Symbol"
+      >_)</a
+      ><a name="1928"
+      > </a
+      ><a name="1929" class="Symbol"
+      >(</a
+      ><a name="1930" href="lib.types.Sigma.html#6108" class="Function"
+      >&#931;-fmap-r</a
+      ><a name="1938"
+      > </a
+      ><a name="1939" class="Symbol"
+      >&#955;</a
+      ><a name="1940"
+      > </a
+      ><a name="1941" href="lib.types.BigWedge.html#1941" class="Bound"
+      >a</a
+      ><a name="1942"
+      > </a
+      ><a name="1943" class="Symbol"
+      >&#8594;</a
+      ><a name="1944"
+      > </a
+      ><a name="1945" href="lib.Base.html#5347" class="Field"
+      >fst</a
+      ><a name="1948"
+      > </a
+      ><a name="1949" class="Symbol"
+      >(</a
+      ><a name="1950" href="lib.types.Pointed.html#1690" class="Function"
+      >&#8857;&#8211;&gt;</a
+      ><a name="1953"
+      > </a
+      ><a name="1954" class="Symbol"
+      >(</a
+      ><a name="1955" href="lib.types.BigWedge.html#1757" class="Bound"
+      >Xeq</a
+      ><a name="1958"
+      > </a
+      ><a name="1959" href="lib.types.BigWedge.html#1941" class="Bound"
+      >a</a
+      ><a name="1960" class="Symbol"
+      >)))</a
+      ><a name="1963"
+      > </a
+      ><a name="1964" class="Symbol"
+      >(</a
+      ><a name="1965" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="1968"
+      > </a
+      ><a name="1969" class="Symbol"
+      >_)</a
+      ><a name="1971"
+      >
+    </a
+      ><a name="1976" class="Symbol"
+      >(</a
+      ><a name="1977" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="1985"
+      > </a
+      ><a name="1986" class="Symbol"
+      >&#955;</a
+      ><a name="1987"
+      > </a
+      ><a name="1988" href="lib.types.BigWedge.html#1988" class="Bound"
+      >_</a
+      ><a name="1989"
+      > </a
+      ><a name="1990" class="Symbol"
+      >&#8594;</a
+      ><a name="1991"
+      > </a
+      ><a name="1992" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="1995" class="Symbol"
+      >)</a
+      ><a name="1996"
+      > </a
+      ><a name="1997" class="Symbol"
+      >(</a
+      ><a name="1998" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="2006"
+      > </a
+      ><a name="2007" class="Symbol"
+      >&#955;</a
+      ><a name="2008"
+      > </a
+      ><a name="2009" href="lib.types.BigWedge.html#2009" class="Bound"
+      >a</a
+      ><a name="2010"
+      > </a
+      ><a name="2011" class="Symbol"
+      >&#8594;</a
+      ><a name="2012"
+      > </a
+      ><a name="2013" href="lib.Base.html#5386" class="Function"
+      >pair=</a
+      ><a name="2018"
+      > </a
+      ><a name="2019" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2022"
+      > </a
+      ><a name="2023" class="Symbol"
+      >(</a
+      ><a name="2024" href="lib.types.Pointed.html#1608" class="Function"
+      >&#8857;&#8211;&gt;-pt</a
+      ><a name="2030"
+      > </a
+      ><a name="2031" class="Symbol"
+      >(</a
+      ><a name="2032" href="lib.types.BigWedge.html#1757" class="Bound"
+      >Xeq</a
+      ><a name="2035"
+      > </a
+      ><a name="2036" href="lib.types.BigWedge.html#2009" class="Bound"
+      >a</a
+      ><a name="2037" class="Symbol"
+      >)))</a
+      ><a name="2040"
+      > </a
+      ><a name="2041" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2042"
+      >
+    </a
+      ><a name="2047" href="lib.Equivalence.html#5614" class="Function"
+      >idf-is-equiv</a
+      ><a name="2059"
+      > </a
+      ><a name="2060" class="Symbol"
+      >_</a
+      ><a name="2061"
+      > </a
+      ><a name="2062" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2063"
+      > </a
+      ><a name="2064" href="lib.types.Sigma.html#6389" class="Function"
+      >&#931;-isemap-r</a
+      ><a name="2074"
+      > </a
+      ><a name="2075" class="Symbol"
+      >(&#955;</a
+      ><a name="2077"
+      > </a
+      ><a name="2078" href="lib.types.BigWedge.html#2078" class="Bound"
+      >a</a
+      ><a name="2079"
+      > </a
+      ><a name="2080" class="Symbol"
+      >&#8594;</a
+      ><a name="2081"
+      > </a
+      ><a name="2082" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2085"
+      > </a
+      ><a name="2086" class="Symbol"
+      >(</a
+      ><a name="2087" href="lib.types.BigWedge.html#1757" class="Bound"
+      >Xeq</a
+      ><a name="2090"
+      > </a
+      ><a name="2091" href="lib.types.BigWedge.html#2078" class="Bound"
+      >a</a
+      ><a name="2092" class="Symbol"
+      >))</a
+      ><a name="2094"
+      > </a
+      ><a name="2095" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2096"
+      > </a
+      ><a name="2097" href="lib.Equivalence.html#5614" class="Function"
+      >idf-is-equiv</a
+      ><a name="2109"
+      > </a
+      ><a name="2110" class="Symbol"
+      >_</a
+      ><a name="2111"
+      >
+
+  </a
+      ><a name="2115" href="lib.types.BigWedge.html#2115" class="Function"
+      >BigWedge-emap-r</a
+      ><a name="2130"
+      > </a
+      ><a name="2131" class="Symbol"
+      >:</a
+      ><a name="2132"
+      > </a
+      ><a name="2133" href="lib.types.BigWedge.html#662" class="Function"
+      >BigWedge</a
+      ><a name="2141"
+      > </a
+      ><a name="2142" href="lib.types.BigWedge.html#1719" class="Bound"
+      >X&#8320;</a
+      ><a name="2144"
+      > </a
+      ><a name="2145" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="2146"
+      > </a
+      ><a name="2147" href="lib.types.BigWedge.html#662" class="Function"
+      >BigWedge</a
+      ><a name="2155"
+      > </a
+      ><a name="2156" href="lib.types.BigWedge.html#1737" class="Bound"
+      >X&#8321;</a
+      ><a name="2158"
+      >
+  </a
+      ><a name="2161" href="lib.types.BigWedge.html#2115" class="Function"
+      >BigWedge-emap-r</a
+      ><a name="2176"
+      > </a
+      ><a name="2177" class="Symbol"
+      >=</a
+      ><a name="2178"
+      > </a
+      ><a name="2179" href="lib.types.PushoutFmap.html#12924" class="Function"
+      >Pushout-emap</a
+      ><a name="2191"
+      > </a
+      ><a name="2192" href="lib.types.BigWedge.html#1792" class="Function"
+      >bigwedge-span-emap-r</a
+      ><a name="2212"
+      >
+
+  </a
+      ><a name="2216" href="lib.types.BigWedge.html#2216" class="Function"
+      >&#8857;BigWedge-emap-r</a
+      ><a name="2232"
+      > </a
+      ><a name="2233" class="Symbol"
+      >:</a
+      ><a name="2234"
+      > </a
+      ><a name="2235" href="lib.types.BigWedge.html#885" class="Function"
+      >&#8857;BigWedge</a
+      ><a name="2244"
+      > </a
+      ><a name="2245" href="lib.types.BigWedge.html#1719" class="Bound"
+      >X&#8320;</a
+      ><a name="2247"
+      > </a
+      ><a name="2248" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="2250"
+      > </a
+      ><a name="2251" href="lib.types.BigWedge.html#885" class="Function"
+      >&#8857;BigWedge</a
+      ><a name="2260"
+      > </a
+      ><a name="2261" href="lib.types.BigWedge.html#1737" class="Bound"
+      >X&#8321;</a
+      ><a name="2263"
+      >
+  </a
+      ><a name="2266" href="lib.types.BigWedge.html#2216" class="Function"
+      >&#8857;BigWedge-emap-r</a
+      ><a name="2282"
+      > </a
+      ><a name="2283" class="Symbol"
+      >=</a
+      ><a name="2284"
+      > </a
+      ><a name="2285" href="lib.Equivalence.html#13119" class="Function"
+      >&#8771;-to-&#8857;&#8771;</a
+      ><a name="2292"
+      > </a
+      ><a name="2293" href="lib.types.BigWedge.html#2115" class="Function"
+      >BigWedge-emap-r</a
+      ><a name="2308"
+      > </a
+      ><a name="2309" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2312"
+      >
+
+</a
+      ><a name="2314" class="Keyword"
+      >module</a
+      ><a name="2320"
+      > </a
+      ><a name="2321" href="lib.types.BigWedge.html#2321" class="Module"
+      >_</a
+      ><a name="2322"
+      > </a
+      ><a name="2323" class="Symbol"
+      >{</a
+      ><a name="2324" href="lib.types.BigWedge.html#2324" class="Bound"
+      >i&#8320;</a
+      ><a name="2326"
+      > </a
+      ><a name="2327" href="lib.types.BigWedge.html#2327" class="Bound"
+      >i&#8321;</a
+      ><a name="2329"
+      > </a
+      ><a name="2330" href="lib.types.BigWedge.html#2330" class="Bound"
+      >j</a
+      ><a name="2331" class="Symbol"
+      >}</a
+      ><a name="2332"
+      > </a
+      ><a name="2333" class="Symbol"
+      >{</a
+      ><a name="2334" href="lib.types.BigWedge.html#2334" class="Bound"
+      >A&#8320;</a
+      ><a name="2336"
+      > </a
+      ><a name="2337" class="Symbol"
+      >:</a
+      ><a name="2338"
+      > </a
+      ><a name="2339" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2343"
+      > </a
+      ><a name="2344" href="lib.types.BigWedge.html#2324" class="Bound"
+      >i&#8320;</a
+      ><a name="2346" class="Symbol"
+      >}</a
+      ><a name="2347"
+      > </a
+      ><a name="2348" class="Symbol"
+      >{</a
+      ><a name="2349" href="lib.types.BigWedge.html#2349" class="Bound"
+      >A&#8321;</a
+      ><a name="2351"
+      > </a
+      ><a name="2352" class="Symbol"
+      >:</a
+      ><a name="2353"
+      > </a
+      ><a name="2354" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2358"
+      > </a
+      ><a name="2359" href="lib.types.BigWedge.html#2327" class="Bound"
+      >i&#8321;</a
+      ><a name="2361" class="Symbol"
+      >}</a
+      ><a name="2362"
+      >
+  </a
+      ><a name="2365" class="Symbol"
+      >(</a
+      ><a name="2366" href="lib.types.BigWedge.html#2366" class="Bound"
+      >X</a
+      ><a name="2367"
+      > </a
+      ><a name="2368" class="Symbol"
+      >:</a
+      ><a name="2369"
+      > </a
+      ><a name="2370" href="lib.types.BigWedge.html#2349" class="Bound"
+      >A&#8321;</a
+      ><a name="2372"
+      > </a
+      ><a name="2373" class="Symbol"
+      >&#8594;</a
+      ><a name="2374"
+      > </a
+      ><a name="2375" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2378"
+      > </a
+      ><a name="2379" href="lib.types.BigWedge.html#2330" class="Bound"
+      >j</a
+      ><a name="2380" class="Symbol"
+      >)</a
+      ><a name="2381"
+      > </a
+      ><a name="2382" class="Symbol"
+      >(</a
+      ><a name="2383" href="lib.types.BigWedge.html#2383" class="Bound"
+      >Aeq</a
+      ><a name="2386"
+      > </a
+      ><a name="2387" class="Symbol"
+      >:</a
+      ><a name="2388"
+      > </a
+      ><a name="2389" href="lib.types.BigWedge.html#2334" class="Bound"
+      >A&#8320;</a
+      ><a name="2391"
+      > </a
+      ><a name="2392" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="2393"
+      > </a
+      ><a name="2394" href="lib.types.BigWedge.html#2349" class="Bound"
+      >A&#8321;</a
+      ><a name="2396" class="Symbol"
+      >)</a
+      ><a name="2397"
+      > </a
+      ><a name="2398" class="Keyword"
+      >where</a
+      ><a name="2403"
+      >
+
+  </a
+      ><a name="2407" href="lib.types.BigWedge.html#2407" class="Function"
+      >bigwedge-span-emap-l</a
+      ><a name="2427"
+      > </a
+      ><a name="2428" class="Symbol"
+      >:</a
+      ><a name="2429"
+      > </a
+      ><a name="2430" href="lib.types.Span.html#3414" class="Function"
+      >SpanEquiv</a
+      ><a name="2439"
+      > </a
+      ><a name="2440" class="Symbol"
+      >(</a
+      ><a name="2441" href="lib.types.Cofiber.html#369" class="Function"
+      >cofiber-span</a
+      ><a name="2453"
+      > </a
+      ><a name="2454" class="Symbol"
+      >(</a
+      ><a name="2455" href="lib.types.BigWedge.html#492" class="Function"
+      >bigwedge-f</a
+      ><a name="2465"
+      > </a
+      ><a name="2466" class="Symbol"
+      >(</a
+      ><a name="2467" href="lib.types.BigWedge.html#2366" class="Bound"
+      >X</a
+      ><a name="2468"
+      > </a
+      ><a name="2469" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="2470"
+      > </a
+      ><a name="2471" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="2473"
+      > </a
+      ><a name="2474" href="lib.types.BigWedge.html#2383" class="Bound"
+      >Aeq</a
+      ><a name="2477" class="Symbol"
+      >)))</a
+      ><a name="2480"
+      > </a
+      ><a name="2481" class="Symbol"
+      >(</a
+      ><a name="2482" href="lib.types.Cofiber.html#369" class="Function"
+      >cofiber-span</a
+      ><a name="2494"
+      > </a
+      ><a name="2495" class="Symbol"
+      >(</a
+      ><a name="2496" href="lib.types.BigWedge.html#492" class="Function"
+      >bigwedge-f</a
+      ><a name="2506"
+      > </a
+      ><a name="2507" href="lib.types.BigWedge.html#2366" class="Bound"
+      >X</a
+      ><a name="2508" class="Symbol"
+      >))</a
+      ><a name="2510"
+      >
+  </a
+      ><a name="2513" href="lib.types.BigWedge.html#2407" class="Function"
+      >bigwedge-span-emap-l</a
+      ><a name="2533"
+      > </a
+      ><a name="2534" class="Symbol"
+      >=</a
+      ><a name="2535"
+      > </a
+      ><a name="2536" href="lib.types.Span.html#2556" class="InductiveConstructor"
+      >span-map</a
+      ><a name="2544"
+      > </a
+      ><a name="2545" class="Symbol"
+      >(</a
+      ><a name="2546" href="lib.Base.html#8002" class="Function"
+      >idf</a
+      ><a name="2549"
+      > </a
+      ><a name="2550" class="Symbol"
+      >_)</a
+      ><a name="2552"
+      > </a
+      ><a name="2553" class="Symbol"
+      >(</a
+      ><a name="2554" href="lib.types.Sigma.html#4671" class="Function"
+      >&#931;-fmap-l</a
+      ><a name="2562"
+      > </a
+      ><a name="2563" class="Symbol"
+      >(</a
+      ><a name="2564" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="2567"
+      > </a
+      ><a name="2568" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="2569"
+      > </a
+      ><a name="2570" href="lib.types.BigWedge.html#2366" class="Bound"
+      >X</a
+      ><a name="2571" class="Symbol"
+      >)</a
+      ><a name="2572"
+      > </a
+      ><a name="2573" class="Symbol"
+      >(</a
+      ><a name="2574" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="2576"
+      > </a
+      ><a name="2577" href="lib.types.BigWedge.html#2383" class="Bound"
+      >Aeq</a
+      ><a name="2580" class="Symbol"
+      >))</a
+      ><a name="2582"
+      > </a
+      ><a name="2583" class="Symbol"
+      >(</a
+      ><a name="2584" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="2586"
+      > </a
+      ><a name="2587" href="lib.types.BigWedge.html#2383" class="Bound"
+      >Aeq</a
+      ><a name="2590" class="Symbol"
+      >)</a
+      ><a name="2591"
+      >
+    </a
+      ><a name="2596" class="Symbol"
+      >(</a
+      ><a name="2597" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="2605"
+      > </a
+      ><a name="2606" class="Symbol"
+      >&#955;</a
+      ><a name="2607"
+      > </a
+      ><a name="2608" href="lib.types.BigWedge.html#2608" class="Bound"
+      >_</a
+      ><a name="2609"
+      > </a
+      ><a name="2610" class="Symbol"
+      >&#8594;</a
+      ><a name="2611"
+      > </a
+      ><a name="2612" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2615" class="Symbol"
+      >)</a
+      ><a name="2616"
+      > </a
+      ><a name="2617" class="Symbol"
+      >(</a
+      ><a name="2618" href="lib.Function.html#1818" class="InductiveConstructor"
+      >comm-sqr</a
+      ><a name="2626"
+      > </a
+      ><a name="2627" class="Symbol"
+      >&#955;</a
+      ><a name="2628"
+      > </a
+      ><a name="2629" href="lib.types.BigWedge.html#2629" class="Bound"
+      >_</a
+      ><a name="2630"
+      > </a
+      ><a name="2631" class="Symbol"
+      >&#8594;</a
+      ><a name="2632"
+      > </a
+      ><a name="2633" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2636" class="Symbol"
+      >)</a
+      ><a name="2637"
+      > </a
+      ><a name="2638" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2639"
+      >
+    </a
+      ><a name="2644" href="lib.Equivalence.html#5614" class="Function"
+      >idf-is-equiv</a
+      ><a name="2656"
+      > </a
+      ><a name="2657" class="Symbol"
+      >_</a
+      ><a name="2658"
+      > </a
+      ><a name="2659" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2660"
+      > </a
+      ><a name="2661" href="lib.types.Sigma.html#4946" class="Function"
+      >&#931;-isemap-l</a
+      ><a name="2671"
+      > </a
+      ><a name="2672" class="Symbol"
+      >(</a
+      ><a name="2673" href="lib.Base.html#9657" class="Field"
+      >de&#8857;</a
+      ><a name="2676"
+      > </a
+      ><a name="2677" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="2678"
+      > </a
+      ><a name="2679" href="lib.types.BigWedge.html#2366" class="Bound"
+      >X</a
+      ><a name="2680" class="Symbol"
+      >)</a
+      ><a name="2681"
+      > </a
+      ><a name="2682" class="Symbol"
+      >(</a
+      ><a name="2683" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2686"
+      > </a
+      ><a name="2687" href="lib.types.BigWedge.html#2383" class="Bound"
+      >Aeq</a
+      ><a name="2690" class="Symbol"
+      >)</a
+      ><a name="2691"
+      > </a
+      ><a name="2692" href="lib.Base.html#5331" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2693"
+      > </a
+      ><a name="2694" href="lib.Base.html#5359" class="Field"
+      >snd</a
+      ><a name="2697"
+      > </a
+      ><a name="2698" href="lib.types.BigWedge.html#2383" class="Bound"
+      >Aeq</a
+      ><a name="2701"
+      >
+
+  </a
+      ><a name="2705" href="lib.types.BigWedge.html#2705" class="Function"
+      >BigWedge-emap-l</a
+      ><a name="2720"
+      > </a
+      ><a name="2721" class="Symbol"
+      >:</a
+      ><a name="2722"
+      > </a
+      ><a name="2723" href="lib.types.BigWedge.html#662" class="Function"
+      >BigWedge</a
+      ><a name="2731"
+      > </a
+      ><a name="2732" class="Symbol"
+      >(</a
+      ><a name="2733" href="lib.types.BigWedge.html#2366" class="Bound"
+      >X</a
+      ><a name="2734"
+      > </a
+      ><a name="2735" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="2736"
+      > </a
+      ><a name="2737" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="2739"
+      > </a
+      ><a name="2740" href="lib.types.BigWedge.html#2383" class="Bound"
+      >Aeq</a
+      ><a name="2743" class="Symbol"
+      >)</a
+      ><a name="2744"
+      > </a
+      ><a name="2745" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="2746"
+      > </a
+      ><a name="2747" href="lib.types.BigWedge.html#662" class="Function"
+      >BigWedge</a
+      ><a name="2755"
+      > </a
+      ><a name="2756" href="lib.types.BigWedge.html#2366" class="Bound"
+      >X</a
+      ><a name="2757"
+      >
+  </a
+      ><a name="2760" href="lib.types.BigWedge.html#2705" class="Function"
+      >BigWedge-emap-l</a
+      ><a name="2775"
+      > </a
+      ><a name="2776" class="Symbol"
+      >=</a
+      ><a name="2777"
+      > </a
+      ><a name="2778" href="lib.types.PushoutFmap.html#12924" class="Function"
+      >Pushout-emap</a
+      ><a name="2790"
+      > </a
+      ><a name="2791" href="lib.types.BigWedge.html#2407" class="Function"
+      >bigwedge-span-emap-l</a
+      ><a name="2811"
+      >
+
+  </a
+      ><a name="2815" href="lib.types.BigWedge.html#2815" class="Function"
+      >&#8857;BigWedge-emap-l</a
+      ><a name="2831"
+      > </a
+      ><a name="2832" class="Symbol"
+      >:</a
+      ><a name="2833"
+      > </a
+      ><a name="2834" href="lib.types.BigWedge.html#885" class="Function"
+      >&#8857;BigWedge</a
+      ><a name="2843"
+      > </a
+      ><a name="2844" class="Symbol"
+      >(</a
+      ><a name="2845" href="lib.types.BigWedge.html#2366" class="Bound"
+      >X</a
+      ><a name="2846"
+      > </a
+      ><a name="2847" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="2848"
+      > </a
+      ><a name="2849" href="lib.Equivalence.html#4804" class="Function"
+      >&#8211;&gt;</a
+      ><a name="2851"
+      > </a
+      ><a name="2852" href="lib.types.BigWedge.html#2383" class="Bound"
+      >Aeq</a
+      ><a name="2855" class="Symbol"
+      >)</a
+      ><a name="2856"
+      > </a
+      ><a name="2857" href="lib.Equivalence.html#13022" class="Function Operator"
+      >&#8857;&#8771;</a
+      ><a name="2859"
+      > </a
+      ><a name="2860" href="lib.types.BigWedge.html#885" class="Function"
+      >&#8857;BigWedge</a
+      ><a name="2869"
+      > </a
+      ><a name="2870" href="lib.types.BigWedge.html#2366" class="Bound"
+      >X</a
+      ><a name="2871"
+      >
+  </a
+      ><a name="2874" href="lib.types.BigWedge.html#2815" class="Function"
+      >&#8857;BigWedge-emap-l</a
+      ><a name="2890"
+      > </a
+      ><a name="2891" class="Symbol"
+      >=</a
+      ><a name="2892"
+      > </a
+      ><a name="2893" href="lib.Equivalence.html#13119" class="Function"
+      >&#8771;-to-&#8857;&#8771;</a
+      ><a name="2900"
+      > </a
+      ><a name="2901" href="lib.types.BigWedge.html#2705" class="Function"
+      >BigWedge-emap-l</a
+      ><a name="2916"
+      > </a
+      ><a name="2917" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="2920"
+      >
+
+</a
+      ><a name="2922" class="Keyword"
+      >module</a
+      ><a name="2928"
+      > </a
+      ><a name="2929" href="lib.types.BigWedge.html#2929" class="Module"
+      >_</a
+      ><a name="2930"
+      > </a
+      ><a name="2931" class="Symbol"
+      >{</a
+      ><a name="2932" href="lib.types.BigWedge.html#2932" class="Bound"
+      >i</a
+      ><a name="2933" class="Symbol"
+      >}</a
+      ><a name="2934"
+      > </a
+      ><a name="2935" class="Symbol"
+      >{</a
+      ><a name="2936" href="lib.types.BigWedge.html#2936" class="Bound"
+      >A</a
+      ><a name="2937"
+      > </a
+      ><a name="2938" class="Symbol"
+      >:</a
+      ><a name="2939"
+      > </a
+      ><a name="2940" href="lib.Base.html#1144" class="Function"
+      >Type</a
+      ><a name="2944"
+      > </a
+      ><a name="2945" href="lib.types.BigWedge.html#2932" class="Bound"
+      >i</a
+      ><a name="2946" class="Symbol"
+      >}</a
+      ><a name="2947"
+      > </a
+      ><a name="2948" class="Symbol"
+      >(</a
+      ><a name="2949" href="lib.types.BigWedge.html#2949" class="Bound"
+      >X</a
+      ><a name="2950"
+      > </a
+      ><a name="2951" class="Symbol"
+      >:</a
+      ><a name="2952"
+      > </a
+      ><a name="2953" href="lib.types.BigWedge.html#2936" class="Bound"
+      >A</a
+      ><a name="2954"
+      > </a
+      ><a name="2955" class="Symbol"
+      >&#8594;</a
+      ><a name="2956"
+      > </a
+      ><a name="2957" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="2960"
+      > </a
+      ><a name="2961" href="lib.types.BigWedge.html#2932" class="Bound"
+      >i</a
+      ><a name="2962" class="Symbol"
+      >)</a
+      ><a name="2963"
+      > </a
+      ><a name="2964" class="Keyword"
+      >where</a
+      ><a name="2969"
+      >
+
+  </a
+      ><a name="2973" href="lib.types.BigWedge.html#2973" class="Function"
+      >extract-glue-from-BigWedge-is-const</a
+      ><a name="3008"
+      > </a
+      ><a name="3009" class="Symbol"
+      >:</a
+      ><a name="3010"
+      >
+    </a
+      ><a name="3015" class="Symbol"
+      >&#8704;</a
+      ><a name="3016"
+      > </a
+      ><a name="3017" href="lib.types.BigWedge.html#3017" class="Bound"
+      >bw</a
+      ><a name="3019"
+      > </a
+      ><a name="3020" class="Symbol"
+      >&#8594;</a
+      ><a name="3021"
+      > </a
+      ><a name="3022" href="lib.types.Suspension.html#4734" class="Function"
+      >extract-glue</a
+      ><a name="3034"
+      > </a
+      ><a name="3035" class="Symbol"
+      >{</a
+      ><a name="3036" class="Argument"
+      >s</a
+      ><a name="3037"
+      > </a
+      ><a name="3038" class="Symbol"
+      >=</a
+      ><a name="3039"
+      > </a
+      ><a name="3040" href="lib.types.BigWedge.html#576" class="Function"
+      >bigwedge-span</a
+      ><a name="3053"
+      > </a
+      ><a name="3054" href="lib.types.BigWedge.html#2949" class="Bound"
+      >X</a
+      ><a name="3055" class="Symbol"
+      >}</a
+      ><a name="3056"
+      > </a
+      ><a name="3057" href="lib.types.BigWedge.html#3017" class="Bound"
+      >bw</a
+      ><a name="3059"
+      > </a
+      ><a name="3060" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3062"
+      > </a
+      ><a name="3063" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="3068"
+      >
+  </a
+      ><a name="3071" href="lib.types.BigWedge.html#2973" class="Function"
+      >extract-glue-from-BigWedge-is-const</a
+      ><a name="3106"
+      > </a
+      ><a name="3107" class="Symbol"
+      >=</a
+      ><a name="3108"
+      > </a
+      ><a name="3109" href="lib.types.BigWedge.html#1431" class="Function"
+      >BigWedge-elim</a
+      ><a name="3122"
+      >
+    </a
+      ><a name="3127" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3130"
+      >
+    </a
+      ><a name="3135" class="Symbol"
+      >(&#955;</a
+      ><a name="3137"
+      > </a
+      ><a name="3138" href="lib.types.BigWedge.html#3138" class="Bound"
+      >x</a
+      ><a name="3139"
+      > </a
+      ><a name="3140" href="lib.types.BigWedge.html#3140" class="Bound"
+      >y</a
+      ><a name="3141"
+      > </a
+      ><a name="3142" class="Symbol"
+      >&#8594;</a
+      ><a name="3143"
+      > </a
+      ><a name="3144" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3145"
+      > </a
+      ><a name="3146" class="Symbol"
+      >(</a
+      ><a name="3147" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="3152"
+      > </a
+      ><a name="3153" href="lib.types.BigWedge.html#3138" class="Bound"
+      >x</a
+      ><a name="3154" class="Symbol"
+      >))</a
+      ><a name="3156"
+      >
+    </a
+      ><a name="3161" class="Symbol"
+      >(</a
+      ><a name="3162" href="lib.cubical.Square.html#8229" class="Function"
+      >&#8595;-='-from-square</a
+      ><a name="3178"
+      > </a
+      ><a name="3179" href="lib.Base.html#8144" class="Function Operator"
+      >&#8728;</a
+      ><a name="3180"
+      > </a
+      ><a name="3181" class="Symbol"
+      >&#955;</a
+      ><a name="3182"
+      > </a
+      ><a name="3183" href="lib.types.BigWedge.html#3183" class="Bound"
+      >x</a
+      ><a name="3184"
+      > </a
+      ><a name="3185" class="Symbol"
+      >&#8594;</a
+      ><a name="3186"
+      >
+      </a
+      ><a name="3193" href="lib.types.Pushout.html#1428" class="Function"
+      >ExtractGlue.glue-&#946;</a
+      ><a name="3211"
+      > </a
+      ><a name="3212" href="lib.types.BigWedge.html#3183" class="Bound"
+      >x</a
+      ><a name="3213"
+      > </a
+      ><a name="3214" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="3217"
+      >
+        </a
+      ><a name="3226" href="lib.cubical.Square.html#18106" class="Function"
+      >tr-square</a
+      ><a name="3235"
+      > </a
+      ><a name="3236" class="Symbol"
+      >(</a
+      ><a name="3237" href="lib.types.Suspension.html#932" class="Function"
+      >merid</a
+      ><a name="3242"
+      > </a
+      ><a name="3243" href="lib.types.BigWedge.html#3183" class="Bound"
+      >x</a
+      ><a name="3244" class="Symbol"
+      >)</a
+      ><a name="3245"
+      >
+      </a
+      ><a name="3252" href="lib.cubical.Square.html#12327" class="Function Operator"
+      >&#8865;v&#8729;</a
+      ><a name="3255"
+      > </a
+      ><a name="3256" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3257"
+      > </a
+      ><a name="3258" class="Symbol"
+      >(</a
+      ><a name="3259" href="lib.PathFunctor.html#2086" class="Function"
+      >ap-cst</a
+      ><a name="3265"
+      > </a
+      ><a name="3266" href="lib.types.Suspension.html#858" class="Function"
+      >north</a
+      ><a name="3271"
+      > </a
+      ><a name="3272" class="Symbol"
+      >(</a
+      ><a name="3273" href="lib.types.Cofiber.html#813" class="Function"
+      >cfglue</a
+      ><a name="3279"
+      > </a
+      ><a name="3280" href="lib.types.BigWedge.html#3183" class="Bound"
+      >x</a
+      ><a name="3281" class="Symbol"
+      >)))</a
+      ><a name="3284"
+      >
+
+</a
+      ><a name="3286" class="Comment"
+      >{- A BigWedge indexed by Bool is just a binary Wedge -}</a
+      ><a name="3341"
+      >
+</a
+      ><a name="3342" class="Keyword"
+      >module</a
+      ><a name="3348"
+      > </a
+      ><a name="3349" href="lib.types.BigWedge.html#3349" class="Module"
+      >_</a
+      ><a name="3350"
+      > </a
+      ><a name="3351" class="Symbol"
+      >{</a
+      ><a name="3352" href="lib.types.BigWedge.html#3352" class="Bound"
+      >i</a
+      ><a name="3353" class="Symbol"
+      >}</a
+      ><a name="3354"
+      > </a
+      ><a name="3355" class="Symbol"
+      >(</a
+      ><a name="3356" href="lib.types.BigWedge.html#3356" class="Bound"
+      >Pick</a
+      ><a name="3360"
+      > </a
+      ><a name="3361" class="Symbol"
+      >:</a
+      ><a name="3362"
+      > </a
+      ><a name="3363" href="lib.types.Bool.html#236" class="Function"
+      >Bool</a
+      ><a name="3367"
+      > </a
+      ><a name="3368" class="Symbol"
+      >&#8594;</a
+      ><a name="3369"
+      > </a
+      ><a name="3370" href="lib.Base.html#9584" class="Record"
+      >Ptd</a
+      ><a name="3373"
+      > </a
+      ><a name="3374" href="lib.types.BigWedge.html#3352" class="Bound"
+      >i</a
+      ><a name="3375" class="Symbol"
+      >)</a
+      ><a name="3376"
+      > </a
+      ><a name="3377" class="Keyword"
+      >where</a
+      ><a name="3382"
+      >
+
+  </a
+      ><a name="3386" href="lib.types.BigWedge.html#3386" class="Function"
+      >BigWedge-Bool-equiv-Wedge</a
+      ><a name="3411"
+      > </a
+      ><a name="3412" class="Symbol"
+      >:</a
+      ><a name="3413"
+      > </a
+      ><a name="3414" href="lib.types.BigWedge.html#662" class="Function"
+      >BigWedge</a
+      ><a name="3422"
+      > </a
+      ><a name="3423" href="lib.types.BigWedge.html#3356" class="Bound"
+      >Pick</a
+      ><a name="3427"
+      > </a
+      ><a name="3428" href="lib.Equivalence.html#4492" class="Function Operator"
+      >&#8771;</a
+      ><a name="3429"
+      > </a
+      ><a name="3430" href="lib.types.Wedge.html#554" class="Function"
+      >Wedge</a
+      ><a name="3435"
+      > </a
+      ><a name="3436" class="Symbol"
+      >(</a
+      ><a name="3437" href="lib.types.BigWedge.html#3356" class="Bound"
+      >Pick</a
+      ><a name="3441"
+      > </a
+      ><a name="3442" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3446" class="Symbol"
+      >)</a
+      ><a name="3447"
+      > </a
+      ><a name="3448" class="Symbol"
+      >(</a
+      ><a name="3449" href="lib.types.BigWedge.html#3356" class="Bound"
+      >Pick</a
+      ><a name="3453"
+      > </a
+      ><a name="3454" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="3459" class="Symbol"
+      >)</a
+      ><a name="3460"
+      >
+  </a
+      ><a name="3463" href="lib.types.BigWedge.html#3386" class="Function"
+      >BigWedge-Bool-equiv-Wedge</a
+      ><a name="3488"
+      > </a
+      ><a name="3489" class="Symbol"
+      >=</a
+      ><a name="3490"
+      > </a
+      ><a name="3491" href="lib.Equivalence.html#4643" class="Function"
+      >equiv</a
+      ><a name="3496"
+      > </a
+      ><a name="3497" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="3498"
+      > </a
+      ><a name="3499" href="lib.types.BigWedge.html#3883" class="Function"
+      >g</a
+      ><a name="3500"
+      > </a
+      ><a name="3501" href="lib.types.BigWedge.html#3911" class="Function"
+      >f-g</a
+      ><a name="3504"
+      > </a
+      ><a name="3505" href="lib.types.BigWedge.html#4575" class="Function"
+      >g-f</a
+      ><a name="3508"
+      >
+    </a
+      ><a name="3513" class="Keyword"
+      >where</a
+      ><a name="3518"
+      >
+    </a
+      ><a name="3523" class="Keyword"
+      >module</a
+      ><a name="3529"
+      > </a
+      ><a name="3530" href="lib.types.BigWedge.html#3530" class="Module"
+      >F</a
+      ><a name="3531"
+      > </a
+      ><a name="3532" class="Symbol"
+      >=</a
+      ><a name="3533"
+      > </a
+      ><a name="3534" href="lib.types.BigWedge.html#1472" class="Module"
+      >BigWedgeRec</a
+      ><a name="3545"
+      > </a
+      ><a name="3546" class="Symbol"
+      >{</a
+      ><a name="3547" class="Argument"
+      >X</a
+      ><a name="3548"
+      > </a
+      ><a name="3549" class="Symbol"
+      >=</a
+      ><a name="3550"
+      > </a
+      ><a name="3551" href="lib.types.BigWedge.html#3356" class="Bound"
+      >Pick</a
+      ><a name="3555" class="Symbol"
+      >}</a
+      ><a name="3556"
+      >
+      </a
+      ><a name="3563" class="Symbol"
+      >{</a
+      ><a name="3564" class="Argument"
+      >C</a
+      ><a name="3565"
+      > </a
+      ><a name="3566" class="Symbol"
+      >=</a
+      ><a name="3567"
+      > </a
+      ><a name="3568" href="lib.types.Wedge.html#554" class="Function"
+      >Wedge</a
+      ><a name="3573"
+      > </a
+      ><a name="3574" class="Symbol"
+      >(</a
+      ><a name="3575" href="lib.types.BigWedge.html#3356" class="Bound"
+      >Pick</a
+      ><a name="3579"
+      > </a
+      ><a name="3580" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3584" class="Symbol"
+      >)</a
+      ><a name="3585"
+      > </a
+      ><a name="3586" class="Symbol"
+      >(</a
+      ><a name="3587" href="lib.types.BigWedge.html#3356" class="Bound"
+      >Pick</a
+      ><a name="3591"
+      > </a
+      ><a name="3592" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="3597" class="Symbol"
+      >)}</a
+      ><a name="3599"
+      >
+      </a
+      ><a name="3606" class="Symbol"
+      >(</a
+      ><a name="3607" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="3611"
+      > </a
+      ><a name="3612" class="Symbol"
+      >(</a
+      ><a name="3613" href="lib.Base.html#9674" class="Field"
+      >pt</a
+      ><a name="3615"
+      > </a
+      ><a name="3616" class="Symbol"
+      >(</a
+      ><a name="3617" href="lib.types.BigWedge.html#3356" class="Bound"
+      >Pick</a
+      ><a name="3621"
+      > </a
+      ><a name="3622" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3626" class="Symbol"
+      >)))</a
+      ><a name="3629"
+      >
+      </a
+      ><a name="3636" class="Symbol"
+      >(&#955;</a
+      ><a name="3638"
+      > </a
+      ><a name="3639" class="Symbol"
+      >{</a
+      ><a name="3640" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3644"
+      > </a
+      ><a name="3645" class="Symbol"
+      >&#8594;</a
+      ><a name="3646"
+      > </a
+      ><a name="3647" href="lib.types.Wedge.html#686" class="Function"
+      >winl</a
+      ><a name="3651" class="Symbol"
+      >;</a
+      ><a name="3652"
+      > </a
+      ><a name="3653" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="3658"
+      > </a
+      ><a name="3659" class="Symbol"
+      >&#8594;</a
+      ><a name="3660"
+      > </a
+      ><a name="3661" href="lib.types.Wedge.html#728" class="Function"
+      >winr</a
+      ><a name="3665" class="Symbol"
+      >})</a
+      ><a name="3667"
+      >
+      </a
+      ><a name="3674" class="Symbol"
+      >(&#955;</a
+      ><a name="3676"
+      > </a
+      ><a name="3677" class="Symbol"
+      >{</a
+      ><a name="3678" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3682"
+      > </a
+      ><a name="3683" class="Symbol"
+      >&#8594;</a
+      ><a name="3684"
+      > </a
+      ><a name="3685" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3688" class="Symbol"
+      >;</a
+      ><a name="3689"
+      > </a
+      ><a name="3690" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="3695"
+      > </a
+      ><a name="3696" class="Symbol"
+      >&#8594;</a
+      ><a name="3697"
+      > </a
+      ><a name="3698" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="3703" class="Symbol"
+      >})</a
+      ><a name="3705"
+      >
+
+    </a
+      ><a name="3711" class="Keyword"
+      >module</a
+      ><a name="3717"
+      > </a
+      ><a name="3718" href="lib.types.BigWedge.html#3718" class="Module"
+      >G</a
+      ><a name="3719"
+      > </a
+      ><a name="3720" class="Symbol"
+      >=</a
+      ><a name="3721"
+      > </a
+      ><a name="3722" href="lib.types.Wedge.html#1513" class="Module"
+      >WedgeRec</a
+      ><a name="3730"
+      > </a
+      ><a name="3731" class="Symbol"
+      >{</a
+      ><a name="3732" class="Argument"
+      >X</a
+      ><a name="3733"
+      > </a
+      ><a name="3734" class="Symbol"
+      >=</a
+      ><a name="3735"
+      > </a
+      ><a name="3736" href="lib.types.BigWedge.html#3356" class="Bound"
+      >Pick</a
+      ><a name="3740"
+      > </a
+      ><a name="3741" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3745" class="Symbol"
+      >}</a
+      ><a name="3746"
+      > </a
+      ><a name="3747" class="Symbol"
+      >{</a
+      ><a name="3748" class="Argument"
+      >Y</a
+      ><a name="3749"
+      > </a
+      ><a name="3750" class="Symbol"
+      >=</a
+      ><a name="3751"
+      > </a
+      ><a name="3752" href="lib.types.BigWedge.html#3356" class="Bound"
+      >Pick</a
+      ><a name="3756"
+      > </a
+      ><a name="3757" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="3762" class="Symbol"
+      >}</a
+      ><a name="3763"
+      >
+      </a
+      ><a name="3770" class="Symbol"
+      >{</a
+      ><a name="3771" class="Argument"
+      >C</a
+      ><a name="3772"
+      > </a
+      ><a name="3773" class="Symbol"
+      >=</a
+      ><a name="3774"
+      > </a
+      ><a name="3775" href="lib.types.BigWedge.html#662" class="Function"
+      >BigWedge</a
+      ><a name="3783"
+      > </a
+      ><a name="3784" href="lib.types.BigWedge.html#3356" class="Bound"
+      >Pick</a
+      ><a name="3788" class="Symbol"
+      >}</a
+      ><a name="3789"
+      >
+      </a
+      ><a name="3796" class="Symbol"
+      >(</a
+      ><a name="3797" href="lib.types.BigWedge.html#803" class="Function"
+      >bwin</a
+      ><a name="3801"
+      > </a
+      ><a name="3802" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3806" class="Symbol"
+      >)</a
+      ><a name="3807"
+      >
+      </a
+      ><a name="3814" class="Symbol"
+      >(</a
+      ><a name="3815" href="lib.types.BigWedge.html#803" class="Function"
+      >bwin</a
+      ><a name="3819"
+      > </a
+      ><a name="3820" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="3825" class="Symbol"
+      >)</a
+      ><a name="3826"
+      >
+      </a
+      ><a name="3833" class="Symbol"
+      >(</a
+      ><a name="3834" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="3835"
+      > </a
+      ><a name="3836" class="Symbol"
+      >(</a
+      ><a name="3837" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="3843"
+      > </a
+      ><a name="3844" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="3848" class="Symbol"
+      >)</a
+      ><a name="3849"
+      > </a
+      ><a name="3850" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="3851"
+      > </a
+      ><a name="3852" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="3858"
+      > </a
+      ><a name="3859" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="3864" class="Symbol"
+      >)</a
+      ><a name="3865"
+      >
+
+    </a
+      ><a name="3871" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="3872"
+      > </a
+      ><a name="3873" class="Symbol"
+      >=</a
+      ><a name="3874"
+      > </a
+      ><a name="3875" href="lib.types.Pushout.html#1397" class="Function"
+      >F.f</a
+      ><a name="3878"
+      >
+    </a
+      ><a name="3883" href="lib.types.BigWedge.html#3883" class="Function"
+      >g</a
+      ><a name="3884"
+      > </a
+      ><a name="3885" class="Symbol"
+      >=</a
+      ><a name="3886"
+      > </a
+      ><a name="3887" href="lib.types.Wedge.html#1715" class="Function"
+      >G.f</a
+      ><a name="3890"
+      >
+
+    </a
+      ><a name="3896" class="Keyword"
+      >abstract</a
+      ><a name="3904"
+      >
+      </a
+      ><a name="3911" href="lib.types.BigWedge.html#3911" class="Function"
+      >f-g</a
+      ><a name="3914"
+      > </a
+      ><a name="3915" class="Symbol"
+      >:</a
+      ><a name="3916"
+      > </a
+      ><a name="3917" class="Symbol"
+      >&#8704;</a
+      ><a name="3918"
+      > </a
+      ><a name="3919" href="lib.types.BigWedge.html#3919" class="Bound"
+      >w</a
+      ><a name="3920"
+      > </a
+      ><a name="3921" class="Symbol"
+      >&#8594;</a
+      ><a name="3922"
+      > </a
+      ><a name="3923" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="3924"
+      > </a
+      ><a name="3925" class="Symbol"
+      >(</a
+      ><a name="3926" href="lib.types.BigWedge.html#3883" class="Function"
+      >g</a
+      ><a name="3927"
+      > </a
+      ><a name="3928" href="lib.types.BigWedge.html#3919" class="Bound"
+      >w</a
+      ><a name="3929" class="Symbol"
+      >)</a
+      ><a name="3930"
+      > </a
+      ><a name="3931" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="3933"
+      > </a
+      ><a name="3934" href="lib.types.BigWedge.html#3919" class="Bound"
+      >w</a
+      ><a name="3935"
+      >
+      </a
+      ><a name="3942" href="lib.types.BigWedge.html#3911" class="Function"
+      >f-g</a
+      ><a name="3945"
+      > </a
+      ><a name="3946" class="Symbol"
+      >=</a
+      ><a name="3947"
+      > </a
+      ><a name="3948" href="lib.types.Wedge.html#1407" class="Function"
+      >Wedge-elim</a
+      ><a name="3958"
+      >
+        </a
+      ><a name="3967" class="Symbol"
+      >(&#955;</a
+      ><a name="3969"
+      > </a
+      ><a name="3970" href="lib.types.BigWedge.html#3970" class="Bound"
+      >_</a
+      ><a name="3971"
+      > </a
+      ><a name="3972" class="Symbol"
+      >&#8594;</a
+      ><a name="3973"
+      > </a
+      ><a name="3974" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3977" class="Symbol"
+      >)</a
+      ><a name="3978"
+      >
+        </a
+      ><a name="3987" class="Symbol"
+      >(&#955;</a
+      ><a name="3989"
+      > </a
+      ><a name="3990" href="lib.types.BigWedge.html#3990" class="Bound"
+      >_</a
+      ><a name="3991"
+      > </a
+      ><a name="3992" class="Symbol"
+      >&#8594;</a
+      ><a name="3993"
+      > </a
+      ><a name="3994" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="3997" class="Symbol"
+      >)</a
+      ><a name="3998"
+      >
+        </a
+      ><a name="4007" class="Symbol"
+      >(</a
+      ><a name="4008" href="lib.types.Paths.html#7720" class="Function"
+      >&#8595;-&#8728;=idf-in'</a
+      ><a name="4019"
+      > </a
+      ><a name="4020" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="4021"
+      > </a
+      ><a name="4022" href="lib.types.BigWedge.html#3883" class="Function"
+      >g</a
+      ><a name="4023"
+      > </a
+      ><a name="4024" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="4025"
+      >
+          </a
+      ><a name="4036" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4038"
+      > </a
+      ><a name="4039" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="4040"
+      > </a
+      ><a name="4041" class="Symbol"
+      >(</a
+      ><a name="4042" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4044"
+      > </a
+      ><a name="4045" href="lib.types.BigWedge.html#3883" class="Function"
+      >g</a
+      ><a name="4046"
+      > </a
+      ><a name="4047" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="4052" class="Symbol"
+      >)</a
+      ><a name="4053"
+      >
+            </a
+      ><a name="4066" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4068"
+      > </a
+      ><a name="4069" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4071"
+      > </a
+      ><a name="4072" class="Symbol"
+      >(</a
+      ><a name="4073" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4075"
+      > </a
+      ><a name="4076" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="4077" class="Symbol"
+      >)</a
+      ><a name="4078"
+      > </a
+      ><a name="4079" href="lib.types.Wedge.html#1727" class="Function"
+      >G.glue-&#946;</a
+      ><a name="4087"
+      > </a
+      ><a name="4088" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4089"
+      >
+          </a
+      ><a name="4100" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4102"
+      > </a
+      ><a name="4103" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="4104"
+      > </a
+      ><a name="4105" class="Symbol"
+      >(</a
+      ><a name="4106" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4107"
+      > </a
+      ><a name="4108" class="Symbol"
+      >(</a
+      ><a name="4109" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="4115"
+      > </a
+      ><a name="4116" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4120" class="Symbol"
+      >)</a
+      ><a name="4121"
+      > </a
+      ><a name="4122" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4123"
+      > </a
+      ><a name="4124" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="4130"
+      > </a
+      ><a name="4131" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="4136" class="Symbol"
+      >)</a
+      ><a name="4137"
+      >
+            </a
+      ><a name="4150" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4152"
+      > </a
+      ><a name="4153" href="lib.PathFunctor.html#477" class="Function"
+      >ap-&#8729;</a
+      ><a name="4157"
+      > </a
+      ><a name="4158" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="4159"
+      > </a
+      ><a name="4160" class="Symbol"
+      >(</a
+      ><a name="4161" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4162"
+      > </a
+      ><a name="4163" class="Symbol"
+      >(</a
+      ><a name="4164" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="4170"
+      > </a
+      ><a name="4171" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4175" class="Symbol"
+      >))</a
+      ><a name="4177"
+      > </a
+      ><a name="4178" class="Symbol"
+      >(</a
+      ><a name="4179" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="4185"
+      > </a
+      ><a name="4186" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="4191" class="Symbol"
+      >)</a
+      ><a name="4192"
+      > </a
+      ><a name="4193" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4194"
+      >
+          </a
+      ><a name="4205" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4207"
+      > </a
+      ><a name="4208" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="4209"
+      > </a
+      ><a name="4210" class="Symbol"
+      >(</a
+      ><a name="4211" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4212"
+      > </a
+      ><a name="4213" class="Symbol"
+      >(</a
+      ><a name="4214" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="4220"
+      > </a
+      ><a name="4221" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4225" class="Symbol"
+      >))</a
+      ><a name="4227"
+      > </a
+      ><a name="4228" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4229"
+      > </a
+      ><a name="4230" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4232"
+      > </a
+      ><a name="4233" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="4234"
+      > </a
+      ><a name="4235" class="Symbol"
+      >(</a
+      ><a name="4236" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="4242"
+      > </a
+      ><a name="4243" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="4248" class="Symbol"
+      >)</a
+      ><a name="4249"
+      >
+            </a
+      ><a name="4262" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4264"
+      > </a
+      ><a name="4265" href="lib.PathFunctor.html#291" class="Function"
+      >ap-!</a
+      ><a name="4269"
+      > </a
+      ><a name="4270" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="4271"
+      > </a
+      ><a name="4272" class="Symbol"
+      >(</a
+      ><a name="4273" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="4279"
+      > </a
+      ><a name="4280" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4284" class="Symbol"
+      >)</a
+      ><a name="4285"
+      >
+               </a
+      ><a name="4301" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="4308"
+      > </a
+      ><a name="4309" class="Symbol"
+      >(&#955;</a
+      ><a name="4311"
+      > </a
+      ><a name="4312" href="lib.types.BigWedge.html#4312" class="Bound"
+      >w</a
+      ><a name="4313"
+      > </a
+      ><a name="4314" class="Symbol"
+      >&#8594;</a
+      ><a name="4315"
+      > </a
+      ><a name="4316" href="lib.types.BigWedge.html#4312" class="Bound"
+      >w</a
+      ><a name="4317"
+      > </a
+      ><a name="4318" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4319"
+      > </a
+      ><a name="4320" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4322"
+      > </a
+      ><a name="4323" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="4324"
+      > </a
+      ><a name="4325" class="Symbol"
+      >(</a
+      ><a name="4326" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="4332"
+      > </a
+      ><a name="4333" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="4338" class="Symbol"
+      >))</a
+      ><a name="4340"
+      > </a
+      ><a name="4341" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4342"
+      >
+          </a
+      ><a name="4353" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4354"
+      > </a
+      ><a name="4355" class="Symbol"
+      >(</a
+      ><a name="4356" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4358"
+      > </a
+      ><a name="4359" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="4360"
+      > </a
+      ><a name="4361" class="Symbol"
+      >(</a
+      ><a name="4362" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="4368"
+      > </a
+      ><a name="4369" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4373" class="Symbol"
+      >))</a
+      ><a name="4375"
+      > </a
+      ><a name="4376" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4377"
+      > </a
+      ><a name="4378" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4380"
+      > </a
+      ><a name="4381" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="4382"
+      > </a
+      ><a name="4383" class="Symbol"
+      >(</a
+      ><a name="4384" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="4390"
+      > </a
+      ><a name="4391" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="4396" class="Symbol"
+      >)</a
+      ><a name="4397"
+      >
+            </a
+      ><a name="4410" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4412"
+      > </a
+      ><a name="4413" href="lib.types.Pushout.html#1428" class="Function"
+      >F.glue-&#946;</a
+      ><a name="4421"
+      > </a
+      ><a name="4422" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4426"
+      >
+               </a
+      ><a name="4442" href="lib.Base.html#3888" class="Function"
+      >|in-ctx</a
+      ><a name="4449"
+      > </a
+      ><a name="4450" class="Symbol"
+      >(&#955;</a
+      ><a name="4452"
+      > </a
+      ><a name="4453" href="lib.types.BigWedge.html#4453" class="Bound"
+      >w</a
+      ><a name="4454"
+      > </a
+      ><a name="4455" class="Symbol"
+      >&#8594;</a
+      ><a name="4456"
+      > </a
+      ><a name="4457" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4458"
+      > </a
+      ><a name="4459" href="lib.types.BigWedge.html#4453" class="Bound"
+      >w</a
+      ><a name="4460"
+      > </a
+      ><a name="4461" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4462"
+      > </a
+      ><a name="4463" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4465"
+      > </a
+      ><a name="4466" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="4467"
+      > </a
+      ><a name="4468" class="Symbol"
+      >(</a
+      ><a name="4469" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="4475"
+      > </a
+      ><a name="4476" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="4481" class="Symbol"
+      >))</a
+      ><a name="4483"
+      > </a
+      ><a name="4484" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4485"
+      >
+          </a
+      ><a name="4496" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4498"
+      > </a
+      ><a name="4499" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="4500"
+      > </a
+      ><a name="4501" class="Symbol"
+      >(</a
+      ><a name="4502" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="4508"
+      > </a
+      ><a name="4509" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="4514" class="Symbol"
+      >)</a
+      ><a name="4515"
+      >
+            </a
+      ><a name="4528" href="lib.Base.html#7586" class="Function Operator"
+      >=&#10216;</a
+      ><a name="4530"
+      > </a
+      ><a name="4531" href="lib.types.Pushout.html#1428" class="Function"
+      >F.glue-&#946;</a
+      ><a name="4539"
+      > </a
+      ><a name="4540" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="4545"
+      > </a
+      ><a name="4546" href="lib.Base.html#7586" class="Function Operator"
+      >&#10217;</a
+      ><a name="4547"
+      >
+          </a
+      ><a name="4558" href="lib.types.Wedge.html#771" class="Function"
+      >wglue</a
+      ><a name="4563"
+      > </a
+      ><a name="4564" href="lib.Base.html#7681" class="Function Operator"
+      >=&#8718;</a
+      ><a name="4566" class="Symbol"
+      >)</a
+      ><a name="4567"
+      >
+
+      </a
+      ><a name="4575" href="lib.types.BigWedge.html#4575" class="Function"
+      >g-f</a
+      ><a name="4578"
+      > </a
+      ><a name="4579" class="Symbol"
+      >:</a
+      ><a name="4580"
+      > </a
+      ><a name="4581" class="Symbol"
+      >&#8704;</a
+      ><a name="4582"
+      > </a
+      ><a name="4583" href="lib.types.BigWedge.html#4583" class="Bound"
+      >bw</a
+      ><a name="4585"
+      > </a
+      ><a name="4586" class="Symbol"
+      >&#8594;</a
+      ><a name="4587"
+      > </a
+      ><a name="4588" href="lib.types.BigWedge.html#3883" class="Function"
+      >g</a
+      ><a name="4589"
+      > </a
+      ><a name="4590" class="Symbol"
+      >(</a
+      ><a name="4591" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="4592"
+      > </a
+      ><a name="4593" href="lib.types.BigWedge.html#4583" class="Bound"
+      >bw</a
+      ><a name="4595" class="Symbol"
+      >)</a
+      ><a name="4596"
+      > </a
+      ><a name="4597" href="lib.Base.html#1878" class="Datatype Operator"
+      >==</a
+      ><a name="4599"
+      > </a
+      ><a name="4600" href="lib.types.BigWedge.html#4583" class="Bound"
+      >bw</a
+      ><a name="4602"
+      >
+      </a
+      ><a name="4609" href="lib.types.BigWedge.html#4575" class="Function"
+      >g-f</a
+      ><a name="4612"
+      > </a
+      ><a name="4613" class="Symbol"
+      >=</a
+      ><a name="4614"
+      > </a
+      ><a name="4615" href="lib.types.BigWedge.html#1431" class="Function"
+      >BigWedge-elim</a
+      ><a name="4628"
+      >
+        </a
+      ><a name="4637" class="Symbol"
+      >(</a
+      ><a name="4638" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4639"
+      > </a
+      ><a name="4640" class="Symbol"
+      >(</a
+      ><a name="4641" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="4647"
+      > </a
+      ><a name="4648" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4652" class="Symbol"
+      >))</a
+      ><a name="4654"
+      >
+        </a
+      ><a name="4663" class="Symbol"
+      >(&#955;</a
+      ><a name="4665"
+      > </a
+      ><a name="4666" class="Symbol"
+      >{</a
+      ><a name="4667" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4671"
+      > </a
+      ><a name="4672" class="Symbol"
+      >&#8594;</a
+      ><a name="4673"
+      > </a
+      ><a name="4674" class="Symbol"
+      >&#955;</a
+      ><a name="4675"
+      > </a
+      ><a name="4676" href="lib.types.BigWedge.html#4676" class="Bound"
+      >_</a
+      ><a name="4677"
+      > </a
+      ><a name="4678" class="Symbol"
+      >&#8594;</a
+      ><a name="4679"
+      > </a
+      ><a name="4680" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4683" class="Symbol"
+      >;</a
+      ><a name="4684"
+      > </a
+      ><a name="4685" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="4690"
+      > </a
+      ><a name="4691" class="Symbol"
+      >&#8594;</a
+      ><a name="4692"
+      > </a
+      ><a name="4693" class="Symbol"
+      >&#955;</a
+      ><a name="4694"
+      > </a
+      ><a name="4695" href="lib.types.BigWedge.html#4695" class="Bound"
+      >_</a
+      ><a name="4696"
+      > </a
+      ><a name="4697" class="Symbol"
+      >&#8594;</a
+      ><a name="4698"
+      > </a
+      ><a name="4699" href="lib.Base.html#1929" class="InductiveConstructor"
+      >idp</a
+      ><a name="4702" class="Symbol"
+      >})</a
+      ><a name="4704"
+      >
+        </a
+      ><a name="4713" class="Symbol"
+      >(&#955;</a
+      ><a name="4715"
+      > </a
+      ><a name="4716" class="Symbol"
+      >{</a
+      ><a name="4717" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4721"
+      > </a
+      ><a name="4722" class="Symbol"
+      >&#8594;</a
+      ><a name="4723"
+      > </a
+      ><a name="4724" href="lib.cubical.Square.html#10289" class="Function"
+      >&#8595;-&#8728;=idf-from-square</a
+      ><a name="4743"
+      > </a
+      ><a name="4744" href="lib.types.BigWedge.html#3883" class="Function"
+      >g</a
+      ><a name="4745"
+      > </a
+      ><a name="4746" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="4747"
+      > </a
+      ><a name="4748" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="4749"
+      >
+              </a
+      ><a name="4764" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4766"
+      > </a
+      ><a name="4767" class="Symbol"
+      >(</a
+      ><a name="4768" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4770"
+      > </a
+      ><a name="4771" href="lib.types.BigWedge.html#3883" class="Function"
+      >g</a
+      ><a name="4772" class="Symbol"
+      >)</a
+      ><a name="4773"
+      > </a
+      ><a name="4774" class="Symbol"
+      >(</a
+      ><a name="4775" href="lib.types.Pushout.html#1428" class="Function"
+      >F.glue-&#946;</a
+      ><a name="4783"
+      > </a
+      ><a name="4784" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4788" class="Symbol"
+      >)</a
+      ><a name="4789"
+      > </a
+      ><a name="4790" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="4793"
+      >
+              </a
+      ><a name="4808" href="lib.cubical.Square.html#17806" class="Function"
+      >bl-square</a
+      ><a name="4817"
+      > </a
+      ><a name="4818" class="Symbol"
+      >(</a
+      ><a name="4819" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="4825"
+      > </a
+      ><a name="4826" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4830" class="Symbol"
+      >);</a
+      ><a name="4832"
+      >
+            </a
+      ><a name="4845" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="4850"
+      > </a
+      ><a name="4851" class="Symbol"
+      >&#8594;</a
+      ><a name="4852"
+      > </a
+      ><a name="4853" href="lib.cubical.Square.html#10289" class="Function"
+      >&#8595;-&#8728;=idf-from-square</a
+      ><a name="4872"
+      > </a
+      ><a name="4873" href="lib.types.BigWedge.html#3883" class="Function"
+      >g</a
+      ><a name="4874"
+      > </a
+      ><a name="4875" href="lib.types.BigWedge.html#3871" class="Function"
+      >f</a
+      ><a name="4876"
+      > </a
+      ><a name="4877" href="lib.Base.html#8344" class="Function Operator"
+      >$</a
+      ><a name="4878"
+      >
+              </a
+      ><a name="4893" class="Symbol"
+      >(</a
+      ><a name="4894" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4896"
+      > </a
+      ><a name="4897" class="Symbol"
+      >(</a
+      ><a name="4898" href="lib.Base.html#3888" class="Function"
+      >ap</a
+      ><a name="4900"
+      > </a
+      ><a name="4901" href="lib.types.BigWedge.html#3883" class="Function"
+      >g</a
+      ><a name="4902" class="Symbol"
+      >)</a
+      ><a name="4903"
+      > </a
+      ><a name="4904" class="Symbol"
+      >(</a
+      ><a name="4905" href="lib.types.Pushout.html#1428" class="Function"
+      >F.glue-&#946;</a
+      ><a name="4913"
+      > </a
+      ><a name="4914" href="lib.types.Bool.html#282" class="InductiveConstructor"
+      >false</a
+      ><a name="4919" class="Symbol"
+      >)</a
+      ><a name="4920"
+      > </a
+      ><a name="4921" href="lib.PathGroupoid.html#419" class="Function Operator"
+      >&#8729;</a
+      ><a name="4922"
+      > </a
+      ><a name="4923" href="lib.types.Wedge.html#1727" class="Function"
+      >G.glue-&#946;</a
+      ><a name="4931" class="Symbol"
+      >)</a
+      ><a name="4932"
+      > </a
+      ><a name="4933" href="lib.cubical.Square.html#12105" class="Function Operator"
+      >&#8729;v&#8865;</a
+      ><a name="4936"
+      >
+              </a
+      ><a name="4951" href="lib.cubical.Square.html#18199" class="Function"
+      >lt-square</a
+      ><a name="4960"
+      > </a
+      ><a name="4961" class="Symbol"
+      >(</a
+      ><a name="4962" href="lib.PathGroupoid.html#1217" class="Function"
+      >!</a
+      ><a name="4963"
+      > </a
+      ><a name="4964" class="Symbol"
+      >(</a
+      ><a name="4965" href="lib.types.BigWedge.html#970" class="Function"
+      >bwglue</a
+      ><a name="4971"
+      > </a
+      ><a name="4972" href="lib.types.Bool.html#258" class="InductiveConstructor"
+      >true</a
+      ><a name="4976" class="Symbol"
+      >))</a
+      ><a name="4978"
+      > </a
+      ><a name="4979" href="lib.cubical.Square.html#12549" class="Function Operator"
+      >&#8865;h</a
+      ><a name="4981"
+      > </a
+      ><a name="4982" href="lib.cubical.Square.html#484" class="Function"
+      >vid-square</a
+      ><a name="4992" class="Symbol"
+      >})</a
+      ><a name="4994"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>
