@@ -25,9 +25,10 @@ install:
 script:
 - stack exec agda -- --version
 - set -o pipefail # so that Bash will report the failure of type checking
-# 2-stage type-checking to reduce peak memory usage, hopefully
+# (n+1)-stage type-checking to reduce peak memory usage, hopefully
 - stack exec agda -- --library-file=libraries-travis --without-K --rewriting core/HoTT.agda | ts
 # checking this file is very resource demanding, so it is checked first (actually, I gave up on this)
 # - stack exec agda -- --library-file=libraries-travis --without-K --rewriting theorems/homotopy/3x3/Commutes.agda
-# checking the rest
+# checking the rest, in two rounds (the second round is added on 2017/03/23)
+- stack exec agda -- --library-file=libraries-travis --without-K --rewriting theorems/index2.agda | ts
 - stack exec agda -- --library-file=libraries-travis --without-K --rewriting theorems/index.agda | ts

@@ -54,14 +54,7 @@ import homotopy.VanKampen
 import homotopy.BlakersMassey
 
 {- cw complexes -}
-import cw.CW
-import cw.examples.Examples
--- cellular cohomology groups
-import cw.cohomology.CellularChainComplex
--- Eilenberg-Steenred cohomology groups rephrased
-import cw.cohomology.ReconstructedCohomologyGroups
--- isomorphisms between the cochains the heads
-import cw.cohomology.ReconstructedCochainsIsoCellularCochains
+import index2
 
 -- There are some unported theorems
 
