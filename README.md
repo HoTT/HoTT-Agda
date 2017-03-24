@@ -301,6 +301,11 @@ List of contribution (possibly outdated or incorrect):
 - Chris Jeris: Eckmann-Hilton argument
 - Michael Shulman: updates to equivalence and univalence
 
+License
+-------
+This work is released under [MIT license](https://opensource.org/licenses/MIT).
+See [LICENSE.md](LICENSE.md).
+
 Funding
 -------
 
