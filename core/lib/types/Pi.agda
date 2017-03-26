@@ -7,14 +7,15 @@ open import lib.types.Paths
 
 module lib.types.Pi where
 
-abstract
-  Π-level : ∀ {i j} {A : Type i} {B : A → Type j} {n : ℕ₋₂}
-    → (((x : A) → has-level n (B x)) → has-level n (Π A B))
-  Π-level {n = ⟨-2⟩} p =
-    ((λ x → fst (p x)) , (λ f → λ= (λ x → snd (p x) (f x))))
-  Π-level {n = S n} p = λ f g →
-    equiv-preserves-level λ=-equiv
-      (Π-level (λ x → p x (f x) (g x)))
+Π-level : ∀ {i j} {A : Type i} {B : A → Type j} {n : ℕ₋₂}
+  → (((x : A) → has-level n (B x)) → has-level n (Π A B))
+Π-level {n = ⟨-2⟩} p =
+  ((λ x → fst (p x)) , (λ f → λ= (λ x → snd (p x) (f x))))
+Π-level {n = S n} p = lemma where
+  abstract
+    lemma = λ f g →
+      equiv-preserves-level λ=-equiv
+        (Π-level (λ x → p x (f x) (g x)))
 
 module _ {i j} {A : Type i} {B : A → Type j} where
   abstract
@@ -25,10 +26,10 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     Π-is-set = Π-level
 
 module _ {i j} {A : Type i} {B : Type j} where
-  abstract
-    →-level : {n : ℕ₋₂} → (has-level n B → has-level n (A → B))
-    →-level p = Π-level (λ _ → p)
+  →-level : {n : ℕ₋₂} → (has-level n B → has-level n (A → B))
+  →-level p = Π-level (λ _ → p)
 
+  abstract
     →-is-set : is-set B → is-set (A → B)
     →-is-set = →-level
 

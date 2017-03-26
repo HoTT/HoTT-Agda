@@ -136,21 +136,21 @@ module _ {i j} {A : Type i} {B : A → Type j} where
   (q : B == B' [ (λ X → (X → Type j)) ↓ p ]) → Σ A B == Σ A' B'
 Σ= idp idp = idp
 
-abstract
+Σ-level : ∀ {i j} {n : ℕ₋₂} {A : Type i} {P : A → Type j}
+  → (has-level n A → ((x : A) → has-level n (P x))
+    → has-level n (Σ A P))
+Σ-level {n = ⟨-2⟩} p q =
+  ((fst p , (fst (q (fst p)))) ,
+    (λ y → pair= (snd p _) (from-transp! _ _ (snd (q _) _))))
+Σ-level {n = S n} p q = lemma where
+  abstract
+    lemma = λ x y → equiv-preserves-level (=Σ-econv x y)
+      (Σ-level (p _ _) λ _ →
+        equiv-preserves-level ((to-transp-equiv _ _)⁻¹) (q _ _ _))
 
-  Σ-level : ∀ {i j} {n : ℕ₋₂} {A : Type i} {P : A → Type j}
-    → (has-level n A → ((x : A) → has-level n (P x))
-      → has-level n (Σ A P))
-  Σ-level {n = ⟨-2⟩} p q =
-    ((fst p , (fst (q (fst p)))) ,
-      (λ y → pair= (snd p _) (from-transp! _ _ (snd (q _) _))))
-  Σ-level {n = S n} p q = λ x y → equiv-preserves-level (=Σ-econv x y)
-    (Σ-level (p _ _)
-      (λ _ → equiv-preserves-level ((to-transp-equiv _ _)⁻¹) (q _ _ _)))
-
-  ×-level : ∀ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j}
-    → (has-level n A → has-level n B → has-level n (A × B))
-  ×-level pA pB = Σ-level pA (λ x → pB)
+×-level : ∀ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j}
+  → (has-level n A → has-level n B → has-level n (A × B))
+×-level pA pB = Σ-level pA (λ x → pB)
 
 -- Equivalences in a Σ-type
 
