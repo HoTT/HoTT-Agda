@@ -139,9 +139,8 @@ module _ {i j} {A : Type i} {B : A → Type j} where
 Σ-level : ∀ {i j} {n : ℕ₋₂} {A : Type i} {P : A → Type j}
   → (has-level n A → ((x : A) → has-level n (P x))
     → has-level n (Σ A P))
-Σ-level {n = ⟨-2⟩} p q =
-  ((fst p , (fst (q (fst p)))) ,
-    (λ y → pair= (snd p _) (from-transp! _ _ (snd (q _) _))))
+Σ-level {n = ⟨-2⟩} p q = (fst p , (fst (q (fst p)))) , lemma
+  where abstract lemma = λ y → pair= (snd p _) (from-transp! _ _ (snd (q _) _))
 Σ-level {n = S n} p q = lemma where
   abstract
     lemma = λ x y → equiv-preserves-level (=Σ-econv x y)
