@@ -279,6 +279,7 @@ Citation
   author={Guillaume Brunerie
     and Kuen-Bang {Hou (Favonia)}
     and Evan Cavallo
+    and Eric Finster
     and Jesper Cockx
     and Christian Sattler
     and Chris Jeris
@@ -296,6 +297,7 @@ List of contribution (possibly outdated or incorrect):
 - Guillaume Brunerie: the foundation, pi1s1, 3x3 lemma, many more
 - Favonia: covering space, Blakers-Massey, van Kampen, cohomology
 - Evan Cavallo: cubical reasoning, cohomology, Mayer-Vietoris
+- Eric Finster: modalities
 - Jesper Cockx: rewrite rules
 - Christian Sattler: updates to equivalence and univalence
 - Chris Jeris: Eckmann-Hilton argument
