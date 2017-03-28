@@ -34,24 +34,24 @@ is-connected-is-prop : ∀ {i} {n : ℕ₋₂} {A : Type i}
 is-connected-is-prop = is-contr-is-prop
 
 {- "induction principle" for n-connected maps (where codomain is n-type) -}
-pre∘-conn-is-equiv : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂}
-  → {h : A → B} → has-conn-fibers n h
-  → (∀ {k} (P : B → n -Type k) → is-equiv (λ (s : Π B (fst ∘ P)) → s ∘ h))
-pre∘-conn-is-equiv {A = A} {B = B} {n = n} {h = h} c P = is-eq f g f-g g-f
-  where f : Π B (fst ∘ P) → Π A (fst ∘ P ∘ h)
-        f k a = k (h a)
+abstract
+  pre∘-conn-is-equiv : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂}
+    → {h : A → B} → has-conn-fibers n h
+    → (∀ {k} (P : B → n -Type k) → is-equiv (λ (s : Π B (fst ∘ P)) → s ∘ h))
+  pre∘-conn-is-equiv {A = A} {B = B} {n = n} {h = h} c P = is-eq f g f-g g-f
+    where f : Π B (fst ∘ P) → Π A (fst ∘ P ∘ h)
+          f k a = k (h a)
 
-        helper : Π A (fst ∘ P ∘ h)
-          → (b : B) → Trunc n (Σ A (λ a → h a == b)) → (fst (P b))
-        helper t b r =
-          Trunc-rec (snd (P b))
-            (λ x → transport (λ y → fst (P y)) (snd x) (t (fst x)))
-            r
+          helper : Π A (fst ∘ P ∘ h)
+            → (b : B) → Trunc n (Σ A (λ a → h a == b)) → (fst (P b))
+          helper t b r =
+            Trunc-rec (snd (P b))
+              (λ x → transport (λ y → fst (P y)) (snd x) (t (fst x)))
+              r
 
-        g : Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)
-        g t b = helper t b (fst (c b))
+          g : Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)
+          g t b = helper t b (fst (c b))
 
-        abstract
           f-g : ∀ t → f (g t) == t
           f-g t = λ= $ λ a → transport
             (λ r →  Trunc-rec (snd (P (h a))) _ r == t a)
