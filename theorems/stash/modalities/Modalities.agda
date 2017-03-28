@@ -2,7 +2,7 @@
 
 open import HoTT
 
-module Modalities where
+module stash.modalities.Modalities where
 
   record Modality {ℓ} : Type (lsucc ℓ) where
     field
