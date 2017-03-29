@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
 
@@ -11,7 +11,7 @@ module stash.modalities.ModalWedge {i} (M : Modality {i})
   
   record args : Type (lsucc i) where
     field
-      jn-conn : is-contr (◯ (a₀ == a₀) * (b₀ == b₀))
+      jn-conn : is-contr (◯ ((a₀ == a₀) * (b₀ == b₀)))
       R : A → B → P-Type M
       f : (a : A) → fst (R a b₀)
       g : (b : B) → fst (R a₀ b)

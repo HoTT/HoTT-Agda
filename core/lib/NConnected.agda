@@ -33,13 +33,12 @@ is-connected-is-prop : ∀ {i} {n : ℕ₋₂} {A : Type i}
   → is-prop (is-connected n A)
 is-connected-is-prop = is-contr-is-prop
 
--- XXX What is the naming convention?
 {- "induction principle" for n-connected maps (where codomain is n-type) -}
 abstract
-  conn-elim-iseconv : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂}
+  pre∘-conn-is-equiv : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂}
     → {h : A → B} → has-conn-fibers n h
     → (∀ {k} (P : B → n -Type k) → is-equiv (λ (s : Π B (fst ∘ P)) → s ∘ h))
-  conn-elim-iseconv {A = A} {B = B} {n = n} {h = h} c P = is-eq f g f-g g-f
+  pre∘-conn-is-equiv {A = A} {B = B} {n = n} {h = h} c P = is-eq f g f-g g-f
     where f : Π B (fst ∘ P) → Π A (fst ∘ P ∘ h)
           f k a = k (h a)
 
@@ -72,13 +71,13 @@ conn-elim : ∀ {i j k} {A : Type i} {B : Type j} {n : ℕ₋₂}
   → {h : A → B} → has-conn-fibers n h
   → (P : B → n -Type k)
   → Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)
-conn-elim c P f = is-equiv.g (conn-elim-iseconv c P) f
+conn-elim c P f = is-equiv.g (pre∘-conn-is-equiv c P) f
 
 conn-elim-β : ∀ {i j k} {A : Type i} {B : Type j} {n : ℕ₋₂}
   {h : A → B} (c : has-conn-fibers n h)
   (P : B → n -Type k) (f : Π A (fst ∘ P ∘ h))
   → ∀ a → (conn-elim c P f (h a)) == f a
-conn-elim-β c P f = app= (is-equiv.f-g (conn-elim-iseconv c P) f)
+conn-elim-β c P f = app= (is-equiv.f-g (pre∘-conn-is-equiv c P) f)
 
 
 {- generalized "almost induction principle" for maps into ≥n-types
@@ -88,7 +87,7 @@ conn-elim-general : ∀ {i j} {A : Type i} {B : Type j} {n k : ℕ₋₂}
   → ∀ {l} (P : B → (k +2+ n) -Type l)
   → ∀ t → has-level k (Σ (Π B (fst ∘ P)) (λ s → (s ∘ f) == t))
 conn-elim-general {k = ⟨-2⟩} c P t =
-  equiv-is-contr-map (conn-elim-iseconv c P) t
+  equiv-is-contr-map (pre∘-conn-is-equiv c P) t
 conn-elim-general {B = B} {n = n} {k = S k'} {f = f} c P t =
   λ {(g , p) (h , q) →
     equiv-preserves-level (e g h p q) $
