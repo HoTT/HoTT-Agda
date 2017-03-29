@@ -1,3 +1,5 @@
+MIT License
+
 Copyright (c) 2013-2017 Guillaume Brunerie, Kuen-Bang Hou (Favonia), Evan Cavallo,
 Eric Finster, Jesper Cockx, Christian Sattler, Chris Jeris and Michael Shulman
 
