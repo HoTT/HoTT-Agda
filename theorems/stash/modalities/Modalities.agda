@@ -87,6 +87,10 @@ module stash.modalities.Modalities where
             inv-l : (b : ◯ B) → η (η-inv b) == b
             inv-l = ◯-elim _ (λ b → ◯-== _ _) (λ b → ap η (inv-r b))
 
+    ==-is-local : {A : Type ℓ} {a₀ a₁ : A} → is-local A → is-local (a₀ == a₁)
+    ==-is-local {A} {a₀} {a₁} w  = is-local-is-replete
+      (◯-== (η a₀) (η a₁)) (ap-equiv (η , is-local-to-η-equiv w) a₀ a₁ ⁻¹)
+
     Π-is-local : {A : Type ℓ} (B : A → Type ℓ) (w : (a : A) → is-local (B a)) → is-local (Π A B)
     Π-is-local {A} B w = is-local-retract {◯ (Π A B)} {Π A B} ◯-is-local η-inv η r
 
@@ -136,24 +140,19 @@ module stash.modalities.Modalities where
               g-f k = λ= $ λ (b : B) →
                 ◯-elim {A = hfiber h b}
                         (λ _ → g (f k) b == k b)
-                        (λ r → pths-local b)
-                        (λ r → {!!})
+                        (λ r → ==-is-local (snd (P b)))
+                        (λ r → lemma₁ (fst r) b (snd r))
                         (fst (c b))
 
-                  where pths-local : (b : B) → is-local (g (f k) b == k b)
-                        pths-local b = is-local-is-replete
-                          (◯-== {fst (P b)} (η (g (f k) b)) (η (k b)))
-                          ((ap-equiv (η , is-local-to-η-equiv (snd (P b))) (g (f k) b) (k b)) ⁻¹)
+                  where lemma₀ : (a : A) → (b : B) → (p : h a == b) →
+                               helper (k ∘ h) b (η (a , p)) == k b
+                        lemma₀ a .(h a) idp = helper-β (k ∘ h) (h a) (a , idp) 
 
-                        lemma : ∀ xl → ∀ b → (p : h xl == b) →
-                          helper (k ∘ h) b (η (xl , p)) == k b
-                        lemma xl ._ idp = {!!}
-                        
+                        lemma₁ : (a : A) → (b : B) → (p : h a == b) →
+                               helper (k ∘ h) b (fst (c b)) == k b
+                        lemma₁ a b p = transport! (λ r → helper (k ∘ h) b r == k b)
+                          (snd (c b) (η (a , p))) (lemma₀ a b p)
 
-              -- g-f k = λ= $ λ (b : B) →
-              --   Trunc-elim (λ r → =-preserves-level {x = helper (k ∘ h) b r} (snd (P b)))
-              --              (λ x → lemma (fst x) b (snd x)) (fst (c b))
-              --   where
 
     ◯-connected-elim : {A B : Type ℓ} (f : A → B) → is-◯-equiv f →
                         (P : B → ◯-Type) → Π A (fst ∘ P ∘ f) → Π B (fst ∘ P)
