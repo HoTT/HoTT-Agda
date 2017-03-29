@@ -1,6 +1,3 @@
-LICENSE
-=======
-
 Copyright (c) 2013-2017 Guillaume Brunerie, Kuen-Bang Hou (Favonia), Evan Cavallo,
 Eric Finster, Jesper Cockx, Christian Sattler, Chris Jeris and Michael Shulman
 
@@ -21,15 +18,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
-ACKNOWLEDGMENT
-===============
-
-This material is partially based upon work supported by the National Science
-Foundation under Grant Number 1116703. Any opinions, findings, and conclusions
-or recommendations expressed in this material are those of the author(s)
-and do not necessarily reflect the views of the National Science Foundation.
-
-This material is also partially based upon work supported by the Air Force
-Office of Scientific Research under Multidisciplinary Research Program of
-the University Research Initiative (MURI) Grant Number FA9550-15-1-0053.
