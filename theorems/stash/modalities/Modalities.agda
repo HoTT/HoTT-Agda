@@ -52,6 +52,9 @@ module stash.modalities.Modalities where
     ◯-func : {A B : Type ℓ} (f : A → B) → ◯ A → ◯ B
     ◯-func {A} {B} f = ◯-rec ◯-is-local (λ a → η (f a))
 
+    ◯-func-β : {A B : Type ℓ} (f : A → B) (a : A) → ◯-func f (η a) == η (f a)
+    ◯-func-β f a = ◯-rec-β ◯-is-local (λ a → η (f a)) a
+
     -- This is the only appearence of univalence, but ...
     is-local-is-replete : {A B : Type ℓ} → is-local A → A ≃ B → is-local B
     is-local-is-replete w eq = transport is-local (ua eq) w
@@ -100,17 +103,44 @@ module stash.modalities.Modalities where
             r : (φ : Π A B) → η-inv (η φ) == φ
             r φ = λ= (λ a → ◯-rec-β (w a) (λ φ₀ → φ₀ a) φ)
     
-    -- Σ-P : {A : Type ℓ} (B : A → Type ℓ) (pA : P A) (pB : (a : A) → P (B a)) → P (Σ A B)
-    -- Σ-P {A} B pA pB = ◯-retract {◯ (Σ A B)} {Σ A B} in-◯ η-inv η {!!}
+    Σ-is-local : {A : Type ℓ} (B : A → Type ℓ)
+                 (lA : is-local A) (lB : (a : A) → is-local (B a)) →
+                 is-local (Σ A B)
+    Σ-is-local {A} B lA lB = is-local-retract {◯ (Σ A B)} {Σ A B} ◯-is-local η-inv η r
 
-    --   where h : ◯ (Σ A B) → A
-    --         h = (is-equiv.g (P-η-equiv pA)) ∘ (◯-func fst)
+      where h : ◯ (Σ A B) → A
+            h = (is-equiv.g (is-local-to-η-equiv lA)) ∘ (◯-func fst)
+
+            h-β : (ab : Σ A B) → h (η ab) == fst ab
+            h-β ab = ap (is-equiv.g (is-local-to-η-equiv lA)) (◯-func-β fst ab) ∙
+                         is-equiv.g-f (is-local-to-η-equiv lA) (fst ab)
+
+            k₀ : (w : ◯ (Σ A B)) → ◯ (B (h w))
+            k₀ = ◯-elim {A = Σ A B} (◯ ∘ B ∘ h) (λ _ → ◯-is-local)
+              (λ ab → transport! (◯ ∘ B) (h-β ab) (η (snd ab)))
+
+            k₁ : {a : A} → ◯ (B a) → B a
+            k₁ {a} =  is-equiv.g (is-local-to-η-equiv (lB a)) 
             
-    --         C : ◯ (Σ A B) → Type ℓ
-    --         C w = B (h w)
+            k : (w : ◯ (Σ A B)) → B (h w)
+            k w = is-equiv.g (is-local-to-η-equiv (lB (h w))) (k₀ w)
 
-    --         η-inv : ◯ (Σ A B) → Σ A B
-    --         η-inv w = h w , {!!}
+            k-β : (ab : Σ A B) → k (η ab) == snd ab [ B ↓ h-β ab ]
+            k-β ab = ap↓ k₁ (from-transp! (λ a → ◯ (B a)) (h-β ab) k₀-β) ∙'ᵈ
+                     is-equiv.g-f (is-local-to-η-equiv (lB (fst ab))) (snd ab)
+
+              where k₀-β : k₀ (η ab) == transport! (λ a → ◯ (B a)) (h-β ab) (η (snd ab))
+                    k₀-β =  ◯-elim-β {A = Σ A B} (◯ ∘ B ∘ h) (λ _ → ◯-is-local)
+                      ((λ ab → transport! (◯ ∘ B) (h-β ab) (η (snd ab)))) ab 
+
+            C : ◯ (Σ A B) → Type ℓ
+            C w = B (h w)
+
+            η-inv : ◯ (Σ A B) → Σ A B
+            η-inv w = h w , ◯-elim C (lB ∘ h) (k ∘ η) w
+
+            r : (x : Σ A B) → η-inv (η x) == x
+            r (a , b) = pair= (h-β (a , b)) (◯-elim-β C (lB ∘ h) (k ∘ η) (a , b) ∙ᵈ (k-β (a , b)))
 
     abstract
       pre∘-◯-conn-is-equiv : {A B : Type ℓ} {h : A → B} → is-◯-equiv h → 
@@ -154,9 +184,9 @@ module stash.modalities.Modalities where
                           (snd (c b) (η (a , p))) (lemma₀ a b p)
 
 
-    ◯-connected-elim : {A B : Type ℓ} (f : A → B) → is-◯-equiv f →
+    ◯-extend : {A B : Type ℓ} (f : A → B) → is-◯-equiv f →
                         (P : B → ◯-Type) → Π A (fst ∘ P ∘ f) → Π B (fst ∘ P)
-    ◯-connected-elim f c P s = is-equiv.g (pre∘-◯-conn-is-equiv {h = f} c P) s
+    ◯-extend f c P s = is-equiv.g (pre∘-◯-conn-is-equiv {h = f} c P) s
 
     ◯-preserves-× : {A B : Type ℓ} → ◯ (A × B) ≃ ◯ A × ◯ B
     ◯-preserves-× {A} {B} = equiv ◯-split ◯-pair inv-l inv-r
