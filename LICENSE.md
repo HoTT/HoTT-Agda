@@ -1,7 +1,6 @@
 MIT License
 
-Copyright (c) 2013-2017 Guillaume Brunerie, Kuen-Bang Hou (Favonia), Evan Cavallo,
-Eric Finster, Jesper Cockx, Christian Sattler, Chris Jeris and Michael Shulman
+Copyright (c) 2013-2017 Guillaume Brunerie, Kuen-Bang Hou (Favonia), Evan Cavallo, Eric Finster, Jesper Cockx, Christian Sattler, Chris Jeris and Michael Shulman
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
