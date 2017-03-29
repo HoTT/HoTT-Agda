@@ -37,6 +37,10 @@ module stash.modalities.Modalities where
     is-lex = (A : Type ℓ) → (B : Type ℓ) → (f : A → B) →
                     is-conn A → is-conn B → (b : B) → is-conn (hfiber f b)
 
+    ◯-conn-elim : {A B : Type ℓ} (f : A → B) (φ : (b : B) → is-conn (hfiber f b))
+                   (R : B → P-Type) → (b : B) → fst (R b)
+    ◯-conn-elim f φ R b = {!!}                      
+    
     -- Some basic constructions
 
     ◯-rec : {A B : Type ℓ} (w : P B) (f : A → B) → ◯ A → B

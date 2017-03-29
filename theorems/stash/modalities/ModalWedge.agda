@@ -17,23 +17,29 @@ module stash.modalities.ModalWedge {i} (M : Modality {i})
       g : (b : B) → fst (R a₀ b)
       p : f a₀ == g b₀
 
+
   -- I claim the above arguments should be enough to
   -- have an elimination.
   module _ (r : args) where
     open args r
 
+    ∨-to-× : ⊙[ A , a₀ ] ∨ ⊙[ B , b₀ ] → A × B 
+    ∨-to-× = Wedge-rec (λ a → (a , b₀)) (λ b → (a₀ , b)) idp
+
+    ∨-to-×-fiber-to : hfiber ∨-to-× (a₀ , b₀) → (a₀ == a₀) * (b₀ == b₀)
+    ∨-to-×-fiber-to (w , p) = {!!}
+
+    ∨-to-×-fiber-from : (a₀ == a₀) * (b₀ == b₀) → hfiber ∨-to-× (a₀ , b₀)
+    ∨-to-×-fiber-from = Join-rec {!!} {!!} {!!}
+
+    ∨-to-×-fiber : hfiber ∨-to-× (a₀ , b₀) ≃ (a₀ == a₀) * (b₀ == b₀)
+    ∨-to-×-fiber = {!!}
+
+
     ext : (a : A) → (b : B) → fst (R a b)
     ext a = {!hfiber!}
 
-  -- Intuitively, the reason is the following:
-  --
-  --   let ∨-to-× : X ∨ Y → X × Y be the inclusion of the wedge
-  --   into the product.
-  --
-  --   Then I claim:
-  --
-  --   thm : (x : X) → (y : Y) → hfiber (∨-to-×) (x , y) ≃ (x == x) * (y == y)
-  --
+
 
 
   
