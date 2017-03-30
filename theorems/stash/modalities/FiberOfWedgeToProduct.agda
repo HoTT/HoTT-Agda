@@ -13,33 +13,39 @@ module stash.modalities.FiberOfWedgeToProduct
   ∨-to-× = WedgeToProduct.f
 
   private
-    module To = WedgeElim
-      {P = λ x∨y → ∨-to-× x∨y == pt X⊙×Y → (pt X == pt X) * (pt Y == pt Y)}
+    module To (x : de⊙ X) (y : de⊙ Y) = WedgeElim
+      {P = λ x∨y → ∨-to-× x∨y == (x , y) → (pt X == x) * (pt Y == y)}
       (λ x p → right (snd×= p)) (λ y p → left (fst×= p))
-      (↓-app→cst-in λ {p} {p'} p= →
+      (↓-app→cst-in λ {p} {p'} p-path →
         (! (glue (fst×= p , snd×= p))
          ∙ ap (left ∘ fst×=)
-            ( ↓-app=cst-out p=
-            ∙ ap (_∙ p') WedgeToProduct.glue-β)))
+            ( ↓-app=cst-out' p-path
+            ∙ ap (_∙' p') WedgeToProduct.glue-β
+            ∙ ∙'-unit-l p')))
 
-    to : hfiber ∨-to-× (pt X⊙×Y) → (pt X == pt X) * (pt Y == pt Y)
-    to = uncurry To.f
+    to : ∀ x y → hfiber ∨-to-× (x , y) → (pt X == x) * (pt Y == y)
+    to x y = uncurry (To.f x y)
 
     private
-      from-glue : ∀ {x y} (x-path : x == pt X) (y-path : y == pt Y)
-        → (winl x , pair×= x-path idp) == (winr y , pair×= idp y-path)
-            :> hfiber ∨-to-× (pt X⊙×Y)
-      from-glue idp idp = pair= wglue (↓-app=cst-in' (! WedgeToProduct.glue-β))
+      from-glue-template : ∀ {x y} (x-path : pt X == x) (y-path : pt Y == y)
+        → (winr y , pair×= x-path idp) == (winl x , pair×= idp y-path)
+            :> hfiber ∨-to-× (x , y)
+      from-glue-template idp idp = pair= (! wglue) $
+        ↓-app=cst-in' $ ! $ ap-! ∨-to-× wglue ∙ ap ! WedgeToProduct.glue-β
 
-    module From = JoinRec
-      {D = hfiber ∨-to-× (pt X⊙×Y)}
-      (λ x-loop → winl (pt X) , pair×= x-loop idp)
-      (λ y-loop → winr (pt Y) , pair×= idp y-loop)
-      (uncurry from-glue)
+    module From (x : de⊙ X) (y : de⊙ Y) = JoinRec
+      {D = hfiber ∨-to-× (x , y)}
+      (λ x-path → winr y , pair×= x-path idp)
+      (λ y-path → winl x , pair×= idp y-path)
+      (uncurry from-glue-template)
 
-    from : (pt X == pt X) * (pt Y == pt Y) → hfiber ∨-to-× (pt X⊙×Y)
+    from : ∀ x y → (pt X == x) * (pt Y == y) → hfiber ∨-to-× (x , y)
     from = From.f
 
   postulate
-    fiber-thm : (x : de⊙ X) (y : de⊙ Y) → hfiber ∨-to-× (x , y) ≃ (pt X == x) * (pt Y == y)
+    from-to : ∀ x y w → from x y (to x y w) == w
+    to-from : ∀ x y j → to x y (from x y j) == j
+
+  fiber-thm : ∀ x y → hfiber ∨-to-× (x , y) ≃ (pt X == x) * (pt Y == y)
+  fiber-thm x y = equiv (to x y) (from x y) (to-from x y) (from-to x y)
 
