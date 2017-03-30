@@ -55,6 +55,18 @@ module stash.modalities.Modalities where
     ◯-func-β : {A B : Type ℓ} (f : A → B) (a : A) → ◯-func f (η a) == η (f a)
     ◯-func-β f a = ◯-rec-β ◯-is-local (λ a → η (f a)) a
 
+    ◯-func-is-equiv : {A B : Type ℓ} (f : A → B) → is-equiv f → is-equiv (◯-func f)
+    ◯-func-is-equiv f f-ise = is-eq _ (◯-func g)
+      (◯-elim
+        (λ ◯b → ◯-func f (◯-func g ◯b) == ◯b)
+        (λ ◯b → ◯-== (◯-func f (◯-func g ◯b)) ◯b)
+        (λ b → ap (◯-func f) (◯-func-β g b) ∙ ◯-func-β f (g b) ∙ ap η (f-g b)))
+      (◯-elim
+        (λ ◯a → ◯-func g (◯-func f ◯a) == ◯a)
+        (λ ◯a → ◯-== (◯-func g (◯-func f ◯a)) ◯a)
+        (λ a → ap (◯-func g) (◯-func-β f a) ∙ ◯-func-β g (f a) ∙ ap η (g-f a)))
+      where open is-equiv f-ise
+
     -- This is the only appearence of univalence, but ...
     is-local-is-replete : {A B : Type ℓ} → is-local A → A ≃ B → is-local B
     is-local-is-replete w eq = transport is-local (ua eq) w
