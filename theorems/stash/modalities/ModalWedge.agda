@@ -30,7 +30,13 @@ module stash.modalities.ModalWedge {i} (M : Modality i)
     R' (a , b) = R a b
 
     ∨-to-×-is-◯-equiv : is-◯-equiv M (∨-to-× ⊙A ⊙B)
-    ∨-to-×-is-◯-equiv (a , b) = transport! (is-◯-connected M) (ua (fiber-thm ⊙A ⊙B a b) ) (jn-conn a b)
+    ∨-to-×-is-◯-equiv (a , b) = equiv-preserves-level (◯-thm ⁻¹) (jn-conn a b)
+
+      where thm : hfiber (∨-to-× ⊙A ⊙B) (a , b) ≃ (pt ⊙A == a) * (pt ⊙B == b)
+            thm = fiber-thm ⊙A ⊙B a b
+
+            ◯-thm : ◯ (hfiber (∨-to-× ⊙A ⊙B) (a , b)) ≃ ◯ ((a₀ == a) * (b₀ == b))
+            ◯-thm = ◯-func M (fst thm) , ◯-func-is-equiv M (fst thm) (snd thm)
 
     ext : (a : A) → (b : B) → fst (R a b)
     ext a b = ◯-extend M
