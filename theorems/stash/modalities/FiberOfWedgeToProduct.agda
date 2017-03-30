@@ -39,3 +39,7 @@ module stash.modalities.FiberOfWedgeToProduct
 
     from : (pt X == pt X) * (pt Y == pt Y) → hfiber ∨-to-× (pt X⊙×Y)
     from = From.f
+
+  postulate
+    fiber-thm : (x : de⊙ X) (y : de⊙ Y) → hfiber ∨-to-× (x , y) ≃ (pt X == x) * (pt Y == y)
+

@@ -1,0 +1,51 @@
+{-# OPTIONS --without-K --rewriting #-}
+
+open import HoTT
+
+-- custom pushout for Blakers-Massey
+
+module stash.modalities.gbm.Pushout {i}
+  {A : Type i} {B : Type i} (Q : A → B → Type i) where
+
+bmspan : Span {i} {i} {i}
+bmspan = span A B (Σ A λ a → Σ B λ b → Q a b) fst (fst ∘ snd)
+
+BMPushout : Type i
+BMPushout = Pushout bmspan
+
+bmleft : A → BMPushout
+bmleft = left
+
+bmright : B → BMPushout
+bmright = right
+
+bmglue : ∀ {a b} → Q a b → bmleft a == bmright b
+bmglue {a} {b} q = glue (a , b , q)
+
+module BMPushoutElim {l} {P : BMPushout → Type l}
+  (bmleft* : (a : A) → P (bmleft a)) (bmright* : (b : B) → P (bmright b))
+  (bmglue* : ∀ {a b} (q : Q a b) → bmleft* a == bmright* b [ P ↓ bmglue q ]) where
+
+  private
+    module P = PushoutElim {d = bmspan} {P = P}
+      bmleft* bmright* (λ c → bmglue* (snd (snd c)))
+
+  f = P.f
+
+  glue-β : ∀ {a b} (q : Q a b) → apd f (bmglue q) == bmglue* q
+  glue-β q = P.glue-β (_ , _ , q)
+
+BMPushout-elim = BMPushoutElim.f
+
+module BMPushoutRec {l} {D : Type l}
+  (bmleft* : A → D) (bmright* : B → D)
+  (bmglue* : ∀ {a b} (q : Q a b) → bmleft* a == bmright* b) where
+
+  private
+    module P = PushoutRec {d = bmspan} {D = D}
+      bmleft* bmright* (λ c → bmglue* (snd (snd c)))
+
+  f = P.f
+
+  glue-β : ∀ {a b} (q : Q a b) → ap f (bmglue q) == bmglue* q
+  glue-β q = P.glue-β (_ , _ , q)
