@@ -4,12 +4,12 @@ open import HoTT
 
 open import stash.modalities.Modalities
 
-module stash.modalities.Gbm {ℓ} (M : Modality {ℓ})
+module stash.modalities.Gbm {ℓ} (M : Modality ℓ)
   {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
-  (H : {a₀ : A} {b₀ : B}
-       (α : Σ A (λ a → Q a b₀))
-       (β : Σ B (λ b → Q a₀ b)) →
-       is-◯-connected M (α == α) * (β == β))
+  (H : {a₀ : A} {b₀ : B} (q₀ : Q a₀ b₀)
+       {a₁ : A} (q₁ : Q a₁ b₀)
+       {b₁ : B} (q₂ : Q a₀ b₁) → 
+       is-◯-connected M (((a₀ , q₀) == (a₁ , q₁)) * ((b₀ , q₀) == (b₁ , q₂))))
   where       
 
   open Modality M  

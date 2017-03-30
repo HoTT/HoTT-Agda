@@ -2,14 +2,14 @@
 
 open import HoTT hiding (left; right)
 open import stash.modalities.Modalities
--- import homotopy.WedgeExtension as WedgeExt
+import stash.modalities.ModalWedge as WedgeExt
 
-module stash.modalities.gbm.CoherenceData {ℓ} (M : Modality {ℓ})
+module stash.modalities.gbm.CoherenceData {ℓ} (M : Modality ℓ)
   {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
-  (H : {a₀ : A} {b₀ : B}
-       (α : Σ A (λ a → Q a b₀))
-       (β : Σ B (λ b → Q a₀ b)) →
-       is-◯-connected M (α == α) * (β == β))
+  (H : {a₀ : A} {b₀ : B} (q₀ : Q a₀ b₀)
+       {a₁ : A} (q₁ : Q a₁ b₀)
+       {b₁ : B} (q₂ : Q a₀ b₁) → 
+       is-◯-connected M (((a₀ , q₀) == (a₁ , q₁)) * ((b₀ , q₀) == (b₁ , q₂))))
   where       
 
 open Modality M  
@@ -71,16 +71,17 @@ module To {a₁ b₀} (q₁₀ : Q a₁ b₀) where
   p' = λ r shift → ap (template u₀ v₀ r shift q₁₀) (path-coherence q₁₀)
   p = λ= λ r → λ= λ shift → p' r shift
 
---   args : WedgeExt.args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
---   args = record {
---     n = n; m = m;
---     cA = g-conn b₀;
---     cB = f-conn a₁;
---     P = λ u v → swap-level $ P u v , Π-level λ _ → Π-level λ _ → Trunc-level;
---     f = f; g = g; p = p}
+  args : WedgeExt.args M {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
+  args = record {
+    jn-conn = λ u v → H q₁₀ (snd u) (snd v) ;
+    R = λ u v → P u v , Π-is-local M _ (λ _ → Π-is-local M _ (λ _ → ◯-is-local)) ;
+    f = f ;
+    g = g ;
+    p = p
+    }
 
---   ext : ∀ u v → P u v
---   ext = WedgeExt.ext args
+  ext : ∀ u v → P u v
+  ext = WedgeExt.ext M args
 
 --   β-l : ∀ u r shift → ext u v₀ r shift == f u r shift
 --   β-l u r shift = app= (app= (WedgeExt.β-l u) r) shift
@@ -110,54 +111,54 @@ module To {a₁ b₀} (q₁₀ : Q a₁ b₀) where
 --       p' r shift
 --         =∎
 
--- to' : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
---   → (r : bmleft a₀ == bmright b₁)
---   → hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁) r
---   → Trunc (m +2+ n) (hfiber bmglue r)
--- to' q₀₀ q₁₁ r (q₁₀ , shift) = To.ext q₁₀ (_ , q₀₀) (_ , q₁₁) r shift
+to' : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
+  → (r : bmleft a₀ == bmright b₁)
+  → hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁) r
+  → ◯ (hfiber bmglue r)
+to' q₀₀ q₁₁ r (q₁₀ , shift) = To.ext q₁₀ (_ , q₀₀) (_ , q₁₁) r shift
 
--- to : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
---   → (r : bmleft a₀ == bmright b₁)
---   → Trunc (m +2+ n) (hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁) r)
---   → Trunc (m +2+ n) (hfiber bmglue r)
--- to q₀₀ q₁₁ r = Trunc-rec Trunc-level (to' q₀₀ q₁₁ r)
+to : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
+  → (r : bmleft a₀ == bmright b₁)
+  → ◯ (hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁) r)
+  → ◯ (hfiber bmglue r)
+to q₀₀ q₁₁ r = ◯-rec M ◯-is-local (to' q₀₀ q₁₁ r) 
 
--- module From {a₀ b₁} (q₀₁ : Q a₀ b₁) where
---   U = Σ A λ a → Q a b₁
---   u₀ : U
---   u₀ = (a₀ , q₀₁)
+module From {a₀ b₁} (q₀₁ : Q a₀ b₁) where
+  U = Σ A λ a → Q a b₁
+  u₀ : U
+  u₀ = (a₀ , q₀₁)
 
---   V = Σ B λ b → Q a₀ b
---   v₀ : V
---   v₀ = (b₁ , q₀₁)
+  V = Σ B λ b → Q a₀ b
+  v₀ : V
+  v₀ = (b₁ , q₀₁)
 
---   P : U → V → Type (lmax i (lmax j k))
---   P u v = (r : bmleft a₀ == bmright b₁)
---     → bmglue q₀₁ == r
---     → Trunc (m +2+ n) (hfiber (λ q₁₀ → bmglue (snd v) ∙' ! (bmglue q₁₀) ∙' bmglue (snd u)) r)
+  P : U → V → Type ℓ
+  P u v = (r : bmleft a₀ == bmright b₁)
+    → bmglue q₀₁ == r
+    → ◯ (hfiber (λ q₁₀ → bmglue (snd v) ∙' ! (bmglue q₁₀) ∙' bmglue (snd u)) r)
 
---   template : ∀ (u : U) (v : V)
---     → (r : bmleft a₀ == bmright b₁)
---     → (shift : bmglue q₀₁ == r)
---     → ∀ q₁₀ → bmglue q₀₁ == bmglue (snd v) ∙' ! (bmglue q₁₀) ∙' bmglue (snd u)
---     → Trunc (m +2+ n) (hfiber (λ q₁₀ → bmglue (snd v) ∙' ! (bmglue q₁₀) ∙' bmglue (snd u)) r)
---   template u v r shift q₁₀ path = [ q₁₀ , ! path ∙' shift ]
+  template : ∀ (u : U) (v : V)
+    → (r : bmleft a₀ == bmright b₁)
+    → (shift : bmglue q₀₁ == r)
+    → ∀ q₁₀ → bmglue q₀₁ == bmglue (snd v) ∙' ! (bmglue q₁₀) ∙' bmglue (snd u)
+    → ◯ (hfiber (λ q₁₀ → bmglue (snd v) ∙' ! (bmglue q₁₀) ∙' bmglue (snd u)) r)
+  template u v r shift q₁₀ path = η (q₁₀ , ! path ∙' shift)
 
---   f = λ u r shift → template u v₀ r shift (snd u) (path-lemma₁ q₀₁ (snd u))
---   g = λ v r shift → template u₀ v r shift (snd v) (path-lemma₂ q₀₁ (snd v))
---   p' = λ r shift → ap (template u₀ v₀ r shift q₀₁) (path-coherence q₀₁)
---   p = λ= λ r → λ= λ shift → p' r shift
+  f = λ u r shift → template u v₀ r shift (snd u) (path-lemma₁ q₀₁ (snd u))
+  g = λ v r shift → template u₀ v r shift (snd v) (path-lemma₂ q₀₁ (snd v))
+  p' = λ r shift → ap (template u₀ v₀ r shift q₀₁) (path-coherence q₀₁)
+  p = λ= λ r → λ= λ shift → p' r shift
 
---   args : WedgeExt.args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
---   args = record {
---     n = n; m = m;
---     cA = g-conn b₁;
---     cB = f-conn a₀;
---     P = λ u v → swap-level $ P u v , Π-level λ _ → Π-level λ _ → Trunc-level;
---     f = f; g = g; p = p}
+  args : WedgeExt.args M {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
+  args = record {
+    jn-conn = λ u v → H q₀₁ (snd u) (snd v) ;
+    R = λ u v → P u v , Π-is-local M _ (λ _ → Π-is-local M _ (λ _ → ◯-is-local)) ;
+    f = f ;
+    g = g ;
+    p = p }
 
---   ext : ∀ u v → P u v
---   ext = WedgeExt.ext args
+  ext : ∀ u v → P u v
+  ext = WedgeExt.ext M args
 
 --   β-l : ∀ u r shift → ext u v₀ r shift == f u r shift
 --   β-l u r shift = app= (app= (WedgeExt.β-l u) r) shift
