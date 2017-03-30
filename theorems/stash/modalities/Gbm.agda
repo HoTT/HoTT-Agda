@@ -12,127 +12,166 @@ module stash.modalities.Gbm {ℓ} (M : Modality ℓ)
        is-◯-connected M (((a₀ , q₀) == (a₁ , q₁)) * ((b₀ , q₀) == (b₁ , q₂))))
   where       
 
-  open Modality M  
+open Modality M  
 
+open import stash.modalities.gbm.Pushout Q
+import stash.modalities.gbm.CoherenceData M Q H as Coh
 
-  -- module _ {ℓ} (X Y : Type ℓ) (Z : X → Y → Type ℓ) (M : Modality {ℓ}) where
+-- These extra parameters will be discharged in the end
+module _ {a₀} {b₀} (q₀₀ : Q a₀ b₀) where
 
-  --   open Modality M
-    
-  --   f : X → Type ℓ
-  --   f x = Σ Y (λ y → Z x y)
+  -- Step 1:
+  -- Generalizing the theorem to [bmleft x == p] for arbitrary p.
+  -- This requires a pushout-rec
 
-  --   g : Y → Type ℓ
-  --   g y = Σ X (λ x → Z x y)
+  -- "extended" version
+  code-bmleft-template : ∀ a₁ {p} (r' : bmleft a₁ == p) → bmleft a₀ == p → Type ℓ
+  code-bmleft-template a₁ r' r = ◯ (hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' r') r)
 
-  --   -- The hypothesis of the generalized theorem works out to the following,
-  --   -- which asserts that the fiberwise join of the diagonals of f and g
-  --   -- is in fact an equivalence after applying the modality
-    
-  --   hypothesis' : Type ℓ
-  --   hypothesis' = {x₀ x₁ : X} → (p : x₀ == x₁) → (α : f x₀) → (β : f x₁) →
-  --                 {y₀ y₁ : Y} → (q : y₀ == y₁) → (γ : g y₀) → (δ : g y₁) →
-  --                 is-contr (◯ ((α == β [ f ↓ p ]) * (γ == δ [ g ↓ q ])))
+  code-bmleft : ∀ a₁ → bmleft a₀ == bmleft a₁ → Type ℓ
+  code-bmleft a₁ = code-bmleft-template a₁ idp
 
-  --   hypothesis : Type ℓ
-  --   hypothesis = {x₀ : X} {y₀ : Y} {z₀ : Z x₀ y₀}  -- This says we are over Z
-  --                {x₁ : X} {z₁ : Z x₁ y₀}           -- An element of Z×YZ
-  --                {y₁ : Y} {z₂ : Z x₀ y₁}           -- An element of Z×XZ
-  --                → is-contr (◯ (Σ (x₀ == x₁) (λ p → z₀ == z₁ [ _ ↓ p ])
-  --                              * Σ (y₀ == y₁) (λ p → z₀ == z₂ [ _ ↓ p ])))
+  code-bmright : ∀ b₁ → bmleft a₀ == bmright b₁ → Type ℓ
+  code-bmright b₁ r = ◯ (hfiber bmglue r)
 
-  --   -- The hope is that the more complicated versions above can be reduced
-  --   -- to the following more elegant one:
+  -- The template from [Coh.eqv] to the input for [apd code glue]
+  -- for using the identification elimination.
+  code-bmglue-template : ∀ {a₁ p}
+    → (code : (r : bmleft a₀ == p) → Type ℓ)
+    → (r : bmleft a₁ == p)
+    → (∀ r' → code-bmleft-template a₁ r r' ≃ code r')
+    → code-bmleft-template a₁ idp == code [ (λ p → bmleft a₀ == p → Type ℓ) ↓ r ]
+  code-bmglue-template _ idp lemma = λ= (ua ∘ lemma)
 
-  --   hypothesis'' : Type ℓ
-  --   hypothesis'' = {x₀ : X} {y₀ : Y} → (α : f x₀) → (β : g y₀)
-  --                  → is-contr (◯ ((α == α) * (β == β)))
+  -- The real glue, that is, the template with actual equivalence.
+  code-bmglue : ∀ {a₁ b₁} (q₁₁ : Q a₁ b₁)
+    → code-bmleft a₁ == code-bmright b₁
+      [ (λ p → bmleft a₀ == p → Type ℓ) ↓ bmglue q₁₁ ]
+  code-bmglue {a₁} {b₁} q₁₁ =
+    code-bmglue-template (code-bmright b₁) (bmglue q₁₁) (Coh.eqv q₀₀ q₁₁)
 
+  -- Here's the data structure for the generalized theorem.
+  module Code = BMPushoutElim code-bmleft code-bmright code-bmglue
 
-  --   W : Type ℓ
-  --   W = FiberedPushout Z
+  code : ∀ p → bmleft a₀ == p → Type ℓ
+  code = Code.f
 
-  --   gap-lcl : {x : X} {y : Y} → Z x y → in-left {P = Z} x == in-right y
-  --   gap-lcl {x} {y} z = ! (glue-left z) ∙ glue-right z
+  -- Step 2:
+  -- [code] is contractible!
 
-  --   module OverZ {x₀ : X} {y₀ : Y} {z₀ : Z x₀ y₀} where
-      
-  --     -- Here are our total spaces in the first step, passing
-  --     -- the the slice over Z
+  -- The center for [idp].  We will use transport to find the center
+  -- in other fibers.
+  code-center-idp : code (bmleft a₀) idp
+  code-center-idp = η (q₀₀ , !-inv'-r (bmglue q₀₀))
 
-  --     X×WZ : Type ℓ
-  --     X×WZ = Σ X (λ x → in-mid {P = Z} z₀ == in-left x)
+  -- The following is the breakdown of the path for coercing:
+  --   [ap2 code r (↓-cst=idf-in' r)]
+  -- We will need the broken-down version anyway,
+  -- so why not breaking them down from the very beginning?
 
-  --     Y×WZ : Type ℓ
-  --     Y×WZ = Σ Y (λ y → in-mid {P = Z} z₀ == in-right y)
+  -- The template here, again, is to keep the possibility
+  -- of plugging in [idp] for [r].
+  coerce-path-template : ∀ {p} r
+    → code-bmleft a₀ == code p [ (λ p → bmleft a₀ == p → Type ℓ) ↓ r ]
+    → code-bmleft a₀ idp == code p r
+  coerce-path-template idp lemma = app= lemma idp
 
-  --     Z×WZ : Type ℓ
-  --     Z×WZ = Σ X (λ x → Σ Y (λ y → Σ (Z x y) (λ z → in-mid {P = Z} z₀ == in-mid z)))
+  -- The real path.
+  coerce-path : ∀ {p} r → code (bmleft a₀) idp == code p r
+  coerce-path r = coerce-path-template r (apd code r)
 
-  --     --
-  --     --  Here we start to better isolate the hypothesies of the theorem.
-  --     --  We start with the X side
-  --     --
-      
-  --     Z×XZ : Type ℓ
-  --     Z×XZ = Σ X (λ x → Σ Y (λ y → Σ (Z x y) (λ z → x == x₀)))
+  -- Find the center in other fibers.
+  code-center : ∀ {p} r → code p r
+  code-center r = coe (coerce-path r) code-center-idp
 
-  --     -- This type is equivalent to the one above by path induction
-  --     Z×XZ' : Type ℓ
-  --     Z×XZ' = Σ Y (λ y → Z x₀ y) 
+  -- Part of the decomposed [coe (coerce-path r)]
+  code-bmleft-template-diag : ∀ {p} (r : bmleft a₀ == p)
+    → code-bmleft a₀ idp → code-bmleft-template a₀ r r
+  code-bmleft-template-diag r = ◯-rec M ◯-is-local
+    λ {(q₀₀' , shift) →
+      η (q₀₀' , ! (∙'-assoc (bmglue q₀₀) (! (bmglue q₀₀')) r) ∙ ap (_∙' r) shift ∙' ∙'-unit-l r )}
 
-  --     f' : Z×XZ' → Type ℓ
-  --     f' (y , z) = Σ (y == y₀) (λ p → z == z₀ [ (λ y → Z x₀ y) ↓ p ])
+  abstract
+    code-bmleft-template-diag-idp : ∀ x → code-bmleft-template-diag idp x == x
+    code-bmleft-template-diag-idp = ◯-elim _ (λ _ → ==-is-local M ◯-is-local)
+      (λ{(q₁₀ , shift) → {!ap (λ p → η (q₁₀ , p)) (ap-idf shift)!} })
+      -- Trunc-elim (λ _ → =-preserves-level Trunc-level)
+      --   λ{(q₁₀ , shift) → ap (λ p → [ q₁₀ , p ]) (ap-idf shift)}
 
-  --     --
-  --     --  Now we do the Y side
-  --     --
+  -- Here shows the use of two templates.  It will be super painful
+  -- if we cannot throw in [idp].  Now we only have to deal with
+  -- simple computations.
+  abstract
+    coe-coerce-path-code-bmglue-template : ∀ {p} (r : bmleft a₀ == p)
+      (lemma : ∀ r' → code-bmleft-template a₀ r r' ≃ code p r')
+      (x : code-bmleft a₀ idp)
+      → coe (coerce-path-template r (code-bmglue-template (code p) r lemma)) x
+      == –> (lemma r) (code-bmleft-template-diag r x)
+    coe-coerce-path-code-bmglue-template idp lemma x =
+      coe (app= (λ= (ua ∘ lemma)) idp) x
+        =⟨ ap (λ p → coe p x) (app=-β (ua ∘ lemma) idp) ⟩
+      coe (ua (lemma idp)) x
+        =⟨ coe-β (lemma idp) x ⟩
+      –> (lemma idp) x
+        =⟨ ! (ap (–> (lemma idp)) (code-bmleft-template-diag-idp x)) ⟩
+      –> (lemma idp) (code-bmleft-template-diag idp x)
+        =∎
 
-  --     Z×YZ : Type ℓ
-  --     Z×YZ = Σ X (λ x → Σ Y (λ y → Σ (Z x y) (λ z → y == y₀)))
+  -- Here is the actually lemma we want!
+  -- A succinct breakdown of [coerce-path code (glue q)].
+  abstract
+    coe-coerce-path-code-bmglue : ∀ {b₁} (q₀₁ : Q a₀ b₁) x
+      → coe (coerce-path (bmglue q₀₁)) x
+      == Coh.to q₀₀ q₀₁ (bmglue q₀₁) (code-bmleft-template-diag (bmglue q₀₁) x)
+    coe-coerce-path-code-bmglue q₀₁ x = {!!}
+      -- coe (coerce-path-template (bmglue q₀₁) (apd code (bmglue q₀₁))) x
+      --   =⟨ ap (λ p → coe (coerce-path-template (bmglue q₀₁) p) x) (Code.glue-β q₀₁) ⟩
+      -- coe (coerce-path-template (bmglue q₀₁) (code-bmglue q₀₁)) x
+      --   =⟨ coe-coerce-path-code-bmglue-template (bmglue q₀₁) (Coh.eqv q₀₀ q₀₁) x ⟩
+      -- Coh.to q₀₀ q₀₁ (bmglue q₀₁) (code-bmleft-template-diag (bmglue q₀₁) x)
+      --   =∎
 
-  --     -- Similarly for this one
-  --     Z×YZ' : Type ℓ
-  --     Z×YZ' = Σ X (λ x → Z x y₀)
+  -- This is the only case you care for contractibiltiy.
+  abstract
+    code-coh-lemma : ∀ {b₁} (q₀₁ : Q a₀ b₁) → code-center (bmglue q₀₁) == η (q₀₁ , idp)
+    code-coh-lemma q₀₁ = {!!}
+      -- coe (coerce-path (bmglue q₀₁)) code-center-idp
+      --   =⟨ coe-coerce-path-code-bmglue q₀₁ code-center-idp ⟩
+      -- Coh.to' q₀₀ q₀₁ (bmglue q₀₁) (q₀₀ , α₁α₁⁻¹α₂=α₂ (bmglue q₀₀) (bmglue q₀₁))
+      --   =⟨ ap (Coh.To.ext q₀₀ (_ , q₀₀) (_ , q₀₁) (bmglue q₀₁)) (path-lemma (bmglue q₀₀) (bmglue q₀₁)) ⟩
+      -- Coh.To.ext q₀₀ (_ , q₀₀) (_ , q₀₁) (bmglue q₀₁) (! path)
+      --   =⟨ Coh.To.β-r q₀₀ (_ , q₀₁) (bmglue q₀₁) (! path) ⟩
+      -- [ q₀₁ , path ∙' ! path ]
+      --   =⟨ ap (λ p → [ q₀₁ , p ]) (!-inv'-r path) ⟩
+      -- [ q₀₁ , idp ]
+      --   =∎
+      -- where
+      --   path = Coh.βPair.path (Coh.βpair-bmright q₀₀ q₀₁ (bmglue q₀₁))
 
-  --     g' : Z×YZ' → Type ℓ
-  --     g' (x , z) = Σ (x == x₀) (λ p → z == z₀ [ (λ x → Z x y₀) ↓ p ])
+      --   -- this is defined to be the path generated by [code-bmleft-template-diag]
+      --   α₁α₁⁻¹α₂=α₂ : ∀ {p₁ p₂ p₃ : BMPushout} (α₁ : p₁ == p₂) (α₂ : p₁ == p₃)
+      --     → α₁ ∙' ! α₁ ∙' α₂ == α₂
+      --   α₁α₁⁻¹α₂=α₂ α₁ α₂ = ! (∙'-assoc α₁ (! α₁) α₂) ∙ ap (_∙' α₂) (!-inv'-r α₁) ∙' ∙'-unit-l α₂
 
-  --     -- Okay.  Good.  I claim the total space of each of these is
-  --     -- contractible.
+      --   -- the relation of this path and the one from CoherenceData
+      --   path-lemma : ∀ {p₁ p₂ p₃ : BMPushout} (α₁ : p₁ == p₂) (α₂ : p₁ == p₃)
+      --     → α₁α₁⁻¹α₂=α₂ α₁ α₂ == ! (Coh.α₁=α₂α₂⁻¹α₁ α₂ α₁)
+      --   path-lemma idp idp = idp
 
-  --     claim : is-contr (Σ Z×YZ' g')
-  --     claim = ((x₀ , z₀) , (idp , idp)) , (λ { ((.x₀ , .z₀) , idp , idp) → idp })
+  -- Make [r] free to apply identification elimination.
+  code-coh : ∀ {b₁} (r : bmleft a₀ == bmright b₁) (s : hfiber bmglue r) → code-center r == η s 
+  code-coh ._ (q₀₁ , idp) = code-coh-lemma q₀₁
 
-  --     -- Right.  In other words, it's equivalent to Z as desired.
+  -- Finish the lemma.
+  code-contr : ∀ {b₁} (r : bmleft a₀ == bmright b₁) → is-contr (◯ (hfiber bmglue r))
+  code-contr r = code-center r , ◯-elim _ (λ _ → ==-is-local M ◯-is-local) (code-coh r)
 
-  --     new-hypothesis : Type ℓ
-  --     new-hypothesis = (α : Z×XZ') → (β : Z×YZ') → is-contr (◯ (f' α * g' β))
-
-  --     pt₀ : Z×XZ
-  --     pt₀ = x₀ , (y₀ , (z₀ , idp))
-
-  --     pt₁ : Z×YZ
-  --     pt₁ = x₀ , (y₀ , (z₀ , idp))
-
-  --     gluel₀ : {x : X} → Z x y₀ → in-mid {P = Z} z₀ == in-left x
-  --     gluel₀ z = glue-right z₀ ∙ ! (gap-lcl z) 
-
-  --     gluer₀ : {y : Y} → Z x₀ y → in-mid {P = Z} z₀ == in-right y
-  --     gluer₀ z = glue-left z₀ ∙ gap-lcl z 
-
-  --     CodesFor : (w : W) (p : in-mid z₀ == w) → Type ℓ
-  --     CodesFor = FiberedPushoutElim.f _
-  --                  (λ x α → ◯ (hfiber gluel₀ α))
-  --                  (λ x y α → {!!})
-  --                  (λ y α → ◯ (hfiber gluer₀ α))
-  --                  {!!}
-  --                  {!!}
-
-  --   -- So the real theorem would be about the total map, but this should suffice
-  --   -- by standard kind of stuff
-  --   thm : {x : X} {y : Y} → hypothesis' → (p : in-left x == in-right y) → is-contr (◯ (hfiber gap-lcl p))
-  --   thm = {!!}
-    
-
+-- The final theorem.
+-- It is sufficient to find some [q₀₀].
+gen-blakers-massey : ∀ {a₀ b₀} → is-◯-equiv M (bmglue {a₀} {b₀})
+gen-blakers-massey {a₀} r = {!!}
+  -- Trunc-rec
+  -- (prop-has-level-S is-connected-is-prop)
+  -- (λ{(_ , q₀₀) → code-contr q₀₀ r})
+  -- (fst (f-conn a₀))
 

@@ -185,17 +185,17 @@ module From {a₀ b₁} (q₀₁ : Q a₀ b₁) where
 --       where β-l' = WedgeExt.β-l {r = args} u₀
 --             β-r' = WedgeExt.β-r {r = args} v₀
 
--- from' : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
---   → (r : bmleft a₀ == bmright b₁)
---   → hfiber bmglue r
---   → Trunc (m +2+ n) (hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁) r)
--- from' q₀₀ q₁₁ r (q₀₁ , shift) = From.ext q₀₁ (_ , q₁₁) (_ , q₀₀) r shift
+from' : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
+  → (r : bmleft a₀ == bmright b₁)
+  → hfiber bmglue r
+  → ◯ (hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁) r)
+from' q₀₀ q₁₁ r (q₀₁ , shift) = From.ext q₀₁ (_ , q₁₁) (_ , q₀₀) r shift
 
--- from : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
---   → (r : bmleft a₀ == bmright b₁)
---   → Trunc (m +2+ n) (hfiber bmglue r)
---   → Trunc (m +2+ n) (hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁) r)
--- from q₀₀ q₁₁ r = Trunc-rec Trunc-level (from' q₀₀ q₁₁ r)
+from : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
+  → (r : bmleft a₀ == bmright b₁)
+  → ◯ (hfiber bmglue r)
+  → ◯ (hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁) r)
+from q₀₀ q₁₁ r = ◯-rec M ◯-is-local (from' q₀₀ q₁₁ r)
 
 -- -- Equivalence
 
@@ -402,7 +402,9 @@ module From {a₀ b₁} (q₀₁ : Q a₀ b₁) where
 --     → to q₀₀ q₁₁ r (from q₀₀ q₁₁ r fiber) == fiber
 --   to-from q₀₀ q₁₁ r = Trunc-elim (λ _ → =-preserves-level Trunc-level) (to-from' q₀₀ q₁₁ r)
 
--- eqv : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁) r
---   → Trunc (m +2+ n) (hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁) r)
---   ≃ Trunc (m +2+ n) (hfiber bmglue r)
--- eqv q₀₀ q₁₁ r = equiv (to q₀₀ q₁₁ r) (from q₀₀ q₁₁ r) (to-from q₀₀ q₁₁ r) (from-to q₀₀ q₁₁ r)
+postulate
+  eqv : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁) r
+        → ◯ (hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁) r)
+         ≃ ◯ (hfiber bmglue r)
+
+    -- eqv q₀₀ q₁₁ r = equiv (to q₀₀ q₁₁ r) (from q₀₀ q₁₁ r) (to-from q₀₀ q₁₁ r) (from-to q₀₀ q₁₁ r)
