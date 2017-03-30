@@ -2,10 +2,10 @@
 
 open import HoTT
 
-open import Orthogonality
-open import Modalities
+open import stash.modalities.Orthogonality
+open import stash.modalities.Modalities
 
-module NullifyFamily where
+module stash.modalities.NullifyFamily where
 
   module _ {ℓ} {I : Type ℓ} (X : I → Type ℓ) (A : Type ℓ) where
 
@@ -48,11 +48,11 @@ module NullifyFamily where
 
     open Modality
 
-    NullifyAllModality : Modality {ℓ}
-    P NullifyAllModality A = ⟦ X ⊥ A ⟧ₗ
-    P-is-prop NullifyAllModality {A} = Π-level (λ i → is-equiv-is-prop (Δ A (X i)))
+    NullifyAllModality : Modality ℓ
+    is-local NullifyAllModality A = ⟦ X ⊥ A ⟧ₗ
+    is-local-is-prop NullifyAllModality {A} = Π-level (λ i → is-equiv-is-prop)
     ◯ NullifyAllModality A = NullifyAll X A
-    in-◯ NullifyAllModality {A} = nullify-is-null A  
+    ◯-is-local NullifyAllModality {A} = nullify-is-null A
     η NullifyAllModality {A} = inj X A
     ◯-elim NullifyAllModality Q Q-is-null φ = NullifyAllElim.f X _ Q (λ i n → Q-is-null n i) φ
     ◯-elim-β NullifyAllModality Q Q-is-null φ a = idp

@@ -4,7 +4,7 @@ open import HoTT
 
 module stash.modalities.Modalities where
 
-  record Modality {ℓ} : Type (lsucc ℓ) where
+  record Modality ℓ : Type (lsucc ℓ) where
     field
 
       is-local : Type ℓ → Type ℓ
@@ -23,7 +23,7 @@ module stash.modalities.Modalities where
                   
       ◯-== : {A : Type ℓ} (a₀ a₁ : ◯ A) → is-local (a₀ == a₁)
 
-  module _ {ℓ} (M : Modality {ℓ}) where
+  module _ {ℓ} (M : Modality ℓ) where
 
     open Modality M
 

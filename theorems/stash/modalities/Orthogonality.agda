@@ -2,7 +2,7 @@
 
 open import HoTT
 
-module Orthogonality where
+module stash.modalities.Orthogonality where
 
   Δ : ∀ {ℓ} (A B : Type ℓ) → A → (B → A)
   Δ A B a = λ _ → a
