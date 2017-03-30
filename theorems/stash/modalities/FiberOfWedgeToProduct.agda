@@ -12,6 +12,9 @@ module stash.modalities.FiberOfWedgeToProduct
   ∨-to-× : X ∨ Y → de⊙ X⊙×Y
   ∨-to-× = WedgeToProduct.f
 
+  ∨-to-×-glue-β : ap ∨-to-× wglue == idp
+  ∨-to-×-glue-β = WedgeToProduct.glue-β 
+
   private
     module To = WedgeElim
       {P = λ x∨y → ∨-to-× x∨y == pt X⊙×Y → (pt X == pt X) * (pt Y == pt Y)}
