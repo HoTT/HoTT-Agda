@@ -62,58 +62,80 @@ module _ {i} {A : Type i} {x y z : A} where
   post∙'-equiv : (p : y == z) → (x == y) ≃ (x == z)
   post∙'-equiv p = ((λ q → q ∙' p) , post∙'-is-equiv p)
 
-module _ {i j} {A : Type i} {B : Type j} {f : A → B} {b : B} where
+module _ {i j} {A : Type i} {B : Type j}
+  {f : A → B} {x y : A} {b : B} where
 
-  ↓-app=cst-in : {x y : A} {p : x == y} {u : f x == b} {v : f y == b}
+  ↓-app=cst-in : {p : x == y} {u : f x == b} {v : f y == b}
     → u == (ap f p ∙ v)
     → (u == v [ (λ x → f x == b) ↓ p ])
   ↓-app=cst-in {p = idp} q = q
 
-  ↓-app=cst-out : {x y : A} {p : x == y} {u : f x == b} {v : f y == b}
+  ↓-app=cst-out : {p : x == y} {u : f x == b} {v : f y == b}
     → (u == v [ (λ x → f x == b) ↓ p ])
     → u == (ap f p ∙ v)
   ↓-app=cst-out {p = idp} r = r
 
-  ↓-app=cst-econv : {x y : A} {p : x == y} {u : f x == b} {v : f y == b}
-    → (u == (ap f p ∙ v)) ≃ (u == v [ (λ x → f x == b) ↓ p ])
-  ↓-app=cst-econv {p = idp} = equiv ↓-app=cst-in ↓-app=cst-out
-     (λ _ → idp) (λ _ → idp)
+  ↓-app=cst-β : {p : x == y} {u : f x == b} {v : f y == b}
+    → (q : u == (ap f p ∙ v))
+    → ↓-app=cst-out {p = p} (↓-app=cst-in q) == q
+  ↓-app=cst-β {p = idp} q = idp
 
-  ↓-cst=app-in : {x y : A} {p : x == y} {u : b == f x} {v : b == f y}
+  ↓-app=cst-η : {p : x == y} {u : f x == b} {v : f y == b}
+    → (q : u == v [ (λ x → f x == b) ↓ p ])
+    → ↓-app=cst-in (↓-app=cst-out q) == q
+  ↓-app=cst-η {p = idp} q = idp
+
+  ↓-app=cst-econv : {p : x == y} {u : f x == b} {v : f y == b}
+    → (u == (ap f p ∙ v)) ≃ (u == v [ (λ x → f x == b) ↓ p ])
+  ↓-app=cst-econv {p = p} = equiv ↓-app=cst-in ↓-app=cst-out
+    (↓-app=cst-η {p = p}) (↓-app=cst-β {p = p})
+
+  ↓-cst=app-in : {p : x == y} {u : b == f x} {v : b == f y}
     → (u ∙' ap f p) == v
     → (u == v [ (λ x → b == f x) ↓ p ])
   ↓-cst=app-in {p = idp} q = q
 
-  ↓-cst=app-out : {x y : A} {p : x == y} {u : b == f x} {v : b == f y}
+  ↓-cst=app-out : {p : x == y} {u : b == f x} {v : b == f y}
     → (u == v [ (λ x → b == f x) ↓ p ])
     → (u ∙' ap f p) == v
   ↓-cst=app-out {p = idp} r = r
 
-  ↓-cst=app-econv : {x y : A} {p : x == y} {u : b == f x} {v : b == f y}
+  ↓-cst=app-econv : {p : x == y} {u : b == f x} {v : b == f y}
     → ((u ∙' ap f p) == v) ≃ (u == v [ (λ x → b == f x) ↓ p ])
   ↓-cst=app-econv {p = idp} = equiv ↓-cst=app-in ↓-cst=app-out
      (λ _ → idp) (λ _ → idp)
 
 {- alternative versions -}
 
-module _ {i j} {A : Type i} {B : Type j} {f : A → B} where
+module _ {i j} {A : Type i} {B : Type j}
+  {f : A → B} {x y : A} {b : B} where
 
-  ↓-app=cst-in' : {x y : A} {b : B} {p : x == y} {u : f x == b} {v : f y == b}
+  ↓-app=cst-in' : {p : x == y} {u : f x == b} {v : f y == b}
     → u == (ap f p ∙' v)
     → (u == v [ (λ x → f x == b) ↓ p ])
   ↓-app=cst-in' {p = idp} {v = idp} q = q
 
-  ↓-app=cst-out' : {x y : A} {b : B} {p : x == y} {u : f x == b} {v : f y == b}
+  ↓-app=cst-out' : {p : x == y} {u : f x == b} {v : f y == b}
     → (u == v [ (λ x → f x == b) ↓ p ])
     → u == (ap f p ∙' v)
   ↓-app=cst-out' {p = idp} {v = idp} r = r
 
-  ↓-cst=app-in' : {x y : A} {b : B} {p : x == y} {u : b == f x} {v : b == f y}
+  ↓-app=cst-β' : {p : x == y} {u : f x == b} {v : f y == b}
+    → (q : u == (ap f p ∙' v))
+    → ↓-app=cst-out' {p = p} {v = v} (↓-app=cst-in' q) == q
+  ↓-app=cst-β' {p = idp} {v = idp} q = idp
+
+  ↓-app=cst-η' : {p : x == y} {u : f x == b} {v : f y == b}
+    → (q : u == v [ (λ x → f x == b) ↓ p ])
+    → ↓-app=cst-in' (↓-app=cst-out' q) == q
+  ↓-app=cst-η' {p = idp} {v = idp} q = idp
+
+  ↓-cst=app-in' : {p : x == y} {u : b == f x} {v : b == f y}
     → (u ∙ ap f p) == v
     → (u == v [ (λ x → b == f x) ↓ p ])
   ↓-cst=app-in' {p = idp} {u = idp} q = q
 
-  ↓-cst=app-out' : {x y : A} {b : B} {p : x == y} {u : b == f x} {v : b == f y}
+  ↓-cst=app-out' : {p : x == y} {u : b == f x} {v : b == f y}
     → (u == v [ (λ x → b == f x) ↓ p ])
     → (u ∙ ap f p) == v
   ↓-cst=app-out' {p = idp} {u = idp} r = r
