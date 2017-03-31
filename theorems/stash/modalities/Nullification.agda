@@ -2,10 +2,10 @@
 
 open import HoTT
 
-open import Orthogonality
-open import Modalities
+open import stash.modalities.Orthogonality
+open import stash.modalities.Modalities
 
-module Nullification where
+module stash.modalities.Nullification where
 
   module _ {ℓ} where
 
@@ -57,7 +57,7 @@ module Nullification where
   module _ {ℓ} (X A : Type ℓ) where
 
     SX↯A : Type ℓ
-    SX↯A = (Suspension X) ↯ A
+    SX↯A = (Susp X) ↯ A
 
     SX↯A== : A → A → Type ℓ
     SX↯A== a₀ a₁ = Path {A = SX↯A} (inj a₀) (inj a₁)
@@ -68,8 +68,8 @@ module Nullification where
       where escape : (X → SX↯A== a₀ a₁) → SX↯A== a₀ a₁
             escape α = ! (apex-path test north) ∙ apex-path test south
 
-              where test : Suspension X → SX↯A
-                    test = Suspension-rec (inj a₀) (inj a₁) α
+              where test : Susp X → SX↯A
+                    test = Susp-rec (inj a₀) (inj a₁) α
 
     thm-to : (a₀ a₁ : A) → X ↯ (a₀ == a₁) → SX↯A== a₀ a₁
     thm-to a₀ a₁ = ↯-Rec.f (lemma a₀ a₁) (ap inj)
@@ -82,7 +82,7 @@ module Nullification where
 
     -- Going to try to state Bousfield's lemmas here
     ΣW : Type ℓ
-    ΣW = Suspension W
+    ΣW = Susp W
     
     -- The first lemma is simply closure under Σ-types
     lemma₁ : ⟦ W ⊥ B ⟧ₒ → ⟦ W ⊥ X ⟧ᵣ → ⟦ W ⊥ Σ B X ⟧ₒ
@@ -98,7 +98,7 @@ module Nullification where
   module _ {ℓ} (X A B : Type ℓ) (f : A → B) where
 
     ΣX : Type ℓ
-    ΣX = Suspension X
+    ΣX = Susp X
 
     thm : (b : B) → A ≲ X → B ≲ X → hfiber f b ≲ ΣX
     thm b α β = {!!}
@@ -107,10 +107,10 @@ module Nullification where
   -- map f : A → B, then if A and B are X acyclic, the homotopy fiber
   -- of f is ΣX acyclic.
 
-  module _ {ℓ} (X : Type ℓ) where
+  -- module _ {ℓ} (X : Type ℓ) where
 
-    join-proj : (Y A : Type ℓ) → (X * Y) ↯ A → Y ↯ A
-    join-proj Y A = ↯-Rec.f (jn-ideal ↯-is-local) inj
+  --   join-proj : (Y A : Type ℓ) → (X * Y) ↯ A → Y ↯ A
+  --   join-proj Y A = ↯-Rec.f (jn-ideal ↯-is-local) inj
 
 
 
