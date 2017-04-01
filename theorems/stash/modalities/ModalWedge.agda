@@ -12,8 +12,8 @@ module stash.modalities.ModalWedge {i} (M : Modality i)
 
   record args : Type (lsucc i) where
     field
-      jn-conn : (a : A) (b : B) → is-◯-connected M ((a₀ == a) * (b₀ == b))
-      R : A → B → ◯-Type M
+      jn-conn : (a : A) (b : B) → is-◯-connected ((a₀ == a) * (b₀ == b))
+      R : A → B → ◯-Type
       f : (a : A) → fst (R a b₀)
       g : (b : B) → fst (R a₀ b)
       p : f a₀ == g b₀
@@ -26,20 +26,17 @@ module stash.modalities.ModalWedge {i} (M : Modality i)
       ⊙B = ⊙[ B , b₀ ]
       A⊙×B = ⊙A ⊙× ⊙B
 
-    R' : de⊙ A⊙×B → ◯-Type M
+    R' : de⊙ A⊙×B → ◯-Type
     R' (a , b) = R a b
 
-    ∨-to-×-is-◯-equiv : is-◯-equiv M (∨-to-× ⊙A ⊙B)
-    ∨-to-×-is-◯-equiv (a , b) = equiv-preserves-level (◯-thm ⁻¹) (jn-conn a b)
+    ∨-to-×-is-◯-equiv : is-◯-equiv (∨-to-× ⊙A ⊙B)
+    ∨-to-×-is-◯-equiv (a , b) = equiv-preserves-level (◯-emap thm ⁻¹) (jn-conn a b)
 
       where thm : hfiber (∨-to-× ⊙A ⊙B) (a , b) ≃ (pt ⊙A == a) * (pt ⊙B == b)
             thm = fiber-thm ⊙A ⊙B a b
 
-            ◯-thm : ◯ (hfiber (∨-to-× ⊙A ⊙B) (a , b)) ≃ ◯ ((a₀ == a) * (b₀ == b))
-            ◯-thm = ◯-func M (fst thm) , ◯-func-is-equiv M (fst thm) (snd thm)
-
     ext : (a : A) → (b : B) → fst (R a b)
-    ext a b = ◯-extend M
+    ext a b = ◯-extend
       (∨-to-× ⊙A ⊙B)
       ∨-to-×-is-◯-equiv R'
       (Wedge-elim f g lemma)
