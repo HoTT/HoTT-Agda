@@ -25,10 +25,6 @@ module stash.modalities.Modalities where
 
       ◯-=-is-local : {A : Type ℓ} (a₀ a₁ : ◯ A) → is-local (a₀ == a₁)
 
-  module _ {ℓ} (M : Modality ℓ) where
-
-    open Modality M
-
     ◯-Type : Type (lsucc ℓ)
     ◯-Type = Σ (Type ℓ) is-local
 
@@ -39,9 +35,8 @@ module stash.modalities.Modalities where
     is-◯-equiv {B = B} f = (b : B) → is-◯-connected (hfiber f b)
 
     is-lex : Type (lsucc ℓ)
-    is-lex = {A B : Type ℓ} (f : A → B) →
-             is-◯-connected A → is-◯-connected B →
-             (b : B) → is-◯-connected (hfiber f b)
+    is-lex = {A B : Type ℓ} (f : A → B)
+      → is-◯-connected A → is-◯-connected B → is-◯-equiv f
 
     -- Some basic constructions
 
@@ -55,7 +50,7 @@ module stash.modalities.Modalities where
     ◯-fmap f = ◯-rec ◯-is-local (λ a → η (f a))
 
     ◯-fmap-β : {A B : Type ℓ} (f : A → B) (a : A) → ◯-fmap f (η a) == η (f a)
-    ◯-fmap-β f a = ◯-rec-β ◯-is-local (λ a → η (f a)) a
+    ◯-fmap-β f = ◯-rec-β ◯-is-local (λ a → η (f a))
 
     ◯-isemap : {A B : Type ℓ} (f : A → B) → is-equiv f → is-equiv (◯-fmap f)
     ◯-isemap f f-ise = is-eq _ (◯-fmap g) to-from from-to where
@@ -69,6 +64,9 @@ module stash.modalities.Modalities where
         from-to = ◯-elim
           (λ ◯a → ◯-=-is-local (◯-fmap g (◯-fmap f ◯a)) ◯a)
           (λ a → ap (◯-fmap g) (◯-fmap-β f a) ∙ ◯-fmap-β g (f a) ∙ ap η (g-f a))
+
+    ◯-emap : {A B : Type ℓ} → A ≃ B → ◯ A ≃ ◯ B
+    ◯-emap (f , f-ise) = ◯-fmap f , ◯-isemap f f-ise
 
     -- This is the only appearence of univalence, but ...
     local-is-replete : {A B : Type ℓ} → is-local A → A ≃ B → is-local B
@@ -84,45 +82,47 @@ module stash.modalities.Modalities where
        where η-inv : ◯ A → A
              η-inv = ◯-rec w (idf A)
 
-             inv-r : (a : A) → η-inv (η a) == a
-             inv-r = ◯-rec-β w (idf A)
+             abstract
+               inv-r : (a : A) → η-inv (η a) == a
+               inv-r = ◯-rec-β w (idf A)
 
-             inv-l : (a : ◯ A) → η (η-inv a) == a
-             inv-l = ◯-elim (λ a₀ → ◯-=-is-local _ _)
-                            (λ a₀ → ap η (inv-r a₀))
+               inv-l : (a : ◯ A) → η (η-inv a) == a
+               inv-l = ◯-elim (λ a₀ → ◯-=-is-local _ _)
+                              (λ a₀ → ap η (inv-r a₀))
 
-    η-equiv-implies-local : {A : Type ℓ} → is-equiv (η {A}) → is-local A
-    η-equiv-implies-local {A} eq = local-is-replete {◯ A} {A} ◯-is-local ((η , eq) ⁻¹)
+    abstract
+      η-equiv-implies-local : {A : Type ℓ} → is-equiv (η {A}) → is-local A
+      η-equiv-implies-local {A} eq = local-is-replete {◯ A} {A} ◯-is-local ((η , eq) ⁻¹)
 
-    retract-is-local : {A B : Type ℓ} (w : is-local A)
-                       (f : A → B) (g : B → A) (r : (b : B) → f (g b) == b) →
-                       is-local B
-    retract-is-local {A} {B} w f g r = η-equiv-implies-local {B} (is-eq η η-inv inv-l inv-r)
+      retract-is-local : {A B : Type ℓ} (w : is-local A)
+        (f : A → B) (g : B → A) (r : (b : B) → f (g b) == b) →
+        is-local B
+      retract-is-local {A} {B} w f g r = η-equiv-implies-local (is-eq η η-inv inv-l inv-r)
 
-      where η-inv : ◯ B → B
-            η-inv = f ∘ (◯-rec w g)
+        where η-inv : ◯ B → B
+              η-inv = f ∘ (◯-rec w g)
 
-            inv-r : (b : B) → η-inv (η b) == b
-            inv-r b = ap f (◯-rec-β w g b) ∙ r b
+              inv-r : (b : B) → η-inv (η b) == b
+              inv-r b = ap f (◯-rec-β w g b) ∙ r b
 
-            inv-l : (b : ◯ B) → η (η-inv b) == b
-            inv-l = ◯-elim (λ b → ◯-=-is-local _ _) (λ b → ap η (inv-r b))
+              inv-l : (b : ◯ B) → η (η-inv b) == b
+              inv-l = ◯-elim (λ b → ◯-=-is-local _ _) (λ b → ap η (inv-r b))
 
-    =-preserves-local : {A : Type ℓ} {a₀ a₁ : A} → is-local A → is-local (a₀ == a₁)
-    =-preserves-local {A} {a₀} {a₁} w  = local-is-replete
-      (◯-=-is-local (η a₀) (η a₁)) (ap-equiv (η , local-implies-η-equiv w) a₀ a₁ ⁻¹)
+      =-preserves-local : {A : Type ℓ} → is-local A → {a₀ a₁ : A} → is-local (a₀ == a₁)
+      =-preserves-local {A} w {a₀} {a₁} = local-is-replete
+        (◯-=-is-local (η a₀) (η a₁)) (ap-equiv (η , local-implies-η-equiv w) a₀ a₁ ⁻¹)
 
-    Π-is-local : {A : Type ℓ} {B : A → Type ℓ} (w : (a : A) → is-local (B a)) → is-local (Π A B)
-    Π-is-local {A} {B} w = retract-is-local {◯ (Π A B)} {Π A B} ◯-is-local η-inv η r
+      Π-is-local : {A : Type ℓ} {B : A → Type ℓ} (w : (a : A) → is-local (B a)) → is-local (Π A B)
+      Π-is-local {A} {B} w = retract-is-local {◯ (Π A B)} {Π A B} ◯-is-local η-inv η r
 
-      where η-inv : ◯ (Π A B) → Π A B
-            η-inv φ' a = ◯-rec (w a) (λ φ → φ a) φ'
+        where η-inv : ◯ (Π A B) → Π A B
+              η-inv φ' a = ◯-rec (w a) (λ φ → φ a) φ'
 
-            r : (φ : Π A B) → η-inv (η φ) == φ
-            r φ = λ= (λ a → ◯-rec-β (w a) (λ φ₀ → φ₀ a) φ)
+              r : (φ : Π A B) → η-inv (η φ) == φ
+              r φ = λ= (λ a → ◯-rec-β (w a) (λ φ₀ → φ₀ a) φ)
 
-    →-is-local : {A B : Type ℓ} → is-local B → is-local (A → B)
-    →-is-local w = Π-is-local (λ _ → w)
+      →-is-local : {A B : Type ℓ} → is-local B → is-local (A → B)
+      →-is-local w = Π-is-local (λ _ → w)
 
     ◯-fmap2 : {A B C : Type ℓ} (f : A → B → C) → (◯ A → ◯ B → ◯ C)
     ◯-fmap2 f = ◯-rec (→-is-local ◯-is-local) (λ a → ◯-fmap (f a))
@@ -132,33 +132,39 @@ module stash.modalities.Modalities where
     ◯-fmap2-β f a b = app= (◯-rec-β (→-is-local ◯-is-local) (λ a → ◯-fmap (f a)) a) (η b)
                     ∙ ◯-fmap-β (f a) b
 
-    Σ-is-local : {A : Type ℓ} (B : A → Type ℓ)
-                 (lA : is-local A) (lB : (a : A) → is-local (B a)) →
-                 is-local (Σ A B)
-    Σ-is-local {A} B lA lB = retract-is-local {◯ (Σ A B)} {Σ A B} ◯-is-local η-inv η r
+    abstract
+      Σ-is-local : {A : Type ℓ} (B : A → Type ℓ)
+        → is-local A → ((a : A) → is-local (B a))
+        → is-local (Σ A B)
+      Σ-is-local {A} B lA lB = retract-is-local {◯ (Σ A B)} {Σ A B} ◯-is-local η-inv η r
 
-      where h : ◯ (Σ A B) → A
-            h = ◯-rec lA fst
+        where h : ◯ (Σ A B) → A
+              h = ◯-rec lA fst
 
-            h-β : (ab : Σ A B) → h (η ab) == fst ab
-            h-β = ◯-rec-β lA fst
+              h-β : (ab : Σ A B) → h (η ab) == fst ab
+              h-β = ◯-rec-β lA fst
 
-            k : (w : ◯ (Σ A B)) → B (h w)
-            k = ◯-elim (lB ∘ h) λ ab → transport! B (h-β ab) (snd ab)
+              k : (w : ◯ (Σ A B)) → B (h w)
+              k = ◯-elim (lB ∘ h) λ ab → transport! B (h-β ab) (snd ab)
 
-            k-β : (ab : Σ A B) → k (η ab) == snd ab [ B ↓ h-β ab ]
-            k-β ab = from-transp! B (h-β ab) $
-              ◯-elim-β (lB ∘ h) (λ ab → transport! B (h-β ab) (snd ab)) ab
+              k-β : (ab : Σ A B) → k (η ab) == snd ab [ B ↓ h-β ab ]
+              k-β ab = from-transp! B (h-β ab) $
+                ◯-elim-β (lB ∘ h) (λ ab → transport! B (h-β ab) (snd ab)) ab
 
-            η-inv : ◯ (Σ A B) → Σ A B
-            η-inv w = h w , k w
+              η-inv : ◯ (Σ A B) → Σ A B
+              η-inv w = h w , k w
 
-            r : (x : Σ A B) → η-inv (η x) == x
-            r ab = pair= (h-β ab) (k-β ab)
+              r : (x : Σ A B) → η-inv (η x) == x
+              r ab = pair= (h-β ab) (k-β ab)
+
+      ×-is-local : {A B : Type ℓ}
+        → is-local A → is-local B → is-local (A × B)
+      ×-is-local {B = B} lA lB = Σ-is-local (λ _ → B) lA (λ _ → lB)
+
 
     abstract
-      pre∘-◯-conn-is-equiv : {A B : Type ℓ} {h : A → B} → is-◯-equiv h →
-                             (P : B → ◯-Type) → is-equiv (λ (s : Π B (fst ∘ P)) → s ∘ h)
+      pre∘-◯-conn-is-equiv : {A B : Type ℓ} {h : A → B} → is-◯-equiv h
+        → (P : B → ◯-Type) → is-equiv (λ (s : Π B (fst ∘ P)) → s ∘ h)
       pre∘-◯-conn-is-equiv {A} {B} {h} c P = is-eq f g f-g g-f
 
         where f : Π B (fst ∘ P) → Π A (fst ∘ P ∘ h)
@@ -183,7 +189,7 @@ module stash.modalities.Modalities where
               g-f : ∀ k → g (f k) == k
               g-f k = λ= λ (b : B) →
                 ◯-elim {A = hfiber h b}
-                       (λ r → =-preserves-local (snd (P b)))
+                       (λ r → =-preserves-local (snd (P b)) {g (f k) b})
                        (λ r → lemma₁ (fst r) b (snd r))
                        (fst (c b))
 
@@ -197,49 +203,42 @@ module stash.modalities.Modalities where
                           (snd (c b) (η (a , p))) (lemma₀ a b p)
 
 
-    ◯-extend : {A B : Type ℓ} (f : A → B) → is-◯-equiv f →
-                        (P : B → ◯-Type) → Π A (fst ∘ P ∘ f) → Π B (fst ∘ P)
+    ◯-extend : {A B : Type ℓ} (f : A → B) → is-◯-equiv f
+      → (P : B → ◯-Type) → Π A (fst ∘ P ∘ f) → Π B (fst ∘ P)
     ◯-extend f c P s = is-equiv.g (pre∘-◯-conn-is-equiv {h = f} c P) s
 
     ◯-preserves-× : {A B : Type ℓ} → ◯ (A × B) ≃ ◯ A × ◯ B
     ◯-preserves-× {A} {B} = equiv ◯-split ◯-pair inv-l inv-r
 
       where ◯-fst : ◯ (A × B) → ◯ A
-            ◯-fst ab = ◯-fmap fst ab
+            ◯-fst = ◯-fmap fst
 
             ◯-fst-β : (ab : A × B) → ◯-fst (η ab) == η (fst ab)
-            ◯-fst-β ab = ◯-rec-β ◯-is-local _ ab
+            ◯-fst-β = ◯-fmap-β fst
 
             ◯-snd : ◯ (A × B) → ◯ B
-            ◯-snd ab = ◯-fmap snd ab
+            ◯-snd = ◯-fmap snd
 
             ◯-snd-β : (ab : A × B) → ◯-snd (η ab) == η (snd ab)
-            ◯-snd-β ab = ◯-rec-β ◯-is-local _ ab
+            ◯-snd-β = ◯-fmap-β snd
 
             ◯-split : ◯ (A × B) → ◯ A × ◯ B
-            ◯-split ab = (◯-fst ab , ◯-snd ab)
+            ◯-split = fanout ◯-fst ◯-snd
 
             ◯-pair : ◯ A × ◯ B → ◯ (A × B)
             ◯-pair = uncurry (◯-fmap2 _,_)
 
-            ◯-pair-β : (a : A) → (b : B) → ◯-pair (η a , η b) == η (a , b)
+            ◯-pair-β : (a : A) (b : B) → ◯-pair (η a , η b) == η (a , b)
             ◯-pair-β = ◯-fmap2-β _,_
 
-            lem₀ : (a : ◯ A) → (b : ◯ B) → ◯-fst (◯-pair (a , b)) == a
-            lem₀ = ◯-elim (λ _ → Π-is-local λ _ → ◯-=-is-local _ _)
-                          (λ a → ◯-elim
-                            (λ _ → ◯-=-is-local _ _)
-                            (λ b → ap ◯-fst (◯-pair-β a b) ∙ ◯-fst-β (a , b)))
+            abstract
+              inv-l : (ab : ◯ A × ◯ B) → ◯-split (◯-pair ab) == ab
+              inv-l = uncurry $
+                ◯-elim (λ _ → Π-is-local λ _ → =-preserves-local (×-is-local ◯-is-local ◯-is-local))
+                  (λ a → ◯-elim (λ _ → =-preserves-local (×-is-local ◯-is-local ◯-is-local))
+                    (λ b → ap ◯-split (◯-pair-β a b)
+                         ∙ pair×= (◯-fst-β (a , b)) (◯-snd-β (a , b))))
 
-            lem₁ : (a : ◯ A) → (b : ◯ B) → ◯-snd (◯-pair (a , b)) == b
-            lem₁ = ◯-elim (λ _ → Π-is-local λ _ → ◯-=-is-local _ _)
-                          (λ a → ◯-elim
-                            (λ _ → ◯-=-is-local _ _)
-                            (λ b → ap ◯-snd (◯-pair-β a b) ∙ ◯-snd-β (a , b)))
-
-            inv-l : (ab : ◯ A × ◯ B) → ◯-split (◯-pair ab) == ab
-            inv-l (a , b) = pair×= (lem₀ a b) (lem₁ a b)
-
-            inv-r : (ab : ◯ (A × B)) → ◯-pair (◯-split ab) == ab
-            inv-r = ◯-elim (λ _ → ◯-=-is-local _ _)
-                           (λ ab → ap ◯-pair (pair×= (◯-fst-β ab) (◯-snd-β ab)) ∙ ◯-pair-β (fst ab) (snd ab))
+              inv-r : (ab : ◯ (A × B)) → ◯-pair (◯-split ab) == ab
+              inv-r = ◯-elim (λ _ → ◯-=-is-local _ _)
+                             (λ ab → ap ◯-pair (pair×= (◯-fst-β ab) (◯-snd-β ab)) ∙ ◯-pair-β (fst ab) (snd ab))
