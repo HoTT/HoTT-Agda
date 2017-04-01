@@ -138,38 +138,23 @@ module stash.modalities.Modalities where
     Σ-is-local {A} B lA lB = retract-is-local {◯ (Σ A B)} {Σ A B} ◯-is-local η-inv η r
 
       where h : ◯ (Σ A B) → A
-            h = (is-equiv.g (local-implies-η-equiv lA)) ∘ (◯-fmap fst)
+            h = ◯-rec lA fst
 
             h-β : (ab : Σ A B) → h (η ab) == fst ab
-            h-β ab = ap (is-equiv.g (local-implies-η-equiv lA)) (◯-fmap-β fst ab) ∙
-                         is-equiv.g-f (local-implies-η-equiv lA) (fst ab)
-
-            k₀ : (w : ◯ (Σ A B)) → ◯ (B (h w))
-            k₀ = ◯-elim {A = Σ A B} (λ _ → ◯-is-local)
-              (λ ab → transport! (◯ ∘ B) (h-β ab) (η (snd ab)))
-
-            k₁ : {a : A} → ◯ (B a) → B a
-            k₁ {a} =  is-equiv.g (local-implies-η-equiv (lB a))
+            h-β = ◯-rec-β lA fst
 
             k : (w : ◯ (Σ A B)) → B (h w)
-            k w = is-equiv.g (local-implies-η-equiv (lB (h w))) (k₀ w)
+            k = ◯-elim (lB ∘ h) λ ab → transport! B (h-β ab) (snd ab)
 
             k-β : (ab : Σ A B) → k (η ab) == snd ab [ B ↓ h-β ab ]
-            k-β ab = ap↓ k₁ (from-transp! (λ a → ◯ (B a)) (h-β ab) k₀-β) ∙'ᵈ
-                     is-equiv.g-f (local-implies-η-equiv (lB (fst ab))) (snd ab)
-
-              where k₀-β : k₀ (η ab) == transport! (λ a → ◯ (B a)) (h-β ab) (η (snd ab))
-                    k₀-β =  ◯-elim-β {A = Σ A B} (λ _ → ◯-is-local)
-                      ((λ ab → transport! (◯ ∘ B) (h-β ab) (η (snd ab)))) ab
-
-            C : ◯ (Σ A B) → Type ℓ
-            C w = B (h w)
+            k-β ab = from-transp! B (h-β ab) $
+              ◯-elim-β (lB ∘ h) (λ ab → transport! B (h-β ab) (snd ab)) ab
 
             η-inv : ◯ (Σ A B) → Σ A B
-            η-inv w = h w , ◯-elim (lB ∘ h) (k ∘ η) w
+            η-inv w = h w , k w
 
             r : (x : Σ A B) → η-inv (η x) == x
-            r (a , b) = pair= (h-β (a , b)) (◯-elim-β (lB ∘ h) (k ∘ η) (a , b) ∙ᵈ (k-β (a , b)))
+            r ab = pair= (h-β ab) (k-β ab)
 
     abstract
       pre∘-◯-conn-is-equiv : {A B : Type ℓ} {h : A → B} → is-◯-equiv h →
