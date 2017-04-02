@@ -16,29 +16,68 @@ module stash.modalities.FiberOfWedgeToProduct
   ∨-to-×-glue-β = WedgeToProduct.glue-β 
 
   private
+    abstract
+      ↓-∨to×=cst-out : ∀ {x y} {p p' : (pt X , pt Y) == (x , y)}
+        → p == p' [ (λ w → ∨-to-× w == (x , y)) ↓ wglue ]
+        → p == p'
+      ↓-∨to×=cst-out {p' = idp} q =
+        ↓-app=cst-out' q ∙ WedgeToProduct.glue-β
+
+      ↓-∨to×=cst-in : ∀ {x y} {p p' : (pt X , pt Y) == (x , y)}
+        → p == p'
+        → p == p' [ (λ w → ∨-to-× w == (x , y)) ↓ wglue ]
+      ↓-∨to×=cst-in {p' = idp} q =
+        ↓-app=cst-in' (q ∙ ! WedgeToProduct.glue-β)
+
+      ↓-∨to×=cst-β : ∀ {x y} {p p' : (pt X , pt Y) == (x , y)}
+        (q : p == p')
+        → ↓-∨to×=cst-out (↓-∨to×=cst-in q) == q
+      ↓-∨to×=cst-β {p' = idp} idp =
+          ap (_∙ WedgeToProduct.glue-β) (↓-app=cst-β' {p = wglue} (! WedgeToProduct.glue-β))
+        ∙ !-inv-l WedgeToProduct.glue-β
+
+      ↓-∨to×=cst-η : ∀ {x y} {p p' : (pt X , pt Y) == (x , y)}
+        (q : p == p' [ (λ w → ∨-to-× w == (x , y)) ↓ wglue ])
+        → ↓-∨to×=cst-in (↓-∨to×=cst-out q) == q
+      ↓-∨to×=cst-η {p = p} {p' = idp} q =
+          ap ↓-app=cst-in'
+            ( ∙-assoc (↓-app=cst-out' q) WedgeToProduct.glue-β (! WedgeToProduct.glue-β)
+            ∙ ap (↓-app=cst-out' q ∙_) (!-inv-r WedgeToProduct.glue-β)
+            ∙ ∙-unit-r (↓-app=cst-out' q))
+        ∙ ↓-app=cst-η' q
+
+  private
     to-glue-template : ∀ {x y}
-      {p : (pt X , pt Y) == (x , y)}
-      {p' : (pt X , pt Y) == (x , y)}
-      (p-path : p == p' [ (λ w → ∨-to-× w == (x , y)) ↓ wglue ])
+      {p p' : (pt X , pt Y) == (x , y)}
+      (q : p == p' [ (λ w → ∨-to-× w == (x , y)) ↓ wglue ])
       → right (snd×= p) == left (fst×= p') :> (pt X == x) * (pt Y == y)
-    to-glue-template {p = p} {p' = idp} p-path =
-         ! (glue (fst×= p , snd×= p))
-      ∙' ap (left ∘ fst×=) (↓-app=cst-out' p-path ∙ WedgeToProduct.glue-β)
+    to-glue-template {p = p} {p' = p'} q =
+      ! (glue (fst×= p , snd×= p)) ∙' ap (left ∘ fst×=) (↓-∨to×=cst-out q)
 
     module To (x : de⊙ X) (y : de⊙ Y) = WedgeElim
       {P = λ x∨y → ∨-to-× x∨y == (x , y) → (pt X == x) * (pt Y == y)}
       (λ x p → right (snd×= p)) (λ y p → left (fst×= p))
       (↓-app→cst-in to-glue-template)
 
-    to : ∀ x y → hfiber ∨-to-× (x , y) → (pt X == x) * (pt Y == y)
-    to x y = uncurry (To.f x y)
+  to : ∀ x y → hfiber ∨-to-× (x , y) → (pt X == x) * (pt Y == y)
+  to x y = uncurry (To.f x y)
 
-    private
-      from-glue-template : ∀ {x y} (x-path : pt X == x) (y-path : pt Y == y)
-        → (winr y , pair×= x-path idp) == (winl x , pair×= idp y-path)
-            :> hfiber ∨-to-× (x , y)
-      from-glue-template idp idp = ! $ pair= wglue $
-        ↓-app=cst-in' (! WedgeToProduct.glue-β)
+  private
+    -- the only needed β-rule for [to] applied to [wglue].
+    abstract
+      to-glue-idp-β : ap (to (pt X) (pt Y)) (pair= wglue (↓-∨to×=cst-in idp))
+        == ! (glue (idp , idp))
+      to-glue-idp-β =
+          split-ap2 (to _ _) wglue (↓-∨to×=cst-in idp)
+        ∙ ap (λ p → ↓-app→cst-out p (↓-∨to×=cst-in idp)) (To.glue-β _ _)
+        ∙ ↓-app→cst-β to-glue-template (↓-∨to×=cst-in idp)
+        ∙ ap (λ p → ! (glue (idp , idp)) ∙' ap (left ∘ fst×=) p) (↓-∨to×=cst-β idp)
+
+  private
+    from-glue-template : ∀ {x y} (x-path : pt X == x) (y-path : pt Y == y)
+      → (winr y , pair×= x-path idp) == (winl x , pair×= idp y-path)
+          :> hfiber ∨-to-× (x , y)
+    from-glue-template idp idp = ! $ pair= wglue (↓-∨to×=cst-in idp)
 
     module From (x : de⊙ X) (y : de⊙ Y) = JoinRec
       {D = hfiber ∨-to-× (x , y)}
@@ -46,23 +85,19 @@ module stash.modalities.FiberOfWedgeToProduct
       (λ y-path → winl x , pair×= idp y-path)
       (uncurry from-glue-template)
 
-    from : ∀ x y → (pt X == x) * (pt Y == y) → hfiber ∨-to-× (x , y)
-    from = From.f
+  from : ∀ x y → (pt X == x) * (pt Y == y) → hfiber ∨-to-× (x , y)
+  from = From.f
 
-  abstract
-    to-from-glue-template : ∀ {x y} (x-path : pt X == x) (y-path : pt Y == y)
-      → ap left (fst×=-β x-path idp) == ap right (snd×=-β idp y-path)
-          [ (λ j → to x y (from x y j) == j) ↓ glue (x-path , y-path) ]
-    to-from-glue-template idp idp = ↓-∘=idf-in' (to _ _) (from _ _) $
-        ap (ap (to _ _)) (From.glue-β _ _ (idp , idp))
-      ∙ ap-! (to _ _) (pair= wglue (↓-app=cst-in' (! WedgeToProduct.glue-β)))
-      ∙ ap ! ( split-ap2 (to _ _) wglue (↓-app=cst-in' (! WedgeToProduct.glue-β))
-             ∙ ap (λ p → ↓-app→cst-out p (↓-app=cst-in' (! WedgeToProduct.glue-β))) (To.glue-β _ _)
-             ∙ ↓-app→cst-β to-glue-template (↓-app=cst-in' (! WedgeToProduct.glue-β))
-             ∙ ap (λ p → ! (glue (idp , idp)) ∙' ap (left ∘ fst×=) p)
-                 ( ap (_∙ WedgeToProduct.glue-β) (↓-app=cst-β' {p = wglue} (! WedgeToProduct.glue-β))
-                 ∙ !-inv-l WedgeToProduct.glue-β))
-      ∙ !-! (glue (idp , idp))
+  private
+    abstract
+      to-from-glue-template : ∀ {x y} (x-path : pt X == x) (y-path : pt Y == y)
+        → ap left (fst×=-β x-path idp) == ap right (snd×=-β idp y-path)
+            [ (λ j → to x y (from x y j) == j) ↓ glue (x-path , y-path) ]
+      to-from-glue-template idp idp = ↓-∘=idf-in' (to _ _) (from _ _) $
+          ap (ap (to _ _)) (From.glue-β _ _ (idp , idp))
+        ∙ ap-! (to _ _) (pair= wglue (↓-∨to×=cst-in idp))
+        ∙ ap ! to-glue-idp-β
+        ∙ !-! (glue (idp , idp))
 
     to-from : ∀ x y j → to x y (from x y j) == j
     to-from x y = Join-elim
@@ -71,8 +106,50 @@ module stash.modalities.FiberOfWedgeToProduct
       (λ y-path → ap right (snd×=-β idp y-path))
       (uncurry to-from-glue-template)
 
-  postulate
-    from-to : ∀ x y w → from x y (to x y w) == w
+  private
+    abstract
+      from-to-winl-template : ∀ {x x' y} (xy-path : (x' , pt Y) == (x , y))
+        → (winl x , pair×= idp (snd×= xy-path)) == (winl x' , xy-path)
+            :> hfiber ∨-to-× (x , y)
+      from-to-winl-template idp = idp
+
+      from-to-winr-template : ∀ {x y y'} (xy-path : (pt X , y') == (x , y))
+        → (winr y , pair×= (fst×= xy-path) idp) == (winr y' , xy-path)
+            :> hfiber ∨-to-× (x , y)
+      from-to-winr-template idp = idp
+
+      -- this version enables path induction on [q] which
+      -- turns *both* [p] and [p'] into [idp]. yay!
+      from-to-glue-template' : ∀ {x y}
+        (p p' : (pt X , pt Y) == (x , y)) (q : p == p')
+        → from-to-winl-template p == from-to-winr-template p'
+          [ (λ xy → from x y (to x y xy) == xy) ↓ pair= wglue (↓-∨to×=cst-in q) ]
+      from-to-glue-template' idp .idp idp =
+        ↓-∘=idf-in' (from (pt X) (pt Y)) (to (pt X) (pt Y)) $
+            ap (ap (from _ _)) to-glue-idp-β
+          ∙ ap-! (from _ _) (glue (idp , idp))
+          ∙ ap ! (From.glue-β _ _ (idp , idp))
+          ∙ !-! (pair= wglue (↓-∨to×=cst-in idp))
+
+      from-to-glue-template : ∀ {x y}
+        (p p' : (pt X , pt Y) == (x , y))
+        (q : p == p' [ (λ w → ∨-to-× w == (x , y)) ↓ wglue ])
+        → from-to-winl-template p == from-to-winr-template p'
+          [ (λ xy → from x y (to x y xy) == xy) ↓ pair= wglue q ]
+      from-to-glue-template {x} {y} p p' q =
+        transport
+          (λ q →
+            from-to-winl-template p == from-to-winr-template p'
+            [ (λ xy → from x y (to x y xy) == xy) ↓ pair= wglue q ])
+          (↓-∨to×=cst-η q) 
+          (from-to-glue-template' p p' (↓-∨to×=cst-out q))
+
+    from-to : ∀ x y hf → from x y (to x y hf) == hf
+    from-to x y = uncurry $ Wedge-elim
+      {P = λ w → ∀ p → from x y (To.f x y w p) == (w , p)}
+      (λ x → from-to-winl-template)
+      (λ y → from-to-winr-template)
+      (↓-Π-in λ {p} {p'} → from-to-glue-template p p')
 
   fiber-thm : ∀ x y → hfiber ∨-to-× (x , y) ≃ (pt X == x) * (pt Y == y)
   fiber-thm x y = equiv (to x y) (from x y) (to-from x y) (from-to x y)
