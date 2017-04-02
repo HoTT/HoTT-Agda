@@ -12,13 +12,28 @@ module stash.modalities.Orthogonality where
     ⟦_⊥_⟧ : (X : Type ℓ) (A : Type ℓ) → Type _
     ⟦ X ⊥ A ⟧ = is-equiv (Δ A X)
 
-    ⊤-orth-always : (A : Type ℓ) → ⟦ Lift ⊤ ⊥ A ⟧
-    ⊤-orth-always A = record {
+    ⊤-orthogonal : (A : Type ℓ) → ⟦ Lift ⊤ ⊥ A ⟧
+    ⊤-orthogonal A = record {
       g = λ φ → φ (lift unit) ;
       f-g = λ φ → λ= (λ { (lift unit) → idp }) ;
       g-f = λ a → idp ;
       adj = λ a → λ=-η idp }
 
+    e-orth : {A B X : Type ℓ} → ⟦ A ⊥ X ⟧ → (A ≃ B) → ⟦ B ⊥ X ⟧
+    e-orth {A} {B} {X} ω e = is-eq (Δ X B) g f-g g-f
+
+      where lem : (B → X) ≃ (A → X) 
+            lem = pre∘-equiv {C = X} e
+            
+            g : (B → X) → X
+            g φ = is-equiv.g ω (φ ∘ (fst e))
+
+            f-g : (φ : B → X) → Δ X B (g φ) == φ
+            f-g φ = λ= (λ b → {!is-equiv.f-g ω (φ ∘ (fst e))!})
+
+            g-f : (x : X) → g (Δ X B x) == x
+            g-f x = {!!}
+            
   --   ⟦_⊥_⟧ₗ : {I : Type ℓ} (X : I → Type ℓ) (A : Type ℓ) → Type ℓ
   --   ⟦_⊥_⟧ₗ {I = I} X A = (i : I) → ⟦ X i ⊥ A ⟧ₒ
 
@@ -27,10 +42,6 @@ module stash.modalities.Orthogonality where
 
   --   ⟦_⊥_⟧ : {I J : Type ℓ} (X : I → Type ℓ) (A : J → Type ℓ) → Type ℓ
   --   ⟦_⊥_⟧ {I} {J} X A = (i : I) → (j : J) → ⟦ X i ⊥ A j ⟧ₒ
-
-  
-  --   e-orth : {A B X : Type ℓ} → ⟦ A ⊥ X ⟧ₒ → (A ≃ B) → ⟦ B ⊥ X ⟧ₒ
-  --   e-orth {A} {B} {X} = {!!}
     
   --   cone-of : {A B : Type ℓ} → (A → B) → Type ℓ
   --   cone-of {A} {B} f = hfiber (Δ B A) f
@@ -92,7 +103,7 @@ module stash.modalities.Orthogonality where
     equiv-≻ = {!!}
 
     ≻-trivial : (A : Type ℓ) → (Lift ⊤) ≻ A
-    ≻-trivial A X ω = ⊤-orth-always X
+    ≻-trivial A X ω = ⊤-orthogonal X
   
     ≻-reflexive : (A : Type ℓ) → A ≻ A
     ≻-reflexive A Y x = x
@@ -107,7 +118,7 @@ module stash.modalities.Orthogonality where
     self-ortho-contr A ω = diag-equiv-lem A ω
 
     ≻-⊤-is-contr : (A : Type ℓ) → A ≻ (Lift ⊤) → is-contr A
-    ≻-⊤-is-contr A ω = self-ortho-contr A (ω A (⊤-orth-always A))
+    ≻-⊤-is-contr A ω = self-ortho-contr A (ω A (⊤-orthogonal A))
 
     -- We jump a universe level, but its certainly convenient ...
     is-hyper-prop : Type ℓ → Type (lsucc ℓ)

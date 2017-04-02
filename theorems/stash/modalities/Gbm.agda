@@ -10,7 +10,7 @@ BM-Hypothesis : {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ) → Typ
 BM-Hypothesis {A} {B} Q = {a₀ : A} {b₀ : B} (q₀ : Q a₀ b₀)
                           {a₁ : A} (q₁ : Q a₁ b₀)
                           {b₁ : B} (q₂ : Q a₀ b₁) → 
-                          is-◯-connected M (((a₀ , q₀) == (a₁ , q₁)) * ((b₀ , q₀) == (b₁ , q₂)))
+                          Modality.is-◯-connected M (((a₀ , q₀) == (a₁ , q₁)) * ((b₀ , q₀) == (b₁ , q₂)))
 
 module _ {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
          (H : BM-Hypothesis Q) where
@@ -90,13 +90,13 @@ module _ {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
     -- Part of the decomposed [coe (coerce-path r)]
     code-bmleft-template-diag : ∀ {p} (r : bmleft a₀ == p)
       → code-bmleft a₀ idp → code-bmleft-template a₀ r r
-    code-bmleft-template-diag r = ◯-rec M ◯-is-local
+    code-bmleft-template-diag r = ◯-rec ◯-is-local
       λ {(q₀₀' , shift) →
         η (q₀₀' , ! (∙'-assoc (bmglue q₀₀) (! (bmglue q₀₀')) r) ∙ ap (_∙' r) shift ∙' ∙'-unit-l r )}
 
     abstract
       code-bmleft-template-diag-idp : ∀ x → code-bmleft-template-diag idp x == x
-      code-bmleft-template-diag-idp = ◯-elim _ (λ _ → ==-is-local M ◯-is-local)
+      code-bmleft-template-diag-idp = ◯-elim (λ _ → =-preserves-local ◯-is-local)
         (λ{(q₁₀ , shift) → {!ap (λ p → η (q₁₀ , p)) (ap-idf shift)!} })
         -- Trunc-elim (λ _ → =-preserves-level Trunc-level)
         --   λ{(q₁₀ , shift) → ap (λ p → [ q₁₀ , p ]) (ap-idf shift)}
@@ -167,7 +167,7 @@ module _ {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
 
     -- Finish the lemma.
     code-contr : ∀ {b₁} (r : bmleft a₀ == bmright b₁) → is-contr (◯ (hfiber bmglue r))
-    code-contr r = code-center r , ◯-elim _ (λ _ → ==-is-local M ◯-is-local) (code-coh r)
+    code-contr r = code-center r , ◯-elim (λ _ → =-preserves-local ◯-is-local) (code-coh r)
 
 --
 --  Right, what we need to do is "rebase" the fibration over the 

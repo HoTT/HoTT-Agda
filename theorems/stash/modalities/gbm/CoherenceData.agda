@@ -9,7 +9,7 @@ module stash.modalities.gbm.CoherenceData {ℓ} (M : Modality ℓ)
   (H : {a₀ : A} {b₀ : B} (q₀ : Q a₀ b₀)
        {a₁ : A} (q₁ : Q a₁ b₀)
        {b₁ : B} (q₂ : Q a₀ b₁) → 
-       is-◯-connected M (((a₀ , q₀) == (a₁ , q₁)) * ((b₀ , q₀) == (b₁ , q₂))))
+       Modality.is-◯-connected M (((a₀ , q₀) == (a₁ , q₁)) * ((b₀ , q₀) == (b₁ , q₂))))
   where       
 
 open Modality M  
@@ -74,7 +74,7 @@ module To {a₁ b₀} (q₁₀ : Q a₁ b₀) where
   args : WedgeExt.args M {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
   args = record {
     jn-conn = λ u v → H q₁₀ (snd u) (snd v) ;
-    R = λ u v → P u v , Π-is-local M _ (λ _ → Π-is-local M _ (λ _ → ◯-is-local)) ;
+    R = λ u v → P u v , Π-is-local (λ _ → Π-is-local (λ _ → ◯-is-local)) ;
     f = f ;
     g = g ;
     p = p
@@ -121,7 +121,7 @@ to : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
   → (r : bmleft a₀ == bmright b₁)
   → ◯ (hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁) r)
   → ◯ (hfiber bmglue r)
-to q₀₀ q₁₁ r = ◯-rec M ◯-is-local (to' q₀₀ q₁₁ r) 
+to q₀₀ q₁₁ r = ◯-rec ◯-is-local (to' q₀₀ q₁₁ r) 
 
 module From {a₀ b₁} (q₀₁ : Q a₀ b₁) where
   U = Σ A λ a → Q a b₁
@@ -152,7 +152,7 @@ module From {a₀ b₁} (q₀₁ : Q a₀ b₁) where
   args : WedgeExt.args M {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
   args = record {
     jn-conn = λ u v → H q₀₁ (snd u) (snd v) ;
-    R = λ u v → P u v , Π-is-local M _ (λ _ → Π-is-local M _ (λ _ → ◯-is-local)) ;
+    R = λ u v → P u v , Π-is-local (λ _ → Π-is-local (λ _ → ◯-is-local)) ;
     f = f ;
     g = g ;
     p = p }
@@ -195,7 +195,7 @@ from : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
   → (r : bmleft a₀ == bmright b₁)
   → ◯ (hfiber bmglue r)
   → ◯ (hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁) r)
-from q₀₀ q₁₁ r = ◯-rec M ◯-is-local (from' q₀₀ q₁₁ r)
+from q₀₀ q₁₁ r = ◯-rec ◯-is-local (from' q₀₀ q₁₁ r)
 
 -- -- Equivalence
 
