@@ -3,6 +3,7 @@
 open import HoTT
 
 open import stash.modalities.Modalities
+import stash.modalities.gbm.Pushout
 
 module stash.modalities.gbm.Surjectivity {ℓ} (M : Modality ℓ) where
 
@@ -44,9 +45,12 @@ module stash.modalities.gbm.Surjectivity {ℓ} (M : Modality ℓ) where
       A' : Type ℓ
       A' = Σ A (λ a → Trunc (S ⟨-2⟩) (Σ B (λ b → Q a b)))
 
-      Q' : Relation A' B
-      Q' (a , _) b = Q a b
+    RestrictionOf : Relation A' B
+    RestrictionOf (a , _) b = Q a b
 
+    private
+      Q' = RestrictionOf
+      
     claim₀ : (a₀ a₁ : A') → (a₀ == a₁) ≃ (fst a₀ == fst a₁)
     claim₀ a₀ a₁ = equiv f g f-g g-f
 
@@ -87,5 +91,26 @@ module stash.modalities.gbm.Surjectivity {ℓ} (M : Modality ℓ) where
             claim₂ : ((fst a₀ , q₀ == fst a₁ , q₁) * (b₀ , q₀ == b₁ , q₂)) ≃
                      ((a₀ , q₀ == a₁ , q₁) * (b₀ , q₀ == b₁ , q₂))
             claim₂ = *-emap (claim₁ ⁻¹) (ide _)                            
-                    
+
+    -- Okay, now on to the pushout thing
+    import stash.modalities.gbm.Pushout Q as W
+    import stash.modalities.gbm.Pushout Q' as W'
+
+    induced-map : W'.BMPushout → W.BMPushout
+    induced-map = Pushout-fmap
+      (span-map fst (idf _) (λ { ((a , _) , (b , q)) → a , (b , q) })
+        (comm-sqr (λ { ((a , _) , (b , q)) → idp }))
+        (comm-sqr (λ { ((a , _) , (b , q)) → idp })))
+    
+    -- So, the idea is to do an encode decode argument here
+    -- of a similar style.
+
+    -- goal : Σ (A × B) (λ ab → W.bmleft (fst ab) == W.bmright (snd ab)) ≃
+    --        Σ (A' × B) (λ ab → W'.bmleft (fst ab) == W'.bmright (snd ab) )
+    -- goal = {!!}
+    
+    -- pth-equiv : (a : A') (b : B) → (W'.bmleft a == W'.bmright b) ≃ (W.bmleft (fst a) == W.bmright b)
+    -- pth-equiv a b = equiv {!!} {!!} {!!} {!!}
+
+
 

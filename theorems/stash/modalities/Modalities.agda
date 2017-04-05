@@ -31,6 +31,9 @@ module stash.modalities.Modalities where
     is-◯-connected : Type ℓ → Type ℓ
     is-◯-connected A = is-contr (◯ A)
 
+    is-◯-connected-is-prop : ∀ {A} → is-prop (is-◯-connected A)
+    is-◯-connected-is-prop {A} = is-contr-is-prop
+    
     is-◯-equiv : {A B : Type ℓ} → (A → B) → Type ℓ
     is-◯-equiv {B = B} f = (b : B) → is-◯-connected (hfiber f b)
 

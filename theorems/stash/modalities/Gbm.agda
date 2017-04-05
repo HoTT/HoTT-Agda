@@ -6,14 +6,10 @@ open import stash.modalities.Modalities
 
 module stash.modalities.Gbm {ℓ} (M : Modality ℓ) where
 
-BM-Hypothesis : {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ) → Type ℓ
-BM-Hypothesis {A} {B} Q = {a₀ : A} {b₀ : B} (q₀ : Q a₀ b₀)
-                          {a₁ : A} (q₁ : Q a₁ b₀)
-                          {b₁ : B} (q₂ : Q a₀ b₁) → 
-                          Modality.is-◯-connected M (((a₀ , q₀) == (a₁ , q₁)) * ((b₀ , q₀) == (b₁ , q₂)))
+import stash.modalities.gbm.Surjectivity M as Surj
 
 module _ {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
-         (H : BM-Hypothesis Q) where
+         (H : Surj.BM-Relation Q) where
 
   open Modality M  
 
@@ -169,72 +165,35 @@ module _ {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
     code-contr : ∀ {b₁} (r : bmleft a₀ == bmright b₁) → is-contr (◯ (hfiber bmglue r))
     code-contr r = code-center r , ◯-elim (λ _ → =-preserves-local ◯-is-local) (code-coh r)
 
---
---  Right, what we need to do is "rebase" the fibration over the 
---  A' = Σ A (λ a → is-merely Q a ?)
---  B' = Σ B (λ b → is-merely Q ? b)
---
---  This is what corresponds to the image factorization for a
---  dependent type.
---
---  Then the theorem needs to be that the hypotheses applied to
---  this new fibration imply those of the old.  (In fact, this should
---  be some kind of equivalence.)
--- 
-
-module _ {A : Type ℓ} (P : A → Type ℓ) where
-
-  private
-
-    is-inhab : A → Type ℓ
-    is-inhab a = Trunc (S ⟨-2⟩) (P a)
-    
-    A' : Type ℓ
-    A' = Σ A is-inhab
-    
-    P' : A' → Type ℓ
-    P' (a , _) = P a
-
-  lem : {a₀ : A} (w₀ : is-inhab a₀)
-        {a₁ : A} (w₁ : is-inhab a₁)
-        (p : a₀ == a₁) → (a₀ , w₀) == (a₁ , w₁)
-  lem w₀ w₁ idp = pair= idp (prop-has-all-paths Trunc-level w₀ w₁)
-  
-  surj-lem : {a₀ : A} {w₀ : is-inhab a₀} (p₀ : P' (a₀ , w₀))
-             {a₁ : A} {w₁ : is-inhab a₁} (p₁ : P' (a₁ , w₁))
-             → (((a₀ , w₀) , p₀) == ((a₁ , w₁) , p₁)) ≃ ((a₀ , p₀) == (a₁ , p₁))
-  surj-lem p₀ p₁ = {!!}
-             
 module _ {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
-         (H : BM-Hypothesis Q) where
+         (H : Surj.BM-Relation Q) where
 
+  open Modality M
+  
   private
-
     A' : Type ℓ
     A' = Σ A (λ a → Trunc (S ⟨-2⟩) (Σ B (λ b → Q a b)))
 
-    B' : Type ℓ
-    B' = Σ B (λ b → Trunc (S ⟨-2⟩) (Σ A (λ a → Q a b)))
+    Q' = Surj.RestrictionOf Q
 
-    Q' : A' → B' → Type ℓ
-    Q' (a , _) (b , _) = Q a b
+  import stash.modalities.gbm.Pushout Q as W
+  import stash.modalities.gbm.Pushout Q' as W'
 
+  gbm' : (a' : A') (b : B) → is-◯-equiv (W'.bmglue {a'} {b})
+  gbm' a' b r = Trunc-rec
+    (prop-has-level-S is-◯-connected-is-prop)
+    (λ{(_ , q₀₀) → code-contr Q' (Surj.thm Q H) q₀₀ r}) 
+    (snd a')
 
-  assume-surjective : BM-Hypothesis Q'
-  assume-surjective {a₀ , α₀} {b₀ , β₀} q₀ {a₁ , α₁} q₁ {b₁ , β₁} q₂ =
-    {!H q₀ q₁ q₂!}
+  total-map : (z : Σ (A × B) (λ ab → Q (fst ab) (snd ab))) → W.bmleft (fst (fst z)) == W.bmright (snd (fst z))
+  total-map ((a , b) , q) = W.bmglue q
 
-    where a-to : ((a₀ , α₀) , q₀ == (a₁ , α₁) , q₁) → (a₀ , q₀ == a₁ , q₁)
-          a-to p = pair= (fst= (fst= p)) {!snd= p!}
+  blorp-map : (a : A) (b : B) (q : Q a b) → W'.bmleft (a , [ b , q ]) == W'.bmright b
+  blorp-map a b q = {!!}
 
-          a-from : (a₀ , q₀ == a₁ , q₁) → ((a₀ , α₀) , q₀ == (a₁ , α₁) , q₁)
-          a-from p = pair= (pair= (fst= p) {!!}) {!!}
-          
--- BM-Hypothesis : {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ) → Type ℓ
--- BM-Hypothesis {A} {B} Q = {a₀ : A} {b₀ : B} (q₀ : Q a₀ b₀)
---                           {a₁ : A} (q₁ : Q a₁ b₀)
---                           {b₁ : B} (q₂ : Q a₀ b₁) → 
---                           is-◯-connected M (((a₀ , q₀) == (a₁ , q₁)) * ((b₀ , q₀) == (b₁ , q₂)))
+  
+-- bmglue : ∀ {a b} → Q a b → bmleft a == bmright b
+-- bmglue {a} {b} q = glue (a , b , q)
 
 
 -- The final theorem.
