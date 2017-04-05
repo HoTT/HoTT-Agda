@@ -14,71 +14,72 @@ module stash.modalities.gbm.PushoutMono where
     private
       D = Pushout s
 
-    mleft : A → D
-    mleft = left
+      mleft : A → D
+      mleft = left
 
-    mright : B → D
-    mright = right
+      mright : B → D
+      mright = right
 
-    mglue : (c : C) → mleft (f c) == mright (g c)
-    mglue c = glue c
+      mglue : (c : C) → mleft (f c) == mright (g c)
+      mglue c = glue c
+
+    -- Construct a fibration over the pushout
+    -- whose total space is equivalent to A
+
+    lemma₀ : (c : C) → is-contr (hfiber g (g c))
+    lemma₀ c = inhab-prop-is-contr (c , idp) (m (g c))
+
+    lemma₁ : (c : C) → is-contr (hfiber (idf A) (f c))
+    lemma₁ c = equiv-is-contr-map (idf-is-equiv A) (f c)
+
+    glue-equiv : (c : C) → hfiber (idf A) (f c) ≃ hfiber g (g c)
+    glue-equiv c = (contr-equiv-Unit (lemma₀ c)) ⁻¹ ∘e (contr-equiv-Unit (lemma₁ c))
     
-    -- The total space of this fibration should be
-    -- equivalent to A
     A' : (d : D) → Type i
-    A' = Pushout-rec (λ a → hfiber (idf A) a) (λ b → hfiber g b) (λ c → ua (eqv c))
+    A' = Pushout-rec (λ a → hfiber (idf A) a) (λ b → hfiber g b) (λ c → ua (glue-equiv c))
 
-      where lem₀ : (c : C) → is-contr (hfiber g (g c))
-            lem₀ c = inhab-prop-is-contr (c , idp) (m (g c))
 
-            lem₁ : (c : C) → is-contr (hfiber (idf A) (f c))
-            lem₁ c = equiv-is-contr-map (idf-is-equiv A) (f c)
+    -- Pulling back over B, we should have a space
+    -- equivalent to C as well as the path spaces
+    -- we are interested in.
 
-            eqv : (c : C) → hfiber (idf A) (f c) ≃ hfiber g (g c)
-            eqv c = (contr-equiv-Unit (lem₀ c)) ⁻¹ ∘e (contr-equiv-Unit (lem₁ c)) 
-
-    -- This is a fibration over B whose total space should
-    -- be equivalent to C
     C' : Type i
     C' = Σ B (A' ∘ mright)
 
-    -- Yeah, this is going to work.  You're going to use
-    -- transport after pushing the element a into the pushout.
-    -- Just need to see how "rewriting" works ...
-    to : Σ (A × B) (λ ab → mleft (fst ab) == mright (snd ab)) → C'
-    to ((a , b) , p) = b , transport A' p (a , idp)
+    C'-equiv-pths : C' ≃ Σ (A × B) (λ ab → mleft (fst ab) == mright (snd ab))
+    C'-equiv-pths = equiv to from to-from from-to
 
-    from : C' → Σ (A × B) (λ ab → mleft (fst ab) == mright (snd ab))
-    from (b , c , p) = (f c , b) , mglue c ∙ ap mright p
+      where to : C' → Σ (A × B) (λ ab → mleft (fst ab) == mright (snd ab))
+            to (b , c , p) = (f c , b) , mglue c ∙ ap mright p
 
-    fst-eqv : C' ≃ Σ (A × B) (λ ab → mleft (fst ab) == mright (snd ab))
-    fst-eqv = equiv from to f-g {!!}
-
-      where f-g : (x : Σ (A × B) (λ ab → mleft (fst ab) == mright (snd ab))) → from (to x) == x
-            f-g ((a , b) , p) = {!!}
+            from : Σ (A × B) (λ ab → mleft (fst ab) == mright (snd ab)) → C'
+            from ((a , b) , p) = b , transport A' p (a , idp)
             
-    C-to-C' : C → C'
-    C-to-C' c = g c , (c , idp)
+            to-from : (x : Σ (A × B) (λ ab → mleft (fst ab) == mright (snd ab))) → to (from x) == x
+            to-from ((a , b) , p) = {!!}
 
-    C'-to-C : C' → C
-    C'-to-C (b , c , p) = c
+            from-to : (c' : C') → from (to c') == c'
+            from-to c' = {!!}
 
-    snd-eqv : C ≃ C'
-    snd-eqv = equiv C-to-C' C'-to-C f-g g-f
+    C-equiv-C' : C ≃ C'
+    C-equiv-C' = equiv to from to-from from-to
 
-      where f-g : (c' : C') → C-to-C' (C'-to-C c') == c'
-            f-g (b , c , p) = pair= p {!!}
+      where to : C → C'
+            to c = g c , (c , idp)
 
-            g-f : (c : C) → C'-to-C (C-to-C' c) == c
-            g-f c = idp
+            from : C' → C
+            from (b , c , p) = c
+
+            to-from : (c' : C') → to (from c') == c'
+            to-from (b , c , p) = pair= p {!!}
+
+            from-to : (c : C) → from (to c) == c
+            from-to c = idp
             
-    -- Right, and then you're going to have a map from C, and
-    -- you're going to try to show that this is an equivalence.
 
-    thm : C ≃ Σ (A × B) (λ ab → mleft (fst ab) == mright (snd ab))
-    thm = fst-eqv ∘e snd-eqv
+    -- Combining the two equivalences from above
+    -- gives us the result we want.
 
-    -- Yeah, but then after this you'll still need that the
-    -- composite of pushouts is a pushout.  That one seems like
-    -- a real pain in the ass.  I feel like there has to be
-    -- a shorter way.
+    pushout-mono-is-pullback : C ≃ Σ (A × B) (λ ab → mleft (fst ab) == mright (snd ab))
+    pushout-mono-is-pullback = C'-equiv-pths ∘e C-equiv-C'
+
