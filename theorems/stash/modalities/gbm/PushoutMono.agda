@@ -46,6 +46,20 @@ module stash.modalities.gbm.PushoutMono where
     C' : Type i
     C' = Σ B (A' ∘ mright)
 
+    -- Given (a : A) and an element it is equal to in the
+    -- the pushout, we can find an element in the fiber which
+    -- witnesses that equaltiy
+    witness-for : ∀ {a b} (p : mleft a == mright b) → hfiber g b
+    witness-for {a} p = transport A' p (a , idp)
+
+    -- Next we would want to show that the image of that witness under
+    -- the map "f" is in fact "a" itself
+    witness-for-coh₀ : ∀ {a b} (p : mleft a == mright b) → f (fst (witness-for p)) == a
+    witness-for-coh₀ p = {!!}
+
+    witness-for-coh₁ : ∀ {a b} (p : mleft a == mright b) → b == b [ (λ _ → B) ↓ witness-for-coh₀ p ]
+    witness-for-coh₁ p = {!!}
+    
     C'-equiv-pths : C' ≃ Σ (A × B) (λ ab → mleft (fst ab) == mright (snd ab))
     C'-equiv-pths = equiv to from to-from from-to
 
@@ -53,14 +67,18 @@ module stash.modalities.gbm.PushoutMono where
             to (b , c , p) = (f c , b) , mglue c ∙ ap mright p
 
             from : Σ (A × B) (λ ab → mleft (fst ab) == mright (snd ab)) → C'
-            from ((a , b) , p) = b , transport A' p (a , idp)
+            from ((a , b) , p) = b , witness-for p 
             
             to-from : (x : Σ (A × B) (λ ab → mleft (fst ab) == mright (snd ab))) → to (from x) == x
-            to-from ((a , b) , p) = {!!}
+            to-from ((a , b) , p) = pair= (pair= (witness-for-coh₀ p) (witness-for-coh₁ p)) {!!}
 
             from-to : (c' : C') → from (to c') == c'
-            from-to c' = {!!}
+            from-to (b , c , p) = pair= idp (fst (m _ _ (c , p)))
 
+    lemma₂ : {b₀ b₁ : B} (p : b₀ == b₁) (e₀ : hfiber g b₀) (e₁ : hfiber g b₁)
+      → e₀ == e₁ [ (λ b → hfiber g b) ↓ p ]
+    lemma₂ idp e₀ e₁ = fst (m _ e₀ e₁)
+    
     C-equiv-C' : C ≃ C'
     C-equiv-C' = equiv to from to-from from-to
 
@@ -71,8 +89,8 @@ module stash.modalities.gbm.PushoutMono where
             from (b , c , p) = c
 
             to-from : (c' : C') → to (from c') == c'
-            to-from (b , c , p) = pair= p {!!}
-
+            to-from (b , c , p) = pair= p (lemma₂ p (c , idp) (c , p))
+                    
             from-to : (c : C) → from (to c) == c
             from-to c = idp
             
