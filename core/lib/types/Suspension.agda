@@ -229,7 +229,7 @@ abstract
                      (λ a → ap [_] (merid a)) [ x' ]
     mers-eq ⟨-2⟩ cA x x' = contr-has-all-paths (Trunc-level {n = -1} _ _) _ _
     mers-eq {A = A} (S n) cA x x' =
-      conn-elim (pointed-conn-out A x cA)
+      conn-extend (pointed-conn-out A x cA)
         (λ y → ((ap [_] (merid x) == ap [_] (merid y)) ,
                 Trunc-level {n = S (S n)} _ _ _ _))
         (λ _ → idp) x'

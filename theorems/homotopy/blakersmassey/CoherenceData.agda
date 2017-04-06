@@ -341,7 +341,7 @@ module FromTo {a₁ b₀} (q₁₀ : Q a₁ b₀) where
 
 abstract
   from-to' : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁) r fiber
-    → from q₀₀ q₁₁ r (to' q₀₀ q₁₁ r fiber) == [ fiber ]
+    → from q₀₀ q₁₁ r (to q₀₀ q₁₁ r [ fiber ]) == [ fiber ]
   from-to' q₀₀ q₁₁ r (q₁₀ , shift) = FromTo.ext q₁₀ (_ , q₀₀) (_ , q₁₁) r shift
 
   from-to : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁) r fiber
@@ -397,7 +397,7 @@ module ToFrom {a₀ b₁} (q₀₁ : Q a₀ b₁) where
 
 abstract
   to-from' : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁) r fiber
-    → to q₀₀ q₁₁ r (from' q₀₀ q₁₁ r fiber) == [ fiber ]
+    → to q₀₀ q₁₁ r (from q₀₀ q₁₁ r [ fiber ]) == [ fiber ]
   to-from' q₀₀ q₁₁ r (q₀₁ , shift) = ToFrom.ext q₀₁ (_ , q₁₁) (_ , q₀₀) r shift
 
   to-from : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁) r fiber

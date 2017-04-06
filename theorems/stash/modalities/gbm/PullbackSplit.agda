@@ -33,25 +33,10 @@ module PullbackLSplit {i j k l} {A : Type i} {B : Type j} {C : Type k}
           to (pullback c b p) = pullback (pullback c (g b) p) b idp
 
           from : Pullback d₂ → Pullback d
-          from (pullback (pullback c a p) b q) = pullback c b (p ∙ ap f q )
+          from (pullback (pullback c a p) b idp) = pullback c b p
 
           to-from : (x : Pullback d₂) → to (from x) == x
-          to-from (pullback (pullback c a p) b q) =
-            pullback= _ mid idp last
-
-              where lem : (p ∙ ap f q) ∙ ap f (! q) == p
-                    lem = (p ∙ ap f q) ∙ ap f (! q)  =⟨ ∙-assoc p (ap f q) (ap f (! q)) ⟩
-                           p ∙ (ap f q ∙ ap f (! q)) =⟨ ∙-ap f q (! q) |in-ctx (λ x → p ∙ x) ⟩
-                           p ∙ (ap f (q ∙ (! q)))    =⟨ !-inv-r q |in-ctx (λ x → p ∙ (ap f x)) ⟩
-                           p ∙ idp                   =⟨ ∙-unit-r p ⟩ 
-                           p ∎
-
-                    mid = (pullback= d₁ idp (! q) lem)
-
-                    last : idp == ap Pullback.b mid ∙ q
-                    last = idp =⟨ ! (!-inv-l q) ⟩
-                           (! q) ∙ q =⟨ ! (pullback-bβ d₁ idp (! q) lem) |in-ctx (λ x → x ∙ q) ⟩ 
-                           ap Pullback.b mid ∙ q ∎
+          to-from (pullback _ b idp) = idp
 
           from-to : (x : Pullback d) → from (to x) == x
-          from-to (pullback c b p) = pullback= d idp idp ((∙-unit-r (p ∙ idp)) ∙ (∙-unit-r p))
+          from-to _ = idp

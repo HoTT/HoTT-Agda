@@ -67,31 +67,33 @@ abstract
               helper (k ∘ h) b [ (xl , p) ] == k b
             lemma xl ._ idp = idp
 
-conn-elim : ∀ {i j k} {A : Type i} {B : Type j} {n : ℕ₋₂}
+conn-extend : ∀ {i j k} {A : Type i} {B : Type j} {n : ℕ₋₂}
   → {h : A → B} → has-conn-fibers n h
   → (P : B → n -Type k)
   → Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)
-conn-elim c P f = is-equiv.g (pre∘-conn-is-equiv c P) f
+conn-extend c P f = is-equiv.g (pre∘-conn-is-equiv c P) f
 
-conn-elim-β : ∀ {i j k} {A : Type i} {B : Type j} {n : ℕ₋₂}
+conn-out = conn-extend
+
+conn-extend-β : ∀ {i j k} {A : Type i} {B : Type j} {n : ℕ₋₂}
   {h : A → B} (c : has-conn-fibers n h)
   (P : B → n -Type k) (f : Π A (fst ∘ P ∘ h))
-  → ∀ a → (conn-elim c P f (h a)) == f a
-conn-elim-β c P f = app= (is-equiv.f-g (pre∘-conn-is-equiv c P) f)
+  → ∀ a → (conn-extend c P f (h a)) == f a
+conn-extend-β c P f = app= (is-equiv.f-g (pre∘-conn-is-equiv c P) f)
 
 
 {- generalized "almost induction principle" for maps into ≥n-types
    TODO: rearrange this to use ≤T?                                 -}
-conn-elim-general : ∀ {i j} {A : Type i} {B : Type j} {n k : ℕ₋₂}
+conn-extend-general : ∀ {i j} {A : Type i} {B : Type j} {n k : ℕ₋₂}
   → {f : A → B} → has-conn-fibers n f
   → ∀ {l} (P : B → (k +2+ n) -Type l)
   → ∀ t → has-level k (Σ (Π B (fst ∘ P)) (λ s → (s ∘ f) == t))
-conn-elim-general {k = ⟨-2⟩} c P t =
+conn-extend-general {k = ⟨-2⟩} c P t =
   equiv-is-contr-map (pre∘-conn-is-equiv c P) t
-conn-elim-general {B = B} {n = n} {k = S k'} {f = f} c P t =
+conn-extend-general {B = B} {n = n} {k = S k'} {f = f} c P t =
   λ {(g , p) (h , q) →
     equiv-preserves-level (e g h p q) $
-      conn-elim-general {k = k'} c (Q g h) (app= (p ∙ ! q))}
+      conn-extend-general {k = k'} c (Q g h) (app= (p ∙ ! q))}
   where
     Q : (g h : Π B (fst ∘ P)) → B → (k' +2+ n) -Type _
     Q g h b = ((g b == h b) , snd (P b) _ _)
@@ -125,12 +127,12 @@ conn-elim-general {B = B} {n = n} {k = S k'} {f = f} c P t =
       ∘e (Σ-emap-l _ λ=-equiv)) ∘e Σ-emap-r (lemma g h p q)
 
 
-conn-intro : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} {h : A → B}
+conn-in : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} {h : A → B}
   → (∀ (P : B → n -Type (lmax i j))
      → Σ (Π A (fst ∘ P ∘ h) → Π B (fst ∘ P))
          (λ u → ∀ (t : Π A (fst ∘ P ∘ h)) → ∀ x → (u t ∘ h) x == t x))
   → has-conn-fibers n h
-conn-intro {A = A} {B = B} {h = h} sec b =
+conn-in {A = A} {B = B} {h = h} sec b =
   let s = sec (λ b → (Trunc _ (hfiber h b) , Trunc-level))
   in (fst s (λ a → [ a , idp ]) b ,
       λ kt → Trunc-elim (λ kt → =-preserves-level {y = kt} Trunc-level)
@@ -189,7 +191,7 @@ abstract
 prop-over-connected :  ∀ {i j} {A : Type i} {a : A} (p : is-connected 0 A)
   → (P : A → hProp j)
   → fst (P a) → Π A (fst ∘ P)
-prop-over-connected p P x = conn-elim (pointed-conn-out _ _ p) P (λ _ → x)
+prop-over-connected p P x = conn-extend (pointed-conn-out _ _ p) P (λ _ → x)
 
 {- Connectedness of a truncated type -}
 Trunc-preserves-conn : ∀ {i} {A : Type i} {n : ℕ₋₂} (m : ℕ₋₂)
@@ -278,13 +280,13 @@ equiv-preserves-conn {n = n} e = equiv-preserves-level (Trunc-emap n e)
   → has-conn-fibers n g
   → has-conn-fibers n (g ∘ f)
 ∘-conn {n = n} f g cf cg =
-  conn-intro (λ P → conn-elim cg P ∘ conn-elim cf (P ∘ g) , lemma P)
+  conn-in (λ P → conn-extend cg P ∘ conn-extend cf (P ∘ g) , lemma P)
     where
-      lemma : ∀ P h x → conn-elim cg P (conn-elim cf (P ∘ g) h) (g (f x)) == h x
+      lemma : ∀ P h x → conn-extend cg P (conn-extend cf (P ∘ g) h) (g (f x)) == h x
       lemma P h x =
-        conn-elim cg P (conn-elim cf (P ∘ g) h) (g (f x))
-          =⟨ conn-elim-β cg P (conn-elim cf (P ∘ g) h) (f x) ⟩
-        conn-elim cf (P ∘ g) h (f x)
-          =⟨ conn-elim-β cf (P ∘ g) h x ⟩
+        conn-extend cg P (conn-extend cf (P ∘ g) h) (g (f x))
+          =⟨ conn-extend-β cg P (conn-extend cf (P ∘ g) h) (f x) ⟩
+        conn-extend cf (P ∘ g) h (f x)
+          =⟨ conn-extend-β cf (P ∘ g) h x ⟩
         h x
           =∎

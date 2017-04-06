@@ -37,6 +37,8 @@ module stash.modalities.Modalities where
     is-◯-equiv : {A B : Type ℓ} → (A → B) → Type ℓ
     is-◯-equiv {B = B} f = (b : B) → is-◯-connected (hfiber f b)
 
+    has-◯-conn-fibers = is-◯-equiv
+
     is-lex : Type (lsucc ℓ)
     is-lex = {A B : Type ℓ} (f : A → B)
       → is-◯-connected A → is-◯-connected B → is-◯-equiv f
@@ -71,8 +73,8 @@ module stash.modalities.Modalities where
     ◯-emap : {A B : Type ℓ} → A ≃ B → ◯ A ≃ ◯ B
     ◯-emap (f , f-ise) = ◯-fmap f , ◯-isemap f f-ise
 
-    is-◯-conn-emap : {A B : Type ℓ} → A ≃ B → is-◯-connected A → is-◯-connected B
-    is-◯-conn-emap e c = equiv-preserves-level (◯-emap e) c
+    equiv-preserves-◯-conn : {A B : Type ℓ} → A ≃ B → is-◯-connected A → is-◯-connected B
+    equiv-preserves-◯-conn e c = equiv-preserves-level (◯-emap e) c
 
     -- This is the only appearence of univalence, but ...
     local-is-replete : {A B : Type ℓ} → is-local A → A ≃ B → is-local B
@@ -209,9 +211,16 @@ module stash.modalities.Modalities where
                           (snd (c b) (η (a , p))) (lemma₀ a b p)
 
 
-    ◯-extend : {A B : Type ℓ} (f : A → B) → is-◯-equiv f
-      → (P : B → ◯-Type) → Π A (fst ∘ P ∘ f) → Π B (fst ∘ P)
-    ◯-extend f c P s = is-equiv.g (pre∘-◯-conn-is-equiv {h = f} c P) s
+    ◯-extend : {A B : Type ℓ}
+      → {h : A → B} → is-◯-equiv h
+      → (P : B → ◯-Type)
+      → Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)
+    ◯-extend c P f = is-equiv.g (pre∘-◯-conn-is-equiv c P) f
+
+    ◯-extend-β : {A B : Type ℓ} {h : A → B} (c : is-◯-equiv h)
+      (P : B → ◯-Type) (f : Π A (fst ∘ P ∘ h))
+      → ∀ a → ◯-extend c P f (h a) == f a
+    ◯-extend-β c P f = app= (is-equiv.f-g (pre∘-◯-conn-is-equiv c P) f)
 
     ◯-preserves-× : {A B : Type ℓ} → ◯ (A × B) ≃ ◯ A × ◯ B
     ◯-preserves-× {A} {B} = equiv ◯-split ◯-pair inv-l inv-r
