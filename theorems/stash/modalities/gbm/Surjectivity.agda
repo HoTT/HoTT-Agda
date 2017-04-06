@@ -92,25 +92,31 @@ module stash.modalities.gbm.Surjectivity {ℓ} (M : Modality ℓ) where
                      ((a₀ , q₀ == a₁ , q₁) * (b₀ , q₀ == b₁ , q₂))
             claim₂ = *-emap (claim₁ ⁻¹) (ide _)                            
 
+    open import stash.modalities.gbm.PushoutMono
+    open import homotopy.PushoutSplit
+
     -- Okay, now on to the pushout thing
     import stash.modalities.gbm.Pushout Q as W
     import stash.modalities.gbm.Pushout Q' as W'
 
-    induced-map : W'.BMPushout → W.BMPushout
-    induced-map = Pushout-fmap
-      (span-map fst (idf _) (λ { ((a , _) , (b , q)) → a , (b , q) })
-        (comm-sqr (λ { ((a , _) , (b , q)) → idp }))
-        (comm-sqr (λ { ((a , _) , (b , q)) → idp })))
-    
-    -- So, the idea is to do an encode decode argument here
-    -- of a similar style.
+    private
+      D = (Σ A' λ a → Σ B λ b → Q (fst a) b)
 
-    -- goal : Σ (A × B) (λ ab → W.bmleft (fst ab) == W.bmright (snd ab)) ≃
-    --        Σ (A' × B) (λ ab → W'.bmleft (fst ab) == W'.bmright (snd ab) )
-    -- goal = {!!}
-    
-    -- pth-equiv : (a : A') (b : B) → (W'.bmleft a == W'.bmright b) ≃ (W.bmleft (fst a) == W.bmright b)
-    -- pth-equiv a b = equiv {!!} {!!} {!!} {!!}
+    long-span : Span {ℓ} {ℓ} {ℓ}
+    long-span = span A B D (fst ∘ fst) (fst ∘ snd) 
 
+    short-span : Span {ℓ} {ℓ} {ℓ}
+    short-span = span A W'.BMPushout A' fst W'.bmleft
 
+    short-span-is-mono : is-mono (Span.f short-span)
+    short-span-is-mono = λ b → equiv-preserves-level ((hfiber-fst b) ⁻¹) Trunc-level
+
+    module PS = PushoutLSplit {A = A'} {B = A} {C = B} {D = D} fst fst (fst ∘ snd)
+    module ML = MonoLemma short-span short-span-is-mono
+
+    psplit-eqv : Pushout long-span ≃ Pushout short-span
+    psplit-eqv = PS.split-equiv
+
+    mono-conclusion : A' ≃ Σ (A × W'.BMPushout) (λ aw → ML.mleft (fst aw) == ML.mright (snd aw))
+    mono-conclusion = ML.pushout-mono-is-pullback 
 

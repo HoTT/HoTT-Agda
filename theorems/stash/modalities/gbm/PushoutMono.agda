@@ -4,40 +4,49 @@ open import HoTT
 
 module stash.modalities.gbm.PushoutMono where
 
+  --
+  --  The goal of this file is to prove the following:
+  --  Suppose we have a pushout
+  --
+  --        g
+  --    C ------> B
+  --    v         |
+  --    |         |
+  --  f |         |
+  --    v         v
+  --    A ------> D
+  --
+  --  and the map f is a monomorphism.  Then the square
+  --  is also a pullback.
+  -- 
+
   is-mono : ∀ {i j} {A : Type i} {B : Type j} → (A → B) → Type _
   is-mono {B = B} f = (b : B) → has-level (S ⟨-2⟩) (hfiber f b)
 
-  module _ {i} (s : Span {i} {i} {i}) (m : is-mono (Span.f s)) where
+  module MonoLemma {i} (s : Span {i} {i} {i}) (m : is-mono (Span.f s)) where
 
     open Span s
 
     private
       D = Pushout s
 
-      mleft : A → D
-      mleft = left
+    mleft : A → D
+    mleft = left
 
-      mright : B → D
-      mright = right
+    mright : B → D
+    mright = right
 
-      mglue : (c : C) → mleft (f c) == mright (g c)
-      mglue c = glue c
+    mglue : (c : C) → mleft (f c) == mright (g c)
+    mglue c = glue c
 
     -- Construct a fibration over the pushout
     -- whose total space is equivalent to B
 
-    lemma₀ : (c : C) → is-contr (hfiber f (f c))
-    lemma₀ c = inhab-prop-is-contr (c , idp) (m (f c))
-
-    lemma₁ : (c : C) → is-contr (hfiber (idf B) (g c))
-    lemma₁ c = equiv-is-contr-map (idf-is-equiv B) (g c)
-
-    -- You should probably just do this directly ....
-    glue-equiv : (c : C) → hfiber f (f c) ≃ hfiber (idf B) (g c) 
-    glue-equiv c = (contr-equiv-Unit (lemma₁ c)) ⁻¹ ∘e contr-equiv-Unit (lemma₀ c)
+    glue-equiv : (c : C) → hfiber f (f c) ≃ Lift {j = i} ⊤
+    glue-equiv c = contr-equiv-LiftUnit (inhab-prop-is-contr (c , idp) (m (f c)))
     
     B' : (d : D) → Type i
-    B' = Pushout-rec (λ a → hfiber f a) (λ b → hfiber (idf B) b) (λ c → ua (glue-equiv c))
+    B' = Pushout-rec (λ a → hfiber f a) (λ _ → Lift ⊤) (λ c → ua (glue-equiv c))
 
     -- Pulling back over A, we should have a space
     -- equivalent to C as well as the path spaces
@@ -46,17 +55,35 @@ module stash.modalities.gbm.PushoutMono where
     C' : Type i
     C' = Σ A (B' ∘ mleft)
 
+    -- Some scratch work ...
+    --
+    -- B-equiv-B' : B ≃ Σ D B'
+    -- B-equiv-B' = equiv to (λ { (d , b') → from d b' }) {!!} {!!}
+
+    --   where to : B → Σ D B'
+    --         to b = mright b , lift unit
+
+    --         from : (d : D) → B' d → B
+    --         from = Pushout-elim (λ a e → g (fst e)) (λ b _ → b) (λ c → ↓-Π-in (λ q → {!B' (left (f c))!}))
+
+            
     -- Given (b : B) and an element it is equal to in the
     -- the pushout, we can find an element in the fiber which
     -- witnesses that equaltiy
+
     witness-for : ∀ {a b} (p : mleft a == mright b) → hfiber f a
-    witness-for {b = b} p = transport! B' p (b , idp) 
+    witness-for {b = b} p = transport! B' p (lift unit)
 
-    -- Next we would want to show that the image of that witness under
-    -- the map "g" is in fact "b" itself
-    witness-for-coh₀ : ∀ {a b} (p : mleft a == mright b) → g (fst (witness-for p)) == b
-    witness-for-coh₀ p = {!!}
+    -- We need the following two coherences to finish the proof
+    
+    postulate
+    
+      witness-for-coh₀ : ∀ {a b} (p : mleft a == mright b) → g (fst (witness-for p)) == b
 
+      witness-for-coh₁ : ∀ {a b} (p : mleft a == mright b) →
+        (! (ap mleft (snd (witness-for p))) ∙ mglue (fst (witness-for p))) == p
+          [ (λ ab → mleft (fst ab) == mright (snd ab)) ↓ (ap (λ x → (a , x)) (witness-for-coh₀ p)) ]
+    
     C'-equiv-pths : C' ≃ Σ (A × B) (λ ab → mleft (fst ab) == mright (snd ab))
     C'-equiv-pths = equiv to from to-from from-to
 
@@ -67,7 +94,7 @@ module stash.modalities.gbm.PushoutMono where
             from ((a , b) , p) = a , witness-for p 
             
             to-from : (x : Σ (A × B) (λ ab → mleft (fst ab) == mright (snd ab))) → to (from x) == x
-            to-from ((a , b) , p) = pair= (pair= idp (witness-for-coh₀ p)) {!!}
+            to-from ((a , b) , p) = pair= (pair= idp (witness-for-coh₀ p)) (witness-for-coh₁ p)
 
             from-to : (c' : C') → from (to c') == c'
             from-to (a , c , p) = pair= idp (fst (m _ _ (c , p)))
