@@ -31,3 +31,7 @@ module Coinduction where
 module _ where
   infix 15 _∎
   _∎ = _=∎
+  conn-elim = conn-extend
+  conn-elim-β = conn-extend-β
+  conn-elim-general = conn-extend-general
+  conn-intro = conn-in

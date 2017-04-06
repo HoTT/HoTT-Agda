@@ -49,7 +49,7 @@ module FreudenthalEquiv
 
   Codes-mer-is-equiv : (x : de⊙ X) → is-equiv (Codes-mer x)
   Codes-mer-is-equiv =
-    conn-elim (pointed-conn-out (de⊙ X) (pt X) cX)
+    conn-extend (pointed-conn-out (de⊙ X) (pt X) cX)
       (λ x' → (is-equiv (Codes-mer x') , prop-has-level-S is-equiv-is-prop))
       (λ tt → transport is-equiv (! (Codes-mer-β-r)) (idf-is-equiv _))
 
@@ -58,7 +58,7 @@ module FreudenthalEquiv
 
   Codes-mer-inv-x₀ : <– (Codes-mer-equiv (pt X)) == idf _
   Codes-mer-inv-x₀ =
-       ap is-equiv.g (conn-elim-β
+       ap is-equiv.g (conn-extend-β
           (pointed-conn-out (de⊙ X) (pt X) cX)
           (λ x' → (is-equiv (Codes-mer x') , prop-has-level-S is-equiv-is-prop))
           _ unit)
