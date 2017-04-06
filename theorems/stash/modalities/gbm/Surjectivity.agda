@@ -93,6 +93,7 @@ module stash.modalities.gbm.Surjectivity {ℓ} (M : Modality ℓ) where
             claim₂ = *-emap (claim₁ ⁻¹) (ide _)                            
 
     open import stash.modalities.gbm.PushoutMono
+    open import stash.modalities.gbm.PullbackSplit
     open import homotopy.PushoutSplit
 
     -- Okay, now on to the pushout thing
@@ -100,11 +101,33 @@ module stash.modalities.gbm.Surjectivity {ℓ} (M : Modality ℓ) where
     import stash.modalities.gbm.Pushout Q' as W'
 
     private
+      Z = (Σ A λ a → Σ B λ b → Q a b)
       D = (Σ A' λ a → Σ B λ b → Q (fst a) b)
 
+    long-span' : Span
+    long-span' = span A B Z fst (fst ∘ snd)
+    
     long-span : Span {ℓ} {ℓ} {ℓ}
     long-span = span A B D (fst ∘ fst) (fst ∘ snd) 
 
+    long-span-eqv : SpanEquiv long-span long-span'
+    long-span-eqv = (span-map (idf A) (idf B) (–> D-equiv-Z) {!!} {!!}) , {!!}
+
+      where D-equiv-Z : D ≃ Z
+            D-equiv-Z = equiv to from to-from from-to
+
+              where to : D → Z
+                    to ((a , e) , b , q) = a , b , q
+
+                    from : Z → D
+                    from (a , b , q) = (a , [ (b , q) ]) , (b , q)
+
+                    to-from : (z : Z) → to (from z) == z
+                    to-from (a , b , q) = idp
+
+                    from-to : (d : D) → from (to d) == d
+                    from-to ((a , e) , b , q) = pair= (pair= idp (prop-has-all-paths Trunc-level _ e)) {!!}
+            
     short-span : Span {ℓ} {ℓ} {ℓ}
     short-span = span A W'.BMPushout A' fst W'.bmleft
 
@@ -120,3 +143,34 @@ module stash.modalities.gbm.Surjectivity {ℓ} (M : Modality ℓ) where
     mono-conclusion : A' ≃ Σ (A × W'.BMPushout) (λ aw → ML.mleft (fst aw) == ML.mright (snd aw))
     mono-conclusion = ML.pushout-mono-is-pullback 
 
+    module PBS₀ = PullbackLSplit {A = W'.BMPushout} {B = B} {C = A} {D = Pushout short-span} right right left
+    module PBS₁ = PullbackLSplit {A = W'.BMPushout} {B = B} {C = A} {D = Pushout long-span} ((<– psplit-eqv) ∘ right) right left
+
+    lower-cospan : Cospan 
+    lower-cospan = cospan A W'.BMPushout (Pushout short-span) left right
+
+    outer-cospan : Cospan 
+    outer-cospan = cospan A B (Pushout short-span) left (right ∘ W'.bmright)
+
+    -- Great.  And this one will be okay because of the
+    -- equivalence that you prove above.
+    outer-cospan' : Cospan
+    outer-cospan' = cospan A B (Pushout long-span) left right
+    
+    upper-cospan : Cospan 
+    upper-cospan = cospan (Pullback lower-cospan) B W'.BMPushout Pullback.b right
+
+    upper-cospan' : Cospan
+    upper-cospan' = cospan A' B W'.BMPushout W'.bmleft W'.bmright
+    
+    pb-conclusion : Pullback outer-cospan ≃ Pullback upper-cospan
+    pb-conclusion = PBS₀.split-equiv
+
+    --     L --> B    K = A ×_D C / (f,h)       d₁ = A -> D <- C
+    --     |     |g   L = B ×_A K / (g,left)    d₂ = B -> A <- K
+    --     v     v                              d  = B -> D <- C
+    --     K --> A
+    --     |     |f
+    --     v     v
+    --     C --> D
+    --        h
