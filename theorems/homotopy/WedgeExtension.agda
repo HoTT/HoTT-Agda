@@ -43,11 +43,12 @@ module homotopy.WedgeExtension
       β-l : ∀ a → ext r a b₀ == f a
       β-l a = ap (λ t → t unit) (snd (l r a))
 
-    abstract
-      β-r-aux : fst (l r a₀) == g
-      β-r-aux = fst= (conn-extend-β
-        (pointed-conn-out A a₀ cA)
-        (Q r) (λ (_ : Unit) → (g , ap cst (! p))) unit)
+    private
+      abstract
+        β-r-aux : fst (l r a₀) == g
+        β-r-aux = fst= (conn-extend-β
+          (pointed-conn-out A a₀ cA)
+          (Q r) (λ (_ : Unit) → (g , ap cst (! p))) unit)
 
     abstract
       β-r : ∀ b → ext r a₀ b == g b
@@ -61,12 +62,12 @@ module homotopy.WedgeExtension
         ! (β-r b₀ ∙ ! p) ∙ β-r b₀
           =⟨ !-∙ (β-r b₀) (! p) |in-ctx (λ w → w ∙ β-r b₀) ⟩
         (! (! p) ∙ ! (β-r b₀)) ∙ β-r b₀
-          =⟨ !-! p |in-ctx (λ w → (w ∙ ! (β-r b₀)) ∙ β-r b₀)  ⟩
-        (p ∙ ! (β-r b₀)) ∙ β-r b₀
-          =⟨ ∙-assoc p (! (β-r b₀)) (β-r b₀) ⟩
-        p ∙ ! (β-r b₀) ∙ β-r b₀
-          =⟨ ap (λ w → p ∙ w) (!-inv-l (β-r b₀)) ∙ ∙-unit-r p ⟩
-        p ∎
+          =⟨ ∙-assoc (! (! p)) (! (β-r b₀)) (β-r b₀) ⟩
+        ! (! p) ∙ (! (β-r b₀) ∙ β-r b₀)
+          =⟨ ap2 _∙_ (!-! p) (!-inv-l (β-r b₀)) ⟩
+        p ∙ idp
+          =⟨ ∙-unit-r p ⟩
+        p =∎
         where
         lemma₁ : β-l a₀ == ap (λ s → s unit) (ap cst (! p))
                  [ (λ k → k b₀ == f a₀) ↓ β-r-aux ]
