@@ -43,7 +43,7 @@ module stash.modalities.gbm.Surjectivity {ℓ} (M : Modality ℓ) where
     private
 
       A' : Type ℓ
-      A' = Σ A (λ a → Trunc (S ⟨-2⟩) (Σ B (λ b → Q a b)))
+      A' = Σ A λ a → Trunc -1 (Σ B λ b → Q a b)
 
     RestrictionOf : Relation A' B
     RestrictionOf (a , _) b = Q a b
@@ -52,28 +52,7 @@ module stash.modalities.gbm.Surjectivity {ℓ} (M : Modality ℓ) where
       Q' = RestrictionOf
       
     claim₀ : (a₀ a₁ : A') → (a₀ == a₁) ≃ (fst a₀ == fst a₁)
-    claim₀ a₀ a₁ = equiv f g f-g g-f
-
-      where f : a₀ == a₁ → fst a₀ == fst a₁
-            f = fst=
-
-            P : A → hProp ℓ
-            P a = Trunc (S ⟨-2⟩) (Σ B (λ b → Q a b)) , Trunc-level
-            
-            q : (p : fst a₀ == fst a₁) → snd a₀ == snd a₁ [ _ ↓ p ]
-            q p = prop-lemma P p (snd a₀) (snd a₁)
-            
-            g : fst a₀ == fst a₁ → a₀ == a₁
-            g p = pair= p (q p)
-
-            f-g : (p : fst a₀ == fst a₁) → f (g p) == p
-            f-g p = fst=-β p (q p)
-
-            g-f : (p : a₀ == a₁) → g (f p) == p
-            g-f p = ap (λ x → pair= (fst= p) x) pp ∙ (! (pair=-η p))
-
-              where pp : q (fst= p) == snd= p
-                    pp = fst (pths-ovr-is-prop P (fst= p) (snd a₀) (snd a₁) (q (fst= p)) (snd= p))
+    claim₀ a₀ a₁ = Subtype=-econv ((λ a → Trunc -1 (Σ B λ b → Q a b)), λ a → Trunc-level) a₀ a₁ ⁻¹
 
     next-claim : {a₀ a₁ : A'} {b : B} (q₀ : Q' a₀ b) (q₁ : Q' a₁ b) (p : a₀ == a₁)
                  → (q₀ == q₁ [ (λ a → Q' a b) ↓ p ]) ≃ (q₀ == q₁ [ (λ a → Q a b) ↓ fst= p ])
