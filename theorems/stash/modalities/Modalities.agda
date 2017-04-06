@@ -71,8 +71,8 @@ module stash.modalities.Modalities where
     ◯-emap : {A B : Type ℓ} → A ≃ B → ◯ A ≃ ◯ B
     ◯-emap (f , f-ise) = ◯-fmap f , ◯-isemap f f-ise
 
-    is-◯-conn-emap : {A B : Type ℓ} → A ≃ B → is-◯-connected A → is-◯-connected B
-    is-◯-conn-emap e c = equiv-preserves-level (◯-emap e) c
+    equiv-preserves-◯-conn : {A B : Type ℓ} → A ≃ B → is-◯-connected A → is-◯-connected B
+    equiv-preserves-◯-conn e c = equiv-preserves-level (◯-emap e) c
 
     -- This is the only appearence of univalence, but ...
     local-is-replete : {A B : Type ℓ} → is-local A → A ≃ B → is-local B

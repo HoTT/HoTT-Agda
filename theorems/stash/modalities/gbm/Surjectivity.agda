@@ -80,7 +80,7 @@ module stash.modalities.gbm.Surjectivity {ℓ} (M : Modality ℓ) where
     next-claim q₀ q₁ idp = ide (q₀ == q₁)                 
 
     thm : BM-Relation Q → BM-Relation Q'
-    thm H {a₀} {b₀} q₀ {a₁} q₁ {b₁} q₂ = is-◯-conn-emap claim₂ (H {fst a₀} {b₀} q₀ {fst a₁} q₁ {b₁} q₂)
+    thm H {a₀} {b₀} q₀ {a₁} q₁ {b₁} q₂ = equiv-preserves-◯-conn claim₂ (H {fst a₀} {b₀} q₀ {fst a₁} q₁ {b₁} q₂)
 
       where claim₁ : (a₀ , q₀ == a₁ , q₁) ≃ (fst a₀ , q₀ == fst a₁ , q₁)
             claim₁ = (=Σ-econv (fst a₀ , q₀) (fst a₁ , q₁))
