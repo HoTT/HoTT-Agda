@@ -50,7 +50,7 @@ module PullbackLSplit {i j k l} {A : Type i} {B : Type j} {C : Type k}
 
                     last : idp == ap Pullback.b mid ∙ q
                     last = idp =⟨ ! (!-inv-l q) ⟩
-                           (! q) ∙ q =⟨ ap (λ x → x ∙ q) (! (pullback-bβ d₁ idp (! q) lem)) ⟩ 
+                           (! q) ∙ q =⟨ ! (pullback-bβ d₁ idp (! q) lem) |in-ctx (λ x → x ∙ q) ⟩ 
                            ap Pullback.b mid ∙ q ∎
 
           from-to : (x : Pullback d) → from (to x) == x
