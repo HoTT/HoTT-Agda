@@ -29,22 +29,24 @@ module stash.modalities.ModalWedge {i} (M : Modality i)
       ∨-to-×-is-◯-equiv : is-◯-equiv ∨-to-×
       ∨-to-×-is-◯-equiv (a , b) = equiv-preserves-◯-conn (fiber-thm a b ⁻¹) (jn-conn a b)
 
-    private
-      module A∨BToR = WedgeElim f g
-        (↓-ap-out= (fst ∘ uncurry R) ∨-to-× wglue ∨-to-×-glue-β p)
+    module A∨BToR = WedgeElim f g
+      (↓-ap-out= (fst ∘ uncurry R) ∨-to-× wglue ∨-to-×-glue-β p)
 
-      A∨B-to-R : ∀ w → fst (uncurry R (∨-to-× w))
-      A∨B-to-R = A∨BToR.f
+    A∨B-to-R : ∀ w → fst (uncurry R (∨-to-× w))
+    A∨B-to-R = A∨BToR.f
 
     ext : (a : A) → (b : B) → fst (R a b)
     ext = curry $ ◯-extend ∨-to-×-is-◯-equiv (uncurry R) A∨B-to-R
 
-    abstract
-      β-l : (a : A) → ext a b₀ == f a
-      β-l a = ◯-extend-β ∨-to-×-is-◯-equiv (uncurry R) A∨B-to-R (winl a)
+  module _ {r : args} where
+    open args r
 
-      β-r : (b : B) → ext a₀ b == g b
-      β-r b = ◯-extend-β ∨-to-×-is-◯-equiv (uncurry R) A∨B-to-R (winr b)
+    abstract
+      β-l : (a : A) → ext r a b₀ == f a
+      β-l a = ◯-extend-β (∨-to-×-is-◯-equiv r) (uncurry R) (A∨B-to-R r) (winl a)
+
+      β-r : (b : B) → ext r a₀ b == g b
+      β-r b = ◯-extend-β (∨-to-×-is-◯-equiv r) (uncurry R) (A∨B-to-R r) (winr b)
 
       coh : ! (β-l a₀) ∙ β-r b₀ == p
       coh = ap (! (β-l a₀) ∙_) (! (∙'-unit-l (β-r b₀)) ∙ ! lemma₁)
@@ -64,8 +66,8 @@ module stash.modalities.ModalWedge {i} (M : Modality i)
           lemma₁ : β-l a₀ ∙ p == idp ∙' β-r b₀
           lemma₁ = lemma₀ (fst ∘ uncurry R) ∨-to-× wglue ∨-to-×-glue-β
             p idp (β-l a₀) (β-r b₀)
-            ( ap (β-l a₀ ◃_) (! A∨BToR.glue-β)
-            ∙ ↓-=-out (apd (◯-extend-β ∨-to-×-is-◯-equiv (uncurry R) A∨B-to-R) wglue)
+            ( ap (β-l a₀ ◃_) (! (A∨BToR.glue-β r))
+            ∙ ↓-=-out (apd (◯-extend-β (∨-to-×-is-◯-equiv r) (uncurry R) (A∨B-to-R r)) wglue)
             ∙ ap (_▹ β-r b₀)
-                (apd-∘'' (◯-extend ∨-to-×-is-◯-equiv (uncurry R) A∨B-to-R)
+                (apd-∘'' (◯-extend (∨-to-×-is-◯-equiv r) (uncurry R) (A∨B-to-R r))
                    ∨-to-× wglue ∨-to-×-glue-β))
