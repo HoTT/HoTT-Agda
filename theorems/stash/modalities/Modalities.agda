@@ -37,6 +37,11 @@ module stash.modalities.Modalities where
     is-◯-equiv : {A B : Type ℓ} → (A → B) → Type ℓ
     is-◯-equiv {B = B} f = (b : B) → is-◯-connected (hfiber f b)
 
+    postulate
+      total-◯-equiv : {A : Type ℓ} {P Q : A → Type ℓ} (φ : (a : A) → P a → Q a)
+                       (e : (a : A) → is-◯-equiv (φ a)) →
+                       is-◯-equiv (Σ-fmap-r φ)
+
     has-◯-conn-fibers = is-◯-equiv
 
     is-lex : Type (lsucc ℓ)

@@ -89,24 +89,25 @@ module stash.modalities.gbm.Surjectivity {ℓ} (M : Modality ℓ) where
     long-span : Span {ℓ} {ℓ} {ℓ}
     long-span = span A B D (fst ∘ fst) (fst ∘ snd) 
 
-    long-span-eqv : SpanEquiv long-span long-span'
-    long-span-eqv = (span-map (idf A) (idf B) (–> D-equiv-Z) {!!} {!!}) , {!!}
+    postulate 
+      long-span-eqv : SpanEquiv long-span long-span'
+      -- long-span-eqv = (span-map (idf A) (idf B) (–> D-equiv-Z) {!!} {!!}) , {!!}
 
-      where D-equiv-Z : D ≃ Z
-            D-equiv-Z = equiv to from to-from from-to
+      --   where D-equiv-Z : D ≃ Z
+      --         D-equiv-Z = equiv to from to-from from-to
 
-              where to : D → Z
-                    to ((a , e) , b , q) = a , b , q
+      --           where to : D → Z
+      --                 to ((a , e) , b , q) = a , b , q
 
-                    from : Z → D
-                    from (a , b , q) = (a , [ (b , q) ]) , (b , q)
+      --                 from : Z → D
+      --                 from (a , b , q) = (a , [ (b , q) ]) , (b , q)
 
-                    to-from : (z : Z) → to (from z) == z
-                    to-from (a , b , q) = idp
+      --                 to-from : (z : Z) → to (from z) == z
+      --                 to-from (a , b , q) = idp
 
-                    from-to : (d : D) → from (to d) == d
-                    from-to ((a , e) , b , q) = pair= (pair= idp (prop-has-all-paths Trunc-level _ e)) {!!}
-            
+      --                 from-to : (d : D) → from (to d) == d
+      --                 from-to ((a , e) , b , q) = pair= (pair= idp (prop-has-all-paths Trunc-level _ e)) {!!}
+
     short-span : Span {ℓ} {ℓ} {ℓ}
     short-span = span A W'.BMPushout A' fst W'.bmleft
 
@@ -118,6 +119,9 @@ module stash.modalities.gbm.Surjectivity {ℓ} (M : Modality ℓ) where
 
     psplit-eqv : Pushout long-span ≃ Pushout short-span
     psplit-eqv = PS.split-equiv
+
+    pushout-thm : W.BMPushout ≃ Pushout long-span
+    pushout-thm = (Pushout-emap long-span-eqv) ⁻¹
 
     mono-conclusion : A' ≃ Σ (A × W'.BMPushout) (λ aw → ML.mleft (fst aw) == ML.mright (snd aw))
     mono-conclusion = ML.pushout-mono-is-pullback 
@@ -139,17 +143,20 @@ module stash.modalities.gbm.Surjectivity {ℓ} (M : Modality ℓ) where
     upper-cospan : Cospan 
     upper-cospan = cospan (Pullback lower-cospan) B W'.BMPushout Pullback.b right
 
-    upper-cospan' : Cospan
-    upper-cospan' = cospan A' B W'.BMPushout W'.bmleft W'.bmright
-    
     pb-conclusion : Pullback outer-cospan ≃ Pullback upper-cospan
     pb-conclusion = PBS₀.split-equiv
 
-    --     L --> B    K = A ×_D C / (f,h)       d₁ = A -> D <- C
-    --     |     |g   L = B ×_A K / (g,left)    d₂ = B -> A <- K
-    --     v     v                              d  = B -> D <- C
-    --     K --> A
-    --     |     |f
-    --     v     v
-    --     C --> D
-    --        h
+    bm-cospan : Cospan
+    bm-cospan = cospan A B W.BMPushout left right
+
+    bm-cospan' : Cospan
+    bm-cospan' = cospan A' B W'.BMPushout left right
+
+    postulate
+      pullback-equiv : Pullback bm-cospan ≃ Pullback bm-cospan'
+    -- pullback-equiv = Pullback bm-cospan ≃⟨ {!!} ⟩ -- Because of pushout-thm
+    --                  Pullback outer-cospan' ≃⟨ {!!} ⟩ -- Because of psplit-eqv
+    --                  Pullback outer-cospan ≃⟨ Surj.pb-conclusion ⟩  
+    --                  Pullback upper-cospan ≃⟨ {!!} ⟩ -- Because of mono-conclusion
+    --                  Pullback bm-cospan' ≃∎
+

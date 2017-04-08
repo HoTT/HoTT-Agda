@@ -175,6 +175,9 @@ module _ {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
     A' = Σ A (λ a → Trunc (S ⟨-2⟩) (Σ B (λ b → Q a b)))
 
     Q' = Surj.RestrictionOf Q
+  
+    Z = Σ (A × B) (λ ab → Q (fst ab) (snd ab))
+    Z' = Σ (A' × B) (λ ab → Q' (fst ab) (snd ab))
 
   import stash.modalities.gbm.Pushout Q as W
   import stash.modalities.gbm.Pushout Q' as W'
@@ -185,23 +188,45 @@ module _ {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
     (λ{(_ , q₀₀) → code-contr Q' (Surj.thm Q H) q₀₀ r}) 
     (snd a')
 
-  total-map : (z : Σ (A × B) (λ ab → Q (fst ab) (snd ab))) → W.bmleft (fst (fst z)) == W.bmright (snd (fst z))
-  total-map ((a , b) , q) = W.bmglue q
+  total-glue : Z' → Σ (A' × B) (λ ab → W'.bmleft (fst ab) == W'.bmright (snd ab))
+  total-glue (((a , e) , b) , q) = ((a , e) , b) , (W'.bmglue q)
 
-  blorp-map : (a : A) (b : B) (q : Q a b) → W'.bmleft (a , [ b , q ]) == W'.bmright b
-  blorp-map a b q = {!!}
+  total-glue-is-◯-equiv : is-◯-equiv total-glue
+  total-glue-is-◯-equiv = total-◯-equiv (λ { ((a , e) , b) → W'.bmglue }) (λ { ((a , e) , b) → gbm' (a , e) b }) 
 
-  
--- bmglue : ∀ {a b} → Q a b → bmleft a == bmright b
--- bmglue {a} {b} q = glue (a , b , q)
+  Z-to-Z' : Z → Z'
+  Z-to-Z' ((a , b) , q) = ((a , [ b , q ]) , b) , q
 
+  Z'-to-Z : Z' → Z
+  Z'-to-Z (((a , e) , b) , q) = (a , b) , q
 
--- The final theorem.
--- It is sufficient to find some [q₀₀].
--- gen-blakers-massey : ∀ {a₀ b₀} → is-◯-equiv M (bmglue {a₀} {b₀})
--- gen-blakers-massey {a₀} r = {!!}
-  -- Trunc-rec
-  -- (prop-has-level-S is-connected-is-prop)
-  -- (λ{(_ , q₀₀) → code-contr q₀₀ r})
-  -- (fst (f-conn a₀))
+  private
+    Pb = Σ (A × B) (λ ab → W.bmleft (fst ab) == W.bmright (snd ab))
+    Pb' = Σ (A' × B) (λ ab → W'.bmleft (fst ab) == W'.bmright (snd ab))
 
+  pb-theorem : Pb ≃ Pb'
+  pb-theorem = Pb ≃⟨ (pullback-decomp-equiv (Surj.bm-cospan Q)) ⁻¹ ⟩
+               Pullback (Surj.bm-cospan Q) ≃⟨ Surj.pullback-equiv Q ⟩
+               Pullback (Surj.bm-cospan' Q) ≃⟨ pullback-decomp-equiv (Surj.bm-cospan' Q) ⟩ 
+               Pb' ≃∎
+
+  --
+  --  Basic idea:  the term "total-glue-is-◯-equiv" above asserts
+  --  that the map "t" on the right hand side is a ◯-equivalence.
+  --          ~
+  --    Z --------> Z'
+  --    |           |
+  --  s |           | t
+  --    |           |
+  --    v           v
+  --    Pb -------> Pb'
+  --          ~
+  --
+  --  We are going to construct a commutative diagram where the top and
+  --  bottom maps are equivalences.  The top map is Z-to-Z' from above, which
+  --  is easy to show is an equivalence.  The bottom map is more difficult,
+  --  but I am not far away.
+  --
+  --  It should follow from this that the map s is also a ◯-equivalence,
+  --  which is the statement we are after.
+  --
