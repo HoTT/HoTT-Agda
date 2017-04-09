@@ -75,88 +75,158 @@ module stash.modalities.gbm.Surjectivity {ℓ} (M : Modality ℓ) where
     open import stash.modalities.gbm.PullbackSplit
     open import homotopy.PushoutSplit
 
-    -- Okay, now on to the pushout thing
-    import stash.modalities.gbm.Pushout Q as W
-    import stash.modalities.gbm.Pushout Q' as W'
-
     private
+
+      module W = stash.modalities.gbm.Pushout Q
+      module W' = stash.modalities.gbm.Pushout Q'
+      W  = W.BMPushout
+      W' = W'.BMPushout
+      
       Z = (Σ A λ a → Σ B λ b → Q a b)
-      D = (Σ A' λ a → Σ B λ b → Q (fst a) b)
+      Z' = (Σ A' λ a → Σ B λ b → Q (fst a) b)
 
-    long-span' : Span
-    long-span' = span A B Z fst (fst ∘ snd)
-    
-    long-span : Span {ℓ} {ℓ} {ℓ}
-    long-span = span A B D (fst ∘ fst) (fst ∘ snd) 
+      Z-to-Z' : Z → Z'
+      Z-to-Z' (a , b , q) = (a , [ b , q ]) , b , q
 
-    postulate 
-      long-span-eqv : SpanEquiv long-span long-span'
-      -- long-span-eqv = (span-map (idf A) (idf B) (–> D-equiv-Z) {!!} {!!}) , {!!}
+      Z'-to-Z : Z' → Z
+      Z'-to-Z ((a , e) , b , q) = a , b , q
 
-      --   where D-equiv-Z : D ≃ Z
-      --         D-equiv-Z = equiv to from to-from from-to
+      postulate
+        Z-to-Z'-equiv : is-equiv Z-to-Z'
 
-      --           where to : D → Z
-      --                 to ((a , e) , b , q) = a , b , q
+      --
+      --  The following two cospans are clearly equivalent
+      --  in view of the equivalence between Z and Z'
+      --
+      --   span₀ : A <--- Z ----> B
+      --   span₁ : A <--- Z' ---> B
+      --
+      
+      span₀ = span A B Z fst (fst ∘ snd)
+      span₁ = span A B Z' (fst ∘ fst) (fst ∘ snd)
 
-      --                 from : Z → D
-      --                 from (a , b , q) = (a , [ (b , q) ]) , (b , q)
+      W'' = Pushout span₁
+      
+      equiv-span₀₁ : SpanEquiv span₀ span₁
+      equiv-span₀₁ = (span-map (idf A) (idf B) Z-to-Z'
+        (comm-sqr (λ a → idp))
+        (comm-sqr (λ b → idp))) ,
+          ( idf-is-equiv A
+          , idf-is-equiv B
+          , Z-to-Z'-equiv)
 
-      --                 to-from : (z : Z) → to (from z) == z
-      --                 to-from (a , b , q) = idp
+      equiv-pushout₀₁ : W ≃ W''
+      equiv-pushout₀₁ = Pushout-emap equiv-span₀₁
 
-      --                 from-to : (d : D) → from (to d) == d
-      --                 from-to ((a , e) , b , q) = pair= (pair= idp (prop-has-all-paths Trunc-level _ e)) {!!}
+      X = Pushout (span A W' A' fst left)
+      
+      --
+      --  Now apply the PushoutLSplit lemma to the following diagram:
+      --
+      --    Z' ---------> B   
+      --    |             |   
+      --    |             |
+      --    v             v
+      --    A' ---------> W'   outer = span₁
+      --    |             |
+      --    |   span₂     |
+      --    v             v
+      --    A ----------> W'' ≃ X ≃ W
+      --
+      
+      po-split-lemma : W'' ≃ X
+      po-split-lemma = PS.split-equiv
 
-    short-span : Span {ℓ} {ℓ} {ℓ}
-    short-span = span A W'.BMPushout A' fst W'.bmleft
+        where module PS = PushoutLSplit {A = A'} {B = A} {C = B} {D = Z'} fst fst (fst ∘ snd)
 
-    short-span-is-mono : is-mono (Span.f short-span)
-    short-span-is-mono = λ b → equiv-preserves-level ((hfiber-fst b) ⁻¹) Trunc-level
+      --
+      --  Now we switch gears and take pullbacks.  We
+      --  have the following diagram:
+      --
+      -- U'' ≃  U' ≃ U ---------> B  
+      --             |            |
+      --             |            |
+      --             v            v
+      --        A' ≃ V ---------> W'  outer = cospan₀
+      --             |            |
+      --             |  cospan₂   |
+      --             v            v
+      --             A ---------> X ≃ W''
 
-    module PS = PushoutLSplit {A = A'} {B = A} {C = B} {D = D} fst fst (fst ∘ snd)
-    module ML = MonoLemma short-span short-span-is-mono
+      cospan₀ = cospan A B X left (right ∘ W'.bmright)
+      cospan₁ = cospan A B W'' left right
+      cospan₂ = cospan A W' X left right
 
-    psplit-eqv : Pushout long-span ≃ Pushout short-span
-    psplit-eqv = PS.split-equiv
+      V = Pullback (cospan A W' X left right)
 
-    pushout-thm : W.BMPushout ≃ Pushout long-span
-    pushout-thm = (Pushout-emap long-span-eqv) ⁻¹
+      U = Pullback cospan₀
+      U' = Pullback cospan₁
+      U'' = Pullback (cospan V B W' Pullback.b right)
+      
+      pb-split-lemma : U ≃ U''
+      pb-split-lemma = PBSplit.split-equiv
 
-    mono-conclusion : A' ≃ Σ (A × W'.BMPushout) (λ aw → ML.mleft (fst aw) == ML.mright (snd aw))
-    mono-conclusion = ML.pushout-mono-is-pullback 
+        where module PBSplit = PullbackLSplit {A = W'} {B = B} {C = A} {D = X} right right left
+      
+      cospan-equiv₀₁ : CospanEquiv cospan₁ cospan₀
+      cospan-equiv₀₁ = (cospan-map (idf A) (idf B) (fst (po-split-lemma))
+        (comm-sqr (λ a → idp))
+        (comm-sqr (λ b → idp))) ,
+          idf-is-equiv A ,
+          idf-is-equiv B ,
+          snd (po-split-lemma)
 
-    module PBS₀ = PullbackLSplit {A = W'.BMPushout} {B = B} {C = A} {D = Pushout short-span} right right left
-    module PBS₁ = PullbackLSplit {A = W'.BMPushout} {B = B} {C = A} {D = Pushout long-span} ((<– psplit-eqv) ∘ right) right left
+      U'-equiv-U : U' ≃ U
+      U'-equiv-U = Pullback-emap cospan-equiv₀₁
 
-    lower-cospan : Cospan 
-    lower-cospan = cospan A W'.BMPushout (Pushout short-span) left right
+      --
+      --  The map A' --> A is a mono.  Hence by
+      --  the PushoutMono lemma we get that it
+      --  is also a pullback and consequently 
+      --  equivalent to V
+      --
+      
+      V-equiv-A' : V ≃ A'
+      V-equiv-A' = (ML.pushout-mono-is-pullback) ⁻¹ ∘e (pullback-decomp-equiv cospan₂)
+      
+        where module ML = MonoLemma
+                (span A W' A' fst left)
+                (λ b → equiv-preserves-level ((hfiber-fst b) ⁻¹) Trunc-level)
 
-    outer-cospan : Cospan 
-    outer-cospan = cospan A B (Pushout short-span) left (right ∘ W'.bmright)
+      
+      --
+      --  Now on to the main theorem
+      --
 
-    -- Great.  And this one will be okay because of the
-    -- equivalence that you prove above.
-    outer-cospan' : Cospan
-    outer-cospan' = cospan A B (Pushout long-span) left right
-    
-    upper-cospan : Cospan 
-    upper-cospan = cospan (Pullback lower-cospan) B W'.BMPushout Pullback.b right
+      A×WB = Pullback (cospan A B W left right)
+      A'×W'B = Pullback (cospan A' B W' left right)
 
-    pb-conclusion : Pullback outer-cospan ≃ Pullback upper-cospan
-    pb-conclusion = PBS₀.split-equiv
+      U''-equiv-A'×W'B : U'' ≃ A'×W'B
+      U''-equiv-A'×W'B = Pullback-emap cospan-eqv
 
-    bm-cospan : Cospan
-    bm-cospan = cospan A B W.BMPushout left right
+        where cospan-eqv : CospanEquiv (cospan V B W' Pullback.b right)
+                                       (cospan A' B W' left right)
+              cospan-eqv = (cospan-map (fst (V-equiv-A')) (idf B) (idf W')
+                                       (comm-sqr (λ v → {!!})) -- have to show this commutes
+                                       (comm-sqr (λ b → idp))) ,
+                                       snd (V-equiv-A') ,
+                                       idf-is-equiv B ,
+                                       idf-is-equiv W'
 
-    bm-cospan' : Cospan
-    bm-cospan' = cospan A' B W'.BMPushout left right
+      A×WB-equiv-U : A×WB ≃ U
+      A×WB-equiv-U = Pullback-emap cospan-eqv
 
-    postulate
-      pullback-equiv : Pullback bm-cospan ≃ Pullback bm-cospan'
-    -- pullback-equiv = Pullback bm-cospan ≃⟨ {!!} ⟩ -- Because of pushout-thm
-    --                  Pullback outer-cospan' ≃⟨ {!!} ⟩ -- Because of psplit-eqv
-    --                  Pullback outer-cospan ≃⟨ Surj.pb-conclusion ⟩  
-    --                  Pullback upper-cospan ≃⟨ {!!} ⟩ -- Because of mono-conclusion
-    --                  Pullback bm-cospan' ≃∎
+        where cospan-eqv : CospanEquiv (cospan A B W left right) cospan₀
+              cospan-eqv = (cospan-map (idf A) (idf B) (fst (po-split-lemma ∘e equiv-pushout₀₁))
+                                       (comm-sqr (λ a → idp))
+                                       (comm-sqr (λ b → idp))) ,
+                                       idf-is-equiv A ,
+                                       (idf-is-equiv B) ,
+                                       (snd (po-split-lemma ∘e equiv-pushout₀₁))
 
+      pullback-equiv : A×WB ≃ A'×W'B
+      pullback-equiv = A×WB ≃⟨ A×WB-equiv-U ⟩
+                       U ≃⟨ pb-split-lemma ⟩ 
+                       U'' ≃⟨ U''-equiv-A'×W'B ⟩ 
+                       A'×W'B ≃∎
+      
