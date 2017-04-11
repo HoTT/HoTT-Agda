@@ -6,12 +6,17 @@ open import stash.modalities.Modalities
 
 module stash.modalities.Gbm {ℓ} (M : Modality ℓ) where
 
-import stash.modalities.gbm.Surjectivity M as Surj
+open Modality M
+
+BM-Relation : {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ) → Type ℓ
+BM-Relation {A} {B} Q =
+  {a₀ : A} {b₀ : B} (q₀ : Q a₀ b₀)
+  {a₁ : A} (q₁ : Q a₁ b₀)
+  {b₁ : B} (q₂ : Q a₀ b₁) → 
+  is-◯-connected (((a₀ , q₀) == (a₁ , q₁)) * ((b₀ , q₀) == (b₁ , q₂)))
 
 module _ {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
-         (H : Surj.BM-Relation Q) where
-
-  open Modality M  
+         (H : BM-Relation Q) where
 
   open import stash.modalities.gbm.Pushout Q
   import stash.modalities.gbm.CoherenceData M Q H as Coh
@@ -166,49 +171,207 @@ module _ {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
     code-contr r = code-center r , ◯-elim (λ _ → =-preserves-local ◯-is-local) (code-coh r)
 
 module _ {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
-         (H : Surj.BM-Relation Q) where
+         (H : BM-Relation Q) where
 
-  open Modality M
-  
+  import stash.modalities.gbm.Pushout
+  open import stash.modalities.gbm.PushoutMono
+  open import stash.modalities.gbm.PullbackSplit
+  open import homotopy.PushoutSplit
+
   private
+  
     A' : Type ℓ
     A' = Σ A (λ a → Trunc (S ⟨-2⟩) (Σ B (λ b → Q a b)))
 
-    Q' = Surj.RestrictionOf Q
+    Q' : A' → B → Type ℓ
+    Q' (a , _) b = Q a b
   
-    Z = Σ (A × B) (λ ab → Q (fst ab) (snd ab))
-    Z' = Σ (A' × B) (λ ab → Q' (fst ab) (snd ab))
+    Q'-pth-ovr-lemma : {a₀ a₁ : A'} {b : B} (q₀ : Q' a₀ b) (q₁ : Q' a₁ b) (p : a₀ == a₁)
+                 → (q₀ == q₁ [ (λ a → Q' a b) ↓ p ]) ≃ (q₀ == q₁ [ (λ a → Q a b) ↓ fst= p ])
+    Q'-pth-ovr-lemma q₀ q₁ idp = ide (q₀ == q₁)                 
 
-  import stash.modalities.gbm.Pushout Q as W
-  import stash.modalities.gbm.Pushout Q' as W'
+    Q'-is-BM-Relation : BM-Relation Q'
+    Q'-is-BM-Relation {a₀} {b₀} q₀ {a₁} q₁ {b₁} q₂ =
+      equiv-preserves-◯-conn (*-emap eqv (ide _))
+        (H {fst a₀} {b₀} q₀ {fst a₁} q₁ {b₁} q₂)
 
-  gbm' : (a' : A') (b : B) → is-◯-equiv (W'.bmglue {a'} {b})
-  gbm' a' b r = Trunc-rec
-    (prop-has-level-S is-◯-connected-is-prop)
-    (λ{(_ , q₀₀) → code-contr Q' (Surj.thm Q H) q₀₀ r}) 
-    (snd a')
+      where eqv = =Σ-econv (a₀ , q₀) (a₁ , q₁)
+                    ∘e (Σ-emap-r (Q'-pth-ovr-lemma q₀ q₁)) ⁻¹
+                    ∘e (Σ-emap-l (λ p → q₀ == q₁ [ (λ a → Q a b₀) ↓ p ])
+                         (Subtype=-econv ((λ a → Trunc -1 (Σ B λ b → Q a b)), λ a → Trunc-level) a₀ a₁ ⁻¹)) ⁻¹
+                    ∘e (=Σ-econv (fst a₀ , q₀) (fst a₁ , q₁)) ⁻¹
 
-  total-glue : Z' → Σ (A' × B) (λ ab → W'.bmleft (fst ab) == W'.bmright (snd ab))
-  total-glue (((a , e) , b) , q) = ((a , e) , b) , (W'.bmglue q)
+    module W = stash.modalities.gbm.Pushout Q
+    module W' = stash.modalities.gbm.Pushout Q'
+    W  = W.BMPushout
+    W' = W'.BMPushout
 
-  total-glue-is-◯-equiv : is-◯-equiv total-glue
-  total-glue-is-◯-equiv = total-◯-equiv (λ { ((a , e) , b) → W'.bmglue }) (λ { ((a , e) , b) → gbm' (a , e) b }) 
+    Z = (Σ A λ a → Σ B λ b → Q a b)
+    Z' = (Σ A' λ a → Σ B λ b → Q (fst a) b)
 
-  Z-to-Z' : Z → Z'
-  Z-to-Z' ((a , b) , q) = ((a , [ b , q ]) , b) , q
+    Z-to-Z' : Z → Z'
+    Z-to-Z' (a , b , q) = (a , [ b , q ]) , b , q
 
-  Z'-to-Z : Z' → Z
-  Z'-to-Z (((a , e) , b) , q) = (a , b) , q
+    Z'-to-Z : Z' → Z
+    Z'-to-Z ((a , e) , b , q) = a , b , q
 
-  private
-    Pb = Σ (A × B) (λ ab → W.bmleft (fst ab) == W.bmright (snd ab))
-    Pb' = Σ (A' × B) (λ ab → W'.bmleft (fst ab) == W'.bmright (snd ab))
+    postulate
+      Z≃Z' : is-equiv Z-to-Z'
 
-  pb-theorem : Pb ≃ Pb'
-  pb-theorem = Pb ≃⟨ (pullback-decomp-equiv (Surj.bm-cospan Q)) ⁻¹ ⟩
-               Pullback (Surj.bm-cospan Q) ≃⟨ Surj.pullback-equiv Q ⟩
-               Pullback (Surj.bm-cospan' Q) ≃⟨ pullback-decomp-equiv (Surj.bm-cospan' Q) ⟩ 
-               Pb' ≃∎
+    W-span = span A B Z fst (fst ∘ snd)
+    W''-span = span A B Z' (fst ∘ fst) (fst ∘ snd)
+
+    W'' = Pushout W''-span
+
+    W≃W'' : W ≃ W''
+    W≃W'' = Pushout-emap span-eqv
+
+      where span-eqv : SpanEquiv W-span W''-span
+            span-eqv = (span-map (idf A) (idf B) Z-to-Z'
+                         (comm-sqr (λ a → idp))
+                         (comm-sqr (λ b → idp))) ,
+                         ( idf-is-equiv A
+                         , idf-is-equiv B
+                         , Z≃Z')
+
+    --
+    --  But the PushoutSplit lemma, we find that
+    --
+    --    Z' ---------> B   
+    --    |             |   
+    --    |             |
+    --    v             v
+    --    A' ---------> W'
+    --    |             |
+    --    |             |
+    --    v             v
+    --    A ----------> W'' ≃ X
+    --
+
+    X = Pushout (span A W' A' fst left)
+
+    W''≃X : W'' ≃ X
+    W''≃X = PS.split-equiv
+
+      where module PS = PushoutLSplit {A = A'} {B = A} {C = B} {D = Z'} fst fst (fst ∘ snd)
+
+    --
+    --  Now we switch gears and take pullbacks.  We
+    --  have the following diagram:
+    --
+    -- U'' ≃  U' ≃ U ---------> B  
+    --             |            |
+    --             |            |
+    --             v            v
+    --        A' ≃ V ---------> W'  outer = cospan₀
+    --             |            |
+    --             |  cospan₂   |
+    --             v            v
+    --             A ---------> X ≃ W''
+    
+    V = Pullback (cospan A W' X left right)
+
+    U = Pullback (cospan A B X left (right ∘ W'.bmright))
+    U' = Pullback (cospan A B W'' left right)
+    U'' = Pullback (cospan V B W' Pullback.b right)
+
+    U≃U'' : U ≃ U''
+    U≃U'' = PBSplit.split-equiv
+
+      where module PBSplit = PullbackLSplit {A = W'} {B = B} {C = A} {D = X} right right left
+
+    --
+    --  The map A' --> A is a mono.  Hence by
+    --  the PushoutMono lemma we get that it
+    --  is also a pullback and consequently 
+    --  equivalent to V
+    --
+
+    V≃A' : V ≃ A'
+    V≃A' = (ML.pushout-mono-is-pullback) ⁻¹ ∘e (pullback-decomp-equiv (cospan A W' X left right))
+
+      where module ML = MonoLemma
+              (span A W' A' fst left)
+              (λ b → equiv-preserves-level ((hfiber-fst b) ⁻¹) Trunc-level)
+
+    -- We need this for commutivity below
+    V≃A'-coh : (v : V) → Pullback.b v == left (fst V≃A' v)
+    V≃A'-coh (pullback a b h) = {!(fst V-equiv-A' (pullback a b h))!}
+
+    --
+    --  Now on to the main theorem
+    --
+
+    A×WB = Pullback (cospan A B W left right)
+    A'×W'B = Pullback (cospan A' B W' left right)
+
+    U''≃A'×W'B : U'' ≃ A'×W'B
+    U''≃A'×W'B = Pullback-emap cospan-eqv
+
+      where cospan-eqv : CospanEquiv (cospan V B W' Pullback.b right)
+                                     (cospan A' B W' left right)
+            cospan-eqv = (cospan-map (fst (V≃A')) (idf B) (idf W')
+                                     (comm-sqr V≃A'-coh) 
+                                     (comm-sqr (λ b → idp))) ,
+                                     snd (V≃A') ,
+                                     idf-is-equiv B ,
+                                     idf-is-equiv W'
+
+
+    A×WB≃U : A×WB ≃ U
+    A×WB≃U = Pullback-emap cospan-eqv
+
+      where cospan-eqv : CospanEquiv (cospan A B W left right) (cospan A B X left (right ∘ W'.bmright))
+            cospan-eqv = (cospan-map (idf A) (idf B) (fst (W''≃X ∘e W≃W''))
+                                     (comm-sqr (λ a → idp))
+                                     (comm-sqr (λ b → idp))) ,
+                                     idf-is-equiv A ,
+                                     (idf-is-equiv B) ,
+                                     (snd (W''≃X ∘e W≃W''))
+
+    pullback-equiv : A×WB ≃ A'×W'B
+    pullback-equiv = A×WB ≃⟨ A×WB≃U ⟩
+                     U ≃⟨ U≃U'' ⟩ 
+                     U'' ≃⟨ U''≃A'×W'B ⟩ 
+                     A'×W'B ≃∎
+
+
+    bm-map : Z → Σ (A × B) (λ ab → W.bmleft (fst ab) == W.bmright (snd ab))
+    bm-map (a , b , q) = (a , b) , (W.bmglue q)
+    
+    bm-map' : Z' → Σ (A' × B) (λ ab → W'.bmleft (fst ab) == W'.bmright (snd ab))
+    bm-map' (a' , b , q) = (a' , b) , W'.bmglue q 
+
+    bm-map'-is-◯-equiv : is-◯-equiv bm-map'
+    bm-map'-is-◯-equiv = {!!}
+
+    -- import stash.modalities.gbm.Pushout Q as W
+    -- import stash.modalities.gbm.Pushout Q' as W'
+
+    -- gbm' : (a' : A') (b : B) → is-◯-equiv (W'.bmglue {a'} {b})
+    -- gbm' a' b r = Trunc-rec
+    --   (prop-has-level-S is-◯-connected-is-prop)
+    --   (λ{(_ , q₀₀) → code-contr Q' Q'-is-BM-Relation q₀₀ r}) 
+    --   (snd a')
+
+    -- Z = Σ (A × B) (λ ab → Q (fst ab) (snd ab))
+    -- Z' = Σ (A' × B) (λ ab → Q' (fst ab) (snd ab))
+
+    -- total-glue : Z' → Σ (A' × B) (λ ab → W'.bmleft (fst ab) == W'.bmright (snd ab))
+    -- total-glue (((a , e) , b) , q) = ((a , e) , b) , (W'.bmglue q)
+
+    -- total-glue-is-◯-equiv : is-◯-equiv total-glue
+    -- total-glue-is-◯-equiv = total-◯-equiv (λ { ((a , e) , b) → W'.bmglue }) (λ { ((a , e) , b) → gbm' (a , e) b }) 
+
+  -- private
+  --   Pb = Σ (A × B) (λ ab → W.bmleft (fst ab) == W.bmright (snd ab))
+  --   Pb' = Σ (A' × B) (λ ab → W'.bmleft (fst ab) == W'.bmright (snd ab))
+
+  -- pb-theorem : Pb ≃ Pb'
+  -- pb-theorem = Pb ≃⟨ (pullback-decomp-equiv (Surj.bm-cospan Q)) ⁻¹ ⟩
+  --              Pullback (Surj.bm-cospan Q) ≃⟨ Surj.pullback-equiv Q ⟩
+  --              Pullback (Surj.bm-cospan' Q) ≃⟨ pullback-decomp-equiv (Surj.bm-cospan' Q) ⟩ 
+  --              Pb' ≃∎
 
   --
   --  Basic idea:  the term "total-glue-is-◯-equiv" above asserts
