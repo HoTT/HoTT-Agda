@@ -170,7 +170,7 @@ module _ {i j k} {A : Type i} {P : A → Type j} {Q : A → Type k}
 
   private
     f-tot : Σ A P → Σ A Q
-    f-tot (x , y) = x , f x y
+    f-tot = Σ-fmap-r f
 
   fiber-equiv-is-total-equiv : (∀ x → is-equiv (f x)) → is-equiv f-tot
   fiber-equiv-is-total-equiv f-ise = is-eq _ from to-from from-to
