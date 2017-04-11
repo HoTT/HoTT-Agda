@@ -78,7 +78,7 @@ module stash.modalities.Modalities where
 
     total-◯-equiv : {A : Type ℓ} {P Q : A → Type ℓ} (φ : ∀ a → P a → Q a) → 
                      (∀ a → is-◯-equiv (φ a)) → is-◯-equiv (Σ-fmap-r φ)
-    total-◯-equiv φ e (a , q) = equiv-preserves-◯-conn ((Σ-fmap-r-hfiber φ q) ⁻¹) (e a q)
+    total-◯-equiv φ e (a , q) = equiv-preserves-◯-conn (hfiber-Σ-fmap-r φ q ⁻¹) (e a q)
 
     -- This is the only appearence of univalence, but ...
     local-is-replete : {A B : Type ℓ} → is-local A → A ≃ B → is-local B
