@@ -33,6 +33,11 @@ module stash.modalities.Orthogonality where
 
             g-f : (x : X) → g (Δ X B x) == x
             g-f x = {!!}
+
+    prod-to : {A B X : Type ℓ} → ⟦ A ⊥ X ⟧ → ⟦ B ⊥ X ⟧ → ⟦ A × B ⊥ X ⟧
+    prod-to e f = is-eq _ (λ φ → is-equiv.g e (λ a → is-equiv.g f (λ b → φ (a , b))))
+      (λ φ → λ= (λ { (a , b) → app= (is-equiv.f-g e (λ a → is-equiv.g f (λ b → φ (a , b)))) a ∙ app= (is-equiv.f-g f (λ b → φ (a , b))) b }))
+      (λ x → ap (is-equiv.g e) (λ= (λ a → is-equiv.g-f f x)) ∙ is-equiv.g-f e x)
             
   --   ⟦_⊥_⟧ₗ : {I : Type ℓ} (X : I → Type ℓ) (A : Type ℓ) → Type ℓ
   --   ⟦_⊥_⟧ₗ {I = I} X A = (i : I) → ⟦ X i ⊥ A ⟧ₒ

@@ -176,6 +176,7 @@ module _ {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
   import stash.modalities.gbm.Pushout
   open import stash.modalities.gbm.PushoutMono
   open import stash.modalities.gbm.PullbackSplit
+  open import stash.modalities.gbm.GbmUtil
   open import homotopy.PushoutSplit
 
   private
@@ -335,47 +336,34 @@ module _ {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
                      U'' ≃⟨ U''≃A'×W'B ⟩ 
                      A'×W'B ≃∎
 
+    Pb = Σ A (λ a → Σ B (λ b →  W.bmleft a == W.bmright b))
+    Pb' = Σ A' (λ a → Σ B (λ b →  W'.bmleft a == W'.bmright b))
 
-    bm-map : Z → Σ (A × B) (λ ab → W.bmleft (fst ab) == W.bmright (snd ab))
-    bm-map (a , b , q) = (a , b) , (W.bmglue q)
+    Pb≃Pb' = Pb ≃⟨ Σ-assoc ⁻¹  ⟩
+             Σ (A × B) (λ ab → W.bmleft (fst ab) == W.bmright (snd ab)) ≃⟨ (pullback-decomp-equiv (cospan A B W left right)) ⁻¹  ⟩
+             A×WB ≃⟨ pullback-equiv ⟩
+             A'×W'B ≃⟨ pullback-decomp-equiv (cospan A' B W' left right) ⟩ 
+             Σ (A' × B) (λ ab → W'.bmleft (fst ab) == W'.bmright (snd ab)) ≃⟨ Σ-assoc ⟩
+             Pb' ≃∎
+
+    bm-map : Z → Pb
+    bm-map (a , b , q) = a , b , W.bmglue q
     
-    bm-map' : Z' → Σ (A' × B) (λ ab → W'.bmleft (fst ab) == W'.bmright (snd ab))
-    bm-map' (a' , b , q) = (a' , b) , W'.bmglue q 
+    bm-map' : Z' → Pb'
+    bm-map' (a' , b , q) = a' , b , W'.bmglue q 
 
     bm-map'-is-◯-equiv : is-◯-equiv bm-map'
-    bm-map'-is-◯-equiv = {!!}
-
-    -- import stash.modalities.gbm.Pushout Q as W
-    -- import stash.modalities.gbm.Pushout Q' as W'
-
-    -- gbm' : (a' : A') (b : B) → is-◯-equiv (W'.bmglue {a'} {b})
-    -- gbm' a' b r = Trunc-rec
-    --   (prop-has-level-S is-◯-connected-is-prop)
-    --   (λ{(_ , q₀₀) → code-contr Q' Q'-is-BM-Relation q₀₀ r}) 
-    --   (snd a')
-
-    -- Z = Σ (A × B) (λ ab → Q (fst ab) (snd ab))
-    -- Z' = Σ (A' × B) (λ ab → Q' (fst ab) (snd ab))
-
-    -- total-glue : Z' → Σ (A' × B) (λ ab → W'.bmleft (fst ab) == W'.bmright (snd ab))
-    -- total-glue (((a , e) , b) , q) = ((a , e) , b) , (W'.bmglue q)
-
-    -- total-glue-is-◯-equiv : is-◯-equiv total-glue
-    -- total-glue-is-◯-equiv = total-◯-equiv (λ { ((a , e) , b) → W'.bmglue }) (λ { ((a , e) , b) → gbm' (a , e) b }) 
-
-  -- private
-  --   Pb = Σ (A × B) (λ ab → W.bmleft (fst ab) == W.bmright (snd ab))
-  --   Pb' = Σ (A' × B) (λ ab → W'.bmleft (fst ab) == W'.bmright (snd ab))
-
-  -- pb-theorem : Pb ≃ Pb'
-  -- pb-theorem = Pb ≃⟨ (pullback-decomp-equiv (Surj.bm-cospan Q)) ⁻¹ ⟩
-  --              Pullback (Surj.bm-cospan Q) ≃⟨ Surj.pullback-equiv Q ⟩
-  --              Pullback (Surj.bm-cospan' Q) ≃⟨ pullback-decomp-equiv (Surj.bm-cospan' Q) ⟩ 
-  --              Pb' ≃∎
+    bm-map'-is-◯-equiv =
+      total-◯-equiv
+        (λ a' → λ { (b , q) → b , W'.bmglue q})
+        (λ a' → total-◯-equiv (λ b q → W'.bmglue q)
+          (λ b r → Trunc-rec (prop-has-level-S is-◯-connected-is-prop)
+            (λ{(_ , q₀₀) → code-contr Q' Q'-is-BM-Relation q₀₀ r}) (snd a')))
 
   --
-  --  Basic idea:  the term "total-glue-is-◯-equiv" above asserts
-  --  that the map "t" on the right hand side is a ◯-equivalence.
+  --  We have a commutative diagram with top and bottom
+  --  maps equivalences.  This induces an equivalence on
+  --  homotopy fibers, from which the theorem follows
   --          ~
   --    Z --------> Z'
   --    |           |
@@ -385,11 +373,10 @@ module _ {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
   --    Pb -------> Pb'
   --          ~
   --
-  --  We are going to construct a commutative diagram where the top and
-  --  bottom maps are equivalences.  The top map is Z-to-Z' from above, which
-  --  is easy to show is an equivalence.  The bottom map is more difficult,
-  --  but I am not far away.
-  --
-  --  It should follow from this that the map s is also a ◯-equivalence,
-  --  which is the statement we are after.
-  --
+
+  generalized-blakers-massey : is-◯-equiv bm-map
+  generalized-blakers-massey pb = equiv-preserves-◯-conn (lemma ⁻¹) (bm-map'-is-◯-equiv (fst Pb≃Pb' pb))
+
+    where lemma : hfiber bm-map pb ≃ hfiber bm-map' (fst Pb≃Pb' pb)
+          lemma = map-equiv-hfiber bm-map bm-map' Z-to-Z' (fst Pb≃Pb') {!!} Z≃Z' (snd Pb≃Pb') pb
+          
