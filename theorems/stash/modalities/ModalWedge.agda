@@ -12,7 +12,7 @@ module stash.modalities.ModalWedge {i} (M : Modality i)
     ⊙A = ⊙[ A , a₀ ]
     ⊙B = ⊙[ B , b₀ ]
     A⊙×B = ⊙A ⊙× ⊙B
-  open import stash.modalities.FiberOfWedgeToProduct ⊙A ⊙B
+  open import homotopy.FiberOfWedgeToProduct ⊙A ⊙B
 
   record args : Type (lsucc i) where
     field

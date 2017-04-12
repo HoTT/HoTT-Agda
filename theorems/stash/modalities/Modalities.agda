@@ -16,11 +16,11 @@ module stash.modalities.Modalities where
       η : {A : Type ℓ} → A → ◯ A
 
       ◯-elim : {A : Type ℓ} {B : ◯ A → Type ℓ}
-        (B-local : Π (◯ A) (λ a → is-local (B a)))
+        (B-local : (x : ◯ A) → is-local (B x))
         → Π A (B ∘ η) → Π (◯ A) B
 
       ◯-elim-β : {A : Type ℓ} {B : ◯ A → Type ℓ}
-        (B-local : Π (◯ A) (λ a → is-local (B a))) (f : Π A (B ∘ η))
+        (B-local : (x : ◯ A) → is-local (B x)) (f : Π A (B ∘ η))
         → (a : A) → ◯-elim B-local f (η a) == f a
 
       ◯-=-is-local : {A : Type ℓ} (a₀ a₁ : ◯ A) → is-local (a₀ == a₁)
@@ -45,17 +45,22 @@ module stash.modalities.Modalities where
 
     -- Some basic constructions
 
-    ◯-rec : {A B : Type ℓ} (w : is-local B) (f : A → B) → ◯ A → B
-    ◯-rec w = ◯-elim (λ _ → w)
+    module ◯Elim {A : Type ℓ} {B : ◯ A → Type ℓ}
+      (B-local : (x : ◯ A) → is-local (B x)) (η* : Π A (B ∘ η)) where
 
-    ◯-rec-β : {A B : Type ℓ} (w : is-local B) (f : A → B) (a : A) → ◯-rec w f (η a) == f a
-    ◯-rec-β w = ◯-elim-β (λ _ → w)
+      f = ◯-elim B-local η*
+      η-β = ◯-elim-β B-local η*
 
-    ◯-fmap : {A B : Type ℓ} (f : A → B) → (◯ A → ◯ B)
-    ◯-fmap f = ◯-rec ◯-is-local (λ a → η (f a))
+    module ◯Rec {A : Type ℓ} {B : Type ℓ}
+      (B-local : is-local B) (η* : A → B)
+      = ◯Elim (λ _ → B-local) η*
+    ◯-rec = ◯Rec.f
+    ◯-rec-β = ◯Rec.η-β
 
-    ◯-fmap-β : {A B : Type ℓ} (f : A → B) (a : A) → ◯-fmap f (η a) == η (f a)
-    ◯-fmap-β f = ◯-rec-β ◯-is-local (λ a → η (f a))
+    module ◯Fmap {A B : Type ℓ} (f : A → B) =
+      ◯Rec ◯-is-local (η ∘ f)
+    ◯-fmap = ◯Fmap.f
+    ◯-fmap-β = ◯Fmap.η-β
 
     ◯-isemap : {A B : Type ℓ} (f : A → B) → is-equiv f → is-equiv (◯-fmap f)
     ◯-isemap f f-ise = is-eq _ (◯-fmap g) to-from from-to where
@@ -78,7 +83,7 @@ module stash.modalities.Modalities where
 
     total-◯-equiv : {A : Type ℓ} {P Q : A → Type ℓ} (φ : ∀ a → P a → Q a) → 
                      (∀ a → is-◯-equiv (φ a)) → is-◯-equiv (Σ-fmap-r φ)
-    total-◯-equiv φ e (a , q) = equiv-preserves-◯-conn ((Σ-fmap-r-hfiber φ q) ⁻¹) (e a q)
+    total-◯-equiv φ e (a , q) = equiv-preserves-◯-conn (hfiber-Σ-fmap-r φ q ⁻¹) (e a q)
 
     -- This is the only appearence of univalence, but ...
     local-is-replete : {A B : Type ℓ} → is-local A → A ≃ B → is-local B
@@ -136,13 +141,13 @@ module stash.modalities.Modalities where
       →-is-local : {A B : Type ℓ} → is-local B → is-local (A → B)
       →-is-local w = Π-is-local (λ _ → w)
 
-    ◯-fmap2 : {A B C : Type ℓ} (f : A → B → C) → (◯ A → ◯ B → ◯ C)
-    ◯-fmap2 f = ◯-rec (→-is-local ◯-is-local) (λ a → ◯-fmap (f a))
-
-    ◯-fmap2-β : {A B C : Type ℓ} (f : A → B → C) (a : A) (b : B)
-      → (◯-fmap2 f (η a) (η b) == η (f a b))
-    ◯-fmap2-β f a b = app= (◯-rec-β (→-is-local ◯-is-local) (λ a → ◯-fmap (f a)) a) (η b)
-                    ∙ ◯-fmap-β (f a) b
+    module ◯Fmap2 {A B C : Type ℓ} (η* : A → B → C) where
+      private module M = ◯Rec (→-is-local ◯-is-local) (◯-fmap ∘ η*)
+      f = M.f
+      η-β : ∀ a b → f (η a) (η b) == η (η* a b)
+      η-β a b = app= (M.η-β a) (η b) ∙ ◯-fmap-β (η* a) b
+    ◯-fmap2 = ◯Fmap2.f
+    ◯-fmap2-β = ◯Fmap2.η-β
 
     abstract
       Σ-is-local : {A : Type ℓ} (B : A → Type ℓ)
@@ -174,57 +179,51 @@ module stash.modalities.Modalities where
       ×-is-local {B = B} lA lB = Σ-is-local (λ _ → B) lA (λ _ → lB)
 
 
-    abstract
-      pre∘-◯-conn-is-equiv : {A B : Type ℓ} {h : A → B} → is-◯-equiv h
-        → (P : B → ◯-Type) → is-equiv (λ (s : Π B (fst ∘ P)) → s ∘ h)
-      pre∘-◯-conn-is-equiv {A} {B} {h} c P = is-eq f g f-g g-f
+    module _ {A B : Type ℓ} {h : A → B} (c : is-◯-equiv h) (P : B → ◯-Type) where
+      abstract
+        pre∘-◯-conn-is-equiv : is-equiv (λ (s : Π B (fst ∘ P)) → s ∘ h)
+        pre∘-◯-conn-is-equiv = is-eq f g f-g g-f
 
-        where f : Π B (fst ∘ P) → Π A (fst ∘ P ∘ h)
-              f k a = k (h a)
+          where f : Π B (fst ∘ P) → Π A (fst ∘ P ∘ h)
+                f k a = k (h a)
 
-              helper : Π A (fst ∘ P ∘ h) → (b : B) → ◯ (Σ A (λ a → h a == b)) → (fst (P b))
-              helper t b = ◯-rec (snd (P b)) (λ x → transport (fst ∘ P) (snd x) (t (fst x)))
+                helper : Π A (fst ∘ P ∘ h) → (b : B) → ◯ (Σ A (λ a → h a == b)) → (fst (P b))
+                helper t b = ◯-rec (snd (P b)) (λ x → transport (fst ∘ P) (snd x) (t (fst x)))
 
-              helper-β : (t : Π A (fst ∘ P ∘ h)) → (b : B) → (r : hfiber h b) →
-                         helper t b (η r) == transport (fst ∘ P) (snd r) (t (fst r))
-              helper-β t b = ◯-rec-β (snd (P b)) (λ x → transport (fst ∘ P) (snd x) (t (fst x)))
+                helper-β : (t : Π A (fst ∘ P ∘ h)) → (b : B) → (r : hfiber h b) →
+                           helper t b (η r) == transport (fst ∘ P) (snd r) (t (fst r))
+                helper-β t b = ◯-rec-β (snd (P b)) (λ x → transport (fst ∘ P) (snd x) (t (fst x)))
 
-              g : Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)
-              g t b = helper t b (fst (c b))
+                g : Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)
+                g t b = helper t b (fst (c b))
 
-              f-g : ∀ t → f (g t) == t
-              f-g t = λ= $ λ a → transport
-                (λ r → ◯-rec (snd (P (h a))) _ r == t a)
-                (! (snd (c (h a)) (η (a , idp))))
-                (◯-rec-β (snd (P (h a))) _ (a , idp))
+                f-g : ∀ t → f (g t) == t
+                f-g t = λ= $ λ a → transport
+                  (λ r → ◯-rec (snd (P (h a))) _ r == t a)
+                  (! (snd (c (h a)) (η (a , idp))))
+                  (◯-rec-β (snd (P (h a))) _ (a , idp))
 
-              g-f : ∀ k → g (f k) == k
-              g-f k = λ= λ (b : B) →
-                ◯-elim {A = hfiber h b}
-                       (λ r → =-preserves-local (snd (P b)) {g (f k) b})
-                       (λ r → lemma₁ (fst r) b (snd r))
-                       (fst (c b))
+                g-f : ∀ k → g (f k) == k
+                g-f k = λ= λ (b : B) →
+                  ◯-elim {A = hfiber h b}
+                         (λ r → =-preserves-local (snd (P b)) {g (f k) b})
+                         (λ r → lemma₁ (fst r) b (snd r))
+                         (fst (c b))
 
-                  where lemma₀ : (a : A) → (b : B) → (p : h a == b) →
-                               helper (k ∘ h) b (η (a , p)) == k b
-                        lemma₀ a .(h a) idp = helper-β (k ∘ h) (h a) (a , idp)
+                    where lemma₀ : (a : A) → (b : B) → (p : h a == b) →
+                                 helper (k ∘ h) b (η (a , p)) == k b
+                          lemma₀ a .(h a) idp = helper-β (k ∘ h) (h a) (a , idp)
 
-                        lemma₁ : (a : A) → (b : B) → (p : h a == b) →
-                               helper (k ∘ h) b (fst (c b)) == k b
-                        lemma₁ a b p = transport! (λ r → helper (k ∘ h) b r == k b)
-                          (snd (c b) (η (a , p))) (lemma₀ a b p)
+                          lemma₁ : (a : A) → (b : B) → (p : h a == b) →
+                                 helper (k ∘ h) b (fst (c b)) == k b
+                          lemma₁ a b p = transport! (λ r → helper (k ∘ h) b r == k b)
+                            (snd (c b) (η (a , p))) (lemma₀ a b p)
 
+      ◯-extend : Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)
+      ◯-extend = is-equiv.g pre∘-◯-conn-is-equiv
 
-    ◯-extend : {A B : Type ℓ}
-      → {h : A → B} → is-◯-equiv h
-      → (P : B → ◯-Type)
-      → Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)
-    ◯-extend c P f = is-equiv.g (pre∘-◯-conn-is-equiv c P) f
-
-    ◯-extend-β : {A B : Type ℓ} {h : A → B} (c : is-◯-equiv h)
-      (P : B → ◯-Type) (f : Π A (fst ∘ P ∘ h))
-      → ∀ a → ◯-extend c P f (h a) == f a
-    ◯-extend-β c P f = app= (is-equiv.f-g (pre∘-◯-conn-is-equiv c P) f)
+      ◯-extend-β : ∀ f a → ◯-extend f (h a) == f a
+      ◯-extend-β f = app= (is-equiv.f-g pre∘-◯-conn-is-equiv f)
 
     ◯-preserves-× : {A B : Type ℓ} → ◯ (A × B) ≃ ◯ A × ◯ B
     ◯-preserves-× {A} {B} = equiv ◯-split ◯-pair inv-l inv-r

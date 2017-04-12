@@ -225,22 +225,23 @@ module _ {i j} {A : Type i} {B : A → Type j} where
   → (e : B₀ ≃ B₁) → (A × B₀ ≃ A × B₁)
 ×-emap-r A e = Σ-emap-r (λ _ → e)
 
-Σ-fmap-r-hfiber : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
-                  → (φ : ∀ x → B x → C x) → {a : A} → (c : C a) →
-                  hfiber (Σ-fmap-r φ) (a , c) ≃ hfiber (φ a) c
-Σ-fmap-r-hfiber φ {a} c = equiv to from to-from from-to
+hfiber-Σ-fmap-r : ∀ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k}
+  → (h : ∀ x → B x → C x) → {a : A} → (c : C a)
+  → hfiber (Σ-fmap-r h) (a , c) ≃ hfiber (h a) c
+hfiber-Σ-fmap-r h {a} c = equiv to from to-from from-to
 
-  where to : hfiber (Σ-fmap-r φ) (a , c) → hfiber (φ a) c
+  where to : hfiber (Σ-fmap-r h) (a , c) → hfiber (h a) c
         to ((_ , b) , idp) = b , idp
 
-        from : hfiber (φ a) c → hfiber (Σ-fmap-r φ) (a , c)
+        from : hfiber (h a) c → hfiber (Σ-fmap-r h) (a , c)
         from (b , idp) = (a , b) , idp
 
-        to-from : (x : hfiber (φ a) c) → to (from x) == x
-        to-from (b , idp) = idp
+        abstract
+          to-from : (x : hfiber (h a) c) → to (from x) == x
+          to-from (b , idp) = idp
 
-        from-to : (x : hfiber (Σ-fmap-r φ) (a , c)) → from (to x) == x
-        from-to ((_ , b) , idp) = idp
+          from-to : (x : hfiber (Σ-fmap-r h) (a , c)) → from (to x) == x
+          from-to ((_ , b) , idp) = idp
 
 {-
 -- 2016/08/20 favonia: no one is using the following two functions.

@@ -2,8 +2,7 @@
 
 open import HoTT
 
-module stash.modalities.FiberOfWedgeToProduct
-  {i j} (X : Ptd i) (Y : Ptd j) where
+module homotopy.FiberOfWedgeToProduct {i j} (X : Ptd i) (Y : Ptd j) where
 
   private
     X⊙×Y = X ⊙× Y
