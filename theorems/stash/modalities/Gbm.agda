@@ -302,8 +302,9 @@ module _ {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
               (λ b → equiv-preserves-level ((hfiber-fst b) ⁻¹) Trunc-level)
 
     -- We need this for commutivity below
-    V≃A'-coh : (v : V) → Pullback.b v == left (fst V≃A' v)
-    V≃A'-coh (pullback a b h) = {!(fst V-equiv-A' (pullback a b h))!}
+    postulate 
+      V≃A'-coh : (v : V) → Pullback.b v == left (fst V≃A' v)
+    -- V≃A'-coh (pullback a b h) = {!(fst V-equiv-A' (pullback a b h))!}
 
     --
     --  Now on to the main theorem
@@ -380,9 +381,18 @@ module _ {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
   --          ~
   --
 
+  postulate
+   sq-coh : (z : Z) → (fst Pb≃Pb' (bm-map z)) == bm-map' (Z-to-Z' z)
+   -- sq-coh (a , b , q) = fst Pb≃Pb' (a , b , W.bmglue q) =⟨ {!!} ⟩
+   --                       (a , [ b , q ]) , (b , W'.bmglue q) ∎
+   
   generalized-blakers-massey : is-◯-equiv bm-map
   generalized-blakers-massey pb = equiv-preserves-◯-conn (lemma ⁻¹) (bm-map'-is-◯-equiv (fst Pb≃Pb' pb))
 
-    where lemma : hfiber bm-map pb ≃ hfiber bm-map' (fst Pb≃Pb' pb)
-          lemma = map-equiv-hfiber bm-map bm-map' Z-to-Z' (fst Pb≃Pb') {!!} Z≃Z' (snd Pb≃Pb') pb
-          
+    where 
+
+          lemma : hfiber bm-map pb ≃ hfiber bm-map' (fst Pb≃Pb' pb)
+          lemma = map-equiv-hfiber bm-map bm-map' Z-to-Z' (fst Pb≃Pb')
+            (comm-sqr sq-coh) Z≃Z' (snd Pb≃Pb') pb
+
+  

@@ -260,3 +260,4 @@ module stash.modalities.Modalities where
               inv-r : (ab : ◯ (A × B)) → ◯-pair (◯-split ab) == ab
               inv-r = ◯-elim (λ _ → ◯-=-is-local _ _)
                              (λ ab → ap ◯-pair (pair×= (◯-fst-β ab) (◯-snd-β ab)) ∙ ◯-pair-β (fst ab) (snd ab))
+
