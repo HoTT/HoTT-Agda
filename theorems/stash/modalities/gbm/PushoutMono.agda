@@ -120,7 +120,7 @@ module stash.modalities.gbm.PushoutMono where
     mright-is-mono d = equiv-preserves-level (lem ⁻¹ ∘e (hfiber-fst d) ⁻¹) (B'-is-prop d)
 
       where lem : hfiber mright d ≃ hfiber fst d
-            lem = map-equiv-hfiber mright fst (fst B≃B') (idf D) (comm-sqr (λ b → idp)) (snd B≃B') (idf-is-equiv D) d
+            lem = hfiber-sq-eqv mright fst (fst B≃B') (idf D) (comm-sqr (λ b → idp)) (snd B≃B') (idf-is-equiv D) d
             
     -- Pulling back over A, we should have a space
     -- equivalent to C as well as the path spaces

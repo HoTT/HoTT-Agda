@@ -6,6 +6,14 @@ open import stash.modalities.Modalities
 
 module stash.modalities.gbm.GbmUtil where
 
+  BM-Relation : ∀ {ℓ} (M : Modality ℓ) {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ) → Type ℓ
+  BM-Relation M {A} {B} Q =
+    {a₀ : A} {b₀ : B} (q₀ : Q a₀ b₀)
+    {a₁ : A} (q₁ : Q a₁ b₀)
+    {b₁ : B} (q₂ : Q a₀ b₁) → 
+    Modality.is-◯-connected M (((a₀ , q₀) == (a₁ , q₁)) * ((b₀ , q₀) == (b₁ , q₂)))
+
+
   prop-lemma : ∀ {ℓ} {A : Type ℓ} {a₀ a₁ : A} (P : A → hProp ℓ)
                (p : a₀ == a₁) (x₀ : (fst ∘ P) a₀) (x₁ : (fst ∘ P) a₁) →
                x₀ == x₁ [ (fst ∘ P) ↓ p ]
