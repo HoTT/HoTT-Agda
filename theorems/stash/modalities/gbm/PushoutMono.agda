@@ -25,8 +25,18 @@ module stash.modalities.gbm.PushoutMono where
   is-mono {B = B} f = (b : B) → has-level (S ⟨-2⟩) (hfiber f b)
 
   mono-eq : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) {a₀ a₁ : A}
-            (p : f a₀ == f a₁) → is-mono f → a₀ == a₁
+    (p : f a₀ == f a₁) → is-mono f → a₀ == a₁
   mono-eq f {a₀} {a₁} p ism = ! (fst= (fst (ism (f a₁) (a₁ , idp) (a₀ , p))))
+
+  mono-eq-ap : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) {a₀ a₁ : A}
+    (p : f a₀ == f a₁) → (is-m : is-mono f) → ap f (mono-eq f p is-m) == p
+  mono-eq-ap f p is-m = {!!}
+  
+  Lift-Unit-is-contr : ∀ {i} → is-contr (Lift {j = i} ⊤)
+  Lift-Unit-is-contr = equiv-preserves-level (lower-equiv ⁻¹) Unit-is-contr
+
+  Lift-Unit-is-prop : ∀ {i} → is-prop (Lift {j = i} ⊤)
+  Lift-Unit-is-prop = contr-is-prop Lift-Unit-is-contr
 
   module MonoLemma {i} (s : Span {i} {i} {i}) (m : is-mono (Span.f s)) where
 
@@ -62,12 +72,9 @@ module stash.modalities.gbm.PushoutMono where
     B'-β c = B'.glue-β c 
 
     B'-is-prop : (d : D) → is-prop (B' d)
-    B'-is-prop = Pushout-elim (λ a → m a) (λ b → Lift-⊤-is-prop)
+    B'-is-prop = Pushout-elim (λ a → m a) (λ b → Lift-Unit-is-prop)
       (λ c → prop-lemma (λ z → is-prop (B' z) , is-prop-is-prop) (mglue c) (m (f c))
-      Lift-⊤-is-prop)
-
-      where Lift-⊤-is-prop : is-prop (Lift {j = i} ⊤)
-            Lift-⊤-is-prop = contr-is-prop (equiv-preserves-level (lower-equiv ⁻¹) Unit-is-contr)
+      Lift-Unit-is-prop)
 
     B'-prop : (d : D) → hProp i
     B'-prop d = B' d , B'-is-prop d
@@ -80,39 +87,61 @@ module stash.modalities.gbm.PushoutMono where
       → y == x [ B' ↓ p ]
     B'-pth-in' p x y = prop-lemma B'-prop p y x
 
+    -- Yeah, these triples of data seem to come up a bunch
+    -- the point is, such data is contractible...
+    data-contr : (c : C) → is-contr (Σ (B' (left (f c))) (λ l → Σ (B' (right (g c))) (λ r → l == r [ B' ↓ glue c ])))
+    data-contr c = Σ-level (inhab-prop-is-contr (c , idp) (m (f c)))
+      (λ l → Σ-level Lift-Unit-is-contr (λ r → pths-ovr-contr B'-prop (glue c) l r))
 
-    B-to-B' : B → Σ D B'
-    B-to-B' b = mright b , lift unit
+    data-elim : (c : C) (P : (l : B' (left (f c))) (r : B' (right (g c))) → (l == r [ B' ↓ glue c ]) → Type i)
+                → (t : Σ (B' (left (f c))) (λ l → Σ (B' (right (g c))) (λ r → l == r [ B' ↓ glue c ])))
+                → P (fst t) (fst (snd t)) (snd (snd t))
+                → (l : B' (left (f c))) → (r : B' (right (g c))) → (q : l == r [ B' ↓ glue c ]) → P l r q
+    data-elim c P t x l r q = transport (λ { (l₀ , r₀ , q₀) → P l₀ r₀ q₀ })
+      (contr-has-all-paths (data-contr c) _ _) x
+    
+    module _ where
 
-    B'-to-B : Σ D B' → B
-    B'-to-B = uncurry $ Pushout-elim (λ a e → g (fst e)) (λ b _ → b) (λ c → ↓-Π-in (λ {l} {r} q → ↓-cst-in (ap g (mono-eq f (snd l) m))))
-
-    postulate
-      B-to-from : (db : Σ D B') → B-to-B' (B'-to-B db) == db
+      private
       
-    B≃B' : B ≃ Σ D B'
-    B≃B' = equiv B-to-B' B'-to-B B-to-from (λ b → idp)
+        to : B → Σ D B'
+        to b = mright b , lift unit
 
-      -- where to-from : (db : Σ D B') → to (from db) == db
-      --       to-from = uncurry $ Pushout-elim
-      --         lem 
-      --         (λ b _ → idp )
-      --         (λ c → ↓-Π-in (λ {l} {r} q → coh c l r q))
+        from : Σ D B' → B
+        from = uncurry $ Pushout-elim
+          (λ a e → g (fst e))
+          (λ b _ → b)
+          (λ c → ↓-Π-in (λ {l} {r} q → ↓-cst-in (ap g (mono-eq f (snd l) m))))
 
-      --         where lem : (a : A) (l : B' (left a)) → to (from (left a , l)) == left a , l
-      --               lem a l = pair= pth (B'-pth-in' pth l (lift unit))
+        to-from : (db : Σ D B') → to (from db) == db
+        to-from = uncurry $ Pushout-elim lem₀ (λ b _ → idp) 
+          (λ c → ↓-Π-in (λ {l} {r} q → ↓-app=idf-in (lem₁ c l r q)))
 
-      --                 where pth : mright (g (fst l)) == mleft a
-      --                       pth =  ! (mglue (fst l)) ∙ ap left (snd l)
+          where lem₀ : (a : A) (l : B' (left a)) → to (from (left a , l)) == left a , l
+                lem₀ .(f c) (c , idp) = ! (pair= (mglue c) (B'-pth-in (mglue c) (c , idp) (lift unit))) 
 
-      --               coh : (c : C) (l : B' (left (f c))) (r : B' (right (g c))) (q : l == r [ B' ↓ glue c ]) →
-      --                      (lem (f c) l) == idp [ (λ db → to (from db) == db) ↓ pair= (glue c) q ]
-      --               coh c l r q = ↓-app=idf-in calc
+                P : (c : C) (l : B' (left (f c))) (r : B' (right (g c))) (q : l == r [ B' ↓ glue c ]) → Type i
+                P c l r q = lem₀ (f c) l ∙' pair= (glue c) q ==
+                            ap (λ v → to (from v)) (pair= (glue c) q) ∙ idp
 
-      --                 where calc = lem (f c) l ∙' pair= (glue c) q =⟨ Σ-∙' (B'-pth-in' (! (mglue (fst l)) ∙ ap left (snd l)) l (lift unit)) q ⟩
-      --                              pair= ((! (mglue (fst l)) ∙ ap left (snd l)) ∙' glue c) ((B'-pth-in' (! (mglue (fst l)) ∙ ap left (snd l)) l (lift unit)) ∙'ᵈ q)
-      --                                =⟨ {!!} ⟩ 
-      --                              ap (λ v → to (from v)) (pair= (glue c) q) ∙ idp ∎
+                -- Okay, I see what to do.  You have to kind of "unwrap" the
+                -- ap as it is applied to the uncurry guy above.  Then you use
+                -- glue-β to get that it's the value of from given above.
+                -- The other side already reduces quite a bit.  Just a bit of
+                -- path algebra.
+                lem₂ : (c : C) → P c (c , idp) (lift unit) (fst (pths-ovr-contr B'-prop (glue c) (c , idp) (lift unit)))
+                lem₂ c = lem₀ (f c) (c , idp) ∙' pair= (glue c) q =⟨ {!!} ⟩ 
+                         ap (λ v → to (from v)) (pair= (glue c) q) ∙ idp ∎
+                  
+                    where q = (fst (pths-ovr-contr B'-prop (glue c) (c , idp) (lift unit)))
+                  
+                lem₁ : (c : C) (l : B' (left (f c))) (r : B' (right (g c))) (q : l == r [ B' ↓ glue c ]) 
+                  → lem₀ (f c) l ∙' pair= (glue c) q ==
+                     ap (λ v → to (from v)) (pair= (glue c) q) ∙ idp
+                lem₁ c l r q = data-elim c (P c) {!!} {!!} l r q
+                     
+      B≃B' : B ≃ Σ D B'
+      B≃B' = equiv to from to-from (λ b → idp)
             
     -- From the above equivalence, we can prove that
     -- mright is also a mono
@@ -135,11 +164,6 @@ module stash.modalities.gbm.PushoutMono where
 
     witness-for : ∀ {a b} (p : mleft a == mright b) → hfiber f a
     witness-for p = transport! B' p (lift unit)
-
-    -- Okay, this is not so hard in the special case when we
-    -- are over a glue map.  Why is this enough?
-    witness-for-special : (c : C) → g (fst (witness-for (mglue c))) == g c
-    witness-for-special c = ap g (mono-eq f (snd (witness-for (glue c))) m)
     
     -- Using the fact that mright is a mono, we can
     -- find a proof of the following
@@ -152,12 +176,24 @@ module stash.modalities.gbm.PushoutMono where
             lem : mright (g c) == mright b
             lem = ! (mglue c) ∙ ap mleft (snd (witness-for p)) ∙ p
 
-    postulate
-    
-      witness-for-coh₁ : ∀ {a b} (p : mleft a == mright b) →
-        (! (ap mleft (snd (witness-for p))) ∙ mglue (fst (witness-for p))) == p
-          [ (λ ab → mleft (fst ab) == mright (snd ab)) ↓ (ap (λ x → (a , x)) (witness-for-coh₀ p)) ]
-    
+    witness-for-coh₁ : ∀ {a b} (p : mleft a == mright b)
+      → (! (ap mleft (snd (witness-for p))) ∙ mglue (fst (witness-for p))) == p
+         [ (λ ab → mleft (fst ab) == mright (snd ab)) ↓ (ap (λ x → (a , x)) (witness-for-coh₀ p)) ]
+    witness-for-coh₁ {a} p = ↓-ap-in _ (λ b₀ → (a , b₀)) (↓-cst=app-in calc)
+
+      where α = ap mleft (snd (witness-for p))
+            β = mglue (fst (witness-for p))
+            
+            calc = (! α ∙ β) ∙' ap mright (witness-for-coh₀ p)
+                      =⟨ mono-eq-ap mright (! β ∙ α ∙ p) mright-is-mono |in-ctx (λ x → (! α ∙ β) ∙' x) ⟩
+                   (! α ∙ β) ∙' ! β ∙ α ∙ p =⟨ ∙'=∙ (! α ∙ β) (! β ∙ α ∙ p) ⟩
+                   (! α ∙ β) ∙ ! β ∙ α ∙ p =⟨ ∙-assoc (! α) β (! β ∙ α ∙ p) ⟩
+                   ! α ∙ β ∙ ! β ∙ α ∙ p =⟨ ! (∙-assoc β (! β) (α ∙ p)) |in-ctx (λ x → ! α ∙ x) ⟩
+                   ! α ∙ (β ∙ ! β) ∙ α ∙ p =⟨ !-inv-r β |in-ctx (λ x → ! α ∙ x ∙ α ∙ p) ⟩
+                   ! α ∙ α ∙ p =⟨ ! (∙-assoc (! α) α p) ⟩
+                   (! α ∙ α) ∙ p =⟨ !-inv-l α |in-ctx (λ x → x ∙ p) ⟩ 
+                   p ∎
+            
     C'-equiv-pths : C' ≃ Σ (A × B) (λ ab → mleft (fst ab) == mright (snd ab))
     C'-equiv-pths = equiv to from to-from from-to
 

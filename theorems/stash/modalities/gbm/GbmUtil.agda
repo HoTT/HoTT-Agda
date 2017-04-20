@@ -24,6 +24,11 @@ module stash.modalities.gbm.GbmUtil where
                      is-prop (x₀ == x₁ [ (fst ∘ P) ↓ p ])
   pths-ovr-is-prop P idp x₀ x₁ = =-preserves-level (snd (P _))                             
 
+  pths-ovr-contr : ∀ {ℓ} {A : Type ℓ} {a₀ a₁ : A} (P : A → hProp ℓ)
+                     (p : a₀ == a₁) (x₀ : (fst ∘ P) a₀) (x₁ : (fst ∘ P) a₁) →
+                     is-contr (x₀ == x₁ [ (fst ∘ P) ↓ p ])
+  pths-ovr-contr P idp x₀ x₁ = =-preserves-level (inhab-prop-is-contr x₀ (snd (P _)))
+  
   eqv-square : ∀ {i j} {A : Type i} {B : Type j} (e : A ≃ B)
     {b b' : B} (p : b == b')
     → ap (–> e ∘ <– e) p == (<–-inv-r e b) ∙ p ∙ (! (<–-inv-r e b'))

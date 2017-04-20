@@ -109,9 +109,28 @@ module _ {i₀ j₀ k₀ i₁ j₁ k₁} {cospan₀ : Cospan {i₀} {j₀} {k₀
     to = To.f
     from = From.f
 
-    -- Gotta finish the path algebra
+    to-from : ∀ y → to (from y) == y
+    to-from (pullback a b h) = pullback= _ (hA-ise.f-g a) (hB-ise.f-g b) {!cospan-to.hA!}
+
+      where gA = cospan-from.hA
+            gB = cospan-from.hB
+            gC = cospan-from.hC
+            
+            a₁ = gA a
+            b₁ = gB b
+            h₁ = Pullback.h (from (pullback a b h))
+            fc = commutes cospan-to.f-commutes
+
+            test : a₁ == gA a
+            test = idp
+
+
+    -- (! (commutes (CospanMap.f-commutes cospan-map) a) ∙
+    --   ap (λ x → CospanMap.hC cospan-map x) h ∙
+    --   (commutes (CospanMap.g-commutes cospan-map) b))
+
     postulate
-      to-from : ∀ y → to (from y) == y
+      -- to-from : ∀ y → to (from y) == y
       -- to-from (pullback a b h) = pullback= _ (hA-ise.f-g a) (hB-ise.f-g b) {!!}
 
       from-to : ∀ x → from (to x) == x
@@ -119,5 +138,4 @@ module _ {i₀ j₀ k₀ i₁ j₁ k₁} {cospan₀ : Cospan {i₀} {j₀} {k₀
 
   Pullback-emap : Pullback cospan₀ ≃ Pullback cospan₁
   Pullback-emap = equiv to from to-from from-to
-
 
