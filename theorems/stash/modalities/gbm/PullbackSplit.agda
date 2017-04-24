@@ -2,6 +2,8 @@
 
 open import HoTT
 
+open import stash.modalities.gbm.GbmUtil
+
 module stash.modalities.gbm.PullbackSplit where
 
 --     L --> B    K = A ×_D C / (f,h)       d₁ = A -> D <- C
@@ -106,35 +108,189 @@ module _ {i₀ j₀ k₀ i₁ j₁ k₁} {cospan₀ : Cospan {i₀} {j₀} {k₀
     module hB-ise = is-equiv hB-ise
     module hC-ise = is-equiv hC-ise
 
+    f = cospan₀.f
+    g = cospan₀.g
+    f' = cospan₁.f
+    g' = cospan₁.g
+
+    α = commutes cospan-to.f-commutes
+    β = commutes cospan-to.g-commutes
+
+    α' = commutes cospan-from.f-commutes
+    β' = commutes cospan-from.g-commutes
+    
+    hA = cospan-to.hA
+    hB = cospan-to.hB
+    hC = cospan-to.hC
+    
+    kA = cospan-from.hA
+    kB = cospan-from.hB
+    kC = cospan-from.hC
+
+    module kA-ise = is-equiv (is-equiv-inverse hA-ise)
+    module kB-ise = is-equiv (is-equiv-inverse hB-ise)
+    module kC-ise = is-equiv (is-equiv-inverse hC-ise)
+
+    kA-ise = is-equiv-inverse hA-ise
+    kB-ise = is-equiv-inverse hB-ise
+    kC-ise = is-equiv-inverse hC-ise
+
     to = To.f
     from = From.f
 
-    to-from : ∀ y → to (from y) == y
-    to-from (pullback a b h) = pullback= _ (hA-ise.f-g a) (hB-ise.f-g b) {!cospan-to.hA!}
+    from-to : ∀ x → from (to x) == x
+    from-to (pullback a b h) = pullback= _ (hA-ise.g-f a) (hB-ise.g-f b) goal
 
-      where gA = cospan-from.hA
-            gB = cospan-from.hB
-            gC = cospan-from.hC
-            
-            a₁ = gA a
-            b₁ = gB b
-            h₁ = Pullback.h (from (pullback a b h))
-            fc = commutes cospan-to.f-commutes
+      where eq₀ = hC-ise.g-f (f a) ∙ h ∙ ! (hC-ise.g-f (g b))
+                    =⟨ ! (ap-idf h) |in-ctx (λ x → hC-ise.g-f (f a) ∙ x ∙ ! (hC-ise.g-f (g b))) ⟩
+                  hC-ise.g-f (f a) ∙ ap (idf _) h ∙ ! (hC-ise.g-f (g b))
+                    =⟨ ! (∙-assoc (hC-ise.g-f (f a)) _ _) ⟩ 
+                  (hC-ise.g-f (f a) ∙ ap (idf _) h) ∙ ! (hC-ise.g-f (g b))
+                    =⟨ ↓-==-out (apd hC-ise.g-f h) |in-ctx (λ x → x ∙ ! (hC-ise.g-f (g b))) ⟩
+                  (ap (kC ∘ hC) h ∙ hC-ise.g-f (g b)) ∙ ! (hC-ise.g-f (g b))
+                    =⟨ ∙-assoc (ap (kC ∘ hC) h) _ _ ⟩ 
+                  ap (kC ∘ hC) h ∙ hC-ise.g-f (g b) ∙ ! (hC-ise.g-f (g b))
+                    =⟨ !-inv-r (hC-ise.g-f (g b)) |in-ctx (λ x → ap (kC ∘ hC) h ∙ x) ⟩ 
+                  ap (kC ∘ hC) h ∙ idp
+                    =⟨ ∙-unit-r (ap (kC ∘ hC) h) ⟩ 
+                  ap (kC ∘ hC) h ∎
 
-            test : a₁ == gA a
-            test = idp
+            eq₁ = β' (hB b)
+                    =⟨ ! (hB-ise.adj b) |in-ctx (λ x → ap kC (! (β (kB (hB b)) ∙ ap g' x)) ∙ hC-ise.g-f (g (kB (hB b)))) ⟩ 
+                  ap kC (! (β (kB (hB b)) ∙ ap g' (ap hB (hB-ise.g-f b)))) ∙ hC-ise.g-f (g (kB (hB b)))
+                    =⟨ ∘-ap g' hB (hB-ise.g-f b) |in-ctx (λ x → ap kC (! (β (kB (hB b)) ∙ x)) ∙ hC-ise.g-f (g (kB (hB b)))) ⟩
+                  ap kC (! (β (kB (hB b)) ∙ ap (g' ∘ hB) (hB-ise.g-f b))) ∙ hC-ise.g-f (g (kB (hB b)))
+                    =⟨ ↓-==-out (apd β (hB-ise.g-f b)) |in-ctx (λ x → ap kC (! x) ∙ hC-ise.g-f (g (kB (hB b)))) ⟩ 
+                  ap kC (! (ap (hC ∘ g) (hB-ise.g-f b) ∙ β b)) ∙ hC-ise.g-f (g (kB (hB b)))
+                    =⟨ ap-! kC (ap (hC ∘ g) (hB-ise.g-f b) ∙ β b) |in-ctx (λ x → x ∙ hC-ise.g-f (g (kB (hB b)))) ⟩ 
+                  ! (ap kC (ap (hC ∘ g) (hB-ise.g-f b) ∙ β b)) ∙ hC-ise.g-f (g (kB (hB b)))
+                    =⟨ ap-∙ kC (ap (hC ∘ g) (hB-ise.g-f b)) (β b) |in-ctx (λ x → ! x ∙ hC-ise.g-f (g (kB (hB b)))) ⟩ 
+                  ! (ap kC (ap (hC ∘ g) (hB-ise.g-f b)) ∙ ap kC (β b)) ∙ hC-ise.g-f (g (kB (hB b)))
+                    =⟨ !-∙ (ap kC (ap (hC ∘ g) (hB-ise.g-f b))) (ap kC (β b)) |in-ctx (λ x → x ∙ hC-ise.g-f (g (kB (hB b)))) ⟩
+                  (! (ap kC (β b)) ∙ ! (ap kC (ap (hC ∘ g) (hB-ise.g-f b)))) ∙ hC-ise.g-f (g (kB (hB b)))
+                    =⟨ ∙-assoc (! (ap kC (β b))) _ _ ⟩
+                  ! (ap kC (β b)) ∙ ! (ap kC (ap (hC ∘ g) (hB-ise.g-f b))) ∙ hC-ise.g-f (g (kB (hB b)))
+                    =⟨ ∘-ap kC (hC ∘ g) (hB-ise.g-f b) |in-ctx (λ x → ! (ap kC (β b)) ∙ ! x ∙ hC-ise.g-f (g (kB (hB b)))) ⟩ 
+                  ! (ap kC (β b)) ∙ ! (ap (kC ∘ hC ∘ g) (hB-ise.g-f b)) ∙ hC-ise.g-f (g (kB (hB b)))
+                    =⟨ ! (∘-ap (kC ∘ hC) g (hB-ise.g-f b)) |in-ctx (λ x → ! (ap kC (β b)) ∙ ! x ∙ hC-ise.g-f (g (kB (hB b)))) ⟩ 
+                  ! (ap kC (β b)) ∙ ! (ap (kC ∘ hC) (ap g (hB-ise.g-f b))) ∙ hC-ise.g-f (g (kB (hB b)))
+                    =⟨ eqv-square' (hC , hC-ise) (ap g (hB-ise.g-f b)) |in-ctx (λ x → ! (ap kC (β b)) ∙ ! x ∙ hC-ise.g-f (g (kB (hB b)))) ⟩ 
+                  ! (ap kC (β b)) ∙ ! (hC-ise.g-f (g (kB (hB b))) ∙ (ap g (hB-ise.g-f b)) ∙ ! (hC-ise.g-f (g b))) ∙ hC-ise.g-f (g (kB (hB b)))
+                    =⟨ !-∙ (hC-ise.g-f (g (kB (hB b)))) ((ap g (hB-ise.g-f b)) ∙ ! (hC-ise.g-f (g b))) |in-ctx (λ x → ! (ap kC (β b)) ∙ x ∙ hC-ise.g-f (g (kB (hB b)))) ⟩ 
+                  ! (ap kC (β b)) ∙ (! (ap g (hB-ise.g-f b) ∙ ! (hC-ise.g-f (g b))) ∙ ! (hC-ise.g-f (g (kB (hB b))))) ∙ hC-ise.g-f (g (kB (hB b)))
+                    =⟨ ∙-assoc (! (ap g (hB-ise.g-f b) ∙ ! (hC-ise.g-f (g b)))) _ _ |in-ctx (λ x → ! (ap kC (β b)) ∙ x) ⟩ 
+                  ! (ap kC (β b)) ∙ ! (ap g (hB-ise.g-f b) ∙ ! (hC-ise.g-f (g b))) ∙ ! (hC-ise.g-f (g (kB (hB b)))) ∙ hC-ise.g-f (g (kB (hB b)))
+                    =⟨ !-inv-l (hC-ise.g-f (g (kB (hB b)))) |in-ctx (λ x → ! (ap kC (β b)) ∙ ! (ap g (hB-ise.g-f b) ∙ ! (hC-ise.g-f (g b))) ∙ x) ⟩ 
+                  ! (ap kC (β b)) ∙ ! (ap g (hB-ise.g-f b) ∙ ! (hC-ise.g-f (g b))) ∙ idp
+                    =⟨ ∙-unit-r (! (ap g (hB-ise.g-f b) ∙ ! (hC-ise.g-f (g b)))) |in-ctx (λ x → ! (ap kC (β b)) ∙ x) ⟩ 
+                  ! (ap kC (β b)) ∙ ! (ap g (hB-ise.g-f b) ∙ ! (hC-ise.g-f (g b)))
+                    =⟨ !-∙ (ap g (hB-ise.g-f b)) (! (hC-ise.g-f (g b))) |in-ctx (λ x → ! (ap kC (β b)) ∙ x) ⟩ 
+                  ! (ap kC (β b)) ∙ ! (! (hC-ise.g-f (g b))) ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ !-! (hC-ise.g-f (g b)) |in-ctx (λ x → ! (ap kC (β b)) ∙ x ∙ ! (ap g (hB-ise.g-f b))) ⟩ 
+                  ! (ap kC (β b)) ∙ hC-ise.g-f (g b) ∙ ! (ap g (hB-ise.g-f b)) ∎
 
+            eq₂ = α' (hA a)
+                    =⟨ ! (hA-ise.adj a) |in-ctx (λ x → ap kC (! (α (kA (hA a)) ∙ ap f' x)) ∙ hC-ise.g-f (f (kA (hA a)))) ⟩ 
+                  ap kC (! (α (kA (hA a)) ∙ ap f' (ap hA (hA-ise.g-f a)))) ∙ hC-ise.g-f (f (kA (hA a)))
+                    =⟨ ∘-ap f' hA (hA-ise.g-f a) |in-ctx (λ x → ap kC (! (α (kA (hA a)) ∙ x)) ∙ hC-ise.g-f (f (kA (hA a)))) ⟩
+                  ap kC (! (α (kA (hA a)) ∙ ap (f' ∘ hA) (hA-ise.g-f a))) ∙ hC-ise.g-f (f (kA (hA a)))
+                    =⟨ ↓-==-out (apd α (hA-ise.g-f a)) |in-ctx (λ x → ap kC (! x) ∙ hC-ise.g-f (f (kA (hA a)))) ⟩ 
+                  ap kC (! (ap (hC ∘ f) (hA-ise.g-f a) ∙ α a)) ∙ hC-ise.g-f (f (kA (hA a)))
+                    =⟨ ap-! kC (ap (hC ∘ f) (hA-ise.g-f a) ∙ α a) |in-ctx (λ x → x ∙ hC-ise.g-f (f (kA (hA a)))) ⟩ 
+                  ! (ap kC (ap (hC ∘ f) (hA-ise.g-f a) ∙ α a)) ∙ hC-ise.g-f (f (kA (hA a)))
+                    =⟨ ap-∙ kC (ap (hC ∘ f) (hA-ise.g-f a)) (α a) |in-ctx (λ x → ! x ∙ hC-ise.g-f (f (kA (hA a)))) ⟩ 
+                  ! (ap kC (ap (hC ∘ f) (hA-ise.g-f a)) ∙ ap kC (α a)) ∙ hC-ise.g-f (f (kA (hA a)))
+                    =⟨ !-∙ (ap kC (ap (hC ∘ f) (hA-ise.g-f a))) (ap kC (α a)) |in-ctx (λ x → x ∙ hC-ise.g-f (f (kA (hA a)))) ⟩
+                  (! (ap kC (α a)) ∙ ! (ap kC (ap (hC ∘ f) (hA-ise.g-f a)))) ∙ hC-ise.g-f (f (kA (hA a)))
+                    =⟨ ∙-assoc (! (ap kC (α a))) _ _ ⟩
+                  ! (ap kC (α a)) ∙ ! (ap kC (ap (hC ∘ f) (hA-ise.g-f a))) ∙ hC-ise.g-f (f (kA (hA a)))
+                    =⟨ ∘-ap kC (hC ∘ f) (hA-ise.g-f a) |in-ctx (λ x → ! (ap kC (α a)) ∙ ! x ∙ hC-ise.g-f (f (kA (hA a)))) ⟩ 
+                  ! (ap kC (α a)) ∙ ! (ap (kC ∘ hC ∘ f) (hA-ise.g-f a)) ∙ hC-ise.g-f (f (kA (hA a)))
+                    =⟨ ! (∘-ap (kC ∘ hC) f (hA-ise.g-f a)) |in-ctx (λ x → ! (ap kC (α a)) ∙ ! x ∙ hC-ise.g-f (f (kA (hA a)))) ⟩ 
+                  ! (ap kC (α a)) ∙ ! (ap (kC ∘ hC) (ap f (hA-ise.g-f a))) ∙ hC-ise.g-f (f (kA (hA a)))
+                    =⟨ eqv-square' (hC , hC-ise) (ap f (hA-ise.g-f a)) |in-ctx (λ x → ! (ap kC (α a)) ∙ ! x ∙ hC-ise.g-f (f (kA (hA a)))) ⟩ 
+                  ! (ap kC (α a)) ∙ ! (hC-ise.g-f (f (kA (hA a))) ∙ (ap f (hA-ise.g-f a)) ∙ ! (hC-ise.g-f (f a))) ∙ hC-ise.g-f (f (kA (hA a)))
+                    =⟨ !-∙ (hC-ise.g-f (f (kA (hA a)))) ((ap f (hA-ise.g-f a)) ∙ ! (hC-ise.g-f (f a))) |in-ctx (λ x → ! (ap kC (α a)) ∙ x ∙ hC-ise.g-f (f (kA (hA a)))) ⟩ 
+                  ! (ap kC (α a)) ∙ (! (ap f (hA-ise.g-f a) ∙ ! (hC-ise.g-f (f a))) ∙ ! (hC-ise.g-f (f (kA (hA a))))) ∙ hC-ise.g-f (f (kA (hA a)))
+                    =⟨ ∙-assoc (! (ap f (hA-ise.g-f a) ∙ ! (hC-ise.g-f (f a)))) _ _ |in-ctx (λ x → ! (ap kC (α a)) ∙ x) ⟩ 
+                  ! (ap kC (α a)) ∙ ! (ap f (hA-ise.g-f a) ∙ ! (hC-ise.g-f (f a))) ∙ ! (hC-ise.g-f (f (kA (hA a)))) ∙ hC-ise.g-f (f (kA (hA a)))
+                    =⟨ !-inv-l (hC-ise.g-f (f (kA (hA a)))) |in-ctx (λ x → ! (ap kC (α a)) ∙ ! (ap f (hA-ise.g-f a) ∙ ! (hC-ise.g-f (f a))) ∙ x) ⟩ 
+                  ! (ap kC (α a)) ∙ ! (ap f (hA-ise.g-f a) ∙ ! (hC-ise.g-f (f a))) ∙ idp
+                    =⟨ ∙-unit-r (! (ap f (hA-ise.g-f a) ∙ ! (hC-ise.g-f (f a)))) |in-ctx (λ x → ! (ap kC (α a)) ∙ x) ⟩ 
+                  ! (ap kC (α a)) ∙ ! (ap f (hA-ise.g-f a) ∙ ! (hC-ise.g-f (f a)))
+                    =⟨ !-∙ (ap f (hA-ise.g-f a)) (! (hC-ise.g-f (f a))) |in-ctx (λ x → ! (ap kC (α a)) ∙ x) ⟩ 
+                  ! (ap kC (α a)) ∙ ! (! (hC-ise.g-f (f a))) ∙ ! (ap f (hA-ise.g-f a))
+                    =⟨ !-! (hC-ise.g-f (f a)) |in-ctx (λ x → ! (ap kC (α a)) ∙ x ∙ ! (ap f (hA-ise.g-f a))) ⟩
+                  ! (ap kC (α a)) ∙ hC-ise.g-f (f a) ∙ ! (ap f (hA-ise.g-f a)) ∎
 
-    -- (! (commutes (CospanMap.f-commutes cospan-map) a) ∙
-    --   ap (λ x → CospanMap.hC cospan-map x) h ∙
-    --   (commutes (CospanMap.g-commutes cospan-map) b))
+            lem = ! (α' (hA a)) ∙ ap kC (! (α a) ∙ ap hC h ∙ β b) ∙ β' (hB b)
+                    =⟨ ap-∙ kC (! (α a)) (ap hC h ∙ β b) |in-ctx (λ x → ! (α' (hA a)) ∙ x ∙ β' (hB b)) ⟩
+                  ! (α' (hA a)) ∙ (ap kC (! (α a)) ∙ ap kC (ap hC h ∙ β b)) ∙ β' (hB b)
+                    =⟨ ∙-assoc (ap kC (! (α a))) (ap kC (ap hC h ∙ β b)) (β' (hB b)) |in-ctx (λ x → ! (α' (hA a)) ∙ x) ⟩ 
+                  ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ ap kC (ap hC h ∙ β b) ∙ β' (hB b)
+                    =⟨ ap-∙ kC (ap hC h) (β b) |in-ctx (λ x → ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ x ∙ β' (hB b)) ⟩ 
+                  ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ (ap kC (ap hC h) ∙ ap kC (β b)) ∙ β' (hB b)
+                    =⟨ ∙-assoc (ap kC (ap hC h)) (ap kC (β b)) (β' (hB b)) |in-ctx (λ x → ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ x) ⟩ 
+                  ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ ap kC (ap hC h) ∙ ap kC (β b) ∙ β' (hB b)
+                    =⟨ ∘-ap kC hC h |in-ctx (λ x → ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ x ∙ ap kC (β b) ∙ β' (hB b)) ⟩
+                  ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ ap (kC ∘ hC) h ∙ ap kC (β b) ∙ β' (hB b)
+                    =⟨ eq₁ |in-ctx (λ x → ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ ap (kC ∘ hC) h ∙ ap kC (β b) ∙ x) ⟩ 
+                  ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ ap (kC ∘ hC) h ∙ ap kC (β b) ∙ ! (ap kC (β b)) ∙ hC-ise.g-f (g b) ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ ! (∙-assoc (ap kC (β b)) _ _) |in-ctx (λ x → ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ ap (kC ∘ hC) h ∙ x) ⟩ 
+                  ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ ap (kC ∘ hC) h ∙ (ap kC (β b) ∙ ! (ap kC (β b))) ∙ hC-ise.g-f (g b) ∙ ! (ap g (hB-ise.g-f b)) 
+                    =⟨ !-inv-r (ap kC (β b)) |in-ctx (λ x → ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ ap (kC ∘ hC) h ∙ x ∙ hC-ise.g-f (g b) ∙ ! (ap g (hB-ise.g-f b))) ⟩
+                  ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ ap (kC ∘ hC) h ∙ hC-ise.g-f (g b) ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ ! eq₀ |in-ctx (λ x → ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ x ∙ hC-ise.g-f (g b) ∙ ! (ap g (hB-ise.g-f b))) ⟩
+                  ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ (hC-ise.g-f (f a) ∙ h ∙ ! (hC-ise.g-f (g b))) ∙ hC-ise.g-f (g b) ∙ ! (ap g (hB-ise.g-f b))                    
+                    =⟨ ! (∙-assoc (hC-ise.g-f (f a)) _ _) |in-ctx (λ x → ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ x ∙ hC-ise.g-f (g b) ∙ ! (ap g (hB-ise.g-f b))) ⟩
+                  ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ ((hC-ise.g-f (f a) ∙ h) ∙ ! (hC-ise.g-f (g b))) ∙ hC-ise.g-f (g b) ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ ∙-assoc (hC-ise.g-f (f a) ∙ h) _ _ |in-ctx (λ x → ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ x) ⟩ 
+                  ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ (hC-ise.g-f (f a) ∙ h) ∙ ! (hC-ise.g-f (g b)) ∙ hC-ise.g-f (g b) ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ ! (∙-assoc (! (hC-ise.g-f (g b))) _ _) |in-ctx (λ x → ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ (hC-ise.g-f (f a) ∙ h) ∙ x) ⟩ 
+                  ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ (hC-ise.g-f (f a) ∙ h) ∙ (! (hC-ise.g-f (g b)) ∙ hC-ise.g-f (g b)) ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ !-inv-l (hC-ise.g-f (g b)) |in-ctx (λ x → ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ (hC-ise.g-f (f a) ∙ h) ∙ x ∙ ! (ap g (hB-ise.g-f b))) ⟩
+                  ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ (hC-ise.g-f (f a) ∙ h) ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ ∙-assoc (hC-ise.g-f (f a)) _ _ |in-ctx (λ x → ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ x) ⟩
+                  ! (α' (hA a)) ∙ ap kC (! (α a)) ∙ hC-ise.g-f (f a) ∙ h ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ eq₂ |in-ctx (λ x → ! x ∙ ap kC (! (α a)) ∙ hC-ise.g-f (f a) ∙ h ∙ ! (ap g (hB-ise.g-f b))) ⟩  
+                  ! (! (ap kC (α a)) ∙ hC-ise.g-f (f a) ∙ ! (ap f (hA-ise.g-f a))) ∙ ap kC (! (α a)) ∙ hC-ise.g-f (f a) ∙ h ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ !-∙ (! (ap kC (α a))) _ |in-ctx (λ x → x ∙ ap kC (! (α a)) ∙ hC-ise.g-f (f a) ∙ h ∙ ! (ap g (hB-ise.g-f b))) ⟩
+                  (! (hC-ise.g-f (f a) ∙ ! (ap f (hA-ise.g-f a))) ∙ ! (! (ap kC (α a)))) ∙ ap kC (! (α a)) ∙ hC-ise.g-f (f a) ∙ h ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ ∙-assoc (! (hC-ise.g-f (f a) ∙ ! (ap f (hA-ise.g-f a)))) _ _ ⟩
+                  ! (hC-ise.g-f (f a) ∙ ! (ap f (hA-ise.g-f a))) ∙ ! (! (ap kC (α a))) ∙ ap kC (! (α a)) ∙ hC-ise.g-f (f a) ∙ h ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ ap-! kC (α a) |in-ctx (λ x → ! (hC-ise.g-f (f a) ∙ ! (ap f (hA-ise.g-f a))) ∙ ! (! (ap kC (α a))) ∙ x ∙ hC-ise.g-f (f a) ∙ h ∙ ! (ap g (hB-ise.g-f b))) ⟩ 
+                  ! (hC-ise.g-f (f a) ∙ ! (ap f (hA-ise.g-f a))) ∙ ! (! (ap kC (α a))) ∙ ! (ap kC (α a)) ∙ hC-ise.g-f (f a) ∙ h ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ ! (∙-assoc (! (! (ap kC (α a)))) _ _) |in-ctx (λ x → ! (hC-ise.g-f (f a) ∙ ! (ap f (hA-ise.g-f a))) ∙ x) ⟩ 
+                  ! (hC-ise.g-f (f a) ∙ ! (ap f (hA-ise.g-f a))) ∙ (! (! (ap kC (α a))) ∙ ! (ap kC (α a))) ∙ hC-ise.g-f (f a) ∙ h ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ !-inv-l (! (ap kC (α a))) |in-ctx (λ x → ! (hC-ise.g-f (f a) ∙ ! (ap f (hA-ise.g-f a))) ∙ x ∙ hC-ise.g-f (f a) ∙ h ∙ ! (ap g (hB-ise.g-f b))) ⟩ 
+                  ! (hC-ise.g-f (f a) ∙ ! (ap f (hA-ise.g-f a))) ∙ hC-ise.g-f (f a) ∙ h ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ !-∙ (hC-ise.g-f (f a)) _  |in-ctx (λ x → x ∙ hC-ise.g-f (f a) ∙ h ∙ ! (ap g (hB-ise.g-f b))) ⟩ 
+                  (! (! (ap f (hA-ise.g-f a))) ∙ ! (hC-ise.g-f (f a))) ∙ hC-ise.g-f (f a) ∙ h ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ ∙-assoc (! (! (ap f (hA-ise.g-f a)))) _ _ ⟩
+                  ! (! (ap f (hA-ise.g-f a))) ∙ ! (hC-ise.g-f (f a)) ∙ hC-ise.g-f (f a) ∙ h ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ ! (∙-assoc (! (hC-ise.g-f (f a))) _ _) |in-ctx (λ x → ! (! (ap f (hA-ise.g-f a))) ∙ x) ⟩ 
+                  ! (! (ap f (hA-ise.g-f a))) ∙ (! (hC-ise.g-f (f a)) ∙ hC-ise.g-f (f a)) ∙ h ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ !-inv-l (hC-ise.g-f (f a)) |in-ctx (λ x → ! (! (ap f (hA-ise.g-f a))) ∙ x ∙ h ∙ ! (ap g (hB-ise.g-f b))) ⟩
+                  ! (! (ap f (hA-ise.g-f a))) ∙ h ∙ ! (ap g (hB-ise.g-f b))
+                    =⟨ !-! (ap f (hA-ise.g-f a)) |in-ctx (λ x → x ∙ h ∙ ! (ap g (hB-ise.g-f b))) ⟩ 
+                  ap f (hA-ise.g-f a) ∙ h ∙ ! (ap g (hB-ise.g-f b)) ∎
+
+            goal = (! (α' (hA a)) ∙ ap kC (! (α a) ∙ ap hC h ∙ β b) ∙ β' (hB b)) ∙ ap g (hB-ise.g-f b)
+                     =⟨ lem |in-ctx (λ x → x ∙ ap g (hB-ise.g-f b)) ⟩
+                   (ap f (hA-ise.g-f a) ∙ h ∙ ! (ap g (hB-ise.g-f b))) ∙ ap g (hB-ise.g-f b)
+                     =⟨ ∙-assoc (ap f (hA-ise.g-f a)) (h ∙ ! (ap g (hB-ise.g-f b))) _ ⟩ 
+                   ap f (hA-ise.g-f a) ∙ (h ∙ ! (ap g (hB-ise.g-f b))) ∙ ap g (hB-ise.g-f b)
+                     =⟨ ∙-assoc h _ _ |in-ctx (λ x → ap f (hA-ise.g-f a) ∙ x) ⟩ 
+                   ap f (hA-ise.g-f a) ∙ h ∙ ! (ap g (hB-ise.g-f b)) ∙ ap g (hB-ise.g-f b)
+                     =⟨ !-inv-l (ap g (hB-ise.g-f b)) |in-ctx (λ x → ap f (hA-ise.g-f a) ∙ h ∙ x) ⟩ 
+                   ap f (hA-ise.g-f a) ∙ h ∙ idp
+                     =⟨ ∙-unit-r h |in-ctx (λ x → ap f (hA-ise.g-f a) ∙ x) ⟩ 
+                   ap f (hA-ise.g-f a) ∙ h ∎
+
 
     postulate
-      -- to-from : ∀ y → to (from y) == y
+      to-from : ∀ y → to (from y) == y
       -- to-from (pullback a b h) = pullback= _ (hA-ise.f-g a) (hB-ise.f-g b) {!!}
-
-      from-to : ∀ x → from (to x) == x
-      -- from-to (pullback a b h) = pullback= _ (hA-ise.g-f a) (hB-ise.g-f b) {!!}
 
   Pullback-emap : Pullback cospan₀ ≃ Pullback cospan₁
   Pullback-emap = equiv to from to-from from-to

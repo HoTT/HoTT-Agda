@@ -33,7 +33,24 @@ module stash.modalities.gbm.GbmUtil where
     {b b' : B} (p : b == b')
     → ap (–> e ∘ <– e) p == (<–-inv-r e b) ∙ p ∙ (! (<–-inv-r e b'))
   eqv-square e idp = ! (!-inv-r (<–-inv-r e _))
-               
+
+  eqv-square' : ∀ {i j} {A : Type i} {B : Type j} (e : A ≃ B)
+    {a a' : A} (p : a == a')
+    → ap (<– e ∘ –> e) p == <–-inv-l e a ∙ p ∙ ! (<–-inv-l e a')
+  eqv-square' e idp = ! (!-inv-r (<–-inv-l e _))
+                
+  ↓-==-in : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
+    {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+    → (u ∙ ap g p) == (ap f p ∙ v)
+    → (u == v [ (λ x → f x == g x) ↓ p ])
+  ↓-==-in {p = idp} q = ! (∙-unit-r _) ∙ q
+
+  ↓-==-out : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
+    {x y : A} {p : x == y} {u : f x == g x} {v : f y == g y}
+    → (u == v [ (λ x → f x == g x) ↓ p ])
+    → (u ∙ ap g p) == (ap f p ∙ v)
+  ↓-==-out {p = idp} q = (∙-unit-r _) ∙ q 
+
   module HFiberSrcEquiv {i₀ i₁ i₂} {A : Type i₀} {B : Type i₁} {C : Type i₂}
     (f : A → B) (h : B → C) (k : A → C)
     (w : (a : A) → h (f a) == k a)

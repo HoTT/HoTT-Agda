@@ -239,10 +239,6 @@ module stash.modalities.gbm.PushoutMono where
             from-to : (c' : C') → from (to c') == c'
             from-to (a , c , p) = pair= idp (fst (m _ _ (c , p)))
 
-    lemma₂ : {a₀ a₁ : A} (p : a₀ == a₁) (e₀ : hfiber f a₀) (e₁ : hfiber f a₁)
-      → e₀ == e₁ [ (λ a → hfiber f a) ↓ p ]
-    lemma₂ idp e₀ e₁ = fst (m _ e₀ e₁)
-  
     C-equiv-C' : C ≃ C'
     C-equiv-C' = equiv to from to-from from-to
 
@@ -253,7 +249,7 @@ module stash.modalities.gbm.PushoutMono where
             from (a , c , p) = c
 
             to-from : (c' : C') → to (from c') == c'
-            to-from (a , c , p) = pair= p (lemma₂ p (c , idp) (c , p))
+            to-from (a , c , p) = pair= p (fst (pths-ovr-contr (λ a → hfiber f a , m a) p (c , idp) (c , p)))
                     
             from-to : (c : C) → from (to c) == c
             from-to c = idp

@@ -142,9 +142,12 @@ module stash.modalities.Gbm {ℓ} (M : Modality ℓ)
               (λ b → equiv-preserves-level ((hfiber-fst b) ⁻¹) Trunc-level)
 
     -- We need this for commutivity below
-    postulate 
-      V≃A'-coh : (v : V) → Pullback.b v == left (fst V≃A' v)
-    -- V≃A'-coh (pullback a b h) = {!(fst V-equiv-A' (pullback a b h))!}
+    V≃A'-coh : (v : V) → Pullback.b v == left (fst V≃A' v)
+    V≃A'-coh (pullback a b h) = ! (ML.witness-for-coh₀ h)
+
+      where module ML = MonoLemma
+              (span A W' A' fst left)
+              (λ b → equiv-preserves-level ((hfiber-fst b) ⁻¹) Trunc-level)
 
     --
     --  Now on to the main theorem
@@ -177,18 +180,14 @@ module stash.modalities.Gbm {ℓ} (M : Modality ℓ)
                                      (idf-is-equiv B) ,
                                      (snd (W''≃X ∘e W≃W''))
 
-    pullback-equiv : A×WB ≃ A'×W'B
-    pullback-equiv = A×WB ≃⟨ A×WB≃U ⟩
-                     U ≃⟨ U≃U'' ⟩ 
-                     U'' ≃⟨ U''≃A'×W'B ⟩ 
-                     A'×W'B ≃∎
-
     Pb = Σ A (λ a → Σ B (λ b →  W.bmleft a == W.bmright b))
     Pb' = Σ A' (λ a → Σ B (λ b →  W'.bmleft a == W'.bmright b))
 
     Pb≃Pb' = Pb ≃⟨ Σ-assoc ⁻¹  ⟩
              Σ (A × B) (λ ab → W.bmleft (fst ab) == W.bmright (snd ab)) ≃⟨ (pullback-decomp-equiv (cospan A B W left right)) ⁻¹  ⟩
-             A×WB ≃⟨ pullback-equiv ⟩
+             A×WB ≃⟨ A×WB≃U ⟩
+             U ≃⟨ U≃U'' ⟩ 
+             U'' ≃⟨ U''≃A'×W'B ⟩ 
              A'×W'B ≃⟨ pullback-decomp-equiv (cospan A' B W' left right) ⟩ 
              Σ (A' × B) (λ ab → W'.bmleft (fst ab) == W'.bmright (snd ab)) ≃⟨ Σ-assoc ⟩
              Pb' ≃∎
@@ -221,10 +220,10 @@ module stash.modalities.Gbm {ℓ} (M : Modality ℓ)
   --          ~
   --
 
-  postulate
-   sq-coh : (z : Z) → (fst Pb≃Pb' (bm-map z)) == bm-map' (Z-to-Z' z)
-   -- sq-coh (a , b , q) = fst Pb≃Pb' (a , b , W.bmglue q) =⟨ {!!} ⟩
-   --                       (a , [ b , q ]) , (b , W'.bmglue q) ∎
+  sq-coh : (z : Z) → (fst Pb≃Pb' (bm-map z)) == bm-map' (Z-to-Z' z)
+  sq-coh (a , b , q) = {!!}
+    -- fst Pb≃Pb' (a , b , W.bmglue q) =⟨ {!!} ⟩
+    -- (a , [ b , q ]) , (b , W'.bmglue q) ∎
    
   generalized-blakers-massey : is-◯-equiv bm-map
   generalized-blakers-massey pb = equiv-preserves-◯-conn (lemma ⁻¹) (bm-map'-is-◯-equiv (fst Pb≃Pb' pb))
