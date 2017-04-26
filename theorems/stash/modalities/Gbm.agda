@@ -222,6 +222,21 @@ module stash.modalities.Gbm {ℓ} (M : Modality ℓ)
 
   sq-coh : (z : Z) → (fst Pb≃Pb' (bm-map z)) == bm-map' (Z-to-Z' z)
   sq-coh (a , b , q) = {!!}
+
+    where test = fst Pb≃Pb' (a , b , W.bmglue q) =⟨ idp ⟩
+                 (–> Σ-assoc) (–> (pullback-decomp-equiv (cospan A' B W' left right)) {!–> U''≃A'×W'B ?!} )  =⟨ idp ⟩ 
+                 fst Pb≃Pb' (a , b , W.bmglue q) ∎
+
+
+    -- Pb≃Pb' = Pb ≃⟨ Σ-assoc ⁻¹  ⟩
+    --          Σ (A × B) (λ ab → W.bmleft (fst ab) == W.bmright (snd ab)) ≃⟨ (pullback-decomp-equiv (cospan A B W left right)) ⁻¹  ⟩
+    --          A×WB ≃⟨ A×WB≃U ⟩
+    --          U ≃⟨ U≃U'' ⟩ 
+    --          U'' ≃⟨ U''≃A'×W'B ⟩ 
+    --          A'×W'B ≃⟨ pullback-decomp-equiv (cospan A' B W' left right) ⟩ 
+    --          Σ (A' × B) (λ ab → W'.bmleft (fst ab) == W'.bmright (snd ab)) ≃⟨ Σ-assoc ⟩
+    --          Pb' ≃∎
+
     -- fst Pb≃Pb' (a , b , W.bmglue q) =⟨ {!!} ⟩
     -- (a , [ b , q ]) , (b , W'.bmglue q) ∎
    
