@@ -6,15 +6,6 @@ module homotopy.FiberOfWedgeToProduct {i j} (X : Ptd i) (Y : Ptd j) where
 
   private
     X⊙×Y = X ⊙× Y
-    module WedgeToProduct = WedgeRec (_, pt Y) (pt X ,_) idp
-
-  ∨-to-× : X ∨ Y → de⊙ X⊙×Y
-  ∨-to-× = WedgeToProduct.f
-
-  ∨-to-×-glue-β : ap ∨-to-× wglue == idp
-  ∨-to-×-glue-β = WedgeToProduct.glue-β 
-
-  private
     abstract
       ↓-∨to×=cst-out : ∀ {x y} {p p' : (pt X , pt Y) == (x , y)}
         → p == p' [ (λ w → ∨-to-× w == (x , y)) ↓ wglue ]
@@ -109,12 +100,12 @@ module homotopy.FiberOfWedgeToProduct {i j} (X : Ptd i) (Y : Ptd j) where
     abstract
       from-to-winl-template : ∀ {x x' y} (xy-path : (x' , pt Y) == (x , y))
         → (winl x , pair×= idp (snd×= xy-path)) == (winl x' , xy-path)
-            :> hfiber ∨-to-× (x , y)
+            :> hfiber (∨-to-× {X = X} {Y = Y}) (x , y)
       from-to-winl-template idp = idp
 
       from-to-winr-template : ∀ {x y y'} (xy-path : (pt X , y') == (x , y))
         → (winr y , pair×= (fst×= xy-path) idp) == (winr y' , xy-path)
-            :> hfiber ∨-to-× (x , y)
+            :> hfiber (∨-to-× {X = X} {Y = Y}) (x , y)
       from-to-winr-template idp = idp
 
       -- this version enables path induction on [q] which

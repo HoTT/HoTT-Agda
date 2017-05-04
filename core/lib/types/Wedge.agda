@@ -7,6 +7,7 @@ open import lib.types.Pointed
 open import lib.types.Pushout
 open import lib.types.PushoutFlattening
 open import lib.types.PushoutFmap
+open import lib.types.Sigma
 open import lib.types.Span
 open import lib.types.Unit
 
@@ -146,6 +147,19 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
   projr = Projr.f
   ⊙projl = Projl.⊙f
   ⊙projr = Projr.⊙f
+
+module _ {i j} {X : Ptd i} {Y : Ptd j} where
+
+  module WedgeToProduct = ⊙WedgeRec ((_, pt Y) , idp) ((pt X ,_), idp)
+
+  ∨-⊙to-× : X ⊙∨ Y ⊙→ X ⊙× Y
+  ∨-⊙to-× = WedgeToProduct.⊙f
+
+  ∨-to-× : X ∨ Y → de⊙ (X ⊙× Y)
+  ∨-to-× = WedgeToProduct.f
+
+  ∨-to-×-glue-β : ap ∨-to-× wglue == idp
+  ∨-to-×-glue-β = WedgeToProduct.glue-β
 
 module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
   (eqX : X ⊙≃ X') (eqY : Y ⊙≃ Y') where
