@@ -8,7 +8,7 @@ record CoHSpaceStructure {i} (X : Ptd i) : Type i where
   constructor coHSpaceStructure
   field
     coμ : X ⊙→ X ⊙∨ X
-    coμ-to-×-is-Δ : ∀ x → ∨-to-× (fst coμ x) == (x , x)
+    ∨-to-×-coμ-is-Δ : ∀ x → ∨-to-× (fst coμ x) == (x , x)
 
 module _ {i} (X : Ptd i) where
   private
@@ -75,7 +75,7 @@ module _ {i} (X : Ptd i) where
     merid x
       =∎
 
-  susp-co-h-structure : CoHSpaceStructure (⊙Susp X)
-  susp-co-h-structure = record {
+  Susp-co-h-space-structure : CoHSpaceStructure (⊙Susp X)
+  Susp-co-h-space-structure = record {
     coμ = ⊙pinch;
-    coμ-to-×-is-Δ = λ x → pair×= (fst-⊙pinch-to-× x) (snd-⊙pinch-to-× x)}
+    ∨-to-×-coμ-is-Δ = λ x → pair×= (fst-⊙pinch-to-× x) (snd-⊙pinch-to-× x)}
