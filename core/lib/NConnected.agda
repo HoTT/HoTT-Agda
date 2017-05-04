@@ -109,7 +109,7 @@ conn-extend-general {B = B} {n = n} {k = S k'} {f = f} c P t =
     move-right-on-right-econv {x = x} p idp idp =
       (_ , pre∙-is-equiv (∙-unit-r p))
 
-    lemma : ∀ g h p q → (H : ∀ x → g x == h x)
+    lemma : ∀ g h p q → (H : g ∼ h)
       → ((H ∘ f) == app= (p ∙ ! q))
          ≃ (ap (λ v → v ∘ f) (λ= H) ∙ q == p)
     lemma g h p q H =
@@ -120,7 +120,7 @@ conn-extend-general {B = B} {n = n} {k = S k'} {f = f} c P t =
                    (ap-equiv app=-equiv _ _ ⁻¹)
 
     e : ∀ g h p q  →
-      (Σ (∀ x → g x == h x) (λ r → (r ∘ f) == app= (p ∙ ! q)))
+      (Σ (g ∼ h) (λ r → (r ∘ f) == app= (p ∙ ! q)))
       ≃ ((g , p) == (h , q))
     e g h p q =
       ((=Σ-econv _ _ ∘e Σ-emap-r (λ u → ↓-app=cst-econv ∘e !-equiv))
@@ -130,7 +130,7 @@ conn-extend-general {B = B} {n = n} {k = S k'} {f = f} c P t =
 conn-in : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} {h : A → B}
   → (∀ (P : B → n -Type (lmax i j))
      → Σ (Π A (fst ∘ P ∘ h) → Π B (fst ∘ P))
-         (λ u → ∀ (t : Π A (fst ∘ P ∘ h)) → ∀ x → (u t ∘ h) x == t x))
+         (λ u → ∀ (t : Π A (fst ∘ P ∘ h)) → u t ∘ h ∼ t))
   → has-conn-fibers n h
 conn-in {A = A} {B = B} {h = h} sec b =
   let s = sec (λ b → (Trunc _ (hfiber h b) , Trunc-level))

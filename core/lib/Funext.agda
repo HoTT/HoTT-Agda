@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Base
+open import lib.Function
 open import lib.Equivalence
 open import lib.Univalence
 open import lib.NType
@@ -14,7 +15,7 @@ module lib.Funext {i} {A : Type i} where
 
 -- Naive non dependent function extensionality
 
-module FunextNonDep {j} {B : Type j} {f g : A → B} (h : (x : A) → f x == g x)
+module FunextNonDep {j} {B : Type j} {f g : A → B} (h : f ∼ g)
   where
 
   private
@@ -67,7 +68,7 @@ module WeakFunext {j} {P : A → Type j} (e : (x : A) → is-contr (P x)) where
 
 -- Naive dependent function extensionality
 
-module FunextDep {j} {P : A → Type j} {f g : Π A P} (h : (x : A) → f x == g x)
+module FunextDep {j} {P : A → Type j} {f g : Π A P} (h : f ∼ g)
   where
 
   open WeakFunext
@@ -101,8 +102,7 @@ module StrongFunextDep {j} {P : A → Type j} where
 
   open FunextDep
 
-  app= : ∀ {f g : Π A P} (p : f == g)
-    → ((x : A) → f x == g x)
+  app= : ∀ {f g : Π A P} (p : f == g) → f ∼ g
   app= p x = ap (λ u → u x) p
 
   λ=-idp : (f : Π A P)
@@ -116,7 +116,7 @@ module StrongFunextDep {j} {P : A → Type j} where
     → p == λ= (app= p)
   λ=-η {f} idp = λ=-idp f
 
-  app=-β : {f g : Π A P} (h : (x : A) → f x == g x) (x : A)
+  app=-β : {f g : Π A P} (h : f ∼ g) (x : A)
     → app= (λ= h) x == h x
   app=-β h = app=-path (Q-f==Q-g h)  where
 
@@ -136,26 +136,26 @@ module StrongFunextDep {j} {P : A → Type j} where
 
 module _ {j} {P : A → Type j} {f g : Π A P} where
 
-  app= : f == g → ((x : A) → f x == g x)
+  app= : f == g → f ∼ g
   app= p x = ap (λ u → u x) p
 
   abstract
-    λ= : (h : (x : A) → f x == g x) → f == g
+    λ= : f ∼ g → f == g
     λ= = FunextDep.λ=
 
-    app=-β : (p : (x : A) → f x == g x) (x : A) → app= (λ= p) x == p x
+    app=-β : (p : f ∼ g) (x : A) → app= (λ= p) x == p x
     app=-β = StrongFunextDep.app=-β
 
     λ=-η : (p : f == g) → p == λ= (app= p)
     λ=-η = StrongFunextDep.λ=-η
 
-  λ=-equiv : ((x : A) → f x == g x) ≃ (f == g)
+  λ=-equiv : (f ∼ g) ≃ (f == g)
   λ=-equiv = (λ= , λ=-is-equiv) where
     abstract
       λ=-is-equiv : is-equiv λ=
       λ=-is-equiv = StrongFunextDep.λ=-is-equiv
 
-  app=-equiv : (f == g) ≃ ((x : A) → f x == g x)
+  app=-equiv : (f == g) ≃ (f ∼ g)
   app=-equiv = (app= , app=-is-equiv) where
     abstract
       app=-is-equiv : is-equiv app=

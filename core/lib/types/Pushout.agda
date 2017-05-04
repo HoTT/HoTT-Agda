@@ -55,7 +55,7 @@ module PushoutRec {i j k} {d : Span {i} {j} {k}} {l} {D : Type l}
 Pushout-rec = PushoutRec.f
 
 Pushout-rec-η : ∀ {i j k} {d : Span {i} {j} {k}} {l} {D : Type l} (f : Pushout d → D)
-  → ∀ x → Pushout-rec (f ∘ left) (f ∘ right) (ap f ∘ glue) x == f x
+  → Pushout-rec (f ∘ left) (f ∘ right) (ap f ∘ glue) ∼ f
 Pushout-rec-η f = Pushout-elim (λ _ → idp) (λ _ → idp)
   (λ c → ↓-='-in' $ ! $ PushoutRec.glue-β (f ∘ left) (f ∘ right) (ap f ∘ glue) c)
 

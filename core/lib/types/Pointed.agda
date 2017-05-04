@@ -19,18 +19,11 @@ module lib.types.Pointed where
 
 -- function extensionality for pointed maps
 ⊙λ= : ∀ {i j} {X : Ptd i} {Y : Ptd j} {f g : X ⊙→ Y}
-  (p : ∀ x → fst f x == fst g x)
+  (p : fst f ∼ fst g)
   (α : snd f == snd g [ (λ y → y == pt Y) ↓ p (pt X) ])
   → f == g
 ⊙λ= {g = g} p α =
   pair= (λ= p) (↓-app=cst-in (↓-idf=cst-out α ∙ ap (_∙ snd g) (! (app=-β p _))))
-
-{-
-⊙λ=' : ∀ {i j} {X : Ptd i} {Y : Ptd j} {f g : X ⊙→ Y}
-  (p : ∀ x → fst f x == fst g x) (α : snd f == p (pt X) ∙ snd g)
-  → f == g
-⊙λ=' p α = ⊙λ= p (↓-idf=cst-in α)
--}
 
 -- associativity of pointed maps
 ⊙∘-assoc-pt : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}

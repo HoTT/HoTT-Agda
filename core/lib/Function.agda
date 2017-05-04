@@ -18,6 +18,16 @@ module lib.Function where
   → a₁ == a₂ → f a₂ == b → f a₁ == b
 ⊙∘-pt f p q = ap f p ∙ q
 
+infixr 30 _∼_ _⊙∼_
+_∼_ : ∀ {i j} {A : Type i} {B : A → Type j}
+  (f g : (a : A) → B a) → Type (lmax i j)
+f ∼ g = ∀ x → f x == g x
+
+_⊙∼_ : ∀ {i j} {X : Ptd i} {Y : Ptd j}
+  (f g : X ⊙→ Y) → Type (lmax i j)
+_⊙∼_ {X = X} {Y = Y} (f , f-pt) (g , g-pt) =
+  Σ (f ∼ g) λ p → f-pt == g-pt [ (_== pt Y) ↓ p (pt X) ]
+
 infixr 80 _⊙∘_
 _⊙∘_ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   (g : Y ⊙→ Z) (f : X ⊙→ Y) → X ⊙→ Z

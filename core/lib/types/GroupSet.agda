@@ -118,7 +118,7 @@ module lib.types.GroupSet {i} where
 
   groupset-hom= : ∀ {grp : Group i} {j} {gset₁ gset₂ : GroupSet grp j}
     {gsh₁ gsh₂ : GroupSetHom gset₁ gset₂}
-    → (∀ x → GroupSetHom.f gsh₁ x == GroupSetHom.f gsh₂ x)
+    → GroupSetHom.f gsh₁ ∼ GroupSetHom.f gsh₂
     → gsh₁ == gsh₂
   groupset-hom= {gset₂ = gset₂} f= =
     groupset-hom='
