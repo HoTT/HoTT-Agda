@@ -1,8 +1,10 @@
 {-# OPTIONS --without-K --rewriting #-}
 
-open import HoTT
+open import lib.Basics
+open import lib.NType2
+open import lib.types.Sigma
 
-module stash.modalities.Modalities where
+module lib.types.Modality where
 
   record Modality ℓ : Type (lsucc ℓ) where
     field
@@ -28,22 +30,7 @@ module stash.modalities.Modalities where
     ◯-Type : Type (lsucc ℓ)
     ◯-Type = Σ (Type ℓ) is-local
 
-    is-◯-connected : Type ℓ → Type ℓ
-    is-◯-connected A = is-contr (◯ A)
-
-    is-◯-connected-is-prop : ∀ {A} → is-prop (is-◯-connected A)
-    is-◯-connected-is-prop {A} = is-contr-is-prop
-    
-    is-◯-equiv : {A B : Type ℓ} → (A → B) → Type ℓ
-    is-◯-equiv {B = B} f = (b : B) → is-◯-connected (hfiber f b)
-
-    has-◯-conn-fibers = is-◯-equiv
-
-    is-lex : Type (lsucc ℓ)
-    is-lex = {A B : Type ℓ} (f : A → B)
-      → is-◯-connected A → is-◯-connected B → is-◯-equiv f
-
-    -- Some basic constructions
+    {- elimination rules -}
 
     module ◯Elim {A : Type ℓ} {B : ◯ A → Type ℓ}
       (B-local : (x : ◯ A) → is-local (B x)) (η* : Π A (B ∘ η)) where
@@ -56,6 +43,8 @@ module stash.modalities.Modalities where
       = ◯Elim (λ _ → B-local) η*
     ◯-rec = ◯Rec.f
     ◯-rec-β = ◯Rec.η-β
+
+    {- functoriality -}
 
     module ◯Fmap {A B : Type ℓ} (f : A → B) =
       ◯Rec ◯-is-local (η ∘ f)
@@ -78,12 +67,7 @@ module stash.modalities.Modalities where
     ◯-emap : {A B : Type ℓ} → A ≃ B → ◯ A ≃ ◯ B
     ◯-emap (f , f-ise) = ◯-fmap f , ◯-isemap f f-ise
 
-    equiv-preserves-◯-conn : {A B : Type ℓ} → A ≃ B → is-◯-connected A → is-◯-connected B
-    equiv-preserves-◯-conn e c = equiv-preserves-level (◯-emap e) c
-
-    total-◯-equiv : {A : Type ℓ} {P Q : A → Type ℓ} (φ : ∀ a → P a → Q a) → 
-                     (∀ a → is-◯-equiv (φ a)) → is-◯-equiv (Σ-fmap-r φ)
-    total-◯-equiv φ e (a , q) = equiv-preserves-◯-conn (hfiber-Σ-fmap-r φ q ⁻¹) (e a q)
+    {- equivalences preserve locality -}
 
     -- This is the only appearence of univalence, but ...
     local-is-replete : {A B : Type ℓ} → is-local A → A ≃ B → is-local B
@@ -92,6 +76,8 @@ module stash.modalities.Modalities where
     -- This name aligns with the current codebase better.
     equiv-preserves-local : {A B : Type ℓ} → A ≃ B → is-local A → is-local B
     equiv-preserves-local e A-is-loc = local-is-replete A-is-loc e
+
+    {- locality and [η] being an equivalence -}
 
     local-implies-η-equiv : {A : Type ℓ} → is-local A → is-equiv (η {A})
     local-implies-η-equiv {A} w = is-eq (η {A}) η-inv inv-l inv-r
@@ -125,59 +111,36 @@ module stash.modalities.Modalities where
               inv-l : (b : ◯ B) → η (η-inv b) == b
               inv-l = ◯-elim (λ b → ◯-=-is-local _ _) (λ b → ap η (inv-r b))
 
+    {- locality of identification -}
+
+    abstract
       =-preserves-local : {A : Type ℓ} → is-local A → {a₀ a₁ : A} → is-local (a₀ == a₁)
       =-preserves-local {A} w {a₀} {a₁} = local-is-replete
         (◯-=-is-local (η a₀) (η a₁)) (ap-equiv (η , local-implies-η-equiv w) a₀ a₁ ⁻¹)
 
-      Π-is-local : {A : Type ℓ} {B : A → Type ℓ} (w : (a : A) → is-local (B a)) → is-local (Π A B)
-      Π-is-local {A} {B} w = retract-is-local {◯ (Π A B)} {Π A B} ◯-is-local η-inv η r
+    {- ◯-connectness and ◯-equivalences -}
 
-        where η-inv : ◯ (Π A B) → Π A B
-              η-inv φ' a = ◯-rec (w a) (λ φ → φ a) φ'
+    is-◯-connected : Type ℓ → Type ℓ
+    is-◯-connected A = is-contr (◯ A)
 
-              r : (φ : Π A B) → η-inv (η φ) == φ
-              r φ = λ= (λ a → ◯-rec-β (w a) (λ φ₀ → φ₀ a) φ)
+    is-◯-connected-is-prop : ∀ {A} → is-prop (is-◯-connected A)
+    is-◯-connected-is-prop {A} = is-contr-is-prop
+    
+    is-◯-equiv : {A B : Type ℓ} → (A → B) → Type ℓ
+    is-◯-equiv {B = B} f = (b : B) → is-◯-connected (hfiber f b)
 
-      →-is-local : {A B : Type ℓ} → is-local B → is-local (A → B)
-      →-is-local w = Π-is-local (λ _ → w)
+    has-◯-conn-fibers = is-◯-equiv
 
-    module ◯Fmap2 {A B C : Type ℓ} (η* : A → B → C) where
-      private module M = ◯Rec (→-is-local ◯-is-local) (◯-fmap ∘ η*)
-      f = M.f
-      η-β : ∀ a b → f (η a) (η b) == η (η* a b)
-      η-β a b = app= (M.η-β a) (η b) ∙ ◯-fmap-β (η* a) b
-    ◯-fmap2 = ◯Fmap2.f
-    ◯-fmap2-β = ◯Fmap2.η-β
+    is-lex : Type (lsucc ℓ)
+    is-lex = {A B : Type ℓ} (f : A → B)
+      → is-◯-connected A → is-◯-connected B → is-◯-equiv f
 
-    abstract
-      Σ-is-local : {A : Type ℓ} (B : A → Type ℓ)
-        → is-local A → ((a : A) → is-local (B a))
-        → is-local (Σ A B)
-      Σ-is-local {A} B lA lB = retract-is-local {◯ (Σ A B)} {Σ A B} ◯-is-local η-inv η r
+    equiv-preserves-◯-conn : {A B : Type ℓ} → A ≃ B → is-◯-connected A → is-◯-connected B
+    equiv-preserves-◯-conn e c = equiv-preserves-level (◯-emap e) c
 
-        where h : ◯ (Σ A B) → A
-              h = ◯-rec lA fst
-
-              h-β : (ab : Σ A B) → h (η ab) == fst ab
-              h-β = ◯-rec-β lA fst
-
-              k : (w : ◯ (Σ A B)) → B (h w)
-              k = ◯-elim (lB ∘ h) λ ab → transport! B (h-β ab) (snd ab)
-
-              k-β : (ab : Σ A B) → k (η ab) == snd ab [ B ↓ h-β ab ]
-              k-β ab = from-transp! B (h-β ab) $
-                ◯-elim-β (lB ∘ h) (λ ab → transport! B (h-β ab) (snd ab)) ab
-
-              η-inv : ◯ (Σ A B) → Σ A B
-              η-inv w = h w , k w
-
-              r : (x : Σ A B) → η-inv (η x) == x
-              r ab = pair= (h-β ab) (k-β ab)
-
-      ×-is-local : {A B : Type ℓ}
-        → is-local A → is-local B → is-local (A × B)
-      ×-is-local {B = B} lA lB = Σ-is-local (λ _ → B) lA (λ _ → lB)
-
+    total-◯-equiv : {A : Type ℓ} {P Q : A → Type ℓ} (φ : ∀ a → P a → Q a) → 
+                     (∀ a → is-◯-equiv (φ a)) → is-◯-equiv (Σ-fmap-r φ)
+    total-◯-equiv φ e (a , q) = equiv-preserves-◯-conn (hfiber-Σ-fmap-r φ q ⁻¹) (e a q)
 
     module _ {A B : Type ℓ} {h : A → B} (c : is-◯-equiv h) (P : B → ◯-Type) where
       abstract
@@ -224,6 +187,61 @@ module stash.modalities.Modalities where
 
       ◯-extend-β : ∀ f a → ◯-extend f (h a) == f a
       ◯-extend-β f = app= (is-equiv.f-g pre∘-◯-conn-is-equiv f)
+
+    {- locality of function types -}
+
+    abstract
+      Π-is-local : {A : Type ℓ} {B : A → Type ℓ} (w : (a : A) → is-local (B a)) → is-local (Π A B)
+      Π-is-local {A} {B} w = retract-is-local {◯ (Π A B)} {Π A B} ◯-is-local η-inv η r
+
+        where η-inv : ◯ (Π A B) → Π A B
+              η-inv φ' a = ◯-rec (w a) (λ φ → φ a) φ'
+
+              r : (φ : Π A B) → η-inv (η φ) == φ
+              r φ = λ= (λ a → ◯-rec-β (w a) (λ φ₀ → φ₀ a) φ)
+
+      →-is-local : {A B : Type ℓ} → is-local B → is-local (A → B)
+      →-is-local w = Π-is-local (λ _ → w)
+
+    -- Fmap2 because of locality of function types
+    module ◯Fmap2 {A B C : Type ℓ} (η* : A → B → C) where
+      private module M = ◯Rec (→-is-local ◯-is-local) (◯-fmap ∘ η*)
+      f = M.f
+      η-β : ∀ a b → f (η a) (η b) == η (η* a b)
+      η-β a b = app= (M.η-β a) (η b) ∙ ◯-fmap-β (η* a) b
+    ◯-fmap2 = ◯Fmap2.f
+    ◯-fmap2-β = ◯Fmap2.η-β
+
+    {- locality of sigma types -}
+
+    abstract
+      Σ-is-local : {A : Type ℓ} (B : A → Type ℓ)
+        → is-local A → ((a : A) → is-local (B a))
+        → is-local (Σ A B)
+      Σ-is-local {A} B lA lB = retract-is-local {◯ (Σ A B)} {Σ A B} ◯-is-local η-inv η r
+
+        where h : ◯ (Σ A B) → A
+              h = ◯-rec lA fst
+
+              h-β : (ab : Σ A B) → h (η ab) == fst ab
+              h-β = ◯-rec-β lA fst
+
+              k : (w : ◯ (Σ A B)) → B (h w)
+              k = ◯-elim (lB ∘ h) λ ab → transport! B (h-β ab) (snd ab)
+
+              k-β : (ab : Σ A B) → k (η ab) == snd ab [ B ↓ h-β ab ]
+              k-β ab = from-transp! B (h-β ab) $
+                ◯-elim-β (lB ∘ h) (λ ab → transport! B (h-β ab) (snd ab)) ab
+
+              η-inv : ◯ (Σ A B) → Σ A B
+              η-inv w = h w , k w
+
+              r : (x : Σ A B) → η-inv (η x) == x
+              r ab = pair= (h-β ab) (k-β ab)
+
+      ×-is-local : {A B : Type ℓ}
+        → is-local A → is-local B → is-local (A × B)
+      ×-is-local {B = B} lA lB = Σ-is-local (λ _ → B) lA (λ _ → lB)
 
     ◯-preserves-× : {A B : Type ℓ} → ◯ (A × B) ≃ ◯ A × ◯ B
     ◯-preserves-× {A} {B} = equiv ◯-split ◯-pair inv-l inv-r
