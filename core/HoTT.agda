@@ -11,9 +11,10 @@ open import lib.Relation2 public
 open import lib.Function2 public
 
 open import lib.cubical.Cubical public
+open import lib.types.Types public
 open import lib.groups.Groups public
 open import lib.groupoids.Groupoids public
-open import lib.types.Types public
+open import lib.modalities.Modalities public
 
 {-
 To use coinduction in the form of [∞], [♭] and [♯] you can do:

@@ -243,8 +243,8 @@ module lib.types.Modality where
         → is-local A → is-local B → is-local (A × B)
       ×-is-local {B = B} lA lB = Σ-is-local (λ _ → B) lA (λ _ → lB)
 
-    ◯-preserves-× : {A B : Type ℓ} → ◯ (A × B) ≃ ◯ A × ◯ B
-    ◯-preserves-× {A} {B} = equiv ◯-split ◯-pair inv-l inv-r
+    ◯-×-econv : {A B : Type ℓ} → ◯ (A × B) ≃ ◯ A × ◯ B
+    ◯-×-econv {A} {B} = equiv ◯-split ◯-pair inv-l inv-r
 
       where ◯-fst : ◯ (A × B) → ◯ A
             ◯-fst = ◯-fmap fst
