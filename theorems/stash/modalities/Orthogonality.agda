@@ -2,6 +2,8 @@
 
 open import HoTT
 
+open import stash.modalities.JoinAdj
+
 module stash.modalities.Orthogonality where
 
   module PathSplit {i} (X : Type i) (x y : X) where
@@ -25,11 +27,29 @@ module stash.modalities.Orthogonality where
 
   module _ {i} where
   
-    Δ : (A : Type i) (X : Type i) → A → (X → A)
-    Δ A X = cst
+    Δ : (X A : Type i) → X → (A → X)
+    Δ X A = cst
 
-    ⟦_⊥_⟧ : (X : Type i) (A : Type i) → Type _
-    ⟦ X ⊥ A ⟧ = is-equiv (Δ A X)
+    -- Δ-ap : {X A : Type i} {x y : X} (φ : A → x == y) (a : A)
+    --   → λ= φ == ap cst (φ a)
+    -- Δ-ap φ a = equiv-is-inj {f = app=} (snd app=-equiv) (λ= φ) (ap cst (φ a)) (λ= (λ a₀ → app=-β φ a₀ ∙ {!lem a₀!}))
+
+    --   where lem : ∀ a₀ → φ a₀ == app= (ap cst (φ a₀)) a₀ 
+    --         lem = {!!}
+
+    ⟦_⊥_⟧ : (A : Type i) (X : Type i) → Type i
+    ⟦ A ⊥ X ⟧ = is-equiv (Δ X A)
+
+    ctr : {A X : Type i} → ⟦ A ⊥ X ⟧ → (A → X) → X
+    ctr A⊥X φ = is-equiv.g A⊥X φ
+
+    ctr-null : {A X : Type i} (A⊥X : ⟦ A ⊥ X ⟧) (φ : A → X)
+      → cst (ctr A⊥X φ) == φ 
+    ctr-null A⊥X φ = is-equiv.f-g A⊥X φ
+
+    ctr-cst : {A X : Type i} (A⊥X : ⟦ A ⊥ X ⟧) 
+      → (x : X) → ctr A⊥X (cst x) == x
+    ctr-cst A⊥X x = is-equiv.g-f A⊥X x
 
     Unit-orth : (A : Type i) → ⟦ Lift ⊤ ⊥ A ⟧
     Unit-orth A = record {
@@ -45,44 +65,119 @@ module stash.modalities.Orthogonality where
     self-orth-is-contr A ω = Δ-equiv-is-contr A ω
 
     orth-emap : {A B X : Type i} → ⟦ A ⊥ X ⟧ → (A ≃ B) → ⟦ B ⊥ X ⟧
-    orth-emap {A} {B} {X} ω e = is-eq (Δ X B) g f-g g-f
+    orth-emap {A} {B} {X} A⊥ e = is-eq (Δ X B) g f-g g-f
 
       where g : (B → X) → X
-            g φ = is-equiv.g ω (φ ∘ (fst e))
+            g φ = ctr A⊥ (φ ∘ (fst e))
 
             f-g : (φ : B → X) → Δ X B (g φ) == φ
-            f-g φ = λ= (λ b → app= (is-equiv.f-g ω (φ ∘ (fst e))) (<– e b) ∙ ap φ (<–-inv-r e b) )
+            f-g φ = λ= (λ b → app= (ctr-null A⊥ (φ ∘ (fst e))) (<– e b) ∙ ap φ (<–-inv-r e b) )
 
             g-f : (x : X) → g (Δ X B x) == x
-            g-f x = is-equiv.g-f ω x
+            g-f x = ctr-cst A⊥ x
 
-    prod-to : {A B X : Type i} → ⟦ A ⊥ X ⟧ → ⟦ B ⊥ X ⟧ → ⟦ A × B ⊥ X ⟧
-    prod-to e f = is-eq _ (λ φ → is-equiv.g e (λ a → is-equiv.g f (λ b → φ (a , b))))
-      (λ φ → λ= (λ { (a , b) → app= (is-equiv.f-g e (λ a → is-equiv.g f (λ b → φ (a , b)))) a ∙ app= (is-equiv.f-g f (λ b → φ (a , b))) b }))
-      (λ x → ap (is-equiv.g e) (λ= (λ a → is-equiv.g-f f x)) ∙ is-equiv.g-f e x)
+    Σ-orth : {A X : Type i} {B : A → Type i} → ⟦ A ⊥ X ⟧ → (B⊥ : (a : A) → ⟦ B a ⊥ X ⟧) → ⟦ Σ A B ⊥ X ⟧
+    Σ-orth {A} {X} {B} A⊥ B⊥ = is-eq _ from to-from from-to
 
-    -- This is a special case of a more general result, but I'll prove
-    -- it directly here first.
+      where from : (Σ A B → X) → X
+            from φ = ctr A⊥ (λ a → ctr (B⊥ a) (λ b → φ (a , b)))
+
+            to-from : (φ : Σ A B → X) → cst (from φ) == φ
+            to-from φ = λ= (λ { (a , b) → app= (ctr-null A⊥ (λ a → ctr (B⊥ a) (λ b → φ (a , b)))) a ∙
+                                           app= (ctr-null (B⊥ a) (λ b → φ (a , b))) b })
+
+            from-to : (x : X) → from (cst x) == x
+            from-to x = ap (ctr A⊥) (λ= (λ a → ctr-cst (B⊥ a) x)) ∙ ctr-cst A⊥ x
+
+    -- -- This works if the base is connected, but you'll have to add that
+    -- fib-orth : {A X : Type i} {B : A → Type i} → ⟦ Σ A B ⊥ X ⟧ →  (a : A) → ⟦ B a ⊥ X ⟧
+    -- fib-orth {A} {X} {B} Σ⊥ a = is-eq _ g {!!} {!!}
+
+    --   where g : (φ : B a → X) → X
+    --         g φ = ctr Σ⊥ {!!}
+
+    -- -- This looks doomed ...
+    -- base-orth : {A X : Type i} {B : A → Type i} → ⟦ Σ A B ⊥ X ⟧ → ⟦ A ⊥ X ⟧
+    -- base-orth {A} {X} {B} Σ⊥ = is-eq _ g f-g {!!}
+
+    --   where g : (φ : A → X) → X
+    --         g φ = ctr Σ⊥ (uncurry (λ a _ → φ a))
+
+    --         f-g : (φ : A → X) → cst (g φ) == φ
+    --         f-g φ = λ= (λ a → app= (ctr-null Σ⊥ (uncurry (λ a _ → φ a))) (a , {!!}))
+
+    ×-orth : {A B X : Type i} → ⟦ A ⊥ X ⟧ → ⟦ B ⊥ X ⟧ → ⟦ A × B ⊥ X ⟧
+    ×-orth {B = B} A⊥ B⊥ = Σ-orth {B = λ _ → B} A⊥ (λ _ → B⊥)
+
+    -- Okay, you need to find a simpler way.
+    -- *-orth : {A B X : Type i} → ⟦ B ⊥ X ⟧ → ⟦ A * B ⊥ X ⟧
+    -- *-orth {A} {B} {X} ω = is-eq (Δ X (A * B)) from to-from from-to
+
+    --   where from : (A * B → X) → X
+    --         from f = is-equiv.g ω (f ∘ right)
+
+    --           where test : A → hfiber cst (f ∘ right)
+    --                 test =  snd (–> (join-adj A B X) f) 
+                    
+    --         to-from : (f : A * B → X) → Δ X (A * B) (from f) == f
+    --         to-from f = {!!}
+
+    --         from-to : (x : X) → from (Δ X (A * B) x) == x
+    --         from-to x = {!is-equiv.g-f ω x!}
+
+    postulate
+
+      -- Right, this is a special case of the join adjunction ...
+      adj-orth : (A X : Type i) → ⟦ Susp A ⊥ X ⟧ → (x y : X) → ⟦ A ⊥ x == y ⟧
+
     pths-orth : {A X : Type i} {x y : X} → ⟦ A ⊥ X ⟧ → ⟦ A ⊥ x == y ⟧
-    pths-orth {A} {X} {x} {y} ω = is-eq (Δ (x == y) A) g {!!} {!!}
+    pths-orth {A} {X} {x} {y} A⊥X = is-eq (Δ (x == y) A) g to-from from-to
 
-      where θ : (A → X) → X
-            θ = is-equiv.g ω
+      where g : (A → x == y) → x == y
+            g φ = ! (ctr-cst A⊥X x) ∙ ap (ctr A⊥X) (λ= φ) ∙ ctr-cst A⊥X y 
 
-            g : (A → x == y) → x == y
-            g φ = p ∙ q
+            to-from : (φ : A → x == y) → Δ (x == y) A (g φ) == φ
+            to-from φ = λ= coh
 
-              where module PS = PathSplit X x y
+              where coh : (a : A) → g φ == φ a
+                    coh a = ! (ctr-cst A⊥X x) ∙ ap (ctr A⊥X) (λ= φ) ∙ ctr-cst A⊥X y =⟨ {!!} ⟩
+                            φ a ∎
 
-                    z : X
-                    z = θ (fst ∘ (–> PS.path-split) ∘ φ)
+                      where puzzle = ap (ctr A⊥X) (λ= φ) =⟨ {!a !} ⟩
+                                     ap (ctr A⊥X) (ap cst (φ a)) =⟨ ∘-ap (ctr A⊥X) cst (φ a) ⟩ 
+                                     ap ((ctr A⊥X) ∘ cst) (φ a) ∎
 
-                    p : x == z
-                    p = ! (is-equiv.g-f ω x) ∙ ap θ (λ= (fst ∘ snd ∘ (–> PS.path-split) ∘ φ))
+                            eq : ctr-cst A⊥X x ∙' φ a == ap ((ctr A⊥X) ∘ cst) (φ a) ∙ ctr-cst A⊥X y
+                            eq = ↓-app=idf-out (apd (ctr-cst A⊥X) (φ a))
 
-                    q : z == y
-                    q = ap θ (λ= (snd ∘ snd ∘ (–> PS.path-split) ∘ φ)) ∙ is-equiv.g-f ω y
+                            eq₀ : ctr-null A⊥X (cst x) ∙' λ= φ == ap (cst ∘ (ctr A⊥X)) (λ= φ) ∙ ctr-null A⊥X (cst y)
+                            eq₀ = ↓-app=idf-out (apd (ctr-null A⊥X) (λ= φ))
 
+                            adj : ap cst (ctr-cst A⊥X x) == ctr-null A⊥X (cst x)
+                            adj = is-equiv.adj A⊥X x
+
+                            adj' : ap (ctr A⊥X) (ctr-null A⊥X (cst x)) == ctr-cst A⊥X (ctr A⊥X (cst x))
+                            adj' = is-equiv.adj' A⊥X (cst x)
+
+                            claim : (λ= φ) == ! (ap cst (ctr-cst A⊥X x)) ∙ ap cst (ap (ctr A⊥X) (λ= φ)) ∙ ap cst (ctr-cst A⊥X y)
+                            claim = {!!}
+
+                            then : (λ= φ) == ap cst (! (ctr-cst A⊥X x) ∙ ap (ctr A⊥X) (λ= φ) ∙ ctr-cst A⊥X y)
+                            then = {!!}
+                            
+            from-to : (p : x == y) → g (cst p) == p
+            from-to p = {!!}
+            
+    -- ctr : {A X : Type i} → ⟦ A ⊥ X ⟧ → (A → X) → X
+    -- ctr A⊥X φ = is-equiv.g A⊥X φ
+
+    -- ctr-null : {A X : Type i} (A⊥X : ⟦ A ⊥ X ⟧) (φ : A → X)
+    --   → cst (ctr A⊥X φ) == φ 
+    -- ctr-null A⊥X φ = is-equiv.f-g A⊥X φ
+
+    -- ctr-cst : {A X : Type i} (A⊥X : ⟦ A ⊥ X ⟧) 
+    --   → (x : X) → ctr A⊥X (cst x) == x
+    -- ctr-cst A⊥X x = is-equiv.g-f A⊥X x
 
   -- Weak cellular inequalities
   module _ {i} where
@@ -90,8 +185,8 @@ module stash.modalities.Orthogonality where
     _≻_ : Type i → Type i → Type _
     X ≻ A = (Y : Type i) → ⟦ A ⊥ Y ⟧ → ⟦ X ⊥ Y ⟧
 
-    equiv-≻ : {X Y : Type i} {A : Type i} → X ≻ A → X ≃ Y → Y ≻ A
-    equiv-≻ {X} {Y} {A} ω e Z o = orth-emap (ω Z o) e
+    ≻-emap : {X Y : Type i} {A : Type i} → X ≻ A → X ≃ Y → Y ≻ A
+    ≻-emap {X} {Y} {A} ω e Z o = orth-emap (ω Z o) e
 
     ≻-trivial : (A : Type i) → (Lift ⊤) ≻ A
     ≻-trivial A X _ = Unit-orth X
@@ -105,14 +200,32 @@ module stash.modalities.Orthogonality where
     ≻-⊤-is-contr : (A : Type i) → A ≻ (Lift ⊤) → is-contr A
     ≻-⊤-is-contr A ω = self-orth-is-contr A (ω A (Unit-orth A))
 
+    Σ-≻ : {A X : Type i} {P : X → Type i} → X ≻ A → (P≻A : (x : X) → P x ≻ A) → Σ X P ≻ A
+    Σ-≻ X≻A P≻A Y A⊥Y = Σ-orth (X≻A Y A⊥Y) (λ x → P≻A x Y A⊥Y)
+    
     -- We jump a universe level, but its certainly convenient ...
     is-hyper-prop : Type i → Type (lsucc i)
     is-hyper-prop A = (X Y : Type i) (f : X → Y) → X ≻ A → Y ≻ A → (y : Y) → hfiber f y ≻ A
 
-    hyper-prop-kills-paths : (A : Type i) → is-hyper-prop A → (a₀ a₁ : A) → a₀ == a₁ ≻ A
-    hyper-prop-kills-paths A hp a₀ a₁ =
-      equiv-≻ (hp (Lift ⊤) A (λ _ → a₀) (≻-trivial A) (≻-reflexive A) a₁)
-      (equiv (λ { (lift unit , p) → p }) (λ p → (lift unit , p))
-             (λ p → idp) (λ { (lift unit , p) → idp }))
+    hp-kills-paths : (A : Type i) → is-hyper-prop A
+      → (X : Type i) → X ≻ A
+      → (x y : X) → (x == y) ≻ A
+    hp-kills-paths A hp X X≻A x y = ≻-emap (hp (Lift ⊤) X (λ _ → x) (≻-trivial A) X≻A y)
+      (equiv snd (λ p → (_ , p)) (λ _ → idp) (λ _ → idp))
 
-  
+    -- Okay, so in some sense this is much more natural.
+    -- It just says the connected guys have to be closed under
+    -- diagonals.
+    kills-paths-hp : (A : Type i)
+      → (κ : (X : Type i) → X ≻ A → (x y : X) → (x == y) ≻ A)
+      → is-hyper-prop A
+    kills-paths-hp A κ X Y f X≻A Y≻A y = Σ-≻ X≻A (λ x → κ Y Y≻A (f x) y)
+
+    -- You'll have to think a bit about why this is equivalent
+    -- to *preserving* the path spaces.
+
+    ×-≻ : {A B X : Type i} → A ≻ X → B ≻ X → A × B ≻ X
+    ×-≻ ω₀ ω₁ Y e = ×-orth (ω₀ Y e) (ω₁ Y e)
+    
+    postulate
+      susp-≻ : (A : Type i) → Susp A ≻ A

@@ -1,5 +1,4 @@
 {-# OPTIONS --without-K --rewriting #-}
-
 open import HoTT
 
 open import stash.modalities.gbm.GbmUtil

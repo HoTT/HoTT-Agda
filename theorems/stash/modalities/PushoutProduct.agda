@@ -22,8 +22,7 @@ _□_ : (f : A → B) (g : A' → B') → Pushout (□-span f g) → B × B'
 f □ g = PshoutProd.f f g
 
 □-glue-β : (f : A → B) (g : A' → B') (a : A) (a' : A') → ap (f □ g) (glue (a , a')) == idp
-□-glue-β f g = {!PshoutProd.glue-β!}
--- Agda bug is keeping me from finishing this ...
+□-glue-β f g a a' = PshoutProd.glue-β f g (a , a')
   
 module _ (f : A → B) (g : A' → B') where
 

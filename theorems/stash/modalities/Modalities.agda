@@ -4,6 +4,14 @@ open import HoTT
 
 module stash.modalities.Modalities where
 
+  -- Where to put this?  Or maybe there's
+  -- a simpler proof from some library function?
+  !ᵈ-inv-l-out : ∀ {ℓ} {A : Type ℓ} {P : A → Type ℓ}
+    {a₀ a₁ : A} {p : a₀ == a₁} {x₀ x₁ : P a₁} 
+    → (q : x₀ == x₁ [ P ↓ ! p ∙ p ])
+    → x₀ == x₁
+  !ᵈ-inv-l-out {p = idp} q = q
+
   record Modality ℓ : Type (lsucc ℓ) where
     field
 
@@ -85,6 +93,7 @@ module stash.modalities.Modalities where
                      (∀ a → is-◯-equiv (φ a)) → is-◯-equiv (Σ-fmap-r φ)
     total-◯-equiv φ e (a , q) = equiv-preserves-◯-conn (hfiber-Σ-fmap-r φ q ⁻¹) (e a q)
 
+
     -- This is the only appearence of univalence, but ...
     local-is-replete : {A B : Type ℓ} → is-local A → A ≃ B → is-local B
     local-is-replete w eq = transport is-local (ua eq) w
@@ -140,6 +149,27 @@ module stash.modalities.Modalities where
 
       →-is-local : {A B : Type ℓ} → is-local B → is-local (A → B)
       →-is-local w = Π-is-local (λ _ → w)
+
+      private
+
+        η-hfiber-lemma : {A : Type ℓ} (a : ◯ A) (x : hfiber η a) →
+          η x == η (fst x , idp) [ (λ z → ◯ (hfiber η z)) ↓ ! (snd x) ]
+        η-hfiber-lemma .(η a₀) (a₀ , idp) = idp
+
+      η-has-◯-conn-fibers : {A : Type ℓ} → has-◯-conn-fibers (η {A})
+      η-has-◯-conn-fibers {A} a = σ a , τ
+
+        where σ : (a : ◯ A) → ◯ (hfiber η a)
+              σ = ◯-elim (λ _ → ◯-is-local) (λ a₀ → η (a₀ , idp))
+
+              coh : (a : A) → σ (η a) == η (a , idp)
+              coh a = ◯-elim-β (λ _ → ◯-is-local) (λ a₀ → η (a₀ , idp)) a 
+
+              τ-aux : (x₀ : hfiber η a) → σ a == η x₀
+              τ-aux (a₀ , p) = ! (!ᵈ-inv-l-out {p = p} (η-hfiber-lemma a (a₀ , p) ∙ᵈ ! (coh a₀) ∙ᵈ apd σ p))
+
+              τ : (x : ◯ (hfiber η a)) → σ a == x
+              τ = ◯-elim (λ x → ◯-=-is-local (σ a) x) τ-aux
 
     module ◯Fmap2 {A B C : Type ℓ} (η* : A → B → C) where
       private module M = ◯Rec (→-is-local ◯-is-local) (◯-fmap ∘ η*)
