@@ -9,7 +9,7 @@ module homotopy.WedgeCofiber {i} (X Y : Ptd i) where
 
   module CofWinl where
 
-    module Into = CofiberRec {f = winl} (pt Y) (projr X Y) (λ _ → idp)
+    module Into = CofiberRec {f = winl} (pt Y) (projr {X = X} {Y = Y}) (λ _ → idp)
 
     into = Into.f
 
@@ -25,7 +25,7 @@ module homotopy.WedgeCofiber {i} (X Y : Ptd i) where
           (λ y → idp)
           (↓-='-from-square $
             (lemma (cfglue (pt X)) (ap cfcod wglue)
-             ∙h⊡ (ap-∘ out (projr X Y) wglue ∙ ap (ap out) (Projr.glue-β X Y))
+             ∙h⊡ (ap-∘ out projr wglue ∙ ap (ap out) (Projr.glue-β))
                   ∙v⊡ bl-square (ap cfcod wglue))))
         (λ x → ↓-∘=idf-from-square out into $
           ! (∙-unit-r _) ∙h⊡
@@ -43,12 +43,12 @@ module homotopy.WedgeCofiber {i} (X Y : Ptd i) where
     ⊙eq : ⊙Cofiber ⊙winl ⊙≃ Y
     ⊙eq = ≃-to-⊙≃ eq idp
 
-  cfcod-winl-projr-comm-sqr : CommSquare (cfcod' winl) (projr X Y) (idf _) CofWinl.into
+  cfcod-winl-projr-comm-sqr : CommSquare (cfcod' winl) projr (idf _) CofWinl.into
   cfcod-winl-projr-comm-sqr = comm-sqr λ _ → idp
 
   module CofWinr where
 
-    module Into = CofiberRec {f = winr} (pt X) (projl X Y) (λ _ → idp)
+    module Into = CofiberRec {f = winr} (pt X) (projl {X = X} {Y = Y}) (λ _ → idp)
 
     into = Into.f
 
@@ -63,7 +63,7 @@ module homotopy.WedgeCofiber {i} (X Y : Ptd i) where
           (λ x → idp)
           (λ y → (ap cfcod wglue ∙ ! (cfglue (pt Y))) ∙ cfglue y)
           (↓-='-from-square $
-            (ap-∘ out (projl X Y) wglue ∙ ap (ap out) (Projl.glue-β X Y)) ∙v⊡
+            (ap-∘ out projl wglue ∙ ap (ap out) Projl.glue-β) ∙v⊡
                connection
              ⊡h∙ ! (lemma (ap (cfcod' winr) wglue) (cfglue (pt Y)))))
         (λ y → ↓-∘=idf-from-square out into $
@@ -82,5 +82,5 @@ module homotopy.WedgeCofiber {i} (X Y : Ptd i) where
     ⊙eq : ⊙Cofiber ⊙winr ⊙≃ X
     ⊙eq = ≃-to-⊙≃ eq idp
 
-  cfcod-winr-projl-comm-sqr : CommSquare (cfcod' winr) (projl X Y) (idf _) CofWinr.into
+  cfcod-winr-projl-comm-sqr : CommSquare (cfcod' winr) projl (idf _) CofWinr.into
   cfcod-winr-projl-comm-sqr = comm-sqr λ _ → idp

@@ -36,3 +36,8 @@ module _ where
   conn-elim-β = conn-extend-β
   conn-elim-general = conn-extend-general
   conn-intro = conn-in
+
+  if_then_else_ : ∀ {i} {A : Type i}
+    → Bool → A → A → A
+  if true then t else e = t
+  if false then t else e = e

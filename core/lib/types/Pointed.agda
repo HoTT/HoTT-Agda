@@ -133,7 +133,7 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} (⊙e : X ⊙≃ Y) where
 ⊙Bool→-equiv-idf {i} X = equiv ⊙Bool→-to-idf g f-g g-f
   where
   g : de⊙ X → ⊙Bool ⊙→ X
-  g x = (if_then pt X else x) , idp
+  g x = Bool-rec (pt X) x , idp
 
   abstract
     f-g : ∀ x → ⊙Bool→-to-idf (g x) == x

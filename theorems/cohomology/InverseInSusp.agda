@@ -26,29 +26,29 @@ private
   ⊙subtract : ⊙Susp X ⊙→ ⊙Susp X ⊙∨ ⊙Susp X
   ⊙subtract = (subtract , ! (ap winl (merid (pt X))))
 
-  projl-subtract : ∀ σ → projl _ _ (subtract σ) == Susp-flip σ
+  projl-subtract : ∀ σ → projl (subtract σ) == Susp-flip σ
   projl-subtract = Susp-elim idp idp $
     ↓-='-from-square ∘ vert-degen-square ∘ λ x →
-      ap-∘ (projl _ _) subtract (merid x)
-      ∙ ap (ap (projl _ _)) (Subtract.merid-β x)
-      ∙ ap-∙ (projl _ _) (ap winl (! (merid x))) (wglue ∙ ap winr (merid x))
-      ∙ ((∘-ap (projl _ _) winl (! (merid x))
+      ap-∘ projl subtract (merid x)
+      ∙ ap (ap projl) (Subtract.merid-β x)
+      ∙ ap-∙ projl (ap winl (! (merid x))) (wglue ∙ ap winr (merid x))
+      ∙ ((∘-ap projl winl (! (merid x))
           ∙ ap-idf _)
-         ∙2 (ap-∙ (projl _ _) wglue (ap winr (merid x))
-             ∙ (Projl.glue-β _ _
-                ∙2 (∘-ap (projl _ _) winr (merid x) ∙ ap-cst _ _))))
+         ∙2 (ap-∙ projl wglue (ap winr (merid x))
+             ∙ (Projl.glue-β
+                ∙2 (∘-ap projl winr (merid x) ∙ ap-cst _ _))))
       ∙ ∙-unit-r _
       ∙ ! (SuspFlip.merid-β x)
 
-  projr-subtract : ∀ σ → projr _ _ (subtract σ) == σ
+  projr-subtract : ∀ σ → projr (subtract σ) == σ
   projr-subtract = Susp-elim idp idp $
-    ↓-∘=idf-in' (projr _ _) subtract ∘ λ x →
-      ap (ap (projr _ _)) (Subtract.merid-β x)
-      ∙ ap-∙ (projr _ _) (ap winl (! (merid x))) (wglue ∙ ap winr (merid x))
-      ∙ ((∘-ap (projr _ _) winl (! (merid x)) ∙ ap-cst _ _)
-         ∙2 (ap-∙ (projr _ _) wglue (ap winr (merid x))
-             ∙ (Projr.glue-β _ _
-                ∙2 (∘-ap (projr _ _) winr (merid x) ∙ ap-idf _))))
+    ↓-∘=idf-in' projr subtract ∘ λ x →
+      ap (ap projr) (Subtract.merid-β x)
+      ∙ ap-∙ projr (ap winl (! (merid x))) (wglue ∙ ap winr (merid x))
+      ∙ ((∘-ap projr winl (! (merid x)) ∙ ap-cst _ _)
+         ∙2 (ap-∙ projr wglue (ap winr (merid x))
+             ∙ (Projr.glue-β
+                ∙2 (∘-ap projr winr (merid x) ∙ ap-idf _))))
 
   fold-subtract : ∀ σ → fold (subtract σ) == south
   fold-subtract = Susp-elim idp idp $

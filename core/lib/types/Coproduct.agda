@@ -11,6 +11,20 @@ module lib.types.Coproduct where
 
 module _ {i j} {A : Type i} {B : Type j} where
 
+  Coprod-elim : ∀ {k} {C : A ⊔ B → Type k}
+    → ((a : A) → C (inl a)) → ((b : B) → C (inr b))
+    → Π (A ⊔ B) C
+  Coprod-elim f g (inl a) = f a
+  Coprod-elim f g (inr b) = g b
+
+  ⊔-elim = Coprod-elim
+
+  Coprod-rec : ∀ {k} {C : Type k}
+    → (A → C) → (B → C) → (A ⊔ B → C)
+  Coprod-rec {C = C} = Coprod-elim {C = λ _ → C}
+
+  ⊔-rec = Coprod-rec
+
   Coprod= : Coprod A B → Coprod A B → Type (lmax i j)
   Coprod= (inl a₁) (inl a₂) = Lift {j = (lmax i j)} $ a₁ == a₂
   Coprod= (inl a₁) (inr b₂) = Lift Empty
@@ -62,6 +76,13 @@ module _ {i j} {A : Type i} {B : Type j} where
 
   Coprod-level = ⊔-level
 
+module _ {i i' j j'} {A : Type i} {A' : Type i'} {B : Type j} {B' : Type j'}
+  (f : A → A') (g : B → B') where
+
+  ⊔-fmap : A ⊔ B → A' ⊔ B'
+  ⊔-fmap (inl a) = inl (f a)
+  ⊔-fmap (inr b) = inr (g b)
+
 infix 80 _⊙⊔_
 _⊙⊔_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
 X ⊙⊔ Y = ⊙[ Coprod (de⊙ X) (de⊙ Y) , inl (pt X) ]
@@ -69,9 +90,26 @@ X ⊙⊔ Y = ⊙[ Coprod (de⊙ X) (de⊙ Y) , inl (pt X) ]
 _⊔⊙_ : ∀ {i j} → Ptd i → Ptd j → Ptd (lmax i j)
 X ⊔⊙ Y = ⊙[ Coprod (de⊙ X) (de⊙ Y) , inr (pt Y) ]
 
+module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  (f : X ⊙→ Z) (g : Y ⊙→ Z) where
+
+  ⊙⊔-rec : X ⊙⊔ Y ⊙→ Z
+  ⊙⊔-rec = Coprod-rec (fst f) (fst g) , snd f
+
+  ⊔⊙-rec : X ⊔⊙ Y ⊙→ Z
+  ⊔⊙-rec = Coprod-rec (fst f) (fst g) , snd g
+
+module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
+  (f : X ⊙→ X') (g : Y ⊙→ Y') where
+
+  ⊙⊔-fmap : X ⊙⊔ Y ⊙→ X' ⊙⊔ Y'
+  ⊙⊔-fmap = ⊔-fmap (fst f) (fst g) , ap inl (snd f)
+
+  ⊔⊙-fmap : X ⊔⊙ Y ⊙→ X' ⊔⊙ Y'
+  ⊔⊙-fmap = ⊔-fmap (fst f) (fst g) , ap inr (snd g)
+
 codiag : ∀ {i} {A : Type i} → A ⊔ A → A
-codiag (inl a) = a
-codiag (inr a) = a
+codiag = Coprod-rec (idf _) (idf _)
 
 ⊙codiag : ∀ {i} {X : Ptd i} → X ⊙⊔ X ⊙→ X
 ⊙codiag = (codiag , idp)

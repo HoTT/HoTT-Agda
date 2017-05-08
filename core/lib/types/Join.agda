@@ -20,17 +20,37 @@ module _ {i j} (A : Type i) (B : Type j) where
   _*_ : Type _
   _*_ = Pushout *-span
 
-module JoinElim {i j} {A : Type i} {B : Type j} {k} {P : A * B → Type k}
-  (left* : (a : A) → P (left a)) (right* : (b : B) → P (right b))
-  (glue* : (ab : A × B) → left* (fst ab) == right* (snd ab) [ P ↓ glue ab ])
-  = PushoutElim left* right* glue*
-open JoinElim public using () renaming (f to Join-elim)
+module _ {i j} {A : Type i} {B : Type j} where
+  jleft : A → A * B
+  jleft = left
 
-module JoinRec {i j} {A : Type i} {B : Type j} {k} {D : Type k}
-  (left* : (a : A) → D) (right* : (b : B) → D)
-  (glue* : (ab : A × B) → left* (fst ab) == right* (snd ab))
-  = PushoutRec left* right* glue*
-open JoinRec public using () renaming (f to Join-rec)
+  jright : B → A * B
+  jright = right
+
+  jglue : ∀ a b → jleft a == jright b
+  jglue = curry glue
+
+  module JoinElim {k} {P : A * B → Type k}
+    (jleft* : (a : A) → P (jleft a)) (jright* : (b : B) → P (jright b))
+    (jglue* : ∀ a b → jleft* a == jright* b [ P ↓ jglue a b ]) where
+
+    private
+      module M = PushoutElim {d = *-span A B} {P = P} jleft* jright* (uncurry jglue*)
+    f = M.f
+    glue-β = curry M.glue-β
+
+  Join-elim = JoinElim.f
+
+  module JoinRec {k} {C : Type k}
+    (jleft* : (a : A) → C) (jright* : (b : B) → C)
+    (jglue* : ∀ a b → jleft* a == jright* b) where
+
+    private
+      module M = PushoutRec jleft* jright* (uncurry jglue*)
+    f = M.f
+    glue-β = curry M.glue-β
+
+  Join-rec = JoinRec.f
 
 module _ {i j} (X : Ptd i) (Y : Ptd j) where
 

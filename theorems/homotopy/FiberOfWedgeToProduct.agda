@@ -6,35 +6,6 @@ module homotopy.FiberOfWedgeToProduct {i j} (X : Ptd i) (Y : Ptd j) where
 
   private
     X⊙×Y = X ⊙× Y
-    abstract
-      ↓-∨to×=cst-out : ∀ {x y} {p p' : (pt X , pt Y) == (x , y)}
-        → p == p' [ (λ w → ∨-to-× w == (x , y)) ↓ wglue ]
-        → p == p'
-      ↓-∨to×=cst-out {p' = idp} q =
-        ↓-app=cst-out' q ∙ WedgeToProduct.glue-β
-
-      ↓-∨to×=cst-in : ∀ {x y} {p p' : (pt X , pt Y) == (x , y)}
-        → p == p'
-        → p == p' [ (λ w → ∨-to-× w == (x , y)) ↓ wglue ]
-      ↓-∨to×=cst-in {p' = idp} q =
-        ↓-app=cst-in' (q ∙ ! WedgeToProduct.glue-β)
-
-      ↓-∨to×=cst-β : ∀ {x y} {p p' : (pt X , pt Y) == (x , y)}
-        (q : p == p')
-        → ↓-∨to×=cst-out (↓-∨to×=cst-in q) == q
-      ↓-∨to×=cst-β {p' = idp} idp =
-          ap (_∙ WedgeToProduct.glue-β) (↓-app=cst-β' {p = wglue} (! WedgeToProduct.glue-β))
-        ∙ !-inv-l WedgeToProduct.glue-β
-
-      ↓-∨to×=cst-η : ∀ {x y} {p p' : (pt X , pt Y) == (x , y)}
-        (q : p == p' [ (λ w → ∨-to-× w == (x , y)) ↓ wglue ])
-        → ↓-∨to×=cst-in (↓-∨to×=cst-out q) == q
-      ↓-∨to×=cst-η {p = p} {p' = idp} q =
-          ap ↓-app=cst-in'
-            ( ∙-assoc (↓-app=cst-out' q) WedgeToProduct.glue-β (! WedgeToProduct.glue-β)
-            ∙ ap (↓-app=cst-out' q ∙_) (!-inv-r WedgeToProduct.glue-β)
-            ∙ ∙-unit-r (↓-app=cst-out' q))
-        ∙ ↓-app=cst-η' q
 
   private
     to-glue-template : ∀ {x y}

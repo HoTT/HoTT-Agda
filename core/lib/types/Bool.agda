@@ -22,11 +22,12 @@ pattern false = inr unit
 ⊙Bool : Ptd₀
 ⊙Bool = ⊙[ Bool , true ]
 
--- Non-dependent
-if_then_else_ : ∀ {i} {A : Type i}
-  → Bool → A → A → A
-if true then t else e = t
-if false then t else e = e
+Bool-elim : ∀ {i} {P : Bool → Type i} → P true → P false → Π Bool P
+Bool-elim true* false* true = true*
+Bool-elim true* false* false = false*
+
+Bool-rec : ∀ {i} {A : Type i} → A → A → (Bool → A)
+Bool-rec {A = A} = Bool-elim {P = λ _ → A}
 
 private
   Bool-true≠false-type : Bool → Type₀

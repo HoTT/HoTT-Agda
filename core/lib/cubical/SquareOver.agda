@@ -79,7 +79,8 @@ squareover-cst-in {sq = ids} sq' = sq'
     → SquareOver B hid-square α idp idp β
   lemma {p = idp} r = horiz-degen-square r
 
-infixr 80 _∙v↓⊡_ _∙h↓⊡_ _↓⊡v∙_ _↓⊡h∙_
+infixr 80 _∙v↓⊡_ _∙h↓⊡_
+infixl 85 _↓⊡v∙_ _↓⊡h∙_
 
 _∙h↓⊡_ : ∀ {i j} {A : Type i} {B : A → Type j} {a₀₀ a₀₁ a₁₀ a₁₁ : A}
   {p₀₋ : a₀₀ == a₀₁} {p₋₀ : a₀₀ == a₁₀} {p₋₁ : a₀₁ == a₁₁} {p₁₋ : a₁₀ == a₁₁}
