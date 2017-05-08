@@ -7,6 +7,11 @@ do `make all'
 
 This file is intentionally named index.agda so that
 Agda will generate index.html.
+
+  favonia:
+  On 2017/05/08, I further partition the results into multiple
+  independent index[n].agda files because the garbage collection
+  is not really working.
 -}
 
 module index where
@@ -48,13 +53,14 @@ import homotopy.AnyUniversalCoverIsPathSet
 import homotopy.PathSetIsInitalCover
 
 {- van kampen -}
-import homotopy.VanKampen
+-- see index3.agda
 
 {- blakers massey -}
-import homotopy.BlakersMassey
+-- see index3.agda
 
 {- cw complexes -}
-import index2
+-- see index2.agda
+
 
 -- There are some unported theorems
 
