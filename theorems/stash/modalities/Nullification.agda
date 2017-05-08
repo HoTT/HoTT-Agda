@@ -3,7 +3,6 @@
 open import HoTT
 
 open import stash.modalities.Orthogonality
-open import stash.modalities.Modalities
 
 module stash.modalities.Nullification where
 

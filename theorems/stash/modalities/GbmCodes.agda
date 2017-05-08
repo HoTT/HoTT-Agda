@@ -2,7 +2,6 @@
 
 open import HoTT
 
-open import stash.modalities.Modalities
 open import stash.modalities.gbm.GbmUtil
 
 module stash.modalities.GbmCodes {ℓ} (M : Modality ℓ) where

@@ -58,32 +58,32 @@ module stash.modalities.Orthogonality where
       g-f = λ a → idp ;
       adj = λ a → λ=-η idp }
 
-    equiv-preserves-orth-l : {X Y A : Type ℓ} → (X ≃ Y) → ⟦ X ⊥ A ⟧ → ⟦ Y ⊥ A ⟧
-    equiv-preserves-orth-l {X} {Y} {A} (f , f-ise) ω = is-eq (Δ A Y) g f-g ω.g-f
+    equiv-preserves-orth-l : {A B X : Type ℓ} → (A ≃ B) → ⟦ A ⊥ X ⟧ → ⟦ B ⊥ X ⟧
+    equiv-preserves-orth-l {A} {B} {X} (f , f-ise) ω = is-eq (Δ X B) g f-g ω.g-f
 
       where module ω = is-equiv ω
             module f = is-equiv f-ise
 
-            g : (Y → A) → A
+            g : (B → X) → X
             g φ = ω.g (φ ∘ f)
 
-            f-g : (φ : Y → A) → Δ A Y (g φ) == φ
-            f-g φ = λ= λ y → app= (ω.f-g (φ ∘ f)) (f.g y) ∙ ap φ (f.f-g y)
+            f-g : (φ : B → X) → Δ X B (g φ) == φ
+            f-g φ = λ= λ b → app= (ω.f-g (φ ∘ f)) (f.g b) ∙ ap φ (f.f-g b)
 
-    equiv-preserves-orth-r : {X A B : Type ℓ} → (A ≃ B) → ⟦ X ⊥ A ⟧ → ⟦ X ⊥ B ⟧
-    equiv-preserves-orth-r {X} {A} {B} (f , f-ise) ω = is-eq (Δ B X) g f-g g-f
+    equiv-preserves-orth-r : {A X Y : Type ℓ} → (X ≃ Y) → ⟦ A ⊥ X ⟧ → ⟦ A ⊥ Y ⟧
+    equiv-preserves-orth-r {A} {X} {Y} (f , f-ise) ω = is-eq (Δ Y A) g f-g g-f
 
       where module ω = is-equiv ω
             module f = is-equiv f-ise
 
-            g : (X → B) → B
+            g : (A → Y) → Y
             g φ = f (ω.g (f.g ∘ φ))
 
-            f-g : (φ : X → B) → Δ B X (g φ) == φ
+            f-g : (φ : A → Y) → Δ Y A (g φ) == φ
             f-g φ = λ= λ x → ap f (app= (ω.f-g (f.g ∘ φ)) x) ∙ f.f-g (φ x)
 
-            g-f : (b : B) → g (Δ B X b) == b
-            g-f b = ap f (ω.g-f (f.g b)) ∙ f.f-g b
+            g-f : (y : Y) → g (Δ Y A y) == y
+            g-f y = ap f (ω.g-f (f.g y)) ∙ f.f-g y
 
     -- -- This works if the base is connected, but you'll have to add that
     -- fib-orth : {A X : Type i} {B : A → Type i} → ⟦ Σ A B ⊥ X ⟧ →  (a : A) → ⟦ B a ⊥ X ⟧
@@ -148,23 +148,13 @@ module stash.modalities.Orthogonality where
             from-to : (p : x == y) → g (cst p) == p
             from-to p = {!!}
             
-    -- ctr : {A X : Type i} → ⟦ A ⊥ X ⟧ → (A → X) → X
-    -- ctr A⊥X φ = is-equiv.g A⊥X φ
-
-    -- ctr-null : {A X : Type i} (A⊥X : ⟦ A ⊥ X ⟧) (φ : A → X)
-    --   → cst (ctr A⊥X φ) == φ 
-    -- ctr-null A⊥X φ = is-equiv.f-g A⊥X φ
-
-    -- ctr-cst : {A X : Type i} (A⊥X : ⟦ A ⊥ X ⟧) 
-    --   → (x : X) → ctr A⊥X (cst x) == x
-    -- ctr-cst A⊥X x = is-equiv.g-f A⊥X x
 
   -- Weak cellular inequalities
   module _ {i} where
   
     _≻_ : Type i → Type i → Type _
     X ≻ A = (Y : Type i) → ⟦ A ⊥ Y ⟧ → ⟦ X ⊥ Y ⟧
-
+    
     ≻-emap : {X Y : Type i} {A : Type i} → X ≻ A → X ≃ Y → Y ≻ A
     ≻-emap {X} {Y} {A} ω e Z o = orth-emap (ω Z o) e
 
