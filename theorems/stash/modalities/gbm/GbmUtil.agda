@@ -2,8 +2,6 @@
 
 open import HoTT
 
-open import stash.modalities.Modalities
-
 module stash.modalities.gbm.GbmUtil where
 
   BM-Relation : ∀ {ℓ} (M : Modality ℓ) {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ) → Type ℓ

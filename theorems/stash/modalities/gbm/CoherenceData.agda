@@ -1,8 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT hiding (left; right)
-import stash.modalities.ModalWedge
-open import stash.modalities.Modalities
+import homotopy.ModalWedgeExtension
 
 module stash.modalities.gbm.CoherenceData {ℓ} (M : Modality ℓ)
   {A : Type ℓ} {B : Type ℓ} (Q : A → B → Type ℓ)
@@ -14,7 +13,7 @@ module stash.modalities.gbm.CoherenceData {ℓ} (M : Modality ℓ)
 
 open Modality M
 module WedgeExt {A} {a₀} {B} {b₀} =
-  stash.modalities.ModalWedge M {A} {a₀} {B} {b₀}
+  homotopy.ModalWedgeExtension M {A} {a₀} {B} {b₀}
 open import stash.modalities.gbm.Pushout Q
 
 -- {- goal :
@@ -75,7 +74,7 @@ module To {a₁ b₀} (q₁₀ : Q a₁ b₀) where
 
   args : WedgeExt.args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
   args = record {
-    jn-conn = λ u v → H q₁₀ (snd u) (snd v);
+    join-conn = λ u v → H q₁₀ (snd u) (snd v);
     R = λ u v → P u v , Π-is-local λ _ → Π-is-local λ _ → ◯-is-local;
     f = f; g = g; p = p}
 
@@ -156,7 +155,7 @@ module From {a₀ b₁} (q₀₁ : Q a₀ b₁) where
 
   args : WedgeExt.args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
   args = record {
-    jn-conn = λ u v → H q₀₁ (snd u) (snd v);
+    join-conn = λ u v → H q₀₁ (snd u) (snd v);
     R = λ u v → P u v , Π-is-local λ _ → Π-is-local λ _ → ◯-is-local;
     f = f; g = g; p = p}
 
@@ -337,7 +336,7 @@ module FromTo {a₁ b₀} (q₁₀ : Q a₁ b₀) where
 
   args : WedgeExt.args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
   args = record {
-    jn-conn = λ u v → H q₁₀ (snd u) (snd v);
+    join-conn = λ u v → H q₁₀ (snd u) (snd v);
     R = λ u v → P u v , Π-is-local λ _ → Π-is-local λ _ → ◯-=-is-local _ _;
     f = f; g = g; p = p}
 
@@ -391,7 +390,7 @@ module ToFrom {a₀ b₁} (q₀₁ : Q a₀ b₁) where
 
   args : WedgeExt.args {A = U} {a₀ = u₀} {B = V} {b₀ = v₀}
   args = record {
-    jn-conn = λ u v → H q₀₁ (snd u) (snd v);
+    join-conn = λ u v → H q₀₁ (snd u) (snd v);
     R = λ u v → P u v , Π-is-local λ _ → Π-is-local λ _ → ◯-=-is-local _ _;
     f = f; g = g; p = p}
 

@@ -2,7 +2,6 @@
 
 open import HoTT
 
-open import stash.modalities.Modalities
 open import stash.modalities.gbm.GbmUtil
 open import stash.modalities.GbmCodes
 
