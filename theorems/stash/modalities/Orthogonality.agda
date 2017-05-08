@@ -10,7 +10,7 @@ module stash.modalities.Orthogonality where
     Δ A X = cst
 
     ⟦_⊥_⟧ : (X : Type ℓ) (A : Type ℓ) → Type _
-    ⟦ X ⊥ A ⟧ = is-equiv (Δ A X)
+    ⟦ A ⊥ X ⟧ = is-equiv (Δ X A)
 
     ⊤-orthogonal : (A : Type ℓ) → ⟦ Lift ⊤ ⊥ A ⟧
     ⊤-orthogonal A = record {
@@ -19,32 +19,32 @@ module stash.modalities.Orthogonality where
       g-f = λ a → idp ;
       adj = λ a → λ=-η idp }
 
-    equiv-preserves-orth-l : {X Y A : Type ℓ} → (X ≃ Y) → ⟦ X ⊥ A ⟧ → ⟦ Y ⊥ A ⟧
-    equiv-preserves-orth-l {X} {Y} {A} (f , f-ise) ω = is-eq (Δ A Y) g f-g ω.g-f
+    equiv-preserves-orth-l : {A B X : Type ℓ} → (A ≃ B) → ⟦ A ⊥ X ⟧ → ⟦ B ⊥ X ⟧
+    equiv-preserves-orth-l {A} {B} {X} (f , f-ise) ω = is-eq (Δ X B) g f-g ω.g-f
 
       where module ω = is-equiv ω
             module f = is-equiv f-ise
 
-            g : (Y → A) → A
+            g : (B → X) → X
             g φ = ω.g (φ ∘ f)
 
-            f-g : (φ : Y → A) → Δ A Y (g φ) == φ
-            f-g φ = λ= λ y → app= (ω.f-g (φ ∘ f)) (f.g y) ∙ ap φ (f.f-g y)
+            f-g : (φ : B → X) → Δ X B (g φ) == φ
+            f-g φ = λ= λ b → app= (ω.f-g (φ ∘ f)) (f.g b) ∙ ap φ (f.f-g b)
 
-    equiv-preserves-orth-r : {X A B : Type ℓ} → (A ≃ B) → ⟦ X ⊥ A ⟧ → ⟦ X ⊥ B ⟧
-    equiv-preserves-orth-r {X} {A} {B} (f , f-ise) ω = is-eq (Δ B X) g f-g g-f
+    equiv-preserves-orth-r : {A X Y : Type ℓ} → (X ≃ Y) → ⟦ A ⊥ X ⟧ → ⟦ A ⊥ Y ⟧
+    equiv-preserves-orth-r {A} {X} {Y} (f , f-ise) ω = is-eq (Δ Y A) g f-g g-f
 
       where module ω = is-equiv ω
             module f = is-equiv f-ise
 
-            g : (X → B) → B
+            g : (A → Y) → Y
             g φ = f (ω.g (f.g ∘ φ))
 
-            f-g : (φ : X → B) → Δ B X (g φ) == φ
+            f-g : (φ : A → Y) → Δ Y A (g φ) == φ
             f-g φ = λ= λ x → ap f (app= (ω.f-g (f.g ∘ φ)) x) ∙ f.f-g (φ x)
 
-            g-f : (b : B) → g (Δ B X b) == b
-            g-f b = ap f (ω.g-f (f.g b)) ∙ f.f-g b
+            g-f : (y : Y) → g (Δ Y A y) == y
+            g-f y = ap f (ω.g-f (f.g y)) ∙ f.f-g y
 
     -- e-orth : {A B X : Type ℓ} → ⟦ A ⊥ X ⟧ → (A ≃ B) → ⟦ B ⊥ X ⟧
 
@@ -116,10 +116,10 @@ module stash.modalities.Orthogonality where
   module _ {ℓ} where
 
     _≻_ : Type ℓ → Type ℓ → Type (lsucc ℓ)
-    X ≻ Y = (A : Type ℓ) → ⟦ Y ⊥ A ⟧ → ⟦ X ⊥ A ⟧
+    A ≻ B = (X : Type ℓ) → ⟦ B ⊥ X ⟧ → ⟦ A ⊥ X ⟧
 
-    equiv-≻ : {X Y : Type ℓ} {Z : Type ℓ} → X ≻ Z → X ≃ Y → Y ≻ Z
-    equiv-≻ X≻Z X≃Y A Z⊥A = equiv-preserves-orth-l X≃Y (X≻Z A Z⊥A)
+    equiv-≻ : {A B C : Type ℓ} → A ≻ C → A ≃ B → B ≻ C
+    equiv-≻ A≻C A≃B X C⊥X = equiv-preserves-orth-l A≃B (A≻C X C⊥X)
 
     ≻-trivial : (A : Type ℓ) → (Lift ⊤) ≻ A
     ≻-trivial A X ω = ⊤-orthogonal X
