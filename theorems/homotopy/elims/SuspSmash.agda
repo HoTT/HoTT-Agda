@@ -2,56 +2,59 @@
 
 open import HoTT
 open import homotopy.elims.Lemmas
-open import homotopy.elims.CofPushoutSection
 
 module homotopy.elims.SuspSmash {i j k} {X : Ptd i} {Y : Ptd j}
   {P : Susp (X ∧ Y) → Type k}
   (north* : P north) (south* : P south)
-  (cod* : (s : de⊙ X × de⊙ Y) → north* == south* [ P ↓ merid (cfcod s) ])
+  (smin* : (x : de⊙ X) (y : de⊙ Y) → north* == south* [ P ↓ merid (smin x y) ])
   where
 
 private
-  base* = transport (λ κ → north* == south* [ P ↓ merid κ ])
-    (! (cfglue (winl (pt X))))
-    (cod* (pt X , pt Y))
+  smbase*-template : ∀ {s} (p : s == smin (pt X) (pt Y))
+    → north* == south* [ P ↓ merid s ]
+  smbase*-template p = transport! (λ κ → north* == south* [ P ↓ merid κ ])
+    p (smin* (pt X) (pt Y))
 
+  smbasel* = smbase*-template (smgluel (pt X))
+  smbaser* = smbase*-template (smgluer (pt Y))
+
+  -- note that [smin*] is adjusted.
   coh* : (s : X ∧ Y) → north* == south* [ P ↓ merid s ]
-  coh* = CofPushoutSection.elim (λ _ → tt) (λ _ → idp)
-    base*
-    (λ {(x , y) →
-      (fst (fillX x) ∙ fst (fillY y)) ◃ fst fill0 ◃ cod* (x , y)})
-    (↓↓-from-squareover ∘ λ x →
-      snd (fillX x) ↓⊡h∙
-      ap (λ p → p ◃ fst fill0 ◃ cod* (x , pt Y))
-         (! (ap (λ q → fst (fillX x) ∙ q) fillY-lemma ∙ ∙-unit-r _)))
-    (↓↓-from-squareover ∘ λ y →
-      snd (fillY y) ↓⊡h∙
-      ap (λ p → p ◃ fst fill0 ◃ cod* (pt X , y))
-         (! (ap (λ q → q ∙ fst (fillY y)) fillX-lemma)))
+  coh* = Smash-elim smbasel* smbaser*
+    (λ x y → fst (fill-l x) ◃ fst (fill-r y) ◃ fst fill-base ◃ smin* x y)
+    (λ x → ↓↓-from-squareover $
+      snd (fill-l x) ↓⊡h∙ ap (fst (fill-l x) ◃_) (! (idp◃ _)) ↓⊡h∙
+      ap (λ p → fst (fill-l x) ◃ p ◃ fst fill-base ◃ smin* x (pt Y)) (! fill-r-β))
+    (λ y → ↓↓-from-squareover $
+      snd (fill-r y) ↓⊡h∙ ! (idp◃ _) ↓⊡h∙
+      ap (λ p → p ◃ fst (fill-r y) ◃ fst fill-base ◃ smin* (pt X) y) (! fill-l-β))
     where
-    fill-lemma : (w : X ∨ Y)
-      (α : north* == south* [ P ↓ merid (cfcod (∨-in-× X Y w)) ])
+    fill-template : ∀ {s₁ s₂} (p : s₁ == s₂)
+      (α : north* == south* [ P ↓ merid s₁ ])
+      (β : north* == south* [ P ↓ merid s₂ ])
       → Σ (north* == north*)
-          (λ p → SquareOver P (natural-square merid (cfglue w))
-                   base*
-                   (↓-ap-in _ _ (apd (λ _ → north*) (cfglue w)))
-                   (↓-ap-in _ _ (apd (λ _ → south*) (cfglue w)))
-                   (p ◃ α))
-    fill-lemma w α = fill-upper-right _ _ _ _ _
+          (λ q → SquareOver P (natural-square merid p)
+                   α
+                   (↓-ap-in _ _ (apd (λ _ → north*) p))
+                   (↓-ap-in _ _ (apd (λ _ → south*) p))
+                   (q ◃ β))
+    fill-template p α β = fill-upper-right _ _ _ _ _
 
-    fill0 = fill-lemma (winl (pt X)) (cod* (pt X , pt Y))
-    fillX = λ x → fill-lemma (winl x) (fst fill0 ◃ cod* (x , pt Y))
-    fillY = λ y → fill-lemma (winr y) (fst fill0 ◃ cod* (pt X , y))
+    fill-base = fill-template (smgluel (pt X)) smbasel* (smin* (pt X) (pt Y))
+    fill-l = λ x → fill-template (smgluel x) smbasel* (fst fill-base ◃ smin* x (pt Y))
+    fill-l-β : fst (fill-l (pt X)) == idp
+    fill-l-β = ! $
+      fill-upper-right-unique _ _ _ _ _ idp (snd fill-base ↓⊡h∙ ! (idp◃ _))
 
-    fillX-lemma : fst (fillX (pt X)) == idp
-    fillX-lemma = ! $
-      fill-upper-right-unique _ _ _ _ _ idp (snd fill0 ↓⊡h∙ ! (idp◃ _))
+    fill-r = λ y → fill-template (smgluer y) smbaser* (fst fill-base ◃ smin* (pt X) y)
+    fill-r-β : fst (fill-r (pt Y)) == idp
+    fill-r-β = ! $
+      fill-upper-right-unique _ _ _ _ _ idp (snd fill-base ↓⊡h∙ ! (idp◃ _))
+      ∙ ap (λ sp → fst (fill-template (snd sp) (smbase*-template (snd sp))
+                                      (fst fill-base ◃ smin* (pt X) (pt Y))))
+           (contr-has-all-paths (pathto-is-contr (smin (pt X) (pt Y)))
+                                (smbasel , smgluel (pt X))
+                                (smbaser , smgluer (pt Y)))
 
-    fillY-lemma : fst (fillY (pt Y)) == idp
-    fillY-lemma = ! $
-      fill-upper-right-unique _ _ _ _ _ idp (snd fill0 ↓⊡h∙ ! (idp◃ _))
-      ∙ ap (λ w → fst (fill-lemma w (fst fill0 ◃ cod* (∨-in-× X Y w))))
-           wglue
-
-susp-smash-elim : Π (Susp (X ∧ Y)) P
-susp-smash-elim = Susp-elim north* south* coh*
+SuspSmash-elim : Π (Susp (X ∧ Y)) P
+SuspSmash-elim = Susp-elim north* south* coh*

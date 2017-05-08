@@ -6,7 +6,7 @@ open import homotopy.elims.Lemmas
 {- Given a span [A ←f– C –g→ B] and a map [h : A ⊔_C B → D] where
  - [g] has a left inverse:
 
- - To define a fundction  [Π (Cof h) P], one can give only the [cfbase],
+ - To define a function [Π (Cof h) P], one can give only the [cfbase],
  - [cfcod], [cfglue∘left], and [cfglue∘right] cases, and construct a map
  - which has the right behavior on [cfbase], [cfcod], [cfglue∘left],
  - with [cfglue∘right] edited to achieve the highest coherence.

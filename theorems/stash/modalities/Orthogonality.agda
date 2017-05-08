@@ -58,36 +58,32 @@ module stash.modalities.Orthogonality where
       g-f = λ a → idp ;
       adj = λ a → λ=-η idp }
 
-    Δ-equiv-is-contr : (A : Type i) → is-equiv (Δ A A) → is-contr A
-    Δ-equiv-is-contr A e = is-equiv.g e (idf A) , (λ a → app= (is-equiv.f-g e (idf A)) a)
-  
-    self-orth-is-contr : (A : Type i) → ⟦ A ⊥ A ⟧ → is-contr A
-    self-orth-is-contr A ω = Δ-equiv-is-contr A ω
+    equiv-preserves-orth-l : {X Y A : Type ℓ} → (X ≃ Y) → ⟦ X ⊥ A ⟧ → ⟦ Y ⊥ A ⟧
+    equiv-preserves-orth-l {X} {Y} {A} (f , f-ise) ω = is-eq (Δ A Y) g f-g ω.g-f
 
-    orth-emap : {A B X : Type i} → ⟦ A ⊥ X ⟧ → (A ≃ B) → ⟦ B ⊥ X ⟧
-    orth-emap {A} {B} {X} A⊥ e = is-eq (Δ X B) g f-g g-f
+      where module ω = is-equiv ω
+            module f = is-equiv f-ise
 
-      where g : (B → X) → X
-            g φ = ctr A⊥ (φ ∘ (fst e))
+            g : (Y → A) → A
+            g φ = ω.g (φ ∘ f)
 
-            f-g : (φ : B → X) → Δ X B (g φ) == φ
-            f-g φ = λ= (λ b → app= (ctr-null A⊥ (φ ∘ (fst e))) (<– e b) ∙ ap φ (<–-inv-r e b) )
+            f-g : (φ : Y → A) → Δ A Y (g φ) == φ
+            f-g φ = λ= λ y → app= (ω.f-g (φ ∘ f)) (f.g y) ∙ ap φ (f.f-g y)
 
-            g-f : (x : X) → g (Δ X B x) == x
-            g-f x = ctr-cst A⊥ x
+    equiv-preserves-orth-r : {X A B : Type ℓ} → (A ≃ B) → ⟦ X ⊥ A ⟧ → ⟦ X ⊥ B ⟧
+    equiv-preserves-orth-r {X} {A} {B} (f , f-ise) ω = is-eq (Δ B X) g f-g g-f
 
-    Σ-orth : {A X : Type i} {B : A → Type i} → ⟦ A ⊥ X ⟧ → (B⊥ : (a : A) → ⟦ B a ⊥ X ⟧) → ⟦ Σ A B ⊥ X ⟧
-    Σ-orth {A} {X} {B} A⊥ B⊥ = is-eq _ from to-from from-to
+      where module ω = is-equiv ω
+            module f = is-equiv f-ise
 
-      where from : (Σ A B → X) → X
-            from φ = ctr A⊥ (λ a → ctr (B⊥ a) (λ b → φ (a , b)))
+            g : (X → B) → B
+            g φ = f (ω.g (f.g ∘ φ))
 
-            to-from : (φ : Σ A B → X) → cst (from φ) == φ
-            to-from φ = λ= (λ { (a , b) → app= (ctr-null A⊥ (λ a → ctr (B⊥ a) (λ b → φ (a , b)))) a ∙
-                                           app= (ctr-null (B⊥ a) (λ b → φ (a , b))) b })
+            f-g : (φ : X → B) → Δ B X (g φ) == φ
+            f-g φ = λ= λ x → ap f (app= (ω.f-g (f.g ∘ φ)) x) ∙ f.f-g (φ x)
 
-            from-to : (x : X) → from (cst x) == x
-            from-to x = ap (ctr A⊥) (λ= (λ a → ctr-cst (B⊥ a) x)) ∙ ctr-cst A⊥ x
+            g-f : (b : B) → g (Δ B X b) == b
+            g-f b = ap f (ω.g-f (f.g b)) ∙ f.f-g b
 
     -- -- This works if the base is connected, but you'll have to add that
     -- fib-orth : {A X : Type i} {B : A → Type i} → ⟦ Σ A B ⊥ X ⟧ →  (a : A) → ⟦ B a ⊥ X ⟧
@@ -109,24 +105,8 @@ module stash.modalities.Orthogonality where
     ×-orth : {A B X : Type i} → ⟦ A ⊥ X ⟧ → ⟦ B ⊥ X ⟧ → ⟦ A × B ⊥ X ⟧
     ×-orth {B = B} A⊥ B⊥ = Σ-orth {B = λ _ → B} A⊥ (λ _ → B⊥)
 
-    -- Okay, you need to find a simpler way.
-    -- *-orth : {A B X : Type i} → ⟦ B ⊥ X ⟧ → ⟦ A * B ⊥ X ⟧
-    -- *-orth {A} {B} {X} ω = is-eq (Δ X (A * B)) from to-from from-to
-
-    --   where from : (A * B → X) → X
-    --         from f = is-equiv.g ω (f ∘ right)
-
-    --           where test : A → hfiber cst (f ∘ right)
-    --                 test =  snd (–> (join-adj A B X) f) 
-                    
-    --         to-from : (f : A * B → X) → Δ X (A * B) (from f) == f
-    --         to-from f = {!!}
-
-    --         from-to : (x : X) → from (Δ X (A * B) x) == x
-    --         from-to x = {!is-equiv.g-f ω x!}
-
     postulate
-
+    
       -- Right, this is a special case of the join adjunction ...
       adj-orth : (A X : Type i) → ⟦ Susp A ⊥ X ⟧ → (x y : X) → ⟦ A ⊥ x == y ⟧
 
@@ -199,7 +179,7 @@ module stash.modalities.Orthogonality where
             
     ≻-⊤-is-contr : (A : Type i) → A ≻ (Lift ⊤) → is-contr A
     ≻-⊤-is-contr A ω = self-orth-is-contr A (ω A (Unit-orth A))
-
+    
     Σ-≻ : {A X : Type i} {P : X → Type i} → X ≻ A → (P≻A : (x : X) → P x ≻ A) → Σ X P ≻ A
     Σ-≻ X≻A P≻A Y A⊥Y = Σ-orth (X≻A Y A⊥Y) (λ x → P≻A x Y A⊥Y)
     

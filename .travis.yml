@@ -29,6 +29,7 @@ script:
 - stack exec agda -- --library-file=libraries-travis --without-K --rewriting core/HoTT.agda | ts
 # checking this file is very resource demanding, so it is checked first (actually, I gave up on this)
 # - stack exec agda -- --library-file=libraries-travis --without-K --rewriting theorems/homotopy/3x3/Commutes.agda
-# checking the rest, in two rounds (the second round is added on 2017/03/23)
-- stack exec agda -- --library-file=libraries-travis --without-K --rewriting theorems/index2.agda | ts
+# checking the rest, in three rounds (the second round is added on 2017/03/23, and the third round on 2017/05/08)
 - stack exec agda -- --library-file=libraries-travis --without-K --rewriting theorems/index.agda | ts
+- stack exec agda -- --library-file=libraries-travis --without-K --rewriting theorems/index2.agda | ts
+- stack exec agda -- --library-file=libraries-travis --without-K --rewriting theorems/index3.agda | ts

@@ -3,6 +3,7 @@
 open import HoTT
 open import homotopy.SuspSectionDecomp
 open import homotopy.CofiberComp
+open import homotopy.SmashIsCofiber
 
 module homotopy.SuspProduct where
 
@@ -22,9 +23,9 @@ module SuspProduct {i} {j} (X : Ptd i) (Y : Ptd j) where
   ⊙eq =
     ⊙∨-emap (⊙ide (⊙Susp X))
       (⊙∨-emap (⊙ide (⊙Susp Y))
-        (⊙Susp-emap (CofiberComp.⊙eq i₁ i₂)))
+        (⊙Susp-emap (Smash-⊙equiv-Cof X Y ⊙⁻¹ ⊙∘e CofiberComp.⊙eq i₁ i₂)))
     ⊙∘e ⊙∨-emap (⊙ide (⊙Susp X))
-        (≃-to-⊙≃ (SuspSectionDecomp.eq (⊙cfcod' i₁ ⊙∘ i₂) j₂ (λ y → idp))
-                 (! $ ap winl $ merid (pt Y)))
+          (≃-to-⊙≃ (SuspSectionDecomp.eq (⊙cfcod' i₁ ⊙∘ i₂) j₂ (λ y → idp))
+                   (! $ ap winl $ merid (pt Y)))
     ⊙∘e ≃-to-⊙≃ (SuspSectionDecomp.eq i₁ fst (λ x → idp))
                 (! $ ap winl $ merid (pt X))

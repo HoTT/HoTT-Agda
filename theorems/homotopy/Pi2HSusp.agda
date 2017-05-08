@@ -13,7 +13,7 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (de⊙ X))
   {- TODO this belongs somewhere else, but where? -}
   private
     Type=-ext : ∀ {i} {A B : Type i} (p q : A == B)
-      → ((x : A) → coe p x == coe q x) → p == q
+      → (coe p ∼ coe q) → p == q
     Type=-ext p q α =
       ! (ua-η p)
       ∙ ap ua (Subtype=-out is-equiv-prop (λ= α))

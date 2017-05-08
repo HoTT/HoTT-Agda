@@ -405,7 +405,7 @@ easy as it seems.
 ∙-app= idp β = λ=-η β
 
 ∙-λ= : ∀ {i j} {A : Type i} {B : A → Type j} {f g h : Π A B}
-  (α : (x : A) → f x == g x) (β : (x : A) → g x == h x)
+  (α : f ∼ g) (β : g ∼ h)
   → λ= α ∙ λ= β == λ= (λ x → α x ∙ β x)
 ∙-λ= α β = ∙-app= (λ= α) (λ= β)
   ∙ ap λ= (λ= (λ x → ap (λ w → w ∙ app= (λ= β) x) (app=-β α x)

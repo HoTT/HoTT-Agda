@@ -2,21 +2,18 @@
 
 open import HoTT
 
-open import stash.modalities.Modalities
-
-module stash.modalities.ModalWedge {i} (M : Modality i)
+module homotopy.ModalWedgeExtension {i} (M : Modality i)
   {A : Type i} {a₀ : A} {B : Type i} {b₀ : B} where
 
   open Modality M
   private
-    ⊙A = ⊙[ A , a₀ ]
-    ⊙B = ⊙[ B , b₀ ]
-    A⊙×B = ⊙A ⊙× ⊙B
-  open import homotopy.FiberOfWedgeToProduct ⊙A ⊙B
+    X = ⊙[ A , a₀ ]
+    Y = ⊙[ B , b₀ ]
+  open import homotopy.FiberOfWedgeToProduct X Y
 
   record args : Type (lsucc i) where
     field
-      jn-conn : (a : A) (b : B) → is-◯-connected ((a₀ == a) * (b₀ == b))
+      join-conn : (a : A) (b : B) → is-◯-connected ((a₀ == a) * (b₀ == b))
       R : A → B → ◯-Type
       f : (a : A) → fst (R a b₀)
       g : (b : B) → fst (R a₀ b)
@@ -26,11 +23,11 @@ module stash.modalities.ModalWedge {i} (M : Modality i)
     open args r
 
     abstract
-      ∨-to-×-is-◯-equiv : is-◯-equiv ∨-to-×
-      ∨-to-×-is-◯-equiv (a , b) = equiv-preserves-◯-conn (fiber-thm a b ⁻¹) (jn-conn a b)
+      ∨-to-×-is-◯-equiv : is-◯-equiv (∨-to-× {X = X} {Y = Y})
+      ∨-to-×-is-◯-equiv (a , b) = equiv-preserves-◯-conn (fiber-thm a b ⁻¹) (join-conn a b)
 
     module A∨BToR = WedgeElim f g
-      (↓-ap-out= (fst ∘ uncurry R) ∨-to-× wglue ∨-to-×-glue-β p)
+      (↓-ap-out= (fst ∘ uncurry R) ∨-to-× wglue (∨-to-×-glue-β {X = X} {Y = Y}) p)
 
     A∨B-to-R : ∀ w → fst (uncurry R (∨-to-× w))
     A∨B-to-R = A∨BToR.f

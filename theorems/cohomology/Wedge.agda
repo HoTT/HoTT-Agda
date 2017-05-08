@@ -28,13 +28,13 @@ module cohomology.Wedge {i} (CT : CohomologyTheory i)
 
   private
     abstract
-      βl : ∀ x → CEl-fmap n ⊙winl (CEl-fmap n (⊙projl X Y) x) == x
-      βl = CEl-fmap-inverse n ⊙winl (⊙projl X Y) λ _ → idp
+      βl : ∀ x → CEl-fmap n ⊙winl (CEl-fmap n (⊙projl {X = X} {Y}) x) == x
+      βl = CEl-fmap-inverse n ⊙winl ⊙projl λ _ → idp
 
-      βr : ∀ y → CEl-fmap n ⊙winr (CEl-fmap n (⊙projr X Y) y) == y
-      βr = CEl-fmap-inverse n ⊙winr (⊙projr X Y) λ _ → idp
+      βr : ∀ y → CEl-fmap n ⊙winr (CEl-fmap n (⊙projr {X = X} {Y}) y) == y
+      βr = CEl-fmap-inverse n ⊙winr ⊙projr λ _ → idp
 
-      C-projr-C-winl-is-exact : is-exact (C-fmap n (⊙projr X Y)) (C-fmap n ⊙winl)
+      C-projr-C-winl-is-exact : is-exact (C-fmap n (⊙projr {X = X} {Y})) (C-fmap n ⊙winl)
       C-projr-C-winl-is-exact = equiv-preserves'-exact
         (C-comm-square n cfcod-winl-projr-comm-sqr)
         (C-comm-square n $ comm-sqr λ _ → idp)
@@ -43,7 +43,7 @@ module cohomology.Wedge {i} (CT : CohomologyTheory i)
         (C-isemap n (⊙idf _) (idf-is-equiv _))
         (C-exact n ⊙winl)
 
-      C-projl-C-winr-is-exact : is-exact (C-fmap n (⊙projl X Y)) (C-fmap n ⊙winr)
+      C-projl-C-winr-is-exact : is-exact (C-fmap n (⊙projl {X = X} {Y})) (C-fmap n ⊙winr)
       C-projl-C-winr-is-exact = equiv-preserves'-exact
         (C-comm-square n cfcod-winr-projl-comm-sqr)
         (C-comm-square n $ comm-sqr λ _ → idp)
@@ -53,7 +53,7 @@ module cohomology.Wedge {i} (CT : CohomologyTheory i)
         (C-exact n ⊙winr)
 
   import groups.ProductRepr
-    (C-fmap n (⊙projl X Y)) (C-fmap n (⊙projr X Y))
+    (C-fmap n (⊙projl {X = X} {Y})) (C-fmap n ⊙projr)
     (C-fmap n ⊙winl) (C-fmap n ⊙winr) βl βr
     C-projl-C-winr-is-exact
     C-projr-C-winl-is-exact as PR
@@ -61,11 +61,11 @@ module cohomology.Wedge {i} (CT : CohomologyTheory i)
   C-Wedge : C n (X ⊙∨ Y) ≃ᴳ C n X ×ᴳ C n Y
   C-Wedge = PR.iso
 
-  C-projl-inl-comm-sqr : CommSquareᴳ (C-fmap n (⊙projl X Y))
+  C-projl-inl-comm-sqr : CommSquareᴳ (C-fmap n ⊙projl)
     ×ᴳ-inl (idhom _) (–>ᴳ C-Wedge)
   C-projl-inl-comm-sqr = PR.i₁-inl-comm-sqr
 
-  C-projr-inr-comm-sqr : CommSquareᴳ (C-fmap n (⊙projr X Y))
+  C-projr-inr-comm-sqr : CommSquareᴳ (C-fmap n ⊙projr)
     ×ᴳ-inr (idhom _) (–>ᴳ C-Wedge)
   C-projr-inr-comm-sqr = PR.i₂-inr-comm-sqr
 
@@ -92,41 +92,41 @@ module cohomology.Wedge {i} (CT : CohomologyTheory i)
 
     Wedge-hom-η-comm-sqr : {Z : Ptd i} (φ : C n (⊙Wedge X Y) →ᴳ C n Z)
       → CommSquareᴳ φ
-          (×ᴳ-fanin (C-is-abelian n _) (φ ∘ᴳ C-fmap n (⊙projl X Y))
-                                       (φ ∘ᴳ C-fmap n (⊙projr X Y)))
+          (×ᴳ-fanin (C-is-abelian n _) (φ ∘ᴳ C-fmap n ⊙projl)
+                                       (φ ∘ᴳ C-fmap n ⊙projr))
           (–>ᴳ C-Wedge) (idhom _)
     Wedge-hom-η-comm-sqr φ = comm-sqrᴳ λ x∨y →
         ap (GroupHom.f φ) (! (GroupIso.g-f C-Wedge x∨y))
       ∙ ! (×ᴳ-fanin-pre∘ (C-is-abelian n _) (C-is-abelian n _)
-             φ (C-fmap n (⊙projl X Y)) (C-fmap n (⊙projr X Y)) _)
+             φ (C-fmap n ⊙projl) (C-fmap n ⊙projr) _)
 
     Wedge-hom-η-comm-sqr' : {Z : Ptd i} (φ : C n (⊙Wedge X Y) →ᴳ C n Z)
       → CommSquareᴳ
-          (×ᴳ-fanin (C-is-abelian n _) (φ ∘ᴳ C-fmap n (⊙projl X Y))
-                                       (φ ∘ᴳ C-fmap n (⊙projr X Y)))
+          (×ᴳ-fanin (C-is-abelian n _) (φ ∘ᴳ C-fmap n ⊙projl)
+                                       (φ ∘ᴳ C-fmap n ⊙projr))
           φ (<–ᴳ C-Wedge) (idhom _)
     Wedge-hom-η-comm-sqr' {Z} φ = comm-sqrᴳ λ z →
       ×ᴳ-fanin-pre∘ (C-is-abelian n _) (C-is-abelian n _)
-        φ (C-fmap n (⊙projl X Y)) (C-fmap n (⊙projr X Y)) _
+        φ (C-fmap n ⊙projl) (C-fmap n ⊙projr) _
 
     Wedge-in-comm-sqr : {Z : Ptd i} (f : Z ⊙→ ⊙Wedge X Y)
       → CommSquareᴳ (C-fmap n f)
-          (×ᴳ-fanin (C-is-abelian n _) (C-fmap n (⊙projl X Y ⊙∘ f))
-                                       (C-fmap n (⊙projr X Y ⊙∘ f)))
+          (×ᴳ-fanin (C-is-abelian n _) (C-fmap n (⊙projl ⊙∘ f))
+                                       (C-fmap n (⊙projr ⊙∘ f)))
           (–>ᴳ C-Wedge) (idhom _)
     Wedge-in-comm-sqr f = comm-sqrᴳ λ x∨y →
         (Wedge-hom-η-comm-sqr (C-fmap n f) □$ᴳ x∨y)
       ∙ ap2 (Group.comp (C n _))
-          (∘-C-fmap n f (⊙projl X Y) _)
-          (∘-C-fmap n f (⊙projr X Y) _)
+          (∘-C-fmap n f ⊙projl _)
+          (∘-C-fmap n f ⊙projr _)
 
     Wedge-in-comm-sqr' : {Z : Ptd i} (f : Z ⊙→ ⊙Wedge X Y)
       → CommSquareᴳ
-          (×ᴳ-fanin (C-is-abelian n _) (C-fmap n (⊙projl X Y ⊙∘ f))
-                                       (C-fmap n (⊙projr X Y ⊙∘ f)))
+          (×ᴳ-fanin (C-is-abelian n _) (C-fmap n (⊙projl ⊙∘ f))
+                                       (C-fmap n (⊙projr ⊙∘ f)))
           (C-fmap n f) (<–ᴳ C-Wedge) (idhom _)
     Wedge-in-comm-sqr' f = comm-sqrᴳ λ z →
         ap2 (Group.comp (C n _))
-          (C-fmap-∘ n (⊙projl X Y) f _)
-          (C-fmap-∘ n (⊙projr X Y) f _)
+          (C-fmap-∘ n ⊙projl f _)
+          (C-fmap-∘ n ⊙projr f _)
       ∙ (Wedge-hom-η-comm-sqr' (C-fmap n f) □$ᴳ z)

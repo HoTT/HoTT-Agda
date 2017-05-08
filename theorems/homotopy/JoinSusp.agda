@@ -11,18 +11,18 @@ module _ {i} (A : Type i) where
   private
 
       module Into = JoinRec {A = Bool} {B = A}
-        {D = Susp A}
-        (if_then north else south)
+        {C = Susp A}
+        (Bool-rec north south)
         (λ _ → south)
-        (λ {(true , a) → merid a;
-            (false , a) → idp})
+        (λ {true a → merid a;
+            false a → idp})
 
       into = Into.f
 
       module Out = SuspRec {C = Bool * A}
         (left true)
         (left false)
-        (λ a → glue (true , a) ∙ ! (glue (false , a)))
+        (λ a → jglue true a ∙ ! (jglue false a))
 
       out = Out.f
 
@@ -30,26 +30,25 @@ module _ {i} (A : Type i) where
       into-out = Susp-elim
         idp
         idp
-        (↓-∘=idf-from-square into out ∘ λ a → vert-degen-square $
+        (λ a → ↓-∘=idf-from-square into out $ vert-degen-square $
            ap (ap into) (Out.merid-β a)
-           ∙ ap-∙ into (glue (true , a)) (! (glue (false , a)))
-           ∙ (Into.glue-β (true , a)
-              ∙2 (ap-! into (glue (false , a))
-                  ∙ ap ! (Into.glue-β (false , a))))
+           ∙ ap-∙ into (jglue true a) (! (jglue false a))
+           ∙ (Into.glue-β true a
+              ∙2 (ap-! into (jglue false a)
+                  ∙ ap ! (Into.glue-β false a)))
            ∙ ∙-unit-r _)
 
       out-into : ∀ j → out (into j) == j
       out-into = Join-elim
-        (λ{true → idp ; false → idp})
-        (λ a → glue (false , a))
-        (↓-∘=idf-from-square out into ∘
-          λ {(true , a) →
-                (ap (ap out) (Into.glue-β (true , a)) ∙ Out.merid-β a)
-                ∙v⊡ (vid-square {p = glue (true , a)}
-                      ⊡h rt-square (glue (false , a)))
-                ⊡v∙ ∙-unit-r _;
-             (false , a) →
-               ap (ap out) (Into.glue-β (false , a)) ∙v⊡ connection})
+        (Bool-elim idp idp)
+        (λ a → jglue false a)
+        (λ{true a → ↓-∘=idf-from-square out into $
+              (ap (ap out) (Into.glue-β true a) ∙ Out.merid-β a)
+              ∙v⊡ (vid-square {p = jglue true a}
+                    ⊡h rt-square (jglue false a))
+              ⊡v∙ ∙-unit-r _;
+           false a → ↓-∘=idf-from-square out into $
+             ap (ap out) (Into.glue-β false a) ∙v⊡ connection})
 
   *-Bool-l : Bool * A ≃ Susp A
   *-Bool-l = equiv into out into-out out-into

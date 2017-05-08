@@ -6,7 +6,10 @@
   difficult to type check everything in one round on travis,
   so parts of index.agda are moved here.
 
-  This file is checked before index.agda.
+  favonia:
+  On 2017/05/08, I further partition the results into multiple
+  independent index[n].agda files because the garbage collection
+  is not really working.
 -}
 
 module index2 where

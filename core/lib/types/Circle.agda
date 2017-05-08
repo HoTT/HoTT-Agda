@@ -47,7 +47,7 @@ module _ where
       south* = transport P (merid false) base*
       merid*-general :
         ∀ {x : S¹} (p q : base == x) (loop* :  base* == base* [ P ↓ p ∙' ! q ]) (b : Bool)
-        → base* == transport P q base* [ P ↓ if b then p else q ]
+        → base* == transport P q base* [ P ↓ Bool-rec p q b ]
       merid*-general p idp loop* true = loop*
       merid*-general p idp loop* false = idp
 

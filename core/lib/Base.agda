@@ -360,12 +360,6 @@ data Coprod {i j} (A : Type i) (B : Type j) : Type (lmax i j) where
 infixr 80 _⊔_
 _⊔_ = Coprod
 
-match_withl_withr_ : ∀ {i j k} {A : Type i} {B : Type j}
-  {C : Coprod A B → Type k}
-  (x : Coprod A B) (l : (a : A) → C (inl a)) (r : (b : B) → C (inr b)) → C x
-match (inl a) withl l withr r = l a
-match (inr b) withl l withr r = r b
-
 Dec : ∀ {i} (P : Type i) → Type i
 Dec P = P ⊔ ¬ P
 
