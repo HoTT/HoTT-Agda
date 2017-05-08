@@ -14,3 +14,6 @@ import homotopy.VanKampen
 
 {- blakers massey -}
 import homotopy.BlakersMassey
+
+{- modalities -}
+import homotopy.ModalWedgeExtension
