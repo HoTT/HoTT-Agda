@@ -5,7 +5,7 @@ open import HoTT
 module stash.modalities.Orthogonality where
 
   module _ {ℓ} where
-  
+
     Δ : (A : Type ℓ) (X : Type ℓ) → A → (X → A)
     Δ A X = cst
 
@@ -19,26 +19,40 @@ module stash.modalities.Orthogonality where
       g-f = λ a → idp ;
       adj = λ a → λ=-η idp }
 
-    e-orth : {A B X : Type ℓ} → ⟦ A ⊥ X ⟧ → (A ≃ B) → ⟦ B ⊥ X ⟧
-    e-orth {A} {B} {X} ω e = is-eq (Δ X B) g f-g g-f
+    equiv-preserves-orth-l : {X Y A : Type ℓ} → (X ≃ Y) → ⟦ X ⊥ A ⟧ → ⟦ Y ⊥ A ⟧
+    equiv-preserves-orth-l {X} {Y} {A} (f , f-ise) ω = is-eq (Δ A Y) g f-g ω.g-f
 
-      where lem : (B → X) ≃ (A → X) 
-            lem = pre∘-equiv {C = X} e
-            
-            g : (B → X) → X
-            g φ = is-equiv.g ω (φ ∘ (fst e))
+      where module ω = is-equiv ω
+            module f = is-equiv f-ise
 
-            f-g : (φ : B → X) → Δ X B (g φ) == φ
-            f-g φ = λ= (λ b → {!is-equiv.f-g ω (φ ∘ (fst e))!})
+            g : (Y → A) → A
+            g φ = ω.g (φ ∘ f)
 
-            g-f : (x : X) → g (Δ X B x) == x
-            g-f x = {!!}
+            f-g : (φ : Y → A) → Δ A Y (g φ) == φ
+            f-g φ = λ= λ y → app= (ω.f-g (φ ∘ f)) (f.g y) ∙ ap φ (f.f-g y)
+
+    equiv-preserves-orth-r : {X A B : Type ℓ} → (A ≃ B) → ⟦ X ⊥ A ⟧ → ⟦ X ⊥ B ⟧
+    equiv-preserves-orth-r {X} {A} {B} (f , f-ise) ω = is-eq (Δ B X) g f-g g-f
+
+      where module ω = is-equiv ω
+            module f = is-equiv f-ise
+
+            g : (X → B) → B
+            g φ = f (ω.g (f.g ∘ φ))
+
+            f-g : (φ : X → B) → Δ B X (g φ) == φ
+            f-g φ = λ= λ x → ap f (app= (ω.f-g (f.g ∘ φ)) x) ∙ f.f-g (φ x)
+
+            g-f : (b : B) → g (Δ B X b) == b
+            g-f b = ap f (ω.g-f (f.g b)) ∙ f.f-g b
+
+    -- e-orth : {A B X : Type ℓ} → ⟦ A ⊥ X ⟧ → (A ≃ B) → ⟦ B ⊥ X ⟧
 
     prod-to : {A B X : Type ℓ} → ⟦ A ⊥ X ⟧ → ⟦ B ⊥ X ⟧ → ⟦ A × B ⊥ X ⟧
     prod-to e f = is-eq _ (λ φ → is-equiv.g e (λ a → is-equiv.g f (λ b → φ (a , b))))
       (λ φ → λ= (λ { (a , b) → app= (is-equiv.f-g e (λ a → is-equiv.g f (λ b → φ (a , b)))) a ∙ app= (is-equiv.f-g f (λ b → φ (a , b))) b }))
       (λ x → ap (is-equiv.g e) (λ= (λ a → is-equiv.g-f f x)) ∙ is-equiv.g-f e x)
-            
+
   --   ⟦_⊥_⟧ₗ : {I : Type ℓ} (X : I → Type ℓ) (A : Type ℓ) → Type ℓ
   --   ⟦_⊥_⟧ₗ {I = I} X A = (i : I) → ⟦ X i ⊥ A ⟧ₒ
 
@@ -47,7 +61,7 @@ module stash.modalities.Orthogonality where
 
   --   ⟦_⊥_⟧ : {I J : Type ℓ} (X : I → Type ℓ) (A : J → Type ℓ) → Type ℓ
   --   ⟦_⊥_⟧ {I} {J} X A = (i : I) → (j : J) → ⟦ X i ⊥ A j ⟧ₒ
-    
+
   --   cone-of : {A B : Type ℓ} → (A → B) → Type ℓ
   --   cone-of {A} {B} f = hfiber (Δ B A) f
 
@@ -72,7 +86,7 @@ module stash.modalities.Orthogonality where
   -- --   jn-ideal o = contr-cones-to-orth (λ φ → (is-equiv.g o (φ ∘ right) , {!!}) , {!!})
 
   -- module _ {ℓ} {I J : Type ℓ} where
-  
+
   --   -- Pushout product (fiberwise join)
   --   _□_ : (X : I → Type ℓ) (Y : J → Type ℓ) → I × J → Type ℓ
   --   (X □ Y) (i , j) = X i * Y j
@@ -85,14 +99,14 @@ module stash.modalities.Orthogonality where
   --   ⟪_,_⟫₀ : (X : I → Type ℓ) (Y : J → Type ℓ) → (i : I) → (j : J) → Y j → (X i → Y j)
   --   ⟪ X , Y ⟫₀ a b y x = y
 
-  --   fb-diag-orth : (X : I → Type ℓ) (Y : J → Type ℓ) → 
+  --   fb-diag-orth : (X : I → Type ℓ) (Y : J → Type ℓ) →
   --                  ⟦ X ⊥ Y ⟧ → (i : I) → (j : J) → (f : X i → Y j) → is-contr (⟪ X , Y ⟫ i j f)
   --   fb-diag-orth X Y ε i j f = orth-to-contr-cones (ε i j) f
 
   -- -- module _ {ℓ} {I J K : Type ℓ} where
 
-  -- --   thm : (X : I → Type ℓ) (Y : J → Type ℓ) (Z : K → Type ℓ) 
-  -- --         (i : I) (j : J) (k : K) (f : X i * Y j → Z k) → 
+  -- --   thm : (X : I → Type ℓ) (Y : J → Type ℓ) (Z : K → Type ℓ)
+  -- --         (i : I) (j : J) (k : K) (f : X i * Y j → Z k) →
   -- --         ⟪ X □ Y , Z ⟫ (i , j) k f ≃ ⟪ X , ⟪ Y , Z ⟫ j k ⟫ i (λ y → f (right y)) (λ x → (f (left x)) , λ= (λ y → ap f (glue (x , y))))
   -- --   thm = {!!}
 
@@ -100,25 +114,25 @@ module stash.modalities.Orthogonality where
   -- That is, without passing through the nullification functor?
   -- For example, using orthogonality?
   module _ {ℓ} where
-  
-    _≻_ : Type ℓ → Type ℓ → Type _
-    X ≻ A = (Y : Type ℓ) → ⟦ A ⊥ Y ⟧ → ⟦ X ⊥ Y ⟧
 
-    equiv-≻ : {X Y : Type ℓ} {A : Type ℓ} → X ≻ A → X ≃ Y → Y ≻ A
-    equiv-≻ = {!!}
+    _≻_ : Type ℓ → Type ℓ → Type (lsucc ℓ)
+    X ≻ Y = (A : Type ℓ) → ⟦ Y ⊥ A ⟧ → ⟦ X ⊥ A ⟧
+
+    equiv-≻ : {X Y : Type ℓ} {Z : Type ℓ} → X ≻ Z → X ≃ Y → Y ≻ Z
+    equiv-≻ X≻Z X≃Y A Z⊥A = equiv-preserves-orth-l X≃Y (X≻Z A Z⊥A)
 
     ≻-trivial : (A : Type ℓ) → (Lift ⊤) ≻ A
     ≻-trivial A X ω = ⊤-orthogonal X
-  
+
     ≻-reflexive : (A : Type ℓ) → A ≻ A
     ≻-reflexive A Y x = x
 
     ≻-trans : (A B C : Type ℓ) → A ≻ B → B ≻ C → A ≻ C
     ≻-trans A B C ω₀ ω₁ Y cy = ω₀ Y (ω₁ Y cy)
-            
+
     diag-equiv-lem : (A : Type ℓ) → is-equiv (Δ A A) → is-contr A
     diag-equiv-lem A e = is-equiv.g e (idf A) , (λ a → app= (is-equiv.f-g e (idf A)) a)
-  
+
     self-ortho-contr : (A : Type ℓ) → ⟦ A ⊥ A ⟧ → is-contr A
     self-ortho-contr A ω = diag-equiv-lem A ω
 
@@ -134,5 +148,3 @@ module stash.modalities.Orthogonality where
       equiv-≻ (hp (Lift ⊤) A (λ _ → a₀) (≻-trivial A) (≻-reflexive A) a₁)
       (equiv (λ { (lift unit , p) → p }) (λ p → (lift unit , p))
              (λ p → idp) (λ { (lift unit , p) → idp }))
-
-  
