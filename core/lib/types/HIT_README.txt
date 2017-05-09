@@ -5,6 +5,15 @@
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 
+Note
+====
+
+This document is kept as a historical record. The higher inductive types have
+since been implemented using the new Agda feature---rewriting rules---which are
+cleaner and potentially more reliable than the hacks (described in this document)
+to guard the abstraction. See core/lib/types/Pushout.agda for an example.
+
+
 Introduction
 ============
 
