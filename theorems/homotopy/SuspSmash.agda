@@ -25,14 +25,14 @@ private
     (left (pt X))
     (right (pt Y))
     (Smash-rec
-      (glue (pt X , pt Y))
-      (glue (pt X , pt Y))
       (λ x y →
-        glue (pt X , pt Y) ∙ ! (glue (x , pt Y))
-        ∙ glue (x , y)
-        ∙ ! (glue (pt X , y)) ∙ glue (pt X , pt Y))
-      (λ x → ! (reduce-x (glue (pt X , pt Y)) (glue (x , pt Y))))
-      (λ y → ! (reduce-y (glue (pt X , pt Y)) (glue (pt X , y)))))
+        jglue (pt X) (pt Y) ∙ ! (jglue x (pt Y))
+        ∙ jglue x y
+        ∙ ! (jglue (pt X) y) ∙ jglue (pt X) (pt Y))
+      (jglue (pt X) (pt Y))
+      (jglue (pt X) (pt Y))
+      (λ x → reduce-x (jglue (pt X) (pt Y)) (jglue x (pt Y)))
+      (λ y → reduce-y (jglue (pt X) (pt Y)) (jglue (pt X) y)))
 
   into = Into.f
 
@@ -77,8 +77,8 @@ private
                  {r = merid (smin x y)}
                  {s = merid (smin (pt X) y)}
                  {t = merid (smin (pt X) (pt Y))}
-            (ap merid (! (smgluel (pt X)) ∙ smgluel x))
-            (ap merid (! (smgluer y) ∙ smgluer (pt Y))))
+            (ap merid (smgluel (pt X) ∙ ! (smgluel x)))
+            (ap merid (smgluer y ∙ ! (smgluer (pt Y)))))
       where
       lemma₁ : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
         {x y z u v w : A}

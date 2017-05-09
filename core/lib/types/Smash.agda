@@ -15,9 +15,9 @@ module lib.types.Smash {i j} where
 module _ (X : Ptd i) (Y : Ptd j) where
 
   ⊙∧-span : ⊙Span
-  ⊙∧-span = ⊙span ⊙Bool (X ⊙× Y) (X ⊙⊔ Y)
-    (⊙⊔-fmap {Y = Y} ⊙cst ⊙cst)
+  ⊙∧-span = ⊙span (X ⊙× Y) ⊙Bool (X ⊙⊔ Y)
     (⊔-rec (_, pt Y) (pt X ,_) , idp)
+    (⊙⊔-fmap {Y = Y} ⊙cst ⊙cst)
 
   ∧-span : Span
   ∧-span = ⊙Span-to-Span ⊙∧-span
@@ -29,31 +29,31 @@ module _ (X : Ptd i) (Y : Ptd j) where
 
 module _ {X : Ptd i} {Y : Ptd j} where
 
+  smin : de⊙ X → de⊙ Y → Smash X Y
+  smin x y = left (x , y)
+
   smbasel : Smash X Y
-  smbasel = left true
+  smbasel = right true
 
   smbaser : Smash X Y
-  smbaser = left false
+  smbaser = right false
 
-  smin : de⊙ X → de⊙ Y → Smash X Y
-  smin x y = right (x , y)
-
-  smgluel : (x : de⊙ X) → smbasel == smin x (pt Y)
+  smgluel : (x : de⊙ X) → smin x (pt Y) == smbasel
   smgluel x = glue (inl x)
 
-  smgluer : (y : de⊙ Y) → smbaser == smin (pt X) y
+  smgluer : (y : de⊙ Y) → smin (pt X) y == smbaser
   smgluer y = glue (inr y)
 
   module SmashElim {k} {P : Smash X Y → Type k}
+    (smin* : (x : de⊙ X) (y : de⊙ Y) → P (smin x y))
     (smbasel* : P smbasel) (smbaser* : P smbaser)
-    (smin* : (x : de⊙ X) (y : de⊙ Y) → P (right (x , y)))
-    (smgluel* : (x : de⊙ X) → smbasel* == smin* x (pt Y) [ P ↓ smgluel x ])
-    (smgluer* : (y : de⊙ Y) → smbaser* == smin* (pt X) y [ P ↓ smgluer y ]) where
+    (smgluel* : (x : de⊙ X) → smin* x (pt Y) == smbasel* [ P ↓ smgluel x ])
+    (smgluer* : (y : de⊙ Y) → smin* (pt X) y == smbaser* [ P ↓ smgluer y ]) where
 
     private
       module M = PushoutElim
-        (Coprod-elim (λ _ → smbasel*) (λ _ → smbaser*))
         (uncurry smin*)
+        (Coprod-elim (λ _ → smbasel*) (λ _ → smbaser*))
         (Coprod-elim smgluel* smgluer*)
     f = M.f
     smgluel-β = M.glue-β ∘ inl
@@ -62,15 +62,15 @@ module _ {X : Ptd i} {Y : Ptd j} where
   Smash-elim = SmashElim.f
 
   module SmashRec {k} {C : Type k}
-    (smbasel* smbaser* : C)
     (smin* : (x : de⊙ X) (y : de⊙ Y) → C)
-    (smgluel* : (x : de⊙ X) → smbasel* == smin* x (pt Y))
-    (smgluer* : (y : de⊙ Y) → smbaser* == smin* (pt X) y) where
+    (smbasel* smbaser* : C)
+    (smgluel* : (x : de⊙ X) → smin* x (pt Y) == smbasel*)
+    (smgluer* : (y : de⊙ Y) → smin* (pt X) y == smbaser*) where
 
     private
       module M = PushoutRec {d = ∧-span X Y}
-        (Coprod-rec (λ _ → smbasel*) (λ _ → smbaser*))
         (uncurry smin*)
+        (Coprod-rec (λ _ → smbasel*) (λ _ → smbaser*))
         (Coprod-elim smgluel* smgluer*)
     f = M.f
     smgluel-β = M.glue-β ∘ inl
