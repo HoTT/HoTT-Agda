@@ -196,3 +196,62 @@ module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
 
   ⊙∨-emap : X ⊙∨ Y ⊙≃ X' ⊙∨ Y'
   ⊙∨-emap = ≃-to-⊙≃ ∨-emap (ap winl (snd (fst eqX)))
+
+module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} where
+
+  ∨-assoc : (X ⊙∨ Y) ∨ Z ≃ X ∨ (Y ⊙∨ Z)
+  ∨-assoc = equiv to from to-from from-to where
+    module ToInl = WedgeRec {C = X ∨ (Y ⊙∨ Z)} winl (winr ∘ winl) wglue
+    module To = WedgeRec {X = X ⊙∨ Y} ToInl.f (winr ∘ winr) (wglue ∙ ap winr wglue)
+
+    to : (X ⊙∨ Y) ∨ Z → X ∨ (Y ⊙∨ Z)
+    to = To.f
+
+    module FromInr = WedgeRec {C = (X ⊙∨ Y) ∨ Z} (winl ∘ winr) winr (! (ap winl wglue) ∙ wglue)
+    module From = WedgeRec {Y = Y ⊙∨ Z} (winl ∘ winl) FromInr.f (ap winl wglue)
+
+    from : X ∨ (Y ⊙∨ Z) → (X ⊙∨ Y) ∨ Z
+    from = From.f
+
+    abstract
+      to-from : ∀ x → to (from x) == x
+      to-from = Wedge-elim
+        (λ x → idp)
+        (Wedge-elim (λ y → idp) (λ z → idp) $ ↓-='-in' $ ! $
+          ap (to ∘ FromInr.f) wglue
+            =⟨ ap-∘ to FromInr.f wglue ⟩
+          ap to (ap FromInr.f wglue)
+            =⟨ ap (ap to) FromInr.glue-β ⟩
+          ap to (! (ap winl wglue) ∙ wglue)
+            =⟨ ap-∙ to (! (ap winl wglue)) wglue ⟩
+          ap to (! (ap winl wglue)) ∙ ap to wglue
+            =⟨ _∙2_ (ap-! to (ap winl wglue) ∙ ap ! (∘-ap to winl wglue ∙ ToInl.glue-β)) To.glue-β ⟩
+          ! wglue ∙ wglue ∙ ap winr wglue
+            =⟨ ! $ ∙-assoc (! wglue) wglue (ap winr wglue) ⟩
+          (! wglue ∙ wglue) ∙ ap winr wglue
+            =⟨ ap (_∙ ap winr wglue) (!-inv-l wglue) ⟩
+          ap winr wglue
+            =∎)
+        (↓-∘=idf-in' to from (ap (ap to) From.glue-β ∙ ∘-ap to winl wglue ∙ ToInl.glue-β))
+
+      from-to : ∀ x → from (to x) == x
+      from-to = Wedge-elim
+        (Wedge-elim (λ x → idp) (λ y → idp) $ ↓-='-in' $
+          ! (ap-∘ from ToInl.f wglue ∙ ap (ap from) ToInl.glue-β ∙ From.glue-β))
+        (λ z → idp)
+        (↓-∘=idf-in' from to $
+          ap from (ap to wglue)
+            =⟨ ap (ap from) To.glue-β ⟩
+          ap from (wglue ∙ ap winr wglue)
+            =⟨ ap-∙ from wglue (ap winr wglue) ⟩
+          ap from wglue ∙ ap from (ap winr wglue)
+            =⟨ From.glue-β ∙2 (∘-ap from winr wglue ∙ FromInr.glue-β) ⟩
+          ap winl wglue ∙ ! (ap winl wglue) ∙ wglue
+            =⟨ ! $ ∙-assoc (ap winl wglue) (! (ap winl wglue)) wglue ⟩
+          (ap winl wglue ∙ ! (ap winl wglue)) ∙ wglue
+            =⟨ ap (_∙ wglue) (!-inv-r (ap winl wglue)) ⟩
+          wglue
+            =∎)
+
+  ⊙∨-assoc : (X ⊙∨ Y) ⊙∨ Z ⊙≃ X ⊙∨ (Y ⊙∨ Z)
+  ⊙∨-assoc = ≃-to-⊙≃ ∨-assoc idp
