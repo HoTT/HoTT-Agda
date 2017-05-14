@@ -67,7 +67,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} (F : X ⊙→ Y) where
   ⊙cfcod' = cfcod , ap cfcod (! (snd F)) ∙ ! (cfglue (pt X))
 
   ⊙cfglue' : ⊙cst == ⊙cfcod' ⊙∘ F
-  ⊙cfglue' = ⊙λ= cfglue (lemma cfcod (cfglue (pt X)) (snd F))
+  ⊙cfglue' = ⊙λ=' cfglue (lemma cfcod (cfglue (pt X)) (snd F))
     where
     lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
       {x y : A} {z : B} (p : z == f x) (q : x == y)

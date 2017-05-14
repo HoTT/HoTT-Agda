@@ -63,37 +63,37 @@ module _ {i} {X : Ptd i} where
 ⊙Ω-fmap-∘ : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   (g : Y ⊙→ Z) (f : X ⊙→ Y)
   → ⊙Ω-fmap (g ⊙∘ f) == ⊙Ω-fmap g ⊙∘ ⊙Ω-fmap f
-⊙Ω-fmap-∘ (g , idp) (f , idp) = ⊙λ= (λ p → ap-∘ g f p) idp
+⊙Ω-fmap-∘ (g , idp) (f , idp) = ⊙λ=' (λ p → ap-∘ g f p) idp
 
 ⊙Ω-fmap-idf : ∀ {i} {X : Ptd i} → ⊙Ω-fmap (⊙idf X) == ⊙idf _
-⊙Ω-fmap-idf = ⊙λ= ap-idf idp
+⊙Ω-fmap-idf = ⊙λ=' ap-idf idp
 
 ⊙Ω-fmap2-fst : ∀ {i j} {X : Ptd i} {Y : Ptd j}
   → ⊙Ω-fmap2 {X = X} {Y = Y} ⊙fst == ⊙fst
-⊙Ω-fmap2-fst = ⊙λ= (uncurry ap2-fst) idp
+⊙Ω-fmap2-fst = ⊙λ=' (uncurry ap2-fst) idp
 
 ⊙Ω-fmap2-snd : ∀ {i j} {X : Ptd i} {Y : Ptd j}
   → ⊙Ω-fmap2 {X = X} {Y = Y} ⊙snd == ⊙snd
-⊙Ω-fmap2-snd = ⊙λ= (uncurry ap2-snd) idp
+⊙Ω-fmap2-snd = ⊙λ=' (uncurry ap2-snd) idp
 
 ⊙Ω-fmap-fmap2 : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
   (G : Z ⊙→ W) (F : X ⊙× Y ⊙→ Z)
   → ⊙Ω-fmap G ⊙∘ ⊙Ω-fmap2 F == ⊙Ω-fmap2 (G ⊙∘ F)
 ⊙Ω-fmap-fmap2 (g , idp) (f , idp) =
-  ⊙λ= (uncurry (ap-ap2 g (curry f))) idp
+  ⊙λ=' (uncurry (ap-ap2 g (curry f))) idp
 
 ⊙Ω-fmap2-fmap : ∀ {i j k l m}
   {X : Ptd i} {Y : Ptd j} {U : Ptd k} {V : Ptd l} {Z : Ptd m}
   (G : (U ⊙× V) ⊙→ Z) (F₁ : X ⊙→ U) (F₂ : Y ⊙→ V)
   → ⊙Ω-fmap2 G ⊙∘ ⊙×-fmap (⊙Ω-fmap F₁) (⊙Ω-fmap F₂) == ⊙Ω-fmap2 (G ⊙∘ ⊙×-fmap F₁ F₂)
 ⊙Ω-fmap2-fmap (g , idp) (f₁ , idp) (f₂ , idp) =
-  ⊙λ= (λ {(p , q) → ap2-ap-l (curry g) f₁ p (ap f₂ q)
-                  ∙ ap2-ap-r (λ x v → g (f₁ x , v)) f₂ p q})
-      idp
+  ⊙λ=' (λ {(p , q) → ap2-ap-l (curry g) f₁ p (ap f₂ q)
+                   ∙ ap2-ap-r (λ x v → g (f₁ x , v)) f₂ p q})
+       idp
 
 ⊙Ω-fmap2-diag : ∀ {i j} {X : Ptd i} {Y : Ptd j} (F : X ⊙× X ⊙→ Y)
   → ⊙Ω-fmap2 F ⊙∘ ⊙diag == ⊙Ω-fmap (F ⊙∘ ⊙diag)
-⊙Ω-fmap2-diag (f , idp) = ⊙λ= (ap2-diag (curry f)) idp
+⊙Ω-fmap2-diag (f , idp) = ⊙λ=' (ap2-diag (curry f)) idp
 
 {- iterated loop spaces -}
 
@@ -277,7 +277,7 @@ module _ {i} {X : Ptd i} where
     lemma {p = idp} idp = idp
 
   ⊙Ω-fmap2-∙ : ⊙Ω-fmap2 (⊙Ω-∙ {X = X}) == ⊙Ω-∙
-  ⊙Ω-fmap2-∙ = ⊙λ= (uncurry Ω-fmap2-∙) idp
+  ⊙Ω-fmap2-∙ = ⊙λ=' (uncurry Ω-fmap2-∙) idp
 
   Ω^2-∙-comm : (α β : Ω^ 2 X) → Ω^S-∙ 1 α β == Ω^S-∙ 1 β α
   Ω^2-∙-comm α β = ! (⋆2=Ω^S-∙ α β) ∙ ⋆2=⋆'2 α β ∙ ⋆'2=Ω^S-∙ α β

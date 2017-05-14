@@ -98,10 +98,10 @@ record CohomologyTheory i : Type (lsucc i) where
   CEl-emap n ⊙eq = equiv (CEl-fmap n (⊙–> ⊙eq)) (CEl-fmap n (⊙<– ⊙eq)) to-from from-to where
     abstract
       to-from = λ x → ! (CEl-fmap-∘ n (⊙<– ⊙eq) (⊙–> ⊙eq) x)
-                    ∙ ap (λ f → CEl-fmap n f x) (⊙<–-inv-l ⊙eq)
+                    ∙ ap (λ f → CEl-fmap n f x) (⊙λ= (⊙<–-inv-l ⊙eq))
                     ∙ CEl-fmap-idf n x
       from-to = λ x → ! (CEl-fmap-∘ n (⊙–> ⊙eq) (⊙<– ⊙eq) x)
-                    ∙ ap (λ f → CEl-fmap n f x) (⊙<–-inv-r ⊙eq)
+                    ∙ ap (λ f → CEl-fmap n f x) (⊙λ= (⊙<–-inv-r ⊙eq))
                     ∙ CEl-fmap-idf n x
 
   abstract
@@ -145,7 +145,7 @@ record CohomologyTheory i : Type (lsucc i) where
       → (∀ x → fst f x == fst g x)
       → (∀ y → CEl-fmap n f y == CEl-fmap n g y)
     CEl-fmap-base-indep n h y = CEl-fmap-base-indep' n _ _ _ _
-                              ∙ ap (λ f → CEl-fmap n f y) (⊙λ= h (↓-idf=cst-in' idp))
+                              ∙ ap (λ f → CEl-fmap n f y) (⊙λ=' h (↓-idf=cst-in' idp))
   C-fmap-base-indep = CEl-fmap-base-indep
 
   {- cohomology of the unit -}

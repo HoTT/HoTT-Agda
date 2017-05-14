@@ -37,14 +37,14 @@ module SuspAdjointLoopIso {i} where
         ⊙ap2-lemma : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
           (f : X ⊙× Y ⊙→ Z)
           → ⊙Ω-fmap f == ⊙Ω-fmap2 f ⊙∘ ⊙fanout (⊙Ω-fmap ⊙fst) (⊙Ω-fmap ⊙snd)
-        ⊙ap2-lemma (f , idp) = ⊙λ= (ap2-lemma f) idp
+        ⊙ap2-lemma (f , idp) = ⊙λ=' (ap2-lemma f) idp
 
         arr2-lemma : B.arr2 ⊙Ω-∙ == ⊙Ω-∙
         arr2-lemma =
           ⊙Ω-fmap ⊙Ω-∙ ⊙∘ A×.⊙out _ _
             =⟨ ⊙ap2-lemma ⊙Ω-∙ |in-ctx _⊙∘ A×.⊙out _ _ ⟩
           (⊙Ω-fmap2 ⊙Ω-∙ ⊙∘ A×.⊙into _ _) ⊙∘ A×.⊙out _ _
-            =⟨ ⊙∘-assoc (⊙Ω-fmap2 ⊙Ω-∙) (A×.⊙into _ _) (A×.⊙out _ _) ⟩
+            =⟨ ⊙λ= $ ⊙∘-assoc (⊙Ω-fmap2 ⊙Ω-∙) (A×.⊙into _ _) (A×.⊙out _ _) ⟩
           ⊙Ω-fmap2 ⊙Ω-∙ ⊙∘ (A×.⊙into _ _ ⊙∘ A×.⊙out _ _)
             =⟨ A×.⊙into-out _ _ |in-ctx ⊙Ω-fmap2 ⊙Ω-∙ ⊙∘_ ⟩
           ⊙Ω-fmap2 ⊙Ω-∙

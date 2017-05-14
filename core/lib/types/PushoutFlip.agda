@@ -83,7 +83,7 @@ module _ {i j k} (ps : ⊙Span {i} {j} {k}) where
   ⊙Pushout-flip-involutive : ∀ {i j k} (ps : ⊙Span {i} {j} {k})
     → ⊙Pushout-flip (⊙Span-flip ps) ⊙∘ ⊙Pushout-flip ps == ⊙idf _
   ⊙Pushout-flip-involutive ps =
-    ⊙λ= (Pushout-flip-involutive _) lemma
+    ⊙λ=' (Pushout-flip-involutive _) lemma
     where
     lemma :
       ap Pushout-flip (snd (⊙right (⊙Span-flip ps))) ∙ snd (⊙right ps)

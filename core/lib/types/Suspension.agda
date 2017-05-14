@@ -110,7 +110,7 @@ module _ {i} where
 
   ⊙Susp-fmap-idf : (X : Ptd i)
     → ⊙Susp-fmap (⊙idf X) == ⊙idf (⊙Susp X)
-  ⊙Susp-fmap-idf X = ⊙λ= (Susp-fmap-idf (de⊙ X)) idp
+  ⊙Susp-fmap-idf X = ⊙λ=' (Susp-fmap-idf (de⊙ X)) idp
 
 module _ {i j} where
 
@@ -121,7 +121,7 @@ module _ {i j} where
 
   ⊙Susp-fmap-cst : {X : Ptd i} {Y : Ptd j}
     → ⊙Susp-fmap (⊙cst {X = X} {Y = Y}) == ⊙cst
-  ⊙Susp-fmap-cst = ⊙λ= (Susp-fmap-cst _) idp
+  ⊙Susp-fmap-cst = ⊙λ=' (Susp-fmap-cst _) idp
 
   Susp-flip-fmap : {A : Type i} {B : Type j} (f : A → B)
     → ∀ σ → Susp-flip (Susp-fmap f σ) == Susp-fmap f (Susp-flip σ)
@@ -150,7 +150,7 @@ module _ {i j k} where
   ⊙Susp-fmap-∘ : {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
     (g : Y ⊙→ Z) (f : X ⊙→ Y)
     → ⊙Susp-fmap (g ⊙∘ f) == ⊙Susp-fmap g ⊙∘ ⊙Susp-fmap f
-  ⊙Susp-fmap-∘ g f = ⊙λ= (Susp-fmap-∘ (fst g) (fst f)) idp
+  ⊙Susp-fmap-∘ g f = ⊙λ=' (Susp-fmap-∘ (fst g) (fst f)) idp
 
 
 {- Extract the 'glue component' of a pushout -}

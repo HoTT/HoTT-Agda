@@ -47,7 +47,7 @@ module homotopy.SphereEndomorphism where
     ⊙S¹-endo-in-η : ∀ f → ⊙S¹-endo-in (⊙SphereS-endo-out 0 f) == f
     ⊙S¹-endo-in-η = Trunc-elim (λ _ → =-preserves-set Trunc-level)
       λ{(f , pt) → ap [_] $
-        ⊙S¹-endo-in''-shifted pt (ap f loop) ∙ ⊙λ= (S¹-rec-η f) idp}
+        ⊙S¹-endo-in''-shifted pt (ap f loop) ∙ ⊙λ= (S¹-rec-η f , idp)}
       where
       -- free one end to apply identification elimination
       ⊙S¹-endo-in''-shifted : {base* : S¹}

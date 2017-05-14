@@ -96,15 +96,15 @@ counit-unit-to-hom {i} {j} {F} {G} adj = record {
       G.arr (ε U ⊙∘ F.arr s) ⊙∘ η X
         =⟨ G.comp (ε U) (F.arr s) |in-ctx (λ w → w ⊙∘ η X) ⟩
       (G.arr (ε U) ⊙∘ G.arr (F.arr s)) ⊙∘ η X
-        =⟨ ⊙∘-assoc (G.arr (ε U)) (G.arr (F.arr s)) (η X) ⟩
+        =⟨ ⊙λ= $ ⊙∘-assoc (G.arr (ε U)) (G.arr (F.arr s)) (η X) ⟩
       G.arr (ε U) ⊙∘ G.arr (F.arr s) ⊙∘ η X
         =⟨ ! (η-natural s) |in-ctx (λ w → G.arr (ε U) ⊙∘ w) ⟩
       G.arr (ε U) ⊙∘ η (G.obj U) ⊙∘ s
-        =⟨ ! (⊙∘-assoc (G.arr (ε U)) (η (G.obj U)) s) ⟩
+        =⟨ ! $ ⊙λ= (⊙∘-assoc (G.arr (ε U)) (η (G.obj U)) s) ⟩
       (G.arr (ε U) ⊙∘ η (G.obj U)) ⊙∘ s
         =⟨ Gε-ηG U |in-ctx (λ w → w ⊙∘ s) ⟩
       ⊙idf (G.obj U) ⊙∘ s
-        =⟨ ⊙∘-unit-l s ⟩
+        =⟨ ⊙λ= $ ⊙∘-unit-l s ⟩
       s ∎
 
     out-into : (r : F.obj X ⊙→ U) → out (into r) == r
@@ -112,11 +112,11 @@ counit-unit-to-hom {i} {j} {F} {G} adj = record {
       ε U ⊙∘ F.arr (G.arr r ⊙∘ η X)
         =⟨ F.comp (G.arr r) (η X) |in-ctx (λ w → ε U ⊙∘ w) ⟩
       ε U ⊙∘ F.arr (G.arr r) ⊙∘ F.arr (η X)
-        =⟨ ! (⊙∘-assoc (ε U) (F.arr (G.arr r)) (F.arr (η X))) ⟩
+        =⟨ ! $ ⊙λ= (⊙∘-assoc (ε U) (F.arr (G.arr r)) (F.arr (η X))) ⟩
       (ε U ⊙∘ F.arr (G.arr r)) ⊙∘ F.arr (η X)
         =⟨ ε-natural r |in-ctx (λ w → w ⊙∘ F.arr (η X)) ⟩
       (r ⊙∘ ε (F.obj X)) ⊙∘ F.arr (η X)
-        =⟨ ⊙∘-assoc r (ε (F.obj X)) (F.arr (η X)) ⟩
+        =⟨ ⊙λ= $ ⊙∘-assoc r (ε (F.obj X)) (F.arr (η X)) ⟩
       r ⊙∘ ε (F.obj X) ⊙∘ F.arr (η X)
         =⟨ εF-Fη X |in-ctx (λ w → r ⊙∘ w) ⟩
       r ∎
@@ -129,11 +129,11 @@ counit-unit-to-hom {i} {j} {F} {G} adj = record {
     → –> (eq Y U) r ⊙∘ h == –> (eq X U) (r ⊙∘ F.arr h)
   nat-dom {X} {Y} h U r =
     (G.arr r ⊙∘ η Y) ⊙∘ h
-      =⟨ ⊙∘-assoc (G.arr r) (η Y) h ⟩
+      =⟨ ⊙λ= $ ⊙∘-assoc (G.arr r) (η Y) h ⟩
     G.arr r ⊙∘ η Y ⊙∘ h
       =⟨ η-natural h |in-ctx (λ w → G.arr r ⊙∘ w) ⟩
     G.arr r ⊙∘ G.arr (F.arr h) ⊙∘ η X
-      =⟨ ! (⊙∘-assoc (G.arr r) (G.arr (F.arr h)) (η X)) ⟩
+      =⟨ ! $ ⊙λ= (⊙∘-assoc (G.arr r) (G.arr (F.arr h)) (η X)) ⟩
     (G.arr r ⊙∘ G.arr (F.arr h)) ⊙∘ η X
       =⟨ ! (G.comp r (F.arr h)) |in-ctx (λ w → w ⊙∘ η X) ⟩
     G.arr (r ⊙∘ F.arr h) ⊙∘ η X ∎
@@ -143,7 +143,7 @@ counit-unit-to-hom {i} {j} {F} {G} adj = record {
     → G.arr k ⊙∘ –> (eq X U) r == –> (eq X V) (k ⊙∘ r)
   nat-cod X k r =
     G.arr k ⊙∘ (G.arr r ⊙∘ η X)
-      =⟨ ! (⊙∘-assoc (G.arr k) (G.arr r) (η X)) ⟩
+      =⟨ ! $ ⊙λ= (⊙∘-assoc (G.arr k) (G.arr r) (η X)) ⟩
     (G.arr k ⊙∘ G.arr r) ⊙∘ η X
       =⟨ ! (G.comp k r) |in-ctx (λ w → w ⊙∘ η X) ⟩
     G.arr (k ⊙∘ r) ⊙∘ η X ∎
@@ -205,7 +205,7 @@ module RightAdjoint× {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
                            (⊙snd ⊙∘ <– (A.eq _ _) (⊙idf _)))
       =⟨ ap (–> (A.eq _ _)) (! (⊙fanout-pre∘ ⊙fst ⊙snd (<– (A.eq _ _) (⊙idf _)))) ⟩
     –> (A.eq _ _) (⊙fanout ⊙fst ⊙snd ⊙∘ <– (A.eq _ _) (⊙idf _))
-      =⟨ ⊙∘-unit-l _ |in-ctx –> (A.eq _ _) ⟩
+      =⟨ ⊙λ= (⊙∘-unit-l _) |in-ctx –> (A.eq _ _) ⟩
     –> (A.eq _ _) (<– (A.eq _ _) (⊙idf _))
       =⟨ <–-inv-r (A.eq _ _) (⊙idf _) ⟩
     ⊙idf _ ∎
@@ -301,10 +301,10 @@ module LeftAdjoint∨ {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
                               (G.arr ⊙into ⊙∘ –> (A.eq _ _) ⊙winr))
       =⟨ ap2 (λ w₁ w₂ → <– (A.eq _ _) (⊙Wedge-rec w₁ w₂))
              (A.nat-cod _ ⊙into ⊙winl
-              ∙ ap (–> (A.eq _ _)) (Into.⊙winl-β ∙ ! (⊙∘-unit-l _))
+              ∙ ap (–> (A.eq _ _)) (Into.⊙winl-β ∙ ! (⊙λ= $ ⊙∘-unit-l _))
               ∙ ! (A.nat-dom ⊙winl _ (⊙idf _)))
              (A.nat-cod _ ⊙into ⊙winr
-              ∙ ap (–> (A.eq _ _)) (Into.⊙winr-β ∙ ! (⊙∘-unit-l _))
+              ∙ ap (–> (A.eq _ _)) (Into.⊙winr-β ∙ ! (⊙λ= $ ⊙∘-unit-l _))
               ∙ ! (A.nat-dom ⊙winr _ (⊙idf _))) ⟩
     <– (A.eq _ _) (⊙Wedge-rec (–> (A.eq _ _) (⊙idf _) ⊙∘ ⊙winl)
                               (–> (A.eq _ _) (⊙idf _) ⊙∘ ⊙winr))

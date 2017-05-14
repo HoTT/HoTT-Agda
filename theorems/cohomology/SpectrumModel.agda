@@ -31,7 +31,7 @@ module SpectrumModel where
   C-is-abelian n X =
     iso-preserves-abelian (Trunc-⊙→Ω-group-emap-codom X (spectrum (succ n))) $
       Trunc-group-abelian (⊙→Ω-group-structure _ _) $ λ {(f , fpt) (g , gpt) →
-        ⊙λ= (λ x → Ω^2-∙-comm (f x) (g x)) (pt-lemma fpt gpt)}
+        ⊙λ=' (λ x → Ω^2-∙-comm (f x) (g x)) (pt-lemma fpt gpt)}
     where
     pt-lemma : ∀ {i} {A : Type i} {x : A} {p q : idp {a = x} == idp {a = x}}
       (α : p == idp) (β : q == idp)
@@ -111,7 +111,7 @@ module SpectrumModel where
     {- precomposing [⊙cfcod' f] and then [f] gives [0] -}
     im-sub-ker-lemma : (f : X ⊙→ Y) (g : uCEl n (⊙Cofiber f))
       → (g ⊙∘ ⊙cfcod' f) ⊙∘ f == ⊙cst
-    im-sub-ker-lemma (f , fpt) (g , gpt) = ⊙λ=
+    im-sub-ker-lemma (f , fpt) (g , gpt) = ⊙λ='
       (λ x → ap g (! (cfglue' f x)) ∙ gpt)
       (↓-idf=cst-in
         (ap (g ∘ cfcod) fpt
@@ -205,7 +205,7 @@ module SpectrumModel where
     out-into = Trunc-elim
       {P = λ tH → out (into tH) == tH}
       (λ _ → =-preserves-level Trunc-level)
-      (λ {(h , hpt) → ap [_] $ ⊙λ= (out-into-fst (h , hpt)) (↓-idf=cst-in (! (!-inv-l hpt)))})
+      (λ {(h , hpt) → ap [_] $ ⊙λ=' (out-into-fst (h , hpt)) (↓-idf=cst-in (! (!-inv-l hpt)))})
       where
       lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B)
         {a₁ a₂ : A} {b : B} (p : a₁ == a₂) (q : f a₁ == b)

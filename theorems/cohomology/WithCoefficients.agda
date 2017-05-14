@@ -24,7 +24,7 @@ module cohomology.WithCoefficients where
       unit-l-lemma idp = idp
 
       unit-l : ∀ G → comp ident G == G
-      unit-l G = ⊙λ= (λ _ → idp) (unit-l-lemma (snd G))
+      unit-l G = ⊙λ=' (λ _ → idp) (unit-l-lemma (snd G))
 
       assoc-lemma : ∀ {i} {A : Type i} {x : A} {p q r : x == x}
         (α : p == idp) (β : q == idp) (γ : r == idp)
@@ -34,7 +34,7 @@ module cohomology.WithCoefficients where
       assoc-lemma idp idp idp = idp
 
       assoc : ∀ F G H → comp (comp F G) H == comp F (comp G H)
-      assoc F G H = ⊙λ=
+      assoc F G H = ⊙λ='
         (λ x → ∙-assoc (fst F x) (fst G x) (fst H x))
         (assoc-lemma (snd F) (snd G) (snd H))
 
@@ -43,7 +43,7 @@ module cohomology.WithCoefficients where
       inv-l-lemma idp = idp
 
       inv-l : ∀ F → comp (inv F) F == ident
-      inv-l F = ⊙λ= (!-inv-l ∘ fst F) (inv-l-lemma (snd F))
+      inv-l F = ⊙λ=' (!-inv-l ∘ fst F) (inv-l-lemma (snd F))
 
 Trunc-⊙→Ω-group : ∀ {i j} (X : Ptd i) (Y : Ptd j) → Group (lmax i j)
 Trunc-⊙→Ω-group X Y = Trunc-group (⊙→Ω-group-structure X Y)
@@ -54,7 +54,7 @@ Trunc-⊙→Ω-group X Y = Trunc-group (⊙→Ω-group-structure X Y)
   (f : X ⊙→ Y) (Z : Ptd k)
   → (⊙→Ω-group-structure Y Z →ᴳˢ ⊙→Ω-group-structure X Z)
 ⊙→Ω-group-structure-fmap-dom F Z = group-structure-hom (_⊙∘ F)
-  (λ g₁ g₂ → ⊙∘-assoc ⊙Ω-∙ (⊙fanout g₁ g₂) F
+  (λ g₁ g₂ → ⊙λ= (⊙∘-assoc ⊙Ω-∙ (⊙fanout g₁ g₂) F)
            ∙ ap (⊙Ω-∙ ⊙∘_) (⊙fanout-pre∘ g₁ g₂ F))
 
 Trunc-⊙→Ω-group-fmap-dom : ∀ {i j k} {X : Ptd i} {Y : Ptd j}
@@ -86,14 +86,14 @@ Trunc-⊙→Ω-group-fmap-dom-∘ : ∀ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : P
     == Trunc-⊙→Ω-group-fmap-dom f W ∘ᴳ Trunc-⊙→Ω-group-fmap-dom g W
 Trunc-⊙→Ω-group-fmap-dom-∘ g f W = group-hom= $ λ= $
   Trunc-elim (λ _ → =-preserves-level Trunc-level)
-    (λ h → ap [_] (! (⊙∘-assoc h g f)))
+    (λ h → ap [_] (! (⊙λ= $ ⊙∘-assoc h g f)))
 
 ⊙→Ω-group-structure-fmap-codom : ∀ {i j k} (X : Ptd i) {Y : Ptd j} {Z : Ptd k}
   → Y ⊙→ Z → (⊙→Ω-group-structure X Y →ᴳˢ ⊙→Ω-group-structure X Z)
 ⊙→Ω-group-structure-fmap-codom X {Y} {Z} F = group-structure-hom
     (⊙Ω-fmap F ⊙∘_)
-    (λ G H → ⊙λ= (λ x → Ω-fmap-∙ F ((fst G) x) ((fst H) x))
-                 (lemma (snd F) (snd G) (snd H)))
+    (λ G H → ⊙λ=' (λ x → Ω-fmap-∙ F ((fst G) x) ((fst H) x))
+                  (lemma (snd F) (snd G) (snd H)))
     where
       abstract
         lemma : ∀ {ptZ : de⊙ Z} (α : (fst F) (pt Y) == ptZ)
@@ -129,7 +129,7 @@ Trunc-⊙→Ω-group-fmap-nat : ∀ {i₀ i₁ j₀ j₁}
   == Trunc-⊙→Ω-group-fmap-codom X₀ G  ∘ᴳ Trunc-⊙→Ω-group-fmap-dom   F  Y₀
 Trunc-⊙→Ω-group-fmap-nat F G = group-hom= $ λ= $ Trunc-elim
   (λ _ → =-preserves-level Trunc-level)
-  (λ k → ap [_] $ ⊙∘-assoc (⊙Ω-fmap G) k F)
+  (λ k → ap [_] $ ⊙λ= $ ⊙∘-assoc (⊙Ω-fmap G) k F)
 
 {- Not used.
 Trunc-⊙→Ω-group-emap-nat : ∀ {i₀ i₁ j₀ j₁}

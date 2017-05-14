@@ -88,7 +88,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
     ⊙winl-β = idp
 
     ⊙winr-β : ⊙f ⊙∘ ⊙winr == h
-    ⊙winr-β = ⊙λ= (λ _ → idp) $
+    ⊙winr-β = ⊙λ=' (λ _ → idp) $
       ap (_∙ snd g)
          (ap-! f wglue ∙ ap ! glue-β ∙ !-∙ (snd g) (! (snd h)))
       ∙ ∙-assoc (! (! (snd h))) (! (snd g)) (snd g)
@@ -101,7 +101,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
   ⊙Wedge-rec-post∘ : ∀ {k l} {Z : Ptd k} {W : Ptd l}
     (k : Z ⊙→ W) (g : X ⊙→ Z) (h : Y ⊙→ Z)
     → k ⊙∘ ⊙Wedge-rec g h == ⊙Wedge-rec (k ⊙∘ g) (k ⊙∘ h)
-  ⊙Wedge-rec-post∘ k g h = ⊙λ=
+  ⊙Wedge-rec-post∘ k g h = ⊙λ='
     (Wedge-elim (λ _ → idp) (λ _ → idp)
       (↓-='-in' $ ⊙WedgeRec.glue-β (k ⊙∘ g) (k ⊙∘ h)
                  ∙ lemma (fst k) (snd g) (snd h) (snd k)
@@ -115,7 +115,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
     lemma f idp idp idp = idp
 
   ⊙Wedge-rec-η : ⊙Wedge-rec ⊙winl ⊙winr == ⊙idf (X ⊙∨ Y)
-  ⊙Wedge-rec-η = ⊙λ=
+  ⊙Wedge-rec-η = ⊙λ='
     (Wedge-elim (λ _ → idp) (λ _ → idp)
       (↓-='-in' $ ap-idf wglue
                  ∙ ! (!-! wglue)
@@ -183,13 +183,25 @@ fold = Fold.f
 ⊙fold = Fold.⊙f
 
 module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
+  (fX : X ⊙→ X') (fY : Y ⊙→ Y') where
+
+  wedge-span-map : SpanMap (wedge-span X Y) (wedge-span X' Y')
+  wedge-span-map = span-map (fst fX) (fst fY) (idf _)
+                      (comm-sqr λ _ → snd fX)
+                      (comm-sqr λ _ → snd fY)
+
+  ∨-fmap : X ∨ Y → X' ∨ Y'
+  ∨-fmap = Pushout-fmap wedge-span-map
+
+  ⊙∨-fmap : X ⊙∨ Y ⊙→ X' ⊙∨ Y'
+  ⊙∨-fmap = ∨-fmap , ap winl (snd fX)
+
+module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
   (eqX : X ⊙≃ X') (eqY : Y ⊙≃ Y') where
 
   wedge-span-emap : SpanEquiv (wedge-span X Y) (wedge-span X' Y')
-  wedge-span-emap = ( span-map (fst (fst eqX)) (fst (fst eqY)) (idf _)
-                        (comm-sqr λ _ → snd (fst eqX))
-                        (comm-sqr λ _ → snd (fst eqY))
-                    , snd eqX , snd eqY , idf-is-equiv _)
+  wedge-span-emap = wedge-span-map (⊙–> eqX) (⊙–> eqY)
+                  , snd eqX , snd eqY , idf-is-equiv _
 
   ∨-emap : X ∨ Y ≃ X' ∨ Y'
   ∨-emap = Pushout-emap wedge-span-emap
@@ -197,7 +209,7 @@ module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
   ⊙∨-emap : X ⊙∨ Y ⊙≃ X' ⊙∨ Y'
   ⊙∨-emap = ≃-to-⊙≃ ∨-emap (ap winl (snd (fst eqX)))
 
-module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} where
+module _ {i j k} (X : Ptd i) (Y : Ptd j) (Z : Ptd k) where
 
   ∨-assoc : (X ⊙∨ Y) ∨ Z ≃ X ∨ (Y ⊙∨ Z)
   ∨-assoc = equiv to from to-from from-to where

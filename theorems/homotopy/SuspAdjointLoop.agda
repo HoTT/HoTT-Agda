@@ -39,7 +39,7 @@ module Σ⊣Ω {i} where
 
   η-natural : {X Y : Ptd i} (f : X ⊙→ Y)
     → ⊙η Y ⊙∘ f == ⊙Ω-fmap (⊙Susp-fmap f) ⊙∘ ⊙η X
-  η-natural {X = X} (f , idp) = ⊙λ=
+  η-natural {X = X} (f , idp) = ⊙λ='
     (λ x → ! $
       ap-∙ (Susp-fmap f) (merid x) (! (merid (pt X)))
       ∙ SuspFmap.merid-β f x
@@ -55,7 +55,7 @@ module Σ⊣Ω {i} where
 
   ε-natural : {X Y : Ptd i} (f : X ⊙→ Y)
     → ⊙ε Y ⊙∘ ⊙Susp-fmap (⊙Ω-fmap f) == f ⊙∘ ⊙ε X
-  ε-natural (f , idp) = ⊙λ=
+  ε-natural (f , idp) = ⊙λ='
     (SuspElim.f idp idp
       (λ p → ↓-='-from-square $ vert-degen-square $
         ap-∘ (ε _) (Susp-fmap (ap f)) (merid p)
@@ -66,7 +66,7 @@ module Σ⊣Ω {i} where
     idp
 
   εΣ-Ση : (X : Ptd i) → ⊙ε (⊙Susp X) ⊙∘ ⊙Susp-fmap (⊙η X) == ⊙idf _
-  εΣ-Ση X = ⊙λ=
+  εΣ-Ση X = ⊙λ='
     (SuspElim.f
       idp
       (merid (pt X))
@@ -84,7 +84,7 @@ module Σ⊣Ω {i} where
     square-lemma idp idp = ids
 
   Ωε-ηΩ : (X : Ptd i) → ⊙Ω-fmap (⊙ε X) ⊙∘ ⊙η (⊙Ω X) == ⊙idf _
-  Ωε-ηΩ X = ⊙λ=
+  Ωε-ηΩ X = ⊙λ='
     (λ p → ap-∙ (ε X) (merid p) (! (merid idp))
          ∙ (E.merid-β X p ∙2 (ap-! (ε X) (merid idp) ∙ ap ! (E.merid-β X idp)))
          ∙ ∙-unit-r _)
