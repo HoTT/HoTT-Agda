@@ -15,5 +15,8 @@ import homotopy.VanKampen
 {- blakers massey -}
 import homotopy.BlakersMassey
 
+{- cogroups and suspensions -}
+import homotopy.Cogroup
+
 {- modalities -}
 import homotopy.ModalWedgeExtension
