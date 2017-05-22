@@ -95,3 +95,40 @@ module MapsFromCogroup (cogroup-struct : CogroupStructure)
     ; assoc = assoc
     ; inv-l = inv-l
     }
+
+module _ {i} (X : Ptd i) where
+
+  private
+    ⊙inv = ⊙Susp-flip X
+
+    abstract
+      inv-l : ∀ σ → ⊙WedgeRec.f (⊙Susp-flip X) (⊙idf (⊙Susp X)) (pinch X σ) == north
+      inv-l = Susp-elim
+        (! (merid (pt X)))
+        (! (merid (pt X)))
+        (λ x → ↓-app=cst-in $ ! $ ap (_∙ ! (merid (pt X))) $
+          ap (W.f ∘ pinch X) (merid x)
+            =⟨ ap-∘ W.f (pinch X) (merid x) ⟩
+          ap W.f (ap (pinch X) (merid x))
+            =⟨ ap (ap W.f) (Pinch.merid-β X x) ⟩
+          ap W.f (ap winl (σloop X x) ∙ wglue ∙' ap winr (merid x))
+            =⟨ ap-∙ W.f (ap winl (σloop X x)) (wglue ∙' ap winr (merid x)) ⟩
+          ap W.f (ap winl (σloop X x)) ∙ ap W.f (wglue ∙' ap winr (merid x))
+            =⟨ ∘-ap W.f winl (σloop X x) ∙2 ap-∙' W.f wglue (ap winr (merid x)) ⟩
+          ap Susp-flip (σloop X x) ∙ ap W.f wglue ∙' ap W.f (ap winr (merid x))
+            =⟨ ( ap-∙ Susp-flip (merid x) (! (merid (pt X)))
+               ∙ (SuspFlip.merid-β x ∙2 (ap-! Susp-flip (merid (pt X)) ∙ ap ! (SuspFlip.merid-β (pt X)))))
+               ∙2
+               (W.glue-β ∙ ∙-unit-r (! (merid (pt X))))
+               ∙'2
+               (∘-ap W.f winr (merid x) ∙ ap-idf (merid x)) ⟩
+          (! (merid x) ∙ ! (! (merid (pt X)))) ∙ (! (merid (pt X)) ∙' merid x)
+            =⟨ ∙-! (merid x) (! (merid (pt X))) ∙2 ∙'=∙ (! (merid (pt X))) (merid x) ⟩
+          ! (! (merid (pt X)) ∙ merid x) ∙ (! (merid (pt X)) ∙ merid x)
+            =⟨ !-inv-l (! (merid (pt X)) ∙ merid x) ⟩
+          idp
+            =∎)
+        where module W = ⊙WedgeRec (⊙Susp-flip X) (⊙idf (⊙Susp X))
+
+      ⊙inv-l : ⊙Wedge-rec (⊙Susp-flip X) (⊙idf (⊙Susp X)) ⊙∘ ⊙pinch X ⊙∼ ⊙cst
+      ⊙inv-l = inv-l , ↓-idf=cst-in' idp
