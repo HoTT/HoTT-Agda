@@ -24,6 +24,18 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
     → ap f (p ∙ q) == ap f p ∙ ap f q
   ap-∙ idp q = idp
 
+  ∙∙-ap : {x y z w : A} (p : x == y) (q : y == z) (r : z == w)
+    → ap f p ∙ ap f q ∙ ap f r == ap f (p ∙ q ∙ r)
+  ∙∙-ap idp idp r = idp
+
+  ap-∙∙ : {x y z w : A} (p : x == y) (q : y == z) (r : z == w)
+    → ap f (p ∙ q ∙ r) == ap f p ∙ ap f q ∙ ap f r
+  ap-∙∙ idp idp r = idp
+
+  ap-∙∙∙ : {x y z w t : A} (p : x == y) (q : y == z) (r : z == w) (s : w == t)
+    → ap f (p ∙ q ∙ r ∙ s) == ap f p ∙ ap f q ∙ ap f r ∙ ap f s
+  ap-∙∙∙ idp idp idp s = idp
+
   ∙'-ap : {x y z : A} (p : x == y) (q : y == z)
     → ap f p ∙' ap f q == ap f (p ∙' q)
   ∙'-ap p idp = idp
@@ -194,3 +206,19 @@ module _ {i₀ i₁ i₂ i₃ j} {A₀ : Type i₀} {A₁ : Type i₁} {A₂ : T
   ap4 : {x₀ y₀ : A₀} {x₁ y₁ : A₁} {x₂ y₂ : A₂} {x₃ y₃ : A₃}
     → (x₀ == y₀) → (x₁ == y₁) → (x₂ == y₂) → (x₃ == y₃) → f x₀ x₁ x₂ x₃ == f y₀ y₁ y₂ y₃
   ap4 idp idp idp idp = idp
+
+module _ {i₀ i₁ i₂ i₃ i₄ j} {A₀ : Type i₀} {A₁ : Type i₁} {A₂ : Type i₂} {A₃ : Type i₃}
+  {A₄ : Type i₄} {B : Type j} (f : A₀ → A₁ → A₂ → A₃ → A₄ → B) where
+
+  ap5 : {x₀ y₀ : A₀} {x₁ y₁ : A₁} {x₂ y₂ : A₂} {x₃ y₃ : A₃} {x₄ y₄ : A₄}
+    → (x₀ == y₀) → (x₁ == y₁) → (x₂ == y₂) → (x₃ == y₃) → (x₄ == y₄)
+    → f x₀ x₁ x₂ x₃ x₄ == f y₀ y₁ y₂ y₃ y₄
+  ap5 idp idp idp idp idp = idp
+
+module _ {i₀ i₁ i₂ i₃ i₄ i₅ j} {A₀ : Type i₀} {A₁ : Type i₁} {A₂ : Type i₂} {A₃ : Type i₃}
+  {A₄ : Type i₄} {A₅ : Type i₅} {B : Type j} (f : A₀ → A₁ → A₂ → A₃ → A₄ → A₅ → B) where
+
+  ap6 : {x₀ y₀ : A₀} {x₁ y₁ : A₁} {x₂ y₂ : A₂} {x₃ y₃ : A₃} {x₄ y₄ : A₄} {x₅ y₅ : A₅}
+    → (x₀ == y₀) → (x₁ == y₁) → (x₂ == y₂) → (x₃ == y₃) → (x₄ == y₄) → (x₅ == y₅)
+    → f x₀ x₁ x₂ x₃ x₄ x₅ == f y₀ y₁ y₂ y₃ y₄ y₅
+  ap6 idp idp idp idp idp idp = idp

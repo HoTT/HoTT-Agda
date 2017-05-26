@@ -3,9 +3,9 @@
 open import HoTT
 open import homotopy.CoHSpace
 
-module homotopy.Cogroup {i} {X : Ptd i} where
+module homotopy.Cogroup {i} where
 
-record CogroupStructure : Type i where
+record CogroupStructure (X : Ptd i) : Type i where
   field
     co-h-struct : CoHSpaceStructure X
     ⊙inv : X ⊙→ X
@@ -19,7 +19,7 @@ record CogroupStructure : Type i where
     ⊙assoc : ⊙–> (⊙∨-assoc X X X) ⊙∘ ⊙∨-fmap ⊙coμ (⊙idf X) ⊙∘ ⊙coμ
           ⊙∼ ⊙∨-fmap (⊙idf X) ⊙coμ ⊙∘ ⊙coμ
 
-module MapsFromCogroup (cogroup-struct : CogroupStructure)
+module MapsFromCogroup {X : Ptd i} (cogroup-struct : CogroupStructure X)
   {j} (Y : Ptd j) where
 
   module CGS = CogroupStructure cogroup-struct
@@ -47,7 +47,7 @@ module MapsFromCogroup (cogroup-struct : CogroupStructure)
           =⟨ ⊙λ= (⊙∘-unit-r f) ⟩
         f
           =∎
- 
+
       assoc : ∀ f g h → comp (comp f g) h == comp f (comp g h)
       assoc f g h =
         ⊙Wedge-rec (⊙Wedge-rec f g ⊙∘ ⊙coμ) h ⊙∘ ⊙coμ
@@ -96,39 +96,156 @@ module MapsFromCogroup (cogroup-struct : CogroupStructure)
     ; inv-l = inv-l
     }
 
-module _ {i} (X : Ptd i) where
+module _ (X : Ptd i) where
 
   private
     ⊙inv = ⊙Susp-flip X
 
     abstract
       inv-l : ∀ σ → ⊙WedgeRec.f (⊙Susp-flip X) (⊙idf (⊙Susp X)) (pinch X σ) == north
-      inv-l = Susp-elim
-        (! (merid (pt X)))
-        (! (merid (pt X)))
-        (λ x → ↓-app=cst-in $ ! $ ap (_∙ ! (merid (pt X))) $
+      inv-l = Susp-elim (! (merid (pt X))) (! (merid (pt X))) λ x →
+        ↓-app=cst-in $ ! $ ap (_∙ ! (merid (pt X))) $
           ap (W.f ∘ pinch X) (merid x)
             =⟨ ap-∘ W.f (pinch X) (merid x) ⟩
           ap W.f (ap (pinch X) (merid x))
             =⟨ ap (ap W.f) (Pinch.merid-β X x) ⟩
-          ap W.f (ap winl (σloop X x) ∙ wglue ∙' ap winr (merid x))
-            =⟨ ap-∙ W.f (ap winl (σloop X x)) (wglue ∙' ap winr (merid x)) ⟩
-          ap W.f (ap winl (σloop X x)) ∙ ap W.f (wglue ∙' ap winr (merid x))
-            =⟨ ∘-ap W.f winl (σloop X x) ∙2 ap-∙' W.f wglue (ap winr (merid x)) ⟩
-          ap Susp-flip (σloop X x) ∙ ap W.f wglue ∙' ap W.f (ap winr (merid x))
-            =⟨ ( ap-∙ Susp-flip (merid x) (! (merid (pt X)))
-               ∙ (SuspFlip.merid-β x ∙2 (ap-! Susp-flip (merid (pt X)) ∙ ap ! (SuspFlip.merid-β (pt X)))))
-               ∙2
-               (W.glue-β ∙ ∙-unit-r (! (merid (pt X))))
-               ∙'2
-               (∘-ap W.f winr (merid x) ∙ ap-idf (merid x)) ⟩
-          (! (merid x) ∙ ! (! (merid (pt X)))) ∙ (! (merid (pt X)) ∙' merid x)
-            =⟨ ∙-! (merid x) (! (merid (pt X))) ∙2 ∙'=∙ (! (merid (pt X))) (merid x) ⟩
+          ap W.f (ap winl (σloop X x) ∙ wglue ∙ ap winr (merid x))
+            =⟨ ap-∙∙ W.f (ap winl (σloop X x)) wglue (ap winr (merid x)) ⟩
+          ap W.f (ap winl (σloop X x)) ∙ ap W.f wglue ∙ ap W.f (ap winr (merid x))
+            =⟨ ap3 (λ p q r → p ∙ q ∙ r)
+                ( ∘-ap W.f winl (σloop X x)
+                ∙ ap-∙ Susp-flip (merid x) (! (merid (pt X)))
+                ∙ (SuspFlip.merid-β x ∙2 (ap-! Susp-flip (merid (pt X)) ∙ ap ! (SuspFlip.merid-β (pt X)))))
+                (W.glue-β ∙ ∙-unit-r (! (merid (pt X))))
+                (∘-ap W.f winr (merid x) ∙ ap-idf (merid x)) ⟩
+          (! (merid x) ∙ ! (! (merid (pt X)))) ∙ (! (merid (pt X)) ∙ merid x)
+            =⟨ ap (_∙ (! (merid (pt X)) ∙ merid x)) (∙-! (merid x) (! (merid (pt X)))) ⟩
           ! (! (merid (pt X)) ∙ merid x) ∙ (! (merid (pt X)) ∙ merid x)
             =⟨ !-inv-l (! (merid (pt X)) ∙ merid x) ⟩
           idp
-            =∎)
+            =∎
         where module W = ⊙WedgeRec (⊙Susp-flip X) (⊙idf (⊙Susp X))
 
       ⊙inv-l : ⊙Wedge-rec (⊙Susp-flip X) (⊙idf (⊙Susp X)) ⊙∘ ⊙pinch X ⊙∼ ⊙cst
       ⊙inv-l = inv-l , ↓-idf=cst-in' idp
+
+      assoc : ∀ σ
+        → fst (⊙–> (⊙∨-assoc (⊙Susp X) (⊙Susp X) (⊙Susp X)))
+            (∨-fmap (⊙pinch X) (⊙idf (⊙Susp X)) (pinch X σ))
+        == ∨-fmap (⊙idf (⊙Susp X)) (⊙pinch X) (pinch X σ)
+      assoc = Susp-elim idp idp λ x → ↓-='-in' $ ! $
+        ap (Assoc.f ∘ FmapL.f ∘ pinch X) (merid x)
+          =⟨ ap-∘ (Assoc.f ∘ FmapL.f) (pinch X) (merid x) ⟩
+        ap (Assoc.f ∘ FmapL.f) (ap (pinch X) (merid x))
+          =⟨ ap (ap (Assoc.f ∘ FmapL.f)) (Pinch.merid-β X x) ⟩
+        ap (Assoc.f ∘ FmapL.f) (ap winl (σloop X x) ∙ wglue ∙ ap winr (merid x))
+          =⟨ ap-∘ Assoc.f FmapL.f (ap winl (σloop X x) ∙ wglue ∙ ap winr (merid x)) ⟩
+        ap Assoc.f (ap FmapL.f (ap winl (σloop X x) ∙ wglue ∙ ap winr (merid x)))
+          =⟨ ap (ap Assoc.f) $
+                ap FmapL.f (ap winl (σloop X x) ∙ wglue ∙ ap winr (merid x))
+                  =⟨ ap-∙∙ FmapL.f (ap winl (σloop X x)) wglue (ap winr (merid x)) ⟩
+                ap FmapL.f (ap winl (σloop X x)) ∙ ap FmapL.f wglue ∙ ap FmapL.f (ap winr (merid x))
+                  =⟨ ap3 (λ p q r → p ∙ q ∙ r)
+                      ( ∘-ap FmapL.f winl (σloop X x)
+                      ∙ ap-∘ winl (pinch X) (σloop X x)
+                      ∙ ap (ap winl) (lemma₀ x)
+                      ∙ ap-∙∙∙ winl (ap winl (σloop X x)) wglue (ap winr (σloop X x)) (! wglue)
+                      ∙ ap3 (λ p q r → p ∙ ap winl wglue ∙ q ∙ r)
+                          (∘-ap winl winl (σloop X x))
+                          (∘-ap winl winr (σloop X x))
+                          (ap-! winl wglue))
+                      FmapL.glue-β
+                      (∘-ap FmapL.f winr (merid x)) ⟩
+                ( ap (winl ∘ winl) (σloop X x) ∙ ap winl wglue ∙ ap (winl ∘ winr) (σloop X x) ∙ ! (ap winl wglue))
+                ∙ wglue ∙ ap winr (merid x)
+                  =∎ ⟩
+        ap Assoc.f
+          ((ap (winl ∘ winl) (σloop X x) ∙ ap winl wglue ∙ ap (winl ∘ winr) (σloop X x) ∙ ! (ap winl wglue))
+           ∙ wglue ∙ ap winr (merid x))
+          =⟨ ap-∙∙ Assoc.f
+              (ap (winl ∘ winl) (σloop X x) ∙ ap winl wglue ∙ ap (winl ∘ winr) (σloop X x) ∙ ! (ap winl wglue))
+              wglue (ap winr (merid x))
+           ∙ ap (λ p → p ∙ ap Assoc.f wglue ∙ ap Assoc.f (ap winr (merid x)))
+              (ap-∙∙∙ Assoc.f
+                (ap (winl ∘ winl) (σloop X x))
+                (ap winl wglue)
+                (ap (winl ∘ winr) (σloop X x))
+                (! (ap winl wglue))) ⟩
+        ( ap Assoc.f (ap (winl ∘ winl) (σloop X x))
+        ∙ ap Assoc.f (ap winl wglue)
+        ∙ ap Assoc.f (ap (winl ∘ winr) (σloop X x))
+        ∙ ap Assoc.f (! (ap winl wglue)))
+          ∙ ap Assoc.f wglue ∙ ap Assoc.f (ap winr (merid x))
+          =⟨ ap6 (λ p₀ p₁ p₂ p₃ p₄ p₅ → (p₀ ∙ p₁ ∙ p₂ ∙ p₃) ∙ p₄ ∙ p₅)
+              (∘-ap Assoc.f (winl ∘ winl) (σloop X x))
+              (∘-ap Assoc.f winl wglue ∙ AssocInl.glue-β)
+              (∘-ap Assoc.f (winl ∘ winr) (σloop X x) ∙ ap-∘ winr winl (σloop X x))
+              (ap-! Assoc.f (ap winl wglue) ∙ ap ! (∘-ap Assoc.f winl wglue ∙ AssocInl.glue-β))
+              Assoc.glue-β
+              (∘-ap Assoc.f winr (merid x) ∙ ap-∘ winr winr (merid x)) ⟩
+        (ap winl (σloop X x) ∙ wglue ∙ ap winr (ap winl (σloop X x)) ∙ ! wglue)
+        ∙ (wglue ∙ ap winr wglue) ∙ ap winr (ap winr (merid x))
+          =⟨ lemma₁ (ap winl (σloop X x)) wglue (ap winr (ap winl (σloop X x))) (ap winr wglue) (ap winr (ap winr (merid x))) ⟩
+        ap winl (σloop X x) ∙ wglue ∙ ap winr (ap winl (σloop X x)) ∙ ap winr wglue ∙ ap winr (ap winr (merid x))
+          =⟨ ap3 (λ p q r → p ∙ q ∙ r)
+              (ap-∘ FmapR.f winl (σloop X x))
+              (! FmapR.glue-β)
+              ( ∙∙-ap winr (ap winl (σloop X x)) wglue (ap winr (merid x))
+              ∙ ap (ap winr) (! (Pinch.merid-β X x))
+              ∙ ∘-ap winr (pinch X) (merid x)
+              ∙ ap-∘ FmapR.f winr (merid x)) ⟩
+        ap FmapR.f (ap winl (σloop X x)) ∙ ap FmapR.f wglue ∙ ap FmapR.f (ap winr (merid x))
+          =⟨ ∙∙-ap FmapR.f (ap winl (σloop X x)) wglue (ap winr (merid x)) ⟩
+        ap FmapR.f (ap winl (σloop X x) ∙ wglue ∙ ap winr (merid x))
+          =⟨ ! $ ap (ap FmapR.f) (Pinch.merid-β X x) ⟩
+        ap FmapR.f (ap (pinch X) (merid x))
+          =⟨ ∘-ap FmapR.f (pinch X) (merid x) ⟩
+        ap (FmapR.f ∘ pinch X) (merid x)
+          =∎
+        where
+          module Assoc = WedgeAssoc (⊙Susp X) (⊙Susp X) (⊙Susp X)
+          module AssocInl = WedgeAssocInl (⊙Susp X) (⊙Susp X) (⊙Susp X)
+          module FmapL = WedgeFmap (⊙pinch X) (⊙idf (⊙Susp X))
+          module FmapR = WedgeFmap (⊙idf (⊙Susp X)) (⊙pinch X)
+
+          lemma₀ : ∀ x → ap (pinch X) (σloop X x)
+            == ap winl (σloop X x) ∙ wglue ∙ ap winr (σloop X x) ∙ ! wglue
+          lemma₀ x =
+            ap (pinch X) (σloop X x)
+              =⟨ ap-∙ (pinch X) (merid x) (! (merid (pt X))) ⟩
+            ap (pinch X) (merid x) ∙ ap (pinch X) (! (merid (pt X)))
+              =⟨ Pinch.merid-β X x ∙2 (ap-! (pinch X) (merid (pt X)) ∙ ap ! (Pinch.merid-β X (pt X))) ⟩
+            (ap winl (σloop X x) ∙ wglue ∙ ap winr (merid x)) ∙ ! (ap winl (σloop X (pt X)) ∙ wglue ∙ ap winr (merid (pt X)))
+              =⟨ ap (λ p → (ap winl (σloop X x) ∙ wglue ∙ ap winr (merid x))
+                           ∙ ! (ap winl p ∙ wglue ∙ ap winr (merid (pt X))))
+                    σloop-pt ⟩
+            (ap winl (σloop X x) ∙ wglue ∙ ap winr (merid x)) ∙ ! (wglue ∙ ap winr (merid (pt X)))
+              =⟨ lemma₀₁ winr (ap winl (σloop X x)) wglue (merid x) (merid (pt X)) ⟩
+            ap winl (σloop X x) ∙ wglue ∙ ap winr (σloop X x) ∙ ! wglue
+              =∎
+            where
+              lemma₀₁ : ∀ {i j} {A : Type i} {B : Type j} {b₀ b₁ : B} {a₂ a₃ : A}
+                → (f : A → B)
+                → (p₀ : b₀ == b₁) (p₁ : b₁ == f a₂) (p₂ : a₂ == a₃) (p₃ : a₂ == a₃)
+                → (p₀ ∙ p₁ ∙ ap f p₂) ∙ ! (p₁ ∙ ap f p₃)
+                == p₀ ∙ p₁ ∙ ap f (p₂ ∙ ! p₃) ∙ ! p₁
+              lemma₀₁ f idp idp idp p₃ = !-ap f p₃ ∙ ! (∙-unit-r (ap f (! p₃)))
+
+          lemma₁ : ∀ {i} {A : Type i} {a₀ a₁ a₂ a₃ a₄ : A}
+            → (p₀ : a₀ == a₁) (p₁ : a₁ == a₂) (p₂ : a₂ == a₂) (p₃ : a₂ == a₃) (p₄ : a₃ == a₄)
+            → (p₀ ∙ p₁ ∙ p₂ ∙ ! p₁) ∙ (p₁ ∙ p₃) ∙ p₄
+            == p₀ ∙ p₁ ∙ (p₂ ∙ p₃ ∙ p₄)
+          lemma₁ idp idp p₂ idp idp = ∙-unit-r (p₂ ∙ idp)
+
+      ⊙assoc :
+           ⊙–> (⊙∨-assoc (⊙Susp X) (⊙Susp X) (⊙Susp X)) ⊙∘
+           ⊙∨-fmap (⊙pinch X) (⊙idf (⊙Susp X)) ⊙∘ ⊙pinch X
+        ⊙∼ ⊙∨-fmap (⊙idf (⊙Susp X)) (⊙pinch X) ⊙∘ ⊙pinch X
+      ⊙assoc = assoc , idp
+
+  Susp-cogroup-structure : CogroupStructure (⊙Susp X)
+  Susp-cogroup-structure = record {
+    co-h-struct = Susp-co-h-space-structure X;
+    ⊙inv = ⊙Susp-flip X;
+    ⊙inv-l = ⊙inv-l;
+    ⊙assoc = ⊙assoc}
