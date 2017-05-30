@@ -131,29 +131,9 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
   (G-abelian : is-abelian G) where
 
   private
-    module G = Group G
+    module G = AbGroup (G , G-abelian)
     module H = Group H
     module K = Group K
-
-    abstract
-      interchange : (g₁ g₂ g₃ g₄ : G.El) →
-        G.comp (G.comp g₁ g₂) (G.comp g₃ g₄)
-        == G.comp (G.comp g₁ g₃) (G.comp g₂ g₄)
-      interchange g₁ g₂ g₃ g₄ =
-        (g₁ □ g₂) □ (g₃ □ g₄)
-           =⟨ G.assoc g₁ g₂ (g₃ □ g₄) ⟩
-         g₁ □ (g₂ □ (g₃ □ g₄))
-           =⟨ G-abelian g₃ g₄ |in-ctx (λ w → g₁ □ (g₂ □ w)) ⟩
-         g₁ □ (g₂ □ (g₄ □ g₃))
-           =⟨ ! (G.assoc g₂ g₄ g₃) |in-ctx (λ w → g₁ □ w) ⟩
-         g₁ □ ((g₂ □ g₄) □ g₃)
-           =⟨ G-abelian (g₂ □ g₄) g₃ |in-ctx (λ w → g₁ □ w) ⟩
-         g₁ □ (g₃ □ (g₂ □ g₄))
-           =⟨ ! (G.assoc g₁ g₃ (g₂ □ g₄)) ⟩
-         (g₁ □ g₃) □ (g₂ □ g₄) =∎
-         where
-          infix 80 _□_
-          _□_ = G.comp
 
   ×ᴳ-fanin : (H →ᴳ G) → (K →ᴳ G) → (H ×ᴳ K →ᴳ G)
   ×ᴳ-fanin φ ψ = group-hom (λ {(h , k) → G.comp (φ.f h) (ψ.f k)}) lemma
@@ -170,7 +150,7 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
             =⟨ ψ.pres-comp k₁ k₂
                |in-ctx (λ w → G.comp (G.comp (φ.f h₁) (φ.f h₂)) w)  ⟩
           G.comp (G.comp (φ.f h₁) (φ.f h₂)) (G.comp (ψ.f k₁) (ψ.f k₂))
-            =⟨ interchange (φ.f h₁) (φ.f h₂) (ψ.f k₁) (ψ.f k₂) ⟩
+            =⟨ G.interchange (φ.f h₁) (φ.f h₂) (ψ.f k₁) (ψ.f k₂) ⟩
           G.comp (G.comp (φ.f h₁) (ψ.f k₁)) (G.comp (φ.f h₂) (ψ.f k₂)) =∎
 
 abstract

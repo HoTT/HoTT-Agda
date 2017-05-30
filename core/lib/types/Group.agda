@@ -6,6 +6,7 @@ open import lib.types.Pi
 
 module lib.types.Group where
 
+-- 1-approximation of groups without higher coherence conditions.
 record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
   : Type i where
   constructor group-structure
