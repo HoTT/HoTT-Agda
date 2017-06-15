@@ -19,13 +19,13 @@ record CogroupStructure (X : Ptd i) : Type i where
     ⊙assoc : ⊙–> (⊙∨-assoc X X X) ⊙∘ ⊙∨-fmap ⊙coμ (⊙idf X) ⊙∘ ⊙coμ
           ⊙∼ ⊙∨-fmap (⊙idf X) ⊙coμ ⊙∘ ⊙coμ
 
-module MapsFromCogroup {X : Ptd i} (cogroup-struct : CogroupStructure X)
+module _ {X : Ptd i} (cogroup-struct : CogroupStructure X)
   {j} (Y : Ptd j) where
 
-  module CGS = CogroupStructure cogroup-struct
-  ⊙coμ = CGS.⊙coμ
-
   private
+    module CGS = CogroupStructure cogroup-struct
+    ⊙coμ = CGS.⊙coμ
+
     comp : (X ⊙→ Y) → (X ⊙→ Y) → (X ⊙→ Y)
     comp f g = ⊙Wedge-rec f g ⊙∘ ⊙coμ
 
@@ -86,8 +86,8 @@ module MapsFromCogroup {X : Ptd i} (cogroup-struct : CogroupStructure X)
         ⊙cst
           =∎
 
-  maps-from-cogroup-group-structure : GroupStructure (X ⊙→ Y)
-  maps-from-cogroup-group-structure = record
+  cogroup⊙→-group-structure : GroupStructure (X ⊙→ Y)
+  cogroup⊙→-group-structure = record
     { ident = ⊙cst
     ; inv = inv
     ; comp = comp
@@ -249,3 +249,6 @@ module _ (X : Ptd i) where
     ⊙inv = ⊙Susp-flip X;
     ⊙inv-l = ⊙inv-l;
     ⊙assoc = ⊙assoc}
+
+  Susp⊙→-group-structure : ∀ {j} (Y : Ptd j) → GroupStructure (⊙Susp X ⊙→ Y)
+  Susp⊙→-group-structure Y = cogroup⊙→-group-structure Susp-cogroup-structure Y
