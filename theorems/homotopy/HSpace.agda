@@ -8,41 +8,72 @@ module homotopy.HSpace where
 -- not all higher cells are killed.
 record HSpaceStructure {i} (X : Ptd i) : Type i where
   constructor hSpaceStructure
-  private
-    A = de⊙ X
-    e = pt X
   field
-    μ : A → A → A
-    μ-e-l : (a : A) → μ e a == a
-    μ-e-r : (a : A) → μ a e == a
-    μ-coh : μ-e-l e == μ-e-r e
+    ⊙μ : (X ⊙× X) ⊙→ X
+
+  μ : de⊙ X → de⊙ X → de⊙ X
+  μ = curry (fst ⊙μ)
+
+  field
+    ⊙unit-l : ⊙μ ⊙∘ ⊙×-inr X X ⊙∼ ⊙idf X
+    ⊙unit-r : ⊙μ ⊙∘ ⊙×-inl X X ⊙∼ ⊙idf X
+
+  unit-l : ∀ x → μ (pt X) x == x
+  unit-l = fst ⊙unit-l
+
+  unit-r : ∀ x → μ x (pt X) == x
+  unit-r = fst ⊙unit-r
+
+  coh : unit-l (pt X) == unit-r (pt X)
+  coh = ! (↓-idf=cst-out (snd ⊙unit-l) ∙ ∙-unit-r _)
+      ∙ (↓-idf=cst-out (snd ⊙unit-r) ∙ ∙-unit-r _)
+
+record AlternativeHSpaceStructure {i} (X : Ptd i) : Type i where
+  constructor hSpaceStructure
+  field
+    μ : de⊙ X → de⊙ X → de⊙ X
+    unit-l : ∀ x → μ (pt X) x == x
+    unit-r : ∀ x → μ x (pt X) == x
+    coh : unit-l (pt X) == unit-r (pt X)
+
+  ⊙μ : (X ⊙× X) ⊙→ X
+  ⊙μ = uncurry μ , unit-l (pt X)
+
+  ⊙unit-l : ⊙μ ⊙∘ ⊙×-inr X X ⊙∼ ⊙idf X
+  ⊙unit-l = unit-l , ↓-idf=cst-in' idp
+
+  ⊙unit-r : ⊙μ ⊙∘ ⊙×-inl X X ⊙∼ ⊙idf X
+  ⊙unit-r = unit-r , ↓-idf=cst-in' coh
+
+from-alt-h-space : ∀ {i} {X : Ptd i} → AlternativeHSpaceStructure X → HSpaceStructure X
+from-alt-h-space hss = record {AlternativeHSpaceStructure hss}
+
+to-alt-h-space : ∀ {i} {X : Ptd i} → HSpaceStructure X → AlternativeHSpaceStructure X
+to-alt-h-space hss = record {HSpaceStructure hss}
 
 module ConnectedHSpace {i} {X : Ptd i} (c : is-connected 0 (de⊙ X))
   (hX : HSpaceStructure X) where
 
-  open HSpaceStructure hX
-  private
-    A = de⊙ X
-    e = pt X
+  open HSpaceStructure hX public
 
   {-
-  Given that [A] is 0-connected, to prove that each [μ a] is an equivalence we
-  only need to prove that one of them is. But for [a] = [e], [μ a] is the
+  Given that [X] is 0-connected, to prove that each [μ x] is an equivalence we
+  only need to prove that one of them is. But for [x] = [pt X], [μ x] is the
   identity so we’re done.
   -}
 
-  μ-e-l-is-equiv : (a : A) → is-equiv (λ a' → μ a' a)
-  μ-e-l-is-equiv = prop-over-connected {a = e} c
-    (λ a → (is-equiv (λ a' → μ a' a) , is-equiv-is-prop))
-    (transport! is-equiv (λ= μ-e-r) (idf-is-equiv A))
+  l-is-equiv : ∀ x → is-equiv (λ y → μ y x)
+  l-is-equiv = prop-over-connected {a = pt X} c
+    (λ x → (is-equiv (λ y → μ y x) , is-equiv-is-prop))
+    (transport! is-equiv (λ= unit-r) (idf-is-equiv _))
 
-  μ-e-r-is-equiv : (a : A) → is-equiv (μ a)
-  μ-e-r-is-equiv = prop-over-connected {a = e} c
-    (λ a → (is-equiv (μ a) , is-equiv-is-prop))
-    (transport! is-equiv (λ= μ-e-l) (idf-is-equiv A))
+  r-is-equiv : ∀ x → is-equiv (λ y → μ x y)
+  r-is-equiv = prop-over-connected {a = pt X} c
+    (λ x → (is-equiv (λ y → μ x y) , is-equiv-is-prop))
+    (transport! is-equiv (λ= unit-l) (idf-is-equiv _))
 
-  μ-e-l-equiv : A → A ≃ A
-  μ-e-l-equiv a = _ , μ-e-l-is-equiv a
+  l-equiv : de⊙ X → de⊙ X ≃ de⊙ X
+  l-equiv x = _ , l-is-equiv x
 
-  μ-e-r-equiv : A → A ≃ A
-  μ-e-r-equiv a = _ , μ-e-r-is-equiv a
+  r-equiv : de⊙ X → de⊙ X ≃ de⊙ X
+  r-equiv x = _ , r-is-equiv x

@@ -47,10 +47,10 @@ module EM₁HSpace {i} (G : AbGroup i) where
   mult = EM₁-rec {C = EM₁ G.grp → EM₁ G.grp} (Π-level (λ _ → EM₁-level)) (λ x → x) mult-hom
 
   H-⊙EM₁ : HSpaceStructure (⊙EM₁ G.grp)
-  H-⊙EM₁ = record { μ = mult; μ-e-l = μ-e-l; μ-e-r = μ-e-r; μ-coh = μ-coh }
+  H-⊙EM₁ = from-alt-h-space $ record { μ = mult; unit-l = unit-l; unit-r = unit-r; coh = coh }
     where
-    μ-e-l : (x : EM₁ G.grp) → mult embase x == x
-    μ-e-l = EM₁-elim
+    unit-l : (x : EM₁ G.grp) → mult embase x == x
+    unit-l = EM₁-elim
       {P = λ x → mult embase x == x}
       (λ _ → =-preserves-level EM₁-level)
       idp
@@ -58,8 +58,8 @@ module EM₁HSpace {i} (G : AbGroup i) where
                             ∙ ! (∙-unit-r (ap (mult embase) (emloop g))))
       (λ _ _ → set-↓-has-all-paths-↓ (EM₁-level _ _))
 
-    μ-e-r : (x : EM₁ G.grp) → mult x embase == x
-    μ-e-r = EM₁-elim
+    unit-r : (x : EM₁ G.grp) → mult x embase == x
+    unit-r = EM₁-elim
       {P = λ x → mult x embase == x}
       (λ _ → =-preserves-level EM₁-level)
       idp
@@ -79,7 +79,7 @@ module EM₁HSpace {i} (G : AbGroup i) where
          ap (λ z → mult z embase) (emloop g) ∙ idp ∎)
       (λ _ _ → set-↓-has-all-paths-↓ (EM₁-level _ _))
 
-    μ-coh : μ-e-l embase == μ-e-r embase
-    μ-coh = idp
+    coh : unit-l embase == unit-r embase
+    coh = idp
 
   open HSpaceStructure H-⊙EM₁

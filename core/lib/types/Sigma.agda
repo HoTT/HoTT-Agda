@@ -46,6 +46,12 @@ diag a = a , a
 ⊙diag : ∀ {i} {X : Ptd i} → X ⊙→ X ⊙× X
 ⊙diag = ((λ x → (x , x)) , idp)
 
+⊙×-inl : ∀ {i j} (X : Ptd i) (Y : Ptd j) → X ⊙→ X ⊙× Y
+⊙×-inl X Y = (λ x → x , pt Y) , idp
+
+⊙×-inr : ∀ {i j} (X : Ptd i) (Y : Ptd j) → Y ⊙→ X ⊙× Y
+⊙×-inr X Y = (λ y → pt X , y) , idp
+
 ⊙fst-fanout : ∀ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   (f : X ⊙→ Y) (g : X ⊙→ Z)
   → ⊙fst ⊙∘ ⊙fanout f g == f

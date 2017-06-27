@@ -19,8 +19,8 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (de⊙ X))
       ∙ ap ua (Subtype=-out is-equiv-prop (λ= α))
       ∙ ua-η q
 
-  open HSS H-X
-  open ConnectedHSpace cA H-X
+  module μ = ConnectedHSpace cA H-X
+  μ = μ.μ
   private
     A = de⊙ X
     e = pt X
@@ -28,7 +28,7 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (de⊙ X))
   P : Susp A → Type i
   P x = Trunc 1 (north == x)
 
-  module Codes = SuspRec A A (λ a → ua (μ-e-r-equiv a))
+  module Codes = SuspRec A A (λ a → ua (μ.r-equiv a))
 
   Codes : Susp A → Type i
   Codes = Codes.f
@@ -52,8 +52,8 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (de⊙ X))
     transport-Codes-mer a a' =
       coe (ap Codes (merid a)) a'
         =⟨ Codes.merid-β a |in-ctx (λ w → coe w a') ⟩
-      coe (ua (μ-e-r-equiv a)) a'
-        =⟨ coe-β (μ-e-r-equiv a) a' ⟩
+      coe (ua (μ.r-equiv a)) a'
+        =⟨ coe-β (μ.r-equiv a) a' ⟩
       μ a a' ∎
 
     transport-Codes-mer-e-! : (a : A)
@@ -63,8 +63,8 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (de⊙ X))
         =⟨ ap-! Codes (merid e) |in-ctx (λ w → coe w a) ⟩
       coe (! (ap Codes (merid e))) a
         =⟨ Codes.merid-β e |in-ctx (λ w → coe (! w) a) ⟩
-      coe (! (ua (μ-e-r-equiv e))) a
-        =⟨ Type=-ext (ua (μ-e-r-equiv e)) idp (λ x → coe-β _ x ∙ μ-e-l x)
+      coe (! (ua (μ.r-equiv e))) a
+        =⟨ Type=-ext (ua (μ.r-equiv e)) idp (λ x → coe-β _ x ∙ μ.unit-l x)
           |in-ctx (λ w → coe (! w) a) ⟩
       coe (! idp) a ∎
 
@@ -74,7 +74,7 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (de⊙ X))
       transport Codes (merid a ∙ ! (merid e)) e
         =⟨ transp-∙ {B = Codes} (merid a) (! (merid e)) e ⟩
       transport Codes (! (merid e)) (transport Codes (merid a) e)
-        =⟨ transport-Codes-mer a e ∙ μ-e-r a
+        =⟨ transport-Codes-mer a e ∙ μ.unit-r a
           |in-ctx (λ w → transport Codes (! (merid e)) w) ⟩
       transport Codes (! (merid e)) a
         =⟨ transport-Codes-mer-e-! a ⟩
@@ -91,14 +91,14 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (de⊙ X))
         P = λ a a' → (_ , Trunc-level {n = 1} _ _);
         f = λ a →  ap [_] $
               merid (μ a e)
-                =⟨ ap merid (μ-e-r a) ⟩
+                =⟨ ap merid (μ.unit-r a) ⟩
               merid a
                 =⟨ ap (λ w → w ∙ merid a) (! (!-inv-r (merid e)))
                    ∙ ∙-assoc (merid e) (! (merid e)) (merid a)  ⟩
               merid e ∙ ! (merid e) ∙ merid a ∎;
         g = λ a' → ap [_] $
               merid (μ e a')
-                =⟨ ap merid (μ-e-l a') ⟩
+                =⟨ ap merid (μ.unit-l a') ⟩
               merid a'
                 =⟨ ! (∙-unit-r (merid a'))
                    ∙ ap (λ w → merid a' ∙ w) (! (!-inv-l (merid e))) ⟩
@@ -107,7 +107,7 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (de⊙ X))
               merid (μ e e) =⟨ p₁ ⟩
               merid e       =⟨ p₂ ⟩
               merid e ∙ ! (merid e) ∙ merid e ∎})
-             (pair×= (ap (λ x → ap merid x) (! μ-coh)) (coh (merid e)))}
+             (pair×= (ap (λ x → ap merid x) (! μ.coh)) (coh (merid e)))}
         where coh : {B : Type i} {b b' : B} (p : b == b')
                 → ap (λ w → w ∙ p) (! (!-inv-r p)) ∙ ∙-assoc p (! p) p
                   == ! (∙-unit-r p) ∙ ap (λ w → p ∙ w) (! (!-inv-l p))

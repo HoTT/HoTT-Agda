@@ -6,8 +6,8 @@ open import homotopy.HSpace
 module homotopy.HopfConstruction {i} {X : Ptd i} (c : is-connected 0 (de⊙ X))
   (hX : HSpaceStructure X) where
 
-open HSpaceStructure hX
-open ConnectedHSpace c hX
+module μ = ConnectedHSpace c hX
+μ = μ.μ
 private
   A = de⊙ X
 
@@ -17,7 +17,7 @@ suspension of [A] with fiber [A] and applying [μ a] when you move along
 [merid a].
 -}
 
-module H = SuspRecType A A μ-e-r-equiv
+module H = SuspRecType A A μ.r-equiv
 
 {-
 The total space of the previous fibration is the pushout of the following span
@@ -48,13 +48,13 @@ x = span= (equiv snd (_,_ tt) (λ b → idp) (λ a → idp))
     to (a , a') = (μ a a' , a')
 
     from : A × A → A × A
-    from (a , a') = (<– (μ-e-l-equiv a') a , a')
+    from (a , a') = (<– (μ.l-equiv a') a , a')
 
     to-from : (a : A × A) → to (from a) == a
-    to-from (a , a') = pair×= (<–-inv-r (μ-e-l-equiv a') a) idp
+    to-from (a , a') = pair×= (<–-inv-r (μ.l-equiv a') a) idp
 
     from-to : (a : A × A) → from (to a) == a
-    from-to (a , a') = pair×= (<–-inv-l (μ-e-l-equiv a') a) idp
+    from-to (a , a') = pair×= (<–-inv-l (μ.l-equiv a') a) idp
 
 lemma2 : (A * A) ≃ (Pushout (Span-flip (*-span A A)))
 lemma2 = Pushout-flip-equiv (*-span A A)
