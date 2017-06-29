@@ -37,14 +37,13 @@ module _ {A : Type i} {j} where
   open Cover
 
   -- Equality between covers.
-  private
-    cover=′ : {c₁ c₂ : Cover A j} → Fiber c₁ == Fiber c₂ → c₁ == c₂
-    cover=′ {cover f _} {cover .f _} idp = ap (cover f) $
-      prop-has-all-paths (Π-is-prop λ _ → is-set-is-prop) _ _
+  cover=' : {c₁ c₂ : Cover A j} → Fiber c₁ == Fiber c₂ → c₁ == c₂
+  cover=' {cover f _} {cover .f _} idp = ap (cover f) $
+    prop-has-all-paths (Π-is-prop λ _ → is-set-is-prop) _ _
 
   cover= : {c₁ c₂ : Cover A j} → (∀ a → Fiber c₁ a ≃ Fiber c₂ a)
     → c₁ == c₂
-  cover= F≃ = cover=′ (λ= λ a → ua $ F≃ a)
+  cover= F≃ = cover=' (λ= λ a → ua $ F≃ a)
 
   -- The definition of universality in terms of connectedness.
   is-universal : Cover A j → Type (lmax i j)
