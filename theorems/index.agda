@@ -51,6 +51,7 @@ import homotopy.SpaceFromGroups
 import homotopy.GroupSetsRepresentCovers
 import homotopy.AnyUniversalCoverIsPathSet
 import homotopy.PathSetIsInitalCover
+import homotopy.CircleCover
 
 {- van kampen -}
 -- see index3.agda
