@@ -1,8 +1,6 @@
-language: c # disable cabal
+language: generic
 
-branches:
-  only:
-  - master
+dist: trusty
 
 git:
   depth: 3
@@ -14,7 +12,7 @@ cache:
 addons:
   apt:
     sources:
-    - fpcomplete-precise
+    - fpcomplete-trusty
     packages:
     - moreutils # this old version does not supports [ts -i] or [ts -s]
     - stack
