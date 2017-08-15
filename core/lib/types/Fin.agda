@@ -3,6 +3,7 @@
 open import lib.Basics
 open import lib.NType2
 open import lib.types.Nat
+open import lib.types.Subtype
 
 module lib.types.Fin where
 
@@ -14,8 +15,14 @@ instance
   FromNat.in-range (Fin-reader {n}) m = m < n
   FromNat.read (Fin-reader {n}) m ⦃ m<n ⦄ = m , m<n
 
+Fin-prop : ℕ → SubtypeProp ℕ lzero
+Fin-prop n = ((_< n) , λ _ → <-is-prop)
+
 Fin-is-set : {n : ℕ} → is-set (Fin n)
-Fin-is-set {n} = Subtype-level ((_< n) , λ _ → <-is-prop) ℕ-is-set
+Fin-is-set {n} = Subtype-level (Fin-prop n) ℕ-is-set
+
+Fin-has-dec-eq : {n : ℕ} → has-dec-eq (Fin n)
+Fin-has-dec-eq {n} = Subtype-has-dec-eq (Fin-prop n) ℕ-has-dec-eq
 
 Fin-equiv-Empty : Fin 0 ≃ Empty
 Fin-equiv-Empty = equiv to from to-from from-to where

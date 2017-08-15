@@ -18,6 +18,12 @@ _∘sub_ : ∀ {i j k} {A : Type i} {B : Type j}
 P ∘sub f = SubtypeProp.prop P ∘ f , level where
   abstract level = SubtypeProp.level P ∘ f
 
+Subtype-has-dec-eq : ∀ {i j} {A : Type i} (subProp : SubtypeProp A j)
+  → has-dec-eq A → has-dec-eq (Subtype subProp)
+Subtype-has-dec-eq subProp dec s₁ s₂ with dec (fst s₁) (fst s₂)
+... | inl s₁=s₂ = inl (Subtype=-out subProp s₁=s₂)
+... | inr s₁≠s₂ = inr λ s₁=s₂ → s₁≠s₂ (ap fst s₁=s₂)
+
 {- Dependent paths in a Σ-type -}
 module _ {i j k} {A : Type i} {B : A → Type j} (subB : (a : A) → SubtypeProp (B a) k)
   where

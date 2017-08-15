@@ -2,9 +2,9 @@
 
 open import lib.Basics
 open import lib.types.Coproduct
-open import lib.types.Truncation
-open import lib.types.Pi
 open import lib.types.Fin
+open import lib.types.Pi
+open import lib.types.Truncation
 
 module lib.types.Choice where
 
