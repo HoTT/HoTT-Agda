@@ -1,0 +1,52 @@
+{-# OPTIONS --without-K --rewriting #-}
+
+open import lib.Basics
+open import lib.NType2
+open import lib.types.Nat
+
+module lib.types.Fin where
+
+Fin : ℕ → Type₀
+Fin n = Σ ℕ (_< n)
+
+instance
+  Fin-reader : ∀ {n} → FromNat (Fin n)
+  FromNat.in-range (Fin-reader {n}) m = m < n
+  FromNat.read (Fin-reader {n}) m ⦃ m<n ⦄ = m , m<n
+
+Fin-is-set : {n : ℕ} → is-set (Fin n)
+Fin-is-set {n} = Subtype-level ((_< n) , λ _ → <-is-prop) ℕ-is-set
+
+Fin-equiv-Empty : Fin 0 ≃ Empty
+Fin-equiv-Empty = equiv to from to-from from-to where
+  to : Fin 0 → Empty
+  to (_ , ())
+
+  from : Empty → Fin 0
+  from ()
+
+  abstract
+    to-from : ∀ x → to (from x) == x
+    to-from ()
+
+    from-to : ∀ x → from (to x) == x
+    from-to (_ , ())
+
+Fin-equiv-Coprod : {n : ℕ} → Fin (S n) ≃ Fin n ⊔ Unit
+Fin-equiv-Coprod {n} = equiv to from to-from from-to where
+  to : Fin (S n) → Fin n ⊔ Unit
+  to (m , ltS) = inr unit
+  to (m , ltSR lt) = inl (m , lt)
+
+  from : Fin n ⊔ Unit → Fin (S n)
+  from (inr _) = n , ltS
+  from (inl (m , lt)) = m , ltSR lt
+
+  abstract
+    to-from : ∀ x → to (from x) == x
+    to-from (inr _) = idp
+    to-from (inl _) = idp
+
+    from-to : ∀ x → from (to x) == x
+    from-to (_ , ltS) = idp
+    from-to (_ , ltSR _) = idp

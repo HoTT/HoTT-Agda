@@ -14,6 +14,8 @@ open import lib.types.Cospan public
 open import lib.types.Cover public
 open import lib.types.EilenbergMacLane1 public
 open import lib.types.Empty public
+open import lib.types.Fin public
+open import lib.types.NatColim public
 open import lib.types.Group public
 open import lib.types.GroupSet public
 open import lib.types.Groupoid public
@@ -26,7 +28,6 @@ open import lib.types.List public
 open import lib.types.LoopSpace public
 open import lib.types.Modality public
 open import lib.types.Nat public
-open import lib.types.NatColim public
 open import lib.types.PathSeq public
 open import lib.types.PathSet public
 open import lib.types.Paths public

@@ -231,16 +231,6 @@ O *2 = O
 *2-monotone-≤ (inl p) = inl (ap _*2 p)
 *2-monotone-≤ (inr lt) = inr (*2-monotone-< lt)
 
--- Finite types
-
-Fin : ℕ → Type₀
-Fin n = Σ ℕ (_< n)
-
-instance
-  Fin-reader : ∀ {n} → FromNat (Fin n)
-  FromNat.in-range (Fin-reader {n}) m = m < n
-  FromNat.read (Fin-reader {n}) m ⦃ m<n ⦄ = m , m<n
-
 -- Trichotomy
 
 ℕ-trichotomy : (m n : ℕ) → (m == n) ⊔ ((m < n) ⊔ (n < m))
