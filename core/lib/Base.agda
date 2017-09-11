@@ -67,7 +67,6 @@ data _==_ {i} {A : Type i} (a : A) : A → Type i where
 Path = _==_
 
 {-# BUILTIN EQUALITY _==_ #-}
-{-# BUILTIN REFL idp #-}
 
 {- Paulin-Mohring J rule
 

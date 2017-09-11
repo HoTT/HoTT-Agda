@@ -9,7 +9,7 @@ Setup
 -----
 
 The code is loosely broken into `core` and `theorems` Agda libraries.
-You need Agda 2.5.2 or newer
+You need Agda 2.5.3 or newer
 and include at least the path to `core.agda-lib` in your Agda library list.
 See `CHANGELOG` of Agda 2.5 for more information.
 
