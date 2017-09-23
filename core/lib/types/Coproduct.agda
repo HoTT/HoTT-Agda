@@ -154,3 +154,21 @@ module _ {i j k} {A : Type i} {B : Type j} (P : A ⊔ B → Type k) where
       from-to : ∀ fg → from (to fg) == fg
       from-to fg = λ= λ where (inl _) → idp
                               (inr _) → idp
+
+-- the empty type is a unit for the coproduct
+Coprod-unit-left : ∀ {i} (A : Type i) → ⊥ ⊔ A ≃ A
+Coprod-unit-left {i} (A) = equiv to from to-from from-to
+  where
+    to : ⊥ ⊔ A → A
+    to (inl ())
+    to (inr a) = a
+
+    from : A → ⊥ ⊔ A
+    from a = inr a
+
+    to-from : (a : A) → to (from a) == a
+    to-from a = idp
+
+    from-to : (x : ⊥ ⊔ A) → from (to x) == x
+    from-to (inl ())
+    from-to (inr a) = idp
