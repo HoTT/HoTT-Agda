@@ -13,8 +13,8 @@ module lib.groups.TruncationGroup where
 
 module _ {i} {El : Type i} (GS : GroupStructure El) where
 
-  Trunc-group-struct : GroupStructure (Trunc 0 El)
-  Trunc-group-struct = record {
+  Trunc-group-structure : GroupStructure (Trunc 0 El)
+  Trunc-group-structure = record {
     ident = [ ident GS ];
     inv = Trunc-fmap (inv GS);
     comp = _⊗_;
@@ -46,7 +46,7 @@ module _ {i} {El : Type i} (GS : GroupStructure El) where
   Trunc-group = record {
     El = Trunc 0 El;
     El-level = Trunc-level;
-    group-struct = Trunc-group-struct }
+    group-struct = Trunc-group-structure }
 
 Trunc-group-× : ∀ {i j} {A : Type i} {B : Type j}
   (GS : GroupStructure A) (HS : GroupStructure B)
