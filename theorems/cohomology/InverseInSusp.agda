@@ -13,7 +13,7 @@ module cohomology.InverseInSusp {i} (CT : CohomologyTheory i)
   (n : ℤ) {X : Ptd i} where
 
 open CohomologyTheory CT
-open import cohomology.Wedge CT n (⊙Susp X) (⊙Susp X)
+open import cohomology.Wedge CT n
 
 private
   module Subtract = SuspRec {C = de⊙ (⊙Susp X ⊙∨ ⊙Susp X)}
@@ -71,10 +71,10 @@ private
         ap2 (Group.comp (C n (⊙Susp X)))
           (! (CEl-fmap-base-indep n projl-subtract x))
           (! (CEl-fmap-idf n x) ∙ ! (CEl-fmap-base-indep n projr-subtract x))
-      ∙ (Wedge-in-comm-sqr' ⊙subtract □$ᴳ (x , x))
+      ∙ (C-Wedge-in-comm-sqr' (⊙Susp X) (⊙Susp X) ⊙subtract □$ᴳ (x , x))
       ∙ ap (CEl-fmap n ⊙subtract)
-          ( ap (GroupIso.g C-Wedge ∘ diag) (! (CEl-fmap-idf n x))
-          ∙ (C-Wedge-rec-comm-sqr' (⊙idf _) (⊙idf _) □$ᴳ x))
+          ( ap (GroupIso.g (C-Wedge (⊙Susp X) (⊙Susp X)) ∘ diag) (! (CEl-fmap-idf n x))
+          ∙ (C-Wedge-rec-comm-sqr' (⊙Susp X) (⊙Susp X) (⊙idf _) (⊙idf _) □$ᴳ x))
       ∙ ∘-CEl-fmap n ⊙subtract ⊙fold x
       ∙ CEl-fmap-base-indep n (λ σ → fold-subtract σ ∙ ! (merid (pt X))) x
       ∙ CEl-fmap-cst n x
