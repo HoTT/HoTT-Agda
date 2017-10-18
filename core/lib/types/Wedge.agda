@@ -257,6 +257,59 @@ module _ {i i' j j' k} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j}
           == snd (⊙Wedge-rec (winl* ⊙∘ f) (winr* ⊙∘ g))
         lemma₁ (f , idp) _ (winl* , idp) = idp
 
+module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j}
+  {Y' : Ptd j'} (f : X ⊙→ X') (g : Y ⊙→ Y') where
+
+  ⊙projl-fmap : ⊙projl ⊙∘ ⊙∨-fmap f g ⊙∼ ⊙Wedge-rec f ⊙cst
+  ⊙projl-fmap =
+    Wedge-elim (λ _ → idp) (λ _ → idp) (↓-='-in' $ ! $ lemma₀ f g) , lemma₁ f g
+    where
+      abstract
+        lemma₀ : ∀ {X' Y'} (f : X ⊙→ X') (g : Y ⊙→ Y')
+          →  ap (projl ∘ ∨-fmap f g) wglue
+          == ap (⊙WedgeRec.f f ⊙cst) wglue
+        lemma₀ (f , idp) (g , idp) =
+          ap (projl ∘ ∨-fmap (f , idp) (g , idp)) wglue
+            =⟨ ap-∘ projl (∨-fmap (f , idp) (g , idp)) wglue ⟩
+          ap projl (ap (∨-fmap (f , idp) (g , idp)) wglue)
+            =⟨ ap (ap projl) (WedgeFmap.glue-β (f , idp) (g , idp)) ⟩
+          ap projl wglue
+            =⟨ Projl.glue-β ⟩
+          idp
+            =⟨ ! $ ⊙WedgeRec.glue-β (f , idp) ⊙cst ⟩
+          ap (⊙WedgeRec.f (f , idp) ⊙cst) wglue
+            =∎
+
+        lemma₁ : ∀ {X' Y'} (f : X ⊙→ X') (g : Y ⊙→ Y')
+          →  snd (⊙projl ⊙∘ ⊙∨-fmap f g)
+          == snd (⊙Wedge-rec {Y = Y} f ⊙cst)
+        lemma₁ (f , idp) (g , idp) = idp
+
+  ⊙projr-fmap : ⊙projr ⊙∘ ⊙∨-fmap f g ⊙∼ ⊙Wedge-rec ⊙cst g
+  ⊙projr-fmap =
+    Wedge-elim (λ _ → idp) (λ _ → idp) (↓-='-in' $ ! $ lemma₀ f g) , lemma₁ f g
+    where
+      abstract
+        lemma₀ : ∀ {X' Y'} (f : X ⊙→ X') (g : Y ⊙→ Y')
+          →  ap (projr ∘ ∨-fmap f g) wglue
+          == ap (⊙WedgeRec.f ⊙cst g) wglue
+        lemma₀ (f , idp) (g , idp) =
+          ap (projr ∘ ∨-fmap (f , idp) (g , idp)) wglue
+            =⟨ ap-∘ projr (∨-fmap (f , idp) (g , idp)) wglue ⟩
+          ap projr (ap (∨-fmap (f , idp) (g , idp)) wglue)
+            =⟨ ap (ap projr) (WedgeFmap.glue-β (f , idp) (g , idp)) ⟩
+          ap projr wglue
+            =⟨ Projr.glue-β ⟩
+          idp
+            =⟨ ! $ ⊙WedgeRec.glue-β ⊙cst (g , idp) ⟩
+          ap (⊙WedgeRec.f ⊙cst (g , idp)) wglue
+            =∎
+
+        lemma₁ : ∀ {X' Y'} (f : X ⊙→ X') (g : Y ⊙→ Y')
+          →  snd (⊙projr ⊙∘ ⊙∨-fmap f g)
+          == snd (⊙Wedge-rec {X = X} ⊙cst g)
+        lemma₁ (f , idp) (g , idp) = idp
+
 module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   (f : X ⊙→ Z) (g : Y ⊙→ Z) where
 
