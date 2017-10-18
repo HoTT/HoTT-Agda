@@ -53,7 +53,7 @@ module _ {X : Ptd i} (cogroup-struct : CogroupStructure X)
         ⊙Wedge-rec (⊙Wedge-rec f g ⊙∘ ⊙coμ) h ⊙∘ ⊙coμ
           =⟨ ! $ ⊙λ= (⊙∘-unit-r h) |in-ctx (λ h → ⊙Wedge-rec (⊙Wedge-rec f g ⊙∘ ⊙coμ) h ⊙∘ ⊙coμ) ⟩
         ⊙Wedge-rec (⊙Wedge-rec f g ⊙∘ ⊙coμ) (h ⊙∘ ⊙idf X) ⊙∘ ⊙coμ
-          =⟨ ! $ ⊙λ= (⊙∘-Wedge-rec-fmap (⊙Wedge-rec f g) h ⊙coμ (⊙idf X)) |in-ctx _⊙∘ ⊙coμ ⟩
+          =⟨ ! $ ⊙λ= (⊙Wedge-rec-fmap (⊙Wedge-rec f g) h ⊙coμ (⊙idf X)) |in-ctx _⊙∘ ⊙coμ ⟩
         (⊙Wedge-rec (⊙Wedge-rec f g) h ⊙∘ ⊙∨-fmap ⊙coμ (⊙idf X)) ⊙∘ ⊙coμ
           =⟨ ⊙λ= $ ⊙∘-assoc (⊙Wedge-rec (⊙Wedge-rec f g) h) (⊙∨-fmap ⊙coμ (⊙idf X)) ⊙coμ ⟩
         ⊙Wedge-rec (⊙Wedge-rec f g) h ⊙∘ ⊙∨-fmap ⊙coμ (⊙idf X) ⊙∘ ⊙coμ
@@ -65,7 +65,7 @@ module _ {X : Ptd i} (cogroup-struct : CogroupStructure X)
         ⊙Wedge-rec f (⊙Wedge-rec g h) ⊙∘ ⊙∨-fmap (⊙idf X) ⊙coμ ⊙∘ ⊙coμ
           =⟨ ! $ ⊙λ= $ ⊙∘-assoc (⊙Wedge-rec f (⊙Wedge-rec g h)) (⊙∨-fmap (⊙idf X) ⊙coμ) ⊙coμ ⟩
         (⊙Wedge-rec f (⊙Wedge-rec g h) ⊙∘ ⊙∨-fmap (⊙idf X) ⊙coμ) ⊙∘ ⊙coμ
-          =⟨ ⊙λ= (⊙∘-Wedge-rec-fmap f (⊙Wedge-rec g h) (⊙idf X) ⊙coμ) |in-ctx _⊙∘ ⊙coμ  ⟩
+          =⟨ ⊙λ= (⊙Wedge-rec-fmap f (⊙Wedge-rec g h) (⊙idf X) ⊙coμ) |in-ctx _⊙∘ ⊙coμ  ⟩
         ⊙Wedge-rec (f ⊙∘ ⊙idf X) (⊙Wedge-rec g h ⊙∘ ⊙coμ) ⊙∘ ⊙coμ
           =⟨ ⊙λ= (⊙∘-unit-r f) |in-ctx (λ f → ⊙Wedge-rec f (⊙Wedge-rec g h ⊙∘ ⊙coμ) ⊙∘ ⊙coμ) ⟩
         ⊙Wedge-rec f (⊙Wedge-rec g h ⊙∘ ⊙coμ) ⊙∘ ⊙coμ

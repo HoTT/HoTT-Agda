@@ -228,10 +228,10 @@ module _ {i i' j j' k} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j}
   {Y' : Ptd j'} {Z : Ptd k} (winl* : X' ⊙→ Z) (winr* : Y' ⊙→ Z)
   (f : X ⊙→ X') (g : Y ⊙→ Y') where
 
-  ⊙∘-Wedge-rec-fmap :
+  ⊙Wedge-rec-fmap :
        ⊙Wedge-rec winl* winr* ⊙∘ ⊙∨-fmap f g
     ⊙∼ ⊙Wedge-rec (winl* ⊙∘ f) (winr* ⊙∘ g)
-  ⊙∘-Wedge-rec-fmap =
+  ⊙Wedge-rec-fmap =
     Wedge-elim (λ _ → idp) (λ _ → idp) (↓-='-in' $ ! $ lemma₀ winl* winr* f g) ,
     lemma₁ winl* winr* f
     where
@@ -256,6 +256,48 @@ module _ {i i' j j' k} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j}
           →  snd (⊙Wedge-rec winl* winr* ⊙∘ ⊙∨-fmap f g)
           == snd (⊙Wedge-rec (winl* ⊙∘ f) (winr* ⊙∘ g))
         lemma₁ (f , idp) _ (winl* , idp) = idp
+
+module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  (f : X ⊙→ Z) (g : Y ⊙→ Z) where
+
+  {- favonia: This is a special case, but still proved separately to make sure
+     it has good computational content. (Maybe this is overkilling.) -}
+  ⊙fold-fmap : ⊙fold ⊙∘ ⊙∨-fmap f g ⊙∼ ⊙Wedge-rec f g
+  ⊙fold-fmap =
+    Wedge-elim (λ _ → idp) (λ _ → idp) (↓-='-in' $ ! $ lemma₀ f g) , lemma₁ f g
+    where
+      abstract
+        lemma₀ : ∀ {Z} (f : X ⊙→ Z) (g : Y ⊙→ Z)
+          →  ap (⊙WedgeRec.f (⊙idf _) (⊙idf _) ∘ ∨-fmap f g) wglue
+          == ap (⊙WedgeRec.f f g) wglue
+        lemma₀ (f , idp) (g , g-pt) =
+          ap (⊙WedgeRec.f (⊙idf _) (⊙idf _) ∘ ∨-fmap (f , idp) (g , g-pt)) wglue
+            =⟨ ap-∘
+                (⊙WedgeRec.f (⊙idf _) (⊙idf _))
+                (∨-fmap (f , idp) (g , g-pt))
+                wglue ⟩
+          ap (⊙WedgeRec.f (⊙idf _) (⊙idf _)) (ap (∨-fmap (f , idp) (g , g-pt)) wglue)
+            =⟨ ap (ap (⊙WedgeRec.f (⊙idf _) (⊙idf _)))
+                  (WedgeFmap.glue-β (f , idp) (g , g-pt)) ⟩
+          ap (⊙WedgeRec.f (⊙idf _) (⊙idf _)) (wglue ∙' ap winr (! g-pt))
+            =⟨ ap-∙' (⊙WedgeRec.f (⊙idf _) (⊙idf _)) wglue (ap winr (! g-pt)) ⟩
+          ap (⊙WedgeRec.f (⊙idf _) (⊙idf _)) wglue
+            ∙' ap (⊙WedgeRec.f (⊙idf _) (⊙idf _)) (ap winr (! g-pt))
+            =⟨ ap2 _∙'_
+                (⊙WedgeRec.glue-β (⊙idf _) (⊙idf _))
+                ( ∘-ap (⊙WedgeRec.f (⊙idf _) (⊙idf _)) winr (! g-pt)
+                ∙ ap-idf (! g-pt)) ⟩
+          idp ∙' ! g-pt
+            =⟨ ∙'-unit-l (! g-pt) ⟩
+          ! g-pt
+            =⟨ ! $ ⊙WedgeRec.glue-β (f , idp) (g , g-pt) ⟩
+          ap (⊙WedgeRec.f (f , idp) (g , g-pt) ) wglue
+            =∎
+
+        lemma₁ : ∀ {Z} (f : X ⊙→ Z) (g : Y ⊙→ Z)
+          →  snd (⊙Wedge-rec (⊙idf _) (⊙idf _) ⊙∘ ⊙∨-fmap f g)
+          == snd (⊙Wedge-rec f g)
+        lemma₁ (f , idp) (g , g-pt) = idp
 
 module _ {i j k} (X : Ptd i) (Y : Ptd j) (Z : Ptd k) where
     
