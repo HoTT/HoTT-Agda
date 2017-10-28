@@ -13,7 +13,7 @@ module lib.types.GroupSet {i} where
 
   -- The right group action with respect to the group [grp].
   record GroupSetStructure (grp : Group i) {j} (El : Type j)
-    (_ : is-set El) : Type (lmax i j) where
+    {{_ : is-set El}} : Type (lmax i j) where
     constructor groupset-structure
     private
       module G = Group grp
@@ -29,21 +29,20 @@ module lib.types.GroupSet {i} where
     constructor groupset
     field
       El : Type j
-      El-level : is-set El
-      grpset-struct : GroupSetStructure grp El El-level
+      {{El-level}} : is-set El
+      grpset-struct : GroupSetStructure grp El
     open GroupSetStructure grpset-struct public
-    El-is-set = El-level
 
   -- A helper function to establish equivalence between two G-sets.
   -- Many data are just props and this function do the coversion for them
   -- for you.  You only need to show the non-trivial parts.
-  module _ {grp : Group i} {j} {El : Type j} {El-level : is-set El} where
+  module _ {grp : Group i} {j} {El : Type j} {{El-level : is-set El}} where
     private
       module G = Group grp
       module GS = GroupStructure G.group-struct
     open GroupSetStructure
     private
-      groupset-structure=' : ∀ {gss₁ gss₂ : GroupSetStructure grp El El-level}
+      groupset-structure=' : ∀ {gss₁ gss₂ : GroupSetStructure grp El}
         → (act= : act gss₁ == act gss₂)
         → unit-r gss₁ == unit-r gss₂
           [ (λ act → ∀ x → act x GS.ident == x) ↓ act= ]
@@ -54,14 +53,13 @@ module lib.types.GroupSet {i} where
       groupset-structure=' {groupset-structure _ _ _} {groupset-structure ._ ._ ._}
         idp idp idp = idp
 
-    groupset-structure= : ∀ {gss₁ gss₂ : GroupSetStructure grp El El-level}
+    groupset-structure= : ∀ {gss₁ gss₂ : GroupSetStructure grp El}
       → (∀ x g → act gss₁ x g == act gss₂ x g)
       → gss₁ == gss₂
     groupset-structure= act= = groupset-structure='
       (λ= λ x → λ= λ g → act= x g)
-      (prop-has-all-paths-↓ (Π-level λ _ → El-level _ _))
-      (prop-has-all-paths-↓
-        (Π-level λ _ → Π-level λ _ → Π-level λ _ → El-level _ _))
+      prop-has-all-paths-↓
+      prop-has-all-paths-↓ 
 
   module _ {grp : Group i} {j : ULevel} where
     private
@@ -73,9 +71,9 @@ module lib.types.GroupSet {i} where
         → (El= : El gs₁ == El gs₂)
         → (El-level : El-level gs₁ == El-level gs₂ [ is-set ↓ El= ])
         → grpset-struct gs₁ == grpset-struct gs₂
-          [ uncurry (GroupSetStructure grp) ↓ pair= El= El-level ]
+          [ uncurry (λ a b → GroupSetStructure grp a {{b}}) ↓ pair= El= El-level ]
         → gs₁ == gs₂
-      groupset='' {groupset _ _ _} {groupset ._ ._ ._} idp idp idp = idp
+      groupset='' {groupset _ _} {groupset ._ ._} idp idp idp = idp
 
       groupset=' : ∀ {gs₁ gs₂ : GroupSet grp j}
         → (El= : El gs₁ == El gs₂)
@@ -83,7 +81,7 @@ module lib.types.GroupSet {i} where
         → (∀ {x₁} {x₂} (p : x₁ == x₂ [ idf _ ↓ El= ]) g
             → act gs₁ x₁ g == act gs₂ x₂ g [ idf _ ↓ El= ])
         → gs₁ == gs₂
-      groupset=' {groupset _ _ _} {groupset ._ ._ _} idp idp act= =
+      groupset=' {groupset _ _} {groupset ._ _} idp idp act= =
         groupset='' idp idp (groupset-structure= λ x g → act= idp g)
 
     groupset= : ∀ {gs₁ gs₂ : GroupSet grp j}
@@ -95,7 +93,7 @@ module lib.types.GroupSet {i} where
     groupset= El≃ act= =
       groupset='
         (ua El≃)
-        (prop-has-all-paths-↓ is-set-is-prop)
+        prop-has-all-paths-↓
         (λ x= g → ↓-idf-ua-in El≃ $ act= (↓-idf-ua-out El≃ x=) g)
 
   -- The GroupSet homomorphism.
@@ -123,8 +121,7 @@ module lib.types.GroupSet {i} where
   groupset-hom= {gset₂ = gset₂} f= =
     groupset-hom='
       (λ= f=)
-      (prop-has-all-paths-↓ $
-        Π-level λ _ → Π-level λ _ → GroupSet.El-level gset₂ _ _)
+      prop-has-all-paths-↓ where
 
   group-to-group-set : ∀ (grp : Group i) → GroupSet grp i
   group-to-group-set grp = record {

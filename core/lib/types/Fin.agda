@@ -19,7 +19,7 @@ Fin-prop : ℕ → SubtypeProp ℕ lzero
 Fin-prop n = ((_< n) , λ _ → <-is-prop)
 
 Fin-is-set : {n : ℕ} → is-set (Fin n)
-Fin-is-set {n} = Subtype-level (Fin-prop n) ℕ-is-set
+Fin-is-set {n} = Subtype-level (Fin-prop n)
 
 Fin-has-dec-eq : {n : ℕ} → has-dec-eq (Fin n)
 Fin-has-dec-eq {n} = Subtype-has-dec-eq (Fin-prop n) ℕ-has-dec-eq

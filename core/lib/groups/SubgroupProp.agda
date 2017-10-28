@@ -13,14 +13,14 @@ record SubgroupProp {i} (G : Group i) j : Type (lmax i (lsucc j)) where
     module G = Group G
   field
     prop : G.El → Type j
-    level : ∀ g → is-prop (prop g)
+    {{level}} : ∀ {g} → is-prop (prop g)
     -- In theory being inhabited implies that the identity is included,
     -- but in practice let's just prove the identity case.
     ident : prop G.ident
     diff : ∀ {g₁ g₂} → prop g₁ → prop g₂ → prop (G.diff g₁ g₂)
 
   subEl-prop : SubtypeProp G.El j
-  subEl-prop = prop , level
+  subEl-prop = prop , (λ _ → level)
   SubEl = Subtype subEl-prop
 
   abstract
@@ -125,9 +125,6 @@ trivial-propᴳ {i} G = record {M} where
 
     ident : prop G.ident
     ident = idp
-
-    level : ∀ g → is-prop (prop g)
-    level g = G.El-level g G.ident
 
     abstract
       diff : {g₁ g₂ : G.El} → prop g₁ → prop g₂ → prop (G.diff g₁ g₂)

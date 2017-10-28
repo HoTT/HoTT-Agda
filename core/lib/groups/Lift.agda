@@ -21,7 +21,7 @@ Lift-group-structure GS = record
   where open GroupStructure GS
 
 Lift-group : ∀ {i j} → Group i → Group (lmax i j)
-Lift-group {j = j} G = group (Lift {j = j} El) (Lift-level El-level)
+Lift-group {j = j} G = group (Lift {j = j} El)
                              (Lift-group-structure group-struct)
   where open Group G
 

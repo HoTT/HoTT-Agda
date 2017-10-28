@@ -39,7 +39,7 @@ module FunextNonDep {j} {B : Type j} {f g : A → B} (h : f ∼ g)
       fst-is-equiv =
         is-eq fst (λ z → (z , (z , idp))) (λ _ → idp)
           (λ x' → ap (λ x → (_ , x))
-                        (contr-has-all-paths (pathfrom-is-contr (fst x')) _ _))
+                        (contr-has-all-paths _ _))
 
       comp-fst-is-equiv : is-equiv (λ (f : A → free-path-space-B)
                                      → (λ x → fst (f x)))
@@ -64,7 +64,7 @@ module WeakFunext {j} {P : A → Type j} (e : (x : A) → is-contr (P x)) where
   abstract
     weak-λ= : is-contr (Π A P)
     weak-λ= = transport (λ Q → is-contr (Π A Q)) (! P-is-Unit)
-                            ((λ x → lift unit) , (λ y → λ=-nondep (λ x → idp)))
+                            (has-level-make ((λ x → lift unit) , (λ y → λ=-nondep (λ x → idp))))
 
 -- Naive dependent function extensionality
 
@@ -80,8 +80,9 @@ module FunextDep {j} {P : A → Type j} {f g : Π A P} (h : f ∼ g)
     Q-is-contr : (x : A) → is-contr (Q x)
     Q-is-contr x = pathfrom-is-contr (f x)
 
-    ΠAQ-is-contr : is-contr (Π A Q)
-    ΠAQ-is-contr = weak-λ= Q-is-contr
+    instance
+      ΠAQ-is-contr : is-contr (Π A Q)
+      ΠAQ-is-contr = weak-λ= Q-is-contr
 
   Q-f : Π A Q
   Q-f x = (f x , idp)
@@ -91,7 +92,7 @@ module FunextDep {j} {P : A → Type j} {f g : Π A P} (h : f ∼ g)
 
   abstract
     Q-f==Q-g : Q-f == Q-g
-    Q-f==Q-g = contr-has-all-paths ΠAQ-is-contr Q-f Q-g
+    Q-f==Q-g = contr-has-all-paths Q-f Q-g
 
   λ= : f == g
   λ= = ap (λ u x → fst (u x)) Q-f==Q-g
@@ -108,8 +109,8 @@ module StrongFunextDep {j} {P : A → Type j} where
   λ=-idp : (f : Π A P)
     → idp == λ= (λ x → idp {a = f x})
   λ=-idp f = ap (ap (λ u x → fst (u x)))
-    (contr-has-all-paths (=-preserves-level
-                         (ΠAQ-is-contr (λ x → idp)))
+    (contr-has-all-paths {{=-preserves-level
+                           (ΠAQ-is-contr (λ x → idp))}}
                          idp (Q-f==Q-g (λ x → idp)))
 
   λ=-η : {f g : Π A P} (p : f == g)

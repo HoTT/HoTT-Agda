@@ -49,18 +49,17 @@ module _ {i j k} (D : Group-Cospan {i} {j} {k}) where
         (φ.pres-comp h₁ h₂ ∙ ap2 G.comp p₁ p₂ ∙ ! (ψ.pres-comp k₁ k₂))};
     unit-l = λ {(pullback h k p) →
       pullback= d (H.unit-l h) (K.unit-l k)
-        (prop-has-all-paths (G.El-level _ _) _ _)};
+        (prop-has-all-paths _ _)};
     assoc = λ {(pullback h₁ k₁ p₁) (pullback h₂ k₂ p₂) (pullback h₃ k₃ p₃) →
       pullback= d (H.assoc h₁ h₂ h₃) (K.assoc k₁ k₂ k₃)
-        (prop-has-all-paths (G.El-level _ _) _ _)};
+        (prop-has-all-paths _ _)};
     inv-l = λ {(pullback h k p) →
       pullback= d (H.inv-l h) (K.inv-l k)
-        (prop-has-all-paths (G.El-level _ _) _ _)}}
+        (prop-has-all-paths _ _)}}
 
   Pullback-group : Group (lmax i (lmax j k))
   Pullback-group = record {
     El = Pullback d;
-    El-level = pullback-level 0 H.El-level K.El-level G.El-level;
     group-struct = Pullback-group-struct}
 
   pfst-hom : Pullback-group →ᴳ H
@@ -86,4 +85,4 @@ module _ {i j k} (D : Group-Cospan {i} {j} {k}) where
       pres-comp = λ j₁ j₂ → pullback= (group-cospan-out D)
         (χ.pres-comp j₁ j₂)
         (θ.pres-comp j₁ j₂)
-        (prop-has-all-paths (Group.El-level G _ _) _ _)}
+        (prop-has-all-paths _ _)}

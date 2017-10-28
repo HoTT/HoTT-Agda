@@ -21,7 +21,7 @@ Unit-group-structure = record
   }
 
 Unit-group : Group lzero
-Unit-group = group _ Unit-is-set Unit-group-structure
+Unit-group = group _ Unit-group-structure
 
 0ᴳ = Unit-group
 

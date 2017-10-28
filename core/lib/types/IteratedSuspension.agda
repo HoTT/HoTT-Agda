@@ -62,9 +62,10 @@ Sphere : (n : ℕ) → Type₀
 Sphere n = de⊙ (⊙Sphere n)
 
 abstract
-  Sphere-conn : ∀ (n : ℕ) → is-connected ⟨ n ⟩₋₁ (Sphere n)
-  Sphere-conn 0 = inhab-conn true
-  Sphere-conn (S n) = Susp-conn (Sphere-conn n)
+  instance
+    Sphere-conn : ∀ (n : ℕ) → is-connected ⟨ n ⟩₋₁ (Sphere n)
+    Sphere-conn 0 = inhab-conn true
+    Sphere-conn (S n) = Susp-conn (Sphere-conn n)
 
 -- favonia: [S¹] has its own elim rules in Circle.agda.
 ⊙S⁰ = ⊙Sphere 0

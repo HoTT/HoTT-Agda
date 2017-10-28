@@ -20,6 +20,7 @@ record Cover (A : Type i) j : Type (lmax i (lsucc j)) where
   field
     Fiber : A → Type j
     Fiber-level : ∀ a → is-set (Fiber a)
+
   Fiber-is-set = Fiber-level
   TotalSpace = Σ A Fiber
 
@@ -39,7 +40,7 @@ module _ {A : Type i} {j} where
   -- Equality between covers.
   cover=' : {c₁ c₂ : Cover A j} → Fiber c₁ == Fiber c₂ → c₁ == c₂
   cover=' {cover f _} {cover .f _} idp = ap (cover f) $
-    prop-has-all-paths (Π-is-prop λ _ → is-set-is-prop) _ _
+    prop-has-all-paths _ _
 
   cover= : {c₁ c₂ : Cover A j} → (∀ a → Fiber c₁ a ≃ Fiber c₂ a)
     → c₁ == c₂
@@ -91,7 +92,7 @@ module _ (X : Ptd i)
              → (idp=p : idp == p)
              → idp == p↑
                [ (λ p → a↑ == a↑ [ F ↓ p ]) ↓ idp=p ]
-    idp=p↑ idp = prop-has-all-paths (F-level a _ _) _ _
+    idp=p↑ idp = prop-has-all-paths {{has-level-apply (F-level a) _ _}} _ _
 
     -- The injection map with some ends free (in order to apply J).
     from′ : ∀ {p : a == a} {p↑ : a↑ == a↑ [ F ↓ p ]}
@@ -113,7 +114,7 @@ module _ (X : Ptd i)
                 → from′ (to′ idp=p⇑) idp=snd=p⇑ == idp=p⇑
                   [ (λ p⇑ → idp == p⇑) ↓ ! (pair=-η p⇑) ]
     from′-to′ idp idp=snd=p⇑ = ap (from′ idp)
-      $ contr-has-all-paths (F-level a _ _ _ _) _ _
+      $ contr-has-all-paths {{has-level-apply (has-level-apply (F-level a) _ _) _ _}} _ _
 
     -- Injection is left-inverse to projection.
     from-to : ∀ p²⇑ → from (to p²⇑) == p²⇑
@@ -144,7 +145,7 @@ module _ {A : Type i} where
     → Fiber cov a₁ → a₁ =₀ a₂
     → Fiber cov a₂
   cover-trace cov a↑ p =
-    transport₀ (Fiber cov) (Fiber-is-set cov _) p a↑
+    transport₀ (Fiber cov) {{Fiber-is-set cov _}} p a↑
 
   abstract
     cover-trace-idp₀ : ∀ {j} (cov : Cover A j) {a₁}
@@ -158,7 +159,7 @@ module _ {A : Type i} where
       → (p : a₁ =₀ a₂)
       → cover-trace cov (cover-trace cov a↑ loop) p
       == cover-trace cov a↑ (loop ∙₀ p)
-    cover-paste cov a↑ loop p = ! $ transp₀-∙₀ (Fiber-is-set cov) loop p a↑
+    cover-paste cov a↑ loop p = ! $ transp₀-∙₀ {{Fiber-is-set cov _}} loop p a↑
 
 -- Path sets form a covering space
 module _ (X : Ptd i) where

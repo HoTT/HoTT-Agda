@@ -7,44 +7,15 @@ open import lib.types.Paths
 
 module lib.types.Pi where
 
-Π-level : ∀ {i j} {A : Type i} {B : A → Type j} {n : ℕ₋₂}
-  → (((x : A) → has-level n (B x)) → has-level n (Π A B))
-Π-level {n = ⟨-2⟩} p = (λ x → fst (p x)) , lemma
-  where abstract lemma = λ f → λ= (λ x → snd (p x) (f x))
-Π-level {n = S n} p = lemma where
-  abstract
-    lemma = λ f g →
-      equiv-preserves-level λ=-equiv
-        (Π-level λ x → p x (f x) (g x))
-
-module _ {i j} {A : Type i} {B : A → Type j} where
-  abstract
-    Π-is-prop : ((x : A) → is-prop (B x)) → is-prop (Π A B)
-    Π-is-prop = Π-level
-
-    Π-is-set : ((x : A) → is-set (B x)) → is-set (Π A B)
-    Π-is-set = Π-level
-
-module _ {i j} {A : Type i} {B : Type j} where
-  →-level : {n : ℕ₋₂} → (has-level n B → has-level n (A → B))
-  →-level p = Π-level (λ _ → p)
-
-  abstract
-    →-is-set : is-set B → is-set (A → B)
-    →-is-set = →-level
-
-    →-is-prop : is-prop B → is-prop (A → B)
-    →-is-prop = →-level
-
-module _ {i} {A : Type i} where
-  abstract
-    ¬-is-prop : is-prop (¬ A)
-    ¬-is-prop = →-is-prop ⊥-is-prop
-
-module _ {i j} {X : Ptd i} {Y : Ptd j} where
-  abstract
-    ⊙→-level : {n : ℕ₋₂} → has-level n (de⊙ Y) → has-level n (X ⊙→ Y)
-    ⊙→-level pY = Σ-level (→-level pY) (λ _ → =-preserves-level pY)
+instance
+  Π-level : ∀ {i j} {A : Type i} {B : A → Type j} {n : ℕ₋₂}
+    → ((x : A) → has-level n (B x)) → has-level n (Π A B)
+  Π-level {n = ⟨-2⟩} p = has-level-make ((λ x → contr-center (p x)) , lemma)
+    where abstract lemma = λ f → λ= (λ x → contr-path (p x) (f x))
+  Π-level {n = S n} p = has-level-make lemma where
+    abstract
+      lemma = λ f g →
+        equiv-preserves-level λ=-equiv {{Π-level (λ x → has-level-apply (p x) (f x) (g x))}}
 
 
 {- Equivalences in a Π-type -}

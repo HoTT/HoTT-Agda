@@ -145,7 +145,7 @@ module lib.types.Modality where
       → is-◯-connected A → is-◯-connected B → is-◯-equiv f
 
     equiv-preserves-◯-conn : {A B : Type ℓ} → A ≃ B → is-◯-connected A → is-◯-connected B
-    equiv-preserves-◯-conn e c = equiv-preserves-level (◯-emap e) c
+    equiv-preserves-◯-conn e c = equiv-preserves-level (◯-emap e) {{c}}
 
     total-◯-equiv : {A : Type ℓ} {P Q : A → Type ℓ} (φ : ∀ a → P a → Q a) → 
                      (∀ a → is-◯-equiv (φ a)) → is-◯-equiv (Σ-fmap-r φ)
@@ -167,12 +167,12 @@ module lib.types.Modality where
                 helper-β t b = ◯-rec-β (snd (P b)) (λ x → transport (fst ∘ P) (snd x) (t (fst x)))
 
                 g : Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)
-                g t b = helper t b (fst (c b))
+                g t b = helper t b (contr-center (c b))
 
                 f-g : ∀ t → f (g t) == t
                 f-g t = λ= $ λ a → transport
                   (λ r → ◯-rec (snd (P (h a))) _ r == t a)
-                  (! (snd (c (h a)) (η (a , idp))))
+                  (! (contr-path (c (h a)) (η (a , idp))))
                   (◯-rec-β (snd (P (h a))) _ (a , idp))
 
                 g-f : ∀ k → g (f k) == k
@@ -180,16 +180,16 @@ module lib.types.Modality where
                   ◯-elim {A = hfiber h b}
                          (λ r → =-preserves-local (snd (P b)) {g (f k) b})
                          (λ r → lemma₁ (fst r) b (snd r))
-                         (fst (c b))
+                         (contr-center (c b))
 
                     where lemma₀ : (a : A) → (b : B) → (p : h a == b) →
                                  helper (k ∘ h) b (η (a , p)) == k b
                           lemma₀ a .(h a) idp = helper-β (k ∘ h) (h a) (a , idp)
 
                           lemma₁ : (a : A) → (b : B) → (p : h a == b) →
-                                 helper (k ∘ h) b (fst (c b)) == k b
+                                 helper (k ∘ h) b (contr-center (c b)) == k b
                           lemma₁ a b p = transport! (λ r → helper (k ∘ h) b r == k b)
-                            (snd (c b) (η (a , p))) (lemma₀ a b p)
+                            (contr-path (c b) (η (a , p))) (lemma₀ a b p)
 
       ◯-extend : Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)
       ◯-extend = is-equiv.g pre∘-◯-conn-is-equiv

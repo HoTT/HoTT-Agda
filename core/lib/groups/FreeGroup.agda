@@ -32,20 +32,15 @@ module _ {A : Type i} where
   qw[_] : Word A → QuotWord A
   qw[_] = q[_]
 
-  QuotWord-level : is-set (QuotWord A)
-  QuotWord-level = SetQuot-level
-
-  QuotWord-is-set = QuotWord-level
-
   module QuotWordElim {k} {P : QuotWord A → Type k}
-    (p : (x : QuotWord A) → is-set (P x)) (incl* : (a : Word A) → P qw[ a ])
+    {{_ : {x : QuotWord A} → is-set (P x)}} (incl* : (a : Word A) → P qw[ a ])
     (rel* : ∀ {a₁ a₂} (r : QuotWordRel a₁ a₂) → incl* a₁ == incl* a₂ [ P ↓ quot-rel r ])
-    = SetQuotElim p incl* rel*
+    = SetQuotElim incl* rel*
   open QuotWordElim public renaming (f to QuotWord-elim) hiding (quot-rel-β)
 
-  module QuotWordRec {k} {B : Type k} (p : is-set B) (incl* : Word A → B)
+  module QuotWordRec {k} {B : Type k} {{_ : is-set B}} (incl* : Word A → B)
     (rel* : ∀ {a₁ a₂} (r : QuotWordRel a₁ a₂) → incl* a₁ == incl* a₂)
-    = SetQuotRec p incl* rel*
+    = SetQuotRec incl* rel*
   open QuotWordRec public renaming (f to QuotWord-rec)
 
 module _ (A : Type i) where
@@ -71,13 +66,11 @@ module _ (A : Type i) where
     infixl 80 _⊞_
     _⊞_ : QuotWord A → QuotWord A → QuotWord A
     _⊞_ = QuotWord-rec
-      (→-is-set QuotWord-is-set)
-      (λ l₁ → QuotWord-rec QuotWord-is-set (λ l₂ → qw[ l₁ ++ l₂ ])
+      (λ l₁ → QuotWord-rec (λ l₂ → qw[ l₁ ++ l₂ ])
         (λ r → quot-rel $ QuotWordRel-cong-++-r l₁ r))
       (λ {l₁} {l₁'} r → λ= $ QuotWord-elim
-        (λ _ → =-preserves-set QuotWord-is-set)
         (λ l₂ → quot-rel $ QuotWordRel-cong-++-l r l₂)
-        (λ _ → prop-has-all-paths-↓ (QuotWord-is-set _ _)))
+        (λ _ → prop-has-all-paths-↓))
 
     abstract
       QuotWordRel-cong-flip : ∀ {l₁ l₂}
@@ -105,7 +98,7 @@ module _ (A : Type i) where
         qwr-refl (++-unit-r (reverse l))
 
     ⊟ : QuotWord A → QuotWord A
-    ⊟ = QuotWord-rec QuotWord-is-set (qw[_] ∘ reverse ∘ Word-flip)
+    ⊟ = QuotWord-rec (qw[_] ∘ reverse ∘ Word-flip)
       (λ r → quot-rel $ QuotWordRel-cong-reverse $ QuotWordRel-cong-flip r)
 
     ⊞-unit : QuotWord A
@@ -114,18 +107,17 @@ module _ (A : Type i) where
     abstract
       ⊞-unit-l : ∀ g → ⊞-unit ⊞ g == g
       ⊞-unit-l = QuotWord-elim
-        (λ _ → =-preserves-set QuotWord-is-set)
         (λ _ → idp)
-        (λ _ → prop-has-all-paths-↓ (QuotWord-is-set _ _))
+        (λ _ → prop-has-all-paths-↓)
 
       ⊞-assoc : ∀ g₁ g₂ g₃ → (g₁ ⊞ g₂) ⊞ g₃ == g₁ ⊞ (g₂ ⊞ g₃)
-      ⊞-assoc = QuotWord-elim (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set QuotWord-is-set)
-        (λ l₁ → QuotWord-elim (λ _ → Π-is-set λ _ → =-preserves-set QuotWord-is-set)
-          (λ l₂ → QuotWord-elim (λ _ → =-preserves-set QuotWord-is-set)
+      ⊞-assoc = QuotWord-elim
+        (λ l₁ → QuotWord-elim
+          (λ l₂ → QuotWord-elim
             (λ l₃ → ap qw[_] $ ++-assoc l₁ l₂ l₃)
-            (λ _ → prop-has-all-paths-↓ $ QuotWord-is-set _ _))
-          (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → QuotWord-is-set _ _))
-        (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → Π-is-prop λ _ → QuotWord-is-set _ _)
+            (λ _ → prop-has-all-paths-↓))
+          (λ _ → prop-has-all-paths-↓))
+        (λ _ → prop-has-all-paths-↓)
 
       Word-inv-l : ∀ l → QuotWordRel {A} (reverse (Word-flip l) ++ l) nil
       Word-inv-l nil = qwr-refl idp
@@ -140,9 +132,8 @@ module _ (A : Type i) where
 
       ⊟-inv-l : ∀ g → (⊟ g) ⊞ g == ⊞-unit
       ⊟-inv-l = QuotWord-elim
-        (λ _ → =-preserves-set QuotWord-is-set)
         (λ l → quot-rel (Word-inv-l l))
-        (λ _ → prop-has-all-paths-↓ (QuotWord-is-set _ _))
+        (λ _ → prop-has-all-paths-↓)
 
   QuotWord-group-structure : GroupStructure (QuotWord A)
   QuotWord-group-structure = record
@@ -155,7 +146,7 @@ module _ (A : Type i) where
     }
 
   FreeGroup : Group i
-  FreeGroup = group _ QuotWord-is-set QuotWord-group-structure
+  FreeGroup = group _ QuotWord-group-structure
 
   module FreeGroup = Group FreeGroup
 
@@ -184,17 +175,16 @@ module _ {A : Type i} {j} (G : Group j) where
   FreeGroup-extend f' = record {M} where
     module M where
       f : QuotWord A → G.El
-      f = QuotWord-rec G.El-level (Word-extendᴳ G f')
+      f = QuotWord-rec (Word-extendᴳ G f')
           (λ r → Word-extendᴳ-emap f' r)
       abstract
         pres-comp : preserves-comp (FreeGroup.comp A) G.comp f
         pres-comp =
-          QuotWord-elim (λ _ → Π-is-set λ _ → =-preserves-set G.El-level)
+          QuotWord-elim
             (λ l₁ → QuotWord-elim
-              (λ _ → =-preserves-set G.El-level)
               (λ l₂ → Word-extendᴳ-++ G f' l₁ l₂)
-              (λ _ → prop-has-all-paths-↓ (G.El-level _ _)))
-            (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → G.El-level _ _))
+              (λ _ → prop-has-all-paths-↓))
+            (λ _ → prop-has-all-paths-↓)
 
   private
     module Lemma (hom : FreeGroup A →ᴳ G) where
@@ -220,9 +210,8 @@ module _ {A : Type i} {j} (G : Group j) where
     abstract
       to-from : ∀ h → to (from h) == h
       to-from h = group-hom= $ λ= $ QuotWord-elim
-        (λ _ → =-preserves-set G.El-level)
         (λ l → Word-extendᴳ-hom h l)
-        (λ _ → prop-has-all-paths-↓ (G.El-level _ _))
+        (λ _ → prop-has-all-paths-↓)
 
       from-to : ∀ f → from (to f) == f
       from-to f = λ= λ a → G.unit-r (f a)

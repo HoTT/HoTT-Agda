@@ -25,8 +25,9 @@ module _ {i} (n : ℕ) (X : Ptd i) where
   Ω^S-group : has-level ⟨ S n ⟩ (de⊙ X) → Group i
   Ω^S-group pX = group
     (Ω^ (S n) X)
-    (Ω^-level 0 (S n) X $
-       transport (λ t → has-level t (de⊙ X)) (! (+2+0 ⟨ S n ⟩₋₂)) pX)
+    -- TODO: make it find it automatically
+    {{Ω^-level 0 (S n) X $
+       transport (λ t → has-level t (de⊙ X)) (! (+2+0 ⟨ S n ⟩₋₂)) pX}}
     Ω^S-group-structure
 
 module _ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j} where

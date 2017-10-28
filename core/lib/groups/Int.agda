@@ -9,6 +9,7 @@ open import lib.types.Word
 open import lib.groups.Homomorphism
 open import lib.groups.Isomorphism
 open import lib.groups.FreeAbelianGroup
+open import lib.types.SetQuotient
 
 module lib.groups.Int where
 
@@ -23,7 +24,7 @@ module lib.groups.Int where
   }
 
 ℤ-group : Group₀
-ℤ-group = group _ ℤ-is-set ℤ-group-structure
+ℤ-group = group _ ℤ-group-structure
 
 ℤ-group-is-abelian : is-abelian ℤ-group
 ℤ-group-is-abelian = ℤ+-comm
@@ -48,8 +49,7 @@ module lib.groups.Int where
       ∙ ap (FreeAbGroup.comp Unit fs[ inr unit :: nil ]) (to-from' l)
 
     to-from : ∀ fs → to (from fs) == fs
-    to-from = FormalSum-elim (λ _ → =-preserves-set FormalSum-level)
-      to-from' (λ _ → prop-has-all-paths-↓ (FormalSum-level _ _))
+    to-from = FormalSum-elim to-from' (λ _ → prop-has-all-paths-↓)
 
     from-to : ∀ z → from (to z) == z
     from-to (pos 0) = idp

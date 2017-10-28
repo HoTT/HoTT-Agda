@@ -46,8 +46,8 @@ module lib.groups.GroupProduct where
 
 infix 80 _×ᴳ_
 _×ᴳ_ : ∀ {i j} → Group i → Group j → Group (lmax i j)
-_×ᴳ_ (group A A-level A-struct) (group B B-level B-struct) =
-  group (A × B) (×-level A-level B-level) (×-group-struct A-struct B-struct)
+_×ᴳ_ (group A A-struct) (group B B-struct) =
+  group (A × B) (×-group-struct A-struct B-struct)
 
 
 {- general product -}
@@ -64,7 +64,7 @@ _×ᴳ_ (group A A-level A-struct) (group B B-level B-struct) =
   where open GroupStructure
 
 Πᴳ : ∀ {i j} (I : Type i) (F : I → Group j) → Group (lmax i j)
-Πᴳ I F = group (Π I (El ∘ F)) (Π-level (λ i → El-level (F i)))
+Πᴳ I F = group (Π I (El ∘ F)) {{Π-level (λ i → El-level (F i))}} -- TODO: how to get instance search to work?
                (Π-group-struct (group-struct ∘ F))
   where open Group
 

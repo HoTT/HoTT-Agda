@@ -44,14 +44,14 @@ is-contr-map {A = A} {B = B} f = (y : B) → is-contr (hfiber f y)
 equiv-is-contr-map : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
   → (is-equiv f → is-contr-map f)
 equiv-is-contr-map e y =
-   equiv-preserves-level (Σ-emap-l (_== y) (_ , e) ⁻¹) (pathto-is-contr y)
+   equiv-preserves-level (Σ-emap-l (_== y) (_ , e) ⁻¹)
 
 contr-map-is-equiv : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
   → (is-contr-map f → is-equiv f)
 contr-map-is-equiv {f = f} cm = is-eq _
-  (λ b → fst (fst (cm b)))
-  (λ b → snd (fst (cm b)))
-  (λ a → ap fst (snd (cm (f a)) (a , idp)))
+  (λ b → fst (contr-center (cm b)))
+  (λ b → snd (contr-center (cm b)))
+  (λ a → ap fst (contr-path (cm (f a)) (a , idp)))
 
 
 fiber=-econv : ∀ {i j} {A : Type i} {B : Type j} {h : A → B} {y : B}
@@ -81,11 +81,11 @@ module _ {i j} {A : Type i} {B : Type j} {f : A → B} (e : is-equiv f) where
 
   equiv-linv-is-contr : is-contr (linv f)
   equiv-linv-is-contr = equiv-preserves-level (Σ-emap-r λ _ → λ=-equiv ⁻¹)
-                          (equiv-is-contr-map (pre∘-is-equiv e) (idf A))
+                          {{equiv-is-contr-map (pre∘-is-equiv e) (idf A)}}
 
   equiv-rinv-is-contr : is-contr (rinv f)
   equiv-rinv-is-contr = equiv-preserves-level (Σ-emap-r λ _ → λ=-equiv ⁻¹)
-                          (equiv-is-contr-map (post∘-is-equiv e) (idf B))
+                          {{equiv-is-contr-map (post∘-is-equiv e) (idf B)}}
 
 module _ {i j} {A : Type i} {B : Type j} {f : A → B} where
 
@@ -109,7 +109,7 @@ module _ {i j} {A : Type i} {B : Type j} {f : A → B} where
 equiv-rcoh-is-contr : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
                       (e : is-equiv f) → (v : rinv f) → is-contr (rcoh f v)
 equiv-rcoh-is-contr {f = f} e v = equiv-preserves-level ((rcoh-econv v)⁻¹)
-  (Π-level (λ x → =-preserves-level (equiv-is-contr-map e (f x))))
+  {{Π-level (λ x → =-preserves-level (equiv-is-contr-map e (f x)))}}
 
 rinv-and-rcoh-is-equiv : ∀ {i j} {A : Type i} {B : Type j} {h : A → B}
   → Σ (rinv h) (rcoh h) ≃ is-equiv h
@@ -124,14 +124,19 @@ is-equiv-is-prop : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
   → is-prop (is-equiv f)
 is-equiv-is-prop = inhab-to-contr-is-prop λ e →
   equiv-preserves-level rinv-and-rcoh-is-equiv
-    (Σ-level (equiv-rinv-is-contr e) (equiv-rcoh-is-contr e))
+    {{Σ-level (equiv-rinv-is-contr e) (equiv-rcoh-is-contr e)}}
+
+instance
+  is-equiv-level : ∀ {i j} {A : Type i} {B : Type j} {f : A → B} {n : ℕ₋₂}
+    → has-level (S n) (is-equiv f)
+  is-equiv-level = prop-has-level-S is-equiv-is-prop
 
 is-equiv-prop : ∀ {i j} {A : Type i} {B : Type j}
   → SubtypeProp (A → B) (lmax i j)
 is-equiv-prop = is-equiv , λ f → is-equiv-is-prop
 
 ∘e-unit-r : ∀ {i} {A B : Type i} (e : A ≃ B) → (e ∘e ide A) == e
-∘e-unit-r e = pair= idp (prop-has-all-paths is-equiv-is-prop _ _)
+∘e-unit-r e = pair= idp (prop-has-all-paths _ _)
 
 ua-∘e : ∀ {i} {A B : Type i}
   (e₁ : A ≃ B) {C : Type i} (e₂ : B ≃ C) → ua (e₂ ∘e e₁) == ua e₁ ∙ ua e₂
@@ -159,7 +164,7 @@ module _ {j} {B : Empty → Type j} where
   Σ₁-Empty = equiv (⊥-rec ∘ fst) ⊥-rec ⊥-elim (⊥-rec ∘ fst)
 
   Π₁-Empty : Π Empty B ≃ Unit
-  Π₁-Empty = equiv (cst tt) (cst ⊥-elim) (λ _ → contr-has-all-paths Unit-is-contr _ _) (λ _ → λ= ⊥-elim)
+  Π₁-Empty = equiv (cst tt) (cst ⊥-elim) (λ _ → contr-has-all-paths _ _) (λ _ → λ= ⊥-elim)
 
 Σ₂-Empty : ∀ {i} {A : Type i} → Σ A (λ _ → Empty) ≃ Empty
 Σ₂-Empty = equiv (⊥-rec ∘ snd) ⊥-rec ⊥-elim (⊥-rec ∘ snd)

@@ -206,30 +206,30 @@ module _ {i j} (X : Ptd i) where
 abstract
   Susp-conn : ∀ {i} {A : Type i} {n : ℕ₋₂}
     → is-connected n A → is-connected (S n) (Susp A)
-  Susp-conn {A = A} {n = n} cA =
+  Susp-conn {A = A} {n = n} cA = has-level-make
     ([ north ] ,
-     Trunc-elim (λ _ → =-preserves-level Trunc-level)
+     Trunc-elim
        (Susp-elim
          idp
-         (Trunc-rec (Trunc-level {n = S n} _ _)
-                    (λ a → ap [_] (merid a))
-                    (fst cA))
+         (Trunc-rec (λ a → ap [_] (merid a))
+                    (contr-center cA))
          (λ x → Trunc-elim
             {P = λ y → idp ==
-              Trunc-rec (Trunc-level {n = S n} _ _) (λ a → ap [_] (merid a)) y
+              Trunc-rec (λ a → ap [_] (merid a)) y
               [ (λ z → [ north ] == [ z ]) ↓ (merid x) ]}
-            (λ _ → ↓-preserves-level (Trunc-level {n = S n} _ _))
-            (λ x' → ↓-cst=app-in (∙'-unit-l _ ∙ mers-eq n cA x x'))
-            (fst cA))))
+            {{λ _ → ↓-preserves-level}}
+            (λ x' → ↓-cst=app-in (∙'-unit-l _ ∙ mers-eq n x x'))
+            (contr-center cA))))
     where
+    instance _ = cA
+
     mers-eq : ∀ {i} {A : Type i} (n : ℕ₋₂)
-      → is-connected n A → (x x' : A)
+      {{_ : is-connected n A}} → (x x' : A)
       → ap ([_] {n = S n}) (merid x)
-        == Trunc-rec (Trunc-level {n = S n} _ _)
-                     (λ a → ap [_] (merid a)) [ x' ]
-    mers-eq ⟨-2⟩ cA x x' = contr-has-all-paths (Trunc-level {n = -1} _ _) _ _
-    mers-eq {A = A} (S n) cA x x' =
-      conn-extend (pointed-conn-out A x cA)
+        == Trunc-rec {{has-level-apply (Trunc-level {n = S n}) _ _}} (λ a → ap [_] (merid a)) [ x' ]
+    mers-eq ⟨-2⟩ x x' = contr-has-all-paths _ _
+    mers-eq {A = A} (S n) x x' =
+      conn-extend (pointed-conn-out A x)
         (λ y → ((ap [_] (merid x) == ap [_] (merid y)) ,
-                Trunc-level {n = S (S n)} _ _ _ _))
+                has-level-apply (has-level-apply (Trunc-level {n = S (S n)}) _ _) _ _))
         (λ _ → idp) x'

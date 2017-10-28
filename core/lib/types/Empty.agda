@@ -10,14 +10,16 @@ Empty-rec = Empty-elim
 ⊥-rec : ∀ {i} {A : Type i} → (⊥ → A)
 ⊥-rec = Empty-rec
 
-abstract
-  Empty-is-prop : is-prop Empty
-  Empty-is-prop = Empty-elim
+Empty-is-prop : is-prop Empty
+Empty-is-prop = has-level-make Empty-elim
 
-  Empty-is-set : is-set Empty
-  Empty-is-set = raise-level -1 Empty-is-prop
+instance
+  Empty-level : {n : ℕ₋₂} → has-level (S n) Empty
+  Empty-level = prop-has-level-S Empty-is-prop
 
-  Empty-level = Empty-is-prop
-  ⊥-is-prop = Empty-is-prop
-  ⊥-is-set = Empty-is-set
-  ⊥-level = Empty-level
+Empty-is-set : is-set Empty
+Empty-is-set = raise-level -1 Empty-is-prop
+
+⊥-is-prop = Empty-is-prop
+⊥-is-set = Empty-is-set
+⊥-level = Empty-level

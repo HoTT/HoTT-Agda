@@ -139,17 +139,17 @@ module _ {i} {G H : Group i} (iso : GroupIso G H) where
       (p : Group.El G == Group.El H)
       (q : Group.El-level G == Group.El-level H [ _ ↓ p ])
       (r : Group.group-struct G == Group.group-struct H [ _ ↓ p ])
-      → ap Group.El (ap3-lemma group p q r) == p
+      → ap Group.El (ap3-lemma (λ a b c → group a {{b}} c) p q r) == p
     ap3-lemma-El idp idp idp = idp
 
   {- a homomorphism which is an equivalence gives a path between groups -}
   abstract
     uaᴳ : G == H
     uaᴳ =
-      ap3-lemma group
+      ap3-lemma (λ a b c → group a {{b}} c)
         El=
-        (prop-has-all-paths-↓ has-level-is-prop)
-        (↓-group-structure= (G.El-level) El= ident= inv= comp=)
+        prop-has-all-paths-↓
+        (↓-group-structure= El= ident= inv= comp=)
       where
       ident= : G.ident == H.ident [ (λ C → C) ↓ El= ]
       ident= = ↓-idf-ua-in _ pres-ident
@@ -271,16 +271,17 @@ module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H)
     module φ = GroupHom φ
 
     abstract
-      image-prop : (h : H.El) → is-prop (hfiber φ.f h)
-      image-prop h = all-paths-is-prop λ {(g₁ , p₁) (g₂ , p₂) →
-        pair= (inj g₁ g₂ (p₁ ∙ ! p₂)) (prop-has-all-paths-↓ (H.El-level _ _))}
+      instance
+        image-prop : (h : H.El) → is-prop (hfiber φ.f h)
+        image-prop h = all-paths-is-prop λ {(g₁ , p₁) (g₂ , p₂) →
+          pair= (inj g₁ g₂ (p₁ ∙ ! p₂)) prop-has-all-paths-↓}
 
   surjᴳ-and-injᴳ-is-equiv : is-equiv φ.f
   surjᴳ-and-injᴳ-is-equiv = contr-map-is-equiv
-    (λ h → let (g₁ , p₁) = Trunc-rec (image-prop h) (idf _) (surj h) in
-      ((g₁ , p₁) , (λ {(g₂ , p₂) →
+    (λ h → let (g₁ , p₁) = Trunc-rec (idf _) (surj h) in
+      has-level-make ((g₁ , p₁) , (λ {(g₂ , p₂) →
         pair= (inj g₁ g₂ (p₁ ∙ ! p₂))
-                (prop-has-all-paths-↓ (H.El-level _ _))})))
+                prop-has-all-paths-↓})))
 
   surjᴳ-and-injᴳ-iso : G ≃ᴳ H
   surjᴳ-and-injᴳ-iso = φ , surjᴳ-and-injᴳ-is-equiv

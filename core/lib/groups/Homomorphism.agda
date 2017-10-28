@@ -21,16 +21,11 @@ preserves-comp : ∀ {i j} {A : Type i} {B : Type j}
   → Type (lmax i j)
 preserves-comp Ac Bc f = ∀ a₁ a₂ → f (Ac a₁ a₂) == Bc (f a₁) (f a₂)
 
-preserves-comp-is-prop : ∀ {i j} {A : Type i} {B : Type j}
-  (pB : is-set B) (A-comp : A → A → A) (B-comp : B → B → B)
-  → (f : A → B) → is-prop (preserves-comp A-comp B-comp f)
-preserves-comp-is-prop pB Ac Bc f = Π-is-prop λ _ → Π-is-prop λ _ → pB _ _
-
 preserves-comp-prop : ∀ {i j} {A : Type i} {B : Type j}
-  (pB : is-set B) (A-comp : A → A → A) (B-comp : B → B → B)
+  {{_ : is-set B}} (A-comp : A → A → A) (B-comp : B → B → B)
   → SubtypeProp (A → B) (lmax i j)
-preserves-comp-prop pB Ac Bc =
-  preserves-comp Ac Bc , preserves-comp-is-prop pB Ac Bc
+preserves-comp-prop Ac Bc =
+  preserves-comp Ac Bc , ⟨⟩
 
 record GroupStructureHom {i j} {GEl : Type i} {HEl : Type j}
   (GS : GroupStructure GEl) (HS : GroupStructure HEl) : Type (lmax i j) where
@@ -117,7 +112,7 @@ abstract
   group-hom= : ∀ {i j} {G : Group i} {H : Group j} {φ ψ : G →ᴳ H}
     → GroupHom.f φ == GroupHom.f ψ → φ == ψ
   group-hom= {G = G} {H = H} p = ap (uncurry group-hom) $
-    Subtype=-out (preserves-comp-prop (Group.El-level H) (Group.comp G) (Group.comp H)) p
+    Subtype=-out (preserves-comp-prop (Group.comp G) (Group.comp H)) p
 
   group-hom=-↓ : ∀ {i j k} {A : Type i} {G : A → Group j} {H : A → Group k} {x y : A}
     {p : x == y} {φ : G x →ᴳ H x} {ψ : G y →ᴳ H y}
@@ -127,15 +122,13 @@ abstract
   group-hom=-↓ {p = idp} = group-hom=
 
 abstract
-  GroupHom-level : ∀ {i j} {G : Group i} {H : Group j} → is-set (G →ᴳ H)
-  GroupHom-level {G = G} {H = H} = equiv-preserves-level
-    (equiv (uncurry group-hom) (λ x → GroupHom.f x , GroupHom.pres-comp x)
-           (λ _ → idp) (λ _ → idp))
-    (Subtype-level
-      (preserves-comp-prop (Group.El-level H) (Group.comp G) (Group.comp H))
-      (→-level (Group.El-is-set H)))
-
-→ᴳ-level = GroupHom-level
+  instance
+    GroupHom-level : ∀ {i j} {G : Group i} {H : Group j} → is-set (G →ᴳ H)
+    GroupHom-level {G = G} {H = H} = equiv-preserves-level
+      (equiv (uncurry group-hom) (λ x → GroupHom.f x , GroupHom.pres-comp x)
+             (λ _ → idp) (λ _ → idp))
+      {{Subtype-level
+        (preserves-comp-prop (Group.comp G) (Group.comp H))}}
 
 infixr 80 _∘ᴳ_
 
@@ -185,9 +178,6 @@ _∘subᴳ_ {k = k} {G = G} P φ = record {M} where
     prop : G.El → Type k
     prop = P.prop ∘ φ.f
 
-    level : ∀ g → is-prop (prop g)
-    level = P.level ∘ φ.f
-
     abstract
       ident : prop G.ident
       ident = transport! P.prop φ.pres-ident P.ident
@@ -223,9 +213,6 @@ module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H) where
       prop : G.El → Type j
       prop g = φ.f g == H.ident
       abstract
-        level : (g : G.El) → is-prop (prop g)
-        level g = H.El-level _ _
-
         ident : prop G.ident
         ident = φ.pres-ident
 
@@ -298,7 +285,7 @@ module _ {i j k} {G : Group i} {H : Group j} {K : Group k}
   abstract
     {- an equivalent version of is-exact-ktoi  -}
     im-sub-ker-in : is-fullᴳ (ker-propᴳ (ψ ∘ᴳ φ)) → im-propᴳ φ ⊆ᴳ ker-propᴳ ψ
-    im-sub-ker-in r h = Trunc-rec (K.El-level _ _) (λ {(g , p) → ap ψ.f (! p) ∙ r g})
+    im-sub-ker-in r h = Trunc-rec (λ {(g , p) → ap ψ.f (! p) ∙ r g})
 
     im-sub-ker-out : im-propᴳ φ ⊆ᴳ ker-propᴳ ψ → is-fullᴳ (ker-propᴳ (ψ ∘ᴳ φ))
     im-sub-ker-out s g = s (φ.f g) [ g , idp ]
@@ -350,7 +337,7 @@ module _ {i j} (G : Group i) (H : AbGroup j)
         inv-l φ = group-hom= $ λ= λ _ → H.inv-l _
 
   hom-group : Group (lmax i j)
-  hom-group = group (G →ᴳ H.grp) GroupHom-level hom-group-structure
+  hom-group = group (G →ᴳ H.grp) hom-group-structure
 
   abstract
     hom-group-is-abelian : is-abelian hom-group

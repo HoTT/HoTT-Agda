@@ -233,7 +233,7 @@ lower-equiv = equiv lower lift (λ _ → idp) (λ _ → idp)
 {- Any contractible type is equivalent to (all liftings of) the unit type -}
 module _ {i} {A : Type i} (h : is-contr A) where
   contr-equiv-Unit : A ≃ Unit
-  contr-equiv-Unit = equiv (λ _ → unit) (λ _ → fst h) (λ _ → idp) (snd h)
+  contr-equiv-Unit = equiv (λ _ → unit) (λ _ → contr-center h) (λ _ → idp) (contr-path h)
 
   contr-equiv-LiftUnit : ∀ {j} → A ≃ Lift {j = j} Unit
   contr-equiv-LiftUnit = lower-equiv ⁻¹ ∘e contr-equiv-Unit
@@ -285,11 +285,11 @@ module _ {i j} {A : Type i} {B : Type j} where
 {- Equivalent types have the same truncation level -}
 abstract
   equiv-preserves-level : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} (e : A ≃ B)
-    → (has-level n A → has-level n B)
-  equiv-preserves-level {n = ⟨-2⟩} e (x , p) =
-    (–> e x , (λ y → ap (–> e) (p _) ∙ <–-inv-r e y))
-  equiv-preserves-level {n = S n} e c = λ x y →
-     equiv-preserves-level (ap-equiv (e ⁻¹) x y ⁻¹) (c (<– e x) (<– e y))
+    {{_ : has-level n A}} → has-level n B
+  equiv-preserves-level {n = ⟨-2⟩} e {{p}} =
+    has-level-make (–> e (contr-center p) , (λ y → ap (–> e) (contr-path p _) ∙ <–-inv-r e y))
+  equiv-preserves-level {n = S n} e {{c}} = has-level-make (λ x y →
+    equiv-preserves-level (ap-equiv (e ⁻¹) x y ⁻¹) {{has-level-apply c (<– e x) (<– e y)}})
 
 {- This is a collection of type equivalences involving basic type formers.
    We exclude Empty since Π₁-Empty requires λ=.

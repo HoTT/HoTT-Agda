@@ -53,6 +53,11 @@ of-type A u = u
 infix 40 of-type
 syntax of-type A u =  u :> A
 
+{- Instance search -}
+
+⟨⟩ : ∀ {i} {A : Type i} {{a : A}} → A
+⟨⟩ {{a}} = a
+
 {- Identity type
 
 The identity type is called [Path] and [_==_] because the symbol [=] is
