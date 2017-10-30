@@ -27,8 +27,8 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     ↓-level {p = idp} k = has-level-apply k _ _
 
     ↓-preserves-level : {a b : A} {p : a == b} {u : B a} {v : B b} {n : ℕ₋₂}
-      {{_ : has-level n (B b)}} → has-level n (u == v [ B ↓ p ])
-    ↓-preserves-level {p = idp} = ⟨⟩
+      → has-level n (B b) → has-level n (u == v [ B ↓ p ])
+    ↓-preserves-level {p = idp} = =-preserves-level
 
     prop-has-all-paths-↓ : {x y : A} {p : x == y} {u : B x} {v : B y}
       {{_ : is-prop (B y)}} → u == v [ B ↓ p ]
@@ -167,18 +167,22 @@ hSet₀ = hSet lzero
 -- [n -Type] is an (n+1)-type
 
 abstract
-  instance
-    ≃-level : ∀ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j}
-      → (has-level n A → has-level n B → has-level n (A ≃ B))
-    ≃-level {n = ⟨-2⟩} pA pB = has-level-make
+  ≃-contr : ∀ {i j} {A : Type i} {B : Type j}
+      → is-contr A → is-contr B → is-contr (A ≃ B)
+  ≃-contr pA pB = has-level-make
       ((cst (contr-center pB) , contr-to-contr-is-equiv _ pA pB)
       , (λ e → pair= (λ= (λ _ → contr-path pB _))
                      (from-transp is-equiv _ (prop-path is-equiv-is-prop _ _))))
-    ≃-level {n = S n} pA pB = Σ-level ⟨⟩ ⟨⟩ where instance _ = pA; _ = pB
 
-    universe-=-level : ∀ {i} {n : ℕ₋₂} {A B : Type i}
-      → (has-level n A → has-level n B → has-level n (A == B))
-    universe-=-level pA pB = equiv-preserves-level ua-equiv where instance _ = pA; _ = pB
+instance
+  ≃-level : ∀ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j}
+    → (has-level n A → has-level n B → has-level n (A ≃ B))
+  ≃-level {n = ⟨-2⟩} = ≃-contr
+  ≃-level {n = S n} pA pB = Σ-level ⟨⟩ ⟨⟩ where instance _ = pA; _ = pB
+
+  universe-=-level : ∀ {i} {n : ℕ₋₂} {A B : Type i}
+    → (has-level n A → has-level n B → has-level n (A == B))
+  universe-=-level pA pB = equiv-preserves-level ua-equiv where instance _ = pA; _ = pB
 
 module _ {i} {n} where
   private

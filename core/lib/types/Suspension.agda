@@ -217,7 +217,7 @@ abstract
             {P = λ y → idp ==
               Trunc-rec (λ a → ap [_] (merid a)) y
               [ (λ z → [ north ] == [ z ]) ↓ (merid x) ]}
-            {{λ _ → ↓-preserves-level}}
+            {{λ _ → ↓-preserves-level ⟨⟩}}
             (λ x' → ↓-cst=app-in (∙'-unit-l _ ∙ mers-eq n x x'))
             (contr-center cA))))
     where

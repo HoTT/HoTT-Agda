@@ -6,7 +6,7 @@ open import cw.CW
 module cw.examples.Unit where
 
 cw-unit-skel : Skeleton {lzero} 0
-cw-unit-skel = Unit , Unit-is-set
+cw-unit-skel = Unit , ⟨⟩
 CWUnit = ⟦ cw-unit-skel ⟧
 
 CWUnit-equiv-Unit : CWUnit ≃ Unit

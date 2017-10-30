@@ -15,7 +15,7 @@ module _ {R : Rel A j} where
   postulate  -- HIT
     q[_] : (a : A) → SetQuot R
     quot-rel : {a₁ a₂ : A} → R a₁ a₂ → q[ a₁ ] == q[ a₂ ]
-    instance SetQuot-level : is-set (SetQuot R)
+    instance SetQuot-is-set : is-set (SetQuot R)
 
   module SetQuotElim {k} {P : SetQuot R → Type k}
     {{p : {x : SetQuot R} → is-set (P x)}} (q[_]* : (a : A) → P q[ a ])

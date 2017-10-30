@@ -38,21 +38,20 @@ module groups.KernelSndImageInl {i j k}
       from' ((g , h) , h-in-ker) = h , ! (φ-snd-β (g , h)) ∙ h-in-ker
 
       from-rel : ∀ {gh₁ gh₂} → ker/im-rel gh₁ gh₂ → from' gh₁ == from' gh₂
-      from-rel {gh₁} {gh₂} = Trunc-rec (Ker.El-is-set φ _ _)
+      from-rel {gh₁} {gh₂} = Trunc-rec
         (λ{(g , inl-g=h₁h₂⁻¹) → Ker.El=-out φ
           (H.zero-diff-same (snd (fst gh₁)) (snd (fst gh₂)) (! (snd×= inl-g=h₁h₂⁻¹)))})
 
     from : Ker/Im.El → Ker.El φ
-    from = SetQuot-rec (Ker.El-is-set φ) from' from-rel
+    from = SetQuot-rec from' from-rel
 
     abstract
       to-from : ∀ g → to (from g) == g
       to-from = SetQuot-elim
         {P = λ g → to (from g) == g}
-        (λ _ → =-preserves-set Ker/Im.El-is-set)
         (λ{((g , h) , h-in-ker) → quot-rel
           [ G.inv g , ap2 _,_ (! (G.unit-l (G.inv g))) (! (H.inv-r h)) ]})
-        (λ _ → prop-has-all-paths-↓ (Ker/Im.El-is-set _ _))
+        (λ _ → prop-has-all-paths-↓)
 
       from-to : ∀ g → from (to g) == g
       from-to _ = Ker.El=-out φ idp

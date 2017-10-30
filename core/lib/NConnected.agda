@@ -191,21 +191,22 @@ prop-over-connected :  ∀ {i j} {A : Type i} {a : A} {{p : is-connected 0 A}}
 prop-over-connected P x = conn-extend (pointed-conn-out _ _) P (λ _ → x)
 
 {- Connectedness of a truncated type -}
-Trunc-preserves-conn : ∀ {i} {A : Type i} {n : ℕ₋₂} (m : ℕ₋₂)
-  {{_ : is-connected n A}} → is-connected n (Trunc m A)
-Trunc-preserves-conn {n = ⟨-2⟩} m = Trunc-level
-Trunc-preserves-conn {A = A} {n = S n} m {{c}} = lemma (contr-center c) (contr-path c)
-  where
-  lemma : (x₀ : Trunc (S n) A) → (∀ x → x₀ == x) → is-connected (S n) (Trunc m A)
-  lemma = Trunc-elim
-    (λ a → λ p → has-level-make ([ [ a ] ] ,
-       Trunc-elim
-         (Trunc-elim
-           {{λ _ → =-preserves-level
-                    (Trunc-preserves-level (S n) Trunc-level)}}
-           (λ x → <– (Trunc=-equiv [ [ a ] ] [ [ x ] ])
-              (Trunc-fmap (ap [_])
-                (–> (Trunc=-equiv [ a ] [ x ]) (p [ x ])))))))
+instance
+  Trunc-preserves-conn : ∀ {i} {A : Type i} {n : ℕ₋₂} {m : ℕ₋₂}
+    → is-connected n A → is-connected n (Trunc m A)
+  Trunc-preserves-conn {n = ⟨-2⟩} _ = Trunc-level
+  Trunc-preserves-conn {A = A} {n = S n} {m} c = lemma (contr-center c) (contr-path c)
+    where
+    lemma : (x₀ : Trunc (S n) A) → (∀ x → x₀ == x) → is-connected (S n) (Trunc m A)
+    lemma = Trunc-elim
+      (λ a → λ p → has-level-make ([ [ a ] ] ,
+        Trunc-elim
+          (Trunc-elim
+            {{λ _ → =-preserves-level
+                      (Trunc-preserves-level (S n) Trunc-level)}}
+            (λ x → <– (Trunc=-equiv [ [ a ] ] [ [ x ] ])
+               (Trunc-fmap (ap [_])
+                 (–> (Trunc=-equiv [ a ] [ x ]) (p [ x ])))))))
 
 {- Connectedness of a Σ-type -}
 abstract
@@ -241,6 +242,7 @@ abstract
 
 {- connectedness of a path space -}
 abstract
+ instance
   path-conn : ∀ {i} {A : Type i} {x y : A} {n : ℕ₋₂}
     → is-connected (S n) A → is-connected n (x == y)
   path-conn {x = x} {y = y} cA =

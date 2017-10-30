@@ -123,7 +123,7 @@ to : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
   → (r : bmleft a₀ == bmright b₁)
   → Trunc (m +2+ n) (hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁) r)
   → Trunc (m +2+ n) (hfiber bmglue r)
-to q₀₀ q₁₁ r = Trunc-rec Trunc-level (to' q₀₀ q₁₁ r)
+to q₀₀ q₁₁ r = Trunc-rec (to' q₀₀ q₁₁ r)
 
 module From {a₀ b₁} (q₀₁ : Q a₀ b₁) where
   U = Σ A λ a → Q a b₁
@@ -197,7 +197,7 @@ from : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁)
   → (r : bmleft a₀ == bmright b₁)
   → Trunc (m +2+ n) (hfiber bmglue r)
   → Trunc (m +2+ n) (hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁) r)
-from q₀₀ q₁₁ r = Trunc-rec Trunc-level (from' q₀₀ q₁₁ r)
+from q₀₀ q₁₁ r = Trunc-rec (from' q₀₀ q₁₁ r)
 
 -- Equivalence
 
@@ -346,7 +346,7 @@ abstract
 
   from-to : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁) r fiber
     → from q₀₀ q₁₁ r (to q₀₀ q₁₁ r fiber) == fiber
-  from-to q₀₀ q₁₁ r = Trunc-elim (λ _ → =-preserves-level Trunc-level) (from-to' q₀₀ q₁₁ r)
+  from-to q₀₀ q₁₁ r = Trunc-elim (from-to' q₀₀ q₁₁ r)
 
 module ToFrom {a₀ b₁} (q₀₁ : Q a₀ b₁) where
   -- upper
@@ -402,7 +402,7 @@ abstract
 
   to-from : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁) r fiber
     → to q₀₀ q₁₁ r (from q₀₀ q₁₁ r fiber) == fiber
-  to-from q₀₀ q₁₁ r = Trunc-elim (λ _ → =-preserves-level Trunc-level) (to-from' q₀₀ q₁₁ r)
+  to-from q₀₀ q₁₁ r = Trunc-elim (to-from' q₀₀ q₁₁ r)
 
 eqv : ∀ {a₀ a₁ b₀ b₁} (q₀₀ : Q a₀ b₀) (q₁₁ : Q a₁ b₁) r
   → Trunc (m +2+ n) (hfiber (λ q₁₀ → bmglue q₀₀ ∙' ! (bmglue q₁₀) ∙' bmglue q₁₁) r)

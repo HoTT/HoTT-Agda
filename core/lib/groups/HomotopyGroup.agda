@@ -86,7 +86,7 @@ module _ {i} where
                     ∘e Ω^-emap 1 (Ω^STruncPreIso.F r , Ω^STruncPreIso.e r))})
 
   Ω^S-group-Trunc-fuse-diag-iso : (n : ℕ) (X : Ptd i)
-    → Ω^S-group n (⊙Trunc ⟨ S n ⟩ X) Trunc-level ≃ᴳ πS n X
+    → Ω^S-group n (⊙Trunc ⟨ S n ⟩ X) ≃ᴳ πS n X
   Ω^S-group-Trunc-fuse-diag-iso n X = group-hom (fst F) pres-comp , e
     where
     r = transport (λ k → Ω^STruncPreIso n 0 k X)
@@ -99,9 +99,9 @@ abstract
   πS-Trunc-fuse-≤-iso n m X Sn≤m =
     πS n (⊙Trunc m X)
       ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso n (⊙Trunc m X) ⁻¹ᴳ ⟩
-    Ω^S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X)) Trunc-level
-      ≃ᴳ⟨ Ω^S-group-emap n Trunc-level Trunc-level (≃-to-⊙≃ (Trunc-fuse-≤ (de⊙ X) Sn≤m) idp) ⟩
-    Ω^S-group n (⊙Trunc ⟨ S n ⟩ X) Trunc-level
+    Ω^S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X))
+      ≃ᴳ⟨ Ω^S-group-emap n (≃-to-⊙≃ (Trunc-fuse-≤ (de⊙ X) Sn≤m) idp) ⟩
+    Ω^S-group n (⊙Trunc ⟨ S n ⟩ X)
       ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso n X ⟩
     πS n X
       ≃ᴳ∎
@@ -111,9 +111,9 @@ abstract
   πS-Trunc-fuse->-iso n m X m<n =
     πS n (⊙Trunc m X)
       ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso n (⊙Trunc m X) ⁻¹ᴳ ⟩
-    Ω^S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X)) Trunc-level
+    Ω^S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X))
       ≃ᴳ⟨ contr-iso-0ᴳ _ $ inhab-prop-is-contr
-           (Group.ident (Ω^S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X)) Trunc-level))
+           (Group.ident (Ω^S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X))))
            {{Ω^-level -1 (S n) _ $ Trunc-preserves-level ⟨ S n ⟩ $
              raise-level-≤T
                (transport (λ k → m ≤T k) (+2+-comm -1 ⟨ S n ⟩₋₂) (<T-to-≤T m<n))

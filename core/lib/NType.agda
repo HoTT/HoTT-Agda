@@ -20,6 +20,7 @@ module _ {i} where
   has-level-aux (S n) A = (x y : A) → has-level n (x == y)
 
   record has-level n A where
+    -- Agda notices that the record is recursive, so we need to specify that we want eta-equality
     inductive
     eta-equality
     constructor has-level-make
@@ -63,13 +64,12 @@ module _ {i} where
         lemma idp = idp
 
   {- Truncation levels are cumulative -}
-  abstract
-    raise-level : {A : Type i} (n : ℕ₋₂)
-      → (has-level n A → has-level (S n) A)
-    raise-level ⟨-2⟩ q =
-      all-paths-is-prop (λ x y → ! (contr-path q x) ∙ contr-path q y)
-    raise-level (S n) q =
-      has-level-make (λ x y → raise-level n (has-level-apply q x y))
+  raise-level : {A : Type i} (n : ℕ₋₂)
+    → (has-level n A → has-level (S n) A)
+  raise-level ⟨-2⟩ q =
+    all-paths-is-prop (λ x y → ! (contr-path q x) ∙ contr-path q y)
+  raise-level (S n) q =
+    has-level-make (λ x y → raise-level n (has-level-apply q x y))
 
   {- Having decidable equality is stronger that being a set -}
 
@@ -145,15 +145,18 @@ module _ {i} where
       prop-is-set : is-prop A → is-set A
       prop-is-set = prop-has-level-S
 
-      {- If [A] has level [n], then so does [x == y] for [x y : A] -}
-      instance
-        =-preserves-level : {n : ℕ₋₂} {x y : A}
-          → has-level n A → has-level n (x == y)
-        =-preserves-level {⟨-2⟩} p = has-level-make (contr-has-all-paths {{p}} _ _ , unique-path) where
+      =-preserves-contr : {x y : A} → is-contr A → is-contr (x == y)
+      =-preserves-contr p = has-level-make (contr-has-all-paths {{p}} _ _ , unique-path) where
           unique-path : {u v : A} (q : u == v)
             → contr-has-all-paths {{p}} u v == q
           unique-path idp = !-inv-l (contr-path p _)
-        =-preserves-level {S n} {x} {y} p = raise-level n (has-level-apply p x y)
+
+    {- If [A] has level [n], then so does [x == y] for [x y : A] -}
+    instance
+      =-preserves-level : {n : ℕ₋₂} {x y : A}
+        → has-level n A → has-level n (x == y)
+      =-preserves-level {⟨-2⟩} = =-preserves-contr
+      =-preserves-level {S n} {x} {y} p = raise-level n (has-level-apply p x y)
 
     {- The type of paths from a fixed point is contractible -}
     instance

@@ -56,7 +56,7 @@ private
       ∙ ap (λ sp → fst (fill-template (snd sp)
                                       (fst fill-base ◃ smin* (pt X) (pt Y))
                                       (smbase*-template (snd sp))))
-           (contr-has-all-paths (pathfrom-is-contr (smin (pt X) (pt Y)))
+           (contr-has-all-paths {{pathfrom-is-contr (smin (pt X) (pt Y))}}
                                 (smbasel , smgluel (pt X))
                                 (smbaser , smgluer (pt Y)))
 

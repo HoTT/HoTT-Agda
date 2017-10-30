@@ -28,7 +28,6 @@ module homotopy.PathSetIsInitalCover {i} (X : Ptd i)
 
       lemma₂ : ∀ a p → cover-hom a p == quotient-cover a p
       lemma₂ a = Trunc-elim
-        (λ p → =-preserves-set (⊙cov.Fiber-level a))
         (lemma₁ a)
 
     theorem : cover-hom == quotient-cover

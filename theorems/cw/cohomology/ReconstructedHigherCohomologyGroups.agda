@@ -19,7 +19,7 @@ module cw.cohomology.ReconstructedHigherCohomologyGroups {i : ULevel} (OT : Ordi
 
   private
     ≤-dec-has-all-paths : {m n : ℕ} → has-all-paths (Dec (m ≤ n))
-    ≤-dec-has-all-paths = prop-has-all-paths (Dec-level ≤-is-prop)
+    ≤-dec-has-all-paths = prop-has-all-paths
 
   private
     abstract

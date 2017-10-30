@@ -24,7 +24,7 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
     φ-const-implies-ψ-is-inj : (∀ g →  φ.f g == H.ident) → is-injᴳ ψ
     φ-const-implies-ψ-is-inj φ-is-const =
       has-trivial-ker-is-injᴳ ψ λ h ψh=0 →
-        Trunc-rec (H.El-is-set _ _)
+        Trunc-rec
           (λ{(g , φg=h) → ! φg=h ∙ φ-is-const g})
           (E.ker-sub-im h ψh=0)
 
@@ -44,7 +44,7 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
 
         module From (k : Ker.El ψ)
           = ConstExt {A = hfiber φ.f (fst k)} {B = G.El}
-              G.El-is-set (λ hf → fst hf)
+              (λ hf → fst hf)
               (λ hf₁ hf₂ → φ-is-inj _ _ (snd hf₁ ∙ ! (snd hf₂)))
 
         from : Ker.El ψ → G.El
@@ -54,7 +54,6 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
         to-from k = Ker.El=-out ψ $
           Trunc-elim
             {P = λ hf → φ.f (From.ext k hf) == fst k}
-            (λ _ → H.El-is-set _ _)
             (λ{(g , p) → p})
             (uncurry E.ker-sub-im k)
 
@@ -79,16 +78,14 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
           ! (ψ.pres-diff h₁ h₂) ∙ E.im-sub-ker (H.diff h₁ h₂) h₁h₂⁻¹-in-im
 
       f : Cok.El → K.El
-      f = SetQuot-rec K.El-is-set ψ.f f-rel
+      f = SetQuot-rec ψ.f f-rel
       abstract
         pres-comp : ∀ h₁ h₂ → f (Cok.comp h₁ h₂) == K.comp (f h₁) (f h₂)
         pres-comp = SetQuot-elim
-          (λ _ → Π-is-set λ _ → =-preserves-set K.El-is-set)
           (λ h₁ → SetQuot-elim
-            (λ _ → =-preserves-set K.El-is-set)
             (λ h₂ → ψ.pres-comp h₁ h₂)
-            (λ _ → prop-has-all-paths-↓ (K.El-is-set _ _)))
-          (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → K.El-is-set _ _))
+            (λ _ → prop-has-all-paths-↓))
+          (λ _ → prop-has-all-paths-↓)
 
   abstract
     ψ-surj-implies-coker-to-K-is-equiv : (H-is-abelian : is-abelian H)
@@ -103,7 +100,7 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
 
         module From (k : K.El)
           = ConstExt {A = hfiber ψ.f k} {B = Cok.El}
-              Cok.El-is-set (λ hf → q[ fst hf ])
+              (λ hf → q[ fst hf ])
               (λ{(h₁ , p₁) (h₂ , p₂) → quot-rel $
                 E.ker-sub-im (H.diff h₁ h₂) $
                   ψ.pres-diff h₁ h₂ ∙ ap2 K.diff p₁ p₂ ∙ K.inv-r k})
@@ -114,15 +111,13 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
         to-from : ∀ k → to (from k) == k
         to-from k = Trunc-elim
           {P = λ hf → to (From.ext k hf) == k}
-          (λ _ → K.El-is-set _ _)
           (λ{(h , p) → p})
           (ψ-is-surj k)
 
         from-to : ∀ c → from (to c) == c
         from-to = SetQuot-elim
-          (λ _ → =-preserves-set Cok.El-is-set)
           (λ h → From.ext-is-const (ψ.f h) (ψ-is-surj (ψ.f h)) [ h , idp ])
-          (λ _ → prop-has-all-paths-↓ (Cok.El-is-set _ _))
+          (λ _ → prop-has-all-paths-↓)
 
   ψ-surj-implies-coker-iso-K : (H-is-abelian : is-abelian H)
     → is-surjᴳ ψ → Coker φ H-is-abelian ≃ᴳ K
@@ -177,7 +172,7 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
           h =∎
 
         ker-part-imχ : (im : Im.El χ) → GroupHom.f ker-part (fst im) == Ker.ident ψ
-        ker-part-imχ (h , s) = Trunc-rec (Ker.El-level ψ _ _)
+        ker-part-imχ (h , s) = Trunc-rec
           (λ {(k , p) → Ker.El=-out ψ $
             H.comp h (H.inv (χ.f (ψ.f h)))
               =⟨ ! p |in-ctx (λ w → H.comp w (H.inv (χ.f (ψ.f w)))) ⟩
@@ -197,7 +192,7 @@ module Exact {i j k} {G : Group i} {H : Group j} {K : Group k}
         im-part-kerψ (h , p) = Im.El=-out χ (ap χ.f p ∙ χ.pres-ident)
 
         im-part-imχ : (im : Im.El χ) → GroupHom.f im-part (fst im) == im
-        im-part-imχ (h , s) = Trunc-rec (Im.El-level χ _ _)
+        im-part-imχ (h , s) = Trunc-rec {{has-level-apply (Im.El-level χ) _ _}}
             (λ {(k , p) → Im.El=-out χ $
               χ.f (ψ.f h)        =⟨ ! p |in-ctx (χ.f ∘ ψ.f) ⟩
               χ.f (ψ.f (χ.f k))  =⟨ χ-inv-r k |in-ctx χ.f ⟩
@@ -330,7 +325,7 @@ abstract
   equiv-preserves-exact {K₀ = K₀} {K₁} {φ₀ = φ₀} {ψ₀} {φ₁} {ψ₁} {ξG} {ξH} {ξK}
     (comm-sqrᴳ φ□) (comm-sqrᴳ ψ□) ξG-is-equiv ξH-is-equiv ξK-is-equiv exact₀
     = record {
-      im-sub-ker = λ h₁ → Trunc-rec (SubgroupProp.level (ker-propᴳ ψ₁) h₁)
+      im-sub-ker = λ h₁ → Trunc-rec
         (λ{(g₁ , φ₁g₁=h₁) →
           ψ₁.f h₁
             =⟨ ap ψ₁.f $ ! $ ξH.f-g h₁ ⟩
@@ -349,7 +344,7 @@ abstract
           Group.ident K₁
             =∎});
       ker-sub-im = λ h₁ ψ₁h₁=0 →
-        Trunc-rec (SubgroupProp.level (im-propᴳ φ₁) h₁)
+        Trunc-rec
           (λ{(g₀ , φ₀g₀=ξH⁻¹h₁) → [ ξG.f g₀ ,_ $
             φ₁.f (ξG.f g₀)
               =⟨ ! $ φ□ g₀ ⟩

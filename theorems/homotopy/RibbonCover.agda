@@ -20,7 +20,6 @@ module homotopy.RibbonCover {i : ULevel} where
       A = de⊙ X
       a₁ = pt X
       El = GroupSet.El gs
-      El-level = GroupSet.El-level gs
       infix 80 _⊙_
       _⊙_ = GroupSet.act gs
 
@@ -39,7 +38,6 @@ module homotopy.RibbonCover {i : ULevel} where
       A = de⊙ X
       a = pt X
       El = GroupSet.El gs
-      El-level = GroupSet.El-level gs
       infix 80 _⊙_
       _⊙_ = GroupSet.act gs
 
@@ -62,14 +60,12 @@ module homotopy.RibbonCover {i : ULevel} where
       Make each fiber a set and cancel all higher structures
       due to [paste].
     -}
-    Ribbon-level : is-set (Ribbon X gs a₂)
-    Ribbon-level = SetQuot-level
-
-    Ribbon-is-set = Ribbon-level
+    Ribbon-is-set : is-set (Ribbon X gs a₂)
+    Ribbon-is-set = SetQuot-is-set
 
     -- Elimination rules.
     module RibbonElim {j} {P : Ribbon X gs a₂ → Type j}
-      (P-level : ∀ r → is-set (P r))
+      {{P-level : ∀ {r} → is-set (P r)}}
       (trace* : ∀ el p → P (trace el p))
       (paste* : ∀ el loop p
                 → trace* (el ⊙ loop) p == trace* el (loop ∙₀ p)
@@ -82,7 +78,7 @@ module homotopy.RibbonCover {i : ULevel} where
         rel* : ∀ {α₁ α₂} (r : RibbonRel X gs a₂ α₁ α₂) → q[ α₁ ]* == q[ α₂ ]* [ P ↓ quot-rel r ]
         rel* (ribbon-rel el loop p) = paste* el loop p
 
-        module M = SetQuotElim P-level q[_]* rel*
+        module M = SetQuotElim q[_]* rel*
 
       f : Π (Ribbon X gs a₂) P
       f = M.f
@@ -90,13 +86,13 @@ module homotopy.RibbonCover {i : ULevel} where
     open RibbonElim public using () renaming (f to Ribbon-elim)
 
     module RibbonRec {j} {P : Type j}
-      (P-level : is-set P)
+      {{P-level : is-set P}}
       (trace* : ∀ el p → P)
       (paste* : ∀ el loop p
                 → trace* (el ⊙ loop) p == trace* el (loop ∙₀ p)) where
 
       private
-        module M = RibbonElim (λ _ → P-level) trace*
+        module M = RibbonElim trace*
           (λ el loop p → ↓-cst-in (paste* el loop p))
 
       f : Ribbon X gs a₂ → P
@@ -108,9 +104,7 @@ module homotopy.RibbonCover {i : ULevel} where
   Ribbon-cover : ∀ (X : Ptd i) {j} (gs : GroupSet (πS 0 X) j)
     → Cover (de⊙ X) (lmax i j)
   Ribbon-cover X gs = record
-    { Fiber = Ribbon X gs
-    ; Fiber-level = λ a → Ribbon-level
-    }
+    { Fiber = Ribbon X gs }
 
   transp-trace : ∀ {A : Type i} {a₁} {j}
     {gs : GroupSet (πS 0 ⊙[ A , a₁ ]) j}

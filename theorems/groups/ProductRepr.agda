@@ -32,7 +32,7 @@ module groups.ProductRepr {i j}
     module j₂ = GroupHom j₂
 
   fanout-has-trivial-ker : has-trivial-kerᴳ (×ᴳ-fanout j₁ j₂)
-  fanout-has-trivial-ker g q = Trunc-rec (G.El-level _ _)
+  fanout-has-trivial-ker g q = Trunc-rec
       (lemma g (fst×= q))
       (ker-sub-im ex₁ g (snd×= q))
     where

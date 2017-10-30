@@ -19,7 +19,7 @@ module homotopy.VanKampen {i j k l}
     abstract
       lemma : ∀ c → q[ ⟧a idp₀ ] == q[ ⟧b idp₀ ] [ (λ p → code p p) ↓ glue c ]
       lemma = SurjExt.ext
-        (λ c → ↓-preserves-set SetQuot-is-set)
+        {{↓-preserves-level ⟨⟩}}
         h h-is-surj
         (λ d → from-transp (λ p → code p p) (glue (h d)) $
           transport (λ p → code p p) (glue (h d)) q[ ⟧a idp₀ ]
@@ -34,23 +34,23 @@ module homotopy.VanKampen {i j k l}
             =⟨ quot-rel (pcBBr-idp₀-idp₀ (pc-b idp₀)) ⟩
           q[ ⟧b idp₀ ]
             =∎)
-        (λ _ _ _ → prop-has-all-paths-↓ $ ↓-level SetQuot-is-set)
+        (λ _ _ _ → prop-has-all-paths-↓ {{↓-level ⟨⟩}})
 
   encode : ∀ {p₀ p₁} → p₀ =₀ p₁ → code p₀ p₁
-  encode {p₀} {p₁} pPP = transport₀ (code p₀) (code-is-set {p₀} {p₁}) pPP (encode-idp p₀)
+  encode {p₀} {p₁} pPP = transport₀ (code p₀) {{code-is-set {p₀} {p₁}}} pPP (encode-idp p₀)
 
   abstract
     decode-encode-idp : ∀ p → decode {p} {p} (encode-idp p) == idp₀
     decode-encode-idp = Pushout-elim
       {P = λ p → decode {p} {p} (encode-idp p) == idp₀}
       (λ _ → idp) (λ _ → idp)
-      (λ c → prop-has-all-paths-↓ (Trunc-level {n = 0} idp₀ (idp₀ :> Trunc 0 (right (g c) == _))))
+      (λ c → prop-has-all-paths-↓)
 
     decode-encode' : ∀ {p₀ p₁} (pPP : p₀ == p₁) → decode {p₀} {p₁} (encode [ pPP ]) == [ pPP ]
     decode-encode' idp = decode-encode-idp _
 
     decode-encode : ∀ {p₀ p₁} (pPP : p₀ =₀ p₁) → decode {p₀} {p₁} (encode pPP) == pPP
-    decode-encode = Trunc-elim (λ _ → =-preserves-set Trunc-level) decode-encode'
+    decode-encode = Trunc-elim decode-encode'
 
   abstract
     transp-idcAA-r : ∀ {a₀ a₁} (p : a₀ == a₁) -- [idc] = identity code
@@ -63,7 +63,6 @@ module homotopy.VanKampen {i j k l}
       → encode (decodeAB q[ c ]) == q[ c ]
     encode-decodeAA {a₀} (pc-a pA) = Trunc-elim
       {P = λ pA → encode (decodeAA q[ ⟧a pA ]) == q[ ⟧a pA ]}
-      (λ _ → =-preserves-set SetQuot-is-set)
       (λ pA →
         transport (codeAP a₀) (ap left pA) q[ ⟧a idp₀ ]
           =⟨ ap (λ e → coe e q[ ⟧a idp₀ ]) (∘-ap (codeAP a₀) left pA) ⟩
@@ -74,10 +73,9 @@ module homotopy.VanKampen {i j k l}
       pA
     encode-decodeAA {a₀} (pc-aba d pc pA) = Trunc-elim
       {P = λ pA → encode (decodeAA q[ pc ab⟦ d ⟧a pA ]) == q[ pc ab⟦ d ⟧a pA ]}
-      (λ _ → =-preserves-set SetQuot-is-set)
       (λ pA →
         encode (decodeAB q[ pc ] ∙₀' [ ! (glue (h d)) ∙' ap left pA ])
-          =⟨ transp₀-∙₀' (λ p₁ → code-is-set {left a₀} {p₁}) (decodeAB q[ pc ]) [ ! (glue (h d)) ∙' ap left pA ] (encode-idp (left a₀)) ⟩
+          =⟨ transp₀-∙₀' {{λ {p₁} → code-is-set {left a₀} {p₁}}} (decodeAB q[ pc ]) [ ! (glue (h d)) ∙' ap left pA ] (encode-idp (left a₀)) ⟩
         transport (codeAP a₀) (! (glue (h d)) ∙' ap left pA) (encode (decodeAB q[ pc ]))
           =⟨ ap (transport (codeAP a₀) (! (glue (h d)) ∙' ap left pA)) (encode-decodeAB pc) ⟩
         transport (codeAP a₀) (! (glue (h d)) ∙' ap left pA) q[ pc ]
@@ -95,10 +93,9 @@ module homotopy.VanKampen {i j k l}
       pA
     encode-decodeAB {a₀} (pc-aab d pc pB) = Trunc-elim
       {P = λ pB → encode (decodeAB q[ pc aa⟦ d ⟧b pB ]) == q[ pc aa⟦ d ⟧b pB ]}
-      (λ _ → =-preserves-set SetQuot-is-set)
       (λ pB →
         encode (decodeAA q[ pc ] ∙₀' [ glue (h d) ∙' ap right pB ])
-          =⟨ transp₀-∙₀' (λ p₁ → code-is-set {left a₀} {p₁}) (decodeAA q[ pc ]) [ glue (h d) ∙' ap right pB ] (encode-idp (left a₀)) ⟩
+          =⟨ transp₀-∙₀' {{λ {p₁} → code-is-set {left a₀} {p₁}}} (decodeAA q[ pc ]) [ glue (h d) ∙' ap right pB ] (encode-idp (left a₀)) ⟩
         transport (codeAP a₀) (glue (h d) ∙' ap right pB) (encode (decodeAA q[ pc ]))
           =⟨ ap (transport (codeAP a₀) (glue (h d) ∙' ap right pB)) (encode-decodeAA pc) ⟩
         transport (codeAP a₀) (glue (h d) ∙' ap right pB) q[ pc ]
@@ -127,10 +124,9 @@ module homotopy.VanKampen {i j k l}
       → encode (decodeBB q[ c ]) == q[ c ]
     encode-decodeBA {b₀} (pc-bba d pc pA) = Trunc-elim
       {P = λ pA → encode (decodeBA q[ pc bb⟦ d ⟧a pA ]) == q[ pc bb⟦ d ⟧a pA ]}
-      (λ _ → =-preserves-set SetQuot-is-set)
       (λ pA →
         encode (decodeBB q[ pc ] ∙₀' [ ! (glue (h d)) ∙' ap left pA ])
-          =⟨ transp₀-∙₀' (λ p₁ → code-is-set {right b₀} {p₁}) (decodeBB q[ pc ]) [ ! (glue (h d)) ∙' ap left pA ] (encode-idp (right b₀)) ⟩
+          =⟨ transp₀-∙₀' {{λ {p₁} → code-is-set {right b₀} {p₁}}} (decodeBB q[ pc ]) [ ! (glue (h d)) ∙' ap left pA ] (encode-idp (right b₀)) ⟩
         transport (codeBP b₀) (! (glue (h d)) ∙' ap left pA) (encode (decodeBB q[ pc ]))
           =⟨ ap (transport (codeBP b₀) (! (glue (h d)) ∙' ap left pA)) (encode-decodeBB pc) ⟩
         transport (codeBP b₀) (! (glue (h d)) ∙' ap left pA) q[ pc ]
@@ -148,7 +144,6 @@ module homotopy.VanKampen {i j k l}
       pA
     encode-decodeBB {b₀} (pc-b pB) = Trunc-elim
       {P = λ pB → encode (decodeBB q[ ⟧b pB ]) == q[ ⟧b pB ]}
-      (λ _ → =-preserves-set SetQuot-is-set)
       (λ pB →
         transport (codeBP b₀) (ap right pB) q[ ⟧b idp₀ ]
           =⟨ ap (λ e → coe e q[ ⟧b idp₀ ]) (∘-ap (codeBP b₀) right pB) ⟩
@@ -159,10 +154,9 @@ module homotopy.VanKampen {i j k l}
       pB
     encode-decodeBB {b₀} (pc-bab d pc pB) = Trunc-elim
       {P = λ pB → encode (decodeBB q[ pc ba⟦ d ⟧b pB ]) == q[ pc ba⟦ d ⟧b pB ]}
-      (λ _ → =-preserves-set SetQuot-is-set)
       (λ pB →
         encode (decodeBA q[ pc ] ∙₀' [ glue (h d) ∙' ap right pB ])
-          =⟨ transp₀-∙₀' (λ p₁ → code-is-set {right b₀} {p₁}) (decodeBA q[ pc ]) [ glue (h d) ∙' ap right pB ] (encode-idp (right b₀)) ⟩
+          =⟨ transp₀-∙₀' {{λ {p₁} → code-is-set {right b₀} {p₁}}} (decodeBA q[ pc ]) [ glue (h d) ∙' ap right pB ] (encode-idp (right b₀)) ⟩
         transport (codeBP b₀) (glue (h d) ∙' ap right pB) (encode (decodeBA q[ pc ]))
           =⟨ ap (transport (codeBP b₀) (glue (h d) ∙' ap right pB)) (encode-decodeBA pc) ⟩
         transport (codeBP b₀) (glue (h d) ∙' ap right pB) q[ pc ]
@@ -187,28 +181,24 @@ module homotopy.VanKampen {i j k l}
       (λ a₀ → Pushout-elim
         (λ a₁ → SetQuot-elim
           {P = λ cPP → encode (decodeAA cPP) == cPP}
-          (λ _ → =-preserves-set SetQuot-is-set)
           (encode-decodeAA {a₀} {a₁})
-          (λ _ → prop-has-all-paths-↓ (SetQuot-is-set _ _)))
+          (λ _ → prop-has-all-paths-↓))
         (λ b₁ → SetQuot-elim
           {P = λ cPP → encode (decodeAB cPP) == cPP}
-          (λ _ → =-preserves-set SetQuot-is-set)
           (encode-decodeAB {a₀} {b₁})
-          (λ _ → prop-has-all-paths-↓ (SetQuot-is-set _ _)))
-        (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ cPP → SetQuot-is-set _ _))
+          (λ _ → prop-has-all-paths-↓))
+        (λ _ → prop-has-all-paths-↓))
       (λ b₀ → Pushout-elim
         (λ a₁ → SetQuot-elim
           {P = λ cPP → encode (decodeBA cPP) == cPP}
-          (λ _ → =-preserves-set SetQuot-is-set)
           (encode-decodeBA {b₀} {a₁})
-          (λ _ → prop-has-all-paths-↓ (SetQuot-is-set _ _)))
+          (λ _ → prop-has-all-paths-↓))
         (λ b₁ → SetQuot-elim
           {P = λ cPP → encode (decodeBB cPP) == cPP}
-          (λ _ → =-preserves-set SetQuot-is-set)
           (encode-decodeBB {b₀} {b₁})
-          (λ _ → prop-has-all-paths-↓ (SetQuot-is-set _ _)))
-        (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ cPP → SetQuot-is-set _ _))
-      (λ _ → prop-has-all-paths-↓ $ Π-is-prop λ p₁ → Π-is-prop λ cPP → codeBP-is-set {p₁ = p₁} _ _)
+          (λ _ → prop-has-all-paths-↓))
+        (λ _ → prop-has-all-paths-↓))
+      (λ _ → prop-has-all-paths-↓ {{Π-level (λ p₁ → Π-level (λ cPP → has-level-apply (codeBP-is-set {p₁ = p₁}) _ _))}})
       p₀ p₁
 
   vankampen : ∀ p₀ p₁ → (p₀ =₀ p₁) ≃ code p₀ p₁

@@ -30,34 +30,31 @@ module groups.Cokernel {i j}
       ident = q[ H.ident ]
 
       inv : coker-El → coker-El
-      inv = SetQuot-rec SetQuot-level inv' inv-rel
+      inv = SetQuot-rec inv' inv-rel
         where
           inv' : H.El → coker-El
           inv' h = q[ H.inv h ]
 
           abstract
             inv-rel : ∀ {h₁ h₂} → coker-rel h₁ h₂ → inv' h₁ == inv' h₂
-            inv-rel {h₁} {h₂} = Trunc-rec (SetQuot-level _ _)
+            inv-rel {h₁} {h₂} = Trunc-rec
               λ{(g , φg=h₁h₂⁻¹) → quot-rel
                 [ G.inv g , φ.pres-inv g ∙ ap H.inv φg=h₁h₂⁻¹
                           ∙ H.inv-diff h₁ h₂ ∙ H.comm h₂ (H.inv h₁)
                           ∙ ap (H.comp (H.inv h₁)) (! (H.inv-inv h₂)) ]}
 
       comp : coker-El → coker-El → coker-El
-      comp = SetQuot-rec level comp' comp-rel where
-        abstract
-          level : is-set (coker-El → coker-El)
-          level = →-is-set SetQuot-level
+      comp = SetQuot-rec comp' comp-rel where
 
         comp' : H.El → coker-El → coker-El
-        comp' h₁ = SetQuot-rec SetQuot-level comp'' comp'-rel where
+        comp' h₁ = SetQuot-rec comp'' comp'-rel where
 
           comp'' : H.El → coker-El
           comp'' h₂ = q[ H.comp h₁ h₂ ]
 
           abstract
             comp'-rel : ∀ {h₂ h₂'} → coker-rel h₂ h₂' → comp'' h₂ == comp'' h₂'
-            comp'-rel {h₂} {h₂'} = Trunc-rec (SetQuot-level _ _)
+            comp'-rel {h₂} {h₂'} = Trunc-rec
               λ{(g , φg=h₂h₂'⁻¹) → quot-rel
                 [ g , ! ( ap (H.comp (H.comp h₁ h₂)) (H.inv-comp h₁ h₂')
                         ∙ H.assoc h₁ h₂ (H.comp (H.inv h₂') (H.inv h₁))
@@ -69,8 +66,8 @@ module groups.Cokernel {i j}
 
         abstract
           comp-rel : ∀ {h₁ h₁'} → coker-rel h₁ h₁' → comp' h₁ == comp' h₁'
-          comp-rel {h₁} {h₁'} = Trunc-rec (level _ _)
-            λ{(g , φg=h₁h₁'⁻¹) → λ= $ SetQuot-elim (λ _ → =-preserves-set SetQuot-level)
+          comp-rel {h₁} {h₁'} = Trunc-rec
+            λ{(g , φg=h₁h₁'⁻¹) → λ= $ SetQuot-elim
               (λ h₂ → quot-rel
                   [ g , ! ( ap (H.comp (H.comp h₁ h₂)) (H.inv-comp h₁' h₂)
                           ∙ H.assoc h₁ h₂ (H.comp (H.inv h₂) (H.inv h₁'))
@@ -78,35 +75,30 @@ module groups.Cokernel {i j}
                                           ∙ ap (λ h → H.comp h (H.inv h₁')) (H.inv-r h₂)
                                           ∙ H.unit-l (H.inv h₁'))
                           ∙ ! φg=h₁h₁'⁻¹ )])
-              (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))}
+              (λ _ → prop-has-all-paths-↓)}
 
       abstract
         unit-l : ∀ cok → comp ident cok == cok
         unit-l = SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-level)
           (λ h → ap q[_] $ H.unit-l h)
-          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
+          (λ _ → prop-has-all-paths-↓)
 
         assoc : ∀ cok₁ cok₂ cok₃ → comp (comp cok₁ cok₂) cok₃ == comp cok₁ (comp cok₂ cok₃)
         assoc = SetQuot-elim
-          (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set SetQuot-level)
           (λ h₁ → SetQuot-elim
-            (λ _ → Π-is-set λ _ → =-preserves-set SetQuot-level)
             (λ h₂ → SetQuot-elim
-              (λ _ → =-preserves-set SetQuot-level)
               (λ h₃ → ap q[_] $ H.assoc h₁ h₂ h₃)
-              (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _)))
-            (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → SetQuot-level _ _)))
-          (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → Π-is-prop λ _ → SetQuot-level _ _))
+              (λ _ → prop-has-all-paths-↓))
+            (λ _ → prop-has-all-paths-↓))
+          (λ _ → prop-has-all-paths-↓)
 
         inv-l : ∀ cok → comp (inv cok) cok == ident
         inv-l = SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-level)
           (λ h → ap q[_] $ H.inv-l h)
-          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
+          (λ _ → prop-has-all-paths-↓)
 
   Coker : Group (lmax i j)
-  Coker = group _ SetQuot-level coker-struct
+  Coker = group _ coker-struct
 
   module Coker = Group Coker
 
@@ -118,9 +110,7 @@ module groups.Cokernel {i j}
       to-pres-comp : preserves-comp Coker.comp
         (QuotGroup.comp (im-npropᴳ φ H-ab)) (idf _)
       to-pres-comp = SetQuot-elim
-        (λ _ → Π-is-set λ _ → =-preserves-set SetQuot-level)
         (λ _ → SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-level)
           (λ _ → idp)
-          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _)))
-        (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → SetQuot-level _ _))
+          (λ _ → prop-has-all-paths-↓))
+        (λ _ → prop-has-all-paths-↓)

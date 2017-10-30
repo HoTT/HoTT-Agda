@@ -17,6 +17,17 @@ instance
       lemma = λ f g →
         equiv-preserves-level λ=-equiv {{Π-level (λ x → has-level-apply (p x) (f x) (g x))}}
 
+  Πi-level : ∀ {i j} {A : Type i} {B : A → Type j} {n : ℕ₋₂}
+    → ((x : A) → has-level n (B x)) → has-level n ({x : A} → B x)
+  Πi-level {A = A} {B} p = equiv-preserves-level e {{Π-level p}}  where
+
+    e : Π A B ≃ ({x : A} → B x)
+    fst e f {x} = f x
+    is-equiv.g (snd e) f x = f
+    is-equiv.f-g (snd e) _ = idp
+    is-equiv.g-f (snd e) _ = idp
+    is-equiv.adj (snd e) _ = idp
+
 
 {- Equivalences in a Π-type -}
 Π-emap-l : ∀ {i j k} {A : Type i} {B : Type j} (P : B → Type k)

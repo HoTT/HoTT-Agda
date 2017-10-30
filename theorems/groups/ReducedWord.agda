@@ -37,15 +37,16 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
   Word-has-dec-eq (x :: v) (y :: w) | inl x=y | inr v≠w = inr $ v≠w ∘ snd ∘ List=-in
   Word-has-dec-eq (x :: v) (y :: w) | inr x≠y = inr $ x≠y ∘ fst ∘ List=-in
 
-  Word-is-set : is-set (Word A)
-  Word-is-set = dec-eq-is-set Word-has-dec-eq
+  instance
+    Word-is-set : is-set (Word A)
+    Word-is-set = dec-eq-is-set Word-has-dec-eq
 
   is-reduced-is-prop : {w : Word A} → is-prop (is-reduced w)
-  is-reduced-is-prop {nil}                 = Lift-level Unit-is-prop
-  is-reduced-is-prop {x    :: nil}         = Lift-level Unit-is-prop
+  is-reduced-is-prop {nil}                 = ⟨⟩
+  is-reduced-is-prop {x    :: nil}         = ⟨⟩
   is-reduced-is-prop {inl x :: inl y :: l} = is-reduced-is-prop {inl y :: l}
-  is-reduced-is-prop {inl x :: inr y :: l} = ×-level (→-is-prop (λ x₁ → λ ())) (is-reduced-is-prop {inr y :: l})
-  is-reduced-is-prop {inr x :: inl y :: l} = ×-level (→-is-prop (λ x₁ → λ ())) (is-reduced-is-prop {inl y :: l})
+  is-reduced-is-prop {inl x :: inr y :: l} = ⟨⟩ where instance _ = is-reduced-is-prop {inr y :: l}
+  is-reduced-is-prop {inr x :: inl y :: l} = ⟨⟩ where instance _ = is-reduced-is-prop {inl y :: l}
   is-reduced-is-prop {inr x :: inr y :: l} = is-reduced-is-prop {inr y :: l}
 
   is-reduced-prop : SubtypeProp (Word A) i
@@ -56,8 +57,9 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
   ReducedWord : Type i
   ReducedWord = Subtype is-reduced-prop
 
-  ReducedWord-is-set : is-set ReducedWord
-  ReducedWord-is-set = Subtype-level is-reduced-prop Word-is-set
+  instance
+    ReducedWord-is-set : is-set ReducedWord
+    ReducedWord-is-set = Subtype-level is-reduced-prop where instance _ = is-reduced-is-prop
 
   -- Identifications in [ReducedWord].
 
@@ -258,7 +260,7 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
     }
 
   ReducedWord-group : Group i
-  ReducedWord-group = group _ ReducedWord-is-set ReducedWord-group-struct
+  ReducedWord-group = group _ ReducedWord-group-struct
 
   private
     abstract
@@ -298,7 +300,7 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
     to = GroupHom.f ReducedWord-to-FreeGroup
 
     from : QuotWord A → ReducedWord
-    from = QuotWord-rec ReducedWord-is-set reduce reduce-emap
+    from = QuotWord-rec reduce reduce-emap
 
     abstract
       QuotWordRel-reduce : ∀ w
@@ -309,9 +311,9 @@ module groups.ReducedWord {i} {A : Type i} (dec : has-dec-eq A) where
         uncurry (QuotWordRel-cons x) (reduce w)
 
       to-from : ∀ qw → to (from qw) == qw
-      to-from = QuotWord-elim (λ _ → =-preserves-set QuotWord-is-set)
+      to-from = QuotWord-elim
         (λ w → ! $ quot-rel $ QuotWordRel-reduce w)
-        (λ _ → prop-has-all-paths-↓ (QuotWord-is-set _ _))
+        (λ _ → prop-has-all-paths-↓)
 
       from-to : ∀ rw → from (to rw) == rw
       from-to = Group.unit-r ReducedWord-group

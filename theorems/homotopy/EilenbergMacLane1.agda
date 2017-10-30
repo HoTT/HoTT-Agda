@@ -16,17 +16,17 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
     comp-equiv-id : comp-equiv G.ident == ide G.El
     comp-equiv-id =
       pair= (λ= G.unit-r)
-            (prop-has-all-paths-↓ {B = is-equiv} is-equiv-is-prop)
+            (prop-has-all-paths-↓ {B = is-equiv})
 
     comp-equiv-comp : (g₁ g₂ : G.El) → comp-equiv (G.comp g₁ g₂)
                       == (comp-equiv g₂ ∘e comp-equiv g₁)
     comp-equiv-comp g₁ g₂ =
       pair= (λ= (λ x → ! (G.assoc x g₁ g₂)))
-            (prop-has-all-paths-↓ {B = is-equiv} is-equiv-is-prop)
+            (prop-has-all-paths-↓ {B = is-equiv})
 
     Ω-group : Group (lsucc i)
     Ω-group = Ω^S-group 0
-      ⊙[ (0 -Type i) , (G.El , G.El-level) ] (0 -Type-level i)
+      ⊙[ (0 -Type i) , (G.El , G.El-level) ]
 
     Codes-hom : G →ᴳ Ω-group
     Codes-hom = group-hom (nType=-out ∘ ua ∘ comp-equiv) pres-comp where
@@ -48,7 +48,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
             =∎
 
     Codes : EM₁ G → 0 -Type i
-    Codes = EM₁-rec {G = G} {C = 0 -Type i} (0 -Type-level i)
+    Codes = EM₁-rec {G = G} {C = 0 -Type i}
                     (G.El , G.El-level)
                     Codes-hom
 
@@ -58,8 +58,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
         ↓-ap-out fst Codes (emloop g) $
         ↓-ap-out (idf _) fst (ap Codes (emloop g)) $
         transport (λ w → g' == G.comp g' g [ idf _ ↓ ap fst w ])
-                  (! (EM₁Rec.emloop-β (0 -Type-level i)
-                                     (G.El , G.El-level) Codes-hom g)) $
+                  (! (EM₁Rec.emloop-β (G.El , G.El-level) Codes-hom g)) $
         transport (λ w → g' == G.comp g' g [ idf _ ↓ w ])
                   (! (fst=-β (ua $ comp-equiv g) _)) $
         ↓-idf-ua-in (comp-equiv g) idp
@@ -76,10 +75,9 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
     decode : {x : EM₁ G} → fst (Codes x) → embase == x
     decode {x} =
       EM₁-elim {P = λ x' → fst (Codes x') → embase == x'}
-        (λ _ → Π-level (λ _ → =-preserves-level EM₁-level))
         emloop
         loop'
-        (λ _ _ → prop-has-all-paths-↓ (↓-level (Π-level (λ _ → EM₁-level _ _))))
+        (λ _ _ → prop-has-all-paths-↓ {{↓-level ⟨⟩}})
         x
       where
       loop' : (g : G.El)
@@ -99,7 +97,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
     emloop-equiv : G.El ≃ (embase' G == embase)
     emloop-equiv = equiv emloop encode decode-encode encode-emloop
 
-  Ω¹-EM₁ : Ω^S-group 0 (⊙EM₁ G) EM₁-level ≃ᴳ G
+  Ω¹-EM₁ : Ω^S-group 0 (⊙EM₁ G) ≃ᴳ G
   Ω¹-EM₁ = ≃-to-≃ᴳ (emloop-equiv ⁻¹)
     (λ l₁ l₂ → <– (ap-equiv emloop-equiv _ _) $
       emloop (encode (l₁ ∙ l₂))
@@ -112,4 +110,4 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
         =∎)
 
   π₁-EM₁ : πS 0 (⊙EM₁ G) ≃ᴳ G
-  π₁-EM₁ = Ω¹-EM₁ ∘eᴳ unTrunc-iso (Ω^S-group-structure 0 (⊙EM₁ G)) (EM₁-level _ _)
+  π₁-EM₁ = Ω¹-EM₁ ∘eᴳ unTrunc-iso (Ω^S-group-structure 0 (⊙EM₁ G))

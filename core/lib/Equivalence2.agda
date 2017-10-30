@@ -120,16 +120,17 @@ rinv-and-rcoh-is-equiv {h = h} = equiv f g (λ _ → idp) (λ _ → idp)
         g : is-equiv h → Σ (rinv h) (rcoh h)
         g t = ((is-equiv.g t , is-equiv.f-g t) , (is-equiv.g-f t , is-equiv.adj t))
 
-is-equiv-is-prop : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
-  → is-prop (is-equiv f)
-is-equiv-is-prop = inhab-to-contr-is-prop λ e →
-  equiv-preserves-level rinv-and-rcoh-is-equiv
-    {{Σ-level (equiv-rinv-is-contr e) (equiv-rcoh-is-contr e)}}
+abstract
+  is-equiv-is-prop : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
+    → is-prop (is-equiv f)
+  is-equiv-is-prop = inhab-to-contr-is-prop λ e →
+    equiv-preserves-level rinv-and-rcoh-is-equiv
+      {{Σ-level (equiv-rinv-is-contr e) (equiv-rcoh-is-contr e)}}
 
-instance
-  is-equiv-level : ∀ {i j} {A : Type i} {B : Type j} {f : A → B} {n : ℕ₋₂}
-    → has-level (S n) (is-equiv f)
-  is-equiv-level = prop-has-level-S is-equiv-is-prop
+  instance
+    is-equiv-level : ∀ {i j} {A : Type i} {B : Type j} {f : A → B} {n : ℕ₋₂}
+      → has-level (S n) (is-equiv f)
+    is-equiv-level = prop-has-level-S is-equiv-is-prop
 
 is-equiv-prop : ∀ {i j} {A : Type i} {B : Type j}
   → SubtypeProp (A → B) (lmax i j)

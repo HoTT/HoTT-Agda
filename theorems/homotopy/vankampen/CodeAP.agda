@@ -51,12 +51,12 @@ module homotopy.vankampen.CodeAP {i j k l}
   codeAB a₀ b₁ = SetQuot (precodeAB-rel {a₀} {b₁})
 
   c-aba : ∀ {a₀} d {a₁} (pc : codeAB a₀ (g (h d))) (pA : f (h d) =₀ a₁) → codeAA a₀ a₁
-  c-aba d {a₁} c pA = SetQuot-rec SetQuot-is-set
+  c-aba d {a₁} c pA = SetQuot-rec
     (λ pc → q[ pc-aba d pc pA ])
     (λ r → quot-rel $ pcAAr-cong r pA) c
 
   c-aab : ∀ {a₀} d {b₁} (pc : codeAA a₀ (f (h d))) (pB : g (h d) =₀ b₁) → codeAB a₀ b₁
-  c-aab d {a₁} c pB = SetQuot-rec SetQuot-is-set
+  c-aab d {a₁} c pB = SetQuot-rec
     (λ pc → q[ pc-aab d pc pB ])
     (λ r → quot-rel $ pcABr-cong r pB) c
 
@@ -65,7 +65,7 @@ module homotopy.vankampen.CodeAP {i j k l}
   abstract
     pcAA-idp₀-idp₀-head : ∀ {d₀ a} (pA : f (h d₀) =₀ a)
       → q[ ⟧a idp₀ aa⟦ d₀ ⟧b idp₀ ab⟦ d₀ ⟧a pA ] == q[ ⟧a pA ] :> codeAA _ a
-    pcAA-idp₀-idp₀-head {d₀} = Trunc-elim (λ _ → =-preserves-set SetQuot-is-set) lemma where
+    pcAA-idp₀-idp₀-head {d₀} = Trunc-elim lemma where
       lemma : ∀ {a} (pA : f (h d₀) == a)
         → q[ ⟧a idp₀ aa⟦ d₀ ⟧b idp₀ ab⟦ d₀ ⟧a [ pA ] ] == q[ ⟧a [ pA ] ] :> codeAA _ a
       lemma idp = quot-rel $ pcAAr-idp₀-idp₀ (⟧a idp₀)
@@ -111,15 +111,13 @@ module homotopy.vankampen.CodeAP {i j k l}
       abstract
         from-to : ∀ cAA → from (to cAA) == cAA
         from-to = SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-is-set)
           (λ pcAA → quot-rel (pcAAr-idp₀-idp₀ pcAA))
-          (λ _ → prop-has-all-paths-↓ (SetQuot-is-set _ _))
+          (λ _ → prop-has-all-paths-↓)
 
         to-from : ∀ cAB → to (from cAB) == cAB
         to-from = SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-is-set)
           (λ pcAB → quot-rel (pcABr-idp₀-idp₀ pcAB))
-          (λ _ → prop-has-all-paths-↓ (SetQuot-is-set _ _))
+          (λ _ → prop-has-all-paths-↓)
 
     abstract
       eqv-is-const : ∀ d₁ d₂ (p : h d₁ == h d₂)
@@ -127,7 +125,7 @@ module homotopy.vankampen.CodeAP {i j k l}
         [ (λ c → codeAA a₀ (f c) ≃ codeAB a₀ (g c)) ↓ p ]
       eqv-is-const d₁ d₂ p = ↓-Subtype-in (λ d → is-equiv-prop) $
         ↓-→-from-transp $ λ= $
-          SetQuot-elim (λ _ → =-preserves-set SetQuot-is-set)
+          SetQuot-elim
             (λ pcAA →
               transport (λ c → codeAB a₀ (g c)) p q[ pcAA aa⟦ d₁ ⟧b idp₀ ]
                 =⟨ ap-∘ (codeAB a₀) g p |in-ctx (λ p → coe p q[ pcAA aa⟦ d₁ ⟧b idp₀ ]) ⟩
@@ -141,10 +139,9 @@ module homotopy.vankampen.CodeAP {i j k l}
                 =⟨ ∘-ap (codeAA a₀) f p |in-ctx (λ p → coe p q[ pcAA ]) |in-ctx (λ c → c-aab d₂ c idp₀) ⟩
               c-aab d₂ (transport (λ c → codeAA a₀ (f c)) p q[ pcAA ]) idp₀
                 =∎)
-            (λ _ → prop-has-all-paths-↓ (SetQuot-is-set _ _))
+            (λ _ → prop-has-all-paths-↓)
 
     module SE = SurjExt
-      (λ c → ≃-is-set SetQuot-is-set SetQuot-is-set)
       h h-is-surj
       eqv-on-image
       eqv-is-const
@@ -168,7 +165,7 @@ module homotopy.vankampen.CodeAP {i j k l}
       {P = λ p₁ → is-set (codeAP a₀ p₁)}
       (λ a₁ → SetQuot-is-set)
       (λ b₁ → SetQuot-is-set)
-      (λ c₁ → prop-has-all-paths-↓ is-set-is-prop)
+      (λ c₁ → prop-has-all-paths-↓)
       p₁
   codeAP-is-set = codeAP-level
 
@@ -230,24 +227,23 @@ module homotopy.vankampen.CodeAP {i j k l}
         natural₀ : ∀ {c₀ c₁} (p : c₀ =₀ c₁)
           → (ap₀ left (ap₀ f p) ∙₀' [ glue c₁ ]) == ([ glue c₀ ] ∙₀' ap₀ right (ap₀ g p))
           :> (left (f c₀) =₀ right (g c₁) :> Pushout span)
-        natural₀ = Trunc-elim (λ _ → =-preserves-set Trunc-level) (ap [_] ∘ natural)
+        natural₀ = Trunc-elim (ap [_] ∘ natural)
     pcAB-to-path-rel (pcABr-cong pcAA pB) = pcAA-to-path-rel pcAA |in-ctx _∙₀' [ glue (h _) ] ∙₀' ap₀ right pB
 
   decodeAA : ∀ {a₀ a₁} → codeAA a₀ a₁ → left a₀ =₀ left a₁ :> Pushout span
   decodeAB : ∀ {a₀ b₁} → codeAB a₀ b₁ → left a₀ =₀ right b₁ :> Pushout span
-  decodeAA = SetQuot-rec Trunc-level pcAA-to-path pcAA-to-path-rel
-  decodeAB = SetQuot-rec Trunc-level pcAB-to-path pcAB-to-path-rel
+  decodeAA = SetQuot-rec pcAA-to-path pcAA-to-path-rel
+  decodeAB = SetQuot-rec pcAB-to-path pcAB-to-path-rel
 
   abstract
     decodeAA-is-decodeAB : ∀ {a₀} c₁ →
       decodeAA {a₀} {f c₁} == decodeAB {a₀} {g c₁}
       [ (λ p₁ → codeAP a₀ p₁ → left a₀ =₀ p₁) ↓ glue c₁ ]
     decodeAA-is-decodeAB {a₀ = a₀} = SurjExt.ext
-      (λ _ → ↓-preserves-level $ Π-is-set λ _ → Trunc-level) h h-is-surj
+      {{↓-preserves-level ⟨⟩}} h h-is-surj
       (λ d₁ → ↓-→-from-transp $ λ= $ SetQuot-elim
         {P = λ cAA → transport (left a₀ =₀_) (glue (h d₁)) (decodeAA cAA)
                   == decodeAB (transport (codeAP a₀) (glue (h d₁)) cAA)}
-        (λ _ → =-preserves-set Trunc-level)
         (λ pcAA →
           transport (left a₀ =₀_) (glue (h d₁)) (pcAA-to-path pcAA)
             =⟨ transp₀-cst=₀idf [ glue (h d₁) ] (pcAA-to-path pcAA) ⟩
@@ -259,8 +255,8 @@ module homotopy.vankampen.CodeAP {i j k l}
             =⟨ ! $ ap (λ p → decodeAB (coe p q[ pcAA ])) (CodeAP.glue-β a₀ (h d₁)) ⟩
           decodeAB (transport (codeAP a₀) (glue (h d₁)) q[ pcAA ])
             =∎)
-        (λ _ → prop-has-all-paths-↓ $ Trunc-level {n = 0} _ _))
-      (λ _ _ _ → prop-has-all-paths-↓ $ ↓-level $ Π-is-set λ _ → Trunc-level)
+        (λ _ → prop-has-all-paths-↓))
+      (λ _ _ _ → prop-has-all-paths-↓ {{↓-level ⟨⟩}})
 
   decodeAP : ∀ {a₀ p₁} → codeAP a₀ p₁ → left a₀ =₀ p₁
   decodeAP {p₁ = p₁} = Pushout-elim

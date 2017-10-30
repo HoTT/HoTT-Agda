@@ -153,7 +153,7 @@ paths-mike (x , t) = paths-mike-c x t where
                     =⟨ Σ-∙ (↓-loop^ n) q ⟩
           pair= (loop^ n ∙ loop) (↓-loop^ n ∙ᵈ q)
                     =⟨ pair== (! (loop^+ n 1) ∙ ap loop^ (ℤ+-comm n 1 ∙ S¹Cover.↓-loop-out q))
-                              (set-↓-has-all-paths-↓ ℤ-is-set) ⟩
+                              set-↓-has-all-paths-↓ ⟩
           pair= (loop^ n') (↓-loop^ n') ∎))) where
 
       ↓-loop^ : (n : ℤ) → 0 == n [ S¹Cover ↓ loop^ n ]
@@ -161,7 +161,7 @@ paths-mike (x , t) = paths-mike-c x t where
 
 abstract
   contr-mike : is-contr (Σ S¹ S¹Cover)
-  contr-mike = ((base , 0) , paths-mike)
+  contr-mike = has-level-make ((base , 0) , paths-mike)
 
 {- 5. Flattening lemma proof that [Σ S¹ Cover] is contractible -}
 
@@ -172,7 +172,7 @@ open S¹Cover using (module Wt; Wt; cct; ppt; flattening-S¹)
 -- We prove that the flattened HIT corresponding to the universal cover of the
 -- circle (the real line) is contractible
 Wt-is-contr : is-contr Wt
-Wt-is-contr = (cct tt 0 , Wt.elim (base* ∘ snd) (loop* ∘ snd)) where
+Wt-is-contr = has-level-make (cct tt 0 , Wt.elim (base* ∘ snd) (loop* ∘ snd)) where
 
   -- This is basically [loop^] using a different composition order
   base* : (n : ℤ) → cct tt 0 == cct tt n
@@ -238,7 +238,7 @@ abstract
 encode-decode : (x : S¹) (t : S¹Cover x) → encode (decode x t) == t
 encode-decode =
   S¹-elim {P = λ x → (t : S¹Cover x) → encode (decode x t) == t}
-    encode-loop^ (↓-Π-in (λ q → prop-has-all-paths-↓ (ℤ-is-set _ _)))
+    encode-loop^ (↓-Π-in (λ q → prop-has-all-paths-↓))
 
 encode-is-equiv' : (x : S¹) → is-equiv (encode {x})
 encode-is-equiv' x = is-eq encode (decode x) (encode-decode x) (decode-encode x)
@@ -248,19 +248,20 @@ encode-is-equiv' x = is-eq encode (decode x) (encode-decode x) (decode-encode x)
 abstract
   S¹Cover-is-set : {y : S¹} → is-set (S¹Cover y)
   S¹Cover-is-set {y} = S¹-elim {P = λ y → is-set (S¹Cover y)}
-    ℤ-is-set (prop-has-all-paths-↓ is-set-is-prop) y
+    ℤ-is-set prop-has-all-paths-↓ y
 
   ΩS¹-is-set : {y : S¹} → is-set (base == y)
   ΩS¹-is-set {y} = equiv-preserves-level ((encode {y} , encode-is-equiv y) ⁻¹)
-                                         (S¹Cover-is-set {y})
+                                         {{S¹Cover-is-set {y}}}
 
 S¹-level : has-level 1 S¹
-S¹-level =
-  S¹-elim (λ _ → ΩS¹-is-set) (prop-has-all-paths-↓ (Π-level (λ x → is-set-is-prop)))
+S¹-level = has-level-make (S¹-elim ⟨⟩ prop-has-all-paths-↓) where instance _ = ΩS¹-is-set
+
+instance S¹-level-instance = S¹-level
 
 {- 9. More stuff -}
 
-ΩS¹-iso-ℤ : Ω^S-group 0 ⊙S¹ S¹-level ≃ᴳ ℤ-group
+ΩS¹-iso-ℤ : Ω^S-group 0 ⊙S¹ ≃ᴳ ℤ-group
 ΩS¹-iso-ℤ = ≃-to-≃ᴳ ΩS¹≃ℤ encode-pres-∙ where
   abstract
     encode-∙ : ∀ {x₁ x₂} (loop₁ : base == x₁) (loop₂ : x₁ == x₂)
@@ -282,5 +283,5 @@ S¹-level =
           =∎
 
 abstract
-  ΩS¹-is-abelian : is-abelian (Ω^S-group 0 ⊙S¹ S¹-level)
+  ΩS¹-is-abelian : is-abelian (Ω^S-group 0 ⊙S¹)
   ΩS¹-is-abelian = iso-preserves-abelian (ΩS¹-iso-ℤ ⁻¹ᴳ) ℤ-group-is-abelian

@@ -31,7 +31,12 @@ module _ {G : Group i} where
   embase = embase' G
   emloop = emloop' G
   emloop-comp = emloop-comp' G
-  EM₁-level = EM₁-level' G
+
+  instance
+    EM₁-level : {n : ℕ₋₂} → has-level (S (S (S n))) (EM₁ G)
+    EM₁-level {⟨-2⟩} = EM₁-level' G
+    EM₁-level {S n} = raise-level _ EM₁-level
+
 
   abstract
     -- This was in the original paper, but is actually derivable.
@@ -40,7 +45,7 @@ module _ {G : Group i} where
       ap emloop (! $ G.unit-r G.ident) ∙ emloop-comp G.ident G.ident
 
   module EM₁Elim {j} {P : EM₁ G → Type j}
-    (P-level : (x : EM₁ G) → has-level ⟨ 1 ⟩ (P x))
+    {{_ : (x : EM₁ G) → has-level ⟨ 1 ⟩ (P x)}}
     (embase* : P embase)
     (emloop* : (g : G.El) → embase* == embase* [ P ↓ emloop g ])
     (emloop-comp* : (g₁ g₂ : G.El) →
@@ -59,11 +64,11 @@ module _ {G : Group i} where
   open EM₁Elim public using () renaming (f to EM₁-elim)
 
   module EM₁Rec {j} {C : Type j}
-    (C-level : has-level ⟨ 1 ⟩ C) (embase* : C)
-    (hom* : G →ᴳ (Ω^S-group 0 ⊙[ C , embase* ] C-level)) where
+    {{_ : has-level ⟨ 1 ⟩ C}} (embase* : C)
+    (hom* : G →ᴳ (Ω^S-group 0 ⊙[ C , embase* ])) where
 
     private
-      module M = EM₁Elim {P = λ _ → C} (λ _ → C-level)
+      module M = EM₁Elim {P = λ _ → C}
         embase* (λ g → ↓-cst-in (GroupHom.f hom* g))
         (λ g₁ g₂ → ↓-cst-in2 (GroupHom.pres-comp hom* g₁ g₂)
                  ∙'ᵈ ↓-cst-in-∙ (emloop g₁) (emloop g₂)
@@ -94,11 +99,12 @@ module _ {G : Group i} where
         lemma = ! (emloop-comp (G.inv g) g) ∙ ap emloop (G.inv-l g) ∙ emloop-ident
 
     {- EM₁ is 0-connected -}
-    EM₁-conn : is-connected 0 (EM₁ G)
-    EM₁-conn = has-level-make ([ embase ] , Trunc-elim
-      (EM₁-elim
-        {P = λ x → [ embase ] == [ x ]}
-        (λ _ → raise-level _ (=-preserves-level Trunc-level))
-        idp
-        (λ _ → prop-has-all-paths-↓)
-        (λ _ _ → set-↓-has-all-paths-↓)))
+    instance
+      EM₁-conn : is-connected 0 (EM₁ G)
+      EM₁-conn = has-level-make ([ embase ] , Trunc-elim
+        (EM₁-elim
+          {P = λ x → [ embase ] == [ x ]}
+          {{λ _ → raise-level _ (=-preserves-level Trunc-level)}}
+          idp
+          (λ _ → prop-has-all-paths-↓)
+          (λ _ _ → set-↓-has-all-paths-↓)))

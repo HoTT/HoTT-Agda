@@ -41,7 +41,7 @@ module cohomology.DisjointlyPointedSet {i} (OT : OrdinaryTheory i) where
             in* (x , pt≠x) false with dec x
             in* (x , pt≠x) false | inl pt=x = ⊥-rec (pt≠x pt=x)
             in* (x , pt≠x) false | inr pt≠'x =
-              ap (λ ¬p → bwin (x , ¬p) false) $ prop-has-all-paths ¬-is-prop pt≠'x pt≠x
+              ap (λ ¬p → bwin (x , ¬p) false) $ prop-has-all-paths pt≠'x pt≠x
 
             glue* : (wp : MinusPoint X)
               → base* == in* wp true [ (λ x → from (to x) == x) ↓ bwglue wp ]

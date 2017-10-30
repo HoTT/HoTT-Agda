@@ -5,7 +5,7 @@ import homotopy.ConstantToSetExtendsToProp as ConstExt
 
 module homotopy.RelativelyConstantToSetExtendsViaSurjection
   {i j k} {A : Type i} {B : Type j} {C : B → Type k}
-  (C-is-set : ∀ b → is-set (C b))
+  {{_ : ∀ {b} → is-set (C b)}}
   (f : A → B) (f-is-surj : is-surj f)
   (g : (a : A) → C (f a))
   (g-is-const : ∀ a₁ a₂ → (p : f a₁ == f a₂) → g a₁ == g a₂ [ C ↓ p ])
@@ -28,11 +28,11 @@ module homotopy.RelativelyConstantToSetExtendsViaSurjection
 
     module CE (b : B) =
       ConstExt {A = hfiber f b} {B = C b}
-        (C-is-set b) (lemma b) (lemma-const b)
+        (lemma b) (lemma-const b)
 
   ext : Π B C
   ext b = CE.ext b (f-is-surj b)
 
   β : (a : A) → ext (f a) == g a
   β a = ap (CE.ext (f a))
-    (prop-has-all-paths Trunc-level (f-is-surj (f a)) [ a , idp ])
+    (prop-has-all-paths (f-is-surj (f a)) [ a , idp ])

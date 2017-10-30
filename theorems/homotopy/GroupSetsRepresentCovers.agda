@@ -5,7 +5,7 @@ import homotopy.ConstantToSetExtendsToProp as ConstExt
 open import homotopy.RibbonCover
 
 module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
-  (A-conn : is-connected 0 (de⊙ X)) where
+  {{_ : is-connected 0 (de⊙ X)}} where
 
   open Cover
 
@@ -21,7 +21,7 @@ module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
 
   -- Covering spaces to G-sets.
   cover-to-grpset-struct : ∀ {j} (cov : Cover A j)
-    → GroupSetStructure (πS 0 X) (Fiber cov a₁) (Fiber-is-set cov a₁)
+    → GroupSetStructure (πS 0 X) (Fiber cov a₁)
   cover-to-grpset-struct cov = record
     { act = cover-trace cov
     ; unit-r = cover-trace-idp₀ cov
@@ -31,7 +31,6 @@ module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
   cover-to-grpset : ∀ {j} → Cover A j → GroupSet (πS 0 X) j
   cover-to-grpset cov = record
     { El = Fiber cov a₁
-    ; El-level = Fiber-level cov a₁
     ; grpset-struct = cover-to-grpset-struct cov
     }
 
@@ -40,7 +39,7 @@ module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
     abstract
       [base-path] : ∀ {a₂ : A} → Trunc -1 (a₁ == a₂)
       [base-path] {a₂} =
-        –> (Trunc=-equiv [ a₁ ] [ a₂ ]) (contr-has-all-paths A-conn [ a₁ ] [ a₂ ])
+        –> (Trunc=-equiv [ a₁ ] [ a₂ ]) (contr-has-all-paths [ a₁ ] [ a₂ ])
 
   -- Part 1: Show that the synthesized cover (ribbon) is fiberwisely
   --         equivalent to the original fiber.
@@ -67,7 +66,7 @@ module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
             ∎
 
       module FiberAndPathToRibbon {a₂} (a↑ : Fiber cov a₂)
-        = ConstExt Ribbon-is-set
+        = ConstExt
           (fiber+path-to-ribbon a↑)
           (fiber+path-to-ribbon-is-path-irrelevant a↑)
 
@@ -85,7 +84,7 @@ module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
   ribbon-to-fiber : ∀ {j} (cov : Cover A j) {a₂}
     → Ribbon X (cover-to-grpset cov) a₂ → Cover.Fiber cov a₂
   ribbon-to-fiber cov {a₂} r =
-    Ribbon-rec (Fiber-is-set cov a₂) (cover-trace cov) (cover-paste cov) r
+    Ribbon-rec (cover-trace cov) (cover-paste cov) r
 
   private
     -- Some routine computations.
@@ -95,15 +94,14 @@ module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
         → fiber-to-ribbon cov (ribbon-to-fiber cov r) == r
       ribbon-to-fiber-to-ribbon cov {a₂} = Ribbon-elim
         {P = λ r → fiber-to-ribbon cov (ribbon-to-fiber cov r) == r}
-        (λ _ → =-preserves-set Ribbon-is-set)
         (λ a↑ p → Trunc-elim
           -- All ugly things will go away when bp = proj bp′
-          (λ bp → Ribbon-is-set
+          {{λ bp → has-level-apply Ribbon-is-set
                     (fiber+path₋₁-to-ribbon cov (cover-trace cov a↑ p) bp)
-                    (trace a↑ p))
+                    (trace a↑ p)}}
           (lemma a↑ p)
           [base-path])
-        (λ _ _ _ → prop-has-all-paths-↓ (Ribbon-is-set _ _))
+        (λ _ _ _ → prop-has-all-paths-↓)
         where
           abstract
             lemma : ∀ {a₂} (a↑ : Cover.Fiber cov a₁) (p : a₁ =₀ a₂) (bp : a₁ == a₂)
@@ -123,10 +121,10 @@ module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
         → ribbon-to-fiber cov (fiber-to-ribbon cov {a₂} a↑) == a↑
       fiber-to-ribbon-to-fiber cov {a₂} a↑ = Trunc-elim
         -- All ugly things will go away when bp = proj bp′
-        (λ bp → Cover.Fiber-is-set cov a₂
+        {{λ bp → has-level-apply (Cover.Fiber-is-set cov)
                   (ribbon-to-fiber cov
                     (fiber+path₋₁-to-ribbon cov a↑ bp))
-                  a↑)
+                  a↑}}
         (lemma a↑)
         [base-path]
         where
@@ -151,7 +149,7 @@ module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
   ribbon-a₁-to-El : ∀ {j} {gs : GroupSet (πS 0 X) j}
     → Ribbon X gs a₁ → GroupSet.El gs
   ribbon-a₁-to-El {j} {gs} = let open GroupSet gs in
-    Ribbon-rec El-level act assoc
+    Ribbon-rec act assoc
 
   ribbon-a₁-to-El-equiv : ∀ {j} {gs : GroupSet (πS 0 X) j}
     → Ribbon X gs a₁ ≃ GroupSet.El gs
@@ -161,7 +159,6 @@ module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
       (λ a↑ → unit-r a↑)
       (Ribbon-elim
         {P = λ r → trace (ribbon-a₁-to-El r) idp₀ == r}
-        (λ _ → =-preserves-set Ribbon-is-set)
         (λ y p →
           trace (act y p) idp₀
             =⟨ paste y p idp₀ ⟩
@@ -169,14 +166,14 @@ module homotopy.GroupSetsRepresentCovers {i} (X : Ptd i)
             =⟨ ap (trace y) $ ∙₀-unit-r p ⟩
           trace y p
             ∎)
-        (λ _ _ _ → prop-has-all-paths-↓ (Ribbon-is-set _ _)))
+        (λ _ _ _ → prop-has-all-paths-↓))
 
   grpset-to-cover-to-grpset : ∀ {j} (gs : GroupSet (πS 0 X) (lmax i j))
     → cover-to-grpset (grpset-to-cover gs) == gs
   grpset-to-cover-to-grpset gs =
     groupset=
       ribbon-a₁-to-El-equiv
-      (λ {x₁}{x₂} x= → Trunc-elim (λ _ → =-preserves-set $ GroupSet.El-is-set gs) λ g →
+      (λ {x₁}{x₂} x= → Trunc-elim λ g →
         ribbon-a₁-to-El (transport (Ribbon X gs) g x₁)
           =⟨ ap (λ x → ribbon-a₁-to-El (transport (Ribbon X gs) g x))
                 $ ! $ <–-inv-l ribbon-a₁-to-El-equiv x₁ ⟩

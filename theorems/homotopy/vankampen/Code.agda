@@ -31,9 +31,9 @@ module homotopy.vankampen.Code {i j k l}
     pcAB-to-pcBB-rel d₀ (pcABr-cong r pB) = pcBBr-cong (pcAA-to-pcBA-rel d₀ r) pB
 
   cAA-to-cBA : ∀ d₀ {a} → codeAA (f (h d₀)) a → codeBA (g (h d₀)) a
-  cAA-to-cBA d₀ = SetQuot-rec SetQuot-level (q[_] ∘ pcAA-to-pcBA d₀) (quot-rel ∘ pcAA-to-pcBA-rel d₀)
+  cAA-to-cBA d₀ = SetQuot-rec (q[_] ∘ pcAA-to-pcBA d₀) (quot-rel ∘ pcAA-to-pcBA-rel d₀)
   cAB-to-cBB : ∀ d₀ {b} → codeAB (f (h d₀)) b → codeBB (g (h d₀)) b
-  cAB-to-cBB d₀ = SetQuot-rec SetQuot-level (q[_] ∘ pcAB-to-pcBB d₀) (quot-rel ∘ pcAB-to-pcBB-rel d₀)
+  cAB-to-cBB d₀ = SetQuot-rec (q[_] ∘ pcAB-to-pcBB d₀) (quot-rel ∘ pcAB-to-pcBB-rel d₀)
 
   -- BX to AX
   pcBA-to-pcAA : ∀ d₀ {a} → precodeBA (g (h d₀)) a → precodeAA (f (h d₀)) a
@@ -56,9 +56,9 @@ module homotopy.vankampen.Code {i j k l}
     pcBB-to-pcAB-rel d₀ (pcBBr-cong r pB) = pcABr-cong (pcBA-to-pcAA-rel d₀ r) pB
 
   cBA-to-cAA : ∀ d₀ {a} → codeBA (g (h d₀)) a → codeAA (f (h d₀)) a
-  cBA-to-cAA d₀ = SetQuot-rec SetQuot-level (q[_] ∘ pcBA-to-pcAA d₀) (quot-rel ∘ pcBA-to-pcAA-rel d₀)
+  cBA-to-cAA d₀ = SetQuot-rec (q[_] ∘ pcBA-to-pcAA d₀) (quot-rel ∘ pcBA-to-pcAA-rel d₀)
   cBB-to-cAB : ∀ d₀ {b} → codeBB (g (h d₀)) b → codeAB (f (h d₀)) b
-  cBB-to-cAB d₀ = SetQuot-rec SetQuot-level (q[_] ∘ pcBB-to-pcAB d₀) (quot-rel ∘ pcBB-to-pcAB-rel d₀)
+  cBB-to-cAB d₀ = SetQuot-rec (q[_] ∘ pcBB-to-pcAB d₀) (quot-rel ∘ pcBB-to-pcAB-rel d₀)
 
   -- roundtrips
   abstract
@@ -110,15 +110,13 @@ module homotopy.vankampen.Code {i j k l}
       abstract
         to-from : ∀ cBA → to (from cBA) == cBA
         to-from = SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-is-set)
           (pcBA-to-pcAA-to-pcBA d₀)
-          (λ _ → prop-has-all-paths-↓ (SetQuot-is-set _ _))
+          (λ _ → prop-has-all-paths-↓)
 
         from-to : ∀ cAA → from (to cAA) == cAA
         from-to = SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-is-set)
           (pcAA-to-pcBA-to-pcAA d₀)
-          (λ _ → prop-has-all-paths-↓ (SetQuot-is-set _ _))
+          (λ _ → prop-has-all-paths-↓)
 
     abstract
       eqv-is-const : ∀ d₁ d₂ (p : h d₁ == h d₂)
@@ -126,7 +124,7 @@ module homotopy.vankampen.Code {i j k l}
         [ (λ c → codeAA (f c) a₁ ≃ codeBA (g c) a₁) ↓ p ]
       eqv-is-const d₁ d₂ p = ↓-Subtype-in (λ d → is-equiv-prop) $
         ↓-→-from-transp $ λ= $
-          SetQuot-elim (λ _ → =-preserves-set SetQuot-is-set)
+          SetQuot-elim
             (λ pcAA →
               transport (λ c → codeBA (g c) a₁) p q[ pcAA-to-pcBA d₁ pcAA ]
                 =⟨ ap-∘ (λ b → codeBA b a₁) g p |in-ctx (λ p → coe p q[ pcAA-to-pcBA d₁ pcAA ]) ⟩
@@ -144,10 +142,9 @@ module homotopy.vankampen.Code {i j k l}
                 =⟨ ∘-ap (λ c → codeAA c a₁) f p |in-ctx (λ p → coe p q[ pcAA ]) |in-ctx cAA-to-cBA d₂ ⟩
               cAA-to-cBA d₂ (transport (λ c → codeAA (f c) a₁) p q[ pcAA ])
                 =∎)
-            (λ _ → prop-has-all-paths-↓ (SetQuot-is-set _ _))
+            (λ _ → prop-has-all-paths-↓)
 
     module SE = SurjExt
-      (λ c → ≃-is-set SetQuot-is-set SetQuot-is-set)
       h h-is-surj
       eqv-on-image
       eqv-is-const
@@ -172,15 +169,13 @@ module homotopy.vankampen.Code {i j k l}
       abstract
         to-from : ∀ cBB → to (from cBB) == cBB
         to-from = SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-is-set)
           (pcBB-to-pcAB-to-pcBB d₀)
-          (λ _ → prop-has-all-paths-↓ (SetQuot-is-set _ _))
+          (λ _ → prop-has-all-paths-↓)
 
         from-to : ∀ cAB → from (to cAB) == cAB
         from-to = SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-is-set)
           (pcAB-to-pcBB-to-pcAB d₀)
-          (λ _ → prop-has-all-paths-↓ (SetQuot-is-set _ _))
+          (λ _ → prop-has-all-paths-↓)
 
     abstract
       eqv-is-const : ∀ d₁ d₂ (p : h d₁ == h d₂)
@@ -188,7 +183,7 @@ module homotopy.vankampen.Code {i j k l}
         [ (λ c → codeAB (f c) b₁ ≃ codeBB (g c) b₁) ↓ p ]
       eqv-is-const d₁ d₂ p = ↓-Subtype-in (λ d → is-equiv-prop) $
         ↓-→-from-transp $ λ= $
-          SetQuot-elim (λ _ → =-preserves-set SetQuot-is-set)
+          SetQuot-elim
             (λ pcAB →
               transport (λ c → codeBB (g c) b₁) p q[ pcAB-to-pcBB d₁ pcAB ]
                 =⟨ ap-∘ (λ b → codeBB b b₁) g p |in-ctx (λ p → coe p q[ pcAB-to-pcBB d₁ pcAB ]) ⟩
@@ -206,10 +201,9 @@ module homotopy.vankampen.Code {i j k l}
                 =⟨ ∘-ap (λ c → codeAB c b₁) f p |in-ctx (λ p → coe p q[ pcAB ]) |in-ctx cAB-to-cBB d₂ ⟩
               cAB-to-cBB d₂ (transport (λ c → codeAB (f c) b₁) p q[ pcAB ])
                 =∎)
-            (λ _ → prop-has-all-paths-↓ (SetQuot-is-set _ _))
+            (λ _ → prop-has-all-paths-↓)
 
     module SE = SurjExt
-      (λ c → ≃-is-set SetQuot-is-set SetQuot-is-set)
       h h-is-surj
       eqv-on-image
       eqv-is-const
@@ -236,7 +230,6 @@ module homotopy.vankampen.Code {i j k l}
              [ (λ p → codeAP (f (h d₀)) p ≃ codeBP (g (h d₀)) p) ↓ glue (h d₁) ]
         lemma = ↓-Subtype-in (λ d → is-equiv-prop) $
           ↓-→-from-transp $ λ= $ SetQuot-elim
-            (λ _ → =-preserves-set SetQuot-is-set)
             (λ pcAA →
               transport (λ p → codeBP (g (h d₀)) p) (glue (h d₁)) q[ pcAA-to-pcBA d₀ pcAA ]
                 =⟨ transp-cBP-glue d₁ (pcAA-to-pcBA d₀ pcAA) ⟩
@@ -244,7 +237,7 @@ module homotopy.vankampen.Code {i j k l}
                 =⟨ ! $ transp-cAP-glue d₁ pcAA |in-ctx cAB-to-cBB d₀ ⟩
               cAB-to-cBB d₀ (transport (λ p → codeAP (f (h d₀)) p) (glue (h d₁)) q[ pcAA ])
                 =∎)
-            (λ _ → prop-has-all-paths-↓ $ SetQuot-is-set _ _)
+            (λ _ → prop-has-all-paths-↓)
 
     abstract
       path : ∀ c₀ c₁
@@ -252,14 +245,14 @@ module homotopy.vankampen.Code {i j k l}
         == CodeABEquivCodeBB.eqv (g c₁) c₀
         [ (λ p → codeAP (f c₀) p ≃ codeBP (g c₀) p) ↓ glue c₁ ]
       path = SurjExt.ext
-        (λ c₀ → Π-is-set λ c₁ → ↓-preserves-level $ ≃-is-set SetQuot-is-set SetQuot-is-set)
+        {{Π-level (λ _ → ↓-preserves-level ⟨⟩)}}
         h h-is-surj
         (λ d₀ → SurjExt.ext
-          (λ c₁ → ↓-preserves-level $ ≃-is-set SetQuot-is-set SetQuot-is-set)
+          {{↓-preserves-level ⟨⟩}}
           h h-is-surj
           (λ d₁ → path-on-image d₀ d₁)
-          (λ _ _ _ → prop-has-all-paths-↓ $ ↓-level $ ≃-is-set SetQuot-is-set SetQuot-is-set))
-        (λ _ _ _ → prop-has-all-paths-↓ $ Π-is-prop λ _ → ↓-level $ ≃-is-set SetQuot-is-set SetQuot-is-set)
+          (λ _ _ _ → prop-has-all-paths-↓ {{↓-level ⟨⟩}}))
+        (λ _ _ _ → prop-has-all-paths-↓ {{Π-level (λ _ → ↓-level ⟨⟩)}})
 
 
   cAP-equiv-cBP : ∀ c₀ p₁ → codeAP (f c₀) p₁ ≃ codeBP (g c₀) p₁
@@ -282,8 +275,9 @@ module homotopy.vankampen.Code {i j k l}
       {P = λ p₀ → ∀ p₁ → is-set (code p₀ p₁)}
       (λ a₀ p₁ → codeAP-level {a₀} {p₁})
       (λ b₀ p₁ → codeBP-level {b₀} {p₁})
-      (λ c₀ → prop-has-all-paths-↓ $ Π-is-prop λ p₁ → is-set-is-prop)
+      (λ c₀ → prop-has-all-paths-↓)
       p₀ p₁
+
   code-is-set = code-level
 
   abstract
@@ -336,11 +330,10 @@ module homotopy.vankampen.Code {i j k l}
       decodeAA {f c₀} {a₁} == decodeBA {g c₀} {a₁}
       [ (λ p₀ → code p₀ (left a₁) → p₀ =₀ left a₁) ↓ glue c₀ ]
     decodeAA-is-decodeBA {a₁ = a₁} = SurjExt.ext
-      (λ _ → ↓-preserves-level $ Π-is-set λ _ → Trunc-level) h h-is-surj
+      {{↓-preserves-level ⟨⟩}} h h-is-surj
       (λ d₀ → ↓-→-from-transp $ λ= $ SetQuot-elim
         {P = λ cAA → transport (_=₀ left a₁) (glue (h d₀)) (decodeAA cAA)
                   == decodeBA (transport (λ p₀ → code p₀ (left a₁)) (glue (h d₀)) cAA)}
-        (λ _ → =-preserves-set Trunc-level)
         (λ pcAA →
           transport (_=₀ left a₁) (glue (h d₀)) (pcAA-to-path pcAA)
             =⟨ transp₀-idf=₀cst [ glue (h d₀) ] (pcAA-to-path pcAA) ⟩
@@ -360,19 +353,18 @@ module homotopy.vankampen.Code {i j k l}
             =⟨ ap (λ p → decodeBA (coe p q[ pcAA ])) (∘-ap (λ f₁ → f₁ (left a₁)) code (glue (h d₀))) ⟩
           decodeBA (transport (λ p₀ → code p₀ (left a₁)) (glue (h d₀)) q[ pcAA ])
             =∎)
-        (λ _ → prop-has-all-paths-↓ $ Trunc-level {n = 0} _ _))
-      (λ _ _ _ → prop-has-all-paths-↓ $ ↓-level $ Π-is-set λ _ → Trunc-level)
+        (λ _ → prop-has-all-paths-↓))
+      (λ _ _ _ → prop-has-all-paths-↓ {{↓-level ⟨⟩}})
 
   abstract
     decodeAB-is-decodeBB : ∀ {b₁} c₀ →
       decodeAB {f c₀} {b₁} == decodeBB {g c₀} {b₁}
       [ (λ p₀ → code p₀ (right b₁) → p₀ =₀ right b₁) ↓ glue c₀ ]
     decodeAB-is-decodeBB {b₁ = b₁} = SurjExt.ext
-      (λ _ → ↓-preserves-level $ Π-is-set λ _ → Trunc-level) h h-is-surj
+      {{↓-preserves-level ⟨⟩}} h h-is-surj
       (λ d₀ → ↓-→-from-transp $ λ= $ SetQuot-elim
         {P = λ cAB → transport (_=₀ right b₁) (glue (h d₀)) (decodeAB cAB)
                   == decodeBB (transport (λ p₀ → code p₀ (right b₁)) (glue (h d₀)) cAB)}
-        (λ _ → =-preserves-set Trunc-level)
         (λ pcAB →
           transport (_=₀ right b₁) (glue (h d₀)) (pcAB-to-path pcAB)
             =⟨ transp₀-idf=₀cst [ glue (h d₀) ] (pcAB-to-path pcAB) ⟩
@@ -392,8 +384,8 @@ module homotopy.vankampen.Code {i j k l}
             =⟨ ap (λ p → decodeBB (coe p q[ pcAB ])) (∘-ap (λ f₁ → f₁ (right b₁)) code (glue (h d₀))) ⟩
           decodeBB (transport (λ p₀ → code p₀ (right b₁)) (glue (h d₀)) q[ pcAB ])
             =∎)
-        (λ _ → prop-has-all-paths-↓ $ Trunc-level {n = 0} _ _))
-      (λ _ _ _ → prop-has-all-paths-↓ $ ↓-level $ Π-is-set λ _ → Trunc-level)
+        (λ _ → prop-has-all-paths-↓))
+      (λ _ _ _ → prop-has-all-paths-↓ {{↓-level ⟨⟩}})
 
   abstract
     decodeAP-is-decodeBP : ∀ c₀ p₁
@@ -404,7 +396,7 @@ module homotopy.vankampen.Code {i j k l}
         [ (λ p₀ → code p₀ p₁ → p₀ =₀ p₁) ↓ glue c₀ ]}
       (λ a₁ → decodeAA-is-decodeBA {a₁ = a₁} c₀)
       (λ b₁ → decodeAB-is-decodeBB {b₁ = b₁} c₀)
-      (λ _ → prop-has-all-paths-↓ $ ↓-level $ Π-is-set λ _ → Trunc-level)
+      (λ _ → prop-has-all-paths-↓ {{↓-level ⟨⟩}})
 
   decode : ∀ {p₀ p₁} → code p₀ p₁ → p₀ =₀ p₁
   decode {p₀} {p₁} = Pushout-elim

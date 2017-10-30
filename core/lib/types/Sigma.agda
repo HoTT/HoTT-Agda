@@ -154,6 +154,10 @@ instance
         {{Σ-level (has-level-apply p _ _) (λ _ →
           equiv-preserves-level ((to-transp-equiv _ _)⁻¹) {{has-level-apply (q _) _ _}})}}
 
+×-level : ∀ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j}
+  → (has-level n A → has-level n B → has-level n (A × B))
+×-level pA pB = Σ-level pA (λ x → pB)
+
 -- Equivalences in a Σ-type
 
 Σ-fmap-l : ∀ {i j k} {A : Type i} {B : Type j} (P : B → Type k)
