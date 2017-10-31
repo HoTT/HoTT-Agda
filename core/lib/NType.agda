@@ -73,7 +73,7 @@ module _ {i} where
       lemma idp | inr r⊥ = lift (r⊥ idp)
 
       UIP : {y : A} (p q : x == y) → p == q
-      UIP idp q with d x | lemma q where
+      UIP idp q with d x | lemma q
       UIP idp q | inl r  | s = ! (!-inv-l r) ∙' s
       UIP idp q | inr r⊥ | _ = Empty-elim (r⊥ idp)
 
