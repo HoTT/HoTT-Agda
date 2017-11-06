@@ -5,6 +5,7 @@ open import lib.Equivalence2
 open import lib.Function2
 open import lib.NType2
 open import lib.types.Group
+open import lib.types.Int
 open import lib.types.Pi
 open import lib.types.Subtype
 open import lib.types.Truncation
@@ -59,7 +60,12 @@ record GroupStructureHom {i j} {GEl : Type i} {HEl : Type j}
       H.ident
         =∎
 
-    -- pres-exp TODO
+    pres-exp : ∀ g i → f (G.exp g i) == H.exp (f g) i
+    pres-exp g (pos O) = pres-ident
+    pres-exp g (pos (S O)) = idp
+    pres-exp g (pos (S (S n))) = pres-comp g (G.exp g (pos (S n))) ∙ ap (H.comp (f g)) (pres-exp g (pos (S n)))
+    pres-exp g (negsucc O) = pres-inv g
+    pres-exp g (negsucc (S n)) = pres-comp (G.inv g) (G.exp g (negsucc n)) ∙ ap2 H.comp (pres-inv g) (pres-exp g (negsucc n))
 
     pres-conj : ∀ g h → f (G.conj g h) == H.conj (f g) (f h)
     pres-conj g h = pres-comp (G.comp g h) (G.inv g) ∙ ap2 H.comp (pres-comp g h) (pres-inv g)

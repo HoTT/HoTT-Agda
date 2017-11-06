@@ -20,3 +20,6 @@ import homotopy.Cogroup
 
 {- modalities -}
 import homotopy.ModalWedgeExtension
+
+{- conjecture 3.5.3 in favonia's thesis -}
+import groups.Int

@@ -4,11 +4,22 @@ open import HoTT
 
 module groups.Pointed where
 
-⊙Group : (i : ULevel) → Type (lsucc i)
-⊙Group i = Σ (Group i) Group.El
+infix 60 ⊙[_,_]ᴳ
 
-_⊙→ᴳ_ : {i j : ULevel} → ⊙Group i → ⊙Group j → Type (lmax i j)
-⊙G ⊙→ᴳ ⊙H = Σ (fst ⊙G →ᴳ fst ⊙H) (λ φ → GroupHom.f φ (snd ⊙G) == snd ⊙H)
+record ⊙Group (i : ULevel) : Type (lsucc i) where
+  constructor ⊙[_,_]ᴳ
+  field
+    de⊙ᴳ : Group i
+    ptᴳ : Group.El de⊙ᴳ
+open ⊙Group
 
-_⊙≃ᴳ_ : {i j : ULevel} → ⊙Group i → ⊙Group j → Type (lmax i j)
-⊙G ⊙≃ᴳ ⊙H = Σ (fst ⊙G ≃ᴳ fst ⊙H) (λ φ → GroupIso.f φ (snd ⊙G) == snd ⊙H)
+⊙Group₀ = ⊙Group lzero
+
+_⊙→ᴳ_ : ∀ {i j} → ⊙Group i → ⊙Group j → Type (lmax i j)
+⊙G ⊙→ᴳ ⊙H = Σ (de⊙ᴳ ⊙G →ᴳ de⊙ᴳ ⊙H) (λ φ → GroupHom.f φ (ptᴳ ⊙G) == ptᴳ ⊙H)
+
+_⊙≃ᴳ_ : ∀ {i j} → ⊙Group i → ⊙Group j → Type (lmax i j)
+⊙G ⊙≃ᴳ ⊙H = Σ (de⊙ᴳ ⊙G ≃ᴳ de⊙ᴳ ⊙H) (λ φ → GroupIso.f φ (ptᴳ ⊙G) == ptᴳ ⊙H)
+
+is-infinite-cyclic : ∀ {i} → ⊙Group i → Type i
+is-infinite-cyclic ⊙[ G , g ]ᴳ = is-equiv (Group.exp G g)
