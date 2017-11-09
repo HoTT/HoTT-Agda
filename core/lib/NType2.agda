@@ -61,7 +61,7 @@ abstract
 
     is-contr-is-prop-aux : (x y : is-contr A) → x == y
     is-contr-is-prop-aux x y =
-      ap has-level-make
+      ap has-level-in
         (pair= (contr-path x (contr-center y))
                (↓-Π-cst-app-in (λ a → ↓-idf=cst-in' (lemma x (contr-center y) a (contr-path y a)))))
 
@@ -74,7 +74,7 @@ abstract
     has-level-aux-prop = Π-level (λ x → Π-level (λ y → has-level-is-prop))
 
     e : has-level-aux (S n) A ≃ has-level (S n) A
-    fst e = has-level-make
+    fst e = has-level-in
     is-equiv.g (snd e) = has-level-apply
     is-equiv.f-g (snd e) = λ _ → idp
     is-equiv.g-f (snd e) = λ _ → idp
@@ -169,7 +169,7 @@ hSet₀ = hSet lzero
 abstract
   ≃-contr : ∀ {i j} {A : Type i} {B : Type j}
       → is-contr A → is-contr B → is-contr (A ≃ B)
-  ≃-contr pA pB = has-level-make
+  ≃-contr pA pB = has-level-in
       ((cst (contr-center pB) , contr-to-contr-is-equiv _ pA pB)
       , (λ e → pair= (λ= (λ _ → contr-path pB _))
                      (from-transp is-equiv _ (prop-path is-equiv-is-prop _ _))))
@@ -217,7 +217,7 @@ abstract
  instance
   _-Type-level_ : (n : ℕ₋₂) (i : ULevel)
     → has-level (S n) (n -Type i)
-  (n -Type-level i) = has-level-make (λ { (A , pA) (B , pB) → aux A B pA pB}) where
+  (n -Type-level i) = has-level-in (λ { (A , pA) (B , pB) → aux A B pA pB}) where
     
     aux : (A B : Type i) (pA : has-level n A) (pB : has-level n B) → has-level n ((A , pA) == (B , pB))
     aux A B pA pB = equiv-preserves-level (nType=-econv (A , ⟨⟩) (B , ⟨⟩)) where instance _ = pA; _ = pB

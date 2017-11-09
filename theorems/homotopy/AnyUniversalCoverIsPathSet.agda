@@ -8,7 +8,7 @@ private
   a₁ = pt X
 
 path-set-is-universal : is-universal (path-set-cover X)
-path-set-is-universal = has-level-make ([ pt X , idp₀ ] ,
+path-set-is-universal = has-level-in ([ pt X , idp₀ ] ,
   Trunc-elim
     {P = λ xp₀ → [ pt X , idp₀ ] == xp₀}
     (λ{(x , p₀) → Trunc-elim

@@ -11,7 +11,7 @@ Empty-rec = Empty-elim
 ⊥-rec = Empty-rec
 
 Empty-is-prop : is-prop Empty
-Empty-is-prop = has-level-make Empty-elim
+Empty-is-prop = has-level-in Empty-elim
 
 instance
   Empty-level : {n : ℕ₋₂} → has-level (S n) Empty

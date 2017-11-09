@@ -206,7 +206,7 @@ module _ {i j} (X : Ptd i) where
 abstract
   Susp-conn : ∀ {i} {A : Type i} {n : ℕ₋₂}
     → is-connected n A → is-connected (S n) (Susp A)
-  Susp-conn {A = A} {n = n} cA = has-level-make
+  Susp-conn {A = A} {n = n} cA = has-level-in
     ([ north ] ,
      Trunc-elim
        (Susp-elim

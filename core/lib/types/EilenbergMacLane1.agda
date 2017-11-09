@@ -101,7 +101,7 @@ module _ {G : Group i} where
     {- EM₁ is 0-connected -}
     instance
       EM₁-conn : is-connected 0 (EM₁ G)
-      EM₁-conn = has-level-make ([ embase ] , Trunc-elim
+      EM₁-conn = has-level-in ([ embase ] , Trunc-elim
         (EM₁-elim
           {P = λ x → [ embase ] == [ x ]}
           {{λ _ → raise-level _ (=-preserves-level Trunc-level)}}

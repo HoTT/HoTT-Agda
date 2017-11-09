@@ -157,7 +157,7 @@ module _ {a₀} {b₀} (q₀₀ : Q a₀ b₀) where
 
   -- Finish the lemma.
   code-contr : ∀ {b₁} (r : bmleft a₀ == bmright b₁) → is-contr (Trunc (m +2+ n) (hfiber bmglue r))
-  code-contr r = has-level-make (code-center r , Trunc-elim (code-coh r))
+  code-contr r = has-level-in (code-center r , Trunc-elim (code-coh r))
 
 -- The final theorem.
 -- It is sufficient to find some [q₀₀].

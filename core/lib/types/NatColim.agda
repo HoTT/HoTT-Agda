@@ -116,7 +116,7 @@ ncolim-conn : ∀ {i} {D : ℕ → Type i} (d : (n : ℕ) → D n → D (S n)) (
 ncolim-conn {D = D} d ⟨-2⟩ = -2-conn (ℕColim d)
 ncolim-conn {D = D} d (S m) {{cD}} =
   Trunc-rec
-    (λ x → has-level-make ([ ncin O x ] ,
+    (λ x → has-level-in ([ ncin O x ] ,
             (Trunc-elim $
               λ c → ap [_] (nc-match-=-base d x c) ∙ nc-match-=-point x c)))
     (contr-center (cD O))

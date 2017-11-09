@@ -13,5 +13,5 @@ pattern tt = unit
 -- Unit is contractible
 instance
   Unit-level : {n : ℕ₋₂} → has-level n Unit
-  Unit-level {n = ⟨-2⟩} = has-level-make (unit , λ y → idp)
+  Unit-level {n = ⟨-2⟩} = has-level-in (unit , λ y → idp)
   Unit-level {n = S n} = raise-level n Unit-level

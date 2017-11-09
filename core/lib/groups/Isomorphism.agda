@@ -279,7 +279,7 @@ module _ {i j} {G : Group i} {H : Group j} (φ : G →ᴳ H)
   surjᴳ-and-injᴳ-is-equiv : is-equiv φ.f
   surjᴳ-and-injᴳ-is-equiv = contr-map-is-equiv
     (λ h → let (g₁ , p₁) = Trunc-rec (idf _) (surj h) in
-      has-level-make ((g₁ , p₁) , (λ {(g₂ , p₂) →
+      has-level-in ((g₁ , p₁) , (λ {(g₂ , p₂) →
         pair= (inj g₁ g₂ (p₁ ∙ ! p₂))
                 prop-has-all-paths-↓})))
 

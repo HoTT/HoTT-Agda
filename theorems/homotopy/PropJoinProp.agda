@@ -9,14 +9,14 @@ module homotopy.PropJoinProp
   {j} {B : Type j} {{_ : is-prop B}} where
 
 contr-left : (a : A) → is-contr (A * B)
-contr-left a = has-level-make (left a , Pushout-elim
+contr-left a = has-level-in (left a , Pushout-elim
   (λ a' → ap left (prop-has-all-paths a a'))
   (λ b' → glue (a , b'))
   (λ {(a' , b') → ↓-cst=idf-in' $ ! $
     ↓-app=cst-out (apd (λ a → glue (a , b')) (prop-has-all-paths a a'))}))
 
 contr-right : (b : B) → is-contr (A * B)
-contr-right b = has-level-make (right b , Pushout-elim
+contr-right b = has-level-in (right b , Pushout-elim
   (λ a' → ! (glue (a' , b)))
   (λ b' → ap right (prop-has-all-paths b b'))
   (λ {(a' , b') → ↓-cst=idf-in' $

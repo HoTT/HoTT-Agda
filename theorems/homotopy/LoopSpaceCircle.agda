@@ -161,7 +161,7 @@ paths-mike (x , t) = paths-mike-c x t where
 
 abstract
   contr-mike : is-contr (Σ S¹ S¹Cover)
-  contr-mike = has-level-make ((base , 0) , paths-mike)
+  contr-mike = has-level-in ((base , 0) , paths-mike)
 
 {- 5. Flattening lemma proof that [Σ S¹ Cover] is contractible -}
 
@@ -172,7 +172,7 @@ open S¹Cover using (module Wt; Wt; cct; ppt; flattening-S¹)
 -- We prove that the flattened HIT corresponding to the universal cover of the
 -- circle (the real line) is contractible
 Wt-is-contr : is-contr Wt
-Wt-is-contr = has-level-make (cct tt 0 , Wt.elim (base* ∘ snd) (loop* ∘ snd)) where
+Wt-is-contr = has-level-in (cct tt 0 , Wt.elim (base* ∘ snd) (loop* ∘ snd)) where
 
   -- This is basically [loop^] using a different composition order
   base* : (n : ℤ) → cct tt 0 == cct tt n
@@ -255,7 +255,7 @@ abstract
                                          {{S¹Cover-is-set {y}}}
 
 S¹-level : has-level 1 S¹
-S¹-level = has-level-make (S¹-elim ⟨⟩ prop-has-all-paths-↓) where instance _ = ΩS¹-is-set
+S¹-level = has-level-in (S¹-elim ⟨⟩ prop-has-all-paths-↓) where instance _ = ΩS¹-is-set
 
 instance S¹-level-instance = S¹-level
 

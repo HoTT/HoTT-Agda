@@ -64,7 +64,7 @@ module WeakFunext {j} {P : A → Type j} (e : (x : A) → is-contr (P x)) where
   abstract
     weak-λ= : is-contr (Π A P)
     weak-λ= = transport (λ Q → is-contr (Π A Q)) (! P-is-Unit)
-                            (has-level-make ((λ x → lift unit) , (λ y → λ=-nondep (λ x → idp))))
+                            (has-level-in ((λ x → lift unit) , (λ y → λ=-nondep (λ x → idp))))
 
 -- Naive dependent function extensionality
 

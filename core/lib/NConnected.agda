@@ -26,7 +26,7 @@ has-conn-fibers {A = A} {B = B} n f =
 
 {- all inhabited types are -1-connected -}
 inhab-conn : ∀ {i} {A : Type i} (a : A) → is-connected -1 A
-inhab-conn a = has-level-make ([ a ] , prop-has-all-paths [ a ])
+inhab-conn a = has-level-in ([ a ] , prop-has-all-paths [ a ])
 
 {- connectedness is a prop -}
 is-connected-is-prop : ∀ {i} {n : ℕ₋₂} {A : Type i}
@@ -90,7 +90,7 @@ conn-extend-general : ∀ {i j} {A : Type i} {B : Type j} {n k : ℕ₋₂}
   → ∀ t → has-level k (Σ (Π B (fst ∘ P)) (λ s → (s ∘ f) == t))
 conn-extend-general {k = ⟨-2⟩} c P t =
   equiv-is-contr-map (pre∘-conn-is-equiv c P) t
-conn-extend-general {B = B} {n = n} {k = S k'} {f = f} c P t = has-level-make
+conn-extend-general {B = B} {n = n} {k = S k'} {f = f} c P t = has-level-in
   λ {(g , p) (h , q) →
     equiv-preserves-level (e g h p q)
       {{conn-extend-general {k = k'} c (Q g h) (app= (p ∙ ! q))}} }
@@ -134,7 +134,7 @@ conn-in : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} {h : A → B}
   → has-conn-fibers n h
 conn-in {A = A} {B = B} {h = h} sec b =
   let s = sec (λ b → (Trunc _ (hfiber h b) , Trunc-level))
-  in has-level-make (fst s (λ a → [ a , idp ]) b ,
+  in has-level-in (fst s (λ a → [ a , idp ]) b ,
       Trunc-elim (λ k → transport
                    (λ v → fst s (λ a → [ a , idp ]) (fst v) == [ fst k , snd v ])
                    (contr-path (pathfrom-is-contr (h (fst k))) (b , snd k))
@@ -143,7 +143,7 @@ conn-in {A = A} {B = B} {h = h} sec b =
 abstract
   pointed-conn-in : ∀ {i} {n : ℕ₋₂} (A : Type i) (a₀ : A)
     → has-conn-fibers {A = ⊤} n (cst a₀) → is-connected (S n) A
-  pointed-conn-in {n = n} A a₀ c = has-level-make
+  pointed-conn-in {n = n} A a₀ c = has-level-in
     ([ a₀ ] ,
      Trunc-elim
        (λ a → Trunc-rec
@@ -152,7 +152,7 @@ abstract
 abstract
   pointed-conn-out : ∀ {i} {n : ℕ₋₂} (A : Type i) (a₀ : A)
     {{_ : is-connected (S n) A}} → has-conn-fibers {A = ⊤} n (cst a₀)
-  pointed-conn-out {n = n} A a₀ {{c}} a = has-level-make
+  pointed-conn-out {n = n} A a₀ {{c}} a = has-level-in
     (point ,
      λ y → ! (cancel point)
            ∙ (ap out $ contr-has-all-paths (into point) (into y))
@@ -199,7 +199,7 @@ instance
     where
     lemma : (x₀ : Trunc (S n) A) → (∀ x → x₀ == x) → is-connected (S n) (Trunc m A)
     lemma = Trunc-elim
-      (λ a → λ p → has-level-make ([ [ a ] ] ,
+      (λ a → λ p → has-level-in ([ [ a ] ] ,
         Trunc-elim
           (Trunc-elim
             {{λ _ → =-preserves-level
@@ -221,7 +221,7 @@ abstract
       (λ a₀ pA →
         Trunc-elim
           {P = λ tb → (∀ ty → tb == ty) → is-connected (S m) (Σ A B)}
-          (λ b₀ pB → has-level-make
+          (λ b₀ pB → has-level-in
             ([ a₀ , b₀ ] ,
               Trunc-elim
                 {P = λ tp → [ a₀ , b₀ ] == tp}

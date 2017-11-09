@@ -287,8 +287,8 @@ abstract
   equiv-preserves-level : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} (e : A ≃ B)
     {{_ : has-level n A}} → has-level n B
   equiv-preserves-level {n = ⟨-2⟩} e {{p}} =
-    has-level-make (–> e (contr-center p) , (λ y → ap (–> e) (contr-path p _) ∙ <–-inv-r e y))
-  equiv-preserves-level {n = S n} e {{c}} = has-level-make (λ x y →
+    has-level-in (–> e (contr-center p) , (λ y → ap (–> e) (contr-path p _) ∙ <–-inv-r e y))
+  equiv-preserves-level {n = S n} e {{c}} = has-level-in (λ x y →
     equiv-preserves-level (ap-equiv (e ⁻¹) x y ⁻¹) {{has-level-apply c (<– e x) (<– e y)}})
 
 {- This is a collection of type equivalences involving basic type formers.

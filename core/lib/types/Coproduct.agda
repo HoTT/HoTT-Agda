@@ -68,15 +68,15 @@ module _ {i j} {A : Type i} {B : Type j} where
   instance
     ⊔-level : ∀ {n} → has-level (S (S n)) A → has-level (S (S n)) B
               → has-level (S (S n)) (Coprod A B)
-    ⊔-level {n} pA pB = has-level-make (⊔-level-aux pA pB) where
+    ⊔-level {n} pA pB = has-level-in (⊔-level-aux pA pB) where
       
       instance _ = pA; _ = pB
 
       ⊔-level-aux : has-level (S (S n)) A → has-level (S (S n)) B
               → has-level-aux (S (S n)) (Coprod A B)
       ⊔-level-aux _ _ (inl a₁) (inl a₂) = equiv-preserves-level (inl=inl-equiv a₁ a₂ ⁻¹)
-      ⊔-level-aux _ _ (inl a₁) (inr b₂) = has-level-make (λ p → Empty-rec (inl≠inr a₁ b₂ p))
-      ⊔-level-aux _ _ (inr b₁) (inl a₂) = has-level-make (λ p → Empty-rec (inr≠inl b₁ a₂ p))
+      ⊔-level-aux _ _ (inl a₁) (inr b₂) = has-level-in (λ p → Empty-rec (inl≠inr a₁ b₂ p))
+      ⊔-level-aux _ _ (inr b₁) (inl a₂) = has-level-in (λ p → Empty-rec (inr≠inl b₁ a₂ p))
       ⊔-level-aux _ _ (inr b₁) (inr b₂) = equiv-preserves-level ((inr=inr-equiv b₁ b₂)⁻¹)
 
   Coprod-level = ⊔-level

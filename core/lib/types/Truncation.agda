@@ -120,10 +120,10 @@ abstract
 
 Trunc-preserves-level : ∀ {i} {A : Type i} {n : ℕ₋₂} (m : ℕ₋₂)
  → has-level n A → has-level n (Trunc m A)
-Trunc-preserves-level {n = ⟨-2⟩} _ p = has-level-make
+Trunc-preserves-level {n = ⟨-2⟩} _ p = has-level-in
   ([ contr-center p ] , Trunc-elim (λ a → ap [_] (contr-path p a)))
 Trunc-preserves-level ⟨-2⟩ _ = contr-has-level Trunc-level
-Trunc-preserves-level {n = (S n)} (S m) c = has-level-make (λ t₁ t₂ →
+Trunc-preserves-level {n = (S n)} (S m) c = has-level-in (λ t₁ t₂ →
   Trunc-elim
     {{λ s₁ → prop-has-level-S {A = has-level n (s₁ == t₂)} has-level-is-prop}}
     (λ a₁ → Trunc-elim

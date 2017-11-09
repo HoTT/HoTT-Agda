@@ -23,7 +23,7 @@ module _ {i} where
     -- Agda notices that the record is recursive, so we need to specify that we want eta-equality
     inductive
     eta-equality
-    constructor has-level-make
+    constructor has-level-in
     field
       has-level-apply : has-level-aux n A
   open has-level public
@@ -52,7 +52,7 @@ module _ {i} where
 
   abstract
     all-paths-is-prop : {A : Type i} → (has-all-paths A → is-prop A)
-    all-paths-is-prop {A} c = has-level-make (λ x y → has-level-make (c x y , canon-path)) where
+    all-paths-is-prop {A} c = has-level-in (λ x y → has-level-in (c x y , canon-path)) where
 
       canon-path : {x y : A} (p : x == y) → c x y == p
       canon-path {.y} {y} idp =
@@ -69,7 +69,7 @@ module _ {i} where
   raise-level ⟨-2⟩ q =
     all-paths-is-prop (λ x y → ! (contr-path q x) ∙ contr-path q y)
   raise-level (S n) q =
-    has-level-make (λ x y → raise-level n (has-level-apply q x y))
+    has-level-in (λ x y → raise-level n (has-level-apply q x y))
 
   {- Having decidable equality is stronger that being a set -}
 
@@ -102,7 +102,7 @@ module _ {i} where
       UIP idp q | inr r⊥ | _ = Empty-elim (r⊥ idp)
 
     dec-eq-is-set : {A : Type i} → has-dec-eq A → is-set A
-    dec-eq-is-set d = has-level-make (λ x y → dec-onesided-eq-is-prop x (d x) y)
+    dec-eq-is-set d = has-level-in (λ x y → dec-onesided-eq-is-prop x (d x) y)
 
   {- Relationships between levels -}
 
@@ -115,14 +115,14 @@ module _ {i} where
       prop-has-all-paths {{c}} x y = prop-path c x y
 
       inhab-prop-is-contr : A → {{_ : is-prop A}} → is-contr A
-      inhab-prop-is-contr x₀ {{p}} = has-level-make (x₀ , λ y → prop-path p x₀ y)
+      inhab-prop-is-contr x₀ {{p}} = has-level-in (x₀ , λ y → prop-path p x₀ y)
 
       inhab-to-contr-is-prop : (A → is-contr A) → is-prop A
       inhab-to-contr-is-prop c = all-paths-is-prop $
         λ x y → ! (contr-path (c x) x) ∙ contr-path (c x) y
 
       inhab-to-prop-is-prop : (A → is-prop A) → is-prop A
-      inhab-to-prop-is-prop c = has-level-make (λ x y → has-level-apply (c x) x y)
+      inhab-to-prop-is-prop c = has-level-in (λ x y → has-level-apply (c x) x y)
 
       contr-has-level : {n : ℕ₋₂} → (is-contr A → has-level n A)
       contr-has-level {n = ⟨-2⟩} p = p
@@ -146,7 +146,7 @@ module _ {i} where
       prop-is-set = prop-has-level-S
 
       =-preserves-contr : {x y : A} → is-contr A → is-contr (x == y)
-      =-preserves-contr p = has-level-make (contr-has-all-paths {{p}} _ _ , unique-path) where
+      =-preserves-contr p = has-level-in (contr-has-all-paths {{p}} _ _ , unique-path) where
           unique-path : {u v : A} (q : u == v)
             → contr-has-all-paths {{p}} u v == q
           unique-path idp = !-inv-l (contr-path p _)
@@ -161,14 +161,14 @@ module _ {i} where
     {- The type of paths from a fixed point is contractible -}
     instance
       pathfrom-is-contr : (x : A) → is-contr (Σ A (λ t → x == t))
-      pathfrom-is-contr x = has-level-make ((x , idp) , pathfrom-unique-path) where
+      pathfrom-is-contr x = has-level-in ((x , idp) , pathfrom-unique-path) where
         pathfrom-unique-path : {u : A} (pp : Σ A (λ t → u == t)) → (u , idp) == pp
         pathfrom-unique-path (u , idp) = idp
 
     {- The type of paths to a fixed point is contractible -}
     instance
       pathto-is-contr : (x : A) → is-contr (Σ A (λ t → t == x))
-      pathto-is-contr x = has-level-make ((x , idp) , pathto-unique-path) where
+      pathto-is-contr x = has-level-in ((x , idp) , pathto-unique-path) where
         pathto-unique-path : {u : A} (pp : Σ A (λ t → t == u)) → (u , idp) == pp
         pathto-unique-path (u , idp) = idp
 

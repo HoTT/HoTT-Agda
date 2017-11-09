@@ -10,9 +10,9 @@ module lib.types.Pi where
 instance
   Π-level : ∀ {i j} {A : Type i} {B : A → Type j} {n : ℕ₋₂}
     → ((x : A) → has-level n (B x)) → has-level n (Π A B)
-  Π-level {n = ⟨-2⟩} p = has-level-make ((λ x → contr-center (p x)) , lemma)
+  Π-level {n = ⟨-2⟩} p = has-level-in ((λ x → contr-center (p x)) , lemma)
     where abstract lemma = λ f → λ= (λ x → contr-path (p x) (f x))
-  Π-level {n = S n} p = has-level-make lemma where
+  Π-level {n = S n} p = has-level-in lemma where
     abstract
       lemma = λ f g →
         equiv-preserves-level λ=-equiv {{Π-level (λ x → has-level-apply (p x) (f x) (g x))}}
