@@ -3,10 +3,10 @@
 open import HoTT
 open import homotopy.HSpace
 
-module homotopy.HopfConstruction {i} {X : Ptd i} (c : is-connected 0 (de⊙ X))
+module homotopy.HopfConstruction {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
   (hX : HSpaceStructure X) where
 
-module μ = ConnectedHSpace c hX
+module μ = ConnectedHSpace hX
 μ = μ.μ
 private
   A = de⊙ X

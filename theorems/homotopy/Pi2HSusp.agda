@@ -6,8 +6,8 @@ import homotopy.WedgeExtension as WedgeExt
 
 module homotopy.Pi2HSusp where
 
-module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (de⊙ X))
-  (cA : is-connected 0 (de⊙ X)) (H-X : HSS X)
+module Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
+  {{_ : is-connected 0 (de⊙ X)}} (H-X : HSS X)
   where
 
   {- TODO this belongs somewhere else, but where? -}
@@ -19,7 +19,7 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (de⊙ X))
       ∙ ap ua (Subtype=-out is-equiv-prop (λ= α))
       ∙ ua-η q
 
-  module μ = ConnectedHSpace cA H-X
+  module μ = ConnectedHSpace H-X
   μ = μ.μ
   private
     A = de⊙ X
@@ -34,14 +34,14 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (de⊙ X))
   Codes = Codes.f
 
   Codes-level : (x : Susp A) → has-level 1 (Codes x)
-  Codes-level = Susp-elim gA gA
-    (λ _ → prop-has-all-paths-↓ has-level-is-prop)
+  Codes-level = Susp-elim ⟨⟩ ⟨⟩
+    (λ _ → prop-has-all-paths-↓)
 
   encode₀ : {x : Susp A} → (north == x) → Codes x
   encode₀ α = transport Codes α e
 
   encode : {x : Susp A} → P x → Codes x
-  encode {x} = Trunc-rec (Codes-level x) encode₀
+  encode {x} = Trunc-rec {{Codes-level x}} encode₀
 
   decode' : A → P north
   decode' a = [ (merid a ∙ ! (merid e)) ]
@@ -87,8 +87,8 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (de⊙ X))
     homomorphism = WedgeExt.ext args
       where
       args : WedgeExt.args {a₀ = e} {b₀ = e}
-      args = record {m = -1; n = -1; cA = cA; cB = cA;
-        P = λ a a' → (_ , Trunc-level {n = 1} _ _);
+      args = record {m = -1; n = -1;
+        P = λ a a' → (_ , ⟨⟩);
         f = λ a →  ap [_] $
               merid (μ a e)
                 =⟨ ap merid (μ.unit-r a) ⟩
@@ -141,7 +141,8 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (de⊙ X))
       → decode {x} (encode {x} tα) == tα
     decode-encode {x} = Trunc-elim
       {P = λ tα → decode {x} (encode {x} tα) == tα}
-      (λ _ → =-preserves-level Trunc-level)
+      -- FIXME: Agda very slow (looping?) when omitting the next line
+      {{λ _ → =-preserves-level Trunc-level}}
       (J (λ y p → decode {y} (encode {y} [ p ]) == [ p ])
          (ap [_] (!-inv-r (merid e))))
 
@@ -152,8 +153,8 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (de⊙ X))
   ⊙main-lemma = ≃-to-⊙≃ main-lemma-eq idp
 
   abstract
-    main-lemma-iso : Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp X))) Trunc-level
-                  ≃ᴳ Ω^S-group 0 (⊙Trunc 1 X) Trunc-level
+    main-lemma-iso : Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp X)))
+                  ≃ᴳ Ω^S-group 0 (⊙Trunc 1 X)
     main-lemma-iso = (record {f = f; pres-comp = pres-comp} , ie)
       where
       h : ⊙Trunc 1 (⊙Ω (⊙Susp X)) ⊙→ ⊙Trunc 1 X
@@ -167,7 +168,7 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (de⊙ X))
       pres-comp = Ω^S-fmap-∙ 0 h
 
       ie : is-equiv f
-      ie = Ω^-isemap 1 h (snd $ ((unTrunc-equiv A gA)⁻¹ ∘e main-lemma-eq))
+      ie = Ω^-isemap 1 h (snd $ ((unTrunc-equiv A)⁻¹ ∘e main-lemma-eq))
 
   abstract
     π₂-Susp : πS 1 (⊙Susp X) ≃ᴳ πS 0 X
@@ -176,8 +177,8 @@ module Pi2HSusp {i} {X : Ptd i} (gA : has-level 1 (de⊙ X))
         ≃ᴳ⟨ πS-Ω-split-iso 0 (⊙Susp X) ⟩
       πS 0 (⊙Ω (⊙Susp X))
         ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso 0 (⊙Ω (⊙Susp X)) ⁻¹ᴳ ⟩
-      Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp X))) Trunc-level
+      Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp X)))
         ≃ᴳ⟨ main-lemma-iso ⟩
-      Ω^S-group 0 (⊙Trunc 1 X) Trunc-level
+      Ω^S-group 0 (⊙Trunc 1 X)
         ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso 0 X ⟩
       πS 0 X ≃ᴳ∎

@@ -111,21 +111,23 @@ module _ {i} {D : ℕ → Type i} (d : (n : ℕ) → D n → D (S n)) where
 {- If all Dₙ are m-connected, then the colim is m-connected -}
 
 ncolim-conn : ∀ {i} {D : ℕ → Type i} (d : (n : ℕ) → D n → D (S n)) (m : ℕ₋₂)
-  → ((n : ℕ) → is-connected m (D n))
+  {{_ : (n : ℕ) → is-connected m (D n)}}
   → is-connected m (ℕColim d)
-ncolim-conn {D = D} d ⟨-2⟩ cD = -2-conn (ℕColim d)
-ncolim-conn {D = D} d (S m) cD =
-  Trunc-rec (prop-has-level-S is-contr-is-prop)
-    (λ x → ([ ncin O x ] ,
-            (Trunc-elim (λ _ → =-preserves-level Trunc-level) $
+ncolim-conn {D = D} d ⟨-2⟩ = -2-conn (ℕColim d)
+ncolim-conn {D = D} d (S m) {{cD}} =
+  Trunc-rec
+    (λ x → has-level-in ([ ncin O x ] ,
+            (Trunc-elim $
               λ c → ap [_] (nc-match-=-base d x c) ∙ nc-match-=-point x c)))
-    (fst (cD O))
+    (contr-center (cD O))
   where
+  instance f = λ {n} → cD n
+
   nc-match-=-point : (x : D O) (c : ℕColim d)
     → [_] {n = S m} (nc-match d x c) == [ c ]
   nc-match-=-point x = ℕColimElim.f d
     (λ n y → ap (Trunc-fmap (ncin n))
-                (contr-has-all-paths (cD n) [ nc-lift d n x ] [ y ]))
+                (contr-has-all-paths [ nc-lift d n x ] [ y ]))
       (λ n y → ↓-='-from-square $
         (ap-∘ [_] (nc-match d x) (ncglue n y)
          ∙ ap (ap [_]) (ℕCMatch.ncglue-β d x n y))
@@ -134,25 +136,25 @@ ncolim-conn {D = D} d (S m) cD =
         ∙h⊡
         square-symmetry
           (natural-square
-            (Trunc-elim (λ _ → =-preserves-level Trunc-level)
+            (Trunc-elim
                (λ c → ap [_] (nc-raise-= d c)))
             (ap (Trunc-fmap (ncin n))
-                (contr-has-all-paths (cD n) [ nc-lift d n x ] [ y ])))
+                (contr-has-all-paths [ nc-lift d n x ] [ y ])))
         ⊡h∙
         ∘-ap (Trunc-fmap (nc-raise d)) (Trunc-fmap (ncin n))
-          (contr-has-all-paths (cD n) [ nc-lift d n x ] [ y ])
+          (contr-has-all-paths [ nc-lift d n x ] [ y ])
         ⊡h∙
         vert-degen-path
           (natural-square
             (λ t → Trunc-fmap-∘ (nc-raise d) (ncin n) t
                    ∙ ! (Trunc-fmap-∘ (ncin (S n)) (d n) t))
-            (contr-has-all-paths (cD n) [ nc-lift d n x ] [ y ]))
+            (contr-has-all-paths [ nc-lift d n x ] [ y ]))
         ⊡h∙
         ap-∘ (Trunc-fmap (ncin (S n))) (Trunc-fmap (d n))
-             (contr-has-all-paths (cD n) [ nc-lift d n x ] [ y ])
+             (contr-has-all-paths [ nc-lift d n x ] [ y ])
         ⊡h∙
         ap (ap (Trunc-fmap (ncin (S n))))
-           (contr-has-all-paths (=-preserves-level (cD (S n))) _ _))
+           (contr-has-all-paths _ _))
 
 {- Type of finite tuples -}
 

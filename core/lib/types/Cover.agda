@@ -19,7 +19,8 @@ record Cover (A : Type i) j : Type (lmax i (lsucc j)) where
   constructor cover
   field
     Fiber : A → Type j
-    Fiber-level : ∀ a → is-set (Fiber a)
+    {{Fiber-level}} : ∀ {a} → is-set (Fiber a)
+
   Fiber-is-set = Fiber-level
   TotalSpace = Σ A Fiber
 
@@ -38,8 +39,8 @@ module _ {A : Type i} {j} where
 
   -- Equality between covers.
   cover=' : {c₁ c₂ : Cover A j} → Fiber c₁ == Fiber c₂ → c₁ == c₂
-  cover=' {cover f _} {cover .f _} idp = ap (cover f) $
-    prop-has-all-paths (Π-is-prop λ _ → is-set-is-prop) _ _
+  cover=' {cover f} {cover .f} idp = ap (λ (x : ∀ {a} → is-set (f a)) → cover f {{x}})
+    (prop-has-all-paths _ _)
 
   cover= : {c₁ c₂ : Cover A j} → (∀ a → Fiber c₁ a ≃ Fiber c₂ a)
     → c₁ == c₂
@@ -72,7 +73,6 @@ module _ (X : Ptd i)
   open Cover c
   private
     F = Cover.Fiber c
-    F-level = Cover.Fiber-level c
     A = de⊙ X
     a = pt⊙ X
 
@@ -91,7 +91,7 @@ module _ (X : Ptd i)
              → (idp=p : idp == p)
              → idp == p↑
                [ (λ p → a↑ == a↑ [ F ↓ p ]) ↓ idp=p ]
-    idp=p↑ idp = prop-has-all-paths (F-level a _ _) _ _
+    idp=p↑ idp = prop-has-all-paths _ _
 
     -- The injection map with some ends free (in order to apply J).
     from′ : ∀ {p : a == a} {p↑ : a↑ == a↑ [ F ↓ p ]}
@@ -113,7 +113,7 @@ module _ (X : Ptd i)
                 → from′ (to′ idp=p⇑) idp=snd=p⇑ == idp=p⇑
                   [ (λ p⇑ → idp == p⇑) ↓ ! (pair=-η p⇑) ]
     from′-to′ idp idp=snd=p⇑ = ap (from′ idp)
-      $ contr-has-all-paths (F-level a _ _ _ _) _ _
+      $ contr-has-all-paths _ _
 
     -- Injection is left-inverse to projection.
     from-to : ∀ p²⇑ → from (to p²⇑) == p²⇑
@@ -144,7 +144,7 @@ module _ {A : Type i} where
     → Fiber cov a₁ → a₁ =₀ a₂
     → Fiber cov a₂
   cover-trace cov a↑ p =
-    transport₀ (Fiber cov) (Fiber-is-set cov _) p a↑
+    transport₀ (Fiber cov) p a↑
 
   abstract
     cover-trace-idp₀ : ∀ {j} (cov : Cover A j) {a₁}
@@ -158,19 +158,17 @@ module _ {A : Type i} where
       → (p : a₁ =₀ a₂)
       → cover-trace cov (cover-trace cov a↑ loop) p
       == cover-trace cov a↑ (loop ∙₀ p)
-    cover-paste cov a↑ loop p = ! $ transp₀-∙₀ (Fiber-is-set cov) loop p a↑
+    cover-paste cov a↑ loop p = ! $ transp₀-∙₀ loop p a↑
 
 -- Path sets form a covering space
 module _ (X : Ptd i) where
   path-set-cover : Cover (de⊙ X) i
   path-set-cover = record
-    { Fiber = λ a → pt⊙ X =₀ a
-    ; Fiber-level = λ a → Trunc-level
-    }
+    { Fiber = λ a → pt⊙ X =₀ a }
 
 -- Cover morphisms
 CoverHom : ∀ {A : Type i} {j₁ j₂}
   → (cov1 : Cover A j₁)
   → (cov2 : Cover A j₂)
   → Type (lmax i (lmax j₁ j₂))
-CoverHom (cover F₁ _) (cover F₂ _) = ∀ a → F₁ a → F₂ a
+CoverHom (cover F₁) (cover F₂) = ∀ a → F₁ a → F₂ a

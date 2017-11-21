@@ -49,7 +49,7 @@ module groups.PropQuotUniqueFactorization
           quot-relᴳ {P = P/Q-prop} $ <– (quot-relᴳ-equiv {P = Q}) $
             ! (φ-comm h₁) ∙ ap φ₂.f (r₁ ∙ ! r₂) ∙ φ-comm h₂
 
-      module HToP/Q = ConstExt P/Q.El-is-set
+      module HToP/Q = ConstExt
         H-to-P/Q-f' H-to-P/Q-f'-const
 
       H-to-P/Q-f : Trunc -1 (hfiber φ₁.f k) → P/Q.El
@@ -65,10 +65,7 @@ module groups.PropQuotUniqueFactorization
         → (hf₂ : Trunc -1 (hfiber φ₁.f k₂))
         → H-to-P/Q-f (H.comp k₁ k₂) hf₁₂ == P/Q.comp (H-to-P/Q-f k₁ hf₁) (H-to-P/Q-f k₂ hf₂)
       H-to-P/Q-f-comp k₁ k₂ hf₁₂ = Trunc-elim
-        (λ hf₁ → Π-is-prop λ hf₂ →
-          P/Q.El-is-set _ (P/Q.comp (H-to-P/Q-f k₁ hf₁) (H-to-P/Q-f k₂ hf₂)))
         (λ{(p₁ , r₁) → Trunc-elim
-          (λ hf₂ → P/Q.El-is-set _ (P/Q.comp q[ p₁ ] (H-to-P/Q-f k₂ hf₂)))
           (λ{(p₂ , r₂) → H-to-P/Q-f-is-const (H.comp k₁ k₂)
               hf₁₂ [ P.comp p₁ p₂ , φ₁.pres-comp p₁ p₂ ∙ ap2 H.comp r₁ r₂ ]})})
 
@@ -84,19 +81,19 @@ module groups.PropQuotUniqueFactorization
     to = λ k → H-to-P/Q-f k (φ₁-is-surj k)
 
     from : P/Q.El → H.El
-    from = SetQuot-rec H.El-is-set
+    from = SetQuot-rec
       (λ p → φ₁.f p)
       (λ {p₁} {p₂} q'p₁p₂⁻¹ → φ₂-is-inj (φ₁.f p₁) (φ₁.f p₂) $
         φ-comm p₁ ∙ quot-relᴳ {P = Q} q'p₁p₂⁻¹ ∙ ! (φ-comm p₂))
 
     abstract
       to-from : ∀ p/q → to (from p/q) == p/q
-      to-from = SetQuot-elim (λ p/q → raise-level -1 $ P/Q.El-is-set _ p/q)
+      to-from = SetQuot-elim
         (λ p → H-to-P/Q-f-is-const (φ₁.f p) (φ₁-is-surj (φ₁.f p)) [ p , idp ])
-        (λ _ → prop-has-all-paths-↓ $ P/Q.El-is-set _ _)
+        (λ _ → prop-has-all-paths-↓)
 
       from-to' : ∀ k (hf : Trunc -1 (hfiber φ₁.f k)) → from (H-to-P/Q-f k hf) == k
-      from-to' k = Trunc-elim (λ hf → H.El-is-set (from (H-to-P/Q-f k hf)) k) (λ{(p , r) → r})
+      from-to' k = Trunc-elim (λ{(p , r) → r})
 
       from-to : ∀ k → from (to k) == k
       from-to k = from-to' k (φ₁-is-surj k)

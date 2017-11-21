@@ -13,7 +13,7 @@ private
 
 module FreudenthalEquiv
   {i} (n k : ℕ₋₂) (kle : k ≤T S n +2+ S n)
-  (X : Ptd i) (cX : is-connected (S (S n)) (de⊙ X)) where
+  (X : Ptd i) {{cX : is-connected (S (S n)) (de⊙ X)}} where
 
   Q : Susp (de⊙ X) → Type i
   Q x = Trunc k (north == x)
@@ -23,8 +23,6 @@ module FreudenthalEquiv
 
   Codes-mer-args : WedgeExt.args {a₀ = pt X} {b₀ = [_] {n = k} (pt X)}
   Codes-mer-args = record {n = S n; m = S n;
-    cA = cX;
-    cB = Trunc-preserves-conn k cX;
     P = λ _ _ → (Trunc k (de⊙ X) , raise-level-≤T kle Trunc-level);
     f = [_]; g = idf _; p = idp}
 
@@ -49,8 +47,8 @@ module FreudenthalEquiv
 
   Codes-mer-is-equiv : (x : de⊙ X) → is-equiv (Codes-mer x)
   Codes-mer-is-equiv =
-    conn-extend (pointed-conn-out (de⊙ X) (pt X) cX)
-      (λ x' → (is-equiv (Codes-mer x') , prop-has-level-S is-equiv-is-prop))
+    conn-extend (pointed-conn-out {n = S n} (de⊙ X) (pt X))
+      (λ x' → (is-equiv (Codes-mer x') , is-equiv-level))
       (λ tt → transport is-equiv (! (Codes-mer-β-r)) (idf-is-equiv _))
 
   Codes-mer-equiv : (x : de⊙ X) → Trunc k (de⊙ X) ≃ Trunc k (de⊙ X)
@@ -59,8 +57,8 @@ module FreudenthalEquiv
   Codes-mer-inv-x₀ : <– (Codes-mer-equiv (pt X)) == idf _
   Codes-mer-inv-x₀ =
        ap is-equiv.g (conn-extend-β
-          (pointed-conn-out (de⊙ X) (pt X) cX)
-          (λ x' → (is-equiv (Codes-mer x') , prop-has-level-S is-equiv-is-prop))
+          (pointed-conn-out (de⊙ X) (pt X))
+          (λ x' → (is-equiv (Codes-mer x') , is-equiv-level))
           _ unit)
      ∙ lemma (! (Codes-mer-β-r)) (snd $ ide _)
     where lemma : ∀ {i j} {A : Type i} {B : Type j} {f g : A → B}
@@ -73,7 +71,7 @@ module FreudenthalEquiv
 
   Codes-has-level : (x : Susp (de⊙ X)) → has-level k (Codes x)
   Codes-has-level = Susp-elim Trunc-level Trunc-level
-                      (λ _ → prop-has-all-paths-↓ has-level-is-prop)
+                      (λ _ → prop-has-all-paths-↓)
 
   decodeN : Codes north → Trunc k (north' (de⊙ X) == north)
   decodeN = Trunc-fmap up
@@ -88,12 +86,12 @@ module FreudenthalEquiv
   encode₀ α = transport Codes α [ pt X ]
 
   encode : {x : Susp (de⊙ X)} → Trunc k (north == x) → Codes x
-  encode {x} tα = Trunc-rec (Codes-has-level x) encode₀ tα
+  encode {x} tα = Trunc-rec {{Codes-has-level x}} encode₀ tα
 
   abstract
     encode-decodeN : (c : Codes north) → encode (decodeN c) == c
     encode-decodeN = Trunc-elim
-      (λ _ → =-preserves-level Trunc-level)
+      {{λ _ → =-preserves-level Trunc-level}}
       (λ x →
         encode (decodeN [ x ])
           =⟨ idp ⟩
@@ -203,12 +201,12 @@ module FreudenthalEquiv
 
       STS-args : WedgeExt.args {a₀ = pt X} {b₀ = pt X}
       STS-args =
-        record {n = S n; m = S n; cA = cX; cB = cX; P = P; f = f; g = g; p = p}
+        record {n = S n; m = S n; P = P; f = f; g = g; p = p}
 
       STS : (x' : de⊙ X) (c : Codes north) →
         transport Q (merid x') (Trunc-fmap up c)
         == Trunc-fmap (merid) (transport Codes (merid x') c)
-      STS x' = Trunc-elim (λ _ → =-preserves-level Trunc-level)
+      STS x' = Trunc-elim {{λ _ → =-preserves-level Trunc-level}}
                           (WedgeExt.ext STS-args x')
 
   abstract
@@ -216,7 +214,7 @@ module FreudenthalEquiv
       → decode {x} (encode {x} tα) == tα
     decode-encode {x} = Trunc-elim
       {P = λ tα → decode {x} (encode {x} tα) == tα}
-      (λ _ → =-preserves-level Trunc-level)
+      {{λ _ → =-preserves-level Trunc-level}}
       (J (λ y p → decode {y} (encode {y} [ p ]) == [ p ])
          (ap [_] (!-inv-r (merid (pt X)))))
 
@@ -235,14 +233,14 @@ module FreudenthalEquiv
 {- Used to prove stability in iterated suspensions -}
 module FreudenthalIso
   {i} (n : ℕ₋₂) (k : ℕ) (kle : ⟨ S k ⟩ ≤T S (n +2+ S n))
-  (X : Ptd i) (cX : is-connected (S (S n)) (de⊙ X)) where
+  (X : Ptd i) {{_ : is-connected (S (S n)) (de⊙ X)}} where
 
-  open FreudenthalEquiv n ⟨ S k ⟩ kle X cX public
+  open FreudenthalEquiv n ⟨ S k ⟩ kle X public
 
-  hom : Ω^S-group k (⊙Trunc ⟨ S k ⟩ X) Trunc-level
-     →ᴳ Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp X))) Trunc-level
-  hom = Ω^S-group-fmap k Trunc-level Trunc-level (decodeN , decodeN-pt)
+  hom : Ω^S-group k (⊙Trunc ⟨ S k ⟩ X)
+     →ᴳ Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp X)))
+  hom = Ω^S-group-fmap k (decodeN , decodeN-pt)
 
-  iso : Ω^S-group k (⊙Trunc ⟨ S k ⟩ X) Trunc-level
-     ≃ᴳ Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp X))) Trunc-level
-  iso = Ω^S-group-emap k Trunc-level Trunc-level ⊙eq
+  iso : Ω^S-group k (⊙Trunc ⟨ S k ⟩ X)
+     ≃ᴳ Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp X)))
+  iso = Ω^S-group-emap k ⊙eq

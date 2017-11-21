@@ -22,9 +22,7 @@ module groups.KernelImage {i j k}
     ker-El = Σ H.El (λ h → ψ.f h == K.ident)
 
     ker-subtype : SubtypeProp H.El k
-    ker-subtype = (λ h → ψ.f h == K.ident) , level
-      where abstract level : ∀ h → is-prop (ψ.f h == K.ident)
-                     level h = K.El-is-set _ _
+    ker-subtype = (λ h → ψ.f h == K.ident) , ⟨⟩
 
   ker-El=-out = Subtype=-out ker-subtype
 
@@ -46,7 +44,7 @@ module groups.KernelImage {i j k}
         where abstract lemma = ψ.pres-ident
 
       inv : ker/im-El → ker/im-El
-      inv = SetQuot-rec SetQuot-level inv' inv-rel
+      inv = SetQuot-rec inv' inv-rel
         where
           inv' : ker-El → ker/im-El
           inv' (h , ψh=0) = q[ H.inv h , lemma ]
@@ -54,20 +52,17 @@ module groups.KernelImage {i j k}
 
           abstract
             inv-rel : ∀ {ker₁ ker₂} → ker/im-rel ker₁ ker₂ → inv' ker₁ == inv' ker₂
-            inv-rel {h₁ , _} {h₂ , _} = Trunc-rec (SetQuot-level _ _)
+            inv-rel {h₁ , _} {h₂ , _} = Trunc-rec
               λ{(g , φg=h₁h₂⁻¹) → quot-rel
                 [ G.inv g , φ.pres-inv g ∙ ap H.inv φg=h₁h₂⁻¹
                           ∙ H.inv-diff h₁ h₂ ∙ H.comm h₂ (H.inv h₁)
                           ∙ ap (H.comp (H.inv h₁)) (! (H.inv-inv h₂)) ]}
 
       comp : ker/im-El → ker/im-El → ker/im-El
-      comp = SetQuot-rec level comp' comp-rel where
-        abstract
-          level : is-set (ker/im-El → ker/im-El)
-          level = →-is-set SetQuot-level
+      comp = SetQuot-rec comp' comp-rel where
 
         comp' : ker-El → ker/im-El → ker/im-El
-        comp' (h₁ , ψh₁=0) = SetQuot-rec SetQuot-level comp'' comp'-rel where
+        comp' (h₁ , ψh₁=0) = SetQuot-rec comp'' comp'-rel where
 
           comp'' : ker-El → ker/im-El
           comp'' (h₂ , ψh₂=0) = q[ H.comp h₁ h₂ , lemma ]
@@ -76,7 +71,7 @@ module groups.KernelImage {i j k}
 
           abstract
             comp'-rel : ∀ {ker₂ ker₂'} → ker/im-rel ker₂ ker₂' → comp'' ker₂ == comp'' ker₂'
-            comp'-rel {h₂ , _} {h₂' , _} = Trunc-rec (SetQuot-level _ _)
+            comp'-rel {h₂ , _} {h₂' , _} = Trunc-rec
               λ{(g , φg=h₂h₂'⁻¹) → quot-rel
                 [ g , ! ( ap (H.comp (H.comp h₁ h₂)) (H.inv-comp h₁ h₂')
                         ∙ H.assoc h₁ h₂ (H.comp (H.inv h₂') (H.inv h₁))
@@ -88,8 +83,8 @@ module groups.KernelImage {i j k}
 
         abstract
           comp-rel : ∀ {ker₁ ker₁'} → ker/im-rel ker₁ ker₁' → comp' ker₁ == comp' ker₁'
-          comp-rel {h₁ , _} {h₁' , _} = Trunc-rec (level _ _)
-            λ{(g , φg=h₁h₁'⁻¹) → λ= $ SetQuot-elim (λ _ → =-preserves-set SetQuot-level)
+          comp-rel {h₁ , _} {h₁' , _} = Trunc-rec
+            λ{(g , φg=h₁h₁'⁻¹) → λ= $ SetQuot-elim
               (λ{(h₂ , _) → quot-rel
                   [ g , ! ( ap (H.comp (H.comp h₁ h₂)) (H.inv-comp h₁' h₂)
                           ∙ H.assoc h₁ h₂ (H.comp (H.inv h₂) (H.inv h₁'))
@@ -97,35 +92,30 @@ module groups.KernelImage {i j k}
                                           ∙ ap (λ h → H.comp h (H.inv h₁')) (H.inv-r h₂)
                                           ∙ H.unit-l (H.inv h₁'))
                           ∙ ! φg=h₁h₁'⁻¹ )]})
-              (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))}
+              (λ _ → prop-has-all-paths-↓)}
 
       abstract
         unit-l : ∀ k/i → comp ident k/i == k/i
         unit-l = SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-level)
           (λ{(h , _) → ap q[_] $ ker-El=-out (H.unit-l h)})
-          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
+          (λ _ → prop-has-all-paths-↓)
 
         assoc : ∀ k/i₁ k/i₂ k/i₃ → comp (comp k/i₁ k/i₂) k/i₃ == comp k/i₁ (comp k/i₂ k/i₃)
         assoc = SetQuot-elim
-          (λ _ → Π-is-set λ _ → Π-is-set λ _ → =-preserves-set SetQuot-level)
           (λ{(h₁ , _) → SetQuot-elim
-            (λ _ → Π-is-set λ _ → =-preserves-set SetQuot-level)
             (λ{(h₂ , _) → SetQuot-elim
-              (λ _ → =-preserves-set SetQuot-level)
               (λ{(h₃ , _) → ap q[_] $ ker-El=-out (H.assoc h₁ h₂ h₃)})
-              (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))})
-            (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → SetQuot-level _ _))})
-          (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → Π-is-prop λ _ → SetQuot-level _ _))
+              (λ _ → prop-has-all-paths-↓)})
+            (λ _ → prop-has-all-paths-↓)})
+          (λ _ → prop-has-all-paths-↓)
 
         inv-l : ∀ k/i → comp (inv k/i) k/i == ident
         inv-l = SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-level)
           (λ{(h , _) → ap q[_] $ ker-El=-out (H.inv-l h)})
-          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _))
+          (λ _ → prop-has-all-paths-↓)
 
   Ker/Im : Group (lmax i (lmax j k))
-  Ker/Im = group _ SetQuot-level ker/im-struct
+  Ker/Im = group _ ker/im-struct
 
   module Ker/Im = Group Ker/Im
 
@@ -137,9 +127,7 @@ module groups.KernelImage {i j k}
       to-pres-comp : preserves-comp Ker/Im.comp
         (QuotGroup.comp (quot-of-sub (ker-propᴳ ψ) (im-npropᴳ φ H-ab))) (idf _)
       to-pres-comp = SetQuot-elim
-        (λ _ → Π-is-set λ _ → =-preserves-set SetQuot-level)
         (λ _ → SetQuot-elim
-          (λ _ → =-preserves-set SetQuot-level)
           (λ _ → ap q[_] $ ker-El=-out idp)
-          (λ _ → prop-has-all-paths-↓ (SetQuot-level _ _)))
-        (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → SetQuot-level _ _))
+          (λ _ → prop-has-all-paths-↓))
+        (λ _ → prop-has-all-paths-↓)

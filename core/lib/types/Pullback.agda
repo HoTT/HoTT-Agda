@@ -66,8 +66,8 @@ module _ {i j k} (D : Cospan {i} {j} {k}) where
 module _ {i j k} (n : ℕ₋₂) {D : Cospan {i} {j} {k}} where
   open Cospan D
 
-  pullback-level : has-level n A → has-level n B → has-level n C
-    → has-level n (Pullback D)
-  pullback-level pA pB pC =
-    equiv-preserves-level ((pullback-decomp-equiv D)⁻¹) $
-      Σ-level (×-level pA pB) (λ _ → =-preserves-level pC)
+  instance
+    pullback-level : has-level n A → has-level n B → has-level n C
+      → has-level n (Pullback D)
+    pullback-level pA pB pC =
+      equiv-preserves-level ((pullback-decomp-equiv D)⁻¹) where instance _ = pA; _ = pB; _ = pC

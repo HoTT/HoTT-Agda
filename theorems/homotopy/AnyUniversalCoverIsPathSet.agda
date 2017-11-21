@@ -8,15 +8,13 @@ private
   a₁ = pt X
 
 path-set-is-universal : is-universal (path-set-cover X)
-path-set-is-universal = [ pt X , idp₀ ] ,
+path-set-is-universal = has-level-in ([ pt X , idp₀ ] ,
   Trunc-elim
     {P = λ xp₀ → [ pt X , idp₀ ] == xp₀}
-    (λ xp₀ → =-preserves-level Trunc-level)
     (λ{(x , p₀) → Trunc-elim
       {P = λ p₀ → [ pt X , idp₀ ] == [ x , p₀ ]}
-      (λ p₀ → Trunc-level {n = 1} [ pt X , idp₀ ] [ x , p₀ ])
       (λ p → ap [_] $ pair= p (lemma p))
-      p₀ })
+      p₀ }))
   where
     lemma : ∀ {x} (p : pt X == x) → idp₀ == [ p ] [ (pt X =₀_) ↓ p ]
     lemma idp = idp
@@ -24,13 +22,14 @@ path-set-is-universal = [ pt X , idp₀ ] ,
 module _ {j} (univ-cov : ⊙UniversalCover X j) where
   private
     module univ-cov = ⊙UniversalCover univ-cov
+    instance _ = univ-cov.is-univ
 
     -- One-to-one mapping between the universal cover
     -- and the truncated path spaces from one point.
 
     [path] : ∀ (a⇑₁ a⇑₂ : univ-cov.TotalSpace) → a⇑₁ =₀ a⇑₂
     [path] a⇑₁ a⇑₂ = –> (Trunc=-equiv [ a⇑₁ ] [ a⇑₂ ])
-      (contr-has-all-paths univ-cov.is-univ [ a⇑₁ ] [ a⇑₂ ])
+      (contr-has-all-paths [ a⇑₁ ] [ a⇑₂ ])
 
     abstract
       [path]-has-all-paths :
@@ -38,7 +37,7 @@ module _ {j} (univ-cov : ⊙UniversalCover X j) where
         → has-all-paths (a⇑₁ =₀ a⇑₂)
       [path]-has-all-paths {a⇑₁} {a⇑₂} =
         transport has-all-paths (ua (Trunc=-equiv [ a⇑₁ ] [ a⇑₂ ])) $
-          contr-has-all-paths (raise-level -2 univ-cov.is-univ [ a⇑₁ ] [ a⇑₂ ])
+          contr-has-all-paths {{has-level-apply (raise-level -2 univ-cov.is-univ) [ a⇑₁ ] [ a⇑₂ ]}}
 
     to : ∀ {a₂} → univ-cov.Fiber a₂ → a₁ =₀ a₂
     to {a₂} a⇑₂ = ap₀ fst ([path] (a₁ , univ-cov.pt) (a₂ , a⇑₂))
@@ -49,7 +48,6 @@ module _ {j} (univ-cov : ⊙UniversalCover X j) where
     abstract
       to-from : ∀ {a₂} (p : a₁ =₀ a₂) → to (from p) == p
       to-from = Trunc-elim
-        (λ _ → =-preserves-set Trunc-level)
         (λ p → lemma p)
         where
           lemma : ∀ {a₂} (p : a₁ == a₂) → to (from [ p ]) == [ p ]
@@ -64,10 +62,10 @@ module _ {j} (univ-cov : ⊙UniversalCover X j) where
 
       from-to : ∀ {a₂} (a⇑₂ : univ-cov.Fiber a₂) → from (to a⇑₂) == a⇑₂
       from-to {a₂} a⇑₂ = Trunc-elim
-        (λ p → =-preserves-set
+        {{λ p → =-preserves-level
                 {x = from (ap₀ fst p)}
                 {y = a⇑₂}
-                (univ-cov.Fiber-is-set a₂))
+                univ-cov.Fiber-is-set}}
         (λ p → to-transp $ snd= p)
         ([path] (a₁ , univ-cov.pt) (a₂ , a⇑₂))
 

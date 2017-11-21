@@ -68,7 +68,7 @@ module _ (dec : has-dec-eq A) where
         ∙ ℤ+-unit-l (Word-coef w a)
 
   FormalSum-coef : FormalSum A → (A → ℤ)
-  FormalSum-coef = FormalSum-rec (→-is-set ℤ-is-set) Word-coef (λ r → λ= $ FormalSum-coef-rel r)
+  FormalSum-coef = FormalSum-rec Word-coef (λ r → λ= $ FormalSum-coef-rel r)
 
   -- Theorem : if coef w a == 0 then FormalSumRel w nil
 
@@ -235,12 +235,10 @@ module _ (dec : has-dec-eq A) where
       → (∀ a → FormalSum-coef fs₁ a == FormalSum-coef fs₂ a)
       → fs₁ == fs₂
     FormalSum-coef-ext = FormalSum-elim
-      (λ fs₁ → Π-is-set λ fs₂ → →-is-set $ =-preserves-set FormalSum-is-set)
       (λ w₁ → FormalSum-elim
-        (λ fs₂ → →-is-set $ =-preserves-set FormalSum-is-set)
         (λ w₂ → FormalSum-coef-ext' w₁ w₂)
-        (λ _ → prop-has-all-paths-↓ (→-is-prop $ FormalSum-is-set _ _)))
-      (λ _ → prop-has-all-paths-↓ (Π-is-prop λ _ → →-is-prop $ FormalSum-is-set _ _))
+        (λ _ → prop-has-all-paths-↓))
+      (λ _ → prop-has-all-paths-↓)
 
   has-finite-support : (A → ℤ) → Type i
   has-finite-support f = Σ (FormalSum A) λ fs → ∀ a → f a == FormalSum-coef fs a
@@ -252,4 +250,4 @@ module _ {dec : has-dec-eq A} where
     has-finite-support-is-prop f = all-paths-is-prop
       λ{(fs₁ , match₁) (fs₂ , match₂) → pair=
         (FormalSum-coef-ext dec fs₁ fs₂ λ a → ! (match₁ a) ∙ match₂ a)
-        (prop-has-all-paths-↓ $ Π-is-prop λ _ → ℤ-is-set _ _)}
+        prop-has-all-paths-↓}

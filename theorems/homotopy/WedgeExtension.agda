@@ -9,8 +9,8 @@ module homotopy.WedgeExtension
   record args : Type (lmax (lsucc i) (lsucc j)) where
     field
       n m : ℕ₋₂
-      cA : is-connected (S n) A
-      cB : is-connected (S m) B
+      {{cA}} : is-connected (S n) A
+      {{cB}} : is-connected (S m) B
       P : A → B → (n +2+ m) -Type (lmax i j)
       f : (a : A) → fst (P a b₀)
       g : (b : B) → fst (P a₀ b)
@@ -22,11 +22,11 @@ module homotopy.WedgeExtension
 
       Q : A → n -Type (lmax i j)
       Q a = ((Σ (∀ b → fst (P a b)) (λ k → (k ∘ cst b₀) == cst (f a)) ,
-                conn-extend-general (pointed-conn-out B b₀ cB)
+                conn-extend-general (pointed-conn-out B b₀)
                                     (P a) (cst (f a))))
 
       l : Π A (fst ∘ Q)
-      l = conn-extend (pointed-conn-out A a₀ cA)
+      l = conn-extend (pointed-conn-out A a₀)
                       Q (λ (_ : Unit) → (g , ap cst (! p)))
 
 
@@ -47,7 +47,7 @@ module homotopy.WedgeExtension
       abstract
         β-r-aux : fst (l r a₀) == g
         β-r-aux = fst= (conn-extend-β
-          (pointed-conn-out A a₀ cA)
+          (pointed-conn-out A a₀)
           (Q r) (λ (_ : Unit) → (g , ap cst (! p))) unit)
 
     abstract
@@ -72,7 +72,7 @@ module homotopy.WedgeExtension
         lemma₁ : β-l a₀ == ap (λ s → s unit) (ap cst (! p))
                  [ (λ k → k b₀ == f a₀) ↓ β-r-aux ]
         lemma₁ = ap↓ (ap (λ s → s unit)) $
-                      snd= (conn-extend-β (pointed-conn-out A a₀ cA)
+                      snd= (conn-extend-β (pointed-conn-out A a₀)
                            (Q r) (λ (_ : Unit) → (g , ap cst (! p))) unit)
 
         lemma₂ : β-r b₀ ∙ ! p == β-l a₀

@@ -26,7 +26,7 @@ has-conn-fibers {A = A} {B = B} n f =
 
 {- all inhabited types are -1-connected -}
 inhab-conn : ∀ {i} {A : Type i} (a : A) → is-connected -1 A
-inhab-conn a = [ a ] , prop-has-all-paths Trunc-level [ a ]
+inhab-conn a = has-level-in ([ a ] , prop-has-all-paths [ a ])
 
 {- connectedness is a prop -}
 is-connected-is-prop : ∀ {i} {n : ℕ₋₂} {A : Type i}
@@ -45,23 +45,23 @@ abstract
           helper : Π A (fst ∘ P ∘ h)
             → (b : B) → Trunc n (Σ A (λ a → h a == b)) → (fst (P b))
           helper t b r =
-            Trunc-rec (snd (P b))
+            Trunc-rec {{snd (P b)}}
               (λ x → transport (λ y → fst (P y)) (snd x) (t (fst x)))
               r
 
           g : Π A (fst ∘ P ∘ h) → Π B (fst ∘ P)
-          g t b = helper t b (fst (c b))
+          g t b = helper t b (contr-center (c b))
 
           f-g : ∀ t → f (g t) == t
           f-g t = λ= $ λ a → transport
-            (λ r →  Trunc-rec (snd (P (h a))) _ r == t a)
-            (! (snd (c (h a)) [ (a , idp) ]))
+            (λ r →  Trunc-rec {{snd (P (h a))}} _ r == t a)
+            (! (contr-path(c (h a)) [ (a , idp) ]))
             idp
 
           g-f : ∀ k → g (f k) == k
           g-f k = λ= $ λ (b : B) →
-            Trunc-elim (λ r → =-preserves-level {x = helper (k ∘ h) b r} (snd (P b)))
-                       (λ x → lemma (fst x) b (snd x)) (fst (c b))
+            Trunc-elim {{λ r → =-preserves-level {x = helper (k ∘ h) b r} (snd (P b))}}
+                       (λ x → lemma (fst x) b (snd x)) (contr-center (c b))
             where
             lemma : ∀ xl → ∀ b → (p : h xl == b) →
               helper (k ∘ h) b [ (xl , p) ] == k b
@@ -90,13 +90,13 @@ conn-extend-general : ∀ {i j} {A : Type i} {B : Type j} {n k : ℕ₋₂}
   → ∀ t → has-level k (Σ (Π B (fst ∘ P)) (λ s → (s ∘ f) == t))
 conn-extend-general {k = ⟨-2⟩} c P t =
   equiv-is-contr-map (pre∘-conn-is-equiv c P) t
-conn-extend-general {B = B} {n = n} {k = S k'} {f = f} c P t =
+conn-extend-general {B = B} {n = n} {k = S k'} {f = f} c P t = has-level-in
   λ {(g , p) (h , q) →
-    equiv-preserves-level (e g h p q) $
-      conn-extend-general {k = k'} c (Q g h) (app= (p ∙ ! q))}
+    equiv-preserves-level (e g h p q)
+      {{conn-extend-general {k = k'} c (Q g h) (app= (p ∙ ! q))}} }
   where
     Q : (g h : Π B (fst ∘ P)) → B → (k' +2+ n) -Type _
-    Q g h b = ((g b == h b) , snd (P b) _ _)
+    Q g h b = ((g b == h b) , has-level-apply (snd (P b)) _ _)
 
     app=-ap : ∀ {i j k} {A : Type i} {B : Type j} {C : B → Type k}
       (f : A → B) {g h : Π B C} (p : g == h)
@@ -134,31 +134,28 @@ conn-in : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} {h : A → B}
   → has-conn-fibers n h
 conn-in {A = A} {B = B} {h = h} sec b =
   let s = sec (λ b → (Trunc _ (hfiber h b) , Trunc-level))
-  in (fst s (λ a → [ a , idp ]) b ,
-      λ kt → Trunc-elim (λ kt → =-preserves-level {y = kt} Trunc-level)
-        (λ k → transport
-                 (λ v → fst s (λ a → [ a , idp ]) (fst v) == [ fst k , snd v ])
-                 (snd (pathfrom-is-contr (h (fst k))) (b , snd k))
-                 (snd s (λ a → [ a , idp ]) (fst k)))
-        kt)
+  in has-level-in (fst s (λ a → [ a , idp ]) b ,
+      Trunc-elim (λ k → transport
+                   (λ v → fst s (λ a → [ a , idp ]) (fst v) == [ fst k , snd v ])
+                   (contr-path (pathfrom-is-contr (h (fst k))) (b , snd k))
+                   (snd s (λ a → [ a , idp ]) (fst k))))
 
 abstract
   pointed-conn-in : ∀ {i} {n : ℕ₋₂} (A : Type i) (a₀ : A)
     → has-conn-fibers {A = ⊤} n (cst a₀) → is-connected (S n) A
-  pointed-conn-in {n = n} A a₀ c =
+  pointed-conn-in {n = n} A a₀ c = has-level-in
     ([ a₀ ] ,
-     Trunc-elim (λ _ → =-preserves-level Trunc-level)
-       (λ a → Trunc-rec (Trunc-level {n = S n} _ _)
-             (λ x → ap [_] (snd x)) (fst $ c a)))
+     Trunc-elim
+       (λ a → Trunc-rec
+             (λ x → ap [_] (snd x)) (contr-center $ c a)))
 
 abstract
   pointed-conn-out : ∀ {i} {n : ℕ₋₂} (A : Type i) (a₀ : A)
-    → is-connected (S n) A → has-conn-fibers {A = ⊤} n (cst a₀)
-  pointed-conn-out {n = n} A a₀ c a =
+    {{_ : is-connected (S n) A}} → has-conn-fibers {A = ⊤} n (cst a₀)
+  pointed-conn-out {n = n} A a₀ {{c}} a = has-level-in
     (point ,
      λ y → ! (cancel point)
-           ∙ (ap out $ contr-has-all-paths (=-preserves-level c)
-                                           (into point) (into y))
+           ∙ (ap out $ contr-has-all-paths (into point) (into y))
            ∙ cancel y)
     where
       into-aux : Trunc n (Σ ⊤ (λ _ → a₀ == a)) → Trunc n (a₀ == a)
@@ -182,38 +179,38 @@ abstract
           =⟨ Trunc-fmap-∘ _ _ x ⟩
         Trunc-fmap (λ q → (tt , (snd q))) x
           =⟨ Trunc-elim {P = λ x → Trunc-fmap (λ q → (tt , snd q)) x == x}
-               (λ _ → =-preserves-level Trunc-level) (λ _ → idp) x ⟩
+               (λ _ → idp) x ⟩
         x =∎
 
       point : Trunc n (Σ ⊤ (λ _ → a₀ == a))
-      point = out $ contr-has-all-paths c [ a₀ ] [ a ]
+      point = out $ contr-has-all-paths [ a₀ ] [ a ]
 
-prop-over-connected :  ∀ {i j} {A : Type i} {a : A} (p : is-connected 0 A)
+prop-over-connected :  ∀ {i j} {A : Type i} {a : A} {{p : is-connected 0 A}}
   → (P : A → hProp j)
   → fst (P a) → Π A (fst ∘ P)
-prop-over-connected p P x = conn-extend (pointed-conn-out _ _ p) P (λ _ → x)
+prop-over-connected P x = conn-extend (pointed-conn-out _ _) P (λ _ → x)
 
 {- Connectedness of a truncated type -}
-Trunc-preserves-conn : ∀ {i} {A : Type i} {n : ℕ₋₂} (m : ℕ₋₂)
-  → is-connected n A → is-connected n (Trunc m A)
-Trunc-preserves-conn {n = ⟨-2⟩} m c = Trunc-level
-Trunc-preserves-conn {A = A} {n = S n} m c = lemma (fst c) (snd c)
-  where
-  lemma : (x₀ : Trunc (S n) A) → (∀ x → x₀ == x) → is-connected (S n) (Trunc m A)
-  lemma = Trunc-elim
-    (λ _ → Π-level (λ _ → Σ-level Trunc-level
-                     (λ _ → Π-level (λ _ → =-preserves-level Trunc-level))))
-    (λ a → λ p → ([ [ a ] ] ,
-       Trunc-elim (λ _ → =-preserves-level Trunc-level)
-         (Trunc-elim
-           (λ _ → =-preserves-level
-                    (Trunc-preserves-level (S n) Trunc-level))
-           (λ x → <– (Trunc=-equiv [ [ a ] ] [ [ x ] ])
-              (Trunc-fmap (ap [_])
-                (–> (Trunc=-equiv [ a ] [ x ]) (p [ x ])))))))
+instance
+  Trunc-preserves-conn : ∀ {i} {A : Type i} {n : ℕ₋₂} {m : ℕ₋₂}
+    → is-connected n A → is-connected n (Trunc m A)
+  Trunc-preserves-conn {n = ⟨-2⟩} _ = Trunc-level
+  Trunc-preserves-conn {A = A} {n = S n} {m} c = lemma (contr-center c) (contr-path c)
+    where
+    lemma : (x₀ : Trunc (S n) A) → (∀ x → x₀ == x) → is-connected (S n) (Trunc m A)
+    lemma = Trunc-elim
+      (λ a → λ p → has-level-in ([ [ a ] ] ,
+        Trunc-elim
+          (Trunc-elim
+            {{λ _ → =-preserves-level
+                      (Trunc-preserves-level (S n) Trunc-level)}}
+            (λ x → <– (Trunc=-equiv [ [ a ] ] [ [ x ] ])
+               (Trunc-fmap (ap [_])
+                 (–> (Trunc=-equiv [ a ] [ x ]) (p [ x ])))))))
 
 {- Connectedness of a Σ-type -}
 abstract
+ instance
   Σ-conn : ∀ {i} {j} {A : Type i} {B : A → Type j} {n : ℕ₋₂}
     → is-connected n A → (∀ a → is-connected n (B a))
     → is-connected n (Σ A B)
@@ -221,25 +218,22 @@ abstract
   Σ-conn {A = A} {B = B} {n = S m} cA cB =
     Trunc-elim
       {P = λ ta → (∀ tx → ta == tx) → is-connected (S m) (Σ A B)}
-      (λ _ → Π-level (λ _ → prop-has-level-S is-contr-is-prop))
       (λ a₀ pA →
         Trunc-elim
           {P = λ tb → (∀ ty → tb == ty) → is-connected (S m) (Σ A B)}
-          (λ _ → Π-level (λ _ → prop-has-level-S is-contr-is-prop))
-          (λ b₀ pB →
+          (λ b₀ pB → has-level-in
             ([ a₀ , b₀ ] ,
               Trunc-elim
                 {P = λ tp → [ a₀ , b₀ ] == tp}
-                (λ _ → =-preserves-level Trunc-level)
                 (λ {(r , s) →
-                  Trunc-rec (Trunc-level {n = S m} _ _)
-                    (λ pa → Trunc-rec (Trunc-level {n = S m} _ _)
+                  Trunc-rec
+                    (λ pa → Trunc-rec
                       (λ pb → ap [_] (pair= pa (from-transp! B pa pb)))
                       (–> (Trunc=-equiv [ b₀ ] [ transport! B pa s ])
                           (pB [ transport! B pa s ])))
                     (–> (Trunc=-equiv [ a₀ ] [ r ]) (pA [ r ]))})))
-          (fst (cB a₀)) (snd (cB a₀)))
-      (fst cA) (snd cA)
+          (contr-center (cB a₀)) (contr-path (cB a₀)))
+      (contr-center cA) (contr-path cA)
 
   ×-conn : ∀ {i} {j} {A : Type i} {B : Type j} {n : ℕ₋₂}
     → is-connected n A → is-connected n B
@@ -248,29 +242,30 @@ abstract
 
 {- connectedness of a path space -}
 abstract
+ instance
   path-conn : ∀ {i} {A : Type i} {x y : A} {n : ℕ₋₂}
     → is-connected (S n) A → is-connected n (x == y)
   path-conn {x = x} {y = y} cA =
     equiv-preserves-level (Trunc=-equiv [ x ] [ y ])
-      (contr-is-prop cA [ x ] [ y ])
+      {{has-level-apply (contr-is-prop cA) [ x ] [ y ]}}
 
 {- an n-Type which is n-connected is contractible -}
 connected-at-level-is-contr : ∀ {i} {A : Type i} {n : ℕ₋₂}
-  → has-level n A → is-connected n A → is-contr A
-connected-at-level-is-contr pA cA =
-  equiv-preserves-level (unTrunc-equiv _ pA) cA
+  {{pA : has-level n A}} {{cA : is-connected n A}} → is-contr A
+connected-at-level-is-contr {{pA}} {{cA}} =
+  equiv-preserves-level (unTrunc-equiv _) {{cA}}
 
 {- if A is n-connected and m ≤ n, then A is m-connected -}
 connected-≤T : ∀ {i} {m n : ℕ₋₂} {A : Type i}
-  → m ≤T n → is-connected n A → is-connected m A
-connected-≤T {m = m} {n = n} {A = A} leq cA =
+  → m ≤T n → {{_ : is-connected n A}} → is-connected m A
+connected-≤T {m = m} {n = n} {A = A} leq =
   transport (λ B → is-contr B)
             (ua (Trunc-fuse A m n) ∙ ap (λ k → Trunc k A) (minT-out-l leq))
-            (Trunc-preserves-level m cA)
+            (Trunc-preserves-level m ⟨⟩)
 
 {- Equivalent types have the same connectedness -}
 equiv-preserves-conn : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} (e : A ≃ B)
-  → (is-connected n A → is-connected n B)
+  {{_ : is-connected n A}} → is-connected n B
 equiv-preserves-conn {n = n} e = equiv-preserves-level (Trunc-emap n e)
 
 {- Composite of two connected functions is connected -}

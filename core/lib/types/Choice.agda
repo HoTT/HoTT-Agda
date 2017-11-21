@@ -10,7 +10,7 @@ module lib.types.Choice where
 
 unchoose : ∀ {i j} {n : ℕ₋₂} {A : Type i} {B : A → Type j}
   → Trunc n (Π A B) → Π A (Trunc n ∘ B)
-unchoose = Trunc-rec (Π-level λ _ → Trunc-level) (λ f → [_] ∘ f)
+unchoose = Trunc-rec (λ f → [_] ∘ f)
 
 has-choice : ∀ {i} (n : ℕ₋₂) (A : Type i) j → Type (lmax i (lsucc j))
 has-choice {i} n A j = (B : A → Type j) → is-equiv (unchoose {n = n} {A} {B})
@@ -27,8 +27,7 @@ Empty-has-choice {n} B = is-eq to from to-from from-to where
     to-from _ = λ= λ{()}
 
     from-to : ∀ f → from (to f) == f
-    from-to = Trunc-elim (λ _ → =-preserves-level Trunc-level)
-      (λ _ → ap [_] (λ= λ{()}))
+    from-to = Trunc-elim (λ _ → ap [_] (λ= λ{()}))
 
 Unit-has-choice : ∀ {n} {j} → has-choice n Unit j
 Unit-has-choice {n} B = is-eq to from to-from from-to where
@@ -45,13 +44,11 @@ Unit-has-choice {n} B = is-eq to from to-from from-to where
     to-from f = λ= λ{unit →
       Trunc-elim
         {P = λ f-unit → to (Trunc-fmap Unit-elim' f-unit) unit == f-unit}
-        (λ _ → =-preserves-level Trunc-level)
         (λ _ → idp)
         (f unit)}
 
     from-to : ∀ f → from (to f) == f
-    from-to = Trunc-elim (λ _ → =-preserves-level Trunc-level)
-      (λ f → ap [_] (λ= λ{unit → idp}))
+    from-to = Trunc-elim (λ f → ap [_] (λ= λ{unit → idp}))
 
 Coprod-has-choice : ∀ {i j} {n} {A : Type i} {B : Type j} {k}
   → has-choice n A k → has-choice n B k
@@ -71,10 +68,8 @@ Coprod-has-choice {n = n} {A} {B} A-hc B-hc C = is-eq to from to-from from-to wh
     to-from-inl' : ∀ f a → to (from f) (inl a) == A-unchoose (A-unchoose.g (f ∘ inl)) a
     to-from-inl' f a = Trunc-elim
       {P = λ f-inl → to (Trunc-fmap2 Coprod-elim f-inl (B-unchoose.g (f ∘ inr))) (inl a) == A-unchoose f-inl a}
-      (λ _ → =-preserves-level Trunc-level)
       (λ f-inl → Trunc-elim
         {P = λ f-inr → to (Trunc-fmap2 Coprod-elim [ f-inl ] f-inr) (inl a) == [ f-inl a ]}
-        (λ _ → =-preserves-level Trunc-level)
         (λ f-inr → idp)
         (B-unchoose.g (f ∘ inr)))
       (A-unchoose.g (f ∘ inl))
@@ -85,10 +80,8 @@ Coprod-has-choice {n = n} {A} {B} A-hc B-hc C = is-eq to from to-from from-to wh
     to-from-inr' : ∀ f b → to (from f) (inr b) == B-unchoose (B-unchoose.g (f ∘ inr)) b
     to-from-inr' f b = Trunc-elim
       {P = λ f-inr → to (Trunc-fmap2 Coprod-elim (A-unchoose.g (f ∘ inl)) f-inr) (inr b) == B-unchoose f-inr b}
-      (λ _ → =-preserves-level Trunc-level)
       (λ f-inr → Trunc-elim
         {P = λ f-inl → to (Trunc-fmap2 Coprod-elim f-inl [ f-inr ]) (inr b) == [ f-inr b ]}
-        (λ _ → =-preserves-level Trunc-level)
         (λ f-inl → idp)
         (A-unchoose.g (f ∘ inl)))
       (B-unchoose.g (f ∘ inr))
@@ -100,7 +93,7 @@ Coprod-has-choice {n = n} {A} {B} A-hc B-hc C = is-eq to from to-from from-to wh
     to-from f = λ= λ{(inl a) → to-from-inl f a; (inr b) → to-from-inr f b}
 
     from-to : ∀ f → from (to f) == f
-    from-to = Trunc-elim (λ _ → =-preserves-level Trunc-level)
+    from-to = Trunc-elim
       (λ f →
         Trunc-fmap2 Coprod-elim (A-unchoose.g (λ a → [ f (inl a)])) (B-unchoose.g (λ b → [ f (inr b)]))
           =⟨ ap2 (Trunc-fmap2 Coprod-elim) (A-unchoose.g-f [ f ∘ inl ]) (B-unchoose.g-f [ f ∘ inr ]) ⟩
@@ -144,7 +137,6 @@ equiv-preserves-choice {n = n} {A} {B} (f , f-ise) A-hc C = is-eq to from to-fro
     to-from' g a =
       Trunc-elim
         {P = λ g-f → to (from' g-f) (f a) == A-unchoose g-f a}
-        (λ _ → =-preserves-level Trunc-level)
         (λ g-f' → ap [_] $ to-from'' g-f' a)
         (A-unchoose.g (g ∘ f))
 
@@ -166,7 +158,6 @@ equiv-preserves-choice {n = n} {A} {B} (f , f-ise) A-hc C = is-eq to from to-fro
     from-to : ∀ g → from (to g) == g
     from-to = Trunc-elim
       {P = λ g → from (to g) == g}
-      (λ _ → =-preserves-level Trunc-level)
       (λ g →
         from' (A-unchoose.g (λ a → [ g (f a) ]))
           =⟨ ap from' (A-unchoose.g-f [ (g ∘ f) ]) ⟩

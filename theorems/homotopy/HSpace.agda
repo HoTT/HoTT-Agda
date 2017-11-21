@@ -51,7 +51,7 @@ from-alt-h-space hss = record {AlternativeHSpaceStructure hss}
 to-alt-h-space : ∀ {i} {X : Ptd i} → HSpaceStructure X → AlternativeHSpaceStructure X
 to-alt-h-space hss = record {HSpaceStructure hss}
 
-module ConnectedHSpace {i} {X : Ptd i} (c : is-connected 0 (de⊙ X))
+module ConnectedHSpace {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
   (hX : HSpaceStructure X) where
 
   open HSpaceStructure hX public
@@ -63,12 +63,12 @@ module ConnectedHSpace {i} {X : Ptd i} (c : is-connected 0 (de⊙ X))
   -}
 
   l-is-equiv : ∀ x → is-equiv (λ y → μ y x)
-  l-is-equiv = prop-over-connected {a = pt X} c
+  l-is-equiv = prop-over-connected {a = pt X}
     (λ x → (is-equiv (λ y → μ y x) , is-equiv-is-prop))
     (transport! is-equiv (λ= unit-r) (idf-is-equiv _))
 
   r-is-equiv : ∀ x → is-equiv (λ y → μ x y)
-  r-is-equiv = prop-over-connected {a = pt X} c
+  r-is-equiv = prop-over-connected {a = pt X}
     (λ x → (is-equiv (λ y → μ x y) , is-equiv-is-prop))
     (transport! is-equiv (λ= unit-l) (idf-is-equiv _))
 

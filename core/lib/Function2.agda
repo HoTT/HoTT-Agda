@@ -13,9 +13,9 @@ module _ {i j k} {A : Type i} {B : Type j} {C : Type k}
   abstract
     ∘-is-surj : is-surj g → is-surj f → is-surj (g ∘ f)
     ∘-is-surj g-is-surj f-is-surj c =
-      Trunc-rec Trunc-level
+      Trunc-rec
         (λ{(b , gb=c) →
-          Trunc-rec Trunc-level
+          Trunc-rec
           (λ{(a , fa=b) → [ a , ap g fa=b ∙ gb=c ]})
           (f-is-surj b)})
         (g-is-surj c)

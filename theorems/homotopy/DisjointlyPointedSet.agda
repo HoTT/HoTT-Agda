@@ -47,7 +47,7 @@ module _ {i} where
           sep-unite (inl _) | inr ¬p = ⊥-rec (¬p idp)
           sep-unite (inr (x , ¬p)) with dec x
           sep-unite (inr (x , ¬p)) | inl p   = ⊥-rec (¬p p)
-          sep-unite (inr (x , ¬p)) | inr ¬p' = ap inr $ pair= idp (prop-has-all-paths ¬-is-prop ¬p' ¬p)
+          sep-unite (inr (x , ¬p)) | inr ¬p' = ap inr $ pair= idp (prop-has-all-paths ¬p' ¬p)
 
           unite-sep : ∀ x → unite-pt X (sep x) == x
           unite-sep x with dec x
@@ -109,14 +109,12 @@ module _ {i j k} n (A : Type i) (B : Type j) where
               from-to f = λ= λ{
                 (inl a) → Trunc-elim
                   {P = λ t → [ lift tt ] == t}
-                  (λ _ → =-preserves-level Trunc-level)
                   (λ _ → idp) (f (inl a));
                 (inr b) → idp}
 
           lemma₃ : ∀ f → –> lemma₂ (unchoose (<– (Trunc-emap n lemma₁) f)) == unchoose f
           lemma₃ = Trunc-elim
             {P = λ f → –> lemma₂ (unchoose (<– (Trunc-emap n lemma₁) f)) == unchoose f}
-            (λ _ → =-preserves-level (Π-level λ _ → Trunc-level))
             (λ f → λ= λ b → idp)
 
 module _ {i j} n {X : Ptd i} (X-sep : has-disjoint-pt X) where

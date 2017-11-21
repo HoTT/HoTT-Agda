@@ -8,7 +8,7 @@ open import homotopy.JoinSusp
 module homotopy.Hopf where
 
 import homotopy.HopfConstruction
-module Hopf = homotopy.HopfConstruction S¹-conn ⊙S¹-hSpace
+module Hopf = homotopy.HopfConstruction ⊙S¹-hSpace
 
 Hopf : S² → Type₀
 Hopf = Hopf.H.f

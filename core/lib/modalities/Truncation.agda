@@ -14,6 +14,6 @@ Trunc-modality n = record {
   ◯ = Trunc n;
   ◯-is-local = Trunc-level;
   η = [_];
-  ◯-elim = Trunc-elim;
+  ◯-elim = λ f → Trunc-elim {{f}};
   ◯-elim-β = λ _ _ _ → idp;
   ◯-=-is-local = λ _ _ → =-preserves-level Trunc-level}

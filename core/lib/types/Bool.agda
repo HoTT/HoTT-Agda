@@ -50,4 +50,6 @@ abstract
   Bool-is-set : is-set Bool
   Bool-is-set = dec-eq-is-set Bool-has-dec-eq
 
-Bool-level = Bool-is-set
+instance
+  Bool-level : {n : ℕ₋₂} → has-level (S (S n)) Bool
+  Bool-level = set-has-level-SS Bool-is-set

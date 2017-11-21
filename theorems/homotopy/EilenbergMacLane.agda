@@ -11,8 +11,8 @@ open import homotopy.EilenbergMacLane1
 module homotopy.EilenbergMacLane where
 
 -- EM(G,n) when G is π₁(A,a₀)
-module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (de⊙ X))
-  (gA : has-level 1 (de⊙ X)) (H-X : HSS X) where
+module EMImplicit {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
+  {{_ : has-level 1 (de⊙ X)}} (H-X : HSS X) where
 
   private
     A = de⊙ X
@@ -26,13 +26,14 @@ module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (de⊙ X))
     EM = de⊙ (⊙EM n)
 
   EM-level : (n : ℕ) → has-level ⟨ n ⟩ (EM n)
-  EM-level O = gA a₀ a₀
-  EM-level (S n) = Trunc-level
+  EM-level O = ⟨⟩
+  EM-level (S n) = ⟨⟩
 
-  EM-conn : (n : ℕ) → is-connected ⟨ n ⟩ (EM (S n))
-  EM-conn n = Trunc-preserves-conn ⟨ S n ⟩
-                  (transport (λ t → is-connected t (de⊙ (⊙Susp^ n X)))
-                    (+2+0 ⟨ n ⟩₋₂) (⊙Susp^-conn n cA))
+  instance
+    EM-conn : (n : ℕ) → is-connected ⟨ n ⟩ (EM (S n))
+    EM-conn n = Trunc-preserves-conn
+                    (transport (λ t → is-connected t (de⊙ (⊙Susp^ n X)))
+                      (+2+0 ⟨ n ⟩₋₂) (⊙Susp^-conn n))
 
   {-
   π (S k) (EM (S n)) (embase (S n)) == π k (EM n) (embase n)
@@ -55,7 +56,7 @@ module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (de⊙ X))
               lemma (S n') = ≤-trans (≤-ap-S (lemma n')) (inr ltS)
 
     private
-      module SS = Susp^StableSucc X cA k (S n) Skle
+      module SS = Susp^StableSucc X k (S n) Skle
 
     abstract
       stable : πS (S k) (⊙EM (S SSn)) ≃ᴳ πS k (⊙EM SSn)
@@ -75,9 +76,8 @@ module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (de⊙ X))
     π₁ n =
       contr-iso-0ᴳ (πS 0 (⊙EM (S (S n))))
         (connected-at-level-is-contr
-          (raise-level-≤T (≤T-ap-S (≤T-ap-S (-2≤T ⟨ n ⟩₋₂)))
-                          (Trunc-level {n = 0}))
-          (Trunc-preserves-conn 0 (path-conn (EM-conn (S n)))))
+          {{raise-level-≤T (≤T-ap-S (≤T-ap-S (-2≤T ⟨ n ⟩₋₂)))
+                          (Trunc-level {n = 0})}})
 
     -- some clutter here arises from the definition of <;
     -- any simple way to avoid this?
@@ -106,7 +106,7 @@ module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (de⊙ X))
     π₁ = πS-Trunc-fuse-≤-iso 0 1 X ≤T-refl
 
     private
-      module Π₂ = Pi2HSusp gA cA H-X
+      module Π₂ = Pi2HSusp H-X
 
     π₂ : πS 1 (⊙EM 2) ≃ᴳ πS 0 X
     π₂ = Π₂.π₂-Susp
@@ -126,8 +126,8 @@ module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (de⊙ X))
       contr-iso-0ᴳ (πS k (⊙EM n))
         (inhab-prop-is-contr
           [ idp^ (S k) ]
-          (Trunc-preserves-level 0 (Ω^-level -1 (S k) _
-            (raise-level-≤T (lemma lt) (EM-level n)))))
+          {{Trunc-preserves-level 0 (Ω^-level -1 (S k) _
+            (raise-level-≤T (lemma lt) (EM-level n)))}})
       where lemma : {k n : ℕ} → n < k → ⟨ n ⟩ ≤T (⟨ k ⟩₋₂ +2+ -1)
             lemma ltS = inl (! (+2+-comm _ -1))
             lemma (ltSR lt) = ≤T-trans (lemma lt) (inr ltS)
@@ -135,14 +135,14 @@ module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (de⊙ X))
   module Spectrum where
 
     private
-      module Π₂ = Pi2HSusp gA cA H-X
+      module Π₂ = Pi2HSusp H-X
 
     spectrum0 : ⊙Ω (⊙EM 1) ⊙≃ ⊙EM 0
     spectrum0 =
       ⊙Ω (⊙EM 1)
         ⊙≃⟨ ≃-to-⊙≃ (Trunc=-equiv _ _) idp ⟩
       ⊙Trunc 0 (⊙Ω X)
-        ⊙≃⟨ ≃-to-⊙≃ (unTrunc-equiv _ (gA a₀ a₀)) idp ⟩
+        ⊙≃⟨ ≃-to-⊙≃ (unTrunc-equiv _) idp ⟩
       ⊙Ω X ⊙≃∎
 
     spectrum1 : ⊙Ω (⊙EM 2) ⊙≃ ⊙EM 1
@@ -152,13 +152,14 @@ module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (de⊙ X))
       ⊙Trunc 1 (⊙Ω (⊙Susp X))
         ⊙≃⟨ Π₂.⊙main-lemma ⟩
       X
-        ⊙≃⟨ ≃-to-⊙≃ (unTrunc-equiv _ gA) idp ⊙⁻¹ ⟩
+        ⊙≃⟨ ≃-to-⊙≃ (unTrunc-equiv _) idp ⊙⁻¹ ⟩
       ⊙EM 1 ⊙≃∎
 
     private
-      sconn : (n : ℕ) → is-connected ⟨ S n ⟩ (de⊙ (⊙Susp^ (S n) X))
-      sconn n = transport (λ t → is-connected t (de⊙ (⊙Susp^ (S n) X)))
-                          (+2+0 ⟨ n ⟩₋₁) (⊙Susp^-conn (S n) cA)
+      instance
+        sconn : (n : ℕ) → is-connected ⟨ S n ⟩ (de⊙ (⊙Susp^ (S n) X))
+        sconn n = transport (λ t → is-connected t (de⊙ (⊙Susp^ (S n) X)))
+                            (+2+0 ⟨ n ⟩₋₁) (⊙Susp^-conn (S n))
 
       kle : (n : ℕ) → ⟨ S (S n) ⟩ ≤T ⟨ n ⟩ +2+ ⟨ n ⟩
       kle O = inl idp
@@ -168,7 +169,7 @@ module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (de⊙ X))
 
       module FS (n : ℕ) =
         FreudenthalEquiv ⟨ n ⟩₋₁ ⟨ S (S n) ⟩ (kle n)
-          (⊙Susp^ (S n) X) (sconn n)
+          (⊙Susp^ (S n) X)
 
     spectrumSS : (n : ℕ)
       → ⊙Ω (⊙EM (S (S (S n)))) ⊙≃ ⊙EM (S (S n))
@@ -187,7 +188,7 @@ module EMImplicit {i} {X : Ptd i} (cA : is-connected 0 (de⊙ X))
 
 module EMExplicit {i} (G : AbGroup i) where
   module HSpace = EM₁HSpace G
-  open EMImplicit EM₁-conn EM₁-level HSpace.H-⊙EM₁ public
+  open EMImplicit HSpace.H-⊙EM₁ public
 
   open BelowDiagonal public using (πS-below)
 

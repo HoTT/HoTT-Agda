@@ -192,10 +192,9 @@ record Group i : Type (lsucc i) where
   constructor group
   field
     El : Type i
-    El-level : has-level 0 El
+    {{El-level}} : has-level 0 El
     group-struct : GroupStructure El
   open GroupStructure group-struct public
-  El-is-set = El-level
 
 Group₀ : Type (lsucc lzero)
 Group₀ = Group lzero
@@ -236,9 +235,9 @@ is-trivialᴳ : ∀ {i} (G : Group i) → Type i
 is-trivialᴳ G = ∀ g → g == Group.ident G
 
 contr-is-trivialᴳ : ∀ {i} (G : Group i)
-  → is-contr (Group.El G) → is-trivialᴳ G
-contr-is-trivialᴳ G El-is-contr g =
-  contr-has-all-paths El-is-contr _ _
+  {{_ : is-contr (Group.El G)}} → is-trivialᴳ G
+contr-is-trivialᴳ G g =
+  contr-has-all-paths _ _
 
 {- group-structure= -}
 
@@ -246,25 +245,24 @@ module _ where
   open GroupStructure
 
   abstract
-    group-structure= : ∀ {i} {A : Type i} (pA : has-level 0 A)
+    group-structure= : ∀ {i} {A : Type i} {{_ : is-set A}}
       {id₁ id₂ : A} {inv₁ inv₂ : A → A} {comp₁ comp₂ : A → A → A}
       → ∀ {unit-l₁ unit-l₂ assoc₁ assoc₂ inv-l₁ inv-l₂}
       → (id₁ == id₂) → (inv₁ == inv₂) → (comp₁ == comp₂)
       → Path {A = GroupStructure A}
           (group-structure id₁ inv₁ comp₁ unit-l₁ assoc₁ inv-l₁)
           (group-structure id₂ inv₂ comp₂ unit-l₂ assoc₂ inv-l₂)
-    group-structure= pA {id₁ = id₁} {inv₁ = inv₁} {comp₁ = comp₁} idp idp idp =
+    group-structure= {id₁ = id₁} {inv₁ = inv₁} {comp₁ = comp₁} idp idp idp =
       ap3 (group-structure id₁ inv₁ comp₁)
-        (prop-has-all-paths (Π-level (λ _ → pA _ _)) _ _)
-        (prop-has-all-paths
-          (Π-level (λ _ → Π-level (λ _ → Π-level (λ _ → pA _ _)))) _ _)
-        (prop-has-all-paths (Π-level (λ _ → pA _ _)) _ _)
+        (prop-has-all-paths _ _)
+        (prop-has-all-paths _ _)
+        (prop-has-all-paths _ _)
 
     ↓-group-structure= : ∀ {i} {A B : Type i}
-      (A-level : has-level 0 A)
+      {{_ : has-level 0 A}}
       {GS : GroupStructure A} {HS : GroupStructure B} (p : A == B)
       → (ident GS == ident HS [ (λ C → C) ↓ p ])
       → (inv GS == inv HS [ (λ C → C → C) ↓ p ])
       → (comp GS == comp HS [ (λ C → C → C → C) ↓ p ])
       → GS == HS [ GroupStructure ↓ p ]
-    ↓-group-structure= A-level idp = group-structure= A-level
+    ↓-group-structure= idp = group-structure=

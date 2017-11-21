@@ -41,7 +41,7 @@ module cw.DegreeBySquashing {i} where
 
     degree-map' : ℤ-group →ᴳ ℤ-group
     degree-map' = –>ᴳ (πS-SphereS-iso-ℤ n)
-               ∘ᴳ Trunc-rec →ᴳ-level (πS-fmap n)
+               ∘ᴳ Trunc-rec (πS-fmap n)
                     (⊙SphereS-endo-in n [ degree-map ])
                ∘ᴳ <–ᴳ (πS-SphereS-iso-ℤ n)
 

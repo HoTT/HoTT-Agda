@@ -44,8 +44,8 @@ abstract
   πS-Ω-split-iso n X =
     group-hom
       (Trunc-fmap (Ω^-Ω-split (S n) X))
-      (Trunc-elim (λ _ → Π-level (λ _ → =-preserves-level Trunc-level))
-        (λ p → Trunc-elim (λ _ → =-preserves-level Trunc-level)
+      (Trunc-elim
+        (λ p → Trunc-elim
           (λ q → ap [_] (Ω^S-Ω-split-∙ n X p q)))) ,
     Trunc-isemap 0 (Ω^-Ω-split-is-equiv (S n) X)
 
@@ -86,7 +86,7 @@ module _ {i} where
                     ∘e Ω^-emap 1 (Ω^STruncPreIso.F r , Ω^STruncPreIso.e r))})
 
   Ω^S-group-Trunc-fuse-diag-iso : (n : ℕ) (X : Ptd i)
-    → Ω^S-group n (⊙Trunc ⟨ S n ⟩ X) Trunc-level ≃ᴳ πS n X
+    → Ω^S-group n (⊙Trunc ⟨ S n ⟩ X) ≃ᴳ πS n X
   Ω^S-group-Trunc-fuse-diag-iso n X = group-hom (fst F) pres-comp , e
     where
     r = transport (λ k → Ω^STruncPreIso n 0 k X)
@@ -99,9 +99,9 @@ abstract
   πS-Trunc-fuse-≤-iso n m X Sn≤m =
     πS n (⊙Trunc m X)
       ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso n (⊙Trunc m X) ⁻¹ᴳ ⟩
-    Ω^S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X)) Trunc-level
-      ≃ᴳ⟨ Ω^S-group-emap n Trunc-level Trunc-level (≃-to-⊙≃ (Trunc-fuse-≤ (de⊙ X) Sn≤m) idp) ⟩
-    Ω^S-group n (⊙Trunc ⟨ S n ⟩ X) Trunc-level
+    Ω^S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X))
+      ≃ᴳ⟨ Ω^S-group-emap n (≃-to-⊙≃ (Trunc-fuse-≤ (de⊙ X) Sn≤m) idp) ⟩
+    Ω^S-group n (⊙Trunc ⟨ S n ⟩ X)
       ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso n X ⟩
     πS n X
       ≃ᴳ∎
@@ -111,22 +111,22 @@ abstract
   πS-Trunc-fuse->-iso n m X m<n =
     πS n (⊙Trunc m X)
       ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso n (⊙Trunc m X) ⁻¹ᴳ ⟩
-    Ω^S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X)) Trunc-level
+    Ω^S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X))
       ≃ᴳ⟨ contr-iso-0ᴳ _ $ inhab-prop-is-contr
-           (Group.ident (Ω^S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X)) Trunc-level))
-           (Ω^-level -1 (S n) _ $ Trunc-preserves-level ⟨ S n ⟩ $
+           (Group.ident (Ω^S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X))))
+           {{Ω^-level -1 (S n) _ $ Trunc-preserves-level ⟨ S n ⟩ $
              raise-level-≤T
                (transport (λ k → m ≤T k) (+2+-comm -1 ⟨ S n ⟩₋₂) (<T-to-≤T m<n))
-               (Trunc-level {n = m})) ⟩
+               (Trunc-level {n = m})}} ⟩
     0ᴳ ≃ᴳ∎
 
   -- XXX Naming conventions?
   πS->level-econv : ∀ {i} (n : ℕ) (m : ℕ₋₂) (X : Ptd i)
-    → (m <T ⟨ S n ⟩) → has-level m (de⊙ X)
+    → (m <T ⟨ S n ⟩) → {{_ : has-level m (de⊙ X)}}
     → πS n X ≃ᴳ 0ᴳ
-  πS->level-econv n m X lt pX =
+  πS->level-econv n m X lt =
     πS n X
-      ≃ᴳ⟨ πS-emap n (⊙unTrunc-equiv X pX ⊙⁻¹) ⟩
+      ≃ᴳ⟨ πS-emap n (⊙unTrunc-equiv X ⊙⁻¹) ⟩
     πS n (⊙Trunc m X)
       ≃ᴳ⟨ πS-Trunc-fuse->-iso n m X lt ⟩
     0ᴳ

@@ -255,8 +255,8 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
   → (has-level (⟨ n ⟩₋₂ +2+ m) (de⊙ X) → has-level m (Ω^ n X))
 Ω^-level m O X pX = pX
 Ω^-level m (S n) X pX =
-  Ω^-level (S m) n X
-    (transport (λ k → has-level k (de⊙ X)) (! (+2+-βr ⟨ n ⟩₋₂ m)) pX)
+  has-level-apply (Ω^-level (S m) n X
+    (transport (λ k → has-level k (de⊙ X)) (! (+2+-βr ⟨ n ⟩₋₂ m)) pX))
     (idp^ n) (idp^ n)
 
 Ω^-conn : ∀ {i} (m : ℕ₋₂) (n : ℕ) (X : Ptd i)

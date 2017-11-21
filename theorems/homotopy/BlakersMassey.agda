@@ -81,14 +81,14 @@ module _ {a₀} {b₀} (q₀₀ : Q a₀ b₀) where
   -- Part of the decomposed [coe (coerce-path r)]
   code-bmleft-template-diag : ∀ {p} (r : bmleft a₀ == p)
     → code-bmleft a₀ idp → code-bmleft-template a₀ r r
-  code-bmleft-template-diag r = Trunc-rec Trunc-level
+  code-bmleft-template-diag r = Trunc-rec
     λ {(q₀₀' , shift) →
       [ q₀₀' , ! (∙'-assoc (bmglue q₀₀) (! (bmglue q₀₀')) r) ∙ ap (_∙' r) shift ∙' ∙'-unit-l r ]}
 
   abstract
     code-bmleft-template-diag-idp : ∀ x → code-bmleft-template-diag idp x == x
     code-bmleft-template-diag-idp =
-      Trunc-elim (λ _ → =-preserves-level Trunc-level)
+      Trunc-elim
         λ{(q₁₀ , shift) → ap (λ p → [ q₁₀ , p ]) (ap-idf shift)}
 
   -- Here shows the use of two templates.  It will be super painful
@@ -157,13 +157,11 @@ module _ {a₀} {b₀} (q₀₀ : Q a₀ b₀) where
 
   -- Finish the lemma.
   code-contr : ∀ {b₁} (r : bmleft a₀ == bmright b₁) → is-contr (Trunc (m +2+ n) (hfiber bmglue r))
-  code-contr r = code-center r , Trunc-elim
-    (λ _ → =-preserves-level Trunc-level) (code-coh r)
+  code-contr r = has-level-in (code-center r , Trunc-elim (code-coh r))
 
 -- The final theorem.
 -- It is sufficient to find some [q₀₀].
 blakers-massey : ∀ {a₀ b₀} → has-conn-fibers (m +2+ n) (bmglue {a₀} {b₀})
 blakers-massey {a₀} r = Trunc-rec
-  (prop-has-level-S is-connected-is-prop)
   (λ{(_ , q₀₀) → code-contr q₀₀ r})
-  (fst (f-conn a₀))
+  (contr-center (f-conn a₀))

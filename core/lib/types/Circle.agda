@@ -175,5 +175,6 @@ module S¹RecType {i} (A : Type i) (e : A ≃ A) where
   flattening-S¹ : Σ S¹ f == Wt
   flattening-S¹ = generic-S¹ ∙ ua FlatteningS¹.flattening-equiv
 
-S¹-conn : is-connected 0 S¹
-S¹-conn = Sphere-conn 1
+instance
+  S¹-conn : is-connected 0 S¹
+  S¹-conn = Sphere-conn 1

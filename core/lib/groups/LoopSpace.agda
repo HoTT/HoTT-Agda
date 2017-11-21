@@ -22,11 +22,12 @@ module _ {i} (n : ℕ) (X : Ptd i) where
     inv-l = Ω^S-!-inv-l n
     }
 
-  Ω^S-group : has-level ⟨ S n ⟩ (de⊙ X) → Group i
-  Ω^S-group pX = group
+  Ω^S-group : {{_ : has-level ⟨ S n ⟩ (de⊙ X)}} → Group i
+  Ω^S-group = group
     (Ω^ (S n) X)
-    (Ω^-level 0 (S n) X $
-       transport (λ t → has-level t (de⊙ X)) (! (+2+0 ⟨ S n ⟩₋₂)) pX)
+    -- TODO: make it find it automatically
+    {{Ω^-level 0 (S n) X $
+       transport (λ t → has-level t (de⊙ X)) (! (+2+0 ⟨ S n ⟩₋₂)) ⟨⟩}}
     Ω^S-group-structure
 
 module _ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j} where
@@ -44,12 +45,12 @@ module _ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j} where
     Ω^S-group-structure-fmap F , Ω^S-group-structure-isemap F-is-equiv
 
 module _ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
-  (X-level : has-level ⟨ S n ⟩ (de⊙ X))
-  (Y-level : has-level ⟨ S n ⟩ (de⊙ Y))
+  {{X-level : has-level ⟨ S n ⟩ (de⊙ X)}}
+  {{Y-level : has-level ⟨ S n ⟩ (de⊙ Y)}}
   where
 
-  Ω^S-group-fmap : X ⊙→ Y → Ω^S-group n X X-level →ᴳ Ω^S-group n Y Y-level
+  Ω^S-group-fmap : X ⊙→ Y → Ω^S-group n X →ᴳ Ω^S-group n Y
   Ω^S-group-fmap = →ᴳˢ-to-→ᴳ ∘ Ω^S-group-structure-fmap n
 
-  Ω^S-group-emap : X ⊙≃ Y → Ω^S-group n X X-level ≃ᴳ Ω^S-group n Y Y-level
+  Ω^S-group-emap : X ⊙≃ Y → Ω^S-group n X ≃ᴳ Ω^S-group n Y
   Ω^S-group-emap = ≃ᴳˢ-to-≃ᴳ ∘ Ω^S-group-structure-emap n

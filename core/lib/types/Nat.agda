@@ -64,10 +64,13 @@ abstract
   ℕ-has-dec-eq (S n) (S m) | inl p = inl (ap S p)
   ℕ-has-dec-eq (S n) (S m) | inr ¬p = inr (λ p → ¬p (ℕ-S-is-inj n m p))
 
-  ℕ-is-set : is-set ℕ
-  ℕ-is-set = dec-eq-is-set ℕ-has-dec-eq
+ℕ-is-set : is-set ℕ
+ℕ-is-set = dec-eq-is-set ℕ-has-dec-eq
 
-ℕ-level = ℕ-is-set
+instance
+  ℕ-level : {n : ℕ₋₂} → has-level (S (S n)) ℕ
+  ℕ-level {⟨-2⟩} = ℕ-is-set
+  ℕ-level {n = S n} = raise-level (S (S n)) ℕ-level
 
 {- Inequalities -}
 infix 40 _<_ _≤_
@@ -170,7 +173,7 @@ abstract
     <-has-all-paths' : {m n₁ n₂ : ℕ} (eqn : n₁ == n₂) (lt₁ : m < n₁) (lt₂ : m < n₂)
       → PathOver (λ n → m < n) eqn lt₁ lt₂
     <-has-all-paths' eqn ltS ltS = transport (λ eqn₁ → PathOver (_<_ _) eqn₁ ltS ltS)
-      (prop-has-all-paths (ℕ-is-set _ _) idp eqn) idp
+      (prop-has-all-paths idp eqn) idp
     <-has-all-paths' idp ltS (ltSR lt₂) = ⊥-rec (<-to-≠ lt₂ idp)
     <-has-all-paths' idp (ltSR lt₁) ltS = ⊥-rec (<-to-≠ lt₁ idp)
     <-has-all-paths' idp (ltSR lt₁) (ltSR lt₂) = ap ltSR (<-has-all-paths' idp lt₁ lt₂)
@@ -180,13 +183,14 @@ abstract
 
   ≤-has-all-paths : {m n : ℕ} → has-all-paths (m ≤ n)
   ≤-has-all-paths = λ{
-    (inl eq₁) (inl eq₂) → ap inl (prop-has-all-paths (ℕ-is-set _ _) eq₁ eq₂);
+    (inl eq₁) (inl eq₂) → ap inl (prop-has-all-paths eq₁ eq₂);
     (inl eq)  (inr lt)  → ⊥-rec (<-to-≠ lt eq);
     (inr lt)  (inl eq)  → ⊥-rec (<-to-≠ lt eq);
     (inr lt₁) (inr lt₂) → ap inr (<-has-all-paths lt₁ lt₂)}
 
-  ≤-is-prop : {m n : ℕ} → is-prop (m ≤ n)
-  ≤-is-prop = all-paths-is-prop ≤-has-all-paths
+  instance
+    ≤-is-prop : {m n : ℕ} → is-prop (m ≤ n)
+    ≤-is-prop = all-paths-is-prop ≤-has-all-paths
 
 <-+-l : {m n : ℕ} (k : ℕ) → m < n → (k + m) < (k + n)
 <-+-l O lt = lt

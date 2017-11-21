@@ -130,7 +130,10 @@ abstract
   ℤ-is-set : is-set ℤ
   ℤ-is-set = dec-eq-is-set ℤ-has-dec-eq
 
-ℤ-level = ℤ-is-set
+  instance
+    ℤ-level : {n : ℕ₋₂} → has-level (S (S n)) ℤ
+    ℤ-level {⟨-2⟩} = ℤ-is-set
+    ℤ-level {n = S n} = raise-level (S (S n)) ℤ-level
 
 {-
   ℤ is also a group!

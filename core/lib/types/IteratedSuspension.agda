@@ -15,9 +15,9 @@ module lib.types.IteratedSuspension where
 
 abstract
   ⊙Susp^-conn : ∀ {i} (n : ℕ) {X : Ptd i} {m : ℕ₋₂}
-    → is-connected m (de⊙ X) → is-connected (⟨ n ⟩₋₂ +2+ m) (de⊙ (⊙Susp^ n X))
-  ⊙Susp^-conn O cX = cX
-  ⊙Susp^-conn (S n) cX = Susp-conn (⊙Susp^-conn n cX)
+    {{_ : is-connected m (de⊙ X)}} → is-connected (⟨ n ⟩₋₂ +2+ m) (de⊙ (⊙Susp^ n X))
+  ⊙Susp^-conn O = ⟨⟩
+  ⊙Susp^-conn (S n) = Susp-conn (⊙Susp^-conn n)
 
 ⊙Susp^-+ : ∀ {i} (m n : ℕ) {X : Ptd i}
   → ⊙Susp^ m (⊙Susp^ n X) == ⊙Susp^ (m + n) X
@@ -62,9 +62,10 @@ Sphere : (n : ℕ) → Type₀
 Sphere n = de⊙ (⊙Sphere n)
 
 abstract
-  Sphere-conn : ∀ (n : ℕ) → is-connected ⟨ n ⟩₋₁ (Sphere n)
-  Sphere-conn 0 = inhab-conn true
-  Sphere-conn (S n) = Susp-conn (Sphere-conn n)
+  instance
+    Sphere-conn : ∀ (n : ℕ) → is-connected ⟨ n ⟩₋₁ (Sphere n)
+    Sphere-conn 0 = inhab-conn true
+    Sphere-conn (S n) = Susp-conn (Sphere-conn n)
 
 -- favonia: [S¹] has its own elim rules in Circle.agda.
 ⊙S⁰ = ⊙Sphere 0

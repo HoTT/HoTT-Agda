@@ -68,13 +68,13 @@ module cw.cohomology.CellularChainComplex {i : ULevel} where
         == ap (λ m≤n → cw-take m≤n (cw-init skel)) (≤-has-all-paths (≤-trans lteS (inr Sm<n)) (inr m<n))
       path-lemma₀ skel m<n Sm<n =
         ap (λ m≤Sn → cw-take m≤Sn skel) (≤-has-all-paths (≤-trans lteS (lteSR (inr Sm<n))) (lteSR (inr m<n)))
-          =⟨ ap (ap (λ m≤Sn → cw-take m≤Sn skel)) (contr-has-all-paths (≤-is-prop _ _) _ _) ⟩
+          =⟨ ap (ap (λ m≤Sn → cw-take m≤Sn skel)) (contr-has-all-paths _ _) ⟩
         ap (λ m≤Sn → cw-take m≤Sn skel) (ap (lteSR ∘ inr) (<-has-all-paths (<-trans ltS Sm<n) m<n))
           =⟨ ∘-ap (λ m≤Sn → cw-take m≤Sn skel) (lteSR ∘ inr) _ ⟩
         ap (λ Sm<n → cw-take (lteSR (inr Sm<n)) skel) (<-has-all-paths (<-trans ltS Sm<n) m<n)
           =⟨ ap-∘ (λ m≤n → cw-take m≤n (cw-init skel)) inr _ ⟩
         ap (λ m≤n → cw-take m≤n (cw-init skel)) (ap inr (<-has-all-paths (<-trans ltS Sm<n) m<n))
-          =⟨ ap (ap (λ m≤n → cw-take m≤n (cw-init skel))) (contr-has-all-paths (≤-is-prop _ _) _ _) ⟩
+          =⟨ ap (ap (λ m≤n → cw-take m≤n (cw-init skel))) (contr-has-all-paths _ _) ⟩
         ap (λ m≤n → cw-take m≤n (cw-init skel)) (≤-has-all-paths (≤-trans lteS (inr Sm<n)) (inr m<n))
           =∎
 
@@ -83,9 +83,9 @@ module cw.cohomology.CellularChainComplex {i : ULevel} where
         == ap (λ n≤Sn → cw-take n≤Sn (cw-init skel)) (≤-has-all-paths lteS lteS)
       path-lemma₁ skel =
         ap (λ n≤SSn → cw-take n≤SSn skel) (≤-has-all-paths (lteSR lteS) (lteSR lteS))
-          =⟨ ap (ap (λ n≤SSn → cw-take n≤SSn skel)) (contr-has-all-paths (≤-is-prop _ _) _ _) ⟩
+          =⟨ ap (ap (λ n≤SSn → cw-take n≤SSn skel)) (contr-has-all-paths _ _) ⟩
         idp
-          =⟨ ap (ap (λ n≤Sn → cw-take n≤Sn (cw-init skel))) (contr-has-all-paths (≤-is-prop _ _) _ _) ⟩
+          =⟨ ap (ap (λ n≤Sn → cw-take n≤Sn (cw-init skel))) (contr-has-all-paths _ _) ⟩
         ap (λ n≤Sn → cw-take n≤Sn (cw-init skel)) (≤-has-all-paths lteS lteS)
           =∎
 
@@ -93,7 +93,7 @@ module cw.cohomology.CellularChainComplex {i : ULevel} where
         → ap (λ n≤Sn → cw-take n≤Sn skel) (≤-has-all-paths lteS lteS) == idp
       path-lemma₂ skel =
         ap (λ n≤Sn → cw-take n≤Sn skel) (≤-has-all-paths lteS lteS)
-          =⟨ ap (ap (λ n≤Sn → cw-take n≤Sn skel)) (contr-has-all-paths (≤-is-prop _ _) _ _) ⟩
+          =⟨ ap (ap (λ n≤Sn → cw-take n≤Sn skel)) (contr-has-all-paths _ _) ⟩
         idp
           =∎
 
