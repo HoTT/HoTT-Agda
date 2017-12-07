@@ -95,7 +95,8 @@ module _ {i} {X : Ptd i} where
   → ⊙Ω-fmap2 F ⊙∘ ⊙diag == ⊙Ω-fmap (F ⊙∘ ⊙diag)
 ⊙Ω-fmap2-diag (f , idp) = ⊙λ=' (ap2-diag (curry f)) idp
 
-{- iterated loop spaces -}
+{- iterated loop spaces. [Ω^] and [Ω^'] iterates [Ω] from different sides:
+   [Ω^ (S n) X = Ω (Ω^ n X)] and [Ω^' (S n) X = Ω^' n (Ω X)]. -}
 
 module _ {i} where
 
@@ -106,17 +107,12 @@ module _ {i} where
   Ω^ : (n : ℕ) → Ptd i → Type i
   Ω^ n X = de⊙ (⊙Ω^ n X)
 
-{- for n ≥ 1, we have a group structure on the loop space -}
-module _ {i} (n : ℕ) {X : Ptd i} where
+  ⊙Ω^' : (n : ℕ) → Ptd i → Ptd i
+  ⊙Ω^' O X = X
+  ⊙Ω^' (S n) X = (⊙Ω^' n (⊙Ω X))
 
-  Ω^S-! : Ω^ (S n) X → Ω^ (S n) X
-  Ω^S-! = Ω-!
-
-  Ω^S-∙ : Ω^ (S n) X → Ω^ (S n) X → Ω^ (S n) X
-  Ω^S-∙ = Ω-∙
-
-idp^ : ∀ {i} (n : ℕ) {X : Ptd i} → Ω^ n X
-idp^ n {X} = pt (⊙Ω^ n X)
+  Ω^' : (n : ℕ) → Ptd i → Type i
+  Ω^' n X = de⊙ (⊙Ω^' n X)
 
 {- [⊙Ω^-fmap] and [⊙Ω^-fmap2] for higher loop spaces -}
 
@@ -129,6 +125,15 @@ idp^ n {X} = pt (⊙Ω^ n X)
   → X ⊙→ Y → (de⊙ (⊙Ω^ n X) → de⊙ (⊙Ω^ n Y))
 Ω^-fmap n F = fst (⊙Ω^-fmap n F)
 
+⊙Ω^'-fmap : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
+  → X ⊙→ Y → ⊙Ω^' n X ⊙→ ⊙Ω^' n Y
+⊙Ω^'-fmap O F = F
+⊙Ω^'-fmap (S n) F = ⊙Ω^'-fmap n (⊙Ω-fmap F)
+
+Ω^'-fmap : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
+  → X ⊙→ Y → (de⊙ (⊙Ω^' n X) → de⊙ (⊙Ω^' n Y))
+Ω^'-fmap n F = fst (⊙Ω^'-fmap n F)
+
 ⊙Ω^-fmap2 : ∀ {i j k} (n : ℕ) {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
   → ((X ⊙× Y) ⊙→ Z)
   → ((⊙Ω^ n X ⊙× ⊙Ω^ n Y) ⊙→ ⊙Ω^ n Z)
@@ -140,12 +145,30 @@ idp^ n {X} = pt (⊙Ω^ n X)
   → ((Ω^ n X) × (Ω^ n Y) → Ω^ n Z)
 Ω^-fmap2 n F = fst (⊙Ω^-fmap2 n F)
 
+⊙Ω^'-fmap2 : ∀ {i j k} (n : ℕ) {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  → ((X ⊙× Y) ⊙→ Z)
+  → ((⊙Ω^' n X ⊙× ⊙Ω^' n Y) ⊙→ ⊙Ω^' n Z)
+⊙Ω^'-fmap2 O F = F
+⊙Ω^'-fmap2 (S n) F = ⊙Ω^'-fmap2 n (⊙Ω-fmap2 F)
+
+Ω^'-fmap2 : ∀ {i j k} (n : ℕ) {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  → ((X ⊙× Y) ⊙→ Z)
+  → ((Ω^' n X) × (Ω^' n Y) → Ω^' n Z)
+Ω^'-fmap2 n F = fst (⊙Ω^'-fmap2 n F)
+
 ⊙Ω^-fmap-idf : ∀ {i} (n : ℕ) {X : Ptd i} → ⊙Ω^-fmap n (⊙idf X) == ⊙idf _
 ⊙Ω^-fmap-idf O = idp
 ⊙Ω^-fmap-idf (S n) = ap ⊙Ω-fmap (⊙Ω^-fmap-idf n) ∙ ⊙Ω-fmap-idf
 
 Ω^-fmap-idf : ∀ {i} (n : ℕ) {X : Ptd i} → Ω^-fmap n (⊙idf X) == idf _
 Ω^-fmap-idf n = fst= $ ⊙Ω^-fmap-idf n
+
+⊙Ω^'-fmap-idf : ∀ {i} (n : ℕ) {X : Ptd i} → ⊙Ω^'-fmap n (⊙idf X) == ⊙idf _
+⊙Ω^'-fmap-idf O = idp
+⊙Ω^'-fmap-idf (S n) = ap (⊙Ω^'-fmap n) ⊙Ω-fmap-idf ∙ ⊙Ω^'-fmap-idf n
+
+Ω^'-fmap-idf : ∀ {i} (n : ℕ) {X : Ptd i} → Ω^'-fmap n (⊙idf X) == idf _
+Ω^'-fmap-idf n = fst= $ ⊙Ω^'-fmap-idf n
 
 ⊙Ω^-fmap-fmap2 : ∀ {i j k l} (n : ℕ) {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
   (G : Z ⊙→ W) (F : (X ⊙× Y) ⊙→ Z)
@@ -199,6 +222,27 @@ idp^ n {X} = pt (⊙Ω^ n X)
   → Ω^-fmap2 n F ∘ diag == Ω^-fmap n (F ⊙∘ ⊙diag)
 Ω^-fmap2-diag n F = fst= $ ⊙Ω^-fmap2-diag n F
 
+{- for n ≥ 1, we have a group structure on the loop space -}
+module _ {i} (n : ℕ) {X : Ptd i} where
+
+  Ω^S-! : Ω^ (S n) X → Ω^ (S n) X
+  Ω^S-! = Ω-!
+
+  Ω^S-∙ : Ω^ (S n) X → Ω^ (S n) X → Ω^ (S n) X
+  Ω^S-∙ = Ω-∙
+
+  Ω^'S-! : Ω^' (S n) X → Ω^' (S n) X
+  Ω^'S-! = Ω^'-fmap n (Ω-! , idp)
+
+  Ω^'S-∙ : Ω^' (S n) X → Ω^' (S n) X → Ω^' (S n) X
+  Ω^'S-∙ = curry $ Ω^'-fmap2 n (uncurry Ω-∙ , idp)
+
+idp^ : ∀ {i} (n : ℕ) {X : Ptd i} → Ω^ n X
+idp^ n {X} = pt (⊙Ω^ n X)
+
+idp^' : ∀ {i} (n : ℕ) {X : Ptd i} → Ω^' n X
+idp^' n {X} = pt (⊙Ω^' n X)
+
 module _ {i} {X : Ptd i} (n : ℕ) where
 
   {- Prove these as lemmas now
@@ -250,6 +294,22 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
 
   ⊙Ω^-emap : (n : ℕ) → X ⊙≃ Y → ⊙Ω^ n X ⊙≃ ⊙Ω^ n Y
   ⊙Ω^-emap n (F , e) = ⊙Ω^-fmap n F , ⊙Ω^-isemap n F e
+
+{- [Ω^'] preserves (pointed) equivalences too -}
+module _ {i j} where
+
+  Ω^'-isemap : {X : Ptd i} {Y : Ptd j} (n : ℕ) (F : X ⊙→ Y) (e : is-equiv (fst F))
+    → is-equiv (Ω^'-fmap n F)
+  Ω^'-isemap O F e = e
+  Ω^'-isemap (S n) F e = Ω^'-isemap n (⊙Ω-fmap F) (Ω-isemap F e)
+
+  ⊙Ω^'-isemap = Ω^'-isemap
+
+  Ω^'-emap : {X : Ptd i} {Y : Ptd j} (n : ℕ) → X ⊙≃ Y → Ω^' n X ≃ Ω^' n Y
+  Ω^'-emap n (F , e) = Ω^'-fmap n F , Ω^'-isemap n F e
+
+  ⊙Ω^'-emap : {X : Ptd i} {Y : Ptd j} (n : ℕ) → X ⊙≃ Y → ⊙Ω^' n X ⊙≃ ⊙Ω^' n Y
+  ⊙Ω^'-emap n (F , e) = ⊙Ω^'-fmap n F , ⊙Ω^'-isemap n F e
 
 Ω^-level : ∀ {i} (m : ℕ₋₂) (n : ℕ) (X : Ptd i)
   → (has-level (⟨ n ⟩₋₂ +2+ m) (de⊙ X) → has-level m (Ω^ n X))
@@ -311,8 +371,8 @@ module _ {i} where
   Ω-Trunc-econv m X = Trunc=-equiv [ pt X ] [ pt X ]
 -}
 
-{- Our definition of Ω^ builds up loops on the outside,
- - but this is equivalent to building up on the inside -}
+{- Our definition of [Ω^] builds up loops from the outside,
+ - but this is equivalent to building up from the inside -}
 module _ {i} where
   ⊙Ω^-Ω-split : (n : ℕ) (X : Ptd i)
     → (⊙Ω^ (S n) X ⊙→ ⊙Ω^ n (⊙Ω X))
