@@ -145,5 +145,5 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
 -- These functions use different [A], [B] or [f].
 module _ {i} {A : Type i} where
   -- [concat] in Haskell
-  concat : ∀ {i} {A : Type i} → List (List A) → List A
+  concat : List (List A) → List A
   concat l = foldr _++_ nil l
