@@ -211,6 +211,32 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
        (λ a → idp)
        x
 
+{- naturality of Trunc=-equiv -}
+
+module _ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j} (f : A → B) where
+  Trunc=-fmap : ∀ (a₀ a₁ : Trunc (S n) A)
+    → (fst (Trunc= {n = n} a₀ a₁) → fst (Trunc= {n = n} (Trunc-fmap f a₀) (Trunc-fmap f a₁)))
+  Trunc=-fmap = Trunc-elim
+    {P = λ a₀ → ∀ a₁ → (fst (Trunc= a₀ a₁) → fst (Trunc= (Trunc-fmap f a₀) (Trunc-fmap f a₁)))}
+    {{λ a₀ → Π-level λ a₁ → Π-level λ _ → raise-level _ $ snd (Trunc= (Trunc-fmap f a₀) (Trunc-fmap f a₁))}}
+    (λ a₀ → Trunc-elim
+      {P = λ a₁ → (fst (Trunc= [ a₀ ] a₁) → fst (Trunc= [ f a₀ ] (Trunc-fmap f a₁)))}
+      {{λ a₁ → Π-level λ _ → raise-level _ $ snd (Trunc= [ f a₀ ] (Trunc-fmap f a₁))}}
+      (λ a₁ → Trunc-fmap (ap f)))
+
+module _ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j} (f : A → B) where
+  Trunc=-equiv-nat : ∀ (a₀ a₁ : Trunc (S n) A) (p : a₀ == a₁)
+     →  –> (Trunc=-equiv (Trunc-fmap f a₀) (Trunc-fmap f a₁)) (ap (Trunc-fmap f) p)
+     == Trunc=-fmap f a₀ a₁ (–> (Trunc=-equiv a₀ a₁) p)
+  Trunc=-equiv-nat a₀ .a₀ idp =
+    Trunc-elim
+      {P = λ a
+        →  –> (Trunc=-equiv (Trunc-fmap f a) (Trunc-fmap f a)) idp
+        == Trunc=-fmap f a a (–> (Trunc=-equiv a a) idp)}
+      {{λ a → raise-level _ $ =-preserves-level $ snd ((Trunc= (Trunc-fmap f a) (Trunc-fmap f a)))}}
+      (λ _ → idp)
+      a₀
+
 {- Truncation preserves equivalences - more convenient than univalence+ap
  - when we need to know the forward or backward function explicitly -}
 module _ {i j} (n : ℕ₋₂) {A : Type i} {B : Type j} where
