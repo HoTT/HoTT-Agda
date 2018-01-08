@@ -153,6 +153,9 @@ Trunc-extend-equiv n A B = (Trunc-rec , Trunc-rec-is-equiv n A B)
 Trunc-fmap : ∀ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j} → ((A → B) → (Trunc n A → Trunc n B))
 Trunc-fmap f = Trunc-rec ([_] ∘ f)
 
+⊙Trunc-fmap : ∀ {i j} {n : ℕ₋₂} {X : Ptd i} {Y : Ptd j} → ((X ⊙→ Y) → (⊙Trunc n X ⊙→ ⊙Trunc n Y))
+⊙Trunc-fmap F = Trunc-fmap (fst F) , ap [_] (snd F)
+
 Trunc-fmap2 : ∀ {i j k} {n : ℕ₋₂} {A : Type i} {B : Type j} {C : Type k}
   → ((A → B → C) → (Trunc n A → Trunc n B → Trunc n C))
 Trunc-fmap2 f = Trunc-rec (λ a → Trunc-fmap (f a))
