@@ -98,6 +98,16 @@ record CommSquare {i₀ i₁ j₀ j₁}
   : Type (lmax (lmax i₀ i₁) (lmax j₀ j₁)) where
   constructor comm-sqr
   field
-    commutes : ∀ a₀ → (hB ∘ f₀) a₀ == (f₁ ∘ hA) a₀
+    commutes : hB ∘ f₀ ∼ f₁ ∘ hA
 
 open CommSquare public
+
+record ⊙CommSquare {i₀ i₁ j₀ j₁}
+  {X₀ : Ptd i₀} {X₁ : Ptd i₁} {Y₀ : Ptd j₀} {Y₁ : Ptd j₁}
+  (f₀ : X₀ ⊙→ Y₀) (f₁ : X₁ ⊙→ Y₁) (hX : X₀ ⊙→ X₁) (hY : Y₀ ⊙→ Y₁)
+  : Type (lmax (lmax i₀ i₁) (lmax j₀ j₁)) where
+  constructor ⊙comm-sqr
+  field
+    ⊙commutes : hY ⊙∘ f₀ ⊙∼ f₁ ⊙∘ hX
+
+open ⊙CommSquare public
