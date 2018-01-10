@@ -3,6 +3,7 @@
 open import lib.Basics
 open import lib.types.Sigma
 open import lib.types.Paths
+open import lib.types.Pointed
 
 module lib.types.CommutingSquare where
 
@@ -22,6 +23,31 @@ CommSquare-∘v : ∀ {i₀ i₁ i₂ j₀ j₁ j₂}
   → CommSquare f₀ f₂ (kA ∘ hA) (kB ∘ hB)
 CommSquare-∘v {hA = hA} {kB = kB} (comm-sqr □₁₂) (comm-sqr □₀₁) =
   comm-sqr λ a₀ → ap kB (□₀₁ a₀) ∙ □₁₂ (hA a₀)
+
+{- XXX Reduce the usage of [⊙λ=] -}
+⊙CommSquare-∘v : ∀ {i₀ i₁ i₂ j₀ j₁ j₂}
+  {X₀ : Ptd i₀} {X₁ : Ptd i₁} {X₂ : Ptd i₂}
+  {Y₀ : Ptd j₀} {Y₁ : Ptd j₁} {Y₂ : Ptd j₂}
+  {f₀ : X₀ ⊙→ Y₀} {f₁ : X₁ ⊙→ Y₁} {f₂ : X₂ ⊙→ Y₂}
+  {hX : X₀ ⊙→ X₁} {hY : Y₀ ⊙→ Y₁}
+  {kX : X₁ ⊙→ X₂} {kY : Y₁ ⊙→ Y₂}
+  → ⊙CommSquare f₁ f₂ kX kY
+  → ⊙CommSquare f₀ f₁ hX hY
+  → ⊙CommSquare f₀ f₂ (kX ⊙∘ hX) (kY ⊙∘ hY)
+⊙CommSquare-∘v {f₀ = f₀} {f₁} {f₂} {hX} {hY} {kX} {kY} (⊙comm-sqr □₁₂) (⊙comm-sqr □₀₁) =
+  ⊙comm-sqr $ ⊙app= $
+    (kY ⊙∘ hY) ⊙∘ f₀
+      =⟨ ⊙λ= $ ⊙∘-assoc kY hY f₀ ⟩
+    kY ⊙∘ (hY ⊙∘ f₀)
+      =⟨ ap (kY ⊙∘_) (⊙λ= □₀₁) ⟩
+    kY ⊙∘ (f₁ ⊙∘ hX)
+      =⟨ ! $ ⊙λ= $ ⊙∘-assoc kY f₁ hX ⟩
+    (kY ⊙∘ f₁) ⊙∘ hX
+      =⟨ ap (_⊙∘ hX) (⊙λ= □₁₂) ⟩
+    (f₂ ⊙∘ kX) ⊙∘ hX
+      =⟨ ⊙λ= $ ⊙∘-assoc f₂ kX hX ⟩
+    f₂ ⊙∘ (kX ⊙∘ hX)
+      =∎
 
 CommSquare-inverse-v : ∀ {i₀ i₁ j₀ j₁}
   {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
