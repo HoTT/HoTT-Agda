@@ -180,6 +180,7 @@ to functions between corresponding structures.
 Here is a list of standardized suffices that denote different kind of functoriality:
 
 - `X-fmap`: `X` maps morphisms to morphisms (covariantly or contravariantly).
+- `X-csmap`: `X` maps commuting squares to commuting squares (covariantly or contravariantly).
 - `X-emap`: `X` maps isomorphisms to isomorphisms.
 - `X-isemap`: Usually a part of `X-emap` which lifts the proof of being an isomorphism.
 

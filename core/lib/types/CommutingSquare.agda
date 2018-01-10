@@ -12,6 +12,15 @@ module lib.types.CommutingSquare where
 infix 0 _□$_
 _□$_ = CommSquare.commutes
 
+de⊙-csmap : ∀ {i₀ i₁ j₀ j₁}
+  {X₀ : Ptd i₀} {X₁ : Ptd i₁}
+  {Y₀ : Ptd j₀} {Y₁ : Ptd j₁}
+  {f : X₀ ⊙→ Y₀} {g : X₁ ⊙→ Y₁}
+  {hX : X₀ ⊙→ X₁} {hY : Y₀ ⊙→ Y₁}
+  → ⊙CommSquare f g hX hY
+  → CommSquare (fst f) (fst g) (fst hX) (fst hY)
+de⊙-csmap (⊙comm-sqr cs) = comm-sqr (fst cs)
+
 CommSquare-∘v : ∀ {i₀ i₁ i₂ j₀ j₁ j₂}
   {A₀ : Type i₀} {A₁ : Type i₁} {A₂ : Type i₂}
   {B₀ : Type j₀} {B₁ : Type j₁} {B₂ : Type j₂}
