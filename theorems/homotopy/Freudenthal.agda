@@ -230,8 +230,8 @@ module FreudenthalEquiv
   ⊙path : ⊙Trunc k X == ⊙Trunc k (⊙Ω (⊙Susp X))
   ⊙path = ⊙ua ⊙eq
 
-  ⊙Ω^'S-⊙eq : (n : ℕ) → ⊙Ω^' n (⊙Trunc k X) ⊙≃ ⊙Ω^' n (⊙Trunc k (⊙Ω (⊙Susp X)))
-  ⊙Ω^'S-⊙eq n = ⊙Ω^'-emap n ⊙eq
+  ⊙Ω^'-⊙eq : (n : ℕ) → ⊙Ω^' n (⊙Trunc k X) ⊙≃ ⊙Ω^' n (⊙Trunc k (⊙Ω (⊙Susp X)))
+  ⊙Ω^'-⊙eq n = ⊙Ω^'-emap n ⊙eq
 
 {- Used to prove stability in iterated suspensions -}
 module FreudenthalIso
