@@ -65,6 +65,21 @@ module _ {i} {X : Ptd i} where
   → ⊙Ω-fmap (g ⊙∘ f) == ⊙Ω-fmap g ⊙∘ ⊙Ω-fmap f
 ⊙Ω-fmap-∘ (g , idp) (f , idp) = ⊙λ=' (λ p → ap-∘ g f p) idp
 
+⊙Ω-csmap : ∀ {i₀ i₁ j₀ j₁} {X₀ : Ptd i₀} {X₁ : Ptd i₁}
+  {Y₀ : Ptd j₀} {Y₁ : Ptd j₁} {f : X₀ ⊙→ Y₀} {g : X₁ ⊙→ Y₁}
+  {hX : X₀ ⊙→ X₁} {hY : Y₀ ⊙→ Y₁}
+  → ⊙CommSquare f g hX hY
+  → ⊙CommSquare (⊙Ω-fmap f) (⊙Ω-fmap g) (⊙Ω-fmap hX) (⊙Ω-fmap hY)
+⊙Ω-csmap {f = f} {g} {hX} {hY} (⊙comm-sqr cs) = ⊙comm-sqr $ ⊙app= $
+  ⊙Ω-fmap hY ⊙∘ ⊙Ω-fmap f
+    =⟨ ! $ ⊙Ω-fmap-∘ hY f ⟩
+  ⊙Ω-fmap (hY ⊙∘ f)
+    =⟨ ap ⊙Ω-fmap $ ⊙λ= cs ⟩
+  ⊙Ω-fmap (g ⊙∘ hX)
+    =⟨ ⊙Ω-fmap-∘ g hX ⟩
+  ⊙Ω-fmap g ⊙∘ ⊙Ω-fmap hX
+    =∎
+
 ⊙Ω-fmap-idf : ∀ {i} {X : Ptd i} → ⊙Ω-fmap (⊙idf X) == ⊙idf _
 ⊙Ω-fmap-idf = ⊙λ=' ap-idf idp
 
@@ -125,10 +140,26 @@ module _ {i} where
   → X ⊙→ Y → (de⊙ (⊙Ω^ n X) → de⊙ (⊙Ω^ n Y))
 Ω^-fmap n F = fst (⊙Ω^-fmap n F)
 
+⊙Ω^-csmap : ∀ {i₀ i₁ j₀ j₁} (n : ℕ) {X₀ : Ptd i₀} {X₁ : Ptd i₁}
+  {Y₀ : Ptd j₀} {Y₁ : Ptd j₁} {f : X₀ ⊙→ Y₀} {g : X₁ ⊙→ Y₁}
+  {hX : X₀ ⊙→ X₁} {hY : Y₀ ⊙→ Y₁}
+  → ⊙CommSquare f g hX hY
+  → ⊙CommSquare (⊙Ω^-fmap n f) (⊙Ω^-fmap n g) (⊙Ω^-fmap n hX) (⊙Ω^-fmap n hY)
+⊙Ω^-csmap O cs = cs
+⊙Ω^-csmap (S n) cs = ⊙Ω-csmap (⊙Ω^-csmap n cs)
+
 ⊙Ω^'-fmap : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
   → X ⊙→ Y → ⊙Ω^' n X ⊙→ ⊙Ω^' n Y
 ⊙Ω^'-fmap O F = F
 ⊙Ω^'-fmap (S n) F = ⊙Ω^'-fmap n (⊙Ω-fmap F)
+
+⊙Ω^'-csmap : ∀ {i₀ i₁ j₀ j₁} (n : ℕ) {X₀ : Ptd i₀} {X₁ : Ptd i₁}
+  {Y₀ : Ptd j₀} {Y₁ : Ptd j₁} {f : X₀ ⊙→ Y₀} {g : X₁ ⊙→ Y₁}
+  {hX : X₀ ⊙→ X₁} {hY : Y₀ ⊙→ Y₁}
+  → ⊙CommSquare f g hX hY
+  → ⊙CommSquare (⊙Ω^'-fmap n f) (⊙Ω^'-fmap n g) (⊙Ω^'-fmap n hX) (⊙Ω^'-fmap n hY)
+⊙Ω^'-csmap O cs = cs
+⊙Ω^'-csmap (S n) cs = ⊙Ω^'-csmap n (⊙Ω-csmap cs)
 
 Ω^'-fmap : ∀ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
   → X ⊙→ Y → (de⊙ (⊙Ω^' n X) → de⊙ (⊙Ω^' n Y))
@@ -155,6 +186,13 @@ module _ {i} where
   → ((X ⊙× Y) ⊙→ Z)
   → ((Ω^' n X) × (Ω^' n Y) → Ω^' n Z)
 Ω^'-fmap2 n F = fst (⊙Ω^'-fmap2 n F)
+
+⊙Ω^-fmap-∘ : ∀ {i j k} (n : ℕ) {X : Ptd i} {Y : Ptd j} {Z : Ptd k}
+  (g : Y ⊙→ Z) (f : X ⊙→ Y)
+  → ⊙Ω^-fmap n (g ⊙∘ f) == ⊙Ω^-fmap n g ⊙∘ ⊙Ω^-fmap n f
+⊙Ω^-fmap-∘ O _ _ = idp
+⊙Ω^-fmap-∘ (S n) g f = ap ⊙Ω-fmap (⊙Ω^-fmap-∘ n g f)
+                     ∙ ⊙Ω-fmap-∘ (⊙Ω^-fmap n g) (⊙Ω^-fmap n f)
 
 ⊙Ω^-fmap-idf : ∀ {i} (n : ℕ) {X : Ptd i} → ⊙Ω^-fmap n (⊙idf X) == ⊙idf _
 ⊙Ω^-fmap-idf O = idp

@@ -17,6 +17,11 @@ module lib.types.Pointed where
 
 {- Pointed maps -}
 
+⊙app= : ∀ {i j} {X : Ptd i} {Y : Ptd j} {f g : X ⊙→ Y}
+  → f == g → f ⊙∼ g
+⊙app= {X = X} {Y = Y} p =
+  app= (fst= p) , ↓-ap-in (_== pt Y) (λ u → u (pt X)) (snd= p)
+
 -- function extensionality for pointed maps
 ⊙λ= : ∀ {i j} {X : Ptd i} {Y : Ptd j} {f g : X ⊙→ Y}
   → f ⊙∼ g → f == g
