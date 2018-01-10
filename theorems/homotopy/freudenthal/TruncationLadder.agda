@@ -38,17 +38,17 @@ module homotopy.freudenthal.TruncationLadder where
         (⊙–> (⊙Ω^'-emap m (⊙Ω-Trunc {n = ⟨ m ⟩} (⊙Ω^ n (⊙Ω (⊙Susp X))))))
   step X m n = step' (⊙Ω^-fmap n (⊙up X)) m ⟨ m ⟩
 
-  pillar : ∀ {i} (X : Ptd i) m n
+  rail : ∀ {i} (X : Ptd i) m n
     → ⊙Ω^' m (⊙Trunc ⟨ m ⟩ (⊙Ω^ n X)) ⊙≃ ⊙Trunc 0 (⊙Ω^' m (⊙Ω^ n X))
-  pillar X O _ = ⊙ide _
-  pillar X (S m) n = pillar X m (S n) ⊙∘e ⊙Ω^'-emap m (⊙Ω-Trunc (⊙Ω^ n X))
+  rail X O _ = ⊙ide _
+  rail X (S m) n = rail X m (S n) ⊙∘e ⊙Ω^'-emap m (⊙Ω-Trunc (⊙Ω^ n X))
 
   ladder' : ∀ {i} (X : Ptd i) m n
     → ⊙CommSquare
         (⊙Ω^'-fmap m (⊙Trunc-fmap (⊙Ω^-fmap n (⊙up X))))
         (⊙Trunc-fmap (⊙Ω^'-fmap m (⊙Ω^-fmap n (⊙up X))))
-        (⊙–> (pillar X m n))
-        (⊙–> (pillar (⊙Ω (⊙Susp X)) m n))
+        (⊙–> (rail X m n))
+        (⊙–> (rail (⊙Ω (⊙Susp X)) m n))
   ladder' X O _ = ⊙comm-sqr (⊙∘-unit-l _)
   ladder' X (S m) n =
     ⊙CommSquare-∘v (ladder' X m (S n)) (step X m n)
@@ -57,6 +57,6 @@ module homotopy.freudenthal.TruncationLadder where
     → ⊙CommSquare
         (⊙Ω^'-fmap m (⊙Trunc-fmap (⊙up X)))
         (⊙Trunc-fmap (⊙Ω^'-fmap m (⊙up X)))
-        (⊙–> (pillar X m 0))
-        (⊙–> (pillar (⊙Ω (⊙Susp X)) m 0))
+        (⊙–> (rail X m 0))
+        (⊙–> (rail (⊙Ω (⊙Susp X)) m 0))
   ladder X m = ladder' X m 0
