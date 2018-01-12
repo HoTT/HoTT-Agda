@@ -89,7 +89,12 @@ abstract
 
 {- compositions -}
 
-infixr 80 _∘eᴳ_
+infixr 80 _∘eᴳˢ_ _∘eᴳ_
+
+_∘eᴳˢ_ : ∀ {i j k} {GEl : Type i} {HEl : Type j} {KEl : Type k}
+  {GS : GroupStructure GEl} {HS : GroupStructure HEl} {KS : GroupStructure KEl}
+  → HS ≃ᴳˢ KS → GS ≃ᴳˢ HS → GS ≃ᴳˢ KS
+(φ₂ , ie₂) ∘eᴳˢ (φ₁ , ie₁) = (φ₂ ∘ᴳˢ φ₁ , ie₂ ∘ise ie₁)
 
 _∘eᴳ_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
   → H ≃ᴳ K → G ≃ᴳ H → G ≃ᴳ K

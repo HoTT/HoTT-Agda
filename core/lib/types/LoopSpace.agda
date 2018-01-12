@@ -285,7 +285,7 @@ idp^ n {X} = pt (⊙Ω^ n X)
 idp^' : ∀ {i} (n : ℕ) {X : Ptd i} → Ω^' n X
 idp^' n {X} = pt (⊙Ω^' n X)
 
-module _ {i} {X : Ptd i} (n : ℕ) where
+module _ {i} (n : ℕ) {X : Ptd i} where
 
   {- Prove these as lemmas now
    - so we don't have to deal with the n = O case later -}
@@ -310,6 +310,33 @@ module _ {i} {X : Ptd i} (n : ℕ) where
     → Ω^S-∙ n p (Ω^S-! n p) == idp^ (S n)
   Ω^S-!-inv-r = !-inv-r
 
+module _ {i} where
+
+  Ω^'S-∙-unit-l : (n : ℕ) {X : Ptd i} (q : Ω^' (S n) X)
+    → (Ω^'S-∙ n (idp^' (S n)) q) == q
+  Ω^'S-∙-unit-l O _ = idp
+  Ω^'S-∙-unit-l (S n) = Ω^'S-∙-unit-l n
+
+  Ω^'S-∙-unit-r : (n : ℕ) {X : Ptd i} (q : Ω^' (S n) X)
+    → (Ω^'S-∙ n q (idp^' (S n))) == q
+  Ω^'S-∙-unit-r O = ∙-unit-r
+  Ω^'S-∙-unit-r (S n) = Ω^'S-∙-unit-r n
+
+  Ω^'S-∙-assoc : (n : ℕ) {X : Ptd i} (p q r : Ω^' (S n) X)
+    → Ω^'S-∙ n (Ω^'S-∙ n p q) r == Ω^'S-∙ n p (Ω^'S-∙ n q r)
+  Ω^'S-∙-assoc O = ∙-assoc
+  Ω^'S-∙-assoc (S n) = Ω^'S-∙-assoc n
+
+  Ω^'S-!-inv-l : (n : ℕ) {X : Ptd i} (p : Ω^' (S n) X)
+    → Ω^'S-∙ n (Ω^'S-! n p) p == idp^' (S n)
+  Ω^'S-!-inv-l O = !-inv-l
+  Ω^'S-!-inv-l (S n) = Ω^'S-!-inv-l n
+
+  Ω^'S-!-inv-r : (n : ℕ) {X : Ptd i} (p : Ω^' (S n) X)
+    → Ω^'S-∙ n p (Ω^'S-! n p) == idp^' (S n)
+  Ω^'S-!-inv-r O = !-inv-r
+  Ω^'S-!-inv-r (S n) = Ω^'S-!-inv-r n
+
 module _ where
   Ω-fmap-∙ : ∀ {i j} {X : Ptd i} {Y : Ptd j} (F : X ⊙→ Y) (p q : Ω X)
     → Ω-fmap F (p ∙ q) == Ω-fmap F p ∙ Ω-fmap F q
@@ -320,6 +347,13 @@ module _ where
     → Ω^-fmap (S n) F (Ω^S-∙ n p q)
       == Ω^S-∙ n (Ω^-fmap (S n) F p) (Ω^-fmap (S n) F q)
   Ω^S-fmap-∙ n F = Ω-fmap-∙ (⊙Ω^-fmap n F)
+
+  Ω^'S-fmap-∙ : ∀ {i j} (n : ℕ)
+    {X : Ptd i} {Y : Ptd j} (F : X ⊙→ Y) (p q : Ω^' (S n) X)
+    → Ω^'-fmap (S n) F (Ω^'S-∙ n p q)
+      == Ω^'S-∙ n (Ω^'-fmap (S n) F p) (Ω^'-fmap (S n) F q)
+  Ω^'S-fmap-∙ O = Ω-fmap-∙
+  Ω^'S-fmap-∙ (S n) F = Ω^'S-fmap-∙ n (⊙Ω-fmap F)
 
 {- [Ω^] preserves (pointed) equivalences -}
 module _ {i j} {X : Ptd i} {Y : Ptd j} where
@@ -360,6 +394,16 @@ module _ {i j} where
   has-level-apply (Ω^-level (S m) n X
     (transport (λ k → has-level k (de⊙ X)) (! (+2+-βr ⟨ n ⟩₋₂ m)) pX))
     (idp^ n) (idp^ n)
+
+Ω^'-is-set : ∀ {i} (n : ℕ) (X : Ptd i)
+  → (has-level ⟨ n ⟩ (de⊙ X) → is-set (Ω^' n X))
+Ω^'-is-set O X pX = pX
+Ω^'-is-set (S n) X pX = Ω^'-is-set n (⊙Ω X) (has-level-apply pX (pt X) (pt X))
+
+Ω^'-is-prop : ∀ {i} (n : ℕ) (X : Ptd i)
+  → (has-level ⟨ n ⟩₋₁ (de⊙ X) → is-prop (Ω^' n X))
+Ω^'-is-prop O X pX = pX
+Ω^'-is-prop (S n) X pX = Ω^'-is-prop n (⊙Ω X) (has-level-apply pX (pt X) (pt X))
 
 Ω^-conn : ∀ {i} (m : ℕ₋₂) (n : ℕ) (X : Ptd i)
   → (is-connected (⟨ n ⟩₋₂ +2+ m) (de⊙ X)) → is-connected m (Ω^ n X)
@@ -440,3 +484,27 @@ module _ {i} where
 
   Ω^-Ω-split-equiv : (n : ℕ) (X : Ptd i) → Ω^ (S n) X ≃ Ω^ n (⊙Ω X)
   Ω^-Ω-split-equiv n X = _ , Ω^-Ω-split-is-equiv n X
+
+module _ {i j} (X : Ptd i) (Y : Ptd j) where
+
+  Ω-× : Ω (X ⊙× Y) ≃ Ω X × Ω Y
+  Ω-× = equiv
+    (λ p → fst×= p , snd×= p)
+    (λ p → pair×= (fst p) (snd p))
+    (λ p → pair×= (fst×=-β (fst p) (snd p)) (snd×=-β (fst p) (snd p)))
+    (! ∘ pair×=-η)
+
+  ⊙Ω-× : ⊙Ω (X ⊙× Y) ⊙≃ ⊙Ω X ⊙× ⊙Ω Y
+  ⊙Ω-× = ≃-to-⊙≃ Ω-× idp
+
+module _ {i j} where
+
+  ⊙Ω^-× : ∀ (n : ℕ) (X : Ptd i) (Y : Ptd j)
+    → ⊙Ω^ n (X ⊙× Y) ⊙≃ ⊙Ω^ n X ⊙× ⊙Ω^ n Y
+  ⊙Ω^-× O _ _ = ⊙ide _
+  ⊙Ω^-× (S n) X Y = ⊙Ω-× (⊙Ω^ n X) (⊙Ω^ n Y) ⊙∘e ⊙Ω-emap (⊙Ω^-× n X Y)
+
+  ⊙Ω^'-× : ∀ (n : ℕ) (X : Ptd i) (Y : Ptd j)
+    → ⊙Ω^' n (X ⊙× Y) ⊙≃ ⊙Ω^' n X ⊙× ⊙Ω^' n Y
+  ⊙Ω^'-× O _ _ = ⊙ide _
+  ⊙Ω^'-× (S n) X Y = ⊙Ω^'-× n (⊙Ω X) (⊙Ω Y) ⊙∘e ⊙Ω^'-emap n (⊙Ω-× X Y)

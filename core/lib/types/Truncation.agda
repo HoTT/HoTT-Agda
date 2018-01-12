@@ -208,6 +208,7 @@ module _ {i} {n : ℕ₋₂} {A : Type i} where
     level ta tb tc = raise-level _ $
               Π-level (λ _ → Π-level (λ _ → snd (Trunc= ta tc)))
 
+  {- XXX naming convention -}
   Trunc=-∙-comm : {x y z : Trunc (S n) A }
     (p : x == y) (q : y == z)
     →  –> (Trunc=-equiv x z) (p ∙ q)

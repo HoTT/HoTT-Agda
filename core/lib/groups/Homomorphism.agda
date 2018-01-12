@@ -136,17 +136,29 @@ abstract
       {{Subtype-level
         (preserves-comp-prop (Group.comp G) (Group.comp H))}}
 
-infixr 80 _∘ᴳ_
+infixr 80 _∘ᴳˢ_ _∘ᴳ_
 
 abstract
-  ∘-pres-comp : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k} (ψ : H →ᴳ K) (φ : G →ᴳ H)
+  ∘ᴳˢ-pres-comp : ∀ {i j k} {GEl : Type i} {HEl : Type j} {KEl : Type k}
+    {GS : GroupStructure GEl} {HS : GroupStructure HEl} {KS : GroupStructure KEl}
+    (ψ : HS →ᴳˢ KS) (φ : GS →ᴳˢ HS)
+    → preserves-comp (GroupStructure.comp GS) (GroupStructure.comp KS) (GroupStructureHom.f ψ ∘ GroupStructureHom.f φ)
+  ∘ᴳˢ-pres-comp ψ φ g₁ g₂ = ap (GroupStructureHom.f ψ) (GroupStructureHom.pres-comp φ g₁ g₂)
+    ∙ GroupStructureHom.pres-comp ψ (GroupStructureHom.f φ g₁) (GroupStructureHom.f φ g₂)
+
+  ∘ᴳ-pres-comp : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k} (ψ : H →ᴳ K) (φ : G →ᴳ H)
     → preserves-comp (Group.comp G) (Group.comp K) (GroupHom.f ψ ∘ GroupHom.f φ)
-  ∘-pres-comp ψ φ g₁ g₂ = ap (GroupHom.f ψ) (GroupHom.pres-comp φ g₁ g₂)
+  ∘ᴳ-pres-comp ψ φ g₁ g₂ = ap (GroupHom.f ψ) (GroupHom.pres-comp φ g₁ g₂)
     ∙ GroupHom.pres-comp ψ (GroupHom.f φ g₁) (GroupHom.f φ g₂)
+
+_∘ᴳˢ_ : ∀  {i j k} {GEl : Type i} {HEl : Type j} {KEl : Type k}
+  {GS : GroupStructure GEl} {HS : GroupStructure HEl} {KS : GroupStructure KEl}
+  → (HS →ᴳˢ KS) → (GS →ᴳˢ HS) → (GS →ᴳˢ KS)
+ψ ∘ᴳˢ φ = group-structure-hom (GroupStructureHom.f ψ ∘ GroupStructureHom.f φ) (∘ᴳˢ-pres-comp ψ φ)
 
 _∘ᴳ_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
   → (H →ᴳ K) → (G →ᴳ H) → (G →ᴳ K)
-ψ ∘ᴳ φ = group-hom (GroupHom.f ψ ∘ GroupHom.f φ) (∘-pres-comp ψ φ)
+ψ ∘ᴳ φ = group-hom (GroupHom.f ψ ∘ GroupHom.f φ) (∘ᴳ-pres-comp ψ φ)
 
 {- algebraic properties -}
 
