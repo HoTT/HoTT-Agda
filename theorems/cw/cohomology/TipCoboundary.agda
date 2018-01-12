@@ -23,7 +23,7 @@ cw-co∂-head' = co∂
 
 cw-co∂-head : C2×CX₀ 0 →ᴳ CXₙ/Xₙ₋₁ 1
 cw-co∂-head = record {f = GroupHom.f cw-co∂-head' ∘ snd; pres-comp = lemma}
-  where abstract lemma = ∘-pres-comp cw-co∂-head' (×ᴳ-snd {G = C2 0} {H = CX₀ 0})
+  where abstract lemma = ∘ᴳ-pres-comp cw-co∂-head' (×ᴳ-snd {G = C2 0} {H = CX₀ 0})
 
 abstract
   -- This relies on the [lemma] above being non-abstract within this scope.

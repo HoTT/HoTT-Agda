@@ -44,6 +44,9 @@ module lib.groups.GroupProduct where
       inv-l : ∀ ab → comp (inv ab) ab == ident
       inv-l (g , h) = pair×= (G.inv-l g) (H.inv-l h)
 
+infix 80 _×ᴳˢ_
+_×ᴳˢ_ = ×-group-struct
+
 infix 80 _×ᴳ_
 _×ᴳ_ : ∀ {i j} → Group i → Group j → Group (lmax i j)
 _×ᴳ_ (group A A-struct) (group B B-struct) =

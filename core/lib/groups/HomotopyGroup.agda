@@ -26,6 +26,9 @@ module _ {i} where
   πS : (n : ℕ) (X : Ptd i) → Group i
   πS n X = Trunc-group (Ω^S-group-structure n X)
 
+  π'S : (n : ℕ) (X : Ptd i) → Group i
+  π'S n X = Trunc-group (Ω^'S-group-structure n X)
+
   fundamental-group : (X : Ptd i) → Group i
   fundamental-group X = πS 0 X
 
@@ -34,8 +37,14 @@ module _ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j} where
   πS-fmap : X ⊙→ Y → (πS n X →ᴳ πS n Y)
   πS-fmap F = Trunc-group-fmap (Ω^S-group-structure-fmap n F)
 
+  π'S-fmap : X ⊙→ Y → (π'S n X →ᴳ π'S n Y)
+  π'S-fmap F = Trunc-group-fmap (Ω^'S-group-structure-fmap n F)
+
   πS-emap : (X ⊙≃ Y) → (πS n X ≃ᴳ πS n Y)
   πS-emap e = Trunc-group-emap (Ω^S-group-structure-emap n e)
+
+  π'S-emap : (X ⊙≃ Y) → (π'S n X ≃ᴳ π'S n Y)
+  π'S-emap e = Trunc-group-emap (Ω^'S-group-structure-emap n e)
 
 {- π_(n+1) of a space is π_n of its loop space -}
 abstract
@@ -93,6 +102,16 @@ module _ {i} where
                   (+2+0 ⟨ S n ⟩₋₂) (Ω^S-Trunc-preiso n 0 X)
     open Ω^STruncPreIso r
 
+{- favonia: the same lemma for the alternative homotopy groups is trivial. -}
+
+  Ω^'S-group-Trunc-fuse-diag-iso : (n : ℕ) (X : Ptd i)
+    → Ω^'S-group n (⊙Trunc ⟨ S n ⟩ X) ≃ᴳ π'S n X
+  Ω^'S-group-Trunc-fuse-diag-iso O X =
+    ≃-to-≃ᴳ (Trunc=-equiv [ pt X ] [ pt X ]) Trunc=-∙-comm
+  Ω^'S-group-Trunc-fuse-diag-iso (S n) X =
+        Ω^'S-group-Trunc-fuse-diag-iso n (⊙Ω X)
+    ∘eᴳ Ω^'S-group-emap n {X = ⊙Ω (⊙Trunc ⟨ S (S n) ⟩ X)} (≃-to-⊙≃ (Trunc=-equiv [ pt X ] [ pt X ]) idp)
+
 abstract
   πS-Trunc-fuse-≤-iso : ∀ {i} (n : ℕ) (m : ℕ₋₂) (X : Ptd i)
     → (⟨ S n ⟩ ≤T m) → πS n (⊙Trunc m X) ≃ᴳ πS n X
@@ -104,6 +123,18 @@ abstract
     Ω^S-group n (⊙Trunc ⟨ S n ⟩ X)
       ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso n X ⟩
     πS n X
+      ≃ᴳ∎
+
+  π'S-Trunc-fuse-≤-iso : ∀ {i} (n : ℕ) (m : ℕ₋₂) (X : Ptd i)
+    → (⟨ S n ⟩ ≤T m) → π'S n (⊙Trunc m X) ≃ᴳ π'S n X
+  π'S-Trunc-fuse-≤-iso n m X Sn≤m =
+    π'S n (⊙Trunc m X)
+      ≃ᴳ⟨ Ω^'S-group-Trunc-fuse-diag-iso n (⊙Trunc m X) ⁻¹ᴳ ⟩
+    Ω^'S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X))
+      ≃ᴳ⟨ Ω^'S-group-emap n (≃-to-⊙≃ (Trunc-fuse-≤ (de⊙ X) Sn≤m) idp) ⟩
+    Ω^'S-group n (⊙Trunc ⟨ S n ⟩ X)
+      ≃ᴳ⟨ Ω^'S-group-Trunc-fuse-diag-iso n X ⟩
+    π'S n X
       ≃ᴳ∎
 
   πS-Trunc-fuse->-iso : ∀ {i} (n : ℕ) (m : ℕ₋₂) (X : Ptd i)
@@ -120,6 +151,18 @@ abstract
                (Trunc-level {n = m})}} ⟩
     0ᴳ ≃ᴳ∎
 
+  π'S-Trunc-fuse->-iso : ∀ {i} (n : ℕ) (m : ℕ₋₂) (X : Ptd i)
+    → (m <T ⟨ S n ⟩) → π'S n (⊙Trunc m X) ≃ᴳ 0ᴳ
+  π'S-Trunc-fuse->-iso n m X m<n =
+    π'S n (⊙Trunc m X)
+      ≃ᴳ⟨ Ω^'S-group-Trunc-fuse-diag-iso n (⊙Trunc m X) ⁻¹ᴳ ⟩
+    Ω^'S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X))
+      ≃ᴳ⟨ contr-iso-0ᴳ _ $ inhab-prop-is-contr
+           (Group.ident (Ω^'S-group n (⊙Trunc ⟨ S n ⟩ (⊙Trunc m X))))
+           {{Ω^'-is-prop (S n) _ $ Trunc-preserves-level ⟨ S n ⟩ $
+             raise-level-≤T (<T-to-≤T m<n) (Trunc-level {n = m})}} ⟩
+    0ᴳ ≃ᴳ∎
+
   -- XXX Naming conventions?
   πS->level-econv : ∀ {i} (n : ℕ) (m : ℕ₋₂) (X : Ptd i)
     → (m <T ⟨ S n ⟩) → {{_ : has-level m (de⊙ X)}}
@@ -132,31 +175,22 @@ abstract
     0ᴳ
       ≃ᴳ∎
 
+  π'S->level-econv : ∀ {i} (n : ℕ) (m : ℕ₋₂) (X : Ptd i)
+    → (m <T ⟨ S n ⟩) → {{_ : has-level m (de⊙ X)}}
+    → π'S n X ≃ᴳ 0ᴳ
+  π'S->level-econv n m X lt =
+    π'S n X
+      ≃ᴳ⟨ π'S-emap n (⊙unTrunc-equiv X ⊙⁻¹) ⟩
+    π'S n (⊙Trunc m X)
+      ≃ᴳ⟨ π'S-Trunc-fuse->-iso n m X lt ⟩
+    0ᴳ
+      ≃ᴳ∎
+
 {- πₙ(X × Y) == πₙ(X) × πₙ(Y) -}
 module _ {i j} (n : ℕ) (X : Ptd i) (Y : Ptd  j) where
 
   πS-× : πS n (X ⊙× Y) ≃ᴳ πS n X ×ᴳ πS n Y
-  πS-× = Trunc-group-× _ _
-     ∘eᴳ Trunc-group-emap (group-structure-hom f pres-comp , is-eq f g f-g g-f)
-    where
-    f : Ω^ (S n) (X ⊙× Y) → Ω^ (S n) X × Ω^ (S n) Y
-    f r = (Ω^-fmap (S n) ⊙fst r , Ω^-fmap (S n) ⊙snd r)
+  πS-× = Trunc-group-× _ _ ∘eᴳ Trunc-group-emap (Ω^S-group-structure-× n X Y)
 
-    g : Ω^ (S n) X × Ω^ (S n) Y → Ω^ (S n) (X ⊙× Y)
-    g = Ω^-fmap2 (S n) (⊙idf _)
-
-    f-g : (s : Ω^ (S n) X × Ω^ (S n) Y) → f (g s) == s
-    f-g (p , q) = pair×=
-      (app= (Ω^-fmap-fmap2 (S n) ⊙fst (⊙idf _) ∙ Ω^-fmap2-fst (S n)) (p , q))
-      (app= (Ω^-fmap-fmap2 (S n) ⊙snd (⊙idf _) ∙ Ω^-fmap2-snd (S n)) (p , q))
-
-    g-f : (r : Ω^ (S n) (X ⊙× Y)) → g (f r) == r
-    g-f = app= $
-      ap (_∘ diag) (Ω^-fmap2-fmap (S n) (⊙idf _) ⊙fst ⊙snd)
-      ∙ Ω^-fmap2-diag (S n) (⊙idf _ ⊙∘ ⊙×-fmap ⊙fst ⊙snd)
-      ∙ Ω^-fmap-idf (S n)
-
-    pres-comp : (p q : Ω^ (S n) (X ⊙× Y))
-      → f (Ω^S-∙ n p q) == (Ω^S-∙ n (fst (f p)) (fst (f q)) ,
-                            Ω^S-∙ n (snd (f p)) (snd (f q)))
-    pres-comp p q = pair×= (Ω^S-fmap-∙ n ⊙fst p q) (Ω^S-fmap-∙ n ⊙snd p q)
+  π'S-× : π'S n (X ⊙× Y) ≃ᴳ π'S n X ×ᴳ π'S n Y
+  π'S-× = Trunc-group-× _ _ ∘eᴳ Trunc-group-emap (Ω^'S-group-structure-× n X Y)

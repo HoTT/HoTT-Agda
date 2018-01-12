@@ -14,7 +14,7 @@ open import cohomology.PtdMapSequence CT
 
 co∂ : C n X →ᴳ C (succ n) (⊙Cofiber f)
 co∂ = record {f = CEl-fmap (succ n) ⊙extract-glue ∘ GroupIso.g (C-Susp n X); pres-comp = lemma} where
-  abstract lemma = ∘-pres-comp (C-fmap (succ n) ⊙extract-glue) (GroupIso.g-hom (C-Susp n X))
+  abstract lemma = ∘ᴳ-pres-comp (C-fmap (succ n) ⊙extract-glue) (GroupIso.g-hom (C-Susp n X))
 
 C-cofiber-seq : HomSequence (C n Y) (C (succ n) X)
 C-cofiber-seq =
