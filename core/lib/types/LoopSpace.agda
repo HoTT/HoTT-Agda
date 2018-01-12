@@ -269,11 +269,15 @@ module _ {i} (n : ℕ) {X : Ptd i} where
   Ω^S-∙ : Ω^ (S n) X → Ω^ (S n) X → Ω^ (S n) X
   Ω^S-∙ = Ω-∙
 
-  Ω^'S-! : Ω^' (S n) X → Ω^' (S n) X
-  Ω^'S-! = Ω^'-fmap n (Ω-! , idp)
+module _ {i} where
 
-  Ω^'S-∙ : Ω^' (S n) X → Ω^' (S n) X → Ω^' (S n) X
-  Ω^'S-∙ = curry $ Ω^'-fmap2 n (uncurry Ω-∙ , idp)
+  Ω^'S-! : (n : ℕ) {X : Ptd i} → Ω^' (S n) X → Ω^' (S n) X
+  Ω^'S-! O = Ω-!
+  Ω^'S-! (S n) {X} = Ω^'S-! n {⊙Ω X}
+
+  Ω^'S-∙ : (n : ℕ) {X : Ptd i} → Ω^' (S n) X → Ω^' (S n) X → Ω^' (S n) X
+  Ω^'S-∙ O = Ω-∙
+  Ω^'S-∙ (S n) {X} = Ω^'S-∙ n {⊙Ω X}
 
 idp^ : ∀ {i} (n : ℕ) {X : Ptd i} → Ω^ n X
 idp^ n {X} = pt (⊙Ω^ n X)
