@@ -161,8 +161,8 @@ Trunc-fmap2 : ∀ {i j k} {n : ℕ₋₂} {A : Type i} {B : Type j} {C : Type k}
 Trunc-fmap2 f = Trunc-rec (λ a → Trunc-fmap (f a))
 
 -- XXX What is the naming convention?
-Trunc-fpmap : ∀ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j} {f g : A → B} (h : (a : A) → f a == g a)
-  → ((a : Trunc n A) → Trunc-fmap f a == Trunc-fmap g a)
+Trunc-fpmap : ∀ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j} {f g : A → B}
+  → f ∼ g → Trunc-fmap {n = n} f ∼ Trunc-fmap g
 Trunc-fpmap h = Trunc-elim (ap [_] ∘ h)
 
 Trunc-fmap-idf : ∀ {i} {n : ℕ₋₂} {A : Type i}
