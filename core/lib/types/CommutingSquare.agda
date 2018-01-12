@@ -58,15 +58,35 @@ CommSquare-∘v {hA = hA} {kB = kB} (comm-sqr □₁₂) (comm-sqr □₀₁) =
     f₂ ⊙∘ (kX ⊙∘ hX)
       =∎
 
+is-cs-equiv : ∀ {i₀ i₁ j₀ j₁}
+  {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
+  {f₀ : A₀ → B₀} {f₁ : A₁ → B₁} {hA : A₀ → A₁} {hB : B₀ → B₁}
+  → CommSquare f₀ f₁ hA hB → Type (lmax (lmax i₀ i₁) (lmax j₀ j₁))
+is-cs-equiv {hA = hA} {hB} _ = is-equiv hA × is-equiv hB
+
+CommSquareEquiv : ∀ {i₀ i₁ j₀ j₁}
+  {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
+  (f₀ : A₀ → B₀) (f₁ : A₁ → B₁) (hA : A₀ → A₁) (hB : B₀ → B₁)
+  → Type (lmax (lmax i₀ i₁) (lmax j₀ j₁))
+CommSquareEquiv f₀ f₁ hA hB = Σ (CommSquare f₀ f₁ hA hB) is-cs-equiv
+
+CommSquareEquiv-inverse-v : ∀ {i₀ i₁ j₀ j₁}
+  {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
+  {f₀ : A₀ → B₀} {f₁ : A₁ → B₁} {hA : A₀ → A₁} {hB : B₀ → B₁}
+  → (cse : CommSquareEquiv f₀ f₁ hA hB)
+  → CommSquareEquiv f₁ f₀ (is-equiv.g (fst (snd cse))) (is-equiv.g (snd (snd cse)))
+CommSquareEquiv-inverse-v {f₀ = f₀} {f₁} {hA} {hB} (comm-sqr □ , hA-ise , hB-ise) =
+    comm-sqr (λ a₁ → ap hB.g (! (□ (hA.g a₁) ∙ ap f₁ (hA.f-g a₁))) ∙ hB.g-f (f₀ (hA.g a₁)))
+  , is-equiv-inverse hA-ise , is-equiv-inverse hB-ise
+  where module hA = is-equiv hA-ise
+        module hB = is-equiv hB-ise
+
 CommSquare-inverse-v : ∀ {i₀ i₁ j₀ j₁}
   {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
   {f₀ : A₀ → B₀} {f₁ : A₁ → B₁} {hA : A₀ → A₁} {hB : B₀ → B₁}
   → CommSquare f₀ f₁ hA hB → (hA-ise : is-equiv hA) (hB-ise : is-equiv hB)
   → CommSquare f₁ f₀ (is-equiv.g hA-ise) (is-equiv.g hB-ise)
-CommSquare-inverse-v {f₀ = f₀} {f₁} {hA} {hB} (comm-sqr □) hA-ise hB-ise =
-  comm-sqr λ a₁ → ap hB.g (! (□ (hA.g a₁) ∙ ap f₁ (hA.f-g a₁))) ∙ hB.g-f (f₀ (hA.g a₁))
-  where module hA = is-equiv hA-ise
-        module hB = is-equiv hB-ise
+CommSquare-inverse-v cs hA-ise hB-ise = fst $ CommSquareEquiv-inverse-v (cs , hA-ise , hB-ise)
 
 abstract
   -- 'r' with respect to '∘v'
@@ -166,3 +186,37 @@ abstract
             (p₀ : a₀ == a₁) (p₁ : a₂ == a₀) (q₀ : f a₂ == b)
             → ap f p₀ ∙ (ap f (! (p₁ ∙' p₀)) ∙ q₀) == ! (ap f p₁) ∙' q₀
           lemma f idp idp idp = idp
+
+module _ where
+
+CommSquareEquiv-preserves-equiv : ∀ {i₀ i₁ j₀ j₁}
+  {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
+  {f₀ : A₀ → B₀} {f₁ : A₁ → B₁} {hA : A₀ → A₁} {hB : B₀ → B₁}
+  → CommSquareEquiv f₀ f₁ hA hB
+  → is-equiv f₀ → is-equiv f₁
+CommSquareEquiv-preserves-equiv {f₀ = f₀} {f₁} {hA} {hB} (cs , hA-ise , hB-ise) f₀-ise =
+  transport is-equiv
+    (λ= λ a₁ →
+      hB (f₀ (is-equiv.g hA-ise a₁))
+        =⟨ cs □$ is-equiv.g hA-ise a₁ ⟩
+      f₁ (hA (is-equiv.g hA-ise a₁))
+        =⟨ ap f₁ $ is-equiv.f-g hA-ise a₁ ⟩
+      f₁ a₁
+        =∎)
+    (hB-ise ∘ise f₀-ise ∘ise is-equiv-inverse hA-ise)
+
+CommSquareEquiv-preserves'-equiv : ∀ {i₀ i₁ j₀ j₁}
+  {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
+  {f₀ : A₀ → B₀} {f₁ : A₁ → B₁} {hA : A₀ → A₁} {hB : B₀ → B₁}
+  → CommSquareEquiv f₀ f₁ hA hB
+  → is-equiv f₁ → is-equiv f₀
+CommSquareEquiv-preserves'-equiv {f₀ = f₀} {f₁} {hA} {hB} (cs , hA-ise , hB-ise) f₁-ise =
+  transport is-equiv
+    (λ= λ a₀ →
+      is-equiv.g hB-ise (f₁ (hA a₀))
+        =⟨ ! $ ap (is-equiv.g hB-ise) (cs □$ a₀) ⟩
+      is-equiv.g hB-ise (hB (f₀ a₀))
+        =⟨ is-equiv.g-f hB-ise (f₀ a₀) ⟩
+      f₀ a₀
+        =∎)
+    (is-equiv-inverse hB-ise ∘ise f₁-ise ∘ise hA-ise)
