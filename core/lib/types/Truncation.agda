@@ -176,6 +176,13 @@ Trunc-fmap-∘ : ∀ {i j k} {n : ℕ₋₂} {A : Type i} {B : Type j} {C : Type
 Trunc-fmap-∘ g f =
   Trunc-elim (λ _ → idp)
 
+Trunc-csmap : ∀ {i₀ i₁ j₀ j₁} {n : ℕ₋₂}
+  {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
+  {f : A₀ → B₀} {g : A₁ → B₁} {hA : A₀ → A₁} {hB : B₀ → B₁}
+  → CommSquare f g hA hB
+  → CommSquare (Trunc-fmap {n = n} f) (Trunc-fmap g) (Trunc-fmap hA) (Trunc-fmap hB)
+Trunc-csmap (comm-sqr cs) = comm-sqr $ Trunc-elim (ap [_] ∘ cs)
+
 {- Pushing concatentation through Trunc= -}
 module _ {i} {n : ℕ₋₂} {A : Type i} where
 
