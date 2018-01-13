@@ -21,6 +21,9 @@ module FreudenthalEquiv
   up : de⊙ X → north' (de⊙ X) == north
   up x = merid x ∙ ! (merid (pt X))
 
+  ⊙up : X ⊙→ ⊙Ω (⊙Susp X)
+  ⊙up = up , !-inv-r (merid (pt X))
+
   Codes-mer-args : WedgeExt.args {a₀ = pt X} {b₀ = [_] {n = k} (pt X)}
   Codes-mer-args = record {n = S n; m = S n;
     P = λ _ _ → (Trunc k (de⊙ X) , raise-level-≤T kle Trunc-level);
@@ -73,11 +76,19 @@ module FreudenthalEquiv
   Codes-has-level = Susp-elim Trunc-level Trunc-level
                       (λ _ → prop-has-all-paths-↓)
 
+  {-
+    favonia:
+
+    This equation should be true: [⊙Trunc-fmap ⊙up = (decodeN , decodeN-pt)].
+    Maybe there is a way to refactor the following code so that
+    pointedness is handled more elegantly.
+  -}
+
   decodeN : Codes north → Trunc k (north' (de⊙ X) == north)
   decodeN = Trunc-fmap up
 
   decodeN-pt : decodeN [ pt X ] == [ idp ]
-  decodeN-pt = ap [_] (!-inv-r (merid (pt X)))
+  decodeN-pt = snd (⊙Trunc-fmap ⊙up)
 
   decodeS : Codes south → Q south
   decodeS = Trunc-fmap merid
@@ -135,7 +146,7 @@ module FreudenthalEquiv
       P : de⊙ X → de⊙ X → (S (n +2+ (S n))) -Type (lmax i i)
       P = λ x₁ x₂ →
         ((transport Q (merid x₁) (Trunc-fmap up [ x₂ ])
-          == Trunc-fmap (merid) (transport Codes (merid x₁) [ x₂ ])),
+          == Trunc-fmap merid (transport Codes (merid x₁) [ x₂ ])),
          =-preserves-level (raise-level-≤T kle Trunc-level))
 
       f : (a : de⊙ X) → fst (P a (pt X))
@@ -148,14 +159,14 @@ module FreudenthalEquiv
           =⟨ ap [_] $ ap (λ s → s ∙ merid a) (!-inv-r (merid (pt X))) ⟩
         [ merid a ]
           =⟨ idp ⟩
-        Trunc-fmap (merid) [ a ]
-          =⟨ ap (Trunc-fmap (merid)) (! (app= Codes-mer-β-l a)) ⟩
-        Trunc-fmap (merid) (Codes-mer a [ pt X ])
-          =⟨ ap (Trunc-fmap (merid)) (! (coe-β (Codes-mer-equiv a) [ pt X ])) ⟩
-        Trunc-fmap (merid) (coe (ua (Codes-mer-equiv a)) [ pt X ])
+        Trunc-fmap merid [ a ]
+          =⟨ ap (Trunc-fmap merid) (! (app= Codes-mer-β-l a)) ⟩
+        Trunc-fmap merid (Codes-mer a [ pt X ])
+          =⟨ ap (Trunc-fmap merid) (! (coe-β (Codes-mer-equiv a) [ pt X ])) ⟩
+        Trunc-fmap merid (coe (ua (Codes-mer-equiv a)) [ pt X ])
           =⟨ ! (SuspRec.merid-β _ _ (ua ∘ Codes-mer-equiv) a)
-            |in-ctx (λ w → Trunc-fmap (merid) (coe w [ pt X ])) ⟩
-        Trunc-fmap (merid) (transport Codes (merid a) [ pt X ]) ∎
+            |in-ctx (λ w → Trunc-fmap merid (coe w [ pt X ])) ⟩
+        Trunc-fmap merid (transport Codes (merid a) [ pt X ]) ∎
 
       g : (b : de⊙ X) → fst (P (pt X) b)
       g b =
@@ -169,14 +180,14 @@ module FreudenthalEquiv
                       ∙ ∙-unit-r (merid b) ⟩
         [ merid b ]
           =⟨ idp ⟩
-        Trunc-fmap (merid) [ b ]
-          =⟨ ap (Trunc-fmap (merid)) (! (app= Codes-mer-β-r [ b ])) ⟩
-        Trunc-fmap (merid) (Codes-mer (pt X) [ b ])
-          =⟨ ap (Trunc-fmap (merid)) (! (coe-β (Codes-mer-equiv (pt X)) [ b ])) ⟩
-        Trunc-fmap (merid) (coe (ua (Codes-mer-equiv (pt X))) [ b ])
+        Trunc-fmap merid [ b ]
+          =⟨ ap (Trunc-fmap merid) (! (app= Codes-mer-β-r [ b ])) ⟩
+        Trunc-fmap merid (Codes-mer (pt X) [ b ])
+          =⟨ ap (Trunc-fmap merid) (! (coe-β (Codes-mer-equiv (pt X)) [ b ])) ⟩
+        Trunc-fmap merid (coe (ua (Codes-mer-equiv (pt X))) [ b ])
           =⟨ ! (SuspRec.merid-β _ _ (ua ∘ Codes-mer-equiv) (pt X))
-            |in-ctx (λ w → Trunc-fmap (merid) (coe w [ b ])) ⟩
-        Trunc-fmap (merid) (transport Codes (merid (pt X)) [ b ]) ∎
+            |in-ctx (λ w → Trunc-fmap merid (coe w [ b ])) ⟩
+        Trunc-fmap merid (transport Codes (merid (pt X)) [ b ]) ∎
 
       p : f (pt X) == g (pt X)
       p = ap2
@@ -189,14 +200,14 @@ module FreudenthalEquiv
             =⟨ ap [_] p₁ ⟩
           [ merid (pt X) ]
             =⟨ idp ⟩
-          Trunc-fmap (merid) [ pt X ]
-            =⟨ ap (Trunc-fmap (merid)) (! p₂) ⟩
-          Trunc-fmap (merid) (Codes-mer (pt X) [ pt X ])
-            =⟨ ap (Trunc-fmap (merid)) (! (coe-β (Codes-mer-equiv (pt X)) [ pt X ])) ⟩
-          Trunc-fmap (merid) (coe (ua (Codes-mer-equiv (pt X))) [ pt X ])
+          Trunc-fmap merid [ pt X ]
+            =⟨ ap (Trunc-fmap merid) (! p₂) ⟩
+          Trunc-fmap merid (Codes-mer (pt X) [ pt X ])
+            =⟨ ap (Trunc-fmap merid) (! (coe-β (Codes-mer-equiv (pt X)) [ pt X ])) ⟩
+          Trunc-fmap merid (coe (ua (Codes-mer-equiv (pt X))) [ pt X ])
             =⟨ ! (SuspRec.merid-β _ _ (ua ∘ Codes-mer-equiv) (pt X))
-              |in-ctx (λ w → Trunc-fmap (merid) (coe w [ pt X ])) ⟩
-          Trunc-fmap (merid) (transport Codes (merid (pt X)) [ pt X ]) ∎)
+              |in-ctx (λ w → Trunc-fmap merid (coe w [ pt X ])) ⟩
+          Trunc-fmap merid (transport Codes (merid (pt X)) [ pt X ]) ∎)
         (coh (merid (pt X))) Codes-mer-coh
 
       STS-args : WedgeExt.args {a₀ = pt X} {b₀ = pt X}
@@ -205,7 +216,7 @@ module FreudenthalEquiv
 
       STS : (x' : de⊙ X) (c : Codes north) →
         transport Q (merid x') (Trunc-fmap up c)
-        == Trunc-fmap (merid) (transport Codes (merid x') c)
+        == Trunc-fmap merid (transport Codes (merid x') c)
       STS x' = Trunc-elim {{λ _ → =-preserves-level Trunc-level}}
                           (WedgeExt.ext STS-args x')
 
@@ -230,8 +241,8 @@ module FreudenthalEquiv
   ⊙path : ⊙Trunc k X == ⊙Trunc k (⊙Ω (⊙Susp X))
   ⊙path = ⊙ua ⊙eq
 
-  ⊙Ω^'-⊙eq : (n : ℕ) → ⊙Ω^' n (⊙Trunc k X) ⊙≃ ⊙Ω^' n (⊙Trunc k (⊙Ω (⊙Susp X)))
-  ⊙Ω^'-⊙eq n = ⊙Ω^'-emap n ⊙eq
+  ⊙Ω^'-eq : (n : ℕ) → ⊙Ω^' n (⊙Trunc k X) ⊙≃ ⊙Ω^' n (⊙Trunc k (⊙Ω (⊙Susp X)))
+  ⊙Ω^'-eq n = ⊙Ω^'-emap n ⊙eq
 
 {- Used to prove stability in iterated suspensions -}
 module FreudenthalIso
