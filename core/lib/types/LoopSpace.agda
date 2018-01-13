@@ -534,6 +534,10 @@ module _ {i j} (X : Ptd i) (Y : Ptd j) where
   ⊙Ω-× : ⊙Ω (X ⊙× Y) ⊙≃ ⊙Ω X ⊙× ⊙Ω Y
   ⊙Ω-× = ≃-to-⊙≃ Ω-× idp
 
+  Ω-×-∙ : ∀ (p q : Ω (X ⊙× Y))
+    → –> Ω-× (p ∙ q) == (fst (–> Ω-× p) ∙ fst (–> Ω-× q) , snd (–> Ω-× p) ∙ snd (–> Ω-× q))
+  Ω-×-∙ p q = pair×= (Ω-fmap-∙ ⊙fst p q) (Ω-fmap-∙ ⊙snd p q)
+
 module _ {i j} where
 
   ⊙Ω^-× : ∀ (n : ℕ) (X : Ptd i) (Y : Ptd j)
