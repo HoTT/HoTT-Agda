@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
+open import lib.Function2
 open import lib.types.Sigma
 open import lib.types.Paths
 open import lib.types.Pointed
@@ -58,18 +59,6 @@ CommSquare-∘v {hA = hA} {kB = kB} (comm-sqr □₁₂) (comm-sqr □₀₁) =
     f₂ ⊙∘ (kX ⊙∘ hX)
       =∎
 
-is-cs-equiv : ∀ {i₀ i₁ j₀ j₁}
-  {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
-  {f₀ : A₀ → B₀} {f₁ : A₁ → B₁} {hA : A₀ → A₁} {hB : B₀ → B₁}
-  → CommSquare f₀ f₁ hA hB → Type (lmax (lmax i₀ i₁) (lmax j₀ j₁))
-is-cs-equiv {hA = hA} {hB} _ = is-equiv hA × is-equiv hB
-
-CommSquareEquiv : ∀ {i₀ i₁ j₀ j₁}
-  {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
-  (f₀ : A₀ → B₀) (f₁ : A₁ → B₁) (hA : A₀ → A₁) (hB : B₀ → B₁)
-  → Type (lmax (lmax i₀ i₁) (lmax j₀ j₁))
-CommSquareEquiv f₀ f₁ hA hB = Σ (CommSquare f₀ f₁ hA hB) is-cs-equiv
-
 CommSquareEquiv-∘v : ∀ {i₀ i₁ i₂ j₀ j₁ j₂}
   {A₀ : Type i₀} {A₁ : Type i₁} {A₂ : Type i₂}
   {B₀ : Type j₀} {B₁ : Type j₁} {B₂ : Type j₂}
@@ -81,18 +70,6 @@ CommSquareEquiv-∘v : ∀ {i₀ i₁ i₂ j₀ j₁ j₂}
   → CommSquareEquiv f₀ f₂ (kA ∘ hA) (kB ∘ hB)
 CommSquareEquiv-∘v (cs₀ , kA-ise , kB-ise) (cs₁ , hA-ise , hB-ise) =
   (CommSquare-∘v cs₀ cs₁ , kA-ise ∘ise hA-ise , kB-ise ∘ise hB-ise)
-
-is-⊙cs-equiv : ∀ {i₀ i₁ j₀ j₁}
-  {X₀ : Ptd i₀} {X₁ : Ptd i₁} {Y₀ : Ptd j₀} {Y₁ : Ptd j₁}
-  {f₀ : X₀ ⊙→ Y₀} {f₁ : X₁ ⊙→ Y₁} {hX : X₀ ⊙→ X₁} {hY : Y₀ ⊙→ Y₁}
-  → ⊙CommSquare f₀ f₁ hX hY → Type (lmax (lmax i₀ i₁) (lmax j₀ j₁))
-is-⊙cs-equiv {hX = hX} {hY} _ = is-equiv (fst hX) × is-equiv (fst hY)
-
-⊙CommSquareEquiv : ∀ {i₀ i₁ j₀ j₁}
-  {X₀ : Ptd i₀} {X₁ : Ptd i₁} {Y₀ : Ptd j₀} {Y₁ : Ptd j₁}
-  (f₀ : X₀ ⊙→ Y₀) (f₁ : X₁ ⊙→ Y₁) (hX : X₀ ⊙→ X₁) (hY : Y₀ ⊙→ Y₁)
-  → Type (lmax (lmax i₀ i₁) (lmax j₀ j₁))
-⊙CommSquareEquiv f₀ f₁ hX hY = Σ (⊙CommSquare f₀ f₁ hX hY) is-⊙cs-equiv
 
 ⊙CommSquareEquiv-∘v : ∀ {i₀ i₁ i₂ j₀ j₁ j₂}
   {X₀ : Ptd i₀} {X₁ : Ptd i₁} {X₂ : Ptd i₂}

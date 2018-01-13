@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
+open import lib.Function2
 open import lib.NType2
 open import lib.types.Bool
 open import lib.types.Empty
@@ -159,3 +160,12 @@ module _ {i j k} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} (⊙e : X ⊙≃ Y) where
       where lemma : ∀ b → fst (g (h false)) b == h b
             lemma true = ! hpt
             lemma false = idp
+
+⊙Bool→-equiv-idf-nat : ∀ {i j} {X : Ptd i} {Y : Ptd j} (F : X ⊙→ Y)
+  → CommSquareEquiv
+      (F ⊙∘_)
+      (fst F)
+      ⊙Bool→-to-idf
+      ⊙Bool→-to-idf
+⊙Bool→-equiv-idf-nat F = (comm-sqr λ _ → idp) ,
+  snd (⊙Bool→-equiv-idf _) , snd (⊙Bool→-equiv-idf _)

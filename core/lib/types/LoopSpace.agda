@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
+open import lib.Function2
 open import lib.NConnected
 open import lib.types.CommutingSquare
 open import lib.types.Empty
