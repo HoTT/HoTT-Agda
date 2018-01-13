@@ -108,4 +108,5 @@ adj = record {
 
 hadj = counit-unit-to-hom adj
 
+open CounitUnitAdjoint adj public
 open HomAdjoint hadj public
