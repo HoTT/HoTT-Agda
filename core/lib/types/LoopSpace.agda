@@ -2,6 +2,7 @@
 
 open import lib.Basics
 open import lib.NConnected
+open import lib.types.CommutingSquare
 open import lib.types.Empty
 open import lib.types.Nat
 open import lib.types.Paths
@@ -79,6 +80,23 @@ module _ {i} {X : Ptd i} where
     =⟨ ⊙Ω-fmap-∘ g hX ⟩
   ⊙Ω-fmap g ⊙∘ ⊙Ω-fmap hX
     =∎
+
+⊙Ω-csemap : ∀ {i₀ i₁ j₀ j₁} {X₀ : Ptd i₀} {X₁ : Ptd i₁}
+  {Y₀ : Ptd j₀} {Y₁ : Ptd j₁} {f : X₀ ⊙→ Y₀} {g : X₁ ⊙→ Y₁}
+  {hX : X₀ ⊙→ X₁} {hY : Y₀ ⊙→ Y₁}
+  → ⊙CommSquareEquiv f g hX hY
+  → ⊙CommSquareEquiv (⊙Ω-fmap f) (⊙Ω-fmap g) (⊙Ω-fmap hX) (⊙Ω-fmap hY)
+⊙Ω-csemap {f = f} {g} {hX} {hY} (⊙comm-sqr cs , hX-ise , hY-ise) =
+  (⊙comm-sqr $ ⊙app= $
+    ⊙Ω-fmap hY ⊙∘ ⊙Ω-fmap f
+      =⟨ ! $ ⊙Ω-fmap-∘ hY f ⟩
+    ⊙Ω-fmap (hY ⊙∘ f)
+      =⟨ ap ⊙Ω-fmap $ ⊙λ= cs ⟩
+    ⊙Ω-fmap (g ⊙∘ hX)
+      =⟨ ⊙Ω-fmap-∘ g hX ⟩
+    ⊙Ω-fmap g ⊙∘ ⊙Ω-fmap hX
+      =∎) ,
+  Ω-isemap hX hX-ise , Ω-isemap hY hY-ise
 
 ⊙Ω-fmap-idf : ∀ {i} {X : Ptd i} → ⊙Ω-fmap (⊙idf X) == ⊙idf _
 ⊙Ω-fmap-idf = ⊙λ=' ap-idf idp
@@ -371,6 +389,13 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
   ⊙Ω^-emap : (n : ℕ) → X ⊙≃ Y → ⊙Ω^ n X ⊙≃ ⊙Ω^ n Y
   ⊙Ω^-emap n (F , e) = ⊙Ω^-fmap n F , ⊙Ω^-isemap n F e
 
+⊙Ω^-csemap : ∀ {i₀ i₁ j₀ j₁} (n : ℕ) {X₀ : Ptd i₀} {X₁ : Ptd i₁}
+  {Y₀ : Ptd j₀} {Y₁ : Ptd j₁} {f : X₀ ⊙→ Y₀} {g : X₁ ⊙→ Y₁}
+  {hX : X₀ ⊙→ X₁} {hY : Y₀ ⊙→ Y₁}
+  → ⊙CommSquareEquiv f g hX hY
+  → ⊙CommSquareEquiv (⊙Ω^-fmap n f) (⊙Ω^-fmap n g) (⊙Ω^-fmap n hX) (⊙Ω^-fmap n hY)
+⊙Ω^-csemap n {hX = hX} {hY} (cs , hX-ise , hY-ise) = ⊙Ω^-csmap n cs , Ω^-isemap n hX hX-ise , Ω^-isemap n hY hY-ise
+
 {- [Ω^'] preserves (pointed) equivalences too -}
 module _ {i j} where
 
@@ -387,6 +412,13 @@ module _ {i j} where
   ⊙Ω^'-emap : {X : Ptd i} {Y : Ptd j} (n : ℕ) → X ⊙≃ Y → ⊙Ω^' n X ⊙≃ ⊙Ω^' n Y
   ⊙Ω^'-emap n (F , e) = ⊙Ω^'-fmap n F , ⊙Ω^'-isemap n F e
 
+⊙Ω^'-csemap : ∀ {i₀ i₁ j₀ j₁} (n : ℕ) {X₀ : Ptd i₀} {X₁ : Ptd i₁}
+  {Y₀ : Ptd j₀} {Y₁ : Ptd j₁} {f : X₀ ⊙→ Y₀} {g : X₁ ⊙→ Y₁}
+  {hX : X₀ ⊙→ X₁} {hY : Y₀ ⊙→ Y₁}
+  → ⊙CommSquareEquiv f g hX hY
+  → ⊙CommSquareEquiv (⊙Ω^'-fmap n f) (⊙Ω^'-fmap n g) (⊙Ω^'-fmap n hX) (⊙Ω^'-fmap n hY)
+⊙Ω^'-csemap n {hX = hX} {hY} (cs , hX-ise , hY-ise) = ⊙Ω^'-csmap n cs , Ω^'-isemap n hX hX-ise , Ω^'-isemap n hY hY-ise
+
 Ω^-level : ∀ {i} (m : ℕ₋₂) (n : ℕ) (X : Ptd i)
   → (has-level (⟨ n ⟩₋₂ +2+ m) (de⊙ X) → has-level m (Ω^ n X))
 Ω^-level m O X pX = pX
@@ -394,6 +426,10 @@ module _ {i j} where
   has-level-apply (Ω^-level (S m) n X
     (transport (λ k → has-level k (de⊙ X)) (! (+2+-βr ⟨ n ⟩₋₂ m)) pX))
     (idp^ n) (idp^ n)
+
+{- As for the levels of [Ω^'], these special cases can avoid
+   trailing constants, and it seems we only need the following
+   two special cases. -}
 
 Ω^'-is-set : ∀ {i} (n : ℕ) (X : Ptd i)
   → (has-level ⟨ n ⟩ (de⊙ X) → is-set (Ω^' n X))
