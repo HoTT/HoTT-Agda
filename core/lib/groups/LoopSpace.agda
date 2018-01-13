@@ -95,15 +95,18 @@ module _ {i j} (n : ℕ) {X : Ptd i} {Y : Ptd j}
 
 module _ {i j} where
 
+  private
+    Ω-group-structure-× : ∀ (X : Ptd i) (Y : Ptd j)
+      → Ω^S-group-structure 0 (X ⊙× Y) ≃ᴳˢ Ω^S-group-structure 0 X ×ᴳˢ Ω^S-group-structure 0 Y
+    Ω-group-structure-× X Y = ≃-to-≃ᴳˢ (Ω-× X Y) (Ω-×-∙ X Y)
+
   Ω^S-group-structure-× : ∀ (n : ℕ) (X : Ptd i) (Y : Ptd j)
     → Ω^S-group-structure n (X ⊙× Y) ≃ᴳˢ Ω^S-group-structure n X ×ᴳˢ Ω^S-group-structure n Y
   Ω^S-group-structure-× n X Y =
-         ≃-to-≃ᴳˢ (Ω-× (⊙Ω^ n X) (⊙Ω^ n Y)) (λ p q → pair×= (Ω-fmap-∙ ⊙fst p q) (Ω-fmap-∙ ⊙snd p q))
-    ∘eᴳˢ Ω^S-group-structure-emap 0 (⊙Ω^-× n X Y)
+    Ω-group-structure-× (⊙Ω^ n X) (⊙Ω^ n Y) ∘eᴳˢ Ω^S-group-structure-emap 0 (⊙Ω^-× n X Y)
 
   Ω^'S-group-structure-× : ∀ (n : ℕ) (X : Ptd i) (Y : Ptd j)
     → Ω^'S-group-structure n (X ⊙× Y) ≃ᴳˢ Ω^'S-group-structure n X ×ᴳˢ Ω^'S-group-structure n Y
-  Ω^'S-group-structure-× O X Y =
-    ≃-to-≃ᴳˢ (Ω-× X Y) (λ p q → pair×= (Ω-fmap-∙ ⊙fst p q) (Ω-fmap-∙ ⊙snd p q))
+  Ω^'S-group-structure-× O X Y = Ω-group-structure-× X Y
   Ω^'S-group-structure-× (S n) X Y =
     Ω^'S-group-structure-× n (⊙Ω X) (⊙Ω Y) ∘eᴳˢ Ω^'S-group-structure-emap n (⊙Ω-× X Y)
