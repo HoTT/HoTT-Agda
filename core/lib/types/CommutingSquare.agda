@@ -70,6 +70,42 @@ CommSquareEquiv : ∀ {i₀ i₁ j₀ j₁}
   → Type (lmax (lmax i₀ i₁) (lmax j₀ j₁))
 CommSquareEquiv f₀ f₁ hA hB = Σ (CommSquare f₀ f₁ hA hB) is-cs-equiv
 
+CommSquareEquiv-∘v : ∀ {i₀ i₁ i₂ j₀ j₁ j₂}
+  {A₀ : Type i₀} {A₁ : Type i₁} {A₂ : Type i₂}
+  {B₀ : Type j₀} {B₁ : Type j₁} {B₂ : Type j₂}
+  {f₀ : A₀ → B₀} {f₁ : A₁ → B₁} {f₂ : A₂ → B₂}
+  {hA : A₀ → A₁} {hB : B₀ → B₁}
+  {kA : A₁ → A₂} {kB : B₁ → B₂}
+  → CommSquareEquiv f₁ f₂ kA kB
+  → CommSquareEquiv f₀ f₁ hA hB
+  → CommSquareEquiv f₀ f₂ (kA ∘ hA) (kB ∘ hB)
+CommSquareEquiv-∘v (cs₀ , kA-ise , kB-ise) (cs₁ , hA-ise , hB-ise) =
+  (CommSquare-∘v cs₀ cs₁ , kA-ise ∘ise hA-ise , kB-ise ∘ise hB-ise)
+
+is-⊙cs-equiv : ∀ {i₀ i₁ j₀ j₁}
+  {X₀ : Ptd i₀} {X₁ : Ptd i₁} {Y₀ : Ptd j₀} {Y₁ : Ptd j₁}
+  {f₀ : X₀ ⊙→ Y₀} {f₁ : X₁ ⊙→ Y₁} {hX : X₀ ⊙→ X₁} {hY : Y₀ ⊙→ Y₁}
+  → ⊙CommSquare f₀ f₁ hX hY → Type (lmax (lmax i₀ i₁) (lmax j₀ j₁))
+is-⊙cs-equiv {hX = hX} {hY} _ = is-equiv (fst hX) × is-equiv (fst hY)
+
+⊙CommSquareEquiv : ∀ {i₀ i₁ j₀ j₁}
+  {X₀ : Ptd i₀} {X₁ : Ptd i₁} {Y₀ : Ptd j₀} {Y₁ : Ptd j₁}
+  (f₀ : X₀ ⊙→ Y₀) (f₁ : X₁ ⊙→ Y₁) (hX : X₀ ⊙→ X₁) (hY : Y₀ ⊙→ Y₁)
+  → Type (lmax (lmax i₀ i₁) (lmax j₀ j₁))
+⊙CommSquareEquiv f₀ f₁ hX hY = Σ (⊙CommSquare f₀ f₁ hX hY) is-⊙cs-equiv
+
+⊙CommSquareEquiv-∘v : ∀ {i₀ i₁ i₂ j₀ j₁ j₂}
+  {X₀ : Ptd i₀} {X₁ : Ptd i₁} {X₂ : Ptd i₂}
+  {Y₀ : Ptd j₀} {Y₁ : Ptd j₁} {Y₂ : Ptd j₂}
+  {f₀ : X₀ ⊙→ Y₀} {f₁ : X₁ ⊙→ Y₁} {f₂ : X₂ ⊙→ Y₂}
+  {hX : X₀ ⊙→ X₁} {hY : Y₀ ⊙→ Y₁}
+  {kX : X₁ ⊙→ X₂} {kY : Y₁ ⊙→ Y₂}
+  → ⊙CommSquareEquiv f₁ f₂ kX kY
+  → ⊙CommSquareEquiv f₀ f₁ hX hY
+  → ⊙CommSquareEquiv f₀ f₂ (kX ⊙∘ hX) (kY ⊙∘ hY)
+⊙CommSquareEquiv-∘v (⊙cs₀ , kX-ise , kY-ise) (⊙cs₁ , hX-ise , hY-ise) =
+  (⊙CommSquare-∘v ⊙cs₀ ⊙cs₁ , kX-ise ∘ise hX-ise , kY-ise ∘ise hY-ise)
+
 CommSquareEquiv-inverse-v : ∀ {i₀ i₁ j₀ j₁}
   {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
   {f₀ : A₀ → B₀} {f₁ : A₁ → B₁} {hA : A₀ → A₁} {hB : B₀ → B₁}
@@ -220,3 +256,19 @@ CommSquareEquiv-preserves'-equiv {f₀ = f₀} {f₁} {hA} {hB} (cs , hA-ise , h
       f₀ a₀
         =∎)
     (is-equiv-inverse hB-ise ∘ise f₁-ise ∘ise hA-ise)
+
+⊙CommSquareEquiv-preserves-equiv : ∀ {i₀ i₁ j₀ j₁}
+  {X₀ : Ptd i₀} {X₁ : Ptd i₁} {Y₀ : Ptd j₀} {Y₁ : Ptd j₁}
+  {f₀ : X₀ ⊙→ Y₀} {f₁ : X₁ ⊙→ Y₁} {hX : X₀ ⊙→ X₁} {hY : Y₀ ⊙→ Y₁}
+  → ⊙CommSquareEquiv f₀ f₁ hX hY
+  → is-equiv (fst f₀) → is-equiv (fst f₁)
+⊙CommSquareEquiv-preserves-equiv (⊙cs , ise) =
+  CommSquareEquiv-preserves-equiv (de⊙-csmap ⊙cs , ise)
+
+⊙CommSquareEquiv-preserves'-equiv : ∀ {i₀ i₁ j₀ j₁}
+  {X₀ : Ptd i₀} {X₁ : Ptd i₁} {Y₀ : Ptd j₀} {Y₁ : Ptd j₁}
+  {f₀ : X₀ ⊙→ Y₀} {f₁ : X₁ ⊙→ Y₁} {hX : X₀ ⊙→ X₁} {hY : Y₀ ⊙→ Y₁}
+  → ⊙CommSquareEquiv f₀ f₁ hX hY
+  → is-equiv (fst f₁) → is-equiv (fst f₀)
+⊙CommSquareEquiv-preserves'-equiv (⊙cs , ise) =
+  CommSquareEquiv-preserves'-equiv (de⊙-csmap ⊙cs , ise)
