@@ -3,10 +3,9 @@
 open import HoTT
 open import homotopy.PtdAdjoint
 
-module homotopy.SuspAdjointLoop where
+module homotopy.SuspAdjointLoop {i} where
 
-module Σ⊣Ω {i} where
-
+private
   SuspFunctor : PtdFunctor i i
   SuspFunctor = record {
     obj = ⊙Susp;
@@ -96,14 +95,17 @@ module Σ⊣Ω {i} where
         [ _== idp ↓ ap-∙ f p (! p) ∙ (α ∙2 (ap-! f p ∙ ap ! α)) ∙ !-inv-r q ]
     pt-lemma f idp idp = idp
 
-  adj : CounitUnitAdjoint SuspFunctor LoopFunctor
-  adj = record {
-    η = ⊙η;
-    ε = ⊙ε;
+adj : CounitUnitAdjoint SuspFunctor LoopFunctor
+adj = record {
+  η = ⊙η;
+  ε = ⊙ε;
 
-    η-natural = η-natural;
-    ε-natural = ε-natural;
+  η-natural = η-natural;
+  ε-natural = ε-natural;
 
-    εF-Fη = εΣ-Ση;
-    Gε-ηG = Ωε-ηΩ}
+  εF-Fη = εΣ-Ση;
+  Gε-ηG = Ωε-ηΩ}
 
+hadj = counit-unit-to-hom adj
+
+open HomAdjoint hadj public

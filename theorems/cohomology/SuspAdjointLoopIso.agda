@@ -2,18 +2,13 @@
 
 open import HoTT
 open import homotopy.PtdAdjoint
-open import homotopy.SuspAdjointLoop
 open import cohomology.WithCoefficients
 
 module cohomology.SuspAdjointLoopIso where
 
 module SuspAdjointLoopIso {i} where
 
-  private
-    hadj : HomAdjoint {i} {i} Σ⊣Ω.SuspFunctor Σ⊣Ω.LoopFunctor
-    hadj = counit-unit-to-hom Σ⊣Ω.adj
-
-    module A = HomAdjoint hadj
+  import homotopy.SuspAdjointLoop {i} as A
 
   module _ (X Y : Ptd i) where
 
@@ -26,8 +21,8 @@ module SuspAdjointLoopIso {i} where
         ∙ ap (_⊙∘ ⊙fanout (–> (A.eq X (⊙Ω Y)) h₁) (–> (A.eq X (⊙Ω Y)) h₂))
              arr2-lemma
         where
-        module A× = RightAdjoint× hadj
-        module B = RightAdjointBinary hadj
+        module A× = RightAdjoint× A.hadj
+        module B = RightAdjointBinary A.hadj
 
         ap2-lemma : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
           (f : A × B → C) {r s : A × B} (p : r == s)
