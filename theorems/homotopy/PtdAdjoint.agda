@@ -161,53 +161,53 @@ module RightAdjoint× {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
   ⊙into = ⊙fanout (G.arr ⊙fst) (G.arr ⊙snd)
 
   ⊙out : G.obj U ⊙× G.obj V ⊙→ G.obj (U ⊙× V)
-  ⊙out = –> (A.eq _ _) (⊙fanout (<– (A.eq _ _) ⊙fst)
-                                (<– (A.eq _ _) ⊙snd))
+  ⊙out = –> (A.eq (G.obj U ⊙× G.obj V) (U ⊙× V)) (⊙fanout (<– (A.eq (G.obj U ⊙× G.obj V) U) ⊙fst)
+                                                          (<– (A.eq (G.obj U ⊙× G.obj V) V) ⊙snd))
 
-  ⊙into-out : ⊙into ⊙∘ ⊙out == ⊙idf _
+  ⊙into-out : ⊙into ⊙∘ ⊙out == ⊙idf (G.obj U ⊙× G.obj V)
   ⊙into-out =
     ⊙fanout (G.arr ⊙fst) (G.arr ⊙snd) ⊙∘ ⊙out
       =⟨ ⊙fanout-pre∘ (G.arr ⊙fst) (G.arr ⊙snd) ⊙out ⟩
     ⊙fanout (G.arr ⊙fst ⊙∘ ⊙out) (G.arr ⊙snd ⊙∘ ⊙out)
       =⟨ ap2 ⊙fanout
-           (A.nat-cod _ ⊙fst (⊙fanout (<– (A.eq _ _) ⊙fst) (<– (A.eq _ _) ⊙snd))
-            ∙ ap (–> (A.eq _ _))
-                 (⊙fst-fanout (<– (A.eq _ _) ⊙fst) (<– (A.eq _ _) ⊙snd))
-            ∙ <–-inv-r (A.eq _ _) ⊙fst)
-           (A.nat-cod _ ⊙snd (⊙fanout (<– (A.eq _ _) ⊙fst) (<– (A.eq _ _) ⊙snd))
-            ∙ ap (–> (A.eq _ _))
-                 (⊙snd-fanout (<– (A.eq _ _) ⊙fst) (<– (A.eq _ _) ⊙snd))
-            ∙ <–-inv-r (A.eq _ _) ⊙snd) ⟩
+           (A.nat-cod _ ⊙fst (⊙fanout (<– (A.eq (G.obj U ⊙× G.obj V) U) ⊙fst) (<– (A.eq (G.obj U ⊙× G.obj V) V) ⊙snd))
+            ∙ ap (–> (A.eq (G.obj U ⊙× G.obj V) U))
+                 (⊙fst-fanout (<– (A.eq (G.obj U ⊙× G.obj V) U) ⊙fst) (<– (A.eq (G.obj U ⊙× G.obj V) V) ⊙snd))
+            ∙ <–-inv-r (A.eq (G.obj U ⊙× G.obj V) U) ⊙fst)
+           (A.nat-cod _ ⊙snd (⊙fanout (<– (A.eq (G.obj U ⊙× G.obj V) U) ⊙fst) (<– (A.eq (G.obj U ⊙× G.obj V) V) ⊙snd))
+            ∙ ap (–> (A.eq (G.obj U ⊙× G.obj V) V))
+                 (⊙snd-fanout (<– (A.eq (G.obj U ⊙× G.obj V) U) ⊙fst) (<– (A.eq (G.obj U ⊙× G.obj V) V) ⊙snd))
+            ∙ <–-inv-r (A.eq (G.obj U ⊙× G.obj V) V) ⊙snd) ⟩
     ⊙fanout ⊙fst ⊙snd ∎
 
   ⊙out-into : ⊙out ⊙∘ ⊙into == ⊙idf _
   ⊙out-into =
-    –> (A.eq _ _) (⊙fanout (<– (A.eq _ _) ⊙fst) (<– (A.eq _ _) ⊙snd))
+    –> (A.eq (G.obj U ⊙× G.obj V) (U ⊙× V)) (⊙fanout (<– (A.eq (G.obj U ⊙× G.obj V) U) ⊙fst) (<– (A.eq (G.obj U ⊙× G.obj V) V) ⊙snd))
     ⊙∘ ⊙fanout (G.arr ⊙fst) (G.arr ⊙snd)
       =⟨ A.nat-dom (⊙fanout (G.arr ⊙fst) (G.arr ⊙snd)) _
-           (⊙fanout (<– (A.eq _ _) ⊙fst) (<– (A.eq _ _) ⊙snd)) ⟩
-    –> (A.eq _ _) (⊙fanout (<– (A.eq _ _) ⊙fst) (<– (A.eq _ _) ⊙snd)
+           (⊙fanout (<– (A.eq (G.obj U ⊙× G.obj V) U) ⊙fst) (<– (A.eq (G.obj U ⊙× G.obj V) V) ⊙snd)) ⟩
+    –> (A.eq (G.obj (U ⊙× V)) (U ⊙× V)) (⊙fanout (<– (A.eq (G.obj U ⊙× G.obj V) U) ⊙fst) (<– (A.eq (G.obj U ⊙× G.obj V) V) ⊙snd)
     ⊙∘ F.arr (⊙fanout (G.arr ⊙fst) (G.arr ⊙snd)))
-      =⟨ ⊙fanout-pre∘ (<– (A.eq _ _) ⊙fst) (<– (A.eq _ _) ⊙snd)
+      =⟨ ⊙fanout-pre∘ (<– (A.eq (G.obj U ⊙× G.obj V) U) ⊙fst) (<– (A.eq (G.obj U ⊙× G.obj V) V) ⊙snd)
            (F.arr (⊙fanout (G.arr ⊙fst) (G.arr ⊙snd)))
          |in-ctx –> (A.eq _ _) ⟩
-    –> (A.eq _ _) (⊙fanout
-            (<– (A.eq _ _) ⊙fst ⊙∘ F.arr (⊙fanout (G.arr ⊙fst) (G.arr ⊙snd)))
-            (<– (A.eq _ _) ⊙snd ⊙∘ F.arr (⊙fanout (G.arr ⊙fst) (G.arr ⊙snd))))
-      =⟨ ap2 (λ f g → –> (A.eq _ _) (⊙fanout f g))
+    –> (A.eq (G.obj (U ⊙× V)) (U ⊙× V)) (⊙fanout
+            (<– (A.eq (G.obj U ⊙× G.obj V) U) ⊙fst ⊙∘ F.arr (⊙fanout (G.arr ⊙fst) (G.arr ⊙snd)))
+            (<– (A.eq (G.obj U ⊙× G.obj V) V) ⊙snd ⊙∘ F.arr (⊙fanout (G.arr ⊙fst) (G.arr ⊙snd))))
+      =⟨ ap2 (λ f g → –> (A.eq (G.obj (U ⊙× V)) (U ⊙× V)) (⊙fanout f g))
            (A.nat!-dom (⊙fanout (G.arr ⊙fst) (G.arr ⊙snd)) _ ⊙fst
-            ∙ ap (<– (A.eq _ _)) (⊙fst-fanout (G.arr ⊙fst) (G.arr ⊙snd))
+            ∙ ap (<– (A.eq (G.obj (U ⊙× V)) U)) (⊙fst-fanout (G.arr ⊙fst) (G.arr ⊙snd))
             ∙ ! (A.nat!-cod _ ⊙fst (⊙idf _)))
            (A.nat!-dom (⊙fanout (G.arr ⊙fst) (G.arr ⊙snd)) _ ⊙snd
-            ∙ ap (<– (A.eq _ _)) (⊙snd-fanout (G.arr ⊙fst) (G.arr ⊙snd))
+            ∙ ap (<– (A.eq (G.obj (U ⊙× V)) V)) (⊙snd-fanout (G.arr ⊙fst) (G.arr ⊙snd))
             ∙ ! (A.nat!-cod _ ⊙snd (⊙idf _))) ⟩
-    –> (A.eq _ _) (⊙fanout (⊙fst ⊙∘ <– (A.eq _ _) (⊙idf _))
-                           (⊙snd ⊙∘ <– (A.eq _ _) (⊙idf _)))
-      =⟨ ap (–> (A.eq _ _)) (! (⊙fanout-pre∘ ⊙fst ⊙snd (<– (A.eq _ _) (⊙idf _)))) ⟩
-    –> (A.eq _ _) (⊙fanout ⊙fst ⊙snd ⊙∘ <– (A.eq _ _) (⊙idf _))
-      =⟨ ⊙λ= (⊙∘-unit-l _) |in-ctx –> (A.eq _ _) ⟩
-    –> (A.eq _ _) (<– (A.eq _ _) (⊙idf _))
-      =⟨ <–-inv-r (A.eq _ _) (⊙idf _) ⟩
+    –> (A.eq (G.obj (U ⊙× V)) (U ⊙× V)) (⊙fanout (⊙fst ⊙∘ <– (A.eq (G.obj (U ⊙× V)) (U ⊙× V)) (⊙idf _))
+                                                 (⊙snd ⊙∘ <– (A.eq (G.obj (U ⊙× V)) (U ⊙× V)) (⊙idf _)))
+      =⟨ ap (–> (A.eq (G.obj (U ⊙× V)) (U ⊙× V))) (! (⊙fanout-pre∘ ⊙fst ⊙snd (<– (A.eq (G.obj (U ⊙× V)) (U ⊙× V)) (⊙idf _)))) ⟩
+    –> (A.eq (G.obj (U ⊙× V)) (U ⊙× V)) (⊙fanout ⊙fst ⊙snd ⊙∘ <– (A.eq (G.obj (U ⊙× V)) (U ⊙× V)) (⊙idf _))
+      =⟨ ⊙λ= (⊙∘-unit-l _) |in-ctx –> (A.eq (G.obj (U ⊙× V)) (U ⊙× V)) ⟩
+    –> (A.eq (G.obj (U ⊙× V)) (U ⊙× V)) (<– (A.eq (G.obj (U ⊙× V)) (U ⊙× V)) (⊙idf _))
+      =⟨ <–-inv-r (A.eq (G.obj (U ⊙× V)) (U ⊙× V)) (⊙idf _) ⟩
     ⊙idf _ ∎
 
   ⊙eq : G.obj (U ⊙× V) ⊙≃ G.obj U ⊙× G.obj V
@@ -283,38 +283,40 @@ module LeftAdjoint∨ {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
   ⊙into : F.obj U ⊙∨ F.obj V ⊙→ F.obj (U ⊙∨ V)
   ⊙into = Into.⊙f
 
-  module OutHelp = ⊙WedgeRec (–> (A.eq _ _) ⊙winl) (–> (A.eq _ _) ⊙winr)
+  module OutHelp = ⊙WedgeRec
+    (–> (A.eq U (F.obj U ⊙∨ F.obj V)) ⊙winl)
+    (–> (A.eq V (F.obj U ⊙∨ F.obj V)) ⊙winr)
 
   ⊙out : F.obj (U ⊙∨ V) ⊙→ F.obj U ⊙∨ F.obj V
-  ⊙out = <– (A.eq _ _) OutHelp.⊙f
+  ⊙out = <– (A.eq (U ⊙∨ V) (F.obj U ⊙∨ F.obj V)) OutHelp.⊙f
 
-  ⊙into-out : ⊙into ⊙∘ ⊙out == ⊙idf _
+  ⊙into-out : ⊙into ⊙∘ ⊙out == ⊙idf (F.obj (U ⊙∨ V))
   ⊙into-out =
     ⊙into ⊙∘ ⊙out
-      =⟨ A.nat!-cod _ ⊙into (⊙Wedge-rec (–> (A.eq _ _) ⊙winl)
-                                        (–> (A.eq _ _) ⊙winr)) ⟩
-    <– (A.eq _ _) (G.arr ⊙into ⊙∘ ⊙Wedge-rec (–> (A.eq _ _) ⊙winl)
-                                             (–> (A.eq _ _) ⊙winr))
-      =⟨ ap (<– (A.eq _ _)) (⊙Wedge-rec-post∘ (G.arr ⊙into)
-                              (–> (A.eq _ _) ⊙winl) (–> (A.eq _ _) ⊙winr)) ⟩
-    <– (A.eq _ _) (⊙Wedge-rec (G.arr ⊙into ⊙∘ –> (A.eq _ _) ⊙winl)
-                              (G.arr ⊙into ⊙∘ –> (A.eq _ _) ⊙winr))
-      =⟨ ap2 (λ w₁ w₂ → <– (A.eq _ _) (⊙Wedge-rec w₁ w₂))
+      =⟨ A.nat!-cod _ ⊙into (⊙Wedge-rec (–> (A.eq U (F.obj U ⊙∨ F.obj V)) ⊙winl)
+                                        (–> (A.eq V (F.obj U ⊙∨ F.obj V)) ⊙winr)) ⟩
+    <– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (G.arr ⊙into ⊙∘ ⊙Wedge-rec (–> (A.eq U (F.obj U ⊙∨ F.obj V)) ⊙winl)
+                                             (–> (A.eq V (F.obj U ⊙∨ F.obj V)) ⊙winr))
+      =⟨ ap (<– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V)))) (⊙Wedge-rec-post∘ (G.arr ⊙into)
+                              (–> (A.eq U (F.obj U ⊙∨ F.obj V)) ⊙winl) (–> (A.eq V (F.obj U ⊙∨ F.obj V)) ⊙winr)) ⟩
+    <– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙Wedge-rec (G.arr ⊙into ⊙∘ –> (A.eq U (F.obj U ⊙∨ F.obj V)) ⊙winl)
+                                                    (G.arr ⊙into ⊙∘ –> (A.eq V (F.obj U ⊙∨ F.obj V)) ⊙winr))
+      =⟨ ap2 (λ w₁ w₂ → <– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙Wedge-rec w₁ w₂))
              (A.nat-cod _ ⊙into ⊙winl
-              ∙ ap (–> (A.eq _ _)) (Into.⊙winl-β ∙ ! (⊙λ= $ ⊙∘-unit-l _))
+              ∙ ap (–> (A.eq U (F.obj (U ⊙∨ V)))) (Into.⊙winl-β ∙ ! (⊙λ= $ ⊙∘-unit-l _))
               ∙ ! (A.nat-dom ⊙winl _ (⊙idf _)))
              (A.nat-cod _ ⊙into ⊙winr
-              ∙ ap (–> (A.eq _ _)) (Into.⊙winr-β ∙ ! (⊙λ= $ ⊙∘-unit-l _))
+              ∙ ap (–> (A.eq V (F.obj (U ⊙∨ V)))) (Into.⊙winr-β ∙ ! (⊙λ= $ ⊙∘-unit-l _))
               ∙ ! (A.nat-dom ⊙winr _ (⊙idf _))) ⟩
-    <– (A.eq _ _) (⊙Wedge-rec (–> (A.eq _ _) (⊙idf _) ⊙∘ ⊙winl)
-                              (–> (A.eq _ _) (⊙idf _) ⊙∘ ⊙winr))
-      =⟨ ap (<– (A.eq _ _))
-            (! (⊙Wedge-rec-post∘ (–> (A.eq _ _) (⊙idf _)) ⊙winl ⊙winr)) ⟩
-    <– (A.eq _ _) (–> (A.eq _ _) (⊙idf _) ⊙∘ ⊙Wedge-rec ⊙winl ⊙winr)
-      =⟨ ap (λ w → <– (A.eq _ _) (–> (A.eq _ _) (⊙idf _) ⊙∘ w))
+    <– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙Wedge-rec (–> (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙idf _) ⊙∘ ⊙winl)
+                                                    (–> (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙idf _) ⊙∘ ⊙winr))
+      =⟨ ap (<– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))))
+            (! (⊙Wedge-rec-post∘ (–> (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙idf _)) ⊙winl ⊙winr)) ⟩
+    <– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (–> (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙idf _) ⊙∘ ⊙Wedge-rec ⊙winl ⊙winr)
+      =⟨ ap (λ w → <– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (–> (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙idf _) ⊙∘ w))
             ⊙Wedge-rec-η ⟩
-    <– (A.eq _ _) (–> (A.eq _ _) (⊙idf _))
-      =⟨ <–-inv-l (A.eq _ _) (⊙idf _) ⟩
+    <– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (–> (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙idf _))
+      =⟨ <–-inv-l (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙idf _) ⟩
     ⊙idf _ ∎
 
   ⊙out-into : ⊙out ⊙∘ ⊙into == ⊙idf _
@@ -324,11 +326,11 @@ module LeftAdjoint∨ {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
     ⊙Wedge-rec (⊙out ⊙∘ F.arr ⊙winl) (⊙out ⊙∘ F.arr ⊙winr)
       =⟨ ap2 ⊙Wedge-rec
            (A.nat!-dom ⊙winl _ (⊙Wedge-rec _ _)
-            ∙ ap (<– (A.eq _ _)) OutHelp.⊙winl-β
-            ∙ <–-inv-l (A.eq _ _) ⊙winl)
+            ∙ ap (<– (A.eq U (F.obj U ⊙∨ F.obj V))) OutHelp.⊙winl-β
+            ∙ <–-inv-l (A.eq U (F.obj U ⊙∨ F.obj V)) ⊙winl)
            (A.nat!-dom ⊙winr _ (⊙Wedge-rec _ _)
-            ∙ ap (<– (A.eq _ _)) OutHelp.⊙winr-β
-            ∙ <–-inv-l (A.eq _ _) ⊙winr) ⟩
+            ∙ ap (<– (A.eq V (F.obj U ⊙∨ F.obj V))) OutHelp.⊙winr-β
+            ∙ <–-inv-l (A.eq V (F.obj U ⊙∨ F.obj V)) ⊙winr) ⟩
     ⊙Wedge-rec ⊙winl ⊙winr
       =⟨ ⊙Wedge-rec-η ⟩
     ⊙idf _ ∎
