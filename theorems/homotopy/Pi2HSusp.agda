@@ -149,8 +149,11 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
   eq' : Trunc 1 (Ω (⊙Susp X)) ≃ A
   eq' = equiv encode' decodeN' encode'-decodeN' decode'-encode'
 
+  ⊙decodeN : ⊙Trunc 1 X ⊙→ ⊙Trunc 1 (⊙Ω (⊙Susp X))
+  ⊙decodeN = ⊙Trunc-fmap (SAL.η X)
+
   decodeN : Trunc 1 A → Trunc 1 (Ω (⊙Susp X))
-  decodeN = fst (⊙Trunc-fmap (SAL.η X))
+  decodeN = fst ⊙decodeN
 
   encodeN : Trunc 1 (Ω (⊙Susp X)) → Trunc 1 A
   encodeN = [_] ∘ encode' {x = north}
@@ -163,6 +166,9 @@ module homotopy.Pi2HSusp {i} {X : Ptd i} {{_ : has-level 1 (de⊙ X)}}
 
   ⊙eq : ⊙Trunc 1 (⊙Ω (⊙Susp X)) ⊙≃ ⊙Trunc 1 X
   ⊙eq = ≃-to-⊙≃ eq idp
+
+  ⊙eq⁻¹ : ⊙Trunc 1 X ⊙≃ ⊙Trunc 1 (⊙Ω (⊙Susp X))
+  ⊙eq⁻¹ = ⊙decodeN , snd (eq ⁻¹)
 
   iso : Ω^S-group 0 (⊙Trunc 1 (⊙Ω (⊙Susp X)))
       ≃ᴳ Ω^S-group 0 (⊙Trunc 1 X)
