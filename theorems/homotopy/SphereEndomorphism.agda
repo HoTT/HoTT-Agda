@@ -137,36 +137,42 @@ module homotopy.SphereEndomorphism where
     import homotopy.TruncationLoopLadder as TLL
     import homotopy.SuspAdjointLoop as SAL
     import homotopy.SuspAdjointLoopLadder as SALL
+    import homotopy.CircleHSpace as CHS
+    import homotopy.Pi2HSusp as Pi2
 
-    Ω^'SS-Trunc-up-is-equiv : ∀ n → is-equiv (Ω^'-fmap (S (S n)) (⊙Trunc-fmap {n = ⟨ S (S n) ⟩} (F.⊙up n)))
-    Ω^'SS-Trunc-up-is-equiv n = snd (Ω^'-emap (S (S n)) (F.⊙eq n))
+    ⊙up : ∀ n → ⊙Sphere n ⊙→ ⊙Ω (⊙Sphere (S n))
+    ⊙up n = SAL.η (⊙Sphere n)
 
-    Trunc-Ω^'-up-is-equiv : ∀ n → is-equiv (Trunc-fmap {n = 0} (Ω^'-fmap (S (S n)) (F.⊙up n)))
-    Trunc-Ω^'-up-is-equiv n = ⊙CommSquareEquiv-preserves-equiv (TLL.ladder (S (S n)) (F.⊙up n)) (Ω^'SS-Trunc-up-is-equiv n)
+    Ω^'S-Trunc-up-is-equiv : ∀ n → is-equiv (Ω^'-fmap (S n) (⊙Trunc-fmap {n = ⟨ S n ⟩} (⊙up (S n))))
+    Ω^'S-Trunc-up-is-equiv O = snd (Ω-emap (Pi2.⊙eq⁻¹ CHS.⊙S¹-hSpace))
+    Ω^'S-Trunc-up-is-equiv (S n) = snd (Ω^'-emap (S (S n)) (F.⊙eq n))
 
-    Trunc-post⊙∘-Ω^'-up-is-equiv : ∀ n →
-      is-equiv (Trunc-fmap {n = 0} ((⊙Ω^'-fmap (S (S n)) (F.⊙up n) ⊙∘_) :> (_ → ⊙Bool ⊙→ _)))
-    Trunc-post⊙∘-Ω^'-up-is-equiv n = CommSquareEquiv-preserves'-equiv
-      (Trunc-csemap (⊙Bool→-equiv-idf-nat (⊙Ω^'-fmap (S (S n)) (F.⊙up n))))
-      (Trunc-Ω^'-up-is-equiv n)
+    Trunc-Ω^'S-up-is-equiv : ∀ n → is-equiv (Trunc-fmap {n = 0} (Ω^'-fmap (S n) (⊙up (S n))))
+    Trunc-Ω^'S-up-is-equiv n = ⊙CommSquareEquiv-preserves-equiv (TLL.ladder (S n) (⊙up (S n))) (Ω^'S-Trunc-up-is-equiv n)
 
-    Trunc-post⊙∘-up-is-equiv : ∀ n →
-      is-equiv (Trunc-fmap {n = 0} ((F.⊙up n ⊙∘_) :> (_ → ⊙Sphere (S (S n)) ⊙→ _)))
-    Trunc-post⊙∘-up-is-equiv n = CommSquareEquiv-preserves'-equiv
-      (Trunc-csemap (SALL.ladder (S (S n)) (F.⊙up n)))
-      (Trunc-post⊙∘-Ω^'-up-is-equiv n)
+    Trunc-post⊙∘-Ω^'S-up-is-equiv : ∀ n →
+      is-equiv (Trunc-fmap {n = 0} ((⊙Ω^'-fmap (S n) (⊙up (S n)) ⊙∘_) :> (_ → ⊙Bool ⊙→ _)))
+    Trunc-post⊙∘-Ω^'S-up-is-equiv n = CommSquareEquiv-preserves'-equiv
+      (Trunc-csemap (⊙Bool→-equiv-idf-nat (⊙Ω^'-fmap (S n) (⊙up (S n)))))
+      (Trunc-Ω^'S-up-is-equiv n)
+
+    Trunc-post⊙∘-upS-is-equiv : ∀ n →
+      is-equiv (Trunc-fmap {n = 0} ((⊙up (S n) ⊙∘_) :> (_ → ⊙Sphere (S n) ⊙→ _)))
+    Trunc-post⊙∘-upS-is-equiv n = CommSquareEquiv-preserves'-equiv
+      (Trunc-csemap (SALL.ladder (S n) (⊙up (S n))))
+      (Trunc-post⊙∘-Ω^'S-up-is-equiv n)
 
     final-fix : ∀ n →
       CommSquareEquiv
-        (⊙Susp-fmap :> ((⊙Sphere (S (S n)) ⊙→ ⊙Sphere (S (S n))) → _))
+        (⊙Susp-fmap :> ((⊙Sphere (S n) ⊙→ ⊙Sphere (S n)) → _))
         (SAL.η _ ⊙∘_)
         (idf _)
         (–> (SAL.eq _ _))
     final-fix n = comm-sqr (λ f → ! (SAL.η-natural f)) , idf-is-equiv _ , snd (SAL.eq _ _)
 
-  ⊙SphereSS-Trunc-Susp-is-equiv : ∀ n →
-    is-equiv (Trunc-fmap ⊙Susp-fmap :> (Trunc 0 (⊙Sphere (S (S n)) ⊙→ ⊙Sphere (S (S n))) → _))
-  ⊙SphereSS-Trunc-Susp-is-equiv n =
+  Trunc-⊙SphereS-endo-Susp-is-equiv : ∀ n →
+    is-equiv (Trunc-fmap ⊙Susp-fmap :> (Trunc 0 (⊙Sphere (S n) ⊙→ ⊙Sphere (S n)) → _))
+  Trunc-⊙SphereS-endo-Susp-is-equiv n =
     CommSquareEquiv-preserves'-equiv
       (Trunc-csemap (final-fix n))
-      (Trunc-post⊙∘-up-is-equiv n)
+      (Trunc-post⊙∘-upS-is-equiv n)
