@@ -241,12 +241,9 @@ module FreudenthalEquiv
   ⊙path : ⊙Trunc k X == ⊙Trunc k (⊙Ω (⊙Susp X))
   ⊙path = ⊙ua ⊙eq
 
-  ⊙Ω^'-eq : (n : ℕ) → ⊙Ω^' n (⊙Trunc k X) ⊙≃ ⊙Ω^' n (⊙Trunc k (⊙Ω (⊙Susp X)))
-  ⊙Ω^'-eq n = ⊙Ω^'-emap n ⊙eq
-
 {- Used to prove stability in iterated suspensions -}
 module FreudenthalIso
-  {i} (n : ℕ₋₂) (k : ℕ) (kle : ⟨ S k ⟩ ≤T S (n +2+ S n))
+  {i} (n : ℕ₋₂) (k : ℕ) (kle : ⟨ S k ⟩ ≤T S n +2+ S n)
   (X : Ptd i) {{_ : is-connected (S (S n)) (de⊙ X)}} where
 
   open FreudenthalEquiv n ⟨ S k ⟩ kle X public
