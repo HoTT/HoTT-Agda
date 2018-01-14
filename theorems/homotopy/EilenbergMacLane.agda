@@ -4,7 +4,7 @@ open import HoTT
 open import homotopy.HSpace renaming (HSpaceStructure to HSS)
 open import homotopy.Freudenthal
 open import homotopy.IterSuspensionStable
-open import homotopy.Pi2HSusp
+import homotopy.Pi2HSusp as Pi2HSusp
 open import homotopy.EM1HSpace
 open import homotopy.EilenbergMacLane1
 
@@ -150,9 +150,7 @@ module EMImplicit {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
       ⊙Ω (⊙EM 2)
         ⊙≃⟨ ≃-to-⊙≃ (Trunc=-equiv _ _) idp ⟩
       ⊙Trunc 1 (⊙Ω (⊙Susp X))
-        ⊙≃⟨ Π₂.⊙main-lemma ⟩
-      X
-        ⊙≃⟨ ≃-to-⊙≃ (unTrunc-equiv _) idp ⊙⁻¹ ⟩
+        ⊙≃⟨ Π₂.⊙eq ⟩
       ⊙EM 1 ⊙≃∎
 
     private

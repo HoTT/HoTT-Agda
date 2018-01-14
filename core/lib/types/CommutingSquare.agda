@@ -207,8 +207,8 @@ CommSquareEquiv-preserves-equiv : ∀ {i₀ i₁ j₀ j₁}
   → CommSquareEquiv f₀ f₁ hA hB
   → is-equiv f₀ → is-equiv f₁
 CommSquareEquiv-preserves-equiv {f₀ = f₀} {f₁} {hA} {hB} (cs , hA-ise , hB-ise) f₀-ise =
-  transport is-equiv
-    (λ= λ a₁ →
+  ∼-preserves-equiv
+    (λ a₁ →
       hB (f₀ (is-equiv.g hA-ise a₁))
         =⟨ cs □$ is-equiv.g hA-ise a₁ ⟩
       f₁ (hA (is-equiv.g hA-ise a₁))
@@ -223,8 +223,8 @@ CommSquareEquiv-preserves'-equiv : ∀ {i₀ i₁ j₀ j₁}
   → CommSquareEquiv f₀ f₁ hA hB
   → is-equiv f₁ → is-equiv f₀
 CommSquareEquiv-preserves'-equiv {f₀ = f₀} {f₁} {hA} {hB} (cs , hA-ise , hB-ise) f₁-ise =
-  transport is-equiv
-    (λ= λ a₀ →
+  ∼-preserves-equiv
+    (λ a₀ →
       is-equiv.g hB-ise (f₁ (hA a₀))
         =⟨ ! $ ap (is-equiv.g hB-ise) (cs □$ a₀) ⟩
       is-equiv.g hB-ise (hB (f₀ a₀))

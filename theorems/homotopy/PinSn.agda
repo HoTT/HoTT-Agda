@@ -3,7 +3,7 @@
 open import HoTT
 open import homotopy.CircleHSpace
 open import homotopy.LoopSpaceCircle
-open import homotopy.Pi2HSusp
+import homotopy.Pi2HSusp as Pi2HSusp
 open import homotopy.IterSuspensionStable
 
 -- This summerizes all [πₙ Sⁿ]
