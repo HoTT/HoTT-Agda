@@ -322,6 +322,19 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : (a : A) → B a → Type k
     where f = λ c → ((λ a → fst (c a)) , (λ a → snd (c a)))
           g = λ d → (λ a → (fst d a , snd d a))
 
+∼-preserves-equiv : ∀ {i j} {A : Type i} {B : Type j} {f₀ f₁ : A → B}
+  → f₀ ∼ f₁ → is-equiv f₀ → is-equiv f₁
+∼-preserves-equiv homotopy f-ise =
+  is-eq _ g (λ b → ! (homotopy (g b)) ∙ f-g b) (λ a → ap g (! (homotopy a)) ∙ g-f a)
+  where open is-equiv f-ise
+
+replace-inverse : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
+  (f-ise : is-equiv f) {g₁ : B → A}
+  → is-equiv.g f-ise ∼ g₁ → is-equiv f
+replace-inverse {f = f} f-ise {g₁ = g₁} g∼ =
+  is-eq f g₁ (λ b → ap f (! (g∼ b)) ∙ f-g b) (λ a → ! (g∼ (f a)) ∙ g-f a)
+  where open is-equiv f-ise
+
 {-
 Pointed equivalences
 -}

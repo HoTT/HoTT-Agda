@@ -2,6 +2,7 @@
 
 open import HoTT
 import homotopy.WedgeExtension as WedgeExt
+import homotopy.SuspAdjointLoop as SAL
 
 module homotopy.Freudenthal where
 
@@ -18,11 +19,10 @@ module FreudenthalEquiv
   Q : Susp (de⊙ X) → Type i
   Q x = Trunc k (north == x)
 
-  up : de⊙ X → north' (de⊙ X) == north
-  up x = merid x ∙ ! (merid (pt X))
-
   ⊙up : X ⊙→ ⊙Ω (⊙Susp X)
-  ⊙up = up , !-inv-r (merid (pt X))
+  ⊙up = SAL.η _
+
+  up = fst ⊙up
 
   Codes-mer-args : WedgeExt.args {a₀ = pt X} {b₀ = [_] {n = k} (pt X)}
   Codes-mer-args = record {n = S n; m = S n;
