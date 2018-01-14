@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
-open import lib.Function2
 open import lib.types.Sigma
 open import lib.types.Paths
 open import lib.types.Pointed

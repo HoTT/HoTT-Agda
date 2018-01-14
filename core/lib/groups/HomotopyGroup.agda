@@ -56,7 +56,7 @@ abstract
       (Trunc-elim
         (λ p → Trunc-elim
           (λ q → ap [_] (Ω^S-Ω-split-∙ n X p q)))) ,
-    Trunc-isemap 0 (Ω^-Ω-split-is-equiv (S n) X)
+    Trunc-isemap {n = 0} (Ω^-Ω-split-is-equiv (S n) X)
 
 {- We can shift the truncation inside the loop in the definition of π -}
 module _ {i} where

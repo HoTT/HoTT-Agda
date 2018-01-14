@@ -250,7 +250,7 @@ module _ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j} (f : A → B) where
 
 {- Truncation preserves equivalences - more convenient than univalence+ap
  - when we need to know the forward or backward function explicitly -}
-module _ {i j} (n : ℕ₋₂) {A : Type i} {B : Type j} where
+module _ {i j} {n : ℕ₋₂} {A : Type i} {B : Type j} where
 
   Trunc-isemap : {f : A → B} → is-equiv f → is-equiv (Trunc-fmap {n = n} f)
   Trunc-isemap {f-orig} ie = is-eq f g f-g g-f where
@@ -265,6 +265,13 @@ module _ {i j} (n : ℕ₋₂) {A : Type i} {B : Type j} where
 
   Trunc-emap : A ≃ B → Trunc n A ≃ Trunc n B
   Trunc-emap (f , f-ie) = Trunc-fmap f , Trunc-isemap f-ie
+
+Trunc-csemap : ∀ {i₀ i₁ j₀ j₁} {n : ℕ₋₂}
+  {A₀ : Type i₀} {A₁ : Type i₁} {B₀ : Type j₀} {B₁ : Type j₁}
+  {f : A₀ → B₀} {g : A₁ → B₁} {hA : A₀ → A₁} {hB : B₀ → B₁}
+  → CommSquareEquiv f g hA hB
+  → CommSquareEquiv (Trunc-fmap {n = n} f) (Trunc-fmap g) (Trunc-fmap hA) (Trunc-fmap hB)
+Trunc-csemap (cs , hA-ise , hB-ise) = Trunc-csmap cs , Trunc-isemap hA-ise , Trunc-isemap hB-ise
 
 transport-Trunc : ∀ {i j} {A : Type i} {n : ℕ₋₂} (P : A → Type j)
   {x y : A} (p : x == y) (b : P x)
