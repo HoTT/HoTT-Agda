@@ -71,7 +71,7 @@ module _ {i j k} n (A : Type i) (B : Type j) where
     ⊔-has-choice-implies-inr-has-choice : has-choice n (A ⊔ B) k → has-choice n B k
     ⊔-has-choice-implies-inr-has-choice ⊔-ac W =
       transport is-equiv (λ= lemma₃)
-        (snd lemma₂ ∘ise ⊔-ac W' ∘ise is-equiv-inverse (snd (Trunc-emap n lemma₁))) where
+        (snd lemma₂ ∘ise ⊔-ac W' ∘ise is-equiv-inverse (snd (Trunc-emap lemma₁))) where
           W' : A ⊔ B → Type k
           W' (inl _) = Lift {j = k} ⊤
           W' (inr b) = W b
@@ -112,9 +112,9 @@ module _ {i j k} n (A : Type i) (B : Type j) where
                   (λ _ → idp) (f (inl a));
                 (inr b) → idp}
 
-          lemma₃ : ∀ f → –> lemma₂ (unchoose (<– (Trunc-emap n lemma₁) f)) == unchoose f
+          lemma₃ : ∀ f → –> lemma₂ (unchoose (<– (Trunc-emap lemma₁) f)) == unchoose f
           lemma₃ = Trunc-elim
-            {P = λ f → –> lemma₂ (unchoose (<– (Trunc-emap n lemma₁) f)) == unchoose f}
+            {P = λ f → –> lemma₂ (unchoose (<– (Trunc-emap lemma₁) f)) == unchoose f}
             (λ f → λ= λ b → idp)
 
 module _ {i j} n {X : Ptd i} (X-sep : has-disjoint-pt X) where

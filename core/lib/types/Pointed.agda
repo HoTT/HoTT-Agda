@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
-open import lib.Function2
 open import lib.NType2
 open import lib.types.Bool
 open import lib.types.Empty

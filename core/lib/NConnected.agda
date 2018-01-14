@@ -266,7 +266,7 @@ connected-≤T {m = m} {n = n} {A = A} leq =
 {- Equivalent types have the same connectedness -}
 equiv-preserves-conn : ∀ {i j} {A : Type i} {B : Type j} {n : ℕ₋₂} (e : A ≃ B)
   {{_ : is-connected n A}} → is-connected n B
-equiv-preserves-conn {n = n} e = equiv-preserves-level (Trunc-emap n e)
+equiv-preserves-conn {n = n} e = equiv-preserves-level (Trunc-emap e)
 
 {- Composite of two connected functions is connected -}
 ∘-conn : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
