@@ -1,8 +1,8 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
-open import cohomology.SuspAdjointLoopIso
-open import cohomology.WithCoefficients
+open import groups.SuspAdjointLoopIso
+open import groups.ToOmega
 open import cohomology.Theory
 
 {- A spectrum (family (Eₙ | n : ℤ) such that ΩEₙ₊₁ = Eₙ)

@@ -2,9 +2,9 @@
 
 open import HoTT
 open import homotopy.PtdAdjoint
-open import cohomology.WithCoefficients
+open import groups.ToOmega
 
-module cohomology.SuspAdjointLoopIso where
+module groups.SuspAdjointLoopIso where
 
 module SuspAdjointLoopIso {i} where
 
