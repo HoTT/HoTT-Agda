@@ -70,7 +70,7 @@ module SpectrumModel where
     C-Susp' : {E₁ E₀ : Ptd i} (iso : ⊙Ω E₁ ⊙≃ E₀) (X : Ptd i)
       → Trunc-⊙→Ω-group (⊙Susp X) E₁ ≃ᴳ Trunc-⊙→Ω-group X E₀
     C-Susp' {E₁ = E₁} iso X = Trunc-⊙→Ω-group-emap-codom X iso
-                          ∘eᴳ SuspAdjointLoopIso.iso X E₁
+                          ∘eᴳ SuspAdjointLoopIso.⊙→Ω-iso-⊙→Ω X E₁
 
     -- This can be further simplified
     C-Susp-fmap' : {E₁ E₀ : Ptd i} (iso : ⊙Ω E₁ ⊙≃ E₀) {X Y : Ptd i} (f : X ⊙→ Y)
@@ -80,20 +80,20 @@ module SpectrumModel where
           (fst (C-Susp' iso Y)) (fst (C-Susp' iso X))
     C-Susp-fmap' {E₁} {E₀} iso {X} {Y} f = comm-sqrᴳ λ x →
         GroupHom.f (Trunc-⊙→Ω-group-fmap-codom X (fst iso))
-          (GroupIso.f (SuspAdjointLoopIso.iso X E₁)
+          (GroupIso.f (SuspAdjointLoopIso.⊙→Ω-iso-⊙→Ω X E₁)
             (GroupHom.f (Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap f) E₁) x))
-          =⟨ SuspAdjointLoopIso.nat-dom f E₁
+          =⟨ SuspAdjointLoopIso.⊙→Ω-iso-⊙→Ω-nat-dom f E₁
             |in-ctx (λ h → GroupHom.f h x)
             |in-ctx GroupHom.f (Trunc-⊙→Ω-group-fmap-codom X (fst iso)) ⟩
         GroupHom.f (Trunc-⊙→Ω-group-fmap-codom X (fst iso))
           (GroupHom.f (Trunc-⊙→Ω-group-fmap-dom f (⊙Ω E₁))
-            (GroupIso.f (SuspAdjointLoopIso.iso Y E₁) x))
+            (GroupIso.f (SuspAdjointLoopIso.⊙→Ω-iso-⊙→Ω Y E₁) x))
           =⟨ ! $ Trunc-⊙→Ω-group-fmap-nat f (fst iso)
             |in-ctx GroupHom.f
-            |in-ctx (λ h → h (GroupIso.f (SuspAdjointLoopIso.iso Y E₁) x)) ⟩
+            |in-ctx (λ h → h (GroupIso.f (SuspAdjointLoopIso.⊙→Ω-iso-⊙→Ω Y E₁) x)) ⟩
         GroupHom.f (Trunc-⊙→Ω-group-fmap-dom f E₀)
           (GroupHom.f (Trunc-⊙→Ω-group-fmap-codom Y (fst iso))
-            (GroupIso.f (SuspAdjointLoopIso.iso Y E₁) x))
+            (GroupIso.f (SuspAdjointLoopIso.⊙→Ω-iso-⊙→Ω Y E₁) x))
           =∎
 
   C-Susp : (n : ℤ) (X : Ptd i) → C (succ n) (⊙Susp X) ≃ᴳ C n X
