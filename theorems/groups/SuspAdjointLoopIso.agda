@@ -46,12 +46,12 @@ module SuspAdjointLoopIso {i} where
             =⟨ ⊙Ω-fmap2-∙ ⟩
           ⊙Ω-∙ ∎
 
-    iso : Trunc-⊙→Ω-group (⊙Susp X) Y ≃ᴳ Trunc-⊙→Ω-group X (⊙Ω Y)
-    iso = Trunc-group-emap (≃-to-≃ᴳˢ (A.eq X (⊙Ω Y)) pres-comp)
+    ⊙→Ω-iso-⊙→Ω : Trunc-⊙→Ω-group (⊙Susp X) Y ≃ᴳ Trunc-⊙→Ω-group X (⊙Ω Y)
+    ⊙→Ω-iso-⊙→Ω = Trunc-group-emap (≃-to-≃ᴳˢ (A.eq X (⊙Ω Y)) pres-comp)
 
   abstract
-    nat-dom : {X Y : Ptd i} (f : X ⊙→ Y) (Z : Ptd i)
-      → fst (iso X Z) ∘ᴳ Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap f) Z
-        == Trunc-⊙→Ω-group-fmap-dom f (⊙Ω Z) ∘ᴳ fst (iso Y Z)
-    nat-dom f Z = group-hom= $ λ= $ Trunc-elim
+    ⊙→Ω-iso-⊙→Ω-nat-dom : {X Y : Ptd i} (f : X ⊙→ Y) (Z : Ptd i)
+      → fst (⊙→Ω-iso-⊙→Ω X Z) ∘ᴳ Trunc-⊙→Ω-group-fmap-dom (⊙Susp-fmap f) Z
+        == Trunc-⊙→Ω-group-fmap-dom f (⊙Ω Z) ∘ᴳ fst (⊙→Ω-iso-⊙→Ω Y Z)
+    ⊙→Ω-iso-⊙→Ω-nat-dom f Z = group-hom= $ λ= $ Trunc-elim
       (λ g → ap [_] (! (A.nat-dom f (⊙Ω Z) g)))
