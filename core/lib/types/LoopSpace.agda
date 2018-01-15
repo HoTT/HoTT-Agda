@@ -44,6 +44,10 @@ module _ {i} {X : Ptd i} where
   → X ⊙→ Y → (Ω X → Ω Y)
 Ω-fmap F = fst (⊙Ω-fmap F)
 
+Ω-fmap-β : ∀ {i j} {X : Ptd i} {Y : Ptd j} (F : X ⊙→ Y) (p : Ω X)
+  → Ω-fmap F p == ! (snd F) ∙ ap (fst F) p ∙' snd F
+Ω-fmap-β (_ , idp) _ = idp
+
 Ω-isemap : ∀ {i j} {X : Ptd i} {Y : Ptd j}
   (F : X ⊙→ Y) → is-equiv (fst F) → is-equiv (Ω-fmap F)
 Ω-isemap (f , idp) e = ap-is-equiv e _ _
