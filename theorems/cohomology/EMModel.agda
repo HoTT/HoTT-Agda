@@ -2,9 +2,9 @@
 
 open import HoTT
 open import homotopy.EilenbergMacLane
+open import groups.ToOmega
 open import cohomology.Theory
 open import cohomology.SpectrumModel
-open import cohomology.WithCoefficients
 
 module cohomology.EMModel where
 

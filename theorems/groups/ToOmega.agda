@@ -4,7 +4,7 @@ open import HoTT
 
 -- TODO Is it possible to have a more generic [→-group] construction?
 
-module cohomology.WithCoefficients where
+module groups.ToOmega where
 
 ⊙→Ω-group-structure : ∀ {i j} (X : Ptd i) (Y : Ptd j)
   → GroupStructure (X ⊙→ ⊙Ω Y)
