@@ -23,7 +23,7 @@ private
   module _ (X : Ptd i) where
 
     η : de⊙ X → Ω (⊙Susp X)
-    η x = merid x ∙ ! (merid (pt X))
+    η x = σloop X x
 
     module E = SuspRec (pt X) (pt X) (idf _)
 
@@ -31,7 +31,7 @@ private
     ε = E.f
 
     ⊙η : X ⊙→ ⊙Ω (⊙Susp X)
-    ⊙η = (η , !-inv-r (merid (pt X)))
+    ⊙η = (η , σloop-pt)
 
     ⊙ε : ⊙Susp (⊙Ω X) ⊙→ X
     ⊙ε = (ε , idp)
@@ -94,6 +94,8 @@ private
       → ap (ap f) (!-inv-r p) ∙ idp == idp
         [ _== idp ↓ ap-∙ f p (! p) ∙ (α ∙2 (ap-! f p ∙ ap ! α)) ∙ !-inv-r q ]
     pt-lemma f idp idp = idp
+
+module Eta = E
 
 adj : CounitUnitAdjoint SuspFunctor LoopFunctor
 adj = record {
