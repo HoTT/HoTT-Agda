@@ -156,5 +156,5 @@ module groups.SuspAdjointLoop {i} where
           ∘ᴳˢ ⊙→Ω-group-structure-fmap-codom X (A.η Y)
           ∘ᴳˢ GroupStructureIso.f-hom (Susp⊙→-iso-⊙→Ω X Y))
 
-      Susp⊙→-Susp-fmap-hom : Susp⊙→-group-structure X Y →ᴳˢ Susp⊙→-group-structure (⊙Susp X) (⊙Susp Y)
-      Susp⊙→-Susp-fmap-hom = group-structure-hom ⊙Susp-fmap pres-comp
+    Susp⊙→-Susp-fmap-hom : Susp⊙→-group-structure X Y →ᴳˢ Susp⊙→-group-structure (⊙Susp X) (⊙Susp Y)
+    Susp⊙→-Susp-fmap-hom = group-structure-hom ⊙Susp-fmap pres-comp
