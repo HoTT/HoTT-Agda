@@ -37,7 +37,7 @@ module _ where
   base = north
 
   loop : base == base
-  loop = merid true ∙' ! (merid false)
+  loop = σloop ⊙Bool false
 
   module S¹Elim {i} {P : S¹ → Type i} (base* : P base)
     (loop* : base* == base* [ P ↓ loop ]) where
@@ -46,14 +46,15 @@ module _ where
       north* = base*
       south* = transport P (merid false) base*
       merid*-general :
-        ∀ {x : S¹} (p q : base == x) (loop* :  base* == base* [ P ↓ p ∙' ! q ]) (b : Bool)
-        → base* == transport P q base* [ P ↓ Bool-rec p q b ]
-      merid*-general p idp loop* true = loop*
-      merid*-general p idp loop* false = idp
+        ∀ {x : S¹} (p q : base == x)
+          (loop* :  base* == base* [ P ↓ p ∙ ! q ]) (b : Bool)
+        → base* == transport P p base* [ P ↓ Bool-rec q p b ]
+      merid*-general idp q loop* false = idp
+      merid*-general idp q loop* true = !ᵈ' loop*
 
       merid* : ∀ (b : Bool) → north* == south* [ P ↓ merid b ]
-      merid* true = merid*-general (merid true) (merid false) loop* true
-      merid* false = merid*-general (merid true) (merid false) loop* false
+      merid* false = merid*-general (merid false) (merid true) loop* false
+      merid* true = merid*-general (merid false) (merid true) loop* true
 
       module SE = SuspElim north* south* merid*
 
@@ -62,22 +63,22 @@ module _ where
 
     private
       merid*-general-lemma :
-        ∀ {x : S¹} (p q : base == x) (loop* :  base* == base* [ P ↓ p ∙' ! q ])
-        → merid*-general p q loop* true ▹ !ᵈ (merid*-general p q loop* false) == loop*
-      merid*-general-lemma p idp loop* = ▹idp _
+        ∀ {x : S¹} (p q : base == x) (loop* :  base* == base* [ P ↓ p ∙ ! q ])
+        → merid*-general p q loop* false ◃ !ᵈ (merid*-general p q loop* true) == loop*
+      merid*-general-lemma idp q loop* = idp◃ _ ∙ !ᵈ-!ᵈ' loop*
 
     loop-β : apd f loop == loop*
     loop-β =
       apd f loop
-        =⟨ apd-∙' f (merid true) (! (merid false)) ⟩
-      apd f (merid true) ▹ apd f (! (merid false))
-        =⟨ apd-! f (merid false) |in-ctx apd f (merid true) ▹_ ⟩
-      apd f (merid true) ▹ !ᵈ (apd f (merid false))
-        =⟨ SE.merid-β true |in-ctx _▹ !ᵈ (apd f (merid false)) ⟩
-      merid* true ▹ !ᵈ (apd f (merid false))
-        =⟨ SE.merid-β false |in-ctx (λ p → merid* true ▹ !ᵈ p) ⟩
-      merid* true ▹ !ᵈ (merid* false)
-        =⟨ merid*-general-lemma (merid true) (merid false) loop* ⟩
+        =⟨ apd-∙ f (merid false) (! (merid true)) ⟩
+      apd f (merid false) ◃ apd f (! (merid true))
+        =⟨ apd-! f (merid true) |in-ctx apd f (merid false) ◃_ ⟩
+      apd f (merid false) ◃ !ᵈ (apd f (merid true))
+        =⟨ SE.merid-β false |in-ctx _◃ !ᵈ (apd f (merid true)) ⟩
+      merid* false ◃ !ᵈ (apd f (merid true))
+        =⟨ SE.merid-β true |in-ctx (λ p → merid* false ◃ !ᵈ p) ⟩
+      merid* false ◃ !ᵈ (merid* true)
+        =⟨ merid*-general-lemma (merid false) (merid true) loop* ⟩
       loop*
         =∎
 

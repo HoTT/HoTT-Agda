@@ -164,6 +164,15 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     → (u == v [ B ↓ p ] → v == u [ B ↓ (! p)])
   !ᵈ {p = idp} = !
 
+  !ᵈ' : {x y : A} {p : x == y} {u : B y} {v : B x}
+    → (u == v [ B ↓ (! p) ] → v == u [ B ↓ p ])
+  !ᵈ' {p = idp} = !
+
+  !ᵈ-!ᵈ' : {x y : A} {p : x == y} {u : B y} {v : B x}
+    → (q : u == v [ B ↓ (! p) ])
+    → !ᵈ (!ᵈ' q) == q
+  !ᵈ-!ᵈ' {p = idp} idp = idp
+
   {- Dependent concatenation -}
 
   infixr 80 _∙ᵈ_ _∙'ᵈ_ _◃_ _▹_ _!◃_ _▹!_
