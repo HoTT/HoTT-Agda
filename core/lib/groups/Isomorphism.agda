@@ -50,6 +50,32 @@ private
     ∙ ! (ap g (pc (g b₁) (g b₂)))
     ∙ g-f (Ac (g b₁) (g b₂))
 
+module GroupStructureIso {i j} {GEl : Type i} {HEl : Type j}
+  {GS : GroupStructure GEl} {HS : GroupStructure HEl}
+  (iso : GroupStructureIso GS HS) where
+
+  f-hom : GS →ᴳˢ HS
+  f-hom = fst iso
+
+  open GroupStructureHom {GS = GS} {HS = HS} f-hom public
+
+  f-is-equiv : is-equiv f
+  f-is-equiv = snd iso
+
+  open is-equiv f-is-equiv public
+
+  f-equiv : GEl ≃ HEl
+  f-equiv = f , f-is-equiv
+
+  g-hom : HS →ᴳˢ GS
+  g-hom = group-structure-hom g (inverse-preserves-comp (GroupStructure.comp GS) (GroupStructure.comp HS) f-is-equiv pres-comp)
+
+  g-is-equiv : is-equiv g
+  g-is-equiv = is-equiv-inverse f-is-equiv
+
+  g-equiv : HEl ≃ GEl
+  g-equiv = g , g-is-equiv
+
 module GroupIso {i j} {G : Group i} {H : Group j} (iso : GroupIso G H) where
 
   f-hom : G →ᴳ H
@@ -110,7 +136,11 @@ G ≃ᴳ⟨ e₁ ⟩ e₂ = e₂ ∘eᴳ e₁
 _≃ᴳ∎ : ∀ {i} (G : Group i) → (G ≃ᴳ G)
 _≃ᴳ∎ = idiso
 
-infixl 120 _⁻¹ᴳ
+infixl 120 _⁻¹ᴳˢ _⁻¹ᴳ
+
+_⁻¹ᴳˢ : ∀ {i j} {GEl : Type i} {HEl : Type j} {GS : GroupStructure GEl} {HS : GroupStructure HEl}
+  → GS ≃ᴳˢ HS → HS ≃ᴳˢ GS
+_⁻¹ᴳˢ {GS = GS} {HS} (φ , ie) = GroupStructureIso.g-hom (φ , ie) , is-equiv-inverse ie
 
 _⁻¹ᴳ : ∀ {i j} {G : Group i} {H : Group j} → G ≃ᴳ H → H ≃ᴳ G
 _⁻¹ᴳ {G = G} {H = H} (φ , ie) = GroupIso.g-hom (φ , ie) , is-equiv-inverse ie

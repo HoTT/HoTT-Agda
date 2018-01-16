@@ -128,3 +128,33 @@ module groups.SuspAdjointLoopIso {i} where
 
     Susp⊙→-iso-⊙→Ω : Susp⊙→-group-structure X Y ≃ᴳˢ ⊙→Ω-group-structure X Y
     Susp⊙→-iso-⊙→Ω = ≃-to-≃ᴳˢ (A.eq X Y) pres-comp
+
+  module _ (X Y : Ptd i) where
+
+    private
+      pres-comp : preserves-comp
+        (GroupStructure.comp (Susp⊙→-group-structure X Y))
+        (GroupStructure.comp (Susp⊙→-group-structure (⊙Susp X) (⊙Susp Y)))
+        (⊙Susp-fmap :> ((⊙Susp X ⊙→ Y) → _))
+      pres-comp = ∼-preserves-preserves-comp
+        (GroupStructure.comp (Susp⊙→-group-structure X Y))
+        (GroupStructure.comp (Susp⊙→-group-structure (⊙Susp X) (⊙Susp Y)))
+        (λ f →
+          <– (A.eq (⊙Susp X) (⊙Susp Y)) (<– (A.eq X (⊙Ω (⊙Susp Y))) (⊙Ω-fmap (A.η Y) ⊙∘ –> (A.eq X Y) f))
+            =⟨ ap (<– (A.eq (⊙Susp X) (⊙Susp Y)) ∘ <– (A.eq X (⊙Ω (⊙Susp Y)))) $ A.nat-cod X (A.η Y) f ⟩
+          <– (A.eq (⊙Susp X) (⊙Susp Y)) (<– (A.eq X (⊙Ω (⊙Susp Y))) (–> (A.eq X (⊙Ω (⊙Susp Y))) (A.η Y ⊙∘ f)))
+            =⟨ ap (<– (A.eq (⊙Susp X) (⊙Susp Y))) $ <–-inv-l (A.eq X (⊙Ω (⊙Susp Y))) (A.η Y ⊙∘ f)  ⟩
+          <– (A.eq (⊙Susp X) (⊙Susp Y)) (A.η Y ⊙∘ f)
+            =⟨ ap (<– (A.eq (⊙Susp X) (⊙Susp Y))) $ A.η-natural f ⟩
+          <– (A.eq (⊙Susp X) (⊙Susp Y)) (–> (A.eq (⊙Susp X) (⊙Susp Y)) (⊙Susp-fmap f))
+            =⟨ <–-inv-l (A.eq (⊙Susp X) (⊙Susp Y)) (⊙Susp-fmap f) ⟩
+          ⊙Susp-fmap f
+            =∎)
+        (GroupStructureHom.pres-comp $
+              GroupStructureIso.g-hom (Susp⊙→-iso-⊙→Ω (⊙Susp X) (⊙Susp Y))
+          ∘ᴳˢ GroupStructureIso.g-hom (⊙→Ω-iso-⊙→Ω X (⊙Susp Y))
+          ∘ᴳˢ ⊙→Ω-group-structure-fmap-codom X (A.η Y)
+          ∘ᴳˢ GroupStructureIso.f-hom (Susp⊙→-iso-⊙→Ω X Y))
+
+      Susp⊙→-Susp-fmap-hom : Susp⊙→-group-structure X Y →ᴳˢ Susp⊙→-group-structure (⊙Susp X) (⊙Susp Y)
+      Susp⊙→-Susp-fmap-hom = group-structure-hom ⊙Susp-fmap pres-comp
