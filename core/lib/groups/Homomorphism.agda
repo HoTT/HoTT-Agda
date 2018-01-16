@@ -28,6 +28,14 @@ preserves-comp-prop : ∀ {i j} {A : Type i} {B : Type j}
 preserves-comp-prop Ac Bc =
   preserves-comp Ac Bc , ⟨⟩
 
+abstract
+  ∼-preserves-preserves-comp : ∀ {i j} {A : Type i} {B : Type j}
+    (A-comp : A → A → A) (B-comp : B → B → B) {f₀ f₁ : A → B} → f₀ ∼ f₁
+    → preserves-comp A-comp B-comp f₀
+    → preserves-comp A-comp B-comp f₁
+  ∼-preserves-preserves-comp Ac Bc {f₀ = f₀} {f₁} f₀∼f₁ f₀-pc a₁ a₂ =
+    ! (f₀∼f₁ (Ac a₁ a₂)) ∙ f₀-pc a₁ a₂ ∙ ap2 Bc (f₀∼f₁ a₁) (f₀∼f₁ a₂)
+
 record GroupStructureHom {i j} {GEl : Type i} {HEl : Type j}
   (GS : GroupStructure GEl) (HS : GroupStructure HEl) : Type (lmax i j) where
   constructor group-structure-hom
