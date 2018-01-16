@@ -1,7 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
-open import groups.SuspAdjointLoopIso
+open import groups.SuspAdjointLoop
 open import groups.ToOmega
 open import cohomology.Theory
 
