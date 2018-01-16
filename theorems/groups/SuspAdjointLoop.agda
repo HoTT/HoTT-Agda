@@ -5,7 +5,7 @@ open import homotopy.PtdAdjoint
 open import groups.FromSusp
 open import groups.ToOmega
 
-module groups.SuspAdjointLoopIso {i} where
+module groups.SuspAdjointLoop {i} where
 
   import homotopy.SuspAdjointLoop {i} as A
 
