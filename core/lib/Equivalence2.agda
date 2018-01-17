@@ -146,18 +146,15 @@ ua-∘e =
     (λ {A} {B} e₁ → ∀ {C} → ∀ (e₂ : B ≃ C) → ua (e₂ ∘e e₁) == ua e₁ ∙ ua e₂)
     (λ A → λ e₂ → ap ua (∘e-unit-r e₂) ∙ ap (λ w → (w ∙ ua e₂)) (! (ua-η idp)))
 
-{- Not sure about the interface.
-
 {- Adjointion where hom = path -}
 
 module _ {i j} {A : Type i} {B : Type j} (e : A ≃ B) where
 
-  =-adjunct : ∀ {a b} → (–> e a == b) → (a == <– e b)
-  =-adjunct p = ! (<–-inv-l e _) ∙ ap (<– e) p
+  equiv-adj : ∀ {a b} → (–> e a == b) → (a == <– e b)
+  equiv-adj p = ! (<–-inv-l e _) ∙ ap (<– e) p
 
-  =-adjunct' : ∀ {a b} → (a == <– e b) → (–> e a == b)
-  =-adjunct' p = ap (–> e) p ∙ (<–-inv-r e _)
--}
+  equiv-adj' : ∀ {a b} → (a == <– e b) → (–> e a == b)
+  equiv-adj' p = ap (–> e) p ∙ (<–-inv-r e _)
 
 {- Type former equivalences involving Empty may require λ=. -}
 module _ {j} {B : Empty → Type j} where
@@ -217,3 +214,10 @@ module _ {i j k} {A : Type i} {P : A → Type j} {Q : A → Type k}
                 (ap fst= (! (f-tot.adj (x , p))) ∙ ∘-ap fst f-tot (f-tot.g-f (x , p)))
             ∙ !-inv-l (fst= (f-tot.g-f (x , p))))
             (!ᵈ (from-lemma (f x p)) ∙ᵈ snd= (f-tot.g-f (x , p)))
+
+replace-inverse : ∀ {i j} {A : Type i} {B : Type j} {f : A → B}
+  (f-ise : is-equiv f) {g₁ : B → A}
+  → is-equiv.g f-ise ∼ g₁ → is-equiv f
+replace-inverse {f = f} f-ise {g₁ = g₁} g∼ =
+  is-eq f g₁ (λ b → ap f (! (g∼ b)) ∙ f-g b) (λ a → ! (g∼ (f a)) ∙ g-f a)
+  where open is-equiv f-ise
