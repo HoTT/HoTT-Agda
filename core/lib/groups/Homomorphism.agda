@@ -378,4 +378,9 @@ module _ {i j} (G : Group i) (H : AbGroup j)
 pre∘ᴳ-hom : ∀ {i j k} {G : Group i} {H : Group j} (K : AbGroup k)
   → (G →ᴳ H) → (hom-group H K →ᴳ hom-group G K)
 pre∘ᴳ-hom K φ = record { f = _∘ᴳ φ ; pres-comp = lemma}
-  where abstract lemma = λ _ _ → group-hom= $ λ= λ _ → idp
+  where abstract lemma = λ _ _ → group-hom= idp
+
+post∘ᴳ-hom : ∀ {i j k} (G : Group i) (H : AbGroup j) (K : AbGroup k)
+  → (AbGroup.grp H →ᴳ AbGroup.grp K) → (hom-group G H →ᴳ hom-group G K)
+post∘ᴳ-hom G H K φ = record { f = φ ∘ᴳ_ ; pres-comp = lemma}
+  where abstract lemma = λ _ _ → group-hom= $ λ= λ _ → GroupHom.pres-comp φ _ _
