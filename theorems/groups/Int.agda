@@ -48,12 +48,29 @@ abstract
     (! ∘ ℤ-idf-η)
     (! ∘ ℤ-idf-η)
 
-  ic⊙→ᴳic-is-equiv : ∀ {i j} {⊙G : ⊙Group i} {⊙H : ⊙Group j}
+  {- favonia: not sure how useful this is. we'll see -}
+  iso-ℤ-implies-endo-infinite-cyclic : ∀ {i} (G : AbGroup i)
+    → AbGroup.grp G ≃ᴳ ℤ-group
+    → is-infinite-cyclic ⊙[ hom-group (AbGroup.grp G) G , idhom _ ]ᴳ
+  iso-ℤ-implies-endo-infinite-cyclic G G-iso-ℤ =
+    isomorphism-preserves'-infinite-cyclic
+      ((hom-group (AbGroup.grp G) G
+        ≃ᴳ⟨ pre∘ᴳ-iso G (G-iso-ℤ ⁻¹ᴳ) ⟩
+      hom-group ℤ-group G
+        ≃ᴳ⟨ post∘ᴳ-iso ℤ-group G ℤ-abgroup G-iso-ℤ ⟩
+      hom-group ℤ-group ℤ-abgroup
+        ≃ᴳ⟨ ℤ→ᴳ-iso-idf ℤ-abgroup ⟩
+      ℤ-group
+        ≃ᴳ∎) ,
+      GroupIso.f-g G-iso-ℤ 1)
+      ℤ-is-infinite-cyclic
+
+  infinite-cyclic-hom-is-equiv : ∀ {i j} {⊙G : ⊙Group i} {⊙H : ⊙Group j}
     → (φ : ⊙G ⊙→ᴳ ⊙H)
     → is-infinite-cyclic ⊙G
     → is-infinite-cyclic ⊙H
     → is-equiv (GroupHom.f (fst φ))
-  ic⊙→ᴳic-is-equiv {⊙G = ⊙G} {⊙H = ⊙H} φ G-iic H-iic =
+  infinite-cyclic-hom-is-equiv {⊙G = ⊙G} {⊙H = ⊙H} φ G-iic H-iic =
     ∼-preserves-equiv
       (λ g →
         ⊙Group.exp ⊙H (ptᴳ ⊙H) (is-equiv.g G-iic g)

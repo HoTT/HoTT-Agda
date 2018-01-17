@@ -368,3 +368,16 @@ pre∘ᴳ-iso K iso = ≃-to-≃ᴳ (equiv to from to-from from-to) to-pres-comp
 
     from-to : ∀ φ → from (to φ) == φ
     from-to φ = group-hom= $ λ= λ h → ap (GroupHom.f φ) (GroupIso.f-g iso h)
+
+post∘ᴳ-iso : ∀ {i j k} (G : Group i) (H : AbGroup j) (K : AbGroup k)
+  → (AbGroup.grp H ≃ᴳ AbGroup.grp K) → (hom-group G H ≃ᴳ hom-group G K)
+post∘ᴳ-iso G H K iso = ≃-to-≃ᴳ (equiv to from to-from from-to) to-pres-comp where
+  to = GroupHom.f (post∘ᴳ-hom G H K (–>ᴳ iso))
+  to-pres-comp = GroupHom.pres-comp (post∘ᴳ-hom G H K(–>ᴳ iso))
+  from = GroupHom.f (post∘ᴳ-hom G K H (<–ᴳ iso))
+  abstract
+    to-from : ∀ φ → to (from φ) == φ
+    to-from φ = group-hom= $ λ= λ g → GroupIso.f-g iso (GroupHom.f φ g)
+
+    from-to : ∀ φ → from (to φ) == φ
+    from-to φ = group-hom= $ λ= λ h → GroupIso.g-f iso (GroupHom.f φ h)
