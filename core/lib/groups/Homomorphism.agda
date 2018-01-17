@@ -108,6 +108,9 @@ _→ᴳ_ = GroupHom
 idhom : ∀ {i} (G : Group i) → (G →ᴳ G)
 idhom G = group-hom (idf _) (λ _ _ → idp)
 
+idshom : ∀ {i} {GEl : Type i} (GS : GroupStructure GEl) → (GS →ᴳˢ GS)
+idshom GS = group-structure-hom (idf _) (λ _ _ → idp)
+
 {- constant (zero) homomorphism -}
 module _ where
   cst-hom : ∀ {i j} {G : Group i} {H : Group j} → (G →ᴳ H)

@@ -54,10 +54,10 @@ module GroupStructureIso {i j} {GEl : Type i} {HEl : Type j}
   {GS : GroupStructure GEl} {HS : GroupStructure HEl}
   (iso : GroupStructureIso GS HS) where
 
-  f-hom : GS →ᴳˢ HS
-  f-hom = fst iso
+  f-shom : GS →ᴳˢ HS
+  f-shom = fst iso
 
-  open GroupStructureHom {GS = GS} {HS = HS} f-hom public
+  open GroupStructureHom {GS = GS} {HS = HS} f-shom public
 
   f-is-equiv : is-equiv f
   f-is-equiv = snd iso
@@ -67,8 +67,8 @@ module GroupStructureIso {i j} {GEl : Type i} {HEl : Type j}
   f-equiv : GEl ≃ HEl
   f-equiv = f , f-is-equiv
 
-  g-hom : HS →ᴳˢ GS
-  g-hom = group-structure-hom g (inverse-preserves-comp (GroupStructure.comp GS) (GroupStructure.comp HS) f-is-equiv pres-comp)
+  g-shom : HS →ᴳˢ GS
+  g-shom = group-structure-hom g (inverse-preserves-comp (GroupStructure.comp GS) (GroupStructure.comp HS) f-is-equiv pres-comp)
 
   g-is-equiv : is-equiv g
   g-is-equiv = is-equiv-inverse f-is-equiv
@@ -103,6 +103,9 @@ module GroupIso {i j} {G : Group i} {H : Group j} (iso : GroupIso G H) where
 idiso : ∀ {i} (G : Group i) → (G ≃ᴳ G)
 idiso G = idhom G , idf-is-equiv _
 
+idsiso : ∀ {i} {GEl : Type i} (GS : GroupStructure GEl) → (GS ≃ᴳˢ GS)
+idsiso GS = idshom GS , idf-is-equiv _
+
 {- equality of isomomorphisms -}
 abstract
   group-hom=-to-iso= : ∀ {i j} {G : Group i} {H : Group j} {φ ψ : G ≃ᴳ H}
@@ -126,12 +129,20 @@ _∘eᴳ_ : ∀ {i j k} {G : Group i} {H : Group j} {K : Group k}
   → H ≃ᴳ K → G ≃ᴳ H → G ≃ᴳ K
 (φ₂ , ie₂) ∘eᴳ (φ₁ , ie₁) = (φ₂ ∘ᴳ φ₁ , ie₂ ∘ise ie₁)
 
-infixr 10 _≃ᴳ⟨_⟩_
-infix  15 _≃ᴳ∎
+infixr 10 _≃ᴳˢ⟨_⟩_ _≃ᴳ⟨_⟩_
+infix  15 _≃ᴳˢ∎ _≃ᴳ∎
+
+_≃ᴳˢ⟨_⟩_ : ∀ {i j k} {GEl : Type i} {HEl : Type j} {KEl : Type k}
+  (GS : GroupStructure GEl) {HS : GroupStructure HEl} {KS : GroupStructure KEl}
+  → GS ≃ᴳˢ HS → HS ≃ᴳˢ KS → GS ≃ᴳˢ KS
+GS ≃ᴳˢ⟨ e₁ ⟩ e₂ = e₂ ∘eᴳˢ e₁
 
 _≃ᴳ⟨_⟩_ : ∀ {i j k} (G : Group i) {H : Group j} {K : Group k}
   → G ≃ᴳ H → H ≃ᴳ K → G ≃ᴳ K
 G ≃ᴳ⟨ e₁ ⟩ e₂ = e₂ ∘eᴳ e₁
+
+_≃ᴳˢ∎ : ∀ {i} {GEl : Type i} (GS : GroupStructure GEl) → (GS ≃ᴳˢ GS)
+_≃ᴳˢ∎ = idsiso
 
 _≃ᴳ∎ : ∀ {i} (G : Group i) → (G ≃ᴳ G)
 _≃ᴳ∎ = idiso
@@ -140,7 +151,7 @@ infixl 120 _⁻¹ᴳˢ _⁻¹ᴳ
 
 _⁻¹ᴳˢ : ∀ {i j} {GEl : Type i} {HEl : Type j} {GS : GroupStructure GEl} {HS : GroupStructure HEl}
   → GS ≃ᴳˢ HS → HS ≃ᴳˢ GS
-_⁻¹ᴳˢ {GS = GS} {HS} (φ , ie) = GroupStructureIso.g-hom (φ , ie) , is-equiv-inverse ie
+_⁻¹ᴳˢ {GS = GS} {HS} (φ , ie) = GroupStructureIso.g-shom (φ , ie) , is-equiv-inverse ie
 
 _⁻¹ᴳ : ∀ {i j} {G : Group i} {H : Group j} → G ≃ᴳ H → H ≃ᴳ G
 _⁻¹ᴳ {G = G} {H = H} (φ , ie) = GroupIso.g-hom (φ , ie) , is-equiv-inverse ie

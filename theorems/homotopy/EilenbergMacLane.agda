@@ -31,9 +31,7 @@ module EMImplicit {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
 
   instance
     EM-conn : (n : ℕ) → is-connected ⟨ n ⟩ (EM (S n))
-    EM-conn n = Trunc-preserves-conn
-                    (transport (λ t → is-connected t (de⊙ (⊙Susp^ n X)))
-                      (+2+0 ⟨ n ⟩₋₂) (⊙Susp^-conn n))
+    EM-conn n = Trunc-preserves-conn (⊙Susp^-conn' n)
 
   {-
   π (S k) (EM (S n)) (embase (S n)) == π k (EM n) (embase n)
@@ -56,7 +54,7 @@ module EMImplicit {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
               lemma (S n') = ≤-trans (≤-ap-S (lemma n')) (inr ltS)
 
     private
-      module SS = Susp^StableSucc X k (S n) Skle
+      module SS = Susp^StableSucc k (S n) Skle (⊙Susp^ (S n) X) {{⊙Susp^-conn' (S n)}}
 
     abstract
       stable : πS (S k) (⊙EM (S SSn)) ≃ᴳ πS k (⊙EM SSn)
@@ -156,8 +154,7 @@ module EMImplicit {i} {X : Ptd i} {{_ : is-connected 0 (de⊙ X)}}
     private
       instance
         sconn : (n : ℕ) → is-connected ⟨ S n ⟩ (de⊙ (⊙Susp^ (S n) X))
-        sconn n = transport (λ t → is-connected t (de⊙ (⊙Susp^ (S n) X)))
-                            (+2+0 ⟨ n ⟩₋₁) (⊙Susp^-conn (S n))
+        sconn n = ⊙Susp^-conn' (S n)
 
       kle : (n : ℕ) → ⟨ S (S n) ⟩ ≤T ⟨ n ⟩ +2+ ⟨ n ⟩
       kle O = inl idp

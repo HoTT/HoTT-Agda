@@ -7,8 +7,8 @@ module homotopy.IterSuspensionStable where
 
 {- π (S k) (Ptd-Susp^ (S n) X) == π k (Ptd-Susp^ n X), where k = S k'
    Susp^Stable below assumes k ≠ O instead of taking k' as the argument -}
-module Susp^StableSucc {i} (X : Ptd i) {{_ : is-connected 0 (de⊙ X)}}
-  (k n : ℕ) (Skle : S k ≤ n *2) where
+module Susp^StableSucc {i} (k n : ℕ) (Skle : S k ≤ n *2)
+  (X : Ptd i) {{_ : is-connected ⟨ n ⟩ (de⊙ X)}} where
 
   {- some numeric computations -}
   private
@@ -21,18 +21,16 @@ module Susp^StableSucc {i} (X : Ptd i) {{_ : is-connected 0 (de⊙ X)}}
 
   private
     module F = FreudenthalIso
-      ⟨ n ⟩₋₂ k Skle' (⊙Susp^ n X)
-      {{transport (λ t → is-connected t (de⊙ (⊙Susp^ n X)))
-                 (+2+0 ⟨ n ⟩₋₂) (⊙Susp^-conn n)}}
+      ⟨ n ⟩₋₂ k Skle' X
 
-  stable : πS (S k) (⊙Susp^ (S n) X) ≃ᴳ πS k (⊙Susp^ n X)
+  stable : πS (S k) (⊙Susp X) ≃ᴳ πS k X
   stable =
-    πS (S k) (⊙Susp^ (S n) X)
-      ≃ᴳ⟨ πS-Ω-split-iso k (⊙Susp^ (S n) X) ⟩
-    πS k (⊙Ω (⊙Susp^ (S n) X))
-      ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso k (⊙Ω (⊙Susp^ (S n) X)) ⁻¹ᴳ ⟩
-    Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp^ (S n) X)))
+    πS (S k) (⊙Susp X)
+      ≃ᴳ⟨ πS-Ω-split-iso k (⊙Susp X) ⟩
+    πS k (⊙Ω (⊙Susp X))
+      ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso k (⊙Ω (⊙Susp X)) ⁻¹ᴳ ⟩
+    Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Ω (⊙Susp X)))
       ≃ᴳ⟨ F.iso ⁻¹ᴳ ⟩
-    Ω^S-group k (⊙Trunc ⟨ S k ⟩ (⊙Susp^ n X))
-      ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso k (⊙Susp^ n X) ⟩
-    πS k (⊙Susp^ n X) ≃ᴳ∎
+    Ω^S-group k (⊙Trunc ⟨ S k ⟩ X)
+      ≃ᴳ⟨ Ω^S-group-Trunc-fuse-diag-iso k X ⟩
+    πS k X ≃ᴳ∎

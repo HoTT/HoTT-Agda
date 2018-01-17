@@ -139,7 +139,6 @@ Trunc-⊙→Ω-group-emap-nat F G = group-hom=-to-iso= $ Trunc-⊙→Ω-group-fm
 
 {- Pointed maps out of bool -}
 
-abstract
-  Trunc-⊙Bool→Ω-iso-π₁ : ∀ {i} (X : Ptd i)
-    → Trunc-⊙→Ω-group ⊙Bool X ≃ᴳ πS 0 X
-  Trunc-⊙Bool→Ω-iso-π₁ {i} X = Trunc-group-emap (≃-to-≃ᴳˢ (⊙Bool→-equiv-idf (⊙Ω X)) (λ _ _ → idp))
+Trunc-⊙Bool→Ω-iso-π₁ : ∀ {i} (X : Ptd i)
+  → Trunc-⊙→Ω-group ⊙Bool X ≃ᴳ πS 0 X
+Trunc-⊙Bool→Ω-iso-π₁ {i} X = Trunc-group-emap (≃-to-≃ᴳˢ (⊙Bool→-equiv-idf (⊙Ω X)) (λ _ _ → idp))

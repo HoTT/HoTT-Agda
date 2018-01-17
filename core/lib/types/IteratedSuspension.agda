@@ -19,6 +19,11 @@ abstract
   ⊙Susp^-conn O = ⟨⟩
   ⊙Susp^-conn (S n) = Susp-conn (⊙Susp^-conn n)
 
+  ⊙Susp^-conn' : ∀ {i} (n : ℕ) {X : Ptd i}
+    {{_ : is-connected 0 (de⊙ X)}} → is-connected ⟨ n ⟩ (de⊙ (⊙Susp^ n X))
+  ⊙Susp^-conn' O = ⟨⟩
+  ⊙Susp^-conn' (S n) = Susp-conn (⊙Susp^-conn' n)
+
 ⊙Susp^-+ : ∀ {i} (m n : ℕ) {X : Ptd i}
   → ⊙Susp^ m (⊙Susp^ n X) == ⊙Susp^ (m + n) X
 ⊙Susp^-+ O n = idp
