@@ -63,3 +63,9 @@ module lib.groups.Int where
         GroupHom.pres-comp (FreeAbGroup-extend ℤ-abgroup (λ _ → 1))
           fs[ inr unit :: nil ] (FreeAbGroup.exp Unit fs[ inl unit :: nil ] (negsucc n))
       ∙ ap pred (from-to (negsucc n))
+
+exp-shom : ∀ {i} {GEl : Type i} (GS : GroupStructure GEl) (g : GEl) → ℤ-group-structure →ᴳˢ GS
+exp-shom GS g = group-structure-hom (GroupStructure.exp GS g) (GroupStructure.exp-+ GS g)
+
+exp-hom : ∀ {i} (G : Group i) (g : Group.El G) → ℤ-group →ᴳ G
+exp-hom G g = group-hom (Group.exp G g) (Group.exp-+ G g)
