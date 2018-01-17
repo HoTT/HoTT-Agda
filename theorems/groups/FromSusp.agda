@@ -226,3 +226,6 @@ module groups.FromSusp {i} (X : Ptd i) where
 
   Susp⊙→-group-structure : ∀ {j} (Y : Ptd j) → GroupStructure (⊙Susp X ⊙→ Y)
   Susp⊙→-group-structure Y = cogroup⊙→-group-structure Susp-cogroup-structure Y
+
+  Trunc-Susp⊙→-group : ∀ {j} (Y : Ptd j) → Group (lmax i j)
+  Trunc-Susp⊙→-group Y = Trunc-group (Susp⊙→-group-structure Y)

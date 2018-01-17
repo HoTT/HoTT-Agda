@@ -76,6 +76,9 @@ susp-⊙span X =
 σloop-pt : ∀ {i} {X : Ptd i} → σloop X (pt X) == idp
 σloop-pt {X = ⊙[ _ , x₀ ]} = !-inv-r (merid x₀)
 
+⊙σloop : ∀ {i} (X : Ptd i) → X ⊙→ ⊙[ north' (de⊙ X) == north' (de⊙ X) , idp ]
+⊙σloop X = σloop X , σloop-pt
+
 
 module SuspFlip {i} {A : Type i} = SuspRec
   (south' A) north (! ∘ merid)

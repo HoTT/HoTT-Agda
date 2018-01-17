@@ -131,8 +131,8 @@ abstract
   decode-encode _ idp = idp  -- Magic!
 
 -- And we get the theorem
-ΩS¹≃ℤ : (base == base) ≃ ℤ
-ΩS¹≃ℤ = equiv encode (decode base) encode-loop^ (decode-encode base)
+ΩS¹-equiv-ℤ : (base == base) ≃ ℤ
+ΩS¹-equiv-ℤ = equiv encode (decode base) encode-loop^ (decode-encode base)
 
 {- 4. Mike’s proof that [Σ S¹ Cover] is contractible -}
 
@@ -227,8 +227,8 @@ abstract
   encode-is-equiv = total-equiv-is-fiber-equiv (λ _ → encode) total-is-equiv
 
 -- We can then conclude that the loop space of the circle is equivalent to [ℤ]
-ΩS¹≃ℤ' : (base == base) ≃ ℤ
-ΩS¹≃ℤ' = (encode {base} , encode-is-equiv base)
+ΩS¹-equiv-ℤ' : (base == base) ≃ ℤ
+ΩS¹-equiv-ℤ' = (encode {base} , encode-is-equiv base)
 
 {- 7. Encode-decode proof of the whole fiberwise equivalence -}
 
@@ -262,7 +262,7 @@ instance S¹-level-instance = S¹-level
 {- 9. More stuff -}
 
 ΩS¹-iso-ℤ : Ω^S-group 0 ⊙S¹ ≃ᴳ ℤ-group
-ΩS¹-iso-ℤ = ≃-to-≃ᴳ ΩS¹≃ℤ encode-pres-∙ where
+ΩS¹-iso-ℤ = ≃-to-≃ᴳ ΩS¹-equiv-ℤ encode-pres-∙ where
   abstract
     encode-∙ : ∀ {x₁ x₂} (loop₁ : base == x₁) (loop₂ : x₁ == x₂)
       → encode (loop₁ ∙ loop₂) == encode' loop₂ (encode loop₁)
