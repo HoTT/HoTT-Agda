@@ -7,16 +7,15 @@ open import groups.SphereEndomorphism
 open import groups.FromSusp
 open import cohomology.Theory
 
-module cohomology.SphereEndomorphism {i} (CT : CohomologyTheory i) (n : ℤ) where
+module cohomology.SphereEndomorphism {i} (CT : CohomologyTheory i) (n : ℤ) (m : ℕ) where
 
   open CohomologyTheory CT
-  module CCGS m where
-    open import cohomology.Cogroup CT n
-      (Lift-Susp-cogroup-structure (⊙Sphere m))
-      (⊙Lift {j = i} (⊙Sphere (S m))) public
+  open import cohomology.Cogroup CT n
+    (Lift-Susp-cogroup-structure (⊙Sphere m))
+    (⊙Lift {j = i} (⊙Sphere (S m)))
   
-  C-fmap-hom : ∀ m → Trunc-⊙LiftSphereS-endo-group m →ᴳ
+  C-fmap-hom : Trunc-⊙LiftSphereS-endo-group m →ᴳ
     (hom-group (C n (⊙Lift (⊙Sphere (S m)))) (C-abgroup n (⊙Lift (⊙Sphere (S m)))))
-  C-fmap-hom m = group-hom
+  C-fmap-hom = group-hom
     (Trunc-rec λ f → C-fmap n f)
-    (Trunc-elim λ f → Trunc-elim λ g → CCGS.C-fmap-preserves-comp m f g)
+    (Trunc-elim λ f → Trunc-elim λ g → C-fmap-preserves-comp f g)
