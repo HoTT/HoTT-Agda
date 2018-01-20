@@ -28,3 +28,20 @@ instance
 
 ⊙lower-equiv : ∀ {i j} {X : Ptd i} → ⊙Lift {j = j} X ⊙≃ X
 ⊙lower-equiv = (⊙lower , snd lower-equiv)
+
+Lift-fmap : ∀ {i j k} {A : Type i} {B : Type j}
+  → (A → B) → (Lift {j = k} A → Lift {j = k} B)
+Lift-fmap f = lift ∘ f ∘ lower
+
+Lift-fmap-equiv : ∀ {i j k} {A : Type i} {B : Type j}
+  → (A → B) ≃ (Lift {j = k} A → Lift {j = k} B)
+Lift-fmap-equiv = equiv Lift-fmap (λ f → lower ∘ f ∘ lift) (λ _ → idp) (λ _ → idp)
+
+⊙Lift-fmap : ∀ {i j k} {X : Ptd i} {Y : Ptd j}
+  → (X ⊙→ Y) → (⊙Lift {j = k} X ⊙→ ⊙Lift {j = k} Y)
+⊙Lift-fmap f = ⊙lift ⊙∘ f ⊙∘ ⊙lower
+
+⊙Lift-fmap-equiv : ∀ {i j k} {X : Ptd i} {Y : Ptd j}
+  → (X ⊙→ Y) ≃ (⊙Lift {j = k} X ⊙→ ⊙Lift {j = k} Y)
+⊙Lift-fmap-equiv = equiv ⊙Lift-fmap (λ f → ⊙lower ⊙∘ f ⊙∘ ⊙lift)
+  (λ {(_ , idp) → idp}) (λ {(_ , idp) → idp})

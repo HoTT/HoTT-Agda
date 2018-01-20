@@ -64,6 +64,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
     f = M.f
     glue-β = M.glue-β unit
 
+  ∨-elim = WedgeElim.f
   Wedge-elim = WedgeElim.f
 
   module WedgeRec {k} {C : Type k} (winl* : de⊙ X → C) (winr* : de⊙ Y → C)
@@ -75,6 +76,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
     f = M.f
     glue-β = M.glue-β unit
 
+  ∨-rec = WedgeRec.f
   Wedge-rec = WedgeRec.f
 
   module ⊙WedgeRec {k} {Z : Ptd k} (g : X ⊙→ Z) (h : Y ⊙→ Z) where
@@ -99,23 +101,25 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
           ∙ ∙-unit-r (! (! (snd h)))
           ∙ !-! (snd h)
 
+  ⊙∨-rec = ⊙WedgeRec.⊙f
   ⊙Wedge-rec = ⊙WedgeRec.⊙f
 
   ⊙Wedge-rec-post∘ : ∀ {k l} {Z : Ptd k} {W : Ptd l}
     (k : Z ⊙→ W) (g : X ⊙→ Z) (h : Y ⊙→ Z)
-    → k ⊙∘ ⊙Wedge-rec g h == ⊙Wedge-rec (k ⊙∘ g) (k ⊙∘ h)
-  ⊙Wedge-rec-post∘ k g h = ⊙λ='
+    → k ⊙∘ ⊙Wedge-rec g h ⊙∼ ⊙Wedge-rec (k ⊙∘ g) (k ⊙∘ h)
+  ⊙Wedge-rec-post∘ k g h =
     (Wedge-elim (λ _ → idp) (λ _ → idp)
       (↓-='-in' $ ⊙WedgeRec.glue-β (k ⊙∘ g) (k ⊙∘ h)
                  ∙ lemma (fst k) (snd g) (snd h) (snd k)
                  ∙ ! (ap (ap (fst k)) (⊙WedgeRec.glue-β g h))
-                 ∙ ∘-ap (fst k) (fst (⊙Wedge-rec g h)) wglue))
+                 ∙ ∘-ap (fst k) (fst (⊙Wedge-rec g h)) wglue)) ,
     idp
     where
     lemma : ∀ {i j} {A : Type i} {B : Type j} (f : A → B) {x y z : A} {w : B}
       (p : x == z) (q : y == z) (r : f z == w)
       → (ap f p ∙ r) ∙ ! (ap f q ∙ r) == ap f (p ∙ ! q)
     lemma f idp idp idp = idp
+  ⊙∨-rec-post∘ = ⊙Wedge-rec-post∘
 
   ⊙Wedge-rec-η : ⊙Wedge-rec ⊙winl ⊙winr == ⊙idf (X ⊙∨ Y)
   ⊙Wedge-rec-η = ⊙λ='
@@ -124,6 +128,7 @@ module _ {i j} {X : Ptd i} {Y : Ptd j} where
                  ∙ ! (!-! wglue)
                  ∙ ! (⊙WedgeRec.glue-β ⊙winl ⊙winr)))
     idp
+  ⊙∨-rec-η = ⊙Wedge-rec-η
 
   add-wglue : de⊙ (X ⊙⊔ Y) → X ∨ Y
   add-wglue (inl x) = winl x
@@ -208,6 +213,27 @@ module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
   Wedge-fmap = ∨-fmap
   ⊙Wedge-fmap = ⊙∨-fmap
 
+module _ {i₀ i₁ i₂ j₀ j₁ j₂} {X₀ : Ptd i₀} {X₁ : Ptd i₁} {X₂ : Ptd i₂}
+  {Y₀ : Ptd j₀} {Y₁ : Ptd j₁} {Y₂ : Ptd j₂}
+  where
+
+  ∨-fmap-∘ :
+    (gX : X₁ ⊙→ X₂) (fX : X₀ ⊙→ X₁)
+    (gY : Y₁ ⊙→ Y₂) (fY : Y₀ ⊙→ Y₁)
+    → ∨-fmap (gX ⊙∘ fX) (gY ⊙∘ fY) ∼ ∨-fmap gX gY ∘ ∨-fmap fX fY
+  ∨-fmap-∘ (gX , idp) (fX , idp) (gY , idp) (fY , idp) =
+    Pushout-fmap-∘ (wedge-span-map (gX , idp) (gY , idp)) (wedge-span-map (fX , idp) (fY , idp))
+
+  ⊙∨-fmap-∘ :
+    (gX : X₁ ⊙→ X₂) (fX : X₀ ⊙→ X₁)
+    (gY : Y₁ ⊙→ Y₂) (fY : Y₀ ⊙→ Y₁)
+    → ⊙∨-fmap (gX ⊙∘ fX) (gY ⊙∘ fY) ⊙∼ ⊙∨-fmap gX gY ⊙∘ ⊙∨-fmap fX fY
+  ⊙∨-fmap-∘ (gX , idp) (fX , idp) (gY , idp) (fY , idp) =
+    ∨-fmap-∘ (gX , idp) (fX , idp) (gY , idp) (fY , idp) , idp
+
+  Wedge-fmap-∘ = ∨-fmap-∘
+  ⊙Wedge-fmap-∘ = ⊙∨-fmap-∘
+
 module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j} {Y' : Ptd j'}
   (eqX : X ⊙≃ X') (eqY : Y ⊙≃ Y') where
 
@@ -256,6 +282,7 @@ module _ {i i' j j' k} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j}
           →  snd (⊙Wedge-rec winl* winr* ⊙∘ ⊙∨-fmap f g)
           == snd (⊙Wedge-rec (winl* ⊙∘ f) (winr* ⊙∘ g))
         lemma₁ (f , idp) _ (winl* , idp) = idp
+  ⊙∨-rec-fmap = ⊙Wedge-rec-fmap
 
 module _ {i i' j j'} {X : Ptd i} {X' : Ptd i'} {Y : Ptd j}
   {Y' : Ptd j'} (f : X ⊙→ X') (g : Y ⊙→ Y') where
@@ -412,6 +439,59 @@ module _ {i j k} (X : Ptd i) (Y : Ptd j) (Z : Ptd k) where
   ⊙∨-assoc : (X ⊙∨ Y) ⊙∨ Z ⊙≃ X ⊙∨ (Y ⊙∨ Z)
   ⊙∨-assoc = ≃-to-⊙≃ ∨-assoc idp
 
+module _ {i₀ i₁ j₀ j₁ k₀ k₁}
+  {X₀ : Ptd i₀} {Y₀ : Ptd j₀} {Z₀ : Ptd k₀}
+  {X₁ : Ptd i₁} {Y₁ : Ptd j₁} {Z₁ : Ptd k₁}
+  where
+
+  ⊙∨-assoc-nat : ∀ (f : X₀ ⊙→ X₁) (g : Y₀ ⊙→ Y₁) (h : Z₀ ⊙→ Z₁)
+    →  ⊙–> (⊙∨-assoc X₁ Y₁ Z₁) ⊙∘ ⊙∨-fmap (⊙∨-fmap f g) h
+    ⊙∼ ⊙∨-fmap f (⊙∨-fmap g h) ⊙∘ ⊙–> (⊙∨-assoc X₀ Y₀ Z₀)
+  ⊙∨-assoc-nat (f , idp) (g , idp) (h , idp) =
+    (Wedge-elim
+      -- {P = –> (∨-assoc X₁ Y₁ Z₁) ∘ ∨-fmap (⊙∨-fmap f g) h ∼ ∨-fmap f (⊙∨-fmap g h) ∘ –> (∨-assoc X₀ Y₀ Z₀)}
+      (Wedge-elim (λ _ → idp) (λ _ → idp)
+        (↓-='-in' $
+          ap (∨-fmap (f , idp) (⊙∨-fmap (g , idp) (h , idp)) ∘ WedgeAssocInl.f X₀ Y₀ Z₀) wglue
+            =⟨ ap-∘ (∨-fmap (f , idp) (⊙∨-fmap (g , idp) (h , idp))) (WedgeAssocInl.f X₀ Y₀ Z₀) wglue ⟩
+          ap (∨-fmap (f , idp) (⊙∨-fmap (g , idp) (h , idp))) (ap (WedgeAssocInl.f X₀ Y₀ Z₀) wglue)
+            =⟨ ap (ap (∨-fmap (f , idp) (⊙∨-fmap (g , idp) (h , idp)))) (WedgeAssocInl.glue-β X₀ Y₀ Z₀) ⟩
+          ap (∨-fmap (f , idp) (⊙∨-fmap (g , idp) (h , idp))) wglue
+            =⟨ WedgeFmap.glue-β (f , idp) (⊙∨-fmap (g , idp) (h , idp)) ⟩
+          wglue
+            =⟨ ! $ WedgeAssocInl.glue-β X₁ Y₁ Z₁ ⟩
+          ap (WedgeAssocInl.f X₁ Y₁ Z₁) wglue
+            =⟨ ! $ ap (ap (WedgeAssocInl.f X₁ Y₁ Z₁)) $ WedgeFmap.glue-β (f , idp) (g , idp) ⟩
+          ap (WedgeAssocInl.f X₁ Y₁ Z₁) (ap (∨-fmap (f , idp) (g , idp)) wglue)
+            =⟨ ∘-ap (WedgeAssocInl.f X₁ Y₁ Z₁) (∨-fmap (f , idp) (g , idp)) wglue ⟩
+          ap (WedgeAssocInl.f X₁ Y₁ Z₁ ∘ ∨-fmap (f , idp) (g , idp)) wglue
+            =∎))
+      (λ _ → idp)
+      (↓-='-in' $
+        ap (∨-fmap (f , idp) (⊙∨-fmap (g , idp) (h , idp)) ∘ WedgeAssoc.f X₀ Y₀ Z₀) wglue
+          =⟨ ap-∘ (∨-fmap (f , idp) (⊙∨-fmap (g , idp) (h , idp))) (WedgeAssoc.f X₀ Y₀ Z₀) wglue ⟩
+        ap (∨-fmap (f , idp) (⊙∨-fmap (g , idp) (h , idp))) (ap (WedgeAssoc.f X₀ Y₀ Z₀) wglue)
+          =⟨ ap (ap (∨-fmap (f , idp) (⊙∨-fmap (g , idp) (h , idp)))) (WedgeAssoc.glue-β X₀ Y₀ Z₀) ⟩
+        ap (∨-fmap (f , idp) (⊙∨-fmap (g , idp) (h , idp))) (wglue ∙ ap winr wglue)
+          =⟨ ap-∙ (∨-fmap (f , idp) (⊙∨-fmap (g , idp) (h , idp))) wglue (ap winr wglue) ⟩
+        ap (∨-fmap (f , idp) (⊙∨-fmap (g , idp) (h , idp))) wglue
+        ∙ ap (∨-fmap (f , idp) (⊙∨-fmap (g , idp) (h , idp))) (ap winr wglue)
+          =⟨ ap2 _∙_
+               (WedgeFmap.glue-β (f , idp) (⊙∨-fmap (g , idp) (h , idp)))
+               ( ∘-ap (∨-fmap (f , idp) (⊙∨-fmap (g , idp) (h , idp))) winr wglue
+               ∙ ap-∘ winr (∨-fmap (g , idp) (h , idp)) wglue
+               ∙ ap (ap winr) (WedgeFmap.glue-β (g , idp) (h , idp))) ⟩
+        wglue ∙ ap winr wglue
+          =⟨ ! $ WedgeAssoc.glue-β X₁ Y₁ Z₁ ⟩
+        ap (WedgeAssoc.f X₁ Y₁ Z₁) wglue
+          =⟨ ! $ ap (ap (WedgeAssoc.f X₁ Y₁ Z₁)) $ WedgeFmap.glue-β (⊙∨-fmap (f , idp) (g , idp)) (h , idp) ⟩
+        ap (WedgeAssoc.f X₁ Y₁ Z₁) (ap (∨-fmap (⊙∨-fmap (f , idp) (g , idp)) (h , idp)) wglue)
+          =⟨ ∘-ap (WedgeAssoc.f X₁ Y₁ Z₁) (∨-fmap (⊙∨-fmap (f , idp) (g , idp)) (h , idp)) wglue ⟩
+        ap (WedgeAssoc.f X₁ Y₁ Z₁ ∘ ∨-fmap (⊙∨-fmap (f , idp) (g , idp)) (h , idp)) wglue
+          =∎))
+    ,
+    idp
+
 module _ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
   (f : X ⊙→ W) (g : Y ⊙→ W) (h : Z ⊙→ W) where
 
@@ -439,3 +519,4 @@ module _ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
         ∙ ! (⊙WedgeRec.glue-β (⊙Wedge-rec f g) h)))
     ,
     idp
+  ⊙∨-rec-assoc = ⊙Wedge-rec-assoc
