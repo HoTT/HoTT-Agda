@@ -86,3 +86,8 @@ module groups.SphereEndomorphism where
     isomorphism-preserves-infinite-cyclic
       (Trunc-⊙SphereS-endo-Susp-fmap-⊙iso n)
       (Trunc-⊙SphereS-endo-⊙group-is-infinite-cyclic n)
+
+  {- new def of degree -}
+
+  Trunc-⊙SphereS-endo-degree : ∀ n → Trunc 0 (⊙Sphere (S n) ⊙→ ⊙Sphere (S n)) → ℤ
+  Trunc-⊙SphereS-endo-degree n = is-equiv.g (Trunc-⊙SphereS-endo-⊙group-is-infinite-cyclic n)

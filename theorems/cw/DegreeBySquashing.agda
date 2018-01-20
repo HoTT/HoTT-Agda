@@ -3,7 +3,7 @@
 open import HoTT
 open import cw.CW
 open import homotopy.SphereEndomorphism
-open import homotopy.PinSn
+open import groups.SphereEndomorphism
 open import groups.CoefficientExtensionality
 
 module cw.DegreeBySquashing {i} where
@@ -39,17 +39,8 @@ module cw.DegreeBySquashing {i} where
     degree-map : Sphere (S n) → Sphere (S n)
     degree-map = cw-squash-lower-to-Sphere ∘ attaching-last skel upper
 
-    degree-map' : ℤ-group →ᴳ ℤ-group
-    degree-map' = –>ᴳ (πS-SphereS-iso-ℤ n)
-               ∘ᴳ Trunc-rec (πS-fmap n)
-                    (⊙SphereS-endo-in n [ degree-map ])
-               ∘ᴳ <–ᴳ (πS-SphereS-iso-ℤ n)
-
-    degree' : ℤ → ℤ
-    degree' = GroupHom.f degree-map'
-
     degree : ℤ
-    degree = degree' 1
+    degree = Trunc-⊙SphereS-endo-degree n (Trunc-⊙SphereS-endo-in n [ degree-map ])
 
   module DegreeAtOne (skel : Skeleton {i} 1)
     (dec : has-cells-with-dec-eq skel)
