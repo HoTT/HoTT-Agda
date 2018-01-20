@@ -297,8 +297,10 @@ module LeftAdjoint∨ {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
                                         (–> (A.eq V (F.obj U ⊙∨ F.obj V)) ⊙winr)) ⟩
     <– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (G.arr ⊙into ⊙∘ ⊙Wedge-rec (–> (A.eq U (F.obj U ⊙∨ F.obj V)) ⊙winl)
                                              (–> (A.eq V (F.obj U ⊙∨ F.obj V)) ⊙winr))
-      =⟨ ap (<– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V)))) (⊙Wedge-rec-post∘ (G.arr ⊙into)
-                              (–> (A.eq U (F.obj U ⊙∨ F.obj V)) ⊙winl) (–> (A.eq V (F.obj U ⊙∨ F.obj V)) ⊙winr)) ⟩
+      =⟨ ap (<– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V)))) $ ⊙λ= $
+          ⊙Wedge-rec-post∘ (G.arr ⊙into)
+            (–> (A.eq U (F.obj U ⊙∨ F.obj V)) ⊙winl)
+            (–> (A.eq V (F.obj U ⊙∨ F.obj V)) ⊙winr) ⟩
     <– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙Wedge-rec (G.arr ⊙into ⊙∘ –> (A.eq U (F.obj U ⊙∨ F.obj V)) ⊙winl)
                                                     (G.arr ⊙into ⊙∘ –> (A.eq V (F.obj U ⊙∨ F.obj V)) ⊙winr))
       =⟨ ap2 (λ w₁ w₂ → <– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙Wedge-rec w₁ w₂))
@@ -310,8 +312,8 @@ module LeftAdjoint∨ {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
               ∙ ! (A.nat-dom ⊙winr _ (⊙idf _))) ⟩
     <– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙Wedge-rec (–> (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙idf _) ⊙∘ ⊙winl)
                                                     (–> (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙idf _) ⊙∘ ⊙winr))
-      =⟨ ap (<– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))))
-            (! (⊙Wedge-rec-post∘ (–> (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙idf _)) ⊙winl ⊙winr)) ⟩
+      =⟨ ap (<– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V)))) $ ! $ ⊙λ= $
+            ⊙Wedge-rec-post∘ (–> (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙idf _)) ⊙winl ⊙winr ⟩
     <– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (–> (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙idf _) ⊙∘ ⊙Wedge-rec ⊙winl ⊙winr)
       =⟨ ap (λ w → <– (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (–> (A.eq (U ⊙∨ V) (F.obj (U ⊙∨ V))) (⊙idf _) ⊙∘ w))
             ⊙Wedge-rec-η ⟩
@@ -322,7 +324,7 @@ module LeftAdjoint∨ {i j} {F : PtdFunctor i j} {G : PtdFunctor j i}
   ⊙out-into : ⊙out ⊙∘ ⊙into == ⊙idf _
   ⊙out-into =
     ⊙out ⊙∘ ⊙Wedge-rec (F.arr ⊙winl) (F.arr ⊙winr)
-      =⟨ ⊙Wedge-rec-post∘ ⊙out (F.arr ⊙winl) (F.arr ⊙winr) ⟩
+      =⟨ ⊙λ= $ ⊙Wedge-rec-post∘ ⊙out (F.arr ⊙winl) (F.arr ⊙winr) ⟩
     ⊙Wedge-rec (⊙out ⊙∘ F.arr ⊙winl) (⊙out ⊙∘ F.arr ⊙winr)
       =⟨ ap2 ⊙Wedge-rec
            (A.nat!-dom ⊙winl _ (⊙Wedge-rec _ _)

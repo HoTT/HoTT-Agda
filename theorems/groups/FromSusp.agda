@@ -4,7 +4,9 @@ open import HoTT
 open import homotopy.CoHSpace
 open import homotopy.Cogroup
 
-module groups.FromSusp {i} (X : Ptd i) where
+module groups.FromSusp where
+
+module _ {i} (X : Ptd i) where
   private
     A = de⊙ X
     e = pt X
@@ -229,3 +231,19 @@ module groups.FromSusp {i} (X : Ptd i) where
 
   Trunc-Susp⊙→-group : ∀ {j} (Y : Ptd j) → Group (lmax i j)
   Trunc-Susp⊙→-group Y = Trunc-group (Susp⊙→-group-structure Y)
+
+module _ {i j} (X : Ptd i) where
+
+  Lift-Susp-co-h-space-structure : CoHSpaceStructure (⊙Lift {j = j} (⊙Susp X))
+  Lift-Susp-co-h-space-structure =
+    Lift-co-h-space-structure {j = j} (Susp-co-h-space-structure X)
+
+  Lift-Susp-cogroup-structure : CogroupStructure (⊙Lift {j = j} (⊙Susp X))
+  Lift-Susp-cogroup-structure =
+    Lift-cogroup-structure {j = j} (Susp-cogroup-structure X)
+
+  LiftSusp⊙→-group-structure : ∀ {k} (Y : Ptd k) → GroupStructure (⊙Lift {j = j} (⊙Susp X) ⊙→ Y)
+  LiftSusp⊙→-group-structure Y = cogroup⊙→-group-structure Lift-Susp-cogroup-structure Y
+
+  Trunc-LiftSusp⊙→-group : ∀ {k} (Y : Ptd k) → Group (lmax (lmax i j) k)
+  Trunc-LiftSusp⊙→-group Y = Trunc-group (LiftSusp⊙→-group-structure Y)
