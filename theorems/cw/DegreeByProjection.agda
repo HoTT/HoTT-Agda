@@ -6,7 +6,7 @@ open import homotopy.SphereEndomorphism
 open import groups.SphereEndomorphism
 open import groups.CoefficientExtensionality
 
-module cw.DegreeBySquashing {i} where
+module cw.DegreeByProjection {i} where
 
   module DegreeAboveOne {n : ℕ} (skel : Skeleton {i} (S (S n)))
     (dec : has-cells-with-dec-eq skel)
@@ -21,23 +21,22 @@ module cw.DegreeBySquashing {i} where
       lower-cells = cells-last lower-skel
       lower-cells-has-dec-eq = cells-last-has-dec-eq lower-skel lower-dec
 
-    -- squash the lower CW complex except one of its cells [lower]
-    cw-squash-lower-to-Sphere : ⟦ lower-skel ⟧ → Sphere (S n)
-    cw-squash-lower-to-Sphere = Attached-rec (λ _ → north) squash-hubs squash-spokes where
-      -- squash cells except [lower]
-      squash-hubs : lower-cells → Sphere (S n)
-      squash-hubs c with lower-cells-has-dec-eq c lower
+    -- project the cell [lower] out of the lower CW complex
+    cw-proj-lower : ⟦ lower-skel ⟧ → Sphere (S n)
+    cw-proj-lower = Attached-rec (λ _ → north) proj-hubs proj-spokes where
+      proj-hubs : lower-cells → Sphere (S n)
+      proj-hubs c with lower-cells-has-dec-eq c lower
       ... | (inl _) = south
       ... | (inr _) = north
-      -- squash cells except [lower]
-      squash-spokes : (c : lower-cells) → Sphere n
-        → north == squash-hubs c
-      squash-spokes c s with lower-cells-has-dec-eq c lower
+
+      proj-spokes : (c : lower-cells) → Sphere n
+        → north == proj-hubs c
+      proj-spokes c s with lower-cells-has-dec-eq c lower
       ... | (inl _) = merid s
       ... | (inr _) = idp
 
     degree-map : Sphere (S n) → Sphere (S n)
-    degree-map = cw-squash-lower-to-Sphere ∘ attaching-last skel upper
+    degree-map = cw-proj-lower ∘ attaching-last skel upper
 
     degree : ℤ
     degree = Trunc-⊙SphereS-endo-degree n (Trunc-⊙SphereS-endo-in n [ degree-map ])

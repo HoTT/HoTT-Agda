@@ -2,7 +2,7 @@
 
 open import HoTT
 open import cw.CW
-open import cw.DegreeBySquashing
+open import cw.DegreeByProjection
 open import cohomology.ChainComplex
 
 module cw.cohomology.CellularChainComplex {i : ULevel} where
