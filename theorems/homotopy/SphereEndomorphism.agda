@@ -6,12 +6,29 @@ open import homotopy.PinSn
 
 module homotopy.SphereEndomorphism where
 
+  Sphere-endo : ∀ n → Type₀
+  Sphere-endo n = Sphere n → Sphere n
+
+  ⊙Sphere-endo : ∀ n → Type₀
+  ⊙Sphere-endo n = ⊙Sphere n ⊙→ ⊙Sphere n
+
+  ⊙LiftSphere-endo : ∀ {i} n → Type i
+  ⊙LiftSphere-endo {i} n = ⊙Lift {j = i} (⊙Sphere n) ⊙→ ⊙Lift {j = i} (⊙Sphere n)
+
+  Trunc-Sphere-endo : ∀ n → Type₀
+  Trunc-Sphere-endo = Trunc 0 ∘ Sphere-endo
+
+  Trunc-⊙Sphere-endo : ∀ n → Type₀
+  Trunc-⊙Sphere-endo = Trunc 0 ∘ ⊙Sphere-endo
+
+  Trunc-⊙LiftSphere-endo : ∀ {i} n → Type i
+  Trunc-⊙LiftSphere-endo {i} = Trunc 0 ∘ ⊙LiftSphere-endo {i}
+
   {- Part 0: pointedness is free -}
 
-  Trunc-⊙SphereS-endo-out : ∀ n
-    → Trunc 0 (⊙Sphere (S n) ⊙→ ⊙Sphere (S n))
-    → Trunc 0 ( Sphere (S n)  →  Sphere (S n))
-  Trunc-⊙SphereS-endo-out n = Trunc-rec ([_] ∘ fst)
+  Trunc-⊙Sphere-endo-out : ∀ n
+    → Trunc-⊙Sphere-endo n → Trunc-Sphere-endo n
+  Trunc-⊙Sphere-endo-out n = Trunc-rec ([_] ∘ fst)
 
   -- For [S¹], the pointedness is free because of the commutativity of its loop space.
 
@@ -44,7 +61,7 @@ module homotopy.SphereEndomorphism where
   Trunc-⊙S¹-endo-in = Trunc-fmap ⊙S¹-endo-in
 
   abstract
-    Trunc-⊙S¹-endo-in-η : ∀ f → Trunc-⊙S¹-endo-in (Trunc-⊙SphereS-endo-out 0 f) == f
+    Trunc-⊙S¹-endo-in-η : ∀ f → Trunc-⊙S¹-endo-in (Trunc-⊙Sphere-endo-out 1 f) == f
     Trunc-⊙S¹-endo-in-η = Trunc-elim
       λ{(f , pt) → ap [_] $
         ⊙S¹-endo-in'-shifted pt (ap f loop) ∙ ⊙λ= (S¹-rec-η f , idp)}
@@ -55,7 +72,7 @@ module homotopy.SphereEndomorphism where
         → ⊙S¹-endo-in' base* loop* == (S¹-rec base* loop* , shift)
       ⊙S¹-endo-in'-shifted idp _ = idp
 
-    Trunc-⊙S¹-endo-out-β : ∀ f → Trunc-⊙SphereS-endo-out 0 (Trunc-⊙S¹-endo-in f) == f
+    Trunc-⊙S¹-endo-out-β : ∀ f → Trunc-⊙Sphere-endo-out 1 (Trunc-⊙S¹-endo-in f) == f
     Trunc-⊙S¹-endo-out-β = Trunc-elim
       λ f → ! (ap (λ f → [ fst (⊙S¹-endo-in f) ]) (λ= $ S¹-rec-η f))
           ∙ ⊙S¹-endo-out-β (f base) (ap f loop)
@@ -69,7 +86,7 @@ module homotopy.SphereEndomorphism where
           (λ loop* → ap (λ loop* → [ S¹-rec base loop* ]) (S¹Rec.loop-β base loop*))
           prop-has-all-paths-↓
 
-  Trunc-⊙S¹-endo-out-is-equiv : is-equiv (Trunc-⊙SphereS-endo-out 0)
+  Trunc-⊙S¹-endo-out-is-equiv : is-equiv (Trunc-⊙Sphere-endo-out 1)
   Trunc-⊙S¹-endo-out-is-equiv = is-eq _ Trunc-⊙S¹-endo-in Trunc-⊙S¹-endo-out-β Trunc-⊙S¹-endo-in-η
 
   -- For [Sphere (S (S n))], the pointedness is free because of its connectivity.
@@ -86,39 +103,37 @@ module homotopy.SphereEndomorphism where
       (contr-has-all-paths {{SphereSS-conn n}} [ x ] [ y ])
 
   Trunc-⊙SphereSS-endo-in : ∀ n
-    → Trunc 0 ( Sphere (S (S n))  →  Sphere (S (S n)))
-    → Trunc 0 (⊙Sphere (S (S n)) ⊙→ ⊙Sphere (S (S n)))
+    → Trunc-Sphere-endo (S (S n)) → Trunc-⊙Sphere-endo (S (S n))
   Trunc-⊙SphereSS-endo-in n = Trunc-rec λ f →
     Trunc-rec (λ pt → [ f , pt ])
       (SphereSS-has-all-trunc-paths n (f north) north)
 
   abstract
-    Trunc-⊙SphereSS-endo-in-η : ∀ n f → Trunc-⊙SphereSS-endo-in n (Trunc-⊙SphereS-endo-out (S n) f) == f
+    Trunc-⊙SphereSS-endo-in-η : ∀ n f → Trunc-⊙SphereSS-endo-in n (Trunc-⊙Sphere-endo-out (S (S n)) f) == f
     Trunc-⊙SphereSS-endo-in-η n = Trunc-elim
       λ{(f , pt) → ap (Trunc-rec (λ pt → [ f , pt ]))
         (contr-has-all-paths {{SphereSS-conn-path n (f north) north}}
           (SphereSS-has-all-trunc-paths n (f north) north) [ pt ])}
 
-    Trunc-⊙SphereSS-endo-out-β : ∀ n f → Trunc-⊙SphereS-endo-out (S n) (Trunc-⊙SphereSS-endo-in n f) == f
+    Trunc-⊙SphereSS-endo-out-β : ∀ n f → Trunc-⊙Sphere-endo-out (S (S n)) (Trunc-⊙SphereSS-endo-in n f) == f
     Trunc-⊙SphereSS-endo-out-β n = Trunc-elim
       λ f → Trunc-elim
-        {P = λ pt → Trunc-⊙SphereS-endo-out (S n) (Trunc-rec (λ pt → [ f , pt ]) pt) == [ f ]}
+        {P = λ pt → Trunc-⊙Sphere-endo-out (S (S n)) (Trunc-rec (λ pt → [ f , pt ]) pt) == [ f ]}
         (λ pt → idp) (SphereSS-has-all-trunc-paths n (f north) north)
 
-  Trunc-⊙SphereSS-endo-out-is-equiv : ∀ n → is-equiv (Trunc-⊙SphereS-endo-out (S n))
+  Trunc-⊙SphereSS-endo-out-is-equiv : ∀ n → is-equiv (Trunc-⊙Sphere-endo-out (S (S n)))
   Trunc-⊙SphereSS-endo-out-is-equiv n = is-eq
-    (Trunc-⊙SphereS-endo-out (S n)) (Trunc-⊙SphereSS-endo-in n)
+    (Trunc-⊙Sphere-endo-out (S (S n))) (Trunc-⊙SphereSS-endo-in n)
     (Trunc-⊙SphereSS-endo-out-β n) (Trunc-⊙SphereSS-endo-in-η n)
 
   -- the unified interface
 
-  Trunc-⊙SphereS-endo-out-is-equiv : ∀ n → is-equiv (Trunc-⊙SphereS-endo-out n)
+  Trunc-⊙SphereS-endo-out-is-equiv : ∀ n → is-equiv (Trunc-⊙Sphere-endo-out (S n))
   Trunc-⊙SphereS-endo-out-is-equiv 0 = Trunc-⊙S¹-endo-out-is-equiv
   Trunc-⊙SphereS-endo-out-is-equiv (S n) = Trunc-⊙SphereSS-endo-out-is-equiv n
 
   Trunc-⊙SphereS-endo-in : ∀ n
-    → Trunc 0 ( Sphere (S n)  →  Sphere (S n))
-    → Trunc 0 (⊙Sphere (S n) ⊙→ ⊙Sphere (S n))
+    → Trunc-Sphere-endo (S n) → Trunc-⊙Sphere-endo (S n)
   Trunc-⊙SphereS-endo-in n = is-equiv.g (Trunc-⊙SphereS-endo-out-is-equiv n)
 
   {- Part 1: suspension is an isomorphism -}
@@ -165,14 +180,14 @@ module homotopy.SphereEndomorphism where
 
     final-fix : ∀ n →
       CommSquareEquiv
-        (⊙Susp-fmap :> ((⊙Sphere (S n) ⊙→ ⊙Sphere (S n)) → _))
+        (⊙Susp-fmap :> (⊙Sphere-endo (S n) → _))
         (SAL.η _ ⊙∘_)
         (idf _)
         (–> (SAL.eq _ _))
     final-fix n = comm-sqr (λ f → ! (SAL.η-natural f)) , idf-is-equiv _ , snd (SAL.eq _ _)
 
   Trunc-⊙SphereS-endo-Susp-is-equiv : ∀ n →
-    is-equiv (Trunc-fmap ⊙Susp-fmap :> (Trunc 0 (⊙Sphere (S n) ⊙→ ⊙Sphere (S n)) → _))
+    is-equiv (Trunc-fmap ⊙Susp-fmap :> (Trunc-⊙Sphere-endo (S n) → _))
   Trunc-⊙SphereS-endo-Susp-is-equiv n =
     CommSquareEquiv-preserves'-equiv
       (Trunc-csemap (final-fix n))
