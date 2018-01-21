@@ -13,11 +13,10 @@ open import groups.ToOmega
 
 module groups.SphereEndomorphism where
 
-  ⊙SphereS-endo-group-structure : ∀ n → GroupStructure (⊙Sphere (S n) ⊙→ ⊙Sphere (S n))
+  ⊙SphereS-endo-group-structure : ∀ n → GroupStructure (⊙Sphere-endo (S n))
   ⊙SphereS-endo-group-structure n = Susp⊙→-group-structure (⊙Sphere n) (⊙Sphere (S n))
 
-  ⊙LiftSphereS-endo-group-structure : ∀ {i} n →
-    GroupStructure (⊙Lift {j = i} (⊙Sphere (S n)) ⊙→ ⊙Lift {j = i} (⊙Sphere (S n)))
+  ⊙LiftSphereS-endo-group-structure : ∀ {i} n → GroupStructure (⊙LiftSphere-endo {i} (S n))
   ⊙LiftSphereS-endo-group-structure {i} n =
     LiftSusp⊙→-group-structure {j = i} (⊙Sphere n) (⊙Lift {j = i} (⊙Sphere (S n)))
 
@@ -44,11 +43,6 @@ module groups.SphereEndomorphism where
 
   Trunc-⊙LiftSphereS-endo-⊙group : ∀ {i} n → ⊙Group i
   Trunc-⊙LiftSphereS-endo-⊙group {i} n = ⊙[ Trunc-⊙LiftSphereS-endo-group {i = i} n , [ ⊙idf _ ] ]ᴳ
-
-  Trunc-⊙SphereS-endo-iso-Trunc-⊙LiftSphereS-endo : ∀ {i} n →
-    Trunc-⊙SphereS-endo-group n ≃ᴳ Trunc-⊙LiftSphereS-endo-group {i} n
-  Trunc-⊙SphereS-endo-iso-Trunc-⊙LiftSphereS-endo {i} n =
-    Trunc-group-emap (⊙SphereS-endo-siso-⊙LiftSphereS-endo {i} n)
 
   Trunc-⊙S¹-endo-group-iso-ℤ : Trunc-⊙SphereS-endo-group 0 ≃ᴳ ℤ-group
   Trunc-⊙S¹-endo-group-iso-ℤ =
@@ -87,7 +81,32 @@ module groups.SphereEndomorphism where
       (Trunc-⊙SphereS-endo-Susp-fmap-⊙iso n)
       (Trunc-⊙SphereS-endo-⊙group-is-infinite-cyclic n)
 
+  Trunc-⊙SphereS-endo-iso-Trunc-⊙LiftSphereS-endo : ∀ {i} n →
+    Trunc-⊙SphereS-endo-group n ≃ᴳ Trunc-⊙LiftSphereS-endo-group {i} n
+  Trunc-⊙SphereS-endo-iso-Trunc-⊙LiftSphereS-endo {i} n =
+    Trunc-group-emap (⊙SphereS-endo-siso-⊙LiftSphereS-endo {i} n)
+
+  Trunc-⊙SphereS-endo-⊙iso-Trunc-⊙LiftSphereS-endo : ∀ {i} n →
+    Trunc-⊙SphereS-endo-⊙group n ⊙≃ᴳ Trunc-⊙LiftSphereS-endo-⊙group {i} n
+  Trunc-⊙SphereS-endo-⊙iso-Trunc-⊙LiftSphereS-endo {i} n =
+    Trunc-⊙SphereS-endo-iso-Trunc-⊙LiftSphereS-endo {i} n , idp
+
+  Trunc-⊙LiftSphereS-endo-⊙group-is-infinite-cyclic : ∀ {i} n → is-infinite-cyclic (Trunc-⊙LiftSphereS-endo-⊙group {i} n)
+  Trunc-⊙LiftSphereS-endo-⊙group-is-infinite-cyclic {i} n =
+    isomorphism-preserves-infinite-cyclic
+      (Trunc-⊙SphereS-endo-⊙iso-Trunc-⊙LiftSphereS-endo {i} n)
+      (Trunc-⊙SphereS-endo-⊙group-is-infinite-cyclic n)
+
   {- new def of degree -}
 
-  Trunc-⊙SphereS-endo-degree : ∀ n → Trunc 0 (⊙Sphere (S n) ⊙→ ⊙Sphere (S n)) → ℤ
+  Trunc-⊙SphereS-endo-degree : ∀ n → Trunc-⊙Sphere-endo (S n) → ℤ
   Trunc-⊙SphereS-endo-degree n = is-equiv.g (Trunc-⊙SphereS-endo-⊙group-is-infinite-cyclic n)
+
+  ⊙SphereS-endo-degree : ∀ n → ⊙Sphere-endo (S n) → ℤ
+  ⊙SphereS-endo-degree n = Trunc-⊙SphereS-endo-degree n ∘ [_]
+
+  Trunc-⊙LiftSphereS-endo-degree : ∀ {i} n → Trunc-⊙LiftSphere-endo {i} (S n) → ℤ
+  Trunc-⊙LiftSphereS-endo-degree {i} n = is-equiv.g (Trunc-⊙LiftSphereS-endo-⊙group-is-infinite-cyclic {i} n)
+
+  ⊙LiftSphereS-endo-degree : ∀ {i} n → ⊙LiftSphere-endo {i} (S n) → ℤ
+  ⊙LiftSphereS-endo-degree {i} n = Trunc-⊙LiftSphereS-endo-degree {i} n ∘ [_]

@@ -375,6 +375,13 @@ module _ {i j} (G : Group i) (H : AbGroup j)
   hom-abgroup : AbGroup (lmax i j)
   hom-abgroup = hom-group , hom-group-is-abelian
 
+module _ {i j} {G : Group i} {H : AbGroup j} where
+  app-hom : Group.El G → hom-group G H →ᴳ AbGroup.grp H
+  app-hom g = group-hom (λ φ → GroupHom.f φ g) lemma
+    where abstract lemma = λ φ ψ → idp
+
+  appᴳ = app-hom
+
 pre∘ᴳ-hom : ∀ {i j k} {G : Group i} {H : Group j} (K : AbGroup k)
   → (G →ᴳ H) → (hom-group H K →ᴳ hom-group G K)
 pre∘ᴳ-hom K φ = record { f = _∘ᴳ φ ; pres-comp = lemma}

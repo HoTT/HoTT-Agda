@@ -48,15 +48,15 @@ is-infinite-cyclic : ∀ {i} → ⊙Group i → Type i
 is-infinite-cyclic ⊙[ G , g ]ᴳ =
   is-struct-infinite-cyclic ⊙[ Group.group-struct G , g ]ᴳˢ
 
-abstract
-  isomorphism-preserves-infinite-cyclic : ∀ {i j}
-    → {⊙G : ⊙Group i} {⊙H : ⊙Group j} → ⊙G ⊙≃ᴳ ⊙H
-    → is-infinite-cyclic ⊙G
-    → is-infinite-cyclic ⊙H
-  isomorphism-preserves-infinite-cyclic
-    {⊙G = ⊙[ G , g ]ᴳ} {⊙H = ⊙[ H , h ]ᴳ} (iso , pres-pt) ⊙G-iic =
-    is-eq _ (is-equiv.g ⊙G-iic ∘ GroupIso.g iso) to-from from-to
-    where
+isomorphism-preserves-infinite-cyclic : ∀ {i j}
+  → {⊙G : ⊙Group i} {⊙H : ⊙Group j} → ⊙G ⊙≃ᴳ ⊙H
+  → is-infinite-cyclic ⊙G
+  → is-infinite-cyclic ⊙H
+isomorphism-preserves-infinite-cyclic
+  {⊙G = ⊙[ G , g ]ᴳ} {⊙H = ⊙[ H , h ]ᴳ} (iso , pres-pt) ⊙G-iic =
+  is-eq _ (is-equiv.g ⊙G-iic ∘ GroupIso.g iso) to-from from-to
+  where
+    abstract
       lemma : Group.exp H h ∼ GroupIso.f iso ∘ Group.exp G g
       lemma i = ! $
         GroupIso.f iso (Group.exp G g i)
@@ -66,32 +66,31 @@ abstract
         Group.exp H h i
           =∎
 
-      abstract
-        to-from : ∀ x → Group.exp H h (is-equiv.g ⊙G-iic (GroupIso.g iso x)) == x
-        to-from x =
-          Group.exp H h (is-equiv.g ⊙G-iic (GroupIso.g iso x))
-            =⟨ lemma (is-equiv.g ⊙G-iic (GroupIso.g iso x)) ⟩
-          GroupIso.f iso (Group.exp G g (is-equiv.g ⊙G-iic (GroupIso.g iso x)))
-            =⟨ ap (GroupIso.f iso) (is-equiv.f-g ⊙G-iic (GroupIso.g iso x)) ⟩
-          GroupIso.f iso (GroupIso.g iso x)
-            =⟨ GroupIso.f-g iso x ⟩
-          x
-            =∎
+      to-from : ∀ x → Group.exp H h (is-equiv.g ⊙G-iic (GroupIso.g iso x)) == x
+      to-from x =
+        Group.exp H h (is-equiv.g ⊙G-iic (GroupIso.g iso x))
+          =⟨ lemma (is-equiv.g ⊙G-iic (GroupIso.g iso x)) ⟩
+        GroupIso.f iso (Group.exp G g (is-equiv.g ⊙G-iic (GroupIso.g iso x)))
+          =⟨ ap (GroupIso.f iso) (is-equiv.f-g ⊙G-iic (GroupIso.g iso x)) ⟩
+        GroupIso.f iso (GroupIso.g iso x)
+          =⟨ GroupIso.f-g iso x ⟩
+        x
+          =∎
 
-        from-to : ∀ i → is-equiv.g ⊙G-iic (GroupIso.g iso (Group.exp H h i)) == i
-        from-to i =
-          is-equiv.g ⊙G-iic (GroupIso.g iso (Group.exp H h i))
-            =⟨ ap (is-equiv.g ⊙G-iic ∘ GroupIso.g iso) (lemma i) ⟩
-          is-equiv.g ⊙G-iic (GroupIso.g iso (GroupIso.f iso (Group.exp G g i)))
-            =⟨ ap (is-equiv.g ⊙G-iic) (GroupIso.g-f iso (Group.exp G g i)) ⟩
-          is-equiv.g ⊙G-iic (Group.exp G g i)
-            =⟨ is-equiv.g-f ⊙G-iic i ⟩
-          i
-            =∎
+      from-to : ∀ i → is-equiv.g ⊙G-iic (GroupIso.g iso (Group.exp H h i)) == i
+      from-to i =
+        is-equiv.g ⊙G-iic (GroupIso.g iso (Group.exp H h i))
+          =⟨ ap (is-equiv.g ⊙G-iic ∘ GroupIso.g iso) (lemma i) ⟩
+        is-equiv.g ⊙G-iic (GroupIso.g iso (GroupIso.f iso (Group.exp G g i)))
+          =⟨ ap (is-equiv.g ⊙G-iic) (GroupIso.g-f iso (Group.exp G g i)) ⟩
+        is-equiv.g ⊙G-iic (Group.exp G g i)
+          =⟨ is-equiv.g-f ⊙G-iic i ⟩
+        i
+          =∎
 
-  isomorphism-preserves'-infinite-cyclic : ∀ {i j}
-    → {⊙G : ⊙Group i} {⊙H : ⊙Group j} → ⊙G ⊙≃ᴳ ⊙H
-    → is-infinite-cyclic ⊙H
-    → is-infinite-cyclic ⊙G
-  isomorphism-preserves'-infinite-cyclic iso iic =
-    isomorphism-preserves-infinite-cyclic (iso ⊙⁻¹ᴳ) iic
+isomorphism-preserves'-infinite-cyclic : ∀ {i j}
+  → {⊙G : ⊙Group i} {⊙H : ⊙Group j} → ⊙G ⊙≃ᴳ ⊙H
+  → is-infinite-cyclic ⊙H
+  → is-infinite-cyclic ⊙G
+isomorphism-preserves'-infinite-cyclic iso iic =
+  isomorphism-preserves-infinite-cyclic (iso ⊙⁻¹ᴳ) iic
