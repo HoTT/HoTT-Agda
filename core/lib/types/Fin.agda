@@ -15,6 +15,17 @@ instance
   FromNat.in-range (Fin-reader {n}) m = m < n
   FromNat.read (Fin-reader {n}) m ⦃ m<n ⦄ = m , m<n
 
+Fin-S : ∀ {n} → Fin n → Fin (S n)
+Fin-S (n , lt) = n , ltSR lt
+
+Fin-S^ : ∀ {n} → (m : ℕ) → Fin n → Fin (m + n)
+Fin-S^ O <n = <n
+Fin-S^ (S m) <n = Fin-S (Fin-S^ m <n)
+
+Fin-S^' : ∀ {n} → (m : ℕ) → Fin n → Fin (ℕ-S^' m n)
+Fin-S^' O <n = <n
+Fin-S^' (S m) <n = Fin-S^' m (Fin-S <n)
+
 Fin-prop : ℕ → SubtypeProp ℕ lzero
 Fin-prop n = ((_< n) , λ _ → <-is-prop)
 
@@ -47,7 +58,7 @@ Fin-equiv-Coprod {n} = equiv to from to-from from-to where
 
   from : Fin n ⊔ Unit → Fin (S n)
   from (inr _) = n , ltS
-  from (inl (m , lt)) = m , ltSR lt
+  from (inl fin) = Fin-S fin
 
   abstract
     to-from : ∀ x → to (from x) == x
