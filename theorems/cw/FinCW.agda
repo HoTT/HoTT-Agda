@@ -4,7 +4,7 @@ open import HoTT renaming (pt to pt⊙)
 open import homotopy.DisjointlyPointedSet
 open import cw.CW
 
-module cw.FiniteCW where
+module cw.FinCW where
 
 record AttachedFinSkeleton n (Skel : Type₀) (Real : Skel → Skeleton n) : Type₀ where
   constructor attached-fin-skeleton
