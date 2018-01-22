@@ -26,6 +26,46 @@ Fin-S^' : ∀ {n} → (m : ℕ) → Fin n → Fin (ℕ-S^' m n)
 Fin-S^' O <n = <n
 Fin-S^' (S m) <n = Fin-S^' m (Fin-S <n)
 
+Fin-basis : ∀ {i} {I : ℕ} (X : Fin I → Ptd i)
+  → (<I : Fin I) (x : de⊙ (X <I))
+  → Π (Fin I) (de⊙ ∘ X)
+Fin-basis X (_ , ltS) x (_ , ltS) = x
+Fin-basis X (_ , ltSR lt₀) x (_ , ltSR lt₁) =
+  Fin-basis (X ∘ Fin-S) (_ , lt₀) x (_ , lt₁)
+Fin-basis X (_ , ltSR _) x (_ , ltS) = pt (X (_ , ltS))
+Fin-basis X (_ , ltS) x (_ , ltSR lt) = pt (X (_ , ltSR lt))
+
+Fin-basis-diag : ∀ {i} {I : ℕ} (X : Fin I → Ptd i) <I g
+  → Fin-basis X <I g <I == g
+Fin-basis-diag X (_ , ltS) g = idp
+Fin-basis-diag X (_ , ltSR <I) g = Fin-basis-diag (X ∘ Fin-S) (_ , <I) g
+
+private
+  Fin-basis-late' : ∀ {i} m n {I : ℕ} (X : Fin (ℕ-S^' m (n + S I)) → Ptd i) <I g
+    →  Fin-basis X (Fin-S^' m (Fin-S^ n (Fin-S <I))) g (Fin-S^' m (Fin-S^ n (I , ltS)))
+    == pt (X (Fin-S^' m (Fin-S^ n (I , ltS))))
+  Fin-basis-late' O O X <I g = idp
+  Fin-basis-late' O (S n) X <I g = Fin-basis-late' O n (X ∘ Fin-S) <I g
+  Fin-basis-late' (S m) n X <I g = Fin-basis-late' m (S n) X <I g
+
+Fin-basis-late : ∀ {i} m {I : ℕ} (X : Fin (ℕ-S^' (S m) I) → Ptd i) <I g
+  →  Fin-basis X (Fin-S^' (S m) <I) g (Fin-S^' m (I , ltS))
+  == pt (X (Fin-S^' m (I , ltS)))
+Fin-basis-late m = Fin-basis-late' m O
+
+private
+  Fin-basis-early' : ∀ {i} m n {I : ℕ} (X : Fin (ℕ-S^' m (n + S I)) → Ptd i) <I g
+    →  Fin-basis X (Fin-S^' m (Fin-S^ n (I , ltS))) g (Fin-S^' m (Fin-S^ n (Fin-S <I)))
+    == pt (X (Fin-S^' m (Fin-S^ n (Fin-S <I))))
+  Fin-basis-early' O O X <I g = idp
+  Fin-basis-early' O (S n) X <I g = Fin-basis-early' O n (X ∘ Fin-S) <I g
+  Fin-basis-early' (S m) n X <I g = Fin-basis-early' m (S n) X <I g
+
+Fin-basis-early : ∀ {i} m {I : ℕ} (X : Fin (ℕ-S^' (S m) I) → Ptd i) <I g
+  →  Fin-basis X (Fin-S^' m (I , ltS)) g (Fin-S^' (S m) <I)
+  == pt (X (Fin-S^' (S m) <I))
+Fin-basis-early m = Fin-basis-early' m O
+
 Fin-prop : ℕ → SubtypeProp ℕ lzero
 Fin-prop n = ((_< n) , λ _ → <-is-prop)
 
