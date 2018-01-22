@@ -34,6 +34,11 @@ abstract
   +-assoc 0     m n = idp
   +-assoc (S k) m n = ap S (+-assoc k m n)
 
+-- the [+] is like [ℕ-S^]
+ℕ-S^' : ℕ → ℕ → ℕ
+ℕ-S^' O n = n
+ℕ-S^' (S m) n = ℕ-S^' m (S n)
+
 ℕ-pred : ℕ → ℕ
 ℕ-pred 0 = 0
 ℕ-pred (S n) = n

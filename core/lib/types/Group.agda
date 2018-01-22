@@ -1,6 +1,8 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
+open import lib.types.Fin
+open import lib.types.Nat
 open import lib.types.Int
 open import lib.types.Pi
 
@@ -187,6 +189,10 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
 
     inv-diff : (g h : El) → inv (diff g h) == diff h g
     inv-diff g h = inv-comp g (inv h) ∙ ap (_⊙ inv g) (inv-inv h)
+
+  sum : ∀ {I : ℕ} → (Fin I → El) → El
+  sum {I = O} f = ident
+  sum {I = S n} f = comp (sum (f ∘ Fin-S)) (f (n , ltS))
 
 record Group i : Type (lsucc i) where
   constructor group
