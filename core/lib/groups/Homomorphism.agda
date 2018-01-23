@@ -4,8 +4,10 @@ open import lib.Basics
 open import lib.Equivalence2
 open import lib.Function2
 open import lib.NType2
+open import lib.types.Fin
 open import lib.types.Group
 open import lib.types.Int
+open import lib.types.Nat
 open import lib.types.Pi
 open import lib.types.Subtype
 open import lib.types.Truncation
@@ -80,6 +82,11 @@ record GroupStructureHom {i j} {GEl : Type i} {HEl : Type j}
 
     pres-diff : ∀ g h → f (G.diff g h) == H.diff (f g) (f h)
     pres-diff g h = pres-comp g (G.inv h) ∙ ap (H.comp (f g)) (pres-inv h)
+
+    pres-sum : ∀ {I : ℕ} (g : Fin I → GEl) → f (G.sum g) == H.sum (f ∘ g)
+    pres-sum {I = O} _ = pres-ident
+    pres-sum {I = S I} g = pres-comp (G.sum (g ∘ Fin-S)) (g (_ , ltS))
+      ∙ ap (λ h → H.comp h (f (g (_ , ltS)))) (pres-sum (g ∘ Fin-S))
 
   ⊙f : ⊙[ GEl , G.ident ] ⊙→ ⊙[ HEl , H.ident ]
   ⊙f = f , pres-ident

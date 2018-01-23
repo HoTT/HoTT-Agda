@@ -27,7 +27,7 @@ module groups.FinProduct where
     sum-basis-late' : ∀ {i} n m {I : ℕ}
       → (F : Fin (ℕ-S^' n (S (ℕ-S^' m I))) → Group i)
       → (g : Π (Fin (S (ℕ-S^' m I))) (Group.El ∘ F ∘ Fin-S^' n))
-      →  Group.sum (Πᴳ _ F) (λ <I → Πᴳ-basis F (Fin-S^' n (Fin-S (Fin-S^' m <I))) (g (Fin-S (Fin-S^' m <I))))
+      →  Group.sum (Πᴳ _ F) (λ <I → Πᴳ-basis F (Fin-S^' (S n) (Fin-S^' m <I)) (g (Fin-S (Fin-S^' m <I))))
            (Fin-S^' n (ℕ-S^' m I , ltS))
       == Group.ident (F (Fin-S^' n (ℕ-S^' m I , ltS)))
     sum-basis-late' n m {I = O} F g = idp
