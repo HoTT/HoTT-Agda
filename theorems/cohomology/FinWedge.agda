@@ -166,7 +166,7 @@ module _ where
         (C-fwproj-basis-early m Z (o , o<I) g)
       ∙ Group.unit-r (C n (⊙FinWedge Z)) _
 
-  inverse-basis : ∀ {I} (Z : Fin I → Ptd₀) <I g
+  inverse-C-finite-additive-basis : ∀ {I} (Z : Fin I → Ptd₀) <I g
     →  inverse-C-finite-additive Z (Πᴳ-basis (C n ∘ Z) <I g)
     == CEl-fmap n (⊙fwproj {X = Z} <I) g
-  inverse-basis = sum-C-fwproj-basis' O
+  inverse-C-finite-additive-basis = sum-C-fwproj-basis' O
