@@ -15,9 +15,11 @@ open CohomologyTheory CT
 
 module _ {I} (Z : Fin I → Ptd₀) where
 
-  C-finite-additive : ∀ {I} (Z : Fin I → Ptd₀)
-    → is-equiv (GroupHom.f (C-additive-hom n Z))
-  C-finite-additive {I} Z = C-additive n Z (Fin-has-choice 0 I lzero)
+  C-finite-additive : is-equiv (GroupHom.f (C-additive-hom n Z))
+  C-finite-additive = C-additive n Z (Fin-has-choice 0 I lzero)
+
+  C-finite-additive-iso : C n (⊙FinWedge Z) ≃ᴳ Πᴳ (Fin I) (C n ∘ Z)
+  C-finite-additive-iso = C-additive-iso n Z (Fin-has-choice 0 I lzero)
 
   {- an explicit inverse function -}
   inverse-C-finite-additive :
@@ -89,9 +91,9 @@ module _ where
       == f <I
     sum-C-fwproj-fwin = sum-C-fwproj-fwin' O
 
-    inverse-C-finite-additive-is-inverse'' : ∀ {I} (Z : Fin I → Ptd₀)
+    inverse-C-finite-additive-is-inverse' : ∀ {I} (Z : Fin I → Ptd₀)
       → ∀ f → GroupHom.f (C-additive-hom n Z) (inverse-C-finite-additive Z f) ∼ f
-    inverse-C-finite-additive-is-inverse'' Z f <I =
+    inverse-C-finite-additive-is-inverse' Z f <I =
       CEl-fmap n (⊙fwin {X = Z} <I) (Group.sum (C n (⊙FinWedge Z)) (λ <I → CEl-fmap n (⊙fwproj <I) (f <I)))
         =⟨ GroupHom.pres-sum (C-fmap n (⊙fwin {X = Z} <I)) (λ <I → CEl-fmap n (⊙fwproj <I) (f <I)) ⟩
       Group.sum (C n (Z <I)) (λ <I' → CEl-fmap n (⊙fwin {X = Z} <I) (CEl-fmap n (⊙fwproj <I') (f <I')))
@@ -102,10 +104,10 @@ module _ where
         =∎
     
   inverse-C-finite-additive-matches : ∀ {I} (Z : Fin I → Ptd₀)
-    → GroupIso.g (C-additive-iso n Z (Fin-has-choice 0 I lzero)) ∼ inverse-C-finite-additive Z
+    → is-equiv.g (C-finite-additive Z) ∼ inverse-C-finite-additive Z
   inverse-C-finite-additive-matches {I} Z f =
-    ! $ equiv-adj (GroupIso.f-equiv (C-additive-iso n Z (Fin-has-choice 0 I lzero))) $
-      λ= $ inverse-C-finite-additive-is-inverse'' Z f
+    ! $ equiv-adj (GroupIso.f-equiv (C-finite-additive-iso Z)) $
+      λ= $ inverse-C-finite-additive-is-inverse' Z f
 
   private
     C-fwproj-basis-late : ∀ m {I} (Z : Fin (ℕ-S^' (S m) I) → Ptd₀) <I g
@@ -170,3 +172,10 @@ module _ where
     →  inverse-C-finite-additive Z (Πᴳ-basis (C n ∘ Z) <I g)
     == CEl-fmap n (⊙fwproj {X = Z} <I) g
   inverse-C-finite-additive-basis = sum-C-fwproj-basis' O
+
+  inverse-C-finite-additive-basis' : ∀ {I} (Z : Fin I → Ptd₀) <I g
+    → is-equiv.g (C-finite-additive Z) (Πᴳ-basis (C n ∘ Z) <I g)
+    == CEl-fmap n (⊙fwproj {X = Z} <I) g
+  inverse-C-finite-additive-basis' Z <I g =
+      inverse-C-finite-additive-matches Z (Πᴳ-basis (C n ∘ Z) <I g)
+    ∙ inverse-C-finite-additive-basis Z <I g
