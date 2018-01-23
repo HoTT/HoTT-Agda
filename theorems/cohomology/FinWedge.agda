@@ -106,3 +106,67 @@ module _ where
   inverse-C-finite-additive-matches {I} Z f =
     ! $ equiv-adj (GroupIso.f-equiv (C-additive-iso n Z (Fin-has-choice 0 I lzero))) $
       λ= $ inverse-C-finite-additive-is-inverse'' Z f
+
+  private
+    C-fwproj-basis-late : ∀ m {I} (Z : Fin (ℕ-S^' (S m) I) → Ptd₀) <I g
+      → CEl-fmap n (⊙fwproj (Fin-S^' (S m) <I))
+          (Πᴳ-basis (C n ∘ Z) (Fin-S^' m (I , ltS)) g (Fin-S^' (S m) <I))
+      == Cident n (⊙FinWedge Z)
+    C-fwproj-basis-late m Z <I g =
+      ap (CEl-fmap n (⊙fwproj (Fin-S^' (S m) <I)))
+         (Πᴳ-basis-early m (C n ∘ Z) <I g)
+      ∙ GroupHom.pres-ident (C-fmap n (⊙fwproj (Fin-S^' (S m) <I)))
+
+    C-fwproj-basis-early : ∀ m {I} (Z : Fin (ℕ-S^' (S m) I) → Ptd₀) <I g
+      → CEl-fmap n (⊙fwproj (Fin-S^' m (I , ltS)))
+          (Πᴳ-basis (C n ∘ Z) (Fin-S^' (S m) <I) g (Fin-S^' m (I , ltS)))
+      == Cident n (⊙FinWedge Z)
+    C-fwproj-basis-early m {I} Z <I g =
+      ap (CEl-fmap n (⊙fwproj (Fin-S^' m (I , ltS))))
+         (Πᴳ-basis-late m (C n ∘ Z) <I g)
+      ∙ GroupHom.pres-ident (C-fmap n (⊙fwproj (Fin-S^' m (I , ltS))))
+
+    C-fwproj-basis-diag : ∀ {I} (Z : Fin I → Ptd₀) <I g
+      → CEl-fmap n (⊙fwproj <I) (Πᴳ-basis (C n ∘ Z) <I g <I)
+      == CEl-fmap n (⊙fwproj {X = Z} <I) g
+    C-fwproj-basis-diag Z <I g =
+      ap (CEl-fmap n (⊙fwproj <I)) (Πᴳ-basis-diag (C n ∘ Z) <I g)
+
+    sum-C-fwproj-basis-late' : ∀ m o {I} (Z : Fin (ℕ-S^' (S m) (ℕ-S^' o I)) → Ptd₀) g
+      → Group.sum (C n (⊙FinWedge Z))
+          (λ <I' → CEl-fmap n (⊙fwproj (Fin-S^' (S m) (Fin-S^' o <I')))
+            (Πᴳ-basis (C n ∘ Z) (Fin-S^' m (ℕ-S^' o I , ltS)) g (Fin-S^' (S m) (Fin-S^' o <I'))))
+      == Cident n (⊙FinWedge Z)
+    sum-C-fwproj-basis-late' m o {I = O} Z g = idp
+    sum-C-fwproj-basis-late' m o {I = S I} Z g =
+      ap2 (Group.comp (C n (⊙FinWedge Z)))
+        (sum-C-fwproj-basis-late' m (S o) Z g)
+        (C-fwproj-basis-late m Z (Fin-S^' o (I , ltS)) g)
+      ∙ Group.unit-l (C n (⊙FinWedge Z)) _
+
+    sum-C-fwproj-basis-late : ∀ m {I} (Z : Fin (ℕ-S^' (S m) I) → Ptd₀) g
+      → Group.sum (C n (⊙FinWedge Z))
+          (λ <I' → CEl-fmap n (⊙fwproj (Fin-S^' (S m) <I'))
+            (Πᴳ-basis (C n ∘ Z) (Fin-S^' m (I , ltS)) g (Fin-S^' (S m) <I')))
+      == Cident n (⊙FinWedge Z)
+    sum-C-fwproj-basis-late m = sum-C-fwproj-basis-late' m O
+
+    sum-C-fwproj-basis' : ∀ m {I} (Z : Fin (ℕ-S^' m I) → Ptd₀) <I g
+      → Group.sum (C n (⊙FinWedge Z))
+          (λ <I' → CEl-fmap n (⊙fwproj (Fin-S^' m <I')) (Πᴳ-basis (C n ∘ Z) (Fin-S^' m <I) g (Fin-S^' m <I')))
+      == CEl-fmap n (⊙fwproj {X = Z} (Fin-S^' m <I)) g
+    sum-C-fwproj-basis' m Z (I , ltS) g =
+      ap2 (Group.comp (C n (⊙FinWedge Z)))
+        (sum-C-fwproj-basis-late m Z g)
+        (C-fwproj-basis-diag Z (Fin-S^' m (I , ltS)) g)
+      ∙ Group.unit-l (C n (⊙FinWedge Z)) _
+    sum-C-fwproj-basis' m Z (o , ltSR o<I) g =
+      ap2 (Group.comp (C n (⊙FinWedge Z)))
+        (sum-C-fwproj-basis' (S m) Z (o , o<I) g)
+        (C-fwproj-basis-early m Z (o , o<I) g)
+      ∙ Group.unit-r (C n (⊙FinWedge Z)) _
+
+  inverse-basis : ∀ {I} (Z : Fin I → Ptd₀) <I g
+    →  inverse-C-finite-additive Z (Πᴳ-basis (C n ∘ Z) <I g)
+    == CEl-fmap n (⊙fwproj {X = Z} <I) g
+  inverse-basis = sum-C-fwproj-basis' O
