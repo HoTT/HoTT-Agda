@@ -60,19 +60,23 @@ record CohomologyTheory i : Type (lsucc i) where
     C-exact : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
       → is-exact (C-fmap n (⊙cfcod' f)) (C-fmap n f)
 
-  C-additive-hom : (n : ℤ) {I : Type i} (Z : I → Ptd i)
+  C-additive : (n : ℤ) {I : Type i} (Z : I → Ptd i)
     → C n (⊙BigWedge Z) →ᴳ Πᴳ I (λ i → C n (Z i))
-  C-additive-hom n Z = Πᴳ-fanout (C-fmap n ∘ ⊙bwin {X = Z})
+  C-additive n Z = Πᴳ-fanout (C-fmap n ∘ ⊙bwin {X = Z})
+
+  CEl-additive : (n : ℤ) {I : Type i} (Z : I → Ptd i)
+    → CEl n (⊙BigWedge Z) → Π I (λ i → CEl n (Z i))
+  CEl-additive n Z = GroupHom.f (C-additive n Z)
 
   field
-    C-additive : (n : ℤ) {I : Type i} (Z : I → Ptd i)
+    C-additive-is-equiv : (n : ℤ) {I : Type i} (Z : I → Ptd i)
       → has-choice 0 I i
-      → is-equiv (GroupHom.f (C-additive-hom n Z))
+      → is-equiv (CEl-additive n Z)
 
   C-additive-iso : (n : ℤ) {I : Type i} (Z : I → Ptd i)
     → has-choice 0 I i
     → C n (⊙BigWedge Z) ≃ᴳ Πᴳ I (λ i → C n (Z i))
-  C-additive-iso n Z ac = C-additive-hom n Z , C-additive n Z ac
+  C-additive-iso n Z ac = C-additive n Z , C-additive-is-equiv n Z ac
 
   C2 : ℤ → Group i
   C2 n = C n (⊙Lift ⊙Bool)
