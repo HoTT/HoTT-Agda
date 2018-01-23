@@ -223,8 +223,8 @@ module SpectrumModel where
            ap (Out'.f (λ a → (h , hpt) ⊙∘ ⊙bwin a)) (bwglue a) ∎)
 
     abstract
-      C-additive : is-equiv (GroupHom.f (Πᴳ-fanout (C-fmap n ∘ ⊙bwin {X = X})))
-      C-additive = transport is-equiv
+      C-additive-is-equiv : is-equiv (GroupHom.f (Πᴳ-fanout (C-fmap n ∘ ⊙bwin {X = X})))
+      C-additive-is-equiv = transport is-equiv
         (λ= $ Trunc-elim
           (λ _ → idp))
         ((ac (uCEl n ∘ X)) ∘ise (is-eq into out into-out out-into))
@@ -242,7 +242,7 @@ spectrum-cohomology = record {
   C-Susp = C-Susp;
   C-Susp-fmap = C-Susp-fmap;
   C-exact = C-exact;
-  C-additive = C-additive}
+  C-additive-is-equiv = C-additive-is-equiv}
 
 spectrum-C-S⁰ : (n : ℤ) → C n (⊙Lift ⊙S⁰) ≃ᴳ πS 0 (E (succ n))
 spectrum-C-S⁰ n = Trunc-⊙Bool→Ω-iso-π₁ (E (succ n)) ∘eᴳ Trunc-⊙→Ω-group-emap-dom ⊙lift-equiv (E (succ n))
