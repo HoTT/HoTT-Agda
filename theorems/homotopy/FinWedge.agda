@@ -37,11 +37,9 @@ module _ {i} {I} {X : Fin I → Ptd i} where
   ⊙fwproj : ∀ <I → ⊙FinWedge X ⊙→ X <I
   ⊙fwproj <I = fwproj <I , idp
 
-  fwproj-basis-diag : ∀ <I → fwproj-basis <I <I == ⊙idf _
-  fwproj-basis-diag <I = Fin-basis-diag (λ <I' → ⊙[ X <I' ⊙→ X <I , ⊙cst ]) <I (⊙idf _)
-
   fwproj-fwin-diag : ∀ <I → fwproj <I ∘ fwin <I ∼ idf _
-  fwproj-fwin-diag <I x = ap (λ f → fst f x) (fwproj-basis-diag <I)
+  fwproj-fwin-diag <I x = ap (λ f → fst f x)
+    (Fin-basis-diag (λ <I' → ⊙[ X <I' ⊙→ X <I , ⊙cst ]) <I (⊙idf _))
   
 module _ {i} n {I} {X : Fin (ℕ-S^' (S n) I) → Ptd i} where
 
