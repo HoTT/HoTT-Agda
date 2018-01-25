@@ -102,11 +102,56 @@ module groups.SphereEndomorphism where
   Trunc-⊙SphereS-endo-degree : ∀ n → Trunc-⊙Sphere-endo (S n) → ℤ
   Trunc-⊙SphereS-endo-degree n = is-equiv.g (Trunc-⊙SphereS-endo-⊙group-is-infinite-cyclic n)
 
+  abstract
+    Trunc-⊙SphereS-endo-degree-Susp : ∀ n f
+      →  Trunc-⊙SphereS-endo-degree (S n) (Trunc-fmap ⊙Susp-fmap f)
+      == Trunc-⊙SphereS-endo-degree n f
+    Trunc-⊙SphereS-endo-degree-Susp n f =
+      ap (Trunc-⊙SphereS-endo-degree n) (GroupIso.g-f (Trunc-⊙SphereS-endo-Susp-fmap-iso n) f)
+
   ⊙SphereS-endo-degree : ∀ n → ⊙Sphere-endo (S n) → ℤ
   ⊙SphereS-endo-degree n = Trunc-⊙SphereS-endo-degree n ∘ [_]
+
+  abstract
+    ⊙SphereS-endo-degree-Susp : ∀ n f
+      →  ⊙SphereS-endo-degree (S n) (⊙Susp-fmap f)
+      == ⊙SphereS-endo-degree n f
+    ⊙SphereS-endo-degree-Susp n f = Trunc-⊙SphereS-endo-degree-Susp n [ f ]
+
+    ⊙SphereS-endo-degree-base-indep : ∀ n {f g}
+      → fst f ∼ fst g
+      → ⊙SphereS-endo-degree n f == ⊙SphereS-endo-degree n g
+    ⊙SphereS-endo-degree-base-indep n {f} {g} f∼g =
+      ! (⊙SphereS-endo-degree-Susp n f)
+      ∙ ap (λ f → ⊙SphereS-endo-degree (S n) (Susp-fmap f , idp)) (λ= f∼g)
+      ∙ ⊙SphereS-endo-degree-Susp n g
 
   Trunc-⊙LiftSphereS-endo-degree : ∀ {i} n → Trunc-⊙LiftSphere-endo {i} (S n) → ℤ
   Trunc-⊙LiftSphereS-endo-degree {i} n = is-equiv.g (Trunc-⊙LiftSphereS-endo-⊙group-is-infinite-cyclic {i} n)
 
+  abstract
+    Trunc-⊙LiftSphereS-endo-degree-Susp : ∀ {i} n f
+      →  Trunc-⊙LiftSphereS-endo-degree {i} (S n) (Trunc-fmap (λ f → ⊙Lift-fmap (⊙Susp-fmap (⊙lower ⊙∘ f ⊙∘ ⊙lift))) f)
+      == Trunc-⊙LiftSphereS-endo-degree {i} n f
+    Trunc-⊙LiftSphereS-endo-degree-Susp {i} n =
+      Trunc-elim
+        {{λ _ → =-preserves-level ℤ-is-set}}
+        (λ f → ⊙SphereS-endo-degree-Susp n (⊙lower ⊙∘ f ⊙∘ ⊙lift))
+
   ⊙LiftSphereS-endo-degree : ∀ {i} n → ⊙LiftSphere-endo {i} (S n) → ℤ
   ⊙LiftSphereS-endo-degree {i} n = Trunc-⊙LiftSphereS-endo-degree {i} n ∘ [_]
+
+  abstract
+    ⊙LiftSphereS-endo-degree-Susp : ∀ {i} n f
+      →  ⊙LiftSphereS-endo-degree {i} (S n) (⊙Lift-fmap (⊙Susp-fmap (⊙lower ⊙∘ f ⊙∘ ⊙lift)))
+      == ⊙LiftSphereS-endo-degree {i} n f
+    ⊙LiftSphereS-endo-degree-Susp {i} n f =
+      Trunc-⊙LiftSphereS-endo-degree-Susp {i} n [ f ]
+
+    ⊙LiftSphereS-endo-degree-base-indep : ∀ {i} n {f g}
+      → fst f ∼ fst g
+      → ⊙LiftSphereS-endo-degree {i} n f == ⊙LiftSphereS-endo-degree {i} n g
+    ⊙LiftSphereS-endo-degree-base-indep {i} n {f} {g} f∼g =
+      ! (⊙LiftSphereS-endo-degree-Susp {i} n f)
+      ∙ ap (λ f → ⊙LiftSphereS-endo-degree {i} (S n) (⊙Lift-fmap (Susp-fmap (lower ∘ f ∘ lift) , idp))) (λ= f∼g)
+      ∙ ⊙LiftSphereS-endo-degree-Susp {i} n g

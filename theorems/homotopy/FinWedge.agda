@@ -6,6 +6,10 @@ module homotopy.FinWedge where
 
 module _ {i} {I} (X : Fin I → Ptd i) where
 
+  {- the function for cofiber -}
+  finwedge-f : Fin I → Σ (Fin I) (de⊙ ∘ X)
+  finwedge-f = bigwedge-f X
+
   FinWedge : Type i
   FinWedge = BigWedge X
 
@@ -22,6 +26,9 @@ module _ {i} {I} {X : Fin I → Ptd i} where
 
   ⊙fwin : (<I : Fin I) → X <I ⊙→ ⊙FinWedge X
   ⊙fwin = ⊙bwin
+
+  fwglue : (<I : Fin I) → fwbase == fwin <I (pt (X <I))
+  fwglue = cfglue
 
   fwproj-basis : ∀ <I → ∀ <I' → (X <I' ⊙→ X <I)
   fwproj-basis <I = Fin-basis (λ <I' → ⊙[ X <I' ⊙→ X <I , ⊙cst ]) <I (⊙idf _)
@@ -54,3 +61,22 @@ module _ {i} n {I} {X : Fin (ℕ-S^' (S n) I) → Ptd i} where
     ∼ cst (pt (X (Fin-S^' n (I , ltS))))
   fwproj-fwin-late <I x = ap (λ f → fst f x)
     (Fin-basis-early n (λ <I' → ⊙[ X <I' ⊙→ X (Fin-S^' n (I , ltS)) , ⊙cst ]) <I (⊙idf _))
+
+module _ {i₀ i₁} {I} {X₀ : Fin I → Ptd i₀} {X₁ : Fin I → Ptd i₁}
+  (Xeq : ∀ <I → X₀ <I ⊙≃ X₁ <I) where
+
+  finwedge-span-emap-r : SpanEquiv (cofiber-span (finwedge-f X₀)) (cofiber-span (finwedge-f X₁))
+  finwedge-span-emap-r = bigwedge-span-emap-r Xeq
+
+  FinWedge-emap-r : FinWedge X₀ ≃ FinWedge X₁
+  FinWedge-emap-r = BigWedge-emap-r Xeq
+
+  ⊙FinWedge-emap-r : ⊙FinWedge X₀ ⊙≃ ⊙FinWedge X₁
+  ⊙FinWedge-emap-r = ⊙BigWedge-emap-r Xeq
+
+module _ {i j} {I} {X : Fin I → Ptd i} where
+
+  postulate {- TODO -}
+    fwproj-FinWedge-emap-r-lift : ∀ (<I : Fin I)
+      → fwproj {X = ⊙Lift {j = j} ∘ X} <I ∘ fst (FinWedge-emap-r (λ _ → ⊙lift-equiv {j = j}))
+      ∼ lift {j = j} ∘ fwproj {X = X} <I
