@@ -7,7 +7,7 @@ open import groups.FinProduct
 open import groups.SphereEndomorphism
 open import cohomology.Theory
 
-module cohomology.FinBouquetToFinBouquet (CT : CohomologyTheory lzero) (n : ℤ) (m : ℕ) where
+module cohomology.RephraseFinCoboundary (CT : CohomologyTheory lzero) (n : ℤ) (m : ℕ) where
 
 open CohomologyTheory CT
 open import cohomology.FinWedge CT n
@@ -114,4 +114,54 @@ abstract
           ap (λ g → Group.exp G g (⊙LiftSphereS-endo-degree m (⊙fwproj <J ⊙∘ f ⊙∘ ⊙fwin <I))) $
             GroupIso.f-g iso (g <J)) ⟩
     Group.sum G (λ <J → Group.exp G (g <J) (⊙LiftSphereS-endo-degree m (⊙fwproj <J ⊙∘ f ⊙∘ ⊙fwin <I)))
+      =∎
+
+  rephrase-in-degrees₂ : ∀ {I J : ℕ} (f : ⊙FinBouquet I (S m) ⊙→ ⊙FinBouquet J (S m))
+    {G : Group₀} (iso : C n (⊙Lift (⊙Sphere (S m))) ≃ᴳ G) g
+    → GroupIso.f (Πᴳ-emap-r _ (λ _ → iso))
+        (CEl-finite-additive (FinBouquetLift-family I (S m))
+          (CEl-fmap n (fst (⊙FinWedge-emap-r (λ _ → ⊙lower-equiv)))
+            (CEl-fmap n f
+              (CEl-fmap n (fst (⊙FinWedge-emap-r (λ _ → ⊙lower-equiv) ⊙⁻¹))
+                (is-equiv.g (C-finite-additive-is-equiv (FinBouquetLift-family J (S m)))
+                  (GroupIso.g (Πᴳ-emap-r _ (λ _ → iso)) g))))))
+    ∼ λ <I → Group.sum G (λ <J → Group.exp G (g <J) (⊙SphereS-endo-degree m (⊙fwproj <J ⊙∘ f ⊙∘ ⊙fwin <I)))
+  rephrase-in-degrees₂ {I} {J} f {G} iso g <I =
+    GroupIso.f iso
+      (CEl-fmap n (⊙fwin <I)
+        (CEl-fmap n (fst (⊙FinWedge-emap-r (λ _ → ⊙lower-equiv)))
+          (CEl-fmap n f
+            (CEl-fmap n (fst (⊙FinWedge-emap-r (λ _ → ⊙lower-equiv) ⊙⁻¹))
+              (is-equiv.g (C-finite-additive-is-equiv (FinBouquetLift-family J (S m)))
+                (GroupIso.g (Πᴳ-emap-r _ (λ _ → iso)) g))))))
+      =⟨ ap (GroupIso.f iso ∘ CEl-fmap n (⊙fwin <I)) $
+          (λ x →
+            ∘-CEl-fmap n (fst (⊙FinWedge-emap-r (λ _ → ⊙lower-equiv))) f
+              (CEl-fmap n (fst (⊙FinWedge-emap-r (λ _ → ⊙lower-equiv) ⊙⁻¹)) x)
+            ∙ ∘-CEl-fmap n (f ⊙∘ fst (⊙FinWedge-emap-r (λ _ → ⊙lower-equiv)))
+                (fst (⊙FinWedge-emap-r (λ _ → ⊙lower-equiv) ⊙⁻¹)) x)
+          (is-equiv.g (C-finite-additive-is-equiv (FinBouquetLift-family J (S m)))
+            (GroupIso.g (Πᴳ-emap-r _ (λ _ → iso)) g)) ⟩
+    GroupIso.f iso
+      (CEl-fmap n (⊙fwin <I)
+        (CEl-fmap n (fst (⊙FinWedge-emap-r (λ _ → ⊙lower-equiv) ⊙⁻¹) ⊙∘ f ⊙∘ fst (⊙FinWedge-emap-r (λ _ → ⊙lower-equiv)))
+          (is-equiv.g (C-finite-additive-is-equiv (FinBouquetLift-family J (S m)))
+            (GroupIso.g (Πᴳ-emap-r _ (λ _ → iso)) g))))
+      =⟨ rephrase-in-degrees₁
+          (fst (⊙FinWedge-emap-r (λ _ → ⊙lower-equiv) ⊙⁻¹) ⊙∘ f ⊙∘ fst (⊙FinWedge-emap-r (λ _ → ⊙lower-equiv)))
+          iso g <I ⟩
+    Group.sum G (λ <J → Group.exp G (g <J)
+      (⊙LiftSphereS-endo-degree {i = lzero} m
+        (⊙fwproj <J
+        ⊙∘ (fst (⊙FinWedge-emap-r (λ _ → ⊙lower-equiv) ⊙⁻¹) ⊙∘ f ⊙∘ fst (⊙FinWedge-emap-r (λ _ → ⊙lower-equiv)))
+        ⊙∘ ⊙fwin <I)))
+      =⟨ ap (Group.sum G) (λ= λ <J →
+          ap (Group.exp G (g <J)) $
+            ⊙SphereS-endo-degree-base-indep m λ x →
+              lower (fwproj <J (fst (FinWedge-emap-r (λ _ → ⊙lift-equiv)) (fst f (fwin <I x))))
+                =⟨ ap lower (fwproj-FinWedge-emap-r-lift <J (fst f (fwin <I x))) ⟩
+              fwproj <J (fst f (fwin <I x))
+                =∎) ⟩
+    Group.sum G (λ <J → Group.exp G (g <J)
+      (⊙SphereS-endo-degree m (⊙fwproj <J ⊙∘ f ⊙∘ ⊙fwin <I)))
       =∎
