@@ -14,12 +14,12 @@ open import cohomology.FinWedge CT n
 open import cohomology.SphereEndomorphism CT n m
 
 abstract
-  rephrase-in-degrees' : ∀ {I J : ℕ} (f : ⊙FinBouquetLift I (S m) ⊙→ ⊙FinBouquetLift J (S m)) g
+  rephrase-in-degrees₀ : ∀ {I J : ℕ} (f : ⊙FinBouquetLift I (S m) ⊙→ ⊙FinBouquetLift J (S m)) g
     → CEl-finite-additive (FinBouquetLift-family I (S m))
         (CEl-fmap n f (is-equiv.g (C-finite-additive-is-equiv (FinBouquetLift-family J (S m))) g))
     ∼ λ <I → Group.sum (C n (⊙Lift (⊙Sphere (S m))))
           (λ <J → Group.exp (C n (⊙Lift (⊙Sphere (S m)))) (g <J) (⊙LiftSphereS-endo-degree m (⊙fwproj <J ⊙∘ f ⊙∘ ⊙fwin <I)))
-  rephrase-in-degrees' {I} {J} f g <I =
+  rephrase-in-degrees₀ {I} {J} f g <I =
     CEl-fmap n (⊙fwin <I)
       (CEl-fmap n f
         (is-equiv.g (C-finite-additive-is-equiv (FinBouquetLift-family J (S m))) g))
@@ -76,3 +76,42 @@ abstract
     Group.sum (C n (⊙Lift (⊙Sphere (S m)))) (λ <J →
       Group.exp (C n (⊙Lift (⊙Sphere (S m)))) (g <J) (⊙LiftSphereS-endo-degree m (⊙fwproj <J ⊙∘ f ⊙∘ ⊙fwin <I)))
         =∎
+
+  rephrase-in-degrees₁ : ∀ {I J : ℕ} (f : ⊙FinBouquetLift I (S m) ⊙→ ⊙FinBouquetLift J (S m))
+    {G : Group₀} (iso : C n (⊙Lift (⊙Sphere (S m))) ≃ᴳ G) g
+    → GroupIso.f (Πᴳ-emap-r _ (λ _ → iso))
+        (CEl-finite-additive (FinBouquetLift-family I (S m))
+          (CEl-fmap n f (is-equiv.g (C-finite-additive-is-equiv (FinBouquetLift-family J (S m)))
+            (GroupIso.g (Πᴳ-emap-r _ (λ _ → iso)) g))))
+    ∼ λ <I → Group.sum G (λ <J → Group.exp G (g <J) (⊙LiftSphereS-endo-degree m (⊙fwproj <J ⊙∘ f ⊙∘ ⊙fwin <I)))
+  rephrase-in-degrees₁ {I} {J} f {G} iso g <I =
+    GroupIso.f iso
+      (CEl-fmap n (⊙fwin <I)
+        (CEl-fmap n f (is-equiv.g (C-finite-additive-is-equiv (FinBouquetLift-family J (S m)))
+          (GroupIso.g (Πᴳ-emap-r _ (λ _ → iso)) g))))
+      =⟨ ap (GroupIso.f iso) $ rephrase-in-degrees₀ f (GroupIso.g (Πᴳ-emap-r _ (λ _ → iso)) g) <I ⟩
+    GroupIso.f iso
+      (Group.sum (C n (⊙Lift (⊙Sphere (S m)))) (λ <J →
+        Group.exp (C n (⊙Lift (⊙Sphere (S m)))) (GroupIso.g iso (g <J))
+          (⊙LiftSphereS-endo-degree m (⊙fwproj <J ⊙∘ f ⊙∘ ⊙fwin <I))))
+      =⟨ GroupIso.pres-sum iso (λ <J →
+          Group.exp (C n (⊙Lift (⊙Sphere (S m)))) (GroupIso.g iso (g <J))
+            (⊙LiftSphereS-endo-degree m (⊙fwproj <J ⊙∘ f ⊙∘ ⊙fwin <I))) ⟩
+    Group.sum G (λ <J →
+      GroupIso.f iso
+        (Group.exp (C n (⊙Lift (⊙Sphere (S m))))
+          (GroupIso.g iso (g <J))
+          (⊙LiftSphereS-endo-degree m (⊙fwproj <J ⊙∘ f ⊙∘ ⊙fwin <I))))
+      =⟨ ap (Group.sum G) (λ= λ <J →
+          GroupIso.pres-exp iso
+            (GroupIso.g iso (g <J))
+            (⊙LiftSphereS-endo-degree m (⊙fwproj <J ⊙∘ f ⊙∘ ⊙fwin <I))) ⟩
+    Group.sum G (λ <J →
+      Group.exp G
+        (GroupIso.f iso (GroupIso.g iso (g <J)))
+        (⊙LiftSphereS-endo-degree m (⊙fwproj <J ⊙∘ f ⊙∘ ⊙fwin <I)))
+      =⟨ ap (Group.sum G) (λ= λ <J →
+          ap (λ g → Group.exp G g (⊙LiftSphereS-endo-degree m (⊙fwproj <J ⊙∘ f ⊙∘ ⊙fwin <I))) $
+            GroupIso.f-g iso (g <J)) ⟩
+    Group.sum G (λ <J → Group.exp G (g <J) (⊙LiftSphereS-endo-degree m (⊙fwproj <J ⊙∘ f ⊙∘ ⊙fwin <I)))
+      =∎
