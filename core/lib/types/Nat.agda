@@ -67,7 +67,7 @@ abstract
   ℕ-has-dec-eq (S n) O = inr (ℕ-S≠O n)
   ℕ-has-dec-eq (S n) (S m) with ℕ-has-dec-eq n m
   ℕ-has-dec-eq (S n) (S m) | inl p = inl (ap S p)
-  ℕ-has-dec-eq (S n) (S m) | inr ¬p = inr (λ p → ¬p (ℕ-S-is-inj n m p))
+  ℕ-has-dec-eq (S n) (S m) | inr ¬p = inr (ℕ-S-≠ ¬p)
 
 ℕ-is-set : is-set ℕ
 ℕ-is-set = dec-eq-is-set ℕ-has-dec-eq

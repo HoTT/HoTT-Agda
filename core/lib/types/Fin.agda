@@ -69,11 +69,29 @@ Fin-basis-early m = Fin-basis-early' m O
 Fin-prop : ℕ → SubtypeProp ℕ lzero
 Fin-prop n = ((_< n) , λ _ → <-is-prop)
 
-Fin-is-set : {n : ℕ} → is-set (Fin n)
-Fin-is-set {n} = Subtype-level (Fin-prop n)
+abstract
+  Fin-is-set : {n : ℕ} → is-set (Fin n)
+  Fin-is-set {n} = Subtype-level (Fin-prop n)
 
+Fin-pred=-type : {n : ℕ} → Fin n → Fin n → Type₀
+Fin-pred=-type (_ , ltSR _) (_ , ltS) = ⊤
+Fin-pred=-type (_ , ltS) (_ , ltSR _) = ⊤
+Fin-pred=-type (m , ltS) (n , ltS) = m == n :> ℕ
+Fin-pred=-type {S n} (m , ltSR m<n) (o , ltSR o<n) = (m , m<n) == (o , o<n) :> Fin n
+
+Fin-pred= : {n : ℕ} {x y : Fin n} → x == y → Fin-pred=-type x y
+Fin-pred= {x = (_ , ltS)} idp = idp
+Fin-pred= {x = (_ , ltSR _)} idp = idp
+
+{- This is not made abstract so that certain proofs compute in a certain way.
+   Otherwise [Subtype-has-dec-eq (Fin-prop n) ℕ-has-dec-eq] is a shorter proof. -}
 Fin-has-dec-eq : {n : ℕ} → has-dec-eq (Fin n)
-Fin-has-dec-eq {n} = Subtype-has-dec-eq (Fin-prop n) ℕ-has-dec-eq
+Fin-has-dec-eq (_ , ltS) (_ , ltS) = inl idp
+Fin-has-dec-eq (m , ltS) (o , ltSR o<m) = inr $ <-to-≠ o<m ∘ ! ∘ ap fst
+Fin-has-dec-eq (m , ltSR m<o) (o , ltS) = inr $ <-to-≠ m<o ∘ ap fst
+Fin-has-dec-eq (_ , ltSR m<n) (_ , ltSR o<n) with Fin-has-dec-eq (_ , m<n) (_ , o<n)
+... | inl p = inl (ap Fin-S p)
+... | inr ¬p = inr (¬p ∘ Fin-pred=)
 
 Fin-equiv-Empty : Fin 0 ≃ Empty
 Fin-equiv-Empty = equiv to from to-from from-to where
