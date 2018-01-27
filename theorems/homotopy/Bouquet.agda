@@ -11,6 +11,9 @@ Rose I = BigWedge {A = I} (λ _ → ⊙S¹)
 Bouquet-family : ∀ {i} (I : Type i) (m : ℕ) → (I → Ptd₀)
 Bouquet-family I m _ = ⊙Sphere m
 
+Bouquet : ∀ {i} (I : Type i) (m : ℕ) → Type i
+Bouquet I m = BigWedge (Bouquet-family I m)
+
 ⊙Bouquet : ∀ {i} (I : Type i) (m : ℕ) → Ptd i
 ⊙Bouquet I m = ⊙BigWedge (Bouquet-family I m)
 
