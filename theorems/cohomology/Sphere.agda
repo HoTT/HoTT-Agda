@@ -21,7 +21,7 @@ C-Sphere-≠-is-trivial n (S m) n≠Sm = iso-preserves'-trivial
     ≃ᴳ∎)
   (C-Sphere-≠-is-trivial (pred n) m (pred-≠ n≠Sm))
 
-C-Sphere-diag : (m : ℕ) → C (ℕ-to-ℤ m) (⊙Lift (⊙Sphere m)) ≃ᴳ C 0 (⊙Lift ⊙S⁰)
+C-Sphere-diag : (m : ℕ) → C (ℕ-to-ℤ m) (⊙Lift (⊙Sphere m)) ≃ᴳ C2 0
 C-Sphere-diag O = idiso _
 C-Sphere-diag (S m) =
   C (ℕ-to-ℤ (S m)) (⊙Lift (⊙Sphere (S m)))

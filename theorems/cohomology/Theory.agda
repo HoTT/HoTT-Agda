@@ -51,6 +51,16 @@ record CohomologyTheory i : Type (lsucc i) where
       → CommSquareᴳ (C-fmap (succ n) (⊙Susp-fmap f)) (C-fmap n f)
           (GroupIso.f-hom (C-Susp n Y)) (GroupIso.f-hom (C-Susp n X))
 
+  C-Susp-fmap-cse : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
+    → CommSquareEquivᴳ (C-fmap (succ n) (⊙Susp-fmap f)) (C-fmap n f)
+        (GroupIso.f-hom (C-Susp n Y)) (GroupIso.f-hom (C-Susp n X))
+  C-Susp-fmap-cse n {X} {Y} f = C-Susp-fmap n f , GroupIso.f-is-equiv (C-Susp n Y) , GroupIso.f-is-equiv (C-Susp n X)
+
+  C-Susp-fmap' : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
+    → CommSquareᴳ (C-fmap n f) (C-fmap (succ n) (⊙Susp-fmap f))
+        (GroupIso.g-hom (C-Susp n Y)) (GroupIso.g-hom (C-Susp n X))
+  C-Susp-fmap' n f = fst (CommSquareEquivᴳ-inverse-v (C-Susp-fmap-cse n f))
+
   CEl-Susp-fmap : (n : ℤ) {X Y : Ptd i} (f : X ⊙→ Y)
     → CommSquare (CEl-fmap (succ n) (⊙Susp-fmap f)) (CEl-fmap n f)
         (GroupIso.f (C-Susp n Y)) (GroupIso.f (C-Susp n X))
