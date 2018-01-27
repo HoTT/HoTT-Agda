@@ -137,6 +137,9 @@ module PushoutLSplit {i j k l} {A : Type i} {B : Type j} {C : Type k}
   split : Pushout d → Pushout d₂
   split = Split.f
 
+  split-glue-β : ∀ x → ap split (glue x) == glue (f x) ∙' ap right (glue x)
+  split-glue-β x = Split.glue-β x ∙ ap (λ p → glue (f x) ∙' ap right p) (!-! (glue x))
+
   inner-span-map : SpanMap d₁ d
   inner-span-map = span-map g (idf C) (idf D) (comm-sqr λ _ → idp) (comm-sqr λ _ → idp)
 
