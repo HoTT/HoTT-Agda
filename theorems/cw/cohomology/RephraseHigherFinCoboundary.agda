@@ -15,7 +15,6 @@ module cw.cohomology.RephraseHigherFinCoboundary (OT : OrdinaryTheory lzero)
   {n} (⊙fin-skel : ⊙FinSkeleton (S (S n))) where
 
 open OrdinaryTheory OT
-open import cohomology.Bouquet OT
 open import cohomology.FinBouquet OT
 open import cohomology.RephraseFinCoboundary OT
 
@@ -67,7 +66,7 @@ abstract
                 g))))) <I
       =⟨ ap
           (λ g →
-            GroupIso.f (C-Bouquet-diag (S (S n)) (⊙cells-last ⊙skel) (⊙cells-last-has-choice ⊙skel ac))
+            GroupIso.f (C-FinBouquet-diag (S (S n)) I)
               (CEl-fmap (ℕ-to-ℤ (S (S n))) (⊙–> (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ skel))
                 (CEl-fmap (ℕ-to-ℤ (S (S n))) ⊙cw-∂-before-Susp g)) <I) $
           C-Susp-fmap' (ℕ-to-ℤ (S n)) (⊙<– (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ skel₋₁)) □$ᴳ
@@ -80,7 +79,7 @@ abstract
             (<– (CEl-Susp (ℕ-to-ℤ (S n)) (⊙FinBouquet _ (S n)))
               (GroupIso.g (C-FinBouquet-diag (S n) I₋₁)
                 g))))) <I
-      =⟨ ap (λ g → GroupIso.f (C-Bouquet-diag (S (S n)) (⊙cells-last ⊙skel) (⊙cells-last-has-choice ⊙skel ac)) g <I) $
+      =⟨ ap (λ g → GroupIso.f (C-FinBouquet-diag (S (S n)) I) g <I) $
             ∘-CEl-fmap (ℕ-to-ℤ (S (S n))) (⊙–> (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ skel)) ⊙cw-∂-before-Susp
               (CEl-fmap (ℕ-to-ℤ (S (S n))) (⊙Susp-fmap (⊙<– (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ skel₋₁)))
                 (<– (CEl-Susp (ℕ-to-ℤ (S n)) (⊙FinBouquet _ (S n)))
