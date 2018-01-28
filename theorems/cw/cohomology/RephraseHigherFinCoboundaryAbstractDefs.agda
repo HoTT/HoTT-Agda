@@ -47,7 +47,7 @@ open import cw.cohomology.WedgeOfCells OT
           ⊙∘ ⊙–> (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ skel)
 
 function₁ : Fin I → Fin I₋₁ → Sphere-endo (S n)
-function₁ <I <I₋₁ = bwproj (cells-last-has-dec-eq skel₋₁ dec₋₁) (FinBouquet-family _ (S n)) <I₋₁
+function₁ <I <I₋₁ = bwproj Fin-has-dec-eq (FinBouquet-family I₋₁ (S n)) <I₋₁
                   ∘ <– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁)
                   ∘ cfcod
                   ∘ attaching-last skel <I
@@ -65,7 +65,67 @@ abstract
   function₁'-β : ∀ <I <I₋₁ → function₁' <I <I₋₁ == function₁ <I <I₋₁
   function₁'-β _ _ = idp
 
-postulate
   mega-reduction : ∀ <I <I₋₁ →
       Susp-fmap (fwproj <I₋₁) ∘ fst ⊙function₀' ∘ fwin <I
-    ∼ Susp-fmap (function₁' <I <I₋₁)          
+    ∼ Susp-fmap (function₁' <I <I₋₁)
+  mega-reduction <I <I₋₁ = Susp-elim idp idp λ x → ↓-='-in' $ ! $
+    ap (Susp-fmap (fwproj <I₋₁) ∘ fst ⊙function₀ ∘ fwin <I) (merid x)
+      =⟨ ap-∘
+          ( Susp-fmap (fwproj <I₋₁)
+          ∘ Susp-fmap (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁))
+          ∘ cw-∂-before-Susp)
+          (Bouquet-to-Xₙ/Xₙ₋₁ skel ∘ fwin <I)
+          (merid x) ⟩
+    ap ( Susp-fmap (fwproj <I₋₁)
+       ∘ Susp-fmap (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁))
+       ∘ cw-∂-before-Susp)
+       (ap (Bouquet-to-Xₙ/Xₙ₋₁ skel ∘ fwin <I) (merid x))
+      =⟨ ap (ap ( Susp-fmap (fwproj <I₋₁)
+                ∘ Susp-fmap (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁))
+                ∘ cw-∂-before-Susp))
+            (Bouquet-to-Xₙ/Xₙ₋₁-in-merid-β skel <I x) ⟩
+    ap ( Susp-fmap (fwproj <I₋₁)
+       ∘ Susp-fmap (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁))
+       ∘ cw-∂-before-Susp)
+       (cfglue (attaching-last skel <I x) ∙' ap cfcod (spoke <I x))
+      =⟨ ap-∘
+          ( Susp-fmap (fwproj <I₋₁)
+          ∘ Susp-fmap (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁)))
+          cw-∂-before-Susp
+          (cfglue (attaching-last skel <I x) ∙' ap cfcod (spoke <I x)) ⟩
+    ap ( Susp-fmap (fwproj <I₋₁)
+       ∘ Susp-fmap (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁)))
+       (ap cw-∂-before-Susp
+         (cfglue (attaching-last skel <I x) ∙' ap cfcod (spoke <I x)))
+      =⟨ ap (ap ( Susp-fmap (fwproj <I₋₁)
+                ∘ Susp-fmap (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁))))
+            ( ap-∙' cw-∂-before-Susp (cfglue (attaching-last skel <I x)) (ap cfcod (spoke <I x))
+            ∙ ap2 _∙'_
+                (cw-∂-before-Susp-glue-β (attaching-last skel <I x))
+                ( ∘-ap cw-∂-before-Susp cfcod (spoke <I x)
+                ∙ ap-cst south (spoke <I x))) ⟩
+    ap ( Susp-fmap (fwproj <I₋₁)
+       ∘ Susp-fmap (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁)))
+       (merid (cfcod (attaching-last skel <I x)))
+      =⟨ ap-∘
+          (Susp-fmap (fwproj <I₋₁))
+          (Susp-fmap (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁)))
+          (merid (cfcod (attaching-last skel <I x))) ⟩
+    ap (Susp-fmap (fwproj <I₋₁))
+       (ap (Susp-fmap (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁)))
+           (merid (cfcod (attaching-last skel <I x))))
+      =⟨ ap
+          (ap (Susp-fmap (fwproj <I₋₁)))
+          (SuspFmap.merid-β
+            (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁))
+            (cfcod (attaching-last skel <I x))) ⟩
+    ap (Susp-fmap (fwproj <I₋₁))
+       (merid (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁) (cfcod (attaching-last skel <I x))))
+      =⟨ SuspFmap.merid-β (fwproj <I₋₁)
+          (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁) (cfcod (attaching-last skel <I x))) ⟩
+    merid (fwproj <I₋₁ (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁) (cfcod (attaching-last skel <I x))))
+      =⟨ ap merid (fwproj-is-bwproj <I₋₁ (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁) (cfcod (attaching-last skel <I x)))) ⟩
+    merid (function₁ <I <I₋₁ x)
+      =⟨ ! $ SuspFmap.merid-β (function₁ <I <I₋₁) x ⟩
+    ap (Susp-fmap (function₁ <I <I₋₁)) (merid x)
+      =∎
