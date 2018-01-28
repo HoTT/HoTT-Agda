@@ -12,16 +12,16 @@ open import cohomology.Sphere OT
 open import cohomology.FinWedge cohomology-theory
 open import cohomology.Bouquet OT
 
-C-FinBouquet : ∀ n I → C (ℕ-to-ℤ n) (⊙FinBouquet I n) ≃ᴳ Πᴳ (Fin I) (λ _ → C2 0)
-C-FinBouquet n I = C-Bouquet n (Fin I) (Fin-has-choice 0 I lzero)
+C-FinBouquet-diag : ∀ n I → C (ℕ-to-ℤ n) (⊙FinBouquet I n) ≃ᴳ Πᴳ (Fin I) (λ _ → C2 0)
+C-FinBouquet-diag n I = C-Bouquet-diag n (Fin I) (Fin-has-choice 0 I lzero)
 
 abstract
-  C-FinBouquet-β : ∀ n I g <I
-    →  GroupIso.f (C-FinBouquet n I) g <I
+  C-FinBouquet-diag-β : ∀ n I g <I
+    →  GroupIso.f (C-FinBouquet-diag n I) g <I
     == GroupIso.f (C-Sphere-diag n)
         (CEl-fmap (ℕ-to-ℤ n) ⊙lower
           (CEl-fmap (ℕ-to-ℤ n) (⊙fwin <I) g))
-  C-FinBouquet-β n I g <I =
+  C-FinBouquet-diag-β n I g <I =
     GroupIso.f (C-Sphere-diag n) (CEl-fmap (ℕ-to-ℤ n) (⊙fwin <I) (CEl-fmap (ℕ-to-ℤ n) (⊙–> (⊙BigWedge-emap-r (λ _ → ⊙lower-equiv))) g))
       =⟨ ap (GroupIso.f (C-Sphere-diag n)) $
             ∘-CEl-fmap (ℕ-to-ℤ n) (⊙fwin <I) (⊙–> (⊙BigWedge-emap-r (λ _ → ⊙lower-equiv))) g
@@ -30,8 +30,8 @@ abstract
     GroupIso.f (C-Sphere-diag n) (CEl-fmap (ℕ-to-ℤ n) ⊙lower (CEl-fmap (ℕ-to-ℤ n) (⊙fwin <I) g))
       =∎
   
-  inverse-C-FinBouquet-β : ∀ n I g
-    →  GroupIso.g (C-FinBouquet n I) g
+  inverse-C-FinBouquet-diag-β : ∀ n I g
+    →  GroupIso.g (C-FinBouquet-diag n I) g
     == Group.sum (C (ℕ-to-ℤ n) (⊙FinBouquet I n))
         (λ <I → CEl-fmap (ℕ-to-ℤ n) (⊙fwproj <I)
           (CEl-fmap (ℕ-to-ℤ n) ⊙lift
