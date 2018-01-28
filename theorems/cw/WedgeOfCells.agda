@@ -8,8 +8,11 @@ open import cw.CW
 
 module cw.WedgeOfCells {i} {n} (skel : Skeleton {i} (S n)) where
 
-Xₙ/Xₙ₋₁ : Ptd i
-Xₙ/Xₙ₋₁ = ⊙[ Cofiber (cw-incl-last skel) , cfbase ]
+Xₙ/Xₙ₋₁ : Type i
+Xₙ/Xₙ₋₁ = Cofiber (cw-incl-last skel)
+
+⊙Xₙ/Xₙ₋₁ : Ptd i
+⊙Xₙ/Xₙ₋₁ = ⊙[ Xₙ/Xₙ₋₁ , cfbase ]
 
 private
   cells : Type i
@@ -35,7 +38,7 @@ private
   
   module BigWedgeSuspEquivQuotient = PushoutLSplit (uncurry attaching) (λ _ → unit) fst
 
-Bouquet-to-Xₙ/Xₙ₋₁ : Bouquet cells (S n) → de⊙ Xₙ/Xₙ₋₁ 
+Bouquet-to-Xₙ/Xₙ₋₁ : Bouquet cells (S n) → Xₙ/Xₙ₋₁
 Bouquet-to-Xₙ/Xₙ₋₁ = BigWedgeSuspEquivQuotient.split ∘ BouquetToBigWedgeSusp.f
 
 abstract
@@ -84,8 +87,8 @@ private
   Bouquet-equiv-BigWedgeSusp : Bouquet cells (S n) ≃ BigWedgeSusp
   Bouquet-equiv-BigWedgeSusp = BouquetToBigWedgeSusp.f , Bouquet-to-BigWedgeSusp-is-equiv
 
-Bouquet-equiv-Xₙ/Xₙ₋₁ : Bouquet cells (S n) ≃ de⊙ Xₙ/Xₙ₋₁
+Bouquet-equiv-Xₙ/Xₙ₋₁ : Bouquet cells (S n) ≃ Xₙ/Xₙ₋₁
 Bouquet-equiv-Xₙ/Xₙ₋₁ = BigWedgeSuspEquivQuotient.split-equiv ∘e Bouquet-equiv-BigWedgeSusp
 
-Bouquet-⊙equiv-Xₙ/Xₙ₋₁ : ⊙Bouquet cells (S n) ⊙≃ Xₙ/Xₙ₋₁
+Bouquet-⊙equiv-Xₙ/Xₙ₋₁ : ⊙Bouquet cells (S n) ⊙≃ ⊙Xₙ/Xₙ₋₁
 Bouquet-⊙equiv-Xₙ/Xₙ₋₁ = ≃-to-⊙≃ Bouquet-equiv-Xₙ/Xₙ₋₁ idp

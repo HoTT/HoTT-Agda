@@ -12,8 +12,10 @@ module homotopy.SphereEndomorphism where
   ⊙Sphere-endo : ∀ n → Type₀
   ⊙Sphere-endo n = ⊙Sphere n ⊙→ ⊙Sphere n
 
+{-
   ⊙LiftSphere-endo : ∀ {i} n → Type i
   ⊙LiftSphere-endo {i} n = ⊙Lift {j = i} (⊙Sphere n) ⊙→ ⊙Lift {j = i} (⊙Sphere n)
+-}
 
   Trunc-Sphere-endo : ∀ n → Type₀
   Trunc-Sphere-endo = Trunc 0 ∘ Sphere-endo
@@ -21,14 +23,16 @@ module homotopy.SphereEndomorphism where
   Trunc-⊙Sphere-endo : ∀ n → Type₀
   Trunc-⊙Sphere-endo = Trunc 0 ∘ ⊙Sphere-endo
 
+{-
   Trunc-⊙LiftSphere-endo : ∀ {i} n → Type i
   Trunc-⊙LiftSphere-endo {i} = Trunc 0 ∘ ⊙LiftSphere-endo {i}
+-}
 
   {- Part 0: pointedness is free -}
 
   Trunc-⊙Sphere-endo-out : ∀ n
     → Trunc-⊙Sphere-endo n → Trunc-Sphere-endo n
-  Trunc-⊙Sphere-endo-out n = Trunc-rec ([_] ∘ fst)
+  Trunc-⊙Sphere-endo-out n = Trunc-fmap fst
 
   -- For [S¹], the pointedness is free because of the commutativity of its loop space.
 

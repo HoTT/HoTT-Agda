@@ -16,26 +16,26 @@ open import cohomology.Sphere OT
 open import cohomology.FinBouquet OT
 
 abstract
-  rephrase-in-degrees : ∀ n {I J : ℕ} (f : ⊙FinBouquet I (S n) ⊙→ ⊙Susp (⊙FinBouquet J n)) g
-    → GroupIso.f (C-FinBouquet (S n) I)
+  rephrase-in-degree : ∀ n {I J : ℕ} (f : ⊙FinBouquet I (S n) ⊙→ ⊙Susp (⊙FinBouquet J n)) g
+    → GroupIso.f (C-FinBouquet-diag (S n) I)
         (CEl-fmap (ℕ-to-ℤ (S n)) f
           (<– (CEl-Susp (ℕ-to-ℤ n) (⊙FinBouquet J n))
-            (GroupIso.g (C-FinBouquet n J) g)))
+            (GroupIso.g (C-FinBouquet-diag n J) g)))
     ∼ λ <I → Group.sum (C2 0)
           (λ <J → Group.exp (C2 0) (g <J) (⊙SphereS-endo-degree n (⊙Susp-fmap (⊙fwproj <J) ⊙∘ f ⊙∘ ⊙fwin <I)))
-  rephrase-in-degrees n {I} {J} f g <I =
-    GroupIso.f (C-FinBouquet (S n) I)
+  rephrase-in-degree n {I} {J} f g <I =
+    GroupIso.f (C-FinBouquet-diag (S n) I)
       (CEl-fmap (ℕ-to-ℤ (S n)) f
         (<– (CEl-Susp (ℕ-to-ℤ n) (⊙FinBouquet J n))
-          (GroupIso.g (C-FinBouquet n J) g)))
+          (GroupIso.g (C-FinBouquet-diag n J) g)))
       <I
       =⟨ ap
-          (λ g → GroupIso.f (C-FinBouquet (S n) I)
+          (λ g → GroupIso.f (C-FinBouquet-diag (S n) I)
             (CEl-fmap (ℕ-to-ℤ (S n)) f
               (<– (CEl-Susp (ℕ-to-ℤ n) (⊙FinBouquet J n))
                 g)) <I)
-          (inverse-C-FinBouquet-β n J g) ⟩
-    GroupIso.f (C-FinBouquet (S n) I)
+          (inverse-C-FinBouquet-diag-β n J g) ⟩
+    GroupIso.f (C-FinBouquet-diag (S n) I)
       (CEl-fmap (ℕ-to-ℤ (S n)) f
         (<– (CEl-Susp (ℕ-to-ℤ n) (⊙FinBouquet J n))
           (Group.sum (C (ℕ-to-ℤ n) (⊙FinBouquet J n))
@@ -43,13 +43,13 @@ abstract
               (CEl-fmap (ℕ-to-ℤ n) ⊙lift
                 (GroupIso.g (C-Sphere-diag n) (g <J)))))))
       <I
-      =⟨ ap (λ g → GroupIso.f (C-FinBouquet (S n) I) g <I) $
+      =⟨ ap (λ g → GroupIso.f (C-FinBouquet-diag (S n) I) g <I) $
           GroupHom.pres-sum
             (C-fmap (ℕ-to-ℤ (S n)) f ∘ᴳ GroupIso.g-hom (C-Susp (ℕ-to-ℤ n) (⊙FinBouquet J n)))
             (λ <J → CEl-fmap (ℕ-to-ℤ n) (⊙fwproj <J)
               (CEl-fmap (ℕ-to-ℤ n) ⊙lift
                 (GroupIso.g (C-Sphere-diag n) (g <J)))) ⟩
-    GroupIso.f (C-FinBouquet (S n) I)
+    GroupIso.f (C-FinBouquet-diag (S n) I)
       (Group.sum (C (ℕ-to-ℤ (S n)) (⊙FinBouquet I (S n)))
         (λ <J → CEl-fmap (ℕ-to-ℤ (S n)) f
           (<– (CEl-Susp (ℕ-to-ℤ n) (⊙FinBouquet J n))
@@ -58,12 +58,12 @@ abstract
                 (GroupIso.g (C-Sphere-diag n) (g <J)))))))
       <I
       =⟨ ap
-          (λ f → GroupIso.f (C-FinBouquet (S n) I)
+          (λ f → GroupIso.f (C-FinBouquet-diag (S n) I)
             (Group.sum (C (ℕ-to-ℤ (S n)) (⊙FinBouquet I (S n))) f) <I)
           (λ= λ <J → ap (CEl-fmap (ℕ-to-ℤ (S n)) f) $
             C-Susp-fmap' (ℕ-to-ℤ n) (⊙fwproj <J) □$ᴳ
               CEl-fmap (ℕ-to-ℤ n) ⊙lift (GroupIso.g (C-Sphere-diag n) (g <J))) ⟩
-    GroupIso.f (C-FinBouquet (S n) I)
+    GroupIso.f (C-FinBouquet-diag (S n) I)
       (Group.sum (C (ℕ-to-ℤ (S n)) (⊙FinBouquet I (S n)))
         (λ <J → CEl-fmap (ℕ-to-ℤ (S n)) f
           (CEl-fmap (ℕ-to-ℤ (S n)) (⊙Susp-fmap (⊙fwproj <J))
@@ -71,7 +71,7 @@ abstract
               (CEl-fmap (ℕ-to-ℤ n) ⊙lift
                 (GroupIso.g (C-Sphere-diag n) (g <J)))))))
       <I
-      =⟨ C-FinBouquet-β (S n) I
+      =⟨ C-FinBouquet-diag-β (S n) I
           (Group.sum (C (ℕ-to-ℤ (S n)) (⊙FinBouquet I (S n)))
             (λ <J → CEl-fmap (ℕ-to-ℤ (S n)) f
               (CEl-fmap (ℕ-to-ℤ (S n)) (⊙Susp-fmap (⊙fwproj <J))

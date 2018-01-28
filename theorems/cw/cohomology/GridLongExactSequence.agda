@@ -15,9 +15,9 @@ open import cw.cohomology.GridPtdMap f g
 
 {-
   X --> Y ----> Z
-        |       |
-        v       v
-       Y/X --> Z/X
+  |     |       |
+  v     v       v
+  1 -> Y/X --> Z/X
         | this  |
         v   one v
         1 ---> Z/Y
@@ -47,6 +47,28 @@ private
 grid-co∂ : C n Y/X →ᴳ C (succ n) Z/Y
 grid-co∂ = record {f = CEl-fmap (succ n) Z/Y-to-E ∘ GroupHom.f co∂ ; pres-comp = lemma} where
   abstract lemma = ∘ᴳ-pres-comp (C-fmap (succ n) Z/Y-to-E) co∂
+
+grid-∂-before-Susp : C/B → Susp B/A
+grid-∂-before-Susp = extract-glue ∘ C/B-to-E
+
+⊙grid-∂-before-Susp : Z/Y ⊙→ ⊙Susp Y/X
+⊙grid-∂-before-Susp = grid-∂-before-Susp , lemma where
+  abstract lemma = snd (⊙extract-glue ⊙∘ Z/Y-to-E)
+
+abstract
+  grid-co∂-β : GroupHom.f grid-co∂ ∼ CEl-fmap (succ n) ⊙grid-∂-before-Susp ∘ <– (CEl-Susp n Y/X)
+  grid-co∂-β x = ∘-CEl-fmap (succ n) Z/Y-to-E ⊙extract-glue _
+
+abstract
+  grid-∂-before-Susp-glue-β : ∀ x →
+    ap (fst ⊙grid-∂-before-Susp) (glue x) == merid (cfcod x)
+  grid-∂-before-Susp-glue-β x =
+      ap-∘ extract-glue C/B-to-E (glue x)
+    ∙ ap (ap extract-glue) (C/B-to-E-glue-β x)
+    ∙ ap-∙' extract-glue (glue (cfcod x)) (ap cfcod (glue x))
+    ∙ ap2 _∙'_
+        (ExtractGlue.glue-β (cfcod x))
+        (∘-ap extract-glue cfcod (glue x) ∙ ap-cst south (glue x))
 
 C-grid-cofiber-seq : HomSequence (C n Z/X) (C (succ n) Y/X)
 C-grid-cofiber-seq =

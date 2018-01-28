@@ -32,5 +32,8 @@ FinBouquetLift-family {i} I m _ = ⊙Lift {j = i} (⊙Sphere m)
 FinBouquet-family : (I m : ℕ) → (Fin I → Ptd₀)
 FinBouquet-family I m _ = ⊙Sphere m
 
+FinBouquet : (I m : ℕ) → Type₀
+FinBouquet I m = FinWedge (FinBouquet-family I m)
+
 ⊙FinBouquet : (I m : ℕ) → Ptd₀
 ⊙FinBouquet I m = ⊙FinWedge (FinBouquet-family I m)

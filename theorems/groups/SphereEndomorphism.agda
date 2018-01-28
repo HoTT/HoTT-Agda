@@ -16,6 +16,7 @@ module groups.SphereEndomorphism where
   ⊙SphereS-endo-group-structure : ∀ n → GroupStructure (⊙Sphere-endo (S n))
   ⊙SphereS-endo-group-structure n = Susp⊙→-group-structure (⊙Sphere n) (⊙Sphere (S n))
 
+{-
   ⊙LiftSphereS-endo-group-structure : ∀ {i} n → GroupStructure (⊙LiftSphere-endo {i} (S n))
   ⊙LiftSphereS-endo-group-structure {i} n =
     LiftSusp⊙→-group-structure {j = i} (⊙Sphere n) (⊙Lift {j = i} (⊙Sphere (S n)))
@@ -31,18 +32,23 @@ module groups.SphereEndomorphism where
         =⟨ ! $ ⊙λ= $ ⊙∨-rec-post∘ ⊙lift f g ⟩
       ⊙lift ⊙∘ ⊙∨-rec f g
         =∎)
+-}
 
   Trunc-⊙SphereS-endo-group : ∀ n → Group₀
   Trunc-⊙SphereS-endo-group n = Trunc-Susp⊙→-group (⊙Sphere n) (⊙Sphere (S n))
 
+{-
   Trunc-⊙LiftSphereS-endo-group : ∀ {i} n → Group i
   Trunc-⊙LiftSphereS-endo-group {i} n = Trunc-LiftSusp⊙→-group {j = i} (⊙Sphere n) (⊙Lift {j = i} (⊙Sphere (S n)))
+-}
 
   Trunc-⊙SphereS-endo-⊙group : ∀ n → ⊙Group₀
   Trunc-⊙SphereS-endo-⊙group n = ⊙[ Trunc-⊙SphereS-endo-group n , [ ⊙idf _ ] ]ᴳ
 
+{-
   Trunc-⊙LiftSphereS-endo-⊙group : ∀ {i} n → ⊙Group i
   Trunc-⊙LiftSphereS-endo-⊙group {i} n = ⊙[ Trunc-⊙LiftSphereS-endo-group {i = i} n , [ ⊙idf _ ] ]ᴳ
+-}
 
   Trunc-⊙S¹-endo-group-iso-ℤ : Trunc-⊙SphereS-endo-group 0 ≃ᴳ ℤ-group
   Trunc-⊙S¹-endo-group-iso-ℤ =
@@ -81,6 +87,7 @@ module groups.SphereEndomorphism where
       (Trunc-⊙SphereS-endo-Susp-fmap-⊙iso n)
       (Trunc-⊙SphereS-endo-⊙group-is-infinite-cyclic n)
 
+{-
   Trunc-⊙SphereS-endo-iso-Trunc-⊙LiftSphereS-endo : ∀ {i} n →
     Trunc-⊙SphereS-endo-group n ≃ᴳ Trunc-⊙LiftSphereS-endo-group {i} n
   Trunc-⊙SphereS-endo-iso-Trunc-⊙LiftSphereS-endo {i} n =
@@ -96,8 +103,9 @@ module groups.SphereEndomorphism where
     isomorphism-preserves-infinite-cyclic
       (Trunc-⊙SphereS-endo-⊙iso-Trunc-⊙LiftSphereS-endo {i} n)
       (Trunc-⊙SphereS-endo-⊙group-is-infinite-cyclic n)
+-}
 
-  {- new def of degree -}
+  {- definition of degree -}
 
   Trunc-⊙SphereS-endo-degree : ∀ n → Trunc-⊙Sphere-endo (S n) → ℤ
   Trunc-⊙SphereS-endo-degree n = is-equiv.g (Trunc-⊙SphereS-endo-⊙group-is-infinite-cyclic n)
@@ -118,6 +126,22 @@ module groups.SphereEndomorphism where
       == ⊙SphereS-endo-degree n f
     ⊙SphereS-endo-degree-Susp n f = Trunc-⊙SphereS-endo-degree-Susp n [ f ]
 
+    ⊙SphereS-endo-degree-Susp' : ∀ n f
+      →  ⊙SphereS-endo-degree (S n) (Susp-fmap f , idp)
+      == Trunc-⊙SphereS-endo-degree n (Trunc-⊙SphereS-endo-in n [ f ])
+    ⊙SphereS-endo-degree-Susp' n f =
+      ⊙SphereS-endo-degree (S n) (Susp-fmap f , idp)
+        =⟨ ap
+            (Trunc-⊙SphereS-endo-degree (S n) ∘ Trunc-fmap (λ f → Susp-fmap f , idp))
+            (! $ is-equiv.f-g (Trunc-⊙SphereS-endo-out-is-equiv n) [ f ]) ⟩
+      Trunc-⊙SphereS-endo-degree (S n) (Trunc-fmap (λ f → Susp-fmap f , idp) (Trunc-fmap fst (Trunc-⊙SphereS-endo-in n [ f ])))
+        =⟨ ap (Trunc-⊙SphereS-endo-degree (S n))
+            (Trunc-fmap-∘ (λ f → Susp-fmap f , idp) fst (Trunc-⊙SphereS-endo-in n [ f ])) ⟩
+      Trunc-⊙SphereS-endo-degree (S n) (Trunc-fmap ⊙Susp-fmap (Trunc-⊙SphereS-endo-in n [ f ]))
+        =⟨ Trunc-⊙SphereS-endo-degree-Susp n (Trunc-⊙SphereS-endo-in n [ f ]) ⟩
+      Trunc-⊙SphereS-endo-degree n (Trunc-⊙SphereS-endo-in n [ f ])
+        =∎
+
     ⊙SphereS-endo-degree-base-indep : ∀ n {f g}
       → fst f ∼ fst g
       → ⊙SphereS-endo-degree n f == ⊙SphereS-endo-degree n g
@@ -126,6 +150,7 @@ module groups.SphereEndomorphism where
       ∙ ap (λ f → ⊙SphereS-endo-degree (S n) (Susp-fmap f , idp)) (λ= f∼g)
       ∙ ⊙SphereS-endo-degree-Susp n g
 
+{-
   Trunc-⊙LiftSphereS-endo-degree : ∀ {i} n → Trunc-⊙LiftSphere-endo {i} (S n) → ℤ
   Trunc-⊙LiftSphereS-endo-degree {i} n = is-equiv.g (Trunc-⊙LiftSphereS-endo-⊙group-is-infinite-cyclic {i} n)
 
@@ -155,3 +180,4 @@ module groups.SphereEndomorphism where
       ! (⊙LiftSphereS-endo-degree-Susp {i} n f)
       ∙ ap (λ f → ⊙LiftSphereS-endo-degree {i} (S n) (⊙Lift-fmap (Susp-fmap (lower ∘ f ∘ lift) , idp))) (λ= f∼g)
       ∙ ⊙LiftSphereS-endo-degree-Susp {i} n g
+-}

@@ -16,6 +16,7 @@ record CoHSpaceStructure {i} (X : Ptd i) : Type i where
     ⊙unit-l : ⊙projr ⊙∘ ⊙coμ ⊙∼ ⊙idf X
     ⊙unit-r : ⊙projl ⊙∘ ⊙coμ ⊙∼ ⊙idf X
 
+{-
 module _ {i j : ULevel} {X : Ptd i} (CHSS : CoHSpaceStructure X) where
 
   open CoHSpaceStructure CHSS
@@ -48,3 +49,4 @@ module _ {i j : ULevel} {X : Ptd i} (CHSS : CoHSpaceStructure X) where
     ; ⊙unit-l = ⊙app= lemma-l
     ; ⊙unit-r = ⊙app= lemma-r
     }
+-}
