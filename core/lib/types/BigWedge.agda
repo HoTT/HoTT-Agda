@@ -82,7 +82,7 @@ module _ {i₀ i₁ j} {A₀ : Type i₀} {A₁ : Type i₁}
   ⊙BigWedge-emap-l : ⊙BigWedge (X ∘ –> Aeq) ⊙≃ ⊙BigWedge X
   ⊙BigWedge-emap-l = ≃-to-⊙≃ BigWedge-emap-l idp
 
-module _ {i} {A : Type i} (X : A → Ptd i) where
+module _ {i j} {A : Type i} (X : A → Ptd j) where
 
   extract-glue-from-BigWedge-is-const :
     ∀ bw → extract-glue {s = bigwedge-span X} bw == north
@@ -145,3 +145,21 @@ module _ {i} (Pick : Bool → Ptd i) where
             false → ↓-∘=idf-from-square g f $
               (ap (ap g) (F.glue-β false) ∙ G.glue-β) ∙v⊡
               lt-square (! (bwglue true)) ⊡h vid-square})
+
+module _ {i j} {A : Type i} (dec : has-dec-eq A) (X : A → Ptd j) (a : A) where
+
+  ⊙bwproj-in : (a' : A) → X a' ⊙→ X a
+  ⊙bwproj-in a' with dec a a'
+  ... | inl idp = ⊙idf _
+  ... | inr _ = ⊙cst
+
+  module BigWedgeProj = BigWedgeRec
+    (pt (X a))
+    (λ a → fst (⊙bwproj-in a))
+    (λ a → ! (snd (⊙bwproj-in a)))
+
+  bwproj : BigWedge X → de⊙ (X a)
+  bwproj = BigWedgeProj.f
+
+  ⊙bwproj : ⊙BigWedge X ⊙→ X a
+  ⊙bwproj = bwproj , idp

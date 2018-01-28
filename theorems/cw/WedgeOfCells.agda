@@ -6,17 +6,17 @@ open import homotopy.PushoutSplit
 open import homotopy.DisjointlyPointedSet
 open import cw.CW
 
-module cw.WedgeOfCells {i} {n} (⊙skel : ⊙Skeleton {i} (S n)) where
+module cw.WedgeOfCells {i} {n} (skel : Skeleton {i} (S n)) where
 
 Xₙ/Xₙ₋₁ : Ptd i
-Xₙ/Xₙ₋₁ = ⊙Cofiber (⊙cw-incl-last ⊙skel)
+Xₙ/Xₙ₋₁ = ⊙[ Cofiber (cw-incl-last skel) , cfbase ]
 
 private
   cells : Type i
-  cells = ⊙cells-last ⊙skel
+  cells = cells-last skel
 
-  attaching : cells → (Sphere n → de⊙ ⊙⟦ ⊙skel ⟧₋₁)
-  attaching = ⊙attaching-last ⊙skel
+  attaching : cells → (Sphere n → ⟦ skel ⟧₋₁)
+  attaching = attaching-last skel
 
   {- this is also a cofiber -}
   BigWedgeSusp : Type i

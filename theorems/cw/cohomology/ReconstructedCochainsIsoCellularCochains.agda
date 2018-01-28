@@ -27,7 +27,7 @@ module cw.cohomology.ReconstructedCochainsIsoCellularCochains {i : ULevel}
       ∘eᴳ ×ᴳ-emap (Πᴳ₁-Unit ⁻¹ᴳ) (CX₀-β ⊙skel 0 ac)
     rcc-iso-ccc-nth ⊙skel {m = S m} (inl idp) ac
       =   FreeAbGroup-extend-iso (C2-abgroup 0)
-      ∘eᴳ CXₙ/Xₙ₋₁-β-diag ⊙skel ac
+      ∘eᴳ CXₙ/Xₙ₋₁-diag-β ⊙skel ac
     rcc-iso-ccc-nth ⊙skel {m = O} (inr ltS) ac =
       rcc-iso-ccc-nth (⊙cw-init ⊙skel) (inl idp) (⊙init-has-cells-with-choice ⊙skel ac)
     rcc-iso-ccc-nth ⊙skel {m = S m} (inr ltS) ac =

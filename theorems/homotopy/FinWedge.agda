@@ -30,24 +30,39 @@ module _ {i} {I} {X : Fin I → Ptd i} where
   fwglue : (<I : Fin I) → fwbase == fwin <I (pt (X <I))
   fwglue = cfglue
 
-  fwproj-basis : ∀ <I → ∀ <I' → (X <I' ⊙→ X <I)
-  fwproj-basis <I = Fin-basis (λ <I' → ⊙[ X <I' ⊙→ X <I , ⊙cst ]) <I (⊙idf _)
+  module _ (<I : Fin I) where
 
-  module FinWedgeProj (<I : Fin I)
-    = BigWedgeRec (pt (X <I))
-        (fst ∘ fwproj-basis <I)
-        (! ∘ snd ∘ fwproj-basis <I)
+    ⊙fwproj-in : ∀ <I' → (X <I' ⊙→ X <I)
+    ⊙fwproj-in = Fin-basis (λ <I' → ⊙[ X <I' ⊙→ X <I , ⊙cst ]) <I (⊙idf _)
 
-  fwproj : ∀ <I → FinWedge X → de⊙ (X <I)
-  fwproj = FinWedgeProj.f
+    module FinWedgeProj = BigWedgeRec
+      (pt (X <I)) (fst ∘ ⊙fwproj-in)
+      (! ∘ snd ∘ ⊙fwproj-in)
 
-  ⊙fwproj : ∀ <I → ⊙FinWedge X ⊙→ X <I
-  ⊙fwproj <I = fwproj <I , idp
+    fwproj : FinWedge X → de⊙ (X <I)
+    fwproj = FinWedgeProj.f
 
-  fwproj-fwin-diag : ∀ <I → fwproj <I ∘ fwin <I ∼ idf _
-  fwproj-fwin-diag <I x = ap (λ f → fst f x)
-    (Fin-basis-diag (λ <I' → ⊙[ X <I' ⊙→ X <I , ⊙cst ]) <I (⊙idf _))
-  
+    ⊙fwproj : ⊙FinWedge X ⊙→ X <I
+    ⊙fwproj = fwproj , idp
+
+    fwproj-fwin-diag : fwproj ∘ fwin <I ∼ idf _
+    fwproj-fwin-diag x = ap (λ f → fst f x)
+      (Fin-basis-diag (λ <I' → ⊙[ X <I' ⊙→ X <I , ⊙cst ]) <I (⊙idf _))
+
+    fwproj-fwin-≠ : ∀ {<J} → <I ≠ <J → fwproj ∘ fwin <J ∼ cst (pt (X <I))
+    fwproj-fwin-≠ neq x = ap (λ f → fst f x)
+      (Fin-basis-≠ (λ <I' → ⊙[ X <I' ⊙→ X <I , ⊙cst ]) <I (⊙idf _) neq)
+
+    ⊙fwproj-in-is-⊙bwproj-in : ⊙fwproj-in ∼ ⊙bwproj-in Fin-has-dec-eq X <I
+    ⊙fwproj-in-is-⊙bwproj-in <I' with Fin-has-dec-eq <I <I'
+    ... | inl idp = Fin-basis-diag (λ <I' → ⊙[ X <I' ⊙→ X <I , ⊙cst ]) <I (⊙idf _)
+    ... | inr neq = Fin-basis-≠ (λ <I' → ⊙[ X <I' ⊙→ X <I , ⊙cst ]) <I (⊙idf _) neq
+
+    fwproj-is-bwproj : fwproj ∼ bwproj Fin-has-dec-eq X <I
+    fwproj-is-bwproj x =
+      ap (λ ⊙in → BigWedgeRec.f (pt (X <I)) (fst ∘ ⊙in) (! ∘ snd ∘ ⊙in) x)
+        (λ= ⊙fwproj-in-is-⊙bwproj-in)
+
 module _ {i} n {I} {X : Fin (ℕ-S^' (S n) I) → Ptd i} where
 
   fwproj-fwin-early : ∀ <I
