@@ -19,6 +19,7 @@ record CogroupStructure {i} (X : Ptd i) : Type i where
     ⊙assoc : ⊙–> (⊙∨-assoc X X X) ⊙∘ ⊙∨-fmap ⊙coμ (⊙idf X) ⊙∘ ⊙coμ
           ⊙∼ ⊙∨-fmap (⊙idf X) ⊙coμ ⊙∘ ⊙coμ
 
+{-
 module _ {i j : ULevel} {X : Ptd i} (CGS : CogroupStructure X) where
 
   open CogroupStructure CGS
@@ -128,7 +129,7 @@ module _ {i j : ULevel} {X : Ptd i} (CGS : CogroupStructure X) where
     ; ⊙inv-l = ⊙app= lemma-inv
     ; ⊙assoc = ⊙app= lemma-assoc
     }
-
+-}
 
 module _ {i j} {X : Ptd i} (cogroup-struct : CogroupStructure X) (Y : Ptd j) where
 

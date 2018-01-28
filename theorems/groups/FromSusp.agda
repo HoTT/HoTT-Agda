@@ -232,6 +232,7 @@ module _ {i} (X : Ptd i) where
   Trunc-Susp⊙→-group : ∀ {j} (Y : Ptd j) → Group (lmax i j)
   Trunc-Susp⊙→-group Y = Trunc-group (Susp⊙→-group-structure Y)
 
+{-
 module _ {i j} (X : Ptd i) where
 
   Lift-Susp-co-h-space-structure : CoHSpaceStructure (⊙Lift {j = j} (⊙Susp X))
@@ -247,3 +248,4 @@ module _ {i j} (X : Ptd i) where
 
   Trunc-LiftSusp⊙→-group : ∀ {k} (Y : Ptd k) → Group (lmax (lmax i j) k)
   Trunc-LiftSusp⊙→-group Y = Trunc-group (LiftSusp⊙→-group-structure Y)
+-}

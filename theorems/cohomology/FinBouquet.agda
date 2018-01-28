@@ -36,8 +36,8 @@ abstract
         (λ <I → CEl-fmap (ℕ-to-ℤ n) (⊙fwproj <I)
           (CEl-fmap (ℕ-to-ℤ n) ⊙lift
             (GroupIso.g (C-Sphere-diag n) (g <I))))
-  inverse-C-FinBouquet-β n I g =
-    GroupIso.g (C-FinBouquet n I) g
+  inverse-C-FinBouquet-diag-β n I g =
+    GroupIso.g (C-FinBouquet-diag n I) g
       =⟨ idp ⟩
     CEl-fmap (ℕ-to-ℤ n) (⊙<– (⊙BigWedge-emap-r (λ _ → ⊙lower-equiv)))
       (GroupIso.g (C-finite-additive-iso (ℕ-to-ℤ n) (FinBouquetLift-family I n))

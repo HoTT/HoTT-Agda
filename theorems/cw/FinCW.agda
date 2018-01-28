@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT renaming (pt to pt⊙)
-open import homotopy.DisjointlyPointedSet
 open import cw.CW
 
 module cw.FinCW where
@@ -64,10 +63,10 @@ record ⊙FinSkeleton (n : ℕ) : Type₁ where
 fcw-init : ∀ {n} → FinSkeleton (S n) → FinSkeleton n
 fcw-init (attached-fin-skeleton skel _ _) = skel
 
-{-
-⊙cw-init : ∀ {n} → ⊙Skeleton (S n) → ⊙Skeleton n
-⊙cw-init (⊙skeleton skel pt dec) = ⊙skeleton (cw-init skel) pt dec
+⊙fcw-init : ∀ {n} → ⊙FinSkeleton (S n) → ⊙FinSkeleton n
+⊙fcw-init (⊙fin-skeleton skel pt) = ⊙fin-skeleton (fcw-init skel) pt
 
+{-
 cw-take : ∀ {m n : ℕ} (m≤n : m ≤ n) → Skeleton n → Skeleton m
 cw-take (inl idp)        skel = skel
 cw-take (inr ltS)        skel = cw-init skel

@@ -439,6 +439,7 @@ module _ {i j k} (X : Ptd i) (Y : Ptd j) (Z : Ptd k) where
   ⊙∨-assoc : (X ⊙∨ Y) ⊙∨ Z ⊙≃ X ⊙∨ (Y ⊙∨ Z)
   ⊙∨-assoc = ≃-to-⊙≃ ∨-assoc idp
 
+{-
 module _ {i₀ i₁ j₀ j₁ k₀ k₁}
   {X₀ : Ptd i₀} {Y₀ : Ptd j₀} {Z₀ : Ptd k₀}
   {X₁ : Ptd i₁} {Y₁ : Ptd j₁} {Z₁ : Ptd k₁}
@@ -491,6 +492,7 @@ module _ {i₀ i₁ j₀ j₁ k₀ k₁}
           =∎))
     ,
     idp
+-}
 
 module _ {i j k l} {X : Ptd i} {Y : Ptd j} {Z : Ptd k} {W : Ptd l}
   (f : X ⊙→ W) (g : Y ⊙→ W) (h : Z ⊙→ W) where

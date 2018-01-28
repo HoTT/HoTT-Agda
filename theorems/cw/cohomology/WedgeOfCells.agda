@@ -15,14 +15,14 @@ open import cw.WedgeOfCells (⊙Skeleton.skel ⊙skel)
 
 module _ (m : ℤ) where
   CXₙ/Xₙ₋₁ : Group i
-  CXₙ/Xₙ₋₁ = C m Xₙ/Xₙ₋₁
+  CXₙ/Xₙ₋₁ = C m ⊙Xₙ/Xₙ₋₁
 
   CEl-Xₙ/Xₙ₋₁ : Type i
   CEl-Xₙ/Xₙ₋₁ = Group.El CXₙ/Xₙ₋₁
 
   abstract
     CXₙ/Xₙ₋₁-is-abelian : is-abelian CXₙ/Xₙ₋₁
-    CXₙ/Xₙ₋₁-is-abelian = C-is-abelian m Xₙ/Xₙ₋₁
+    CXₙ/Xₙ₋₁-is-abelian = C-is-abelian m ⊙Xₙ/Xₙ₋₁
 
   CXₙ/Xₙ₋₁-abgroup : AbGroup i
   CXₙ/Xₙ₋₁-abgroup = CXₙ/Xₙ₋₁ , CXₙ/Xₙ₋₁-is-abelian

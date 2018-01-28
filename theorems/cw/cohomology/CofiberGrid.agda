@@ -51,6 +51,10 @@ module cw.cohomology.CofiberGrid {i j k}
   C/B-to-E : C/B → E
   C/B-to-E = C/BToE.f
 
+  C/B-to-E-glue-β : ∀ x →
+    ap C/B-to-E (glue x) == glue (cfcod x) ∙' ap cfcod (glue x)
+  C/B-to-E-glue-β = HSplit.split-glue-β
+
   private
     module DToC/B = HSplit.Inner
     D-to-C/B : D → C/B
