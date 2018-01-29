@@ -3,11 +3,12 @@
 open import lib.Basics
 open import lib.NType2
 open import lib.types.Empty
-open import lib.types.Sigma
-open import lib.types.Pi
 open import lib.types.Group
-open import lib.types.Nat
+open import lib.types.Int
 open import lib.types.List
+open import lib.types.Nat
+open import lib.types.Pi
+open import lib.types.Sigma
 
 module lib.types.Word {i} where
 
@@ -35,6 +36,12 @@ module _ {A : Type i} where
   Word-flip-flip : ∀ w → Word-flip (Word-flip w) == w
   Word-flip-flip nil = idp
   Word-flip-flip (x :: l) = ap2 _::_ (flip-flip x) (Word-flip-flip l)
+
+  Word-exp : A → ℤ → Word A
+  Word-exp a (pos 0) = nil
+  Word-exp a (pos (S n)) = inl a :: Word-exp a (pos n)
+  Word-exp a (negsucc 0) = inr a :: nil
+  Word-exp a (negsucc (S n)) = inr a :: Word-exp a (negsucc n)
 
 module _ {A : Type i} {j} (G : Group j) where
   private

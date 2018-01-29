@@ -74,6 +74,9 @@ Fin-basis-early : ∀ {i} m {I : ℕ} (X : Fin (ℕ-S^' (S m) I) → Ptd i) <I g
   == pt (X (Fin-S^' (S m) <I))
 Fin-basis-early m = Fin-basis-early' m O
 
+Fin-to-≠ : ∀ {n} (<n : Fin n) → fst <n ≠ n
+Fin-to-≠ <n = <-to-≠ (snd <n)
+
 Fin-prop : ℕ → SubtypeProp ℕ lzero
 Fin-prop n = ((_< n) , λ _ → <-is-prop)
 
@@ -83,6 +86,35 @@ abstract
 
   Fin-has-dec-eq : {n : ℕ} → has-dec-eq (Fin n)
   Fin-has-dec-eq {n} = Subtype-has-dec-eq (Fin-prop n) ℕ-has-dec-eq
+
+private
+  Fin-pred=-type : {n : ℕ} → Fin n → Fin n → Type₀
+  Fin-pred=-type (_ , ltSR _) (_ , ltS) = ⊤
+  Fin-pred=-type (_ , ltS) (_ , ltSR _) = ⊤
+  Fin-pred=-type (m , ltS) (n , ltS) = m == n :> ℕ
+  Fin-pred=-type {S n} (m , ltSR m<n) (o , ltSR o<n) = (m , m<n) == (o , o<n) :> Fin n
+
+  Fin-pred= : {n : ℕ} {x y : Fin n} → x == y → Fin-pred=-type x y
+  Fin-pred= {x = (_ , ltS)} idp = idp
+  Fin-pred= {x = (_ , ltSR _)} idp = idp
+
+abstract
+  Fin-S-inj : ∀ {n} → is-inj (Fin-S {n = n})
+  Fin-S-inj _ _ = Fin-pred=
+
+  Fin-S^-inj : ∀ {n} m → is-inj (Fin-S^ {n = n} m)
+  Fin-S^-inj O _ _ p = p
+  Fin-S^-inj (S n) _ _ p = Fin-S^-inj n _ _ (Fin-S-inj _ _ p)
+
+  Fin-S^'-inj : ∀ {n} m → is-inj (Fin-S^' {n = n} m)
+  Fin-S^'-inj O _ _ p = p
+  Fin-S^'-inj (S n) _ _ p = Fin-S-inj _ _ (Fin-S^'-inj n _ _ p)
+
+  Fin-S^'-late-≠ : ∀ n {m} (<m : Fin m) → Fin-S^' (S n) <m ≠ Fin-S^' n (m , ltS)
+  Fin-S^'-late-≠ n <m p =  Fin-to-≠ <m (ap fst (Fin-S^'-inj n _ _ p))
+
+  Fin-S^'-early-≠ : ∀ n {m} (<m : Fin m) → Fin-S^' n (m , ltS) ≠ Fin-S^' (S n) <m
+  Fin-S^'-early-≠ n <m = Fin-S^'-late-≠ n <m ∘ !
 
 Fin-equiv-Empty : Fin 0 ≃ Empty
 Fin-equiv-Empty = equiv to from to-from from-to where

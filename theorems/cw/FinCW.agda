@@ -186,9 +186,9 @@ FinSkeleton-has-cells-with-dec-eq {n = S n} fin-skel =
 
 FinSkeleton-has-cells-with-choice : ∀ t {n} (fin-skel : FinSkeleton n) j
   → has-cells-with-choice t (FinSkeleton-realize fin-skel) j
-FinSkeleton-has-cells-with-choice t {n = O} fin-skel j = Fin-has-choice t _ j
+FinSkeleton-has-cells-with-choice t {n = O} fin-skel j = Fin-has-choice t j
 FinSkeleton-has-cells-with-choice t {n = S n} fin-skel j =
-  FinSkeleton-has-cells-with-choice t (fcw-init fin-skel) j , Fin-has-choice t _ j
+  FinSkeleton-has-cells-with-choice t (fcw-init fin-skel) j , Fin-has-choice t j
 
 ⊙FinSkeleton-has-cells-with-choice : ∀ t {n} (fin-skel : ⊙FinSkeleton n) j
   → ⊙has-cells-with-choice t (⊙FinSkeleton-realize fin-skel) j

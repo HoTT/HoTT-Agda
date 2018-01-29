@@ -13,7 +13,7 @@ open import cohomology.FinWedge cohomology-theory
 open import cohomology.Bouquet OT
 
 C-FinBouquet-diag : ∀ n I → C (ℕ-to-ℤ n) (⊙FinBouquet I n) ≃ᴳ Πᴳ (Fin I) (λ _ → C2 0)
-C-FinBouquet-diag n I = C-Bouquet-diag n (Fin I) (Fin-has-choice 0 I lzero)
+C-FinBouquet-diag n I = C-Bouquet-diag n (Fin I) (Fin-has-choice 0 lzero)
 
 abstract
   C-FinBouquet-diag-β : ∀ n I g <I

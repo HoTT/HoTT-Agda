@@ -242,3 +242,11 @@ module _ {A : Type i} {j} (G : AbGroup j) where
 
   FreeAbGroup-extend-iso : Πᴳ A (λ _ → G.grp) ≃ᴳ hom-group (FreeAbGroup.grp A) G
   FreeAbGroup-extend-iso = FreeAbGroup-extend-hom , FreeAbGroup-extend-is-equiv
+
+{- relation with [Word-exp] -}
+
+module _ {A : Type i} where
+
+  postulate
+    FormalSumRel-pres-exp : ∀ (a : A) z →
+      fs[ Word-exp a z ] == GroupStructure.exp (FormalSum-group-structure A) fs[ inl a :: nil ] z
