@@ -41,13 +41,22 @@ module cw.DegreeByProjection {i} where
       points-dec-eq = cells-nth-has-dec-eq (inr ltS) skel dec
       endpoint = attaching-last skel
 
-    -- Maybe [true] can or should be mapped to [-1]. Not sure.
+    -- When [true] matches, [true] will be sent to [false],
+    -- which is bad.
+    degree-true : ℤ
+    degree-true with points-dec-eq (endpoint line true) point
+    degree-true | inl _ = -1
+    degree-true | inr _ = 0
+
+    -- When [false] matches, [false] will be sent to [false],
+    -- which is good.
+    degree-false : ℤ
+    degree-false with points-dec-eq (endpoint line false) point
+    degree-false | inl _ = 1
+    degree-false | inr _ = 0
+
     degree : ℤ
-    degree with points-dec-eq (endpoint line true) point
-    degree | inl _ = 1
-    degree | inr _ with points-dec-eq (endpoint line false) point
-    degree | inr _ | inl _ = -1
-    degree | inr _ | inr _ = 0
+    degree = degree-false ℤ+ degree-true
 
   degree-last : ∀ {n} (skel : Skeleton {i} (S n))
     → has-cells-with-dec-eq skel
