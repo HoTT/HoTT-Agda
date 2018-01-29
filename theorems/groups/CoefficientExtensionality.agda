@@ -2,9 +2,9 @@
 
 open import HoTT
 
-module groups.CoefficientExtensionality {i} {A : Type i} where
+module groups.CoefficientExtensionality where
 
-module _ (dec : has-dec-eq A) where
+module _ {i} {A : Type i} (dec : has-dec-eq A) where
 
   Word-coef : Word A → (A → ℤ)
   Word-coef nil a = 0
@@ -73,22 +73,16 @@ module _ (dec : has-dec-eq A) where
   -- Theorem : if coef w a == 0 then FormalSumRel w nil
 
   private
-    exp : A → ℤ → Word A
-    exp a (pos 0) = nil
-    exp a (pos (S n)) = inl a :: exp a (pos n)
-    exp a (negsucc 0) = inr a :: nil
-    exp a (negsucc (S n)) = inr a :: exp a (negsucc n)
-
     abstract
-      exp-succ : ∀ a z → FormalSumRel (inl a :: exp a z) (exp a (succ z))
-      exp-succ a (pos _) = fsr-refl idp
-      exp-succ a (negsucc 0) = fsr-flip (inl a) nil
-      exp-succ a (negsucc (S n)) = fsr-flip (inl a) (exp a (negsucc n))
+      Word-exp-succ : ∀ (a : A) z → FormalSumRel (inl a :: Word-exp a z) (Word-exp a (succ z))
+      Word-exp-succ a (pos _) = fsr-refl idp
+      Word-exp-succ a (negsucc 0) = fsr-flip (inl a) nil
+      Word-exp-succ a (negsucc (S n)) = fsr-flip (inl a) (Word-exp a (negsucc n))
 
-      exp-pred : ∀ a z → FormalSumRel (inr a :: exp a z) (exp a (pred z))
-      exp-pred a (pos 0) = fsr-refl idp
-      exp-pred a (pos (S n)) = fsr-flip (inr a) (exp a (pos n))
-      exp-pred a (negsucc _) = fsr-refl idp
+      Word-exp-pred : ∀ (a : A) z → FormalSumRel (inr a :: Word-exp a z) (Word-exp a (pred z))
+      Word-exp-pred a (pos 0) = fsr-refl idp
+      Word-exp-pred a (pos (S n)) = fsr-flip (inr a) (Word-exp a (pos n))
+      Word-exp-pred a (negsucc _) = fsr-refl idp
 
       Word-coef-inl-eq : ∀ {a b} (p : b == a) w
         → Word-coef (inl b :: w) a == succ (Word-coef w a)
@@ -123,7 +117,7 @@ module _ (dec : has-dec-eq A) where
         left-captures-all : Word-coef w a == left-exponent
         right-list : Word A
         right-shorter : length right-list ≤ n
-        fsr : FormalSumRel w (exp a left-exponent ++ right-list)
+        fsr : FormalSumRel w (Word-exp a left-exponent ++ right-list)
 
     abstract
       collect-split : ∀ a {n} w (len=n : length w == n) → CollectSplitIH a w len=n
@@ -141,7 +135,7 @@ module _ (dec : has-dec-eq A) where
         right-shorter = ≤-trans right-shorter (inr ltS);
         fsr = fsr-trans (fsr-refl (ap (λ a → inl a :: w) b=a)) $
               fsr-trans (fsr-cons (inl a) fsr) $
-                        (FormalSumRel-cong-++-l (exp-succ a left-exponent) right-list)}
+                        (FormalSumRel-cong-++-l (Word-exp-succ a left-exponent) right-list)}
         where open CollectSplitIH (collect-split a w idp)
       ... | inr b≠a = record {
         left-exponent = left-exponent;
@@ -149,7 +143,7 @@ module _ (dec : has-dec-eq A) where
         right-list = inl b :: right-list;
         right-shorter = ≤-ap-S right-shorter;
         fsr = fsr-trans (fsr-cons (inl b) fsr) $
-          fsr-sym (FormalSumRel-swap1 (inl b) (exp a left-exponent) right-list)}
+          fsr-sym (FormalSumRel-swap1 (inl b) (Word-exp a left-exponent) right-list)}
         where open CollectSplitIH (collect-split a w idp)
       collect-split a (inr b :: w) idp with dec b a
       ... | inl b=a = record {
@@ -159,7 +153,7 @@ module _ (dec : has-dec-eq A) where
         right-shorter = ≤-trans right-shorter (inr ltS);
         fsr = fsr-trans (fsr-refl (ap (λ a → inr a :: w) b=a)) $
               fsr-trans (fsr-cons (inr a) fsr) $
-                        (FormalSumRel-cong-++-l (exp-pred a left-exponent) right-list)}
+                        (FormalSumRel-cong-++-l (Word-exp-pred a left-exponent) right-list)}
         where open CollectSplitIH (collect-split a w idp)
       ... | inr b≠a = record {
         left-exponent = left-exponent;
@@ -167,7 +161,7 @@ module _ (dec : has-dec-eq A) where
         right-list = inr b :: right-list;
         right-shorter = ≤-ap-S right-shorter;
         fsr = fsr-trans (fsr-cons (inr b) fsr) $
-          fsr-sym (FormalSumRel-swap1 (inr b) (exp a left-exponent) right-list)}
+          fsr-sym (FormalSumRel-swap1 (inr b) (Word-exp a left-exponent) right-list)}
         where open CollectSplitIH (collect-split a w idp)
 
       -- We simulate strong induction by recursing on both [m] and [n≤m].
@@ -192,7 +186,7 @@ module _ (dec : has-dec-eq A) where
           whole-is-right : FormalSumRel (inl a :: w) right-list
           whole-is-right =
             fsr-trans (fsr-cons (inl a) fsr) $
-            fsr-trans (fsr-refl (ap (λ e → inl a :: exp a e ++ right-list) left-exponent-is-minus-one)) $
+            fsr-trans (fsr-refl (ap (λ e → inl a :: Word-exp a e ++ right-list) left-exponent-is-minus-one)) $
                       fsr-flip (inl a) right-list
 
           right-zero-coef : ∀ a' → Word-coef right-list a' == 0
@@ -208,7 +202,7 @@ module _ (dec : has-dec-eq A) where
           whole-is-right : FormalSumRel (inr a :: w) right-list
           whole-is-right =
             fsr-trans (fsr-cons (inr a) fsr) $
-            fsr-trans (fsr-refl (ap (λ e → inr a :: exp a e ++ right-list) left-exponent-is-one)) $
+            fsr-trans (fsr-refl (ap (λ e → inr a :: Word-exp a e ++ right-list) left-exponent-is-one)) $
                       fsr-flip (inr a) right-list
 
           right-zero-coef : ∀ a' → Word-coef right-list a' == 0
@@ -243,7 +237,7 @@ module _ (dec : has-dec-eq A) where
   has-finite-support : (A → ℤ) → Type i
   has-finite-support f = Σ (FormalSum A) λ fs → ∀ a → f a == FormalSum-coef fs a
 
-module _ {dec : has-dec-eq A} where
+module _ {i} {A : Type i} {dec : has-dec-eq A} where
 
   abstract
     has-finite-support-is-prop : ∀ f → is-prop (has-finite-support dec f)
@@ -251,3 +245,138 @@ module _ {dec : has-dec-eq A} where
       λ{(fs₁ , match₁) (fs₂ , match₂) → pair=
         (FormalSum-coef-ext dec fs₁ fs₂ λ a → ! (match₁ a) ∙ match₂ a)
         prop-has-all-paths-↓}
+
+module _ where
+
+  private
+    abstract
+      Word-coef-exp-diag-pos : ∀ {I} (<I : Fin I) n →
+        Word-coef Fin-has-dec-eq (Word-exp <I (pos n)) <I == pos n
+      Word-coef-exp-diag-pos <I O = idp
+      Word-coef-exp-diag-pos <I (S n) with Fin-has-dec-eq <I <I
+      ... | inl _ = ap succ (Word-coef-exp-diag-pos <I n)
+      ... | inr ¬p = ⊥-rec (¬p idp)
+
+      Word-coef-exp-diag-negsucc : ∀ {I} (<I : Fin I) n →
+        Word-coef Fin-has-dec-eq (Word-exp <I (negsucc n)) <I == negsucc n
+      Word-coef-exp-diag-negsucc <I O with Fin-has-dec-eq <I <I
+      ... | inl _ = idp
+      ... | inr ¬p = ⊥-rec (¬p idp)
+      Word-coef-exp-diag-negsucc <I (S n) with Fin-has-dec-eq <I <I
+      ... | inl _ = ap pred (Word-coef-exp-diag-negsucc <I n)
+      ... | inr ¬p = ⊥-rec (¬p idp)
+
+      Word-coef-exp-diag : ∀ {I} (<I : Fin I) z →
+        Word-coef Fin-has-dec-eq (Word-exp <I z) <I == z
+      Word-coef-exp-diag <I (pos n) = Word-coef-exp-diag-pos <I n
+      Word-coef-exp-diag <I (negsucc n) = Word-coef-exp-diag-negsucc <I n
+
+      Word-coef-exp-≠-pos : ∀ {I} {<I <I' : Fin I} (_ : <I ≠ <I') n →
+        Word-coef Fin-has-dec-eq (Word-exp <I (pos n)) <I' == 0
+      Word-coef-exp-≠-pos _ O = idp
+      Word-coef-exp-≠-pos {<I = <I} {<I'} neq (S n) with Fin-has-dec-eq <I <I'
+      ... | inl p = ⊥-rec (neq p)
+      ... | inr ¬p = Word-coef-exp-≠-pos neq n
+
+      Word-coef-exp-≠-negsucc : ∀ {I} {<I <I' : Fin I} (_ : <I ≠ <I') n →
+        Word-coef Fin-has-dec-eq (Word-exp <I (negsucc n)) <I' == 0
+      Word-coef-exp-≠-negsucc {<I = <I} {<I'} neq O with Fin-has-dec-eq <I <I'
+      ... | inl p = ⊥-rec (neq p)
+      ... | inr ¬p = idp
+      Word-coef-exp-≠-negsucc {<I = <I} {<I'} neq (S n) with Fin-has-dec-eq <I <I'
+      ... | inl p = ⊥-rec (neq p)
+      ... | inr ¬p = Word-coef-exp-≠-negsucc neq n
+
+      Word-coef-exp-≠ : ∀ {I} {<I <I' : Fin I} (_ : <I ≠ <I') z →
+        Word-coef Fin-has-dec-eq (Word-exp <I z) <I' == 0
+      Word-coef-exp-≠ neq (pos n) = Word-coef-exp-≠-pos neq n
+      Word-coef-exp-≠ neq (negsucc n) = Word-coef-exp-≠-negsucc neq n
+
+    Word-sum' : ∀ (I : ℕ) {A : Type₀} (F : Fin I → A) (f : Fin I → ℤ) → Word A
+    Word-sum' 0 F f = nil
+    Word-sum' (S I) F f = Word-sum' I (F ∘ Fin-S) (f ∘ Fin-S) ++ Word-exp (F (I , ltS)) (f (I , ltS))
+
+    Word-sum : ∀ {I : ℕ} (f : Fin I → ℤ) → Word (Fin I)
+    Word-sum {I} f = Word-sum' I (idf (Fin I)) f
+
+    abstract
+      Word-coef-sum'-late : ∀ n m (I : ℕ) (f : Fin I → ℤ)
+        → Word-coef Fin-has-dec-eq (Word-sum' I (Fin-S^' (S n) ∘ Fin-S^' m) f) (Fin-S^' n (ℕ-S^' m I , ltS)) == 0
+      Word-coef-sum'-late n m 0 f = idp
+      Word-coef-sum'-late n m (S I) f =
+        Word-coef Fin-has-dec-eq
+          (Word-sum' I (Fin-S^' (S n) ∘ Fin-S^' (S m)) (f ∘ Fin-S) ++ Word-exp (Fin-S^' (S n) (Fin-S^' m (I , ltS))) (f (I , ltS)))
+          (Fin-S^' n (ℕ-S^' (S m) I , ltS))
+          =⟨ Word-coef-++ Fin-has-dec-eq
+              (Word-sum' I (Fin-S^' (S n) ∘ Fin-S^' (S m)) (f ∘ Fin-S))
+              (Word-exp (Fin-S^' (S n) (Fin-S^' m (I , ltS))) (f (I , ltS)))
+              (Fin-S^' n (ℕ-S^' (S m) I , ltS)) ⟩
+        Word-coef Fin-has-dec-eq (Word-sum' I (Fin-S^' (S n) ∘ Fin-S^' (S m)) (f ∘ Fin-S)) (Fin-S^' n (ℕ-S^' (S m) I , ltS))
+        ℤ+
+        Word-coef Fin-has-dec-eq (Word-exp (Fin-S^' (S n) (Fin-S^' m (I , ltS))) (f (I , ltS))) (Fin-S^' n (ℕ-S^' (S m) I , ltS))
+          =⟨ ap2 _ℤ+_
+              (Word-coef-sum'-late n (S m) I (f ∘ Fin-S))
+              (Word-coef-exp-≠ (Fin-S^'-late-≠ n (Fin-S^' m (I , ltS))) (f (I , ltS))) ⟩
+        0
+          =∎
+
+      Word-coef-sum' : ∀ n {I} (f : Fin I → ℤ) <I
+        → Word-coef Fin-has-dec-eq (Word-sum' I (Fin-S^' n) f) (Fin-S^' n <I) == f <I
+      Word-coef-sum' n f (I , ltS) =
+        Word-coef Fin-has-dec-eq
+          (Word-sum' I (Fin-S^' (S n)) (f ∘ Fin-S) ++ Word-exp (Fin-S^' n (I , ltS)) (f (I , ltS)))
+          (Fin-S^' n (I , ltS))
+          =⟨ Word-coef-++ Fin-has-dec-eq
+              (Word-sum' I (Fin-S^' (S n)) (f ∘ Fin-S))
+              (Word-exp (Fin-S^' n (I , ltS)) (f (I , ltS)))
+              (Fin-S^' n (I , ltS)) ⟩
+        Word-coef Fin-has-dec-eq (Word-sum' I (Fin-S^' (S n)) (f ∘ Fin-S)) (Fin-S^' n (I , ltS))
+        ℤ+
+        Word-coef Fin-has-dec-eq (Word-exp (Fin-S^' n (I , ltS)) (f (I , ltS))) (Fin-S^' n (I , ltS))
+          =⟨ ap2 _ℤ+_
+              (Word-coef-sum'-late n 0 I (f ∘ Fin-S))
+              (Word-coef-exp-diag (Fin-S^' n (I , ltS)) (f (I , ltS))) ⟩
+        f (I , ltS)
+          =∎
+      Word-coef-sum' n {I = S I} f (m , ltSR m<I) =
+        Word-coef Fin-has-dec-eq
+          (Word-sum' I (Fin-S^' (S n)) (f ∘ Fin-S) ++ Word-exp (Fin-S^' n (I , ltS)) (f (I , ltS)))
+          (Fin-S^' (S n) (m , m<I))
+          =⟨ Word-coef-++ Fin-has-dec-eq
+              (Word-sum' I (Fin-S^' (S n)) (f ∘ Fin-S))
+              (Word-exp (Fin-S^' n (I , ltS)) (f (I , ltS)))
+              (Fin-S^' (S n) (m , m<I)) ⟩
+        Word-coef Fin-has-dec-eq (Word-sum' I (Fin-S^' (S n)) (f ∘ Fin-S)) (Fin-S^' (S n) (m , m<I))
+        ℤ+
+        Word-coef Fin-has-dec-eq (Word-exp (Fin-S^' n (I , ltS)) (f (I , ltS))) (Fin-S^' (S n) (m , m<I))
+          =⟨ ap2 _ℤ+_
+              (Word-coef-sum' (S n) {I} (f ∘ Fin-S) (m , m<I))
+              (Word-coef-exp-≠ (Fin-S^'-early-≠ n (m , m<I)) (f (I , ltS))) ⟩
+        f (m , ltSR m<I) ℤ+ 0
+          =⟨ ℤ+-unit-r _ ⟩
+        f (m , ltSR m<I)
+          =∎
+
+  FormalSum-sum' : ∀ n (I : ℕ) (f : Fin I → ℤ) → FormalSum (Fin (ℕ-S^' n I))
+  FormalSum-sum' n O f = fs[ nil ]
+  FormalSum-sum' n (S I) f =
+    Group.comp (FreeAbGroup.grp (Fin (ℕ-S^' (S n) I)))
+      (FormalSum-sum' (S n) I (f ∘ Fin-S))
+      (Group.exp (FreeAbGroup.grp (Fin (ℕ-S^' (S n) I))) fs[ inl (Fin-S^' n (I , ltS)) :: nil ] (f (I , ltS)))
+
+  FormalSum-sum : ∀ {I : ℕ} (f : Fin I → ℤ) → FormalSum (Fin I)
+  FormalSum-sum {I} = FormalSum-sum' 0 I
+
+  private
+    abstract
+      FormalSum-sum'-β : ∀ n (I : ℕ) (f : Fin I → ℤ)
+        → FormalSum-sum' n I f == fs[ Word-sum' I (Fin-S^' n) f ]
+      FormalSum-sum'-β n O f = idp
+      FormalSum-sum'-β n (S I) f =
+        ap2 (Group.comp (FreeAbGroup.grp (Fin (ℕ-S^' (S n) I))))
+          (FormalSum-sum'-β (S n) I (f ∘ Fin-S))
+          (! (FormalSumRel-pres-exp (Fin-S^' n (I , ltS)) (f (I , ltS))))
+
+  Fin→-has-finite-support : ∀ {I} (f : Fin I → ℤ) → has-finite-support Fin-has-dec-eq f
+  Fin→-has-finite-support {I} f = FormalSum-sum f , lemma
+    where abstract lemma = λ <I → ! (ap (λ fs → FormalSum-coef Fin-has-dec-eq fs <I) (FormalSum-sum'-β 0 I f) ∙ Word-coef-sum' 0 f <I)

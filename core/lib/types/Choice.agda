@@ -166,8 +166,8 @@ equiv-preserves-choice {n = n} {A} {B} (f , f-ise) A-hc C = is-eq to from to-fro
         [ g ]
           =∎)
 
-Fin-has-choice : ∀ (n : ℕ₋₂) m l → has-choice n (Fin m) l
-Fin-has-choice _ 0 _ = equiv-preserves-choice
+Fin-has-choice : ∀ (n : ℕ₋₂) {m} l → has-choice n (Fin m) l
+Fin-has-choice _ {O} _ = equiv-preserves-choice
   (Fin-equiv-Empty ⁻¹) Empty-has-choice
-Fin-has-choice n (S m) l = equiv-preserves-choice
-  (Fin-equiv-Coprod ⁻¹) (Coprod-has-choice (Fin-has-choice n m l) Unit-has-choice)
+Fin-has-choice n {S m} l = equiv-preserves-choice
+  (Fin-equiv-Coprod ⁻¹) (Coprod-has-choice (Fin-has-choice n l) Unit-has-choice)

@@ -22,10 +22,10 @@ module _ {I} (Z : Fin I → Ptd₀) where
   CEl-finite-additive = GroupHom.f C-finite-additive
 
   C-finite-additive-is-equiv : is-equiv CEl-finite-additive
-  C-finite-additive-is-equiv = C-additive-is-equiv n Z (Fin-has-choice 0 I lzero)
+  C-finite-additive-is-equiv = C-additive-is-equiv n Z (Fin-has-choice 0 lzero)
 
   C-finite-additive-iso : C n (⊙FinWedge Z) ≃ᴳ Πᴳ (Fin I) (C n ∘ Z)
-  C-finite-additive-iso = C-additive-iso n Z (Fin-has-choice 0 I lzero)
+  C-finite-additive-iso = C-additive-iso n Z (Fin-has-choice 0 lzero)
 
   {- an explicit inverse function -}
   alt-inverse-C-finite-additive :
