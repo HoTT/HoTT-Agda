@@ -20,7 +20,7 @@ module cw.cohomology.ReconstructedCochainsIsoCellularCochains {i : ULevel}
       → ⊙has-cells-with-choice 0 ⊙skel i
       →  AbGroup.grp (RCC.cochain-template ⊙skel (inl m≤n))
       ≃ᴳ hom-group (AbGroup.grp (CCC.chain-template (⊙Skeleton.skel ⊙skel) (inl m≤n))) (C2-abgroup 0)
-    rcc-iso-ccc-nth ⊙skel {m = O}   (inl idp) ac
+    rcc-iso-ccc-nth ⊙skel {m = O} (inl idp) ac
       =   FreeAbGroup-extend-iso (C2-abgroup 0)
       ∘eᴳ Πᴳ-emap-l (λ _ → C2 0) (separable-unite-equiv (⊙Skeleton.pt-dec ⊙skel))
       ∘eᴳ Πᴳ₁-⊔-iso-×ᴳ {A = Unit} {B = MinusPoint (⊙cw-head ⊙skel)} (λ _ → C2 0) ⁻¹ᴳ

@@ -172,6 +172,7 @@ cw-incl-tail (inr (ltSR lt)) skel =
 -- Extra conditions on CW complexes
 
 -- 1. decidable equalities
+
 FinSkeleton-has-cells-with-dec-eq : ∀ {n} (fin-skel : FinSkeleton n)
   → has-cells-with-dec-eq (FinSkeleton-realize fin-skel)
 FinSkeleton-has-cells-with-dec-eq {n = O} fin-skel = Fin-has-dec-eq

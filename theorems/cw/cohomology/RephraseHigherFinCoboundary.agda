@@ -8,7 +8,7 @@ open import groups.SphereEndomorphism
 open import cw.CW
 open import cw.FinCW
 open import cw.WedgeOfCells
-open import cw.DegreeByProjection {lzero}
+open import cw.FinBoundary
 open import cohomology.Theory
 
 module cw.cohomology.RephraseHigherFinCoboundary (OT : OrdinaryTheory lzero)
@@ -41,7 +41,7 @@ open import cw.cohomology.RephraseHigherFinCoboundaryAbstractDefs OT ⊙fin-skel
 abstract
   rephrase-cw-co∂-last-in-degree : ∀ g
     → GroupIso.f (CXₙ/Xₙ₋₁-diag-β ⊙skel ac) (GroupHom.f cw-co∂-last (GroupIso.g (CXₙ/Xₙ₋₁-diag-β ⊙skel₋₁ ac₋₁) g))
-    ∼ λ <I → Group.sum (C2 0) (λ <I₋₁ → Group.exp (C2 0) (g <I₋₁) (degree-last skel dec <I <I₋₁))
+    ∼ λ <I → Group.sum (C2 0) (λ <I₋₁ → Group.exp (C2 0) (g <I₋₁) (fdegree-last fin-skel <I <I₋₁))
   rephrase-cw-co∂-last-in-degree g <I =
     GroupIso.f (C-FinBouquet-diag (S (S n)) I)
       (CEl-fmap (ℕ-to-ℤ (S (S n))) (⊙–> (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ skel))

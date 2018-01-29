@@ -358,11 +358,9 @@ module _ where
           =∎
 
   FormalSum-sum' : ∀ n (I : ℕ) (f : Fin I → ℤ) → FormalSum (Fin (ℕ-S^' n I))
-  FormalSum-sum' n O f = fs[ nil ]
-  FormalSum-sum' n (S I) f =
-    Group.comp (FreeAbGroup.grp (Fin (ℕ-S^' (S n) I)))
-      (FormalSum-sum' (S n) I (f ∘ Fin-S))
-      (Group.exp (FreeAbGroup.grp (Fin (ℕ-S^' (S n) I))) fs[ inl (Fin-S^' n (I , ltS)) :: nil ] (f (I , ltS)))
+  FormalSum-sum' n I f =
+    Group.sum (FreeAbGroup.grp (Fin (ℕ-S^' n I)))
+      (λ <I → Group.exp (FreeAbGroup.grp (Fin (ℕ-S^' n I))) fs[ inl (Fin-S^' n <I) :: nil ] (f <I))
 
   FormalSum-sum : ∀ {I : ℕ} (f : Fin I → ℤ) → FormalSum (Fin I)
   FormalSum-sum {I} = FormalSum-sum' 0 I

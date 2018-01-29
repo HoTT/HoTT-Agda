@@ -1,11 +1,11 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
-open import cw.CW
 open import homotopy.Bouquet
 open import homotopy.SphereEndomorphism
 open import groups.SphereEndomorphism
 open import groups.CoefficientExtensionality
+open import cw.CW
 open import cw.WedgeOfCells
 
 module cw.DegreeByProjection {i} where
@@ -109,6 +109,12 @@ module cw.DegreeByProjection {i} where
     → cells-last skel → FreeAbGroup.El (cells-last (cw-init skel))
   boundary'-last skel dec fin-sup upper = fst ((snd fin-sup) upper)
 
+  boundary-last : ∀ {n} (skel : Skeleton {i} (S n)) dec
+    → has-degrees-with-finite-support skel dec
+    → FreeAbGroup.grp (cells-last skel) →ᴳ FreeAbGroup.grp (cells-last (cw-init skel))
+  boundary-last skel dec fin-sup =
+    FreeAbGroup-extend (FreeAbGroup (cells-last (cw-init skel))) (boundary'-last skel dec fin-sup)
+
   boundary'-nth : ∀ {m n} (Sm≤n : S m ≤ n) (skel : Skeleton {i} n) dec
     → has-degrees-with-finite-support skel dec
     → cells-nth Sm≤n skel → FreeAbGroup.El (cells-last (cw-init (cw-take Sm≤n skel)))
@@ -116,3 +122,12 @@ module cw.DegreeByProjection {i} where
     boundary'-last (cw-take Sm≤n skel)
       (take-has-cells-with-dec-eq Sm≤n skel dec)
       (take-has-degrees-with-finite-support Sm≤n skel dec fin-sup)
+
+  boundary-nth : ∀ {m n} (Sm≤n : S m ≤ n) (skel : Skeleton {i} n) dec
+    → has-degrees-with-finite-support skel dec
+    →  FreeAbGroup.grp (cells-nth Sm≤n skel)
+    →ᴳ FreeAbGroup.grp (cells-last (cw-init (cw-take Sm≤n skel)))
+  boundary-nth Sm≤n skel dec fin-sup =
+    FreeAbGroup-extend
+      (FreeAbGroup (cells-last (cw-init (cw-take Sm≤n skel))))
+      (boundary'-nth Sm≤n skel dec fin-sup)
