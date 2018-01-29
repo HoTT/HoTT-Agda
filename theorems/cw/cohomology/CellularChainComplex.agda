@@ -22,8 +22,7 @@ module cw.cohomology.CellularChainComplex {i : ULevel} where
       →ᴳ FreeAbGroup.grp (cells-nth m≤n skel)
     boundary-nth-template skel dec fin-sup m≤n Sm≤n path₀ path₁ =
          transportᴳ (λ lower-skel → FreeAbGroup.grp (cells-last lower-skel)) (path₀ ∙ path₁)
-      ∘ᴳ FreeAbGroup-extend (FreeAbGroup (cells-last (cw-init (cw-take Sm≤n skel))))
-           (boundary'-nth Sm≤n skel dec fin-sup)
+      ∘ᴳ boundary-nth Sm≤n skel dec fin-sup
 
   boundary-template : ∀ {n} (skel : Skeleton {i} n) dec
     → has-degrees-with-finite-support skel dec
