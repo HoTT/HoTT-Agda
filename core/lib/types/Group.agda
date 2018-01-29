@@ -237,6 +237,17 @@ module AbGroup {i} (G : AbGroup i) where
       comp (comp g₁ g₃) (comp g₂ g₄)
         =∎
 
+    diff-comp : (g₁ g₂ g₃ g₄ : El) →
+        diff (comp g₁ g₂) (comp g₃ g₄)
+        == comp (diff g₁ g₃) (diff g₂ g₄)
+    diff-comp g₁ g₂ g₃ g₄ =
+        diff (comp g₁ g₂) (comp g₃ g₄)
+          =⟨ ap (comp (comp g₁ g₂)) (inv-comp g₃ g₄ ∙ comm (inv g₄) (inv g₃)) ⟩
+        comp (comp g₁ g₂) (comp (inv g₃) (inv g₄))
+          =⟨ interchange g₁ g₂ (inv g₃) (inv g₄) ⟩
+        comp (diff g₁ g₃) (diff g₂ g₄)
+          =∎
+
 is-trivialᴳ : ∀ {i} (G : Group i) → Type i
 is-trivialᴳ G = ∀ g → g == Group.ident G
 
