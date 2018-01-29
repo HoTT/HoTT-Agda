@@ -3,13 +3,14 @@
 open import lib.Basics
 open import lib.NType2
 open import lib.types.Empty
-open import lib.types.Sigma
-open import lib.types.Pi
 open import lib.types.Group
-open import lib.types.Nat
+open import lib.types.Int
 open import lib.types.List
-open import lib.types.Word
+open import lib.types.Nat
+open import lib.types.Pi
 open import lib.types.SetQuotient
+open import lib.types.Sigma
+open import lib.types.Word
 open import lib.groups.GroupProduct
 open import lib.groups.Homomorphism
 open import lib.groups.Isomorphism
@@ -247,6 +248,13 @@ module _ {A : Type i} {j} (G : AbGroup j) where
 
 module _ {A : Type i} where
 
-  postulate
+  abstract
     FormalSumRel-pres-exp : ∀ (a : A) z →
       fs[ Word-exp a z ] == GroupStructure.exp (FormalSum-group-structure A) fs[ inl a :: nil ] z
+    FormalSumRel-pres-exp a (pos O) = idp
+    FormalSumRel-pres-exp a (pos (S O)) = idp
+    FormalSumRel-pres-exp a (pos (S (S n))) =
+      ap (Group.comp (FreeAbGroup.grp A) fs[ inl a :: nil ]) (FormalSumRel-pres-exp a (pos (S n)))
+    FormalSumRel-pres-exp a (negsucc O) = idp
+    FormalSumRel-pres-exp a (negsucc (S n)) =
+      ap (Group.comp (FreeAbGroup.grp A) fs[ inr a :: nil ]) (FormalSumRel-pres-exp a (negsucc n))
