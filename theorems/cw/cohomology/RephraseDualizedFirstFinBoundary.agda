@@ -6,8 +6,8 @@ open import cw.FinCW
 open import cw.FinBoundary
 open import cohomology.Theory
 
-module cw.cohomology.RephraseDualizedFinBoundary (OT : OrdinaryTheory lzero)
-  {n} (⊙fin-skel : ⊙FinSkeleton (S (S n))) where
+module cw.cohomology.RephraseDualizedFirstFinBoundary (OT : OrdinaryTheory lzero)
+  (⊙fin-skel : ⊙FinSkeleton 1) where
 
 open OrdinaryTheory OT
 
@@ -15,8 +15,7 @@ private
   fin-skel = ⊙FinSkeleton.skel ⊙fin-skel
   I = AttachedFinSkeleton.numCells fin-skel
   
-  fin-skel₋₁ = AttachedFinSkeleton.skel fin-skel
-  I₋₁ = AttachedFinSkeleton.numCells fin-skel₋₁
+  I₋₁ = AttachedFinSkeleton.skel fin-skel
 
 abstract
   rephrase-dualized-boundary-in-degree : ∀ g <I
