@@ -10,10 +10,10 @@ module groups.DisjointlyPointedSet where
   diff-and-separate {X = X} G f =
     f (pt X) , λ x- → Group.diff G (f (fst x-)) (f (pt X))
 
-  shift-and-merge : ∀ {i j} {X : Ptd i} (G : Group j)
+  shift-and-unite : ∀ {i j} {X : Ptd i} (G : Group j)
     → is-separable X
     → Group.El G × (MinusPoint X → Group.El G) → (de⊙ X → Group.El G)
-  shift-and-merge {X = X} G X-sep p x with X-sep x
+  shift-and-unite {X = X} G X-sep p x with X-sep x
   ... | inl _ = fst p
   ... | inr pt≠x = Group.comp G (snd p (x , pt≠x)) (fst p)
 
@@ -28,14 +28,7 @@ module groups.DisjointlyPointedSet where
                 (Group.comp (AbGroup.grp G ×ᴳ Πᴳ (MinusPoint X) (λ _ → AbGroup.grp G)))
                 (diff-and-separate grp)
       lemma f₀ f₁ = pair×= idp
-        (λ= λ x- →
-          diff (comp (f₀ (fst x-)) (f₁ (fst x-))) (comp (f₀ (pt X)) (f₁ (pt X)))
-            =⟨ ap (comp (comp (f₀ (fst x-)) (f₁ (fst x-))))
-                (inv-comp (f₀ (pt X)) (f₁ (pt X)) ∙ comm (inv (f₁ (pt X))) (inv (f₀ (pt X)))) ⟩
-          comp (comp (f₀ (fst x-)) (f₁ (fst x-))) (comp (inv (f₀ (pt X))) (inv (f₁ (pt X))))
-            =⟨ interchange (f₀ (fst x-)) (f₁ (fst x-)) (inv (f₀ (pt X))) (inv (f₁ (pt X))) ⟩
-          comp (diff (f₀ (fst x-)) (f₀ (pt X))) (diff (f₁ (fst x-)) (f₁ (pt X)))
-            =∎)
+        (λ= λ x- → diff-comp (f₀ (fst x-)) (f₁ (fst x-)) (f₀ (pt X)) (f₁ (pt X)))
 
   diff-and-separate-is-equiv : ∀ {i j} {X : Ptd i} (G : Group j)
     → is-separable X → is-equiv (diff-and-separate {X = X} G)
@@ -43,7 +36,7 @@ module groups.DisjointlyPointedSet where
     where
       open Group G
       to = diff-and-separate {X = X} G
-      from = shift-and-merge {X = X} G X-sep
+      from = shift-and-unite {X = X} G X-sep
 
       abstract
         fst-to-from : ∀ p → fst (to (from p)) == fst p
