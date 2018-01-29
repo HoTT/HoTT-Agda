@@ -22,9 +22,7 @@ module cw.cohomology.ReconstructedCochainsIsoCellularCochains {i : ULevel}
       ≃ᴳ hom-group (AbGroup.grp (CCC.chain-template (⊙Skeleton.skel ⊙skel) (inl m≤n))) (C2-abgroup 0)
     rcc-iso-ccc-nth ⊙skel {m = O} (inl idp) ac
       =   FreeAbGroup-extend-iso (C2-abgroup 0)
-      ∘eᴳ Πᴳ-emap-l (λ _ → C2 0) (separable-unite-equiv (⊙Skeleton.pt-dec ⊙skel))
-      ∘eᴳ Πᴳ₁-⊔-iso-×ᴳ {A = Unit} {B = MinusPoint (⊙cw-head ⊙skel)} (λ _ → C2 0) ⁻¹ᴳ
-      ∘eᴳ ×ᴳ-emap (Πᴳ₁-Unit ⁻¹ᴳ) (CX₀-β ⊙skel 0 ac)
+      ∘eᴳ C2×CX₀-β ⊙skel 0 ac
     rcc-iso-ccc-nth ⊙skel {m = S m} (inl idp) ac
       =   FreeAbGroup-extend-iso (C2-abgroup 0)
       ∘eᴳ CXₙ/Xₙ₋₁-diag-β ⊙skel ac

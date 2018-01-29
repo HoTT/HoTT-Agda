@@ -1,6 +1,8 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
+open import homotopy.DisjointlyPointedSet
+open import groups.DisjointlyPointedSet
 open import cohomology.Theory
 
 open import cw.CW
@@ -9,7 +11,6 @@ module cw.cohomology.TipAndAugment {i} (OT : OrdinaryTheory i)
   (⊙skel : ⊙Skeleton {i} 0) where
 
 open OrdinaryTheory OT
-open import homotopy.DisjointlyPointedSet
 open import cohomology.DisjointlyPointedSet OT
 
 module _ (m : ℤ) where
@@ -32,6 +33,16 @@ module _ (m : ℤ) where
   CX₀-β : ⊙has-cells-with-choice 0 ⊙skel i
     → CX₀ ≃ᴳ Πᴳ (MinusPoint (⊙cw-head ⊙skel)) (λ _ → C2 m)
   CX₀-β ac = C-set m (⊙cw-head ⊙skel) (snd (⊙Skeleton.skel ⊙skel)) (⊙Skeleton.pt-dec ⊙skel) ac
+
+  C2×CX₀-β : ⊙has-cells-with-choice 0 ⊙skel i
+    → C2×CX₀ ≃ᴳ Πᴳ (de⊙ (⊙cw-head ⊙skel)) (λ _ → C2 m)
+  C2×CX₀-β ac =
+    C2×CX₀
+      ≃ᴳ⟨ ×ᴳ-emap (idiso _) (CX₀-β ac) ⟩
+    C2 m ×ᴳ Πᴳ (MinusPoint (⊙cw-head ⊙skel)) (λ _ → C2 m)
+      ≃ᴳ⟨ diff-and-separate-iso {X = ⊙cw-head ⊙skel} (C2-abgroup m) (⊙Skeleton.pt-dec ⊙skel) ⁻¹ᴳ ⟩
+    Πᴳ (de⊙ (⊙cw-head ⊙skel)) (λ _ → C2 m)
+      ≃ᴳ∎
 
 abstract
   CX₀-≠-is-trivial : ∀ {m} (m≠0 : m ≠ 0)
