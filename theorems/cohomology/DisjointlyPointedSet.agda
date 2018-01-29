@@ -65,7 +65,7 @@ module cohomology.DisjointlyPointedSet {i} (OT : OrdinaryTheory i) where
       C n (⊙BigWedge {A = MinusPoint X} (λ _ → ⊙Lift ⊙Bool))
         ≃ᴳ⟨ C-additive-iso n (λ _ → ⊙Lift ⊙Bool)
               (MinusPoint-has-choice 0 (separable-has-disjoint-pt dec) ac) ⟩
-      Πᴳ (MinusPoint X) (λ _ → C n (⊙Lift ⊙Bool))
+      Πᴳ (MinusPoint X) (λ _ → C2 n)
         ≃ᴳ∎
 
   module _ {n : ℤ} (n≠0 : n ≠ 0) (X : Ptd i)
