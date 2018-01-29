@@ -6,6 +6,9 @@ open import cw.FinCW
 open import cw.FinBoundary
 open import cohomology.Theory
 
+{- The reason that RephraseDualizedFirstFinBoundary did not handle this case
+   is because [FinSkeleton n] does not compute. -}
+
 module cw.cohomology.RephraseDualizedFirstFinBoundary (OT : OrdinaryTheory lzero)
   (⊙fin-skel : ⊙FinSkeleton 1) where
 
