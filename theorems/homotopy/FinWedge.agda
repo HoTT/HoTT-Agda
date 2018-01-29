@@ -89,9 +89,64 @@ module _ {i₀ i₁} {I} {X₀ : Fin I → Ptd i₀} {X₁ : Fin I → Ptd i₁}
   ⊙FinWedge-emap-r : ⊙FinWedge X₀ ⊙≃ ⊙FinWedge X₁
   ⊙FinWedge-emap-r = ⊙BigWedge-emap-r Xeq
 
-module _ {i j} {I} {X : Fin I → Ptd i} where
+module _ {i j} where
 
-  postulate {- TODO -}
-    fwproj-FinWedge-emap-r-lift : ∀ (<I : Fin I)
-      → fwproj {X = ⊙Lift {j = j} ∘ X} <I ∘ fst (FinWedge-emap-r (λ _ → ⊙lift-equiv {j = j}))
+  private
+    fwproj-FinWedge-emap-r-lift-in :
+      ∀ {I} {X : Fin I → Ptd i} (<I <I' : Fin I) x
+      →  fwproj {X = ⊙Lift {j = j} ∘ X} <I (fwin <I' (lift x))
+      == lift {j = j} (fwproj {X = X} <I (fwin <I' x))
+    fwproj-FinWedge-emap-r-lift-in (_ , ltS) (_ , ltS) x = idp
+    fwproj-FinWedge-emap-r-lift-in (_ , ltSR lt₀) (_ , ltSR lt₁) x =
+      fwproj-FinWedge-emap-r-lift-in (_ , lt₀) (_ , lt₁) x
+    fwproj-FinWedge-emap-r-lift-in (_ , ltS) (_ , ltSR _) x = idp
+    fwproj-FinWedge-emap-r-lift-in (_ , ltSR _) (_ , ltS) x = idp
+
+    fwproj-FinWedge-emap-r-lift-glue' :
+      ∀ {I} {X : Fin I → Ptd i} (<I <I' : Fin I)
+      → ap (lift {j = j}) (! (snd (⊙fwproj-in {X = X} <I <I')))
+      == ! (snd (⊙fwproj-in <I <I')) ∙' fwproj-FinWedge-emap-r-lift-in <I <I' (pt (X <I'))
+    fwproj-FinWedge-emap-r-lift-glue' (_ , ltS) (_ , ltS) = idp
+    fwproj-FinWedge-emap-r-lift-glue' (_ , ltSR lt₀) (_ , ltSR lt₁) =
+      fwproj-FinWedge-emap-r-lift-glue' (_ , lt₀) (_ , lt₁)
+    fwproj-FinWedge-emap-r-lift-glue' (_ , ltS) (_ , ltSR _) = idp
+    fwproj-FinWedge-emap-r-lift-glue' (_ , ltSR _) (_ , ltS) = idp
+
+    fwproj-FinWedge-emap-r-lift-glue :
+      ∀ {I} {X : Fin I → Ptd i} (<I <I' : Fin I)
+      →  idp
+      == fwproj-FinWedge-emap-r-lift-in {I = I} {X = X} <I <I' (pt (X <I'))
+      [ (λ x → fwproj {X = ⊙Lift {j = j} ∘ X} <I (–> (FinWedge-emap-r (λ _ → ⊙lift-equiv {j = j})) x)
+            == lift {j = j} (fwproj {X = X} <I x)) ↓ fwglue <I' ]
+    fwproj-FinWedge-emap-r-lift-glue {I} {X} <I <I' = ↓-='-in' $
+      ap (lift {j = j} ∘ fwproj {X = X} <I) (fwglue <I')
+        =⟨ ap-∘ (lift {j = j}) (fwproj {X = X} <I) (fwglue <I') ⟩
+      ap (lift {j = j}) (ap (fwproj {X = X} <I) (fwglue <I'))
+        =⟨ ap (ap (lift {j = j})) $ FinWedgeProj.glue-β <I <I' ⟩
+      ap (lift {j = j}) (! (snd (⊙fwproj-in <I <I')))
+        =⟨ fwproj-FinWedge-emap-r-lift-glue' {X = X} <I <I' ⟩
+      ! (snd (⊙fwproj-in <I <I')) ∙' fwproj-FinWedge-emap-r-lift-in <I <I' (pt (X <I'))
+        =⟨ ap (_∙' fwproj-FinWedge-emap-r-lift-in <I <I' (pt (X <I'))) $
+            ( ! $ FinWedgeProj.glue-β <I <I') ⟩
+      ap (fwproj {X = ⊙Lift {j = j} ∘ X} <I) (fwglue <I')
+      ∙' fwproj-FinWedge-emap-r-lift-in <I <I' (pt (X <I'))
+        =⟨ ap (λ p → ap (fwproj {X = ⊙Lift {j = j} ∘ X} <I) p
+                  ∙' fwproj-FinWedge-emap-r-lift-in <I <I' (pt (X <I'))) $
+            (! $ PushoutFmap.glue-β (fst (bigwedge-span-emap-r (λ _ → ⊙lift-equiv {j = j}))) <I') ⟩
+      ap (fwproj {X = ⊙Lift {j = j} ∘ X} <I) (ap (–> (FinWedge-emap-r (λ _ → ⊙lift-equiv {j = j}))) (fwglue <I'))
+      ∙' fwproj-FinWedge-emap-r-lift-in <I <I' (pt (X <I'))
+        =⟨ ap (_∙' fwproj-FinWedge-emap-r-lift-in <I <I' (pt (X <I'))) $
+            (∘-ap (fwproj {X = ⊙Lift {j = j} ∘ X} <I) (–> (FinWedge-emap-r (λ _ → ⊙lift-equiv {j = j}))) (fwglue <I')) ⟩
+      ap (fwproj {X = ⊙Lift {j = j} ∘ X} <I ∘ –> (FinWedge-emap-r (λ _ → ⊙lift-equiv {j = j}))) (fwglue <I')
+      ∙' fwproj-FinWedge-emap-r-lift-in <I <I' (pt (X <I'))
+        =∎
+
+  abstract
+    fwproj-FinWedge-emap-r-lift :
+      ∀ {I} {X : Fin I → Ptd i} (<I : Fin I)
+      → fwproj {X = ⊙Lift {j = j} ∘ X} <I ∘ –> (FinWedge-emap-r (λ _ → ⊙lift-equiv {j = j}))
       ∼ lift {j = j} ∘ fwproj {X = X} <I
+    fwproj-FinWedge-emap-r-lift <I =
+      BigWedge-elim idp
+        (fwproj-FinWedge-emap-r-lift-in <I)
+        (fwproj-FinWedge-emap-r-lift-glue <I)
