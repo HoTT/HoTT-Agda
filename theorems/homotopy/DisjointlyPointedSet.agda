@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
+open import homotopy.Bouquet
 
 {-
 Various lemmas that will be used in cohomology.DisjointlyPointedSet.
@@ -67,6 +68,7 @@ module _ {i} where
   separable-unite-equiv dX = _ , separable-has-disjoint-pt dX
 
 module _ {i j k} n (A : Type i) (B : Type j) where
+  {- Hmm. Where should we put this lemma? -}
   abstract
     ⊔-has-choice-implies-inr-has-choice : has-choice n (A ⊔ B) k → has-choice n B k
     ⊔-has-choice-implies-inr-has-choice ⊔-ac W =
@@ -117,9 +119,56 @@ module _ {i j k} n (A : Type i) (B : Type j) where
             {P = λ f → –> lemma₂ (unchoose (<– (Trunc-emap lemma₁) f)) == unchoose f}
             (λ f → λ= λ b → idp)
 
-module _ {i j} n {X : Ptd i} (X-sep : has-disjoint-pt X) where
+module _ {i j} n {X : Ptd i} (X-sep : is-separable X) where
   abstract
     MinusPoint-has-choice : has-choice n (de⊙ X) j → has-choice n (MinusPoint X) j
     MinusPoint-has-choice X-ac =
       ⊔-has-choice-implies-inr-has-choice n ⊤ (MinusPoint X) $
-        transport! (λ A → has-choice n A j) (ua (_ , X-sep)) X-ac
+        transport! (λ A → has-choice n A j) (ua (_ , separable-has-disjoint-pt X-sep)) X-ac
+
+module _ {i} {X : Ptd i} (X-sep : is-separable X) where
+
+  Bouquet-equiv-X : Bouquet (MinusPoint X) 0 ≃ de⊙ X
+  Bouquet-equiv-X = equiv to from to-from from-to where
+    from : de⊙ X → BigWedge {A = MinusPoint X} (λ _ → ⊙Bool)
+    from x with X-sep x
+    from x | inl p  = bwbase
+    from x | inr ¬p = bwin (x , ¬p) false
+
+    module To = BigWedgeRec {A = MinusPoint X} {X = λ _ → ⊙Bool}
+      (pt X) (λ{_ true → pt X; (x , _) false → x}) (λ _ → idp)
+    to = To.f
+
+    abstract
+      from-to : ∀ x → from (to x) == x
+      from-to = BigWedge-elim base* in* glue* where
+        base* : from (pt X) == bwbase
+        base* with X-sep (pt X)
+        base* | inl _  = idp
+        base* | inr ¬p = ⊥-rec (¬p idp)
+
+        in* : (wp : MinusPoint X) (b : Bool)
+          → from (to (bwin wp b)) == bwin wp b
+        in* wp true with X-sep (pt X)
+        in* wp true | inl _ = bwglue wp
+        in* wp true | inr pt≠pt = ⊥-rec (pt≠pt idp)
+        in* (x , pt≠x) false with X-sep x
+        in* (x , pt≠x) false | inl pt=x = ⊥-rec (pt≠x pt=x)
+        in* (x , pt≠x) false | inr pt≠'x =
+          ap (λ ¬p → bwin (x , ¬p) false) $ prop-has-all-paths pt≠'x pt≠x
+
+        glue* : (wp : MinusPoint X)
+          → base* == in* wp true [ (λ x → from (to x) == x) ↓ bwglue wp ]
+        glue* wp = ↓-∘=idf-from-square from to $ ap (ap from) (To.glue-β wp) ∙v⊡ square where
+          square : Square base* idp (bwglue wp) (in* wp true)
+          square with X-sep (pt X)
+          square | inl _ = br-square (bwglue wp)
+          square | inr ¬p = ⊥-rec (¬p idp)
+
+      to-from : ∀ x → to (from x) == x
+      to-from x with X-sep x
+      to-from x | inl pt=x = pt=x
+      to-from x | inr pt≠x = idp
+
+  Bouquet-⊙equiv-X : ⊙Bouquet (MinusPoint X) 0 ⊙≃ X
+  Bouquet-⊙equiv-X = ≃-to-⊙≃ Bouquet-equiv-X idp

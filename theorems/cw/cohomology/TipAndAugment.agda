@@ -30,28 +30,22 @@ module _ (m : ℤ) where
   C2×CX₀-abgroup : AbGroup i
   C2×CX₀-abgroup = C2×CX₀ , C2×CX₀-is-abelian
 
-  CX₀-β : ⊙has-cells-with-choice 0 ⊙skel i
-    → CX₀ ≃ᴳ Πᴳ (MinusPoint (⊙cw-head ⊙skel)) (λ _ → C2 m)
-  CX₀-β ac = C-set m (⊙cw-head ⊙skel) (snd (⊙Skeleton.skel ⊙skel)) (⊙Skeleton.pt-dec ⊙skel) ac
+module _ where
+  CX₀-diag-β : ⊙has-cells-with-choice 0 ⊙skel i
+    → CX₀ 0 ≃ᴳ Πᴳ (MinusPoint (⊙cw-head ⊙skel)) (λ _ → C2 0)
+  CX₀-diag-β ac = C-set (⊙cw-head ⊙skel) (snd (⊙Skeleton.skel ⊙skel)) (⊙Skeleton.pt-dec ⊙skel) ac
 
-  C2×CX₀-β : ⊙has-cells-with-choice 0 ⊙skel i
-    → C2×CX₀ ≃ᴳ Πᴳ (de⊙ (⊙cw-head ⊙skel)) (λ _ → C2 m)
-  C2×CX₀-β ac =
-    C2×CX₀
-      ≃ᴳ⟨ ×ᴳ-emap (idiso _) (CX₀-β ac) ⟩
-    C2 m ×ᴳ Πᴳ (MinusPoint (⊙cw-head ⊙skel)) (λ _ → C2 m)
-      ≃ᴳ⟨ diff-and-separate-iso {X = ⊙cw-head ⊙skel} (C2-abgroup m) (⊙Skeleton.pt-dec ⊙skel) ⁻¹ᴳ ⟩
-    Πᴳ (de⊙ (⊙cw-head ⊙skel)) (λ _ → C2 m)
-      ≃ᴳ∎
+  C2×CX₀-diag-β : ⊙has-cells-with-choice 0 ⊙skel i
+    → C2×CX₀ 0 ≃ᴳ Πᴳ (de⊙ (⊙cw-head ⊙skel)) (λ _ → C2 0)
+  C2×CX₀-diag-β ac = diff-and-separate-iso {X = ⊙cw-head ⊙skel} (C2-abgroup 0) (⊙Skeleton.pt-dec ⊙skel) ⁻¹ᴳ
+                 ∘eᴳ ×ᴳ-emap (idiso _) (CX₀-diag-β ac)
 
 abstract
   CX₀-≠-is-trivial : ∀ {m} (m≠0 : m ≠ 0)
     → ⊙has-cells-with-choice 0 ⊙skel i
     → is-trivialᴳ (CX₀ m)
-  CX₀-≠-is-trivial {m} m≠0 ac =
-    iso-preserves'-trivial (CX₀-β m ac) $
-      Πᴳ-is-trivial (MinusPoint (⊙cw-head ⊙skel))
-        (λ _ → C2 m) (λ _ → C-dimension m≠0)
+  CX₀-≠-is-trivial m≠0 ac =
+    C-set-≠-is-trivial m≠0 (⊙cw-head ⊙skel) (snd (⊙Skeleton.skel ⊙skel)) (⊙Skeleton.pt-dec ⊙skel) ac
 
 cw-coε : C2 0 →ᴳ C2×CX₀ 0
 cw-coε = ×ᴳ-inl {G = C2 0} {H = CX₀ 0}

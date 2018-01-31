@@ -316,7 +316,7 @@ module _ where
         Word-coef Fin-has-dec-eq (Word-exp (Fin-S^' (S n) (Fin-S^' m (I , ltS))) (f (I , ltS))) (Fin-S^' n (ℕ-S^' (S m) I , ltS))
           =⟨ ap2 _ℤ+_
               (Word-coef-sum'-late n (S m) I (f ∘ Fin-S))
-              (Word-coef-exp-≠ (Fin-S^'-late-≠ n (Fin-S^' m (I , ltS))) (f (I , ltS))) ⟩
+              (Word-coef-exp-≠ (Fin-S^'-≠ n (ltSR≠ltS _)) (f (I , ltS))) ⟩
         0
           =∎
 
@@ -351,7 +351,7 @@ module _ where
         Word-coef Fin-has-dec-eq (Word-exp (Fin-S^' n (I , ltS)) (f (I , ltS))) (Fin-S^' (S n) (m , m<I))
           =⟨ ap2 _ℤ+_
               (Word-coef-sum' (S n) {I} (f ∘ Fin-S) (m , m<I))
-              (Word-coef-exp-≠ (Fin-S^'-early-≠ n (m , m<I)) (f (I , ltS))) ⟩
+              (Word-coef-exp-≠ (Fin-S^'-≠ n (ltS≠ltSR (m , m<I))) (f (I , ltS))) ⟩
         f (m , ltSR m<I) ℤ+ 0
           =⟨ ℤ+-unit-r _ ⟩
         f (m , ltSR m<I)

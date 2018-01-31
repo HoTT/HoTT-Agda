@@ -4,6 +4,7 @@ open import lib.Basics
 open import lib.Equivalence2
 open import lib.Function2
 open import lib.NType2
+open import lib.types.Coproduct
 open import lib.types.Fin
 open import lib.types.Group
 open import lib.types.Int
@@ -87,6 +88,14 @@ record GroupStructureHom {i j} {GEl : Type i} {HEl : Type j}
     pres-sum {I = O} _ = pres-ident
     pres-sum {I = S I} g = pres-comp (G.sum (g ∘ Fin-S)) (g (_ , ltS))
       ∙ ap (λ h → H.comp h (f (g (_ , ltS)))) (pres-sum (g ∘ Fin-S))
+
+    pres-subsum-r : ∀ {k l} {I : ℕ} {A : Type k} {B : Type l}
+      → (p : Fin I → Coprod A B) (g : B → GEl)
+      → f (G.subsum-r p g) == H.subsum-r p (f ∘ g)
+    pres-subsum-r p g = pres-sum (Coprod-rec (λ _ → G.ident) g ∘ p)
+      ∙ ap H.sum (λ= λ x →
+            Coprod-rec-post∘ f (λ _ → G.ident) g (p x)
+          ∙ ap (λ h → Coprod-rec h (f ∘ g) (p x)) (λ= λ _ → pres-ident))
 
   ⊙f : ⊙[ GEl , G.ident ] ⊙→ ⊙[ HEl , H.ident ]
   ⊙f = f , pres-ident

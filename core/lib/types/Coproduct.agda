@@ -81,6 +81,16 @@ module _ {i j} {A : Type i} {B : Type j} where
 
   Coprod-level = ⊔-level
 
+module _ {i j} {A : Type i} {B : Type j} where
+
+  Coprod-rec-post∘ : ∀ {k l} {C : Type k} {D : Type l}
+    → (h : C → D) (f : A → C) (g : B → C)
+    → h ∘ Coprod-rec f g ∼ Coprod-rec (h ∘ f) (h ∘ g)
+  Coprod-rec-post∘ h f g (inl _) = idp
+  Coprod-rec-post∘ h f g (inr _) = idp
+
+  ⊔-rec-post∘ = Coprod-rec-post∘
+
 module _ {i i' j j'} {A : Type i} {A' : Type i'} {B : Type j} {B' : Type j'}
   (f : A → A') (g : B → B') where
 
