@@ -1,6 +1,7 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
+open import groups.SumOfSubIndicator
 open import cohomology.Theory
 
 {- It should be possible to prove lemmas for arbitrary universe levels,
@@ -56,59 +57,6 @@ module _ where
       C-bwproj-bwin-diag B-dec b g =
         CEl-fmap-base-indep n (bwproj-bwin-diag B-dec b) g ∙ C-fmap-idf n g
 
-      subsum-r-C-bwproj-bwin-late' : ∀ {A B : Type₀} (B-dec : has-dec-eq B) m o {I}
-        (p : Fin (ℕ-S^' (S m) (ℕ-S^' o I)) ≃ Coprod A B) {X : Ptd₀} (f : Π B (λ _ → CEl n X)) {b*}
-        → inr b* == –> p (Fin-S^' m (ℕ-S^' o I , ltS))
-        → Group.subsum-r (C n X) (–> p ∘ Fin-S^' (S m) ∘ Fin-S^' o)
-            (λ b → CEl-fmap n (⊙bwproj B-dec b ⊙∘ ⊙bwin {X = λ _ → X} b*) (f b))
-        == Cident n X
-      subsum-r-C-bwproj-bwin-late' B-dec m o {I = O} p {X} f _ = idp
-      subsum-r-C-bwproj-bwin-late' B-dec m o {I = S I} p {X} f {b*} path₀ =
-        ap2 (Group.comp (C n X))
-          (subsum-r-C-bwproj-bwin-late' B-dec m (S o) p {X} f path₀)
-          (Coprod-elim
-            {C = λ c →
-              c == –> p (Fin-S^' (S m) (Fin-S^' o (I , ltS)))
-              →  Coprod-rec (λ _ → Cident n X)
-                 (λ b → CEl-fmap n (⊙bwproj B-dec b ⊙∘ ⊙bwin {X = λ _ → X} b*) (f b))
-                 c
-              == Cident n X}
-            (λ _ _ → idp)
-            (λ b path₁ → C-bwproj-bwin-≠ B-dec (λ b=b* → –>-≠ p (Fin-S^'-≠ m (ltSR≠ltS _)) (! path₁ ∙ ap inr b=b* ∙' path₀)) _)
-            (–> p (Fin-S^' (S m) (Fin-S^' o (I , ltS)))) idp)
-        ∙ Group.unit-l (C n X) _
-
-      subsum-C-bwproj-bwin' : ∀ {A B : Type₀} (B-dec : has-dec-eq B) m {I}
-        (p : Fin (ℕ-S^' m I) ≃ Coprod A B) {X : Ptd₀} (f : Π B (λ _ → CEl n X)) {b*}
-        → (<I* : Fin I) → inr b* == –> p (Fin-S^' m <I*)
-        → Group.subsum-r (C n X) (–> p ∘ Fin-S^' m)
-            (λ b → CEl-fmap n (⊙bwproj B-dec b ⊙∘ ⊙bwin {X = λ _ → X} b*) (f b))
-        == f b*
-      subsum-C-bwproj-bwin' B-dec m p {X} f {b*} (I , ltS) path₀ =
-        ap2 (Group.comp (C n X))
-          (subsum-r-C-bwproj-bwin-late' B-dec m 0 {I = I} p {X} f {b*} path₀)
-          ( ap
-              (Coprod-rec
-                (λ _ → Cident n X)
-                (λ b → CEl-fmap n (⊙bwproj B-dec b ⊙∘ ⊙bwin {X = λ _ → X} b*) (f b)))
-              (! path₀)
-          ∙ C-bwproj-bwin-diag B-dec b* (f b*))
-        ∙ Group.unit-l (C n X) _
-      subsum-C-bwproj-bwin' B-dec m {I = S I} p {X} f {b*} (o , ltSR o<I) path₀ =
-        ap2 (Group.comp (C n X))
-          (subsum-C-bwproj-bwin' B-dec (S m) {I} p {X} f (o , o<I) path₀)
-          (Coprod-elim
-            {C = λ c →
-              c == –> p (Fin-S^' m (I , ltS))
-              →  Coprod-rec (λ _ → Cident n X)
-                 (λ b → CEl-fmap n (⊙bwproj B-dec b ⊙∘ ⊙bwin {X = λ _ → X} b*) (f b))
-                 c
-              == Cident n X}
-            (λ _ _ → idp)
-            (λ b path₁ → C-bwproj-bwin-≠ B-dec (λ b=b* → –>-≠ p (Fin-S^'-≠ m (ltS≠ltSR _)) (! path₁ ∙ ap inr b=b* ∙' path₀)) _)
-            (–> p (Fin-S^' m (I , ltS))) idp)
-        ∙ Group.unit-r (C n X) _
-
       inverse-C-subfinite-additive-β' : ∀ {A B : Type₀} (B-dec : has-dec-eq B) {I}
         (p : Fin I ≃ Coprod A B) {X : Ptd₀}
         → ∀ f → GroupHom.f (C-subfinite-additive (–> p) X) (explicit-inverse-C-subfinite-additive (–> p) X B-dec f) ∼ f
@@ -118,7 +66,10 @@ module _ where
         Group.subsum-r (C n X) (–> p) (λ b → CEl-fmap n (⊙bwin b*) (CEl-fmap n (⊙bwproj B-dec b) (f b)))
           =⟨ ap (Group.subsum-r (C n X) (–> p)) (λ= λ b → ∘-CEl-fmap n (⊙bwin b*) (⊙bwproj B-dec b) (f b)) ⟩
         Group.subsum-r (C n X) (–> p) (λ b → CEl-fmap n (⊙bwproj B-dec b ⊙∘ ⊙bwin b*) (f b))
-          =⟨ subsum-C-bwproj-bwin' B-dec 0 p f (<– p (inr b*)) (! $ <–-inv-r p (inr b*)) ⟩
+          =⟨ subsum-r-subindicator (C n X) p (λ b → CEl-fmap n (⊙bwproj B-dec b ⊙∘ ⊙bwin b*) (f b))
+              b* (λ b≠b* → C-bwproj-bwin-≠ B-dec b≠b* _) ⟩
+        CEl-fmap n (⊙bwproj B-dec b* ⊙∘ ⊙bwin b*) (f b*)
+          =⟨ C-bwproj-bwin-diag B-dec b* (f b*) ⟩
         f b*
           =∎
 
