@@ -44,14 +44,14 @@ module cw.DegreeByProjection {i} where
     -- When [true] matches, [true] will be sent to [false],
     -- which is bad.
     degree-true : ℤ
-    degree-true with points-dec-eq (endpoint line true) point
+    degree-true with points-dec-eq point (endpoint line true)
     degree-true | inl _ = -1
     degree-true | inr _ = 0
 
     -- When [false] matches, [false] will be sent to [false],
     -- which is good.
     degree-false : ℤ
-    degree-false with points-dec-eq (endpoint line false) point
+    degree-false with points-dec-eq point (endpoint line false)
     degree-false | inl _ = 1
     degree-false | inr _ = 0
 

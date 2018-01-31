@@ -163,6 +163,7 @@ abstract
         (⊙SphereS-endo-degree n (⊙Susp-fmap (⊙bwproj JB-dec b) ⊙∘ f ⊙∘ ⊙fwin <I)))
       =∎
 
+  {- the version specialzied to [Fin J]. -}
   rephrase-in-degree' : ∀ n {I J : ℕ} (f : ⊙FinBouquet I (S n) ⊙→ ⊙Susp (⊙FinBouquet J n)) g
     → GroupIso.f (C-FinBouquet-diag (S n) I)
         (CEl-fmap (ℕ-to-ℤ (S n)) f

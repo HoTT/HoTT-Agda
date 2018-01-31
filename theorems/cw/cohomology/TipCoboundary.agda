@@ -7,6 +7,7 @@ open import groups.ExactSequence
 open import cohomology.Theory
 
 open import cw.CW
+open import cw.WedgeOfCells
 
 module cw.cohomology.TipCoboundary {i} (OT : OrdinaryTheory i)
   (⊙skel : ⊙Skeleton {i} 1) where
@@ -20,6 +21,16 @@ CX₁/X₀-is-abelian = CXₙ/Xₙ₋₁-is-abelian 1
 
 cw-co∂-head' : CX₀ 0 →ᴳ CXₙ/Xₙ₋₁ 1
 cw-co∂-head' = co∂
+
+⊙cw-∂-head'-before-Susp : ⊙Xₙ/Xₙ₋₁ (⊙Skeleton.skel ⊙skel) ⊙→ ⊙Susp (⊙cw-head ⊙skel)
+⊙cw-∂-head'-before-Susp = ⊙∂-before-Susp
+
+cw-∂-head'-before-Susp : Xₙ/Xₙ₋₁ (⊙Skeleton.skel ⊙skel) → Susp (cw-head (⊙Skeleton.skel ⊙skel))
+cw-∂-head'-before-Susp = ∂-before-Susp
+
+abstract
+  cw-∂-head'-before-Susp-glue-β : ∀ x → ap cw-∂-head'-before-Susp (cfglue x) == merid x
+  cw-∂-head'-before-Susp-glue-β = ∂-before-Susp-glue-β
 
 cw-co∂-head : C2×CX₀ 0 →ᴳ CXₙ/Xₙ₋₁ 1
 cw-co∂-head = record {f = GroupHom.f cw-co∂-head' ∘ snd; pres-comp = lemma}

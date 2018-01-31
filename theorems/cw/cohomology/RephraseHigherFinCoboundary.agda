@@ -70,8 +70,8 @@ abstract
               (CEl-fmap (ℕ-to-ℤ (S (S n))) (⊙–> (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ skel))
                 (CEl-fmap (ℕ-to-ℤ (S (S n))) ⊙cw-∂-before-Susp g)) <I) $
           C-Susp-fmap' (ℕ-to-ℤ (S n)) (⊙<– (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ skel₋₁)) □$ᴳ
-          (GroupIso.g (C-FinBouquet-diag (S n) I₋₁)
-            g) ⟩
+            (GroupIso.g (C-FinBouquet-diag (S n) I₋₁)
+              g) ⟩
     GroupIso.f (C-FinBouquet-diag (S (S n)) I)
       (CEl-fmap (ℕ-to-ℤ (S (S n))) (⊙–> (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ skel))
         (CEl-fmap (ℕ-to-ℤ (S (S n))) ⊙cw-∂-before-Susp

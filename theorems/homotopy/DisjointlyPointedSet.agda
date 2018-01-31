@@ -24,43 +24,54 @@ module _ {i} where
   MinusPoint : (X : Ptd i) → Type i
   MinusPoint X = Σ (de⊙ X) (pt X ≠_)
 
+  MinusPoint-prop : (X : Ptd i) → SubtypeProp (de⊙ X) i
+  MinusPoint-prop X = (pt X ≠_) , ⟨⟩
+
+  abstract
+    MinusPoint-has-dec-eq : {X : Ptd i}
+      → has-dec-eq (de⊙ X)
+      → has-dec-eq (MinusPoint X)
+    MinusPoint-has-dec-eq {X} X-dec =
+      Subtype-has-dec-eq (MinusPoint-prop X) X-dec
+
   unite-pt : (X : Ptd i) → (⊤ ⊔ MinusPoint X → de⊙ X)
   unite-pt X (inl _) = pt X
   unite-pt X (inr (x , _)) = x
 
+  separate-pt : {X : Ptd i}
+    → is-separable X
+    → (de⊙ X → ⊤ ⊔ (Σ (de⊙ X) (pt X ≠_)))
+  separate-pt dec x with dec x
+  separate-pt dec x | inl _  = inl unit
+  separate-pt dec x | inr ¬p = inr (x , ¬p)
+
   has-disjoint-pt : (X : Ptd i) → Type i
   has-disjoint-pt X = is-equiv (unite-pt X)
 
-  abstract
-    separable-has-disjoint-pt : {X : Ptd i}
-      → is-separable X → has-disjoint-pt X
-    separable-has-disjoint-pt {X} dec =
-      is-eq _ sep unite-sep sep-unite where
-        sep : de⊙ X → ⊤ ⊔ (Σ (de⊙ X) (pt X ≠_))
-        sep x with dec x
-        sep x | inl _  = inl unit
-        sep x | inr ¬p = inr (x , ¬p)
+  separable-has-disjoint-pt : {X : Ptd i}
+    → is-separable X → has-disjoint-pt X
+  separable-has-disjoint-pt {X} dec =
+    is-eq _ (separate-pt dec) unite-sep sep-unite where
+      abstract
+        sep-unite : ∀ x → separate-pt dec (unite-pt X x) == x
+        sep-unite (inl _) with dec (pt X)
+        sep-unite (inl _) | inl _  = idp
+        sep-unite (inl _) | inr ¬p = ⊥-rec (¬p idp)
+        sep-unite (inr (x , ¬p)) with dec x
+        sep-unite (inr (x , ¬p)) | inl p   = ⊥-rec (¬p p)
+        sep-unite (inr (x , ¬p)) | inr ¬p' = ap inr $ pair= idp (prop-has-all-paths ¬p' ¬p)
 
-        abstract
-          sep-unite : ∀ x → sep (unite-pt X x) == x
-          sep-unite (inl _) with dec (pt X)
-          sep-unite (inl _) | inl _  = idp
-          sep-unite (inl _) | inr ¬p = ⊥-rec (¬p idp)
-          sep-unite (inr (x , ¬p)) with dec x
-          sep-unite (inr (x , ¬p)) | inl p   = ⊥-rec (¬p p)
-          sep-unite (inr (x , ¬p)) | inr ¬p' = ap inr $ pair= idp (prop-has-all-paths ¬p' ¬p)
+        unite-sep : ∀ x → unite-pt X (separate-pt dec x) == x
+        unite-sep x with dec x
+        unite-sep x | inl p = p
+        unite-sep x | inr ¬p = idp
 
-          unite-sep : ∀ x → unite-pt X (sep x) == x
-          unite-sep x with dec x
-          unite-sep x | inl p = p
-          unite-sep x | inr ¬p = idp
-
-    disjoint-pt-is-separable : {X : Ptd i}
-      → has-disjoint-pt X → is-separable X
-    disjoint-pt-is-separable unite-ise x with unite.g x | unite.f-g x
-      where module unite = is-equiv unite-ise
-    disjoint-pt-is-separable unite-ise x | inl unit       | p   = inl p
-    disjoint-pt-is-separable unite-ise x | inr (y , pt≠y) | y=x = inr λ pt=x → pt≠y (pt=x ∙ ! y=x)
+  disjoint-pt-is-separable : {X : Ptd i}
+    → has-disjoint-pt X → is-separable X
+  disjoint-pt-is-separable unite-ise x with unite.g x | unite.f-g x
+    where module unite = is-equiv unite-ise
+  disjoint-pt-is-separable unite-ise x | inl unit       | p   = inl p
+  disjoint-pt-is-separable unite-ise x | inr (y , pt≠y) | y=x = inr λ pt=x → pt≠y (pt=x ∙ ! y=x)
 
   separable-unite-equiv : ∀ {X}
     → is-separable X
@@ -119,7 +130,7 @@ module _ {i j k} n (A : Type i) (B : Type j) where
             {P = λ f → –> lemma₂ (unchoose (<– (Trunc-emap lemma₁) f)) == unchoose f}
             (λ f → λ= λ b → idp)
 
-module _ {i j} n {X : Ptd i} (X-sep : is-separable X) where
+module _ {i j} {n} {X : Ptd i} (X-sep : is-separable X) where
   abstract
     MinusPoint-has-choice : has-choice n (de⊙ X) j → has-choice n (MinusPoint X) j
     MinusPoint-has-choice X-ac =
