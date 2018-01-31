@@ -15,7 +15,7 @@ module cohomology.DisjointlyPointedSet {i} (OT : OrdinaryTheory i) where
     (ac : has-choice 0 (de⊙ X) i) where
 
     C-set : C 0 X ≃ᴳ Πᴳ (MinusPoint X) (λ _ → C2 0)
-    C-set = C-Bouquet-diag 0 (MinusPoint X) (MinusPoint-has-choice 0 X-sep ac)
+    C-set = C-Bouquet-diag 0 (MinusPoint X) (MinusPoint-has-choice X-sep ac)
         ∘eᴳ C-emap 0 (Bouquet-⊙equiv-X X-sep)
 
   module _ {n : ℤ} (n≠0 : n ≠ 0) (X : Ptd i)
@@ -26,4 +26,4 @@ module cohomology.DisjointlyPointedSet {i} (OT : OrdinaryTheory i) where
       C-set-≠-is-trivial : is-trivialᴳ (C n X)
       C-set-≠-is-trivial = iso-preserves'-trivial
         (C-emap n (Bouquet-⊙equiv-X X-sep))
-        (C-Bouquet-≠-is-trivial n (MinusPoint X) 0 n≠0 (MinusPoint-has-choice 0 X-sep ac))
+        (C-Bouquet-≠-is-trivial n (MinusPoint X) 0 n≠0 (MinusPoint-has-choice X-sep ac))

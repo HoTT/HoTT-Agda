@@ -20,8 +20,6 @@ module cw.cohomology.RephraseHigherFinCoboundaryAbstractDefs (OT : OrdinaryTheor
 
 open OrdinaryTheory OT
 open import cohomology.Bouquet OT
-open import cohomology.SubFinBouquet OT
-open import cohomology.RephraseSubFinCoboundary OT
 
 private
   ⊙skel = ⊙FinSkeleton-realize ⊙fin-skel
