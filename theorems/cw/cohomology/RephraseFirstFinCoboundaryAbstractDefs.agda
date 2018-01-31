@@ -157,23 +157,21 @@ abstract
  
   open DegreeAtOne skel dec
 
-  {- maha = mega -}
-
-  maha-reduction' : ∀ <I b
+  degree-matches' : ∀ <I b
     →  merid (function₁' <I b false) ∙ ! (merid (function₁' <I b true))
     == loop^ (degree <I (fst b))
-  maha-reduction' <I b with Fin-has-dec-eq (fst b) (endpoint <I false)
-  maha-reduction' <I b | inl _ with Fin-has-dec-eq (fst b) (endpoint <I true)
-  maha-reduction' <I b | inl _ | inl _ = !-inv-r (merid false)
-  maha-reduction' <I b | inl _ | inr _ = idp
-  maha-reduction' <I b | inr _ with Fin-has-dec-eq (fst b) (endpoint <I true)
-  maha-reduction' <I b | inr _ | inl _ = ap (_∙ ! (merid false)) (! (!-! (merid true))) ∙ ∙-! (! (merid true)) (merid false)
-  maha-reduction' <I b | inr _ | inr _ = !-inv-r (merid true)
+  degree-matches' <I b with Fin-has-dec-eq (fst b) (endpoint <I false)
+  degree-matches' <I b | inl _ with Fin-has-dec-eq (fst b) (endpoint <I true)
+  degree-matches' <I b | inl _ | inl _ = !-inv-r (merid false)
+  degree-matches' <I b | inl _ | inr _ = idp
+  degree-matches' <I b | inr _ with Fin-has-dec-eq (fst b) (endpoint <I true)
+  degree-matches' <I b | inr _ | inl _ = ap (_∙ ! (merid false)) (! (!-! (merid true))) ∙ ∙-! (! (merid true)) (merid false)
+  degree-matches' <I b | inr _ | inr _ = !-inv-r (merid true)
  
-  maha-reduction : ∀ <I b
+  degree-matches : ∀ <I b
     →  ⊙SphereS-endo-degree 0 (Susp-fmap (function₁' <I b) , idp)
     == degree <I (fst b)
-  maha-reduction <I b = equiv-adj' ΩS¹-equiv-ℤ $ 
+  degree-matches <I b = equiv-adj' ΩS¹-equiv-ℤ $
     ap (Susp-fmap (function₁ <I b)) loop
       =⟨ ap-∙ (Susp-fmap (function₁ <I b)) (merid false) (! (merid true))  ⟩
     ap (Susp-fmap (function₁ <I b)) (merid false)
@@ -183,6 +181,6 @@ abstract
             ( ap-! (Susp-fmap (function₁ <I b)) (merid true)
             ∙ ap ! (SuspFmap.merid-β (function₁ <I b) true)) ⟩
     merid (function₁ <I b false) ∙ ! (merid (function₁ <I b true))
-      =⟨ maha-reduction' <I b ⟩
+      =⟨ degree-matches' <I b ⟩
     loop^ (degree <I (fst b))
       =∎

@@ -56,7 +56,7 @@ module cw.DegreeByProjection {i} where
     degree-false | inr _ = 0
 
     degree : ℤ
-    degree = degree-false ℤ+ degree-true
+    degree = degree-true ℤ+ degree-false
 
   degree-last : ∀ {n} (skel : Skeleton {i} (S n))
     → has-cells-with-dec-eq skel
