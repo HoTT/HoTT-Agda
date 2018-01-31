@@ -3,14 +3,12 @@
 open import HoTT
 open import homotopy.FinWedge
 open import homotopy.Bouquet
-open import groups.FinProduct 
 open import groups.SphereEndomorphism
 open import cohomology.Theory
 
 module cohomology.RephraseFinCoboundary (OT : OrdinaryTheory lzero) where
 
 open OrdinaryTheory OT
-open import cohomology.FinWedge cohomology-theory
 open import cohomology.SphereEndomorphism cohomology-theory
 open import cohomology.Sphere OT
 open import cohomology.FinBouquet OT

@@ -16,6 +16,17 @@ co∂ : C n X →ᴳ C (succ n) (⊙Cofiber f)
 co∂ = record {f = CEl-fmap (succ n) ⊙extract-glue ∘ GroupIso.g (C-Susp n X); pres-comp = lemma} where
   abstract lemma = ∘ᴳ-pres-comp (C-fmap (succ n) ⊙extract-glue) (GroupIso.g-hom (C-Susp n X))
 
+⊙∂-before-Susp : ⊙Cofiber f ⊙→ ⊙Susp X
+⊙∂-before-Susp = ⊙extract-glue
+
+∂-before-Susp : Cofiber (fst f) → Susp (de⊙ X)
+∂-before-Susp = extract-glue
+
+abstract
+  ∂-before-Susp-glue-β : ∀ x →
+    ap ∂-before-Susp (cfglue x) == merid x
+  ∂-before-Susp-glue-β = ExtractGlue.glue-β
+
 C-cofiber-seq : HomSequence (C n Y) (C (succ n) X)
 C-cofiber-seq =
   C n Y                   →⟨ C-fmap n f                  ⟩ᴳ

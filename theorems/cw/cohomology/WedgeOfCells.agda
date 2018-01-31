@@ -3,7 +3,6 @@
 open import HoTT
 open import cohomology.Theory
 open import homotopy.PushoutSplit
-open import homotopy.DisjointlyPointedSet
 open import cw.CW
 
 module cw.cohomology.WedgeOfCells {i} (OT : OrdinaryTheory i)

@@ -146,20 +146,89 @@ module _ {i} (Pick : Bool → Ptd i) where
               (ap (ap g) (F.glue-β false) ∙ G.glue-β) ∙v⊡
               lt-square (! (bwglue true)) ⊡h vid-square})
 
-module _ {i j} {A : Type i} (dec : has-dec-eq A) (X : A → Ptd j) (a : A) where
+module _ {i j} {A : Type i} (dec : has-dec-eq A) {X : Ptd j} where
 
-  ⊙bwproj-in : (a' : A) → X a' ⊙→ X a
-  ⊙bwproj-in a' with dec a a'
-  ... | inl idp = ⊙idf _
+  {- The dependent version increases the complexity significantly
+     and we do not need it. -}
+
+  ⊙bwproj-in : A → A → X ⊙→ X
+  ⊙bwproj-in a a' with dec a a'
+  ... | inl _ = ⊙idf _
   ... | inr _ = ⊙cst
 
-  module BigWedgeProj = BigWedgeRec
-    (pt (X a))
-    (λ a → fst (⊙bwproj-in a))
-    (λ a → ! (snd (⊙bwproj-in a)))
+  module BigWedgeProj (a : A) = BigWedgeRec
+    {X = λ _ → X}
+    (pt X)
+    (λ a' → fst (⊙bwproj-in a a'))
+    (λ a' → ! (snd (⊙bwproj-in a a')))
 
-  bwproj : BigWedge X → de⊙ (X a)
+  bwproj : A → BigWedge (λ _ → X) → de⊙ X
   bwproj = BigWedgeProj.f
 
-  ⊙bwproj : ⊙BigWedge X ⊙→ X a
-  ⊙bwproj = bwproj , idp
+  ⊙bwproj : A → ⊙BigWedge (λ _ → X) ⊙→ X
+  ⊙bwproj a = bwproj a , idp
+
+  abstract
+    bwproj-bwin-diag : (a : A) → bwproj a ∘ bwin a ∼ idf (de⊙ X)
+    bwproj-bwin-diag a x with dec a a
+    ... | inl _ = idp
+    ... | inr a≠a with a≠a idp
+    ...           | ()
+
+    bwproj-bwin-≠ : {a a' : A} → a ≠ a' → bwproj a ∘ bwin a' ∼ cst (pt X)
+    bwproj-bwin-≠ {a} {a'} a≠a' x with dec a a'
+    ... | inr _ = idp
+    ... | inl a=a' with a≠a' a=a'
+    ...            | ()
+
+module _ {i j k} {A : Type i} (dec : has-dec-eq A) {X : Ptd j} (a : A) where
+
+  abstract
+    private
+      bwproj-BigWedge-emap-r-lift-in : ∀ a'
+        → bwproj dec {X = ⊙Lift {j = k} X} a ∘ bwin a' ∘ lift
+        ∼ lift {j = k} ∘ bwproj dec {X = X} a ∘ bwin a'
+      bwproj-BigWedge-emap-r-lift-in a' with dec a a'
+      ... | inl _ = λ _ → idp
+      ... | inr _ = λ _ → idp
+
+      bwproj-BigWedge-emap-r-lift-glue' : ∀ (a' : A)
+        → ap (lift {j = k}) (! (snd (⊙bwproj-in dec {X = X} a a')))
+        == ! (snd (⊙bwproj-in dec {X = ⊙Lift {j = k} X} a a')) ∙' bwproj-BigWedge-emap-r-lift-in a' (pt X)
+      bwproj-BigWedge-emap-r-lift-glue' a' with dec a a'
+      ... | inl _ = idp
+      ... | inr _ = idp
+
+    bwproj-BigWedge-emap-r-lift-glue : ∀ (a' : A)
+      →  idp == bwproj-BigWedge-emap-r-lift-in a' (pt X)
+      [ (λ x → bwproj dec {X = ⊙Lift {j = k} X} a (–> (BigWedge-emap-r (λ _ → ⊙lift-equiv {j = k})) x)
+            == lift {j = k} (bwproj dec {X = X} a x)) ↓ bwglue a' ]
+    bwproj-BigWedge-emap-r-lift-glue a' = ↓-='-in' $
+      ap (lift {j = k} ∘ bwproj dec a) (bwglue a')
+        =⟨ ap-∘ (lift {j = k}) (bwproj dec a) (bwglue a') ⟩
+      ap (lift {j = k}) (ap (bwproj dec a) (bwglue a'))
+        =⟨ ap (ap (lift {j = k})) $ BigWedgeProj.glue-β dec a a' ⟩
+      ap (lift {j = k}) (! (snd (⊙bwproj-in dec a a')))
+        =⟨ bwproj-BigWedge-emap-r-lift-glue' a' ⟩
+      ! (snd (⊙bwproj-in dec a a')) ∙' bwproj-BigWedge-emap-r-lift-in a' (pt X)
+        =⟨ ap (_∙' bwproj-BigWedge-emap-r-lift-in a' (pt X)) $
+            ( ! $ BigWedgeProj.glue-β dec a a') ⟩
+      ap (bwproj dec a) (bwglue a') ∙' bwproj-BigWedge-emap-r-lift-in a' (pt X)
+        =⟨ ap (λ p → ap (bwproj dec a) p
+                  ∙' bwproj-BigWedge-emap-r-lift-in a' (pt X)) $
+            (! $ PushoutFmap.glue-β (fst (bigwedge-span-emap-r (λ _ → ⊙lift-equiv {j = k}))) a') ⟩
+      ap (bwproj dec a) (ap (–> (BigWedge-emap-r (λ _ → ⊙lift-equiv {j = k}))) (bwglue a'))
+      ∙' bwproj-BigWedge-emap-r-lift-in a' (pt X)
+        =⟨ ap (_∙' bwproj-BigWedge-emap-r-lift-in a' (pt X)) $
+            (∘-ap (bwproj dec a) (–> (BigWedge-emap-r (λ _ → ⊙lift-equiv {j = k}))) (bwglue a')) ⟩
+      ap (bwproj dec a ∘ –> (BigWedge-emap-r (λ _ → ⊙lift-equiv {j = k}))) (bwglue a')
+      ∙' bwproj-BigWedge-emap-r-lift-in a' (pt X)
+        =∎
+
+    bwproj-BigWedge-emap-r-lift :
+        bwproj dec {X = ⊙Lift {j = k} X} a ∘ –> (BigWedge-emap-r (λ _ → ⊙lift-equiv {j = k}))
+      ∼ lift {j = k} ∘ bwproj dec a
+    bwproj-BigWedge-emap-r-lift =
+      BigWedge-elim {X = λ _ → X} idp
+        bwproj-BigWedge-emap-r-lift-in
+        bwproj-BigWedge-emap-r-lift-glue

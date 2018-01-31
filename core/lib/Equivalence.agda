@@ -147,6 +147,9 @@ module _ {i} {j} {A : Type i} {B : Type j} where
   –>-is-inj : (e : A ≃ B) → is-inj (–> e)
   –>-is-inj e x y p = ! (<–-inv-l e x) ∙ ap (<– e) p ∙ <–-inv-l e y
 
+  –>-≠ : (e : A ≃ B) → {a₀ a₁ : A} → a₀ ≠ a₁ → –> e a₀ ≠ –> e a₁
+  –>-≠ e {a₀} {a₁} neq = neq ∘ –>-is-inj e a₀ a₁
+
   equiv-is-inj : {f : A → B} → is-equiv f → is-inj f
   equiv-is-inj ise = –>-is-inj (_ , ise)
 

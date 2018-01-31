@@ -1,9 +1,10 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import lib.Basics
+open import lib.types.Coproduct
 open import lib.types.Fin
-open import lib.types.Nat
 open import lib.types.Int
+open import lib.types.Nat
 open import lib.types.Pi
 
 module lib.types.Group where
@@ -193,6 +194,10 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
   sum : ∀ {I : ℕ} → (Fin I → El) → El
   sum {I = O} f = ident
   sum {I = S n} f = comp (sum (f ∘ Fin-S)) (f (n , ltS))
+
+  subsum-r : ∀ {j k} {I : ℕ} {A : Type j} {B : Type k}
+    → (Fin I → Coprod A B) → (B → El) → El
+  subsum-r p f = sum (λ x → ⊔-rec (λ _ → ident) f (p x))
 
 record Group i : Type (lsucc i) where
   constructor group

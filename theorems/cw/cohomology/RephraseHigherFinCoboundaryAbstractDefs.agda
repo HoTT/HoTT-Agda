@@ -1,7 +1,6 @@
 {-# OPTIONS --without-K --rewriting #-}
 
 open import HoTT
-open import HoTT
 open import homotopy.Bouquet
 open import homotopy.FinWedge
 open import homotopy.SphereEndomorphism
@@ -12,7 +11,7 @@ open import cw.WedgeOfCells
 open import cw.DegreeByProjection {lzero}
 open import cohomology.Theory
 
-{- This file should be part of RephraseFinCoboundary,
+{- This file should be part of RephraseHigherFinCoboundary,
    but putting these in a separate file seems more effective
    in speeding up type-checking. Could be an Agda bug. -}
 
@@ -47,7 +46,7 @@ open import cw.cohomology.WedgeOfCells OT
           ⊙∘ ⊙–> (Bouquet-⊙equiv-Xₙ/Xₙ₋₁ skel)
 
 function₁ : Fin I → Fin I₋₁ → Sphere-endo (S n)
-function₁ <I <I₋₁ = bwproj Fin-has-dec-eq (FinBouquet-family I₋₁ (S n)) <I₋₁
+function₁ <I <I₋₁ = bwproj Fin-has-dec-eq <I₋₁
                   ∘ <– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁)
                   ∘ cfcod
                   ∘ attaching-last skel <I
@@ -123,8 +122,6 @@ abstract
        (merid (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁) (cfcod (attaching-last skel <I x))))
       =⟨ SuspFmap.merid-β (fwproj <I₋₁)
           (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁) (cfcod (attaching-last skel <I x))) ⟩
-    merid (fwproj <I₋₁ (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁) (cfcod (attaching-last skel <I x))))
-      =⟨ ap merid (fwproj-is-bwproj <I₋₁ (<– (Bouquet-equiv-Xₙ/Xₙ₋₁ skel₋₁) (cfcod (attaching-last skel <I x)))) ⟩
     merid (function₁ <I <I₋₁ x)
       =⟨ ! $ SuspFmap.merid-β (function₁ <I <I₋₁) x ⟩
     ap (Susp-fmap (function₁ <I <I₋₁)) (merid x)

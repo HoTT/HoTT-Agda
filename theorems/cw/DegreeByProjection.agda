@@ -23,7 +23,7 @@ module cw.DegreeByProjection {i} where
       lower-dec = cells-nth-has-dec-eq lteS skel dec
 
     degree-map : Sphere (S n) → Sphere (S n)
-    degree-map = bwproj lower-dec (Bouquet-family lower-cells (S n)) lower
+    degree-map = bwproj lower-dec lower
                ∘ <– (Bouquet-equiv-Xₙ/Xₙ₋₁ lower-skel)
                ∘ cfcod
                ∘ attaching-last skel upper

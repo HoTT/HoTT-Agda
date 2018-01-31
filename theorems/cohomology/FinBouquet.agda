@@ -9,7 +9,7 @@ module cohomology.FinBouquet (OT : OrdinaryTheory lzero) where
 
 open OrdinaryTheory OT
 open import cohomology.Sphere OT
-open import cohomology.FinWedge cohomology-theory
+open import cohomology.SubFinWedge cohomology-theory
 open import cohomology.Bouquet OT
 
 C-FinBouquet-diag : ∀ n I → C (ℕ-to-ℤ n) (⊙FinBouquet I n) ≃ᴳ Πᴳ (Fin I) (λ _ → C2 0)
@@ -40,10 +40,10 @@ abstract
     GroupIso.g (C-FinBouquet-diag n I) g
       =⟨ idp ⟩
     CEl-fmap (ℕ-to-ℤ n) (⊙<– (⊙BigWedge-emap-r (λ _ → ⊙lower-equiv)))
-      (GroupIso.g (C-finite-additive-iso (ℕ-to-ℤ n) (FinBouquetLift-family I n))
+      (GroupIso.g (C-finite-additive-iso (ℕ-to-ℤ n) I (⊙Lift (⊙Sphere n)))
         (GroupIso.g (C-Sphere-diag n) ∘ g))
       =⟨ ap (CEl-fmap (ℕ-to-ℤ n) (⊙<– (⊙BigWedge-emap-r (λ _ → ⊙lower-equiv)))) $
-          inverse-C-finite-additive-β (ℕ-to-ℤ n) (FinBouquetLift-family I n) (GroupIso.g (C-Sphere-diag n) ∘ g) ⟩
+          inverse-C-finite-additive-β (ℕ-to-ℤ n) (GroupIso.g (C-Sphere-diag n) ∘ g) ⟩
     CEl-fmap (ℕ-to-ℤ n) (⊙<– (⊙BigWedge-emap-r (λ _ → ⊙lower-equiv)))
       (Group.sum (C (ℕ-to-ℤ n) (⊙FinBouquetLift I n))
         (λ <I → CEl-fmap (ℕ-to-ℤ n) (⊙fwproj <I) (GroupIso.g (C-Sphere-diag n) (g <I))))
