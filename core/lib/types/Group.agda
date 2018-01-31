@@ -181,6 +181,13 @@ record GroupStructure {i} (El : Type i) --(El-level : has-level 0 El)
       ∙ ap (comp (inv g)) (exp-+ g (negsucc n) z₂)
       ∙ ! (assoc (inv g) (exp g (negsucc n)) (exp g z₂))
 
+  exp-ident : ∀ z → exp ident z == ident
+  exp-ident (pos 0) = idp
+  exp-ident (pos 1) = idp
+  exp-ident (pos (S (S n))) = unit-l _ ∙ exp-ident (pos (S n))
+  exp-ident (negsucc 0) = inv-ident
+  exp-ident (negsucc (S n)) = ap2 comp inv-ident (exp-ident (negsucc n)) ∙ unit-l _
+
   diff : El → El → El
   diff g h = g ⊙ inv h
 
@@ -242,16 +249,37 @@ module AbGroup {i} (G : AbGroup i) where
       comp (comp g₁ g₃) (comp g₂ g₄)
         =∎
 
+    inv-comp' : ∀ g₁ g₂ → inv (comp g₁ g₂) == comp (inv g₁) (inv g₂)
+    inv-comp' g₁ g₂ = inv-comp g₁ g₂ ∙ comm (inv g₂) (inv g₁)
+
     diff-comp : (g₁ g₂ g₃ g₄ : El) →
         diff (comp g₁ g₂) (comp g₃ g₄)
         == comp (diff g₁ g₃) (diff g₂ g₄)
     diff-comp g₁ g₂ g₃ g₄ =
         diff (comp g₁ g₂) (comp g₃ g₄)
-          =⟨ ap (comp (comp g₁ g₂)) (inv-comp g₃ g₄ ∙ comm (inv g₄) (inv g₃)) ⟩
+          =⟨ ap (comp (comp g₁ g₂)) (inv-comp' g₃ g₄) ⟩
         comp (comp g₁ g₂) (comp (inv g₃) (inv g₄))
           =⟨ interchange g₁ g₂ (inv g₃) (inv g₄) ⟩
         comp (diff g₁ g₃) (diff g₂ g₄)
           =∎
+
+    sum-comp : ∀ {I} (f g : Fin I → El)
+      → sum (λ x → comp (f x) (g x)) == comp (sum f) (sum g)
+    sum-comp {I = O} f g = ! (unit-l _)
+    sum-comp {I = S I} f g =
+        ap (λ x → comp x (comp (f (I , ltS)) (g (I , ltS)))) (sum-comp (f ∘ Fin-S) (g ∘ Fin-S))
+      ∙ interchange (sum (f ∘ Fin-S)) (sum (g ∘ Fin-S)) (f (I , ltS)) (g (I , ltS))
+
+    exp-comp : ∀ g₁ g₂ z → exp (comp g₁ g₂) z == comp (exp g₁ z) (exp g₂ z)
+    exp-comp g₁ g₂ (pos O) = ! (unit-l _)
+    exp-comp g₁ g₂ (pos (S O)) = idp
+    exp-comp g₁ g₂ (pos (S (S n))) =
+        ap (comp (comp g₁ g₂)) (exp-comp g₁ g₂ (pos (S n)))
+      ∙ interchange g₁ g₂ (exp g₁ (pos (S n))) (exp g₂ (pos (S n)))
+    exp-comp g₁ g₂ (negsucc O) = inv-comp' g₁ g₂
+    exp-comp g₁ g₂ (negsucc (S n)) =
+        ap2 comp (inv-comp' g₁ g₂) (exp-comp g₁ g₂ (negsucc n))
+      ∙ interchange (inv g₁) (inv g₂) (exp g₁ (negsucc n)) (exp g₂ (negsucc n))
 
 is-trivialᴳ : ∀ {i} (G : Group i) → Type i
 is-trivialᴳ G = ∀ g → g == Group.ident G

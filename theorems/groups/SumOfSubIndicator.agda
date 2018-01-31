@@ -2,11 +2,12 @@
 
 open import HoTT
 
-{- It should be possible to prove lemmas for arbitrary universe levels,
-   but this file is only used for [FinSkeleton], which is in the zeroth
-   universe. -}
+{- Maybe it is actually easier to prove [sum-subindicator]
+   and then derive the other lemma. -}
 
-module groups.SumOfSubIndicator {i j k} (G : Group i) {A : Type j} {B : Type k}
+module groups.SumOfSubIndicator where
+
+module _ {i j k} (G : Group i) {A : Type j} {B : Type k}
   {I} (p : Fin I ≃ Coprod A B) (f : B → Group.El G) b*
   (sub-indicator : ∀ {b} → b ≠ b* → f b == Group.ident G)
   where
@@ -55,3 +56,10 @@ module groups.SumOfSubIndicator {i j k} (G : Group i) {A : Type j} {B : Type k}
 
     subsum-r-subindicator : subsum-r (–> p) f == f b*
     subsum-r-subindicator = subsum-r-all' 0 p (<– p (inr b*)) (! (<–-inv-r p (inr b*)))
+
+module _ {i} (G : Group i) {I} (f : Fin I → Group.El G) <I*
+  (sub-indicator : ∀ {<I} → <I ≠ <I* → f <I == Group.ident G)
+  where
+
+  sum-subindicator : Group.sum G f == f <I*
+  sum-subindicator = subsum-r-subindicator G (⊔₁-Empty (Fin I) ⁻¹) f <I* sub-indicator
