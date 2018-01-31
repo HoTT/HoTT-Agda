@@ -15,8 +15,8 @@ module cw.cohomology.RephraseHigherFinCoboundary (OT : OrdinaryTheory lzero)
   {n} (⊙fin-skel : ⊙FinSkeleton (S (S n))) where
 
 open OrdinaryTheory OT
-open import cohomology.FinBouquet OT
-open import cohomology.RephraseFinCoboundary OT
+open import cohomology.SubFinBouquet OT
+open import cohomology.RephraseSubFinCoboundary OT
 
 private
   ⊙skel = ⊙FinSkeleton-realize ⊙fin-skel
@@ -101,7 +101,7 @@ abstract
         (<– (CEl-Susp (ℕ-to-ℤ (S n)) (⊙FinBouquet _ (S n)))
           (GroupIso.g (C-FinBouquet-diag (S n) I₋₁)
             g))) <I
-      =⟨ rephrase-in-degree (S n) {I = I} {J = I₋₁} ⊙function₀' g <I ⟩
+      =⟨ rephrase-in-degree' (S n) {I = I} {J = I₋₁} ⊙function₀' g <I ⟩
     Group.sum (C2 0)
       (λ <I₋₁ → Group.exp (C2 0) (g <I₋₁)
         (⊙SphereS-endo-degree (S n)

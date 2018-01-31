@@ -20,6 +20,9 @@ Bouquet I m = BigWedge (Bouquet-family I m)
 BouquetLift-family : ∀ {i} (I : Type i) (m : ℕ) → (I → Ptd i)
 BouquetLift-family {i} I m _ = ⊙Lift {j = i} (⊙Sphere m)
 
+BouquetLift : ∀ {i} (I : Type i) (m : ℕ) → Type i
+BouquetLift {i} I m = BigWedge (BouquetLift-family I m)
+
 ⊙BouquetLift : ∀ {i} (I : Type i) (m : ℕ) → Ptd i
 ⊙BouquetLift {i} I m = ⊙BigWedge (BouquetLift-family I m)
 
