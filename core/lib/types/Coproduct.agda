@@ -151,6 +151,9 @@ codiag = Coprod-rec (idf _) (idf _)
     out-into (true , a) = idp
     out-into (false , b) = idp
 
+⊔₁-Empty : ∀ {i} (A : Type i) → Empty ⊔ A ≃ A
+⊔₁-Empty A = equiv (λ{(inl ()); (inr a) → a}) inr (λ _ → idp) (λ{(inl ()); (inr _) → idp})
+
 module _ {i j k} {A : Type i} {B : Type j} (P : A ⊔ B → Type k) where
   Π₁-⊔-equiv-× : Π (A ⊔ B) P ≃ Π A (P ∘ inl) × Π B (P ∘ inr)
   Π₁-⊔-equiv-× = equiv to from to-from from-to

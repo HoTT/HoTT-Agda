@@ -155,5 +155,5 @@ module _ where
       → is-equiv.g (C-finite-additive-is-equiv I X)
       ∼ explicit-inverse-C-finite-additive I X
     inverse-C-finite-additive-β {I} {X} =
-      inverse-C-subfinite-additive-β {A = Empty} {B = Fin I} (Fin-has-choice 0 lzero) Fin-has-dec-eq
-        (equiv inr (λ{(inl ()); (inr x) → x}) (λ{(inl ()); (inr _) → idp}) (λ _ → idp)) {X}
+      inverse-C-subfinite-additive-β {A = Empty} {B = Fin I}
+        (Fin-has-choice 0 lzero) Fin-has-dec-eq (⊔₁-Empty (Fin I) ⁻¹) {X}
