@@ -183,8 +183,9 @@ abstract
     <-has-all-paths' idp (ltSR lt₁) ltS = ⊥-rec (<-to-≠ lt₁ idp)
     <-has-all-paths' idp (ltSR lt₁) (ltSR lt₂) = ap ltSR (<-has-all-paths' idp lt₁ lt₂)
 
-  <-is-prop : {m n : ℕ} → is-prop (m < n)
-  <-is-prop = all-paths-is-prop <-has-all-paths
+  instance
+    <-is-prop : {m n : ℕ} → is-prop (m < n)
+    <-is-prop = all-paths-is-prop <-has-all-paths
 
   ≤-has-all-paths : {m n : ℕ} → has-all-paths (m ≤ n)
   ≤-has-all-paths = λ{
