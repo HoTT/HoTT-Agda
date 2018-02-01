@@ -19,10 +19,11 @@ private
   I₋₁ = AttachedFinSkeleton.numCells fin-skel₋₁
 
 abstract
-  rephrase-dualized-boundary-in-degree : ∀ g <I
-    →  FormalSum-extend (C2-abgroup 0) g (GroupHom.f (fboundary-last fin-skel) fs[ inl <I :: nil ])
+  rephrase-dualized-higher-boundary-in-degree : ∀ g <I
+    → GroupIso.g (FreeAbGroup-extend-iso (C2-abgroup 0))
+        (GroupIso.f (FreeAbGroup-extend-iso (C2-abgroup 0)) g ∘ᴳ fboundary-last fin-skel) <I
     == Group.sum (C2 0) (λ <I₋₁ → Group.exp (C2 0) (g <I₋₁) (fdegree-last fin-skel <I <I₋₁))
-  rephrase-dualized-boundary-in-degree g <I =
+  rephrase-dualized-higher-boundary-in-degree g <I =
     FormalSum-extend (C2-abgroup 0) g (GroupHom.f (fboundary-last fin-skel) fs[ inl <I :: nil ])
       =⟨ ap (FormalSum-extend (C2-abgroup 0) g) $
           app= (is-equiv.g-f (FreeAbGroup-extend-is-equiv (FreeAbGroup (Fin I₋₁))) (fboundary'-last fin-skel)) <I ⟩

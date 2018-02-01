@@ -122,8 +122,8 @@ abstract
 
 abstract
   private
-    degree-true-≠ : ∀ {<I <I'} → (<I' ≠ endpoint <I true) → degree-true <I <I' == 0
-    degree-true-≠ {<I} {<I'} neq with Fin-has-dec-eq <I' (endpoint <I true)
+    degree-true-≠ : ∀ {<I <I₋₁} → (<I₋₁ ≠ endpoint <I true) → degree-true <I <I₋₁ == 0
+    degree-true-≠ {<I} {<I₋₁} neq with Fin-has-dec-eq <I₋₁ (endpoint <I true)
     ... | inl eq = ⊥-rec (neq eq)
     ... | inr _ = idp
 
@@ -132,14 +132,14 @@ abstract
     ... | inl _ = idp
     ... | inr neq = ⊥-rec (neq idp)
 
-    sum-degree-true : ∀ <I g → Group.sum (C2 0) (λ <I' → Group.exp (C2 0) g (degree-true <I <I')) == Group.inv (C2 0) g
+    sum-degree-true : ∀ <I g → Group.sum (C2 0) (λ <I₋₁ → Group.exp (C2 0) g (degree-true <I <I₋₁)) == Group.inv (C2 0) g
     sum-degree-true <I g =
-        sum-subindicator (C2 0) (λ <I' → Group.exp (C2 0) g (degree-true <I <I'))
+        sum-subindicator (C2 0) (λ <I₋₁ → Group.exp (C2 0) g (degree-true <I <I₋₁))
           (endpoint <I true) (λ neq → ap (Group.exp (C2 0) g) (degree-true-≠ neq))
       ∙ ap (Group.exp (C2 0) g) (degree-true-diag <I)
 
-    degree-false-≠ : ∀ {<I <I'} → (<I' ≠ endpoint <I false) → degree-false <I <I' == 0
-    degree-false-≠ {<I} {<I'} neq with Fin-has-dec-eq <I' (endpoint <I false)
+    degree-false-≠ : ∀ {<I <I₋₁} → (<I₋₁ ≠ endpoint <I false) → degree-false <I <I₋₁ == 0
+    degree-false-≠ {<I} {<I₋₁} neq with Fin-has-dec-eq <I₋₁ (endpoint <I false)
     ... | inl eq = ⊥-rec (neq eq)
     ... | inr _ = idp
 
@@ -148,18 +148,18 @@ abstract
     ... | inl _ = idp
     ... | inr neq = ⊥-rec (neq idp)
 
-    sum-degree-false : ∀ <I g → Group.sum (C2 0) (λ <I' → Group.exp (C2 0) g (degree-false <I <I')) == g
+    sum-degree-false : ∀ <I g → Group.sum (C2 0) (λ <I₋₁ → Group.exp (C2 0) g (degree-false <I <I₋₁)) == g
     sum-degree-false <I g =
-        sum-subindicator (C2 0) (λ <I' → Group.exp (C2 0) g (degree-false <I <I'))
+        sum-subindicator (C2 0) (λ <I₋₁ → Group.exp (C2 0) g (degree-false <I <I₋₁))
           (endpoint <I false) (λ neq → ap (Group.exp (C2 0) g) (degree-false-≠ neq))
       ∙ ap (Group.exp (C2 0) g) (degree-false-diag <I)
 
-    sum-degree : ∀ <I g → Group.sum (C2 0) (λ <I' → Group.exp (C2 0) g (degree <I <I')) == Group.ident (C2 0)
+    sum-degree : ∀ <I g → Group.sum (C2 0) (λ <I₋₁ → Group.exp (C2 0) g (degree <I <I₋₁)) == Group.ident (C2 0)
     sum-degree <I g =
-        ap (Group.sum (C2 0)) (λ= λ <I' → Group.exp-+ (C2 0) g (degree-true <I <I') (degree-false <I <I'))
+        ap (Group.sum (C2 0)) (λ= λ <I₋₁ → Group.exp-+ (C2 0) g (degree-true <I <I₋₁) (degree-false <I <I₋₁))
       ∙ AbGroup.sum-comp (C2-abgroup 0)
-          (λ <I' → Group.exp (C2 0) g (degree-true <I <I'))
-          (λ <I' → Group.exp (C2 0) g (degree-false <I <I'))
+          (λ <I₋₁ → Group.exp (C2 0) g (degree-true <I <I₋₁))
+          (λ <I₋₁ → Group.exp (C2 0) g (degree-false <I <I₋₁))
       ∙ ap2 (Group.comp (C2 0))
           (sum-degree-true <I g)
           (sum-degree-false <I g)
@@ -174,32 +174,32 @@ abstract
 
   rephrase-cw-co∂-head-in-degree : ∀ g
     → GroupIso.f (CXₙ/Xₙ₋₁-diag-β ac) (GroupHom.f cw-co∂-head (GroupIso.g (C2×CX₀-diag-β ac₋₁) g))
-    ∼ λ <I → Group.sum (C2 0) (λ <I' → Group.exp (C2 0) (g <I') (degree <I <I'))
+    ∼ λ <I → Group.sum (C2 0) (λ <I₋₁ → Group.exp (C2 0) (g <I₋₁) (degree <I <I₋₁))
   rephrase-cw-co∂-head-in-degree g <I =
     GroupIso.f (CXₙ/Xₙ₋₁-diag-β ac) (GroupHom.f cw-co∂-head' (GroupIso.g (CX₀-diag-β ac₋₁) (snd (diff-and-separate (C2 0) g)))) <I
       =⟨ rephrase-cw-co∂-head'-in-degree (snd (diff-and-separate (C2 0) g)) <I ⟩
     Group.subsum-r (C2 0) ⊙head-separate
       (λ b → Group.exp (C2 0) (Group.diff (C2 0) (g (fst b)) (g pt))
         (degree <I (fst b)))
-      =⟨ ap (Group.sum (C2 0)) (λ= λ <I' →
+      =⟨ ap (Group.sum (C2 0)) (λ= λ <I₋₁ →
           merge-branches
-            (λ <I' → Group.exp (C2 0) (Group.diff (C2 0) (g <I') (g pt)) (degree <I <I'))
+            (λ <I₋₁ → Group.exp (C2 0) (Group.diff (C2 0) (g <I₋₁) (g pt)) (degree <I <I₋₁))
             ( ap (λ g → Group.exp (C2 0) g (degree <I pt)) (Group.inv-r (C2 0) (g pt))
             ∙ Group.exp-ident (C2 0) (degree <I pt))
-            <I'
-          ∙ AbGroup.exp-comp (C2-abgroup 0) (g <I') (Group.inv (C2 0) (g pt)) (degree <I <I')) ⟩
-    Group.sum (C2 0) (λ <I' →
+            <I₋₁
+          ∙ AbGroup.exp-comp (C2-abgroup 0) (g <I₋₁) (Group.inv (C2 0) (g pt)) (degree <I <I₋₁)) ⟩
+    Group.sum (C2 0) (λ <I₋₁ →
       Group.comp (C2 0)
-        (Group.exp (C2 0) (g <I') (degree <I <I'))
-        (Group.exp (C2 0) (Group.inv (C2 0) (g pt)) (degree <I <I')))
+        (Group.exp (C2 0) (g <I₋₁) (degree <I <I₋₁))
+        (Group.exp (C2 0) (Group.inv (C2 0) (g pt)) (degree <I <I₋₁)))
       =⟨ AbGroup.sum-comp (C2-abgroup 0)
-          (λ <I' → Group.exp (C2 0) (g <I') (degree <I <I'))
-          (λ <I' → Group.exp (C2 0) (Group.inv (C2 0) (g pt)) (degree <I <I')) ⟩
+          (λ <I₋₁ → Group.exp (C2 0) (g <I₋₁) (degree <I <I₋₁))
+          (λ <I₋₁ → Group.exp (C2 0) (Group.inv (C2 0) (g pt)) (degree <I <I₋₁)) ⟩
     Group.comp (C2 0)
-      (Group.sum (C2 0) (λ <I' → Group.exp (C2 0) (g <I') (degree <I <I')))
-      (Group.sum (C2 0) (λ <I' → Group.exp (C2 0) (Group.inv (C2 0) (g pt)) (degree <I <I')))
-      =⟨ ap (Group.comp (C2 0) (Group.sum (C2 0) (λ <I' → Group.exp (C2 0) (g <I') (degree <I <I'))))
+      (Group.sum (C2 0) (λ <I₋₁ → Group.exp (C2 0) (g <I₋₁) (degree <I <I₋₁)))
+      (Group.sum (C2 0) (λ <I₋₁ → Group.exp (C2 0) (Group.inv (C2 0) (g pt)) (degree <I <I₋₁)))
+      =⟨ ap (Group.comp (C2 0) (Group.sum (C2 0) (λ <I₋₁ → Group.exp (C2 0) (g <I₋₁) (degree <I <I₋₁))))
           (sum-degree <I (Group.inv (C2 0) (g pt)))
         ∙ Group.unit-r (C2 0) _ ⟩
-    Group.sum (C2 0) (λ <I' → Group.exp (C2 0) (g <I') (degree <I <I'))
+    Group.sum (C2 0) (λ <I₋₁ → Group.exp (C2 0) (g <I₋₁) (degree <I <I₋₁))
       =∎

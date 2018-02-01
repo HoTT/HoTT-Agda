@@ -22,8 +22,7 @@ FinSkeleton-realize {n = O} n = Fin n , Fin-is-set
 FinSkeleton-realize {n = S n} (attached-fin-skeleton _ s α) =
   attached-skeleton _ (Fin s , Fin-is-set) α
 
-f⟦_⟧ : {n : ℕ} → FinSkeleton n → Type₀
-f⟦_⟧ = Realizer ∘ FinSkeleton-realize
+⦉_⦊ = FinSkeleton-realize
 
 -- Pointedness
 
@@ -39,7 +38,7 @@ fcw-head-has-dec-eq {n = S n} (attached-fin-skeleton skel _ _) =
 
 -- this function is needed for pointedness
 fcw-incl^ : ∀ {n : ℕ} (skel : FinSkeleton n)
-  → fcw-head skel → f⟦ skel ⟧
+  → fcw-head skel → ⟦ ⦉ skel ⦊ ⟧
 fcw-incl^ fin-skel = incl^ (FinSkeleton-realize fin-skel)
 
 -- disjointly pointed skeletons
@@ -49,14 +48,12 @@ record ⊙FinSkeleton (n : ℕ) : Type₁ where
     skel : FinSkeleton n
     pt : fcw-head skel
 
-⊙FinSkeleton-realize : {n : ℕ} → ⊙FinSkeleton n → ⊙Skeleton n
+⊙FinSkeleton-realize : {n : ℕ} → ⊙FinSkeleton n → ⊙Skeleton {i = lzero} n
 ⊙FinSkeleton-realize (⊙fin-skeleton skel pt) =
   ⊙skeleton (FinSkeleton-realize skel) pt (fcw-head-has-dec-eq skel pt)
 
-⊙FinRealizer : {n : ℕ} → ⊙FinSkeleton n → Ptd₀
-⊙FinRealizer = ⊙Realizer ∘ ⊙FinSkeleton-realize
-
-⊙f⟦_⟧ = ⊙FinRealizer
+⊙⦉_⦊ : {n : ℕ} → ⊙FinSkeleton n → ⊙Skeleton {i = lzero} n
+⊙⦉_⦊ = ⊙FinSkeleton-realize
 
 -- Take a prefix of a skeleton
 
