@@ -17,9 +17,9 @@ module index2 where
 {- cw complexes -}
 import cw.CW
 import cw.examples.Examples
--- cellular cohomology groups
-import cw.cohomology.CellularChainComplex
--- Eilenberg-Steenred cohomology groups rephrased
+-- Eilenberg-Steenred cohomology groups refarmulated
 import cw.cohomology.ReconstructedCohomologyGroups
--- isomorphisms between the cochains the heads
+-- Isomorphisms between the cochains
 import cw.cohomology.ReconstructedCochainsIsoCellularCochains
+-- Equivalence between the cochains for finite CWs
+import cw.cohomology.ReconstructedCochainsEquivCellularCochains
