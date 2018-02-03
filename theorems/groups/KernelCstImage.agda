@@ -29,7 +29,7 @@ module groups.KernelCstImage {i j k}
 
       from-to : ∀ ker → from (to ker) == ker
       from-to = SetQuot-elim
-        (λ _ → ap q[_] $ ker-El=-out idp)
+        (λ _ → ap q[_] $ Ker.El=-out (cst-hom {G = H} {H = K}) idp)
         (λ _ → prop-has-all-paths-↓)
 
       to-pres-comp : preserves-comp Ker/Im.comp Coker.comp to
