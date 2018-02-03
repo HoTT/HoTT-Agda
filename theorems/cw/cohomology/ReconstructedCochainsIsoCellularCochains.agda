@@ -11,10 +11,10 @@ module cw.cohomology.ReconstructedCochainsIsoCellularCochains {i : ULevel}
   (OT : OrdinaryTheory i) where
 
   open OrdinaryTheory OT
-  open import cw.cohomology.CellularChainComplex as CCC
-  open import cw.cohomology.ReconstructedCochainComplex OT as RCC
-  open import cw.cohomology.TipAndAugment OT
   open import cw.cohomology.WedgeOfCells OT
+  open import cw.cohomology.cellular.ChainComplex as CCC
+  open import cw.cohomology.reconstructed.cochain.Complex OT as RCC
+  open import cw.cohomology.reconstructed.TipAndAugment OT
 
   private
     rcc-iso-ccc-nth : ∀ {n} (⊙skel : ⊙Skeleton n) {m} (m≤n : m ≤ n)

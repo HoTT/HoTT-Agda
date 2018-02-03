@@ -9,11 +9,11 @@ open import cw.CW
 module cw.cohomology.ReconstructedCohomologyGroups {i : ULevel} (OT : OrdinaryTheory i) where
 
   open OrdinaryTheory OT
-  open import cw.cohomology.Descending OT
-  open import cw.cohomology.ReconstructedCochainComplex OT
-  open import cw.cohomology.ReconstructedZerothCohomologyGroup OT
-  open import cw.cohomology.ReconstructedFirstCohomologyGroup OT
-  open import cw.cohomology.ReconstructedHigherCohomologyGroups OT
+  open import cw.cohomology.reconstructed.Descending OT
+  open import cw.cohomology.reconstructed.cochain.Complex OT
+  open import cw.cohomology.reconstructed.cochain.ZerothGroup OT
+  open import cw.cohomology.reconstructed.cochain.FirstGroup OT
+  open import cw.cohomology.reconstructed.cochain.HigherGroups OT
 
   abstract
     reconstructed-cohomology-group : ∀ m {n} (⊙skel : ⊙Skeleton {i} n)
