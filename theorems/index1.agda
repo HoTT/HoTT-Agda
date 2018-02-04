@@ -14,7 +14,7 @@ Agda will generate index.html.
   is not really working.
 -}
 
-module index where
+module index1 where
 
 {- some group theory results -}
 import groups.ReducedWord

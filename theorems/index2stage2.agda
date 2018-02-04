@@ -12,11 +12,7 @@
   is not really working.
 -}
 
-module index2 where
-
-{- cw complexes -}
-import cw.CW
-import cw.examples.Examples
+module index2stage2 where
 
 {- isomorphisms between different kinds of cohomology groups for finite CWs. -}
 import cw.cohomology.AxiomaticIsoCellular

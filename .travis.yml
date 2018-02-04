@@ -8,6 +8,12 @@ git:
 cache:
   directories:
   - $HOME/.stack
+  - $HOME/agdai-backup
+
+env:
+  - INDEX=index1.agda
+  - INDEX="index2stage1.agda index2stage2.agda"
+  - INDEX=index3.agda
 
 addons:
   apt:
@@ -18,16 +24,33 @@ addons:
     - stack
 
 install:
-- travis_wait 30 stack --no-terminal --install-ghc --resolver lts-9 install Agda
 
 script:
+- export TIMEOUT_THRESHOLD=46
+- export TRAVIS_WAIT_LIMIT=47
+- |
+  if [ "${SECONDS}" -ge "$((TIMEOUT_THRESHOLD*60))" ]; then
+    false;
+  else
+    travis_wait "$(((TRAVIS_WAIT_LIMIT*60-SECONDS)/60))" stack --no-terminal --install-ghc --resolver lts-9 install Agda;
+  fi
 - stack exec agda -- --version
-- set -o pipefail # so that Bash will report the failure of type checking
-# (n+1)-stage type-checking to reduce peak memory usage, hopefully
-- stack exec agda -- --library-file=libraries-travis --without-K --rewriting core/HoTT.agda | ts
-# checking this file is very resource demanding, so it is checked first (actually, I gave up on this)
-# - stack exec agda -- --library-file=libraries-travis --without-K --rewriting theorems/homotopy/3x3/Commutes.agda
-# checking the rest, in three rounds (the second round is added on 2017/03/23, and the third round on 2017/05/08)
-- stack exec agda -- --library-file=libraries-travis --without-K --rewriting theorems/index.agda | ts
-- stack exec agda -- --library-file=libraries-travis --without-K --rewriting theorems/index2.agda | ts
-- stack exec agda -- --library-file=libraries-travis --without-K --rewriting theorems/index3.agda | ts
+- travis-script/restore-agdai.sh
+- |
+  if [ "${SECONDS}" -ge "$((TIMEOUT_THRESHOLD*60))" ]; then
+    false;
+  else
+    travis_wait "$(((TRAVIS_WAIT_LIMIT*60-SECONDS)/60))" travis-script/check.sh core/HoTT.agda;
+  fi
+- travis-script/backup-agdai.sh
+- |
+  PREMATURE_ERROR=0;
+  for file in ${INDEX}; do
+    if [ "${SECONDS}" -ge "$((TIMEOUT_THRESHOLD*60))" ]; then
+      PREMATURE_ERROR=1; break;
+    else
+      travis_wait "$(((TRAVIS_WAIT_LIMIT*60-SECONDS)/60))" travis-script/check.sh "theorems/${file}" || PREMATURE_ERROR=1;
+    fi;
+    travis-script/backup-agdai.sh || PREMATURE_ERROR=1;
+  done;
+  if [ "${PREMATURE_ERROR}" == "1" ]; then false; fi
