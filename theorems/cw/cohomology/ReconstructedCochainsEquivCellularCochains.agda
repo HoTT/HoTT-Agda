@@ -64,13 +64,13 @@ module cw.cohomology.ReconstructedCochainsEquivCellularCochains
               (rcc-iso-ccc-template ⊙⦉ ⊙fin-skel ⦊ m≤n?
               (⊙FinSkeleton-has-cells-with-choice 0 ⊙fin-skel lzero)) g))
 
-      frcc-comm-fccc-nth : ∀ {n} (⊙fin-skel : ⊙FinSkeleton n) {m} (m≤n : m ≤ n) (Sm≤n : S m ≤ n)
-        → frcc-comm-fccc-Type ⊙fin-skel (inl m≤n) (inl Sm≤n)
-            (RCC-coboundary-template' ⊙fin-skel (inl m≤n) (inl Sm≤n))
-            (CCC-boundary-template' ⊙fin-skel (inl m≤n) (inl Sm≤n))
-      frcc-comm-fccc-nth ⊙fin-skel (inl idp) (inl Sm=m) = ⊥-rec (<-to-≠ ltS (! Sm=m))
-      frcc-comm-fccc-nth ⊙fin-skel (inl idp) (inr Sm<m) = ⊥-rec (<-to-≠ (<-trans Sm<m ltS) idp)
-      frcc-comm-fccc-nth ⊙fin-skel {m = O} (inr ltS) (inl 1=1) =
+      frcc-comm-fccc-nth-zero : ∀ {n} (⊙fin-skel : ⊙FinSkeleton n) (0≤n : 0 ≤ n) (1≤n : 1 ≤ n)
+        → frcc-comm-fccc-Type ⊙fin-skel (inl 0≤n) (inl 1≤n)
+            (RCC-coboundary-template' ⊙fin-skel (inl 0≤n) (inl 1≤n))
+            (CCC-boundary-template' ⊙fin-skel (inl 0≤n) (inl 1≤n))
+      frcc-comm-fccc-nth-zero ⊙fin-skel (inl idp) (inl 1=0) = ⊥-rec (ℕ-S≠O O 1=0)
+      frcc-comm-fccc-nth-zero ⊙fin-skel (inl idp) (inr ())
+      frcc-comm-fccc-nth-zero ⊙fin-skel (inr ltS) (inl 1=1) =
         transport!
           (λ 1=1 → frcc-comm-fccc-Type ⊙fin-skel (inl lteS) (inl (inl 1=1))
               (RCC-coboundary-template' ⊙fin-skel (inl lteS) (inl (inl 1=1)))
@@ -83,7 +83,39 @@ module cw.cohomology.ReconstructedCochainsEquivCellularCochains
                 (FinSkeleton-has-cells-with-dec-eq (⊙FinSkeleton.skel ⊙fin-skel))
                 (FinSkeleton-has-degrees-with-finite-support (⊙FinSkeleton.skel ⊙fin-skel))))
             (fst (first-coboundary-comm-sqrᴳ ⊙fin-skel)))
-      frcc-comm-fccc-nth ⊙fin-skel {m = S m} (inr ltS) (inl SSm=SSm) =
+      frcc-comm-fccc-nth-zero ⊙fin-skel (inr ltS) (inr (ltSR ()))
+      frcc-comm-fccc-nth-zero ⊙fin-skel (inr (ltSR 0<n)) (inl 1=Sn) = ⊥-rec (<-to-≠ (<-ap-S 0<n) 1=Sn)
+      frcc-comm-fccc-nth-zero ⊙fin-skel (inr (ltSR ltS)) (inr 1<2) =
+        transport!
+          (λ 1<2 → frcc-comm-fccc-Type ⊙fin-skel (inl (inr (ltSR ltS))) (inl (inr 1<2))
+            (RCC-coboundary-template' ⊙fin-skel (inl (inr (ltSR ltS))) (inl (inr 1<2)))
+            (CCC-boundary-template' ⊙fin-skel (inl (inr (ltSR ltS))) (inl (inr 1<2))))
+          (prop-has-all-paths 1<2 ltS)
+          (coe!
+            (ap2 (λ p₁ p₂ → frcc-comm-fccc-Type ⊙fin-skel (inl (inr (ltSR ltS))) (inl (inr ltS)) p₁ p₂)
+              (RCC.coboundary-first-template-descend-from-two ⊙⦉ ⊙fin-skel ⦊)
+              (CCC.boundary-template-descend-from-two-above ⦉ ⊙FinSkeleton.skel ⊙fin-skel ⦊
+                (FinSkeleton-has-cells-with-dec-eq (⊙FinSkeleton.skel ⊙fin-skel))
+                (FinSkeleton-has-degrees-with-finite-support (⊙FinSkeleton.skel ⊙fin-skel))))
+            (frcc-comm-fccc-nth-zero (⊙fcw-init ⊙fin-skel) (inr ltS) (inl idp)))
+      frcc-comm-fccc-nth-zero ⊙fin-skel (inr (ltSR (ltSR ()))) (inr ltS)
+      frcc-comm-fccc-nth-zero ⊙fin-skel (inr (ltSR (ltSR 0<n))) (inr (ltSR 1<Sn)) =
+        (coe!
+          (ap2 (λ p₁ p₂ → frcc-comm-fccc-Type ⊙fin-skel (inl (inr (ltSR (ltSR 0<n)))) (inl (inr (ltSR 1<Sn))) p₁ p₂)
+            (RCC.coboundary-first-template-descend-from-far ⊙⦉ ⊙fin-skel ⦊ (ltSR 0<n) 1<Sn)
+            (CCC.boundary-template-descend-from-far ⦉ ⊙FinSkeleton.skel ⊙fin-skel ⦊
+              (FinSkeleton-has-cells-with-dec-eq (⊙FinSkeleton.skel ⊙fin-skel))
+              (FinSkeleton-has-degrees-with-finite-support (⊙FinSkeleton.skel ⊙fin-skel))
+              (ltSR 0<n) 1<Sn))
+          (frcc-comm-fccc-nth-zero (⊙fcw-init ⊙fin-skel) (inr (ltSR 0<n)) (inr 1<Sn)))
+
+      frcc-comm-fccc-nth-higher : ∀ {n} (⊙fin-skel : ⊙FinSkeleton n) {m} (Sm≤n : S m ≤ n) (SSm≤n : S (S m) ≤ n)
+        → frcc-comm-fccc-Type ⊙fin-skel (inl Sm≤n) (inl SSm≤n)
+            (RCC-coboundary-template' ⊙fin-skel (inl Sm≤n) (inl SSm≤n))
+            (CCC-boundary-template' ⊙fin-skel (inl Sm≤n) (inl SSm≤n))
+      frcc-comm-fccc-nth-higher ⊙fin-skel (inl idp) (inl SSm=Sm) = ⊥-rec (<-to-≠ ltS (! SSm=Sm))
+      frcc-comm-fccc-nth-higher ⊙fin-skel (inl idp) (inr SSm<Sm) = ⊥-rec (<-to-≠ (<-trans SSm<Sm ltS) idp)
+      frcc-comm-fccc-nth-higher ⊙fin-skel {m} (inr ltS) (inl SSm=SSm) =
         transport!
           (λ SSm=SSm → frcc-comm-fccc-Type ⊙fin-skel (inl lteS) (inl (inl SSm=SSm))
             (RCC-coboundary-template' ⊙fin-skel (inl lteS) (inl (inl SSm=SSm)))
@@ -96,53 +128,31 @@ module cw.cohomology.ReconstructedCochainsEquivCellularCochains
                 (FinSkeleton-has-cells-with-dec-eq (⊙FinSkeleton.skel ⊙fin-skel))
                 (FinSkeleton-has-degrees-with-finite-support (⊙FinSkeleton.skel ⊙fin-skel))))
             (fst (higher-coboundary-comm-sqrᴳ ⊙fin-skel)))
-      frcc-comm-fccc-nth ⊙fin-skel (inr ltS) (inr Sm<Sm) = ⊥-rec (<-to-≠ Sm<Sm idp)
-      frcc-comm-fccc-nth ⊙fin-skel (inr (ltSR n<m)) (inl Sn=Sm) = ⊥-rec (<-to-≠ (<-ap-S n<m) Sn=Sm)
-      frcc-comm-fccc-nth ⊙fin-skel {m = O} (inr (ltSR ltS)) (inr Sm<SSm) =
+      frcc-comm-fccc-nth-higher ⊙fin-skel (inr ltS) (inr SSm<SSm) = ⊥-rec (<-to-≠ SSm<SSm idp)
+      frcc-comm-fccc-nth-higher ⊙fin-skel (inr (ltSR Sm<n)) (inl SSm=Sn) = ⊥-rec (<-to-≠ (<-ap-S Sm<n) SSm=Sn)
+      frcc-comm-fccc-nth-higher ⊙fin-skel (inr (ltSR ltS)) (inr SSm<SSSm) =
         transport!
-          (λ Sm<SSm → frcc-comm-fccc-Type ⊙fin-skel (inl (inr (ltSR ltS))) (inl (inr Sm<SSm))
-            (RCC-coboundary-template' ⊙fin-skel (inl (inr (ltSR ltS))) (inl (inr Sm<SSm)))
-            (CCC-boundary-template' ⊙fin-skel (inl (inr (ltSR ltS))) (inl (inr Sm<SSm))))
-          (prop-has-all-paths Sm<SSm ltS)
-          (coe!
-            (ap2 (λ p₁ p₂ → frcc-comm-fccc-Type ⊙fin-skel (inl (inr (ltSR ltS))) (inl (inr ltS)) p₁ p₂)
-              (RCC.coboundary-first-template-descend-from-two ⊙⦉ ⊙fin-skel ⦊)
-              (CCC.boundary-template-descend-from-two-above ⦉ ⊙FinSkeleton.skel ⊙fin-skel ⦊
-                (FinSkeleton-has-cells-with-dec-eq (⊙FinSkeleton.skel ⊙fin-skel))
-                (FinSkeleton-has-degrees-with-finite-support (⊙FinSkeleton.skel ⊙fin-skel))))
-            (frcc-comm-fccc-nth (⊙fcw-init ⊙fin-skel) (inr ltS) (inl idp)))
-      frcc-comm-fccc-nth ⊙fin-skel {m = S m} (inr (ltSR ltS)) (inr Sm<SSm) =
-        transport!
-          (λ Sm<SSm → frcc-comm-fccc-Type ⊙fin-skel (inl (inr (ltSR ltS))) (inl (inr Sm<SSm))
-            (RCC-coboundary-template' ⊙fin-skel (inl (inr (ltSR ltS))) (inl (inr Sm<SSm)))
-            (CCC-boundary-template' ⊙fin-skel (inl (inr (ltSR ltS))) (inl (inr Sm<SSm))))
-          (prop-has-all-paths Sm<SSm ltS)
+          (λ SSm<SSSm → frcc-comm-fccc-Type ⊙fin-skel (inl (inr (ltSR ltS))) (inl (inr SSm<SSSm))
+            (RCC-coboundary-template' ⊙fin-skel (inl (inr (ltSR ltS))) (inl (inr SSm<SSSm)))
+            (CCC-boundary-template' ⊙fin-skel (inl (inr (ltSR ltS))) (inl (inr SSm<SSSm))))
+          (prop-has-all-paths SSm<SSSm ltS)
           (coe!
             (ap2 (λ p₁ p₂ → frcc-comm-fccc-Type ⊙fin-skel (inl (inr (ltSR ltS))) (inl (inr ltS)) p₁ p₂)
               (RCC.coboundary-higher-template-descend-from-one-above ⊙⦉ ⊙fin-skel ⦊)
               (CCC.boundary-template-descend-from-two-above ⦉ ⊙FinSkeleton.skel ⊙fin-skel ⦊
                 (FinSkeleton-has-cells-with-dec-eq (⊙FinSkeleton.skel ⊙fin-skel))
                 (FinSkeleton-has-degrees-with-finite-support (⊙FinSkeleton.skel ⊙fin-skel))))
-            (frcc-comm-fccc-nth (⊙fcw-init ⊙fin-skel) (inr ltS) (inl idp)))
-      frcc-comm-fccc-nth ⊙fin-skel (inr (ltSR (ltSR m<m))) (inr ltS) = ⊥-rec (<-to-≠ m<m idp)
-      frcc-comm-fccc-nth ⊙fin-skel {m = O} (inr (ltSR (ltSR m<n))) (inr (ltSR SSm<Sn)) =
+            (frcc-comm-fccc-nth-higher (⊙fcw-init ⊙fin-skel) (inr ltS) (inl idp)))
+      frcc-comm-fccc-nth-higher ⊙fin-skel (inr (ltSR (ltSR Sm<Sm))) (inr ltS) = ⊥-rec (<-to-≠ Sm<Sm idp)
+      frcc-comm-fccc-nth-higher ⊙fin-skel (inr (ltSR (ltSR Sm<n))) (inr (ltSR SSm<Sn)) =
         (coe!
-          (ap2 (λ p₁ p₂ → frcc-comm-fccc-Type ⊙fin-skel (inl (inr (ltSR (ltSR m<n)))) (inl (inr (ltSR SSm<Sn))) p₁ p₂)
-            (RCC.coboundary-first-template-descend-from-far ⊙⦉ ⊙fin-skel ⦊ (ltSR m<n) SSm<Sn)
+          (ap2 (λ p₁ p₂ → frcc-comm-fccc-Type ⊙fin-skel (inl (inr (ltSR (ltSR Sm<n)))) (inl (inr (ltSR SSm<Sn))) p₁ p₂)
+            (RCC.coboundary-higher-template-descend-from-far ⊙⦉ ⊙fin-skel ⦊ (ltSR Sm<n) SSm<Sn)
             (CCC.boundary-template-descend-from-far ⦉ ⊙FinSkeleton.skel ⊙fin-skel ⦊
               (FinSkeleton-has-cells-with-dec-eq (⊙FinSkeleton.skel ⊙fin-skel))
               (FinSkeleton-has-degrees-with-finite-support (⊙FinSkeleton.skel ⊙fin-skel))
-              (ltSR m<n) SSm<Sn))
-          (frcc-comm-fccc-nth (⊙fcw-init ⊙fin-skel) (inr (ltSR m<n)) (inr SSm<Sn)))
-      frcc-comm-fccc-nth ⊙fin-skel {m = S m} (inr (ltSR (ltSR m<n))) (inr (ltSR SSm<Sn)) =
-        (coe!
-          (ap2 (λ p₁ p₂ → frcc-comm-fccc-Type ⊙fin-skel (inl (inr (ltSR (ltSR m<n)))) (inl (inr (ltSR SSm<Sn))) p₁ p₂)
-            (RCC.coboundary-higher-template-descend-from-far ⊙⦉ ⊙fin-skel ⦊ (ltSR m<n) SSm<Sn)
-            (CCC.boundary-template-descend-from-far ⦉ ⊙FinSkeleton.skel ⊙fin-skel ⦊
-              (FinSkeleton-has-cells-with-dec-eq (⊙FinSkeleton.skel ⊙fin-skel))
-              (FinSkeleton-has-degrees-with-finite-support (⊙FinSkeleton.skel ⊙fin-skel))
-              (ltSR m<n) SSm<Sn))
-          (frcc-comm-fccc-nth (⊙fcw-init ⊙fin-skel) (inr (ltSR m<n)) (inr SSm<Sn)))
+              (ltSR Sm<n) SSm<Sn))
+          (frcc-comm-fccc-nth-higher (⊙fcw-init ⊙fin-skel) (inr (ltSR Sm<n)) (inr SSm<Sn)))
 
       frcc-comm-fccc-template : ∀ {n} (⊙fin-skel : ⊙FinSkeleton n)
           {m} (m≤n? : Dec (m ≤ n)) (Sm≤n? : Dec (S m ≤ n))
@@ -151,7 +161,8 @@ module cw.cohomology.ReconstructedCochainsEquivCellularCochains
             (CCC-boundary-template' ⊙fin-skel m≤n? Sm≤n?)
       frcc-comm-fccc-template ⊙fin-skel m≤n? (inr Sm≰n) = frcc-comm-fccc-above ⊙fin-skel m≤n? Sm≰n
       frcc-comm-fccc-template ⊙fin-skel (inr m≰n) (inl Sm≤n) = ⊥-rec $ m≰n (≤-trans lteS Sm≤n)
-      frcc-comm-fccc-template ⊙fin-skel (inl m≤n) (inl Sm≤n) = frcc-comm-fccc-nth ⊙fin-skel m≤n Sm≤n
+      frcc-comm-fccc-template ⊙fin-skel {m = O} (inl m≤n) (inl Sm≤n) = frcc-comm-fccc-nth-zero ⊙fin-skel m≤n Sm≤n
+      frcc-comm-fccc-template ⊙fin-skel {m = S m} (inl Sm≤n) (inl SSm≤n) = frcc-comm-fccc-nth-higher ⊙fin-skel Sm≤n SSm≤n
 
       frcc-comm-fccc : ∀ {n} (⊙fin-skel : ⊙FinSkeleton n) m
         → frcc-comm-fccc-Type ⊙fin-skel (≤-dec m n) (≤-dec (S m) n)
