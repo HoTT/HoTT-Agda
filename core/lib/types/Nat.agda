@@ -156,7 +156,7 @@ private
 <-dec (S n) (S m) | inr ¬p = inr (¬p ∘ <-cancel-S)
 
 ≤-dec : Decidable _≤_
-≤-dec O m = inl (O≤ m)
+≤-dec O m = inl (O≤ m) -- important for the current cohomology development
 ≤-dec (S n) O = inr (S≰O n)
 ≤-dec (S n) (S m) with ≤-dec n m
 ≤-dec (S n) (S m) | inl p = inl (≤-ap-S p)
