@@ -23,11 +23,12 @@ addons:
     - moreutils # this old version does not supports [ts -i] or [ts -s]
     - stack
 
-install:
-
-script:
+before_install:
 - export TIMEOUT_THRESHOLD=46
 - export TRAVIS_WAIT_LIMIT=47
+- travis-script/restore-agdai.sh
+
+install:
 - |
   if [ "${SECONDS}" -ge "$((TIMEOUT_THRESHOLD*60))" ]; then
     false;
@@ -35,14 +36,14 @@ script:
     travis_wait "$(((TRAVIS_WAIT_LIMIT*60-SECONDS)/60))" stack --no-terminal --install-ghc --resolver lts-9 install Agda;
   fi
 - stack exec agda -- --version
-- travis-script/restore-agdai.sh
+
+script:
 - |
   if [ "${SECONDS}" -ge "$((TIMEOUT_THRESHOLD*60))" ]; then
     false;
   else
     travis_wait "$(((TRAVIS_WAIT_LIMIT*60-SECONDS)/60))" travis-script/check.sh core/HoTT.agda;
   fi
-- travis-script/backup-agdai.sh
 - |
   PREMATURE_ERROR=0;
   for file in ${INDEX}; do
@@ -51,6 +52,8 @@ script:
     else
       travis_wait "$(((TRAVIS_WAIT_LIMIT*60-SECONDS)/60))" travis-script/check.sh "theorems/${file}" || PREMATURE_ERROR=1;
     fi;
-    travis-script/backup-agdai.sh || PREMATURE_ERROR=1;
   done;
   if [ "${PREMATURE_ERROR}" == "1" ]; then false; fi
+
+before_cache:
+- travis-script/backup-agdai.sh
