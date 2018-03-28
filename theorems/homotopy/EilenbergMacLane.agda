@@ -192,3 +192,14 @@ module EMExplicit {i} (G : AbGroup i) where
 
   open AboveDiagonal public using (πS-above)
   open Spectrum public using (spectrum)
+
+module EilenbergMacLane-functorial {i} (G : Group i) (H : Group i) where
+  ⊙EM₁-fmap : (G →ᴳ H) → (⊙EM₁ G ⊙→ ⊙EM₁ H)
+  ⊙EM₁-fmap φ =  f , idp
+    where
+      f : EM₁ G → EM₁ H
+      f = EM₁-rec {G = G} {C = EM₁ H}
+                  embase
+                  (GroupIso.g-hom (Ω¹-EM₁ H) ∘ᴳ φ)
+
+  -- TODO: ⊙EM-fmap functor axioms
