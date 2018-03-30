@@ -12,6 +12,7 @@ open import lib.types.CommutingSquare public
 open import lib.types.Coproduct public
 open import lib.types.Cospan public
 open import lib.types.Cover public
+open import lib.types.CRing public
 open import lib.types.EilenbergMacLane1 public
 open import lib.types.Empty public
 open import lib.types.Fin public

@@ -2,6 +2,7 @@
 
 open import lib.Basics
 open import lib.types.Group
+open import lib.groups.Homomorphism
 
 module lib.types.CRing where
 
@@ -74,6 +75,15 @@ record CRing i : Type (lsucc i) where
 
   add-group : Group i
   add-group = group El add-group-struct
+
+  add-ab-group : AbGroup i
+  add-ab-group = add-group , add-comm
+
+  mult-hom : El → add-group →ᴳ add-group
+  mult-hom g = group-hom (mult g) (distr-r g)
+
+  mult-hom-zero : mult-hom zero == cst-hom
+  mult-hom-zero = group-hom= (λ= mult-zero-l)
 
 Ring₀ : Type (lsucc lzero)
 Ring₀ = CRing lzero
