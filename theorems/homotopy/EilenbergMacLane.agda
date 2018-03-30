@@ -194,12 +194,39 @@ module EMExplicit {i} (G : AbGroup i) where
   open Spectrum public using (spectrum)
 
 module EilenbergMacLane-functorial {i} (G : Group i) (H : Group i) where
-  ⊙EM₁-fmap : (G →ᴳ H) → (⊙EM₁ G ⊙→ ⊙EM₁ H)
-  ⊙EM₁-fmap φ =  f , idp
+  EM₁-fmap' : (G →ᴳ H) → G →ᴳ Ω^S-group 0 (⊙EM₁ H)
+  EM₁-fmap' φ = group-hom f f-preserves-comp
     where
-      f : EM₁ G → EM₁ H
-      f = EM₁-rec {G = G} {C = EM₁ H}
-                  embase
-                  (GroupIso.g-hom (Ω¹-EM₁ H) ∘ᴳ φ)
+      f : Group.El G → embase' H == embase
+      f g = emloop (GroupHom.f φ g)
+      f-preserves-comp : ∀ g₁ g₂ → f (Group.comp G g₁ g₂) == f g₁ ∙ f g₂
+      f-preserves-comp g₁ g₂ =
+        emloop (GroupHom.f φ (Group.comp G g₁ g₂))
+          =⟨ GroupHom.pres-comp φ g₁ g₂ |in-ctx emloop ⟩
+        emloop (Group.comp H (GroupHom.f φ g₁) (GroupHom.f φ g₂))
+          =⟨ emloop-comp' H (GroupHom.f φ g₁) (GroupHom.f φ g₂) ⟩
+        emloop (GroupHom.f φ g₁) ∙ emloop (GroupHom.f φ g₂) =∎
+
+  EM₁-fmap : (G →ᴳ H) → EM₁ G → EM₁ H
+  EM₁-fmap φ = EM₁-rec {G = G} {C = EM₁ H} embase (EM₁-fmap' φ)
+
+  ⊙EM₁-fmap : (G →ᴳ H) → (⊙EM₁ G ⊙→ ⊙EM₁ H)
+  ⊙EM₁-fmap φ = EM₁-fmap φ , idp
+
+  EM₁-fmap-cst : ∀ x → EM₁-fmap cst-hom x == embase
+  EM₁-fmap-cst = EM₁-elim {P = λ x' → EM₁-fmap cst-hom x' == embase}
+                          idp
+                          h
+                          (λ _ _ → prop-has-all-paths-↓ {{↓-level ⟨⟩}})
+    where
+      h : (g : Group.El G) → idp == idp [ (λ x' → EM₁-fmap cst-hom x' == embase) ↓ emloop g ]
+      h g = ↓-app=cst-in $
+              idp {a = embase' H}
+                =⟨ ! emloop-ident ⟩
+              emloop (Group.ident H)
+                =⟨ ! (EM₁Rec.emloop-β {C = EM₁ H} embase (EM₁-fmap' cst-hom) g) ⟩
+              ap (λ z → EM₁-fmap cst-hom z) (emloop' G g)
+                =⟨ ! (∙-unit-r _) ⟩
+              ap (λ z → EM₁-fmap cst-hom z) (emloop' G g) ∙ idp =∎
 
   -- TODO: ⊙EM-fmap functor axioms
