@@ -245,7 +245,82 @@ TODO: describe more precisely each file
 
 This directory contains proofs of interesting homotopy-theoretic theorems.
 
-TODO: describe more precisely each file
+─ `3x3/`: TODO
+  ─ `Common`: TODO
+  ─ `Commutes`: TODO
+  ─ `From`: TODO
+  ─ `FromTo`: TODO
+  ─ `FromTo2`: TODO
+  ─ `FromTo3`: TODO
+  ─ `FromToInit`: TODO
+  ─ `PushoutPushout`: TODO
+  ─ `To`: TODO
+  ─ `ToFrom`: TODO
+  ─ `ToFrom2`: TODO
+  ─ `ToFrom3`: TODO
+  ─ `ToFromInit`: TODO
+  ─ `Transpose`: TODO
+─ `AnyUniversalCoverIsPathSet`: Proves that for any universal covering `F` over some type `A` with base point `a₁ : A`, the fiber `F.Fiber a₂` over some point `a₂ : A` is equivalent to `a₁ =₀ a₂`, the 0-truncation of the space of paths between `a₁` and `a₂`.
+─ `BlakersMassey`: Contains a proof of the Blakers–Massey theorem. See the paper [A mechanization of the Blakers-Massey connectivity theorem in Homotopy Type Theory](https://arxiv.org/abs/1605.03227).
+─ `Bouquet`: Defines the bouquet of a family of circles and other families of pointed types.
+─ `CircleCover`: Defines a type `S¹Cover` and proves that it is equivalent to the type `Cover S¹ j` of coverings of `S¹`.
+─ `CircleHSpace`: Defines `⊙S¹-hSpace : HSpaceStructure ⊙S¹`.
+─ `CoHSpace`: Defines what a `CoHSpaceStructure` is.
+─ `CofiberComp`: Let `f : X ⊙→ Z` and `g : Y ⊙→ Z` be two pointed maps. This file proves that the cofiber of the composition of `g` and `⊙cfcod` f : Z ⊙→ ⊙Cofiber f` is equivalent to the cofiber of the induced map `h : X ⊙∨ Y ⊙→ Z`.
+─ `CofiberSequence`: Proves that the 5-term sequence obtained from a map `f : X ⊙→ Y` by repeatedly taking the map into the cofiber of the previous map is equivalent to the sequence `X ⊙→⟨ f ⟩ Y ⊙→⟨ ⊙cfcod` f ⟩ ⊙Cofiber f ⊙→⟨ ⊙extract-glue ⟩ ⊙Susp X ⊙→⟨ ⊙Susp-fmap f ⟩ ⊙Susp Y ⊙⊣|`.
+─ `Cogroup`: Defines `CogroupStructure`, proves that such a structure on `X` induces a `GroupStructure` on `X ⊙→ Y` for any pointed type `Y`.
+─ `ConstantToSetExtendsToProp`: Proves that any constant function `f : A → B` factors through a function `Trunc -1 A → B`.
+─ `DisjointlyPointedSet`: Defines properties `is-separable X` (equality to the base point is decidable) and `has-disjoint-pt` (being pointedly equivalent to the coproduct of the singleton and `MinusPoint X`, that is `X` without the base point) of pointed types `X` and proves that they are equivalent. Also gives a pointed equivalence between `⊙Bouquet (MinusPoint X) 0`, a bouquet of 0-spheres indexed by `MinusPoint X` and `X` for each pointed type `X` that is separable.
+─ `EM1HSpace`: Defines the `HSpaceStructure` on the Eilenberg–MacLane space `⊙EM₁ G` for an abelian group `G`.
+─ `EilenbergMacLane`: Defines the Eilenberg–MacLane spaces `⊙EM G n`, proves that `⊙Ω (⊙EM G (S n))` is pointedly equivalent to `⊙EM G n` for each `n` and that their homotopy groups are as required. See *Eilenberg-MacLane Spaces in Homotopy Type Theory* by Dan Licata and Eric Finster.
+─ `EilenbergMacLane1`: Proves that the fundamental group of the Eilenberg–MacLane space `⊙EM₁ G` (which is defined as a HIT) is in fact `G`.
+─ `FiberOfWedgeToProduct`: Let `X` of `Y` be two types with basepoints `x₀` and `y₀`. This contains a proof that the fiber of the induced map `X ∨ Y → X × Y` over a point `(x , y)` is equivalent to the join `(x₀ == x) * (y₀ == y)`.
+─ `FinWedge`: Contains helper functions and lemmas for dealing with wedges indexed over `Fin I` for some `I : ℕ`.
+─ `Freudenthal`: Proves the Freudenthal suspension theorem.
+─ `GroupSetsRepresentCovers`: Let `X` be a 0-connected type. This file gives an equivalence between coverings of `X` and `πS 0 X`-sets (where `πS 0 X` is the fundamental group of `X`).
+─ `HSpace`: Contains definition(s) of H-spaces and some basic lemmas.
+─ `Hopf`: Proves that the total space of the Hopf fibration is `S³`.
+─ `HopfConstruction`: Given a 0-connected H-space `X`, constructs a fibration `H` on `Susp A` with total space equivalent to the join `X * X`.
+─ `HopfJunior`: Contains `HopfJunior : S¹ → Type₀`, a fibration with fibers equivalent to `Bool` (a.k.a. the 0-sphere) and a proof that its total space is (equivalent to) `S¹`.
+─ `IterSuspensionStable`: TODO
+─ `JoinAssoc3x3`: TODO
+─ `JoinAssocCubical`: TODO
+─ `JoinComm`: TODO
+─ `JoinSusp`: TODO
+─ `LoopSpaceCircle`: TODO
+─ `ModalWedgeExtension`: TODO
+─ `PathSetIsInitalCover`: TODO
+─ `Pi2HSusp`: TODO
+─ `PinSn`: TODO
+─ `PropJoinProp`: TODO
+─ `PtdAdjoint`: TODO
+─ `PtdMapSequence`: TODO
+─ `PushoutSplit`: TODO
+─ `RelativelyConstantToSetExtendsViaSurjection`: TODO
+─ `RibbonCover`: TODO
+─ `SmashIsCofiber`: TODO
+─ `SpaceFromGroups`: TODO
+─ `SphereEndomorphism`: TODO
+─ `SuspAdjointLoop`: TODO
+─ `SuspAdjointLoopLadder`: TODO
+─ `SuspProduct`: TODO
+─ `SuspSectionDecomp`: TODO
+─ `SuspSmash`: TODO
+─ `TruncationLoopLadder`: TODO
+─ `VanKampen`: TODO
+─ `WedgeCofiber`: TODO
+─ `WedgeExtension`: TODO
+─ `blakersmassey/`: TODO
+  ─ `CoherenceData`: TODO
+  - `Pushout`: TODO
+─ `elims/`: TODO
+  ─ `CofPushoutSection`: TODO
+  ─ `Lemmas`: TODO
+  ─ `SuspSmash`: TODO
+- `vankampen/`: TODO
+  ─ `Code`: TODO
+  ─ `CodeAP`: TODO
+  ─ `CodeBP`: TODO
 
 ### Cohomology (directory `theorems/cohomology/`)
 
