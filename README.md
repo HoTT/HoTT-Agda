@@ -282,19 +282,20 @@ This directory contains proofs of interesting homotopy-theoretic theorems.
 ─ `Hopf`: Proves that the total space of the Hopf fibration is `S³`.
 ─ `HopfConstruction`: Given a 0-connected H-space `X`, constructs a fibration `H` on `Susp A` with total space equivalent to the join `X * X`.
 ─ `HopfJunior`: Contains `HopfJunior : S¹ → Type₀`, a fibration with fibers equivalent to `Bool` (a.k.a. the 0-sphere) and a proof that its total space is (equivalent to) `S¹`.
-─ `IterSuspensionStable`: TODO
-─ `JoinAssoc3x3`: TODO
-─ `JoinAssocCubical`: TODO
-─ `JoinComm`: TODO
-─ `JoinSusp`: TODO
-─ `LoopSpaceCircle`: TODO
-─ `ModalWedgeExtension`: TODO
-─ `PathSetIsInitalCover`: TODO
-─ `Pi2HSusp`: TODO
-─ `PinSn`: TODO
-─ `PropJoinProp`: TODO
-─ `PtdAdjoint`: TODO
-─ `PtdMapSequence`: TODO
+─ `IterSuspensionStable`: Contains a reformulation of the Freudenthal suspension theorem.
+─ `JoinAssoc3x3`: Gives an equivalence between the joins `(A * B) * C` and `A * (B * C)`. The proof uses the 3x3-lemma.
+─ `JoinAssocCubical`: Gives an equivalence between the joins `(A * B) * C` and `A * (B * C)`. The proof involves squares and cubes.
+─ `JoinComm`: Gives an equivalence between the joins `A * B` and `B * A`.
+─ `JoinSusp`: Contains equivalences `Bool * A ≃ Susp A`, `Susp A * B ≃ Susp (A * B)` and `⊙Sphere m ⊙* X ⊙≃ ⊙Susp^ (S m) X
+` ((m+1)-fold suspension is equivalent to joining with an m-sphere).
+─ `LoopSpaceCircle`: Proves that the fundamental group of the circle is equivalent to the integers.
+─ `ModalWedgeExtension`: Lemmas about modalities and the function `X ∨ Y → X × Y` for pointed types `X` and `Y`.
+─ `PathSetIsInitalCover`: Proves that the covering constructed from the path set of a type `X` is initial in the category of coverings of `X`.
+─ `Pi2HSusp`: Given an H-space `X`, constructs an isomorphism `π₂-Susp : πS 1 (⊙Susp X) ≃ᴳ πS 0 X` between the fundamental group of `X` and the second homotopy group of its suspension.
+─ `PinSn`: Proves that the n-th homotopy group of the n-sphere is isomorphic to the integers.
+─ `PropJoinProp`: Proves that if `A` and `B` are propositions, then so is `A * B`.
+─ `PtdAdjoint`: Defines what a endofunctor of the category of pointed spaces is, gives two definitions of adjointness of such functors via unit and counit morphisms and via equivalence of Hom-types and constructs equivalence between the definitions. Also proves that right adjoints preserve products and left adjoints preserve wedges.
+─ `PtdMapSequence`: Defines data types representing sequences of pointed maps and maps between them.
 ─ `PushoutSplit`: TODO
 ─ `RelativelyConstantToSetExtendsViaSurjection`: TODO
 ─ `RibbonCover`: TODO
