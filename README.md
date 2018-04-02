@@ -366,5 +366,5 @@ The views and conclusions contained in this document are those of the author and
 interpreted as representing the official policies, either expressed or implied, of any sponsoring
 institution, the U.S. government or any other entity.
 
-[favonia-thesis]: https://www.math.ias.edu/~favonia/thesis.html
+[favonia-thesis]: http://favonia.org/thesis.html
 [guillaume-brunerie-thesis]: https://arxiv.org/abs/1606.05916
