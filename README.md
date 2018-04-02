@@ -261,7 +261,8 @@ This directory contains proofs of interesting homotopy-theoretic theorems.
   ─ `ToFromInit`: TODO
   ─ `Transpose`: TODO
 ─ `AnyUniversalCoverIsPathSet`: Proves that for any universal covering `F` over some type `A` with base point `a₁ : A`, the fiber `F.Fiber a₂` over some point `a₂ : A` is equivalent to `a₁ =₀ a₂`, the 0-truncation of the space of paths between `a₁` and `a₂`.
-─ `BlakersMassey`: Contains a proof of the Blakers–Massey theorem. See the paper [A mechanization of the Blakers-Massey connectivity theorem in Homotopy Type Theory](https://arxiv.org/abs/1605.03227).
+─ `BlakersMassey`: Contains a proof of the Blakers–Massey theorem. See the paper [A mechanization of the Blakers-Massey connectivity theorem in Homotopy Type Theory](https://arxiv.org/abs/1605.03227) and [Favonia's thesis][favonia-thesis].
+─ `blakersmassey/`: Contains definitions and lemmas for `BlakersMassey.agda`.
 ─ `Bouquet`: Defines the bouquet of a family of circles and other families of pointed types.
 ─ `CircleCover`: Defines a type `S¹Cover` and proves that it is equivalent to the type `Cover S¹ j` of coverings of `S¹`.
 ─ `CircleHSpace`: Defines `⊙S¹-hSpace : HSpaceStructure ⊙S¹`.
@@ -271,6 +272,10 @@ This directory contains proofs of interesting homotopy-theoretic theorems.
 ─ `Cogroup`: Defines `CogroupStructure`, proves that such a structure on `X` induces a `GroupStructure` on `X ⊙→ Y` for any pointed type `Y`.
 ─ `ConstantToSetExtendsToProp`: Proves that any constant function `f : A → B` factors through a function `Trunc -1 A → B`.
 ─ `DisjointlyPointedSet`: Defines properties `is-separable X` (equality to the base point is decidable) and `has-disjoint-pt` (being pointedly equivalent to the coproduct of the singleton and `MinusPoint X`, that is `X` without the base point) of pointed types `X` and proves that they are equivalent. Also gives a pointed equivalence between `⊙Bouquet (MinusPoint X) 0`, a bouquet of 0-spheres indexed by `MinusPoint X` and `X` for each pointed type `X` that is separable.
+─ `elims/`: Contains proofs of elimination principles.
+  ─ `CofPushoutSection`: Given a span `s`, in which one of the maps has a left-inverse, and a map `h : Pushout s → D`, proves an elimination principle for `Cofiber h`.
+  ─ `Lemmas`: Contains technical lemmas about commutative squares over commutative squares.
+  ─ `SuspSmash`: Gives an elimination principle for `Susp (X ∧ Y)`, the suspension of the smash product.
 ─ `EM1HSpace`: Defines the `HSpaceStructure` on the Eilenberg–MacLane space `⊙EM₁ G` for an abelian group `G`.
 ─ `EilenbergMacLane`: Defines the Eilenberg–MacLane spaces `⊙EM G n`, proves that `⊙Ω (⊙EM G (S n))` is pointedly equivalent to `⊙EM G n` for each `n` and that their homotopy groups are as required. See *Eilenberg-MacLane Spaces in Homotopy Type Theory* by Dan Licata and Eric Finster.
 ─ `EilenbergMacLane1`: Proves that the fundamental group of the Eilenberg–MacLane space `⊙EM₁ G` (which is defined as a HIT) is in fact `G`.
@@ -286,8 +291,7 @@ This directory contains proofs of interesting homotopy-theoretic theorems.
 ─ `JoinAssoc3x3`: Gives an equivalence between the joins `(A * B) * C` and `A * (B * C)`. The proof uses the 3x3-lemma.
 ─ `JoinAssocCubical`: Gives an equivalence between the joins `(A * B) * C` and `A * (B * C)`. The proof involves squares and cubes.
 ─ `JoinComm`: Gives an equivalence between the joins `A * B` and `B * A`.
-─ `JoinSusp`: Contains equivalences `Bool * A ≃ Susp A`, `Susp A * B ≃ Susp (A * B)` and `⊙Sphere m ⊙* X ⊙≃ ⊙Susp^ (S m) X
-` ((m+1)-fold suspension is equivalent to joining with an m-sphere).
+─ `JoinSusp`: Contains equivalences `Bool * A ≃ Susp A`, `Susp A * B ≃ Susp (A * B)` and `⊙Sphere m ⊙* X ⊙≃ ⊙Susp^ (S m) X` ((m+1)-fold suspension is equivalent to joining with an m-sphere).
 ─ `LoopSpaceCircle`: Proves that the fundamental group of the circle is equivalent to the integers.
 ─ `ModalWedgeExtension`: Lemmas about modalities and the function `X ∨ Y → X × Y` for pointed types `X` and `Y`.
 ─ `PathSetIsInitalCover`: Proves that the covering constructed from the path set of a type `X` is initial in the category of coverings of `X`.
@@ -296,32 +300,22 @@ This directory contains proofs of interesting homotopy-theoretic theorems.
 ─ `PropJoinProp`: Proves that if `A` and `B` are propositions, then so is `A * B`.
 ─ `PtdAdjoint`: Defines what a endofunctor of the category of pointed spaces is, gives two definitions of adjointness of such functors via unit and counit morphisms and via equivalence of Hom-types and constructs equivalence between the definitions. Also proves that right adjoints preserve products and left adjoints preserve wedges.
 ─ `PtdMapSequence`: Defines data types representing sequences of pointed maps and maps between them.
-─ `PushoutSplit`: TODO
-─ `RelativelyConstantToSetExtendsViaSurjection`: TODO
-─ `RibbonCover`: TODO
-─ `SmashIsCofiber`: TODO
-─ `SpaceFromGroups`: TODO
-─ `SphereEndomorphism`: TODO
-─ `SuspAdjointLoop`: TODO
-─ `SuspAdjointLoopLadder`: TODO
-─ `SuspProduct`: TODO
-─ `SuspSectionDecomp`: TODO
-─ `SuspSmash`: TODO
-─ `TruncationLoopLadder`: TODO
-─ `VanKampen`: TODO
-─ `WedgeCofiber`: TODO
-─ `WedgeExtension`: TODO
-─ `blakersmassey/`: TODO
-  ─ `CoherenceData`: TODO
-  - `Pushout`: TODO
-─ `elims/`: TODO
-  ─ `CofPushoutSection`: TODO
-  ─ `Lemmas`: TODO
-  ─ `SuspSmash`: TODO
-- `vankampen/`: TODO
-  ─ `Code`: TODO
-  ─ `CodeAP`: TODO
-  ─ `CodeBP`: TODO
+─ `PushoutSplit`: Shows one direction of the [pasting law for pushouts](https://ncatlab.org/nlab/show/pasting+law+for+pullbacks), namely the fact that if you compose pushout squares you get another pushout square.
+─ `RelativelyConstantToSetExtendsViaSurjection`: Given a surjective function `f : A → B`, a type family `C : B → Type k` of sets and a dependent function `g : (a : A) → C (f a)` such that `g` agree `g-is-const : ∀ a₁ a₂ → (p : f a₁ == f a₂) → g a₁ == g a₂ [ C ↓ p ]`, shows that there is a function `ext : (b : B) → C (f a)` such that `g` is equal to `ext ∘ f`.
+─ `RibbonCover`: Constructs a covering of a type `X` given a set with an action of the fundamental group of `X` on it. Used to prove an equivalence between such sets and coverings if `X` is connected in `GroupSetsRepresentCovers`.
+─ `SmashIsCofiber`: Proves that the smash product `Smash X Y` of two pointed types `X` and `Y` is equivalent to the cofiber of the induced map `A ∨ B → A × B`.
+─ `SpaceFromGroups`: Given an infinite sequence of groups, all abelian except maybe the first, constructs a type with these groups as its homotopy groups.
+─ `SphereEndomorphism`: Proves that the types of endomaps of a sphere and the type of basepoint-preserving such endomaps become equivalent when 0-truncated. Also proves that suspension induces an equivalence between the set of endomaps of the `n`-sphere and the set of endomaps of the `S n`-sphere for positive `n`.
+─ `SuspAdjointLoop`: Defines the suspension and the loop functor and proves that they are adjoint.
+─ `SuspAdjointLoopLadder`: Proves naturality in the covariant argument of the adjunction between the iterated suspension and the iterated loop space when phrased in terms of Hom-types.
+─ `SuspProduct`: Proves that `⊙Susp (X ⊙× Y) ⊙≃ ⊙Susp X ⊙∨ (⊙Susp Y ⊙∨ ⊙Susp (X ⊙∧ Y))`.
+─ `SuspSectionDecomp`: Let `f : X → Y` be a pointed section of `g : Y → X`. Then there is an equivalence `Susp (de⊙ Y) ≃ ⊙Susp X ∨ ⊙Susp (⊙Cofiber ⊙f)` between the suspension of `Y` and the wedge sum of the suspensions of `X` and the cofiber of `f`. This can be interpreted as a splitting in the part ΣX → ΣY → Σcofib(f) of the cofiber sequence of `f`.
+─ `SuspSmash`: Gives an equivalence `⊙Susp (⊙Smash X Y) ⊙≃ (X ⊙* Y)` between the suspension of the smash product and the join of two pointed types.
+─ `TruncationLoopLadder`: Proves the naturality of the equivalence of the 0-truncation of the m-fold loop space and the m-fold loop space of the m-truncation.
+─ `VanKampen`: Proves the improved version of the *Seifert–van Kampen theorem* for calculating the fundamental groupoid of a pushout from [Favonia's thesis][favonia-thesis].
+- `vankampen/`: Contains definitions and lemmas for `VanKampen.agda`.
+─ `WedgeCofiber`: Shows that the cofiber space of `winl : X → X ∨ Y` is equivalent to `Y` and the cofiber space of `winr : Y → X ∨ Y` is equivalent to `X`.
+─ `WedgeExtension`: Proves the *wedge connectivity lemma* from the HoTT book (lemma 8.6.2), which basically says that given an n-connected pointed type `A` and an m-connected pointed type `B` a function `h : (w : A ∨ B) → P (∨-to-× w)`, where `P : A × B → Type` is a family of (n+m)-types, extends along `∨-to-× : A ∨ B → A × B`.
 
 ### Cohomology (directory `theorems/cohomology/`)
 
@@ -384,3 +378,5 @@ Air Force Office of Scientific Research under grant numbers FA-95501210370 and F
 The views and conclusions contained in this document are those of the author and should not be
 interpreted as representing the official policies, either expressed or implied, of any sponsoring
 institution, the U.S. government or any other entity.
+
+[favonia-thesis]: https://www.math.ias.edu/~favonia/thesis.html
