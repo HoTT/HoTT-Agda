@@ -306,9 +306,30 @@ This directory contains proofs of interesting homotopy-theoretic theorems.
 
 ### Cohomology (directory `theorems/cohomology/`)
 
-This directory contains proofs of interesting cohomology-theoretic theorems.
+This directory contains proofs of interesting cohomology-theoretic theorems. Many results in this directory are described in [Evan Cavallo's thesis][ecavallo-thesis].
 
-TODO: describe more precisely each file
+- `Bouquet`: Shows that the cohomology in degree n of a bouquet of n-spheres indexed by a type `I`, which has choice, is isomorphic to the product of `I` copies of `C2 0` (the 0-th cohomology of the 0-sphere) for an ordinary cohomology theory.
+- `ChainComplex`: Defines the data types of (co)chain complexes and equivalences between them, defines their (co)homology groups and proves that equivalences between complex induce equivalences between their cohomology groups.
+- `CoHSpace`: Contains simple lemmas about the cohomology of co-H-spaces.
+- `Cogroup`: Given a type `X` with a cogroup structure and a type `Y`, proves that the map `(X ⊙→ Y) → (C n Y →ᴳ C n X)` is a group homomorphism for any cohomology theory `C`.
+- `Coproduct`: Proves that `C n (X ⊙⊔ Y) ≃ᴳ C n (X ⊙∨ Y) ×ᴳ C2 n` (where `C2 n` is the `n`-th cohomology of the 0-sphere) for any cohomology theory `C`.
+- `DisjointlyPointedSet`: Shows that the cohomology of a separable pointed set `X`, which has choice, is the `MinusPoint X`-fold product of `C2 0` (the 0-th cohomology of the 0-sphere) in degree 0 and trivial in higher degrees for any ordinary cohomology theory `C`.
+- `EMModel`: Constructs the Eilenberg–MacLane spectrum given an abelian group and shows that its induced cohomology theory is ordinary.
+- `InverseInSusp`: Shows that the homomorphism Cⁿ(ΣX) → Cⁿ(ΣX) mapping an element to its inverse is induced by a map ΣX → ΣX.
+- `LongExactSequence`: Given a map `f : X → Y`, constructs the sequence Cⁿ(Y) → Cⁿ(X) → Cⁿ⁺¹(cofib(f)) → Cⁿ⁺¹(Y) → ⋯ and shows that it is exact.
+- `MayerVietoris`: Given a pointed span X ←f– Z –g→ Y, shows the cofiber space of the natural map `reglue` : X ∨ Y → X ⊔_Z Y is equivalent to the suspension of Z. Using this equivalence one can derive the Mayer–Vietoris sequence from the long exact sequence associated with `reglue`.
+- `PtdMapSequence`: Functions for applying a cohomology theory to a sequence of pointed maps, producing a sequence of group homomorphisms.
+- `RephraseSubFinCoboundary`: Gives a description the homomorphism induced in cohomology by a map from a bouquet of (n+1)-spheres to the suspension of a bouquet of n-spheres in terms of mapping degrees. This is used for defining cellular cohomology.
+- `Sigma`: Constructs an isomorphism `C n (⊙Σ X Y) ≃ᴳ C n (⊙BigWedge Y) ×ᴳ C n X` for a type `X`, a family `Y : X → Ptd i` and any cohomology theory `C`.
+- `SpectrumModel`: Shows that a spectrum induces a cohomology theory.
+- `Sphere`: Shows that the cohomology of the m-sphere is `C2 0` (the 0-cohomology of the 0-sphere) in degree m and trivial in other degrees for any ordinary cohomology theory.
+- `SphereEndomorphism`: Proves that the map `C n (⊙Sphere (S m)) C → n (⊙Sphere (S m))` induced by a map `f : ⊙Sphere (S m) ⊙→ ⊙Sphere (S m)` is given by multiplication with the degree of `f`.
+- `SphereProduct`: Gives an isomorphism `C n (⊙Sphere m ⊙× X) ≃ᴳ C n (⊙Lift (⊙Sphere m)) ×ᴳ (C n X ×ᴳ C n (⊙Susp^ m X))` for calculating the cohomology of the product of the m-sphere and `X` for any pointed type `X` and any cohomology theory.
+- `SubFinBouquet`: Constructs an explicit inverse to the function from the cohomology of the wedge of m-spheres indexed over a subfinite type `B` to the product (indexed over `B`) of the 0-th cohomology groups of the 0-sphere.
+- `SubFinWedge`: Constructs an explicit inverse to the function from the cohomology of the wedge of a (sub)finite family of pointed types to the product of the cohomologies of the pointed types.
+- `Theory`: Defines a data type `CohomologyTheory` of cohomology theories fulfilling some axioms similar to the Eilenberg–Steenrod axioms and proves some basic consequences of these axioms.
+- `Torus`: Contains a computation of the cohomology of the n-torus.
+- `Wedge`: Gives an isomorphism between Cⁿ(X ∨ Y) and Cⁿ(X) × Cⁿ(Y) (“finite additivity”) without using the additivity axiom and shows that e.g. the projection map to Cⁿ(X) is induced by the inclusion of X in X ∨ Y and similarly for other maps.
 
 ### CW complexes (directory `theorems/cw/`)
 
@@ -368,3 +389,4 @@ institution, the U.S. government or any other entity.
 
 [favonia-thesis]: http://favonia.org/thesis.html
 [guillaume-brunerie-thesis]: https://arxiv.org/abs/1606.05916
+[ecavallo-thesis]: http://www.cs.cmu.edu/~ecavallo/works/thesis.pdf
