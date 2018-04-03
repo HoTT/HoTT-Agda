@@ -317,7 +317,7 @@ This directory contains proofs of interesting cohomology-theoretic theorems. Man
 - `EMModel`: Constructs the Eilenberg–MacLane spectrum given an abelian group and shows that its induced cohomology theory is ordinary.
 - `InverseInSusp`: Shows that the homomorphism Cⁿ(ΣX) → Cⁿ(ΣX) mapping an element to its inverse is induced by a map ΣX → ΣX.
 - `LongExactSequence`: Given a map `f : X → Y`, constructs the sequence Cⁿ(Y) → Cⁿ(X) → Cⁿ⁺¹(cofib(f)) → Cⁿ⁺¹(Y) → ⋯ and shows that it is exact.
-- `MayerVietoris`: Given a pointed span X ←f– Z –g→ Y, shows the cofiber space of the natural map `reglue` : X ∨ Y → X ⊔_Z Y is equivalent to the suspension of Z. Using this equivalence one can derive the Mayer–Vietoris sequence from the long exact sequence associated with `reglue`.
+- `MayerVietoris`: Given a pointed span X ←f– Z –g→ Y, shows the cofiber space of the natural map `reglue` : X ∨ Y → X ⊔\_Z Y is equivalent to the suspension of Z. Using this equivalence one can derive the Mayer–Vietoris sequence from the long exact sequence associated with `reglue`.
 - `PtdMapSequence`: Functions for applying a cohomology theory to a sequence of pointed maps, producing a sequence of group homomorphisms.
 - `RephraseSubFinCoboundary`: Gives a description the homomorphism induced in cohomology by a map from a bouquet of (n+1)-spheres to the suspension of a bouquet of n-spheres in terms of mapping degrees. This is used for defining cellular cohomology.
 - `Sigma`: Constructs an isomorphism `C n (⊙Σ X Y) ≃ᴳ C n (⊙BigWedge Y) ×ᴳ C n X` for a type `X`, a family `Y : X → Ptd i` and any cohomology theory `C`.
