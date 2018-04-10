@@ -19,7 +19,7 @@ module _ (G : Group i) where
     embase' : EM₁
     emloop' : Group.El G → embase' == embase'
     emloop-comp' : ∀ g₁ g₂ → emloop' (Group.comp G g₁ g₂) == emloop' g₁ ∙ emloop' g₂
-    EM₁-level' : has-level ⟨ 1 ⟩ EM₁
+    -- EM₁-level' : has-level ⟨ 1 ⟩ EM₁
 
   ⊙EM₁ : Ptd i
   ⊙EM₁ = ⊙[ EM₁ , embase' ]
@@ -32,10 +32,10 @@ module _ {G : Group i} where
   emloop = emloop' G
   emloop-comp = emloop-comp' G
 
-  instance
-    EM₁-level : {n : ℕ₋₂} → has-level (S (S (S n))) (EM₁ G)
-    EM₁-level {⟨-2⟩} = EM₁-level' G
-    EM₁-level {S n} = raise-level _ EM₁-level
+  -- instance
+  --   EM₁-level : {n : ℕ₋₂} → has-level (S (S (S n))) (EM₁ G)
+  --   EM₁-level {⟨-2⟩} = EM₁-level' G
+  --   EM₁-level {S n} = raise-level _ EM₁-level
 
 
   abstract
@@ -45,7 +45,7 @@ module _ {G : Group i} where
       ap emloop (! $ G.unit-r G.ident) ∙ emloop-comp G.ident G.ident
 
   module EM₁Elim {j} {P : EM₁ G → Type j}
-    {{_ : (x : EM₁ G) → has-level ⟨ 1 ⟩ (P x)}}
+    -- {{_ : (x : EM₁ G) → has-level ⟨ 1 ⟩ (P x)}}
     (embase* : P embase)
     (emloop* : (g : G.El) → embase* == embase* [ P ↓ emloop g ])
     (emloop-comp* : (g₁ g₂ : G.El) →
@@ -104,7 +104,7 @@ module _ {G : Group i} where
       EM₁-conn = has-level-in ([ embase ] , Trunc-elim
         (EM₁-elim
           {P = λ x → [ embase ] == [ x ]}
-          {{λ _ → raise-level _ (=-preserves-level Trunc-level)}}
+          -- {{λ _ → raise-level _ (=-preserves-level Trunc-level)}}
           idp
           (λ _ → prop-has-all-paths-↓)
           (λ _ _ → set-↓-has-all-paths-↓)))

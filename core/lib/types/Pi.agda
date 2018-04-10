@@ -243,6 +243,26 @@ module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} where
     → u == u' [ (λ x → B x → C x) ↓ p ]
   ↓-→-from-transp {p = idp} q = q
 
+  comp-transp : {x x' x'' : A}
+    {u : B x → C x} {u' : B x' → C x'} {u'' : B x'' → C x''}
+    (p : x == x') (q : x' == x'')
+    (r : transport C p ∘ u == u' ∘ transport B p)
+    (s : transport C q ∘ u' == u'' ∘ transport B q)
+    → transport C (p ∙ q) ∘ u == u'' ∘ transport B (p ∙ q)
+  comp-transp {x} {x'} {x''} {u} {u'} {u''} p q r s =
+    λ= λ b →
+      transp-∙ p q (u b)
+        ∙ ap (λ f → transport C q (f b)) r
+        ∙ ap (λ g → g (transport B p b)) s
+        ∙ ap u'' (! (transp-∙ p q b))
+
+  ↓-→-from-transp-∙ᵈ : {x x' x'' : A} {p : x == x'} {q : x' == x''}
+    {u : B x → C x} {u' : B x' → C x'} {u'' : B x'' → C x''}
+    (r : transport C p ∘ u == u' ∘ transport B p)
+    (s : transport C q ∘ u' == u'' ∘ transport B q)
+    → ↓-→-from-transp {x} {x''} {p ∙ q} {u} {u''} (comp-transp {x} {x'} {x''} {u} {u'} {u''} p q r s) == (↓-→-from-transp {x} {x'} {p = p} r ∙ᵈ ↓-→-from-transp {x'} {x''} {q} s)
+  ↓-→-from-transp-∙ᵈ {p = idp} {q = idp} idp idp = ! (λ=-η idp)
+
   ↓-→-to-transp : {x x' : A} {p : x == x'}
     {u : B x → C x} {u' : B x' → C x'}
     → u == u' [ (λ x → B x → C x) ↓ p ]
