@@ -71,11 +71,34 @@ module _ {i j} {A : Type i} {B : Type j} where
 
   {- Introduction of an equality between [↓-cst-in]s (used to deduce the
      recursor from the eliminator in HIT with 2-paths) -}
-  ↓-cst-in2 : {a a' : A} {u v : B}
-    {p₀ : a == a'} {p₁ : a == a'} {q₀ q₁ : u == v} {q : p₀ == p₁}
+  ↓-cst-in2 : {a a' : A} {b b' : B}
+    {p₀ p₁ : a == a'} {q₀ q₁ : b == b'} {q : p₀ == p₁}
     → q₀ == q₁
-    → (↓-cst-in {p = p₀} q₀ == ↓-cst-in {p = p₁} q₁ [ (λ p → u == v [ (λ _ → B) ↓ p ]) ↓ q ])
+    → (↓-cst-in {p = p₀} q₀ == ↓-cst-in {p = p₁} q₁ [ (λ p → b == b' [ (λ _ → B) ↓ p ]) ↓ q ] )
   ↓-cst-in2 {p₀ = idp} {p₁ = .idp} {q₀} {q₁} {idp} k = k
+
+  ↓-cst-in2-∙ : {a a' : A} {b b' : B}
+    {p₀ p₁ p₂ : a == a'} {q₀ q₁ q₂ : b == b'} {p₀₁ : p₀ == p₁} {p₁₂ : p₁ == p₂}
+    → (q₀₁ : q₀ == q₁) (q₁₂ : q₁ == q₂)
+    → ↓-cst-in2 {q = p₀₁ ∙ p₁₂} (q₀₁ ∙ q₁₂) == ↓-cst-in2 {q = p₀₁} q₀₁ ∙ᵈ ↓-cst-in2 {q = p₁₂} q₁₂
+  ↓-cst-in2-∙ {p₀ = idp} {p₁ = .idp} {p₂ = .idp} {q₀} {q₁} {q₂} {idp} {idp} q₀₁ q₀₂ = idp
+
+  ↓-cst-in2-∙ᵣ : {a a' a'' : A} {b b' b'' : B}
+    {p₀ p₁ : a == a'} {p' : a' == a''}
+    {q₀ q₁ : b == b'} {q' : b' == b''}
+    {p₀₁ : p₀ == p₁}
+    → (q₀₁ : q₀ == q₁)
+    → ↓-cst-in2 {q = ap (λ r → r ∙ p') p₀₁} (ap (λ r → r ∙ q') q₀₁) == ↓-cst-in-∙ p₀ p' q₀ q' ◃ (↓-cst-in2 {q = p₀₁} q₀₁ ∙ᵈᵣ ↓-cst-in {p = p'} q') ▹! (↓-cst-in-∙ p₁ p' q₁ q')
+      -- ↓-cst-in2 {q = p₀₁ ∙ᵣ p'} (q₀₁ ∙ᵣ q') == ↓-cst-in2 {q = p₀₁} q₀₁ ∙ᵈᵣ ↓-cst-in {p = p'} q'
+
+        -- ↓-cst-in2 {q = p₀₁ ∙ᵣ p'} (q₀₁ ∙ᵣ q')              :  ↓-cst-in {p = p₀ ∙ p'} (q₀ ∙ q') == ↓-cst-in {p = p₁ ∙ p'} (q₁ ∙ q') [ (λ p → b == b'' [ (λ _ → B) ↓ p ]) ↓ (p₀₁ ∙ᵣ p') ]
+        -- ↓-cst-in2 {q = ap (λ r → r ∙ p') p₀₁} (q₀₁ ∙ᵣ q')  :  ↓-cst-in {p = p₀ ∙ p'} (q₀ ∙ q') == ↓-cst-in {p = p₁ ∙ p'} (q₁ ∙ q') [ (λ p → b == b'' [ (λ _ → B) ↓ p ]) ↓ (ap (λ r → r ∙ p') p₀₁) ]
+        -- ↓-cst-in2 {q = p₀₁} q₀₁                            :  ↓-cst-in {p = p₀} q₀ == ↓-cst-in {p = p₁} q₁                         [ (λ p → b == b'  [ (λ _ → B) ↓ p ]) ↓ p₀₁ ]
+        -- ↓-cst-in {p = p'} q'                               :  b' == b'' [ (λ _ → B) ↓ p' ]
+        -- ↓-cst-in2 {q = p₀₁} q₀₁ ∙ᵈᵣ ↓-cst-in {p = p'} q'   :  ↓-cst-in q₀ ∙ᵈ ↓-cst-in q' == ↓-cst-in q₁ ∙ᵈ ↓-cst-in q'             [ (λ s → b == b'' [ (λ _ → B) ↓ s ]) ↓ (ap (λ r → r ∙ p') p₀₁) ]
+
+        -- [ (λ pa → fst pa == snd pa [ (λ p → u == v [ (λ _ → B) ↓ p ]) ↓ q ]) ↓ ? ]
+  ↓-cst-in2-∙ᵣ {p₀ = idp} {p₁ = .idp} {p' = idp} {q₀ = idp} {q₁ = .idp} {q' = idp} {p₀₁ = idp} idp = idp
 
 -- Dependent paths in a fibration constant in the second argument
 module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} where

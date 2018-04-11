@@ -103,7 +103,7 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
           =⟨ ! (emloop-comp y g) ⟩
         emloop (G.comp y g)
           =⟨ ap emloop (! (to-transp (↓-Codes-loop g y))) ⟩
-        emloop (transport (λ z → fst (Codes z)) (emloop g) y) =∎
+        emloop (transport (fst ∘ Codes) (emloop g) y) =∎
       Q : embase' G == embase → Type i
       Q p = emloop == emloop [ P ↓ p ]
       loop' : (g : G.El) → Q (emloop g)
@@ -111,10 +111,25 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
       comp-loop'-transp : (g₁ g₂ : G.El)
         → transport (λ x → embase' G == x) (emloop g₁ ∙ emloop g₂) ∘ emloop == emloop ∘ transport (fst ∘ Codes) (emloop g₁ ∙ emloop g₂)
       comp-loop'-transp g₁ g₂ = comp-transp {i} {i} {i} {EM₁ G} {fst ∘ Codes} {λ x → embase == x} {embase} {embase} {embase} {emloop} {emloop} {emloop} (emloop g₁) (emloop g₂) (loop'-transp g₁) (loop'-transp g₂)
+      DD : (g₁ g₂ y : G.El) →
+           app= (loop'-transp (G.comp g₁ g₂) ∙' ap (λ p → emloop ∘ transport (fst ∘ Codes) p) (emloop-comp g₁ g₂)) y ==
+           app= (ap (λ p → transport (λ x → embase' G == x) p ∘ emloop) (emloop-comp g₁ g₂) ∙ comp-loop'-transp g₁ g₂) y
+      DD g₁ g₂ y = {!!}
+        where
+        g₁g₂ : G.El
+        g₁g₂ = G.comp g₁ g₂
+        e₁ : transport (λ z → embase == z) (emloop' G g₁g₂) (emloop y) == emloop y ∙ emloop g₁g₂
+        e₁ = transp-cst=idf (emloop g₁g₂) (emloop y)
+        e₂ : emloop' G y ∙ emloop g₁g₂ == emloop (G.comp y g₁g₂)
+        e₂ = ! (emloop-comp y g₁g₂)
+        e₃ : emloop' G (G.comp y g₁g₂) == emloop (transport (fst ∘ Codes) (emloop g₁g₂) y)
+        e₃ = ap emloop (! (to-transp (↓-Codes-loop g₁g₂ y)))
+        -- e₄ : emloop' G (transport (fst ∘ Codes) (emloop g₁g₂) y) == emloop (transport (fst ∘ Codes) (emloop g₁ ∙ emloop g₂) y)
+        -- e₄ = ap (λ p → emloop ∘ transport (fst ∘ Codes) p) (emloop-comp g₁ g₂)
       EE : (g₁ g₂ : G.El) →
-           loop'-transp (G.comp g₁ g₂) ∙' ap (λ p → emloop ∘ transport (fst ∘ Codes) p) (emloop-comp g₁ g₂) ==
-           ap (λ p → transport (λ x → embase' G == x) p ∘ emloop) (emloop-comp g₁ g₂) ∙ comp-loop'-transp g₁ g₂
-      EE g₁ g₂ = {!!}
+        loop'-transp (G.comp g₁ g₂) ∙' ap (λ p → emloop ∘ transport (fst ∘ Codes) p) (emloop-comp g₁ g₂) ==
+        ap (λ p → transport (λ x → embase' G == x) p ∘ emloop) (emloop-comp g₁ g₂) ∙ comp-loop'-transp g₁ g₂
+      EE g₁ g₂ = –>-is-inj app=-equiv _ _ (λ= (DD g₁ g₂))
       FF : (g₁ g₂ : G.El) → loop' (G.comp g₁ g₂) == ↓-→-from-transp (comp-loop'-transp g₁ g₂) [ Q ↓ emloop-comp g₁ g₂ ]
       FF g₁ g₂ = foo (emloop-comp g₁ g₂) emloop emloop (loop'-transp (G.comp g₁ g₂)) (comp-loop'-transp g₁ g₂) (EE g₁ g₂)
       GG : (g₁ g₂ : G.El) → ↓-→-from-transp (comp-loop'-transp g₁ g₂) == loop' g₁ ∙ᵈ loop' g₂
