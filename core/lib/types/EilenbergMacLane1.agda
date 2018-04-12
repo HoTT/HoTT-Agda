@@ -224,11 +224,14 @@ module _ {G : Group i} where
 
         tt : ↓-cst-in s₃* == s₃**
         tt =
-          ↓-cst-in s₃*
-            =⟨ ↓-cst-in-∙ (emloop g₁) (emloop g₂ ∙ emloop g₃) (emloop* g₁) (emloop* g₂ ∙ emloop* g₃) ⟩
-          emloop** g₁ ∙ᵈ ↓-cst-in (emloop* g₂ ∙ emloop* g₃)
-            =⟨ emloop** g₁ ∙ᵈₗ ↓-cst-in-∙ (emloop g₂) (emloop g₃) (emloop* g₂) (emloop* g₃) ⟩
-          s₃** =∎
+          -- ↓-cst-in s₃*
+          --   =⟨ ↓-cst-in-∙ (emloop g₁) (emloop g₂ ∙ emloop g₃) (emloop* g₁) (emloop* g₂ ∙ emloop* g₃) ⟩
+          -- emloop** g₁ ∙ᵈ ↓-cst-in (emloop* g₂ ∙ emloop* g₃)
+          --   =⟨ emloop** g₁ ∙ᵈₗ ↓-cst-in-∙ (emloop g₂) (emloop g₃) (emloop* g₂) (emloop* g₃) ⟩
+          -- s₃** =∎
+          ↓-cst-in-∙ (emloop g₁) (emloop g₂ ∙ emloop g₃) (emloop* g₁) (emloop* g₂ ∙ emloop* g₃)
+          ∙ ap (λ y → ↓-cst-in {p = emloop g₁} (emloop* g₁) ∙ᵈ y) (↓-cst-in-∙ (emloop g₂) (emloop g₃) (emloop* g₂) (emloop* g₃))
+
 
         dd : (r : s₀ == s₃) → s₀* == s₃* → s₀** == s₃** [ (λ p → embase* == embase* [ P ↓ p ]) ↓ r ]
         dd r q = ↓-cst-in2 {q = r} q ▹ tt
@@ -242,14 +245,21 @@ module _ {G : Group i} where
           (e₀₁*' ∙ᵈ e₁₂*' ∙ᵈ e₂₃*') ▹ tt
             =⟨ (↓-cst-in2-∙ᵣ {p' = emloop g₃} {q' = emloop* g₃} {p₀₁ = emloop-comp g₁ g₂} (emloop-comp* g₁ g₂)) |in-ctx (λ y → (e₀₁*' ∙ᵈ y ∙ᵈ e₂₃*') ▹ tt) ⟩
           (e₀₁*' ∙ᵈ (f₀ ◃ f₁ ▹! f₂) ∙ᵈ e₂₃*') ▹ tt
-          --   =⟨ ? ⟩
-          -- ((↓-cst-in2 {q = e₀₁} e₀₁* ∙ᵈ (f₀ ◃ f₁ ▹! f₂)) ∙ᵈ ↓-cst-in2 {q = e₂₃} e₂₃*) ▹ tt
-          --   =⟨ ! (◃▹-assoc (↓-cst-in2 {q = e₀₁} e₀₁*) (↓-cst-in-∙ (emloop (G.comp g₁ g₂)) (emloop g₃) (emloop* (G.comp g₁ g₂)) (emloop* g₃)) ((↓-cst-in2 {q = emloop-comp g₁ g₂} (emloop-comp* g₁ g₂) ∙ᵈᵣ ↓-cst-in {p = emloop g₃} (emloop* g₃)) ▹! (↓-cst-in-∙ (emloop g₁ ∙ emloop g₂) (emloop g₃) (emloop* g₁ ∙ emloop* g₂) (emloop* g₃)))) |in-ctx (λ y → (y ∙ᵈ ↓-cst-in2 {q = e₂₃} e₂₃*) ▹ tt) ⟩
-          -- ((e₀₁**
-          --  ∙ᵈ ((↓-cst-in2 {q = emloop-comp g₁ g₂} (emloop-comp* g₁ g₂) ∙ᵈᵣ ↓-cst-in {p = emloop g₃} (emloop* g₃))
-          --        ▹! (↓-cst-in-∙ (emloop g₁ ∙ emloop g₂) (emloop g₃) (emloop* g₁ ∙ emloop* g₂) (emloop* g₃)))
-          --  ∙ᵈ ↓-cst-in2 {q = e₂₃} e₂₃*) ▹ tt)
-          =⟨ {!!} ⟩
+            =⟨ ∙ᵈ-assoc f₀ (f₁ ▹! f₂) e₂₃*' |in-ctx (λ y → (e₀₁*' ∙ᵈ y) ▹ tt) ⟩
+          (e₀₁*' ∙ᵈ f₀ ◃ (f₁ ▹! f₂) ∙ᵈ e₂₃*') ▹ tt
+            =⟨ ! (◃▹-assoc e₀₁*' f₀ ((f₁ ▹! f₂) ∙ᵈ e₂₃*')) |in-ctx (λ y → y ▹ tt) ⟩
+          (e₀₁** ∙ᵈ (f₁ ▹! f₂) ∙ᵈ e₂₃*') ▹ tt
+            =⟨ ∙ᵈ-∙'ᵈ-assoc' e₀₁** ((f₁ ▹! f₂) ∙ᵈ e₂₃*') tt ⟩
+          e₀₁** ∙ᵈ ((f₁ ▹! f₂) ∙ᵈ e₂₃*') ▹ tt
+            =⟨ ∙ᵈ-∙'ᵈ-assoc' (f₁ ▹! f₂) e₂₃*' tt |in-ctx (λ y → e₀₁** ∙ᵈ y) ⟩
+          e₀₁** ∙ᵈ (f₁ ▹! f₂) ∙ᵈ e₂₃*' ▹ tt
+            =⟨ ↓-cst-in-assoc {p₀ = emloop g₁} {p₁ = emloop g₂} {p₂ = emloop g₃} (emloop* g₁) (emloop* g₂) (emloop* g₃) |in-ctx (λ y → e₀₁** ∙ᵈ (f₁ ▹! f₂) ∙ᵈ y) ⟩
+          e₀₁** ∙ᵈ (f₁ ▹! f₂) ∙ᵈ ((f₂ ∙ f₃) ◃ e₂₃**)
+            =⟨ ! (◃▹-assoc (f₁ ▹! f₂) (f₂ ∙ f₃) e₂₃**) |in-ctx (λ y → e₀₁** ∙ᵈ y) ⟩
+          e₀₁** ∙ᵈ ((f₁ ▹! f₂) ▹ (f₂ ∙ f₃)) ∙ᵈ e₂₃**
+          =⟨ h |in-ctx (λ y → e₀₁** ∙ᵈ y ∙ᵈ e₂₃**) ⟩
+          e₀₁** ∙ᵈ (f₁ ▹ f₃) ∙ᵈ e₂₃**
+            =⟨ {! !} ⟩
           φ** =∎
           where
           e₀₁*' : ↓-cst-in s₀* == ↓-cst-in s₁* [ (λ p → embase* == embase* [ P ↓ p ]) ↓ e₀₁ ]
@@ -268,6 +278,20 @@ module _ {G : Group i} where
           f₂ : ↓-cst-in ((emloop* g₁ ∙ emloop* g₂) ∙ emloop* g₃) ==
                ↓-cst-in {p = emloop g₁ ∙ emloop g₂} (emloop* g₁ ∙ emloop* g₂) ∙ᵈ ↓-cst-in {p = emloop g₃} (emloop* g₃)
           f₂ = ↓-cst-in-∙ (emloop g₁ ∙ emloop g₂) (emloop g₃) (emloop* g₁ ∙ emloop* g₂) (emloop* g₃)
+          f₃ : ↓-cst-in {p = emloop g₁ ∙ emloop g₂} (emloop* g₁ ∙ emloop* g₂) ∙ᵈ ↓-cst-in {p = emloop g₃} (emloop* g₃) ==
+               (↓-cst-in {p = emloop g₁} (emloop* g₁) ∙ᵈ ↓-cst-in {p = emloop g₂} (emloop* g₂)) ∙ᵈ ↓-cst-in {p = emloop g₃} (emloop* g₃)
+          f₃ = ap (λ y → y ∙ᵈ ↓-cst-in (emloop* g₃)) (↓-cst-in-∙ (emloop g₁) (emloop g₂) (emloop* g₁) (emloop* g₂))
+          h : (f₁ ▹! f₂) ▹ (f₂ ∙ f₃) == f₁ ▹ f₃
+          h =
+            (f₁ ▹! f₂) ▹ (f₂ ∙ f₃)
+              =⟨ {!∙'ᵈ-assoc f₁ f₂ (f₂ ∙ f₃)!} ⟩
+            f₁ ▹ (! f₂) ∙' f₂ ∙ f₃
+              =⟨ ap (λ y → f₁ ▹ y) (∙'=∙ (! f₂) (f₂ ∙ f₃)) ⟩
+            f₁ ▹ (! f₂) ∙ f₂ ∙ f₃
+              =⟨ ap (λ y → f₁ ▹ y) (! (∙-assoc (! f₂) f₂ f₃)) ⟩
+            f₁ ▹ ((! f₂) ∙ f₂) ∙ f₃
+              =⟨ ap (λ y → f₁ ▹ y ∙ f₃) (!-inv-l f₂) ⟩
+            f₁ ▹ f₃ =∎
 
         -- e₀₁** : s₀** == s₁** [ (λ s → embase* == embase* [ P ↓ s ]) ↓ e₀₁ ]
         -- e₀₁** = emloop-comp** (G.comp g₁ g₂) g₃

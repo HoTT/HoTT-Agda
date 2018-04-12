@@ -39,6 +39,14 @@ module _ {i} {A : Type i} where
     → (p ∙' q) ∙' r == p ∙' (q ∙' r)
   ∙'-assoc _ _ idp = idp
 
+  ∙-∙'-assoc : {x y z t : A} (p : x == y) (q : y == z) (r : z == t)
+    → (p ∙ q) ∙' r == p ∙ (q ∙' r)
+  ∙-∙'-assoc idp _ _ = idp
+
+  ∙-∙'-assoc' : {x y z t : A} (p : x == y) (q : y == z) (r : z == t)
+    → (p ∙ q) ∙' r == p ∙ (q ∙' r)
+  ∙-∙'-assoc' _ _ idp = idp
+
   -- [∙-unit-l] and [∙'-unit-r] are definitional
 
   ∙-unit-r : {x y : A} (q : x == y) → q ∙ idp == q
@@ -233,6 +241,24 @@ module _ {i j} {A : Type i} {B : A → Type j} where
   _∙'ᵈ_ {p = idp} {p' = idp} q r = q ∙' r
 
   _▹_ = _∙'ᵈ_
+
+  ∙'ᵈ-assoc : {a₀ a₁ a₂ a₃ : A} {e₀₁ : a₀ == a₁} {e₁₂ : a₁ == a₂} {e₂₃ : a₂ == a₃}
+    {b₀ : B a₀} {b₁ : B a₁} {b₂ : B a₂} {b₃ : B a₃}
+    (f₀₁ : b₀ == b₁ [ B ↓ e₀₁ ]) (f₁₂ : b₁ == b₂ [ B ↓ e₁₂ ]) (f₂₃ : b₂ == b₃ [ B ↓ e₂₃ ])
+    → (f₀₁ ∙'ᵈ f₁₂) ∙'ᵈ f₂₃ == f₀₁ ∙'ᵈ (f₁₂ ∙'ᵈ f₂₃) [ (λ e → b₀ == b₃ [ B ↓ e ]) ↓ ∙'-assoc e₀₁ e₁₂ e₂₃ ]
+  ∙'ᵈ-assoc {e₀₁ = idp} {e₁₂ = idp} {e₂₃ = idp} f₀₁ f₁₂ idp = idp
+
+  ∙ᵈ-∙'ᵈ-assoc : {a₀ a₁ a₂ a₃ : A} {e₀₁ : a₀ == a₁} {e₁₂ : a₁ == a₂} {e₂₃ : a₂ == a₃}
+    {b₀ : B a₀} {b₁ : B a₁} {b₂ : B a₂} {b₃ : B a₃}
+    (f₀₁ : b₀ == b₁ [ B ↓ e₀₁ ]) (f₁₂ : b₁ == b₂ [ B ↓ e₁₂ ]) (f₂₃ : b₂ == b₃ [ B ↓ e₂₃ ])
+    → (f₀₁ ∙ᵈ f₁₂) ∙'ᵈ f₂₃ == f₀₁ ∙ᵈ (f₁₂ ∙'ᵈ f₂₃) [ (λ e → b₀ == b₃ [ B ↓ e ]) ↓ ∙-∙'-assoc e₀₁ e₁₂ e₂₃ ]
+  ∙ᵈ-∙'ᵈ-assoc {e₀₁ = idp} {e₁₂ = idp} {e₂₃ = idp} idp f₁₂ f₂₃ = idp
+
+  ∙ᵈ-∙'ᵈ-assoc' : {a₀ a₁ a₂ a₃ : A} {e₀₁ : a₀ == a₁} {e₁₂ : a₁ == a₂} {e₂₃ : a₂ == a₃}
+    {b₀ : B a₀} {b₁ : B a₁} {b₂ : B a₂} {b₃ : B a₃}
+    (f₀₁ : b₀ == b₁ [ B ↓ e₀₁ ]) (f₁₂ : b₁ == b₂ [ B ↓ e₁₂ ]) (f₂₃ : b₂ == b₃ [ B ↓ e₂₃ ])
+    → (f₀₁ ∙ᵈ f₁₂) ∙'ᵈ f₂₃ == f₀₁ ∙ᵈ (f₁₂ ∙'ᵈ f₂₃) [ (λ e → b₀ == b₃ [ B ↓ e ]) ↓ ∙-∙'-assoc' e₀₁ e₁₂ e₂₃ ]
+  ∙ᵈ-∙'ᵈ-assoc' {e₀₁ = idp} {e₁₂ = idp} {e₂₃ = idp} idp f₁₂ f₂₃ = idp
 
   _∙'ᵈᵣ_ : {a₀ a₁ a₂ : A}
     {b₀ : B a₀} {b₁ : B a₁} {b₂ : B a₂}

@@ -83,6 +83,16 @@ module _ {i j} {A : Type i} {B : Type j} where
     → ↓-cst-in2 {q = p₀₁ ∙ p₁₂} (q₀₁ ∙ q₁₂) == ↓-cst-in2 {q = p₀₁} q₀₁ ∙ᵈ ↓-cst-in2 {q = p₁₂} q₁₂
   ↓-cst-in2-∙ {p₀ = idp} {p₁ = .idp} {p₂ = .idp} {q₀} {q₁} {q₂} {idp} {idp} q₀₁ q₀₂ = idp
 
+  ↓-cst-in-assoc : {a a' a'' a''' : A}
+    {p₀ : a == a'} {p₁ : a' == a''} {p₂ : a'' == a'''}
+    {b b' b'' b''' : B}
+    (q₀ : b == b') (q₁ : b' == b'') (q₂ : b'' == b''')
+    →  ↓-cst-in2 {q = ∙-assoc p₀ p₁ p₂} (∙-assoc q₀ q₁ q₂)
+       ▹ (↓-cst-in-∙ p₀ (p₁ ∙ p₂) q₀ (q₁ ∙ q₂) ∙ ap (λ y → ↓-cst-in {p = p₀} q₀ ∙ᵈ y) (↓-cst-in-∙ p₁ p₂ q₁ q₂))
+    == (↓-cst-in-∙ (p₀ ∙ p₁) p₂ (q₀ ∙ q₁) q₂ ∙ ap (λ y → y ∙ᵈ ↓-cst-in {p = p₂} q₂) (↓-cst-in-∙ p₀ p₁ q₀ q₁))
+       ◃ ∙ᵈ-assoc (↓-cst-in {p = p₀} q₀) (↓-cst-in {p = p₁} q₁) (↓-cst-in {p = p₂} q₂)
+  ↓-cst-in-assoc {p₀ = idp} {p₁ = idp} {p₂ = idp} idp idp idp = idp
+
   ↓-cst-in2-∙ᵣ : {a a' a'' : A} {b b' b'' : B}
     {p₀ p₁ : a == a'} {p' : a' == a''}
     {q₀ q₁ : b == b'} {q' : b' == b''}
