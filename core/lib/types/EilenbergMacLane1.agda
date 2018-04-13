@@ -35,12 +35,6 @@ module _ {G : Group i} where
   emloop-comp = emloop-comp' G
   emloop-coh = emloop-coh' G
 
-  -- instance
-  --   EM₁-level : {n : ℕ₋₂} → has-level (S (S (S n))) (EM₁ G)
-  --   EM₁-level {⟨-2⟩} = EM₁-level' G
-  --   EM₁-level {S n} = raise-level _ EM₁-level
-
-
   abstract
     -- This was in the original paper, but is actually derivable.
     emloop-ident : emloop G.ident == idp
@@ -48,7 +42,6 @@ module _ {G : Group i} where
       ap emloop (! $ G.unit-r G.ident) ∙ emloop-comp G.ident G.ident
 
   module EM₁Elim {j} {P : EM₁ G → Type j}
-    -- {{_ : (x : EM₁ G) → has-level ⟨ 1 ⟩ (P x)}}
     (embase* : P embase)
     (emloop* : (g : G.El) → embase* == embase* [ P ↓ emloop g ])
     (emloop-comp* : (g₁ g₂ : G.El) →
@@ -69,6 +62,18 @@ module _ {G : Group i} where
       emloop-β : (g : G.El) → apd f (emloop g) == emloop* g
 
   open EM₁Elim public using () renaming (f to EM₁-elim)
+
+  EM₁-level₁-elim : ∀ {j} {P : EM₁ G → Type j}
+    {{is-1-type : (x : EM₁ G) → has-level ⟨ 1 ⟩ (P x)}}
+    (embase* : P embase)
+    (emloop* : (g : G.El) → embase* == embase* [ P ↓ emloop g ])
+    (emloop-comp* : (g₁ g₂ : G.El) →
+       emloop* (G.comp g₁ g₂) == emloop* g₁ ∙ᵈ emloop* g₂
+       [ (λ p → embase* == embase* [ P ↓ p ]) ↓ emloop-comp g₁ g₂ ])
+    → ((x : EM₁ G) → P x)
+  EM₁-level₁-elim {{is-1-type}} embase* emloop* emloop-comp* =
+    EM₁-elim embase* emloop* emloop-comp*
+             (λ g₁ g₂ g₃ → prop-has-all-paths-↓ {{↓-level (↓-level (is-1-type embase))}})
 
   module EM₁Rec {j} {C : Type j}
     (embase* : C)
@@ -341,25 +346,14 @@ module _ {G : Group i} where
 
   open EM₁Rec public using () renaming (f to EM₁-rec)
 
-  {-
-  module EM₁Rec {j} {C : Type j}
-    {{_ : has-level ⟨ 1 ⟩ C}} (embase* : C)
-    (hom* : G →ᴳ (Ω^S-group 0 ⊙[ C , embase* ])) where
-
-    private
-      module M = EM₁Elim {P = λ _ → C}
-        embase* (λ g → ↓-cst-in (GroupHom.f hom* g))
-        (λ g₁ g₂ → ↓-cst-in2 (GroupHom.pres-comp hom* g₁ g₂)
-                 ∙'ᵈ ↓-cst-in-∙ (emloop g₁) (emloop g₂)
-                      (GroupHom.f hom* g₁) (GroupHom.f hom* g₂))
-
-    f = M.f
-
-    emloop-β : (g : G.El) → ap f (emloop g) == GroupHom.f hom* g
-    emloop-β g = apd=cst-in {f = f} (M.emloop-β g)
-
-  open EM₁Rec public using () renaming (f to EM₁-rec)
-  -}
+  EM₁-level₁-rec : ∀ {j} {C : Type j}
+    {{_ : has-level ⟨ 1 ⟩ C}}
+    (embase* : C)
+    (hom* : G →ᴳ (Ω^S-group 0 ⊙[ C , embase* ]))
+    → (EM₁ G → C)
+  EM₁-level₁-rec embase* hom* =
+    EM₁-rec embase* (GroupHom.f hom*) (GroupHom.pres-comp hom*)
+            (λ g₁ g₂ g₃ → prop-has-all-paths _ _)
 
 -- basic lemmas about [EM₁]
 
@@ -379,13 +373,12 @@ module _ {G : Group i} where
         lemma = ! (emloop-comp (G.inv g) g) ∙ ap emloop (G.inv-l g) ∙ emloop-ident
 
     {- EM₁ is 0-connected -}
-    -- TODO
-    -- instance
-    --   EM₁-conn : is-connected 0 (EM₁ G)
-    --   EM₁-conn = has-level-in ([ embase ] , Trunc-elim
-    --     (EM₁-elim
-    --       {P = λ x → [ embase ] == [ x ]}
-    --       -- {{λ _ → raise-level _ (=-preserves-level Trunc-level)}}
-    --       idp
-    --       (λ _ → prop-has-all-paths-↓)
-    --       (λ _ _ → set-↓-has-all-paths-↓)))
+    instance
+      EM₁-conn : is-connected 0 (EM₁ G)
+      EM₁-conn = has-level-in ([ embase ] , Trunc-elim
+        (EM₁-level₁-elim
+          {P = λ x → [ embase ] == [ x ]}
+          {{λ _ → raise-level _ (=-preserves-level Trunc-level)}}
+          idp
+          (λ _ → prop-has-all-paths-↓)
+          (λ _ _ → set-↓-has-all-paths-↓)))
