@@ -75,7 +75,12 @@ module _ {i j} {A : Type i} {B : Type j} where
     {p₀ p₁ : a == a'} {q₀ q₁ : b == b'} {q : p₀ == p₁}
     → q₀ == q₁
     → (↓-cst-in {p = p₀} q₀ == ↓-cst-in {p = p₁} q₁ [ (λ p → b == b' [ (λ _ → B) ↓ p ]) ↓ q ] )
-  ↓-cst-in2 {p₀ = idp} {p₁ = .idp} {q₀} {q₁} {idp} k = k
+  ↓-cst-in2 {p₀ = idp} {p₁ = .idp} {q = idp} k = k
+
+  ↓-cst-in2-idp : {a a' : A} {b b' : B}
+    (p : a == a') (q : b == b')
+    → ↓-cst-in2 {q = idp {a = p}} (idp {a = q}) == idp {a = ↓-cst-in {p = p} q}
+  ↓-cst-in2-idp idp q = idp
 
   ↓-cst-in2-∙ : {a a' : A} {b b' : B}
     {p₀ p₁ p₂ : a == a'} {q₀ q₁ q₂ : b == b'} {p₀₁ : p₀ == p₁} {p₁₂ : p₁ == p₂}
@@ -94,7 +99,7 @@ module _ {i j} {A : Type i} {B : Type j} where
      ◃ ∙ᵈ-assoc (↓-cst-in {p = p₀} q₀) (↓-cst-in {p = p₁} q₁) (↓-cst-in {p = p₂} q₂)
   ↓-cst-in-assoc {p₀ = idp} {p₁ = idp} {p₂ = idp} idp idp idp = idp
 
-  ↓-cst-in2-∙ᵣ : {a a' a'' : A} {b b' b'' : B}
+  ↓-cst-in2-whisker-right : {a a' a'' : A} {b b' b'' : B}
     {p₀ p₁ : a == a'} {p' : a' == a''}
     {q₀ q₁ : b == b'} {q' : b' == b''}
     {p₀₁ : p₀ == p₁}
@@ -102,16 +107,17 @@ module _ {i j} {A : Type i} {B : Type j} where
     →    ↓-cst-in2 {q = ap (λ r → r ∙ p') p₀₁} (ap (λ r → r ∙ q') q₀₁)
        ▹ ↓-cst-in-∙ p₁ p' q₁ q'
       == ↓-cst-in-∙ p₀ p' q₀ q' ◃ (↓-cst-in2 {q = p₀₁} q₀₁ ∙ᵈᵣ ↓-cst-in {p = p'} q')
-      -- ↓-cst-in2 {q = p₀₁ ∙ᵣ p'} (q₀₁ ∙ᵣ q') == ↓-cst-in2 {q = p₀₁} q₀₁ ∙ᵈᵣ ↓-cst-in {p = p'} q'
+  ↓-cst-in2-whisker-right {p₀ = idp} {p₁ = .idp} {p' = idp} {q₀ = idp} {q₁ = .idp} {q' = idp} {p₀₁ = idp} idp = idp
 
-        -- ↓-cst-in2 {q = p₀₁ ∙ᵣ p'} (q₀₁ ∙ᵣ q')              :  ↓-cst-in {p = p₀ ∙ p'} (q₀ ∙ q') == ↓-cst-in {p = p₁ ∙ p'} (q₁ ∙ q') [ (λ p → b == b'' [ (λ _ → B) ↓ p ]) ↓ (p₀₁ ∙ᵣ p') ]
-        -- ↓-cst-in2 {q = ap (λ r → r ∙ p') p₀₁} (q₀₁ ∙ᵣ q')  :  ↓-cst-in {p = p₀ ∙ p'} (q₀ ∙ q') == ↓-cst-in {p = p₁ ∙ p'} (q₁ ∙ q') [ (λ p → b == b'' [ (λ _ → B) ↓ p ]) ↓ (ap (λ r → r ∙ p') p₀₁) ]
-        -- ↓-cst-in2 {q = p₀₁} q₀₁                            :  ↓-cst-in {p = p₀} q₀ == ↓-cst-in {p = p₁} q₁                         [ (λ p → b == b'  [ (λ _ → B) ↓ p ]) ↓ p₀₁ ]
-        -- ↓-cst-in {p = p'} q'                               :  b' == b'' [ (λ _ → B) ↓ p' ]
-        -- ↓-cst-in2 {q = p₀₁} q₀₁ ∙ᵈᵣ ↓-cst-in {p = p'} q'   :  ↓-cst-in q₀ ∙ᵈ ↓-cst-in q' == ↓-cst-in q₁ ∙ᵈ ↓-cst-in q'             [ (λ s → b == b'' [ (λ _ → B) ↓ s ]) ↓ (ap (λ r → r ∙ p') p₀₁) ]
-
-        -- [ (λ pa → fst pa == snd pa [ (λ p → u == v [ (λ _ → B) ↓ p ]) ↓ q ]) ↓ ? ]
-  ↓-cst-in2-∙ᵣ {p₀ = idp} {p₁ = .idp} {p' = idp} {q₀ = idp} {q₁ = .idp} {q' = idp} {p₀₁ = idp} idp = idp
+  ↓-cst-in2-whisker-left : {a a' a'' : A} {b b' b'' : B}
+    {p : a == a'} {p₀' p₁' : a' == a''}
+    {q : b == b'} {q₀' q₁' : b' == b''}
+    {p₀₁' : p₀' == p₁'}
+    → (q₀₁' : q₀' == q₁')
+    →  ↓-cst-in2 {q = ap (λ r → p ∙ r) p₀₁'} (ap (λ r → q ∙ r) q₀₁')
+    ▹  ↓-cst-in-∙ p p₁' q q₁'
+    == ↓-cst-in-∙ p p₀' q q₀' ◃ (↓-cst-in {p = p} q ∙ᵈₗ ↓-cst-in2 {q = p₀₁'} q₀₁')
+  ↓-cst-in2-whisker-left {p = idp} {p₀' = idp} {p₁' = .idp} {q = idp} {q₀' = idp} {q₁' = .idp} {p₀₁' = idp} idp = idp
 
 -- Dependent paths in a fibration constant in the second argument
 module _ {i j k} {A : Type i} {B : A → Type j} {C : A → Type k} where
@@ -167,6 +173,12 @@ module _ {i j k} {A : Type i} {B : Type j} (C : B → Type k) (f : A → B) wher
     → u == v [ C ↓ ap f p ]
     → u == v [ C ∘ f ↓ p ]
   ↓-ap-out idp idp = idp
+
+↓-cst-in2-ap : ∀ {i j k} {A : Type i} {B : Type j} {C : Type k}
+  {a a' : A} {b b' : B} {c c' : C}
+  (f : C → a == a') (g : C → b == b') (r : c == c')
+  → ↓-cst-in2 {q = ap f r} (ap g r) == ↓-ap-in (λ p → b == b' [ (λ _ → B) ↓ p ]) f (apd (λ c → ↓-cst-in {p = f c} (g c)) r)
+↓-cst-in2-ap {c = c} {c' = .c} f g idp = ↓-cst-in2-idp (f c) (g c)
 
 -- Dependent paths over [ap2 f p q]
 module _ {i j k l} {A : Type i} {B : Type j} {C : Type k} (D : C → Type l)
