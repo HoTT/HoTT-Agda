@@ -88,9 +88,10 @@ module _ {i j} {A : Type i} {B : Type j} where
     {b b' b'' b''' : B}
     (q₀ : b == b') (q₁ : b' == b'') (q₂ : b'' == b''')
     →  ↓-cst-in2 {q = ∙-assoc p₀ p₁ p₂} (∙-assoc q₀ q₁ q₂)
-       ▹ (↓-cst-in-∙ p₀ (p₁ ∙ p₂) q₀ (q₁ ∙ q₂) ∙ ap (λ y → ↓-cst-in {p = p₀} q₀ ∙ᵈ y) (↓-cst-in-∙ p₁ p₂ q₁ q₂))
-    == (↓-cst-in-∙ (p₀ ∙ p₁) p₂ (q₀ ∙ q₁) q₂ ∙ ap (λ y → y ∙ᵈ ↓-cst-in {p = p₂} q₂) (↓-cst-in-∙ p₀ p₁ q₀ q₁))
-       ◃ ∙ᵈ-assoc (↓-cst-in {p = p₀} q₀) (↓-cst-in {p = p₁} q₁) (↓-cst-in {p = p₂} q₂)
+     ▹ (↓-cst-in-∙ p₀ (p₁ ∙ p₂) q₀ (q₁ ∙ q₂) ∙ (↓-cst-in {p = p₀} q₀ ∙ᵈₗ ↓-cst-in-∙ p₁ p₂ q₁ q₂))
+    == ↓-cst-in-∙ (p₀ ∙ p₁) p₂ (q₀ ∙ q₁) q₂
+     ◃ (↓-cst-in-∙ p₀ p₁ q₀ q₁ ∙ᵈᵣ ↓-cst-in {p = p₂} q₂)
+     ◃ ∙ᵈ-assoc (↓-cst-in {p = p₀} q₀) (↓-cst-in {p = p₁} q₁) (↓-cst-in {p = p₂} q₂)
   ↓-cst-in-assoc {p₀ = idp} {p₁ = idp} {p₂ = idp} idp idp idp = idp
 
   ↓-cst-in2-∙ᵣ : {a a' a'' : A} {b b' b'' : B}
@@ -98,7 +99,9 @@ module _ {i j} {A : Type i} {B : Type j} where
     {q₀ q₁ : b == b'} {q' : b' == b''}
     {p₀₁ : p₀ == p₁}
     → (q₀₁ : q₀ == q₁)
-    → ↓-cst-in2 {q = ap (λ r → r ∙ p') p₀₁} (ap (λ r → r ∙ q') q₀₁) == ↓-cst-in-∙ p₀ p' q₀ q' ◃ (↓-cst-in2 {q = p₀₁} q₀₁ ∙ᵈᵣ ↓-cst-in {p = p'} q') ▹! (↓-cst-in-∙ p₁ p' q₁ q')
+    →    ↓-cst-in2 {q = ap (λ r → r ∙ p') p₀₁} (ap (λ r → r ∙ q') q₀₁)
+       ▹ ↓-cst-in-∙ p₁ p' q₁ q'
+      == ↓-cst-in-∙ p₀ p' q₀ q' ◃ (↓-cst-in2 {q = p₀₁} q₀₁ ∙ᵈᵣ ↓-cst-in {p = p'} q')
       -- ↓-cst-in2 {q = p₀₁ ∙ᵣ p'} (q₀₁ ∙ᵣ q') == ↓-cst-in2 {q = p₀₁} q₀₁ ∙ᵈᵣ ↓-cst-in {p = p'} q'
 
         -- ↓-cst-in2 {q = p₀₁ ∙ᵣ p'} (q₀₁ ∙ᵣ q')              :  ↓-cst-in {p = p₀ ∙ p'} (q₀ ∙ q') == ↓-cst-in {p = p₁ ∙ p'} (q₁ ∙ q') [ (λ p → b == b'' [ (λ _ → B) ↓ p ]) ↓ (p₀₁ ∙ᵣ p') ]
@@ -338,4 +341,3 @@ transp-ap-↓ : ∀ {i j k} {A : Type i} {B : Type j} (P : B → Type k) (h : A 
   {a₁ a₂ : A} (p : a₁ == a₂) (y : P (h a₂))
   → transport P (! (ap h p)) y == y [ P ∘ h ↓ p ]
 transp-ap-↓ _ _ idp _ = idp
-

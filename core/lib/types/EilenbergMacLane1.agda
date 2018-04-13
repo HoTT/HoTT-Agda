@@ -224,13 +224,8 @@ module _ {G : Group i} where
 
         tt : ↓-cst-in s₃* == s₃**
         tt =
-          -- ↓-cst-in s₃*
-          --   =⟨ ↓-cst-in-∙ (emloop g₁) (emloop g₂ ∙ emloop g₃) (emloop* g₁) (emloop* g₂ ∙ emloop* g₃) ⟩
-          -- emloop** g₁ ∙ᵈ ↓-cst-in (emloop* g₂ ∙ emloop* g₃)
-          --   =⟨ emloop** g₁ ∙ᵈₗ ↓-cst-in-∙ (emloop g₂) (emloop g₃) (emloop* g₂) (emloop* g₃) ⟩
-          -- s₃** =∎
-          ↓-cst-in-∙ (emloop g₁) (emloop g₂ ∙ emloop g₃) (emloop* g₁) (emloop* g₂ ∙ emloop* g₃)
-          ∙ ap (λ y → ↓-cst-in {p = emloop g₁} (emloop* g₁) ∙ᵈ y) (↓-cst-in-∙ (emloop g₂) (emloop g₃) (emloop* g₂) (emloop* g₃))
+            ↓-cst-in-∙ (emloop g₁) (emloop g₂ ∙ emloop g₃) (emloop* g₁) (emloop* g₂ ∙ emloop* g₃)
+          ∙ (emloop** g₁ ∙ᵈₗ ↓-cst-in-∙ (emloop g₂) (emloop g₃) (emloop* g₂) (emloop* g₃))
 
 
         dd : (r : s₀ == s₃) → s₀* == s₃* → s₀** == s₃** [ (λ p → embase* == embase* [ P ↓ p ]) ↓ r ]
@@ -243,23 +238,23 @@ module _ {G : Group i} where
           (e₀₁*' ∙ᵈ ↓-cst-in2 {q = e₁₂ ∙ e₂₃} (e₁₂* ∙ e₂₃*)) ▹ tt
             =⟨ (↓-cst-in2-∙ {p₀₁ = e₁₂} {p₁₂ = e₂₃} e₁₂* e₂₃*) |in-ctx (λ y → (e₀₁*' ∙ᵈ y) ▹ tt) ⟩
           (e₀₁*' ∙ᵈ e₁₂*' ∙ᵈ e₂₃*') ▹ tt
-            =⟨ (↓-cst-in2-∙ᵣ {p' = emloop g₃} {q' = emloop* g₃} {p₀₁ = emloop-comp g₁ g₂} (emloop-comp* g₁ g₂)) |in-ctx (λ y → (e₀₁*' ∙ᵈ y ∙ᵈ e₂₃*') ▹ tt) ⟩
-          (e₀₁*' ∙ᵈ (f₀ ◃ f₁ ▹! f₂) ∙ᵈ e₂₃*') ▹ tt
-            =⟨ ∙ᵈ-assoc f₀ (f₁ ▹! f₂) e₂₃*' |in-ctx (λ y → (e₀₁*' ∙ᵈ y) ▹ tt) ⟩
-          (e₀₁*' ∙ᵈ f₀ ◃ (f₁ ▹! f₂) ∙ᵈ e₂₃*') ▹ tt
-            =⟨ ! (◃▹-assoc e₀₁*' f₀ ((f₁ ▹! f₂) ∙ᵈ e₂₃*')) |in-ctx (λ y → y ▹ tt) ⟩
-          (e₀₁** ∙ᵈ (f₁ ▹! f₂) ∙ᵈ e₂₃*') ▹ tt
-            =⟨ ∙ᵈ-∙'ᵈ-assoc' e₀₁** ((f₁ ▹! f₂) ∙ᵈ e₂₃*') tt ⟩
-          e₀₁** ∙ᵈ ((f₁ ▹! f₂) ∙ᵈ e₂₃*') ▹ tt
-            =⟨ ∙ᵈ-∙'ᵈ-assoc' (f₁ ▹! f₂) e₂₃*' tt |in-ctx (λ y → e₀₁** ∙ᵈ y) ⟩
-          e₀₁** ∙ᵈ (f₁ ▹! f₂) ∙ᵈ e₂₃*' ▹ tt
-            =⟨ ↓-cst-in-assoc {p₀ = emloop g₁} {p₁ = emloop g₂} {p₂ = emloop g₃} (emloop* g₁) (emloop* g₂) (emloop* g₃) |in-ctx (λ y → e₀₁** ∙ᵈ (f₁ ▹! f₂) ∙ᵈ y) ⟩
-          e₀₁** ∙ᵈ (f₁ ▹! f₂) ∙ᵈ ((f₂ ∙ f₃) ◃ e₂₃**)
-            =⟨ ! (◃▹-assoc (f₁ ▹! f₂) (f₂ ∙ f₃) e₂₃**) |in-ctx (λ y → e₀₁** ∙ᵈ y) ⟩
-          e₀₁** ∙ᵈ ((f₁ ▹! f₂) ▹ (f₂ ∙ f₃)) ∙ᵈ e₂₃**
-          =⟨ h |in-ctx (λ y → e₀₁** ∙ᵈ y ∙ᵈ e₂₃**) ⟩
+            =⟨ ∙ᵈ-∙'ᵈ-assoc' e₀₁*' (e₁₂*' ∙ᵈ e₂₃*') tt ⟩
+          e₀₁*' ∙ᵈ (e₁₂*' ∙ᵈ e₂₃*') ▹ tt
+            =⟨ ∙ᵈ-∙'ᵈ-assoc' e₁₂*' e₂₃*' tt |in-ctx (λ y → e₀₁*' ∙ᵈ y) ⟩
+          e₀₁*' ∙ᵈ e₁₂*' ∙ᵈ e₂₃*' ▹ tt
+            =⟨ ↓-cst-in-assoc {p₀ = emloop g₁} {p₁ = emloop g₂} {p₂ = emloop g₃} (emloop* g₁) (emloop* g₂) (emloop* g₃) |in-ctx (λ y → e₀₁*' ∙ᵈ e₁₂*' ∙ᵈ y) ⟩
+          e₀₁*' ∙ᵈ e₁₂*' ∙ᵈ f₂ ◃ f₃ ◃ e₂₃**
+            =⟨ ! (◃▹-assoc e₁₂*' f₂ (f₃ ◃ e₂₃**)) |in-ctx (λ y → e₀₁*' ∙ᵈ y) ⟩
+          e₀₁*' ∙ᵈ (e₁₂*' ▹ f₂) ∙ᵈ f₃ ◃ e₂₃**
+            =⟨ ↓-cst-in2-∙ᵣ {p' = emloop g₃} {q' = emloop* g₃} {p₀₁ = emloop-comp g₁ g₂} (emloop-comp* g₁ g₂) |in-ctx (λ y → e₀₁*' ∙ᵈ y ∙ᵈ f₃ ◃ e₂₃**) ⟩
+          e₀₁*' ∙ᵈ (f₀ ◃ f₁) ∙ᵈ f₃ ◃ e₂₃**
+            =⟨ ∙ᵈ-assoc f₀ f₁ (f₃ ◃ e₂₃**) |in-ctx (λ y → e₀₁*' ∙ᵈ y) ⟩
+          e₀₁*' ∙ᵈ f₀ ◃ f₁ ∙ᵈ f₃ ◃ e₂₃**
+            =⟨ ! (◃▹-assoc e₀₁*' f₀ (f₁ ∙ᵈ f₃ ◃ e₂₃**)) ⟩
+          e₀₁** ∙ᵈ f₁ ∙ᵈ f₃ ◃ e₂₃**
+            =⟨ ! (◃▹-assoc f₁ f₃ e₂₃**) |in-ctx (λ y → e₀₁** ∙ᵈ y) ⟩
           e₀₁** ∙ᵈ (f₁ ▹ f₃) ∙ᵈ e₂₃**
-            =⟨ {! !} ⟩
+            =⟨ ! (∙ᵈᵣ-∙'ᵈ f₁' f₃' (emloop** g₃)) |in-ctx (λ y → e₀₁** ∙ᵈ y ∙ᵈ e₂₃**) ⟩
           φ** =∎
           where
           e₀₁*' : ↓-cst-in s₀* == ↓-cst-in s₁* [ (λ p → embase* == embase* [ P ↓ p ]) ↓ e₀₁ ]
@@ -269,50 +264,29 @@ module _ {G : Group i} where
           e₂₃*' : ↓-cst-in s₂* == ↓-cst-in s₃* [ (λ p → embase* == embase* [ P ↓ p ]) ↓ e₂₃ ]
           e₂₃*' = ↓-cst-in2 {q = e₂₃} e₂₃*
           f₀ : ↓-cst-in (emloop* (G.comp g₁ g₂) ∙ emloop* g₃) ==
-               ↓-cst-in {p = emloop (G.comp g₁ g₂)} (emloop* (G.comp g₁ g₂)) ∙ᵈ ↓-cst-in {p = emloop g₃} (emloop* g₃)
+               emloop** (G.comp g₁ g₂) ∙ᵈ emloop** g₃
           f₀ = ↓-cst-in-∙ (emloop (G.comp g₁ g₂)) (emloop g₃) (emloop* (G.comp g₁ g₂)) (emloop* g₃)
-          f₁ : ↓-cst-in {p = emloop (G.comp g₁ g₂)} (emloop* (G.comp g₁ g₂)) ∙ᵈ ↓-cst-in {p = emloop g₃} (emloop* g₃) ==
-               ↓-cst-in {p = emloop g₁ ∙ emloop g₂} (emloop* g₁ ∙ emloop* g₂) ∙ᵈ ↓-cst-in {p = emloop g₃} (emloop* g₃)
+          f₁' : emloop** (G.comp g₁ g₂) == ↓-cst-in {p = emloop g₁ ∙ emloop g₂} (emloop* g₁ ∙ emloop* g₂)
+                  [ (λ s → embase* == embase* [ P ↓ s ]) ↓ emloop-comp' G g₁ g₂ ]
+          f₁' = ↓-cst-in2 {q = emloop-comp g₁ g₂} (emloop-comp* g₁ g₂)
+          f₁ : emloop** (G.comp g₁ g₂) ∙ᵈ emloop** g₃ ==
+               ↓-cst-in {p = emloop g₁ ∙ emloop g₂} (emloop* g₁ ∙ emloop* g₂) ∙ᵈ emloop** g₃
                  [ (λ s → embase* == embase* [ P ↓ s ]) ↓ ap (λ r → r ∙ emloop' G g₃) (emloop-comp' G g₁ g₂) ]
-          f₁ = ↓-cst-in2 {q = emloop-comp g₁ g₂} (emloop-comp* g₁ g₂) ∙ᵈᵣ ↓-cst-in {p = emloop g₃} (emloop* g₃)
+          f₁ = f₁' ∙ᵈᵣ emloop** g₃
           f₂ : ↓-cst-in ((emloop* g₁ ∙ emloop* g₂) ∙ emloop* g₃) ==
-               ↓-cst-in {p = emloop g₁ ∙ emloop g₂} (emloop* g₁ ∙ emloop* g₂) ∙ᵈ ↓-cst-in {p = emloop g₃} (emloop* g₃)
+               ↓-cst-in {p = emloop g₁ ∙ emloop g₂} (emloop* g₁ ∙ emloop* g₂) ∙ᵈ emloop** g₃
           f₂ = ↓-cst-in-∙ (emloop g₁ ∙ emloop g₂) (emloop g₃) (emloop* g₁ ∙ emloop* g₂) (emloop* g₃)
-          f₃ : ↓-cst-in {p = emloop g₁ ∙ emloop g₂} (emloop* g₁ ∙ emloop* g₂) ∙ᵈ ↓-cst-in {p = emloop g₃} (emloop* g₃) ==
-               (↓-cst-in {p = emloop g₁} (emloop* g₁) ∙ᵈ ↓-cst-in {p = emloop g₂} (emloop* g₂)) ∙ᵈ ↓-cst-in {p = emloop g₃} (emloop* g₃)
-          f₃ = ap (λ y → y ∙ᵈ ↓-cst-in (emloop* g₃)) (↓-cst-in-∙ (emloop g₁) (emloop g₂) (emloop* g₁) (emloop* g₂))
-          h : (f₁ ▹! f₂) ▹ (f₂ ∙ f₃) == f₁ ▹ f₃
-          h =
-            (f₁ ▹! f₂) ▹ (f₂ ∙ f₃)
-              =⟨ {!∙'ᵈ-assoc f₁ f₂ (f₂ ∙ f₃)!} ⟩
-            f₁ ▹ (! f₂) ∙' f₂ ∙ f₃
-              =⟨ ap (λ y → f₁ ▹ y) (∙'=∙ (! f₂) (f₂ ∙ f₃)) ⟩
-            f₁ ▹ (! f₂) ∙ f₂ ∙ f₃
-              =⟨ ap (λ y → f₁ ▹ y) (! (∙-assoc (! f₂) f₂ f₃)) ⟩
-            f₁ ▹ ((! f₂) ∙ f₂) ∙ f₃
-              =⟨ ap (λ y → f₁ ▹ y ∙ f₃) (!-inv-l f₂) ⟩
-            f₁ ▹ f₃ =∎
+          f₃' : ↓-cst-in {p = emloop g₁ ∙ emloop g₂} (emloop* g₁ ∙ emloop* g₂) == (emloop** g₁ ∙ᵈ emloop** g₂)
+          f₃' = ↓-cst-in-∙ (emloop g₁) (emloop g₂) (emloop* g₁) (emloop* g₂)
+          f₃ : ↓-cst-in {p = emloop g₁ ∙ emloop g₂} (emloop* g₁ ∙ emloop* g₂) ∙ᵈ emloop** g₃ ==
+               (emloop** g₁ ∙ᵈ emloop** g₂) ∙ᵈ emloop** g₃
+          f₃ = f₃' ∙ᵈᵣ emloop** g₃
 
-        -- e₀₁** : s₀** == s₁** [ (λ s → embase* == embase* [ P ↓ s ]) ↓ e₀₁ ]
-        -- e₀₁** = emloop-comp** (G.comp g₁ g₂) g₃
-
-        -- e₁₂** : s₁** == s₂** [ (λ s → embase* == embase* [ P ↓ s ]) ↓ e₁₂ ]
-        -- e₁₂** = emloop-comp** g₁ g₂ ∙ᵈᵣ emloop** g₃
-
-        -- e₂₃** : s₂** == s₃** [ (λ s → embase* == embase* [ P ↓ s ]) ↓ e₂₃ ]
-        -- e₂₃** = ∙ᵈ-assoc (emloop** g₁) (emloop** g₂) (emloop** g₃)
-
-        {-
-        emloop-coh**-helper : (g₁ g₂ g₃ : G.El) →
-          emloop-comp** (G.comp g₁ g₂) g₃ ∙ᵈ (emloop-comp** g₁ g₂ ∙ᵈᵣ emloop** g₃) ∙ᵈ ∙ᵈ-assoc (emloop** g₁) (emloop** g₂) (emloop** g₃) ==
-            -- : emloop** (G.comp (G.comp g₁ g₂) g₃) == emloop** g₁ ∙ᵈ (emloop** g₂ ∙ᵈ emloop** g₃) [ (λ p → embase* == embase* [ P ↓ p ]) ↓ e ]
-            --     with e = emloop-comp' (Group.comp G g₁ g₂) g₃ ∙ ap (λ l → l ∙ emloop' g₃) (emloop-comp' g₁ g₂) ∙ ∙-assoc (emloop' g₁) (emloop' g₂) (emloop' g₃)
-          emloop-comp* (G.comp g₁ g₂) g₃ ∙ ap (λ l → l ∙ emloop* g₃) (emloop-comp* g₁ g₂) ∙ ∙-assoc (emloop* g₁) (emloop* g₂) (emloop* g₃) -- : emloop* (G.comp (G.comp g₁ g₂) g₃) == emloop* g₁ ∙ (emloop* g₂ ∙ emloop* g₃)
-        emloop-coh**-helper g₁ g₂ g₃ = ?
-        -}
+        ee : dd ψ ψ* == ψ**
+        ee = {!!}
 
         emloop-coh** : φ** == ψ** [ (λ e → s₀** == s₃** [ (λ p → embase* == embase* [ P ↓ p ]) ↓ e ]) ↓ φ=ψ ]
-        emloop-coh** = {!!}
+        emloop-coh** = (! cc) ◃ ap (λ y → dd φ y) φ*=ψ* ◃ apd (λ y → dd y ψ*) φ=ψ ▹ ee
 
       module M = EM₁Elim {P = λ _ → C} embase* emloop** emloop-comp** emloop-coh**
 

@@ -40,9 +40,7 @@ module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
     → ap f p ∙' ap f q == ap f (p ∙' q)
   ∙'-ap p idp = idp
 
-  ap-∙' : {x y z : A} (p : x == y) (q : y == z)
-    → ap f (p ∙' q) == ap f p ∙' ap f q
-  ap-∙' p idp = idp
+  -- note: ap-∙' is defined in PathGroupoid
 
 {- Dependent stuff -}
 module _ {i j} {A : Type i} {B : A → Type j} (f : Π A B) where

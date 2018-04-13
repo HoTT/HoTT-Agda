@@ -113,6 +113,12 @@ module _ {i} {A : Type i} where
     → (idp {a = p}) ∙'2 (idp {a = q}) == idp
   idp∙'2idp idp idp = idp
 
+module _ {i j} {A : Type i} {B : Type j} (f : A → B) where
+
+  ap-∙' : {x y z : A} (p : x == y) (q : y == z)
+    → ap f (p ∙' q) == ap f p ∙' ap f q
+  ap-∙' p idp = idp
+
 {-
 Sometimes we need to restart a new section in order to have everything in the
 previous one generalized.
@@ -209,20 +215,20 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     → (f₀₁ ∙ᵈ f₁₂) ∙ᵈ f₂₃ == f₀₁ ∙ᵈ (f₁₂ ∙ᵈ f₂₃) [ (λ e → b₀ == b₃ [ B ↓ e ]) ↓ ∙-assoc e₀₁ e₁₂ e₂₃ ]
   ∙ᵈ-assoc {e₀₁ = idp} {e₁₂ = idp} {e₂₃ = idp} idp f₁₂ f₂₃ = idp
 
-  -- Dependent whiskering
+  infixr 80 _∙ᵈᵣ_
+  infixl 80 _∙ᵈₗ_
+
+  {- Dependent whiskering -}
   _∙ᵈᵣ_ : {a₀ a₁ a₂ : A}
     {b₀ : B a₀} {b₁ : B a₁} {b₂ : B a₂}
-    {e : a₀ == a₁} {e' : a₀ == a₁} {f : a₁ == a₂}
+    {e e' : a₀ == a₁} {f : a₁ == a₂}
     {α : e == e'}
     {p : b₀ == b₁ [ B ↓ e ]} {p' : b₀ == b₁ [ B ↓ e' ]}
     → (β : p == p' [ (λ r → b₀ == b₁ [ B ↓ r ]) ↓ α ])
     → (q : b₁ == b₂ [ B ↓ f ])
-    -- → p ∙ᵈ q == p' ∙ᵈ q [ (λ s → b₀ == b₂ [ B ↓ s ]) ↓ (α ∙ᵣ f) ]
-    -- → p ∙ᵈ q == p' ∙ᵈ q [ (λ r → b₀ == b₂ [ B ↓ r ∙ f ]) ↓ α ]
     → p ∙ᵈ q == p' ∙ᵈ q [ (λ s → b₀ == b₂ [ B ↓ s ]) ↓ ap (λ r → r ∙ f) α ]
-  _∙ᵈᵣ_ {f = idp} {α = idp} idp idp = idp
+  _∙ᵈᵣ_ {α = idp} idp q = idp
 
-    -- Dependent whiskering
   _∙ᵈₗ_ : {a₀ a₁ a₂ : A}
     {b₀ : B a₀} {b₁ : B a₁} {b₂ : B a₂}
     {e : a₀ == a₁} {f : a₁ == a₂} {f' : a₁ == a₂}
@@ -231,7 +237,7 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     (p : b₀ == b₁ [ B ↓ e ])
     → (β : q == q' [ (λ r → b₁ == b₂ [ B ↓ r ]) ↓ α ])
     → p ∙ᵈ q == p ∙ᵈ q' [ (λ s → b₀ == b₂ [ B ↓ s ]) ↓ ap (λ r → e ∙ r) α ]
-  _∙ᵈₗ_ {e = idp} {α = idp} idp idp = idp
+  _∙ᵈₗ_ {α = idp} q idp = idp
 
   _∙'ᵈ_ : {x y z : A} {p : x == y} {p' : y == z}
     {u : B x} {v : B y} {w : B z}
@@ -268,7 +274,7 @@ module _ {i j} {A : Type i} {B : A → Type j} where
     → (β : p == p' [ (λ r → b₀ == b₁ [ B ↓ r ]) ↓ α ])
     → (q : b₁ == b₂ [ B ↓ f ])
     → p ∙'ᵈ q == p' ∙'ᵈ q [ (λ s → b₀ == b₂ [ B ↓ s ]) ↓ ap (λ r → r ∙' f) α ]
-  _∙'ᵈᵣ_ {f = idp} {α = idp} idp idp = idp
+  _∙'ᵈᵣ_ {α = idp} idp q = idp
 
   {- That’s not perfect, because [q] could be a dependent path. But in that case
      this is not well typed… -}
@@ -350,6 +356,18 @@ module _ {i j} {A : Type i} {B : A → Type j} where
   apd∙' q r idp = ! (idp∙'2idp (q _) (r _))
 
 module _ {i j} {A : Type i} {B : A → Type j} where
+
+  ∙ᵈᵣ-∙'ᵈ : {a₀ a₁ a₂ : A}
+    {b₀ : B a₀} {b₁ : B a₁} {b₂ : B a₂}
+    {e e' e'' : a₀ == a₁} {f : a₁ == a₂}
+    {α : e == e'}
+    {α' : e' == e''}
+    {p : b₀ == b₁ [ B ↓ e ]} {p' : b₀ == b₁ [ B ↓ e' ]} {p'' : b₀ == b₁ [ B ↓ e'' ]}
+    → (β : p == p' [ (λ r → b₀ == b₁ [ B ↓ r ]) ↓ α ])
+    → (β' : p' == p'' [ (λ r → b₀ == b₁ [ B ↓ r ]) ↓ α' ])
+    → (q : b₁ == b₂ [ B ↓ f ])
+    → (β ∙'ᵈ β') ∙ᵈᵣ q == (β ∙ᵈᵣ q) ∙'ᵈ (β' ∙ᵈᵣ q) [ (λ y → (p ∙ᵈ q) == (p'' ∙ᵈ q) [ (λ s → b₀ == b₂ [ B ↓ s ]) ↓ y ]) ↓ ap-∙' (λ r → r ∙ f) α α' ]
+  ∙ᵈᵣ-∙'ᵈ {α = idp} {α' = idp} β idp q = idp
 
   {- Exchange -}
 
