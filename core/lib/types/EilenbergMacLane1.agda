@@ -22,6 +22,7 @@ module _ (G : Group i) where
     emloop-coh' : ∀ g₁ g₂ g₃ →
       emloop-comp' (Group.comp G g₁ g₂) g₃ ∙ ap (λ l → l ∙ emloop' g₃) (emloop-comp' g₁ g₂) ∙ ∙-assoc (emloop' g₁) (emloop' g₂) (emloop' g₃)
       == ap emloop' (Group.assoc G g₁ g₂ g₃) ∙ emloop-comp' g₁ (Group.comp G g₂ g₃) ∙ ap (λ l → emloop' g₁ ∙ l) (emloop-comp' g₂ g₃)
+    EM₁-level' : has-level ⟨ 2 ⟩ EM₁
 
   ⊙EM₁ : Ptd i
   ⊙EM₁ = ⊙[ EM₁ , embase' ]
@@ -35,6 +36,11 @@ module _ {G : Group i} where
   emloop-comp = emloop-comp' G
   emloop-coh = emloop-coh' G
 
+  instance
+    EM₁-level : {n : ℕ₋₂} → has-level (S (S (S (S n)))) (EM₁ G)
+    EM₁-level {⟨-2⟩} = EM₁-level' G
+    EM₁-level {S n} = raise-level _ EM₁-level
+
   abstract
     -- This was in the original paper, but is actually derivable.
     emloop-ident : emloop G.ident == idp
@@ -42,6 +48,7 @@ module _ {G : Group i} where
       ap emloop (! $ G.unit-r G.ident) ∙ emloop-comp G.ident G.ident
 
   module EM₁Elim {j} {P : EM₁ G → Type j}
+    {{_ : (x : EM₁ G) → has-level ⟨ 2 ⟩ (P x)}}
     (embase* : P embase)
     (emloop* : (g : G.El) → embase* == embase* [ P ↓ emloop g ])
     (emloop-comp* : (g₁ g₂ : G.El) →
@@ -63,19 +70,23 @@ module _ {G : Group i} where
 
   open EM₁Elim public using () renaming (f to EM₁-elim)
 
-  EM₁-level₁-elim : ∀ {j} {P : EM₁ G → Type j}
+  module EM₁Level₁Elim {j} {P : EM₁ G → Type j}
     {{is-1-type : (x : EM₁ G) → has-level ⟨ 1 ⟩ (P x)}}
     (embase* : P embase)
     (emloop* : (g : G.El) → embase* == embase* [ P ↓ emloop g ])
     (emloop-comp* : (g₁ g₂ : G.El) →
-       emloop* (G.comp g₁ g₂) == emloop* g₁ ∙ᵈ emloop* g₂
-       [ (λ p → embase* == embase* [ P ↓ p ]) ↓ emloop-comp g₁ g₂ ])
-    → ((x : EM₁ G) → P x)
-  EM₁-level₁-elim {{is-1-type}} embase* emloop* emloop-comp* =
-    EM₁-elim embase* emloop* emloop-comp*
-             (λ g₁ g₂ g₃ → prop-has-all-paths-↓ {{↓-level (↓-level (is-1-type embase))}})
+      emloop* (G.comp g₁ g₂) == emloop* g₁ ∙ᵈ emloop* g₂
+      [ (λ p → embase* == embase* [ P ↓ p ]) ↓ emloop-comp g₁ g₂ ]) where
+
+    module M = EM₁Elim {{λ x → raise-level 1 (is-1-type x)}}
+                       embase* emloop* emloop-comp*
+                       (λ g₁ g₂ g₃ → prop-has-all-paths-↓ {{↓-level (↓-level (is-1-type embase))}})
+    open M public
+
+  open EM₁Level₁Elim public using () renaming (f to EM₁-level₁-elim)
 
   module EM₁Rec {j} {C : Type j}
+    {{_ : has-level ⟨ 2 ⟩ C}}
     (embase* : C)
     (emloop* : (g : G.El) → embase* == embase*)
     (emloop-comp* : (g₁ g₂ : G.El) → emloop* (G.comp g₁ g₂) == emloop* g₁ ∙ emloop* g₂)
@@ -334,8 +345,9 @@ module _ {G : Group i} where
                  [ (λ p → embase* == embase* [ P ↓ p ]) ↓ ap (λ y → emloop g₁ ∙ y) (emloop-comp g₂ g₃) ]
           f₁ = emloop** g₁ ∙ᵈₗ f₁'
 
-        emloop-coh** : φ** == ψ** [ (λ e → s₀** == s₃** [ (λ p → embase* == embase* [ P ↓ p ]) ↓ e ]) ↓ φ=ψ ]
-        emloop-coh** = (! cc) ◃ ap (λ y → dd φ y) φ*=ψ* ◃ apd (λ y → dd y ψ*) φ=ψ ▹ ee
+        abstract
+          emloop-coh** : φ** == ψ** [ (λ e → s₀** == s₃** [ (λ p → embase* == embase* [ P ↓ p ]) ↓ e ]) ↓ φ=ψ ]
+          emloop-coh** = (! cc) ◃ ap (λ y → dd φ y) φ*=ψ* ◃ apd (λ y → dd y ψ*) φ=ψ ▹ ee
 
       module M = EM₁Elim {P = λ _ → C} embase* emloop** emloop-comp** emloop-coh**
 
@@ -346,14 +358,17 @@ module _ {G : Group i} where
 
   open EM₁Rec public using () renaming (f to EM₁-rec)
 
-  EM₁-level₁-rec : ∀ {j} {C : Type j}
-    {{_ : has-level ⟨ 1 ⟩ C}}
+  module EM₁Level₁Rec {j} {C : Type j}
+    {{is-1-type : has-level ⟨ 1 ⟩ C}}
     (embase* : C)
-    (hom* : G →ᴳ (Ω^S-group 0 ⊙[ C , embase* ]))
-    → (EM₁ G → C)
-  EM₁-level₁-rec embase* hom* =
-    EM₁-rec embase* (GroupHom.f hom*) (GroupHom.pres-comp hom*)
-            (λ g₁ g₂ g₃ → prop-has-all-paths _ _)
+    (hom* : G →ᴳ (Ω^S-group 0 ⊙[ C , embase* ])) where
+
+    module M = EM₁Rec {{raise-level 1 is-1-type}}
+                      embase* (GroupHom.f hom*) (GroupHom.pres-comp hom*)
+                      (λ g₁ g₂ g₃ → prop-has-all-paths _ _)
+    open M public
+
+  open EM₁Level₁Rec public using () renaming (f to EM₁-level₁-rec)
 
 -- basic lemmas about [EM₁]
 
