@@ -231,21 +231,16 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
           e₁₀₋₄ : s₁₀ == s₄
           e₁₀₋₄ = ap emloop (G.assoc y g₁ g₂)
 
-          cd₁ : e₁₃ == (e₁₆ ∙ e₆₇) ∙ ! e₃₇
-          cd₁ = post-rotate-in e₁₃ _ (e₁₆ ∙ e₆₇) $
+          cd₁ : e₁₃ == e₁₆ ∙ e₆₇ ∙ ! e₃₇
+          cd₁ = post-rearrange-in (e₁₃ ◃∎) (e₁₆ ◃∙ e₆₇ ◃∎) e₃₇ $
                 transp-cst=idf-natural (emloop-comp g₁ g₂) (emloop y)
 
-          -- TODO: is there an easier way??
           cd₂ : ! e₃₇ ∙ ! e₄₃ == ! e₈₇ ∙ ! e₉₈ ∙ ! e₁₀₋₉ ∙ e₁₀₋₄
           cd₂ = pre-rotate-in e₈₇ (! e₃₇ ∙ ! e₄₃) (! e₉₈ ∙ ! e₁₀₋₉ ∙ e₁₀₋₄) $
                 pre-rotate-in e₉₈ (e₈₇ ∙ ! e₃₇ ∙ ! e₄₃) (! e₁₀₋₉ ∙ e₁₀₋₄) $
                 pre-rotate-in e₁₀₋₉ (e₉₈ ∙ e₈₇ ∙ ! e₃₇ ∙ ! e₄₃) e₁₀₋₄ $
-                (λ p → ! (ap (λ z → e₁₀₋₉ ∙ z) (∙-assoc e₉₈ e₈₇ (! e₃₇ ∙ ! e₄₃))) ∙ p) $
-                (λ p → ! (∙-assoc e₁₀₋₉ (e₉₈ ∙ e₈₇) (! e₃₇ ∙ ! e₄₃)) ∙ p) $
-                (λ p → ! (∙-assoc (e₁₀₋₉ ∙ e₉₈ ∙ e₈₇) (! e₃₇) (! e₄₃)) ∙ p) $
-                post-rotate'-in e₁₀₋₄ e₄₃ ((e₁₀₋₉ ∙ e₉₈ ∙ e₈₇) ∙ ! e₃₇) $
-                post-rotate'-in (e₁₀₋₄ ∙ e₄₃) e₃₇ (e₁₀₋₉ ∙ e₉₈ ∙ e₈₇) $
-                (λ p → p ∙ ! (∙-assoc e₁₀₋₄ e₄₃ e₃₇)) $
+                post-rearrange'-in (e₁₀₋₉ ◃∙ e₉₈ ◃∙ e₈₇ ◃∙ ! e₃₇ ◃∎) e₄₃ (e₁₀₋₄ ◃∎) $
+                post-rearrange'-in (e₁₀₋₉ ◃∙ e₉₈ ◃∙ e₈₇ ◃∎) e₃₇ (e₁₀₋₄ ◃∙ e₄₃ ◃∎) $
                 emloop-coh' G y g₁ g₂
 
           DD : e₁₂ == e₁₂'
@@ -259,8 +254,12 @@ module homotopy.EilenbergMacLane1 {i} (G : Group i) where
             app= q₁₅ y ∙ e₅₂
               =⟨ app=-β {f = f₁} {g = f₅} (transp-emloop=emloop-transp g₁g₂) y |in-ctx (λ z → z ∙ e₅₂) ⟩
             (e₁₃ ∙ ! e₄₃ ∙ e₄₅) ∙ e₅₂
-              =⟨ cd₁ |in-ctx (λ z → (z ∙ ! e₄₃ ∙ e₄₅) ∙ e₅₂) ⟩
-            (((e₁₆ ∙ e₆₇) ∙ ! e₃₇) ∙ ! e₄₃ ∙ e₄₅) ∙ e₅₂
+              =⟨ ! (↯-∙∙ (e₁₃ ◃∙ ! e₄₃ ◃∙ (e₄₅ ◃∎)) (e₅₂ ◃∎)) ⟩
+            e₁₃ ∙ ! e₄₃ ∙ e₄₅ ∙ e₅₂
+              =⟨ rewrite-path (s₁ ∎∎) (e₁₃ ◃∎) (e₁₆ ◃∙ e₆₇ ◃∙ ! e₃₇ ◃∎) cd₁ (! e₄₃ ◃∙ e₄₅ ◃∙ e₅₂ ◃∎) ⟩
+            e₁₆ ∙ e₆₇ ∙ ! e₃₇ ∙ ! e₄₃ ∙ e₄₅ ∙ e₅₂
+              =⟨ rewrite-path (e₁₆ ◃∙ e₆₇ ◃∎) (! e₃₇ ◃∙ ! e₄₃ ◃∎) (! e₈₇ ◃∙ ! e₉₈ ◃∙ ! e₁₀₋₉ ◃∙ e₁₀₋₄ ◃∎) cd₂ (e₄₅ ◃∙ e₅₂ ◃∎) ⟩
+            e₁₆ ∙ e₆₇ ∙ ! e₈₇ ∙ ! e₉₈ ∙ ! e₁₀₋₉ ∙ e₁₀₋₄ ∙ e₄₅ ∙ e₅₂
               =⟨ {!!} ⟩
             e₁₂' =∎
 
