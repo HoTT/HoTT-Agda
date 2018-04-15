@@ -190,6 +190,10 @@ transp-cst=idf : ∀ {i} {A : Type i} {a x y : A} (p : x == y) (q : a == x)
   → transport (λ x → a == x) p q == q ∙ p
 transp-cst=idf idp q = ! (∙-unit-r q)
 
+transp-cst=idf-natural : ∀ {i} {A : Type i} {a x y : A} {p p' : x == y} (e : p == p') (q : a == x)
+  → transp-cst=idf p q ∙ ap (λ s → q ∙ s) e == ap (λ s → transport (λ x → a == x) s q) e ∙ transp-cst=idf p' q
+transp-cst=idf-natural {p = idp} {p' = .idp} idp idp = idp
+
 {- for functions with more arguments -}
 module _ {i₀ i₁ i₂ j} {A₀ : Type i₀} {A₁ : Type i₁} {A₂ : Type i₂}
   {B : Type j} (f : A₀ → A₁ → A₂ → B) where
